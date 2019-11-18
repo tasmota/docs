@@ -18,7 +18,7 @@
 * [TuyaMCU](TuyaMCU)    
 * [Displays](Displays)  
 * [Blinds and Shutters](Blinds-and-Shutters)    
-* [Supported Devices](supported-devices)  
+* [Supported Devices](sSpported-Devices)  
 * [Smart Home Integrations](Integrations)   
 * [Power Monitoring Calibration](Power-Monitoring-Calibration)     
 * [Web UI](WebUI)     
