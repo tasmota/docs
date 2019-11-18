@@ -298,5 +298,5 @@ Delete the following in your `.platformio` folder (`%USERPROFILE%\.platformio` i
 - [**Gitpod**](Compiling-Tasmota-on-Gitpod) - compile your own binary in the cloud using [Gitpod](https://www.gitpod.io/).  
 - [**TasmoCompiler**](https://github.com/benzino77/tasmocompiler) - simple web GUI to compile Tasmota with your own settings
 
-## Need More Help?
+# Need More Help?
 If you have encountered problems during flash see the [FAQ](FAQ). Ask for help in [Discord](https://discord.gg/Ks2Kzd4) or [Community Forum](https://groups.google.com/d/forum/sonoffusers)
