@@ -10,11 +10,19 @@
   <div id="app"></div>
   <script>
     window.$docsify = {
-      loadSidebar: true,
-      repo: 'https://github.com/arends/Tasmota',
-      subMaxLevel: 2
+      name       : 'Tasmota',
+			repo       : 'https://github.com/arendst/Tasmota',
+			// coverpage  : 'coverpage.md',
+			homepage   : 'Home.md',
+			// homepage   : 'https://raw.githubusercontent.com/jhildenbiddle/docsify-themeable/master/README.md',
+			loadSidebar: '_sidebar.md',
+			auto2top   : true,
+			maxLevel   : 3, 
+			subMaxLevel: 3,
     }
   </script>
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <script src="https://unpkg.com/docsify/lib/plugins/search.js"></script>
+
 </body>
 </html>
