@@ -1,10 +1,5 @@
 [![icon](_media/logog.png)](Home)
-
-<small>v7.1</small>
-
-> Open-source operating system for ESP8266
-
-> Featuring:
+> Open-source operating system for ESP8266 featuring:
 
 - Easy [initial setup](initial-configuration)
 - [Browser interface](webui) for configuration and control
@@ -17,9 +12,9 @@
 - Wemo and Hue emulation for [Amazon Alexa](Alexa) support
 - [KNX](KNX-features) IP protocol support
 
->To start 
-
->you will need [some tools](Prerequisites) to [prepare](Hardware-preparation) your device for [flashing Tasmota](Flashing) and [connect](initial-configuration) it to your Wi-Fi network and [MQTT](MQTT) broker.
+[Get Started](Home)
+[Installation](Installation)
+[GitHub](https://github.com/arendst/Tasmota)
 
 
 <!-- background image -->
