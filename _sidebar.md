@@ -1,9 +1,7 @@
-* [Prerequisites](Prerequisites)  
-* [Hardware Preparation](Hardware-Preparation)  
-* [Flashing](Flashing)  
-* [Initial Configuration](Initial-Configuration)  
-* [MQTT](MQTT)  
-* [Upgrading](Upgrading)     
+* [Installation](Installation)  
+* [**Initial Configuration**](Initial-Configuration)  
+* [**MQTT**](MQTT)  
+* [**Upgrading**](Upgrading)     
 * [FAQ](FAQ)  
 
 * [Templates](Templates)  
