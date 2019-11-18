@@ -11,17 +11,17 @@ To install Tasmota on your device you have to prepare certain tools and software
 Any [variation](https://en.wikipedia.org/wiki/ESP8266#Espressif_modules) of the [ESP8266 chip](https://www.espressif.com/en/products/hardware/esp8266ex/overview) can be flashed with Tasmota.
 
 ### Serial-to-USB adapter with 3.3V supply
+<img src="https://user-images.githubusercontent.com/5904370/55688731-3f0acd00-597c-11e9-866c-d6ed7658ec4b.png" align=right></img>
 The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?title=Power) is **one of the most important elements** for both flashing the device and for stable operation. You must ensure that the device receives sufficient power (current AND appropriate voltage level) to properly flash the firmware on the device.
 * [CH340G](https://cdn.sparkfun.com/datasheets/Dev/Arduino/Other/CH340DS1.PDF) is a reliable and very cheap adapter (example [1](https://www.sparkfun.com/products/14050), [2](https://www.aliexpress.com/item/1PCS-CH340-module-instead-of-PL2303-CH340G-RS232-to-TTL-module-upgrade-USB-to-serial-port/32761423124.html)).
 * [FTDI FT232](https://www.ftdichip.com/Products/ICs/FT232R.htm) - these adapters have a lot of fakes in the market so buy only from reliable sources ([example](https://www.sparkfun.com/products/13746)). Buy only the variant with a separate 3.3V regulator on PCB! 
 * [CP2102](https://www.silabs.com/documents/public/data-sheets/cp2102-9.pdf) or [PL2303](http://www.prolific.com.tw/UserFiles/files/ds_pl2303HXD_v1_4_4.pdf) - works with certain devices, but using an external 3.3V supply might be necessary. Not recommended for beginners!
 * [RaspberryPi](https://github.com/arendst/Tasmota/wiki/Flash-Sonoff-using-Raspberry-Pi) - only for advanced users. External 3.3V supply necessary.
 * [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) and [D1 mini](https://wiki.wemos.cc/products:d1:d1_mini) (Pro/Lite) boards have a micro USB upload port and don't require an adapter.
-<img src="https://user-images.githubusercontent.com/5904370/55688731-3f0acd00-597c-11e9-866c-d6ed7658ec4b.png" align=right></img>
 
 ?> ***Don't forget to install drivers for your serial-to-USB adapter.***
 
-*Some adapters can be switched between 3.3V and 5V for the data pins, but still provide 5V on the power pin which will fry your device.  You **MUST** make sure both the **data** and **VCC** pins are set for 3.3V.*
+!> *Some adapters can be switched between 3.3V and 5V for the data pins, but still provide 5V on the power pin which will fry your device.  You **MUST** make sure both the **data** and **VCC** pins are set for 3.3V.*
 ### Soldering equipment
 To solder you'll of course need a soldering iron, soldering tin and some flux. If you're new to soldering check out some soldering tutorial videos while you're at it.
 
