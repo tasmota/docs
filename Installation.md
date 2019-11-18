@@ -19,7 +19,7 @@ The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?
 * [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) and [D1 mini](https://wiki.wemos.cc/products:d1:d1_mini) (Pro/Lite) boards have a micro USB upload port and don't require an adapter.
 <img src="https://user-images.githubusercontent.com/5904370/55688731-3f0acd00-597c-11e9-866c-d6ed7658ec4b.png" align=right></img>
 
-***Don't forget to install drivers for your serial-to-USB adapter.***
+?> ***Don't forget to install drivers for your serial-to-USB adapter.***
 
 *Some adapters can be switched between 3.3V and 5V for the data pins, but still provide 5V on the power pin which will fry your device.  You **MUST** make sure both the **data** and **VCC** pins are set for 3.3V.*
 ### Soldering equipment
@@ -37,7 +37,7 @@ You need a computer with a USB port to upload the firmware to your device and co
 ### Smartphone
 Tasmota installed from a precompiled binary needs to be configured to work with your Wi-Fi network before you can access the Tasmota web UI. This is usually done by connecting to a Tasmota Wi-Fi Access Point with your smartphone (or tablet or computer with Wi-Fi). 
 
-## Needed Software
+## Software
 ### Tasmota firmware
 Download a Tasmota binary (.bin) file. If you're not sure which binary is the right one for you consult the [builds table](Builds) or just start with `tasmota.bin`.
 
@@ -101,8 +101,9 @@ In most cases those pins are available on the PCB in the form of pin holes or so
 
 **DO NOT CONNECT DEVICES TO MAINS POWER WHILE THE COVER IS OPEN AND CIRCUIT BOARD IS EXPOSED!!!**
 
-**NEVER TRY TO FLASH WHILE YOUR DEVICE IS CONNECTED TO MAINS POWER!!!**
 <img alt="Sonoff Pow Bricked" src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/pow1.jpg" height="240" align="right" />
+
+**NEVER TRY TO FLASH WHILE YOUR DEVICE IS CONNECTED TO MAINS POWER!!!**
 
 **YOU CAN BE ELECTROCUTED IF YOU DON'T KNOW WHAT YOU ARE DOING!**
 
@@ -120,7 +121,8 @@ When you have identified pins on your device, connect wires according to the tab
 | RX | TX  |
 | GND | GND|
 
-**Note that TX from your adapter goes to RX on the ESP8266 device and RX from adapter goes to TX on the device!**
+?> **Note that TX from your adapter goes to RX on the ESP8266 device and RX from adapter goes to TX on the device!**
+
 ![Image courtesy of https://www.domo-blog.fr/](https://user-images.githubusercontent.com/5904370/57880182-69bf2f80-781e-11e9-8953-88599cb89155.png)
 
 ## Programming Mode
