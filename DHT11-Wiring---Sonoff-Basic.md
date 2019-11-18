@@ -1,4 +1,4 @@
-To wire a DHT11 up to a Sonoff Basic, I first soldered a pin header to the main pin header row. For the location see [[GPIO-Locations]].
+To wire a DHT11 up to a Sonoff Basic, I first soldered a pin header to the main pin header row. For the location see [GPIO-Locations].
 
 I decided to use regular 2.54mm connectors (often referred to as Dupont connectors), so that I can switch sensors if I have to. In order to fit the dupont cables within the enclosure, I had to bend the 2.54mm pin headers by about 45°.
 

@@ -8,7 +8,7 @@
 ## Hass configuration - General
 This page describes configuring Hass and Tasmota **without** MQTT device discovery, with manual configuration of each device in Hass.
 
-While [[automatic discovery|Home-Assistant]] is the recommended method, an advantage of manually configuring device is the user maintains control of all aspects of the device configuration and usage.
+While [automatic discovery|Home-Assistant] is the recommended method, an advantage of manually configuring device is the user maintains control of all aspects of the device configuration and usage.
 
 Hass configuration not exposed in the UI is done by editing the file `configuration.yaml` which is found in folder `.homeassistant` after installation and first start of Hass.
 
@@ -214,7 +214,7 @@ Use the [`sensor.mqtt`](https://www.home-assistant.io/components/sensor.mqtt/) c
 #### Periodical updates
 
 A DHT22 Temperature and Humidity sensor connected to a Sonoff TH10 will send in [`TelePeriod`](commands#teleperiod) set intervals the following information to the MQTT broker:
-```
+```json
 tele/tasmota/SENSOR = {"Time":"2017-02-12T16:11:12", "DHT22":{"Temperature":23.9, "Humidity":34.1}}
 ```
 To make the information visible in HA add the following lines to the configuration file.

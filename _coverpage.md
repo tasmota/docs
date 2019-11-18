@@ -1,7 +1,6 @@
-<img src="media/logo" alt="Tasmota Logo"></img>
+[![icon](_media/logog.png)](Home)
 
-<!-- <img src="https://user-images.githubusercontent.com/5904370/55973675-661c1400-5c86-11e9-8453-0082bfcd61b6.png" width="200" align="right"> </img> -->
-> Tasmota v7.1
+<small>v7.1</small>
 
 > Open-source operating system for ESP8266
 
@@ -18,6 +17,12 @@
 - Wemo and Hue emulation for [Amazon Alexa](Alexa) support
 - [KNX](KNX-features) IP protocol support
 
-> How to start
+>To start 
 
-You will need [some tools](Prerequisites) to [prepare](Hardware-preparation) your device for [flashing Tasmota](Flashing) and [connect](initial-configuration) it to your Wi-Fi network and [MQTT](MQTT) broker.
+>you will need [some tools](Prerequisites) to [prepare](Hardware-preparation) your device for [flashing Tasmota](Flashing) and [connect](initial-configuration) it to your Wi-Fi network and [MQTT](MQTT) broker.
+
+
+<!-- background image -->
+
+![](_media/bg.jpg)
+

@@ -8,8 +8,8 @@
 This page describes configuring Hass and Tasmota for MQTT device discovery.
 
 If you don't want to use this option, please refer to:
- - [[Home Assistant - Manual Config|Home-Assistant-‐-Manual-Config]] - For Home Assistant 0.84.2 or later together with Tasmota developement version built 2018-12-13 or later
- - [[Home Assistant - Manual Config (Legacy)|Home-Assistant-‐-Manual-Config-(Legacy)]] - For older versions of Home Assistant or Tasmota
+ - [Home Assistant - Manual Config](Home-Assistant-Manual-Config) - For Home Assistant 0.84.2 or later together with Tasmota developement version built 2018-12-13 or later
+ - [Home Assistant - Manual Config (Legacy)](Home-Assistant-Manual-Config-(Legacy)) - For older versions of Home Assistant or Tasmota
 
 Hass configuration is not exposed in the web UI. It is done by editing the `configuration.yaml` file which is found in the `.homeassistant` folder after installing and the first startup of Hass (or in the `/config` folder, if you’re using Hass.io).
 
@@ -82,7 +82,7 @@ and the relay will NOT be switched.
 
 Tasmota `switchmode` default for buttons and switches is `Switchmode 0` (TOGGLE). This means all the entities created will automatically turn off after `one second`. To change the button behavior, [`SwitchMode`](Commands#switchmode) must be changed. For example setting up a switch to `SwitchMode 1` (follow) will create a switch with ON and OFF payloads.
 
-For other type of devices, e.g Sonoff iFan02, example entries for `configuration.yaml` are available in [[Home Assistant - Manual Config|Home-Assistant-‐-Manual-Config]]
+For other type of devices, e.g Sonoff iFan02, example entries for `configuration.yaml` are available in [Home Assistant - Manual Config|Home-Assistant-‐-Manual-Config]
 
 On each Tasmota device which should be automatically discovered by Hass, enter the following commands in the web console:\
 `SetOption19 1` - Enables MQTT discovery\

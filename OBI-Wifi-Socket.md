@@ -24,7 +24,7 @@ More Infos can be found here: [#1988](https://github.com/arendst/Tasmota/issues/
 ### Initial Configuration
 In the default configuration GPIO0 (which is also used to enable flash-mode) is setup as a Button.  
 To enable AP-Mode and setup the correct GPIOs as described below,  
-You can short GPIO0 to GND 4 times as if it was a button (see [[Button-usage]])  
+You can short GPIO0 to GND 4 times as if it was a button (see [Button-usage])  
 Using this method allows you to flash a precompiled binary
    
 ### Device Images

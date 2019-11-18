@@ -7,7 +7,7 @@
 ## Hass configuration - General
 This page describes configuring Hass and Tasmota **without **MQTT device discovery, with manual configuration of each device in Hass.
 
-While [[automatic discovery|Home-Assistant]] is the recommended method, an advantage of manually configuring device is the user maintains control of all aspects of the device configuration and usage.
+While [automatic discovery|Home-Assistant] is the recommended method, an advantage of manually configuring device is the user maintains control of all aspects of the device configuration and usage.
 
 Hass configuration not exposed in the UI is done by editing the file `configuration.yaml` which is found in folder `.homeassistant` after installation and first start of Hass.
 

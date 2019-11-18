@@ -1,29 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="//unpkg.com/docsify/themes/buble.css">
+      <meta charset="UTF-8">
+      <title>Tasmota Documentation</title>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+      <meta name="description" content="Description">
+      <meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<!-- Theme: Simple Dark -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
+
+<!-- PrismJS theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/themes/prism-dark.css">
+
 </head>
 <body>
   <div id="app"></div>
   <script>
     window.$docsify = {
-      name       : 'Tasmota',
+      themeColor: '#1FA3EC',
+      name       : 'Tasmota Documentation',
 			repo       : 'https://github.com/arendst/Tasmota',
-			// coverpage  : 'coverpage.md',
-			// homepage   : 'Home.md',
-			// homepage   : 'https://raw.githubusercontent.com/jhildenbiddle/docsify-themeable/master/README.md',
+      nameLink   : '/#/Home',
+			homepage   : 'Home.md',
+      logo       : '/_media/logog.png',
 			loadSidebar: true,
-      coverpage: true,
+      onlyCover  : true,
+      autoHeader : true,
+      coverpage  : true,
 			auto2top   : true,
 			// maxLevel   : 1, 
-			subMaxLevel: 1,
+			subMaxLevel: 2,
+     
+      editLink: {
+      text: '<span style="color:#1FA3EC"><small>Improve this article</small></span>',
+      // text: '<span style="color=1FA3EC">Improve this document</span>',
+      // repo: 'tasmota/docs',
+      repo: 'https://github.com/tasmota/docs/blob/master/',
+      cssClass: 'docsify-edit-link m-1'
+      },
+      // plugins: [
+      // function (hook, vm) {
+      //     hook.beforeEach(function (html) {
+      //       if (/githubusercontent\.com/.test(vm.route.file)) {
+      //         url = vm.route.file
+      //           .replace('raw.githubusercontent.com', 'github.com')
+      //           .replace(/\/master/, '/blob/master')
+      //       } else {
+      //         url = 'https://github.com/tasmota/docs/blob/master/' + vm.route.file
+      //       }
+      //       var editHtml = '[Edit Document](' + url + ')\n'
+      //       return editHtml
+      //         + html
+      //         + '\n\n----\n\n'
+      //         + '<a href="https://docsify.js.org" target="_blank" style="color: inherit; font-weight: normal; text-decoration: none;">Powered by docsify</a>'
+      //     })
+      //   },
+        // ]
     }
+  
   </script>
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <!-- Prism search plugin -->
   <script src="https://unpkg.com/docsify/lib/plugins/search.js"></script>
+  <!-- copy code snippet script -->
+  <!-- Latest v2.x.x -->
+  <script src="https://unpkg.com/docsify-copy-code@2"></script>
+  <!-- Edit on Github on every page -->
+  <script src="//unpkg.com/docsify-edit-link@^1"></script>
+  <!-- Prism additional components -->
+  <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-yaml.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-json.min.js"></script>
 
 </body>
 </html>
