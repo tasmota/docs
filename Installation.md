@@ -267,6 +267,15 @@ esptool -cp COM5 -bm dout -cf tasmota.bin -v
 
 Unplug your serial programming adapter or your device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](Initial-Configuration). **For proper device initialization after the firmware upload completes, power down and power up the device.**
 
+## OTA Flashing Tools
+**Tasmota is NOT a developer of these tools. For help and troubleshooting you will need to _get support from those projects_.**
+- [**Tuya Convert**](Tuya-OTA) - easy OTA flash for devices with Tuya chips, no disassembly required
+- [**Sonoff DIY**](Sonoff-DIY) - OTA flash for select Sonoff devices (some disassembly required)
+- [**Node-RED OTA server and firmware manager**](https://flows.nodered.org/flow/888b4cd95250197eb429b2f40d188185) - [Node-RED](https://nodered.org/) flow for managing OTA updates 
+- [**OTA over SCP**](OTA-over-SCP) - setup and configure "OTA over SCP" upload for PlatformIO
+- [**Python HTTP OTA server**](Python-HTTP-OTA-Server) - setting up a small Python server to serve OTA upgrade binaries
+- [**SonOTA**](SonOTA---Espressif2Arduino---Tasmota-without-compiling) - OTA flash eWeLink based devices *(mostly outdated)*
+
 # Compiling From Source
 Tutorials for setting up development environments if you want to modify the code or default settings and [compile your own binaries](compile-your-build).
 - [**PlatformIO**](PlatformIO) -  setup and configure [PlatformIO](https://platformio.org) for compilation and upload
@@ -282,19 +291,12 @@ Delete the following in your `.platformio` folder (`%USERPROFILE%\.platformio` i
 - Everything in `.platformio/platforms`  
 - All folders that begin with `framework...` in `.platformio/packages`  
 
-## Online Compilers
-_**Can only create a firmware binary.** Use one of the [tools](Prerequisites#flashing-tool) to flash it to your device._
+### Online Compilers
+
+?> **Can only create a firmware binary.** Use one of the [tools](Prerequisites#flashing-tool) to flash it to your device._
+
 - [**Gitpod**](Compiling-Tasmota-on-Gitpod) - compile your own binary in the cloud using [Gitpod](https://www.gitpod.io/).  
 - [**TasmoCompiler**](https://github.com/benzino77/tasmocompiler) - simple web GUI to compile Tasmota with your own settings
-
-## OTA Flashing Tools
-**Tasmota is NOT a developer of these tools. For help and troubleshooting you will need to _get support from those projects_.**
-- [**Tuya Convert**](Tuya-OTA) - easy OTA flash for devices with Tuya chips, no disassembly required
-- [**Sonoff DIY**](Sonoff-DIY) - OTA flash for select Sonoff devices (some disassembly required)
-- [**Node-RED OTA server and firmware manager**](https://flows.nodered.org/flow/888b4cd95250197eb429b2f40d188185) - [Node-RED](https://nodered.org/) flow for managing OTA updates 
-- [**OTA over SCP**](OTA-over-SCP) - setup and configure "OTA over SCP" upload for PlatformIO
-- [**Python HTTP OTA server**](Python-HTTP-OTA-Server) - setting up a small Python server to serve OTA upgrade binaries
-- [**SonOTA**](SonOTA---Espressif2Arduino---Tasmota-without-compiling) - OTA flash eWeLink based devices *(mostly outdated)*
 
 ## Need More Help?
 If you have encountered problems during flash see the [FAQ](FAQ). Ask for help in [Discord](https://discord.gg/Ks2Kzd4) or [Community Forum](https://groups.google.com/d/forum/sonoffusers)
