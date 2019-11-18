@@ -1,12 +1,12 @@
 Installation  
-[Prerequisites](Prerequisites)  
-[Hardware Preparation](Hardware-Preparation)  
-[Flashing](Flashing)  
-[Initial Configuration](Initial-Configuration)  
-[MQTT](MQTT)  
-[Upgrading](Upgrading)     
-[FAQ](FAQ)  
-  
+* [Prerequisites](Prerequisites)  
+* [Hardware Preparation](Hardware-Preparation)  
+* [Flashing](Flashing)  
+* [Initial Configuration](Initial-Configuration)  
+* [MQTT](MQTT)  
+* [Upgrading](Upgrading)     
+* [FAQ](FAQ)  
+
 How to Use  
 [Templates](Templates)  
 [Modules](Modules)  

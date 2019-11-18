@@ -1,12 +1,12 @@
 Installation  
-[](Prerequisites)  
-[](Hardware-Preparation)  
-[](Flashing)  
-[](Initial-Configuration)  
-[](MQTT)  
-[](Upgrading)     
-[](FAQ)  
-  
+* [](Prerequisites)  
+* [](Hardware-Preparation)  
+* [](Flashing)  
+* [](Initial-Configuration)  
+* [](MQTT)  
+* [](Upgrading)     
+* [](FAQ)  
+
   
 [](Templates)  
 [](Modules)  
