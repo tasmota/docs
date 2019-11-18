@@ -39,32 +39,22 @@
       repo: 'https://github.com/tasmota/docs/blob/master/',
       cssClass: 'docsify-edit-link m-1'
       },
-      // plugins: [
-      // function (hook, vm) {
-      //     hook.beforeEach(function (html) {
-      //       if (/githubusercontent\.com/.test(vm.route.file)) {
-      //         url = vm.route.file
-      //           .replace('raw.githubusercontent.com', 'github.com')
-      //           .replace(/\/master/, '/blob/master')
-      //       } else {
-      //         url = 'https://github.com/tasmota/docs/blob/master/' + vm.route.file
-      //       }
-      //       var editHtml = '[Edit Document](' + url + ')\n'
-      //       return editHtml
-      //         + html
-      //         + '\n\n----\n\n'
-      //         + '<a href="https://docsify.js.org" target="_blank" style="color: inherit; font-weight: normal; text-decoration: none;">Powered by docsify</a>'
-      //     })
-      //   },
-        // ]
-    }
+      tabs: {
+        persist    : true,      // default
+        sync       : true,      // default
+        theme      : 'material', // default
+        tabComments: true,      // default
+        tabHeadings: true       // default
+      }
+    };
   
   </script>
+  <!-- Latest v2.x.x -->
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
   <!-- Prism search plugin -->
   <script src="https://unpkg.com/docsify/lib/plugins/search.js"></script>
   <!-- copy code snippet script -->
-  <!-- Latest v2.x.x -->
   <script src="https://unpkg.com/docsify-copy-code@2"></script>
   <!-- Edit on Github on every page -->
   <script src="//unpkg.com/docsify-edit-link@^1"></script>
