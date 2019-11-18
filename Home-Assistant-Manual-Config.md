@@ -584,7 +584,7 @@ fan:
     speed_command_topic: "cmnd/sonoff_fan/FanSpeed"    
     state_topic: "stat/sonoff_fan/RESULT"
     speed_state_topic: "stat/sonoff_fan/RESULT"
-    #state_value_template: "{% if value_json.FanSpeed == 0 -%}0{%- elif value_json.FanSpeed > 0 -%}4{%- endif %}"
+    #state_value_template: '{% if value_json.FanSpeed == 0 -%}0{%- elif value_json.FanSpeed > 0 -%}4{%- endif %}'
     state_value_template: >
       {% if value_json.FanSpeed is defined %}
         {% if value_json.FanSpeed == 0 -%}0{%- elif value_json.FanSpeed > 0 -%}4{%- endif %}
