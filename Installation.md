@@ -1,7 +1,9 @@
-To install Tasmota on your device you have to prepare some tools and software.
+!> **If you don't have the willingness to tinker and learn... TURN BACK!**.<br> Tasmota is not a commercial product and support is limited. You have to be willing to research and debug potential problems yourself.
 
-If your device works with Tuya Smart or Smart Life app it may be possible to flash it with [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert) without disassembly or soldering and skip directly to [initial configuration](initial-configuration).
-# Prerequisites
+?> If your device works with Tuya Smart or Smart Life app it may be possible to flash it with [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert) without disassembly or soldering and skip directly to [Initial Configuration](initial-configuration).
+
+To install Tasmota on your device you have to prepare certain tools and software.
+
 ## Needed Hardware
 
 <img src="https://user-images.githubusercontent.com/5904370/55688732-43cf8100-597c-11e9-9171-e8f7d975aff4.jpg" width=150 align=right></img>
@@ -83,10 +85,7 @@ This is an optional way to configure your device using [Commands](Commands) and 
 * **[Putty](https://www.putty.org/)** - popular client available on every platform
 * **[Minicom](https://www.acmesystems.it/minicom)** - one of many Linux terminals
 
-## Other Requirements
-### The willingness to tinker and learn
-Tasmota is not a commercial product and support is limited. You have to be willing to research and debug problems that might arise.
-### MQTT
+### Other Required Knowledge
 Tasmota is designed to be controlled and communicate via [MQTT](http://mqtt.org/). To use it to its fullest potential you need an [MQTT broker and client](https://www.hivemq.com/blog/mqtt-essentials-part-3-client-broker-connection-establishment/). 
 
 Read our [wiki article on MQTT](MQTT) for a quick introduction.
@@ -124,7 +123,7 @@ When you have identified pins on your device, connect wires according to the tab
 **Note that TX from your adapter goes to RX on the ESP8266 device and RX from adapter goes to TX on the device!**
 ![Image courtesy of https://www.domo-blog.fr/](https://user-images.githubusercontent.com/5904370/57880182-69bf2f80-781e-11e9-8953-88599cb89155.png)
 
-## Putting the Device into Programming Mode
+## Programming Mode
 <img alt="Example without button" src="https://user-images.githubusercontent.com/5904370/55689595-8dbd6480-5986-11e9-81c6-a13c6b7e5971.png" height=200 align=right></img>
 ESP8266 needs to be put into **Programming Mode** before the firmware can be uploaded. This is done by pulling the GPIO0 pin to GND while the chip is booting. 
 
@@ -161,7 +160,6 @@ Once you have followed [Hardware preparation](Hardware-preparation), your device
 Optionally, you may want to back up the device manufacturer's firmware. To do so, you must use esptool. Refer to the [instructions below](#optional-backup-firmware).
 
 ## Tasmota PyFlasher
-<img src="https://raw.githubusercontent.com/tasmota/tasmota-pyflasher/v1/images/splash.png" width=300 align=right></img>
 Tasmota PyFlasher is specifically designed for use with Tasmota binaries with an easy to use GUI. It is based on [NodeMcu Pyflasher](https://github.com/marcelstoer/nodemcu-pyflasher) and [esptool.py](https://github.com/espressif/esptool).
 
 Download the [latest release](https://github.com/tasmota/tasmota-pyflasher/releases) for your platform (currently only Windows). Double click the downloaded file and it'll start, no installation required. Simple and fast...
@@ -216,14 +214,14 @@ Ensure the device is in flash mode before each step.
 
 #### *Optional:* Backup firmware
 Backup the current firmware with the following command:
-```
+```bash
 esptool.py --port COM5 read_flash 0x00000 0x100000 fwbackup.bin
 ```
 *When the command completes the device is not in flash mode anymore.* Repeat the process of putting your device in programming mode.
 
 #### Erase flash memory
 Erase the complete flash memory holding the firmware with the following command:
-```
+```bash
 esptool.py --port COM5 erase_flash
 ```
 It only takes a few seconds to erase 1M of flash.
@@ -233,7 +231,7 @@ It only takes a few seconds to erase 1M of flash.
 #### Upload firmware
 Load the chosen Tasmota firmware file with the following command (e.g., `tasmota.bin` in this example):
 
-```
+```bash
 esptool.py --port COM5 write_flash -fs 1MB -fm dout 0x0 tasmota.bin
 ```
 
@@ -255,13 +253,13 @@ The following commands use `COM5` as an example. Change `COM5` with your port de
 Ensure the device is in flash mode before each step.
 
 #### Erase flash memory  
-```
+```bash
 esptool -cp COM5 -ce -v
 ```
 
 #### Upload firmware
 Once the erase is complete, put device back into programming mode and upload the firmware
-```
+```bash
 esptool -cp COM5 -bm dout -cf tasmota.bin -v
 ```
 
