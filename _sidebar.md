@@ -1,7 +1,7 @@
 * [Installation](Installation)  
-* [**Initial Configuration**](Initial-Configuration)  
-* [**MQTT**](MQTT)  
-* [**Upgrading**](Upgrading)     
+* [Initial Configuration](Initial-Configuration)  
+* [MQTT](MQTT)  
+* [Upgrading](Upgrading)     
 * [FAQ](FAQ)  
 
 * [Templates](Templates)  
