@@ -1,8 +1,8 @@
 To install Tasmota on your device you have to prepare some tools and software.
 
 If your device works with Tuya Smart or Smart Life app it may be possible to flash it with [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert) without disassembly or soldering and skip directly to [initial configuration](initial-configuration).
-# Prerequisites
-## Needed Hardware
+# Prerequisite
+## Hardware
 
 <img src="https://user-images.githubusercontent.com/5904370/55688732-43cf8100-597c-11e9-9171-e8f7d975aff4.jpg" width=150 align=right></img>
 ### Device with an ESP8266/ESP8285 chip
@@ -35,7 +35,7 @@ You need a computer with a USB port to upload the firmware to your device and co
 ### Smartphone
 Tasmota installed from a precompiled binary needs to be configured to work with your Wi-Fi network before you can access the Tasmota web UI. This is usually done by connecting to a Tasmota Wi-Fi Access Point with your smartphone (or tablet or computer with Wi-Fi). 
 
-## Needed Software
+## Software
 ### Tasmota firmware
 Download a Tasmota binary (.bin) file. If you're not sure which binary is the right one for you consult the [builds table](Builds) or just start with `tasmota.bin`.
 
