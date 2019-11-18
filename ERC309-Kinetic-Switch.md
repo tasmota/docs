@@ -1,0 +1,38 @@
+![](https://user-images.githubusercontent.com/25117255/61148426-0e888100-a4df-11e9-92c5-43453afcc6c5.png)
+
+Discussed [here](https://github.com/arendst/Tasmota/issues/6056#issuecomment-510954469)
+
+#### Configuration
+
+Configure as a `Tuya Dimmer (54)` (support as a BASE module was introduced in 6.2.1.16).  
+
+- GPIO13 - Tuya Rx (108)
+- GPIO15 - Tuya Tx (107)
+<BR>
+
+- Template: {"NAME":"Kinetic Switch","GPIO":[255,255,255,255,255,255,0,0,255,108,255,107,255],"FLAG":0,"BASE":54}
+- [Module](https://user-images.githubusercontent.com/34905120/47967431-4a537880-e02b-11e8-955b-ee9843bd222d.jpg)
+<BR>
+
+#### Flashing
+
+This device uses a Tuya TYWE3S Wi-Fi PCB module.  An easy soldering method is to take several Dupont style jumper wires, cut one end off, and apply a bit of solder to each stripped end.  This will keep the wire flexible and prevent any circuit board pads from ripping off.  Apply a bit of solder to each pad necessary to flash (double check your pin-outs).  Once the wire and pad have solder simply put the two together and apply a bit of heat and they will join together.  
+
+![tywe3s_3](https://user-images.githubusercontent.com/3240875/43324698-669affd6-917a-11e8-8e06-c800741bfb68.png)
+![chip_wires](https://user-images.githubusercontent.com/3240875/43324672-578ffcbc-917a-11e8-800c-f1d008ca3cf4.JPG)
+
+Attach the GPIO0 wire to ground during initial boot to flash.  A 3-pin header bridged together works great with GPIO0, GND and the GND from the USB flasher attached (TX pin to RX pin and RX pin to TX pin on USB flash adapter). Verify that you are using 3.3volts to flash, **NOT 5V!**
+
+Two options:
+
+1. Remove the ESP PCB by desoldering. This makes it easier to get to the pins of the TYWE3S board.
+
+   ![](https://user-images.githubusercontent.com/25117255/60970963-637f9800-a323-11e9-8a68-1e3ca171e3bc.JPEG)
+
+2. No PCB desoldering. You will have to connect the RESET pin of the MCU chip to GND. This requires a soldering iron with a thin tip.
+
+   ![](https://user-images.githubusercontent.com/1183624/61084250-d5440880-a42d-11e9-93c4-0407092a5dce.jpeg)
+
+
+[Product Link](https://s.click.aliexpress.com/e/54JDwLm)
+

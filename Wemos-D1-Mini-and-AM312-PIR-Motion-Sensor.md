@@ -1,0 +1,1 @@
+[Moved](PIR-Motion-Sensors#AM312)

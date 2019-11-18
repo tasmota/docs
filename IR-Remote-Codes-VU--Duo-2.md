@@ -1,0 +1,48 @@
+# IR Codes for VU+ Duo2
+
+**Example received Code:**
+**tele/sonoffIRBridge_1/RESULT = {"IrReceived":{"Protocol":"RC6","Bits":36,"Data":"0x8052900C"}**
+
+**Example IRsend Command:**
+**IRsend {"Protocol":"RC6","Bits":36,"Data":0x8052900C}**
+
+* 0xC8052900C="ON/OFF"
+* 0xC8052100D="Mute"
+* 0xC80529010="Vol+"
+* 0xC80521011="Vol-"
+* 0xC80529020="P+"
+* 0xC80529021="P+"
+* 0xC8052105A="Left"
+* 0xC8052905B="Right"
+* 0xC80529058="Up"
+* 0xC80529059="Down"
+* 0xC8052905C="OK"
+* 0xC80529054="Men"
+* 0xC8052906D="Red"
+* 0xC8052906F="Yellow"
+* 0xC8052906E="Green"
+* 0xC80529070="Blue"
+* 0xC8052902D="Play/Pause"
+* 0xC80529031="Stop"
+* 0xC80529028="Forward"
+* 0xC80529029="Back"
+* 0xC80529001="Key 1"
+* 0xC80529002="Key 2"
+* 0xC80529003="Key 3"
+* 0xC80529004="Key 4"
+* 0xC80529005="Key 5"
+* 0xC80529006="Key 6"
+* 0xC80529007="Key 7"
+* 0xC80529008="Key 8"
+* 0xC80529009="Key 9"
+* 0xC80529000="Key 0"
+* 0xC805290BB="Key <"
+* 0xC805290BC="Key >"
+* 0xC80529037="Record"
+* 0xC805290CC="EPG"
+* 0xC80529055="Exit"
+* 0xC805290E5="Audio"
+* 0xC805290F2="Radio"
+* 0xC805290E4="TV"
+* 0xC80521049="Context"
+* 0xC80529081="Help"

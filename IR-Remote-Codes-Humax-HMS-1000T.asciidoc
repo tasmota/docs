@@ -1,0 +1,81 @@
+Power	{"Protocol":"NEC","Bits":32,"Data":"0x000800FF"}
+
+TV Apps	{"Protocol":"NEC","Bits":32,"Data":"0x0008D22D"}
+
+Text	{"Protocol":"NEC","Bits":32,"Data":"0x00087689"}
+
+Wide	{"Protocol":"NEC","Bits":32,"Data":"0x0008728D"}
+
+Play	{"Protocol":"NEC","Bits":32,"Data":"0x000816E9"}
+
+Pause	{"Protocol":"NEC","Bits":32,"Data":"0x000846B9"}
+
+Rew	{"Protocol":"NEC","Bits":32,"Data":"0x0008A659"}
+
+Fwd	{"Protocol":"NEC","Bits":32,"Data":"0x000826D9"}
+
+Stop	{"Protocol":"NEC","Bits":32,"Data":"0x0008C639"}
+
+Record	{"Protocol":"NEC","Bits":32,"Data":"0x00088679"}
+
+Search	{"Protocol":"NEC","Bits":32,"Data":"0x0008E21D"}
+
+Plus	{"Protocol":"NEC","Bits":32,"Data":"0x000842BD"}
+
+Exit	{"Protocol":"NEC","Bits":32,"Data":"0x00086897"}
+
+Back	{"Protocol":"NEC","Bits":32,"Data":"0x0008827D"}
+
+Up	{"Protocol":"NEC","Bits":32,"Data":"0x00088877"}
+
+Down	{"Protocol":"NEC","Bits":32,"Data":"0x0008A857"}
+
+Left	{"Protocol":"NEC","Bits":32,"Data":"0x000848B7"}
+
+Right	{"Protocol":"NEC","Bits":32,"Data":"0x000828D7"}
+
+Enter	{"Protocol":"NEC","Bits":32,"Data":"0x0008C837"}
+
+Vol +	{"Protocol":"NEC","Bits":32,"Data":"0x0008F807"}
+
+Vol -	{"Protocol":"NEC","Bits":32,"Data":"0x000802FD"}
+
+Mute	{"Protocol":"NEC","Bits":32,"Data":"0x000818E7"}
+
+Home	{"Protocol":"NEC","Bits":32,"Data":"0x0008708F"}
+
+Guide	{"Protocol":"NEC","Bits":32,"Data":"0x0008D827"}
+
+Ch +	{"Protocol":"NEC","Bits":32,"Data":"0x000808F7"}
+
+Ch -	{"Protocol":"NEC","Bits":32,"Data":"0x0008F00F"}
+
+Red	{"Protocol":"NEC","Bits":32,"Data":"0x000838C7"}
+
+Green	{"Protocol":"NEC","Bits":32,"Data":"0x0008B847"}
+
+Yellow	{"Protocol":"NEC","Bits":32,"Data":"0x000858A7"}
+
+Blue	{"Protocol":"NEC","Bits":32,"Data":"0x00087887"}
+
+1	{"Protocol":"NEC","Bits":32,"Data":"0x0008C03F"}
+
+2	{"Protocol":"NEC","Bits":32,"Data":"0x000820DF"}
+
+3	{"Protocol":"NEC","Bits":32,"Data":"0x0008A05F"}
+
+4	{"Protocol":"NEC","Bits":32,"Data":"0x0008609F"}
+
+5	{"Protocol":"NEC","Bits":32,"Data":"0x0008E01F"}
+
+6	{"Protocol":"NEC","Bits":32,"Data":"0x000810EF"}
+
+7	{"Protocol":"NEC","Bits":32,"Data":"0x0008906F"}
+
+8	{"Protocol":"NEC","Bits":32,"Data":"0x000850AF"}
+
+9	{"Protocol":"NEC","Bits":32,"Data":"0x0008D02F"}
+
+0	{"Protocol":"NEC","Bits":32,"Data":"0x000830CF"}
+
+TV/Radio	{"Protocol":"NEC","Bits":32,"Data":"0x0008B04F"}

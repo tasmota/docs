@@ -1,0 +1,1 @@
+[Moved](https://github.com/arendst/Tasmota/wiki/RCWL-0516)
