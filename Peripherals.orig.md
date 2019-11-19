@@ -1,9 +1,9 @@
+## Configuring Peripherals
 You can connect peripherals (sensors, displays, switches, LED lights, ...) to available pins of the device. [Read here](Expanding-Tasmota) for more. 
 
 More about [general configuration](Sensor-Configuration) of peripherals.
 
-### Supported peripherals
-*Some of the articles were written originally for D1 mini but the information still applies except the wiring instructions*
+?> *Some of the articles were written originally for D1 mini but the information still applies except the wiring instructions*
 - [**A4988**](A4988-Stepper-Motor-Controller) - Stepper Motor Controller 
 - [**ADC**](ADC) - Analog input over A0 pin  
 - **ADS1x15** - A/D Converter (I<sup>2</sup>C)
@@ -79,7 +79,7 @@ More about [general configuration](Sensor-Configuration) of peripherals.
 
 [Sensor API Documentation](Sensor-API)
 
-## Expanding specific devices
+## Expanding Specific Devices
 
   - [LEGO nightstand switch using Sonoff SV](https://jeff.noxon.cc/2018/11/21/lego-nightstand-light-switch/)
   - [Add a physical button to Sonoff Basic](https://translate.google.com/translate?hl=en&sl=auto&tl=en&u=https%3A%2F%2Fwww.domo-blog.fr%2Fajouter-un-bouton-physique-au-sonoff-basic%2F)

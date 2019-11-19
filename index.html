@@ -19,17 +19,20 @@
   <script>
     window.$docsify = {
       themeColor: '#1FA3EC',
-      name       : 'Tasmota Documentation',
+      name       : 'Tasmota',
 			repo       : 'https://github.com/arendst/Tasmota',
       nameLink   : './#/Home',
 			homepage   : 'Home.md',
       logo       : '/_media/logog_mini.png',
-			loadSidebar: true,
       onlyCover  : true,
       autoHeader : false,
       coverpage  : true,
 			auto2top   : true,
-			// maxLevel   : 1, 
+      // maxLevel   : 1,
+			loadSidebar: true,
+      // alias: {
+      //   '/.*/_sidebar.md': '/_sidebar.md',
+      // }, 
 			subMaxLevel: 2,
      
       editLink: {
@@ -58,6 +61,8 @@
   <script src="https://unpkg.com/docsify-copy-code@2"></script>
   <!-- Edit on Github on every page -->
   <script src="//unpkg.com/docsify-edit-link@^1"></script>
+  <!-- Sidebar Collapse -->
+  <script src="//unpkg.com/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js">
   <!-- Prism additional components -->
   <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
   <script src="//unpkg.com/prismjs/components/prism-yaml.min.js"></script>

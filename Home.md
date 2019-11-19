@@ -1,7 +1,7 @@
 
-!> Demoing warning text
+!> Make sure to read Installation to see some new features in action
 
-?> Demoing info text
+?> Click on "Peripherals" to see morphing sidebar depending on folder
 
 
 ### Whats New?
@@ -30,5 +30,5 @@ Tasmota development branch is undergoing a big code rewrite of the light driver.
 <!-- tabs:end -->
 
 
-## Community
+### Community
 See [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota) or [Community Forum](https://groups.google.com/d/forum/sonoffusers) for feedback, questions and troubleshooting.
