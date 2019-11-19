@@ -1,5 +1,5 @@
 [![icon](_media/logog.png)](Home)
-> Open-source operating system for ESP8266 featuring:
+>Alternative firmware for ESP8266 featuring:
 
 - Easy [initial setup](initial-configuration)
 - [Browser interface](webui) for configuration and control
