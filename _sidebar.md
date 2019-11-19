@@ -1,5 +1,5 @@
 * How to Use
-* [Installation](installation/)
+* [Installation](/installation/)
 * [Commands](Commands)  
 * [Templates](Templates)  
 * [Modules](Modules)  
@@ -7,7 +7,7 @@
 * [Rules](Rules)  
 * [Scripting](Scripting-Language)  
 * [Timers](Timers)  
-* [Peripherals](peripherals/)  
+* [Peripherals](/peripherals/)  
 * [Buttons and Switches](Buttons-and-Switches)  
 * [Lights](Lights)  
 * [Status LEDs](Status-LED)  
