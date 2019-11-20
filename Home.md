@@ -9,7 +9,7 @@
 > Did you notice the different blockquotes???
 
 
-> [!TIP|label:Theo Says|icon:fas fa-plug]
+> [!TIP|label:Theo Says|icon:fas fa-hand-spock]
 > We can even make our own heading text and/or icon
 
 
