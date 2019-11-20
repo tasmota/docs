@@ -41,11 +41,11 @@ It requires Python, if you do not have an installed copy of Python 2.x or 3.x do
 
 Download the [esptool Source code](https://github.com/espressif/esptool/releases) to a folder of your choice.
 Go to the folder and install Esptool with command 
-```bash
+```
 python setup.py install
 ```
 Esptool for [Debian](https://packages.debian.org/stretch/esptool) and [Ubuntu](https://packages.ubuntu.com/cosmic/esptool) is installed with 
-```bash
+```
 sudo apt install esptool
 ```
 

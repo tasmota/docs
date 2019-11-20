@@ -1,18 +1,63 @@
-## What are commands?
-Tasmota provides three powerful man machine interfaces:<BR>**MQTT**, **web** and **serial**.
+# Commands
+- [How to Use Commands](#how-to-use-commands)
+- [Control](#control)
+- [Management](#management)
+- [Wi-Fi](#wi-fi)
+- [MQTT](#mqtt)
+- [Rules](#rules)
+- [Timers](#timers)
+- [Sensor](#sensor)
+- [Power Monitoring](#power-monitoring)
+- [Light](#light)
+- [Sonoff RF Bridge](#sonoff-rf-bridge)
+- [IR Remote](#ir-remote)
+- [SetOption overview](#setoption-overview)
+- [Serial Bridge](#serial-bridge)
+- [MP3 Player](#mp3-player)
+- [Domoticz](#domoticz)
+- [KNX](#knx)
+- [Displays](#displays)
+- [Stepper Motors](#stepper-motors)
+- [Blinds, Shutters and Roller Shades](#blinds-shutters-and-roller-shades)
+- [Zigbee](#zigbee)
 
-### Sending with MQTT
+
+## How to Use
+
+Tasmota provides three powerful man machine interfaces for issuing commands: **MQTT**, **web** and **serial** 
+
+Every command **used without a parameter (payload) returns the current setting**.
+   * `Power` will return the status of Relay1
+
+Instead of `0` you can use `off` and instead of `1` you can use `on`.
+   * `Power ON` turns Relay1 on
+   * `Power1 1` also turns Relay1 on
+
+Replace `<x>` in a command with the appropriate index number. Leave it empty to use the first available.
+   * `Power1` and `Power` both control Relay1
+
+In commands with `x..y` value parameters use a number from `x` to `y` range.
+
+When a command mentions resetting to *"firmware default"* it means the setting will revert to the one in the flashed binary file. If you used `user_config_override.h` at compile time it will revert to those.
+
+?> Beside results initiated by a command (synchronous) you can get asynchronous results initiated by rule trigger, telemetry event, commands from other source or changed device values.    
+Simply put, other messages may precede messages published as a result of your commands.    
+For example:   
+A `tele/%topic%/STATUS` message (sent every 300 seconds by default) may appear exactly after you issue `Power off` command and before you receive `stat/%topic%/RESULT = {"POWER":"OFF"}` message.
+
+
+### with MQTT
 
 To send commands and view responses you'll need an [MQTT client](http://www.hivemq.com/blog/seven-best-mqtt-client-tools).
 
 Commands over MQTT are issued by using `cmnd/%topic%/<command> <parameter>` where `%topic%` is the topic of the device you're sending the command to. If there is no `<parameter>` (an empty MQTT message/payload), a query is sent for current status of the `<command>`.
 
-See [MQTT](MQTT) wiki to find out more.
+See [MQTT](MQTT) article to find out more.
 
-### Sending with web requests
+### with web requests
 
 Commands can be executed via web (HTTP) requests, for example:  
-```http
+```
 http://<ip>/cm?cmnd=Power%20TOGGLE
 http://<ip>/cm?cmnd=Power%20On
 http://<ip>/cm?cmnd=Power%20off
@@ -21,18 +66,21 @@ http://<ip>/cm?user=admin&password=joker&cmnd=Power%20Toggle
 Any spaces or special characters must be replaced with their respective ASCII hex codes. You must precede the hex code with `%` (e.g., `;` = `%3B`).  
 
 If you have set a password for web user interface access, this must be included (in plaintext) in the URL of the HTTP request, like so:  
-```http
+```
 http://<ip>/cm?&user=put_username_here&password=put_password_here&cmnd=Power%20On
 ```
-### Sending with Console in the web UI
+### in Console in the web UI
+
 **Console** menu in the web UI is a convenient place to send commands and it behaves similar to a terminal connection via serial bridge. 
 
-### Sending commands over serial bridge
+### over serial bridge
+
 If you flashed the device via serial method you can connect to it with a terminal application (e.g. [Termite](https://www.compuphase.com/software_termite.htm) or Arduino IDE Serial Monitor) to issue commands and follow responses. This is a practical way to do a `Backlog` setup of your new device.
 
 *The serial interface is set to 115200 bps except for devices that require a different baudrate.
 
-## Using Backlog
+### Power of Backlog
+
 `Backlog` command allows executing up to 30 consecutive commands with a single command line. Each command is separated by a semicolon (";"). `Backlog` is a useful feature to avoid numerous restarts when setting up a new device. You can use it to:
 
 Set up both Wi-Fi AP's
@@ -51,37 +99,20 @@ When using [web](#web) requests *(You have to encode "space" as '%20' and ";" as
 ```http
 http://<ip>/cm?user=admin&password=joker&cmnd=Backlog%20Power%20Toggle%3BPower1%20ff
 ```
-### Clear Backlog queue
+#### Clear Backlog queue
+
 A `Backlog` command without an argument clears an possible existing `Backlog` queue.
 
 E.g. in case of command _`Backlog Power1 OFF; Delay 600; Power1 ON`_ the usage of an additional `Backlog` command without any argument within the delay time of 1 minute will delete the whole queue _`Power1 OFF; Delay 600; Power1 ON`_. Therefore `Power1 ON` command will not be executed and the relay would remain off.
 
-# How to Use Commands
+> [!INFO]
+>Unless noted otherwise, commands that do not indicate an introduction version are available since 5.10. If you're using an older version some of the commands might not work. Note that availability of some features and their associated commands is dependent on the options selected during the firmware compilation. Please consult the [builds](Builds) table for a reference of which features are available for each pre-compiled firmware binary variant.
 
-**Unless noted otherwise, commands that do not indicate an introduction version are available since 5.10.** If you're using an older version some of the commands might not work. Note that availability of some features and their associated commands is dependent on the options selected during the firmware compilation. Please consult the [builds](Builds) table for a reference of which features are available for each pre-compiled firmware binary variant.
+## Command List
 
-Every command **used without a parameter (payload) returns the current setting**.
-   * `Power` will return the status of Relay1
+### Control
 
-Instead of `0` you can use `off` and instead of `1` you can use `on`.
-   * `Power ON` turns Relay1 on
-   * `Power1 1` also turns Relay1 on
-
-Replace `<x>` in a command with the appropriate index number. Leave it empty to use the first available.
-   * `Power1` and `Power` both control Relay1
-
-In commands with `x..y` value parameters use a number from `x` to `y` range.
-
-When a command mentions resetting to *"firmware default"* it means the setting will revert to the one in the flashed binary file. If you used `user_config_override.h` at compile time it will revert to those.
-
-**Note:** Beside results initiated by a command (synchronous) you can get asynchronous results initiated by rule trigger, telemetry event, commands from other source or changed device values. 
-Simply put, other messages may precede messages published as a result of your commands.
-* a `tele/%topic%/STATUS` message (sent every 300 seconds by default) may appear exactly after you issue `Power off` command and before you receive `stat/%topic%/RESULT = {"POWER":"OFF"}` message.
-
-## Control
-
-
-<a id="tb-command">Command|Parameters
+Command|Parameters
 :---|:---
 Backlog<a id="Backlog"></a>|List of commands to be executed in sequence separated by  `;`<BR> See [Using Backlog](#using-backlog) for examples.
 BlinkCount<a id="BlinkCount"></a>|Number of relay toggles ([blinks](#power)) **(does not control the status LED)**<BR> `0` = blink many times before restoring power state <BR> `1..32000` = set number of blinks *(default = `10`)*
@@ -103,9 +134,9 @@ SwitchDebounce<a id="SwitchDebounce"></a>|User control over switch debounce timi
 SwitchMode\<x\><a id="SwitchMode"></a>|[Switch mode](Buttons-and-Switches#switchmode) <BR> `0` = toggle *(default)* <BR> `1` = follow (0 = off, 1 = on) <BR> `2` = inverted follow (0 = on, 1 = off) <BR> `3` = pushbutton (default 1, 0 = toggle) <BR> `4` = inverted pushbutton (default 0, 1 = toggle) <BR> `5` = pushbutton with hold (default 1, 0 = toggle, Hold = hold) <BR> `6` = inverted pushbutton with hold (default 0, 1 = toggle, hold = hold) <BR> `7` = pushbutton toggle (0 = toggle, 1 = toggle)
 See also|[`SetOption1`](#SetOption1) - Set button multipress mode<BR>[`SetOption11`](#SetOption11) - Swap pushbutton single and double press functionality<BR>[`SetOption13`](#SetOption13) - Allow immediate action on single button press<BR>[`SetOption26`](#SetOption26) - Use indexes even when only one relay is present<BR>[`SetOption31`](#SetOption31) - Disable Wi-Fi LED status blinking<BR>[`SetOption32`](#SetOption32) - Set hold interval before sending `HOLD` action<BR>[`SetOption40`](#SetOption40) - Stop detecting any input change on button GPIO<BR>[`SetOption67`](#SetOption67) - Enable/Disable Buzzer
 
-## Management
+### Management
 
-<a id="tb-management">Command|Parameters
+Command|Parameters
 :---|:---
 Delay<a id="Delay"></a>|`2..3600` = set delay between two backlog commands with 0.1 second increment
 DeepSleepTime<a id="DeepSleep"></a>|Time to enter [deep sleep mode](DeepSleep)&emsp;  »6.6.0.18<BR>`0` = disable deep sleep mode *(default)*<BR>`10..86400` = set deep sleep mode time period in seconds
@@ -144,10 +175,9 @@ Upload<a id="Upload"></a>|`1` = download firmware from `OtaUrl` and restart<BR>`
 WebLog<a id="WebLog"></a>|`0` = disable web logging<BR> `1` = show only error messages<BR> `2` = show error and info messages *(default)*<BR>`3` = show error, info and debug messages<BR>`4` = show error, info and more debug messages
 See also|[`SetOption68`](#Setoption68) - PWM Channel control<BR>[`SetOption76`](#Setoption76) - DeepSleep disable bootcount incrementing
 
-## WiFi
+### Wi-Fi
 
-
-<a id="tb-wifi">Command|Parameters
+Command|Parameters
 :---|:---
 AP<a id="AP"></a>|`0` = switch to other Wi-Fi Access Point<BR>`1`= select Wi-Fi Access Point 1<BR>`2`= select Wi-Fi Access Point 2
 Hostname<a id="Hostname"></a>|`1` = reset hostname to `MQTT_TOPIC-<4digits>` and restart<BR>`<value>` = set hostname (32 char limit) and restart. If hostname contains `%` it will be reset to the default instead.<BR>**_If using MQTT to issue this command, if it is used with the device `GroupTopic`, the command will not be executed._**
@@ -164,10 +194,9 @@ WifiConfig<a id="WifiConfig"></a>|`0` - disable Wi-Fi Manager and reboot (used w
 [WifiPower](WifiPower)<a id="WifiPower"></a>|set Wi-Fi transmit power level in decibel-milliwatts (dBm) *(default = `17`)*
 See also|[`SetOption55`](#Setoption55) - mDNS service control<BR>[`SetOption56`](#Setoption56) - Wi-Fi network scan to select strongest signal on restart<BR>[`SetOption57`](#Setoption57) - Wi-Fi network re-scan, alternate AP
 
-## MQTT
+### MQTT
 
-
-<a id="tb-mqtt">Command|Parameters
+Command|Parameters
 :---|:---
 ButtonRetain<a id="ButtonRetain"></a>|`0` = disable use of MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on button press
 ButtonTopic<a id="ButtonTopic"></a>|`<value>` = set MQTT button topic (32 chars max)<BR>`0` = disable use of MQTT button topic<BR>`1` = set MQTT button topic to device `%topic%`<BR>`2` = reset MQTT button topic to firmware default (`MQTT_BUTTON_TOPIC`) *(default = `0`)*<BR>_If using MQTT to issue this command, if it is published to the device `GroupTopic`, the command will not be executed._
@@ -199,10 +228,9 @@ Topic<a id="Topic"></a>|`1` = reset MQTT topic to firmware default (`MQTT_TOPIC`
 Unsubscribe<a id="Unsubscribe"></a>|Unsubscribe from topics subsribed to with [`Subscribe`](#subscribe) &emsp;  »6.5.0<BR>`  ` = unsubscribe all topics<BR>`<eventName>` = unsubscribe from a specific MQTT topic
 See also|[`SetOption4`](#setoption4) - Return MQTT response as `RESULT` or `%COMMAND%` topic<BR>[`SetOption10`](#setoption10) - Main topic change behavior
 
-## Rules
+### Rules
 
-
-<a id="tb-rules">Command|Parameters
+Command|Parameters
 :---|:---
 Add\<x\><a id="Add"></a>|`<value>` = add value to Var\<x\> ([example](Rule-Cookbook/#arithmetic-commands-to-be-used-with-vars))&emsp;  »6.1.0
 CalcRes<a id="CalcRes"></a>|Current calculation resolution&emsp;  »6.4.0<BR>`0..7` = set number of decimal places to be used in `Add`, `Sub`, `Mult` and `Scale`
@@ -215,21 +243,21 @@ Scale\<x\><a id="Scale"></a>|Scale value from a low and high limit to another lo
 Sub\<x\><a id="Sub"></a>|`<value>` = subtract value to Var\<x\> ([example](Rule-Cookbook/#arithmetic-commands-to-be-used-with-vars))&emsp;  »6.1.0
 Var\<x\><a id="Var"></a>|Manage up to 5 variables stored in memory (x = `1..5`)&emsp;  »6.1.0<BR>`Var` returns all current values. `Var<x>` returns the variable's current value.&emsp;  »6.6.0.2<BR>`<string>` = store a string value in a variable<BR>`"` = clear stored value in Var\<x\>
 
-## Timers
+### Timers
 » v5.13.1
 
-<a id="tb-timers">Command|Parameters
+Command|Parameters
 :---|:---
 Latitude<a id="Latitude"></a>|`<value>` = set latitude
 Longitude<a id="Longitude"></a>|`<value>` = set longitude
 Timers<a id="Timers"></a>|Timers control<br>`0` = disable all timers&emsp;  »6.2.0<BR>`1` = enable all timers<BR>`2` = toggle all timers<BR>
 Timer\<x\><a id="Timer"></a>|Parameters for Timer\<x\> where x = `1..16`<BR>`0` = clear parameters for Timer\<x\>&emsp;  »6.2.0<BR>`1..16` = copy Timer\<y\> parameters to Timer\<x\><BR>`{ "name":value ; .. }` = set all or individual parameters using JSON payload with names and values of data pairs from the [table](https://github.com/arendst/Tasmota/wiki/Timers#json-payload-anatomy) 
 
-## Sensor
-Note: Information on sensors documented below is transmitted in the Tasmota telemetry message
+> [!Note]
+> Information on sensors documented below is transmitted in the Tasmota telemetry message
+### Sensors
 
-
-<a id="tb-sensor">Command|Parameters
+Command|Parameters
 :---|:---
 AdcParam<a id="AdcParam"></a>|ADC0 analog input tuning parameters&emsp;  »6.6.0<br>`<sensor>, <param1>, <param2>, <param3>`<BR>`<sensor>`<li>`2` = Temperature [Steinhart-Hart thermistor equation](https://en.wikipedia.org/wiki/Steinhart%E2%80%93Hart_equation) parameters:</li><ul>`<param1>` = NTC Voltage bridge resistor in Ohms *(default = `32000`)*<br>`<param2>` = NTC Resistance in Ohms *(default = `10000`)*<BR>`<param3>` = NTC Beta Coefficient *(default = `3350`)*</li></ul><li>`3` = Light [Lux equation](https://www.allaboutcircuits.com/projects/design-a-luxmeter-using-a-light-dependent-resistor/) parameters:</li><ul>`<param1>` = LDR Voltage bridge resistor in Ohms *(default = `10000`)*<BR>`<param2>` = LDR Lux Scalar *(default = `12518931`)*<BR>`<param3>` = LDR Lux Exponent *(default = `-1.4050`)*
 Altitude<a id="Altitude"></a>|`-30000..30000` - altitude in meters
@@ -248,15 +276,15 @@ Sensor34<a id="Sensor34"></a>|&emsp;  »6.6.0<BR>[HX711 load cell](https://githu
 Sensor50<a id="Sensor50"></a>|[PAJ7620](PAJ7620) gesture sensor<BR>`0` = sensor muted, no readings in Tasmota<BR>`1`= gesture mode<BR>`2` = proximity mode<BR>`3` = corner mode<br>`4` = PIN mode<br>`5` = cursor mode
 Sensor53<a id="Sensor53"></a>|[Smart Meter Interface](Smart-Meter-Interface)<BR>`r` = reset the driver with a new descriptor specified with the Tasmota [Scripting](Scripting-Language) language.<BR>`c<x> <value>` = preset counter (x = `1..5`) to `value` when the driver is set to counter mode<BR>`d<x>` = disable data decoding and dump meter (x = `1..5`) data to the Console. This is used to decipher the meter's data format to define the variable encoding in the meter's descriptor.<BR>`d0` = disable data dump mode and revert to decoding mode.
 TempRes<a id="TempRes"></a>|Temperature sensor resolution<BR>`0..3` = maximum number of decimal places
+TempOffset<a id="TempOffset"></a>|`-12.7..12.7` = calibrate temperature sensor telemetry values&emsp;  »7.0.0.5<BR>This setting affects **all** temperature sensors on the device.
 VoltRes<a id="VoltRes"></a>|Voltage sensor resolution<BR>`0..3` = maximum number of decimal places
 WattRes<a id="WattRes"></a>|Power sensor resolution<BR>`0..3` = maximum number of decimal places
 WeightRes<a id="WeightRes"></a>|Load cell sensor resolution&emsp;  »6.3.0<BR>`0..3` = maximum number of decimal places
 See also|[`SetOption8`](#SetOption8)  - Show temperature in Celsius *(default)* or Fahrenheit<BR>[`SetOption18`](#SetOption18) - Set status of signal light paired with CO<sub>2</sub> sensor<BR>[`SetOption24`](#SetOption24) - Set pressure units
 
-## Power Monitoring
+### Power Monitoring
 
-
-<a id="tb-powermon">Command|Parameters
+Command|Parameters
 :---|:---
 AmpRes<a id="AmpRes"></a>|Current sensor resolution<BR>`0..3` = maximum number of decimal places
 CurrentCal<a id="CurrentCal"></a>|<value> `1100..32767` *(default = `3500`)*<BR>Set calibration offset value for reported `Current` telemetry reading&emsp;  »6.4.1.6<BR>Allows finer calibration for HLW8012, HJL01, and BL0937 energy monitoring devices
@@ -286,16 +314,16 @@ VoltRes<a id="VoltRes"></a>|Voltage sensor resolution<BR>`0..3` = maximum number
 WattRes<a id="WattRes"></a>|Power sensor resolution<BR>`0..3` = maximum number of decimal places
 See Also|[`SetOption21`](#SetOption21) - Energy monitoring when power is off<BR>[`SetOption33`](#SetOption33) - Configure power monitoring Max_Power_Retry count number<BR>
 
-## Light
+### Light
 <!--- 
 <a id="Brightness>"></a>Brightness|`0..255` = set brightness value from 0 to 255
  -->
 
-<a id="tb-lights">Command|Parameters
+Command|Parameters
 :---|:---
 Channel\<x\><a id="Channel"></a>|`0..100` = set PWM channel dimmer value from 0 to 100%&emsp;  »5.13.0<BR>`+` = increase by 10&emsp;  »7.0.0.1<BR>`-` = decrease by 10&emsp;  »7.0.0.1<BR>When [`SetOption68`](#setoption68) is set to `1`, channel numbering begins with Relays first then PWM channels. [`Channel<x>`](#channel) will be aligned to [`Power<x>`](#power) numbering.<BR>**Example**: 2 Relays and 3 PWM:<BR>&emsp;Relay1 = `Power1`<BR>&emsp;Relay2 = `Power2`<BR>&emsp;PWM1 = `Power3` and `Channel3`<BR>&emsp;PWM2 = `Power4` and `Channel4`<BR>&emsp;PWM3 = `Power5` and `Channel5`
 Color\<x><a id="Color"></a>|`r,g,b` = set color by decimal value (`0..255`)<BR>`#CWWW` = set hex color value for CT lights <BR>`#RRGGBB` = set hex color value for RGB lights<BR>`#RRGGBBWW` = set hex color value for RGBW lights<BR>`#RRGGBBCWWW` = set hex color value for RGBCCT lights (5 PWM channels)<BR>x = `1..6`<BR>`1` = Set color<BR>`2` = Set color adjusted to current `Dimmer` value<BR>`3` = Set clock seconds hand color *([Scheme](#Scheme) `5` only)*<BR>`4` = Set clock minutes hand color *([Scheme](#Scheme) `5` only)*<BR>`5` = Set clock hour hand color *([Scheme](#Scheme) `5` only)*<BR>`6` = Set clock hour marker color<BR>[**White Blend Mode**](white-blend-mode) &emsp;  »6.3.0
-||Set color to<BR>`1` = red<BR>`2` = green<BR>`3` = blue<BR>`4` = orange<BR>`5` = light green<BR>`6` = light blue<BR>`7` = amber<BR>`8` = cyan<BR>`9` = purple<BR>`10` = yellow<BR>`11` = pink<BR>`12` = white (using RGB channels)<BR>`+` = next color<BR>`-` = previous color
+ |Set color to<BR>`1` = red<BR>`2` = green<BR>`3` = blue<BR>`4` = orange<BR>`5` = light green<BR>`6` = light blue<BR>`7` = amber<BR>`8` = cyan<BR>`9` = purple<BR>`10` = yellow<BR>`11` = pink<BR>`12` = white (using RGB channels)<BR>`+` = next color<BR>`-` = previous color
 CT<a id="CT"></a>|`153..500` = set color temperature from 153 (cold) to 500 (warm) for CT lights<BR>`+` = increase CT value by 10<BR>`-` = decrease CT value by 10
 Dimmer<a id="Dimmer"></a>|`0..100` = set dimmer value from 0 to 100%<BR>`+` = increase by 10<BR>`-` = decrease by 10
 Dimmer\<x>|**Commands available only when `SetOption37 >= 128`** ([#6819](../pull/6819))&emsp;  »7.0.0.1<br>`<value>` same as in `Dimmer`<br>`Dimmer0 <value>` - set dimming for all channels<BR>`Dimmer1 <value>` - set dimming for RGB channels<BR>`Dimmer2 <value>` - set dimming for white channels
@@ -305,13 +333,13 @@ HsbColor<a id="HsbColor"></a>|`<hue>,<sat>,<bri>` = set color by hue, saturation
 HsbColor1<a id="HsbColor1"></a>|`0..360` = set hue
 HsbColor2<a id="HsbColor2"></a>|`0..100` = set saturation 
 HsbColor3<a id="HsbColor3"></a>|`0..100` = set brightness
-Led\<x\><a id="Led"></a>|`#RRGGBB` = set hex color value where `<x>` is the pixel number of the LED<br> *(aplies only to addressable LEDs)*
+Led\<x\><a id="Led"></a>|`#RRGGBB` = set hex color value where `<x>` is the pixel number of the LED<br> *(applies only to addressable LEDs)*
 LedTable<a id="LedTable"></a>|`0` = do not use [LED gamma correction](https://learn.adafruit.com/led-tricks-gamma-correction?view=all) *(default &laquo;6.5.0.9)*<BR>`1` = use gamma correction *(default &raquo;6.5.0.9)*
 Pixels<a id="Pixels"></a>|`1..512` = set amount of pixels in strip or ring and reset [`Rotation`](#rotation) *(applies only to addressable LEDs)*
 RGBWWTable<a id="RGBWWTable"></a>|Control compensation of unbalanced PWM channels or  [White Blend Mode](White-Blend-Mode) &emsp;  »6.2.1.10<br>`PWM1,PWM2,PWM3,PWM4,PWM5` = channel range with values `0..255` *(default =`255,255,255,255,255`)*<BR>Range adjustment is computed **after** Gamma correction.
 Rotation<a id="Rotation"></a>|`<value>` = set amount of pixels to rotate (up to `Pixels` value) *(applies only to addressable LEDs)*
 Scheme<a id="Scheme"></a>|Light effects<BR>`+` = next scheme<BR>`-` = previous scheme<BR>`0` = single color for LED light *(default)*<BR>`1` = start wake up sequence (same as [`Wakeup`](#wakeup))<BR>`2` = cycle up through colors using Speed option<BR>`3` = cycle down through colors using Speed option<BR>`4` = random cycle through colors using Speed and Fade
-||**The following schemes are usable only with addressable LEDs, e.g. WS281X, Neopixel**<BR>`5` = clock mode ([example](https://hackaday.io/project/28194-esp-and-ws2812-based-clock))<BR>`6` = candlelight pattern<BR>`7` = RGB pattern<BR>`8` = Christmas pattern<BR>`9` = Hannukah pattern<BR>`10` = Kwanzaa pattern<BR>`11` = rainbow pattern<BR>`12` = fire pattern
+|**Following schemes are usable only with addressable LEDs, e.g. WS281X, Neopixel**<BR>`5` = clock mode ([example](https://hackaday.io/project/28194-esp-and-ws2812-based-clock))<BR>`6` = candlelight pattern<BR>`7` = RGB pattern<BR>`8` = Christmas pattern<BR>`9` = Hanukkah pattern<BR>`10` = Kwanzaa pattern<BR>`11` = rainbow pattern<BR>`12` = fire pattern
 Speed<a id="Speed"></a>|`1..20` = set fade speed from fast `1` to very slow `20`<BR>`+` = increase speed<BR>`-` = decrease speed
 Wakeup<a id="Wakeup"></a>|Start wake up sequence from OFF to stored `Dimmer` value<BR>`0..100` = Start wake up sequence from OFF to provided `Dimmer` value
 WakeupDuration<a id="WakeupDuration"></a>|`1..3600` = set wake up duration in seconds
@@ -319,10 +347,10 @@ White<a id="White"></a>|&emsp;  »6.4.0<BR>`1..100` = set white channel brightne
 Width\<x><a id="Width"></a>|x = `1..4`<BR>`1` - `0..4` = LED group width *([Scheme](#Scheme) `6..12` only)*<BR>`2` - `0..32` = seconds hand width *([Scheme](#Scheme) `5` only)*<BR>`3` - `0..32` = minutes hand width *([Scheme](#Scheme) `5` only)*<BR>`4` - `0..32` = hour hand width *([Scheme](#Scheme) `5` only)*
 See also|[`SetOption15`](#SetOption15), [`SetOption16`](#SetOption16), [`SetOption17`](#SetOption17), [`SetOption20`](#SetOption20), [`SetOption37`](#SetOption37) and [`SetOption68`](#Setoption68) 
 
-## Sonoff RF Bridge
+### RF Bridge
 
 
-<a id="tb-rfbridge">Command|Parameters
+Command|Parameters
 :---|:---
 RfCode<a id="RfCode"></a>|Show last sent 24-bit user code<BR>`1..8388607` = send 24-bit user code<BR>`#1..#7FFFFF` = send 24-bit hexadecimal user code using RfSync, RfLow and RfHigh timing
 RfHigh<a id="RfHigh"></a>|`1` = reset high pulse time to 840 microseconds<BR>`2..32767` = set high pulse time in microseconds<BR>`#2..#7FFF` = set high pulse time in hexadecimal microseconds
@@ -333,17 +361,17 @@ RfRaw<a id="RfRaw"></a>|&emsp;  »6.1.0<br>**This command only works when the fi
 RfSync<a id="RfSync"></a>|`1` = reset start sync pulse time to 8470 microseconds<BR>`2..32767` = set start sync pulse time in microseconds<BR>`#2..#7FFF` = set start sync pulse time in hexadecimal microseconds
 See also|[`SetOption28`](#SetOption28) - Set RF received data format
 
-## IR Remote
+### IR Remote
 
-<a id="tb-irremote">Command|Parameters
+Command|Parameters
 :---|:---
 IRsend`<x>`<a id="IRsend"></a>|Send an IR remote control code as a decimal or hexadecimal string in a JSON payload. In order to send IR data, _**you must configure one of the free device GPIO as `IRsend (8)`. GPIO01 nor GPIO03 can be used.**_<BR>`<x>` [_optional_] = number of times the IR message is sent. If not specified or `0..1`, the message is sent only once (i.e., not repeated) _(default)_<BR>`>1` = emulate a long-press on the remote control, sending the message `<x>` times, or sending a repeat message for specific protocols (like NEC)<BR><BR>`{"Protocol":"<value>","Bits":<value>,"Data":<value>}`<BR><BR>`"Protocol"` (select one of the following):<ul><li>`"NEC"`</li><li>`"SONY"`</li><li>`"RC5"`</li><li>`"RC6"`</li><li>`"DISH"`</li><li>`"JVC"`</li><li>`"PANASONIC"`</li><li>`"SAMSUNG"`</li><li>`"PIONEER"`</li></ul>`"Bits":1..32` = required number of data bits<BR>&nbsp;&nbsp;&nbsp;&nbsp;for PANASONIC protocol this parameter is the the address, not the number of bits<BR><BR>`"Data":1..(2^32)-1` = data frame as 32 bit decimal.<BR>&nbsp;&nbsp;&nbsp;&nbsp;e.g., `IRsend {"Protocol":"NEC","Bits":32,"Data":2170978686}`<BR>**or**<BR>`"Data":0x1..0xFFFFFFFF` = data frame as 32 bit hexadecimal.<BR>&nbsp;&nbsp;&nbsp;&nbsp;e.g., `IRsend {"Protocol":"NEC","Bits":32,"Data":0x8166817E}`<BR><BR>Alternatively, you can send IR remote control codes using [RAW command encoding](IRSend-RAW-Encoding).<BR><BR>Information on [Receiving Infrared Data](Receiving-Infrared-Remote-Control-Data)
 IRhvac<a id="IRhvac"></a>|Send HVAC IR remote control code as JSON payload<Br>`{"Vendor":"<value>","Power":<value>,"Mode":”<value>”, "FanSpeed":”<value>”,"Temp":<value>}`<BR>`"Vendor":"Toshiba"\|"Mitsubishi"\|"LG"\|"Fujitsu"`<BR>`"Power":0\|1`<BR>`"Mode":"Hot"\|"Cold"\|"Dry"\|"Auto"`<BR>`"FanSpeed":"1"\|"2"\|"3"\|"4"\|"5"\|"Auto"\|"Silence"` <BR>`"Temp":17..30`
 |See also|[`SetOption29`](#SetOption29)  - Set IR received data format<BR>[`SetOption38`](#SetOption38)  - Set IR received protocol sensitivity<BR>[`SetOption58`](#SetOption58) - [IR Raw data in JSON payload](https://github.com/arendst/Tasmota/issues/2116#issuecomment-440716483)
 
-## SetOption overview
+### SetOptions
 
-<a id="tb-setoption">Command|Parameters
+Command|Parameters
 :---:|:---
 SetOption0<a id="SetOption0"></a>|Save power state and use after restart (=SaveState)<BR> `0` = disable<BR> `1` = enable *(default)*
 SetOption1<a id="SetOption1"></a>|Set [button multipress](Control-other-devices) mode to<BR> `0` = allow all button actions *(default)*<BR> `1` = restrict to single, double and hold actions (i.e., disable inadvertent reset due to long press)
@@ -405,7 +433,7 @@ SetOption76<a id="SetOption76"></a>|Bootcount incrementing when [DeepSleep](Deep
 SetOption80<a id="SetOption80"></a>|[Blinds and shutters](blinds-and-shutters) support&emsp;  »6.6.0.14<BR>`0` = disable blinds and shutters support *(default)*<BR>`1` = enable blinds and shutters support
 SetOption81<a id="SetOption81"></a>|Set PCF8574 component behavior for all ports&emsp;  »6.6.0.14<BR>`0` = set as regular state *(default)*<BR>`1` = set as inverted state
 
-## Serial Bridge
+### Serial Bridge
 Both hardware and software Serial Bridge are supported.
  
 Hardware Serial Bridge uses `GPIO1 (Tx)` and `GPIO3 (Rx)` or `GPIO13 (Tx)` and `GPIO15 (Rx)` pins of your device.   
@@ -415,7 +443,7 @@ Information received by Tasmota over the serial bridge is captured automatically
 
 Expect possible communication errors when additional sensors are configured.  
 
-<a id="tb-serial">Command|Parameters
+Command|Parameters
 :---|:---
 Baudrate<a id="Baudrate"></a>|`1` = set hardware serial bridge to default baud rate of 115200 bps<BR>`<value>` = set baud rate. The set rate will be a multiple of 300. The maximum baud rate possible is 19,660,500.
 SBaudrate<a id="SBaudrate"></a>|`1` = set software serial bridge to default baud rate of 9600 bps<BR>`<value>` = set baud rate. The set rate will be a multiple of 300. The maximum baud rate possible is 19,660,500.
@@ -424,12 +452,12 @@ SerialSend\<x><a id="SerialSend"></a>|`<string>`<BR>Disable serial logging and s
 SSerialSend\<x><a id="SSerialSend"></a>|`<string>`<BR>Send using software serial protocol<BR>x = `1..5`<BR>`1` = send appending `\n` (newline) ()<BR>`2` = send<BR>`3` = replace escape characters and send &emsp;  »6.5.0<BR>`4` = send as binary data. Data in serial response messages is encoded as hex strings<BR>`5` = send as hex. Data in serial response messages is encoded as hex strings &emsp;  »6.5.0
 TuyaSend\<x><a id="TuyaSend"></a>|Send data to MCU with [TuyaMCU](TuyaMCU)&emsp; » v7.0.0.1<br>x = `1..4`<br>`TuyaSend1 <dpId>,<boolean>` = send boolean (`0`/`1`) data type to dpId (1 byte max length)<br>`TuyaSend2 <dpId>,<int>` = send integer data to dpId (4 bytes max length)<br>`TuyaSend2 <dpId>,<0xAABBCCDD>` = send 4 byte data to dpId (4 bytes max length)<br>`TuyaSend3 <dpId>,<value>` = send any data type to dpId (unknown max length)<br>`TuyaSend4 <dpId>,<enum>` = send enumerated (`0`/`1`/`2`/`3`/`4`/`5`) data type to dpId (1 byte max length)<br>
 
-## MP3 Player 
+### MP3 Player 
 » v6.6.0
 
 The MP3 Player driver is based on the one from DFRobot. They named it [DFPlayer mini](https://www.dfrobot.com/wiki/index.php/DFPlayer_Mini_SKU:DFR0299). All MP3 Players with the identical Serial Control Command structure can be used.
 
-<a id="tb-mp3">Command|Parameters
+Command|Parameters
 :---|:---
 MP3DAC<a id="MP3DAC"></a>|`0` = DAC on *(default)*<BR>`1` = DAC off
 MP3Device<a id="MP3Device"></a>|Specify playback device<BR>`1` = USB<BR>`2` = SD Card *(default (also defaults on reset or power cycle))*
@@ -441,10 +469,10 @@ MP3Stop<a id="MP3Stop"></a>|Stop
 MP3Track<a id="MP3Track"></a>|`x` = play track \<x\>
 MP3Volume<a id="MP3Volume"></a>|`0..100` = set Volume
 
-## Domoticz
+### Domoticz
 
 
-<a id="tb-domoticz">Command|Parameters
+Command|Parameters
 :---|:---
 <a id="DomoticzIdx"></a>DomoticzIdx\<x\>|Show Domoticz Relay idx \<x\> (x = `1..4`)<BR>`0` = disable use of Relay idx \<x\> *(default)*<BR>`<value>` = Show Relay idx \<x\>
 <a id="DomoticzKeyIdx"></a>DomoticzKeyIdx\<x\>|Show Domoticz Key idx \<x\> (x = `1..4`)<BR>`0` = disable use of Key idx \<x\> *(default)*<BR>`<value>` = Show Key idx \<x\> (to use enable [ButtonTopic](#buttontopic))
@@ -452,9 +480,9 @@ MP3Volume<a id="MP3Volume"></a>|`0..100` = set Volume
 <a id="DomoticzSwitchIdx"></a>DomoticzSwitchIdx\<x\>|Show Domoticz Switch idx \<x\> (x = `1..4`)<BR>`0` = disable use of Switch idx \<x\> *(default)*<BR>`<value>` = Show Switch idx \<x\> (to use enable [SwitchTopic](#switchtopic))
 <a id="DomoticzUpdateTimer"></a>DomoticzUpdateTimer|Show current update timer value in seconds<BR>`0` = disable sending interim Domoticz status *(default)*<BR>`1..3600` = send status to Domoticz in defined intervals
 
-## KNX
+### KNX
 
-<a id="tb-knx">Command|Parameters
+Command|Parameters
 :---|:---
 KnxTx_Cmnd\<x\><a id="KnxTx_Cmnd"></a>|`0` or `1` = send command using slot \<x\> set in KNX Menu at KNX_TX
 KnxTx_Val\<x\><a id="KnxTx_Val"></a>|`<value>` = send float value using slot \<x\> set in KNX Menu at KNX_TX
@@ -485,11 +513,11 @@ KNX_CB\<x\><a id="KNX_CB"></a>|Setup Group Address to Receive Data/Commands <BR>
 15|Button 7|255|EMPTY
 16|Button 8|
 
-## Displays
+### Displays
 » v6.3.0
 
-<a id="tb-displays">Command|Parameters
-:--- |:---
+Command|Parameters
+|:--- |:---
 Display<a id="Display"></a>|Show current display setting as a JSON payload
 DisplayAddress<a id="DisplayAddress"></a>|`0..255` Set display module address
 DisplayDimmer<a id="DisplayDimmer"></a>|`0` Turn the display off<BR> `1..100` Turn the display on<BR>`0..100` Set display luminosity *(only on 8x8 Dot-Matrix displays)*
@@ -505,11 +533,11 @@ DisplayFont<a id="DisplayFont"></a>|Specify the current font<BR>`0` use classic 
 DisplayWidth<a id="DisplayWidth"></a>|Specify the display width in pixels *(SSD1306 only)*&emsp;  »6.6.0.2
 DisplayHeight<a id="DisplayHeight"></a>|Specify the display height in pixels *(SSD1306 only)*&emsp;  »6.6.0.2
 
-## Stepper Motors 
+### Stepper Motors 
 » v6.6.0.12
 
 <a id="tb-stepperMotors">Command|Parameters
-|:--- |:---
+:---|:---
 MotorMIS<a id="MotorMIS"></a>|`1,2,4,8,16` Set micro stepping increment - 1/1 (full steps) to 1/16 *(default = `1`)*
 MotorSPR<a id="MotorSPR"></a>|`integer` Set the number of steps the given motor needs for one revolution *(default = `200`)*<BR>This is dependent on the type of motor and micro stepping. Most common motors are 1.8° per step.
 MotorRPM<a id="MotorRPM"></a>|`1..300` Set revolutions per minute *(default = `30`)*
@@ -517,11 +545,11 @@ MotorMove<a id="MotorMove"></a>|`integer` Move the motor the given number of ste
 MotorRotate<a id="MotorRotate"></a>|`integer` Rotate the motor the given number of degrees (positive values: clockwise, negative values: counterclockwise)
 MotorTurn<a id="MotorMIS"></a>|`float` Spin the motor the given number of turns (positive values: clockwise, negative values: counterclockwise)
 
-## [Blinds, Shutters and Roller Shades](Blinds-and-Shutters)
+### Blinds, Shutters and Roller Shades
 » v6.6.0.14
 
-<a id="tb-shutters">Command<BR> (x = `1..4`)|Parameters
--|-
+Command<BR> (x = `1..4`)|Parameters
+:---|:---
 ShutterCalibration\<x><a id="ShutterCalibration"></a>|Granular shutter position calibration. Real position in cm must be put in at 30 50 70 90 percent
 ShutterCloseDuration\<x><a id="ShutterCloseDuration"></a>| `1..255` *(default = `10`)*<BR>Define the time, in seconds, it takes to fully close the shutter. A fraction of a second can be specified (e.g. `45.7`).
 ShutterClose\<x><a id="ShutterClose"></a>|Engage the relay to close the shutter. This action can be requested at any time.
@@ -536,15 +564,15 @@ ShutterSetHalfway\<x><a id="ShutterSetHalfway"></a>| `0..100` *(default = `50`)*
 ShutterStop\<x><a id="ShutterStop"></a>|Disengage the relays to stop the shutter
 See also| [`SetOption80`](#SetOption80) - Enable shutter support
 
-## [Zigbee](Zigbee)
+### Zigbee
 » v7.0.0.3
 
-<a id="tb-zigbee">Command|Parameters
----|---
+Command|Parameters
+:---|:---
 ZigbeePermitJoin<a id="ZigbeePermitJoin"></a>|Sets new device pairing mode<BR>`0` = disable pairing<BR>`1` = enable pairing for 60 seconds<BR>`99` = enable pairing until device reboot<BR><ul>:warning: Leaving your Zigbee network pairing open to join will allow any Zigbee device to connect and retrieve your network encryption key. This can lead to a compromise of your Zigbee network. :warning:</ul>
 ZigbeeProbe<a id="ZigbeeProbe"></a>|Probe a Zigbee device to get additional information including its IEEEaddress, vendor and model names, endpoints, and supported clusters per endpoint.<BR>`<shortaddr>` (e.g., `0x1234`)<BR>A device probe is performed automatically when a new Zigbee device connects.<BR>A probe may be needed after a Tasmota reboot.<BR>Battery powered Zigbee devices can generally not be probed because they are in sleep mode most of the time.
 ZigbeeRead<a id="ZigbeeRead"></a>|Read Zigbee device attributes<BR>`{ "Device":"<shortaddr>", "Endpoint":"<endpoint>", "Cluster":"<cluster>", "Read":[<attrlist>] }`<BR>&emsp;`<shortaddr>` the short address of the Zigbee device on the network.<BR>&emsp;`<endpoint>` the target endpoint on the device ([identifying endpoints](Zigbee-Operation#identifying-target-device-endpoints))<BR>&emsp;`<cluster>` the cluster number of the attributes<BR>&emsp;`<attrlist>` requested attributes array<BR><BR>Ex: `ZigbeeRead { "device":"0x69CF", "endpoint":"0x03", "cluster":"0x0006", "read":["0x0000"] }`
 ZigbeeReset<a id="ZigbeeReset"></a>|`1` = perform a factory reset and reconfiguration of the CC2530 chip.<BR>**You will need to re-pair all Zigbee devices**
 ZigbeeSend<a id="ZigbeeSend"></a>|`{ "Device":"<shortaddr>", "Endpoint":"<endpoint>", "Send":{"<sendcmd>":<sendparam>} }`<BR>&emsp;`<shortaddr>` the short address of the Zigbee device on the network.<BR>&emsp;`<endpoint>` the target endpoint on the device ([identifying endpoints](Zigbee-Operation#identifying-target-device-endpoints))<BR>&emsp;`"<sendcmd>":<sendparam>` the command and parameters to send ([Zigbee Device Commands](Zigbee-Operation#supported-zigbee-device-commands))<BR>Note: Use [`ZigbeeZCLSend`](#ZigbeeZCLSend) to send a raw form low-level message<BR><BR>Ex: `ZigbeeSend { "Device":"0x1234", "Endpoint":"0x03", "Send":{"Power":"on"} }`
 ZigbeeStatus\<x><a id="ZigbeeStatus"></a>|Display Zigbee devices seen on the network since boot<BR>`<device>` (optional) = device number (enumerated beginning with 1)<BR>` ` = all devices<BR>This command provides three levels of increasing detail according to `<x>`<BR>`ZigbeeStatus1` Display Short Address, and Friendly Name<BR>`ZigbeeStatus2` Also include Manufacturer ID and Model ID<BR>`ZigbeeStatus3` Also include a list of endpoints and the clusterIds supported by each endpoint<BR>Ex: `ZigbeeStatus3 1` requests all details for device number 1<BR><BR>The information requested may exceed the maximum result size allowed by Tasmota. In this case, the output will be truncated. To get all of the desired information, request results for a specific device individually.
-ZigbeeZCLSend<a id="ZigbeeZCLSend"></a>|:warning: **Do not use unless you know _exactly_ what you are doing.** :warning:<BR>Send a raw ZCL message to a Zigbee device. This is a low-level command, and requires to manually build the ZCL parameters. Most common usage will be provided as high-level functions.
+ZigbeeZCLSend<a id="ZigbeeZCLSend"></a>|:warning: :warning: :warning: **Do not use unless you know _exactly_ what you are doing.** :warning: :warning: :warning:<BR>Send a raw ZCL message to a Zigbee device. This is a low-level command, and requires to manually build the ZCL parameters. Most common usage will be provided as high-level functions.

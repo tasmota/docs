@@ -1,11 +1,12 @@
 [Home Assistant](https://home-assistant.io/) (Hass) is an open-source home automation platform running on Python 3.
 
 **Important:** The information on this page is related to:
- - Old Tasmota versions: development versions 6.3.0.16 or older (before 2018-12-13)
- - Old Home Assistant versions: prior to 0.84.2
+ - Tasmota development version 6.3.0.**17** (2018-12-13) or later
+   - **Version 6.3.0 will NOT work**
+ - Home Assistant 0.84.2 or later
 
 ## Hass configuration - General
-This page describes configuring Hass and Tasmota **without **MQTT device discovery, with manual configuration of each device in Hass.
+This page describes configuring Hass and Tasmota **without** MQTT device discovery, with manual configuration of each device in Hass.
 
 While [[automatic discovery|Home-Assistant]] is the recommended method, an advantage of manually configuring device is the user maintains control of all aspects of the device configuration and usage.
 
@@ -66,7 +67,7 @@ Default username for the embedded broker is `homeassistant` while port defaults 
 
 If the MQTT broker or Hass is restarted, or there is a WiFi outage, Tasmota device state may not be synced with Home Assistant.
 
-Use this automation to get all your devices in sync, including power state, after Home Assistant is (re)started.
+Use this automation to get all your devices in sync, including power state, **immediately** after Home Assistant is (re)started.
 
 ```yaml
 # Example automations.yaml entry
@@ -94,7 +95,7 @@ This automation posts to the default "sonoffs" group topic.  Each device will se
 
 ### Tip: View the firmware version number of a Tasmota device
 
-Add a sensor like below in your sensor section for each Tasmota device in one card in an order that makes sense for you. Change the state_topic and availability_topic to the unique topic of each device.
+Add a sensor like below in your sensor section for each Tasmota device in one card in an order that makes sense for you. Change the `state_topic` and `availability_topic` to the unique topic of each device.
 
 ```yaml
 # Example configuration.yaml entry
@@ -109,7 +110,7 @@ sensor:
     payload_not_available: "Offline"
 ```
 
-Automation to have each device to push out the firmware version on Home Assistant reboot.  Tip: The user can manually trigger this automation without a reboot during upgrades of devices.
+Automation to have each device to push out the firmware version on Home Assistant reboot. *Tip: The user can manually trigger this automation without a reboot during upgrades of devices.*
 
 ```yaml
 # Example automations.yaml entry
@@ -160,12 +161,11 @@ Put it into a group
       - script.get_sonoff_ip
       - sensor.sonoff_ip
 ```
-restart HA 
-plug in your newly flashed ESP8266 Click EXECUTE (in the new group) and It will display the IP address in the "Sonoff IP" sensor, don't forget to change the topic name in "Configure MQTT" in the Configuration Menu.
+Restart HA and plug in your newly flashed ESP8266 device. Click `EXECUTE` (in the new group) and the "Sonoff IP" sensor will display the IP address. After finding out the new IP don't forget to change the topic name in "Configure MQTT" in the Configuration Menu.
 
-### Tip: WiFI RSSI Signal Strength
+### Tip: Wi-Fi RSSI Signal Strength
 
-Display the WiFi signal strength published from each telemetry message (default time is every 300 seconds).  Change the two topics below to your Tasmota device name.  It may not immediately show on your Home Assistant panel until the next telemetry message is published.
+Display the Wi-Fi signal strength published from each telemetry message (default time is every 300 seconds).  Change the two topics below to your Tasmota device name.  It may not immediately show on your Home Assistant panel until the next telemetry message is published.
 
 ```yaml
 # Example configuration.yaml entry
@@ -183,7 +183,10 @@ sensor:
 ## Configure Switches
 Use the [`switch.mqtt`](https://www.home-assistant.io/components/switch.mqtt/) component.
 
-Use POWER1, POWER2, etc when you are using a device with more than one relay (if SetOption26 is on you must also use POWER1 even if only one relay exists)
+Use POWER1, POWER2, etc when you are using a device with more than one relay or if [SetOption26](commands#setoption26) is enabled)
+
+Configure the module, and on the Console run:\
+`SetOption59 1` - This enables sending of tele/<topic>/STATE on POWER and light related commands
 
 ```yaml
 # Example configuration.yaml entry
@@ -202,7 +205,7 @@ switch:
     retain: false
 ```
 
-If you are using your Sonoff to control a light, you may want to use the Use the [`light.mqtt`](https://www.home-assistant.io/components/light.mqtt/) component. component. Simply replace `switch` with `light` in the above configuration. All other settings remain the same.
+If you are using your Sonoff to control a light, you may want to use the [`light.mqtt`](https://www.home-assistant.io/components/light.mqtt/) component. Replace `switch:` with `light:` in the above configuration. All other settings remain the same.
 
 ## Configure Sensors
 Use the [`sensor.mqtt`](https://www.home-assistant.io/components/sensor.mqtt/) component.
@@ -210,7 +213,7 @@ Use the [`sensor.mqtt`](https://www.home-assistant.io/components/sensor.mqtt/) c
 
 #### Periodical updates
 
-A DHT22 Temperature and Humidity sensor connected to a Sonoff TH10 will send at ``TelePeriod`` intervals the following information to the MQTT broker:
+A DHT22 Temperature and Humidity sensor connected to a Sonoff TH10 will send in [`TelePeriod`](commands#teleperiod) set intervals the following information to the MQTT broker:
 ```
 tele/tasmota/SENSOR = {"Time":"2017-02-12T16:11:12", "DHT22":{"Temperature":23.9, "Humidity":34.1}}
 ```
@@ -235,7 +238,6 @@ sensor:
     payload_available: "Online"
     payload_not_available: "Offline"
 ```
-This periodic interval can be changed using the ``TelePeriod`` command (see the wiki for the MQTT commands).
 
 #### Manual updates
 
@@ -326,21 +328,28 @@ sensor:
     state_topic: "stat/pow1/STATUS8"
     value_template: "{{ value_json.StatusPWR.Factor }}"
 ```
+Complete tutorial on a power monitoring plug setup:
+
+
+[![Laundry sensor](https://img.youtube.com/vi/ktHQrhAF8VQ/0.jpg)](https://www.youtube.com/watch?v=ktHQrhAF8VQ)
 
 ## Configure Lights
 Use the [`light.mqtt`](https://www.home-assistant.io/components/light.mqtt/) component.
 ### Dimmer / PWM LED
+Configure the module, and on the Console run:\
+`SetOption59 1` - This enables sending of tele/<topic>/STATE on POWER and light related commands
+
 ```yaml
 # Example configuration.yaml entry
 light:
   - platform: mqtt
     name: "Light 1"
     command_topic: "cmnd/light1/POWER"
-    state_topic: "stat/light1/RESULT"
+    state_topic: "tele/light1/STATE"
     state_value_template: "{{value_json.POWER}}"
     availability_topic: "tele/light1/LWT"
     brightness_command_topic: "cmnd/light1/Dimmer"
-    brightness_state_topic: "stat/light1/RESULT"
+    brightness_state_topic: "tele/light1/STATE"
     brightness_scale: 100
     on_command_type: "brightness"
     brightness_value_template: "{{value_json.Dimmer}}"
@@ -355,7 +364,8 @@ light:
 ### RGB Lights
 #### Any 3-channel PWM LED dimmer or AiLight
 Configure the module, and on the Console run:\
-`SetOption17 1` - This enables decimal colors
+`SetOption17 1` - This enables decimal colors\
+`SetOption59 1` - This enables sending of tele/<topic>/STATE on POWER and light related commands
 
 ```yaml
 # Example configuration.yaml entry
@@ -363,19 +373,19 @@ light:
   - platform: mqtt
     name: "Light 1"
     command_topic: "cmnd/light1/POWER"
-    state_topic: "stat/light1/RESULT"
+    state_topic: "tele/light1/STATE"
     state_value_template: "{{value_json.POWER}}"
     availability_topic: "tele/light1/LWT"
     brightness_command_topic: "cmnd/light1/Dimmer"
-    brightness_state_topic: "stat/light1/RESULT"
+    brightness_state_topic: "tele/light1/STATE"
     brightness_scale: 100
     on_command_type: "brightness"
     brightness_value_template: "{{value_json.Dimmer}}"
     rgb_command_topic: "cmnd/light1/Color2"
-    rgb_state_topic: "stat/light1/RESULT"
+    rgb_state_topic: "tele/light1/STATE"
     rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
     effect_command_topic: "cmnd/light1/Scheme"
-    effect_state_topic: "stat/light1/RESULT"
+    effect_state_topic: "tele/light1/STATE"
     effect_value_template: "{{value_json.Scheme}}"
     effect_list:
       - 0
@@ -391,10 +401,10 @@ light:
     retain: false
 ```
 
-#### Led WS2812B
+#### LED WS281X
 
 Configure any of the pins of the module as "WS2812B", and on the Console run:\
-`SetOption17 1` - This enables decimal colors
+`SetOption17 1` - This enables decimal colors\
 
 ```yaml
 # Example configuration.yaml entry
@@ -402,19 +412,19 @@ light:
   - platform: mqtt
     name: "Light 1"
     command_topic: "cmnd/light1/POWER"
-    state_topic: "stat/light1/RESULT"
+    state_topic: "stat/light1/STATE"
     state_value_template: "{{value_json.POWER}}"
     availability_topic: "tele/light1/LWT"
     brightness_command_topic: "cmnd/light1/Dimmer"
-    brightness_state_topic: "stat/light1/RESULT"
+    brightness_state_topic: "stat/light1/STATE"
     brightness_scale: 100
     on_command_type: "brightness"
     brightness_value_template: "{{value_json.Dimmer}}"
     rgb_command_topic: "cmnd/light1/Color2"
-    rgb_state_topic: "stat/light1/RESULT"
+    rgb_state_topic: "tele/light1/STATE"
     rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
     effect_command_topic: "cmnd/light1/Scheme"
-    effect_state_topic: "stat/light1/RESULT"
+    effect_state_topic: "stat/light1/STATE"
     effect_value_template: "{{value_json.Scheme}}"
     effect_list:
       - 0
@@ -440,15 +450,17 @@ light:
 
 ### RGBW Lights
 
-#### MagicHome Led Controller 
+#### MagicHome LED Controller 
 
 Configure the module as "34 MagicHome", and on the Console run:\
-`SetOption17 1` - This enables decimal colors
+`SetOption17 1` - This enables decimal colors\
+`SetOption59 1` - This enables sending of tele/<topic>/STATE on POWER and light related commands
 
 #### Arilux LC02 
 
 Configure the module as "18 Generic module", and on the Console run:
 `SetOption17 1` - This enables decimal colors
+`SetOption59 1` - This enables sending of tele/<topic>/STATE on POWER and light related commands
 
 More info how to configure the GPIO [Arilux LC02](https://github.com/arendst/Tasmota/wiki/Arilux-LC02)
 
@@ -458,23 +470,23 @@ light:
   - platform: mqtt
     name: "Light 1"
     command_topic: "cmnd/light1/POWER"
-    state_topic: "stat/light1/RESULT"
+    state_topic: "tele/light1/STATE"
     state_value_template: "{{value_json.POWER}}"
     availability_topic: "tele/light1/LWT"
     brightness_command_topic: "cmnd/light1/Dimmer"
-    brightness_state_topic: "stat/light1/RESULT"
+    brightness_state_topic: "tele/light1/STATE"
     brightness_scale: 100
     on_command_type: "brightness"
     brightness_value_template: "{{value_json.Dimmer}}"
-    white_value_state_topic: "stat/light1/RESULT"
-    white_value_command_topic: "cmnd/light1/Channel4"
+    white_value_state_topic: "tele/light1/STATE"
+    white_value_command_topic: "cmnd/light1/White"
     white_value_scale: 100
     white_value_template: "{{ value_json.Channel[3] }}"
     rgb_command_topic: "cmnd/light1/Color2"
-    rgb_state_topic: "stat/light1/RESULT"
+    rgb_state_topic: "tele/light1/STATE"
     rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
     effect_command_topic: "cmnd/light1/Scheme"
-    effect_state_topic: "stat/light1/RESULT"
+    effect_state_topic: "tele/light1/STATE"
     effect_value_template: "{{value_json.Scheme}}"
     effect_list:
       - 0
@@ -494,7 +506,8 @@ light:
 
 #### Sonoff B1, or any 5-channel LED dimmer
 Configure the module, and on the Console run:\
-`SetOption17 1` - This enables decimal colors
+`SetOption17 1` - This enables decimal colors\
+`SetOption59 1` - This enables sending of tele/<topic>/STATE on POWER and light related commands
 
 You can set the following using the sonoff web interface - Console or by sending it MQTT commands
 ```
@@ -508,22 +521,22 @@ light:
   - platform: mqtt
     name: "Light 1"
     command_topic: "cmnd/light1/POWER"
-    state_topic: "stat/light1/RESULT"
+    state_topic: "tele/light1/STATE"
     state_value_template: "{{value_json.POWER}}"
     availability_topic: "tele/light1/LWT"
     brightness_command_topic: "cmnd/light1/Dimmer"
-    brightness_state_topic: "stat/light1/RESULT"
+    brightness_state_topic: "tele/light1/STATE"
     brightness_scale: 100
     on_command_type: "brightness"
     brightness_value_template: "{{value_json.Dimmer}}"
     color_temp_command_topic: "cmnd/light1/CT"
-    color_temp_state_topic: "stat/light1/RESULT"
+    color_temp_state_topic: "tele/light1/STATE"
     color_temp_value_template: "{{value_json.CT}}"
     rgb_command_topic: "cmnd/light1/Color2"
-    rgb_state_topic: "stat/light1/RESULT"
+    rgb_state_topic: "tele/light1/STATE"
     rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
     effect_command_topic: "cmnd/light1/Scheme"
-    effect_state_topic: "stat/light1/RESULT"
+    effect_state_topic: "tele/light1/STATE"
     effect_value_template: "{{value_json.Scheme}}"
     effect_list:
       - 0
@@ -538,7 +551,6 @@ light:
     qos: 1
     retain: false
 ```
-
 
 ## Configure RF Codes from Sonoff-Bridge
 Use the [`binary_sensor.mqtt`](https://www.home-assistant.io/components/binary_sensor.mqtt/) component.
@@ -656,7 +668,8 @@ Pat Ceiling Fan:
 
 ## Configure Sonoff S31 w/ Power Monitoring as group of switch + sensor
 Configure the module as Sonoff S31, and on the Console run:\
-`SetOption4 1`
+`SetOption4 1`\
+`SetOption59 1`
 
 ```yaml
 # Example configuration.yaml entry
@@ -752,17 +765,90 @@ Sonoff S31_02:
   - sensor.s31_02_energy_total
 ```
 
-Alternative: Group all attribute in one mqtt sensor component. Home assistant 0.94 and above
+
+### Counter/Pulse/Water Meter sensor 
+
+The tasmota counter is volatile (not saved in case or reset/ reboot) due to flash wear. 
+Common use cases are a water meter that works with a pulse.
+this custom component [counter](https://github.com/hhaim/hass/blob/master/custom_components/sensor/tasmota_counter.py)
+ can handle it.
+
 ```yaml
-sensor:
-  - platform: mqtt
-    name: "SonOffPow1"
-    state_topic: "tele/sonoffpow1/SENSOR"
-    value_template: '{{ value_json["ENERGY"]["Power"] }}'
-    availability_topic: "tele/sonoffpow1/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    unit_of_measurement: "Watts" 
-    json_attributes_topic: "tele/sonoffpow1/SENSOR"
-    json_attributes_template: '{{ value_json["ENERGY"] | tojson }}'
+- platform: tasmota_counter
+    name: HASS_NAME
+    s topic: TOPIC
+    counter_id: 1
+    max_valid_diff: 2000
+    unit_of_measurement: 'l'
+    icon: mdi:water-pump
+    expire_after: 300
+    value_template: "{{ (4885 + (value))|int }}"
+``` 
+
+<!-- broken links and deprecated custom components in HA
+### MCP230xx binary sensor 
+
+It has a few async mqtt indications (interrupt and status) and it is tedious to define many of them 
+this custom component can solve this (use case, alarm with 16 inputs)
+
+[MCP23017 binary sensor](https://github.com/hhaim/hass/blob/master/custom_components/binary_sensor/mqtt_alarm.py)
+
+```yaml
+
+tasmota_alarm:
+  devices:
+    - name: HASS_NAME
+      stopic: TOPIC
+      binary_sensors:
+         - name: door
+           polar: true
+         - name: vol
+           polar: true
+         - name: kitchen
+           polar: true
+         - name: backdoor
+           polar: true
+..
 ```
+see [full example](https://github.com/hhaim/hass/blob/master/configuration.yaml)
+
+
+### A simpler way to define a Switch 
+
+[tasmota switch](https://github.com/hhaim/hass)
+
+* No need Option59,
+* No need startup script command 
+* No need to define LWT/Qos
+
+it just works and sync with HASS
+ 
+```yaml
+switch:
+  - platform: mqtt_tasmota
+    name: HASS_DEVICE
+    index: '1' #POWER ID
+    stopic: TOPIC
+..
+```
+
+## Relay connected to an MCP230XX
+
+This example controls a relay connected to D6 pin of the MCP23017 expander.
+```
+- platform: mqtt
+    name: "AC RED LED"
+    state_topic: "stat/FishtankAC/RESULT"
+    value_template: "{{ value_json.S29cmnd_D6.STATE }}"
+    state_on: "ON"
+    state_off: "OFF"
+    command_topic: "cmnd/FishtankAC/sensor29"
+    payload_on: "6,ON"
+    payload_off: "6,OFF"
+    qos: 1
+```
+
+-->
+
+
+

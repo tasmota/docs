@@ -12,7 +12,7 @@ If you are using LetsEncrypt to generate your server certificates, you should ac
 
 ### Fingerprint validation
 
-The fingerprint is now calculated on the server's Public Key and no longer on its Certificate. The good news is that Public Keys tend to change far less often than certificates, i.e. LetsEncrypt triggers a certificate renewal every 3 months, the Public Key fingerprint will not change after a certificate renewal. The bad news is that there is no simple command to retrieve the server's Public Key fingerprint.
+The fingerprint is now calculated on the server's Public Key and no longer on its Certificate. The good news is that Public Keys tend to change far less often than certificates, i.e. LetsEncrypt triggers a certificate renewal every 3 months, the Public Key fingerprint will not change after a certificate renewal. The bad news is that there is no `openssl` command to retrieve the server's Public Key fingerprint, although [a tool exists to calculate it](https://github.com/issacg/tasmota-fingerprint) from your certificate.
 
 So to simplify your task, we have added two more options: 1/ auto-learning of the fingerprint, 2/ disabling of the fingerprint validation altogether.
 

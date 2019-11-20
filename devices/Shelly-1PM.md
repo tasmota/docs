@@ -13,13 +13,10 @@ The GPIOs on the Shelly are connected to AC power!** Only use a Shelly as design
 **Do not connect AC power and the serial connection at the same time**
 The GND connection of the Shelly is connected to the live AC wire. Connecting serial with your PC will fry your PC.
 
-**Check the correct jumper position before connecting AC power to Shelly 1.**
-If the jumper is set to 12V you will destroy your Shelly!
-
 An ESP8266 with 2MB flash single relay device 42mm "round" in size.
 
 ## Serial Flashing
-Shelly 1PM comes with a partially exposed programming/debug header which can be used to flash Tasmota on the device. A USB-to-UART adapter is needed as well as a reliable 3.3V with at least 350 mA drive capability. The following diagram shows the device pinout and power source voltage selection jumper.
+Shelly 1PM comes with a partially exposed programming/debug header which can be used to flash Tasmota on the device. A USB-to-UART adapter is needed as well as a reliable 3.3V with at least 350 mA drive capability. The following diagram shows the device pinout.
 
 <img src="https://github.com/arendst/arendst.github.io/blob/master/media/shelly/shelly1pm-pinout-812x400.png" height="250" />
 

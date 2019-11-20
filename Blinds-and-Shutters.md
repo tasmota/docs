@@ -35,13 +35,12 @@ Refer to the [Blinds, Shutters and Roller Shades Commands](Commands#blinds-shutt
 
 Turning a device relay on or off directly (i.e., using `Power`) will function to affect a shutter's movement. In momentary mode (i.e., stepper motor), the relays start or stop the motor. The driver takes care of the direction and proper update of the shutter position.
 
-By default, only `Shutter1` is enabled when `SetOption80 1` is invoked.
+By default, only `Shutter1` is enabled when `SetOption80 1` is invoked.  
+<img src="https://user-images.githubusercontent.com/34340210/65997878-3517e180-e468-11e9-950e-bfe299771233.png">
 
-![ShutterWeb1](https://user-images.githubusercontent.com/34340210/65997878-3517e180-e468-11e9-950e-bfe299771233.png)
 
-A maximum of four shutters per device are supported.
-
-![ShutterWeb4](https://user-images.githubusercontent.com/34340210/65997879-3517e180-e468-11e9-9c44-9ad4a4a970cc.png)
+A maximum of four shutters per device are supported.  
+<img src="https://user-images.githubusercontent.com/34340210/65997879-3517e180-e468-11e9-9c44-9ad4a4a970cc.png">
 
 To enable additional shutters, `ShutterRelay<x> <value>` must be executed for each additional shutter. Additional shutter declarations must be sequentially numbered, and without gaps (i.e., first shutter 2, then shutter 3, and finally shutter 4).
 

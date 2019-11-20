@@ -1,5 +1,4 @@
-* How to Use
-* [Installation](/installation/)
+* [FAQ](/FAQ/)
 * [Commands](Commands)  
 * [Templates](Templates)  
 * [Modules](Modules)  
@@ -19,6 +18,8 @@
 * [Power Monitoring Calibration](Power-Monitoring-Calibration)     
 * [Web UI](WebUI)     
 * Useful Topics 
+* [Tips](Tips)  
+* [Tutorials](Tutorials)  
 * [Cool Projects](Cool-Projects)   
 * [MQTT Overview](MQTT-Overview)  
 * [MQTT Retained Messages](PowerOnState-Configuration)  

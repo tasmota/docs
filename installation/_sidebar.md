@@ -1,6 +1,7 @@
-
-* [Prerequisites](installation/Installation) 
-* [Initial Configuration](installation/Initial-Configuration)  
-* [MQTT](installation/MQTT)  
-* [Upgrading](installation/Upgrading)     
-* [Go Back](../)  
+* [Prerequisites](Prerequisites)  
+* [Hardware Preparation](Hardware-Preparation)  
+* [Flashing](Flashing)  
+* [Initial Configuration](Initial-Configuration)  
+* [MQTT](MQTT)  
+* [Upgrading](Upgrading)     
+* [Back](/Home)  

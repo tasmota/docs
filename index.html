@@ -13,6 +13,26 @@
 <!-- PrismJS theme -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/themes/prism-dark.css">
 
+<style>
+:root {
+  --content-max-width                 : 55em;
+  --table-head-background             : var(--mono-shade3);
+  --table-row-even-background         : var(--mono-shade1);
+  --table-row-odd-background          : var(--mono-tint1);
+/* Sidebar
+============================================================================= */
+    --sidebar-background                          : var(--mono-shade2);
+    --sidebar-padding                             : 0 25px;
+    --sidebar-transition-duration                 : var(--duration-fast);
+    --sidebar-width                               : 20rem;
+    --sidebar-nav-indent                          : 0.6em;
+    --sidebar-nav-margin                          : 0.6rem 0 0;
+    --sidebar-nav-padding                         : ;
+
+    --sidebar-nav-link-margin                     : ;
+    
+</style>
+
 </head>
 <body>
   <div id="app"></div>
@@ -26,14 +46,18 @@
       logo       : '/_media/logog_mini.png',
       onlyCover  : true,
       autoHeader : false,
+      relativePath: true,
       coverpage  : true,
 			auto2top   : true,
+      mergeNavbar: true,
+      notFoundPage: true,
       // maxLevel   : 1,
 			loadSidebar: true,
+      loadNavbar: true,
       // alias: {
       //   '/.*/_sidebar.md': '/_sidebar.md',
       // }, 
-			subMaxLevel: 2,
+			subMaxLevel: 3,
      
       editLink: {
       text: '<span style="color:#1FA3EC"><small>Improve this article</small></span>',
@@ -42,6 +66,8 @@
       repo: 'https://github.com/tasmota/docs/blob/master/',
       cssClass: 'docsify-edit-link m-1'
       },
+      formatUpdated: 'Last updated {DD}.{MM}.{YYYY}',
+     
       tabs: {
         persist    : true,      // default
         sync       : true,      // default

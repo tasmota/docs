@@ -3,15 +3,14 @@ You've successfully flashed your device with a downloaded binary of Tasmota but 
 # Using Web UI
 ## Configure Wi-Fi 
 Tasmota provides a wireless access point for easy Wi-Fi configuration. 
+>*If you flashed using Tuya Convert this is the only option to set up your device.*
 
-!> If you flashed using Tuya Convert this is the only option to set up your device.
-
-<img style="margin: 10px 10px; float:left; width:220px" alt="Sonoff AP" src="https://user-images.githubusercontent.com/5904370/68963209-b4723200-07d6-11ea-9116-4b0f4f0f4dbc.png"></img>
+<img alt="Sonoff AP" src="https://user-images.githubusercontent.com/5904370/68963209-b4723200-07d6-11ea-9116-4b0f4f0f4dbc.png" align="left" width=200></img>
 Connect your device to a power source and grab your smartphone (or tablet or laptop or any other web and Wi-Fi capable device). Search for a Wi-Fi AP named **tasmota-xxxx** (where **x** is a number) and connect to it. _In this example the Wi-Fi AP is named **tasmota-7718**._ When it connects to the network, you may get a warning that there is no Internet connection and be prompted to connect to a different network. _Do not allow the mobile device to select a different network_.
 
-!> *Wi-Fi manager server is active for only 3 minutes. If you miss the window you might have to disconnect your device from power and reconnect.*
+> *Wi-Fi manager server is active for only 3 minutes. If you miss the window you might have to disconnect your device from power and reconnect.*
 
-<img style="margin: 10px 5px; float:right; width:220px" alt="Sign in to Wi-Fi Network" src="https://user-images.githubusercontent.com/5904370/68963506-5a25a100-07d7-11ea-8d34-91cfc8b658f6.png"></img>
+<img alt="Sign in to Wi-Fi Network" src="https://user-images.githubusercontent.com/5904370/68963506-5a25a100-07d7-11ea-8d34-91cfc8b658f6.png" align="right" width=280></img>
 After you have connected to the Tasmota Wi-Fi AP, open http://192.168.4.1 in a web browser on the smartphone (or whatever device you used). 
 Depending on the phone, it will take you to the Tasmota configuration page automatically, or you will get a prompt to *sign in to Wi-Fi network* or *authorize*. Tapping on the AP name should also open the configuration page.
 

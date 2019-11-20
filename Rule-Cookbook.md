@@ -40,6 +40,7 @@
 - [Garage Door Opener](#Garage-Door-Opener)
 - [Remote Control Button Multi-press](#Remote-Control-Button-Multi-press)
 - [Two-way light switches without MQTT](#two-way-light-switches-without-mqtt)
+- [Roller shutter push-button toggle](#roller-shutter-push-button-toggle)
 ------------------------------------------------------------------------------
 
 #### Use long press action on a switch
@@ -1476,18 +1477,37 @@ Note that having a rule for the Button#State disables the power toggling of the 
 
 ```lua
 Rule1
-  ON Power1#state=1 DO WebSend [192.168.0.144] POWER1 1 ENDON 
-  ON Power1#state=0 DO WebSend [192.168.0.144] POWER1 0 ENDON
+  ON Power1#state DO WebSend [192.168.0.144] POWER1 %value% ENDON
+  ON Power2#state DO WebSend [192.168.0.144] POWER2 %value% ENDON
+  ON Power3#state DO WebSend [192.168.0.144] POWER3 %value% ENDON
 
-Rule2
-  ON Power2#state=1 DO WebSend [192.168.0.144] POWER2 1 ENDON 
-  ON Power2#state=0 DO WebSend [192.168.0.144] POWER2 0 ENDON
+Rule1 1
+```
 
-Rule3
-  ON Power3#state=1 DO WebSend [192.168.0.144] POWER3 1 ENDON 
-  ON Power3#state=0 DO WebSend [192.168.0.144] POWER3 0 ENDON
+[Back To Top](#top)
 
-Backlog Rule1 1; Rule2 1; Rule3 1
+------------------------------------------------------------------------------
+
+#### Roller shutter push-button toggle
+
+With a two relay device (e.g., Shelly 2.5) configured for a roller shutter, you can also connect push-buttons (configured as switch components in this example) and set them for inverted toggle behavior. Pressing a push-button once makes the roller shutter move in one direction. Pressing it again stops it. These rules each use a variable to remember the shutter state where `0 == Stopped` and `1 == Moving`.
+
+```lua
+Backlog SwitchTopic 0; SwitchMode1 4; SwitchMode2 4
+
+Rule1
+  ON Switch1#State==1 DO Add1 1 ENDON
+  ON Var1#State==0 DO ShutterStop1 ENDON
+  ON Var1#State==1 DO ShutterClose1 ENDON
+  ON Var1#State>=2 DO Var1 0 ENDON
+  ON Shutter1#Close DO Var1 0 ENDON
+  ON Switch2#State==1 DO Add2 1 ENDON
+  ON Var2#State==0 DO ShutterStop1 ENDON
+  ON Var2#State==1 DO ShutterOpen1 ENDON
+  ON Var2#State>=2 DO Var2 0 ENDON
+  ON Shutter1#Open DO Var2 0 ENDON
+
+Rule1 1
 ```
 
 [Back To Top](#top)

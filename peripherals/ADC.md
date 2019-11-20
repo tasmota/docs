@@ -1,5 +1,7 @@
 ESP8266 has a single ADC pin available. It may be used to read voltage at ADC pin or to read module supply voltage (VCC). 
-> When referring to the ADC pin these terms are used interchangeably: ADC (Analog-to-digital Converter), TOUT, Pin6, A0 or Analog0.
+> When referring to the ADC pin these terms are used interchangeably: ADC (Analog-to-digital Converter), TOUT, Pin6, A0 or Analog0.  
+> 
+> **Check your Wi-Fi module**. The ESP8266 A0 pin supports a maximum voltage of 1.0V. Many newer Wi-Fi modules have an on-board voltage divider to support a higher A0 input voltage range (typically in the range between 0 and 3.3 volts). You may need to use an external voltage divider to ensure your input voltage is in the right range.
 
 By default Tasmota uses ADC pin to read voltage. The signal comes from an analog [peripheral](peripherals), or sometimes from the device itself (see [Shelly 2.5](Shelly-2.5)). 
 

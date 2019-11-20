@@ -1,4 +1,4 @@
-[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/device.jpg|Lonsonho 16A EU Power Monitor]
+[[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/device.jpg|Lonsonho 16A EU Power Monitor]]
 * Aliexpress: [Lonsonho Wifi Smart Socket Power Monitor EU 2 Pin](https://www.aliexpress.com/item/Lonsonho-Smart-Plug-Wifi-Smart-Socket-Power-Monitor-EU-France-US-AU-UK-Korea-Plug-Outlet/32901221191.html)
 * Aliexpress: [RGB Smart Plug](https://www.aliexpress.com/item/ET-Smart-Plug-Wifi-Socket-With-Switch-Phone-APP-Voice-Remote-Control-Monitor-Smart-Timing-Switch/32964036349.html?spm=a2g0s.9042311.0.0.439c4c4d4N8N2Q)
 * amazon.de: [Smart Steckdose, Wechsellicht 16A, WLAN Steckdose Wifi Stecker fernbedienbar, Stromverbrauch messen, funktioniert mit Alexa [Echo, Echo Dot] und Google Home, 4 Packs](https://www.amazon.de/gp/product/B07MYL3HLZ)
@@ -82,7 +82,7 @@ Complete RGB support requires building slightly custom Tasmota. Edit `sonoff/son
 _Make sure that you don't have wrong WiFi configuration in user_config_override.h._
 Build and OTA flash it to the device using Tasmota. After it reboots configure as following:
 
-[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/config.png|Configuration]
+[[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/config.png|Configuration]]
 
 RGB and dimming should work now.
 
@@ -93,18 +93,18 @@ _One of my devices had a hardware issue - constantly losing WiFi, rebooted when 
 
 * Unbend earth connections on the bottom to make them straight.
 * Use a sharp knife to slice through glue between RGB ring and the case. Requires quite a lot of force and time. RGB ring may break in places where glue is stronger than the plastic.
-[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/opening.jpg|Opening]
+[[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/opening.jpg|Opening]]
 * Use a screwdriver to pry the case open.
-[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/opened.jpg|Opened]
+[[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/opened.jpg|Opened]]
 * Remove button cap
-[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/opened2.jpg|Opened2]
+[[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/opened2.jpg|Opened2]]
 * Desolder output connections, try not to melt any plastic. Remove support plastic with a screwdriver, it's held to the PCB by two clips.
 * Desolder input poles. This is tricky since there's a lot of solder. I've removed as much of it as possible with desoldering pump, then melted the solder and rotated the poles with pliers while it cooled. Poles are made of steel and steel don't accept solder well.
 * Remove the PCB by lifting it up. It's glued to the case on the bottom by the relay and held tight with input poles so it requires some force. Also, it's not easy to grab the PCB. I've used dip removing tweezers, holding PCB by holes for the earth connectors.
-[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/relay_glue.jpg|Glue]
-[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/esp.jpg|ESP8266EX]
-[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/relay.jpg|Relay]
-[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/relay2.jpg|Relay2]
+[[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/relay_glue.jpg|Glue]]
+[[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/esp.jpg|ESP8266EX]]
+[[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/relay.jpg|Relay]]
+[[https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/relay2.jpg|Relay2]]
 I figured out the pinout for flashing the device:
 ![Pinout](https://github.com/iroger/Tasmota/blob/master/relay.jpg?raw=true)
 

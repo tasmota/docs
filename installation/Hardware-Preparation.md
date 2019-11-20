@@ -21,7 +21,7 @@ Each device has its pins labelled differently. If the labelling isn't visible on
 When you have identified pins on your device, connect wires according to the table:
 
 |Serial adapter  | ESP8266 device |
-|---:|:--------|
+|-----------:|:-------------------|
 |        3V3 | 3V3 or VCC         |
 |         TX | RX                 |
 |         RX | TX                 |

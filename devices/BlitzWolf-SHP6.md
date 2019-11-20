@@ -1,4 +1,4 @@
-[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-01.jpg|BlitzWolf SHP6]
+[[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-01.jpg|BlitzWolf SHP6]]
 
 The BlitzWolf BW-SHP6 and the Gosund SP111 are basically the same device, barring the branding.  
 
@@ -19,13 +19,13 @@ Please see the [Hardware Preparation](https://github.com/arendst/Tasmota/wiki/Ha
 ### Step 2
 Remove one screw on the back of the device. **PH1** screwdriver required.
 
-[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-02.jpg|One PH1 Screw]
+[[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-02.jpg|One PH1 Screw]]
 
 ### Step 3
 Undo 2 screws. **PH1** screwdriver required.
 Disconnect antenna.
 
-[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-03.jpg|Two PH1 Screws and antenna]
+[[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-03.jpg|Two PH1 Screws and antenna]]
 
 ### Step 4
 Carefully remove PCB from casing for easier soldering.
@@ -35,7 +35,7 @@ Carefully remove PCB from casing for easier soldering.
 ### Step 5
 Solder cables to the ESP Pins.
 
-[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-04.jpg|Solder points]
+[[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-04.jpg|Solder points]]
 
 If you do not want to solder you can try using crocodile clips and manually push a jumper cable first to IO0 (enter flash mode while booting, i.e. connect IO0 to ground) and then during flashing push a jumper to TX. Just be careful to not cause any short-circuit with the clips on the other side of the pads.
 
@@ -44,7 +44,7 @@ If you do not want to solder you can try using crocodile clips and manually push
 
 ### Step 6
 Connect serial adapter and make a shortwire between Pin IO0 and GND during startup (for entering flashmode).
-[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-05.jpg|Soldered cables]
+[[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-05.jpg|Soldered cables]]
 
 ### Step 7
 Clear flash to avoid issues with dropping WiFi connection.
@@ -61,24 +61,26 @@ Select the correct configuration under _Configuration -> Configure Module_
 ### As an alternative for steps 2 to 5: 
 The following programming adapter could be an option, which requires no soldering or significant disassembly on the SHP-6.
 It significantly reduces the effort of reflashing multiple SHP-6 units.
-[http://www.thingiverse.com/thing:3476167]
-[https://cdn.thingiverse.com/renders/e2/cc/49/cc/6a/298542652c3ba493b6d4a284ed505efe_preview_featured.jpg]
+[[http://www.thingiverse.com/thing:3476167]]
+[[https://cdn.thingiverse.com/renders/e2/cc/49/cc/6a/298542652c3ba493b6d4a284ed505efe_preview_featured.jpg]]
 
 
 **Module Type:** BlitzWolf SHP
-[https://i.imgur.com/UCs6ASh.png|Tasmota SHP6 Configuration]
+[[https://i.imgur.com/UCs6ASh.png|Tasmota SHP6 Configuration]]
 
 
 
 ## Other photos
 
-[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-06.jpg|Left side]
-[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-07.jpg|Right side]
-[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-08.jpg|Back]
-[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-09.jpg|All parts]
+[[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-06.jpg|Left side]]
+[[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-07.jpg|Right side]]
+[[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-08.jpg|Back]]
+[[https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-09.jpg|All parts]]
 
 ## Template
-[https://blakadder.github.io/templates/blitzwolf_SHP6.html]
+[[https://blakadder.github.io/templates/blitzwolf_SHP6.html]]
+
+[[https://blakadder.github.io/templates/gosund_SP111_v2.html]] Gosund SP111 with new PCB SP111_A_Wifi_Ver1.1
 
 ## Calibration fine tuning
 Approach the calibration using the Method 2. If not satisfied with the results, you could mod the SMD direct measure resistor or mitigate this using a Tasmota set of rules:
@@ -88,7 +90,7 @@ Rule1 ON energy#power<=100 DO Currentcal 2500 BREAK ON energy#power<=500 DO Curr
 Rule1 1
 ```
 
-Take the CurrentCal values above as a first approach and should be corrected through the Tasmota Method 2 calibration procedure: [https://github.com/arendst/Tasmota/wiki/Power-Monitoring-Calibration]
+Take the CurrentCal values above as a first approach and should be corrected through the Tasmota Method 2 calibration procedure: [[https://github.com/arendst/Tasmota/wiki/Power-Monitoring-Calibration]]
 
 ## Home Assistant configuration 
 ```yaml

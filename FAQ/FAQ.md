@@ -1,5 +1,5 @@
-### [**Troubleshooting**](Troubleshooting)  
-### Installation
+## Table of Contents
+#### Installation
  - [Cannot enter flash mode](#Cannot-enter-flash-mode)
  - [Flashing issues](#Flashing-issues)
  - [Firmware update with file upload not working](Upgrading#upgrade-by-file-upload)
@@ -7,18 +7,18 @@
  - [There was white smoke and the device doesn't work anymore!](#There-was-white-smoke-and-the-device-doesnt-work-anymore)
  - [Sonoff 4CH V2 / Sonoff Dual V2 won't flash](#Sonoff-4CH-V2--Sonoff-Dual-V2-wont-flash)
  - [Flashing fails on MacOS High Sierra](#Flashing-fails-on-MacOS-High-Sierra)
-### Wi-Fi
+#### Wi-Fi
  - [Cannot connect to Wi-Fi](#Cannot-connect-to-Wi-Fi)
  - [I entered the wrong Wi-Fi information](#I-entered-the-wrong-Wi-Fi-information)
  - [Device disconnects from Wi-Fi often](#Device-disconnects-from-Wi-Fi-often)
  - [Wi-Fi stops working](#Wi-Fi-stops-working)
  - [Control device from outside my network](../issues/5352)
  - [Weaker Wi-Fi signal after upgrade](#Weaker-Wi-Fi-signal-after-upgrade)
-### MQTT
+#### MQTT
  - [Cannot connect to my MQTT broker](#Cannot-connect-to-my-MQTT-broker)
  - [Frequent MQTT reconnects](#Frequent-MQTT-reconnects)
  - [What's Topic, GroupTopic and FallBack Topic](Tips#topic-grouptopic-and-fallback-topic)
-### Device
+#### Device
  - [How do I configure this unknown device](Configuration-Procedure-for-New-Devices)
  - [Relay clicks and LED flashes at 1 second intervals](#Relay-clicks-and-LED-flashes-at-1-second-intervals)
  - [Status LED blinking](#Status-LED-blinking)
@@ -27,7 +27,7 @@
  - [Cannot find my device in Modules](#Cannot-find-my-device-in-Modules) 
  - [Device keeps restarting after changing config over MQTT](#Device-keeps-restarting-after-changing-config-over-MQTT)
  - [Can you add this unsupported sensor to Tasmota](#Can-you-add-this-unsupported-sensor-to-Tasmota)
- - [Tasmota is sending a lengthy status update (`STATUS` - `STATUS11`) every 5 seconds. What's going on?](#Tasmota-is-sending-a-lengthy-status-update-STATUS---STATUS11-every-5-seconds-Whats-going-on)
+ - [Tasmota is sending a lengthy status update ("STATUS" - "STATUS11") every 5 seconds. What's going on?](#Tasmota-is-sending-a-lengthy-status-update-STATUS---STATUS11-every-5-seconds-Whats-going-on)
  - [Web interface asks for password](#Web-interface-asks-for-password)
  - [Power monitoring shows wrong values](#Power-monitoring-shows-wrong-values)
  - [Power monitoring resets Energy Today mid-day](../issues/5571)
@@ -38,10 +38,6 @@
  - [How do I invert the output of the green LED on the Sonoff Basic so the LED is on when the relay is off?](#How-do-I-invert-the-output-of-the-green-LED-on-the-Sonoff-Basic-so-the-LED-is-on-when-the-relay-is-off)
  - [What is an Arduino core?](#What-is-an-Arduino-core)
  - [Device Operational Recovery](Device-Operational-Recovery)
-### [**Tips**](Tips)  
-### [**Tutorials**](Tutorials)  
-
-### [I cannot find an answer to my problem here](#I-cannot-find-an-answer-here)
 
 ## Installation
 ### Cannot enter flash mode
@@ -94,6 +90,7 @@ Solution:
 4. Restart the flash process. It works!
 
 ## Wi-Fi
+
 ### Cannot connect to Wi-Fi 
 If your device does not connect to your Wi-Fi and you've made sure the Wi-Fi credentials are correct, it is caused by using special chars or white spaces in your SSID or Password of your Wi-Fi. Remove them and try again. Other reason can be using an SSID longer than the allowed 32 characters.
 

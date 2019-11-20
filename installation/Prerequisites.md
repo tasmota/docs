@@ -1,10 +1,6 @@
-To install Tasmota on your device you have to prepare some tools and software.
-
-If your device works with Tuya Smart or Smart Life app it may be possible to flash it with [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert) without disassembly or soldering and skip directly to [initial configuration](initial-configuration).
-
 ## Needed Hardware
 
-<img src="https://user-images.githubusercontent.com/5904370/55688732-43cf8100-597c-11e9-9171-e8f7d975aff4.jpg" width=150 align=right></img>
+<img style="float:right;width:150" src="../_media/esp8266.png"></img>
 ### Device with an ESP8266/ESP8285 chip
 Any [variation](https://en.wikipedia.org/wiki/ESP8266#Espressif_modules) of the [ESP8266 chip](https://www.espressif.com/en/products/hardware/esp8266ex/overview) can be flashed with Tasmota.
 
@@ -28,7 +24,8 @@ If you're intimidated by soldering you could get away with holding the headers w
 
 You could use any kind of wire but [jumper wires](http://blog.sparkfuneducation.com/what-is-jumper-wire) (also called DuPont wires) are more practical than soldering and desoldering.
 
-### Pin headers<img src="https://user-images.githubusercontent.com/5904370/55688997-a6764c00-597f-11e9-9f5f-cb5c38c21479.png" height=100 align=right></img>
+### Pin headers
+<img src="https://user-images.githubusercontent.com/5904370/55688997-a6764c00-597f-11e9-9f5f-cb5c38c21479.png" height=100 align=right></img>
 [Pin headers](https://learn.sparkfun.com/tutorials/connector-basics/pin-header-connectors) come in male or female version. Choose according to your jumper wire connectors.
 ### Computer with Linux, Windows or MacOS
 You need a computer with a USB port to upload the firmware to your device and configure it.

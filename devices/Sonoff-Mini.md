@@ -2,7 +2,7 @@ The Sonoff Mini is, as the name implies, a very small device, designed to be hid
 
 Tasmota can be flashed on this device via OTA using the [Sonoff DIY](Sonoff-DIY) feature.
 
-Several free GPIO are available. The the OTA jumper pin is the most accessible and very easy to use on a pin header.
+Several free GPIO are available. The OTA jumper pin is the most accessible and very easy to use on a pin header.
 
 ![PCB with GPIO's etc labelled](https://user-images.githubusercontent.com/3912017/66733148-dfc3d300-ee5e-11e9-8715-87c8ecb844a7.jpg)
 
