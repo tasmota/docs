@@ -1,13 +1,26 @@
 
-!> Make sure to read Installation to see some new features in action
+> [!WARNING]
+> Make sure to read Installation to see some new features in action
 
-?> Click on "Peripherals" to see morphing sidebar depending on folder
+> [!TIP]
+> Click on "Peripherals" to see morphing sidebar depending on folder
 
+> [!NOTE]
+> Did you notice the different blockquotes???
+
+
+> [!TIP|label:Theo Says|icon:fas fa-plug]
+> We can even make our own heading text and/or icon
+
+
+Glossary test: Module 
+ Component
 
 ### Whats New?
 
 
 <!-- tabs:start -->
+
 
 #### ** 2019-11-15 **
 We present the official Tasmota firmware flashing tool:  
@@ -28,6 +41,7 @@ Some outdated features have been removed so wave goodbye to: WPS, SmartConfig, t
 Tasmota development branch is undergoing a big code rewrite of the light driver. Some things might break in the process, be aware of that if you're installing the daily build on a critical device and make sure to report any [issues](https://github.com/arendst/Tasmota/issues).
 
 <!-- tabs:end -->
+
 
 
 ### Community
