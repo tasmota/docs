@@ -2,6 +2,7 @@
 
 Those LEDs are defined in a template or module using `Led1`, `Led2`, `Led3` or `Led4` (or `Led1i`, `Led2i`, `Led3i` or `Led4i`) and additionally using `LedLink` or `LedLinki` (`LedLink` was introduced in version 6.5.0.12). It is not recommended to assign `Led<x>` and `Led<x>i` with the same `<x>` number. Prior to version 6.5.0.12, Tasmota only supported up to two LED components to indicate the power state of the relay(s), and the Wi-Fi/MQTT connectivity status. 
 
+> [!COMMENT]
 > It is possible to wire in your own LED and assign it as any of the above mentioned but that's outside the scope of this article.
 
 If only one LED is configured, it serves both purposes; the link status LED and/or the LED that indicates the power state of the relay(s). If more than one LED component is defined, `Led1`/`Led1i` will act as the Wi-Fi/MQTT status LED and the next defined LED (e.g., `Led2`/`Led2i`) will act as the LED that indicates the power state of the relay(s). _This is the default behavior_. Configuring a GPIO as an [`LEDLink`/`LEDLinki`](#using-ledlink) component changes this behavior.

@@ -348,7 +348,7 @@ Example: Core-/SDK-Version: **2_3_0**/1.5.3(aec24ac9)
   - mqtt reconnect and lagging fixed
   - fixed [Esp8266 IP Address not reachable](https://github.com/esp8266/Arduino/issues/2330)
   - [umm_malloc](https://github.com/esp8266/Arduino/pull/6161) error fixed
-  - Extend PWM resolution for low brightness lights ([Details](../pull/5742))
+  - Extend PWM resolution for low brightness lights ([Details](https://github.com/arendst/Tasmota/pull/5742))
   - Modem Sleep doesn't work but Tasmota has a CPU dynamic sleep to save energy, so it is not a big issue for this core
   - Alexa works
   - Web UI is fast

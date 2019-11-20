@@ -1,4 +1,3 @@
-## Home Automation 
 Tasmota integrates with many home automation systems by allowing control and reporting sensor data.
 - [**Alexa**](Alexa)
 - [**Domoticz**](Domoticz)

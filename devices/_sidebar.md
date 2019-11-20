@@ -1,6 +1,4 @@
-Most ESP82xx based devices are able to run Tasmota. The devices listed below come with a guide on flashing and using it with Tasmota. An additional [repository of Tasmota configuration templates](https://blakadder.github.io/templates) for a vast number of other devices (e.g., any device with an **_ESP82xx-based_** Tuya Wi-FI module) is available.  
-
-- [**Sonoff 4CH**](Sonoff-4CH)<img src="https://user-images.githubusercontent.com/5904370/53279262-400ad680-370f-11e9-8449-742fbfac5908.png" align="right" />
+- [**Sonoff 4CH**](Sonoff-4CH)
 - [**Sonoff 4CH Pro**](Sonoff-4CH-Pro)
 - [**Sonoff 4CH DIY**](Sonoff-4CH-DIY)
 - [**Sonoff B1 / B1 R2**](Sonoff-B1)
@@ -17,7 +15,7 @@ Most ESP82xx based devices are able to run Tasmota. The devices listed below com
 - [**Sonoff RF**](sonoff-RF)
 - [**Sonoff RF R3**](Sonoff-DIY)
 - [**Sonoff RF Bridge 433**](Sonoff-RF-Bridge-433)
-- [**Sonoff S20 Smart Socket**](sonoff-S20)<img src="https://user-images.githubusercontent.com/5904370/53279217-8c561680-370f-11e9-8150-59acedcb8f37.png" align="right"/> 
+- [**Sonoff S20 Smart Socket**](sonoff-S20)
 - [**Sonoff S26 Smart Socket**](Sonoff-S26-Smart-Socket)
 - [**Sonoff S31**](sonoff-S31)
 - [**Sonoff SC**](sonoff-SC)
@@ -31,9 +29,9 @@ Most ESP82xx based devices are able to run Tasmota. The devices listed below com
 - [**Blitzwolf BW-SHP2**](blitzwolf-SHP2)
 - [**Blitzwolf BW-SHP4**](BlitzWolf-BW-SHP4-(UK-Version))
 - [**Blitzwolf BW-SHP6**](blitzwolf-SHP6)
-- [**Digoo DG-SP202**](../pull/4891)
+- [**Digoo DG-SP202**](https://github.com/arendst/Tasmota/pull/4891)
 - [**Geekcreit 2CH**](Geekcreit-Sonoff-2-Channel-Relay-(AC-85V-250V))
-- [**Gosund SP1**](Gosund-SP1)<img src="https://user-images.githubusercontent.com/5904370/53279089-f968ac80-370d-11e9-8464-ce9d1c9c679c.jpg" width="250" align="right" />
+- [**Gosund SP1**](Gosund-SP1)
 - [**H801 LED Controller**](H801)
 - [**HuaFan Smart Socket**](HuaFan-Smart-Socket)
 - [**Luminea LED Controller**](Luminea-ZX-2844-675-(RGBW-LED-Controller))
@@ -45,7 +43,7 @@ Most ESP82xx based devices are able to run Tasmota. The devices listed below com
 - [**OBI Socket**](OBI-Wifi-Socket)
 - [**OBI Socket 2**](OBI-Socket-2)
 - [**OBI Socket IP44 (Black)**](OBI-WiFi-Socket-IP44)
-- [**Shelly 1**](shelly-1)<img src="https://shelly.cloud/wp-content/uploads/2018/11/shelly1_thumb.png" width="250" align="right" />
+- [**Shelly 1**](shelly-1)
 - [**Shelly 1PM**](shelly-1PM)
 - [**Shelly 2**](shelly-2)
 - [**Shelly 2.5**](shelly-2.5)
@@ -54,11 +52,11 @@ Most ESP82xx based devices are able to run Tasmota. The devices listed below com
 - [**Teckin SP22**](Teckin-sp22)
 - [**YTF IR Bridge**](ytf-ir-bridge)
      - [**IR Codes Remotes**](Codes-for-IR-Remotes-(for-YTF-IR-Bridge))
-- [**WT003-EU 4 AC + 4 USB Outlet Tuya Power Strip EU**](../pull/4590)
+- [**WT003-EU 4 AC + 4 USB Outlet Tuya Power Strip EU**](https://github.com/arendst/Tasmota/pull/4590)
 - [**Wemos D1 R1 & R2**](Wemos-D1-R1-&-R2)
 - [**Wemos D1 Mini**](Wemos-D1-Mini)
     - [**Flashing**](Wemos-D1-Mini#flashing-wemos-with-tasmota)
     - [**Configuration**](Wemos-D1-Mini#generic-module)
     - [**Usable Pins**](Expanding-Tasmota#usable-pins)
 
-See "[Other Devices](Other-Devices)" for a list of flashing guides for other miscellaneous ESP82xx devices.
+* [Other Devices](Other-Devices)
