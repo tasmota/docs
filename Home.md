@@ -8,6 +8,8 @@
 > [!NOTE]
 > Did you notice the different blockquotes???
 
+> [!COMMENT]
+> Custom alert
 
 > [!TIP|label:Theo Says|icon:fas fa-hand-spock]
 > We can even make our own heading text and/or icon
