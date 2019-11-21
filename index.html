@@ -17,7 +17,9 @@
 
 <style>
 :root {
+  --base-line-height     : 1.5;
   --content-max-width                 : 70em;
+  --table-cell-padding                : 0.4em 0.75em;
   --table-head-background             : var(--mono-shade3);
   --table-row-even-background         : var(--mono-shade1);
   --table-row-odd-background          : var(--mono-tint1);
@@ -26,12 +28,11 @@
     --sidebar-background                          : var(--mono-shade2);
     --sidebar-padding                             : 0 25px;
     --sidebar-transition-duration                 : var(--duration-fast);
-    --sidebar-width                               : 20rem;
+    --sidebar-width                               : 18rem;
     --sidebar-nav-indent                          : 0.6em;
-    --sidebar-nav-margin                          : 0.6rem 0 0;
-    --sidebar-nav-padding                         : ;
-
-    --sidebar-nav-link-margin                     : ;
+    --sidebar-nav-margin                          : 0 0 0;
+    --sidebar-nav-link-padding                    : 0 0;
+    --sidebar-nav-link-before-margin              : 0 0 0 0;
     
 </style>
 
@@ -106,7 +107,7 @@
   <!-- Beautiful Alerts plugin - Custom blockquote alerts -->
   <script src="https://unpkg.com/docsify-plugin-flexible-alerts"></script>
   <!-- Sidebar Collapse -->
-  <script src="//unpkg.com/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+  <script src="//unpkg.com/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script> 
   <!-- Glossary - https://github.com/TheGreenToaster/docsify-glossary -->
   <!-- <script src="//unpkg.com/docsify-glossary/dist/docsify-glossary.min.js"></script> -->
   <!-- Pagination -->

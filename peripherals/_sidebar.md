@@ -11,7 +11,7 @@
 - [BME280](BME280)
 - [BME680](BME680)
 - [Buzzer](Buzzer)
-- [CC2530](../Zigbee)
+- [CC2530](Zigbee)
 - CCS811
 - [Chirp! Soil Moisture Sensor](Moisture-Sensor-and-Chirp!-Sensor)
 - [DHT11](DHT11)

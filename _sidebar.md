@@ -1,3 +1,4 @@
+* **Features**
 * [Upgrading](Upgrading)
 * [Commands](Commands)  
 * [Templates](Templates)  
@@ -14,11 +15,11 @@
 * [Zigbee](Zigbee)
 * [Displays](Displays)  
 * [Blinds and Shutters](Blinds-and-Shutters)    
-* [Smart Home Integrations](Integrations)   
+* [Smart Home Integrations](/integrations/)   
 * [Power Monitoring Calibration](Power-Monitoring-Calibration)     
 * [Web UI](WebUI)     
 * [Supported Devices](/devices/)  
-* Useful Topics 
+* **Useful Topics**
 * [Tips](Tips)  
 * [Tutorials](Tutorials)  
 * [Cool Projects](Cool-Projects)   

@@ -2,16 +2,16 @@ Tasmota's web user interface is a practical way to control and manage your tasmo
 
 To access it use your device's IP address in your favorite web browser.
 
-### Configuration
+#### Configuration
 Configuration menu allows you to configure everything from components to Wi-Fi and gives you the option to backup and restore the configuration in a secure location.
 
-### Information
+#### Information
 Displays a single page loaded with information about the device including: current Tasmota version, Wi-Fi AP data, MQTT host data and more
 
-### Firmware Upgrade
+#### Firmware Upgrade
 An easy to use menu to initiate a firmware [upgrade](Upgrading) from an uploaded .bin or an OTA server.
 
-### Console
+#### Console
 Terminal access to Tasmota. Issue [commands](Commands) here or follow the information stream. Useful for debugging when using [˙Weblog 4`](Commands#weblog).
 
 ## Themes

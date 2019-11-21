@@ -1,4 +1,4 @@
-## HOME AUTOMATION SYSTEM EXAMPLES WITH PI, SONOFF, AND NODE-RED
+#### Home automation system examples with Pi, Tasmota and Node-Red
 
 * Detailed setting up Node-Red and mosquitto on a Raspberry PI and initial control of a Sonoff Switch:
 

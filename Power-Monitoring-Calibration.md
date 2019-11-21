@@ -1,6 +1,5 @@
-You might need to calibrate your power monitoring device as correct measurements are influenced by hardware and timing differences.
+!> You need to calibrate your power monitoring device as correct measurements are influenced by hardware and timing differences.
 
-# What you need
 - Your power monitoring capable device flashed with Tasmota and configured with the correct module/template that supports power monitoring
 - An AC capable **calibrated** multi-meter
 - A **known** wattage load with a **power factor as close to 1** as possible (e.g., a resistive load) for best results  
@@ -9,7 +8,7 @@ You might need to calibrate your power monitoring device as correct measurements
   **Do not** use switch mode driven devices such as LED lamps, computer equipment, or inductive/capacitive devices such as motors!
 - > A calibrated power meter (A.K.A. Kill-a-Watt) *(optional)*
 
-# Set up
+## Setup
 - Connect the load (e.g., a 60W incandescent light bulb) to your device  
   >*(optional)* Plug your load into the Kill-a-Watt
 - Open two Tasmota web UI browser windows for your power monitoring device:
@@ -38,22 +37,18 @@ You might need to calibrate your power monitoring device as correct measurements
    Example: 1000*(60.0/235.5) = 254.777
 4. Confirm the validity of your calibration process checking `Power Factor` from the web UI which should be as close as possible to `1.00`. In theory resistive loads will always provide a power factor of 1.00. If that is not the case, we recommend you repeat the calibration process and make sure everything was done correctly. 
    
-### Script for automatic calibration
-
-[Tampermonkey script](https://gist.githubusercontent.com/blakadder/beb92969e5af570dfb34d0001dee4754/raw/44c048dfc925d591f7f1b677c1de738d6489d970/powcalscript) submitted by [@yuuya45](https://github.com/yuuya45)
-
 ## Method 2
 The [`CurrentCal`](Commands#currentcal), [`PowerCal`](Commands#powercal), and [`VoltageCal`](Commands#voltagecal) commands allow fine tuning of the power calibration.  
 
 Repeat the procedure below for each of the three readings: Current, Power, and Voltage using the corresponding calibration command ([`CurrentCal`](Commands#currentcal), [`PowerCal`](Commands#powercal), and [`VoltageCal`](Commands#voltagecal) respectively). **Take note that the offset ranges vary for each command**.  
 
-### Procedure
+## Procedure
 - Check the reading using the multi-meter
 - Compare it with the reading on the Tasmota web UI
 - If there is an observed difference, change the offset value by issuing the calibration command in the Console (e.g., `PowerCal 10000`)
 - Adjust the offset value up or down until the readings on the multi-meter and the web page are as close as possible
 
-# Known issues
+## Known Issues
 Power monitoring chips like the HLW8032 (Blitzwolf SHP5) and CSE7766 (Sonoff S31, Sonoff POW R2) occasionally report invalid power measurements for load values below 5W. During this situation it sometimes reports a valid load. By setting [SetOption39](commands#setoption39) to `128` (default) it must read at least 128 invalid power readings before reporting there is no load.
 
 To discard all loads below 6W simply set `SetOption39 1` (`0` will reset to default on next restart) so it will report no load below 6W.

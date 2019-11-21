@@ -1,3 +1,4 @@
+* **Get Started with Tasmota**
 * [Prerequisites](Prerequisites)  
 * [Hardware Preparation](Hardware-Preparation)  
 * [Flashing](Flashing)  
