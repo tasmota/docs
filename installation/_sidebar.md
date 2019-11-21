@@ -3,6 +3,5 @@
 * [Hardware Preparation](Hardware-Preparation)  
 * [Flashing](Flashing)  
 * [Initial Configuration](Initial-Configuration)  
-* [MQTT](MQTT)  
-* [Upgrading](Upgrading)     
+* [MQTT](MQTT)   
 * [Back](/Home)  
