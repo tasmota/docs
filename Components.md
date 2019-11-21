@@ -1,4 +1,4 @@
-**Component** is anything wired to the ESP8266/ESP8255 chip to be controlled by or send data to it. 
+?>**Component** is anything wired to the ESP8266/ESP8255 chip to be controlled by or send data to it. 
 
 Components can be: buttons, switches, relays, LEDs, sensors, displays, MCU units, etc. Every component is assigned in the device template to the GPIO it is wired (connected) to.
 
