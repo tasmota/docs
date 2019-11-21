@@ -4,12 +4,13 @@ We need to connect to the serial programming interface of the ESP8266 chip. This
 
 In most cases those pins are available on the PCB in the form of pin holes or solder pads but pin headers or jumper wires need to be soldered or otherwise applied. In some cases you will need to solder wires directly on the chip's pins which requires some experience and good soldering equipment.
 
-### :warning: WARNING BEFORE PROCEEDING :warning: 
+> [!WARNING]
+> WARNING BEFORE PROCEEDING
 
 **DO NOT CONNECT DEVICES TO MAINS POWER WHILE THE COVER IS OPEN AND CIRCUIT BOARD IS EXPOSED!!!**
 
 **NEVER TRY TO FLASH WHILE YOUR DEVICE IS CONNECTED TO MAINS POWER!!!**
-<img alt="Sonoff Pow Bricked" src="https://github.com/arendst/arendst.github.io/blob/master/media/pow1.jpg" height="240" align="right" />
+<img alt="Sonoff Pow Bricked" src="../_media/pow1.jpg" height="240" align="right" />
 
 **YOU CAN BE ELECTROCUTED IF YOU DON'T KNOW WHAT YOU ARE DOING!**
 
