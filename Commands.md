@@ -1,26 +1,4 @@
 # Commands
-- [How to Use Commands](#how-to-use)
-- [Control](#control)
-- [Management](#management)
-- [Wi-Fi](#wi-fi)
-- [MQTT](#mqtt)
-- [Rules](#rules)
-- [Timers](#timers)
-- [Sensor](#sensor)
-- [Power Monitoring](#power-monitoring)
-- [Light](#light)
-- [Sonoff RF Bridge](#sonoff-rf-bridge)
-- [IR Remote](#ir-remote)
-- [SetOption overview](#setoptions)
-- [Serial Bridge](#serial-bridge)
-- [MP3 Player](#mp3-player)
-- [Domoticz](#domoticz)
-- [KNX](#knx)
-- [Displays](#displays)
-- [Stepper Motors](#stepper-motors)
-- [Blinds, Shutters and Roller Shades](#blinds-shutters-and-roller-shades)
-- [Zigbee](#zigbee)
-
 
 ## How to Use
 
