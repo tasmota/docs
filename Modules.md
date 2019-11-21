@@ -12,7 +12,7 @@ Each module is assigned a number which is used in [Template configuration](templ
 
 | #| Name| Module specifics
 | ---: | :--- | :---
-| 0 | Template | Module for currently active template. Named after the template NAME field. *If a template is not active it will display `Generic (0)`.<br>**Do not use it until you enter a template**, use `Generic (18)`*|
+| 0 | Template | Module for currently active template. Named after the template NAME field.<br>*If a template is not active it will display `Generic (0)`.<br>**Do not use it until you configure a template**, use `Generic (18)` instead*|
 <a id="SonoffBasic">	</a>	1	|	Sonoff Basic	|	
 <a id="SonoffRF">	</a>	2	|	Sonoff RF	|	
 <a id="SonoffSV">	</a>	3	|	Sonoff SV	|	
@@ -25,7 +25,7 @@ Each module is assigned a number which is used in [Template configuration](templ
 <a id="SonoffTouch">	</a>	10	|	Sonoff Touch	|	Invert `LedState 1` functionality
 <a id="SonoffLED">	</a>	11	|	Sonoff LED	|	Set light type to 2 PWM channels disregarding SetOption15. Fix device specific LED instabilities by disabling GPIO04, GPIO5 and GPIO14
 <a id="1Channel">	</a>	12	|	1 Channel	|	
-<a id="4Channel">	</a>	13	|	4 Channel	|	[See Sonoff Dual](#SonoffDual)
+<a id="4Channel">	</a>	13	|	4 Channel	|	[See Sonoff Dual](/devices/SonoffDual)
 <a id="MotorC/AC">	</a>	14	|	Motor C/AC	|	Force all relays ON at power up and disable command `PowerOnState`
 <a id="ElectroDragon">	</a>	15	|	ElectroDragon	|	
 <a id="EXSRelays">	</a>	16	|	EXS Relay(s)	|	Enable pulse latching using even/odd numbered relay pairs
