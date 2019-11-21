@@ -11,7 +11,7 @@
 - [Light](#light)
 - [Sonoff RF Bridge](#sonoff-rf-bridge)
 - [IR Remote](#ir-remote)
-- [SetOption overview](#setoption-overview)
+- [SetOption overview](#setoptions)
 - [Serial Bridge](#serial-bridge)
 - [MP3 Player](#mp3-player)
 - [Domoticz](#domoticz)
