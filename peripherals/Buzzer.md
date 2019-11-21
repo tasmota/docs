@@ -2,7 +2,7 @@
 
 Tasmota gives you the option to control the sound pattern of a buzzer. 
 
-> [!INFO]
+> [!NOTE]
 > A device LED can be assigned as a `Buzzer` component to display a blink pattern.
 
 ## Buzzer command

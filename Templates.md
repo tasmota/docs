@@ -9,7 +9,7 @@ To provide easy processing by Tasmota, a user template is written as a JSON stri
 
 More about [template properties](Templates#explanation-of-template-properties) at the bottom of the article.
 
-## Template configuration
+## How to Use
 
 Go to **Configuration - Configure Template** ...
 
@@ -21,7 +21,7 @@ Go to **Configuration - Configure Template** ...
 
 Time to create your template.
 
-### Creating your template 
+### Creating Your Template 
 1. Change<img src="https://i.postimg.cc/SQwp2Lnr/template4.png" align="right"> the template name (also defines the name for the module).
 2. Select a module to [**BASE** your template on](Templates#base). If you're not sure, `Module 18` is the best choice. In this example the device is based on Blitzwolf SHP (45) module.
 3. Configure the components assigned to the [**GPIOs**](Templates#gpio) to match your device. If you do not know what pins your device uses, read about the [new device configuration procedure](Configuration-Procedure-for-New-Devices) to determine the correct pin assignments.
@@ -30,7 +30,8 @@ Time to create your template.
     - Any unused GPIO that has cannot have a peripheral connected should be set to `None (0)`. In our example the device has no exposed GPIO's so the unused ones are set to `0` compared to the original BlitzWolf module.     
     - GPIOs that can have peripherals connected to (exposed GPIOs) should be set to `User (255)`. This allows future configuration through the **Configure Module** dialog without the need to create a new template.  
    
-      > A `Sonoff TH` is a good example. It has a jack connected to GPIO4 that allows a user to plug in a sensor. Assigning GPIO4 as `255` allows a Template to have correct for this device even if nothing is plugged in. But, when a user decides to connect a sensor using the jack, GPIO4 can be set to the type of sensor through the Configure Module page.
+      > [!EXAMPLE]
+      > Take `Sonoff TH` as one: It has a jack connected to GPIO4 that allows a user to plug in a sensor. Assigning GPIO4 as `255` allows a Template to have correct GPIOs for this device even if nothing is plugged in. But, when a user decides to connect a sensor using the jack, GPIO4 can be set to the type of sensor through the Configure Module page.
 
 4. Click on **Save** and you'll see this message
 
@@ -40,7 +41,7 @@ Time to create your template.
 
 ![](https://i.postimg.cc/NjxhzWpJ/template-finished.png)
 
-## Exporting your Template
+### Exporting Your Template
 
 Now that you've set up your previously unsupported device in Tasmota it is time to share the knowledge:
 
@@ -53,7 +54,7 @@ MQT: stat/tasmota/RESULT = {"NAME":"RGB Smart Plug","GPIO":[37,0,39,0,38,134,0,0
 
 Copy the string `{"NAME":"RGB Smart Plug","GPIO":[37,0,39,0,38,134,0,0,131,17,132,21,0],"FLAG":0,"BASE":45}` and share it on the [Tasmota Device Templates Repository](https://blakadder.github.io/templates/).
 
-## Importing Templates
+### Importing Templates
 
 Go to **Configuration - Configure Other**
 
@@ -70,10 +71,8 @@ The device will reboot with a name reflecting your template name and `Module 0` 
 
 ![It is finished](https://i.postimg.cc/28hN4qvf/template-import3.png)
 
-### Merge Template and module settings
-You can set up your device in module **Configuration - Configure Module** and use command `Template 255` to merge the settings of the Module with current template into a new Template named "Merged".
 
-## Template configuration with commands
+## Commands
 A user provided template can be stored in Tasmota using the [`Template`](commands#template) command. It has the following parameters.
 
 |Parameter|  Description |
@@ -93,7 +92,10 @@ A user provided template can be stored in Tasmota using the [`Template`](command
 
 **After setting a template in command line it is necessary to issue `Module 0` command if the device doesn't reboot on its own.**
 
-# Explanation of template properties
+#### Merge Template with Module
+You can set up your device in module **Configuration - Configure Module** and use command `Template 255` to merge the settings of the Module with current template into a new Template named "Merged".
+
+## Anatomy of a Template
 Let's look again at our example template:
 
 ```
@@ -109,27 +111,27 @@ NAME          | Up to 14 characters for the Module name
 [FLAG](#flag) | 8 bit mask flag register
 [BASE](#base) | Module number of a hard-coded device to be used when device specific functionality is needed
 
-## GPIO
+### GPIO
 
-### GPIO order
+#### GPIO order
 
 ```  
 GPIO# |00| 01|02| 03|04| 05| 09| 10| 12| 13| 14| 15| 16|  
 CODE  [17,148,29,149,52,255,255,255,138,255,139,255,255] 
 ```
 
-### GPIO functionality
+#### GPIO functionality
 The GPIO functionality numbers are the same as shown by command ``GPIOs``. In addition code 255 is added to select a GPIO as user configurable via the GUI Configure Module menu.
 
-***example***
+> [!EXAMPLE]
 >In our example the GPIO 00 data element is `17` which corresponds to the `Button1` component, according to the following table. If you change that template element to `9` it would then be assigned as a `Switch1` component instead.
 
-### Components
+#### Components
 See [Components](Components) for a complete list
 
 [Google Sheet](https://docs.google.com/spreadsheets/d/10aYCaR3P09omn_vryFGyyq7dS-XK54K2fGAcb4gruik) with the components by number or alphabetically.
 
-## FLAG
+### FLAG
 Used to configure the [ADC](ADC) type. In most templates this should be set to `0`.
 
 FLAG |  Feature description
@@ -142,10 +144,10 @@ FLAG |  Feature description
    5 | Buttoni
   15 | User configured (same as GPIO `255`)
 
-## BASE
+### BASE
 BASE is the starting module setup for the custom template. Some modules include special programming. If your device is similar to an existing built-in module it is best to use that as a starting point. When you're not sure which BASE module is suitable for your device use the `Generic (18)` module. A list of hard-coded devices can be found in [Modules](Modules).
 
-***example***
+> [!EXAMPLE]
 >In the [RGB Smart Plug](https://blakadder.github.io/templates/rgbpow.html)
 template we used the `BlitzWolf SHP (45)` module as BASE since the power monitoring circuitry is identical but GPIO00 and GPIO02 were changed and an unused GPIO04 was added to enable the RGB LED function. Using that specific module we took advantage of that module's calibrated power monitoring special programming which the `Generic (18)` module does not use.
 

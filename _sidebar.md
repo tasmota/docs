@@ -11,6 +11,7 @@
 * [Lights](Lights)  
 * [Status LEDs](Status-LED)  
 * [TuyaMCU](TuyaMCU)    
+* [Zigbee](Zigbee)
 * [Displays](Displays)  
 * [Blinds and Shutters](Blinds-and-Shutters)    
 * [Smart Home Integrations](Integrations)   

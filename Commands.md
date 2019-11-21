@@ -1,5 +1,5 @@
 # Commands
-- [How to Use Commands](#how-to-use-commands)
+- [How to Use Commands](#how-to-use)
 - [Control](#control)
 - [Management](#management)
 - [Wi-Fi](#wi-fi)
@@ -46,7 +46,7 @@ For example:
 A `tele/%topic%/STATUS` message (sent every 300 seconds by default) may appear exactly after you issue `Power off` command and before you receive `stat/%topic%/RESULT = {"POWER":"OFF"}` message.
 
 
-### with MQTT
+### ...with MQTT
 
 To send commands and view responses you'll need an [MQTT client](http://www.hivemq.com/blog/seven-best-mqtt-client-tools).
 
@@ -54,7 +54,7 @@ Commands over MQTT are issued by using `cmnd/%topic%/<command> <parameter>` wher
 
 See [MQTT](MQTT) article to find out more.
 
-### with web requests
+### ...with Web Requests
 
 Commands can be executed via web (HTTP) requests, for example:  
 ```
@@ -69,17 +69,17 @@ If you have set a password for web user interface access, this must be included 
 ```
 http://<ip>/cm?&user=put_username_here&password=put_password_here&cmnd=Power%20On
 ```
-### in Console in the web UI
+### ...in Console in the Web UI
 
 **Console** menu in the web UI is a convenient place to send commands and it behaves similar to a terminal connection via serial bridge. 
 
-### over serial bridge
+### ...over Serial Bridge
 
 If you flashed the device via serial method you can connect to it with a terminal application (e.g. [Termite](https://www.compuphase.com/software_termite.htm) or Arduino IDE Serial Monitor) to issue commands and follow responses. This is a practical way to do a `Backlog` setup of your new device.
 
 *The serial interface is set to 115200 bps except for devices that require a different baudrate.
 
-### Power of Backlog
+### ...the Power of Backlog
 
 `Backlog` command allows executing up to 30 consecutive commands with a single command line. Each command is separated by a semicolon (";"). `Backlog` is a useful feature to avoid numerous restarts when setting up a new device. You can use it to:
 
