@@ -1,5 +1,5 @@
 >[!DANGER]
-> **If you don't have the willingness to tinker and learn... TURN BACK!**.<br> Tasmota is not a commercial product and support is limited. You have to be willing to research and debug potential problems yourself.
+> _If you don't have the willingness to tinker and learn... TURN BACK!._<br> Tasmota is not a commercial product and support is limited. You have to be willing to research and debug potential problems yourself.
 
 To install Tasmota on your device you have to prepare some tools and software from the [prerequisites](Prerequisites) list.
 
