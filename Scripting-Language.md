@@ -10,9 +10,9 @@ To use it you must [compile your build](compile-your-build). Add the following t
 #endif  
 ```
 
-### Optional Features
+#### Optional Includes
 
-These features are enabled by adding the following `#define` compiler directive parameters and then compiling the firmware. These parameters are explained further below in the article.
+Additional features are enabled by adding the following `#define` compiler directive parameters and then compiling the firmware. These parameters are explained further below in the article.
 
 | Feature | Description |
 | -- | -- |
@@ -32,7 +32,7 @@ USE_SCRIPT_FATFS | enables SD card support (on SPI bus). Specify the CS pin numb
 USE_SCRIPT_FATFS_EXT | enables additional FS commands  
 SDCARD_DIR | enables support for web UI for SD card directory upload and download  
 ----
-
+## Features
 Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules).
 
 [Script Cookbook](Script-Cookbook)
@@ -64,14 +64,14 @@ To save code space almost no error messages are provided. However it is taken ca
 - _**No spaces are allowed between math operators**_
 - Comments start with `;`  
 
-**Console script commands**  
+**Console Commands**   
 `script <n>` \<n>: `0` = switch script off; `1` = switch script on  
 `script ><cmdline>` execute \<cmdline>  
 - Can be used to set variables, e.g., `script >mintmp=15`  
 - Multiple statements can be specified by separating each with a semicolon, e.g. `script >mintmp=15;maxtemp=40`  
 - The script itself can't be specified because the size would not fit the MQTT buffers
 
-**Script Sections**  
+## Script Sections
 _Section descriptors (e.g., `>E`) are **case sensitive**_  
 >`>D ssize`  
   ssize = optional max string size (default=19)  
@@ -173,13 +173,14 @@ The lines in this section are displayed in the web UI main page. Requires compil
  `<txt>` = label text 
 
 >`>M`  
-[Smart Meter Interface](smart-meter-interface)  
+[Smart Meter Interface](peripherals/smart-meter-interface)  
 
 If a variable does not exist, `???` is displayed for commands  
 
 If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var` does not exist the destination variable is NOT updated.  
 
-**Special variables** (read only)  
+## Special Variables
+(read only)  
 `upsecs` = seconds since start  
 `uptime` = minutes since start  
 `time` = minutes since midnight  
@@ -246,7 +247,7 @@ The following variables are cleared after reading true:
 Remarks:  
 If you define a variable with the same name as a special variable that special variable is discarded  
 
-**Tasmota commands**  
+## Commands
 `=> <command>` Execute \<command>  recursion disabled  
 `+> <command>` Execute \<command>  recursion enabled  
 `-> <command>` Execute \<command> - do not send MQTT or log messages (i.e., silent execute - useful to reduce traffic)  
