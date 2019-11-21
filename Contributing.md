@@ -16,10 +16,10 @@ Whenever you feel is a good guide or an article that would help other users just
 All new devices should be submitted through the [Templates Repository](http://blakadder.github.io/templates). If you're adding a device with a comprehensive flashing or configuration tutorial you can create a new page in the Wiki and link to it in your template submission.
 
 ## Editing articles
-If you spot an error in an article use the *Improve this article* link at the top of the page to correct it. 
-
 > [!WARNING]
 > You need a GitHub user account to be able to edit!
+
+If you spot an error in an article use the *Improve this article* link at the top of the page to correct it. 
 
 You'll be taken to the GitHub repository page of that file.
 
