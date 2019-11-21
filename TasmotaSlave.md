@@ -1,6 +1,6 @@
 # Tasmota Slave
 
-**This feature is not included in precompiled binaries.**    
+!> **This feature is not included in precompiled binaries.**     
 To use it you must [compile your build](compile-your-build).
 
 It is possible to amend your existing Arduino [Uno](https://store.arduino.cc/usa/arduino-uno-rev3)/[Mini](https://store.arduino.cc/usa/arduino-mini-05)/[Nano](https://store.arduino.cc/usa/arduino-nano) project to interface with a Tasmota powered ESP8266/ESP8285 generic development boards such as the Wemos D1 or NodeMCU branded hardware boards.

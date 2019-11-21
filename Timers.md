@@ -1,4 +1,4 @@
-**» v5.13.1**
+?> Timers allow you to automate your device based on time triggers.
 
 To control a device locally 16 timers are programmable. They can be configured with the `Timer<x>` command followed by a JSON payload with optional parameters. For example:
 
@@ -25,7 +25,7 @@ Longitude<a id="Longitude"></a>|`<value>` = set longitude
 Timers<a id="Timers"></a>|Timers control<br>`0` = disable all timers&emsp;  » v6.2.0<BR>`1` = enable all timers<BR>`2` = toggle all timers<BR>
 Timer\<x\><a id="Timer"></a>|Parameters for Timer\<x\> where x = `1..16`<BR>`0` = clear parameters for Timer\<x\>&emsp;  » v6.2.0<BR>`1..16` = copy Timer\<y\> parameters to Timer\<x\><BR>`{ "name":value ; .. }` = set all or individual parameters using JSON payload with names and values of data pairs from the table below
 
-### JSON payload anatomy
+### JSON Payload Anatomy
 JSON Name|JSON Value
 :---|:---
 Arm|`0` = disarm or disable timer<BR>`1` = arm or enable timer

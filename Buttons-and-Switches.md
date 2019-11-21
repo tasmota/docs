@@ -1,5 +1,8 @@
-Buttons and switches are primarily used to toggle (turn ON or OFF) device relays. A typical device usually has at least one button (exception being bulbs and some lights) to control the relay(s). Additional buttons and switches can be [wired](Expanding-Tasmota#connect-switch) to a free GPIO and configured in Module or Template settings.
+?> Buttons and switches are primarily used to toggle (turn ON or OFF) device relays. 
 
+A typical device usually has at least one button (exception being bulbs and some lights) to control the relay(s). Additional buttons and switches can be [wired](Expanding-Tasmota#connect-switch) to a free GPIO and configured in Module or Template settings.
+
+> [!NOTE]
 > Other than relays, Tasmota does not publish the state of components (switches, buttons, sensors, etc.) in real-time. Only messages corresponding to relays are transmitted in real-time. The state of components is transmitted automatically each [TelePeriod](Commands#teleperiod) via the `SENSORS` message.
 
 ## Button vs. Switch
@@ -11,14 +14,14 @@ Learn more about buttons and switches in [this video](https://www.youtube.com/wa
 
 Both have a similar function, but Tasmota distinguishes between a "Button" and a "Switch" in other ways. 
 
-# Button
+## Button
 <img align=right src="https://user-images.githubusercontent.com/5904370/57244172-2273ba80-7038-11e9-89ce-49ef46cb36d6.png" width=100> 
 
 For Tasmota, a `Button` is typically a momentary push-button (or a capacitive touch button in some light switches). By default a button toggles the corresponding relay. Every time the button gets pressed the relay changes its `Power` state (ON or OFF). Besides toggling  the `Power` state, a button is also used to activate [multi press button functions](Button-usage#multi-press-functions), to do long press (HOLD) actions, or send messages to different MQTT topics. See [Button-usage](Button-usage) for a detailed multi-press function list, `ButtonTopic` options, and changing default Button functionality.  
 
 A push-to-make button should use a `Button<x>` component while a push-to-break button should use `Button<x>i` (i.e., inverted).
 
-# Switch
+## Switch
 <img align=right src="https://user-images.githubusercontent.com/5904370/57244373-84ccbb00-7038-11e9-85a9-3af6531c9f6d.png" width=100>
 
 In Tasmota a `Switch` is any switch or push-button additionally connected to a free GPIO. Some possibilities include:
@@ -31,14 +34,17 @@ In Tasmota a `Switch` is any switch or push-button additionally connected to a f
 
 By default a switch toggles the corresponding relay. Every time the switch gets flipped, the relay changes its state (ON or OFF). Instead of the default toggling of the relay, switches can be configured to send messages to different MQTT topics or send commands to other Tasmota devices. To ignore the default behaviour define a rule which triggers on `Switch<x>#State` or use [`Switchtopic`](#Switchtopic).
 
-Example rule to make Switch1 publish its value to cmnd/custom-topic/SWITCH:
+> [!EXAMPLE]
+> A rule to make Switch1 publish its value to cmnd/custom-topic/SWITCH:
 ```
 Rule1 on switch1#state do publish cmnd/custom-topic/SWITCH %value% endon
 Rule1 1
 ```
->Now, to make everything a little confusing: A push-button can be configured as a `Switch` and a toggle switch can be configured as a `Button`. Configuring a toggle switch as a `Button` is not recommended!  
 
-## [SwitchMode](Commands#switchmode)
+Just to make everything a little confusing: A push-button can be configured as a `Switch` and a toggle switch can be configured as a `Button`. Configuring a toggle switch as a `Button` is not recommended!  
+
+## SwitchMode
+
 > For visual learners: [Tasmota Switchmode Explained](https://www.youtube.com/watch?v=kiXAGkyqFeU) - video by Dr Zzs
 
 To change the behavior of a physical input peripheral configured as a Tasmota `Switch<x>` component, whether a toggle switch or a [momentary switch](https://en.wikipedia.org/wiki/Switch#Biased_switches) (i.e., a push-button), use the `SwitchMode` command. If there is more than one `Switch<x>` component, use `SwitchMode<x>` where `<x>` is the number of your switch from the Tasmota GPIO configuration.
@@ -99,21 +105,19 @@ Set toggle push-button mode
 
 Tasmota will send a `TOGGLE` command when pressed and another `TOGGLE` command when released.
 
->For example, when the button is pressed, toggle the relay to ring the doorbell; when the button is released, ring the doorbell again.  
+> [!EXAMPLE]
+> When the button is pressed, toggle the relay to ring the doorbell; when the button is released, ring the doorbell again.  
 
-## [SwitchTopic](Commands#switchtopic)
+## SwitchTopic
 SwitchTopic and ButtonTopic are almost identical in use. You can use this guide interchangeably for both or read [ButtonTopic](Button-usage#ButtonTopic).
-### Note about SwitchTopic (or ButtonTopic) and MQTT
 
-When using `SwitchTopic 1` or `2` (or `ButtonTopic 1` or `2`)  and your MQTT broker becomes unavailable, Tasmota falls back to default `SwitchTopic 0` (or `ButtonTopic 0`), which is not optimal.
-
-To avoid this, we recommend using [rules](Rules). They simply always work!
+!>When using `SwitchTopic 1` or `2` (or `ButtonTopic 1` or `2`)  and your MQTT broker becomes unavailable, Tasmota falls back to default `SwitchTopic 0` (or `ButtonTopic 0`), which is not optimal.<br>To avoid this, we recommend using [rules](Rules). They simply always work!
 
 If you still need to use SwitchTopic or ButtonTopic, read on!
 
 #### `SwitchTopic 0`
 
-> _Default mode_
+ _Default mode_
 
 By default a switch controls the corresponding relay and doesn't send any MQTT messages itself.
 
@@ -121,33 +125,38 @@ No MQTT message will be published on account of the new switch state. The messag
 
 #### `SwitchTopic 1`
 
-> Sets MQTT switch topic to device %topic%
+_Sets MQTT switch topic to device %topic%_
 
 When changing the state of the switch an MQTT message is sent to the device topic with the payload according to `SwitchMode` set.  
 
-*Example: Device topic `tasmota`, `SwitchMode 3` yields the following message.*
-
-```MQT: cmnd/tasmota/POWER = TOGGLE```
-
-*Notice the ***`cmnd`*** instead of the `stat` at the beginning.*
+>[!EXAMPLE] 
+> Device topic `tasmota`, `SwitchMode 3` yields the following message:
+>
+>```
+MQT: cmnd/tasmota/POWER = TOGGLE
+```
+>
+>*Notice the ***`cmnd`*** instead of the `stat` at the beginning.*
 
 This is the same as sending an MQTT commands to this device, the device relay will be set to the defined state.
 
 #### `SwitchTopic <value>`
 
-> Set switch topic to a custom topic (32 characters max)
+_Set switch topic to a custom topic (32 characters max)_
 
 This will send an MQTT message to a custom defined topic similarly to option 1.
 
 For example, we set the topic to `tasmota02` with `SwitchTopic tasmota02`. 
 
-*Example: Device topic `tasmota`, `SwitchMode 1`, custom topic `tasmota02` yields the following message.*
+> [!EXAMPLE]
+> Device topic `tasmota`, `SwitchMode 1`, custom topic `tasmota02` yields the following message:
+>
+>```
+MQT: cmnd/tasmota02/POWER = ON
+```
+>If you have a device with the topic `tasmota02` this action will turn on its relay while not affecting anything on the `tasmota` device.
 
-```MQT: cmnd/tasmota02/POWER = ON```
-
-If you have a device with the topic `tasmota02` this action will turn on its relay while not affecting anything on the `tasmota` device.
-
-### In summary
+#### In Summary
 
 `SwitchTopic 0` controls the relay directly.  
 `SwitchTopic 1` sends an MQTT message to the device topic. This sets the state of the devices relay accordingly.  

@@ -1,4 +1,4 @@
-Starting with Tasmota version **6.5**, devices can be configured by users using a **Template**.
+?> **Template** is a definition of a device and how its GPIOs are assigned.
 
 These are intended to be an easy way for users to create and share configurations for devices that are unsupported in Tasmota but have common characteristics with existing modules. We encourage everyone who creates a template for a [new unknown device](Configuration-Procedure-for-New-Devices) to [add it to the database](https://blakadder.github.io/templates/) with an image of the device, links to the manufacturer or where it can be found and, of course, the template for it.
 

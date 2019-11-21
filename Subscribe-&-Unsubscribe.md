@@ -1,6 +1,6 @@
 &emsp;  » v6.5.0
 
-**This feature is not included in precompiled binaries.**    
+!> **This feature is not included in precompiled binaries.**     
 To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
 ```c++
 #ifndef SUPPORT_MQTT_EVENT
@@ -20,12 +20,12 @@ You can subscribe a MQTT topic and assign an event name. Once we received subscr
 For example, if you have a Tasmota based thermostat and multiple temperature sensors in different locations, usually you have to set up a home automation system like Domoticz to control the thermostat. Right now, with this new feature, you can write a rule to do this.  
 
 **Examples:**  
-```lua
+```console
 Rule1
   ON mqtt#initialized DO Subscribe BkLight, stat/%topic%/POWER ENDON
   ON Event#BkLight=ON DO <command> ENDON
 ```
-```lua
+```console
 Rule1
   ON mqtt#initialized DO Subscribe DnTemp, stat/%topic%/SENSOR, DS18B20.Temperature ENDON
   ON Event#DnTemp>=21 DO <command> ENDON

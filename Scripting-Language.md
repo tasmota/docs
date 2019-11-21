@@ -1,4 +1,4 @@
-!> **This feature is not included in precompiled binaries.**    
+!> **This feature is not included in precompiled binaries.**     
 
 To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
 ```
@@ -34,8 +34,6 @@ SDCARD_DIR | enables support for web UI for SD card directory upload and downloa
 ----
 ## Features
 Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules).
-
-[Script Cookbook](Script-Cookbook)
 
 To enter a script, go to `Configuration` =\> `Edit script` in the Tasmota web UI menu
 
@@ -402,3 +400,5 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 `frd("fname")` remove directory fname  
 `fx("fname")` check if file fname exists  
 `fe("fname")` execute script fname (max 2048 bytes, script must start with the '>' character on the first line)  
+
+# [Scripting Cookbook](Scripting-Cookbook)

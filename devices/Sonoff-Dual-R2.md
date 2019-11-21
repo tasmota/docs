@@ -49,7 +49,7 @@ Please be aware, that the button on the Sonoff Dual will initially not have any 
 
 Other than on most Sonoff module the button is not connected to the normal button pin (GPIO0). After freshly flashing Tasmota (with the default module setting "Sonoff Basic"), the button will **not act as described** in the [Button Usage](https://github.com/arendst/Tasmota/wiki/Button-usage) article. You will not be able to switch power or activate the special WiFi modes.
 
-**Possible Workarounds:** Take advantage of the default WiFi fallback behavior, which is to connect via [WPS](https://en.wikipedia.org/wiki/Wi-Fi_Protected_Setup) or configure the module firmware config beforehand via `user_config_override.h`.
+You will need to configure wifi credentials connecting directly to the wifi AP your Dual will broadcast or configure the module firmware config beforehand via `user_config_override.h`.
 
 After configuring the device as a "Sonoff Dual", the button will regain normal functionality.
 

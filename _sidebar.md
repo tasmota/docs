@@ -1,4 +1,4 @@
-* [FAQ](/FAQ/)
+* [Upgrading](Upgrading)
 * [Commands](Commands)  
 * [Templates](Templates)  
 * [Modules](Modules)  

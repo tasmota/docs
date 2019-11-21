@@ -221,3 +221,14 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 8     | Holding time setting                                       | keep_warm_setting    | Issue and report | Integer       | Values range:0-360, Pitch1, Scale0, Unit:min                        |
 | 9     | Mode                                                       | work_type            | Issue and report | Enum          | Enumerated values: setting_quick, boiling_quick, temp_setting, temp_ |
 ```
+
+### BecaThermostat(WIP)
+```
+| DP ID | Function points     | Identifier  | Data type        | Function type | Properties                                 |
+|-------|---------------------|-------------|------------------|---------------|--------------------------------------------|
+| 1     | Switch              | Power       | Issue and report | Boolean       |                                            |
+| 2     | Target temperature  | TempSet     | Issue and report | Integer       | Values range:0-37, Pitch1, Scale0, Unit:℃  |
+| 3     | Current Temperature | TempCurrent | Only report      | Integer       | Values range:-9-99, Pitch1, Scale0, Unit:℃ |
+| 4     | Mode                | Mode        | Issue and report | Enum          | Enumerated values:m, p (wip)               |
+| 102   | Floor Temperature   | FloorCurrent| Issue and report | Integer       | Values range:0-37, Pitch1, Scale0, Unit:℃ |
+```

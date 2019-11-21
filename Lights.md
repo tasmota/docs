@@ -1,19 +1,23 @@
+?> Lights... You know what lights do.... Right?
+
 Lights come in various shapes (bulb, strips, ceiling lights, ...) but in Tasmota they are separated in 3 categories:
- - [Channel controlled LEDs](#channel-controlled-LEDs)
- - [Addressable LEDs](#addressable-LEDs)
- - [Status LEDs](#status-LEDs) 
+ - Channel Controlled LEDs
+ - Addressable LEDs
+ - Status LEDs 
 
 
-### Lights in webUI
-Tasmota' webUI displays only **Brightness**, **CT**, **White** or **PWM** level sliders depending on the light component, the number of PWM channels configured and SetOption used. 
+## Lights in WebUI
+Tasmotas webUI displays only **Brightness**, **CT**, **White** or **PWM** level sliders depending on the light component, the number of PWM channels configured and SetOption used. 
 
-***There are no RGB controls in the webUI.*** Use [`Color`](commands#color) commands instead.
-
+> [!DANGER]
+>There are no RGB controls in the webUI.
+> Use [`Color`](commands#color) commands instead.
+>
 >The webUI doesn't have a color picker for RGB lights due to memory and flash size requirements to implement one. 
 
 See [**light commands**](Commands#light) for how to control lights.
 
-## Channel controlled LEDs
+## Channel Controlled LEDs
 Lights controlled using up to 5 channels (red, green, blue, cold white, warm white). Channels are controlled using PWM or APDM.
 
 ### PWM

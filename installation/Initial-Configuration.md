@@ -73,7 +73,7 @@ If your screen is empty type `status` in the bottom command bar and hit enter. I
 To configure Tasmota you need to issue commands, some commands will reboot your device and to avoid that we will use the `Backlog` command feature.
 
 Configure your Wi-Fi network and a secondary Wi-Fi network
-```lua
+```console
 Backlog ssid1 <yourssid>; password1 <your_password>; ssid2 <your_ssid2>; password2 <your_password>
 ```
 ![After restart](https://user-images.githubusercontent.com/5904370/55748616-69718e80-5a3f-11e9-8b58-4d15c1816e71.png)
@@ -81,7 +81,7 @@ Backlog ssid1 <yourssid>; password1 <your_password>; ssid2 <your_ssid2>; passwor
 Device will restart and connect to your network. It will display your devices newly assigned IP. Direct your web browser to that IP address to access the Web UI for further configuration and contol.
 
 Configure MQTT broker address, MQTT credentials, unique device topic and OTA url to the latest official release
-```lua
+```console
 Backlog mqtthost <yourhost>; mqttuser <user>; mqttpassword <password>; topic <unique_topic>; otaurl http://thehackbox.org/tasmota/release/tasmota.bin
 ```
 >*Keep your personal configuration in a text file and simply copy and paste the backlog commands to a newly flashed device.*
