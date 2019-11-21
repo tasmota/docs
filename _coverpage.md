@@ -12,8 +12,8 @@
 - Wemo and Hue emulation for [Amazon Alexa](Alexa) support
 - [KNX](KNX-features) IP protocol support
 
-[Get Started](Home)
-[Installation](Installation)
+[Get started!](/installation/)
+[Documentation](Home)
 [GitHub](https://github.com/arendst/Tasmota)
 
 
