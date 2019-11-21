@@ -1,9 +1,12 @@
 ESP8266 has a single ADC pin available. It may be used to read voltage at ADC pin or to read module supply voltage (VCC). 
-> When referring to the ADC pin these terms are used interchangeably: ADC (Analog-to-digital Converter), TOUT, Pin6, A0 or Analog0.  
-> 
-> **Check your Wi-Fi module**. The ESP8266 A0 pin supports a maximum voltage of 1.0V. Many newer Wi-Fi modules have an on-board voltage divider to support a higher A0 input voltage range (typically in the range between 0 and 3.3 volts). You may need to use an external voltage divider to ensure your input voltage is in the right range.
 
-By default Tasmota uses ADC pin to read voltage. The signal comes from an analog [peripheral](peripherals), or sometimes from the device itself (see [Shelly 2.5](Shelly-2.5)). 
+> [!NOTE]
+ When referring to the ADC pin these terms are used interchangeably: ADC (Analog-to-digital Converter), TOUT, Pin6, A0 or Analog0.  
+
+> [!WARNING]
+> Check your Wi-Fi module. The ESP8266 A0 pin supports a maximum voltage of 1.0V. Many newer Wi-Fi modules have an on-board voltage divider to support a higher A0 input voltage range (typically in the range between 0 and 3.3 volts). You may need to use an external voltage divider to ensure your input voltage is in the right range.
+
+By default Tasmota uses the ADC pin to read voltage. The signal comes from an analog [peripheral](/peripherals/), or sometimes from the device itself (see [Shelly 2.5](/devices/Shelly-2.5)). 
 
 After wiring a peripheral to A0 pin you have to configure it in **Configure Module**:
 
@@ -21,14 +24,17 @@ After wiring a peripheral to A0 pin you have to configure it in **Configure Modu
 The reading will show in web UI's sensor section as "_%option% %value%_" depending on the selected option. Tasmota calculates the values for temperature and light, analog values can be `1` to `1024`.
 
 Example: ADC as `Analog (1)`    
-![ADC in web UI](https://i.postimg.cc/zv9jpXsL/Analog0.png)
+![ADC in web UI](../_media/Analog0.png)
 
 A message will be published in `tele/%topic%/SENSOR` JSON response as `"ANALOG": ` depending on the selected option.
 
-Example: ADC a Light(3)
+Example: ADC as `Light (3)`   
+```json
 18:55:09 MQT: tele/tasmota/SENSOR = {"Time":"2019-10-31T18:55:09","ANALOG":{"Illuminance":8}}
+```
 
-> Careful when setting ADC as Button, if there is constant voltage on the pin it might register as a [long press](Button-usage#long-press) and reset the device to firmware defaults
+> [!WARNING] 
+>Careful when setting ADC as Button, if there is constant voltage on the pin it might register as a [long press](Button-usage#long-press) and reset the device to firmware defaults
 
 ### Rule triggers
 Use these triggers in rules:    
@@ -50,7 +56,6 @@ user_config_override.h flag:
 // -- Internal Analog input -----------------------
 #define USE_ADC_VCC                              // Display Vcc in Power status
 ```
-
 
 Supply voltage is published in `tele/%topic%/STATE` under `"Vcc":` in mV:
 ```

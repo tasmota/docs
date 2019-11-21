@@ -7,13 +7,11 @@ Lights come in various shapes (bulb, strips, ceiling lights, ...) but in Tasmota
 
 
 ## Lights in WebUI
-Tasmotas webUI displays only **Brightness**, **CT**, **White** or **PWM** level sliders depending on the light component, the number of PWM channels configured and SetOption used. 
+Tasmotas webUI displays **Brightness**, **CT**, **White**, **Color Picker**, **Color Saturation** or **PWM** level sliders depending on the light component, the number of PWM channels configured and SetOptions used. 
 
-> [!DANGER]
->There are no RGB controls in the webUI.
-> Use [`Color`](commands#color) commands instead.
->
->The webUI doesn't have a color picker for RGB lights due to memory and flash size requirements to implement one. 
+RGBCCT or 5 channel LED light strip presented in web UI:
+
+![Light in web UI](_media/light_UI_5channel.png)
 
 See [**light commands**](Commands#light) for how to control lights.
 

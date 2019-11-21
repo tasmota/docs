@@ -132,7 +132,7 @@ See [Components](Components) for a complete list
 [Google Sheet](https://docs.google.com/spreadsheets/d/10aYCaR3P09omn_vryFGyyq7dS-XK54K2fGAcb4gruik) with the components by number or alphabetically.
 
 ### FLAG
-Used to configure the [ADC](ADC) type. In most templates this should be set to `0`.
+Used to configure the [ADC](/peripherals/ADC) type. In most templates this should be set to `0`.
 
 FLAG |  Feature description
 -----|------------------------------

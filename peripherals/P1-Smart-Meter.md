@@ -8,18 +8,18 @@ The transistor makes sure that the RxD signal is converted and inverted to 3.3v
 
 ### Tasmota Configuration
 
-In the _Configuration -> Configure Module_ page, select module `**Generic (18)**`
+In the _Configuration -> Configure Module_ page, select module `Generic (18)`
 
 From the web console set the serial delimiter to 10 (newline). This makes Tasmota publish each line of the telegram separately to mqtt. 
 
-```SerialDelimiter 10```
+`SerialDelimiter 10`
 
-```SerialSend```
+`SerialSend`
 
 ### Example output
 Below an example of the telegram message published (per line) to mqtt. From here your HA system can process the data required for your needs.
 
-```
+```json
 16:59:39 MQT: tele/wemos-9/RESULT = {"SerialReceived":"/KFM5KAIFA-METER"}
 16:59:39 MQT: tele/wemos-9/RESULT = {"SerialReceived":""}
 16:59:39 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-3:0.2.8(42)"}
@@ -51,7 +51,7 @@ Below an example of the telegram message published (per line) to mqtt. From here
 ### Description of each line 
 see also [DSMR 5.0 - P1 Companion Standard](https://www.netbeheernederland.nl/_upload/Files/Slimme_meter_15_a727fce1f1.pdf)
 
-```
+``` 
 Header information - {"SerialReceived":"/KFM5KAIFA-METER"}
 Empty line - {"SerialReceived":""}
 Version information for P1 output - {"SerialReceived":"1-3:0.2.8(42)"}
