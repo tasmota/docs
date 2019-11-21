@@ -50,7 +50,7 @@
 Activate long press action with `Switchmode 5` and shorten long press time to 2 seconds (`Setoption32 20`).
 
 Long pressing on switch1 sends `POWER 2` (toggle action) command to the `tasmota02` device
-```lua
+```console
 Backlog SwitchMode 5; SetOption32 20
 Rule on switch1#state=3 do publish cmnd/tasmota02/POWER 2 endon
 Rule 1
@@ -77,7 +77,7 @@ Software
 - Disable ButtonTopic as it overrides rules for buttons: `ButtonTopic 0`
 
 Rule
-```lua
+```console
 Rule1
   on button1#state do publish cmnd/ring2/power %value% endon
   on button2#state do publish cmnd/strip1/power %value% endon
@@ -121,7 +121,7 @@ If you want to have blink functionality define a rule like `on clock#Timer=5 do 
 The rule command once option provides the possibility to trigger only once on a slow change while the change is still within the bounds of the test.
 
 Rule
-```lua
+```console
 on ENERGY#Current>0.100 do publish tool/tablesaw/power 1 endon
 on ENERGY#Current<0.100 do publish tool/tablesaw/power 0 endon
 ```
@@ -151,7 +151,7 @@ Software
 - Home Automation tool Domoticz configured with a virtual sensor Temp+Hum using Idx 134
 
 Rule
-```lua
+```console
 on tele-am2301-12#temperature do var1 %value% endon
 on tele-am2301-12#humidity do publish domoticz/in {"idx":134,"svalue":"%var1%;%value%;1"} endon
 ```
@@ -218,7 +218,7 @@ Demonstrate the use of variables. Make sure to execute commands `Rule 4`(Disable
 * Toggle a variable
 
   rules needed:  
-  ```lua
+  ```console
   on event#togglevar1 do event toggling1=%var1% endon
   on event#toggling1<1 do event setvar1=1 endon
   on event#toggling1>0 do event setvar1=0 endon
@@ -242,7 +242,7 @@ Demonstrate the use of variables. Make sure to execute commands `Rule 4`(Disable
   mqtt:    `cmnd/[topic]/event anyname=number`
 
 * Everything together:  
-  ```lua
+  ```console
   Rule1 
     on event#togglevar1 do event toggling1=%var1% endon 
     on event#toggling1<1 do event setvar1=1 endon 
@@ -266,7 +266,7 @@ Well at least not as you probably would expect. The `var1` value used by the `po
 #### Control device LEDs with Relays
 If a device has more than one relay and LEDs on different GPIOs (not connected to the relay) you need to use rules to display current relay status on LEDs. This example is a 3 gang wall switch. Instead of LEDs you need to assign 3 dummy relays that will be controlled when the real relays are switched to reflect their status.
 
-```lua
+```console
 Backlog ledmask 0x0000; setoption13 1; seriallog 0
 
 rule1 
@@ -318,7 +318,7 @@ On boot start a watchdog timer to check temp sensor connection.
 `Rule on system#boot do RuleTimer1 70 endon`
 
 An available button is configured as switch to set thermostat ON or OFF
-```lua
+```console
 Rule1
   on switch1#state do backlog event toggling1=%mem1% endon
   on event#toggling1=0 do mem1 1 endon
@@ -332,7 +332,7 @@ Resets checking timer if temperature is connected
 `on tele-SI7021#temperature do backlog var1 1; RuleTimer1 30; event ctrl_ready=1; event temp_demand=%value% endon`
 
 Thermostat control - upper limit and lower limit and enabled  
-```lua
+```console
 on on event#ctrl_ready>%mem1% do var1 0 endon
 on event#temp_demand>%mem2% do power1 0 endon
 on event#temp_demand<%mem3% do power1 %var1% endon
@@ -361,13 +361,13 @@ Everything together:
 
 INITIAL CONFIG: (Note: RuleTimer1 must be greater that TelePeriod for expected results)
 
-```lua
+```console
 backlog SwitchMode1 3; Rule 1; Rule 4; TelePeriod 60; SetOption26 1; SetOption0 0; poweronstate 0; mem1 0; mem2 25; mem3 23; var1 0
 ```
 
 RULES:
 
-```lua
+```console
 Rule1 
   on system#boot do RuleTimer1 70 endon 
   on Switch1#State do event toggling1=%mem1% endon 
@@ -382,7 +382,7 @@ Rule1
 
 EXAMPLE RULES WITHOUT TEMP SENSOR TO TEST THE THERMOSTAT RULES
 
-```lua
+```console
 Rule1 
   on system#boot do RuleTimer1 70 endon 
   on Switch1#State do event toggling1=%mem1% endon 
@@ -430,7 +430,7 @@ In a swimming pool, a filter pump and a solar panel is installed. When the sun i
 `var3`: on threshold temp for panel  
 `mem3`: lowest valid panel temp  
 
-```lua
+```console
 mem3 25
 
 rule1
@@ -483,7 +483,7 @@ Example of a switch controlling a light with a condition of a required amount of
 
 When the switch is on, the light will turn on but only when you have less than 100 lux in that room. While if the switch is off the light will be off.
 
-```lua
+```console
 Rule1
   on switch1#state=1 do var1 100 endon
   on switch1#state=0 do backlog var1 0; power1 off endon
@@ -492,7 +492,7 @@ Rule1
 
 _All together to work as a rule:_
 
-```lua
+```console
 Rule 1
 
 Rule1
@@ -507,7 +507,7 @@ Rule1
 
 #### Time-delayed Auto-off Switch
 **Rule:**  
-```lua
+```console
 Rule1
   on button1#state do backlog power1 %value%; RuleTimer1 600 endon
   on Rules#Timer=1 do power1 off endon
@@ -530,7 +530,7 @@ Rule1
 
 #### Time-delay After Switch Off
 **Rule:**
-```lua
+```console
 on switch1#state=1 do backlog
   power1 on;
   ruletimer1 0
@@ -569,7 +569,7 @@ LDR on Wemos A0 (activated in user_config_override.h)
 and type the following statements in the Console:
 
 **Rules:**   
-```lua
+```console
 SwitchMode1 1
 
 Rule1
@@ -608,7 +608,7 @@ Optional
 
 Assuming that your switch is on `GPIO00` and configured as `Switch1`:
 
-```lua
+```console
 SwitchMode1 1
 
 Rule1
@@ -635,7 +635,7 @@ Behavior: Disable Button1 Short Press and Toggle Relay1 only when holding button
 
 Type in the console:
 
-```lua
+```console
 Backlog ButtonTopic 0; SetOption1 1; SetOption32 20
 
 Rule1
@@ -660,7 +660,7 @@ In the case you do not want the double press feature you can configure your butt
 
 **Another example but using switch instead of button:**
 
-```lua
+```console
 Backlog SwitchTopic1 0; SwitchMode1 5; SetOption32 20
 
 Rule1
@@ -682,7 +682,7 @@ Set Timers to turn on your light at Sunset and Turn off at sunrise.
 Use `poweronstate 0` in order to start with lights off when powering up your device.
 Set the following rules:
 
-```lua
+```console
 Rule1
   on Time#Initialized do backlog event checksunrise=%time%; event checksunset=%time% endon
   on event#checksunset>%sunset% do power1 1 endon
@@ -701,7 +701,7 @@ IF %time%>%sunset DO power1 1 / IF %time%<%sunrise DO power1 1
 Turn on light at dusk until your nighttime and again in the morning before dawn.  
 
 What if the sun sets after your nighttime, as in during the summer? Then the timer will turn off the light at "night", but then the Sunset timer will turn it on again, so it stays on all night.  
-```lua
+```console
 Rule1
   on Time#Initialized do event chkSun endon
   on Time#Minute=%sunset% do event chkSun endon
@@ -718,7 +718,7 @@ Rule2
   on event#setPower do power1 %var1% endon
 ```
 
-```lua
+```console
 Backlog mem1 360; mem2 1350
 Backlog Rule1 1; Rule2 1
 ```
@@ -778,7 +778,7 @@ PreInfo:
 - Lat and Lng set in config
 
 Commands:
-```lua
+```console
 SwitchMode1 1
 
 Rule1
@@ -805,25 +805,25 @@ Used a combination of Clock Timers and Rule to do this.
 
 **Timer 1:** Power ON switch at Sunset  
 Powers on the switch at sunset with an offset of 20 minutes. Repeats every day.  
-```lua
+```console
 Timer1 {"Arm":1,"Mode":2,"Time":"-00:20","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":1}
 ```
 
 **Timer 2:** Power OFF switch at Night.  
 Turns power OFF at 23.00hrs. Repeats every day.  
-```lua
+```console
 Timer2 {"Arm":1,"Mode":0,"Time":"23:00","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":0}
 ```
 
 **Timer 3:** Trigger Luminance Rule at Sunrise  
 Start watching the Lux sensor 15 minutes after sunrise.  
-```lua
+```console
 Timer3 {"Arm":1,"Mode":1,"Time":"00:15","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":3}
 ```
 
 **Rule 1:** Main Rule to check Luminance  
 If Luminance is less than 150lx, power ON. If it goes beyond 175lx, power OFF.  
-```lua
+```console
 Rule1
   on tele-TSL2561#Illuminance<150 do power1 1 endon
   on tele-TSL2561#Illuminance>175 do power1 0 endon 
@@ -833,7 +833,7 @@ Rule1 1
 
 **Rule 2:** Trigger Rule1 only in the Mornings  
 This ensures that Rule1 is triggered when Timer3 starts (in the morning) and stops when Timer1 starts (in the evenings).  
-```lua
+```console
 Rule2
   on Clock#Timer=3 do Rule1 1 endon
   on Clock#Timer=4 do  Rule1 0  endon
@@ -859,7 +859,7 @@ There is also an [option](Control-other-devices) to swap the actions of the **si
   **double press**: send a mqtt message  
   **hold 2 secs**: send another mqtt message
 
-  ```lua
+  ```console
   Backlog ButtonTopic 0; SetOption1 1; SetOption11 1; SetOption32 20
   
   Rule1
@@ -876,7 +876,7 @@ There is also an [option](Control-other-devices) to swap the actions of the **si
   **double press**: Turn relay 1  
   **hold 2 secs**: send another mqtt message  
 
-  ```lua
+  ```console
   Backlog ButtonTopic 0; SetOption1 1; SetOption11 0; SetOption32 20  
   
   Rule1
@@ -898,7 +898,7 @@ There is also an [option](Control-other-devices) to swap the actions of the **si
   **single press**: Do nothing  
   **hold 2 secs**: Toggle relay 1
 
-  ```lua
+  ```console
   Backlog SwitchTopic1 0; SwitchMode1 5; SetOption32 20  
   
   Rule1
@@ -914,7 +914,7 @@ There is also an [option](Control-other-devices) to swap the actions of the **si
 
 #### Perform any action on single/double press (for switches AND buttons)
 
-```lua
+```console
 SwitchMode 5  
 
 Rule1
@@ -952,7 +952,7 @@ Connect the Switch to GND and the GPIO on your device. Be sure put a 4.7k resist
 _Dont forget to change the IDX value_
 
 **Commands:**
-```lua
+```console
 Backlog SwitchTopic 0; SwitchMode4 2; SetOption0 0; PowerOnState 0
 
 var1 1
@@ -1000,7 +1000,7 @@ The above is not proper, though, in case you have a redundant MQTT (e.g., two MQ
 In such case, when the active MQTT fails for any reason, the expected behavior is to achieve automatic re-connection to the other MQTT server.
 
 That can be easily configured defining the following rule on the device console:
-```lua
+```console
 Rule1 on Mqtt#Disconnected do MqttHost 0 endon
 Rule1 1
 ```
@@ -1018,7 +1018,7 @@ If the MqttHost field already contains an IP, you have to delete it using the we
 
 When measuring distance and you have the need to see it in percentage of distance. In the example 100% is everything below 69cm and 0% is everything above 128cm. This is used for showing fill percentage of a wood pellets storage.
 
-```lua
+```console
 Rule1
   on tele-SR04#distance do backlog var1 %value%; event checklimit=%value%; event senddistance endon
   on event#checklimit>128 do var1 128 endon
@@ -1057,7 +1057,7 @@ When two (or more) switches are defined as input and you want to distinguish the
 
 Output:
 
-```lua
+```console
 RUL: SWITCH1#STATE performs "publish stat/wemos-4/RESULT {"POWER1":"1"}"
 MQT: stat/wemos-4/RESULT = {"POWER1":"1"}
 RUL: SWITCH2#STATE performs "publish stat/wemos-4/RESULT {"POWER2":"1"}"
@@ -1079,7 +1079,7 @@ MQT: stat/wemos-4/RESULT = {"POWER1":"0"}
 #### Receiving state of anything that triggers SWITCH more than one time
 
 With analog intercom doorbells you can take out info about ringing from speaker voltage. You can connect GPIO to it via opto-isolator and resistor to take out state. But even with those speaker voltage is dropping so it switches the device multiple times.
-```lua
+```console
 MQT: cmnd/doorbell/POWER2 = OFF (retained)
 MQT: cmnd/doorbell/POWER2 = ON (retained)
 MQT: cmnd/doorbell/POWER2 = OFF (retained)
@@ -1088,7 +1088,7 @@ MQT: cmnd/doorbell/POWER2 = OFF (retained)
 ```
 
 To solve it we can use rules.
-```lua
+```console
 SwitchTopic 0
 
 Rule1
@@ -1142,7 +1142,7 @@ Result
 
 By having a device (an [Oil Diffusser](https://blakadder.github.io/templates/oil_diffuser_550ml.html)) that controls all its features through an MCU and reports the states in serial codes to the ESP8266 I had to create some rules to control it using the Web UI or standard Power commands.
 
-```lua
+```console
 Rule2 
   on power1#state=1 do serialsend5 55AA00060005020400010213 endon 
   on power1#state=0 do serialsend5 55AA00060005020400010011 endon 
@@ -1153,7 +1153,7 @@ Power1 controls the device, Power2 turn on and off the light on the device.
 
 Another rule was created to issued commands on boot so the serial interface works every time and to control the built in fan using Event triggers and have its state retained in an MQTT message for Home Assistant.
 
-```lua
+```console
 Rule3 
   on system#boot do backlog baudrate 9600; seriallog 2; serialsend5 55aa000300010306 endon 
   on event#high do backlog serialsend5 55AA00060005650400010175; publish2 stat/diffuser/FAN high endon 
@@ -1204,7 +1204,7 @@ Rule3
 #### Transmit sensor value only when a delta is reached  
 Send only when the sensor value changes by a certain amount.  
 
-```lua
+```console
 Rule1
   on SI7021#temperature>%var1% do backlog var1 %value%; publish stat/mqttTopic/temp %value%; var2 %value%; add1 2; sub2 2 endon
   on SI7021#temperature<%var2% do backlog var2 %value%; publish stat/mqttTopic/temp %value%; var1 %value%; add1 2; sub2 2 endon
@@ -1213,7 +1213,7 @@ Rule1
 #### Adjust the value of a sensor and send it by MQTT
 This example adds 2 degrees to the measured temperature and then sends that value to an MQTT topic.
 
-```lua
+```console
 Rule1
   on tele-SI7021#temperature do backlog var1 %value%; add1 2; event sendtemp endon
   on event#sendtemp do publish stat/mqttTopic/temp %var1% endon
@@ -1228,7 +1228,7 @@ Rule1
 This example switches a connected relays over the software serial on and off.<br> 
 Write the following rules:
 
-```lua
+```console
 rule1
   on SSerialReceived#Data=on do power1 1 endon
   on SSerialReceived#Data=off do power1 0 endon
@@ -1236,7 +1236,7 @@ rule1
 
 receiving `on` and `off` results in
 
-```lua
+```console
 MQT: tele/mqttTopic/RESULT = {"SSerialReceived":"on"}
 RUL: SSERIALRECEIVED#DATA=ON performs "power1 1"
 MQT: stat/mqttTopic/RESULT = {"POWER":"ON"}
@@ -1256,7 +1256,7 @@ MQT: stat/mqttTopic/POWER = OFF
 ``BREAK`` is an alternative to ``ENDON``. ``BREAK`` will stop the execution for the triggers that follow. If a trigger that ends with ``BREAK`` fires, then the following triggers of that rule will not be executed. This allows to simulate ``IF..ELSEIF..ELSE..ENDIF``
 
 **Example:**
-```lua
+```console
 IF temp > 85 then
   VAR1 more85
 ELSEIF temp > 83 then
@@ -1271,7 +1271,7 @@ ENDIF
 ```
 
 With the actual rules, if we use a set like the following:
-```lua
+```console
 Rule1
   on event#temp>85 do VAR1 more85 endon
   on event#temp>83 do VAR1 more83 endon
@@ -1281,7 +1281,7 @@ Rule1
 ```
 
 This is the output in the console:
-```lua
+```console
 CMD: rule
 MQT: stat/living/RESULT = {"Rule1":"ON","Once":"ON","StopOnError":"OFF","Free":322,"Rules":"on event#temp>85 do VAR1 more85 endon on event#temp>83 do VAR1 more83 endon on event#temp>81 do VAR1 more81 endon on event#temp=81 do VAR1 equal81 endon on event#temp<81 do VAR1 less81 endon"}
 CMD: event temp=10
@@ -1298,7 +1298,7 @@ RUL: EVENT#TEMP>81 performs "VAR1 more81"
 MQT: stat/living/RESULT = {"Var1":"more81"}
 ```
 So, all the triggers where TEMP>100, are firing. With the ``BREAK`` statement the rule set can be changed to:
-```lua
+```console
 Rule
   on event#temp>85 do VAR1 more85 break
   on event#temp>83 do VAR1 more83 break
@@ -1308,7 +1308,7 @@ Rule
 ```
 
 Which will result in the following output:
-```lua
+```console
 CMD: rule
 RSL: RESULT = {"Rule1":"ON","Once":"OFF","StopOnError":"OFF","Free":321,"Rules":"on event#temp>85 do VAR1 more85 break on event#temp>83 do VAR1 more83 break on event#temp>81 do VAR1 more81 endon on event#temp=81 do VAR1 equal81 endon on event#temp<81 do VAR1 less81 endon"}
 CMD: event temp=10
@@ -1334,7 +1334,7 @@ Power sensor reporting thresholds are set by a percentage change in the Power va
 
 This rule also uses the [one-shot feature of rules](#4-usage-of-one-shot-once) to avoid reporting of every small change within a threshold window. The rule (a ON/DO/ENDON rule in this the set) will trigger only once when a threshold is crossed.
 
-```lua
+```console
 Backlog PowerDelta 0; Rule1 0; Rule1 5
  
 Rule1
@@ -1347,7 +1347,7 @@ Rule1 1
 ```
 
 Which translates to:
-```lua
+```console
 Rule Pseudo Code
 IF ENERGY#Power>=35  // ENERGY#Power GE 35
   DO Backlog PowerDelta 10; Status 8
@@ -1366,7 +1366,7 @@ ELSE  // ENERGY#Power changed (i.e. LE 5)
 #### IR Forward
 
 Using one IR receiver and one sender (or both extender) you can simply forward signals from one to another using the following rule
-```lua
+```console
 rule1 on IRreceived#Data do publish cmnd/irsideboard/irsend {Protocol:NEC,Bits:32,Data:0x%value%} endon
 ```
 
@@ -1401,7 +1401,7 @@ rule1 on IRreceived#Data do publish cmnd/irsideboard/irsend {Protocol:NEC,Bits:3
 // var3=1 Only When OPENING  
 // var4=1 Only When CLOSING  
 
-```lua
+```console
 Rule1
   on Switch1#Boot=1 do backlog delay 99; event Opened endon
   on Switch2#Boot=1 do backlog delay 99; event Closed endon
@@ -1441,14 +1441,14 @@ For example, a remote control with one button to change speed. This rules simula
 //The `<trigger>` can be a a condition or an event sent from another device or home automation hub.  
 //`<topic>` corresponds to the device transmitting the code (e.g., [YTF IR Bridge](YTF-IR-Bridge)). This could also be modified to send an RF code from a [Sonoff RF Bridge](Sonoff-RF-Bridge-433).  
 // The `Delay` may not be necessary in your environment or may need to be adjusted according to your device characteristics. 
-```lua
+```console
 Rule 1
   ON Event#tora DO Backlog Publish cmnd/<topic>/IRSend {"Protocol":"NEC","Bits":32,"Data":"0x00FF30CF"}; Delay 10 ENDON
   ON <trigger> DO Backlog Event tora; Event tora; Event tora ENDON
 ```
 
 //Enable the Rule set  
-```lua
+```console
 Rule1 1
 ```
 
@@ -1464,7 +1464,7 @@ Using the `WebSend` command, the two switches can talk to each other - no need f
 
 Starting with the slave, the rule to toggle the master is pretty simple:
 
-```lua
+```console
 Rule1
   ON Button1#State DO WebSend [192.168.0.74] POWER1 TOGGLE ENDON
   ON Button2#State DO WebSend [192.168.0.74] POWER2 TOGGLE ENDON
@@ -1475,7 +1475,7 @@ Rule1 1
 
 Note that having a rule for the Button#State disables the power toggling of the slave's relay(s).  This is desirable because we want the master to control the slave's relay state(s) according to its own as follows:
 
-```lua
+```console
 Rule1
   ON Power1#state DO WebSend [192.168.0.144] POWER1 %value% ENDON
   ON Power2#state DO WebSend [192.168.0.144] POWER2 %value% ENDON
@@ -1492,7 +1492,7 @@ Rule1 1
 
 With a two relay device (e.g., Shelly 2.5) configured for a roller shutter, you can also connect push-buttons (configured as switch components in this example) and set them for inverted toggle behavior. Pressing a push-button once makes the roller shutter move in one direction. Pressing it again stops it. These rules each use a variable to remember the shutter state where `0 == Stopped` and `1 == Moving`.
 
-```lua
+```console
 Backlog SwitchTopic 0; SwitchMode1 4; SwitchMode2 4
 
 Rule1
