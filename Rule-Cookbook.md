@@ -45,7 +45,8 @@
 
 #### Use long press action on a switch
 
-**NOTE: This example is for GPIOs defined as switches not buttons**
+>[!INFO]
+> This example is for GPIOs defined as switches not buttons
 
 Activate long press action with `Switchmode 5` and shorten long press time to 2 seconds (`Setoption32 20`).
 
