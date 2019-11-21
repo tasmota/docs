@@ -40,9 +40,9 @@ Each module is assigned a number which is used in [Template configuration](templ
 <a id="SonoffBridge">	</a>	25	|	Sonoff Bridge	|	Enable and Process data via hardware serial interface using GPIO01 and GPIO03. Change the baud rate to 19200 bps. Process 16 buttons in web GUI. Enable EFM8BB1 firmware upload
 <a id="SonoffB1">	</a>	26	|	Sonoff B1	|	Set light type to RGBWC using MY92x1
 <a id="Ailight">	</a>	27	|	Ailight	|	Set light type to RGBW using MY92x1
-<a id="SonoffT11Ch">	</a>	28	|	Sonoff T1 1Ch	|	[See Sonoff Touch](#SonoffTouch)
-<a id="SonoffT12Ch">	</a>	29	|	Sonoff T1 2Ch	|	[See Sonoff Touch](#SonoffTouch)
-<a id="SonoffT13Ch">	</a>	30	|	Sonoff T1 3Ch	|	[See Sonoff Touch](#SonoffTouch)
+<a id="SonoffT11Ch">	</a>	28	|	Sonoff T1 1Ch	|	[See Sonoff Touch](/devices/SonoffTouch)
+<a id="SonoffT12Ch">	</a>	29	|	Sonoff T1 2Ch	|	[See Sonoff Touch](/devices/SonoffTouch)
+<a id="SonoffT13Ch">	</a>	30	|	Sonoff T1 3Ch	|	[See Sonoff Touch](/devices/SonoffTouch)
 <a id="SuplaEspablo">	</a>	31	|	Supla Espablo	|	
 <a id="WittyCloud">	</a>	32	|	Witty Cloud	|	
 <a id="YunshanRelay">	</a>	33	|	Yunshan Relay	|	
