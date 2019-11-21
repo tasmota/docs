@@ -16,6 +16,12 @@
 ### What's New?
 <!-- tabs:start -->
 
+#### **0000-01-01**
+Tasmota 7.1 Betty is released!  
+
+<iframe seamless="seamless" style="width: 100%; border: none; display: block; max-width: 420px; height: 360px;" src="https://getyarn.io/yarn-clip/embed/35d9764f-a5ba-488b-9dd3-28b6062aa295?autoplay=false"> </iframe>
+   
+More light improvemements, chief amongst them a color picker in the web UI. FINALLY!!! 
 
 #### **2019-11-15**
 We present the official Tasmota firmware flashing tool:  
