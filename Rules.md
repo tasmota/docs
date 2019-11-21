@@ -1,13 +1,8 @@
+<a id="top"></a>
 Tasmota provides a Rule feature heavily inspired by the _ESPEasy_ implementation. Rules expand the functionality of Tasmota with flexible and user configurable logic while maintaining a small memory footprint. Automation solutions can be implemented without having to add dedicated code or use external solutions.  
 
-- [Rule Syntax](#rule-syntax)
-  - [Trigger](#Rule-trigger)
-  - [Command](#Rule-command)
-  - [Variables](#Rule-variables)
 - [Rule Cookbook](Rule-Cookbook) (_Sample rules_)
 
-<a id="top"></a>
-## Introduction
 Rules perform actions based on triggers (e.g., switch state change, temperature threshold, events like system boot, a defined timer elapsing, custom defined events, etc.) They are stored in flash and therefore will survive a reboot.
 
 > Most pre-compiled binaries ([builds](Builds)) have the Rules feature enabled. The exception being `tasmota-minimal.bin`. *If you are compiling your own firmware, in order to use rules, include `#define USE_RULES` in `user_config_override.h`.*
@@ -94,17 +89,17 @@ Every [command](Commands) with a one level JSON response has the #Data trigger.
 
 Trigger           | When it occurs |
 ------------------|----------------|
-|\<command>#Data|A response such as {"Fanspeed":3} has the Fanspeed#Data trigger.<br>A response like {"PulseTime2":{"Set":0,"Remaining":0}} does NOT have the #data trigger as the triggers are PulseTime2#Set and PulseTime2#Remaining. 
+|\<command\>#Data|A response such as {"Fanspeed":3} has the Fanspeed#Data trigger.<br>A response like {"PulseTime2":{"Set":0,"Remaining":0}} does NOT have the #data trigger as the triggers are PulseTime2#Set and PulseTime2#Remaining. 
 
 Connected sensors can be a trigger in the form as they are represented in the `TelePeriod` and `Status 8` JSON payloads.  
 
 Trigger           | When it occurs |
 ------------------|----------------|
 |DS18B20#Temperature| whenever the temperature of sensor DS18B20 changes|
-|DS18B20#Temperature<20| whenever the temperature of sensor DS18B20 is below 20 degrees|
+|DS18B20#Temperature\<20| whenever the temperature of sensor DS18B20 is below 20 degrees|
 |AM2301-12#Humidity==55.5| whenever the humidity of sensor AM2301-12 equals 55.5%|
-|INA219#Current>0.100| whenever the current drawn is more than 0.1A|
-|Energy#Power>100| whenever the power used is more than 100W|
+|INA219#Current\>0.100| whenever the current drawn is more than 0.1A|
+|Energy#Power\>100| whenever the power used is more than 100W|
 
 To trigger only at TelePeriod time, prefix the sensor with the word `Tele-`.  
 
@@ -176,3 +171,5 @@ The `<value>` can also be the value of the trigger of the rule.
   ON wifi#connected DO Var2 %timestamp% ENDON
   ON mqtt#connected DO Publish stat/topic/BLACKOUT {"From":"%Var1%","To":"%Var2%"} ENDON
   ```
+## [Rule Cookbook](Rule-Cookbook) 
+Sample rules to use as a starting point to creating your own.
