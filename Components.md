@@ -15,7 +15,7 @@ If you wish to expand a device with a [peripheral](Peripherals) component, after
 
 Read more about [peripherals](Peripherals).
 
-### Components List
+## Components List
 [Google Sheet](https://docs.google.com/spreadsheets/d/10aYCaR3P09omn_vryFGyyq7dS-XK54K2fGAcb4gruik) of components by number and alphabetically
 
 |#|Name|Description
