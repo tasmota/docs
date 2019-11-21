@@ -1,17 +1,17 @@
-**Module** is a firmware supported device which has specific code to enable its features.
+?> **Module** is a firmware supported device which has specific code to enable its features.
+
+**Configure Module** page in the webUI is used to configure your device as one of the modules **_and_** to [configure additional components](Components) connected to one of the free GPIO pins of the device.
 
 > [!WARNING]
 >New Modules are added to Tasmota only if a device requires additional code for new functions. Use [Templates](Templates) first to configure your device if it's not in the module list.
 
-**Configure Module** page in the WebUI is used to configure your device as one of the modules **and** to [configure additional components](components) connected to one of the free GPIO pins of the device.
-
 > [!TIP]
 > Use Generic module `Module 18` to have almost all GPIO pins available.
 
-Each module is assigned a number which is used in [Template configuration](templates#base) or when using [`Module`](commands#module) command.
+Each module is assigned a number which is used in [Template configuration](Templates#BASE) or when using [`Module`](Commands#module) command.
 
 | #| Name| Module specifics
-| ---: | :--- | :---
+| ---: | :-------- | :---
 | 0 | Template | Module for currently active template. Named after the template NAME field.<br>*If a template is not active it will display `Generic (0)`.<br>**Do not use it until you configure a template**, use `Generic (18)` instead*|
 <a id="SonoffBasic">	</a>	1	|	Sonoff Basic	|	
 <a id="SonoffRF">	</a>	2	|	Sonoff RF	|	
@@ -25,7 +25,7 @@ Each module is assigned a number which is used in [Template configuration](templ
 <a id="SonoffTouch">	</a>	10	|	Sonoff Touch	|	Invert `LedState 1` functionality
 <a id="SonoffLED">	</a>	11	|	Sonoff LED	|	Set light type to 2 PWM channels disregarding SetOption15. Fix device specific LED instabilities by disabling GPIO04, GPIO5 and GPIO14
 <a id="1Channel">	</a>	12	|	1 Channel	|	
-<a id="4Channel">	</a>	13	|	4 Channel	|	[See Sonoff Dual](/devices/SonoffDual)
+<a id="4Channel">	</a>	13	|	4 Channel	|	[See Sonoff Dual](/devices/Sonoff-Dual)
 <a id="MotorC/AC">	</a>	14	|	Motor C/AC	|	Force all relays ON at power up and disable command `PowerOnState`
 <a id="ElectroDragon">	</a>	15	|	ElectroDragon	|	
 <a id="EXSRelays">	</a>	16	|	EXS Relay(s)	|	Enable pulse latching using even/odd numbered relay pairs
@@ -40,9 +40,9 @@ Each module is assigned a number which is used in [Template configuration](templ
 <a id="SonoffBridge">	</a>	25	|	Sonoff Bridge	|	Enable and Process data via hardware serial interface using GPIO01 and GPIO03. Change the baud rate to 19200 bps. Process 16 buttons in web GUI. Enable EFM8BB1 firmware upload
 <a id="SonoffB1">	</a>	26	|	Sonoff B1	|	Set light type to RGBWC using MY92x1
 <a id="Ailight">	</a>	27	|	Ailight	|	Set light type to RGBW using MY92x1
-<a id="SonoffT11Ch">	</a>	28	|	Sonoff T1 1Ch	|	[See Sonoff Touch](/devices/SonoffTouch)
-<a id="SonoffT12Ch">	</a>	29	|	Sonoff T1 2Ch	|	[See Sonoff Touch](/devices/SonoffTouch)
-<a id="SonoffT13Ch">	</a>	30	|	Sonoff T1 3Ch	|	[See Sonoff Touch](/devices/SonoffTouch)
+<a id="SonoffT11Ch">	</a>	28	|	Sonoff T1 1Ch	|	[See Sonoff Touch](/devices/Sonoff-Touch)
+<a id="SonoffT12Ch">	</a>	29	|	Sonoff T1 2Ch	|	[See Sonoff Touch](/devices/Sonoff-Touch)
+<a id="SonoffT13Ch">	</a>	30	|	Sonoff T1 3Ch	|	[See Sonoff Touch](/devices/Sonoff-Touch)
 <a id="SuplaEspablo">	</a>	31	|	Supla Espablo	|	
 <a id="WittyCloud">	</a>	32	|	Witty Cloud	|	
 <a id="YunshanRelay">	</a>	33	|	Yunshan Relay	|	
