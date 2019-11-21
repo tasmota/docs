@@ -12,7 +12,7 @@ Each module is assigned a number which is used in [Template configuration](templ
 
 | #| Name| Module specifics
 | ---: | :--- | :---
-| 0 | Template | Module for currently active template. Named after the template NAME field. *If a template is not active it will display `Generic (0)`. **Do not use it until you enter a template**, use `Generic (18)`*|
+| 0 | Template | Module for currently active template. Named after the template NAME field. *If a template is not active it will display `Generic (0)`.<br>**Do not use it until you enter a template**, use `Generic (18)`*|
 <a id="SonoffBasic">	</a>	1	|	Sonoff Basic	|	
 <a id="SonoffRF">	</a>	2	|	Sonoff RF	|	
 <a id="SonoffSV">	</a>	3	|	Sonoff SV	|	
