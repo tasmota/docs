@@ -933,7 +933,7 @@ Switching in Tasmota is usually done by High/Low (+3.3V/GND) changes on a GPIO. 
 - When the **light is ON** and there is a **short period** of pulses **->** then turn the light **OFF**.
 - When there is a longer period of pulses (i.e., **HOLD**) **->** toggle dimming direction and then adjust the brightness level as long as the button is pressed or until the limits are reached.
 
-[#6085 (comment)](../issues/6085#issuecomment-512353010)
+[#6085 (comment)](https://github.com/arendst/Tasmota/issues/6085#issuecomment-512353010)
 
 In the Data Section >D at the beginning of the Script the following initialization variables may be changed:
 - dim multiplier - 0..2.55 set the dimming increment value

@@ -1376,7 +1376,7 @@ rule1 on IRreceived#Data do publish cmnd/irsideboard/irsend {Protocol:NEC,Bits:3
 ------------------------------------------------------------------------------
 
 #### Garage Door Opener
-([#3942](../issues/3942#issue-365226844))
+([#3942](https://github.com/arendst/Tasmota/issues/3942#issue-365226844))
 
 // Set the relay on time to signal the opener  
 `PulseTime 7`

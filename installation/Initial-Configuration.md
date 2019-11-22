@@ -1,38 +1,41 @@
 You've successfully flashed your device with a downloaded binary of Tasmota but now you need to connect the tasmotised device to your Wi-Fi network. 
 
-# Using Web UI
-## Configure Wi-Fi 
+## Using Web UI
+### Configure Wi-Fi 
 Tasmota provides a wireless access point for easy Wi-Fi configuration. 
->*If you flashed using Tuya Convert this is the only option to set up your device.*
 
-<img alt="Sonoff AP" src="https://user-images.githubusercontent.com/5904370/68963209-b4723200-07d6-11ea-9116-4b0f4f0f4dbc.png" align="left" width=200></img>
+!> If you flashed using Tuya Convert this is the only option to set up your device.
+
+<img alt="Tasmota AP" src="https://user-images.githubusercontent.com/5904370/68963209-b4723200-07d6-11ea-9116-4b0f4f0f4dbc.png" style="margin:10px;float:left;width:150px"></img>
 Connect your device to a power source and grab your smartphone (or tablet or laptop or any other web and Wi-Fi capable device). Search for a Wi-Fi AP named **tasmota-xxxx** (where **x** is a number) and connect to it. _In this example the Wi-Fi AP is named **tasmota-7718**._ When it connects to the network, you may get a warning that there is no Internet connection and be prompted to connect to a different network. _Do not allow the mobile device to select a different network_.
+<p>
 
-> *Wi-Fi manager server is active for only 3 minutes. If you miss the window you might have to disconnect your device from power and reconnect.*
+?> Wi-Fi manager server is active for only 3 minutes. If you miss the window you might have to disconnect your device from power and reconnect.
 
-<img alt="Sign in to Wi-Fi Network" src="https://user-images.githubusercontent.com/5904370/68963506-5a25a100-07d7-11ea-8d34-91cfc8b658f6.png" align="right" width=280></img>
+
 After you have connected to the Tasmota Wi-Fi AP, open http://192.168.4.1 in a web browser on the smartphone (or whatever device you used). 
-Depending on the phone, it will take you to the Tasmota configuration page automatically, or you will get a prompt to *sign in to Wi-Fi network* or *authorize*. Tapping on the AP name should also open the configuration page.
+<img alt="Sign in to Wi-Fi Network" src="https://user-images.githubusercontent.com/5904370/68963506-5a25a100-07d7-11ea-8d34-91cfc8b658f6.png" style="margin:5px;float:right;width:200px"></img>Depending on the phone, it will take you to the Tasmota configuration page automatically, or you will get a prompt to *sign in to Wi-Fi network* or *authorize*. Tapping on the AP name should also open the configuration page.
 
 <img alt="Tasmota AP" src="https://user-images.githubusercontent.com/5904370/68961890-a242c480-07d3-11ea-912f-b45464104f2c.png
-" align="right" height="350"></img>
+" style="margin:5px;float:right;width:300px"></img>
 At this page you can have Tasmota scan for available Wi-Fi networks. Select the right network from the list or enter the following:
 
 **AP1 SSid** - your Wi-Fi network name  
->SSID's are case sensitive 
+_SSID's are case sensitive_
 
-**AP1 Password** - password for your Wi-Fi AP<br>
->Wi-Fi password has to be under 32 characters and without special characters (e.g. asterisks) or white spaces
+**AP1 Password** - password for your Wi-Fi AP    
+Wi-Fi password has to be under 32 characters and without special characters (e.g. asterisks) or white spaces
 
-*Recommended:*  
-**AP2 SSid** - alternative Wi-Fi network SSID<br>
-**AP2 Password** - password for your alternative Wi-Fi AP
-
->*If you're not using a second Wi-Fi network you can enter an SSID without a password you can connect to as a backup in case something went wrong with your Wi-Fi credentials.*
+*Recommended:*   
+**AP2 SSid** - alternative Wi-Fi network SSID   
+**AP2 Password** - password for your alternative Wi-Fi AP   
 
 Click the checkbox to see the password you enter to ensure that it is correct and that your mobile device has not inadvertently capitalized the first letter if it is supposed to be lower case nor autocorrected what you entered. ~~Double~~ **Triple check the Wi-Fi credentials** and click on **Save** to apply the settings. The device will restart and connect to your home network. The `tasmota-xxxx` network will not longer be present. Therefore your smartphone will automatically be disconnected and should connect back to its data network.
 
-## Configure MQTT
+> [!TIP]
+>If you're not using a second Wi-Fi network you can enter an SSID without a password you can connect to as a backup in case something went wrong with your Wi-Fi credentials.
+
+### Configure MQTT
 Look in your router for a newly connected device with the same name as the Wi-Fi access point. *(In this example **tasmota-7718**.)*
 
 If you don't have access to your router you can find your newly flashed device with an IP scanner:
@@ -43,18 +46,18 @@ If you don't have access to your router you can find your newly flashed device w
 
 Open the IP address with your web browser and you have full access to Tasmota.
 
-Now is the time to set up [MQTT](MQTT) and the last remaining, but equally important, step:
+Now is the time to set up [MQTT](/installation/MQTT) and the last remaining, but equally important, step:
 
-## Configure module or template
+### Configure Module or Template
 
-Configure your device using [Templates](Templates) in **Configuration - Configure Template** or [Modules](Supported-Devices) in **Configuration - Configure Module**.
+Configure your device using [Templates](Templates) in **Configuration - Configure Template** or [Modules](Modules) in **Configuration - Configure Module**.
 
-Your device running Tasmota is now ready to be [controlled](Commands), [automated](Rules) or [integrated](Integrations) in your smart home solution.
+Your device running Tasmota is now ready to be [controlled](Commands), [automated](Rules) or [integrated](/integrations/) in your smart home solution.
 
-# Using Serial Terminal
+## Using Serial Terminal
 If you flashed the device using serial-to-USB adapter (or it is a NodeMCU/D1 mini) you can take advantage of the existing connection and configure your device over the serial connection using [Commands](commands).
 
-First you will need a [Serial Terminal](Prerequisites#serial-terminal) program. 
+First you will need a [Serial Terminal](/installation/Prerequisites#serial-terminal) program. 
 
 *In this example [Termite](https://www.compuphase.com/software_termite.htm) on Windows is used.*
 
@@ -84,8 +87,9 @@ Configure MQTT broker address, MQTT credentials, unique device topic and OTA url
 ```console
 Backlog mqtthost <yourhost>; mqttuser <user>; mqttpassword <password>; topic <unique_topic>; otaurl http://thehackbox.org/tasmota/release/tasmota.bin
 ```
->*Keep your personal configuration in a text file and simply copy and paste the backlog commands to a newly flashed device.*
+> [!TIP]
+>Keep your personal configuration in a text file and simply copy and paste the backlog commands to a newly flashed device.
 
 Commands and Backlog are powerful and in time you can learn to configure almost everything (NTP servers, longitude and latitude, custom device options, etc) with a few copy and paste moves.
 
-Your device is connected to your network and to the MQTT broker. One last thing to do is configure your device using [Templates](Templates) in **Configuration - Configure Template** or [Modules](Supported-Devices) in **Configuration - Configure Module**.
+Your device is connected to your network and to the MQTT broker. One last thing to do is configure your device using [Templates](Templates) in **Configuration - Configure Template** or [Modules](Modules) in **Configuration - Configure Module**.

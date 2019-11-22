@@ -12,7 +12,7 @@
  - [I entered the wrong Wi-Fi information](#I-entered-the-wrong-Wi-Fi-information)
  - [Device disconnects from Wi-Fi often](#Device-disconnects-from-Wi-Fi-often)
  - [Wi-Fi stops working](#Wi-Fi-stops-working)
- - [Control device from outside my network](../issues/5352)
+ - [Control device from outside my network](https://github.com/arendst/Tasmota/issues/5352)
  - [Weaker Wi-Fi signal after upgrade](#Weaker-Wi-Fi-signal-after-upgrade)
 #### MQTT
  - [Cannot connect to my MQTT broker](#Cannot-connect-to-my-MQTT-broker)
@@ -30,7 +30,7 @@
  - [Tasmota is sending a lengthy status update ("STATUS" - "STATUS11") every 5 seconds. What's going on?](#Tasmota-is-sending-a-lengthy-status-update-STATUS---STATUS11-every-5-seconds-Whats-going-on)
  - [Web interface asks for password](#Web-interface-asks-for-password)
  - [Power monitoring shows wrong values](#Power-monitoring-shows-wrong-values)
- - [Power monitoring resets Energy Today mid-day](../issues/5571)
+ - [Power monitoring resets Energy Today mid-day](https://github.com/arendst/Tasmota/issues/5571)
  - [Sensors don't show values](#Sensors-dont-show-values)
  - [Timers trigger at the wrong time](#Timers-trigger-at-the-wrong-time)
  - [Auto-discovery in Home Assistant doesn't work](#Auto-discovery-in-Home-Assistant-doesnt-work)
@@ -81,7 +81,7 @@ Testing with two different (fairly new) FTDI boards and two Sonoff 4CH v2.0 and 
 I found that the problem in both Sonoff's was that instead of the FTDI Sonoff cross-over TX->RX and RX->TX I had to do TX->TX RX->RX this then allowed me to upload the sketch.
 
 ### Flashing fails on MacOS High Sierra
-Related to issue [#957](../issues/957#issuecomment-338779258).
+Related to issue [#957](https://github.com/arendst/Tasmota/issues/957#issuecomment-338779258).
 
 Solution:
 1. Install the VCP drivers for Mac from the [FTDI website](http://www.ftdichip.com/Drivers/VCP.htm)
@@ -212,7 +212,7 @@ You can disable status LED blinking using:
 ### My device randomly switches on and off. Do I have ghosts in my house?
 Most of the issues with random, or "ghost", switching are related to MQTT retain settings. In short, your MQTT broker is retaining a message with the POWER status of the device which gets applied on reboots. [Solution here](PowerOnState-Configuration#side-effects-with-using-mqtt-messages) 
 
-In some cases, adding a switch to a device causes ghost switching. In this case, you may need to add a [low pass filter](https://www.youtube.com/watch?v=aq8_os6g13s&ab_channel=DrZzs) to dampen any spikes on the input. In the case of the Sonoff T1, a modification to [change the filter capacitor](../issues/5449#issuecomment-478471697) on the PCB may be required.
+In some cases, adding a switch to a device causes ghost switching. In this case, you may need to add a [low pass filter](https://www.youtube.com/watch?v=aq8_os6g13s&ab_channel=DrZzs) to dampen any spikes on the input. In the case of the Sonoff T1, a modification to [change the filter capacitor](https://github.com/arendst/Tasmota/issues/5449#issuecomment-478471697) on the PCB may be required.
 
 This short [10 minute video by TheHookUp](https://www.youtube.com/watch?v=31IyfM1gygo&t=15s) nicely explains what it is and how to prevent it. 
 
@@ -238,9 +238,9 @@ The restart is normal if you change something at the device configuration.
 You need to clear the retain messages of your HA/Broker/MQTT Server.
 
 Read also:
-- [#2140](../issues/2140)
-- [#2658 (comment)](../issues/2658#issuecomment-387112217)
-- [#2716](../issues/2716)
+- [#2140](https://github.com/arendst/Tasmota/issues/2140)
+- [#2658 (comment)](https://github.com/arendst/Tasmota/issues/2658#issuecomment-387112217)
+- [#2716](https://github.com/arendst/Tasmota/issues/2716)
 
 ### Can you add this unsupported sensor to Tasmota
 

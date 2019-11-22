@@ -1,7 +1,6 @@
 * **Get Started with Tasmota**
-* [Prerequisites](Prerequisites)  
-* [Hardware Preparation](Hardware-Preparation)  
-* [Flashing](Flashing)  
-* [Initial Configuration](Initial-Configuration)  
-* [MQTT](MQTT)   
-* [Back](/Home)  
+* [Prerequisites](/installation/Prerequisites)  
+* [Hardware Preparation](/installation/Hardware-Preparation)  
+* [Flashing](/installation/Flashing)  
+* [Initial Configuration](/installation/Initial-Configuration)  
+* [Done](Home)  

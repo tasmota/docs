@@ -79,7 +79,7 @@ _**Can only create a firmware binary.** Use one of the [tools](Prerequisites#fla
 ### Serial terminal
 A program that connects to your Tasmota device directly over the serial connection you used to flash it.
 
-This is an optional way to configure your device using [Commands](Commands) and [Backlog](Commands#using-backlog). Be sure to configure your program for local echo so that the characters you type are displayed locally on your monitor as well as transmitted to the device. Also, every request needs to end with `<CR><LF>`. Your program may only send the carriage return (`Ctrl-M`) when hitting `Enter` and not automatically send the `<LF>`. You can send a linefeed using `Ctrl-J` on the keyboard.
+This is an optional way to configure your device using [Commands](Commands) and [Backlog](Commands#the-power-of-backlog). Be sure to configure your program for local echo so that the characters you type are displayed locally on your monitor as well as transmitted to the device. Also, every request needs to end with `<CR><LF>`. Your program may only send the carriage return (`Ctrl-M`) when hitting `Enter` and not automatically send the `<LF>`. You can send a linefeed using `Ctrl-J` on the keyboard.
 * **[Termite](https://www.compuphase.com/software_termite.htm)** - simple terminal for windows
 * **[Termie](http://termie.sourceforge.net/)** - open source clone of Termite
 * **[Putty](https://www.putty.org/)** - popular client available on every platform

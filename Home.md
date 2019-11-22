@@ -19,7 +19,7 @@
 #### **0000-01-01**
 Tasmota 7.1 Betty is released!  
 
-<iframe width="300" src="https://www.youtube.com/embed/9iEoq8qZZK8?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="500" height="260" src="https://www.youtube.com/embed/9iEoq8qZZK8?autoplay=1&rel=0&controls=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 More light improvemements, chief amongst them a color picker in the web UI. FINALLY!!! 
 

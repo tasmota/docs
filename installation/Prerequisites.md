@@ -1,21 +1,24 @@
 ## Needed Hardware
 
-<img style="float:right;width:150" src="../_media/esp8266.png"></img>
+<img style="float:right;width:250px" src="../_media/esp8266.png"></img>
 ### Device with an ESP8266/ESP8285 chip
 Any [variation](https://en.wikipedia.org/wiki/ESP8266#Espressif_modules) of the [ESP8266 chip](https://www.espressif.com/en/products/hardware/esp8266ex/overview) can be flashed with Tasmota.
 
 ### Serial-to-USB adapter with 3.3V supply
 The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?title=Power) is **one of the most important elements** for both flashing the device and for stable operation. You must ensure that the device receives sufficient power (current AND appropriate voltage level) to properly flash the firmware on the device.
 * [CH340G](https://cdn.sparkfun.com/datasheets/Dev/Arduino/Other/CH340DS1.PDF) is a reliable and very cheap adapter (example [1](https://www.sparkfun.com/products/14050), [2](https://www.aliexpress.com/item/1PCS-CH340-module-instead-of-PL2303-CH340G-RS232-to-TTL-module-upgrade-USB-to-serial-port/32761423124.html)).
+<img src="../_media/ch340g.png" style="margin:5px;float:right;width:200px"></img>
 * [FTDI FT232](https://www.ftdichip.com/Products/ICs/FT232R.htm) - these adapters have a lot of fakes in the market so buy only from reliable sources ([example](https://www.sparkfun.com/products/13746)). Buy only the variant with a separate 3.3V regulator on PCB! 
 * [CP2102](https://www.silabs.com/documents/public/data-sheets/cp2102-9.pdf) or [PL2303](http://www.prolific.com.tw/UserFiles/files/ds_pl2303HXD_v1_4_4.pdf) - works with certain devices, but using an external 3.3V supply might be necessary. Not recommended for beginners!
 * [RaspberryPi](https://github.com/arendst/Tasmota/wiki/Flash-Sonoff-using-Raspberry-Pi) - only for advanced users. External 3.3V supply necessary.
-* [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) and [D1 mini](https://wiki.wemos.cc/products:d1:d1_mini) (Pro/Lite) boards have a micro USB upload port and don't require an adapter.
-<img src="https://user-images.githubusercontent.com/5904370/55688731-3f0acd00-597c-11e9-866c-d6ed7658ec4b.png" align=right></img>
+* [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) and [D1 mini](https://cleanuri.com/x60JQ9) (Pro/Lite) boards have a micro USB upload port and don't require an adapter.
 
-***Don't forget to install drivers for your serial-to-USB adapter.***
+> [!NOTE]
+>Don't forget to install drivers for your serial-to-USB adapter.
 
-*Some adapters can be switched between 3.3V and 5V for the data pins, but still provide 5V on the power pin which will fry your device.  You **MUST** make sure both the **data** and **VCC** pins are set for 3.3V.*
+> [!DANGER]
+>Some adapters can be switched between 3.3V and 5V for the data pins, but still provide 5V on the power pin which will fry your device.  You MUST make sure both the data and VCC pins are set for 3.3V.
+
 ### Soldering equipment
 To solder you'll of course need a soldering iron, soldering tin and some flux. If you're new to soldering check out some soldering tutorial videos while you're at it.
 
@@ -25,7 +28,8 @@ If you're intimidated by soldering you could get away with holding the headers w
 You could use any kind of wire but [jumper wires](http://blog.sparkfuneducation.com/what-is-jumper-wire) (also called DuPont wires) are more practical than soldering and desoldering.
 
 ### Pin headers
-<img src="https://user-images.githubusercontent.com/5904370/55688997-a6764c00-597f-11e9-9f5f-cb5c38c21479.png" height=100 align=right></img>
+<img src="../_media/pinheaders.png" style="margin:5px;float:right;width:10em"></img>
+
 [Pin headers](https://learn.sparkfun.com/tutorials/connector-basics/pin-header-connectors) come in male or female version. Choose according to your jumper wire connectors.
 ### Computer with Linux, Windows or MacOS
 You need a computer with a USB port to upload the firmware to your device and configure it.
@@ -67,14 +71,14 @@ If you use PlatformIO, to be sure that you have the latest build of the ESP Core
 - All folders that begin with `framework...` in `.platformio/packages`  
 
 #### Online Compilers
-_**Can only create a firmware binary.** Use one of the [tools](Prerequisites#flashing-tool) to flash it to your device._
+_**Can only create a firmware binary.** Use one of the [tools](/installation/Prerequisites#flashing-tool) to flash it to your device._
 - [**Gitpod**](Compiling-Tasmota-on-Gitpod) - compile your own binary in the cloud using [Gitpod](https://www.gitpod.io/).  
 - [**TasmoCompiler**](https://github.com/benzino77/tasmocompiler) - simple web GUI to compile Tasmota with your own settings
 
 ### Serial terminal
 A program that connects to your Tasmota device directly over the serial connection you used to flash it.
 
-This is an optional way to configure your device using [Commands](Commands) and [Backlog](Commands#using-backlog). Be sure to configure your program for local echo so that the characters you type are displayed locally on your monitor as well as transmitted to the device. Also, every request needs to end with `<CR><LF>`. Your program may only send the carriage return (`Ctrl-M`) when hitting `Enter` and not automatically send the `<LF>`. You can send a linefeed using `Ctrl-J` on the keyboard.
+This is an optional way to configure your device using [Commands](Commands) and [Backlog](Commands#the-power-of-backlog). Be sure to configure your program for local echo so that the characters you type are displayed locally on your monitor as well as transmitted to the device. Also, every request needs to end with `<CR><LF>`. Your program may only send the carriage return (`Ctrl-M`) when hitting `Enter` and not automatically send the `<LF>`. You can send a linefeed using `Ctrl-J` on the keyboard.
 * **[Termite](https://www.compuphase.com/software_termite.htm)** - simple terminal for windows
 * **[Termie](http://termie.sourceforge.net/)** - open source clone of Termite
 * **[Putty](https://www.putty.org/)** - popular client available on every platform
@@ -86,4 +90,4 @@ Tasmota is not a commercial product and support is limited. You have to be willi
 ### MQTT
 Tasmota is designed to be controlled and communicate via [MQTT](http://mqtt.org/). To use it to its fullest potential you need an [MQTT broker and client](https://www.hivemq.com/blog/mqtt-essentials-part-3-client-broker-connection-establishment/). 
 
-Read our [wiki article on MQTT](MQTT) for a quick introduction.
+Read our [article on MQTT](MQTT) for how it is utilised in Tasmota.

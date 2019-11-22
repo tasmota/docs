@@ -47,7 +47,7 @@ Recommendation: **Use both tokens at all time within your FullTopic string**
 
 ## Send multiple MQTT commands at once
 
-To change connectivity configuration over MQTT you can (should) use the [Backlog command](https://github.com/arendst/Tasmota/wiki/Commands#using-backlog) to send multiple commands to your Sonoff(s) at once and prevent reboot between the commands. For example you can change the wifi SSID and Password in one step by sending the following MQTT message to your sonoff's `Backlog` topic:
+To change connectivity configuration over MQTT you can (should) use the [Backlog command](https://github.com/arendst/Tasmota/wiki/Commands#the-power-of-backlog) to send multiple commands to your Sonoff(s) at once and prevent reboot between the commands. For example you can change the wifi SSID and Password in one step by sending the following MQTT message to your sonoff's `Backlog` topic:
 
 ```mosquitto_pub -t 'cmnd/yoursonoff/Backlog' -m 'ssid1 yournewssid; password1 yournewpassword'```
 
