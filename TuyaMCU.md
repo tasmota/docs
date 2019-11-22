@@ -173,6 +173,9 @@ Now we need to tell Tasmota to use maximum and minimum values. This controlled b
 
 Once set, try `dimmer 100` in the Console and check if the brightness of bulb is same is the same as when the maximum was set using hardware buttons.	
 
+Video instructions by Digiblur:   
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_3WW4NVYHrU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ### Power Metering	
 Some Tuya MCU devices support Power measurement support over serial. For this its better to use a bulb with known wattage rating.  	
 
