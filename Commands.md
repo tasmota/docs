@@ -372,7 +372,7 @@ SetOption26<a id="setoption26"></a>|Use indexes even when only one relay is pres
 SetOption28<a id="setoption28"></a>|RF received data format&emsp;  »6.1.0<BR> `0` = hex *(default)*<BR> `1` = decimal 
 SetOption29<a id="setoption29"></a>|IR received data format&emsp;  »6.1.0<BR> `0` = hex *(default)*<BR> `1` = decimal 
 SetOption30<a id="setoption30"></a>|Enforce Home Assistant auto-discovery as light&emsp;  »6.1.0<BR> `0` = relays are announced as a switch and PWM as a light *(default)*<BR> `1` = both relays and PWM are announced as light
-SetOption31<a id="setoption31"></a>|Disable status LED  blinking during Wi-Fi and MQTT connection problems.&emsp;  »6.2.0<br>*[`LedPower`](#LedPower) must be set to `0` for this feature to work.*<BR>`0` = LED blinking enabled *(default)*<BR> `1` = LED blinking disabled
+SetOption31<a id="setoption31"></a>|Disable status LED  blinking during Wi-Fi and MQTT connection problems.&emsp;  »6.2.0<br> *[`LedPower`](#LedPower) must be set to `0` for this feature to work* <BR>`0` = LED blinking enabled *(default)*<BR> `1` = LED blinking disabled
 SetOption32<a id="setoption32"></a>|Number of 0.1 seconds to hold button before sending `HOLD` action message.<BR> `1..100` to set button hold time *(default = `40`)*. This option also affects the time required to perform a firmware defaults reset (10x `HOLD` action time)
 SetOption33<a id="setoption33"></a>|Max power limit can be exceeded by number of seconds before the relay is turned off<BR> `1..250` = set number of seconds *(default = `5`)*
 SetOption34<a id="setoption34"></a>|`0..255` = set [Backlog](#backlog) inter-command delay in milliseconds *(default = `200`)*&emsp;  »6.6.0.17
