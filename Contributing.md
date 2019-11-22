@@ -40,3 +40,26 @@ Now you wait for one of the Tasmota admins to approve your PR.
 _**Congratulations**_! 
 
 You've made a contribution to the Tasmota project making it a better experience for all future users. Thank you!
+
+## Rendering Alert tags
+
+Blockquotes `>` can now look even fancier:
+
+?> =`?>`
+
+!> = `!>`
+
+> [!TIP]
+> `> [!TIP]`
+
+> [!DANGER]
+> `> [!DANGER]`
+
+> [!NOTE]
+> `> [!NOTE]`
+
+> [!EXAMPLE]
+> `> [!EXAMPLE]`
+
+
+
