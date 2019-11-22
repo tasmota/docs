@@ -1,15 +1,9 @@
 [Home Assistant](https://home-assistant.io/) (Hass) is an open-source home automation platform running on Python 3.
 
-**Important:** The information on this page is related to:
- - Tasmota release 6.4.1 or later
- - Home Assistant 0.84.2 or later
-
 ## Hass configuration - General
 This page describes configuring Hass and Tasmota for MQTT device discovery.
 
-If you don't want to use this option, please refer to:
- - [[Home Assistant - Manual Config|Home-Assistant-‐-Manual-Config]] - For Home Assistant 0.84.2 or later together with Tasmota developement version built 2018-12-13 or later
- - [[Home Assistant - Manual Config (Legacy)|Home-Assistant-‐-Manual-Config-(Legacy)]] - For older versions of Home Assistant or Tasmota
+If you don't want to use this option, please refer to [[Home Assistant - Manual Config|Home-Assistant-‐-Manual-Config]] 
 
 Hass configuration is not exposed in the web UI. It is done by editing the `configuration.yaml` file which is found in the `.homeassistant` folder after installing and the first startup of Hass (or in the `/config` folder, if you’re using Hass.io).
 
@@ -31,7 +25,8 @@ To connect Hass to an external MQTT server, use Hass web UI:\
 Configuration -> Integrations -> Set up a new Integration -> MQTT\
 Note: Make sure to tick the "Enable discovery" option to enable MQTT device discovery.
 
-### Configure the embedded broker (deprecated since 0.92 but still working)
+### Configure the embedded broker (deprecated)
+Home Assistant contains an embedded MQTT broker called HBMQTT. If configured, Home Assistant will automatically connect to it:
 
 ```yaml
 # Example configuration.yaml entry
@@ -43,10 +38,10 @@ mqtt:
 Default username for the embedded broker is `homeassistant` while port defaults to `1883`.  
 
 #### :warning: Warning:
-As of release 0.92, the embedded broker has been marked as deprecated. This means bugs may not be fixed, and the functionality may be removed in a future release.
+As of release 0.92, the embedded broker has been marked as deprecated. This means bugs may not be fixed, and the functionality may be removed in a future release. There is an issue with the HBMQTT broker and the WebSocket connection that is causing a memory leak. If you experience this issue, consider using another broker like Mosquitto.
 
 ## Add Tasmota devices to Home Assistant
-To ease Home Assistant configuration, a feature called [MQTT discovery](https://www.home-assistant.io/docs/mqtt/discovery/) is available. _(warning: this feature is not included in `tasmota-classic.bin`)_\
+To ease Home Assistant configuration, a feature called [MQTT discovery](https://www.home-assistant.io/docs/mqtt/discovery/) is available.
 With MQTT discovery, no user interaction or configuration file edit is needed to add new devices to Hass.
 
 Automatic discovery is currently supported for:
@@ -57,11 +52,13 @@ Automatic discovery is currently supported for:
     - Use Hass [light.switch](https://www.home-assistant.io/components/light.switch/) component
 - Sensor - Announced as Home Assistant `sensor`
 - Button - Announced as Home Assistant `binary sensor` 
+  - `ON` for `1 second` when pressed, then it will automatically turn `OFF`
 - Switch - Announced as Home Assistant `binary sensor`
+  - Will mantain his status until the next event
 
-Starting from release 6.7.1, to have `buttons` and `switches` discovered `switchtopic` or `buttontopic` must be set to the default value of `0` and they will listen to `%topic%/stat/RESULT` topic.
+To have `buttons` and `switches` discovered `switchtopic` or `buttontopic` must be set to the default value of `0` and they will automatically start to listen and publish using `%topic%/stat/SWITCHx` or `%topic%/stat/BUTTONx` topic.
 ```lua
-MQT: tasmota/stat/RESULT = {"BUTTON1":"TOGGLE"} 
+MQT: tasmota/stat/SWITCH1 = {"STATE":"TOGGLE"} 
 MQT: tasmota/stat/RESULT = {"POWER":"ON"} 
 MQT: tasmota/stat/POWER = ON
 ```
@@ -73,14 +70,13 @@ Rule1 ON Button1#STATE DO Var1 %value% ENDON
 ```
 With the rule enabled , when you press the button you will get
 ```lua
-RUL: BUTTON1#STATE performs "var1 2"
+RUL: BUTTON1#STATE performs "Var1 2"
 MQT: tasmota/stat/RESULT = {"Var1":"2"}
-MQT: tasmota/stat/RESULT = {"BUTTON1":"TOGGLE"}
+MQT: tasmota/stat/BUTTON1 = {"STATE":"TOGGLE"}
 ```
 and the relay will NOT be switched.
 
-
-Tasmota `switchmode` default for buttons and switches is `Switchmode 0` (TOGGLE). This means all the entities created will automatically turn off after `one second`. To change the button behavior, [`SwitchMode`](Commands#switchmode) must be changed. For example setting up a switch to `SwitchMode 1` (follow) will create a switch with ON and OFF payloads.
+Tasmota `switchmode` default for buttons and switches is `Switchmode 0` (TOGGLE). To change the behavior, [`SwitchMode`](Commands#switchmode) must be changed. For example setting up a switch to `SwitchMode 1` (follow) will create a switch with ON and OFF payloads.
 
 For other type of devices, e.g Sonoff iFan02, example entries for `configuration.yaml` are available in [[Home Assistant - Manual Config|Home-Assistant-‐-Manual-Config]]
 
@@ -88,6 +84,19 @@ On each Tasmota device which should be automatically discovered by Hass, enter t
 `SetOption19 1` - Enables MQTT discovery\
  
 By executing `SetOption19 1`, the automatic discovery feature is enabled and a retained MQTT message starting with topic "homeassistant/..", as defined in `my_user_config.h` HOME_ASSISTANT_DISCOVERY_PREFIX, is sent containing parameters used by Home Assistant to automatically configure a device.
+
+After the discovery is enabled, some other options will be automatically changed to suit the new configuration:
+
+- `SetOption4` will be set to `0`
+  - Return MQTT response always as `RESULT` and not as uppercase command
+- `SetOption17` will be set to `1`
+  - Show Color string as comma-separated decimal
+- `SetOption59` will be set to `1`
+  - Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands: `State`, `Power` and any command causing a light to be turned on.
+
+#### Important:
+For every change you made on your device configuration you will need a reboot or use `setoption19 1` again to see the changes under Hass.\
+Please be advised that not all sensors can be correctly rendered under Hass. In those cases a fallback function will be used to create a generic sensor.
 
 To disable the automatic discovery feature and remove the retained message, execute `SetOption19 0` and the "homeassistant" topic is removed from Home Assistant and MQTT broker. **The device topic will not revert to defaults**. You have to manually change the fulltopic structure back to `%prefix%/%topic%/` in [**MQTT Configuration**](MQTT).
 
@@ -107,9 +116,6 @@ By clicking on one of the entities, and then on the cog wheel, name in Hass and 
 ![image](https://user-images.githubusercontent.com/14281572/50020005-f4cc9d00-ffd4-11e8-9881-b04ed6e85468.png)
 
 ![image](https://user-images.githubusercontent.com/14281572/50020040-09109a00-ffd5-11e8-8026-74293753783a.png)
-
-Note1: Lights currently show up under "Entities without devices", this will be fixed in Hass 0.85 [#19013](https://github.com/home-assistant/home-assistant/pull/19013)\
-Note2: After changing `entity_id` Hass must be restarted, this will be fixed in Hass 0.85 [#19414](https://github.com/home-assistant/home-assistant/pull/19414)
 
 For every device discovered with `SetOption19` an informative sensor will be created automatically:
 
