@@ -3,7 +3,7 @@
 ## Hass configuration - General
 This page describes configuring Hass and Tasmota for MQTT device discovery.
 
-If you don't want to use this option, please refer to [[Home Assistant - Manual Config|Home-Assistant-‐-Manual-Config]] 
+If you don't want to use this option, please refer to [Home Assistant - Manual Config](https://tasmota.github.io/docs/#/integrations/Home-Assistant-%E2%80%90-Manual-Config) 
 
 Hass configuration is not exposed in the web UI. It is done by editing the `configuration.yaml` file which is found in the `.homeassistant` folder after installing and the first startup of Hass (or in the `/config` folder, if you’re using Hass.io).
 
