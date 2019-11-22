@@ -24,7 +24,7 @@ After wiring a peripheral to A0 pin you have to configure it in **Configure Modu
 The reading will show in web UI's sensor section as "_%option% %value%_" depending on the selected option. Tasmota calculates the values for temperature and light, analog values can be `1` to `1024`.
 
 > [!NOTE]
-When using Temperature (2) or light (3) a calibration could be needed. In case of shifted values  [`AdcParam`](Commands#adcparam) can be used to calibrate the output.
+When using Temperature (2) or light (3) a calibration could be needed. In case of shifted values [`AdcParam`](Commands#adcparam) can be used to calibrate the output.
 
 Example: ADC as `Analog (1)`    
 ![ADC in web UI](../_media/Analog0.png)
