@@ -18,4 +18,4 @@ Features that are not available in any release build have to be enabled in sourc
 - **tasmota-display.bin** *(dsp)* built for connecting displays but omits some features such as energy monitoring. If you need additional features, compile your own firmware (e.g., [Gitpod](Compiling-Tasmota-on-Gitpod)).
 - [**tasmota-ir.bin**](Tasmota-IR) *(ir)* provides almost all `IRremoteESP8266` protocols. If you need additional features, compile your own firmware (e.g., [Gitpod](Compiling-Tasmota-on-Gitpod)) to compile [`ircustom`](Tasmota-IR).
 
-[Available Features and Sensors](../tree/development/RELEASENOTES.md#available-features-and-sensors)
+[remoteMarkdownUrl](https://raw.githubusercontent.com/arendst/Tasmota/development/RELEASENOTES.md#available-features-and-sensors)

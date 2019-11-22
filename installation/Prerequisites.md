@@ -1,13 +1,13 @@
 ## Needed Hardware
 
-<img style="float:right;width:250px" src="../_media/esp8266.png"></img>
+<img style="float:right;width:250px" src="_media/esp8266.png"></img>
 ### Device with an ESP8266/ESP8285 chip
 Any [variation](https://en.wikipedia.org/wiki/ESP8266#Espressif_modules) of the [ESP8266 chip](https://www.espressif.com/en/products/hardware/esp8266ex/overview) can be flashed with Tasmota.
 
 ### Serial-to-USB adapter with 3.3V supply
 The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?title=Power) is **one of the most important elements** for both flashing the device and for stable operation. You must ensure that the device receives sufficient power (current AND appropriate voltage level) to properly flash the firmware on the device.
 * [CH340G](https://cdn.sparkfun.com/datasheets/Dev/Arduino/Other/CH340DS1.PDF) is a reliable and very cheap adapter (example [1](https://www.sparkfun.com/products/14050), [2](https://www.aliexpress.com/item/1PCS-CH340-module-instead-of-PL2303-CH340G-RS232-to-TTL-module-upgrade-USB-to-serial-port/32761423124.html)).
-<img src="../_media/ch340g.png" style="margin:5px;float:right;width:200px"></img>
+<img src="_media/ch340g.png" style="margin:5px;float:right;width:200px"></img>
 * [FTDI FT232](https://www.ftdichip.com/Products/ICs/FT232R.htm) - these adapters have a lot of fakes in the market so buy only from reliable sources ([example](https://www.sparkfun.com/products/13746)). Buy only the variant with a separate 3.3V regulator on PCB! 
 * [CP2102](https://www.silabs.com/documents/public/data-sheets/cp2102-9.pdf) or [PL2303](http://www.prolific.com.tw/UserFiles/files/ds_pl2303HXD_v1_4_4.pdf) - works with certain devices, but using an external 3.3V supply might be necessary. Not recommended for beginners!
 * [RaspberryPi](https://github.com/arendst/Tasmota/wiki/Flash-Sonoff-using-Raspberry-Pi) - only for advanced users. External 3.3V supply necessary.
@@ -28,7 +28,7 @@ If you're intimidated by soldering you could get away with holding the headers w
 You could use any kind of wire but [jumper wires](http://blog.sparkfuneducation.com/what-is-jumper-wire) (also called DuPont wires) are more practical than soldering and desoldering.
 
 ### Pin headers
-<img src="../_media/pinheaders.png" style="margin:5px;float:right;width:10em"></img>
+<img src="_media/pinheaders.png" style="margin:5px;float:right;width:10em"></img>
 
 [Pin headers](https://learn.sparkfun.com/tutorials/connector-basics/pin-header-connectors) come in male or female version. Choose according to your jumper wire connectors.
 ### Computer with Linux, Windows or MacOS

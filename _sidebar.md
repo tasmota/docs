@@ -1,4 +1,5 @@
 * **Features**
+* [MQTT](MQTT)
 * [Upgrading](Upgrading)
 * [Commands](Commands)  
 * [Templates](Templates)  

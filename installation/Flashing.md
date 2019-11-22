@@ -1,4 +1,4 @@
-If you have read through the [Prerequisites](/installation/Prerequisites) you should have selected [a pre-compiled Tasmota firmware binary](Prerequisites#tasmota-firmware) or chosen to [compile your own Tasmota firmware binary](#flashing-and-compiling-from-source).
+If you have read through the [Prerequisites](/installation/Prerequisites) you should have selected [a pre-compiled Tasmota firmware binary](/installation/Prerequisites#tasmota-firmware) or chosen to [compile your own Tasmota firmware binary](#flashing-and-compiling-from-source).
 
 Once you have followed [Hardware preparation](/installation/Hardware-preparation), your device should be in Flash Mode and ready for a Tasmota firmware binary file to be flashed. For that you need a **flashing tool**.
 
@@ -16,8 +16,7 @@ Download the [latest release](https://github.com/tasmota/tasmota-pyflasher/relea
 2. Select the correct **Serial port** (COM# port). Leave on auto-select if not sure.
 3. **Browse** to the Tasmota firmware binary you downloaded or compiled.
 
-:red_circle: Set **Erase flash** to **yes, wipe all data!!!** if it is the first time flashing Tasmota on the device or you're experiencing issues with the existing flash and need to do a full erase.    
-**If you're upgrading an already flashed Tasmota and wish to keep your settings, set it to *no*.**
+> [!DANGER] Leave *Erase flash* on *yes, wipe all data!!!* if it is the first time flashing Tasmota on the device or you're experiencing issues with the existing flash and need to do a full erase. If you're upgrading an already flashed Tasmota and wish to keep your settings, set it to *no*.
 
 4. Click **Flash Tasmota** and wait until done.
 
@@ -25,7 +24,10 @@ If the flash was successful the _Console_ window will display:
 
 ![Flash succeeded](https://user-images.githubusercontent.com/5904370/55690010-489c3100-598c-11e9-8135-e44469037e11.png)
 
-Unplug your serial programming adapter or device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](/installation/Initial-Configuration). **For proper device initialization after the firmware upload completes, power down and power up the device.**
+Unplug your serial programming adapter or device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](/installation/Initial-Configuration). 
+
+> [!TIP]
+>For proper device initialization after the firmware upload completes, power down and power up the device.
 
 ### Common mistakes
 Message `COM# failed to connect: Failed to connect to Espressif device: Timed out waiting for packet header` means your device is not connected (recheck COM port number and USB cable) or not in flash mode (retry flash mode procedure for your device).  
@@ -45,7 +47,7 @@ Go to the folder and install Esptool with command
 python setup.py install
 ```
 Esptool for [Debian](https://packages.debian.org/stretch/esptool) and [Ubuntu](https://packages.ubuntu.com/cosmic/esptool) is installed with 
-```
+```bash
 sudo apt install esptool
 ```
 
@@ -141,4 +143,4 @@ _**Can only create a firmware binary.** Use one of the [tools](/installation/Pre
 - [**SonOTA**](SonOTA---Espressif2Arduino---Tasmota-without-compiling) - OTA flash eWeLink based devices *(mostly outdated)*
 
 ## Need more help?
-If you have encountered problems during flash see the [FAQ](FAQ). Ask for help in [Discord](https://discord.gg/Ks2Kzd4) or [Community Forum](https://groups.google.com/d/forum/sonoffusers)
+If you have encountered problems during flash see the [FAQ](/faq/). Ask for help in [Discord](https://discord.gg/Ks2Kzd4) or [Community Forum](https://groups.google.com/d/forum/sonoffusers)
