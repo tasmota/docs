@@ -183,7 +183,7 @@ sensor:
 ## Configure Switches
 Use the [`switch.mqtt`](https://www.home-assistant.io/components/switch.mqtt/) component.
 
-Use POWER1, POWER2, etc when you are using a device with more than one relay or if [SetOption26](commands#setoption26) is enabled)
+Use POWER1, POWER2, etc when you are using a device with more than one relay or if [SetOption26](Commands#setoption26) is enabled)
 
 Configure the module, and on the Console run:\
 `SetOption59 1` - This enables sending of tele/<topic>/STATE on POWER and light related commands

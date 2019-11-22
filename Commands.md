@@ -110,7 +110,7 @@ PowerOnState<a id="poweronstate"></a>|Control relay state when the device is _**
 PulseTime\<x\><a id="pulsetime"></a>|Display the amount of `PulseTime` remaining on the corresponding Relay (enumerated)<BR>`<value>` Set the duration to keep the corresponding Relay `ON` when `Power<x> ON` command is issued. After this amount of time, the relay will be turned `OFF`.<BR>`0` / `OFF` = disable use of PulseTime for the corresponding Relay<BR>`1..111` = set PulseTime for the corresponding Relay in 0.1 second increments<BR>`112..64900` = set PulseTime for  the corresponding Relay, offset by 100, in 1 second increments. Add 100 to desired interval in seconds, e.g., `PulseTime 113` = 13 seconds and `PulseTime 460` = 6 minutes (i.e., 360 seconds)<BR>
 SwitchDebounce<a id="switchdebounce"></a>|User control over switch debounce timing &emsp;  »6.2.0<BR>`40..1000` = set switch debounce time in milliseconds *(default = `50`)*
 SwitchMode\<x\><a id="switchmode"></a>|[Switch mode](Buttons-and-Switches#switchmode) <BR> `0` = toggle *(default)* <BR> `1` = follow (0 = off, 1 = on) <BR> `2` = inverted follow (0 = on, 1 = off) <BR> `3` = pushbutton (default 1, 0 = toggle) <BR> `4` = inverted pushbutton (default 0, 1 = toggle) <BR> `5` = pushbutton with hold (default 1, 0 = toggle, Hold = hold) <BR> `6` = inverted pushbutton with hold (default 0, 1 = toggle, hold = hold) <BR> `7` = pushbutton toggle (0 = toggle, 1 = toggle)
-See also|[`SetOption1`](#SetOption1) - Set button multipress mode<BR>[`SetOption11`](#SetOption11) - Swap pushbutton single and double press functionality<BR>[`SetOption13`](#SetOption13) - Allow immediate action on single button press<BR>[`SetOption26`](#SetOption26) - Use indexes even when only one relay is present<BR>[`SetOption31`](#SetOption31) - Disable Wi-Fi LED status blinking<BR>[`SetOption32`](#SetOption32) - Set hold interval before sending `HOLD` action<BR>[`SetOption40`](#SetOption40) - Stop detecting any input change on button GPIO<BR>[`SetOption67`](#SetOption67) - Enable/Disable Buzzer
+See also|[`SetOption1`](#setoption1) - Set button multipress mode<BR>[`SetOption11`](#setoption11) - Swap pushbutton single and double press functionality<BR>[`SetOption13`](#setoption13) - Allow immediate action on single button press<BR>[`SetOption26`](#setoption26) - Use indexes even when only one relay is present<BR>[`SetOption31`](#setoption31) - Disable Wi-Fi LED status blinking<BR>[`SetOption32`](#setoption32) - Set hold interval before sending `HOLD` action<BR>[`SetOption40`](#setoption40) - Stop detecting any input change on button GPIO<BR>[`SetOption67`](#setoption67) - Enable/Disable Buzzer
 
 ### Management
 
@@ -151,7 +151,7 @@ TuyaMCU<a id="tuyamcu"></a>|Used to map functions in TuyaMCU &emsp;  »6.7.1<br>
 Upgrade<a id="upgrade"></a>|`1` = download firmware from `OtaUrl` and restart<BR>`<value>` = download firmware from `OtaUrl` if \<value\> is higher than device version
 Upload<a id="upload"></a>|`1` = download firmware from `OtaUrl` and restart<BR>`<value>` = download firmware from `OtaUrl` if \<value\> is higher than device version
 WebLog<a id="weblog"></a>|`0` = disable web logging<BR> `1` = show only error messages<BR> `2` = show error and info messages *(default)*<BR>`3` = show error, info and debug messages<BR>`4` = show error, info and more debug messages
-See also|[`SetOption68`](#Setoption68) - PWM Channel control<BR>[`SetOption76`](#Setoption76) - DeepSleep disable bootcount incrementing
+See also|[`SetOption68`](#setoption68) - PWM Channel control<BR>[`SetOption76`](#setoption76) - DeepSleep disable bootcount incrementing
 
 ### Wi-Fi
 
@@ -170,7 +170,7 @@ WebSensor\<x\><a id="websensor"></a>|Control display of sensor telemetry in the 
 WebServer<a id="webserver"></a>|`0` = stop web server<BR>`1` = start web server in user mode<BR>`2` = start web server in admin mode
 WifiConfig<a id="wificonfig"></a>|`0` - disable Wi-Fi Manager and reboot (used with alternate AP)<BR>`2` = set [Wi-Fi Manager](https://github.com/tzapu/WiFiManager/blob/master/README.md#how-it-works) as the current configuration tool and start Wi-Fi Manager (web server at 192.168.4.1) for 3 minutes, then reboot and try to connect Wi-Fi network<BR>`4` = disable Wi-Fi Manager but retry other AP without rebooting<BR>`5` = disable Wi-Fi Manager and alternatively retry AP1 and AP2 until connected without rebooting<BR>`6` = Wi-Fi parameters can only be entered via commands in the serial console<BR>`7` = set [Wi-Fi Manager](https://github.com/tzapu/WiFiManager/blob/master/README.md#how-it-works) (web server at 192.168.4.1) as the current configuration tool restricted with the only option to reset settings. &emsp;  »6.5.0<BR>_This setting is recommended for devices without an external control/reset button_.<BR>&emsp;_No longer supported_ » v6.6.0.21<BR>`1` = set [SmartConfig](https://community.particle.io/t/smart-config-the-missing-manual-now-available/442) ([Android](https://play.google.com/store/apps/details?id=com.iotmaker&hl=en_US)/iOS) as the current configuration tool, start SmartConfig for 3 minutes and reboot and try to connect to Wi-Fi<BR>`3` = set [WPS](https://en.wikipedia.org/wiki/Wi-Fi_Protected_Setup) as configuration tool, try WPS for 3 minutes and reboot and try to connect to Wi-Fi
 [WifiPower](WifiPower)<a id="wifipower"></a>|set Wi-Fi transmit power level in decibel-milliwatts (dBm) *(default = `17`)*
-See also|[`SetOption55`](#Setoption55) - mDNS service control<BR>[`SetOption56`](#Setoption56) - Wi-Fi network scan to select strongest signal on restart<BR>[`SetOption57`](#Setoption57) - Wi-Fi network re-scan, alternate AP
+See also|[`SetOption55`](#setoption55) - mDNS service control<BR>[`SetOption56`](#setoption56) - Wi-Fi network scan to select strongest signal on restart<BR>[`SetOption57`](#setoption57) - Wi-Fi network re-scan, alternate AP
 
 ### MQTT
 
@@ -258,7 +258,7 @@ TempOffset<a id="tempoffset"></a>|`-12.7..12.7` = calibrate temperature sensor t
 VoltRes<a id="voltres"></a>|Voltage sensor resolution<BR>`0..3` = maximum number of decimal places
 WattRes<a id="wattres"></a>|Power sensor resolution<BR>`0..3` = maximum number of decimal places
 WeightRes<a id="weightres"></a>|Load cell sensor resolution&emsp;  »6.3.0<BR>`0..3` = maximum number of decimal places
-See also|[`SetOption8`](#SetOption8)  - Show temperature in Celsius *(default)* or Fahrenheit<BR>[`SetOption18`](#SetOption18) - Set status of signal light paired with CO<sub>2</sub> sensor<BR>[`SetOption24`](#SetOption24) - Set pressure units
+See also|[`SetOption8`](#setoption8)  - Show temperature in Celsius *(default)* or Fahrenheit<BR>[`SetOption18`](#setoption18) - Set status of signal light paired with CO<sub>2</sub> sensor<BR>[`SetOption24`](#setoption24) - Set pressure units
 
 ### Power Monitoring
 
@@ -290,7 +290,7 @@ VoltageLow<a id="voltagelow"></a>|`0` = disable voltage low threshold *(default)
 VoltageSet<a id="voltageset"></a>|`<value>` = [calibrate](power-monitoring-calibration) voltage to a target value in V&emsp;  »5.12.0
 VoltRes<a id="voltres"></a>|Voltage sensor resolution<BR>`0..3` = maximum number of decimal places
 WattRes<a id="wattres"></a>|Power sensor resolution<BR>`0..3` = maximum number of decimal places
-See Also|[`SetOption21`](#SetOption21) - Energy monitoring when power is off<BR>[`SetOption33`](#SetOption33) - Configure power monitoring Max_Power_Retry count number<BR>
+See Also|[`SetOption21`](#setoption21) - Energy monitoring when power is off<BR>[`SetOption33`](#setoption33) - Configure power monitoring Max_Power_Retry count number<BR>
 
 ### Light
 <!--- 
@@ -323,7 +323,7 @@ Wakeup<a id="wakeup"></a>|Start wake up sequence from OFF to stored `Dimmer` val
 WakeupDuration<a id="wakeupduration"></a>|`1..3600` = set wake up duration in seconds
 White<a id="white"></a>|&emsp;  »6.4.0<BR>`1..100` = set white channel brightness in single white channel lights (single W or RGBW lights)
 Width\<x><a id="width"></a>|x = `1..4`<BR>`1` - `0..4` = LED group width *([Scheme](#Scheme) `6..12` only)*<BR>`2` - `0..32` = seconds hand width *([Scheme](#Scheme) `5` only)*<BR>`3` - `0..32` = minutes hand width *([Scheme](#Scheme) `5` only)*<BR>`4` - `0..32` = hour hand width *([Scheme](#Scheme) `5` only)*
-See also|[`SetOption15`](#SetOption15), [`SetOption16`](#SetOption16), [`SetOption17`](#SetOption17), [`SetOption20`](#SetOption20), [`SetOption37`](#SetOption37) and [`SetOption68`](#Setoption68) 
+See also|[`SetOption15`](#setoption15), [`SetOption16`](#setoption16), [`SetOption17`](#setoption17), [`SetOption20`](#setoption20), [`SetOption37`](#setoption37) and [`SetOption68`](#setoption68) 
 
 ### RF Bridge
 
@@ -337,7 +337,7 @@ RfKey\<x\><a id="rfkey"></a>|Send learned or default RF data for RfKey\<x\> (x =
 RfLow<a id="rflow"></a>|`1` = reset low pulse time to 270 microseconds<BR>`2..32767` = set low pulse time in microseconds<BR>`#2..#7FFF` = set low pulse time in hexadecimal microseconds
 RfRaw<a id="rfraw"></a>|&emsp;  »6.1.0<br>**This command only works when the firmware has been updated with [Portisch firmware](https://github.com/Portisch/RF-Bridge-EFM8BB1/releases).** Refer to the [Portisch wiki](https://github.com/Portisch/RF-Bridge-EFM8BB1/wiki) for details.<BR>[Learning and Decoding RF Codes with Portisch Firmware](Sonoff-RF-Bridge-433#portisch-firmware-specific-usage)<BR>`0` = Set iTead default firmware support and messages *(default on restart)*<BR> `1` = set Portisch firmware support and messages<BR> `166` or `AAA655` = start sniffing/reading RF signals disabling iTead default RF handling<BR> `167` or `AAA755` = stop sniffing/reading RF signals enabling iTead default RF handling<BR> `168` or `AAA855` = transmitting iTead default RF protocols<BR> `169` or `AAA955` = start sniffing and learning predefined protocols<BR> `176` or `AAB055` = bucket Transmitting using command 0xB0<BR> `177` or `AAB155` = start Bucket sniffing using command 0xB1<BR> `192` or `AAC000C055` = beep (`00C0` is the length of the sound)<BR> `255` or `AAFF55` = show Rf firmware version<BR> `<value>` = hexadecimal data to be sent to RF chip. This must be immediately followed by the `RfRaw 0` command (e.g., `Backlog RfRaw <value>; RfRaw 0`
 RfSync<a id="rfsync"></a>|`1` = reset start sync pulse time to 8470 microseconds<BR>`2..32767` = set start sync pulse time in microseconds<BR>`#2..#7FFF` = set start sync pulse time in hexadecimal microseconds
-See also|[`SetOption28`](#SetOption28) - Set RF received data format
+See also|[`SetOption28`](#setoption28) - Set RF received data format
 
 ### IR Remote
 
@@ -345,71 +345,71 @@ Command|Parameters
 :---|:---
 IRsend`<x>`<a id="irsend"></a>|Send an IR remote control code as a decimal or hexadecimal string in a JSON payload. In order to send IR data, _**you must configure one of the free device GPIO as `IRsend (8)`. GPIO01 nor GPIO03 can be used.**_<BR>`<x>` [_optional_] = number of times the IR message is sent. If not specified or `0..1`, the message is sent only once (i.e., not repeated) _(default)_<BR>`>1` = emulate a long-press on the remote control, sending the message `<x>` times, or sending a repeat message for specific protocols (like NEC)<BR><BR>`{"Protocol":"<value>","Bits":<value>,"Data":<value>}`<BR><BR>`"Protocol"` (select one of the following):<ul><li>`"NEC"`</li><li>`"SONY"`</li><li>`"RC5"`</li><li>`"RC6"`</li><li>`"DISH"`</li><li>`"JVC"`</li><li>`"PANASONIC"`</li><li>`"SAMSUNG"`</li><li>`"PIONEER"`</li></ul>`"Bits":1..32` = required number of data bits<BR>&nbsp;&nbsp;&nbsp;&nbsp;for PANASONIC protocol this parameter is the the address, not the number of bits<BR><BR>`"Data":1..(2^32)-1` = data frame as 32 bit decimal.<BR>&nbsp;&nbsp;&nbsp;&nbsp;e.g., `IRsend {"Protocol":"NEC","Bits":32,"Data":2170978686}`<BR>**or**<BR>`"Data":0x1..0xFFFFFFFF` = data frame as 32 bit hexadecimal.<BR>&nbsp;&nbsp;&nbsp;&nbsp;e.g., `IRsend {"Protocol":"NEC","Bits":32,"Data":0x8166817E}`<BR><BR>Alternatively, you can send IR remote control codes using [RAW command encoding](IRSend-RAW-Encoding).<BR><BR>Information on [Receiving Infrared Data](Receiving-Infrared-Remote-Control-Data)
 IRhvac<a id="irhvac"></a>|Send HVAC IR remote control code as JSON payload<Br>`{"Vendor":"<value>","Power":<value>,"Mode":”<value>”, "FanSpeed":”<value>”,"Temp":<value>}`<BR>`"Vendor":"Toshiba"\|"Mitsubishi"\|"LG"\|"Fujitsu"`<BR>`"Power":0\|1`<BR>`"Mode":"Hot"\|"Cold"\|"Dry"\|"Auto"`<BR>`"FanSpeed":"1"\|"2"\|"3"\|"4"\|"5"\|"Auto"\|"Silence"` <BR>`"Temp":17..30`
-|See also|[`SetOption29`](#SetOption29)  - Set IR received data format<BR>[`SetOption38`](#SetOption38)  - Set IR received protocol sensitivity<BR>[`SetOption58`](#SetOption58) - [IR Raw data in JSON payload](https://github.com/arendst/Tasmota/issues/2116#issuecomment-440716483)
+|See also|[`SetOption29`](#setoption29)  - Set IR received data format<BR>[`SetOption38`](#setoption38)  - Set IR received protocol sensitivity<BR>[`SetOption58`](#setoption58) - [IR Raw data in JSON payload](https://github.com/arendst/Tasmota/issues/2116#issuecomment-440716483)
 
 ### SetOptions
 
 Command|Parameters
 :---:|:---
-SetOption0<a id="SetOption0"></a>|Save power state and use after restart (=SaveState)<BR> `0` = disable<BR> `1` = enable *(default)*
-SetOption1<a id="SetOption1"></a>|Set [button multipress](Control-other-devices) mode to<BR> `0` = allow all button actions *(default)*<BR> `1` = restrict to single, double and hold actions (i.e., disable inadvertent reset due to long press)
-SetOption3<a id="SetOption3"></a>|[MQTT](mqtt) <BR>`0` = disable MQTT<BR> `1` = enable MQTT *(default)* 
-SetOption4<a id="SetOption4"></a>|Return MQTT response as<BR> `0` = RESULT topic *(default)*<BR> `1` = %COMMAND% topic
-SetOption8<a id="SetOption8"></a>|Show temperature in<BR> `0`= Celsius *(default)*<BR> `1` = Fahrenheit
-SetOption10<a id="SetOption10"></a>|When the device MQTT topic changes <BR> `0` = remove retained message on old topic LWT *(default)*<BR> `1` = send "Offline" to old topic LWT
-SetOption11<a id="SetOption11"></a>|Swap button single and double press [functionality](Control-other-devices#double-press--hold)<BR> `0` = disabled *(default)*<BR> `1` = enabled
-SetOption12<a id="SetOption12"></a>|Configuration saving to flash option<BR>`0` = allow dynamic flash save slot rotation *(default)*<BR>`1` = use fixed eeprom flash slot 
-SetOption13<a id="SetOption13"></a>|Allow immediate action on single button press<BR>`0` = single, multi-press and hold button actions *(default)*<BR> `1` = only single press action for immediate response (i.e., disable multipress detection). Disable by holding for 4 x button hold time (see [`SetOption32`](#setoption32)).
-SetOption15<a id="SetOption15"></a>|Set PWM control for LED lights<BR>`0` = basic PWM control<BR>`1` = control with [`Color`](#Color) or [`Dimmer`](#Dimmer) commands _(default)_
-SetOption16<a id="SetOption16"></a>|Set addressable LED Clock scheme parameter<BR> `0` = clock-wise mode *(default)*<BR> `1` = counter-clock-wise mode
-SetOption17<a id="SetOption17"></a>|Show [`Color`](#Color) string as<BR> `0` = hex string *(default)*<BR> `1` = comma-separated decimal string
-SetOption18<a id="SetOption18"></a>|Set status of signal light paired with [CO<sub>2</sub> sensor](#sensor14)<BR> `0` = disable light *(default)*<BR>`1` = enable light
-SetOption19<a id="SetOption19"></a>|[Home Assistant](Home-Assistant) automatic discovery.<BR>***WARNING*** On version 6.4.1.x enabling may cause a watchdog reset if used on a device with a configured sensor <BR> `0` = disabled *(default)*<BR> `1` = enabled and also sets [`SetOption59`](#setoption59)`= 1`<BR>If you enable and then disable `SetOption19`, doing so does not set [`SetOption59`](#setoption59)`= 0` and does not revert to default `%prefix%/%topic%/` [`FullTopic`](#fulltopic)
-SetOption20<a id="SetOption20"></a>|Update of Dimmer/Color/CT without turning power on<BR>`0` = disabled *(default)*<BR>`1` = enabled
-SetOption21<a id="SetOption21"></a>|Energy monitoring when power is off<BR>`0` = disabled *(default)*<BR>`1` = enabled
-SetOption24<a id="SetOption24"></a>|Set pressure units &emsp;  »6.4.0<BR> `0` = hPa *(default)*<BR> `1` = mmHg
-SetOption26<a id="SetOption26"></a>|Use indexes even when only one relay is present<BR> `0` = messages use POWER *(default)*<BR> `1` = messages use POWER1
-SetOption28<a id="SetOption28"></a>|RF received data format&emsp;  »6.1.0<BR> `0` = hex *(default)*<BR> `1` = decimal 
-SetOption29<a id="SetOption29"></a>|IR received data format&emsp;  »6.1.0<BR> `0` = hex *(default)*<BR> `1` = decimal 
-SetOption30<a id="SetOption30"></a>|Enforce Home Assistant auto-discovery as light&emsp;  »6.1.0<BR> `0` = relays are announced as a switch and PWM as a light *(default)*<BR> `1` = both relays and PWM are announced as light
-SetOption31<a id="SetOption31"></a>|Disable status LED  blinking during Wi-Fi and MQTT connection problems.&emsp;  »6.2.0<br>*[`LedPower`](#LedPower) must be set to `0` for this feature to work.*<BR>`0` = LED blinking enabled *(default)*<BR> `1` = LED blinking disabled
-SetOption32<a id="SetOption32"></a>|Number of 0.1 seconds to hold button before sending `HOLD` action message.<BR> `1..100` to set button hold time *(default = `40`)*. This option also affects the time required to perform a firmware defaults reset (10x `HOLD` action time)
-SetOption33<a id="SetOption33"></a>|Max power limit can be exceeded by number of seconds before the relay is turned off<BR> `1..250` = set number of seconds *(default = `5`)*
-SetOption34<a id="SetOption34"></a>|`0..255` = set [Backlog](#backlog) inter-command delay in milliseconds *(default = `200`)*&emsp;  »6.6.0.17
-SetOption36<a id="SetOption36"></a>|Boot loop defaults restoration control.&emsp;  »6.6.0.17<BR>`0` = disable boot loop control<BR> `1..200` = set number of boot loops (a restart caused by any exception or watchdog timer within less than `BOOT_LOOP_TIME` (default 10 seconds) before beginning to restore settings  *(default = `1`)*. Once this number is reached, subsequent restarts will:<ul><li>1<sup>st</sup> restart: disable ESP8285 generic GPIOs interfering with flash SPI</li><li>2<sup>nd</sup> restart: disable rules causing boot loop</li><li>3<sup>rd</sup> restart: disable all rules</li><li>4<sup>th</sup> restart: reset user defined GPIOs to disable any attached peripherals</li><li>5<sup>th</sup> restart: reset module to Sonoff Basic (1)</li></ul>
-SetOption37<a id="SetOption37"></a>|Color remapping for led channels, also provides an option for allowing independent handling of RGB and white channels. Setting changes require a device reboot.&emsp;  »6.5.0<BR>`0` = disabled<br>`1..119` = according to [this table](SetOption37---Color-channel-mapping)<br>`120..127` = invalid (results in same as `0`)<br>`128..255` = same as `0..127` but with independent channel handling enabled
-SetOption38<a id="SetOption38"></a>|`6..255 ` = set IRReceive protocol detection sensitivity minimizing UNKNOWN protocols&emsp;  »6.6.0
-SetOption39<a id="SetOption39"></a>|Control handling of invalid power measurements. [Read more...](Power-monitoring-calibration#known-issues)&emsp;  »6.6.0<BR>`0` = reset to default on next restart<BR>`1..255` = number of invalid power readings before reporting no load *(default =`128`)*.
-SetOption40<a id="SetOption40"></a>|Stop detecting input change on the button GPIO. Solves [#5449](../issues/5449)&emsp;  »6.6.0<br>Active only when [`SetOption1 1`](#setoption1) and [`SetOption13 0`](#setoption13). **This disables all long press functionality.**<BR>`0..250` = button hold time in 0.1 seconds after which button functionality is disabled.*(default =`1`)* <BR>Example: `Backlog SetOption1 1; SetOption13 0; SetOption40 10` - discard any button press over 1 second
-SetOption42<a id="SetOption42"></a>|<BR>`0..255` = set over-temperature (Celsius only) threshold resulting in power off on all energy monitoring devices *(default = `90`)* &emsp;  »6.6.0.1
-SetOption43<a id="SetOption43"></a>|**Deprecated** in favor of [`DimmerRange`](#DimmerRange) &emsp;  »6.6.0.18<BR>`0..255` = set maximum dimming value ([details](TuyaMCU#dimming-range)) *(default = `100`)*<BR>Available for Tuya (» v6.6.0.7) and PS_16_DZ (» v6.6.0.14) dimmers
-SetOption51<a id="SetOption51"></a>|Enable GPIO9 and GPIO10 component selections in Module Configuration for ESP8285&emsp;  »6.1.1.14<BR>:rotating_light: **WARNING** Do not use on ESP8266 devices! :rotating_light:<BR>`0` = disable *(default)*<BR>`1` = enable
-SetOption52<a id="SetOption52"></a>|Control display of optional time offset from UTC in JSON payloads&emsp;  »6.2.1.2<BR>`0` = disable *(default)*<BR> `1` = enable
-SetOption53<a id="SetOption53"></a>|Display hostname and IP address in GUI&emsp;  »6.2.1.20<BR>`0` = disable *(default)*<BR> `1` = enable
-SetOption54<a id="SetOption54"></a>|Apply [`SetOption20`](#SetOption20) settings to commands from Tuya device&emsp;  »6.3.0.4<BR>`0` = disable *(default)*<BR> `1` = enable
-SetOption55<a id="SetOption55"></a>|mDNS service&emsp;  »6.4.1.4<BR>`0` = disable *(default)* <BR> `1` = enable
-SetOption56<a id="SetOption56"></a>|Wi-Fi network scan to select strongest signal on restart (network has to be visible)&emsp;  »6.3.0.10<BR>`0` = disable *(default)*<BR> `1` = enable
-SetOption57<a id="SetOption57"></a>|Wi-Fi network re-scan every 44 minutes with alternate to +10dB stronger signal if detected (only visible networks)&emsp;  »6.3.0.10<BR>`0` = disable *(default)*<BR> `1` = enable
-SetOption58<a id="SetOption58"></a>|[IR Raw data in JSON payload](https://github.com/arendst/Tasmota/issues/2116#issuecomment-440716483)&emsp;  »6.3.0.11<BR>`0` = disable *(default)*<BR> `1` = enable
-SetOption59<a id="SetOption59"></a>|Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands: [`State`](#State), [`Power`](#Power) and any command causing a light to be turned on.&emsp;  »6.3.0.13<BR>`0` = disable *(default)*<BR> `1` = enable
-SetOption60<a id="SetOption60"></a>|Enable normal sleep instead of [dynamic sleep](Dynamic%20Sleep)&emsp;  »6.3.0.15<BR> `0` = dynamic sleep *(default)*<BR> `1` = sleep
-SetOption61<a id="SetOption61"></a>|Force [local operation](https://github.com/arendst/Tasmota/pull/4562#issuecomment-446230001) when [`ButtonTopic`](#ButtonTopic) or [`SwitchTopic`](#SwitchTopic) is set.&emsp;  »6.3.0.16<BR>`0` = disable *(default)*<BR> `1` = enable
-SetOption62<a id="SetOption62"></a>|Set retain on Button or Switch hold messages&emsp;  »6.4.1.19<BR>`0` = disable *(default)*<BR> `1` = don't use retain flag on `HOLD` messages
-SetOption63<a id="SetOption63"></a>|Set relay state feedback scan at restart ([#5594](../issues/5594), [#5663](../issues/5663))&emsp;  »6.5.0.9<BR>`0` = Scan relay power feedback state at restart *(default)*<BR> `1` = Disable relay power feedback state scanning at restart
-SetOption64<a id="SetOption64"></a>|Switch between `-` or `_` as sensor name separator&emsp;  »6.5.0.12<BR>`0` = sensor name index separator is `-` _(hyphen)_ *(default)*<BR> `1` = sensor name index separator is `_` _(underscore)_<br>*Affects DS18X20, DHT, BMP and SHT3X sensor names in tele messages*
-SetOption65<a id="SetOption65"></a>|Control [fast power cycle detection](Fast-power-cycle-device-recovery) device recovery&emsp;  »6.7.1<BR>`0` = detection is active *(default)*<BR>`1` = detection is **inactive**
-SetOption66<a id="SetOption66"></a>|Set publishing TuyaReceived to MQTT&emsp;  »6.7.0<BR>`0` = disable publishing `TuyaReceived` over MQTT *(default)*<BR>`1` = enable publishing `TuyaReceived` over MQTT
-SetOption67<a id="SetOption67"></a>|iFan03 Buzzer control&emsp;  »6.6.0.2<BR>`0` = disable Sonoff iFan03 buzzer *(default)*<BR>`1` = enable Sonoff iFan03 buzzer 
-SetOption68<a id="SetOption68"></a>|Multi-channel PWM instead of a single light&emsp;  »6.6.0.3<BR>`0` = Treat [PWM](#pwm) as a single light *(default)*<BR>`1` = Treat [PWM](#pwm) as separate channels. In this mode, use [`Power<x>`](#power) to turn lights on and off, and [`Channel<x>`](#channel) to change the value of each channel.<BR>[`Color`](#color) still works to set all channels at once.<BR>***Requires restart after change***
-SetOption69<a id="SetOption69"></a>|**Deprecated** in favor of [DimmerRange](#DimmerRange) &emsp;  »6.6.0.18<br>By default Tuya dimmers won't dim below 10% because some don't function very well that way.&emsp;  »6.6.0.5<BR>`0` = disable Tuya dimmer 10% lower limit<BR>`1` = enable Tuya dimmer 10% lower limit *(default)*
-SetOption71<a id="SetOption71"></a>|Set DDS238 Modbus register for active energy&emsp;  »6.6.0.14<BR>`0` = set primary register *(default)*<BR>`1` = set alternate register
-SetOption72<a id="SetOption72"></a>|Set reference used for total energy &emsp;  »6.6.0.15<BR>`0` = use firmware counter *(default)*<BR>`1` = use energy monitor (e.g., PZEM-0xx, SDM120, SDM630, DDS238, DDSU666) hardware counter
-SetOption73<a id="SetOption73"></a>|Set HTTP Cross-Origin Resource Sharing (CORS) &emsp;  »7.0.0.1<BR>`0` = disable CORS *(default)*<BR>`1` = enable CORS
-SetOption74<a id="SetOption74"></a>|Enable internal pullup for single DS18x20 sensor &emsp;  »7.0.0.1<BR>`0` = disabled *(default)*<BR>`1` = internal pullup enabled
-SetOption75<a id="SetOption75"></a>|Set grouptopic behaviour ([#6779](../issues/6779))&emsp;  »7.0.0.1<BR>`0` = GroupTopic using FullTopic replacing %topic% _(default)_<BR>`1` =  GroupTopic is `cmnd/%grouptopic%/` 
-SetOption76<a id="SetOption76"></a>|Bootcount incrementing when [DeepSleep](DeepSleep) is enabled ([#6930](../issues/6930))&emsp;  »7.0.0.4<BR>`0` = disable bootcount incrementing _(default)_<BR>`1` = enable bootcount incrementing 
-SetOption80<a id="SetOption80"></a>|[Blinds and shutters](blinds-and-shutters) support&emsp;  »6.6.0.14<BR>`0` = disable blinds and shutters support *(default)*<BR>`1` = enable blinds and shutters support
-SetOption81<a id="SetOption81"></a>|Set PCF8574 component behavior for all ports&emsp;  »6.6.0.14<BR>`0` = set as regular state *(default)*<BR>`1` = set as inverted state
+SetOption0<a id="setoption0"></a>|Save power state and use after restart (=SaveState)<BR> `0` = disable<BR> `1` = enable *(default)*
+SetOption1<a id="setoption1"></a>|Set [button multipress](Control-other-devices) mode to<BR> `0` = allow all button actions *(default)*<BR> `1` = restrict to single, double and hold actions (i.e., disable inadvertent reset due to long press)
+SetOption3<a id="setoption3"></a>|[MQTT](mqtt) <BR>`0` = disable MQTT<BR> `1` = enable MQTT *(default)* 
+SetOption4<a id="setoption4"></a>|Return MQTT response as<BR> `0` = RESULT topic *(default)*<BR> `1` = %COMMAND% topic
+SetOption8<a id="setoption8"></a>|Show temperature in<BR> `0`= Celsius *(default)*<BR> `1` = Fahrenheit
+SetOption10<a id="setoption10"></a>|When the device MQTT topic changes <BR> `0` = remove retained message on old topic LWT *(default)*<BR> `1` = send "Offline" to old topic LWT
+SetOption11<a id="setoption11"></a>|Swap button single and double press [functionality](Control-other-devices#double-press--hold)<BR> `0` = disabled *(default)*<BR> `1` = enabled
+SetOption12<a id="setoption12"></a>|Configuration saving to flash option<BR>`0` = allow dynamic flash save slot rotation *(default)*<BR>`1` = use fixed eeprom flash slot 
+SetOption13<a id="setoption13"></a>|Allow immediate action on single button press<BR>`0` = single, multi-press and hold button actions *(default)*<BR> `1` = only single press action for immediate response (i.e., disable multipress detection). Disable by holding for 4 x button hold time (see [`SetOption32`](#setoption32)).
+SetOption15<a id="setoption15"></a>|Set PWM control for LED lights<BR>`0` = basic PWM control<BR>`1` = control with [`Color`](#Color) or [`Dimmer`](#Dimmer) commands _(default)_
+SetOption16<a id="setoption16"></a>|Set addressable LED Clock scheme parameter<BR> `0` = clock-wise mode *(default)*<BR> `1` = counter-clock-wise mode
+SetOption17<a id="setoption17"></a>|Show [`Color`](#Color) string as<BR> `0` = hex string *(default)*<BR> `1` = comma-separated decimal string
+SetOption18<a id="setoption18"></a>|Set status of signal light paired with [CO<sub>2</sub> sensor](#sensor14)<BR> `0` = disable light *(default)*<BR>`1` = enable light
+SetOption19<a id="setoption19"></a>|[Home Assistant](Home-Assistant) automatic discovery.<BR>***WARNING*** On version 6.4.1.x enabling may cause a watchdog reset if used on a device with a configured sensor <BR> `0` = disabled *(default)*<BR> `1` = enabled and also sets [`SetOption59`](#setoption59)`= 1`<BR>If you enable and then disable `SetOption19`, doing so does not set [`SetOption59`](#setoption59)`= 0` and does not revert to default `%prefix%/%topic%/` [`FullTopic`](#fulltopic)
+SetOption20<a id="setoption20"></a>|Update of Dimmer/Color/CT without turning power on<BR>`0` = disabled *(default)*<BR>`1` = enabled
+SetOption21<a id="setoption21"></a>|Energy monitoring when power is off<BR>`0` = disabled *(default)*<BR>`1` = enabled
+SetOption24<a id="setoption24"></a>|Set pressure units &emsp;  »6.4.0<BR> `0` = hPa *(default)*<BR> `1` = mmHg
+SetOption26<a id="setoption26"></a>|Use indexes even when only one relay is present<BR> `0` = messages use POWER *(default)*<BR> `1` = messages use POWER1
+SetOption28<a id="setoption28"></a>|RF received data format&emsp;  »6.1.0<BR> `0` = hex *(default)*<BR> `1` = decimal 
+SetOption29<a id="setoption29"></a>|IR received data format&emsp;  »6.1.0<BR> `0` = hex *(default)*<BR> `1` = decimal 
+SetOption30<a id="setoption30"></a>|Enforce Home Assistant auto-discovery as light&emsp;  »6.1.0<BR> `0` = relays are announced as a switch and PWM as a light *(default)*<BR> `1` = both relays and PWM are announced as light
+SetOption31<a id="setoption31"></a>|Disable status LED  blinking during Wi-Fi and MQTT connection problems.&emsp;  »6.2.0<br>*[`LedPower`](#LedPower) must be set to `0` for this feature to work.*<BR>`0` = LED blinking enabled *(default)*<BR> `1` = LED blinking disabled
+SetOption32<a id="setoption32"></a>|Number of 0.1 seconds to hold button before sending `HOLD` action message.<BR> `1..100` to set button hold time *(default = `40`)*. This option also affects the time required to perform a firmware defaults reset (10x `HOLD` action time)
+SetOption33<a id="setoption33"></a>|Max power limit can be exceeded by number of seconds before the relay is turned off<BR> `1..250` = set number of seconds *(default = `5`)*
+SetOption34<a id="setoption34"></a>|`0..255` = set [Backlog](#backlog) inter-command delay in milliseconds *(default = `200`)*&emsp;  »6.6.0.17
+SetOption36<a id="setoption36"></a>|Boot loop defaults restoration control.&emsp;  »6.6.0.17<BR>`0` = disable boot loop control<BR> `1..200` = set number of boot loops (a restart caused by any exception or watchdog timer within less than `BOOT_LOOP_TIME` (default 10 seconds) before beginning to restore settings  *(default = `1`)*. Once this number is reached, subsequent restarts will:<ul><li>1<sup>st</sup> restart: disable ESP8285 generic GPIOs interfering with flash SPI</li><li>2<sup>nd</sup> restart: disable rules causing boot loop</li><li>3<sup>rd</sup> restart: disable all rules</li><li>4<sup>th</sup> restart: reset user defined GPIOs to disable any attached peripherals</li><li>5<sup>th</sup> restart: reset module to Sonoff Basic (1)</li></ul>
+SetOption37<a id="setoption37"></a>|Color remapping for led channels, also provides an option for allowing independent handling of RGB and white channels. Setting changes require a device reboot.&emsp;  »6.5.0<BR>`0` = disabled<br>`1..119` = according to [this table](SetOption37---Color-channel-mapping)<br>`120..127` = invalid (results in same as `0`)<br>`128..255` = same as `0..127` but with independent channel handling enabled
+SetOption38<a id="setoption38"></a>|`6..255 ` = set IRReceive protocol detection sensitivity minimizing UNKNOWN protocols&emsp;  »6.6.0
+SetOption39<a id="setoption39"></a>|Control handling of invalid power measurements. [Read more...](Power-monitoring-calibration#known-issues)&emsp;  »6.6.0<BR>`0` = reset to default on next restart<BR>`1..255` = number of invalid power readings before reporting no load *(default =`128`)*.
+SetOption40<a id="setoption40"></a>|Stop detecting input change on the button GPIO. Solves [#5449](../issues/5449)&emsp;  »6.6.0<br>Active only when [`SetOption1 1`](#setoption1) and [`SetOption13 0`](#setoption13). **This disables all long press functionality.**<BR>`0..250` = button hold time in 0.1 seconds after which button functionality is disabled.*(default =`1`)* <BR>Example: `Backlog SetOption1 1; SetOption13 0; SetOption40 10` - discard any button press over 1 second
+SetOption42<a id="setoption42"></a>|<BR>`0..255` = set over-temperature (Celsius only) threshold resulting in power off on all energy monitoring devices *(default = `90`)* &emsp;  »6.6.0.1
+SetOption43<a id="setoption43"></a>|**Deprecated** in favor of [`DimmerRange`](#DimmerRange) &emsp;  »6.6.0.18<BR>`0..255` = set maximum dimming value ([details](TuyaMCU#dimming-range)) *(default = `100`)*<BR>Available for Tuya (» v6.6.0.7) and PS_16_DZ (» v6.6.0.14) dimmers
+SetOption51<a id="setoption51"></a>|Enable GPIO9 and GPIO10 component selections in Module Configuration for ESP8285&emsp;  »6.1.1.14<BR>:rotating_light: **WARNING** Do not use on ESP8266 devices! :rotating_light:<BR>`0` = disable *(default)*<BR>`1` = enable
+SetOption52<a id="setoption52"></a>|Control display of optional time offset from UTC in JSON payloads&emsp;  »6.2.1.2<BR>`0` = disable *(default)*<BR> `1` = enable
+SetOption53<a id="setoption53"></a>|Display hostname and IP address in GUI&emsp;  »6.2.1.20<BR>`0` = disable *(default)*<BR> `1` = enable
+SetOption54<a id="setoption54"></a>|Apply [`SetOption20`](#setoption20) settings to commands from Tuya device&emsp;  »6.3.0.4<BR>`0` = disable *(default)*<BR> `1` = enable
+SetOption55<a id="setoption55"></a>|mDNS service&emsp;  »6.4.1.4<BR>`0` = disable *(default)* <BR> `1` = enable
+SetOption56<a id="setoption56"></a>|Wi-Fi network scan to select strongest signal on restart (network has to be visible)&emsp;  »6.3.0.10<BR>`0` = disable *(default)*<BR> `1` = enable
+SetOption57<a id="setoption57"></a>|Wi-Fi network re-scan every 44 minutes with alternate to +10dB stronger signal if detected (only visible networks)&emsp;  »6.3.0.10<BR>`0` = disable *(default)*<BR> `1` = enable
+SetOption58<a id="setoption58"></a>|[IR Raw data in JSON payload](https://github.com/arendst/Tasmota/issues/2116#issuecomment-440716483)&emsp;  »6.3.0.11<BR>`0` = disable *(default)*<BR> `1` = enable
+SetOption59<a id="setoption59"></a>|Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands: [`State`](#State), [`Power`](#Power) and any command causing a light to be turned on.&emsp;  »6.3.0.13<BR>`0` = disable *(default)*<BR> `1` = enable
+SetOption60<a id="setoption60"></a>|Enable normal sleep instead of [dynamic sleep](Dynamic%20Sleep)&emsp;  »6.3.0.15<BR> `0` = dynamic sleep *(default)*<BR> `1` = sleep
+SetOption61<a id="setoption61"></a>|Force [local operation](https://github.com/arendst/Tasmota/pull/4562#issuecomment-446230001) when [`ButtonTopic`](#ButtonTopic) or [`SwitchTopic`](#SwitchTopic) is set.&emsp;  »6.3.0.16<BR>`0` = disable *(default)*<BR> `1` = enable
+SetOption62<a id="setoption62"></a>|Set retain on Button or Switch hold messages&emsp;  »6.4.1.19<BR>`0` = disable *(default)*<BR> `1` = don't use retain flag on `HOLD` messages
+SetOption63<a id="setoption63"></a>|Set relay state feedback scan at restart ([#5594](../issues/5594), [#5663](../issues/5663))&emsp;  »6.5.0.9<BR>`0` = Scan relay power feedback state at restart *(default)*<BR> `1` = Disable relay power feedback state scanning at restart
+SetOption64<a id="setoption64"></a>|Switch between `-` or `_` as sensor name separator&emsp;  »6.5.0.12<BR>`0` = sensor name index separator is `-` _(hyphen)_ *(default)*<BR> `1` = sensor name index separator is `_` _(underscore)_<br>*Affects DS18X20, DHT, BMP and SHT3X sensor names in tele messages*
+SetOption65<a id="setoption65"></a>|Control [fast power cycle detection](Fast-power-cycle-device-recovery) device recovery&emsp;  »6.7.1<BR>`0` = detection is active *(default)*<BR>`1` = detection is **inactive**
+SetOption66<a id="setoption66"></a>|Set publishing TuyaReceived to MQTT&emsp;  »6.7.0<BR>`0` = disable publishing `TuyaReceived` over MQTT *(default)*<BR>`1` = enable publishing `TuyaReceived` over MQTT
+SetOption67<a id="setoption67"></a>|iFan03 Buzzer control&emsp;  »6.6.0.2<BR>`0` = disable Sonoff iFan03 buzzer *(default)*<BR>`1` = enable Sonoff iFan03 buzzer 
+SetOption68<a id="setoption68"></a>|Multi-channel PWM instead of a single light&emsp;  »6.6.0.3<BR>`0` = Treat [PWM](#pwm) as a single light *(default)*<BR>`1` = Treat [PWM](#pwm) as separate channels. In this mode, use [`Power<x>`](#power) to turn lights on and off, and [`Channel<x>`](#channel) to change the value of each channel.<BR>[`Color`](#color) still works to set all channels at once.<BR>***Requires restart after change***
+SetOption69<a id="setoption69"></a>|**Deprecated** in favor of [DimmerRange](#DimmerRange) &emsp;  »6.6.0.18<br>By default Tuya dimmers won't dim below 10% because some don't function very well that way.&emsp;  »6.6.0.5<BR>`0` = disable Tuya dimmer 10% lower limit<BR>`1` = enable Tuya dimmer 10% lower limit *(default)*
+SetOption71<a id="setoption71"></a>|Set DDS238 Modbus register for active energy&emsp;  »6.6.0.14<BR>`0` = set primary register *(default)*<BR>`1` = set alternate register
+SetOption72<a id="setoption72"></a>|Set reference used for total energy &emsp;  »6.6.0.15<BR>`0` = use firmware counter *(default)*<BR>`1` = use energy monitor (e.g., PZEM-0xx, SDM120, SDM630, DDS238, DDSU666) hardware counter
+SetOption73<a id="setoption73"></a>|Set HTTP Cross-Origin Resource Sharing (CORS) &emsp;  »7.0.0.1<BR>`0` = disable CORS *(default)*<BR>`1` = enable CORS
+SetOption74<a id="setoption74"></a>|Enable internal pullup for single DS18x20 sensor &emsp;  »7.0.0.1<BR>`0` = disabled *(default)*<BR>`1` = internal pullup enabled
+SetOption75<a id="setoption75"></a>|Set grouptopic behaviour ([#6779](../issues/6779))&emsp;  »7.0.0.1<BR>`0` = GroupTopic using FullTopic replacing %topic% _(default)_<BR>`1` =  GroupTopic is `cmnd/%grouptopic%/` 
+SetOption76<a id="setoption76"></a>|Bootcount incrementing when [DeepSleep](DeepSleep) is enabled ([#6930](../issues/6930))&emsp;  »7.0.0.4<BR>`0` = disable bootcount incrementing _(default)_<BR>`1` = enable bootcount incrementing 
+SetOption80<a id="setoption80"></a>|[Blinds and shutters](blinds-and-shutters) support&emsp;  »6.6.0.14<BR>`0` = disable blinds and shutters support *(default)*<BR>`1` = enable blinds and shutters support
+SetOption81<a id="setoption81"></a>|Set PCF8574 component behavior for all ports&emsp;  »6.6.0.14<BR>`0` = set as regular state *(default)*<BR>`1` = set as inverted state
 
 ### Serial Bridge
 Both hardware and software Serial Bridge are supported.
@@ -540,7 +540,7 @@ ShutterRelay\<x><a id="shutterrelay"></a>|`<value>`<BR>`0` = disable this and al
 ShutterSetClose\<x><a id="shuttersetclose"></a>|Set the shutter closed position. `ShutterPosition` will be reset to fully closed value (e.g., `0` when `ShutterInvert = 0`, `100` otherwise).
 ShutterSetHalfway\<x><a id="shuttersethalfway"></a>| `0..100` *(default = `50`)*<BR>Define shutter half open position (in percent)
 ShutterStop\<x><a id="shutterstop"></a>|Disengage the relays to stop the shutter
-See also| [`SetOption80`](#SetOption80) - Enable shutter support
+See also| [`SetOption80`](#setoption80) - Enable shutter support
 
 ### Zigbee
 » v7.0.0.3
