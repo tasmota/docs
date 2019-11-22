@@ -1,10 +1,5 @@
 [Home Assistant](https://home-assistant.io/) (Hass) is an open-source home automation platform running on Python 3.
 
-**Important:** The information on this page is related to:
- - Tasmota development version 6.3.0.**17** (2018-12-13) or later
-   - **Version 6.3.0 will NOT work**
- - Home Assistant 0.84.2 or later
-
 ## Hass configuration - General
 This page describes configuring Hass and Tasmota **without** MQTT device discovery, with manual configuration of each device in Hass.
 
@@ -51,7 +46,8 @@ Configuration -> Integrations -> Set up a new Integration -> MQTT\
 
 Note: Make sure to tick the "Enable discovery" option to enable MQTT device discovery.
 
-### Configure the embedded broker
+### Configure the embedded broker (deprecated)
+Home Assistant contains an embedded MQTT broker called HBMQTT. If configured, Home Assistant will automatically connect to it:
 
 ```yaml
 # Example configuration.yaml entry
@@ -59,7 +55,10 @@ mqtt:
   password: hello
 ```
 
-Default username for the embedded broker is `homeassistant` while port defaults to `1883`.
+Default username for the embedded broker is `homeassistant` while port defaults to `1883`.  
+
+#### :warning: Warning:
+As of release 0.92, the embedded broker has been marked as deprecated. This means bugs may not be fixed, and the functionality may be removed in a future release. There is an issue with the HBMQTT broker and the WebSocket connection that is causing a memory leak. If you experience this issue, consider using another broker like Mosquitto.
 
 ## Tips
 
