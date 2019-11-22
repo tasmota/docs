@@ -4,7 +4,7 @@ Once you have followed [Hardware preparation](/installation/Hardware-preparation
 
 Optionally, you may want to back up the device manufacturer's firmware. To do so, you must use esptool. Refer to the [instructions below](#optional-backup-firmware).
 
-# Tasmota PyFlasher
+## Tasmota PyFlasher
 <img src="https://raw.githubusercontent.com/tasmota/tasmota-pyflasher/v1/images/splash.png" style="margin:5px;float:left;width:150px"></img>
 Tasmota PyFlasher is specifically designed for use with Tasmota binaries with an easy to use GUI. It is based on [NodeMcu Pyflasher](https://github.com/marcelstoer/nodemcu-pyflasher) and [esptool.py](https://github.com/espressif/esptool).
 
@@ -29,13 +29,12 @@ Unplug your serial programming adapter or device and plug it back in or connect 
 > [!TIP]
 >For proper device initialization after the firmware upload completes, power down and power up the device.
 
-### Common mistakes
+#### Common mistakes
 Message `COM# failed to connect: Failed to connect to Espressif device: Timed out waiting for packet header` means your device is not connected (recheck COM port number and USB cable) or not in flash mode (retry flash mode procedure for your device).  
 
 Sometimes a "successful" flash will still result in a device that does not function as expected. If your device exhibits strange behaviors, we recommend that you use esptool.py to erase the flash as described below. And, if you are using esptool.py for erasing, you might as well upload the firmware that way as well. But definitely erase using esptool.py.
 
-<a id="esptool"></a>
-# esptool.py
+## esptool.py
 
 Esptool is the official tool for flashing ESP8266 chips and is the most reliable. 
 
@@ -51,7 +50,7 @@ Esptool for [Debian](https://packages.debian.org/stretch/esptool) and [Ubuntu](h
 sudo apt install esptool
 ```
 
-### Upload Tasmota
+#### Upload Tasmota
 Make sure you followed the steps to put your device in flash mode. Place your chosen firmware binary file in the same folder as esptool.py.
 
 Esptool uses the serial interface to communicate with your device. On Windows these interfaces are named COM1, COM2, etc. and on Linux they are named /dev/ttyUSB0, /dev/ttyUSB1, etc. Before using esptool, make sure you know which serial port your programming adapter is connected to.
@@ -60,14 +59,14 @@ The following use `COM5` as an example. Change `COM5` with your serial port desi
 
 Ensure the device is in flash mode before each step.
 
-#### *Optional:* Backup firmware
+#### Backup Firmware <small>(optional step)</small>
 Backup the current firmware with the following command:
 ```
 esptool.py --port COM5 read_flash 0x00000 0x100000 fwbackup.bin
 ```
 *When the command completes the device is not in flash mode anymore.* Repeat the process of putting your device in programming mode.
 
-#### Erase flash memory
+#### Erase Flash Memory
 Erase the complete flash memory holding the firmware with the following command:
 ```
 esptool.py --port COM5 erase_flash
@@ -76,31 +75,33 @@ It only takes a few seconds to erase 1M of flash.
 
 *When the command completes the device is not in flash mode anymore.* Repeat the process of putting your device in programming mode.
 
-#### Upload firmware
+#### Upload Firmware
 Load the chosen Tasmota firmware file with the following command (e.g., `tasmota.bin` in this example):
 
 ```
 esptool.py --port COM5 write_flash -fs 1MB -fm dout 0x0 tasmota.bin
 ```
 
-Unplug your serial programming adapter or your device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](/installation/Initial-Configuration). **For proper device initialization after the firmware upload completes, power down and power up the device.**
+Unplug your serial programming adapter or your device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](/installation/Initial-Configuration). 
 
-## Esptool executable
+> [!TIP]
+>For proper device initialization after the firmware upload completes, power down and power up the device.
+
+## Esptool Executable
 The executable version of esptool is maintained by Ivan Grokhotkov and releases are kept at [https://github.com/igrr/esptool-ck/releases](https://github.com/igrr/esptool-ck/releases). Supports Linux, Linux ARM, Windows 32-bit and Mac
 
-#### Download and install
+#### First Step
 For the purpose of simplicity only the Windows version will be explained here, but the commands and parameters are the same for Windows, Linux and Mac.
 
 Download the latest release of [Esptool-CK](https://github.com/igrr/esptool-ck/releases) and extract the compressed file to a folder of your choice.
 
-### Upload Tasmota
 Place your chosen firmware binary file (e.g., `tasmota.bin` in the example below) in the same folder as Esptool-CK to simplify the process.
 
 The following commands use `COM5` as an example. Change `COM5` with your port designation.
 
 Ensure the device is in flash mode before each step.
 
-#### Erase flash memory  
+#### Erase Flash Memory  
 ```
 esptool -cp COM5 -ce -v
 ```
@@ -113,7 +114,7 @@ esptool -cp COM5 -bm dout -cf tasmota.bin -v
 
 Unplug your serial programming adapter or your device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](/installation/Initial-Configuration). **For proper device initialization after the firmware upload completes, power down and power up the device.**
 
-# Flashing and compiling from source
+## Compiling from Source
 Tutorials for setting up development environments if you want to modify the code or default settings and [compile your own binaries](compile-your-build).
 - [**PlatformIO**](PlatformIO) -  setup and configure [PlatformIO](https://platformio.org) for compilation and upload
 - [**PlatformIO CLI**](PlatformIO-CLI) - use the PlatformIO command line interface on Linux for compilation and upload
@@ -128,12 +129,14 @@ Delete the following in your `.platformio` folder (`%USERPROFILE%\.platformio` i
 - Everything in `.platformio/platforms`  
 - All folders that begin with `framework...` in `.platformio/packages`  
 
-## Online Compilers
+Read more in [Compile Your Own Tasmota](Compile-your-build).
+
+#### Online Compilers
 _**Can only create a firmware binary.** Use one of the [tools](/installation/Prerequisites#flashing-tool) to flash it to your device._
 - [**Gitpod**](Compiling-Tasmota-on-Gitpod) - compile your own binary in the cloud using [Gitpod](https://www.gitpod.io/).  
 - [**TasmoCompiler**](https://github.com/benzino77/tasmocompiler) - simple web GUI to compile Tasmota with your own settings
 
-# OTA Flashing Tools
+## OTA Flashing Tools
 **Tasmota is NOT a developer of these tools. For help and troubleshooting you will need to _get support from those projects_.**
 - [**Tuya Convert**](Tuya-OTA) - easy OTA flash for devices with Tuya chips, no disassembly required
 - [**Sonoff DIY**](Sonoff-DIY) - OTA flash for select Sonoff devices (some disassembly required)
@@ -142,5 +145,5 @@ _**Can only create a firmware binary.** Use one of the [tools](/installation/Pre
 - [**Python HTTP OTA server**](Python-HTTP-OTA-Server) - setting up a small Python server to serve OTA upgrade binaries
 - [**SonOTA**](SonOTA---Espressif2Arduino---Tasmota-without-compiling) - OTA flash eWeLink based devices *(mostly outdated)*
 
-## Need more help?
+## Need More Help?
 If you have encountered problems during flash see the [FAQ](/faq/). Ask for help in [Discord](https://discord.gg/Ks2Kzd4) or [Community Forum](https://groups.google.com/d/forum/sonoffusers)

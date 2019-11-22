@@ -32,7 +32,7 @@ When you have identified pins on your device, connect wires according to the tab
 **Note that TX from your adapter goes to RX on the ESP8266 device and RX from adapter goes to TX on the device!**
 ![Image courtesy of https://www.domo-blog.fr/](https://user-images.githubusercontent.com/5904370/57880182-69bf2f80-781e-11e9-8953-88599cb89155.png)
 
-## Putting the Device into Programming Mode
+## Programming Mode
 <img alt="Example without button" src="https://user-images.githubusercontent.com/5904370/55689595-8dbd6480-5986-11e9-81c6-a13c6b7e5971.png" style="margin:5px;float:right;width:180px"></img>
 ESP8266 needs to be put into **Programming Mode** before the firmware can be uploaded. This is done by pulling the GPIO0 pin to GND while the chip is booting. 
 

@@ -1,10 +1,11 @@
 ## Needed Hardware
 
 <img style="float:right;width:250px" src="_media/esp8266.png"></img>
-### Device with an ESP8266/ESP8285 chip
+
+#### ESP8266 or ESP8285 Device
 Any [variation](https://en.wikipedia.org/wiki/ESP8266#Espressif_modules) of the [ESP8266 chip](https://www.espressif.com/en/products/hardware/esp8266ex/overview) can be flashed with Tasmota.
 
-### Serial-to-USB adapter with 3.3V supply
+#### Serial-to-USB Adapter
 The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?title=Power) is **one of the most important elements** for both flashing the device and for stable operation. You must ensure that the device receives sufficient power (current AND appropriate voltage level) to properly flash the firmware on the device.
 * [CH340G](https://cdn.sparkfun.com/datasheets/Dev/Arduino/Other/CH340DS1.PDF) is a reliable and very cheap adapter (example [1](https://www.sparkfun.com/products/14050), [2](https://www.aliexpress.com/item/1PCS-CH340-module-instead-of-PL2303-CH340G-RS232-to-TTL-module-upgrade-USB-to-serial-port/32761423124.html)).
 <img src="_media/ch340g.png" style="margin:5px;float:right;width:200px"></img>
@@ -19,36 +20,36 @@ The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?
 > [!DANGER]
 >Some adapters can be switched between 3.3V and 5V for the data pins, but still provide 5V on the power pin which will fry your device.  You MUST make sure both the data and VCC pins are set for 3.3V.
 
-### Soldering equipment
+#### Soldering Tools
 To solder you'll of course need a soldering iron, soldering tin and some flux. If you're new to soldering check out some soldering tutorial videos while you're at it.
 
 If you're intimidated by soldering you could get away with holding the headers with jumper wires in the pin holes during flashing but it is not a fool proof process and flashing might fail.
-### Jumper wires
+#### Jumper wires
 
 You could use any kind of wire but [jumper wires](http://blog.sparkfuneducation.com/what-is-jumper-wire) (also called DuPont wires) are more practical than soldering and desoldering.
 
-### Pin headers
+#### Pin Headers
 <img src="_media/pinheaders.png" style="margin:5px;float:right;width:10em"></img>
 
 [Pin headers](https://learn.sparkfun.com/tutorials/connector-basics/pin-header-connectors) come in male or female version. Choose according to your jumper wire connectors.
-### Computer with Linux, Windows or MacOS
+#### Computer with Linux, Windows or MacOS
 You need a computer with a USB port to upload the firmware to your device and configure it.
-### Smartphone
+#### Smartphone
 Tasmota installed from a precompiled binary needs to be configured to work with your Wi-Fi network before you can access the Tasmota web UI. This is usually done by connecting to a Tasmota Wi-Fi Access Point with your smartphone (or tablet or computer with Wi-Fi). 
 
 ## Needed Software
-### Tasmota firmware
+#### Tasmota Firmware Binary
 Download a Tasmota binary (.bin) file. If you're not sure which binary is the right one for you consult the [builds table](Builds) or just start with `tasmota.bin`.
 
 The latest _**development**_ binary files are available on the [OTA server](http://thehackbox.org/tasmota). The latest merged development code is compiled hourly. The latest _**master**_ release binary files can be downloaded from [GitHub](https://github.com/arendst/Tasmota/releases) or from the [OTA server](http://thehackbox.org/tasmota/release/). 
 
-### Flashing tool
+### Flashing Tool
 - [**Tasmota PyFlasher**](https://github.com/tasmota/tasmota-pyflasher) - official flashing tool intended for Tasmota. (Windows or Mac)
 - [**NodeMCU PyFlasher**](https://github.com/marcelstoer/nodemcu-pyflasher) - easy to use GUI flasher based on esptool.py. (Windows or Mac)
 - [**Esptool.py**](https://github.com/espressif/esptool) - the official flashing tool from Espressif. (Requires Python)
 - [**Esptool executable**](https://github.com/igrr/esptool-ck) - Esptool in executable form, no Python required. (Windows, Linux or Mac)
 
-#### OTA Flashing Tools
+##### OTA Flashing Tools
 **Tasmota is NOT a developer of these tools. For help and troubleshooting you will need to _get support from those projects_.**
 - [**Tuya OTA**](Tuya-OTA) - easy OTA flash for devices with Tuya chips, no disassembly required
 - [**Sonoff DIY**](Sonoff-DIY) - OTA flash for select Sonoff devices (some disassembly required)
@@ -57,25 +58,7 @@ The latest _**development**_ binary files are available on the [OTA server](http
 - [**Python HTTP OTA server**](Python-HTTP-OTA-Server) - setting up a small Python server to serve OTA upgrade binaries
 - [**SonOTA**](SonOTA---Espressif2Arduino---Tasmota-without-compiling) - OTA flash eWeLink based devices *(mostly outdated)*
 
-#### Modifying Tasmota Code
-If you want to modify the code or default settings you can use:
-- [**PlatformIO**](PlatformIO) -  setup and configure [PlatformIO](https://platformio.org) for Tasmota compilation and upload
-- [**PlatformIO CLI**](PlatformIO-CLI) - how to flash Tasmota using the PlatformIO command line interface on Linux
-- [**PlatformIO-Core**](Create-your-own-Firmware-Build-without-IDE) - automate firmware builds using PlatformIO-Core and flash with esptool
-- [**Visual Studio Code**](Visual-Studio-Code) -  setup and configure [Visual Studio Code](https://code.visualstudio.com) with PlatformIO for Tasmota
-- [**Atom**](Beginner-Guide---Create-your-own-Firmware-Build) - beginner guide building Tasmota firmware using [Atom](https://atom.io/) with PlatformIO plugin
-- [**Arduino IDE**](Arduino-IDE) - setup and configure Arduino IDE for Tasmota compilation and upload
-
-If you use PlatformIO, to be sure that you have the latest build of the ESP Core, first delete the following folders in your current `.platformio` folder:
-- Everything in `.platformio/platforms`  
-- All folders that begin with `framework...` in `.platformio/packages`  
-
-#### Online Compilers
-_**Can only create a firmware binary.** Use one of the [tools](/installation/Prerequisites#flashing-tool) to flash it to your device._
-- [**Gitpod**](Compiling-Tasmota-on-Gitpod) - compile your own binary in the cloud using [Gitpod](https://www.gitpod.io/).  
-- [**TasmoCompiler**](https://github.com/benzino77/tasmocompiler) - simple web GUI to compile Tasmota with your own settings
-
-### Serial terminal
+### Serial Terminal
 A program that connects to your Tasmota device directly over the serial connection you used to flash it.
 
 This is an optional way to configure your device using [Commands](Commands) and [Backlog](Commands#the-power-of-backlog). Be sure to configure your program for local echo so that the characters you type are displayed locally on your monitor as well as transmitted to the device. Also, every request needs to end with `<CR><LF>`. Your program may only send the carriage return (`Ctrl-M`) when hitting `Enter` and not automatically send the `<LF>`. You can send a linefeed using `Ctrl-J` on the keyboard.
@@ -84,10 +67,24 @@ This is an optional way to configure your device using [Commands](Commands) and 
 * **[Putty](https://www.putty.org/)** - popular client available on every platform
 * **[Minicom](https://www.acmesystems.it/minicom)** - one of many Linux terminals
 
-## Other Requirements
-### The willingness to tinker and learn
-Tasmota is not a commercial product and support is limited. You have to be willing to research and debug problems that might arise.
-### MQTT
+## MQTT Knowledge
 Tasmota is designed to be controlled and communicate via [MQTT](http://mqtt.org/). To use it to its fullest potential you need an [MQTT broker and client](https://www.hivemq.com/blog/mqtt-essentials-part-3-client-broker-connection-establishment/). 
 
 Read our [article on MQTT](MQTT) for how it is utilised in Tasmota.
+
+## Compiling Tools <small>(Optional)</small>
+If you want to modify the code or default settings you can use:
+- [**PlatformIO**](PlatformIO) -  setup and configure [PlatformIO](https://platformio.org) for Tasmota compilation and upload
+- [**PlatformIO CLI**](PlatformIO-CLI) - how to flash Tasmota using the PlatformIO command line interface on Linux
+- [**PlatformIO-Core**](Create-your-own-Firmware-Build-without-IDE) - automate firmware builds using PlatformIO-Core and flash with esptool
+- [**Visual Studio Code**](Visual-Studio-Code) -  setup and configure [Visual Studio Code](https://code.visualstudio.com) with PlatformIO for Tasmota
+- [**Atom**](Beginner-Guide---Create-your-own-Firmware-Build) - beginner guide building Tasmota firmware using [Atom](https://atom.io/) with PlatformIO plugin
+- [**Arduino IDE**](Arduino-IDE) - setup and configure Arduino IDE for Tasmota compilation and upload
+- [**Docker Tasmota**](https://github.com/tasmota/docker-tasmota) - compile from a Docker container using PlatformIO
+
+Read more in [Compile Your Own Tasmota](Compile-your-build).
+
+#### Online Compilers
+_**Can only create a firmware binary.** Use one of the [tools](/installation/Prerequisites#flashing-tool) to flash it to your device._
+- [**Gitpod**](Compiling-Tasmota-on-Gitpod) - compile your own binary in the cloud using [Gitpod](https://www.gitpod.io/).  
+- [**TasmoCompiler**](https://github.com/benzino77/tasmocompiler) - simple web GUI to compile Tasmota with your own settings
