@@ -1,8 +1,9 @@
 # Connecting Tasmota to AWS IoT
 
-*This feature is still experimental, and undergoing thorough testing to check stability (i.e. that memory pressure does not cause a crash). After a few months of testing, it appears extremely stable (no crash).*
+!> **This feature is not included in precompiled binaries.**     
 
-To use this feature you must compile your own firmware by adding the following lines to `user_config_override.h`. AWS IoT also requires [Tasmota TLS](TLS).  
+To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
+
 ```
 #ifndef USE_MQTT_TLS
 #define USE_MQTT_TLS
@@ -15,6 +16,8 @@ To use this feature you must compile your own firmware by adding the following l
 #undef USE_DISCOVERY
 #endif
 ```
+> [!DANGER]
+>This feature is still experimental, and undergoing thorough testing to check stability (i.e. that memory pressure does not cause a crash). After a few months of testing, it appears extremely stable (no crash).
 
 > As of Tasmota version 6.6.0.3, the device-specific credentials are no longer restricted to being set at compile time only. You can now use the same firmware for all your devices. AWS IoT credentials can be set through the Console at runtime and are stored in flash memory. Credentials will survive firmware updates and OTA. Credentials will not survive a full Flash reset `Reset 5` or `Reset 6` nor will it survive a System Parameter Flash reset `Reset 3`
 
@@ -22,13 +25,13 @@ To use this feature you must compile your own firmware by adding the following l
 
 AWS IoT provides secure, bi-directional communication between Internet-connected devices such as sensors, actuators, embedded micro-controllers. This basically allows to communicate in both direction from the cloud using MQTT over secure channels using TLS.
 
-### 1. More Alexa controls
+#### 1. More Alexa controls
 
 It's actually easy to develop smarthome Alexa skills, so that you can control your whole house. Currently you can only use the local Philips Hue/Wemo emulation - limited to lights and switches. You can imagine for instance controlling your Sonoff RF Bridge and send IR codes to your TV.
 
 Alexa skills need to communicate back to your devices, which is easy using MQTT and AWS IoT
 
-### 2. No need for a local gateway
+#### 2. No need for a local gateway
 
 Of course you can do it with a local gateway like Raspberry PI using many of the open-source solutions (Domoticz...).
 
@@ -64,18 +67,18 @@ AWS IoT requires a distinct Private Key and Certificate per Tasmota device. Curr
 
 Here is a simple guide.
 
-### Step 0. Open an AWS Account
+#### Step 0. Open an AWS Account
 
 If you don't have already one, just follow the guide: https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/
 
-### Step 1. Prerequisites
+#### Step 1. Prerequisites
 
 You will need to install/compile the following:
 
  * Complete environment to compile Tasmota, ex: PlatformIO (https://github.com/arendst/Tasmota/wiki/PlatformIO)
  * Recent version of `openssl`
 
-### Step 1.5 Deploy required resources using AWS CloudFormation and skip to Step 6.
+#### Step 1.5 Deploy required resources using AWS CloudFormation and skip to Step 6.
 
 The following AWS CloudFormation template will create these resources:
 
