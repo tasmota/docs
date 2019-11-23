@@ -25,7 +25,7 @@ See [IR commands](Commands#ir-remote) for use.
 
 IR Receiver is used to capture IR codes. Those codes can be sent using [`IRSend`](commands#irsend) or used as a [rule](Rules) trigger.   
 
-> Example uses the widely available [KY-022](https://arduinomodules.info/ky-022-infrared-receiver-module/) breakout board.
+Example uses the widely available [KY-022](https://arduinomodules.info/ky-022-infrared-receiver-module/) breakout board.
 
 ### Wiring
 | KY-022   | ESP266 |
