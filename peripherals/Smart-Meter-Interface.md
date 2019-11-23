@@ -131,6 +131,7 @@ with the '=' char at the beginning of a line you may do some special decoding
 - [SDM530 (MODBUS)](#SDM530)
 - [Janitza B23 (MODBUS)](#Janitza-B23)
 - [Hager EHZ363 (SML) with daily values](#Hager-EHZ363-SML-with-daily-values)
+- [Iskra MT 174](#Iskra-MT-174)
 ------------------------------------------------------------------------------
 
 ### Hager EHZ363 (SML)
@@ -275,7 +276,6 @@ with the '=' char at the beginning of a line you may do some special decoding
 >`>D`
 
 >`>B`
-
 =>sensor53 r
 
 >`>M 1` 
@@ -310,7 +310,6 @@ hr=0
 ; permanent midnight values  
 p:pi_m=0  
 p:po_m=0  
-
 
 >`>B`  
 =>sensor53 r  
@@ -355,6 +354,26 @@ Tageseinspeisung: {m} %po_d% kWh
 1,77070100020800ff@1000,Einspeisung,KWh,Total_out,4  
 1,77070100100700ff@1,Aktueller Verbrauch,W,Power_curr,0  
 1,77070100000009ff@#,Zähler Nr,,Meter_number,0  
+\#
+
+[Back To Top](#top)
+
+------------------------------------------------------------------------------
+
+
+### Iskra MT 174
+
+>`>D`
+
+>`>B`
+=>sensor53 r
+
+>`>M 1` 
++1,3,o,0,300,STROM,1,100,2F3F210D0A  
+>
+1,1-0:1.8.1*255(@1,Total Verbrauch,KWh,Total_in,3  
+1,1-0:2.8.1*255(@1,Total Verkauf,KWh,Total_in,3  
+1,1-0:0.0.0*255(@#),Zähler Nr,,Meter_number,0  
 \#
 
 [Back To Top](#top)
