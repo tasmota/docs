@@ -66,9 +66,9 @@ Virtually everything which has to be moved or rotated can be done now using thes
 ![28BYJ-48_V1](https://user-images.githubusercontent.com/34340210/66860253-d91a8600-ef5a-11e9-9195-c816e329abb8.jpg ':size=200')  
 
 ### Breakout Boards
-![](/docs/_media/peripherals/stepper-motor1.webp ':size=100') 
-![](/docs/_media/peripherals/stepper-motor2.webp ':size=100') 
-![](/docs/_media/peripherals/stepper-motor3.webp ':size=100') 
+![](../_media/peripherals/stepper-motor1.webp ':size=100') 
+![](../_media/peripherals/stepper-motor2.webp ':size=100') 
+![](../_media/peripherals/stepper-motor3.webp ':size=100') 
 
 #### Buy Links
 [Banggood](https://www.banggood.com/A4988DRV8825-Stepper-Motor-Control-Board-Expansion-Board-For-3D-Printer-p-1238774.html)  

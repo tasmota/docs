@@ -18,7 +18,7 @@ You can interact with Tasmota using Amazon Alexa through its Echo devices .
 
 In **Configuration - Configure Other** page in the webUI select emulation type.
 
-![](/docs/_media/emulation_confguration.png)
+![](../_media/emulation_confguration.png)
 
 > [!WARNING]
 > Alexa Hue integration requires a physical Alexa device. The app alone is not enough.

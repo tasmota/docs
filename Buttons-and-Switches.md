@@ -236,7 +236,7 @@ Command [`SetOption11`](commands#setoption11) allows for swapping the functional
 
 These changes result in the following:
 
-![Action matrix](/docs/_media/button-matrix.png ":size=300")
+![Action matrix](../_media/button-matrix.png ":size=300")
 
 #### Example
 
