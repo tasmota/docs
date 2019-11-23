@@ -16,4 +16,4 @@ White:
 Green:
 * D5 GPIO14 = 34 PWM2
 
-[Learn more about Arilux devices](https://github.com/arendst/Tasmota/wiki/MagicHome-with-ESP8285)
+[Learn more about Arilux devices](devices/MagicHome-with-ESP8285)

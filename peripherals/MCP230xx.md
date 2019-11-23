@@ -153,7 +153,7 @@ rule on event#MCPINT_D0=1 do power on endon on event#MCPINT_D0=0 do power off en
 
 In the example above the rule would respond to an interrupt of HIGH on pin 0 of the MCP by executing command "power on" and respond to an interrupt of LOW on pin 0 with the command "power off"
 
-See the Wiki on [Using Rules](https://github.com/arendst/Tasmota/wiki/Rules) for more information on how this can be helpful to your requirements.
+See the Wiki on [Using Rules](Rules) for more information on how this can be helpful to your requirements.
 
 If you require only one of the two reporting methods you may use the sensor29 command to configure the interrupt behavior according to your requirements using command:
 

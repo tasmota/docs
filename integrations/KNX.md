@@ -101,7 +101,7 @@ DEVICE 2
 
 ### 4) Setting a Temperature sensor:
 
-We can configure to send the value of temperature or humidity every teleperiod. This teleperiod can be configured. See TasmotaTasmota [wiki](https://github.com/arendst/Tasmota/wiki/Commands). It is recommended also to set the reply temperature address.
+We can configure to send the value of temperature or humidity every teleperiod. This teleperiod can be configured. See TasmotaTasmota [wiki](Commands). It is recommended also to set the reply temperature address.
 
 <img src="https://github.com/ascillato/Sonoff-Tasmota_KNX/blob/development/.github/7.jpg" />
 

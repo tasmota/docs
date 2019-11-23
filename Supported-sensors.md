@@ -34,7 +34,7 @@
 - **MLX90614**  MLX IR Temperature sensor (I<sup>2</sup>C)
 - [**MPR121**](MPR121) Proximity Capacitive Touch Sensor Controller (I<sup>2</sup>C)
 - **MPU6050**  3-Axis Gyroscope and 3-Axis Accelerometer sensor (I<sup>2</sup>C)
-- [**P1 Energy Meter**](https://github.com/arendst/Tasmota/wiki/P1-Smart-Meter)
+- [**P1 Energy Meter**](P1-Smart-Meter)
 - [**PAJ7620**](PAJ7620) Gesture & Proximity Detection Sensor
 - [**PCA9685**](PCA9685) 16-channel, 12-bit PWM LED controller (I<sup>2</sup>C)
 - **PCF8574** 8-port I\/O Expander (I<sup>2</sup>C)
@@ -68,7 +68,7 @@
 
 ## Expanding your devices
 *(written originally for D1 mini but the majority of the information applies to other peripherals)*  
-- [Sensor Configuration](https://github.com/arendst/Tasmota/wiki/Sensor-Configuration)
+- [Sensor Configuration](Sensor-Configuration)
 - [Wiring additional things to a module](Expanding-Tasmota)<img src="https://user-images.githubusercontent.com/5904370/53279684-f8864980-3712-11e9-9451-da6259bae2ea.png" width="250" align="right" />
   - [Connecting a Switch](Expanding-Tasmota#connect-switch)
   - [LEGO nightstand switch using Sonoff SV](https://jeff.noxon.cc/2018/11/21/lego-nightstand-light-switch/)

@@ -2,7 +2,7 @@
 
 ## Serial Connection
 
-Please see the [Hardware Preparation](https://github.com/arendst/Tasmota/wiki/Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](installation/Hardware-Preparation) page for general instructions.
 
 MAKE SURE YOU DON'T HAVE IT PLUGGED IN WHEN DOING ANY OF THIS INCLUDING FLASHING - YOU HAVE BEEN WARNED.
 

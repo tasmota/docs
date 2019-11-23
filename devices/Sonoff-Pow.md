@@ -14,7 +14,7 @@ The GPIOs on the Pow are connected to AC power!** Only use a POW as designed.
 
 ## Serial Connection 
 
-Please see the [Hardware Preparation](https://github.com/arendst/Tasmota/wiki/Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](installation/Hardware-Preparation) page for general instructions.
 
 3V3, RX, TX and GND pins are available at the rear end of the PCB.
 
@@ -23,7 +23,7 @@ Please see the [Hardware Preparation](https://github.com/arendst/Tasmota/wiki/Ha
 To enter **flash mode**, press down on the button while powering the device.
 
 ## Power Monitoring Calibration
-Sonoff Pow might need calibration as correct measurements are influenced by hardware and timing differences. See [Power Monitoring Calibration](https://github.com/arendst/Tasmota/wiki/Power-Monitoring-Calibration)
+Sonoff Pow might need calibration as correct measurements are influenced by hardware and timing differences. See [Power Monitoring Calibration](devices/Power-Monitoring-Calibration)
    
 ## Telemetry
 The Sonoff Pow can provide Energy, Power, Voltage and Current information in different ways.

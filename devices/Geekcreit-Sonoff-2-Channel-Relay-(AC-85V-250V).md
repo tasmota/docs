@@ -4,7 +4,7 @@
 * Version with enclosure: https://www.banggood.com/Geekcreit-2-Channel-AC-85V-250V-APP-Remote-Control-WIFI-Wireless-Switch-Socket-For-Smart-Home-p-1114958.html?rmmds=search&cur_warehouse=CN
 
 The Geekcreit/"Sonoff" 2CH is based on the ESP8285 via the Itead PSF-B04.
-It is very similar to 4CH DIY, so this wiki page is based on [the page](https://github.com/arendst/Tasmota/wiki/Sonoff-4CH-DIY) for that device.
+It is very similar to 4CH DIY, so this wiki page is based on [the page](devices/Sonoff-4CH-DIY) for that device.
 
 More info here:
 https://github.com/arendst/Tasmota/issues/1970
@@ -15,7 +15,7 @@ https://github.com/arendst/Tasmota/issues/1970
 
 ### Geekcreit/"Sonoff" 2CH
 
-Please see the [Hardware Preparation](https://github.com/arendst/Tasmota/wiki/Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](installation/Hardware-Preparation) page for general instructions.
 
 As always, you need to access the serial interface. The **four serial pins** (3V3, Rx, Tx, GND) can be seen in the picture.
 Unless you have a very steady hand soldering will be required for the TX and RX on the ESP chip.

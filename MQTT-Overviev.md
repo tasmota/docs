@@ -53,7 +53,7 @@ Note: By default firmware will search for an MQTT broker using mDNS by searching
 
 ### General
 
-See the wiki's https://github.com/arendst/Tasmota/wiki/Commands[command list] for the definitive list of operations that you can perform. The first word in the column marked `Command` is the text that you need to put at the end of a `cmnd` string when you issue a publication message. The second word is the contents of the payload. If there is no second word, you can simply send an empty payload. For example:
+See the wiki's Commands[command list] for the definitive list of operations that you can perform. The first word in the column marked `Command` is the text that you need to put at the end of a `cmnd` string when you issue a publication message. The second word is the contents of the payload. If there is no second word, you can simply send an empty payload. For example:
 
 [options="header"]
 |===

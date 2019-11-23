@@ -62,7 +62,7 @@ In this picture Yellow is Tx, Orange is Ground, Grey is Rx and White is Vdd:
 
 Connect the other end of the wires to your USB-to-serial adapter and make sure the supply voltage selected is 3.3V.
 
-Shorting pin *7* (GPIO0) to ground while plugging the serial adapter into the computer's USB port will bring the module into UART firmware upload mode. See https://github.com/arendst/Tasmota/wiki/Esptool for details of how to flash the firmware when in firmware upload mode.
+Shorting pin *7* (GPIO0) to ground while plugging the serial adapter into the computer's USB port will bring the module into UART firmware upload mode. See devices/Esptool for details of how to flash the firmware when in firmware upload mode.
 
 Once you have flashed the firmware, leave the jumpers soldered to the pins and unplug & reinsert your USB-to-serial adapter - this will reset the unit and provide voltage to the ESP8266 which will then boot the new Tasmota firmware - you'll see a Wifi network called "sonof-xxxx" if it has flashed successfully worked (if you do not see the wifi, the flashing process might not have worked correctly and you'll need to try again).
 

@@ -229,7 +229,7 @@ Command|Parameters
 Latitude<a id="latitude"></a>|`<value>` = set latitude
 Longitude<a id="longitude"></a>|`<value>` = set longitude
 Timers<a id="timers"></a>|Timers control<br>`0` = disable all timers<BR>`1` = enable all timers<BR>`2` = toggle all timers<BR>
-Timer<x\><a id="timer"></a>|Parameters for Timer<x\> where x = `1..16`<BR>`0` = clear parameters for Timer<x\><BR>`1..16` = copy Timer\<y\> parameters to Timer<x\><BR>`{ "name":value ; .. }` = set all or individual parameters using JSON payload with names and values of data pairs from the [table](https://github.com/arendst/Tasmota/wiki/Timers#json-payload-anatomy) 
+Timer<x\><a id="timer"></a>|Parameters for Timer<x\> where x = `1..16`<BR>`0` = clear parameters for Timer<x\><BR>`1..16` = copy Timer\<y\> parameters to Timer<x\><BR>`{ "name":value ; .. }` = set all or individual parameters using JSON payload with names and values of data pairs from the [table](Timers#json-payload-anatomy) 
 
 > [!Note]
 > Information on sensors documented below is transmitted in the Tasmota telemetry message

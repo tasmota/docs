@@ -3,7 +3,7 @@
 
 ## Serial Connection
 
-Please see the [Hardware Preparation](https://github.com/arendst/Tasmota/wiki/Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](installation/Hardware-Preparation) page for general instructions.
 
 ## LED State
 

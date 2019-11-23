@@ -35,4 +35,4 @@ You can change between D4 **GPIO2** 56 **LED1i** and D4 **GPIO2** 52 **LED1** (B
 
 That's it, now your smart plug will flash both red and blue leds and smart plug button should respond to presses.
 
-Special thanks to Travis Griggs for his help with flashing process (I based this tutorial on his own: [LINK](https://github.com/arendst/Tasmota/wiki/SM-SO301)) 
+Special thanks to Travis Griggs for his help with flashing process (I based this tutorial on his own: [LINK](devices/SM-SO301)) 

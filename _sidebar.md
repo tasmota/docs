@@ -20,7 +20,7 @@
 * [Power Monitoring Calibration](Power-Monitoring-Calibration)   
 * [TLS](TLS)  
 * [Web UI](WebUI)     
-* [Supported Devices](/devices/)  
+* [Supported Modules](/devices/)  
 * **Useful Topics**
 * [Tips](Tips)  
 * [Tutorials](Tutorials)  

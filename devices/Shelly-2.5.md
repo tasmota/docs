@@ -59,7 +59,7 @@ If you connect momentary switches and want press/double press/hold functionality
 Run `Backlog SetOption1 1; SetOption11 1; SetOption32 1` to enable all three states. `Button1` is the button on the back of the device next to the pin header. `Button2` and `Button3` are assigned to the SW1 and SW2 external inputs.
 
 ## Flash mode
-To be able to flash the Tasmota firmware you need to get into flash mode. Therefore connect a wire from GPIO0 to ground. For further information have a look at [bringing-the-module-in-flash-mode](https://github.com/arendst/Tasmota/wiki/Hardware-Preparation#bringing-the-module-in-flash-mode).
+To be able to flash the Tasmota firmware you need to get into flash mode. Therefore connect a wire from GPIO0 to ground. For further information have a look at [bringing-the-module-in-flash-mode](installation/Hardware-Preparation#bringing-the-module-in-flash-mode).
 
 ## Calibration
 Tasmota will disable serial logging after a restart as the communication between Tasmota and the Energy Monitoring chip is using the same serial interface. Make sure not to enable `SerialLog` as it will interfere with the Energy Monitoring functionality.

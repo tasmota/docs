@@ -26,7 +26,7 @@ We present the official Tasmota firmware flashing tool:
 [Tasmota v6.7.1 Allison](../releases/tag/v6.7.1) releases with a fix for the bug causing serious issues in power monitoring devices. 
 
 #### **2019-10-25**
-[Tasmota v6.7.0](../releases/tag/v6.7.0) is released bringing support for [blind and shutters](Commands#blinds-shutters-and-roller-shades), [deep sleep and wake up pin](DeepSleep). [Tuya component](tuyamcu) is more customisable supporting a wider range of devices and a plethora of new sensors. Support for [Zigbee](https://github.com/arendst/Tasmota/wiki/Zigbee) devices is in a nascent stage of development.    
+[Tasmota v6.7.0](../releases/tag/v6.7.0) is released bringing support for [blind and shutters](Commands#blinds-shutters-and-roller-shades), [deep sleep and wake up pin](DeepSleep). [Tuya component](tuyamcu) is more customisable supporting a wider range of devices and a plethora of new sensors. Support for [Zigbee](Zigbee) devices is in a nascent stage of development.    
 Besides that there are bug fixes and improvements and on top of all that: better support for iFan03, Shelly 2.5, a rewrite of the light driver and the default Arduino core is now pre2.6. Last, but not least, the new tasmota-ir.bin build that has fully featured IR support but at the cost of other features.
 
 _In with the new, out with the old!_    

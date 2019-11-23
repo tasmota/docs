@@ -24,7 +24,7 @@ As of 1.0.11 [`homebridge-mqttthing`](https://www.npmjs.com/package/homebridge-m
 
 Check out [macwyznawca's packages](https://www.npmjs.com/~macwyznawca) for supported functions, each in a separate package.
 
-To use Homebridge with Tasmota you need to have an existing MQTT broker set up ([see wiki overview](https://github.com/arendst/Tasmota/wiki/MQTT-Overview)) and each of your Sonoff devices should have a unique topic set.
+To use Homebridge with Tasmota you need to have an existing MQTT broker set up ([see wiki overview](MQTT-Overview)) and each of your Sonoff devices should have a unique topic set.
 
 Example screenshot from Apple Home.app
 

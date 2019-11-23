@@ -348,7 +348,7 @@ Rule3 1
 - Relay4 is used for error status (ON = error), no control
 - Relay5 is used for light mode status (0 = rgb_cycle, 1 = color), no control
 
-LED mode status is reported to mqtt topic `stat/GD-30W/EFFECT` and command [`Event`](https://github.com/arendst/Tasmota/wiki/Commands#event) is used to control some functions using [`TuyaSend4`](https://github.com/arendst/Tasmota/wiki/Commands#tuyasend4) command. All this is defined in `Rule1`
+LED mode status is reported to mqtt topic `stat/GD-30W/EFFECT` and command [`Event`](Commands#event) is used to control some functions using [`TuyaSend4`](Commands#tuyasend4) command. All this is defined in `Rule1`
 
 Color can be changed using `TuyaSend3 108,RRGGBB64646464` (RR, GG and BB are hex value) only in color mode.
 

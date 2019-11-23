@@ -12,7 +12,7 @@ The GPIOs on the Pow are connected to AC power!** Only use a POW R2 as designed.
 
 ## Serial Flashing 
 
-Please see the [Hardware Preparation](https://github.com/arendst/Tasmota/wiki/Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](installation/Hardware-Preparation) page for general instructions.
 
 3V3, RX, TX and GND pins are available at the rear/short end of the PCB.
 
@@ -29,7 +29,7 @@ Serial logging is disabled by the Tasmota code for this module. Serial communica
 [![](http://img.youtube.com/vi/fqOJjA6Pph0/0.jpg)](http://www.youtube.com/watch?v=fqOJjA6Pph0 "")
 
 ## Power Monitoring Calibration
-Sonoff Pow R2 might need calibration as correct measurements are influenced by hardware and timing differences. See [Power Monitoring Calibration](https://github.com/arendst/Tasmota/wiki/Power-Monitoring-Calibration)
+Sonoff Pow R2 might need calibration as correct measurements are influenced by hardware and timing differences. See [Power Monitoring Calibration](devices/Power-Monitoring-Calibration)
    
 ## Telemetry
 The Sonoff Pow R2 can provide Energy, Power, Voltage and Current information in different ways.

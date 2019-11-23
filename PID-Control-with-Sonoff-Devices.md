@@ -4,7 +4,7 @@ The PID algorithm is one designed to be used to control real-world processes tha
 
 In use it can either regularly be given the current process value via MQTT or if the device has a sensor attached then that sensor can be used to read the process value.  So using a TH10 with a DS18B20 the complete PID loop control can be build into the device so that the process will continue to be controlled even if the wifi is down.  This is a very cost effective way of achieving PID control.
 
-The algorithm allows the relay to be used in a time proportioned way using the [Time Proportioned output](https://github.com/arendst/Tasmota/wiki/Time-Proportioned-Output-support) extension.
+The algorithm allows the relay to be used in a time proportioned way using the [Time Proportioned output](Time-Proportioned-Output-support) extension.
 
 The loop tuning parameters can be set at build time and can be adjusted at run time via MQTT.
 

@@ -32,7 +32,7 @@ The display consists of three panels:
 :warning: ATTENTION: The proper method of customizing firmware compilation options is to use the `user_config_override.h` file. Most customizations should not require changes to the `my_user_config.h` file. To modify the stock configuration:  
 1. Select the `/tamota` folder in the Explorer (1) pane
 2. Create a new file called `user_config_override.h`
-3. In the Editor (2) pane, add, change, or remove anything you need in your configuration file to define your own settings. Refer to the `user_config_override_sample.h` file as well as `my_user_config.h` for `#define` options ([sample](https://pastebin.com/M5KPPWAJ)). You can find a list of Tasmota features and settings listed [here](https://github.com/arendst/Tasmota/wiki/Builds). Define the features you require in your configuration file.
+3. In the Editor (2) pane, add, change, or remove anything you need in your configuration file to define your own settings. Refer to the `user_config_override_sample.h` file as well as `my_user_config.h` for `#define` options ([sample](https://pastebin.com/M5KPPWAJ)). You can find a list of Tasmota features and settings listed [here](Builds). Define the features you require in your configuration file.
 4. Click 'File' on the menu bar and 'Save' your edits.
 
 ### Prepare the IDE for Compilation
@@ -72,4 +72,4 @@ If you already have Tasmota flashed on your device, you can use the `File Upload
 3. After `tasmota-minimal.bin` is successfully loaded, select `Firmware Upgrade` once again and upload the firmware file compiled using Gitpod.
 
 #### Serial Flash
-Follow the same [procedure for flashing](https://github.com/arendst/Tasmota/wiki/Flashing) as you would any new device.
+Follow the same [procedure for flashing](installation/Flashing) as you would any new device.

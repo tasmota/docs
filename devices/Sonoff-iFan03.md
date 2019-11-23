@@ -1,11 +1,11 @@
-(For information on the iFan02 please see here - [iFan02](https://github.com/arendst/Tasmota/wiki/Sonoff-iFan02))
+(For information on the iFan02 please see here - [iFan02](devices/Sonoff-iFan02))
 
 ## Serial Flashing
-Please see the [Hardware Preparation](https://github.com/arendst/Tasmota/wiki/Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](installation/Hardware-Preparation) page for general instructions.
 
-Next, please see the [Flashing](https://github.com/arendst/Tasmota/wiki/Flashing) page for general information on the flashing process.
+Next, please see the [Flashing](installation/Flashing) page for general information on the flashing process.
 
-Flash the latest version of [`tasmota.bin`](http://thehackbox.org/tasmota/json/tasmota.bin):
+Flash the latest version of [`tasmota.bin`](http://thehackbox.org/tasmota/release/tasmota.bin):
 
 1. Connect your serial flashing device pins to the iFan03 (for connection locations see the pin out on the left hand side of the picture below).  
    ![](https://github.com/tim-dcl/BRUH3-Home-Assistant-Configuration/blob/master/IMG_20190817_155847511_HDR.jpg)
@@ -40,85 +40,3 @@ The capacitors in the iFan03 do not set the speed of US fans correctly. To corre
 To pair the remote control after the device has been flashed with the new firmware, the device needs to be powered from _**mains**_ voltage (not from the USB serial flashing device). **Be careful dealing with mains voltages. Ensure that all connections are correctly made and that the iFan03 covers are properly re-assembled.**
 
 To pair the remote control, hold down any button on the remote control and apply power to the iFan03. Once the device boots up you should hear a series of clicks as the internal relays operate. Once completed you can test the remote and it should all be operational.
-
-## Home Assistant Configuration
-
-### Fan Speed
-Credit to [finity](https://community.home-assistant.io/t/sonoff-ifan02-tasmota-mqtt-fan/64083/13)
-
-There are two different configurations that need to be used depending on the method of use in Home Assistant.
-
-To use the iFan03 along with the [Fan Control Entity Row](https://github.com/finity69x2/fan-control-entity-row) then use the configuration below:
-
-```yaml
-  - platform: mqtt  
-    name: "iFan03-2 Test Fan"
-    command_topic: "cmnd/iFan03-2/FanSpeed"
-    speed_command_topic: "cmnd/iFan03-2/FanSpeed"    
-    state_topic: "stat/iFan03-2/RESULT"
-    speed_state_topic: "stat/iFan03-2/RESULT"
-    state_value_template: >
-      {% if value_json.FanSpeed is defined %}
-        {% if value_json.FanSpeed == 0 -%}0{%- elif value_json.FanSpeed > 0 -%}4{%- endif %}
-      {% else %}
-        {% if states.fan.ifan03_2_test_fan.state == 'off' -%}0{%- elif states.fan.ifan03_2_test_fan.state == 'on' -%}4{%- endif %}
-      {% endif %}
-    speed_value_template: "{{ value_json.FanSpeed }}"
-    availability_topic: tele/iFan03-2/LWT
-    payload_off: "0"
-    payload_on: "4"
-    payload_low_speed: "1"
-    payload_medium_speed: "2"
-    payload_high_speed: "3"
-    payload_available: Online
-    payload_not_available: Offline
-    speeds:
-      - off
-      - low
-      - medium
-      - high
-```
-
-If you will be using the regular toggle to control off & on and using the pop up "more info" window to control the speeds then use this configuration:
-
-```yaml
-  - platform: mqtt  
-    name: "iFan03-2 Test Fan Popup"
-    command_topic: "cmnd/iFan03-2/FanSpeed"
-    speed_command_topic: "cmnd/iFan03-2/FanSpeed"    
-    state_topic: "stat/iFan03-2/RESULT"
-    speed_state_topic: "stat/iFan03-2/RESULT"
-    state_value_template: >
-      {% if value_json.FanSpeed is defined %}
-        {% if value_json.FanSpeed == 0 -%}0{%- elif value_json.FanSpeed > 0 -%}ON{%- endif %}
-      {% else %}
-        {% if states.fan.ifan03_2_test_fan_popup.state == 'off' -%}0{%- elif states.fan.ifan03_2_test_fan_popup.state == 'on' -%}ON{%- endif %}
-      {% endif %}
-    speed_value_template: "{{ value_json.FanSpeed }}"
-    availability_topic: tele/iFan03-2/LWT
-    payload_off: "0"
-    payload_on: "ON"
-    payload_low_speed: "1"
-    payload_medium_speed: "2"
-    payload_high_speed: "3"
-    payload_available: Online
-    payload_not_available: Offline
-    speeds:
-      - off
-      - low
-      - medium
-      - high
-```
-
-### Fan Light
-
-```yaml
-  - platform: mqtt
-    name: "iFan03-2 Light"
-    command_topic: "cmnd/iFan03-2/power1"
-    state_topic: "stat/iFan03-2/POWER1"
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-    retain: false
-```

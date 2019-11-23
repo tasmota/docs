@@ -167,7 +167,7 @@ mosquitto_pub -t 'cmnd/RGBled/rule2' -m 'ON'
 mosquitto_pub -t 'cmnd/RGBled/rule3' -m 'ON'
 ```
 
-The hex codes for the "Data" value come from the data tag when looking at the JSON sent via MQTT. You can also view this data on the Tasmota console screen. From here you can program it to do whatever you want using [Rules](https://github.com/arendst/Tasmota/wiki/Rules).
+The hex codes for the "Data" value come from the data tag when looking at the JSON sent via MQTT. You can also view this data on the Tasmota console screen. From here you can program it to do whatever you want using [Rules](devices/Rules).
 
 [LC01-banggood]: http://www.banggood.com/ARILUX-AL-LC01-Super-Mini-LED-WIFI-Smart-RGB-Controller-For-RGB-LED-Strip-Light-DC-9-12V-p-1058603.html?rmmds=search
 [LC02-banggood]: http://www.banggood.com/ARILUX-AL-LC02-Super-Mini-LED-WIFI-APP-Controller-Dimmer-for-RGBW-LED-Strip-Light-DC-9-12V-p-1060222.html

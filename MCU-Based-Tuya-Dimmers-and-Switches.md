@@ -4,7 +4,7 @@ There are several Tuya dimmer and switch variants made by various manufacturers.
 
 The basic identification of a Tuya device is when the device information references the "Tuya Smart", "SmartLife", or "Smart Living" app. These switches and dimmers are based on a [Tuya TYWE3S Wi-Fi PCB](https://docs.tuya.com/en/hardware/WiFi-module/wifi-e3s-module.html) module along with an MCU. TYWE3S is based on the ESP8266 which is supported by Tasmota.
 
-[Wiki page for TYWE3S](https://github.com/arendst/Tasmota/wiki/TYWE3S)
+[Wiki page for TYWE3S](TYWE3S)
 
 The TYWE3S module mostly takes care of Wi-Fi and software features while the MCU controls the actual hardware (buttons, relays, dimmer, power measurement, etc). The MCU is interfaced to TYWE3S using the serial interface which connects to the Rx and Tx pins.
 
@@ -43,7 +43,7 @@ If an MCU is present, bridge RST to GND on the MCU
 
 Use a 6.6.0.10 Tasmota version or higher. There are lots of Tuya Serial fixes / features added in there and the tutorial below expects them.
 
-Now you need to follow the commands explained in the [flashing tutorial](https://github.com/arendst/Tasmota/wiki/Flashing).
+Now you need to follow the commands explained in the [flashing tutorial](installation/Flashing).
 
 TIP: If you are using jumper headers use `sleep 15 &&` before your commands, this would free your hand and give you some time to set the jumper pins and connect the USB to PC.
 
@@ -65,7 +65,7 @@ TIP: If you are using jumper headers use `sleep 15 &&` before your commands, thi
 
 6. If the device is connecting fine to your network, now is the time to power it down and re-assemble it. Connect a test bulb (or to the final place if you don't mind testing there)
 7. Once this is saved and device is rebooted. Open the Tasmota configuration page and you should be able to use the Toggle button to toggle the dimmer or at least one of the gangs in a multi gang switch.
-8. Follow the process [here](https://github.com/arendst/Tasmota/wiki/TuyaMCU) depending on switch or dimmer.
+8. Follow the process [here](TuyaMCU) depending on switch or dimmer.
 
 ## Product Specific guides
 ### [Otim Dimmer](Otim-Dimmer)

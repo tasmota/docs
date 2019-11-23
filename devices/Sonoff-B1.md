@@ -2,7 +2,7 @@ Sonoff B1 R2 is the replacement for Sonoff B1 and can be programmed the same way
 
 ## Serial Flashing
 
-Please see the [Hardware Preparation](https://github.com/arendst/Tasmota/wiki/Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](installation/Hardware-Preparation) page for general instructions.
 
 As always, you need to access the serial interface. First pop up the top part of the bulb with controlled force. The PCB as shown in the image will become visible.
 

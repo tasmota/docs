@@ -109,7 +109,7 @@ For users that intend to migrate to the new MQTT Binding some examples for the i
 
 In the example configuration you can see a non-default **Full Topic** definition, which is **not** used in the following examples (but which can be recommended).
 
-Simply **set up items** for all Tasmota [MQTT topics](https://github.com/arendst/Tasmota/wiki/MQTT-Features) you are interested in. Examples for most needed topics are given below. Some Tasmota topics are JSON encoded, the `JSONPATH` transformation can be used to extract this data.
+Simply **set up items** for all Tasmota [MQTT topics](MQTT-Features) you are interested in. Examples for most needed topics are given below. Some Tasmota topics are JSON encoded, the `JSONPATH` transformation can be used to extract this data.
  
 Additional or further interesting topics are easily identified by reading up on the Tasmota wiki and by subscribing to the modules topics. Subscribe to all topics of one module with the [MQTT wildcard](http://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices) topic string `+/sonoff-XYZ/#` (String depends on your user-configured Topic/FullTopic). Configure items for the identified topics similar to the ones below.
 

@@ -10,7 +10,7 @@ GND - GND
 
 More information can be found here: [#1190](https://github.com/arendst/Tasmota/issues/1190). 
 
-For Switches and dimmers with additional MCU check guide [here](https://github.com/arendst/Tasmota/wiki/Tuya-Dimmer-and-Tuya-Switches-(based-on-serial-MCU)) 
+For Switches and dimmers with additional MCU check guide [here](Tuya-Dimmer-and-Tuya-Switches-(based-on-serial-MCU)) 
      
 ### Device Images
 ![1](https://user-images.githubusercontent.com/14855001/34748935-615ded3e-f59f-11e7-9f40-320c0a8e14df.jpg)  

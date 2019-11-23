@@ -8,7 +8,7 @@ I found the esp8266 as expected in here I was able to identify the module at a e
 [spec sheet](https://fccid.io/2AKBPESP8266-S3/User-Manual/User-Manual-3594791.html)
 
 @znanev did most of the work already 
-[the uk version of this plug as noted by Znanev](https://github.com/arendst/Tasmota/wiki/Hyleton-313-Smart-Plug)
+[the uk version of this plug as noted by Znanev](devices/Hyleton-313-Smart-Plug)
 
 it took a great deal of time to confirm that I did indeed have the same pin outs as this UK plug
 I stumbled apon what I think is the original manufacturer of these but we will probably never know 

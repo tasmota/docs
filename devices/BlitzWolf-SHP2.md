@@ -23,7 +23,7 @@ This method does't need any wiring.
 
 ## Serial Connection
 
-Please see the [Hardware Preparation](https://github.com/arendst/Tasmota/wiki/Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](installation/Hardware-Preparation) page for general instructions.
 
 
 ### Step 1.
@@ -38,7 +38,7 @@ Solder cables to the ESP Pins
 ![soldered cables](https://user-images.githubusercontent.com/25499089/43945387-358d35c2-9c82-11e8-8031-27754090e50c.jpg)
 ### Step 3.
 :warning: :warning: :warning:  
-For version 2.3 and 2.4, see: https://github.com/arendst/Tasmota/wiki/Gosund-SP1
+For version 2.3 and 2.4, see: devices/Gosund-SP1
 ![shortwire during startup](https://user-images.githubusercontent.com/644662/48127131-4326a780-e283-11e8-93ef-acc7b94650d2.png).  
 :warning: :warning: :warning:  
 
@@ -121,4 +121,4 @@ sensor:
 ```
 
 ## Attention
-There is a [newer hardware revision (v2.3)](https://github.com/arendst/Tasmota/issues/4303) which is supported too. Use latest release. See also https://github.com/arendst/Tasmota/wiki/Gosund-SP1
+There is a [newer hardware revision (v2.3)](https://github.com/arendst/Tasmota/issues/4303) which is supported too. Use latest release. See also devices/Gosund-SP1

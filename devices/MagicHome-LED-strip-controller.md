@@ -51,7 +51,7 @@ Some GPIO are preconfigured with the board:
 - GPIO14 - (PWM1) Red color on the LED strip, second pin from the GND
 - GPIO12 - (PWM3) Blue color on the LED strip, third pin from the GND
 
-For instructions to setup the 24 Button Remote visit the [AL-LC04 device page](https://github.com/arendst/Tasmota/wiki/Arilux-LC04)
+For instructions to setup the 24 Button Remote visit the [AL-LC04 device page](devices/Arilux-LC04)
 
 Check this for Board Version 2.3 : [#1867](https://github.com/arendst/Tasmota/issues/1867#issuecomment-364811579)
 
@@ -88,6 +88,6 @@ mosquitto_pub -t 'cmnd/light/rule2' -m '1'
 mosquitto_pub -t 'cmnd/light/rule3' -m '1'
 ```
 
-The hex codes for the "Data" value come from the data tag when looking at the JSON sent via MQTT. You can also view this data on the Tasmota console screen. From here you can program it to do what ever you want. See here for more details: https://github.com/arendst/Tasmota/wiki/Rules
+The hex codes for the "Data" value come from the data tag when looking at the JSON sent via MQTT. You can also view this data on the Tasmota console screen. From here you can program it to do what ever you want. See here for more details: devices/Rules
 
 ![](https://i.imgur.com/AWXrYTp.jpg)

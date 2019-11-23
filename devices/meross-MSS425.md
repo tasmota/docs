@@ -2,7 +2,7 @@
 There are different versions of this power strip. An MSS425EEU-R purchased in August 2019 was based on the Mediatek Wi-Fi chip and **not on an ESP82xx!** Tasmota is only suitable for ESP82xx based devices.  
 
 # meross Power Strip
-This power strip was selling on [Amazon](https://www.amazon.com/meross-Protector-Compatible-Assistant-Individually/dp/B07DXSJP8H/ref=sr_1_21?ie=UTF8&qid=1539543509&sr=8-21&keywords=wifi+smart+power+strip) for about $17 when I bought it. The ESP module is mounted on the side vertically on board. It's another Tuya TYWE3S, 1MB. For more information on the Tuya TYWE3S, see [this page](https://github.com/arendst/Tasmota/wiki/TYWE3S). I soldered pins on and bent them down to get everything back in the case.
+This power strip was selling on [Amazon](https://www.amazon.com/meross-Protector-Compatible-Assistant-Individually/dp/B07DXSJP8H/ref=sr_1_21?ie=UTF8&qid=1539543509&sr=8-21&keywords=wifi+smart+power+strip) for about $17 when I bought it. The ESP module is mounted on the side vertically on board. It's another Tuya TYWE3S, 1MB. For more information on the Tuya TYWE3S, see [this page](devices/TYWE3S). I soldered pins on and bent them down to get everything back in the case.
 
 ![meross guts picture](https://raw.githubusercontent.com/hank/tasmota-contrib/master/2018-10-27-163303.jpg)
 

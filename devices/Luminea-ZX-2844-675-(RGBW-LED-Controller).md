@@ -44,7 +44,7 @@ There is an second version with a green PCB and different pinout:
 
 ## Serial Connection
 
-See the [Hardware Preparation](https://github.com/arendst/Tasmota/wiki/Hardware-Preparation) page for general instructions.
+See the [Hardware Preparation](installation/Hardware-Preparation) page for general instructions.
 
 ![](https://i.ibb.co/NtDnSQ4/JCDXSRGBW.jpg)
 

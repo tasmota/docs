@@ -1,6 +1,6 @@
 ## Wemos D1 Release 1 (R1) and Release 2 (R2)
 
-Here you can find information for the big brother of the Wemos D1 mini which can be found [here](https://github.com/arendst/Tasmota/wiki/Wemos%20D1%20Mini) in the Wiki.
+Here you can find information for the big brother of the Wemos D1 mini which can be found [here](devices/Wemos%20D1%20Mini) in the Wiki.
 
 ### R1 vs. R2 - The Difference
 - When you take a look at the figure 1 you will see it with one blink of the eye thet the old Wemos

@@ -7,7 +7,7 @@ Unlike most Sonoff modules, the Sonoff Touch is based on the ESP8285 rather than
 
 ## Serial Connection
 
-Please see the [Hardware Preparation](https://github.com/arendst/Tasmota/wiki/Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](installation/Hardware-Preparation) page for general instructions.
 
 As always, you need to access the serial interface. Carefully remove the top PCB from the assembly. The hidden underside of the PCB contains the ESP8285 as shown in the pictures. The **four serial pins** (3V3, Rx, Tx, GND) can be seen in the pictures for the US version (left) and the EU version (right) of the module PCB.
 

@@ -9,7 +9,7 @@ As chipset is a **TYWE2S**, you'll have to connect GPIO0 (marked IO0) manually t
 
 ![](https://i.imgur.com/GZkFNWQ.jpg)
 
-There's better images than mines [here](https://github.com/arendst/Tasmota/wiki/CE-Smart-Home---LA-WF3-Wifi-Plug-(TYWE2S)) and [here](https://github.com/arendst/Tasmota/wiki/4CH-Wifi-Socket-with-USB-Charger-SA-P402A-(TYWE2S)) on the wiki.
+There's better images than mines [here](devices/CE-Smart-Home---LA-WF3-Wifi-Plug-(TYWE2S)) and [here](devices/4CH-Wifi-Socket-with-USB-Charger-SA-P402A-(TYWE2S)) on the wiki.
 
 ### Configuration
 

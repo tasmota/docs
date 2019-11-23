@@ -11,7 +11,7 @@ For further infos see [Issue #4727](https://github.com/arendst/Tasmota/issues/47
 
 ## Serial Connection
 
-Please see the [Hardware Preparation](https://github.com/arendst/Tasmota/wiki/Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](installation/Hardware-Preparation) page for general instructions.
 
 ### Step 1
 **Disconnect device from power source!**
@@ -90,7 +90,7 @@ Rule1 ON energy#power<=100 DO Currentcal 2500 BREAK ON energy#power<=500 DO Curr
 Rule1 1
 ```
 
-Take the CurrentCal values above as a first approach and should be corrected through the Tasmota Method 2 calibration procedure: [[https://github.com/arendst/Tasmota/wiki/Power-Monitoring-Calibration]]
+Take the CurrentCal values above as a first approach and should be corrected through the Tasmota Method 2 calibration procedure: [[devices/Power-Monitoring-Calibration]]
 
 ## Home Assistant configuration 
 ```yaml

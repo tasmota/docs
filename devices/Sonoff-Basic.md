@@ -2,7 +2,7 @@ Sonoff Basic - the one that started it all!
 
 ## Serial Flashing
 
-Please see the [Hardware Preparation](https://github.com/arendst/Tasmota/wiki/Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](installation/Hardware-Preparation) page for general instructions.
 
 <img alt="Sonoff Basic connection diagram" src="https://user-images.githubusercontent.com/2870104/30516551-ed12d69e-9b42-11e7-8373-1bfbbf346839.png" width="50%" align="right" />
 
@@ -10,7 +10,7 @@ You need to access the serial interface. The **four serial pins** (3V3, Rx, Tx, 
 
 For flashing the Sonoff Basic, hold the button while connecting the 3.3V power. The LED remains off until the flashing process is done and the board is rebooted.
 
-If your switch is powering up but is showing a solid-blink-reset pattern see [this FAQ entry for advice](https://github.com/arendst/Tasmota/wiki/Troubleshooting#running-out-of-memory).
+If your switch is powering up but is showing a solid-blink-reset pattern see [this FAQ entry for advice](devices/Troubleshooting#running-out-of-memory).
 
 - GPIO00 - BUTTON
 - GPIO12 - RELAY

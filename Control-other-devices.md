@@ -24,4 +24,4 @@ setoption11 1
 Taken from the discussion:
 [https://github.com/arendst/Tasmota/issues/200#issuecomment-343756826](https://github.com/arendst/Tasmota/issues/200#issuecomment-343756826)
 
-[Example using Rules](https://github.com/arendst/Tasmota/wiki/Rule-cookbook#16-using-an-external-button-with-single-press---double-press-and-hold)
+[Example using Rules](Rule-cookbook#16-using-an-external-button-with-single-press---double-press-and-hold)

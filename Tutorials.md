@@ -1,6 +1,6 @@
 ### Installation Tutorials
-* [How to Flash the RF Bridge](https://github.com/arendst/Tasmota/wiki/How-to-Flash-the-RF-Bridge)  
-* [Flash your Sonoff switch using a RaspberryPi instead of USB-to-TTL serial connector](https://github.com/arendst/Tasmota/wiki/Flash-Sonoff-using-Raspberry-Pi)
+* [How to Flash the RF Bridge](How-to-Flash-the-RF-Bridge)  
+* [Flash your Sonoff switch using a RaspberryPi instead of USB-to-TTL serial connector](Flash-Sonoff-using-Raspberry-Pi)
 * [Flashing over the original firmware via OTA update](https://github.com/codetheweb/tuyapi/issues/49#issuecomment-452512186)
 
 ### Video tutorials
@@ -26,7 +26,7 @@
 
 
 ### Advanced Guides
-* [Expand Sonoff Basic to 4MB Flash](https://github.com/arendst/Tasmota/wiki/How-to-Expand-Sonoff-Basic-to-4MB-Flash)
+* [Expand Sonoff Basic to 4MB Flash](How-to-Expand-Sonoff-Basic-to-4MB-Flash)
 
 ### Non-English Tutorials
 * DE - [Tuya Geräte Flashen](https://www.youtube.com/watch?v=0MAPHmvPGFM)

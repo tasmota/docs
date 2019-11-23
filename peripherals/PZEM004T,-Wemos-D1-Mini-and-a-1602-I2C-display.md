@@ -13,7 +13,7 @@
 ## Preparation
 **You need to compile your own Tasmota firmware as none of the pre-compiled binaries have support for _display and PZEM_ module.**  
 
-**Set up your preferred IDE as described in [wiki](https://github.com/arendst/Tasmota/wiki/Flashing#flashing-and-compiling-from-source)**  
+**Set up your preferred IDE as described in [wiki](installation/Flashing#flashing-and-compiling-from-source)**  
 
 ### Enable IDE to Use Custom Settings
 Create _**user_config_override.h**_ in the `sonoff` folder and paste the contents of this [sample configuration file](https://pastebin.com/WkfyKYnh).

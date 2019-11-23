@@ -8,4 +8,4 @@ Fast power cycle device recovery is implemented for situations where a device ca
 1. Cut power from the device completely for 30 seconds
 2. Power the device on and off three times with intervals lower than 10 seconds and leave it on after fourth time
 3. Fast power cycle device recovery should activate and the device should be reset to firmware defaults
-   > If you flashed a precompiled binary you can [reconfigure](https://github.com/arendst/Tasmota/wiki/Initial-Configuration#configure-wi-fi) the device using the web UI.
+   > If you flashed a precompiled binary you can [reconfigure](Initial-Configuration#configure-wi-fi) the device using the web UI.

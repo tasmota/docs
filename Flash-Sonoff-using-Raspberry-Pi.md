@@ -147,5 +147,5 @@ This is how it looks in real-life 😆
 # That’s it :smiley:
 
 Sources:  
-[Flashing commands](https://github.com/arendst/Tasmota/wiki/Esptool)  
+[Flashing commands](Esptool)  
 https://spellfoundry.com/2016/05/29/configuring-gpio-serial-port-raspbian-jessie-including-pi-3/

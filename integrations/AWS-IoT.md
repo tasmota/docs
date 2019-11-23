@@ -75,7 +75,7 @@ If you don't have already one, just follow the guide: https://aws.amazon.com/pre
 
 You will need to install/compile the following:
 
- * Complete environment to compile Tasmota, ex: PlatformIO (https://github.com/arendst/Tasmota/wiki/PlatformIO)
+ * Complete environment to compile Tasmota, ex: PlatformIO (PlatformIO)
  * Recent version of `openssl`
 
 #### Step 1.5 Deploy required resources using AWS CloudFormation and skip to Step 6.
