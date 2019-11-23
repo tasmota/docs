@@ -286,7 +286,9 @@ Make sure your sensor is properly wired and the GPIOs assigned.
 Your vanilla `tasmota.bin` doesn't have complete sensor support. Make sure you've installed tasmota-sensors.bin that support the largest number of sensors. Some sensors require enabling in the code and compiling your own binary. See [Builds](Builds) for a comprehensive list of supported components.
 
 ### Timers trigger at the wrong time
-Check the log in the web UI Console to see if the device's time is set correctly. There are two elements to setting the time: 1. obtaining the UTC time, and, 2. local Daylight Saving Time policies.  
+Tasmota devices must have a their time of day set properly in order for **any** timers to work properly. Check the log in the web UI Console to see if the device's time is set correctly. There are two elements to setting the time: 1. obtaining the UTC time, and, 2. local Daylight Saving Time policies.  
+
+There are three methods available to set the device time: 1. [NTP](http://www.ntp.org/), 2. An [RTC peripheral](DS3231), or 3. the [`Time`](Commands#time) command. The typical method Tasmota uses to set its time is to obtain the time from an Internet NTP server. It can also query an NTP server on its local network (e.g., from a Raspberry Pi, [Chrony add-on](https://github.com/hassio-addons/addon-chrony) in Home Assistant, etc.).  
 
 Check the information about your router's features. If the router provides an NTP server, be sure to configure it properly. If the Tasmota device receives its IP address via DHCP from the router, Tasmota will request its time sync from the router's time server. This is managed by the Arduino core, not Tasmota ([\#5283](https://github.com/arendst/Tasmota/issues/5283#issuecomment-466888846)). Therefore, if the NTP server on the router is not configured, or configured improperly, the time on the Tasmota device could be wrong. If the router does not have a time server, this is not the problem.  
 
