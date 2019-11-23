@@ -91,7 +91,7 @@ MQT: tasmota/stat/POWER = ON
 ```
 This option gives the user the ability to get a more granular control over entities on both Tasmota and Home Assistant.
 
-#### **why this is here*
+#### **why this is here**
 
 A simple Tasmota rule example:
 ```console
