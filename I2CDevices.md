@@ -1,0 +1,1 @@
+[remoteMarkdownUrl](https://raw.githubusercontent.com/arendst/Tasmota/development/I2CDEVICES.md)

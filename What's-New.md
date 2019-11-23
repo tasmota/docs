@@ -1,1 +1,1 @@
-[remoteMarkdownUrl](https://raw.githubusercontent.com/blakadder/Tasmota/docs_reqork/tasmota/CHANGELOG.md)
+[remoteMarkdownUrl](https://raw.githubusercontent.com/arendst/Tasmota/development/tasmota/CHANGELOG.md)
