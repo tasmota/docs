@@ -254,7 +254,7 @@ Sensor34<a id="Sensor34"></a>|&emsp;  »6.6.0<BR>[HX711 load cell](https://githu
 Sensor50<a id="Sensor50"></a>|[PAJ7620](PAJ7620) gesture sensor<BR>`0` = sensor muted, no readings in Tasmota<BR>`1`= gesture mode<BR>`2` = proximity mode<BR>`3` = corner mode<br>`4` = PIN mode<br>`5` = cursor mode
 Sensor53<a id="Sensor53"></a>|[Smart Meter Interface](Smart-Meter-Interface)<BR>`r` = reset the driver with a new descriptor specified with the Tasmota [Scripting](Scripting-Language) language.<BR>`c<x> <value>` = preset counter (x = `1..5`) to `value` when the driver is set to counter mode<BR>`d<x>` = disable data decoding and dump meter (x = `1..5`) data to the Console. This is used to decipher the meter's data format to define the variable encoding in the meter's descriptor.<BR>`d0` = disable data dump mode and revert to decoding mode.
 TempRes<a id="tempres"></a>|Temperature sensor resolution<BR>`0..3` = maximum number of decimal places
-TempOffset<a id="tempoffset"></a>|`-12.7..12.7` = calibrate temperature sensor telemetry values&emsp;  »7.0.0.5<BR>This setting affects **all** temperature sensors on the device.
+TempOffset<a id="tempoffset"></a>|`-12.6..12.6` = calibrate temperature sensor telemetry values&emsp;  »7.0.0.5<BR>This setting affects **all** temperature sensors on the device.
 VoltRes<a id="voltres"></a>|Voltage sensor resolution<BR>`0..3` = maximum number of decimal places
 WattRes<a id="wattres"></a>|Power sensor resolution<BR>`0..3` = maximum number of decimal places
 WeightRes<a id="weightres"></a>|Load cell sensor resolution&emsp;  »6.3.0<BR>`0..3` = maximum number of decimal places
