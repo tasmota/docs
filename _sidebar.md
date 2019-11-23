@@ -1,6 +1,6 @@
 * **Features**
-* [MQTT](MQTT)
 * [Upgrading](Upgrading)
+* [MQTT](MQTT)
 * [Commands](Commands)  
 * [Templates](Templates)  
 * [Modules](Modules)  
@@ -8,6 +8,7 @@
 * [Rules](Rules)  
 * [Scripting](Scripting-Language)  
 * [Timers](Timers)  
+* [Smart Home Integrations](/integrations/)   
 * [Peripherals](/peripherals/)  
 * [Buttons and Switches](Buttons-and-Switches)  
 * [Lights](Lights)  
@@ -16,7 +17,6 @@
 * [Zigbee](Zigbee)
 * [Displays](Displays)  
 * [Blinds and Shutters](Blinds-and-Shutters)    
-* [Smart Home Integrations](/integrations/)   
 * [Power Monitoring Calibration](Power-Monitoring-Calibration)     
 * [Web UI](WebUI)     
 * [Supported Devices](/devices/)  
