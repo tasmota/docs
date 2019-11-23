@@ -588,7 +588,7 @@ sensor:
 <!-- tabs:end -->
 
 ### Power Monitoring
-<img alt="Example of Lovelace UI" src="_media/hax_pow1.png" style="margin:5px;float:right;width:10em"></img>
+<img alt="Example of Lovelace UI" src="/docs/_media/hax_pow1.png" style="margin:5px;float:right;width:10em"></img>
 
 Add in Home Assistant using the [MQTT Sensor](https://www.home-assistant.io/components/sensor.mqtt/) integration.
 
