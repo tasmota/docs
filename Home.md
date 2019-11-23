@@ -14,6 +14,7 @@
 [![donate](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://paypal.me/tasmota)
 
 ### What's New?
+
 <!-- tabs:start -->
 
 #### **2019-11-15**
