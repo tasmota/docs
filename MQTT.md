@@ -111,7 +111,7 @@ Using the tokens the following example topics can be made:
 - `FullTopic tasmota/bedroom/%topic%/%prefix%/`
 - `FullTopic penthouse/bedroom1/bathroom2/%topic%/%prefix%/`
 
-### %prefix%
+#### %prefix%
 Tasmota uses 3 prefixes for forming a FullTopic:
 
 - `cmnd` - prefix to issue commands; ask for status

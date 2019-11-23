@@ -1,8 +1,5 @@
 
-## openHAB Integration
-
 The "open Home Automation Bus" ([openHAB](http://www.openhab.org/)) is an open source, technology agnostic home automation platform which runs as the center of your smart home. Besides 200 other add-ons for all kinds of technologies, openHAB provides an MQTT add-on ("binding") to interface with systems like Tasmota.
-
 
 By following the guide below you'll be able to observe, control and manage your Sonoff modules from your openHAB system. If you are new to openHAB, please learn about the basic concepts and the initial setup. The below article will not cover any basics which are out of scope to the Tasmota integration.
 
