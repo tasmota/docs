@@ -1,2 +1,2 @@
-- [FAQ](FAQ)
-- [Troubleshooting](Troubleshooting)
+- [FAQ](/faq/FAQ)
+- [Troubleshooting](/faq/Troubleshooting)

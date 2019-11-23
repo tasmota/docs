@@ -1,19 +1,12 @@
-= MQTT Overview
-:Author: Pat Beirne
-:toc: macro
-:toc-placement!: 
-
-toc::[]
-
-== MQTT Message flow 
+## MQTT Message flow 
 
 Here is a diagram showing the connection phase and the network transactions required to turn a sonoff device on.   
 
 image::http://alt2.pbeirne.com/images/sonoff_cmnd_flow3.png[flow diagram]
 
-In a typical setup, you'll have multiple Sonoff's (or other devices using this project's code) on the left-hand side.  
+In a typical setup, you'll have multiple devices on the left-hand side.  
 
-image::http://alt2.pbeirne.com/images/sonoff_cmnd_flow2.png[multiple devices diagram]
+![image](http://alt2.pbeirne.com/images/sonoff_cmnd_flow2.png)
 
 
 There are lots of ways to control your devices. One typically uses a laptop/desktop to configure and test your Sonoffs and perhaps a smartphone to keep track of what's happening. In the long run you might want to integrate your device in a home-automation system like node-RED, openHAB, HomeAssistant, HomeBridge, Domoticz, ...
@@ -29,13 +22,13 @@ There are lots of ways to control your devices. One typically uses a laptop/desk
 
 These are `prefix1`, `prefix2` & `prefix3` in the code
 
-## Configuring MQTT
+### Configuring MQTT
 MQTT settings can be initially setup in the web interface and thereafter configured by commands.
 
-### Enable MQTT
+#### Enable MQTT
 Enable MQTT with the tickbox under Configuration -> Configuration Other
 
-### Configure MQTT Settings
+#### Configure MQTT Settings
 Once enabled MQTT can be configured at Configuration -> Configure MQTT. 
 
 [options="header"]

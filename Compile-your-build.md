@@ -4,7 +4,7 @@ To include a feature you need (or build completely customized Tamota) you will h
 
 First you will need a [development environment](https://github.com/arendst/Tasmota/wiki/Flashing#flashing-and-compiling-from-source) and Tasmota's source code (either [development](https://github.com/arendst/Tasmota/archive/development.zip) or [master](https://github.com/arendst/Tasmota/archive/master.zip) branch).
 
-**Simplest way to compile is with [GitPod](Compiling-Tasmota-on-Gitpod), requires only a web browser.**
+**Simplest way to compile is with [GitPod](Gitpod), requires only a web browser.**
 
 Once you have set up the development environment, unzip the source code into a folder.
 

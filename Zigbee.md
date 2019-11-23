@@ -1,13 +1,13 @@
-# Zigbee to Tasmota (Z2T)
+?> Zigbee2Tasmota serves as a gateway for devices connected to a Zigbee wireless network to bridge their communications over to Wi-Fi. 
 
-The purpose of Z2T is to serve as a gateway for devices connected to a Zigbee wireless network to bridge their communications over to Wi-Fi. Z2T is a lightweight Zigbee solution running on an ESP82xx Wi-Fi chip. Hence it is easier to deploy in your living room or around your home. It is largely inspired from [Zigbee2mqtt](#why-another-zigbee-project) but it's a complete rewrite to make it fit on an ESP82xx with 80kB of RAM and only 1MB of flash memory.
+Zigbee2Tasmota is a lightweight Zigbee solution running on an ESP82xx Wi-Fi chip. Hence it is easier to deploy in your living room or around your home. It is largely inspired from [Zigbee2mqtt](#why-another-zigbee-project) but it's a complete rewrite to make it fit on an ESP82xx with 80kB of RAM and only 1MB of flash memory.
 
-## Introduction
+## Zigbee Introduction
 Before using Zigbee to Tasmota, you need to understand a few concepts. Here is a simplified comparison to the Wi-Fi equivalent (sort of).
 
 |Zigbee concept|Wi-Fi equivalent|
 |---|---|
-|**Zigbee coordinator**<BR>The coordinator is responsible for selecting the channel, PanID, security policy, and stack profile for a network. Z2T will act as a coordinator.<BR>You can have multiple coordinators as long as they have different PanIDs.|Wi-Fi Access Point|
+|**Zigbee coordinator**<BR>The coordinator is responsible for selecting the channel, PanID, security policy, and stack profile for a network. Zigbee2Tasmota will act as a coordinator.<BR>You can have multiple coordinators as long as they have different PanIDs.|Wi-Fi Access Point|
 |**PanID**<BR>(Personal Area Network IDentifier)<BR>This parameter is unique in a Zigbee network. The PanID is a 16-bit integer.<BR>*Default: 0x1A63*|SSID (the Wi-Fi network name)|
 |**ShortAddr**<BR>Address of the device on the Zigbee network. This address is randomly assigned when the device first connects to the coordinator. The coordinator has address 0x0000.<BR>You need to track which device has which address. There is currently no "Friendly Name" mechanism. This may be added in the future.|IP address|
 |**Endpoint**<BR>The endpoint on the coordinator or on the Zigbee device the message is sent from/to. You can see endpoints as logical device providing distinct features|IP Port|
@@ -16,9 +16,9 @@ Before using Zigbee to Tasmota, you need to understand a few concepts. Here is a
 |**Encryption Key**<BR>128-bit encryption key.<BR>*default: 0x0D0C0A08060402000F0D0B0907050301*|Wi-Fi password|
 |**Pairing**<BR>By default the coordinator does not accept new devices unless put in pairing mode. When in pairing mode, it will accept pairing requests from any device within range.<BR>*Default: pairing disabled*|WPS|
 
-# Hardware
-## Zigbee Adapter
-**You cannot use any CC2531 based device with Tasmota!**. CC2531 supports USB communication and not serial communication required by Z2T.
+## Hardware
+### Zigbee Adapter
+**You cannot use any CC2531 based device with Tasmota!**. CC2531 supports USB communication and not serial communication required by Zigbee2Tasmota.
 
 |Device	|Notes|
 |---|---|
@@ -26,16 +26,16 @@ Before using Zigbee to Tasmota, you need to understand a few concepts. Here is a
 |**[CC2530 with external antenna](https://www.aliexpress.com/item/33007098493.html)**<BR><img src="https://user-images.githubusercontent.com/49731213/64906209-c0ad1680-d6e3-11e9-8703-71ea36c5be72.jpg" width="240"><BR>or<BR><img src="https://user-images.githubusercontent.com/49731213/64913622-eec24300-d743-11e9-9416-0b19a4cbc3c4.jpg" width="240">|Better range.|
 |**[CC2530 with external antenna and CC2591 RF front end](https://www.aliexpress.com/item/4000118023903.html)**<BR><img src="https://user-images.githubusercontent.com/49731213/64906219-f0f4b500-d6e3-11e9-8cd0-e135af531718.jpg" width="240">|Best range.<BR>Please note you need a specific firmware for CC2591 frontend.|
 
-## Wi-Fi Adapter
-Using an ESP82xx device such as a Wemos D1 Mini or a NodeMCU to flash the CC2530 (described below) is a lower cost alternative than using a single purpose [CC_DEBUGGER](https://www.aliexpress.com/item/32869263224.html). When in normal operation, this ESP82xx device can then also serve as the Wi-Fi adapter for the Z2T messaging.
+### Wi-Fi Adapter
+Using an ESP82xx device such as a Wemos D1 Mini or a NodeMCU to flash the CC2530 (described below) is a lower cost alternative than using a single purpose [CC_DEBUGGER](https://www.aliexpress.com/item/32869263224.html). When in normal operation, this ESP82xx device can then also serve as the Wi-Fi adapter for the Zigbee2Tasmota messaging.
 
-In normal operation, only two free GPIO are needed for the serial communications with the CC2530. You can use the ESP82xx device above to flash the CC2530 adapter(s) and then use any other ESP82xx device flashed with Z2T as the gateway between Zigbee and Wi-Fi.  
+In normal operation, only two free GPIO are needed for the serial communications with the CC2530. You can use the ESP82xx device above to flash the CC2530 adapter(s) and then use any other ESP82xx device flashed with Zigbee2Tasmota as the gateway between Zigbee and Wi-Fi.  
 
-# Connecting Zigbee adapter to Tasmota
-## 1. Flash the CC2530 module
-Z2T requires a TI CC2530 based module flashed with [Z-Stack-firmware](https://github.com/Koenkk/Z-Stack-firmware) from [Koen Kanters](https://github.com/Koenkk). To simplify this procedure, a ready to use [fork of the needed firmware files](https://github.com/s-hadinger/CCLib) is available. 
+## Connecting to Tasmota
+#### 1. Flash the CC2530 module
+Zigbee2Tasmota requires a TI CC2530 based module flashed with [Z-Stack-firmware](https://github.com/Koenkk/Z-Stack-firmware) from [Koen Kanters](https://github.com/Koenkk). To simplify this procedure, a ready to use [fork of the needed firmware files](https://github.com/s-hadinger/CCLib) is available. 
 
-### A. Flash CCLib on an ESP82xx Device
+**A. Flash CCLib on an ESP82xx Device**    
 Flashing the CC2530 normally requires a [CC_DEBUGGER](https://www.aliexpress.com/item/32869263224.html). Using an ESP82xx device like a [Wemos D1 Mini](https://www.aliexpress.com/item/32681374223.html) is a lower cost alternative.  
 
 If you are using a Wemos D1 Mini or NodeMCU, just plug the microUSB port. Vcc (3.3V), GND, Tx (GPIO1), and Rx (GPIO3) are connected via the microUSB port. Be sure that you are using a USB **_data_** cable.  
@@ -54,7 +54,7 @@ Follow the usual ESP82xx [flashing process](Flashing) - you are just using [`CCL
 
 Once the firmware upload completes, retain the serial interface connections (3.3V, GND, Tx, Rx). These will be used later for flashing the CC2530.
 
-### B. Connect the CC2530 and the ESP82xx
+**B. Connect the CC2530 and the ESP82xx**    
 The DL-20 Zigbee module has a 5-pin 1.27mm pitch unpopulated header with 0.6mm througholes. For flashing any of the Zigbee modules, you need the following connections:  
 
 ESP<BR>Pin|D1 Mini<BR>NodeMCU|CC2530<BR>Pin|[DL-20 J2<BR>Pin Location](https://user-images.githubusercontent.com/34340210/67676080-29301a00-f957-11e9-8799-c819241e0b4c.png "CC2530 DL-20 Pin-outs")
@@ -73,7 +73,7 @@ Insert alternating male Dupont jumpers; one jumper on one side, the next one on 
 <img src="https://user-images.githubusercontent.com/34340210/65651836-aa556380-dfdd-11e9-8788-549d0f427403.jpg" width="360">
 <img src="https://user-images.githubusercontent.com/34340210/65651832-a7f30980-dfdd-11e9-845d-81c2b99babb9.jpg" width="360">
 
-### C. Upload the firmware to the CC2530
+**C. Upload the firmware to the CC2530**    
 The CC2530 requires `Z-Stack_Home_1.2`, of type `Default` (not `Source Routing`). For convenience, ready to use [firmware files](https://github.com/s-hadinger/CCLib/tree/master/Bin) are provided. Select the right one for your hardware: `CC2530`, `CC2530 + CC2591` or `CC2530 + CC2592`.
 
 _**These Python scripts require Python 2.7.**_  
@@ -172,8 +172,8 @@ Additional References:
 - [Koen Kanters](https://github.com/Koenkk) [Z-Stack CC2530 firmware files](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_Home_1.2/bin/default).
 - There are many tutorials online on how to flash a CC2530 with a dedicated [CC_DEBUGGER](https://www.aliexpress.com/item/32869263224.html).  
 
-## 2. Flash an ESP82xx Device with Z2T Tasmota
-Once the CC2530 flashing process completes, you can re-use that ESP82xx device by flashing it with the Z2T firmware. Otherwise, you can use any ESP82xx device.  
+#### 2. Flash an ESP82xx Device with Zigbee2Tasmota Tasmota
+Once the CC2530 flashing process completes, you can re-use that ESP82xx device by flashing it with the Zigbee2Tasmota firmware. Otherwise, you can use any ESP82xx device.  
 - [Compile Tasmota](Flashing#flashing-and-compiling-from-source)
   - `#define USE_ZIGBEE` in `user_config_override.h`.
 <!---
@@ -182,11 +182,11 @@ Once the CC2530 flashing process completes, you can re-use that ESP82xx device b
     - Comment out: `;board_build.f_cpu         = 80000000L`
     - Uncomment: `board_build.f_cpu         = 160000000L`
   
-    **Note**: If you find that your Z2T operation is unstable, you may have an ESP82xx device that cannot operate reliably at the higher frequency. If you are using hardware serial (see below) and you still have unreliability, try compiling for 80MHz (reverse the options above) and flash the ESP82xx device again to see if operating at a lower frequency improves stability. Running at 80MHz will impact software serial communications so hardware serial is highly recommended if running the ESP82xx at 80MHz.
+    **Note**: If you find that your Zigbee2Tasmota operation is unstable, you may have an ESP82xx device that cannot operate reliably at the higher frequency. If you are using hardware serial (see below) and you still have unreliability, try compiling for 80MHz (reverse the options above) and flash the ESP82xx device again to see if operating at a lower frequency improves stability. Running at 80MHz will impact software serial communications so hardware serial is highly recommended if running the ESP82xx at 80MHz.
 --->
 - Follow the usual [Tasmota flashing process](Flashing)
 
-## 3. Connect the CC2530 to the Tasmota Device
+#### 3. Connect the CC2530 to the Tasmota Device
 The connection uses a 115200 baud serial connection. Hence you need to configure two GPIOs: `Zigbee TX` and `Zigbee RX`.
 
 If you are using your ESP82xx device to flash the Zigbee adapter as described in the flashing section, GPIO4, GPIO5, and GPIO12 are already in use. You may want to leave these connections in place in case you need to update the CC2530 firmware in the future. Otherwise, any of these GPIO can also be used.
@@ -207,14 +207,14 @@ Configure the Tasmota device using a custom template. Assign **`Zigbee Tx (165)`
 
 <img src="https://user-images.githubusercontent.com/49731213/64920989-ec043400-d7bd-11e9-8f5c-74ece5c4e26c.jpg" width="240">
 
-## 4. First run
+#### 4. First run
 Due to memory constraints of the CC2530, you can only pair 16 devices to a coordinator ([See details](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator)). 
 
-> There is an alternative firmware allowing for Zigbee routers to create a mesh network and go beyond 16 devices. This is currently not tested nor supported by Z2T. It may be added later.
+> There is an alternative firmware allowing for Zigbee routers to create a mesh network and go beyond 16 devices. This is currently not tested nor supported by Zigbee2Tasmota. It may be added later.
 
-Z2T is still in its early phase. Logging is set to verbose mode to ease reporting or debugging. It should become less verbose in the future.
+Zigbee2Tasmota is still in its early phase. Logging is set to verbose mode to ease reporting or debugging. It should become less verbose in the future.
 
-After the Tasmota device boots, Z2T will wait for 15 seconds before initializing the CC2530. This time allows for Wi-Fi and MQTT connection (hopefully).
+After the Tasmota device boots, Zigbee2Tasmota will wait for 15 seconds before initializing the CC2530. This time allows for Wi-Fi and MQTT connection (hopefully).
 
 When you first run your CC2530, you will see additional steps to configure the device:
 ```
@@ -334,8 +334,275 @@ MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":0,"Message":"Started"}}
 ZIG: Zigbee started
 ```
 
-# Using Zigbee to Tasmota
-Read more on [Zigbee to Tasmota commands and Zigbee device configuration](Zigbee-Operation).
+## Using Zigbee2Tasmota
 
-## Why another Zigbee project?  
-There are several excellent open-source Zigbee to MQTT solutions like the widely used [Zigbee2mqtt](https://www.zigbee2mqtt.io/) or [Aqara Hub](https://github.com/Frans-Willem/AqaraHub). Zigbee2mqtt is a comprehensive solution but requires at least a Raspberry Pi to run it. Z2T is a lightweight solution running on an ESP82xx Wi-Fi chip. Hence it is easier to deploy in your living room or around your home.
+For a list of available command see [Zigbee Commands](Commands#zigbee).  
+
+> [!NOTE]
+> Zigbee will automatically boot the CC2530 device, configure it and wait for Zigbee messages.  
+
+### Zigbee2Tasmota Status
+You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  
+
+Ex: ```{"ZigbeeState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}```  
+- `Status` contains a numeric code about the status message
+  - `0`: initialization complete, **Zigbee2Tasmota is running normally**
+  - `1`: booting
+  - `2`: resetting CC2530 configuration
+  - `3`: starting Zigbee coordinator
+  - `20`: disabling Permit Join
+  - `21`: allowing Permit Join for 60 seconds
+  - `22`: allowing Permit Join until next boot
+  - `30`: Zigbee device connects or reconnects
+  - `31`: Received Node Descriptor information for a Zigbee device
+  - `32`: Received the list of active endpoints for a Zigbee device
+  - `33`: Received the simple Descriptor with active ZCL clusters for a Zigbee device
+  - `50`: reporting CC2530 firmware version
+  - `51`: reporting CC2530 device information and associated devices
+  - `98`: error, unsupported CC2530 firmware
+  - `99`: general error, **Zigbee2Tasmota was unable to start**
+- `Message` (optional) a human-readable message
+- other fields depending on the message (e.g., Status=`50` or Status=`51`)
+
+### Pairing Zigbee Devices
+By default, and for security reasons, the Zigbee coordinator does not automatically accept new devices. To pair new devices, use [`ZigbeePermitJoin 1`](Commands#zigbeepermitjoin). Once Zigbee2Tasmota is in pairing mode, put the Zigbee device into pairing mode. This is usually accomplished by pressing the button on the device for 5 seconds or more. To stop pairing, use [`ZigbeePermitJoin 0`](Commands#zigbeepermitjoin).
+
+### Reading Sensors
+Sensor messages are published via MQTT when they are received from the Zigbee device. Unlike Zigbee2MQTT, there is currently no debouncing nor caching.
+
+Example: [Xiaomi Aqara Sensor](https://www.aliexpress.com/item/32876734250.html)
+<img src="https://user-images.githubusercontent.com/49731213/64921315-3a1b3680-d7c2-11e9-94a1-32e6ac6d4e72.jpg"  width="140">
+
+This sensor monitors humidity, temperature, and air pressure.  Its Zigbee model ID is `lumi.weather`.
+
+1. Put Zigbee2Tasmota into pairing mode using the `ZigbeePermitJoin` command as described above
+2. Press the Xiaomi Aqara sensor's button for 5 seconds to pair the devices. You will see a message as follows:  
+   ```
+   MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":30,"IEEEAddr":"00158D00036B50AE","ShortAddr":"0x8F20","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
+   ```
+
+   |Field name|Value|
+   |---|---|
+   |`Status`|`30` indicates a device connect or reconnect. This is the opportunity to match IEEEAddress and short address|
+   |`IEEEAddr`|Long unique address (64 bits) of the device - factory set|
+   |`ShortAddr`|Short address (16 bits) randomly assigned to the device on this Zigbee network|
+   |`PowerSource`|`true` = the device is connected to a power source<BR>`false` = the device runs on battery|
+   |`ReceiveWhenIdle`|`true` = the device can receive commands when idle<BR>`false` = the device is not listening. Commands should be sent when the device reconnects and is idle|
+   |`Security`|Security capability (meaning unknown, to be determined)|
+
+This device publishes sensor values roughly every hour or when a change occurs. You can also force an update pressing the device's button. It sends two kinds of messages, either 3x standard Zigbee messages, or a single proprietary message containing all sensor values.  
+
+Examples:
+```
+MQT: tele/<topic>/RESULT = {"0x8F20":{"Humidity":23.47}}
+MQT: tele/<topic>/RESULT = {"0x8F20":{"Temperature":59.85}}
+MQT: tele/<topic>/RESULT = {"0x8F20":{"Pressure":1005,"PressureUnit":"hPa"}}
+MQT: tele/<topic>/RESULT = {"0x8F20":{"Temperature":23.47,"Humidity":58.97,"Pressure":1005.8,"PressureUnit":"hPa","Voltage":3.005,"Battery":100}}
+MQT: tele/<topic>/RESULT = {"0x8F20":{"ModelId":"lumi.weather"}}
+```
+`0x8F20` is the ShortAddress of the sensor.  
+
+Supported values:  
+
+|Field name|Value|
+|---|---|
+|`Humidity`|Humidity in percentage (float)|
+|`Pressure` and `PressureUnit`|Atmospheric pressure (float) and unit (string)<BR>Currently only `hPa` (A.K.A. mbar) is supported|
+|`Temperature`|Temperature in Celsius (float)|
+|`Voltage`|Battery voltage (float)|
+|`Battery`|Battery charge in percentage (integer)|
+|`ModelId`|Model name of the Zigbee device (string)<BR>Ex: `lumi.weather`|
+
+### Device Information
+You can dump the internal information gathered about connected Zigbee devices with the command [`ZigbeeStatus`](Commands#zigbeestatus).  
+
+`ZigbeeStatus1` - List all connected devices  
+```yaml
+{"ZigbeeStatus-99":[{"ShortAddr":"0x6B58"},{"ShortAddr":"0xE9C3"},{"ShortAddr":"0x3D82"}]}
+```
+
+_(JSON pretty-printed for readability)_  
+```yaml
+{
+    "ZigbeeStatus-99": [
+        {
+            "ShortAddr":"0x6B58"
+        },
+        {
+            "ShortAddr":"0xE9C3"
+        },
+        {
+            "ShortAddr":"0x3D82"
+        }
+    ]
+}
+```
+
+`ZigbeeStatus 2` - Display detailed information for each device, including long address, model and manufacturer:  
+```yaml
+{"ZigbeeStatus2":[{"ShortAddr":"0x6B58","IEEEAddr":"7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},{"ShortAddr":"0xE9C3","IEEEAddr":"00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},{"ShortAddr":"0x3D82","IEEEAddr":"0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips"}]}
+```
+
+_(JSON pretty-printed for readability)_  
+```yaml
+{
+    "ZigbeeStatus2": [
+        {
+            "ShortAddr": "0x6B58",
+            "IEEEAddr": "7CB03EAA0A0292DD",
+            "ModelId": "Plug 01",
+            "Manufacturer": "OSRAM"
+        },
+        {
+            "ShortAddr": "0xE9C3",
+            "IEEEAddr": "00158D00036B50AE",
+            "ModelId": "lumi.weather",
+            "Manufacturer": "LUMI"
+        },
+        {
+            "ShortAddr": "0x3D82",
+            "IEEEAddr": "0017880102FE1DBD",
+            "ModelId": "LWB010",
+            "Manufacturer": "Philips"
+        }
+    ]
+}
+```
+
+#### Identifying Target Device Endpoints
+You can use `ZigbeeStatus3` to display information about all the endpoints and ZCL clusters supported. If probing was successful (at pairing time or using `ZigbeeProbe`), Tasmota will automatically find the right endpoint. If the device was not probed, you need to specify the endpoint explicitly. It is always better to explicitly add the endpoint number if you know it.
+
+##### Known Endpoints
+
+Device|Endpoint
+-|-
+OSRAM Plug|`0x03`
+Philips Hue Bulb|`0x0B`
+
+```json
+{"ZigbeeStatus3":[{"ShortAddr":"0x6B58","Endpoints":{"0x03":{"ProfileId":"0xC05E","ProfileIdName":"ZigBee Light Link","ClustersIn":["0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"],"ClustersOut":["0x0019"]}}},{"ShortAddr":"0xE9C3","Endpoints":{"0x01":{"ProfileId":"0x0104","ClustersIn":["0x0000","0x0003","0xFFFF","0x0402","0x0403","0x0405"],"ClustersOut":["0x0000","0x0004","0xFFFF"]}}},{"ShortAddr":"0x3D82","Endpoints":{"0x0B":{"ProfileId":"0xC05E"," ...
+```
+
+_(JSON formatted for readability)_  
+```json
+{
+  "ZigbeeStatus3": [
+    {
+      "ShortAddr": "0x6B58",
+      "Endpoints": {
+        "0x03": {
+          "ProfileId": "0xC05E",
+          "ProfileIdName": "ZigBee Light Link",
+          "ClustersIn": [
+            "0x1000",
+            "0x0000",
+            "0x0003",
+            "0x0004",
+            "0x0005",
+            "0x0006",
+            "0x0B04",
+            "0xFC0F"
+          ],
+          "ClustersOut": [
+            "0x0019"
+          ]
+        }
+      }
+    },
+    {
+      "ShortAddr": "0xE9C3",
+      "Endpoints": {
+        "0x01": {
+          "ProfileId": "0x0104",
+          "ClustersIn": [
+            "0x0000",
+            "0x0003",
+            "0xFFFF",
+            "0x0402",
+            "0x0403",
+            "0x0405"
+          ],
+          "ClustersOut": [
+            "0x0000",
+            "0x0004",
+            "0xFFFF"
+          ]
+        }
+      }
+    },
+    {
+      "ShortAddr": "0x3D82",
+      "Endpoints": {
+        "0x0B": {
+          "ProfileId": "0xC05E",
+          " ...
+        }
+      }
+    }
+  ]
+}
+```
+
+> [!EXAMPLE]
+> OSRAM Zigbee plug
+
+
+```json
+{"Device":"0x69CF","IEEEAddr":"0000000000000000","ModelId":"Plug 01","Manufacturer":"OSRAM","Endpoints":{"0x03":{"ProfileId":"0xC05E","ProfileIdName":"ZigBee Light Link","ClustersIn":["0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"],"ClustersOut":["0x0019"]}}}
+```
+
+The message above shows that the device supports only one endpoint `0x03` which accepts messages (`ClustersIn`) for clusters `"0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"`.
+
+### Supported Zigbee Device Commands
+
+Command|Parameters|Cluster
+-|-|-
+Power|`1\|true\|"true"\|"on"`: On<BR>`0\|false\|"false"\|"off"`: Off<BR>`2\|"Toggle"`: Toggle|0x0006
+Dimmer|`0..254`: Dimmer value<BR>255 is normally considered as invalid, and may be converted to 254|0x0008
+Dimmer+|`null`: no parameter. Increases dimmer by 10%|0x0008
+Dimmer-|`null`: no parameter. Decreases dimmer by 10%|0x0008
+DimmerStop|`null`: no parameter. Stops any running increase of decrease of dimmer.|0x0008
+ResetAlarm|`<alarmcode>,<clusterid>`: (to be documented later)|0x0009
+ResetAllAlarms|`null`: no parameter, (to be documented later)|0x0009
+Hue|`0..254`: change Hue value|0x0300
+Sat|`0..254`: change Sat value|0x0300
+HueSat|`0..254,0..254`: change both Hue and Sat values|0x0300
+Color|`0..65534,0..65534`: change the color using [x,y] coordinates|0x0300
+CT|`0..65534`: change the white color-temperature in Mireds|0x0300
+Shutter|`0..254`: send any Shutter command (prefer the commands below)|0x0102
+ShutterOpen|`null`: no parameter, open shutter|0x0102
+ShutterClose|`null`: no parameter, close shutter|0x0102
+ShutterStop|`null`: no parameter, stop shutter movement|0x0102
+ShutterLift|`0..100`: move shutter to a specific position in percent<BR>`0`%=open, `100`%=closed|0x0102
+ShutterTilt|`0..100`: move the shutter to the specific tilt position in percent|0x0102
+
+Examples:
+
+**OSRAM Plug**
+
+```json
+ZigbeeSend { "device":"0x69CF", "endpoint":"0x03", "send":{"Power":"On"} }
+ZigbeeSend { "device":"0x69CF", "endpoint":"0x03", "send":{"Power":1} }
+ZigbeeSend { "device":"0x69CF", "endpoint":"0x03", "send":{"Power":false} }
+ZigbeeSend { "device":"0x69CF", "endpoint":"0x03", "send":{"Power":"Toggle"} }
+```
+
+Read the On/Off status: (all three commands below are synonyms)
+
+```json
+ZigbeeRead { "device":"0x69CF", "endpoint":"0x03", "cluster":"0x0006", "read":"0x0000" }
+ZigbeeRead { "device":"0x69CF", "endpoint":"0x03", "cluster":"0x0006", "read":["0x0000"] }
+ZigbeeRead { "device":"0x69CF", "endpoint":3, "cluster":6, "read":0 }
+```
+
+**Philips Hue bulb**
+
+```json
+ZigbeeSend { "device":"0x3D82", "endpoint":"0x0B", "send":{"Power":"Off"} }
+ZigbeeSend { "device":"0x3D82", "endpoint":"0x0B", "send":{"Dimmer":128} }
+ZigbeeSend { "device":"0x3D82", "endpoint":"0x0B", "send":{"Dimmer":254} }
+ZigbeeSend { "device":"0x3D82", "endpoint":"0x0B", "send":{"Dimmer":0} }
+```
+
+#### Why another Zigbee project?  
+There are several excellent open-source Zigbee to MQTT solutions like the widely used [Zigbee2mqtt](https://www.zigbee2mqtt.io/) or [Aqara Hub](https://github.com/Frans-Willem/AqaraHub). Zigbee2mqtt is a comprehensive solution but requires at least a Raspberry Pi to run it. Zigbee2Tasmota is a lightweight solution running on an ESP82xx Wi-Fi chip. Hence it is easier to deploy in your living room or around your home.

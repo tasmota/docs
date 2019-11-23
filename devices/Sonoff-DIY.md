@@ -34,7 +34,7 @@ As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible tha
 - Select `Firmware flash` (`Brush machine` on newer versions of the tool)
 - Select a Tasmota binary (e.g., [`tasmota-wifiman.bin`](http://thehackbox.org/tasmota/tasmota-wifiman.bin)) or your own self-compiled binary. It must fit in the available free program space. You can use the 2.3.0 Core for this initial flash since it has the smallest program memory footprint. _**Do NOT use the tasmota-minimal pre-compiled binary**_ as it does not allow you to change any settings.
   
-  > You may wish to [compile your own firmware](Compiling-Tasmota-on-Gitpod) with all the features you require and disabling the features you do not. This will usually result in a "full" binary that is under 500k. You can use the resulting firmware file instead of the pre-compiled `tasmota-wifiman.bin`.  
+  > You may wish to [compile your own firmware](Gitpod) with all the features you require and disabling the features you do not. This will usually result in a "full" binary that is under 500k. You can use the resulting firmware file instead of the pre-compiled `tasmota-wifiman.bin`.  
 - Select the device in the flash pop-up and then select OK
 - Tasmota will be uploaded and started
 
@@ -53,7 +53,7 @@ This procedure is recommended for MacOS, but also works for Linux.
 - `sonoffDiy` SSID on your local network. Use a router/access point or configure your laptop/smartphone as a hotspot with the proper SSID and password.
 - A `<webServer>` available on the same local network. Very simple web servers like `SimpleHTTPServer` will not work. For Mac, the [OSX built-in web server](Mac-OSX-Local-Web-Server-for-Tasmota-Firmware-Binaries) is recommended.  
 - A Tasmota binary (e.g., [`tasmota-wifiman.bin`](http://thehackbox.org/tasmota/tasmota-wifiman.bin)) or your own self-compiled binary. It must fit in the available free program space. You can use the 2.3.0 Core for this initial flash since it has the smallest program memory footprint. _**Do NOT use the tasmota-minimal pre-compiled binary**_ as it does not allow you to change any settings.
-  >You may wish to [compile your own firmware](Compiling-Tasmota-on-Gitpod) with all the features you require and disabling the features you do not. This will usually result in a "full" binary that is under 500k. You can use the resulting firmware file instead of the pre-compiled `tasmota-wifiman.bin`. This way you will not have to perform the secondary OTA firmware update. _**Nevertheless, it is still recommended that you perform a `Reset 5` immediately after the Sonoff DIY flash completes.**_  
+  >You may wish to [compile your own firmware](Gitpod) with all the features you require and disabling the features you do not. This will usually result in a "full" binary that is under 500k. You can use the resulting firmware file instead of the pre-compiled `tasmota-wifiman.bin`. This way you will not have to perform the secondary OTA firmware update. _**Nevertheless, it is still recommended that you perform a `Reset 5` immediately after the Sonoff DIY flash completes.**_  
 
   Upload the firmware file to the `<webServer>` available on the same local network.  
 - SHA256 `<SHAsum>` of firmware binary file  

@@ -1,10 +1,8 @@
 !> **This feature is not included in precompiled binaries.**     
 To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
 
-## \#define directives
-
-Feature | Description
-| -- | -- |
+#define directive | Description
+ ---|---
 USE_DISPLAY | Enable display support. Also requires at least one of the following compilation directives 
 USE_DISPLAY_LCD | Enable LCD display. Also requires `USE_I2C`
 USE_DISPLAY_SSD1306 | Enable OLED SSD106 display. Also requires `USE_I2C`
@@ -22,7 +20,8 @@ USE_AWATCH | Enables analog watch support
 USE_GRAPH | Enable line charts. Also requires `NUM_GRAPHS`
 
 ----
-## [Display Commands](commands#displays)
+## Display Commands
+See commands page for full list of available [Display Commands](Commands#displays)
 
 ## DisplayMode Parameters
 
@@ -37,7 +36,7 @@ Parameter	|	LCD Display	|	OLED Display	|	TFT Display
 4	|	Local sensors	|	MQTT and local sensors	|	MQTT and local sensors
 5	|	MQTT and Time/Date	|	MQTT, local sensors and Time/Date	|	MQTT, local sensors and Time/Date
 
-# DisplayText Use
+## DisplayText Use
 
 The `DisplayText` command is used to display text as well as graphics and graphs on LCD, OLED and e-Paper
 displays (EPD). The command argument is a string that is printed on the display at the current position.
@@ -45,7 +44,7 @@ The string can be prefixed by embedded control commands enclosed in brackets `[]
 
 In order to use the `DisplayText` command the `DisplayMode` must be set to `0` (or optional `1` on LCD displays) or other modes must be disabled before compilation with `#undef USE_DISPLAY_MODES1TO5`.
 
-## DisplayText parameters
+### DisplayText parameters
 
 In the list below `p` stands for parameter and may be a number from 1 to n digits.
 On monochrome graphic displays things are drawn into a local frame buffer and sent to the display either
@@ -161,7 +160,7 @@ Selected with `Ci` and `Bi` in the ILI9488, SSD1351, and RA8876 color panels
 | 15 | DARKGREY | 16 | ORANGE | 17 | GREENYELLOW |
 | 18 | PINK |
 
-## Notes about e-Paper displays
+#### Notes about e-Paper displays
 
 E-Paper displays have 2 operating modes: full update and partial update. While full update delivers a clean and sharp picture, it has the disadvantage of taking several seconds for the screen update and shows severe flickering during update. Partial update is quite fast (300 ms) with no flickering but there is the possibility that erased content is still slightly visible. It is therefore useful to perform a full update in regular intervals (e.g., each hour) to fully refresh the display.
  
@@ -169,10 +168,10 @@ Compilation directives: `#define USE_SPI`, `#define USE_DISPLAY`, `#define USE_D
 
 **Remark**: the 4.2 e-Paper display requires about 15k of RAM. Therefore it only works with Core 2.42 and above.
 
-## OLED Lifetime
+#### OLED Lifetime
 The typical specifications for the lifetime of an OLED when permanently on is about 10000 hours (416 days). Dimming to 50% expands the lifetime to about 25000 hours.  
 
-## Burn-in
+#### Burn-in
 The data sheets of the TFT and OLED displays mention burn-in effects when a static display is shown for extended periods of time. You may want to consider turning on the display on demand only.
 
 ## Fonts
@@ -196,7 +195,7 @@ The ILI9488 and SSD1351 are connected via hardware 3-wire SPI `(MOSI=GPIO13, SCL
 
 The RA8876 is connected via standard hardware 4-wire SPI `(MOSI=GPIO13, MISO=GPIO12, SCLK=GPIO14, CS=GPIO15)`. No backlight pin is needed (dimmer supported).  
 
-# Examples
+## Examples
 
 Print Text at size 1 on line 1, column 1:  
 `DisplayText [s1l1c1]Hello how are you?`

@@ -1,5 +1,6 @@
-* **Home Automation**
+* **Smart Home**
 * [Alexa](/integrations/Alexa)
+* [AWS IoT](/integrations/AWS-IoT)
 * [Domoticz](/integrations/Domoticz)
 * [Home Assistant](/integrations/Home-Assistant)
 * [HomeBridge](/integrations/Homebridge)

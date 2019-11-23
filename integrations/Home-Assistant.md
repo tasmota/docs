@@ -1,6 +1,5 @@
 [Home Assistant](https://home-assistant.io/) (Hass) is an open source home automation solution that puts local control and privacy first.
 
-## MQTT Broker
 Tasmota communicates with Home Assistant using MQTT. Before going any further, make sure MQTT is [properly set up in Home Assistant](https://www.home-assistant.io/docs/mqtt/broker) and [in Tasmota](MQTT). 
 
 First, test if the two can communicate. 
@@ -12,11 +11,11 @@ To test control of a relay or light, as **Publish a packet topic** enter `cnmd/%
 ![](/docs/_media/hass1.png ':size=150')
 ![](/docs/_media/hass2.png ':size=150')
 
-#### Adding Tasmota Devices
+# Adding Devices
 
 Home Assistant has two avenues of adding Tasmota devices:
-- MQTT Discovery
-- Adding by editing configuration.yaml 
+1. Using MQTT discovery
+2. Adding by editing configuration.yaml 
 
 > [!NOTE]
 > After every change to the configuration file you'll need to restart Home Assistant to make it aware of the changes.

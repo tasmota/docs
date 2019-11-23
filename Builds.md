@@ -14,8 +14,8 @@ Features that are not available in any release build have to be enabled in sourc
 - **tasmota-classic.bin** **!DISCONTINUED SINCE v6.7.0!** *(cla)* stripped down version but it allows initial installation using either [Wi-Fi Manager](Initial-Configuration#configure-wi-fi), [WPS](https://en.wikipedia.org/wiki/Wi-Fi_Protected_Setup) or [ESP8266 SmartConfig](http://techiesms.com/iot-projects/now-no-need-enter-ssid-name-password-inside-code-esp8266-smart-config/).
 - **tasmota-minimal.bin** *(min)* is a specialised build to subsequently allow OTA uploads. ***This version should NOT be used for initial installation!***
 - **tasmota-sensors.bin** *(sns)* enables the same features as _tasmota.bin_ and includes support for additional sensors
-- **tasmota-knx.bin** *(knx)* includes [KNX](KNX-Features) support but omits some features. If you need additional features, compile your own firmware (e.g., [Gitpod](Compiling-Tasmota-on-Gitpod)).
-- **tasmota-display.bin** *(dsp)* built for connecting displays but omits some features such as energy monitoring. If you need additional features, compile your own firmware (e.g., [Gitpod](Compiling-Tasmota-on-Gitpod)).
-- [**tasmota-ir.bin**](Tasmota-IR) *(ir)* provides almost all `IRremoteESP8266` protocols. If you need additional features, compile your own firmware (e.g., [Gitpod](Compiling-Tasmota-on-Gitpod)) to compile [`ircustom`](Tasmota-IR).
+- **tasmota-knx.bin** *(knx)* includes [KNX](KNX-Features) support but omits some features. If you need additional features, compile your own firmware (e.g., [Gitpod](Gitpod)).
+- **tasmota-display.bin** *(dsp)* built for connecting displays but omits some features such as energy monitoring. If you need additional features, compile your own firmware (e.g., [Gitpod](Gitpod)).
+- [**tasmota-ir.bin**](Tasmota-IR) *(ir)* provides almost all `IRremoteESP8266` protocols. If you need additional features, compile your own firmware (e.g., [Gitpod](Gitpod)) to compile [`ircustom`](Tasmota-IR).
 
 [remoteMarkdownUrl](https://raw.githubusercontent.com/arendst/Tasmota/development/BUILDS.md)
