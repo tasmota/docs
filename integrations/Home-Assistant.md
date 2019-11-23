@@ -35,6 +35,10 @@ Automatic discovery is currently supported for:
 - Switch - announced as `binary sensor`
   - will mantain his status until the next event
 
+To show a relay as a Home Assistant "light" instead of as a "switch" either:   
+use Tasmota command [`SetOption30 1`](Commands#setoption30)   
+use [light.switch](https://www.home-assistant.io/components/light.switch/) component
+
 Types of devices not listed above (e.g. Sonoff iFan03)  require [manual configuration](#manual-confguration)
 
 ### Enabling 
@@ -78,9 +82,6 @@ The "homeassistant/" topic is removed from Home Assistant and MQTT broker.
 
 #### **dont know**
 
-To show a relay as a Home Assistant "light" instead of as a "switch" either:   
-use Tasmota command [`SetOption30 1`](Commands#setoption30)   
-use [light.switch](https://www.home-assistant.io/components/light.switch/) component
 
 To have switches and buttons discovered `SwitchTopic` or `ButtonTopic` must be set to `0` (default value) and they will automatically start to listen and publish using `%topic%/stat/SWITCH<x>` or `%topic%/stat/BUTTON<x>` topic.
 
