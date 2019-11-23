@@ -1,12 +1,9 @@
 * **Home Automation**
 * [Alexa](/integrations/Alexa)
 * [Domoticz](/integrations/Domoticz)
-* [Google Assistant](https://doc.gbridge.io/integration/tasmota.html)
 * [Home Assistant](/integrations/Home-Assistant)
-* [Manual configuration](/integrations/Home-Assistant-‐-Manual-Config)
 * [HomeBridge](/integrations/Homebridge)
 * [HomeSeer](/integrations/HomeSeer)
-* [IOBroker](https://github.com/arendst/Tasmota/issues/3769)
 * [IP-Symcon](/integrations/IP-Symcon)
 * [KNXnet/IP](/integrations/KNX)
 * [NodeRed Examples](/integrations/NodeRed)
@@ -14,6 +11,9 @@
 * [OctoPrint](/integrations/Octoprint)
 * [OpenHAB](/integrations/openHAB)
 * [ʘttʘ](/integrations/otto)
+* **external links**
+* [IOBroker](https://github.com/arendst/Tasmota/issues/3769)
+* [Google Assistant](https://doc.gbridge.io/integration/tasmota.html)
 * [SmartThings](https://github.com/BrettSheleski/SmartThingsPublic/blob/master/devicetypes/brettsheleski/sonoff-tasmota.src/readme.md)
 * **Device management**
 * [Tasmota Device Manager](/integrations/Tasmota-Device-Manager)

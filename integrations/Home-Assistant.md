@@ -1,6 +1,6 @@
 [Home Assistant](https://home-assistant.io/) (Hass) is an open source home automation solution that puts local control and privacy first.
 
-# MQTT Broker
+## MQTT Broker
 Tasmota communicates with Home Assistant using MQTT. Before going any further, make sure MQTT is [properly set up in Home Assistant](https://www.home-assistant.io/docs/mqtt/broker) and [in Tasmota](MQTT). 
 
 First, test if the two can communicate. 
@@ -12,7 +12,7 @@ To test control of a relay or light, as **Publish a packet topic** enter `cnmd/%
 ![](../_media/hass1.png ':size=150')
 ![](../_media/hass2.png ':size=150')
 
-# Adding Tasmota Devices
+#### Adding Tasmota Devices
 
 Home Assistant has two avenues of adding Tasmota devices:
 - MQTT Discovery
@@ -22,8 +22,7 @@ Home Assistant has two avenues of adding Tasmota devices:
 > After every change to the configuration file you'll need to restart Home Assistant to make it aware of the changes.
 
 If you don't want to use MQTT discovery, skip to [Manual Config](Manual-Config) 
-
-## MQTT Discovery
+## Automatic Discovery
 Home Assistant has a feature called [MQTT discovery](https://www.home-assistant.io/docs/mqtt/discovery/).
 With MQTT discovery no user interaction or configuration file editing is needed to add new devices in Home Assistant.
 
@@ -134,6 +133,7 @@ For every device discovered with `SetOption19` an informative sensor will be cre
 [Home Assistant](https://home-assistant.io/) (Hass) is an open-source home automation platform running on Python 3.
 
 ## Manual Editing
+
 Advantage of manually configuring device is that you maintain control of all aspects of the device configuration.
 
 Home Assistant [configuration](https://www.home-assistant.io/docs/configuration/) is done by editing `configuration.yaml` file.
@@ -755,7 +755,7 @@ this custom component [counter](https://github.com/hhaim/hass/blob/master/custom
     value_template: "{{ (4885 + (value))|int }}"
 ``` 
 
-# Tips
+## Tips
 
 <!-- tabs:start -->
 

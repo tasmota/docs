@@ -1,6 +1,6 @@
 [Tasmota Device Manager](https://github.com/jziolkowski/tdm) or TDM is a GUI application written in Python for discovery and monitoring of Tasmota flashed devices.
 
-![Screenshot](https://github.com/jziolkowski/tdm/raw/assets/image.png)
+![Screenshot](https://user-images.githubusercontent.com/11555742/66050573-bf764900-e52d-11e9-8356-e3dbf4ef6205.png ':size=300')
 
 # Features
 
