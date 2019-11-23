@@ -190,8 +190,6 @@ To use it you must [compile your build](compile-your-build). Add the following t
 - Support for nested IF statements  
 - Available free RAM is the only limit for logical operators, parenthesis, and nested IF statements.  
 
-Note: All the commands executed _**within an IF block**_ are performed via `Backlog`  
-
 ### Syntax  
 `<if-statement>`  
 - `IF (<logical-expression>) <statement-list> {ELSEIF (<logical-expression>) <statement-list>} [ELSE <statement-list>] ENDIF`  
@@ -212,11 +210,14 @@ Note: All the commands executed _**within an IF block**_ are performed via `Back
 
 ### In English
 IF statement supports 3 formats:  
-- `IF (<condition>) <statement-list> ENDIF`  
-- `IF (<condition>) <statement-list> ELSE <statement-list> ENDIF`  
-- `IF (<condition>) <statement-list> [ELSEIF (<condition>) <statement-list> ] ELSE <statement-list> ENDIF`  
+- `IF (<logical-expression>) <statement-list> ENDIF`  
+- `IF (<logical-expression>) <statement-list> ELSE <statement-list> ENDIF`  
+- `IF (<logical-expression>) <statement-list> [ELSEIF (<logical-expression>) <statement-list> ] ELSE <statement-list> ENDIF`  
 
-`<condition>` is a logical expression, for example:  
+The outermost `<if-statement>` cannot be chained with other Tasmota commands in a `Backlog `. For example, `Backlog Power1 0; IF var1==1 Power1 1 ENDIF`, is **NOT** permitted. Commands chained with `<if-statement>` are allowed in a `<statement-list>`. For example, `IF ENERGY#Current>10 Power1 0; IF var1==1 Power1 1 ENDIF ENDIF`, **is** permitted.  
+
+`<logical-expression>`  
+Examples:  
 - `VAR1>=10`  
 - Multiple comparison expressions with logical operator `AND` or `OR` between them. `AND` has higher priority than `OR`. For example:  
 `UPTIME>100 AND MEM1==1 OR MEM2==1`  

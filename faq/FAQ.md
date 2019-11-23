@@ -164,7 +164,8 @@ On an ESP82xx, Wi-Fi calibration is sensitive to the power supplied. If this cha
 1. **Save the device configuration**
 2. Run [`Reset 5`](Commands#reset) in the Console. This command deletes Wi-Fi calibration data, erases all flash memory, and resets parameters to firmware defaults _but keeps your Wi-Fi network credentials_
 3. The device will restart
-4. **Restore your device configuration from the _step 1_ backup**  
+4. Cycle the power on the device. Wi-Fi calibration will not be done unless the device performs a cold boot from power up.
+5. **Restore your device configuration from the _step 1_ backup**  
 
 ## MQTT
 ### Cannot connect to my MQTT broker
