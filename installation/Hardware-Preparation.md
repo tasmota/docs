@@ -9,7 +9,7 @@ In most cases those pins are available on the PCB in the form of pin holes or so
 >
 >DO NOT CONNECT DEVICES TO MAINS POWER WHILE THE COVER IS OPEN AND CIRCUIT BOARD IS EXPOSED!!!
 
-<img alt="Sonoff Pow Bricked" src="../_media/pow1.jpg" style="margin:5px;float:right;width:240px">
+<img alt="Sonoff Pow Bricked" src="/docs/_media/pow1.jpg" style="margin:5px;float:right;width:240px">
 
 **NEVER TRY TO FLASH WHILE YOUR DEVICE IS CONNECTED TO MAINS POWER!!!**
 

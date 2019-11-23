@@ -9,8 +9,8 @@ In Home Assistant web UI go to **Developer Tools - MQTT**. Subscribe to `tele/to
 
 To test control of a relay or light, as **Publish a packet topic** enter `cnmd/%topic%/POWER` with payload `toggle`. When you click **PUBLISH** your device should switch state and a JSON response will be visible in **Listen to a topic** window.
 
-![](../_media/hass1.png ':size=150')
-![](../_media/hass2.png ':size=150')
+![](/docs/_media/hass1.png ':size=150')
+![](/docs/_media/hass2.png ':size=150')
 
 #### Adding Tasmota Devices
 

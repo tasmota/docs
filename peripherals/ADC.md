@@ -27,7 +27,7 @@ The reading will show in web UI's sensor section as "_%option% %value%_" dependi
 When using Temperature (2) or light (3) a calibration could be needed. In case of shifted values [`AdcParam`](Commands#adcparam) can be used to calibrate the output.
 
 Example: ADC as `Analog (1)`    
-![ADC in web UI](../_media/Analog0.png)
+![ADC in web UI](/docs/_media/Analog0.png)
 
 A message will be published in `tele/%topic%/SENSOR` JSON response as `"ANALOG": ` depending on the selected option.
 
