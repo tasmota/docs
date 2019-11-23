@@ -251,11 +251,10 @@ with the '=' char at the beginning of a line you may do some special decoding
 >`>B`  
 =>sensor53 r
 
->`>M 1` 
- 
+>`>M 1`  
 +1,3,m,0,9600,MODBUS,1,1,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010  
- 
-1,010404ffffffffxxxx@i0:1,Voltage P1,V,Voltage_P1,2  
+>
+>1,010404ffffffffxxxx@i0:1,Voltage P1,V,Voltage_P1,2  
 1,010404ffffffffxxxx@i1:1,Voltage P2,V,Voltage_P2,2  
 1,010404ffffffffxxxx@i2:1,Voltage P3,V,Voltage_P3,2  
 1,010404ffffffffxxxx@i3:1,Current P1,A,Current_P1,2  
@@ -279,19 +278,18 @@ with the '=' char at the beginning of a line you may do some special decoding
 =>sensor53 r
 
 >`>M 1` 
-> 
-+1,3,m,0,9600,Janiza,1,1,01034A38,01034A3A,01034A3C,01034A4C,01034A4E,01034A50,01034A72,01034A7A,01034A82
++1,3,m,0,9600,Janiza,1,1,01034A38,01034A3A,01034A3C,01034A4C,01034A4E,01034A50,01034A72,01034A7A,01034A82  
 >
-1,010304ffffffffxxxx@i0:1,Voltage L1-N,V,Voltage_L1-N,2
-1,010304ffffffffxxxx@i1:1,Voltage L2-N,V,Voltage_L2-N,2
-1,010304ffffffffxxxx@i2:1,Voltage L3-N,V,Voltage_L3-N,2
-1,010304ffffffffxxxx@i3:1,Real power L1-N,W,Real_power_L1-N,2
-1,010304ffffffffxxxx@i4:1,Real power L2-N,W,Real_power_L2-N,2
-1,010304ffffffffxxxx@i5:1,Real power L3-N,W,Real_power_L3-N,2
-1,010304ffffffffxxxx@i6:1,Real energy L3,Wh,Real_energy_L3,2
-1,010304ffffffffxxxx@i7:1,Real energy L3-consumed,Wh,Real_energy_L3_consumed,2
-1,010304ffffffffxxxx@i8:1,Real energy L3-delivered,Wh,Real_energy_L3_delivered,2
-2,1-0:1.8.0*255(@100,Zählerstand,cbm,Count,3
+>1,010304ffffffffxxxx@i0:1,Voltage L1-N,V,Voltage_L1-N,2  
+1,010304ffffffffxxxx@i1:1,Voltage L2-N,V,Voltage_L2-N,2  
+1,010304ffffffffxxxx@i2:1,Voltage L3-N,V,Voltage_L3-N,2  
+1,010304ffffffffxxxx@i3:1,Real power L1-N,W,Real_power_L1-N,2  
+1,010304ffffffffxxxx@i4:1,Real power L2-N,W,Real_power_L2-N,2  
+1,010304ffffffffxxxx@i5:1,Real power L3-N,W,Real_power_L3-N,2  
+1,010304ffffffffxxxx@i6:1,Real energy L3,Wh,Real_energy_L3,2  
+1,010304ffffffffxxxx@i7:1,Real energy L3-consumed,Wh,Real_energy_L3_consumed,2  
+1,010304ffffffffxxxx@i8:1,Real energy L3-delivered,Wh,Real_energy_L3_delivered,2  
+2,1-0:1.8.0*255(@100,Zählerstand,cbm,Count,3  
 \#
 
 [Back To Top](#top)
