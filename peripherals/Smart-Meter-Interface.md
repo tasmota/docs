@@ -371,7 +371,7 @@ Tageseinspeisung: {m} %po_d% kWh
 >`>M 1` 
 +1,3,o,0,300,STROM,1,100,2F3F210D0A  
 >
-1,1-0:1.8.1*255(@1,Total Verbrauch,KWh,Total_in,3  
+>1,1-0:1.8.1*255(@1,Total Verbrauch,KWh,Total_in,3  
 1,1-0:2.8.1*255(@1,Total Verkauf,KWh,Total_in,3  
 1,1-0:0.0.0*255(@#),Zähler Nr,,Meter_number,0  
 \#
