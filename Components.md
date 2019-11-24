@@ -1,18 +1,16 @@
 ?>**Component** is anything wired to the ESP8266/ESP8255 chip to be controlled by or send data to it. 
 
+<img src="_media/components.png" style="float:right;height:8em;margin:10px"></img>
 Components can be: buttons, switches, relays, LEDs, sensors, displays, MCU units, etc. Every component is assigned in the device template to the GPIO it is wired (connected) to.
 
 Every Tasmota device has some components configured by default. Most often there is a relay, a button and a LED configured as is the case for a Sonoff Basic in the following image.
 
-![Overview of a Template](_media/components.png ':size=150')
-
-
 > GPIOs configured as User (255) are the GPIOs that can be assigned to components in the Configure Module page. See next image for an example!
 
 ## Assigning Components
+<img src="_media/components2.png" style="float:right;height:10em;margin:10px"></img>
 If you wish to expand a device with a [peripheral](Peripherals) component, after properly wiring everything, you need to assign it to a free GPIO in **Configure Module** page or use command [`GPIO<x>`](commands#gpio).
 
-![GPIO Assign](_media/components2.png ':size=150')
 
 Read more about [peripherals](Peripherals).
 

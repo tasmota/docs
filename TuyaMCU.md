@@ -173,8 +173,7 @@ Now we need to tell Tasmota to use maximum and minimum values. This controlled b
 
 Once set, try `dimmer 100` in the Console and check if the brightness of bulb is same is the same as when the maximum was set using hardware buttons.	
 
-Video instructions by Digiblur:   
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_3WW4NVYHrU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[Video instructions](https://www.youtube.com/embed/_3WW4NVYHrU) by Digiblur
 
 ### Power Metering	
 Some Tuya MCU devices support Power measurement support over serial. For this its better to use a bulb with known wattage rating.  	
@@ -306,7 +305,9 @@ tuyamcu 11,103 # make 0x67 a relay
 Does not appear to have any impact on the curtain.
 
 ## Aromatherapy Diffuser
-Applies to devices using the PCB marked GD-HDFW05-v1.0. ![image](https://user-images.githubusercontent.com/5904370/67526288-c4559500-f6b4-11e9-867f-2b3ae0b82437.png)
+Applies to devices using the PCB marked GD-HDFW05-v1.0. 
+
+![image](https://user-images.githubusercontent.com/5904370/67526288-c4559500-f6b4-11e9-867f-2b3ae0b82437.png ":size=100")
 
 This diffuser uses the same dpId scheme as the [example protocol](tuya-protocols#aromatherapy-machine-oil-diffuser)
 
@@ -593,5 +594,5 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 ```
 
 ## Further Reading
-* [dpId Function Tables](tuya-protocols#dpid-functions-tables)
-* [TuyaMCU Based Dimmers and Switches](MCU-Based-Tuya-Dimmers-and-Switches)
+
+* [TuyaMCU Flashing and Device Configuration](TuyaMCU-Devices)
