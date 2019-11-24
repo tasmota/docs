@@ -95,7 +95,7 @@ Tasmota uses flash memory to store options and settings. New versions add (or re
 To avoid this use our decode-config tool to easily create and restore backups in Tasmota:
 
 ## decode-config tool 
-* [decode-config.py](https://github.com/arendst/Tasmota/tree/development/tools) - [installation instructions](https://github.com/arendst/Tasmota/blob/development/tools/decode-config.md) in Python for Windows or Linux
+* [decode-config.py](https://github.com/tasmota/decode-config/blob/master/decode-config.py) - [installation instructions](https://github.com/tasmota/decode-config/blob/master/README.md) in Python for Windows or Linux
 * [decode-config.exe](https://github.com/tasmota/Tasmota-decode-config) - Windows only executable. If using this replace `decode-config.py` with `decode-config.exe` or `decode-config_x64.exe`  in the instruction examples.
 
 #### 1. Make a configuration backup:
