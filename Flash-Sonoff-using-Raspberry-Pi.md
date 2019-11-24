@@ -11,7 +11,7 @@ Summarizing the process and needed connections based on the above blog, please r
 2. Prepare serial connection.  
    _Note: Use the correct serial connection as per your version of the Raspberry Pi._
 
-   | Device          |  Serial Connection      |
+   | Device        |  Serial Connection      |
    | ------------- |---------------|
    | RaspberryPi 1/2/3 (BT disabled or miniuart) |   /dev/ttyAMA0      |
    | RaspberryPi 3          |   /dev/ttyS0      |

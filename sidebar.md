@@ -30,7 +30,7 @@ Installation
   
 [](Cool-Projects)   
 [](MQTT-Overview)  
-[](PowerOnState-Configuration)  
+[](PowerOnState)  
 [](Energy-Saving)  
 [](Securing-your-IoT-from-hacking)  
 [](For-Developers)    

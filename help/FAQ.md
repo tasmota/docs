@@ -211,7 +211,7 @@ You can disable status LED blinking using:
 `Backlog LedPower 0; SetOption31 1`
 
 ### My device randomly switches on and off. Do I have ghosts in my house?
-Most of the issues with random, or "ghost", switching are related to MQTT retain settings. In short, your MQTT broker is retaining a message with the POWER status of the device which gets applied on reboots. [Solution here](PowerOnState-Configuration#side-effects-with-using-mqtt-messages) 
+Most of the issues with random, or "ghost", switching are related to MQTT retain settings. In short, your MQTT broker is retaining a message with the POWER status of the device which gets applied on reboots. [Solution here](PowerOnState#side-effects-with-using-mqtt-messages) 
 
 In some cases, adding a switch to a device causes ghost switching. In this case, you may need to add a [low pass filter](https://www.youtube.com/watch?v=aq8_os6g13s&ab_channel=DrZzs) to dampen any spikes on the input. In the case of the Sonoff T1, a modification to [change the filter capacitor](https://github.com/arendst/Tasmota/issues/5449#issuecomment-478471697) on the PCB may be required.
 

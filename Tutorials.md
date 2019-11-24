@@ -1,6 +1,6 @@
 ### Installation Tutorials
 * [How to Flash the RF Bridge](How-to-Flash-the-RF-Bridge)  
-* [Flash your Sonoff switch using a RaspberryPi instead of USB-to-TTL serial connector](Flash-Sonoff-using-Raspberry-Pi)
+* [Flash your device using a RaspberryPi instead of USB-to-TTL serial connector](Flash-Sonoff-using-Raspberry-Pi)
 * [Flashing over the original firmware via OTA update](https://github.com/codetheweb/tuyapi/issues/49#issuecomment-452512186)
 
 ### Video tutorials

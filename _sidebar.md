@@ -22,10 +22,9 @@
 * [Web UI](WebUI)     
 * [Supported Modules](/devices/)  
 * **Useful Topics**
-* [Tutorials](Tutorials)  
 * [Cool Projects](Cool-Projects)   
 * [Securing Your Setup](Securing-your-IoT-from-hacking)  
-* [MQTT Retained Messages](PowerOnState-Configuration)  
+* [Tutorials](Tutorials)  
 * [Energy Saving](Energy-Saving)  
 * [Theo'sTips](Tips)  
 * [What's New!](What's-New)  
