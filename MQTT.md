@@ -1,4 +1,4 @@
-MQTT is the recommended protocol for controlling your devices. If you have no previous knowledge of it you can learn more from [MQTT Overview](MQTT-Overview) or get a complete course in the [MQTT Essentials](http://www.hivemq.com/mqtt-essentials/) article series. After you have a working [MQTT broker](https://www.google.com/search?q=setting+up+an+mqtt+broker) you need to configure Tasmota to communicate with it. 
+MQTT is the recommended protocol for controlling your devices. If you have no previous knowledge of it you can learn more from [MQTT Essentials](http://www.hivemq.com/mqtt-essentials/) article series. After you have a working [MQTT broker](https://www.google.com/search?q=setting+up+an+mqtt+broker) you need to configure Tasmota to communicate with it. 
 
 ## Configure MQTT 
 If you flashed a precompiled .bin or didn't enter MQTT info in `user_config_override.h` before compiling you have to configure it on your device first.
