@@ -3,11 +3,12 @@ Easily upgrade Tasmota to a newer version or different build while keeping all y
 _**The first rule of upgrading: If it ain't broke, don't fix it!**_    
 In other words, ensure that there is a good reason to mess with a working installation (e.g., a need to use a new feature or address a found problem fixed in a more current version).
 
-**Any time you upgrade it is highly recommended that you [back up your device settings](#device-settings). It is easily done in webUI under ***"Configuration - Backup Config"*** page.**
+> [!TIP]
+>Any time you upgrade it is highly recommended that you [back up your device settings](#Backing-Up-Settings). It is easily done in webUI under *Configuration - Backup Config"* page in the webUI
 
 
 ## OTA Upgrade 
-Upgrading the device firmware [over-the-air](https://en.wikipedia.org/wiki/Over-the-air_programming) is the convenient way to upgrade. Open a web browser to you device's web UI and select Firmware Upgrade.
+Upgrading the device firmware [over-the-air](https://en.wikipedia.org/wiki/Over-the-air_programming), or OTA, is the convenient way to upgrade. Open a web browser to you device's web UI and select Firmware Upgrade.
 
   ![Upgrading_1](https://user-images.githubusercontent.com/5904370/68962045-fbaaf380-07d3-11ea-9736-a44c13ef7653.png)
 
@@ -28,20 +29,20 @@ After the upgrade is completed you can reconnect back to the web UI and check th
 If you wish to switch to a different [build](Builds) you have to change OtaUrl to the desired binary from our [OTA Server](http://thehackbox.org/tasmota/).
 
 It is possible to create your own simple http OTA server (https is not supported) using Python and perform upgrades from there. 
-Install Python and from the folder where the binary resides (make sure `tasmota-minimal.bin` is located there too) run:
-```
+Install Python3 and from the folder where the binary resides (make sure `tasmota-minimal.bin` is located there too) run:
+```cmd
 python -m http.server 8000
 ```
 Change your OtaUrl to http://ipoftheserver:8000/yourbinary.bin and start the upgrade process.
 
 ### By File Upload
-This process requires you to have a minimal build ([`tasmota-minimal.bin`](http://thehackbox.org/tasmota/release/tasmota-minimal.bin)) of the firmware since the upload process needs the space in flash memory to upload the new binary. 
+This process requires you to have a minimal build `tasmota-minimal.bin` of the firmware since the upload process needs the space in flash memory to upload the new binary. 
 
 When you try to immediately upgrade to a new binary without using minimal firmware you will be greeted with this error.
 
 ![Upgrading_4](https://user-images.githubusercontent.com/5904370/68962296-85f35780-07d4-11ea-90ae-86fcd7d14681.png)
 
-Browse to the minimal binary with **Choose File**. The chosen filename should be visible. *In our example we use **`tasmota-minimal.bin`***
+Browse to the minimal binary with **Choose File**. The chosen filename should be visible. *In our example its **`tasmota-minimal.bin`***
 
 ![minimal upgrade](https://user-images.githubusercontent.com/5904370/68962383-baffaa00-07d4-11ea-8122-fcf971ca96f5.png)
 
@@ -49,12 +50,14 @@ Wait until the device restarts. In the Main Menu web UI will display this warnin
 
 ![minimal message](https://user-images.githubusercontent.com/5904370/68962530-1a5dba00-07d5-11ea-83aa-f6f640d9a38f.png)
 
-Go to **Firmware Upgrade** again. This time browse to the binary you want to upgrade to with **Choose File** and click **Start upgrade**. *In our example we use **`tasmota-sensors.bin`*** 
+Go to **Firmware Upgrade** again. This time browse to the binary you want to upgrade to with **Choose File** and click **Start upgrade**. *In our example its **`tasmota-sensors.bin`*** 
 
 ![image](https://user-images.githubusercontent.com/5904370/68962783-a7087800-07d5-11ea-9f8c-bd90fdb3e9ca.png)
 
 You will see an **Upload starting...** and then **Upload successful** message. Wait until the device restarts, reconnect back to the web UI and check the firmware version on the bottom of the page.
+
 ### Using Commands
+
 Your device can be upgraded using [commands](Commands) via MQTT, web requests or Console in the web UI.
 
 [OtaUrl](Commands#OtaUrl) is used to set your OTA address. 
@@ -70,26 +73,30 @@ upgrade 1
 Wait for the upgrade process to complete and check the Tasmota version. If in console you can use `Status 2`.
 
 ### Using Device Button
+
 Devices with a built in button (the one used to put your device into [flash mode](Hardware-Preparation#bringing-the-module-in-flash-mode)) can initiate OTA upgrade with it.
 
 7 short presses of the button will start OTA download of firmware using the Ota Url. Device LED is lit during the update.
 
 ## Serial Upgrade
+
 Upgrade over the serial connection using serial-to-USB adapter.
 
 Upload the new version over serial using the same process as in [Flashing](Flashing) but DO NOT erase flash. The new binary will flash over the old one and keep all your settings intact.
 
 ## External Programs
+
 [**Tasmota Device Manager**](https://github.com/jziolkowski/tdm) or TDM is a multiplatform GUI application written in Python for discovery and management of Tasmota devices.
 You can set up OTA url and initiate OTA upgrade from TDM using GUI.
 
-[**openHAB**](openHAB#maintenance-actions)  - implement an automation rule to upgrade devices from openHAB
+[**openHAB**](integrations/openHAB#maintenance-actions)  - implement an automation rule to upgrade devices from openHAB
 
 [**Node-RED OTA server and firmware manager**](https://flows.nodered.org/flow/888b4cd95250197eb429b2f40d188185) - [Node-RED](https://nodered.org/) flow for managing OTA updates 
 
 [**OTA over SCP**](OTA-over-SCP) - setup and configure "OTA over SCP" upload for PlatformIO
 
 # Backing Up Settings
+
 Tasmota uses flash memory to store options and settings. New versions add (or remove) features that use various regions of that memory. If you did not erase flash when you flashed your device, an updated version of Tasmota may be accessing areas with values left over from the old Tasmota or even the original factory firmware. This might cause unexpected and unwanted behavior or even major problems (constant reboots or reconnects). 
 
 To avoid this use our decode-config tool to easily create and restore backups in Tasmota:
