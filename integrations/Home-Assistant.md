@@ -470,7 +470,7 @@ to
 ### Sensors
 Add in Home Assistant using the [MQTT Sensor](https://www.home-assistant.io/components/sensor.mqtt/) integration.
 
-A sensor will send its data in set intervals defined by [`TelePeriod`](commands#teleperiod) (default every 5 minutes).
+A sensor will send its data in set intervals defined by [`TelePeriod`](Commands#teleperiod) (default every 5 minutes).
 
 <!-- tabs:start -->
 
@@ -545,7 +545,7 @@ sensor:
     unit_of_measurement: "hPa"
     device_class: pressure
 ```
-Change unit_of_measurement to `"mmHg"` if [`SetOption24 1`](commands#setoption24)
+Change unit_of_measurement to `"mmHg"` if [`SetOption24 1`](Commands#setoption24)
 
 <!-- Dead link and not default HA functionality
 ### Counter
@@ -591,7 +591,7 @@ sensor:
 
 Add in Home Assistant using the [MQTT Sensor](https://www.home-assistant.io/components/sensor.mqtt/) integration.
 
-Power monitoring sensors will send their data in set intervals defined by [`TelePeriod`](commands#teleperiod) (default every 5 minutes).
+Power monitoring sensors will send their data in set intervals defined by [`TelePeriod`](Commands#teleperiod) (default every 5 minutes).
 
 To get all the data in Home Assistant requires multiple sensors which you can later group to your liking in [Lovelace UI](https://www.home-assistant.io/lovelace/)
 

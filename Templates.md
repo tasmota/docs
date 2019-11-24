@@ -73,7 +73,7 @@ The device will reboot with a name reflecting your template name and `Module 0` 
 
 
 ## Commands
-A user provided template can be stored in Tasmota using the [`Template`](commands#template) command. It has the following parameters.
+A user provided template can be stored in Tasmota using the [`Template`](Commands#template) command. It has the following parameters.
 
 |Parameter|  Description |
 |---------|----------|

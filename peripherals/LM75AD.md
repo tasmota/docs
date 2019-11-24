@@ -28,7 +28,7 @@ In the _Configuration -> Configure Module_ page assign:
 After a reboot the driver will detect LM75AD automatically and display Temperature.
 
 ### Commands
-[`TempOffset`](commands#tempoffset) can be used for calibrating the measured temperature. This setting affects **all** temperature sensors on the device.
+[`TempOffset`](Commands#tempoffset) can be used for calibrating the measured temperature. This setting affects **all** temperature sensors on the device.
 
 ### Breakout Boards
 

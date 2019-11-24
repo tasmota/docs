@@ -153,7 +153,7 @@ A push-to-make button should use a `Button<x>` component while a push-to-break b
 ## Multi-Press Functions
  
 > [!DANGER]
->If you [have changed](#Changing-default-button-functionality) [ButtonTopic](commands#buttontopic), [SetOption1](commands#setoption1), [SetOption11](commands#setoption11) or [SetOption13](commands#setoption13) some of the listed functionality will be changed or removed.
+>If you [have changed](#Changing-default-button-functionality) [ButtonTopic](Commands#buttontopic), [SetOption1](Commands#setoption1), [SetOption11](Commands#setoption11) or [SetOption13](Commands#setoption13) some of the listed functionality will be changed or removed.
 
 ### 1 short press
 Toggles the relay. This will blink the LED twice and send an MQTT status message like `stat/tasmota/POWER1 ON`. If `cmnd/tasmota/ButtonRetain on` has been used the MQTT message will also contain the MQTT retain flag.
@@ -176,15 +176,15 @@ Start Wi-Fi Protected Setup (WPS) allowing for SSID and password configuration u
 Restarts the device.
 
 ### 7 short presses
-Start OTA update of firmware using [OtaUrl](commands#otaurl). The green LED is lit during the update.
+Start OTA update of firmware using [OtaUrl](Commands#otaurl). The green LED is lit during the update.
 
 ### **Long press**
 There are two separate functions associated with a button long press based on how long it is held:
-1. When held continuously for 40 seconds (Configurable with [SetOption32](commands#setoption32), value is 10x the configured hold time) Tasmota will reset to firmware defaults and restart.
-2. If enabled, button pressed for 4 seconds (Configurable with [SetOption32](commands#setoption32)) creates a HOLD action. Check [table below](#changing-default-button-functionality) on how to enable this function.
+1. When held continuously for 40 seconds (Configurable with [SetOption32](Commands#setoption32), value is 10x the configured hold time) Tasmota will reset to firmware defaults and restart.
+2. If enabled, button pressed for 4 seconds (Configurable with [SetOption32](Commands#setoption32)) creates a HOLD action. Check [table below](#changing-default-button-functionality) on how to enable this function.
 
   > [!DANGER]
-  >When a button is configured with a [Switchmode](commands#switchmode) that keeps it as ON while depressed it activates the reset to firmware defaults function. Change that button to switch or change switchmode to avoid repeated resets to defaults.
+  >When a button is configured with a [Switchmode](Commands#switchmode) that keeps it as ON while depressed it activates the reset to firmware defaults function. Change that button to switch or change switchmode to avoid repeated resets to defaults.
 
 ## ButtonTopic
 
@@ -230,9 +230,9 @@ For example, we set the topic to `tasmota02` with `ButtonTopic tasmota02`.
 
 ### Changing Default Functionality
 
-If a [`ButtonTopic`](commands#buttontopic) (and if [`SetOption1 1`](commands#SetOption1)) or [`SwitchTopic 1`](commands#SwitchTopic) is defined (and [`SwitchMode`](commands#switchmode) is set to `5` or `6`) and a button is pressed longer than defined Key Hold Time ([`SetOption32`](commands#setoption32) default 4 seconds) an MQTT message like `cmnd/%topic%/POWER HOLD` will be sent. `HOLD` can be changed with [`StateText4`](commands#StateText4).
+If a [`ButtonTopic`](Commands#buttontopic) (and if [`SetOption1 1`](Commands#SetOption1)) or [`SwitchTopic 1`](Commands#SwitchTopic) is defined (and [`SwitchMode`](Commands#switchmode) is set to `5` or `6`) and a button is pressed longer than defined Key Hold Time ([`SetOption32`](Commands#setoption32) default 4 seconds) an MQTT message like `cmnd/%topic%/POWER HOLD` will be sent. `HOLD` can be changed with [`StateText4`](Commands#StateText4).
 
-Command [`SetOption11`](commands#setoption11) allows for swapping the functionality of the push button.
+Command [`SetOption11`](Commands#setoption11) allows for swapping the functionality of the push button.
 
 These changes result in the following:
 

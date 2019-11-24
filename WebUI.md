@@ -15,7 +15,7 @@ An easy to use menu to initiate a firmware [upgrade](Upgrading) from an uploaded
 Terminal access to Tasmota. Issue [commands](Commands) here or follow the information stream. Useful for debugging when using [˙Weblog 4`](Commands#weblog).
 
 ## Themes
-WebUI is themable starting with »6.6.0 using [`WebColor`](commands#webcolor) commands. 
+WebUI is themable starting with »6.6.0 using [`WebColor`](Commands#webcolor) commands. 
 
 To apply the theme copy the entire code block and send it in console or via MQTT.
 

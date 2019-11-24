@@ -9,7 +9,7 @@ To use it you must [compile your build](compile-your-build). Add the following t
 ```
 
 ## Subscribe
-Subscribes to an MQTT topic and assigns an [`Event`](commands#event) name to it. 
+Subscribes to an MQTT topic and assigns an [`Event`](Commands#event) name to it. 
 
 `Subscribe <eventName>, <mqttTopic> [, <key>]`
 > The command without any parameters will list all currently subscribed topics.

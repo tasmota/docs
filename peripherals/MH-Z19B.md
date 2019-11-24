@@ -58,4 +58,4 @@ Measure range can be selected with command:
 * sensor15 3000 for 3000 ppm range
 * sensor15 5000 for 5000 ppm range
 
-[Full commands list for the sensor](commands#sensor15)
+[Full commands list for the sensor](Commands#sensor15)

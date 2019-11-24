@@ -15,7 +15,7 @@ In the _Configuration -> Configure Module_ page assign:
 After reboot of the device the temperature and humidity are displayed.
 
 ### Commands
-[`TempOffset`](commands#tempoffset) can be used for calibrating the measured temperature. This setting affects **all** temperature sensors on the device.
+[`TempOffset`](Commands#tempoffset) can be used for calibrating the measured temperature. This setting affects **all** temperature sensors on the device.
 
 ### Wemos DHT11 Shield
 _Note: this is ONLY for v1.0.0 of the DHT11 shield, since v2.0.0 uses I<sup>2</sup>C and pinned differently._

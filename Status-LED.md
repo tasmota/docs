@@ -15,7 +15,7 @@ For example, on a Sonoff Basic the green LED is used as the link status LED. Onc
 
 **Link status LED** shows the network state, more specifically the Wi-Fi and MQTT connection status.
 
-It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (if MQTT is enabled). You can change this behaviour with [`LedState`](commands#ledstate) or turn it off with [`SetOption31`](commands#SetOption31).
+It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (if MQTT is enabled). You can change this behaviour with [`LedState`](Commands#ledstate) or turn it off with [`SetOption31`](Commands#SetOption31).
 
 ### Power status LED
 **Power status LED** shows the power status of relay component(s). [`LedMask`](Commands#ledmask) determines which relay(s) are associated with the power status LED. This behavior can be modified with the [`LedState`](Commands#ledstate) command. The LED is turned off by default when the relay is OFF and turned on when the relay switches ON.

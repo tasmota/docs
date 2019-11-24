@@ -23,7 +23,7 @@ See [IR commands](Commands#ir-remote) for use.
 # IR Receiver
 <img src="https://user-images.githubusercontent.com/5904370/68152195-7443c180-ff43-11e9-95dc-0268d5e5dd3c.png" align=right width=170></img>
 
-IR Receiver is used to capture IR codes. Those codes can be sent using [`IRSend`](commands#irsend) or used as a [rule](Rules) trigger.   
+IR Receiver is used to capture IR codes. Those codes can be sent using [`IRSend`](Commands#irsend) or used as a [rule](Rules) trigger.   
 
 Example uses the widely available [KY-022](https://arduinomodules.info/ky-022-infrared-receiver-module/) breakout board.
 

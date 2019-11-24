@@ -55,6 +55,6 @@ Repeat the procedure below for each of the readings: Current, Power, and Voltage
 4. Adjust the offset value up or down until the readings on the multi-meter and the web page are as close as possible
 
 ## Known Issues
-Power monitoring chips like the HLW8032 (Blitzwolf SHP5) and CSE7766 (Sonoff S31, Sonoff POW R2) occasionally report invalid power measurements for load values below 5W. During this situation it sometimes reports a valid load. By setting [SetOption39](commands#setoption39) to `128` (default) it must read at least 128 invalid power readings before reporting there is no load.
+Power monitoring chips like the HLW8032 (Blitzwolf SHP5) and CSE7766 (Sonoff S31, Sonoff POW R2) occasionally report invalid power measurements for load values below 5W. During this situation it sometimes reports a valid load. By setting [SetOption39](Commands#setoption39) to `128` (default) it must read at least 128 invalid power readings before reporting there is no load.
 
 To discard all loads below 6W simply set `SetOption39 1` (`0` will reset to default on next restart) so it will report no load below 6W.

@@ -9,7 +9,7 @@ Every Tasmota device has some components configured by default. Most often there
 
 ## Assigning Components
 <img src="_media/components2.png" style="float:right;height:10em;margin:10px"></img>
-If you wish to expand a device with a [peripheral](Peripherals) component, after properly wiring everything, you need to assign it to a free GPIO in **Configure Module** page or use command [`GPIO<x>`](commands#gpio).
+If you wish to expand a device with a [peripheral](Peripherals) component, after properly wiring everything, you need to assign it to a free GPIO in **Configure Module** page or use command [`GPIO<x>`](Commands#gpio).
 
 
 Read more about [peripherals](Peripherals).

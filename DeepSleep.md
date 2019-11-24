@@ -24,7 +24,7 @@ If you want to **temporarily disable deep sleep mode**, you can use any GPIO and
  
 If you want to execute some commands or a special script BEFORE the device goes into deep sleep you can use FUNC_SAVE_BEFORE_RESTART as a predefined hook to implement your own procedure. This requires you to code your own function and compile your custom firmware. If you want to use rules you can use the `System#Save` trigger. This will be executed just before the device goes into deep sleep.
 
-> **If you're having issues after wakeup from sleep make sure bootloop detection is off [`SetOption36 0`](commands#setoption36) [#6890](https://github.com/arendst/Tasmota/issues/6890#issuecomment-552181980)**
+> **If you're having issues after wakeup from sleep make sure bootloop detection is off [`SetOption36 0`](Commands#setoption36) [#6890](https://github.com/arendst/Tasmota/issues/6890#issuecomment-552181980)**
 
 ### Deep Sleep Algorithm General Timing
 Let's assume you have set `DeepSleepTime 3600` (one hour) and `TelePeriod 300` (five minutes). The device will first wake at 8:00 am. The device will boot and connect Wi-Fi. Next, the correct time must be sync'ed from one of the NTP servers. Now the device has all prerequisites for going into deep sleep.  

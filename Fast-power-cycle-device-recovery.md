@@ -1,6 +1,6 @@
 **Introduced in v6.7.1**
 
-Fast power cycle device recovery is implemented for situations where a device cannot be reset to firmware defaults (no serial access, no button). It resets all Tasmota settings (equal to [`Reset 1`](commands#reset)) after 4 power cycles.
+Fast power cycle device recovery is implemented for situations where a device cannot be reset to firmware defaults (no serial access, no button). It resets all Tasmota settings (equal to [`Reset 1`](Commands#reset)) after 4 power cycles.
 
 [`SetOption65`](Commands#setoption65) must be set to `0` *(default)* in order for this feature to be enabled.
 

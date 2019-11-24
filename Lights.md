@@ -31,7 +31,7 @@ These lights are configured by assigning `PWM1(i)` through `PWM5(i)` components 
 |4|Red|Green|Blue|White||
 |5|Red|Green|Blue|Cold White|Warm White|
 
-If you require individual channel control (f.e. when connecting multiple single channel light strips to a multichannel LED controller) use [`SetOption68 1`](commands#setoption68) to control each PWM individually with sliders in webUI and  [`Channel<x>`](commands#channel) commands.
+If you require individual channel control (f.e. when connecting multiple single channel light strips to a multichannel LED controller) use [`SetOption68 1`](Commands#setoption68) to control each PWM individually with sliders in webUI and  [`Channel<x>`](Commands#channel) commands.
 
 For better color mixing of RGB and white channels read about [White-Blend-Mode](White Blend Mode).
 
@@ -47,12 +47,12 @@ SM16716 LEDs, sometimes mislabelled as WS2801.
 
 Configured in Tasmota by assigning `SM16716 CLK`, `SM16716 DAT` and `SM16716 PWR` component to their GPIOs. 
 
-Some SM16716 bulbs have BGR order and need [`SetOption37 54`](commands#setoption57) to work properly.
+Some SM16716 bulbs have BGR order and need [`SetOption37 54`](Commands#setoption57) to work properly.
 
 ## Addressable LEDs
 Lights where each LED is individually controlled. In these lights it is possible to adjust each LEDs power, color and brightness, all just with the use of a single GPIO pin.
 
-WebUI shows only the brightness slider and power toggle for these lights, all other controls are available with [commands](commands#light).
+WebUI shows only the brightness slider and power toggle for these lights, all other controls are available with [commands](Commands#light).
 
 ### WS2812
 Any light using WS2811, WS2812b, WS2813 or SK6812 LEDs falls into this component. They're also commonly called Neopixel lights.

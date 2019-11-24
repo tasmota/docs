@@ -47,7 +47,7 @@ The following example will go in depth on what happens when you send an MQTT com
 
 A device was flashed and configured with the **FullTopic** as default `%prefix%/%topic%/` and the **Topic** set to `tasmota-switch`. We want to see current status of the switch and change it.
 
-By looking at the [commands](commands) table we can learn about the [Power](commands#power) command and options associated with it. 
+By looking at the [commands](commands) table we can learn about the [Power](Commands#power) command and options associated with it. 
 * Ask the device for status:
   ```java
   cmnd/tasmota-switch/Power ← 	// an empty message/payload sends a status query
@@ -99,8 +99,8 @@ Telemetry data will be sent by prefix `tele` like `tele/tasmota/SENSOR {"Time":"
 ### FullTopic
 This is the MQTT topic used to communicate with Tasmota over MQTT. It is created using tokens placed within a user definable string (100 character limit). The tokens are substituted dynamically at run-time. Available substitution tokens are:
 - `%prefix%` = one of three prefixes as defined by commands `Prefix1` *(default = `cmnd`)*, `Prefix2` *(default = `stat`)* and `Prefix3` *(default = `tele`)*.
-- `%topic%` = one of five topics as defined by commands [`Topic`](commands#topic), [`GroupTopic`](commands#grouptopic), [`ButtonTopic`](commands#buttontopic), [`SwitchTopic`](commands#switchtopic) and [`MqttClient`](commands#mqttclient).
-- `%hostname%` = the hostname of the device as defined through the web UI *(default = `%s-%04d`)* or via [`Hostname`](commands#hostname) command.
+- `%topic%` = one of five topics as defined by commands [`Topic`](Commands#topic), [`GroupTopic`](Commands#grouptopic), [`ButtonTopic`](Commands#buttontopic), [`SwitchTopic`](Commands#switchtopic) and [`MqttClient`](Commands#mqttclient).
+- `%hostname%` = the hostname of the device as defined through the web UI *(default = `%s-%04d`)* or via [`Hostname`](Commands#hostname) command.
 - `%id%` =  MAC address of the device.
 
 > [!TIP]
@@ -129,7 +129,7 @@ All MQTT status messages will be sent using the configurable `%topic%` which mus
 
 > Default Topic is `tasmota`
 
-The use of the `%topic%` token is mandatory in case you want to use [`ButtonTopic`](commands#buttontopic) and/or [`SwitchTopic`](commands#switchtopic). It also provides for GroupTopic and Fallback Topic functionality.
+The use of the `%topic%` token is mandatory in case you want to use [`ButtonTopic`](Commands#buttontopic) and/or [`SwitchTopic`](Commands#switchtopic). It also provides for GroupTopic and Fallback Topic functionality.
 
 > [!TIP]
 > Use `%prefix%` and `%topic%` tokens at all time within your FullTopic definition!

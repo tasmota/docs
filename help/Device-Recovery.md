@@ -13,7 +13,7 @@ Listed below are a few ways to reset the device to what is set in the firmware b
 - Issue `Reset 1` command via the console, MQTT or HTTP. After the device reboots fully cycle power.  
 - Fast Power Cycle Device Recovery procedure:
 
-Fast power cycle device recovery is implemented for situations where a device cannot be reset to firmware defaults by other means (no serial access, no button). It resets all Tasmota settings (equal to [`Reset 1`](commands#reset)) after 4 power cycles.
+Fast power cycle device recovery is implemented for situations where a device cannot be reset to firmware defaults by other means (no serial access, no button). It resets all Tasmota settings (equal to [`Reset 1`](Commands#reset)) after 4 power cycles.
 
 [`SetOption65`](Commands#setoption65) must be set to `0` *(default)* in order for this feature to be enabled.
 
