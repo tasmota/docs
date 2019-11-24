@@ -1,7 +1,7 @@
 The Sonoff RF Bridge has two separate chips to handle the Wi-Fi (ESP8285) and RF (EFM8BB1) communications respectively. It is used to send and receive codes with 433.9MHz frequency RF devices. Codes received from RF devices such as remote controls is passed to the onboard ESP8285 via the serial interface. The code data is relayed via MQTT. Similarly, the Bridge receives commands over Wi-Fi and sends the encoded data to the RF chip to control an RF device. Thus, the Sonoff RF Bridge "bridges" communications between RF and Wi-Fi.
 
 ## Flash Tasmota
-Please [see](How-to-Flash-the-RF-Bridge) for flashing details and the [Hardware Preparation](Hardware-Preparation) article for general flashing instructions.
+Please [see](How-to-Flash-the-RF-Bridge) for flashing details and the [Hardware Preparation](installation/Hardware-Preparation) article for general flashing instructions.
 
 Access the serial interface available on the 5-pin header next to the switch as can be seen in the image.
 

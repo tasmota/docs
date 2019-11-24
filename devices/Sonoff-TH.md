@@ -2,7 +2,7 @@ Sonoff TH10 or TH16 / Ver 2.0 (year 2017/2018/2019) based on ESP8266.
 TH10 has a relay rated to 10 amps and TH16 to 16 amps (Input voltage: 90~ 250V AC).
 ## Serial Flashing
 
-![](https://smartlife.tech/blog/wp-content/uploads/2017/06/SonoffTHDiagram-1.jpg)
+![](https://smartlife.tech/blog/wp-content/uploads/2017/06/SonoffTHDiagram-1.jpg ":size=300")
 
 The 2.5mm jack socket connects to GPIO14. 
 

@@ -18,9 +18,9 @@ An ESP8266 with 2MB flash single relay device 42mm "round" in size.
 ## Serial Flashing
 Shelly 1PM comes with a partially exposed programming/debug header which can be used to flash Tasmota on the device. A USB-to-UART adapter is needed as well as a reliable 3.3V with at least 350 mA drive capability. The following diagram shows the device pinout.
 
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/shelly/shelly1pm-pinout-812x400.png" height="250" />
+<img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/shelly/shelly1pm-pinout-812x400.png" height="250" />
 
-## Template (requires Tasmota 6.5.0.10)
+## Template 
 ```
 {"NAME":"Shelly 1PM","GPIO":[56,0,0,0,82,134,0,0,0,0,0,21,0],"FLAG":2,"BASE":18}
 ```

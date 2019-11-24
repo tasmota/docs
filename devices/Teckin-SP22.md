@@ -1,4 +1,4 @@
-The [BlitzWolf BW-SHP2](BlitzWolf-SHP2), HomeCube SP1, and Teckin SP22 are basically the same device barring the branding.
+The [BlitzWolf BW-SHP2](devices/BlitzWolf-SHP2), HomeCube SP1, and Teckin SP22 are basically the same device barring the branding.
 
 # :warning: Warning :warning:
 

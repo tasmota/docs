@@ -72,11 +72,11 @@ In the following examples `%topic%` is `tasmota` for demonstration purposes:
 
 - The power state message can be sent with the retain flag set. Enable this with `cmnd/tasmota/PowerRetain on`.
 
-- The telemetry messages can also be sent with the retain flag, but this is a compile time option. See [#1071](https://github.com/arendst/Tasmota/issues/1071).
+- The telemetry messages can also be sent with the retain flag, but this is a compile option. See [#1071](https://github.com/arendst/Tasmota/issues/1071).
 
 - For Sonoff Dual or Sonoff 4CH the relays need to be addressed with `cmnd/tasmota/POWER<x>`, where {x} is the relay number from 1 to 2 (Sonoff Dual) or from 1 to 4 (Sonoff 4CH). `cmnd/tasmota/POWER4 off` turns off the 4th relay on a Sonoff 4CH.
 
-- MQTT topic can be changed with `cmnd/tasmota/TOPIC tasmota1` which reboots Tasmota and changes the `%topic%` to `tasmota1`. From that point on MQTT commands should look like `cmnd/tasmota1/POWER on`.
+- MQTT topic can be changed with `cmnd/tasmota/%topic% tasmota1` which reboots Tasmota and changes the `%topic%` to `tasmota1`. From that point on MQTT commands should look like `cmnd/tasmota1/POWER on`.
 
 - The OTA firmware location can be made known to tasmota with `cmnd/tasmota/OtaUrl http://thehackbox.org/tasmota/release/tasmota.bin`. Reset to default with `cmnd/tasmota/OraUrl 1`.
 
@@ -95,13 +95,16 @@ While most MQTT commands will result in a message in JSON format the power statu
 Telemetry data will be sent by prefix `tele` like `tele/tasmota/SENSOR {"Time":"2017-02-16T10:13:52", "DS18B20":{"Temperature":20.6}}`
 
 ## MQTT Topic Definition
-MQTT topic is flexible using command `FullTopic` and tokens to be placed within the user definable string (100 character limit). The tokens are substituted dynamically at run-time. The available substitution tokens are:
-- `%prefix%` = one of three prefixes as defined by commands `Prefix1` *(default = `cmnd`)*, `Prefix2` *(default = `stat`)* and `Prefix3` *(default = `tele`)*.
-- `%topic%` = one of five topics as defined by commands `Topic`, `GroupTopic`, `ButtonTopic`, `SwitchTopic` and `MqttClient`.
-- `%hostname%` = the hostname of the device as defined through the web UI *(default = `%s-%04d`)* or via the `Hostname` command.
-- `%id%` =  the MAC address of the device.
 
-> These substitution tokens will be used in examples across the wiki.
+### FullTopic
+This is the MQTT topic used to communicate with Tasmota over MQTT. It is created using tokens placed within a user definable string (100 character limit). The tokens are substituted dynamically at run-time. Available substitution tokens are:
+- `%prefix%` = one of three prefixes as defined by commands `Prefix1` *(default = `cmnd`)*, `Prefix2` *(default = `stat`)* and `Prefix3` *(default = `tele`)*.
+- `%topic%` = one of five topics as defined by commands [`Topic`](commands#topic), [`GroupTopic`](commands#grouptopic), [`ButtonTopic`](commands#buttontopic), [`SwitchTopic`](commands#switchtopic) and [`MqttClient`](commands#mqttclient).
+- `%hostname%` = the hostname of the device as defined through the web UI *(default = `%s-%04d`)* or via [`Hostname`](commands#hostname) command.
+- `%id%` =  MAC address of the device.
+
+> [!TIP]
+> These substitution tokens will be used in examples across the documentation
 
 If `FullTopic` does not contain the `%topic%` token, the device will not subscribe to `GroupTopic` and `FallbackTopic`.
 
@@ -119,8 +122,32 @@ Tasmota uses 3 prefixes for forming a FullTopic:
 - `tele` - reports telemetry info at specified intervals
 
 > [!TIP] 
-> To solve possible MQTT topic loops it is strongly suggested that you use the `%prefix%` token in all of your FullTopics. It may work without `%prefix%` as some validation are implemented forcing the use of a prefix in commands sent to the device. Status and telemetry do not need a prefix.
+> To solve possible MQTT topic loops it is strongly suggested that you use the `%prefix%` token in all of your FullTopics. Status and telemetry do not need a prefix.
 
-The use of the `%topic%` token is also mandatory in case you want to use [`ButtonTopic`](commands#buttontopic) and/or [`SwitchTopic`](commands#switchtopic). It also provides for grouptopic and fallback topic functionality.
+### %topic%
+All MQTT status messages will be sent using the configurable `%topic%` which must be made unique by the user. It can be called `bedroom` but it could also be called `XP-TS_10` as long as the user knows what it is and where to find it.
 
-Recommendation: **Use `%prefix%` and `%topic%` tokens at all time within your FullTopic definition!**
+> Default Topic is `tasmota`
+
+The use of the `%topic%` token is mandatory in case you want to use [`ButtonTopic`](commands#buttontopic) and/or [`SwitchTopic`](commands#switchtopic). It also provides for GroupTopic and Fallback Topic functionality.
+
+> [!TIP]
+> Use `%prefix%` and `%topic%` tokens at all time within your FullTopic definition!
+
+### GroupTopic
+Having two devices with the same topic allowed for MQTT commands to be sent once to make the devices act in conjunction. That inspired a third topic called GroupTopic.  Devices with the same GroupTopic will all listen to that GroupTopic and react to the same MQTT command sent to it. You can use this to take gloal actions like updating firmware on all devices or split up devices into different groups using a unique GroupTopic for each group.
+
+> Default GroupTopic is `tasmotas`
+
+### FallBack Topic
+Initially Tasmota had one MQTT configurable topic planned called Topic. It soon became apparent that when two devices come online with the same topic this would be a challenge, to say the least!
+
+Tasmota then introduced a unique, non-configurable "FallBack Topic" that allows MQTT communication regardless of the configurable topic. This fallback topic is just what it is meant to be: **a fallback topic** in case of emergency!
+
+<img src="_media/dves.png" style="float:right"></img>
+By default the Fallback Topic is `DVES_XXXXXX_fb` where xxxxxx is derived from the last 6 charactes of the device's MAC address (excluding `:`). It might look something like this: `DVES_3D5E26_fb`. You can find out the DVES code by looking at **Configuration - Configure MQTT** page's Client description or issuing `Status 6`:
+```
+00:00:00 MQT: stat/tasmota/STATUS6 = {"StatusMQT":{"MqttHost":"1.1.1.1","MqttPort":1883,"MqttClientMask":"DVES_%06X","MqttClient":"DVES_3D5E26","MqttUser":"tasmota","MqttCount":1,"MAX_PACKET_SIZE":1000,"KEEPALIVE":30}}
+```
+
+

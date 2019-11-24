@@ -51,7 +51,7 @@ The latest _**development**_ binary files are available on the [OTA server](http
 
 ##### OTA Flashing Tools
 **Tasmota is NOT a developer of these tools. For help and troubleshooting you will need to _get support from those projects_.**
-- [**Tuya OTA**](Tuya-OTA) - easy OTA flash for devices with Tuya chips, no disassembly required
+- [**Tuya-Convert**](Tuya-Convert) - easy OTA flash for devices with Tuya chips, no disassembly required
 - [**Sonoff DIY**](Sonoff-DIY) - OTA flash for select Sonoff devices (some disassembly required)
 - [**Node-RED OTA server and firmware manager**](https://flows.nodered.org/flow/888b4cd95250197eb429b2f40d188185) - [Node-RED](https://nodered.org/) flow for managing OTA updates 
 - [**OTA over SCP**](OTA-over-SCP) - setup and configure "OTA over SCP" upload for PlatformIO

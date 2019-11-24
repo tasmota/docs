@@ -12,7 +12,7 @@ Flash the latest version of [`tasmota.bin`](http://thehackbox.org/tasmota/releas
 
 2. When you are ready to flash your device, hold down the large white tipped button on the iFan03 while connecting the serial adapter to your computer. This will power the serial adapter as well as the iFan03. Usually, you can release the button on the iFan03 once it has fully booted - after 3-5 seconds once the lights have flashed. If the device does not enter programming mode successfully, cycle power but this time continue to hold the button during the entire firmware upload process (i.e., step 4 below).
 
-3. Using NodeMCU Pyflasher (recommended):
+3. Using Tasmota PyFlasher (recommended):
    - Select the firmware file that you want to flash
    - Set the COM port for your serial programming adapter
    - Ensure that flash mode `Dual Output (DOUT)`, and baud rate of `115200` is selected

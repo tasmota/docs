@@ -1,6 +1,6 @@
 Installation  
 * [](Prerequisites)  
-* [](Hardware-Preparation)  
+* [](installation/Hardware-Preparation)  
 * [](Flashing)  
 * [](Initial-Configuration)  
 * [](MQTT)  

@@ -1,4 +1,6 @@
-## [**Theo's Tips**](Theo's-Tasmota-Tips)  
+## Theo's Tasmota Tips
+
+[remoteMarkdownUrl](https://raw.githubusercontent.com/tasmota/docs/master/Theo's-Tasmota-Tips.md)
 
 ## Obtaining the IP address of a Tasmota device
 - The network name is be `<MQTT_TOPIC>-<last 4 decimal chars of MAC address>`. The default name is `sonoff-xxxx`.
@@ -12,17 +14,6 @@
 **RFC952**  
 >  ASSUMPTIONS  
 >  1. A "name" (Net, Host, Gateway, or Domain name) is a text string up    to 24 characters drawn from the alphabet (A-Z), digits (0-9), minus    sign (-), and period (.).  Note that periods are only allowed when    they serve to delimit components of "domain style names". (See    RFC-921, "Domain Name System Implementation Schedule", for    background).  No blank or space characters are permitted as part of a    name. No distinction is made between upper and lower case.  The first    character must be an alpha character.  The last character must not be    a minus sign or period.  A host which serves as a GATEWAY should have    "-GATEWAY" or "-GW" as part of its name.  Hosts which do not serve as    Internet gateways should not use "-GATEWAY" and "-GW" as part of    their names. A host which is a TAC should have "-TAC" as the last    part of its host name, if it is a DoD host.  Single character names    or nicknames are not allowed.  
-
-## Topic, GroupTopic, and FallBack Topic
-Initially Tasmota had one MQTT configurable topic planned called TOPIC. It soon became apparent that when two devices come online with the same topic this would be a challenge, to say the least!
-
-Tasmota then introduced a unique, non-configurable "fallback topic" that allows to always change the MQTT configurable topic to a new unique topic. This fallback topic is just what it is meant to be: A FALLBACK TOPIC in case of emergency.
-
-All MQTT status messages will be sent using the configurable TOPIC which must be made unique by the user. It might be called `bedroom` but it could also have been called `titanic10` as long as the user knows what it is and where to find it.
-
-Having two devices with the same topic allowed for MQTT commands to be sent once to make the devices act in conjunction. That inspired a third topic to subscribe to called GROUPTOPIC. The default GROUPTOPIC is `sonoffs`. Devices with the same GROUPTOPIC will react to the same MQTT command. You can use this to take actions (e.g., update firmware) devices using different groups (e.g., sonoff, sonoff-sensors, etc.).
-
-Changing TOPIC can be done online using the fallback topic and is only needed once. There is no need to change `user_config_override.h` all the time, as many users seem to think they have to do with any new release. All changes are stored in flash. A lot of coding effort is expended to retain these changes between firmware updates.
 
 ## Flash Memory Considerations
 - To stop saving parameter changes to Flash or Spiffs use command ```SaveData off```.

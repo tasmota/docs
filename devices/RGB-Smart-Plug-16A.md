@@ -12,7 +12,7 @@ AS ALWAYS, YOU DO ANY OF THIS AT YOUR OWN RISK.
 
 Device case is glued so recommended way to flash it is using [tuya-convert](https://github.com/ct-Open-Source/tuya-convert)
 
-_This method worked for 3 devices that were shipped before January 2019, never paired with Tuya apps and never powered on near open WiFi APs. So they had no chance to download Tuya OTA updates. It may not work for devices with newer firmware._
+_This method worked for 3 devices that were shipped before January 2019, never paired with Tuya apps and never powered on near open WiFi APs. So they had no chance to download Tuya-Convert updates. It may not work for devices with newer firmware._
 
 ### Prerequisites
 * You'll need a Linux device with both WiFi capable of running in AP mode and ethernet connection

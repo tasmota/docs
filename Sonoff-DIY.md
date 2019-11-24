@@ -26,7 +26,7 @@ As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible tha
 - Modify your PC configuration to provide a Mobile hotspot:
   - SSID: `sonoffDiy` (_**case sensitive!**_)
   - Password: `20170618sn`
-  <img src="https://github.com/arendst/arendst.github.io/blob/master/media/w10mobile_hotspot.png" />  
+  <img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/w10mobile_hotspot.png" />  
 - Power on the Sonoff device and verify that it shows up on the Mobile hotspot Settings page
 - Start the `tool_01DIY85` utility
 - The utility should discover the device

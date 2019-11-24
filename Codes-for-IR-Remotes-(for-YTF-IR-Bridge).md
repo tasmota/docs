@@ -1,6 +1,6 @@
 On this page IR Codes for different IR Remote  are collected.
 
-The IR Codes can be used with [YTF IR Bridge](YTF-IR-Bridge) (or maybe with other devices, that have a IR sender connected)
+The IR Codes can be used with [YTF IR Bridge](devices/YTF-IR-Bridge) (or maybe with other devices, that have a IR sender connected)
 
 The codes will also fit other devices from same manufacturer or series.
 Please try out...

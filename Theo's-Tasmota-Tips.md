@@ -40,7 +40,7 @@ Indications of selecting the wrong Flash Mode compile option (like DIO or QIO) o
 
 Configuration settings are saved in flash. Over time different areas of flash have been used as can be seen in the picture below.
 
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/memmap1.jpg" />
+![](https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/memmap1.jpg)
 
 To reduce flash wear I started to use a number of rotating flash pages with version 5.2. To still be able to use maximum program size during OTA or webpage upgrades I copy the latest config to the EEPROM area just before the upgrade starts.
 

@@ -29,7 +29,7 @@ Serial logging is disabled by the Tasmota code for this module. Serial communica
 [![](http://img.youtube.com/vi/fqOJjA6Pph0/0.jpg)](http://www.youtube.com/watch?v=fqOJjA6Pph0 "")
 
 ## Power Monitoring Calibration
-Sonoff Pow R2 might need calibration as correct measurements are influenced by hardware and timing differences. See [Power Monitoring Calibration](devices/Power-Monitoring-Calibration)
+Sonoff Pow R2 might need calibration as correct measurements are influenced by hardware and timing differences. See [Power Monitoring Calibration](Power-Monitoring-Calibration)
    
 ## Telemetry
 The Sonoff Pow R2 can provide Energy, Power, Voltage and Current information in different ways.

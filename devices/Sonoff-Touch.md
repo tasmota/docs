@@ -11,8 +11,8 @@ Please see the [Hardware Preparation](installation/Hardware-Preparation) page fo
 
 As always, you need to access the serial interface. Carefully remove the top PCB from the assembly. The hidden underside of the PCB contains the ESP8285 as shown in the pictures. The **four serial pins** (3V3, Rx, Tx, GND) can be seen in the pictures for the US version (left) and the EU version (right) of the module PCB.
 
-<img title="Sonoff Touch US version" src="https://github.com/arendst/arendst.github.io/blob/master/media/touchus.jpg" width="44%" /> 
-<img title="Sonoff Touch EU version" src="https://github.com/arendst/arendst.github.io/blob/master/media/toucheu.jpg" width="48%" align="right" />
+<img title="Sonoff Touch US version" src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/touchus.jpg" width="44%" /> 
+<img title="Sonoff Touch EU version" src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/toucheu.jpg" width="48%" align="right" />
 
 Be careful while removing and reassembling the top PCB. The touch sensor should be back in its intended place. Be sure to not touch it directly during the modifications.
 

@@ -15,7 +15,7 @@ The GND connection of the Shelly is connected to the live AC wire. Connecting se
 If the jumper is set to 12V you will destroy your Shelly!
 # Shelly 2
 An ESP8266 with 2MB flash dual relay device with Energy Monitoring the size of round 45mm.<br>
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/shelly/shelly2_serial_connection2.jpg" height="250" />
+<img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/shelly/shelly2_serial_connection2.jpg" height="250"></img>
 
 ## Templates as of v6.4.1.17
 The inbuilt template equals the following:<br>
@@ -24,9 +24,10 @@ An alternative template without switch pull-up is:<br>
 ``{"NAME":"Shelly 2n","GPIO":[0,135,0,136,21,22,0,0,82,0,83,137,0],"FLAG":0,"BASE":47}``
 
 ## Pullup or no pullup
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/shelly/shelly2pullup.png" width="250" align="right" />
 The shelly 2 inputs may or may not need pullups for SW1 and SW2 to work correctly. Default state is pullups enabled.
 
 To disable pullups either use command SetOption62 1 or select the option from the GUI.
+
+<img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/shelly/shelly2pullup.png" width="250"></img>
 
 Refer to the following issue: https://github.com/arendst/Tasmota/issues/4841

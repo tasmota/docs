@@ -39,8 +39,8 @@ Using the TX T1 1-3 device template will work. A new T0 template is forthcoming.
 ### [Flashing](Flashing)
 1. Connect the device's serial interface pins to the [Serial-to-USB adapter](Prerequisites#serial-to-usb-adapter-with-33v-supply). **Be sure that your adapter is set to supply 3.3v**. Place a jumper wire from GND to the side of R19 nearest the screw hole cutout - this is connected to GPIO0.
 2. Download `tasmota.bin` from http://thehackbox.org/tasmota
-3. Have [`NodeMCU PyFlasher`](Flashing#nodemcu-pyflasher) running with the correct settings. Be sure to select `DOUT` and `Erase flash - yes`. Select the right COM port for your serial-to-USB adapter and select `tasmota.bin` from the folder where you downloaded the file. 
-4. Plug the serial adapter into the USB port and click the `Flash` button on `NodeMCU PyFlasher`.
+3. Have [`Tasmota PyFlasher`](Flashing#nodemcu-pyflasher) running with the correct settings. Be sure to select `DOUT` and `Erase flash - yes`. Select the right COM port for your serial-to-USB adapter and select `tasmota.bin` from the folder where you downloaded the file. 
+4. Plug the serial adapter into the USB port and click the `Flash` button on `Tasmota PyFlasher`.
 5. When you get the flash complete, remove the GND jumper wire from GPIO0.
 6. Cycle power on your device by disconnecting the serial adapter from the USB port for a couple of seconds and plugging it back in.
 

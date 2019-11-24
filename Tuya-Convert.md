@@ -12,9 +12,8 @@ Tuya-Convert comes with [`tasmota-wifiman.bin`](http://thehackbox.org/tasmota/ta
 
 Help and troubleshooting for Tuya-Convert is done on [Tuya-Convert's Github](https://github.com/ct-Open-Source/tuya-convert/issues).
 
-:warning: :warning: :warning:
- 
-***The fact that you can flash Tasmota on your device does not mean all of its features are currently supported. Please research before purchasing to see if other users have successfully flashed the device and are able to use it fully***
+>[!DANGER]
+>The fact that you can flash Tasmota on your device does not mean all of its features are currently supported. Please research before purchasing to see if other users have successfully flashed the device and are able to use it fully
 
 * [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert) video walkthrough
 * [TuyOTA](https://github.com/SynAckFin/TuyOTA/wiki/Walkthrough) walkthrough

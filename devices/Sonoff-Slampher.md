@@ -1,0 +1,1 @@
+https://blog.hobbytronics.pk/tasmota-sonoff-slampher-local-control/

@@ -21,13 +21,15 @@ An ESP8266 with 2MB flash single relay device 42mm "round" in size.
 ## Serial Connection
 Shelly1 comes with a partially exposed programming/debug header which can be used to flash Tasmota on the device. A serial-to-USB adapter is needed as well as a reliable 3.3V source with at least 350 mA drive capability. The following diagram shows the device pinout and power source voltage selection jumper.
 
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/shelly/shelly1_pinout-800x433.jpg" height="250" />
+<img src="https://github.com/arendst/arendst.github.io/blob/master/media/shelly/shelly1_pinout-800x433.jpg?raw=true" height="250" />
 
 ## Flash mode
 To be able to flash the Tasmota firmware you need to get into flash mode. Therefore connect a wire from GPIO0 to ground. For further information have a look at [Hardware Preparation](installation/Hardware-Preparation#bringing-the-module-in-flash-mode).
 
 ## **⚠️️WARNING⚠️️**
-Please note what version of the Shelly 1 you have (V1, V2 or V3). The V2 user guide is [incorrect](https://gallery.mailchimp.com/0d9bf8d9ddf1b29f33cb71ba5/images/cb16c7b5-5887-4ef2-b6c1-6e90ccaf648a.png?mc_cid=0a274764f3&mc_eid=05c10a130f). The mains connections are as shown in the image above for all versions of the switch. The labels on the V2 switches are [wrong](https://gallery.mailchimp.com/0d9bf8d9ddf1b29f33cb71ba5/images/cb16c7b5-5887-4ef2-b6c1-6e90ccaf648a.png?mc_cid=0a274764f3&mc_eid=05c10a130f)!
+Please note what version of the Shelly 1 you have (V1, V2 or V3). The V2 user guide is [incorrect](https://gallery.mailchimp.com/0d9bf8d9ddf1b29f33cb71ba5/images/cb16c7b5-5887-4ef2-b6c1-6e90ccaf648a.png?mc_cid=0a274764f3&mc_eid=05c10a130f). The mains connections are as shown in the image above for all versions of the switch. The labels on the V2 switches are **WRONG!**
+
+![wrong](https://gallery.mailchimp.com/0d9bf8d9ddf1b29f33cb71ba5/images/cb16c7b5-5887-4ef2-b6c1-6e90ccaf648a.png?mc_cid=0a274764f3&mc_eid=05c10a130f ":size=200")
 ## Video tutorial by digiblurDIY
 [![](http://img.youtube.com/vi/mSENAY9_AlI/0.jpg)](http://www.youtube.com/watch?v=mSENAY9_AlI "")
 ### Video tutorial by BurnsHA
