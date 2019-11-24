@@ -318,7 +318,7 @@ pin=SML#Total_in
 pout=SML#Total_out  
 
 >`>S`  
-; on midnight, save meter total values  
+; at midnight, save meter total values  
 hr=hours  
 if chg[hr]>0  
 and hr==0  
@@ -348,10 +348,10 @@ Tageseinspeisung: {m} %po_d% kWh
 >`>M 1`  
 +1,3,s,0,9600,SML  
 >  
->1,77070100010800ff@1000,Verbrauch,KWh,Total_in,4  
-1,77070100020800ff@1000,Einspeisung,KWh,Total_out,4  
-1,77070100100700ff@1,Aktueller Verbrauch,W,Power_curr,0  
-1,77070100000009ff@#,Zähler Nr,,Meter_number,0  
+>1,77070100010800ff@1000,Total Consumed,KWh,Total_in,4  
+1,77070100020800ff@1000,Total Delivered,KWh,Total_out,4  
+1,77070100100700ff@1,Current Consumption,W,Power_curr,0  
+1,77070100000009ff@#,Meter Number,,Meter_number,0  
 \#
 
 [Back To Top](#top)
@@ -366,12 +366,12 @@ Tageseinspeisung: {m} %po_d% kWh
 >`>B`
 =>sensor53 r
 
->`>M 1` 
+>`>M 1`  
 +1,3,o,0,300,STROM,1,100,2F3F210D0A  
 >
->1,1-0:1.8.1*255(@1,Total Verbrauch,KWh,Total_in,3  
-1,1-0:2.8.1*255(@1,Total Verkauf,KWh,Total_in,3  
-1,1-0:0.0.0*255(@#),Zähler Nr,,Meter_number,0  
+>1,1-0:1.8.1*255(@1,Total Consumed,KWh,Total_in,3
+1,1-0:2.8.1*255(@1,Total Delivered,KWh,Total_out,3
+1,1-0:0.0.0*255(@#),Meter Number,,Meter_number,0  
 \#
 
 [Back To Top](#top)
