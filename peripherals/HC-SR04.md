@@ -5,8 +5,7 @@ Buy example:
 - [Sparkfun](https://www.sparkfun.com/products/13959)
 
 ## Configuration
-### Wiring
-<img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/wemos/wemos_hc-sr04_schematic.jpg" align=right></img>
+#### Wiring<img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/wemos/wemos_hc-sr04_schematic.jpg" align=right></img>
 
 | HC-SR04   | ESP8266 |
 |---|---|

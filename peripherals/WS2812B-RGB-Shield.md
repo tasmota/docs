@@ -3,7 +3,7 @@
 
 From the [Wemos ws2812b shield specs](https://cleanuri.com/a8jX2Q) the DATA  pin is connected to D2 of the Wemos.
 
-### Tasmota Configuration
+#### Tasmota Settings
 In the Configuration -> Configure Module page, select the following:
 * **D2 GPIO4** : **07 WS2812**
 

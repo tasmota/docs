@@ -1,14 +1,14 @@
 DHT11 is a basic, ultra low-cost digital temperature and humidity sensor. It is very inaccurate and surpassed by others (AM2301, BME280, ...) thus not recommended by us.
 
 ## Configuration
-### Wiring
+#### Wiring
 | DHT11   | ESP266 |
 |---|---|
 |-   |GND   |
 |OUT   |GPIOx   |
 |+  |3.3V    |
 
-### Tasmota
+#### Tasmota Settings
 In the _Configuration -> Configure Module_ page assign:
 - GPIOx to `DHT11 (1)`   
 

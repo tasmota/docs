@@ -11,7 +11,7 @@
 
 
 [Documentation](Home)
-[Get started!](/installation/)
+[Get Started!](/installation/)
 [GitHub](https://github.com/arendst/Tasmota)
 
 

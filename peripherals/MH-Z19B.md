@@ -30,7 +30,7 @@ Operating current < 18mA average
 |TX   |Rx|
 |RX   |Tx|
 
-### Tasmota Configuration
+#### Tasmota Settings
 In the Configuration -> Configure Module page, select the following for Wemos D1 mini:
 1. **Module Type:** 18 Generic
 2. **TX GPIO1 Serial Out:** 60 MHZ Tx

@@ -9,7 +9,8 @@ To use it you must [compile your build](compile-your-build). Add the following t
 ----
 This driver is used to control stepper-motors such as [NEMA 17](https://reprap.org/wiki/NEMA_17_Stepper_motor).   
 
-## Wiring
+## Configuration
+#### Wiring
 The driverboard has several connectors: powering the controller (3.3-5.0 V), input (+/-) & output (1a/1b/2a/2b), the motor (up to 35V/2A), and to control the circuit (in order at the control side of the board):  
 
 Connector | Description
@@ -23,7 +24,7 @@ EN|Enable the power supply for the motor
 SLP|Sleep (bridge to RST)
 RST|Reset (bridge to SLP)
 
-## Tasmota Configuration
+#### Tasmota Settings
 There are six GPIO [components](Components) that should be configured to free GPIOs:  
 ```
 A4988 DIR (170)  

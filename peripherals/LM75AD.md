@@ -7,7 +7,7 @@ The LM75AD is an I<sup>2</sup>C temperature sensor that converts temperature dir
 [LM75A Datasheet](https://www.nxp.com/docs/en/data-sheet/LM75A.pdf)
 
 ## Configuration
-### Wiring
+#### Wiring
 | LM75AD   | ESP8266 |
 |---|---|
 |VCC   |3.3V

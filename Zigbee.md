@@ -20,11 +20,27 @@ Before using Zigbee to Tasmota, you need to understand a few concepts. Here is a
 ### Zigbee Adapter
 **You cannot use any CC2531 based device with Tasmota!**. CC2531 supports USB communication and not serial communication required by Zigbee2Tasmota.
 
-|Device	|Notes|
-|---|---|
-|**[CC2530 with PCB antenna, DL-20](https://www.aliexpress.com/item/32904763478.html)**<BR>[<img src="https://user-images.githubusercontent.com/34340210/67676080-29301a00-f957-11e9-8799-c819241e0b4c.png" width="240">](https://user-images.githubusercontent.com/34340210/67676080-29301a00-f957-11e9-8799-c819241e0b4c.png "CC2530 DL-20 Pin-outs")|Compact and cheap, but with limited range.|
-|**[CC2530 with external antenna](https://www.aliexpress.com/item/33007098493.html)**<BR><img src="https://user-images.githubusercontent.com/49731213/64906209-c0ad1680-d6e3-11e9-8703-71ea36c5be72.jpg" width="240"><BR>or<BR><img src="https://user-images.githubusercontent.com/49731213/64913622-eec24300-d743-11e9-9416-0b19a4cbc3c4.jpg" width="240">|Better range.|
-|**[CC2530 with external antenna and CC2591 RF front end](https://www.aliexpress.com/item/4000118023903.html)**<BR><img src="https://user-images.githubusercontent.com/49731213/64906219-f0f4b500-d6e3-11e9-8cd0-e135af531718.jpg" width="240">|Best range.<BR>Please note you need a specific firmware for CC2591 frontend.|
+<table style="text-align:center; width: 80%;">
+    <col style="width:30%">
+    <col style="width:30%">
+    <col style="width:30%">
+  <tr>
+    <th><a href="https://www.aliexpress.com/item/32904763478.html"> CC2530 with PCB antenna, DL-20</a></th>
+    <th><a href="https://www.aliexpress.com/item/33007098493.html">CC2530 with external antenna</a></th>
+    <th><a href="https://www.aliexpress.com/item/4000118023903.html">CC2530 with external antenna and CC2591 RF front end</a></th>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://user-images.githubusercontent.com/34340210/67676080-29301a00-f957-11e9-8799-c819241e0b4c.png" style="width:10em"></img>
+    </td>
+    <td>
+      <img src="https://user-images.githubusercontent.com/49731213/64906209-c0ad1680-d6e3-11e9-8703-71ea36c5be72.jpg" style="width:10em"></img>
+    </td>
+    <td>
+      <img src="https://user-images.githubusercontent.com/49731213/64906219-f0f4b500-d6e3-11e9-8cd0-e135af531718.jpg" style="width:10em"></img>
+    </td>
+</tr>
+</table>
 
 ### Wi-Fi Adapter
 Using an ESP82xx device such as a Wemos D1 Mini or a NodeMCU to flash the CC2530 (described below) is a lower cost alternative than using a single purpose [CC_DEBUGGER](https://www.aliexpress.com/item/32869263224.html). When in normal operation, this ESP82xx device can then also serve as the Wi-Fi adapter for the Zigbee2Tasmota messaging.

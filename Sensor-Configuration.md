@@ -1,23 +1,24 @@
-> Read before continuing:   
-> &emsp;- [Components](Components)    
-> &emsp;- [Expanding Tasmota](Expanding-Tasmota) 
+?> Read before continuing:   
+ &emsp;- [Components](Components)    
+ &emsp;- [Expanding Tasmota](Expanding-Tasmota) 
 
-_**A peripheral must have correctly wired power, GND and data pins to the device prior to booting in order for Tasmota to detect it and initialize it properly.**_
+> [!WARNING]
+>A peripheral must have correctly wired power, GND and data pins to the device prior to booting in order for Tasmota to detect it and initialize it properly.
 
-## Configuration in Tasmota
-Tasmota allows for easy selection of peripherals (sensors, switches, etc) and configuration to GPIO pins. 
+## Tasmota Settings
+<img src="https://user-images.githubusercontent.com/5904370/68432161-2a154700-01b4-11ea-8ba9-adb7b717490d.png" style="float:right;height:15em;margin:10px 0">
+Tasmota allows for easy selection of peripherals (sensors, switches, etc) and assignment to GPIO pins. 
 
-Configuration is possible in the webUI ***Configuration - Configure Module*** page:
-![image](https://user-images.githubusercontent.com/5904370/68432161-2a154700-01b4-11ea-8ba9-adb7b717490d.png)
+Configuration is possible in the webUI ***Configuration - Configure Module*** page
 
 or by using commands: [`Module`](Commands#module) and [`GPIO`](Commands#gpio), or [`Template`](Commands#template).
 
-#### [`Module`](Commands#module) 
+**[`Module`](Commands#module)**    
 First select desired module for the device (Wait for the restart). Depending on the type of [Module](Modules), only certain GPIO pins are user configurable. Module Generic (18) has all the GPIOs configurable.   
 
 _[`Modules`](Commands#modules) shows supported modules_
 
-#### [`GPIO`](Commands#gpio) 
+**[`GPIO`](Commands#gpio)**    
 Assign a [component](Components) to a GPIO.
    
 - `gpio14 2` configures sensor AM2301 to GPIO14_    
@@ -28,7 +29,7 @@ _[`Gpios All`](Commands#gpios) shows list of all available components by name an
 
 **For a peripheral to show up you may need to power cycle your device instead of a soft restart.**
 
-#### [`Template`](Commands#template) 
+**[`Template`](Commands#template)**   
 Instead of using `Module` and `GPIO` you can define all using `Template` [Read more...](Templates#template-configuration-with-commands)
 
 ## Additional Options

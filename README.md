@@ -3,7 +3,7 @@ This is the repo for documentation of the Tasmota open source alternative firmwa
 
 ## Editing Files
 
-Use strict markdown syntax
+Use normal markdown syntax with some enhancements
 
 ## Enhancements
 
@@ -66,3 +66,22 @@ Ciao!
 <!-- tabs:end -->
 ```
 
+## Shields color codes
+
+I2C:
+<img src="https://img.shields.io/static/v1?label=&message=i2c&color=blue" style="float:right"> </img> 
+
+GPIO:
+ <img src="https://img.shields.io/static/v1?label=&message=gpio&color=purple"  style="float:right"> </img> 
+
+ADC:
+ <img src="https://img.shields.io/static/v1?label=&message=adc&color=orange"  style="float:right"> </img> 
+
+Serial:
+ <img src="https://img.shields.io/static/v1?label=&message=serial&color=seagreen"  style="float:right"> </img> 
+
+Serial:
+ <img src="https://img.shields.io/static/v1?label=&message=spi&color=slategrey"  style="float:right"> </img> 
+
+Tuya:
+ <img src="https://img.shields.io/static/v1?label=&message=tuya&color=orangered"  style="float:right"> </img> 

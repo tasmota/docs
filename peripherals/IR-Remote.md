@@ -7,7 +7,7 @@ Most builds support only most common IR protocols, but [tasmota-ir.bin](Tasmota-
 > YT-IRTM transmitter/receiver board is serial only and does not work with this driver (its also limited to only NEC IR protocol).
 
 
-### Wiring
+#### Wiring
 | IR w/ 2N222   | ESP266 |
 |---|---|
 |data   |GPIOx   |
@@ -27,7 +27,7 @@ IR Receiver is used to capture IR codes. Those codes can be sent using [`IRSend`
 
 Example uses the widely available [KY-022](https://arduinomodules.info/ky-022-infrared-receiver-module/) breakout board.
 
-### Wiring
+#### Wiring
 | KY-022   | ESP266 |
 |---|---|
 |S   |GPIOx   |

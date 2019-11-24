@@ -2,8 +2,7 @@ PIR motion sensors, albeit called sensors, are configured as switches in Tasmota
 
 Most PIR's are single wire and they require connecting to VCC, GND and one GPIO. In this guide we will use `GPIO15` as the pin that the PIR output is connected to.
 
-### Tasmota Configuration
-
+#### Tasmota Settings
 In _Configuration -> Configure Module_ menu change `GPIO15` to `Switch1`.
 ![Step 1](https://user-images.githubusercontent.com/5904370/67887920-7e814c80-fb4c-11e9-863d-7219894be506.png)
 
