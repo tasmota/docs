@@ -20,7 +20,7 @@ Home Assistant has two avenues of adding Tasmota devices:
 > [!NOTE]
 > After every change to the configuration file you'll need to restart Home Assistant to make it aware of the changes.
 
-If you don't want to use MQTT discovery, skip to [Manual Config](Manual-Config) 
+If you don't want to use MQTT discovery, skip to [Manual Config](#configurationyaml-editing) 
 ## Automatic Discovery
 Home Assistant has a feature called [MQTT discovery](https://www.home-assistant.io/docs/mqtt/discovery/).
 With MQTT discovery no user interaction or configuration file editing is needed to add new devices in Home Assistant.
@@ -87,7 +87,7 @@ and the relay will NOT be switched. -->
 
 <!-- tabs:end -->
 
-Types of devices not listed above (fans, covers, etc) require [manual configuration](#manual-confguration)
+Types of devices not listed above (fans, covers, etc) require [manual configuration](#fans)
 
 ### Enabling 
 
@@ -143,7 +143,7 @@ For every device discovered with `SetOption19` an informative sensor will be cre
 
 [Home Assistant](https://home-assistant.io/) (Hass) is an open-source home automation platform running on Python 3.
 
-## confguration.yaml editing
+## configuration.yaml editing
 
 The advantage of manually configuring a device is that you maintain control of all aspects of the configuration.
 
