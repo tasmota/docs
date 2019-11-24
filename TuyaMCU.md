@@ -2,13 +2,13 @@
 
 Originally, in those devices, the Wi-Fi module takes care of network and software features. Meanwhile, the MCU controls the hardware based on commands received from the Wi-Fi module or built-in controls (buttons, switches, remotes and similar) and reports the status back to the Wi-Fi module. 
 
-TuyaMCU module facilitates communication between Tasmota and the MCU using [Tuya Serial Port Communication Protocol](tuya-protocols):
+TuyaMCU module facilitates communication between Tasmota and the MCU using [Tuya Serial Port Communication Protocol](#tuya-protocols):
 - `TuyaMCU` command maps device functions to Tasmota components 
 - `TuyaSend<x>` command calculates and sends complex serial commands using only two parameters
 - _**TuyaReceived**_ response interprets status messages and publishes a JSON payload to an MQTT topic 
 
 ## TuyaMCU Command
-Command [`TuyaMCU`](commands#tuyamcu) is used to map Tasmota components to Tuya device dpId's. 
+Command [`TuyaMCU`](Commands#tuyamcu) is used to map Tasmota components to Tuya device dpId's. 
 > Used only if your device is defined as module `TuyaMCU (54)`.
 
 Command value consists of two comma separated parameters: fnId and dpId. 
@@ -65,7 +65,7 @@ Use this procedure to determine which dpId's are available:
 4. Observe all lines printed as `TYA: FnId=0 is set for dpId=XXX` and note all dpId values. 
 
 Now that you have a list of usable dpId's you need to determine what their functions are:
-1. Consulting our [list of commonly used](tuya-protocols#dpid-function-tables) dpId's and existing device configurations
+1. Consulting our [list of commonly used](#dpid-function-tables) dpId's and existing device configurations
 2. Observing Tasmota logs while activating features of the device (with a remote or on device controls) and correlating log messages
 3. Extrapolating possible function of the dpId based on Data Type and Function Command, then testing using `TuyaSend<x>`
 
@@ -408,7 +408,7 @@ On device boot, TuyaMCU executes the required basic protocols and reads the func
 
 After receiving a command from Tasmota (Command Word `0x06`), the MCU performs corresponding logical control. When the dpID status is changed, the MCU reports the data (Command Word `0x07`) to TuyaMCU component. 
 
-## dpId functions tables
+## dpId Function Tables
 ***This information is just for orientation. Functions are assigned by the manufacturer and can be on different dpId's***
 
 - DP ID: dpId.
@@ -426,7 +426,7 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
    - Integer（integer）: transmitted as integer
    - Transparent (raw): data in binary 
 
-### Switches or plugs/power strips
+### Switches or Plugs/Power Strips
 ```
 | DP ID | Identifier  | Data type          | Function type | Properties                                   |
 |-------|-------------|--------------------|---------------|----------------------------------------------|
@@ -442,7 +442,7 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 13    | countdown_5 | Control and report | Integer       | undefined0-86400, undefined1, Scale0, Unit:s |
 ```
 
-### Aromatherapy machine (Oil Diffuser)
+### Aromatherapy Machine (Oil Diffuser)
 ```
 | DP ID | Function points          | Identifier     | Data type        | Function type | Properties
 | 1     | Switch                   | Power          | Issue and report | Boolean       |                                                                        |
@@ -458,7 +458,7 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 ```
 > `colour_data` format of the lights is a string of 14 characters, for example, 00112233334455, where 00 indicates R, 11 indicates G, 22 indicates B, 3333 indicates the hue, 44 indicates the saturation, and 55 indicates the value. The initial value is saved by default. If you do not want to adjust the light, set the data to the maximum value 100% (0x64). The last four characters have fixed values.
 
-### Curtain motor
+### Curtain Motor
 ```
 | DP ID | Function points | Identifier    | Data type        | Function type | Properties                                    |
 |-------|-----------------|---------------|------------------|---------------|-----------------------------------------------|
@@ -470,7 +470,7 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 ```
 > [Complete document on protocols](https://github.com/arendst/Tasmota/files/3658412/protocol_CurtainM_20190926.pdf)
 
-### Power monitoring plug
+### Power Monitoring Plug
 ```
 | DP ID | Function points        | Identifier      | Data type          | Function type | Properties                                    |
 |-------|------------------------|-----------------|--------------------|---------------|-----------------------------------------------|

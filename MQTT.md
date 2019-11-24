@@ -144,8 +144,7 @@ Initially Tasmota had one MQTT configurable topic planned called Topic. It soon 
 
 Tasmota then introduced a unique, non-configurable "FallBack Topic" that allows MQTT communication regardless of the configurable topic. This fallback topic is just what it is meant to be: **a fallback topic** in case of emergency!
 
-<img src="_media/dves.png" style="float:right"></img>
-By default the Fallback Topic is `DVES_XXXXXX_fb` where xxxxxx is derived from the last 6 charactes of the device's MAC address (excluding `:`). It might look something like this: `DVES_3D5E26_fb`. You can find out the DVES code by looking at **Configuration - Configure MQTT** page's Client description or issuing `Status 6`:
+By default the Fallback Topic is `DVES_XXXXXX_fb` where xxxxxx is derived from the last 6 charactes of the device's MAC address (excluding `:`). It might look something like this: `DVES_3D5E26_fb`. You can find out the DVES code by looking at **Information** page in the webUI or issuing `Status 6`:
 ```
 00:00:00 MQT: stat/tasmota/STATUS6 = {"StatusMQT":{"MqttHost":"1.1.1.1","MqttPort":1883,"MqttClientMask":"DVES_%06X","MqttClient":"DVES_3D5E26","MqttUser":"tasmota","MqttCount":1,"MAX_PACKET_SIZE":1000,"KEEPALIVE":30}}
 ```
