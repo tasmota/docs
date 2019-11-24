@@ -7,7 +7,7 @@ To provide easy processing by Tasmota, a user template is written as a JSON stri
 {"NAME":"UserModule1","GPIO":[17,148,29,149,7,255,255,255,138,255,139,255,255],"FLAG":0,"BASE":18}
 ```
 
-More about [template properties](Templates#explanation-of-template-properties) at the bottom of the article.
+More about [template properties](#Anatomy-of-a-template) at the bottom of the article.
 
 ## How to Use
 
@@ -23,8 +23,8 @@ Time to create your template.
 
 ### Creating Your Template 
 1. Change<img src="https://i.postimg.cc/SQwp2Lnr/template4.png" align="right"> the template name (also defines the name for the module).
-2. Select a module to [**BASE** your template on](Templates#base). If you're not sure, `Module 18` is the best choice. In this example the device is based on Blitzwolf SHP (45) module.
-3. Configure the components assigned to the [**GPIOs**](Templates#gpio) to match your device. If you do not know what pins your device uses, read about the [new device configuration procedure](Configuration-Procedure-for-New-Devices) to determine the correct pin assignments.
+2. Select a module to [**BASE** your template on](#base). If you're not sure, `Module 18` is the best choice. In this example the device is based on Blitzwolf SHP (45) module.
+3. Configure the components assigned to the [**GPIOs**](#gpio) to match your device. If you do not know what pins your device uses, read about the [new device configuration procedure](Configuration-Procedure-for-New-Devices) to determine the correct pin assignments.
 ![GPIO configuration](https://i.postimg.cc/d1j4sYZp/template5.png)
  
     - Any unused GPIO that has cannot have a peripheral connected should be set to `None (0)`. In our example the device has no exposed GPIO's so the unused ones are set to `0` compared to the original BlitzWolf module.     
