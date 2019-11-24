@@ -2,13 +2,15 @@
 
 If MQTT is defined and [`PowerRetain`](Commands#powerretain) is used the last state will be stored permanently in MQTT database.
 
-| | |
+|Command | Description |
 |-|-|
 [`PowerRetain`](Commands#powerretain)	| Show current MQTT power retain state.<BR> `0` / `off` = disable MQTT power retain on status update *(default)* <BR> `1` / `on` = enable MQTT power retain on status update
 
-A message in your MQTT broker flagged as 'retained' will ***_always_ override the `PowerOnState`***. This is usually the cause for "ghost switching". Learn more in [MQTT retained messages explained](http://www.steves-internet-guide.com/mqtt-retained-messages-example/). Check out [this tutorial](https://www.youtube.com/watch?v=31IyfM1gygo) for troubleshooting switch ghosting.
+**BUT**, a message in your MQTT broker flagged as 'retained' will ***_always_ override the `PowerOnState`***. 
 
-### Clearing retained messages
+This is usually the main cause for "ghost switching". Learn more in [MQTT retained messages explained](http://www.steves-internet-guide.com/mqtt-retained-messages-example/). Check out [this tutorial](https://www.youtube.com/watch?v=31IyfM1gygo) for troubleshooting switch ghosting.
+
+### Clearing Retained Messages
 To check, if there is a retain flag set for the switch's power topic, monitor `cmnd/+/power` in a MQTT client (recommended [MQTT.fx](https://mqttfx.jensd.de/) for Windows or [Eclipse Mosquitto](https://mosquitto.org/) in linux).
 
 You can use [Tasmota Device Manager](https://github.com/jziolkowski/tdm) to clear all retained messages for selected device with a single click.
@@ -22,7 +24,7 @@ or use the following tutorials/forum threads:
 
 ## Predefined PowerOnState functionality
 
-| | |
+| Command | Description |
 |-|-|
 |[`PowerOnState`](Commands#poweronstate) | Control relay state after _**powering up**_ the device.<BR> `0` / `OFF` = keep relay(s) OFF after power up <BR> `1` / `ON` = turn relay(s) ON after power up <BR> `2` / `TOGGLE` = toggle relay(s) from last saved state <BR> `3` = switch relay(s) to their last saved state *(default)* <BR> `4` = turn relay(s) ON and disable further relay control <BR> `5` = after a `PulseTime` period turn relay(s) ON (acts as inverted [`PulseTime`](Commands#pulsetime) mode)|
 

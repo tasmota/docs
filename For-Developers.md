@@ -4,4 +4,4 @@
 
 ### Maintained Tasmota forks with additional features:  
 [**Time Proportioned Output Fork**](Time-Proportioned-Output-support)  
-[**PID Control Fork**](PID-Control-with-Sonoff-Devices)  
+[**PID Control Fork**](PID-Control)  
