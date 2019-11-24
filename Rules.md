@@ -82,7 +82,7 @@ Time#Minute<a id="TimeMinute"></a>|every minute
 Time#Minute\|5|every five minutes
 Time#Minute==241|every day once at 04:01 (241 minutes after midnight)
 Time#Set<a id="TimeSet"></a>|every hour when NTP makes time in sync
-Var\<x>#State<a id="VarState"></a>|when the value for Var\<x> is changed
+Var\<x\>#State<a id="VarState"></a>|when the value for Var\<x\> is changed
 Wifi#Connected<a id="WifiConnected"></a>|when Wi-Fi is connected
 Wifi#Disconnected<a id="WifiDisconnected"></a>|when Wi-Fi is disconnected
 
@@ -90,7 +90,7 @@ Every [command](Commands) with a one level JSON response has the #Data trigger.
 
 Trigger           | When it occurs |
 ------------------|----------------|
-|\<command\>#Data|A response such as {"Fanspeed":3} has the Fanspeed#Data trigger.<br>A response like {"PulseTime2":{"Set":0,"Remaining":0}} does NOT have the #data trigger as the triggers are PulseTime2#Set and PulseTime2#Remaining. 
+| \<command\>#Data|A response such as {"Fanspeed":3} has the Fanspeed#Data trigger.<br>A response like {"PulseTime2":{"Set":0,"Remaining":0}} does NOT have the #data trigger as the triggers are PulseTime2#Set and PulseTime2#Remaining. 
 
 Connected sensors can be a trigger in the form as they are represented in the `TelePeriod` and `Status 8` JSON payloads.  
 
