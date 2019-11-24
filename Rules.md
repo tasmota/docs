@@ -65,7 +65,7 @@ Dimmer#Boot<a id="DimmerBoot"></a>|occurs after Tasmota starts<a id="ADC0"></a>
 Dimmer#State<a id="DimmerState"></a>|when the value for Dimmer is changed
 Event#eventName<a id="EventeventName"></a>|when command `Event eventName` is executed. You can define your own event values and trigger them with the [`Event`](commands#event) command.
 FanSpeed#Data=3|when the fan speed is set to `3`
-Mem\<x\>#State<a id="MemState"></a>|when the value for Mem\<x\> is changed
+Mem&lt;x\>#State<a id="MemState"></a>|when the value for Mem&lt;x\> is changed
 Http#Initialized<a id="HttpInitialized"></a>|
 Mqtt#Connected<a id="MqttConnected"></a>|when MQTT is connected
 Mqtt#Disconnected<a id="MqttDisconnected"></a>|when MQTT is disconnected
@@ -82,7 +82,7 @@ Time#Minute<a id="TimeMinute"></a>|every minute
 Time#Minute\|5|every five minutes
 Time#Minute==241|every day once at 04:01 (241 minutes after midnight)
 Time#Set<a id="TimeSet"></a>|every hour when NTP makes time in sync
-Var\<x\>#State<a id="VarState"></a>|when the value for Var\<x\> is changed
+Var&lt;x\>\#State<a id="VarState"></a>|when the value for Var&lt;x\> is changed
 Wifi#Connected<a id="WifiConnected"></a>|when Wi-Fi is connected
 Wifi#Disconnected<a id="WifiDisconnected"></a>|when Wi-Fi is disconnected
 
@@ -90,14 +90,14 @@ Every [command](Commands) with a one level JSON response has the #Data trigger.
 
 |Trigger           | When it occurs |
 |------------------|----------------|
-| \<command\>#Data|A response such as {"Fanspeed":3} has the Fanspeed#Data trigger.<br>A response like {"PulseTime2":{"Set":0,"Remaining":0}} does NOT have the #data trigger as the triggers are PulseTime2#Set and PulseTime2#Remaining. 
+| &lt;command\>#Data|A response such as {"Fanspeed":3} has the Fanspeed#Data trigger.<br>A response like {"PulseTime2":{"Set":0,"Remaining":0}} does NOT have the #data trigger as the triggers are PulseTime2#Set and PulseTime2#Remaining. 
 
 Connected sensors can be a trigger in the form as they are represented in the `TelePeriod` and `Status 8` JSON payloads.  
 
 |Trigger           | When it occurs |
 |------------------|----------------|
 |DS18B20#Temperature| whenever the temperature of sensor DS18B20 changes|
-|DS18B20#Temperature\<20| whenever the temperature of sensor DS18B20 is below 20 degrees|
+|DS18B20#Temperature&lt;20| whenever the temperature of sensor DS18B20 is below 20 degrees|
 |AM2301-12#Humidity==55.5| whenever the humidity of sensor AM2301-12 equals 55.5%|
 |INA219#Current\>0.100| whenever the current drawn is more than 0.1A|
 |Energy#Power\>100| whenever the power used is more than 100W|
@@ -112,9 +112,9 @@ Hardware and software serial interface, RF, IR and TuyaMCU are also supported ba
 
 |Trigger           | When it occurs |
 ------------------|----------------|
-|TuyaReceived#Data=\<hex_string><a id="TuyaReceivedData"></a>| whenever \<hex_string> is received with [TuyaMCU](tuyamcu) component|
-|SerialReceived#Data=\<string><a id="SerialReceivedData"></a>| whenever \<string> is received via hardware serial|
-|SSerialReceived#Data=\<string>| whenever \<string> is received via software serial|
+|TuyaReceived#Data=&lt;hex_string><a id="TuyaReceivedData"></a>| whenever &lt;hex_string> is received with [TuyaMCU](tuyamcu) component|
+|SerialReceived#Data=&lt;string><a id="SerialReceivedData"></a>| whenever &lt;string> is received via hardware serial|
+|SSerialReceived#Data=&lt;string>| whenever &lt;string> is received via software serial|
 |IrReceived#Data=801<a id="IrReceivedData"></a>| whenever an IR signal for a RC5 remote control button 1 is received|
 |IrReceived#Data=0x00FF9867|whenever an IR signal with hex code 0x00FF9867 is received|
 |RfReceived#RfKey=4<a id="RfReceivedRfKey"></a>| whenever the [RF Bridge](Sonoff-RF-Bridge-433) receives a recognized RfKey 4 signal
@@ -227,8 +227,8 @@ Parenthesis can be used to change the priority of logical expression. For exampl
 
   Symbol|Description
   -|-
-  VAR\<x>|variable (\<x> = `1..MAX_RULE_VARS`, e.g., `VAR2`)
-  MEM\<x>|persistent variable (\<x> = `1..MAX_RULE_MEMS`, e.g., `MEM3`)
+  VAR&lt;x>|variable (&lt;x> = `1..MAX_RULE_VARS`, e.g., `VAR2`)
+  MEM&lt;x>|persistent variable (&lt;x> = `1..MAX_RULE_MEMS`, e.g., `MEM3`)
   TIME|minutes past midnight
   UPTIME|uptime minutes
   UTCTIME|UTC time, UNIX timestamp, seconds since 01/01/1970
@@ -289,8 +289,8 @@ In addition to numeric constants, the following symbolic values can be used:
 
 Symbol|Description
 -|-
-VAR\<x>|variable (\<x> = `1..MAX_RULE_VARS`, e.g., `VAR2`)
-MEM\<x>|persistent variable (\<x> = `1..MAX_RULE_MEMS`, e.g., `MEM3`)
+VAR&lt;x>|variable (&lt;x> = `1..MAX_RULE_VARS`, e.g., `VAR2`)
+MEM&lt;x>|persistent variable (&lt;x> = `1..MAX_RULE_MEMS`, e.g., `MEM3`)
 TIME|minutes past midnight
 UPTIME|uptime minutes
 UTCTIME|UTC time, UNIX timestamp, seconds since 01/01/1970
