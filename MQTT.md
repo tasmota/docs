@@ -47,7 +47,7 @@ The following example will go in depth on what happens when you send an MQTT com
 
 A device was flashed and configured with the **FullTopic** as default `%prefix%/%topic%/` and the **Topic** set to `tasmota-switch`. We want to see current status of the switch and change it.
 
-By looking at the [commands](commands) table we can learn about the [Power](Commands#power) command and options associated with it. 
+By looking at the commands table we can learn about the [Power](Commands#power) command and options associated with it. 
 * Ask the device for status:
   ```java
   cmnd/tasmota-switch/Power ← 	// an empty message/payload sends a status query
