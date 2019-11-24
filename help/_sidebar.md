@@ -1,0 +1,3 @@
+- [FAQ](help/FAQ)
+- [Troubleshooting](help/Troubleshooting)
+- [Device Recovery](help/Device-Recovery)

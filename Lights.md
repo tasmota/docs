@@ -40,7 +40,7 @@ MY92xx [family](http://www.my-semi.com/content/products/product_list.aspx?id=2) 
 
 Configured in Tasmota by assigning `MY92x1 DI` and `MY92x DCKI` components to their GPIOs (some devices might have more than one  MY92xx controller)
 
-Channel mapping for such devices is dependent on the controllers but is easily [remapped](SetOption37---Color-channel-mapping) using [`SetOption37`](Commands#setoption37).
+Channel mapping for such devices is dependent on the controllers but is easily [remapped](SetOption37) using [`SetOption37`](Commands#setoption37).
 
 ### SM16716
 SM16716 LEDs, sometimes mislabelled as WS2801.

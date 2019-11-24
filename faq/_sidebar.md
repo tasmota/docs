@@ -1,2 +1,0 @@
-- [FAQ](/faq/FAQ)
-- [Troubleshooting](/faq/Troubleshooting)

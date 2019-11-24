@@ -146,4 +146,4 @@ _**Can only create a firmware binary.** Use one of the [tools](/installation/Pre
 - [**SonOTA**](SonOTA---Espressif2Arduino---Tasmota-without-compiling) - OTA flash eWeLink based devices *(mostly outdated)*
 
 ## Need More Help?
-If you have encountered problems during flash see the [FAQ](/faq/). Ask for help in [Discord](https://discord.gg/Ks2Kzd4) or [Community Forum](https://groups.google.com/d/forum/sonoffusers)
+If you have encountered problems during flash see the [FAQ](/help/). Ask for help in [Discord](https://discord.gg/Ks2Kzd4) or [Community Forum](https://groups.google.com/d/forum/sonoffusers)

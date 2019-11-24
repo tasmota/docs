@@ -6,9 +6,10 @@
     * [Initial Configuration](/installation/Initial-Configuration)  
 * Resources
     * [Download Firmware](http://thehackbox.org/tasmota/release/)
-    * [Supported Devices](http://tasmota.fun)
+    * [Device Templates](http://tasmota.fun)
     * [What's New](What's-New)
 * Help
-    * [FAQ](/faq/FAQ)
-    * [Troubleshooting](/faq/Troubleshooting)
+    * [FAQ](/help/FAQ)
+    * [Troubleshooting](/help/Troubleshooting)
+    * [Device Recovery](/help/Device-Recovery)
     * [Discord Help](https://discord.gg/Ks2Kzd4)

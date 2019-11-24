@@ -8,7 +8,7 @@
 >  A resistive load device is any device which draws a constant amount of power. For example, an incandescent or halogen light bulb (best choice since their power draw is declared on them). An electric kettle, heater, or blow dryer are also options but you will also need a power meter since the power draw *could* vary.  
 
 > [!DANGER]
->  **Do not** use switch mode driven devices such as LED lamps, computer equipment, or inductive/capacitive devices such as motors!
+>  Do not use switch mode driven devices such as LED lamps, computer equipment, or inductive/capacitive devices such as motors!
 
 - *(optional)* A calibrated power meter (a.k.a Kill-a-Watt) or AC multi-meter
 
@@ -26,9 +26,9 @@
    [`PowerSet 60.0`](Commands#powerset)  
    _If you're using something other than a 60W bulb, enter your load's power rating_
 
-2. Verify the **Voltage** reading with the multi-meter. Adjust the voltage offset if needed (in Volts):  
+2. Verify the **Voltage** reading. Adjust the voltage offset if needed (in Volts):  
    [`VoltageSet <voltage>`](Commands#voltageset)  
-   _Replace `<voltage>` with the reading on your multi-meter. Your voltage will vary depending on the electrical standards and your electrical grid_  
+   _Replace `<voltage>` with your standard voltage or with reading on your multi-meter if you have one. Your voltage will vary depending on the electrical standards and your electrical grid_  
 
 3. Verify the **Current** reading by calculating current value (amperage) using this formula: **P<sub>(W)</sub>/V<sub>(V)</sub>=I<sub>(A)</sub>**. Adjust the current offset if needed (in milliAmps (mA=A\*1000)):  
    [`CurrentSet <current>`](Commands#currentset)  
