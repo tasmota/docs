@@ -26,7 +26,7 @@
 * [Securing Your Setup](Securing-your-IoT-from-hacking)
 * [Tutorials](Tutorials)
 * [Energy Saving](Energy-Saving)
-* [Theo'sTips](Tips)
+* [Theo's Tips](Theo's-Tasmota-Tips)
 * [What's New!](What's-New)
 * [How to Contribute?](Contributing)
 * [For Developers](For-Developers)

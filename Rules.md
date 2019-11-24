@@ -65,7 +65,7 @@ Dimmer#Boot<a id="DimmerBoot"></a>|occurs after Tasmota starts<a id="ADC0"></a>
 Dimmer#State<a id="DimmerState"></a>|when the value for Dimmer is changed
 Event#eventName<a id="EventeventName"></a>|when command `Event eventName` is executed. You can define your own event values and trigger them with the [`Event`](commands#event) command.
 FanSpeed#Data=3|when the fan speed is set to `3`
-Mem\<x>#State<a id="MemState"></a>|when the value for Mem\<x> is changed
+Mem\<x\>#State<a id="MemState"></a>|when the value for Mem\<x\> is changed
 Http#Initialized<a id="HttpInitialized"></a>|
 Mqtt#Connected<a id="MqttConnected"></a>|when MQTT is connected
 Mqtt#Disconnected<a id="MqttDisconnected"></a>|when MQTT is disconnected
