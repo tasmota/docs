@@ -18,7 +18,7 @@ Before using Zigbee to Tasmota, you need to understand a few concepts. Here is a
 
 ## Hardware
 ### Zigbee Adapter
-**You cannot use any CC2531 based device with Tasmota!**. CC2531 supports USB communication and not serial communication required by Zigbee2Tasmota.
+**You cannot use any CC2531 based device with Tasmota!** CC2531 supports USB communication and not serial communication required by Zigbee2Tasmota.
 
 <table style="text-align:center; width: 80%;">
     <col style="width:30%">
