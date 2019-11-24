@@ -88,14 +88,14 @@ Wifi#Disconnected<a id="WifiDisconnected"></a>|when Wi-Fi is disconnected
 
 Every [command](Commands) with a one level JSON response has the #Data trigger.
 
-Trigger           | When it occurs |
-------------------|----------------|
+|Trigger           | When it occurs |
+|------------------|----------------|
 | \<command\>#Data|A response such as {"Fanspeed":3} has the Fanspeed#Data trigger.<br>A response like {"PulseTime2":{"Set":0,"Remaining":0}} does NOT have the #data trigger as the triggers are PulseTime2#Set and PulseTime2#Remaining. 
 
 Connected sensors can be a trigger in the form as they are represented in the `TelePeriod` and `Status 8` JSON payloads.  
 
-Trigger           | When it occurs |
-------------------|----------------|
+|Trigger           | When it occurs |
+|------------------|----------------|
 |DS18B20#Temperature| whenever the temperature of sensor DS18B20 changes|
 |DS18B20#Temperature\<20| whenever the temperature of sensor DS18B20 is below 20 degrees|
 |AM2301-12#Humidity==55.5| whenever the humidity of sensor AM2301-12 equals 55.5%|
@@ -104,13 +104,13 @@ Trigger           | When it occurs |
 
 To trigger only at TelePeriod time, prefix the sensor with the word `Tele-`.  
 
-Trigger           | When it occurs |
+|Trigger           | When it occurs |
 ------------------|----------------|
 |Tele-AM2301#Temperature|sensor AM2301 Temperature value when the TelePeriod JSON payload is output|
 
 Hardware and software serial interface, RF, IR and TuyaMCU are also supported based on their [JSON](JSON-Status-Responses) status message:  
 
-Trigger           | When it occurs |
+|Trigger           | When it occurs |
 ------------------|----------------|
 |TuyaReceived#Data=\<hex_string><a id="TuyaReceivedData"></a>| whenever \<hex_string> is received with [TuyaMCU](tuyamcu) component|
 |SerialReceived#Data=\<string><a id="SerialReceivedData"></a>| whenever \<string> is received via hardware serial|
