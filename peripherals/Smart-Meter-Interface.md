@@ -28,7 +28,7 @@ The Smart Meter Interface provides a means to connect many kinds of meters to Ta
 
 There are many different meters that use the same protocol. There are multitudes of variants and use cases. A meter can be defined by using compilation time `#define` pragmas. This requires recompiling the firmware to make modifications.  
 
-This interface provides a means of specifying these definitions through [meter descriptors](Smart-Meter-Interface-Descriptors). This method uses the [scripting language](Scripting-Language) editor to define the descriptors. In this way, only one firmware binary version is required and a modification can be made easily "on the fly".  
+This interface provides a means of specifying these definitions through [meter descriptors](#Smart-Meter-Descriptors). This method uses the [scripting language](Scripting-Language) editor to define the descriptors. In this way, only one firmware binary version is required and a modification can be made easily "on the fly".  
 
 **Note:** If no `>M` section is found in the script or if the scripting language is not compiled, the driver reverts to the default `#define` definition(s).  
   
@@ -243,7 +243,7 @@ with the '=' char at the beginning of a line you may do some special decoding
 
 ------------------------------------------------------------------------------
 
-### MODBUS Device
+### MODBUS Devices
 ### SDM530
 
 >`>D`  

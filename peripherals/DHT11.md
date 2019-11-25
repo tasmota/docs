@@ -20,13 +20,13 @@ After reboot of the device the temperature and humidity are displayed.
 ### Wemos DHT11 Shield
 _Note: this is ONLY for v1.0.0 of the DHT11 shield, since v2.0.0 uses I<sup>2</sup>C and pinned differently._
 
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/wemos_dth11_shield.jpg" align="right" width=300>
+<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/wemos_dth11_shield.jpg?raw=true" align="right" width=300>
 
 From the [Wemos DHT11 shield specs](https://wiki.wemos.cc/products:retired:dht_shield_v1.0.0) the DATA OUT pin is connected to D4 of the Wemos.
 
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/wemos_dht11_config_marked.jpg"/>
+<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/wemos_dht11_config_marked.jpg?raw=true"/>
 
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/wemos_dht11_main_marked.jpg"/>
+<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/wemos_dht11_main_marked.jpg?raw=true"/>
 
 _Note: Having the shield compact on top of the processor increases the temperature. In normal Mode this can be up to 6°C. So you should add sleep mode. Adding normal "Sleep 100" and putting the sensor vertically reduces the temperature difference to 2°C_
 

@@ -79,7 +79,7 @@ Mains IN, mains OUT, all sealed:
 * Check images below for more information about the 1kOhm resistor needed to shift the voltage to 5V from 3V3 for the PZEM-004T serial connection.  
 
 PZEM-004T v.1.0  
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/pzem/pzem-fix.jpg" height="400" />
+<img src="https://github.com/arendst/arendst.github.io/blob/master/media/pzem/pzem-fix.jpg?raw=true" height="400" />
 
 PZEM-004T v.3.0  
 <img src="https://user-images.githubusercontent.com/34340210/63592015-8508ac00-c57e-11e9-9e20-2b41b2662161.jpeg" height="400" />

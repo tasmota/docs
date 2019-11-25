@@ -55,7 +55,7 @@ Example: enable blinds and shutters support
 ```
 - identifier = `USE_SHUTTER`
 1. check whether USE_SHUTTER is already defined and proceed if it is not
-2. line copied from [`my_user_config.h`](https://github.com/arendst/Tasmota/blob/20370820b85acf282fbf7ebec38ef2a484921a16/tasmota/my_user_config.h#L332) then uncommented. tells the compiler to include (#define) shutter support
+2. this line copied from [`my_user_config.h`](https://github.com/arendst/Tasmota/blob/20370820b85acf282fbf7ebec38ef2a484921a16/tasmota/my_user_config.h#L332) then uncommented, tells the compiler to include (#define) shutter support
 3. close the IF statement from line 1
 
 Example: disable Domoticz support
@@ -73,5 +73,5 @@ Example: disable Domoticz support
 
 Save file, compile the custom binary and flash it
 
-:warning:     
-***There are limits to how many features can be included! If you go overboard code might not compile due to features conflicting _or_ might not be able to be flashed if it exceeds [ESP8266 limits](Sensor-API#keeping-esp8266-code-compact)***.
+> [!WARNING]   
+>There are limits to how many features can be included! If you go overboard code might not compile due to features conflicting _or_ might not be able to be flashed if it exceeds [ESP8266 limits](Sensor-API#keeping-esp8266-code-compact).

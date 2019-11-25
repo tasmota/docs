@@ -3,7 +3,7 @@ Opening my Sonoff 4CH (https://www.itead.cc/sonoff-4ch.html) I realized that on 
 I ordered on Aliexpress some 2.5 mm jacks and when I received it after some work...
 
 <p align="center">
-  <img src="https://github.com/arendst/arendst.github.io/blob/master/media/4chjack/sf4ch-jack.jpg">
+  <img src="https://github.com/arendst/arendst.github.io/blob/master/media/4chjack/sf4ch-jack.jpg?raw=true">
 </p>
 
 The schematic reports that 2.5 mm jack is configured as following (jack on right side, ESP8285 on the left side:

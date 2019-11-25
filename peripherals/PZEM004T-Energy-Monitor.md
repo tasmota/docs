@@ -1,4 +1,4 @@
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/pzem/pzem-done.jpg" width="250" align="right" />
+<img src="https://github.com/arendst/arendst.github.io/blob/master/media/pzem/pzem-done.jpg?raw=true" width="250" align="right" />
 The PZEM-004T together with a Sonoff Basic provide a good clamp on energy monitor.
 
 ## Parts needed
@@ -15,7 +15,7 @@ Install Tasmota on the Sonoff Basic and confirm it is functional before connecti
 As the PZEM-004T expects 5V serial data and the Sonoff Basic only provides up to 3V3, the expected optocoupler input power of the PZEM-004T has to be reduced. This can be accomplished by soldering a 1k resistor between the joints shown below (modification works for version v.1.0 and v.3.0).
 
 PZEM-004T v.1.0  
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/pzem/pzem-fix.jpg" height="400" />
+<img src="https://github.com/arendst/arendst.github.io/blob/master/media/pzem/pzem-fix.jpg?raw=true" height="400" />
 
 PZEM-004T v.3.0  
 <img src="https://user-images.githubusercontent.com/34340210/63592015-8508ac00-c57e-11e9-9e20-2b41b2662161.jpeg" height="400" />

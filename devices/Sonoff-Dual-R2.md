@@ -34,7 +34,7 @@ Please see the [Hardware Preparation](installation/Hardware-Preparation) page fo
 
 As always, you need to access the serial interface. The **four serial pins** (3V3, Rx, Tx, GND) are available at the short end of the PCB and can be seen on the left side of the first image and are labeled in red on the second image. For the v2.0 version of the board you need to cross-over the serial interface, see [troubleshooting](devices/Troubleshooting).
 
-<img alt="Sonoff Dual, GPIO0 grounded" src="https://github.com/arendst/arendst.github.io/blob/master/media/dual2a.jpg" width="48%" />
+<img alt="Sonoff Dual, GPIO0 grounded" src="https://github.com/arendst/arendst.github.io/blob/master/media/dual2a.jpg?raw=true" width="48%" />
 <img alt="Alternate GPIO0 spot" src="http://tinkerman.cat/wp-content/uploads/2016/12/20161206_234331s.jpg" width="48%" align="right" />
 
 Programming the Sonoff Dual is more difficult because the on-board-button is not connected to GPIO0. As with all ESP8266 modules pulling GPIO0 to GND is needed to put the chip in programming mode. You need to **connect GPIO0 and GND** during power up.

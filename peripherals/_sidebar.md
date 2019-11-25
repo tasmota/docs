@@ -58,7 +58,7 @@ SHT1x
 [SHT30](peripherals/SHT30)
 SI114x
 Si7021
-[Smart Meter Interface](peripherals/smart-meter-interface)
+[Smart Meter Interface](peripherals/Smart-Meter-Interface)
 SolaX X1
 SPS30
 TM1638

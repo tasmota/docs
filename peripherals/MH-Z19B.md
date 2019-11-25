@@ -1,7 +1,7 @@
 ## MH-Z19B CO<sub>2</sub> Sensor (Serial)
 
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/mhz19b-co2-sensor-front.jpg" align=right width=225>
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/mhz19b-co2-sensor-back.jpg" align=right width=225>
+<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/mhz19b-co2-sensor-front.jpg?raw=true" align=right width=225>
+<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/mhz19b-co2-sensor-back.jpg?raw=true" align=right width=225>
 
 The MH-Z19 sensor is manufactured by [Winsen](http://www.winsensor.com/) Lt., China and the measurement method used is based on the non-dispersive infrared ([NDIR](https://en.wikipedia.org/wiki/Nondispersive_infrared_sensor)) principle to detect the existence of CO<sub>2</sub> in the air.
 
@@ -49,7 +49,7 @@ For Sonoff Basic:
 ### Tasmota Main
 After reboot of the device the MHZ-19B measurements are shown.
 
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/wemos_mhz19b_main_marked.jpg" width=300>
+<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/wemos_mhz19b_main_marked.jpg?raw=true" width=300>
 
 Measure range can be selected with command:
 
