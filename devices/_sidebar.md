@@ -48,7 +48,7 @@
 [Shelly 2.5](devices/Shelly-2.5)
 [SK03 Outdoor Smart Plug](devices/SK03-Outdoor-Smart-Plug)
 [Teckin SP10 Smart Socket](devices/Teckin-sp10)
-[Teckin SP22](devices/Teckin-sp22)
+[Teckin SP22](devices/Teckin-SP22)
 [YTF IR Bridge](devices/YTF-IR-Bridge)
 [WT003-EU 4 AC + 4 USB Outlet Tuya Power Strip EU](https://github.com/arendst/Tasmota/pull/4590)
 [Wemos D1 R1 & R2](devices/Wemos-D1-R1-&-R2)
