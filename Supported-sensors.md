@@ -52,7 +52,7 @@
 - **SHT1x**  Temperature and Humidity sensor (I<sup>2</sup>C)
 - [**SHT30**](Wemos-D1-Mini-and-SHT30-Shield-High-Precision-Humidity-&-Temperature) Humidity & Temperature Sensor
 - **SI114x**  UV Index, IR and Visible Light sensor (I<sup>2</sup>C)
-- [**Smart Meter Interface**](smart-meter-interface) (Serial)
+- [**Smart Meter Interface**](Smart-Meter-Interface) (Serial)
 - [**Soil Moisture Sensor**](Moisture-Sensor-and-Chirp!-Sensor) (I<sup>2</sup>C)
 - **SolaX X1**  SolaX X1 inverter (Serial)
 - **SPS30**  Particulate Matter (PM) sensor (I<sup>2</sup>C)
