@@ -53,7 +53,7 @@ The devices listed below are existing as modules in Tasmota.
 - [**Shelly 2.5**](devices/Shelly-2.5)
 - [**SK03 Outdoor Smart Plug**](devices/SK03-Outdoor-Smart-Plug)
 - [**Teckin SP10 Smart Socket**](devices/Teckin-sp10)
-- [**Teckin SP22**](devices/Teckin-sp22)
+- [**Teckin SP22**](devices/Teckin-SP22)
 - [**YTF IR Bridge**](devices/YTF-IR-Bridge)
      - [**IR Codes Remotes**](devices/Codes-for-IR-Remotes-(for-YTF-IR-Bridge))
 - [**WT003-EU 4 AC + 4 USB Outlet Tuya Power Strip EU**](https://github.com/arendst/Tasmota/pull/4590)
