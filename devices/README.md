@@ -9,7 +9,7 @@ The devices listed below are existing as modules in Tasmota.
 - [**Sonoff 4CH DIY**](devices/Sonoff-4CH-DIY)
 - [**Sonoff B1 / B1 R2**](devices/Sonoff-B1)
 - [**Sonoff Basic**](devices/Sonoff-Basic)
-- [**Sonoff Basic R3**](devices/Sonoff-DIY)
+- [**Sonoff Basic R3**](devices/sonoff-basic-r3)
 - [**Sonoff Dual**](devices/sonoff-dual)
 - [**Sonoff Dual R2**](devices/sonoff-dual-R2)
 - [**Sonoff iFan02**](devices/Sonoff-iFan02)
