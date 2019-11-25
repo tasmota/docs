@@ -5,7 +5,7 @@
 [Sonoff B1 / B1 R2](devices/Sonoff-B1)
 [Sonoff Basic R1/R2/R3](devices/Sonoff-Basic)
 [Sonoff Dual](devices/Sonoff-Dual)
-[Sonoff Dual R2](devices/sonoff-dual-R2)
+[Sonoff Dual R2](devices/Sonoff-Dual-R2)
 [Sonoff iFan02](devices/Sonoff-iFan02)
 [Sonoff iFan03](devices/Sonoff-iFan03)
 [Sonoff Mini](devices/Sonoff-Mini)
