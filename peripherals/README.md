@@ -30,7 +30,7 @@ _[`Gpios All`](Commands#gpios) shows list of all available components by name an
 **[`Template`](Commands#template)**   
 Instead of using `Module` and `GPIO` you can define everything using `Template`. [Read more...](Templates#template-configuration-with-commands)
 
-## Additional Options
+### Additional Options
 
 #### Measurement Units
 Temperature units can be set to Celsius or Fahrenheit with [`SetOption8`](Commands#setoption8) command.
@@ -45,7 +45,8 @@ Some peripherals offer, or even require, additional commands. See [Commands](Com
 
 > To make a link between the different naming schemes the [Pin Definition overview](https://github.com/esp8266/esp8266-wiki/wiki/Pin-definition) in the ESP8266 wiki is quite helpful.
 
-### Examples
+## Examples
+
 #### Connect switch
 If you take a Sonoff Basic and connect a switch between pin4 (GND) and pin5 (GPIO14) of the 5 pin programming header you now have a second switch connected to the device. You can set this through the module config page as option `Switch1 (9)` or from the command line with `gpio14 9`.
 

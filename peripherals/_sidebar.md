@@ -1,4 +1,4 @@
-[Peripherals](peripherals/)
+* [Peripherals](peripherals/)
 
 [Supported Peripherals](peripherals/Supported-Peripherals)
 * [A4988](peripherals/A4988-Stepper-Motor-Controller)
