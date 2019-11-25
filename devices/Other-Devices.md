@@ -24,7 +24,7 @@ This page is here for archival purposes. For new devices use [Tasmota Device Tem
 - [Oittm Smart Plug](devices/Oittm-Smart-Plug)
 - [Mirabella Genio Smart Plug](devices/Mirabella-Genio-Smart-Plug)
 - [CE Smart Home™ Garden Power Stake](devices/CE-Smart-Home™-Garden-Power-Stake)
-- [4CH-Wifi-Socket-with-USB-Charger (Tuya TYWE2S)](devices/4CH-Wifi-Socket-with-USB-Charger-(TYWE2S))
+- [4CH-Wifi-Socket-with-USB-Charger (Tuya TYWE2S)](devices/4CH-Wifi-Socket-with-USB-Charger-SA-P402A-(TYWE2S))
 - [Anoopsyche JH-G01B1](https://github.com/arendst/Tasmota/issues/5066#issuecomment-458741056)
 - [RGB Smart Socket with Power Monitor 16A EU](devices/RGB-Smart-Plug-16A)
 - [Supernight Dual Wifi Plug](devices/Supernight-dual-wifi-plug)
