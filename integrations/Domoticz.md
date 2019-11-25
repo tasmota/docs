@@ -1,5 +1,5 @@
 
-<img alt="Domoticz" src="/_media/logo/domoticz2.jpg" style="margin:10px;float:right;width:20em"> </img>
+<img alt="Domoticz" src="../_media/logo/domoticz2.jpg" style="margin:10px;float:right;width:20em"> </img>
 Tasmota supports [Domoticz](http://www.domoticz.com/) MQTT 'out of the box' for both relays and sensors.
 
 Find below the procedure to configure Domoticz and Tasmota.
@@ -30,7 +30,7 @@ Make a new virtual switch and remeber its Idx number.
     1. Remember it's Idx number
 
 ## Tasmota Configuration
-<img alt="Domoticz" src="/_media/logo/domoticz3.jpg" style="margin:10px;float:right;width:15em"> </img>
+<img alt="Domoticz" src="../_media/logo/domoticz3.jpg" style="margin:10px;float:right;width:15em"> </img>
 Tasmota provides different ways to configure Domoticz parameters. Choose the method you prefer:
 
 [The sections below don't look like they are needed any longer. The in topic and out topic entry areas don't appear to be in the Domoticz configure section - at least they are not there in mine and mine is working 17/03/2018]
