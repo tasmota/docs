@@ -31,9 +31,9 @@ The devices listed below are existing as modules in Tasmota.
 - [**Sonoff TH**](devices/Sonoff-TH)
 - [**Arilux LC02**](devices/Arilux-LC02)
 - [**Armtronix Dimmers**](devices/Armtronix-Dimmers)
-- [**Blitzwolf BW-SHP2**](devices/Blitzwolf-SHP2)
+- [**Blitzwolf BW-SHP2**](devices/BlitzWolf-SHP2)
 - [**Blitzwolf BW-SHP4**](devices/BlitzWolf-BW-SHP4-(UK-Version))
-- [**Blitzwolf BW-SHP6**](devices/Blitzwolf-SHP6)
+- [**Blitzwolf BW-SHP6**](devices/BlitzWolf-SHP6)
 - [**Digoo DG-SP202**](devices/Digoo-DG-SP202)
 - [**Geekcreit 2CH**](devices/Geekcreit-Sonoff-2-Channel-Relay-(AC-85V-250V))
 - [**Gosund SP1**](devices/Gosund-SP1)<img src="https://user-images.githubusercontent.com/5904370/53279089-f968ac80-370d-11e9-8464-ce9d1c9c679c.jpg"  style="float:right;width:15em"></img>
