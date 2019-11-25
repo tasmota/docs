@@ -11,7 +11,7 @@ The devices listed below are existing as modules in Tasmota.
 - [**Sonoff Basic**](devices/Sonoff-Basic)
 - [**Sonoff Basic R3**](devices/Sonoff-Basic?id=sonoff-basic-r33)
 - [**Sonoff Dual**](devices/sonoff-dual)
-- [**Sonoff Dual R2**](devices/sonoff-dual-R2)
+- [**Sonoff Dual R2**](devices/Sonoff-Dual-R2)
 - [**Sonoff iFan02**](devices/Sonoff-iFan02)
 - [**Sonoff iFan03**](devices/Sonoff-iFan03)
 - [**Sonoff Mini**](devices/Sonoff-Mini)
