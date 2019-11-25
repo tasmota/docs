@@ -14,7 +14,7 @@ The devices listed below are existing as modules in Tasmota.
 - [**Sonoff iFan02**](devices/Sonoff-iFan02)
 - [**Sonoff iFan03**](devices/Sonoff-iFan03)
 - [**Sonoff Mini**](devices/Sonoff-Mini)
-- [**Sonoff Pow**](devices/Sonoff-pow)
+- [**Sonoff Pow**](devices/Sonoff-Pow)
 - [**Sonoff Pow R2**](devices/Sonoff-Pow-R2)
 - [**Sonoff PSA**](devices/Sonoff-PSA)
 - [**Sonoff RF**](devices/Sonoff-RF)
