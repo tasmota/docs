@@ -1,5 +1,3 @@
-# Commands
-
 ## How to Use
 
 Tasmota provides three powerful man machine interfaces for issuing commands: **MQTT**, **web** and **serial** 

@@ -31,6 +31,7 @@ _[`Gpios All`](Commands#gpios) shows list of all available components by name an
 Instead of using `Module` and `GPIO` you can define everything using `Template`. [Read more...](Templates#template-configuration-with-commands)
 
 ## Additional Options
+
 #### Measurement Units
 Temperature units can be set to Celsius or Fahrenheit with [`SetOption8`](Commands#setoption8) command.
 

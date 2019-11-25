@@ -1,4 +1,3 @@
-### Supported Peripherals
 Name|Description|Image
 ---|---|---
 [**A4988**](peripherals/A4988-Stepper-Motor-Controller)|Stepper Motor Controller 
@@ -50,8 +49,8 @@ Name|Description|Image
 [**RDM6300**](peripherals/RDM6300) | 125Khz RFID Module
 **RX-4M50RR30SF / RX-AM8SF** | RF Sensor receiver (gpio)
 **SCD30** | CO<sub>2</sub> sensor (I<sup>2</sup>C)
-**SDM120** | Modbus Energy Meter (serial)
-**SDM630** | Modbus Energy Meter (serial)
+**Eastron SDM120** | Modbus Energy Meter (serial)
+**Eastron SDM630** | Modbus Energy Meter (serial)
 [**SDS011 (SDS021)**](peripherals/SDS011) | Laser Dust Sensor
 **SGP30** | Gas and Air Quality sensor (I<sup>2</sup>C)
 **SHT1x** | Temperature and Humidity sensor (I<sup>2</sup>C)
@@ -73,14 +72,14 @@ Name|Description|Image
 
 [Google Sheet list of supported peripherals](peripherals/https://docs.google.com/spreadsheets/d/1VaZrCUjNosUQGYBX0pTVoY_rkSzEIcTP8K3052smOB4/edit?usp=sharing)
 
-[Sensor API Documentation](peripherals/Sensor-API)
+[Sensor API Documentation](Sensor-API)
 
 ## Expanding Specific Devices
 
-  | [LEGO nightstand switch using Sonoff SV](peripherals/https://jeff.noxon.cc/2018/11/21/lego-nightstand-light-switch/)
-  | [Add a physical button to Sonoff Basic](peripherals/https://translate.google.com/translate?hl=en&sl=auto&tl=en&u=https%3A%2F%2Fwww.domo-blog.fr%2Fajouter-un-bouton-physique-au-sonoff-basic%2F)
-[Remote button for Sonoff](peripherals/Control-a-Sonoff-using-a-remote-button)
-[Expand Sonoff S20 with a jack plug](peripherals/https://github.com/arendst/Tasmota/issues/670)
-[Expand Sonoff 4CH with a jack plug](peripherals/Expanding-4CH)
-[Modify KaKu to WKaKu Power Socket](peripherals/Modify-KaKu-to-WKaKu-Power-Socket)
-[GPIO Locations](peripherals/GPIO-Locations)
+* [LEGO nightstand switch using Sonoff SV](peripherals/https://jeff.noxon.cc/2018/11/21/lego-nightstand-light-switch/)
+* [Add a physical button to Sonoff Basic](peripherals/https://translate.google.com/translate?hl=en&sl=auto&tl=en&u=https%3A%2F%2Fwww.domo-blog.fr%2Fajouter-un-bouton-physique-au-sonoff-basic%2F)
+* [Remote button for Sonoff](peripherals/Control-a-Sonoff-using-a-remote-button)
+* [Expand Sonoff S20 with a jack plug](peripherals/https://github.com/arendst/Tasmota/issues/670)
+* [Expand Sonoff 4CH with a jack plug](peripherals/Expanding-4CH)
+* [Modify KaKu to WKaKu Power Socket](peripherals/Modify-KaKu-to-WKaKu-Power-Socket)
+* [GPIO Locations](peripherals/GPIO-Locations)

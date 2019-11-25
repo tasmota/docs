@@ -5,6 +5,7 @@ Buy example:
 - [Sparkfun](https://www.sparkfun.com/products/13959)
 
 ## Configuration
+
 #### Wiring<img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/wemos/wemos_hc-sr04_schematic.jpg" align=right></img>
 
 | HC-SR04   | ESP8266 |
@@ -19,7 +20,7 @@ The HC-SR04 operates at 5V and therefore the echo signal will be 5V as well. Con
 There is a variant of the HC-SR04, called HC-SR04P. It mainly operates at 3.3V and then it doesn't need the voltage divider but you will notice a range drop of about 1 meter.
 ![image](https://user-images.githubusercontent.com/5904370/68340827-75155880-00e7-11ea-8f79-efd47bd421bc.png)
 
-### Tasmota 
+#### Tasmota Settings 
 In the _Configuration -> Configure Module_ page assign:
 1. GPIOx to `SR04 Tri (69)`
 2. GPIOy to `SR04 Ech (70)`

@@ -10,6 +10,7 @@ Otherwise you must [compile your build](compile-your-build). Add the following t
 Honeywell HumidIcon™ Digital Humidity and Temperature Sensors HIH Series
 
 ## Configuration
+
 #### Wiring
 Get the 4 pin SIP version if possible, as this will be easier to solder than the 8 pin SMD version.
 

@@ -40,6 +40,7 @@
  - [help/Device-Recovery Recovery](Device-Operational-Recovery)
 
 ## Installation
+
 ### Cannot enter flash mode
 Be sure to press the button correctly, you must "feel" a click. If your on-device button doesn't allow you to enter flash mode or there is no GPIO0 broken out to the PCB, you can always bridge GND to GPIO0 pin directly on the chip. Search on the Internet for your chip's pinouts and use [the tutorial](Hardware-Preparation#bringing-the-module-in-flash-mode). Be sure to keep GPIO0 grounded long enough (3-5 seconds) before disconnecting to ensure the chip has booted completely into programming mode. On devices that do not provide a GPIO0 connected button, it may be easier to leave the wired bridge in place throughout the entire flashing process (erase & upload). Doing so will not create any problems for flashing the device. After the firmware is uploaded successfully, remove the bridge. This allows the device to boot normally.
 
@@ -168,6 +169,7 @@ On an ESP82xx, Wi-Fi calibration is sensitive to the power supplied. If this cha
 5. **Restore your device configuration from the _step 1_ backup**  
 
 ## MQTT
+
 ### Cannot connect to my MQTT broker
 Make sure you've [configured MQTT](MQTT) correctly. If that didn't solve the issue check your MQTT broker logs. 
 Most likely problem is your broker doesn't allow logins for your Tasmota configure user and password or your ACL settings do not include your device.
@@ -201,6 +203,7 @@ You have more than one device connected with the same %topic% defined. Its impor
 If that is not the issue, erase all flash using esptool.py or esptool.exe and flash again by wire (as explained [here](#esptool-usage)) using [the latest precompiled bins with core v2.6](http://thehackbox.org/tasmota/pre-2.6/).
 
 ## Device
+
 ### Relay clicks and LED flashes at 1 second intervals
 This indicates that your device did not get flashed properly. In this case it will toggle all it's pins at 1 sec intervals. A flash erase and a new flash is required.
 
@@ -249,7 +252,7 @@ Short answer: **NO!**
 
 Long answer: There is not enough time in our coders lives to take requests, if you can code a driver for that sensor and submit a PR it will be considered, otherwise you can only wait for someone else to do it.
 
-### Tasmota is sending a lengthy status update (`STATUS` - `STATUS11`) every 5 seconds. What's going on?
+### Tasmota is sending a lengthy status update every 5 seconds. What's going on?
 Turn off [TasmoAdmin](TasmoAdmin)! It is polling your device with `STATUS 0` command with a HTTP request every 5 seconds which causes the status updates and unnecessary stress load on the device. In some cases it might even interfere with normal device operation.
 
 ### Web Interface Asks for Password
@@ -391,5 +394,5 @@ Example: Core-/SDK-Version: **2_3_0**/1.5.3(aec24ac9)
 
 * 2.5.2 **Not supported beginning with 6.6.0.18**  
 
-## I cannot find an answer here
+## I Cannot Find An Answer Here!
 Check the [Troubleshooting](Troubleshooting) section or join [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), or the [Community Forum](https://groups.google.com/d/forum/sonoffusers) for assistance from other Tasmota users.  

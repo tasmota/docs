@@ -67,21 +67,20 @@ Ciao!
 ```
 
 ## Shields color codes
+### Connection
 
 I2C:
-<img src="https://img.shields.io/static/v1?label=&message=i2c&color=blue" style="float:right"> </img> 
-
+![](https://img.shields.io/static/v1?label=sensor&message=i2c&color=blue ":no-zoom")
 GPIO:
- <img src="https://img.shields.io/static/v1?label=&message=gpio&color=purple"  style="float:right"> </img> 
-
+ ![](https://img.shields.io/static/v1?label=controller&message=gpio&color=purple ":no-zoom")
 ADC:
- <img src="https://img.shields.io/static/v1?label=&message=adc&color=orange"  style="float:right"> </img> 
-
+ ![](https://img.shields.io/static/v1?label=output&message=adc&color=orange ":no-zoom")
 Serial:
- <img src="https://img.shields.io/static/v1?label=&message=serial&color=seagreen"  style="float:right"> </img> 
-
+ ![](https://img.shields.io/static/v1?label=connection&message=serial&color=seagreen ":no-zoom")
 Serial:
- <img src="https://img.shields.io/static/v1?label=&message=spi&color=slategrey"  style="float:right"> </img> 
-
+ ![](https://img.shields.io/static/v1?label=connection&message=spi&color=slategrey ":no-zoom")
 Tuya:
- <img src="https://img.shields.io/static/v1?label=&message=tuya&color=orangered"  style="float:right"> </img> 
+ ![](https://img.shields.io/static/v1?label=connection&message=tuya&color=orangered ":no-zoom")
+
+
+

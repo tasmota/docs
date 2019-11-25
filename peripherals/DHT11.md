@@ -1,6 +1,7 @@
 DHT11 is a basic, ultra low-cost digital temperature and humidity sensor. It is very inaccurate and surpassed by others (AM2301, BME280, ...) thus not recommended by us.
 
 ## Configuration
+
 #### Wiring
 | DHT11   | ESP266 |
 |---|---|
