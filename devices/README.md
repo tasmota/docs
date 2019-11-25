@@ -55,7 +55,7 @@ The devices listed below are existing as modules in Tasmota.
 - [**Teckin SP10 Smart Socket**](devices/Teckin-sp10)
 - [**Teckin SP22**](devices/Teckin-SP22)
 - [**YTF IR Bridge**](devices/YTF-IR-Bridge)
-     - [**IR Codes Remotes**](devices/Codes-for-IR-Remotes-(for-YTF-IR-Bridge))
+     - [**IR Codes Remotes**](Codes-for-IR-Remotes-(for-YTF-IR-Bridge))
 - [**WT003-EU 4 AC + 4 USB Outlet Tuya Power Strip EU**](https://github.com/arendst/Tasmota/pull/4590)
 - [**Wemos D1 R1 & R2**](devices/Wemos-D1-R1-&-R2)
 - [**Wemos D1 Mini**](devices/Wemos-D1-Mini)
