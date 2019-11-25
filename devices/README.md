@@ -20,7 +20,7 @@ The devices listed below are existing as modules in Tasmota.
 - [**Sonoff RF**](devices/Sonoff-RF)
 - [**Sonoff RF R3**](devices/Sonoff-RF-R3)
 - [**Sonoff RF Bridge 433**](devices/Sonoff-RF-Bridge-433)
-- [**Sonoff S20 Smart Socket**](devices/sonoff-S20)<img src="https://user-images.githubusercontent.com/5904370/53279217-8c561680-370f-11e9-8150-59acedcb8f37.png"  style="float:right"></img> 
+- [**Sonoff S20 Smart Socket**](devices/Sonoff-S20)<img src="https://user-images.githubusercontent.com/5904370/53279217-8c561680-370f-11e9-8150-59acedcb8f37.png"  style="float:right"></img> 
 - [**Sonoff S26 Smart Socket**](devices/Sonoff-S26-Smart-Socket)
 - [**Sonoff S31**](devices/Sonoff-S31)
 - [**Sonoff SC**](devices/Sonoff-SC)
