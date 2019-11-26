@@ -1,4 +1,4 @@
-[![icon](_media/logog.png)](Home)
+![icon](_media/frontlogob.svg)
 >Alternative firmware for ESP8266 devices
 
 - Easy and flexible setup

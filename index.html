@@ -6,34 +6,25 @@
       <link rel="icon" href="favicon.ico">
       <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-      <!-- <meta name="description" content="Documentation for Tasmota"> -->
-      <meta name="keywords" content="tasmota tuya esp8266 flash nodemcu firmware help installation">  
-      <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+      <meta name="description" content="Tasmota">
+      <meta name="keywords" content="tasmota tuya esp8266 flash nodemcu firmware help installation open source flash">  
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+      <meta property="og:title" content="Tasmota">
+      <meta property="og:description" content="Alternative open source firware for ESP8266 devices.">
+      <meta property="og:image" content="https://tasmota.github.io/docs/_media/logow.png">
+      <meta property="og:url" content="https://tasmota.github.io/docs/#/Home">
+      <meta name="twitter:title" content="Tasmota">
+      <meta name="twitter:description" content="Alternative open source firware for ESP8266 devices.">
+      <meta name="twitter:image" content="https://tasmota.github.io/docs/_media/logow.png">
+      <meta name="twitter:card" content="summary_large_image">
+
 <!-- Theme: Simple Dark -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
-
+<link rel="stylesheet" href="_media/theme-custom.css">
 <!-- PrismJS theme -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/themes/prism-dark.css">
 
 <style>
-:root {
-  --mono-shade4                       : hsl(var(--mono-hue), var(--mono-saturation), 10%);
-  --base-line-height                  : 1.5;
-  --content-max-width                 : 70em;
-  --table-cell-padding                : 0.4em 0.75em;
-  --table-head-background             : var(--mono-shade4);
-  --table-row-even-background         : var(--mono-shade2);
-  --table-row-odd-background          : var(--mono-shade3);
-/* Sidebar
-============================================================================= */
-    --sidebar-background              : var(--mono-shade2);
-    --sidebar-padding                 : 0 25px;
-    --sidebar-transition-duration     : var(--duration-fast);
-    --sidebar-width                   : 18rem;
-    --sidebar-nav-indent              : 0.6em;
-    --sidebar-nav-margin              : 0 0 0;
-    --sidebar-nav-link-padding        : 0 0;
-    --sidebar-nav-link-before-margin  : 0 0 0 0;  
 </style>
 
 </head>
@@ -47,7 +38,7 @@
 			repo       : 'https://github.com/arendst/Tasmota',
       nameLink   : './#/Home',
 			homepage   : 'Home.md',
-      logo       : '/_media/logog_mini.png',
+      logo       : '/_media/logob.svg',
       onlyCover  : true,
       relativePath: false,
       coverpage  : true,
@@ -78,11 +69,11 @@
         tabHeadings: true       // default
       },
       'flexibleAlerts': {
-      style: 'flat',
+      style: 'tasmota',
       example: {
         label: "Example",
         icon: "fas fa-chalkboard-teacher",
-        className: "comment"
+        className: "example"
         },
       search : [
       '/',    

@@ -4,8 +4,7 @@ We need to connect to the serial programming interface of the ESP8266 chip. This
 
 In most cases those pins are available on the PCB in the form of pin holes or solder pads but pin headers or jumper wires need to be soldered or otherwise applied. In some cases you will need to solder wires directly on the chip's pins which requires some experience and good soldering equipment.
 
-> [!WARNING]
-> WARNING BEFORE PROCEEDING
+> [!WARNING|style:flat|label:DANGER]
 >
 >DO NOT CONNECT DEVICES TO MAINS POWER WHILE THE COVER IS OPEN AND CIRCUIT BOARD IS EXPOSED!!!
 

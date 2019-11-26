@@ -3,3 +3,4 @@
 
 # [FAQ](FAQ)
 # [Troubleshooting](Troubleshooting)
+# [Device Recovery](Device-Recovery)

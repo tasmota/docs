@@ -74,7 +74,7 @@ Wait for the upgrade process to complete and check the Tasmota version. If in co
 
 ### Using Device Button
 
-Devices with a built in button (the one used to put your device into [flash mode](Hardware-Preparation#bringing-the-module-in-flash-mode)) can initiate OTA upgrade with it.
+Devices with a built in button (the one used to put your device into [flash mode](installation/Hardware-Preparation#programming-mode)) can initiate OTA upgrade with it.
 
 7 short presses of the button will start OTA download of firmware using the Ota Url. Device LED is lit during the update.
 

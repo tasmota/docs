@@ -1,4 +1,4 @@
->[!DANGER]
+>[!DANGER|style:flat]
 > If you don't have the willingness to tinker and learn... TURN BACK!.<br> Tasmota is not a commercial product and support is limited. You have to be willing to research and debug potential problems yourself.
 
 ---

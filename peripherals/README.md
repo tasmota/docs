@@ -43,7 +43,7 @@ To change the update interval (teleperiod) of MQTT messages change the [`TelePer
 #### Peripheral Specific
 Some peripherals offer, or even require, additional commands. See [Commands](Commands#Sensor) page for peripheral specific commands.
 
-> To make a link between the different naming schemes the [Pin Definition overview](https://github.com/esp8266/esp8266-wiki/wiki/Pin-definition) in the ESP8266 wiki is quite helpful.
+> [!TIP] To make a link between the different naming schemes the [Pin Definition overview](https://github.com/esp8266/esp8266-wiki/wiki/Pin-definition) in the ESP8266 wiki is quite helpful.
 
 ## Examples
 
@@ -66,21 +66,16 @@ You can then plug a sensor into the jack like you would to a [Sonoff TH](Sonoff-
 
 
 ## Restrictions  
-> [!DANGER]  
 
-If you can avoid it, don't use GPIOs: **0, 1, 2, 6-11, 15 and 16**. That leaves **4, 5, 12, 13, 14** as GPIOs without any constraints. **3** being RX is also good to avoid (PWM is not working on this GPIO).
+> [!DANGER]  If you can avoid it, don't use GPIOs: **0, 1, 2, 6-11, 15 and 16**. That leaves **4, 5, 12, 13, 14** as GPIOs without any constraints. **3** being RX is also good to avoid (PWM is not working on this GPIO).
 
 Others ***can*** be used but you have to mind the constraints outlined in [this document](https://tttapa.github.io/ESP8266/Chap04%20-%20Microcontroller.html).
 
 ### Voltage and Current
-> [!DANGER]  
-
-The ESP8266 is a 3.3V microcontroller, so its I/O operates at 3.3V as well. The pins are **not** 5V tolerant, applying more than 3.6V on any pin will release the [magic smoke](https://en.wikipedia.org/wiki/Magic_smoke) (fry the chip).
-
-The maximum current that can be drawn from a single GPIO pin is 12mA.
+> [!DANGER] The ESP8266 is a 3.3V microcontroller, so its I/O operates at 3.3V as well. The pins are **not** 5V tolerant, applying more than 3.6V on any pin will release the [magic smoke](https://en.wikipedia.org/wiki/Magic_smoke) (fry the chip). The maximum current that can be drawn from a single GPIO pin is 12mA.
 
 ### Power Supply
-> [!DANGER]  
+> [!DANGER]
 
 The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?title=Power) is **one of the most important elements** for stable device operation. Many devices on the market have barely adequate power supplies for normal operation. ***Connected peripherals may strain the ability of the power supply on the device to deliver appropriate power to all the components, both on-board as well as externally connected.***
 

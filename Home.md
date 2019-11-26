@@ -1,5 +1,5 @@
 
-<img style="margin: 10px 10px; float:right; width:220px" src="_media/logog.png" alt="Tasmota Logo"></img>
+<img style="margin: 10px 10px; float:right; width:40%" src="_media/frontlogob.svg" alt="Tasmota Logo"></img>
 
 <!-- <img src="https://user-images.githubusercontent.com/5904370/55973675-661c1400-5c86-11e9-8453-0082bfcd61b6.png" width="200" align="right"> </img> -->
 <span style="font-size:25px">Latest release:</span>
