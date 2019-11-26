@@ -1,6 +1,6 @@
-You can connect all kinds of peripherals (sensors, displays, switches, LED lights, ...) to available pins of your device or even create your own from a development board 
+?>You can connect all kinds of peripherals (sensors, displays, switches, LED lights, ...) to available pins of your device or even create your own from a development board 
 
-> [!WARNING]
+> [!TIP]
 >A peripheral must have correctly wired power, GND and data pins to the device prior to booting in order for Tasmota to detect it and initialize it properly.
 
 ## Tasmota Settings

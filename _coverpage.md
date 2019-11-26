@@ -1,5 +1,5 @@
 ![icon](_media/frontlogob.svg)
->Alternative firmware for ESP8266 devices
+>Alternative open source firmware for ESP8266 devices
 
 - Easy and flexible setup
 - OTA updates 
