@@ -46,7 +46,7 @@ Blockquotes `>` can now look even fancier:
 > `> [!EXAMPLE]`
 
 > [!DANGER|style:flat]
-> `> [!DANGER]`
+> `> [!DANGER|style:flat]`
 
 ### Creating Tabs
 Tabs inside tabs are not supported.
