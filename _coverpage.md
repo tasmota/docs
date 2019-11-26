@@ -15,7 +15,4 @@
 [GitHub](https://github.com/arendst/Tasmota)
 
 
-<!-- background image -->
-
-![](_media/bg.jpg)
 
