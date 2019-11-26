@@ -1,4 +1,4 @@
-**Status LEDs** are the LEDs on the device that display its state.
+?> **Status LEDs** are the LEDs on the device used to display its state.
 
 Those LEDs are defined in a template or module using `Led1`, `Led2`, `Led3` or `Led4` (or `Led1i`, `Led2i`, `Led3i` or `Led4i`) and additionally using `LedLink` or `LedLinki` (`LedLink` was introduced in version 6.5.0.12). It is not recommended to assign `Led<x>` and `Led<x>i` with the same `<x>` number. Prior to version 6.5.0.12, Tasmota only supported up to two LED components to indicate the power state of the relay(s), and the Wi-Fi/MQTT connectivity status. 
 
@@ -20,7 +20,7 @@ It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (i
 ### Power status LED
 **Power status LED** shows the power status of relay component(s). [`LedMask`](Commands#ledmask) determines which relay(s) are associated with the power status LED. This behavior can be modified with the [`LedState`](Commands#ledstate) command. The LED is turned off by default when the relay is OFF and turned on when the relay switches ON.
 
-> Depending on the device design, some LEDs are connected to the same GPIO as the relay. Those cannot be independently controlled since they have to follow the relay state.
+> [!NOTE] Depending on the device design, some LEDs are connected to the same GPIO as the relay. Those cannot be independently controlled since they have to follow the relay state.
 
 If you have more than one LED wired independently and you want it to show the power state of the relay, you must assign an `LedLink` GPIO.
 

@@ -5,7 +5,8 @@ Components can be: buttons, switches, relays, LEDs, sensors, displays, MCU units
 
 Every Tasmota device has some components configured by default. Most often there is a relay, a button and a LED configured as is the case for a Sonoff Basic in the following image.
 
-> GPIOs configured as User (255) are the GPIOs that can be assigned to components in the Configure Module page. See next image for an example!
+> [!TIP]
+> GPIOs configured as User (255) are the GPIOs that can be assigned to components in the **Configure Module** page. 
 
 ## Assigning Components
 <img src="_media/components2.png" style="float:right;height:10em;margin:10px"></img>

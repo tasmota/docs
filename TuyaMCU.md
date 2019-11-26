@@ -9,14 +9,14 @@ TuyaMCU module facilitates communication between Tasmota and the MCU using [Tuya
 
 ## TuyaMCU Command
 Command [`TuyaMCU`](Commands#tuyamcu) is used to map Tasmota components to Tuya device dpId's. 
-> Used only if your device is defined as module `TuyaMCU (54)`.
+> [!WARNING] Used only if your device is defined as module `TuyaMCU (54)`.
 
 Command value consists of two comma separated parameters: fnId and dpId. 
 ```
 TuyaMCU <fnId>,<dpId>
 ```  
 where `<fnId>` is a Tasmota component and `<dpId>` is the dpId to map the function to.
-> `TuyaMCU 11,1` maps Relay1 (fnId 11) to dpId 1.
+> [!EXAMPLE] `TuyaMCU 11,1` maps Relay1 (fnId 11) to dpId 1.
 
 If any existing entry with same `fnId` or `dpId` is already present, it will be updated to the new value.    
 
@@ -35,7 +35,7 @@ Use this procedure to determine which dpId's are available:
 1. Go to `Configure` -> `Console` option in Tasmota web interface.
 2. Use command `weblog 4` to enable verbose logging in web interface.
 3. Observe the log. After every 9-10 seconds you should see log messages similar to:
-   ```
+   ```console
    TYA: Heartbeat
    TYA: RX Packet: "55aa0107000501010001000f"
    TYA: FnId=0 is set for dpId=1
@@ -83,7 +83,7 @@ Voltage (in deci Volt) | 33 |
 Relay Inverted1 to Relay Inverted8 | 41 to 48 | Map only to dpId with on / off function
 Battery powered sensor mode | 51 | 
 
-> This component is under active development which means the function list may expand in the future.
+> [!NOTE] This component is under active development which means the function list may expand in the future.
 
 Since the majority of devices have a power on/off functions on dpId 1 its mapped to fnId 11 (Relay1) by default.
 
@@ -102,13 +102,13 @@ Command's value consists of two comma separated parameters: dpId and data.
 There are 4 different commands, one for each [data type](#data-type-table).
 
 - `TuyaSend1` -> Sends boolean (Type 1) data (`0/1`) to dpId (Max data length 1 byte)
-> `TuyaSend1 1,0` sends vaue `0` to dpId=1 switching the device off
+> [!EXAMPLE] `TuyaSend1 1,0` sends vaue `0` to dpId=1 switching the device off
 - `TuyaSend2` -> Sends integer or 4 byte (Type 2) data to dpId (Max data length 4 bytes)
-> `TuyaSend2 14,100` sends value `100` to dpId=14 setting timer to 100 minutes
+> [!EXAMPLE] `TuyaSend2 14,100` sends value `100` to dpId=14 setting timer to 100 minutes
 - `TuyaSend3` -> Sends string (Type 3) data to dpId ( Max data length not-known)
-> `TuyaSend3 108,ff0000646464ff` sends a 14 char hex string to dpId=108 (Type 3) containing RGBHSV values to control a light
+> [!EXAMPLE] `TuyaSend3 108,ff0000646464ff` sends a 14 char hex string to dpId=108 (Type 3) containing RGBHSV values to control a light
 - `TuyaSend4` -> Sends enum (Type 4) data (`0/1/2/3/4/5`) to dpId (Max data length 1 bytes)
-> `TuyaSend4 103,2` sends value `2` to dpId=103 to set fan speed to high
+> [!EXAMPLE] `TuyaSend4 103,2` sends value `2` to dpId=103 to set fan speed to high
 
 ## TuyaReceived
 Every status message from the MCU gets a JSON response named `TuyaReceived` which contains the MCU protocol status message inside key/value pairs which are hidden from the user by default.
@@ -118,7 +118,7 @@ To publish them to an MQTT Topic of `tele/%topic%/RESULT` you need to enable `Se
 #### Example
 After issuing serial command `55aa0006000501010001010e` (Device power (dpId=1) is mapped to Relay1 (fnId=11)) we get the following console output (with `weblog 4`):
 
-```
+```console
 19:54:18 TYA: Send "55aa0006000501010001010e"
 19:54:18 MQT: stat/GD-30W/STATE = {"Time":"2019-10-25T19:54:18","Uptime":"0T01:45:51","UptimeSec":6351,"Heap":27,"SleepMode":"Dynamic","Sleep":0,"LoadAvg":999,"MqttCount":1,"POWER1":"ON","POWER2":"OFF","POWER3":"ON","POWER4":"OFF","POWER5":"ON","Dimmer":100,"Fade":"OFF","Speed":1,"LedTable":"OFF","Wifi":{"AP":1,"SSId":"HTPC","BSSId":"50:64:2B:5B:41:59","Channel":10,"RSSI":24,"LinkCount":1,"Downtime":"0T00:00:08"}}
 19:54:18 MQT: stat/GD-30W/RESULT = {"POWER1":"ON"}
@@ -131,11 +131,11 @@ Above `TYA: fnId=11 is set for dpId=1` you can see the JSON response for that dp
 
 "Data" field contains the complete response and the rest of the key/value pairs show the protocol broken into parts. "DpId", "DpIdData" and "DpIdType" are the ones we're most interested in since we can use them for `TuyaSend`.
 
-> Use command `SerialSend5 55aa0001000000` at any time to request statuses of all dpId's from the MCU. 
+> [!TIP] Use command `SerialSend5 55aa0001000000` at any time to request statuses of all dpId's from the MCU. 
 #### Use in Rules
 This data can also be used as a trigger for rules using `TuyaReceivedData#Data=hex_string`
 
-```
+```console
 Rule1 on TuyaReceived#Data=55AA000700056E040001007E do publish2 stat/tuya_light/effect rgb_cycle
 ``` 
 will publish a status message to a custom topic when `55AA000700056E040001007E` appears in "Data" field of the response.
@@ -159,7 +159,7 @@ The dimmer FunctionId is `21`. On a dimmer dpId generally is `2` or `3`. Try bot
 
 ### Dimming Range	
 Once you have figured out the dimming functionId, we need to find the maximum dimming range. Once the dimming Id is set, the logs will continue	
-```	
+```console	
 TYA: Heartbeat	
 TYA: RX Packet: "55aa03070005010100010011"	
 TYA: RX Relay-1 --> MCU State: Off Current State:Off	
@@ -179,7 +179,7 @@ Once set, try `dimmer 100` in the Console and check if the brightness of bulb is
 Some Tuya MCU devices support Power measurement support over serial. For this its better to use a bulb with known wattage rating.  	
 
 Observe the logs in the Console  	
-```	
+```console	
 TYA: RX Packet: "55aa03070005010100010011"	
 TYA: FnId=11 is set for dpId=1	
 TYA: RX Device-1 --> MCU State: Off Current State:Off	
@@ -208,7 +208,7 @@ In the `RX Packet` we are interested in the 3 digits before last 2 digits. For e
 7. Now we need the power rating of your bulb example `9W`. Multiply by 10 (90) and convert to hex which gives us 0x5A. Check which unknown ID is close to `5A`. I this example it is `59` for `ID=5`. This is the Id of `Active Power` function.	
 8. Set the active power functionId `31` by entering `TuyaMCU 31,5`.	
 9. Once Power and Voltage are set you should see something such as this in the logs:	
-   ```	
+   ```console	
    TYA: RX Packet: "55aa03070005010100010011"	
    TYA: FnId=11 is set for dpId=1	
    TYA: RX Device-1 --> MCU State: Off Current State:Off	
@@ -229,7 +229,7 @@ In the `RX Packet` we are interested in the 3 digits before last 2 digits. For e
 10. To get the Id for the current, calculate Current = Power / Voltage ( 9 / 244.7 ) = 0.0367. Multiply this by 1000 = 36.77. Now convert 36 to hex which is 0x24. This is closest to `25` which is Id 4. 	
 11. Set the current FunctionId `32` using command `TuyaMCU 32,4`.	
 12. Observe the logs should start showing	
-    ```	
+    ```console	
     TYA: RX Packet: "55aa03070005010100010011"	
     TYA: FnId=11 is set for dpId=1	
     TYA: RX Device-1 --> MCU State: Off Current State:Off	
@@ -259,7 +259,7 @@ For switches we need to
 By default, the TuyaMCU module expects a 1 gang switch. There is currenty no way to detect the number of relays present in an MCU based switch. We need to tell the number of relays to Tasmota using FunctionIDs 12 to 18 for Relay2 to Relay4. 	
 * For a 4 gang switch set `TuyaMCU 12,2`, `TuyaMCU 13,3` and `TuyaMCU 14,4` if the dpIds for Relays 2-4 are `2`,`3`,`4`.	
 
-> You can configure all at once by using `Backlog TuyaMCU 12,2; TuyaMCU 13,3; TuyaMCU 14,4`	
+> [!TIP] You can configure all at once by using `Backlog TuyaMCU 12,2; TuyaMCU 13,3; TuyaMCU 14,4`	
 ### Power Metering	
 Power metering configuration is same as for [dimmers](#power-metering).	
 
@@ -273,7 +273,7 @@ The stock Tuya App communicates with the PIC Micro inside the motor housing at 9
 * `dpId 103` is unknown.	
 
 ### Debugging	
-```	
+```tuya	
 55 aa 00 06 "deliver dp" 0005 "len=5" 66 04 00 01 <00=close100%,01=open0%> <chksum> is the fully open/close command	
 07 "report dp" 0005 (len) 66 04 00 01 <00 or 01> <chksum> is the reply.	
 55 aa 00 06 "deliver dp" 0008 (len=8) 65 02 00 04  <value.32 <chksum> is the move partial command	
@@ -427,7 +427,7 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
    - Transparent (raw): data in binary 
 
 ### Switches or Plugs/Power Strips
-```
+
 | DP ID | Identifier  | Data type          | Function type | Properties                                   |
 |-------|-------------|--------------------|---------------|----------------------------------------------|
 | 1     | switch_1    | Control and report | Boolean       |                                              |
@@ -440,12 +440,13 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 11    | countdown_3 | Control and report | Integer       | undefined0-86400, undefined1, Scale0, Unit:s |
 | 12    | countdown_4 | Control and report | Integer       | undefined0-86400, undefined1, Scale0, Unit:s |
 | 13    | countdown_5 | Control and report | Integer       | undefined0-86400, undefined1, Scale0, Unit:s |
-```
+
 
 ### Aromatherapy Machine (Oil Diffuser)
-```
-| DP ID | Function points          | Identifier     | Data type        | Function type | Properties
-| 1     | Switch                   | Power          | Issue and report | Boolean       |                                                                        |
+
+| DP ID | Function points          | Identifier     | Data type        | Function type | Properties |
+|-------|-----------------|---------------|------------------|---------------|-----------------------------------------------|
+| 1     | Switch                   | Power          | Issue and report | Boolean       |         |
 | 6     | Amount of fog            | fog            | Issue and report | Enum          | Enumerated values:small, large|
 | 11    | Light                    | Light          | Issue and report | Boolean       | |
 | 12    | Fault alarm              | fault          | Only report      | Fault         | Barrier values:1|
@@ -455,11 +456,11 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 102   | Color value              | colour_data    | Issue and report | Char type     | *see below |
 | 103   | Light mode               | lightmode      | Issue and report | Enum          | Enumerated values: 1, 2, 3|
 | 104   | Brightness setting       | setlight       | Issue and report | Integer       | Values range: 0-255, Pitch1, Scale0, Unit:\%|
-```
+
 > `colour_data` format of the lights is a string of 14 characters, for example, 00112233334455, where 00 indicates R, 11 indicates G, 22 indicates B, 3333 indicates the hue, 44 indicates the saturation, and 55 indicates the value. The initial value is saved by default. If you do not want to adjust the light, set the data to the maximum value 100% (0x64). The last four characters have fixed values.
 
 ### Curtain Motor
-```
+
 | DP ID | Function points | Identifier    | Data type        | Function type | Properties                                    |
 |-------|-----------------|---------------|------------------|---------------|-----------------------------------------------|
 | 1     | Percentage      | percent_state | Only report      | Integer       | Values range:0-100, Pitch1, Scale0, Unit:%    |
@@ -467,11 +468,11 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 3     | Auto Power      | auto_power    | Issue and report | Boolean       |                                               |
 | 4     | Left time       | countdown     | Issue and report | Enum          | Enumerated values:cancel, 1, 2, 3, 4          |
 | 5     | Total Time      | time_total    | Only report      | Integer       | Values range:0-120000, Pitch1, Scale0, Unit:m |
-```
+
 > [Complete document on protocols](https://github.com/arendst/Tasmota/files/3658412/protocol_CurtainM_20190926.pdf)
 
 ### Power Monitoring Plug
-```
+
 | DP ID | Function points        | Identifier      | Data type          | Function type | Properties                                    |
 |-------|------------------------|-----------------|--------------------|---------------|-----------------------------------------------|
 | 1     | switch_1               | switch_1        | Control and report | Boolean       |                                               |
@@ -486,10 +487,10 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 24    | power coefficient      | power_coe       | Data report        | Integer       | undefined0-1000000, undefined1, Scale0, Unit: |
 | 25    | statistics coefficient | electricity_coe | Data report        | Integer       | undefined0-1000000, undefined1, Scale0, Unit: |
 | 26    | warning                | fault           | Data report        | Fault         | Barrier values:ov_cr                          |
-```
+
 
 ### Dehumidifier
-```
+
 | DP ID | Function points | Identifier  | Data type        | Function type | Properties                                               |
 |-------|-----------------|-------------|------------------|---------------|----------------------------------------------------------|
 | 1     | Switch          | Switch      | Issue and report | Boolean       |                                                          |
@@ -503,10 +504,10 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 11    | Filter reset    | FilterReset | Issue and report | Boolean       |                                                          |
 | 12    | indoor temp     | Temp        | Only report      | Integer       | Values range:-20-50, Pitch1, Scale0, Unit:℃             |
 | 13    | Indoor humidity | Humidity    | Only report      | Integer       | Values range:0-100, Pitch1, Scale0, Unit:%               |
-```
+
 
 ### Lighting
-```
+
 | DP ID | Function points | Identifier    | Data type          | Function type | Properties                                                                 |
 |-------|-----------------|---------------|--------------------|---------------|----------------------------------------------------------------------------|
 | 1     | Switch          | led_switch    | Control and report | Boolean       |                                                                            |
@@ -518,10 +519,10 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 8     | Scene2          | flash_scene_2 | Control and report | Char type     |                                                                            |
 | 9     | Scene3          | flash_scene_3 | Control and report | Char type     |                                                                            |
 | 10    | Scene4          | flash_scene_4 | Control and report | Char type     |                                                                            |
-```
+
 
 ### Air purifier
-```
+
 | DP ID | Function points | Identifier  | Data type        | Function type | Properties                                               |
 |-------|-----------------|-------------|------------------|---------------|----------------------------------------------------------|
 | 1     | Switch          | Switch      | Issue and report | Boolean       |                                                          |
@@ -535,10 +536,10 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 11    | Filter reset    | FilterReset | Issue and report | Boolean       |                                                          |
 | 12    | indoor temp     | Temp        | Only report      | Integer       | Values range:-20-50, Pitch1, Scale0, Unit:℃              |
 | 13    | Indoor humidity | Humidity    | Only report      | Integer       | Values range:0-100, Pitch1, Scale0, Unit:%               |
-```
+
 
 ### Heater
-```
+
 | DP ID | Function points     | Identifier  | Data type        | Function type | Properties                                 |
 |-------|---------------------|-------------|------------------|---------------|--------------------------------------------|
 | 1     | Switch              | Power       | Issue and report | Boolean       |                                            |
@@ -548,10 +549,10 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 5     | Fault alarm         | Fault       | Only report      | Fault         | Barrier values:1, 2, 3                     |
 | 6     | Gear position       | gear        | Issue and report | Enum          | Enumerated values:low, mid, high, off      |
 | 7     | Conservation        | eco_mode    | Issue and report | Boolean       |                                            |
-```
+
 
 ### Smart fan
-```
+
 | DP ID | Function points      | Identifier     | Data type        | Function type | Properties                                |
 |-------|----------------------|----------------|------------------|---------------|-------------------------------------------|
 | 1     | Switch               | switch         | Issue and report | Boolean       |                                           |
@@ -566,9 +567,9 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 10    | Cool                 | fan_cool       | Issue and report | Boolean       |                                           |
 | 11    | Set Temperate        | temp           | Issue and report | Integer       | Values range:0-50, Pitch1, Scale0, Unit:℃ |
 | 12    | Current Temperature  | temp_current   | Only report      | Integer       | Values range:0-50, Pitch1, Scale0, Unit:℃ |
-```
+
 ### Kettle
-```
+
 | DP ID | Function points                                            | Identifier           | Data type        | Function type | Properties                                                          |
 |-------|------------------------------------------------------------|----------------------|------------------|---------------|---------------------------------------------------------------------|
 | 1     | Working switch                                             | start                | Issue and report | Boolean       |                                                                     |
@@ -580,10 +581,10 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 7     | Insulation switch                                          | switch_keep_warm     | Issue and report | Boolean       |                                                                     |
 | 8     | Holding time setting                                       | keep_warm_setting    | Issue and report | Integer       | Values range:0-360, Pitch1, Scale0, Unit:min                        |
 | 9     | Mode                                                       | work_type            | Issue and report | Enum          | Enumerated values: setting_quick, boiling_quick, temp_setting, temp_ |
-```
+
 
 ### BecaThermostat(WIP)
-```
+
 | DP ID | Function points     | Identifier  | Data type        | Function type | Properties                                 |
 |-------|---------------------|-------------|------------------|---------------|--------------------------------------------|
 | 1     | Switch              | Power       | Issue and report | Boolean       |                                            |
@@ -591,7 +592,7 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 3     | Current Temperature | TempCurrent | Only report      | Integer       | Values range:-9-99, Pitch1, Scale0, Unit:℃ |
 | 4     | Mode                | Mode        | Issue and report | Enum          | Enumerated values:m, p (wip)               |
 | 102   | Floor Temperature   | FloorCurrent| Issue and report | Integer       | Values range:0-37, Pitch1, Scale0, Unit:℃ |
-```
+
 
 ## Further Reading
 

@@ -55,14 +55,6 @@
   <defs
      id="defs12">
     <linearGradient
-       id="linearGradient7687"
-       osb:paint="solid">
-      <stop
-         style="stop-color:#d5dee3;stop-opacity:1;"
-         offset="0"
-         id="stop7685" />
-    </linearGradient>
-    <linearGradient
        id="linearGradient6191"
        osb:paint="solid">
       <stop
@@ -182,7 +174,7 @@
        id="linearGradient6025"
        osb:paint="solid">
       <stop
-         style="stop-color:#0a86cc;stop-opacity:1;"
+         style="stop-color:#1fa3ec;stop-opacity:1;"
          offset="0"
          id="stop6023" />
     </linearGradient>
@@ -198,15 +190,6 @@
        y2="145.13"
        gradientUnits="userSpaceOnUse"
        gradientTransform="translate(-44.42,-29.87)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient6025"
-       id="linearGradient7689"
-       x1="0.069829322"
-       y1="47.567242"
-       x2="170.61253"
-       y2="47.567242"
-       gradientUnits="userSpaceOnUse" />
   </defs>
   <title
      id="title14">Tasmota Logo</title>
@@ -220,7 +203,7 @@
      class="cls-1"
      d="M 85.19,60.13 A 52.6,52.6 0 0 0 66.45,161.89 V 146.71 A 38.8,38.8 0 0 1 78.31,74.5 v 95.89 H 92.08 V 74.5 a 38.8,38.8 0 0 1 11.86,72.21 v 15.13 A 52.6,52.6 0 0 0 85.19,60.13 Z"
      id="path18"
-     style="fill:#951717;fill-opacity:1;stroke:url(#linearGradient6027);stroke-opacity:0"
+     style="fill:#d5dee3;fill-opacity:1;stroke:url(#linearGradient6027);stroke-opacity:0"
      inkscape:connector-curvature="0" />
   <polygon
      class="cls-1"
@@ -265,7 +248,7 @@
      style="fill:#d5dee3;fill-opacity:1"
      inkscape:connector-curvature="0" />
   <path
-     style="fill:url(#linearGradient7689);fill-opacity:1.0;stroke:#1fa3ec;stroke-width:0.70351124;stroke-opacity:0"
+     style="fill:#d5dee3;fill-opacity:1;stroke:#1fa3ec;stroke-width:0.70351124;stroke-opacity:0"
      d="M 4.9344766,89.779403 0.56619159,85.37194 42.946578,42.995898 85.326963,0.61985333 127.72047,43.017698 l 42.3935,42.397846 -4.59092,4.550107 -4.59091,4.550106 L 123.4767,57.065215 C 102.8762,36.467417 85.70465,19.614675 85.31769,19.614675 c -0.386959,0 -17.48006,16.778743 -37.984675,37.286095 C 26.8284,77.408123 9.8833418,94.186866 9.6773291,94.186866 c -0.2060121,0 -2.3402956,-1.98336 -4.7428525,-4.407463 z"
      id="path6568"
      inkscape:connector-curvature="0" />

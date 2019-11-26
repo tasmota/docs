@@ -39,8 +39,6 @@ A push-button can be configured as a `Switch` and a toggle switch can be configu
 
 ## SwitchMode
 
-> For visual learners: [Tasmota Switchmode Explained](https://www.youtube.com/watch?v=kiXAGkyqFeU) - video by Dr Zzs
-
 To change the behavior of a physical input peripheral configured as a Tasmota `Switch<x>` component, whether a toggle switch or a [momentary switch](https://en.wikipedia.org/wiki/Switch#Biased_switches) (i.e., a push-button), use the `SwitchMode` command. If there is more than one `Switch<x>` component, use `SwitchMode<x>` where `<x>` is the number of your switch from the Tasmota GPIO configuration.
 
 SwitchMode, as the name implies, applies _**ONLY**_ to GPIO configured in Tasmota as a `Switch<x>` [component](Components) (9-16 & 82-89). SwitchMode has _**NO**_ impact on the behavior of GPIO configured as `Button<x>` [components](Components) (17-20, 90-93, & 112-129). SwitchMode sets the desired behavior of a `Switch<x>` component based on whether it's a switch or a push-button (i.e., a momentary switch) that is physically connected to the GPIO.
@@ -57,14 +55,14 @@ Set switch to follow mode (`0 = OFF`, `1 = ON`)
 
 At the time when the circuit is closed, Tasmota will send `ON` and opening the circuit sends `OFF`.  
 
-> You want to use `SwitchMode 1` when connecting a [toggle switch](https://en.wikipedia.org/wiki/Switch#Toggle_switch) (e.g. a classic light switch) to your  device. This way the "software switch" will mirror the state of the "hardware switch". If the real switch is in the "ON" position, the state in Tasmota  is `ON` as well.
+> [!TIP] You want to use `SwitchMode 1` when connecting a [toggle switch](https://en.wikipedia.org/wiki/Switch#Toggle_switch) (e.g. a classic light switch) to your  device. This way the "software switch" will mirror the state of the "hardware switch". If the real switch is in the "ON" position, the state in Tasmota  is `ON` as well.
 
 **`SwitchMode 2`**   
 Set switch to inverted follow mode (`0 = ON`, `1 = OFF`)
 
 At the time when the circuit is closed, Tasmota will send `OFF` and opening the circuit sends `ON`.  
 
->When connecting a momentary switch (i.e., a push-button) you will want to use `SwitchMode 3..7`.  
+> [!TIP] When connecting a momentary switch (i.e., a push-button) you will want to use `SwitchMode 3..7`.  
 
 **`SwitchMode 3`**   
 Set push-button mode (`0 = TOGGLE`, `1 = ON` (_default_))
@@ -86,7 +84,7 @@ Set inverted push-button with long press mode (`0 = OFF` (_default_), `1 = TOGGL
 
 Tasmota will send a `TOGGLE` command when the button pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Default state is OFF and when pressed it's ON. When held for the time set in `SetOption32` (_default = 4s_), Tasmota sends `HOLD` (use Switch<x>#state=3 in rules).
 
->Long press or hold can be used in [conjunction with rules](Rule-cookbook#use-long-press-action-on-a-switch) to create additional features or to control another Tasmota device.
+> [!TIP] Long press or hold can be used in [conjunction with rules](Rule-cookbook#use-long-press-action-on-a-switch) to create additional features or to control another Tasmota device.
 
 **`SwitchMode 7`**   
 Set toggle push-button mode
@@ -215,10 +213,10 @@ Set button topic to a custom topic (32 characters max).
 
 This will send an MQTT message to a custom defined topic similarly to option 1.
 
-For example, we set the topic to `tasmota02` with `ButtonTopic tasmota02`. 
 
 > [!EXAMPLE]
-> Device topic _tasmota_ with `SwitchMode 1`, custom topic _tasmota02_ yields the following message: `MQT: cmnd/tasmota02/POWER = TOGGLE`
+> For example, we set the topic to _tasmota02_ with `ButtonTopic tasmota02`.   
+Device topic _tasmota_ with `SwitchMode 1`, custom topic _tasmota02_ yields the following message: `MQT: cmnd/tasmota02/POWER = TOGGLE`
 >
 > If you have another device with the topic _tasmota02_ this action will toggle its relay while not affecting anything on the _tasmota_ device.
 
