@@ -274,7 +274,7 @@ with the '=' char at the beginning of a line you may do some special decoding
 
 >`>D`
 
->`>B`
+>`>B`  
 =>sensor53 r
 
 >`>M 1` 
@@ -299,7 +299,7 @@ with the '=' char at the beginning of a line you may do some special decoding
 
 ### Hager EHZ363 (SML) with daily values
 
->`>D` 
+>`>D`  
 pin=0  
 pout=0  
 pi_d=0  
@@ -363,15 +363,15 @@ Tageseinspeisung: {m} %po_d% kWh
 
 >`>D`
 
->`>B`
+>`>B`  
 =>sensor53 r
 
 >`>M 1`  
 +1,3,o,0,300,STROM,1,100,2F3F210D0A  
 >
->1,1-0:1.8.1*255(@1,Total Consumed,KWh,Total_in,3
-1,1-0:2.8.1*255(@1,Total Delivered,KWh,Total_out,3
-1,1-0:0.0.0*255(@#),Meter Number,,Meter_number,0  
+>1,1-0:1.8.1*255(@1,Total Consumed,KWh,Total_in,3  
+1,1-0:2.8.1*255(@1,Total Delivered,KWh,Total_out,3  
+1,1-0:0.0.0*255(@#),Meter Number,,Meter_number,0    
 \#
 
 [Back To Top](#top)
