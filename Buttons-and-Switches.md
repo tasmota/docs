@@ -29,7 +29,7 @@ By default a switch toggles the corresponding relay. Every time the switch gets 
 
 > [!EXAMPLE]
 > A rule to make Switch1 publish its value to cmnd/custom-topic/SWITCH:
-```
+```console
 Rule1 on switch1#state do publish cmnd/custom-topic/SWITCH %value% endon
 Rule1 1
 ```
