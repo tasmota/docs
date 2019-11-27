@@ -6,8 +6,7 @@ To provide easy processing by Tasmota, a user template is written as a JSON stri
 ```json
 {"NAME":"UserModule1","GPIO":[17,148,29,149,7,255,255,255,138,255,139,255,255],"FLAG":0,"BASE":18}
 ```
-
-More about [template properties](#Anatomy-of-a-template) at the bottom of the article.
+> [!TIP] Visit [Tasmota Device Templates Repository](https://blakadder.github.io/templates/) for a complete list of supported devices
 
 ## How to Use
 
