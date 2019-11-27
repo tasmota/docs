@@ -110,11 +110,15 @@ This is the MQTT topic used to communicate with Tasmota over MQTT. It is created
 
 If `FullTopic` does not contain the `%topic%` token, the device will not subscribe to `GroupTopic` and `FallbackTopic`.
 
+> [!TIP]
+> The order of _%prefix%_ and _%topic%_ doesn't matter, unless you have enabled Auto-discovery for Home Assistant ([`SetOption19`](Commands#setoption19)). Enabling this option re-formats the FullTopic to required order.
+
 Using the tokens the following example topics can be made:
 - `FullTopic %prefix%/%topic%/` _default_
 - `FullTopic tasmota/%topic%/%prefix%/`
 - `FullTopic tasmota/bedroom/%topic%/%prefix%/`
 - `FullTopic penthouse/bedroom1/bathroom2/%topic%/%prefix%/`
+- `FullTopic %prefix%/home/cellar/%topic%/`
 
 #### %prefix%
 Tasmota uses 3 prefixes for forming a FullTopic:
