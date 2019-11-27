@@ -49,12 +49,12 @@ Tasmota 6.5.0.8 and higher supports Shelly 2.5
 | 16 | ADE7953 IRQ
 | A0 | Internal Temperature
 
-`{"NAME":"Shelly 2.5","GPIO":[56,255,17,255,21,83,0,0,6,82,5,22,156],"FLAG":2,"BASE":18}`  
+`{"NAME":"Shelly 2.5","GPIO":[56,0,17,0,21,83,0,0,6,82,5,22,156],"FLAG":2,"BASE":18}`  
 
 Energy metering is done by a ADE7953 chip connected via I2C and IRQ on GPIO16.  
 
 If you connect momentary switches, use the following template:  
-`{"NAME":"Shelly 2.5 (buttons)","GPIO":[56,0,19,0,21,127,0,0,0,126,0,22,0],"FLAG":2,"BASE":18}`
+`{"NAME":"Shelly 2.5 (buttons)","GPIO":[56,0,19,0,21,127,0,0,6,126,5,22,156],"FLAG":2,"BASE":18}`
 `Button1` and `Button2` are assigned to the SW1 and SW2 external inputs. `Button3` is the button on the back of the device next to the pin header and you can optionally assign the baheviour you want using rules.
 
 If you want the buttons to respond instantly, go to the console and type `SetOption13 1`.
