@@ -3,17 +3,17 @@
 To control a device locally 16 timers are programmable. They can be configured with the `Timer<x>` command followed by a JSON payload with optional parameters. For example:
 
 Timer 1 will ENABLE output of POWER1 at exactly 2:23 every Tue/Wed and Sat
-```
+```console
 Timer1 {"Arm":1,"Time":"02:23","Window":0,"Days":"--TW--S","Repeat":1,"Output":1,"Action":1}
 ```
 
 Timer 4 will TOGGLE output of POWER2 within a 30 minute window centered around 16:23 each Sunday, Monday, Thursday and Friday and will disable (disarm) after executing.
-```
+```console
 Timer4 {"Arm":1,"Time":"16:23","Window":15,"Days":"SM00TF0","Repeat":0,"Output":2,"Action":2}
 ```
 
 When `Mode 1` or `Mode 2` is used, `Latitude` and `Longitude` become available. In that case the `Time` value is **always** used as an offset so make sure to set it to `00:00` if no offset is wanted.
-```
+```console
 Timer1 {"Arm":1,"Mode":2,"Time":"-2:23","Window":0,"Days":"11TW11S","Repeat":1,"Output":1,"Action":1}
 ```
 
