@@ -7,6 +7,7 @@
 * Resources
     * [Download Firmware](http://thehackbox.org/tasmota/release/)
     * [Device Templates](http://tasmota.fun)
+    * [Tasmota PyFlasher](https://github.com/tasmota/tasmota-pyflasher)
     * [What's New](What's-New)
 * Help
     * [FAQ](/help/FAQ)
