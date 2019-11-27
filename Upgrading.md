@@ -30,7 +30,7 @@ If you wish to switch to a different [build](Builds) you have to change OtaUrl t
 
 It is possible to create your own simple http OTA server (https is not supported) using Python and perform upgrades from there. 
 Install Python3 and from the folder where the binary resides (make sure `tasmota-minimal.bin` is located there too) run:
-```cmd
+```commandline
 python -m http.server 8000
 ```
 Change your OtaUrl to http://ipoftheserver:8000/yourbinary.bin and start the upgrade process.
@@ -42,7 +42,7 @@ When you try to immediately upgrade to a new binary without using minimal firmwa
 
 ![Upgrading_4](https://user-images.githubusercontent.com/5904370/68962296-85f35780-07d4-11ea-90ae-86fcd7d14681.png)
 
-Browse to the minimal binary with **Choose File**. The chosen filename should be visible. *In our example its **`tasmota-minimal.bin`***
+Browse to the minimal binary with **Choose File**. The chosen filename should be visible. _In our example its **`tasmota-minimal.bin`**._
 
 ![minimal upgrade](https://user-images.githubusercontent.com/5904370/68962383-baffaa00-07d4-11ea-8122-fcf971ca96f5.png)
 
@@ -50,7 +50,7 @@ Wait until the device restarts. In the Main Menu web UI will display this warnin
 
 ![minimal message](https://user-images.githubusercontent.com/5904370/68962530-1a5dba00-07d5-11ea-83aa-f6f640d9a38f.png)
 
-Go to **Firmware Upgrade** again. This time browse to the binary you want to upgrade to with **Choose File** and click **Start upgrade**. *In our example its **`tasmota-sensors.bin`*** 
+Go to **Firmware Upgrade** again. This time browse to the binary you want to upgrade to with **Choose File** and click **Start upgrade**. _In our example its **`tasmota-sensors.bin`**._
 
 ![image](https://user-images.githubusercontent.com/5904370/68962783-a7087800-07d5-11ea-9f8c-bd90fdb3e9ca.png)
 

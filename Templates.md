@@ -3,7 +3,7 @@
 These are intended to be an easy way for users to create and share configurations for devices that are unsupported in Tasmota but have common characteristics with existing modules. We encourage everyone who creates a template for a [new unknown device](Configuration-Procedure-for-New-Devices) to [add it to the database](https://blakadder.github.io/templates/) with an image of the device, links to the manufacturer or where it can be found and, of course, the template for it.
 
 To provide easy processing by Tasmota, a user template is written as a JSON string and could look like this:
-```
+```json
 {"NAME":"UserModule1","GPIO":[17,148,29,149,7,255,255,255,138,255,139,255,255],"FLAG":0,"BASE":18}
 ```
 
@@ -48,7 +48,7 @@ Now that you've set up your previously unsupported device in Tasmota it is time 
 1. Check that `Module 0` is selected in the **Configuration - Configure Module** menu. 
 2. Open up **Console** and issue command `Template` which will output a string with the configuration of your currently active template. Our example gives the following:
 
-```
+```json
 MQT: stat/tasmota/RESULT = {"NAME":"RGB Smart Plug","GPIO":[37,0,39,0,38,134,0,0,131,17,132,21,0],"FLAG":0,"BASE":45}
 ```
 
