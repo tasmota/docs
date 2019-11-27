@@ -289,7 +289,7 @@ VoltageLow<a id="voltagelow"></a>|`0` = disable voltage low threshold *(default)
 VoltageSet<a id="voltageset"></a>|`<value>` = [calibrate](power-monitoring-calibration) voltage to a target value in V&emsp;  »5.12.0
 VoltRes<a id="voltres"></a>|Voltage sensor resolution<BR>`0..3` = maximum number of decimal places
 WattRes<a id="wattres"></a>|Power sensor resolution<BR>`0..3` = maximum number of decimal places
-See Also|[`SetOption21`](#setoption21) - Energy monitoring when power is off<BR>[`SetOption33`](#setoption33) - Configure power monitoring Max_Power_Retry count number<BR>
+See Also|[`SetOption21`](#setoption21) - Energy monitoring when power is off<BR>[`SetOption33`](#setoption33) - Configure power monitoring Max_Power_Retry count number<BR>[`SetOption72`](#setoption72) - Set reference used for total energy
 
 ### Light
 <!--- 
