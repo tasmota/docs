@@ -8,5 +8,5 @@
 ---
 
 > [!TIP]
-> If your device works with Tuya Smart or Smart Life app it may be possible to flash it with [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert) without disassembly or soldering and skip directly to [Initial Configuration](/installation/initial-configuration).
+> If your device works with Tuya Smart or Smart Life app it may be possible to flash it with [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert) without disassembly or soldering and skip directly to [Initial Configuration](/installation/Initial-Configuration).
 
