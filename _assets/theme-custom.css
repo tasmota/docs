@@ -9,6 +9,7 @@
     --cover-background-mask-color       : #1fa3ec;
     --cover-background-mask-opacity     : 0.8;
     --cover-blockquote-color            : #1fa3ec;
+    --code-theme-text                   : #e4e4e4 ;
     --table-cell-padding                : 0.4em 0.75em;
     --table-head-background             : var(--mono-shade4);
     --table-row-even-background         : var(--mono-shade2);

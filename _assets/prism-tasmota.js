@@ -1,8 +1,12 @@
 Prism.languages.console = {
+	'regex': {
+		pattern: /(?<!\s)^\w+/im,
+		lookback: true
+	},
 	'operator': /^\b(?:rule)\d?\b/im,
-	'number': /\b(?<=on)\s\S{1,}#\S{1,}\b/i,
+	'constant': /\b(?<=on)\s\S{1,}#\S{1,}\b/i,
 	'selector': /(?<!(power\w+))\s(?:on|do|endon|break|if|else|elseif|and|or)\b/i,
-	'regex': /\b(?:backlog)\b/i,
+	'boolean': /\b(?:backlog)\b/i,
 	'comment': /[<]\w+[>]/,
 	'deleted': /[;]\s/,
 	'json': {
@@ -10,5 +14,4 @@ Prism.languages.console = {
 			alias: 'language-json',
 			inside: Prism.languages.json
 			},
-	'important': /(?<!\ )^\w+/im,
 };

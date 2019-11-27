@@ -39,7 +39,7 @@ WebColor {"WebColor":["#000000","#ffffff","#f2f2f2","#000000","#ffffff","#000000
 <img src="https://user-images.githubusercontent.com/5904370/68239855-0b744c00-000c-11ea-9384-4b03b6c1a8f4.png" width="100" align=right>
 
 ```console
- WebColor {"WebColor":["#cccccc","#2f3133","#3d3f41","#dddddd","#293134","#ffb000","#293134","#ff5661","#008000","#ffffff","#ec7600","#bf5f00","#d43535","#931f1f","#47c266","#5aaf6f","#ffffff","#999999","#bc4d90"]}
+WebColor {"WebColor":["#cccccc","#2f3133","#3d3f41","#dddddd","#293134","#ffb000","#293134","#ff5661","#008000","#ffffff","#ec7600","#bf5f00","#d43535","#931f1f","#47c266","#5aaf6f","#ffffff","#999999","#bc4d90"]}
 ```
 <br>
 

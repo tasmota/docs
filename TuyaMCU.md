@@ -35,7 +35,7 @@ Use this procedure to determine which dpId's are available:
 1. Go to `Configure` -> `Console` option in Tasmota web interface.
 2. Use command `weblog 4` to enable verbose logging in web interface.
 3. Observe the log. After every 9-10 seconds you should see log messages similar to:
-   ```console
+   ```json
    TYA: Heartbeat
    TYA: RX Packet: "55aa0107000501010001000f"
    TYA: FnId=0 is set for dpId=1
@@ -118,7 +118,7 @@ To publish them to an MQTT Topic of `tele/%topic%/RESULT` you need to enable `Se
 #### Example
 After issuing serial command `55aa0006000501010001010e` (Device power (dpId=1) is mapped to Relay1 (fnId=11)) we get the following console output (with `weblog 4`):
 
-```console
+```
 19:54:18 TYA: Send "55aa0006000501010001010e"
 19:54:18 MQT: stat/GD-30W/STATE = {"Time":"2019-10-25T19:54:18","Uptime":"0T01:45:51","UptimeSec":6351,"Heap":27,"SleepMode":"Dynamic","Sleep":0,"LoadAvg":999,"MqttCount":1,"POWER1":"ON","POWER2":"OFF","POWER3":"ON","POWER4":"OFF","POWER5":"ON","Dimmer":100,"Fade":"OFF","Speed":1,"LedTable":"OFF","Wifi":{"AP":1,"SSId":"HTPC","BSSId":"50:64:2B:5B:41:59","Channel":10,"RSSI":24,"LinkCount":1,"Downtime":"0T00:00:08"}}
 19:54:18 MQT: stat/GD-30W/RESULT = {"POWER1":"ON"}
@@ -136,7 +136,7 @@ Above `TYA: fnId=11 is set for dpId=1` you can see the JSON response for that dp
 This data can also be used as a trigger for rules using `TuyaReceivedData#Data=hex_string`
 
 ```console
-Rule1 on TuyaReceived#Data=55AA000700056E040001007E do publish2 stat/tuya_light/effect rgb_cycle
+Rule1 on TuyaReceived#Data=55AA000700056E040001007E do publish2 stat/tuya_light/effect rgb_cycle endon
 ``` 
 will publish a status message to a custom topic when `55AA000700056E040001007E` appears in "Data" field of the response.
 
@@ -159,7 +159,7 @@ The dimmer FunctionId is `21`. On a dimmer dpId generally is `2` or `3`. Try bot
 
 ### Dimming Range	
 Once you have figured out the dimming functionId, we need to find the maximum dimming range. Once the dimming Id is set, the logs will continue	
-```console	
+```	
 TYA: Heartbeat	
 TYA: RX Packet: "55aa03070005010100010011"	
 TYA: RX Relay-1 --> MCU State: Off Current State:Off	
@@ -179,7 +179,7 @@ Once set, try `dimmer 100` in the Console and check if the brightness of bulb is
 Some Tuya MCU devices support Power measurement support over serial. For this its better to use a bulb with known wattage rating.  	
 
 Observe the logs in the Console  	
-```console	
+```	
 TYA: RX Packet: "55aa03070005010100010011"	
 TYA: FnId=11 is set for dpId=1	
 TYA: RX Device-1 --> MCU State: Off Current State:Off	
@@ -208,7 +208,7 @@ In the `RX Packet` we are interested in the 3 digits before last 2 digits. For e
 7. Now we need the power rating of your bulb example `9W`. Multiply by 10 (90) and convert to hex which gives us 0x5A. Check which unknown ID is close to `5A`. I this example it is `59` for `ID=5`. This is the Id of `Active Power` function.	
 8. Set the active power functionId `31` by entering `TuyaMCU 31,5`.	
 9. Once Power and Voltage are set you should see something such as this in the logs:	
-   ```console	
+   ```	
    TYA: RX Packet: "55aa03070005010100010011"	
    TYA: FnId=11 is set for dpId=1	
    TYA: RX Device-1 --> MCU State: Off Current State:Off	
@@ -229,7 +229,7 @@ In the `RX Packet` we are interested in the 3 digits before last 2 digits. For e
 10. To get the Id for the current, calculate Current = Power / Voltage ( 9 / 244.7 ) = 0.0367. Multiply this by 1000 = 36.77. Now convert 36 to hex which is 0x24. This is closest to `25` which is Id 4. 	
 11. Set the current FunctionId `32` using command `TuyaMCU 32,4`.	
 12. Observe the logs should start showing	
-    ```console	
+    ```	
     TYA: RX Packet: "55aa03070005010100010011"	
     TYA: FnId=11 is set for dpId=1	
     TYA: RX Device-1 --> MCU State: Off Current State:Off	
@@ -273,7 +273,7 @@ The stock Tuya App communicates with the PIC Micro inside the motor housing at 9
 * `dpId 103` is unknown.	
 
 ### Debugging	
-```tuya	
+```	
 55 aa 00 06 "deliver dp" 0005 "len=5" 66 04 00 01 <00=close100%,01=open0%> <chksum> is the fully open/close command	
 07 "report dp" 0005 (len) 66 04 00 01 <00 or 01> <chksum> is the reply.	
 55 aa 00 06 "deliver dp" 0008 (len=8) 65 02 00 04  <value.32 <chksum> is the move partial command	
@@ -293,12 +293,12 @@ There may first be a reply of 65 02 00 04 <oldvalue.32> <chksum> before the moto
 With these settings, the `dimmer` command can adjust the curtain from 100% (closed) to 1% (almost fully open, 0% is the motor limit, but 1% is the Tasmota limit?)	
 
 #### Things That Did Not Work	
-```	
+```console	
 tuyamcu 1,102 # make 0x66 a button	
 tuyamcu 1,103 # make 0x67 a button	
 ```	
 Having 0x66 declared a button caused the motor to oscillate - open part way and then close again. Like Tasmota was sending the "fully open" command and then immediately cancelling it with a "partial close" command.	
-```	
+```console	
 tuyamcu 11,102 # make 0x66 a relay	
 tuyamcu 11,103 # make 0x67 a relay	
 ```	

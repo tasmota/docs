@@ -104,9 +104,13 @@ Hardware
 Software
 - Tasmota compiled with `#define USE_RULES`
 - Configure timer5 for rule execution when activated:  
-  `timer5 {"Arm":1,"Mode":0,"Time":"16:00","Days":"1111111","Repeat":1,"Action":3}`
+  ```console
+  Timer5 {"Arm":1,"Mode":0,"Time":"16:00","Days":"1111111","Repeat":1,"Action":3}
+  ```
 - Rule  
-  `Rule1 on clock#Timer=5 do backlog power2 on;power1 off;power3 2 endon`
+  ```console
+  Rule1 on clock#Timer=5 do backlog power2 on;power1 off;power3 2 endon
+  ```
 
 Result
 - When the timer expires the rule kicks in and set Power1 to OFF, Power2 to ON and Toggles Power3
@@ -121,10 +125,11 @@ If you want to have blink functionality define a rule like `on clock#Timer=5 do 
 #### Usage of one-shot (once)
 The rule command once option provides the possibility to trigger only once on a slow change while the change is still within the bounds of the test.
 
-Rule
+
 ```console
-on ENERGY#Current>0.100 do publish tool/tablesaw/power 1 endon
-on ENERGY#Current<0.100 do publish tool/tablesaw/power 0 endon
+Rule
+  on ENERGY#Current>0.100 do publish tool/tablesaw/power 1 endon
+  on ENERGY#Current<0.100 do publish tool/tablesaw/power 0 endon
 ```
 
 This creates a rule to publish MQTT commands whenever a Sonoff POW has current passing through it. Used as is, it will publish MQTT commands repeatedly, over and over, while current is >0.100 ... but, executing another command:
@@ -153,8 +158,9 @@ Software
 
 Rule
 ```console
-on tele-am2301-12#temperature do var1 %value% endon
-on tele-am2301-12#humidity do publish domoticz/in {"idx":134,"svalue":"%var1%;%value%;1"} endon
+Rule
+  on tele-am2301-12#temperature do var1 %value% endon
+  on tele-am2301-12#humidity do publish domoticz/in {"idx":134,"svalue":"%var1%;%value%;1"} endon
 ```
 
 Result
@@ -178,14 +184,16 @@ Hardware
 Software
 - Tasmota compiled with `#define USE_RULES`
 
-Rule
-- `on analog#a0div10 do dimmer %value% endon`
+```console
+Rule on analog#a0div10 do dimmer %value% endon
+```
 
 Result
 - Turning the potentiometer the voltage on the analog input will change resulting in a value change of 0 (Off) to 100 for the trigger. Using this value to control the dimmer of the WS2812 will control the brightness of the led(s)
 
-Rule
-- `on analog#a0div10 do publish cmnd/grouplight/dimmer %value% endon`
+```console
+Rule on analog#a0div10 do publish cmnd/grouplight/dimmer %value% endon
+```
 
 Result
 - This time all lights configured with GroupTopic `grouplight` will change their brightness according to the potentiometer position.
@@ -200,65 +208,64 @@ NOTE: You might want to execute command `SaveData 2` to reduce flash writes ;-)
 #### Setting variables
 Demonstrate the use of variables. Make sure to execute commands `Rule 4`(Disable one-shot detection) first when trying the following example.
 
-* Set a variable
+Set a variable
 
-  rule needed:  
-  `on event#setvar1 do var1 %value% endon`
+```console
+Rule on event#setvar1 do var1 %value% endon
+```
 
-  command:  
-  `event setvar1=1`
+Command:  `event setvar1=1`
 
-* View a variable
+View a variable
+```console
+rule on event#getvar1 do var1 endon
+```
 
-  rule needed:  
-  `on event#getvar1 do var1 endon`
-
-  command:  
-  `event getvar1`
+Command:  `event getvar1`
 
 * Toggle a variable
 
-  rules needed:  
-  ```console
+```console
+Rule
   on event#togglevar1 do event toggling1=%var1% endon
   on event#toggling1<1 do event setvar1=1 endon
   on event#toggling1>0 do event setvar1=0 endon
   on event#setvar1 do var1 %value% endon
-  ```
+ ```
 
-  command:  
-  `event togglevar1`
+Command:  `event togglevar1`
 
-* Show Messages:
+Show Messages:
 
-  rule needed:  
-  `on event#message do publish stat/[topic]/log %value% endon`
+```console
+Rule on event#message do publish stat/[topic]/log %value% endon
+```
 
-  command:  
-  `event message=INIT`
+Command:  `event message=INIT`
 
-* All event commands can be executed from:
+All event commands can be executed from:
 
-  console: `event anyname=number`
-  mqtt:    `cmnd/[topic]/event anyname=number`
+- console: `event anyname=number`
+-  mqtt:    `cmnd/[topic]/event anyname=number`
 
-* Everything together:  
-  ```console
-  Rule1 
-    on event#togglevar1 do event toggling1=%var1% endon 
-    on event#toggling1<1 do event setvar1=1 endon 
-    on event#toggling1>0 do event setvar1=0 endon 
-    on event#setvar1 do var1 %value% endon 
-    on event#getvar1 do var1 endon 
-    on event#message do publish stat/mqttTopic/log %value% endon
-  ```
+Everything together:  
+```console
+Rule1 
+  on event#togglevar1 do event toggling1=%var1% endon 
+  on event#toggling1<1 do event setvar1=1 endon 
+  on event#toggling1>0 do event setvar1=0 endon 
+  on event#setvar1 do var1 %value% endon 
+  on event#getvar1 do var1 endon 
+  on event#message do publish stat/mqttTopic/log %value% endon
+```
 
-**NOTE**
+>[!NOTE]
+>The following won't work:  
+```console
+Rule1 on event#setvar1 do backlog var1 %value%; power1 %var1% endon
+```
 
-Note that the following won't work:  
-`Rule1 on event#setvar1 do backlog var1 %value%; power1 %var1% endon`
-
-Well at least not as you probably would expect. The `var1` value used by the `power1` command will be the value present before the `backlog` command is executed. This is so, because the rule will replace `%var1%` BEFORE the `backlog` commands are put in the `backlog` command stream.
+At least not as you probably would expect. The `var1` value used by the `power1` command will be the value present before the `backlog` command is executed. This is so, because the rule will replace `%var1%` BEFORE the `backlog` commands are put in the `backlog` command stream.
 
 
 [Back To Top](#top)
@@ -316,7 +323,9 @@ Initial config on console:
 Rules:
 
 On boot start a watchdog timer to check temp sensor connection.  
-`Rule on system#boot do RuleTimer1 70 endon`
+```console
+Rule on system#boot do RuleTimer1 70 endon
+```
 
 An available button is configured as switch to set thermostat ON or OFF
 ```console
@@ -327,16 +336,21 @@ Rule1
 ```
 
 Check temp sensor connection. If fails, set to off and turn off thermostat. Also continue checking  
-`on Rules#Timer=1 do backlog var1 0; RuleTimer1 70; power1 0 endon`
+```console
+Rule on Rules#Timer=1 do backlog var1 0; RuleTimer1 70; power1 0 endon
+```
 
 Resets checking timer if temperature is connected  
-`on tele-SI7021#temperature do backlog var1 1; RuleTimer1 30; event ctrl_ready=1; event temp_demand=%value% endon`
+```console
+Rule on tele-SI7021#temperature do backlog var1 1; RuleTimer1 30; event ctrl_ready=1; event temp_demand=%value% endon
+```
 
 Thermostat control - upper limit and lower limit and enabled  
 ```console
-on on event#ctrl_ready>%mem1% do var1 0 endon
-on event#temp_demand>%mem2% do power1 0 endon
-on event#temp_demand<%mem3% do power1 %var1% endon
+Rule1
+  on event#ctrl_ready>%mem1% do var1 0 endon
+  on event#temp_demand>%mem2% do power1 0 endon
+  on event#temp_demand<%mem3% do power1 %var1% endon
 ```
 
 
@@ -530,9 +544,8 @@ Rule1
 ------------------------------------------------------------------------------
 
 #### Time-delay After Switch Off
-**Rule:**
 ```console
-on switch1#state=1 do backlog
+Rule1 on switch1#state=1 do backlog
   power1 on;
   ruletimer1 0
 endon
@@ -543,7 +556,9 @@ on rules#timer=1 do
   power1 0
 endon
 ```
-`backlog switchmode1 1; rule1 1`
+```console
+backlog switchmode1 1; rule1 1
+```
 
 **Legend:**  
 `ruletimer1 300` sets a 5 minute timer. After that time, fan will be switched off. If during the defined 5 minutes (or in general - when timer is counting) you the switch on, the timer will be canceled.
@@ -724,46 +739,46 @@ Backlog mem1 360; mem2 1350
 Backlog Rule1 1; Rule2 1
 ```
 
-- **Explanation:**  
-  \#  When device restarts, calculate if the light should be on or off  
+**Explanation:**  
+  - When device restarts, calculate if the light should be on or off  
   `on Time#Initialized do event chkSun endon`
 
-  \#  Calculate if the light should be on or off  
+  - Calculate if the light should be on or off  
   `on Time#Minute=%sunset% do event chkSun endon`
   `on Time#Minute=%mem2% do event chkSun endon`
   `on Time#Minute=%sunrise% do event chkSun endon`
   `on Time#Minute=%mem1% do event chkSun endon`
 
-  \#  Calculate if the light should be on or off  
+  -  Calculate if the light should be on or off  
   `on event#chkSun do backlog `
   
-  &nbsp;&nbsp;&nbsp;&nbsp;\# Assume off  
-  &nbsp;&nbsp;&nbsp;&nbsp;`var1 0; `
+  - Assume off  
+  `var1 0; `
   
-  &nbsp;&nbsp;&nbsp;&nbsp;\# Trigger each event with the current time  
-  &nbsp;&nbsp;&nbsp;&nbsp;`event chkSunrise=%time%; event chkSunset=%time%; event chkmorn=%time%; event chknight=%time%; event setPower `
-
-  `endon`
+  - Trigger each event with the current time  
+  `event chkSunrise=%time%; event chkSunset=%time%; event chkmorn=%time%; event chknight=%time%; event setPower`
+  - End rule   
+   `endon`
   
-  \# If before sunrise, turn on  
+  - If before sunrise, turn on  
   `on event#chkSunrise<%sunrise% do var1 1 endon`
   
-  \# If past sunset, turn on  
+  - If past sunset, turn on  
   `on event#chkSunset>=%sunset% do var1 1 endon`
   
-  \# But if before Morning time (`mem1`), do not turn on  
+  - But if before Morning time (`mem1`), do not turn on  
   `on event#chkmorn<%mem1% do var1 0 endon`
   
-  \# Or if after Night time (`mem2`), do not turn on  
+  - Or if after Night time (`mem2`), do not turn on  
   `on event#chknight>=%mem2% do var1 0 endon`
   
-  \# Perform on/off state  
+  - Perform on/off state  
   `on event#setPower do power1 %var1% endon`
 
-  \# Set variables for Morning (06h00) and Night (22h30) times  
+  - Set variables for Morning (06h00) and Night (22h30) times  
   `Backlog mem1 360; mem2 1350`
 
-  \# Turn on the rule sets  
+  - Turn on the rule sets  
   `Backlog Rule1 1; Rule2 1`
 
 [Back To Top](#top)
@@ -865,7 +880,7 @@ There is also an [option](Control-other-devices) to swap the actions of the **si
   
   Rule1
     on button1#state=3 do publish cmnd/topicHOLD/power 2 endon
-    on button1#state=2 do publish cmnd/topicDOUBLEPRESS/power 2 endon  
+    on button1#state=2 do publish cmnd/topicDOUBLEPRESS/power 2 endon 
   
   Rule1 1
   ```
@@ -882,7 +897,7 @@ There is also an [option](Control-other-devices) to swap the actions of the **si
   
   Rule1
     on button1#state=3 do publish cmnd/topicHOLD/power 2 endon
-    on button1#state=2 do publish cmnd/topicSINGLEPRESS/power 2 endon  
+    on button1#state=2 do publish cmnd/topicSINGLEPRESS/power 2 endon 
   
   Rule1 1
   ```
@@ -1008,7 +1023,9 @@ Rule1 1
 
 If the MqttHost field already contains an IP, you have to delete it using the web interface or the following MQTT command:
 
-`mosquitto_pub -h mqtt_server.local -t "cmnd/mqttTopic/MqttHost" -m ''`
+```
+mosquitto_pub -h mqtt_server.local -t "cmnd/mqttTopic/MqttHost" -m ''
+```
 
 
 [Back To Top](#top)
@@ -1044,7 +1061,7 @@ When two (or more) switches are defined as input and you want to distinguish the
 - SwitchMode2 1 will make Switch2#state to be 1 when ON and 0 when OFF  
   `SwitchMode2 1`
 
-- Publish json with key POWER1 and value %value%  
+- Publish json with key POWER1 and value %value%
   `Rule1 on switch1#state do publish stat/wemos-4/RESULT {"POWER1":"%value%"} endon`
 
 - Publish json with key POWER2 and value %value%  
@@ -1058,7 +1075,7 @@ When two (or more) switches are defined as input and you want to distinguish the
 
 Output:
 
-```console
+```
 RUL: SWITCH1#STATE performs "publish stat/wemos-4/RESULT {"POWER1":"1"}"
 MQT: stat/wemos-4/RESULT = {"POWER1":"1"}
 RUL: SWITCH2#STATE performs "publish stat/wemos-4/RESULT {"POWER2":"1"}"
@@ -1080,7 +1097,7 @@ MQT: stat/wemos-4/RESULT = {"POWER1":"0"}
 #### Receiving state of anything that triggers SWITCH more than one time
 
 With analog intercom doorbells you can take out info about ringing from speaker voltage. You can connect GPIO to it via opto-isolator and resistor to take out state. But even with those speaker voltage is dropping so it switches the device multiple times.
-```console
+```
 MQT: cmnd/doorbell/POWER2 = OFF (retained)
 MQT: cmnd/doorbell/POWER2 = ON (retained)
 MQT: cmnd/doorbell/POWER2 = OFF (retained)
@@ -1126,11 +1143,11 @@ Hardware
 - INA219 I<sup>2</sup>C sensor
 - WS2812 LEDring with 24 LEDs powered by the Wemos D1 mini 5V thru the INA219 sensor
 
-Software
-- Tasmota compiled with `#define USE_RULES`
 
-Rule
-- `on INA219#Current>0.100 do Backlog Dimmer 10;Color 10,0,0 endon`
+```console
+Rule1 on INA219#Current>0.100 do Backlog Dimmer 10;Color 10,0,0 endon
+Rule1 on
+```
 
 Result
 - When a user raises brightness to a level using more than 0.1A the rule kicks in and lowers the current by executing command `Dimmer 10` and changes the color to Red with command `Color 10,0,0`.
@@ -1237,7 +1254,7 @@ rule1
 
 receiving `on` and `off` results in
 
-```console
+```
 MQT: tele/mqttTopic/RESULT = {"SSerialReceived":"on"}
 RUL: SSERIALRECEIVED#DATA=ON performs "power1 1"
 MQT: stat/mqttTopic/RESULT = {"POWER":"ON"}
@@ -1257,7 +1274,7 @@ MQT: stat/mqttTopic/POWER = OFF
 ``BREAK`` is an alternative to ``ENDON``. ``BREAK`` will stop the execution for the triggers that follow. If a trigger that ends with ``BREAK`` fires, then the following triggers of that rule will not be executed. This allows to simulate ``IF..ELSEIF..ELSE..ENDIF``
 
 **Example:**
-```console
+```
 IF temp > 85 then
   VAR1 more85
 ELSEIF temp > 83 then
@@ -1282,7 +1299,7 @@ Rule1
 ```
 
 This is the output in the console:
-```console
+```
 CMD: rule
 MQT: stat/living/RESULT = {"Rule1":"ON","Once":"ON","StopOnError":"OFF","Free":322,"Rules":"on event#temp>85 do VAR1 more85 endon on event#temp>83 do VAR1 more83 endon on event#temp>81 do VAR1 more81 endon on event#temp=81 do VAR1 equal81 endon on event#temp<81 do VAR1 less81 endon"}
 CMD: event temp=10
@@ -1309,7 +1326,7 @@ Rule
 ```
 
 Which will result in the following output:
-```console
+```
 CMD: rule
 RSL: RESULT = {"Rule1":"ON","Once":"OFF","StopOnError":"OFF","Free":321,"Rules":"on event#temp>85 do VAR1 more85 break on event#temp>83 do VAR1 more83 break on event#temp>81 do VAR1 more81 endon on event#temp=81 do VAR1 equal81 endon on event#temp<81 do VAR1 less81 endon"}
 CMD: event temp=10
@@ -1348,7 +1365,7 @@ Rule1 1
 ```
 
 Which translates to:
-```console
+```
 Rule Pseudo Code
 IF ENERGY#Power>=35  // ENERGY#Power GE 35
   DO Backlog PowerDelta 10; Status 8
@@ -1382,7 +1399,9 @@ rule1 on IRreceived#Data do publish cmnd/irsideboard/irsend {Protocol:NEC,Bits:3
 `PulseTime 7`
 
 // Send ON and OFF as the switch is ON or OFF  
-`Backlog SwitchMode1 1; SwitchMode2 1; SwitchMode3 1`
+```console
+Backlog SwitchMode1 1; SwitchMode2 1; SwitchMode3 1
+```
 
 //No need to save changes on power cycle  
 `SetOption0 0`
@@ -1391,17 +1410,22 @@ rule1 on IRreceived#Data do publish cmnd/irsideboard/irsend {Protocol:NEC,Bits:3
 `PowerOnState 0`
 
 //One shot Detection off  
-`Backlog Rule1 0; Rule1 4; Rule2 0; Rule2 4; Rule2 0; Rule2 4`
+```console
+Backlog Rule1 0; Rule1 4; Rule2 0; Rule2 4; Rule2 0; Rule2 4
+```
 
 //Set Counter to measure the period between on and off, check if its blinking because of an obstruction  
-`Backlog CounterType 1; CounterDebounce 100`
+```console
+Backlog CounterType 1; CounterDebounce 100
+```
 
 //So the door doesn't close if you send it an Open when it's already Opened, etc.  
+```
 // var1=1 Only When OPEN  
 // var2=1 Only When CLOSED  
 // var3=1 Only When OPENING  
 // var4=1 Only When CLOSING  
-
+```
 ```console
 Rule1
   on Switch1#Boot=1 do backlog delay 99; event Opened endon
@@ -1429,7 +1453,9 @@ Rule3
 ```
 
 //Turn on Rules  
-`Backlog Rule1 1; Rule2 1; Rule3 1`
+```console
+Backlog Rule1 1; Rule2 1; Rule3 1
+```
 
 [Back To Top](#top)
 
@@ -1449,9 +1475,7 @@ Rule 1
 ```
 
 //Enable the Rule set  
-```console
-Rule1 1
-```
+`Rule1 1`
 
 [Back To Top](#top)
 

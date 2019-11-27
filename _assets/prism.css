@@ -8,7 +8,7 @@ https://prismjs.com/download.html#themes=prism-dark&languages=markup+css+clike+j
 
 code[class*="language-"],
 pre[class*="language-"] {
-	color: white;
+	color: #cacaca;
 	background: none;
 	text-shadow: 0 -.1em .2em black;
 	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
@@ -78,14 +78,12 @@ pre[class*="language-"] {
 
 .token.property,
 .token.tag,
-.token.boolean,
 .token.number,
-.token.constant,
 .token.symbol {
 	color: hsl(350, 40%, 70%);
 }
 
-.token.selector,
+
 .token.attr-name,
 .token.string,
 .token.char,
@@ -109,7 +107,6 @@ pre[class*="language-"] {
 	color: hsl(350, 40%, 70%);
 }
 
-.token.regex,
 .token.important {
 	color: #e90;
 }
@@ -127,6 +124,20 @@ pre[class*="language-"] {
 }
 
 .token.deleted {
-	color: rgb(218, 92, 92);
+	color: rgb(218, 92, 92);	/* the ; in backlogs */
+}
+.token.regex {
+	color: #e90;				/* tasmota command */
 }
 
+.token.selector {
+	color: hsl(187, 78%, 57%);	/* rule operators */
+}
+
+.token.constant {
+	color: hsl(61, 64%, 47%);	/* rule triggers */
+}
+
+.token.boolean {
+	color: hsl(290, 38%, 60%);	/* backlog */
+}
