@@ -234,15 +234,15 @@ Command [`SetOption11`](Commands#setoption11) allows for swapping the functional
 
 These changes result in the following:
 
-![Action matrix](../_media/button-matrix.png ":size=300")
+![Action matrix](_media/button-matrix.png ":size=300")
 
 #### Example
 
 You can control a ceiling fan from a Sonoff Touch:   
 If your standard topic of Sonoff Touch is `light` and the ceiling fan topic is `ceilingfan` issue these commands on the Sonoff Touch to activate the double press feature.
-```
-buttontopic ceilingfan
-setoption11 1
+```console
+ButtonTopic ceilingfan
+SetOption11 1
 ```
 All of the above is easier accomplished using [Rules](Rules)!
 
