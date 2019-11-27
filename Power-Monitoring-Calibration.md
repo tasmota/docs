@@ -14,7 +14,7 @@
 
 ## Setup
 - Connect the load (e.g., a 60W incandescent light bulb) to your device  
-   *(optional)* Plug your load into the Kill-a-Watt
+  - *(optional)* Plug your load into the Kill-a-Watt
 - Open two Tasmota web UI browser windows for your power monitoring device:
   - Click on Console in one browser window
   - Keep the other on the main page to view the Power telemetry data
@@ -32,7 +32,7 @@
 
 3. Verify the **Current** reading by calculating current value (amperage) using this formula: **P<sub>(W)</sub>/V<sub>(V)</sub>=I<sub>(A)</sub>**. Adjust the current offset if needed (in milliAmps (mA=A\*1000)):  
    [`CurrentSet <current>`](Commands#currentset)  
-   _Replace `<current>` with your calculated value (in milliAmps)  
+   _Replace `<current>` with your calculated value (in milliAmps)_  
 
    `CurrentSet` calculation:   
    P/V=I
@@ -40,6 +40,7 @@
 
 > [!EXAMPLE]
 > 1000*(60.0/235.5) = 254.777
+
 4. Confirm the validity of your calibration process checking `Power Factor` from the web UI which should be as close as possible to `1.00`. In theory resistive loads will always provide a power factor of 1.00. If that is not the case, we recommend you repeat the calibration process and make sure everything was done correctly. 
    
 ## Fine Tuning
