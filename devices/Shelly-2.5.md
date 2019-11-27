@@ -53,10 +53,12 @@ Tasmota 6.5.0.8 and higher supports Shelly 2.5
 
 Energy metering is done by a ADE7953 chip connected via I2C and IRQ on GPIO16.  
 
-If you connect momentary switches and want press/double press/hold functionality, use the following template:  
-`{"NAME":"Shelly 2.5 (buttons)","GPIO":[56,255,17,255,21,127,0,0,6,128,5,22,156],"FLAG":2,"BASE":18}`  
+If you connect momentary switches, use the following template:  
+`{"NAME":"Shelly 2.5 (buttons)","GPIO":[56,0,19,0,21,127,0,0,0,126,0,22,0],"FLAG":2,"BASE":18}`
+`Button1` and `Button2` are assigned to the SW1 and SW2 external inputs. `Button3` is the button on the back of the device next to the pin header and you can optionally assign the baheviour you want using rules.
 
-Run `Backlog SetOption1 1; SetOption11 1; SetOption32 1` to enable all three states. `Button1` is the button on the back of the device next to the pin header. `Button2` and `Button3` are assigned to the SW1 and SW2 external inputs.
+If you want the buttons to respond instantly, go to the console and type `SetOption13 1`.
+But, if you want press/double press/hold functionality, run instead `Backlog SetOption1 1; SetOption11 1; SetOption32 1` to enable all three states.
 
 ## Flash mode
 To be able to flash the Tasmota firmware you need to get into flash mode. Therefore connect a wire from GPIO0 to ground. For further information have a look at [bringing-the-module-in-flash-mode](installation/Hardware-Preparation#bringing-the-module-in-flash-mode).
@@ -82,9 +84,7 @@ rule1 5
 ```
 
 ## Ghost switching
-The Shelly 2.5 inputs appear to be notoriously susceptible to interference. Therefore ghost switching can happen.
-
-You might want to experiment with the switch debounce delay. It is set to 50 milliseconds by default.
+The Shelly 2.5 inputs appear to be notoriously susceptible to interference. Therefore ghost switching can happen if the wires are long (>1m / 3ft). If you experience this issue, you might want to experiment with the switch debounce delay. It is set to 50 milliseconds by default.
 
 Use command `SwitchDebounce 100` to change it to a less sensitive value, which might work better. The value be set up to 1000 milliseconds.
 
