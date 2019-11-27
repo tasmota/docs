@@ -63,15 +63,15 @@ If you flashed the device via serial method you can connect to it with a termina
 
 Set up both Wi-Fi AP's
 ```console
-Backlog ssid1 myssid; password1 mypassword; ssid2 myssid2; password2 mypassword2
+Backlog SSID1 <myssid>; Password1 <mypassword>; SSID2 <myssid2>; Password2 <mypassword2>
 ```
 Configure MQTT broker address, MQTT credentials, device topic and activate a few custom options
 ```console
-Backlog mqtthost <yourhost>; mqttuser <user>; mqttpassword <password>; topic <customtopic>; setoption53 1; powerretain on
+Backlog MqttHost <yourhost>; MqttUser <user>; MqttPassword <password>; Topic <customtopic>; SetOption53 1; PowerRetain on
 ```
 For specific relay control, using backlog like a script
 ```console
-Backlog status 1; power 2 on; delay 20; power 2 off; status 4
+Backlog Status 1; Power2 on; Delay 20; Power2 off; Status 4
 ```
 When using [web](#web) requests *(You have to encode "space" as '%20' and ";" as '%3B')*
 ```http
