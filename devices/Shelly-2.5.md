@@ -60,6 +60,8 @@ If you connect momentary switches, use the following template:
 If you want the buttons to respond instantly, go to the console and type `SetOption13 1`.
 But, if you want press/double press/hold functionality, run instead `Backlog SetOption1 1; SetOption11 1; SetOption32 1` to enable all three states.
 
+If you want to see Voltage and Frequency also when the relays are off, use `SetOption21 1`
+
 ## Flash mode
 To be able to flash the Tasmota firmware you need to get into flash mode. Therefore connect a wire from GPIO0 to ground. For further information have a look at [bringing-the-module-in-flash-mode](installation/Hardware-Preparation#bringing-the-module-in-flash-mode).
 
