@@ -2,7 +2,7 @@
 In this example the Kaifa MA105C meter is used and might work with other meters as well.
 
 ## Schematics
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/wemos_kaifa_energy_meter_scematic.png?raw=true" width="600">
+<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/wemos_kaifa_energy_meter_scematic.png?raw=true" >
 
 The transistor makes sure that the RxD signal is converted and inverted to 3.3v 
 
