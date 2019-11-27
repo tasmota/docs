@@ -61,14 +61,16 @@ The latest _**development**_ binary files are available on the [OTA server](http
 ### Serial Terminal
 A program that connects to your Tasmota device directly over the serial connection you used to flash it.
 
-This is an optional way to configure your device using [Commands](Commands) and [Backlog](Commands#the-power-of-backlog). Be sure to configure your program for local echo so that the characters you type are displayed locally on your monitor as well as transmitted to the device. Also, every request needs to end with `<CR><LF>`. Your program may only send the carriage return (`Ctrl-M`) when hitting `Enter` and not automatically send the `<LF>`. You can send a linefeed using `Ctrl-J` on the keyboard.
+This is an optional way to configure your device using [Commands](Commands) and [Backlog](Commands#the-power-of-backlog). 
 * **[Termite](https://www.compuphase.com/software_termite.htm)** - simple terminal for windows
 * **[Termie](http://termie.sourceforge.net/)** - open source clone of Termite
 * **[Putty](https://www.putty.org/)** - popular client available on every platform
 * **[Minicom](https://www.acmesystems.it/minicom)** - one of many Linux terminals
 
+> [!TIP] Enable _local echo_ so that you can see what is typed and transmitted to the device. Enable **Append CR+LF** since every request needs to end with `<CR><LF>`. 
+
 ## MQTT Knowledge
-Tasmota is designed to be controlled and communicate via [MQTT](http://mqtt.org/). To use it to its fullest potential you need an [MQTT broker and client](https://www.hivemq.com/blog/mqtt-essentials-part-3-client-broker-connection-establishment/). 
+Tasmota is designed to be controlled and communicate via [MQTT](http://mqtt.org/). To use it to its fullest potential you need an [MQTT broker](https://www.hivemq.com/blog/mqtt-essentials-part-3-client-broker-connection-establishment/). 
 
 Read our [article on MQTT](MQTT) for how it is utilised in Tasmota.
 
@@ -82,9 +84,9 @@ If you want to modify the code or default settings you can use:
 - [**Arduino IDE**](Arduino-IDE) - setup and configure Arduino IDE for Tasmota compilation and upload
 - [**Docker Tasmota**](https://github.com/tasmota/docker-tasmota) - compile from a Docker container using PlatformIO
 
-Read more in [Compile Your Own Tasmota](Compile-your-build).
-
 #### Online Compilers
 _**Can only create a firmware binary.** Use one of the [tools](/installation/Prerequisites#flashing-tool) to flash it to your device._
 - [**Gitpod**](Gitpod) - compile your own binary in the cloud using [Gitpod](https://www.gitpod.io/).  
 - [**TasmoCompiler**](https://github.com/benzino77/tasmocompiler) - simple web GUI to compile Tasmota with your own settings
+
+More details in [Compile Your Own Tasmota](Compile-your-build).

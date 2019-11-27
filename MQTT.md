@@ -7,7 +7,8 @@ If you flashed a precompiled .bin or didn't enter MQTT info in `user_config_over
 Go to **Configuration -> Configure Other** and make sure **"MQTT Enable"** box is checked.<BR> 
 Once MQTT is enabled you need to set it up using **Configuration -> Configure MQTT**. 
 
->While here, you might as well change the Friendly Name into something more descriptive than generic "Tasmota". *This is a must for Home Assistant autodiscovery feature.*
+> [!TIP]
+>While here, you might as well change the Friendly Name into something more descriptive than generic "Tasmota".<br>*This is a must for Home Assistant autodiscovery feature.*
 
 ![Enable MQTT](https://i.postimg.cc/6QDQnH2X/mqtt-config1.png)
 ![Configure MQTT ](https://i.postimg.cc/y8LggXy1/mqtt-config2.png)
@@ -26,7 +27,7 @@ For a basic setup you only need to set **Host**, **User** and **Password** but i
 
 Using a serial connection or the WebUI Console you can issue (or even better, paste a premade) Backlog command for quick and easy MQTT setup.
 
-```
+```console
 Backlog mqtthost <mqtt_broker_address>; mqttport <mqtt_broker_port>; mqttuser <username>; mqttpassword <password>; topic <device_topic>
 ```
 
@@ -45,28 +46,29 @@ Commands over MQTT are issued to Tasmota by using `cmnd/%topic%/<command> <param
 
 The following example will go in depth on what happens when you send an MQTT command.
 
-A device was flashed and configured with the **FullTopic** as default `%prefix%/%topic%/` and the **Topic** set to `tasmota-switch`. We want to see current status of the switch and change it.
+A device was flashed and configured with the **FullTopic** as default `%prefix%/%topic%/` and the **Topic** set to `tasmota_switch`. We want to see the current status of the switch and change it.
 
-By looking at the commands table we can learn about the [Power](Commands#power) command and options associated with it. 
-* Ask the device for status:
-  ```java
-  cmnd/tasmota-switch/Power ← 	// an empty message/payload sends a status query
-     ↳ stat/tasmota-switch/RESULT → {"POWER":"OFF"}  
-     ↳ stat/tasmota-switch/POWER → OFF
+By looking at the commands table we can learn about the [`POWER`](Commands#power) command and options associated with it. 
+
+**Ask the device for status**
+  ```js
+  cmnd/tasmota_switch/Power ← 	// an empty message/payload sends a status query
+     ↳ stat/tasmota_switch/RESULT → {"POWER":"OFF"}  
+     ↳ stat/tasmota_switch/POWER → OFF
   ```
-  We can see that the module's relay is turned off.
+  We can see that the switch (device's relay) is turned off.
 
-* Send a command to toggle the switch:
-  ```java
-  cmnd/tasmota-switch/Power ← "TOGGLE"
+**Send a command to toggle the relay**
+  ```js
+  cmnd/tasmota_switch/Power ← "TOGGLE"
      ↳ // Power for relay 1 is toggled
-     ↳ stat/tasmota-switch/RESULT → {"POWER":"ON"}  
-     ↳ stat/tasmota-switch/POWER → ON
+     ↳ stat/tasmota_switch/RESULT → {"POWER":"ON"}  
+     ↳ stat/tasmota_switch/POWER → ON
   ```
   We've sent the toggle command and received confirmation that the switch is turned on.
 
 ### Examples
-In the following examples `%topic%` is `tasmota` for demonstration purposes:
+In the following examples `%topic%` is `tasmota`:
 
 - The relay can be controlled with `cmnd/tasmota/POWER on`, `cmnd/tasmota/POWER off` or `cmnd/tasmota/POWER toggle`. Tasmota will send a MQTT status message like `stat/tasmota/POWER ON`.
 
@@ -145,8 +147,8 @@ Initially Tasmota had one MQTT configurable topic planned called Topic. It soon 
 Tasmota then introduced a unique, non-configurable "FallBack Topic" that allows MQTT communication regardless of the configurable topic. This fallback topic is just what it is meant to be: **a fallback topic** in case of emergency!
 
 By default the Fallback Topic is `DVES_XXXXXX_fb` where xxxxxx is derived from the last 6 charactes of the device's MAC address (excluding `:`). It might look something like this: `DVES_3D5E26_fb`. You can find out the DVES code by looking at **Information** page in the webUI or issuing `Status 6`:
-```
-00:00:00 MQT: stat/tasmota/STATUS6 = {"StatusMQT":{"MqttHost":"1.1.1.1","MqttPort":1883,"MqttClientMask":"DVES_%06X","MqttClient":"DVES_3D5E26","MqttUser":"tasmota","MqttCount":1,"MAX_PACKET_SIZE":1000,"KEEPALIVE":30}}
+```json
+12:36:17 MQT: stat/tasmota/STATUS6 = {"StatusMQT":{"MqttHost":"1.1.1.1","MqttPort":1883,"MqttClientMask":"DVES_%06X","MqttClient":"DVES_3D5E26","MqttUser":"tasmota","MqttCount":1,"MAX_PACKET_SIZE":1000,"KEEPALIVE":30}}
 ```
 
 ## Retained MQTT Messages
@@ -157,7 +159,7 @@ If MQTT is defined and [`PowerRetain`](Commands#powerretain) is used the last st
 |-|-|
 [`PowerRetain`](Commands#powerretain)	| Show current MQTT power retain state.<BR> `0` / `off` = disable MQTT power retain on status update *(default)* <BR> `1` / `on` = enable MQTT power retain on status update
 
-**BUT**, a message in your MQTT broker flagged as 'retained' will ***_always_ override the `PowerOnState`***. 
+**BUT**, a message in your MQTT broker flagged as 'retained' will **_always_ override the `PowerOnState`**. 
 
 This is usually the main cause for "ghost switching". Learn more in [MQTT retained messages explained](http://www.steves-internet-guide.com/mqtt-retained-messages-example/). Check out [this tutorial](https://www.youtube.com/watch?v=31IyfM1gygo) for troubleshooting switch ghosting.
 

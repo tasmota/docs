@@ -19,11 +19,11 @@ _[`Modules`](Commands#modules) shows supported modules_
 **[`GPIO`](Commands#gpio)**    
 Assign a [component](Components) to a GPIO.
    
-- `gpio14 2` configures sensor AM2301 to GPIO14_    
-- `Backlog gpio14 5; gpio4 6` sets I<sup>2</sup>C SCL to GPIO14 and I<sup>2</sup>C SDA to GPIO4
-   Tasmota will auto-detect all connected and supported I<sup>2</sup>C devices. If you have conflicting I<sup>2</sup>C addresses see [I2CDevice](Commands#I2CDevice)
+- `GPIO14 2` configures sensor AM2301 to GPIO14_    
+- `Backlog GPIO14 5; GPIO4 6` sets I<sup>2</sup>C SCL to GPIO14 and I<sup>2</sup>C SDA to GPIO4
+   Tasmota will auto-detect all connected and supported I<sup>2</sup>C devices. If you have conflicting I<sup>2</sup>C addresses see [I2CDevices](I2CDevices)
 
-_[`Gpios All`](Commands#gpios) shows list of all available components by name and index_
+_[`GPIOs All`](Commands#gpios) shows list of all available components by name and index_
 
 **For a peripheral to show up you may need to power cycle your device instead of a soft restart.**
 

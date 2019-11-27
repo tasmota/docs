@@ -3,7 +3,7 @@ Prism.languages.console = {
 	'number': /\b(?<=on)\s\S{1,}#\S{1,}\s/i,
 	'selector': /(?<!(power\d?))\s(?:on|do|endon|break|if|else|elseif|and|or)\b/i,
 	'regex': /\b(?:backlog)\b/i,
-	'comment': /\b[<].*[>]\b/,
+	'comment': /[<]\w+[>]/,
 	'important': /^\w/im,
 	'deleted': /[;]\s/,
 	'json': {

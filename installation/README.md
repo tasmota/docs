@@ -3,8 +3,10 @@
 
 ---
 
-**To install Tasmota on your device first prepare some tools and software from the [prerequisites](/installation/Prerequisites) list.**
+<div style="font-size:250%;text-align:center">To install Tasmota on your device you will need to prepare the tools and software from the <a href="/installation/Prerequisites">Prerequisites</a> list.</div>
+
 ---
+
 > [!TIP]
 > If your device works with Tuya Smart or Smart Life app it may be possible to flash it with [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert) without disassembly or soldering and skip directly to [Initial Configuration](initial-configuration).
 
