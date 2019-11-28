@@ -84,7 +84,7 @@ If you desire that the %-opening closely match what `ShutterPosition<x>` and web
 
 Notice that there is no calibration for the 10\% position. On many shutters, there is no movement during the initial phase (i.e., nearly 10% of total time). Therefore the opening could be `0`. This measurement would cause an execution DIV 0 exception. Therefore the first calibration point is 30%. In most cases this is not a large opening so the calibration will be near enough. Yes, until ~10%, the position will be a bit "off" but not enough for concern.
 
-### Motor movement delays
+### Motor Movement Delays
 Some motors need up to one second after power is turned on before they start moving. You can confirm if you are having this issue if opening and closing as a single action works properly but doing this in smaller steps result in a shift of the position.  
 1. `Shutterposition<x> 30`  
    Measure the shutter position. This is the `reference_position`
@@ -102,8 +102,8 @@ Some motors need up to one second after power is turned on before they start mov
 
 Close the shutter and repeat this procedure until the motor delay is set properly.  
 
-## Preparation
-### Sonoff Dual R2 Required Configuration
+## Configuration
+#### Sonoff Dual R2 Required Configuration
 If using a Sonoff Dual R2, use the following Template:  
 `{"NAME":"Sonoff Dual R2","GPIO":[17,255,0,255,0,22,18,0,21,56,0,0,0,0],"FLAG":0,"BASE":39}`
 
@@ -116,7 +116,7 @@ If using a Sonoff Dual R2, use the following Template:
 - Set `ShutterSetHalfway<x>`
 - If the shutter uses a stepper motor instead of separate motors for each direction (i.e., duration based), define `PulseTime<x> 2` on both relays. The driver's behavior will change to a stepper motor that needs pulses to start and stop.  
 
-## Rules
+### Rules
 Tasmota rule triggers:  
 - `Shutter<x>#Position`
 - `Shutter<x>#Open` and `Shutter<x>#Close`
@@ -132,7 +132,7 @@ Examples:
 - Open/Close or set a specific position for a shutter. This example drives the second shutter to the same position as the first shutter:  
   `Rule1 ON Shutter1#Position DO ShutterPosition2 %value%" ENDON`
 
-## Home Assistant Support
+### Home Assistant Support
 For shutter position to persist in Home Assistant through device reboots, execute `PowerRetain 1`.
 
 These sample configurations should allow the shutter work in Home Assistant. Change the device MQTT topic and templates to match your settings. This is only an example and may need further modification to work in your environment.
@@ -217,10 +217,10 @@ cover:
 
 ## Wiring Diagrams
 ### Normal wire configuration with a PCF as digital I/O
-![Normal wire](https://user-images.githubusercontent.com/34340210/65997880-35b07800-e468-11e9-82d3-8dcaab14b3bf.png)
+![Normal wire](https://user-images.githubusercontent.com/34340210/65997880-35b07800-e468-11e9-82d3-8dcaab14b3bf.png ":size=200px")
 
 ### Short Circuit safe wire configuration with a PCF as digital I/O
-![ShortCicuitSafe](https://user-images.githubusercontent.com/34340210/65997877-3517e180-e468-11e9-9b8c-2f0787f977f6.png)
+![ShortCicuitSafe](https://user-images.githubusercontent.com/34340210/65997877-3517e180-e468-11e9-9b8c-2f0787f977f6.png ":size=200px")
 
 ## Sample Log Output
 Typical log output (log level `3`) when starting from `ShutterOpen1`. The first command is `ShutterClose1`. After closing, open it to 50% with `ShutterPosition1 50`  
