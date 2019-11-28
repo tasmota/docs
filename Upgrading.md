@@ -4,7 +4,7 @@ _**The first rule of upgrading: If it ain't broke, don't fix it!**_
 In other words, ensure that there is a good reason to mess with a working installation (e.g., a need to use a new feature or address a found problem fixed in a more current version).
 
 > [!TIP]
->Any time you upgrade it is highly recommended that you [back up your device settings](#Backing-Up-Settings). It is easily done in webUI under *Configuration - Backup Config"* page in the webUI
+>Any time you upgrade it is highly recommended that you [back up your device settings](#Backing-Up-Settings). It is easily done in webUI under **Configuration - Backup Config** page in the webUI
 
 
 ## OTA Upgrade 
