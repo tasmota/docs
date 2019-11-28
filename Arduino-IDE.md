@@ -28,9 +28,9 @@ IMPORTANT: For Windows users, before executing *arduino.exe* add an empty folder
 ## Configure Arduino IDE
 Select ``Tools`` and verify the following settings for **All Tasmota devices**.
 
-#### ESP8266 Board version 2.6.0:
+#### ESP8266 Board version 2.6.1:
 
-<img src="https://user-images.githubusercontent.com/24528715/68532632-2272b100-0320-11ea-97b4-ccdef22e04ad.png" width="300" />
+<img src="https://github.com/tasmota/docs/blob/master/_media/ArduinoIDE_settings.png" width="300" />
 
 ## Compile Tasmota
 Open Arduino IDE and select file *tasmota.ino* from your *sketchbook\tasmota* folder.
