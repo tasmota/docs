@@ -16,7 +16,7 @@ IMPORTANT: For Windows users, before executing *arduino.exe* add an empty folder
 
 ### Copy Files
 - Remove default compile options for floating point ``printf`` and ``scanf`` which are not being used by Tasmota and save 15k code space.
-- Replace in Arduino IDE folder ``portable\packages\esp8266\hardware\esp8266\2.6.0`` file *platform.txt* with the Tasmota Source code file ``arduino\version 2.6.0\platform.txt``.
+- Replace in Arduino IDE folder ``portable\packages\esp8266\hardware\esp8266\2.6.1`` file *platform.txt* with the Tasmota Source code file ``arduino\version 2.6.1\platform.txt``.
 
 ## Download Tasmota
 - Download the latest Tasmota release Source code from `https://github.com/arendst/Tasmota` and unzip to another known folder. 
@@ -30,7 +30,7 @@ Select ``Tools`` and verify the following settings for **All Tasmota devices**.
 
 #### ESP8266 Board version 2.6.1:
 
-<img src="https://github.com/tasmota/docs/blob/master/_media/ArduinoIDE_settings.png" width="300" />
+<img src="https://github.com/tasmota/docs/blob/master/_media/ArduinoIDE_settings.png">
 
 ## Compile Tasmota
 Open Arduino IDE and select file *tasmota.ino* from your *sketchbook\tasmota* folder.
