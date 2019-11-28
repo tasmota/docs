@@ -92,4 +92,4 @@ Backlog mqtthost <yourhost>; mqttuser <user>; mqttpassword <password>; topic <un
 
 Commands and Backlog are powerful and in time you can learn to configure almost everything (NTP servers, longitude and latitude, custom device options, etc) with a few copy and paste moves.
 
-Your device is connected to your network and to the MQTT broker. One last thing to do is configure your device using [Templates](https://blakadder.github.io/templates/index.html) in **Configuration - Configure Template** or [Modules](Modules) in **Configuration - Configure Module**.
+Your device is connected to your network and to the MQTT broker. One last thing to do is configure your device using [Templates](Templates) in **Configuration - Configure Template** or [Modules](Modules) in **Configuration - Configure Module**. Search for your device configuration template in our [Device Templates Repository](https://blakadder.github.io/templates/)
