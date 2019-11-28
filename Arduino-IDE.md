@@ -11,7 +11,7 @@ IMPORTANT: For Windows users, before executing *arduino.exe* add an empty folder
 
 ### Install ESP8266 Board Definitions
 - Open Arduino IDE and select ``File`` → ``Preferences`` (``Arduino`` → ``Preferences`` on Mac) and use the following text for field *Additional Boards Manager URLs:* 
-``https://github.com/esp8266/Arduino/releases/download/2.6.0/package_esp8266com_index.json`` and select *OK*.
+``https://github.com/esp8266/Arduino/releases/download/2.6.1/package_esp8266com_index.json`` and select *OK*.
 - Open ``Tools`` → ``Boards...`` → ``Boards Manager...`` and scroll down and click on *esp8266 by ESP8266 Community*. Click the *Install* button to download and install the latest ESP8266 board software. Select *Close*.
 
 ### Copy Files
