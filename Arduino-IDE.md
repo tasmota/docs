@@ -1,5 +1,3 @@
-## :red_circle:  Since Tasmota 6.6.0.15 Arduino IDE is not recommended to use for compiling. You will get errors and probably won't be able to compile.
-
 _**Use [Gitpod](Gitpod) or [VSC with PlatformIO](Visual-Studio-Code) to compile the firmware. Setup is much easier for these IDEs. The Tasmota project is already configured for them.**_
 
 ## Arduino IDE setup and configuration for Tasmota compilation and upload
