@@ -4,9 +4,8 @@
     --mono-shade4                       : hsl(var(--mono-hue), var(--mono-saturation), 10%);
     --base-line-height                  : 1.5;
     --content-max-width                 : 70em;
-    --cover-background-blend-mode       : multiply ;
+    --cover-background-blend-mode       : darken ;
     --cover-background-color            : var(--base-background-color);
-    --cover-background-mask-color       : #1fa3ec;
     --cover-background-mask-opacity     : 0.8;
     --cover-blockquote-color            : #1fa3ec;
     --code-theme-text                   : #e4e4e4 ;

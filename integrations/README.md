@@ -1,5 +1,9 @@
-
-<h2>Tasmota easily integrates with many home automation solutions reporting status and sensor data and allowing complete control.</h2>
+<p>
+<div style="font-size:200%;text-align:center">
+Tasmota easily integrates with many home automation solutions reporting status and sensor data and allowing complete control.
+</div>
+<hr>
+<br>
 
 [![HomeAssistant](../_media/logo/home-assistant.png ":no-zoom")](/integrations/Home-Assistant)
 [![openHAB](../_media/logo/openhab.png ":no-zoom")](/integrations/openHAB)
