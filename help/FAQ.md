@@ -36,8 +36,8 @@
  - [Auto-discovery in Home Assistant doesn't work](#Auto-discovery-in-Home-Assistant-doesnt-work)
  - [Why is my changed configuration not loaded?](#Why-is-my-changed-configuration-not-loaded)
  - [How do I invert the output of the green LED on the Sonoff Basic so the LED is on when the relay is off?](#How-do-I-invert-the-output-of-the-green-LED-on-the-Sonoff-Basic-so-the-LED-is-on-when-the-relay-is-off)
- - [What is an Arduino core?](#What-is-an-Arduino-core)
- - [help/Device-Recovery Recovery](Device-Operational-Recovery)
+ - [What is an Arduino core?](#What-is-an-Arduino-Core)
+ - [help/Device-Recovery Recovery](#Device-Operational-Recovery)
 
 ## Installation
 
