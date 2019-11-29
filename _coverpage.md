@@ -1,4 +1,4 @@
-![icon](_media/frontlogob.svg)
+![icon](_media/frontlogob.svg ":size=100%")
 >Alternative open source firmware for ESP8266 devices
 
 - Easy and flexible setup
@@ -12,6 +12,7 @@
 
 [Documentation](Home)
 [Get Started!](/installation/)
+[Download](http://thehackbox.org/tasmota/release/)
 [GitHub](https://github.com/arendst/Tasmota)
 
 
