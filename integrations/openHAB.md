@@ -6,7 +6,7 @@ By following the guide below you'll be able to observe, control and manage your 
 **Example Result:**
 The screenshot of an openHAB Sitemap below features a few Sonoff modules for lighting, two modified Sonoff Basic with sensors for temperature and humidity readings and two Sonoff Pow for power measurements of a washing machine and dishwasher:
 
-![example openHAB sitemap](https://community-openhab-org.s3-eu-central-1.amazonaws.com/original/2X/c/c4c91610a96750bb3ee30c88c299884039f80172.png "openHAB example of the end result shown in BasicUI :size=200")
+![example openHAB sitemap](https://community-openhab-org.s3-eu-central-1.amazonaws.com/original/2X/c/c4c91610a96750bb3ee30c88c299884039f80172.png)
 
 ## Requirements
 
