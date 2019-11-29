@@ -1,5 +1,6 @@
 * **Features**
 * [Upgrading](Upgrading)
+* [Moving to V7](moving-to-v7)
 * [MQTT](MQTT)
 * [Commands](Commands)
 * [Templates](Templates)
