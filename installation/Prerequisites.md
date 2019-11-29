@@ -39,9 +39,11 @@ Tasmota installed from a precompiled binary needs to be configured to work with 
 
 ## Needed Software
 #### Tasmota Firmware Binary
-Download a Tasmota binary (.bin) file. If you're not sure which binary is the right one for you consult the [builds table](Builds) or just start with `tasmota.bin`.
+Download a Tasmota firmware binary file (.bin). If you're not sure which binary is the right one for you just start with `tasmota.bin` or consult the [builds table](Builds) to see which features you need. 
 
-The latest _**development**_ binary files are available on the [OTA server](http://thehackbox.org/tasmota). The latest merged development code is compiled hourly. The latest _**master**_ release binary files can be downloaded from [GitHub](https://github.com/arendst/Tasmota/releases) or from the [OTA server](http://thehackbox.org/tasmota/release/). 
+Official release binaries can be downloaded from [GitHub releases](https://github.com/arendst/Tasmota/releases) or from our [OTA server](http://thehackbox.org/tasmota/release/). 
+
+Latest _**development**_ branch binaries are available only from our [OTA server](http://thehackbox.org/tasmota). The latest merged development code is compiled hourly. 
 
 ### Flashing Tool
 - [**Tasmota PyFlasher**](https://github.com/tasmota/tasmota-pyflasher) - official flashing tool intended for Tasmota. (Windows or Mac)
