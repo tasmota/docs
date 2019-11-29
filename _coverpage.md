@@ -1,4 +1,6 @@
-![icon](_media/frontlogob.svg ":size=100%")
+<!-- ![icon](_media/frontlogob.svg ":size=100%") -->
+# Tasmota
+
 >Alternative open source firmware for ESP8266 devices
 
 - Easy and flexible setup
