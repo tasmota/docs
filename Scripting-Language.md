@@ -27,7 +27,8 @@ USE_SCRIPT_WEB_DISPLAY | enable `>W` section (modify web UI)
 USE_TOUCH_BUTTONS | enable virtual touch button support with touch displays
 USE_WEBSEND_RESPONSE | enable receiving the response of a [`WebSend`](Commands#websend) command (received in section E)
 SCRIPT_STRIP_COMMENTS | enables stripping comments when attempting to paste a script that is too large to fit
-USE_24C256 | enables use of 24C256 I<sup>2</sup>C EEPROM to expand script buffer (defaults to 4k)  
+USE_ANGLE_FUNC | add sin(x),acos(x) and sqrt(x) e.g. to allow calculation of horizontal cylinder volume
+USE_24C256 | enables use of 24C256 I<sup>2</sup>C EEPROM to expand script buffer (defaults to 4k)
 USE_SCRIPT_FATFS | enables SD card support (on SPI bus). Specify the CS pin number. Also enables 4k script buffer  
 USE_SCRIPT_FATFS_EXT | enables additional FS commands  
 SDCARD_DIR | enables support for web UI for SD card directory upload and download  
@@ -209,6 +210,9 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `st(svar c n)` = string token - retrieve the n<sup>th</sup> element of svar delimited by c  
 `sl(svar)` = gets the length of a string  
 `sb(svar p n)` = gets a substring from svar at position p (if p<0 counts from end) and length n  
+`sin(x)` = calculates the sinus(x) (if defined USE_ANGLE_FUNC)  
+`acos(x)` = calculates the acos(x) (if defined USE_ANGLE_FUNC)  
+`sqrt(x)` = calculates the sqrt(x) (if defined USE_ANGLE_FUNC)  
 `s(x)` = explicit conversion from number x to string  
 `mqtts` = MQTT connection status: `0` = disconnected, `>0` = connected  
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
