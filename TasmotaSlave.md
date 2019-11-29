@@ -1,14 +1,10 @@
-# Tasmota Slave
-
-!> **This feature is not included in precompiled binaries.**     
-To use it you must [compile your build](compile-your-build).
-
 It is possible to amend your existing Arduino [Uno](https://store.arduino.cc/usa/arduino-uno-rev3)/[Mini](https://store.arduino.cc/usa/arduino-mini-05)/[Nano](https://store.arduino.cc/usa/arduino-nano) project to interface with a Tasmota powered ESP8266/ESP8285 generic development boards such as the Wemos D1 or NodeMCU branded hardware boards.
 
 The creation of a slave driver interface implemented since Tasmota 7.0.0.2 enables this possibility.
 
-## Compiling Tasmota to include Tasmota Slave support
-To enable support for the Tasmota Slave functionality you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:  
+!> **This feature is not included in precompiled binaries.**     
+
+To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
 ```
 #ifndef USE_TASMOTA_SLAVE
 #define USE_TASMOTA_SLAVE    // Enable the driver
