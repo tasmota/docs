@@ -36,8 +36,8 @@
  - [Auto-discovery in Home Assistant doesn't work](#Auto-discovery-in-Home-Assistant-doesnt-work)
  - [Why is my changed configuration not loaded?](#Why-is-my-changed-configuration-not-loaded)
  - [How do I invert the output of the green LED on the Sonoff Basic so the LED is on when the relay is off?](#How-do-I-invert-the-output-of-the-green-LED-on-the-Sonoff-Basic-so-the-LED-is-on-when-the-relay-is-off)
- - [What is an Arduino core?](#What-is-an-Arduino-core)
- - [help/Device-Recovery Recovery](Device-Operational-Recovery)
+ - [What is an Arduino core?](#What-is-an-Arduino-Core)
+ - [help/Device-Recovery Recovery](/help/Device-Recovery)
 
 ## Installation
 
@@ -395,4 +395,4 @@ Example: Core-/SDK-Version: **2_3_0**/1.5.3(aec24ac9)
 * 2.5.2 **Not supported beginning with 6.6.0.18**  
 
 ## I Cannot Find An Answer Here!
-Check the [Troubleshooting](Troubleshooting) section or join [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), or the [Community Forum](https://groups.google.com/d/forum/sonoffusers) for assistance from other Tasmota users.  
+Check the [Troubleshooting](/help/Troubleshooting) section or join [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), or the [Community Forum](https://groups.google.com/d/forum/sonoffusers) for assistance from other Tasmota users.  
