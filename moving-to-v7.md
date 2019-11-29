@@ -18,7 +18,7 @@ If you're upgrading from a core version older than 2.6 and you're experiencing c
 
 Default GroupTopic changed from `sonoffs` to `tasmotas`. Every new device will have `tasmotas` as the default GroupTopic but previously flashed ones will remain on `sonoffs`.
 
-To change GroupTopic of all old devices to the new one:
+To change GroupTopic of all old devices to the new one (if you're using the default FullTopic):
 ```console
 Publish cmnd/sonoffs/GroupTopic tasmotas
 ```
