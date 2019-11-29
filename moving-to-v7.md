@@ -22,6 +22,10 @@ To change GroupTopic of all old devices to the new one (if you're using the defa
 ```console
 Publish cmnd/sonoffs/GroupTopic tasmotas
 ```
+For Home Assistant autodiscovery enabled devices
+```console
+Publish sonoffs/cmnd/GroupTopic tasmotas
+```
 ### Wi-Fi Config AP
 To configure your device after flashing it for the first time you searched for AP named "sonoff-xxxx" but from now on you have to search for "tasmota-xxxx".
 
