@@ -1,4 +1,4 @@
-![icon](_media/frontlogob.svg ":size=200%")
+![icon](_media/frontlogob.svg ':size=300px')
 
 >Alternative open source firmware for ESP8266 devices
 
