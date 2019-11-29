@@ -13,8 +13,4 @@
 
 [Documentation](Home)
 [Get Started!](/installation/)
-[Download](http://thehackbox.org/tasmota/release/)
 [GitHub](https://github.com/arendst/Tasmota)
-
-
-
