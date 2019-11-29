@@ -9,9 +9,12 @@ Lights come in various shapes (bulb, strips, ceiling lights, ...) but in Tasmota
 ## Lights in WebUI
 Tasmotas webUI displays **Brightness**, **CT**, **White**, **Color Picker**, **Color Saturation** or **PWM** level sliders depending on the light component, the number of PWM channels configured and SetOptions used. 
 
+
 RGBCCT or 5 channel LED light strip presented in web UI:
 
-![Light in web UI](_media/light_UI_5channel.png)
+![Light in web UI](_media/light_UI_5channel.png)  
+
+Tasmota uses a HSB color model, which besides other more subtile differences compared to HSL means, that the color must be desaturated to reach complete black or white.  
 
 See [**light commands**](Commands#light) for how to control lights.
 
