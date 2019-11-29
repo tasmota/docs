@@ -18,6 +18,7 @@
 * [Zigbee](Zigbee)
 * [Displays](Displays)
 * [Blinds and Shutters](Blinds-and-Shutters)
+* [TasmotaSlave](TasmotaSlave)
 * [Power Monitoring Calibration](Power-Monitoring-Calibration)
 * [TLS](TLS)
 * [Web UI](WebUI)
