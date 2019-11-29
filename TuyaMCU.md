@@ -101,13 +101,23 @@ Command's value consists of two comma separated parameters: dpId and data.
 
 There are 4 different commands, one for each [data type](#data-type-table).
 
-- `TuyaSend1` -> Sends boolean (Type 1) data (`0/1`) to dpId (Max data length 1 byte)
+#### `TuyaSend1` 
+Sends boolean (Type 1) data (`0/1`) to dpId (Max data length 1 byte)
+
 > [!EXAMPLE] `TuyaSend1 1,0` sends vaue `0` to dpId=1 switching the device off
-- `TuyaSend2` -> Sends integer or 4 byte (Type 2) data to dpId (Max data length 4 bytes)
+#### `TuyaSend2` 
+Sends integer or 4 byte (Type 2) data to dpId (Max data length 4 bytes)
+
 > [!EXAMPLE] `TuyaSend2 14,100` sends value `100` to dpId=14 setting timer to 100 minutes
-- `TuyaSend3` -> Sends string (Type 3) data to dpId ( Max data length not-known)
+
+#### `TuyaSend3` 
+Sends string (Type 3) data to dpId ( Max data length not-known)
+
 > [!EXAMPLE] `TuyaSend3 108,ff0000646464ff` sends a 14 char hex string to dpId=108 (Type 3) containing RGBHSV values to control a light
-- `TuyaSend4` -> Sends enum (Type 4) data (`0/1/2/3/4/5`) to dpId (Max data length 1 bytes)
+
+#### `TuyaSend4` 
+Sends enum (Type 4) data (`0/1/2/3/4/5`) to dpId (Max data length 1 bytes)
+
 > [!EXAMPLE] `TuyaSend4 103,2` sends value `2` to dpId=103 to set fan speed to high
 
 ## TuyaReceived
