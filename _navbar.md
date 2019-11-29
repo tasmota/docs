@@ -5,10 +5,11 @@
     * [Flashing](/installation/Flashing)  
     * [Initial Configuration](/installation/Initial-Configuration)  
 * Resources
-    * [What's New](What's-New)
     * [Download Firmware](http://thehackbox.org/tasmota/release/)
     * [Device Templates](http://tasmota.fun)
     * [Tasmota PyFlasher](https://github.com/tasmota/tasmota-pyflasher/releases)
+    * [Project GitHub](https://github.com/arendst/Tasmota)
+    * [What's New](What's-New)
 * Help
     * [FAQ](/help/FAQ)
     * [Troubleshooting](/help/Troubleshooting)
