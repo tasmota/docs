@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>HTML Meta Tag</title>
+      <meta http-equiv = "refresh" content = "0; url = /#/help/" />
+   </head>
+   <body>
+    <p>Redirecting to <a href="/#/help/">help</a>
+
+   </body>
+</html>
