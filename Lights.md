@@ -60,7 +60,7 @@ WebUI shows only the brightness slider and power toggle for these lights, all ot
 ### WS2812
 Any light using WS2811, WS2812b, WS2813 or SK6812 LEDs falls into this component. They're also commonly called Neopixel lights.
 
-Configured in Tasmota by assigning `WS2812` component to its GPIO. 
+Configured in Tasmota by assigning `WS2812 (7)` component to its GPIO. 
 
 For wiring, see instructions for [LED strip](WS2812B-and-WS2813) or [Wemos RGB shield](WS2812B-RGB-Shield).
 
