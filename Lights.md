@@ -36,7 +36,7 @@ These lights are configured by assigning `PWM1(i)` through `PWM5(i)` components 
 
 If you require individual channel control (f.e. when connecting multiple single channel light strips to a multichannel LED controller) use [`SetOption68 1`](Commands#setoption68) to control each PWM individually with sliders in webUI and  [`Channel<x>`](Commands#channel) commands.
 
-For better color mixing of RGB and white channels read about [White-Blend-Mode](White-Blend-Mode)
+For better color mixing of RGB and white channels read about [White Blend Mode](White-Blend-Mode).
 
 ### MY92xx
 MY92xx [family](http://www.my-semi.com/content/products/product_list.aspx?id=2) of drivers uses Adaptive Pulse Density Modulation. 
