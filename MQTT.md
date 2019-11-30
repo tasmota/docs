@@ -133,7 +133,7 @@ Tasmota uses 3 prefixes for forming a FullTopic:
 ### %topic%
 All MQTT status messages will be sent using the configurable `%topic%` which must be made unique by the user. It can be called `bedroom` but it could also be called `XP-TS_10` as long as the user knows what it is and where to find it.
 
-> Default Topic is `tasmota`
+?> Default Topic is `tasmota`
 
 The use of the `%topic%` token is mandatory in case you want to use [`ButtonTopic`](Commands#buttontopic) and/or [`SwitchTopic`](Commands#switchtopic). It also provides for GroupTopic and Fallback Topic functionality.
 
@@ -143,7 +143,7 @@ The use of the `%topic%` token is mandatory in case you want to use [`ButtonTopi
 ### GroupTopic
 Having two devices with the same topic allowed for MQTT commands to be sent once to make the devices act in conjunction. That inspired a third topic called GroupTopic.  Devices with the same GroupTopic will all listen to that GroupTopic and react to the same MQTT command sent to it. You can use this to take gloal actions like updating firmware on all devices or split up devices into different groups using a unique GroupTopic for each group.
 
-> Default GroupTopic is `tasmotas`
+?> Default GroupTopic is `tasmotas`
 
 ### FallBack Topic
 Initially Tasmota had one MQTT configurable topic planned called Topic. It soon became apparent that when two devices come online with the same topic this would be a challenge, to say the least!

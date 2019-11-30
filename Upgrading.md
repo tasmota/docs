@@ -10,16 +10,16 @@ In other words, ensure that there is a good reason to mess with a working instal
 ## OTA Upgrade 
 Upgrading the device firmware [over-the-air](https://en.wikipedia.org/wiki/Over-the-air_programming), or OTA, is the convenient way to upgrade. Open a web browser to you device's web UI and select Firmware Upgrade.
 
-  ![Upgrading_1](https://user-images.githubusercontent.com/5904370/68962045-fbaaf380-07d3-11ea-9736-a44c13ef7653.png)
+![Upgrading_1](https://user-images.githubusercontent.com/5904370/68962045-fbaaf380-07d3-11ea-9736-a44c13ef7653.png ":size=200")
 
 You are presented with two choices. Using an OTA server or by uploading a downloaded or self-compiled binary file.
 
-![Upgrading_2](https://user-images.githubusercontent.com/5904370/68962130-301eaf80-07d4-11ea-87bb-54c018fe7794.png)
+![Upgrading_2](https://user-images.githubusercontent.com/5904370/68962130-301eaf80-07d4-11ea-87bb-54c018fe7794.png ":size=200")
 
 ### Using Web UI
 If you want to upgrade to the latest release version click the first **Start Upgrade** button. This screen should appear
 
- ![Upgrading_3](https://user-images.githubusercontent.com/5904370/68962209-52b0c880-07d4-11ea-8ea8-193e945dab9b.png)
+ ![Upgrading_3](https://user-images.githubusercontent.com/5904370/68962209-52b0c880-07d4-11ea-8ea8-193e945dab9b.png ":size=200")
 
 During this process Tasmota will download the new firmware from the url and install it. It might need to download **`tasmota-minimal.bin`** first but all that happens automatically. All you have to do is **wait 2 to 5 minutes**. 
 
@@ -30,7 +30,7 @@ If you wish to switch to a different [build](Builds) you have to change OtaUrl t
 
 It is possible to create your own simple http OTA server (https is not supported) using Python and perform upgrades from there. 
 Install Python3 and from the folder where the binary resides (make sure `tasmota-minimal.bin` is located there too) run:
-```commandline
+```
 python -m http.server 8000
 ```
 Change your OtaUrl to http://ipoftheserver:8000/yourbinary.bin and start the upgrade process.
@@ -40,19 +40,19 @@ This process requires you to have a minimal build `tasmota-minimal.bin` of the f
 
 When you try to immediately upgrade to a new binary without using minimal firmware you will be greeted with this error.
 
-![Upgrading_4](https://user-images.githubusercontent.com/5904370/68962296-85f35780-07d4-11ea-90ae-86fcd7d14681.png)
+![Upgrading_4](https://user-images.githubusercontent.com/5904370/68962296-85f35780-07d4-11ea-90ae-86fcd7d14681.png ":size=200")
 
 Browse to the minimal binary with **Choose File**. The chosen filename should be visible. _In our example its **`tasmota-minimal.bin`**._
 
-![minimal upgrade](https://user-images.githubusercontent.com/5904370/68962383-baffaa00-07d4-11ea-8122-fcf971ca96f5.png)
+![minimal upgrade](https://user-images.githubusercontent.com/5904370/68962383-baffaa00-07d4-11ea-8122-fcf971ca96f5.png ":size=200")
 
 Wait until the device restarts. In the Main Menu web UI will display this warning message on top.
 
-![minimal message](https://user-images.githubusercontent.com/5904370/68962530-1a5dba00-07d5-11ea-83aa-f6f640d9a38f.png)
+![minimal message](https://user-images.githubusercontent.com/5904370/68962530-1a5dba00-07d5-11ea-83aa-f6f640d9a38f.png ":size=200")
 
 Go to **Firmware Upgrade** again. This time browse to the binary you want to upgrade to with **Choose File** and click **Start upgrade**. _In our example its **`tasmota-sensors.bin`**._
 
-![image](https://user-images.githubusercontent.com/5904370/68962783-a7087800-07d5-11ea-9f8c-bd90fdb3e9ca.png)
+![image](https://user-images.githubusercontent.com/5904370/68962783-a7087800-07d5-11ea-9f8c-bd90fdb3e9ca.png ":size=200")
 
 You will see an **Upload starting...** and then **Upload successful** message. Wait until the device restarts, reconnect back to the web UI and check the firmware version on the bottom of the page.
 
@@ -62,13 +62,13 @@ Your device can be upgraded using [commands](Commands) via MQTT, web requests or
 
 [OtaUrl](Commands#OtaUrl) is used to set your OTA address. 
 ```console
-otaurl http://thehackbox.org/tasmota/tasmota-sensors.bin
+OtaUrl http://thehackbox.org/tasmota/tasmota-sensors.bin
 ```
 *In this example we chose a development branch version with additional sensors support*
 
 Initiate [upgrade](Commands#upgrade) from OTA server
 ```console
-upgrade 1
+Upgrade 1
 ```
 Wait for the upgrade process to complete and check the Tasmota version. If in console you can use `Status 2`.
 
@@ -105,24 +105,34 @@ To avoid this use our decode-config tool to easily create and restore backups in
 * [decode-config.py](https://github.com/tasmota/decode-config/blob/master/decode-config.py) - [installation instructions](https://github.com/tasmota/decode-config/blob/master/README.md) in Python for Windows or Linux
 * [decode-config.exe](https://github.com/tasmota/Tasmota-decode-config) - Windows only executable. If using this replace `decode-config.py` with `decode-config.exe` or `decode-config_x64.exe`  in the instruction examples.
 
-#### 1. Make a configuration backup:
-* Create a new backup straight from your device   
+#### 1. make a configuration backup:
+
+  * Create a new backup straight from your device   
 
     `decode-config.py -d <deviceIP> --backup-file Config-@f --backup-type json`
 
-   > @f will be replaced by that device's FriendlyName
+    `@f` will be replaced by decode-config to device's FriendlyName
+
+  **_or_**
+
 * Convert a previously made `.dmp` backup into a JSON file   
   
-     `decode-config.py -f <dmp_filename> --backup-file Config-@f --backup-type json`
-#### 2. Perform a reset 
+  `decode-config.py -f <dmp_filename> --backup-file Config-@f --backup-type json`
+
+#### 2. perform a device reset 
+Erase flash settings area but keep Wi-Fi and MQTT settings
+
 `Reset 6`
    
-> Erase flash settings area but retains Wi-Fi and MQTT settings
-#### 3. Upgrade the firmware via OTA or file upload
-#### 4. Restore configuration
-    decode-config.py -d <deviceIP> --restore-file <config-filename>
-  
-If you can't restore configuration directly you can configure the device manually referring to the [Commands article](Commands) and the settings (e.g., SetOptions, Rules, etc.) in the JSON file you created in step #1. You can paste the JSON to a [JSON parser](https://jsonformatter.org/json-parser) to make it easily readable. 
+#### 3. upgrade the firmware via OTA or file upload
+#### 4. restore configuration
+
+`decode-config.py -d <deviceIP> --restore-file <config-filename>`
+
+...and you're done!
+
+
+If you can't restore configuration directly you can configure the device manually referring to the [Commands article](Commands) and the settings (e.g., SetOptions, Rules, etc.) in the JSON file you created in step #1. You can paste the JSON into a [JSON parser](https://jsonformatter.org/json-parser) to make it easily readable. 
 
 # Migration Path
 Until now several versions of Tasmota have been released starting with the C version Sonoff-MQTT-OTA followed by Sonoff-MQTT-OTA-Arduino, Sonoff-Tasmota and ultimately **Tasmota**.
@@ -140,16 +150,17 @@ As said, mostly painless. There are some deviations to this rule as I rearranged
 * Easy migration from **Tasmota 4.x** to **Tasmota 5.14**.  
   As a safeguard perform a Backup Configuration before installing the new version. If settings are lost after the upgrade perform a Restore Configuration.
 * Easy migration from **Tasmota 5.2** to **Tasmota 6.x**.  
-  As a safeguard perform a **Backup Configuration** before installing the new version. If settings are lost after the upgrade perform a **Restore Configuration**.
-  - :warning: If you've used development versions between 6.6.0.7 and 6.6.0.11 [Back up your device settings](#device-settings) as described above. Convert the backup to human readable form as you **MUST** restore these settings manually. :warning:
+  As a safeguard perform a **_Backup Configuration_** before installing the new version. If settings are lost after the upgrade perform a **Restore Configuration**.
+  > [!WARNING] If you've used development versions between 6.6.0.7 and 6.6.0.11 [**back up your device settings**](#device-settings) as described above. Convert the backup to human readable form as you **MUST** restore these settings manually.
+
   - Perform a `Reset 6` before upgrading the firmware and, for safe measure, after the upgrade completes.  
   - Enter your device configurations using the settings saved in the first step.
 * Easy migration from **Tasmota 6.x** to **Tasmota 7.x**. 
   As a safeguard perform a **Backup Configuration** before installing the new version. If settings are lost after the upgrade perform a **Restore Configuration**.
 
-If *Backup Configuration -> Restore Configuration* fails, reset to firmware defaults and use [decode-config tool](#decode-config-tool) to restore your backed up configuration.
+If ***Backup Configuration -> Restore Configuration*** fails, reset to firmware defaults and use [decode-config tool](#decode-config-tool) to restore your backed up configuration.
 
-So to migrate from **Sonoff-MQTT-OTA-Arduino versions before 3.1.0** to **Tasmota 7.x** you will need to take five steps:
+In summary: to migrate from **Sonoff-MQTT-OTA-Arduino versions before 3.1.0** to **Tasmota 7.x** you will need to take five steps:
 
 1. Migrate to **Tasmota 3.9.x**
 2. Migrate to **Tasmota 4.x**

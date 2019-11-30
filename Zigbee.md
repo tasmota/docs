@@ -386,25 +386,25 @@ By default, and for security reasons, the Zigbee coordinator does not automatica
 ### Reading Sensors
 Sensor messages are published via MQTT when they are received from the Zigbee device. Unlike Zigbee2MQTT, there is currently no debouncing nor caching.
 
-Example: [Xiaomi Aqara Sensor](https://www.aliexpress.com/item/32876734250.html)
-<img src="https://user-images.githubusercontent.com/49731213/64921315-3a1b3680-d7c2-11e9-94a1-32e6ac6d4e72.jpg"  width="140">
+#### Example for [Aqara Temperature & Humidity Sensor](https://www.aqara.com/us/temperature_humidity_sensor.html)
+<img src="_media/aqara.png"  style="float:right;width:10em">
 
 This sensor monitors humidity, temperature, and air pressure.  Its Zigbee model ID is `lumi.weather`.
 
 1. Put Zigbee2Tasmota into pairing mode using the `ZigbeePermitJoin` command as described above
 2. Press the Xiaomi Aqara sensor's button for 5 seconds to pair the devices. You will see a message as follows:  
-   ```
+   ```yaml
    MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":30,"IEEEAddr":"00158D00036B50AE","ShortAddr":"0x8F20","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
    ```
 
-   |Field name|Value|
-   |---|---|
-   |`Status`|`30` indicates a device connect or reconnect. This is the opportunity to match IEEEAddress and short address|
-   |`IEEEAddr`|Long unique address (64 bits) of the device - factory set|
-   |`ShortAddr`|Short address (16 bits) randomly assigned to the device on this Zigbee network|
-   |`PowerSource`|`true` = the device is connected to a power source<BR>`false` = the device runs on battery|
-   |`ReceiveWhenIdle`|`true` = the device can receive commands when idle<BR>`false` = the device is not listening. Commands should be sent when the device reconnects and is idle|
-   |`Security`|Security capability (meaning unknown, to be determined)|
+|Field name|Value|
+|---|---|
+|`Status`|`30` indicates a device connect or reconnect. This is the opportunity to match IEEEAddress and short address|
+|`IEEEAddr`|Long unique address (64 bits) of the device - factory set|
+|`ShortAddr`|Short address (16 bits) randomly assigned to the device on this Zigbee network|
+|`PowerSource`|`true` = the device is connected to a power source<BR>`false` = the device runs on battery|
+|`ReceiveWhenIdle`|`true` = the device can receive commands when idle<BR>`false` = the device is not listening. Commands should be sent when the device reconnects and is idle|
+|`Security`|Security capability (meaning unknown, to be determined)|
 
 This device publishes sensor values roughly every hour or when a change occurs. You can also force an update pressing the device's button. It sends two kinds of messages, either 3x standard Zigbee messages, or a single proprietary message containing all sensor values.  
 
@@ -455,12 +455,12 @@ _(JSON pretty-printed for readability)_
 ```
 
 `ZigbeeStatus 2` - Display detailed information for each device, including long address, model and manufacturer:  
-```yaml
+```json
 {"ZigbeeStatus2":[{"ShortAddr":"0x6B58","IEEEAddr":"7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},{"ShortAddr":"0xE9C3","IEEEAddr":"00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},{"ShortAddr":"0x3D82","IEEEAddr":"0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips"}]}
 ```
 
-_(JSON pretty-printed for readability)_  
-```yaml
+_(formatted for readability)_  
+```json
 {
     "ZigbeeStatus2": [
         {
@@ -499,7 +499,7 @@ Philips Hue Bulb|`0x0B`
 {"ZigbeeStatus3":[{"ShortAddr":"0x6B58","Endpoints":{"0x03":{"ProfileId":"0xC05E","ProfileIdName":"ZigBee Light Link","ClustersIn":["0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"],"ClustersOut":["0x0019"]}}},{"ShortAddr":"0xE9C3","Endpoints":{"0x01":{"ProfileId":"0x0104","ClustersIn":["0x0000","0x0003","0xFFFF","0x0402","0x0403","0x0405"],"ClustersOut":["0x0000","0x0004","0xFFFF"]}}},{"ShortAddr":"0x3D82","Endpoints":{"0x0B":{"ProfileId":"0xC05E"," ...
 ```
 
-_(JSON formatted for readability)_  
+_(formatted for readability)_  
 ```json
 {
   "ZigbeeStatus3": [
@@ -569,7 +569,7 @@ _(JSON formatted for readability)_
 
 The message above shows that the device supports only one endpoint `0x03` which accepts messages (`ClustersIn`) for clusters `"0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"`.
 
-### Supported Zigbee Device Commands
+### Zigbee Device Commands
 
 Command|Parameters|Cluster
 -|-|-
@@ -594,7 +594,7 @@ ShutterTilt|`0..100`: move the shutter to the specific tilt position in percent|
 
 Examples:
 
-**OSRAM Plug**
+#### OSRAM Plug
 
 ```json
 ZigbeeSend { "device":"0x69CF", "endpoint":"0x03", "send":{"Power":"On"} }
@@ -611,7 +611,7 @@ ZigbeeRead { "device":"0x69CF", "endpoint":"0x03", "cluster":"0x0006", "read":["
 ZigbeeRead { "device":"0x69CF", "endpoint":3, "cluster":6, "read":0 }
 ```
 
-**Philips Hue bulb**
+#### Philips Hue bulb
 
 ```json
 ZigbeeSend { "device":"0x3D82", "endpoint":"0x0B", "send":{"Power":"Off"} }

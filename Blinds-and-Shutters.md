@@ -6,41 +6,52 @@ To use it you must [compile your build](compile-your-build). Add the following t
 #endif
 ```
 ----
-This driver adds support to wirelessly control blinds and roller shades connected to regular ON/OFF motors or stepper motors.
+?> Control blinds and roller shades connected to regular ON/OFF motors or stepper motors.
 
 The device must have at least two relays (e.g., a [Sonoff Dual R2](#sonoff-dual-r2-required-configuration)). Otherwise the shutter feature will not work.
 
+## Commands
+First enable shutter support with `SetOption80 1`
+
+Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands#blinds-shutters-and-roller-shades).
+
 ## Shutter Modes
-There are three shutter modes which are defined according to the PulseTime and Interlock settings. The examples below are for a `ShutterRelay1 1` configuration (i.e., `Relay1` and `Relay2`).
-1. Normal Operation (ShutterMode: 0) - First relay: OFF/DOWN, Second relay: OFF/UP  
+There are three shutter modes which are defined according to the [PulseTime](Commands#pulsetime) and [Interlock](Commands#interlock) settings. The examples below are for a `ShutterRelay1 1` configuration (using Relay1 and Relay2).
+1. **ShutterMode 0** - Normal Operation   
+   First relay: OFF/DOWN, Second relay: OFF/UP  
    - `Backlog PulseTime1 0; PulseTime2 0`
    - `Backlog Interlock 1,2; Interlock ON` (Interlocked relay pair)
-2. Short Circuit Safe (ShutterMode: 1) - First relay: ON/OFF, Second relay: UP/DOWN
+
+1. **ShutterMode 1** - Circuit Safe   
+   First relay: ON/OFF, Second relay: UP/DOWN
    - `Backlog PulseTime1 0; PulseTime2 0`
    - `Interlock OFF`
-3. Stepper motors (ShutterMode: 2) - First relay: OFF/DOWN PULSE, Second relay: OFF/UP PULSE
+
+1. **ShutterMode 2** - Stepper Motors   
+   First relay: OFF/DOWN PULSE, Second relay: OFF/UP PULSE
    - `Backlog PulseTime1 2; PulseTime2 2`
    - `Backlog Interlock 1,2; Interlock ON` (Interlocked relay pair)
 
-[Diagrams](#wiring-diagrams) for Normal, Stepper motor, and Short Circuit-Safe configurations are available at the end of this page. Even if the shutter does not have two motors, three wires have to be connected.
+[Wiring diagrams](#wiring-diagrams) for Normal, Stepper motor, and Short Circuit-Safe configurations are available at the end of this page. Even if the shutter does not have two motors, three wires have to be connected.
 
-**After setting the options for shutter mode, the device must be rebooted.** Otherwise, the sliders won't be available in the web UI, and the `ShutterOpenDuration<x>`and  `ShutterCloseDuration<x>` commands will report "Shutter unknown". Send `ShutterRelay<x> 1` and check what `ShutterMode` is displayed:
-```
+> [!NOTE] **After setting the options for shutter mode, the device must be rebooted.** Otherwise, the sliders won't be available in the web UI, and the `ShutterOpenDuration<x>`and  `ShutterCloseDuration<x>` commands will report "Shutter unknown". 
+
+Issue `ShutterRelay<x> 1` command and check in console which **ShutterMode** is displayed:
+
+<pre style="white-space:pre-line">
 Shutter accuracy digits: 1
-Shutter 0 (Relay:1): Init. Pos: 20000 [100 %], Open Vel.: 100 Close Vel.: 100 , Max Way: 20000, Opentime 10.0 [s], Closetime 10.0 [s], CoedffCalc: c0: 0, c1 200, c2: 200, c3: 0, c4: 0, binmask 3, is inverted 1, ShutterMode 0, motordelay 0
-```
+Shutter 0 (Relay:1): Init. Pos: 20000 [100 %], Open Vel.: 100 Close Vel.: 100 , Max Way: 20000, Opentime 10.0 [s], Closetime 10.0 [s], CoedffCalc: c0: 0, c1 200, c2: 200, c3: 0, c4: 0, binmask 3, is inverted 1, <span style="font-weight:bold;color:lime">ShutterMode 0</span>, motordelay 0
+</pre>
 
 ## Operation
-Refer to the [Blinds, Shutters and Roller Shades Commands](Commands#blinds-shutters-and-roller-shades)  
-
 Turning a device relay on or off directly (i.e., using `Power`) will function to affect a shutter's movement. In momentary mode (i.e., stepper motor), the relays start or stop the motor. The driver takes care of the direction and proper update of the shutter position.
 
 By default, only `Shutter1` is enabled when `SetOption80 1` is invoked.  
-<img src="https://user-images.githubusercontent.com/34340210/65997878-3517e180-e468-11e9-950e-bfe299771233.png">
+![](https://user-images.githubusercontent.com/34340210/65997878-3517e180-e468-11e9-950e-bfe299771233.png ":size=200")
 
 
 A maximum of four shutters per device are supported.  
-<img src="https://user-images.githubusercontent.com/34340210/65997879-3517e180-e468-11e9-9c44-9ad4a4a970cc.png">
+![](https://user-images.githubusercontent.com/34340210/65997879-3517e180-e468-11e9-9c44-9ad4a4a970cc.png ":size=200") 
 
 To enable additional shutters, `ShutterRelay<x> <value>` must be executed for each additional shutter. Additional shutter declarations must be sequentially numbered, and without gaps (i.e., first shutter 2, then shutter 3, and finally shutter 4).
 

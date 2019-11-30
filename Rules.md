@@ -41,7 +41,7 @@ A rule trigger can consist of:
 - `[SensorName]#[ValueName][comparison][value]`
 - `Tele-[SensorName]#[ValueName]`
 
-Comparison operators:  
+#### Rule Trigger Comparison Operators
 
 |Operator|Function|
 |:-:|:--|
@@ -54,7 +54,7 @@ Comparison operators:
 |`<=`| lesser than or equal to|
 |`\|`| used for [modulo operation](https://en.wikipedia.org/wiki/Modulo_operation) with remainder = 0 (exact division)|
 
-#### Some of available triggers:  
+#### Examples of Available Triggers
 
 Trigger|When it occurs 
 :-|:-
@@ -73,7 +73,7 @@ Power1#Boot<a id="PowerBoot"></a>|`Relay1` state before Wi-Fi and MQTT are conne
 Power1#State<a id="PowerState"></a>|when a power output is changed<br>use `Power1#state=0` and `Power1#state=1` for comparison, not =off or =on<br>Power2 for Relay2, etc.
 Rules#Timer=1<a id="RulesTimer"></a>|when countdown `RuleTimer1` expires
 Switch1#Boot<a id="SwitchBoot"></a>|occurs after Tasmota starts before it is initializated.
-Switch1#State<a id="SwitchState"></a>|when a switch changes state:<br>`0` = OFF<BR>`1` = ON<BR>`2` = TOGGLE<BR>`3` = HOLD<BR>(`SwitchTopic 0` must be set for this to trigger)
+Switch1#State<a id="SwitchState"></a>|when a switch changes to state<br>use `Switch1#state=0` and `Switch1#state=1` for comparison, not =off or =on<br>`0` = OFF<BR>`1` = ON<BR>`2` = TOGGLE<BR>`3` = HOLD<BR>(`SwitchTopic 0` must be set for this to trigger)
 System#Boot<a id="SystemBoot"></a>|occurs once after Tasmota is intialised (after the INFO1, INFO2 and INFO3 console messages).
 System#Save<a id="SystemSave"></a>|executed just before a planned restart
 Time#Initialized<a id="TimeInitialized"></a>|once when NTP is initialized and time is in sync
@@ -90,7 +90,7 @@ Every [command](Commands) with a one level JSON response has the #Data trigger.
 
 |Trigger           | When it occurs |
 |------------------|----------------|
-| &lt;command\>#Data|A response such as {"Fanspeed":3} has the Fanspeed#Data trigger.<br>A response like {"PulseTime2":{"Set":0,"Remaining":0}} does NOT have the #data trigger as the triggers are PulseTime2#Set and PulseTime2#Remaining. 
+| &lt;command\>#Data|A response such as {"Fanspeed":3} has the Fanspeed#Data trigger.<br>A response like {"PulseTime2":{"Set":0,"Remaining":0}} does **NOT** have the #data trigger as the triggers are PulseTime2#Set and PulseTime2#Remaining. 
 
 Connected sensors can be a trigger in the form as they are represented in the `TelePeriod` and `Status 8` JSON payloads.  
 
@@ -98,7 +98,7 @@ Connected sensors can be a trigger in the form as they are represented in the `T
 |------------------|----------------|
 |DS18B20#Temperature| whenever the temperature of sensor DS18B20 changes|
 |DS18B20#Temperature&lt;20| whenever the temperature of sensor DS18B20 is below 20 degrees|
-|AM2301-12#Humidity==55.5| whenever the humidity of sensor AM2301-12 equals 55.5%|
+|BME280#Humidity==55.5| whenever the humidity of sensor BEM280 equals 55.5%|
 |INA219#Current\>0.100| whenever the current drawn is more than 0.1A|
 |Energy#Power\>100| whenever the power used is more than 100W|
 
@@ -127,19 +127,23 @@ A rule command can be any command listed in the [Commands list](Commands). The c
 
 `ON Switch1#State DO Power %value% ENDON`
 
-To accomplish a rule with one trigger but several commands, you need to use `Backlog`:  
+To accomplish a rule with one trigger but several commands, you need to use `Backlog`:
+
 `ON <trigger> DO Backlog <command1>; <command2>; <command3> ENDON`
 
-**Appending a rule onto an existing rule set**  
+**Appending new rule onto an existing rule set**  
 Use the `+` character to append a new rule to the rule set. For example:
 
 &nbsp;&nbsp;&nbsp;&nbsp;Existing Rule1:  `ON Rules#Timer=1 DO Mem2 %time% ENDON`
 
-&nbsp;&nbsp;&nbsp;&nbsp;Rule to append:  `ON button1#state DO POWER TOGGLE ENDON`
+&nbsp;&nbsp;&nbsp;&nbsp;Rule to append:  `ON Button1#state DO POWER TOGGLE ENDON`
 
 &nbsp;&nbsp;&nbsp;&nbsp;Command:         `Rule1 + ON button1#state DO POWER TOGGLE ENDON`
 
-&nbsp;&nbsp;&nbsp;&nbsp;Resulting Rule1: `ON Rules#Timer=1 DO Mem2 %time% ENDON ON button1#state DO POWER TOGGLE ENDON`
+&nbsp;&nbsp;&nbsp;&nbsp;Resulting in 
+```console
+Rule1 ON Rules#Timer=1 DO Mem2 %time% ENDON ON Button1#state DO POWER TOGGLE ENDON
+```
 
 ### Rule Variables
 
@@ -166,11 +170,11 @@ The `<value>` can also be the value of the trigger of the rule.
 - Set Var4 to Var2's value - `ON Event#temp DO Var4 %Var2% ENDON`
 - Set Mem2 to the current time (minutes elapsed since midnight) - `ON Rules#Timer=1 DO Mem2 %time% ENDON`
 - After a Wi-Fi reconnect event, publish a payload containing timestamps of when Wi-Fi was disconnected in *From:* and when Wi-Fi re-connected in *To:* to `stat/topic/BLACKOUT`.
-  ```
+  ```console
   Rule1
-  ON wifi#disconnected DO Var1 %timestamp% ENDON
-  ON wifi#connected DO Var2 %timestamp% ENDON
-  ON mqtt#connected DO Publish stat/topic/BLACKOUT {"From":"%Var1%","To":"%Var2%"} ENDON
+    ON wifi#disconnected DO Var1 %timestamp% ENDON
+    ON wifi#connected DO Var2 %timestamp% ENDON
+    ON mqtt#connected DO Publish stat/topic/BLACKOUT {"From":"%Var1%","To":"%Var2%"} ENDON
   ```
 
 ## Conditional Rules

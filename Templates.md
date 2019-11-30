@@ -6,17 +6,17 @@ To provide easy processing by Tasmota, a user template is written as a JSON stri
 ```json
 {"NAME":"UserModule1","GPIO":[17,148,29,149,7,255,255,255,138,255,139,255,255],"FLAG":0,"BASE":18}
 ```
-> [!TIP] Visit [Tasmota Device Templates Repository](https://blakadder.github.io/templates/) for a complete list of supported devices
+> [!TIP] [**Tasmota Device Templates Repository**](https://blakadder.github.io/templates/) has a complete list of supported devices and their templates.
 
 ## How to Use
 
 Go to **Configuration - Configure Template** ...
 
-![How to get to template config](https://i.postimg.cc/Z5QP4q7C/template1.png)
+![How to get to template config](https://i.postimg.cc/Z5QP4q7C/template1.png ":size=200")
 
 ... and you'll end up looking at this screen.
 
-![Configure Template](https://i.postimg.cc/SR9375nG/template2.png)
+![Configure Template](https://i.postimg.cc/SR9375nG/template2.png ":size=200")
 
 Time to create your template.
 
@@ -34,11 +34,11 @@ Time to create your template.
 
 4. Click on **Save** and you'll see this message
 
-![](https://i.postimg.cc/4dqjcZxd/template6.png)
+![](https://i.postimg.cc/4dqjcZxd/template6.png ":size=200")
 
 5. Finally, the device will reboot with the new template name
 
-![](https://i.postimg.cc/NjxhzWpJ/template-finished.png)
+![](https://i.postimg.cc/NjxhzWpJ/template-finished.png ":size=200")
 
 ### Exporting Your Template
 
@@ -57,18 +57,18 @@ Copy the string `{"NAME":"RGB Smart Plug","GPIO":[37,0,39,0,38,134,0,0,131,17,13
 
 Go to **Configuration - Configure Other**
 
-![How to get to template config](https://i.postimg.cc/25Hsznpn/template-import1.png)
+![How to get to template config](https://i.postimg.cc/25Hsznpn/template-import1.png ":size=250")
 
 When there:
 1. Paste the template string into the Template field
 2. Make sure you **check Activate**
 3. Click on **Save**. 
 
-![Template configuration](https://i.postimg.cc/P5HsKtzv/template-import2.png)
+![Template configuration](https://i.postimg.cc/P5HsKtzv/template-import2.png ":size=250")
 
 The device will reboot with a name reflecting your template name and `Module 0` selected which has your new template stored.
 
-![It is finished](https://i.postimg.cc/28hN4qvf/template-import3.png)
+![It is finished](https://i.postimg.cc/28hN4qvf/template-import3.png ":size=250")
 
 
 ## Commands
@@ -92,7 +92,7 @@ A user provided template can be stored in Tasmota using the [`Template`](Command
 **After setting a template in command line it is necessary to issue `Module 0` command if the device doesn't reboot on its own.**
 
 #### Merge Template with Module
-You can set up your device in module **Configuration - Configure Module** and use command `Template 255` to merge the settings of the Module with current template into a new Template named "Merged".
+You can set up your device in module **_Configuration -> Configure Module_** and use command `Template 255` to merge the settings of the Module with current template into a new Template named "Merged".
 
 ## Anatomy of a Template
 Let's look again at our example template:

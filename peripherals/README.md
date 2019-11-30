@@ -11,12 +11,12 @@ Configuration is possible in the webUI ***Configuration - Configure Module*** pa
 
 or by using commands: [`Module`](Commands#module) and [`GPIO`](Commands#gpio), or [`Template`](Commands#template).
 
-**[`Module`](Commands#module)**    
+#### `Module`
 First select desired module for the device (Wait for the restart). Depending on the type of [Module](Modules), only certain GPIO pins are user configurable. Module Generic (18) has all the GPIOs configurable.   
 
 _[`Modules`](Commands#modules) shows supported modules_
 
-**[`GPIO`](Commands#gpio)**    
+#### `GPIO`
 Assign a [component](Components) to a GPIO.
    
 - `GPIO14 2` configures sensor AM2301 to GPIO14_    
@@ -27,7 +27,7 @@ _[`GPIOs All`](Commands#gpios) shows list of all available components by name an
 
 **For a peripheral to show up you may need to power cycle your device instead of a soft restart.**
 
-**[`Template`](Commands#template)**   
+#### `Template`
 Instead of using `Module` and `GPIO` you can define everything using `Template`. [Read more...](Templates#template-configuration-with-commands)
 
 ### Additional Options

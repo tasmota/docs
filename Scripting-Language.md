@@ -72,59 +72,67 @@ To save code space almost no error messages are provided. However it is taken ca
 
 ## Script Sections
 _Section descriptors (e.g., `>E`) are **case sensitive**_  
->`>D ssize`  
-  ssize = optional max string size (default=19)  
+`>D ssize`   
+  `ssize` = optional max string size (default=19)  
   define and init variables here, must be the first section, no other code allowed  
-  `p:vname` specifies permanent variables. The number of permanent variables is limited by Tasmota rules space (50 bytes) - numeric variables are 4 bytes; string variables are one byte longer than the length of string  
-  `t:vname` specifies countdown timers, if >0 they are decremented in seconds  until zero is reached. see example below  
-  `i:vname` specifies auto increment counters if >=0 (in seconds)  
-  `m:vname` specifies a median filter variable with 5 entries (for elimination of outliers)  
-  `M:vname` specifies a moving average filter variable with 8 entries (for smoothing data)  
+  `p:vname`   
+  specifies permanent variables. The number of permanent variables is limited by Tasmota rules space (50 bytes) - numeric variables are 4 bytes; string variables are one byte longer than the length of string  
+  `t:vname`   
+  specifies countdown timers, if >0 they are decremented in seconds  until zero is reached. see example below  
+  `i:vname`   
+  specifies auto increment counters if >=0 (in seconds)  
+  `m:vname`   
+   specifies a median filter variable with 5 entries (for elimination of outliers)  
+  `M:vname`   
+  specifies a moving average filter variable with 8 entries (for smoothing data)  
   (max 5 filters in total m+M) optional another filter length (1..127) can be given after the definition.  
-  Filter vars can be accessed also in indexed mode vname[x] (x = `1..N`, x = `0` returns current array index pointer)  
+  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer)  
   Using this filter, vars can be used as arrays  
->
->  Keep variable names as short as possible. The length of all variable names taken together may not exceed 256 characters.  
+
+> [!TIP] Keep variable names as short as possible. The length of all variable names taken together may not exceed 256 characters.  
   Memory is dynamically allocated as a result of the D section.  
   Copying a string to a number or reverse is supported  
 
->`>B`  
+`>B`  
 executed on BOOT time and on save script  
 
->`>E`  
+`>E`  
 Executed when a Tasmota MQTT `RESULT` message is received, e.g., on `POWER` change
 
->`>F`  
+`>F`  
 Executed every 100 ms  
 
->`>S`  
+`>S`  
 Executed every second  
 
->`>R`  
+`>R`  
 Executed on restart. p vars are saved automatically after this call  
 
->`>T`  
+`>T`  
 Executed on [`TelePeriod`](Commands#teleperiod) time (`SENSOR` and `STATE`), only put `tele-` vars in this section  
 Remark: json variable names (like all others) may not contain math operators like - , you should set [`SetOption64 1`](Commands#setoption64) to replace `-` (_dash_) with `_` (_underscore_)
 
->`>H`  
+`>H`  
 Alexa Hue interface (up to 32 virtual hue devices) *([example](Script-Cookbook#hue-emulation))*  
 `device`,`type`,`onVars`  
 Remark: hue values have a range from 0-65535. Divide by 182 to assign HSBcolors hue values.
->
->`device` device name  
+
+`device` device name  
 `type` device type - `E` = extended color; `S` = switch  
 `onVars` assign Hue "on" extended color parameters for hue, saturation, brightness, and color temperature (hue,sat,bri,ct) to scripter variables  
-example:  
-lamp1,E,on=pwr1,hue=hue1,sat=sat1,bri=bri1,ct=ct1  
+> [!EXAMPLE] `lamp1,E,on=pwr1,hue=hue1,sat=sat1,bri=bri1,ct=ct1`
 
->`>U`  
+`>U`  
 status JSON Messages arrive here
 
->`>b` _(note lower case)_  
+`>b` _(note lower case)_  
 executed on button state change  
-`bt[x]` read button state (x = `1.. MAX_KEYS`)  
-example:  
+
+`bt[x]`   
+read button state (x = `1.. MAX_KEYS`)  
+
+>[!EXAMPLE]  
+```
 if bt[1]==0  
 then  
 print falling edge of button1  
@@ -132,46 +140,52 @@ endif
 if bt[1]==1  
 then  
 print rising edge of button1  
-endif 
+endif
+```
   
->`>J`  
+`>J`  
 The lines in this section are published via MQTT in a JSON payload on [TelePeriod](Commands#teleperiod). Requires compiling with `#define USE_SCRIPT_JSON_EXPORT `.  
 
->`>W`  
+`>W`  
 The lines in this section are displayed in the web UI main page. Requires compiling with `#define USE_SCRIPT_WEB_DISPLAY`.  
->
-> You may put any html code here.  
->- Variables may be substituted using %var%  
->- HTML statements are displayed in the sensor section of the main page  
->- HTML statements preceded with a `@` are displayed at the top of the page  
->- USER IO elements are displayed at the top of the page  
->
->A web user interface may be generated containing any of the following elements: toggle button, check box, slider, or text and number input.  
->- **Button:** `bu(<vn> <txt1> <txt2>)` (up to 4 buttons may be defined in one row)  
+
+You may put any html code here.  
+- Variables may be substituted using %var%  
+- HTML statements are displayed in the sensor section of the main page  
+- HTML statements preceded with a `@` are displayed at the top of the page  
+- USER IO elements are displayed at the top of the page  
+
+A web user interface may be generated containing any of the following elements: toggle button, check box, slider, or text and number input.  
+- **Button:**   
+ `bu(<vn> <txt1> <txt2>)` (up to 4 buttons may be defined in one row)  
  `<vn>` = name of variable to hold button state  
  `<txt1>` = text of ON state of button  
  `<txt2>` = text of OFF state of button
->- **Checkbox:** `ck(<vn> <txt>)`  
+- **Checkbox:**   
+ `ck(<vn> <txt>)`  
  `<vn>` = name of variable to hold checkbox state  
  `<txt>` = label text   
->- **Slider:** `sl(<min> <max> <vn> <ltxt> <mtxt> <rtxt>)`  
+- **Slider:**    
+`sl(<min> <max> <vn> <ltxt> <mtxt> <rtxt>)`  
  `<min>` = slider minimum value  
  `<max>` = slider maximum value  
  `<vn>` = name of variable to hold slider value  
  `<ltxt>` = label left of slider  
  `<mtxt>` = label middle of slider  
  `<rtxt>` = label right of slider  
->- **Text Input:** `tx(<vn> <txt>)`  
+- **Text Input:**    
+ `tx(<vn> <txt>)`  
  `<vn>` = name of string variable to hold text state  
  `<txt>` = label text   
->- **Number Input:** `nm(<min <max> <step> <vn> <txt>)`  
+- **Number Input:**    
+ `nm(<min <max> <step> <vn> <txt>)`  
  `<min>` = number minimum value  
  `<max>` = number maximum value  
  `<step>` = number step value for up/down arrows  
  `<vn>` = name of number variable to hold number  
  `<txt>` = label text 
 
->`>M`  
+`>M`  
 [Smart Meter Interface](peripherals/smart-meter-interface)  
 
 If a variable does not exist, `???` is displayed for commands  
@@ -263,21 +277,21 @@ If you define a variable with the same name as a special variable that special v
 `print` or `=> print` prints to the log for debugging  
 &nbsp;&nbsp;&nbsp;&nbsp;A Tasmota MQTT RESULT message invokes the script's `>E` section. Add `=> print` statements to debug a script.  
     
-- Example:  
-  ```
-  slider=Dimmer
-  power=POWER
-  
-  if upd[slider]>0
-  then
-  =>print slider updated %slider%
-  endif
-  
-  if upd[power]>0
-  then
-  =>print power updated %power%
-  endif
-  ```
+> [!EXAMPLE]  
+>```
+>slider=Dimmer
+>power=POWER
+>
+>if upd[slider]>0
+>then
+>=>print slider updated %slider%
+>endif
+>
+>if upd[power]>0
+>then
+>=>print power updated %power%
+>endif
+>```
 
 `break` exits a section or terminates a `for next` loop  
 `dpx` sets decimal precision to x (0-9)  
@@ -324,7 +338,7 @@ else => do that
 endif  
 ```
 
-OR  
+**or**   
 
 ```
 if a==b  
@@ -354,8 +368,10 @@ Enabling this feature also enables [Tasmota TLS](TLS) as `sendmail` uses SSL.
   
 `sendmail [server:port:user:passwd:from:to:subject] msg`  
 
-Example:  
-`sendmail [smtp.gmail.com:465:user:passwd:sender@gmail.com:rec@gmail.com:alarm] %string%`  
+> [!EXAMPLE]  
+```
+sendmail [smtp.gmail.com:465:user:passwd:sender@gmail.com:rec@gmail.com:alarm] %string%
+```  
 
 The following parameters can be specified during compilation via `#define` directives in `user_config_override.h`:  
 * `EMAIL_SERVER`  
@@ -365,11 +381,9 @@ The following parameters can be specified during compilation via `#define` direc
 * `EMAIL_FROM`  
 
 To use any of these values, pass an `*` as its corresponding argument placeholder.  
-Example:  
-`sendmail [*:*:*:*:*:rec@gmail.com:theSubject] theMessage`  
+> [!EXAMPLE] `sendmail [*:*:*:*:*:rec@gmail.com:theSubject] theMessage`  
 
-Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `>m` _(note lower case)_ section. The specified text in this script section must end with an `#` character. `sendmail` will use the `>m` section if `*` is passed as the `msg` parameter.  
-[Example](Script-Cookbook#Send-e-mail)  
+Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `>m` _(note lower case)_ section. The specified text in this script section must end with an `#` character. `sendmail` will use the `>m` section if `*` is passed as the `msg` parameter. See [Scripting Cookbook Example].(Script-Cookbook#Send-e-mail)  
  
 **Subscribe, Unsubscribe**  
 `#define SUPPORT_MQTT_EVENT`  

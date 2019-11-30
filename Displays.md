@@ -103,18 +103,21 @@ Draw up to 16 GFX buttons to switch real Tasmota devices such as relays.
 - Button number + 256 - a virtual touch toggle button is created (MQTT => TBT)
 - Button number + 512 - a virtual touch push button is created (MQTT => PBT)
   
-Parameters are separated by colons. For example: `b0:260:260:100:50:2:11:4:2:Rel 1:`
+`b#:xp:yp:xa:ys:oc:fc:tc:ts:text:`   
+_Parameters are separated by colons._   
+* `b#` where # = button number 0-15  
+* `xp` = x position  
+* `yp` = y position  
+* `xa` = x size  
+* `ys` = y size  
+* `oc` = outline index color  
+* `fc` = fill index color  
+* `tc` = text index color  
+* `ts` = text size  
+* `text:` = button text (must end with a colon :) (max 9 chars)  
 
->bp `p` = button number 0-15  
-xp = x position  
-yp = y position  
-xa = x size  
-ys = y size  
-oc = outline index color  
-fc = fill index color  
-tc = text index color  
-ts = text size  
-text: = button text (must end with a colon :) (max 9 chars)  
+Example:   
+`b0:260:260:100:50:2:11:4:2:Rel 1:`
 
 
 ### Line chart
@@ -123,28 +126,28 @@ text: = button text (must end with a colon :) (max 9 chars)
 Up to 4 line charts may be defined.  
 
 Ticks may be defined by adding tick numbers to the `n` parameter.  
-&nbsp;&nbsp;&nbsp;&nbsp;For example: `n` = graph number (0..3) + x ticks (16\*number of x ticks) + y ticks (1024\*number of y ticks).  
+> [!EXAMPLE] `n` = graph number (0..3) + x ticks (16\*number of x ticks) + y ticks (1024\*number of y ticks).  
 
-Parameters are separated by colons.
 
->*Gn:xp:yp:xs:ys:t:fmax:fmin* = defines a line chart.  
-n = number up to 4 charts (0..3) + optional ticks  
-xp = x position  
-yp = y position  
-xs = x size  (if xs<0) graph is not reinitialized on second call (e.g., restart of scripter)  
-ys = y size  
-t = time in minutes for total chart  
-ymin = float chart minimum y  
-ymax = float chart maximum y  
-icol = line color index (only for color graphs)  
+`Gn:xp:yp:xs:ys:t:fmax:fmin` defines a line chart:   
+_Parameters are separated by colons._
+* `n` = number up to 4 charts (0..3) + optional ticks  
+* `xp` = x position  
+* `yp` = y position  
+* `xs` = x size  (if xs<0) graph is not reinitialized on second call (e.g., restart of scripter)  
+* `ys` = y size  
+* `t` = time in minutes for total chart  
+* `ymin` = float chart minimum y  
+* `ymax` = float chart maximum y  
+* `icol` = line color index (only for color graphs)  
 
->gn:v Adds a value to the chart buffer  
-n = number up to 4 charts (0..3)  
-v = float value to add  
+`gn:v` adds a value to the chart buffer:
+* `n` = number up to 4 charts (0..3)  
+* `v` = float value to add  
 
->Gdn:m = set graph n draw mode `0` = off, `1` = on. When on, redraw graph  
-Gsn:path: = save graph `n` to path (if optional SD card is present)  
-Grn:path: = restore graph `n` from path (if optional SD card is present)  
+`Gdn:m` sets graph n draw mode `0` = off, `1` = on. When on, redraw graph  
+* `Gsn:path:` = save graph `n` to path (if optional SD card is present)  
+* `Grn:path:` = restore graph `n` from path (if optional SD card is present)  
 
 ### Color Indices
 
@@ -160,7 +163,7 @@ Selected with `Ci` and `Bi` in the ILI9488, SSD1351, and RA8876 color panels
 | 15 | DARKGREY | 16 | ORANGE | 17 | GREENYELLOW |
 | 18 | PINK |
 
-#### Notes about e-Paper displays
+#### Notes on e-Paper Displays
 
 E-Paper displays have 2 operating modes: full update and partial update. While full update delivers a clean and sharp picture, it has the disadvantage of taking several seconds for the screen update and shows severe flickering during update. Partial update is quite fast (300 ms) with no flickering but there is the possibility that erased content is still slightly visible. It is therefore useful to perform a full update in regular intervals (e.g., each hour) to fully refresh the display.
  
@@ -178,10 +181,10 @@ The data sheets of the TFT and OLED displays mention burn-in effects when a stat
 The EPD font contains 95 characters starting from code 32, while the classic GFX font contains 256 characters ranging from 0 to 255. Custom characters above 127 can be displayed. To display these characters, you must specify an escape sequence (standard octal escapes do not work). The `~`character followed by a hex byte can define any character code.  
 
 GFXFont:  
-![GFXFont](https://user-images.githubusercontent.com/11647075/63440218-bb83e100-c42f-11e9-810c-74099f851902.jpg)
+![GFXFont](https://user-images.githubusercontent.com/11647075/63440218-bb83e100-c42f-11e9-810c-74099f851902.jpg ":size=200")
 
 EPDFont:  
-![EPDFont](https://user-images.githubusercontent.com/11647075/63440222-be7ed180-c42f-11e9-9be3-2f446fc28037.jpg)
+![EPDFont](https://user-images.githubusercontent.com/11647075/63440222-be7ed180-c42f-11e9-9be3-2f446fc28037.jpg ":size=200")
 
 ## Hardware Connections
 I<sup>2</sup>C displays are connected in the usual manner and defined via the GPIO component selection.  
@@ -209,11 +212,11 @@ Refresh screen:
 Draw rectangle from x,y with width and height:  
 `DisplayText [x50y50r200:100]`
 
-### Display local sensors
+### Display Local Sensors
 _(line breaks and indentation added to the rules for readability)_
 
 Use Tasmota rules to display sensor values, time, and a separation line. Refresh the display every 60 minutes:
-```
+```console
 rule1 on tele-SHT3X-0x44#Temperature do DisplayText [f1p7x0y5]%value% C endon
       on tele-SHT3X-0x44#Humidity do DisplayText [f1p10x70y5]%value% %[x0y20h296x250y5t] endon
       on tele-BMP280#Pressure do DisplayText [f1p10x140y5]%value% hPa endon
@@ -221,7 +224,7 @@ rule1 on tele-SHT3X-0x44#Temperature do DisplayText [f1p7x0y5]%value% C endon
 ```
 
 Show 4 analog channels:
-```
+```console
 rule1 on tele-ADS1115#A0 do DisplayText [s1p21c1l01]Analog1: %value% adc endon
       on tele-ADS1115#A1 do DisplayText [s1p21c1l3]Analog2: %value% adc endon
       on tele-ADS1115#A2 do DisplayText [s1p21c1l5]Analog3: %value% adc endon
@@ -229,7 +232,7 @@ rule1 on tele-ADS1115#A0 do DisplayText [s1p21c1l01]Analog1: %value% adc endon
 ```
 
 Show BME280 + SGP30:
-```
+```console
 rule1 on tele-BME280#Temperature do DisplayText [s1p21x0y0]Temp: %value% C endon
       on tele-BME280#Humidity do DisplayText [s1p21x0y10]Hum : %value% %% endon
       on tele-BME280#Pressure do DisplayText [s1p21x0y20]Prss: %value% hPa endon
@@ -237,7 +240,7 @@ rule1 on tele-BME280#Temperature do DisplayText [s1p21x0y0]Temp: %value% C endon
       on tele-SGP30#eCO2 do DisplayText [s1p21x0y40]eCO2: %value% ppm [s1p0x0y50]Time: [x35y50t] endon
 ```
 
-## Display drivers
+## Display Drivers
 
 Waveshare has two kinds of display controllers: with partial update and without partial update. The 2.9 inch driver is for partial update and should also support other Waveshare partial update models with modified WIDTH and HEIGHT parameters. The 4.2 inch driver is a hack which makes the full update display behave like a partial update and should probably work with other full update displays.  
 
