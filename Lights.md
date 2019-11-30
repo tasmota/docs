@@ -62,7 +62,7 @@ Any light using WS2811, WS2812b, WS2813 or SK6812 LEDs falls into this component
 
 Configured in Tasmota by assigning `WS2812 (7)` component to its GPIO. 
 
-For wiring, see instructions for [LED strip](WS2812B-and-WS2813) or [Wemos RGB shield](WS2812B-RGB-Shield).
+For wiring, see instructions for [LED strip](/peripherals/WS2812B-and-WS2813) or [Wemos RGB shield](/peripherals/WS2812B-RGB-Shield).
 
 ## Status LEDs
 Special subset of lights used to convey device status such as Wi-Fi and power. [Read more...](Status-LED)
