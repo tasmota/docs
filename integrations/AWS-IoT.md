@@ -16,8 +16,6 @@ To use it you must [compile your build](compile-your-build). Add the following t
 #undef USE_DISCOVERY
 #endif
 ```
-> [!DANGER]
->This feature is still experimental, and undergoing thorough testing to check stability (i.e. that memory pressure does not cause a crash). After a few months of testing, it appears extremely stable (no crash).
 
 > As of Tasmota version 6.6.0.3, the device-specific credentials are no longer restricted to being set at compile time only. You can now use the same firmware for all your devices. AWS IoT credentials can be set through the Console at runtime and are stored in flash memory. Credentials will survive firmware updates and OTA. Credentials will not survive a full Flash reset `Reset 5` or `Reset 6` nor will it survive a System Parameter Flash reset `Reset 3`
 
@@ -48,8 +46,6 @@ Communication is done over TLS 1.2 tunnels, using client certificates to authent
 Thanks to the switch of Arduino to BearSSL and aggressive optimization, the amount of memory needed is as low as 6.0k during normal operation, and an additional 6.6k during connection (TLS handshake). This makes it totally doable with standard 'Tasmota' firmware with Web and Hue emulation activated. You should see more than 20k of memory still available.
 
 ### Caveats
-
-As mentioned earlier, this is still experimental and we are happy to get your feedback.
 
 AWS IoT requires each Tasmota device to have its own distinct Private Key and Certificate (~800 bytes). Although you could imagine to use the same Private Key in all your devices, this is considered as a very bad practice. You are warned!
 
