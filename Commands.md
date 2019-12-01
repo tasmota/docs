@@ -202,7 +202,7 @@ SwitchTopic<a id="switchtopic"></a>|`<value>` = set MQTT switch topic (32 chars 
 TelePeriod<a id="teleperiod"></a>|`0` = disable telemetry messages<BR>`1` = reset telemetry period to firmware default (`TELE_PERIOD`)<BR>`10..3600` = set telemetry period in seconds *(default = `300`)*
 Topic<a id="topic"></a>|`1` = reset MQTT topic to firmware default (`MQTT_TOPIC`) and restart<BR>`<value>` = set MQTT topic (32 chars max) **and** `ButtonTopic` and restart.<BR>*If using MQTT to issue this command, if it is used with the device `GroupTopic`, the command will not be executed. (Mqtt Topic can't be equal to Mqtt Client)*
 Unsubscribe<a id="unsubscribe"></a>|Unsubscribe from topics subsribed to with [`Subscribe`](#subscribe) <BR>`  ` = unsubscribe all topics<BR>`<eventName>` = unsubscribe from a specific MQTT topic
-See also|[`SetOption4`](#setoption4) - Return MQTT response as `RESULT` or `%COMMAND%` topic<BR>[`SetOption10`](#setoption10) - Main topic change behavior
+See also|[`SetOption3`](#setoption3) - Disable//Enable MQTT<BR>[`SetOption4`](#setoption4) - Return MQTT response as `RESULT` or `%COMMAND%` topic<BR>[`SetOption10`](#setoption10) - Main topic change behavior
 
 ### Rules
 
