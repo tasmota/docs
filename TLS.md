@@ -123,7 +123,34 @@ Here are the most common TLS errors:
 | -1002 | Cannot connect to TCP port |
 | -1000 | Out of memory error |
 | 1 | Bad fingerprint |
-| 23 | The server's public key is too large. Tasmota TLS is limited to 2048 RSA keys |
+| 2 | BR_ERR_BAD_STATE |
+| 3 | BR_ERR_UNSUPPORTED_VERSION |
+| 4 | BR_ERR_BAD_VERSION |
+| 5 | BR_ERR_BAD_LENGTH |
+| 6 | BR_ERR_TOO_LARGE |
+| 7 | BR_ERR_BAD_MAC |
+| 8 | BR_ERR_NO_RANDOM |
+| 9 | BR_ERR_UNKNOWN_TYPE |
+| 10 | BR_ERR_UNEXPECTED |
+| 12 | BR_ERR_BAD_CCS |
+| 13 | BR_ERR_BAD_ALERT |
+| 14 | BR_ERR_BAD_HANDSHAKE |
+| 15 | BR_ERR_OVERSIZED_ID |
+| 16 | BR_ERR_BAD_CIPHER_SUITE |
+| 17 | BR_ERR_BAD_COMPRESSION |
+| 18 | BR_ERR_BAD_FRAGLEN |
+| 19 | BR_ERR_BAD_SECRENEG |
+| 20 | BR_ERR_EXTRA_EXTENSION |
+| 21 | BR_ERR_BAD_SNI |
+| 22 | BR_ERR_BAD_HELLO_DONE |
+| 23 | BR_ERR_LIMIT_EXCEEDED: the server's public key is too large. Tasmota TLS is limited to 2048 RSA keys |
+| 24 | BR_ERR_BAD_FINISHED |
+| 25 | BR_ERR_RESUME_MISMATCH |
+| 26 | BR_ERR_INVALID_ALGORITHM |
+| 27 | BR_ERR_BAD_SIGNATURE |
+| 28 | BR_ERR_WRONG_KEY_USAGE |
+| 29 | BR_ERR_NO_CLIENT_AUTH |
+| 31 | BR_ERR_IO |
 | 62 | X509 not trusted, the server certificate is not signed by the CA (AWS IoT or LetsEncrypt) |
 | 266 | SSL3_ALERT_UNEXPECTED_MESSAGE |
 | 276 | TLS1_ALERT_BAD_RECORD_MAC |
