@@ -352,8 +352,6 @@ This is the last step, you need to configure the MQTT parameters. The easiest wa
 
 Here is a command per command description. Most commands will trigger a device reboot. You can use `backlog` to launch all commands at once.
 
-Deactivate MQTT: `SetOption3 0`
-
 Enter the AWS IoT endpoint. `MqttHost <xxxxxxxxxxxxxx>-ats.iot.eu-central-1.amazonaws.com`
 
 Set the MQTT port: `MqttPort 8883`
@@ -364,17 +362,10 @@ Optional, change the topic to distinguish the devices from each others: `Topic s
 
 There are two ways to check the server certificate. This is controlled with the `#define USE_MQTT_TLS_CA_CERT` option in `sonoff/my_user_config.h` file. If activated, Tasmota will check the server certificate validity with the AmazonCA1 certificate embedded. This is the simplest option but it's a little slower. Alternatively you can use fingerprint validation instead - see appendix.
 
-Finally reactivate MQTT: `SetOption3 1`
-
 Here is the wrap-up of commands:
 
 ```
-SetOption3 0
-MqttHost <xxxxxxxxxxxxxx>-ats.iot.eu-central-1.amazonaws.com
-MqttPort 8883
-Topic sonoff/Tasmota-01
-MqttFingerprint1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-SetOption3 1
+BackLog MqttHost <xxxxxxxxxxxxxx>-ats.iot.eu-central-1.amazonaws.com; MqttPort 8883; Topic sonoff/Tasmota-01; MqttFingerprint1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 ```
 
 > Keep in mind that AWS IoT does not support 'retained' messages. Whatever the 'retained' configuration in Tasmota, messages are always published as 'retained=false'.
