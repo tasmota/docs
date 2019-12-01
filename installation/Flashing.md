@@ -45,10 +45,6 @@ Go to the folder and install Esptool with command
 ```
 python setup.py install
 ```
-Esptool for [Debian](https://packages.debian.org/stretch/esptool) and [Ubuntu](https://packages.ubuntu.com/cosmic/esptool) is installed with 
-```bash
-sudo apt install esptool
-```
 
 #### Upload Tasmota
 Make sure you followed the steps to put your device in flash mode. Place your chosen firmware binary file in the same folder as esptool.py.
