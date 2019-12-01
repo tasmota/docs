@@ -125,7 +125,29 @@ Here are the most common TLS errors:
 | 1 | Bad fingerprint |
 | 23 | The server's public key is too large. Tasmota TLS is limited to 2048 RSA keys |
 | 62 | X509 not trusted, the server certificate is not signed by the CA (AWS IoT or LetsEncrypt) |
-| 298 | Missing client private key |
+| 266 | SSL3_ALERT_UNEXPECTED_MESSAGE |
+| 276 | TLS1_ALERT_BAD_RECORD_MAC |
+| 277 | TLS1_ALERT_DECRYPTION_FAILED |
+| 278 | TLS1_ALERT_RECORD_OVERFLOW |
+| 286 | SSL3_ALERT_DECOMPRESSION_FAIL |
+| 296 | SSL3_ALERT_HANDSHAKE_FAILURE |
+| 298 | TLS1_ALERT_BAD_CERTIFICATE: Missing or bad client private key |
+| 299 | TLS1_ALERT_UNSUPPORTED_CERT |
+| 300 | TLS1_ALERT_CERTIFICATE_REVOKED |
+| 301 | TLS1_ALERT_CERTIFICATE_EXPIRED |
+| 302 | TLS1_ALERT_CERTIFICATE_UNKNOWN |
+| 303 | SSL3_ALERT_ILLEGAL_PARAMETER |
+| 304 | TLS1_ALERT_UNKNOWN_CA |
+| 305 | TLS1_ALERT_ACCESS_DENIED |
+| 306 | TLS1_ALERT_DECODE_ERROR |
+| 307 | TLS1_ALERT_DECRYPT_ERROR |
+| 316 | TLS1_ALERT_EXPORT_RESTRICTION |
+| 326 | TLS1_ALERT_PROTOCOL_VERSION |
+| 327 | TLS1_ALERT_INSUFFIENT_SECURITY |
+| 336 | TLS1_ALERT_INTERNAL_ERROR |
+| 346 | TLS1_ALERT_USER_CANCELED |
+| 356 | TLS1_ALERT_NO_RENEGOTIATION |
+| 366 | TLS1_ALERT_UNSUPPORTED_EXT |
 
 [Additional `BR_ERR*` error codes](https://www.bearssl.org/gitweb/?p=BearSSL;a=blob;f=inc/bearssl_ssl.h)  
 
