@@ -118,8 +118,8 @@ LetsEncrypt based server (Mosquitto for ex), with full CA validation (easier to 
 
 Here are the most common TLS errors:  
 
-Error code | Description
-|---:|:---
+|Error code | Description|
+|---:|:---|
 | -1002 | Cannot connect to TCP port |
 | -1000 | Out of memory error |
 | 1 | Bad fingerprint |
