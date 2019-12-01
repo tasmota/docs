@@ -4,7 +4,7 @@
 <!-- <img src="https://user-images.githubusercontent.com/5904370/55973675-661c1400-5c86-11e9-8453-0082bfcd61b6.png" width="200" align="right"> </img> -->
 <span style="font-size:25px">Latest release:</span>
 
-<span style="font-size:45px;">7.1 Betty</span>
+<span style="font-size:45px;">7.1.1 Betty</span>
 
 <!-- <img src="https://user-images.githubusercontent.com/5904370/55974399-d4ada180-5c87-11e9-99cc-316220bf5e95.png" align="right" width=200></img> -->
 
@@ -18,7 +18,7 @@
 <!-- tabs:start -->
 
 #### **2019-11-29**
-Tasmota v7.1 [Betty](https://www.youtube.com/watch?v=9iEoq8qZZK8) is released. Read [Moving to v7](moving-to-v7) on all the breaking changes and how to deal with them.
+Tasmota v7.1.1 [Betty](https://www.youtube.com/watch?v=9iEoq8qZZK8) is released. Read [Moving to v7](moving-to-v7) on all the breaking changes and how to deal with them.
 
 This release is chock full of changes and improvements! 
 * Everything is Tasmota now, Sonoff-Tasmota is no more.
