@@ -1,5 +1,3 @@
- ![](https://img.shields.io/static/v1?label=connection&message=gpio&color=purple)
-
 !> **This feature is not included in precompiled binaries.**
 
 To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
@@ -69,6 +67,7 @@ Virtually everything which has to be moved or rotated can be done now using thes
 ![Nema-17_v1](https://user-images.githubusercontent.com/34340210/66860250-d6b82c00-ef5a-11e9-8897-1a4e9d7fdf21.jpg ':size=200')
 ![28BYJ-48_V1](https://user-images.githubusercontent.com/34340210/66860253-d91a8600-ef5a-11e9-9195-c816e329abb8.jpg ':size=200')  
 
+[Convert 28BYJ-48 to bipolar so that it works with this driver](https://coeleveld.com/wp-content/uploads/2016/10/Modifying-a-28BYJ-48-step-motor-from-unipolar-to-bipolar.pdf)
 ## Breakout Boards
 ![](../_media/peripherals/stepper-motor1.png ':size=100') 
 ![](../_media/peripherals/stepper-motor2.png ':size=100') 
