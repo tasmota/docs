@@ -61,8 +61,19 @@ With four shutters, eight `Relay<x>` components are needed. If manual operation 
 
 Using manual operation `Switch<x>` pairs may require setting `SwitchMode<x> 4` (inverse follow) for proper switch behavior.
 
-## Stepper Motor Support
+## Pulse Motor Support
 There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
+
+## Stepper Motor Support
+You can also use the favourite NEMA stepper motors to operate your shutters and blinds. You have to configure them very similar to the  Circuit Safe (Shuttermode 1) configuration. To operate the NEMA you need a stepper driver module. The A4988 are very vamous. The most important pins of thisboard are: EN (enable), DIR (direction), STP (Stepper) for input. We use EN and DIR as RELAY1i and RELAY2. Please be aware to use the INVERSE relay for the enable. To send the STP Signal we will define a PWM on the next GPIO. You number of the PWM, e.g. PWM1 must match to the number of the shutter. e.g. shutter1. You cannot use any other PWM devices on the same ESP, when using the stepper motor because I need to work with the frequency. This is a global variable for all PWM ports. Last not least we need on the next GPIO a COUNTER1. This is for measuring the steps and send the stepper to the correct position. COUNTER1 must be connected to PWM1. If not your device will run forever.
+
+Example configuration:
+ - D1: Relay1i  = EN
+ - D2: Relay2   = DIR
+ - D3: PWM1     = STP
+ - D4: COUNTER1 = connected to D3/PWM1
+
+`shutteropenduration` must be same as `shuttercloseduration`. There is a soft start of 0.5sec. If you don't like the slow fine position at the end you can add `shuttermotordelay 0.25` to minimize this.
 
 ## Calibration
 [Shutter calibration video tutorial](https://www.youtube.com/watch?v=Z-grrvnu2bU)  
