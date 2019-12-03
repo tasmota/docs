@@ -4,7 +4,7 @@ The creation of a slave driver interface implemented since Tasmota 7.0.0.2 enabl
 
 !> **This feature is not included in precompiled binaries.**     
 
-To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
+To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 ```
 #ifndef USE_TASMOTA_SLAVE
 #define USE_TASMOTA_SLAVE    // Enable the driver
