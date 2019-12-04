@@ -8,14 +8,23 @@
 
 <!-- <img src="https://user-images.githubusercontent.com/5904370/55974399-d4ada180-5c87-11e9-99cc-316220bf5e95.png" align="right" width=200></img> -->
 
-[![GitHub download](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg)](https://github.com/arendst/Tasmota/releases/latest)
-[![License](https://img.shields.io/github/license/arendst/Tasmota.svg)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt)
-[![Chat](https://img.shields.io/discord/479389167382691863.svg)](https://discord.gg/Ks2Kzd4)
-[![donate](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://paypal.me/tasmota)
+[![GitHub download](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=for-the-badge)](https://github.com/arendst/Tasmota/releases/latest)
+[![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=for-the-badge)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt)
+[![Chat](https://img.shields.io/discord/479389167382691863.svg?style=for-the-badge)](https://discord.gg/Ks2Kzd4)
+[![donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=for-the-badge)](https://paypal.me/tasmota)
+
 
 ### What's New?
 
 <!-- tabs:start -->
+
+#### **2019-12-04**
+Remember that official Tasmota firmware flashing tools from a month ago? Old news! We give you the even more official, home made, GMO free new tool: Tasmotizer!
+
+[<img src="https://user-images.githubusercontent.com/11555742/69891714-ec14ca00-12fe-11ea-9140-92842fa1bff9.jpg" width=300></img>](https://github.com/tasmota/tasmotizer) 
+
+It one-click backups your original firmware, and even downloads the latest release/development bins for you, and - if needed - can send your default settings to the device after it's flashed. And it has a dark theme, so it must be good.
+
 
 #### **2019-11-29**
 Tasmota v7.1.1 [Betty](https://www.youtube.com/watch?v=9iEoq8qZZK8) is released. Read [Moving to v7](moving-to-v7) on all the breaking changes and how to deal with them.
