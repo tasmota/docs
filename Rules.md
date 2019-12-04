@@ -26,7 +26,7 @@ Rule sets are defined by using the [`Rule<x>`](Commands#rule) command. After def
   
 See [Commands](Commands#Rules) for a complete list of rules related commands.  
   
-There are three separate rule sets called `Rule1`, `Rule2` and `Rule3`. Each rule set can contain as many rules as can fit within the 511 character limit. Whenever a rule set is enabled all the rules in it will be active.
+There are three separate rule sets called `Rule1`, `Rule2` and `Rule3`. Each rule set can contain as many rules as can fit within the 511 character limit. Whenever a rule set is enabled all the rules in it will be active. If the character count of the rules in the set exceed the limit, split the rules into another rule set. If you have a long list of rules, verify the rules have all fit by inspecting the resulting log.
 
 Rules inside a rule set `Rule<x>` are concatenated and entered as a single statement.  
 `Rule<x> ON <trigger1> DO <command> ENDON ON <trigger2> DO <command> ENDON ...`  
@@ -40,6 +40,8 @@ A rule trigger can consist of:
 - `[SensorName]#[ValueName]`
 - `[SensorName]#[ValueName][comparison][value]`
 - `Tele-[SensorName]#[ValueName]`
+
+A trigger may be used in more than one rule. This may be required for some cases of using `IF/ELSE` since an `IF` statement cannot be used within a `Backlog`.
 
 #### Rule Trigger Comparison Operators
 
