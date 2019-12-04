@@ -10,6 +10,7 @@
 
 [![GitHub download](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=for-the-badge)](https://github.com/arendst/Tasmota/releases/latest)
 [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=for-the-badge)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt)
+
 [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=for-the-badge)](https://discord.gg/Ks2Kzd4)
 [![donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=for-the-badge)](https://paypal.me/tasmota)
 
