@@ -8,9 +8,9 @@
 
 <!-- <img src="https://user-images.githubusercontent.com/5904370/55974399-d4ada180-5c87-11e9-99cc-316220bf5e95.png" align="right" width=200></img> -->
 
-[![GitHub download](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square)](https://github.com/arendst/Tasmota/releases/latest)
+[![GitHub download](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](https://github.com/arendst/Tasmota/releases/latest)
 [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt)
-[![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square)](https://discord.gg/Ks2Kzd4)
+[![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4)
 [![donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
 
