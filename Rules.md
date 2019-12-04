@@ -143,7 +143,9 @@ To accomplish a rule with one trigger but several commands, you need to use `Bac
 `ON <trigger> DO Backlog <command1>; <command2>; <command3> ENDON`
 
 You can also duplicate the same trigger on many lines. 
+
 `on power2#state=1 do power1 1 endon`
+
 `on power2#state=1 do RuleTimer1 100 endon`
 
 **Rules have a maximum string length**
