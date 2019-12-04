@@ -125,7 +125,14 @@ Hardware and software serial interface, RF, IR and TuyaMCU are also supported ba
 ### Rule Command
 A rule command can be any command listed in the [Commands list](Commands). The command's `<parameter>` can be replaced with  `%value%` which will use the value of the trigger. 
 
-`ON Switch1#State DO Power %value% ENDON`
+`ON Switch1#State DO Power value ENDON`
+
+You can also duplicate the same trigger on many lines. 
+`on power2#state=1 do power1 1 endon`
+`on power2#state=1 do RuleTimer1 100 endon`
+
+**Rules have a maximum string length**
+If the string of your rule is to long and it reach the limit of the rule length, you will loose the end of it... Always verify the status line returned after the insert in the console to see if the last words of your rule has been well inserted. In the case of your rule length is larger then the limit, split it in an other rule<x>...
 
 To accomplish a rule with one trigger but several commands, you need to use `Backlog`:
 
@@ -134,7 +141,7 @@ To accomplish a rule with one trigger but several commands, you need to use `Bac
 **Appending new rule onto an existing rule set**  
 Use the `+` character to append a new rule to the rule set. For example:
 
-&nbsp;&nbsp;&nbsp;&nbsp;Existing Rule1:  `ON Rules#Timer=1 DO Mem2 %time% ENDON`
+&nbsp;&nbsp;&nbsp;&nbsp;Existing Rule1:  `ON Rules#Timer=1 DO Mem2 time ENDON`
 
 &nbsp;&nbsp;&nbsp;&nbsp;Rule to append:  `ON Button1#state DO POWER TOGGLE ENDON`
 
@@ -147,34 +154,38 @@ Rule1 ON Rules#Timer=1 DO Mem2 %time% ENDON ON Button1#state DO POWER TOGGLE END
 
 ### Rule Variables
 
-There are ten available variables (double precision reals) in Tasmota, `Var1..Var5` and `Mem1..Mem5`. All `Var` will be empty strings when the program starts. The value of all `Mem` persists after a reboot. They provide a means to store the trigger `%value%` to be used in any rule.    
+There are ten available variables (double precision reals) in Tasmota, `Var1..Var5` and `Mem1..Mem5`. All `Var` will be empty strings when the program starts. The value of all `Mem` persists after a reboot. They provide a means to store the trigger `value` to be used in any rule.    
 
 The value of a `Var<x>` and `Mem<x>` can be:  
 - any number
 - any text
-- %var1% to %var5%
-- %mem1% to %mem5% 
-- %time%
-- %timestamp%
-- %uptime%
-- %sunrise%
-- %sunset%
-- %utctime%
+- var1 to var5
+- mem1 to mem5
+- time
+- timestamp
+- uptime
+- sunrise
+- sunset
+- utctime
+
+You can test it directly in the console like:
+12:44:12 CMD: var4 = utctime
+12:44:12 RSL: stat/tasmota/RESULT = {"Var4":"1575481472.000"}
 
 To set the value for `Var<x>` and `Mem<x>` use the command  
 - `Var<x> <value>`
 - `Mem<x> <value>`
 
 The `<value>` can also be the value of the trigger of the rule.  
-- Set Var2 to the temperature of the AM2301 sensor - `ON AM2301#Temperature DO Var2 %value% ENDON`
-- Set Var4 to Var2's value - `ON Event#temp DO Var4 %Var2% ENDON`
-- Set Mem2 to the current time (minutes elapsed since midnight) - `ON Rules#Timer=1 DO Mem2 %time% ENDON`
+- Set Var2 to the temperature of the AM2301 sensor - `ON AM2301#Temperature DO Var2 value ENDON`
+- Set Var4 to Var2's value - `ON Event#temp DO Var4 Var2 ENDON`
+- Set Mem2 to the current time (minutes elapsed since midnight) - `ON Rules#Timer=1 DO Mem2 time ENDON`
 - After a Wi-Fi reconnect event, publish a payload containing timestamps of when Wi-Fi was disconnected in *From:* and when Wi-Fi re-connected in *To:* to `stat/topic/BLACKOUT`.
   ```console
   Rule1
-    ON wifi#disconnected DO Var1 %timestamp% ENDON
-    ON wifi#connected DO Var2 %timestamp% ENDON
-    ON mqtt#connected DO Publish stat/topic/BLACKOUT {"From":"%Var1%","To":"%Var2%"} ENDON
+    ON wifi#disconnected DO Var1 timestamp ENDON
+    ON wifi#connected DO Var2 timestamp ENDON
+    ON mqtt#connected DO Publish stat/topic/BLACKOUT {"From":"Var1","To":"Var2"} ENDON
   ```
 
 ## Conditional Rules
@@ -243,8 +254,16 @@ Parenthesis can be used to change the priority of logical expression. For exampl
 `<statement-list>`  
 - A Tasmota command (e.g.,`LedPower on`)  
 - Another IF statement (`IF ... ENDIF`)  
-- Multiple Tasmota commands or IF statements separated by `;`. For example:  
-  `Power1 off; LedPower on; IF (Mem1==0) Var1 Var1+1; Mem1 1 ENDIF; Delay 10; Power1 on`  
+- Multiple Tasmota commands into a IF works if statements separated by `;`. For example:  
+  `IF (Mem1==0) Var1 Var1+1; Mem1 1; Delay 10; Power1 on ENDIF`
+  
+   But not like this:
+   `Power1 off; LedPower on; IF (Mem1==0) Var1 Var1+1; Mem1 1 ENDIF; Delay 10; Power1 on`
+   
+   You should split it in two lines like:
+   `on power2#state=1 do Power1 off; LedPower on; endon`
+   `on power2#state=1 do IF (Mem1==0) Var1 Var1+1; Mem1 1 ENDIF; Delay 10; Power1 on endon`
+  
   `Backlog` is implied and is not required (saves rule set buffer space).  
 
 > [!EXAMPLE]
