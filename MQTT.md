@@ -15,13 +15,13 @@ Once MQTT is enabled you need to set it up using **Configuration -> Configure MQ
 
 For a basic setup you only need to set **Host**, **User** and **Password** but it is recommended to change **Topic** to avoid issues. Each device should have a unique **Topic**.
 
-- **Host** = your MQTT broker address or IP (**avoid mDNS**, means no `.local` at the end of the name!) 
+- **Host** = your MQTT broker address or IP (**mDNS is not available in the official Tasmota builds**, means no `.local` domain!) 
 - **Port** = your MQTT broker port (default port is set to 1883)
-- **Client** = device's unique identifier, do not change if not sure what it is for
+- **Client** = device's unique identifier. In 99% of cases it's okay to leave it as is, however some Cloud-based MQTT brokers require a ClientID connected to your account.
 - **User** = username for authenticating on your MQTT broker
 - **Password** = password for authenticating on your MQTT broker
-- **Topic** = unique identifying topic for your device (e.g. `hallswitch`, `kitchen-light`). `%topic%` in wiki references to this. 
-- **FullTopic** = [full topic definition](#mqtt-topic-definition), do not change if not sure what it is for
+- **Topic** = unique identifying topic for your device (e.g. `hallswitch`, `kitchen-light`). `%topic%` in wiki references to this. **It is recommended to use a single word for the topic.**
+- **FullTopic** = [full topic definition](#mqtt-topic-definition). Modify it if you want to use multi-level topics for your devices, for example `lights/%prefix%/%topic%/` or `%prefix%/top_floor/bathroom/%topic%/` etc.
 
 ### Configure MQTT using Backlog
 
@@ -67,8 +67,12 @@ By looking at the commands table we can learn about the [`POWER`](Commands#power
   ```
   We've sent the toggle command and received confirmation that the switch is turned on.
 
+> [!TIP]
+> By default, Tasmota replies to all commands through `.../RESULT`.
+> This behavior can be changed using [SetOption4](Commands#SetOption4), which makes the commands reply on the endpoint matching the command name, ex. `cmnd/tasmota/PowerOnState` will send a response on `cmnd/tasmota/POWERONSTATE`.
+
 ### Examples
-In the following examples `%topic%` is `tasmota`:
+In the following examples `%topic%` is `tasmota`, FullTopic is `%prefix%/%topic%/`, and prefixes are default `cmnd/stat/tele`:
 
 - The relay can be controlled with `cmnd/tasmota/POWER on`, `cmnd/tasmota/POWER off` or `cmnd/tasmota/POWER toggle`. Tasmota will send a MQTT status message like `stat/tasmota/POWER ON`.
 
@@ -78,7 +82,7 @@ In the following examples `%topic%` is `tasmota`:
 
 - For Sonoff Dual or Sonoff 4CH the relays need to be addressed with `cmnd/tasmota/POWER<x>`, where {x} is the relay number from 1 to 2 (Sonoff Dual) or from 1 to 4 (Sonoff 4CH). `cmnd/tasmota/POWER4 off` turns off the 4th relay on a Sonoff 4CH.
 
-- MQTT topic can be changed with `cmnd/tasmota/%topic% tasmota1` which reboots Tasmota and changes the `%topic%` to `tasmota1`. From that point on MQTT commands should look like `cmnd/tasmota1/POWER on`.
+- MQTT topic can be changed with `cmnd/tasmota/Topic tasmota1` which reboots Tasmota and changes the `%topic%` to `tasmota1`. From that point on MQTT commands should look like `cmnd/tasmota1/POWER on`.
 
 - The OTA firmware location can be made known to tasmota with `cmnd/tasmota/OtaUrl http://thehackbox.org/tasmota/release/tasmota.bin`. Reset to default with `cmnd/tasmota/OraUrl 1`.
 
@@ -88,11 +92,11 @@ In the following examples `%topic%` is `tasmota`:
 
 - The button can send a MQTT message to the broker that in turn will switch the relay. To configure this you need to perform `cmnd/tasmota/ButtonTopic tasmota` where tasmota equals to Topic. The message can also be provided with the retain flag by `cmnd/tasmota/ButtonRetain on`.
 
-- Sonoff Pow status can be retreived with `cmnd/tasmota/status 8` or periodically every 5 minutes using `cmnd/tasmota/TelePeriod 300`.
+- Sonoff Pow (and any device with sensors) status can be requested manually with `cmnd/tasmota/status 8`. Additionally, Tasmota periodically sends telemetry every [TelePeriod](Commands#Teleperiod), which defaults to 300 seconds (5 minutes).
 
-- When a Sonoff Pow threshold like PowerLow has been met a message `tele/tasmota/POWER_LOW ON` will be sent. When the error is corrected a message `tele/tasmota/POWER_LOW OFF` will be sent.
+- When a Sonoff Pow (and any device with power metering sensors) threshold like PowerLow has been met a message `tele/tasmota/POWER_LOW ON` will be sent. When the error is corrected a message `tele/tasmota/POWER_LOW OFF` will be sent.
 
-While most MQTT commands will result in a message in JSON format the power status feedback will always be returned like `stat/tasmota/POWER ON` too.
+While most MQTT commands will result in a message in JSON format the power status feedback will always be returned like `stat/tasmota/POWER ON` as well.
 
 Telemetry data will be sent by prefix `tele` like `tele/tasmota/SENSOR {"Time":"2017-02-16T10:13:52", "DS18B20":{"Temperature":20.6}}`
 
