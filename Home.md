@@ -21,7 +21,7 @@
 #### **2019-12-04**
 Remember that official Tasmota firmware flashing tools from a month ago? Old news! 
 
-We present to you: the even more official, home made, GMO free:
+We present to you the even more official, home made, GMO free: **TASMOTIZER!**
 
 [<img src="https://user-images.githubusercontent.com/11555742/69891714-ec14ca00-12fe-11ea-9140-92842fa1bff9.jpg" width=300></img>](https://github.com/tasmota/tasmotizer) 
 
