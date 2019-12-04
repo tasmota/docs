@@ -87,6 +87,15 @@ Time#Set<a id="TimeSet"></a>|every hour when NTP makes time in sync
 Var&lt;x\>\#State<a id="VarState"></a>|when the value for Var&lt;x\> is changed
 Wifi#Connected<a id="WifiConnected"></a>|when Wi-Fi is connected
 Wifi#Disconnected<a id="WifiDisconnected"></a>|when Wi-Fi is disconnected
+tele-switch1#state<a id="tele-switch"></a>|when a teleperiod message is sent with the state of a SWITCH
+tele-power1#state<a id="tele-power"></a>|when a teleperiod message is sent with the state of a RELAY
+tele-wifi1#ap<a id="tele-power"></a>|when a teleperiod message is sent with the number of the used AP 
+tele-wifi1#ssid<a id="tele-power"></a>|when a teleperiod message is sent with the name of the used AP 
+tele-wifi1#bssid<a id="tele-power"></a>|when a teleperiod message is sent with the name of the bSSID
+tele-wifi1#channel<a id="tele-power"></a>|when a teleperiod message is sent with the number of the wifi channel used
+tele-wifi1#RSSI<a id="tele-power"></a>|when a teleperiod message is sent with the RSSI LEVEL
+tele-wifi1#LinkCount<a id="tele-power"></a>|when a teleperiod message is sent with the number of wifi disconnections
+tele-wifi1#Downtime<a id="tele-power"></a>|when a teleperiod message is sent with the total seconds of wifi disconnections
 
 Every [command](Commands) with a one level JSON response has the #Data trigger.
 
@@ -133,6 +142,13 @@ To accomplish a rule with one trigger but several commands, you need to use `Bac
 
 `ON <trigger> DO Backlog <command1>; <command2>; <command3> ENDON`
 
+You can also duplicate the same trigger on many lines. 
+`on power2#state=1 do power1 1 endon`
+`on power2#state=1 do RuleTimer1 100 endon`
+
+**Rules have a maximum string length**
+If the string of your rule is to long and it reach the limit of the rule length, you will loose the end of it... Always verify the status line returned after the insert in the console to see if the last words of your rule has been well inserted. In the case of your rule length is larger then the limit, split it in an other rule<x>...
+
 **Appending new rule onto an existing rule set**  
 Use the `+` character to append a new rule to the rule set. For example:
 
@@ -162,6 +178,7 @@ The value of a `Var<x>` and `Mem<x>` can be:
 - %sunrise%
 - %sunset%
 - %utctime%
+- %topic%
 
 To set the value for `Var<x>` and `Mem<x>` use the command  
 - `Var<x> <value>`
@@ -248,6 +265,13 @@ Parenthesis can be used to change the priority of logical expression. For exampl
 - Multiple Tasmota commands or IF statements separated by `;`. For example:  
   `Power1 off; LedPower on; IF (Mem1==0) Var1 Var1+1; Mem1 1 ENDIF; Delay 10; Power1 on`  
   `Backlog` is implied and is not required (saves rule set buffer space).  
+  
+  But not like this:
+   `Power1 off; LedPower on; IF (Mem1==0) Var1 Var1+1; Mem1 1 ENDIF; Delay 10; Power1 on`
+
+   You should split it in two lines like:
+   `on power2#state=1 do Power1 off; LedPower on; endon`
+   `on power2#state=1 do IF (Mem1==0) Var1 Var1+1; Mem1 1 ENDIF; Delay 10; Power1 on endon`
 
 > [!EXAMPLE]
 > Rule used to control pressure cooker with a Sonoff S31. Once it is finished cooking, shut off the power immediately.  
