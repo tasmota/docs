@@ -10,7 +10,7 @@
     * [Download Dev Builds](http://thehackbox.org/tasmota)
 * Resources
     * [Device Templates](http://tasmota.fun)
-    * [Tasmota PyFlasher](https://github.com/tasmota/tasmota-pyflasher/releases)
+    * [Tasmotizer!](https://github.com/tasmota/tasmotizer)
     * [What's New](What's-New)
 * Help
     * [FAQ](/help/FAQ)
