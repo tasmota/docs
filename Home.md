@@ -19,13 +19,13 @@
 <!-- tabs:start -->
 
 #### **2019-12-04**
-Remember that official Tasmota firmware flashing tools from a month ago? Old news! 
+Remember that official Tasmota firmware flashing tool from a month ago? Pfft, old news! 
 
-We present to you the even more official, home made, GMO free: **TASMOTIZER!**
+We present to you the even more official, completely home made and GMO free: **TASMOTIZER!**
 
 [<img src="https://user-images.githubusercontent.com/11555742/69891714-ec14ca00-12fe-11ea-9140-92842fa1bff9.jpg" width=300></img>](https://github.com/tasmota/tasmotizer) 
 
-It downloads the latest release/development bins for you, one-click backups your original firmware, and can even (if you wish so) send your default settings to the device after it's flashed. But most of all it has a dark theme, so it must be good!
+It downloads the latest release/development firmware for you, backs up the original firmware with one-click and can even (if you wish so) send your default settings to the device after it's flashed. But most of all it has a dark theme, so it must be good!
 
 #### **2019-11-29**
 Tasmota v7.1.1 [Betty](https://www.youtube.com/watch?v=9iEoq8qZZK8) is released. Read [Moving to v7](moving-to-v7) on all the breaking changes and how to deal with them.
