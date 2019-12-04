@@ -12,7 +12,7 @@ Rules perform actions based on triggers (e.g., switch state change, temperature 
 **Nested rules are not supported.**  
 
 - Optional [`IF / ELSE / ELSEIF` and `AND / OR`](#Conditional-Rules) support **6.6.0.11**  
-- Optional [use of expressions](Expressions-in-Rules) support **6.4.1.14**  
+- Optional [use of expressions](#Expressions-In-Rules) support **6.4.1.14**  
 
 Rule definition statement:  
 `ON <trigger> DO <command> [ENDON | BREAK]`  
