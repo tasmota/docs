@@ -13,14 +13,13 @@
 ## Preparation
 **You need to compile your own Tasmota firmware as none of the pre-compiled binaries have support for _display and PZEM_ module.**  
 
-**Set up your preferred IDE as described in [wiki](installation/Flashing#flashing-and-compiling-from-source)**  
+**Set up your preferred IDE as described in [wiki](/jdocs/Compile-your-build)**  
 
 ### Enable IDE to Use Custom Settings
-Create _**user_config_override.h**_ in the `sonoff` folder and paste the contents of this [sample configuration file](https://pastebin.com/WkfyKYnh).
+Create _**user_config_override.h**_ in the `tasmota` folder and paste the contents of this [sample configuration file](https://pastebin.com/WkfyKYnh).
 
 #### PlatformIO
-- Edit [_**platformio.ini**_](https://github.com/arendst/Tasmota/blob/development/platformio.ini). Uncomment the statement by removing the ";" in front of the line:  
-  `-DUSE_CONFIG_OVERRIDE`  
+- Rename [platformio_override_sample.ini](https://github.com/arendst/Tasmota/blob/development/platformio_override_sample.ini).   to platformio_override.ini
 - Enter `platformio run -e <variant-name>`  
   Examples:  
   - `platformio run -e tasmota-sensors`  
