@@ -106,7 +106,7 @@ Complete document available from https://tttapa.github.io/ESP8266/Chap04%20-%20M
 Just like a normal Arduino, the ESP8266 has digital input/output pins (I/O or GPIO, General Purpose Input/Output pins). As the name implies, they can be used as digital inputs to read a digital voltage, or as digital outputs to output either 0V (sink current) or 3.3V (source current).
 
 ### Usable Pins
-The ESP8266 and ESP8255 have 17 GPIO pins (0-16) but several are [reserved or have constraints](https://i.imgur.com/IH1fYqF.jpg). Do not use any of the _**reserved**_ pins. If you do, you might crash your program. On the ESP8266, six pins (GPIO 6 - 11) are used to interface the flash memory (the small 8-legged chip usually right next to the ESP8266). The ESP8255 has its flash memory integrated into the chip which frees up GPIO 9 and 10.
+The ESP8266 and ESP8285 have 17 GPIO pins (0-16) but several are [reserved or have constraints](https://i.imgur.com/IH1fYqF.jpg). Do not use any of the _**reserved**_ pins. If you do, you might crash your program. On the ESP8266, six pins (GPIO 6 - 11) are used to interface the flash memory (the small 8-legged chip usually right next to the ESP8266). The ESP8285 has its flash memory integrated into the chip which frees up GPIO 9 and 10.
 
 GPIO 1 and 3 are used as TX and RX of the hardware Serial port (UART), so in most cases, you can’t use them as normal I/O while sending/receiving serial data.
 
