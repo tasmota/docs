@@ -10,7 +10,7 @@ Gitpod is a web browser based online IDE. All you need to use it is to link your
 After you successfully sign in, you can start your personal project. The fastest way to load Tasmota into Gitpod is with one of the following links:  
 - Development Branch: [`https://gitpod.io#https://github.com/arendst/Tasmota/tree/development`](https://gitpod.io#https://github.com/arendst/Tasmota/tree/development)
 - Master Release: [`https://gitpod.io#https://github.com/arendst/Tasmota/tree/master`](https://gitpod.io#https://github.com/arendst/Tasmota/tree/master)
-- [TasmoCompiler](https://github.com/benzino77/tasmocompiler/blob/master/README.md): [`https://gitpod.io/#https://github.com/benzino77/tasmocompiler`](https://gitpod.io/#https://github.com/benzino77/tasmocompiler)
+- [TasmoCompiler (outdated)](https://github.com/benzino77/tasmocompiler/blob/master/README.md): [`https://gitpod.io/#https://github.com/benzino77/tasmocompiler`](https://gitpod.io/#https://github.com/benzino77/tasmocompiler)
 
 **Browser Extension**  
 Gitpod has a browser extension (Chrome and Firefox) which is handy to directly load a GitHub project into your personal Gitpod work-space.  
