@@ -4,7 +4,6 @@
 
 ### Video tutorials
 * [Tasmota installation and configuration tutorial](https://www.youtube.com/watch?v=IcOFeIcLFFo)
-* [Fastest way to flash Sonoff devices](https://www.youtube.com/watch?v=UDnNI5wkNNY) using EspEasy
 * [How to flash a Sonoff](https://www.youtube.com/watch?v=-9zNS-ljDzo) using Arduino IDE
 * [Installation tutorial](https://youtu.be/n4MDRm2yAJg) of Tasmota using PlatformIO made by QuickPi.
 * [Flashing Tasmota on Sonoff TH16](https://www.youtube.com/watch?v=exEmeyAwbmI) using Arduino IDE
