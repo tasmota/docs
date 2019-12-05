@@ -23,11 +23,11 @@ Create _**user_config_override.h**_ in the `sonoff` folder and paste the content
   `-DUSE_CONFIG_OVERRIDE`  
 - Enter `platformio run -e <variant-name>`  
   Examples:  
-  - `platformio run -e sonoff-sensors`  
-  - `platformio run -e sonoff-DE`  
+  - `platformio run -e tasmota-sensors`  
+  - `platformio run -e tasmota-DE`  
 
 #### Arduino IDE
-- Edit [_**my_user_config.h**_](https://github.com/arendst/Tasmota/blob/development/sonoff/my_user_config.h). Uncomment the statement by removing the "//" in front of the line:
+- Edit [_**my_user_config.h**_](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h). Uncomment the statement by removing the "//" in front of the line:
   `#define USE_CONFIG_OVERRIDE`
 - Click compile
 
