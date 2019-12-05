@@ -11,8 +11,8 @@ Rules perform actions based on triggers (e.g., switch state change, temperature 
 ## Rule Syntax
 **Nested rules are not supported.**  
 
-- Optional [`IF / ELSE / ELSEIF` and `AND / OR`](#Conditional-Rules) support **6.6.0.11**  
-- Optional [use of expressions](#Expressions-in-Rules) support **6.4.1.14**  
+- Optional [`IF / ELSE / ELSEIF` and `AND / OR`](#Conditional-Rules) support 
+- Optional [use of expressions](#Expressions-in-Rules) support 
 
 Rule definition statement:  
 `ON <trigger> DO <command> [ENDON | BREAK]`  
@@ -87,15 +87,15 @@ Time#Set<a id="TimeSet"></a>|every hour when NTP makes time in sync
 Var&lt;x\>\#State<a id="VarState"></a>|when the value for Var&lt;x\> is changed
 Wifi#Connected<a id="WifiConnected"></a>|when Wi-Fi is connected
 Wifi#Disconnected<a id="WifiDisconnected"></a>|when Wi-Fi is disconnected
-tele-switch1#state<a id="tele-switch"></a>|when a teleperiod message is sent with the state of a SWITCH
-tele-power1#state<a id="tele-power"></a>|when a teleperiod message is sent with the state of a RELAY
-tele-wifi1#ap<a id="tele-power"></a>|when a teleperiod message is sent with the number of the used AP 
-tele-wifi1#ssid<a id="tele-power"></a>|when a teleperiod message is sent with the name of the used AP 
-tele-wifi1#bssid<a id="tele-power"></a>|when a teleperiod message is sent with the name of the bSSID
-tele-wifi1#channel<a id="tele-power"></a>|when a teleperiod message is sent with the number of the wifi channel used
-tele-wifi1#RSSI<a id="tele-power"></a>|when a teleperiod message is sent with the RSSI LEVEL
-tele-wifi1#LinkCount<a id="tele-power"></a>|when a teleperiod message is sent with the number of wifi disconnections
-tele-wifi1#Downtime<a id="tele-power"></a>|when a teleperiod message is sent with the total seconds of wifi disconnections
+Tele-Switch1#state<a id="tele-switch"></a>|when a teleperiod message is sent with the state of a SWITCH
+Tele-Power1#State<a id="Tele-power"></a>|when a teleperiod message is sent with the state of a RELAY
+Tele-Wifi1#AP<a id="tele-power"></a>|when a teleperiod message is sent with the number of the used AP 
+Tele-Wifi1#Ssid<a id="tele-power"></a>|when a teleperiod message is sent with the name of the used AP 
+Tele-Wifi1#Bssid<a id="tele-power"></a>|when a teleperiod message is sent with the name of the bSSID
+Tele-Wifi1#Channel<a id="tele-power"></a>|when a teleperiod message is sent with the number of the wifi channel used
+Tele-Wifi1#RSSI<a id="tele-power"></a>|when a teleperiod message is sent with the RSSI LEVEL
+Tele-Wifi1#LinkCount<a id="tele-power"></a>|when a teleperiod message is sent with the number of wifi disconnections
+Tele-Wifi1#Downtime<a id="tele-power"></a>|when a teleperiod message is sent with the total seconds of wifi disconnections
 
 Every [command](Commands) with a one level JSON response has the #Data trigger.
 
@@ -142,15 +142,6 @@ To accomplish a rule with one trigger but several commands, you need to use `Bac
 
 `ON <trigger> DO Backlog <command1>; <command2>; <command3> ENDON`
 
-You can also duplicate the same trigger on many lines. 
-
-`on power2#state=1 do power1 1 endon`
-
-`on power2#state=1 do RuleTimer1 100 endon`
-
-**Rules have a maximum string length**
-If the string of your rule is to long and it reach the limit of the rule length, you will loose the end of it... Always verify the status line returned after the insert in the console to see if the last words of your rule has been well inserted. In the case of your rule length is larger then the limit, split it in an other rule<x>...
-
 **Appending new rule onto an existing rule set**  
 Use the `+` character to append a new rule to the rule set. For example:
 
@@ -163,6 +154,14 @@ Use the `+` character to append a new rule to the rule set. For example:
 &nbsp;&nbsp;&nbsp;&nbsp;Resulting in 
 ```console
 Rule1 ON Rules#Timer=1 DO Mem2 %time% ENDON ON Button1#state DO POWER TOGGLE ENDON
+```
+
+You can duplicate the same trigger on many lines. 
+
+```console
+Rule
+  on power2#state=1 do power1 1 endon
+  on power2#state=1 do RuleTimer1 100 endon
 ```
 
 ### Rule Variables
