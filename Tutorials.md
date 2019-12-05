@@ -21,10 +21,6 @@
 * [Step to Step Tutorials - Hobbytronics Tutorials](https://hobbytronics.pk/blog/)
 * [Yuval Mejahez - Tasmota Flash tutorials Channel](https://www.youtube.com/channel/UC8eIbt7dehdys0n_n22zKvA)
 
-
-### Advanced Guides
-* [Expand Sonoff Basic to 4MB Flash](How-to-Expand-Sonoff-Basic-to-4MB-Flash)
-
 ### Non-English Tutorials
 * DE - [Tuya Geräte Flashen](https://www.youtube.com/watch?v=0MAPHmvPGFM)
 * DE - [ESP8266 flashen von A - Z](https://www.youtube.com/watch?v=Xfb8Y1R-y1U)
