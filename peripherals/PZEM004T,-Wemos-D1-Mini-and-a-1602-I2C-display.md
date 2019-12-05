@@ -13,7 +13,7 @@
 ## Preparation
 **You need to compile your own Tasmota firmware as none of the pre-compiled binaries have support for _display and PZEM_ module.**  
 
-**Set up your preferred IDE as described in [wiki](/jdocs/Compile-your-build)**  
+**Set up your preferred IDE as described in [wiki](/docs/Compile-your-build)**  
 
 ### Enable IDE to Use Custom Settings
 Create _**user_config_override.h**_ in the `tasmota` folder and paste the contents of this [sample configuration file](https://pastebin.com/WkfyKYnh).
