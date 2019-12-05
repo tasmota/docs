@@ -9,10 +9,6 @@ Rules perform actions based on triggers (e.g., switch state change, temperature 
 > [!NOTE] Most pre-compiled [builds](Builds) have the Rules feature enabled. *If you are >compiling your own firmware, in order to use rules, include `#define USE_RULES` in `user_config_override.h`.*
 
 ## Rule Syntax
-**Nested rules are not supported.**  
-
-- Optional [`IF / ELSE / ELSEIF` and `AND / OR`](#Conditional-Rules) support 
-- Optional [use of expressions](#Expressions-in-Rules) support 
 
 Rule definition statement:  
 `ON <trigger> DO <command> [ENDON | BREAK]`  
