@@ -82,7 +82,7 @@ Devices with a built in button (the one used to put your device into [flash mode
 
 Upgrade over the serial connection using serial-to-USB adapter.
 
-Upload the new version over serial using the same process as in [Flashing](Flashing) but DO NOT erase flash. The new binary will flash over the old one and keep all your settings intact.
+Upload the new version over serial using the same process as in [Flashing](installation/Flashing) but DO NOT erase flash. The new binary will flash over the old one and keep all your settings intact.
 
 ## External Programs
 
