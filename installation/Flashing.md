@@ -9,7 +9,7 @@ Tasmotizer! is specifically designed for use with Tasmota with an easy to use GU
 
 Download the [latest release](https://github.com/tasmota/tasmotizer/releases) for your platform (currently only Windows). Double click the downloaded file and it'll start, no installation required. Simple and fast...
 
-![Tasmotizer UI](/_media/tasmotizer1.png)
+![Tasmotizer UI](../_media/tasmotizer1.png)
 
 1. Connect your device to the serial-to-USB adapter or plug in NodeMCU/D1 mini.
 1. Select the correct **Serial port** (COM# port). Leave on auto-select if not sure.
@@ -25,11 +25,11 @@ Download the [latest release](https://github.com/tasmota/tasmotizer/releases) fo
 
 6. Click **Tasmotize** and wait until done.
 
-![Tasmotizer progress](/_media/tasmotizer2.png)
+![Tasmotizer progress](../_media/tasmotizer2.png)
 
 If the flash was successful it will display: 
 
-![Tasmotizer success](/_media/tasmotizer3.png)
+![Tasmotizer success](../_media/tasmotizer3.png)
 
 Unplug your serial programming adapter or device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](/installation/Initial-Configuration). 
 
