@@ -6,7 +6,7 @@ First, test if the two can communicate.
 
 In Home Assistant web UI go to **Developer Tools - MQTT**. Subscribe to `tele/topic%/STATE` and click **START LISTENING**. You should see a JSON response from your device.
 
-To test control of a relay or light, as **Publish a packet topic** enter `cnmd/%topic%/POWER` with payload `toggle`. When you click **PUBLISH** your device should switch state and a JSON response will be visible in **Listen to a topic** window.
+To test control of a relay or light, as **Publish a packet topic** enter `cmnd/%topic%/POWER` with payload `toggle`. When you click **PUBLISH** your device should switch state and a JSON response will be visible in **Listen to a topic** window.
 
 ![](../_media/hass1.png ':size=150')
 ![](../_media/hass2.png ':size=150')
