@@ -30,7 +30,7 @@ Select ``Tools`` and verify the following settings for **All Tasmota devices**.
 
 #### ESP8266 Board version 2.6.1:
 
-<img src="https://github.com/tasmota/docs/blob/master/_media/ArduinoIDE_settings.png">
+<img src="/_media/ArduinoIDE_settings.png" width=400></img>
 
 ## Compile Tasmota
 Open Arduino IDE and select file *tasmota.ino* from your *sketchbook\tasmota* folder.
