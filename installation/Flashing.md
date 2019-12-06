@@ -60,11 +60,6 @@ If the flash was successful the _Console_ window will display:
 
 Unplug your serial programming adapter or device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](/installation/Initial-Configuration).  -->
 
-#### Common mistakes
-Message `COM# failed to connect: Failed to connect to Espressif device: Timed out waiting for packet header` means your device is not connected (recheck COM port number and USB cable) or not in flash mode (retry flash mode procedure for your device).  
-
-Sometimes a "successful" flash will still result in a device that does not function as expected. If your device exhibits strange behaviors, we recommend that you use esptool.py to erase the flash as described below. And, if you are using esptool.py for erasing, you might as well upload the firmware that way as well. But definitely erase using esptool.py.
-
 ## esptool.py
 
 Esptool is the official tool for flashing ESP8266 chips and is the most reliable. 
