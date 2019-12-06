@@ -2,7 +2,7 @@ If you have read through the [Prerequisites](/installation/Prerequisites) you sh
 
 Once you have followed [Hardware preparation](/installation/Hardware-preparation), your device should be in Flash Mode and ready for a Tasmota firmware binary file to be flashed. For that you need a **flashing tool**.
 
-Optionally, you may want to back up the device manufacturer's firmware. To do so, you must use esptool. Refer to the [instructions below](#optional-backup-firmware).
+Optionally, you may want to back up the device manufacturer's firmware on the 1 in a million chance you don't like Tasmota.
 
 ## Tasmotizer!
 Tasmotizer! is specifically designed for use with Tasmota with an easy to use GUI and [esptool.py](https://github.com/espressif/esptool) under the hood.
