@@ -5,9 +5,9 @@ Once you have followed [Hardware preparation](/installation/Hardware-preparation
 Optionally, you may want to back up the device manufacturer's firmware. To do so, you must use esptool. Refer to the [instructions below](#optional-backup-firmware).
 
 ## Tasmotizer!
-Tasmotizer! is specifically designed for use with Tasmota with an easy to use GUI and uses [esptool.py](https://github.com/espressif/esptool) for flashing.
+Tasmotizer! is specifically designed for use with Tasmota with an easy to use GUI and [esptool.py](https://github.com/espressif/esptool) under the hood.
 
-Download the [latest release](https://github.com/tasmota/tasmotizer/releases) for your platform (currently only Windows). Double click the downloaded file and it'll start, no installation required. Simple and fast...
+Download the [latest release](https://github.com/tasmota/tasmotizer/releases) for your platform, double click the downloaded file and it'll start, no installation required. It is time to Tasmotize!
 
 ![Tasmotizer UI](../_media/tasmotizer1.png ":no-zoom")
 
