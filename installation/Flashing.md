@@ -21,7 +21,7 @@ Download the [latest release](https://github.com/tasmota/tasmotizer/releases) fo
 
 1. _optional_ Backup the original device firmware
 1. Erase flash
-> [!DANGER] Leave *Erase flash* on *yes, wipe all data!!!* if it is the first time flashing Tasmota on the device or you're experiencing issues with the existing flash and need to do a full erase. If you're upgrading an already flashed Tasmota and wish to keep your settings, set it to *no*.
+> [!DANGER] Leave *Erase before flashing* checked if it is the first time flashing Tasmota on the device or you're experiencing issues with the existing flash and need to do a full erase. If you're upgrading an already flashed Tasmota and wish to keep your settings, uncheck *Erase before flashing*.
 
 6. Click **Tasmotize** and wait until done.
 
