@@ -61,7 +61,7 @@ Be sure to press the button correctly, you must "feel" a click. If your on-devic
 
 - If esptool.py stops at "Uploading stub...", use --no-stub 
 
-- If the flash fails or the device does not operate as expected, try using the default ESP82xx boot ROM baud rate - `74880`. This is the baud rate the ESP82xx is set to by default when it boots into programming mode. This baud rate is a selection option in [Tasmota PyFlasher](Flashing#nodemcu-pyflasher). It can be specified as a command line option in [esptool.py](Flashing#esptoolpy) (`-b`) and [esptool.exe](Flashing#esptool-executable) (`-cb`).
+- If the flash fails or the device does not operate as expected, try using the default ESP82xx boot ROM baud rate - `74880`. This is the baud rate the ESP82xx is set to by default when it boots into programming mode. It can be specified as a command line option in [esptool.py](/installation/Flashing#esptoolpy) (`-b`) and [esptool.exe](/installation/Flashing#esptool-executable) (`-cb`).
 
   You may also want to select a serial monitor/terminal capable of setting this "unusual" baud rate. In Termite, type this value (`74880`) in the baud rate selection text box when configuring the port. Having the option to specify this unusual baud rate will allow you to view the [ESP8266 boot ROM log](https://github.com/espressif/esptool/wiki/ESP8266-Boot-ROM-Log) while the device is booting.
 
