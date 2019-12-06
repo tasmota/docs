@@ -62,9 +62,7 @@ Unplug your serial programming adapter or device and plug it back in or connect 
 
 ## esptool.py
 
-Esptool is the official tool for flashing ESP8266 chips and is the most reliable. 
-
-It requires Python, if you do not have an installed copy of Python 2.x or 3.x download and install it from https://www.python.org.
+Esptool is the official Espressif tool for flashing ESP8266 chips. It requires Python, if you do not have an installed copy of Python 2.x or 3.x download and install it from https://www.python.org.
 
 Download the [esptool Source code](https://github.com/espressif/esptool/releases) to a folder of your choice.
 Go to the folder and install Esptool with command 
