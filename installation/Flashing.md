@@ -4,7 +4,39 @@ Once you have followed [Hardware preparation](/installation/Hardware-preparation
 
 Optionally, you may want to back up the device manufacturer's firmware. To do so, you must use esptool. Refer to the [instructions below](#optional-backup-firmware).
 
-## Tasmota PyFlasher
+## Tasmotizer!
+Tasmotizer! is specifically designed for use with Tasmota with an easy to use GUI and uses [esptool.py](https://github.com/espressif/esptool) for flashing.
+
+Download the [latest release](https://github.com/tasmota/tasmotizer/releases) for your platform (currently only Windows). Double click the downloaded file and it'll start, no installation required. Simple and fast...
+
+![Tasmotizer UI](/_media/tasmotizer1.png)
+
+1. Connect your device to the serial-to-USB adapter or plug in NodeMCU/D1 mini.
+1. Select the correct **Serial port** (COM# port). Leave on auto-select if not sure.
+1. Choose Tasmota firmware binary 
+   a. _**BIN file**_ - browse to the Tasmota firmware binary you downloaded or compiled.
+  b. Release - select from a list of available release binaries
+  c. Development - select from a list of latest development binaries
+
+
+1. _optional_ Backup the original device firmware
+1. Erase flash
+> [!DANGER] Leave *Erase flash* on *yes, wipe all data!!!* if it is the first time flashing Tasmota on the device or you're experiencing issues with the existing flash and need to do a full erase. If you're upgrading an already flashed Tasmota and wish to keep your settings, set it to *no*.
+
+6. Click **Tasmotize** and wait until done.
+
+![Tasmotizer progress](/_media/tasmotizer2.png)
+
+If the flash was successful it will display: 
+
+![Tasmotizer success](/_media/tasmotizer3.png)
+
+Unplug your serial programming adapter or device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](/installation/Initial-Configuration). 
+
+> [!TIP]
+>You can use **Send Config** Tasmotizer! button for the initial configuration of your device.
+
+<!-- ## Tasmota PyFlasher
 <img src="https://raw.githubusercontent.com/tasmota/tasmota-pyflasher/v1/images/splash.png" style="margin:5px;float:left;width:150px"></img>
 Tasmota PyFlasher is specifically designed for use with Tasmota binaries with an easy to use GUI. It is based on [NodeMcu Pyflasher](https://github.com/marcelstoer/nodemcu-pyflasher) and [esptool.py](https://github.com/espressif/esptool).
 
@@ -24,10 +56,7 @@ If the flash was successful the _Console_ window will display:
 
 ![Flash succeeded](https://user-images.githubusercontent.com/5904370/55690010-489c3100-598c-11e9-8135-e44469037e11.png)
 
-Unplug your serial programming adapter or device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](/installation/Initial-Configuration). 
-
-> [!TIP]
->For proper device initialization after the firmware upload completes, power down and power up the device.
+Unplug your serial programming adapter or device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](/installation/Initial-Configuration).  -->
 
 #### Common mistakes
 Message `COM# failed to connect: Failed to connect to Espressif device: Timed out waiting for packet header` means your device is not connected (recheck COM port number and USB cable) or not in flash mode (retry flash mode procedure for your device).  
