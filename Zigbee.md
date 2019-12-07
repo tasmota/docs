@@ -134,8 +134,17 @@ _**These Python scripts require Python 2.7.**_
    ```
    
    If your CC2530 is DEBUG_LOCKED, then the flash size will be incorrectly _reported_ as 16kB. Dont worry flashing the Z-Stack firmware will work and reset the DEBUG_LOCKED bit. 
+   
+   In some situation flashing fails with a error message `flash have not enough space`. If this happens do the following:   
 
-3. Flash the Z-Stack firmware using the following command:  
+   ```
+   python Python/cc_read_flash.py -p <serial_port> -o x.hex
+   python Python/cc_write_flash.py --erase -p <serial_port> -i x.hex
+   ```
+   Recheck for connectivity and the the correct flash size by repeating step #3.
+
+
+4. Flash the Z-Stack firmware using the following command:  
    _Flashing the CC2530 **takes about 20 minutes**_  
    ```
    python Python/cc_write_flash.py -e -p <serial_port> -i Bin/CC2530_DEFAULT_20190608_CC2530ZNP-Prod.hex
