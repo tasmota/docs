@@ -141,7 +141,7 @@ _**These Python scripts require Python 2.7.**_
    python Python/cc_read_flash.py -p <serial_port> -o x.hex
    python Python/cc_write_flash.py --erase -p <serial_port> -i x.hex
    ```
-   Recheck for connectivity and the the correct flash size by repeating step #3.
+   Recheck for connectivity and the correct flash size by repeating step #3.
 
 
 4. Flash the Z-Stack firmware using the following command:  
