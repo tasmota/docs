@@ -109,7 +109,7 @@ This procedure is recommended for MacOS, but also works for Linux.
 - Flash firmware at `/zeroconf/ota_flash`  
   > `$ curl http://<deviceIP>:8081/zeroconf/ota_flash -XPOST --data '{"deviceid":"<deviceID>","data":{"downloadUrl": "http://<webServer>/tasmota-wifiman.bin", "sha256sum": "<SHAsum>"} }'`  
 
-  **_`{"seq":2,"error":0}`_**  
+  **_`{"seq":3,"error":0}`_**  
 - Ping the device for about 30 seconds until it has rebooted
 
 ## Post Installation
