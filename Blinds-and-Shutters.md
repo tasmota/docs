@@ -22,12 +22,12 @@ There are three shutter modes which are defined according to the [PulseTime](Com
    - `Backlog PulseTime1 0; PulseTime2 0`
    - `Backlog Interlock 1,2; Interlock ON` (Interlocked relay pair)
 
-1. **ShutterMode 1** - Circuit Safe   
+1. **ShutterMode 1** - Circuit Safe + Stepper Motors. e.g. NEMA
    First relay: ON/OFF, Second relay: UP/DOWN
    - `Backlog PulseTime1 0; PulseTime2 0`
    - `Interlock OFF`
 
-1. **ShutterMode 2** - Stepper Motors   
+1. **ShutterMode 2** - Pulse Motors   
    First relay: OFF/DOWN PULSE, Second relay: OFF/UP PULSE
    - `Backlog PulseTime1 2; PulseTime2 2`
    - `Backlog Interlock 1,2; Interlock ON` (Interlocked relay pair)
