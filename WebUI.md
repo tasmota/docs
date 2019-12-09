@@ -17,7 +17,10 @@ Terminal access to Tasmota. Issue [commands](Commands) here or follow the inform
 ## Themes
 WebUI is themable starting with »6.6.0 using [`WebColor`](Commands#webcolor) commands. 
 
-To apply the theme copy the entire code block and send it in console or via MQTT.
+To apply the theme copy the entire code block and send it in console or via MQTT. When using an MQTT client such as `mosquitto_pub`, enclose the message payload in single quotes (`'`), e.g.,
+```
+mosquitto_pub -h 192.168.1.20 -t "cmnd/myTopic/WebColor" -m '{"WebColor":["#eaeaea","#252525","#4f4f4f","#000000","#dddddd","#65c115","#1f1f1f","#ff5661","#008000","#faffff","#1fa3ec","#0e70a4","#d43535","#931f1f","#47c266","#5aaf6f","#faffff","#999999","#eaeaea"]}'
+```
 
 #### Dark (default theme)
 <img src="https://user-images.githubusercontent.com/5904370/68332933-e6e5a600-00d7-11ea-885d-50395f7239a1.png" width="100" align=right> 
