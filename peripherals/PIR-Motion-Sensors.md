@@ -26,13 +26,13 @@ optional:
 
 A more [advanced example](Rule-Cookbook#Auto-off-Motion-Sense-Switch) of rules with PIRs.
 
-# AM312 
+## AM312 
 
 [AM312](http://www.image.micros.com.pl/_dane_techniczne_auto/cz%20am312.pdf) works even on 3.3v instead of 5v (like HC-SR501) which makes it perfect for ESP8266 devices without a 5V line (like Sonoff Basic). It is also less prone to false triggers due to Wi-Fi interference.
 
 <img src="https://user-images.githubusercontent.com/5904370/67888232-0cf5ce00-fb4d-11e9-85da-379fe70f987a.png?v=4&s=50" width=200></img>
 
-## Pinout
+### Pinout
 ![AM312 Pinout](https://user-images.githubusercontent.com/5904370/67886972-b7b8bd00-fb4a-11e9-90ea-93fd7f5ec972.png)
 
 Pin marked VOUT is connected to a free GPIO pin on the device.
@@ -46,9 +46,25 @@ With this it will stay ON for 30 seconds then send OFF message and the timer res
 
 Another use case as a [hand wave switch](Project-AM312-and-Sonoff-R2).
 
-# HC-SR501
+## HC-SR501
 
 <img src="https://user-images.githubusercontent.com/5904370/67890781-a32bf300-fb51-11e9-8f84-1413fccc4e78.png" width=200>
 
-## Pinout
+### Pinout
 <img src="https://user-images.githubusercontent.com/5904370/67890814-b212a580-fb51-11e9-9e7e-35ff669b4d7b.png" width=300>
+
+## MH-SR602
+This is a very small version of a PIR that is able to modify the sensitivity and delay by soldering resistors.
+
+
+With factory settings this PIR goes to off state after a few seconds so we need to use this rule *instead* of the one in the example. 
+```
+Rule1 on switch1#state=1 do backlog publish stat/%topic%/PIR1 ON; RuleTimer1 30 endon on Rules#Timer=1 do publish stat/%topic%/PIR1 OFF endon
+```
+With this it will stay ON for 30 seconds then send OFF message and the timer restarts every time there's an ON trigger.
+
+### Pinout
+
+![MH-SR602](/_media/peripherals/MH-SR602-pinout.png ":size=200")
+![MH-SR602](/_media/peripherals/MH-SR602-table.png ":size=200")
+![MH-SR602](/_media/peripherals/MH-SR602.jpg)
