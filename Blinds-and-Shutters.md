@@ -73,7 +73,17 @@ Example configuration:
  - D3: PWM1     = STP
  - D4: COUNTER1 = connected to D3/PWM1
 
-`shutteropenduration` must be same as `shuttercloseduration`. There is a soft start of 0.5sec. If you don't like the slow fine position at the end you can add `shuttermotordelay 0.25` to minimize this.
+`shutteropenduration` must be same as `shuttercloseduration`. There is a soft start of 0.5sec. After first Open/Close the operation is automatically fine tuned and the fine positioning at the end of the movement gets shorter.
+
+If you want to define a second or more shutters the definition must be similar to this one.
+ - D5: Relay3i  = EN
+ - D6: Relay4   = DIR
+ - D7: PWM2     = STP
+ - D8: COUNTER2 = connected to D7/PWM2
+ 
+ and `ShutterRelay2 3`.
+ 
+ Please be aware that you cannot move more than ONE shutter at the time. The used PWM frequency control is globally
 
 ## Calibration
 [Shutter calibration video tutorial](https://www.youtube.com/watch?v=Z-grrvnu2bU)  
@@ -135,8 +145,8 @@ If using a Sonoff Dual R2, use the following Template:
 - Set `ShutterRelay<x>`
 - Set `ShutterOpenDuration<x>`
 - Set `ShutterCloseDuration<x>`
-- Set `ShutterSetHalfway<x>`
-- If the shutter uses a stepper motor instead of separate motors for each direction (i.e., duration based), define `PulseTime<x> 2` on both relays. The driver's behavior will change to a stepper motor that needs pulses to start and stop.  
+- Set `ShutterSetHalfway<x>` (optional)
+- If the shutter uses a pulse motor instead of a motors with one wire for each direction (i.e., duration based), define `PulseTime<x> 2` on both relays. The driver's behavior will change to a pulse motor that needs pulses to start and stop.  
 
 ### Rules
 Tasmota rule triggers:  
