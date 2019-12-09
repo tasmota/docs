@@ -63,8 +63,8 @@ Rule1 on Switch1#state=1 do Backlog Publish stat/%topic%/PIR1 ON; RuleTimer1 30 
 ```
 With this it will stay ON for 30 seconds then send OFF message and the timer restarts every time there's an ON trigger.
 
+![MH-SR602](../_media/peripherals/MH-SR602.jpg)
 ### Pinout
 
-![MH-SR602](/_media/peripherals/MH-SR602-pinout.png ":size=200")
-![MH-SR602](/_media/peripherals/MH-SR602-table.png ":size=200")
-![MH-SR602](/_media/peripherals/MH-SR602.jpg)
+![MH-SR602](../_media/peripherals/MH-SR602-pinout.png ":size=200")
+![MH-SR602](../_media/peripherals/MH-SR602-table.png ":size=200")
