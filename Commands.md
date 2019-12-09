@@ -529,16 +529,16 @@ Command<BR> (x = `1..4`)|Parameters
 :---|:---
 ShutterCalibration&#60;x><a id="shuttercalibration"></a>|Granular shutter position calibration. Real position in cm must be put in at 30 50 70 90 percent
 ShutterCloseDuration&#60;x><a id="shuttercloseduration"></a>| `1..255` *(default = `10`)*<BR>Define the time, in seconds, it takes to fully close the shutter. A fraction of a second can be specified (e.g. `45.7`).
-ShutterClose&#60;x><a id="shutterclose"></a>|Engage the relay to close the shutter. This action can be requested at any time.
+ShutterClose&#60;x><a id="shutterclose"></a>|Engage the relay to close the shutter. This action can be requested at any time. Number of shutter can be the index or the arguement
 ShutterInvert&#60;x><a id="shutterinvert"></a>|`0` = use default shutter positioning<BR>`1` = invert shutter positioning
 ShutterMotorDelay&#60;x><a id="shuttermotordelay"></a>|`0.00 .. 12.75` *(default = `0`)*<BR>Define the time, in seconds, that it takes the motor to start moving once power is turned on.
 ShutterOpenDuration&#60;x><a id="shutteropenduration"></a>|`1..255` *(default = `10`)*<BR>time, in seconds, to fully open the shutter. Fraction of a second can be specified (e.g. `45.7`).
-ShutterOpen&#60;x><a id="shutteropen"></a>|Engage the relay to open the shutter. This action can be requested at any time.
+ShutterOpen&#60;x><a id="shutteropen"></a>|Engage the relay to open the shutter. This action can be requested at any time. Number of shutter can be index or the arguement
 ShutterPosition&#60;x><a id="shutterposition"></a>|`0..100`, `UP`, `DOWN`, `STOP`<BR>`0` = Closed, `100` = Open<BR>If the shutter is inverted (e.g., if used with KNX), `100` = Closed, `0` = Open<BR>A shutter position change can be requested at any time. The shutter will stop and revert or update to the requested position. The shutter's actual position will be saved _**after**_ the movement is completed. In this case, the position will be restored during reboot. An interruption during shutter movement (e.g., a device restart) will lose the current position.
 ShutterRelay&#60;x><a id="shutterrelay"></a>|`<value>`<BR>`0` = disable this and all higher numbered shutters<BR>`1,3,5,7,...` (must be an odd number) = define the `Relay<value>` component used to open the shutter. This relay's mate, the next higher numbered relay, closes the shutter. Depending on the shutter mode, the relays may need to be interlocked using the [`Interlock`](Commands#interlock) command.<BR>**The `ShutterRelay` command must be executed first before any other shutter commands for `Shutter<x>` can be executed.**
 ShutterSetClose&#60;x><a id="shuttersetclose"></a>|Set the shutter closed position. `ShutterPosition` will be reset to fully closed value (e.g., `0` when `ShutterInvert = 0`, `100` otherwise).
 ShutterSetHalfway&#60;x><a id="shuttersethalfway"></a>| `0..100` *(default = `50`)*<BR>Define shutter half open position (in percent)
-ShutterStop&#60;x><a id="shutterstop"></a>|Disengage the relays to stop the shutter
+ShutterStop&#60;x><a id="shutterstop"></a>|Disengage the relays to stop the shutter. Number of shutter can be the index or the arguement
 See also| [`SetOption80`](#setoption80) - Enable shutter support
 
 ### Zigbee
