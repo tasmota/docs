@@ -10,10 +10,10 @@ If there already is a `Switch1` simply choose the next in line. Same applies if 
 
 A configured PIR will not appear in the web UI in any form. To make it report like a sensor we need a rule that will send movement triggers to an MQTT topic.
 
-```
+```console
 SwitchMode1 1
 SwitchTopic 0
-Rule1 on switch1#state=1 do publish stat/%topic%/PIR1 ON endon on switch1#state=0 do publish stat/%topic%/PIR1 OFF endon
+Rule1 on Switch1#state=1 do publish stat/%topic%/PIR1 ON endon on Switch1#state=0 do Publish stat/%topic%/PIR1 OFF endon
 Rule1 1
 ```
 You can change (`PIR1`) and the message (`ON`/`OFF`) to whatever suits your needs. `%topic%` is the configured device topic.
@@ -39,8 +39,8 @@ Pin marked VOUT is connected to a free GPIO pin on the device.
 
 
 This PIR goes to off state after a few seconds so we need to use this rule *instead* of the one in the example. 
-```
-Rule1 on switch1#state=1 do backlog publish stat/%topic%/PIR1 ON; RuleTimer1 30 endon on Rules#Timer=1 do publish stat/%topic%/PIR1 OFF endon
+```console
+Rule1 on Switch1#state=1 do Backlog Publish stat/%topic%/PIR1 ON; RuleTimer1 30 endon on Rules#Timer=1 do Publish stat/%topic%/PIR1 OFF endon
 ```
 With this it will stay ON for 30 seconds then send OFF message and the timer restarts every time there's an ON trigger.
 
@@ -58,8 +58,8 @@ This is a very small version of a PIR that is able to modify the sensitivity and
 
 
 With factory settings this PIR goes to off state after a few seconds so we need to use this rule *instead* of the one in the example. 
-```
-Rule1 on switch1#state=1 do backlog publish stat/%topic%/PIR1 ON; RuleTimer1 30 endon on Rules#Timer=1 do publish stat/%topic%/PIR1 OFF endon
+```console
+Rule1 on Switch1#state=1 do Backlog Publish stat/%topic%/PIR1 ON; RuleTimer1 30 endon on Rules#Timer=1 do Publish stat/%topic%/PIR1 OFF endon
 ```
 With this it will stay ON for 30 seconds then send OFF message and the timer restarts every time there's an ON trigger.
 
