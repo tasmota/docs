@@ -40,7 +40,7 @@ D4: COUNTER1 = connected to D3/PWM1
   `Backlog PulseTime1 0; PulseTime2 0`  
   `Interlock OFF`  
 
-**Restart ESP**
+**Restart ESP**  
   `restart 1`
 
 **Test ShutterMode 1 (SHUTTER1 is already on)**
