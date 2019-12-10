@@ -34,8 +34,8 @@ D4: COUNTER1 = connected to D3/PWM1
  -`SetOption80 1`
 
 **Setting for work ShutterMode 1**
- -`Backlog PulseTime1 0; PulseTime2 0`
- -`Interlock OFF`
+  -`Backlog PulseTime1 0; PulseTime2 0`
+  -`Interlock OFF`
 
 *** Restart ESP
 restart 1
