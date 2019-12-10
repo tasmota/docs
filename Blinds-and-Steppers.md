@@ -88,3 +88,8 @@ ShutterOpen2 or ShutterClose2
 Backlog ShutterOpenDuration2 15; ShutterCloseDuration2 15; shuttermotordelay2 0.25
 
 *** Next, perform the calibration as written on the wiki.
+
+https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v411.jpg
+https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v412.jpg
+https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v421.jpg
+https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v422.jpg
