@@ -11,10 +11,12 @@ https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades
 *** Description of the settings step by step.
 
 *** rename file user_config_override.h to user_config.h
-*** insert it user_config.h
+*** insert it user_config.h  
+```
 #ifndef USE_SHUTTER
-#define USE_SHUTTER
+#define USE_SHUTTER           // Add Shutter support (+6k code)
 #endif
+```
 
 *** in platformio.ini Uncomment by deleting ";"
 tasmota
