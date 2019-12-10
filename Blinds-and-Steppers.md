@@ -33,9 +33,9 @@ D4: COUNTER1 = connected to D3/PWM1
 ## Enable shutter support (SHUTTER1 is enable)
  -`SetOption80 1`
 
-**Setting for work ShutterMode 1**
-  -`Backlog PulseTime1 0; PulseTime2 0`
-  -`Interlock OFF`
+**Setting for work ShutterMode 1**  
+  -`Backlog PulseTime1 0; PulseTime2 0`  
+  -`Interlock OFF`  
 
 *** Restart ESP
 restart 1
