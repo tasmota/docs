@@ -15,6 +15,7 @@
 * **external links**
 * [IOBroker](https://github.com/arendst/Tasmota/issues/3769)
 * [Google Assistant](https://doc.gbridge.io/integration/tasmota.html)
+* [Mozilla WebThings Adapter](https://github.com/tim-hellhake/tasmota-adapter)
 * [SmartThings](https://github.com/BrettSheleski/SmartThingsPublic/blob/master/devicetypes/brettsheleski/sonoff-tasmota.src/readme.md)
 * **Device management**
 * [Tasmota Device Manager](/integrations/Tasmota-Device-Manager)
