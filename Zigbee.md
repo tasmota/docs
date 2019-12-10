@@ -194,7 +194,7 @@ Additional References:
 
 #### 2. Flash an ESP82xx Device with Zigbee2Tasmota Tasmota
 Once the CC2530 flashing process completes, you can re-use that ESP82xx device by flashing it with the Zigbee2Tasmota firmware. Otherwise, you can use any ESP82xx device.  
-- [Compile Tasmota](flashing-and-compiling-from-source)
+- [Compile Tasmota](compiling-from-source)
   - `#define USE_ZIGBEE` in `user_config_override.h`.
 <!---
   - Run the ESP at 160MHz instead of 80MHz, this ensures higher reliability in serial communication with CC2530.  
