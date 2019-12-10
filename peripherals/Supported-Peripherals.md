@@ -36,7 +36,7 @@ Name|Description|Image
 [**MH-Z19B**](peripherals/MH-Z19B) | CO<sub>2</sub> Sensor |<img src="https://user-images.githubusercontent.com/5904370/53279635-54040780-3712-11e9-8c83-970280003b6d.png" style="width:50px"></img>
 [**MLX90614**](peripherals/MLX90614) | MLX9061X Infrared Thermometer (I<sup>2</sup>C) | <img src="../_media/peripherals/mlx90614-1.jpg" style="width:30px"></img>
 [**MPR121**](peripherals/MPR121) | Proximity Capacitive Touch Sensor Controller (I<sup>2</sup>C)
-**MPU6050** | 3-Axis Gyroscope and 3-Axis Accelerometer sensor (I<sup>2</sup>C)
+[**MPU6050**](peripherals/MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer sensor (I<sup>2</sup>C)
 [**P1 Smart Meter**](peripherals/P1-Smart-Meter) | Energy Meter (serial)
 [**PAJ7620**](peripherals/PAJ7620) | Gesture & Proximity Detection Sensor
 [**PIR**](peripherals/PIR-Motion-Sensors#AM312) | Passive Infrared Sensor (gpio) | <img src="https://user-images.githubusercontent.com/5904370/53279530-8c571600-3711-11e9-85c0-27d35be2df48.png"  style="width:1.5em"></img>

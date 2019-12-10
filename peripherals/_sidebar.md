@@ -26,6 +26,7 @@
 * [MH-Z19B](peripherals/MH-Z19B)
 * [MLX90614](peripherals/MLX90614)
 * [MPR121](peripherals/MPR121)
+* [MPU-6050](peripherals/MPU-6050)
 * [P1 Smart Meter](peripherals/P1-Smart-Meter)
 * [PIR Motion Sensors](peripherals/PIR-Motion-Sensors)
 * [PAJ7620](peripherals/PAJ7620)
