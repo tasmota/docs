@@ -604,6 +604,35 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 102   | Floor Temperature   | FloorCurrent| Issue and report | Integer       | Values range:0-37, Pitch1, Scale0, Unit:℃ |
 
 
+### Inkbird ITC-308-Wifi Temperature controller with individual plug in sockets for heating/cooling
+
+| DP ID | Function points            | Identifier | Data type        | Function type | Properties                                                  |
+|-------|----------------------------|------------|------------------|---------------|-------------------------------------------------------------|
+| 101   | Temperature unit           | Cf         | Issue and report | Integer       | 0=C, 1=F                                                    |
+| 102   | Calibration                | Ca         | Issue and report | Integer       | Unit is 0.1C                                                |
+| 104   | Temperature sensor         |            | Issue and report | Integer       | Unit is 0.1C                                                |
+| 106   | Temperature set point      | Ts         | Issue and report | Integer       | Unit is 0.1C                                                |
+| 108   | Compressor delay time      | Pt         | Issue and report | Integer       | Unit is minutes                                             |
+| 109   | Alarm high temperature     | Ah         | Issue and report | Integer       | Unit is 0.1C                                                |
+| 110   | Alarm low temperature      | Al         | Issue and report | Integer       | Unit is 0.1C, For negative values use -(0xFFFFFFFF - value) |
+| 115   | Relay status               |            | Only report      | Integer       | 01=cool, 02=off, 03=heating                                 |
+| 116   | Temperature sensor         |            | Issue and report | Integer       | Unit is 0.1F                                                |
+| 117   | Heating differential value | Hd         | Issue and report | Integer       | Unit is 0.1C                                                |
+| 118   | Cooling differential value | Cd         | Issue and report | Integer       | Unit is 0.1C                                                |
+
+The unit will constantly be sending the temperature sensor value in
+celcius and fahrenheit: 104 and 116.  To trigger the unit to send all
+settings, send any value to a non-used register, e.g. TuyaSend1 2,1
+
+Example:
+
+| Tasmota command   | Result                                  |
+|-------------------|-----------------------------------------|
+| TuyaSend1 2,1     | Trigger the unit to reveal all settings |
+| TuyaSend2 106,250 | Change set-point to 25.0C               |
+| TuyaSend2 101,1   | Change units to Fahrenheit              |
+
+
 ## Further Reading
 
 * [TuyaMCU Flashing and Device Configuration](TuyaMCU-Devices)
