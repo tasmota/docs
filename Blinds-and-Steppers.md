@@ -89,10 +89,11 @@ Backlog ShutterOpenDuration2 15; ShutterCloseDuration2 15; shuttermotordelay2 0.
 
 *** Next, perform the calibration as written on the wiki.
 
-https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v411.jpg
+## Wiring Diagrams
+### SHUTTER1: (pic. v4.1.1 and v4.1.2)
+![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v411.jpg ":size=200px")
+![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v412.jpg ":size=200px")
 
-https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v412.jpg
-
-https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v421.jpg
-
-https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v422.jpg
+### SHUTTER2: (pic. v4.1.1 and v4.1.2)
+![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v421.jpg ":size=200px")
+![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v422.jpg ":size=200px")
