@@ -31,12 +31,11 @@ D4: COUNTER1 = connected to D3/PWM1
 !!! The connection of the COUNTER is mandatory, or the ESP will always freeze!!!
 
 ## Enable shutter support (SHUTTER1 is enable)
+ -`SetOption80 1`
 
-`SetOption80 1`
-
-*** Setting for work ShutterMode 1
-Backlog PulseTime1 0; PulseTime2 0
-Interlock OFF
+**Setting for work ShutterMode 1**
+-`Backlog PulseTime1 0; PulseTime2 0`
+-`Interlock OFF`
 
 *** Restart ESP
 restart 1
