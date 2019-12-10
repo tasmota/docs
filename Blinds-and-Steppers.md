@@ -43,7 +43,7 @@ D4: COUNTER1 = connected to D3/PWM1
 **Restart ESP**  
   `restart 1`
 
-**Test ShutterMode 1 (SHUTTER1 is already on)**
+**Test ShutterMode 1 (SHUTTER1 is already on)**  
   `ShutterRelay1 1`
 
 *** Setting the speed of the stepper motor.
