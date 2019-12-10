@@ -5,10 +5,10 @@ https://tasmota.github.io/docs/#/Commands?id=setoption80
 
 https://tasmota.github.io/docs/#/Blinds-and-Shutters
 
+https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades
 
 
 *** Description of the settings step by step.
-
 
 *** rename file user_config_override.h to user_config.h
 *** insert it user_config.h
