@@ -22,12 +22,12 @@ For example, if you have a Tasmota based thermostat and multiple temperature sen
 **Examples:**  
 ```console
 Rule1
-  ON mqtt#initialized DO Subscribe BkLight, stat/%topic%/POWER ENDON
+  ON mqtt#connected DO Subscribe BkLight, stat/%topic%/POWER ENDON
   ON Event#BkLight=ON DO <command> ENDON
 ```
 ```console
 Rule1
-  ON mqtt#initialized DO Subscribe DnTemp, stat/%topic%/SENSOR, DS18B20.Temperature ENDON
+  ON mqtt#connected DO Subscribe DnTemp, stat/%topic%/SENSOR, DS18B20.Temperature ENDON
   ON Event#DnTemp>=21 DO <command> ENDON
 
 where the MQTT message payload is `{"Time":"2017-02-16T10:13:52", "DS18B20":{"Temperature":20.6}}`
