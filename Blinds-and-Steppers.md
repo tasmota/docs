@@ -21,8 +21,6 @@ https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades
 *** in platformio.ini Uncomment by deleting ";"
 ```
 tasmota
-```
-```
 -DUSE_CONFIG_OVERRIDE
 ```
 -----------------------------------
