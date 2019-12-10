@@ -66,7 +66,7 @@ GPIO0|GND
 GPIO1|Rx
 GPIO3|Tx
 
-Follow the usual ESP82xx [flashing process](Flashing) - you are just using [`CCLib_proxy.ino.bin`](https://github.com/s-hadinger/CCLib/blob/master/Bin/CCLib_proxy.ino.bin) instead of Tasmota.
+Follow the usual ESP82xx [flashing process](installation/Flashing) - you are just using [`CCLib_proxy.ino.bin`](https://github.com/s-hadinger/CCLib/blob/master/Bin/CCLib_proxy.ino.bin) instead of Tasmota.
 
 Once the firmware upload completes, retain the serial interface connections (3.3V, GND, Tx, Rx). These will be used later for flashing the CC2530.
 
@@ -194,7 +194,7 @@ Additional References:
 
 #### 2. Flash an ESP82xx Device with Zigbee2Tasmota Tasmota
 Once the CC2530 flashing process completes, you can re-use that ESP82xx device by flashing it with the Zigbee2Tasmota firmware. Otherwise, you can use any ESP82xx device.  
-- [Compile Tasmota](Flashing#flashing-and-compiling-from-source)
+- [Compile Tasmota](flashing-and-compiling-from-source)
   - `#define USE_ZIGBEE` in `user_config_override.h`.
 <!---
   - Run the ESP at 160MHz instead of 80MHz, this ensures higher reliability in serial communication with CC2530.  
@@ -204,7 +204,7 @@ Once the CC2530 flashing process completes, you can re-use that ESP82xx device b
   
     **Note**: If you find that your Zigbee2Tasmota operation is unstable, you may have an ESP82xx device that cannot operate reliably at the higher frequency. If you are using hardware serial (see below) and you still have unreliability, try compiling for 80MHz (reverse the options above) and flash the ESP82xx device again to see if operating at a lower frequency improves stability. Running at 80MHz will impact software serial communications so hardware serial is highly recommended if running the ESP82xx at 80MHz.
 --->
-- Follow the usual [Tasmota flashing process](Flashing)
+- Follow the usual [Tasmota flashing process](installation/Flashing)
 
 #### 3. Connect the CC2530 to the Tasmota Device
 The connection uses a 115200 baud serial connection. Hence you need to configure two GPIOs: `Zigbee TX` and `Zigbee RX`.
