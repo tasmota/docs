@@ -30,7 +30,7 @@ https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades
 **a) Enable shutter support (SHUTTER1 is enable)**  
  `SetOption80 1`  
 
-**b) Setting for work ShutterMode 1**  
+**b) Setting for work ShutterMode 1** - for relay Relay1i and Relay2:  
   `Backlog PulseTime1 0; PulseTime2 0`  
   `Interlock OFF`  
 
@@ -41,7 +41,8 @@ https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades
   `ShutterRelay1 1`
 
 **e) Test work SHUTTER1**  
-  `ShutterOpen1 or ShutterClose1`
+  `ShutterOpen1`
+  `ShutterClose1`
 
 **f) Setting for SHUTTER1 (optional settings)**   
   `Backlog ShutterOpenDuration1 15; ShutterCloseDuration1 15; shuttermotordelay1 0.25`
@@ -49,25 +50,19 @@ https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades
 **ee) Setting the speed of the stepper motor (optional settings). 1000 by default, one frequency for all PWM**
   `ShutterFrequency 1500`  
 
-**ff) Next, perform the calibration as written on the wiki.  
+**ff) Next, perform the calibration as written on the Wiki.**  
 
 
-++++++++++++++++
-optional steps
-++++++++++++++++
+## SHUTTER2: (pic. v4.2.1 and v4.2.)  
+ - D6: Relay3i  = EN  
+ - D6: Relay4   = DIR  
+ - D7: PWM2     = STP  
+ - D8: COUNTER2 = connected to D7/PWM2   
 
------------------------------------
-SHUTTER2: (pic. v4.2.1 and v4.2.2)
------------------------------------
-D5: Relay3i = EN
-D6: Relay4 = DIR
-D7: PWM2 = STP
-D8: COUNTER2 = connected to D7/PWM2
+***NOTE: the connection of the COUNTER is mandatory, or the ESP will always freeze.***
 
-!!! The connection of the COUNTER is mandatory, or the ESP will always freeze!!!
-
-*** Setting for work ShutterMode 1
-Backlog PulseTime3 0; PulseTime4 0
+**a) Setting for work ShutterMode 1** - for relay Relay3i and Relay4:  
+  `Backlog PulseTime3 0; PulseTime4 0`  
 
 *** Restart ESP
 restart 1
