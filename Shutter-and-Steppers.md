@@ -8,14 +8,14 @@
 
 ***NOTE 0:***  
 - you can use only **bipolar** stepper motors.  
-- you must use the **same combination** of stepper drivers and stepper motors.  
+- you must use the **same combination** of stepper drivers and stepper motors.
+- a `shutteropenduration<x>` **must be same** as `shuttercloseduration<x>`.  
 - you must **definitely** configure your stepper drivers.  
 
 ***NOTE 1:***  
  if you use 1 stepper motor cofiguration.  
  - if you use only one stepper motor, you must step-by-step execute the commands for SHUTTER1 only.  
  - the connection of the COUNTER is mandatory, or the ESP will always random freeze.  
- - a `shutteropenduration<x>` must be same as `shuttercloseduration<x>`.  
  
  ***NOTE 2:***  
  if you use 2 or more stepper motor cofiguration.  
