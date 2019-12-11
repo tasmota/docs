@@ -32,8 +32,8 @@ Example configuration:
  `SetOption80 1`  
 
 **b) Setting for work ShutterMode 1**  
-  `Backlog PulseTime1 0; PulseTime2 0`   // for relay Relay1i and Relay2
-  `Interlock OFF`                        // for all relay
+  `Backlog PulseTime1 0; PulseTime2 0`   // for relay Relay1i and Relay2  
+  `Interlock OFF`                        // for all relay  
 
 **c) Restart ESP**  
   `restart 1`
