@@ -1,20 +1,19 @@
 
-*** More information: ***  
+**For more information:**  
 https://tasmota.github.io/docs/#/Commands?id=setoption80  
 https://tasmota.github.io/docs/#/Blinds-and-Shutters  
 https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades  
 
-**Description of the settings step by step.**  
+##Description of the settings step by step.  
 
-*** rename file user_config_override.h to user_config.h
-*** insert it user_config.h  
+**Rename file user_config_override.h to user_config.h and insert to it user_config.h**  
 ```
 #ifndef USE_SHUTTER
 #define USE_SHUTTER           // Add Shutter support (+6k code)
 #endif
 ```
 
-*** in platformio.ini Uncomment by deleting ";"
+**in platformio.ini Uncomment by deleting ";"**
 ```
 tasmota
 -DUSE_CONFIG_OVERRIDE
