@@ -46,7 +46,7 @@ Example configuration:
   `ShutterClose1`  
 
 **f) Setting the speed of the stepper motor (optional settings)**  
-  `ShutterFrequency 1500`  // for all steppers (1000 by default)
+  `ShutterFrequency 1500`  // for all steppers (1000rpm by default)
 
 **Next steps, perform the calibration as written on the Wiki.**  
 
