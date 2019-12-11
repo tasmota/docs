@@ -1,6 +1,5 @@
 
 **For more information:**  
-https://tasmota.github.io/docs/#/Commands?id=setoption80  
 https://tasmota.github.io/docs/#/Blinds-and-Shutters  
 https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades  
 
@@ -28,7 +27,7 @@ Example configuration:
 
 ***NOTE: the connection of the COUNTER is mandatory, or the ESP will always freeze.***
 
-**a) Enable shutter support**  
+**a) Enable SHUTTERs support**  
  `SetOption80 1`  
 
 **b) Setting for work ShutterMode 1**  
