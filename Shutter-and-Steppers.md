@@ -56,7 +56,7 @@ Example configuration:
 **b) Restart ESP**  
   `restart 1`
 
-**c) Test ShutterMode 1**  
+**c) Test work ShutterMode 1**  
   `ShutterRelay2 3`   // for relay Relay3i and Relay4
 
 **d) Test work SHUTTER2**  
