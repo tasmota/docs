@@ -67,7 +67,7 @@ Example configuration:
  - D8: COUNTER2 = connected to D7/PWM2   
 
 **a) Setting for work ShutterMode 1**  
-  `Backlog PulseTime3 0; PulseTime4 0`   // for relay Relay1i and Relay2  
+  `Backlog PulseTime3 0; PulseTime4 0`   // for relay Relay3i and Relay4  
 
 **b) Restart ESP**  
   `restart 1`
