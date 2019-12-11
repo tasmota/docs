@@ -4,9 +4,7 @@
 2.  Full description of working with Shutteris available at [Blinds and Shutters](Blinds-and-Shutters.md).  
 3.  Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#blinds-shutters-and-roller-shades).  
 4.  For connnections Stepper motor ans Stepper drivers use [Wiring diagrams](#wiring-diagrams).  
-5.  For configure your stepper drivers use:
- - [A4988](https://lastminuteengineers.com/a4988-stepper-motor-driver-arduino-tutorial/).
- - [DRV8825](https://lastminuteengineers.com/drv8825-stepper-motor-driver-arduino-tutorial/).
+5.  For configure your stepper drivers use tutorials: [A4988](https://lastminuteengineers.com/a4988-stepper-motor-driver-arduino-tutorial/) or [DRV8825](https://lastminuteengineers.com/drv8825-stepper-motor-driver-arduino-tutorial/).
 
 ***NOTE 0:***  
 - you can use only **bipolar** stepper motors.  
