@@ -1,4 +1,4 @@
-## Description of the settings step by step.  
+## Description of the settings step by step, to configure Shutter and the Stepper motor.    
 
 1.  
 2.  
@@ -37,7 +37,7 @@ Example configuration:
 **f) Setting the speed of the stepper motor (optional settings)**  
   `ShutterFrequency 1500`  // for all steppers (1000rpm by default)
 
-**Next steps, perform the calibration as written on the Wiki.**  
+**g) Next steps, perform the calibration as written on the Wiki.**  
 
 
 ## SHUTTER2.
@@ -64,7 +64,7 @@ Example configuration:
   `ShutterStop2`     // to stop the SHUTTER2  
   `ShutterClose2`  
   
-**Next steps, perform the calibration as written on the Wiki.**  
+**g) Next steps, perform the calibration as written on the Wiki.**  
 
 ## Wiring Diagrams  
 ### SHUTTER1: (pic. v4.1.1 and v4.1.2)  
