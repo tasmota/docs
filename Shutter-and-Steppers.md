@@ -6,13 +6,13 @@
 4.  For connnections Stepper motor ans Stepper drivers use [Wiring diagrams](#wiring-diagrams).  
 
 ***NOTE 1:***  
- if you use <1 stepper motor cofiguration.  
+ if you use 1 stepper motor cofiguration.  
  - if you use only one stepper motor, you must step-by-step execute the commands for SHUTTER1 only.  
  - the connection of the COUNTER is mandatory, or the ESP will always random freeze.  
  - a `shutteropenduration<x>` must be same as `shuttercloseduration<x>`.  
  
  ***NOTE 2:***  
- if you use >1 stepper motor cofiguration.  
+ if you use 2 or more stepper motor cofiguration.  
  - you must step by step execute the commands first for SHUTTER1, and only then for SHUTTER2.  
  - the connection of the COUNTER is mandatory, or the ESP will always random freeze.  
  - a `shutteropenduration<x>` must be same as `shuttercloseduration<x>`.  
