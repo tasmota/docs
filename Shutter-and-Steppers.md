@@ -5,6 +5,12 @@
 3.  Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#blinds-shutters-and-roller-shades).  
 4.  For connnections Stepper motor ans Stepper drivers use [Wiring diagrams](#wiring-diagrams).  
 
+***NOTE 0:***  
+- you can use different stepper drivers like, for example A4988/DRV8825/TMC2208.  
+- you can use different onli bipolar stepper motor like, for example 28BYJ-48/Nema-17/Nema-23.  
+- you must use the same combination of stepper drivers and stepper motors.  
+- you must configire stepper drivers  
+
 ***NOTE 1:***  
  if you use 1 stepper motor cofiguration.  
  - if you use only one stepper motor, you must step-by-step execute the commands for SHUTTER1 only.  
@@ -16,10 +22,8 @@
  - you must step by step execute the commands first for SHUTTER1, and only then for SHUTTER2.  
  - the connection of the COUNTER is mandatory, or the ESP will always random freeze.  
  - a `shutteropenduration<x>` must be same as `shuttercloseduration<x>`.  
- - a `shutteropenduration<y>` must be same as `shuttercloseduration<y>`.  
- - you must use the same combination of stepper drivers and stepper motors.  
- - you must use only one stepper motor can work at a time.  
- - you cannot use different speeds for different stepper motors.  
+ - at one moment in time, only one stepping motor should work.  
+ - you can use only one speed value for all stepper motors.  
  - a maximum of four shutters per device are supported (1 shutters = 1 stepper motor). 
  - a maximum configuration may contain four stepper motors (4 shutters = 4 stepper motor).  
 
