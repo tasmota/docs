@@ -19,11 +19,11 @@ https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades
   -DUSE_CONFIG_OVERRIDE
 ```
 
-## SHUTTER1: (pic. v4.1.1 and v4.1.2)
-D1: Relay1i = EN  
-D2: Relay2 = DIR  
-D3: PWM1 = STP  
-D4: COUNTER1 = connected to D3/PWM1  
+## SHUTTER1: (pic. v4.1.1 and v4.1.2)  
+ - D1: Relay1i  = EN  
+ - D2: Relay2   = DIR  
+ - D3: PWM1     = STP  
+ - D4: COUNTER1 = connected to D3/PWM1   
 
 ***NOTE: the connection of the COUNTER is mandatory, or the ESP will always freeze.***
 
@@ -40,16 +40,16 @@ D4: COUNTER1 = connected to D3/PWM1
 **d) Test ShutterMode 1 (SHUTTER1 is already on)**  
   `ShutterRelay1 1`
 
-**e) TEST work SHUTTER1**  
+**e) Test work SHUTTER1**  
   `ShutterOpen1 or ShutterClose1`
 
-**f) Setting for SHUTTER1 (optional settings) 
+**f) Setting for SHUTTER1 (optional settings)**   
   `Backlog ShutterOpenDuration1 15; ShutterCloseDuration1 15; shuttermotordelay1 0.25`
 
 **ee) Setting the speed of the stepper motor (optional settings). 1000 by default, one frequency for all PWM**
   `ShutterFrequency 1500`  
 
-**ff) Next, perform the calibration as written on the wiki.
+**ff) Next, perform the calibration as written on the wiki.  
 
 
 ++++++++++++++++
