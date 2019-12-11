@@ -42,7 +42,7 @@ Example configuration:
 
 **e) Test work SHUTTER1**  
   `ShutterOpen1`      // for invert shutter positioning, use command ShutterInvert1  
-  `ShutterStop1`  
+  `ShutterStop1`      // to stop the SHUTTER1  
   `ShutterClose1`  
 
 **f) Setting the speed of the stepper motor (optional settings)**  
@@ -51,7 +51,7 @@ Example configuration:
 **Next steps, perform the calibration as written on the Wiki.**  
 
 
-## SHUTTER2: (pic. v4.2.1 and v4.2.)  
+## SHUTTER2.
 Example configuration:  
  - D6: Relay3i  = EN  
  - D6: Relay4   = DIR  
@@ -71,8 +71,8 @@ Example configuration:
   `ShutterRelay2 3`   // for relay Relay3i and Relay4
 
 **d) Test work SHUTTER2**  
-  `ShutterOpen2`  // for invert shutter positioning, use command ShutterInvert2  
-  `ShutterStop2`  
+  `ShutterOpen2`     // for invert shutter positioning, use command ShutterInvert2  
+  `ShutterStop2`     // to stop the SHUTTER2  
   `ShutterClose2`  
   
 **Next steps, perform the calibration as written on the Wiki.**  
