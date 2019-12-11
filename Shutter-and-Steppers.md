@@ -9,11 +9,15 @@
 2.  Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#blinds-shutters-and-roller-shades).  
 4. ///
 
-***NOTE:***  
- - the connection of the COUNTER is mandatory, or the ESP will always freeze.  
+***NOTE 1:***  
+ - the connection of the COUNTER is mandatory, or the ESP will always random freeze.  
  - a maximum of four shutters per device are supported (1 shutters = 1 stepper motor).  
  - a `shutteropenduration<x>` must be same as `shuttercloseduration<x>`.  
- - if you use >1 stpper motor cofiguration, you must use the same combination of stepper drivers and stepper motors, and only one stepper motor can work at a time.  
+ 
+ ***NOTE 2:***  if you use >1 stepper motor cofiguration.  
+ - you must use the same combination of stepper drivers and stepper motors.  
+ - you must use only one stepper motor can work at a time.  
+ - you cannot use different speeds for different stepper motors.  
 
 ## SHUTTER1.
 Example configuration:  
