@@ -15,7 +15,7 @@ Important limitations.
 - you must use the **same combination** of stepper drivers and stepper motors.
 - a `shutteropenduration<x>` **must be same** as `shuttercloseduration<x>`.  
 - you must **definitely configure** your stepper drivers. 
-- the connection of the COUNTER **is mandatory**, or the ESP will always random freeze.  
+- connection of the COUNTER **is mandatory**, or the ESP will always random freeze.  
 
 ***NOTE 1:***  
  if you use 1 stepper motor cofiguration.  
