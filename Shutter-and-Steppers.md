@@ -50,8 +50,8 @@ Example configuration:
 ***NOTE: the connection of the COUNTER is mandatory, or the ESP will always freeze.***
 
 **a) Setting for work ShutterMode 1**  
-  `Backlog PulseTime3 0; PulseTime4 0`   // for relay Relay1i and Relay2
-  `Interlock OFF`                        // for all relay
+  `Backlog PulseTime3 0; PulseTime4 0`   // for relay Relay1i and Relay2  
+  `Interlock OFF`                        // for all relay  
 
 **b) Restart ESP**  
   `restart 1`
