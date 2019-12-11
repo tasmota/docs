@@ -38,11 +38,11 @@ Example configuration:
 **d) Test work ShutterMode 1**  
   `ShutterRelay1 1`   // for relay Relay1i and Relay2
 
-**e) Test work STEEPR1**  
+**e) Test work STEPPER1**  
   `ShutterOpen1`   
-  `ShutterStop1`      // to stop the STEEPR1  
+  `ShutterStop1`      // to stop the STEPPER1  
   `ShutterClose1`  
-  `ShutterInvert1`    // to change the direction of rotation of the STEEPR1  
+  `ShutterInvert1`    // to change the direction of rotation of the STEPPER1  
 
 **f) Setting the speed of the stepper motor (optional settings)**  
   `ShutterFrequency 1500`  // this is a global variable for all steppers (1000rpm by default)
@@ -63,14 +63,14 @@ Example configuration:
 **b) Restart ESP**  
   `restart 1`
 
-**c) Test work ShutterMode 1**  
+**c) Enable ShutterRelay2 and test work ShutterMode 1**  
   `ShutterRelay2 3`   // for relay Relay3i and Relay4
 
-**d) Test work STEEPR2**  
+**d) Test work STEPPER2**  
   `ShutterOpen2`  
-  `ShutterStop2`     // to stop the STEEPR2  
+  `ShutterStop2`     // to stop the STEPPER2  
   `ShutterClose2`  
-  `ShutterInvert2`   // to change the direction of rotation of the STEEPR2  
+  `ShutterInvert2`   // to change the direction of rotation of the STEPPER2  
   
 **e) Next steps, perform the calibration as written on the Wiki.**  
 
