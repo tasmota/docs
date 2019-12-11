@@ -13,20 +13,19 @@ https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades
 #endif
 ```
 
-**in platformio.ini Uncomment by deleting ";"**
+**In platformio.ini uncomment by deleting ";"**
 ```
-tasmota
--DUSE_CONFIG_OVERRIDE
+  tasmota
+  -DUSE_CONFIG_OVERRIDE
 ```
------------------------------------
-SHUTTER1: (pic. v4.1.1 and v4.1.2)
------------------------------------
-D1: Relay1i = EN
-D2: Relay2 = DIR
-D3: PWM1 = STP
-D4: COUNTER1 = connected to D3/PWM1
 
-!!! The connection of the COUNTER is mandatory, or the ESP will always freeze!!!
+## SHUTTER1: (pic. v4.1.1 and v4.1.2)
+D1: Relay1i = EN  
+D2: Relay2 = DIR  
+D3: PWM1 = STP  
+D4: COUNTER1 = connected to D3/PWM1  
+
+***The connection of the COUNTER is mandatory, or the ESP will always freeze***
 
 **Enable shutter support (SHUTTER1 is enable)**  
  `SetOption80 1`  
