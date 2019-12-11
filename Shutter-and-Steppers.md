@@ -27,29 +27,29 @@ D4: COUNTER1 = connected to D3/PWM1
 
 ***The connection of the COUNTER is mandatory, or the ESP will always freeze***
 
-**Enable shutter support (SHUTTER1 is enable)**  
+**a) Enable shutter support (SHUTTER1 is enable)**  
  `SetOption80 1`  
 
-**Setting for work ShutterMode 1**  
+**d) Setting for work ShutterMode 1**  
   `Backlog PulseTime1 0; PulseTime2 0`  
   `Interlock OFF`  
 
-**Restart ESP**  
+**c) Restart ESP**  
   `restart 1`
 
-**Test ShutterMode 1 (SHUTTER1 is already on)**  
+**d) Test ShutterMode 1 (SHUTTER1 is already on)**  
   `ShutterRelay1 1`
 
-*** Setting the speed of the stepper motor.
-*** (1000 by default, one frequency for all PWM)
-shutterfrequency 1500 
-
-*** TEST work SHUTTER1
-ShutterOpen1 or ShutterClose1
+**e) TEST work SHUTTER1**  
+  `ShutterOpen1 or ShutterClose1`
 
 *** Setting for SHUTTER1 (optional settings)
 *** (ShutterOpenDuration==ShutterCloseDuration)
 Backlog ShutterOpenDuration1 15; ShutterCloseDuration1 15; shuttermotordelay1 0.25
+
+**e) Setting the speed of the stepper motor (1000 by default, one frequency for all PWM)**
+  `ShutterFrequency 1500`  
+
 
 *** Next, perform the calibration as written on the wiki.
 
