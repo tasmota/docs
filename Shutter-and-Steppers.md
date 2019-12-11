@@ -7,7 +7,7 @@
 
 ***NOTE 1:***  
  - the connection of the COUNTER is mandatory, or the ESP will always random freeze.  
- - a maximum of four shutters per device are supported (1 shutters = 1 stepper motor).  
+ - a maximum of four shutters per device are supported (max 4 shutters = 4 stepper motor).  
  - a `shutteropenduration<x>` must be same as `shuttercloseduration<x>`.  
  
  ***NOTE 2:***  
