@@ -7,8 +7,8 @@
 
 ***NOTE 0:***  
 - you can use only **bipolar** stepper motors.  
-- you must use the **same combination of stepper** drivers and stepper motors.  
-- you must **definitely** configure your stepper drivers..  
+- you must use the **same combination** of stepper drivers and stepper motors.  
+- you must **definitely** configure your stepper drivers.  
 
 ***NOTE 1:***  
  if you use 1 stepper motor cofiguration.  
