@@ -5,6 +5,8 @@
 3.  Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#blinds-shutters-and-roller-shades).  
 4.  For connnections Stepper motor ans Stepper drivers use [Wiring diagrams](#wiring-diagrams).  
 
+![A4988](https://lastminuteengineers.com/a4988-stepper-motor-driver-arduino-tutorial/)
+
 ***NOTE 0:***  
 - you can use only **bipolar** stepper motors.  
 - you must use the **same combination** of stepper drivers and stepper motors.  
@@ -34,11 +36,11 @@ Example configuration:
  - D4: COUNTER1 = connected to D3/PWM1   
 
 **a) Enable SHUTTER support**  
- `SetOption80 1`   //for all Shutters 
+ `SetOption80 1`   // this is a global variable for all Shutters 
 
 **b) Setting for work ShutterMode 1**  
   `Backlog PulseTime1 0; PulseTime2 0`   // for relay Relay1i and Relay2  
-  `Interlock OFF`                        // for all relay  
+  `Interlock OFF`                        // this is a global variable for all Relays  
 
 **c) Restart ESP**  
   `restart 1`
