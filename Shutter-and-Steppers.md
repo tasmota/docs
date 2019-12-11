@@ -44,7 +44,7 @@ Example configuration:
   `ShutterOpen1`  
   `ShutterClose1`  
 
-**f) Setting the speed of the stepper motor (optional settings)**
+**f) Setting the speed of the stepper motor (optional settings)**  
   `ShutterFrequency 1500`  // for all steppers (1000 by default)
 
 **Next steps, perform the calibration as written on the Wiki.**  
@@ -75,11 +75,11 @@ Example configuration:
 
 **Next steps, perform the calibration as written on the Wiki.**  
 
-## Wiring Diagrams
-### SHUTTER1: (pic. v4.1.1 and v4.1.2)
+## Wiring Diagrams  
+### SHUTTER1: (pic. v4.1.1 and v4.1.2)  
 ![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v411.jpg ":size=200px")
 ![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v412.jpg ":size=200px")
 
-### SHUTTER2: (pic. v4.1.1 and v4.1.2)
+### SHUTTER2: (pic. v4.1.1 and v4.1.2)  
 ![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v421.jpg ":size=200px")
 ![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v422.jpg ":size=200px")
