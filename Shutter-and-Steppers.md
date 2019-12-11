@@ -8,9 +8,11 @@
 ***NOTE 1:***  
  - the connection of the COUNTER is mandatory, or the ESP will always random freeze.  
  - a `shutteropenduration<x>` must be same as `shuttercloseduration<x>`.  
+ - if you use only one stepper motor, you must step-by-step execute the commands for SHUTTER1 only.
  
  ***NOTE 2:***  
  if you use >1 stepper motor cofiguration.  
+ - you must step by step execute the commands first for SHUTTER1, and only then for SHUTTER2.  
  - you must use the same combination of stepper drivers and stepper motors.  
  - you must use only one stepper motor can work at a time.  
  - you cannot use different speeds for different stepper motors.  
