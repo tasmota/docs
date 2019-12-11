@@ -18,7 +18,7 @@
 
 <!-- tabs:start -->
 
-#### **5m Downloads**
+#### **5 MILLION**
 **2019-12-12**
 
 Tasmota has hit **5 MILLION DOWNLOADS** from GitHub!!! 
