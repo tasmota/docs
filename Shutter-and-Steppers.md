@@ -6,10 +6,9 @@
 4.  For connnections Stepper motor ans Stepper drivers use [Wiring diagrams](#wiring-diagrams).  
 
 ***NOTE 0:***  
-- you can use different stepper drivers like, for example A4988/DRV8825/TMC2208.  
-- you can use different stepper motors like, for example 28BYJ-48/Nema-17/Nema-23 (**bipolar** only).  
+- you can use only **bipolar** stepper motors.  
 - you must use the same combination of stepper drivers and stepper motors.  
-- you must configire stepper drivers  
+- you must configire your stepper drivers.  
 
 ***NOTE 1:***  
  if you use 1 stepper motor cofiguration.  
