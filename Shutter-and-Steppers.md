@@ -7,6 +7,7 @@
 5.  For configure your stepper drivers use tutorials: [A4988](https://lastminuteengineers.com/a4988-stepper-motor-driver-arduino-tutorial/) or [DRV8825](https://lastminuteengineers.com/drv8825-stepper-motor-driver-arduino-tutorial/).
 
 ***NOTE 0:***  
+Important limitations.
 - you can use only **bipolar** stepper motors.  
 - you must use the **same combination** of stepper drivers and stepper motors.
 - a `shutteropenduration<x>` **must be same** as `shuttercloseduration<x>`.  
@@ -21,7 +22,6 @@
  if you use 2 or more stepper motor cofiguration.  
  - you must step by step execute the commands first for SHUTTER1, and only then for SHUTTER2.  
  - the connection of the COUNTER is mandatory, or the ESP will always random freeze.  
- - a `shutteropenduration<x>` must be same as `shuttercloseduration<x>`.  
  - at one moment in time, only one stepping motor should work.  
  - you can use only one speed value for all stepper motors.  
  - a maximum of four shutters per device are supported (1 shutters = 1 stepper motor). 
