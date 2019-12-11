@@ -5,7 +5,7 @@
 3.  Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#blinds-shutters-and-roller-shades).  
 4.  For connnections Stepper motor ans Stepper drivers use [Wiring diagrams](#wiring-diagrams).  
 5.  For configure your stepper drivers use tutorials: [A4988](https://lastminuteengineers.com/a4988-stepper-motor-driver-arduino-tutorial/) or [DRV8825](https://lastminuteengineers.com/drv8825-stepper-motor-driver-arduino-tutorial/).  
-6. For modifying a 28BYJ-48 step motor from unipolar to bipolar use tutorial: [28BYJ-48](https://coeleveld.com/wp-content/uploads/2016/10/Modifying-a-28BYJ-48-step-motor-from-unipolar-to-bipolar.pdf).  
+6. For modifying a 28BYJ-48 12V step motor from unipolar to bipolar use tutorial: [28BYJ-48](https://coeleveld.com/wp-content/uploads/2016/10/Modifying-a-28BYJ-48-step-motor-from-unipolar-to-bipolar.pdf).  
 
 ***NOTE 0:***  
 Important limitations.
