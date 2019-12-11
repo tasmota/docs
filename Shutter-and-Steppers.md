@@ -37,11 +37,12 @@ Example configuration:
 **c) Restart ESP**  
   `restart 1`
 
-**d) Test ShutterMode 1**  
+**d) Test work ShutterMode 1**  
   `ShutterRelay1 1`   // for relay Relay1i and Relay2
 
 **e) Test work SHUTTER1**  
-  `ShutterOpen1`  
+  `ShutterOpen1`      // for invert shutter positioning, use command ShutterInvert1
+  `ShutterStop1`  
   `ShutterClose1`  
 
 **f) Setting the speed of the stepper motor (optional settings)**  
@@ -70,9 +71,10 @@ Example configuration:
   `ShutterRelay2 3`   // for relay Relay3i and Relay4
 
 **d) Test work SHUTTER2**  
-  `ShutterOpen2`  
+  `ShutterOpen2`  // for invert shutter positioning, use command ShutterInvert2
+  `ShutterStop2`  
   `ShutterClose2`  
-
+  
 **Next steps, perform the calibration as written on the Wiki.**  
 
 ## Wiring Diagrams  
