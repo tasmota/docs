@@ -85,6 +85,7 @@ Example configuration:
   `ShutterInvert2`   // to change the direction of rotation of the STEPPER2  
   
 **e) Next steps, perform the calibration as written on the Wiki.**  
+[Wiki](Blinds-and-Shutters.md#calibration).  
 
 ## Wiring Diagrams  
 ### SHUTTER1: (pic. v4.1.1 and v4.1.2)  
