@@ -55,8 +55,6 @@ Example configuration:
  - D7: PWM2     = STP  
  - D8: COUNTER2 = connected to D7/PWM2   
 
-***NOTE: the connection of the COUNTER is mandatory, or the ESP will always freeze.***
-
 **a) Setting for work ShutterMode 1**  
   `Backlog PulseTime3 0; PulseTime4 0`   // for relay Relay1i and Relay2  
 
