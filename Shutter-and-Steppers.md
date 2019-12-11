@@ -7,6 +7,9 @@
 https://tasmota.github.io/docs/#/Blinds-and-Shutters  
 https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades  
 
+To use it you must [compile your build](Compile-your-build.md). Add the following to `user_config_override.h`:
+Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#blinds-shutters-and-roller-shades).
+
 ## SHUTTER1.
 Example configuration:  
  - D1: Relay1i  = EN  
@@ -35,7 +38,7 @@ Example configuration:
   `ShutterClose1`  
 
 **f) Setting the speed of the stepper motor (optional settings)**  
-  `ShutterFrequency 1500`  // for all steppers (1000rpm by default)
+  `ShutterFrequency 1500`  // this is a global variable for all steppers (1000rpm by default)
 
 **g) Next steps, perform the calibration as written on the Wiki.**  
 
@@ -51,7 +54,6 @@ Example configuration:
 
 **a) Setting for work ShutterMode 1**  
   `Backlog PulseTime3 0; PulseTime4 0`   // for relay Relay1i and Relay2  
-  `Interlock OFF`                        // for all relay  
 
 **b) Restart ESP**  
   `restart 1`
