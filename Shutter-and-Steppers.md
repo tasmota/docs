@@ -7,7 +7,7 @@
 
 ***NOTE 0:***  
 - you can use different stepper drivers like, for example A4988/DRV8825/TMC2208.  
-- you can use different onli bipolar stepper motor like, for example 28BYJ-48/Nema-17/Nema-23.  
+- you can use different (only **bipolar**) stepper motor like, for example 28BYJ-48/Nema-17/Nema-23.  
 - you must use the same combination of stepper drivers and stepper motors.  
 - you must configire stepper drivers  
 
