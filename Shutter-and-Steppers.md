@@ -1,7 +1,7 @@
 ## Description of the settings step by step, to configure Shutter and the Stepper motor.    
 **AAAAAAAAA:**  
 1.  
-2.  For use Stepper motor ans Stepper drivers[Wiring diagrams](#wiring-diagrams)  
+2.  For connnections Stepper motor ans Stepper drivers use [Wiring diagrams](#wiring-diagrams)  
 
 **For more information:**  
 1.  To use it you must [compile your build](Compile-your-build.md).  
@@ -9,6 +9,11 @@
 2.  Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#blinds-shutters-and-roller-shades).  
 4. ///
 
+***NOTE:***  
+ - the connection of the COUNTER is mandatory, or the ESP will always freeze.  
+ - a maximum of four shutters per device are supported (1 shutters = 1 stepper motor).  
+ - a `shutteropenduration<x>` must be same as `shuttercloseduration<x>`.  
+ - if you use >1 stpper motor cofiguration, you must use the same combination of stepper drivers and stepper motors, and only one stepper motor can work at a time.  
 
 ## SHUTTER1.
 Example configuration:  
@@ -16,8 +21,6 @@ Example configuration:
  - D2: Relay2   = DIR  
  - D3: PWM1     = STP  
  - D4: COUNTER1 = connected to D3/PWM1   
-
-***NOTE: the connection of the COUNTER is mandatory, or the ESP will always freeze.***
 
 **a) Enable SHUTTER support**  
  `SetOption80 1`   //for all Shutters 
