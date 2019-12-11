@@ -18,6 +18,13 @@
 
 <!-- tabs:start -->
 
+#### **2019-12-12**
+Tasmota has hit 5 MILLION DOWNLOADS from GitHub!!! 
+
+We would like to thank everyone for making this project better with each new release. 
+
+Onwards to 10 million and beyond!
+
 #### **2019-12-04**
 Remember that official Tasmota firmware flashing tool from a month ago? Pfft, old news! 
 
