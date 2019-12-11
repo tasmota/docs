@@ -18,14 +18,18 @@
 
 <!-- tabs:start -->
 
-#### **2019-12-12**
-Tasmota has hit 5 MILLION DOWNLOADS from GitHub!!! 
+#### **5m Downloads**
+**2019-12-12**
+
+Tasmota has hit **5 MILLION DOWNLOADS** from GitHub!!! 
 
 We would like to thank everyone for making this project better with each new release. 
 
 Onwards to 10 million and beyond!
 
-#### **2019-12-04**
+#### **Tasmotizer!**
+**2019-12-04**
+
 Remember that official Tasmota firmware flashing tool from a month ago? Pfft, old news! 
 
 We present to you the even more official, completely home made and GMO free: **TASMOTIZER!**
@@ -34,7 +38,9 @@ We present to you the even more official, completely home made and GMO free: **T
 
 It downloads the latest release/development firmware for you, backs up the original firmware with one-click and can even (if you wish so) send your default settings to the device after it's flashed. But most of all it has a dark theme, so it must be good!
 
-#### **2019-11-29**
+#### **Tasmota v7.1.1**
+**2019-11-29**
+
 Tasmota v7.1.1 [Betty](https://www.youtube.com/watch?v=9iEoq8qZZK8) is released. Read [Moving to v7](moving-to-v7) on all the breaking changes and how to deal with them.
 
 This release is chock full of changes and improvements! 
@@ -49,25 +55,6 @@ and more...
 
 Oh, there's also this swanky new Tasmota documentation site on http://tasmota.com.
  
-
-#### **2019-11-15**
-We present the official Tasmota firmware flashing tool:  
-   
-[<img src="https://raw.githubusercontent.com/tasmota/tasmota-pyflasher/v1/images/splash.png" width=300></img>](https://github.com/tasmota/tasmota-pyflasher) 
-
-#### **2019-10-26**
-[Tasmota v6.7.1 Allison](../releases/tag/v6.7.1) releases with a fix for the bug causing serious issues in power monitoring devices. 
-
-#### **2019-10-25**
-[Tasmota v6.7.0](../releases/tag/v6.7.0) is released bringing support for [blind and shutters](Commands#blinds-shutters-and-roller-shades), [deep sleep and wake up pin](DeepSleep). [Tuya component](tuyamcu) is more customisable supporting a wider range of devices and a plethora of new sensors. Support for [Zigbee](Zigbee) devices is in a nascent stage of development.    
-Besides that there are bug fixes and improvements and on top of all that: better support for iFan03, Shelly 2.5, a rewrite of the light driver and the default Arduino core is now pre2.6. Last, but not least, the new tasmota-ir.bin build that has fully featured IR support but at the cost of other features.
-
-_In with the new, out with the old!_    
-Some outdated features have been removed so wave goodbye to: WPS, SmartConfig, tasmota-classic.bin build and Setoptions 2, 34, 41, 44, 45, 46, 65, 66 and 69
-
-#### **2019-10-10**
-Tasmota development branch is undergoing a big code rewrite of the light driver. Some things might break in the process, be aware of that if you're installing the daily build on a critical device and make sure to report any [issues](https://github.com/arendst/Tasmota/issues).
-
 <!-- tabs:end -->
 
 ### Community
