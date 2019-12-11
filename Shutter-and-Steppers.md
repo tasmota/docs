@@ -31,15 +31,15 @@ Example configuration:
 **a) Enable shutter support (and enable SHUTTER1)**  
  `SetOption80 1`  
 
-**b) Setting for work ShutterMode 1** - for relay Relay1i and Relay2:  
-  `Backlog PulseTime1 0; PulseTime2 0`  
-  `Interlock OFF`  
+**b) Setting for work ShutterMode 1**  
+  `Backlog PulseTime1 0; PulseTime2 0`   // for relay Relay1i and Relay2
+  `Interlock OFF`                        // for all relay
 
 **c) Restart ESP**  
   `restart 1`
 
-**d) Test ShutterMode 1** - for relay Relay1i and Relay2:  
-  `ShutterRelay1 1`
+**d) Test ShutterMode 1**  
+  `ShutterRelay1 1`   // for relay Relay1i and Relay2
 
 **e) Test work SHUTTER1**  
   `ShutterOpen1`  
@@ -52,6 +52,7 @@ Example configuration:
 
 
 ## SHUTTER2: (pic. v4.2.1 and v4.2.)  
+Example configuration:  
  - D6: Relay3i  = EN  
  - D6: Relay4   = DIR  
  - D7: PWM2     = STP  
@@ -60,13 +61,13 @@ Example configuration:
 ***NOTE: the connection of the COUNTER is mandatory, or the ESP will always freeze.***
 
 **a) Setting for work ShutterMode 1** - for relay Relay3i and Relay4:  
-  `Backlog PulseTime3 0; PulseTime4 0`  
+  `Backlog PulseTime3 0; PulseTime4 0`   // for relay Relay3i and Relay4
 
 **b) Restart ESP**  
   `restart 1`  
 
-**c) Enable SHUTTER2 and test ShutterMode 1** - for relay Relay3i and Relay4:  
-  `ShutterRelay2 3`
+**c) Enable SHUTTER2 and test ShutterMode 1**  
+  `Backlog PulseTime3 0; PulseTime4 0`   // for relay Relay3i and Relay4
 
 **e) Test work SHUTTER2**  
   `ShutterOpen2`  
