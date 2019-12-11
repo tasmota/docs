@@ -19,7 +19,8 @@ https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades
   -DUSE_CONFIG_OVERRIDE
 ```
 
-## SHUTTER1: (pic. v4.1.1 and v4.1.2)  
+## SHUTTER1.
+Example configuration:  
  - D1: Relay1i  = EN  
  - D2: Relay2   = DIR  
  - D3: PWM1     = STP  
@@ -27,7 +28,7 @@ https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades
 
 ***NOTE: the connection of the COUNTER is mandatory, or the ESP will always freeze.***
 
-**a) Enable shutter support (SHUTTER1 is enable)**  
+**a) Enable shutter support (and enable SHUTTER1)**  
  `SetOption80 1`  
 
 **b) Setting for work ShutterMode 1** - for relay Relay1i and Relay2:  
@@ -37,7 +38,7 @@ https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades
 **c) Restart ESP**  
   `restart 1`
 
-**d) Test ShutterMode 1 (SHUTTER1 is already on)**  
+**d) Test ShutterMode 1** - for relay Relay1i and Relay2:  
   `ShutterRelay1 1`
 
 **e) Test work SHUTTER1**  
