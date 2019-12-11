@@ -28,7 +28,7 @@ Example configuration:
 
 ***NOTE: the connection of the COUNTER is mandatory, or the ESP will always freeze.***
 
-**a) Enable shutter support (and enable SHUTTER1)**  
+**a) Enable shutter support**  
  `SetOption80 1`  
 
 **b) Setting for work ShutterMode 1**  
@@ -46,7 +46,7 @@ Example configuration:
   `ShutterClose1`  
 
 **f) Setting the speed of the stepper motor (optional settings). 1000 by default, one frequency for all PWM**
-  `ShutterFrequency 1500`  
+  `ShutterFrequency 1500`  // for all steppers
 
 **Next steps, perform the calibration as written on the Wiki.**  
 
@@ -60,16 +60,17 @@ Example configuration:
 
 ***NOTE: the connection of the COUNTER is mandatory, or the ESP will always freeze.***
 
-**a) Setting for work ShutterMode 1** - for relay Relay3i and Relay4:  
-  `Backlog PulseTime3 0; PulseTime4 0`   // for relay Relay3i and Relay4
+**a) Setting for work ShutterMode 1**  
+  `Backlog PulseTime3 0; PulseTime4 0`   // for relay Relay1i and Relay2
+  `Interlock OFF`                        // for all relay
 
 **b) Restart ESP**  
-  `restart 1`  
+  `restart 1`
 
-**c) Enable SHUTTER2 and test ShutterMode 1**  
-  `Backlog PulseTime3 0; PulseTime4 0`   // for relay Relay3i and Relay4
+**c) Test ShutterMode 1**  
+  `ShutterRelay2 3`   // for relay Relay3i and Relay4
 
-**e) Test work SHUTTER2**  
+**d) Test work SHUTTER2**  
   `ShutterOpen2`  
   `ShutterClose2`  
 
