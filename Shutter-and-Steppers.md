@@ -5,7 +5,7 @@
 3.  Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#blinds-shutters-and-roller-shades).  
 4.  For connnections Stepper motor ans Stepper drivers use [Wiring diagrams](#wiring-diagrams).  
 
-![A4988](https://lastminuteengineers.com/a4988-stepper-motor-driver-arduino-tutorial/)
+[A4988](https://lastminuteengineers.com/a4988-stepper-motor-driver-arduino-tutorial/)
 
 ***NOTE 0:***  
 - you can use only **bipolar** stepper motors.  
