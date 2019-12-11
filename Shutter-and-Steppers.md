@@ -6,18 +6,23 @@
 4.  For connnections Stepper motor ans Stepper drivers use [Wiring diagrams](#wiring-diagrams).  
 
 ***NOTE 1:***  
+ if you use <1 stepper motor cofiguration.  
+ - if you use only one stepper motor, you must step-by-step execute the commands for SHUTTER1 only.  
  - the connection of the COUNTER is mandatory, or the ESP will always random freeze.  
  - a `shutteropenduration<x>` must be same as `shuttercloseduration<x>`.  
- - if you use only one stepper motor, you must step-by-step execute the commands for SHUTTER1 only.
  
  ***NOTE 2:***  
  if you use >1 stepper motor cofiguration.  
  - you must step by step execute the commands first for SHUTTER1, and only then for SHUTTER2.  
+ - the connection of the COUNTER is mandatory, or the ESP will always random freeze.  
+ - a `shutteropenduration<x>` must be same as `shuttercloseduration<x>`.  
+ - a `shutteropenduration<y>` must be same as `shuttercloseduration<y>`.  
  - you must use the same combination of stepper drivers and stepper motors.  
  - you must use only one stepper motor can work at a time.  
  - you cannot use different speeds for different stepper motors.  
  - a maximum of four shutters per device are supported (1 shutters = 1 stepper motor). 
  - a maximum configuration may contain four stepper motors (4 shutters = 4 stepper motor).  
+
 ## SHUTTER1.
 Example configuration:  
  - D1: Relay1i  = EN  
