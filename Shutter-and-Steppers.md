@@ -16,8 +16,8 @@ Example configuration:
 
 ***NOTE: the connection of the COUNTER is mandatory, or the ESP will always freeze.***
 
-**a) Enable SHUTTERs support**  
- `SetOption80 1`  
+**a) Enable SHUTTER support**  
+ `SetOption80 1`   //for all Shutters 
 
 **b) Setting for work ShutterMode 1**  
   `Backlog PulseTime1 0; PulseTime2 0`   // for relay Relay1i and Relay2  
@@ -64,7 +64,7 @@ Example configuration:
   `ShutterStop2`     // to stop the SHUTTER2  
   `ShutterClose2`  
   
-**g) Next steps, perform the calibration as written on the Wiki.**  
+**e) Next steps, perform the calibration as written on the Wiki.**  
 
 ## Wiring Diagrams  
 ### SHUTTER1: (pic. v4.1.1 and v4.1.2)  
