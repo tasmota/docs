@@ -41,7 +41,7 @@ Example configuration:
   `ShutterRelay1 1`   // for relay Relay1i and Relay2
 
 **e) Test work SHUTTER1**  
-  `ShutterOpen1`      // for invert shutter positioning, use command ShutterInvert1
+  `ShutterOpen1`      // for invert shutter positioning, use command ShutterInvert1  
   `ShutterStop1`  
   `ShutterClose1`  
 
@@ -71,7 +71,7 @@ Example configuration:
   `ShutterRelay2 3`   // for relay Relay3i and Relay4
 
 **d) Test work SHUTTER2**  
-  `ShutterOpen2`  // for invert shutter positioning, use command ShutterInvert2
+  `ShutterOpen2`  // for invert shutter positioning, use command ShutterInvert2  
   `ShutterStop2`  
   `ShutterClose2`  
   
