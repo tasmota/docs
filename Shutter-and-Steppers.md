@@ -44,19 +44,16 @@ https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades
   `ShutterOpen1`  
   `ShutterClose1`  
 
-**f) Setting for SHUTTER1 (optional settings)**   
-  `Backlog ShutterOpenDuration1 15; ShutterCloseDuration1 15; shuttermotordelay1 0.25`  
-
-**ee) Setting the speed of the stepper motor (optional settings). 1000 by default, one frequency for all PWM**
+**f) Setting the speed of the stepper motor (optional settings). 1000 by default, one frequency for all PWM**
   `ShutterFrequency 1500`  
 
-**ff) Next, perform the calibration as written on the Wiki.**  
+**Next steps, perform the calibration as written on the Wiki.**  
 
 
 ## SHUTTER2: (pic. v4.2.1 and v4.2.)  
- - D6: Relay3i  = EN   = On/Off
- - D6: Relay4   = DIR  = Forward/Reverse
- - D7: PWM2     = STP  = Rotate stepper motor
+ - D6: Relay3i  = EN  
+ - D6: Relay4   = DIR  
+ - D7: PWM2     = STP  
  - D8: COUNTER2 = connected to D7/PWM2   
 
 ***NOTE: the connection of the COUNTER is mandatory, or the ESP will always freeze.***
@@ -70,14 +67,11 @@ https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades
 **c) Enable SHUTTER2 and test ShutterMode 1** - for relay Relay3i and Relay4:  
   `ShutterRelay2 3`
 
-*** TEST work SHUTTER2
-ShutterOpen2 or ShutterClose2
+**e) Test work SHUTTER2**  
+  `ShutterOpen2`  
+  `ShutterClose2`  
 
-*** Setting for SHUTTER2 (optional settings)
-*** (ShutterOpenDuration==ShutterCloseDuration)
-Backlog ShutterOpenDuration2 15; ShutterCloseDuration2 15; shuttermotordelay2 0.25
-
-*** Next, perform the calibration as written on the wiki.
+**Next steps, perform the calibration as written on the Wiki.**  
 
 ## Wiring Diagrams
 ### SHUTTER1: (pic. v4.1.1 and v4.1.2)
