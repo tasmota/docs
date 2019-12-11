@@ -1,14 +1,14 @@
 ## Description of the settings step by step, to configure Shutter and the Stepper motor.    
 
-1.  
-2.  
-
 **For more information:**  
 https://tasmota.github.io/docs/#/Blinds-and-Shutters  
-https://tasmota.github.io/docs/#/Commands?id=blinds-shutters-and-roller-shades  
 
-To use it you must [compile your build](Compile-your-build.md). Add the following to `user_config_override.h`:
-Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#blinds-shutters-and-roller-shades).
+1.  To use it you must [compile your build](Compile-your-build.md).  
+2.  Full description of working with Shutteris available at [Blinds and Shutters](Blinds-and-Shutters.md).  
+2.  Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#blinds-shutters-and-roller-shades).  
+4. 
+
+Blinds-and-Shutters.md
 
 ## SHUTTER1.
 Example configuration:  
