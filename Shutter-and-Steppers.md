@@ -8,10 +8,10 @@
 
 ***NOTE 0:***  
 Important limitations.
-- you can use only **bipolar** stepper motors.  
+- you can use **only bipolar** stepper motors.  
 - you must use the **same combination** of stepper drivers and stepper motors.
 - a `shutteropenduration<x>` **must be same** as `shuttercloseduration<x>`.  
-- you must **definitely** configure your stepper drivers.  
+- you must **definitely configure** your stepper drivers.  
 
 ***NOTE 1:***  
  if you use 1 stepper motor cofiguration.  
