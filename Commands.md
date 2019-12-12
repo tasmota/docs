@@ -156,6 +156,7 @@ See also|[`SetOption68`](#setoption68) - PWM Channel control<BR>[`SetOption76`](
 Command|Parameters
 :---|:---
 AP<a id="ap"></a>|`0` = switch to other Wi-Fi Access Point<BR>`1`= select Wi-Fi Access Point 1<BR>`2`= select Wi-Fi Access Point 2
+CORS<a id="cors"></a>|`""` = disable CORS (Cross Origin Resource Sharing) (default)<BR>`*` = enable CORS for all locations<BR>`value` = Enable CORS for location. This needs to be complete url ex: `http://tasui.shantur.com`
 Hostname<a id="hostname"></a>|`1` = reset hostname to `MQTT_TOPIC-<4digits>` and restart<BR>`<value>` = set hostname (32 char limit) and restart. If hostname contains `%` it will be reset to the default instead.<BR>**_If using MQTT to issue this command, if it is used with the device `GroupTopic`, the command will not be executed._**
 IPAddress&#60;x><a id="ipaddress"></a>|Set networking IP (`XXX.XXX.XXX.XXX`) addresses<BR>`IPAddress1` = set device IP address<BR><li>`0.0.0.0` = use dynamic IP address (DHCP)</li><li>`XXX.XXX.XXX.XXX` = set static IP address</li>`IPAddress2` = set gateway IP address<BR>`IPAddress3` = set subnet mask<BR>`IPAddress4` = set DNS server IP address<BR><BR>*follow IPAddress commands with `restart 1` to apply changes*
 Password<x\><a id="password"></a>|`<x>` = `1..2`<BR>`<value>` = set AP<x\> Wi-Fi password and restart<BR>`1` = reset AP<x\> Wi-Fi password to firmware default (`STA_PASS1` or `STA_PASS2`) and restart<BR>Passwords are limited to 64 characters. **Do not use special characters or white spaces in the password**.<BR>**Note that `Password` and `Password1` are equivalent commands.**
@@ -402,7 +403,7 @@ SetOption68<a id="setoption68"></a>|Multi-channel PWM instead of a single light<
 SetOption69<a id="setoption69"></a>|**Deprecated** in favor of [DimmerRange](#DimmerRange) <br>By default Tuya dimmers won't dim below 10% because some don't function very well that way.<BR>`0` = disable Tuya dimmer 10% lower limit<BR>`1` = enable Tuya dimmer 10% lower limit *(default)*
 SetOption71<a id="setoption71"></a>|Set DDS238 Modbus register for active energy<BR>`0` = set primary register *(default)*<BR>`1` = set alternate register
 SetOption72<a id="setoption72"></a>|Set reference used for total energy <BR>`0` = use firmware counter *(default)*<BR>`1` = use energy monitor (e.g., PZEM-0xx, SDM120, SDM630, DDS238, DDSU666) hardware counter
-SetOption73<a id="setoption73"></a>|Set HTTP Cross-Origin Resource Sharing (CORS) <BR>`0` = disable CORS *(default)*<BR>`1` = enable CORS
+SetOption73<a id="setoption73"></a>|*Deprecated in version 7.1.2.4 in favor of CORS command*<BR>Set HTTP Cross-Origin Resource Sharing (CORS) <BR>`0` = disable CORS *(default)*<BR>`1` = enable CORS
 SetOption74<a id="setoption74"></a>|Enable internal pullup for single DS18x20 sensor <BR>`0` = disabled *(default)*<BR>`1` = internal pullup enabled
 SetOption75<a id="setoption75"></a>|Set grouptopic behaviour ([#6779](https://github.com/arendst/Tasmota/issues/6779))<BR>`0` = GroupTopic using FullTopic replacing %topic% _(default)_<BR>`1` =  GroupTopic is `cmnd/%grouptopic%/` 
 SetOption76<a id="setoption76"></a>|Bootcount incrementing when [DeepSleep](DeepSleep) is enabled ([#6930](https://github.com/arendst/Tasmota/issues/6930))<BR>`0` = disable bootcount incrementing _(default)_<BR>`1` = enable bootcount incrementing 
