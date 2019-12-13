@@ -43,7 +43,7 @@ upload_port = COM5
 upload_speed = 115200
 ;upload_resetmethod = nodemcu
 ```
-Enable desired options in _platformio.ini_ for upload to your local OTA server like:
+Enable desired options in _platformio_override.ini_ for upload to your local OTA server like:
 ```
 ; *** Upload file to OTA server using HTTP
 upload_port = domus1:80/api/upload-arduino.php
