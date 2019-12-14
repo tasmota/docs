@@ -238,121 +238,27 @@ After the Tasmota device boots, Zigbee2Tasmota will wait for 15 seconds before i
 
 When you first run your CC2530, you will see additional steps to configure the device:
 ```
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"410000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"4180020200020603"}
 MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}
-ZIG: checking device configuration
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"2108000F00"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"61080200"}
+MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":50,"MajorRel":2,"MinorRel":6,"MaintRel":3,"Revision":20190608}}
 MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":2,"Message":"Reseting configuration"}}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"2605030102"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"660500"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"410000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"4180020200020603"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"26058302631A"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"660500"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"26052D08CCCCCCCCCCCCCCCC"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"660500"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"2605840400080000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"660500"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"2605870100"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"660500"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"2605621001030507090B0D0F00020406080A0C0D"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"660500"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"2605630100"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"660500"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"210901010020FFFFFFFFFFFFFFFF5A6967426565416C6C69616E636530390000000000000000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"610900"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"26058F0101"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"660500"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"2107000F01000100"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"610709"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"2109000F000155"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"610900"}
 MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":3,"Message":"Configured, starting coordinator"}}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"25406400"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"654001"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"45C008"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"45C008"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"45C008"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"45C008"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"45C009"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"2700"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"6700006FF09D19004B12000000070900"}
 MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":51,"IEEEAddr":"00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"250200000000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"650200"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"4582000000000000408F000050A0000100A00000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"250500000000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"650500"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"4585000000000000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"2400010401050000000000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"640000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"24000B0401050000000000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"640000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"250500000000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"650500"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"45850000000000020B01"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"25360200000000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"653600"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"45CB00"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"45B6000000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":0,"Message":"Started"}}
-ZIG: zigbee device ready, listening...
+MQT: tele/tasmota/Zigbee_home/RESULT = {"ZigbeeState":{"Status":0,"Message":"Started"}}
+ZIG: Zigbee started
 ```
-
-You can also force a complete reconfiguration of your CC2530 with the following command, and reboot:  
-`ZigbeeZNPSend 2112000F0100`
 
 Normal boot looks like:  
 ```
-MQT: tele/<topic>/INFO3 = {"RestartReason":"External System"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"410000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"4180020200020603"}
 MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}
-ZIG: checking device configuration
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"2108000F00"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"6108000155"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"2102"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"61020200020603901534010200000000"}
 MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":50,"MajorRel":2,"MinorRel":6,"MaintRel":3,"Revision":20190608}}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"260483"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"6604008302631A"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"26042D"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"6604002D08CCCCCCCCCCCCCCCC"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"260484"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"660400840400080000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"260462"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"660400621001030507090B0D0F00020406080A0C0D"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"260463"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"660400630100"}
 MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":3,"Message":"Configured, starting coordinator"}}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"25406400"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"654000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"45C009"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"2700"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"6700006FF09D19004B12000000070901208F"}
-MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":51,"IEEEAddr":"00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":1,"AssocDevicesList":["0x8F20"]}}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"250200000000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"650200"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"4582000000000000408F000050A0000100A00000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"250500000000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"650500"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"4585000000000000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"2400010401050000000000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"640000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"24000B0401050000000000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"640000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"250500000000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"650500"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"45850000000000020B01"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPSent":"25360200000000"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"653600"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"45CB00"}
-MQT: tele/<topic>/RESULT = {"ZigbeeZNPReceived":"45B6000000"}
+MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":51,"IEEEAddr":"00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
 MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":0,"Message":"Started"}}
 ZIG: Zigbee started
 ```
+
+You can also force a factory reset of your CC2530 with the following command, and reboot:  
+`ZigbeeReset 1`
 
 ## Using Zigbee2Tasmota
 
