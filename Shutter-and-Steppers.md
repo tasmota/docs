@@ -106,8 +106,8 @@ D8|15|Counter2|STP
 
 ## Bill of Materials
 - ESP8266 Boards:  
-  - [Wimos D1 mini](https://www.aliexpress.com/item/32529101036.html)  
-  - [NodeMcu](https://www.aliexpress.com/item/32521100830.html)  
+  - [Wemos D1 mini](https://www.aliexpress.com/item/32529101036.html)  
+  - [NodeMCU](https://www.aliexpress.com/item/32521100830.html)  
 - Stepper motors (NEMA 17):  
   - [Standard](https://www.aliexpress.com/item/32572890101.html)  
   - [5:1 Planetary Gearbox](https://www.aliexpress.com/item/32586860419.html)  
