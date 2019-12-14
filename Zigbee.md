@@ -48,7 +48,7 @@ Using an ESP82xx device such as a Wemos D1 Mini or a NodeMCU to flash the CC2530
 In normal operation, only two free GPIO are needed for the serial communications with the CC2530. You can use the ESP82xx device above to flash the CC2530 adapter(s) and then use any other ESP82xx device flashed with Zigbee2Tasmota as the gateway between Zigbee and Wi-Fi.  
 
 ## Connecting to Tasmota
-#### 1. Flash the CC2530 module
+### 1. Flash the CC2530 module
 Zigbee2Tasmota requires a TI CC2530 based module flashed with [Z-Stack-firmware](https://github.com/Koenkk/Z-Stack-firmware) from [Koen Kanters](https://github.com/Koenkk). To simplify this procedure, a ready to use [fork of the needed firmware files](https://github.com/s-hadinger/CCLib) is available. 
 
 **A. Flash CCLib on an ESP82xx Device**    
@@ -192,7 +192,7 @@ Additional References:
 - [Koen Kanters](https://github.com/Koenkk) [Z-Stack CC2530 firmware files](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_Home_1.2/bin/default).
 - There are many tutorials online on how to flash a CC2530 with a dedicated [CC_DEBUGGER](https://www.aliexpress.com/item/32869263224.html).  
 
-#### 2. Flash an ESP82xx Device with Zigbee2Tasmota Tasmota
+### 2. Flash an ESP82xx Device with Zigbee2Tasmota Tasmota
 Once the CC2530 flashing process completes, you can re-use that ESP82xx device by flashing it with the Zigbee2Tasmota firmware. Otherwise, you can use any ESP82xx device.  
 - [Compile Tasmota](installation/Flashing?id=compiling-from-source)
   - `#define USE_ZIGBEE` in `user_config_override.h`.
@@ -206,7 +206,7 @@ Once the CC2530 flashing process completes, you can re-use that ESP82xx device b
 --->
 - Follow the usual [Tasmota flashing process](installation/Flashing)
 
-#### 3. Connect the CC2530 to the Tasmota Device
+### 3. Connect the CC2530 to the Tasmota Device
 The connection uses a 115200 baud serial connection. Hence you need to configure two GPIOs: `Zigbee TX` and `Zigbee RX`.
 
 If you are using your ESP82xx device to flash the Zigbee adapter as described in the flashing section, GPIO4, GPIO5, and GPIO12 are already in use. You may want to leave these connections in place in case you need to update the CC2530 firmware in the future. Otherwise, any of these GPIO can also be used.
@@ -227,7 +227,7 @@ Configure the Tasmota device using a custom template. Assign **`Zigbee Tx (165)`
 
 <img src="https://user-images.githubusercontent.com/49731213/64920989-ec043400-d7bd-11e9-8f5c-74ece5c4e26c.jpg" width="240">
 
-#### 4. First run
+### 4. First run
 Due to memory constraints of the CC2530, you can only pair 16 devices to a coordinator ([See details](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator)). 
 
 > There is an alternative firmware allowing for Zigbee routers to create a mesh network and go beyond 16 devices. This is currently not tested nor supported by Zigbee2Tasmota. It may be added later.
