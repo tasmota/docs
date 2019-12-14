@@ -367,6 +367,9 @@ Dimming works using slider and `Dimmer` command but only when in color mode, in 
 
 Long press on device's power button initiates Tasmota's Wi-Fi config
 
+## Battery Powered Door Window Sensor
+[Read more here...](https://blakadder.github.io/templates/TYMC-1.html)
+
 # Tuya Protocols
 The MCU communicates with the Wi-Fi module through the serial port with a Tuya specified protocol. Those are classified into basic and functional protocols. 
 
@@ -530,6 +533,13 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 9     | Scene3          | flash_scene_3 | Control and report | Char type     |                                                                            |
 | 10    | Scene4          | flash_scene_4 | Control and report | Char type     |                                                                            |
 
+### Contact Sensor
+| DP ID | Function points   | Identifier         | Data type   | Function type | Properties                                 |
+|-------|-------------------|--------------------|-------------|---------------|--------------------------------------------|
+| 1     | Door Sensor       | doorcontact_state  | Only report | Boolean       |                                            |
+| 2     | Battery Level     | battery_percentage | Only report | Integer       | Values range:0-100, Pitch1, Scale0, Unit:% |
+| 3     | Battery Level     | battery_state      | Only report | Enum          | Enumerated values:low, middle, high        |
+| 4     | Anti-remove Alarm | temper_alarm       | Only report | Boolean       |                                            |
 
 ### Air purifier
 
