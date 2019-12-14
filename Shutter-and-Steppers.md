@@ -10,17 +10,15 @@ Stepper motors can be used to operate shutters and blinds. The configuration is 
 
 Tasmota supports a maximum of four shutters with one stepper motor per shutter. Each stepper connected to a Tasmota device must use the **same** stepper driver and motor. **You cannot move more than one shutter _concurrently_.**  
 
-- Full description of [Blinds and Shutters](Blinds-and-Shutters.md).  
-- Complete list of [Blinds, Shutters and Roller Shades Commands](Commands.md#blinds-shutters-and-roller-shades).  
-- Stepper motor and Stepper drivers [wiring diagrams](#wiring-diagrams).  
+- Full description of [Blinds and Shutters](Blinds-and-Shutters.md)  
+- Complete list of [Blinds, Shutters and Roller Shades Commands](Commands.md#blinds-shutters-and-roller-shades)  
+- Stepper motor and Stepper drivers [wiring diagrams](#wiring-diagrams)  
 - Stepper drivers configuration tutorials:  
   - [A4988](https://lastminuteengineers.com/a4988-stepper-motor-driver-arduino-tutorial/)
   - [DRV8825](https://lastminuteengineers.com/drv8825-stepper-motor-driver-arduino-tutorial/)
-  - [TMC2208](https://wiki.fysetc.com/TMC2208/).  
-- Modifying a 28BYJ-48 12V stepper motor from unipolar to bipolar [tutorial](https://coeleveld.com/wp-content/uploads/2016/10/Modifying-a-28BYJ-48-step-motor-from-unipolar-to-bipolar.pdf).  
-- Stepper Motor Control Development Boards to create your prototype controls circuit:  
-  - [x1](https://aliexpress.com/item/32908836265.html)
-  - [x2](https://aliexpress.com/item/32870732179.html)  
+  - [TMC2208](https://wiki.fysetc.com/TMC2208/)  
+- Modifying a 28BYJ-48 12V stepper motor from unipolar to bipolar [tutorial](https://coeleveld.com/wp-content/uploads/2016/10/Modifying-a-28BYJ-48-step-motor-from-unipolar-to-bipolar.pdf)  
+- [Bill of Materials](#Bill-of-materials)  
 
 ## Example configuration  
 `EN` and `DIR` are on `Relay1i` and `Relay2` respectively. Please be aware to use the **inverse** relay for the enable signal.  
@@ -98,10 +96,35 @@ D8|15|Counter2|STP
 **e) Next steps, perform the calibration as written on the [Wiki](Blinds-and-Shutters.md#calibration).**    
 
 ## Wiring Diagrams  
-### SHUTTER1: (pic. v4.1.1 and v4.1.2)  
+### SHUTTER1: (pic. v4.1.1 and V4.1.2)  
 ![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v411.jpg?raw=true ":size=200px")
 ![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v412.jpg?raw=true ":size=200px")
 
-### SHUTTER2: (pic. v4.2.1 and v4.2.2)  
+### SHUTTER2: (pic. v4.2.1 and V4.2.2)  
 ![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v421.jpg?raw=true ":size=200px")
 ![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v422.jpg?raw=true ":size=200px")
+
+## Bill of Materials
+- ESP8266 Boards:  
+  - [Wimos D1 mini](https://www.aliexpress.com/item/32529101036.html)  
+  - [NodeMcu](https://www.aliexpress.com/item/32521100830.html)  
+- Stepper motors (NEMA 17):  
+  - [Standard](https://www.aliexpress.com/item/32572890101.html)  
+  - [5:1 Planetary Gearbox](https://www.aliexpress.com/item/32586860419.html)  
+- Stepper Drivers:  
+  - [A4988](https://www.aliexpress.com/item/1609523735.html)  
+  - [DRV8825](https://www.aliexpress.com/item/1609523735.html)  
+  - [TMC 2208](https://www.aliexpress.com/item/32851067375.html)  
+- Stepper Motor Control Development Boards:  
+  - [x1](https://aliexpress.com/item/32908836265.html)  
+  - [x2](https://aliexpress.com/item/32870732179.html)  
+- [DC-DC Step Down Power Supply Module](https://www.aliexpress.com/item/32546853828.html)  
+- Power Supplies (AC-DC):  
+  - [DC 12V 2A](https://www.aliexpress.com/item/32856511014.html)  
+  - [DC 12V 2.5A](https://www.aliexpress.com/item/32588476889.html)  
+  - [DC 12V 4A](https://www.aliexpress.com/item/32994556151.html)  
+  - [DC 24v 4A](https://www.aliexpress.com/item/32854269135.html)  
+-  Aluminum Capacitors:  
+   - [35V 100UF](https://www.aliexpress.com/item/32814611460.html)  
+   - [35V 10UF](https://www.aliexpress.com/item/32887486570.html)  
+- [Motor Testing PWM Signal Generator](https://www.aliexpress.com/item/32856654440.html)  
