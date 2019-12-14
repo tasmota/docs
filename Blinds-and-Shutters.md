@@ -65,26 +65,10 @@ Using manual operation `Switch<x>` pairs may require setting `SwitchMode<x> 4` (
 There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands.md#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
 
 ## Stepper Motor Support
-You can also use the favourite NEMA stepper motors to operate your shutters and blinds. You have to configure them very similar to the  Circuit Safe (Shuttermode 1) configuration. To operate the NEMA you need a stepper driver module. The A4988 are very vamous. The most important pins of thisboard are: EN (enable), DIR (direction), STP (Stepper) for input. We use EN and DIR as RELAY1i and RELAY2. Please be aware to use the INVERSE relay for the enable. To send the STP Signal we will define a PWM on the next GPIO. You number of the PWM, e.g. PWM1 must match to the number of the shutter. e.g. shutter1. You cannot use any other PWM devices on the same ESP, when using the stepper motor because I need to work with the frequency. This is a global variable for all PWM ports. Last not least we need on the next GPIO a COUNTER1. This is for measuring the steps and send the stepper to the correct position. COUNTER1 must be connected to PWM1. If not your device will run forever.
-
-Example configuration:
- - D1: Relay1i  = EN
- - D2: Relay2   = DIR
- - D3: PWM1     = STP
- - D4: COUNTER1 = connected to D3/PWM1
-
-`shutteropenduration` must be same as `shuttercloseduration`. You can define a soft start/stop by defining a `shuttermotordelay`. This causes the driver to ramp up/down speed during the defined duration.
-
-If you want to define a second or more shutters the definition must be similar to this one:
- - D5: Relay3i  = EN
- - D6: Relay4   = DIR
- - D7: PWM2     = STP
- - D8: COUNTER2 = connected to D7/PWM2
- 
- and `ShutterRelay2 3`.
- 
- Please be aware that you cannot move more than ONE shutter at the time. The used PWM frequency control is globally. The frequency of the PWM can be changed from 1000Hz to any value up to 10,000Hz. The command `shutterfrequency` globally changes this. Be aware that most 12V operated motors cannot work faster than 2,000Hz. With increasing the voltage up to 24V also 5,000Hz are possible. Maximum voltage auf the A4988 is 36V.
-
+Stepper motors can also be used to operate shutters and blinds. The configuration is very similar to the Circuit Safe (Shuttermode 1) configuration.  
+  
+Please refer to [Shutters and Steppers](link-tbd) for details.  
+  
 ## Calibration
 [Shutter calibration video tutorial](https://www.youtube.com/watch?v=Z-grrvnu2bU)  
 
