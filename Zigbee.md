@@ -305,7 +305,7 @@ This sensor monitors humidity, temperature, and air pressure.  Its Zigbee model 
 1. Put Zigbee2Tasmota into pairing mode using the `ZigbeePermitJoin` command as described above
 2. Press the Xiaomi Aqara sensor's button for 5 seconds to pair the devices. You will see a message as follows:  
    ```yaml
-   MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":30,"IEEEAddr":"00158D00036B50AE","ShortAddr":"0x8F20","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
+   MQT: tele/<topic>/SENSOR = {"ZigbeeState":{"Status":30,"IEEEAddr":"00158D00036B50AE","ShortAddr":"0x8F20","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
    ```
 
 |Field name|Value|
@@ -321,11 +321,11 @@ This device publishes sensor values roughly every hour or when a change occurs. 
 
 Examples:
 ```
-MQT: tele/<topic>/RESULT = {"0x8F20":{"Humidity":23.47}}
-MQT: tele/<topic>/RESULT = {"0x8F20":{"Temperature":59.85}}
-MQT: tele/<topic>/RESULT = {"0x8F20":{"Pressure":1005,"PressureUnit":"hPa"}}
-MQT: tele/<topic>/RESULT = {"0x8F20":{"Temperature":23.47,"Humidity":58.97,"Pressure":1005.8,"PressureUnit":"hPa","Voltage":3.005,"Battery":100}}
-MQT: tele/<topic>/RESULT = {"0x8F20":{"ModelId":"lumi.weather"}}
+MQT: tele/<topic>/SENSOR = {"ZigbeeReceived":{"0x7C71":{"Humidity":55.57,"LinkQuality":42}}}
+MQT: tele/<topic>/SENSOR = {"ZigbeeReceived":{"0x7C71":{"Temperature":20.26,"LinkQuality":44}}}
+MQT: tele/<topic>/SENSOR = {"ZigbeeReceived":{"0x7C71":{"PressureUnit":"hPa","Pressure":983,"Scale":-1,"ScaledValue":9831,"LinkQuality":44}}}
+MQT: tele/<topic>/SENSOR = {"ZigbeeReceived":{"0x7C71":{"Voltage":3.035,"Battery":100,"Temperature":19.91,"Humidity":82.16,"Pressure":983.25,"PressureUnit":"hPa","LinkQuality":47}}}
+MQT: tele/<topic>/SENSOR = {"ZigbeeReceived":{"0x7C71":{"Manufacturer":"LUMI","ModelId":"lumi.weather","LinkQuality":49}}}
 ```
 `0x8F20` is the ShortAddress of the sensor.  
 
@@ -333,12 +333,14 @@ Supported values:
 
 |Field name|Value|
 |---|---|
+|`LinkQuality`|Stength of the Zigbee signal, between 1 and 254 (integer). See this [ZigBee and WiFi Coexistence](https://www.metageek.com/training/resources/zigbee-wifi-coexistence.html)|
 |`Humidity`|Humidity in percentage (float)|
 |`Pressure` and `PressureUnit`|Atmospheric pressure (float) and unit (string)<BR>Currently only `hPa` (A.K.A. mbar) is supported|
 |`Temperature`|Temperature in Celsius (float)|
 |`Voltage`|Battery voltage (float)|
 |`Battery`|Battery charge in percentage (integer)|
 |`ModelId`|Model name of the Zigbee device (string)<BR>Ex: `lumi.weather`|
+|`ScaledValue` and `Scale`|Give the raw measure and the scale correction as 10^scale|
 
 ### Device Information
 You can dump the internal information gathered about connected Zigbee devices with the command [`ZigbeeStatus`](Commands#zigbeestatus).  
