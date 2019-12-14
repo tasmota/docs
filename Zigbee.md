@@ -347,22 +347,16 @@ You can dump the internal information gathered about connected Zigbee devices wi
 
 `ZigbeeStatus1` - List all connected devices  
 ```yaml
-{"ZigbeeStatus-99":[{"ShortAddr":"0x6B58"},{"ShortAddr":"0xE9C3"},{"ShortAddr":"0x3D82"}]}
+{"ZigbeeStatus1":[{"ShortAddr":"0x6B58"},{"ShortAddr":"0xE9C3"},{"ShortAddr":"0x3D82"}]}
 ```
 
 _(JSON pretty-printed for readability)_  
 ```yaml
 {
-    "ZigbeeStatus-99": [
-        {
-            "ShortAddr":"0x6B58"
-        },
-        {
-            "ShortAddr":"0xE9C3"
-        },
-        {
-            "ShortAddr":"0x3D82"
-        }
+    "ZigbeeStatus1": [
+        { "ShortAddr":"0x6B58" },
+        { "ShortAddr":"0xE9C3" },
+        { "ShortAddr":"0x3D82" }
     ]
 }
 ```
@@ -401,6 +395,8 @@ _(formatted for readability)_
 #### Identifying Target Device Endpoints
 You can use `ZigbeeStatus3` to display information about all the endpoints and ZCL clusters supported. If probing was successful (at pairing time or using `ZigbeeProbe`), Tasmota will automatically find the right endpoint. If the device was not probed, you need to specify the endpoint explicitly. It is always better to explicitly add the endpoint number if you know it.
 
+Depending on the number of device you have, `ZigbeeStatus3` output can exceed tha maximum MQTT message size. You can request the status of each individual device using `ZigbeeStatus3 1`, `ZigbeeStatus3 2`, `ZigbeeStatus3 3`...
+
 ##### Known Endpoints
 
 Device|Endpoint
@@ -422,19 +418,8 @@ _(formatted for readability)_
         "0x03": {
           "ProfileId": "0xC05E",
           "ProfileIdName": "ZigBee Light Link",
-          "ClustersIn": [
-            "0x1000",
-            "0x0000",
-            "0x0003",
-            "0x0004",
-            "0x0005",
-            "0x0006",
-            "0x0B04",
-            "0xFC0F"
-          ],
-          "ClustersOut": [
-            "0x0019"
-          ]
+          "ClustersIn": [ "0x1000", "0x0000", "0x0003", "0x0004", "0x0005", "0x0006", "0x0B04", "0xFC0F" ],
+          "ClustersOut": [ "0x0019" ]
         }
       }
     },
@@ -443,19 +428,8 @@ _(formatted for readability)_
       "Endpoints": {
         "0x01": {
           "ProfileId": "0x0104",
-          "ClustersIn": [
-            "0x0000",
-            "0x0003",
-            "0xFFFF",
-            "0x0402",
-            "0x0403",
-            "0x0405"
-          ],
-          "ClustersOut": [
-            "0x0000",
-            "0x0004",
-            "0xFFFF"
-          ]
+          "ClustersIn": [ "0x0000", "0x0003", "0xFFFF", "0x0402", "0x0403", "0x0405" ],
+          "ClustersOut": [ "0x0000", "0x0004", "0xFFFF" ]
         }
       }
     },
