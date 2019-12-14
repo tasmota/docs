@@ -67,7 +67,7 @@ There are shutters that have two relays but only need a pulse to start or stop. 
 ## Stepper Motor Support
 Stepper motors can also be used to operate shutters and blinds. The configuration is very similar to the Circuit Safe (Shuttermode 1) configuration.  
   
-Please refer to [Shutters and Steppers](link-tbd) for details.  
+Please refer to [Shutters and Steppers](Shutter-and-Steppers.md) for details.  
   
 ## Calibration
 [Shutter calibration video tutorial](https://www.youtube.com/watch?v=Z-grrvnu2bU)  
