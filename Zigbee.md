@@ -347,23 +347,23 @@ You can dump the internal information gathered about connected Zigbee devices wi
 
 `ZigbeeStatus1` - List all connected devices  
 ```yaml
-{"ZigbeeStatus1":[{"ShortAddr":"0x6B58"},{"ShortAddr":"0xE9C3"},{"ShortAddr":"0x3D82"}]}
+{"ZigbeeStatus1":[{"Device":"0x6B58"},{"Device":"0xE9C3"},{"Device":"0x3D82"}]}
 ```
 
 _(JSON pretty-printed for readability)_  
 ```yaml
 {
     "ZigbeeStatus1": [
-        { "ShortAddr":"0x6B58" },
-        { "ShortAddr":"0xE9C3" },
-        { "ShortAddr":"0x3D82" }
+        { "Device":"0x6B58" },
+        { "Device":"0xE9C3" },
+        { "Device":"0x3D82" }
     ]
 }
 ```
 
 `ZigbeeStatus 2` - Display detailed information for each device, including long address, model and manufacturer:  
 ```json
-{"ZigbeeStatus2":[{"ShortAddr":"0x6B58","IEEEAddr":"7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},{"ShortAddr":"0xE9C3","IEEEAddr":"00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},{"ShortAddr":"0x3D82","IEEEAddr":"0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips"}]}
+{"ZigbeeStatus2":[{"Device":"0x6B58","IEEEAddr":"7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},{"Device":"0xE9C3","IEEEAddr":"00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},{"Device":"0x3D82","IEEEAddr":"0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips"}]}
 ```
 
 _(formatted for readability)_  
@@ -371,19 +371,19 @@ _(formatted for readability)_
 {
     "ZigbeeStatus2": [
         {
-            "ShortAddr": "0x6B58",
+            "Device": "0x6B58",
             "IEEEAddr": "7CB03EAA0A0292DD",
             "ModelId": "Plug 01",
             "Manufacturer": "OSRAM"
         },
         {
-            "ShortAddr": "0xE9C3",
+            "Device": "0xE9C3",
             "IEEEAddr": "00158D00036B50AE",
             "ModelId": "lumi.weather",
             "Manufacturer": "LUMI"
         },
         {
-            "ShortAddr": "0x3D82",
+            "Device": "0x3D82",
             "IEEEAddr": "0017880102FE1DBD",
             "ModelId": "LWB010",
             "Manufacturer": "Philips"
@@ -393,7 +393,7 @@ _(formatted for readability)_
 ```
 
 #### Identifying Target Device Endpoints
-You can use `ZigbeeStatus3` to display information about all the endpoints and ZCL clusters supported. If probing was successful (at pairing time or using `ZigbeeProbe`), Tasmota will automatically find the right endpoint. If the device was not probed, you need to specify the endpoint explicitly. It is always better to explicitly add the endpoint number if you know it.
+You can use `ZigbeeStatus3` to display all information about all the endpoints and ZCL clusters supported. If probing was successful (at pairing time or using `ZigbeeProbe`), Tasmota will automatically find the right endpoint. If the device was not probed, you need to specify the endpoint explicitly. It is always better to explicitly add the endpoint number if you know it.
 
 Depending on the number of device you have, `ZigbeeStatus3` output can exceed tha maximum MQTT message size. You can request the status of each individual device using `ZigbeeStatus3 1`, `ZigbeeStatus3 2`, `ZigbeeStatus3 3`...
 
@@ -405,7 +405,7 @@ OSRAM Plug|`0x03`
 Philips Hue Bulb|`0x0B`
 
 ```json
-{"ZigbeeStatus3":[{"ShortAddr":"0x6B58","Endpoints":{"0x03":{"ProfileId":"0xC05E","ProfileIdName":"ZigBee Light Link","ClustersIn":["0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"],"ClustersOut":["0x0019"]}}},{"ShortAddr":"0xE9C3","Endpoints":{"0x01":{"ProfileId":"0x0104","ClustersIn":["0x0000","0x0003","0xFFFF","0x0402","0x0403","0x0405"],"ClustersOut":["0x0000","0x0004","0xFFFF"]}}},{"ShortAddr":"0x3D82","Endpoints":{"0x0B":{"ProfileId":"0xC05E"," ...
+{"ZigbeeStatus3":[{"Device":"0x6B58","IEEEAddr":"7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},"Endpoints":{"0x03":{"ProfileId":"0xC05E","ProfileIdName":"ZigBee Light Link","ClustersIn":["0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"],"ClustersOut":["0x0019"]}}},{"Device":"0xE9C3","IEEEAddr":"00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},"Endpoints":{"0x01":{"ProfileId":"0x0104","ClustersIn":["0x0000","0x0003","0xFFFF","0x0402","0x0403","0x0405"],"ClustersOut":["0x0000","0x0004","0xFFFF"]}}},{"Device":"0x3D82","IEEEAddr":"0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips","Endpoints":{"0x0B":{"ProfileId":"0xC05E"," ...
 ```
 
 _(formatted for readability)_  
@@ -413,7 +413,10 @@ _(formatted for readability)_
 {
   "ZigbeeStatus3": [
     {
-      "ShortAddr": "0x6B58",
+      "Device": "0x6B58",
+      "IEEEAddr": "7CB03EAA0A0292DD",
+      "ModelId": "Plug 01",
+      "Manufacturer": "OSRAM",
       "Endpoints": {
         "0x03": {
           "ProfileId": "0xC05E",
@@ -424,7 +427,10 @@ _(formatted for readability)_
       }
     },
     {
-      "ShortAddr": "0xE9C3",
+      "Device": "0xE9C3",
+      "IEEEAddr": "00158D00036B50AE",
+      "ModelId": "lumi.weather",
+      "Manufacturer": "LUMI",
       "Endpoints": {
         "0x01": {
           "ProfileId": "0x0104",
@@ -434,7 +440,10 @@ _(formatted for readability)_
       }
     },
     {
-      "ShortAddr": "0x3D82",
+      "Device": "0x3D82",
+      "IEEEAddr": "0017880102FE1DBD",
+      "ModelId": "LWB010",
+      "Manufacturer": "Philips"
       "Endpoints": {
         "0x0B": {
           "ProfileId": "0xC05E",
