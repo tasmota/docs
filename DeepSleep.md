@@ -81,4 +81,4 @@ Based on run time and the error in the last loop, a new sleeping time will be ca
 
 The effectiveness of the compensation can be seen here. Instead of typically 160-200 seconds, most times it is better than 10 seconds in a one hour deep sleep cycle.
 
-![TempComp](https://github.com/stefanbode/stefanbode.github.io/blob/master/images/deepsleep_comp.png)
+![TempComp](https://raw.githubusercontent.com/stefanbode/stefanbode.github.io/master/images/deepsleep_comp.png)
