@@ -99,9 +99,9 @@ D8|15|Counter2|STP
 
 ## Wiring Diagrams  
 ### SHUTTER1: (pic. v4.1.1 and v4.1.2)  
-![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v411.jpg ":size=200px")
-![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v412.jpg ":size=200px")
+![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v411.jpg?raw=true ":size=200px")
+![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v412.jpg?raw=true ":size=200px")
 
 ### SHUTTER2: (pic. v4.2.1 and v4.2.2)  
-![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v421.jpg ":size=200px")
-![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v422.jpg ":size=200px")
+![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v421.jpg?raw=true ":size=200px")
+![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v422.jpg?raw=true ":size=200px")
