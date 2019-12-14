@@ -44,29 +44,29 @@ D2|4|Relay2|DIR
 D3|0|PWM1|STP
 D4|2|Counter1|STP
 
-**a) Enable SHUTTER support**  
-   `SetOption80 1`   // this is a global variable for all Shutters 
-
-**b) Setting for work ShutterMode 1**  
+**a) Set ShutterMode 1**  
    `Backlog PulseTime1 0; PulseTime2 0`   // for relay Relay1i and Relay2  
    `Interlock OFF`                        // this is a global variable for all Relays  
 
-**c) Restart ESP**  
-   `restart 1`
+**b) Enable Shutters**  
+   `SetOption80 1`   // this is a global variable for all Shutters  
 
-**d) Test work ShutterMode 1**  
+**c) Configure Shutter 1 and test ShutterMode 1 is working**  
    `ShutterRelay1 1`   // for relay Relay1i and Relay2
 
-**e) Test work STEPPER1**  
+**d) Set the stepper motor speed (optional setting)**  
+   `ShutterFrequency 1500`  // this is a global variable for all steppers (1000rpm by default)
+
+**e) Restart Tasmota**  
+   `Restart 1`
+
+**f) Test the shutter**  
    `ShutterOpen1`   
    `ShutterStop1`      // to stop the STEPPER1  
    `ShutterClose1`  
    `ShutterInvert1`    // to change the direction of rotation of the STEPPER1  
 
-**f) Setting the speed of the stepper motor (optional settings)**  
-   `ShutterFrequency 1500`  // this is a global variable for all steppers (1000rpm by default)
-
-**g) Next steps, perform the calibration as written on the [Wiki](Blinds-and-Shutters.md#calibration).**    
+**g) Perform the [shutter calibration](Blinds-and-Shutters.md#calibration)**    
 
 ## Configuration for additional shutters  
 You must first set up the first shutter and only then the next.  
@@ -78,31 +78,31 @@ D6|12|Relay4|DIR
 D7|13|PWM2|STP
 D8|15|Counter2|STP
 
-**a) Setting for work ShutterMode 1**  
+**a) Set ShutterMode 1**  
   `Backlog PulseTime3 0; PulseTime4 0`   // for relay Relay3i and Relay4  
 
-**b) Restart ESP**  
-  `restart 1`
-
-**c) Enable ShutterRelay2 and test work ShutterMode 1**  
+**c) Configure Shutter 2 and test ShutterMode 1 is working**  
   `ShutterRelay2 3`   // for relay Relay3i and Relay4
 
-**d) Test work STEPPER2**  
+**b) Restart Tasmota**  
+  `Restart 1`
+
+**d) Test the shutter**  
   `ShutterOpen2`  
   `ShutterStop2`     // to stop the STEPPER2  
   `ShutterClose2`  
   `ShutterInvert2`   // to change the direction of rotation of the STEPPER2  
   
-**e) Next steps, perform the calibration as written on the [Wiki](Blinds-and-Shutters.md#calibration).**    
+**e) Perform the [shutter calibration](Blinds-and-Shutters.md#calibration)**    
 
 ## Wiring Diagrams  
-### SHUTTER1: (pic. v4.1.1 and V4.1.2)  
-![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v411.jpg?raw=true ":size=200px")
-![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v412.jpg?raw=true ":size=200px")
+### One Shutter
+![411](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v411.jpg ":size=200px")
+![411](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v412.jpg ":size=200px")
 
-### SHUTTER2: (pic. v4.2.1 and V4.2.2)  
-![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v421.jpg?raw=true ":size=200px")
-![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v422.jpg?raw=true ":size=200px")
+### 2 Shutters
+![411](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v421.jpg ":size=200px")
+![411](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v422.jpg ":size=200px")
 
 ## Bill of Materials
 - ESP8266 Boards:  
