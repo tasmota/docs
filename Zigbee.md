@@ -616,7 +616,7 @@ ZigbeeRead { "device":"0x69CF", "endpoint":3, "cluster":6, "read":0 }
 ```
 
 ```
-xx:xx:xx RSL: SENSOR = {"ZigbeeReceived":{"0x69CF":{"Power":true,"LinkQuality":55}}}
+xx:xx:xx MQT: tele/tasmota/SENSOR = {"ZigbeeReceived":{"0x69CF":{"Power":true,"LinkQuality":52}}}
 ```
 
 #### Philips Hue bulb
