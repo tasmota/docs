@@ -73,9 +73,9 @@ Example configuration:
  - D3: PWM1     = STP
  - D4: COUNTER1 = connected to D3/PWM1
 
-`shutteropenduration` must be same as `shuttercloseduration`. There is a soft start of 0.5sec. After first Open/Close the operation is automatically fine tuned and the fine positioning at the end of the movement gets shorter.
+`shutteropenduration` must be same as `shuttercloseduration`. You can define a soft start/stop by defining a `shuttermotordelay`. This causes the driver to ramp up/down speed during the defined duration.
 
-If you want to define a second or more shutters the definition must be similar to this one.
+If you want to define a second or more shutters the definition must be similar to this one:
  - D5: Relay3i  = EN
  - D6: Relay4   = DIR
  - D7: PWM2     = STP
@@ -83,7 +83,7 @@ If you want to define a second or more shutters the definition must be similar t
  
  and `ShutterRelay2 3`.
  
- Please be aware that you cannot move more than ONE shutter at the time. The used PWM frequency control is globally
+ Please be aware that you cannot move more than ONE shutter at the time. The used PWM frequency control is globally. The frequency of the PWM can be changed from 1000Hz to any value up to 10,000Hz. The command `shutterfrequency` globally changes this. Be aware that most 12V operated motors cannot work faster than 2,000Hz. With increasing the voltage up to 24V also 5,000Hz are possible. Maximum voltage auf the A4988 is 36V.
 
 ## Calibration
 [Shutter calibration video tutorial](https://www.youtube.com/watch?v=Z-grrvnu2bU)  
