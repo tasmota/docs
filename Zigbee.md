@@ -215,6 +215,8 @@ The interface between the ESP82xx Wi-Fi device and the CC2530 Zigbee module uses
 
 Tasmota also provides serial communications emulation through software (i.e., software serial). This allows any GPIO to be used. TasmotaSerial version 2.4.x (PR [#6377](https://github.com/arendst/Tasmota/pull/6377)) has improved the reliability of software serial making it feasible for use in this application. However, if you have an option to use hardware serial, choose that.
 
+?> Z2T uses software serial by default to allow for serial logging on GPIO1/GPIO3. Use `SerialLog 0` to enable **hardware serial on GPIO13\[Rx]/GPIO15\[Tx]**.
+
 Recommended connections:  
 
 ESP<BR>Device|Tasmota<BR>Component|<BR>CC2530
