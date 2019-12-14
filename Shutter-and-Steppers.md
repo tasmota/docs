@@ -10,15 +10,15 @@ Stepper motors can be used to operate shutters and blinds. The configuration is 
 
 Tasmota supports a maximum of four shutters with one stepper motor per shutter. Each stepper connected to a Tasmota device must use the **same** stepper driver and motor. **You cannot move more than one shutter _concurrently_.**  
 
-- Full description of [Blinds and Shutters](Blinds-and-Shutters.md).  
-- Complete list of [Blinds, Shutters and Roller Shades Commands](Commands.md#blinds-shutters-and-roller-shades).  
-- Stepper motor and Stepper drivers [wiring diagrams](#wiring-diagrams).  
+- Full description of [Blinds and Shutters](Blinds-and-Shutters.md)  
+- Complete list of [Blinds, Shutters and Roller Shades Commands](Commands.md#blinds-shutters-and-roller-shades)  
+- Stepper motor and Stepper drivers [wiring diagrams](#wiring-diagrams)  
 - Stepper drivers configuration tutorials:  
   - [A4988](https://lastminuteengineers.com/a4988-stepper-motor-driver-arduino-tutorial/)
   - [DRV8825](https://lastminuteengineers.com/drv8825-stepper-motor-driver-arduino-tutorial/)
-  - [TMC2208](https://wiki.fysetc.com/TMC2208/).  
-- Modifying a 28BYJ-48 12V stepper motor from unipolar to bipolar [tutorial](https://coeleveld.com/wp-content/uploads/2016/10/Modifying-a-28BYJ-48-step-motor-from-unipolar-to-bipolar.pdf).  
-- [Bill of materials](Bill-of-materials).  
+  - [TMC2208](https://wiki.fysetc.com/TMC2208/)  
+- Modifying a 28BYJ-48 12V stepper motor from unipolar to bipolar [tutorial](https://coeleveld.com/wp-content/uploads/2016/10/Modifying-a-28BYJ-48-step-motor-from-unipolar-to-bipolar.pdf)  
+- [Bill of Materials](#Bill-of-materials)  
 
 ## Example configuration  
 `EN` and `DIR` are on `Relay1i` and `Relay2` respectively. Please be aware to use the **inverse** relay for the enable signal.  
@@ -104,14 +104,14 @@ D8|15|Counter2|STP
 ![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v421.jpg?raw=true ":size=200px")
 ![411](https://github.com/TrDA-hab/blinds/blob/master/images/A4988%20v422.jpg?raw=true ":size=200px")
 
-## Bill of materials
-- ESP8266 bords:  
+## Bill of Materials
+- ESP8266 Boards:  
   - [Wimos D1 mini](https://www.aliexpress.com/item/32529101036.html)  
   - [NodeMcu](https://www.aliexpress.com/item/32521100830.html)  
-- Stepper motors Nema 17:  
-  - [Standart](https://www.aliexpress.com/item/32572890101.html)  
+- Stepper motors (NEMA 17):  
+  - [Standard](https://www.aliexpress.com/item/32572890101.html)  
   - [5:1 Planetary Gearbox](https://www.aliexpress.com/item/32586860419.html)  
-- Stepper Drives:  
+- Stepper Drivers:  
   - [A4988](https://www.aliexpress.com/item/1609523735.html)  
   - [DRV8825](https://www.aliexpress.com/item/1609523735.html)  
   - [TMC 2208](https://www.aliexpress.com/item/32851067375.html)  
@@ -119,7 +119,7 @@ D8|15|Counter2|STP
   - [x1](https://aliexpress.com/item/32908836265.html)  
   - [x2](https://aliexpress.com/item/32870732179.html)  
 - [DC-DC Step Down Power Supply Module](https://www.aliexpress.com/item/32546853828.html)  
-- Power source Modules AC-DC:  
+- Power Supplies (AC-DC):  
   - [DC 12V 2A](https://www.aliexpress.com/item/32856511014.html)  
   - [DC 12V 2.5A](https://www.aliexpress.com/item/32588476889.html)  
   - [DC 12V 4A](https://www.aliexpress.com/item/32994556151.html)  
@@ -127,6 +127,4 @@ D8|15|Counter2|STP
 -  Aluminum Capacitors:  
    - [35V 100UF](https://www.aliexpress.com/item/32814611460.html)  
    - [35V 10UF](https://www.aliexpress.com/item/32887486570.html)  
-- [Steptest motor test control drive](https://www.aliexpress.com/item/32856654440.html)  
-
- 
+- [Motor Testing PWM Signal Generator](https://www.aliexpress.com/item/32856654440.html)  
