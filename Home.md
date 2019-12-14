@@ -21,7 +21,7 @@
 #### **Development branch breaking changes**
 **2019-12-14**
 
-As of Tasmota development branch v7.1.2.5 there are breaking changes possible.
+As of Tasmota development branch v7.1.2.6 there are breaking changes possible.
 
 - we're updating the settings layout making fallback using OTA impossible
 - before trying development versions be able to fall back using the serial flash method
