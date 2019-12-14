@@ -1,13 +1,4 @@
 
-!> **This feature is not included in precompiled binaries.**     
-To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
-
-```
-#ifndef USE_DEEPSLEEP
-#define USE_DEEPSLEEP  // Add support for deepsleep (+1k code)
-#endif
-```
-----
 Deep sleep support for up to 1 day (i.e., 86,400 seconds) ([`DeepSleepTime`](Commands#deepsleeptime)).
 
 The ESP8266 has a limitation of a maximum of ~71 minutes deep sleep. To overcome the limitation, a short wake-up is performed - the device will wake up every hour for <0.3 seconds until the deep sleep time is reached. The remaining deep sleep time is decremented, and the device is then put back in deep sleep again. The remaining time is stored in RTC memory. As long as the device is powered (e.g., via the battery), this should work fine. Flash memory is not used because of how often this has to occur (every hour) and the time it takes for the flash to be ready takes much longer than the total time to write to the RTC.
