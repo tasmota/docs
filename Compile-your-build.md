@@ -13,18 +13,9 @@ Navigate to where you unpacked Tasmota and into /tasmota folder.
 Open `my_user_config.h` and uncomment (remove `//`) line with `#define USE_CONFIG_OVERRIDE`. It should look like this:    
 `#define USE_CONFIG_OVERRIDE                          // Uncomment to use user_config_override.h file. See README.md`
 
-In PlatformIO you can edit platformio.ini instead. Go to root directory of source code, open platformio.ini and find:
-```
-; *********************************************************************
-; *** Uncomment, by deleting ";" in line below, to use custom settings from file user_config_override.h 
-;                            -DUSE_CONFIG_OVERRIDE
-; *********************************************************************
-
-```
-and uncomment (remove `;`) from line:
-
-```
-                            -DUSE_CONFIG_OVERRIDE
+In PlatformIO you can edit platformio_override.ini instead. Go to root directory of source code, rename platformio_override_sample.ini to platformio_override.ini. By doing this you enable the settings done in this file.
+By default the file `user_config_override.h`is enabled and to build the standard `Tasmota` variant.
+    
 ```
 
 Create a new file in /tasmota folder called `user_config_override.h`.
