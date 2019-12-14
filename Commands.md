@@ -544,6 +544,7 @@ See also| [`SetOption80`](#setoption80) - Enable shutter support
 
 ### Zigbee
 
+See the [Complete Zigbee guide](Zigbee)
 
 Command|Parameters
 :---|:---
