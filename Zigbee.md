@@ -615,6 +615,10 @@ ZigbeeRead { "device":"0x69CF", "endpoint":"0x03", "cluster":"0x0006", "read":["
 ZigbeeRead { "device":"0x69CF", "endpoint":3, "cluster":6, "read":0 }
 ```
 
+```
+xx:xx:xx RSL: SENSOR = {"ZigbeeReceived":{"0x69CF":{"Power":true,"LinkQuality":55}}}
+```
+
 #### Philips Hue bulb
 
 ```json
