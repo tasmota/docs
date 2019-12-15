@@ -26,7 +26,7 @@ As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible tha
 - Modify your PC configuration to provide a Mobile hotspot:
   - SSID: `sonoffDiy` (_**case sensitive!**_)
   - Password: `20170618sn`
-  ![](https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/w10mobile_hotspot.png)
+  <img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/w10mobile_hotspot.png" style="float:right"></img>
 - Power on the Sonoff device and verify that it shows up on the Mobile hotspot Settings page
 - Start the `tool_01DIY85` utility
 - The utility should discover the device
@@ -34,7 +34,7 @@ As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible tha
 - Select `Firmware flash` (`Brush machine` on newer versions of the tool)
 - Select a Tasmota binary (e.g., [`tasmota-wifiman.bin`](http://thehackbox.org/tasmota/tasmota-wifiman.bin)) or your own self-compiled binary. It must fit in the available free program space. You can use the 2.3.0 Core for this initial flash since it has the smallest program memory footprint. _**Do NOT use the tasmota-minimal pre-compiled binary**_ as it does not allow you to change any settings.
   
->[!INFO] You may wish to [compile your own firmware](Gitpod) with all the features you require and disabling the features you do not. This will usually result in a "full" binary that is under 500k. You can use the resulting firmware file instead of the pre-compiled `tasmota-wifiman.bin`.  
+>[!NOTE] You may wish to [compile your own firmware](Gitpod) with all the features you require and disabling the features you do not. This will usually result in a "full" binary that is under 500k. You can use the resulting firmware file instead of the pre-compiled `tasmota-wifiman.bin`.  
 - Select the device in the flash pop-up and then select OK
 - Tasmota will be uploaded and started
 
