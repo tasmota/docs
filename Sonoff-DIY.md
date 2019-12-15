@@ -19,6 +19,7 @@ As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible tha
 - Power on device and connect to eWelink
 - eWelink firmware updated to at least 3.1
 ### Flash Tasmota
+<img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/w10mobile_hotspot.png" style="float:right"></img>
 - Download the [Sonoff DIY `tool_01DIY85`](https://github.com/itead/Sonoff_Devices_DIY_Tools) from Github:
   - `./tool` `.exe` (Microsoft Windows)
   - `./code` `.py` (_not yet tested_)
@@ -26,8 +27,7 @@ As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible tha
 - Modify your PC configuration to provide a Mobile hotspot:
   - SSID: `sonoffDiy` (_**case sensitive!**_)
   - Password: `20170618sn`
-  <img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/w10mobile_hotspot.png" style="float:right"></img>
-- Power on the Sonoff device and verify that it shows up on the Mobile hotspot Settings page
+  - Power on the Sonoff device and verify that it shows up on the Mobile hotspot Settings page
 - Start the `tool_01DIY85` utility
 - The utility should discover the device
 - Select the device and toggle it `ON` and `OFF` to verify you are connected to the right device
