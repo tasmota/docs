@@ -298,6 +298,8 @@ Digital TV	{"Protocol":"SONY","Bits":15,"Data":"0x25EE"}
 * 0x20DF5FA0="Warning: instop"
 * 0x20DF5FA0="Enter Password"
 * 0x20DF3FC0="Warning: Reset to factory"
+
+
 # Set-top Boxes
 
 ## IR Codes for VU+ Duo2
@@ -348,6 +350,7 @@ Digital TV	{"Protocol":"SONY","Bits":15,"Data":"0x25EE"}
 * 0xC805290E4="TV"
 * 0xC80521049="Context"
 * 0xC80529081="Help"
+
 
 ## IR Remote Codes AppleTV Gen4
 Up	{"Protocol":"NEC","Bits":32,"Data":"0x77E15080"}
@@ -502,6 +505,59 @@ Stop	{"Protocol":"NEC","Bits":32,"Data":"0x2662B34C"}
 
 Record	{"Protocol":"NEC","Bits":32,"Data":"0x26624BB4"}
 
+##Smart Reveiver VX/CX
+****
+button | code
+--- | ---
+on/off | {"Protocol":"NEC","Bits":32,"Data":"0x00FF30CF","DataLSB":"0x00FF0CF3","Repeat":0}
+mute | {"Protocol":"NEC","Bits":32,"Data":"0x00FFB04F","DataLSB":"0x00FF0DF2","Repeat":0} 
+FORMAT | {"Protocol":"NEC","Bits":32,"Data":"0x00FF1CE3","DataLSB":"0x00FF38C7","Repeat":0}
+16:9 | {"Protocol":"NEC","Bits":32,"Data":"0x00FFC13E","DataLSB":"0x00FF837C","Repeat":0}
+AUDIO | {"Protocol":"NEC","Bits":32,"Data":"0x00FFFA05","DataLSB":"0x00FF5FA0","Repeat":0} 
+1 | {"Protocol":"NEC","Bits":32,"Data":"0x00FF807F","DataLSB":"0x00FF01FE","Repeat":0}
+2 | {"Protocol":"NEC","Bits":32,"Data":"0x00FF40BF","DataLSB":"0x00FF02FD","Repeat":0}
+3 | {"Protocol":"NEC","Bits":32,"Data":"0x00FFC03F","DataLSB":"0x00FF03FC","Repeat":0}
+4 | {"Protocol":"NEC","Bits":32,"Data":"0x00FF20DF","DataLSB":"0x00FF04FB","Repeat":0}
+5 | {"Protocol":"NEC","Bits":32,"Data":"0x00FFA05F","DataLSB":"0x00FF05FA","Repeat":0}
+6 | {"Protocol":"NEC","Bits":32,"Data":"0x00FF609F","DataLSB":"0x00FF06F9","Repeat":0}
+7 | {"Protocol":"NEC","Bits":32,"Data":"0x00FFE01F","DataLSB":"0x00FF07F8","Repeat":0}
+8 | {"Protocol":"NEC","Bits":32,"Data":"0x00FF10EF","DataLSB":"0x00FF08F7","Repeat":0}
+9 | {"Protocol":"NEC","Bits":32,"Data":"0x00FF906F","DataLSB":"0x00FF09F6","Repeat":0}
+TV/R | {"Protocol":"NEC","Bits":32,"Data":"0x00FFA25D","DataLSB":"0x00FF45BA","Repeat":0}
+0 | {"Protocol":"NEC","Bits":32,"Data":"0x00FF00FF","DataLSB":"0x00FF00FF","Repeat":0}
+RECALL | {"Protocol":"NEC","Bits":32,"Data":"0x00FF19E6","DataLSB":"0x00FF9867","Repeat":0}
+volume + | {"Protocol":"NEC","Bits":32,"Data":"0x00FF5AA5","DataLSB":"0x00FF5AA5","Repeat":0}
+volume - | {"Protocol":"NEC","Bits":32,"Data":"0x00FFDA25","DataLSB":"0x00FF5BA4","Repeat":0}
+P - | {"Protocol":"NEC","Bits":32,"Data":"0x00FFBA45","DataLSB":"0x00FF5DA2","Repeat":0}
+P + | {"Protocol":"NEC","Bits":32,"Data":"0x00FF3AC5","DataLSB":"0x00FF5CA3","Repeat":0}
+red | {"Protocol":"NEC","Bits":32,"Data":"0x00FFEC13","DataLSB":"0x00FF37C8","Repeat":0}
+green | {"Protocol":"NEC","Bits":32,"Data":"0x00FF6C93","DataLSB":"0x00FF36C9","Repeat":0}
+yellow | {"Protocol":"NEC","Bits":32,"Data":"0x00FF4CB3","DataLSB":"0x00FF32CD","Repeat":0}
+blue | {"Protocol":"NEC","Bits":32,"Data":"0x00FF2CD3","DataLSB":"0x00FF34CB","Repeat":0}
+MENU | {"Protocol":"NEC","Bits":32,"Data":"0x00FF4AB5","DataLSB":"0x00FF52AD","Repeat":0}
+BACK | {"Protocol":"NEC","Bits":32,"Data":"0x00FF44BB","DataLSB":"0x00FF22DD","Repeat":0}
+EXIT | {"Protocol":"NEC","Bits":32,"Data":"0x00FFB44B","DataLSB":"0x00FF2DD2","Repeat":0}
+up | {"Protocol":"NEC","Bits":32,"Data":"0x00FF04FB","DataLSB":"0x00FF20DF","Repeat":0}
+left | {"Protocol":"NEC","Bits":32,"Data":"0x00FF8877","DataLSB":"0x00FF11EE","Repeat":0}
+OK | {"Protocol":"NEC","Bits":32,"Data":"0x00FFEA15","DataLSB":"0x00FF57A8","Repeat":0}
+right | {"Protocol":"NEC","Bits":32,"Data":"0x00FF08F7","DataLSB":"0x00FF10EF","Repeat":0}
+down | {"Protocol":"NEC","Bits":32,"Data":"0x00FF847B","DataLSB":"0x00FF21DE","Repeat":0}
+INFO | {"Protocol":"NEC","Bits":32,"Data":"0x00FF34CB","DataLSB":"0x00FF2CD3","Repeat":0}
+FAV | {"Protocol":"NEC","Bits":32,"Data":"0x00FF8679","DataLSB":"0x00FF619E","Repeat":0}
+TXT | {"Protocol":"NEC","Bits":32,"Data":"0x00FF7A85","DataLSB":"0x00FF5EA1","Repeat":0}
+EPG | {"Protocol":"NEC","Bits":32,"Data":"0x00FF06F9","DataLSB":"0x00FF609F","Repeat":0}
+FR | {"Protocol":"NEC","Bits":32,"Data":"0x00FF8976","DataLSB":"0x00FF916E","Repeat":0}
+REC | {"Protocol":"NEC","Bits":32,"Data":"0x00FF619E","DataLSB":"0x00FF8679","Repeat":0}
+FF | {"Protocol":"NEC","Bits":32,"Data":"0x00FF29D6","DataLSB":"0x00FF946B","Repeat":0}
+PREV | {"Protocol":"NEC","Bits":32,"Data":"0x00FF09F6","DataLSB":"0x00FF906F","Repeat":0}
+Play/Pause | {"Protocol":"NEC","Bits":32,"Data":"0x00FFE916","DataLSB":"0x00FF9768","Repeat":0}
+NEXT | {"Protocol":"NEC","Bits":32,"Data":"0x00FFC936","DataLSB":"0x00FF936C","Repeat":0}
+(none left) | {"Protocol":"NEC","Bits":32,"Data":"0x00FF4BB4","DataLSB":"0x00FFD22D","Repeat":0}
+STOP | {"Protocol":"NEC","Bits":32,"Data":"0x00FF718E","DataLSB":"0x00FF8E71","Repeat":0}
+(none right) | {"Protocol":"NEC","Bits":32,"Data":"0x00FF8976","DataLSB":"0x00FF916E","Repeat":0}
+USB | {"Protocol":"NEC","Bits":32,"Data":"0x00FFFB04","DataLSB":"0x00FFDF20","Repeat":0}
+HELP | {"Protocol":"NEC","Bits":32,"Data":"0x00FF54AB","DataLSB":"0x00FF2AD5","Repeat":0}
+DVD | {"Protocol":"NEC","Bits":32,"Data":"0x00FFDB24","DataLSB":"0x00FFDB24","Repeat":0}
 
 # BD/DVD players
 ## IR Remote Codes Sony BD-S1500
