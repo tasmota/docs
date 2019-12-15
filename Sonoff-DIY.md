@@ -10,16 +10,16 @@ Currently the following devices officially support Sonoff DIY:
 
 As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible that other Sonoff devices running eWelink 3.1 or higher will also support it.
 
-:warning: The OTA process Sonoff provides through the Sonoff DIY procedure **does not create a backup** of the Itead firmware on the device. If you use this OTA method to flash Tasmota on the Sonoff device, you will not be able to revert to the original factory firmware. :warning:
+>[!ATTENTION] The OTA process Sonoff provides through the Sonoff DIY procedure **does not create a backup** of the Itead firmware on the device. If you use this OTA method to flash Tasmota on the Sonoff device, you will not be able to revert to the original factory firmware. :warning:
 
 # Flash procedure
 ## Using the Itead DIY tool
 ### Verify and/or update eWelink firmware version
+<img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/w10mobile_hotspot.png" style="float:right"></img>
 - Open the device and remove the jumper labeled OTA if present
 - Power on device and connect to eWelink
 - eWelink firmware updated to at least 3.1
 ### Flash Tasmota
-<img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/w10mobile_hotspot.png" style="float:right"></img>
 - Download the [Sonoff DIY `tool_01DIY85`](https://github.com/itead/Sonoff_Devices_DIY_Tools) from Github:
   - `./tool` `.exe` (Microsoft Windows)
   - `./code` `.py` (_not yet tested_)
