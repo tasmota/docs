@@ -26,7 +26,7 @@ As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible tha
 - Modify your PC configuration to provide a Mobile hotspot:
   - SSID: `sonoffDiy` (_**case sensitive!**_)
   - Password: `20170618sn`
-  <img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/w10mobile_hotspot.png" />  
+  ![](https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/w10mobile_hotspot.png)
 - Power on the Sonoff device and verify that it shows up on the Mobile hotspot Settings page
 - Start the `tool_01DIY85` utility
 - The utility should discover the device
@@ -34,7 +34,7 @@ As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible tha
 - Select `Firmware flash` (`Brush machine` on newer versions of the tool)
 - Select a Tasmota binary (e.g., [`tasmota-wifiman.bin`](http://thehackbox.org/tasmota/tasmota-wifiman.bin)) or your own self-compiled binary. It must fit in the available free program space. You can use the 2.3.0 Core for this initial flash since it has the smallest program memory footprint. _**Do NOT use the tasmota-minimal pre-compiled binary**_ as it does not allow you to change any settings.
   
-  > You may wish to [compile your own firmware](Gitpod) with all the features you require and disabling the features you do not. This will usually result in a "full" binary that is under 500k. You can use the resulting firmware file instead of the pre-compiled `tasmota-wifiman.bin`.  
+>[!INFO] You may wish to [compile your own firmware](Gitpod) with all the features you require and disabling the features you do not. This will usually result in a "full" binary that is under 500k. You can use the resulting firmware file instead of the pre-compiled `tasmota-wifiman.bin`.  
 - Select the device in the flash pop-up and then select OK
 - Tasmota will be uploaded and started
 
@@ -57,7 +57,9 @@ This procedure is recommended for MacOS, but also works for Linux.
 
   Upload the firmware file to the `<webServer>` available on the same local network.  
 - SHA256 `<SHAsum>` of firmware binary file  
-  > `$ shasum -a 256 tasmota-wifiman.bin`  
+  ```
+  $ shasum -a 256 tasmota-wifiman.bin
+  ```  
 
   **_`1da0e89be4c01df033fa6da9d0c1db58c3deea354d7ad194f607d1f518db48f9`_**
 
@@ -77,7 +79,8 @@ This procedure is recommended for MacOS, but also works for Linux.
   In this example, the `<deviceID>` is **_1000988699_**  
 
   _MacOS_  
-  > `$ dns-sd -B _ewelink._tcp`  
+  `$ dns-sd -B _ewelink._tcp`  
+  
   ```
   Browsing for _ewelink._tcp  
   DATE: ---Mon 12 Aug 2019---  
@@ -87,11 +90,12 @@ This procedure is recommended for MacOS, but also works for Linux.
   ```
 
   _Linux_  
-  > `$ avahi-browse -t _ewelink._tcp --resolve`  
-  ```
+    `$ avahi-browse -t _ewelink._tcp --resolve`  
+  
+```
   + wlp3s0 IPv4 eWeLink_1000988699 _ewelink._tcp local
   = wlp3s0 IPv4 eWeLink_1000988699 _ewelink._tcp local hostname = [eWeLink_1000988699.local] address = [192.168.1.109] port = [8081] txt = ["data1={"switch":"off","startup":"off","pulse":"off","pulseWidth":500,"rssi":-47}" "seq=1" "apivers=1" "type=diy_plug" "id=1000988699" "txtvers=1"]
-  ```
+```
 
 ### Flash the firmware and confirm
 - Test with `/zeroconf/info` POST  
@@ -99,7 +103,9 @@ This procedure is recommended for MacOS, but also works for Linux.
 
   **_`{"seq":2,"error":0,"data":"{"switch":"off","startup":"off","pulse":"off","pulseWidth":500,"ssid":"sonoffDiy","otaUnlock":false}"}`_**  
 - Unlock OTA updates at `/zeroconf/ota_unlock`  
-  > `$ curl http://<deviceIP>:8081/zeroconf/ota_unlock -XPOST --data '{"deviceid":"<deviceID>","data":{} }'`  
+ ```
+ $ curl http://<deviceIP>:8081/zeroconf/ota_unlock -XPOST --data '{"deviceid":"<deviceID>","data":{} }'
+ ```  
 
   **_`{"seq":2,"error":0}`_**  
 
@@ -107,7 +113,9 @@ This procedure is recommended for MacOS, but also works for Linux.
 
 
 - Flash firmware at `/zeroconf/ota_flash`  
-  > `$ curl http://<deviceIP>:8081/zeroconf/ota_flash -XPOST --data '{"deviceid":"<deviceID>","data":{"downloadUrl": "http://<webServer>/tasmota-wifiman.bin", "sha256sum": "<SHAsum>"} }'`  
+```
+$ curl http://<deviceIP>:8081/zeroconf/ota_flash -XPOST --data '{"deviceid":"<deviceID>","data":{"downloadUrl": "http://<webServer>/tasmota-wifiman.bin", "sha256sum": "<SHAsum>"} }'
+```  
 
   **_`{"seq":3,"error":0}`_**  
 - Ping the device for about 30 seconds until it has rebooted
@@ -120,7 +128,7 @@ Once the firmware upload completes and the device restarts, the usual `tasmota-x
    > **_Some users have reported that upgrading via web OTA from `tasmota-wifiman.bin` to another binary has resulted in an unresponsive device which has required a wired flash to recover._**  
 4. Once the desired firmware is on the device, continue the regular Tasmota setup process. Use the the appropriate Template from the [repository](https://blakadder.github.io/templates) to assign the device components to the GPIO pins. For example, the  [Sonoff Mini template](https://blakadder.github.io/templates/sonoff_mini.html) assigns these GPIO:
 
-   <BR>GPIO | Tasmota<BR>Component | Device<BR>Function
+   GPIO | Tasmota Component | Device Function
    --: | :--: | :--:
    0 | Button1 (17) | Button
    4 | Switch1 (9) | S1/S2
