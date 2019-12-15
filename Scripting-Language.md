@@ -32,11 +32,13 @@ USE_24C256 | enables use of 24C256 I<sup>2</sup>C EEPROM to expand script buffer
 USE_SCRIPT_FATFS | enables SD card support (on SPI bus). Specify the CS pin number. Also enables 4k script buffer  
 USE_SCRIPT_FATFS_EXT | enables additional FS commands  
 SDCARD_DIR | enables support for web UI for SD card directory upload and download  
+
 ----
+
 ## Features
 Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules).
 
-To enter a script, go to `Configuration` =\> `Edit script` in the Tasmota web UI menu
+To enter a script, go to **Configuration -> Edit script** in the Tasmota web UI menu
 
 The maximum script size is 1535 bytes (uses rule set buffers). If the pasted script is larger than 1535 characters, comments will be stripped to attempt to  make the script fit.  
 
