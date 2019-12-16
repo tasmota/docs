@@ -9,7 +9,7 @@
 * [KNXnet/IP](/integrations/KNX)
 * [NodeRed Examples](/integrations/NodeRed)
 * [nymea](/integrations/nymea)
-* [OctoPrint](/integrations/Octoprint)
+* [OctoPrint](/integrations/OctoPrint)
 * [OpenHAB](/integrations/openHAB)
 * [ʘttʘ](/integrations/otto)
 * **external links**
