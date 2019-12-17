@@ -44,10 +44,13 @@ If you do not want to solder you can try using crocodile clips and manually push
 
 ### Step 6
 Connect serial adapter and make a shortwire between Pin IO0 and GND during startup (for entering flashmode).
+
 ![Soldered cables](https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-05.jpg ":size=200")
 
 ### Step 7
-Clear flash to avoid issues with dropping WiFi connection.
+Erase flash to avoid issues with dropping WiFi connection.
+
+Example using esptool:
 ```
 esptool.py --port COM3 erase_flash
 ```
