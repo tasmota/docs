@@ -85,9 +85,12 @@ Each meter typically provides multiple metrics (voltage, power, humidity, etc.) 
     - `xx` means ignore value  
     - `ss` = extract a signed byte  
     - `uu` = extract an unsigned byte  
-    - `uuuu` = extract an unsigned word 
-    - `uuuuuuuu` = extract an unsigned long word  
-    - `ssss` = extract a signed word  
+    - `UUuu` = extract an unsigned word (high order byte first)  
+    - `uuUU` = extract an unsigned word (low order byte first) 
+    - `UUuuUUuu` = extract an unsigned long word (high order byte first)  
+    - `SSss` = extract a signed word (high order byte first)   
+    - `ssSS` = extract a signed word (low order byte first)  
+    - `SSssSSss` = extract an signed long word (high order byte first)  
     - `ffffffff` = extract a float value  
     - `FFffFFff` = extract a reverse float value  
     - decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte.  
