@@ -135,6 +135,8 @@ with the '=' char at the beginning of a line you may do some special decoding
 - [Janitza B23 (MODBUS)](#Janitza-B23)
 - [Hager EHZ363 (SML) with daily values](#Hager-EHZ363-SML-with-daily-values)
 - [Iskra MT 174](#Iskra-MT-174)
+- [SBC ALE3 (MODBUS)](#SBC-ALE3-MODBUS)
+
 ------------------------------------------------------------------------------
 
 ### Hager EHZ363 (SML)
@@ -291,8 +293,7 @@ with the '=' char at the beginning of a line you may do some special decoding
 1,010304ffffffffxxxx@i5:1,Real power L3-N,W,Real_power_L3-N,2  
 1,010304ffffffffxxxx@i6:1,Real energy L3,Wh,Real_energy_L3,2  
 1,010304ffffffffxxxx@i7:1,Real energy L3-consumed,Wh,Real_energy_L3_consumed,2  
-1,010304ffffffffxxxx@i8:1,Real energy L3-delivered,Wh,Real_energy_L3_delivered,2  
-2,1-0:1.8.0*255(@100,Zählerstand,cbm,Count,3  
+1,010304ffffffffxxxx@i8:1,Real energy L3-delivered,Wh,Real_energy_L3_delivered,2   
 \#
 
 [Back To Top](#top)
@@ -375,6 +376,38 @@ Tageseinspeisung: {m} %po_d% kWh
 >1,1-0:1.8.1*255(@1,Total Consumed,KWh,Total_in,3  
 1,1-0:2.8.1*255(@1,Total Delivered,KWh,Total_out,3  
 1,1-0:0.0.0*255(@#),Meter Number,,Meter_number,0    
+\#
+
+[Back To Top](#top)
+
+### SBC ALE3 MODBUS
+>`>D`  
+>`>B`  
+=>sensor53 r  
+>`>M 1`  
++1,3,M,1,9600,SBC,1,1,02030023,02030028,0203002d,02030025,0203002a,0203002f,02030032,02030027,0203002c,02030031,02030021,02030015,02030018  
+>  
+>1,020304UUuuxxxxxxxx@i0:1,Spannung L1,V,Voltage_L1,0  
+1,020304UUuuxxxxxxxx@i1:1,Spannung L2,V,Voltage_L2,0  
+1,020304UUuuxxxxxxxx@i2:1,Spannung L3,V,Voltage_L3,0  
+1,020304xxxxUUuuxxxx@i0:10,Strom L1,A,Current_L1,2  
+1,020304xxxxUUuuxxxx@i1:10,Strom L2,A,Current_L2,2  
+1,020304xxxxUUuuxxxx@i2:10,Strom L3,A,Current_L3,2  
+1,=h=  
+1,020304UUuuxxxxxxxx@i3:100,Leistung L1,kW,Power_L1,3  
+1,020304UUuuxxxxxxxx@i4:100,Leistung L2,kW,Power_L2,3  
+1,020304UUuuxxxxxxxx@i5:100,Leistung L3,kW,Power_L3,3  
+1,020304UUuuxxxxxxxx@i6:100,Leistung Total,kW,Power_Total,3  
+1,020304xxxxSSssxxxx@i3:100,BlindLeistung L1,kVAr,ReaktivePower_L1,3  
+1,020304xxxxSSssxxxx@i4:100,BlindLeistung L2,kVAr,ReaktivePower_L2,3  
+1,020304xxxxSSssxxxx@i5:100,BlindLeistung L3,kVAr,ReaktivePower_L3,3  
+1,020304xxxxSSssxxxx@i6:100,BLeistung Total,kVAr,ReaktivePower_Total,3  
+1,=h=  
+1,020304UUuuxxxxxxxx@i7:100,CosPhi L1,,CosPhi_L1,2  
+1,020304UUuuxxxxxxxx@i8:100,CosPhi L2,,CosPhi_L2,2  
+1,020304UUuuxxxxxxxx@i9:100,CosPhi L3,,CosPhi_L3,2  
+1,=h=  
+1,020304UUuuUUuuxxxx@i10:100,T2 Wert,kWh,T2_Value,2  
 \#
 
 [Back To Top](#top)
