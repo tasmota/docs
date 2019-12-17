@@ -21,6 +21,7 @@ USE_SCRIPT_JSON_EXPORT | enable `>J` section (publish JSON payload on [TelePerio
 USE_SCRIPT_SUB_COMMAND | enables invoking named script subroutines via the Console or MQTT
 USE_SCRIPT_HUE | enable `>H` section (Alexa Hue emulation)
 USE_SCRIPT_STATUS | enable `>U` section (receive JSON payloads)
+SCRIPT_POWER_SECTION | enable `>P` section (execute on power changes)
 SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe  
 USE_SENDMAIL | enable `>m` section and support for sending e-mail   
 USE_SCRIPT_WEB_DISPLAY | enable `>W` section (modify web UI)
