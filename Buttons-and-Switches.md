@@ -216,7 +216,7 @@ This will send an MQTT message to a custom defined topic similarly to option 1.
 
 > [!EXAMPLE]
 > For example, we set the topic to _tasmota02_ with `ButtonTopic tasmota02`.   
-Device topic _tasmota_ with `SwitchMode 1`, custom topic _tasmota02_ yields the following message: `MQT: cmnd/tasmota02/POWER = TOGGLE`
+>With `SwitchMode 1` the device yields the following message: `MQT: cmnd/tasmota02/POWER = TOGGLE`
 >
 > If you have another device with the topic _tasmota02_ this action will toggle its relay while not affecting anything on the _tasmota_ device.
 
