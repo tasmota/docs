@@ -8,7 +8,9 @@ There are now two additional Tasmota firmware variants that provide almost all I
 Once you have the Tasmota IR firmware file you need, [flash it](Flashing) on your device using the usual method.  
 
 You can test that you have the correct firmware on your device by performing the following command in the web UI Console: `IRhvac {"Vendor":"xx"}`. The output should be a list of the supported protocols/vendors. For example:  
-> **RESULT = {"IRHVAC":"Wrong Vendor (COOLIX|DAIKIN|KELVINATOR|MITSUBISHI_AC|GREE|ARGO|TROTEC|TOSHIBA_AC|FUJITSU_AC|MIDEA|HAIER_AC|HITACHI_AC|HAIER_AC_YRW02|WHIRLPOOL_AC|SAMSUNG_AC|ELECTRA_AC|PANASONIC_AC|DAIKIN2|VESTEL_AC|TECO|TCL112AC|MITSUBISHI_HEAVY_88|MITSUBISHI_HEAVY_152|DAIKIN216|SHARP_AC|GOODWEATHER|DAIKIN160|NEOCLIMA|DAIKIN176|DAIKIN128|AMCOR)"}**
+```
+RESULT = {"IRHVAC":"Wrong Vendor (COOLIX|DAIKIN|KELVINATOR|MITSUBISHI_AC|GREE|ARGO|TROTEC|TOSHIBA_AC|FUJITSU_AC|MIDEA|HAIER_AC|HITACHI_AC|HAIER_AC_YRW02|WHIRLPOOL_AC|SAMSUNG_AC|ELECTRA_AC|PANASONIC_AC|DAIKIN2|VESTEL_AC|TECO|TCL112AC|MITSUBISHI_HEAVY_88|MITSUBISHI_HEAVY_152|DAIKIN216|SHARP_AC|GOODWEATHER|DAIKIN160|NEOCLIMA|DAIKIN176|DAIKIN128|AMCOR)"}
+```
 
 ## Sending IR Commands
 Send an IR remote control code as a decimal or hexadecimal string in a JSON payload. In order to send IR data, _**you must configure one of the free device GPIO as `IRsend (8)`. Neither GPIO01 nor GPIO03 can be used.**_  
