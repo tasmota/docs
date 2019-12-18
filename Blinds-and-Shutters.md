@@ -46,22 +46,21 @@ Shutter 0 (Relay:1): Init. Pos: 20000 [100 %], Open Vel.: 100 Close Vel.: 100 , 
 ## Operation
 Turning a device relay on or off directly (i.e., using `Power`) will function to affect a shutter's movement. In momentary mode (i.e., stepper motor), the relays start or stop the motor. The driver takes care of the direction and proper update of the shutter position.
 
+The shutter reports its position and can also be sent to a dedicated position. `ShutterPosition` = `0` means the shutter is closed and `ShutterPosition` = `100` means the shutter is open. If you need the position values reversed (`0` = open, `100` = closed), define and [calibrate your shutter as documented below](#calibration). Then tell Tasmota to reverse the shutter position meaning via the `ShutterInvert<x> 1` command. All internal calculations are the same (the log output is the same). Only the interaction with the user and other systems changes. Now `ShutterPosition<x> 0` will open the shutter and `ShutterPosition<x> 100` will close the shutter.
+
 By default, only `Shutter1` is enabled when `SetOption80 1` is invoked.  
 ![](https://user-images.githubusercontent.com/34340210/65997878-3517e180-e468-11e9-950e-bfe299771233.png ":size=200")
-
 
 A maximum of four shutters per device are supported.  
 ![](https://user-images.githubusercontent.com/34340210/65997879-3517e180-e468-11e9-9c44-9ad4a4a970cc.png ":size=200") 
 
-To enable additional shutters, `ShutterRelay<x> <value>` must be executed for each additional shutter. Additional shutter declarations must be sequentially numbered, and without gaps (i.e., first shutter 2, then shutter 3, and finally shutter 4).
+To enable additional shutters, `ShutterRelay<x> <value>` must be executed for each additional shutter. Additional shutter declarations must be sequentially numbered, and without gaps (i.e., second shutter is 2, then shutter 3, and finally shutter 4).
 
 Disabling a shutter in the middle of the defined set of shutters will disable all other higher numbered shutters. If the disabled shutter is restored, the higher numbered shutters previously declared will also be restored. When a shutter is added or removed, a list of the active shutters, with their parameters, is output to the log. If you intend to remove shutters, explicitly remove each one beginning with the highest numbered shutter.
 
 With four shutters, eight `Relay<x>` components are needed. If manual operation switches (`Switch<x>` or `Button<x>` pairs) are also used, additional input GPIO are required. The ESP82xx device may not have enough free GPIO to support all the shutter connections required. A GPIO expander such as a PCF8574 or [MCP230xx](MCP230xx) can be used.
 
 Using manual operation `Switch<x>` pairs may require setting `SwitchMode<x> 4` (inverse follow) for proper switch behavior.
-
-The Shutter reports its position and can also be send to a dedicated position. Shutterposition == 0 does mean the shutter is closed and Shutterposition == 100 is open. If you need it the other way around: 0 == Open, 100=Close, then define and calibrate your shutter like defined in the folowing sections. The very last command should be  `ShutterInvert<x> 1`. All internal calculations are the same (log is the same). Only interaction with the user and other system changes. Now a `ShutterPosition<x> 0` will open your shutter.
 
 ## Pulse Motor Support
 There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands.md#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
