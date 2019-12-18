@@ -23,7 +23,7 @@
 * [TLS](TLS)
 * [Web UI](WebUI)
 * [Supported Modules](/devices/) 
-**Useful Topics**
+* **Useful Topics**
 * [Cool Projects](Cool-Projects)
 * [Securing Your Setup](Securing-your-IoT-from-hacking)
 * [Tutorials](Tutorials)
