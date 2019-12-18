@@ -53,7 +53,8 @@ Declare a script `>M` section with the number of connected meters (n = `1..5`)
   - `s` = SML binary smart message coding  
   - `c` = Counter type  
   - `e` = EBus binary coding  
-  - `m` = MODBus binary coding  
+  - `m` = MODBus binary coding with serial mode 8N1   
+  - `M` = MODBus binary coding with serial mode 8E1 
   - `r` = Raw binary coding (any binary telegram)  
 - `<flag>` - options flag  
   - `0` = counter without pullup  
