@@ -61,6 +61,8 @@ With four shutters, eight `Relay<x>` components are needed. If manual operation 
 
 Using manual operation `Switch<x>` pairs may require setting `SwitchMode<x> 4` (inverse follow) for proper switch behavior.
 
+The Shutter reports its position and can also be send to a dedicated position. Shutterposition == 0 does mean the shutter is closed and Shutterposition == 100 is open. If you need it the other way around: 0 == Open, 100=Close, then define and calibrate your shutter like defined in the folowing sections. The very last command should be  `ShutterInvert<x> 1`. All internal calculations are the same (log is the same). Only interaction with the user and other system changes. Now a `ShutterPosition<x> 0` will open your shutter.
+
 ## Pulse Motor Support
 There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands.md#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
 
@@ -130,6 +132,7 @@ If using a Sonoff Dual R2, use the following Template:
 - Set `ShutterOpenDuration<x>`
 - Set `ShutterCloseDuration<x>`
 - Set `ShutterSetHalfway<x>` (optional)
+- Set `ShutterInvert<x>`(optional)
 - If the shutter uses a pulse motor instead of a motors with one wire for each direction (i.e., duration based), define `PulseTime<x> 2` on both relays. The driver's behavior will change to a pulse motor that needs pulses to start and stop.  
 
 ### Rules
