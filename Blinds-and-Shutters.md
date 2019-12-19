@@ -32,7 +32,7 @@ There are three shutter modes which are defined according to the [PulseTime](Com
    - `Backlog PulseTime1 2; PulseTime2 2`
    - `Backlog Interlock 1,2; Interlock ON` (Interlocked relay pair)
    
- 1. **ShutterMode 3** - Stepper Motors   
+1. **ShutterMode 3** - Stepper Motors   
    First relay: ON/OFF, Second relay: UP/DOWN
    PWM: Stepper signal, COUNTER: Stepper position signal
    - `Backlog PulseTime1 0; PulseTime2 0`
