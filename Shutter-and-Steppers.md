@@ -58,16 +58,19 @@ D4|2|Counter1|STP
 **d) Set the stepper motor speed (optional setting)**  
    `ShutterFrequency 1500`  // this is a global variable for all steppers (1000rpm by default)
 
-**e) Restart Tasmota**  
+**e) Set at least a small ramp-up/ramp down period 1.0 second (optional)**
+   `ShutterMotorDelay1 1.0`  // Stepper do not like infinite momentum. Ramp up/down speed allow much higher frequencies.
+
+**f) Restart Tasmota**  
    `Restart 1`
 
-**f) Test the shutter**  
+**g) Test the shutter**  
    `ShutterOpen1`   
    `ShutterStop1`      // to stop the STEPPER1  
    `ShutterClose1`  
    `ShutterInvert1`    // to change the direction of rotation of the STEPPER1  
 
-**g) Perform the [shutter calibration](Blinds-and-Shutters.md#calibration)**    
+**h) Perform the [shutter calibration](Blinds-and-Shutters.md#calibration)**    
 
 ## Configuration for additional shutters  
 You must first set up the first shutter and only then the next.  
