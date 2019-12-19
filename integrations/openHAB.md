@@ -31,7 +31,7 @@ If not done yet, you first need to **install and activate** the [MQTTv1](https:/
 ****
 
 ?> MQTTv1 vs. MQTTv2 Binding Information<br>
-The openHAB community has released a new native openHAB 2 MQTT Binding, which complies with enhancements and significantly changes. Be aware that if you update your openHAB instance, the new MQTT binding will be installed and `mqtt1` will be uninstalled! This means that any MQTT openHAB automations in your openHAB environment will exhibit odd behavior or not operate at all. If you are using `mqtt1`, jump to the `mqtt1` section [below](#mqttv1-Integration).
+The openHAB community has released a new native openHAB 2 MQTT Binding, which complies with enhancements and significantly changes. Be aware that if you update your openHAB instance, the new MQTT binding may be get installed and `mqtt1` could be uninstalled! This means that any MQTT openHAB automations in your openHAB environment will exhibit odd behavior or not operate at all. If you are using `mqtt1`, jump to the `mqtt1` section [below](#mqttv1-Integration).
 
 ## MQTTv2 Integration
 
