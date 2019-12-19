@@ -22,7 +22,7 @@ There are three shutter modes which are defined according to the [PulseTime](Com
    - `Backlog PulseTime1 0; PulseTime2 0`
    - `Backlog Interlock 1,2; Interlock ON` (Interlocked relay pair)
 
-1. **ShutterMode 1** - Circuit Safe + Stepper Motors. e.g. NEMA
+1. **ShutterMode 1** - Circuit Safe 
    First relay: ON/OFF, Second relay: UP/DOWN
    - `Backlog PulseTime1 0; PulseTime2 0`
    - `Interlock OFF`
@@ -31,7 +31,15 @@ There are three shutter modes which are defined according to the [PulseTime](Com
    First relay: OFF/DOWN PULSE, Second relay: OFF/UP PULSE
    - `Backlog PulseTime1 2; PulseTime2 2`
    - `Backlog Interlock 1,2; Interlock ON` (Interlocked relay pair)
-
+   
+ 1. **ShutterMode 3** - Stepper Motors   
+   First relay: ON/OFF, Second relay: UP/DOWN
+   PWM: Stepper signal, COUNTER: Stepper position signal
+   - `Backlog PulseTime1 0; PulseTime2 0`
+   - `Interlock OFF`
+   - PWM and COUNTER defined
+   
+   
 [Wiring diagrams](#wiring-diagrams) for Normal, Stepper motor, and Short Circuit-Safe configurations are available at the end of this page. Even if the shutter does not have two motors, three wires have to be connected.
 
 > [!NOTE] **After setting the options for shutter mode, the device must be rebooted.** Otherwise, the sliders won't be available in the web UI, and the `ShutterOpenDuration<x>`and  `ShutterCloseDuration<x>` commands will report "Shutter unknown". 
@@ -66,7 +74,7 @@ Using manual operation `Switch<x>` pairs may require setting `SwitchMode<x> 4` (
 There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands.md#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
 
 ## Stepper Motor Support
-Stepper motors can also be used to operate shutters and blinds. The configuration is very similar to the Circuit Safe (Shuttermode 1) configuration.  
+Stepper motors can also be used to operate shutters and blinds. Additionally you can operate sliding doors with this configuration.
   
 Please refer to [Shutters and Steppers](Shutter-and-Steppers.md) for details.  
   
