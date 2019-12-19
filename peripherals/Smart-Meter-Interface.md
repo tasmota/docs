@@ -137,8 +137,8 @@ with the '=' char at the beginning of a line you may do some special decoding
 - [Hager EHZ363 (SML) with daily values](#Hager-EHZ363-SML-with-daily-values)
 - [Iskra MT 174](#Iskra-MT-174)
 - [SBC ALE3 (MODBUS)](#SBC-ALE3-MODBUS)
-
-------------------------------------------------------------------------------
+- [2 * SBC ALE3 (MODBUS)](#2-*-SBC-ALE3-MODBUS)
+--------------------------------------------------------
 
 ### Hager EHZ363 (SML)
 
@@ -410,6 +410,62 @@ Tageseinspeisung: {m} %po_d% kWh
 1,=h=  
 1,020304UUuuUUuuxxxx@i10:100,T2 Wert,kWh,T2_Value,2  
 \#
+
+[Back To Top](#top)
+
+### 2 * SBC ALE3 MODBUS
+>`>D`  
+>`>B`  
+=>sensor53 r  
+>`>M 1`  
+>
+>+1,3,M,1,9600,Meter,1,1,01030023,01030028,0103002d,01030025,0103002a,0103002f,01030032,01030027,0103002c,01030031,0103001B,0103001d,03030023,03030028,0303002d,03030025,0303002a,0303002f,03030032,03030027,0303002c,03030031,0303001B,0303001d  
+>  
+>1,=h Domestic Electricity:  
+1,010304UUuuUUuuxxxx@i10:100,1 Tariff 1 total,kWh,M1_T1_total,2  
+1,010304UUuuUUuuxxxx@i11:100,1 Tariff 1 partial,kWh,M1_T1_par,2  
+1,=h Readings:  
+1,010304UUuuxxxxxxxx@i0:1,1 Voltage L1,V,M1_Voltage_L1,0  
+1,010304UUuuxxxxxxxx@i1:1,1 Voltage L2,V,M1_Voltage_L2,0  
+1,010304UUuuxxxxxxxx@i2:1,1 Voltage L3,V,M1_Voltage_L3,0  
+1,010304xxxxUUuuxxxx@i0:10,1 Current L1,A,M1_Current_L1,2  
+1,010304xxxxUUuuxxxx@i1:10,1 Current L2,A,M1_Current_L2,2  
+1,010304xxxxUUuuxxxx@i2:10,1 Current L3,A,M1_Current_L3,2  
+1,010304UUuuxxxxxxxx@i3:100,1 Active Power L1,kW,M1_PRMS_L1,3  
+1,010304UUuuxxxxxxxx@i4:100,1 Active Power L2,kW,M1_PRMS_L2,3  
+1,010304UUuuxxxxxxxx@i5:100,1 Active Power L3,kW,M1_PRMS_L3,3  
+1,010304UUuuxxxxxxxx@i6:100,1 Active Power total,kW,M1_PRMS_total,3  
+1,010304xxxxSSssxxxx@i3:100,1 Reactive Power L1,kVAr,M1_QRMS_L1,3  
+1,010304xxxxSSssxxxx@i4:100,1 Reactive Power L2,kVAr,M1_QRMS_L2,3  
+1,010304xxxxSSssxxxx@i5:100,1 Reactive Power L3,kVAr,M1_QRMS_L3,3  
+1,010304xxxxSSssxxxx@i6:100,1 Reactive Power total,kVAr,M1_QRMS_total,3  
+1,010304UUuuxxxxxxxx@i7:100,1 CosPhi L1,,M1_CosPhi_L1,2  
+1,010304UUuuxxxxxxxx@i8:100,1 CosPhi L2,,M1_CosPhi_L2,2  
+1,010304UUuuxxxxxxxx@i9:100,1 CosPhi L3,,M1_CosPhi_L3,2  
+1,=h________________________________________________  
+; meter 2 +12 offset  
+1,=h Heat Pump  
+1,030304UUuuUUuuxxxx@i22:100,2 Tariff 1 total,kWh,M2_T1_total,2  
+1,030304UUuuUUuuxxxx@i23:100,2 Tariff 1 partial,kWh,M2_T1_par,2  
+1,=h Readings:  
+1,030304UUuuxxxxxxxx@i12:1,2 Voltage L1,V,M2_Voltage_L1,0  
+1,030304UUuuxxxxxxxx@i13:1,2 Voltage L2,V,M2_Voltage_L2,0  
+1,030304UUuuxxxxxxxx@i14:1,2 Voltage L3,V,M2_Voltage_L3,0  
+1,030304xxxxUUuuxxxx@i12:10,2 Current L1,A,M2_Current_L1,2  
+1,030304xxxxUUuuxxxx@i13:10,2 Current L2,A,M2_Current_L2,2  
+1,030304xxxxUUuuxxxx@i14:10,2 Current L3,A,M2_Current_L3,2  
+1,030304UUuuxxxxxxxx@i15:100,2 Active Power L1,kW,M2_PRMS_L1,3  
+1,030304UUuuxxxxxxxx@i16:100,2 Active Power L2,kW,M2_PRMS_L2,3  
+1,030304UUuuxxxxxxxx@i17:100,2 Active Power L3,kW,M2_PRMS_L3,3  
+1,030304UUuuxxxxxxxx@i18:100,2 Active Power total,kW,M2_PRMS_total,3  
+1,030304xxxxSSssxxxx@i15:100,2 Reactive Power L1,kVAr,M2_QRMS_L1,3  
+1,030304xxxxSSssxxxx@i16:100,2 Reactive Power L2,kVAr,M2_QRMS_L2,3  
+1,030304xxxxSSssxxxx@i16:100,2 Reactive Power L3,kVAr,M2_QRMS_L3,3  
+1,030304xxxxSSssxxxx@i18:100,2 Reactive Power total,kVAr,M2_QRMS_total,3  
+1,030304UUuuxxxxxxxx@i19:100,2 CosPhi L1,,M2_CosPhi_L1,2  
+1,030304UUuuxxxxxxxx@i20:100,2 CosPhi L2,,M2_CosPhi_L2,2  
+1,030304UUuuxxxxxxxx@i21:100,2 CosPhi L3,,M2_CosPhi_L3,2  
+\#  
 
 [Back To Top](#top)
 
