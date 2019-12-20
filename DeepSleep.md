@@ -1,5 +1,5 @@
 
-Deep sleep support for up to 1 day (i.e., 86,400 seconds) ([`DeepSleepTime`](Commands#deepsleeptime)).
+Deep sleep support for up  (e.g., if used with KNX) to 1 day (i.e., 86,400 seconds) ([`DeepSleepTime`](Commands#deepsleeptime)).
 
 The ESP8266 has a limitation of a maximum of ~71 minutes deep sleep. To overcome the limitation, a short wake-up is performed - the device will wake up every hour for <0.3 seconds until the deep sleep time is reached. The remaining deep sleep time is decremented, and the device is then put back in deep sleep again. The remaining time is stored in RTC memory. As long as the device is powered (e.g., via the battery), this should work fine. Flash memory is not used because of how often this has to occur (every hour) and the time it takes for the flash to be ready takes much longer than the total time to write to the RTC.
 
@@ -18,11 +18,14 @@ If you want to execute some commands or a special script BEFORE the device goes 
 > **If you're having issues after wakeup from sleep make sure bootloop detection is off [`SetOption36 0`](Commands#setoption36) [#6890](https://github.com/arendst/Tasmota/issues/6890#issuecomment-552181980)**
 
 ### Overcome any Network issue
-If you do not get all requirements (Wifi, NTP Time, MQTT Server and the Teleperiod) the device will stay awake and try to get the remaining stuff working. On battery powered devices this behaviour is not wanted. If something go wrong you may send you device to sleep for another hour. Just to ensure not empty the battery. You can do this through a rule that e.g. fires 30seconds after reboot and send your device for 1h into deepsleep.
+If all requirements (Wifi, time synchronization via NTP, MQTT broker connection, and the Teleperiod) are not met, the device will stay awake while trying to attain the remaining requirements. On battery powered devices this behavior is undesirable because it will quickly deplete the battery. To avoid this when these requirements cannot be met, put the device back into deep sleep for an hour. Do this through a rule that will be triggered 30 seconds after reboot and sends the device into deepsleep for an hour.
 
-```
-rule1 on Dimmer#Boot do ruletimer1 30 endon on rules#timer=1 do deepsleeptime 3600 endon
-rule1 on
+```console
+Rule1
+  ON Dimmer#Boot DO RuleTimer1 30 ENDON
+  ON Rules#Timer=1 DO DeepSleepTime 3600 ENDON
+
+Rule1 ON
 ```
 
 ### Deep Sleep Algorithm General Timing
