@@ -17,6 +17,14 @@ If you want to execute some commands or a special script BEFORE the device goes 
 
 > **If you're having issues after wakeup from sleep make sure bootloop detection is off [`SetOption36 0`](Commands#setoption36) [#6890](https://github.com/arendst/Tasmota/issues/6890#issuecomment-552181980)**
 
+### Overcome any Network issue
+If you do not get all requirements (Wifi, NTP Time, MQTT Server and the Teleperiod) the device will stay awake and try to get the remaining stuff working. On battery powered devices this behaviour is not wanted. If something go wrong you may send you device to sleep for another hour. Just to ensure not empty the battery. You can do this through a rule that e.g. fires 30seconds after reboot and send your device for 1h into deepsleep.
+
+```
+rule1 on Dimmer#Boot do ruletimer1 30 endon on rules#timer=1 do deepsleeptime 3600 endon
+rule1 on
+```
+
 ### Deep Sleep Algorithm General Timing
 Let's assume you have set `DeepSleepTime 3600` (one hour) and `TelePeriod 300` (five minutes). The device will first wake at 8:00 am. The device will boot and connect Wi-Fi. Next, the correct time must be sync'ed from one of the NTP servers. Now the device has all prerequisites for going into deep sleep.  
 
