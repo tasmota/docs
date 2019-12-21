@@ -1,6 +1,6 @@
 Flash and memory space on an ESP82XX chip is limited and very valuable. Because of that our precompiled binaries include the most popular features of Tasmota but no build can include all of them.
 
-To include a feature you need (or build completely customized Tamota) you will have to configure and compile your own version.
+To include a feature you need (or build completely customized Tasmota) you will have to configure and compile your own version.
 
 First you will need a [development environment](installation/Flashing#flashing-and-compiling-from-source) and Tasmota's source code (either [development](https://github.com/arendst/Tasmota/archive/development.zip) or [master](https://github.com/arendst/Tasmota/archive/master.zip) branch).
 
