@@ -18,6 +18,16 @@
 
 <!-- tabs:start -->
 
+#### Tasmota v7.2*
+**2019-12-21**
+
+Tasmota v7.2 Constance is released. See [changelog for all changes](7.2-changelog).
+
+Breaking change: tasmota-basic.bin is renamed to **tasmota-lite.bin**. Update your OtaUrl accordingly.
+
+:warning: This will be the only release that supports fallback from future release 8.0 which will be released in a few days. Tasmota v8.0 will have major changes in configuration code and layout which will completely break any downgrade to versions below v7.2.
+
+
 #### **5 MILLION**
 **2019-12-11**
 

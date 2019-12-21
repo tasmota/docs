@@ -302,7 +302,7 @@ You must also set the [`TimeZone`](Commands#timezone) and Daylight Saving Time p
 If you have timers that use the sunset or sunrise times, you must set your [latitude](Commands#latitude) and [longitude](Commands#longitude) in order for these times to be calculated correctly for your location.
 
 ### Auto-discovery in Home Assistant doesn't work
-The `tasmota-basic.bin` firmware binary (which comes packaged with Tuya-Convert) does not support auto-discovery. Please upgrade to `tasmota.bin` or a similar firmware variant that supports this feature.
+The `tasmota-lite.bin` firmware binary (which comes packaged with Tuya-Convert) does not support auto-discovery. Please upgrade to `tasmota.bin` or a similar firmware variant that supports this feature.
 
 Make sure its enabled in Tasmota it with `SetOption19 1` and you configured the  Home Assistant MQTT integration with Discovery enabled.
 

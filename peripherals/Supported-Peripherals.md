@@ -15,6 +15,7 @@ Name|Description|Image
 **CCS811** | Gas and Air Quality sensor (I<sup>2</sup>C)
 [**Chirp! Soil Moisture Sensor**](peripherals/Moisture-Sensor-and-Chirp!-Sensor) | Moisture Sensor (I<sup>2</sup>C)
 [**DHT11**](peripherals/DHT11) | Temperature and Humidity Sensor
+**DHT12**
 **[DS18x20](peripherals/DS18x20)** | Temperature sensor (1-Wire)
 [**DS3231**](peripherals/DS3231) | Real-Time-Clock (I<sup>2</sup>C)
 [**HM16/HM17**](peripherals/iBeacon-driver) |  Bluetooth iBeacon reader (serial)

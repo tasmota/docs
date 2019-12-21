@@ -15,7 +15,7 @@ With the device connected and in flashing mode, create a backup of the factory f
 
     esptool.py read_flash 0x000000 0x100000 image1M.bin
     esptool.py erase_flash
-    esptool.py write_flash -fs 1MB -fm dout 0x0 tasmota-basic.bin`
+    esptool.py write_flash -fs 1MB -fm dout 0x0 tasmota-lite.bin`
 
 ## Configuration
 ⚠️ Warning! While the below configuration is correct and working, configuring a button on GPIO14 will make the device reset itself to the default Tasmota configuration after a number of seconds.
