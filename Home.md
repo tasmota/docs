@@ -4,7 +4,7 @@
 <!-- <img src="https://user-images.githubusercontent.com/5904370/55973675-661c1400-5c86-11e9-8453-0082bfcd61b6.png" width="200" align="right"> </img> -->
 <span style="font-size:25px">Latest release:</span>
 
-<a href="https://github.com/arendst/Tasmota/releases/tag/v7.1.2"><span style="font-size:45px;">7.1.2 Betty</span></a>
+<a href="https://github.com/arendst/Tasmota/releases/tag/v7.2"><span style="font-size:45px;">7.2 Constance</span></a>
 
 <!-- <img src="https://user-images.githubusercontent.com/5904370/55974399-d4ada180-5c87-11e9-99cc-316220bf5e95.png" align="right" width=200></img> -->
 
