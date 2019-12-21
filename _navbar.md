@@ -17,6 +17,6 @@
     * [Troubleshooting](/help/Troubleshooting)
     * [Device Recovery](/help/Device-Recovery)
     * [Discord Help](https://discord.gg/Ks2Kzd4)
-* v7.2
-    * [v7.1 Documentation](https://tasmota.github.io/docs-7.1/Home)
+* Versioned Docs
+    * [v7.1 Documentation](https://tasmota.github.io/docs-7.1/#/Home)
     * [<v6.7 Documentation](https://github.com/arendst/Tasmota/wiki)
