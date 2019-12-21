@@ -145,7 +145,7 @@ The use of the `%topic%` token is mandatory in case you want to use [`ButtonTopi
 > Use `%prefix%` and `%topic%` tokens at all time within your FullTopic definition!
 
 ### GroupTopic
-Having two devices with the same topic allowed for MQTT commands to be sent once to make the devices act in conjunction. That inspired a third topic called GroupTopic.  Devices with the same GroupTopic will all listen to that GroupTopic and react to the same MQTT command sent to it. You can use this to take gloal actions like updating firmware on all devices or split up devices into different groups using a unique GroupTopic for each group.
+Having two devices with the same topic allowed for MQTT commands to be sent once to make the devices act in conjunction. That inspired a third topic called GroupTopic.  Devices with the same GroupTopic will all listen to that GroupTopic and react to the same MQTT command sent to it. You can use this to take global actions like updating firmware on all devices or split up devices into different groups using a unique GroupTopic for each group.
 
 ?> Default GroupTopic is `tasmotas`
 
