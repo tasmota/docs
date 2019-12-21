@@ -10,7 +10,7 @@ The official firmware name is ***Tasmota*** instead of Sonoff-Tasmota and this i
 ## Upgrading Note
 Upgrading from older versions will not be painless!!! It is ***highly recommended*** to [backup your configuration](Upgrading#backing-up-settings) first, upgrade, erase flash and reset the device to firmware defaults and finally use decode-config tool to restore the configuration.
 
-If you're upgrading from a core version older than 2.6 and you're experiencing connectivity issues use `reset 3` command to reset wi-fi calibration settings. Always fully power cycle your device after the reset is complete to make sure everything is cleared.
+If you're upgrading from a core version older than 6.2 and you're experiencing connectivity issues use `reset 3` command to reset wi-fi calibration settings. Always fully power cycle your device after the reset is complete to make sure everything is cleared.
 
 ## v7 Tips
 ### GroupTopic
