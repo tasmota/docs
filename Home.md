@@ -18,7 +18,7 @@
 
 <!-- tabs:start -->
 
-#### Tasmota v7.2*
+#### **Tasmota v7.2**
 **2019-12-21**
 
 Tasmota v7.2 Constance is released. See [changelog for all changes](7.2-changelog).
