@@ -1,8 +1,6 @@
-&emsp;  » v6.5.0
-
 !> **This feature is not included in precompiled binaries.**     
 To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
-```c++
+```
 #ifndef SUPPORT_MQTT_EVENT
 #define SUPPORT_MQTT_EVENT
 #endif
