@@ -201,8 +201,7 @@ Once the CC2530 flashing process completes, you can re-use that ESP82xx device b
 - [Compile Tasmota](installation/Flashing?id=compiling-from-source)
   - `#define USE_ZIGBEE` in `user_config_override.h`.
   - _optional_ Run the ESP at 160MHz instead of 80MHz, this ensures higher reliability in serial communication with CC2530.  
-    In `platformio.ini`
-    - Comment out: `;board_build.f_cpu         = 80000000L`
+    In `platformio_override.ini`
     - Uncomment: `board_build.f_cpu         = 160000000L`
   
 >[!WARNING] If you find that your Zigbee2Tasmota operation is unstable, you may have an ESP82xx device that cannot operate reliably at the higher frequency. If you are using hardware serial (see below) and you still have unreliability, try compiling for 80MHz (reverse the options above) and flash the ESP82xx device again to see if operating at a lower frequency improves stability. Running at 80MHz will impact software serial communications so hardware serial is highly recommended if running the ESP82xx at 80MHz.
@@ -360,7 +359,7 @@ _(JSON pretty-printed for readability)_
 }
 ```
 
-`ZigbeeStatus 2` - Display detailed information for each device, including long address, model and manufacturer:  
+`ZigbeeStatus2` - Display detailed information for each device, including long address, model and manufacturer:  
 ```json
 {"ZigbeeStatus2":[{"Device":"0x6B58","IEEEAddr":"7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},{"Device":"0xE9C3","IEEEAddr":"00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},{"Device":"0x3D82","IEEEAddr":"0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips"}]}
 ```
