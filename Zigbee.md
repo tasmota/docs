@@ -206,8 +206,7 @@ Once the CC2530 flashing process completes, you can re-use that ESP82xx device b
     - Comment out: `;board_build.f_cpu         = 80000000L`
     - Uncomment: `board_build.f_cpu         = 160000000L`
   
-    **Note**: If you find that your Zigbee2Tasmota operation is unstable, you may have an ESP82xx device that cannot operate reliably at the higher frequency. If you are using hardware serial (see below) and you still have unreliability, try compiling for 80MHz (reverse the options above) and flash the ESP82xx device again to see if operating at a lower frequency improves stability. Running at 80MHz will impact software serial communications so hardware serial is highly recommended if running the ESP82xx at 80MHz.
---->
+    **Note**: If you find that your Zigbee2Tasmota operation is unstable, you may have an ESP82xx device that cannot operate reliably at the higher frequency. If you are using hardware serial (see below) and you still have unreliability, try compiling for 80MHz (reverse the options above) and flash the ESP82xx device again to see if operating at a lower frequency improves stability. Running at 80MHz will impact software serial communications so hardware serial is highly recommended if running the ESP82xx at 80MHz.--->
 - Follow the usual [Tasmota flashing process](installation/Flashing)
 
 ### 3. Connect the CC2530 to the Tasmota Device
