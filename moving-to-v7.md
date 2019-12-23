@@ -5,7 +5,7 @@ The official firmware name is ***Tasmota*** instead of Sonoff-Tasmota and this i
 1. References to _sonoff_ in the UI, code and wiki are replaced with **tasmota**
 2. Default device topic is now `tasmota` and default friendly name is _Tasmota_. 
 3. Default AP for WiFiConfig is `tasmota-xxxx` instead of `sonoff-xxxx`
-4. All binaries are now named `tasmota-xxxx.bin` and default OTA url is `http://thehackbox.org/tasmota/tasmota.bin`
+4. All binaries are now named `tasmota-xxxx.bin` and default OTA url is `http://thehackbox.org/tasmota/release/tasmota.bin`
 
 ## Upgrading Note
 Upgrading from older versions will not be painless!!! It is ***highly recommended*** to [backup your configuration](Upgrading#backing-up-settings) first, upgrade, erase flash and reset the device to firmware defaults and finally use decode-config tool to restore the configuration.
