@@ -319,7 +319,7 @@ Applies to devices using the PCB marked GD-HDFW05-v1.0.
 
 ![image](https://user-images.githubusercontent.com/5904370/67526288-c4559500-f6b4-11e9-867f-2b3ae0b82437.png ":size=100")
 
-This diffuser uses the same dpId scheme as the [example protocol](tuya-protocols#aromatherapy-machine-oil-diffuser)
+This diffuser uses the same dpId scheme as the [example protocol](#aromatherapy-machine-oil-diffuser)
 
 #### Functions
 `dpID 1` device power: 0 = off / 1 = on    
