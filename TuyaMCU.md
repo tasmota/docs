@@ -111,7 +111,9 @@ Sends integer or 4 byte (Type 2) data to dpId (Max data length 4 bytes)
 > [!EXAMPLE] `TuyaSend2 14,100` sends value `100` to dpId=14 setting timer to 100 minutes
 
 #### `TuyaSend3` 
-Sends string (Type 3) data to dpId ( Max data length not-known)
+Sends string (Type 3) data to dpId (Max data length? Not known at this time).  
+
+> [!WARNING] Note that when sending color values, the MCU may interpret lower case and upper case hex codes differently. You may need to test with your specific MCU to ensure that the values sent properly render the color you desire.  
 
 > [!EXAMPLE] `TuyaSend3 108,ff0000646464ff` sends a 14 char hex string to dpId=108 (Type 3) containing RGBHSV values to control a light
 
