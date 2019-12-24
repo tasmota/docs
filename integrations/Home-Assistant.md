@@ -915,7 +915,7 @@ automation:
 For manually configured devices:
 ```yaml
 automation:
-  - alias: "Sync Tasmota states on start-up - autodiscovery"
+  - alias: "Sync Tasmota states on start-up - manual configuration"
     initial_state: true
     trigger:
       platform: homeassistant
