@@ -58,7 +58,7 @@ D4|2|Counter1|STP
 **d) Set the stepper motor speed (optional setting)**  
    `ShutterFrequency 1500`  // this is a global variable for all steppers (1000rpm by default)
 
-**e) Set at least a small ramp-up/ramp down period 1.0 second (optional)**
+**e) Set at least a small ramp-up/ramp down period 1.0 second (optional)**  
    `ShutterMotorDelay1 1.0`  // Stepper do not like infinite momentum. Ramp up/down speed allow much higher frequencies.
 
 **f) Restart Tasmota**  
@@ -103,33 +103,43 @@ D8|15|Counter2|STP
 ## Wiring Diagrams  
 ### One Shutter
 ![411](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v411.jpg ":size=200px")
-![411](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v412.jpg ":size=200px")
+![412](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v412.jpg ":size=200px")
+![414](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v414.jpg ":size=200px")
+![416](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v416.jpg ":size=200px")
 
 ### 2 Shutters
-![411](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v421.jpg ":size=200px")
-![411](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v422.jpg ":size=200px")
+![421](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v421.jpg ":size=200px")
+![422](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v422.jpg ":size=200px")
+![424](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v424.jpg ":size=200px")
 
 ## Bill of Materials
 - ESP8266 Boards:  
   - [Wemos D1 mini](https://www.aliexpress.com/item/32529101036.html)  
   - [NodeMCU](https://www.aliexpress.com/item/32521100830.html)  
+  - [ESP-01S](https://www.aliexpress.com/item/32973088687.html)  
 - Stepper motors (NEMA 17):  
   - [Standard](https://www.aliexpress.com/item/32572890101.html)  
   - [5:1 Planetary Gearbox](https://www.aliexpress.com/item/32586860419.html)  
+- Stepper motors (28BYJ-48):  
+  - [Standard](https://www.aliexpress.com/item/32849028097.html)  
 - Stepper Drivers:  
   - [A4988](https://www.aliexpress.com/item/1609523735.html)  
   - [DRV8825](https://www.aliexpress.com/item/1609523735.html)  
   - [TMC 2208](https://www.aliexpress.com/item/32851067375.html)  
 - Stepper Motor Control Development Boards:  
-  - [x1](https://aliexpress.com/item/32908836265.html)  
-  - [x2](https://aliexpress.com/item/32870732179.html)  
-- [DC-DC Step Down Power Supply Module](https://www.aliexpress.com/item/32546853828.html)  
+  - [x1 board](https://aliexpress.com/item/32908836265.html)  
+  - [x2 board](https://aliexpress.com/item/32870732179.html)  
+- DC-DC Step Down Power Supply Module:  
+  - [MP1584EN](https://www.aliexpress.com/item/33038302152.html)  
+  - [LM2596](https://www.aliexpress.com/item/32719726240.html)  
+  - [XL4015](https://www.aliexpress.com/item/1859072209.html)  
 - Power Supplies (AC-DC):  
-  - [DC 12V 2A](https://www.aliexpress.com/item/32856511014.html)  
   - [DC 12V 2.5A](https://www.aliexpress.com/item/32588476889.html)  
-  - [DC 12V 4A](https://www.aliexpress.com/item/32994556151.html)  
+  - [DC 12V 4A](https://www.aliexpress.com/item/32854269135.html) 
   - [DC 24v 4A](https://www.aliexpress.com/item/32854269135.html)  
 -  Aluminum Capacitors:  
-   - [35V 100UF](https://www.aliexpress.com/item/32814611460.html)  
-   - [35V 10UF](https://www.aliexpress.com/item/32887486570.html)  
-- [Motor Testing PWM Signal Generator](https://www.aliexpress.com/item/32856654440.html)  
+  - [35V 100UF](https://www.aliexpress.com/item/32814611460.html)  
+  - [35V 10UF](https://www.aliexpress.com/item/32887486570.html)  
+- Motor Testing PWM Signal Generator:  
+  - [1 type](https://www.aliexpress.com/item/32856654440.html)  
+  - [2 type](https://www.aliexpress.com/item/32818889845.html)  
