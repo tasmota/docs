@@ -40,5 +40,6 @@
 * [Smart Meter Interface](peripherals/Smart-Meter-Interface)
 * [TSL2561](peripherals/TSL2561)
 * [VEML6070](peripherals/VEML6070)
+* [VL53L0x](peripherals/VL53L0x)
 * [WS2812B](peripherals/WS2812B-RGB-Shield)
 * [WS2812B/WS2813B](peripherals/WS2812B-and-WS2813)

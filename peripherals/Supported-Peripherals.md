@@ -66,7 +66,7 @@ Name|Description|Image
 **TSL2591** | Luminosity Sensor (I<sup>2</sup>C)
 **TX20** | La Crosse Wind (Anemometer) | sensor (gpio)
 [**VEML6070**](peripherals/VEML6070) |  UV Sensor (I<sup>2</sup>C)
-**VL53L0x** | Time of flight sensor (I<sup>2</sup>C)
+[**VL53L0x**](peripherals/VL530L0x) | Time of flight sensor (I<sup>2</sup>C)
 [**WS2812B**](peripherals/WS2812B-RGB-Shield) | Wemos RGB LED Shield
 [**WS2812B/WS2813B**](peripherals/WS2812B-and-WS2813) | LED Strip
 **Xadow (Grove) Mutichannel Gas Sensor** | gas sensor (I<sup>2</sup>C)
