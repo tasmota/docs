@@ -5,7 +5,7 @@ To use it you must [compile your build](compile-your-build). Add the following t
  ---|---
 USE_DISPLAY | Enable display support. Also requires at least one of the following compilation directives 
 USE_DISPLAY_LCD | Enable LCD display. Also requires `USE_I2C`
-USE_DISPLAY_SSD1306 | Enable OLED SSD106 display. Also requires `USE_I2C`
+USE_DISPLAY_SSD1306 | Enable OLED SSD1306 display. Also requires `USE_I2C`
 USE_DISPLAY_MATRIX | Enable MATRIX display
 USE_DISPLAY_ILI9341 | Enable TFT display. Also requires `USE_SPI`
 USE_DISPLAY_EPAPER_29 | Enable EPAPER_29 display. Also requires `USE_SPI`
