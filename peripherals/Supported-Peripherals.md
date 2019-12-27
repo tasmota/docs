@@ -18,6 +18,7 @@ Name|Description|Image
 **DHT12**
 **[DS18x20](peripherals/DS18x20)** | Temperature sensor (1-Wire)
 [**DS3231**](peripherals/DS3231) | Real-Time-Clock (I<sup>2</sup>C)
+[**GPS-NTP-server**](peripherals/GPS-NTP-server) | GPS-NTP-server (serial)
 [**HM16/HM17**](peripherals/iBeacon-driver) |  Bluetooth iBeacon reader (serial)
 **HR-E** | Water Meter Encoder interface (serial)
 [**HC-SR04 (HC-SR04P, JSN-SR04T)**](peripherals/HC-SR04) | Ultrasonic Sensor
