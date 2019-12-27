@@ -100,22 +100,28 @@ D8|15|Counter2|STP
   
 **e) Perform the [shutter calibration](Blinds-and-Shutters.md#calibration)**    
 
+
 ## Wiring Diagrams  
-### One Shutter
+### One Shutter  
 ![411](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v411.jpg ":size=200px")
+- Diagram v412: simple universal setup. For example, the control of horizontal curtain or vertical shutters, blinds adjuster or window opener, pet feeders, opening of a water tap for watering the lawn, rotating table for subject photography, opening the ventilation flap, PTZ camera, 3D Scanner Table, linear Actuator.  
 ![412](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v412.jpg ":size=200px")
+- Diagram v414: parallel setup is to run two parallel steppers motors from the same controller. For example, to control a large and heavy hanging screen for an LCD projector, or two curtains at once on one large window.
 ![414](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v414.jpg ":size=200px")
+- Diagram v416: minimum setup size. For example, for small curtains located in a limited space.
 ![416](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v416.jpg ":size=200px")
 
-### 2 Shutters
+### 2 Shutters  
 ![421](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v421.jpg ":size=200px")
+- Diagram v422: parallel setup is to run two shutters and independent control of two stepper motors from one controller. For example, to control two independent curtains.
 ![422](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v422.jpg ":size=200px")
+- Diagram v424: big parallel setup is to run two shutters and independent control of two pairs of stepper motors from one controller. For example, to control four curtains on one very large window.
 ![424](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v424.jpg ":size=200px")
 
-## Bill of Materials
+## Bill of Materials  
 - ESP8266 Boards:  
   - [Wemos D1 mini](https://www.aliexpress.com/item/32529101036.html)  
-  - [NodeMCU](https://www.aliexpress.com/item/32521100830.html)  
+  - [NodeMCU](https://www.aliexpress.com/item/32266751149.html)  
   - [ESP-01S](https://www.aliexpress.com/item/32973088687.html)  
 - Stepper motors (NEMA 17):  
   - [Standard](https://www.aliexpress.com/item/32572890101.html)  
@@ -142,4 +148,4 @@ D8|15|Counter2|STP
   - [35V 10UF](https://www.aliexpress.com/item/32887486570.html)  
 - Motor Testing PWM Signal Generator:  
   - [1 type](https://www.aliexpress.com/item/32856654440.html)  
-  - [2 type](https://www.aliexpress.com/item/32818889845.html)  
+  - [2 type](https://www.aliexpress.com/item/32818889845.html)   
