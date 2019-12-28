@@ -38,6 +38,8 @@ If you require individual channel control (f.e. when connecting multiple single 
 
 For better color mixing of RGB and white channels read about [White Blend Mode](White-Blend-Mode).
 
+> [!TIP] In a 4 channel RGB+W light there is no separate white slider control. To gain control over the white channel use `RGBWWTable 255,255,255,255,0` which activates White Blend Mode.
+
 ### MY92xx
 MY92xx [family](http://www.my-semi.com/content/products/product_list.aspx?id=2) of drivers uses Adaptive Pulse Density Modulation. 
 
