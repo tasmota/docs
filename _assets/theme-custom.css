@@ -34,6 +34,9 @@
     margin-bottom: 0.25rem !important;
 }
 
+.medium-zoom-overlay, .medium-zoom-image--open {
+    z-index: 0 !important;
+}
 .alert.tasmota.warning {
     border-left-color: #f0ad4e !important;
 }
