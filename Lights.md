@@ -113,7 +113,7 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 
 <br clear="right"/>
 
-### * 5 Channels - RGBCCT Lights
+### 5 Channels - RGBCCT Lights
 
 <img style="float:right;" width="180" alt="Tasmota_5" src="https://user-images.githubusercontent.com/49731213/71555498-57040e80-2a2d-11ea-867c-a37d591930d2.png"><img style="float:right;" width="180" alt="Tasmota_5_2" src="https://user-images.githubusercontent.com/49731213/71555844-8405f080-2a30-11ea-98c9-ea247cbedbc7.png">
 
@@ -130,7 +130,7 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 
 <br clear="right"/>
 
-### * Independent PWM Channels 
+### Independent PWM Channels 
 
 <img style="float:right;width:180px" alt="Tasmota_multi" src="https://user-images.githubusercontent.com/49731213/71555865-bdd6f700-2a30-11ea-8bdb-9dda72139a9a.png">
 
