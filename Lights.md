@@ -7,21 +7,19 @@ Lights come in various shapes (bulb, strips, ceiling lights, ...) but in Tasmota
 
 ## Lights in WebUI
 
-<img style="float:right;" width="280" alt="Tasmota_on-off" src="https://tasmota.github.io/docs/_media/light_UI_5channel.png">
+<img style="float:right;height:120px" alt="Tasmota_on-off" src="https://tasmota.github.io/docs/_media/light_UI_5channel.png">
 
 Tasmotas webUI displays **Brightness**, **CT**, **White**, **Color Picker**, **Color Saturation** or **PWM** level sliders depending on the light component, the number of PWM channels configured and SetOptions used. 
 
-RGBCCT or 5 channel LED light strip presented in web UI:
-
-<br clear="right"/>
+<br>
 
 ### Light controls
 
-<img style="float:right;" width="280" alt="HSV" src="https://user-images.githubusercontent.com/49731213/71559882-a2d1aa80-2a63-11ea-8bb9-6d4b98144809.jpg">
+<img style="float:right;;height:100px" alt="HSV" src="https://user-images.githubusercontent.com/49731213/71559882-a2d1aa80-2a63-11ea-8bb9-6d4b98144809.jpg">
 
 Tasmota uses a HSB color model, which besides other more subtile differences compared to HSL means, that the color must be desaturated to reach complete black or white.
 
-<br clear="right"/>
+<br clear="right">
 
 |Control|Range|Commands and details|
 |---|---|---|
@@ -34,11 +32,11 @@ See [**light commands**](Commands#light) for how to control lights.
 
 ## Channel Controlled Lights
 
-### * On/Off lights, aka Relays
+### Switched Lights aka Relays
 
 <img style="float:right;" width="180" alt="Tasmota_on-off" src="https://user-images.githubusercontent.com/49731213/71555057-8d3e8f80-2a27-11ea-8fc5-4ecaed755bd5.png">
 
-On/Off lights are controlled through `Relay` GPIOs.
+Switched or On/Off lights are controlled through `Relay` GPIOs.
 
 If you define multiple relays, they are controlled with `Power<x>` starting at `x=1`.
 
@@ -53,97 +51,99 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 |Commands|`Power`|
 |Configuration|none|
 
-### * 1 channel
+### 1 Channel - Dimmable Light
 
-<img style="float:right;z-index:300;" width="180" alt="Tasmota_1" src="https://user-images.githubusercontent.com/49731213/71555196-9e889b80-2a29-11ea-9f96-fc47ad65ef43.png">
+<img style="float:right;z-index:300;width:180px" alt="Tasmota_1" src="https://user-images.githubusercontent.com/49731213/71555196-9e889b80-2a29-11ea-9f96-fc47ad65ef43.png">
 
-1 channel lights are often white lights with On/Off control and Dimmer.
+1 channel lights are often white lights with On/Off controls and Dimmer.
 
 **Alexa**: you can use Philips Hue emulation, the light will appear as White light with Dimmer.
-
-<br clear="right"/>
 
 |Configuration|(see below)|
 |---|---|
 |Commands|`Power`, `Dimmer`|
 |Configuration|**Auto Power On**, **PWM configuration**, **Gamma Correction**, **Independant Channels**|
 
-### * 2 channels
+<br clear="right"/>
 
-<img style="float:right;z-index:300;" width="180" alt="Tasmota_2" src="https://user-images.githubusercontent.com/49731213/71555483-3471f580-2a2d-11ea-8eff-8a76e3555ef5.png">
+### 2 Channels - CCT Light
 
-2 channels lights are white lights with color temperature from Cold White (CT=153) to Warm White (CT=500).
+<img style="float:right;z-index:300;width:180px" alt="CCT" src="https://user-images.githubusercontent.com/49731213/71555483-3471f580-2a2d-11ea-8eff-8a76e3555ef5.png">
+
+2 channels lights are white lights with correlated color temperature (CCT) controls from Cold White (CT=153) to Warm White (CT=500).
 
 **Alexa**: you can use Philips Hue emulation, the light will appear as White light with Color Temperature. Control through the Alexa app is limited to the `CT` range `xx..xx` TODO.
-
-<br clear="right"/>
 
 |Configuration|(see below)|
 |---|---|
 |Commands|`Power`, `Dimmer`, `Color`, `White`, `CT`|
 |Configuration|**Auto Power On**, **PWM configuration**, **Gamma Correction**, **PWM CT**|
 
-### * 3 channels
+<br clear="right"/>
 
-<img style="float:right;z-index:300;" width="180" alt="Tasmota_3" src="https://user-images.githubusercontent.com/49731213/71555478-11474600-2a2d-11ea-88e5-94a8eac3560a.png">
+### 3 Channels - RGB Lights
 
-3 channels lights are color RGB lights. You can set color either via RGB or HSB (not HSL). Alexa support also allows XY color, but they are not supported through commands.
+<img style="float:right;z-index:300;width:180px" alt="RGB" src="https://user-images.githubusercontent.com/49731213/71555478-11474600-2a2d-11ea-88e5-94a8eac3560a.png">
+
+3 channel lights are RGB color lights. You can set color either via RGB or HSB (_not HSL_). Alexa support also allows XY color, but that is not supported through commands.
 
 **Alexa**: you can use Philips Hue emulation, the light will appear as Color light.
-
-<br clear="right"/>
 
 |Configuration|(see below)|
 |---|---|
 |Commands|`Power`, `Dimmer`, `Color`, `HSBColor`|
 |Configuration|**Auto Power On**, **PWM configuration**, **Gamma Correction**, **Channel remapping**|
 
-### * 4 channels
+<br clear="right"/>
 
-<img style="float:right;" width="180" alt="Tasmota_4" src="https://user-images.githubusercontent.com/49731213/71555488-48b5f280-2a2d-11ea-8173-1fd45cd5a1e3.png"><img style="float:right;" width="180" alt="Tasmota_4_2" src="https://user-images.githubusercontent.com/49731213/71555832-65075e80-2a30-11ea-9ab6-66688081ef48.png">
+### 4 Channels - RGBW Lights
 
-4 channels lights are RGBW, i.e. RGB light and an additional White light. White can be either Warm White or Cold White depending on the manufacturer.
+<img style="float:right;width:180px" alt="RGB+W" src="https://user-images.githubusercontent.com/49731213/71555488-48b5f280-2a2d-11ea-8173-1fd45cd5a1e3.png"><img style="float:right;width:180px" alt="RGBW-2" src="https://user-images.githubusercontent.com/49731213/71555832-65075e80-2a30-11ea-9ab6-66688081ef48.png">
+
+4 channel lights are RGBW, i.e. RGB light and an additional White light. White can be either Warm White or Cold White depending on the manufacturer.
 
 **Alexa**: you can use Philips Hue emulation, the light will appear as Color light and White light with CT control. The CT control is only present to force pure white instead of RGB white. Changin CT will have no effect.
 
 **Warning**: some lights have limited power supply that do not allow all channels to be at full power at the same time. So be careful if you force all channels via `Color` or **RGB/White split**
-<br clear="right"/>
 
 |Configuration|(see below)|
 |---|---|
 |Commands|`Power`, `Dimmer`, `Color`, `HSBColor`, `White`|
 |Configuration|**Auto Power On**, **PWM configuration**, **Gamma Correction**, **Channel remapping**, **White blend mode**, **RGB/White split**|
 
-### * 5 channels
+<br clear="right"/>
+
+### * 5 Channels - RGBCCT Lights
 
 <img style="float:right;" width="180" alt="Tasmota_5" src="https://user-images.githubusercontent.com/49731213/71555498-57040e80-2a2d-11ea-867c-a37d591930d2.png"><img style="float:right;" width="180" alt="Tasmota_5_2" src="https://user-images.githubusercontent.com/49731213/71555844-8405f080-2a30-11ea-98c9-ea247cbedbc7.png">
 
-5 channels lights are RGBCW, i.e. RGB light and an additional Cold/Warm White light.
+5 channel lights are RGBCCT - an 3 channel RGB light and an additional 2 channel CCT light.
 
 **Alexa**: you can use Philips Hue emulation, the light will appear as Color light and White light with CT control.
 
 **Warning**: some lights have limited power supply that do not allow all channels to be at full power at the same time. So be careful if you force all channels via `Color` or **RGB/White split**
-<br clear="right"/>
 
 |Configuration|(see below)|
 |---|---|
 |Commands|`Power`, `Dimmer`, `Color`, `HSBColor`, `White`, `CT`|
 |Configuration|**Auto Power On**, **PWM configuration**, **Gamma Correction**, **Channel remapping**, **White blend mode**, **RGB/White split**|
 
-### * Multiple independent channels - `SetOption68 1`
+<br clear="right"/>
 
-<img style="float:right;" width="180" alt="Tasmota_multi" src="https://user-images.githubusercontent.com/49731213/71555865-bdd6f700-2a30-11ea-8bdb-9dda72139a9a.png">
+### * Independent PWM Channels 
+
+<img style="float:right;width:180px" alt="Tasmota_multi" src="https://user-images.githubusercontent.com/49731213/71555865-bdd6f700-2a30-11ea-8bdb-9dda72139a9a.png">
 
 Any combination of Relays and PWMs, when enabling `SetOption68 1`.
-
-<br clear="right"/>
 
 |Configuration|(see below)|
 |---|---|
 |Commands|`Power`, `Channel`, `Color`|
 |Configuration|**Auto Power On**, **PWM configuration**, **Gamma Correction**|
 
-## Channel Controlled Options
+<br clear="right"/>
+
+## Channel Controlled Lights Options
 
 ### Auto Power On - `SetOption20`
 
@@ -151,7 +151,7 @@ When enabling `SetOption20 1`, any change to `CT`, `Dimmer`, `HSBColor3`, `Color
 
 Lights are always auto-powered-off when color is set to black or `Dimmer` set to `0`.
 
-### PWM configuration
+### PWM Channel Configuration
 
 Lights controlled using up to 5 channels (red, green, blue, cold white, warm white). Channels are controlled using PWM or APDM.
 
@@ -167,31 +167,26 @@ These lights are configured by assigning `PWM1(i)` through `PWM5(i)` components 
 |4|Red|Green|Blue|White||
 |5|Red|Green|Blue|Cold White|Warm White|
 
-### RGB/White split
-
-By default RGBW and RGBCW can only operate in a single mode, either RGB or White. Enabling one mode disables the other.
-
-Use `SetOption37 128` to split RGB and White into 2 indepedent lights. Note: if you are using Channel Remapping, just add `128` to the value of `SetOption37`.
-
 ### Gamma Correction - `LedTable`
 
 Human eye perception of brightness is non linear, bringing back linearity needs a trick called **[Gamma Correction](https://learn.adafruit.com/led-tricks-gamma-correction)**.
 
-Gamma Correction is enabled by default `LedTable 1`.
+Gamma Correction is enabled by default in Tasmota (`LedTable 1`).
 
-Some lights have hardware gamma correction (Sonoff B1...), and software gamma correction should be disabled: `LedTable 0`.
+Some lights have hardware gamma correction (f.e. Sonoff B1)., in which case software gamma correction should be disabled with `LedTable 0`.
 
-**How do I know if I have hardware gamma correction?**: if you find your light very dark even with `Dimmer 40`, then you have probably hardware gamma correction. Solution: `LedTable 0`.
+>[!TIP] **How do I know if I have hardware gamma correction?**
+>If you find your light very dark even with `Dimmer 40`, then you have probably hardware gamma correction. Solution: `LedTable 0`.
 
-Note: internally Tasmota uses 10 bits resolution PWM to get smoother levels at low brightness. Here is the curve used (orange=ideal, blue=tasmota):
+>[!INFO] Internally Tasmota uses 10 bits resolution PWM to get smoother levels at low brightness. 
 
-<img src="https://user-images.githubusercontent.com/49731213/71531106-798f0e00-28ed-11ea-8916-9ce2e9b98e27.png" width="360">
+Here is the curve used (orange=ideal, blue=tasmota): <img src="https://user-images.githubusercontent.com/49731213/71531106-798f0e00-28ed-11ea-8916-9ce2e9b98e27.png" width="360">
 
 ### White Blend Mode
 
-White Blend Mode is used for 4 channel (RGBW) and 5 channel (RGBWC) devices. It is enabled by setting the last PWM channel to zero (e.g., [`RGBWWTable 255,255,255,<n>,0`](Commands#rgbwwtable)) to lower the white channel intensity.
+White Blend Mode is used for 4 channel (RGBW) and 5 channel (RGBCCT) lights. It is enabled by setting the last PWM channel to zero (e.g., [`RGBWWTable 255,255,255,<n>,0`](Commands#rgbwwtable)for a 4 channel light) to lower the white channel intensity.
 
-Generally, white LEDs are brighter than RGB LEDs. If you want to keep the same brightness, you need to calibrate the white level. In this mode, any white component will be removed from RGB LEDs and sent to the white LEDs. This makes whites look much better.
+Generally white LEDs are brighter than RGB LEDs. If you want to keep the same brightness, you need to calibrate the white level. In this mode, any white component will be removed from RGB LEDs and sent to the white LEDs. This makes whites look much better.
 
 Example: `Color 30508000` will be converted to `Color 0020503000` (0x30 is subtracted from R,G,B channels and added to the White channel)
 
@@ -209,23 +204,19 @@ Examples:
 
 ### PWM CT - `Module 48`
 
-Some Cold/Warm White lights use PWM1 for brightness and PWM2 for color temperature (instead of PWM1=cold, PWM2=warm).
+Some CCT lights use PWM1 for brightness and PWM2 for color temperature (instead of PWM1 for Cold White and PWM2 for Warm White).
 
-For these lights, use `Module 48`, aka Philips Xiaomi mode.
+For these lights, use `Module 48` aka Philips Xiaomi mode.
 
-### Channel Remapping - `SetOption37``
+### RGB and White Split - `SetOption37 128`
 
-See: https://github.com/arendst/Tasmota/wiki/SetOption37---Color-channel-mapping
+By default RGBW and RGBCW can only operate in a one mode, either RGB or White. Enabling one mode disables the other.
 
-TODO: update the link to new page
+Use `SetOption37 128` to split RGB and White into 2 indepedent lights. Note: if you are using Channel Remapping, just add `128` to the value of `SetOption37`.
 
-### TODO
+### Channel Remapping - `SetOption37`
 
-If you require individual channel control (f.e. when connecting multiple single channel light strips to a multichannel LED controller) use [`SetOption68 1`](Commands#setoption68) to control each PWM individually with sliders in webUI and  [`Channel<x>`](Commands#channel) commands.
-
-For better color mixing of RGB and white channels read about [White Blend Mode](White-Blend-Mode).
-
-> [!TIP] In a 4 channel RGB+W light there is no separate white slider control. To gain control over the white channel use `RGBWWTable 255,255,255,255,0` which activates White Blend Mode.
+[Read more...](SetOption37)
 
 ### MY92xx
 MY92xx [family](http://www.my-semi.com/content/products/product_list.aspx?id=2) of drivers uses Adaptive Pulse Density Modulation. 
