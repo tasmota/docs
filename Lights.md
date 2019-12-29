@@ -24,8 +24,8 @@ Tasmota uses a HSB color model, which besides other more subtile differences com
 |---|---|---|
 |**Brightness**|0..100 (percent)|`Dimmer`, `HSBColor3`: Brightness of the light|
 |**Hue**|0..359 (degrees)|`HSBColor1`: Color as an angle in the color wheel<BR><img width="240" alt="Hue" src="https://user-images.githubusercontent.com/49731213/71559624-ae6fa200-2a60-11ea-938a-024376dc00d2.png">|
-|**Sat**|0..100 (percent)|`HSBColor2`: saturation of the color, 0=grey/white, 100=pure color<BR><img width="240" alt="Mireds" src="https://user-images.githubusercontent.com/49731213/71559687-79178400-2a61-11ea-92c4-f93b1d103586.png">|
-|**CT**|153..500 (mireds)|`CT`: white color temperature, from 153 (Cold White) to 500(Warm White)|
+|**Sat**|0..100 (percent)|`HSBColor2`: saturation of the color, 0=grey/white, 100=pure color|
+|**CT**|153..500 (mireds)|`CT`: white color temperature, from 153 (Cold White) to 500(Warm White)<BR><img width="240" alt="Mireds" src="https://user-images.githubusercontent.com/49731213/71559741-402bdf00-2a62-11ea-81a5-0e8028e334fe.png">|
 
 See [**light commands**](Commands#light) for how to control lights.
 
