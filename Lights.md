@@ -26,9 +26,10 @@ See [**light commands**](Commands#light) for how to control lights.
 
 On/Off lights are controlled through `Relay` GPIOs.
 
-Supported commands: `Power`
-
-Configuration: none
+|Configuration|(see below)|
+|---|---|
+|Commands|`Power`|
+|Configuration|none|
 
 ### * 1 channel
 
