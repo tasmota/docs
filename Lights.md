@@ -216,7 +216,7 @@ Use `SetOption37 128` to split RGB and White into 2 indepedent lights. Note: if 
 
 ### Channel Remapping - `SetOption37`
 
-[Read more...](SetOption37)
+[remoteMarkdownUrl](https://raw.githubusercontent.com/tasmota/docs/master/SetOption37.md)
 
 ### MY92xx
 MY92xx [family](http://www.my-semi.com/content/products/product_list.aspx?id=2) of drivers uses Adaptive Pulse Density Modulation. 
