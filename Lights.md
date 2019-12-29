@@ -36,7 +36,7 @@ On/Off lights are controlled through `Relay` GPIOs.
 
 ### * 1 channel
 
-<img style="float:right;" width="180" alt="Tasmota_1" src="https://user-images.githubusercontent.com/49731213/71555196-9e889b80-2a29-11ea-9f96-fc47ad65ef43.png">
+<img style="float:right;z-index:300;" width="180" alt="Tasmota_1" src="https://user-images.githubusercontent.com/49731213/71555196-9e889b80-2a29-11ea-9f96-fc47ad65ef43.png">
 
 1 channel lights are often white lights with On/Off control and Dimmer.
 
@@ -49,7 +49,7 @@ On/Off lights are controlled through `Relay` GPIOs.
 
 ### * 2 channels
 
-<img style="float:right;" width="180" alt="Tasmota_2" src="https://user-images.githubusercontent.com/49731213/71555483-3471f580-2a2d-11ea-8eff-8a76e3555ef5.png">
+<img style="float:right;z-index:300;" width="180" alt="Tasmota_2" src="https://user-images.githubusercontent.com/49731213/71555483-3471f580-2a2d-11ea-8eff-8a76e3555ef5.png">
 
 2 channels lights are white lights with color temperature from Cold White (CT=153) to Warm White (CT=500).
 
@@ -62,7 +62,7 @@ On/Off lights are controlled through `Relay` GPIOs.
 
 ### * 3 channels
 
-<img style="float:right;" width="180" alt="Tasmota_3" src="https://user-images.githubusercontent.com/49731213/71555478-11474600-2a2d-11ea-88e5-94a8eac3560a.png">
+<img style="float:right;z-index:300;" width="180" alt="Tasmota_3" src="https://user-images.githubusercontent.com/49731213/71555478-11474600-2a2d-11ea-88e5-94a8eac3560a.png">
 
 3 channels lights are color RGB lights. You can set color either via RGB or HSB (not HSL). Alexa support also allows XY color, but they are not supported through commands.
 
@@ -89,7 +89,7 @@ On/Off lights are controlled through `Relay` GPIOs.
 
 ### * 5 channels
 
-<img style="float:right;" width="180" alt="Tasmota_5" src="https://user-images.githubusercontent.com/49731213/71555498-57040e80-2a2d-11ea-867c-a37d591930d2.png">
+<img style="float:right;z-index:300;" width="180" alt="Tasmota_5" src="https://user-images.githubusercontent.com/49731213/71555498-57040e80-2a2d-11ea-867c-a37d591930d2.png">
 
 5 channels lights are RGBCW, i.e. RGB light and an additional Cold/Warm White light.
 
