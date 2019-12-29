@@ -5,7 +5,6 @@ Lights come in various shapes (bulb, strips, ceiling lights, ...) but in Tasmota
  - Addressable LEDs
  - Status LEDs 
 
-
 ## Lights in WebUI
 
 <img style="float:right;" width="280" alt="Tasmota_on-off" src="https://tasmota.github.io/docs/_media/light_UI_5channel.png">
@@ -41,6 +40,12 @@ See [**light commands**](Commands#light) for how to control lights.
 
 On/Off lights are controlled through `Relay` GPIOs.
 
+If you define multiple relays, they are controlled with `Power<x>` starting at `x=1`.
+
+**Alexa**: you can use Wemo emulation, your device will appear as a switch. You can change it to a light in the Alexa app.
+
+**Alexa**: if you have one or multiple relays, you can use Philips Hue emulation. All devices will appear as On/Off lights, and named accordingly to `FriendlyName`. Note: if you have only Echo Spot 2nd generation, your light will have a dummy dimmer.
+
 <br clear="right"/>
 
 |Configuration|(see below)|
@@ -54,11 +59,7 @@ On/Off lights are controlled through `Relay` GPIOs.
 
 1 channel lights are often white lights with On/Off control and Dimmer.
 
-If you define multiple relays, they are controlled with `Power<x>` starting at `x=1`.
-
-**Alexa**: you can use Wemo emulation, your device will appear as a switch. You can change it to a light in the Alexa app.
-
-**Alexa**: if you have one or multiple relays, you can use Philips Hue emulation. All devices will appear as On/Off lights, and named accrodingly to `FriendlyName`. Note: if you have only Echo Spot 2nd generation, your light will have a dummy dimmer.
+**Alexa**: you can use Philips Hue emulation, the light will appear as White light with Dimmer.
 
 <br clear="right"/>
 
