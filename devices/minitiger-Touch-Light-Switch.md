@@ -9,6 +9,7 @@ The board has the ID **2PH89174A**
 * Blue status LED (micro controlled)
 * Separate touch IC controlled switch status indicators (blue and red)
 * Aliexpress link: [Click](https://www.aliexpress.com/item/EU-UK-1-2-3-Gang-eWelink-Touch-Light-Smart-Switch-WiFi-Wall-Switch-With-Alexa/32916836771.html?spm=a2g0s.9042311.0.0.27424c4dtwJjoV)
+* Aliexpress link for no neutral version (single live wire) version: [Click](https://www.aliexpress.com/item/32961290914.html)
 
 # Images
 
@@ -43,7 +44,11 @@ If you have successfully put the micro into programming mode the LED does not li
 Works out of the box, configured as Sonoff Basic. The LED does not light up when the switch is turned off. Configure as Sonoff T1 to enable the LED.
 
 ## Dual Channel:
-    {"NAME":"Wall Switch 2C","GPIO":[17,255,255,255,0,22,18,0,21,56,0,0,0],"FLAG":0,"BASE":28}
+        {"NAME":"Wall Switch 2C","GPIO":[53,52,255,17,18,0,0,0,0,21,22,0,0],"FLAG":0,"BASE":28}
+
+## Dual Channel - No Neutral (Single Live Wire):
+        {"NAME":"Wall Switch 2C","GPIO":[53,52,255,17,18,0,0,0,0,21,22,0,0],"FLAG":0,"BASE":28}
+
 ## Triple Channel:
 Since I don't own such a board, you are on your own...
 
