@@ -1,8 +1,8 @@
 The ibeacon driver uses a BLE4 module [HM-17](https://www.herman-shop.com/PDF/bluetooth%20hm16%20hm17.pdf) (HM-16 should also work) which is capable of bluetooth central role  
 it is driven by AT cmds so there may be other compatible modules too.
 
-Working with hte HM-17 Module with the Firmware Version V120 and V110
-The HM-10 Module with flasehd Firmware (https://circuitdigest.com/microcontroller-projects/how-to-flash-the-firmware-on-cloned-hm-10-ble-module-using-arduino-uno) worked too with the Firmware V609.
+Working with the HM-17 Module with Firmware Version V120 and V110
+The HM-10 (clone) Module with flashed Firmware V609 (https://circuitdigest.com/microcontroller-projects/how-to-flash-the-firmware-on-cloned-hm-10-ble-module-using-arduino-uno) worked too.
 When the ESP or HM Module wont boot up, switch the connection to TX-TX and RX-RX and Switch it in the Tasmota Config.
 
 all apple compatible ibeacon devices should work as beacons. this one is fully apple compatible and the battery lasts about a year [NRF51822 ibeacon module](https://cleanuri.com/KYzMAv)
