@@ -167,9 +167,15 @@ These lights are configured by assigning `PWM1(i)` through `PWM5(i)` components 
 |4|Red|Green|Blue|White||
 |5|Red|Green|Blue|Cold White|Warm White|
 
+### RGB/White split
+
+By default RGBW and RGBCW can only operate in a single mode, either RGB or White. Enabling one mode disables the other.
+
+Use `SetOption37 128` to split RGB and White into 2 indepedent lights. Note: if you are using Channel Remapping, just add `128` to the value of `SetOption37`.
+
 ### Gamma Correction - `LedTable`
 
-Human eye perception of brightness is non linear, bringing back linearity needs a trick calles **[Gamma Correction](https://learn.adafruit.com/led-tricks-gamma-correction)**.
+Human eye perception of brightness is non linear, bringing back linearity needs a trick called **[Gamma Correction](https://learn.adafruit.com/led-tricks-gamma-correction)**.
 
 Gamma Correction is enabled by default `LedTable 1`.
 
@@ -206,6 +212,12 @@ Examples:
 Some Cold/Warm White lights use PWM1 for brightness and PWM2 for color temperature (instead of PWM1=cold, PWM2=warm).
 
 For these lights, use `Module 48`, aka Philips Xiaomi mode.
+
+### Channel Remapping - `SetOption37``
+
+See: https://github.com/arendst/Tasmota/wiki/SetOption37---Color-channel-mapping
+
+TODO: update the link to new page
 
 ### TODO
 
