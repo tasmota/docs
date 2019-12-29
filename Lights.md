@@ -14,7 +14,7 @@ Tasmotas webUI displays **Brightness**, **CT**, **White**, **Color Picker**, **C
 
 RGBCCT or 5 channel LED light strip presented in web UI:
 
-<div clear="right"/>
+<br clear="right"/>
 
 ### Light controls
 
