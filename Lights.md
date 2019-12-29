@@ -7,14 +7,25 @@ Lights come in various shapes (bulb, strips, ceiling lights, ...) but in Tasmota
 
 
 ## Lights in WebUI
-Tasmotas webUI displays **Brightness**, **CT**, **White**, **Color Picker**, **Color Saturation** or **PWM** level sliders depending on the light component, the number of PWM channels configured and SetOptions used. 
 
+<img style="float:right;" width="180" alt="Tasmota_on-off" src="https://tasmota.github.io/docs/_media/light_UI_5channel.png">
+
+Tasmotas webUI displays **Brightness**, **CT**, **White**, **Color Picker**, **Color Saturation** or **PWM** level sliders depending on the light component, the number of PWM channels configured and SetOptions used. 
 
 RGBCCT or 5 channel LED light strip presented in web UI:
 
-![Light in web UI](_media/light_UI_5channel.png)  
+Tasmota uses a HSB color model, which besides other more subtile differences compared to HSL means, that the color must be desaturated to reach complete black or white.
 
-Tasmota uses a HSB color model, which besides other more subtile differences compared to HSL means, that the color must be desaturated to reach complete black or white.  
+<br clear="right"/>
+
+### Light controls
+
+|Control|Range|Commands and details|
+|---|---|---|
+|**Brightness**|0..100 (percent)|`Dimmer`, `HSBColor3`: Brightness of the light|
+|**Hue**|0..359 (degrees)|`HSBColor1`: Color as an angle in the color wheel: Red(0), Green(120), Blue(240)|
+|**Sat**|0..100 (percent)|`HSBColor2`: saturation of the color, 0=grey/white, 100=pure color|
+|**CT**|153..500 (mireds)|`CT`: white color temperature, from 153 (ColdW hite) to 500(Warm white)|
 
 See [**light commands**](Commands#light) for how to control lights.
 
