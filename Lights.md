@@ -74,7 +74,7 @@ On/Off lights are controlled through `Relay` GPIOs.
 
 ### * 4 channels
 
-<img style="float:right;z-index:300;" width="180" alt="Tasmota_4" src="https://user-images.githubusercontent.com/49731213/71555488-48b5f280-2a2d-11ea-8173-1fd45cd5a1e3.png"><img style="float:right;z-index:300;" width="180" alt="Tasmota_4_2" src="https://user-images.githubusercontent.com/49731213/71555832-65075e80-2a30-11ea-9ab6-66688081ef48.png">
+<img style="float:right;overflow:hidden;" width="180" alt="Tasmota_4" src="https://user-images.githubusercontent.com/49731213/71555488-48b5f280-2a2d-11ea-8173-1fd45cd5a1e3.png"><img style="float:right;z-index:300;" width="180" alt="Tasmota_4_2" src="https://user-images.githubusercontent.com/49731213/71555832-65075e80-2a30-11ea-9ab6-66688081ef48.png">
 
 4 channels lights are RGBW, i.e. RGB light and an additional White light. White can be either Warm White or Cold White depending on the manufacturer.
 
@@ -88,7 +88,7 @@ On/Off lights are controlled through `Relay` GPIOs.
 
 ### * 5 channels
 
-<img style="float:right;z-index:300;" width="180" alt="Tasmota_5" src="https://user-images.githubusercontent.com/49731213/71555498-57040e80-2a2d-11ea-867c-a37d591930d2.png"><img style="float:right;z-index:300;" width="180" alt="Tasmota_5_2" src="https://user-images.githubusercontent.com/49731213/71555844-8405f080-2a30-11ea-98c9-ea247cbedbc7.png">
+<img style="float:right;overflow:hidden;" width="180" alt="Tasmota_5" src="https://user-images.githubusercontent.com/49731213/71555498-57040e80-2a2d-11ea-867c-a37d591930d2.png"><img style="float:right;z-index:300;" width="180" alt="Tasmota_5_2" src="https://user-images.githubusercontent.com/49731213/71555844-8405f080-2a30-11ea-98c9-ea247cbedbc7.png">
 
 5 channels lights are RGBCW, i.e. RGB light and an additional Cold/Warm White light.
 
