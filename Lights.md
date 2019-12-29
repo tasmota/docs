@@ -16,15 +16,15 @@ RGBCCT or 5 channel LED light strip presented in web UI:
 
 Tasmota uses a HSB color model, which besides other more subtile differences compared to HSL means, that the color must be desaturated to reach complete black or white.
 
-<br clear="right"/>
-
 ### Light controls
+
+<br clear="right"/>
 
 |Control|Range|Commands and details|
 |---|---|---|
 |**Brightness**|0..100 (percent)|`Dimmer`, `HSBColor3`: Brightness of the light|
-|**Hue**|0..359 (degrees)|`HSBColor1`: Color as an angle in the color wheel: Red(0), Green(120), Blue(240)|
-|**Sat**|0..100 (percent)|`HSBColor2`: saturation of the color, 0=grey/white, 100=pure color|
+|**Hue**|0..359 (degrees)|`HSBColor1`: Color as an angle in the color wheel<BR><img width="240" alt="Hue" src="https://user-images.githubusercontent.com/49731213/71559624-ae6fa200-2a60-11ea-938a-024376dc00d2.png">|
+|**Sat**|0..100 (percent)|`HSBColor2`: saturation of the color, 0=grey/white, 100=pure color<BR><img width="240" alt="Mireds" src="https://user-images.githubusercontent.com/49731213/71559687-79178400-2a61-11ea-92c4-f93b1d103586.png">|
 |**CT**|153..500 (mireds)|`CT`: white color temperature, from 153 (Cold White) to 500(Warm White)|
 
 See [**light commands**](Commands#light) for how to control lights.
