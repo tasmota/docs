@@ -75,7 +75,7 @@ On/Off lights are controlled through `Relay` GPIOs.
 
 ### * 4 channels
 
-<img style="float:right;z-index:1;" width="180" alt="Tasmota_4" src="https://user-images.githubusercontent.com/49731213/71555488-48b5f280-2a2d-11ea-8173-1fd45cd5a1e3.png">
+<img style="float:right;z-index:300;" width="180" alt="Tasmota_4" src="https://user-images.githubusercontent.com/49731213/71555488-48b5f280-2a2d-11ea-8173-1fd45cd5a1e3.png">
 
 4 channels lights are RGBW, i.e. RGB light and an additional White light. White can be either Warm White or Cold White depending on the manufacturer.
 
