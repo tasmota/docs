@@ -18,6 +18,65 @@ Tasmota uses a HSB color model, which besides other more subtile differences com
 
 See [**light commands**](Commands#light) for how to control lights.
 
+## Detailed configuration and options for all types of lights
+
+### * On/Off lights, aka Relays
+
+On/Off lights are controlled through `Relay` GPIOs.
+
+Supported commands: `Power`
+
+Configuration: none
+
+### * 1 channel
+
+1 channel lights are often white lights with On/Off control and Dimmer.
+
+|Configuration|(see below)|
+|---|---|
+|Commands|`Power`, `Dimmer`|
+|Configuration|**PWM configuration**, **Gamma Correction**, **Independant Channels**|
+
+### * 2 channels
+
+2 channels lights are white lights with color temperature from Cold White (CT=153) to Warm White (CT=500).
+
+|Configuration|(see below)|
+|---|---|
+|Commands|`Power`, `Dimmer`, `Color`, `White`, `CT`|
+|Configuration|**PWM configuration**, **Gamma Correction**, **PWM CT**|
+
+### * 3 channels
+
+3 channels lights are color RGB lights. You can set color either via RGB or HSB (not HSL). Alexa support also allows XY color, but they are not supported through commands.
+
+|Configuration|(see below)|
+|---|---|
+|Commands|`Power`, `Dimmer`, `Color`, `HSBColor`|
+|Configuration|**PWM configuration**, **Gamma Correction**, **Channel remapping**|
+
+### * 4 channels
+
+4 channels lights are RGBW, i.e. RGB light and an additional White light. White can be either Warm White or Cold White depending on the manufacturer.
+
+|Configuration|(see below)|
+|---|---|
+|Commands|`Power`, `Dimmer`, `Color`, `HSBColor`, `White`|
+|Configuration|**PWM configuration**, **Gamma Correction**, **Channel remapping**, **White blend mode**, **RGB/White split**|
+
+?> Warning: some lights have limited power supply that do not allow all channels to be at full power at the same time. So be careful if you force all channels via `Color` or **RGB/White split**
+
+### * 5 channels
+
+5 channels lights are RGBCW, i.e. RGB light and an additional Cold/Warm White light.
+
+|Configuration|(see below)|
+|---|---|
+|Commands|`Power`, `Dimmer`, `Color`, `HSBColor`, `White`, `CT`|
+|Configuration|**PWM configuration**, **Gamma Correction**, **Channel remapping**, **White blend mode**, **RGB/White split**|
+
+?> Warning: some lights have limited power supply that do not allow all channels to be at full power at the same time. So be careful if you force all channels via `Color` or **RGB/White split**
+
 ## Channel Controlled LEDs
 Lights controlled using up to 5 channels (red, green, blue, cold white, warm white). Channels are controlled using PWM or APDM.
 
