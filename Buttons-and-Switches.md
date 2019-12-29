@@ -84,7 +84,7 @@ Set inverted push-button with long press mode (`0 = OFF` (_default_), `1 = TOGGL
 
 Tasmota will send a `TOGGLE` command when the button pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Default state is OFF and when pressed it's ON. When held for the time set in `SetOption32` (_default = 4s_), Tasmota sends `HOLD` (use Switch<x>#state=3 in rules).
 
-> [!TIP] Long press or hold can be used in [conjunction with rules](Rule-cookbook#use-long-press-action-on-a-switch) to create additional features or to control another Tasmota device.
+> [!TIP] Long press or hold can be used in [conjunction with rules](Rule-Cookbook#use-long-press-action-on-a-switch) to create additional features or to control another Tasmota device.
 
 **`SwitchMode 7`**   
 Set toggle push-button mode
@@ -246,7 +246,7 @@ SetOption11 1
 ```
 All of the above is easier accomplished using [Rules](Rules)!
 
-[Example using Rules](Rule-cookbook#button-with-single-press-double-press-and-hold)
+[Example using Rules](Rule-Cookbook#button-with-single-press-double-press-and-hold)
 
 ---
 For a practical application of everything mentioned in this article read about this excellent [LEGO nightstand switch project](https://jeff.noxon.cc/2018/11/21/lego-nightstand-light-switch/).
