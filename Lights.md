@@ -1,4 +1,4 @@
-?> Lights... You know what lights do.... Right?
+?> 💡 You know what lights do.... Right?
 
 Lights come in various shapes (bulb, strips, ceiling lights, ...) but in Tasmota they are separated in 3 categories:
  - Channel Controlled LEDs
