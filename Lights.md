@@ -33,7 +33,6 @@ On/Off lights are controlled through `Relay` GPIOs.
 |Commands|`Power`|
 |Configuration|none|
 
-
 ### * 1 channel
 
 <img style="float:right;z-index:300;" width="180" alt="Tasmota_1" src="https://user-images.githubusercontent.com/49731213/71555196-9e889b80-2a29-11ea-9f96-fc47ad65ef43.png">
@@ -75,7 +74,7 @@ On/Off lights are controlled through `Relay` GPIOs.
 
 ### * 4 channels
 
-<img style="float:right;z-index:300;" width="180" alt="Tasmota_4" src="https://user-images.githubusercontent.com/49731213/71555488-48b5f280-2a2d-11ea-8173-1fd45cd5a1e3.png">
+<img style="float:right;z-index:300;" width="180" alt="Tasmota_4" src="https://user-images.githubusercontent.com/49731213/71555488-48b5f280-2a2d-11ea-8173-1fd45cd5a1e3.png"><img style="float:right;z-index:300;" width="180" alt="Tasmota_4_2" src="https://user-images.githubusercontent.com/49731213/71555832-65075e80-2a30-11ea-9ab6-66688081ef48.png">
 
 4 channels lights are RGBW, i.e. RGB light and an additional White light. White can be either Warm White or Cold White depending on the manufacturer.
 
@@ -89,7 +88,7 @@ On/Off lights are controlled through `Relay` GPIOs.
 
 ### * 5 channels
 
-<img style="float:right;z-index:300;" width="180" alt="Tasmota_5" src="https://user-images.githubusercontent.com/49731213/71555498-57040e80-2a2d-11ea-867c-a37d591930d2.png">
+<img style="float:right;z-index:300;" width="180" alt="Tasmota_5" src="https://user-images.githubusercontent.com/49731213/71555498-57040e80-2a2d-11ea-867c-a37d591930d2.png"><img style="float:right;z-index:300;" width="180" alt="Tasmota_5_2" src="https://user-images.githubusercontent.com/49731213/71555844-8405f080-2a30-11ea-98c9-ea247cbedbc7.png">
 
 5 channels lights are RGBCW, i.e. RGB light and an additional Cold/Warm White light.
 
@@ -100,6 +99,20 @@ On/Off lights are controlled through `Relay` GPIOs.
 |---|---|
 |Commands|`Power`, `Dimmer`, `Color`, `HSBColor`, `White`, `CT`|
 |Configuration|**PWM configuration**, **Gamma Correction**, **Channel remapping**, **White blend mode**, **RGB/White split**|
+
+### * Multiple independent channels
+
+<img style="float:right;" width="180" alt="Tasmota_multi" src="https://user-images.githubusercontent.com/49731213/71555865-bdd6f700-2a30-11ea-8bdb-9dda72139a9a.png">
+
+Any combination of Relays and PWMs, when enabling `SetOption68 1`.
+
+<br clear="right"/>
+
+|Configuration|(see below)|
+|---|---|
+|Commands|`Power`, `Channel`, `Color`|
+|Configuration|**PWM configuration**, **Gamma Correction**|
+
 
 ## Channel Controlled LEDs
 Lights controlled using up to 5 channels (red, green, blue, cold white, warm white). Channels are controlled using PWM or APDM.
