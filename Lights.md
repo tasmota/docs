@@ -72,7 +72,7 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 
 2 channels lights are white lights with correlated color temperature (CCT) controls from Cold White (CT=153) to Warm White (CT=500).
 
-**Alexa**: you can use Philips Hue emulation, the light will appear as White light with Color Temperature. Control through the Alexa app is limited to the `CT` range `xx..xx` TODO.
+**Alexa**: you can use Philips Hue emulation, the light will appear as White light with Color Temperature. Control through the Alexa app is limited to the `CT` range `199..383`.
 
 |Configuration|(see below)|
 |---|---|
