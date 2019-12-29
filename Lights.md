@@ -31,9 +31,11 @@ On/Off lights are controlled through `Relay` GPIOs.
 |Commands|`Power`|
 |Configuration|none|
 
+<br clear="right"/>
+
 ### * 1 channel
 
-<img style="float:right;clear:both;" width="180" alt="Tasmota_1" src="https://user-images.githubusercontent.com/49731213/71555196-9e889b80-2a29-11ea-9f96-fc47ad65ef43.png">
+<img style="float:right;" width="180" alt="Tasmota_1" src="https://user-images.githubusercontent.com/49731213/71555196-9e889b80-2a29-11ea-9f96-fc47ad65ef43.png">
 
 1 channel lights are often white lights with On/Off control and Dimmer.
 
