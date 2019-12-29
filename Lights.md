@@ -22,7 +22,7 @@ See [**light commands**](Commands#light) for how to control lights.
 
 ### * On/Off lights, aka Relays
 
-<img style="float:right;" width="240" alt="Tasmota_on-off" src="https://user-images.githubusercontent.com/49731213/71555057-8d3e8f80-2a27-11ea-8fc5-4ecaed755bd5.png">
+<img style="float:right;" width="180" alt="Tasmota_on-off" src="https://user-images.githubusercontent.com/49731213/71555057-8d3e8f80-2a27-11ea-8fc5-4ecaed755bd5.png">
 
 On/Off lights are controlled through `Relay` GPIOs.
 
@@ -33,7 +33,7 @@ On/Off lights are controlled through `Relay` GPIOs.
 
 ### * 1 channel
 
-<img style="float:right;clear:both;" width="240" alt="Tasmota_1" src="https://user-images.githubusercontent.com/49731213/71555196-9e889b80-2a29-11ea-9f96-fc47ad65ef43.png">
+<img style="float:right;clear:both;" width="180" alt="Tasmota_1" src="https://user-images.githubusercontent.com/49731213/71555196-9e889b80-2a29-11ea-9f96-fc47ad65ef43.png">
 
 1 channel lights are often white lights with On/Off control and Dimmer.
 
