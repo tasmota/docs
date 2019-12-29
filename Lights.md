@@ -14,9 +14,13 @@ Tasmotas webUI displays **Brightness**, **CT**, **White**, **Color Picker**, **C
 
 RGBCCT or 5 channel LED light strip presented in web UI:
 
-Tasmota uses a HSB color model, which besides other more subtile differences compared to HSL means, that the color must be desaturated to reach complete black or white.
+<div clear="right"/>
 
 ### Light controls
+
+<img style="float:right;" width="180" alt="HSV" src="https://user-images.githubusercontent.com/49731213/71559882-a2d1aa80-2a63-11ea-8bb9-6d4b98144809.jpg">
+
+Tasmota uses a HSB color model, which besides other more subtile differences compared to HSL means, that the color must be desaturated to reach complete black or white.
 
 <br clear="right"/>
 
