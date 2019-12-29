@@ -54,12 +54,18 @@ On/Off lights are controlled through `Relay` GPIOs.
 
 1 channel lights are often white lights with On/Off control and Dimmer.
 
+If you define multiple relays, they are controlled with `Power<x>` starting at `x=1`.
+
+**Alexa**: you can use Wemo emulation, your device will appear as a switch. You can change it to a light in the Alexa app.
+
+**Alexa**: if you have one or multiple relays, you can use Philips Hue emulation. All devices will appear as On/Off lights, and named accrodingly to `FriendlyName`. Note: if you have only Echo Spot 2nd generation, your light will have a dummy dimmer.
+
 <br clear="right"/>
 
 |Configuration|(see below)|
 |---|---|
 |Commands|`Power`, `Dimmer`|
-|Configuration|**PWM configuration**, **Gamma Correction**, **Independant Channels**|
+|Configuration|**Auto Power On**, **PWM configuration**, **Gamma Correction**, **Independant Channels**|
 
 ### * 2 channels
 
@@ -67,12 +73,14 @@ On/Off lights are controlled through `Relay` GPIOs.
 
 2 channels lights are white lights with color temperature from Cold White (CT=153) to Warm White (CT=500).
 
+**Alexa**: you can use Philips Hue emulation, the light will appear as White light with Color Temperature. Control through the Alexa app is limited to the `CT` range `xx..xx` TODO.
+
 <br clear="right"/>
 
 |Configuration|(see below)|
 |---|---|
 |Commands|`Power`, `Dimmer`, `Color`, `White`, `CT`|
-|Configuration|**PWM configuration**, **Gamma Correction**, **PWM CT**|
+|Configuration|**Auto Power On**, **PWM configuration**, **Gamma Correction**, **PWM CT**|
 
 ### * 3 channels
 
@@ -80,12 +88,14 @@ On/Off lights are controlled through `Relay` GPIOs.
 
 3 channels lights are color RGB lights. You can set color either via RGB or HSB (not HSL). Alexa support also allows XY color, but they are not supported through commands.
 
+**Alexa**: you can use Philips Hue emulation, the light will appear as Color light.
+
 <br clear="right"/>
 
 |Configuration|(see below)|
 |---|---|
 |Commands|`Power`, `Dimmer`, `Color`, `HSBColor`|
-|Configuration|**PWM configuration**, **Gamma Correction**, **Channel remapping**|
+|Configuration|**Auto Power On**, **PWM configuration**, **Gamma Correction**, **Channel remapping**|
 
 ### * 4 channels
 
@@ -93,13 +103,15 @@ On/Off lights are controlled through `Relay` GPIOs.
 
 4 channels lights are RGBW, i.e. RGB light and an additional White light. White can be either Warm White or Cold White depending on the manufacturer.
 
+**Alexa**: you can use Philips Hue emulation, the light will appear as Color light and White light with CT control. The CT control is only present to force pure white instead of RGB white. Changin CT will have no effect.
+
 **Warning**: some lights have limited power supply that do not allow all channels to be at full power at the same time. So be careful if you force all channels via `Color` or **RGB/White split**
 <br clear="right"/>
 
 |Configuration|(see below)|
 |---|---|
 |Commands|`Power`, `Dimmer`, `Color`, `HSBColor`, `White`|
-|Configuration|**PWM configuration**, **Gamma Correction**, **Channel remapping**, **White blend mode**, **RGB/White split**|
+|Configuration|**Auto Power On**, **PWM configuration**, **Gamma Correction**, **Channel remapping**, **White blend mode**, **RGB/White split**|
 
 ### * 5 channels
 
@@ -107,13 +119,15 @@ On/Off lights are controlled through `Relay` GPIOs.
 
 5 channels lights are RGBCW, i.e. RGB light and an additional Cold/Warm White light.
 
+**Alexa**: you can use Philips Hue emulation, the light will appear as Color light and White light with CT control.
+
 **Warning**: some lights have limited power supply that do not allow all channels to be at full power at the same time. So be careful if you force all channels via `Color` or **RGB/White split**
 <br clear="right"/>
 
 |Configuration|(see below)|
 |---|---|
 |Commands|`Power`, `Dimmer`, `Color`, `HSBColor`, `White`, `CT`|
-|Configuration|**PWM configuration**, **Gamma Correction**, **Channel remapping**, **White blend mode**, **RGB/White split**|
+|Configuration|**Auto Power On**, **PWM configuration**, **Gamma Correction**, **Channel remapping**, **White blend mode**, **RGB/White split**|
 
 ### * Multiple independent channels
 
@@ -126,7 +140,7 @@ Any combination of Relays and PWMs, when enabling `SetOption68 1`.
 |Configuration|(see below)|
 |---|---|
 |Commands|`Power`, `Channel`, `Color`|
-|Configuration|**PWM configuration**, **Gamma Correction**|
+|Configuration|**Auto Power On**, **PWM configuration**, **Gamma Correction**|
 
 
 ## Channel Controlled LEDs
