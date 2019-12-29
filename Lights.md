@@ -8,7 +8,7 @@ Lights come in various shapes (bulb, strips, ceiling lights, ...) but in Tasmota
 
 ## Lights in WebUI
 
-<img style="float:right;" width="180" alt="Tasmota_on-off" src="https://tasmota.github.io/docs/_media/light_UI_5channel.png">
+<img style="float:right;" width="280" alt="Tasmota_on-off" src="https://tasmota.github.io/docs/_media/light_UI_5channel.png">
 
 Tasmotas webUI displays **Brightness**, **CT**, **White**, **Color Picker**, **Color Saturation** or **PWM** level sliders depending on the light component, the number of PWM channels configured and SetOptions used. 
 
