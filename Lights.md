@@ -130,7 +130,7 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 |Commands|`Power`, `Dimmer`, `Color`, `HSBColor`, `White`, `CT`|
 |Configuration|**Auto Power On**, **PWM configuration**, **Gamma Correction**, **Channel remapping**, **White blend mode**, **RGB/White split**|
 
-### * Multiple independent channels
+### * Multiple independent channels - `SetOption68 1`
 
 <img style="float:right;" width="180" alt="Tasmota_multi" src="https://user-images.githubusercontent.com/49731213/71555865-bdd6f700-2a30-11ea-8bdb-9dda72139a9a.png">
 
@@ -166,6 +166,40 @@ These lights are configured by assigning `PWM1(i)` through `PWM5(i)` components 
 |3|Red|Green|Blue||
 |4|Red|Green|Blue|White||
 |5|Red|Green|Blue|Cold White|Warm White|
+
+### Gamma Correction - `LedTable`
+
+Human eye perception of brightness is non linear, bringing back linearity needs a trick calles **[Gamma Correction](https://learn.adafruit.com/led-tricks-gamma-correction)**.
+
+Gamma Correction is enabled by default `LedTable 1`.
+
+Some lights have hardware gamma correction (Sonoff B1...), and software gamma correction should be disabled: `LedTable 0`.
+
+**How do I know if I have hardware gamma correction?**: if you find your light very dark even with `Dimmer 40`, then you have probably hardware gamma correction. Solution: `LedTable 0`.
+
+Note: internally Tasmota uses 10 bits resolution PWM to get smoother levels at low brightness. Here is the curve used (orange=ideal, blue=tasmota):
+
+<img src="https://user-images.githubusercontent.com/49731213/71531106-798f0e00-28ed-11ea-8916-9ce2e9b98e27.png" width="360">
+
+### White Blend Mode
+
+White Blend Mode is used for 4 channel (RGBW) and 5 channel (RGBWC) devices. It is enabled by setting the last PWM channel to zero (e.g., [`RGBWWTable 255,255,255,<n>,0`](Commands#rgbwwtable)) to lower the white channel intensity.
+
+Generally, white LEDs are brighter than RGB LEDs. If you want to keep the same brightness, you need to calibrate the white level. In this mode, any white component will be removed from RGB LEDs and sent to the white LEDs. This makes whites look much better.
+
+Example: `Color 30508000` will be converted to `Color 0020503000` (0x30 is subtracted from R,G,B channels and added to the White channel)
+
+To calibrate:
+
+1. `Color FFFFFF00`
+2. `RGBWWTable 255,255,255,255,255` - reset to RGB mode
+3. `RGBWWTable 255,255,255,<n>,0` (begin the calibration process with `<n>` == 150)
+4. If too bright, decrease `<n>`. If too dim, increase `<n>`
+5. Go back to step 2 and iterate until satisfied with the color intensities.
+
+Examples:
+* Sonoff B1: `RGBWWTable 255,255,255,35,0`
+* Teckin SB50: `RGBWWTable 255,255,255,80,0`
 
 ### PWM CT - `Module 48`
 
