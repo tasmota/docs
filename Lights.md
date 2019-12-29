@@ -33,7 +33,7 @@ Tasmota uses a HSB color model, which besides other more subtile differences com
 
 See [**light commands**](Commands#light) for how to control lights.
 
-## Detailed configuration and options for all types of lights
+## Channel Controlled Lights
 
 ### * On/Off lights, aka Relays
 
@@ -142,22 +142,37 @@ Any combination of Relays and PWMs, when enabling `SetOption68 1`.
 |Commands|`Power`, `Channel`, `Color`|
 |Configuration|**Auto Power On**, **PWM configuration**, **Gamma Correction**|
 
+## Channel Controlled Options
 
-## Channel Controlled LEDs
+### Auto Power On - `SetOption20`
+
+When enabling `SetOption20 1`, any change to `CT`, `Dimmer`, `HSBColor3`, `Color`, `Channel` results in a non-black color will auto-power-on the light if it was off.
+
+Lights are always auto-powered-off when color is set to black or `Dimmer` set to `0`.
+
+### PWM configuration
+
 Lights controlled using up to 5 channels (red, green, blue, cold white, warm white). Channels are controlled using PWM or APDM.
 
-### PWM
 PWM (Pulse Width Modulation) is the most common method of controlling LED lights. 
 
-These lights are configured by assigning `PWM1(i)` through `PWM5(i)` components to their GPIOs. Depending on the number of used PWMs Tasmota will recognize the light as
+These lights are configured by assigning `PWM1(i)` through `PWM5(i)` components to their GPIOs; `PWM<x>i` means PWM is inverted. Depending on the number of used PWMs Tasmota will recognize the light as
 
 |Channels|PWM1|PWM2|PWM3|PWM4|PWM5|
 |---|---|---|---|---|---|
 |1|Brightness|||||
 |2|Cold White|Warm White||||
-|3|Red|Green|Blue|||
+|3|Red|Green|Blue||
 |4|Red|Green|Blue|White||
 |5|Red|Green|Blue|Cold White|Warm White|
+
+### PWM CT - `Module 48`
+
+Some Cold/Warm White lights use PWM1 for brightness and PWM2 for color temperature (instead of PWM1=cold, PWM2=warm).
+
+For these lights, use `Module 48`, aka Philips Xiaomi mode.
+
+### TODO
 
 If you require individual channel control (f.e. when connecting multiple single channel light strips to a multichannel LED controller) use [`SetOption68 1`](Commands#setoption68) to control each PWM individually with sliders in webUI and  [`Channel<x>`](Commands#channel) commands.
 
