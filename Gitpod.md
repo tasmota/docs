@@ -38,10 +38,8 @@ The display consists of three panels:
 ### Prepare the IDE for Compilation
 1. Open the `platformio.ini` file located in the `/tasmota` root directory (scroll to the bottom of the file Explorer (1) pane). In this file, removing a leading semicolon `;` enables a statement.
 2. In the Editor (2) pane:
-   - If you are using your own `user_config_override.h`, you must tell the compiler to use it. Find the `[common]` section in the file. Enable `-DUSE_CONFIG_OVERRIDE` 
-     ![Edit platformio.ini](https://i.imgur.com/AQml2kI.png)
-   - By default, the 2.6 Core will be compiled. If you wish to use a different Core, find the `[core_active]` section in the file and enable the `platform` and `build_flags` lines for the desired Core. 
-3. Click 'File' on the menu bar and 'Save' your edits
+   - If you are using your own `user_config_override.h`, you must tell the compiler to use it. Rename `platformio_override_sample.ini` to `platformio_override.ini`. This enables `-DUSE_CONFIG_OVERRIDE`.
+   - By default, the 2.6.1 Core will be compiled. If you wish to use a different Core, find the `[core_active]` section in the file and enable the `platform` and `build_flags` lines for the desired Core. Then click 'File' on the menu bar and 'Save' your edits.
 
 ### Compile Your Firmware
 This action is done in the Terminal pane (3) with very simple commands.  
