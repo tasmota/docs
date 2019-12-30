@@ -44,7 +44,7 @@ If you have successfully put the micro into programming mode the LED does not li
 Works out of the box, configured as Sonoff Basic. The LED does not light up when the switch is turned off. Configure as Sonoff T1 to enable the LED.
 
 ## Dual Channel:
-        {"NAME":"Wall Switch 2C","GPIO":[53,52,255,17,18,0,0,0,0,21,22,0,0],"FLAG":0,"BASE":28}
+        {"NAME":"Wall Switch 2C","GPIO":[17,255,255,255,0,22,18,0,21,56,0,0,0],"FLAG":0,"BASE":28}
 
 ## Dual Channel - No Neutral (Single Live Wire):
         {"NAME":"Wall Switch 2C","GPIO":[53,52,255,17,18,0,0,0,0,21,22,0,0],"FLAG":0,"BASE":28}
