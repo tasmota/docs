@@ -20,6 +20,7 @@
 * [Burns Home Automation - Home Automation Tutorials](https://www.youtube.com/channel/UCSKQutOXuNLvFetrKuwudpg/videos)
 * [Step to Step Tutorials - Hobbytronics Tutorials](https://hobbytronics.pk/blog/)
 * [Yuval Mejahez - Tasmota Flash tutorials Channel](https://www.youtube.com/channel/UC8eIbt7dehdys0n_n22zKvA)
+* [Kiril Peyanski - Tasmota and Tasmotizer Easy Flashing Guide for ESP8266 devices](https://youtu.be/_UnI6cnzF3k)
 
 ### Non-English Tutorials
 * DE - [Tuya Geräte Flashen](https://www.youtube.com/watch?v=0MAPHmvPGFM)
