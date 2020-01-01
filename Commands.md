@@ -317,7 +317,7 @@ RGBWWTable<a id="rgbwwtable"></a>|Control compensation of unbalanced PWM channel
 Rotation<a id="rotation"></a>|`<value>` = set amount of pixels to rotate (up to `Pixels` value) *(applies only to addressable LEDs)*
 Scheme<a id="scheme"></a>|Light effects<BR>`+` = next scheme<BR>`-` = previous scheme<BR>`0` = single color for LED light *(default)*<BR>`1` = start wake up sequence (same as [`Wakeup`](#wakeup))<BR>`2` = cycle up through colors using Speed option<BR>`3` = cycle down through colors using Speed option<BR>`4` = random cycle through colors using Speed and Fade
 |**Following schemes are usable only with addressable LEDs, e.g. WS281X, Neopixel**<BR>`5` = clock mode ([example](https://hackaday.io/project/28194-esp-and-ws2812-based-clock))<BR>`6` = candlelight pattern<BR>`7` = RGB pattern<BR>`8` = Christmas pattern<BR>`9` = Hanukkah pattern<BR>`10` = Kwanzaa pattern<BR>`11` = rainbow pattern<BR>`12` = fire pattern
-Speed<a id="speed"></a>|`1..20` = set fade speed from fast `1` to very slow `20`<BR>`+` = increase speed<BR>`-` = decrease speed
+Speed<a id="speed"></a>|`1..40` = set fade speed from fast `1` to very slow `40`<BR>`+` = increase speed<BR>`-` = decrease speed<BR>The `Speed` value represents the time in 0.5s to fade from 0 to 100% (or the reverse). Example: `Speed 4` takes 2.0s to fade from full brightness to black, or 0.5s to move from 75% to 100%.
 Wakeup<a id="wakeup"></a>|Start wake up sequence from OFF to stored `Dimmer` value<BR>`0..100` = Start wake up sequence from OFF to provided `Dimmer` value
 WakeupDuration<a id="wakeupduration"></a>|`1..3600` = set wake up duration in seconds
 White<a id="white"></a>|<BR>`1..100` = set white channel brightness in single white channel lights (single W or RGBW lights)
