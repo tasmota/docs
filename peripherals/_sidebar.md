@@ -16,6 +16,7 @@
 * [DHT11](peripherals/DHT11)
 * [DS18x20](peripherals/DS18x20)
 * [DS3231](peripherals/DS3231)
+* [GPS-NTP-Server](peripherals/GPS-NTP-server)
 * [HM16/HM17](peripherals/iBeacon-driver)
 * [HC-SR04 (HC-SR04P, JSN-SR04T)](peripherals/HC-SR04)
 * [Honeywell HIH](peripherals/Honeywell-HIH)
