@@ -3,13 +3,13 @@
 The foremost reason for the inclusion of this driver was to have a network unrelated time source, but besides this location data is provided  too.  
 
 !>**Only u-blox-devices are supported**  
-The UBX binary protocol was chosen, because it is very memory efficient and all the needed data can be read without further parsing.  The genereric NMEA-standard is NOT supported!`  
+The UBX binary protocol was chosen, because it is very memory efficient and all the needed data can be read without further parsing.  The genereric NMEA-standard is NOT supported!  
 
 The driver is tested on a NEO-6m and a Beitian-220. Series 7 should work too. These modules are quite cheap, starting at about 3.50€ for the NEO-6m.  
 
 
 ### Features:
-- simplified NTP-server
+- simplified NTP-Server
 - sets system time automatically and Settings.latitude and Settings.longitude via command
 - get position and time data
 - can log postion data with timestamp to flash with a small memory footprint of only 12 Bytes per record (!!EXPERIMENTAL!!)
@@ -35,7 +35,7 @@ No further installation steps needed. To get more debug information compile it w
 The driver expects the device to be configured for 9600 baud, which is the default for most of these sensors.
 If necessary the configuration can be changed with the freely available "u-center"-software, which is windows-only but is reported to run quite well with WINE.  
 
-### NTP-server  
+### NTP-Server  
 Simply start the server with 'sensor60 9'.
 
 ### Flash-Log  
@@ -63,12 +63,12 @@ After the first recording, a download-link will appear in the web interface. By 
 + sensor60 8
   only TELE message
 + sensor60 9
-  start NTP-server
+  start NTP-Server
 + sensor60 10
-  deactivate NTP-server
+  deactivate NTP-Server
 + sensor60 11
   force update of Tasmota-system-UTC with every new GPS-time-message
 + sensor60 12
-  do not update of Tasmota-system-UTC with every new GPS-time-message
+  do NOT update of Tasmota-system-UTC with every new GPS-time-message
 + sensor60 13
   set latitude and longitude in settings
