@@ -27,10 +27,10 @@ The initial log should like this:
 00:00:00 MIBLE: started  
 ```  
   
-The driver will do the rest automatically and starts to look for known "special", which will be used to extract the sensor readings.
+The driver will do the rest automatically and starts to look for known "special" packets, which will be used to extract the sensor readings.
 Web-GUI and TELE-messages will be populated with the sensor data.  This can take a while after start and may be influenced by the general traffic on the 2,4 GHz-band.  
 
-For the first driver versíon multiple MI_HT_V1-sensors and Flora-sensors are supported. They will be discriminated by using the company-assigned ID of the BLE Public Device Address (= the "lower" 24 bits). So a TELE-message could like like this:  
+For the first driver versíon multiple MI_HT_V1-sensors and Flora-sensors are supported. They will be discriminated by using the company-assigned ID of the BLE Public Device Address (= the "lower" 24 bits). So a TELE-message could like look this:  
   
 ```
 10:13:38 RSL: stat/tasmota/STATUS8 = {"StatusSNS":{"Time":"2019-12-18T10:13:38","Flora-6ab577":{"Temperature":21.7,"Illuminance":21,"Humidity":0,"Fertility":0},"MJ_HT_V1-3108be":{"Temperature":22.3,"Humidity":56.1},"TempUnit":"C"}}
