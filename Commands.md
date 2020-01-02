@@ -391,7 +391,7 @@ SetOption56<a id="setoption56"></a>|Wi-Fi network scan to select strongest signa
 SetOption57<a id="setoption57"></a>|Wi-Fi network re-scan every 44 minutes with alternate to +10dB stronger signal if detected (only visible networks)<BR>`0` = disable *(default)*<BR> `1` = enable
 SetOption58<a id="setoption58"></a>|[IR Raw data in JSON payload](https://github.com/arendst/Tasmota/issues/2116#issuecomment-440716483)<BR>`0` = disable *(default)*<BR> `1` = enable
 SetOption59<a id="setoption59"></a>|Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands: [`State`](#State), [`Power`](#Power) and any command causing a light to be turned on.<BR>`0` = disable *(default)*<BR> `1` = enable
-SetOption60<a id="setoption60"></a>|Enable normal sleep instead of [dynamic sleep](Dynamic%20Sleep)<BR> `0` = dynamic sleep *(default)*<BR> `1` = sleep
+SetOption60<a id="setoption60"></a>|Set sleep mode<BR> `0` = [dynamic sleep](Dynamic%20Sleep) *(default)*<BR> `1` = normal sleep
 SetOption61<a id="setoption61"></a>|Force [local operation](https://github.com/arendst/Tasmota/pull/4562#issuecomment-446230001) when [`ButtonTopic`](#ButtonTopic) or [`SwitchTopic`](#SwitchTopic) is set.<BR>`0` = disable *(default)*<BR> `1` = enable
 SetOption62<a id="setoption62"></a>|Set retain on Button or Switch hold messages<BR>`0` = disable *(default)*<BR> `1` = don't use retain flag on `HOLD` messages
 SetOption63<a id="setoption63"></a>|Set relay state feedback scan at restart ([#5594](https://github.com/arendst/Tasmota/issues/5594), [#5663](https://github.com/arendst/Tasmota/issues/5663))<BR>`0` = Scan relay power feedback state at restart *(default)*<BR> `1` = Disable relay power feedback state scanning at restart
