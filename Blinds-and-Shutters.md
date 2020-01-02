@@ -127,6 +127,25 @@ Some motors need up to one second after power is turned on before they start mov
 
 Close the shutter and repeat this procedure until the motor delay is set properly.  
 
+## Button control
+`ShutterButton<x> <a> <b> <c> <d> <e> <f> <g> <h> <i> <j>` allows to assign a tasmota button `<x>` to control your shutter `<a>`.
+
+Single press button shutter is set to position `<b>`.  Double press button shutter is set to position `<c>`. Tripple press button shutter is set to position `<d>`. Hold button shutter is set to position `<e>`. Disabling any button action is given by `<b>` ... `<e>` equal to "-". Any press of the button while the shutter is moving will immediately stop that shutter.
+
+Global steering of all your shutters at home is supported by MQTT. By any button action an MQTT command can be initiated to the `<grouptopic>` of the device. For single press button this can be enabled by `<f>` equal to "1". Disabling is indicated by `<f>` equal to "0". Double to hold actions are given by `<g>` ... `<i>`, correspondingly. When `<j>` is equal to "0" only `cmnd/<grouptopic>/Shutterposition<y> ...` with `<y>`=`<x>` is fired. When `<j>` is equal to "1" `<y>`=1...4 is used to control any shutter number of a tasmota device having same `<grouptopic>`.
+
+Easy setup for an "up" button:
+`ShutterButton<x> <a> up` (same as `ShutterButton<x> <a> 100 50 74 100 0 0 0 1 1`)
+Single press will move shutter up to 100%, double press to 50% and tripple press to 74%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` up to 100%.
+
+Easy setup for an "down" button:
+`ShutterButton<x> <a> down` (same as `ShutterButton<x> <a> 0 50 24 0 0 0 0 1 1`)
+Single press will move shutter down to 0%, double press to 50% and tripple press to 24%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` down to 0%.
+
+Easy setup for an "updown" button:
+`ShutterButton<x> <a> updown` (same as `ShutterButton<x> <a> 100 0 50 - 0 0 0 0 0`)
+Single press will move shutter up to 100%, double press down to 0% and tripple press to 50%. No hold action and no other shutter control by MQTT.
+
 ## Configuration
 #### Sonoff Dual R2 Required Configuration
 If using a Sonoff Dual R2, use the following Template:  
