@@ -51,7 +51,13 @@ The naming conventions in the product range of bluetooth sensors in XIAMO-univer
 ### MI_HT_V1:  
 This device works with an AAA-battery for several months and the driver can read temperature, humidity and battery level.  
   
+<img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/mj_ht_v1.png?raw=true" style="width:30px"></img>
+  
   
 ### Mi Flora:  
 Works with a CR2032-coin-cell and provides temperature, illuminance, (soil-)humidity and (soil-)fertility.  
+  
+<img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/miflora.png?raw=true" style="width:30px"></img>  
+  
+  
 
