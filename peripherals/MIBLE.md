@@ -48,7 +48,7 @@ Internally from time to time "fake" sensors will be created, when there was data
 
 The naming conventions in the product range of bluetooth sensors in XIAMO-universe can be a bit confusing. The exact same sensor can be advertised under slightly different names depending on the seller (Mijia, Xiaomi, Cleargrass, ...).
   
-### MI_HT_V1:  
+### MJ_HT_V1:  
 This device works with an AAA-battery for several months and the driver can read temperature, humidity and battery level.  
   
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/mj_ht_v1.png?raw=true" style="width:30px"></img>
