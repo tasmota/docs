@@ -7,7 +7,7 @@ In recent years solutions were found to use this chip for limited Bluetooth-Low-
 One of the first articles about this topic can be found here:  
 https://dmitry.gr/?r=05.Projects&proj=11.%20Bluetooth%20LE%20fakery  
   
-Several further work was done later on by different developers and a working bridge to read sensor data from a XIAMO-MI_HT_V1 already exists.
+Several further work was done later on by different developers and a working bridge to read sensor data from a XIAOMI MI_HT_V1 already exists.
 The fundamental principle is, that some of these sensors send its data as a usual BLE-advertisement packet with a proprietary data format at the end of the payload. These packets had to fit into the 32 bytes of the FIFO-RX-buffer of the NRF24l01, otherwise the "later" bytes were lost.  
 
 For the Tasmota-driver a new solution was found. 
@@ -21,12 +21,14 @@ Uncomment #USE_SPI and #USE_NRF24 in 'my_user_config.h' and configure the pins v
 No additional steps are necessary.  
 The initial log should like this:  
   
+```  
 00:00:00 NRF24L01 initialized  
 00:00:00 NRF24L01+ detected  
 00:00:00 MIBLE: started  
+```  
   
-The driver will do the rest automatically and starts to look for known BLE-advertisements. When it finds one, the corresponding "special" packets will be used to extract the sensor readings.
-Web-GUI and TELE-messages will be populated with the sensor data.  This can take a while and may be influenced by the general traffic on the 2,4 GHz-band.  
+The driver will do the rest automatically and starts to look for known "special", which will be used to extract the sensor readings.
+Web-GUI and TELE-messages will be populated with the sensor data.  This can take a while after start and may be influenced by the general traffic on the 2,4 GHz-band.  
 
 For the first driver versíon multiple MI_HT_V1-sensors and Flora-sensors are supported. They will be discriminated by using the company-assigned ID of the BLE Public Device Address (= the "lower" 24 bits). So a TELE-message could like like this:  
   
@@ -42,8 +44,9 @@ Internally from time to time "fake" sensors will be created, when there was data
   
 ## Working sensors:
 
-**It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely !!!**
+!> **It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely !!**  
 
+The naming conventions in the product range of bluetooth sensors in XIAMO-universe can be a bit confusing. The exact same sensor can be advertised under slightly different names depending on the seller (Mijia, Xiaomi, Cleargrass, ...).
   
 ### MI_HT_V1:  
 This device works with an AAA-battery for several months and the driver can read temperature, humidity and battery level.  
