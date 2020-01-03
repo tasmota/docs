@@ -134,7 +134,7 @@ To have shutter mode independent button control over the shutter and not over it
 
 `ShutterButton<x> <b> <p1> <p2> <p3> <ph> <m1> <m2> <m3> <mh> <mi>` 
 
-This assigns a tasmota button `<b>` to control your shutter `<x>`. The tasmota button `<b>` must already be configured in the module configuration.
+This assigns a tasmota button `<b>` to control your shutter `<x>`. The tasmota button `<b>` must already be configured in the module configuration. You can assign multiple buttons to a single shutter. Any button can only control one shutter (beside the MQTT broadcast feature described below).
 
 By a button single press the shutter is set to position `<p1>`.  Double press will drive the shutter to position `<p2>` and  tripple press to position `<p3>`. Holding the button for more than the `SetOption32` time sets the 
 shutter position to `<ph>`. Any button action `<p1>` to `<ph>` can be disabled by setting the parameter to `-`. Independent from configuration `<p1>` to `<ph>` any press of the button while the shutter is moving will immediately stop the shutter.
