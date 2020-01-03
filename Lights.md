@@ -235,7 +235,7 @@ Some SM16716 bulbs have BGR order and need [`SetOption37 54`](Commands#setoption
 ## Addressable LEDs
 Lights where each LED is individually controlled. In these lights it is possible to adjust each LEDs power, color and brightness, all just with the use of a single GPIO pin.
 
-WebUI shows only the brightness slider and power toggle for these lights, all other controls are available with [commands](Commands#light).
+WebUI shows hue, saturation and brightness sliders and power toggle for these lights. Red and green color may be mixed up (observed for clone of [Wemos RGB shield](/peripherals/WS2812B-RGB-Shield) using Tasmota 8.1.0).
 
 ### WS2812
 Any light using WS2811, WS2812b, WS2813 or SK6812 LEDs falls into this component. They're also commonly called Neopixel lights.
