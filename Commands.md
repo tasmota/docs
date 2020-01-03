@@ -319,7 +319,7 @@ Scheme<a id="scheme"></a>|Light effects<BR>`+` = next scheme<BR>`-` = previous s
 |**Following schemes are usable only with addressable LEDs, e.g. WS281X, Neopixel**<BR>`5` = clock mode ([example](https://hackaday.io/project/28194-esp-and-ws2812-based-clock))<BR>`6` = candlelight pattern<BR>`7` = RGB pattern<BR>`8` = Christmas pattern<BR>`9` = Hanukkah pattern<BR>`10` = Kwanzaa pattern<BR>`11` = rainbow pattern<BR>`12` = fire pattern
 Speed<a id="speed"></a>|`1..40` = set fade speed from fast `1` to very slow `40`<BR>`+` = increase speed<BR>`-` = decrease speed<BR>The `Speed` value represents the time in 0.5s to fade from 0 to 100% (or the reverse). Example: `Speed 4` takes 2.0s to fade from full brightness to black, or 0.5s to move from 75% to 100%.
 Wakeup<a id="wakeup"></a>|Start wake up sequence from OFF to stored `Dimmer` value<BR>`0..100` = Start wake up sequence from OFF to provided `Dimmer` value
-WakeupDuration<a id="wakeupduration"></a>|`1..3600` = set wake up duration in seconds
+WakeupDuration<a id="wakeupduration"></a>|`1..3000` = set wake up duration in seconds
 White<a id="white"></a>|<BR>`1..100` = set white channel brightness in single white channel lights (single W or RGBW lights)
 Width&#60;x><a id="width"></a>|x = `1..4`<BR>`1` - `0..4` = LED group width *([Scheme](#Scheme) `6..12` only)*<BR>`2` - `0..32` = seconds hand width *([Scheme](#Scheme) `5` only)*<BR>`3` - `0..32` = minutes hand width *([Scheme](#Scheme) `5` only)*<BR>`4` - `0..32` = hour hand width *([Scheme](#Scheme) `5` only)*
 See also|[`SetOption15`](#setoption15), [`SetOption16`](#setoption16), [`SetOption17`](#setoption17), [`SetOption20`](#setoption20), [`SetOption37`](#setoption37) and [`SetOption68`](#setoption68) 
