@@ -143,7 +143,7 @@ One can remove all button control for shutter `<x>`  by `ShutterButton<x> -`.
 
 Global steering of all your shutters at home is supported by additional MQTT broadcast. By any button action a corresponding MQTT command can be initiated to the `<grouptopic>` of the device. For single press this can be enabled by `<m1>` equal to `1`, disabling is indicated by `-`. Double to hold MQTT configurations are given by `<m2>` to `<mh>`, correspondingly. When `<mi>` is equal to `-` only `cmnd/<grouptopic>/Shutterposition<x> <p1..h>` is fired. When `<mi>` is equal to `1`, `<x>`=`1..4` is used to control any shutter number of a tasmota device having same `<grouptopic>`.
 
-There are shortcuts to allow common setups:
+There are shortcuts to allow common setups:<BR>
 Setup for an "up" button:
 `ShutterButton<x> <b> up` (same as `ShutterButton<x> <b> 100 50 74 100 0 0 0 1 1`)
 Single press will move shutter up to 100%, double press to 50% and tripple press to 74%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` up to 100%.
