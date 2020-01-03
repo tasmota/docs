@@ -128,22 +128,32 @@ Some motors need up to one second after power is turned on before they start mov
 Close the shutter and repeat this procedure until the motor delay is set properly.  
 
 ## Button control
-`ShutterButton<x> <a> <b> <c> <d> <e> <f> <g> <h> <i> <j>` allows to assign a tasmota button `<x>` to control your shutter `<a>`.
+When shutter is running in normal `ShutterMode: 0`, you already have basic control over the shutter movement using tasmota switches or tasmota buttons in the module configuration to directly drive the shutter relays.  For  short circuit safe operation `ShutterMode: 1` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch or button and 2nd switch on the power by the other switch or button. 
 
-Single press button shutter is set to position `<b>`.  Double press button shutter is set to position `<c>`. Tripple press button shutter is set to position `<d>`. Hold button shutter is set to position `<e>`. Disabling any button action is given by `<b>` ... `<e>` equal to "-". Any press of the button while the shutter is moving will immediately stop that shutter.
+To have shutter mode independent button control over the shutter and not over its relays one can use the `ShutterButton<x>` command. It also introduces some more features, see below:
 
-Global steering of all your shutters at home is supported by MQTT. By any button action an MQTT command can be initiated to the `<grouptopic>` of the device. For single press button this can be enabled by `<f>` equal to "1". Disabling is indicated by `<f>` equal to "0". Double to hold actions are given by `<g>` ... `<i>`, correspondingly. When `<j>` is equal to "0" only `cmnd/<grouptopic>/Shutterposition<y> ...` with `<y>`=`<x>` is fired. When `<j>` is equal to "1" `<y>`=1...4 is used to control any shutter number of a tasmota device having same `<grouptopic>`.
+`ShutterButton<x> <b> <p1> <p2> <p3> <ph> <m1> <m2> <m3> <mh> <mi>` 
 
-Easy setup for an "up" button:
-`ShutterButton<x> <a> up` (same as `ShutterButton<x> <a> 100 50 74 100 0 0 0 1 1`)
+This assigns a tasmota button `<b>` to control your shutter `<x>`. The tasmota button `<b>` must already be configured in the module configuration.
+
+By a button single press the shutter is set to position `<p1>`.  Double press will drive the shutter to position `<p2>` and  tripple press to position `<p3>`. Holding the button for more than the `SetOption32` time sets the 
+shutter position to `<ph>`. Any button action `<p1>` to `<ph>` can be disabled by setting the parameter to `-`. Independent from configuration `<p1>` to `<ph>` any press of the button while the shutter is moving will immediately stop the shutter.
+
+One can remove all button control for shutter `<x>`  by `ShutterButton<x> -`. 
+
+Global steering of all your shutters at home is supported by additional MQTT broadcast. By any button action a corresponding MQTT command can be initiated to the `<grouptopic>` of the device. For single press this can be enabled by `<m1>` equal to `1`, disabling is indicated by `-`. Double to hold MQTT configurations are given by `<m2>` to `<mh>`, correspondingly. When `<mi>` is equal to `-` only `cmnd/<grouptopic>/Shutterposition<x> <p1..h>` is fired. When `<mi>` is equal to `1`, `<x>`=`1..4` is used to control any shutter number of a tasmota device having same `<grouptopic>`.
+
+There are shortcuts to allow common setups:
+Setup for an "up" button:
+`ShutterButton<x> <b> up` (same as `ShutterButton<x> <b> 100 50 74 100 0 0 0 1 1`)
 Single press will move shutter up to 100%, double press to 50% and tripple press to 74%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` up to 100%.
 
-Easy setup for an "down" button:
-`ShutterButton<x> <a> down` (same as `ShutterButton<x> <a> 0 50 24 0 0 0 0 1 1`)
+Setup for an "down" button:
+`ShutterButton<x> <b> down` (same as `ShutterButton<x> <b> 0 50 24 0 0 0 0 1 1`)
 Single press will move shutter down to 0%, double press to 50% and tripple press to 24%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` down to 0%.
 
-Easy setup for an "updown" button:
-`ShutterButton<x> <a> updown` (same as `ShutterButton<x> <a> 100 0 50 - 0 0 0 0 0`)
+Setup for an "updown" button:
+`ShutterButton<x> <b> updown` (same as `ShutterButton<x> <b> 100 0 50 - 0 0 0 0 0`)
 Single press will move shutter up to 100%, double press down to 0% and tripple press to 50%. No hold action and no other shutter control by MQTT.
 
 ## Configuration
