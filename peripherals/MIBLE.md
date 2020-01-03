@@ -7,8 +7,8 @@ In recent years solutions were found to use this chip for limited Bluetooth-Low-
 One of the first articles about this topic can be found here:  
 https://dmitry.gr/?r=05.Projects&proj=11.%20Bluetooth%20LE%20fakery  
   
-Several further work was done later on by different developers and a working bridge to read sensor data from a XIAOMI MI_HT_V1 already exists.
-The fundamental principle is, that some of these sensors send its data as a usual BLE-advertisement packet with a proprietary data format at the end of the payload. These packets had to fit into the 32 bytes of the FIFO-RX-buffer of the NRF24l01, otherwise the "later" bytes were lost.  
+Several further work was done later on by different developers and a working bridge to read sensor data from a XIAOMI MJ_HT_V1 already exists.
+The fundamental principle is, that some of these sensors send its data as a usual BLE-advertisement packet with a proprietary data format at the end of the payload. These packets had to fit into the 32 bytes of the FIFO-RX-buffer of the NRF24L01, otherwise the "later" bytes were lost.  
 
 For the Tasmota-driver a new solution was found. 
 The basic idea is to use some constant ID-bytes of the BLE-packets as the PDU-type for the NRF24l01. 
@@ -18,6 +18,10 @@ Of course there is still no bidirectional "real" BLE-communication, only adverti
 
 ## USAGE:
 Uncomment #USE_SPI and #USE_NRF24 in 'my_user_config.h' and configure the pins vor SPI_DC and SPI_CS while connecting the hardware SPI pins 12 - 14(MOSI, MISO and CLOCK). 
+  
+  <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/nrf24_config.png?raw=true" style="width:30px"></img>  
+   
+   
 No additional steps are necessary.  
 The initial log should like this:  
   
