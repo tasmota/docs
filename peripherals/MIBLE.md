@@ -17,9 +17,12 @@ That way it is possible to read the sensor data from a Mi Flora sensor, which is
 Of course there is still no bidirectional "real" BLE-communication, only advertisements can be read.
 
 ## USAGE:
-Uncomment #USE_SPI and #USE_NRF24 in 'my_user_config.h' and configure the pins vor SPI_DC and SPI_CS while connecting the hardware SPI pins 12 - 14(MOSI, MISO and CLOCK). 
+Uncomment #USE_SPI, #USE_NRF24 and #USE_MIBLE in 'my_user_config.h' and configure the pins vor SPI_DC and SPI_CS while connecting the hardware SPI pins 12 - 14(MOSI, MISO and CLOCK).  
+!! ⚠️ In order to simplify the code, the pin names from the SPI-display-drivers are used ⚠️ !!  
+For the NRF24L01 SPI_DC translates to CSN and SPI_CS to CE.
+
   
-  <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/nrf24_config.png?raw=true" style="width:30px"></img>  
+  <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/nrf24_config.png?raw=true" style="width:120px"></img>  
    
    
 No additional steps are necessary.  
@@ -55,13 +58,13 @@ The naming conventions in the product range of bluetooth sensors in XIAMO-univer
 ### MJ_HT_V1:  
 This device works with an AAA-battery for several months and the driver can read temperature, humidity and battery level.  
   
-<img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/mj_ht_v1.png?raw=true" style="width:30px"></img>
+<img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/mj_ht_v1.png?raw=true" style="width:90px"></img>
   
   
 ### Mi Flora:  
 Works with a CR2032-coin-cell and provides temperature, illuminance, (soil-)humidity and (soil-)fertility.  
   
-<img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/miflora.png?raw=true" style="width:30px"></img>  
+<img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/miflora.png?raw=true" style="width:90px"></img>  
   
   
 
