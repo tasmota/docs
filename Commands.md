@@ -410,6 +410,7 @@ SetOption76<a id="setoption76"></a>|Bootcount incrementing when [DeepSleep](Deep
 SetOption77<a id="setoption77"></a>|Do not power off if a slider is moved to far left<BR>`0` = disabled _(default)_<BR>`1` = enabled 
 SetOption80<a id="setoption80"></a>|[Blinds and shutters](blinds-and-shutters) support<BR>`0` = disable blinds and shutters support *(default)*<BR>`1` = enable blinds and shutters support
 SetOption81<a id="setoption81"></a>|Set PCF8574 component behavior for all ports<BR>`0` = set as regular state *(default)*<BR>`1` = set as inverted state
+SetOption82<a id="setoption82"></a>|Reduce the CT range from 153..500 to 200.380 to accomodate with Alexa range<BR>`0` = CT ranges from 153 to 500 *(default)*<BR>`1` = CT ranges from 200 to 380 (although you can still set in from 153 to 500)
 
 ### Serial Bridge
 Both hardware and software Serial Bridge are supported.
