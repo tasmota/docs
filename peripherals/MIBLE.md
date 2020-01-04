@@ -2,7 +2,7 @@
 
 ## NRF24l01(+) and Bluetooth
   
-This chip is manufactured by Nordic Semiconductors as a single chip transceiver in the 2,4 GHz band. There are many applications in wireless consumer products and the chip is well-known in many Arduino-projects as a versatile low-cost-module.
+This chip is manufactured by Nordic Semiconductors as a single chip transceiver in the 2,4 GHz band. There are many applications in wireless consumer products and the chip is well-known in many Arduino-projects as a versatile low-cost-module.  
 In recent years solutions were found to use this chip for limited Bluetooth-Low-Energy communication.  
 One of the first articles about this topic can be found here:  
 https://dmitry.gr/?r=05.Projects&proj=11.%20Bluetooth%20LE%20fakery  
