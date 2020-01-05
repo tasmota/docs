@@ -132,29 +132,39 @@ When shutter is running in normal `ShutterMode: 0`, you already have basic contr
 
 To have shutter mode independent button control over the shutter and not over its relays one can use the `ShutterButton<x>` command. It also introduces some more features, see below:
 
-`ShutterButton<x> <b> <p1> <p2> <p3> <ph> <m1> <m2> <m3> <mh> <mi>` 
+`ShutterButton<x> <button> <func> <mqtt>` 
 
-This assigns a tasmota button `<b>` to control your shutter `<x>`. The tasmota button `<b>` must already be configured in the module configuration. You can assign multiple buttons to a single shutter. Any button can only control one shutter (beside the MQTT broadcast feature described below).
+This assigns a tasmota button `<button>` to control your shutter `<x>` having functionality `<func>`. The tasmota button `<button>` must already be configured in the module configuration. You can assign multiple buttons to a single shutter. Any button can only control one shutter (beside the `<mqtt>` broadcast feature, see description below). Any press of the button while the shutter is moving will immediately stop the shutter.
 
-By a button single press the shutter is set to position `<p1>`.  Double press will drive the shutter to position `<p2>` and  tripple press to position `<p3>`. Holding the button for more than the `SetOption32` time sets the 
-shutter position to `<ph>`. Any button action `<p1>` to `<ph>` can be disabled by setting the parameter to `-`. Independent from configuration `<p1>` to `<ph>` any press of the button while the shutter is moving will immediately stop the shutter.
+One can remove all button control for shutter `<x>`  by `ShutterButton<x> 0`. 
 
-One can remove all button control for shutter `<x>`  by `ShutterButton<x> -`. 
+The assigned button can have one of the following functionalities:<BR>
+
+ - Setup for an "up" button: `ShutterButton<x> <button> up <mqtt>`
+Single press will move shutter to 100%, double press to 50% and tripple press to 74%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` to 100% when `<mqtt>` is equal to `1`. When `<mqtt>` is equal to `0` hold action of this button is same as single press. 
+
+- Setup for a "down" button: `ShutterButton<x> <button> down <mqtt>`
+Single press will move shutter to 0%, double press to 50% and tripple press to 24%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` to 0% when `<mqtt>` is equal to `1`. When `<mqtt>` is equal to `0` hold action of this button is same as single press. 
+
+- Setup for an "updown" button: `ShutterButton<x> <button> updown <mqtt>`
+Single press will move shutter to 100%, double press down to 0% and tripple press to 50%. No hold action and no other shutter control by MQTT, `<mqtt>` is don't care here.
+
+More advanced control of the button press actions is given by the following `ShutterButton<x>` command syntax:
+
+`ShutterButton<x> <button> <p1> <p2> <p3> <ph> <m1> <m2> <m3> <mh> <mi>` 
+
+`<button>` `1..4`: Button number, `0/-`: disable buttons for this shutter<BR>`<p1>` `0..100`: single press position, `-`: disable<BR>`<p2>` `0..100`: double press position, `-`: disable<BR>`<p3>` `0..100`: tripple press position, `-`: disable<BR>`<ph>` `0..100`: hold press position, `-`: disable<BR>`<m1>` `1`: enable single press position MQTT broadcast, `0/-`: disable<BR>`<m2>` `1`: enable double press position MQTT broadcast, `0/-`: disable<BR>`<m3>` `1`: enable tripple press position MQTT broadcast, `0/-`: disable<BR>`<mh>` `1`: enable hold press position MQTT broadcast, `0/-`: disable<BR>`<mi>` `1`: enable MQTT broadcast to all shutter indices, `0/-`: disable
+
+Any parameters are optional: when missing all subsequent parameters are set to `disable`.
+
+By a button single press the shutter is set to position `<p1>`.  Double press will drive the shutter to position `<p2>` and  tripple press to position `<p3>`. Holding the button for more than the `SetOption32` time sets the shutter position to `<ph>`. Any button action `<p1>` to `<ph>` can be disabled by setting the parameter to `-`. Independent from configuration `<p1>` to `<ph>` any press of the button while the shutter is moving will immediately stop the shutter.
 
 Global steering of all your shutters at home is supported by additional MQTT broadcast. By any button action a corresponding MQTT command can be initiated to the `<grouptopic>` of the device. For single press this can be enabled by `<m1>` equal to `1`, disabling is indicated by `-`. Double to hold MQTT configurations are given by `<m2>` to `<mh>`, correspondingly. When `<mi>` is equal to `-` only `cmnd/<grouptopic>/Shutterposition<x> <p1..h>` is fired. When `<mi>` is equal to `1`, `<x>`=`1..4` is used to control any shutter number of a tasmota device having same `<grouptopic>`.
 
-There are shortcuts to allow common setups:<BR>
-Setup for an "up" button:
-`ShutterButton<x> <b> up` (same as `ShutterButton<x> <b> 100 50 74 100 0 0 0 1 1`)
-Single press will move shutter up to 100%, double press to 50% and tripple press to 74%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` up to 100%.
-
-Setup for an "down" button:
-`ShutterButton<x> <b> down` (same as `ShutterButton<x> <b> 0 50 24 0 0 0 0 1 1`)
-Single press will move shutter down to 0%, double press to 50% and tripple press to 24%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` down to 0%.
-
-Setup for an "updown" button:
-`ShutterButton<x> <b> updown` (same as `ShutterButton<x> <b> 100 0 50 - 0 0 0 0 0`)
-Single press will move shutter up to 100%, double press down to 0% and tripple press to 50%. No hold action and no other shutter control by MQTT.
+Examples:
+- `ShutterButton<x> <button> 100 50 74 100 0 0 0 1 1` is same as `ShutterButton<x> <button> up 1`.
+- `ShutterButton<x> <button> 0 50 24 0 0 0 0 1 1` is same as `ShutterButton<x> <button> down 1`.
+- `ShutterButton<x> <button> 100 0 50 - 0 0 0 0 0` is same as `ShutterButton<x> <button> updown 0`.
 
 ## Configuration
 #### Sonoff Dual R2 Required Configuration
