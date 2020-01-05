@@ -43,7 +43,7 @@ For the first driver versíon multiple MJ_HT_V1-sensors and Flora-sensors are su
 10:13:38 RSL: stat/tasmota/STATUS8 = {"StatusSNS":{"Time":"2019-12-18T10:13:38","Flora-6ab577":{"Temperature":21.7,"Illuminance":21,"Humidity":0,"Fertility":0},"MJ_HT_V1-3108be":{"Temperature":22.3,"Humidity":56.1},"TempUnit":"C"}}
 ```
   
-As the NRF24l01 can only read BLE-advertisements, only the data in these advertisements is accessible.  
+As the NRF24L01 can only read BLE-advertisements, only the data in these advertisements is accessible.  
 All sensors have an additional GATT-interface with more data in it, but it can not be read with a NRF24l01. 
   
 As we can not use a checksum to test data integrity of the packet, only data of sensors, which adresses showed up more than once (default = 3 times) will be published. 
@@ -53,9 +53,10 @@ Internally from time to time "fake" sensors will be created, when there was data
 
 !> **It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely !!**  
 
-The naming conventions in the product range of bluetooth sensors in XIAMO-universe can be a bit confusing. The exact same sensor can be advertised under slightly different names depending on the seller (Mijia, Xiaomi, Cleargrass, ...).
+The naming conventions in the product range of bluetooth sensors in XIAOMI-universe can be a bit confusing. The exact same sensor can be advertised under slightly different names depending on the seller (Mijia, Xiaomi, Cleargrass, ...).
   
 ### MJ_HT_V1:  
+Model: LYWSDCGQ/01ZM  
 This device works with an AAA-battery for several months and the driver can read temperature, humidity and battery level.  
   
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/mj_ht_v1.png?raw=true" style="width:200px"></img>
@@ -67,4 +68,13 @@ Works with a CR2032-coin-cell and provides temperature, illuminance, (soil-)humi
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/miflora.png?raw=true" style="width:200px"></img>  
   
   
+
+### Potential "candidates":  
+Based on published data, the chance to support following sensors in the future is quite good:  
++ LYWSD02MMC (E-Ink-Display, rectangular form, 2 x CR2032-coin-cells)  
++ CGG1 (similar to the LYWSDCGQ/01ZM , but with E-Ink-Display and CR2430-coin-cell)  
+  
+  
+The situation for the new (and cheap) LYWSD03MMC (small, rectangular form) is different, as the sensor data in the advertisements is encrypted (or even absent at all).  
+
 
