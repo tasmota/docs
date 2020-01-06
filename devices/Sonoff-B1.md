@@ -15,7 +15,7 @@ The **four serial pins** (3V3, RX, TX, GND) as well as the GPIO0 signal line are
 
 As with all modules pulling GPIO0 to GND is needed to put the chip in programming mode. You need to **connect GPIO0 and GND** during power up. An additional GND pad is available in the middle of the PCB.
 
-**NOTE:** The **B1 R2** needs the GPIO0 connected to the GND pad in the middle of the PCB. Otherwise it won't enter flash mode. 
+**NOTE:** If experiencing trouble getting the **B1 R2** into flash mode, try pulling GPIO to GND during power up and **holding it** for 20 to 25 seconds before release.
 
 ### LED HEX10 Color Codes
 The Sonoff B1 uses a TEN charter HEX code for all colors. 
