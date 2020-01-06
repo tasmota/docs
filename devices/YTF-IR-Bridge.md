@@ -1,4 +1,5 @@
 * [YTF](https://www.amazon.com/gp/product/B07H46LJZK)
+* [BaKEN](https://www.amazon.co.uk/gp/product/B07ZQSJ4VD) - Identical to the YTF
 * [Tuya](https://www.aliexpress.com/item/a/32951202513.html)
 
 ## Flashing
