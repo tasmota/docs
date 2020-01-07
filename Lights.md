@@ -101,10 +101,12 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 <img style="float:right;width:180px" alt="RGB+W" src="https://user-images.githubusercontent.com/49731213/71555488-48b5f280-2a2d-11ea-8173-1fd45cd5a1e3.png"><img style="float:right;width:180px" alt="RGBW-2" src="https://user-images.githubusercontent.com/49731213/71555832-65075e80-2a30-11ea-9ab6-66688081ef48.png">
 
 4 channel lights are RGBW, i.e. RGB light and an additional White light. White can be either Warm White or Cold White depending on the manufacturer.
->[! ATTENTION] There is no White only slider in the UI for this type of lights
+
 **Alexa**: you can use Philips Hue emulation, the light will appear as Color light and White light with CT control. The CT control is only present to force pure white instead of RGB white. Changin CT will have no effect.
 
 **Warning**: some lights have limited power supply that do not allow all channels to be at full power at the same time. So be careful if you force all channels via `Color` or **RGB/White split**
+
+>[! ATTENTION] There is no White only slider in the UI for this type of lights
 
 |Configuration|(see below)|
 |---|---|
