@@ -90,6 +90,6 @@ If you want to modify the code or default settings you can use:
 #### Online Compilers
 _**Can only create a firmware binary.** Use one of the [tools](/installation/Prerequisites#flashing-tool) to flash it to your device._
 - [**Gitpod**](Gitpod) - compile your own binary in the cloud using [Gitpod](https://www.gitpod.io/).  
-- [**TasmoCompiler**](https://github.com/benzino77/tasmocompiler) - (outdated!) simple web GUI to compile Tasmota with your own settings
+- [**TasmoCompiler**](https://github.com/benzino77/tasmocompiler) - simple web GUI to compile Tasmota with your own settings
 
 More details in [Compile Your Own Tasmota](Compile-your-build).
