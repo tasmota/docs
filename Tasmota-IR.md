@@ -29,9 +29,17 @@ IRhvac<a id="IRhvac"></a>|Send HVAC IR remote control code as JSON payload<BR><B
 ## Receiving IR Commands
 If you have an IR receiver, a message will be logged each time an IR message is seen. `IRremoteESP8266` will try to decode the message against all supported protocols. If unrecognized, the `"Protocol":"UNKNOWN"` will be shown. In this case, the `"Data"` field contains a hash of the received message. The hash can't be used to send the a message, but the same hash will be produced by the same message.  
 
-Information on [Receiving Infrared Data](Receiving-Infrared-Remote-Control-Data)
+An inexpensive IR sensor such as a [TSOP1838](https://hobbyking.com/en_us/keyes-tsop1838-infra-red-37-9khz-receiver-for-arduino.html) can be connected to a device running Tasmota. Configure a free device GPIO as 'IRrecv (51)'. When Tasmota receives an IR message, the data portion of the payload has the same format as the [`IRsend`](Commands#irsend) parameter.
 
-Example:  
+    {"IrReceived":{"Protocol":"<value>","Bits":<value>,"Data":<value>}}
+
+This JSON payload data can be used in a rule such as:
+
+    ON IrReceived#Data=<value> DO <command> ENDON
+
+If the data is received on an unknown protocol, `setoption58 1`  See [here](https://github.com/arendst/Tasmota/issues/2116#issuecomment-440716483).
+
+Examples:  
 **Pioneer Vol+**  
 `MQT: tele/tasmota/IR1/RESULT = {"IrReceived":{"Protocol":"PIONEER","Bits":64,"Data":"0xA55A50AFA55A50AF","DataLSB":"0xA55A0AF5A55A0AF5","Repeat":0}}`
 
