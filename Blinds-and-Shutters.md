@@ -127,6 +127,7 @@ Some motors need up to one second after power is turned on before they start mov
 
 Close the shutter and repeat this procedure until the motor delay is set properly.  
 
+
 ## Button control
 When shutter is running in normal `ShutterMode: 0`, you already have basic control over the shutter movement using tasmota switches or tasmota buttons in the module configuration to directly drive the shutter relays.  For  short circuit safe operation `ShutterMode: 1` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch or button and 2nd switch on the power by the other switch or button. 
 
@@ -165,6 +166,8 @@ Examples:
 - `ShutterButton<x> <button> 100 50 74 100 0 0 0 1 1` is same as `ShutterButton<x> <button> up 1`.
 - `ShutterButton<x> <button> 0 50 24 0 0 0 0 1 1` is same as `ShutterButton<x> <button> down 1`.
 - `ShutterButton<x> <button> 100 0 50 - 0 0 0 0 0` is same as `ShutterButton<x> <button> updown 0`.
+
+Module WiFi setup, restart, upgrade and reset according to [Buttons and Switches](buttons-and-switches) are supported "child and fool save" only when no button restriction (SetOption1) is given and when all configured shutter buttons of that module are pressed simultaneously.
 
 ## Configuration
 #### Sonoff Dual R2 Required Configuration
