@@ -141,7 +141,7 @@ D8|15|Counter2|STP
   - [XL4015](https://www.aliexpress.com/item/1859072209.html)  
 - Power Supplies (AC-DC):  
   - [DC 12V 2.5A](https://www.aliexpress.com/item/32588476889.html)  
-  - [DC 12V 4A](https://www.aliexpress.com/item/32854269135.html) 
+  - [DC 12V 4A](https://www.aliexpress.com/item/32854720283.html) 
   - [DC 24v 4A](https://www.aliexpress.com/item/32854269135.html)  
 - Aluminum Capacitors:  
   - [35V 100UF](https://www.aliexpress.com/item/32814611460.html)  
