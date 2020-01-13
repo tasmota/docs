@@ -44,7 +44,7 @@ Rule1 on Switch1#state=1 do Backlog Publish stat/%topic%/PIR1 ON; RuleTimer1 30 
 ```
 With this it will stay ON for 30 seconds then send OFF message and the timer restarts every time there's an ON trigger.
 
-Another use case as a [hand wave switch](Project-AM312-and-Sonoff-R2).
+Another use case as a [hand wave switch](Project-AM312-and-Sonoff-R2.md).
 
 ## HC-SR501
 
