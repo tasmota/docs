@@ -35,6 +35,8 @@ python -m http.server 8000
 ```
 Change your OtaUrl to http://ipoftheserver:8000/yourbinary.bin and start the upgrade process.
 
+If your binary build (yourbinary.bin) is more than 500KB, Tasmota will need to install first the minial version and after install yourbinary.bin . To have this OTA process working, you have to copy the file tasmota-minimal.bin, and paste/change it's name to yourbinary-minimal.bin, and put it in the same folder of yourbinary.bin, then OTA process will work (Note: do not put "/", "-", "." characheter in "yourbinary").
+
 ### By File Upload
 This process requires you to have a minimal build `tasmota-minimal.bin` of the firmware since the upload process needs the space in flash memory to upload the new binary. 
 
