@@ -93,6 +93,7 @@ Please refer to [Shutters and Steppers](Shutter-and-Steppers.md) for details.
   5. `ShutterClose<x>`
   6. `ShutterSetHalfway<x> 63` (using the value from step #4 above)
   7. `Restart 1`
+- After calibration you might want to enable an additional 1s motor movement by `ShutterEnableEndStopTime<x> 1` when the shutter is asked to move to its end positions (0% and 100%). By this you can guarantee that end positions are still reached in case of inaccuracies. Take care to disable this by `ShutterEnableEndStopTime<x> 0` before further open or close duration measurements.
 
 ### Increasing Calibration Granularity
 If you desire that the %-opening closely match what `ShutterPosition<x>` and web UI indicate, there is a granular calibration matrix available. Ensure that `ShutterClose<x>` and `ShutterOpen<x>` moves the shutter more or less to the limit positions and follow this procedure:
