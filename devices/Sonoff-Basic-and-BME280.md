@@ -15,4 +15,4 @@ YOU NEED TO DISABLE SERIAL LOG COMPLETELY TO ALLOW SENSORS ON TX/RX PINS
 
 On the Tasmota web interface go to `Configuration->Configure Module` and set
 
-![GPIO setting](https://raw.githubusercontent.com/wasi54/MySonoff/master/BME280-Tasmota-GPIO-Setting.png)
+![GPIO setting](_media/BME280-Tasmota-GPIO-Setting.png)
