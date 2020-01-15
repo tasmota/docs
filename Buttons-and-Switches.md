@@ -93,19 +93,28 @@ Tasmota will send a `TOGGLE` command when the button pressed (closing the circui
 Set toggle push-button mode. Same as `SwitchMode 0`.
 
 **`SwitchMode 8`**    
-Set switch to multi toggle mode (`0 = TOGGLE`, `1 = TOGGLE`, `2x change = HOLD`).
+Set switch to multi change toggle mode (`0 = TOGGLE`, `1 = TOGGLE`, `2x change = HOLD`).
 
 Same as `SwitchMode 0` but when the state of the circuit changes within 0.5s twice no `TOGGLE` commands are send but Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
+> [!EXAMPLE]
+> When you change switch fast within 0.5 s some extra action can be triggered using rules. On/Off state of the relay is only changed when there is no 2nd switch change within 0.5 s. 
+
 **`SwitchMode 9`**   
-Set switch to multi press follow mode (`0 = OFF`, `1 = ON`, `2x change = HOLD`)
+Set switch to multi change follow mode (`0 = OFF`, `1 = ON`, `2x change = HOLD`)
 
 Same as `SwitchMode 1` but when the state of the circuit changes within 0.5s twice no `OFF/ON` commands are send but Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
+> [!EXAMPLE]
+> When you change switch fast within 0.5 s some extra action can be triggered using rules. On/Off state of the relay is only changed when there is no 2nd switch change within 0.5 s. 
+
 **`SwitchMode 10`**   
-Set switch to inverted follow mode (`0 = ON`, `1 = OFF`, `2x change = HOLD`)
+Set switch to multi change inverted follow mode (`0 = ON`, `1 = OFF`, `2x change = HOLD`)
 
 Same as `SwitchMode 2` but when the state of the circuit changes within 0.5s twice no `ON/OFF` commands are send but Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
+
+> [!EXAMPLE]
+> When you change switch fast within 0.5 s some extra action can be triggered using rules. On/Off state of the relay is only changed when there is no 2nd switch change within 0.5 s. 
 
 ## SwitchTopic
 
