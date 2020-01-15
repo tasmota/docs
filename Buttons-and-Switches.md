@@ -46,9 +46,12 @@ SwitchMode, as the name implies, applies _**ONLY**_ to GPIO configured in Tasmot
 **`SwitchMode 0`**    
 _Default mode_
 
-Set switch to toggle mode.
+Set switch to toggle mode (`0 = TOGGLE`, `1 = TOGGLE`).
 
-Tasmota sends `TOGGLE` command each time the state of the circuit changes (closing or opening). 
+Tasmota sends `TOGGLE` command each time the state of the circuit changes (closing or opening). In case of a push button attached Tasmota will send a `TOGGLE` command when pressed and another `TOGGLE` command when released.
+
+> [!EXAMPLE]
+> When the button is pressed, toggle the relay to ring the doorbell; when the button is released, ring the doorbell again.  
 
 **`SwitchMode 1`**   
 Set switch to follow mode (`0 = OFF`, `1 = ON`)
@@ -77,22 +80,32 @@ Tasmota will send a `TOGGLE` command when the button is pressed (closing the cir
 **`SwitchMode 5`**   
 Set push-button with long press mode (`0 = TOGGLE`, `1 = ON` (_default_), `long press = HOLD`)
 
-Tasmota will send a `TOGGLE` command when the button is released (opening the circuit). When pressing the button (closing the circuit) nothing will happen. Default state is ON and when pressed it's OFF. When held for the time set in `SetOption32` (_default = 4s_), Tasmota sends `HOLD` (use Switch<x>#state=3 in rules).
+Tasmota will send a `TOGGLE` command when the button is released (opening the circuit). When pressing the button (closing the circuit) nothing will happen. Default state is ON and when pressed it's OFF. When held for the time set in `SetOption32` (_default = 4s_), Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
 **`SwitchMode 6`**   
 Set inverted push-button with long press mode (`0 = OFF` (_default_), `1 = TOGGLE`, `long press = HOLD`)
 
-Tasmota will send a `TOGGLE` command when the button pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Default state is OFF and when pressed it's ON. When held for the time set in `SetOption32` (_default = 4s_), Tasmota sends `HOLD` (use Switch<x>#state=3 in rules).
+Tasmota will send a `TOGGLE` command when the button pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Default state is OFF and when pressed it's ON. When held for the time set in `SetOption32` (_default = 4s_), Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
 > [!TIP] Long press or hold can be used in [conjunction with rules](Rule-Cookbook#use-long-press-action-on-a-switch) to create additional features or to control another Tasmota device.
 
 **`SwitchMode 7`**   
-Set toggle push-button mode
+Set toggle push-button mode. Same as `SwitchMode 0`.
 
-Tasmota will send a `TOGGLE` command when pressed and another `TOGGLE` command when released.
+**`SwitchMode 8`**    
+Set switch to multi toggle mode (`0 = TOGGLE`, `1 = TOGGLE`, `2x change = HOLD`).
 
-> [!EXAMPLE]
-> When the button is pressed, toggle the relay to ring the doorbell; when the button is released, ring the doorbell again.  
+Same as `SwitchMode 0` but when the state of the circuit changes within 0.5s twice no `TOGGLE` commands are send but Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
+
+**`SwitchMode 9`**   
+Set switch to multi press follow mode (`0 = OFF`, `1 = ON`, `2x change = HOLD`)
+
+Same as `SwitchMode 1` but when the state of the circuit changes within 0.5s twice no `OFF/ON` commands are send but Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
+
+**`SwitchMode 10`**   
+Set switch to inverted follow mode (`0 = ON`, `1 = OFF`, `2x change = HOLD`)
+
+Same as `SwitchMode 2` but when the state of the circuit changes within 0.5s twice no `ON/OFF` commands are send but Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
 ## SwitchTopic
 
