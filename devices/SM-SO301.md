@@ -3,6 +3,8 @@ The ESP8266 module inside is a TYWE3S by Tuya.
 
 Model purchased SM-SO301 (it seems to change on Amazon and other places, search for the model#). Other resellers may sell the same unit with various mains voltages/plug types.
 
+Also sold under the Vivitar name model HA-1007-ACD (US version). There is also an HA-1007-AU (AUS version).
+
 ### Product 
 
 ![img_20180726_165744](https://user-images.githubusercontent.com/3240875/43303061-b5408f44-9133-11e8-959b-60cc6bf1d6ca.jpg)
