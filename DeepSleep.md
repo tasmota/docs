@@ -54,7 +54,7 @@ D8|15|LOW
 ## Log Output Explanation
 _(logging level `4`)_  
 
-When MQTT connects at 13:08:38, this sets the system to READY.  
+When MQTT connects at `13:08:38`, this sets the system to READY.  
 ```
 13:08:43 MQT: tele/tasmota/INFO3 = {"RestartReason":"Deep-Sleep Wake"}
 13:08:44 APP: Boot Count 3
