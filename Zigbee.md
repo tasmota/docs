@@ -467,7 +467,7 @@ _(formatted for readability)_
       "Device": "0x3D82",
       "IEEEAddr": "0017880102FE1DBD",
       "ModelId": "LWB010",
-      "Manufacturer": "Philips"
+      "Manufacturer": "Philips",
       "Endpoints": {
         "0x0B": {
           "ProfileId": "0xC05E",
@@ -488,6 +488,37 @@ _(formatted for readability)_
 ```
 
 The message above shows that the device supports only one endpoint `0x03` which accepts messages (`ClustersIn`) for clusters `"0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"`.
+
+### Zigbee friendly names
+
+Since version 8.1.0.4, Z2T supports friendly names for devices. Instead of a short address like `"0x4773"` you can assign a friendly name like `"Room_Plug"`.
+
+See `ZigbeeName` command to set names.
+
+Example with a Xiaomi Aqara Cube with address `0x128F`:
+```yaml
+xx:xx:xx MQT: tele/<topic>/RESULT = {"ZigbeeReceived":{"0x128F":{"AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":162,"AqaraAccelerometer":[-690,2,138],"AqaraAngles":[-78,0,11],"LinkQuality":158}}}
+```
+
+Setting its name to `Vibration_sensor`:
+```yaml
+ZigbeeName 0x128F,Vibration_sensor
+xx:xx:xx CMD: ZigbeeName 0x128F,Vibration_sensor
+xx:xx:xx MQT: stat/tasmota/Zigbee_home/RESULT = {"0x128F":{"Name":"Vibration_sensor"}}
+
+(10 seconds later)
+xx:xx:xx ZIG: Zigbee Devices Data store in Flash (0x402FF800 - 270 bytes)
+```
+
+Now the sensor readings include the friendly name:
+```yaml
+xx:xx:xx MQT: tele/<topic>/RESULT = {"ZigbeeReceived":{"0x128F":{"Name":"Vibration_sensor","AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":171,"AqaraAccelerometer":[-691,12,130],"AqaraAngles":[-78,1,11],"LinkQuality":153}}}
+```
+
+If you set `SetOption83 1` sensor readings will use the friendly name as KSON key, short address is added as `Device`:
+```yaml
+xx:xx:xx MQT: tele/<topic>/RESULT = {"ZigbeeReceived":{"Vibration_sensor":{"Device":"0x128F","AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":171,"AqaraAccelerometer":[-691,8,136],"AqaraAngles":[-78,1,11],"LinkQuality":153}}}
+```
 
 ### Zigbee Device Commands
 
