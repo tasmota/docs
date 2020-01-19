@@ -302,7 +302,7 @@ Ex: ```{"ZigbeeState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Wat
 ### Pairing Zigbee Devices
 By default, and for security reasons, the Zigbee coordinator does not automatically accept new devices. To pair new devices, use [`ZigbeePermitJoin 1`](Commands#zigbeepermitjoin). Once Zigbee2Tasmota is in pairing mode, put the Zigbee device into pairing mode. This is usually accomplished by pressing the button on the device for 5 seconds or more. To stop pairing, use [`ZigbeePermitJoin 0`](Commands#zigbeepermitjoin).
 
-```
+```yaml
 ZigbeePermitJoin 1
 xx:xx:xx CMD: ZigbeePermitJoin 1
 xx:xx:xx MQT: stat/<topic>/RESULT = {"ZigbeePermitJoin":"Done"}
@@ -311,15 +311,15 @@ xx:xx:xx MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":21,"Message":"Enabl
 
 60 seconds later:
 
-```
+```yaml
 xx:xx:xx MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":20,"Message":"Disable Pairing mode"}}
 ```
 
 ### Reading Sensors
-Sensor messages are published via MQTT when they are received from the Zigbee device. Unlike Zigbee2MQTT, there is currently no debouncing nor caching.
+Sensor messages are published via MQTT when they are received from the Zigbee device. Similar to Zigbee2MQTT, Z2T tries to group and debounce sensor values when they are received within a 300ms window.
 
 #### Example for [Aqara Temperature & Humidity Sensor](https://www.aqara.com/us/temperature_humidity_sensor.html)
-<img src="_media/aqara.png"  style="float:right;width:10em">
+<img src="_media/aqara.png" style="float:right;width:10em">
 
 This sensor monitors humidity, temperature, and air pressure.  Its Zigbee model ID is `lumi.weather`.
 
@@ -341,7 +341,7 @@ This sensor monitors humidity, temperature, and air pressure.  Its Zigbee model 
 This device publishes sensor values roughly every hour or when a change occurs. You can also force an update pressing the device's button. It sends two kinds of messages, either 3x standard Zigbee messages, or a single proprietary message containing all sensor values.  
 
 Examples:
-```
+```yaml
 MQT: tele/<topic>/SENSOR = {"ZigbeeReceived":{"0x7C71":{"Humidity":55.57,"LinkQuality":42}}}
 MQT: tele/<topic>/SENSOR = {"ZigbeeReceived":{"0x7C71":{"Temperature":20.26,"LinkQuality":44}}}
 MQT: tele/<topic>/SENSOR = {"ZigbeeReceived":{"0x7C71":{"PressureUnit":"hPa","Pressure":983,"Scale":-1,"ScaledValue":9831,"LinkQuality":44}}}
@@ -413,12 +413,15 @@ _(formatted for readability)_
 }
 ```
 
-#### Identifying Target Device Endpoints
-You can use `ZigbeeStatus3` to display all information about all the endpoints and ZCL clusters supported. If probing was successful (at pairing time or using `ZigbeeProbe`), Tasmota will automatically find the right endpoint. If the device was not probed, you need to specify the endpoint explicitly. It is always better to explicitly add the endpoint number if you know it.
+#### Understanding endpoints
+
+Z2T will automatically compute the best endpoint for any command, based on the endpoint clusters announced by the device. You normally don't need to specify the endpoint number. In rare case, you can still force a specific endpoint.
+
+You can use `ZigbeeStatus3` to display all information about all the endpoints and ZCL clusters supported. If probing was successful (at pairing time or using `ZigbeeProbe`), Tasmota will automatically find the right endpoint.
 
 Depending on the number of device you have, `ZigbeeStatus3` output can exceed tha maximum MQTT message size. You can request the status of each individual device using `ZigbeeStatus3 1`, `ZigbeeStatus3 2`, `ZigbeeStatus3 3`...
 
-##### Known Endpoints
+##### Example Endpoints
 
 Device|Endpoint
 -|-
