@@ -302,6 +302,19 @@ Ex: ```{"ZigbeeState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Wat
 ### Pairing Zigbee Devices
 By default, and for security reasons, the Zigbee coordinator does not automatically accept new devices. To pair new devices, use [`ZigbeePermitJoin 1`](Commands#zigbeepermitjoin). Once Zigbee2Tasmota is in pairing mode, put the Zigbee device into pairing mode. This is usually accomplished by pressing the button on the device for 5 seconds or more. To stop pairing, use [`ZigbeePermitJoin 0`](Commands#zigbeepermitjoin).
 
+```
+ZigbeePermitJoin 1
+xx:xx:xx CMD: ZigbeePermitJoin 1
+xx:xx:xx MQT: stat/<topic>/RESULT = {"ZigbeePermitJoin":"Done"}
+xx:xx:xx MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":21,"Message":"Enable Pairing mode for 60 seconds"}}
+```
+
+60 seconds later:
+
+```
+xx:xx:xx MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":20,"Message":"Disable Pairing mode"}}
+```
+
 ### Reading Sensors
 Sensor messages are published via MQTT when they are received from the Zigbee device. Unlike Zigbee2MQTT, there is currently no debouncing nor caching.
 
