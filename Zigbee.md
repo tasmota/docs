@@ -74,7 +74,21 @@ Follow the usual ESP82xx [flashing process](installation/Flashing) - you are jus
 
 Once the firmware upload completes, retain the serial interface connections (3.3V, GND, Tx, Rx). These will be used later for flashing the CC2530.
 
-**B. Connect the CC2530 and the ESP82xx**    
+
+**B. Use superhouse.tv PCB**
+
+Jon Oxer from superhouse.tv kindly created a [custom PCB](https://github.com/SuperHouse/Z2T) to connect a Wemos D1 Mini and a CC2530 board (with or without CC2591). The PCB makes all the connections required to flash the CC2530 and to run Z2T.
+
+**Complete module**
+
+<img src="https://user-images.githubusercontent.com/49731213/72688606-3c432800-3b09-11ea-9e56-ed24a7c07017.jpg" height="140">
+<img src="https://user-images.githubusercontent.com/49731213/72688611-4533f980-3b09-11ea-9c10-9202d1f60f4d.jpg" height="140">
+
+**Prototype**
+
+<img src="https://user-images.githubusercontent.com/34340210/65651832-a7f30980-dfdd-11e9-845d-81c2b99babb9.jpg" height="140">
+
+**C. Flash a DL-20 Zigbee module**
 The DL-20 Zigbee module has a 5-pin 1.27mm pitch unpopulated header with 0.6mm througholes. For flashing any of the Zigbee modules, you need the following connections:  
 
 ESP<BR>Pin|D1 Mini<BR>NodeMCU|CC2530<BR>Pin|[DL-20 J2<BR>Pin Location](https://user-images.githubusercontent.com/34340210/67676080-29301a00-f957-11e9-8799-c819241e0b4c.png "CC2530 DL-20 Pin-outs")
@@ -89,11 +103,7 @@ GND|GND|GND|1
 Insert alternating male Dupont jumpers; one jumper on one side, the next one on other side. This  allows the pins to provide the friction themselves to maintain contact and remain firmly in place. You only need DD, DC, and RST (a fourth jumper is shown which is used to keep the RST jumper in place). Vcc and GND are available on the main serial interface pins.  
 <img src="https://user-images.githubusercontent.com/34340210/66960536-a47dfb80-f03a-11e9-9c24-9b3bc4676e49.jpg" width="360">  
 
-**Prototype**  
-<img src="https://user-images.githubusercontent.com/34340210/65651836-aa556380-dfdd-11e9-8788-549d0f427403.jpg" width="360">
-<img src="https://user-images.githubusercontent.com/34340210/65651832-a7f30980-dfdd-11e9-845d-81c2b99babb9.jpg" width="360">
-
-**C. Upload the firmware to the CC2530**    
+**D. Upload the firmware to the CC2530**    
 The CC2530 requires `Z-Stack_Home_1.2`, of type `Default` (not `Source Routing`). For convenience, ready to use [firmware files](https://github.com/s-hadinger/CCLib/tree/master/Bin) are provided. Select the right one for your hardware: `CC2530`, `CC2530 + CC2591` or `CC2530 + CC2592`.
 
 _**These Python scripts require Python 2.7.**_  
