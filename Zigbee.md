@@ -517,30 +517,30 @@ Examples:
 #### OSRAM Plug
 
 ```json
-ZigbeeSend { "device":"0x69CF", "endpoint":"0x03", "send":{"Power":"On"} }
-ZigbeeSend { "device":"0x69CF", "endpoint":"0x03", "send":{"Power":1} }
-ZigbeeSend { "device":"0x69CF", "endpoint":"0x03", "send":{"Power":false} }
-ZigbeeSend { "device":"0x69CF", "endpoint":"0x03", "send":{"Power":"Toggle"} }
+ZigbeeSend { "device":"0x4773", "send":{"Power":"On"} }
+ZigbeeSend { "device":"0x4773", "send":{"Power":1} }
+ZigbeeSend { "device":"0x4773", "send":{"Power":false} }
+ZigbeeSend { "device":"0x4773", "send":{"Power":"Toggle"} }
 ```
 
 Read the On/Off status: (all three commands below are synonyms)
 
 ```json
-ZigbeeRead { "device":"0x69CF", "endpoint":"0x03", "cluster":"0x0006", "read":"0x0000" }
-ZigbeeRead { "device":"0x69CF", "endpoint":"0x03", "cluster":"0x0006", "read":["0x0000"] }
-ZigbeeRead { "device":"0x69CF", "endpoint":3, "cluster":6, "read":0 }
+ZigbeeRead { "device":"0x4773", "endpoint":"0x03", "cluster":"0x0006", "read":"0x0000" }
+ZigbeeRead { "device":"0x4773", "endpoint":"0x03", "cluster":"0x0006", "read":["0x0000"] }
+ZigbeeRead { "device":"0x4773", "endpoint":3, "cluster":6, "read":0 }
 ```
 
 ```
-xx:xx:xx MQT: tele/tasmota/SENSOR = {"ZigbeeReceived":{"0x69CF":{"Power":true,"LinkQuality":52}}}
+xx:xx:xx MQT: tele/tasmota/SENSOR = {"ZigbeeReceived":{"0x4773":{"Power":true,"LinkQuality":52}}}
 ```
 
 #### Philips Hue bulb
 
 ```json
-ZigbeeSend { "device":"0x3D82", "endpoint":"0x0B", "send":{"Power":"Off"} }
-ZigbeeSend { "device":"0x3D82", "endpoint":"0x0B", "send":{"Dimmer":128} }
-ZigbeeSend { "device":"0x3D82", "endpoint":"0x0B", "send":{"Dimmer":254} }
+ZigbeeSend { "device":"0x3D82", "send":{"Power":"Off"} }
+ZigbeeSend { "device":"0x3D82", "send":{"Dimmer":128} }
+ZigbeeSend { "device":"0x3D82", "send":{"Dimmer":254} }
 ZigbeeSend { "device":"0x3D82", "endpoint":"0x0B", "send":{"Dimmer":0} }
 ```
 
