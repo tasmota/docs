@@ -238,7 +238,7 @@ GPIO15|Zigbee TX (165)|CC_RXD<BR>(A.K.A. P0_2)
 
 Configure the Tasmota device using a custom template. Assign **`Zigbee Tx (165)`** and **`Zigbee Rx (166)`** to the corresponding GPIOs to be used for serial communication with the CC2530. For example:
 
-```yaml
+```json
 {"NAME":"Zigbee","GPIO":[0,0,0,0,0,0,0,0,0,166,0,165,0],"FLAG":0,"BASE":18}
 ```
 
