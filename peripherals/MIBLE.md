@@ -68,10 +68,19 @@ Works with a CR2032-coin-cell and provides temperature, illuminance, (soil-)humi
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/miflora.png?raw=true" style="width:200px"></img>  
   
   
+### LYWSD02:  
+Model: LYWSDCGQ/01ZM  
+This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the driver can read temperature and humidity.  
+  
+<img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/lywsd02.jpg?raw=true" style="width:200px"></img>  
+  
+Python code to compute and set the value for the time characteristic with a generic BLE-tool: https://github.com/arendst/Tasmota/pull/7564#issuecomment-576396125
+
+
 
 ### Potential "candidates":  
 Based on published data, the chance to support following sensors in the future is quite good:  
-+ LYWSD02MMC (E-Ink-Display, rectangular form, 2 x CR2032-coin-cells)  
+
 + CGG1 (similar to the LYWSDCGQ/01ZM , but with E-Ink-Display and CR2430-coin-cell)  
   
   
