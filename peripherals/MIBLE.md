@@ -69,7 +69,6 @@ Works with a CR2032-coin-cell and provides temperature, illuminance, (soil-)humi
   
   
 ### LYWSD02:  
-Model: LYWSDCGQ/01ZM  
 This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the driver can read temperature and humidity.  
   
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/lywsd02.jpg?raw=true" style="width:200px"></img>  
