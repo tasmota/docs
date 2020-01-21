@@ -72,3 +72,9 @@ After the first recording, a download-link will appear in the web interface. By 
   do NOT update of Tasmota-system-UTC with every new GPS-time-message
 + sensor60 13
   set latitude and longitude in settings
++ sensor60 14
+  open virtual serial port over TCP, usable for u-center:  
+  tcp://ip-address:port (default port: 1234)  
+  !! ⚠️ misconfiguration via u-center can virtually brick the device ⚠️ !!  
++ sensor60 15
+  pause virtual serial port over TCP  (connection stays active in the background)
