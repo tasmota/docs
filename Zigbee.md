@@ -2,6 +2,8 @@
 
 Zigbee2Tasmota is a lightweight Zigbee solution running on an ESP82xx Wi-Fi chip. Hence it is easier to deploy in your living room or around your home. It is largely inspired from [Zigbee2mqtt](#why-another-zigbee-project) but it's a complete rewrite to make it fit on an ESP82xx with 80kB of RAM and only 1MB of flash memory.
 
+A list of compatible devices is maintained in the [Zigbee Device Compatibility Repository](https://zigbee.blakadder.com/zigbee2tasmota.html). 
+
 ## Zigbee Introduction
 Before using Zigbee to Tasmota, you need to understand a few concepts. Here is a simplified comparison to the Wi-Fi equivalent (sort of).
 
