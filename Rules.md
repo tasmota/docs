@@ -91,11 +91,12 @@ Tele-Wifi1#RSSI<a id="tele-power"></a>|when a teleperiod message is sent with th
 Tele-Wifi1#LinkCount<a id="tele-power"></a>|when a teleperiod message is sent with the number of wifi disconnections
 Tele-Wifi1#Downtime<a id="tele-power"></a>|when a teleperiod message is sent with the total seconds of wifi disconnections
 
-Every [command](Commands) with a one level JSON response has the #Data trigger.
+Every [command](Commands) with a JSON payload response has an associated rule trigger.
 
 |Trigger           | When it occurs |
 |------------------|----------------|
-| &lt;command\>#Data|A response such as {"Fanspeed":3} has the Fanspeed#Data trigger.<br>A response like {"PulseTime2":{"Set":0,"Remaining":0}} does **NOT** have the #data trigger as the triggers are PulseTime2#Set and PulseTime2#Remaining. 
+|&lt;command\>#Data|A one level JSON payload such as `{"command":"value"}`. For example, for {"Fanspeed":3}, the trigger is`Fanspeed#Data`.|
+|&lt;command\>#level1#level2#levelN|A multi-level level JSON payload such as `{"level1":{"level2":{"levelN":"value"}}}` does **NOT** have the `#Data` trigger. Instead, the trigger for these responses is `level1#level2#levelN`. For example, for {"PulseTime2":{"Set":0,"Remaining":0}}, the triggers are `PulseTime2#Set` and `PulseTime2#Remaining`.|
 
 Connected sensors can be a trigger in the form as they are represented in the `TelePeriod` and `Status 8` JSON payloads.  
 
