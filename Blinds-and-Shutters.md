@@ -192,6 +192,10 @@ Tasmota rule triggers:
 - `Shutter<x>#Open` and `Shutter<x>#Close`
 - `Shutter#Moving` is triggered every second if the shutter is moving
 - `Shutter#Moved` is triggered ONCE after the shutter stopped
+- `Shutter<x>#Button<button>=0`  is triggered when `button` is hold
+- `Shutter<x>#Button<button>=<n>`  is triggered when `button` is pressed `n` times
+- `Shutter<x>#Button0=0`  is triggered when all buttons of that shutter are hold simultaneously
+- `Shutter<x>#Button0=<n>`  is triggered when all buttons of that shutter are pressed simultaneously `n` times
 
 If more than one shutter is configured, it is not possible to know which shutter is moving.
 
