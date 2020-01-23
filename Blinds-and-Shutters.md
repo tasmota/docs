@@ -189,7 +189,6 @@ If using a Sonoff Dual R2, use the following Template:
 ### Rules
 Tasmota rule triggers:  
 - `Shutter<x>#Position`
-- `Shutter<x>#Open` and `Shutter<x>#Close`
 - `Shutter#Moving` is triggered every second if the shutter is moving
 - `Shutter#Moved` is triggered ONCE after the shutter stopped
 
