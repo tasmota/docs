@@ -72,7 +72,7 @@ Power1#State<a id="PowerState"></a>|when a power output is changed<br>use `Power
 Rules#Timer=1<a id="RulesTimer"></a>|when countdown `RuleTimer1` expires
 Switch1#Boot<a id="SwitchBoot"></a>|occurs after Tasmota starts before it is initializated.
 Switch1#State<a id="SwitchState"></a>|when a switch changes to state<br>use `Switch1#state=0` and `Switch1#state=1` for comparison, not =off or =on<br>`0` = OFF<BR>`1` = ON<BR>`2` = TOGGLE<BR>`3` = HOLD<BR>(`SwitchTopic 0` must be set for this to trigger)
-System#Boot<a id="SystemBoot"></a>|occurs once after Tasmota is intialised (after the INFO1, INFO2 and INFO3 console messages).
+System#Boot<a id="SystemBoot"></a>|occurs once after Tasmota is intialised (after the INFO1, INFO2 and INFO3 console messages). `System#Boot` only triggers if MQTT is enabled and connected. If you need a trigger prior to every service being initialized, , use `Power1#Boot`
 System#Save<a id="SystemSave"></a>|executed just before a planned restart
 Time#Initialized<a id="TimeInitialized"></a>|once when NTP is initialized and time is in sync
 Time#Initialized>120|once, 120 seconds after NTP is initialized and time is in sync
