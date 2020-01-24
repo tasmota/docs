@@ -30,6 +30,8 @@ Operating current < 18mA average
 |TX   |Rx|
 |RX   |Tx|
 
+In some situations if you only get `0 ppm` displayed it may be necessary to set "TX GPIO1" to "MHZ Rx" and "RX GPIO3" to "MHZ Tx" and correspondingly reverse the cabling for RX/TX.  See [here](https://github.com/arendst/Tasmota/issues/2659#issuecomment-387712292) for more details.
+
 #### Tasmota Settings
 In the Configuration -> Configure Module page, select the following for Wemos D1 mini:
 1. **Module Type:** 18 Generic
