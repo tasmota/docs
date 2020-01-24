@@ -95,8 +95,8 @@ The DL-20 Zigbee module has a 5-pin 1.27mm pitch unpopulated header with 0.6mm t
 
 ESP<BR>Pin|D1 Mini<BR>NodeMCU|CC2530<BR>Pin|[DL-20 J2<BR>Pin Location](https://user-images.githubusercontent.com/34340210/67676080-29301a00-f957-11e9-8799-c819241e0b4c.png "CC2530 DL-20 Pin-outs")
 :--:|:--:|:--:|:--:
-GPIO12|D6|CC_DD<BR>(A.K.A. P2_1 or Debug Data)|5
-GPIO4|D2|CC_DC<BR>(A.K.A. P2_2 or Debug Clock)|4
+GPIO12|D6|CC_DD<BR>(A.K.A. P2_1 ('P21') or Debug Data)|5
+GPIO4|D2|CC_DC<BR>(A.K.A. P2_2 ('P22') or Debug Clock)|4
 Vcc|3.3v|Vcc|3
 GPIO5|D1|CC_RST|2
 GND|GND|GND|1
