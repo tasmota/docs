@@ -36,7 +36,7 @@ Before using Zigbee to Tasmota, you need to understand a few concepts. Here is a
       <img src="https://user-images.githubusercontent.com/34340210/67676080-29301a00-f957-11e9-8799-c819241e0b4c.png" style="width:10em"></img>
     </td>
     <td>
-      <img src="https://github.com/tasmota/docs/blob/master/_media/CC2530%20External%20Antenna.png" style="width:10em"></img>
+      <img src="https://raw.githubusercontent.com/tasmota/docs/master/_media/CC2530%20External%20Antenna.png" style="width:10em"></img>
     </td>
     <td>
       <img src="https://user-images.githubusercontent.com/49731213/64906209-c0ad1680-d6e3-11e9-8703-71ea36c5be72.jpg" style="width:10em"></img>
