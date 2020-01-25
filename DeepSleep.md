@@ -8,23 +8,22 @@ To "reset" deep sleep, temporarily disconnect power and the RTC will be wiped on
 
 Please be aware that the minimum deep sleep time is 10 seconds. To wake the device, the RST pin must be connected to the D0/GPIO16 pin because the wake-up signal is sent through D0/GPIO16 to RST.
 
-If you want to **temporarily disable deep sleep mode**, you can use any GPIO and connect this through a 10k resistor to GND. Using D0/GPIO16 is acceptable. You can define a `(182) DeepSleep` component as shown below.
+### Temporarily disable deep sleep mode
+1. Use any GPIO and connect it through a 10k resistor to GND. Using D0/GPIO16 is acceptable. You can define the `(182) DeepSleep` component as shown below.
 
-![](https://user-images.githubusercontent.com/34340210/66764675-4d302d80-ee78-11e9-80fb-cca65e57f26d.png)
+   ![](https://user-images.githubusercontent.com/34340210/66764675-4d302d80-ee78-11e9-80fb-cca65e57f26d.png)
  
-If you want to execute some commands or a special script BEFORE the device goes into deep sleep you can use FUNC_SAVE_BEFORE_RESTART as a predefined hook to implement your own procedure. This requires you to code your own function and compile your custom firmware. If you want to use rules you can use the `System#Save` trigger. This will be executed just before the device goes into deep sleep.
+   If you want to execute some commands or a special script **BEFORE** the device goes into deep sleep you can use FUNC_SAVE_BEFORE_RESTART as a predefined hook to implement your own procedure. This requires you to code your own function and self-compile custom firmware.  
 
-Another method to get devices out of deepsleep for maintenace purposes is to configure a settable flag in your home automation software (such as Node-Red) to listen on the device topic, e.g.
+   To use rules, use the `System#Save` trigger. This will be executed just before the device goes into deep sleep.
 
-`tele/labclimate/INFO1`
+2. Configure a settable flag in your home automation hub (e.g., Node-Red, openHAB, Home Assistant). The flag should subscribe to the `INFO1` boot time message on the device topic, e.g., `tele/myDeviceTopic/INFO1`.  
 
-The moment a message is received on this topic your automation solution can send command `deepsleeptime 0` to topic `cmnd/labclimate/deepsleeptime` with a payload `0`
+   The moment a message is received on this topic, the automation solution can publish a message to topic `cmnd/myDeviceTopic/DeepSleepTime` with a payload `0`. This will cause the device to disable deep sleep and allow maintenance such as firmware updates to be performed without having an unexpected deep sleep event. Send the `DeepSleepTime 0` command **_only once_**.  
 
-This will cause the device to exit deep sleep configuration and allow maintenance such as firmware updates to be performed without having an unexpected deep sleep entry event.
+   Once the device maintenance is completed, place the device back into deep sleep mode using the original configuration.  
 
-Remember to change `labclimate` in this example to your topic and to only send the command `deepsleeptime 0` ONCE.
-
-When you are done with your maintenance processes you can place the device into deep sleep configuration as you did originally.
+   Be sure to change `myDeviceTopic` to the device topic.
 
 > **If you're having issues after wakeup from sleep make sure bootloop detection is off [`SetOption36 0`](Commands#setoption36) [#6890](https://github.com/arendst/Tasmota/issues/6890#issuecomment-552181980)**
 
