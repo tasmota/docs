@@ -286,7 +286,11 @@ cover:
 ```
 
 ### OpenHAB2 Support
-In order to use Tasmota shutter features with OpenHAB2 MQTT binding, one must use a map transformation to be able to send both UP, DOWN and STOP commands and specific positions via one topic. An example is shown below:
+In order to use Tasmota shutter features with OpenHAB2 MQTT binding, one must use a map transformation to be able to send both UP, DOWN and STOP commands and specific positions via one topic.
+
+Since OpenHAB uses 100 for "down/closed" and 0 for "up/open", the device must be configured with "ShutterInvert".
+
+An example is shown below:
 
 things/shutter.things:
 ```
