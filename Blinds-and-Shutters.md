@@ -285,6 +285,127 @@ cover:
            payload: '{{position}}'
 ```
 
+### OpenHAB2 Support
+In order to use Tasmota shutter features with OpenHAB2 MQTT binding, one must use a map transformation to be able to send both UP, DOWN and STOP commands and specific positions via one topic. An example is shown below:
+
+things/shutter.things:
+```
+Thing mqtt:topic:shutter (mqtt:broker:Broker) {
+    Channels:
+        Type rollershutter : Position [ 
+            stateTopic="stat/shutter/SHUTTER1", 
+            commandTopic="cmnd/shutter/Backlog",
+            transformationPatternOut="MAP:rollershutter-shutter1.map"
+        ]
+}
+```
+
+transform/rollershutter-shutter1.map
+```
+0=ShutterOpen1
+100=ShutterClose1
+STOP=ShutterStop1
+1=ShutterPosition1 1
+2=ShutterPosition1 2
+3=ShutterPosition1 3
+4=ShutterPosition1 4
+5=ShutterPosition1 5
+6=ShutterPosition1 6
+7=ShutterPosition1 7
+8=ShutterPosition1 8
+9=ShutterPosition1 9
+10=ShutterPosition1 10
+11=ShutterPosition1 11
+12=ShutterPosition1 12
+13=ShutterPosition1 13
+14=ShutterPosition1 14
+15=ShutterPosition1 15
+16=ShutterPosition1 16
+17=ShutterPosition1 17
+18=ShutterPosition1 18
+19=ShutterPosition1 19
+20=ShutterPosition1 20
+21=ShutterPosition1 21
+22=ShutterPosition1 22
+23=ShutterPosition1 23
+24=ShutterPosition1 24
+25=ShutterPosition1 25
+26=ShutterPosition1 26
+27=ShutterPosition1 27
+28=ShutterPosition1 28
+29=ShutterPosition1 29
+30=ShutterPosition1 30
+31=ShutterPosition1 31
+32=ShutterPosition1 32
+33=ShutterPosition1 33
+34=ShutterPosition1 34
+35=ShutterPosition1 35
+36=ShutterPosition1 36
+37=ShutterPosition1 37
+38=ShutterPosition1 38
+39=ShutterPosition1 39
+40=ShutterPosition1 40
+41=ShutterPosition1 41
+42=ShutterPosition1 42
+43=ShutterPosition1 43
+44=ShutterPosition1 44
+45=ShutterPosition1 45
+46=ShutterPosition1 46
+47=ShutterPosition1 47
+48=ShutterPosition1 48
+49=ShutterPosition1 49
+50=ShutterPosition1 50
+51=ShutterPosition1 51
+52=ShutterPosition1 52
+53=ShutterPosition1 53
+54=ShutterPosition1 54
+55=ShutterPosition1 55
+56=ShutterPosition1 56
+57=ShutterPosition1 57
+58=ShutterPosition1 58
+59=ShutterPosition1 59
+60=ShutterPosition1 60
+61=ShutterPosition1 61
+62=ShutterPosition1 62
+63=ShutterPosition1 63
+64=ShutterPosition1 64
+65=ShutterPosition1 65
+66=ShutterPosition1 66
+67=ShutterPosition1 67
+68=ShutterPosition1 68
+69=ShutterPosition1 69
+70=ShutterPosition1 70
+71=ShutterPosition1 71
+72=ShutterPosition1 72
+73=ShutterPosition1 73
+74=ShutterPosition1 74
+75=ShutterPosition1 75
+76=ShutterPosition1 76
+77=ShutterPosition1 77
+78=ShutterPosition1 78
+79=ShutterPosition1 79
+80=ShutterPosition1 80
+81=ShutterPosition1 81
+82=ShutterPosition1 82
+83=ShutterPosition1 83
+84=ShutterPosition1 84
+85=ShutterPosition1 85
+86=ShutterPosition1 86
+87=ShutterPosition1 87
+88=ShutterPosition1 88
+89=ShutterPosition1 89
+90=ShutterPosition1 90
+91=ShutterPosition1 91
+92=ShutterPosition1 92
+93=ShutterPosition1 93
+94=ShutterPosition1 94
+95=ShutterPosition1 95
+96=ShutterPosition1 96
+97=ShutterPosition1 97
+98=ShutterPosition1 98
+99=ShutterPosition1 99
+```
+
 ## Wiring Diagrams
 ### Normal wire configuration with a PCF as digital I/O
 ![Normal wire](https://user-images.githubusercontent.com/34340210/65997880-35b07800-e468-11e9-82d3-8dcaab14b3bf.png ":size=200px")
