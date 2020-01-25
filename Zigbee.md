@@ -284,7 +284,7 @@ For a list of available command see [Zigbee Commands](Commands#zigbee).
 ### Zigbee2Tasmota Status
 You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  
 
-Ex: ```{"ZigbeeState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}```  
+Ex: ```{"ZbState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}```  
 - `Status` contains a numeric code about the status message
   - `0`: initialization complete, **Zigbee2Tasmota is running normally**
   - `1`: booting
@@ -308,16 +308,16 @@ Ex: ```{"ZigbeeState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Wat
 By default, and for security reasons, the Zigbee coordinator does not automatically accept new devices. To pair new devices, use [`ZigbeePermitJoin 1`](Commands#zigbeepermitjoin). Once Zigbee2Tasmota is in pairing mode, put the Zigbee device into pairing mode. This is usually accomplished by pressing the button on the device for 5 seconds or more. To stop pairing, use [`ZigbeePermitJoin 0`](Commands#zigbeepermitjoin).
 
 ```yaml
-ZigbeePermitJoin 1
-xx:xx:xx CMD: ZigbeePermitJoin 1
-xx:xx:xx MQT: stat/<topic>/RESULT = {"ZigbeePermitJoin":"Done"}
-xx:xx:xx MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":21,"Message":"Enable Pairing mode for 60 seconds"}}
+ZbPermitJoin 1
+xx:xx:xx CMD: ZbPermitJoin 1
+xx:xx:xx MQT: stat/<topic>/RESULT = {"ZbPermitJoin":"Done"}
+xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":21,"Message":"Enable Pairing mode for 60 seconds"}}
 ```
 
 60 seconds later:
 
 ```yaml
-xx:xx:xx MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":20,"Message":"Disable Pairing mode"}}
+xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":20,"Message":"Disable Pairing mode"}}
 ```
 
 ### Reading Sensors
@@ -331,7 +331,7 @@ This sensor monitors humidity, temperature, and air pressure.  Its Zigbee model 
 1. Put Zigbee2Tasmota into pairing mode using the `ZigbeePermitJoin` command as described above
 2. Press the Xiaomi Aqara sensor's button for 5 seconds to pair the devices. You will see a message as follows:  
    ```yaml
-   MQT: tele/<topic>/SENSOR = {"ZigbeeState":{"Status":30,"IEEEAddr":"00158D00036B50AE","ShortAddr":"0x8F20","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
+   MQT: tele/<topic>/SENSOR = {"ZbState":{"Status":30,"IEEEAddr":"00158D00036B50AE","ShortAddr":"0x8F20","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
    ```
 
 |Field name|Value|
@@ -347,11 +347,11 @@ This device publishes sensor values roughly every hour or when a change occurs. 
 
 Examples:
 ```yaml
-MQT: tele/<topic>/SENSOR = {"ZigbeeReceived":{"0x7C71":{"Humidity":55.57,"LinkQuality":42}}}
-MQT: tele/<topic>/SENSOR = {"ZigbeeReceived":{"0x7C71":{"Temperature":20.26,"LinkQuality":44}}}
-MQT: tele/<topic>/SENSOR = {"ZigbeeReceived":{"0x7C71":{"PressureUnit":"hPa","Pressure":983,"Scale":-1,"ScaledValue":9831,"LinkQuality":44}}}
-MQT: tele/<topic>/SENSOR = {"ZigbeeReceived":{"0x7C71":{"Voltage":3.035,"Battery":100,"Temperature":19.91,"Humidity":82.16,"Pressure":983.25,"PressureUnit":"hPa","LinkQuality":47}}}
-MQT: tele/<topic>/SENSOR = {"ZigbeeReceived":{"0x7C71":{"Manufacturer":"LUMI","ModelId":"lumi.weather","LinkQuality":49}}}
+MQT: tele/<topic>/SENSOR = {"ZbReceived":{"0x7C71":{"Humidity":55.57,"LinkQuality":42}}}
+MQT: tele/<topic>/SENSOR = {"ZbReceived":{"0x7C71":{"Temperature":20.26,"LinkQuality":44}}}
+MQT: tele/<topic>/SENSOR = {"ZbReceived":{"0x7C71":{"PressureUnit":"hPa","Pressure":983,"Scale":-1,"ScaledValue":9831,"LinkQuality":44}}}
+MQT: tele/<topic>/SENSOR = {"ZbReceived":{"0x7C71":{"Voltage":3.035,"Battery":100,"Temperature":19.91,"Humidity":82.16,"Pressure":983.25,"PressureUnit":"hPa","LinkQuality":47}}}
+MQT: tele/<topic>/SENSOR = {"ZbReceived":{"0x7C71":{"Manufacturer":"LUMI","ModelId":"lumi.weather","LinkQuality":49}}}
 ```
 `0x8F20` is the ShortAddress of the sensor.  
 
@@ -371,15 +371,15 @@ Supported values:
 ### Device Information
 You can dump the internal information gathered about connected Zigbee devices with the command [`ZigbeeStatus`](Commands#zigbeestatus).  
 
-`ZigbeeStatus1` - List all connected devices  
+`ZbStatus1` - List all connected devices  
 ```yaml
-{"ZigbeeStatus1":[{"Device":"0x6B58"},{"Device":"0xE9C3"},{"Device":"0x3D82"}]}
+{"ZbStatus1":[{"Device":"0x6B58"},{"Device":"0xE9C3"},{"Device":"0x3D82"}]}
 ```
 
 _(JSON pretty-printed for readability)_  
 ```yaml
 {
-    "ZigbeeStatus1": [
+    "ZbStatus1": [
         { "Device":"0x6B58" },
         { "Device":"0xE9C3" },
         { "Device":"0x3D82" }
@@ -387,15 +387,15 @@ _(JSON pretty-printed for readability)_
 }
 ```
 
-`ZigbeeStatus2` - Display detailed information for each device, including long address, model and manufacturer:  
+`ZbStatus2` - Display detailed information for each device, including long address, model and manufacturer:  
 ```json
-{"ZigbeeStatus2":[{"Device":"0x6B58","IEEEAddr":"7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},{"Device":"0xE9C3","IEEEAddr":"00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},{"Device":"0x3D82","IEEEAddr":"0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips"}]}
+{"ZbStatus2":[{"Device":"0x6B58","IEEEAddr":"7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},{"Device":"0xE9C3","IEEEAddr":"00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},{"Device":"0x3D82","IEEEAddr":"0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips"}]}
 ```
 
 _(formatted for readability)_  
 ```json
 {
-    "ZigbeeStatus2": [
+    "ZbStatus2": [
         {
             "Device": "0x6B58",
             "IEEEAddr": "7CB03EAA0A0292DD",
@@ -422,9 +422,9 @@ _(formatted for readability)_
 
 Z2T will automatically compute the best endpoint for any command, based on the endpoint clusters announced by the device. You normally don't need to specify the endpoint number. In rare case, you can still force a specific endpoint.
 
-You can use `ZigbeeStatus3` to display all information about all the endpoints and ZCL clusters supported. If probing was successful (at pairing time or using `ZigbeeProbe`), Tasmota will automatically find the right endpoint.
+You can use `ZbStatus3` to display all information about all the endpoints and ZCL clusters supported. If probing was successful (at pairing time or using `ZbProbe`), Tasmota will automatically find the right endpoint.
 
-Depending on the number of device you have, `ZigbeeStatus3` output can exceed tha maximum MQTT message size. You can request the status of each individual device using `ZigbeeStatus3 1`, `ZigbeeStatus3 2`, `ZigbeeStatus3 3`...
+Depending on the number of device you have, `ZbStatus3` output can exceed tha maximum MQTT message size. You can request the status of each individual device using `ZbStatus3 1`, `ZbStatus3 2`, `ZbStatus3 3`...
 
 ##### Example Endpoints
 
@@ -434,13 +434,13 @@ OSRAM Plug|`0x03`
 Philips Hue Bulb|`0x0B`
 
 ```json
-{"ZigbeeStatus3":[{"Device":"0x6B58","IEEEAddr":"7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},"Endpoints":{"0x03":{"ProfileId":"0xC05E","ProfileIdName":"ZigBee Light Link","ClustersIn":["0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"],"ClustersOut":["0x0019"]}}},{"Device":"0xE9C3","IEEEAddr":"00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},"Endpoints":{"0x01":{"ProfileId":"0x0104","ClustersIn":["0x0000","0x0003","0xFFFF","0x0402","0x0403","0x0405"],"ClustersOut":["0x0000","0x0004","0xFFFF"]}}},{"Device":"0x3D82","IEEEAddr":"0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips","Endpoints":{"0x0B":{"ProfileId":"0xC05E"," ...
+{"ZbStatus3":[{"Device":"0x6B58","IEEEAddr":"7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},"Endpoints":{"0x03":{"ProfileId":"0xC05E","ProfileIdName":"ZigBee Light Link","ClustersIn":["0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"],"ClustersOut":["0x0019"]}}},{"Device":"0xE9C3","IEEEAddr":"00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},"Endpoints":{"0x01":{"ProfileId":"0x0104","ClustersIn":["0x0000","0x0003","0xFFFF","0x0402","0x0403","0x0405"],"ClustersOut":["0x0000","0x0004","0xFFFF"]}}},{"Device":"0x3D82","IEEEAddr":"0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips","Endpoints":{"0x0B":{"ProfileId":"0xC05E"," ...
 ```
 
 _(formatted for readability)_  
 ```json
 {
-  "ZigbeeStatus3": [
+  "ZbStatus3": [
     {
       "Device": "0x6B58",
       "IEEEAddr": "7CB03EAA0A0292DD",
@@ -498,18 +498,18 @@ The message above shows that the device supports only one endpoint `0x03` which 
 
 Since version 8.1.0.4, Z2T supports friendly names for devices. Instead of a short address like `"0x4773"` you can assign a friendly name like `"Room_Plug"`.
 
-See `ZigbeeName` command to set names.
+See `ZbName` command to set names.
 
 Example with a Xiaomi Aqara Cube with address `0x128F`:
 ```yaml
-xx:xx:xx MQT: tele/<topic>/RESULT = {"ZigbeeReceived":{"0x128F":{"AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":162,"AqaraAccelerometer":[-690,2,138],"AqaraAngles":[-78,0,11],"LinkQuality":158}}}
+xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbReceived":{"0x128F":{"AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":162,"AqaraAccelerometer":[-690,2,138],"AqaraAngles":[-78,0,11],"LinkQuality":158}}}
 ```
 
 Setting its name to `Vibration_sensor`:
 ```yaml
 ZigbeeName 0x128F,Vibration_sensor
-xx:xx:xx CMD: ZigbeeName 0x128F,Vibration_sensor
-xx:xx:xx MQT: stat/tasmota/Zigbee_home/RESULT = {"0x128F":{"Name":"Vibration_sensor"}}
+xx:xx:xx CMD: ZbName 0x128F,Vibration_sensor
+xx:xx:xx MQT: stat/<topic>/RESULT = {"0x128F":{"Name":"Vibration_sensor"}}
 
 (10 seconds later)
 xx:xx:xx ZIG: Zigbee Devices Data store in Flash (0x402FF800 - 270 bytes)
@@ -517,12 +517,12 @@ xx:xx:xx ZIG: Zigbee Devices Data store in Flash (0x402FF800 - 270 bytes)
 
 Now the sensor readings include the friendly name:
 ```yaml
-xx:xx:xx MQT: tele/<topic>/RESULT = {"ZigbeeReceived":{"0x128F":{"Name":"Vibration_sensor","AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":171,"AqaraAccelerometer":[-691,12,130],"AqaraAngles":[-78,1,11],"LinkQuality":153}}}
+xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbReceived":{"0x128F":{"Name":"Vibration_sensor","AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":171,"AqaraAccelerometer":[-691,12,130],"AqaraAngles":[-78,1,11],"LinkQuality":153}}}
 ```
 
 If you set `SetOption83 1` sensor readings will use the friendly name as KSON key, short address is added as `Device`:
 ```yaml
-xx:xx:xx MQT: tele/<topic>/RESULT = {"ZigbeeReceived":{"Vibration_sensor":{"Device":"0x128F","AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":171,"AqaraAccelerometer":[-691,8,136],"AqaraAngles":[-78,1,11],"LinkQuality":153}}}
+xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbReceived":{"Vibration_sensor":{"Device":"0x128F","AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":171,"AqaraAccelerometer":[-691,8,136],"AqaraAngles":[-78,1,11],"LinkQuality":153}}}
 ```
 
 ### Zigbee Device Commands
@@ -553,31 +553,31 @@ Examples:
 #### OSRAM Plug
 
 ```json
-ZigbeeSend { "device":"0x4773", "send":{"Power":"On"} }
-ZigbeeSend { "device":"0x4773", "send":{"Power":1} }
-ZigbeeSend { "device":"0x4773", "send":{"Power":false} }
-ZigbeeSend { "device":"0x4773", "send":{"Power":"Toggle"} }
+ZbSend { "device":"0x4773", "send":{"Power":"On"} }
+ZbSend { "device":"0x4773", "send":{"Power":1} }
+ZbSend { "device":"0x4773", "send":{"Power":false} }
+ZbSend { "device":"0x4773", "send":{"Power":"Toggle"} }
 ```
 
 Read the On/Off status: (all three commands below are synonyms)
 
 ```json
-ZigbeeRead { "device":"0x4773", "endpoint":"0x03", "cluster":"0x0006", "read":"0x0000" }
-ZigbeeRead { "device":"0x4773", "endpoint":"0x03", "cluster":"0x0006", "read":["0x0000"] }
-ZigbeeRead { "device":"0x4773", "endpoint":3, "cluster":6, "read":0 }
+ZbRead { "device":"0x4773", "endpoint":"0x03", "cluster":"0x0006", "read":"0x0000" }
+ZbRead { "device":"0x4773", "endpoint":"0x03", "cluster":"0x0006", "read":["0x0000"] }
+ZbRead { "device":"0x4773", "endpoint":3, "cluster":6, "read":0 }
 ```
 
 ```
-xx:xx:xx MQT: tele/tasmota/SENSOR = {"ZigbeeReceived":{"0x4773":{"Power":true,"LinkQuality":52}}}
+xx:xx:xx MQT: tele/tasmota/SENSOR = {"ZbReceived":{"0x4773":{"Power":true,"LinkQuality":52}}}
 ```
 
 #### Philips Hue bulb
 
 ```json
-ZigbeeSend { "device":"0x3D82", "send":{"Power":"Off"} }
-ZigbeeSend { "device":"0x3D82", "send":{"Dimmer":128} }
-ZigbeeSend { "device":"0x3D82", "send":{"Dimmer":254} }
-ZigbeeSend { "device":"0x3D82", "endpoint":"0x0B", "send":{"Dimmer":0} }
+ZbSend { "device":"0x3D82", "send":{"Power":"Off"} }
+ZbSend { "device":"0x3D82", "send":{"Dimmer":128} }
+ZbSend { "device":"0x3D82", "send":{"Dimmer":254} }
+ZbSend { "device":"0x3D82", "endpoint":"0x0B", "send":{"Dimmer":0} }
 ```
 
 #### Why another Zigbee project?  
