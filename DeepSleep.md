@@ -14,6 +14,18 @@ If you want to **temporarily disable deep sleep mode**, you can use any GPIO and
  
 If you want to execute some commands or a special script BEFORE the device goes into deep sleep you can use FUNC_SAVE_BEFORE_RESTART as a predefined hook to implement your own procedure. This requires you to code your own function and compile your custom firmware. If you want to use rules you can use the `System#Save` trigger. This will be executed just before the device goes into deep sleep.
 
+Another method to get devices out of deepsleep for maintenace purposes is to configure a settable flag in your home automation software (such as Node-Red) to listen on the device topic, e.g.
+
+`tele/labclimate/INFO1`
+
+The moment a message is received on this topic your automation solution can send command `deepsleeptime 0` to topic `cmnd/labclimate/deepsleeptime` with a payload `0`
+
+This will cause the device to exit deep sleep configuration and allow maintenance such as firmware updates to be performed without having an unexpected deep sleep entry event.
+
+Remember to change `labclimate` in this example to your topic and to only send the command `deepsleeptime 0` ONCE.
+
+When you are done with your maintenance processes you can place the device into deep sleep configuration as you did originally.
+
 > **If you're having issues after wakeup from sleep make sure bootloop detection is off [`SetOption36 0`](Commands#setoption36) [#6890](https://github.com/arendst/Tasmota/issues/6890#issuecomment-552181980)**
 
 ### Overcome any Network issue
