@@ -209,14 +209,14 @@ See also|[`SetOption3`](#setoption3) - Disable//Enable MQTT<BR>[`SetOption4`](#s
 
 Command|Parameters
 :---|:---
-Add<x\><a id="add"></a>|`<value>` = add value to Var<x\> ([example](Rule-Cookbook/#arithmetic-commands-to-be-used-with-vars))
+Add<x\><a id="add"></a>|`<value>` = add value to Var<x\> ([example](Rule-Cookbook#arithmetic-commands-to-be-used-with-vars))
 CalcRes<a id="calcres"></a>|Current calculation resolution<BR>`0..7` = set number of decimal places to be used in `Add`, `Sub`, `Mult` and `Scale`
 Event<a id="event"></a>|Execute an event to trigger a rule as [documented](Rules#trigger)&emsp;  »5.13.0
 Mem<x\><a id="mem"></a>|Manage up to 16 variables stored on flash (x = `1..16`)<BR>`Mem` returns all current values. `Mem<x>` returns the variable's current value.<BR>`<value>` = store a string value in a variable<BR>`"` = clear stored value in Mem<x\>
-Mult<x\><a id="mult"></a>|`<value>` = multiply value to Var<x\> ([example](Rule-Cookbook/#arithmetic-commands-to-be-used-with-vars))<BR>
+Mult<x\><a id="mult"></a>|`<value>` = multiply value to Var<x\> ([example](Rule-Cookbook#arithmetic-commands-to-be-used-with-vars))<BR>
 Rule<x\><a id="rule"></a>|Rules. [Read more...](Rules)<BR>`0` = disable Rule<x\><BR>`1` = enable Rule<x\><BR>`2` = toggle Rule<x\><BR>`4` = disable one-shot detection (perform commands as long as trigger is met)<BR>`5` = enable one-shot (e.g., sometimes used for slow changing sensors like temperature) detection<BR>`6` = toggle one-shot detection<BR>`8` = disable stop-on-error after exception restart<BR>`9` = enable stop-on-error after exception restart<BR>`10` = toggle stop-on-error after exception restart<BR>`<value>` = define Rule<x\><BR>`+<value>` = append to Rule<x\><BR>`"` = clear Rule<x\>
 RuleTimer<x\><a id="ruletimer"></a>|Up to eight timers to be used as countdown event (x = `1..8`)&emsp;  »5.13.0<BR>`0..32766` = set countdown rule timer in seconds
-Scale<x\><a id="scale"></a>|Scale value from a low and high limit to another low and high limits and save in Var<x\> ([example](Rule-Cookbook/#arithmetic-commands-to-be-used-with-vars))<BR>`v` = value: the number to scale<BR>`fl` = fromLow: the lower bound of the value’s current range<BR>`fh` = fromHigh: the upper bound of the value’s current range<BR>`tl` = toLow: the lower bound of the value’s target range<BR>`th` = toHigh: the upper bound of the value’s target range
+Scale<x\><a id="scale"></a>|Scale value from a low and high limit to another low and high limits and save in Var<x\> ([example](Rule-Cookbook#arithmetic-commands-to-be-used-with-vars))<BR>`v` = value: the number to scale<BR>`fl` = fromLow: the lower bound of the value’s current range<BR>`fh` = fromHigh: the upper bound of the value’s current range<BR>`tl` = toLow: the lower bound of the value’s target range<BR>`th` = toHigh: the upper bound of the value’s target range
 Sub<x\><a id="sub"></a>|`<value>` = subtract value to Var<x\> ([example](Rule-Cookbook#arithmetic-commands-to-be-used-with-vars))
 Var<x\><a id="var"></a>|Manage up to 16 variables stored in memory (x = `1..16`)<BR>`Var` returns all current values. `Var<x>` returns the variable's current value.<BR>`<string>` = store a string value in a variable<BR>`"` = clear stored value in Var<x\>
 
