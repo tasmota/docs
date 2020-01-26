@@ -412,6 +412,7 @@ SetOption80<a id="setoption80"></a>|[Blinds and shutters](blinds-and-shutters) s
 SetOption81<a id="setoption81"></a>|Set PCF8574 component behavior for all ports<BR>`0` = set as regular state *(default)*<BR>`1` = set as inverted state
 SetOption82<a id="setoption82"></a>|Reduce the CT range from 153..500 to 200.380 to accomodate with Alexa range<BR>`0` = CT ranges from 153 to 500 *(default)*<BR>`1` = CT ranges from 200 to 380 (although you can still set in from 153 to 500)
 SetOption83<a id="setoption83"></a>|Uses Zigbee device friendly name instead of 16 bits short addresses as JSON key when reporting values and commands<BR>`0` = JSON key as short address<BR>`1` = JSON key as friendly name<BR>See [`ZigbeeName <device>,<name>`](#zigbeename)
+SetOption84<a id="setoption84"></a>|(Experimental) When using AWS IoT, sends a device shadow update (alternative to retained)<BR>`0` = don't update device shadow (default)<BR>`1` = update device shadow<BR>Note: if the `Topic` contains `'/'` they are replaced with `'_'`
 
 ### Serial Bridge
 Both hardware and software Serial Bridge are supported.
