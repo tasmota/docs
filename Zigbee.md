@@ -252,22 +252,22 @@ When the Tasmota device boots, Zigbee2Tasmota will wait for 15 seconds before in
 
 When you first run your CC2530, you will see additional steps to configure the device:
 ```
-MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}
-MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":50,"MajorRel":2,"MinorRel":6,"MaintRel":3,"Revision":20190608}}
-MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":2,"Message":"Reseting configuration"}}
-MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":3,"Message":"Configured, starting coordinator"}}
-MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":51,"IEEEAddr":"00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
-MQT: tele/tasmota/Zigbee_home/RESULT = {"ZigbeeState":{"Status":0,"Message":"Started"}}
+MQT: tele/<topic>/RESULT = {"ZbState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}
+MQT: tele/<topic>/RESULT = {"ZbState":{"Status":50,"MajorRel":2,"MinorRel":6,"MaintRel":3,"Revision":20190608}}
+MQT: tele/<topic>/RESULT = {"ZbState":{"Status":2,"Message":"Reseting configuration"}}
+MQT: tele/<topic>/RESULT = {"ZbState":{"Status":3,"Message":"Configured, starting coordinator"}}
+MQT: tele/<topic>/RESULT = {"ZbState":{"Status":51,"IEEEAddr":"00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
+MQT: tele/tasmota/Zigbee_home/RESULT = {"ZbState":{"Status":0,"Message":"Started"}}
 ZIG: Zigbee started
 ```
 
 Normal boot looks like:  
 ```
-MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}
-MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":50,"MajorRel":2,"MinorRel":6,"MaintRel":3,"Revision":20190608}}
-MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":3,"Message":"Configured, starting coordinator"}}
-MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":51,"IEEEAddr":"00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
-MQT: tele/<topic>/RESULT = {"ZigbeeState":{"Status":0,"Message":"Started"}}
+MQT: tele/<topic>/RESULT = {"ZbState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}
+MQT: tele/<topic>/RESULT = {"ZbState":{"Status":50,"MajorRel":2,"MinorRel":6,"MaintRel":3,"Revision":20190608}}
+MQT: tele/<topic>/RESULT = {"ZbState":{"Status":3,"Message":"Configured, starting coordinator"}}
+MQT: tele/<topic>/RESULT = {"ZbState":{"Status":51,"IEEEAddr":"00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
+MQT: tele/<topic>/RESULT = {"ZbState":{"Status":0,"Message":"Started"}}
 ZIG: Zigbee started
 ```
 
