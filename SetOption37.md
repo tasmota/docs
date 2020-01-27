@@ -4,7 +4,7 @@ The main reason for this option is to provide support for bulbs whose physical w
 
 For technical reasons this transformation isn't a full N-to-N mapping, it can only the **re-arrange** the channels, which is equivalent to map the (R,G,B,W<sub>c</sub>,W<sub>w</sub>) channels to one of their permutations.
 
-The required permutation can be configured via `SetOptions37 n`, where `n` is the **systematic index** of the permutation, a number from the [0 .. 119] interval, from 0=(R,G,B,W<sub>c</sub>,W<sub>w</sub>) to 119=(W<sub>w</sub>,W<sub>c</sub>,B,G,R):
+The required permutation can be configured via `SetOption37 n`, where `n` is the **systematic index** of the permutation, a number from the [0 .. 119] interval, from 0=(R,G,B,W<sub>c</sub>,W<sub>w</sub>) to 119=(W<sub>w</sub>,W<sub>c</sub>,B,G,R):
 
 | Idx | Perm.               | Idx | Perm.               | Idx | Perm.               | Idx | Perm.               |
 |-----|---------------------|-----|---------------------|-----|---------------------|-----|---------------------|
