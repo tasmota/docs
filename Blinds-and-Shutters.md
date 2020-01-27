@@ -100,18 +100,18 @@ If you desire that the %-opening closely match what `ShutterPosition<x>` and web
 - `ShutterCalibration<x> 30 50 70 90 100`
 - `Restart 1`
 - `ShutterClose<x>`
-- Now move the shutter to each of the following positions and measure the opening for each. 
+- Move the shutter to each of the following opening percentages and measure the shutter's position for each. 
   - `ShutterPosition<x> 30` (e.g., measurement = `15`)
   - `ShutterPosition<x> 50` (e.g., measurement = `50`)
   - `ShutterPosition<x> 70` (e.g., measurement = `100`)
   - `ShutterPosition<x> 90` (e.g., measurement = `150`)
   - `ShutterPosition<x> 100` (e.g., measurement = `180`)
-- Now enter the measurements in `cm` as the calibration:
-  `ShutterCalibration<x> 15 50 100 150 180`
+- Finally, enter the position measurements as the calibration values:
+  `ShutterCalibration<x> 15 50 100 150 180`  
 
-`ShutterCalibration<x>` takes position measurements (**not** the time it takes to move). During calibration you position the shutter to an indicated percentage (e.g., `30%`) of opening and measure the shutter position (e.g., `15`). Use the same unit of measure for all your measurements (e.g., centimeters, inches, etc.). After calibration `ShutterPosition<x> 30` will move to `30%` opening which will correspond to the position you provided (`15`).
+`ShutterCalibration<x>` takes position measurements (**not** the time it takes to move). During calibration you position the shutter to an indicated percentage (e.g., `30%`) of opening and measure the shutter position (e.g., `15`). Use the same unit of measure for all your measurements (e.g., centimeters, inches, etc.). After calibration `ShutterPosition<x> 30` will move to `30%` opening which will correspond to the position you provided (`15`).  
 
-Notice that there is no calibration for the 10\% position. On many shutters, there is no movement during the initial phase (i.e., nearly 10% of total time). Therefore the opening could be `0`. This measurement would cause an execution DIV 0 exception. Therefore the first calibration point is 30%. In most cases this is not a large opening so the calibration will be near enough. Yes, until ~10%, the position will be a bit "off" but not enough for concern.
+Notice that there is no calibration for the 10\% position. On many shutters, there is no movement during the initial phase (i.e., nearly 10% of total time). Therefore the opening could be `0`. This measurement would cause an execution DIV 0 exception. Therefore the first calibration point is 30%. In most cases this is not a large opening so the calibration will be near enough. Yes, until ~10%, the position will be a bit "off" but not enough for concern.  
 
 ### Motor Movement Delays
 Some motors need up to one second after power is turned on before they start moving. You can confirm if you are having this issue if opening and closing as a single action works properly but doing this in smaller steps result in a shift of the position.  
@@ -130,7 +130,6 @@ Some motors need up to one second after power is turned on before they start mov
    `<delay> =  ((max_position-real_max) / 2) / (((100/80) * max_position) / ShutterOpenDuration)`
 
 Close the shutter and repeat this procedure until the motor delay is set properly.  
-
 
 ## Button control
 When shutter is running in normal `ShutterMode: 0`, you already have basic control over the shutter movement using tasmota switches or tasmota buttons in the module configuration to directly drive the shutter relays.  For  short circuit safe operation `ShutterMode: 1` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch or button and 2nd switch on the power by the other switch or button. 
