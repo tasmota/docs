@@ -89,9 +89,9 @@ Please refer to [Shutters and Steppers](Shutter-and-Steppers.md) for details.
   1. `ShutterClose<x>` (confirm that the shutter is completely closed)
   2. `ShutterSetHalfway<x> 50` (reset to default)
   3. Move the shutter to actual 50% open position.
-  4. `ShutterPosition<x>` and record the value (e.g., 63 `%`)
+  4. Use `ShutterPosition<x>` to inquire the shutter's current position and record the value. This value is a **percentage of the total opening** (e.g., `63` = 63% of opening).
   5. `ShutterClose<x>`
-  6. `ShutterSetHalfway<x> 63` (using the `%` value from step #4 above)
+  6. `ShutterSetHalfway<x> 63` (using the value from step #4 above)
   7. `Restart 1`
 
 ### Increasing Calibration Granularity
@@ -101,17 +101,17 @@ If you desire that the %-opening closely match what `ShutterPosition<x>` and web
 - `Restart 1`
 - `ShutterClose<x>`
 - Now move the shutter to each of the following positions and measure the opening for each. 
-  - `ShutterPosition<x> 30` (e.g., measurement = `15 cm`)
-  - `ShutterPosition<x> 50` (e.g., measurement = `50 cm`)
-  - `ShutterPosition<x> 70` (e.g., measurement = `100 cm`)
-  - `ShutterPosition<x> 90` (e.g., measurement = `150 cm`)
-  - `ShutterPosition<x> 100` (e.g., measurement = `180 cm`)
+  - `ShutterPosition<x> 30` (e.g., measurement = `15`)
+  - `ShutterPosition<x> 50` (e.g., measurement = `50`)
+  - `ShutterPosition<x> 70` (e.g., measurement = `100`)
+  - `ShutterPosition<x> 90` (e.g., measurement = `150`)
+  - `ShutterPosition<x> 100` (e.g., measurement = `180`)
 - Now enter the measurements in `cm` as the calibration:
   `ShutterCalibration<x> 15 50 100 150 180`
 
-Notice that there is no calibration for the 10\% position. On many shutters, there is no movement during the initial phase (i.e., nearly 10% of total time). Therefore the opening could be `0`. This measurement would cause an execution DIV 0 exception. Therefore the first calibration point is 30%. In most cases this is not a large opening so the calibration will be near enough. Yes, until ~10%, the position will be a bit "off" but not enough for concern.
+`ShutterCalibration<x>` takes position measurements (**not** the time it takes to move). During calibration you position the shutter to an indicated percentage (e.g., `30%`) of opening and measure the shutter position (e.g., `15`). Use the same unit of measure for all your measurements (e.g., centimeters, inches, etc.). After calibration `ShutterPosition<x> 30` will move to `30%` opening which will correspond to the position you provided (`15`).
 
-Please note that `ShutterCalibration<x>` takes length measurements e.g. in `cm` (no `timing`). During calibration you record measurments in `cm` for the uncalibrated shutter e.g. for `ShutterPosition<x> 50`. After calibration `ShutterPosition<x> 50` will move to calibrated `50 %` and not to the uncalibrated position of `ShutterPosition<x> 50` during calibration.
+Notice that there is no calibration for the 10\% position. On many shutters, there is no movement during the initial phase (i.e., nearly 10% of total time). Therefore the opening could be `0`. This measurement would cause an execution DIV 0 exception. Therefore the first calibration point is 30%. In most cases this is not a large opening so the calibration will be near enough. Yes, until ~10%, the position will be a bit "off" but not enough for concern.
 
 ### Motor Movement Delays
 Some motors need up to one second after power is turned on before they start moving. You can confirm if you are having this issue if opening and closing as a single action works properly but doing this in smaller steps result in a shift of the position.  
