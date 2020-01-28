@@ -373,8 +373,10 @@ Enabling this feature also enables [Tasmota TLS](TLS) as `sendmail` uses SSL.
 
 > [!EXAMPLE]  
 ```
-sendmail [smtp.gmail.com:465:user:passwd:sender@gmail.com:rec@gmail.com:alarm] %string%
+sendmail [smtp.gmail.com:465:user:passwd:sender@gmail.com:<rec@gmail.com>:alarm] %string%
 ```  
+Remark:  
+A number of e-mail servers (such as Gmail) require the receiver's e-mail address to be enclosed by `< ... >` as in example above. Most other e-mail servers also accept this format.  
 
 The following parameters can be specified during compilation via `#define` directives in `user_config_override.h`:  
 * `EMAIL_SERVER`  
@@ -384,7 +386,7 @@ The following parameters can be specified during compilation via `#define` direc
 * `EMAIL_FROM`  
 
 To use any of these values, pass an `*` as its corresponding argument placeholder.  
-> [!EXAMPLE] `sendmail [*:*:*:*:*:rec@gmail.com:theSubject] theMessage`  
+> [!EXAMPLE] `sendmail [*:*:*:*:*:<rec@gmail.com>:theSubject] theMessage`  
 
 Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `>m` _(note lower case)_ section. The specified text in this script section must end with an `#` character. `sendmail` will use the `>m` section if `*` is passed as the `msg` parameter. See [Scripting Cookbook Example].(Script-Cookbook#Send-e-mail)  
  
