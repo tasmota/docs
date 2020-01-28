@@ -3,10 +3,11 @@
 
 Tasmota provides a Rule feature heavily inspired by the _ESPEasy_ implementation while maintaining a small memory footprint. Automation solutions can be implemented without having to add dedicated code or use external solutions.  
 
-
 Rules perform actions based on triggers (e.g., switch state change, temperature threshold, events like system boot, a defined timer elapsing, custom defined events, etc.) They are stored in flash and therefore will survive a reboot.
 
 > [!NOTE] Most pre-compiled [builds](Builds) have the Rules feature enabled. *If you are >compiling your own firmware, in order to use rules, include `#define USE_RULES` in `user_config_override.h`.*
+
+**Complete list of [Rules Commands](Commands#rules)**  
 
 ## Rule Syntax
 
@@ -19,8 +20,6 @@ Rule definition statement:
 - **`BREAK`**  - marks the end of a rule. `BREAK` will stop the execution of the remaining rules that follow this rule within the rule set. If a rule that ends with `BREAK` is triggered, the following rules in that rule set will not be executed. This allows the rules to somewhat simulate an "IF/ELSE" statement.  
 
 Rule sets are defined by using the [`Rule<x>`](Commands#rule) command. After defining a rule set, you have to enable it (turn it on) using `Rule<x> 1`. Similarly you can disable the rule set using `Rule<x> 0`.  
-  
-See [Commands](Commands#Rules) for a complete list of rules related commands.  
   
 There are three separate rule sets called `Rule1`, `Rule2` and `Rule3`. Each rule set can contain as many rules as can fit within the 511 character limit. Whenever a rule set is enabled all the rules in it will be active. If the character count of the rules in the set exceed the limit, split the rules into another rule set. If you have a long list of rules, verify the rules have all fit by inspecting the resulting log.
 
@@ -118,7 +117,7 @@ Hardware and software serial interface, RF, IR and TuyaMCU are also supported ba
 
 |Trigger           | When it occurs |
 ------------------|----------------|
-|TuyaReceived#Data=&lt;hex_string><a id="TuyaReceivedData"></a>| whenever &lt;hex_string> is received with [TuyaMCU](tuyamcu) component|
+|TuyaReceived#Data=&lt;hex_string><a id="TuyaReceivedData"></a>| whenever &lt;hex_string> is received with [TuyaMCU](TuyaMCU) component|
 |SerialReceived#Data=&lt;string><a id="SerialReceivedData"></a>| whenever &lt;string> is received via hardware serial|
 |SSerialReceived#Data=&lt;string>| whenever &lt;string> is received via software serial|
 |IrReceived#Data=801<a id="IrReceivedData"></a>| whenever an IR signal for a RC5 remote control button 1 is received|
@@ -204,7 +203,7 @@ Rule1 "
 ## Conditional Rules
 
 !> **This feature is not included in precompiled binaries.**    
-To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
+To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 ```
 #define USE_EXPRESSION         // Add support for expression evaluation in rules (+3k2 code, +64 bytes mem)  
 #define SUPPORT_IF_STATEMENT   // Add support for IF statement in rules (+4k2 code, -332 bytes mem)  
@@ -292,7 +291,7 @@ Rule1
 
 !> **This feature is not included in precompiled binaries.**    
 
-To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
+To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 ```
 #define USE_EXPRESSION         // Add support for expression evaluation in rules (+3k2 code, +64 bytes mem)  
 #define SUPPORT_IF_STATEMENT   // Add support for IF statement in rules (+4k2 code, -332 bytes mem)  
@@ -306,7 +305,7 @@ Once the feature is enabled, the use of expressions is supported in the followin
 * Var
 * Mem
 * RuleTimer
-* [If conditional statement](Rules---IF-ELSE-ELSEIF-and-AND-OR-Support) (requires `#define SUPPORT_IF_STATEMENT`)
+* [If conditional statement](#conditional-rules) (requires `#define SUPPORT_IF_STATEMENT`)
 
 ### Syntax
 Expressions can use of the following operators. They are listed by the order of operations priority, from higher to lower.
