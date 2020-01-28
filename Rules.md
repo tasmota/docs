@@ -192,6 +192,15 @@ The `<value>` can also be the value of the trigger of the rule.
     ON mqtt#connected DO Publish stat/topic/BLACKOUT {"From":"%Var1%","To":"%Var2%"} ENDON
   ```
 
+### Clear a rule
+
+To [clear / delete](Commands#rule) a rule you need to set it with one quote:
+
+```console
+Rule1 "
+```
+
+
 ## Conditional Rules
 
 !> **This feature is not included in precompiled binaries.**    
