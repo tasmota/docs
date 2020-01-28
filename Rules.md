@@ -194,10 +194,10 @@ The `<value>` can also be the value of the trigger of the rule.
 
 ### Clear a rule
 
-To [clear / delete](Commands#rule) a rule you need to set it to an empty string:
+To [clear / delete](Commands#rule) a rule you need to set it with one quote:
 
 ```console
-Rule1 ""
+Rule1 "
 ```
 
 
