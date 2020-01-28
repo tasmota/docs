@@ -373,8 +373,10 @@ Enabling this feature also enables [Tasmota TLS](TLS) as `sendmail` uses SSL.
 
 > [!EXAMPLE]  
 ```
-sendmail [smtp.gmail.com:465:user:passwd:sender@gmail.com:rec@gmail.com:alarm] %string%
+sendmail [smtp.gmail.com:465:user:passwd:sender@gmail.com:<rec@gmail.com>:alarm] %string%
 ```  
+Remark: 
+A number of e-mail servers (like gmail) require the receiver address to be between <> as in above example. Most other e-mail servers accept this format also.
 
 The following parameters can be specified during compilation via `#define` directives in `user_config_override.h`:  
 * `EMAIL_SERVER`  
