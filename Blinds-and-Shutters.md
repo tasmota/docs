@@ -170,7 +170,7 @@ Examples:
 - `ShutterButton<x> <button> 0 50 24 0 0 0 0 1 1` is same as `ShutterButton<x> <button> down 1`.
 - `ShutterButton<x> <button> 100 0 50 - 0 0 0 0 0` is same as `ShutterButton<x> <button> updown 0`.
 
-Module WiFi setup, restart, upgrade and reset according to [Buttons and Switches](buttons-and-switches) are supported "child and fool save" only when no button restriction (SetOption1) is given and when all configured shutter buttons of that module are pressed simultaneously.
+Module WiFi setup, restart, upgrade and reset according to [Buttons and Switches](buttons-and-switches) are supported "child and fool save" only when no button restriction (SetOption1) is given and when all configured shutter buttons of that shutter are pressed simultaneously.
 
 ## Configuration
 #### Sonoff Dual R2 Required Configuration
