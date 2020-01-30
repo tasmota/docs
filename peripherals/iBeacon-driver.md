@@ -1,4 +1,4 @@
-The ibeacon driver uses a BLE4 module [HM-17](https://www.herman-shop.com/PDF/bluetooth%20hm16%20hm17.pdf) (HM-16 should also work).
+The ibeacon driver uses the BLE4 module [HM-17](https://www.herman-shop.com/PDF/bluetooth%20hm16%20hm17.pdf) (HM-16 should also work).
 The HM-10 works too and maybe other compatible modules (capable of bluetooth central role and driven by AT commands).
 
 The driver is Working with the HM-17 Module with Firmware Version V120 and V110.
