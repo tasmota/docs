@@ -35,7 +35,12 @@ Carefully remove PCB from casing for easier soldering.
 ### Step 5
 Solder cables to the ESP Pins.
 
+SHP6 10A model:
 ![Solder points](https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-04.jpg ":size=200")
+
+SHP6 15A model:
+![Solder points](
+https://raw.githubusercontent.com/tiagofreire-pt/docs/master/_media/Blitzwolf_SHP6_15A.jpg ":size=200")
 
 If you do not want to solder you can try using crocodile clips and manually push a jumper cable first to IO0 (enter flash mode while booting, i.e. connect IO0 to ground) and then during flashing push a jumper to TX. Just be careful to not cause any short-circuit with the clips on the other side of the pads.
 
@@ -61,8 +66,8 @@ Flash Tasmota.
 ### Step 9
 Select the correct configuration under _Configuration -> Configure Module_ or apply [correct template](#template)
 
-* [SHP6](https://blakadder.github.io/templates/blitzwolf_SHP6.html)
-* [Gosund SP111 with new PCB SP111_A_Wifi_Ver1.1](https://blakadder.github.io/templates/gosund_SP111_v2.html)
+* [SHP6 10A model](https://blakadder.github.io/templates/blitzwolf_SHP6.html)
+* [SHP6 15A model (compatible with SP111 v2)](https://blakadder.github.io/templates/gosund_SP111_v2.html)
 
 ### As an alternative for steps 2 to 5: 
 The following programming adapter could be an option, which requires no soldering or significant disassembly on the SHP-6.
@@ -78,7 +83,7 @@ It significantly reduces the effort of reflashing multiple SHP-6 units. [Thingiv
 ![All parts](https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-09.jpg ":size=100")
 
 # Power monitoring calibration
-Approach the calibration using the Method 2. If not satisfied with the results, you could mod the SMD direct measure resistor or mitigate this using a Tasmota set of rules:
+Approach the calibration using the Method 2. If not satisfied with the results, you could mod the SMD direct measure resistor or mitigate this using a Tasmota set of rules (values valid only for the 10A model):
 
 ```console
 Rule1 ON energy#power<=100 DO Currentcal 2500 BREAK ON energy#power<=500 DO Currentcal 2635 BREAK ON energy#power<=1000 DO Currentcal 2788 BREAK ON energy#power<=1500 DO Currentcal 2942 BREAK ON energy#power<=2000 DO Currentcal 3095 BREAK ON energy#power<=2500 DO Currentcal 3249 BREAK ON energy#power>2500 DO Currentcal 3402 BREAK 
