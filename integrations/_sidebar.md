@@ -19,5 +19,6 @@
 * [SmartThings](https://github.com/BrettSheleski/SmartThingsPublic/blob/master/devicetypes/brettsheleski/sonoff-tasmota.src/readme.md)
 * **Device management**
 * [Tasmota Device Manager](/integrations/Tasmota-Device-Manager)
+* [TasUI](/integrations/TasUI)
 * [Tasmota Device Locator](/integrations/Tasmota-Device-Locator)
 * [TasmoAdmin](/integrations/TasmoAdmin)
