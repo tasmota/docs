@@ -21,7 +21,7 @@
 * [Burns Home Automation - Home Automation Tutorials](https://www.youtube.com/channel/UCSKQutOXuNLvFetrKuwudpg/videos)
 * [Step to Step Tutorials - Hobbytronics Tutorials](https://hobbytronics.pk/blog/)
 * [Yuval Mejahez - Tasmota Flash tutorials Channel](https://www.youtube.com/channel/UC8eIbt7dehdys0n_n22zKvA)
-* [Kiril Peyanski - Smart Home, Automation and IoT Devices](https://www.youtube.com/kpeyanski)
+* [Kiril Peyanski - Tasmota Tutorials](https://www.youtube.com/kpeyanski/search?query=tasmota)
 
 ### Non-English Tutorials
 * DE - [Tuya Geräte Flashen](https://www.youtube.com/watch?v=0MAPHmvPGFM)
