@@ -263,6 +263,48 @@ cover:
     tilt_closed_value: 0
     tilt_opened_value: 100
 ```
+Another Home Assistant integration example with position update while movement (Tasmota versions >= v8.1.0.5):  
+```yaml
+cover:
+  - platform: mqtt
+    name: "Balcony Blinds"
+    availability_topic: "tele/%topic%/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    position_topic: "stat/%topic%/RESULT"
+    value_template: >
+      {% if ('Shutter1' in value_json) and ('Position' in value_json.Shutter1) %}
+        {{ value_json.Shutter1.Position }}
+      {% else %}
+        {% if is_state('cover.balcony_blinds', 'unknown') %}
+          50
+        {% else %}
+          {{ state_attr('cover.balcony_blinds','current_position') }}
+        {% endif %}
+      {% endif %}    
+    position_open: 100
+    position_closed: 0
+    set_position_topic: "cmnd/%topic%/ShutterPosition1"
+    command_topic: "cmnd/%topic%/Backlog"
+    payload_open: "ShutterOpen1"
+    payload_close: "ShutterClose1"
+    payload_stop: "ShutterStop1"
+    retain: false
+    optimistic: false
+    qos: 1
+```
+In addition, add to your home assistant start up automation a query for the current shutter position:
+```yaml
+- alias: "Power state on HA start-up"
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/%shutters grouptopic%/shutterposition"
+        payload: ""       
+```
 
 This example works with Home Assistant **versions prior to 0.82**:  
 ```yaml
