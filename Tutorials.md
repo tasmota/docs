@@ -10,6 +10,7 @@
 * [True 3-Way Smart Switch](https://www.youtube.com/watch?v=9LIaDN7Nx2E&t=1s)
 * [Make a motion activated switch with temperature and humidity sensor](https://www.youtube.com/watch?v=mWQnHResSCM)
 * [Sonoff Basic as UK Light Switch](https://www.youtube.com/watch?v=XM03KvdP-uA)
+* [Tasmota and Tasmotizer Easy Flashing Guide for ESP8266 devices](https://youtu.be/_UnI6cnzF3k)
 
 ### YouTube Channels covering Tasmota and home automation
 * [DigiblurDIY - Great and Easy Tasmota related Videos](https://www.youtube.com/channel/UC5ZdPKE2ckcBhljTc2R_qNA/videos)
@@ -20,7 +21,7 @@
 * [Burns Home Automation - Home Automation Tutorials](https://www.youtube.com/channel/UCSKQutOXuNLvFetrKuwudpg/videos)
 * [Step to Step Tutorials - Hobbytronics Tutorials](https://hobbytronics.pk/blog/)
 * [Yuval Mejahez - Tasmota Flash tutorials Channel](https://www.youtube.com/channel/UC8eIbt7dehdys0n_n22zKvA)
-* [Kiril Peyanski - Tasmota and Tasmotizer Easy Flashing Guide for ESP8266 devices](https://youtu.be/_UnI6cnzF3k)
+* [Kiril Peyanski - Smart Home, Automation and IoT Devices](https://www.youtube.com/kpeyanski)
 
 ### Non-English Tutorials
 * DE - [Tuya Geräte Flashen](https://www.youtube.com/watch?v=0MAPHmvPGFM)
