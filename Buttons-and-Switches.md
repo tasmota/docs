@@ -253,7 +253,7 @@ For a practical application of everything mentioned in this article read about t
 
 # Assignment of Buttons and Switches to Relays and PWMs
 
-By default Switches and Buttons controls their corresponding Relay or PWM. _Corresponding_ means the relay which has the same `Power<x>` number as the Switch or Button. So `Switch1` and `Button2` both controls the Relay or PWM at `Power1`.
+By default Switches and Buttons controls their corresponding Relay or PWM. _Corresponding_ means the relay which has the same `Power<x>` number as the Switch or Button. So `Switch1` and `Button1` both controls the Relay or PWM at `Power1`.
 If there's no corresponding `Power<x>` for a Button or Switch, it controls `Power1`.
 
 Relays and PWMs are numbered as `Power<x>`, beginning with Relays followed by PWM. With `SetOption68 = 0`, there's only one virtual `Power<x>` that controls all PWMs. With `SetOption68 = 1`, there's a `Power<x>` for every defined PWM.
