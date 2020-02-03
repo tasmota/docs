@@ -250,3 +250,33 @@ All of the above is easier accomplished using [Rules](Rules)!
 
 ---
 For a practical application of everything mentioned in this article read about this excellent [LEGO nightstand switch project](https://jeff.noxon.cc/2018/11/21/lego-nightstand-light-switch/).
+
+# Assignment of Buttons and Switches to Relays and PWMs
+
+By default Switches and Buttons controls their corresponding Relay or PWM. _Corresponding_ means the relay which has the same `Power<x>` number as the Switch or Button. So `Switch1` and `Button2` both controls the Relay or PWM at `Power1`.
+If there's no corresponding `Power<x>` for a Button or Switch, it controls `Power1`.
+
+Relays and PWMs are numbered as `Power<x>`, beginning with Relays followed by PWM. With `SetOption68 = 0`, there's only one virtual `Power<x>` that controls all PWMs. With `SetOption68 = 1`, there's a `Power<x>` for every defined PWM.
+
+> [!EXAMPLE]
+> `SetOption68 = 1`
+> Defined are Relay2, Relay4, PWM1 and PWM5
+>
+> Relay2 is `Power1` which is controlled by every `Switch1` and `Button1`
+> Relay4 is `Power2` which is controlled by every `Switch2` and `Button2`
+> PWM1 is `Power3` which is controlled by every `Switch3` and `Button3`
+> PWM5 is `Power4` which is controlled by every `Switch4` and `Button4`
+>
+> If a Switch or Button with a higher number is defined (e.g. `Switch6`), it controlls `Power1` which is Relay2
+
+## Customized behaviour
+
+There are several options to customize that default behaviour. One is [SwitchTopic](#SwitchTopic) and [ButtonTopic](#ButtonTopic) which allows to send mqtt messages rather than controlling the corresponding `Power<x>`.
+
+The other option is to assign a rule to `Button#State` or `Switch#State`. This supresses the default behaviour of controlling the corresponding `Power<x>`.
+
+> [!NOTE]
+> If a rule only matches certain states of a button or switch, only for this states the default behaviour is supressed.
+
+> [!EXAMPLE]
+> `Rule1 ON Switch1#State DO Delay 2 ENDON` avoids that Switch1 controls `Power1`
