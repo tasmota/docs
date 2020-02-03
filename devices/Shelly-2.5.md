@@ -58,7 +58,7 @@ If you connect momentary switches, use the following template:
 `Button1` and `Button2` are assigned to the SW1 and SW2 external inputs. `Button3` is the button on the back of the device next to the pin header and you can optionally assign the baheviour you want using rules.
 
 If you want the buttons to respond instantly, go to the console and type `SetOption13 1`.
-But, if you want press/double press/hold functionality, run instead `Backlog SetOption1 1; SetOption11 1; SetOption32 1` to enable all three states.
+But, if you want press/double press/hold functionality, run instead `Backlog SetOption1 1; SetOption11 1; SetOption32 20` to enable all three states and a hold time of 2 Seconds. Use [SetOption32](https://tasmota.github.io/docs/#/Commands?id=setoption32) to set another hold time.
 
 If you want to see Voltage and Frequency also when the relays are off, use `SetOption21 1`
 
@@ -78,9 +78,17 @@ CurrentSet 250.0
 Pause a few seconds between executing the commands as the communication between Tasmota and the energy monitoring chip is a serial interface which can take over a second to complete.
 
 ## Use rules to control shutter endpoints
-As the Shelly 2.5 contains energy monitoring you can use rules to power off the shutter when too much current is drawn at the end point. This rule will power off both directions when the current becomes greater than 500mA.
+As the Shelly 2.5 contains energy monitoring you can use rules to power off the shutter when too much current is drawn at the end point. This rule will power off both directions when the current becomes greater than 600mA.
+Before you activate the rule, let your shutter move and pay attention to the current value in the WebGUI.
+Note your value and add 0.050 to your value.
+After that, you change the value in the rule.
+
+Eg.: Your Value = 0.520 + 0.050 = 0.570
+
+```energy#current[X]>0.570```
+
 ```
-rule1 on energy#current>0.500 do backlog power1 0; power2 0 endon
+rule1 on energy#current[2]>0.600 do backlog power1 0;power2 0; endon on energy#current[1]>0.600 do backlog power1 0;power2 0 endon
 rule1 1
 rule1 5
 ```
