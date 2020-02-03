@@ -106,7 +106,7 @@ _One of my devices had a hardware issue - constantly losing WiFi, rebooted when 
 ![Relay](https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/relay.jpg)  
 ![Relay2](https://raw.githubusercontent.com/wiki/Astr0/Sonoff-Tasmota/images/lonsonho16a/relay2.jpg)  
 I figured out the pinout for flashing the device:  
-![Pinout](https://github.com/iroger/Sonoff-Tasmota/blob/master/relay.jpg)
+![Pinout](https://github.com/iroger/Sonoff-Tasmota/raw/master/relay.jpg)
 
 * Before assembling it back remove as much solder as possible from input and output pole pads. The device fits together very tight, so everything should be perfectly in place. Don't forget to glue the case back.
 
