@@ -58,7 +58,7 @@ If you connect momentary switches, use the following template:
 `Button1` and `Button2` are assigned to the SW1 and SW2 external inputs. `Button3` is the button on the back of the device next to the pin header and you can optionally assign the baheviour you want using rules.
 
 If you want the buttons to respond instantly, go to the console and type `SetOption13 1`.
-But, if you want press/double press/hold functionality, run instead `Backlog SetOption1 1; SetOption11 1; SetOption32 20` to enable all three states and a hold time of 2 Seconds. Use [SetOption32](https://tasmota.github.io/docs/#/Commands?id=setoption32) to set another hold time.
+But, if you want press/double press/hold functionality, run instead `Backlog SetOption1 1; SetOption11 1; SetOption32 20` to enable all three states and set hold time of 2 seconds. Use [SetOption32](https://tasmota.github.io/docs/#/Commands?id=setoption32) to set another hold time.
 
 If you want to see Voltage and Frequency also when the relays are off, use `SetOption21 1`
 
@@ -81,17 +81,21 @@ Pause a few seconds between executing the commands as the communication between 
 As the Shelly 2.5 contains energy monitoring you can use rules to power off the shutter when too much current is drawn at the end point. This rule will power off both directions when the current becomes greater than 600mA.
 Before you activate the rule, let your shutter move and pay attention to the current value in the WebGUI.
 Note your value and add 0.050 to your value.
-After that, you change the value in the rule.
+After that, you change the value for the rule.
 
 Eg.: Your Value = 0.520 + 0.050 = 0.570
 
-```energy#current[X]>0.570```
+`energy#current[X]>0.570`
 
 ```
 rule1 on energy#current[2]>0.600 do backlog power1 0;power2 0; endon on energy#current[1]>0.600 do backlog power1 0;power2 0 endon
 rule1 1
 rule1 5
 ```
+
+## Use Shelly 2.5 device for Blinds and Shutters
+Further Information: [Blinds and Shutters](../Blinds-and-Shutters)
+
 
 ## Ghost switching
 The Shelly 2.5 inputs appear to be notoriously susceptible to interference. Therefore ghost switching can happen if the wires are long (>1m / 3ft). If you experience this issue, you might want to experiment with the switch debounce delay. It is set to 50 milliseconds by default.
