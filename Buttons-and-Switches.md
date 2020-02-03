@@ -271,12 +271,13 @@ Relays and PWMs are numbered as `Power<x>`, beginning with Relays followed by PW
 
 ## Customized behaviour
 
-There are several options to customize that default behaviour. One is [SwitchTopic](#SwitchTopic) and [ButtonTopic](#ButtonTopic) which allows to send mqtt messages rather than controlling the corresponding `Power<x>`.
+There are several options to customize that default behaviour. One is [SwitchTopic](#SwitchTopic) and [ButtonTopic](#ButtonTopic) which allows to send mqtt messages rather than controlling the corresponding `Power<x>`. Be aware that switchtopic/buttontopic have a fallback feature when mqtt or wifi disconnects that will start controlling again their corresponding relays.
 
-The other option is to assign a rule to `Button#State` or `Switch#State`. This supresses the default behaviour of controlling the corresponding `Power<x>`.
+The other option is to assign a rule to `Button#State` or `Switch#State`. This supresses the default behaviour of controlling the corresponding `Power<x>` and don't have any fallback feature. With rules you can make complex behaviours. For rules to be used with switches and/or buttons, switchtopic/buttontopic must be 0 because switchtopic/buttontopic overrides rules.
 
 > [!NOTE]
 > If a rule only matches certain states of a button or switch, only for this states the default behaviour is supressed.
 
 > [!EXAMPLE]
-> `Rule1 ON Switch1#State DO Delay 2 ENDON` avoids that Switch1 controls `Power1`
+> `Rule1 ON Switch1#State DO Delay ENDON` avoids that Switch1 controls `Power1`
+For more examples with rules and button/switches, see the rules cookbook [Read more...](Rules)
