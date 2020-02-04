@@ -107,6 +107,13 @@ Connected sensors can be a trigger in the form as they are represented in the `T
 |INA219#Current\>0.100| whenever the current drawn is more than 0.1A|
 |Energy#Power\>100| whenever the power used is more than 100W|
 
+When the payload consists of an array of data eg: `ENERGY":{Current":[1.320,2.100]}`
+
+|Trigger           | When it occurs |
+------------------|----------------|
+|Energy#Current\[N\]|N = Number of the field. 1 for the first `1.320`, 2 for the second `2.100` etc.|
+|Energy#Current\[1\]\>1.000|whenever the first value of Energy#Current is higher than 1.000.|
+
 To trigger only at TelePeriod time, prefix the sensor with the word `Tele-`.  
 
 |Trigger           | When it occurs |
