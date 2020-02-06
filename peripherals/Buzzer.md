@@ -13,6 +13,7 @@ all parameters are optional. *(default is `1,1,1` (one 100 millisecond beep))*.
 
 `<count>`   
 number of beeps
+`-1` for infinite, `-2` to follow state of LED1;» v8.1.0.6
 
 `<beep>`    
 duration of one beep in 100 millisecond steps
@@ -21,7 +22,7 @@ duration of one beep in 100 millisecond steps
 duration of silence between beeps 100 millisecond steps
 
 `<tune>`    
-is a 32-bit [bitmask](https://en.wikipedia.org/wiki/Mask_(computing)#Masking_bits_to_1) where a `1` bit beeps and a `0` bit is silence according to `<beep>` and `<silence>`, respectively. The tune is played from most significant bit (MSB) to least significant bit (LSB). Leading and trailing `0` bits are ignored. If `<tune>` is specified, `<count>` is ignored. If `<tune>` is `0`, it is ignored.
+is a 32-bit [bitmask](https://en.wikipedia.org/wiki/Mask_(computing)#Masking_bits_to_1) where a `1` bit beeps and a `0` bit is silence according to `<beep>` and `<silence>`, respectively. The tune is played from most significant bit (MSB) to least significant bit (LSB). Leading and trailing `0` bits are ignored. If `<tune>` is specified, `<count>` is ignored (`<count>` for `<tune>` supported in » v8.1.0.66). If `<tune>` is `0`, it is ignored.
 
 Examples:
 `3` - Beep three times with 100 milliseconds duration and 100 milliseconds pause<BR>
