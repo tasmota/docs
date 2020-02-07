@@ -5,7 +5,7 @@
 This is a 4-way powerboard with the addition of a 2 USB ports. The USB Ports are switched together
 
 Opening up the device was easy, but requires the use of a Tri-Wing Screwdriver ( like a phillips, but with 3 slots)
-![tri_wing_screw](https://i.ibb.co/mSzYdVM/triwing.png)
+![tri_wing_screw](https://i.ibb.co/mSzYdVM/triwing.png | width=100)
 
 Pry off the Rubber feet to reveal the scews bneath
 
