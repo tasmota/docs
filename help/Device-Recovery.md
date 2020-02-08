@@ -27,6 +27,7 @@ Implemented for situations where a device cannot be reset to firmware defaults b
 2. Power the device on and off three times with intervals lower than 10 seconds and leave it on after fourth time
 3. Fast power cycle device recovery should activate and the device should be reset to firmware defaults
    > If you flashed a precompiled binary you can [reconfigure](installation/Initial-Configuration#configure-wi-fi) the device using the web UI after the reset. 
+   > Check your wifi networks for tasmota-xxxx, select it and configure the lan settings
 
   If your region experiences regular brownouts (rapid succession power outages), you should disable this feature to avoid unwanted device settings resets. Use [`SetOption65 1`](Commands#setoption65) to disable power cycle recovery.
 
