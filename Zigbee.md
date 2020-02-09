@@ -494,7 +494,7 @@ _(formatted for readability)_
 
 The message above shows that the device supports only one endpoint `0x03` which accepts messages (`ClustersIn`) for clusters `"0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"`.
 
-### Zigbee friendly names
+#### Zigbee Friendly Names
 
 Since version 8.1.0.4, Z2T supports friendly names for devices. Instead of a short address like `"0x4773"` you can assign a friendly name like `"Room_Plug"`.
 
@@ -582,3 +582,41 @@ ZbSend { "device":"0x3D82", "endpoint":"0x0B", "send":{"Dimmer":0} }
 
 #### Why another Zigbee project?  
 There are several excellent open-source Zigbee to MQTT solutions like the widely used [Zigbee2mqtt](https://www.zigbee2mqtt.io/) or [Aqara Hub](https://github.com/Frans-Willem/AqaraHub). Zigbee2mqtt is a comprehensive solution but requires at least a Raspberry Pi to run it. Zigbee2Tasmota is a lightweight solution running on an ESP82xx Wi-Fi chip. Hence it is easier to deploy in your living room or around your home.
+
+## Device Configuration
+
+If your device pairs successfully with Zigbee2Tasmota but doesn't report on standardized endpoint you will see messages like these:   
+`{"ZbReceived":{"0x099F":{"0500!00":"010000FF0000","LinkQuality":70}}}`   
+`{"ZbReceived":{"0x7596":{"0006!01":"","LinkQuality":65}}}`
+
+In this case you will have to use rules or an external home automation solution to parse the ZbReceived messages. The following section will focus only on rules to utilize the device inside Tasmota ecosystem.
+
+### Ikea ON/OFF Switch (E1743)
+`"ModelId":"TRADFRI on/off switch","Manufacturer":"IKEA of Sweden"`
+
+- Short press `O` - `0006!00`
+- Short press `I` - `0006!01`
+- Long press `O` - `0008!01`
+- Long press `I` - `0008!05`
+- Long press release `O` or `I` - `0008!07`
+
+In this example Tradfri switch reports on `0x7596` and is used to control another Tasmota light device:
+
+```console
+Rule
+  on ZbReceived#0x7596#0006!00= do publish cmnd/%topic%/POWER OFF endon 
+  on ZbReceived#0x7596#0006!01= do publish cmnd/%topic%/POWER OFF endon 
+  on ZbReceived#0x7596#0008!01= do publish cmnd/%topic%/Dimmer - endon 
+  on ZbReceived#0x7596#0008!05= do publish cmnd/%topic%/Dimmer + endon
+```
+
+### Aqara Water Leak Sensor (SJCGQ11LM)
+`"ModelId":"lumi.sensor_wleak.aq1","Manufacturer":"LUMI"`
+
+In this example sensor reports on `0x099F` and sends an mqtt message to topic `stat/leak_sensor/LEAK`:
+
+```console
+Rule
+  on ZbReceived#0x099F#0500!00=010000FF0000 do publish stat/leak_sensor/LEAK ON endon 
+  on ZbReceived#0x099F#0500!00=000000FF0000 do publish stat/leak_sensor/LEAK OFF endon 
+```

@@ -890,6 +890,74 @@ sensor:
 
 <!-- tabs:end -->
 
+### Zigbee Devices
+
+<!-- tabs:start -->
+
+#### **Dimmable Light**
+This configuration is for a dimmable light reporting on `0xE1F9` using endpoint 1, cluster 8 for brightness. `ZbRead` part in the template is needed to always update the brightness values.
+
+```yaml
+# Example configuration.yaml entry
+light:
+  - platform: mqtt
+    schema: template
+    name: "Fire Light"
+    command_topic: "cmnd/zigbee-gateway/Backlog"
+    state_topic: "tele/zigbee-gateway/SENSOR"
+    command_on_template: >
+        {%- if brightness is defined -%}
+        ZbSend { "device":"0xE1F9", "send":{"Dimmer":{{ brightness }} } }; ZbSend { "device":"0xE1F9", "send":{"Power":true} }; delay 20; ZbRead { "device":"0xE1F9", "endpoint":1, "cluster":8, "read":0 }
+        {%- else -%}
+        ZbSend { "device":"0xE1F9", "send":{"Power":true} }; delay 20; ZbRead { "device":"0xE1F9", "endpoint":1, "cluster":8, "read":0 }
+        {%- endif -%}
+    command_off_template: 'ZbSend { "device":"0xE1F9", "send":{"Power":false} }; delay 20; ZbRead { "device":"0xE1F9", "endpoint":1, "cluster":8, "read":0 }'
+    state_template: >
+        {% if value_json.ZbReceived is defined and value_json.ZbReceived['0xE1F9'] is defined and value_json.ZbReceived['0xE1F9'].Power is defined %}
+        {% if value_json.ZbReceived['0xE1F9'].Power == true %}
+        on
+        {% else %}
+        off
+        {% endif %}
+        {% else %}
+        {{ states('light.fire_light') }}
+        {% endif %}
+    brightness_template: >
+        {%- if value_json.ZbReceived is defined and value_json.ZbReceived['0xE1F9'] is defined and value_json.ZbReceived['0xE1F9'].Dimmer is defined -%}
+        {{ value_json['ZbReceived']['0xE1F9'].Dimmer | int }}
+        {%- else -%}
+        {{ state_attr('light.fire_light', 'brightness') | int }}
+        {%- endif -%}
+```
+
+#### **Water Leak Sensor**
+This specific configuration is for Xiaomi Aqara Water Leak sensor reporting on `0x099F`.
+
+```yaml
+# Example configuration.yaml entry
+binary_sensor:
+  - platform: mqtt
+    name: "Water Leak"
+    state_topic: "tele/zigbee-gateway/SENSOR"
+    value_template: >
+      {%- if value_json.ZbReceived is defined and value_json.ZbReceived['0x099F'] is defined -%}
+      {%- if value_json.ZbReceived['0x099F']['0500!00'] == '010000FF0000' -%}
+      ON
+      {% else %}
+      OFF
+      {% endif %}
+      {% else %}
+      {{ states('binary_sensor.water_leak') }}
+      {% endif %}
+    availability_topic: "tele/zigbee-gateway/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    qos: 1
+    device_class: moisture
+```
+
+<!-- tabs:end -->
+
 ## Useful Automations
 
 <!-- tabs:start -->
