@@ -25,6 +25,7 @@
 * [MCP23008 / MCP23017](peripherals/MCP230xx)
 * [MGC3130](peripherals/MGC3130)
 * [MH-Z19B](peripherals/MH-Z19B)
+* [MI-HM10](peripherals/MI-HM10)
 * [MIBLE](peripherals/MIBLE)
 * [MLX90614](peripherals/MLX90614)
 * [MPR121](peripherals/MPR121)
