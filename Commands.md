@@ -418,7 +418,7 @@ SetOption84<a id="setoption84"></a>|(Experimental) When using AWS IoT, sends a d
 Both hardware and software Serial Bridge are supported.
  
 Hardware Serial Bridge uses `GPIO1 (Tx)` and `GPIO3 (Rx)` or `GPIO13 (Tx)` and `GPIO15 (Rx)` pins of your device.   
-Software Serial Bridge can use any other GPIO to be configured as components `Serial Tx` and `Serial Rx` (or `SerBr Tx` and `SerBr Rx`). If `Tx` and `Rx` components are not assigned in the Template or Module, `GPIO1` and `GPIO3` will be used. You must disable serial logging ([`SerialLog`](#seriallog) 0) when using Serial Bridge.  
+Software Serial Bridge can use any other GPIO to be configured as components `Serial Tx` and `Serial Rx` (or `SerBr Tx` and `SerBr Rx`). If `Tx` and `Rx` components are not assigned in the Template or Module, `GPIO1` and `GPIO3` will be used. Note that changing serial logging ([`SerialLog`](#seriallog) 0) will disable the hardware Serial Bridge.  
 
 Information received by Tasmota over the serial bridge is captured automatically. Before data will be received, a properly formatted [`SerialSend<x>` or `SSerialSend<x>`](#SerialSend) command must be executed. This must be done any time the device restarts (e.g., via a `System#Boot` triggered rule). This command is required in order to set how the expected serial data will be formatted and interpreted (i.e., which &#60;x> option). A `{"SSerialReceived":{"Data":"<string>"}}` message will be posted. You can use [a rule](Rule-Cookbook#switch-relays-via-serial-interface) to process the string which will be contained in `SSerialReceived#Data`.
 
