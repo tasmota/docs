@@ -24,9 +24,9 @@ At least the device allows the use of a simple BLE connection without any encryp
 
 #### prerequisites:
 -firmware 707 (other versions may work, but this is undefined behavior)  
--simple serial cable connection 
+-simple serial cable connection  
 -HM-10 is set to default baud rate of 115200  (if not look for HM10BAUD-command)  
--uncomment #ifdef USE_HM10 in my_user_config.h
+-uncomment #ifdef USE_HM10 in my_user_config.h  
 -select GPIO-pins "HM10 RX" and "HM10 TX"
 
 #### expected behavior:
@@ -52,3 +52,6 @@ sets the time of sensor x (if it is a LYWSD02) to the system-UTC-time and the ti
 + LYWSD02  
   
 + LYWSD03  
+
+##### not supported:  
+Mi Flora and MJ_HT_V1 will be shown in the WEB-UI, but at the moment no sensor readings will be received.
