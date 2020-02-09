@@ -36,6 +36,7 @@ Name|Description|Image
 [**MCP23008 / MCP23017**](peripherals/MCP230xx) |  I/O Expander (I<sup>2</sup>C)
 [**MGC3130**](peripherals/MGC3130) | 3D Tracking and Gesture Controller
 [**MH-Z19B**](peripherals/MH-Z19B) | CO<sub>2</sub> Sensor |<img src="https://user-images.githubusercontent.com/5904370/53279635-54040780-3712-11e9-8c83-970280003b6d.png" style="width:50px"></img>
+[**MI-HM10**](peripherals/MI-HM10) | BLE-Bridge via HM-10
 [**MIBLE**](peripherals/MIBLE) | experimental BLE-Bridge via NRF24L01
 [**MLX90614**](peripherals/MLX90614) | MLX9061X Infrared Thermometer (I<sup>2</sup>C) | <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/mlx90614-1.jpg?raw=true" style="width:30px"></img>
 [**MPR121**](peripherals/MPR121) | Proximity Capacitive Touch Sensor Controller (I<sup>2</sup>C)
