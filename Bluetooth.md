@@ -1,6 +1,6 @@
 # Bluetooth
 
-Tasmota provides limited Bluetooth functionality through the use of external hardware. Currently driver exists support the use of bluetooth beacons and several BLE sensors from the Mijia/Xiaomi-universe.  
+Tasmota provides limited Bluetooth functionality through the use of external hardware. Current drivers support the use of bluetooth beacons and several BLE sensors from the Mijia/Xiaomi-universe.  
   
   
   
@@ -42,22 +42,22 @@ With the arrival of the (cheap) LYWSD03 came the problem of encrypted data in Mi
 At least the device allows the use of a simple BLE connection without any encrypted authentication and the reading of the sensor data using normal subscription methods to GATT-services. This is more power hungry than the passive reading of BLE advertisements.
 
 
-### Tasmota-HM10-driver
+## Tasmota-HM10-driver
 
-#### prerequisites:
+### prerequisites:
 -firmware 707 (other versions may work, but this is undefined behavior)  
 -simple serial cable connection  
 -HM-10 is set to default baud rate of 115200  (if not look for HM10BAUD-command)  
 -uncomment #ifdef USE_HM10 in my_user_config.h  
 -select GPIO-pins "HM10 RX" and "HM10 TX"
 
-#### expected behavior:
+### expected behavior:
 1. The driver will set a few options of the HM-10
 2. A discovery scan will search for known sensors (Mi Flora, MJ_HT_V1, LYWSD02, LYWSD03)
 3. LYWSD0x-sensors will be connected at a given interval, a subscription is established for 5 seconds and temperature/humidity/battery will be read.
 4. After deconnection return to point 3 after the interval.
 
-#### command interface:  
+### command interface:  
 + hm10scan  
 start new discovery scan  
 + hm10period x  
@@ -70,7 +70,7 @@ sends AT-commands,e.g. hm10at verr? results in AT+VERR?
 sets the time of sensor x (if it is a LYWSD02) to the system-UTC-time and the timezone of Tasmota. Sensors are ordered from 0 to n in the order of the arrival. 
 
 
-#### supported sensors:  
+### supported sensors:  
 + LYWSD02  
 This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the driver can read temperature, humidity and battery. In addition the clock of the device can be set tot the system-time of Tasmota via command "hm10time".  
   
@@ -79,13 +79,13 @@ This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the drive
   
 + LYWSD03  
 
-##### not supported:  
+#### not supported:  
 Mi Flora, MJ_HT_V1
 
 
-### Experimental BLE-Bridge for certain Mijia-Bluetooth-Sensor using the NRF24L01(+)
+## Experimental BLE-Bridge for certain Mijia-Bluetooth-Sensor using the NRF24L01(+)
 
-#### USAGE:
+### USAGE:
 Uncomment #USE_SPI, #USE_NRF24 and #USE_MIBLE in 'my_user_config.h' and configure the pins vor SPI_DC and SPI_CS while connecting the hardware SPI pins 12 - 14(MOSI, MISO and CLOCK).  
 !! ⚠️ In order to simplify the code, the pin names from the SPI-display-drivers are used ⚠️ !!   
 For the NRF24L01 SPI_DC translates to CSN and SPI_CS to CE.  
@@ -124,20 +124,20 @@ Internally from time to time "fake" sensors will be created, when there was data
 
 The naming conventions in the product range of bluetooth sensors in XIAOMI-universe can be a bit confusing. The exact same sensor can be advertised under slightly different names depending on the seller (Mijia, Xiaomi, Cleargrass, ...).
   
-##### MJ_HT_V1:  
+#### MJ_HT_V1:  
 Model: LYWSDCGQ/01ZM  
 This device works with an AAA-battery for several months and the driver can read temperature, humidity and battery level.  
   
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/mj_ht_v1.png?raw=true" style="width:200px"></img>
   
   
-##### Mi Flora:  
+#### Mi Flora:  
 Works with a CR2032-coin-cell and provides temperature, illuminance, (soil-)humidity and (soil-)fertility.  
   
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/miflora.png?raw=true" style="width:200px"></img>  
   
   
-##### LYWSD02:  
+#### LYWSD02:  
 This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the driver can read temperature and humidity.  
   
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/lywsd02.jpg?raw=true" style="width:200px"></img>  
@@ -146,7 +146,7 @@ Python code to compute and set the value for the time characteristic with a gene
 
 
 
-##### Potential "candidates":  
+#### Potential "candidates":  
 Based on published data, the chance to support following sensors in the future is quite good:  
 
 + CGG1 (similar to the LYWSDCGQ/01ZM , but with E-Ink-Display and CR2430-coin-cell)  
