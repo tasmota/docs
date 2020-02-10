@@ -16,6 +16,7 @@
 * [Smart Home Integrations](/integrations/)
 * [Peripherals](/peripherals/)
 * [Zigbee](Zigbee)
+* [Bluetooth](Bluetooth)
 * [Displays](Displays)
 * [Blinds and Shutters](Blinds-and-Shutters)
 * [TasmotaSlave](TasmotaSlave)
