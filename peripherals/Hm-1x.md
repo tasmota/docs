@@ -1,6 +1,6 @@
-# Hm-1x-Family of BT-modules  
+# HM-1x-Family of BT-modules  
   
-The HM-1x-serie is  a whole family of Bluetooth devices made by Jinan Huamao.  
+The HM-1x-serie is  a whole family of Bluetooth Low Energy devices made by Jinan Huamao.  
 http://www.jnhuamao.cn/bluetooth.asp  
   
   
