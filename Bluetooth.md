@@ -83,9 +83,9 @@ This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the drive
 Mi Flora, MJ_HT_V1
 
 
-## Experimental BLE-Bridge for certain Mijia-Bluetooth-Sensor using the NRF24L01(+)
+### Experimental BLE-Bridge for certain Mijia-Bluetooth-Sensor using the NRF24L01(+)
 
-### USAGE:
+#### USAGE:
 Uncomment #USE_SPI, #USE_NRF24 and #USE_MIBLE in 'my_user_config.h' and configure the pins vor SPI_DC and SPI_CS while connecting the hardware SPI pins 12 - 14(MOSI, MISO and CLOCK).  
 !! ⚠️ In order to simplify the code, the pin names from the SPI-display-drivers are used ⚠️ !!   
 For the NRF24L01 SPI_DC translates to CSN and SPI_CS to CE.  
@@ -118,26 +118,26 @@ All sensors have an additional GATT-interface with more data in it, but it can n
 As we can not use a checksum to test data integrity of the packet, only data of sensors, which adresses showed up more than once (default = 3 times) will be published. 
 Internally from time to time "fake" sensors will be created, when there was data corruption in the address bytes.  These will be removed automatically.  
   
-### Working sensors:
+#### Working sensors:
 
 !> **It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely !!**  
 
 The naming conventions in the product range of bluetooth sensors in XIAOMI-universe can be a bit confusing. The exact same sensor can be advertised under slightly different names depending on the seller (Mijia, Xiaomi, Cleargrass, ...).
   
-#### MJ_HT_V1:  
+##### MJ_HT_V1:  
 Model: LYWSDCGQ/01ZM  
 This device works with an AAA-battery for several months and the driver can read temperature, humidity and battery level.  
   
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/mj_ht_v1.png?raw=true" style="width:200px"></img>
   
   
-#### Mi Flora:  
+##### Mi Flora:  
 Works with a CR2032-coin-cell and provides temperature, illuminance, (soil-)humidity and (soil-)fertility.  
   
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/miflora.png?raw=true" style="width:200px"></img>  
   
   
-#### LYWSD02:  
+##### LYWSD02:  
 This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the driver can read temperature and humidity.  
   
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/lywsd02.jpg?raw=true" style="width:200px"></img>  
@@ -146,7 +146,7 @@ Python code to compute and set the value for the time characteristic with a gene
 
 
 
-#### Potential "candidates":  
+##### Potential "candidates":  
 Based on published data, the chance to support following sensors in the future is quite good:  
 
 + CGG1 (similar to the LYWSDCGQ/01ZM , but with E-Ink-Display and CR2430-coin-cell)  
