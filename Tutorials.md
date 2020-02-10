@@ -7,20 +7,20 @@
 * [How to flash a Sonoff](https://www.youtube.com/watch?v=-9zNS-ljDzo) using Arduino IDE
 * [Installation tutorial](https://youtu.be/n4MDRm2yAJg) of Tasmota using PlatformIO made by QuickPi.
 * [Flashing Tasmota on Sonoff TH16](https://www.youtube.com/watch?v=exEmeyAwbmI) using Arduino IDE
-* [True 3-Way Smart Switch](https://www.youtube.com/watch?v=9LIaDN7Nx2E&t=1s)
+* [True 3-Way Smart Switch](https://www.youtube.com/watch?v=9LIaDN7Nx2E)
 * [Make a motion activated switch with temperature and humidity sensor](https://www.youtube.com/watch?v=mWQnHResSCM)
 * [Sonoff Basic as UK Light Switch](https://www.youtube.com/watch?v=XM03KvdP-uA)
 * [Tasmota and Tasmotizer Easy Flashing Guide for ESP8266 devices](https://youtu.be/_UnI6cnzF3k)
 
 ### YouTube Channels covering Tasmota and home automation
-* [DigiblurDIY - Great and Easy Tasmota related Videos](https://www.youtube.com/channel/UC5ZdPKE2ckcBhljTc2R_qNA/videos)
-* [DrZzs - Great and Easy Tasmota related Videos](https://www.youtube.com/channel/UC7G4tLa4Kt6A9e3hJ-HO8ng/videos)
-* [Super House - Home Automation Tutorials](https://www.youtube.com/user/SuperHouseTV/videos)
-* [The Hook Up - Home Automation Tutorials](https://www.youtube.com/channel/UC2gyzKcHbYfqoXA5xbyGXtQ/videos)
-* [BRUH Automation - Home Automation Tutorials](https://www.youtube.com/channel/UCLecVrux63S6aYiErxdiy4w/videos)
-* [Burns Home Automation - Home Automation Tutorials](https://www.youtube.com/channel/UCSKQutOXuNLvFetrKuwudpg/videos)
+* [DigiblurDIY - Great and Easy Tasmota related Videos](https://www.youtube.com/channel/UC5ZdPKE2ckcBhljTc2R_qNA/search?query=tasmota)
+* [DrZzs - Great and Easy Tasmota related Videos](https://www.youtube.com/channel/UC7G4tLa4Kt6A9e3hJ-HO8ng/search?query=tasmota)
+* [Super House - Home Automation Tutorials](https://www.youtube.com/user/SuperHouseTV/search?query=tasmota)
+* [The Hook Up - Home Automation Tutorials](https://www.youtube.com/channel/UC2gyzKcHbYfqoXA5xbyGXtQ/search?query=tasmota)
+* [BRUH Automation - Home Automation Tutorials](https://www.youtube.com/channel/UCLecVrux63S6aYiErxdiy4w/search?query=tasmota)
+* [Burns Home Automation - Home Automation Tutorials](https://www.youtube.com/channel/UCSKQutOXuNLvFetrKuwudpg/search?query=tasmota)
 * [Step to Step Tutorials - Hobbytronics Tutorials](https://hobbytronics.pk/blog/)
-* [Yuval Mejahez - Tasmota Flash tutorials Channel](https://www.youtube.com/channel/UC8eIbt7dehdys0n_n22zKvA)
+* [Yuval Mejahez - Tasmota Flash tutorials Channel](https://www.youtube.com/channel/UC8eIbt7dehdys0n_n22zKvA/search?query=tasmota)
 * [Kiril Peyanski - Tasmota Tutorials](https://www.youtube.com/kpeyanski/search?query=tasmota)
 
 ### Non-English Tutorials
@@ -28,5 +28,5 @@
 * DE - [ESP8266 flashen von A - Z](https://www.youtube.com/watch?v=Xfb8Y1R-y1U)
 * FR - [Ajouter un bouton physique au Sonoff basic](https://www.domo-blog.fr/ajouter-un-bouton-physique-au-sonoff-basic/)
 * IT - [Installazione firmware Tasmota su Sonoff Basic](https://www.youtube.com/watch?v=kFkPk2TDNg8)
-* IL - [Hebrew - Install Tasmota firmware on all Sonoff devices](https://www.youtube.com/channel/UC8eIbt7dehdys0n_n22zKvA)
+* IL - [Hebrew - Install Tasmota firmware on all Sonoff devices](https://www.youtube.com/channel/UC8eIbt7dehdys0n_n22zKvA/search?query=tasmota)
 
