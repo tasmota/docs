@@ -21,7 +21,8 @@ The driver needs firmware Version V120 or V110 for the HM-17 Module.
 For using the HM-10 in most cases a low level flash of the firmware is neccessary. Since nearly all available HM-10 are Clones!
 The HM-10 needs the firmware V609 or the newest V707 to work with the Tasmota driver. You can use the [ESP8266 HM-10 Flasher](https://github.com/Jason2866/CCLoader) to update the firmware. The flasher is based on this [work](https://circuitdigest.com/microcontroller-projects/how-to-flash-the-firmware-on-cloned-hm-10-ble-module-using-arduino-uno)
   
-Bluetooth?id=ibeacon
+[Bluetooth article](/Bluetooth?id=ibeacon).
+
   
 ## MIJIA-BLE-sensors via HM-10  
   
@@ -29,5 +30,6 @@ The HM-10 is a 3.3v Bluetooth 4.0  module based on the TI CC2540/1-Chip and was 
   
 The default baud rate of firmware>700 is 115200.  
 The expected firmware version is 707. Other versions may work too, but before raising an issue on GitHub a test with this version is mandatory.  
+  
+[Bluetooth article](/Bluetooth?id=tasmota-hm10-driver).
 
-Bluetooth?id=tasmota-hm10-driver
