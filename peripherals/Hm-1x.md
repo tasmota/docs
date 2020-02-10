@@ -1,6 +1,9 @@
 # Hm-1x-Family of BT-modules  
   
-The HM-1x-serie is  a whole family of Bluetooth devices made by Jinan Huamao. 
+The HM-1x-serie is  a whole family of Bluetooth devices made by Jinan Huamao.  
+http://www.jnhuamao.cn/bluetooth.asp  
+  
+  
   
 In reality the chance to buy a clone on the „usual“ distribution channels (BG, AE, Ebay, …) is sky-high. In order to get them to work in Tasmota it is mandatory to flash the original firmware on it, which is described elsewhere.  
 Example: https://circuitdigest.com/microcontroller-projects/how-to-flash-the-firmware-on-cloned-hm-10-ble-module-using-arduino-uno  
