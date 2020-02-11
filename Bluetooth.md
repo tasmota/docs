@@ -142,9 +142,6 @@ This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the drive
   
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/lywsd02.jpg?raw=true" style="width:200px"></img>  
   
-Python code to compute and set the value for the time characteristic with a generic BLE-tool: https://github.com/arendst/Tasmota/pull/7564#issuecomment-576396125
-
-
 
 #### Potential "candidates":  
 Based on published data, the chance to support following sensors in the future is quite good:  
