@@ -101,6 +101,9 @@ Tasmota will send a `TOGGLE` command (use Switch<x>#state=2 in rules) when the b
 
 > [!TIP] The dimmer mode can be used in [conjunction with rules](Rule-Cookbook#use-Control-a-dimmer-with-one-switch) to create additional features or to control another Tasmota device.
 
+> [!TIP] The dimmer mode can be used to turn a media player on and off and to control the volume of a media player with one switch.
+
+
 **`SwitchMode 12`**   
 Set inverted push-button with dimmer mode. The same as `Switchmode 11` with inverted Input
 
