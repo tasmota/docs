@@ -55,7 +55,7 @@ Energy metering is done by a ADE7953 chip connected via I2C and IRQ on GPIO16.
 
 If you connect momentary switches, use the following template:  
 `{"NAME":"Shelly 2.5 (buttons)","GPIO":[56,0,19,0,21,127,0,0,6,126,5,22,156],"FLAG":2,"BASE":18}`
-`Button1` and `Button2` are assigned to the SW1 and SW2 external inputs. `Button3` is the button on the back of the device next to the pin header and you can optionally assign the baheviour you want using rules.
+`Button1` and `Button2` are assigned to the SW1 and SW2 external inputs. `Button3` is the button on the back of the device next to the pin header and you can optionally assign the behaviour you want using rules.
 
 If you want the buttons to respond instantly, go to the console and type `SetOption13 1`.
 But, if you want press/double press/hold functionality, run instead `Backlog SetOption1 1; SetOption11 1; SetOption32 20` to enable all three states and set hold time of 2 seconds. Use [SetOption32](https://tasmota.github.io/docs/#/Commands?id=setoption32) to set another hold time.
