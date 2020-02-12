@@ -1,6 +1,6 @@
 If you have read through the [Prerequisites](/installation/Prerequisites) you should have selected [a pre-compiled Tasmota firmware binary](/installation/Prerequisites#tasmota-firmware) or chosen to [compile your own Tasmota firmware binary](#compiling-from-source).
 
-Once you have followed [Hardware preparation](/installation/Hardware-preparation), your device should be in Flash Mode and ready for a Tasmota firmware binary file to be flashed. For that you need a **flashing tool**.
+Once you have followed [Hardware preparation](/installation/Hardware-Preparation), your device should be in Flash Mode and ready for a Tasmota firmware binary file to be flashed. For that you need a **flashing tool**.
 
 Optionally, you may want to back up the device manufacturer's firmware on the 1 in a million chance you don't like Tasmota.
 
