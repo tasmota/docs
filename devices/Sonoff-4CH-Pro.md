@@ -28,6 +28,7 @@ If you have problems to program the 4CH Pro, you might find below tips useful:
 * Use the ESP program header and ensure that the right port is set in the Arduino IDE. 
 * TX/RX are printed correctly on the pro version => TX goes to RX PIN and RX to TX.
 * GPIO0 needs to be connected to ground the first 3 seconds during reboot (or longer)! If not you can not program it.
+* On 4CH Pro R2 try switch S6 to 0 before connecting power to enter flash mode. Reset to 1 (default) after finished flashing.
 
 1. If you use Windows7+, check in the device manager if the port is not added/removed all 2 seconds.
    - If yes then your USB port does not deliver enough ampere.
