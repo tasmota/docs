@@ -1,6 +1,6 @@
 ## How to Use
 
-Tasmota provides three powerful man machine interfaces for issuing commands: **MQTT**, **web** and **serial** 
+Tasmota provides three powerful man machine interfaces for issuing commands: **MQTT**, **web** and **serial**
 
 Every command **used without a parameter (payload) returns the current setting**.
    * `Power` will return the status of Relay1
@@ -18,7 +18,7 @@ In commands with `x..y` value parameters use a number from `x` to `y` range.
 When a command mentions resetting to *"firmware default"* it means the setting will revert to the one in the flashed binary file. If you used `user_config_override.h` at compile time it will revert to those.
 
 > [!NOTE]
-> Beside results initiated by a command (synchronous) you can get asynchronous results initiated by rule trigger, telemetry event, commands from other source or changed device values.    
+> Beside results initiated by a command (synchronous) you can get asynchronous results initiated by rule trigger, telemetry event, commands from other source or changed device values.
 Simply put, other messages may precede messages published as a result of your commands.
 
 > [!EXAMPLE] A `tele/%topic%/STATUS` message (sent every 300 seconds by default) may appear exactly after you issue `Power off` command and before you receive `stat/%topic%/RESULT = {"POWER":"OFF"}` message.
@@ -34,23 +34,23 @@ See [MQTT](MQTT) article to find out more.
 
 ### ...with Web Requests
 
-Commands can be executed via web (HTTP) requests, for example:  
+Commands can be executed via web (HTTP) requests, for example:
 ```
 http://<ip>/cm?cmnd=Power%20TOGGLE
 http://<ip>/cm?cmnd=Power%20On
 http://<ip>/cm?cmnd=Power%20off
 http://<ip>/cm?user=admin&password=joker&cmnd=Power%20Toggle
 ```
-> [!NOTE] Any spaces or special characters must be replaced with their [ASCII hex codes](https://www.rapidtables.com/code/text/ascii-table.html). You must precede each hex code with `%`.  
-Most used ones are: `space` = `%20` &emsp; `;` = `%3B`   
+> [!NOTE] Any spaces or special characters must be replaced with their [ASCII hex codes](https://www.rapidtables.com/code/text/ascii-table.html). You must precede each hex code with `%`.
+Most used ones are: `space` = `%20` &emsp; `;` = `%3B`
 
-If you have set a password for web user interface access, this must be included (in plaintext) in the URL of the HTTP request, like so:  
+If you have set a password for web user interface access, this must be included (in plaintext) in the URL of the HTTP request, like so:
 ```
 http://<ip>/cm?&user=<username>&password=<password>&cmnd=Power%20On
 ```
 ### ...in Console in the Web UI
 
-**Console** menu in the web UI is a convenient place to send commands and it behaves similar to a terminal connection via serial bridge. 
+**Console** menu in the web UI is a convenient place to send commands and it behaves similar to a terminal connection via serial bridge.
 
 ### ...over Serial Bridge
 
@@ -135,7 +135,7 @@ PwmFrequency<a id="pwmfrequency"></a>|`1` = reset PWM frequency to 880Hz<BR>`100
 PwmRange<a id="pwmrange"></a>|`1` = reset maximum PWM range to 1023<BR>`255..1023` = set maximum PWM range
 Reset<a id="reset"></a>|`1` = reset device settings to firmware defaults and restart<BR>`2` = erase flash, reset device settings to firmware defaults and restart<BR> `3` = erase System Parameter Area in flash (Wi-Fi calibration and related data) and restart<BR>`4` = reset device settings to firmware defaults but retain Wi-Fi credentials and restart<BR> `5` = erase all flash and reset parameters to firmware defaults but keep Wi-Fi settings and restart<BR>`6` = erase all flash and reset parameters to firmware defaults but keep Wi-Fi and MQTT settings and restart<BR>*(Erase of flash can take a few seconds to complete and there is no output during the erase process on the serial or web console)*<BR>`99` = reset device bootcount to zero
 Restart<a id="restart"></a>|`1` = restart device<BR>`99` = force restart device without configuration save<BR>_For debug and testing stack trace dumps only:_<BR>`-1` = force an Exception (28) crash<BR>`-2` = force a Soft WDT reset (after a freeze of 2 seconds)<BR>`-3` = force an OS watchdog reset (after a freeze of 120 seconds, **caution!**)
-SaveData<a id="savedata"></a>|`0` = save parameter changes only manually<BR>`1` = save parameter changes every second *(default)*<BR>`2..3600` = save parameter changes every x second 
+SaveData<a id="savedata"></a>|`0` = save parameter changes only manually<BR>`1` = save parameter changes every second *(default)*<BR>`2..3600` = save parameter changes every x second
 SerialLog<a id="seriallog"></a>|Disable hardware serial bridge and<BR>`0` =  disable serial logging<BR> `1` = show only error messages<BR> `2` = show error and info messages *(default)*<BR>`3` = show error, info and debug messages<BR>`4` = show error, info and more debug messages<BR>`SerialLog` will be disabled automatically 10 minutes after the device reboots.
 Sleep<a id="sleep"></a>|`0` = turn sleep off<BR>`1..250` = set sleep duration in milliseconds to enable [energy saving](energy-saving) *(default = `50`)*
 State<a id="state"></a>|Display current device state and publish to `%prefix%/%topic%/RESULT` topic&emsp;  »5.12.0
@@ -228,7 +228,7 @@ Command|Parameters
 Latitude<a id="latitude"></a>|`<value>` = set latitude
 Longitude<a id="longitude"></a>|`<value>` = set longitude
 Timers<a id="timers"></a>|Timers control<br>`0` = disable all timers<BR>`1` = enable all timers<BR>`2` = toggle all timers<BR>
-Timer<x\><a id="timer"></a>|Parameters for Timer<x\> where x = `1..16`<BR>`0` = clear parameters for Timer<x\><BR>`1..16` = copy Timer\<y\> parameters to Timer<x\><BR>`{ "name":value ; .. }` = set all or individual parameters using JSON payload with names and values of data pairs from the [table](Timers#json-payload-anatomy) 
+Timer<x\><a id="timer"></a>|Parameters for Timer<x\> where x = `1..16`<BR>`0` = clear parameters for Timer<x\><BR>`1..16` = copy Timer\<y\> parameters to Timer<x\><BR>`{ "name":value ; .. }` = set all or individual parameters using JSON payload with names and values of data pairs from the [table](Timers#json-payload-anatomy)
 
 > [!Note]
 > Information on sensors documented below is transmitted in the Tasmota telemetry message
@@ -236,7 +236,7 @@ Timer<x\><a id="timer"></a>|Parameters for Timer<x\> where x = `1..16`<BR>`0` = 
 
 Command|Parameters
 :---|:---
-AdcParam<a id="adcparam"></a>|ADC0 analog input tuning parameters<br>`<sensor>, <param1>, <param2>, <param3>`<BR>`<sensor>` values:<br>&emsp; `2` = Temperature [Steinhart-Hart thermistor equation](https://en.wikipedia.org/wiki/Steinhart%E2%80%93Hart_equation) parameters:</li><ul>`<param1>` = NTC Voltage bridge resistor in Ohms *(default = `32000`)*<br>`<param2>` = NTC Resistance in Ohms *(default = `10000`)*<BR>`<param3>` = NTC Beta Coefficient *(default = `3350`)*</li></ul><br>&emsp; `3` = Light [Lux equation](https://www.allaboutcircuits.com/projects/design-a-luxmeter-using-a-light-dependent-resistor/) parameters:</li><ul>`<param1>` = LDR Voltage bridge resistor in Ohms *(default = `10000`)*<BR>`<param2>` = LDR Lux Scalar *(default = `12518931`)*<BR>`<param3>` = LDR Lux Exponent *(default = `-1.4050`)*
+AdcParam<a id="adcparam"></a>|ADC0 analog input tuning parameters<br>`<sensor>, <param1>, <param2>, <param3>,  <param4>`<BR>`<sensor>` values:<br>&emsp; `2` = Temperature [Steinhart-Hart thermistor equation](https://en.wikipedia.org/wiki/Steinhart%E2%80%93Hart_equation) parameters:</li><ul>`<param1>` = NTC Voltage bridge resistor in Ohms *(default = `32000`)*<br>`<param2>` = NTC Resistance in Ohms *(default = `10000`)*<BR>`<param3>` = NTC Beta Coefficient *(default = `3350`)*</li></ul><br>&emsp; `3` = Light [Lux equation](https://www.allaboutcircuits.com/projects/design-a-luxmeter-using-a-light-dependent-resistor/) parameters:</li><ul>`<param1>` = LDR Voltage bridge resistor in Ohms *(default = `10000`)*<BR>`<param2>` = LDR Lux Scalar *(default = `12518931`)*<BR>`<param3>` = LDR Lux Exponent *(default = `-1.4050`)*</li></ul><br>&emsp; `6` = ADC linear range remapping parameters:</li><ul>`<param1>` = input range low value `adcLow` *(default = `0`)*<BR>`<param2>` = input range high value `adcHigh` *(default = `1023`)*<BR>`<param3>` = output range low value `rangeLow` *(default = `0`)*<BR>`<param4>` = output range high value `rangeHigh` *(default = `100`)*<BR>The range remapping perform the following calculation on the ADC value *[0..1023]*:<BR>`Range = ((adcHigh - ADC) / (adcHigh - adcLow)) * (rangeLow - rangeHigh) + rangeHigh`<br>*The calculation is performed in double resolution floating point but all 4 parameters as well as the range output are unsigned 16 bit integers. The calculation result must not exceed [0..65535].*<BR>Example to convert the ADC value on a D1-mini into millivolts (using the default resistor bridge of 220k/100k):<BR>`AdcRange 6, 0, 1023, 0, 3200`
 Altitude<a id="altitude"></a>|`-30000..30000` - altitude in meters
 AmpRes<a id="ampres"></a>|Current sensor resolution<BR>`0..3` = maximum number of decimal places
 Counter<x\><a id="counter"></a>|`0` = reset Counter<x\><BR> `1..64900` = preset Counter<x\><BR>`-1..-64900` = decrease Counter<x\><BR>`+1..+64900` = increase Counter<x\><BR>In order to define and use a Counter, _**you must configure one of the free device GPIO as `Counter<x>`**_
@@ -277,22 +277,22 @@ MaxPowerHold<a id="maxpowerhold"></a>|`1` = set default time to 10 seconds to st
 MaxPowerWindow<a id="maxpowerwindow"></a>|`1` = set default time to 30 seconds to stay power off before re-applying power up to 5 times<BR>`<value>` = set time in seconds to stay power off before re-applying power up to 5 times
 ModuleAddress<a id="moduleaddress"></a>|Set the address of a PZEM module<BR>`1..3` = the last octet of the PZEM-004T serial address<BR>`<address>` = the last octet of the slave address on MODBUS PZEM energy monitoring modules<BR>Prior to setting the module address, the PZEM **_must be connected_** to **both** RX and TX, **and** AC voltage.<BR>Connect one PZEM at a time and issue this command. Repeat for each PZEM to be connected for multi-phase monitoring.<BR>_The command without an argument cannot be used to read the address of the connected PZEM._
 PowerCal<a id="powercal"></a>|<value> `4000..32767` *(default = `12530`)*<BR>Set calibration offset value for reported `Power` telemetry reading<BR>Allows finer calibration for HLW8012, HJL01, and BL0937 energy monitoring devices
-PowerDelta<a id="powerdelta"></a>|Set maximum delta for energy monitoring devices to report on active power load change while the relay is ON. `PowerDelta` will not report when the relay turns off.&emsp;  »5.13.0<BR>`0` = disable reporting on power change<BR>`1..100` = set reporting on percentage power change to send an MQTT telemetry message<BR>`101..32000` = set reporting on absolute power change to send an MQTT telemetry message (offset by 100, e.g., `101`=1W, `207`=107W) 
+PowerDelta<a id="powerdelta"></a>|Set maximum delta for energy monitoring devices to report on active power load change while the relay is ON. `PowerDelta` will not report when the relay turns off.&emsp;  »5.13.0<BR>`0` = disable reporting on power change<BR>`1..100` = set reporting on percentage power change to send an MQTT telemetry message<BR>`101..32000` = set reporting on absolute power change to send an MQTT telemetry message (offset by 100, e.g., `101`=1W, `207`=107W)
 PowerHigh<a id="powerhigh"></a>|`0` = disable power high threshold *(default)*<BR>`<value>` = set power high threshold value in watts to send an MQTT telemetry message
 PowerLow<a id="powerlow"></a>|`0` = disable power low threshold *(default)*<BR>`<value>` = set power low threshold value in watts to send an MQTT telemetry message
 PowerSet<a id="powerset"></a>|`<value>` = [calibrate](power-monitoring-calibration) power to a target value in watts&emsp;  »5.12.0
 Status<a id="status"></a>|`8` = show power usage<BR>`9` = show power thresholds
 Tariff&#60;x><a id="tariff"></a>|P1 Smart Meter tariff configuration<BR>x = `1, 2, 9`<BR>`1` `STD,DST` Start times for off-peak tariff<BR>`2` `STD,DST` End times for off-peak tariff<BR>`9` `0/1`<BR>&emsp;`0` = use Start/End times also on weekends.<BR>&emsp;`1` = use off-peak tariff all weekend.<BR>`STD` and `DST` may be specified as:<BR>&emsp;`<hour>` = `0..23` or<BR>&emsp;`<time>` = `00:00..23:59` or<BR>&emsp;`<minutes>` = `0..1439` (since midnight)<BR>If both `Tariff1` STD and `Tariff2` STD are equal, all tariffs are disabled.
 VoltageCal<a id="voltagecal"></a>|Set calibration offset value for reported `Voltage` telemetry reading<BR><value> `1000..32767` *(default = `1950`)*<BR>Allows finer calibration for HLW8012, HJL01, and BL0937 energy monitoring devices
-VoltageHigh<a id="voltagehigh"></a>|`0` = disable voltage high threshold *(default)*<BR>`<value>` = set voltage high threshold value in V 
-VoltageLow<a id="voltagelow"></a>|`0` = disable voltage low threshold *(default)*<BR>`<value>` = set voltage low threshold value in V 
+VoltageHigh<a id="voltagehigh"></a>|`0` = disable voltage high threshold *(default)*<BR>`<value>` = set voltage high threshold value in V
+VoltageLow<a id="voltagelow"></a>|`0` = disable voltage low threshold *(default)*<BR>`<value>` = set voltage low threshold value in V
 VoltageSet<a id="voltageset"></a>|`<value>` = [calibrate](power-monitoring-calibration) voltage to a target value in V&emsp;  »5.12.0
 VoltRes<a id="voltres"></a>|Voltage sensor resolution<BR>`0..3` = maximum number of decimal places
 WattRes<a id="wattres"></a>|Power sensor resolution<BR>`0..3` = maximum number of decimal places
 See Also|[`SetOption21`](#setoption21) - Energy monitoring when power is off<BR>[`SetOption33`](#setoption33) - Configure power monitoring Max_Power_Retry count number<BR>[`SetOption39`](#setoption39) - Control handling of invalid power measurements<BR>[`SetOption72`](#setoption72) - Set reference used for total energy
 
 ### Light
-<!--- 
+<!---
 <a id="Brightness>"></a>Brightness|`0..255` = set brightness value from 0 to 255
  -->
 
@@ -308,7 +308,7 @@ DimmerRange<a id="dimmerrange"></a>|Change dimming range. *Works only with TuyaM
 Fade<a id="fade"></a>|`0` = do not use fade *(default)* <BR>`1` = use fade
 HsbColor<a id="hsbcolor"></a>|`<hue>,<sat>,<bri>` = set color by hue, saturation and brightness
 HsbColor1<a id="HsbColor1"></a>|`0..360` = set hue
-HsbColor2<a id="HsbColor2"></a>|`0..100` = set saturation 
+HsbColor2<a id="HsbColor2"></a>|`0..100` = set saturation
 HsbColor3<a id="HsbColor3"></a>|`0..100` = set brightness
 Led<x\><a id="led"></a>|`#RRGGBB` = set hex color value where `<x>` is the pixel number of the LED<br> *(applies only to addressable LEDs)*
 LedTable<a id="ledtable"></a>|`0` = do not use [LED gamma correction](https://learn.adafruit.com/led-tricks-gamma-correction?view=all) *(default &laquo;6.5.0.9)*<BR>`1` = use gamma correction *(default &raquo;6.5.0.9)*
@@ -322,7 +322,7 @@ Wakeup<a id="wakeup"></a>|Start wake up sequence from OFF to stored `Dimmer` val
 WakeupDuration<a id="wakeupduration"></a>|`1..3000` = set wake up duration in seconds
 White<a id="white"></a>|<BR>`1..100` = set white channel brightness in single white channel lights (single W or RGBW lights)
 Width&#60;x><a id="width"></a>|x = `1..4`<BR>`1` - `0..4` = LED group width *([Scheme](#Scheme) `6..12` only)*<BR>`2` - `0..32` = seconds hand width *([Scheme](#Scheme) `5` only)*<BR>`3` - `0..32` = minutes hand width *([Scheme](#Scheme) `5` only)*<BR>`4` - `0..32` = hour hand width *([Scheme](#Scheme) `5` only)*
-See also|[`SetOption15`](#setoption15), [`SetOption16`](#setoption16), [`SetOption17`](#setoption17), [`SetOption20`](#setoption20), [`SetOption37`](#setoption37) and [`SetOption68`](#setoption68) 
+See also|[`SetOption15`](#setoption15), [`SetOption16`](#setoption16), [`SetOption17`](#setoption17), [`SetOption20`](#setoption20), [`SetOption37`](#setoption37) and [`SetOption68`](#setoption68)
 
 ### RF Bridge
 
@@ -352,12 +352,12 @@ Command|Parameters
 :---:|:---
 SetOption0<a id="setoption0"></a>|Save power state and use after restart (=SaveState)<BR> `0` = disable<BR> `1` = enable *(default)*
 SetOption1<a id="setoption1"></a>|Set [button multipress](Control-other-devices) mode to<BR> `0` = allow all button actions *(default)*<BR> `1` = restrict to single, double and hold actions (i.e., disable inadvertent reset due to long press)
-SetOption3<a id="setoption3"></a>|[MQTT](mqtt) <BR>`0` = disable MQTT<BR> `1` = enable MQTT *(default)* 
+SetOption3<a id="setoption3"></a>|[MQTT](mqtt) <BR>`0` = disable MQTT<BR> `1` = enable MQTT *(default)*
 SetOption4<a id="setoption4"></a>|Return MQTT response as<BR> `0` = RESULT topic *(default)*<BR> `1` = %COMMAND% topic
 SetOption8<a id="setoption8"></a>|Show temperature in<BR> `0`= Celsius *(default)*<BR> `1` = Fahrenheit
 SetOption10<a id="setoption10"></a>|When the device MQTT topic changes <BR> `0` = remove retained message on old topic LWT *(default)*<BR> `1` = send "Offline" to old topic LWT
 SetOption11<a id="setoption11"></a>|Swap button single and double press [functionality](Control-other-devices#double-press--hold)<BR> `0` = disabled *(default)*<BR> `1` = enabled
-SetOption12<a id="setoption12"></a>|Configuration saving to flash option<BR>`0` = allow dynamic flash save slot rotation *(default)*<BR>`1` = use fixed eeprom flash slot 
+SetOption12<a id="setoption12"></a>|Configuration saving to flash option<BR>`0` = allow dynamic flash save slot rotation *(default)*<BR>`1` = use fixed eeprom flash slot
 SetOption13<a id="setoption13"></a>|Allow immediate action on single button press<BR>`0` = single, multi-press and hold button actions *(default)*<BR> `1` = only single press action for immediate response (i.e., disable multipress detection). Disable by holding for 4 x button hold time (see [`SetOption32`](#setoption32)).
 SetOption15<a id="setoption15"></a>|Set PWM control for LED lights<BR>`0` = basic PWM control<BR>`1` = control with [`Color`](#Color) or [`Dimmer`](#Dimmer) commands _(default)_
 SetOption16<a id="setoption16"></a>|Set addressable LED Clock scheme parameter<BR> `0` = clock-wise mode *(default)*<BR> `1` = counter-clock-wise mode
@@ -368,8 +368,8 @@ SetOption20<a id="setoption20"></a>|Update of Dimmer/Color/CT without turning po
 SetOption21<a id="setoption21"></a>|Energy monitoring when power is off<BR>`0` = disabled *(default)*<BR>`1` = enabled
 SetOption24<a id="setoption24"></a>|Set pressure units <BR> `0` = hPa *(default)*<BR> `1` = mmHg
 SetOption26<a id="setoption26"></a>|Use indexes even when only one relay is present<BR> `0` = messages use POWER *(default)*<BR> `1` = messages use POWER1
-SetOption28<a id="setoption28"></a>|RF received data format<BR> `0` = hex *(default)*<BR> `1` = decimal 
-SetOption29<a id="setoption29"></a>|IR received data format<BR> `0` = hex *(default)*<BR> `1` = decimal 
+SetOption28<a id="setoption28"></a>|RF received data format<BR> `0` = hex *(default)*<BR> `1` = decimal
+SetOption29<a id="setoption29"></a>|IR received data format<BR> `0` = hex *(default)*<BR> `1` = decimal
 SetOption30<a id="setoption30"></a>|Enforce Home Assistant auto-discovery as light<BR> `0` = relays are announced as a switch and PWM as a light *(default)*<BR> `1` = both relays and PWM are announced as light
 SetOption31<a id="setoption31"></a>|Set status LED  blinking during Wi-Fi and MQTT connection problems.<br> _[`LedPower`](#LedPower) must be set to `0` for this feature to work_<BR>`0` = Enabled *(default)*<BR> `1` = Disabled
 SetOption32<a id="setoption32"></a>|Number of 0.1 seconds to hold button before sending `HOLD` action message.<BR> `1..100` to set button hold time *(default = `40`)*. This option also affects the time required to perform a firmware defaults reset (10x `HOLD` action time)
@@ -380,7 +380,7 @@ SetOption37<a id="setoption37"></a>|Color remapping for led channels, also provi
 SetOption38<a id="setoption38"></a>|`6..255 ` = set IRReceive protocol detection sensitivity minimizing UNKNOWN protocols
 SetOption39<a id="setoption39"></a>|Control handling of invalid power measurements. [Read more...](Power-Monitoring-Calibration#known-issues)<BR>`0` = reset to default on next restart<BR>`1..255` = number of invalid power readings before reporting no load *(default =`128`)*.
 SetOption40<a id="setoption40"></a>|Stop detecting input change on the button GPIO. Solves [#5449](https://github.com/arendst/Tasmota/issues/5449)<br>Active only when [`SetOption1 1`](#setoption1) and [`SetOption13 0`](#setoption13). **This disables all long press functionality.**<BR>`0..250` = button hold time in 0.1 seconds after which button functionality is disabled.*(default =`1`)* <BR>Example: `Backlog SetOption1 1; SetOption13 0; SetOption40 10` - discard any button press over 1 second
-SetOption42<a id="setoption42"></a>|<BR>`0..255` = set over-temperature (Celsius only) threshold resulting in power off on all energy monitoring devices *(default = `90`)* 
+SetOption42<a id="setoption42"></a>|<BR>`0..255` = set over-temperature (Celsius only) threshold resulting in power off on all energy monitoring devices *(default = `90`)*
 SetOption43<a id="setoption43"></a>|**Deprecated** in favor of [`DimmerRange`](#DimmerRange) <BR>`0..255` = set maximum dimming value ([details](TuyaMCU#dimming-range)) *(default = `100`)*<BR>Available for Tuya  and PS_16_DZ  dimmers
 SetOption51<a id="setoption51"></a>|Enable GPIO9 and GPIO10 component selections in Module Configuration<BR>:rotating_light: **WARNING** Do not use on ESP8266 devices! :rotating_light:<BR>`0` = disable *(default)*<BR>`1` = enable
 SetOption52<a id="setoption52"></a>|Control display of optional time offset from UTC in JSON payloads<BR>`0` = disable *(default)*<BR> `1` = enable
@@ -398,16 +398,16 @@ SetOption63<a id="setoption63"></a>|Set relay state feedback scan at restart ([#
 SetOption64<a id="setoption64"></a>|Switch between `-` or `_` as sensor name separator<BR>`0` = sensor name index separator is `-` _(hyphen)_ *(default)*<BR> `1` = sensor name index separator is `_` _(underscore)_<br>*Affects DS18X20, DHT, BMP and SHT3X sensor names in tele messages*
 SetOption65<a id="setoption65"></a>|Device recovery using [fast power cycle detection](Fast-power-cycle-device-recovery)<BR>`0` = enabled *(default)*<BR>`1` = disabled
 SetOption66<a id="setoption66"></a>|Set publishing TuyaReceived to MQTT<BR>`0` = disable publishing `TuyaReceived` over MQTT *(default)*<BR>`1` = enable publishing `TuyaReceived` over MQTT
-SetOption67<a id="setoption67"></a>|iFan03 Buzzer control<BR>`0` = disable Sonoff iFan03 buzzer *(default)*<BR>`1` = enable Sonoff iFan03 buzzer 
+SetOption67<a id="setoption67"></a>|iFan03 Buzzer control<BR>`0` = disable Sonoff iFan03 buzzer *(default)*<BR>`1` = enable Sonoff iFan03 buzzer
 SetOption68<a id="setoption68"></a>|Multi-channel PWM instead of a single light<BR>`0` = Treat [PWM](#pwm) as a single light *(default)*<BR>`1` = Treat [PWM](#pwm) as separate channels. In this mode, use [`Power<x>`](#power) to turn lights on and off, and [`Channel<x>`](#channel) to change the value of each channel.<BR>[`Color`](#color) still works to set all channels at once.<BR>***Requires restart after change***
 SetOption69<a id="setoption69"></a>|**Deprecated** in favor of [DimmerRange](#DimmerRange) <br>By default Tuya dimmers won't dim below 10% because some don't function very well that way.<BR>`0` = disable Tuya dimmer 10% lower limit<BR>`1` = enable Tuya dimmer 10% lower limit *(default)*
 SetOption71<a id="setoption71"></a>|Set DDS238 Modbus register for active energy<BR>`0` = set primary register *(default)*<BR>`1` = set alternate register
 SetOption72<a id="setoption72"></a>|Set reference used for total energy <BR>`0` = use firmware counter *(default)*<BR>`1` = use energy monitor (e.g., PZEM-0xx, SDM120, SDM630, DDS238, DDSU666) hardware counter
 SetOption73<a id="setoption73"></a>|*Deprecated in version 7.1.2.4 in favor of CORS command*<BR>Set HTTP Cross-Origin Resource Sharing (CORS) <BR>`0` = disable CORS *(default)*<BR>`1` = enable CORS
 SetOption74<a id="setoption74"></a>|Enable internal pullup for single DS18x20 sensor <BR>`0` = disabled *(default)*<BR>`1` = internal pullup enabled
-SetOption75<a id="setoption75"></a>|Set grouptopic behaviour ([#6779](https://github.com/arendst/Tasmota/issues/6779))<BR>`0` = GroupTopic using FullTopic replacing %topic% _(default)_<BR>`1` =  GroupTopic is `cmnd/%grouptopic%/` 
-SetOption76<a id="setoption76"></a>|Bootcount incrementing when [DeepSleep](DeepSleep) is enabled ([#6930](https://github.com/arendst/Tasmota/issues/6930))<BR>`0` = disable bootcount incrementing _(default)_<BR>`1` = enable bootcount incrementing 
-SetOption77<a id="setoption77"></a>|Do not power off if a slider is moved to far left<BR>`0` = disabled _(default)_<BR>`1` = enabled 
+SetOption75<a id="setoption75"></a>|Set grouptopic behaviour ([#6779](https://github.com/arendst/Tasmota/issues/6779))<BR>`0` = GroupTopic using FullTopic replacing %topic% _(default)_<BR>`1` =  GroupTopic is `cmnd/%grouptopic%/`
+SetOption76<a id="setoption76"></a>|Bootcount incrementing when [DeepSleep](DeepSleep) is enabled ([#6930](https://github.com/arendst/Tasmota/issues/6930))<BR>`0` = disable bootcount incrementing _(default)_<BR>`1` = enable bootcount incrementing
+SetOption77<a id="setoption77"></a>|Do not power off if a slider is moved to far left<BR>`0` = disabled _(default)_<BR>`1` = enabled
 SetOption80<a id="setoption80"></a>|[Blinds and shutters](blinds-and-shutters) support<BR>`0` = disable blinds and shutters support *(default)*<BR>`1` = enable blinds and shutters support
 SetOption81<a id="setoption81"></a>|Set PCF8574 component behavior for all ports<BR>`0` = set as regular state *(default)*<BR>`1` = set as inverted state
 SetOption82<a id="setoption82"></a>|Reduce the CT range from 153..500 to 200.380 to accomodate with Alexa range<BR>`0` = CT ranges from 153 to 500 *(default)*<BR>`1` = CT ranges from 200 to 380 (although you can still set in from 153 to 500)
@@ -416,13 +416,13 @@ SetOption84<a id="setoption84"></a>|(Experimental) When using AWS IoT, sends a d
 
 ### Serial Bridge
 Both hardware and software Serial Bridge are supported.
- 
-Hardware Serial Bridge uses `GPIO1 (Tx)` and `GPIO3 (Rx)` or `GPIO13 (Tx)` and `GPIO15 (Rx)` pins of your device.   
-Software Serial Bridge can use any other GPIO to be configured as components `Serial Tx` and `Serial Rx` (or `SerBr Tx` and `SerBr Rx`). If `Tx` and `Rx` components are not assigned in the Template or Module, `GPIO1` and `GPIO3` will be used. Note that changing serial logging ([`SerialLog`](#seriallog) 0) will disable the hardware Serial Bridge.  
+
+Hardware Serial Bridge uses `GPIO1 (Tx)` and `GPIO3 (Rx)` or `GPIO13 (Tx)` and `GPIO15 (Rx)` pins of your device.
+Software Serial Bridge can use any other GPIO to be configured as components `Serial Tx` and `Serial Rx` (or `SerBr Tx` and `SerBr Rx`). If `Tx` and `Rx` components are not assigned in the Template or Module, `GPIO1` and `GPIO3` will be used. Note that changing serial logging ([`SerialLog`](#seriallog) 0) will disable the hardware Serial Bridge.
 
 Information received by Tasmota over the serial bridge is captured automatically. Before data will be received, a properly formatted [`SerialSend<x>` or `SSerialSend<x>`](#SerialSend) command must be executed. This must be done any time the device restarts (e.g., via a `System#Boot` triggered rule). This command is required in order to set how the expected serial data will be formatted and interpreted (i.e., which &#60;x> option). A `{"SSerialReceived":{"Data":"<string>"}}` message will be posted. You can use [a rule](Rule-Cookbook#switch-relays-via-serial-interface) to process the string which will be contained in `SSerialReceived#Data`.
 
-Expect possible communication errors when additional sensors are configured.  
+Expect possible communication errors when additional sensors are configured.
 
 Command|Parameters
 :---|:---
@@ -430,11 +430,11 @@ Baudrate<a id="baudrate"></a>|`1` = set hardware serial bridge to default baud r
 SBaudrate<a id="sbaudrate"></a>|`1` = set software serial bridge to default baud rate of 9600 bps<BR>`<value>` = set baud rate. The set rate will be a multiple of 300. The maximum baud rate possible is 19,660,500.
 SerialConfig<a id="serialconfig"></a>|`value` = set serial protocol using [data/parity/stop](https://en.wikipedia.org/wiki/Serial_port#Settings) conventional notation (example: `8N1` or `702`)<BR>`0..23` = set serial protocol (`3` equals `8N1`)
 SerialDelimiter<a id="serialdelimiter"></a>|`<value>` = set serial delimiter to [escape character code](https://en.wikipedia.org/wiki/Escape_character#ASCII_escape_character) or ASCII character<BR>`1..127` = set serial delimiter to [decimal ASCII](http://www.asciichart.com/)<BR>`128` = only allow ASCII characters 32 to 127 in response text<BR>`129..255` = disable serial delimiter
-SerialSend&#60;x><a id="serialsend"></a>|`<string>`<BR>Disable serial logging and send using hardware serial<BR>x = `1..5`<BR>`1` = send appending `\n` (newline) ()<BR>`2` = send<BR>`3` = replace escape characters and send <BR>`4` = send as binary. Data in serial response messages is encoded as hex strings <BR>`5` = send as hex. Data in serial response messages is encoded as hex strings 
-SSerialSend&#60;x><a id="sserialsend"></a>|`<string>`<BR>Send using software serial protocol<BR>x = `1..5`<BR>`1` = send appending `\n` (newline) ()<BR>`2` = send<BR>`3` = replace escape characters and send <BR>`4` = send as binary data. Data in serial response messages is encoded as hex strings<BR>`5` = send as hex. Data in serial response messages is encoded as hex strings 
+SerialSend&#60;x><a id="serialsend"></a>|`<string>`<BR>Disable serial logging and send using hardware serial<BR>x = `1..5`<BR>`1` = send appending `\n` (newline) ()<BR>`2` = send<BR>`3` = replace escape characters and send <BR>`4` = send as binary. Data in serial response messages is encoded as hex strings <BR>`5` = send as hex. Data in serial response messages is encoded as hex strings
+SSerialSend&#60;x><a id="sserialsend"></a>|`<string>`<BR>Send using software serial protocol<BR>x = `1..5`<BR>`1` = send appending `\n` (newline) ()<BR>`2` = send<BR>`3` = replace escape characters and send <BR>`4` = send as binary data. Data in serial response messages is encoded as hex strings<BR>`5` = send as hex. Data in serial response messages is encoded as hex strings
 TuyaSend&#60;x><a id="tuyasend"></a>|Send data to MCU with [TuyaMCU](TuyaMCU)<br>x = `1..4`<br>`TuyaSend1 <dpId>,<boolean>` = send boolean (`0`/`1`) data type to dpId (1 byte max length)<br>`TuyaSend2 <dpId>,<int>` = send integer data to dpId (4 bytes max length)<br>`TuyaSend2 <dpId>,<0xAABBCCDD>` = send 4 byte data to dpId (4 bytes max length)<br>`TuyaSend3 <dpId>,<value>` = send any data type to dpId (unknown max length)<br>`TuyaSend4 <dpId>,<enum>` = send enumerated (`0`/`1`/`2`/`3`/`4`/`5`) data type to dpId (1 byte max length)<br>
 
-### MP3 Player 
+### MP3 Player
 » v6.6.0
 
 The MP3 Player driver is based on the one from DFRobot. They named it [DFPlayer mini](https://www.dfrobot.com/wiki/index.php/DFPlayer_Mini_SKU:DFR0299). All MP3 Players with the identical Serial Control Command structure can be used.
@@ -458,7 +458,7 @@ Command|Parameters
 :---|:---
 <a id="domoticzidx"></a>DomoticzIdx<x\>|Show Domoticz Relay idx <x\> (x = `1..4`)<BR>`0` = disable use of Relay idx <x\> *(default)*<BR>`<value>` = Show Relay idx <x\>
 <a id="domoticzkeyidx"></a>DomoticzKeyIdx<x\>|Show Domoticz Key idx <x\> (x = `1..4`)<BR>`0` = disable use of Key idx <x\> *(default)*<BR>`<value>` = Show Key idx <x\> (to use enable [ButtonTopic](#buttontopic))
-<a id="domoticzsensoridx"></a>DomoticzSensorIdx<x\>|Show Domoticz Sensor idx <x\> (x = `1..5`)<BR>`0` = disable use of Sensor idx <x\> *(default)*<BR>`<value>` = Show Sensor idx <x\> 
+<a id="domoticzsensoridx"></a>DomoticzSensorIdx<x\>|Show Domoticz Sensor idx <x\> (x = `1..5`)<BR>`0` = disable use of Sensor idx <x\> *(default)*<BR>`<value>` = Show Sensor idx <x\>
 <a id="domoticzswitchidx"></a>DomoticzSwitchIdx<x\>|Show Domoticz Switch idx <x\> (x = `1..4`)<BR>`0` = disable use of Switch idx <x\> *(default)*<BR>`<value>` = Show Switch idx <x\> (to use enable [SwitchTopic](#switchtopic))
 <a id="domoticzupdatetimer"></a>DomoticzUpdateTimer|Show current update timer value in seconds<BR>`0` = disable sending interim Domoticz status *(default)*<BR>`1..3600` = send status to Domoticz in defined intervals
 
@@ -511,11 +511,11 @@ DisplayRotate<a id="displayrotate"></a>|Set rotation angle<BR> `0` = 0°<BR> `1`
 DisplayText<a id="displaytext"></a>|`<value>` - See [DisplayText use](Displays#displaytext-use)
 DisplayCols<a id="displaycols"></a>|`1..44` Set number of display columns *(for display modes>0)*
 DisplayRows <a id="displayrows"></a>|`1..32` Set number of display rows *(for display modes>0)*
-DisplayFont<a id="displayfont"></a>|Specify the current font<BR>`0` use classic GFX font<BR>`1` = 12<BR>`2` = 24<BR>`3` = 8 (opt)<BR>`7` use RA8876 internal font 
+DisplayFont<a id="displayfont"></a>|Specify the current font<BR>`0` use classic GFX font<BR>`1` = 12<BR>`2` = 24<BR>`3` = 8 (opt)<BR>`7` use RA8876 internal font
 DisplayWidth<a id="displaywidth"></a>|Specify the display width in pixels *(SSD1306 only)*
 DisplayHeight<a id="displayheight"></a>|Specify the display height in pixels *(SSD1306 only)*
 
-### Stepper Motors 
+### Stepper Motors
 
 
 <a id="tb-stepperMotors">Command|Parameters
