@@ -99,7 +99,7 @@ Set push-button with dimmer mode
 
 Tasmota will send a `TOGGLE` command (use Switch<x>#state=2 in rules) when the button is pressed for a short time and is then released. When pressing the button (closing the circuit) for a long time (set in `SetOption32`) Tasmota sends repeated `INC_DEC` (increment or decrement the dimmer) commands (use Switch<x>#state=4 in rules) as long as the button is pressed. Releasing the button starts a internal timer, the time is set in `SetOption32`. When released for the time set in `SetOption32` Tasmota sends a `CLEAR` command (use Switch<x>#state=6 in rules). If the button is pressed again before the timeout Tasmota sends a `INV` command (use Switch<x>#state=5 in rules). The `INV` command is for the controlling sortware (home assistant) to switch between incrementing and decrementing the dimmer.
 
-> [!TIP] The dimmer mode can be used in [conjunction with rules](Rule-Cookbook#use-Control-a-dimmer-with-one-switch) to create additional features or to control another Tasmota device.
+> [!TIP] The dimmer mode can be used in [conjunction with rules](Rule-Cookbook#Control-a-dimmer-with-one-switch) to create additional features or to control another Tasmota device.
 
 > [!TIP] The dimmer mode can be used to turn a media player on and off and to control the volume of a media player with one switch.
 
