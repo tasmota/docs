@@ -11,7 +11,7 @@ Compared to the 4CH the main differences/improvements of the 4CH Pro are:
 
 The "FW/IO0" button (Switch 1) is not directly connected to GPIO0 of the ESP module. A different method has to be used to program this board.
 
-To program the ESP chip disconnect power from the board, connect a cable from any Ground (GND) pin from STM Program Header to the GPIO0 pin on the ESP (be careful not to touch any of the other pins). This is the second pin to the right on the top row of pins (see picture). While holding the pin connected power on the board. The board does not respond to any button pressed when in programming mode and LED 1, 2 and 3 are on (might differ per board). 
+To program the ESP chip disconnect power from the board, connect a cable from any Ground (GND) pin to the GPIO0 pin on the ESP (be careful not to touch any of the other pins). This is the second pin to the right on the top row of pins (see picture). While holding the pin connected power on the board. The board does not respond to any button pressed when in programming mode and LED 1, 2 and 3 are on (might differ per board). 
 
 Use the ESP programming header as described in the picture to upload the firmware and follow regular programming procedure.
 
