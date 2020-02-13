@@ -63,6 +63,7 @@ Example: disable Domoticz support
 >It is not recommended to change `my_user_config.h`, use it only for reference 
 
 Save file, compile the custom binary and flash it
+```
 
 > [!WARNING]   
 >There are limits to how many features can be included! If you go overboard code might not compile due to features conflicting _or_ might not be able to be flashed if it exceeds [ESP8266 limits](Sensor-API#keeping-esp8266-code-compact).
