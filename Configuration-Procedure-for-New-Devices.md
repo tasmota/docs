@@ -34,7 +34,7 @@ If your device is similar to the existing built-in module (e.g., a particular MC
 
    _c._ Once you have found which GPIO are connected to each input, change the GPIO setting in the configuration to a `Button<x>` or `Switch<x>` according to your input component or use case. Proper operation may dictate the use regular or inverted (i.e., `Switch<x>i`/`Button<x>i`) settings. For buttons, you may need to determine whether the internal pull-up is used or not. If so, select `Button<x>`_**n**_, where _**n**_ indicates no pull-up.
 
-      - See [Using a physical pushbutton with single press, double press, and hold](Rule-cookbook#16-using-an-external-button-with-single-press---double-press-and-hold) to control multiple devices with one button.
+      - See [Using a physical pushbutton with single press, double press, and hold](Rule-Cookbook#16-using-an-external-button-with-single-press---double-press-and-hold) to control multiple devices with one button.
 
 4. Once you have determined which GPIO your device uses, set any remaining GPIO to `None (0)`.
    - Save the configuration.
