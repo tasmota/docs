@@ -2,7 +2,7 @@
 
 Lights come in various shapes (bulb, strips, ceiling lights, ...) but in Tasmota they are separated in 3 categories:
  - [Channel Controlled LEDs](#channel-controlled-leds)
- - [Addressable LEDs](addressable-leds)
+ - [Addressable LEDs](#addressable-leds)
  - [Status LEDs](#status-leds) 
 
 ## Controls
