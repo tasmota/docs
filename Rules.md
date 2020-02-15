@@ -129,7 +129,7 @@ Hardware and software serial interface, RF, IR and TuyaMCU are also supported ba
 |SSerialReceived#Data=&lt;string>| whenever &lt;string> is received via software serial|
 |IrReceived#Data=801<a id="IrReceivedData"></a>| whenever an IR signal for a RC5 remote control button 1 is received|
 |IrReceived#Data=0x00FF9867|whenever an IR signal with hex code 0x00FF9867 is received|
-|RfReceived#RfKey=4<a id="RfReceivedRfKey"></a>| whenever the [RF Bridge](Sonoff-RF-Bridge-433) receives a recognized RfKey 4 signal
+|RfReceived#RfKey=4<a id="RfReceivedRfKey"></a>| whenever the [RF Bridge](devices/Sonoff-RF-Bridge-433) receives a recognized RfKey 4 signal
 |RfReceived#Data=0xE8329E<a id="RfReceivedData"></a>|whenever an RF signal with hex code 0xE8329E is received|
 
 [Back To Top](#top)
