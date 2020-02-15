@@ -125,3 +125,8 @@ How to generate the certificates in mosquitto please look at:
 ## SSL/TLS on Tasmota
 
 [TLS](TLS) article explains how to set it up in Tasmota
+
+## Disable unsecured fallback WiFi (WifiManager)
+
+In case your Wifi SSID is not available (i.e. access point dies), the WiFiManager will jump into action and make your tasmota devices available using an unsecured access point.
+Type WifiConfig into the tasmota console. If this parameter is set to 2, you might want to change it after completing the setup of your device. Some less risky options would be: 0/4/5. (For details, see https://tasmota.github.io/docs/#/Commands?id=wi-fi)
