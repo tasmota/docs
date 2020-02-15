@@ -17,7 +17,7 @@ Some devices use the serial port to control the relays or an MCU, so serial logg
 
 The default logging level for SerialLog logging is 2. Unless explicitly set by a command (e.g., user input in the Console, a System#Boot triggered rule), SerialLog will be disabled automatically 10 minutes after the device reboots.
 
-Through a [terminal program](Prerequisites#serial-terminal) set the baud rate to 115200 (19200 for Sonoff Dual), both NL & CR, and disable hardware flow control.  
+Through a [terminal program](installation/Prerequisites#serial-terminal) set the baud rate to 115200 (19200 for Sonoff Dual), both NL & CR, and disable hardware flow control.  
 
 - Debugging the Sonoff Pow is a bit tricky as the serial interface has a **direct connection to one of the AC power lines**. The schematic below uses two optocouplers separating the AC connection on the **left** from the low voltage connection on the **right** allowing for serial control at 115200 baud and uploading of firmware up to 57600 baud while AC is connected.
 <img alt="OptoSerial" src="/_media/OptoSerial.jpg" /> 
