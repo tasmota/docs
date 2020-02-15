@@ -1,1 +1,1 @@
-[Moved](PIR-Motion-Sensors#AM312)
+[Moved](peripherals/PIR-Motion-Sensors#am312)
