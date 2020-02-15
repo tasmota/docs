@@ -10,7 +10,7 @@ You need to access the serial interface. The **four serial pins** (3V3, Rx, Tx, 
 
 For flashing the Sonoff Basic, hold the button while connecting the 3.3V power. The LED remains off until the flashing process is done and the board is rebooted.
 
-If your switch is powering up but is showing a solid-blink-reset pattern see [this FAQ entry for advice](devices/Troubleshooting#running-out-of-memory).
+If your switch is powering up but is showing a solid-blink-reset pattern see [this FAQ entry for advice](help/Troubleshooting#running-out-of-ram).
 
 - GPIO00 - BUTTON
 - GPIO12 - RELAY
