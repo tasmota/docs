@@ -1,1 +1,1 @@
-[Moved](PIR-Motion-Sensors#HC-SR501)
+[Moved](peripherals/PIR-Motion-Sensors#hc-sr501)
