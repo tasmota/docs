@@ -37,7 +37,7 @@ Example: ADC as `Light (3)`
 ```
 
 > [!WARNING] 
->Careful when setting ADC as Button, if there is constant voltage on the pin it might register as a [long press](Button-usage#long-press) and reset the device to firmware defaults
+>Careful when setting ADC as Button, if there is constant voltage on the pin it might register as a [long press](Buttons-and-Switches#long-press) and reset the device to firmware defaults
 
 ### Rule triggers
 Use these triggers in rules:    
