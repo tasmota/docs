@@ -32,7 +32,7 @@ Note 2: GPIO9 and 10 can be safely used with an external switch (even rebooting 
 
 Please see the [Hardware Preparation](installation/Hardware-Preparation) page for general instructions.
 
-As always, you need to access the serial interface. The **four serial pins** (3V3, Rx, Tx, GND) are available at the short end of the PCB and can be seen on the left side of the first image and are labeled in red on the second image. For the v2.0 version of the board you need to cross-over the serial interface, see [troubleshooting](devices/Troubleshooting).
+As always, you need to access the serial interface. The **four serial pins** (3V3, Rx, Tx, GND) are available at the short end of the PCB and can be seen on the left side of the first image and are labeled in red on the second image. For the v2.0 version of the board you need to cross-over the serial interface, see [troubleshooting](help/Troubleshooting).
 
 <img alt="Sonoff Dual, GPIO0 grounded" src="https://github.com/arendst/arendst.github.io/blob/master/media/dual2a.jpg?raw=true" width="48%" />
 <img alt="Alternate GPIO0 spot" src="http://tinkerman.cat/wp-content/uploads/2016/12/20161206_234331s.jpg" width="48%" align="right" />
@@ -47,7 +47,7 @@ Programming the Sonoff Dual is more difficult because the on-board-button is not
 
 Please be aware, that the button on the Sonoff Dual will initially not have any functionality!
 
-Other than on most Sonoff module the button is not connected to the normal button pin (GPIO0). After freshly flashing Tasmota (with the default module setting "Sonoff Basic"), the button will **not act as described** in the [Button Usage](devices/Button-usage) article. You will not be able to switch power or activate the special WiFi modes.
+Other than on most Sonoff module the button is not connected to the normal button pin (GPIO0). After freshly flashing Tasmota (with the default module setting "Sonoff Basic"), the button will **not act as described** in the [Buttons and Switches](Buttons-and-Switches) article. You will not be able to switch power or activate the special WiFi modes.
 
 You will need to configure wifi credentials connecting directly to the wifi AP your Dual will broadcast or configure the module firmware config beforehand via `user_config_override.h`.
 
