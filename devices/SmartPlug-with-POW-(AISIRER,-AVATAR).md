@@ -45,7 +45,7 @@ Tasmota WEB config (Generic)
 
 [webconfig](https://drive.google.com/open?id=12ysKDN6wBvdHVVC33qB3a9rpg5mzKCC7)
 
-**IMPORTANT:** in order to have an accurate measurement of Voltage/Current/Power, you have to calibrate the internal meter with a well know load (like lamp or hair dryer) using this [detailed procedure](Power-monitoring-calibration).
+**IMPORTANT:** in order to have an accurate measurement of Voltage/Current/Power, you have to calibrate the internal meter with a well know load (like lamp or hair dryer) using this [detailed procedure](/Power-Monitoring-Calibration).
 
 ## Update from my side
 I managed to flash two Aisirer plugs using pre-compiled tasmota.binaries, since my plugs had only 1M flash. I used 3.3V connected directly to the ESP board. I had some trouble with WLAN connectivity which caused the relays to pulse, so I switched to 2.3.0 core, which seems default again since a few releases. This runs quite well.
