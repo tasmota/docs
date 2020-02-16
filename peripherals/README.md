@@ -62,7 +62,7 @@ R1 | | no connection
 R2 | 1 | GND
 R3 | 4 | 3.3V
 
-You can then plug a sensor into the jack like you would to a [Sonoff TH](Sonoff-TH) and define what sensor you have connected to GPIO14.
+You can then plug a sensor into the jack like you would to a [Sonoff TH](/devices/Sonoff-TH) and define what sensor you have connected to GPIO14.
 
 
 ## Restrictions  
