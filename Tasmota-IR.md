@@ -3,9 +3,9 @@ The default Tasmota firmware variants include support for IR send/receive for a 
 
 There are now two additional Tasmota firmware variants that provide almost all IRremoteESP8266 protocols. This requires disabling some other features to keep code size manageable.  
 - `sonoff-ir` is pre-packaged for IR blasters, like [Eachen IR Bridge](https://blakadder.github.io/templates/eachen_SANT-IR_01.html) or [YTF IR Bridge](https://blakadder.github.io/templates/ytf_ir_bridge.html). Choose `sonoff-ir` if you are using an IR blaster.  
-- `sonoff-ircustom` is used if you want to customize your features (additional sensors, language, etc.). This variant is required because it triggers a special compilation flag for IRremoteESP8266. Edit the [`IRremoteESP8266.h`](../tree/development/lib/) header in the `IRremoteESP8266-x.x.x/src` folder to disable (i.e., set to `false`) any unneeded/unwanted protocols. Then [compile your own firmware](Flashing#flashing-and-compiling-from-source).
+- `sonoff-ircustom` is used if you want to customize your features (additional sensors, language, etc.). This variant is required because it triggers a special compilation flag for IRremoteESP8266. Edit the [`IRremoteESP8266.h`](../tree/development/lib/) header in the `IRremoteESP8266-x.x.x/src` folder to disable (i.e., set to `false`) any unneeded/unwanted protocols. Then [compile your own firmware](installation/Flashing#flashing-and-compiling-from-source).
 
-Once you have the Tasmota IR firmware file you need, [flash it](Flashing) on your device using the usual method.  
+Once you have the Tasmota IR firmware file you need, [flash it](installation/Flashing) on your device using the usual method.  
 
 You can test that you have the correct firmware on your device by performing the following command in the web UI Console: `IRhvac {"Vendor":"xx"}`. The output should be a list of the supported protocols/vendors. For example:  
 ```
