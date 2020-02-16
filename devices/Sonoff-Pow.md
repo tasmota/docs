@@ -23,7 +23,7 @@ Please see the [Hardware Preparation](installation/Hardware-Preparation) page fo
 To enter **flash mode**, press down on the button while powering the device.
 
 ## Power Monitoring Calibration
-Sonoff Pow might need calibration as correct measurements are influenced by hardware and timing differences. See [Power Monitoring Calibration](devices/Power-Monitoring-Calibration)
+Sonoff Pow might need calibration as correct measurements are influenced by hardware and timing differences. See [Power Monitoring Calibration](/Power-Monitoring-Calibration)
    
 ## Telemetry
 The Sonoff Pow can provide Energy, Power, Voltage and Current information in different ways.
