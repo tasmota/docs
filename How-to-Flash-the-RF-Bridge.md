@@ -1,7 +1,7 @@
 
 Someone asked me on here a more detailed explanation of how to do this, so I thought I would post (as best as I can recall) how to do it with a Windows PC.
 
-- The Sonoff RF Bridge firmware is uploaded Like any other ESP device. Please refer to the [flashing](Flashing) instructions.
+- The Sonoff RF Bridge firmware is uploaded Like any other ESP device. Please refer to the [flashing](installation/Flashing) instructions.
 
 - Ensure the switch on your RF Bridge is switched of the OFF position (change it back to ON position AFTER flashing your Bridge).
 
