@@ -130,7 +130,7 @@ with the '=' char at the beginning of a line you may do some special decoding
 ## Smart Meter Descriptors
 - [Hager EHZ363 (SML)](#Hager-EHZ363-SML)
 - [Hager EHZ161 (OBIS)](#Hager-EHZ161-OBIS)
-- [Landis + Gyr ZMR120AR (OBIS)](#Landis-+-Gyr-ZMR120AReS2R2sfCS-OBIS)
+- [Landis + Gyr ZMR120AR (OBIS)](#landis--gyr-zmr120ares2r2sfcs-obis)
 - [COMBO Meter (Water,Gas,SML)](#COMBO-Meter-WaterGasSML)
 - [WOLF CSZ 11/300 Heater](#WOLF-CSZ-11300-Heater)
 - [SDM530 (MODBUS)](#SDM530)
