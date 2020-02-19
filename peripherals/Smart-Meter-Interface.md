@@ -186,61 +186,61 @@ with the '=' char at the beginning of a line you may do some special decoding
   
     
 > `>D`  
-;Variable Strom Total  
+;Var Voltage Total  
 v1=0  
-;HT Strom Total  
+;HT Main rate total  
 v2=0  
-;NT Strom Total  
+;NT Night rate Total  
 v3=0  
-;aktuelle Leistung L1+L2+L3  
+; Energie L1+L2+L3  
 v4=0  
-;aktuelle Leistung L1  
+;recent current L1  
 v5=0  
-;aktuelle Leistung L2  
+;recent current L2  
 v6=0  
-;aktuelle Leistung L3  
+;recent current L3  
 v7=0  
   
   
->;Variable Minuten  
+>;Var minute   
 min=0  
-;Variable Stunden  
+;Var hour  
 hr=0  
-;Variable Monatsanfang 01.xx.20xx 0:00 Uhr  
+;Var begin of the month 01.xx.20xx 0:00 Uhr  
 md=0  
-;Variable Jahresanfang 01.01. 0:00 Uhr  
+;Var begin of the year 01.01. 0:00 Uhr  
 yr=0  
-;Variable Zähler Schnittstelle >F=ms  
+;Var for counter >F=ms  
 scnt=0  
-;Variable Schnittstellenumschaltung  
+;Var for baudrate changeing 
 res=0  
   
->;Permanente Variable Stromzähler um 0:00 Uhr  
+>;Permanent Var Meter1 0:00 
 p:sm=0  
 p:HT_sm=0  
 p:NT_sm=0  
-;Variable Stromzähler täglich =0  
+;Var Meter 1 daily =0  
 sd=0  
 HT_sd=0  
 NT_sd=0  
-;Permanente Variable Stromzähler am Monatsanfang  
+;Permanent Var for month begin  
 p:sma=0  
 p:HT_sma=0  
 p:NT_sma=0  
-;Variable Stromzähler monatlich =0  
+;Var Meter 1 monthly =0  
 smn=0  
 HT_smn=0  
 NT_smn=0  
-;Permanente Variable Stromzähler am Jahresanfang  
+;Permanent Var for year begin  
 p:sya=0  
 p:HT_sya=0  
 p:NT_sya=0  
-;Variable Stromzähler jährlich =0  
+;Var Meter1 yearly =0  
 syn=0  
 HT_syn=0  
 NT_syn=0  
   
->;Zuweisung zu den Jason Strings  
+>;Fill vars with content on teleperiod  
 > `>T`  
 v1=#Total_in  
 v2=#HT_Total_in  
@@ -251,36 +251,36 @@ v6=#kw_L2
 v7=#kw_L3  
   
 > `>B`  
-;Aktivierung des Treibers  
+;Restart driver  
 =>sensor53 r  
-;Übertragungsinterval in Sekunden  
+;Setting teleperiod to 20sec  
 tper=20  
   
 > `>F`  
-; zähle 100 ms.....Millisekunden  
+; count 100ms 
 scnt+=1  
 switch scnt  
 case 6  
-;Umschaltung der Schnittstelle auf 300 Baud und sende /?! als Sendungsanforderung an SM  
+;setup sml driver to 300 baud and send /?! As HEX to trigger the Meter 
 res=sml(1 0 300)  
 res=sml(1 1 "2F3F210D0A")  
   
->;Umschaltung des SM auf 9600 Baud mit 050  
+>;Ack and ask for switching to 9600 baud
 case 18  
 res=sml(1 1 "063035300D0A")  
   
->;Umschaltung der internen Schnittstelle auf 9600 Baud  
+>;Switching sml driver to 9600 baud  
 case 20  
 res=sml(1 0 9600)  
   
->;Neustart der Schleife nach 50x100ms  
+>;Restart sequence after 50x100ms  
 case 50  
 ; restart sequence  
 scnt=0  
 ends  
   
 > `>S`  
-;Tagesverbrauch  
+;daily usage  
 hr=hours  
 if chg[hr]>0  
 and hr==0  
@@ -298,7 +298,7 @@ HT_sd=v2-HT_sm
 NT_sd=v3-NT_sm  
 }  
 
->;Monatsverbrauch  
+>;Monthly usage  
 md=day  
 if chg[md]>0  
 and md==1  
@@ -316,7 +316,7 @@ HT_smn=v2-HT_sma
 NT_smn=v3-NT_sma  
 }  
   
-> ;Jahresverbrauch  
+> ;Yearly usage  
 yr=year  
 if chg[yr]>0  
 and v1>0  
@@ -334,7 +334,7 @@ NT_syn=v3-NT_sya
 
   
 
-
+>; Json payload send on teleperiod 
 > `>J`  
 ,"Strom_Vb_Tag":%3sd%  
 ,"HT_Strom_Vb_Tag":%3HT_sd%  
@@ -358,7 +358,7 @@ NT_syn=v3-NT_sya
 
 
 
-
+>;Websisplay stuff
 > `>W`  
 \----------------------  
 >0:00 Uhr Σ HT+NT: {m} %0sm% KWh  
