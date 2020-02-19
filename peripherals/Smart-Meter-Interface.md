@@ -181,6 +181,222 @@ with the '=' char at the beginning of a line you may do some special decoding
 
 ------------------------------------------------------------------------------
 
+>`>D`  
+
+;Variable Strom Total
+v1=0
+;HT Strom Total
+v2=0
+;NT Strom Total
+v3=0
+;aktuelle Leistung L1+L2+L3
+v4=0
+;aktuelle Leistung L1
+v5=0
+;aktuelle Leistung L2
+v6=0
+;aktuelle Leistung L3
+v7=0
+
+;Variable Minuten
+min=0
+;Variable Stunden
+hr=0
+;Variable Monatsanfang 01.xx.20xx 0:00 Uhr
+md=0
+;Variable Jahresanfang 01.01. 0:00 Uhr
+yr=0
+
+;Variable Zähler Schnittstelle >F=ms
+scnt=0
+;Variable Schnittstellenumschaltung
+res=0
+
+;Permanente Variable Stromzähler um 0:00 Uhr
+p:sm=0
+p:HT_sm=0
+p:NT_sm=0
+;Variable Stromzähler täglich =0
+sd=0
+HT_sd=0
+NT_sd=0
+;Permanente Variable Stromzähler am Monatsanfang
+p:sma=0
+p:HT_sma=0
+p:NT_sma=0
+;Variable Stromzähler monatlich =0
+smn=0
+HT_smn=0
+NT_smn=0
+;Permanente Variable Stromzähler am Jahresanfang
+p:sya=0
+p:HT_sya=0
+p:NT_sya=0
+;Variable Stromzähler jährlich =0
+syn=0
+HT_syn=0
+NT_syn=0
+
+;Zuweisung zu den Jason Strings
+>T
+v1=#Total_in
+v2=#HT_Total_in
+v3=#NT_Total_in
+v4=#kW_L1+L2+L3
+v5=#kw_L1
+v6=#kw_L2
+v7=#kw_L3
+
+>`>B`  
+;Aktivierung des Treibers
+=>sensor53 r
+;Übertragungsinterval in Sekunden
+tper=20
+
+>F
+; zähle 100 ms.....Millisekunden
+scnt+=1
+switch scnt
+case 6
+;Umschaltung der Schnittstelle auf 300 Baud und sende /?! als Sendungsanforderung an SM
+res=sml(1 0 300)
+res=sml(1 1 "2F3F210D0A")
+
+;Umschaltung des SM auf 9600 Baud mit 050
+case 18
+res=sml(1 1 "063035300D0A")
+
+;Umschaltung der internen Schnittstelle auf 9600 Baud
+case 20
+res=sml(1 0 9600)
+
+;Neustart der Schleife nach 50x100ms
+case 50
+; restart sequence
+scnt=0
+ends
+
+>S
+;Tagesverbrauch
+hr=hours
+if chg[hr]>0
+and hr==0
+and v1>0
+then
+sm=v1
+HT_sm=v2
+NT_sm=v3
+svars
+endif
+
+if upsecs%tper==0{
+sd=v1-sm
+HT_sd=v2-HT_sm
+NT_sd=v3-NT_sm
+}
+
+;Monatsverbrauch
+md=day
+if chg[md]>0
+and md==1
+and v1>0
+then
+sma=v1
+HT_sma=v2
+NT_sma=v3
+svars
+endif
+
+if upsecs%tper==0{
+smn=v1-sma
+HT_smn=v2-HT_sma
+NT_smn=v3-NT_sma
+}
+
+;Jahresverbrauch
+yr=year
+if chg[yr]>0
+and v1>0
+then
+sya=v1
+HT_sya=v2
+NT_sya=v3
+svars
+endif
+
+if upsecs%tper==0{
+syn=v1-sya
+HT_syn=v2-HT_sya
+NT_syn=v3-NT_sya
+
+>J
+,"Strom_Vb_Tag":%3sd%
+,"HT_Strom_Vb_Tag":%3HT_sd%
+,"NT_Strom_Vb_Tag":%3NT_sd%
+,"Strom_Vb_M":%1smn%
+,"HT_Strom_Vb_M":%1HT_smn%
+,"NT_Strom_Vb_M":%1NT_smn%
+,"Strom_Vb_Jahr":%0syn%
+,"HT_Strom_Vb_Jahr":%0HT_syn%
+,"NT_Strom_Vb_Jahr":%0NT_syn%
+,"Strom_0:00 _Uhr":%1sm%
+,"HT_Strom_0:00 _Uhr":%1HT_sm%
+,"NT_Strom_0:00 _Uhr":%1NT_sm%
+,"Strom_Ma":%3sma%
+,"HT_Strom_Ma":%3HT_sma%
+,"NT_Strom_Ma":%3NT_sma%
+,"Strom_Ja":%3sya%
+,"HT_Strom_Ja":%3HT_sya%
+,"NT_Strom_Ja":%3NT_sya%
+
+>W
+----------------------
+0:00 Uhr Σ HT+NT: {m} %0sm% KWh
+HT: {m} %0HT_sm% KWh
+NT: {m} %0NT_sm% KWh
+----------------------
+Monatsanfang: {m} %1sma% KWh
+HT: {m} %1HT_sma% KWh
+NT: {m} %1NT_sma% KWh
+----------------------
+Jahresanfang: {m} %0sya% KWh
+HT: {m} %0HT_sya% KWh
+NT: {m} %0NT_sya% KWh
+.............................
+Tagesverbrauch: {m} %1sd% KWh
+HT: {m} %1HT_sd% KWh
+NT: {m} %1NT_sd% KWh
+----------------------
+Monatsverbrauch: {m} %0smn% KWh
+HT: {m} %0HT_smn% KWh
+NT: {m} %0NT_smn% KWh
+---------------------
+Jahresverbrauch: {m} %0syn% KWh
+HT: {m} %0HT_syn% KWh
+NT: {m} %0NT_syn% KWh
+
+>`>M 1`
++1,3,o,0,9600,,1
+1,0.0.1(@1,Zählernummer,,Meter_number,0
+1,0.9.1(@#),Zeitstempel,Uhr,time-stamp,0
+1,=h===================
+1,1.8.0(@1,HT+NT Zählerstand,KWh,Total_in,3
+1,1.8.1(@1,HT,KWh,HT_Total_in,3
+1,1.8.2(@1,NT,KWh,NT_Total_in,3
+1,=h===================
+1,36.7.0(@1,Power_L1,kW,kW_L1,2
+1,56.7.0(@1,Power_L2,kW,kW_L2,2
+1,76.7.0(@1,Power_L3,kW,kW_L3,2
+1,16.7.0(@1,Σ_L1+L2+L3,kW,kW_L1+L2+L3,2
+1,=h===================
+1,31.7.0(@1,Strom_L1,A,I_L1,2
+1,51.7.0(@1,Strom_L2,A,I_L2,2
+1,71.7.0(@1,Strom_L3,A,I_L3,2
+\#
+
+[Back To Top](#top)
+------------------------------------------------------------------------------
+
 ### COMBO Meter (Water,Gas,SML)
 
 >`>D`  
