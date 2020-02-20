@@ -1,3 +1,4 @@
+
 !> **This feature is not included in precompiled binaries.**     
 To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
 ```
@@ -127,6 +128,34 @@ with the '=' char at the beginning of a line you may do some special decoding
   example:  
   `2,=h==================` insert a separator line  
 
+- With a few Meters, it is necessary to request the Meter to send its data using a specific character string.
+  This string must be sent at a very slow baudrate. (300Baud)
+  If you answer the Meter with an acknowledge and ask the Meter for a new baudrate of 9600 baud, the baudrate of the SML driver has to change, too.
+  
+  That works like this:  
+    
+    
+    > `>D`  
+    res=0   
+    ; In this Example in the >F section    
+    >`>F`   
+    ; Set the Baudrate on Meter 1 to 300 Baud   
+    res=sml(1 0 300)    
+    ;Set the Hex String on Meter 1  
+    res=sml(1 1 "2F3F210D0A")  
+    ;At this point must be a delay to give the Meter some time to answer befor sending another string. Look at the full Example to see how to do that.  
+    res=sml(1 1 "063035300D0A")  
+    ;Set the Baudrate on Meter 1 to 9600 Baud  
+    res=sml(1 0 9600)  
+      
+    > `>M 1`  
+    +1,3,o,0,9600, ,1  
+    ...etc.  
+  
+You can find the full Example [here](#landis--gyr-zmr120ares2r2sfcs-obis).  
+	  
+	  
+
 ## Smart Meter Descriptors
 - [Hager EHZ363 (SML)](#Hager-EHZ363-SML)
 - [Hager EHZ161 (OBIS)](#Hager-EHZ161-OBIS)
@@ -184,21 +213,22 @@ with the '=' char at the beginning of a line you may do some special decoding
 
 ### Landis + Gyr ZMR120AReS2R2sfCS (OBIS)
   
+  `Example: Changing the baud rate during operation.`
     
 > `>D`  
-;Var Voltage Total  
+;Var Power consumption total HT+NT  
 v1=0  
-;HT Main rate total  
+;HT Main electricity tariff consumption total   
 v2=0  
-;NT Night rate Total  
+;NT Night electricity tariff consumption total  
 v3=0  
 ; Energie L1+L2+L3  
 v4=0  
-;recent current L1  
+;recent Energie L1  
 v5=0  
-;recent current L2  
+;recent Energie L2  
 v6=0  
-;recent current L3  
+;recent Energie L3  
 v7=0  
   
   
@@ -210,16 +240,16 @@ hr=0
 md=0  
 ;Var begin of the year 01.01. 0:00 Uhr  
 yr=0  
-;Var for counter >F=ms  
+;Var for counter see >F=ms  
 scnt=0  
 ;Var for baudrate changeing 
 res=0  
   
->;Permanent Var Meter1 0:00 
+>;Permanent Var Meter1 0:00   
 p:sm=0  
 p:HT_sm=0  
 p:NT_sm=0  
-;Var Meter 1 daily =0  
+;Var for daily =0  
 sd=0  
 HT_sd=0  
 NT_sd=0  
@@ -227,7 +257,7 @@ NT_sd=0
 p:sma=0  
 p:HT_sma=0  
 p:NT_sma=0  
-;Var Meter 1 monthly =0  
+;Var for monthly =0  
 smn=0  
 HT_smn=0  
 NT_smn=0  
@@ -235,12 +265,12 @@ NT_smn=0
 p:sya=0  
 p:HT_sya=0  
 p:NT_sya=0  
-;Var Meter1 yearly =0  
+;Var for yearly =0  
 syn=0  
 HT_syn=0  
 NT_syn=0  
   
->;Fill vars with content on teleperiod  
+>;Fill vars with content on teleperiod    
 > `>T`  
 v1=#Total_in  
 v2=#HT_Total_in  
@@ -253,29 +283,29 @@ v7=#kw_L3
 > `>B`  
 ;Restart driver  
 =>sensor53 r  
-;Setting teleperiod to 20sec  
+;Set teleperiod to 20sec  
 tper=20  
   
 > `>F`  
-; count 100ms 
+; count 100ms   
 scnt+=1  
 switch scnt  
 case 6  
-;setup sml driver to 300 baud and send /?! As HEX to trigger the Meter 
+;set sml driver to 300 baud and send /?! as HEX to trigger the Meter   
 res=sml(1 0 300)  
 res=sml(1 1 "2F3F210D0A")  
   
->;Ack and ask for switching to 9600 baud
+>;1800ms later \> Ack and ask for switching to 9600 baud  
 case 18  
 res=sml(1 1 "063035300D0A")  
   
->;Switching sml driver to 9600 baud  
+>;2000ms later \> Switching sml driver to 9600 baud    
 case 20  
 res=sml(1 0 9600)  
   
->;Restart sequence after 50x100ms  
+>;Restart sequence after 50x100ms    
 case 50  
-; restart sequence  
+; 5000ms later \> restart sequence    
 scnt=0  
 ends  
   
@@ -334,7 +364,7 @@ NT_syn=v3-NT_sya
 
   
 
->; Json payload send on teleperiod 
+>; Json payload \> send on teleperiod  
 > `>J`  
 ,"Strom_Vb_Tag":%3sd%  
 ,"HT_Strom_Vb_Tag":%3HT_sd%  
@@ -358,7 +388,7 @@ NT_syn=v3-NT_sya
 
 
 
->;Websisplay stuff
+>;Webdisplay stuff  
 > `>W`  
 \----------------------  
 >0:00 Uhr Σ HT+NT: {m} %0sm% KWh  
