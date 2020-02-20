@@ -1,4 +1,5 @@
 
+
 !> **This feature is not included in precompiled binaries.**     
 To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
 ```
@@ -128,32 +129,62 @@ with the '=' char at the beginning of a line you may do some special decoding
   example:  
   `2,=h==================` insert a separator line  
 
-- With a few Meters, it is necessary to request the Meter to send its data using a specific character string.
-  This string must be sent at a very slow baudrate. (300Baud)
-  If you answer the Meter with an acknowledge and ask the Meter for a new baudrate of 9600 baud, the baudrate of the SML driver has to change, too.
+- With a few meters, it is necessary to request the meter to send its data using a specific character string. This string has to be send at a very low baudrate. (300Baud) 
+  If you reply the meter with an acknowledge and ask the it for a new baudrate of 9600 baud, the baudrate of the SML driver has to be changed, too.
+
+  
+  To change the baudrate:
+  >sml(`METERNUMBER` 0 `BAUDRATE`)  
+  
+  For sending a specific character string:
+  
+  >sml(`METERNUMBER` 1 `STRING`)
   
   That works like this:  
     
     
     > `>D`  
-    res=0   
-    ; In this Example in the >F section    
-    >`>F`   
-    ; Set the Baudrate on Meter 1 to 300 Baud   
-    res=sml(1 0 300)    
-    ;Set the Hex String on Meter 1  
+    res=0  
+    scnt=0  
+      
+    >;For this Example in the >F section  
+    > `>F`
+    ;count 100ms   
+    scnt+=1  
+    switch scnt  
+    case 6  
+    ;set sml driver to 300 baud and send /?! as HEX to trigger the Meter   
+    res=sml(1 0 300)  
     res=sml(1 1 "2F3F210D0A")  
-    ;At this point must be a delay to give the Meter some time to answer befor sending another string. Look at the full Example to see how to do that.  
+      
+    >;1800ms later \> Send ACK and ask for switching to 9600 baud  
+    case 18  
     res=sml(1 1 "063035300D0A")  
-    ;Set the Baudrate on Meter 1 to 9600 Baud  
+  
+    >;2000ms later \> Switching sml driver to 9600 baud    
+    case 20  
     res=sml(1 0 9600)  
+      
+    >;Restart sequence after 50x100ms    
+    case 50  
+    ; 5000ms later \> restart sequence    
+    scnt=0  
+    ends    
       
     > `>M 1`  
     +1,3,o,0,9600, ,1  
     ...etc.  
   
-You can find the full Example [here](#landis--gyr-zmr120ares2r2sfcs-obis).  
-	  
+You can find the example [here.](#landis--gyr-zmr120ares2r2sfcs-obis)  
+
+Attention, this procedure is only necessary, if the meter explicitly asks for 300 baud. The most meters work directly with 9600 baud. Therefore it is easier to give this method a try:
+
+`Meter#,GPIO# Input,OBIS,FLAG,Baudrate,JSONNAME,GPIO# Output,TX Period,Character string`
+> \+ 1,3, O, 0,9600, energy, 1,1,2F3F210D0A 
+
+ Example: [here.](#Iskra-MT-174)
+
+
 	  
 
 ## Smart Meter Descriptors
