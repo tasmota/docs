@@ -2,7 +2,7 @@
 
 Here is a diagram showing the connection phase and the network transactions required to turn a sonoff device on.   
 
-image::http://alt2.pbeirne.com/images/sonoff_cmnd_flow3.png[flow diagram]
+![flow diagram](http://alt2.pbeirne.com/images/sonoff_cmnd_flow3.png)
 
 In a typical setup, you'll have multiple devices on the left-hand side.  
 
@@ -12,13 +12,11 @@ In a typical setup, you'll have multiple devices on the left-hand side.
 There are lots of ways to control your devices. One typically uses a laptop/desktop to configure and test your Sonoffs and perhaps a smartphone to keep track of what's happening. In the long run you might want to integrate your device in a home-automation system like node-RED, openHAB, HomeAssistant, HomeBridge, Domoticz, ...
 
 ### MQTT Message Prefixes
-[options="header"]
-|===
-|Message|Issued by|Intent
-|`cmnd`|devices shown on the right-hand side|control the Sonoff; set configuration; ask for status
-|`stat`|the Sonoffs on the left-hand side|report back status or configuration message
-|`tele`|some Sonoffs (like temperature measuring devices)|report unsolicited telemetry info at periodic intervals
-|===
+Message|Issued by|Intent
+:---|:---|:---
+`cmnd`|devices shown on the right-hand side|control the Sonoff; set configuration; ask for status
+`stat`|the Sonoffs on the left-hand side|report back status or configuration message
+`tele`|some Sonoffs (like temperature measuring devices)|report unsolicited telemetry info at periodic intervals
 
 These are `prefix1`, `prefix2` & `prefix3` in the code
 
@@ -31,17 +29,15 @@ Enable MQTT with the tickbox under Configuration -> Configuration Other
 #### Configure MQTT Settings
 Once enabled MQTT can be configured at Configuration -> Configure MQTT. 
 
-[options="header"]
-|===
-|Field|Size|Default(my_user_config.h)|Notes
-|Host name |32|MQTT_HOST=mqtt_broker.com|Remote URL or ip address. Note that without a special firmware build SSL is NOT supported. 
-|Port|uint|MQTT_PORT=1883|0-65535
-|Client Id|32|MQTT_CLIENT_ID=DVES_%06X|FallBack topic of this device, will be unique for every device; logged by the MQTT server
-|Username|32|MQTT_USER=DVES_USER|Username for MQTT server authentication
-|Password|32|MQTT_PASS=DVES_PASS|Password for MQTT server authentication
-|Topic|32|MQTT_TOPIC=sonoff|User friendly topic name; usually describes the location or use of this device; used in the MQTT commands and responses; should be unique
-|Full Topic|100|%prefix%/%topic%|Format string used to assemble the MQTT commands
-|===
+Field|Size|Default(my_user_config.h)|Notes
+:---|:---|:---|:---
+Host name |32|MQTT_HOST=mqtt_broker.com|Remote URL or ip address. Note that without a special firmware build SSL is NOT supported. 
+Port|uint|MQTT_PORT=1883|0-65535
+Client Id|32|MQTT_CLIENT_ID=DVES_%06X|FallBack topic of this device, will be unique for every device; logged by the MQTT server
+Username|32|MQTT_USER=DVES_USER|Username for MQTT server authentication
+Password|32|MQTT_PASS=DVES_PASS|Password for MQTT server authentication
+Topic|32|MQTT_TOPIC=sonoff|User friendly topic name; usually describes the location or use of this device; used in the MQTT commands and responses; should be unique
+Full Topic|100|%prefix%/%topic%|Format string used to assemble the MQTT commands
 
 Note: By default firmware will search for an MQTT broker using mDNS by searching for a tcp record mqtt.local. However the use of local mDNS hostnames (ex: mqtt_home.local) is not supported, if you want to use a broker on your local network you need to use its local IP or rely on a local DNS to resolve the hostnames.
 
@@ -53,15 +49,13 @@ Note: By default firmware will search for an MQTT broker using mDNS by searching
 
 ### General
 
-See the wiki's Commands[command list] for the definitive list of operations that you can perform. The first word in the column marked `Command` is the text that you need to put at the end of a `cmnd` string when you issue a publication message. The second word is the contents of the payload. If there is no second word, you can simply send an empty payload. For example:
+See the wiki's [command list](Commands) for the definitive list of operations that you can perform. The first word in the column marked `Command` is the text that you need to put at the end of a `cmnd` string when you issue a publication message. The second word is the contents of the payload. If there is no second word, you can simply send an empty payload. For example:
 
-[options="header"]
-|===
-|Command   | Description
-|Power     | Show current power state as On or Off
-|Power on  | Turn power On
-|Power off | Turn power Off
-|===
+Command|Description
+:---|:---
+Power|Show current power state as On or Off
+Power on|Turn power On
+Power off|Turn power Off
 
 To execute these, issue (publish) these MQTT requests
 
@@ -81,7 +75,7 @@ If you have subscribed to these `stat` messages, you can be informed of changes 
 
 
 #### Connecting to MQTT
-You'll need an MQTT server somewhere to communicate with your Sonoff. Some people use publicly available servers, such as iot.eclipse.org. http://moxd.io/2015/10/public-mqtt-brokers/[List of brokers] 
+You'll need an MQTT server somewhere to communicate with your Sonoff. Some people use publicly available servers, such as iot.eclipse.org. [List of brokers](http://moxd.io/2015/10/public-mqtt-brokers/)
 
 Other people think the MQTT server should reside inside your private LAN. You could use a Raspberry/Orange Pi, or just about any Linux machine as the server/broker; you might even squeeze it into your router if you're using OpenWRT.
 
@@ -93,19 +87,17 @@ At the time the sonoff connects with the MQTT server, the sonoff subscribes to +
 
 #### Creating your own MQTT server/broker
 See these sites:
-
-https://www.digitalocean.com/community/questions/how-to-setup-a-mosquitto-mqtt-server-and-receive-data-from-owntracks[Rufio howto] +
-http://wingsquare.com/blog/setting-up-mqtt-mosquitto-broker-in-ubuntu-linux/[Wingsquare howto] +
-http://www.instructables.com/id/Installing-MQTT-BrokerMosquitto-on-Raspberry-Pi/[Instructables howto on Raspberry Pi]
+- [Rufio howto](https://www.digitalocean.com/community/questions/how-to-setup-a-mosquitto-mqtt-server-and-receive-data-from-owntracks)
+- [Wingsquare howto](http://wingsquare.com/blog/setting-up-mqtt-mosquitto-broker-in-ubuntu-linux/)
+- [Instructables howto on Raspberry Pi](http://www.instructables.com/id/Installing-MQTT-BrokerMosquitto-on-Raspberry-Pi/)
 
 
 ### Linux/Cygwin command line
 
 You can install the mosquitto client system using either
-
-    [Cygwin] setup mosquitto_client
-    [Ubuntu/Debian] apt install mosquitto_client
-    [Centos/Fedora] yum install mosquitto_client
+- [Cygwin] setup mosquitto_client
+- [Ubuntu/Debian] apt install mosquitto_client
+- [Centos/Fedora] yum install mosquitto_client
 
 #### Controlling (Publishing)
 
@@ -213,7 +205,7 @@ client.loop_stop()
 client.disconnect()
 ```
 
-Ref: https://pypi.python.org/pypi/paho-mqtt/1.1[Python MQTT]
+Ref: [Python MQTT](https://pypi.python.org/pypi/paho-mqtt/1.1)
 
 ### JavaScript
 Using the node module MQTT.js you can connect to the MQTT broker, send messages and listen to topics. The example uses code compatible with Node v4 or later.
@@ -264,10 +256,10 @@ function loop() {
 }
 ```
 
-Ref: https://github.com/mqttjs/MQTT.js[Node MQTT.js]
+Ref: [Node MQTT.js](https://github.com/mqttjs/MQTT.js)
 
 ### Android phone MQTT Dashboard
-The https://play.google.com/store/apps/details?id=com.thn.iotmqttdashboard[MQTT Dashboard]
+The [MQTT Dashboard](https://play.google.com/store/apps/details?id=com.thn.iotmqttdashboard)
 provides the ability to connect and control Sonoff devices directly.
 
 On the first page, enter the details of how your phone should connect to the MQTT broker. On the SUBSCRIBE page, you
@@ -290,7 +282,7 @@ That's not covered in this how-to.
 ### CONNECT FAILED
     MQTT: CONNECT FAILED x.x.x.x:x, rc {code}. Retry in 10 seconds
 
-## http://pubsubclient.knolleary.net/api.html#state[Status codes]
+## [Status codes](http://pubsubclient.knolleary.net/api.html#state)
 
     -4: MQTT_CONNECTION_TIMEOUT - the server didn't respond within the keepalive time
     -3: MQTT_CONNECTION_LOST - the network connection was broken
@@ -305,6 +297,6 @@ That's not covered in this how-to.
 
 
 ## Debug Tools
-- https://play.google.com/store/apps/details?id=mqttsnooper.mqttsnooper[	
-MQTT Snooper - Sniffer App on Android]
-- https://mqtt-explorer.com/?c=tasmota-wiki[MQTT Explorer - Desktop Application]
+- [MQTT Snooper - Sniffer App on Android](https://play.google.com/store/apps/details?id=mqttsnooper.mqttsnooper)
+- [MQTT Explorer - Desktop Application](https://mqtt-explorer.com/?c=tasmota-wiki)
+- If mosquitto is installed, command-line: `mosquitto_sub -h mqtt-host -v -t "#"`
