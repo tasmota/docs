@@ -11,7 +11,7 @@ Before using Zigbee to Tasmota, you need to understand a few concepts. Here is a
 |---|---|
 |**Zigbee coordinator**<BR>The coordinator is responsible for selecting the channel, PanID, security policy, and stack profile for a network. Zigbee2Tasmota will act as a coordinator.<BR>You can have multiple coordinators as long as they have different PanIDs.|Wi-Fi Access Point|
 |**PanID**<BR>(Personal Area Network IDentifier)<BR>This parameter is unique in a Zigbee network. The PanID is a 16-bit integer.<BR>*Default: 0x1A63*|SSID (the Wi-Fi network name)|
-|**ShortAddr**<BR>Address of the device on the Zigbee network. This address is randomly assigned when the device first connects to the coordinator. The coordinator has address 0x0000.<BR>You need to track which device has which address. There is currently no "Friendly Name" mechanism. This may be added in the future.|IP address|
+|**ShortAddr**<BR>Address of the device on the Zigbee network. This address is randomly assigned when the device first connects to the coordinator. The coordinator has address 0x0000.<BR>You need to track which device has which address or assing a "Friendly Name" to each new discovered device.|IP address|
 |**Endpoint**<BR>The endpoint on the coordinator or on the Zigbee device the message is sent from/to. You can see endpoints as logical device providing distinct features|IP Port|
 |**IEEEAddr**<BR>Device hardware address (64 bits). This is unique per device and factory assigned.|MAC address|
 |[**Channel**](https://www.metageek.com/training/resources/zigbee-wifi-coexistence.html) 11-26<BR>*Default: 11*|Wi-Fi Channel|
