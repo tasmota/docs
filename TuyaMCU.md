@@ -433,7 +433,7 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
    - Issue and report: command data can be sent and status data can be reported back to the Wi-Fi module
    - Report only: supports only status reporting, no control options
 
-- Function Type (Referred as Data Type in [TuyaMCU](tuyamcu) article):
+- Function Type (Referred as Data Type in [Tuya Protocols](Tuya-Protocols) article):
    - Boolean (bool): non-true or false binary variable, such as: switch function, on / off
    - Value (value): suitable for linear adjustment of the type of data, such as: temperature regulation, temperature range 20-40 ℃
    - Enum (enum): custom finite set value, such as: working levels, low / mid / high
