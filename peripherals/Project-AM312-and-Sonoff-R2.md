@@ -1,4 +1,4 @@
-This use case represents a method to use AM312 as a "wave hand toggle" (for under-cabinet kitchen LED). Please note that this solution isn't working in 100% (this sensor has a detection range of a few meters, to decrease the range you can remove the lens from the sensor but still it will pick up movement from 50 cm. You can create the Tasmota rule that will disable AM312 toggle action when the light is on and turn off the power after a few minutes. The gesture sensor [APDS-9960](APDS-9960) should work better for "hand-wave" toggle.
+This use case represents a method to use AM312 as a "wave hand toggle" (for under-cabinet kitchen LED). Please note that this solution isn't working in 100% (this sensor has a detection range of a few meters, to decrease the range you can remove the lens from the sensor but still it will pick up movement from 50 cm. You can create the Tasmota rule that will disable AM312 toggle action when the light is on and turn off the power after a few minutes. The gesture sensor [APDS-9960](peripherals/APDS-9960) should work better for "hand-wave" toggle.
 
 
 #### Wiring for Sonoff Basic R2
@@ -16,7 +16,7 @@ Remember to remove the lens to lower the sensitivity of the sensor.
 #### Configuration the module
 
 1. Go to IP of the device, next _Configuration --> Configure Module -->_ set "GPIO3 Serial In" to "Switch1 (9)"
-2. Go to _Console_ and type _"[SwitchMode 4](Commands#switchmode)"_ ([detailed description of SwitchModes](Buttons-and-switches#switchmode)) to enable toggle switch type.
+2. Go to _Console_ and type _"[SwitchMode 4](Commands#switchmode)"_ ([detailed description of SwitchModes](Buttons-and-Switches#switchmode)) to enable toggle switch type.
 3. Set rule to turn off light after X amount of seconds (mentioned workaround):
 ```
 rule1 on Switch1#State=2 do backlog Power1 1; RuleTimer1 180 endon on Rules#Timer=1 do backlog Power1 0 endon
