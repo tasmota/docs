@@ -189,7 +189,7 @@ A web user interface may be generated containing any of the following elements: 
  `<txt>` = label text 
 
 `>M`  
-[Smart Meter Interface](peripherals/smart-meter-interface)  
+[Smart Meter Interface](peripherals/Smart-Meter-Interface)  
 
 If a variable does not exist, `???` is displayed for commands  
 
