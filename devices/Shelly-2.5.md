@@ -94,7 +94,7 @@ rule1 5
 ```
 
 ## Use Shelly 2.5 device for Blinds and Shutters
-Further Information: [Blinds and Shutters](../Blinds-and-Shutters)
+Further Information: [Blinds and Shutters](Blinds-and-Shutters)
 
 
 ## Ghost switching
