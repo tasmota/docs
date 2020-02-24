@@ -46,7 +46,7 @@ If you don't have access to your router you can find your newly flashed device w
 
 Open the IP address with your web browser and you have full access to Tasmota.
 
-Now is the time to set up [MQTT](/installation/MQTT) and the last remaining, but equally important, step:
+Now is the time to set up [MQTT](MQTT) and the last remaining, but equally important, step:
 
 ### Configure Module or Template
 
