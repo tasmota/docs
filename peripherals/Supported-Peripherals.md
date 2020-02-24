@@ -58,10 +58,10 @@ Name|Description|Image
 [**SDS011 (SDS021)**](peripherals/SDS011) | Laser Dust Sensor
 **SGP30** | Gas and Air Quality sensor (I<sup>2</sup>C)
 **SHT1x** | Temperature and Humidity sensor (I<sup>2</sup>C)
-[**SHT30**](peripherals/Wemos-D1-Mini-and-SHT30-Shield-High-Precision-Humidity-&-Temperature) | Humidity & Temperature Sensor
+[**SHT30**](peripherals/SHT30) | Humidity & Temperature Sensor
 **SI114x** | UV Index, IR and Visible Light sensor (I<sup>2</sup>C)
 **Si7021** | Humidity and Temperature Sensor (I<sup>2</sup>C)
-[**Smart Meter Interface**](peripherals/smart-meter-interface) | (serial)
+[**Smart Meter Interface**](peripherals/Smart-Meter-Interface) | (serial)
 **SolaX X1** | SolaX X1 inverter (serial)
 **SPS30** | Particulate Matter (PM) | sensor (I<sup>2</sup>C)
 **TM1638** | 8 Switch, LED and 7 Segment Unit sensor (gpio)
@@ -69,21 +69,21 @@ Name|Description|Image
 **TSL2591** | Luminosity Sensor (I<sup>2</sup>C)
 **TX20** | La Crosse Wind (Anemometer) | sensor (gpio)
 [**VEML6070**](peripherals/VEML6070) |  UV Sensor (I<sup>2</sup>C)
-[**VL53L0x**](peripherals/VL530L0x) | Time of flight sensor (I<sup>2</sup>C)
+[**VL53L0x**](peripherals/VL53L0x) | Time of flight sensor (I<sup>2</sup>C)
 [**WS2812B**](peripherals/WS2812B-RGB-Shield) | Wemos RGB LED Shield
 [**WS2812B/WS2813B**](peripherals/WS2812B-and-WS2813) | LED Strip
 **Xadow (Grove) Mutichannel Gas Sensor** | gas sensor (I<sup>2</sup>C)
 
-[Google Sheet list of supported peripherals](peripherals/https://docs.google.com/spreadsheets/d/1VaZrCUjNosUQGYBX0pTVoY_rkSzEIcTP8K3052smOB4/edit?usp=sharing)
+[Google Sheet list of supported peripherals](https://docs.google.com/spreadsheets/d/1VaZrCUjNosUQGYBX0pTVoY_rkSzEIcTP8K3052smOB4/edit?usp=sharing)
 
 [Sensor API Documentation](Sensor-API)
 
 ## Expanding Specific Devices
 
-* [LEGO nightstand switch using Sonoff SV](peripherals/https://jeff.noxon.cc/2018/11/21/lego-nightstand-light-switch/)
-* [Add a physical button to Sonoff Basic](peripherals/https://translate.google.com/translate?hl=en&sl=auto&tl=en&u=https%3A%2F%2Fwww.domo-blog.fr%2Fajouter-un-bouton-physique-au-sonoff-basic%2F)
+* [LEGO nightstand switch using Sonoff SV](https://jeff.noxon.cc/2018/11/21/lego-nightstand-light-switch/)
+* [Add a physical button to Sonoff Basic](https://translate.google.com/translate?hl=en&sl=auto&tl=en&u=https%3A%2F%2Fwww.domo-blog.fr%2Fajouter-un-bouton-physique-au-sonoff-basic%2F)
 * [Remote button for Sonoff](peripherals/Control-a-Sonoff-using-a-remote-button)
-* [Expand Sonoff S20 with a jack plug](peripherals/https://github.com/arendst/Tasmota/issues/670)
+* [Expand Sonoff S20 with a jack plug](https://github.com/arendst/Tasmota/issues/670)
 * [Expand Sonoff 4CH with a jack plug](peripherals/Expanding-4CH)
-* [Modify KaKu to WKaKu Power Socket](peripherals/Modify-KaKu-to-WKaKu-Power-Socket)
+* [Modify KaKu to WKaKu Power Socket](devices/Modify-KaKu-to-WKaKu-Power-Socket)
 * [GPIO Locations](peripherals/GPIO-Locations)
