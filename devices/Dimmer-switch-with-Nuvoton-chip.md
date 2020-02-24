@@ -42,7 +42,7 @@ RX    to   RX  (due to the fact the silkscreen is wrong, otherwise, RX connects 
 TX    to   TX  
 SW    to   GND  -- only during power up, to put the ESP in programming mode.
 
-From here the upload is the same as for all other Tasmota devices. See the [Tasmota page](devices/Upload) for detailed info.
+From here the upload is the same as for all other Tasmota devices. See the [upload page](devices/Upload-tools) for detailed info.
 
 **Note:** sonoff basic and classic variants do not support the serial bridge. To get this working you should use the standard tasmota.bin - NOT basic or classic.
 
