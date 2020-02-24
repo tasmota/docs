@@ -203,25 +203,25 @@ Attention, this procedure is only necessary, if the meter explicitly asks for 30
 --------------------------------------------------------
 
 
-### EMH ED300L (SML)
-
->`>D`  
-
->`>B` 
-=>sensor53 r
->`>M 2`
-+1,13,s,0,9600,Haus
-+2,12,s,0,9600,Heizung
+### EMH ED300L (SML)  
+  
+>`>D`    
+  
+>`>B`   
+=>sensor53 r  
+>`>M 2`  
++1,13,s,0,9600,Haus  
++2,12,s,0,9600,Heizung  
 >
->1,77070100100700ff@1,Aktuell,W,Power_curr,0
-1,77070100010800FF@1000,Zählerstand Verb.,kWh,Tariflos,2
-1,77070100020800FF@1000,Zählerstand Einsp.,kWh,Tariflos,2
-2,=h==================
-2,77070100100700ff@1,Aktuell,W,Power_curr,0
-2,77070100010800FF@1000,Zählerstand Verb.,kWh,Tariflos,2
-2,77070100020800FF@1000,Zählerstand Einsp.,kWh,Tariflos,2
-\#
-
+>1,77070100100700ff@1,Aktuell,W,Power_curr,0  
+1,77070100010800FF@1000,Zählerstand Verb.,kWh,Tariflos,2  
+1,77070100020800FF@1000,Zählerstand Einsp.,kWh,Tariflos,2  
+2,=h==================  
+2,77070100100700ff@1,Aktuell,W,Power_curr,0  
+2,77070100010800FF@1000,Zählerstand Verb.,kWh,Tariflos,2  
+2,77070100020800FF@1000,Zählerstand Einsp.,kWh,Tariflos,2  
+\#    
+  
 
 [Back To Top](#top)
 
