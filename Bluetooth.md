@@ -142,12 +142,14 @@ This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the drive
   
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/lywsd02.jpg?raw=true" style="width:200px"></img>  
   
-
-#### Potential "candidates":  
-Based on published data, the chance to support following sensors in the future is quite good:  
-
-+ CGG1 (similar to the LYWSDCGQ/01ZM , but with E-Ink-Display and CR2430-coin-cell)  
   
-  
-The situation for the new (and cheap) LYWSD03MMC (small, rectangular form) is different, as the sensor data in the advertisements is encrypted (or even absent at all). It is highly unlikely to read data with the NRF24L01 out-of-the-box in the future.  
+#### CGG1:  
+This device has an E-Ink-Display, with CR2430-coin-cell and the driver can read temperature, humidity and battery.  
+ 
+
+#### Not supported:  
+ 
+The situation for the new (and cheap) LYWSD03MMC (small, rectangular form) is different, as the sensor data in the advertisements is encrypted (or even absent at all). The same is valid for the CGD1, which is a tiny alarm clock with temperature and humidity.
+
+It is highly unlikely to read data with the NRF24L01 out-of-the-box in the future.  
 
