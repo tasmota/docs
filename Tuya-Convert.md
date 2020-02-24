@@ -8,7 +8,7 @@
 
 Tuya-Convert comes with [`tasmota-wifiman.bin`](http://thehackbox.org/tasmota/tasmota-wifiman.bin) build which includes nearly all Tasmota features required for normal operation with Tuya devices, while removing superfluous sensors, IR and RF support for size. It has pre set [`WifiConfig`](Commands#wificonfig)`= 2` so the device will revert to [Wi-Fi Manager mode](https://github.com/tzapu/WiFiManager/blob/master/README.md#how-it-works) if it cannot connect to the configured Wi-Fi network. Naturally you can upgrade to any other build of the firmware if needed.
 
-**To ensure Tasmota runs reliably execute the command [`reset 5`](Commands#reset) after Tuya-Convert is finished and Tasmota is up and running.** Doing this removes fragments of the original firmware left in flash which can create issues in the future. After all that is done you can proceed with the needed [configuration](initial-configuration) of your device.
+**To ensure Tasmota runs reliably execute the command [`reset 5`](Commands#reset) after Tuya-Convert is finished and Tasmota is up and running.** Doing this removes fragments of the original firmware left in flash which can create issues in the future. After all that is done you can proceed with the needed [configuration](installation/Initial-Configuration) of your device.
 
 Help and troubleshooting for Tuya-Convert is done on [Tuya-Convert's Github](https://github.com/ct-Open-Source/tuya-convert/issues).
 
