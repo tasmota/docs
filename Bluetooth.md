@@ -80,7 +80,7 @@ This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the drive
 + LYWSD03  
 
 #### not supported:  
-Mi Flora, MJ_HT_V1
+Mi Flora, MJ_HT_V1, CGG1
 
 
 ## Experimental BLE-Bridge for certain Mijia-Bluetooth-Sensor using the NRF24L01(+)
@@ -106,7 +106,7 @@ The initial log should like this:
 The driver will do the rest automatically and starts to look for known "special" packets, which will be used to extract the sensor readings.
 Web-GUI and TELE-messages will be populated with the sensor data.  This can take a while after start and may be influenced by the general traffic on the 2,4 GHz-band.  
 
-For the first driver versíon multiple MJ_HT_V1-sensors and Flora-sensors are supported. They will be discriminated by using the company-assigned ID of the BLE Public Device Address (= the "lower" 24 bits). So a TELE-message could like look this:  
+Various sensors of the Xiaomi-Bluetooth-universe are supported. They will be discriminated by using the Product-ID of the MiBeacon. A human readable short product name will be shown instead of the company-assigned ID of the BLE Public Device Address (= the "lower" 24 bits). So a TELE-message could like look this:  
   
 ```
 10:13:38 RSL: stat/tasmota/STATUS8 = {"StatusSNS":{"Time":"2019-12-18T10:13:38","Flora-6ab577":{"Temperature":21.7,"Illuminance":21,"Humidity":0,"Fertility":0},"MJ_HT_V1-3108be":{"Temperature":22.3,"Humidity":56.1},"TempUnit":"C"}}
