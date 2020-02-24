@@ -412,7 +412,7 @@ light:
 
 #### **Addressable LED**
 
-Applies only to [WS281x](../peripherals/WS2812B-and-WS2813) lights. 
+Applies only to [WS281x](peripherals/WS2812B-and-WS2813) lights. 
 
 ```yaml
 light:
