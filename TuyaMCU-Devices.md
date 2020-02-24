@@ -4,7 +4,7 @@ There are several Tuya dimmer and switch variants made by various manufacturers.
 
 The basic identification of a Tuya device is when the device information references the "Tuya Smart", "SmartLife", or "Smart Living" app. These switches and dimmers are based on a [Tuya TYWE3S Wi-Fi PCB](https://docs.tuya.com/en/hardware/WiFi-module/wifi-e3s-module.html) module along with an MCU. TYWE3S is based on the ESP8266 which is supported by Tasmota.
 
-[Wiki page for TYWE3S](TYWE3S)
+[Wiki page for TYWE3S](devices/TYWE3S)
 
 The TYWE3S module mostly takes care of Wi-Fi and software features while the MCU controls the actual hardware (buttons, relays, dimmer, power measurement, etc). The MCU is interfaced to TYWE3S using the serial interface which connects to the Rx and Tx pins.
 
