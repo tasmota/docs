@@ -40,7 +40,7 @@ RX    to   RX  (due to the fact the silkscreen is wrong, otherwise, RX connects 
 TX    to   TX  
 SW    to   GND  -- only durning power up, to put the ESP in programming mode.
 
-From here the upload is the same as for all other Tasmota devices. See the [Tasmota page](devices/Upload) for detailed info.
+From here the upload is the same as for all other Tasmota devices. See the [upload page](Upload-tools) for detailed info.
 
 After the upload was successful, unplug the device from the serial adapter. You can now desolder all the connections you have made earlier. Also remove the wire between RES1 and GND.
 Then plug the board back in its housing. Be careful with the connector on the underside of the board.
