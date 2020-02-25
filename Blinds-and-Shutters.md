@@ -190,7 +190,9 @@ If using a Sonoff Dual R2, use the following Template:
 
 ### Rules
 Tasmota rule triggers:  
-- `Shutter<x>#Position`
+- `Shutter<x>#Position` is triggered at start and and of movement reporting actual position
+- `Shutter<x>#Direction` is triggered at start and and of movement reporting actual direction
+- `Shutter<x>#Target` is triggered at start and and of movement reporting current target
 - `Shutter<x>#Open` and `Shutter<x>#Close`
 - `Shutter#Moving` is triggered every second if the shutter is moving
 - `Shutter#Moved` is triggered ONCE after the shutter stopped
@@ -199,7 +201,7 @@ Tasmota rule triggers:
 - `Shutter<x>#Button0=0`  is triggered when all buttons of that shutter are hold simultaneously
 - `Shutter<x>#Button0=<n>`  is triggered when all buttons of that shutter are pressed simultaneously `n` times
 
-If more than one shutter is configured, it is not possible to know which shutter is moving.
+With #Direction and var1..var4 you can store the movement ofa shutter and get information which shutter is moving
 
 Examples:  
 - Publish a message with the position of the shutter:
