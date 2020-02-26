@@ -33,6 +33,8 @@ Install Python3 and from the folder where the binary resides (make sure `tasmota
 ```
 python -m http.server 8000
 ```
+(If the response is "No module named http" then try again with `python3` instead of `python`.)
+
 Change your OtaUrl to http://ipoftheserver:8000/yourbinary.bin and start the upgrade process. Note: do not use `/`, `-`, or `.` characters in the name of `yourbinary`.
 
 If your binary build (yourbinary.bin) is larger than the available free flash program space, Tasmota will need to first install the minimal version of Tasmota to make more space. To have this work via the web server OTA process, you have to copy the file `tasmota-minimal.bin` in the same folder where `OTAURL` for `yourbinary.bin` is placed, and rename `tasmota-minimal.bin` to `yourbinary-minimal.bin`.
