@@ -4,8 +4,8 @@
  - [Flashing issues](#Flashing-issues)
  - [Firmware update with file upload not working](Upgrading#upgrade-by-file-upload)
  - [Device is hot to the touch](#Device-is-hot-to-the-touch)
- - [There was white smoke and the device doesn't work anymore!](#There-was-white-smoke-and-the-device-doesnt-work-anymore)
- - [Sonoff 4CH V2 / Sonoff Dual V2 won't flash](#Sonoff-4CH-V2--Sonoff-Dual-V2-wont-flash)
+ - [There was white smoke and the device does not work anymore!](#There-was-white-smoke-and-the-device-does-not-work-anymore)
+ - [Sonoff 4CH V2 / Sonoff Dual V2 will not flash](#Sonoff-4CH-V2--Sonoff-Dual-V2-will-not-flash)
  - [Flashing fails on MacOS High Sierra](#Flashing-fails-on-MacOS-High-Sierra)
 #### Wi-Fi
  - [Cannot connect to Wi-Fi](#Cannot-connect-to-Wi-Fi)
@@ -31,9 +31,9 @@
  - [Web interface asks for password](#Web-interface-asks-for-password)
  - [Power monitoring shows wrong values](#Power-monitoring-shows-wrong-values)
  - [Power monitoring resets Energy Today mid-day](https://github.com/arendst/Tasmota/issues/5571)
- - [Sensors don't show values](#Sensors-dont-show-values)
+ - [Sensors do not show values](#Sensors-do-not-show-values)
  - [Timers trigger at the wrong time](#Timers-trigger-at-the-wrong-time)
- - [Auto-discovery in Home Assistant doesn't work](#Auto-discovery-in-Home-Assistant-doesnt-work)
+ - [Auto-discovery in Home Assistant does not work](#Auto-discovery-in-Home-Assistant-does-not-work)
  - [Why is my changed configuration not loaded?](#Why-is-my-changed-configuration-not-loaded)
  - [How do I invert the output of the green LED on the Sonoff Basic so the LED is on when the relay is off?](#How-do-I-invert-the-output-of-the-green-LED-on-the-Sonoff-Basic-so-the-LED-is-on-when-the-relay-is-off)
  - [What is an Arduino core?](#What-is-an-Arduino-Core)
@@ -71,12 +71,12 @@ Remember - **NEVER EVER FLASH WITH 5V!**?
 Better unpower your device and check if the wiring is correct and the voltage is on your FTDI is set to 3.3V. 
 If you've connected VCC to the wrong pin it might cause your device to overheat and destroy it.
 
-### There was white smoke and the device doesn't work anymore!
+### There was white smoke and the device does not work anymore!
 Yes, you've released the fabled "white smoke", the mysterious substance all electronic devices work on. 
 
 In the immortal words of Doctor Bones: **It's dead Jim!**
 
-### Sonoff 4CH V2 / Sonoff Dual V2 won't flash
+### Sonoff 4CH V2 / Sonoff Dual V2 will not flash
 Testing with two different (fairly new) FTDI boards and two Sonoff 4CH v2.0 and the Sonoff Dual v2.0 boards I found that I was getting errors uploading sketches i.e. "warning: espcomm_sync failed" basically a lack of communication between the two devices.
 
 I found that the problem in both Sonoff's was that instead of the FTDI Sonoff cross-over TX->RX and RX->TX I had to do TX->TX RX->RX this then allowed me to upload the sketch.
@@ -284,7 +284,7 @@ If the values shown in the Web UI don't seem right and you're using a Supported 
 
 In case you're using a template you created yourself or found in our Templates Repository try the calibration method first. If the values are still wrong or unrealistic the power monitoring sensors' GPIOs are not configured correctly and you will need to find the correct GPIO assignments before proceeding.
 
-### Sensors don't show values
+### Sensors do not show values
 Make sure your sensor is properly wired and the GPIOs assigned. 
 Your vanilla `tasmota.bin` doesn't have complete sensor support. Make sure you've installed tasmota-sensors.bin that support the largest number of sensors. Some sensors require enabling in the code and compiling your own binary. See [Builds](Builds) for a comprehensive list of supported components.
 
@@ -301,7 +301,7 @@ You must also set the [`TimeZone`](Commands#timezone) and Daylight Saving Time p
 
 If you have timers that use the sunset or sunrise times, you must set your [latitude](Commands#latitude) and [longitude](Commands#longitude) in order for these times to be calculated correctly for your location.
 
-### Auto-discovery in Home Assistant doesn't work
+### Auto-discovery in Home Assistant does not work
 The `tasmota-lite.bin` firmware binary (which comes packaged with Tuya-Convert) does not support auto-discovery. Please upgrade to `tasmota.bin` or a similar firmware variant that supports this feature.
 
 Make sure its enabled in Tasmota it with `SetOption19 1` and you configured the  Home Assistant MQTT integration with Discovery enabled.
