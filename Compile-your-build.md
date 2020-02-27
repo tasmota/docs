@@ -11,7 +11,9 @@ Once you have set up the development environment, unzip the source code into a f
 Navigate to where you unpacked Tasmota and into /tasmota folder.
 
 Open `my_user_config.h` and uncomment (remove `//`) line with `#define USE_CONFIG_OVERRIDE`. It should look like this:    
-`#define USE_CONFIG_OVERRIDE                          // Uncomment to use user_config_override.h file. See README.md`
+```
+#define USE_CONFIG_OVERRIDE                          // Uncomment to use user_config_override.h file. See README.md
+```
 
 In PlatformIO you can edit platformio_override.ini instead. Go to root directory of source code, rename platformio_override_sample.ini to platformio_override.ini. By doing this you enable the settings done in this file.
 By default the file `user_config_override.h`is enabled and to build the standard `Tasmota` variant.
@@ -42,7 +44,7 @@ Example: enable blinds and shutters support
 
 ```
 #ifndef USE_SHUTTER
-#define USE_SHUTTER                              // Add Shutter support for up to 4 shutter with different motortypes (+6k code)
+#define USE_SHUTTER             // Add Shutter support for up to 4 shutter with different motortypes (+6k code)
 #endif
 ```
 
@@ -68,5 +70,4 @@ Example: disable Domoticz support
 
 Save file, compile the custom binary and flash it
 
-> [!WARNING]   
->There are limits to how many features can be included! If you go overboard code might not compile due to features conflicting _or_ might not be able to be flashed if it exceeds [ESP8266 limits](Sensor-API#keeping-esp8266-code-compact).
+>[!WARNING] There are limits to how many features can be included! If you go overboard code might not compile due to features conflicting _or_ might not be able to be flashed if it exceeds [ESP8266 limits](Sensor-API#keeping-esp8266-code-compact).
