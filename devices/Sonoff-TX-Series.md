@@ -4,7 +4,7 @@ The boards are the same for all the series with only a difference in the T0 whic
 
 # Flashing
 
-The flashing steps are the same than for the [older T1 switch](Sonoff-T1) but holding switch 1 does not put the board into flashing mode and there is no reset button on the board
+The flashing steps are the same than for the [older T1 switch](devices/Sonoff-T1) but holding switch 1 does not put the board into flashing mode and there is no reset button on the board
 
 So to put a T1 Touch v1.0 board into flash mode you need to ground GPIO 0 which is exposed on the back of the board and plug the board to USB
 
