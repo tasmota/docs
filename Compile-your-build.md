@@ -67,8 +67,8 @@ Example: disable Domoticz support
 2. tell the compiler to remove (#undef) Domoticz support
 3. close the IF statement from line 1
 
->[!ATTENTION] It is not recommended to change `my_user_config.h`, use it only for reference 
+>[!WARNING] It is not recommended to change `my_user_config.h`, use it only for reference 
 
 Save file, compile the custom binary and flash it
 
->[!WARNING] There are limits to how many features can be included! If you go overboard code might not compile due to features conflicting _or_ might not be able to be flashed if it exceeds [ESP8266 limits](Sensor-API#keeping-esp8266-code-compact).
+>[!NOTE] There are limits to how many features can be included! If you go overboard code might not compile due to features conflicting _or_ might not be able to be flashed if it exceeds [ESP8266 limits](Sensor-API#keeping-esp8266-code-compact).
