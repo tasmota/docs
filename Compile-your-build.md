@@ -30,13 +30,13 @@ Best practice to enable a feature is to use
 #endif
 ```
 
-Directives|Description
--|-    
-`#define %identifier%` | enables the feature
-`#undef %identifier%` | disables the feature
-`#ifdef %identifier%` | checks if the feature is defined in code
-`#ifndef %identifier%` | checks if the feature is not defined
-`#endif` | closes #if statement
+|Directives|Description
+|---|----
+|`#define %identifier%` | enables the feature
+|`#undef %identifier%` | disables the feature
+|`#ifdef %identifier%` | checks if the feature is defined in code
+|`#ifndef %identifier%` | checks if the feature is not defined
+|`#endif` | closes #if statement
 
 Example: enable blinds and shutters support
 
