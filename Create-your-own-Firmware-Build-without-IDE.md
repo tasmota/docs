@@ -138,7 +138,7 @@ After changing to the working copy, we are ready to go:
 
 ## Configure the sources
 
-Now you may want to configure the sources for your needs, as described at [Upload](Upload)
+Now you may want to configure the sources for your needs, as described at [Upload](Upload-tools)
 
 Actually, the sources do build fine right out-of-the box, only it'll be a full build, including all the language localisation and all the build flavours as well, while you are usually interested only in one language and one build flavour only.
 
