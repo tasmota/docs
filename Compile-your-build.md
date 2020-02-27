@@ -23,36 +23,42 @@ Open the file in chosen development environment for editing.
 Enter lines required to enable or disable desired feature. All features and their identifier can be found in [`my_user_config.h`](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h).   
 
 Best practice to enable a feature is to use
+
 ```
 #ifndef %identifier%
 #define %identifier%
 #endif
 ```
+
 Directives|Description
 -|-    
-#define %identifier% | enables the feature
-#undef %identifier% | disables the feature
-#ifdef %identifier% | checks if the feature is defined in code
-#ifndef %identifier% | checks if the feature is not defined
-#endif | closes #if statement
+`#define %identifier%` | enables the feature
+`#undef %identifier%` | disables the feature
+`#ifdef %identifier%` | checks if the feature is defined in code
+`#ifndef %identifier%` | checks if the feature is not defined
+`#endif` | closes #if statement
 
 Example: enable blinds and shutters support
+
 ```
 #ifndef USE_SHUTTER
 #define USE_SHUTTER                              // Add Shutter support for up to 4 shutter with different motortypes (+6k code)
 #endif
 ```
+
 - identifier = `USE_SHUTTER`
 1. check whether USE_SHUTTER is already defined and proceed if it is not
 2. this line copied from [`my_user_config.h`](https://github.com/arendst/Tasmota/blob/20370820b85acf282fbf7ebec38ef2a484921a16/tasmota/my_user_config.h#L332) then uncommented, tells the compiler to include (#define) shutter support
 3. close the IF statement from line 1
 
 Example: disable Domoticz support
+
 ```
 #ifdef USE_DOMOTICZ
 #undef USE_DOMOTICZ                              
 #endif 
 ```
+
 - identifier = `USE_DOMOTICZ`
 1. check whether `USE_DOMOTICZ` is already defined and proceed if it is
 2. tell the compiler to remove (#undef) Domoticz support
@@ -61,7 +67,6 @@ Example: disable Domoticz support
 >It is not recommended to change `my_user_config.h`, use it only for reference 
 
 Save file, compile the custom binary and flash it
-```
 
 > [!WARNING]   
 >There are limits to how many features can be included! If you go overboard code might not compile due to features conflicting _or_ might not be able to be flashed if it exceeds [ESP8266 limits](Sensor-API#keeping-esp8266-code-compact).
