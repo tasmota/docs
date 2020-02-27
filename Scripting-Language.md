@@ -116,7 +116,7 @@ Executed on [`TelePeriod`](Commands#teleperiod) time (`SENSOR` and `STATE`), onl
 Remark: json variable names (like all others) may not contain math operators like - , you should set [`SetOption64 1`](Commands#setoption64) to replace `-` (_dash_) with `_` (_underscore_)
 
 `>H`  
-Alexa Hue interface (up to 32 virtual hue devices) *([example](Script-Cookbook#hue-emulation))*  
+Alexa Hue interface (up to 32 virtual hue devices) *([example](Scripting-Cookbook#hue-emulation))*  
 `device`,`type`,`onVars`  
 Remark: hue values have a range from 0-65535. Divide by 182 to assign HSBcolors hue values.
 
@@ -388,7 +388,7 @@ The following parameters can be specified during compilation via `#define` direc
 To use any of these values, pass an `*` as its corresponding argument placeholder.  
 > [!EXAMPLE] `sendmail [*:*:*:*:*:<rec@gmail.com>:theSubject] theMessage`  
 
-Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `>m` _(note lower case)_ section. The specified text in this script section must end with an `#` character. `sendmail` will use the `>m` section if `*` is passed as the `msg` parameter. See [Scripting Cookbook Example].(Script-Cookbook#Send-e-mail)  
+Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `>m` _(note lower case)_ section. The specified text in this script section must end with an `#` character. `sendmail` will use the `>m` section if `*` is passed as the `msg` parameter. See [Scripting Cookbook Example].(Scripting-Cookbook#Send-e-mail)  
  
 **Subscribe, Unsubscribe**  
 `#define SUPPORT_MQTT_EVENT`  
@@ -399,7 +399,7 @@ Instead of passing the `msg` as a string constant, the body of the e-mail messag
 `CARD_CS` = GPIO of card chip select   
 SD card uses standard hardware SPI GPIO: mosi,miso,sclk  
 A maximum of four files may be open at a time  
-e.g., allows for logging sensors to a tab delimited file and then downloading the file ([see Sensor Logging example](Script-Cookbook#sensor-logging))  
+e.g., allows for logging sensors to a tab delimited file and then downloading the file ([see Sensor Logging example](Scripting-Cookbook#sensor-logging))  
 The downloading of files may be executed in a kind of "multitasking" when bit 7 of loglvl is set (128+loglevel)  
 Without multitasking 150kb/s (all processes are stopped during downloading), with multitasking 50kb/s (other Tasmota processes are running)  
 The script itself is also stored on the SD card with a default size of 4096 characters  
