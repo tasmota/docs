@@ -10,4 +10,4 @@ Device Images
 The used TYWE3S board unfortunately does not have easily reachable solderpads for TX/RX, but I managed to solder with a normal 60W iron between main board and TYWE3S board:
 ![](https://user-images.githubusercontent.com/2738932/46142046-f4362d00-c255-11e8-9210-e83dcb495e19.jpg)
 
-Works perfectly with Tasmota 6.2.1 and the same configuration like [SM-PW701E Socket Board: TYWE3S](TYWE3S)
+Works perfectly with Tasmota 6.2.1 and the same configuration like [SM-PW701E Socket Board: TYWE3S](devices/TYWE3S)
