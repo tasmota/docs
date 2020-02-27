@@ -15,6 +15,7 @@ In order to use LC Technology WiFi Relay for 1 relay version:
    on Power1#State=0 do SerialSend5 A00100A1 endon
   ```
 * Enable the rule (type `rule1 1` in the Tasmota console)
+* Note: If you use LC Technology v1.2 and this rule does not work, try to use 115200 baudrate
 * Note: If that doesn't work for you, you may find that using `Power1#Boot` as the event to trigger the baud rate setting (instead of `System#Boot`) works, as it did for me. So the alternate rule is:
   ```
   on Power1#Boot do Backlog Baudrate 9600; SerialSend5 0 endon
@@ -70,3 +71,11 @@ Additionally, once programmed, you may also have to remove r4. Some issues exist
 This is an easier fix for the ESP-01S relay v1.0 board, which does not require pcb cuts or resistor desoldering, just a 10K resistor soldered as in image: this mod prevents the relay flicker, and connects ch_pd, too
 
 ![](https://user-images.githubusercontent.com/5904370/72250870-ef3cee80-35fc-11ea-875e-dcd93c3ce670.png)
+
+## How to use with up to 12V power supply
+
+LC Technology WiFi Relay use CJT1117B linear regulator which support input power up to 12V. It is ok for ESP-01 and N76E003, but not for relay. Relay connected without any voltage regulator to input power directly.
+
+The easier way to replace existing relay. Part number for 12V relay is SRD-12VDC-SLC. You can use similar analogs for 6V and 9V.
+
+![](https://user-images.githubusercontent.com/25607714/75441867-19592e80-5967-11ea-8044-c30e42bfbe50.JPG)
