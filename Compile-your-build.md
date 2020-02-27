@@ -16,7 +16,7 @@ Open `my_user_config.h` and uncomment (remove `//`) line with `#define USE_CONFI
 ```
 
 In PlatformIO you can edit platformio_override.ini instead. Go to root directory of source code, rename platformio_override_sample.ini to platformio_override.ini. By doing this you enable the settings done in this file.
-By default the file `user_config_override.h`is enabled and to build the standard `Tasmota` variant.
+By default the file `user_config_override.h` is enabled and to build the standard `tasmota` variant.
     
 Create a new file in /tasmota folder called `user_config_override.h`.
 
@@ -32,13 +32,13 @@ Best practice to enable a feature is to use
 #endif
 ```
 
-|Directives|Description
-|---|----
-|`#define %identifier%` | enables the feature
-|`#undef %identifier%` | disables the feature
-|`#ifdef %identifier%` | checks if the feature is defined in code
-|`#ifndef %identifier%` | checks if the feature is not defined
-|`#endif` | closes #if statement
+|Directives|Description|
+|---|----|
+|`#define %identifier%` | enables the feature|
+|`#undef %identifier%` | disables the feature|
+|`#ifdef %identifier%` | checks if the feature is defined in code|
+|`#ifndef %identifier%` | checks if the feature is not defined|
+|`#endif` | closes #if statement|
 
 Example: enable blinds and shutters support
 
@@ -66,7 +66,7 @@ Example: disable Domoticz support
 2. tell the compiler to remove (#undef) Domoticz support
 3. close the IF statement from line 1
 
->It is not recommended to change `my_user_config.h`, use it only for reference 
+>[!ATTENTION] It is not recommended to change `my_user_config.h`, use it only for reference 
 
 Save file, compile the custom binary and flash it
 
