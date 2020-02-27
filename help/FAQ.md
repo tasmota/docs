@@ -42,7 +42,7 @@
 ## Installation
 
 ### Cannot enter flash mode
-Be sure to press the button correctly, you must "feel" a click. If your on-device button doesn't allow you to enter flash mode or there is no GPIO0 broken out to the PCB, you can always bridge GND to GPIO0 pin directly on the chip. Search on the Internet for your chip's pinouts and use [the tutorial](Hardware-Preparation#bringing-the-module-in-flash-mode). Be sure to keep GPIO0 grounded long enough (3-5 seconds) before disconnecting to ensure the chip has booted completely into programming mode. On devices that do not provide a GPIO0 connected button, it may be easier to leave the wired bridge in place throughout the entire flashing process (erase & upload). Doing so will not create any problems for flashing the device. After the firmware is uploaded successfully, remove the bridge. This allows the device to boot normally.
+Be sure to press the button correctly, you must "feel" a click. If your on-device button doesn't allow you to enter flash mode or there is no GPIO0 broken out to the PCB, you can always bridge GND to GPIO0 pin directly on the chip. Search on the Internet for your chip's pinouts and use [the tutorial](installation/Hardware-Preparation#bringing-the-module-in-flash-mode). Be sure to keep GPIO0 grounded long enough (3-5 seconds) before disconnecting to ensure the chip has booted completely into programming mode. On devices that do not provide a GPIO0 connected button, it may be easier to leave the wired bridge in place throughout the entire flashing process (erase & upload). Doing so will not create any problems for flashing the device. After the firmware is uploaded successfully, remove the bridge. This allows the device to boot normally.
 
 ### Flashing issues
 - Double check if you wired the device the serial-to-USB adapter correctly. Almost every device needs RX and TX pins switched to TX and RX. See [Hardware Preparation](installation/Hardware-Preparation) for more.
@@ -100,7 +100,7 @@ With some Wi-Fi routers (i.e. Linksys with DD-WRT), you may have conflicts with 
 DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can resolve connectivity issues.
 
 ### I entered the wrong Wi-Fi information
-- If you have a device with a button and the button is configured as a component in the Tasmota settings (e.g., GPIO0 - Button1), you can try pressing the button to force the device into [Wi-Fi configuration mode](Button-usage#4-short-presses) with 4 short presses of the button. 
+- If you have a device with a button and the button is configured as a component in the Tasmota settings (e.g., GPIO0 - Button1), you can try pressing the button to force the device into [Wi-Fi configuration mode](Buttons-and-Switches#_4-short-presses) with 4 short presses of the button. 
 
 - If that didn't work reset your device using [Fast power cycle device recovery](Fast-power-cycle-device-recovery)
 
@@ -137,7 +137,7 @@ DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can r
 
 First thing to try when having Wi-Fi issues:
 
-   Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](Flashing#erase-firmware)) using [the latest precompiled binaries](http://thehackbox.org/tasmota/).
+   Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](installation/Flashing#erase-firmware)) using [the latest precompiled binaries](http://thehackbox.org/tasmota/).
 
    This approach has solved most of the reported issues. Sometimes this is due to a bad flash, a bad OTA or invalid data that remains in the flash where the SDK memory is.
 
@@ -253,7 +253,7 @@ Short answer: **NO!**
 Long answer: There is not enough time in our coders lives to take requests, if you can code a driver for that sensor and submit a PR it will be considered, otherwise you can only wait for someone else to do it.
 
 ### Tasmota is sending a lengthy status update every 5 seconds. What's going on?
-Turn off [TasmoAdmin](TasmoAdmin)! It is polling your device with `STATUS 0` command with a HTTP request every 5 seconds which causes the status updates and unnecessary stress load on the device. In some cases it might even interfere with normal device operation.
+Turn off [TasmoAdmin](integrations/TasmoAdmin)! It is polling your device with `STATUS 0` command with a HTTP request every 5 seconds which causes the status updates and unnecessary stress load on the device. In some cases it might even interfere with normal device operation.
 
 ### Web Interface Asks for Password
 You modified the Web Admin password (`Configure Other`) and now you cannot access the web interface. You have set up a password for the web interface. You can login with the username `admin` and the password you entered. However, if you don't remember that password there are a few options you can try to gain access to the web interface again.
@@ -275,9 +275,9 @@ You modified the Web Admin password (`Configure Other`) and now you cannot acces
 
 3. If you had set up `WifiConfig 7` as your Wi-Fi fallback method (by previously executing [`WiFiConfig`](Commands#wificonfig) in the Console),  you can reset the device by booting it into Wi-Fi Manager mode. If the SSID configured in the device is not available (e.g., turn off the router), the device will fallback to that restricted Wi-Fi Manager Mode.
 
-4. If your device has a physical push-button, reset the firmware to the default settings as detailed [here](Button-usage#long-press).
+4. If your device has a physical push-button, reset the firmware to the default settings as detailed [here](Buttons-and-Switches#long-press).
 
-5. If nothing helps, then you have to [flash the firmware](Flashing) again using the serial interface. Be sure to erase the flash memory before uploading the binary.
+5. If nothing helps, then you have to [flash the firmware](installation/Flashing) again using the serial interface. Be sure to erase the flash memory before uploading the binary.
 
 ### Power monitoring shows wrong values
 If the values shown in the Web UI don't seem right and you're using a Supported Module you need to [calibrate the power monitoring sensor](Power-Monitoring-Calibration).
@@ -291,7 +291,7 @@ Your vanilla `tasmota.bin` doesn't have complete sensor support. Make sure you'v
 ### Timers trigger at the wrong time
 Tasmota devices must have a their time of day set properly in order for **any** timers to work properly. Check the log in the web UI Console to see if the device's time is set correctly. There are two elements to setting the time: 1. obtaining the UTC time, and, 2. local Daylight Saving Time policies.  
 
-There are three methods available to set the device time: 1. [NTP](http://www.ntp.org/), 2. An [RTC peripheral](DS3231), or 3. the [`Time`](Commands#time) command. The typical method Tasmota uses to set its time is to obtain the time from an Internet NTP server. It can also query an NTP server on its local network (e.g., a network router with an NTP service, a Raspberry Pi running the NTP daemon, the [Chrony add-on](https://github.com/hassio-addons/addon-chrony) in Home Assistant, etc.).  
+There are three methods available to set the device time: 1. [NTP](http://www.ntp.org/), 2. An [RTC peripheral](peripherals/DS3231), or 3. the [`Time`](Commands#time) command. The typical method Tasmota uses to set its time is to obtain the time from an Internet NTP server. It can also query an NTP server on its local network (e.g., a network router with an NTP service, a Raspberry Pi running the NTP daemon, the [Chrony add-on](https://github.com/hassio-addons/addon-chrony) in Home Assistant, etc.).  
 
 Check the information about your router's features. If the router provides an NTP server, be sure to configure it properly. If the Tasmota device receives its IP address via DHCP from the router, Tasmota will request its time sync from the router's time server. This is managed by the Arduino core, not Tasmota ([\#5283](https://github.com/arendst/Tasmota/issues/5283#issuecomment-466888846)). Therefore, if the NTP server on the router is not configured, or configured improperly, the time on the Tasmota device could be wrong. If the router does not have a time server, this is not the problem.  
 
