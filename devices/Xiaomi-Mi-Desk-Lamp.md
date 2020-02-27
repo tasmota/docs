@@ -13,7 +13,7 @@ At the bottom of the lamp stand there is also a 'Reset' button, which can be pre
 
 ## Configuration
 
-Tasmota supports it directly as `Module "Mi Desk Lamp"`. This module is deactivated by default. You must add `#define ROTARY_V1` in your `user_config_override.h` and [compile](Flashing#flashing-and-compiling-from-source) the firmware for this module to be available as a selection option.
+Tasmota supports it directly as `Module "Mi Desk Lamp"`. This module is deactivated by default. You must add `#define ROTARY_V1` in your `user_config_override.h` and [compile](installation/Flashing#flashing-and-compiling-from-source) the firmware for this module to be available as a selection option.
 
 To configure it as `Generic`, here is the GPIO assignment:
 - GPIO02: Button (`GPIO_KEY1`)
