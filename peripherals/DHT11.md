@@ -32,7 +32,7 @@ From the [Wemos DHT11 shield specs](https://wiki.wemos.cc/products:retired:dht_s
 _Note: Having the shield compact on top of the processor increases the temperature. In normal Mode this can be up to 6°C. So you should add sleep mode. Adding normal "Sleep 100" and putting the sensor vertically reduces the temperature difference to 2°C_
 
 ### Sonoff Basic specific
-To wire a DHT11 up to a Sonoff Basic, I first soldered a pin header to the main pin header row. For the location see [GPIO Locations](GPIO-Locations#sonoff-basic).
+To wire a DHT11 up to a Sonoff Basic, I first soldered a pin header to the main pin header row. For the location see [GPIO Locations](peripherals/GPIO-Locations#sonoff-basic).
 
 I decided to use regular 2.54mm connectors (often referred to as Dupont connectors), so that I can switch sensors if I have to. In order to fit the dupont cables within the enclosure, I had to bend the 2.54mm pin headers by about 45°.
 
