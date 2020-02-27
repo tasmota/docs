@@ -39,7 +39,7 @@ Tasmota provides different ways to configure Domoticz parameters. Choose the met
     1. Set `In topic` to `domoticz/in` as hardcoded in Domoticz
     2. Set `Out topic` to `domoticz/out` as hardcoded in Domoticz
     3. Configure `Idx 1` to the value read in step 2.i
-- Use MQTT and execute commands (if necessary, replace `tasmota` with unique topic you configured in Initital Configuration, see point 5 [there](/installation/Initital-Configuration)):
+- Use MQTT and execute commands (if necessary, replace `tasmota` with unique topic you configured in Initital Configuration, see point 5 [there](/installation/Initial-Configuration)):
     1. `cmnd/tasmota/DomoticzInTopic` with payload `domoticz/in` as hardcoded in Domoticz
     2. `cmnd/tasmota/DomoticzOutTopic` with payload `domoticz/out` as hardcoded in Domoticz
     3. `cmnd/tasmota/DomoticzIdx1` with payload value read in step 2.i
