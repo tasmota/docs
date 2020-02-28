@@ -77,16 +77,23 @@ Follow the usual ESP82xx [flashing process](installation/Flashing) - you are jus
 Once the firmware upload completes, retain the serial interface connections (3.3V, GND, Tx, Rx). These will be used later for flashing the CC2530.
 
 
-**B. Use superhouse.tv PCB**
+**B. Ready-made PCB**  
+   These PCB make all the connections required to flash the CC2530 and to run Z2T.  
+   
+   - SuperHouse.tv  
+     Jon Oxer created a [custom PCB](https://github.com/SuperHouse/Z2T) to connect a Wemos D1 Mini and a CC2530 board (with or without CC2591).  
 
-Jon Oxer from superhouse.tv kindly created a [custom PCB](https://github.com/SuperHouse/Z2T) to connect a Wemos D1 Mini and a CC2530 board (with or without CC2591). The PCB makes all the connections required to flash the CC2530 and to run Z2T.
+     **Complete module**  
+     <img src="https://user-images.githubusercontent.com/49731213/72688606-3c432800-3b09-11ea-9e56-ed24a7c07017.jpg" height="140">  
+     <img src="https://user-images.githubusercontent.com/49731213/72688611-4533f980-3b09-11ea-9c10-9202d1f60f4d.jpg" height="140">  
 
-**Complete module**
-
-<img src="https://user-images.githubusercontent.com/49731213/72688606-3c432800-3b09-11ea-9e56-ed24a7c07017.jpg" height="140">
-<img src="https://user-images.githubusercontent.com/49731213/72688611-4533f980-3b09-11ea-9c10-9202d1f60f4d.jpg" height="140">
-
-**Prototype**
+   - H4NC
+     User _**h4nc**_ created a [custom PCB](https://github.com/h4nc/Zigbee2Tasmota_PCB) to connect a NodeMCU and a CC2530 board.  
+     
+     You can also get a complete Z2T module with case, pre-flashed and ready to configure and deploy.  
+     <img src="https://raw.githubusercontent.com/h4nc/Zigbee2Tasmota_PCB/master/images/Z2T_2.jpeg" height="250">  
+     
+**Prototype**  
 
 <img src="https://user-images.githubusercontent.com/34340210/65651832-a7f30980-dfdd-11e9-845d-81c2b99babb9.jpg" height="140">
 
