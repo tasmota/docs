@@ -1,3 +1,5 @@
+
+
 !> **This feature is not included in precompiled binaries.**     
 To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
 ```
@@ -127,9 +129,69 @@ with the '=' char at the beginning of a line you may do some special decoding
   example:  
   `2,=h==================` insert a separator line  
 
+- With a few meters, it is necessary to request the meter to send its data using a specific character string. This string has to be send at a very low baudrate. (300Baud) 
+  If you reply the meter with an acknowledge and ask the it for a new baudrate of 9600 baud, the baudrate of the SML driver has to be changed, too.
+
+  
+  To change the baudrate:
+  >sml(`METERNUMBER` 0 `BAUDRATE`)  
+  
+  For sending a specific character string:
+  
+  >sml(`METERNUMBER` 1 `STRING`)
+  
+  That works like this:  
+    
+    
+    > `>D`  
+    res=0  
+    scnt=0  
+      
+    >;For this Example in the >F section  
+    > `>F`
+    ;count 100ms   
+    scnt+=1  
+    switch scnt  
+    case 6  
+    ;set sml driver to 300 baud and send /?! as HEX to trigger the Meter   
+    res=sml(1 0 300)  
+    res=sml(1 1 "2F3F210D0A")  
+      
+    >;1800ms later \> Send ACK and ask for switching to 9600 baud  
+    case 18  
+    res=sml(1 1 "063035300D0A")  
+  
+    >;2000ms later \> Switching sml driver to 9600 baud    
+    case 20  
+    res=sml(1 0 9600)  
+      
+    >;Restart sequence after 50x100ms    
+    case 50  
+    ; 5000ms later \> restart sequence    
+    scnt=0  
+    ends    
+      
+    > `>M 1`  
+    +1,3,o,0,9600, ,1  
+    ...etc.  
+  
+You can find the example [here.](#landis--gyr-zmr120ares2r2sfcs-obis)  
+
+Attention, this procedure is only necessary, if the meter explicitly asks for 300 baud. The most meters work directly with 9600 baud. Therefore it is easier to give this method a try:
+
+`Meter#,GPIO# Input,OBIS,FLAG,Baudrate,JSONNAME,GPIO# Output,TX Period,Character string`
+> \+ 1,3, O, 0,9600, energy, 1,1,2F3F210D0A 
+
+ Example: [here.](#Iskra-MT-174)
+
+
+	  
+
 ## Smart Meter Descriptors
+- [EMH ED300L (SML)](#EMH-ED300L-SML)
 - [Hager EHZ363 (SML)](#Hager-EHZ363-SML)
 - [Hager EHZ161 (OBIS)](#Hager-EHZ161-OBIS)
+- [Landis + Gyr ZMR120AR (OBIS)](#landis--gyr-zmr120ares2r2sfcs-obis)
 - [COMBO Meter (Water,Gas,SML)](#COMBO-Meter-WaterGasSML)
 - [WOLF CSZ 11/300 Heater](#WOLF-CSZ-11300-Heater)
 - [SDM530 (MODBUS)](#SDM530)
@@ -139,6 +201,31 @@ with the '=' char at the beginning of a line you may do some special decoding
 - [SBC ALE3 (MODBUS)](#SBC-ALE3-MODBUS)
 - [2 * SBC ALE3 (MODBUS)](#2-*-SBC-ALE3-MODBUS)
 --------------------------------------------------------
+
+
+### EMH ED300L (SML)  
+  
+>`>D`    
+  
+>`>B`   
+=>sensor53 r  
+>`>M 2`  
++1,13,s,0,9600,Haus  
++2,12,s,0,9600,Heizung  
+>
+>1,77070100100700ff@1,Aktuell,W,Power_curr,0  
+1,77070100010800FF@1000,Zählerstand Verb.,kWh,Tariflos,2  
+1,77070100020800FF@1000,Zählerstand Einsp.,kWh,Tariflos,2  
+2,=h==================  
+2,77070100100700ff@1,Aktuell,W,Power_curr,0  
+2,77070100010800FF@1000,Zählerstand Verb.,kWh,Tariflos,2  
+2,77070100020800FF@1000,Zählerstand Einsp.,kWh,Tariflos,2  
+\#    
+  
+
+[Back To Top](#top)
+
+------------------------------------------------------------------------------
 
 ### Hager EHZ363 (SML)
 
@@ -176,6 +263,256 @@ with the '=' char at the beginning of a line you may do some special decoding
 1,=d 2 10 @1,Current consumption,W,Power_curr,0  
 1,1-0:0.0.0\*255(@#),Meter Nr,, Meter_number,0  
 \#  
+
+[Back To Top](#top)
+
+------------------------------------------------------------------------------
+
+### Landis + Gyr ZMR120AReS2R2sfCS (OBIS)
+  
+  `Example: Changing the baud rate during operation.`
+    
+> `>D`  
+;Var Power consumption total HT+NT  
+v1=0  
+;HT Main electricity tariff consumption total   
+v2=0  
+;NT Night electricity tariff consumption total  
+v3=0  
+; Energie L1+L2+L3  
+v4=0  
+;recent Energie L1  
+v5=0  
+;recent Energie L2  
+v6=0  
+;recent Energie L3  
+v7=0  
+  
+  
+>;Var minute   
+min=0  
+;Var hour  
+hr=0  
+;Var begin of the month 01.xx.20xx 0:00 Uhr  
+md=0  
+;Var begin of the year 01.01. 0:00 Uhr  
+yr=0  
+;Var for counter see >F=ms  
+scnt=0  
+;Var for baudrate changeing 
+res=0  
+  
+>;Permanent Var Meter1 0:00   
+p:sm=0  
+p:HT_sm=0  
+p:NT_sm=0  
+;Var for daily =0  
+sd=0  
+HT_sd=0  
+NT_sd=0  
+;Permanent Var for month begin  
+p:sma=0  
+p:HT_sma=0  
+p:NT_sma=0  
+;Var for monthly =0  
+smn=0  
+HT_smn=0  
+NT_smn=0  
+;Permanent Var for year begin  
+p:sya=0  
+p:HT_sya=0  
+p:NT_sya=0  
+;Var for yearly =0  
+syn=0  
+HT_syn=0  
+NT_syn=0  
+  
+>;Fill vars with content on teleperiod    
+> `>T`  
+v1=#Total_in  
+v2=#HT_Total_in  
+v3=#NT_Total_in  
+v4=#kW_L1+L2+L3  
+v5=#kw_L1  
+v6=#kw_L2  
+v7=#kw_L3  
+  
+> `>B`  
+;Restart driver  
+=>sensor53 r  
+;Set teleperiod to 20sec  
+tper=20  
+  
+> `>F`  
+; count 100ms   
+scnt+=1  
+switch scnt  
+case 6  
+;set sml driver to 300 baud and send /?! as HEX to trigger the Meter   
+res=sml(1 0 300)  
+res=sml(1 1 "2F3F210D0A")  
+  
+>;1800ms later \> Ack and ask for switching to 9600 baud  
+case 18  
+res=sml(1 1 "063035300D0A")  
+  
+>;2000ms later \> Switching sml driver to 9600 baud    
+case 20  
+res=sml(1 0 9600)  
+  
+>;Restart sequence after 50x100ms    
+case 50  
+; 5000ms later \> restart sequence    
+scnt=0  
+ends  
+  
+> `>S`  
+;daily usage  
+hr=hours  
+if chg[hr]>0  
+and hr==0  
+and v1>0  
+then  
+sm=v1  
+HT_sm=v2  
+NT_sm=v3  
+svars  
+endif  
+  
+>if upsecs%tper==0{  
+sd=v1-sm  
+HT_sd=v2-HT_sm  
+NT_sd=v3-NT_sm  
+}  
+
+>;Monthly usage  
+md=day  
+if chg[md]>0  
+and md==1  
+and v1>0  
+then  
+sma=v1  
+HT_sma=v2  
+NT_sma=v3  
+svars  
+endif  
+  
+>if upsecs%tper==0{  
+smn=v1-sma  
+HT_smn=v2-HT_sma  
+NT_smn=v3-NT_sma  
+}  
+  
+> ;Yearly usage  
+yr=year  
+if chg[yr]>0  
+and v1>0  
+then  
+sya=v1  
+HT_sya=v2  
+NT_sya=v3  
+svars  
+endif  
+  
+>if upsecs%tper==0{  
+syn=v1-sya  
+HT_syn=v2-HT_sya  
+NT_syn=v3-NT_sya  
+
+  
+
+>; Json payload \> send on teleperiod  
+> `>J`  
+,"Strom_Vb_Tag":%3sd%  
+,"HT_Strom_Vb_Tag":%3HT_sd%  
+,"NT_Strom_Vb_Tag":%3NT_sd%  
+,"Strom_Vb_M":%1smn%  
+,"HT_Strom_Vb_M":%1HT_smn%  
+,"NT_Strom_Vb_M":%1NT_smn%  
+,"Strom_Vb_Jahr":%0syn%  
+,"HT_Strom_Vb_Jahr":%0HT_syn%  
+,"NT_Strom_Vb_Jahr":%0NT_syn%  
+,"Strom_0:00 _Uhr":%1sm%  
+,"HT_Strom_0:00 _Uhr":%1HT_sm%  
+,"NT_Strom_0:00 _Uhr":%1NT_sm%  
+,"Strom_Ma":%3sma%  
+,"HT_Strom_Ma":%3HT_sma%  
+,"NT_Strom_Ma":%3NT_sma%  
+,"Strom_Ja":%3sya%  
+,"HT_Strom_Ja":%3HT_sya%  
+,"NT_Strom_Ja":%3NT_sya%  
+  
+
+
+
+>;Webdisplay stuff  
+> `>W`  
+\----------------------  
+>0:00 Uhr Σ HT+NT: {m} %0sm% KWh  
+HT: {m} %0HT_sm% KWh  
+NT: {m} %0NT_sm% KWh  
+\----------------------  
+>Monatsanfang: {m} %1sma% KWh  
+HT: {m} %1HT_sma% KWh  
+NT: {m} %1NT_sma% KWh  
+\----------------------  
+>Jahresanfang: {m} %0sya% KWh  
+HT: {m} %0HT_sya% KWh  
+NT: {m} %0NT_sya% KWh  
+\.............................  
+Tagesverbrauch: {m} %1sd% KWh  
+HT: {m} %1HT_sd% KWh  
+NT: {m} %1NT_sd% KWh  
+\----------------------  
+>Monatsverbrauch: {m} %0smn% KWh  
+HT: {m} %0HT_smn% KWh  
+NT: {m} %0NT_smn% KWh  
+\---------------------  
+>Jahresverbrauch: {m} %0syn% KWh  
+HT: {m} %0HT_syn% KWh  
+> 0:00 Uhr Σ HT+NT: {m} %0sm% KWh  
+HT: {m} %0HT_sm% KWh  
+NT: {m} %0NT_sm% KWh  
+\----------------------  
+>Monatsanfang: {m} %1sma% KWh  
+HT: {m} %1HT_sma% KWh  
+NT: {m} %1NT_sma% KWh  
+\----------------------  
+>Jahresanfang: {m} %0sya% KWh  
+HT: {m} %0HT_sya% KWh  
+NT: {m} %0NT_sya% KWh  
+\.............................  
+Tagesverbrauch: {m} %1sd% KWh  
+HT: {m} %1HT_sd% KWh  
+NT: {m} %1NT_sd% KWh  
+\----------------------  
+>Monatsverbrauch: {m} %0smn% KWh  
+HT: {m} %0HT_smn% KWh  
+NT: {m} %0NT_smn% KWh  
+\---------------------  
+>Jahresverbrauch: {m} %0syn% KWh  
+HT: {m} %0HT_syn% KWh  
+NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh  
+  
+> `>M 1`  
+>
+>+1,3,o,0,9600,,1  
+1,0.0.1(@1,Zählernummer,,Meter_number,0  
+1,0.9.1(@#),Zeitstempel,Uhr,time-stamp,0  
+1,=h===================  
+1,1.8.0(@1,HT+NT Zählerstand,KWh,Total_in,3  
+1,1.8.1(@1,HT,KWh,HT_Total_in,3  
+1,1.8.2(@1,NT,KWh,NT_Total_in,3  
+1,=h===================  
+1,36.7.0(@1,Power_L1,kW,kW_L1,2  
+1,56.7.0(@1,Power_L2,kW,kW_L2,2  
+1,76.7.0(@1,Power_L3,kW,kW_L3,2  
+1,16.7.0(@1,Σ_L1+L2+L3,kW,kW_L1+L2+L3,2  
+1,=h===================  
+1,31.7.0(@1,Strom_L1,A,I_L1,2  
+1,51.7.0(@1,Strom_L2,A,I_L2,2  
+1,71.7.0(@1,Strom_L3,A,I_L3,2  
+\#
 
 [Back To Top](#top)
 
