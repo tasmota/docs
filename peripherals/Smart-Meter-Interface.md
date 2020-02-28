@@ -47,7 +47,7 @@ Declare a script `>M` section with the number of connected meters (n = `1..5`)
 
 ### Meter Declaration
 `+<M>,<rxGPIO>,<type>,<flag>,<parameter>,<jsonPrefix>{,<txGPIO>,<txPeriod>,<cmdTelegram>}`  
-
+Eg.: `+1,3,o,16,9600,Meter1,1,2,2F3F210D0A` 
 - `<M>` - meter number  
 - `<rxGPIO>` - meter data receive GPIO  
 - `<type>` - meter type of meter  
