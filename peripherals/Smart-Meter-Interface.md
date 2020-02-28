@@ -1,5 +1,6 @@
 
 
+
 !> **This feature is not included in precompiled binaries.**     
 To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
 ```
@@ -32,10 +33,13 @@ There are many different meters that use the same protocol. There are multitudes
 
 This interface provides a means of specifying these definitions through [meter descriptors](#Smart-Meter-Descriptors). This method uses the [scripting language](Scripting-Language) editor to define the descriptors. In this way, only one firmware binary version is required and a modification can be made easily "on the fly".  
 
-**Note:** If no `>M` section is found in the script or if the scripting language is not compiled, the driver reverts to the default `#define` definition(s).  
+> [!NOTE] If no `>M` section is found in the script or if the scripting language is not compiled, the driver reverts to the default `#define` definition(s).  
+  
+> [!NOTE]Additional hardware is required to read certain measuring devices. For example: RS485toTTL Adaper for Modbus, IR transistor for electricity meters. Sometimes an additional IR diode and resistors.  
+  
   
 ## Descriptor Syntax
-This section must be present, but empty  
+This section must be present, but empty. In most cases, there is no need to define variables for this driver.  
 > `>D`  
 
 Declare a script `>B` (boot) section to inform the interface to read the meter descriptor(s)
@@ -44,13 +48,20 @@ Declare a script `>B` (boot) section to inform the interface to read the meter d
 
 Declare a script `>M` section with the number of connected meters (n = `1..5`)
 > `>M <n>`  
-
+------------------------------------------------------------------------------
 ### Meter Declaration
 `+<M>,<rxGPIO>,<type>,<flag>,<parameter>,<jsonPrefix>{,<txGPIO>,<txPeriod>,<cmdTelegram>}`  
-Eg.: `+1,3,o,16,9600,Meter1,1,2,2F3F210D0A` 
-- `<M>` - meter number  
+
+> [!EXAMPLE]
+`+1,3,o,0,9600,OBIS1,1,2,2F3F210D0A` 
+`+1,3,s,16,9600,SML1`  
+`+1,12,c,1,-10,H20_Cnt`
+`+1,3,m,0,9600,MODBUS,1,1,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010`  
+
+`+<M>,<rxGPIO>,<type>,<flag>,<parameter>,<jsonPrefix>{,<txGPIO>,<txPeriod>,<cmdTelegram>}`  
+- `<M>` - meter number. The number must be increased with each additional Meter. (1...5)  
 - `<rxGPIO>` - meter data receive GPIO  
-- `<type>` - meter type of meter  
+- `<type>` - meter type of meter:  
   - `o` = OBIS ASCII type of coding  
   - `s` = SML binary smart message coding  
   - `c` = Counter type  
@@ -58,33 +69,46 @@ Eg.: `+1,3,o,16,9600,Meter1,1,2,2F3F210D0A`
   - `m` = MODBus binary coding with serial mode 8N1   
   - `M` = MODBus binary coding with serial mode 8E1 
   - `r` = Raw binary coding (any binary telegram)  
-- `<flag>` - options flag  
+- `<flag>` - options flag:  
   - `0` = counter without pullup  
   - `1` = counter with pullup   
-  - `16` = enable median filter for that meter (not available for counters)     
-- `<parameter>` - parameters according to meter type  
-  - for `o,s,e,m,r`: serial baud rate  
+  - `16` = enable median filter for that meter. Can help with sporadic dropouts eg. reading errors. (not available for counters)     
+- `<parameter>` - parameters according to meter type:  
+  - for `o,s,e,m,r`: serial baud rate eg. 9600  
   - for `c`:  
-    - positive value = counter poll interval  
-    - negative value = debounce time (milliseconds) for irq driven counters  
+    - positive value >0 = counter poll interval  
+    - negative value <=0 = debounce time (milliseconds) for irq driven counters  
 - `<jsonPrefix>` - prefix for Web UI and MQTT JSON payload. Up to 7 characters  
-- `<txGPIO>` - meter command transmit GPIO  
-- `<txPeriod>` - number of 250ms increments. Period to repeat the transmission of commands to the meter  
-- `<cmdTelegram>` - comma separated hex coded byte blocks to send to meter device. For modbus each block is a command to retrieve a certain register from the meter  
+- `<txGPIO>` - meter command transmit GPIO (optional)  
+- `<txPeriod>` - number of 250ms increments (n * 250ms). Period to repeat the transmission of commands to the meter (optional)  
+- `<cmdTelegram>` - comma separated hex coded byte blocks to send to meter device. For modbus each comma separated block is a command to retrieve a certain register from the meter (Optional, only required for measuring devices that have to be triggered with a certain character string.)  
+  
+**Modbus:**
+> [!EXAMPLE]  
+`+1,3,m,0,9600,MODBUS,1,1,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010`    
+Components of the character string:  
+`...01040000,01040002,...`    
+`01` = Modbus ID   
+`04` = Holding Register   
+`0000`/`0002` = Register#  
 
-Examples:  
-`+1,3,o,0,9600,OBIS`  
-`+1,3,m,0,9600,MODBUS,1,1,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010`  
-
+> [!NOTE] ID, Holding Register and Register# may differ depending on the measuring device.  
+   
+------------------------------------------------------------------------------  
 ### Meter Metrics
-Each meter typically provides multiple metrics (voltage, power, humidity, etc.) which it measures. An entry for each metric to be collected `#define MAX_VARS N` (n = `1..16`) must be specified. An entry defines how to decode the data and put it into variables.
+Each meter typically provides multiple metrics (voltage, power, current, humidity etc.) which it measures. An entry for each metric to be collected `#define MAX_VARS N` (n = `1..16`) must be specified. An entry defines how to decode the data and put it into variables.
+
+> [!EXAMPLE] (OBIS/SML/MODBus): 
+`1,1-0:1.8.1\*255(@1,Total consumption,KWh,Total_in,4`   
+`1,77070100010801ff@1000,W1,kWh,w1,4`  
+`1,010304UUuuxxxxxxxx@i0:1,Spannung L1,V,Voltage_L1,0`  
 
 `<M>,<decoder>@<scale>,<label>,<UoM>,<var>,<precision>`  
 - `<M>` - meter number to which this decoder belongs  
-- `<decoder>` - decoding specification. Decode OBIS as ASCII; SML, EBUS, RAW as HEX ASCII
+- `<decoder>` - decoding specification. Decode OBIS as ASCII; SML, EBUS, MODBus, RAW as HEX ASCII
   - OBIS: ASCII OBIS code terminated with `(` character which indicates the start of the meter value  
   - SML: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value  
-  - EBUS,RAW: hex values of EBUS,RAW block to compare  
+  - EBUS, MODBus, RAW: hex values of EBUS, MODBus, RAW block to compare  
     - `xx` means ignore value  
     - `ss` = extract a signed byte  
     - `uu` = extract an unsigned byte  
@@ -96,40 +120,54 @@ Each meter typically provides multiple metrics (voltage, power, humidity, etc.) 
     - `SSssSSss` = extract an signed long word (high order byte first)  
     - `ffffffff` = extract a float value  
     - `FFffFFff` = extract a reverse float value  
-    - decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte.  
-      e.g., 1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0  
-    - in the case of MODBus, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition
-      e.g., 1,010404ffffffffxxxx@i0:1,Voltage P1,V,Voltage_P1,2  
-- `@` decoding definition termination character  
+    - `@` decoding definition termination character
+    - decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte.   
+      e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`  
+    - in the case of **MODBus**, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition  
+	> [!EXAMPLE] 
+   `+1,3,M,1,9600,SBC,1,2,01030023,01030028...`  
+   `1,010304UUuuxxxxxxxx@i0:1,Voltage L1,V,Voltage_L1,0` < the `i0:1` refers to: `01030023` with a scaling factor (`:1`) of 1   
+   `1,010304UUuuxxxxxxxx@i1:10,Current L1,V,Current_L1,2` < the `i1:10` refers to: `01030028` with a scaling factor (`:10`) of 10       
+  
 - `<scale>` - scaling factor (divisor)  
   This can be a fraction (e.g., 0.1 => result * 10), or a negative value  
   When decoding a string result (e.g., a serial meter), use `#` character for this parameter (only in one line per meter). For OBIS, you need a `)` termination character after the `#` character  
+ Example:
+ OBIS: `1,1-0:0.0.0\*255(@#),Meter Nr,, Meter_number,0`  
+ SML: `1,77078181c78203ff@#,Service ID,,Meter_id,0`  
 - `<label>` - web UI label (max 23 chars)  
 - `<UoM>` - unit of measure (max 7 chars)  
 - `<var>` - MQTT variable name (max 23 chars)  
 - `<precision>` - number of decimal places  
   Add 16 to transmit the data immediately. Otherwise it is transmitted on [`TelePeriod`](Commands#teleperiod)  
-
-e.g., `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,4`
+> [!EXAMPLE]   
+ `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,4` > Transmitted on  [`TelePeriod`](Commands#teleperiod)   
+`1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,20` > Precision of 4. 4 + 16 = 20 >transmit its value immediately  
 
 `#` character terminates the list  
 
+------------------------------------------------------------------------------
 **Special Commands**
 
 with the '=' char at the beginning of a line you may do some special decoding  
 
 - `M,=m` perform arithmetic (`+,-,*,/`) on the metric. Use `#` before a number to designate a constant value  
-  example:  
+> [!EXAMPLE]    
+  `1,=m 3+4+5/#3 @100,Voltage L1+L2+L3/3,V,Volt_avg,2`  
   `1,=m 3+4+5/#3` add result of decoder entry 3,4,5 and divided by 3 (i.e., average)  
 - `M,=d` calculate difference between metric values decoded at time intervals  
-  example:  
+> [!EXAMPLE]   
   `1,=d 3 10` calculate 10 second interval difference of decoder entry 3  
 - `M,=h` html text (up to 30 chars)  
   inserts a html line between entries (these lines do not count as decoder entry)  
-  example:  
-  `2,=h==================` insert a separator line  
+> [!EXAMPLE]     
+  `1,=h==================` insert a separator line  
 
-- With a few meters, it is necessary to request the meter to send its data using a specific character string. This string has to be send at a very low baudrate. (300Baud) 
+> [!TIP] Use: `sensor53 dM` to output the received data in the console. M = the number of the defined meter in the script.  
+>[!NOTE]During the output of the data in the console, the data in the WEB UI are not updated. To return write: `sensor53 d0`  
+    
+    
+[!WARNING] With a few meters, it is necessary to request the meter to send its data using a specific character string. This string has to be send at a very low baudrate. (300Baud) 
   If you reply the meter with an acknowledge and ask the it for a new baudrate of 9600 baud, the baudrate of the SML driver has to be changed, too.
 
   
@@ -143,11 +181,10 @@ with the '=' char at the beginning of a line you may do some special decoding
   That works like this:  
     
     
-    > `>D`  
+  > [!EXAMPLE] `>D`  
     res=0  
-    scnt=0  
-      
-    >;For this Example in the >F section  
+    scnt=0    
+;For this Example in the >F section  
     > `>F`
     ;count 100ms   
     scnt+=1  
@@ -156,33 +193,28 @@ with the '=' char at the beginning of a line you may do some special decoding
     ;set sml driver to 300 baud and send /?! as HEX to trigger the Meter   
     res=sml(1 0 300)  
     res=sml(1 1 "2F3F210D0A")  
-      
     >;1800ms later \> Send ACK and ask for switching to 9600 baud  
     case 18  
     res=sml(1 1 "063035300D0A")  
-  
     >;2000ms later \> Switching sml driver to 9600 baud    
     case 20  
-    res=sml(1 0 9600)  
-      
+    res=sml(1 0 9600)   
     >;Restart sequence after 50x100ms    
     case 50  
     ; 5000ms later \> restart sequence    
     scnt=0  
-    ends    
-      
+    ends        
     > `>M 1`  
     +1,3,o,0,9600, ,1  
     ...etc.  
   
-You can find the example [here.](#landis--gyr-zmr120ares2r2sfcs-obis)  
+  You can find the example [here.](#landis--gyr-zmr120ares2r2sfcs-obis)  
 
-Attention, this procedure is only necessary, if the meter explicitly asks for 300 baud. The most meters work directly with 9600 baud. Therefore it is easier to give this method a try:
+!>Attention, this procedure is only necessary, if the meter explicitly asks for 300 baud. The most meters work directly with 9600 baud. Therefore it is easier to give this method a try:  
+> [!EXAMPLE] `Meter#,GPIO# Input,TYPE,FLAG,Baudrate,JSONNAME,GPIO# Output,TX Period,Character string`  
+  > \+ 1,3, o, 0,9600, energy, 1,4,2F3F210D0A   
 
-`Meter#,GPIO# Input,OBIS,FLAG,Baudrate,JSONNAME,GPIO# Output,TX Period,Character string`
-> \+ 1,3, O, 0,9600, energy, 1,1,2F3F210D0A 
-
- Example: [here.](#Iskra-MT-174)
+   Example: [here.](#Iskra-MT-174)
 
 
 	  
@@ -270,7 +302,7 @@ Attention, this procedure is only necessary, if the meter explicitly asks for 30
 
 ### Landis + Gyr ZMR120AReS2R2sfCS (OBIS)
   
-  `Example: Changing the baud rate during operation.`
+ ?> Example: Changing the baud rate during operation.
     
 > `>D`  
 ;Var Power consumption total HT+NT  
@@ -701,7 +733,7 @@ Tageseinspeisung: {m} %po_d% kWh
 ------------------------------------------------------------------------------
 
 
-### Iskra MT 174
+### Iskra MT 174 (OBIS)
 
 >`>D`
 
