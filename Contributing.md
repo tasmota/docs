@@ -52,14 +52,22 @@ Blockquotes `>` can now look even fancier:
 > [!TIP]
 > `> [!TIP]`
 
-> [!DANGER]
-> `> [!DANGER]`
-
 > [!NOTE]
 > `> [!NOTE]`
 
 > [!EXAMPLE]
 > `> [!EXAMPLE]`
+
+> [!WARNING]
+> `> [!WARNING]`
+
+> [!DANGER]
+> `> [!DANGER]`
+
+> [!DANGER|style:flat]
+> `> [!DANGER|style:flat]`
+
+
 
 
 
