@@ -50,6 +50,7 @@ This page is here for archival purposes. For new devices use [Tasmota Device Tem
 - [Mirabella Genio Smart Bulb](devices/Mirabella-Genio-Bulb)
 - [Kohree VHP560 Smart Light Compatible, RGBCW Wi-Fi LED Bulb A19](devices/Kohree-VHP560-Smart-Light-Compatible,-RGBCW-Wi-Fi-LED-Bulb-A19)
 - [Novostella B22 RGBW Smart Light](devices/Novostella-B22-RGB-LED-Colour-WiFi-Smart-Bulb)
+- [Novostella RGBCW Smart LED Flood Light](devices/Novostella-RGBCW-Smart-LED-Flood-Light)
 - [Xiaomi Mi Desk Lamp](devices/Xiaomi-Mi-Desk-Lamp)
 
 ### Out of production devices
