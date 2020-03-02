@@ -66,7 +66,7 @@ To enable additional shutters, `ShutterRelay<x> <value>` must be executed for ea
 
 Disabling a shutter in the middle of the defined set of shutters will disable all other higher numbered shutters. If the disabled shutter is restored, the higher numbered shutters previously declared will also be restored. When a shutter is added or removed, a list of the active shutters, with their parameters, is output to the log. If you intend to remove shutters, explicitly remove each one beginning with the highest numbered shutter.
 
-With four shutters, eight `Relay<x>` components are needed. If manual operation switches (`Switch<x>` or `Button<x>` pairs) are also used, additional input GPIO are required. The ESP82xx device may not have enough free GPIO to support all the shutter connections required. A GPIO expander such as a PCF8574 or [MCP230xx](MCP230xx) can be used.
+With four shutters, eight `Relay<x>` components are needed. If manual operation switches (`Switch<x>` or `Button<x>` pairs) are also used, additional input GPIO are required. The ESP82xx device may not have enough free GPIO to support all the shutter connections required. A GPIO expander such as a PCF8574 or [MCP230xx](peripherals/MCP230xx) can be used.
 
 Using manual operation `Switch<x>` pairs may require setting `SwitchMode<x> 4` (inverse follow) for proper switch behavior.
 
@@ -171,7 +171,7 @@ Examples:
 - `ShutterButton<x> <button> 0 50 24 0 0 0 0 1 1` is same as `ShutterButton<x> <button> down 1`.
 - `ShutterButton<x> <button> 100 0 50 - 0 0 0 0 0` is same as `ShutterButton<x> <button> updown 0`.
 
-Module WiFi setup, restart, upgrade and reset according to [Buttons and Switches](buttons-and-switches) are supported "child and fool save" only when no button restriction (SetOption1) is given and when all configured shutter buttons of that shutter are pressed 5x, 6x, 7x times or hold long simultaneously.
+Module WiFi setup, restart, upgrade and reset according to [Buttons and Switches](Buttons-and-Switches) are supported "child and fool save" only when no button restriction (SetOption1) is given and when all configured shutter buttons of that shutter are pressed 5x, 6x, 7x times or hold long simultaneously.
 
 ## Configuration
 #### Sonoff Dual R2 Required Configuration
