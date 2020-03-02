@@ -4,7 +4,7 @@ Below is correct, but IO0 is directly connected to VCC, so we cannot bring ESP-1
 
 With just two additional wires we can use Tasmota with the SP108E.
 
-[**Analysis of the hardware**](SP108E-HardwareAnalysis)
+[**Analysis of the hardware**](devices/SP108E-HardwareAnalysis)
 
 The trick is to hold the STM32F0 controller in reset. Then we do not need to cut any traces on the PCB because all pins of the STM32F0 are inputs.
 
