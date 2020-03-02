@@ -19,7 +19,7 @@ GND can be found on all three headers. *GPIO0* can be accessed in two ways:
 
 Please be aware, that the button on the Sonoff Dual will initially not have any functionality!
 
-The button is not connected to the normal button pin (GPIO0). After freshly flashing Tasmota (with the default module setting "Sonoff Basic"), the button will **not act as described** in the [Button Usage](devices/Button-usage) article. You will not be able to switch power or activate the special WiFi modes.
+The button is not connected to the normal button pin (GPIO0). After freshly flashing Tasmota (with the default module setting "Sonoff Basic"), the button will **not act as described** in the [Buttons and Switches](Buttons-and-Switches#multi-press-functions) article. You will not be able to switch power or activate the special WiFi modes.
 
 After configuring the device as "Sonoff Dual (5)", the button will regain normal functionality.
 
