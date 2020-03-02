@@ -79,7 +79,7 @@ Time#Minute<a id="TimeMinute"></a>|every minute
 Time#Minute\|5|every five minutes
 Time#Minute=241|every day once at 04:01 (241 minutes after midnight)
 Time#Set<a id="TimeSet"></a>|every hour when NTP makes time in sync
-Var&lt;x\>\#State<a id="VarState"></a>|when the value for Var&lt;x\> is changed (Note: however fired when new value is the same as the previously stored in Var&lt;x\> )
+Var&lt;x\>\#State<a id="VarState"></a>|when the value for Var&lt;x\> is changed (triggers whenever a value is written to `Var<x>` even if its the same value)
 Wifi#Connected<a id="WifiConnected"></a>|when Wi-Fi is connected
 Wifi#Disconnected<a id="WifiDisconnected"></a>|when Wi-Fi is disconnected
 Tele-Wifi1#AP<a id="tele-power"></a>|when a teleperiod message is sent with the number of the used AP 
