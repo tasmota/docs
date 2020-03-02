@@ -19,7 +19,7 @@
   - [Make sure light is on at night](#make-sure-light-is-on-at-night)
   - [Turn On Light Before Dawn and At Dusk](#Turn-On-Light-Before-Dawn-and-At-Dusk)
   - [Enable a PIR Switch only at night](#enable-a-pir-switch-only-at-night)
-    - [PIR Configuration](PIR-Motion-Sensors#HC-SR501#alternative-tasmota-configuration-with-rules-recommended-method)
+    - [PIR Configuration](peripherals/PIR-Motion-Sensors)
   - [Using clock timer to control a luminance-triggered switch only in mornings](#using-clock-timer-to-control-a-luminance-triggered-switch-only-in-mornings)
 - [Button with single press, double press, and hold](#button-with-single-press-double-press-and-hold)
 - [Perform any action on single/double press (for switches AND buttons)](#perform-any-action-on-singledouble-press-for-switches-and-buttons)
@@ -670,7 +670,7 @@ Rule1 1
 `on button1#state=2 do delay endon` : Do nothing when short pressing the button1 (state = 2 means TOGGLE)  
 `Rule1 1` : To enable rules  
 
-NOTE: There is no state value for "double press" for Buttons. It is designed that double press will toggle the relay. See [Control Other Devices](control-other-devices) for more information.
+NOTE: There is no state value for "double press" for Buttons. It is designed that double press will toggle the relay. See [Multi-Press Functions](Buttons-and-Switches#multi-press-functions) for more information.
 
 In the case you do not want the double press feature you can configure your button as switch and also set `SwitchMode` that fits your use case (such as `SwitchMode 5` to make the switch behave like a pushbutton) [SWITCH does not support double press] 
 
@@ -864,7 +864,7 @@ Rule2 1
 #### Button with single press, double press, and hold
 You can have all 3 actions but only if defining your GPIO as button. In this case the double press will toggle the relay.
 
-There is also an [option](Control-other-devices) to swap the actions of the **single press** and **double press**.
+There is also an [option](Buttons-and-Switches#changing-default-functionality) to swap the actions of the **single press** and **double press**.
 
 **_BUTTON WITH 3 DIFFERENT ACTIONS_**
 
@@ -1466,7 +1466,7 @@ For example, a remote control with one button to change speed. This rules simula
 
 //Specify the rule set  
 //The `<trigger>` can be a a condition or an event sent from another device or home automation hub.  
-//`<topic>` corresponds to the device transmitting the code (e.g., [YTF IR Bridge](YTF-IR-Bridge)). This could also be modified to send an RF code from a [Sonoff RF Bridge](Sonoff-RF-Bridge-433).  
+//`<topic>` corresponds to the device transmitting the code (e.g., [YTF IR Bridge](devices/YTF-IR-Bridge)). This could also be modified to send an RF code from a [Sonoff RF Bridge](devices/Sonoff-RF-Bridge-433).  
 // The `Delay` may not be necessary in your environment or may need to be adjusted according to your device characteristics. 
 ```console
 Rule 1
