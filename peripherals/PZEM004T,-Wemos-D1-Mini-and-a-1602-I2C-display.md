@@ -30,7 +30,7 @@ Create _**user_config_override.h**_ in the `tasmota` folder and paste the conten
   `#define USE_CONFIG_OVERRIDE`
 - Click compile
 
-[Flash](Flashing) the binary on the Wemos D1 Mini and confirm it is functional before connecting the PZEM-004T to its serial interface.
+[Flash](installation/Flashing) the binary on the Wemos D1 Mini and confirm it is functional before connecting the PZEM-004T to its serial interface.
 
 ## Tasmota Parameter Configuration
 
