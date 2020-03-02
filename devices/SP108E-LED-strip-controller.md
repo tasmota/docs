@@ -3,7 +3,7 @@ It uses another controller (STM32F0) to control CLK and Data lines to the LEDs t
 
 Warning: Construction zone.
 
-To run Tasmota on it, we need to modify the hardware. See [**here**](SP108E-HardwareMod) for details.
+To run Tasmota on it, we need to modify the hardware. See [**here**](devices/SP108E-HardwareMod) for details.
 
 Currently not working, see HardwareMod for details: "Other than that, the normal flash instruction for Tasmota do apply."
 
