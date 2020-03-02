@@ -17,7 +17,7 @@ Module comes in (at least) 3 variants:
 - LC05: RGB  with Screw-Headers.
 - LC06: RGBW/WW  with Screw-Headers
 
-A different version of this controller with an ESP8285 is documented [here](MagicHome-with-ESP8285)
+A different version of this controller with an ESP8285 is documented [here](devices/MagicHome-with-ESP8285)
 
 ## Serial Connection
 
