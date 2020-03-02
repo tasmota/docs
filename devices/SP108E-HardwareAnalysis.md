@@ -64,7 +64,7 @@ This is the simpler method, no cuts on the PCB required, just two additional wir
 - NRST of STM32F0 to GND
 - IO4 of ESP-12 to R4
 
-See [**here**](SP108E-HardwareMod) for details.
+See [**here**](devices/SP108E-HardwareMod) for details.
 
 ### Flashing prohibited
 Major problem right now is that IO0 is directly connected to VCC, so we cannot bring ESP-12 into flash mode.
