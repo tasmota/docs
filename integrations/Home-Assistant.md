@@ -96,7 +96,10 @@ For a Tasmota device to be automatically discovered by Home Assistant you need t
 ```console
 SetOption19 1
 ```
- 
+> [!NOTE]
+> Discovery is not built in to tasmota lite. Use the full version for discovery.
+
+
 After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device.
 
 !>Device FullTopic will become `%topic%/%prefix%/<command>` (`cmnd/tasmota/POWER` to `tasmota/cmnd/POWER`) and cannot be changed as long as `SetOption19 1` is active.
