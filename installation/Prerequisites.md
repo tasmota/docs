@@ -83,7 +83,7 @@ If you want to modify the code or default settings you can use:
 - [**PlatformIO CLI**](PlatformIO-CLI) - how to flash Tasmota using the PlatformIO command line interface on Linux
 - [**PlatformIO-Core**](Create-your-own-Firmware-Build-without-IDE) - automate firmware builds using PlatformIO-Core and flash with esptool
 - [**Visual Studio Code**](Visual-Studio-Code) -  setup and configure [Visual Studio Code](https://code.visualstudio.com) with PlatformIO for Tasmota
-- [**Atom**](Beginner-Guide---Create-your-own-Firmware-Build) - beginner guide building Tasmota firmware using [Atom](https://atom.io/) with PlatformIO plugin
+- [**Atom**](Create-your-own-Firmware-Build-without-IDE) - beginner guide building Tasmota firmware using [Atom](https://atom.io/) with PlatformIO plugin
 - [**Arduino IDE**](Arduino-IDE) - setup and configure Arduino IDE for Tasmota compilation and upload
 - [**Docker Tasmota**](https://github.com/tasmota/docker-tasmota) - compile from a Docker container using PlatformIO
 
