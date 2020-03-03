@@ -353,7 +353,7 @@ Command|Parameters
 :---:|:---
 SetOption0<a id="setoption0"></a>|Save power state and use after restart (=SaveState)<BR> `0` = disable<BR> `1` = enable *(default)*
 SetOption1<a id="setoption1"></a>|Set [button multipress](Buttons-and-Switches#multi-press-functions) mode to<BR> `0` = allow all button actions *(default)*<BR> `1` = restrict to single, double and hold actions (i.e., disable inadvertent reset due to long press)
-SetOption3<a id="setoption3"></a>|[MQTT](mqtt) <BR>`0` = disable MQTT<BR> `1` = enable MQTT *(default)* 
+SetOption3<a id="setoption3"></a>|[MQTT](MQTT) <BR>`0` = disable MQTT<BR> `1` = enable MQTT *(default)* 
 SetOption4<a id="setoption4"></a>|Return MQTT response as<BR> `0` = RESULT topic *(default)*<BR> `1` = %COMMAND% topic
 SetOption8<a id="setoption8"></a>|Show temperature in<BR> `0`= Celsius *(default)*<BR> `1` = Fahrenheit
 SetOption10<a id="setoption10"></a>|When the device MQTT topic changes <BR> `0` = remove retained message on old topic LWT *(default)*<BR> `1` = send "Offline" to old topic LWT
