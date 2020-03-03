@@ -57,7 +57,7 @@ Keep in mind, the dimmer itself needs a Neutral wire as well. If you replace an 
 ## First connection
 
 When you first power up the dimmer switch, it comes up in AccesPoint mode.
-Follow the instructions [here](devices/Initial-Configuration) 
+Follow the instructions [here](installation/Initial-Configuration) 
 
 ## Set correct module type
 

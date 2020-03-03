@@ -38,7 +38,7 @@ I removed all the crappy lead-free solder and put on a little strip of female pi
 
 Now I can easily hook it all up to the breadboard!
 
-I erased the firmware using the [instructions](devices/Flash-Sonoff-using-Raspberry-Pi) using a Raspberry Pi 3 Model B. I couldn’t get the board into programming mode by grounding the reset pin through the breadboard, so I just held the UP1 button while connecting 3V3 and it worked fine.
+I erased the firmware using the [instructions](Flash-Sonoff-using-Raspberry-Pi) using a Raspberry Pi 3 Model B. I couldn’t get the board into programming mode by grounding the reset pin through the breadboard, so I just held the UP1 button while connecting 3V3 and it worked fine.
 
 There’s another 4-wire connector that goes to the AC board. The wires are as follows:
 
