@@ -11,7 +11,8 @@ So I built a small ESP-01 and a DHT22 and a push button, and used this project c
 
 In other words, I'm using _one_ trivial (DHT+button) wifi device to control the _other_ (sonoff+heater relay). This technique uses Theo's flexible design, since _buttontopic_ can be made different from _topic_.
 
-### Schematic ![schematic of trivial DHT + ESP01](http://alt.pbeirne.com/images/esp_dht2.png)
+### Schematic 
+<img href="http://alt.pbeirne.com/images/esp_dht2.png" alt="schematic of trivial DHT + ESP01" style="background-color:white;">
 NOTE: with this schematic, the DHT sensor is on GPIO2. You'll have to change the` #define DHT_PIN ` in this project's source code from 14 to 2. Also, make sure you use the `black` ESP01 with 1MB of flash; most 2016 purchases should be ok. Of course you can use an ESP12 if you wish.
 
 The optional block shown attaches an LED to the DHT data line, so you can watch when the data is being fetched from the DHT device.
