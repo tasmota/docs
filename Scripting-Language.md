@@ -314,7 +314,17 @@ If `#define USE_SCRIPT_SUB_COMMAND` is included in your `user_config_override.h`
 
 It is possible to "replace" internal Tasmota commands. For example, if a `#POWER1(num)` subroutine is declared, the command `POWER1` is processed in the scripter instead of in the main Tasmota code.  
 
-`=(svar)` executes a routine whose name is passed as a string in a variable (dynamic or self modifying code)  
+`=(svar)` executes a routine whose name is passed as a string in a variable (dynamic or self modifying code). The string has to start with `=>` or `=#` for the routine to be executed.
+```
+>D
+svar="=#subroutine"
+
+>S
+=(svar)
+
+#subroutine
+=>print subroutine was executed
+```
 
 **For loop** (loop count must not be less than 1)
 ```
