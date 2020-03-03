@@ -82,13 +82,13 @@ Time#Set<a id="TimeSet"></a>|every hour when NTP makes time in sync
 Var&lt;x\>\#State<a id="VarState"></a>|when the value for Var&lt;x\> is changed (triggers whenever a value is written to `Var<x>` even if its the same value)
 Wifi#Connected<a id="WifiConnected"></a>|when Wi-Fi is connected
 Wifi#Disconnected<a id="WifiDisconnected"></a>|when Wi-Fi is disconnected
-Tele-Wifi1#AP<a id="tele-power"></a>|when a teleperiod message is sent with the number of the used AP 
-Tele-Wifi1#Ssid<a id="tele-power"></a>|when a teleperiod message is sent with the name of the used AP 
-Tele-Wifi1#Bssid<a id="tele-power"></a>|when a teleperiod message is sent with the name of the bSSID
-Tele-Wifi1#Channel<a id="tele-power"></a>|when a teleperiod message is sent with the number of the wifi channel used
-Tele-Wifi1#RSSI<a id="tele-power"></a>|when a teleperiod message is sent with the RSSI LEVEL
-Tele-Wifi1#LinkCount<a id="tele-power"></a>|when a teleperiod message is sent with the number of wifi disconnections
-Tele-Wifi1#Downtime<a id="tele-power"></a>|when a teleperiod message is sent with the total seconds of wifi disconnections
+Tele-Wifi1#AP<a id="tele-Wifi1-AP"></a>|when a teleperiod message is sent with the number of the used AP 
+Tele-Wifi1#Ssid<a id="tele-Wifi1-Ssid"></a>|when a teleperiod message is sent with the name of the used AP 
+Tele-Wifi1#Bssid<a id="tele-Wifi1-Bssid"></a>|when a teleperiod message is sent with the name of the bSSID
+Tele-Wifi1#Channel<a id="tele-Wifi1-Channel"></a>|when a teleperiod message is sent with the number of the wifi channel used
+Tele-Wifi1#RSSI<a id="tele-Wifi1-RSSI"></a>|when a teleperiod message is sent with the RSSI LEVEL
+Tele-Wifi1#LinkCount<a id="tele-Wifi1-LinkCount"></a>|when a teleperiod message is sent with the number of wifi disconnections
+Tele-Wifi1#Downtime<a id="tele-Wifi1-Downtime"></a>|when a teleperiod message is sent with the total seconds of wifi disconnections
 
 Every [command](Commands) with a JSON payload response has an associated rule trigger.
 
