@@ -40,8 +40,9 @@ in your `user_config_override.h`. This will save approx. 1k8 bytes of code.
 
 ----
 
-The TX20 (retired) and TX23 sensor supplies the two measured values wind speed and wind direction.
 ![](../_media/peripherals/tx23.png ":size=150")
+
+The TX20 (retired) and TX23 sensor supplies the two measured values wind speed and wind direction.
 
 The TX23 sensor is still available under various brand names such as "La Crosse", "Technoline". Unfortunately, the TX20 (at least in Europe) is almost impossible to get. However, the two sensors differ only in the protocol used, but deliver the same measured values.
 
@@ -78,7 +79,7 @@ To be on the save side you can add an additonal external 10k pull-up to TX2x GPI
 
 After a reboot the driver will detect TX20/TX23 automatically and display the wind data:
 
-![image](https://github.com/curzon01/media/blob/master/pics/tx23_sensor.png)
+![image](https://github.com/curzon01/media/blob/master/pics/tx23_sensor.png?raw=true)
 
 Sensor sends a  `tele/%topic%/SENSOR` JSON reponse:
 
