@@ -1,1 +1,1 @@
-[PAGE MOVED!](sonoff-b1)
+[PAGE MOVED!](devices/Sonoff-B1)
