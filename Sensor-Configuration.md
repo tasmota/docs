@@ -23,7 +23,7 @@ Assign a [component](Components) to a GPIO.
    
 - `gpio14 2` configures sensor AM2301 to GPIO14_    
 - `Backlog gpio14 5; gpio4 6` sets I<sup>2</sup>C SCL to GPIO14 and I<sup>2</sup>C SDA to GPIO4
-   Tasmota will auto-detect all connected and supported I<sup>2</sup>C devices. If you have conflicting I<sup>2</sup>C addresses see [I2CDevice](Commands#I2CDevice)
+   Tasmota will auto-detect all connected and supported I<sup>2</sup>C devices. If you have conflicting I<sup>2</sup>C addresses see [I2CDevices](I2CDevices)
 
 _[`Gpios All`](Commands#gpios) shows list of all available components by name and index_
 
@@ -42,4 +42,4 @@ To change the update interval (teleperiod) of MQTT messages change the [`TelePer
 `TelePeriod 10` will set the update interval to 10 seconds, so the sensor will update 6 times a minute.
 
 ### Peripheral Specific
-Some peripherals offer, or even require, additional commands. See [Commands](Commands#Sensor) page for peripheral specific commands.
+Some peripherals offer, or even require, additional commands. See [Commands](Commands#Sensors) page for peripheral specific commands.
