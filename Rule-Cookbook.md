@@ -24,7 +24,7 @@
 - [Button with single press, double press, and hold](#button-with-single-press-double-press-and-hold)
 - [Perform any action on single/double press (for switches AND buttons)](#perform-any-action-on-singledouble-press-for-switches-and-buttons)
 - [External switch to enable or disable doorbell relay with HTTP call](#External-switch-to-enable-or-disable-doorbell-relay-with-HTTP-call)
-- [Force automatic reconnection to MQTT server via SD DNS](#force-automatic-reconnection-to-mqtt-server-via-sd-dns)
+- [Force automatic re-connection to MQTT server via SD DNS](#force-automatic-re-connection-to-mqtt-server-via-sd-dns)
 - [Change distance to percentage](#change-distance-to-percentage)
 - [Distinguish Switch1 and Switch2 without the use of Relay1 and Relay2](#distinguish-switch1-and-switch2-without-the-use-of-relay1-and-relay2)
 - [Receiving state of anything that triggers SWITCH more than one time](#receiving-state-of-anything-that-triggers-switch-more-than-one-time)
@@ -1350,7 +1350,7 @@ RSL: RESULT = {"Var1":"more81"}
 #### Adjust PowerDelta according to current Power values
 Power sensor reporting thresholds are set by a percentage change in the Power value by setting [PowerDelta](Commands#powerdelta). Power changes from 10W to 11W (10%) may not be very interesting. But power changes from 1000W to 1100W (also 10%) could be very important. To avoid getting reports for small changes but ensuring that larger power swings are reported, a rule set can be used to create a gradient threshold based on the absolute power values.
 
-This rule also uses the [one-shot feature of rules](#4-usage-of-one-shot-once) to avoid reporting of every small change within a threshold window. The rule (a ON/DO/ENDON rule in this the set) will trigger only once when a threshold is crossed.
+This rule also uses the [one-shot feature of rules](#usage-of-one-shot-once) to avoid reporting of every small change within a threshold window. The rule (a ON/DO/ENDON rule in this the set) will trigger only once when a threshold is crossed.
 
 ```console
 Backlog PowerDelta 0; Rule1 0; Rule1 5
