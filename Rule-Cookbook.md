@@ -1537,6 +1537,30 @@ Rule1
 Rule1 1
 ```
 
+#### Control a dimmer with one switch
+
+> [!NOTE]
+> This example is for GPIOs defined as switches not buttons
+
+Activate dimmer mode with `Switchmode 11` and shorten long press time to 1 second (`Setoption32 10`).
+
+A short press of the switch sends a `TOGGLE` message to toggle the dimmer. A long press sends repeated `INC_DEC` messages to increment the dimmer. If a second press of the switch follows the first press a `INV` message is sent to invert the function from increment to decrement and repeatet `INC_DEC` messages are sent to decrement the dimmer. After releasing the switch a timeout message `CLEAR` resets the automation
+
+```console
+Backlog SwitchMode 5; SetOption32 20
+
+Rule1
+on system#boot mem1 + endon
+on switch1#state=2 do publish light/cmnd/POWER TOGGLE endon
+on switch1#state=4 do publish light/cmnd/DIMMER %mem1% endon
+on switch1#state=5 do mem1 - endon
+on switch1#state=6 do mem1 + endon
+
+Rule1 1
+```
+Notice we use `Rule` which edits `Rule1` rule set. They can be used interchangeably.
+
+
 [Back To Top](#top)
 
 ------------------------------------------------------------------------------
