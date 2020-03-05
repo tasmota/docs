@@ -28,9 +28,12 @@ In Tasmota a `Switch` is any switch or push-button additionally connected to a f
 By default a switch toggles the corresponding relay. Every time the switch gets flipped, the relay changes its state (ON or OFF). Instead of the default toggling of the relay, switches can be configured to send messages to different MQTT topics or send commands to other Tasmota devices. To ignore the default behaviour define a rule which triggers on `Switch<x>#State` or use [`Switchtopic`](#Switchtopic).
 
 > [!EXAMPLE]
-> A rule to make Switch1 publish its value to cmnd/custom-topic/SWITCH:
+> Make Switch1 publish its value to `cmnd/custom-topic/SWITCH` and not control Relay1
 ```console
-Rule1 on switch1#state do publish cmnd/custom-topic/SWITCH %value% endon
+Backlog SwitchMode1; SwitchTopic 0
+```
+```console
+Rule1 on Switch1#state do Publish cmnd/custom-topic/SWITCH %value% endon
 Rule1 1
 ```
 
