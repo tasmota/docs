@@ -121,9 +121,9 @@ Emulation<a id="emulation"></a>|`0` = disable emulation *(default)*<BR>`1` = ena
 FriendlyName<x\><a id="friendlyname"></a>|`1` = Reset friendly name to firmware default<BR>`<value>` = set friendly name (32 char limit)
 Gpios<a id="gpios"></a>|Show list of available [components](Components#components-list) by name and index<BR>`255` / `All` Show list of all [components](Components#components-list) by name and index<BR>
 Gpio<a id="gpio"></a>|Show current [component](Components#components-list) assignments of the Module's configurable GPIO<BR>`255` / `All` Show [component](Components#components-list) assignments for all the devices available GPIO<BR>
-Gpio<x\><a id="gpio"></a>|_For built-in Modules only. This command does not work for devices configured with a Template._<BR>`<component>` = assign a [component](Components) to `Gpio<x>`
+Gpio<x\><a id="gpiox"></a>|_For built-in Modules only. This command does not work for devices configured with a Template._<BR>`<component>` = assign a [component](Components) to `Gpio<x>`
 I2Cscan<a id="I2Cscan"></a>|Scan I<sup>2</sup>C bus and show addresses for found devices
-I2CDriver<a id="I2Cscan"></a>|Enable / Disable I<sup>2</sup>C sensor drivers. [Read more...](I2CDevices)<BR>
+I2CDriver<a id="I2CDriver"></a>|Enable / Disable I<sup>2</sup>C sensor drivers. [Read more...](I2CDevices)<BR>
 LogHost<a id="loghost"></a>|`1` = reset [syslog](https://www.sigmdel.ca/michel/ha/rpi/syslog_en.html) host to firmware default (`SYS_LOG_HOST`)<BR>`<value>` = set syslog host (32 chars max)
 LogPort<a id="logport"></a>|`1` = reset [syslog](https://www.sigmdel.ca/michel/ha/rpi/syslog_en.html) port to firmware default (`SYS_LOG_PORT`)<BR>`2..32766` = set syslog port
 Modules<a id="modules"></a>|Show available modules by name and index
@@ -239,7 +239,7 @@ Command|Parameters
 :---|:---
 AdcParam<a id="adcparam"></a>|ADC0 analog input tuning parameters<br>`<sensor>, <param1>, <param2>, <param3>`<BR>`<sensor>` values:<br>&emsp; `2` = Temperature [Steinhart-Hart thermistor equation](https://en.wikipedia.org/wiki/Steinhart%E2%80%93Hart_equation) parameters:</li><ul>`<param1>` = NTC Voltage bridge resistor in Ohms *(default = `32000`)*<br>`<param2>` = NTC Resistance in Ohms *(default = `10000`)*<BR>`<param3>` = NTC Beta Coefficient *(default = `3350`)*</li></ul><br>&emsp; `3` = Light [Lux equation](https://www.allaboutcircuits.com/projects/design-a-luxmeter-using-a-light-dependent-resistor/) parameters:</li><ul>`<param1>` = LDR Voltage bridge resistor in Ohms *(default = `10000`)*<BR>`<param2>` = LDR Lux Scalar *(default = `12518931`)*<BR>`<param3>` = LDR Lux Exponent *(default = `-1.4050`)*
 Altitude<a id="altitude"></a>|`-30000..30000` - altitude in meters
-AmpRes<a id="ampres"></a>|Current sensor resolution<BR>`0..3` = maximum number of decimal places
+AmpRes<a id="sensors-ampres"></a>|Current sensor resolution<BR>`0..3` = maximum number of decimal places
 Counter<x\><a id="counter"></a>|`0` = reset Counter<x\><BR> `1..64900` = preset Counter<x\><BR>`-1..-64900` = decrease Counter<x\><BR>`+1..+64900` = increase Counter<x\><BR>In order to define and use a Counter, _**you must configure one of the free device GPIO as `Counter<x>`**_
 CounterDebounce<a id="counterdebounce"></a>|`0` = turn off counter debounce<BR> `1..3200` = set counter debounce time in milliseconds
 CounterType<x\><a id="countertype"></a>|`0` = set Counter<x\> as pulse Counter<BR>`1` = set Counter<x\> as pulse Timer
@@ -253,10 +253,11 @@ Sensor29<a id="sensor29"></a>|MCP23008 / MCP23017 I<sup>2</sup>C GPIO Expander c
 Sensor34<a id="sensor34"></a>|<BR>[HX711 load cell](https://github.com/bogde/HX711) sensor calibration<BR>`1` = reset display to 0<BR>`2` = start calibration<BR>`2` `<value>` = set reference weight in grams and start calibration<BR>`3` = show reference weight in grams<BR>`3` `<value>` = set reference weight in grams<BR>`4` = show calibrated scale value<BR>`4` `<value>` = set calibrated scale value<BR>`5` = show max weight in gram<BR>`5` `<value>` = set max weight in grams<BR>`6` = show single item weight in grams<BR>`6` `<value>` = set single item weight in grams. Once the item weight is set, when items are added to the scale, the telemetry message will report `Count` as the number of items on the scale<BR>`7` = save current weight to be used as start weight on restart<BR>`8` `0/1` <BR>&emsp;`0` = disable JSON message on weight change over 4 grams<BR>&emsp;`1` = enable JSON message on weight change (see below)<BR>`9` `<value>` = set minimum delta to trigger JSON message (see above). <BR>&emsp;`0` = 4 grams (old default)<BR>&emsp;`1..100` = set delta to 0-99 grams<BR>&emsp;`101-255` = set delta to 110-1650 grams (10g increments)
 Sensor50<a id="Sensor50"></a>|[PAJ7620](/peripherals/PAJ7620) gesture sensor<BR>`0` = sensor muted, no readings in Tasmota<BR>`1`= gesture mode<BR>`2` = proximity mode<BR>`3` = corner mode<br>`4` = PIN mode<br>`5` = cursor mode
 Sensor53<a id="sensor53"></a>|[Smart Meter Interface](/peripherals/Smart-Meter-Interface)<BR>`r` = reset the driver with a new descriptor specified with the Tasmota [Scripting](Scripting-Language) language.<BR>`c<x> <value>` = preset counter (x = `1..5`) to `value` when the driver is set to counter mode<BR>`d<x>` = disable data decoding and dump meter (x = `1..5`) data to the Console. This is used to decipher the meter's data format to define the variable encoding in the meter's descriptor.<BR>`d0` = disable data dump mode and revert to decoding mode.
+SpeedUnit<a id="SpeedUnit"></a>|[TX20/TX23](/peripherals/TX2x) anemometer speed unit<BR>`1` = m/s<BR>`2`= km/h<BR>`3` = kn<br>`4` = mph<BR>`5` = ft/s<BR>`6` = yd/s
 TempRes<a id="tempres"></a>|Temperature sensor resolution<BR>`0..3` = maximum number of decimal places
 TempOffset<a id="tempoffset"></a>|`-12.6..12.6` = Set calibraton offset value for reported temperature telemetry<BR>This setting affects **all** temperature sensors on the device.
-VoltRes<a id="voltres"></a>|Voltage sensor resolution<BR>`0..3` = maximum number of decimal places
-WattRes<a id="wattres"></a>|Power sensor resolution<BR>`0..3` = maximum number of decimal places
+VoltRes<a id="sensors-voltres"></a>|Voltage sensor resolution<BR>`0..3` = maximum number of decimal places
+WattRes<a id="sensors-wattres"></a>|Power sensor resolution<BR>`0..3` = maximum number of decimal places
 WeightRes<a id="weightres"></a>|Load cell sensor resolution<BR>`0..3` = maximum number of decimal places
 See also|[`SetOption8`](#setoption8)  - Show temperature in Celsius *(default)* or Fahrenheit<BR>[`SetOption18`](#setoption18) - Set status of signal light paired with CO<sub>2</sub> sensor<BR>[`SetOption24`](#setoption24) - Set pressure units
 
@@ -282,7 +283,7 @@ PowerDelta<a id="powerdelta"></a>|Set maximum delta for energy monitoring device
 PowerHigh<a id="powerhigh"></a>|`0` = disable power high threshold *(default)*<BR>`<value>` = set power high threshold value in watts to send an MQTT telemetry message
 PowerLow<a id="powerlow"></a>|`0` = disable power low threshold *(default)*<BR>`<value>` = set power low threshold value in watts to send an MQTT telemetry message
 PowerSet<a id="powerset"></a>|`<value>` = [calibrate](Power-Monitoring-Calibration) power to a target value in watts&emsp;  »5.12.0
-Status<a id="status"></a>|`8` = show power usage<BR>`9` = show power thresholds
+Status<a id="powermon-status"></a>|`8` = show power usage<BR>`9` = show power thresholds
 Tariff&#60;x><a id="tariff"></a>|P1 Smart Meter tariff configuration<BR>x = `1, 2, 9`<BR>`1` `STD,DST` Start times for off-peak tariff<BR>`2` `STD,DST` End times for off-peak tariff<BR>`9` `0/1`<BR>&emsp;`0` = use Start/End times also on weekends.<BR>&emsp;`1` = use off-peak tariff all weekend.<BR>`STD` and `DST` may be specified as:<BR>&emsp;`<hour>` = `0..23` or<BR>&emsp;`<time>` = `00:00..23:59` or<BR>&emsp;`<minutes>` = `0..1439` (since midnight)<BR>If both `Tariff1` STD and `Tariff2` STD are equal, all tariffs are disabled.
 VoltageCal<a id="voltagecal"></a>|Set calibration offset value for reported `Voltage` telemetry reading<BR><value> `1000..32767` *(default = `1950`)*<BR>Allows finer calibration for HLW8012, HJL01, and BL0937 energy monitoring devices
 VoltageHigh<a id="voltagehigh"></a>|`0` = disable voltage high threshold *(default)*<BR>`<value>` = set voltage high threshold value in V 
@@ -353,7 +354,7 @@ Command|Parameters
 :---:|:---
 SetOption0<a id="setoption0"></a>|Save power state and use after restart (=SaveState)<BR> `0` = disable<BR> `1` = enable *(default)*
 SetOption1<a id="setoption1"></a>|Set [button multipress](Buttons-and-Switches#multi-press-functions) mode to<BR> `0` = allow all button actions *(default)*<BR> `1` = restrict to single, double and hold actions (i.e., disable inadvertent reset due to long press)
-SetOption3<a id="setoption3"></a>|[MQTT](mqtt) <BR>`0` = disable MQTT<BR> `1` = enable MQTT *(default)* 
+SetOption3<a id="setoption3"></a>|[MQTT](MQTT) <BR>`0` = disable MQTT<BR> `1` = enable MQTT *(default)* 
 SetOption4<a id="setoption4"></a>|Return MQTT response as<BR> `0` = RESULT topic *(default)*<BR> `1` = %COMMAND% topic
 SetOption8<a id="setoption8"></a>|Show temperature in<BR> `0`= Celsius *(default)*<BR> `1` = Fahrenheit
 SetOption10<a id="setoption10"></a>|When the device MQTT topic changes <BR> `0` = remove retained message on old topic LWT *(default)*<BR> `1` = send "Offline" to old topic LWT
@@ -474,9 +475,9 @@ KNX_ENABLED<a id="KNX_ENABLED"></a>|Status of KNX Communications<BR>`0` = set to
 KNX_ENHANCED<a id="KNX_ENHANCED"></a>|Status of Enhanced mode for KNX Communications<BR>`0` = set to Disable<BR>`1` = set to Enable
 KNX_PA<a id="KNX_PA"></a>|KNX Physical Address<BR>`0.0.0` = address not set<BR>`x.x.x` = set the device address (example `1.1.0`)
 KNX_GA<a id="KNX_GA"></a>|Return the amount of Group Address to Send Data/Commands configured
-KNX_GA<x\><a id="KNX_GA"></a>|Setup Group Address to Send Data/Commands (<x\> = KNX Group Address number)<BR>`1` = return configuration of GA<x\><BR>`<option>, <area>, <line>, <member>` to set configuration of GA<x\><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<option>` = [see table below for OPTION list](#knxJSON)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<area>, <line>, <member>` = KNX Address to Send Data/Commands<BR>
+KNX_GA<x\><a id="KNX_GAx"></a>|Setup Group Address to Send Data/Commands (<x\> = KNX Group Address number)<BR>`1` = return configuration of GA<x\><BR>`<option>, <area>, <line>, <member>` to set configuration of GA<x\><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<option>` = [see table below for OPTION list](#knxJSON)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<area>, <line>, <member>` = KNX Address to Send Data/Commands<BR>
 KNX_CB<a id="KNX_CB"></a>|Return the amount of Group Address to Receive Data/Commands configured
-KNX_CB<x\><a id="KNX_CB"></a>|Setup Group Address to Receive Data/Commands <BR>`1` = return configuration of CB<x\><BR>`<option>, <area>, <line>, <member>` to set configuration of CB<x\><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<option>` = [see table below for OPTION list](#knxJSON)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<area>, <line>, <member>` = KNX Address to Receive Data/Commands
+KNX_CB<x\><a id="KNX_CBx"></a>|Setup Group Address to Receive Data/Commands <BR>`1` = return configuration of CB<x\><BR>`<option>, <area>, <line>, <member>` to set configuration of CB<x\><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<option>` = [see table below for OPTION list](#knxJSON)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<area>, <line>, <member>` = KNX Address to Receive Data/Commands
 
 <a id="knxjson"></a><BR>OPTION|OPTION<BR>Value|<BR>OPTION|OPTION<BR>Value
 :---|---|:---|---
@@ -527,7 +528,7 @@ MotorSPR<a id="motorspr"></a>|`integer` Set the number of steps the given motor 
 MotorRPM<a id="motorrpm"></a>|`1..300` Set revolutions per minute *(default = `30`)*
 MotorMove<a id="motormove"></a>|`integer` Move the motor the given number of steps (positive values: clockwise, negative values: counterclockwise)
 MotorRotate<a id="motorrotate"></a>|`integer` Rotate the motor the given number of degrees (positive values: clockwise, negative values: counterclockwise)
-MotorTurn<a id="motormis"></a>|`float` Spin the motor the given number of turns (positive values: clockwise, negative values: counterclockwise)
+MotorTurn<a id="motorturn"></a>|`float` Spin the motor the given number of turns (positive values: clockwise, negative values: counterclockwise)
 
 ### Blinds, Shutters and Roller Shades
 
