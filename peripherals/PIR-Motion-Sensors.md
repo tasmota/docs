@@ -26,14 +26,30 @@ optional:
 
 A more [advanced example](Rule-Cookbook#Auto-off-Motion-Sense-Switch) of rules with PIRs.
 
-## AM312 
+## AM312 Human Sensing Module (PIR)
+```
+Operating voltage: DC 2.7-12V;
+Sensor: ≤100 degree cone angle, 3-5 m; (required depending on the lens)
+Delay time: 2 seconds;
+Block time: 2 seconds;
+```
+[AM312](http://www.image.micros.com.pl/_dane_techniczne_auto/cz%20am312.pdf) works even on 3.3V instead of 5Vv (like HC-SR501) which makes it perfect for ESP8266 devices without a 5V supply (like the Sonoff Basic). It is also less prone to false triggers due to Wi-Fi interference
 
-[AM312](http://www.image.micros.com.pl/_dane_techniczne_auto/cz%20am312.pdf) works even on 3.3v instead of 5v (like HC-SR501) which makes it perfect for ESP8266 devices without a 5V line (like Sonoff Basic). It is also less prone to false triggers due to Wi-Fi interference.
+It is a small axial PIR which can be mounted in a 10mm hole. 
+
+A generic AM312 device failed to change the state of a Sonoff Dual R2 Module GPIO with the Tasmota Switch set to ON permanently. A volt meter connected to the GPIO pin, showed insufficient voltage swing to change the pin state. Investigation showed the AM312 module output pin is connected to the header pin via a 20kR resistor - this seems too high to source/ sink enough current to trigger the ESP GPIO.
+
+A fix is to increase the current drive by soldering another 4k7R resistor from the AM312 center output pin to the signal out center jumper pin. This is in parallel with the inbuilt 20kR resistor (black rectangular SMD component marked 203).
+A 10kR parallel resistor didn't turn the GPIO off (swing 3.2V - 1.5V), but 4k7R worked (swing 3.2V - 1.1V).
+
+.
 
 <img src="https://user-images.githubusercontent.com/5904370/67888232-0cf5ce00-fb4d-11e9-85da-379fe70f987a.png?v=4&s=50" width=200></img>
 
 ### Pinout
 ![AM312 Pinout](https://user-images.githubusercontent.com/5904370/67886972-b7b8bd00-fb4a-11e9-90ea-93fd7f5ec972.png)
+
+The metal can body of the PIR sensor is connected to GND giving an easy way to identify the GND or 0V pin.
 
 Pin marked VOUT is connected to a free GPIO pin on the device.
 
@@ -47,11 +63,21 @@ With this it will stay ON for 30 seconds then send OFF message and the timer res
 Another use case as a [hand wave switch](peripherals/Project-AM312-and-Sonoff-R2).
 
 ## HC-SR501
+```
+Operating voltage: DC 4.5-20V
+Sensor: <100 ° cone angle Lens size
+Delay time: 5-200S(adjustable) the range is (0.xx second to tens of second)
+Block time: 2.5S(default)Can be made a range(0.xx to tens of seconds
+```
 
 <img src="https://user-images.githubusercontent.com/5904370/67890781-a32bf300-fb51-11e9-8f84-1413fccc4e78.png" width=200>
 
 ### Pinout
 <img src="https://user-images.githubusercontent.com/5904370/67890814-b212a580-fb51-11e9-9e7e-35ff669b4d7b.png" width=300>
+
+This large generic PIR has two trim pots to tune OFF and ON times, and many have pads to add a LDR to only switch in the dark.
+
+It states a working voltage outside of 3.3V, and proved unreliable with a Sonoff Dual R2 operating at 3V3 giving random switching without motion.
 
 ## MH-SR602
 This is a very small version of a PIR that is able to modify the sensitivity and delay by soldering resistors.
