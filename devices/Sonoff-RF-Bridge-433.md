@@ -74,7 +74,7 @@ The Sonoff RF Bridge is able to learn up to 16 different fixed code remote contr
 
 Tasmota provides default remote control commands to all 16 keys so you can start using the bridge with a Sonoff 4Ch Pro or Sonoff RF device without having the bridge have to learn remote control commands.
 
-See [Sonoff RF Bridge Commands](Commands#sonoff-rf-bridge).
+See [RF Bridge](Commands#rf-bridge) commands.
 
 ## Portisch Firmware Specific Usage
 These sections only apply to the custom Portisch firmware.
