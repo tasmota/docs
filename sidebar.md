@@ -1,11 +1,11 @@
 Installation  
-* [](Prerequisites)  
+* [](installation/Prerequisites)  
 * [](installation/Hardware-Preparation)  
-* [](Flashing)  
-* [](Initial-Configuration)  
+* [](installation/Flashing)  
+* [](installation/Initial-Configuration)  
 * [](MQTT)  
 * [](Upgrading)     
-* [](FAQ)  
+* [](help/FAQ)  
 
   
 [](Templates)  
@@ -16,14 +16,14 @@ Installation
 [](Scripting-Language)  
 [](Timers)  
 [](Buttons-and-Switches)  
-[](Peripherals)  
+[](peripherals/Supported-Peripherals)  
 [](Lights)  
 [](Status-LED)  
 [](TuyaMCU)    
 [](Displays)  
 [](Blinds-and-Shutters)    
-[](supported-devices)  
-[](Integrations)   
+[](devices/)  
+[](integrations/)   
 [](Power-Monitoring-Calibration)     
 [](WebUI)     
   
