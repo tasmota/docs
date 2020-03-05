@@ -63,7 +63,7 @@ But, if you want press/double press/hold functionality, run instead `Backlog Set
 If you want to see Voltage and Frequency also when the relays are off, use `SetOption21 1`
 
 ## Flash mode
-To be able to flash the Tasmota firmware you need to get into flash mode. Therefore connect a wire from GPIO0 to ground. For further information have a look at [bringing-the-module-in-flash-mode](installation/Hardware-Preparation#bringing-the-module-in-flash-mode).
+To be able to flash the Tasmota firmware you need to get into flash mode. Therefore connect a wire from GPIO0 to ground. For further information have a look at [programming mode](installation/Hardware-Preparation#programming-mode).
 
 ## Calibration
 Tasmota will disable serial logging after a restart as the communication between Tasmota and the Energy Monitoring chip is using the same serial interface. Make sure not to enable `SerialLog` as it will interfere with the Energy Monitoring functionality.
