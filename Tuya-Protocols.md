@@ -4,7 +4,7 @@ The MCU communicates with the Wi-Fi module through the serial port. Protocols ar
 They are common protocols integrated in Tasmota's TuyaMCU module. They stay the same for each product and are mandatory for Tuya module to work correctly. 
 
 ## Functional protocols 
-Functional protocols are used for delivering and reporting data of functions. These protocols differ between devices and manufacturers and might require configuration in Tasmota using [`TuyaMCU`](#tuyamcu) command or with [`TuyaSend<x>`](#tuyasend) command.
+Functional protocols are used for delivering and reporting data of functions. These protocols differ between devices and manufacturers and might require configuration in Tasmota using [`TuyaMCU`](Commands#tuyamcu) command or with [`TuyaSend<x>`](Commands#tuyasend) command.
 
 ### Anatomy of functional protocols
 
