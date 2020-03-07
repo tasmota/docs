@@ -1,4 +1,4 @@
-On this page IR Codes for different IR Remote  are collected.
+## On this page IR Codes for different IR Remote  are collected.
 
 The IR Codes can be used with [YTF IR Bridge](devices/YTF-IR-Bridge) (or maybe with other devices, that have a IR sender connected)
 
@@ -196,7 +196,7 @@ Digital TV	{"Protocol":"SONY","Bits":15,"Data":"0x25EE"}
 
 **Example received Code:**
 **tele/sonoffIRBridge_1/RESULT = {"IrReceived":{"Protocol":"NEC","Bits":32,"Data":"0x20DF10EF"}}**
-****
+
 **Example IRsend Command:**
 
 **IRsend {"Protocol":"NEC","Bits":32,"Data":0x20DF10EF}**
@@ -204,7 +204,7 @@ Digital TV	{"Protocol":"SONY","Bits":15,"Data":"0x25EE"}
 **or with mosquitto_pub:**
 
 **mosquitto_pub -q 2 -t cmnd/sonoffIRBridge_1/IRSend -m '{"protocol": "NEC","bits": 32, "data": 0x20DF10EF}'**
-****
+
 * 0x20DF10EF="ON/OFF"
 * 0x20DF0FF0="TV"
 * 0x20DF9E61="Ratio"
@@ -291,7 +291,7 @@ Digital TV	{"Protocol":"SONY","Bits":15,"Data":"0x25EE"}
 * 0x20DFAD52="LG TV Plus"
 * 0x20DFDD22="Sports mode"
 * 0x20DF1EE1="Search"
-* 
+
 * 0x20DFDF20="Warning: instart"
 * 0x20DF7F80="Warning: Poweronly"
 * 0x20DFFF00="Warning: Easy adjust"
@@ -505,7 +505,7 @@ Stop	{"Protocol":"NEC","Bits":32,"Data":"0x2662B34C"}
 
 Record	{"Protocol":"NEC","Bits":32,"Data":"0x26624BB4"}
 
-##Smart Reveiver VX/CX
+## Smart Reveiver VX/CX
 ****
 button | code
 --- | ---
@@ -625,31 +625,30 @@ Mute	{"Protocol":"SONY","Bits":12,"Data":"0x290"}
 
 
 # Projectors
-##IR Remote Codes Acer K132
+## IR Remote Codes Acer K132
 IR Remote Codes for Acer K132 projector (and possibly other models using a remote with Model No. M1820)
 
 <pre><code>ON/OFF	{"Protocol":"NEC","Bits":32,"Data":"0x10C8E11E"}
+* Freeze	{"Protocol":"NEC","Bits":32,"Data":"0x10C8718E"}
+* Hide	{"Protocol":"NEC","Bits":32,"Data":"0x10C8F10E"}
+* Ratio	{"Protocol":"NEC","Bits":32,"Data":"0x10C806F9"}
+* Zoom	{"Protocol":"NEC","Bits":32,"Data":"0x10C8D12E"}
+* Mode	{"Protocol":"NEC","Bits":32,"Data":"0x10C801FE"}
+* Source	{"Protocol":"NEC","Bits":32,"Data":"0x10C831CE"}
 
-Freeze	{"Protocol":"NEC","Bits":32,"Data":"0x10C8718E"}
-Hide	{"Protocol":"NEC","Bits":32,"Data":"0x10C8F10E"}
-Ratio	{"Protocol":"NEC","Bits":32,"Data":"0x10C806F9"}
-Zoom	{"Protocol":"NEC","Bits":32,"Data":"0x10C8D12E"}
-Mode	{"Protocol":"NEC","Bits":32,"Data":"0x10C801FE"}
-Source	{"Protocol":"NEC","Bits":32,"Data":"0x10C831CE"}
+* Back	{"Protocol":"NEC","Bits":32,"Data":"0x10C832CD"}
+* Up	{"Protocol":"NEC","Bits":32,"Data":"0x10C841BE"}
+* Down	{"Protocol":"NEC","Bits":32,"Data":"0x10C8A15E"}
+* Left	{"Protocol":"NEC","Bits":32,"Data":"0x10C8C13E"}
+* Right	{"Protocol":"NEC","Bits":32,"Data":"0x10C8817E"}
+* Enter	{"Protocol":"NEC","Bits":32,"Data":"0x10C8B24D"}
+* Menu	{"Protocol":"NEC","Bits":32,"Data":"0x10C821DE"}
 
-Back	{"Protocol":"NEC","Bits":32,"Data":"0x10C832CD"}
-Up	{"Protocol":"NEC","Bits":32,"Data":"0x10C841BE"}
-Down	{"Protocol":"NEC","Bits":32,"Data":"0x10C8A15E"}
-Left	{"Protocol":"NEC","Bits":32,"Data":"0x10C8C13E"}
-Right	{"Protocol":"NEC","Bits":32,"Data":"0x10C8817E"}
-Enter	{"Protocol":"NEC","Bits":32,"Data":"0x10C8B24D"}
-Menu	{"Protocol":"NEC","Bits":32,"Data":"0x10C821DE"}
+* Vol+	{"Protocol":"NEC","Bits":32,"Data":"0x10C8C639"}
+* Vol-	{"Protocol":"NEC","Bits":32,"Data":"0x10C826D9"}
 
-Vol+	{"Protocol":"NEC","Bits":32,"Data":"0x10C8C639"}
-Vol-	{"Protocol":"NEC","Bits":32,"Data":"0x10C826D9"}
-
-Sound	{"Protocol":"NEC","Bits":32,"Data":"0x10C8AD52"}
-Mute	{"Protocol":"NEC","Bits":32,"Data":"0x10C88679"}
+* Sound	{"Protocol":"NEC","Bits":32,"Data":"0x10C8AD52"}
+* Mute	{"Protocol":"NEC","Bits":32,"Data":"0x10C88679"}
 </code></pre>
 
 # Soundbars
@@ -672,6 +671,7 @@ Mute	{"Protocol":"NEC","Bits":32,"Data":"0x10C88679"}
 * 0x400405280D20="Sound"
 * 0x400405380538="Bluetooth"
 * 0x400405006164="Input"
+
 # Vacuum Cleaners
 ## IR Codes Vacuum Cleaner Ecovacs Deebot Slim2
 
@@ -689,6 +689,7 @@ Mute	{"Protocol":"NEC","Bits":32,"Data":"0x10C88679"}
 * 0x00FFE01F="Left"
 * 0x00FFF00F="Right"
 * 0x00FFC03F="Back/Turn around"
+
 # Ventilation
 # IR Codes Prana 150 energy recovery ventilation
 See device https://prana.org.ua/models/prana_150 (Ukrainian)
@@ -715,7 +716,7 @@ See device https://prana.org.ua/models/prana_150 (Ukrainian)
 
 ![image](https://user-images.githubusercontent.com/563412/61618791-4aa5a980-ac76-11e9-850a-3bf920a3b32b.png)
 
-# christmas candle - Weihnachtsbeleuchtung
+# Christmas candle - Weihnachtsbeleuchtung
 ## Krinner Lumix IR Remote
 
 Remote control has two buttons and three channels.
@@ -724,27 +725,27 @@ Button 0 is to switch off
 Double click on button 1 is flicker mode
 No usable protocol found yet, but raw mode does it.
 
-off channel A
+* off channel A
 irsend 0,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400, 400,1000, 400,1000, 400,1000, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400, 400,1000, 400,1000, 400,1000, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400, 400,1000, 400,1000, 400,1000, 400,2000,5600
-on channel A
+* on channel A
 irsend 0,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400, 400,2000,5600
-flicker channel A
+* flicker channel A
 irsend 0,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400, 400,1000, 400,1100,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400, 400,1000, 400,1100,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400, 400,1000, 400,1100,1000, 400, 400,2000,5600
 
 
-off channel B
+* off channel B
 irsend 0,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400,1000, 400, 400,1000, 400,1000, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400,1000, 400, 400,1000, 400,1000, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400,1000, 400, 400,1000, 400,1000, 400,2000,5600
-on channel B
+* on channel B
 irsend 0,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400,1000, 400,1000, 400,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400,1000, 400,1000, 400,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400,1000, 400,1000, 400,1000, 400, 400,2000,5600
-flicker channel B
+* flicker channel B
 irsend 0,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400,1000, 400, 400,1100,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400,1000, 400, 400,1100,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400,1000, 400,1000, 400, 400,1100,1000, 400, 400,2000,5600
 
 
-off channel C
+* off channel C
 irsend 0,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400, 400,1000, 400,1000, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400, 400,1000, 400,1000, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400, 400,1000, 400,1000, 400,2000,5600
-on channel C
+* on channel C
 irsend 0,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400,1000, 400,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400,1000, 400,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400,1000, 400,1000, 400, 400,2000,5600
-flicker channel C
+* flicker channel C
 irsend 0,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400, 400,1100,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400, 400,1100,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400, 400,1100,1000, 400, 400,2000,5600
 
 
