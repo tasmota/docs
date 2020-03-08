@@ -415,7 +415,10 @@ SetOption81<a id="setoption81"></a>|Set PCF8574 component behavior for all ports
 SetOption82<a id="setoption82"></a>|Reduce the CT range from 153..500 to 200.380 to accomodate with Alexa range<BR>`0` = CT ranges from 153 to 500 *(default)*<BR>`1` = CT ranges from 200 to 380 (although you can still set in from 153 to 500)
 SetOption83<a id="setoption83"></a>|Uses Zigbee device friendly name instead of 16 bits short addresses as JSON key when reporting values and commands<BR>`0` = JSON key as short address<BR>`1` = JSON key as friendly name<BR>See [`ZigbeeName <device>,<name>`](#zigbeename)
 SetOption84<a id="setoption84"></a>|(Experimental) When using AWS IoT, sends a device shadow update (alternative to retained)<BR>`0` = don't update device shadow (default)<BR>`1` = update device shadow<BR>Note: if the `Topic` contains `'/'` they are replaced with `'_'`
-SetOption85<a id="setoption85"></a>|Enable device group support.
+SetOption85<a id="setoption85"></a>|Enable device group support
+SetOption86<a id="setoption86"></a>|PWM Dimmer Turn brightness LED's off 5 seconds after last change
+SetOption87<a id="setoption87"></a>|PWM Dimmer Turn red LED on when powered off
+SetOption88<a id="setoption88"></a>|PWM Dimmer Buttons control remote devices
 SetOption89<a id="setoption89"></a>|Use distinct per device MQTT topic for Zigbee `SENSOR` (see `SensorRetain`)<BR>`0` = unique SENSOR topic (default)<BR>Ex: `tele/tasmota/Zigbee_home/SENSOR = {"ZbReceived":{"0x5ADF":{"Dimmer":254,"Endpoint":1,"LinkQuality":72}}}`<BR>`1`= per-device topic<BR>Ex: `tele/tasmota/Zigbee_home/5ADF/SENSOR = {"ZbReceived":{"0x5ADF":{"Dimmer":254,"Endpoint":1,"LinkQuality":70}}}`
 
 ### Serial Bridge
