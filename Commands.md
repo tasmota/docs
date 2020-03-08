@@ -572,6 +572,7 @@ Zigbee debug functions.
 
 Command|Parameters
 :---|:---
+ZbModelId<a id="zbmodelid"></a>|Manually force the `ModelId` field of a Zigbee device. This is used to simulate devicesnot physically present on the network, for debugging only.<BR>&emsp;`<device>,<modelid>` sets the new ModelId<BR>&emsp;`<device>,` (empty modelid) clears the ModelId<BR>&emsp;`<device>` displays the current ModelId, also displayed in `ZbStatus2`
 ZbProbe<a id="zbprobe"></a>|Probe a Zigbee device to get additional information including its IEEEaddress, vendor and model names, endpoints, and supported clusters per endpoint.<BR>`<device>`<BR>A device probe is performed automatically when a new Zigbee device connects.<BR>Battery powered Zigbee devices can generally not be probed because they are in sleep mode most of the time.
 ZbRead<a id="zbread"></a>|Read Zigbee device attributes<BR>`{ "Device":"<shortaddr>", "Endpoint":"<endpoint>", "Cluster":"<cluster>", "Read":[<attrlist>] }`<BR>&emsp;`<shortaddr>` the short address of the Zigbee device on the network.<BR>&emsp;`<endpoint>` the target endpoint on the device ([identifying endpoints](Zigbee#identifying-target-device-endpoints))<BR>&emsp;`<cluster>` the cluster number of the attributes<BR>&emsp;`<attrlist>` requested attributes array<BR><BR>Ex: `ZbRead { "device":"0x69CF", "endpoint":"0x03", "cluster":"0x0006", "read":["0x0000"] }`
 ZbReset<a id="zbreset"></a>|`1` = perform a factory reset and reconfiguration of the CC2530 chip.<BR>**You will need to re-pair all Zigbee devices**
