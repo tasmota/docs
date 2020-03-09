@@ -3,12 +3,11 @@
 * [Flash your device using a RaspberryPi instead of USB-to-TTL serial connector](Flash-Sonoff-using-Raspberry-Pi)
 
 ### Video tutorials
-* [Tasmota installation and configuration tutorial](https://youtu.be/hIwIhu5OWiA)
+* [Tasmota and Tasmotizer Easy Flashing Guide for ESP8266 devices](https://youtu.be/hIwIhu5OWiA)
 * [Installation tutorial](https://youtu.be/n4MDRm2yAJg) of Tasmota using PlatformIO made by QuickPi.
 * [True 3-Way Smart Switch](https://www.youtube.com/watch?v=9LIaDN7Nx2E)
 * [Make a motion activated switch with temperature and humidity sensor](https://www.youtube.com/watch?v=mWQnHResSCM)
 * [Sonoff Basic as UK Light Switch](https://www.youtube.com/watch?v=XM03KvdP-uA)
-* [Tasmota and Tasmotizer Easy Flashing Guide for ESP8266 devices](https://youtu.be/_UnI6cnzF3k)
 
 ### YouTube Channels covering Tasmota and home automation
 * [DigiblurDIY - Great and Easy Tasmota related Videos](https://www.youtube.com/channel/UC5ZdPKE2ckcBhljTc2R_qNA/search?query=tasmota)
