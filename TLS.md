@@ -120,7 +120,10 @@ Here are the most common TLS errors:
 
 |Error code | Description|
 |---:|:---|
+| -1004 | Missing CA |
+| -1003 | Missing EC private key |
 | -1002 | Cannot connect to TCP port |
+| -1001 | Cannot resolve IP address |
 | -1000 | Out of memory error |
 | 1 | Bad fingerprint |
 | 2 | BR_ERR_BAD_STATE |
