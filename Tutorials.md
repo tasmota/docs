@@ -6,7 +6,6 @@
 * [Tasmota installation and configuration tutorial](https://www.youtube.com/watch?v=IcOFeIcLFFo)
 * [How to flash a Sonoff](https://www.youtube.com/watch?v=-9zNS-ljDzo) using Arduino IDE
 * [Installation tutorial](https://youtu.be/n4MDRm2yAJg) of Tasmota using PlatformIO made by QuickPi.
-* [Flashing Tasmota on Sonoff TH16](https://www.youtube.com/watch?v=exEmeyAwbmI) using Arduino IDE
 * [True 3-Way Smart Switch](https://www.youtube.com/watch?v=9LIaDN7Nx2E)
 * [Make a motion activated switch with temperature and humidity sensor](https://www.youtube.com/watch?v=mWQnHResSCM)
 * [Sonoff Basic as UK Light Switch](https://www.youtube.com/watch?v=XM03KvdP-uA)
