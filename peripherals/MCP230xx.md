@@ -161,7 +161,7 @@ If you require only one of the two reporting methods you may use the sensor29 co
 
 The intmode parameter is optional for pin modes 2 through 4 (those that support interrupts) and may be configured according to the table below depending on your requirements:
 
-![MCP23008 / MCP23017 Interrupt Modes](https://github.com/andrethomas/images/blob/master/mcp230xx/interrupt_modes_v1.PNG)
+![MCP23008 / MCP23017 Interrupt Modes](https://github.com/andrethomas/images/raw/master/mcp230xx/interrupt_modes_v1.PNG)
 
 _Keep in mind that the MCP23008/MCP23017 chip will only store the last interrupt registered in the interrupt register and capture register - Because the interrupt register is only checked every 50 milliseconds by the Tasmota firmware you may experience missed interrupts if your incoming signals fluctuate/change faster than 20 times per second._
 
