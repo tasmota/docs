@@ -2,8 +2,6 @@
 
 ### External Links to cool/amazing projects made with Tasmota
 
-* [Evolution of Tasmota](https://www.youtube.com/watch?v=p-GkyrQ4z-Y&feature=youtu.be)
-
 * [LEGO Nightstand Switch](https://jeff.noxon.cc/2018/11/21/lego-nightstand-light-switch/)  
 * [Tasmota based drop pin door lock](https://community.home-assistant.io/t/tasmota-based-drop-pin-door-lock-30/145389)
 
