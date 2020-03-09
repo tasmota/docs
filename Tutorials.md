@@ -1,16 +1,14 @@
 ### Installation Tutorials
+* [Installing Tasmota using Tasmotizer](https://www.superhouse.tv/37-installing-tasmota-using-tasmotizer/)
 * [How to Flash the RF Bridge](How-to-Flash-the-RF-Bridge)  
 * [Flash your device using a RaspberryPi instead of USB-to-TTL serial connector](Flash-Sonoff-using-Raspberry-Pi)
 
 ### Video tutorials
-* [Tasmota installation and configuration tutorial](https://www.youtube.com/watch?v=IcOFeIcLFFo)
-* [How to flash a Sonoff](https://www.youtube.com/watch?v=-9zNS-ljDzo) using Arduino IDE
+* [Tasmota and Tasmotizer Easy Flashing Guide for ESP8266 devices](https://youtu.be/hIwIhu5OWiA)
 * [Installation tutorial](https://youtu.be/n4MDRm2yAJg) of Tasmota using PlatformIO made by QuickPi.
-* [Flashing Tasmota on Sonoff TH16](https://www.youtube.com/watch?v=exEmeyAwbmI) using Arduino IDE
 * [True 3-Way Smart Switch](https://www.youtube.com/watch?v=9LIaDN7Nx2E)
 * [Make a motion activated switch with temperature and humidity sensor](https://www.youtube.com/watch?v=mWQnHResSCM)
 * [Sonoff Basic as UK Light Switch](https://www.youtube.com/watch?v=XM03KvdP-uA)
-* [Tasmota and Tasmotizer Easy Flashing Guide for ESP8266 devices](https://youtu.be/_UnI6cnzF3k)
 
 ### YouTube Channels covering Tasmota and home automation
 * [DigiblurDIY - Great and Easy Tasmota related Videos](https://www.youtube.com/channel/UC5ZdPKE2ckcBhljTc2R_qNA/search?query=tasmota)
@@ -20,7 +18,6 @@
 * [BRUH Automation - Home Automation Tutorials](https://www.youtube.com/channel/UCLecVrux63S6aYiErxdiy4w/search?query=tasmota)
 * [Burns Home Automation - Home Automation Tutorials](https://www.youtube.com/channel/UCSKQutOXuNLvFetrKuwudpg/search?query=tasmota)
 * [Step to Step Tutorials - Hobbytronics Tutorials](https://hobbytronics.pk/blog/)
-* [Yuval Mejahez - Tasmota Flash tutorials Channel](https://www.youtube.com/channel/UC8eIbt7dehdys0n_n22zKvA/search?query=tasmota)
 * [Kiril Peyanski - Tasmota Tutorials](https://www.youtube.com/kpeyanski/search?query=tasmota)
 
 ### Non-English Tutorials
@@ -29,4 +26,5 @@
 * FR - [Ajouter un bouton physique au Sonoff basic](https://www.domo-blog.fr/ajouter-un-bouton-physique-au-sonoff-basic/)
 * IT - [Installazione firmware Tasmota su Sonoff Basic](https://www.youtube.com/watch?v=kFkPk2TDNg8)
 * IL - [Hebrew - Install Tasmota firmware on all Sonoff devices](https://www.youtube.com/channel/UC8eIbt7dehdys0n_n22zKvA/search?query=tasmota)
+* ?? - [Yuval Mejahez - Tasmota Flash tutorials Channel](https://www.youtube.com/channel/UC8eIbt7dehdys0n_n22zKvA/search?query=tasmota)
 
