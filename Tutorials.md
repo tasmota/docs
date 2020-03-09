@@ -1,4 +1,5 @@
 ### Installation Tutorials
+* [Installing Tasmota using Tasmotizer](https://www.superhouse.tv/37-installing-tasmota-using-tasmotizer/)
 * [How to Flash the RF Bridge](How-to-Flash-the-RF-Bridge)  
 * [Flash your device using a RaspberryPi instead of USB-to-TTL serial connector](Flash-Sonoff-using-Raspberry-Pi)
 
