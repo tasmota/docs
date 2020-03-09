@@ -3,7 +3,7 @@
 * [Flash your device using a RaspberryPi instead of USB-to-TTL serial connector](Flash-Sonoff-using-Raspberry-Pi)
 
 ### Video tutorials
-* [Tasmota installation and configuration tutorial](https://www.youtube.com/watch?v=IcOFeIcLFFo)
+* [Tasmota installation and configuration tutorial](https://youtu.be/hIwIhu5OWiA)
 * [How to flash a Sonoff](https://www.youtube.com/watch?v=-9zNS-ljDzo) using Arduino IDE
 * [Installation tutorial](https://youtu.be/n4MDRm2yAJg) of Tasmota using PlatformIO made by QuickPi.
 * [True 3-Way Smart Switch](https://www.youtube.com/watch?v=9LIaDN7Nx2E)
