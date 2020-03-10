@@ -12,11 +12,11 @@ The MCP23008 has 8 IO pins which the MCP230xx driver uses as D0 - D7. The MCP230
 
 The chip can be connected quite easily, especially if you can source the DIP version of the chip. Here's a basic outline of what a typical circuit would require to be functional:
 
-![Manual Wiring for MCP23008 / MCP23017](https://github.com/andrethomas/images/blob/master/mcp230xx/mcp230xx_manual_wiring_v2.png)
+![Manual Wiring for MCP23008 / MCP23017](https://github.com/andrethomas/images/raw/master/mcp230xx/mcp230xx_manual_wiring_v2.png)
 
 You will need to pick an I2C address in either of the above scenario's using the address mapping according to pin A0, A1, and A2 as from the datasheet as follows:
 
-![MCP23008 / MCP23017 I2C Address Map](https://github.com/andrethomas/images/blob/master/mcp230xx/i2c_address_map.png)
+![MCP23008 / MCP23017 I2C Address Map](https://github.com/andrethomas/images/raw/master/mcp230xx/i2c_address_map.png)
 
 You will need to define the address you are using in `user_config_override.h` for the driver to know on which address the MCP23008/MCP23017 is expected to be found.
 
@@ -41,7 +41,7 @@ If OUTPUT is enabled, telemetry data for the current state of OUTPUT pins will a
 
 The table below outlines how the pins of the MCP23008/MCP23017 are assigned:
 
-![MCP23008 / MCP23017 Pin Map](https://github.com/andrethomas/images/blob/master/mcp230xx/mcp_pin_mapping.PNG)
+![MCP23008 / MCP23017 Pin Map](https://github.com/andrethomas/images/raw/master/mcp230xx/mcp_pin_mapping.PNG)
 
 ### Usage of the driver
 
@@ -161,7 +161,7 @@ If you require only one of the two reporting methods you may use the sensor29 co
 
 The intmode parameter is optional for pin modes 2 through 4 (those that support interrupts) and may be configured according to the table below depending on your requirements:
 
-![MCP23008 / MCP23017 Interrupt Modes](https://github.com/andrethomas/images/blob/master/mcp230xx/interrupt_modes_v1.PNG)
+![MCP23008 / MCP23017 Interrupt Modes](https://github.com/andrethomas/images/raw/master/mcp230xx/interrupt_modes_v1.PNG)
 
 _Keep in mind that the MCP23008/MCP23017 chip will only store the last interrupt registered in the interrupt register and capture register - Because the interrupt register is only checked every 50 milliseconds by the Tasmota firmware you may experience missed interrupts if your incoming signals fluctuate/change faster than 20 times per second._
 

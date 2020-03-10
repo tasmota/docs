@@ -210,6 +210,11 @@ Examples:
 - Open/Close or set a specific position for a shutter. This example drives the second shutter to the same position as the first shutter:  
   `Rule1 ON Shutter1#Position DO ShutterPosition2 %value%" ENDON`
 
+### Jarolift Shutter Support
+Jarolift shutters operates by the 3 commands up/stop/down. Compile with the KeeLoq Option and provide the extracted master keys to communicate. Please see KeeLog description how to do that. After this create a rule to allow the shutter to control the Jarolift devices. Shutter must be in ShutterMode 0.
+
+  `Rule1 On Power1#state=0 DO KeeloqSendButton 4 endon On Power2#state=0 DO KeeloqSendButton 4 endon on Power1#state=1 DO KeeloqSendButton 8 endon on Power2#State=1 DO KeeloqSendButton 2 endon`
+
 ### Home Assistant Support
 For shutter position to persist in Home Assistant through device reboots, execute `PowerRetain 1`.
 
