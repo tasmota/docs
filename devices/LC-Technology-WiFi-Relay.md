@@ -43,8 +43,12 @@ To configure an LC Technology ESP8266 Relay X2, use the following settings...
 
 ## LC Technology WiFi Relay - Quad Relay (note, older versions of this board used a baud rate of 9600, so if 115200 doesn't work, try 9600)
 
-In configuration open `Configure Other` paste this template and select activate   
+Note: The template provided below did not work on an ESP-01 running Tasmota 8.1.0. It was necessary to manually enter the template in the `Configure Template` menu.
+
+* In configuration open `Configure Other` paste this template and select activate
 `{"NAME":"LC Technology 4CH Relay","GPIO":[52,255,17,255,255,255,255,255,21,22,23,24,255],"FLAG":0,"BASE":18}`
+* Open `Configure Module` and set GPIO0, GPIO2, GPIO4 and GPIO5 as Relay1, Relay2, Relay3 and Relay4. Click Save.
+* Disable SerialLog (type ``seriallog 0`` in the Tasmota console)
 
 Enter this command in console (configure the 1st rule)  
 ```
