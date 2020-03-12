@@ -264,7 +264,7 @@ cover:
     tilt_command_topic: 'cmnd/%topic%/ShutterPosition1'
     tilt_status_topic: 'cmnd/%topic%/ShutterPosition1'
     set_position_topic: 'cmnd/%topic%/ShutterPosition1'
-    position_topic: "stat/sonoff-cletto/SHUTTER1"
+    position_topic: "stat/%topic%/SHUTTER1"
     tilt_min: 0
     tilt_max: 100
     tilt_closed_value: 0
