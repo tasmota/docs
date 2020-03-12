@@ -186,6 +186,7 @@ If using a Sonoff Dual R2, use the following Template:
 - Set `ShutterCloseDuration<x>`
 - Set `ShutterSetHalfway<x>` (optional)
 - Set `ShutterInvert<x>`(optional)
+- Set `ShutterInvertWebButtons<x>`(optional) (eg. useful for horizontal awnings)
 - If the shutter uses a pulse motor instead of a motors with one wire for each direction (i.e., duration based), define `PulseTime<x> 2` on both relays. The driver's behavior will change to a pulse motor that needs pulses to start and stop.  
 
 ### Rules
