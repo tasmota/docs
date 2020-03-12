@@ -2,10 +2,10 @@
 #### Installation
  - [Cannot enter flash mode](#Cannot-enter-flash-mode)
  - [Flashing issues](#Flashing-issues)
- - [Firmware update with file upload not working](Upgrading#upgrade-by-file-upload)
+ - [Firmware update with file upload not working](Upgrading#by-file-upload)
  - [Device is hot to the touch](#Device-is-hot-to-the-touch)
  - [There was white smoke and the device does not work anymore!](#There-was-white-smoke-and-the-device-does-not-work-anymore)
- - [Sonoff 4CH V2 / Sonoff Dual V2 will not flash](#Sonoff-4CH-V2--Sonoff-Dual-V2-will-not-flash)
+ - [Sonoff 4CH V2 / Sonoff Dual V2 will not flash](#Sonoff-4CH-V2-Sonoff-Dual-V2-will-not-flash)
  - [Flashing fails on MacOS High Sierra](#Flashing-fails-on-MacOS-High-Sierra)
 #### Wi-Fi
  - [Cannot connect to Wi-Fi](#Cannot-connect-to-Wi-Fi)
@@ -17,7 +17,7 @@
 #### MQTT
  - [Cannot connect to my MQTT broker](#Cannot-connect-to-my-MQTT-broker)
  - [Frequent MQTT reconnects](#Frequent-MQTT-reconnects)
- - [What's Topic, GroupTopic and FallBack Topic](Tips#topic-grouptopic-and-fallback-topic)
+ - [What's Topic, GroupTopic and FallBack Topic](MQTT#mqtt-topic-definition)
 #### Device
  - [How do I configure this unknown device](Configuration-Procedure-for-New-Devices)
  - [Relay clicks and LED flashes at 1 second intervals](#Relay-clicks-and-LED-flashes-at-1-second-intervals)
@@ -27,7 +27,7 @@
  - [Cannot find my device in Modules](#Cannot-find-my-device-in-Modules) 
  - [Device keeps restarting after changing config over MQTT](#Device-keeps-restarting-after-changing-config-over-MQTT)
  - [Can you add this unsupported sensor to Tasmota](#Can-you-add-this-unsupported-sensor-to-Tasmota)
- - [Tasmota is sending a lengthy status update ("STATUS" - "STATUS11") every 5 seconds. What's going on?](#Tasmota-is-sending-a-lengthy-status-update-STATUS---STATUS11-every-5-seconds-Whats-going-on)
+ - [Tasmota is sending a lengthy status update ("STATUS" - "STATUS11") every 5 seconds. What's going on?](#tasmota-is-sending-a-lengthy-status-update-every-5-seconds-what39s-going-on)
  - [Web interface asks for password](#Web-interface-asks-for-password)
  - [Power monitoring shows wrong values](#Power-monitoring-shows-wrong-values)
  - [Power monitoring resets Energy Today mid-day](https://github.com/arendst/Tasmota/issues/5571)
@@ -42,7 +42,7 @@
 ## Installation
 
 ### Cannot enter flash mode
-Be sure to press the button correctly, you must "feel" a click. If your on-device button doesn't allow you to enter flash mode or there is no GPIO0 broken out to the PCB, you can always bridge GND to GPIO0 pin directly on the chip. Search on the Internet for your chip's pinouts and use [the tutorial](installation/Hardware-Preparation#bringing-the-module-in-flash-mode). Be sure to keep GPIO0 grounded long enough (3-5 seconds) before disconnecting to ensure the chip has booted completely into programming mode. On devices that do not provide a GPIO0 connected button, it may be easier to leave the wired bridge in place throughout the entire flashing process (erase & upload). Doing so will not create any problems for flashing the device. After the firmware is uploaded successfully, remove the bridge. This allows the device to boot normally.
+Be sure to press the button correctly, you must "feel" a click. If your on-device button doesn't allow you to enter flash mode or there is no GPIO0 broken out to the PCB, you can always bridge GND to GPIO0 pin directly on the chip. Search on the Internet for your chip's pinouts and use [the tutorial](installation/Hardware-Preparation#programming-mode). Be sure to keep GPIO0 grounded long enough (3-5 seconds) before disconnecting to ensure the chip has booted completely into programming mode. On devices that do not provide a GPIO0 connected button, it may be easier to leave the wired bridge in place throughout the entire flashing process (erase & upload). Doing so will not create any problems for flashing the device. After the firmware is uploaded successfully, remove the bridge. This allows the device to boot normally.
 
 ### Flashing issues
 - Double check if you wired the device the serial-to-USB adapter correctly. Almost every device needs RX and TX pins switched to TX and RX. See [Hardware Preparation](installation/Hardware-Preparation) for more.
@@ -100,7 +100,7 @@ With some Wi-Fi routers (i.e. Linksys with DD-WRT), you may have conflicts with 
 DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can resolve connectivity issues.
 
 ### I entered the wrong Wi-Fi information
-- If you have a device with a button and the button is configured as a component in the Tasmota settings (e.g., GPIO0 - Button1), you can try pressing the button to force the device into [Wi-Fi configuration mode](Buttons-and-Switches#_4-short-presses) with 4 short presses of the button. 
+- If you have a device with a button and the button is configured as a component in the Tasmota settings (e.g., GPIO0 - Button1), you can try pressing the button to force the device into [Wi-Fi configuration mode](Buttons-and-Switches#4-short-presses) with 4 short presses of the button. 
 
 - If that didn't work reset your device using [Fast power cycle device recovery](Fast-power-cycle-device-recovery)
 
@@ -137,7 +137,7 @@ DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can r
 
 First thing to try when having Wi-Fi issues:
 
-   Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](installation/Flashing#erase-firmware)) using [the latest precompiled binaries](http://thehackbox.org/tasmota/).
+   Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](installation/Flashing#erase-flash-memory)) using [the latest precompiled binaries](http://thehackbox.org/tasmota/).
 
    This approach has solved most of the reported issues. Sometimes this is due to a bad flash, a bad OTA or invalid data that remains in the flash where the SDK memory is.
 
@@ -200,7 +200,7 @@ or your mosquitto broker log shows messages like this -
 ```
 You have more than one device connected with the same %topic% defined. Its important that each device has a unique %topic% instead of the default `sonoff`.
 
-If that is not the issue, erase all flash using esptool.py or esptool.exe and flash again by wire (as explained [here](#esptool-usage)) using [the latest precompiled bins with core v2.6](http://thehackbox.org/tasmota/pre-2.6/).
+If that is not the issue, erase all flash using esptool.py or esptool.exe and flash again by wire (as explained [here](Esptool#upload-tasmota)) using [the latest precompiled bins with core v2.6](http://thehackbox.org/tasmota/pre-2.6/).
 
 ## Device
 
@@ -214,7 +214,7 @@ You can disable status LED blinking using:
 `Backlog LedPower 0; SetOption31 1`
 
 ### My device randomly switches on and off. Do I have ghosts in my house?
-Most of the issues with random, or "ghost", switching are related to MQTT retain settings. In short, your MQTT broker is retaining a message with the POWER status of the device which gets applied on reboots. [Solution here](PowerOnState#side-effects-with-using-mqtt-messages) 
+Most of the issues with random, or "ghost", switching are related to MQTT retain settings. In short, your MQTT broker is retaining a message with the POWER status of the device which gets applied on reboots. [Solution here](MQTT#retained-mqtt-messages) 
 
 In some cases, adding a switch to a device causes ghost switching. In this case, you may need to add a [low pass filter](https://www.youtube.com/watch?v=aq8_os6g13s&ab_channel=DrZzs) to dampen any spikes on the input. In the case of the Sonoff T1, a modification to [change the filter capacitor](https://github.com/arendst/Tasmota/issues/5449#issuecomment-478471697) on the PCB may be required.
 
