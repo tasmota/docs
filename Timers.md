@@ -35,4 +35,4 @@ Window|`0..15` = add or subtract a random number of minutes to `Time`
 Days|`SMTWTFS` = set day of weeks mask where `0` or `-` = OFF and any different character = ON
 Repeat|`0` = allow timer only once<BR>`1` = repeat timer execution
 Output|`1..16` = select an output to be used if no rule is enabled
-Action|`0` = turn output OFF<BR> `1` = turn output ON<BR>`2` = TOGGLE output<BR>`3` = RULE/BLINK<br>If the Tasmota [Rules](#rules) feature has been activated by compiling the code (activated by default in all pre-compiled Tasmota binaries), a rule with `Clock#Timer=<timer>` will be triggered if written and turned on by the user.<br>If Rules are not compiled, BLINK output using [BlinkCount](#BlinkCount) parameters.
+Action|`0` = turn output OFF<BR> `1` = turn output ON<BR>`2` = TOGGLE output<BR>`3` = RULE/BLINK<br>If the Tasmota [Rules](Rules) feature has been activated by compiling the code (activated by default in all pre-compiled Tasmota binaries), a rule with `Clock#Timer=<timer>` will be triggered if written and turned on by the user.<br>If Rules are not compiled, BLINK output using [BlinkCount](Commands#BlinkCount) parameters.
