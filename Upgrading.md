@@ -145,6 +145,8 @@ Intermediate upgrade steps might be needed to migrate from an older firmware ver
 The following table lists all relevant firmware versions and a direct link to their minimal build.
 Remember that you **must take each individual step** between the device firmeware version and the latest available.
 
+As a safeguard perform "Backup Configuration" before installing a new version. If settings are lost "Restore Configuration" should bring them back.
+
 | Project Name | Release | Direct Download |
 |-|-|-|
 | Sonoff-Tasmota | [v3.9.22](https://github.com/arendst/Tasmota/releases/tag/v3.9.22) | [`firmware.bin`](https://github.com/arendst/Tasmota/releases/download/v3.9.22/firmware.bin) |
@@ -154,19 +156,23 @@ Remember that you **must take each individual step** between the device firmewar
 | Tasmota        | [v7.2.0](https://github.com/arendst/Tasmota/releases/tag/v7.2.0) | [`tasmota-minimal.bin`](https://github.com/arendst/Tasmota/releases/download/v7.2.0/tasmota-minimal.bin) |
 | Tasmota        | [latest](https://github.com/arendst/Tasmota/releases/latest) | (Check "Assets" section) |
 
-Migrating from one version to the next versions is mostly painless as the settings are saved in the same location in flash and newer settings are appended.
+Follow the path till you reach the latest Tasmota version.
+
+## Background Info and Details
+
+Migrating from one version to the next is mostly painless as the settings are saved in the same location in flash and newer settings are appended.
 
 As said, mostly painless. There are some deviations to this rule as I rearranged the flash. In the next list you'll find an overview of supported migrations paths.
 
 * No migration from **Sonoff-MQTT-OTA** to **Sonoff-MQTT-OTA-Arduino** or **Tasmota**.  
   The settings flash layout and OTA image locations are different from the Arduino versions
-* Easy migration from **Sonoff-MQTT-OTA-Arduino 1.0.11** to **Tasmota 3.9.x**.  
+* Easy migration from **Sonoff-MQTT-OTA-Arduino 1.0.11** to **Sonoff-Tasmota 3.9.x**.  
   After installing Tasmota for the first time some settings need to be adjusted via web configuration or MQTT commands.
-* Easy migration from **Sonoff-MQTT-OTA-Arduino 3.1.0** to **Tasmota 4.x**.  
+* Easy migration from **Sonoff-MQTT-OTA-Arduino 3.1.0** to **Sonoff-Tasmota 4.x**.  
   After installing Tasmota for the first time some settings need to be adjusted via web configuration or MQTT commands.
-* Easy migration from **Tasmota 4.x** to **Tasmota 5.14**.  
+* Easy migration from **Sonoff-Tasmota 4.x** to **Sonoff-Tasmota 5.14**.
   As a safeguard perform a Backup Configuration before installing the new version. If settings are lost after the upgrade perform a Restore Configuration.
-* Easy migration from **Tasmota 5.2** to **Tasmota 6.x**.  
+* Easy migration from **Sonoff-Tasmota 5.2** to **Sonoff-Tasmota 6.x**. 
   As a safeguard perform a **_Backup Configuration_** before installing the new version. If settings are lost after the upgrade perform a **Restore Configuration**.
   > [!WARNING] If you've used development versions between 6.6.0.7 and 6.6.0.11 [**back up your device settings**](#backing-up-settings) as described above. Convert the backup to human readable form as you **MUST** restore these settings manually.
 
@@ -176,11 +182,3 @@ As said, mostly painless. There are some deviations to this rule as I rearranged
   As a safeguard perform a **Backup Configuration** before installing the new version. If settings are lost after the upgrade perform a **Restore Configuration**.
 
 If ***Backup Configuration -> Restore Configuration*** fails, reset to firmware defaults and use [decode-config tool](#decode-config-tool) to restore your backed up configuration.
-
-In summary: to migrate from **Sonoff-MQTT-OTA-Arduino versions before 3.1.0** to **Tasmota 7.x** you will need to take five steps:
-
-1. Migrate to **Tasmota 3.9.x**
-2. Migrate to **Tasmota 4.x**
-3. Migrate to **Tasmota 5.14**: 
-4. Migrate to **Tasmota 6.x**
-5. Migrate to **Tasmota 7.x**
