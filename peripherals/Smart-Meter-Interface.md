@@ -1,8 +1,8 @@
-
-
 <a id="top">
 !> **This feature is not included in precompiled binaries.**     
+
 To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
+
 ```
 #ifndef USE_SCRIPT
 #define USE_SCRIPT  # adds about 17k flash size, variable ram size
@@ -635,9 +635,9 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 1,010404ffffffffxxxx@i3:1,Current P1,A,Current_P1,2  
 1,010404ffffffffxxxx@i4:1,Current P2,A,Current_P2,2  
 1,010404ffffffffxxxx@i5:1,Current P3,A,Current_P3,2  
-1,010404ffffffffxxxx@i6:1,active Power P1,W,Power_P1,2  
-1,010404ffffffffxxxx@i7:1,active Power P2,W,Power_P2,2  
-1,010404ffffffffxxxx@i8:1,actibe Power P3,W,Power_P3,2  
+1,010404ffffffffxxxx@i6:1,Active Power P1,W,Power_P1,2  
+1,010404ffffffffxxxx@i7:1,Active Power P2,W,Power_P2,2  
+1,010404ffffffffxxxx@i8:1,Active Power P3,W,Power_P3,2  
 \#  
 
 [Back To Top](#top)
