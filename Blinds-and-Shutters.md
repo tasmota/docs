@@ -186,6 +186,7 @@ If using a Sonoff Dual R2, use the following Template:
 - Set `ShutterCloseDuration<x>`
 - Set `ShutterSetHalfway<x>` (optional)
 - Set `ShutterInvert<x>`(optional)
+- Set `ShutterInvertWebButtons<x>`(optional) (eg. useful for horizontal awnings)
 - If the shutter uses a pulse motor instead of a motors with one wire for each direction (i.e., duration based), define `PulseTime<x> 2` on both relays. The driver's behavior will change to a pulse motor that needs pulses to start and stop.  
 
 ### Rules
@@ -264,7 +265,7 @@ cover:
     tilt_command_topic: 'cmnd/%topic%/ShutterPosition1'
     tilt_status_topic: 'cmnd/%topic%/ShutterPosition1'
     set_position_topic: 'cmnd/%topic%/ShutterPosition1'
-    position_topic: "stat/sonoff-cletto/SHUTTER1"
+    position_topic: "stat/%topic%/SHUTTER1"
     tilt_min: 0
     tilt_max: 100
     tilt_closed_value: 0

@@ -1385,7 +1385,7 @@ ELSE  // ENERGY#Power changed (i.e. LE 5)
 
 Using one IR receiver and one sender (or both extender) you can simply forward signals from one to another using the following rule
 ```console
-rule1 on IRreceived#Data do publish cmnd/irsideboard/irsend {Protocol:NEC,Bits:32,Data:0x%value%} endon
+rule1 on IRreceived#Data do publish cmnd/irsideboard/irsend {Protocol:NEC,Bits:32,Data:%value%} endon
 ```
 
 [Back To Top](#top)

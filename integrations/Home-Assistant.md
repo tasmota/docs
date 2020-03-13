@@ -43,47 +43,28 @@ Announced to Home Assistant as [MQTT Light](https://www.home-assistant.io/integr
 Announced to Home Assistant as [MQTT Light](https://www.home-assistant.io/integrations/light.mqtt/) with a single channel used for dimming.
 
 #### **Buttons**
-Announced to Home Assistant as [MQTT Binary Sensor](https://www.home-assistant.io/integrations/binary_sensor.mqtt/).
+Announced to Home Assistant as [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
 
-To have buttons discovered `ButtonTopic` must be set to `0` (default value) and it will automatically start to listen and publish using `%topic%/stat/BUTTON<x>` topic.
+To have buttons discovered `ButtonTopic` must be set to `1` or to a custom name and it will automatically start to listen and publish using `/stat/%topic%/BUTTON<x>` topic.
 
-When using with default Tasmota setting the sensor in Home Assistant will show `ON` for `1 second` when pressed, then it will automatically turn to `OFF`.
+When using `ButtonTopic 1` the only possible trigger will be `HOLD` (SetOption1 or SetOption11 must be enabled).  
+When using `ButtonTopic` with a custom name all the possible combination enabled by SetOption1, SetOption11 and Setoption13 will be possible.
 
-`SwitchMode` default for buttons and switches is `Switchmode 0` (TOGGLE). To change the behavior, [`SwitchMode`](Commands#switchmode) must be changed.   For example setting up a switch to `SwitchMode 1` (follow) will create a switch with ON and OFF payloads.
+`SwitchMode` default for buttons and switches is `Switchmode 0` (TOGGLE). To change the behavior, [`SwitchMode`](Commands#switchmode) must be changed (the Button must be configured as Switch to have effect).  For example setting up a switch to `SwitchMode 1` (follow) will create a switch with ON and OFF payloads.
 
 #### **Switches**
-Announced to Home Assistant as [MQTT Binary Sensor](https://www.home-assistant.io/integrations/binary_sensor.mqtt/).
+Announced to Home Assistant as [MQTT Binary Sensor](https://www.home-assistant.io/integrations/binary_sensor.mqtt/) and/or as a [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
 
-To have switches discovered `SwitchTopic` must be set to `0` (default value) and it will automatically start to listen and publish using `%topic%/stat/SWITCH<x>` topic.
+To have switches discovered `SwitchTopic` must be set to a custom name and it will automatically start to listen and publish using `/stat/%topic%/SWITCH<x>` topic.
 
-When using with default Tasmota setting the sensor in Home Assistant will  follow the status of the switch.
+Depending by the `SwitchMode`used, a switch can be a Trigger (`TOGGLE`or `HOLD`), a Binary Sensor (`ON`/`OFF`) or both at the same time.
 
-`SwitchMode` default for buttons and switches is `Switchmode 0` (TOGGLE). To change the behavior, [`SwitchMode`](Commands#switchmode) must be changed.   For example setting up a switch to `SwitchMode 1` (follow) will create a switch with ON and OFF payloads.
+Example:  
+When using with `SwitchMode 0` Tasmota will create just one Trigger for `TOGGLE`.  
+WHen using with `SwitchMode 1` Tasmota will create a `Binary Sensor` with `ON` and `OFF` Payloads.  
+When uisng with `Switchmode 5` Tasmota will create a `Binary Sensor` with `ON` and `OFF` Payloads and a Trigger for `TOGGLE`
 
-<!-- 
-
-######## Don't know what this is used for
-
-```console
-MQT: tasmota/stat/SWITCH1 = {"STATE":"TOGGLE"} 
-MQT: tasmota/stat/RESULT = {"POWER":"ON"} 
-MQT: tasmota/stat/POWER = ON
-```
-This option gives the user the ability to get a more granular control over entities on both Tasmota and Home Assistant.
-
-A simple Tasmota rule example:
-```console
-Rule1 ON Button1#STATE DO Var1 %value% ENDON
-Rule1 1
-```
-
-With this rule enabled , when you press the button you will get
-```console
-RUL: BUTTON1#STATE performs "Var1 2"
-MQT: tasmota/stat/RESULT = {"Var1":"2"}
-MQT: tasmota/stat/BUTTON1 = {"STATE":"TOGGLE"}
-```
-and the relay will NOT be switched. -->
+All switchmodes are supported with the exception of SwitchMode11 and SwitchMode12 able to generate just a `TOGGLE` trigger.
 
 <!-- tabs:end -->
 
@@ -101,8 +82,6 @@ SetOption19 1
 
 
 After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device.
-
-!>Device FullTopic will become `%topic%/%prefix%/<command>` (`cmnd/tasmota/POWER` to `tasmota/cmnd/POWER`) and cannot be changed as long as `SetOption19 1` is active.
 
 Enabling discovery will automatically change some SetOptions to suit the new configuration:
 
@@ -122,10 +101,8 @@ Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands `Sta
 > Please be advised that not all sensors can be correctly rendered under Home Assistant. In those cases a fallback function will be used to create a generic sensor.
 
 ### Disabling 
-To disable MQTT discovery and remove the retained message, execute `SetOption19 0`.
-
+To disable MQTT discovery and remove the retained message, execute `SetOption19 0`.  
 The "homeassistant/" topic is removed from Home Assistant and MQTT broker. 
-!> **Device FullTopic will not revert to defaults**. You have to manually change the structure back to `%prefix%/%topic%/` using **Configure - MQTT Configuration** page in the webUI or [`FullTopic`](Commands#fulltopic) command.
 
 ### Finalizing Setup
 All automatically discovered entities will show up under:  

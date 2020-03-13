@@ -41,7 +41,7 @@ To change the update interval (teleperiod) of MQTT messages change the [`TelePer
 `TelePeriod 10` will set the update interval to 10 seconds, so the sensor will update 6 times a minute.
 
 #### Peripheral Specific
-Some peripherals offer, or even require, additional commands. See [Commands](Commands#Sensor) page for peripheral specific commands.
+Some peripherals offer, or even require, additional commands. See [Commands](Commands#Sensors) page for peripheral specific commands.
 
 > [!TIP] To make a link between the different naming schemes the [Pin Definition overview](https://github.com/esp8266/esp8266-wiki/wiki/Pin-definition) in the ESP8266 wiki is quite helpful.
 
@@ -130,7 +130,7 @@ Internal pull-up/-down resistors
 GPIO 0-15 all have a built-in pull-up resistor, just like in an Arduino. GPIO16 has a built-in pull-down resistor.
 
 ### PWM
-Unlike most Atmel chips (Arduino), the ESP8266 doesn’t support hardware PWM, however, software PWM is supported on all digital pins. The default PWM range is 10-bits @ 1kHz, but this can be changed (up to >14-bit@1kHz). Check [Restrictions](Expanding-Tasmota#red_circle-restrictions).
+Unlike most Atmel chips (Arduino), the ESP8266 doesn’t support hardware PWM, however, software PWM is supported on all digital pins. The default PWM range is 10-bits @ 1kHz, but this can be changed (up to >14-bit@1kHz). Check [Restrictions](#restrictions).
 
 ### Analog Input
 The ESP8266 has a single analog input, with an input range of 0 - 1.0V. If you supply 3.3V, for example, you will damage the chip. Some boards like the NodeMCU have an on-board resistive voltage divider, to get an easier 0 - 3.3V range. You could also just use a trimpot as a voltage divider.
