@@ -141,6 +141,19 @@ If you can't restore configuration directly you can configure the device manuall
 # Migration Path
 Until now several versions of Tasmota have been released starting with the C version Sonoff-MQTT-OTA followed by Sonoff-MQTT-OTA-Arduino, Sonoff-Tasmota and ultimately **Tasmota**.
 
+Intermediate upgrade steps might be needed to migrate from an older firmware version to the latest.
+The following table lists all relevant firmware versions and a direct link to their minimal build.
+Remember that you **must take each individual step** between the device firmeware version and the latest available.
+
+| Project Name | Release | Direct Download |
+|-|-|-|
+| Sonoff-Tasmota | [v3.9.22](https://github.com/arendst/Tasmota/releases/tag/v3.9.22) | [`firmware.bin`](https://github.com/arendst/Tasmota/releases/download/v3.9.22/firmware.bin) |
+| Sonoff-Tasmota | [v4.2.0](https://github.com/arendst/Tasmota/releases/tag/v4.2.0) | [`firmware.bin`](https://github.com/arendst/Tasmota/releases/download/v4.2.0/firmware.bin) |
+| Sonoff-Tasmota | [v5.14.0](https://github.com/arendst/Tasmota/releases/tag/v5.14.0) | [`sonoff-minimal.bin`](https://github.com/arendst/Tasmota/releases/download/v5.14.0/sonoff-minimal.bin)|
+| Sonoff-Tasmota | [v6.7.1](https://github.com/arendst/Tasmota/releases/tag/v6.7.1) | [`sonoff-minimal.bin`](https://github.com/arendst/Tasmota/releases/download/v6.7.1/sonoff-minimal.bin) |
+| Tasmota        | [v7.2.0](https://github.com/arendst/Tasmota/releases/tag/v7.2.0) | [`tasmota-minimal.bin`](https://github.com/arendst/Tasmota/releases/download/v7.2.0/tasmota-minimal.bin) |
+| Tasmota        | [latest](https://github.com/arendst/Tasmota/releases/latest) | (Check "Assets" section) |
+
 Migrating from one version to the next versions is mostly painless as the settings are saved in the same location in flash and newer settings are appended.
 
 As said, mostly painless. There are some deviations to this rule as I rearranged the flash. In the next list you'll find an overview of supported migrations paths.
@@ -168,6 +181,6 @@ In summary: to migrate from **Sonoff-MQTT-OTA-Arduino versions before 3.1.0** to
 
 1. Migrate to **Tasmota 3.9.x**
 2. Migrate to **Tasmota 4.x**
-3. Migrate to **Tasmota 5.14**
+3. Migrate to **Tasmota 5.14**: 
 4. Migrate to **Tasmota 6.x**
 5. Migrate to **Tasmota 7.x**
