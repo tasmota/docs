@@ -12,7 +12,9 @@ To use it you must [compile your build](compile-your-build). Add the following t
 #endif
 #ifdef USE_RULES
 #undef USE_RULES
-#endif  
+#endif
+// see bellow instructions to set the value N accordingly
+#define SML_MAX_VARS N
 ```
 ----
 
@@ -96,7 +98,7 @@ Components of the character string:
    
 ------------------------------------------------------------------------------  
 ### Meter Metrics
-Each meter typically provides multiple metrics (voltage, power, current, humidity etc.) which it measures. An entry for each metric to be collected `#define MAX_VARS N` (n = `1..16`) must be specified. An entry defines how to decode the data and put it into variables.
+Each meter typically provides multiple metrics (voltage, power, current, humidity etc.) which it measures. An entry for each metric to be collected as `#define SML_MAX_VARS N` (n = `1..16`) must be specified, in `user_config_override.h` file (see the code at the page top). An entry defines how to decode the data and put it into variables.
 
 > [!EXAMPLE] (OBIS/SML/MODBus): 
 `1,1-0:1.8.1\*255(@1,Total consumption,KWh,Total_in,4`   
