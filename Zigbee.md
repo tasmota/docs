@@ -215,6 +215,11 @@ Additional References:
 - [Koen Kanters](https://github.com/Koenkk) [Z-Stack CC2530 firmware files](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_Home_1.2/bin/default).
 - There are many tutorials online on how to flash a CC2530 with a dedicated [CC_DEBUGGER](https://www.aliexpress.com/item/32869263224.html).  
 
+## Alternative Flashing:
+If in possession of any raspberry pi, you may flash the CC2530 in 3 minutes following this video:
+https://www.youtube.com/watch?v=RguRQUXWLCY whilst the video describes flashing a CC2531 the process is exactly the same as for a 2530 except for the wiring. 
+The correct wiring for the CC2530 can be seen in this article: http://www.marrold.co.uk/2019/12/flashing-cc2530-cc2591-zigbee-module.html
+
 ### 2. Flash an ESP82xx Device with Zigbee2Tasmota Tasmota
 Once the CC2530 flashing process completes, you can re-use that ESP82xx device by flashing it with the Zigbee2Tasmota firmware. Otherwise, you can use any ESP82xx device.  
 - [Compile Tasmota](installation/Flashing?id=compiling-from-source)
@@ -252,6 +257,13 @@ Configure the Tasmota device using a custom template. Assign **`Zigbee Tx (165)`
 ```
 
 <img src="https://user-images.githubusercontent.com/49731213/64920989-ec043400-d7bd-11e9-8f5c-74ece5c4e26c.jpg" width="240">
+
+
+## Alternative Setup
+A practical option is to use a Sonoff Basic, offering built in power supply, along with the CC2530. The configuration template requires minor modification: 
+
+Substitute GPIO3 (Zigbee RX) for GPIO13 (Zigbee RX) and GPIO1 (Zigbee TX) for  GPIO15 (Zigbee TX).  
+
 
 ### 4. First run
 
@@ -627,3 +639,247 @@ Rule
   on ZbReceived#0x099F#0500!00=010000FF0000 do publish stat/leak_sensor/LEAK ON endon 
   on ZbReceived#0x099F#0500!00=000000FF0000 do publish stat/leak_sensor/LEAK OFF endon 
 ```
+### Homeassistant Sample Configurations.
+
+The following configurations work on aqara/xiaomi sensors/switches. Replace address (0xXXXX) with your device address.
+```
+#  #############################################################################
+#  # binary_sensor
+#  #############################################################################
+binary_sensor:
+- platform: mqtt
+  name: zigbee_plug_01
+  state_topic: "tele/zigbee/SENSOR"
+  payload_on: true
+  payload_off: false
+  value_template: '{{value_json.ZbReceived["0xXXXX"].Power}}'
+  device_class: "power"
+- platform: mqtt
+  name: zigbee_contact_01
+  state_topic: "tele/zigbee/SENSOR"
+  payload_on: true
+  payload_off: false
+  value_template: '{{value_json.ZbReceived["0xXXXX"].Power}}'
+  device_class: "door"
+- platform: mqtt
+  name: zigbee_motion_01
+  state_topic: "tele/zigbee/SENSOR"
+  payload_on: 1
+  payload_off: 0
+  value_template: '{{value_json.ZbReceived["0xXXXX"].Occupancy}}'
+  device_class: "motion"
+- platform: mqtt
+  name: zigbee_router_01
+  state_topic: "tele/zigbee/SENSOR"
+  payload_on: 1
+  payload_off: false
+  value_template: '{{value_json.ZbReceived["0xXXXX"].Power}}'
+  device_class: "connectivity"
+- platform: mqtt
+  name: zigbee_coordinator_01
+  state_topic: "tele/zigbee/STATE"
+  payload_on: "on"
+  payload_off: "off"
+  value_template: '{%if value_json.Wifi.SSId == "YOUR_SSID" %} on {%else%} off {%endif%}'
+  device_class: "connectivity"
+
+#  #############################################################################
+#  # sensor
+#  #############################################################################
+sensor:
+- platform: mqtt
+  name: zigbee_contact_01_battery
+  state_topic: "tele/zigbee/SENSOR"
+  value_template: '{{value_json.ZbReceived["0xXXXX"].Battery}}'
+  unit_of_measurement: "%"
+- platform: mqtt
+  name: zigbee_motion_01_illuminance
+  state_topic: "tele/zigbee/SENSOR"
+  value_template: '{{value_json.ZbReceived["0xXXXX"].Illuminance}}'
+  unit_of_measurement: "lx"
+- platform: mqtt
+  name: zigbee_ambient_01_temperature
+  state_topic: "tele/zigbee/SENSOR"
+  value_template: '{{value_json.ZbReceived["0xXXXX"].Temperature}}'
+  unit_of_measurement: "°C"
+- platform: mqtt
+  name: zigbee_ambient_01_humidity
+  state_topic: "tele/zigbee/SENSOR"
+  value_template: '{{value_json.ZbReceived["0xXXXX"].Humidity}}'
+  unit_of_measurement: "%"
+
+#  #############################################################################
+#  # switch
+#  #############################################################################
+switch:
+- platform: mqtt
+  name: zigbee_plug_01
+  state_topic: "tele/zigbee/SENSOR"
+  command_topic: "cmnd/zigbee/zbsend"
+  payload_on: '{ "device":"0xXXXX", "endpoint":"1", "send":{"Power":"true"} }'
+  payload_off: '{ "device":"0xXXXX", "endpoint":"1", "send":{"Power":"false"} }'
+  state_on: "on"
+  state_off: "off"
+  optimistic: false
+  qos: 1
+  retain: false
+  value_template: '{{states.binary_sensor.zigbee_plug_01.state}}'
+  icon: mdi:power-socket-uk
+  ##############################################################################
+  # Switch for enabling joining
+  ##############################################################################
+- platform: mqtt
+  name: zigbee2tasmota Main join
+  state_topic: "tele/zigbee/RESULT"
+  command_topic: "cmnd/zigbee/ZbPermitJoin" 
+  payload_on: "1"
+  payload_off: "0"
+  state_on: "Enable Pairing mode for 60 seconds"
+  state_off: "off"
+  optimistic: false
+  qos: 1
+  retain: false
+  value_template: '{{value_json.ZbState.Message }}'
+  icon: mdi:zigbee
+
+#  #############################################################################
+#  # Zigbee Management Package (This is a modification of the existing z2m package)
+#  #############################################################################
+#  #############################################################################
+#  # zigbee manager
+#  #############################################################################
+ ###############################################################################
+ # Customize
+ ###############################################################################
+homeassistant:
+  customize:
+  ##############################################################################
+  # Sensors
+  ##############################################################################
+    binary_sensor.zigbee_coordinator_01:
+      friendly_name: zigbee2tasmota Bridge state
+      icon: mdi:zigbee
+      hidden: false 
+
+ ###############################################################################
+ # Groups
+ ###############################################################################
+group:
+  zigbee_group:
+    view: false
+    control: hidden
+    name: zigbee2tasmota
+    entities:
+    - input_boolean.zigbee_permit_join
+    - timer.zigbee_permit_join
+    - binary_sensor.zigbee_coordinator_01
+    - switch.zigbee2tasmota_main_join
+    - automation.enable_zigbee_joining
+    - automation.disable_zigbee_joining
+    - automation.disable_zigbee_joining_by_timer
+
+ ###############################################################################
+ # Input Boolean for enabling/disabling joining
+ ###############################################################################
+input_boolean:
+  zigbee_permit_join:
+    name: Allow devices to join
+    initial: off
+    icon: mdi:cellphone-wireless
+    
+ ###############################################################################
+ # Timer for joining time remaining (60 sec = 1 min)
+ ###############################################################################
+timer:
+  zigbee_permit_join:
+    name: Time remaining
+    duration: 60
+    
+ ###############################################################################
+ # Automations
+ ###############################################################################
+automation:
+- id: enable_zigbee_join
+  alias: Enable Zigbee joining
+  initial_state: true
+  hide_entity: true
+  trigger:
+    platform: state
+    entity_id: input_boolean.zigbee_permit_join
+    to: 'on'
+  action:
+  - service: mqtt.publish
+    data:
+      topic: cmnd/zigbee/ZbPermitJoin
+      payload: '1'
+  - service: timer.start
+    data:
+      entity_id: timer.zigbee_permit_join
+
+- id: disable_zigbee_join
+  alias: Disable Zigbee joining
+  initial_state: true    
+  hide_entity: true
+  trigger:
+  - entity_id: input_boolean.zigbee_permit_join
+    platform: state
+    to: 'off'
+  - platform: homeassistant
+    event: start  
+  action:
+  - service: mqtt.publish
+    data:
+      topic: cmnd/zigbee/ZbPermitJoin
+      payload: '0'
+  - service: timer.cancel
+    data:
+      entity_id: timer.zigbee_permit_join
+
+- id: disable_zigbee_join_timer
+  alias: Disable Zigbee joining by timer
+  initial_state: true    
+  hide_entity: true
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.zigbee_permit_join
+  action:
+  - service: mqtt.publish
+    data:
+      topic: cmnd/zigbee/ZbPermitJoin
+      payload: '0'
+  - service: input_boolean.turn_off
+    data:
+      entity_id: input_boolean.zigbee_permit_join
+
+#  #############################################################################
+#  # Lovelace Card
+#  #############################################################################
+      - type: entities
+        style: |
+          ha-card {border-radius: 15px; border-style: solid;} 
+        title: Zigbee Control
+        show_header_toggle: false
+        entities:
+        - input_boolean.zigbee_permit_join
+        - timer.zigbee_permit_join
+        - entity: binary_sensor.zigbee_coordinator_01
+          type: custom:multiple-entity-row  
+          entities:
+          - icon: mdi:router-wireless
+            state_color: false
+            tap_action:
+              haptic: light
+              action: url
+              url_path: http://192.168.10.16/cs?
+          - icon: mdi:web
+            state_color: false
+            tap_action:
+              haptic: light
+              action: url
+              url_path: https://tasmota.github.io/docs/#/Zigbee             
+        - switch.zigbee2tasmota_main_join
+        - automation.disable_zigbee_joining_by_timer
+        - input_select.zigbee2tasmota_log_level
+   
