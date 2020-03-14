@@ -88,11 +88,11 @@ Declare a script `>M` section with the number of connected meters (n = `1..5`)
 `+1,3,m,0,9600,MODBUS,1,1,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010`    
 Components of the character string:  
 `...01040000,01040002,...`    
-`01` = Modbus ID   
-`04` = Holding Register   
-`0000`/`0002` = Register#  
+`01` = Modbus slave device ID   
+`04` = Instruction to read an Input Register (alternatively, `03` = Instruction to read an Holding Register)
+`0000`/`0002` = Register # (as Hexadecimal codification, without the prefix `0x`. Example: `0x0079` -> `0079`)
 
-> [!NOTE] ID, Holding Register and Register# may differ depending on the measuring device.  
+> [!NOTE] `ID`, `Instruction to read the Register` value (Input vs Holding) and `Register #` may differ depending on the measuring device.  
    
 ------------------------------------------------------------------------------  
 ### Meter Metrics
@@ -109,7 +109,7 @@ Each meter typically provides multiple metrics (voltage, power, current, humidit
   - OBIS: ASCII OBIS code terminated with `(` character which indicates the start of the meter value  
   - SML: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value  
   - EBUS, MODBus, RAW: hex values of EBUS, MODBus, RAW block to compare  
-    - `xx` means ignore value  
+    - `xx` means ignore value  (1 byte)
     - `ss` = extract a signed byte  
     - `uu` = extract an unsigned byte  
     - `UUuu` = extract an unsigned word (high order byte first)  
