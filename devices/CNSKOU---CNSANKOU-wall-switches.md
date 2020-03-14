@@ -1,4 +1,4 @@
-![Glass face of wall switch](https://raw.githubusercontent.com/robdejonge/ExternallyLinked/master/SonoffTasmota-arendst/glassface.jpeg)
+![Glass face of wall switch](https://raw.githubusercontent.com/robdejonge/Externally-Linked/master/GitHub/tasmota/docs/glassface.jpeg)
 
 ### General
 
@@ -10,21 +10,21 @@ The one interesting for Tasmota is of course the WiFi version, which connects to
 
 When opening the package, easily done by turning a screwdriver under the two plastic lips at the lower side of the switch, the first thing we see are the capacitive touch sensors mounted on the back of the low-voltage board.  
 
-![Capacitive touch buttons exposed](https://raw.githubusercontent.com/robdejonge/ExternallyLinked/master/SonoffTasmota-arendst/capacitivetouchbuttons.jpeg)
+![Capacitive touch buttons exposed](https://raw.githubusercontent.com/robdejonge/Externally-Linked/master/GitHub/tasmota/docs/capacitivetouchbuttons.jpeg)
 
 The low-voltage board is connected through a 14-pin connector to the mains board, and contains an [ESP8285](https://www.espressif.com/sites/default/files/documentation/0a-esp8285_datasheet_en.pdf), piezo buzzer (should you wish to remove that audio feedback!) and a number of additional components. The ESP8285 is of course compatible with the ESP8266 albeit with only 1MB flash storage. 
 
-![Low-voltage (top) and mains (bottom) boards unfolded](https://raw.githubusercontent.com/robdejonge/ExternallyLinked/master/SonoffTasmota-arendst/lowandmains.jpeg)
+![Low-voltage (top) and mains (bottom) boards unfolded](https://raw.githubusercontent.com/robdejonge/Externally-Linked/master/GitHub/tasmota/docs/lowandmains.jpeg)
 
 The mains-voltage board contains the mains connection points, a TI ULN2003A relay driver and 1-3 relays and a tiny little board containing a power supply for the low-voltage bits. 
 
-![Back of mains board](https://raw.githubusercontent.com/robdejonge/ExternallyLinked/master/SonoffTasmota-arendst/backofmains.jpeg)
+![Back of mains board](https://raw.githubusercontent.com/robdejonge/Externally-Linked/master/GitHub/tasmota/docs/backofmains.jpeg)
 
 ### Flashing 
 
 The most interesting part is of course how we flash this device with Tasmota. To do this, do not connect the device to mains power and carefully remove the low-voltage board as this is all you'll need. 
 
-![Close-up of where to connect to reprogram the device](https://raw.githubusercontent.com/robdejonge/ExternallyLinked/master/SonoffTasmota-arendst/flashcloseup.jpeg)
+![Close-up of where to connect to reprogram the device](https://raw.githubusercontent.com/robdejonge/Externally-Linked/master/GitHub/tasmota/docs/flashcloseup.jpeg)
 
 Notice the 4 connection points just above the ESP8285, which is where you'll connect (from square pad up) 3v3, RX, TX and GND. I found that normal DuPont jumper wires provide a secure enough connection, but you may wish to solder on a few header pins. 
 
