@@ -2,7 +2,9 @@
 
 <a id="top">
 !> **This feature is not included in precompiled binaries.**     
+
 To use it you must [compile your build](compile-your-build). Add the following to `user_config_override.h`:
+
 ```
 #ifndef USE_SCRIPT
 #define USE_SCRIPT  # adds about 17k flash size, variable ram size
@@ -12,7 +14,9 @@ To use it you must [compile your build](compile-your-build). Add the following t
 #endif
 #ifdef USE_RULES
 #undef USE_RULES
-#endif  
+#endif
+// see bellow instructions to set the value N accordingly
+#define SML_MAX_VARS N
 ```
 ----
 
@@ -88,15 +92,15 @@ Declare a script `>M` section with the number of connected meters (n = `1..5`)
 `+1,3,m,0,9600,MODBUS,1,1,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010`    
 Components of the character string:  
 `...01040000,01040002,...`    
-`01` = Modbus ID   
-`04` = Holding Register   
-`0000`/`0002` = Register#  
+`01` = Modbus slave device ID   
+`04` = Instruction to read an Input Register (alternatively, `03` = Instruction to read an Holding Register)
+`0000`/`0002` = Register # (as Hexadecimal codification, without the prefix `0x`. Example: `0x0079` -> `0079`)
 
-> [!NOTE] ID, Holding Register and Register# may differ depending on the measuring device.  
+> [!NOTE] `ID`, `Instruction to read the Register` value (Input vs Holding) and `Register #` may differ depending on the measuring device.  
    
 ------------------------------------------------------------------------------  
 ### Meter Metrics
-Each meter typically provides multiple metrics (voltage, power, current, humidity etc.) which it measures. An entry for each metric to be collected `#define MAX_VARS N` (n = `1..16`) must be specified. An entry defines how to decode the data and put it into variables.
+Each meter typically provides multiple metrics (voltage, power, current, humidity etc.) which it measures. An entry for each metric to be collected as `#define SML_MAX_VARS N` (n = `1..16`) must be specified, in `user_config_override.h` file (see the code at the page top). An entry defines how to decode the data and put it into variables.
 
 > [!EXAMPLE] (OBIS/SML/MODBus): 
 `1,1-0:1.8.1\*255(@1,Total consumption,KWh,Total_in,4`   
@@ -109,7 +113,7 @@ Each meter typically provides multiple metrics (voltage, power, current, humidit
   - OBIS: ASCII OBIS code terminated with `(` character which indicates the start of the meter value  
   - SML: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value  
   - EBUS, MODBus, RAW: hex values of EBUS, MODBus, RAW block to compare  
-    - `xx` means ignore value  
+    - `xx` means ignore value  (1 byte)
     - `ss` = extract a signed byte  
     - `uu` = extract an unsigned byte  
     - `UUuu` = extract an unsigned word (high order byte first)  
@@ -635,9 +639,9 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 1,010404ffffffffxxxx@i3:1,Current P1,A,Current_P1,2  
 1,010404ffffffffxxxx@i4:1,Current P2,A,Current_P2,2  
 1,010404ffffffffxxxx@i5:1,Current P3,A,Current_P3,2  
-1,010404ffffffffxxxx@i6:1,active Power P1,W,Power_P1,2  
-1,010404ffffffffxxxx@i7:1,active Power P2,W,Power_P2,2  
-1,010404ffffffffxxxx@i8:1,actibe Power P3,W,Power_P3,2  
+1,010404ffffffffxxxx@i6:1,Active Power P1,W,Power_P1,2  
+1,010404ffffffffxxxx@i7:1,Active Power P2,W,Power_P2,2  
+1,010404ffffffffxxxx@i8:1,Active Power P3,W,Power_P3,2  
 \#  
 
 [Back To Top](#top)
