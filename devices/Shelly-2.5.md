@@ -1,3 +1,4 @@
+
 The Shelly 2.5 is supported from Tasmota 6.5.0.8 using a template.
 
 <img src="https://shelly.cloud/wp-content/uploads/2019/02/shelly_25_250.png" width="250" align="right" />
@@ -15,7 +16,7 @@ The GPIOs on the Shelly are connected to AC power!** Only use a Shelly as design
 The GND connection of the Shelly is connected to the live AC wire. Connecting serial with your PC will fry your PC.
 
 # [Shelly 2.5](https://shelly.cloud/shelly-25-wifi-smart-relay-roller-shutter-home-automation/)
-**[Warning](https://www.facebook.com/groups/ShellyIoTCommunitySupport/permalink/2029876037111750/) (April 10, 2019):** _This appears to affect a percentage of their entire first run production. **Check your device before powering it on.**_
+> [!WARNING]**[Warning](https://www.facebook.com/groups/ShellyIoTCommunitySupport/permalink/2029876037111750/) (April 10, 2019):** _This appears to affect a percentage of their entire first run production. **Check your device before powering it on.**_
 
 An ESP8266 with 2MB flash dual relay device with Energy Monitoring. Slightly smaller than the original Shelly 2.
 
@@ -103,3 +104,18 @@ The Shelly 2.5 inputs appear to be notoriously susceptible to interference. Ther
 Use command `SwitchDebounce 100` to change it to a less sensitive value, which might work better. The value be set up to 1000 milliseconds.
 
 Some issues were reported for this topic - [search query](https://github.com/arendst/Tasmota/issues?utf8=%E2%9C%93&q=ghost+shelly)
+
+
+## Overheating 
+
+Due to the built-in temperature sensor, it is possible to switch off the relays when a certain temperature is exceeded. The limit for the original Shelly firmware seems to be around 95 ° C. [Source](https://www.shelly-support.eu/lexikon/index.php?entry/1-shelly-2-5/)
+
+The ambient temperature according to the manufacturer is between:
+
+?> \- 40 ° C up to 40 ° C
+
+Even at temperatures within this range, a significantly higher temperature can occur when installed behind switches or in walls. There are reports that temperature-related shutdowns occur at high loads.
+A standby temperature between 30-60 ° C seems normal.
+An overtemperature threshold is implemented in the Tasmota firmware. It is set to 90 ° C
+This can be changed via [SetOption42](Commands?id=setoption42).
+> [!WARNING]It is absolutely not recommended to increase the limit.
