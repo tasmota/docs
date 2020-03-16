@@ -75,6 +75,8 @@ If anyone finds a datasheet please link it here!
 
 ***
 
+# Re-Programming
+
 ## Tools
 You shall need something in way of the following: (or whatever works for you, this is just my setup)
 * A USB-TTL adapter (TTL, 3V3.. something also with a 3V3 source)  
