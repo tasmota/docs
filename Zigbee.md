@@ -327,6 +327,18 @@ xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":21,"Message":"Enable Pa
 xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":20,"Message":"Disable Pairing mode"}}
 ```
 
+Although this is highly discouraged, you can permanently enable Zigbee pairing, until the next reboot, with `ZbPermitJoin 99`.
+
+```
+ZbPermitJoin 99
+
+xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":22,"Message":"Enable Pairing mode until next boot"}}
+
+ZbPermitJoin 0
+xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":20,"Message":"Disable Pairing mode"}}
+```
+
+
 ### Reading Sensors
 Sensor messages are published via MQTT when they are received from the Zigbee device. Similar to Zigbee2MQTT, Z2T tries to group and debounce sensor values when they are received within a 300ms window.
 
