@@ -263,7 +263,7 @@ MQT: tele/<topic>/RESULT = {"ZbState":{"Status":1,"Message":"CC2530 booted","Res
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":50,"MajorRel":2,"MinorRel":6,"MaintRel":3,"Revision":20190608}}
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":2,"Message":"Reseting configuration"}}
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":3,"Message":"Configured, starting coordinator"}}
-MQT: tele/<topic>/RESULT = {"ZbState":{"Status":51,"IEEEAddr":"00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
+MQT: tele/<topic>/RESULT = {"ZbState":{"Status":51,"IEEEAddr":"0x00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
 MQT: tele/tasmota/Zigbee_home/RESULT = {"ZbState":{"Status":0,"Message":"Started"}}
 ZIG: Zigbee started
 ```
@@ -273,7 +273,7 @@ Normal boot looks like:
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":50,"MajorRel":2,"MinorRel":6,"MaintRel":3,"Revision":20190608}}
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":3,"Message":"Configured, starting coordinator"}}
-MQT: tele/<topic>/RESULT = {"ZbState":{"Status":51,"IEEEAddr":"00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
+MQT: tele/<topic>/RESULT = {"ZbState":{"Status":51,"IEEEAddr":"0x00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":0,"Message":"Started"}}
 ZIG: Zigbee started
 ```
@@ -338,7 +338,7 @@ This sensor monitors humidity, temperature, and air pressure.  Its Zigbee model 
 1. Put Zigbee2Tasmota into pairing mode using the `ZigbeePermitJoin` command as described above
 2. Press the Xiaomi Aqara sensor's button for 5 seconds to pair the devices. You will see a message as follows:  
    ```yaml
-   MQT: tele/<topic>/SENSOR = {"ZbState":{"Status":30,"IEEEAddr":"00158D00036B50AE","ShortAddr":"0x8F20","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
+   MQT: tele/<topic>/SENSOR = {"ZbState":{"Status":30,"IEEEAddr":"0x00158D00036B50AE","ShortAddr":"0x8F20","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
    ```
 
 |Field name|Value|
@@ -396,7 +396,7 @@ _(JSON pretty-printed for readability)_
 
 `ZbStatus2` - Display detailed information for each device, including long address, model and manufacturer:  
 ```json
-{"ZbStatus2":[{"Device":"0x6B58","IEEEAddr":"7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},{"Device":"0xE9C3","IEEEAddr":"00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},{"Device":"0x3D82","IEEEAddr":"0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips"}]}
+{"ZbStatus2":[{"Device":"0x6B58","IEEEAddr":"0x7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},{"Device":"0xE9C3","IEEEAddr":"0x00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},{"Device":"0x3D82","IEEEAddr":"0x0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips"}]}
 ```
 
 _(formatted for readability)_  
@@ -405,19 +405,19 @@ _(formatted for readability)_
     "ZbStatus2": [
         {
             "Device": "0x6B58",
-            "IEEEAddr": "7CB03EAA0A0292DD",
+            "IEEEAddr": "0x7CB03EAA0A0292DD",
             "ModelId": "Plug 01",
             "Manufacturer": "OSRAM"
         },
         {
             "Device": "0xE9C3",
-            "IEEEAddr": "00158D00036B50AE",
+            "IEEEAddr": "0x00158D00036B50AE",
             "ModelId": "lumi.weather",
             "Manufacturer": "LUMI"
         },
         {
             "Device": "0x3D82",
-            "IEEEAddr": "0017880102FE1DBD",
+            "IEEEAddr": "0x0017880102FE1DBD",
             "ModelId": "LWB010",
             "Manufacturer": "Philips"
         }
@@ -441,7 +441,7 @@ OSRAM Plug|`0x03`
 Philips Hue Bulb|`0x0B`
 
 ```json
-{"ZbStatus3":[{"Device":"0x6B58","IEEEAddr":"7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},"Endpoints":{"0x03":{"ProfileId":"0xC05E","ProfileIdName":"ZigBee Light Link","ClustersIn":["0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"],"ClustersOut":["0x0019"]}}},{"Device":"0xE9C3","IEEEAddr":"00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},"Endpoints":{"0x01":{"ProfileId":"0x0104","ClustersIn":["0x0000","0x0003","0xFFFF","0x0402","0x0403","0x0405"],"ClustersOut":["0x0000","0x0004","0xFFFF"]}}},{"Device":"0x3D82","IEEEAddr":"0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips","Endpoints":{"0x0B":{"ProfileId":"0xC05E"," ...
+{"ZbStatus3":[{"Device":"0x6B58","IEEEAddr":"0x7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},"Endpoints":{"0x03":{"ProfileId":"0xC05E","ProfileIdName":"ZigBee Light Link","ClustersIn":["0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"],"ClustersOut":["0x0019"]}}},{"Device":"0xE9C3","IEEEAddr":"0x00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},"Endpoints":{"0x01":{"ProfileId":"0x0104","ClustersIn":["0x0000","0x0003","0xFFFF","0x0402","0x0403","0x0405"],"ClustersOut":["0x0000","0x0004","0xFFFF"]}}},{"Device":"0x3D82","IEEEAddr":"0x0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips","Endpoints":{"0x0B":{"ProfileId":"0xC05E"," ...
 ```
 
 _(formatted for readability)_  
@@ -450,7 +450,7 @@ _(formatted for readability)_
   "ZbStatus3": [
     {
       "Device": "0x6B58",
-      "IEEEAddr": "7CB03EAA0A0292DD",
+      "IEEEAddr": "0x7CB03EAA0A0292DD",
       "ModelId": "Plug 01",
       "Manufacturer": "OSRAM",
       "Endpoints": {
@@ -464,7 +464,7 @@ _(formatted for readability)_
     },
     {
       "Device": "0xE9C3",
-      "IEEEAddr": "00158D00036B50AE",
+      "IEEEAddr": "0x00158D00036B50AE",
       "ModelId": "lumi.weather",
       "Manufacturer": "LUMI",
       "Endpoints": {
@@ -477,7 +477,7 @@ _(formatted for readability)_
     },
     {
       "Device": "0x3D82",
-      "IEEEAddr": "0017880102FE1DBD",
+      "IEEEAddr": "0x0017880102FE1DBD",
       "ModelId": "LWB010",
       "Manufacturer": "Philips",
       "Endpoints": {
@@ -496,7 +496,7 @@ _(formatted for readability)_
 
 
 ```json
-{"Device":"0x69CF","IEEEAddr":"0000000000000000","ModelId":"Plug 01","Manufacturer":"OSRAM","Endpoints":{"0x03":{"ProfileId":"0xC05E","ProfileIdName":"ZigBee Light Link","ClustersIn":["0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"],"ClustersOut":["0x0019"]}}}
+{"Device":"0x69CF","IEEEAddr":"0x0000000000000000","ModelId":"Plug 01","Manufacturer":"OSRAM","Endpoints":{"0x03":{"ProfileId":"0xC05E","ProfileIdName":"ZigBee Light Link","ClustersIn":["0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"],"ClustersOut":["0x0019"]}}}
 ```
 
 The message above shows that the device supports only one endpoint `0x03` which accepts messages (`ClustersIn`) for clusters `"0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"`.
