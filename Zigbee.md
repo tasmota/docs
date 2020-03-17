@@ -538,8 +538,8 @@ Command|Parameters|Cluster
 -|-|-
 Power|`1\|true\|"true"\|"on"`: On<BR>`0\|false\|"false"\|"off"`: Off<BR>`2\|"Toggle"`: Toggle|0x0006
 Dimmer|`0..254`: Dimmer value<BR>255 is normally considered as invalid, and may be converted to 254|0x0008
-Dimmer+|`null`: no parameter. Increases dimmer by 10%|0x0008
-Dimmer-|`null`: no parameter. Decreases dimmer by 10%|0x0008
+DimmerUp|`null`: no parameter. Increases dimmer by 10%|0x0008
+DimmerDown|`null`: no parameter. Decreases dimmer by 10%|0x0008
 DimmerStop|`null`: no parameter. Stops any running increase of decrease of dimmer.|0x0008
 ResetAlarm|`<alarmcode>,<clusterid>`: (to be documented later)|0x0009
 ResetAllAlarms|`null`: no parameter, (to be documented later)|0x0009
