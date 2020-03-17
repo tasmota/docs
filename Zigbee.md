@@ -587,9 +587,6 @@ ZbSend { "device":"0x3D82", "send":{"Dimmer":254} }
 ZbSend { "device":"0x3D82", "endpoint":"0x0B", "send":{"Dimmer":0} }
 ```
 
-#### Why another Zigbee project?  
-There are several excellent open-source Zigbee to MQTT solutions like the widely used [Zigbee2mqtt](https://www.zigbee2mqtt.io/) or [Aqara Hub](https://github.com/Frans-Willem/AqaraHub). Zigbee2mqtt is a comprehensive solution but requires at least a Raspberry Pi to run it. Zigbee2Tasmota is a lightweight solution running on an ESP82xx Wi-Fi chip. Hence it is easier to deploy in your living room or around your home.
-
 ## Device Configuration
 
 If your device pairs successfully with Zigbee2Tasmota but doesn't report on standardized endpoint you will see messages like these:   
