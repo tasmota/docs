@@ -388,62 +388,45 @@ Supported values:
 |`ScaledValue` and `Scale`|Give the raw measure and the scale correction as 10^scale|
 
 ### Device Information
-You can dump the internal information gathered about connected Zigbee devices with the command [`ZigbeeStatus`](Commands#zigbeestatus).  
+You can dump the internal information gathered about connected Zigbee devices with the command [`ZigbeeStatus`](Commands#zigbeestatus).
+
+You can use `ZbStatus2` to display all information and endpoints. If probing was successful (at pairing time or using `ZbProbe`), Tasmota will automatically find the right endpoint.
+
+Depending on the number of device you have, `ZbStatus2` output can exceed tha maximum MQTT message size. You can request the status of each individual device using `ZbStatus2 1`, `ZbStatus2 2`, `ZbStatus2 3`...
 
 `ZbStatus1` - List all connected devices  
 ```yaml
 {"ZbStatus1":[{"Device":"0x6B58"},{"Device":"0xE9C3"},{"Device":"0x3D82"}]}
 ```
 
-_(JSON pretty-printed for readability)_  
-```yaml
-{
-    "ZbStatus1": [
-        { "Device":"0x6B58" },
-        { "Device":"0xE9C3" },
-        { "Device":"0x3D82" }
-    ]
-}
-```
-
 `ZbStatus2` - Display detailed information for each device, including long address, model and manufacturer:  
 ```json
-{"ZbStatus2":[{"Device":"0x6B58","IEEEAddr":"0x7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},{"Device":"0xE9C3","IEEEAddr":"0x00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},{"Device":"0x3D82","IEEEAddr":"0x0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips"}]}
+{"ZbStatus2":[{"Device":"0x4773","IEEEAddr":"0x7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM","Endpoints":["0x03"]},{"Device":"0x135D","Name":"Temp_sensor","IEEEAddr":"0x00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI","Endpoints":["0x01"]}]}
 ```
 
 _(formatted for readability)_  
 ```json
 {
-    "ZbStatus2": [
-        {
-            "Device": "0x6B58",
-            "IEEEAddr": "0x7CB03EAA0A0292DD",
-            "ModelId": "Plug 01",
-            "Manufacturer": "OSRAM"
-        },
-        {
-            "Device": "0xE9C3",
-            "IEEEAddr": "0x00158D00036B50AE",
-            "ModelId": "lumi.weather",
-            "Manufacturer": "LUMI"
-        },
-        {
-            "Device": "0x3D82",
-            "IEEEAddr": "0x0017880102FE1DBD",
-            "ModelId": "LWB010",
-            "Manufacturer": "Philips"
-        }
-    ]
+	"ZbStatus2": [{
+		"Device": "0x4773",
+		"IEEEAddr": "0x7CB03EAA0A0292DD",
+		"ModelId": "Plug 01",
+		"Manufacturer": "OSRAM",
+		"Endpoints": ["0x03"]
+	}, {
+		"Device": "0x135D",
+		"Name": "Temp_sensor",
+		"IEEEAddr": "0x00158D00036B50AE",
+		"ModelId": "lumi.weather",
+		"Manufacturer": "LUMI",
+		"Endpoints": ["0x01"]
+	}]
 }
 ```
 
 #### Understanding endpoints
 
-Z2T will automatically compute the best endpoint for any command, based on the endpoint clusters announced by the device. You normally don't need to specify the endpoint number. In rare case, you can still force a specific endpoint.
-
-You can use `ZbStatus3` to display all information about all the endpoints and ZCL clusters supported. If probing was successful (at pairing time or using `ZbProbe`), Tasmota will automatically find the right endpoint.
-
-Depending on the number of device you have, `ZbStatus3` output can exceed tha maximum MQTT message size. You can request the status of each individual device using `ZbStatus3 1`, `ZbStatus3 2`, `ZbStatus3 3`...
+Z2T will automatically take the first endpoint in the list; this works most of the time. You normally don't need to specify the endpoint number. In rare case, you can still force a specific endpoint.
 
 ##### Example Endpoints
 
@@ -451,67 +434,6 @@ Device|Endpoint
 -|-
 OSRAM Plug|`0x03`
 Philips Hue Bulb|`0x0B`
-
-```json
-{"ZbStatus3":[{"Device":"0x6B58","IEEEAddr":"0x7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},"Endpoints":{"0x03":{"ProfileId":"0xC05E","ProfileIdName":"ZigBee Light Link","ClustersIn":["0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"],"ClustersOut":["0x0019"]}}},{"Device":"0xE9C3","IEEEAddr":"0x00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},"Endpoints":{"0x01":{"ProfileId":"0x0104","ClustersIn":["0x0000","0x0003","0xFFFF","0x0402","0x0403","0x0405"],"ClustersOut":["0x0000","0x0004","0xFFFF"]}}},{"Device":"0x3D82","IEEEAddr":"0x0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips","Endpoints":{"0x0B":{"ProfileId":"0xC05E"," ...
-```
-
-_(formatted for readability)_  
-```json
-{
-  "ZbStatus3": [
-    {
-      "Device": "0x6B58",
-      "IEEEAddr": "0x7CB03EAA0A0292DD",
-      "ModelId": "Plug 01",
-      "Manufacturer": "OSRAM",
-      "Endpoints": {
-        "0x03": {
-          "ProfileId": "0xC05E",
-          "ProfileIdName": "ZigBee Light Link",
-          "ClustersIn": [ "0x1000", "0x0000", "0x0003", "0x0004", "0x0005", "0x0006", "0x0B04", "0xFC0F" ],
-          "ClustersOut": [ "0x0019" ]
-        }
-      }
-    },
-    {
-      "Device": "0xE9C3",
-      "IEEEAddr": "0x00158D00036B50AE",
-      "ModelId": "lumi.weather",
-      "Manufacturer": "LUMI",
-      "Endpoints": {
-        "0x01": {
-          "ProfileId": "0x0104",
-          "ClustersIn": [ "0x0000", "0x0003", "0xFFFF", "0x0402", "0x0403", "0x0405" ],
-          "ClustersOut": [ "0x0000", "0x0004", "0xFFFF" ]
-        }
-      }
-    },
-    {
-      "Device": "0x3D82",
-      "IEEEAddr": "0x0017880102FE1DBD",
-      "ModelId": "LWB010",
-      "Manufacturer": "Philips",
-      "Endpoints": {
-        "0x0B": {
-          "ProfileId": "0xC05E",
-          " ...
-        }
-      }
-    }
-  ]
-}
-```
-
-> [!EXAMPLE]
-> OSRAM Zigbee plug
-
-
-```json
-{"Device":"0x69CF","IEEEAddr":"0x0000000000000000","ModelId":"Plug 01","Manufacturer":"OSRAM","Endpoints":{"0x03":{"ProfileId":"0xC05E","ProfileIdName":"ZigBee Light Link","ClustersIn":["0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"],"ClustersOut":["0x0019"]}}}
-```
-
-The message above shows that the device supports only one endpoint `0x03` which accepts messages (`ClustersIn`) for clusters `"0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"`.
 
 #### Zigbee Friendly Names
 
