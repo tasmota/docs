@@ -289,30 +289,7 @@ You can also force a factory reset of your CC2530 with the following command, an
 For a list of available command see [Zigbee Commands](Commands#zigbee).  
 
 > [!NOTE]
-> Zigbee will automatically boot the CC2530 device, configure it and wait for Zigbee messages.  
-
-### Zigbee2Tasmota Status
-You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  
-
-Ex: ```{"ZbState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}```  
-- `Status` contains a numeric code about the status message
-  - `0`: initialization complete, **Zigbee2Tasmota is running normally**
-  - `1`: booting
-  - `2`: resetting CC2530 configuration
-  - `3`: starting Zigbee coordinator
-  - `20`: disabling Permit Join
-  - `21`: allowing Permit Join for 60 seconds
-  - `22`: allowing Permit Join until next boot
-  - `30`: Zigbee device connects or reconnects
-  - `31`: Received Node Descriptor information for a Zigbee device
-  - `32`: Received the list of active endpoints for a Zigbee device
-  - `33`: Received the simple Descriptor with active ZCL clusters for a Zigbee device
-  - `50`: reporting CC2530 firmware version
-  - `51`: reporting CC2530 device information and associated devices
-  - `98`: error, unsupported CC2530 firmware
-  - `99`: general error, **Zigbee2Tasmota was unable to start**
-- `Message` (optional) a human-readable message
-- other fields depending on the message (e.g., Status=`50` or Status=`51`)
+> Zigbee will automatically boot the CC2530 device, configure the device and wait for Zigbee messages.  
 
 ### Pairing Zigbee Devices
 By default, and for security reasons, the Zigbee coordinator does not automatically accept new devices. To pair new devices, use [`ZbPermitJoin 1`](Commands#zbpermitjoin). Once Zigbee2Tasmota is in pairing mode, put the Zigbee device into pairing mode. This is usually accomplished by pressing the button on the device for 5 seconds or more. To stop pairing, use [`ZbPermitJoin 0`](Commands#zbpermitjoin).
@@ -561,3 +538,26 @@ Rule
   on ZbReceived#0x099F#0500!00=010000FF0000 do publish stat/leak_sensor/LEAK ON endon 
   on ZbReceived#0x099F#0500!00=000000FF0000 do publish stat/leak_sensor/LEAK OFF endon 
 ```
+
+### Zigbee2Tasmota Status
+You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  
+
+Ex: ```{"ZbState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}```  
+- `Status` contains a numeric code about the status message
+  - `0`: initialization complete, **Zigbee2Tasmota is running normally**
+  - `1`: booting
+  - `2`: resetting CC2530 configuration
+  - `3`: starting Zigbee coordinator
+  - `20`: disabling Permit Join
+  - `21`: allowing Permit Join for 60 seconds
+  - `22`: allowing Permit Join until next boot
+  - `30`: Zigbee device connects or reconnects
+  - `31`: Received Node Descriptor information for a Zigbee device
+  - `32`: Received the list of active endpoints for a Zigbee device
+  - `33`: Received the simple Descriptor with active ZCL clusters for a Zigbee device
+  - `50`: reporting CC2530 firmware version
+  - `51`: reporting CC2530 device information and associated devices
+  - `98`: error, unsupported CC2530 firmware
+  - `99`: general error, **Zigbee2Tasmota was unable to start**
+- `Message` (optional) a human-readable message
+- other fields depending on the message (e.g., Status=`50` or Status=`51`)
