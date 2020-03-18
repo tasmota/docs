@@ -52,6 +52,9 @@ When using `ButtonTopic` with a custom name all the possible combination enabled
 
 `SwitchMode` default for buttons and switches is `Switchmode 0` (TOGGLE). To change the behavior, [`SwitchMode`](Commands#switchmode) must be changed (the Button must be configured as Switch to have effect).  For example setting up a switch to `SwitchMode 1` (follow) will create a switch with ON and OFF payloads.
 
+> [!WARNING] 
+> When a Button is set to a different topic than `0` is not possible to use `Button#State` as a trigger for rules.
+
 #### **Switches**
 Announced to Home Assistant as [MQTT Binary Sensor](https://www.home-assistant.io/integrations/binary_sensor.mqtt/) and/or as a [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
 
@@ -61,10 +64,13 @@ Depending by the `SwitchMode`used, a switch can be a Trigger (`TOGGLE`or `HOLD`)
 
 Example:  
 When using with `SwitchMode 0` Tasmota will create just one Trigger for `TOGGLE`.  
-WHen using with `SwitchMode 1` Tasmota will create a `Binary Sensor` with `ON` and `OFF` Payloads.  
-When uisng with `Switchmode 5` Tasmota will create a `Binary Sensor` with `ON` and `OFF` Payloads and a Trigger for `TOGGLE`
+When using with `SwitchMode 1` Tasmota will create a `Binary Sensor` with `ON` and `OFF` Payloads.  
+When using with `Switchmode 5` Tasmota will create a `Binary Sensor` with `ON` and `OFF` Payloads and a Trigger for `TOGGLE`  
 
 All switchmodes are supported with the exception of SwitchMode11 and SwitchMode12 able to generate just a `TOGGLE` trigger.
+
+> [!WARNING] 
+> When a Switch is set to a different topic than `0` is not possible to use `Switch#State` as a trigger for rules.
 
 <!-- tabs:end -->
 
