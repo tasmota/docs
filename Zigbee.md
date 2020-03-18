@@ -266,6 +266,7 @@ MQT: tele/<topic>/RESULT = {"ZbState":{"Status":3,"Message":"Configured, startin
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":51,"IEEEAddr":"0x00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
 MQT: tele/tasmota/Zigbee_home/RESULT = {"ZbState":{"Status":0,"Message":"Started"}}
 ZIG: Zigbee started
+ZIG: No zigbee devices data in Flash
 ```
 
 Normal boot looks like:  
@@ -276,6 +277,7 @@ MQT: tele/<topic>/RESULT = {"ZbState":{"Status":3,"Message":"Configured, startin
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":51,"IEEEAddr":"0x00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":0,"Message":"Started"}}
 ZIG: Zigbee started
+ZIG: Zigbee devices data in Flash (516 bytes)
 ```
 
 You can also force a factory reset of your CC2530 with the following command, and reboot:  
