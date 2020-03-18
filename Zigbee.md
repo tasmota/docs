@@ -490,7 +490,7 @@ ZbRead { "device":"0x4773", "endpoint":"0x03", "cluster":"0x0006", "read":["0x00
 ZbRead { "device":"0x4773", "endpoint":3, "cluster":6, "read":0 }
 ```
 
-```
+```json
 xx:xx:xx MQT: tele/tasmota/SENSOR = {"ZbReceived":{"0x4773":{"Power":true,"LinkQuality":52}}}
 ```
 
