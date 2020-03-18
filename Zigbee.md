@@ -503,6 +503,29 @@ ZbSend { "device":"0x3D82", "send":{"Dimmer":254} }
 ZbSend { "device":"0x3D82", "endpoint":"0x0B", "send":{"Dimmer":0} }
 ```
 
+### Zigbee2Tasmota Status
+You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  
+
+Ex: ```{"ZbState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}```  
+- `Status` contains a numeric code about the status message
+  - `0`: initialization complete, **Zigbee2Tasmota is running normally**
+  - `1`: booting
+  - `2`: resetting CC2530 configuration
+  - `3`: starting Zigbee coordinator
+  - `20`: disabling Permit Join
+  - `21`: allowing Permit Join for 60 seconds
+  - `22`: allowing Permit Join until next boot
+  - `30`: Zigbee device connects or reconnects
+  - `31`: Received Node Descriptor information for a Zigbee device
+  - `32`: Received the list of active endpoints for a Zigbee device
+  - `33`: Received the simple Descriptor with active ZCL clusters for a Zigbee device
+  - `50`: reporting CC2530 firmware version
+  - `51`: reporting CC2530 device information and associated devices
+  - `98`: error, unsupported CC2530 firmware
+  - `99`: general error, **Zigbee2Tasmota was unable to start**
+- `Message` (optional) a human-readable message
+- other fields depending on the message (e.g., Status=`50` or Status=`51`)
+
 ## Device Configuration
 
 If your device pairs successfully with Zigbee2Tasmota but doesn't report on standardized endpoint you will see messages like these:   
@@ -540,26 +563,3 @@ Rule
   on ZbReceived#0x099F#0500!00=010000FF0000 do publish stat/leak_sensor/LEAK ON endon 
   on ZbReceived#0x099F#0500!00=000000FF0000 do publish stat/leak_sensor/LEAK OFF endon 
 ```
-
-### Zigbee2Tasmota Status
-You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  
-
-Ex: ```{"ZbState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}```  
-- `Status` contains a numeric code about the status message
-  - `0`: initialization complete, **Zigbee2Tasmota is running normally**
-  - `1`: booting
-  - `2`: resetting CC2530 configuration
-  - `3`: starting Zigbee coordinator
-  - `20`: disabling Permit Join
-  - `21`: allowing Permit Join for 60 seconds
-  - `22`: allowing Permit Join until next boot
-  - `30`: Zigbee device connects or reconnects
-  - `31`: Received Node Descriptor information for a Zigbee device
-  - `32`: Received the list of active endpoints for a Zigbee device
-  - `33`: Received the simple Descriptor with active ZCL clusters for a Zigbee device
-  - `50`: reporting CC2530 firmware version
-  - `51`: reporting CC2530 device information and associated devices
-  - `98`: error, unsupported CC2530 firmware
-  - `99`: general error, **Zigbee2Tasmota was unable to start**
-- `Message` (optional) a human-readable message
-- other fields depending on the message (e.g., Status=`50` or Status=`51`)
