@@ -292,6 +292,8 @@ For a list of available command see [Zigbee Commands](Commands#zigbee).
 > Zigbee will automatically boot the CC2530 device, configure the device and wait for Zigbee messages.  
 
 ### Pairing Zigbee Devices
+When you first create a Zigbee network, it contains no device except the coordinator. The first step is to add devices to the network, which is called **pairing**.
+
 By default, and for security reasons, the Zigbee coordinator does not automatically accept new devices. To pair new devices, use [`ZbPermitJoin 1`](Commands#zbpermitjoin). Once Zigbee2Tasmota is in pairing mode, put the Zigbee device into pairing mode. This is usually accomplished by pressing the button on the device for 5 seconds or more. To stop pairing, use [`ZbPermitJoin 0`](Commands#zbpermitjoin).
 
 ```yaml
