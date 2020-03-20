@@ -1,6 +1,6 @@
 Yet another MagicHome RGB controller. I specifically had [this one](https://www.aliexpress.com/item/DC5-24V-Wireless-WIFI-LED-RGB-Controller-RGBW-Controller-IR-RF-Remote-Control-IOS-Android-for/32827253255.html).
 
-Aside from it going 9-28v, there are no other external model numbers etc, however opening it up revealed a very different configuration inside, using an ESP8285 chip directly on the board.
+Aside from it going 9-28V, there are no other external model numbers etc, however opening it up revealed a very different configuration inside, using an ESP8285 chip directly on the board.
 
 <img width="50%" src="https://user-images.githubusercontent.com/816454/43894935-fd83a9d8-9c16-11e8-9a78-b7a058d972de.jpg" alt="opened with cover in view">
 
@@ -8,7 +8,7 @@ Aside from it going 9-28v, there are no other external model numbers etc, howeve
 
 ## Identifying this board
 
-Looking closely you can see it's an ESP8285, on the main board, it has the part number: `ZJ-WFMN-A V1.1`, `ZJ-WFMN-B V1.1` or `ZJ-WFMN-C V1.1`
+Looking closely you can see it's an ESP8285, on the main board, it has the part number: `ZJ-WFMN-A V1.1`, `ZJ-WFMN-B V1.1`, `ZJ-WFMN-C V1.1`, or `ZJ-WFMN-D V1.0`
 
 <img width="40%" src="https://user-images.githubusercontent.com/816454/43895058-6fcb4e10-9c17-11e8-8c9c-b99c57a39c55.jpg" alt="board top 1"> 
 <img width="40%" src="https://user-images.githubusercontent.com/816454/43895059-6ffdd7b8-9c17-11e8-994e-aeb8f65f47ef.jpg" alt="board top 2">
@@ -17,16 +17,16 @@ Looking closely you can see it's an ESP8285, on the main board, it has the part 
 
 The devices are similar to the Arilux devices. Here is an overview:
 
-| Model | Color Support | Voltages (sometimes) | Remote | Link                      |
-|-------|---------------|----------|--------|---------------------------|
-| LC01  | RGB           | 5-28V    | None   | [Banggood][LC01-banggood] |
-| LC02  | RGBW          | 9-12V (5-28V)    | None   | [Banggood][LC02-banggood] |
-| LC03  | RGB           | 5-28V    | IR     | [Banggood][LC03-banggood] |
-| LC04  | RGBW          | 9-12V (5-28V)    | IR     | [Banggood][LC04-banggood] |
-| LC08  | RGBWW         | 5-28V    | None   | [Banggood][LC08-banggood] |
-| LC09  | RGB           | 5-28V    | RF     | [Banggood][LC09-banggood] |
-| LC10  | RGBW          | 9-28V    | RF     | [Banggood][LC10-banggood] |
-| LC11  | RGBWW         | 9-28V    | RF     | [Banggood][LC11-banggood] |
+| Model | Color Support | Voltages (sometimes) | Remote | PCB part number  | Link                      |
+|-------|---------------|----------------------|--------|------------------|---------------------------|
+| LC01  | RGB           | 5-28V                | None   | ZJ-WFMN-A V1.1   | [Banggood][LC01-banggood] |
+| LC02  | RGBW          | 9-12V (5-28V)        | None   | ZJ-WFMN-B V1.1   | [Banggood][LC02-banggood] |
+| LC03  | RGB           | 5-28V                | IR     | ZJ-WFMN-A V1.1   | [Banggood][LC03-banggood] |
+| LC04  | RGBW          | 9-12V (5-28V)        | IR     | ZJ-WFMN-A V1.1   | [Banggood][LC04-banggood] |
+| LC08  | RGBWW/RGBWC   | 5-28V                | None   |                  | [Banggood][LC08-banggood] |
+| LC09  | RGB           | 5-28V                | RF     |                  | [Banggood][LC09-banggood] |
+| LC10  | RGBW          | 9-28V                | RF     |                  | [Banggood][LC10-banggood] |
+| LC11  | RGBWW/RGBWC   | 9-28V                | RF     | ZJ-WFMN-D V1.0   | [Banggood][LC11-banggood] |
 
 ## Flashing
 
@@ -38,33 +38,9 @@ The `IO0` port is `GPIO0` that needs to be pulled to ground when powered on for 
 
 <img width="40%" src="https://user-images.githubusercontent.com/816454/43895056-6f41e094-9c17-11e8-95b7-cf565967c89e.jpg" alt="board back with cables">
 
-## Configuration 
+## Template configuration 
 
-Once flashed, I configured it as follows (using Tasmota v6.7.1):
-
-**ZJ-WFMN-B V1.1 (RGBW-Version) alias Arilux LC02**
-
-| Field | Value |
-|---|---|
-|Module type|18 Generic| 
-|D1 GPIO5|38 PWM2|
-|D6 GPIO12|39 PWM3|
-|D7 GPIO13|40 PWM4|
-|D5 GPIO14|37 PWM1|
-
-**ZJ-WFMN-A V1.1 (RGBW Version with IR) alias Arilux LC04**
-
-| Field | Value | Function |
-|---|---|---|
-|Module type|18 Generic|Module type|
-|D2 GPIO4|51 IRRecv|IR Remote (optional, view console for debugging!)|
-|D1 GPIO5|38 PWM2|BLUE|
-|D6 GPIO12|37 PWM1|RED|
-|D7 GPIO13|39 PWM3|GREEN|
-|D8 GPIO15|40 PWM4|WHITE|
-
-
-**ZJ-WFMN-A V1.1 (RGB version) alias Arilux LC01**
+**Arilux LC01 (ZJ-WFMN-A V1.1)**
 
 Automatic configuration:
 
@@ -77,38 +53,60 @@ Manual configuration:
 | Field | Value | Function |
 |---|---|---|
 |Module type|18 Generic|Module type|
-|D1 GPIO5|37 PWM1|RED|
-|D6 GPIO12|38 PWM2|GREEN|
-|D7 GPIO13|39 PWM3|BLUE|
+|GPIO5|37 PWM1|RED|
+|GPIO12|38 PWM2|GREEN|
+|GPIO13|39 PWM3|BLUE|
 
 
-**ZJ-WFMN-A V1.1 (RGB version with IR) alias Arilux LC03**
+**Arilux LC02 (ZJ-WFMN-B V1.1)**
+
+| Field | Value |
+|---|---|
+|Module type|18 Generic| 
+|GPIO5|38 PWM2|
+|GPIO12|39 PWM3|
+|GPIO13|40 PWM4|
+|GPIO14|37 PWM1|
+
+**Arilux LC03 (ZJ-WFMN-A V1.1)**
 
 | Field | Value | Function |
 |---|---|---|
 |Module type|18 Generic|Module type|
-|D2 GPIO4|51 IRRecv|IR Remote|
-|D1 GPIO5|37 PWM1|RED|
-|D6 GPIO12|38 PWM2|GREEN|
-|D7 GPIO13|39 PWM3|BLUE|
+|GPIO4|51 IRRecv|IR Remote|
+|GPIO5|37 PWM1|RED|
+|GPIO12|38 PWM2|GREEN|
+|GPIO13|39 PWM3|BLUE|
 
-**ZJ-WFMN-C V1.1 (monochrome version)**
+**Arilux LC04 (ZJ-WFMN-A V1.1)**
 
-| Field | Value |
-|---|---|
-|Module type|18 Generic|
-|D6 GPIO12|37 PWM1|
+| Field | Value | Function |
+|---|---|---|
+|Module type|18 Generic|Module type|
+|GPIO4|51 IRRecv|IR Remote (optional, view console for debugging!)|
+|GPIO5|38 PWM2|BLUE|
+|GPIO12|37 PWM1|RED|
+|GPIO13|39 PWM3|GREEN|
+|GPIO15|40 PWM4|WHITE|
 
-With all that done, one of the critical things I needed to do so I could set the colors was to run the command to set `SetOption15` to `1`. For me, this was sending the MQTT command (you will need to adjust for your config):
+**Arilux LC11 (ZJ-WFMN-D V1.0)**
 
-```
-mosquitto_pub -t 'cmnd/rgbled/SetOption15' -m '1'
-```
+| Field | Value | Function |
+|---|---|---|
+|Module type|18 Generic|Module type|
+|GPIO4|147 ALux IrRcv||
+|GPIO5|40 PWM4|COLD WHITE|
+|GPIO12|38 PWM2|GREEN|
+|GPIO13|39 PWM3|BLUE|
+|GPIO14|37 PWM1|RED|
+|GPIO15|41 PWM5|WARM WHITE|
+|GPIO16|159 ALux IrSel||
 
-Once the above was done and the device rebooted, I could set the colors using commands such as (to turn on red and white full):
-```
-mosquitto_pub -h openhab.sf -t 'cmnd/rgbled/color' -m '#ff0000ff'
-```
+
+With all that done, one of the critical things I needed to do so I could set the colors was to run the command to set `SetOption15 1`. 
+
+After that it is possible to test the lights functionality, e.g. with the command `color #ff0000ff`.
+
 
 ### RF control
 

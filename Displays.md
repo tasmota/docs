@@ -194,9 +194,9 @@ The I<sup>2</sup>C address must be specified using `DisplayAddress XX`, e.g., `6
 E-Paper displays are connected via software 3-wire SPI `(CS, SCLK, MOSI)`. The other three interface lines of the display
 (DC, Reset, busy) may be left unconnected. The jumper on the circuit board of the display must be set to 3-wire SPI.  
 
-The ILI9488 and SSD1351 are connected via hardware 3-wire SPI `(MOSI=GPIO13, SCLK=GPIO14,CS=GPIO15)`. The ILI9488 must also be connected to the backlight pin (dimmer supported on SSD1351)  
+The ILI9488, ILI9341 and SSD1351 are connected via hardware 3-wire SPI `(MOSI=GPIO13, SCLK=GPIO14, CS=GPIO15)`. The ILI9488 must also be connected to the backlight pin (dimmer supported on SSD1351). [Wiring](https://github.com/arendst/Tasmota/issues/2557#issuecomment-444454436)
 
-The RA8876 is connected via standard hardware 4-wire SPI `(MOSI=GPIO13, MISO=GPIO12, SCLK=GPIO14, CS=GPIO15)`. No backlight pin is needed (dimmer supported).  
+The RA8876 is connected via standard hardware 4-wire SPI `(MOSI=GPIO13, SCLK=GPIO14, CS=GPIO15, MISO=GPIO12)`. No backlight pin is needed (dimmer supported).  
 
 ## Examples
 

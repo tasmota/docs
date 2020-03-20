@@ -10,9 +10,10 @@ Before using Zigbee to Tasmota, you need to understand a few concepts. Here is a
 |Zigbee concept|Wi-Fi equivalent|
 |---|---|
 |**Zigbee coordinator**<BR>The coordinator is responsible for selecting the channel, PanID, security policy, and stack profile for a network. Zigbee2Tasmota will act as a coordinator.<BR>You can have multiple coordinators as long as they have different PanIDs.|Wi-Fi Access Point|
-|**PanID**<BR>(Personal Area Network IDentifier)<BR>This parameter is unique in a Zigbee network. The PanID is a 16-bit integer.<BR>*Default: 0x1A63*|SSID (the Wi-Fi network name)|
-|**ShortAddr**<BR>Address of the device on the Zigbee network. This address is randomly assigned when the device first connects to the coordinator. The coordinator has address 0x0000.<BR>You need to track which device has which address or assing a "Friendly Name" to each new discovered device.|IP address|
-|**Endpoint**<BR>The endpoint on the coordinator or on the Zigbee device the message is sent from/to. You can see endpoints as logical device providing distinct features|IP Port|
+|**PanID**<BR>(Personal Area Network IDentifier)<BR>This parameter is unique in a Zigbee network (16-bit integer, 0x0000–0x3FFF).<BR>*Default: 0x1A63*|SSID (the Wi-Fi network name)|
+|**ShortAddr**<BR>Address of the device on the Zigbee network. This address is randomly assigned when the device first connects to the coordinator (16 bits integer, 0x0000–0xFFF7). The coordinator has address 0x0000.<BR>You need to track which device has which address or assing a "Friendly Name" to each new discovered device.|IP address|
+|**GroupAddr**<BR>Group address of a collection of devices, it allows a single message to address multiple devices at once (16 bits integer, 0x0000–0xFFFF). For example a remote can turn on/off a group of lights. GroupAddr 0x0000 is not assigned.|Multicast|
+|**Endpoint**<BR>The endpoint on the coordinator or on the Zigbee device the message is sent from/to. You can see endpoints as logical device providing distinct features (8 bits integer, 1–240).|IP Port|
 |**IEEEAddr**<BR>Device hardware address (64 bits). This is unique per device and factory assigned.|MAC address|
 |**Channel** 11-26<BR>*Default: 11* (See [Zigbee-Wifi coexistence](https://www.metageek.com/training/resources/zigbee-wifi-coexistence.html))|Wi-Fi Channel|
 |**Encryption Key**<BR>128-bit encryption key.<BR>*default: 0x0D0C0A08060402000F0D0B0907050301*|Wi-Fi password|
@@ -263,9 +264,10 @@ MQT: tele/<topic>/RESULT = {"ZbState":{"Status":1,"Message":"CC2530 booted","Res
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":50,"MajorRel":2,"MinorRel":6,"MaintRel":3,"Revision":20190608}}
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":2,"Message":"Reseting configuration"}}
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":3,"Message":"Configured, starting coordinator"}}
-MQT: tele/<topic>/RESULT = {"ZbState":{"Status":51,"IEEEAddr":"00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
+MQT: tele/<topic>/RESULT = {"ZbState":{"Status":51,"IEEEAddr":"0x00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
 MQT: tele/tasmota/Zigbee_home/RESULT = {"ZbState":{"Status":0,"Message":"Started"}}
 ZIG: Zigbee started
+ZIG: No zigbee devices data in Flash
 ```
 
 Normal boot looks like:  
@@ -273,9 +275,10 @@ Normal boot looks like:
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":50,"MajorRel":2,"MinorRel":6,"MaintRel":3,"Revision":20190608}}
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":3,"Message":"Configured, starting coordinator"}}
-MQT: tele/<topic>/RESULT = {"ZbState":{"Status":51,"IEEEAddr":"00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
+MQT: tele/<topic>/RESULT = {"ZbState":{"Status":51,"IEEEAddr":"0x00124B00199DF06F","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
 MQT: tele/<topic>/RESULT = {"ZbState":{"Status":0,"Message":"Started"}}
 ZIG: Zigbee started
+ZIG: Zigbee devices data in Flash (516 bytes)
 ```
 
 You can also force a factory reset of your CC2530 with the following command, and reboot:  
@@ -286,32 +289,11 @@ You can also force a factory reset of your CC2530 with the following command, an
 For a list of available command see [Zigbee Commands](Commands#zigbee).  
 
 > [!NOTE]
-> Zigbee will automatically boot the CC2530 device, configure it and wait for Zigbee messages.  
-
-### Zigbee2Tasmota Status
-You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  
-
-Ex: ```{"ZbState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}```  
-- `Status` contains a numeric code about the status message
-  - `0`: initialization complete, **Zigbee2Tasmota is running normally**
-  - `1`: booting
-  - `2`: resetting CC2530 configuration
-  - `3`: starting Zigbee coordinator
-  - `20`: disabling Permit Join
-  - `21`: allowing Permit Join for 60 seconds
-  - `22`: allowing Permit Join until next boot
-  - `30`: Zigbee device connects or reconnects
-  - `31`: Received Node Descriptor information for a Zigbee device
-  - `32`: Received the list of active endpoints for a Zigbee device
-  - `33`: Received the simple Descriptor with active ZCL clusters for a Zigbee device
-  - `50`: reporting CC2530 firmware version
-  - `51`: reporting CC2530 device information and associated devices
-  - `98`: error, unsupported CC2530 firmware
-  - `99`: general error, **Zigbee2Tasmota was unable to start**
-- `Message` (optional) a human-readable message
-- other fields depending on the message (e.g., Status=`50` or Status=`51`)
+> Zigbee will automatically boot the CC2530 device, configure the device and wait for Zigbee messages.  
 
 ### Pairing Zigbee Devices
+When you first create a Zigbee network, it contains no device except the coordinator. The first step is to add devices to the network, which is called **pairing**.
+
 By default, and for security reasons, the Zigbee coordinator does not automatically accept new devices. To pair new devices, use [`ZbPermitJoin 1`](Commands#zbpermitjoin). Once Zigbee2Tasmota is in pairing mode, put the Zigbee device into pairing mode. This is usually accomplished by pressing the button on the device for 5 seconds or more. To stop pairing, use [`ZbPermitJoin 0`](Commands#zbpermitjoin).
 
 ```yaml
@@ -327,6 +309,18 @@ xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":21,"Message":"Enable Pa
 xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":20,"Message":"Disable Pairing mode"}}
 ```
 
+Although this is highly discouraged, you can permanently enable Zigbee pairing, until the next reboot, with `ZbPermitJoin 99`.
+
+```
+ZbPermitJoin 99
+
+xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":22,"Message":"Enable Pairing mode until next boot"}}
+
+ZbPermitJoin 0
+xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":20,"Message":"Disable Pairing mode"}}
+```
+
+
 ### Reading Sensors
 Sensor messages are published via MQTT when they are received from the Zigbee device. Similar to Zigbee2MQTT, Z2T tries to group and debounce sensor values when they are received within a 300ms window.
 
@@ -338,7 +332,7 @@ This sensor monitors humidity, temperature, and air pressure.  Its Zigbee model 
 1. Put Zigbee2Tasmota into pairing mode using the `ZigbeePermitJoin` command as described above
 2. Press the Xiaomi Aqara sensor's button for 5 seconds to pair the devices. You will see a message as follows:  
    ```yaml
-   MQT: tele/<topic>/SENSOR = {"ZbState":{"Status":30,"IEEEAddr":"00158D00036B50AE","ShortAddr":"0x8F20","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
+   MQT: tele/<topic>/SENSOR = {"ZbState":{"Status":30,"IEEEAddr":"0x00158D00036B50AE","ShortAddr":"0x8F20","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
    ```
 
 |Field name|Value|
@@ -376,62 +370,45 @@ Supported values:
 |`ScaledValue` and `Scale`|Give the raw measure and the scale correction as 10^scale|
 
 ### Device Information
-You can dump the internal information gathered about connected Zigbee devices with the command [`ZigbeeStatus`](Commands#zigbeestatus).  
+You can dump the internal information gathered about connected Zigbee devices with the command [`ZigbeeStatus`](Commands#zigbeestatus).
+
+You can use `ZbStatus2` to display all information and endpoints. If probing was successful (at pairing time or using `ZbProbe`), Tasmota will automatically find the right endpoint.
+
+Depending on the number of device you have, `ZbStatus2` output can exceed tha maximum MQTT message size. You can request the status of each individual device using `ZbStatus2 1`, `ZbStatus2 2`, `ZbStatus2 3`...
 
 `ZbStatus1` - List all connected devices  
 ```yaml
 {"ZbStatus1":[{"Device":"0x6B58"},{"Device":"0xE9C3"},{"Device":"0x3D82"}]}
 ```
 
-_(JSON pretty-printed for readability)_  
-```yaml
-{
-    "ZbStatus1": [
-        { "Device":"0x6B58" },
-        { "Device":"0xE9C3" },
-        { "Device":"0x3D82" }
-    ]
-}
-```
-
 `ZbStatus2` - Display detailed information for each device, including long address, model and manufacturer:  
 ```json
-{"ZbStatus2":[{"Device":"0x6B58","IEEEAddr":"7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},{"Device":"0xE9C3","IEEEAddr":"00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},{"Device":"0x3D82","IEEEAddr":"0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips"}]}
+{"ZbStatus2":[{"Device":"0x4773","IEEEAddr":"0x7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM","Endpoints":["0x03"]},{"Device":"0x135D","Name":"Temp_sensor","IEEEAddr":"0x00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI","Endpoints":["0x01"]}]}
 ```
 
 _(formatted for readability)_  
 ```json
 {
-    "ZbStatus2": [
-        {
-            "Device": "0x6B58",
-            "IEEEAddr": "7CB03EAA0A0292DD",
-            "ModelId": "Plug 01",
-            "Manufacturer": "OSRAM"
-        },
-        {
-            "Device": "0xE9C3",
-            "IEEEAddr": "00158D00036B50AE",
-            "ModelId": "lumi.weather",
-            "Manufacturer": "LUMI"
-        },
-        {
-            "Device": "0x3D82",
-            "IEEEAddr": "0017880102FE1DBD",
-            "ModelId": "LWB010",
-            "Manufacturer": "Philips"
-        }
-    ]
+	"ZbStatus2": [{
+		"Device": "0x4773",
+		"IEEEAddr": "0x7CB03EAA0A0292DD",
+		"ModelId": "Plug 01",
+		"Manufacturer": "OSRAM",
+		"Endpoints": ["0x03"]
+	}, {
+		"Device": "0x135D",
+		"Name": "Temp_sensor",
+		"IEEEAddr": "0x00158D00036B50AE",
+		"ModelId": "lumi.weather",
+		"Manufacturer": "LUMI",
+		"Endpoints": ["0x01"]
+	}]
 }
 ```
 
 #### Understanding endpoints
 
-Z2T will automatically compute the best endpoint for any command, based on the endpoint clusters announced by the device. You normally don't need to specify the endpoint number. In rare case, you can still force a specific endpoint.
-
-You can use `ZbStatus3` to display all information about all the endpoints and ZCL clusters supported. If probing was successful (at pairing time or using `ZbProbe`), Tasmota will automatically find the right endpoint.
-
-Depending on the number of device you have, `ZbStatus3` output can exceed tha maximum MQTT message size. You can request the status of each individual device using `ZbStatus3 1`, `ZbStatus3 2`, `ZbStatus3 3`...
+Z2T will automatically take the first endpoint in the list; this works most of the time. You normally don't need to specify the endpoint number. In rare case, you can still force a specific endpoint.
 
 ##### Example Endpoints
 
@@ -439,67 +416,6 @@ Device|Endpoint
 -|-
 OSRAM Plug|`0x03`
 Philips Hue Bulb|`0x0B`
-
-```json
-{"ZbStatus3":[{"Device":"0x6B58","IEEEAddr":"7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM"},"Endpoints":{"0x03":{"ProfileId":"0xC05E","ProfileIdName":"ZigBee Light Link","ClustersIn":["0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"],"ClustersOut":["0x0019"]}}},{"Device":"0xE9C3","IEEEAddr":"00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI"},"Endpoints":{"0x01":{"ProfileId":"0x0104","ClustersIn":["0x0000","0x0003","0xFFFF","0x0402","0x0403","0x0405"],"ClustersOut":["0x0000","0x0004","0xFFFF"]}}},{"Device":"0x3D82","IEEEAddr":"0017880102FE1DBD","ModelId":"LWB010","Manufacturer":"Philips","Endpoints":{"0x0B":{"ProfileId":"0xC05E"," ...
-```
-
-_(formatted for readability)_  
-```json
-{
-  "ZbStatus3": [
-    {
-      "Device": "0x6B58",
-      "IEEEAddr": "7CB03EAA0A0292DD",
-      "ModelId": "Plug 01",
-      "Manufacturer": "OSRAM",
-      "Endpoints": {
-        "0x03": {
-          "ProfileId": "0xC05E",
-          "ProfileIdName": "ZigBee Light Link",
-          "ClustersIn": [ "0x1000", "0x0000", "0x0003", "0x0004", "0x0005", "0x0006", "0x0B04", "0xFC0F" ],
-          "ClustersOut": [ "0x0019" ]
-        }
-      }
-    },
-    {
-      "Device": "0xE9C3",
-      "IEEEAddr": "00158D00036B50AE",
-      "ModelId": "lumi.weather",
-      "Manufacturer": "LUMI",
-      "Endpoints": {
-        "0x01": {
-          "ProfileId": "0x0104",
-          "ClustersIn": [ "0x0000", "0x0003", "0xFFFF", "0x0402", "0x0403", "0x0405" ],
-          "ClustersOut": [ "0x0000", "0x0004", "0xFFFF" ]
-        }
-      }
-    },
-    {
-      "Device": "0x3D82",
-      "IEEEAddr": "0017880102FE1DBD",
-      "ModelId": "LWB010",
-      "Manufacturer": "Philips",
-      "Endpoints": {
-        "0x0B": {
-          "ProfileId": "0xC05E",
-          " ...
-        }
-      }
-    }
-  ]
-}
-```
-
-> [!EXAMPLE]
-> OSRAM Zigbee plug
-
-
-```json
-{"Device":"0x69CF","IEEEAddr":"0000000000000000","ModelId":"Plug 01","Manufacturer":"OSRAM","Endpoints":{"0x03":{"ProfileId":"0xC05E","ProfileIdName":"ZigBee Light Link","ClustersIn":["0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"],"ClustersOut":["0x0019"]}}}
-```
-
-The message above shows that the device supports only one endpoint `0x03` which accepts messages (`ClustersIn`) for clusters `"0x1000","0x0000","0x0003","0x0004","0x0005","0x0006","0x0B04","0xFC0F"`.
 
 #### Zigbee Friendly Names
 
@@ -538,8 +454,8 @@ Command|Parameters|Cluster
 -|-|-
 Power|`1\|true\|"true"\|"on"`: On<BR>`0\|false\|"false"\|"off"`: Off<BR>`2\|"Toggle"`: Toggle|0x0006
 Dimmer|`0..254`: Dimmer value<BR>255 is normally considered as invalid, and may be converted to 254|0x0008
-Dimmer+|`null`: no parameter. Increases dimmer by 10%|0x0008
-Dimmer-|`null`: no parameter. Decreases dimmer by 10%|0x0008
+DimmerUp|`null`: no parameter. Increases dimmer by 10%|0x0008
+DimmerDown|`null`: no parameter. Decreases dimmer by 10%|0x0008
 DimmerStop|`null`: no parameter. Stops any running increase of decrease of dimmer.|0x0008
 ResetAlarm|`<alarmcode>,<clusterid>`: (to be documented later)|0x0009
 ResetAllAlarms|`null`: no parameter, (to be documented later)|0x0009
@@ -574,7 +490,7 @@ ZbRead { "device":"0x4773", "endpoint":"0x03", "cluster":"0x0006", "read":["0x00
 ZbRead { "device":"0x4773", "endpoint":3, "cluster":6, "read":0 }
 ```
 
-```
+```json
 xx:xx:xx MQT: tele/tasmota/SENSOR = {"ZbReceived":{"0x4773":{"Power":true,"LinkQuality":52}}}
 ```
 
@@ -587,8 +503,28 @@ ZbSend { "device":"0x3D82", "send":{"Dimmer":254} }
 ZbSend { "device":"0x3D82", "endpoint":"0x0B", "send":{"Dimmer":0} }
 ```
 
-#### Why another Zigbee project?  
-There are several excellent open-source Zigbee to MQTT solutions like the widely used [Zigbee2mqtt](https://www.zigbee2mqtt.io/) or [Aqara Hub](https://github.com/Frans-Willem/AqaraHub). Zigbee2mqtt is a comprehensive solution but requires at least a Raspberry Pi to run it. Zigbee2Tasmota is a lightweight solution running on an ESP82xx Wi-Fi chip. Hence it is easier to deploy in your living room or around your home.
+### Zigbee2Tasmota Status
+You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  
+
+Ex: ```{"ZbState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}```  
+- `Status` contains a numeric code about the status message
+  - `0`: initialization complete, **Zigbee2Tasmota is running normally**
+  - `1`: booting
+  - `2`: resetting CC2530 configuration
+  - `3`: starting Zigbee coordinator
+  - `20`: disabling Permit Join
+  - `21`: allowing Permit Join for 60 seconds
+  - `22`: allowing Permit Join until next boot
+  - `30`: Zigbee device connects or reconnects
+  - `31`: Received Node Descriptor information for a Zigbee device
+  - `32`: Received the list of active endpoints for a Zigbee device
+  - `33`: Received the simple Descriptor with active ZCL clusters for a Zigbee device
+  - `50`: reporting CC2530 firmware version
+  - `51`: reporting CC2530 device information and associated devices
+  - `98`: error, unsupported CC2530 firmware
+  - `99`: general error, **Zigbee2Tasmota was unable to start**
+- `Message` (optional) a human-readable message
+- other fields depending on the message (e.g., Status=`50` or Status=`51`)
 
 ## Device Configuration
 
