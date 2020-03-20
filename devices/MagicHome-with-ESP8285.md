@@ -105,8 +105,8 @@ Manual configuration:
 
 With all that done, one of the critical things I needed to do so I could set the colors was to run the command to set `SetOption15 1`. 
 
-After that it is possible to test the lights functionality, e.g. with the command `color #ff0000ff'
-```
+After that it is possible to test the lights functionality, e.g. with the command `color #ff0000ff`.
+
 
 ### RF control
 
