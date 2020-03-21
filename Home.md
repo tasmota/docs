@@ -4,7 +4,7 @@
 <!-- <img src="https://user-images.githubusercontent.com/5904370/55973675-661c1400-5c86-11e9-8453-0082bfcd61b6.png" width="200" align="right"> </img> -->
 <span style="font-size:25px">Latest release:</span>
 
-<a href="https://github.com/arendst/Tasmota/releases/tag/v8.1.0"><span style="font-size:45px;">8.1 Doris</span></a>
+<a href="https://github.com/arendst/Tasmota/releases/tag/v8.2.0"><span style="font-size:45px;">8.2 Elliot</span></a>
 
 <!-- <img src="https://user-images.githubusercontent.com/5904370/55974399-d4ada180-5c87-11e9-99cc-316220bf5e95.png" align="right" width=200></img> -->
 
@@ -17,6 +17,23 @@
 ### What's New?
 
 <!-- tabs:start -->
+
+#### **Tasmota v8.2**
+**2010-03-20**
+Tasmota v8.2 Elliot is released. 
+
+**Breaking changes:** 
+ - Enabling `SetOption19` will no longer switch %prefix& and %topic% and will keep the default topic structure
+ - Zigbee command prefixes have changed from `Zigbee*` to `Zb*`
+
+Some of notable new features:
+- Support for gzipped binaries
+- Added group control of devices using UDP
+- Added support for Mijia BLE sensors using HM10 or NRF24L01 peripherals
+- Added native support for Martin Jerry type PWM dimmer switches
+- Plenty of new [switchmodes](Buttons-and-Switches#switchmode).
+
+ See [changelog](changelog-8.2) for a complete list of new features, changes and fixes.
 
 #### **Tasmota v8.1**
 **2019-12-25**

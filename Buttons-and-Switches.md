@@ -103,27 +103,27 @@ Set switch to multi change toggle mode (`0 = TOGGLE`, `1 = TOGGLE`, `2x change =
 
 Same as `SwitchMode 0` but when the state of the circuit changes within 0.5s twice no `TOGGLE` commands are send but Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
-> [!EXAMPLE]
-> When you change switch fast within 0.5 s some extra action can be triggered using rules. On/Off power state is only changed when there is no 2nd switch change within 0.5 s. 
+> [!WARNING]
+> When you change switch states fast (within 0.5s) some extra actions can be triggered using rules. ON/OFFpower state is only changed when there is no second switch change within 0.5s. 
 
 **`SwitchMode 9`**   
 Set switch to multi change follow mode (`0 = OFF`, `1 = ON`, `2x change = HOLD`)
 
 Same as `SwitchMode 1` but when the state of the circuit changes within 0.5s twice no `OFF/ON` commands are send but Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
-> [!EXAMPLE]
-> When you change switch fast within 0.5 s some extra action can be triggered using rules. On/Off power state is only changed when there is no 2nd switch change within 0.5 s. 
+> [!WARNING]
+> When you change switch states fast (within 0.5s) some extra actions can be triggered using rules. ON/OFFpower state is only changed when there is no second switch change within 0.5s. 
 
 **`SwitchMode 10`**   
 Set switch to multi change inverted follow mode (`0 = ON`, `1 = OFF`, `2x change = HOLD`)
 
 Same as `SwitchMode 2` but when the state of the circuit changes within 0.5s twice no `ON/OFF` commands are send but Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
-> [!EXAMPLE]
-> When you change switch fast within 0.5 s some extra action can be triggered using rules. On/Off power state is only changed when there is no 2nd switch change within 0.5 s. 
+> [!WARNING]
+> When you change switch states fast (within 0.5s) some extra actions can be triggered using rules. ON/OFFpower state is only changed when there is no second switch change within 0.5s. 
 
 **`SwitchMode 11`**   
-Set push-button with dimmer mode
+Set switch to pushbutton with dimmer mode
 
 Tasmota will send a `TOGGLE` command (use Switch<x>#state=2 in rules) when the button is pressed for a short time and is then released. When pressing the button (closing the circuit) for a long time (set in `SetOption32`) Tasmota sends repeated `INC_DEC` (increment or decrement the dimmer) commands (use Switch<x>#state=4 in rules) as long as the button is pressed. Releasing the button starts a internal timer, the time is set in `SetOption32`. When released for the time set in `SetOption32` Tasmota sends a `CLEAR` command (use Switch<x>#state=6 in rules). If the button is pressed again before the timeout Tasmota sends a `INV` command (use Switch<x>#state=5 in rules). The `INV` command is for the controlling sortware (home assistant) to switch between incrementing and decrementing the dimmer.
 
@@ -133,7 +133,17 @@ Tasmota will send a `TOGGLE` command (use Switch<x>#state=2 in rules) when the b
 
 
 **`SwitchMode 12`**   
-Set inverted push-button with dimmer mode. The same as `Switchmode 11` with inverted Input
+Set switch to inverted pushbutton with dimmer mode. The same as `Switchmode 11` but with inverted behaviour.
+
+**`SwitchMode 13`**   
+Set switch to "push to on" mode (`1 = ON`, `0 = nothing`)
+
+Tasmota will send an `ON` command when the button pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Switch off using `PulseTime`.
+
+**`SwitchMode 14`**   
+Set switch to inverted "push to on" mode (`0 = ON`, `1 = nothing`)
+
+> [!TIP] This mode is useful with PIR sensor switches 
 
 ## SwitchTopic
 
