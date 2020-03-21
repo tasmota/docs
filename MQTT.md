@@ -137,7 +137,7 @@ Tasmota uses 3 prefixes for forming a FullTopic:
 ### %topic%
 All MQTT status messages will be sent using the configurable `%topic%` which must be made unique by the user. It can be called `bedroom` but it could also be called `XP-TS_10` as long as the user knows what it is and where to find it.
 
-?> Default Topic is `tasmota`
+?> Default Topic is `tasmota_XXXX` where `XXXX` is unique and derives from the MAC address
 
 The use of the `%topic%` token is mandatory in case you want to use [`ButtonTopic`](Commands#buttontopic) and/or [`SwitchTopic`](Commands#switchtopic). It also provides for GroupTopic and Fallback Topic functionality.
 
