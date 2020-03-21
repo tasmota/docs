@@ -36,10 +36,16 @@ A beacon with beeper can made beeping by setting RSSI to 99 by MQTT cmd.
 
 Different vendors offer BT-solutions with different accessibilities under the MIJIA-brand. A common solution is the use of so-called „MiBeacons“ which are BLE advertisement packets with a certain data structure, which are broadcasted by the devices automatically. These packets already contain the sensor data and can be passively received by other devices. 
 
-Most of the „older“ BT-sensor-devices use unencrypted messages, which can be read by all kinds of BLE-devices or even a NRF24L01. The big advantage is the power efficiency as no active bi-directional connection has to be established. This is therefore the preferred option, if technically possible.
+Most of the „older“ BT-sensor-devices use unencrypted messages, which can be read by all kinds of BLE-devices or even a NRF24L01. The big advantage is the power efficiency as no active bi-directional connection has to be established. This is therefore the preferred option, if technically possible (= for the supported sensors).
 
 With the arrival of the (cheap) LYWSD03 came the problem of encrypted data in MiBeacons, which to date has only been successfully decrypted in open source projects in a quite complicated way (getting the 16-byte-key with 3rd-party-software while pairing the device with the original Xiaomi-Apps).
-At least the device allows the use of a simple BLE connection without any encrypted authentication and the reading of the sensor data using normal subscription methods to GATT-services. This is more power hungry than the passive reading of BLE advertisements.
+At least the device allows the use of a simple BLE connection without any encrypted authentication and the reading of the sensor data using normal subscription methods to GATT-services. This is more power hungry than the passive reading of BLE advertisements.   
+  
+### Working principle of both Tasmota drivers
+  
+The idea is to provide drivers with as much automatic functions as possible. Besides the hardware setup, there are zero or very few things to configure.  
+The sensor namings are based on the original sensor names and shortened if appropriate (Flower care -> Flora). A part of the MAC will be added to the name as a suffix.  
+All sensors are treated as if they are physically connected to the ESP8266-device.
 
 
 ## Tasmota-HM10-driver
@@ -53,8 +59,8 @@ At least the device allows the use of a simple BLE connection without any encryp
 
 ### expected behavior:
 1. The driver will set a few options of the HM-10
-2. A discovery scan will search for known sensors (Mi Flora, MJ_HT_V1, LYWSD02, LYWSD03)
-3. LYWSD0x-sensors will be connected at a given interval, a subscription is established for 5 seconds and temperature/humidity/battery will be read.
+2. A discovery scan will search for known sensors (Mi Flora, MJ_HT_V1, LYWSD02, LYWSD03, CGG1, CGD1)
+3. Supported sensors except the MJ_HT_V1 will be connected at a given interval, a subscription is established for 5 seconds and temperature/humidity/battery will be read.
 4. After deconnection return to point 3 after the interval.
 
 ### command interface:  
@@ -75,6 +81,8 @@ start an automatic discovery scan with an interval of x seconds to receive data 
 + RULES
 After a discovery scan the driver will report the number of found sensors. As the driver can not know, how many sensors are to be found, this can be used to force a re-scan.  
 `Rule1 on hm10#found<6 do ADD1 1 endon on Var1#state<=3 do hm10scan endon`  - will re-scan up to 3 times, if less than 6 sensors were found.  
++ DEW POINT  
+Dew point will be calculated.  
 
 
 ### Supported sensors:  
@@ -104,7 +112,7 @@ This device works with an AAA-battery for several months and the driver can read
 The driver can read temperature, humidity and battery. Time or alarm functions are not supported.  
 
 #### not supported:  
-CGG1 (might give readings via MiBeacons, but is untested)
+CGG1 should be found and may give readings via MiBeacons, but is untested.  
 
 
 ## Experimental BLE-Bridge for certain Mijia-Bluetooth-Sensor using the NRF24L01(+)
@@ -177,5 +185,5 @@ Alarm clock powered by 2 AA-batteries. Driver can read temperature and humidity.
 
 #### Not supported:  
  
-The situation for the new (and cheap) LYWSD03MMC (small, rectangular form) is different, as the sensor data in the advertisements is encrypted. It is highly unlikely to read data with the NRF24L01 out-of-the-box in the future.  
+The situation for the LYWSD03MMC (small, rectangular form) is different, as the sensor data in the advertisements is encrypted. It is highly unlikely to read data with the NRF24L01 out-of-the-box in the future.  
 
