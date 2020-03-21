@@ -20,6 +20,7 @@
 * [Displays](Displays)
 * [Blinds and Shutters](Blinds-and-Shutters)
 * [TasmotaSlave](TasmotaSlave)
+* [Device Groups](Device-groups)
 * [Power Monitoring Calibration](Power-Monitoring-Calibration)
 * [TLS](TLS)
 * [Web UI](WebUI)
