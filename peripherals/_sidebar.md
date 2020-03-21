@@ -40,6 +40,7 @@
 * [SDS011 (SDS021)](peripherals/SDS011)
 * [SHT30](peripherals/SHT30)
 * [Smart Meter Interface](peripherals/Smart-Meter-Interface)
+* [TX20/TX23](peripherals/TX2x)
 * [TSL2561](peripherals/TSL2561)
 * [VEML6070](peripherals/VEML6070)
 * [VL53L0x](peripherals/VL53L0x)
