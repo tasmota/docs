@@ -41,7 +41,7 @@ Most of the „older“ BT-sensor-devices use unencrypted messages, which can be
 With the arrival of the (cheap) LYWSD03 came the problem of encrypted data in MiBeacons, which to date has only been successfully decrypted in open source projects in a quite complicated way (getting the 16-byte-key with 3rd-party-software while pairing the device with the original Xiaomi-Apps).
 At least the device allows the use of a simple BLE connection without any encrypted authentication and the reading of the sensor data using normal subscription methods to GATT-services. This is more power hungry than the passive reading of BLE advertisements.   
   
-### Working principle of both Tasmota drivers
+### Working principle of both Tasmota drivers (>8.2.0.1)
   
 The idea is to provide drivers with as much automatic functions as possible. Besides the hardware setup, there are zero or very few things to configure.  
 The sensor namings are based on the original sensor names and shortened if appropriate (Flower care -> Flora). A part of the MAC will be added to the name as a suffix.  
@@ -93,10 +93,10 @@ This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the drive
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/lywsd02.jpg?raw=true" style="width:200px"></img>  
  
   
-+ LYWSD03  
++ LYWSD03MMC  
 Small, rectangular form, 1 x CR2032-coin-cell. The driver can read temperature, humidity and battery.
   
-+ Flora  
++ Flower Care ("Flora")  
 Works with a CR2032-coin-cell and provides temperature, illuminance, (soil-)humidity, (soil-)fertility and battery.  
   
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/miflora.png?raw=true" style="width:200px"></img>  
@@ -163,7 +163,7 @@ This device works with an AAA-battery for several months and the driver can read
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/mj_ht_v1.png?raw=true" style="width:200px"></img>
   
   
-#### Mi Flora:  
+#### Flower Care ("Flora"):  
 Works with a CR2032-coin-cell and provides temperature, illuminance, (soil-)humidity and (soil-)fertility.  
   
 <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/miflora.png?raw=true" style="width:200px"></img>  
