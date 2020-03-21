@@ -211,3 +211,15 @@ Read more about [peripherals](peripherals/).
 | 187 | Slave RSTi  | TasmotaSlave Reset Inverted                                                                |
 | 188 | HPMA RX     | Honeywell HPMA115S0 Serial Rx                                                              |
 | 189 | HPMA TX     | Honeywell HPMA115S0 Serial Tx                                                              |
+| 190 | GPS RX     | GPS Serial Tx                                                              |
+| 191 | GPS TX     | GPS Serial Tx                                                              |
+| 192 | DSB OUT     | Pseudo Single wire DS18B20 or DS18S20            |
+| 193 | DHT11 OUT     | Pseudo Single wire DHT11, DHT21, DHT22, AM2301, AM2302, AM2321         |
+| 194 | HM10 RX     | HM10-BLE-Mijia-bridge Serial            |
+| 195 | HM10 TX     | HM10-BLE-Mijia-bridge Serial            |
+| 196 | LE01MR RX     | F&F LE-01MR Energy Meter Serial            |
+| 197 | LE01MR TX     | F&F LE-01MR Energy Meter Serial            |
+| 198 | CC1101 GDO0     | CC1101 RX Pin            |
+| 199 | CC1101 GDO2     | CC1101 TX Pin            |
+| 200 | HRXL RX     | Data from MaxBotix HRXL sonar range sensor            |
+| 201 | MOODL TX     | ElectriQ iQ-wifiMOODL Serial TX          |

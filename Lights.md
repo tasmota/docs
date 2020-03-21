@@ -246,6 +246,10 @@ Configured in Tasmota by assigning `SM16716 CLK`, `SM16716 DAT` and `SM16716 PWR
 
 Some SM16716 bulbs have BGR order and need [`SetOption37 54`](Commands#setoption57) to work properly.
 
+### PWM Dimmer Switches
+
+Specific module (requires a custom binary) for Martin Jerry/acenx/Tessan/NTONPOWER SD0x PWM dimmer switches. Brightness of the load for these dimmers is controlled by a PWM GPIO pin. They typically have power, up and down buttons, a power status LED, five brightness LEDs and another status LED. [Read more...](PWM-dimmer-switch)
+
 ## Addressable LEDs
 Lights where each LED is individually controlled. In these lights it is possible to adjust each LEDs power, color and brightness, all just with the use of a single GPIO pin.
 

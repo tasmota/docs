@@ -31,7 +31,7 @@ Some of notable new features:
 - Support for gzipped binaries
 - Added group control of devices using UDP
 - Added support for Mijia BLE sensors using [HM10](/peripherals/HM-1x) or [NRF24L01](/peripherals/NRF24L01) peripherals
-- Added native support for Martin Jerry type PWM dimmer switches
+- Added native support for Martin Jerry type [PWM dimmer switches](PWM-dimmer-switch)
 - Plenty of new [switchmodes](Buttons-and-Switches#switchmode).
 
  See [changelog](changelog-8.2) for a complete list of new features, changes and fixes.
