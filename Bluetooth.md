@@ -69,10 +69,16 @@ sends AT-commands,e.g. hm10at verr? results in AT+VERR?
 + hm10time x
 sets the time of sensor x (if it is a LYWSD02) to the system-UTC-time and the timezone of Tasmota. Sensors are ordered from 0 to n in the order of the arrival. 
 + hm10auto x
-start an automatic discovery scan with an interval of x seconds to receive data in BLE-advertisements periodically. This an active scan and it should only be used, if necessary (ATM for the MJ_HT_V1). This might change in the future, if the firmware of the HM-10 will support this.
+start an automatic discovery scan with an interval of x seconds to receive data in BLE-advertisements periodically. This an active scan and it should only be used, if necessary (ATM for the MJ_HT_V1). This might change in the future, if a newer firmware of the HM-10 will support passive scan.
+
+### Features:  
++ RULES
+After a discovery scan the driver will report the number of found sensors. As the driver can not know, how many sensors are to be found, this can be used to force a re-scan.  
+`Rule1 on hm10#found<6 do ADD1 1 endon on Var1#state<=3 do hm10scan endon`  - will re-scan up to 3 times, if less than 6 sensors were found.  
 
 
-### supported sensors:  
+### Supported sensors:  
+
 + LYWSD02  
 This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the driver can read temperature, humidity and battery. In addition the clock of the device can be set tot the system-time of Tasmota via command "hm10time".  
   
@@ -80,16 +86,25 @@ This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the drive
  
   
 + LYWSD03  
+Small, rectangular form, 1 x CR2032-coin-cell. The driver can read temperature, humidity and battery.
   
 + Flora  
+Works with a CR2032-coin-cell and provides temperature, illuminance, (soil-)humidity, (soil-)fertility and battery.  
+  
+<img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/miflora.png?raw=true" style="width:200px"></img>  
   
 + MJ_HT_V1  
+Model: LYWSDCGQ/01ZM  
+This device works with an AAA-battery for several months and the driver can read temperature, humidity and battery level. Needs HM10AUTO to update sensor data.
+  
+<img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/mj_ht_v1.png?raw=true" style="width:200px"></img>
+ 
   
 + CGD1 (Alarm clock)  
-
+The driver can read temperature, humidity and battery. Time or alarm functions are not supported.  
 
 #### not supported:  
-CGG1 (might give readings via MiBeacons but is untested)
+CGG1 (might give readings via MiBeacons, but is untested)
 
 
 ## Experimental BLE-Bridge for certain Mijia-Bluetooth-Sensor using the NRF24L01(+)
@@ -162,7 +177,5 @@ Alarm clock powered by 2 AA-batteries. Driver can read temperature and humidity.
 
 #### Not supported:  
  
-The situation for the new (and cheap) LYWSD03MMC (small, rectangular form) is different, as the sensor data in the advertisements is encrypted. 
-
-It is highly unlikely to read data with the NRF24L01 out-of-the-box in the future.  
+The situation for the new (and cheap) LYWSD03MMC (small, rectangular form) is different, as the sensor data in the advertisements is encrypted. It is highly unlikely to read data with the NRF24L01 out-of-the-box in the future.  
 
