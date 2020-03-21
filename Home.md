@@ -23,7 +23,7 @@
 Tasmota v8.2 Elliot is released. 
 
 **Breaking changes:** 
- - Enabling `SetOption19` will no longer switch %prefix& and %topic% and will keep the default topic structure
+ - Enabling `SetOption19` will no longer switch %prefix% and %topic% and will keep the default topic structure
  - Zigbee command prefixes have changed from `Zigbee*` to `Zb*`
 
 Some of notable new features:
