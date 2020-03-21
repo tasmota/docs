@@ -38,7 +38,7 @@ Different vendors offer BT-solutions with different accessibilities under the MI
 
 Most of the „older“ BT-sensor-devices use unencrypted messages, which can be read by all kinds of BLE-devices or even a NRF24L01. The big advantage is the power efficiency as no active bi-directional connection has to be established. This is therefore the preferred option, if technically possible.
 
-With the arrival of the (cheap) LYWSD03 came the problem of encrypted data in MiBeacons, which to date has not been successfully decrypted in open source projects.
+With the arrival of the (cheap) LYWSD03 came the problem of encrypted data in MiBeacons, which to date has only been successfully decrypted in open source projects in a quite complicated way (getting the 16-byte-key with 3rd-party-software while pairing the device with the original Xiaomi-Apps).
 At least the device allows the use of a simple BLE connection without any encrypted authentication and the reading of the sensor data using normal subscription methods to GATT-services. This is more power hungry than the passive reading of BLE advertisements.
 
 
@@ -68,6 +68,8 @@ set or show the speed of the serial interface of the esp8266, not of the hm10
 sends AT-commands,e.g. hm10at verr? results in AT+VERR?  
 + hm10time x
 sets the time of sensor x (if it is a LYWSD02) to the system-UTC-time and the timezone of Tasmota. Sensors are ordered from 0 to n in the order of the arrival. 
++ hm10auto x
+start an automatic discovery scan with an interval of x seconds to receive data in BLE-advertisements periodically. This an active scan and it should only be used, if necessary (ATM for the MJ_HT_V1). This might change in the future, if the firmware of the HM-10 will support this.
 
 
 ### supported sensors:  
@@ -78,9 +80,16 @@ This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the drive
  
   
 + LYWSD03  
+  
++ Flora  
+  
++ MJ_HT_V1  
+  
++ CGD1 (Alarm clock)  
+
 
 #### not supported:  
-Mi Flora, MJ_HT_V1, CGG1
+CGG1 (might give readings via MiBeacons but is untested)
 
 
 ## Experimental BLE-Bridge for certain Mijia-Bluetooth-Sensor using the NRF24L01(+)
@@ -145,11 +154,15 @@ This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the drive
   
 #### CGG1:  
 This device has an E-Ink-Display, with CR2430-coin-cell and the driver can read temperature, humidity and battery.  
+  
+  
+#### CGD1:  
+Alarm clock powered by 2 AA-batteries. Driver can read temperature and humidity.  
  
 
 #### Not supported:  
  
-The situation for the new (and cheap) LYWSD03MMC (small, rectangular form) is different, as the sensor data in the advertisements is encrypted (or even absent at all). The same is valid for the CGD1, which is a tiny alarm clock with temperature and humidity.
+The situation for the new (and cheap) LYWSD03MMC (small, rectangular form) is different, as the sensor data in the advertisements is encrypted. 
 
 It is highly unlikely to read data with the NRF24L01 out-of-the-box in the future.  
 
