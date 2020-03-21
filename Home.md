@@ -19,7 +19,7 @@
 <!-- tabs:start -->
 
 #### **Tasmota v8.2**
-**2010-03-20**
+**2010-03-21**
 Tasmota v8.2 Elliot is released. 
 
 **Breaking changes:** 
