@@ -6,7 +6,7 @@
 - Change commands `Prefix`, `Ssid`, `StateText`, `NTPServer`, and `FriendlyName` displaying all items
 - Change Zigbee command prefix from `Zigbee*` to `Zb*`
 - Change MQTT message size with additional 200 characters
-- Change display of some date and time messages from "Wed Feb 19 10:45:12 2020" to "2020-02-19T10:45:12"
+- Change display of some date and time messages from `Wed Feb 19 10:45:12 2020` to `2020-02-19T10:45:12`
 - Change IRremoteESP8266 library updated to v2.7.4
 - Fix `PowerDelta` zero power detection ([7515](https://github.com/arendst/Tasmota/issues/7515))
 - Fix `White` added to light status ([7142](https://github.com/arendst/Tasmota/issues/7142))
