@@ -11,7 +11,7 @@
 Each module is assigned a number which is used in [Template configuration](Templates#BASE) or when using [`Module`](Commands#module) command.
 
 | #| Name| Module specifics
-| ---: | :-------- | :---
+| ---: | :--- | :---
 | 0 | Template | Module for currently active template. Named after the template NAME field.<br>*If a template is not active it will display `Generic (0)`.<br>**Do not use it until you configure a template**, use `Generic (18)` instead*|
 <a id="SonoffBasic">	</a>	1	|	Sonoff Basic	|	
 <a id="SonoffRF">	</a>	2	|	Sonoff RF	|	
