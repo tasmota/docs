@@ -30,7 +30,7 @@ Tasmota v8.2 Elliot is released.
 Some of notable new features:
 - Support for gzipped binaries
 - Added group control of devices using UDP
-- Added support for Mijia BLE sensors using HM10 or NRF24L01 peripherals
+- Added support for Mijia BLE sensors using [HM10](/peripherals/HM-1x) or [NRF24L01](/peripherals/NRF24L01) peripherals
 - Added native support for Martin Jerry type PWM dimmer switches
 - Plenty of new [switchmodes](Buttons-and-Switches#switchmode).
 
