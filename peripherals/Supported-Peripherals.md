@@ -3,6 +3,7 @@ Name|Description|Image
 [**A4988**](peripherals/A4988-Stepper-Motor-Controller)|Stepper Motor Controller 
 [**ADC**](peripherals/ADC) | Analog input over A0 pin  
 **ADS1x15** | A/D Converter 
+**AHT10/AHT15** | Asair AHT10 / AHT15 Temperature and Humidity Sensor (I<sup>2</sup>C)
 [**AM2301 (DHT21), AM2302 (DHT22), AM2321**](peripherals/AM2301) | Temperature and Humidity Sensor (gpio)|<img src="https://user-images.githubusercontent.com/5904370/53279561-cfb18480-3711-11e9-9889-76ab1d6eafcb.png" style="width:50px"></img>
 [**APDS-9960**](peripherals/APDS-9960) |  Ambient Light, RGB Color and Proximity Sensor with Gesture Detection  | <img src="https://i.postimg.cc/qRLyPy1n/APDS-9960-1-720x533.jpg" style="width:30px"></img>
 [**AZ 7798**](peripherals/AZ-7798) | CO<sub>2</sub> Meter Datalogger
@@ -11,16 +12,20 @@ Name|Description|Image
 [**BME280**](peripherals/BME280) | Temperature, Humidity and Pressure Sensor
 [**BME680**](peripherals/BME680) | Temperature, Humidity, Pressure and Gas Sensor
 [**Buzzer**](peripherals/Buzzer) | Audio Signalling Device
-[**CC2530**](peripherals/CC2530) | Zigbee Adapter (serial)
+[**CC2530**](peripherals/CC2530) | TI CC2530 Zigbee Adapter (serial)
 **CCS811** | Gas and Air Quality sensor (I<sup>2</sup>C)
 [**Chirp! Soil Moisture Sensor**](peripherals/Moisture-Sensor-and-Chirp!-Sensor) | Moisture Sensor (I<sup>2</sup>C)
 [**DHT11**](peripherals/DHT11) | Temperature and Humidity Sensor
-**DHT12**
+**DHT12** |
 **[DS18x20](peripherals/DS18x20)** | Temperature sensor (1-Wire)
+**DS1624/DS1621** | Temperature sensor (1-Wire)
 [**DS3231**](peripherals/DS3231) | Real-Time-Clock (I<sup>2</sup>C)
+**F&F LE-01MR** | F&F LE-01MR Single Phase Modbus Energy meter
 [**GPS-NTP-server**](peripherals/GPS-NTP-server) | GPS-NTP-server (serial)
-[**HM16/HM17**](peripherals/iBeacon-driver) |  Bluetooth iBeacon reader (serial)
+**HDC1080** | Texas Instruments HDC1080 Humidity and Temperature Sensor (I<sup>2</sup>C)
+**[HM-1x](peripherals/Hm-1x)** |  Bluetooth iBeacon reader (serial)
 **HR-E** | Water Meter Encoder interface (serial)
+**HRXL** | MaxBotix HRXL line of Sonar Ranging Sensors (gpio)
 [**HC-SR04 (HC-SR04P, JSN-SR04T)**](peripherals/HC-SR04) | Ultrasonic Sensor
 **[Honeywell HIH](peripherals/Honeywell-HIH)** | Temperature and Humidity sensor (I<sup>2</sup>C)
 **Honeywell HPMA115xx** | Particulate Matter Sensor (serial)
@@ -37,8 +42,8 @@ Name|Description|Image
 [**MGC3130**](peripherals/MGC3130) | 3D Tracking and Gesture Controller
 [**MH-Z19B**](peripherals/MH-Z19B) | CO<sub>2</sub> Sensor |<img src="https://user-images.githubusercontent.com/5904370/53279635-54040780-3712-11e9-8c83-970280003b6d.png" style="width:50px"></img>
 [**MI-HM10**](peripherals/MI-HM10) | BLE-Bridge via HM-10
-[**MIBLE**](peripherals/MIBLE) | experimental BLE-Bridge via NRF24L01
 [**MLX90614**](peripherals/MLX90614) | MLX9061X Infrared Thermometer (I<sup>2</sup>C) | <img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/mlx90614-1.jpg?raw=true" style="width:30px"></img>
+[**NRF24L01**](peripherals/NRF24L01) | NRF24L01 as BLE-bridge for Mijia BT sensors (SPI)
 [**MPR121**](peripherals/MPR121) | Proximity Capacitive Touch Sensor Controller (I<sup>2</sup>C)
 [**MPU6050**](peripherals/MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer sensor (I<sup>2</sup>C)
 [**P1 Smart Meter**](peripherals/P1-Smart-Meter) | Energy Meter (serial)
@@ -67,7 +72,7 @@ Name|Description|Image
 **TM1638** | 8 Switch, LED and 7 Segment Unit sensor (gpio)
 [**TSL2561**](peripherals/TSL2561) | Luminosity Sensor (I<sup>2</sup>C)
 **TSL2591** | Luminosity Sensor (I<sup>2</sup>C)
-**TX20** | La Crosse Wind (Anemometer) | sensor (gpio)
+[**TX2x**](peripherals/TX2x) | La Crosse TX2x Series Anemometer | sensor (gpio)
 [**VEML6070**](peripherals/VEML6070) |  UV Sensor (I<sup>2</sup>C)
 [**VL53L0x**](peripherals/VL53L0x) | Time of flight sensor (I<sup>2</sup>C)
 [**WS2812B**](peripherals/WS2812B-RGB-Shield) | Wemos RGB LED Shield
