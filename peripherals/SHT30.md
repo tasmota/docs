@@ -1,3 +1,5 @@
+!>**This feature is included only in tasmota-sensors.bin** 
+
 **Wemos SHT30 Shield High Precision Humidity & Temperature (I<sup>2</sup>C) sensor**
 
 

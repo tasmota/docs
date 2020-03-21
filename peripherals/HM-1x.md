@@ -1,3 +1,5 @@
+!>**This feature is included only in tasmota-sensors.bin** 
+
 # HM-1x-Family of BT-modules  
   
 The HM-1x-serie is  a whole family of Bluetooth Low Energy devices made by Jinan Huamao.  

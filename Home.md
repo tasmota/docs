@@ -23,6 +23,7 @@
 Tasmota v8.2 Elliot is released. 
 
 **Breaking changes:** 
+ - Most of the sensor support is moved to tasmota-sensors.bin. Consult [Builds table](Builds) for complete information.
  - Enabling `SetOption19` will no longer switch %prefix% and %topic% and will keep the default topic structure
  - Zigbee command prefixes have changed from `Zigbee*` to `Zb*`
 
