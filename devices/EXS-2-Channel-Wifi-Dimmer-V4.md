@@ -27,7 +27,7 @@ Bevor Sie die Firmware flashen, muss das Modul mit 230V (Lötpads "230V IN" und 
 
 ## Schematic
 
-![](https://ex-store.de/media/image/product/222/lg/2-kanal-rs232-wifi-wlan-dimmer-modul-v4-fuer-unterputzmontage-230v-3a~3.png)  
+![](https://user-images.githubusercontent.com/7702766/77254795-f1957780-6c41-11ea-9a11-d589b8378c43.png)  
 
 ## Menu
 
