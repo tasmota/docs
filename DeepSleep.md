@@ -20,11 +20,11 @@ There are a couple of different methods to temporarily disable deep sleep mode a
 
 - Use a GPIO and connect it GND. This can be performed through a switch like in the schematic below. Flipping the switch ON will prevent Tasmota to enter DeepSleep again after next wake-up until the switch is flipped back OFF.
 
-  ![](//_media/deepsleep_switch.png)
+  ![](_media/deepsleep_switch.png)
 
   You can define the `DeepSleep (182)` component as shown below:
 
-  ![](//_media/deepsleep_deepsleep182.png)
+  ![](_media/deepsleep_deepsleep182.png)
 
   The following GPIOs **CANNOT** be used for that purpose :
   - GPIO16 (because it is connected to RST),
@@ -35,7 +35,7 @@ There are a couple of different methods to temporarily disable deep sleep mode a
 
   An interresting use-case is to disable DeepSleep when an external power (USB, PSU, solar panel...) is applied to the device using a transistor like:
 
-  ![](//_media/deepsleep_transistor.png)
+  ![](_media/deepsleep_transistor.png)
 
 If the device is not (easily) accessible, the below methods can be used disable the DeepSleep loop without physically accessing it.
 

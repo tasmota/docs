@@ -35,7 +35,7 @@ tele/ibeacon/SENSOR = {"Time":"2020-03-24T20:05:00","IBEACON_DEAABC788BC1":{"RSS
 > [!TIP] When first connected some modules will be in peripheral mode. You have to change it to central mode using commands `Sensor52 1` and `Sensor52 2`.
 
 ### Supported Devices
-<img src="/_media/bluetooth/nRF51822.png" width=155 align="right">
+<img src="_media/bluetooth/nRF51822.png" width=155 align="right">
 
 All Apple compatible iBeacon devices should be discoverable. 
 
@@ -50,7 +50,7 @@ Cheap "iTag" beacons with a beeper. The battery on these lasts only about a mont
 - [eBay](https://www.ebay.de/sch/i.html?_from=R40&_trksid=m570.l1313&_nkw=Smart-Tag-GPS-Tracker-Bluetooth-Anti-verlorene-Alarm-Key-Finder-Haustier-Kind&_sacat=0)
 - [Amazon.com](https://www.amazon.com/s?k=itag+tracker+4.0)
 
-<img src="/_media/bluetooth/itag.png" width=225><img src="/_media/bluetooth/itag2.png" width=225><img src="/_media/bluetooth/itag3.png" width=225>
+<img src="_media/bluetooth/itag.png" width=225><img src="_media/bluetooth/itag2.png" width=225><img src="_media/bluetooth/itag3.png" width=225>
 
 > [!TIP] 
 You can activate a beacon with a beeper using command `IBEACON_%BEACONID%_RSSI 99` (ID is visible in webUI and SENSOR reports). This command can freeze the Bluetooth moduel and beacon scanning will stop. After a reboot of Tasmota the beacon will start beeping and scanning will resume.
@@ -102,11 +102,11 @@ HM10Auto <a id="hm10auto"></a>|`<value>` = start an automatic discovery scan wit
     <th class="th-lboi">MiFlora</th>
   </tr>
   <tr>
-    <td class="tg-lboi"><img src="/_media/bluetooth/mj_ht_v1.png" width=200></td>
-    <td class="tg-lboi"><img src="/_media/bluetooth/LYWDS02.png" width=200></td>
-    <td class="tg-lboi"><img src="/_media/bluetooth/LYWSD03MMC.png" width=200></td>
-    <td class="tg-lboi"><img src="/_media/bluetooth/CGD1.png" width=200></td>
-    <td class="tg-lboi"><img src="/_media/bluetooth/miflora.png" width=200></td>
+    <td class="tg-lboi"><img src="_media/bluetooth/mj_ht_v1.png" width=200></td>
+    <td class="tg-lboi"><img src="_media/bluetooth/LYWDS02.png" width=200></td>
+    <td class="tg-lboi"><img src="_media/bluetooth/LYWSD03MMC.png" width=200></td>
+    <td class="tg-lboi"><img src="_media/bluetooth/CGD1.png" width=200></td>
+    <td class="tg-lboi"><img src="_media/bluetooth/miflora.png" width=200></td>
   </tr>
   <tr>
     <td class="tg-lboi">temperature, humidity, battery</td>
@@ -161,11 +161,11 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <th class="th-lboi">MiFlora</th>
   </tr>
   <tr>
-    <td class="tg-lboi"><img src="/_media/bluetooth/mj_ht_v1.png" width=200></td>
-    <td class="tg-lboi"><img src="/_media/bluetooth/LYWDS02.png" width=200></td>
-    <td class="tg-lboi"><img src="/_media/bluetooth/CGG1.png" width=200></td>
-    <td class="tg-lboi"><img src="/_media/bluetooth/CGD1.png" width=200></td>
-    <td class="tg-lboi"><img src="/_media/bluetooth/miflora.png" width=200></td>
+    <td class="tg-lboi"><img src="_media/bluetooth/mj_ht_v1.png" width=200></td>
+    <td class="tg-lboi"><img src="_media/bluetooth/LYWDS02.png" width=200></td>
+    <td class="tg-lboi"><img src="_media/bluetooth/CGG1.png" width=200></td>
+    <td class="tg-lboi"><img src="_media/bluetooth/CGD1.png" width=200></td>
+    <td class="tg-lboi"><img src="_media/bluetooth/miflora.png" width=200></td>
   </tr>
   <tr>
     <td class="tg-lboi">temperature, humidity, battery</td>
