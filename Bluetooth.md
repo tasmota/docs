@@ -1,8 +1,24 @@
-# Bluetooth
-
 Tasmota provides limited Bluetooth functionality through the use of external hardware. Current drivers support the use of bluetooth beacons and several BLE sensors from the Mijia/Xiaomi-universe.  
   
+
+<!-- The ibeacon driver uses the BLE4 module [HM-17](https://www.herman-shop.com/PDF/bluetooth%20hm16%20hm17.pdf) (HM-16 should also work).
+The HM-10 works too and maybe other compatible modules (capable of bluetooth central role and driven by AT commands).
+
+The driver needs firmware Version V120 or V110 for the HM-17 Module.
+For using the HM-10 in most cases a low level flash of the firmware is neccessary. Since nearly all available HM-10 are Clones!
+ You can use the [ESP8266 HM-10 Flasher](https://github.com/Jason2866/CCLoader) to update the firmware. The flasher is based on this [work](https://circuitdigest.com/microcontroller-projects/how-to-flash-the-firmware-on-cloned-hm-10-ble-module-using-arduino-uno)
   
+
+  
+## MIJIA-BLE-sensors via HM-10  
+  
+The HM-10 is a 3.3v Bluetooth 4.0  module based on the TI CC2540/1-Chip and was the development platform for this driver.
+  
+The default baud rate of firmware>700 is 115200.  
+The expected firmware version is 707. Other versions may work too, but before raising an issue on GitHub a test with this version is mandatory.  
+ -->
+
+
   
 ## iBeacon  
   

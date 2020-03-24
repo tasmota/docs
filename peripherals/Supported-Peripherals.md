@@ -23,10 +23,11 @@ Name|Description|Image
 **F&F LE-01MR** | F&F LE-01MR Single Phase Modbus Energy meter
 [**GPS-NTP-server**](peripherals/GPS-NTP-server) | GPS-NTP-server (serial)
 **HDC1080** | Texas Instruments HDC1080 Humidity and Temperature Sensor (I<sup>2</sup>C)
-**[HM-1x](peripherals/Hm-1x)** |  Bluetooth iBeacon reader (serial)
+**[HM-10](peripherals/HM-10)** |  BLE Bluetooth gateway (serial)
+**[HM-17/HM-16](peripherals/HM-17)** |  Bluetooth iBeacon reader (serial)
 **HR-E** | Water Meter Encoder interface (serial)
 **HRXL** | MaxBotix HRXL line of Sonar Ranging Sensors (gpio)
-[**HC-SR04 (HC-SR04P, JSN-SR04T)**](peripherals/HC-SR04) | Ultrasonic Sensor
+**[HC-SR04 (HC-SR04P, JSN-SR04T)](peripherals/HC-SR04)** | Ultrasonic Sensor
 **[Honeywell HIH](peripherals/Honeywell-HIH)** | Temperature and Humidity sensor (I<sup>2</sup>C)
 **Honeywell HPMA115xx** | Particulate Matter Sensor (serial)
 **HTU21** | Temperature and Humidity sensor (I<sup>2</sup>C)
