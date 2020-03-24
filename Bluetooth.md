@@ -1,4 +1,4 @@
-Tasmota provides limited Bluetooth functionality through the use of external hardware. Current drivers support the use of bluetooth beacons and several BLE sensors from the Mijia/Xiaomi-universe.  
+Tasmota provides limited Bluetooth functionality through the use of external hardware. Two different drivers support the use of bluetooth beacons or several BLE sensors from the Mijia/Xiaomi-universe.  
   
 
 <!-- The ibeacon driver uses the BLE4 module [HM-17](https://www.herman-shop.com/PDF/bluetooth%20hm16%20hm17.pdf) (HM-16 should also work).
@@ -102,7 +102,10 @@ sends AT-commands,e.g. hm10at verr? results in AT+VERR?
 + hm10time x
 sets the time of sensor x (if it is a LYWSD02) to the system-UTC-time and the timezone of Tasmota. Sensors are ordered from 0 to n in the order of the arrival. 
 + hm10auto x
-start an automatic discovery scan with an interval of x seconds to receive data in BLE-advertisements periodically. This an active scan and it should only be used, if necessary. This might change in the future, if a newer firmware of the HM-10 will support passive scan.
+start an automatic discovery scan with an interval of x seconds to receive data in BLE-advertisements periodically. This an active scan and it should only be used, if necessary. This might change in the future, if a newer firmware of the HM-10 will support passive scan.  
++ hm10 page x  
+shows a maximum of x sensors at a time in the web UI, if there are more sensors than x, the driver will cycle through multiple pages.  
+
 
 ### Features:  
 + RULES
