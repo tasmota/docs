@@ -117,7 +117,7 @@ HM10Auto <a id="hm10auto"></a>|`<value>` = start an automatic discovery scan wit
   </tr>
   <tr>
     <td class="tg-lboi"></td>
-    <td class="tg-lboi">set time using <a href="Commands#hm10time">"HM10Time"</a></td>
+    <td class="tg-lboi">set time using "HM10Time"</td>
     <td class="tg-lboi"></td>
     <td class="tg-lboi">unsupported time or alarm</td>
     <td class="tg-lboi"></td>
