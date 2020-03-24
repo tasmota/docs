@@ -94,7 +94,7 @@ Then reboot ESP8266.
 + hm10scan  
 start new discovery scan  
 + hm10period x  
-set or show interval in seconds between sensor read cycles (is set to the value of teleperiod at start)  
+set or show interval in seconds between sensor read cycles (is set to the value of teleperiod at start). hm10period 1 will trigger one read cycle and not change the period. 
 + hm10baud x   
 set or show the speed of the serial interface of the esp8266, not of the hm10  
 + hm10at xxxx  
