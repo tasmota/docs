@@ -59,7 +59,7 @@ At least the device allows the use of a simple BLE connection without any encryp
   
 ### Working principle of both Tasmota drivers (>8.2.0.1)
   
-The idea is to provide drivers with as much automatic functions as possible. Besides the hardware setup, there are zero or very few things to configure.  
+The idea is to provide drivers with as much automatic functions as possible. Besides the hardware setup, there are zero or very few things to configure. It is not necessary to pair the sensors with any of the vendor apps.  
 The sensor namings are based on the original sensor names and shortened if appropriate (Flower care -> Flora). A part of the MAC will be added to the name as a suffix.  
 All sensors are treated as if they are physically connected to the ESP8266-device.
 
