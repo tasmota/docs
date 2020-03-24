@@ -113,7 +113,7 @@ HM10Auto <a id="hm10auto"></a>|`<value>` = start an automatic discovery scan wit
     <td class="tg-lboi">temperature, humidity, battery</td>
     <td class="tg-lboi">temperature, humidity, battery</td>
     <td class="tg-lboi">temperature, humidity, battery</td>
-    <td class="tg-lboi">temperature, illuminanace, soil humidity, soil fertility, battery</td>
+    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility, battery</td>
   </tr>
   <tr>
     <td class="tg-lboi"></td>
@@ -126,7 +126,7 @@ HM10Auto <a id="hm10auto"></a>|`<value>` = start an automatic discovery scan wit
 
    
 #### Unconfirmed Devices  
-CGG1 should be found and may give readings via MiBeacons, but is untested.  
+CGG1 ClearGrass Temperature and Humidity Monitor should be found and may give readings via MiBeacons, but is untested.  
 
 ## BLE Sensors using nRF24L01(+)
 
@@ -189,7 +189,7 @@ Most of the „older“ BT-sensor-devices use unencrypted messages, which can be
 With the arrival of the (cheap) LYWSD03 came the problem of encrypted data in MiBeacons, which to date has only been successfully decrypted in open source projects in a quite complicated way (getting the 16-byte-key with 3rd-party-software while pairing the device with the original Xiaomi Apps).
 At least the device allows the use of a simple BLE connection without any encrypted authentication and the reading of the sensor data using normal subscription methods to GATT-services. This is more power hungry than the passive reading of BLE advertisements.   
   
-### Working principle of both Tasmota drivers (>8.2.0.1)
+#### Working principle of both Tasmota drivers (>8.2.0.1)
   
 The idea is to provide drivers with as many automatic functions as possible. Besides the hardware setup, there are zero or very few things to configure.  
 The sensor namings are based on the original sensor names and shortened if appropriate (Flower care -> Flora). A part of the MAC will be added to the name as a suffix.  
