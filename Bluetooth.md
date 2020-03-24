@@ -112,6 +112,9 @@ This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the drive
 + LYWSD03MMC  
 Small, rectangular form, 1 x CR2032-coin-cell. The driver can read temperature, humidity and battery.
   
+<img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/lywsd03.png?raw=true" style="width:200px"></img>  
+ 
+ 
 + Flower Care ("Flora")  
 Works with a CR2032-coin-cell and provides temperature, illuminance, (soil-)humidity, (soil-)fertility and battery.  
   
@@ -126,10 +129,14 @@ This device works with an AAA-battery for several months and the driver can read
   
 + CGD1 (Alarm clock)  
 The driver can read temperature, humidity and battery. Time or alarm functions are not supported.  
-
+  
+<img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/CGD1.png?raw=true" style="width:200px"></img>  
+ 
 #### not supported:  
 CGG1 should be found and may give readings via MiBeacons, but is untested.  
-
+  
+<img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/CGG1.png?raw=true" style="width:200px"></img>  
+ 
 
 ## Experimental BLE-Bridge for certain Mijia-Bluetooth-Sensor using the NRF24L01(+)
 
@@ -194,12 +201,21 @@ This device has an E-Ink-Display, works with 2 x CR2032-coin-cells and the drive
 #### CGG1:  
 This device has an E-Ink-Display, with CR2430-coin-cell and the driver can read temperature, humidity and battery.  
   
+<img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/CGG1.png?raw=true" style="width:200px"></img>  
+ 
   
 #### CGD1:  
 Alarm clock powered by 2 AA-batteries. Driver can read temperature and humidity.  
+  
+<img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/CGD1.png?raw=true" style="width:200px"></img>  
+   
+   
  
 
 #### Not supported:  
  
 The situation for the LYWSD03MMC (small, rectangular form) is different, as the sensor data in the advertisements is encrypted. It is highly unlikely to read data with the NRF24L01 out-of-the-box in the future.  
+  
+<img src="https://github.com/tasmota/docs/blob/master/_media/peripherals/lywsd03.png?raw=true" style="width:200px"></img>  
+
 
