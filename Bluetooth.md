@@ -73,10 +73,21 @@ All sensors are treated as if they are physically connected to the ESP8266-devic
 -uncomment #ifdef USE_HM10 in my_user_config.h  
 -select GPIO-pins "HM10 RX" and "HM10 TX"
 
+!> **Most of the self-flashed modules will still have their factory default with a baud rate of 9600 !!**  
+ Please try:  
+` 
+  HM10BAUD 9600`  
+`   
+  HM10AT RENEW
+`  
+Then reboot ESP8266.
+
+
+
 ### expected behavior:
 1. The driver will set a few options of the HM-10
 2. A discovery scan will search for known sensors (Mi Flora, MJ_HT_V1, LYWSD02, LYWSD03, CGG1, CGD1)
-3. Supported sensors except the MJ_HT_V1 will be connected at a given interval, a subscription is established for 5 seconds and temperature/humidity/battery will be read.
+3. Supported sensors will be connected at a given interval, a subscription is established for ~5 seconds and temperature/humidity/battery will be read.
 4. After deconnection return to point 3 after the interval.
 
 ### command interface:  
@@ -91,7 +102,7 @@ sends AT-commands,e.g. hm10at verr? results in AT+VERR?
 + hm10time x
 sets the time of sensor x (if it is a LYWSD02) to the system-UTC-time and the timezone of Tasmota. Sensors are ordered from 0 to n in the order of the arrival. 
 + hm10auto x
-start an automatic discovery scan with an interval of x seconds to receive data in BLE-advertisements periodically. This an active scan and it should only be used, if necessary (ATM for the MJ_HT_V1). This might change in the future, if a newer firmware of the HM-10 will support passive scan.
+start an automatic discovery scan with an interval of x seconds to receive data in BLE-advertisements periodically. This an active scan and it should only be used, if necessary. This might change in the future, if a newer firmware of the HM-10 will support passive scan.
 
 ### Features:  
 + RULES
