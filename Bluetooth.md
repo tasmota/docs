@@ -53,7 +53,7 @@ Cheap "iTag" beacons with a beeper. The battery on these lasts only about a mont
 <img src="_media/bluetooth/itag.png" width=225><img src="_media/bluetooth/itag2.png" width=225><img src="_media/bluetooth/itag3.png" width=225>
 
 > [!TIP] 
-You can activate a beacon with a beeper using command `IBEACON_%BEACONID%_RSSI 99` (ID is visible in webUI and SENSOR reports). This command can freeze the Bluetooth moduel and beacon scanning will stop. After a reboot of Tasmota the beacon will start beeping and scanning will resume.
+You can activate a beacon with a beeper using command `IBEACON_%BEACONID%_RSSI 99` (ID is visible in webUI and SENSOR reports). This command can freeze the Bluetooth module and beacon scanning will stop. After a reboot of Tasmota the beacon will start beeping and scanning will resume.
 
 ## BLE Sensors using HM-1x
 
