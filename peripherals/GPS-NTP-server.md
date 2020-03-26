@@ -33,7 +33,7 @@ In the Configuration -> Configure Module page, select the following for Wemos D1
 
 No further installation steps needed. To get more debug information compile it with option "DEBUG_TASMOTA_SENSOR".
 The driver expects the device to be configured for 9600 baud, which is the default for most of these sensors.
-If necessary the configuration can be changed with the freely available "u-center"-software, which is windows-only but is reported to run quite well with WINE.  
+If necessary the configuration can be changed with the freely available "u-center"-software, which is windows-only but is reported to run quite well with WINE and can be confirmed to work with CrossOver on macOs Catalina.  
 
 ### NTP-Server  
 Simply start the server with 'sensor60 9'.

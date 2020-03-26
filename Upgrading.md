@@ -139,6 +139,9 @@ Erase flash settings area but keep Wi-Fi and MQTT settings
 If you can't restore configuration directly you can configure the device manually referring to the [Commands article](Commands) and the settings (e.g., SetOptions, Rules, etc.) in the JSON file you created in step #1. You can paste the JSON into a [JSON parser](https://jsonformatter.org/json-parser) to make it easily readable. 
 
 # Migration Path
+
+![WARNING] While fallback or downgrading is common practice it was never supported due to Settings additions or changes in newer releases. Starting with release v8.1.0 Doris the Settings are re-allocated in such a way that fallback is only allowed and possible to release v7.2.0 Constance. Once at v7.2.0 you're on your own when downgrading even further.
+
 Until now several versions of Tasmota have been released starting with the C version Sonoff-MQTT-OTA followed by Sonoff-MQTT-OTA-Arduino, Sonoff-Tasmota and ultimately **Tasmota**.
 
 Intermediate upgrade steps might be needed to migrate from an older firmware version to the latest.
@@ -160,7 +163,7 @@ Follow the path till you reach the latest Tasmota version.
 
 ## Background Info and Details
 
-Migrating from one version to the next is mostly painless as the settings are saved in the same location in flash and newer settings are appended.
+Migrating from one minor version to the next is mostly painless as the settings are saved in the same location in flash and newer settings are appended.
 
 As said, mostly painless. There are some deviations to this rule as I rearranged the flash. In the next list you'll find an overview of supported migrations paths.
 
@@ -181,4 +184,10 @@ As said, mostly painless. There are some deviations to this rule as I rearranged
 * Easy migration from **Tasmota 6.x** to **Tasmota 7.x**. 
   As a safeguard perform a **Backup Configuration** before installing the new version. If settings are lost after the upgrade perform a **Restore Configuration**.
 
-If ***Backup Configuration -> Restore Configuration*** fails, reset to firmware defaults and use [decode-config tool](#decode-config-tool) to restore your backed up configuration.
+>[!WARNING] Tasmota 8.1 introduced a major change in parameter storage. Downgrading is not recommended and upgrading to 8.1 has to follow the recommended path and **can still** fail in some cases.
+
+  * Upgrade from **Tasmota 7.2** to **Tasmota 8.1**
+  * Upgrade from **Tasmota 8.1** to **Tasmota 8.x**
+
+
+> [!TIP]If ***Backup Configuration -> Restore Configuration*** fails, reset to firmware defaults and use [decode-config tool](#decode-config-tool) to restore your backed up configuration.

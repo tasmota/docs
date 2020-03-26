@@ -7,7 +7,7 @@ Tasmota provides a wireless access point for easy Wi-Fi configuration.
 !> If you flashed using Tuya Convert this is the only option to set up your device.
 
 <img alt="Tasmota AP" src="https://user-images.githubusercontent.com/5904370/68963209-b4723200-07d6-11ea-9116-4b0f4f0f4dbc.png" style="margin:10px;float:left;width:150px"></img>
-Connect your device to a power source and grab your smartphone (or tablet or laptop or any other web and Wi-Fi capable device). Search for a Wi-Fi AP named **tasmota-xxxx** (where **x** is a number) and connect to it. _In this example the Wi-Fi AP is named **tasmota-7718**._ When it connects to the network, you may get a warning that there is no Internet connection and be prompted to connect to a different network. _Do not allow the mobile device to select a different network_.
+Connect your device to a power source and grab your smartphone (or tablet or laptop or any other web and Wi-Fi capable device). Search for a Wi-Fi AP named **tasmota-xxxx** (where **xxxx** is a number) and connect to it. _In this example the Wi-Fi AP is named **tasmota-7718**._ When it connects to the network, you may get a warning that there is no Internet connection and be prompted to connect to a different network. _Do not allow the mobile device to select a different network_.
 <p>
 
 ?> Wi-Fi manager server is active for only 3 minutes. If you miss the window you might have to disconnect your device from power and reconnect.

@@ -1,6 +1,5 @@
 * **Features**
 * [Upgrading](Upgrading)
-* [Moving to V7](moving-to-v7)
 * [MQTT](MQTT)
 * [Commands](Commands)
 * [Templates](Templates)
@@ -20,6 +19,7 @@
 * [Displays](Displays)
 * [Blinds and Shutters](Blinds-and-Shutters)
 * [TasmotaSlave](TasmotaSlave)
+* [Device Groups](Device-groups)
 * [Power Monitoring Calibration](Power-Monitoring-Calibration)
 * [TLS](TLS)
 * [Web UI](WebUI)

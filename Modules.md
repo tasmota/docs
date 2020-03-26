@@ -11,7 +11,7 @@
 Each module is assigned a number which is used in [Template configuration](Templates#BASE) or when using [`Module`](Commands#module) command.
 
 | #| Name| Module specifics
-| ---: | :-------- | :---
+| ---: | :--- | :---
 | 0 | Template | Module for currently active template. Named after the template NAME field.<br>*If a template is not active it will display `Generic (0)`.<br>**Do not use it until you configure a template**, use `Generic (18)` instead*|
 <a id="SonoffBasic">	</a>	1	|	Sonoff Basic	|	
 <a id="SonoffRF">	</a>	2	|	Sonoff RF	|	
@@ -85,5 +85,7 @@ Each module is assigned a number which is used in [Template configuration](Templ
 <a id="SonoffL1">	</a>	70	|	Sonoff L1	|	
 <a id="SonoffIFan03">	</a>	71	|	Sonoff iFan03	|	
 <a id="EXSDimmer">	</a>	72	|	EX-Store Dimmer	|	
+<a id="PWMDimmerSwitch">	</a>	73	|	PWM Dimmer	|	For MJ-SD01/acenx/NTONPOWER PWM dimmers. [Read more...](PWM-dimmer-switch)
+<a id="PWMDimmerSwitch">	</a>	74	|	Sonoff D1 Dimmer	|	
 
 **Serial logging** is disabled by the Tasmota code for several modules and components (e.g., Sonoff POW, Sonoff S31, Sonoff Dual (v1), Tuya dimmers, PZEM components, etc.). Serial communication is used by these devices to transfer the data from the MCU chip to the ESP chip. Do not enable serial logging ([SerialLog 0](Commands#seriallog)) on these devices. It can cause the device software to crash.

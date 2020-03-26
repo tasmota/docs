@@ -1,3 +1,5 @@
+!>**This feature is included only in tasmota-sensors.bin** 
+
 ## MH-Z19B CO<sub>2</sub> Sensor (Serial)
 
 <img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/mhz19b-co2-sensor-front.jpg?raw=true" align=right width=225>

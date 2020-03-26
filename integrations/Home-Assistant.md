@@ -942,6 +942,24 @@ binary_sensor:
     device_class: moisture
 ```
 
+#### **Enable join switch**
+
+```yaml
+- platform: mqtt
+  name: Zigbee2Tasmota enable join
+  state_topic: "tele/zigbee/RESULT"
+  command_topic: "cmnd/zigbee/ZbPermitJoin" 
+  payload_on: "1"
+  payload_off: "0"
+  state_on: "Enable Pairing mode for 60 seconds"
+  state_off: "off"
+  optimistic: false
+  qos: 1
+  retain: false
+  value_template: '{{value_json.ZbState.Message }}'
+  icon: mdi:zigbee
+```
+   
 <!-- tabs:end -->
 
 ## Useful Automations
