@@ -46,7 +46,7 @@ Most used ones are: `space` = `%20` &emsp; `;` = `%3B`
 
 If you have set a password for web user interface access, this must be included (in plaintext) in the URL of the HTTP request, like so:  
 ```
-http://<ip>/cm?&user=<username>&password=<password>&cmnd=Power%20On
+http://<ip>/cm?user=<username>&password=<password>&cmnd=Power%20On
 ```
 ### ...in Console in the Web UI
 
