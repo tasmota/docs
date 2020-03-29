@@ -1,7 +1,7 @@
 site_name: Tasmota
 repo_name: 'arendst/tasmota'
 repo_url: 'https://github.com/arendst/tasmota'
-edit_uri: 'https://github.com/tasmota/docs/blob/master/'
+edit_uri: 'https://github.com/tasmota/docs/blob/master/docs/'
 # copyright: 'Copyright &copy; 2020 Tasmota Development Team'
 # use_directory_urls: false
 theme: 
@@ -197,4 +197,4 @@ nav:
     - Troubleshooting.md
     - Device-Recovery.md
   - Contributing: Contributing.md
-  - Discord Community: "//discord.gg/Ks2Kzd4"
+  - Discord Community: //discord.gg/Ks2Kzd4  "target=_blank"

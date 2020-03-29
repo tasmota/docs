@@ -27,4 +27,4 @@ GPIO | Component | Description
 14 | IRsend (8) | IR Transmitter
 
 ## IR Codes
-[IR Code List](Codes-for-IR-Remotes-(for-YTF-IR-Bridge))
+[IR Code List](Codes-for-IR-Remotes)

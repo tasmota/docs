@@ -56,7 +56,7 @@ This covers only the basic IR protocols. Read [Complete IR Remote Protocols](Tas
 
 [IR Send RAW configuration and use](IRSend-RAW-Encoding)
 
-User maintained [codes database for IR](Codes-for-IR-Remotes-(for-YTF-IR-Bridge))
+User maintained [codes database for IR](Codes-for-IR-Remotes)
 
 [Linux Infrared Remote Control (LIRC)](http://www.lirc.org/) for more information. 
 
