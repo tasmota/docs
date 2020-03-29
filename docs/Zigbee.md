@@ -765,7 +765,8 @@ Philips Hue Bulb|`0x0B`
 ### Zigbee2Tasmota Status
 You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  
 
-Ex: ```{"ZbState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}```  
+Ex: `{"ZbState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}`
+
 - `Status` contains a numeric code about the status message
   - `0`: initialization complete, **Zigbee2Tasmota is running normally**
   - `1`: booting
