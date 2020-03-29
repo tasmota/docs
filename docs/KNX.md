@@ -1,4 +1,4 @@
-!> **This feature is included only in tasmota-knx build.**     
+!!! note "This feature is included only in tasmota-knx build"     
 
 To use in other builds you must [compile your own build](Compile-your-build). Add the following to `user_config_override.h`:
 ```

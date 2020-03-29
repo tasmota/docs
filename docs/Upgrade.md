@@ -1,1 +1,1 @@
-Moved to [Upgrading](Upgrading)
+redirect: Upgrading.md

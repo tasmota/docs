@@ -51,7 +51,7 @@ Internally from time to time "fake" sensors will be created, when there was data
   
 ## Working sensors:
 
-!> **It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely !!**  
+!!! note "It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely !!"  
 
 The naming conventions in the product range of bluetooth sensors in XIAOMI-universe can be a bit confusing. The exact same sensor can be advertised under slightly different names depending on the seller (Mijia, Xiaomi, Cleargrass, ...).
   

@@ -1,4 +1,6 @@
 site_name: Tasmota
+site_description: Tasmota open source firmware for ESP8266 documentation and help
+site_url: https://tasmota.github.io/docs/
 repo_name: 'arendst/tasmota'
 repo_url: 'https://github.com/arendst/tasmota'
 edit_uri: 'https://github.com/tasmota/docs/blob/master/docs/'
@@ -101,7 +103,6 @@ nav:
   - TuyaMCU.md
   - Device-Groups.md
   - Blinds-and-Shutters.md
-  - Shutter-and-Steppers.md
   - IR Communication: Tasmota-IR.md
   - WebUI.md
   - Compiling: Compile-your-build.md

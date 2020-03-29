@@ -1,6 +1,7 @@
 !!! info "MQTT is the main protocol for controlling Tasmota devices"
 
-If you have no knowledge of what MQTT is, you can learn about it from [MQTT Essentials](http://www.hivemq.com/mqtt-essentials/) articles. After you have a working [MQTT broker](https://www.google.com/search?q=setting+up+an+mqtt+broker) you need to configure Tasmota to communicate with it. 
+After you have a working [MQTT broker](https://www.google.com/search?q=setting+up+an+mqtt+broker) you need to configure Tasmota to communicate with it. 
+If you have no knowledge of what MQTT is, you can learn about it from [MQTT Essentials](http://www.hivemq.com/mqtt-essentials/) articles. 
 
 ## Configure MQTT 
 If you flashed a precompiled .bin or didn't enter MQTT info in `user_config_override.h` before compiling you have to configure it on your device first.
@@ -42,7 +43,7 @@ Commands over MQTT are issued to Tasmota by using `cmnd/%topic%/<command> <param
 
 !!! tip
     If you are using *mosquitto_pub*, you can issue an empty payload using the `-n` command line option. 
-> If your MQTT client cannot issue an empty payload, you can use the single character `?` instead.
+    If your MQTT client cannot issue an empty payload, you can use the single character `?` instead.
 
 ### Command flow
 
@@ -53,6 +54,7 @@ A device was flashed and configured with the **FullTopic** as default `%prefix%/
 By looking at the commands table we can learn about the [`POWER`](Commands.md#power) command and options associated with it. 
 
 **Ask the device for status**
+
   ```js
   cmnd/tasmota_switch/Power ← 	// an empty message/payload sends a status query
      ↳ stat/tasmota_switch/RESULT → {"POWER":"OFF"}  
@@ -61,6 +63,7 @@ By looking at the commands table we can learn about the [`POWER`](Commands.md#po
   We can see that the switch (device's relay) is turned off.
 
 **Send a command to toggle the relay**
+
   ```js
   cmnd/tasmota_switch/Power ← "TOGGLE"
      ↳ // Power for relay 1 is toggled
@@ -71,16 +74,16 @@ By looking at the commands table we can learn about the [`POWER`](Commands.md#po
 
 !!! tip
     By default, Tasmota replies to all commands through `.../RESULT`.
-> This behavior can be changed using [SetOption4](Commands.md#SetOption4), which makes the commands reply on the endpoint matching the command name, ex. `cmnd/tasmota/PowerOnState` will send a response on `cmnd/tasmota/POWERONSTATE`.
+    This behavior can be changed using [SetOption4](Commands.md#SetOption4), which makes the commands reply on the endpoint matching the command name, ex. `cmnd/tasmota/PowerOnState` will send a response on `cmnd/tasmota/POWERONSTATE`.
 
 ### Examples
 In the following examples `%topic%` is `tasmota`, FullTopic is `%prefix%/%topic%/`, and prefixes are default `cmnd/stat/tele`:
 
 - The relay can be controlled with `cmnd/tasmota/POWER on`, `cmnd/tasmota/POWER off` or `cmnd/tasmota/POWER toggle`. Tasmota will send a MQTT status message like `stat/tasmota/POWER ON`.
 
-- The power state message can be sent with the retain flag set. Enable this with `cmnd/tasmota/PowerRetain on`.
+- Power state message can be sent with the retain flag set using [`PowerRetain 1`](Commands#powerretain).
 
-- The telemetry messages can also be sent with the retain flag, but this is a compile option. See [#1071](https://github.com/arendst/Tasmota/issues/1071).
+- Telemetry messages can also be sent with the retain flag using [`SensorRetain`](Commands#sensorretain).
 
 - For Sonoff Dual or Sonoff 4CH the relays need to be addressed with `cmnd/tasmota/POWER<x>`, where {x} is the relay number from 1 to 2 (Sonoff Dual) or from 1 to 4 (Sonoff 4CH). `cmnd/tasmota/POWER4 off` turns off the 4th relay on a Sonoff 4CH.
 
@@ -106,6 +109,7 @@ Telemetry data will be sent by prefix `tele` like `tele/tasmota/SENSOR {"Time":"
 
 ### FullTopic
 This is the MQTT topic used to communicate with Tasmota over MQTT. It is created using tokens placed within a user definable string (100 character limit). The tokens are substituted dynamically at run-time. Available substitution tokens are:
+
 - `%prefix%` = one of three prefixes as defined by commands `Prefix1` *(default = `cmnd`)*, `Prefix2` *(default = `stat`)* and `Prefix3` *(default = `tele`)*.
 - `%topic%` = one of five topics as defined by commands [`Topic`](Commands.md#topic), [`GroupTopic`](Commands.md#grouptopic), [`ButtonTopic`](Commands.md#buttontopic), [`SwitchTopic`](Commands.md#switchtopic) and [`MqttClient`](Commands.md#mqttclient).
 - `%hostname%` = the hostname of the device as defined through the web UI *(default = `%s-%04d`)* or via [`Hostname`](Commands.md#hostname) command.
@@ -120,6 +124,7 @@ If `FullTopic` does not contain the `%topic%` token, the device will not subscri
     The order of _%prefix%_ and _%topic%_ doesn't matter, unless you have enabled Auto-discovery for Home Assistant ([`SetOption19`](Commands.md#setoption19)). Enabling this option re-formats the FullTopic to required order.
 
 Using the tokens the following example topics can be made:
+
 - `FullTopic %prefix%/%topic%/` _default_
 - `FullTopic tasmota/%topic%/%prefix%/`
 - `FullTopic tasmota/bedroom/%topic%/%prefix%/`
@@ -133,14 +138,13 @@ Tasmota uses 3 prefixes for forming a FullTopic:
 - `stat` - reports back status or configuration message
 - `tele` - reports telemetry info at specified intervals
 
-!!! tip
-    
-> To solve possible MQTT topic loops it is strongly suggested that you use the `%prefix%` token in all of your FullTopics. Status and telemetry do not need a prefix.
+!!! warning
+    To solve possible MQTT topic loops it is strongly suggested that you use the `%prefix%` token in all of your FullTopics. Status and telemetry do not need a prefix.
 
 ### %topic%
 All MQTT status messages will be sent using the configurable `%topic%` which must be made unique by the user. It can be called `bedroom` but it could also be called `XP-TS_10` as long as the user knows what it is and where to find it.
 
-?> Default Topic is `tasmota_XXXX` where `XXXX` is unique and derives from the MAC address
+!!! bug "Default Topic is `tasmota_XXXX` where `XXXX` is unique and derives from the MAC address"
 
 The use of the `%topic%` token is mandatory in case you want to use [`ButtonTopic`](Commands.md#buttontopic) and/or [`SwitchTopic`](Commands.md#switchtopic). It also provides for GroupTopic and Fallback Topic functionality.
 
@@ -150,7 +154,7 @@ The use of the `%topic%` token is mandatory in case you want to use [`ButtonTopi
 ### GroupTopic
 Having two devices with the same topic allowed for MQTT commands to be sent once to make the devices act in conjunction. That inspired a third topic called GroupTopic.  Devices with the same GroupTopic will all listen to that GroupTopic and react to the same MQTT command sent to it. You can use this to take global actions like updating firmware on all devices or split up devices into different groups using a unique GroupTopic for each group.
 
-?> Default GroupTopic is `tasmotas`
+!!! bug "Default GroupTopic is `tasmotas`"
 
 ### FallBack Topic
 Initially Tasmota had one MQTT configurable topic planned called Topic. It soon became apparent that when two devices come online with the same topic this would be a challenge, to say the least!

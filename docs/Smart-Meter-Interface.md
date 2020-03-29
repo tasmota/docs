@@ -1,7 +1,7 @@
 
 
 <a id="top">
-!> **This feature is not included in precompiled binaries.**     
+!!! note "This feature is not included in precompiled binaries"     
 
 To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 

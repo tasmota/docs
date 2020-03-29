@@ -1,53 +1,73 @@
-!!! info "Easily upgrade Tasmota to a newer version or different build while keeping all your settings."
+!!! info "Easily upgrade Tasmota to a newer version or different build while keeping all your settings"
 
 <span style="font-size:30px;font-weight: bold">The first rule of upgrading: If it ain't broke, don't fix it!</span>
 
 In other words, ensure that there is a good reason to mess with a working installation (e.g., a need to use a new feature or address a found problem fixed in the current version).
 
-!!! tip
-    Any time you upgrade it is highly recommended that you [back up your device settings](#Backing-Up-Settings). It is easily done in webUI under **Configuration - Backup Config** page in the webUI
+!!! tip "Backup before upgrading"
+    Any time you upgrade it is highly recommended to [back up your device settings](#backing-up-settings). That is easily done from the webUI using **Configuration - Backup Config**.
 
+If you wish to switch to a different [build](Builds) or use development branch you need to download a binary file (gzipped or regular) or change the ***OTA Url*** link.
 
-## OTA Upgrade 
-Upgrading the device firmware [over-the-air](https://en.wikipedia.org/wiki/Over-the-air_programming), or OTA, is the convenient way to upgrade. Open a web browser to you device's web UI and select Firmware Upgrade.
+Download binaries from:
+
+- GitHub [releases](https://github.com/arendst/Tasmota/releases)
+- official [OTA Server](http://thehackbox.org/tasmota/release/)
+- development branch [OTA Server](http://thehackbox.org/tasmota/)
+- your [personal OTA server](#private-ota-server)
+
+### Gzipped binaries
+
+!!! failure "Gzipped binaries can be used **only** once you've upgraded to atleast Tasmota 8.2"
+    Trying to upgrade with a gzipped binary using versions older than 8.2 will fail.
+
+Tasmota 8.2 introduced upgrading using gzipped binaries which are smaller in size and will likely skip the intermediary minimal build installation. This makes the upgrade process faster and straightforward. 
+
+To use simply add `.gz` to the existing OTA Url or download the `.bin.gz` binary from the official [OTA Server](http://thehackbox.org/tasmota/release/) and the next upgrade will 
+
+## Upgrade using webUI
+Upgrading the device firmware [over-the-air](https://en.wikipedia.org/wiki/Over-the-air_programming), aka OTA, is the most convenient way to upgrade. 
+
+To start the upgrade, open a web browser to your device's web UI and select **Firmware Upgrade**.
 
 ![Upgrading_1](https://user-images.githubusercontent.com/5904370/68962045-fbaaf380-07d3-11ea-9736-a44c13ef7653.png)
 
-You are presented with two choices. Using an OTA server or by uploading a downloaded or self-compiled binary file.
+You are presented with two choices:
+
+- **_Upgrade by webserver_** - use an OTA server 
+- **_Ugprade by file upload_** - uploading a downloaded or self-compiled binary file from your computer
 
 ![Upgrading_2](https://user-images.githubusercontent.com/5904370/68962130-301eaf80-07d4-11ea-87bb-54c018fe7794.png)
 
-### Using Web UI
+### Upgrade by web server
 If you want to upgrade to the latest release version click the first **Start Upgrade** button. This screen should appear
 
  ![Upgrading_3](https://user-images.githubusercontent.com/5904370/68962209-52b0c880-07d4-11ea-8ea8-193e945dab9b.png)
 
-During this process Tasmota will download the new firmware from the url and install it. It might need to download **`tasmota-minimal.bin`** first but all that happens automatically. All you have to do is **wait 2 to 5 minutes**. 
+During this process Tasmota will download the new firmware from the url and install it. If you're not using a gzipped binary it might need to download `tasmota-minimal.bin` first, but all that happens automatically. All you have to do is **wait 2 to 5 minutes**. 
 
-After the upgrade is completed you can reconnect back to the web UI and check the firmware version on the bottom of the page.
+After the upgrade is completed you can reconnect back to the web UI and check the firmware version on the bottom of the page or in the ***Information*** tab of the webUI.
 
-#### Changing OtaUrl
-If you wish to switch to a different [build](Builds) you have to change OtaUrl to the desired binary from our [OTA Server](http://thehackbox.org/tasmota/).
+### Upgrade by file upload 
 
-It is possible to create your own simple http OTA server (https is not supported) using Python and perform upgrades from there. 
-Install Python3 and from the folder where the binary resides (make sure `tasmota-minimal.bin` is located there too) run:
-```
-python -m http.server 8000
-```
-(If the response is "No module named http" then try again with `python3` instead of `python`.)
+Go to **Firmware Upgrade**. This time browse to the binary you want to upgrade to with **Choose File** and click **Start upgrade**.    
+_In our example its `tasmota-sensors.bin`._
 
-Change your OtaUrl to http://ipoftheserver:8000/yourbinary.bin and start the upgrade process. Note: do not use `/`, `-`, or `.` characters in the name of `yourbinary`.
+![image](https://user-images.githubusercontent.com/5904370/68962783-a7087800-07d5-11ea-9f8c-bd90fdb3e9ca.png)
 
-If your binary build (yourbinary.bin) is larger than the available free flash program space, Tasmota will need to first install the minimal version of Tasmota to make more space. To have this work via the web server OTA process, you have to copy the file `tasmota-minimal.bin` in the same folder where `OTAURL` for `yourbinary.bin` is placed, and rename `tasmota-minimal.bin` to `yourbinary-minimal.bin`.
+You will see an __Upload starting...__ and then __Upload successful__ message. Wait until the device restarts, reconnect back to the web UI and check the firmware version on the bottom of the page or in the ***Information*** tab of the webUI.
 
-### By File Upload
-This process requires you to have a minimal build `tasmota-minimal.bin` of the firmware since the upload process needs the space in flash memory to upload the new binary. 
+!!! failure "Minimal build upgrade step"
+    If the binary you're upgrading with is larger than 500kb you also need to download the minimal build (`tasmota-minimal.bin(.gz)`) since the upload process needs the space in flash memory to upload the new binary. 
 
-When you try to immediately upgrade to a new binary without using minimal firmware you will be greeted with this error.
+When you try to immediately upgrade with the new binary without using smaller minimal firmware you will be greeted with this error.
 
 ![Upgrading_4](https://user-images.githubusercontent.com/5904370/68962296-85f35780-07d4-11ea-90ae-86fcd7d14681.png)
 
-Browse to the minimal binary with **Choose File**. The chosen filename should be visible. _In our example its **`tasmota-minimal.bin`**._
+#### Minimal build upgrade step
+==This step is necessary only if you get the above error==    
+Browse to the minimal binary with ***Choose File***. The chosen filename should be visible.    
+_In our example its `tasmota-minimal.bin`._
 
 ![minimal upgrade](https://user-images.githubusercontent.com/5904370/68962383-baffaa00-07d4-11ea-8122-fcf971ca96f5.png)
 
@@ -55,11 +75,7 @@ Wait until the device restarts. In the Main Menu web UI will display this warnin
 
 ![minimal message](https://user-images.githubusercontent.com/5904370/68962530-1a5dba00-07d5-11ea-83aa-f6f640d9a38f.png)
 
-Go to **Firmware Upgrade** again. This time browse to the binary you want to upgrade to with **Choose File** and click **Start upgrade**. _In our example its **`tasmota-sensors.bin`**._
-
-![image](https://user-images.githubusercontent.com/5904370/68962783-a7087800-07d5-11ea-9f8c-bd90fdb3e9ca.png)
-
-You will see an **Upload starting...** and then **Upload successful** message. Wait until the device restarts, reconnect back to the web UI and check the firmware version on the bottom of the page.
+Proceed to [upgrade](#by-file-upload)
 
 ### Using Commands
 
@@ -75,11 +91,11 @@ Initiate [upgrade](Commands.md#upgrade) from OTA server
 ```haskell
 Upgrade 1
 ```
-Wait for the upgrade process to complete and check the Tasmota version. If in console you can use `Status 2`.
+Wait for the upgrade process to complete and check the Tasmota version. In console you can use `Status 2`.
 
 ### Using Device Button
 
-Devices with a built in button (the one used to put your device into [flash mode](installation/Hardware-Preparation.md#programming-mode)) can initiate OTA upgrade with it.
+Devices with a built in button (the one used to put your device into [flash mode](Getting-Started#programming-mode)) can initiate OTA upgrade with it.
 
 7 short presses of the button will start OTA download of firmware using the Ota Url. Device LED is lit during the update.
 
@@ -87,7 +103,7 @@ Devices with a built in button (the one used to put your device into [flash mode
 
 Upgrade over the serial connection using serial-to-USB adapter.
 
-Upload the new version over serial using the same process as in [Flashing](installation/Flashing.md) but DO NOT erase flash. The new binary will flash over the old one and keep all your settings intact.
+Upload the new version over serial using the same process as in [Flashing](Getting-Started#flashing) but DO NOT erase flash. The new binary will overwrite the old one and keep your settings.
 
 ## External Programs
 
@@ -100,7 +116,19 @@ You can set up OTA url and initiate OTA upgrade from TDM using GUI.
 
 [**OTA over SCP**](OTA-over-SCP) - setup and configure "OTA over SCP" upload for PlatformIO
 
-# Backing Up Settings
+### Private OTA Server
+It is possible to create your own simple http OTA server (https is not supported) using Python and perform upgrades from there. 
+Install Python3 and from the folder where the binary resides (make sure `tasmota-minimal.bin` is located there too) run:
+```
+python -m http.server 8000
+```
+(If the response is "No module named http" then try again with `python3` instead of `python`.)
+
+Change your OtaUrl to http://ipoftheserver:8000/yourbinary.bin(.gz) and start the upgrade process. Note: do not use `/`, `-`, or `.` characters in the name of `yourbinary`.
+
+If your binary build (yourbinary.bin) is larger than the available free flash program space, Tasmota will need to first install the minimal version of Tasmota to make more space. To have this work via the web server OTA process, you have to copy the file `tasmota-minimal.bin` in the same folder where `OTAURL` for `yourbinary.bin` is placed, and rename `tasmota-minimal.bin` to `yourbinary-minimal.bin`.
+
+## Backing Up Settings
 
 Tasmota uses flash memory to store options and settings. New versions add (or remove) features that use various regions of that memory. If you did not erase flash when you flashed your device, an updated version of Tasmota may be accessing areas with values left over from the old Tasmota or even the original factory firmware. This might cause unexpected and unwanted behavior or even major problems (constant reboots or reconnects). 
 
@@ -139,7 +167,7 @@ Erase flash settings area but keep Wi-Fi and MQTT settings
 
 If you can't restore configuration directly you can configure the device manually referring to the [Commands article](Commands.md) and the settings (e.g., SetOptions, Rules, etc.) in the JSON file you created in step #1. You can paste the JSON into a [JSON parser](https://jsonformatter.org/json-parser) to make it easily readable. 
 
-# Migration Path
+## Migration Path
 
 ![WARNING] While fallback or downgrading is common practice it was never supported due to Settings additions or changes in newer releases. Starting with release v8.1.0 Doris the Settings are re-allocated in such a way that fallback is only allowed and possible to release v7.2.0 Constance. Once at v7.2.0 you're on your own when downgrading even further.
 
@@ -161,8 +189,6 @@ As a safeguard perform "Backup Configuration" before installing a new version. I
 | Tasmota        | [latest](https://github.com/arendst/Tasmota/releases/latest) | (Check "Assets" section) |
 
 Follow the path till you reach the latest Tasmota version.
-
-## Background Info and Details
 
 Migrating from one minor version to the next is mostly painless as the settings are saved in the same location in flash and newer settings are appended.
 

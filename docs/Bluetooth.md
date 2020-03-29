@@ -60,7 +60,7 @@ You can activate a beacon with a beeper using command `IBEACON_%BEACONID%_RSSI 9
 
 ## BLE Sensors using HM-1x
 
-!> **This feature is included only in tasmota-sensors.bin**
+!!! note "This feature is included only in tasmota-sensors.bin"
 
 Otherwise you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
@@ -151,7 +151,7 @@ Internally from time to time "fake" sensors will be created, when there was data
   
 ### Supported Devices
 
-!> **It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely!**  
+!!! note "It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely!"  
 
 The naming conventions in the product range of bluetooth sensors in XIAOMI-universe can be a bit confusing. The exact same sensor can be advertised under slightly different names depending on the seller (Mijia, Xiaomi, Cleargrass, ...).
 

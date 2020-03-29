@@ -2,7 +2,7 @@ It is possible to amend your existing Arduino [Uno](https://store.arduino.cc/usa
 
 The creation of a slave driver interface implemented since Tasmota 7.0.0.2 enables this possibility.
 
-!> **This feature is not included in precompiled binaries.**     
+!!! note "This feature is not included in precompiled binaries"     
 
 To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 ```
