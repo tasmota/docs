@@ -174,40 +174,40 @@ _**These Python scripts require Python 2.7.**_
    python Python/cc_write_flash.py -e -p <serial_port> -i Bin/CC2530_DEFAULT_20190608_CC2530ZNP-Prod.hex
    ```  
    
-   ```
-   INFO: Found a CC2530 chip on /dev/cu.usbserial-xxxx
-   
-   Chip information:
-         Chip ID : 0xa524
-      Flash size : 256 Kb
-       Page size : 2 Kb
-       SRAM size : 8 Kb
-             USB : No
-   Sections in Bin/CC2530_DEFAULT_20190608_CC2530ZNP-Prod.hex:
-   
-    Addr.    Size
-   -------- -------------
-    0x0000   8176 B 
-    0x1ff6   10 B 
-    0x3fff0   1 B 
-    0x2000   239616 B 
-   
-   This is going to ERASE and REPROGRAM the chip. Are you sure? <y/N>:  y
-   
-   Flashing:
-    - Chip erase...
-    - Flashing 4 memory blocks...
-    -> 0x0000 : 8176 bytes 
-       Progress 100%... OK
-    -> 0x1ff6 : 10 bytes 
-       Progress 100%... OK
-    -> 0x3fff0 : 1 bytes 
-       Progress 100%... OK
-    -> 0x2000 : 239616 bytes 
-       Progress 100%... OK
-   
-   Completed
-   ```
+```
+INFO: Found a CC2530 chip on /dev/cu.usbserial-xxxx
+
+Chip information:
+ Chip ID : 0xa524
+Flash size : 256 Kb
+Page size : 2 Kb
+SRAM size : 8 Kb
+     USB : No
+Sections in Bin/CC2530_DEFAULT_20190608_CC2530ZNP-Prod.hex:
+
+Addr.    Size
+-------- -------------
+0x0000   8176 B 
+0x1ff6   10 B 
+0x3fff0   1 B 
+0x2000   239616 B 
+
+This is going to ERASE and REPROGRAM the chip. Are you sure? <y/N>:  y
+
+Flashing:
+- Chip erase...
+- Flashing 4 memory blocks...
+-> 0x0000 : 8176 bytes 
+Progress 100%... OK
+-> 0x1ff6 : 10 bytes 
+Progress 100%... OK
+-> 0x3fff0 : 1 bytes 
+Progress 100%... OK
+-> 0x2000 : 239616 bytes 
+Progress 100%... OK
+
+Completed
+```
 
    _If you don't see any on screen activity that flashing has begun (i.e., progress percentages increasing) within a couple minutes, then abort the command, cycle power on the ESP82xx, and start this step over._
 
@@ -652,12 +652,12 @@ Z2T now supports Hue Emulation for Zigbee lights. It will mimic most of Zigbee g
 
 Command `ZbLight` configures a Zigbee device to be Alexa controllable. Specify the number of channels the light supports:
 
-0. Simple On/Off light
-1. White Light with Dimmer
-2. White Light with Dimmer and Cold/Warm White
-3. RGB Light
-4. RGBW Light
-5. RGBCW Light, RGB and  Cold/Warm White
+* `0` Simple On/Off light
+* `1` White Light with Dimmer
+* `2` White Light with Dimmer and Cold/Warm White
+* `3` RGB Light
+* `4` RGBW Light
+* `5` RGBCW Light, RGB and  Cold/Warm White
 
 To set the light, use `ZbLight <device>,<nb_of_channels`.
 Ex:
