@@ -19,7 +19,7 @@ All new devices should be submitted through the [Templates Repository](http://te
 !!! warning
      You need a GitHub user account to be able to edit!
 
-If you spot an error in an article use the *Improve this article* link at the top of the page to correct it. 
+If you spot an error in an article use the *Edit* (pencil icon) link at the top of the page to correct it. 
 
 You'll be taken to the GitHub repository page of that file.
 
@@ -40,33 +40,6 @@ Now you wait for one of the Tasmota admins to approve your PR.
 _**Congratulations**_! 
 
 You've made a contribution to the Tasmota project making it a better experience for all future users. Thank you!
-
-## Rendering Alert tags
-
-Blockquotes `>` can now look even fancier:
-
-?> =`?>`
-
-!> = `!>`
-
-!!! tip
-     `> [!TIP]`
-
-> [!NOTE]
-> `> [!NOTE]`
-
-!!! example
-     `> [!EXAMPLE]`
-
-!!! warning
-     `> [!WARNING]`
-
-> [!DANGER]
-> `> [!DANGER]`
-
-> [!DANGER|style:flat]
-> `> [!DANGER|style:flat]`
-
 
 
 

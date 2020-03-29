@@ -6,9 +6,9 @@ To use it you must [compile your build](Compile-your-build.md). Add the followin
 #endif
 ```
 ----
-?> Control blinds and roller shades connected to regular ON/OFF motors or stepper motors.
+!!! info "Control blinds and roller shades connected to regular ON/OFF motors or stepper motors"
 
-The device must have at least two relays (e.g., a [Sonoff Dual R2](#sonoff-dual-r2-required-configuration)). Otherwise the shutter feature will not work.
+Your device must have at least two relays (see [Shutters with Sonoff Dual R2](#using-sonoff-dual-r2)). 
 
 ## Commands
 First enable shutter support with `SetOption80 1`
@@ -47,10 +47,10 @@ There are three shutter modes which are defined according to the [PulseTime](Com
 
 Issue `ShutterRelay<x> 1` command and check in console which **ShutterMode** is displayed:
 
-<pre style="white-space:pre-line">
+```
 Shutter accuracy digits: 1
 Shutter 0 (Relay:1): Init. Pos: 20000 [100 %], Open Vel.: 100 Close Vel.: 100 , Max Way: 20000, Opentime 10.0 [s], Closetime 10.0 [s], CoedffCalc: c0: 0, c1 200, c2: 200, c3: 0, c4: 0, binmask 3, is inverted 1, <span style="font-weight:bold;color:lime">ShutterMode 0</span>, motordelay 0
-</pre>
+```
 
 ## Operation
 Turning a device relay on or off directly (i.e., using `Power`) will function to affect a shutter's movement. In momentary mode (i.e., stepper motor), the relays start or stop the motor. The driver takes care of the direction and proper update of the shutter position.
@@ -73,15 +73,15 @@ Using manual operation `Switch<x>` pairs may require setting `SwitchMode<x> 4` (
 
 Any shutter positioning can be locked `ShutterLock<x> 1`. Once executed an ongoing movement is finished while further positioning commands like `ShutterOpen<x>`, `ShutterClose<x>`, `ShutterStop<x>`, and `ShutterPosition<x>`, as well as web UI buttons, web UI sliders, and shutter buttons are disabled. This can be used to lock an outdoor blind in case of high wind or rain. You may also disable shutter positioning games by your children. Shutter positioning can be unlocked using `ShutterLock<x> 0`. Please be aware that the shutter can still be moved by direct relay control (i.e., `power<x>`), or physical switches and buttons. Use hte `ShutterButton<x>` command prior to `ShutterLock` to be able to lock buttons.
 
-## Pulse Motor Support
+### Pulse Motor Support
 There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands.md#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
 
-## Stepper Motor Support
+### Stepper Motor Support
 Stepper motors can also be used to operate shutters and blinds. Additionally you can operate sliding doors with this configuration.
   
 Please refer to [Shutters and Steppers](Shutter-and-Steppers.md) for details.  
   
-## Calibration
+### Calibration
 [Shutter calibration video tutorial](https://www.youtube.com/watch?v=Z-grrvnu2bU)  
 
 - Set the `ShutterOpenDuration<x>` to the time the shutter needs to open completely.
@@ -96,7 +96,7 @@ Please refer to [Shutters and Steppers](Shutter-and-Steppers.md) for details.
   7. `Restart 1`
 - After calibration you might want to enable an additional 1s motor movement by `ShutterEnableEndStopTime<x> 1` when the shutter is asked to move to its end positions (0% and 100%). By this you can guarantee that end positions are still reached in case of inaccuracies. Take care to disable this by `ShutterEnableEndStopTime<x> 0` before further open or close duration measurements.
 
-### Increasing Calibration Granularity
+#### Increasing Calibration Granularity
 If you desire that the %-opening closely match what `ShutterPosition<x>` and web UI indicate, there is a granular calibration matrix available. Ensure that `ShutterClose<x>` and `ShutterOpen<x>` moves the shutter more or less to the limit positions and follow this procedure:
 - `ShutterSetHalfway<x> 50` (reset to default)
 - `ShutterCalibration<x> 30 50 70 90 100`
@@ -133,7 +133,7 @@ Some motors need up to one second after power is turned on before they start mov
 
 Close the shutter and repeat this procedure until the motor delay is set properly.  
 
-## Button control
+### Button control
 When shutter is running in normal `ShutterMode: 0`, you already have basic control over the shutter movement using tasmota switches or tasmota buttons in the module configuration to directly drive the shutter relays.  For  short circuit safe operation `ShutterMode: 1` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch or button and 2nd switch on the power by the other switch or button. 
 
 To have shutter mode independent button control over the shutter and not over its relays one can use the `ShutterButton<x>` command. It also introduces some more features, see below:
@@ -175,11 +175,219 @@ Examples:
 Module WiFi setup, restart, upgrade and reset according to [Buttons and Switches](Buttons-and-Switches) are supported "child and fool save" only when no button restriction (SetOption1) is given and when all configured shutter buttons of that shutter are pressed 5x, 6x, 7x times or hold long simultaneously.
 
 ## Configuration
-#### Sonoff Dual R2 Required Configuration
+
+### using Pulse Motors
+#### Normal wire configuration with a PCF as digital I/O
+![Normal wire](https://user-images.githubusercontent.com/34340210/65997880-35b07800-e468-11e9-82d3-8dcaab14b3bf.png)
+
+#### Short Circuit safe wire configuration with a PCF as digital I/O
+![ShortCicuitSafe](https://user-images.githubusercontent.com/34340210/65997877-3517e180-e468-11e9-9b8c-2f0787f977f6.png)
+
+#### Sample Log Output
+Typical log output (log level `3`) when starting from `ShutterOpen1`. The first command is `ShutterClose1`. After closing, open it to 50% with `ShutterPosition1 50`  
+```
+SHT: Accuracy digits: 1
+SHT: Shutter 0 (Relay:1): Init. Pos: 20000 [100 %], Open Vel.: 100 Close Vel.: 100 , Max Way: 20000, Opentime 10.0 [s], Closetime 10.0 [s], CoedffCalc: c0: 0, c1 200, c2: 200, c3: 0, c4: 0, binmask 3, is inverted 0, ShutterMode 0
+....
+CMD: ShutterClose
+SRC: Serial
+SHT: Position in: payload 0, index 1, source 7
+SHT: lastsource 7:, realpos 20000, target 0, payload 0
+SHT: Start shutter in direction -1
+SRC: Shutter
+MQT: stat/%topic%/RESULT = {"POWER2":"ON"}
+MQT: stat/%topic%/POWER2 = ON
+MQT: stat/%topic%/RESULT = {"ShutterClose1":0}
+SHT: Shutter 0: Real Pos: 19000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 0.5  [s]
+CFG: Saved to flash at F5, Count 725, Bytes 4096
+SHT: Shutter 0: Real Pos: 17000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 1.5  [s]
+SHT: Shutter 0: Real Pos: 15000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 2.5  [s]
+SHT: Shutter 0: Real Pos: 13000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 3.5  [s]
+SHT: Shutter 0: Real Pos: 11000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 4.5  [s]
+SHT: Shutter 0: Real Pos: 9000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 5.5  [s]
+SHT: Shutter 0: Real Pos: 7000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 6.5  [s]
+SHT: Shutter 0: Real Pos: 5000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 7.5  [s]
+SHT: Shutter 0: Real Pos: 3000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 8.5  [s]
+SHT: Shutter 0: Real Pos: 1000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 9.5  [s]
+SHT: Shutter 0: Real Pos. 0, Stoppos: 0, relay: 1, direction -1, pulsetimer: 0, rtcshutter: 10.1 [s], operationtime 0
+MQT: stat/%topic%/SHUTTER1 = 0
+SRC: Shutter
+MQT: stat/%topic%/RESULT = {"POWER2":"OFF"}
+MQT: stat/%topic%/POWER2 = OFF
+MQT: tele/%topic%/RESULT = {"Shutter1":{"Position":0,"direction":0}}
+CFG: Saved to flash at F4, Count 726, Bytes 4096
+....
+CMD: ShutterPosition 50
+SRC: Serial
+SHT: Position in: payload 50, index 1, source 23
+SHT: lastsource 23:, realpos 0, target 10000, payload 50
+SHT: Start shutter in direction 1
+SRC: Shutter
+MQT: stat/%topic%/RESULT = {"POWER1":"ON"}
+MQT: stat/%topic%/POWER1 = ON
+MQT: stat/%topic%/RESULT = {"ShutterPosition1":50}
+SHT: Shutter 0: Real Pos: 1500, Target 10000, source: Shutter, start-pos: 0 %, direction: 1, rtcshutter: 0.8  [s]
+CFG: Saved to flash at FB, Count 727, Bytes 4096
+SHT: Shutter 0: Real Pos: 3500, Target 10000, source: Shutter, start-pos: 0 %, direction: 1, rtcshutter: 1.8  [s]
+SHT: Shutter 0: Real Pos: 5500, Target 10000, source: Shutter, start-pos: 0 %, direction: 1, rtcshutter: 2.7  [s]
+SHT: Shutter 0: Real Pos: 7500, Target 10000, source: Shutter, start-pos: 0 %, direction: 1, rtcshutter: 3.7  [s]
+SHT: Shutter 0: Real Pos: 9500, Target 10000, source: Shutter, start-pos: 0 %, direction: 1, rtcshutter: 4.7  [s]
+SHT: Shutter 0: Real Pos. 10000, Stoppos: 50, relay: 0, direction 1, pulsetimer: 0, rtcshutter: 5.0 [s], operationtime 2
+MQT: stat/%topic%/SHUTTER1 = 50
+SRC: Shutter
+MQT: stat/%topic%/RESULT = {"POWER1":"OFF"}
+MQT: stat/%topic%/POWER1 = OFF
+MQT: tele/%topic%/RESULT = {"Shutter1":{"Position":50,"direction":0}}
+CFG: Saved to flash at FA, Count 728, Bytes 4096
+```
+### using Stepper Motors
+Stepper motors can be used to operate shutters and blinds. The configuration is very similar to the  Circuit Safe (Shuttermode 1) configuration. To operate a stepper motor requires driver module such as the A4988 and uses EN (enable), DIR (direction), STP (Stepper) for controls. If everything is defined correctly the shuttermode 3 will be reported at boot time.
+
+Tasmota supports a maximum of four shutters with one stepper motor per shutter simultanously. In very rare conditions where two or more shutters simoultanously move the last mm it can happen than one shutter moves to far.   
+
+- Stepper drivers configuration tutorials:  
+    - [A4988](https://lastminuteengineers.com/a4988-stepper-motor-driver-arduino-tutorial/)
+    - [DRV8825](https://lastminuteengineers.com/drv8825-stepper-motor-driver-arduino-tutorial/)
+    - [TMC2208](https://wiki.fysetc.com/TMC2208/)  
+- Modifying a 28BYJ-48 12V stepper motor from unipolar to bipolar [tutorial](https://coeleveld.com/wp-content/uploads/2016/10/Modifying-a-28BYJ-48-step-motor-from-unipolar-to-bipolar.pdf)  
+- [Bill of Materials](#Bill-of-materials)  
+
+#### Example configuration  
+`EN` and `DIR` are on `Relay1i` and `Relay2` respectively. Please be aware to use the **inverse** relay for the enable signal.  
+
+The `STP` signal is assigned as a `PWM<x>` component where `<x>` matches the number of the shutter (e.g., `PWM1` for `Shutter1`). The shutter feature adjusts the PWM frequency to operate the motor for proper shutter operation. The stepper motor frequency setting is a global setting all PWM components on the device. This means that all shutters on the device will operate at the same speed. Therefore no PWM devices other than shutters can be connected to the same Tasmota device.  
+
+The frequency of the PWM can be changed from 1000Hz to any value up to 10,000Hz. The command `ShutterFrequency` globally changes this. Be aware that most 12V operated motors cannot work faster than 2,000Hz. 5,000Hz.10,000Hz is possible by increasing the supplied voltage to 24V and use `ShutterMotorDelay` to allow a slow speed up/speed down. The maximum voltage of the A4988 is 36V. The TMC2208 is much more silent than the others but also significant slower and does not like high frequencies. For example, the speed at 24V is half o A4988
+
+Finally a GPIO **must** be assigned as `Counter1`. This counter is used to keep track of the steps and send the stepper to the correct position. The `Counter1` GPIO must be connected to the `PWM1` GPIO. Otherwise the stepper and your shutter will run continually or freeze up randomly.
+
+Only **bipolar** stepper motors may be used (see above).  
+
+You must properly configure the stepper motor driver (see above).
+
+`ShutterOpenDuration` and `ShutterCloseDuration` can be different. Shutter with Stepper motors always match positions exact. There is no need to vary `ShutterOpenDuration` and `ShutterCloseDuration`. Anyhow, if you decrease `ShutterCloseDuration` the Shutter will close with a higher speed on a virtual higher `ShutterFrequency` if possible. Same vice versa.
+
+You can define a soft start/stop by defining a `ShutterMotorDelay`. This causes the driver to ramp the speed up and down during the defined duration. The change of the `ShutterMotorDelay` does NOT change the distance the shutter makes. This is very convinent to trim the accelerate and decelerate rate without changeing the distance.
+
+Wemos Pin|GPIO|Component|Stepper Signal
+:-:|:-:|:-:|:-:
+D1|5|Relay1i|EN
+D2|4|Relay2|DIR
+D3|0|PWM1|STP
+D4|2|Counter1|STP
+
+**a) Set ShutterMode 3**  
+   `Backlog PulseTime1 0; PulseTime2 0`   // for relay Relay1i and Relay2  
+   `Interlock OFF`                        // this is a global variable for all Relays or at least the RELAYS NOT in the Interlock group
+   PWM1 and COUNTER1 defined
+
+**b) Enable Shutters**  
+   `SetOption80 1`   // this is a global variable for all Shutters  
+
+**c) Configure Shutter 1 and test ShutterMode 1 is working**  
+   `ShutterRelay1 1`   // for relay Relay1i and Relay2
+
+**d) Set the stepper motor speed (optional setting)**  
+   `ShutterFrequency 1500`  // this is a global variable for all steppers (1000rpm by default)
+
+**e) Set at least a small ramp-up/ramp down period 1.0 second (optional)**  
+   `ShutterMotorDelay1 1.0`  // Stepper do not like infinite momentum. Ramp up/down speed allow much higher frequencies.
+
+**f) Restart Tasmota**  
+   `Restart 1`
+
+**g) Test the shutter**  
+   `ShutterOpen1`   
+   `ShutterStop1`      // to stop the STEPPER1  
+   `ShutterClose1`  
+   `ShutterInvert1`    // to change the direction of rotation of the STEPPER1  
+
+**h) Perform the [shutter calibration](Blinds-and-Shutters.md#calibration)**    
+
+#### Configuration for additional shutters  
+You must first set up the first shutter and only then the next.  
+
+Wemos Pin|GPIO|Component|Stepper Signal
+:-:|:-:|:-:|:-:
+D5|14|Relay3i|EN
+D6|12|Relay4|DIR
+D7|13|PWM2|STP
+D8|15|Counter2|STP
+
+**a) Set ShutterMode 3**  
+  `Backlog PulseTime3 0; PulseTime4 0`   // for relay Relay3i and Relay4  
+  PWM2 and COUNTER2 defined
+
+**c) Configure Shutter 2 and test ShutterMode 1 is working**  
+  `ShutterRelay2 3`   // for relay Relay3i and Relay4
+
+**b) Restart Tasmota**  
+  `Restart 1`
+
+**d) Test the shutter**  
+  `ShutterOpen2`  
+  `ShutterStop2`     // to stop the STEPPER2  
+  `ShutterClose2`  
+  `ShutterInvert2`   // to change the direction of rotation of the STEPPER2  
+  
+**e) Perform the [shutter calibration](Blinds-and-Shutters.md#calibration)**    
+
+
+#### Motor Wiring Diagrams  
+#### One Shutter  
+![411](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v411.jpg)
+- Diagram v412: simple universal setup. For example, the control of horizontal curtain or vertical shutters, blinds adjuster or window opener, pet feeders, opening of a water tap for watering the lawn, rotating table for subject photography, opening the ventilation flap, PTZ camera, 3D Scanner Table, linear Actuator.  
+![412](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v412.jpg)
+- Diagram v414: parallel setup is to run two parallel steppers motors from the same controller. For example, to control a large and heavy hanging screen for an LCD projector, or two curtains at once on one large window.  
+![414](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v414.jpg)
+- Diagram v416: minimum setup size. For example, for small curtains located in a limited space.  
+![416](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v416.jpg)
+
+#### 2 Shutters  
+![421](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v421.jpg)
+- Diagram v422: parallel setup is to run two shutters and independent control of two stepper motors from one controller. For example, to control two independent curtains.  
+![422](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v422.jpg)
+- Diagram v424: big parallel setup is to run two shutters and independent control of two pairs of stepper motors from one controller. For example, to control four curtains on one very large window.  
+![424](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v424.jpg)
+
+#### Bill of Materials  
+- ESP8266 Boards:  
+  - [Wemos D1 mini](https://www.aliexpress.com/item/32529101036.html)  
+  - [NodeMCU](https://www.aliexpress.com/item/32266751149.html)  
+  - [ESP-01S](https://www.aliexpress.com/item/32973088687.html)  
+- Stepper motors (NEMA 17):  
+  - [Standard](https://www.aliexpress.com/item/32572890101.html)  
+  - [5:1 Planetary Gearbox](https://www.aliexpress.com/item/32586860419.html)  
+- Stepper motors (28BYJ-48):  
+  - [Standard](https://www.aliexpress.com/item/32849028097.html)  
+- Stepper Drivers:  
+  - [A4988](https://www.aliexpress.com/item/1609523735.html)  
+  - [DRV8825](https://www.aliexpress.com/item/1609523735.html)  
+  - [TMC 2208](https://www.aliexpress.com/item/32851067375.html)  
+- Stepper Motor Control Development Boards:  
+  - [x1 board](https://aliexpress.com/item/32908836265.html)  
+  - [x2 board](https://aliexpress.com/item/32870732179.html)  
+- DC-DC Step Down Power Supply Module:  
+  - [MP1584EN](https://www.aliexpress.com/item/33038302152.html)  
+  - [LM2596](https://www.aliexpress.com/item/32719726240.html)  
+  - [XL4015](https://www.aliexpress.com/item/1859072209.html)  
+- Power Supplies (AC-DC):  
+  - [DC 12V 2.5A](https://www.aliexpress.com/item/32588476889.html)  
+  - [DC 12V 4A](https://www.aliexpress.com/item/32854720283.html) 
+  - [DC 24v 4A](https://www.aliexpress.com/item/32854269135.html)  
+- Aluminum Capacitors:  
+  - [35V 100UF](https://www.aliexpress.com/item/32814611460.html)  
+  - [35V 10UF](https://www.aliexpress.com/item/32887486570.html)  
+- Motor Testing PWM Signal Generator:  
+  - [1 type](https://www.aliexpress.com/item/32856654440.html)  
+  - [2 type](https://www.aliexpress.com/item/32818889845.html)   
+
+### using Sonoff Dual R2 
 If using a Sonoff Dual R2, use the following Template:  
 `{"NAME":"Sonoff Dual R2","GPIO":[17,255,0,255,0,22,18,0,21,56,0,0,0,0],"FLAG":0,"BASE":39}`
 
-### Checklist
+#### Checklist
+
 - Ensure that the first relay opens the shutter
 - Ensure that the second relay closes the shutter
 - Set `ShutterRelay<x>`
@@ -190,8 +398,9 @@ If using a Sonoff Dual R2, use the following Template:
 - Set `ShutterInvertWebButtons<x>`(optional) (eg. useful for horizontal awnings)
 - If the shutter uses a pulse motor instead of a motors with one wire for each direction (i.e., duration based), define `PulseTime<x> 2` on both relays. The driver's behavior will change to a pulse motor that needs pulses to start and stop.  
 
-### Rules
+#### Rules
 Tasmota rule triggers:  
+
 - `Shutter<x>#Position` is triggered at start and and of movement reporting actual position
 - `Shutter<x>#Direction` is triggered at start and and of movement reporting actual direction
 - `Shutter<x>#Target` is triggered at start and and of movement reporting current target
@@ -212,12 +421,12 @@ Examples:
 - Open/Close or set a specific position for a shutter. This example drives the second shutter to the same position as the first shutter:  
   `Rule1 ON Shutter1#Position DO ShutterPosition2 %value%" ENDON`
 
-### Jarolift Shutter Support
+#### Jarolift Shutter Support
 Jarolift shutters operates by the 3 commands up/stop/down. Compile with the KeeLoq Option and provide the extracted master keys to communicate. Please see KeeLog description how to do that. After this create a rule to allow the shutter to control the Jarolift devices. Shutter must be in ShutterMode 0.
 
   `Rule1 On Power1#state=0 DO KeeloqSendButton 4 endon On Power2#state=0 DO KeeloqSendButton 4 endon on Power1#state=1 DO KeeloqSendButton 8 endon on Power2#State=1 DO KeeloqSendButton 2 endon`
 
-### Home Assistant Support
+#### Home Assistant Support
 For shutter position to persist in Home Assistant through device reboots, execute `PowerRetain 1`.
 
 These sample configurations should allow the shutter work in Home Assistant. Change the device MQTT topic and templates to match your settings. This is only an example and may need further modification to work in your environment.
@@ -314,236 +523,3 @@ In addition, add to your home assistant start up automation a query for the curr
         topic: "cmnd/%shutters grouptopic%/shutterposition"
         payload: ""       
 ```
-
-This example works with Home Assistant **versions prior to 0.82**:  
-```yaml
-cover:
- - platform: template
-   covers:
-     studio_shutter:
-       friendly_name: "Studio Shutter"
-       position_template: "{{ states.sensor.studio_shutter_position.state | int }}"
-       open_cover:
-         service: mqtt.publish
-         data:
-           topic: 'cmnd/%topic%/ShutterOpen1'
-       close_cover:
-         service: mqtt.publish
-         data:
-           topic: 'cmnd/%topic%/ShutterClose1'
-       stop_cover:
-         service: mqtt.publish
-         data:
-           topic: 'cmnd/%topic%/shutterstop1'
-       set_cover_position:
-         service: mqtt.publish
-         data_template:
-           topic: 'cmnd/%topic%/ShutterPosition1'
-           payload: '{{position}}'
-```
-
-## Wiring Diagrams
-### Normal wire configuration with a PCF as digital I/O
-![Normal wire](https://user-images.githubusercontent.com/34340210/65997880-35b07800-e468-11e9-82d3-8dcaab14b3bf.png ":size=200px")
-
-### Short Circuit safe wire configuration with a PCF as digital I/O
-![ShortCicuitSafe](https://user-images.githubusercontent.com/34340210/65997877-3517e180-e468-11e9-9b8c-2f0787f977f6.png ":size=200px")
-
-## Sample Log Output
-Typical log output (log level `3`) when starting from `ShutterOpen1`. The first command is `ShutterClose1`. After closing, open it to 50% with `ShutterPosition1 50`  
-```
-SHT: Accuracy digits: 1
-SHT: Shutter 0 (Relay:1): Init. Pos: 20000 [100 %], Open Vel.: 100 Close Vel.: 100 , Max Way: 20000, Opentime 10.0 [s], Closetime 10.0 [s], CoedffCalc: c0: 0, c1 200, c2: 200, c3: 0, c4: 0, binmask 3, is inverted 0, ShutterMode 0
-....
-CMD: ShutterClose
-SRC: Serial
-SHT: Position in: payload 0, index 1, source 7
-SHT: lastsource 7:, realpos 20000, target 0, payload 0
-SHT: Start shutter in direction -1
-SRC: Shutter
-MQT: stat/%topic%/RESULT = {"POWER2":"ON"}
-MQT: stat/%topic%/POWER2 = ON
-MQT: stat/%topic%/RESULT = {"ShutterClose1":0}
-SHT: Shutter 0: Real Pos: 19000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 0.5  [s]
-CFG: Saved to flash at F5, Count 725, Bytes 4096
-SHT: Shutter 0: Real Pos: 17000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 1.5  [s]
-SHT: Shutter 0: Real Pos: 15000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 2.5  [s]
-SHT: Shutter 0: Real Pos: 13000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 3.5  [s]
-SHT: Shutter 0: Real Pos: 11000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 4.5  [s]
-SHT: Shutter 0: Real Pos: 9000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 5.5  [s]
-SHT: Shutter 0: Real Pos: 7000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 6.5  [s]
-SHT: Shutter 0: Real Pos: 5000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 7.5  [s]
-SHT: Shutter 0: Real Pos: 3000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 8.5  [s]
-SHT: Shutter 0: Real Pos: 1000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 9.5  [s]
-SHT: Shutter 0: Real Pos. 0, Stoppos: 0, relay: 1, direction -1, pulsetimer: 0, rtcshutter: 10.1 [s], operationtime 0
-MQT: stat/%topic%/SHUTTER1 = 0
-SRC: Shutter
-MQT: stat/%topic%/RESULT = {"POWER2":"OFF"}
-MQT: stat/%topic%/POWER2 = OFF
-MQT: tele/%topic%/RESULT = {"Shutter1":{"Position":0,"direction":0}}
-CFG: Saved to flash at F4, Count 726, Bytes 4096
-....
-CMD: ShutterPosition 50
-SRC: Serial
-SHT: Position in: payload 50, index 1, source 23
-SHT: lastsource 23:, realpos 0, target 10000, payload 50
-SHT: Start shutter in direction 1
-SRC: Shutter
-MQT: stat/%topic%/RESULT = {"POWER1":"ON"}
-MQT: stat/%topic%/POWER1 = ON
-MQT: stat/%topic%/RESULT = {"ShutterPosition1":50}
-SHT: Shutter 0: Real Pos: 1500, Target 10000, source: Shutter, start-pos: 0 %, direction: 1, rtcshutter: 0.8  [s]
-CFG: Saved to flash at FB, Count 727, Bytes 4096
-SHT: Shutter 0: Real Pos: 3500, Target 10000, source: Shutter, start-pos: 0 %, direction: 1, rtcshutter: 1.8  [s]
-SHT: Shutter 0: Real Pos: 5500, Target 10000, source: Shutter, start-pos: 0 %, direction: 1, rtcshutter: 2.7  [s]
-SHT: Shutter 0: Real Pos: 7500, Target 10000, source: Shutter, start-pos: 0 %, direction: 1, rtcshutter: 3.7  [s]
-SHT: Shutter 0: Real Pos: 9500, Target 10000, source: Shutter, start-pos: 0 %, direction: 1, rtcshutter: 4.7  [s]
-SHT: Shutter 0: Real Pos. 10000, Stoppos: 50, relay: 0, direction 1, pulsetimer: 0, rtcshutter: 5.0 [s], operationtime 2
-MQT: stat/%topic%/SHUTTER1 = 50
-SRC: Shutter
-MQT: stat/%topic%/RESULT = {"POWER1":"OFF"}
-MQT: stat/%topic%/POWER1 = OFF
-MQT: tele/%topic%/RESULT = {"Shutter1":{"Position":50,"direction":0}}
-CFG: Saved to flash at FA, Count 728, Bytes 4096
-```
-## Shutter with Stepper Motors
-Stepper motors can be used to operate shutters and blinds. The configuration is very similar to the  Circuit Safe (Shuttermode 1) configuration. To operate a stepper motor requires driver module such as the A4988 and uses EN (enable), DIR (direction), STP (Stepper) for controls. If everything is defined correctly the shuttermode 3 will be reported at boot time.
-
-Tasmota supports a maximum of four shutters with one stepper motor per shutter simultanously. In very rare conditions where two or more shutters simoultanously move the last mm it can happen than one shutter moves to far.   
-
-- Stepper drivers configuration tutorials:  
-    - [A4988](https://lastminuteengineers.com/a4988-stepper-motor-driver-arduino-tutorial/)
-    - [DRV8825](https://lastminuteengineers.com/drv8825-stepper-motor-driver-arduino-tutorial/)
-    - [TMC2208](https://wiki.fysetc.com/TMC2208/)  
-- Modifying a 28BYJ-48 12V stepper motor from unipolar to bipolar [tutorial](https://coeleveld.com/wp-content/uploads/2016/10/Modifying-a-28BYJ-48-step-motor-from-unipolar-to-bipolar.pdf)  
-- [Bill of Materials](#Bill-of-materials)  
-
-### Example configuration  
-`EN` and `DIR` are on `Relay1i` and `Relay2` respectively. Please be aware to use the **inverse** relay for the enable signal.  
-
-The `STP` signal is assigned as a `PWM<x>` component where `<x>` matches the number of the shutter (e.g., `PWM1` for `Shutter1`). The shutter feature adjusts the PWM frequency to operate the motor for proper shutter operation. The stepper motor frequency setting is a global setting all PWM components on the device. This means that all shutters on the device will operate at the same speed. Therefore no PWM devices other than shutters can be connected to the same Tasmota device.  
-
-The frequency of the PWM can be changed from 1000Hz to any value up to 10,000Hz. The command `ShutterFrequency` globally changes this. Be aware that most 12V operated motors cannot work faster than 2,000Hz. 5,000Hz.10,000Hz is possible by increasing the supplied voltage to 24V and use `ShutterMotorDelay` to allow a slow speed up/speed down. The maximum voltage of the A4988 is 36V. The TMC2208 is much more silent than the others but also significant slower and does not like high frequencies. For example, the speed at 24V is half o A4988
-
-Finally a GPIO **must** be assigned as `Counter1`. This counter is used to keep track of the steps and send the stepper to the correct position. The `Counter1` GPIO must be connected to the `PWM1` GPIO. Otherwise the stepper and your shutter will run continually or freeze up randomly.
-
-Only **bipolar** stepper motors may be used (see above).  
-
-You must properly configure the stepper motor driver (see above).
-
-`ShutterOpenDuration` and `ShutterCloseDuration` can be different. Shutter with Stepper motors always match positions exact. There is no need to vary `ShutterOpenDuration` and `ShutterCloseDuration`. Anyhow, if you decrease `ShutterCloseDuration` the Shutter will close with a higher speed on a virtual higher `ShutterFrequency` if possible. Same vice versa.
-
-You can define a soft start/stop by defining a `ShutterMotorDelay`. This causes the driver to ramp the speed up and down during the defined duration. The change of the `ShutterMotorDelay` does NOT change the distance the shutter makes. This is very convinent to trim the accelerate and decelerate rate without changeing the distance.
-
-Wemos Pin|GPIO|Component|Stepper Signal
-:-:|:-:|:-:|:-:
-D1|5|Relay1i|EN
-D2|4|Relay2|DIR
-D3|0|PWM1|STP
-D4|2|Counter1|STP
-
-**a) Set ShutterMode 3**  
-   `Backlog PulseTime1 0; PulseTime2 0`   // for relay Relay1i and Relay2  
-   `Interlock OFF`                        // this is a global variable for all Relays or at least the RELAYS NOT in the Interlock group
-   PWM1 and COUNTER1 defined
-
-**b) Enable Shutters**  
-   `SetOption80 1`   // this is a global variable for all Shutters  
-
-**c) Configure Shutter 1 and test ShutterMode 1 is working**  
-   `ShutterRelay1 1`   // for relay Relay1i and Relay2
-
-**d) Set the stepper motor speed (optional setting)**  
-   `ShutterFrequency 1500`  // this is a global variable for all steppers (1000rpm by default)
-
-**e) Set at least a small ramp-up/ramp down period 1.0 second (optional)**  
-   `ShutterMotorDelay1 1.0`  // Stepper do not like infinite momentum. Ramp up/down speed allow much higher frequencies.
-
-**f) Restart Tasmota**  
-   `Restart 1`
-
-**g) Test the shutter**  
-   `ShutterOpen1`   
-   `ShutterStop1`      // to stop the STEPPER1  
-   `ShutterClose1`  
-   `ShutterInvert1`    // to change the direction of rotation of the STEPPER1  
-
-**h) Perform the [shutter calibration](Blinds-and-Shutters.md#calibration)**    
-
-### Configuration for additional shutters  
-You must first set up the first shutter and only then the next.  
-
-Wemos Pin|GPIO|Component|Stepper Signal
-:-:|:-:|:-:|:-:
-D5|14|Relay3i|EN
-D6|12|Relay4|DIR
-D7|13|PWM2|STP
-D8|15|Counter2|STP
-
-**a) Set ShutterMode 3**  
-  `Backlog PulseTime3 0; PulseTime4 0`   // for relay Relay3i and Relay4  
-  PWM2 and COUNTER2 defined
-
-**c) Configure Shutter 2 and test ShutterMode 1 is working**  
-  `ShutterRelay2 3`   // for relay Relay3i and Relay4
-
-**b) Restart Tasmota**  
-  `Restart 1`
-
-**d) Test the shutter**  
-  `ShutterOpen2`  
-  `ShutterStop2`     // to stop the STEPPER2  
-  `ShutterClose2`  
-  `ShutterInvert2`   // to change the direction of rotation of the STEPPER2  
-  
-**e) Perform the [shutter calibration](Blinds-and-Shutters.md#calibration)**    
-
-
-### Stepper Motor Wiring Diagrams  
-#### One Shutter  
-![411](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v411.jpg ":size=200px")
-- Diagram v412: simple universal setup. For example, the control of horizontal curtain or vertical shutters, blinds adjuster or window opener, pet feeders, opening of a water tap for watering the lawn, rotating table for subject photography, opening the ventilation flap, PTZ camera, 3D Scanner Table, linear Actuator.  
-![412](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v412.jpg ":size=200px")
-- Diagram v414: parallel setup is to run two parallel steppers motors from the same controller. For example, to control a large and heavy hanging screen for an LCD projector, or two curtains at once on one large window.  
-![414](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v414.jpg ":size=200px")
-- Diagram v416: minimum setup size. For example, for small curtains located in a limited space.  
-![416](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v416.jpg ":size=200px")
-
-#### 2 Shutters  
-![421](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v421.jpg ":size=200px")
-- Diagram v422: parallel setup is to run two shutters and independent control of two stepper motors from one controller. For example, to control two independent curtains.  
-![422](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v422.jpg ":size=200px")
-- Diagram v424: big parallel setup is to run two shutters and independent control of two pairs of stepper motors from one controller. For example, to control four curtains on one very large window.  
-![424](https://raw.githubusercontent.com/TrDA-hab/blinds/master/images/A4988%20v424.jpg ":size=200px")
-
-#### Bill of Materials  
-- ESP8266 Boards:  
-  - [Wemos D1 mini](https://www.aliexpress.com/item/32529101036.html)  
-  - [NodeMCU](https://www.aliexpress.com/item/32266751149.html)  
-  - [ESP-01S](https://www.aliexpress.com/item/32973088687.html)  
-- Stepper motors (NEMA 17):  
-  - [Standard](https://www.aliexpress.com/item/32572890101.html)  
-  - [5:1 Planetary Gearbox](https://www.aliexpress.com/item/32586860419.html)  
-- Stepper motors (28BYJ-48):  
-  - [Standard](https://www.aliexpress.com/item/32849028097.html)  
-- Stepper Drivers:  
-  - [A4988](https://www.aliexpress.com/item/1609523735.html)  
-  - [DRV8825](https://www.aliexpress.com/item/1609523735.html)  
-  - [TMC 2208](https://www.aliexpress.com/item/32851067375.html)  
-- Stepper Motor Control Development Boards:  
-  - [x1 board](https://aliexpress.com/item/32908836265.html)  
-  - [x2 board](https://aliexpress.com/item/32870732179.html)  
-- DC-DC Step Down Power Supply Module:  
-  - [MP1584EN](https://www.aliexpress.com/item/33038302152.html)  
-  - [LM2596](https://www.aliexpress.com/item/32719726240.html)  
-  - [XL4015](https://www.aliexpress.com/item/1859072209.html)  
-- Power Supplies (AC-DC):  
-  - [DC 12V 2.5A](https://www.aliexpress.com/item/32588476889.html)  
-  - [DC 12V 4A](https://www.aliexpress.com/item/32854720283.html) 
-  - [DC 24v 4A](https://www.aliexpress.com/item/32854269135.html)  
-- Aluminum Capacitors:  
-  - [35V 100UF](https://www.aliexpress.com/item/32814611460.html)  
-  - [35V 10UF](https://www.aliexpress.com/item/32887486570.html)  
-- Motor Testing PWM Signal Generator:  
-  - [1 type](https://www.aliexpress.com/item/32856654440.html)  
-  - [2 type](https://www.aliexpress.com/item/32818889845.html)   

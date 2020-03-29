@@ -37,37 +37,38 @@ Use this procedure to determine which dpId's are available:
 
 1. Go to `Configure` -> `Console` option in Tasmota web interface.
 2. Use command `weblog 4` to enable verbose logging in web interface.
-3. Observe the log. After every 9-10 seconds you should see log messages similar to:
-   
-   ```json
-   TYA: Heartbeat
-   TYA: RX Packet: "55aa0107000501010001000f"
-   TYA: FnId=0 is set for dpId=1
-   TYA: RX Packet: "55aa01070005020100010010"
-   TYA: FnId=0 is set for dpId=2
-   TYA: RX Packet: "55aa01070005030100010011"
-   TYA: FnId=0 is set for dpId=3
-   TYA: RX Packet: "55aa01070005040100010012"
-   TYA: FnId=0 is set for dpId=4
-   TYA: RX Packet: "55aa0107000807020004000000001c"
-   TYA: FnId=0 is set for dpId=7
-   TYA: RX Packet: "55aa0107000808020004000000001d"
-   TYA: FnId=0 is set for dpId=8
-   TYA: RX Packet: "55aa0107000809020004000000001e"
-   TYA: FnId=0 is set for dpId=9
-   TYA: RX Packet: "55aa010700080a020004000000001f"
-   TYA: FnId=0 is set for dpId=0
-   TYA: RX Packet: "55aa0107000865020004000000007a"
-   TYA: FnId=0 is set for dpId=101
-   TYA: RX Packet: "55aa0107000866020004000000007b"
-   TYA: FnId=0 is set for dpId=102
-   TYA: RX Packet: "55aa0107000867020004000000007c"
-   TYA: FnId=0 is set for dpId=103
-   TYA: RX Packet: "55aa0107000868020004000009870d"
-   TYA: FnId=0 is set for dpId=104
-   ```
+3. Observe the log. After every 9-10 seconds you should see TYA messages.
+
+```
+TYA: Heartbeat
+TYA: RX Packet: "55aa0107000501010001000f"
+TYA: FnId=0 is set for dpId=1
+TYA: RX Packet: "55aa01070005020100010010"
+TYA: FnId=0 is set for dpId=2
+TYA: RX Packet: "55aa01070005030100010011"
+TYA: FnId=0 is set for dpId=3
+TYA: RX Packet: "55aa01070005040100010012"
+TYA: FnId=0 is set for dpId=4
+TYA: RX Packet: "55aa0107000807020004000000001c"
+TYA: FnId=0 is set for dpId=7
+TYA: RX Packet: "55aa0107000808020004000000001d"
+TYA: FnId=0 is set for dpId=8
+TYA: RX Packet: "55aa0107000809020004000000001e"
+TYA: FnId=0 is set for dpId=9
+TYA: RX Packet: "55aa010700080a020004000000001f"
+TYA: FnId=0 is set for dpId=0
+TYA: RX Packet: "55aa0107000865020004000000007a"
+TYA: FnId=0 is set for dpId=101
+TYA: RX Packet: "55aa0107000866020004000000007b"
+TYA: FnId=0 is set for dpId=102
+TYA: RX Packet: "55aa0107000867020004000000007c"
+TYA: FnId=0 is set for dpId=103
+TYA: RX Packet: "55aa0107000868020004000009870d"
+TYA: FnId=0 is set for dpId=104
+```
 
 4. Observe all lines printed as `TYA: FnId=0 is set for dpId=XXX` and note all dpId values. 
+
 
 Now that you have a list of usable dpId's you need to determine what their functions are:
 
@@ -297,7 +298,7 @@ By default, the TuyaMCU module expects a 1 gang switch. There is currenty no way
 #### Power Metering	
 Power metering configuration is same as for [dimmers](#power-metering).	
 
-## Curtain Motors	
+### Curtain Motors	
 The Zemismart WiFi curtain motor uses a Tuya TYWE1S inside the little white dongle as a radio modem.	
 `U1TX` is connected to "USB D+", `U1RX` is connected to "USB D-", and there is a blue LED in the dongle connected to "USB3 R-" controlled by the MCU. To flash Tasmota, we need `U0RX`, `U0TX`, and `GPIO0`. None of which are broken out on the PCB, so soldering or Tuya-Convert are necessary.	
 
@@ -404,7 +405,7 @@ They are common protocols integrated in Tasmota's TuyaMCU module. They stay the 
 ## Functional protocols 
 Functional protocols are used for delivering and reporting data of functions. These protocols differ between devices and manufacturers and might require configuration in Tasmota using [`TuyaMCU`](#tuyamcu) command or with [`TuyaSend<x>`](#tuyasend) command.
 
-### Anatomy of Functional Protocols
+## Anatomy of Tuya Protocol
 
 |Name|Description|
 |---|---|
@@ -441,13 +442,14 @@ This is the command which powers on the device sending Function Command = `1` to
 - Function Command = `0x01` in hex which equals `1` in int
 - Verification Method = `0e` is calculated
 
-### Protocol flow
+#### Protocol flow
 On device boot, TuyaMCU executes the required basic protocols and reads the functional protocol data received, which are used to update status of components mapped in TuyaMCU (Relays, dimmer, power monitoring data).
 
 After receiving a command from Tasmota (Command Word `0x06`), the MCU performs corresponding logical control. When the dpID status is changed, the MCU reports the data (Command Word `0x07`) to TuyaMCU component. 
 
 ## dpId Function Tables
-***This information is just for orientation. Functions are assigned by the manufacturer and can be on different dpId's***
+
+!!! warning "This information is just for orientation. Functions are assigned by the manufacturer and can be on different dpId's"
 
 - DP ID: dpId.
 - Function Point：Used to describe the product function.
@@ -628,7 +630,8 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 9     | Mode                                                       | work_type            | Issue and report | Enum          | Enumerated values: setting_quick, boiling_quick, temp_setting, temp_ |
 
 
-### BecaThermostat(WIP)
+### BecaThermostat 
+!!! warning "Work in progress"
 
 | DP ID | Function points     | Identifier  | Data type        | Function type | Properties                                 |
 |-------|---------------------|-------------|------------------|---------------|--------------------------------------------|
@@ -639,7 +642,8 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 102   | Floor Temperature   | FloorCurrent| Issue and report | Integer       | Values range:0-37, Pitch1, Scale0, Unit:℃ |
 
 
-### Inkbird ITC-308-Wifi Temperature controller with individual plug in sockets for heating/cooling
+### Inkbird ITC-308-Wifi 
+Temperature controller with individual plug in sockets for heating/cooling
 
 | DP ID | Function points            | Identifier | Data type        | Function type | Properties                                                  |
 |-------|----------------------------|------------|------------------|---------------|-------------------------------------------------------------|

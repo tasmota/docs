@@ -1,5 +1,5 @@
 
-<img alt="Domoticz" src="/docs_media/logo/domoticz2.jpg" style="margin:10px;float:right;width:20em"> </img>
+<img alt="Domoticz" src="_media/logo/domoticz2.jpg" style="margin:10px;float:right;width:20em"> </img>
 Tasmota supports [Domoticz](http://www.domoticz.com/) MQTT 'out of the box' for both relays and sensors.
 
 Find below the procedure to configure Domoticz and Tasmota.

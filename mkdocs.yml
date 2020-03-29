@@ -99,9 +99,8 @@ nav:
   - Timers.md
   - Lights.md
   - Buttons-and-Switches.md
-  - Peripherals: Supported-Peripherals.md
+  - Peripherals: Peripherals.md
   - TuyaMCU.md
-  - Device-Groups.md
   - Blinds-and-Shutters.md
   - IR Communication: Tasmota-IR.md
   - WebUI.md
@@ -112,19 +111,21 @@ nav:
     - Zigbee:
       - Zigbee.md
       - Zigbee-Internals.md
+    - GPS-NTP-server.md
+    - I2C Devices: I2CDevices.md
     - TasmotaSlave.md
+    - Device-Groups.md
     - DeepSleep.md
     - PWM-dimmer-switch.md
     - Buzzer.md
     - Dynamic-Sleep.md
-    - GPS-NTP-server.md
-    - I2C Devices: I2CDevices.md
     - Smart-Meter-Interface.md
     - PIR-Motion-Sensors.md
     - Power-Monitoring-Calibration.md
     - Subscribe-&-Unsubscribe.md
     - TLS.md
   - Smart Home Integrations:
+    - Introduction: Integrations.md
     - Alexa.md
     - AWS-IoT.md
     - Domoticz.md
@@ -143,6 +144,7 @@ nav:
     - Mozilla WebThings Adapter: "https://github.com/tim-hellhake/tasmota-adapter"
     - SmartThings: "https://github.com/BrettSheleski/SmartThingsPublic/blob/master/devicetypes/brettsheleski/sonoff-tasmota.src/readme.md"
   - Peripherals:
+    - Supported-Peripherals.md
     - Displays:
       - Displays.md
     # - Analog pin: ADC.md

@@ -106,9 +106,11 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 
 <br clear="right"/>
 
->[!WARNING] There is no White only slider in the UI for 4 channel lights. Use [`White`](Commands.md#white) commands or set up [White Blend Mode](#white-blend-mode).
+!!! failure "There is no White only slider in the UI for 4 channel lights"
+    Use [`White`](Commands.md#white) commands or set up [White Blend Mode](#white-blend-mode).
 
->[!DANGER] Some lights have limited power supply that do not allow all channels to be at full power at the same time. Be careful not to burn out your light if you force all channels via `Color` or [**RGB and White Split**](#rgb-and-white-split).
+!!! danger 
+    Some lights have limited power supply that do not allow all channels to be at full power at the same time. Be careful not to burn out your light if you force all channels via `Color` or [**RGB and White Split**](#rgb-and-white-split).
 
 ### 5 Channels - RGBCCT Lights
 
@@ -125,7 +127,8 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 
 <br clear="right"/>
 
->[!DANGER] Some lights have limited power supply that do not allow all channels to be at full power at the same time. Be careful not to burn out your light if you force all channels via `Color` or [**RGB and White Split**](#rgb-and-white-split)
+!!! danger
+    Some lights have limited power supply that do not allow all channels to be at full power at the same time. Be careful not to burn out your light if you force all channels via `Color` or [**RGB and White Split**](#rgb-and-white-split)
 
 ### Independent PWM Channels 
 
@@ -154,10 +157,11 @@ Some lights have hardware gamma correction (f.e. Sonoff B1)., in which case soft
 
 The curve used: orange=ideal, blue=tasmota.
 
->[!TIP] **How do I know if I have hardware gamma correction?**<br>
->If you find your light very dark even with `Dimmer 40`, then you have probably hardware gamma correction. Solution: `LedTable 0`.
+!!! question "How do I know if I have hardware gamma correction?"
+    If you find your light very dark even with `Dimmer 40`, then you have probably hardware gamma correction. Solution: `LedTable 0`.
 
-!> Internally Tasmota uses 10 bits resolution PWM to get smoother levels at low brightness. 
+!!! quote ""
+    Internally Tasmota uses 10 bits resolution PWM to get smoother levels at low brightness. 
 
 ### White Blend Mode
 
@@ -167,7 +171,8 @@ Enable it by setting the last PWM channel to zero using [`RGBWWTable 255,255,255
 #### Calibration (optional)
 Generally white LEDs are brighter than RGB LEDs. If you want to keep the same brightness, you need to calibrate the white level. In this mode, any white component will be removed from RGB LEDs and sent to the white LEDs. This makes whites look much better.
 
->[!EXAMPLE] `Color 30508000` will be converted to `Color 0020503000` (0x30 is subtracted from RGB channels and added to the White channel)
+!!! example 
+    `Color 30508000` will be converted to `Color 0020503000` (0x30 is subtracted from RGB channels and added to the White channel)
 
 To calibrate a RGBW light:
 
@@ -177,9 +182,9 @@ To calibrate a RGBW light:
 4. If too bright, decrease `<n>`. If too dim, increase `<n>`
 5. Go back to step 2 and iterate until satisfied with the color intensities.
 
->[!EXAMPLE] Calibration examples for specific devices:
->* Sonoff B1: `RGBWWTable 255,255,255,35,0`
->* Teckin SB50: `RGBWWTable 255,255,255,80,0`
+!!! example "Calibration examples for specific devices:"
+    Sonoff B1: `RGBWWTable 255,255,255,35,0`
+    Teckin SB50: `RGBWWTable 255,255,255,80,0`
 
 ### RGB and White Split 
 
@@ -193,7 +198,7 @@ Use `SetOption37 128` to split RGB and White into 2 independent lights. If you a
 
 [`SetOption37`](Commands.md#setoption37)
 
-[remoteMarkdownUrl](https://raw.githubusercontent.com/tasmota/docs/master/SetOption37.md)
+[Read More](SetOption37.md)
 
 ### Disable Auto Power On 
 

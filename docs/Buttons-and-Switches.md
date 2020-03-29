@@ -1,9 +1,9 @@
-?> Buttons and switches are primarily used to toggle (turn ON or OFF) relays or lights. 
+!!! info "Buttons and switches are primarily used to toggle (turn ON or OFF) relays or lights"
 
 A typical device usually has at least one button (exception being bulbs and some lights) to control the power state(s). Additional buttons and switches can be [wired](Expanding-Tasmota#connect-switch) to a free GPIO and configured in Module or Template settings.
 
-> [!NOTE]
-> Other than relays/lights, Tasmota does not publish the state of components (switches, buttons, sensors, etc.) in real-time. State of components is transmitted automatically each [TelePeriod](Commands.md#teleperiod) via the `SENSORS` message.
+!!! note
+    Other than relays/lights, Tasmota does not publish the state of components (switches, buttons, sensors, etc.) in real-time. State of components is transmitted automatically each [TelePeriod](Commands.md#teleperiod) via the `SENSORS` message.
 
 # Button vs. Switch
 A button (also called a push-button) is a momentary or non-latching switch which causes a temporary change in the state of an electrical circuit only while the switch is pressed. An automatic mechanism (i.e. a spring) returns the switch to its default position immediately afterwards, restoring the initial circuit condition.
@@ -14,7 +14,7 @@ Learn more about buttons and switches in [this video](https://www.youtube.com/wa
 
 Both have a similar function, but Tasmota distinguishes between a "Button" and a "Switch" in other ways. 
 
-# Switch
+## Switch
 <img style="float:right;width:6em" src="https://user-images.githubusercontent.com/5904370/57244373-84ccbb00-7038-11e9-85a9-3af6531c9f6d.png"> </img>
 
 In Tasmota a `Switch` is any switch or push-button additionally connected to a free GPIO. Some possibilities include:
@@ -43,7 +43,7 @@ Rule1 1
 And now, to make everything completely confusing:  
 A push-button can be configured as a `Switch` and a toggle switch can be configured as a `Button`. Configuring a toggle switch as a `Button` is not recommended!  
 
-## SwitchMode
+### SwitchMode
 
 To change the behavior of a physical input peripheral configured as a Tasmota `Switch<x>` component, whether a toggle switch or a [momentary switch](https://en.wikipedia.org/wiki/Switch#Biased_switches) (i.e., a push-button), use the `SwitchMode` command. If there is more than one `Switch<x>` component, use `SwitchMode<x>` where `<x>` is the number of your switch from the Tasmota GPIO configuration.
 
@@ -95,8 +95,7 @@ Set inverted push-button with long press mode (`0 = OFF` (_default_), `1 = TOGGL
 
 Tasmota will send a `TOGGLE` command when the button pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Default state is OFF and when pressed it's ON. When held for the time set in `SetOption32` (_default = 4s_), Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
-!!! tip
-    Long press or hold can be used in [conjunction with rules](Rules#use-long-press-action-on-a-switch) to create additional features or to control another Tasmota device.
+!!! tip "Long press or hold can be used in [conjunction with rules](Rules#use-long-press-action-on-a-switch) to create additional features or to control another Tasmota device"
 
 **`SwitchMode 7`**   
 Set toggle push-button mode. Same as `SwitchMode 0`.
@@ -132,8 +131,6 @@ Tasmota will send a `TOGGLE` command (use Switch<x>#state=2 in rules) when the b
 
 !!! tip
     The dimmer mode can be used in [conjunction with rules](Rules#Control-a-dimmer-with-one-switch) to create additional features or to control another Tasmota device.
-
-!!! tip
     The dimmer mode can be used to turn a media player on and off and to control the volume of a media player with one switch.
 
 
@@ -148,10 +145,9 @@ Tasmota will send an `ON` command when the button pressed (closing the circuit).
 **`SwitchMode 14`**   
 Set switch to inverted "push to on" mode (`0 = ON`, `1 = nothing`)
 
-!!! tip
-    This mode is useful with PIR sensor switches 
+!!! tip "This mode is useful with [PIR sensors](PIR-Motion-Sensors)" 
 
-## SwitchTopic
+### SwitchTopic
 
 !!! warning
     When using `SwitchTopic 1` or `2` (or `ButtonTopic 1` or `2`)  and your MQTT broker becomes unavailable, Tasmota falls back to default `SwitchTopic 0` (or `ButtonTopic 0`), which is not optimal.<br>To avoid this, we recommend using [rules](Rules). They simply always work!
@@ -172,10 +168,10 @@ _Sets MQTT switch topic to device %topic%_
 
 When changing the state of the switch an MQTT message is sent to the device topic with the payload according to `SwitchMode` set.  
 
->[!EXAMPLE] 
-> Device topic _tasmota_ with `SwitchMode 3` yields the following message: `MQT: cmnd/tasmota/POWER = TOGGLE`
->
->Notice the _cmnd_ instead of the _stat_ at the beginning.
+!!! example
+    Device topic _tasmota_ with `SwitchMode 3` yields the following message: `MQT: cmnd/tasmota/POWER = TOGGLE`
+
+    Notice the _cmnd_ instead of the _stat_ at the beginning.
 
 This is the same as sending an MQTT commands to this device, the device power state will be set to the defined state.
 
@@ -198,7 +194,7 @@ In the following example, we set the topic to `tasmota02` with `SwitchTopic tasm
 `SwitchTopic 1` sends an MQTT message to the device topic. This sets the state of the devices power accordingly.  
 `SwitchTopic <value>` sends an MQTT message command to the custom topic. This does not change the state of the devices power.
 
-# Button
+## Button
 <img style="float:right;width:6em" src="https://user-images.githubusercontent.com/5904370/57244172-2273ba80-7038-11e9-89ce-49ef46cb36d6.png"> </img> 
 
 For Tasmota, a `Button` is typically a momentary push-button (or a capacitive touch button in some light switches). By default a button toggles the corresponding power state. Every time the button gets pressed a relay or light changes its `Power` state (ON or OFF). Besides toggling  the `Power` state, a button is also used to activate [multi press button functions](#multi-press-functions), to do long press (HOLD) actions, or send messages to different MQTT topics.
@@ -218,45 +214,50 @@ Rule1 on Button1#state do Publish cmnd/custom-topic/BUTTON %value% endon
 Rule1 1
 ```
 
-## Multi-Press Functions
+### Multi-Press Functions
 
 Multipress functions for 2 and more presses cannot be changed using SetOptions or rules.
 
 !!! danger
     If you [have changed](#Changing-default-functionality) [ButtonTopic](Commands.md#buttontopic), [SetOption1](Commands.md#setoption1), [SetOption11](Commands.md#setoption11) or [SetOption13](Commands.md#setoption13) some of the listed functionality will be changed or removed.
 
-### 1 short press
+#### 1 short press
 Toggles the power state. This will blink the LED twice and send an MQTT status message like `stat/tasmota/POWER1 ON`. If `cmnd/tasmota/ButtonRetain on` has been used the MQTT message will also contain the MQTT retain flag.
 
-### 2 short presses
+#### 2 short presses
 Toggles the second power state (if available on the device). This will blink the LED twice and send an MQTT status message like `stat/tasmota/POWER2 on`.
 
 Any device with more than one power output can be configured to act on a double press to switch the second power state (or for Blitzwolf SHP5 the USB power). To be sure not to activate accidental three button press it is wise to set `SetOption1 1`.
 
-### 3 short presses
-Start Wi-Fi smart config allowing for SSID and password configuration using an Android mobile phone with the [ESP8266 SmartConfig](https://play.google.com/store/apps/details?id=com.cmmakerclub.iot.esptouch) app. The LED will blink during the config period. A single button press during this period will abort and restart the device. **Only in tasmota-classic.bin** **OBSOLETED**
+#### 3 short presses
 
-### 4 short presses
+!!! failure "OBSOLETED IN PRECOMPILED BINARIES"
+Start Wi-Fi smart config allowing for SSID and password configuration using an Android mobile phone with the [ESP8266 SmartConfig](https://play.google.com/store/apps/details?id=com.cmmakerclub.iot.esptouch) app. The LED will blink during the config period. A single button press during this period will abort and restart the device. 
+
+#### 4 short presses
 Start Wi-Fi manager providing an Access Point with IP address 192.168.4.1 and a web server allowing the configuration of Wi-Fi. The LED will blink during the config period. A single button press during this period will abort and restart the device.
 
-### 5 short presses
-Start Wi-Fi Protected Setup (WPS) allowing for SSID and password configuration using the router's WPS button or web page. The LED will blink during the config period. A single button press during this period will abort and restart the device. **Only in tasmota-classic.bin** **OBSOLETED**
+#### 5 short presses
 
-### 6 short presses
+!!! failure "OBSOLETED IN PRECOMPILED BINARIES"
+Start Wi-Fi Protected Setup (WPS) allowing for SSID and password configuration using the router's WPS button or web page. The LED will blink during the config period. A single button press during this period will abort and restart the device. 
+
+#### 6 short presses
 Restarts the device.
 
-### 7 short presses
+#### 7 short presses
 Start OTA update of firmware using [OtaUrl](Commands.md#otaurl). The green LED is lit during the update.
 
-### **Long press**
+#### **Long press**
 There are two separate functions associated with a button long press based on how long it is held:
+
 1. When held continuously for 40 seconds (Configurable with [SetOption32](Commands.md#setoption32), value is 10x the configured hold time) Tasmota will reset to firmware defaults and restart.
 2. If enabled, button pressed for 4 seconds (Configurable with [SetOption32](Commands.md#setoption32)) creates a HOLD action. Check [table below](#changing-default-functionality) on how to enable this function.
 
-  > [!DANGER]
-  >When a button is configured with a [Switchmode](Commands.md#switchmode) that keeps it as ON while depressed it activates the reset to firmware defaults function. Change that button to switch or change switchmode to avoid repeated resets to defaults.
+!!! danger 
+    When a button is configured with a [Switchmode](Commands.md#switchmode) that keeps it as ON while depressed it activates the reset to firmware defaults function. Change that button to switch or change switchmode to avoid repeated resets to defaults.
 
-## ButtonTopic
+### ButtonTopic
 
 **`ButtonTopic 0`**
 
@@ -273,11 +274,11 @@ Sets MQTT button topic to device %topic%.
 When changing the state of the button an MQTT message is sent to the device topic with the payload according to `SwitchMode` set.  
 
 !!! example
-     Device topic _tasmota_ with `SwitchMode 3` yields the following message: `MQT: cmnd/tasmota/POWER = ON`
->
->Notice the _cmnd_ instead of the _stat_ at the beginning.
->
-> This is the same as sending an MQTT command to this device, the device power state will be set to the defined state.
+    Device topic _tasmota_ with `SwitchMode 3` yields the following message: `MQT: cmnd/tasmota/POWER = ON`
+    
+    Notice the _cmnd_ instead of the _stat_ at the beginning.
+
+    This is the same as sending an MQTT command to this device, the device power state will be set to the defined state.
 
 **`ButtonTopic <value>`**
 
@@ -288,9 +289,9 @@ This will send an MQTT message to a custom defined topic similarly to option 1.
 
 !!! example
      For example, we set the topic to _tasmota02_ with `ButtonTopic tasmota02`.   
->With `SwitchMode 1` the device yields the following message: `MQT: cmnd/tasmota02/POWER = TOGGLE`
->
-> If you have another device with the topic _tasmota02_ this action will toggle its power state while not affecting anything on the _tasmota_ device.
+     With `SwitchMode 1` the device yields the following message: `MQT: cmnd/tasmota02/POWER = TOGGLE`
+        
+    If you have another device with the topic _tasmota02_ this action will toggle its power state while not affecting anything on the _tasmota_ device.
 
 #### ButtonTopic Summary
 
@@ -306,7 +307,7 @@ Command [`SetOption11`](Commands.md#setoption11) allows for swapping the functio
 
 These changes result in the following:
 
-![Action matrix]_media/button-matrix.png ":size=300")
+[![Action matrix](_media/button-matrix.png)](_media/button-matrix.png)
 
 #### Example
 
@@ -316,9 +317,8 @@ If your standard topic of Sonoff Touch is `light` and the ceiling fan topic is `
 ButtonTopic ceilingfan
 SetOption11 1
 ```
-All of the above is easier accomplished using [Rules](Rules)!
-
-[Example using Rules](Rules#button-with-single-press-double-press-and-hold)
+All of the above is easier accomplished using [Rules](Rules#button-with-single-press-double-press-and-hold)!
 
 ---
+
 For a practical application of everything mentioned in this article read about this excellent [LEGO nightstand switch project](https://jeff.noxon.cc/2018/11/21/lego-nightstand-light-switch/).

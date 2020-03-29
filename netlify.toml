@@ -7,5 +7,6 @@ pip install mkdocs-redirects
 pip install ghp-import
 mkdocs build
 ghp-import site
-git push origin gh-pages
+git checkout gh-pages
+git push
 """

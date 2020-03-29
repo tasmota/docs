@@ -1,4 +1,4 @@
-?> Timers allow you to automate your device based on time triggers.
+!!! info "Timers allow you to automate your device based on time triggers"
 
 To control a device locally 16 timers are programmable. They can be configured with the `Timer<x>` command followed by a JSON payload with optional parameters. For example:
 

@@ -160,7 +160,7 @@ Use the `+` character to append a new rule to the rule set. For example:
 Rule1 ON Rules#Timer=1 DO Mem2 %time% ENDON ON Button1#state DO POWER TOGGLE ENDON
 ```
 
-You can duplicate the same trigger on many lines. 
+You can repeate the same trigger in rules. 
 
 ```haskell
 Rule
@@ -170,9 +170,11 @@ Rule
 
 ### Rule Variables
 
-There are ten available variables (double precision reals) in Tasmota, `Var1..Var5` and `Mem1..Mem5`. All `Var` will be empty strings when the program starts. The value of all `Mem` persists after a reboot. They provide a means to store the trigger `%value%` to be used in any rule.    
+There are ten available variables (double precision reals) in Tasmota: `Var1..Var5` and `Mem1..Mem5`. They provide a means to store the trigger `%value%` to be used in any rule.         
+All `Var` will be empty strings when the program starts. The value of all `Mem` persists after a reboot. 
 
-The value of a `Var<x>` and `Mem<x>` can be:  
+The value of a `Var<x>` and `Mem<x>` can be: 
+
 - any number
 - any text
 - %var1% to %var5%
@@ -186,20 +188,23 @@ The value of a `Var<x>` and `Mem<x>` can be:
 - %topic%
 
 To set the value for `Var<x>` and `Mem<x>` use the command  
+
 - `Var<x> <value>`
 - `Mem<x> <value>`
 
 The `<value>` can also be the value of the trigger of the rule.  
+
 - Set Var2 to the temperature of the AM2301 sensor - `ON AM2301#Temperature DO Var2 %value% ENDON`
 - Set Var4 to Var2's value - `ON Event#temp DO Var4 %Var2% ENDON`
 - Set Mem2 to the current time (minutes elapsed since midnight) - `ON Rules#Timer=1 DO Mem2 %time% ENDON`
 - After a Wi-Fi reconnect event, publish a payload containing timestamps of when Wi-Fi was disconnected in *From:* and when Wi-Fi re-connected in *To:* to `stat/topic/BLACKOUT`.
-  ```haskell
-  Rule1
-    ON wifi#disconnected DO Var1 %timestamp% ENDON
-    ON wifi#connected DO Var2 %timestamp% ENDON
-    ON mqtt#connected DO Publish stat/topic/BLACKOUT {"From":"%Var1%","To":"%Var2%"} ENDON
-  ```
+
+```haskell
+Rule1
+  ON wifi#disconnected DO Var1 %timestamp% ENDON
+  ON wifi#connected DO Var2 %timestamp% ENDON
+  ON mqtt#connected DO Publish stat/topic/BLACKOUT {"From":"%Var1%","To":"%Var2%"} ENDON
+```
 
 #### Delete rule
 
@@ -259,14 +264,12 @@ IF statement supports 3 formats:
 
 The outermost `<if-statement>` cannot be chained with other Tasmota commands in a `Backlog `. For example, `Backlog Power1 0; IF var1==1 Power1 1 ENDIF`, is **NOT** permitted. Commands chained with `<if-statement>` are allowed in a `<statement-list>`. For example, `IF ENERGY#Current>10 Power1 0; IF var1==1 Power1 1 ENDIF ENDIF`, **is** permitted.  
 
-`<logical-expression>`  
-Examples:  
-- `VAR1>=10`  
+`<logical-expression>` example: `VAR1>=10`  
 - Multiple comparison expressions with logical operator `AND` or `OR` between them. `AND` has higher priority than `OR`. For example:  
 `UPTIME>100 AND MEM1==1 OR MEM2==1`  
-Parenthesis can be used to change the priority of logical expression. For example:  
-`UPTIME>100 AND (MEM1==1 OR MEM2==1)`  
-- The following variables can be used in `<condition>`:  
+- Parenthesis can be used to change the priority of logical expression. For example:  `UPTIME>100 AND (MEM1==1 OR MEM2==1)`  
+
+- Following variables can be used in `<condition>`:  
 
   Symbol|Description
   -|-
@@ -366,8 +369,7 @@ Statement|Var1 Result
 
 ### Use long press action on a switch
 
-> [!NOTE]
-> This example is for GPIOs defined as switches not buttons
+!!! note "This example is for GPIOs defined as switches not buttons"
 
 Activate long press action with `Switchmode 5` and shorten long press time to 2 seconds (`Setoption32 20`).
 
@@ -378,8 +380,6 @@ Rule on switch1#state=3 do publish cmnd/tasmota02/POWER 2 endon
 Rule 1
 ```
 Notice we use `Rule` which edits `Rule1` rule set. They can be used interchangeably.
-
-
 
 ------------------------------------------------------------------------------
 
@@ -574,11 +574,10 @@ Rule1
   on event#message do publish stat/mqttTopic/log %value% endon
 ```
 
->[!NOTE]
->The following won't work:  
-```console
-Rule1 on event#setvar1 do backlog var1 %value%; power1 %var1% endon
-```
+!!! note "The following won't work:"
+    ```console
+    Rule1 on event#setvar1 do backlog var1 %value%; power1 %var1% endon
+    ```
 
 At least not as you probably would expect. The `var1` value used by the `power1` command will be the value present before the `backlog` command is executed. This is so, because the rule will replace `%var1%` BEFORE the `backlog` commands are put in the `backlog` command stream.
 
