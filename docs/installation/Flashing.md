@@ -1,0 +1,1 @@
+redirect: Getting-Started#Flashing
