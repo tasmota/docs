@@ -121,3 +121,29 @@ Start:
 * Load device configuration from Flash
 * Query any lights declared with `ZbLight` to read their current states
 * Pause the state machine
+
+## Pairing devices
+When you open pairing with `ZbPermitJoin 1` (60 seconds) or `ZbPermitJoin 99` (until next reboot), you allow new devices to join the network.
+
+Example below is for an OSRAM Plug.
+
+When a new devices joins, Z2T receives a TC Device Indication: `ZDO_TC_DEV_IND` (45CA) message with the device short (16 bits) address and IEEEAddress (64 bits).
+
+```json
+16:39:26 MQT: tele/Zigbee_home/RESULT = {"ZbState":{"Status":30,"IEEEAddr":"0x7CB03EAA0A0292DD","ShortAddr":"0xF75D","PowerSource":true,"ReceiveWhenIdle":true,"Security":false}}
+```
+
+Z2T then queries the device for additional information, like `ZbProbe` would do.
+
+First probe for Active Endpoint `ZDO_ACTIVE_EP_REQ`
+
+```json
+16:39:26 MQT: tele/Zigbee_home/RESULT = {"ZbState":{"Status":32,"ActiveEndpoints":["0x03"]}}
+```
+
+Finally query for the following general attributes: Manufacturer Id and Model Id.
+
+```
+16:39:26 ZIG: ZbZCLRawReceived: {"0xF75D":{"0000/0004":"OSRAM","0000/0005":"Plug 01"}}
+16:39:26 MQT: tele/tasmota/Zigbee_home/SENSOR = {"ZbReceived":{"0xF75D":{"Manufacturer":"OSRAM","ModelId":"Plug 01","Endpoint":3,"LinkQuality":36}}}
+```
