@@ -12,12 +12,12 @@ Configuration is possible in the webUI ***Configuration - Configure Module*** pa
 
 or by using commands: [`Module`](Commands.md#module) and [`GPIO`](Commands.md#gpio), or [`Template`](Commands.md#template).
 
-#### `Module`
+### `Module`
 First select desired module for the device (Wait for the restart). Depending on the type of [Module](Modules), only certain GPIO pins are user configurable. Module Generic (18) has all the GPIOs configurable.   
 
 _[`Modules`](Commands.md#modules) shows supported modules_
 
-#### `GPIO`
+### `GPIO`
 Assign a [component](Components) to a GPIO.
    
 - `GPIO14 2` configures sensor AM2301 to GPIO14_    
@@ -28,10 +28,10 @@ _[`GPIOs All`](Commands.md#gpios) shows list of all available components by name
 
 **For a peripheral to show up you may need to power cycle your device instead of a soft restart.**
 
-#### `Template`
+### `Template`
 Instead of using `Module` and `GPIO` you can define everything using `Template`. [Read more...](Templates#template-configuration-with-commands)
 
-### Additional Options
+## Additional Options
 
 #### Measurement Units
 Temperature units can be set to Celsius or Fahrenheit with [`SetOption8`](Commands.md#setoption8) command.
@@ -79,7 +79,7 @@ Others ***can*** be used but you have to mind the constraints outlined in [this 
     The ESP8266 is a 3.3V microcontroller, so its I/O operates at 3.3V as well. The pins are **not** 5V tolerant, applying more than 3.6V on any pin will release the [magic smoke](https://en.wikipedia.org/wiki/Magic_smoke) (fry the chip). The maximum current that can be drawn from a single GPIO pin is 12mA.
 
 ### Power Supply
-> [!DANGER]
+!!! warning "It is important to have a reliable power supply"
 
 The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?title=Power) is **one of the most important elements** for stable device operation. Many devices on the market have barely adequate power supplies for normal operation. ***Connected peripherals may strain the ability of the power supply on the device to deliver appropriate power to all the components, both on-board as well as externally connected.***
 
@@ -104,7 +104,7 @@ Shielding or using twisted pair wiring are other ways to reduce the effect of ra
 [Example for 10K Resistor](https://user-images.githubusercontent.com/35574450/39960640-8b2735ca-5626-11e8-8128-461b6d9976ad.png)
 (issue[#2708](https://github.com/arendst/Tasmota/issues/2708#issuecomment-388574891))
 
-# ESP8266 In Depth
+## ESP8266 In Depth
 Complete document available from https://tttapa.github.io/ESP8266/Chap04%20-%20Microcontroller.html
 ## Digital I/O
 Just like a normal Arduino, the ESP8266 has digital input/output pins (I/O or GPIO, General Purpose Input/Output pins). As the name implies, they can be used as digital inputs to read a digital voltage, or as digital outputs to output either 0V (sink current) or 3.3V (source current).

@@ -98,11 +98,11 @@ nav:
   - Rules.md
   - Timers.md
   - Lights.md
-  - Buttons-and-Switches.md
-  - Peripherals: Peripherals.md
-  - TuyaMCU.md
   - Blinds-and-Shutters.md
+  - Peripherals: Peripherals.md
+  - Buttons-and-Switches.md
   - IR Communication: Tasmota-IR.md
+  - TuyaMCU.md
   - WebUI.md
   - Compiling: Compile-your-build.md
   - Features:
