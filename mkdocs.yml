@@ -54,6 +54,7 @@ plugins:
           '/installation/Hardware-Preparation.md': 'Getting-Started.md'
           '/installation/Initial-Configuration.md': 'Getting-Started.md'
           'help/FAQ.md': 'FAQ.md'
+          'peripherals/': 'Supported-Peripherals.md'
           'help/Troubleshooting.md': 'Troubleshooting.md'
           'help/Device-Recovery.md': 'Device-Recovery.md'
           'integrations/Alexa.md': 'Alexa.md'
@@ -98,7 +99,7 @@ nav:
   - Buttons-and-Switches.md
   - Peripherals: Supported-Peripherals.md
   - TuyaMCU.md
-  - Device-groups.md
+  - Device-Groups.md
   - Blinds-and-Shutters.md
   - Shutter-and-Steppers.md
   - IR Communication: Tasmota-IR.md

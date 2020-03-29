@@ -23,8 +23,8 @@ Features that are not available in any release build have to be enabled in sourc
 
 ## Available Features and Sensors
 
-| Feature or Sensor     | minimal | lite | tasmota | knx | sensors | ir | display | Remarks
-|-----------------------|---------|-------|--------|-----|---------|----|---------|--------
+| Feature or Sensor | min | lite | tasmota | knx | sensors | ir | display |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | MY_LANGUAGE en-GB     | x | x | x | x | x | x | x |
 | USE_ARDUINO_OTA       | - | - | - | - | - | - | - |
 | USE_DOMOTICZ          | - | - | x | x | x | x | - |
@@ -50,8 +50,7 @@ Features that are not available in any release build have to be enabled in sourc
 | USE_EXPRESSION        | - | - | - | - | - | - | - |
 | SUPPORT_IF_STATEMENT  | - | - | - | - | - | - | - |
 | USE_HOTPLUG           | - | - | - | - | - | - | - |
-|                       |   |   |   |   |   |   |   |
-| Feature or Sensor     | minimal | lite | tasmota | knx | sensors | ir | display | Remarks
+| __Feature or Sensor__ | min | lite | tasmota | knx | sensors | ir | display |
 | ROTARY_V1             | - | - | - | - | - | - | - |
 | USE_SONOFF_RF         | - | - | x | x | x | - | - |
 | USE_RF_FLASH          | - | - | x | x | x | - | - |
@@ -69,8 +68,7 @@ Features that are not available in any release build have to be enabled in sourc
 | USE_PWM_DIMMER        | - | - | x | x | - | - | - |
 | USE_KEELOQ            | - | - | - | - | - | - | - |
 | USE_SONOFF_D1         | - | - | x | x | - | - | - |
-|                       |   |   |   |   |   |   |   |
-| Feature or Sensor     | minimal | lite | tasmota | knx | sensors | ir | display | Remarks
+| __Feature or Sensor__     | min | lite | tasmota | knx | sensors | ir | display |
 | USE_LIGHT             | - | x | x | x | x | x | x |
 | USE_WS2812            | - | - | x | x | x | - | x |
 | USE_WS2812_DMA        | - | - | - | - | - | - | - |
@@ -98,8 +96,7 @@ Features that are not available in any release build have to be enabled in sourc
 | USE_DHT               | - | - | x | x | x | x | x |
 | USE_MAX31855          | - | - | - | - | x | - | - |
 | USE_MAX31865          | - | - | - | - | - | - | - |
-|                       |   |   |   |   |   |   |   |
-| Feature or Sensor     | minimal | lite | tasmota | knx | sensors | ir | display | Remarks
+| __Feature or Sensor__ | min | lite | tasmota | knx | sensors | ir | display |
 | USE_I2C               | - | - | x | x | x | - | x |
 | USE_SHT               | - | - | - | - | x | - | - |
 | USE_HTU               | - | - | - | - | x | - | - |
@@ -140,8 +137,7 @@ Features that are not available in any release build have to be enabled in sourc
 | USE_AHT1x             | - | - | - | - | - | - | - |
 | USE_HDC1080           | - | - | - | - | - | - | - |
 | USE_WEMOS_MOTOR_V1    | - | - | - | - | x | - | - |
-|                       |   |   |   |   |   |   |   |
-| Feature or Sensor     | minimal | lite | tasmota | knx | sensors | ir | display | Remarks
+| __Feature or Sensor__ | min | lite | tasmota | knx | sensors | ir | display |
 | USE_SPI               | - | - | - | - | - | - | x |
 | USE_MHZ19             | - | - | - | - | x | - | - |
 | USE_SENSEAIR          | - | - | - | - | x | - | - |
@@ -164,19 +160,18 @@ Features that are not available in any release build have to be enabled in sourc
 |                       |   |   |   |   |   |   |   |
 | USE_IR_REMOTE         | - | - | x | x | x | x | x |
 | USE_IR_RECEIVE        | - | - | x | x | x | x | x |
-| USE_IR_REMOTE_FULL    | - | - | - | - | - | x | - | Enable ALL protocols
+| USE_IR_REMOTE_FULL    | - | - | - | - | - | x | - | 
 |                       |   |   |   |   |   |   |   |
 | USE_SR04              | - | - | - | - | x | - | - |
 | USE_TM1638            | - | - | - | - | x | - | - |
 | USE_HX711             | - | - | - | - | x | - | - |
 | USE_TX2x_WIND_SENSOR  | - | - | - | - | - | - | - |
 | USE_RC_SWITCH         | - | - | - | - | x | - | - |
-| USE_RF_SENSOR         | - | - | - | - | x | - | - | AlectoV2 only
+| USE_RF_SENSOR         | - | - | - | - | x | - | - |
 | USE_HRE               | - | - | - | - | x | - | - |
 | USE_A4988_STEPPER     | - | - | - | - | - | - | - |
-| USE_TASMOTA_SLAVE     | - | - | - | - | - | - | - | Experimental
-|                       |   |   |   |   |   |   |   |
-| Feature or Sensor     | minimal | lite | tasmota | knx | sensors | ir | display | Remarks
+| USE_TASMOTA_SLAVE     | - | - | - | - | - | - | - | 
+| __Feature or Sensor__ | min | lite | tasmota | knx | sensors | ir | display |
 | USE_DISPLAY           | - | - | - | - | - | - | x |
 | USE_DISPLAY_LCD       | - | - | - | - | - | - | x |
 | USE_DISPLAY_SSD1306   | - | - | - | - | - | - | x |

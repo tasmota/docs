@@ -1,15 +1,10 @@
-?> You know what lights do.... Right? 💡
+!!! info "You know what lights do.... Right? 💡"
 
-Lights come in various shapes (bulb, strips, ceiling lights, ...) but in Tasmota they are separated in 3 categories:
- - [Channel Controlled LEDs](#channel-controlled-leds)
- - [Addressable LEDs](#addressable-leds)
- - [Status LEDs](#status-leds) 
+## Control Lights
 
-## Controls
+### with WebUI
 
-### WebUI
-
-<img style="float:right;height:120px" alt="Tasmota_on-off" src="https://tasmota.github.io/docs_media/light_UI_5channel.png">
+<img style="float:right;height:120px" alt="Tasmota_on-off" src="../_media/light_UI_5channel.png">
 
 Tasmota webUI displays **Brightness**, **CT**, **White**, **Color Picker**, **Color Saturation** or **PWM Level**  sliders depending on the light component, the number of PWM channels configured and SetOptions used. 
 
@@ -26,7 +21,7 @@ Tasmota uses a HSB color model, which besides other more subtile differences com
 |**Sat**|0..100 (percent)|`HSBColor2`: saturation of the color, 0=grey/white, 100=pure color|
 |**CT**|153..500 (mireds)|`CT`: white color temperature, from 153 (Cold White) to 500(Warm White)<BR><img width="240" alt="Mireds" src="https://user-images.githubusercontent.com/49731213/71559840-0909fd80-2a63-11ea-8e15-efb8cce3575b.jpg">|
 
-### Console
+### with Commands
 
 See [**light commands**](Commands.md#light) for how to control lights.
 
@@ -214,9 +209,17 @@ Some CCT lights use PWM1 for brightness and PWM2 for color temperature (instead 
 
 For these lights, use `Module 48` aka Philips Xiaomi mode.
 
-## Channel Controlled LEDs
+## Light Categories
 
-### PWM Lights
+Lights come in various shapes (bulb, strips, ceiling lights, ...) but in Tasmota they are separated in 3 categories:
+
+ - [Channel Controlled LEDs](#channel-controlled-leds)
+ - [Addressable LEDs](#addressable-leds)
+ - [Status LEDs](#status-leds) 
+
+### Channel Controlled Lights
+
+#### PWM Lights
 
 Lights controlled using up to 5 channels (red, green, blue, cold white, warm white). Channels are controlled using PWM or APDM.
 
@@ -232,14 +235,14 @@ These lights are configured by assigning `PWM1(i)` through `PWM5(i)` components 
 |4|Red|Green|Blue|White||
 |5|Red|Green|Blue|Cold White|Warm White|
 
-### MY92xx
+#### MY92xx
 MY92xx [family](http://www.my-semi.com/content/products/product_list.aspx?id=2) of drivers uses Adaptive Pulse Density Modulation. 
 
 Configured in Tasmota by assigning `MY92x1 DI` and `MY92x DCKI` components to their GPIOs (some devices might have more than one  MY92xx controller)
 
 Channel mapping for such devices is dependent on the controllers but is easily [remapped](SetOption37) using [`SetOption37`](Commands.md#setoption37).
 
-### SM16716
+#### SM16716
 SM16716 LEDs, sometimes mislabelled as WS2801.
 
 Configured in Tasmota by assigning `SM16716 CLK`, `SM16716 DAT` and `SM16716 PWR` component to their GPIOs. 
@@ -250,17 +253,48 @@ Some SM16716 bulbs have BGR order and need [`SetOption37 54`](Commands.md#setopt
 
 Specific module (requires a custom binary) for Martin Jerry/acenx/Tessan/NTONPOWER SD0x PWM dimmer switches. Brightness of the load for these dimmers is controlled by a PWM GPIO pin. They typically have power, up and down buttons, a power status LED, five brightness LEDs and another status LED. [Read more...](PWM-dimmer-switch)
 
-## Addressable LEDs
+### Addressable LEDs
 Lights where each LED is individually controlled. In these lights it is possible to adjust each LEDs power, color and brightness, all just with the use of a single GPIO pin.
 
 WebUI shows hue, saturation and brightness sliders and power toggle for these lights. Red and green color may be mixed up (observed for clone of [Wemos RGB shield](WS2812B-RGB-Shield) using Tasmota 8.1.0).
 
-### WS2812
+#### WS2812
 Any light using WS2811, WS2812b, WS2813 or SK6812 LEDs falls into this component. They're also commonly called Neopixel lights.
 
 Configured in Tasmota by assigning `WS2812 (7)` component to its GPIO. 
 
 For wiring, see instructions for [LED strip](WS2812B-and-WS2813) or [Wemos RGB shield](WS2812B-RGB-Shield).
 
-## Status LEDs
-Special subset of lights used to convey device status such as Wi-Fi and power. [Read more...](Status-LED)
+### Status LEDs
+
+!!! info "**Status LEDs** are the LEDs on the device used to display device information"
+
+Those LEDs are defined in a template or module using `Led1`, `Led2`, `Led3` or `Led4` (or `Led1i`, `Led2i`, `Led3i` or `Led4i`) and additionally using `LedLink` or `LedLinki` (`LedLink` was introduced in version 6.5.0.12). It is not recommended to assign `Led<x>` and `Led<x>i` with the same `<x>` number. Prior to version 6.5.0.12, Tasmota only supported up to two LED components to indicate the power state of the relay(s), and the Wi-Fi/MQTT connectivity status. 
+
+!!! note "It is possible to wire in your own LED and assign it as any of the above mentioned but that's outside the scope of this article"
+
+If only one LED is configured, it serves both purposes; the link status LED and/or the LED that indicates the power state of the relay(s). If more than one LED component is defined, `Led1`/`Led1i` will act as the Wi-Fi/MQTT status LED and the next defined LED (e.g., `Led2`/`Led2i`) will act as the LED that indicates the power state of the relay(s). _This is the default behavior_. Configuring a GPIO as an [`LEDLink`/`LEDLinki`](#using-ledlink) component changes this behavior.
+
+<img src="https://raw.githubusercontent.com/blakadder/testdocusite/master/sonoff%20blinking.gif" align=right height=90%>
+
+For example, on a Sonoff Basic the green LED is used as the link status LED. Once the device connects, the LED is used to indicate the relay's power status.
+
+#### Link status LED
+
+**Link status LED** shows the network state, more specifically the Wi-Fi and MQTT connection status.
+
+It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (if MQTT is enabled). You can change this behaviour with [`LedState`](Commands#ledstate) or turn it off with [`SetOption31`](Commands#SetOption31).
+
+#### Power status LED
+**Power status LED** shows the power status of relay component(s). [`LedMask`](Commands#ledmask) determines which relay(s) are associated with the power status LED. This behavior can be modified with the [`LedState`](Commands#ledstate) command. The LED is turned off by default when the relay is OFF and turned on when the relay switches ON.
+
+!!! note 
+    Depending on the device design, some LEDs are connected to the same GPIO as the relay. Those cannot be independently controlled since they have to follow the relay state.
+
+If you have more than one LED wired independently and you want it to show the power state of the relay, you must assign an `LedLink` GPIO.
+
+#### Using LedLink
+`LedLink` / `LedLinki` was introduced with Tasmota version 6.5.0.12. It is used to assign the link status LED. If your device does not have an LED for link status (or you want to use that LED for a different purpose), you can assign `LedLink` to an available free GPIO. When `LedLink(i)` is assigned, other LEDs are automatically linked to their corresponding relay and serve as that relay's power status LED - i.e., `Led<x>(i)` links to `Relay<x>(i)`
+
+#### LedPower Command
+When you use [`LedPower`](Commands#ledpower) you take over control of that particular LED and it stops being linked to its corresponding relay and being its power status LED.
