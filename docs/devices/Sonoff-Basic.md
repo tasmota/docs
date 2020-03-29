@@ -2,7 +2,7 @@ Sonoff Basic - the one that started it all!
 
 ## Serial Flashing
 
-Please see the [Hardware Preparation](Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
 <img alt="Sonoff Basic connection diagram" src="https://user-images.githubusercontent.com/2870104/30516551-ed12d69e-9b42-11e7-8373-1bfbbf346839.png" width="50%" align="right" />
 
@@ -10,7 +10,7 @@ You need to access the serial interface. The **four serial pins** (3V3, Rx, Tx, 
 
 For flashing the Sonoff Basic, hold the button while connecting the 3.3V power. The LED remains off until the flashing process is done and the board is rebooted.
 
-If your switch is powering up but is showing a solid-blink-reset pattern see [this FAQ entry for advice](help/Troubleshooting#running-out-of-ram).
+If your switch is powering up but is showing a solid-blink-reset pattern see [this FAQ entry for advice](../Troubleshooting#running-out-of-ram).
 
 - GPIO00 - BUTTON
 - GPIO12 - RELAY
@@ -26,7 +26,7 @@ This is the board layout for the third design iteration of the Sonoff Basic.
 
 The Sonoff Basic R3 uses the ESP8255 chip. With this version, the mains power reverts to solder rails directly on the PCB. It also moves the Wi-Fi module to a separate PCB mounted on the main PCB. It makes access to the underside of the serial interface contacts quite difficult.
 
-This version of the device supports the new [Itead DIY architecture](https://www.youtube.com/watch?v=fRS-ukCgD_I) which [allows OTA firmware upload](Sonoff-DIY). The device was reviewed by DigiblurDIY in [this video](https://www.youtube.com/watch?v=A-WcIz47Lco).
+This version of the device supports the new [Itead DIY architecture](https://www.youtube.com/watch?v=fRS-ukCgD_I) which [allows OTA firmware upload](../Sonoff-DIY.md). The device was reviewed by DigiblurDIY in [this video](https://www.youtube.com/watch?v=A-WcIz47Lco).
 
 The serial interface pins are broken out on the PCB making flashing using a serial adapter as well. Since the underside of the contacts is not easily reachable, use a solderless solution (i.e., friction) to maintain contact with the pins to flash the device.
 
@@ -39,7 +39,7 @@ GPIO14 is no longer broken out to a contact on the PCB. Instead, GPIO02 (no pull
 
 Unlike GPIO03, the GPIO02 PCB contact is not prepared for a pin. You will need to solder your cable directly on the board. Be careful. Too high a temperature or long heating can damage the contact and its connectivity. You should also make sure that there is no tension on the cable. Affix the cable with a cable tie and perhaps some hot glue.
 
-> GPIO02 as a user configurable input is implemented in the [Sonoff Basic module](Modules) (introduced in 6.3.0.15). If you use GPIO03, you must use a [device template]() (rather than selecting the Sonoff Basic module), and also disable serial logging ([`SerialLog 0`](Commands.md#seriallog)).
+> GPIO02 as a user configurable input is implemented in the [Sonoff Basic module](../Modules) (introduced in 6.3.0.15). If you use GPIO03, you must use a [device template]() (rather than selecting the Sonoff Basic module), and also disable serial logging ([`SerialLog 0`](../Commands.md#seriallog)).
 
 [<img src="https://camo.githubusercontent.com/7ee22f14cc707c04fa8ac357e4dd2a05da63852e/68747470733a2f2f7331352e64697265637475706c6f61642e6e65742f696d616765732f3138313132382f76653971673936382e6a7067" width="200" alt="label">
 ](https://camo.githubusercontent.com/7ee22f14cc707c04fa8ac357e4dd2a05da63852e/68747470733a2f2f7331352e64697265637475706c6f61642e6e65742f696d616765732f3138313132382f76653971673936382e6a7067)

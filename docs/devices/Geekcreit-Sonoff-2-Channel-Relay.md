@@ -15,7 +15,7 @@ https://github.com/arendst/Tasmota/issues/1970
 
 ### Geekcreit/"Sonoff" 2CH
 
-Please see the [Hardware Preparation](Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
 As always, you need to access the serial interface. The **four serial pins** (3V3, Rx, Tx, GND) can be seen in the picture.
 Unless you have a very steady hand soldering will be required for the TX and RX on the ESP chip.

@@ -30,7 +30,7 @@ Make a new virtual switch and remeber its Idx number.
     1. Remember it's Idx number
 
 ## Tasmota Configuration
-<img alt="Domoticz" src="/docs_media/logo/domoticz3.jpg" style="margin:10px;float:right;width:15em"> </img>
+<img alt="Domoticz" src="_media/logo/domoticz3.jpg" style="margin:10px;float:right;width:15em"> </img>
 Tasmota provides different ways to configure Domoticz parameters. Choose the method you prefer:
 
 [The sections below don't look like they are needed any longer. The in topic and out topic entry areas don't appear to be in the Domoticz configure section - at least they are not there in mine and mine is working 17/03/2018]
@@ -39,7 +39,7 @@ Tasmota provides different ways to configure Domoticz parameters. Choose the met
     1. Set `In topic` to `domoticz/in` as hardcoded in Domoticz
     2. Set `Out topic` to `domoticz/out` as hardcoded in Domoticz
     3. Configure `Idx 1` to the value read in step 2.i
-- Use MQTT and execute commands (if necessary, replace `tasmota` with unique topic you configured in Initital Configuration, see point 5 [there](Initial-Configuration)):
+- Use MQTT and execute commands (if necessary, replace `tasmota` with unique topic you configured in Initital Configuration, see point 5 [there](Getting-Started.md#initial-configuration)):
     1. `cmnd/tasmota/DomoticzInTopic` with payload `domoticz/in` as hardcoded in Domoticz
     2. `cmnd/tasmota/DomoticzOutTopic` with payload `domoticz/out` as hardcoded in Domoticz
     3. `cmnd/tasmota/DomoticzIdx1` with payload value read in step 2.i
@@ -76,7 +76,7 @@ Configure Domoticz MQTT Discovery plugin.
 
 ### Tasmota Configuration
 #### Precompiled Binary
-- Each Tasmota device must have it's own topic, the easiest way is to set topic to `tasmota_%06X` (%06X will be replaced by MAC address). See [here](Initial-Configuration) for how to set the topic.
+- Each Tasmota device must have it's own topic, the easiest way is to set topic to `tasmota_%06X` (%06X will be replaced by MAC address). See [here](Getting-Started.md) for how to set the topic.
 - Use MQTT or Serial or Web console and execute commands (replace `<tasmota_xxx>` with the device's unique topic)
     1. `cmnd/<tasmota_xxxx>/SetOption19` with payload `1` to enable MQTT discovery
 

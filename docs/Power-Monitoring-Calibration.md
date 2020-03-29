@@ -38,8 +38,8 @@
    P/V=I
    1000 * Watts/Volts = milliAmperes
 
-> [!EXAMPLE]
-> 1000*(60.0/235.5) = 254.777
+!!! example
+     1000*(60.0/235.5) = 254.777
 
 4. Confirm the validity of your calibration process checking `Power Factor` from the web UI which should be as close as possible to `1.00`. In theory resistive loads will always provide a power factor of 1.00. If that is not the case, we recommend you repeat the calibration process and make sure everything was done correctly. 
    

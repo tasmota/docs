@@ -293,8 +293,8 @@ Parenthesis can be used to change the priority of logical expression. For exampl
    `on power2#state=1 do Power1 off; LedPower on; endon`
    `on power2#state=1 do IF (Mem1==0) Var1 Var1+1; Mem1 1 ENDIF; Delay 10; Power1 on endon`
 
-> [!EXAMPLE]
-> Rule used to control pressure cooker with a Sonoff S31. Once it is finished cooking, shut off the power immediately.  
+!!! example
+     Rule used to control pressure cooker with a Sonoff S31. Once it is finished cooking, shut off the power immediately.  
 ```
 Rule1
  on system#boot do var1 0 endon
@@ -333,8 +333,8 @@ Expressions can use of the following operators. They are listed by the order of 
 * `*` and `/`  (multiplication and division; division by zero returns "0")
 * `+` and `-`  (addition and subtraction)
 
-> [!EXAMPLE]
->* `1+2*2`   results in 5.0 as the multiplication is done first due to its higher priority
+!!! example
+    * `1+2*2`   results in 5.0 as the multiplication is done first due to its higher priority
 * `(1+2)*2`   results in 6.0
 
 In addition to numeric constants, the following symbolic values can be used:  
@@ -350,8 +350,8 @@ LOCALTIME|local time, UNIX timestamp
 SUNRISE|current sunrise time (minutes past midnight)
 SUNSET|current sunset time (minutes past midnight)
 
-> [!EXAMPLE]
-> `Mem1=((0.5*Var1)+10)*0.7`
+!!! example
+     `Mem1=((0.5*Var1)+10)*0.7`
 
 To use expressions in the `Var`, `Mem` and `RuleTimer` commands, an equal sign (`=`) character has to be used after the command. If not, the traditional syntax interpretation is used.  
 

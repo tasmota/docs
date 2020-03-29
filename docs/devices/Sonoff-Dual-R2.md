@@ -5,7 +5,7 @@ Sonoff Dual R2 is the replacement for Sonoff Dual. Compared to the Dual the main
 
 ## Serial Flashing (Sonoff Dual R2)
 
-Please see the [Hardware Preparation](Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
 As always, you need to access the serial interface. VCC, RX, TX and GND are available at the bottom left end of the PCB in the image below.
 ![](https://user-images.githubusercontent.com/5904370/57879391-a7bb5400-781c-11e9-96d4-ea7b87fc3274.png)
@@ -30,9 +30,9 @@ Note 2: GPIO9 and 10 can be safely used with an external switch (even rebooting 
 
 ### Serial Connection
 
-Please see the [Hardware Preparation](Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
-As always, you need to access the serial interface. The **four serial pins** (3V3, Rx, Tx, GND) are available at the short end of the PCB and can be seen on the left side of the first image and are labeled in red on the second image. For the v2.0 version of the board you need to cross-over the serial interface, see [troubleshooting](help/Troubleshooting).
+As always, you need to access the serial interface. The **four serial pins** (3V3, Rx, Tx, GND) are available at the short end of the PCB and can be seen on the left side of the first image and are labeled in red on the second image. For the v2.0 version of the board you need to cross-over the serial interface, see [troubleshooting](../Troubleshooting).
 
 <img alt="Sonoff Dual, GPIO0 grounded" src="https://github.com/arendst/arendst.github.io/blob/master/media/dual2a.jpg?raw=true" width="48%" />
 <img alt="Alternate GPIO0 spot" src="http://tinkerman.cat/wp-content/uploads/2016/12/20161206_234331s.jpg" width="48%" align="right" />
@@ -47,7 +47,7 @@ Programming the Sonoff Dual is more difficult because the on-board-button is not
 
 Please be aware, that the button on the Sonoff Dual will initially not have any functionality!
 
-Other than on most Sonoff module the button is not connected to the normal button pin (GPIO0). After freshly flashing Tasmota (with the default module setting "Sonoff Basic"), the button will **not act as described** in the [Buttons and Switches](Buttons-and-Switches) article. You will not be able to switch power or activate the special WiFi modes.
+Other than on most Sonoff module the button is not connected to the normal button pin (GPIO0). After freshly flashing Tasmota (with the default module setting "Sonoff Basic"), the button will **not act as described** in the [Buttons and Switches](../Buttons-and-Switches) article. You will not be able to switch power or activate the special WiFi modes.
 
 You will need to configure wifi credentials connecting directly to the wifi AP your Dual will broadcast or configure the module firmware config beforehand via `user_config_override.h`.
 

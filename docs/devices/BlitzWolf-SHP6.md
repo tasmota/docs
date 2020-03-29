@@ -11,7 +11,7 @@ For further infos see [Issue #4727](https://github.com/arendst/Tasmota/issues/47
 
 ## Serial Connection
 
-Please see the [Hardware Preparation](Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
 ### Step 1
 **Disconnect device from power source!**

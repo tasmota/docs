@@ -42,7 +42,7 @@ RX    to   RX  (due to the fact the silkscreen is wrong, otherwise, RX connects 
 TX    to   TX  
 SW    to   GND  -- only during power up, to put the ESP in programming mode.
 
-From here the upload is the same as for all other Tasmota devices. See the [upload page](Upload-tools) for detailed info.
+From here the upload is the same as for all other Tasmota devices. See the [upload page](../Getting-Started.md#Flashing) for detailed info.
 
 **Note:** sonoff basic and classic variants do not support the serial bridge. To get this working you should use the standard tasmota.bin - NOT basic or classic.
 
@@ -61,7 +61,7 @@ Keep in mind, the dimmer itself needs a Neutral wire as well. If you replace an 
 ## First connection
 
 When you first power up the dimmer switch, it comes up in AccessPoint mode.
-Follow the instructions [here](Initial-Configuration) 
+Follow the instructions [here](../Getting-Started.md#initial-configuration) 
 
 ## Set correct module type
 

@@ -40,7 +40,7 @@ RX    to   RX  (due to the fact the silkscreen is wrong, otherwise, RX connects 
 TX    to   TX  
 SW    to   GND  -- only durning power up, to put the ESP in programming mode.
 
-From here the upload is the same as for all other Tasmota devices. See the [upload page](Upload-tools) for detailed info.
+From here the upload is the same as for all other Tasmota devices. See the [upload page](../Getting-Started.md#flashing) for detailed info.
 
 After the upload was successful, unplug the device from the serial adapter. You can now desolder all the connections you have made earlier. Also remove the wire between RES1 and GND.
 Then plug the board back in its housing. Be careful with the connector on the underside of the board.
@@ -57,7 +57,7 @@ Keep in mind, the dimmer itself needs a Neutral wire as well. If you replace an 
 ## First connection
 
 When you first power up the dimmer switch, it comes up in AccesPoint mode.
-Follow the instructions [here](Initial-Configuration) 
+Follow the instructions [here](../Getting-Started.md#initial-configuration) 
 
 ## Set correct module type
 

@@ -11,7 +11,7 @@ If your device needs to do something continuously, this will be affected. E.g., 
 > From the release notes:
 > Expect overall button/key/switch misses and wrong values on Sonoff Pow
 
-Also, if using [KNX IP Protocol](integrations/KNX), `Sleep` needs to be 0 in order to avoid losing any telegram.
+Also, if using [KNX IP Protocol](KNX), `Sleep` needs to be 0 in order to avoid losing any telegram.
 
 **Notes:**
 - Starting with Tasmota 6.1.1.12 `Sleep` &ne; `0` has no impact on real time related commands like [`Delay`](Commands#delay), [`PulseTime`](Commands#pulsetime), [`TelePeriod`](Commands#teleperiod) and [`Blinktime`](Commands#blinktime).

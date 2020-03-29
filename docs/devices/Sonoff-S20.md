@@ -2,7 +2,7 @@ Sonoff S20 comes in 4 different plug type variations. Flashing process will be t
 
 ## Serial Connection
 
-Please see the [Hardware Preparation](Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
 <img alt="S20 Smart Socket" src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/s20b.jpg" width="230" align="right" /> 
 The picture shows how to program the S20 Smart Socket powered by the serial-to-USB converter.  With newer US sockets, either use a right-angle header, or remove the header after flashing.  Otherwise,the pushbutton may rub against a pin and get stuck.

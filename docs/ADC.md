@@ -47,7 +47,7 @@ Use these triggers in rules:
 `on Tele-ANALOG#A0 do ...` - triggers on tele messages with Analog object
 > `MQT: tele/tasmota/SENSOR = {"Time":"2019-01-14T19:36:51","ANALOG":{"A0":1024}}`
 
-Rule example: [using a potentiometer on analog pin](Rulesuse-a-potentiometer).
+Rule example: [using a potentiometer on analog pin](Rules#use-a-potentiometer).
 
 ## ADC_VCC
 Instead of an input, ADC pin can be used to measure supply voltage of the ESP module (*this reading in not 100% accurate*). To enable ADC_VCC feature you need to [compile your own build](Compile-your-build):

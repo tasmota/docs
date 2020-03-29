@@ -28,7 +28,7 @@ Implemented for situations where a device cannot be reset to firmware defaults b
 1. Cut power from the device completely for 30 seconds
 2. Power the device on and off three times with intervals lower than 10 seconds and leave it on after fourth time
 3. Fast power cycle device recovery should activate and the device should be reset to firmware defaults
-   > If you flashed a precompiled binary you can [reconfigure](Initial-Configuration#configure-wi-fi) the device using the web UI after the reset. 
+   > If you flashed a precompiled binary you can [reconfigure](Getting-Started.md#configure-wi-fi) the device using the web UI after the reset. 
 
   If your region experiences regular brownouts (rapid succession power outages), you should disable this feature to avoid unwanted device settings resets. Use [`SetOption65 1`](Commands.md#setoption65) to disable power cycle recovery.
 
@@ -42,4 +42,4 @@ Once the device operates reliably, begin the configuration to set the GPIO confi
 
 If the device exhibits defective behavior immediately after a particular individual setting is changed, then be aware that there may be a problem in the firmware. Please report this behavior via the [Tasmota Discord Chat](https://discord.gg/Ks2Kzd4).  
 
-If none of these methods result in reliable operation, the only remaining option is to connect the device to the serial programming interface, erase the flash memory and [flash](Flashing.md) a different precompiled firmware binary.
+If none of these methods result in reliable operation, the only remaining option is to connect the device to the serial programming interface, erase the flash memory and [flash](Getting-Started.md#flashing) a different precompiled firmware binary.

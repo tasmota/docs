@@ -4,5 +4,8 @@ command = """
 pip install mkdocs-minify-plugin
 pip install git+https://github.com/cmitu/mkdocs-altlink-plugin/
 pip install mkdocs-redirects
-mkdocs gh-deploy
+pip install ghp-import
+mkdocs build
+ghp-import site
+git push origin gh-pages
 """

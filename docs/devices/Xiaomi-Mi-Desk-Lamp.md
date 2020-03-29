@@ -1,5 +1,3 @@
-***Supported in Development since 2019-01-15***
-
 Mi Desk Lamp is a cold+warm white led lamp, which has a rotary knob that also acts as a push-button:
 - pushing it turns the lamp on/off
 - rotating it controls the brightness
@@ -13,7 +11,7 @@ At the bottom of the lamp stand there is also a 'Reset' button, which can be pre
 
 ## Configuration
 
-Tasmota supports it directly as `Module "Mi Desk Lamp"`. This module is deactivated by default. You must add `#define ROTARY_V1` in your `user_config_override.h` and [compile](Flashing.md#compiling-from-source) the firmware for this module to be available as a selection option.
+Tasmota supports it directly as `Module "Mi Desk Lamp"`. This module is deactivated by default. You must add `#define ROTARY_V1` in your `user_config_override.h` and [compile](../Compile-your-build.md) the firmware for this module to be available as a selection option.
 
 To configure it as `Generic`, here is the GPIO assignment:
 - GPIO02: Button (`GPIO_KEY1`)
@@ -96,7 +94,7 @@ For serial flashing we need 2 power wires (GND, Vcc), 2 serial wires (RxD, TxD) 
 
 As there is plenty of free space in the lamp stand, I left the wires long enough to reach some empty area and soldered solo pin head sockets on them. This way they will be available if/when I decide to add something on those 3 extra pins :).
 
-The rest of the serial flashing process is [as usual](Hardware-Preparation), but if you want to make a backup of the original firmware, keep in mind that the flash size is **2 MBs**.
+The rest of the serial flashing process is [as usual](../Getting-Started#hardware-preparation), but if you want to make a backup of the original firmware, keep in mind that the flash size is **2 MBs**.
 
 If you are re-flashing the original firmware, the flash size must be explicitly set to '2MB-c1', **the auto-detected '2MB' doesn't work**, so: `esptool.py write_flash --flash_size 2MB-c1 0x00000 xiaomi_desk_lamp.orig.bin`
 

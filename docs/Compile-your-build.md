@@ -16,7 +16,7 @@ If you want to modify the code or default settings you can use:
 - [**Docker Tasmota**](https://github.com/tasmota/docker-tasmota) - compile from a Docker container using PlatformIO
 
 #### Online Compilers
-_**Can only create a firmware binary.** Use one of the [tools](Prerequisites#flashing-tool) to flash it to your device._
+_**Can only create a firmware binary.** Use one of the [tools](Getting-Started.md#flashing-tool) to flash it to your device._
 
 - [**Gitpod**](Gitpod) - compile your own binary in the cloud using [Gitpod](https://www.gitpod.io/).  
 - [**TasmoCompiler**](https://github.com/benzino77/tasmocompiler) - simple web GUI to compile Tasmota with your own settings

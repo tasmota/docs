@@ -1,10 +1,10 @@
 ## Installation
 
 ### Cannot enter flash mode
-Be sure to press the button correctly, you must "feel" a click. If your on-device button doesn't allow you to enter flash mode or there is no GPIO0 broken out to the PCB, you can always bridge GND to GPIO0 pin directly on the chip. Search on the Internet for your chip's pinouts and use [the tutorial](Hardware-Preparation#programming-mode). Be sure to keep GPIO0 grounded long enough (3-5 seconds) before disconnecting to ensure the chip has booted completely into programming mode. On devices that do not provide a GPIO0 connected button, it may be easier to leave the wired bridge in place throughout the entire flashing process (erase & upload). Doing so will not create any problems for flashing the device. After the firmware is uploaded successfully, remove the bridge. This allows the device to boot normally.
+Be sure to press the button correctly, you must "feel" a click. If your on-device button doesn't allow you to enter flash mode or there is no GPIO0 broken out to the PCB, you can always bridge GND to GPIO0 pin directly on the chip. Search on the Internet for your chip's pinouts and use [the tutorial](Getting-Started.md#programming-mode). Be sure to keep GPIO0 grounded long enough (3-5 seconds) before disconnecting to ensure the chip has booted completely into programming mode. On devices that do not provide a GPIO0 connected button, it may be easier to leave the wired bridge in place throughout the entire flashing process (erase & upload). Doing so will not create any problems for flashing the device. After the firmware is uploaded successfully, remove the bridge. This allows the device to boot normally.
 
 ### Flashing issues
-- Double check if you wired the device the serial-to-USB adapter correctly. Almost every device needs RX and TX pins switched to TX and RX. See [Hardware Preparation](Hardware-Preparation) for more.
+- Double check if you wired the device the serial-to-USB adapter correctly. Almost every device needs RX and TX pins switched to TX and RX. See [Hardware Preparation](Getting-Started.md) for more.
 
 - Another common problem are the jumper cables used. Try another cable if you keep getting connection errors or check the cables for connectivity. Most of them are made cheaply and it happens quite often that those cables do not offer a good connection because of bad crimping or broken copper lines in them.
 
@@ -20,7 +20,7 @@ Be sure to press the button correctly, you must "feel" a click. If your on-devic
 
 - If esptool.py stops at "Uploading stub...", use --no-stub 
 
-- If the flash fails or the device does not operate as expected, try using the default ESP82xx boot ROM baud rate - `74880`. This is the baud rate the ESP82xx is set to by default when it boots into programming mode. It can be specified as a command line option in [esptool.py](Flashing.md#esptoolpy) (`-b`) and [esptool.exe](Flashing.md#esptool-executable) (`-cb`).
+- If the flash fails or the device does not operate as expected, try using the default ESP82xx boot ROM baud rate - `74880`. This is the baud rate the ESP82xx is set to by default when it boots into programming mode. It can be specified as a command line option in [esptool.py](Getting-Started.md#esptoolpy) (`-b`) and [esptool.exe](Getting-Started.md#esptool-executable) (`-cb`).
 
   You may also want to select a serial monitor/terminal capable of setting this "unusual" baud rate. In Termite, type this value (`74880`) in the baud rate selection text box when configuring the port. Having the option to specify this unusual baud rate will allow you to view the [ESP8266 boot ROM log](https://github.com/espressif/esptool/wiki/ESP8266-Boot-ROM-Log) while the device is booting.
 
@@ -96,7 +96,7 @@ DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can r
 
 First thing to try when having Wi-Fi issues:
 
-   Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](Flashing.md#erase-flash-memory)) using [the latest precompiled binaries](http://thehackbox.org/tasmota/).
+   Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](Getting-Started.md#erase-flash-memory)) using [the latest precompiled binaries](http://thehackbox.org/tasmota/).
 
    This approach has solved most of the reported issues. Sometimes this is due to a bad flash, a bad OTA or invalid data that remains in the flash where the SDK memory is.
 
@@ -212,7 +212,7 @@ Short answer: **NO!**
 Long answer: There is not enough time in our coders lives to take requests, if you can code a driver for that sensor and submit a PR it will be considered, otherwise you can only wait for someone else to do it.
 
 ### Tasmota is sending a lengthy status update every 5 seconds. What's going on?
-Turn off [TasmoAdmin](integrations/TasmoAdmin)! It is polling your device with `STATUS 0` command with a HTTP request every 5 seconds which causes the status updates and unnecessary stress load on the device. In some cases it might even interfere with normal device operation.
+Turn off [TasmoAdmin](TasmoAdmin)! It is polling your device with `STATUS 0` command with a HTTP request every 5 seconds which causes the status updates and unnecessary stress load on the device. In some cases it might even interfere with normal device operation.
 
 ### Web Interface Asks for Password
 You modified the Web Admin password (`Configure Other`) and now you cannot access the web interface. You have set up a password for the web interface. You can login with the username `admin` and the password you entered. However, if you don't remember that password there are a few options you can try to gain access to the web interface again.
@@ -236,7 +236,7 @@ You modified the Web Admin password (`Configure Other`) and now you cannot acces
 
 4. If your device has a physical push-button, reset the firmware to the default settings as detailed [here](Buttons-and-Switches#long-press).
 
-5. If nothing helps, then you have to [flash the firmware](Flashing.md) again using the serial interface. Be sure to erase the flash memory before uploading the binary.
+5. If nothing helps, then you have to [flash the firmware](Getting-Started.md) again using the serial interface. Be sure to erase the flash memory before uploading the binary.
 
 ### Power monitoring shows wrong values
 If the values shown in the Web UI don't seem right and you're using a Supported Module you need to [calibrate the power monitoring sensor](Power-Monitoring-Calibration).

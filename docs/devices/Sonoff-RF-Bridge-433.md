@@ -1,7 +1,7 @@
 The Sonoff RF Bridge has two separate chips to handle the Wi-Fi (ESP8285) and RF (EFM8BB1) communications respectively. It is used to send and receive codes with 433.9MHz frequency RF devices. Codes received from RF devices such as remote controls is passed to the onboard ESP8285 via the serial interface. The code data is relayed via MQTT. Similarly, the Bridge receives commands over Wi-Fi and sends the encoded data to the RF chip to control an RF device. Thus, the Sonoff RF Bridge "bridges" communications between RF and Wi-Fi.
 
 ## Flash Tasmota
-Please [see](How-to-Flash-the-RF-Bridge) for flashing details and the [Hardware Preparation](Hardware-Preparation) article for general flashing instructions.
+Please [see](../How-to-Flash-the-RF-Bridge.md) for flashing details and the [Hardware Preparation](../Getting-Started.md#hardware-preparation) article for general flashing instructions.
 
 Access the serial interface available on the 5-pin header next to the switch as can be seen in the image.
 
@@ -13,7 +13,7 @@ Connect the serial-to-USB adapter and press the button on the edge while powerin
 
 After flashing the ESP8285, be sure to move the switch position away from the 5-pin header to restore the connection to the RF microcontroller.
 
-Configure the device as usual and select module `Sonoff Bridge (25)`. During normal operation the serial interface is used at 19200 baud to communicate with the RF microcontroller. Therefore serial logging ([`SerialLog 0`](Commands.md#seriallog)) must be disabled.
+Configure the device as usual and select module `Sonoff Bridge (25)`. During normal operation the serial interface is used at 19200 baud to communicate with the RF microcontroller. Therefore serial logging ([`SerialLog 0`](../Commands.md#seriallog)) must be disabled.
 
 **IMPORTANT:** In the Module configuration GPIO4 and GPIO5 must be left as **`00 None`** On R2 versions of the Sonoff RF Bridge, a hardware modification is required in order to use these GPIO.
 
@@ -48,7 +48,7 @@ Apply this modification **_only_** if you intend to use USB for powering the dev
 The R2 revision boards connect the GPIO4 and GPIO5 pins to the USB data lines of the power connector. Compliant USB chargers/power supplies are expected to short the two pins together, which is a problem. These lines are not used by the original firmware, nor by Tasmota. The traces toward the USB power connector need to be cut to avoid interference by the USB wiring. Removing these connections does not interfere with the normal Bridge functionality.
 
 #### Flashing RF Firmware
-1. Make sure you have previously flashed a Tasmota binary built with `RF_FLASH`. Refer to the [builds table](Builds) for pre-compiled binaries which include this feature. Otherwise the "Magic byte is not 0xE9" error will occur.
+1. Make sure you have previously flashed a Tasmota binary built with `RF_FLASH`. Refer to the [builds table](../Builds) for pre-compiled binaries which include this feature. Otherwise the "Magic byte is not 0xE9" error will occur.
 2. Set the module type to `Sonoff Bridge (25)`
 3. Connect two wires (this will be different depending on the `Sonoff RF Bridge 433` hardware version):
    - For `R1`: Connect `GPIO4 to C2Ck` and `GPIO5 to C2D`.
@@ -74,7 +74,7 @@ The Sonoff RF Bridge is able to learn up to 16 different fixed code remote contr
 
 Tasmota provides default remote control commands to all 16 keys so you can start using the bridge with a Sonoff 4Ch Pro or Sonoff RF device without having the bridge have to learn remote control commands.
 
-See [RF Bridge](Commands.md#rf-bridge) commands.
+See [RF Bridge](../Commands.md#rf-bridge) commands.
 
 ## Portisch Firmware Specific Usage
 These sections only apply to the custom Portisch firmware.
@@ -95,7 +95,7 @@ cmnd/sonoffRFBridge/Backlog RfRaw AAB0210314016703F92418010101100110011001010110
 Refer to [issue #3973](https://github.com/arendst/Tasmota/issues/3973) for further information.
 
 ### B1 to B0 Conversion Tools
-After learning how bitbucket works from  the [Portisch wiki](https://github.com/Portisch/RF-Bridge-EFM8BB1/issues/23), use one of these tools to help convert received `B1` sniffing messages to the right 'B0' format to send in the ['RfRaw'](Commands.md#rfraw) command.
+After learning how bitbucket works from  the [Portisch wiki](https://github.com/Portisch/RF-Bridge-EFM8BB1/issues/23), use one of these tools to help convert received `B1` sniffing messages to the right 'B0' format to send in the ['RfRaw'](../Commands.md#rfraw) command.
 
 - [**Online**](http://bbconv.hrbl.pl/)  
   Process:  
@@ -188,5 +188,5 @@ After learning how bitbucket works from  the [Portisch wiki](https://github.com/
 * [Itead Product Page](http://sonoff.itead.cc/en/products/appliances/sonoff-rf-bridge-433)
 * [Itead Shop](https://www.itead.cc/sonoff-rf-bridge-433.html)
 * [Itead Wiki](https://www.itead.cc/wiki/Sonoff_RF_Bridge_433)
-* [How to Flash the RF Bridge](How-to-Flash-the-RF-Bridge)   
+* [How to Flash the RF Bridge](../How-to-Flash-the-RF-Bridge)   
 * [RF Bridge 433 R2 Information](https://github.com/arendst/Tasmota/issues/1916)

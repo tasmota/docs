@@ -47,7 +47,7 @@ The USB port on this variant is not switchable.
 | 14 | Bottom LED (Orange) | LED2i (57)
 | 15 | USB Port | Relay3 (23)
 
-This configuration requires the `LedLinki` [Component](Components) (introduced in 6.5.0.12) to associate the GPIO to the status LED indicator. In order for the LED power indicators to follow the state of each receptacle relay, [`LedState`](Commands.md#ledstate) must be set to show the power state on the LEDs. Select the desired power on state for the device's relays using [`PowerOnState`](Commands.md#poweronstate) and/or a `System#Boot` triggered rule. This device also requires [SetOption63](Commands.md#setoption63) (introduced in 6.5.0.9) in order to disable relay power feedback state scanning at restart.
+This configuration requires the `LedLinki` [Component](../Components) (introduced in 6.5.0.12) to associate the GPIO to the status LED indicator. In order for the LED power indicators to follow the state of each receptacle relay, [`LedState`](../Commands.md#ledstate) must be set to show the power state on the LEDs. Select the desired power on state for the device's relays using [`PowerOnState`](../Commands.md#poweronstate) and/or a `System#Boot` triggered rule. This device also requires [SetOption63](../Commands.md#setoption63) (introduced in 6.5.0.9) in order to disable relay power feedback state scanning at restart.
 
 The following Console statements define the necessary settings and rules as described above.
 ```

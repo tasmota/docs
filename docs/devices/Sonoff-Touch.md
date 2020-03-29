@@ -7,7 +7,7 @@ Unlike most Sonoff modules, the Sonoff Touch is based on the ESP8285 rather than
 
 ## Serial Connection
 
-Please see the [Hardware Preparation](Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
 As always, you need to access the serial interface. Carefully remove the top PCB from the assembly. The hidden underside of the PCB contains the ESP8285 as shown in the pictures. The **four serial pins** (3V3, Rx, Tx, GND) can be seen in the pictures for the US version (left) and the EU version (right) of the module PCB.
 
@@ -16,7 +16,7 @@ As always, you need to access the serial interface. Carefully remove the top PCB
 
 Be careful while removing and reassembling the top PCB. The touch sensor should be back in its intended place. Be sure to not touch it directly during the modifications.
 
-The Sonoff Touch button is **not connected to GPIO0** and hence cannot be used to bring the module into [Programming Mode](Hardware-Preparation#bringing-the-module-in-flash-mode). A connection between GPIO0 and GND needs to be made manually. GPIO0 can be found on the right side of the ESP8285 and is the second pin from the bottom, as can be seen on the pictures.
+The Sonoff Touch button is **not connected to GPIO0** and hence cannot be used to bring the module into [Programming Mode](../Getting-Started#hardware-preparation). A connection between GPIO0 and GND needs to be made manually. GPIO0 can be found on the right side of the ESP8285 and is the second pin from the bottom, as can be seen on the pictures.
 
 **Note:** Even if you have the PSF-A85 chip inside instead of a default ESP8285, the GPIO0 pin is in the same location. Pay attention to the corner of the chip with three unused solder contacts. That is where the external antenna connector is located in the images above. The PSF-A85 in the Sonoff Touch does not have the external antenna connector soldered on.
 

@@ -22,14 +22,14 @@ In Tasmota a `Switch` is any switch or push-button additionally connected to a f
 - [mechanical toggle switch](https://en.wikipedia.org/wiki/Switch#Toggle_switch) - also called a rocker switch
 - [capacitive touch switch](https://en.wikipedia.org/wiki/Touch_switch)  
 - [reed switch](https://en.wikipedia.org/wiki/Reed_switch) 
-- [PIR](https://en.wikipedia.org/wiki/Passive_infrared_sensor) - even though it's technically a  sensor it is [configured as a switch in Tasmota](PIR-Motion-Sensors)
+- [PIR sensor](https://en.wikipedia.org/wiki/Passive_infrared_sensor) - even though it's technically a  sensor it is [configured as a switch in Tasmota](PIR-Motion-Sensors)
 - [mechanical push-button](https://en.wikipedia.org/wiki/Push-button) 
 
 By default a switch toggles the corresponding power state (f.e. `Switch1` controls `Power1`). Every time the switch gets flipped the power state changes (ON or OFF). Instead of the default toggling of the power state, switches can be configured to send messages to different MQTT topics or send commands to other Tasmota devices. To ignore the default behaviour define a rule which triggers on `Switch<x>#State` or use [`Switchtopic`](#Switchtopic). Take note: If the rule matches only certain states, default switch behaviour is supressed only for those states.
 
 
-> [!EXAMPLE]
-> Make Switch1 publish its value to `cmnd/custom-topic/SWITCH` and not control Power1
+!!! example
+     Make Switch1 publish its value to `cmnd/custom-topic/SWITCH` and not control Power1
 ```haskell
 Backlog SwitchMode1; SwitchTopic 0
 ```
@@ -56,8 +56,8 @@ Set switch to toggle mode (`0 = TOGGLE`, `1 = TOGGLE`).
 
 Tasmota sends `TOGGLE` command each time the state of the circuit changes (closing or opening). In case of a push button attached Tasmota will send a `TOGGLE` command when pressed and another `TOGGLE` command when released.
 
-> [!EXAMPLE]
-> When the button is pressed, toggle the power to ring the doorbell; when the button is released, ring the doorbell again.  
+!!! example
+     When the button is pressed, toggle the power to ring the doorbell; when the button is released, ring the doorbell again.  
 
 **`SwitchMode 1`**   
 Set switch to follow mode (`0 = OFF`, `1 = ON`)
@@ -96,7 +96,7 @@ Set inverted push-button with long press mode (`0 = OFF` (_default_), `1 = TOGGL
 Tasmota will send a `TOGGLE` command when the button pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Default state is OFF and when pressed it's ON. When held for the time set in `SetOption32` (_default = 4s_), Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
 !!! tip
-    Long press or hold can be used in [conjunction with rules](Rulesuse-long-press-action-on-a-switch) to create additional features or to control another Tasmota device.
+    Long press or hold can be used in [conjunction with rules](Rules#use-long-press-action-on-a-switch) to create additional features or to control another Tasmota device.
 
 **`SwitchMode 7`**   
 Set toggle push-button mode. Same as `SwitchMode 0`.
@@ -131,7 +131,7 @@ Set switch to pushbutton with dimmer mode
 Tasmota will send a `TOGGLE` command (use Switch<x>#state=2 in rules) when the button is pressed for a short time and is then released. When pressing the button (closing the circuit) for a long time (set in `SetOption32`) Tasmota sends repeated `INC_DEC` (increment or decrement the dimmer) commands (use Switch<x>#state=4 in rules) as long as the button is pressed. Releasing the button starts a internal timer, the time is set in `SetOption32`. When released for the time set in `SetOption32` Tasmota sends a `CLEAR` command (use Switch<x>#state=6 in rules). If the button is pressed again before the timeout Tasmota sends a `INV` command (use Switch<x>#state=5 in rules). The `INV` command is for the controlling sortware (home assistant) to switch between incrementing and decrementing the dimmer.
 
 !!! tip
-    The dimmer mode can be used in [conjunction with rules](RulesControl-a-dimmer-with-one-switch) to create additional features or to control another Tasmota device.
+    The dimmer mode can be used in [conjunction with rules](Rules#Control-a-dimmer-with-one-switch) to create additional features or to control another Tasmota device.
 
 !!! tip
     The dimmer mode can be used to turn a media player on and off and to control the volume of a media player with one switch.
@@ -187,8 +187,8 @@ This will send an MQTT message to a custom defined topic similarly to option 1.
 
 In the following example, we set the topic to `tasmota02` with `SwitchTopic tasmota02`. 
 
-> [!EXAMPLE]
-> Device topic _tasmota_ with `SwitchMode 1` and custom topic _tasmota02_ yields the following message: `MQT: cmnd/tasmota02/POWER = ON`
+!!! example
+     Device topic _tasmota_ with `SwitchMode 1` and custom topic _tasmota02_ yields the following message: `MQT: cmnd/tasmota02/POWER = ON`
 >
 >If you have another device with the topic _tasmota02_ this action will turn on its power while not affecting anything on the _tasmota_ device.
 
@@ -208,8 +208,8 @@ A push-to-make button should use a `Button<x>` component while a push-to-break b
 To ignore default button behaviour define a rule which triggers on `Button<x>#State` or use [`ButtonTopic`](#ButtonTopic). Take note: If the rule matches only certain states, default button behaviour is supressed only for those states.
 
 
-> [!EXAMPLE]
-> Make Button1 publish its value to `cmnd/custom-topic/BUTTON` and not control Power1
+!!! example
+     Make Button1 publish its value to `cmnd/custom-topic/BUTTON` and not control Power1
 ```haskell
 Backlog ButtonTopic 0
 ```
@@ -272,8 +272,8 @@ Sets MQTT button topic to device %topic%.
 
 When changing the state of the button an MQTT message is sent to the device topic with the payload according to `SwitchMode` set.  
 
-> [!EXAMPLE]
-> Device topic _tasmota_ with `SwitchMode 3` yields the following message: `MQT: cmnd/tasmota/POWER = ON`
+!!! example
+     Device topic _tasmota_ with `SwitchMode 3` yields the following message: `MQT: cmnd/tasmota/POWER = ON`
 >
 >Notice the _cmnd_ instead of the _stat_ at the beginning.
 >
@@ -286,8 +286,8 @@ Set button topic to a custom topic (32 characters max).
 This will send an MQTT message to a custom defined topic similarly to option 1.
 
 
-> [!EXAMPLE]
-> For example, we set the topic to _tasmota02_ with `ButtonTopic tasmota02`.   
+!!! example
+     For example, we set the topic to _tasmota02_ with `ButtonTopic tasmota02`.   
 >With `SwitchMode 1` the device yields the following message: `MQT: cmnd/tasmota02/POWER = TOGGLE`
 >
 > If you have another device with the topic _tasmota02_ this action will toggle its power state while not affecting anything on the _tasmota_ device.
@@ -318,7 +318,7 @@ SetOption11 1
 ```
 All of the above is easier accomplished using [Rules](Rules)!
 
-[Example using Rules](Rulesbutton-with-single-press-double-press-and-hold)
+[Example using Rules](Rules#button-with-single-press-double-press-and-hold)
 
 ---
 For a practical application of everything mentioned in this article read about this excellent [LEGO nightstand switch project](https://jeff.noxon.cc/2018/11/21/lego-nightstand-light-switch/).

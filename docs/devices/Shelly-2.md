@@ -1,4 +1,4 @@
-**Shelly 2 is discontinued and replaced by [Shelly 2.5](/devices/Shelly-2.5)**
+**Shelly 2 is discontinued and replaced by [Shelly 2.5](Shelly-2.5)**
 <img src="https://shelly.cloud/wp-content/uploads/2018/02/shelly2_small_250.png" width="250" align="right" />
 
 The Shelly 2 is fully supported in Tasmota from version 6.2.1.7<br>

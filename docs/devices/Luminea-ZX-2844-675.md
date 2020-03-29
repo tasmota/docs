@@ -44,7 +44,7 @@ There is an second version with a green PCB and different pinout:
 
 ## Serial Connection
 
-See the [Hardware Preparation](Hardware-Preparation) page for general instructions.
+See the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
 ![](https://i.ibb.co/NtDnSQ4/JCDXSRGBW.jpg)
 

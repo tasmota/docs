@@ -1,1 +1,1 @@
-redirect: Getting-Started#Flashing
+redirect: ../Getting-Started#Flashing

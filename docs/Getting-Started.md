@@ -353,9 +353,9 @@ Configure your device using [Templates](Templates) in **Configuration - Configur
 Your device running Tasmota is now ready to be [controlled](Commands).
 
 ### Using Serial Terminal
-If you flashed the device using serial-to-USB adapter (or it is a NodeMCU/D1 mini) you can take advantage of the existing connection and configure your device over the serial connection using [Commands](commands).
+If you flashed the device using serial-to-USB adapter (or it is a NodeMCU/D1 mini) you can take advantage of the existing connection and configure your device over the serial connection using [Commands](Commands).
 
-First you will need a [Serial Terminal](Prerequisites#serial-terminal) program. 
+First you will need a [Serial Terminal](#serial-terminal) program. 
 
 *In this example [Termite](https://www.compuphase.com/software_termite.htm) on Windows is used.*
 

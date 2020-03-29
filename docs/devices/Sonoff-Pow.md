@@ -14,7 +14,7 @@ The GPIOs on the Pow are connected to AC power!** Only use a POW as designed.
 
 ## Serial Connection 
 
-Please see the [Hardware Preparation](Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
 3V3, RX, TX and GND pins are available at the rear end of the PCB.
 

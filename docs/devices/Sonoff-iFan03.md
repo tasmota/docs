@@ -1,9 +1,9 @@
 (For information on the iFan02 please see here - [iFan02](/devices/Sonoff-iFan02))
 
 ## Serial Flashing
-Please see the [Hardware Preparation](Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
-Next, please see the [Flashing](Flashing.md) page for general information on the flashing process.
+Next, please see the [Flashing](../Getting-Started#flashing) page for general information on the flashing process.
 
 Flash the latest version of [`tasmota.bin`](http://thehackbox.org/tasmota/release/tasmota.bin):
 

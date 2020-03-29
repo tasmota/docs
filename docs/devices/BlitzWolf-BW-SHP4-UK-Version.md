@@ -2,7 +2,7 @@
 
 ## Serial Connection
 
-Please see the [Hardware Preparation](Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
 MAKE SURE YOU DON'T HAVE IT PLUGGED IN WHEN DOING ANY OF THIS INCLUDING FLASHING - YOU HAVE BEEN WARNED.
 

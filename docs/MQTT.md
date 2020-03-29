@@ -53,23 +53,23 @@ A device was flashed and configured with the **FullTopic** as default `%prefix%/
 
 By looking at the commands table we can learn about the [`POWER`](Commands.md#power) command and options associated with it. 
 
-**Ask the device for status**
+#### Ask the device for status
 
-  ```js
-  cmnd/tasmota_switch/Power ← 	// an empty message/payload sends a status query
-     ↳ stat/tasmota_switch/RESULT → {"POWER":"OFF"}  
-     ↳ stat/tasmota_switch/POWER → OFF
-  ```
+```js
+cmnd/tasmota_switch/Power ← 	// an empty message/payload sends a status query
+    ↳ stat/tasmota_switch/RESULT → {"POWER":"OFF"}  
+    ↳ stat/tasmota_switch/POWER → OFF
+```
   We can see that the switch (device's relay) is turned off.
 
-**Send a command to toggle the relay**
+####Send a command to toggle the relay
 
-  ```js
-  cmnd/tasmota_switch/Power ← "TOGGLE"
-     ↳ // Power for relay 1 is toggled
-     ↳ stat/tasmota_switch/RESULT → {"POWER":"ON"}  
-     ↳ stat/tasmota_switch/POWER → ON
-  ```
+```js
+cmnd/tasmota_switch/Power ← "TOGGLE"
+    ↳ // Power for relay 1 is toggled
+    ↳ stat/tasmota_switch/RESULT → {"POWER":"ON"}  
+    ↳ stat/tasmota_switch/POWER → ON
+```
   We've sent the toggle command and received confirmation that the switch is turned on.
 
 !!! tip

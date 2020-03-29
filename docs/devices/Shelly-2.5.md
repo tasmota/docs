@@ -60,12 +60,12 @@ If you connect momentary switches, use the following template:
 `Button1` and `Button2` are assigned to the SW1 and SW2 external inputs. `Button3` is the button on the back of the device next to the pin header and you can optionally assign the behaviour you want using rules.
 
 If you want the buttons to respond instantly, go to the console and type `SetOption13 1`.
-But, if you want press/double press/hold functionality, run instead `Backlog SetOption1 1; SetOption11 1; SetOption32 20` to enable all three states and set hold time of 2 seconds. Use [SetOption32](https://tasmota.github.io/docs/#/Commands?id=setoption32) to set another hold time.
+But, if you want press/double press/hold functionality, run instead `Backlog SetOption1 1; SetOption11 1; SetOption32 20` to enable all three states and set hold time of 2 seconds. Use [SetOption32](../Commands#setoption32) to set another hold time.
 
 If you want to see Voltage and Frequency also when the relays are off, use `SetOption21 1`
 
 ## Flash mode
-To be able to flash the Tasmota firmware you need to get into flash mode. Therefore connect a wire from GPIO0 to ground. For further information have a look at [programming mode](Hardware-Preparation#programming-mode).
+To be able to flash the Tasmota firmware you need to get into flash mode. Therefore connect a wire from GPIO0 to ground. For further information have a look at [programming mode](../Getting-Started#programming-mode).
 
 ## Calibration
 Tasmota will disable serial logging after a restart as the communication between Tasmota and the Energy Monitoring chip is using the same serial interface. Make sure not to enable `SerialLog` as it will interfere with the Energy Monitoring functionality.
@@ -96,7 +96,7 @@ rule1 5
 ```
 
 ## Use Shelly 2.5 device for Blinds and Shutters
-Further Information: [Blinds and Shutters](Blinds-and-Shutters)
+Further Information: [Blinds and Shutters](../Blinds-and-Shutters)
 
 
 ## Ghost switching
@@ -121,5 +121,5 @@ An overtemperature threshold is implemented in the Tasmota firmware.
 !!! note
     It is set to 90 ° C
 
-This can be changed via [SetOption42](Commands.md?id=setoption42).
+This can be changed via [SetOption42](../Commands.md#setoption42).
 > [!WARNING]It is absolutely not recommended to increase the limit.

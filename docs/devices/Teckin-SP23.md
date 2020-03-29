@@ -16,7 +16,7 @@ Two devices purchased on Amazon ES were already patched, but have been successfu
 ## How to flash
 
 ### OTA Flashing
-No hardware preparation is required to flash if you are confident about having the same version and can easily be flashed using [Tuya-Convert](Tuya-Convert) methods.
+No hardware preparation is required to flash if you are confident about having the same version and can easily be flashed using [Tuya-Convert](../Tuya-Convert) methods.
 
 This results in a fully functional device when using the BlitzWolf SHP2 template.
 

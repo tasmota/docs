@@ -32,16 +32,14 @@ Time to create your template.
     - Any unused GPIO that has cannot have a peripheral connected should be set to `None (0)`. In our example the device has no exposed GPIO's so the unused ones are set to `0` compared to the original BlitzWolf module.     
     - GPIOs that can have peripherals connected to (exposed GPIOs) should be set to `User (255)`. This allows future configuration through the **Configure Module** dialog without the need to create a new template.  
    
-      > [!EXAMPLE]
-      > Take `Sonoff TH` as one: It has a jack connected to GPIO4 that allows a user to plug in a sensor. Assigning GPIO4 as `255` allows a Template to have correct GPIOs for this device even if nothing is plugged in. But, when a user decides to connect a sensor using the jack, GPIO4 can be set to the type of sensor through the Configure Module page.
+    !!! example 
+        Sonoff TH has a jack connected to GPIO4 that allows a user to plug in a sensor. Assigning GPIO4 as `255` allows a Template to have correct GPIOs for this device even if nothing is plugged in. But, when a user decides to connect a sensor using the jack, GPIO4 can be set to the type of sensor through the Configure Module page.
 
-4. Click on **Save** and you'll see this message
+4. Click on **Save** and you'll see this message      
+    ![](https://i.postimg.cc/4dqjcZxd/template6.png)
 
-![](https://i.postimg.cc/4dqjcZxd/template6.png)
-
-5. Finally, the device will reboot with the new template name
-
-![](https://i.postimg.cc/NjxhzWpJ/template-finished.png)
+5. Finally, the device will reboot with the new template name       
+    ![](https://i.postimg.cc/NjxhzWpJ/template-finished.png)
 
 ### Exporting Your Template
 
@@ -63,6 +61,7 @@ Go to **Configuration - Configure Other**
 ![How to get to template config](https://i.postimg.cc/25Hsznpn/template-import1.png ":size=250")
 
 When there:
+
 1. Paste the template string into the Template field
 2. Make sure you **check Activate**
 3. Click on **Save**. 
@@ -125,8 +124,8 @@ CODE  [17,148,29,149,52,255,255,255,138,255,139,255,255]
 #### GPIO functionality
 The GPIO functionality numbers are the same as shown by command ``GPIOs``. In addition code 255 is added to select a GPIO as user configurable via the GUI Configure Module menu.
 
-> [!EXAMPLE]
->In our example the GPIO 00 data element is `17` which corresponds to the `Button1` component, according to the following table. If you change that template element to `9` it would then be assigned as a `Switch1` component instead.
+!!! example
+    In our example the GPIO 00 data element is `17` which corresponds to the `Button1` component, according to the following table. If you change that template element to `9` it would then be assigned as a `Switch1` component instead.
 
 #### Components
 See [Components](Components) for a complete list
@@ -149,8 +148,8 @@ FLAG |  Feature description
 ### BASE
 BASE is the starting module setup for the custom template. Some modules include special programming. If your device is similar to an existing built-in module it is best to use that as a starting point. When you're not sure which BASE module is suitable for your device use the `Generic (18)` module. A list of hard-coded devices can be found in [Modules](Modules).
 
-> [!EXAMPLE]
->In the [RGB Smart Plug](https://templates.blakadder.com/rgbpow.html)
+!!! example
+    In the [RGB Smart Plug](https://templates.blakadder.com/rgbpow.html)
 template we used the `BlitzWolf SHP (45)` module as BASE since the power monitoring circuitry is identical but GPIO00 and GPIO02 were changed and an unused GPIO04 was added to enable the RGB LED function. Using that specific module we took advantage of that module's calibrated power monitoring special programming which the `Generic (18)` module does not use.
 
 

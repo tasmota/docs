@@ -52,7 +52,7 @@ Some peripherals offer, or even require, additional commands. See [Commands](Com
 #### Connect switch
 If you take a Sonoff Basic and connect a switch between pin4 (GND) and pin5 (GPIO14) of the 5 pin programming header you now have a second switch connected to the device. You can set this through the module config page as option `Switch1 (9)` or from the command line with `gpio14 9`.
 
-See [Buttons and Switches](../Buttons-and-Switches.md) for more information.
+See [Buttons and Switches](Buttons-and-Switches.md) for more information.
 
 #### Connect jack
 Instead of connecting a switch, you could connect a 4-pin 2.5mm jack, with the pins wired:  
@@ -64,7 +64,7 @@ R1 | | no connection
 R2 | 1 | GND
 R3 | 4 | 3.3V
 
-You can then plug a sensor into the jack like you would to a [Sonoff TH](../devices/Sonoff-TH.md) and define what sensor you have connected to GPIO14.
+You can then plug a sensor into the jack like you would to a [Sonoff TH](devices/Sonoff-TH.md) and define what sensor you have connected to GPIO14.
 
 
 ## Restrictions  

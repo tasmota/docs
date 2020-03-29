@@ -12,7 +12,7 @@ The GPIOs on the Pow are connected to AC power!** Only use a POW R2 as designed.
 
 ## Serial Flashing 
 
-Please see the [Hardware Preparation](Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
 3V3, RX, TX and GND pins are available at the rear/short end of the PCB.
 
@@ -23,13 +23,13 @@ To enter **flash mode**, press down on the button while powering the device.
 Note - After the module type is changed to "Sonoff Pow R2", the serial port is no longer available for entering configuration commands because the serial port is used to communicate to the power measurement chip.  Make sure you have set up your network connection before doing this.
 
 ### Serial logging
-Serial logging is disabled by the Tasmota code for this module. Serial communication is used by the device to transfer the data from the energy monitoring chip to the ESP chip. Do not enable serial logging ([SerialLog 0](Commands.md#seriallog)) on this device. It can cause the device software to crash. Be sure to leave it disabled.
+Serial logging is disabled by the Tasmota code for this module. Serial communication is used by the device to transfer the data from the energy monitoring chip to the ESP chip. Do not enable serial logging ([SerialLog 0](../Commands.md#seriallog)) on this device. It can cause the device software to crash. Be sure to leave it disabled.
 
 ### Video tutorial by alsolh
 [![](http://img.youtube.com/vi/fqOJjA6Pph0/0.jpg)](http://www.youtube.com/watch?v=fqOJjA6Pph0 "")
 
 ## Power Monitoring Calibration
-Sonoff Pow R2 might need calibration as correct measurements are influenced by hardware and timing differences. See [Power Monitoring Calibration](Power-Monitoring-Calibration)
+Sonoff Pow R2 might need calibration as correct measurements are influenced by hardware and timing differences. See [Power Monitoring Calibration](../Power-Monitoring-Calibration.md)
    
 ## Telemetry
 The Sonoff Pow R2 can provide Energy, Power, Voltage and Current information in different ways.

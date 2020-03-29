@@ -1,5 +1,5 @@
 ## Serial Flashing
-Please see the [Hardware Preparation](Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
 Sonoff 4CH and Sonoff 4CH R2 use the same configuration but have slightly different boards. Check which version you own before proceeding.
 ### Sonoff 4CH

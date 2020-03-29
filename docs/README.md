@@ -42,8 +42,8 @@ Blockquotes `>` can now look even fancier:
 > [!NOTE]
 > `> [!NOTE]`
 
-> [!EXAMPLE]
-> `> [!EXAMPLE]`
+!!! example
+     `> [!EXAMPLE]`
 
 > [!DANGER|style:flat]
 > `> [!DANGER|style:flat]`

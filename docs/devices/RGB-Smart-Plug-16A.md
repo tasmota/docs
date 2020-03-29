@@ -52,7 +52,7 @@ Don't forget to undo everything after flashing, DNS and WiFi won't work otherwis
 
 ### RGB Light
 
-Use this [template](Templates) to configure the device:
+Use this [template](../Templates) to configure the device:
  
 `{"NAME":"RGB Smart Plug","GPIO":[37,0,39,0,38,134,0,0,131,17,132,21,0],"FLAG":0,"BASE":45}`
 

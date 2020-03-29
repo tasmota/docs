@@ -75,7 +75,7 @@ The PZEM-004T together with a HW-655 Relay provide a good clamp-on energy monito
 * DuPont Connectors & 22 AWG wire
 
 ## Preparation
-Install TASMOTA ([tasmota.bin](http://thehackbox.org/tasmota/020502/tasmota.bin)) is sufficient) on the ESP-01 and confirm it is functional before connecting the PZEM-004T to its serial interface. Use of pins other that the default hardware serial GPIO (01 & 03) ([requires 2.4.2 ESP Core or higher](What's-New#version-6303-20181105)) in order for TASMOTA to emulate a serial interface using software serial.
+Install Tasmota on the ESP-01 and confirm it is functional before connecting the PZEM-004T to its serial interface. Use of pins other that the default hardware serial GPIO (01 & 03) in order for TASMOTA to emulate a serial interface using software serial.
 
 ## Hardware connections
 <img src="https://user-images.githubusercontent.com/34340210/51444410-2536e380-1cc5-11e9-8989-b181c2851863.png" height="400" /><br>
@@ -137,7 +137,7 @@ Create _**user_config_override.h**_ in the `tasmota` folder and paste the conten
   `#define USE_CONFIG_OVERRIDE`
 - Click compile
 
-[Flash](Flashing.md) the binary on the Wemos D1 Mini and confirm it is functional before connecting the PZEM-004T to its serial interface.
+[Flash](Getting-Started#flashing) the binary on the Wemos D1 Mini and confirm it is functional before connecting the PZEM-004T to its serial interface.
 
 ## Tasmota Parameter Configuration
 
@@ -199,7 +199,6 @@ PZEM-004T v.3.0
 # PZEM-016
 
 ![](https://user-images.githubusercontent.com/5904370/67893552-0cfacb80-fb57-11e9-9a9b-67482ca905d1.png)
-- [**PZEM016 Energy Monitoring**](PZEM016-Energy-Monitoring) - RS485 to TTL serial modification
 
 :warning: :warning: :warning:  
 **DO NOT PERFORM THIS MODIFICATION WITHOUT REMOVING POWER FROM THE PZEM FIRST!**  

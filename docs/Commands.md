@@ -47,9 +47,9 @@ http://<ip>/cm?cmnd=Power%20On
 http://<ip>/cm?cmnd=Power%20off
 http://<ip>/cm?user=admin&password=joker&cmnd=Power%20Toggle
 ```
-!!! note
-    Any spaces or special characters must be replaced with their [ASCII hex codes](https://www.rapidtables.com/code/text/ascii-table.html). You must precede each hex code with `%`.  
-Most used ones are: `space` = `%20` and `;` = `%3B`   
+!!! warning "Any spaces or special characters must be replaced with their [ASCII hex codes](https://www.rapidtables.com/code/text/ascii-table.html). 
+    You must precede each hex code with `%`. " 
+    Most used codes are: `space` = `%20` and `;` = `%3B`   
 
 If you have set a password for web user interface access, this must be included (in plaintext) in the URL of the HTTP request, like so:  
 ```
@@ -81,7 +81,7 @@ For specific power control, using backlog like a script
 ```haskell
 Backlog Status 1; Power2 on; Delay 20; Power2 off; Status 4
 ```
-When using [web requests](#with-web-requests) *(You have to encode "space" as '%20' and ";" as '%3B')*
+When using [web requests](#with-web-requests) *(Don't forget to encode "space" as '%20' and ";" as '%3B')*
 ```
 http://<ip>/cm?user=admin&password=joker&cmnd=Backlog%20Power%20Toggle%3BPower1%20ff
 ```
@@ -230,15 +230,15 @@ See also|[`SetOption3`](#setoption3) - Disable//Enable MQTT<BR>[`SetOption4`](#s
 
 Command|Parameters
 :---|:---
-Add<x\><a id="add"></a>|`<value>` = add value to Var<x\> ([example](Rulesarithmetic-commands-to-be-used-with-vars))
+Add<x\><a id="add"></a>|`<value>` = add value to Var<x\> ([example](Rules#arithmetic-commands-to-be-used-with-vars))
 CalcRes<a id="calcres"></a>|Current calculation resolution<BR>`0..7` = set number of decimal places to be used in `Add`, `Sub`, `Mult` and `Scale`
 Event<a id="event"></a>|Execute an event to trigger a rule as [documented](Rules#rule-trigger)&emsp;  »5.13.0
 Mem<x\><a id="mem"></a>|Manage up to 16 variables stored on flash (x = `1..16`)<BR>`Mem` returns all current values. `Mem<x>` returns the variable's current value.<BR>`<value>` = store a string value in a variable<BR>`"` = clear stored value in Mem<x\>
-Mult<x\><a id="mult"></a>|`<value>` = multiply value to Var<x\> ([example](Rulesarithmetic-commands-to-be-used-with-vars))<BR>
+Mult<x\><a id="mult"></a>|`<value>` = multiply value to Var<x\> ([example](Rules#arithmetic-commands-to-be-used-with-vars))<BR>
 Rule<x\><a id="rule"></a>|Rules. [Read more...](Rules)<BR>`0` = disable Rule<x\><BR>`1` = enable Rule<x\><BR>`2` = toggle Rule<x\><BR>`4` = disable one-shot detection (perform commands as long as trigger is met)<BR>`5` = enable one-shot (e.g., sometimes used for slow changing sensors like temperature) detection<BR>`6` = toggle one-shot detection<BR>`8` = disable stop-on-error after exception restart<BR>`9` = enable stop-on-error after exception restart<BR>`10` = toggle stop-on-error after exception restart<BR>`<value>` = define Rule<x\><BR>`+<value>` = append to Rule<x\><BR>`"` = clear Rule<x\>
 RuleTimer<x\><a id="ruletimer"></a>|Up to eight timers to be used as countdown event (x = `1..8`)&emsp;  »5.13.0<BR>`0..32766` = set countdown rule timer in seconds
-Scale<x\><a id="scale"></a>|Scale value from a low and high limit to another low and high limits and save in Var<x\> ([example](Rulesarithmetic-commands-to-be-used-with-vars))<BR>`v` = value: the number to scale<BR>`fl` = fromLow: the lower bound of the value’s current range<BR>`fh` = fromHigh: the upper bound of the value’s current range<BR>`tl` = toLow: the lower bound of the value’s target range<BR>`th` = toHigh: the upper bound of the value’s target range
-Sub<x\><a id="sub"></a>|`<value>` = subtract value to Var<x\> ([example](Rulesarithmetic-commands-to-be-used-with-vars))
+Scale<x\><a id="scale"></a>|Scale value from a low and high limit to another low and high limits and save in Var<x\> ([example](Rules#arithmetic-commands-to-be-used-with-vars))<BR>`v` = value: the number to scale<BR>`fl` = fromLow: the lower bound of the value’s current range<BR>`fh` = fromHigh: the upper bound of the value’s current range<BR>`tl` = toLow: the lower bound of the value’s target range<BR>`th` = toHigh: the upper bound of the value’s target range
+Sub<x\><a id="sub"></a>|`<value>` = subtract value to Var<x\> ([example](Rules#arithmetic-commands-to-be-used-with-vars))
 Var<x\><a id="var"></a>|Manage up to 16 variables stored in memory (x = `1..16`)<BR>`Var` returns all current values. `Var<x>` returns the variable's current value.<BR>`<string>` = store a string value in a variable<BR>`"` = clear stored value in Var<x\>
 
 <a id="timers"></a>
@@ -454,7 +454,7 @@ SetOption81<a id="setoption81"></a>|Set PCF8574 component behavior for all ports
 SetOption82<a id="setoption82"></a>|Reduce the CT range from 153..500 to 200.380 to accomodate with Alexa range<BR>`0` = CT ranges from 153 to 500 *(default)*<BR>`1` = CT ranges from 200 to 380 (although you can still set in from 153 to 500)
 SetOption83<a id="setoption83"></a>|Uses Zigbee device friendly name instead of 16 bits short addresses as JSON key when reporting values and commands<BR>`0` = JSON key as short address<BR>`1` = JSON key as friendly name<BR>See [`ZbName <device>,<name>`](#zbname)
 SetOption84<a id="setoption84"></a>|(Experimental) When using AWS IoT, sends a device shadow update (alternative to retained)<BR>`0` = don't update device shadow (default)<BR>`1` = update device shadow<BR>Note: if the `Topic` contains `'/'` they are replaced with `'_'`
-SetOption85<a id="setoption85"></a>|[Device group](Device-groups) support<BR>`0` = disabled _(default)_<BR>`1` = enabled
+SetOption85<a id="setoption85"></a>|[Device group](Device-Groups) support<BR>`0` = disabled _(default)_<BR>`1` = enabled
 SetOption86<a id="setoption86"></a>|**PWM Dimmer only!** Turn brightness LED's off 5 seconds after last change<BR>`0` = disabled _(default)_<BR>`1` = enabled
 SetOption87<a id="setoption87"></a>|**PWM Dimmer only!** Turn red LED on when powered off<BR>`0` = disabled _(default)_<BR>`1` = enabled
 SetOption88<a id="setoption88"></a>|**PWM Dimmer only!** Buttons control remote devices<BR>`0` = disabled _(default)_<BR>`1` = enabled
@@ -469,7 +469,7 @@ Both hardware and software Serial Bridge are supported.
 Hardware Serial Bridge uses `GPIO1 (Tx)` and `GPIO3 (Rx)` or `GPIO13 (Tx)` and `GPIO15 (Rx)` pins of your device.   
 Software Serial Bridge can use any other GPIO to be configured as components `Serial Tx` and `Serial Rx` (or `SerBr Tx` and `SerBr Rx`). If `Tx` and `Rx` components are not assigned in the Template or Module, `GPIO1` and `GPIO3` will be used. Note that changing serial logging ([`SerialLog`](#seriallog) 0) will disable the hardware Serial Bridge.  
 
-Information received by Tasmota over the serial bridge is captured automatically. Before data will be received, a properly formatted [`SerialSend<x>` or `SSerialSend<x>`](#SerialSend) command must be executed. This must be done any time the device restarts (e.g., via a `System#Boot` triggered rule). This command is required in order to set how the expected serial data will be formatted and interpreted (i.e., which &#60;x> option). A `{"SSerialReceived":{"Data":"<string>"}}` message will be posted. You can use [a rule](Rulesswitch-relays-via-serial-interface) to process the string which will be contained in `SSerialReceived#Data`.
+Information received by Tasmota over the serial bridge is captured automatically. Before data will be received, a properly formatted [`SerialSend<x>` or `SSerialSend<x>`](#SerialSend) command must be executed. This must be done any time the device restarts (e.g., via a `System#Boot` triggered rule). This command is required in order to set how the expected serial data will be formatted and interpreted (i.e., which &#60;x> option). A `{"SSerialReceived":{"Data":"<string>"}}` message will be posted. You can use [a rule](Rules#switch-relays-via-serial-interface) to process the string which will be contained in `SSerialReceived#Data`.
 
 Expect possible communication errors when additional sensors are configured.  
 

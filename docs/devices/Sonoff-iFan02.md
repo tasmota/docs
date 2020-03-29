@@ -6,7 +6,7 @@ The Sonoff iFan02 is supported in Tasmota from version 6.0.0b
 
 ## Serial Flashing
 
-Please see the [Hardware Preparation](Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
 Flashing using only a USB to serial converter will not work as the unit draws too much current as can be observed by a flashing blue led on the PCA and a lot of serial gibberish. As AC is not connected to Gnd I used the available power supply of the unit and connecting the USB to serial converter to J3 pins Gnd, Tx and Rx.
 

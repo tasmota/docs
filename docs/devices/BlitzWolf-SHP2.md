@@ -23,7 +23,7 @@ This method does't need any wiring.
 
 ## Serial Connection
 
-Please see the [Hardware Preparation](Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
 
 ### Step 1.

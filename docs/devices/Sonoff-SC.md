@@ -1,6 +1,6 @@
 ## Serial Connection / Flashing
 
-Please see the [Hardware Preparation](Hardware-Preparation) page for general instructions.
+Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
 Flashing the ESP8266
 

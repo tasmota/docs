@@ -4,7 +4,7 @@
 
 # Flashing Wemos with Tasmota
 
-[Flashing](Flashing.md) a Wemos D1 Mini with Tasmota firmware is nearly the same as for every other device.<br>
+[Flashing](../Getting-Started#flashing) a Wemos D1 Mini with Tasmota firmware is nearly the same as for every other device.<br>
 Just connect Wemos D1 mini via USB. No action required to enter Flashmode!
 
 # Configure Tasmota for Wemos
