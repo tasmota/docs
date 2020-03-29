@@ -9,3 +9,4 @@
 # Ignore all local history of files
 .history
 site/
+poetry.lock
