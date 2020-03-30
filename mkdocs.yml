@@ -40,7 +40,7 @@ markdown_extensions:
   - pymdownx.caret
   - codehilite
   - meta
-
+      
 plugins:
   - search
   - alternate-link

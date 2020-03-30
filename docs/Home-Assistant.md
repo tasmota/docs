@@ -13,68 +13,60 @@ To test control of a relay or light, as **Publish a packet topic** enter `cmnd/%
 ![](_media/hass1.png)
 ![](_media/hass2.png)
 
-# Adding Devices
-
 Home Assistant has two avenues of adding Tasmota devices:
 1. Using MQTT discovery
 2. Adding by editing configuration.yaml 
 
-> [!NOTE]
-> After every change to the configuration file you'll need to restart Home Assistant to make it aware of the changes.
+!!! note "After every change to the configuration file you'll need to restart Home Assistant to make it aware of the changes."
 
-If you don't want to use MQTT discovery, skip to [Manual Config](#configurationyaml-editing) 
+If you don't want to use MQTT discovery, skip to [Manual Configuration](#configurationyaml-editing) 
+
 ## Automatic Discovery
 Home Assistant has a feature called [MQTT discovery](https://www.home-assistant.io/docs/mqtt/discovery/).
 With MQTT discovery no user interaction or configuration file editing is needed to add new devices in Home Assistant.
 
 Automatic discovery is currently supported for
 
-<!-- tabs:start -->
+=== "Relays"
+    Announced to Home Assistant as [MQTT Switch](https://www.home-assistant.io/integrations/switch.mqtt/).
 
-#### **Relays**
-Announced to Home Assistant as [MQTT Switch](https://www.home-assistant.io/integrations/switch.mqtt/).
+    To make a relay discovered as "light" in Home Assistant use command [`SetOption30 1`](Commands.md#setoption30)   
 
-To make a relay discovered as "light" in Home Assistant use command [`SetOption30 1`](Commands.md#setoption30)   
+    _Alternatively you can configure it manually using [Light Switch](https://www.home-assistant.io/components/light.switch/) integration._
 
-_Alternatively you can configure it manually using [Light Switch](https://www.home-assistant.io/components/light.switch/) integration._
+=== "Lights"
+    Announced to Home Assistant as [MQTT Light](https://www.home-assistant.io/integrations/light.mqtt/).
 
-#### **Lights**
-Announced to Home Assistant as [MQTT Light](https://www.home-assistant.io/integrations/light.mqtt/).
+=== "Dimmers"
+    Announced to Home Assistant as [MQTT Light](https://www.home-assistant.io/integrations/light.mqtt/) with a single channel used for dimming.
 
-#### **Dimmers**
-Announced to Home Assistant as [MQTT Light](https://www.home-assistant.io/integrations/light.mqtt/) with a single channel used for dimming.
+=== "Buttons"
+    Announced to Home Assistant as [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
 
-#### **Buttons**
-Announced to Home Assistant as [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
+    To have buttons discovered `ButtonTopic` must be set to `1` or to a custom name and it will automatically start to listen and publish using `/stat/%topic%/BUTTON<x>` topic.
 
-To have buttons discovered `ButtonTopic` must be set to `1` or to a custom name and it will automatically start to listen and publish using `/stat/%topic%/BUTTON<x>` topic.
+    When using `ButtonTopic 1` the only possible trigger will be `HOLD` (SetOption1 or SetOption11 must be enabled).  
+    When using `ButtonTopic` with a custom name all the possible combination enabled by SetOption1, SetOption11 and Setoption13 will be possible.
 
-When using `ButtonTopic 1` the only possible trigger will be `HOLD` (SetOption1 or SetOption11 must be enabled).  
-When using `ButtonTopic` with a custom name all the possible combination enabled by SetOption1, SetOption11 and Setoption13 will be possible.
+    `SwitchMode` default for buttons and switches is `Switchmode 0` (TOGGLE). To change the behavior, [`SwitchMode`](Commands.md#switchmode) must be changed (the Button must be configured as Switch to have effect).  For example setting up a switch to `SwitchMode 1` (follow) will create a switch with ON and OFF payloads.
 
-`SwitchMode` default for buttons and switches is `Switchmode 0` (TOGGLE). To change the behavior, [`SwitchMode`](Commands.md#switchmode) must be changed (the Button must be configured as Switch to have effect).  For example setting up a switch to `SwitchMode 1` (follow) will create a switch with ON and OFF payloads.
+    **When a Button is set to a different topic than `0` is not possible to use `Button#State` as a trigger for rules.**
 
-> [!WARNING] 
-> When a Button is set to a different topic than `0` is not possible to use `Button#State` as a trigger for rules.
+=== "Switches"
+    Announced to Home Assistant as [MQTT Binary Sensor](https://www.home-assistant.io/integrations/binary_sensor.mqtt/) and/or as a [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
 
-#### **Switches**
-Announced to Home Assistant as [MQTT Binary Sensor](https://www.home-assistant.io/integrations/binary_sensor.mqtt/) and/or as a [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
+    To have switches discovered `SwitchTopic` must be set to a custom name and it will automatically start to listen and publish using `/stat/%topic%/SWITCH<x>` topic.
 
-To have switches discovered `SwitchTopic` must be set to a custom name and it will automatically start to listen and publish using `/stat/%topic%/SWITCH<x>` topic.
+    Depending by the `SwitchMode`used, a switch can be a Trigger (`TOGGLE`or `HOLD`), a Binary Sensor (`ON`/`OFF`) or both at the same time.
 
-Depending by the `SwitchMode`used, a switch can be a Trigger (`TOGGLE`or `HOLD`), a Binary Sensor (`ON`/`OFF`) or both at the same time.
+    Example:  
+    When using with `SwitchMode 0` Tasmota will create just one Trigger for `TOGGLE`.  
+    When using with `SwitchMode 1` Tasmota will create a `Binary Sensor` with `ON` and `OFF` Payloads.  
+    When using with `Switchmode 5` Tasmota will create a `Binary Sensor` with `ON` and `OFF` Payloads and a Trigger for `TOGGLE`  
 
-Example:  
-When using with `SwitchMode 0` Tasmota will create just one Trigger for `TOGGLE`.  
-When using with `SwitchMode 1` Tasmota will create a `Binary Sensor` with `ON` and `OFF` Payloads.  
-When using with `Switchmode 5` Tasmota will create a `Binary Sensor` with `ON` and `OFF` Payloads and a Trigger for `TOGGLE`  
+    All switchmodes are supported with the exception of SwitchMode11 and SwitchMode12 able to generate just a `TOGGLE` trigger.
 
-All switchmodes are supported with the exception of SwitchMode11 and SwitchMode12 able to generate just a `TOGGLE` trigger.
-
-> [!WARNING] 
-> When a Switch is set to a different topic than `0` is not possible to use `Switch#State` as a trigger for rules.
-
-<!-- tabs:end -->
+    **When a Switch is set to a different topic than `0` is not possible to use `Switch#State` as a trigger for rules.**
 
 Types of devices not listed above (fans, covers, etc) require [manual configuration](#fans)
 
@@ -85,8 +77,8 @@ For a Tasmota device to be automatically discovered by Home Assistant you need t
 ```console
 SetOption19 1
 ```
-> [!NOTE]
-> Discovery is not built in to tasmota lite. Use the full version for discovery.
+
+!!! failure "Discovery is not built in to tasmota lite. Use the full version for discovery."
 
 
 After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device.
@@ -102,8 +94,7 @@ Return MQTT response always as `RESULT` and not as %COMMAND% topic
 **`SetOption59` to `1`**
 Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands `State`, `Power` and any command causing a light to be turned on.
 
-> [!NOTE]
->For every change you made on your device configuration you will need a reboot or use `SetOption19 1` again to see the changes under Home Assistant.
+!!! note "For every change you made on your device configuration you will need a reboot or use `SetOption19 1` again to see the changes under Home Assistant."
 
 !!! warning
      Please be advised that not all sensors can be correctly rendered under Home Assistant. In those cases a fallback function will be used to create a generic sensor.
@@ -137,12 +128,12 @@ The advantage of manually configuring a device is that you maintain control of a
 
 Home Assistant [configuration](https://www.home-assistant.io/docs/configuration/) is done by editing the `configuration.yaml` file.
 
-> [!DANGER]
-> All the configurations are just examples.    
-You need to be familiar with Home Assistant's configuration structure and procedures.   
-Straight copy paste of the given examples into configuration.yaml will not work for you. 
+!!! warning "All the configurations are just examples."
+  You need to be familiar with Home Assistant's configuration structure and procedures.   
+  Straight copy paste of the given examples into configuration.yaml will not work for you. 
 
 If you are using a localized (non-english) version be sure to check the correct spelling and cases for values:
+
   * 'payload_available' 
   * 'payload_not_available'
   * 'payload_on'
@@ -157,9 +148,7 @@ Add in Home Assistant using the [MQTT Switch](https://www.home-assistant.io/comp
 **Required Commands**   
 `SetOption59 1` - enables sending of tele/%topic%/STATE on POWER and light related commands
 
-<!-- tabs:start -->
-
-#### **Single Switch**
+=== "Single Switch"
 
 ```yaml
 switch:
@@ -178,7 +167,7 @@ switch:
 ```
 
 
-#### **Multiple Switches**
+=== "Multiple Switches"
 When a device has more than one relay you need to create a new switch for each relay. For each relay use corresponding POWER\<x\> (POWER1, POWER2, etc)  or if [SetOption26](Commands.md#setoption26) is enabled)
 
 ```yaml
@@ -221,7 +210,7 @@ switch:
     retain: false
 ```
 
-#### **Dimmer**
+=== "Dimmer"
 Used for dimmers and dimmable lights (single channel lights).
 
 ```yaml
@@ -244,8 +233,6 @@ light:
     qos: 1
     retain: false
 ```
-
-<!-- tabs:end -->
 
 !!! tip
     If you are using your device to control a light, you may want to use [`MQTT Light`](https://www.home-assistant.io/components/light.mqtt/) integration instead.   
@@ -263,7 +250,7 @@ Add in Home Assistant using the [MQTT Light](https://www.home-assistant.io/compo
 `Speed 5` - sets transition speed
 <!-- tabs:start -->
 
-#### **Dimming**
+=== "Dimming"
 Used for dimmers and dimmable lights (single channel lights).
 
 ```yaml
@@ -287,7 +274,7 @@ light:
     retain: false
 ```
 
-#### **RGB Light**
+=== "RGB Light"
 
 ```yaml
 light:
@@ -321,7 +308,7 @@ light:
     qos: 1
     retain: false
 ```
-#### **RGB+W Light**
+=== "RGB+W Light"
 
 ```yaml
 light:
@@ -359,7 +346,7 @@ light:
     qos: 1
     retain: false
 ```
-#### **RGB+CCT Light**
+=== "RGB+CCT Light"
 Also known as RGBWW or 5 channel lights
 
 ```yaml
@@ -398,7 +385,7 @@ light:
     retain: false
 ```
 
-#### **Addressable LED**
+=== "Addressable LED"
 
 Applies only to [WS281x](WS2812B-and-WS2813) lights. 
 
@@ -443,7 +430,7 @@ light:
     retain: false
 ```
 
-#### **No SetOption17 RGB**
+=== "No SetOption17 RGB"
 
  If you don't want to use `SetOption17 1` you can change
   ```yaml
@@ -462,7 +449,7 @@ A sensor will send its data in set intervals defined by [`TelePeriod`](Commands.
 
 <!-- tabs:start -->
 
-#### **Temperature**
+=== "Temperature"
 
 Check your sensor name in Tasmota and change accordingly. This example uses the DHT22 sensor.
 
@@ -479,7 +466,7 @@ sensor:
     device_class: temperature
 ```
 
-#### **Humidity**
+=== "Humidity"
 
 Check your sensor name in Tasmota and change accordingly. This example uses the DHT22 sensor.
 
@@ -521,7 +508,7 @@ sensor:
 ```
 -->
 
-#### **Pressure**
+=== "Pressure"
 Check your sensor name in Tasmota and change accordingly. This example uses the BMP280 sensor.
 
 ```yaml
@@ -555,7 +542,7 @@ this custom component [counter](https://github.com/hhaim/hass/blob/master/custom
     value_template: "{{ (4885 + (value))|int }}"
 ```  -->
 
-#### **Wi-Fi Signal Quality**
+=== "Wi-Fi Signal Quality"
 
 Monitor the relative Wi-Fi signal quality of a device.
 
@@ -585,7 +572,7 @@ To get all the data in Home Assistant requires multiple sensors which you can la
 
 <!-- tabs:start -->
 
-#### **Power Monitoring**
+=== "Power Monitoring"
 
 ```yaml
 sensor:
@@ -640,7 +627,7 @@ sensor:
 Add in Home Assistant using the [MQTT Binary Sensor](https://www.home-assistant.io/components/binary_sensor.mqtt/) integration.
 <!-- tabs:start -->
 
-#### **PIR Sensor**
+=== "PIR Sensor"
 Used for a configured [PIR Sensor](PIR-Motion-Sensors) and requires this rule:
 
 **Required Commands**
@@ -660,7 +647,7 @@ binary_sensor:
     qos: 1
 ```
 
-#### **Door Sensor**
+=== "Door Sensor"
 Requires a reed switch configured in Tasmota.
 
 **Required Commands**
@@ -680,7 +667,7 @@ binary_sensor:
     qos: 1
 ```
 
-#### **RF Bridge**
+=== "RF Bridge"
 An RF door sensor configured with an RF receiver in Tasmota.
 ```yaml
 binary_sensor:
@@ -699,7 +686,7 @@ Add in Home Assistant using the [MQTT Fan](https://www.home-assistant.io/compone
 
 <!-- tabs:start -->
 
-#### **Fan**
+=== "Fan"
 
 Derived from [#2839](https://github.com/arendst/Tasmota/issues/2839) by @kbickar and @finity69x2
 
@@ -740,7 +727,7 @@ fan:
 
 <!-- tabs:start -->
 
-#### **iFan02**
+=== "iFan02"
 Combination of configs found in issue 
 [#2839](https://github.com/arendst/Tasmota/issues/2839)
 and Home Assistant forum thread 
@@ -790,7 +777,7 @@ light:
     retain: false
 ```
 
-#### **Sonoff S31**
+=== "Sonoff S31"
 Configure the device as Sonoff S31, and run:\
 `SetOption4 1`   
 `SetOption59 1`
@@ -882,7 +869,7 @@ sensor:
 
 <!-- tabs:start -->
 
-#### **Dimmable Light**
+=== "Dimmable Light"
 This configuration is for a dimmable light reporting on `0xE1F9` using endpoint 1, cluster 8 for brightness. `ZbRead` part in the template is needed to always update the brightness values.
 
 ```yaml
@@ -918,7 +905,7 @@ light:
         {%- endif -%}
 ```
 
-#### **Water Leak Sensor**
+=== "Water Leak Sensor"
 This specific configuration is for Xiaomi Aqara Water Leak sensor reporting on `0x099F`.
 
 ```yaml
@@ -944,7 +931,7 @@ binary_sensor:
     device_class: moisture
 ```
 
-#### **Enable join switch**
+=== "Enable join switch"
 
 ```yaml
 - platform: mqtt
@@ -968,25 +955,10 @@ binary_sensor:
 
 <!-- tabs:start -->
 
-#### **Sync Power State**
+=== "Sync Power State"
 
-When MQTT broker or Home Assistant is restarted, or there is a WiFi outage, Tasmota device state may not be synced with Home Assistant. Use this automation to get all your (auto discovered) devices in sync, including power state, *immediately* after Home Assistant is started.
+When MQTT broker or Home Assistant is restarted, or there is a WiFi outage, Tasmota device state may not be synced with Home Assistant. Use this automation to get all your devices in sync, including power state, *immediately* after Home Assistant is started.
 
-For autodiscovered devices:
-```yaml
-automation:
-  - alias: "Sync Tasmota states on start-up - autodiscovery"
-    initial_state: true
-    trigger:
-      platform: homeassistant
-      event: start
-    action:
-      - service: mqtt.publish
-        data:
-          topic: "tasmotas/cmnd/state"
-          payload: ""
-```
-For manually configured devices:
 ```yaml
 automation:
   - alias: "Sync Tasmota states on start-up - manual configuration"
@@ -1001,68 +973,7 @@ automation:
           payload: ""
 ```
 
-#### **Report Firmware Version - Autodiscovery**
-
-```yaml
-automation:
-  - id: 'tasmota_firmware_installed'
-    alias: "Tasmota Firmware Installed"
-    initial_state: true
-    trigger:
-    - event: start
-      platform: homeassistant
-    action:
-    - data:
-        payload: '2'
-        topic: tasmotas/cmnd/status
-      service: mqtt.publish
-    initial_state: 'true'
-```
-
-Then you can make a sensor that detects the latest version of Tasmota and alerts you if there is an update. Autodiscovery only.
-
-configuration.yaml
-```yaml
-# Getting Firmware from JSON for Tasmota
-sensor:
-  - platform: rest
-    resource: https://api.github.com/repos/arendst/Tasmota/releases/latest
-    name: Sonoff Firmware Version Available
-    username: !secret githubuser
-    password: !secret githubpass
-    authentication: basic
-    value_template: '{{ value_json.tag_name }}'
-    headers:
-      Accept: application/vnd.github.v3+json
-      Content-Type: application/json
-      User-Agent: Home Assistant REST sensor
-  - platform: mqtt
-    name: "Coffee Maker Firmware"
-    state_topic: "coffee/stat/STATUS2"
-    value_template: 'v{{ value_json.StatusFWR.Version }}'
-  - platform: mqtt
-    name: "Garage Door Firmware"
-    state_topic: "garage/stat/STATUS2"
-    value_template: 'v{{ value_json.StatusFWR.Version }}'
-binary_sensor:
-  - platform: template
-    sensors:
-      sonoff_update_available:
-        value_template: >-
-          {{ (states.sensor.tasmota_firmware_version_available.state > states.sensor.coffee_maker_firmware.state) or (states.sensor.tasmota_firmware_version_available.state > states.sensor.garage_door_firmware.state)
-              }}
-```
-Note the above is for 2 switches.
-
-customize.yaml
-```yaml
-binary_sensor.tasmota_update_available:
-  friendly_name: Update Available Tasmota
-  device_class: problem
-```
-Then it will show as an alert icon that you can show in Lovelace.
-
-#### **Report Firmware Version - Manual**
+=== "Report Firmware Version - Manual"
 
 Add a sensor like below for each Tasmota device whose firmware version you want to track.
 
@@ -1095,7 +1006,7 @@ automation:
           payload: "2"
 ```
 
-#### **New device IP Address**
+=== "New device IP Address"
 Here is some code that will display the IP address of yout newly flashed device.
 
 The script:
