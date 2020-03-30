@@ -2,36 +2,36 @@ Deep sleep support for up to 1 day (i.e., 86,400 seconds) (e.g., if used with KN
 
 The ESP8266 has a limitation of a maximum of ~71 minutes deep sleep. To overcome the limitation, a short wake-up is performed - the device will wake up every hour for <0.3 seconds until the deep sleep time is reached. The remaining deep sleep time is decremented, and the device is then put back in deep sleep again. The remaining time is stored in RTC memory. As long as the device is powered (e.g., via the battery), this should work fine. Flash memory is not used because of how often this has to occur (every hour) and the time it takes for the flash to be ready takes much longer than the total time to write to the RTC.
 
-`DeepSleepTime` sets the time that the device remains in deep sleep before it returns to full operating mode before returning to deep sleep again. **This cannot be changed!** For example, if you set `DeepSleepTime 3600`, the device will wake up every hour, exactly (e.g., 8:00am, 9:00am, ...). If you define `DeepSleepTime 86400` (i.e., 60\*60\*24), it will wake-up exactly at 0:00 UTC time - not your local time. If you define `DeepSleepTime 600`, it will wake-up every 10 minutes (e.g., 8:00, 8:10, 8:20, ...).
+`DeepSleepTime` sets the time that the device remains in deep sleep before it returns to full operating mode before returning to deep sleep again. Once the command is issued, the deep sleep cycle commences. During deep sleep, the device is effectively "off" and, as such, it is not possible to modify deepsleeptime without exiting deep sleep. For example, if you set `DeepSleepTime 3600`, the device will wake up every hour, exactly (e.g., 8:00am, 9:00am, ...). If you define `DeepSleepTime 86400` (i.e., 60\*60\*24), it will wake-up exactly at 0:00 UTC time - not your local time. If you define `DeepSleepTime 600`, it will wake-up every 10 minutes (e.g., 8:00, 8:10, 8:20, ...).
 
-To "reset" deep sleep, temporarily disconnect power and the RTC will be wiped on the next reboot. Alternatively, you can define a deep sleep input to temporarily disable deep sleep (described below).
+To exit, or "reset" deep sleep, temporarily disconnect power and the RTC will be wiped on the next reboot. Alternatively, you can define a deep sleep input to temporarily disable deep sleep as described below.
 
-Please be aware that the minimum deep sleep time is 10 seconds. To wake the device, the RST pin must be connected to the D0/GPIO16 pin because the wake-up signal is sent through D0/GPIO16 to RST:
+Please be aware that the minimum deep sleep time is 10 seconds. In order for the device to wake itself to perform its function during thedeep sleep cycle, the RST pin must be connected to the D0/GPIO16 pin. This is the only pin which can perform this function as the wake-up signal is sent from the RTC through D0/GPIO16 to RST:
 
 ![](_media/deepsleep_minimal.png)
 
-It is recommended to leave GPIO16 configured as `None (0)` because GPIO16 cannot be used for anything else due to the hardwire to RST.
+When connected to RST for our purposes, GPIO16 may not be used for an other function. As such, it is recommended to leave it configured as `None (0)`.
 
 ![](_media/deepsleep_gpio16_none.png)
 
 
 ### Temporarily disable deep sleep mode
-There are a couple of different methods to temporarily disable deep sleep mode as outlined below.
+There are a several tried and tested methods to temporarily disable deep sleep mode; these are outlined below.
 
-- Use a GPIO and connect it GND. This can be performed through a switch like in the schematic below. Flipping the switch ON will prevent Tasmota to enter DeepSleep again after next wake-up until the switch is flipped back OFF.
+- Select another GPIO (let's call it "GPIOn") and connect it GND. This can be performed through a switch per the schematic below. Flipping the switch ON will prevent Tasmota to enter DeepSleep again after next wake-up until the switch is flipped back OFF.
 
   ![](_media/deepsleep_switch.png)
 
-  You can define the `DeepSleep (182)` component as shown below:
+  GPIOn should be defined as `DeepSleep (182)` in the configuration as shown below:
 
   ![](_media/deepsleep_deepsleep182.png)
 
-  The following GPIOs **CANNOT** be used for that purpose :
+  The following GPIOs **CANNOT** be used for the purpose of tempporarily disabling deep sleep as described above:
   - GPIO16 (because it is connected to RST),
   - GPIO15 (because of an existing on-board pull-down resistor),
   - GPIO0 (because pulling it down at wake up will enter serial bootload mode).
 
-  All others GPIO should be acceptables.
+  All others GPIO should be acceptable.
 
   An interresting use-case is to disable DeepSleep when an external power (USB, PSU, solar panel...) is applied to the device using a transistor like:
 
@@ -86,7 +86,7 @@ Deep sleep is then triggered at the TELEPERIOD event. In this example, it will o
 
 If you want to minimize the time that the device is in operation, decrease TELEPERIOD down to 10 seconds. This period of time is counted **after** MQTT is connected. Also, in this case, the device will wake up at 9:00 am even if the uptime was much smaller. If the device missed a wake-up it will try a start at the next event - in this case 10:00 am.
 
-## ESP8266 Deep Sleep Side Effects
+## WEMOS D1 Deep Sleep Side-effects
 Not all GPIO behave the same during deep sleep. Some GPIO go HIGH, some LOW, some FOLLOW the relay but work only on FET transistors. As soon as current flows they go LOW. I use one GPIO to trigger a BC337 transistor to switch OFF all connected devices during deep sleep.
 
 Findings:
