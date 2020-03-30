@@ -1,3 +1,7 @@
+## OS specific ########
+.DS_Store
+.fuse_hidden*
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
