@@ -1,0 +1,1 @@
+redirect: ../Rules#Rule-Cookbook

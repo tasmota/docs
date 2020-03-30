@@ -1,0 +1,1 @@
+See [Sonoff DIY](../Sonoff-DIY.md) for flashing instructions

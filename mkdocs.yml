@@ -1,0 +1,205 @@
+site_name: Tasmota
+site_description: Tasmota open source firmware for ESP8266 documentation and help
+site_url: https://tasmota.github.io/docs/
+repo_name: 'arendst/tasmota'
+repo_url: 'https://github.com/arendst/tasmota'
+edit_uri: 'https://github.com/tasmota/docs/blob/master/docs/'
+# copyright: 'Copyright &copy; 2020 Tasmota Development Team'
+# use_directory_urls: false
+theme: 
+  name: material
+  # custom_dir: 'theme'
+  logo: '_media/logo.svg'
+  favicon: _media/favicon.ico
+  palette:
+    primary: 'blue'
+    accent: 'indigo'
+  features:
+    - tabs
+  font:
+    text: Barlow
+    code: Roboto Mono
+extra:
+  social:
+    - icon: fontawesome/brands/discord
+      link: 'https://discord.gg/Ks2Kzd4'
+    - icon: fontawesome/brands/telegram
+      link: 'https://t.me/tasmota'
+    - icon: fontawesome/brands/github-alt
+      link: 'https://github.com/tasmota'
+markdown_extensions:
+  - admonition
+  - toc:
+     permalink: "~"
+     toc_depth: 3
+  # - pymdownx.magiclink:
+  - pymdownx.mark
+  - pymdownx.tabbed
+  - pymdownx.emoji:
+  - pymdownx.betterem
+  - pymdownx.caret
+  - codehilite
+  - meta
+      
+plugins:
+  - search
+  - alternate-link
+  - minify:
+      minify_html: true
+  # - awesome-pages:
+  #     collapse_single_pages: true
+  # - htmlproofer
+  # - redirects:
+  #     redirect_maps:
+  #         '/installation/Flashing.md': 'Getting-Started.md'
+  #         '/installation/Prerequisites.md': 'Getting-Started.md'
+  #         '/installation/Hardware-Preparation.md': 'Getting-Started.md'
+  #         '/installation/Initial-Configuration.md': 'Getting-Started.md'
+  #         'help/FAQ.md': 'FAQ.md'
+  #         'peripherals/': 'Supported-Peripherals.md'
+  #         'help/Troubleshooting.md': 'Troubleshooting.md'
+  #         'help/Device-Recovery.md': 'Device-Recovery.md'
+  #         'integrations/Alexa.md': 'Alexa.md'
+  #         'integrations/AWS-IoT.md': 'AWS-IoT.md'
+  #         'integrations/Home-Assistant.md': 'Home-Assistant.md'
+  #         'integrations/Domoticz.md': 'Domoticz.md'
+  #         'integrations/Homebridge.md': 'Homebridge.md'
+  #         'integrations/HomeSeer.md': 'HomeSeer.md'
+  #         'integrations/IP-Symcon.md': 'IP-Symcon.md'
+  #         'integrations/KNX.md': 'KNX.md'
+  #         'integrations/NodeRed.md': 'NodeRed.md'
+  #         'integrations/nymea.md': 'nymea.md'
+  #         'integrations/Octoprint.md': 'Octoprint.md'
+  #         'integrations/openHAB.md': 'openHAB.md'
+  #         'integrations/otto.md': 'otto.md'
+  #         'integrations/TasmoAdmin.md': 'TasmoAdmin.md'
+  #         'integrations/Tasmota-Device-Locator.md': 'Tasmota-Device-Locator.md'
+  #         'integrations/Tasmota-Device-Manager.md': 'Tasmota-Device-Manager.md'
+  #         'integrations/TasUI.md': 'TasUI.md'
+  #         'integrations/Yeti.md': 'Yeti.md'
+
+google_analytics:
+  - 'UA-140681905-2'
+  - 'auto'
+
+# extra_css:
+#   - 'assets/css/dark-theme.css'
+
+nav: 
+  - Home: index.md
+  - About.md
+  - Getting Started: Getting-Started.md
+  - Upgrading.md
+  - MQTT.md
+  - Commands: Commands.md
+  - Templates: Templates.md
+  - Components.md
+  - Modules: Modules.md
+  - Rules.md
+  - Timers.md
+  - Lights.md
+  - Blinds-and-Shutters.md
+  - Peripherals: Peripherals.md
+  - Buttons-and-Switches.md
+  - IR Communication: Tasmota-IR.md
+  - TuyaMCU.md
+  - WebUI.md
+  - Compiling: Compile-your-build.md
+  - Features:
+    - Scripting: Scripting-Language.md
+    - Bluetooth.md
+    - Zigbee:
+      - Zigbee.md
+      - Zigbee-Internals.md
+    - GPS-NTP-server.md
+    - I2C Devices: I2CDevices.md
+    - TasmotaSlave.md
+    - Device-Groups.md
+    - DeepSleep.md
+    - PWM-dimmer-switch.md
+    - Buzzer.md
+    - Dynamic-Sleep.md
+    - Smart-Meter-Interface.md
+    - PIR-Motion-Sensors.md
+    - Power-Monitoring-Calibration.md
+    - Subscribe-&-Unsubscribe.md
+    - TLS.md
+  - Smart Home Integrations:
+    - Introduction: Integrations.md
+    - Alexa.md
+    - AWS-IoT.md
+    - Domoticz.md
+    - Home-Assistant.md
+    - Homebridge.md
+    - HomeSeer.md
+    - IP-Symcon.md
+    - KNX.md
+    - NodeRed.md
+    - nymea.md
+    - Octoprint.md
+    - openHAB.md
+    - otto.md
+    - Yeti.md
+    - IOBroker: "https://github.com/arendst/Tasmota/issues/3769"
+    - Mozilla WebThings Adapter: "https://github.com/tim-hellhake/tasmota-adapter"
+    - SmartThings: "https://github.com/BrettSheleski/SmartThingsPublic/blob/master/devicetypes/brettsheleski/sonoff-tasmota.src/readme.md"
+  - Peripherals:
+    - Supported-Peripherals.md
+    - Displays:
+      - Displays.md
+    # - Analog pin: ADC.md
+    - A4988 stepper motor controller: A4988-Stepper-Motor-Controller.md
+    - AM2301 temperature and humidity sensor: AM2301.md
+    - Analog pin: ADC.md
+    - APDS-9960.md
+    - AZ-7798.md
+    - BH1750.md
+    - BME280.md
+    - BME680.md
+    # - Buzzer.md
+    - CC2530.md
+    - Chirp! moisture sensor: Moisture-Sensor-and-Chirp!-Sensor.md
+    - DHT11.md
+    - DS18x20.md
+    - DS3231.md
+    # - GPS-NTP-server.md
+    - HM-10.md
+    - HM-17.md
+    - HC-SR04.md
+    - Honeywell-HIH.md
+    - IR-Remote.md
+    - LM75AD.md
+    - MCP230xx.md
+    - MGC3130.md
+    - MH-Z19B.md
+    - MLX90614.md
+    - MPR121.md
+    - MPU-6050.md
+    - NRF24L01.md
+    - P1-Smart-Meter.md
+    # - PIR-Motion-Sensors.md
+    - PAJ7620.md
+    - PCA9685.md
+    - PN532.md
+    - PZEM-0XX.md
+    - RCWL-0516.md
+    - RDM6300.md
+    - SDS011.md
+    - SHT30.md
+    # - Smart-Meter-Interface.md
+    - TX2x.md
+    - TSL2561.md
+    - VEML6070.md
+    - VL53L0x.md
+    - WS2812B-RGB-Shield.md
+    - WS2812B-and-WS2813.md
+  - Supported Devices:
+    - Configuring unknown devices: Configuration-Procedure-for-New-Devices.md
+    - All Supported Devices: https://templates.blakadder.com/ "target=_blank"
+    - Supported-Modules.md
+  - Help:
+    - FAQ.md
+    - Troubleshooting.md
+    - Device-Recovery.md
+  - Contributing: Contributing.md
+  - Discord Community: //discord.gg/Ks2Kzd4  "target=_blank"
