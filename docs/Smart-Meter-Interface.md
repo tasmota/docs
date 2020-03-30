@@ -306,7 +306,7 @@ with the '=' char at the beginning of a line you may do some special decoding
 
 ### Landis + Gyr ZMR120AReS2R2sfCS (OBIS)
   
- ?> Example: Changing the baud rate during operation.
+ Example: Changing the baud rate during operation.
     
 > `>D`  
 ;Var Power consumption total HT+NT  

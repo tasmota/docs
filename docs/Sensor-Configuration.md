@@ -1,6 +1,6 @@
-?> Read before continuing:   
- &emsp;- [Components](Components)    
- &emsp;- [Expanding Tasmota](Expanding-Tasmota) 
+!!! info "Read before continuing:  "
+      &emsp;- [Components](Components)    
+      &emsp;- [Expanding Tasmota](Expanding-Tasmota) 
 
 > [!WARNING]
 >A peripheral must have correctly wired power, GND and data pins to the device prior to booting in order for Tasmota to detect it and initialize it properly.

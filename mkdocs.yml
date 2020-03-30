@@ -156,7 +156,6 @@ nav:
     - BH1750.md
     - BME280.md
     - BME680.md
-    - BMP280 pressure sensor: BME280.md
     # - Buzzer.md
     - CC2530.md
     - Chirp! moisture sensor: Moisture-Sensor-and-Chirp!-Sensor.md

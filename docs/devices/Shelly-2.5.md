@@ -111,9 +111,7 @@ Some issues were reported for this topic - [search query](https://github.com/are
 
 Due to the built-in temperature sensor, it is possible to switch off the relays when a certain temperature is exceeded. The limit for the original Shelly firmware seems to be around 95 ° C. [Source](https://www.shelly-support.eu/lexikon/index.php?entry/1-shelly-2-5/)
 
-The ambient temperature according to the manufacturer is between:
-
-?> \- 40 ° C up to 40 ° C
+The ambient temperature according to the manufacturer is between - 40 ° C up to 40 ° C
 
 Even at temperatures within this range, a significantly higher temperature can occur when installed behind switches or in walls. There are reports that temperature-related shutdowns occur at high loads.
 A standby temperature between 30-60 ° C seems normal.

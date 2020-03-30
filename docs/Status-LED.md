@@ -1,4 +1,4 @@
-?> **Status LEDs** are the LEDs on the device used to display its state.
+!!! info "**Status LEDs** are the LEDs on the device used to display its state"
 
 Those LEDs are defined in a template or module using `Led1`, `Led2`, `Led3` or `Led4` (or `Led1i`, `Led2i`, `Led3i` or `Led4i`) and additionally using `LedLink` or `LedLinki` (`LedLink` was introduced in version 6.5.0.12). It is not recommended to assign `Led<x>` and `Led<x>i` with the same `<x>` number. Prior to version 6.5.0.12, Tasmota only supported up to two LED components to indicate the power state of the relay(s), and the Wi-Fi/MQTT connectivity status. 
 

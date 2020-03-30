@@ -80,7 +80,7 @@ Flashing options:
 
 - Flashing with [CCLoader](https://zigbee.blakadder.com/flashing_ccloader.html) and ESP8266 ==(recommended)==
 - Flashing with [CCLib](Zigbee-CCLib-Flashing.md) and ESP8266
-- Flash with a dedicated [CC Debugger](https://ptvo.info/how-to-select-and-flash-cc2530-144/) and PC 
+- Flash with a dedicated [CC Debugger](https://ptvo.info/how-to-select-and-flash-cc2530-144/) and Windows PC 
 
 ### Flash Tasmota
 Once the CC2530 flashing process completes, you can re-use the  ESP82xx and flash Tasmota with Zigbee2Tasmota enabled firmware. Otherwise, you can use any ESP82xx device.  
