@@ -1,4 +1,4 @@
-### MCP230xx - Microchip MCP23008 / MCP23017 I<sup>2</sup>C GPIO Expander
+# MCP23008 / MCP23017 GPIO Expander
 
 Technical Data from the manufacturer:
 * Microchip [MCP23008](https://www.microchip.com/wwwproducts/en/MCP23008)

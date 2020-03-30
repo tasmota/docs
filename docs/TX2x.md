@@ -1,4 +1,6 @@
-!!! note "This feature is not included in precompiled binaries"     
+# TX20/TX23 anemometer
+
+!!! failure "This feature is not included in precompiled binaries"     
 
 To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 

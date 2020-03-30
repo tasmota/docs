@@ -1,4 +1,4 @@
-!!! note "This feature is not included in precompiled binaries"     
+!!! failure "This feature is not included in precompiled binaries"     
 To use it you must [compile your build](Compile-your-build.md). Add the following to `user_config_override.h`:
 ```
 #ifndef USE_SHUTTER

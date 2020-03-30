@@ -2,7 +2,7 @@
 
 The foremost reason for the inclusion of this driver was to have a network unrelated time source, but besides this location data is provided  too.  
 
-!>**Only u-blox-devices are supported**  
+!!! info "Only u-blox-devices are supported"  
 The UBX binary protocol was chosen, because it is very memory efficient and all the needed data can be read without further parsing.  The genereric NMEA-standard is NOT supported!  
 
 The driver is tested on a NEO-6m and a Beitian-220. Series 7 should work too. These modules are quite cheap, starting at about 3.50€ for the NEO-6m.  

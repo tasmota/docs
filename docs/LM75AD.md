@@ -1,4 +1,5 @@
-!>**This feature is included only in tasmota-sensors.bin** 
+# LM75AD temperature sensor
+!!! info "This feature is included only in tasmota-sensors.bin" 
 
 The LM75AD is an I<sup>2</sup>C temperature sensor that converts temperature directly to digital signals from -55°C to +125°C and achieves an accuracy of 0.125°C
 

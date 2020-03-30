@@ -1,4 +1,6 @@
-**This feature is included only in tasmota-sensors.bin** 
+# Honeywell HIH temperature and humidity sensor
+
+!!! info "This feature is included only in tasmota-sensors.bin"
 
 Otherwise you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 ```

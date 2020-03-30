@@ -1,3 +1,4 @@
+# VL53L0X laser ranging module
 
 The VL53L0X is a Time-of-Flight (ToF) laser-ranging module.
 
