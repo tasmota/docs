@@ -957,23 +957,50 @@ binary_sensor:
 
 === "Sync Power State"
 
-When MQTT broker or Home Assistant is restarted, or there is a WiFi outage, Tasmota device state may not be synced with Home Assistant. Use this automation to get all your devices in sync, including power state, *immediately* after Home Assistant is started.
+When MQTT broker or Home Assistant is restarted, or there is a WiFi outage, Tasmota device states may not be synced with Home Assistant. Use this automation to keep your devices in sync, including power state, *immediately* after Home Assistant is started.
 
 ```yaml
 automation:
-  - alias: "Sync Tasmota states on start-up - manual configuration"
+  - id: Sync Tasmota states
+    alias: Sync Tasmota states
     initial_state: true
     trigger:
       platform: homeassistant
       event: start
     action:
-      - service: mqtt.publish
-        data:
-          topic: "cmnd/tasmotas/state"
-          payload: ""
+    # sync state for devices with default fulltopics
+    - service: mqtt.publish
+      data:
+        topic: cmnd/tasmotas/state
+        payload: ''
+    # sync state for autodiscovery devices
+    - service: mqtt.publish
+      data:
+        topic: tasmotas/cmnd/state
+        payload: ''
 ```
 
-=== "Report Firmware Version - Manual"
+To sync a single TuyaMCU device states add this block with your %topic% to the automation. !!! bug 
+    You could use `tasmotas` but SerialSend might cause issues on other devices so proceed with caution.
+
+```yaml
+    - service: mqtt.publish
+      data:
+        topic: cmnd/%topic%/serialsend5
+        payload: 55aa0001000000
+```
+
+Sync Zigbee device states. Add this block with your %topic% and your Zigbee device name, endpoint and cluster.
+
+!!! example "Example for a dimmable light"
+```yaml
+    - service: mqtt.publish
+      data:
+        topic: cmnd/zigbee-gateway/Backlog
+        payload: ZbRead { "device":"0xE1F9", "endpoint":1, "cluster":6, "read":0 }; delay 5; ZbRead { "device":"0xE1F9", "endpoint":1, "cluster":8, "read":0 }
+```
+
+=== "Report Firmware Version"
 
 Add a sensor like below for each Tasmota device whose firmware version you want to track.
 
@@ -1005,34 +1032,6 @@ automation:
           topic: "cmnd/tasmotas/STATUS"
           payload: "2"
 ```
-
-=== "New device IP Address"
-Here is some code that will display the IP address of yout newly flashed device.
-
-The script:
-
-```yaml	
-script:
-  get_tasmota_ip:	
-    alias: Get Tasmota New IP (tasmota)	
-    sequence:	
-    - data:	
-        topic: cmnd/tasmota/ipaddress	
-      service: mqtt.publish	
-```	
-
-The sensor:
-```yaml
-sensor:
-  - platform: mqtt
-    name: "Tasmota IP"
-    state_topic: 'stat/tasmota/RESULT'
-    value_template: "{{ value_json.IPAddress1.split(' ')[1].replace('(','').replace(')','') }}"
-```
-
-Restart HA and plug in your newly flashed device. Click `EXECUTE` (in the new group) and the "Tasmota IP" sensor will display the IP address. After finding out the new IP don't forget to change the topic of the new device to a unique one.
-
-<!-- tabs:end -->
 
 !!! tip
     If you want all your devices to switch to autodiscovery method go through Developer tools - MQTT by publishing to grouptopic `cmnd/tasmotas/SetOption19` with payload `1`

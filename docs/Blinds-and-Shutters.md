@@ -40,7 +40,7 @@ There are three shutter modes which are defined according to the [PulseTime](Com
    - PWM and COUNTER defined
    
    
-[Wiring diagrams](#wiring-diagrams) for Normal, Stepper motor, and Short Circuit-Safe configurations are available at the end of this page. Even if the shutter does not have two motors, three wires have to be connected.
+[Wiring diagrams](#motor-wiring-diagrams) for Normal, Stepper motor, and Short Circuit-Safe configurations are available at the end of this page. Even if the shutter does not have two motors, three wires have to be connected.
 
 !!! note 
     **After setting the options for shutter mode, the device must be rebooted.** Otherwise, the sliders won't be available in the web UI, and the `ShutterOpenDuration<x>`and  `ShutterCloseDuration<x>` commands will report "Shutter unknown". 
@@ -78,9 +78,7 @@ There are shutters that have two relays but only need a pulse to start or stop. 
 
 ### Stepper Motor Support
 Stepper motors can also be used to operate shutters and blinds. Additionally you can operate sliding doors with this configuration.
-  
-Please refer to [Shutters and Steppers](Shutter-and-Steppers.md) for details.  
-  
+    
 ### Calibration
 [Shutter calibration video tutorial](https://www.youtube.com/watch?v=Z-grrvnu2bU)  
 
@@ -383,8 +381,10 @@ D8|15|Counter2|STP
   - [2 type](https://www.aliexpress.com/item/32818889845.html)   
 
 ### using Sonoff Dual R2 
-If using a Sonoff Dual R2, use the following Template:  
-`{"NAME":"Sonoff Dual R2","GPIO":[17,255,0,255,0,22,18,0,21,56,0,0,0,0],"FLAG":0,"BASE":39}`
+If using a Sonoff Dual R2, use the following Template:
+```  
+{"NAME":"Sonoff Dual R2","GPIO":[17,255,0,255,0,22,18,0,21,56,0,0,0,0],"FLAG":0,"BASE":39}
+```
 
 #### Checklist
 

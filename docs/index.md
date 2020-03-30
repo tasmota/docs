@@ -20,7 +20,7 @@ Incredibly expandable and flexible.
 
 #### Most of the sensor support is moved to tasmota-sensors.bin!
 
-- If your sensor didn't come with the device, it is most likely **not** supported in the default tasmota.bin firmware build anymore. Consult [Builds table](Builds) for complete information.
+- ==If your sensor didn't come with the device, it is most likely **not** supported in the default tasmota.bin firmware build anymore.== Consult [Builds table](Builds) for complete information.
 - Enabling `SetOption19` will no longer switch %prefix% and %topic% and will keep the default topic structure
 - Zigbee command prefixes have changed from `Zigbee*` to `Zb*`
 

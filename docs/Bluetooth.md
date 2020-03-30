@@ -1,8 +1,8 @@
-?> Presence detection with iBeacons or BLE sensor gateway using HM-1x or nRF24L01(+) peripherals
+!!! info "Presence detection with iBeacons or BLE sensor gateway using HM-1x or nRF24L01(+) peripherals"
 
 ## iBeacon  
-**This feature is included only in tasmota-sensors.bin** 
 
+!!! info "This feature is included only in tasmota-sensors.bin"
 Otherwise you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
 ```
@@ -55,13 +55,11 @@ Cheap "iTag" beacons with a beeper. The battery on these lasts only about a mont
 <img src="../_media/bluetooth/itag.png" width=225><img src="../_media/bluetooth/itag2.png" width=225><img src="../_media/bluetooth/itag3.png" width=225>
 
 !!! tip
-    
-You can activate a beacon with a beeper using command `IBEACON_%BEACONID%_RSSI 99` (ID is visible in webUI and SENSOR reports). This command can freeze the Bluetooth module and beacon scanning will stop. After a reboot of Tasmota the beacon will start beeping and scanning will resume.
+    You can activate a beacon with a beeper using command `IBEACON_%BEACONID%_RSSI 99` (ID is visible in webUI and SENSOR reports). This command can freeze the Bluetooth module and beacon scanning will stop. After a reboot of Tasmota the beacon will start beeping and scanning will resume.
 
 ## BLE Sensors using HM-1x
 
-!!! note "This feature is included only in tasmota-sensors.bin"
-
+!!! info "This feature is included only in tasmota-sensors.bin"
 Otherwise you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
 ```
