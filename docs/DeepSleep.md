@@ -86,7 +86,7 @@ Deep sleep is then triggered at the TELEPERIOD event. In this example, it will o
 
 If you want to minimize the time that the device is in operation, decrease TELEPERIOD down to 10 seconds. This period of time is counted **after** MQTT is connected. Also, in this case, the device will wake up at 9:00 am even if the uptime was much smaller. If the device missed a wake-up it will try a start at the next event - in this case 10:00 am.
 
-## WEMOS D1 Deep Sleep Side-effects
+## ESP8266 Deep Sleep Side Effects
 Not all GPIO behave the same during deep sleep. Some GPIO go HIGH, some LOW, some FOLLOW the relay but work only on FET transistors. As soon as current flows they go LOW. I use one GPIO to trigger a BC337 transistor to switch OFF all connected devices during deep sleep.
 
 Findings:

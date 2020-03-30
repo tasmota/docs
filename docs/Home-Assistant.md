@@ -148,7 +148,7 @@ Add in Home Assistant using the [MQTT Switch](https://www.home-assistant.io/comp
 **Required Commands**   
 `SetOption59 1` - enables sending of tele/%topic%/STATE on POWER and light related commands
 
-=== "Single Switch"
+!!! example "Single Switch"
 
 ```yaml
 switch:
@@ -167,7 +167,7 @@ switch:
 ```
 
 
-=== "Multiple Switches"
+!!! example "Multiple Switches"
 When a device has more than one relay you need to create a new switch for each relay. For each relay use corresponding POWER\<x\> (POWER1, POWER2, etc)  or if [SetOption26](Commands.md#setoption26) is enabled)
 
 ```yaml
@@ -210,7 +210,7 @@ switch:
     retain: false
 ```
 
-=== "Dimmer"
+!!! example "Dimmer"
 Used for dimmers and dimmable lights (single channel lights).
 
 ```yaml
@@ -250,7 +250,7 @@ Add in Home Assistant using the [MQTT Light](https://www.home-assistant.io/compo
 `Speed 5` - sets transition speed
 <!-- tabs:start -->
 
-=== "Dimming"
+!!! example "Dimming"
 Used for dimmers and dimmable lights (single channel lights).
 
 ```yaml
@@ -274,7 +274,7 @@ light:
     retain: false
 ```
 
-=== "RGB Light"
+!!! example "RGB Light"
 
 ```yaml
 light:
@@ -308,7 +308,7 @@ light:
     qos: 1
     retain: false
 ```
-=== "RGB+W Light"
+!!! example "RGB+W Light"
 
 ```yaml
 light:
@@ -346,7 +346,7 @@ light:
     qos: 1
     retain: false
 ```
-=== "RGB+CCT Light"
+!!! example "RGB+CCT Light"
 Also known as RGBWW or 5 channel lights
 
 ```yaml
@@ -385,7 +385,7 @@ light:
     retain: false
 ```
 
-=== "Addressable LED"
+!!! example "Addressable LED"
 
 Applies only to [WS281x](WS2812B-and-WS2813) lights. 
 
@@ -430,7 +430,7 @@ light:
     retain: false
 ```
 
-=== "No SetOption17 RGB"
+!!! example "No SetOption17 RGB"
 
  If you don't want to use `SetOption17 1` you can change
   ```yaml
@@ -449,7 +449,7 @@ A sensor will send its data in set intervals defined by [`TelePeriod`](Commands.
 
 <!-- tabs:start -->
 
-=== "Temperature"
+!!! example "Temperature"
 
 Check your sensor name in Tasmota and change accordingly. This example uses the DHT22 sensor.
 
@@ -466,7 +466,7 @@ sensor:
     device_class: temperature
 ```
 
-=== "Humidity"
+!!! example "Humidity"
 
 Check your sensor name in Tasmota and change accordingly. This example uses the DHT22 sensor.
 
@@ -508,7 +508,7 @@ sensor:
 ```
 -->
 
-=== "Pressure"
+!!! example "Pressure"
 Check your sensor name in Tasmota and change accordingly. This example uses the BMP280 sensor.
 
 ```yaml
@@ -542,7 +542,7 @@ this custom component [counter](https://github.com/hhaim/hass/blob/master/custom
     value_template: "{{ (4885 + (value))|int }}"
 ```  -->
 
-=== "Wi-Fi Signal Quality"
+!!! example "Wi-Fi Signal Quality"
 
 Monitor the relative Wi-Fi signal quality of a device.
 
@@ -572,7 +572,7 @@ To get all the data in Home Assistant requires multiple sensors which you can la
 
 <!-- tabs:start -->
 
-=== "Power Monitoring"
+!!! example "Power Monitoring"
 
 ```yaml
 sensor:
@@ -627,7 +627,7 @@ sensor:
 Add in Home Assistant using the [MQTT Binary Sensor](https://www.home-assistant.io/components/binary_sensor.mqtt/) integration.
 <!-- tabs:start -->
 
-=== "PIR Sensor"
+!!! example "PIR Sensor"
 Used for a configured [PIR Sensor](PIR-Motion-Sensors) and requires this rule:
 
 **Required Commands**
@@ -647,7 +647,7 @@ binary_sensor:
     qos: 1
 ```
 
-=== "Door Sensor"
+!!! example "Door Sensor"
 Requires a reed switch configured in Tasmota.
 
 **Required Commands**
@@ -667,7 +667,7 @@ binary_sensor:
     qos: 1
 ```
 
-=== "RF Bridge"
+!!! example "RF Bridge"
 An RF door sensor configured with an RF receiver in Tasmota.
 ```yaml
 binary_sensor:
@@ -686,7 +686,7 @@ Add in Home Assistant using the [MQTT Fan](https://www.home-assistant.io/compone
 
 <!-- tabs:start -->
 
-=== "Fan"
+!!! example "Fan"
 
 Derived from [#2839](https://github.com/arendst/Tasmota/issues/2839) by @kbickar and @finity69x2
 
@@ -727,7 +727,7 @@ fan:
 
 <!-- tabs:start -->
 
-=== "iFan02"
+!!! example "iFan02"
 Combination of configs found in issue 
 [#2839](https://github.com/arendst/Tasmota/issues/2839)
 and Home Assistant forum thread 
@@ -777,7 +777,7 @@ light:
     retain: false
 ```
 
-=== "Sonoff S31"
+!!! example "Sonoff S31"
 Configure the device as Sonoff S31, and run:\
 `SetOption4 1`   
 `SetOption59 1`
@@ -869,7 +869,7 @@ sensor:
 
 <!-- tabs:start -->
 
-=== "Dimmable Light"
+!!! example "Dimmable Light"
 This configuration is for a dimmable light reporting on `0xE1F9` using endpoint 1, cluster 8 for brightness. `ZbRead` part in the template is needed to always update the brightness values.
 
 ```yaml
@@ -905,7 +905,7 @@ light:
         {%- endif -%}
 ```
 
-=== "Water Leak Sensor"
+!!! example "Water Leak Sensor"
 This specific configuration is for Xiaomi Aqara Water Leak sensor reporting on `0x099F`.
 
 ```yaml
@@ -931,7 +931,7 @@ binary_sensor:
     device_class: moisture
 ```
 
-=== "Enable join switch"
+!!! example "Enable join switch"
 
 ```yaml
 - platform: mqtt
@@ -955,7 +955,7 @@ binary_sensor:
 
 <!-- tabs:start -->
 
-=== "Sync Power State"
+!!! example "Sync Power State"
 
 When MQTT broker or Home Assistant is restarted, or there is a WiFi outage, Tasmota device states may not be synced with Home Assistant. Use this automation to keep your devices in sync, including power state, *immediately* after Home Assistant is started.
 
@@ -1000,7 +1000,7 @@ Sync Zigbee device states. Add this block with your %topic% and your Zigbee devi
         payload: ZbRead { "device":"0xE1F9", "endpoint":1, "cluster":6, "read":0 }; delay 5; ZbRead { "device":"0xE1F9", "endpoint":1, "cluster":8, "read":0 }
 ```
 
-=== "Report Firmware Version"
+!!! example "Report Firmware Version"
 
 Add a sensor like below for each Tasmota device whose firmware version you want to track.
 

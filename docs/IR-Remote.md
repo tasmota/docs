@@ -16,6 +16,7 @@ Most builds support only most common IR protocols, but [tasmota-ir.bin](Tasmota-
 
 ### Tasmota
 In the _Configuration -> Configure Module_ page assign:
+
 - GPIOx to `IRsend (8)`   
 
 See [IR commands](Commands.md#ir-remote) for use. 
@@ -36,6 +37,7 @@ Example uses the widely available [KY-022](https://arduinomodules.info/ky-022-in
 
 ### Tasmota
 In the _Configuration -> Configure Module_ page assign:
+
 - GPIOx to `IRrecv (51)`   
 
 On a captured code IR receiver sends a `tele/%topic%/RESULT` JSON reponse:
