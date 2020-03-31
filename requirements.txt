@@ -4,3 +4,4 @@ Pygments>=2.4
 markdown>=3.2
 pymdown-extensions>=7.0b2
 mkdocs-redirects==1.0.0
+git+git://github.com/cmitu/mkdocs-altlink-plugin/

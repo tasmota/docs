@@ -1,0 +1,68 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@0.2.1
+
+workflows:
+  default_workflow:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
+
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
+      - image: circleci/python:3.7
+      
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/postgres:9.4
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install --upgrade pip && pip install -r requirements.txt
+
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+
+      # run tests!
+      # this example uses Django's built-in test-runner
+      # other common Python testing frameworks include pytest and nose
+      # https://pytest.org
+      # https://nose.readthedocs.io
+      - deploy:
+          name: "Deploy docs"
+          command: |
+            git clone --branch=master --depth=1 "https://$USER_NAME:$GITHUB_TOKEN@github.com/$USER_NAME/$CIRCLE_PROJECT_REPONAME.git" deploy && cd deploy
+            git clone --branch=gh-pages --depth=1 "https://$USER_NAME:$GITHUB_TOKEN@github.com/$USER_NAME/$CIRCLE_PROJECT_REPONAME.git" site
+            . ../venv/bin/activate
+            mkdocs build
+            cd site
+            git config user.name "$USER_NAME"
+            git config user.email "$USER_EMAIL"
+            git add --all
+            git commit -m "Deploy $CIRCLE_BUILD_NUM from CircleCI [skip ci]"
+            git push origin gh-pages

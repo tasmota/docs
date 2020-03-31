@@ -1,9 +1,0 @@
-[build]
-publish = "site"
-command = """
-pip install mkdocs-minify-plugin
-pip install git+https://github.com/cmitu/mkdocs-altlink-plugin/
-pip install mkdocs-redirects
-pip install ghp-import
-mkdocs build
-"""
