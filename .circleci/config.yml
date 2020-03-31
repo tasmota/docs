@@ -4,7 +4,7 @@ orbs:
   python: circleci/python@0.2.1
 
 workflows:
-  default_workflow:
+  build_and_deploy:
     jobs:
       - build:
           filters:
