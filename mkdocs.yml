@@ -142,7 +142,7 @@ nav:
     - Yeti.md
     - IOBroker: "https://github.com/arendst/Tasmota/issues/3769"
     - Mozilla WebThings Adapter: "https://github.com/tim-hellhake/tasmota-adapter"
-    - SmartThings: "https://github.com/BrettSheleski/SmartThingsPublic/blob/master/devicetypes/brettsheleski/sonoff-tasmota.src/readme.md"
+    - SmartThings: "https://github.com/BrettSheleski/SmartThingsPublic/tree/master/devicetypes/brettsheleski/sonoff-tasmota.src"
   - Peripherals:
     - Supported-Peripherals.md
     - Displays:
