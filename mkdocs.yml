@@ -82,8 +82,8 @@ google_analytics:
   - 'UA-140681905-2'
   - 'auto'
 
-# extra_css:
-#   - 'assets/css/dark-theme.css'
+extra_css:
+  - 'assets/css/anchor-fix.css'
 
 nav: 
   - Home: index.md

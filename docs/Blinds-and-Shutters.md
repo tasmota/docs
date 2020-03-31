@@ -5,7 +5,7 @@ Your device must have at least two relays (see [Shutters with Sonoff Dual R2](#u
 ## Commands
 First enable shutter support with `SetOption80 1`
 
-Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#blinds).
+Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#shutters).
 
 ## Shutter Modes
 There are three shutter modes which are defined according to the [PulseTime](Commands.md#pulsetime) and [Interlock](Commands.md#interlock) settings. The examples below are for a `ShutterRelay1 1` configuration (using Relay1 and Relay2).
