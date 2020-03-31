@@ -25,7 +25,7 @@ If you don't want to use MQTT discovery, skip to [Manual Configuration](#configu
 Home Assistant has a feature called [MQTT discovery](https://www.home-assistant.io/docs/mqtt/discovery/).
 With MQTT discovery no user interaction or configuration file editing is needed to add new devices in Home Assistant.
 
-Automatic discovery is currently supported for
+!!! note "Automatic discovery is currently supported for:"
 
 === "Relays"
     Announced to Home Assistant as [MQTT Switch](https://www.home-assistant.io/integrations/switch.mqtt/).
