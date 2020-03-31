@@ -1,6 +1,14 @@
 # LM75AD temperature sensor
 !!! info "This feature is included only in tasmota-sensors.bin" 
 
+Otherwise you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+```
+#ifndef USE_LM75AD 
+#define USE_LM75AD      // [I2cDriver20] Enable LM75AD sensor (I2C addresses 0x48 - 0x4F) (+0k5 code)
+#endif
+```
+----
+
 The LM75AD is an I<sup>2</sup>C temperature sensor that converts temperature directly to digital signals from -55°C to +125°C and achieves an accuracy of 0.125°C
 
 >Some features of the LM75A chip not implemented in this driver:   

@@ -26,7 +26,7 @@ _Note: this is ONLY for v1.0.0 of the DHT11 shield, since v2.0.0 uses I<sup>2</s
 
 <img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/wemos_dth11_shield.jpg?raw=true" align="right" width=300>
 
-From the [Wemos DHT11 shield specs](https://wiki.wemos.cc/products%3aretired%3adht_shield_v1.0.0) the DATA OUT pin is connected to D4 of the Wemos.
+From the Wemos DHT11 shield specs the DATA OUT pin is connected to D4 of the Wemos.
 
 <img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/wemos_dht11_config_marked.jpg?raw=true"/>
 

@@ -1,4 +1,4 @@
-This page is here for archival purposes. For new devices use [Tasmota Device Templates Repository](https://templates.blakadder.com)! New submissions here will not be approved.
+This page is here for archival purposes. For new devices use [Tasmota Device Templates Repository](https://templates.blakadder.com/)! New submissions here will not be approved.
 ---
 
 ### Relays/Sonoff Basic Clones

@@ -126,7 +126,7 @@ Once the firmware upload completes and the device restarts, the usual `tasmota-x
 2. **_Perform a `Reset 5` to wipe any flash remnants BEFORE attempting a Tasmota OTA flash for the first time_**
 3. If you flashed `tasmota-wifiman.bin`, it is recommended that you upgrade to the firmware and Core variant that is needed for your device and use case (e.g., `tasmota.bin`). You _**must perform this update**_ using the local `File upload` OTA. **Do not use a web OTA** for this step. Download the firmware file from the [repository](http://thehackbox.org/tasmota) to your computer.
    > **_Some users have reported that upgrading via web OTA from `tasmota-wifiman.bin` to another binary has resulted in an unresponsive device which has required a wired flash to recover._**  
-4. Once the desired firmware is on the device, continue the regular Tasmota setup process. Use the the appropriate Template from the [repository](https://templates.blakadder.com) to assign the device components to the GPIO pins. For example, the  [Sonoff Mini template](https://templates.blakadder.com/sonoff_mini.html) assigns these GPIO:
+4. Once the desired firmware is on the device, continue the regular Tasmota setup process. Use the the appropriate Template from the [repository](https://templates.blakadder.com/) to assign the device components to the GPIO pins. For example, the  [Sonoff Mini template](https://templates.blakadder.com/sonoff_mini.html) assigns these GPIO:
 
    GPIO | Tasmota Component | Device Function
    --: | :--: | :--:

@@ -48,7 +48,7 @@ plugins:
       minify_html: true
   # - awesome-pages:
   #     collapse_single_pages: true
-  # - htmlproofer
+  - htmlproofer
   # - redirects:
   #     redirect_maps:
   #         '/installation/Flashing.md': 'Getting-Started.md'
@@ -148,9 +148,9 @@ nav:
     - Displays:
       - Displays.md
     # - Analog pin: ADC.md
+    - Analog pin: ADC.md
     - A4988 stepper motor controller: A4988-Stepper-Motor-Controller.md
     - AM2301 temperature and humidity sensor: AM2301.md
-    - Analog pin: ADC.md
     - APDS-9960.md
     - AZ-7798.md
     - BH1750.md

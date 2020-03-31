@@ -38,7 +38,7 @@ A4988 MS3 (175)
 The minimal configuration are the `DIR` and `STEP` signals. In such a configuration the motor will be permanently powered and microstepping will be set to 1/1 (full steps).
 
 ### A4988 Controller
-Detailed information about the A4988 controller can be found in the [datasheet](http://www.allegromicro.com/~/media/Files/Datasheets/A4988-Datasheet.ashx).  
+Detailed information about the A4988 controller can be found in the [datasheet](https://www.pololu.com/file/0J450/A4988.pdf).  
 
 #### Microstepping Configuration  
 ![A4988-Truth-Table](https://user-images.githubusercontent.com/34340210/66860427-2d256a80-ef5b-11e9-9979-47778140661f.png)

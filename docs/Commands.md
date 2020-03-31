@@ -97,19 +97,19 @@ A `Backlog` command without an argument clears an possible existing `Backlog` qu
     If you're using Tasmota versions earlier current release some of the commands might not work. 
     Availability of some features and their associated commands depend on the firmware build. Please consult the [builds](Builds) table for a reference of which features are available for each firmware variant.
 
-<a id="control"></a>
+<a id="backlog"></a>
 
 ### Control
 
 Command|Parameters
 :---|:---
-Backlog<a id="backlog"></a>|List of commands to be executed in sequence separated by  `;`<BR> See [Using Backlog](#the-power-of-backlog) for examples.
-BlinkCount<a id="blinkcount"></a>|Number of relay toggles ([blinks](#power)) **(does not control the status LED)**<BR> `0` = blink many times before restoring power state <BR> `1..32000` = set number of blinks *(default = `10`)*
-BlinkTime<a id="blinktime"></a>|`2..3600` set duration, in 0.1 second increments, to [blink](#power) aka toggle Power **(does not control the status LED)**
-ButtonDebounce<a id="buttondebounce"></a>|User control over button debounce timing <BR>`40..1000` = set button debounce time in milliseconds *(default = `50`)*
-Buzzer<a id="buzzer"></a>|`0` = stop active buzzer cycle<BR>`<count>,<beep>,<silence>,<tune>` = [read more...](Buzzer)<BR>`2,3` = Beep twice with 300 milliseconds duration and 100 milliseconds pause<BR>`2,3,4` = Beep twice with 300 milliseconds duration and 400 milliseconds pause<BR>`1,2,3,0xF54` (0000 0000 0000 0000 0000 1111 0101 0100). Each `1` bit beeps for 200 milliseconds and each bounded `0` bit pauses for 300 milliseconds<BR>`-1` = infinite mode<BR>`-2` = follow LED mode
-DevGroupShare<a id="devgroupshare"></a>|Set incoming and outgoing shared item mask.<BR>`<in>,<out>` (default = 0xFFFFFFFF,0xFFFFFFFF)<BR>1 = Power, 2 = Light brightness, 4 = Light fade/speed, 8 = Light scheme, 16 = Light color, 32 = Minimum brightness
-FanSpeed<a id="fanspeed"></a>|Fan speed control *(iFan02/iFan03 only)*<BR>`0` = turn fan OFF<BR>`1..3` = set fan speed<BR>`+` = increase fan speed <BR>`-` = decrease fan speed <BR>
+Backlog|List of commands to be executed in sequence separated by  `;`<BR> See [Using Backlog](#the-power-of-backlog) for examples.<a id="blinkcount"></a>
+BlinkCount|Number of relay toggles ([blinks](#power)) **(does not control the status LED)**<BR> `0` = blink many times before restoring power state <BR> `1..32000` = set number of blinks *(default = `10`)*<a id="blinktime"></a>
+BlinkTime|`2..3600` set duration, in 0.1 second increments, to [blink](#power) aka toggle Power **(does not control the status LED)**<a id="buttondebounce"></a>
+ButtonDebounce|User control over button debounce timing <BR>`40..1000` = set button debounce time in milliseconds *(default = `50`)*<a id="buzzer"></a>
+Buzzer|`0` = stop active buzzer cycle<BR>`<count>,<beep>,<silence>,<tune>` = [read more...](Buzzer)<BR>`2,3` = Beep twice with 300 milliseconds duration and 100 milliseconds pause<BR>`2,3,4` = Beep twice with 300 milliseconds duration and 400 milliseconds pause<BR>`1,2,3,0xF54` (0000 0000 0000 0000 0000 1111 0101 0100). Each `1` bit beeps for 200 milliseconds and each bounded `0` bit pauses for 300 milliseconds<BR>`-1` = infinite mode<BR>`-2` = follow LED mode<a id="devgroupshare"></a>
+DevGroupShare|Set incoming and outgoing shared item mask.<BR>`<in>,<out>` (default = 0xFFFFFFFF,0xFFFFFFFF)<BR>1 = Power, 2 = Light brightness, 4 = Light fade/speed, 8 = Light scheme, 16 = Light color, 32 = Minimum brightness<a id="fanspeed"></a>
+FanSpeed|Fan speed control *(iFan02/iFan03 only)*<BR>`0` = turn fan OFF<BR>`1..3` = set fan speed<BR>`+` = increase fan speed <BR>`-` = decrease fan speed <BR>
 Interlock<a id="interlock"></a>|Relay interlock mode and group selection.<BR>`0` = disable relay interlock for all relays (i.e., each relay is self-locking) *(default)*<BR> `1` = set interlock mode for selected relays<br>Add up to 8 relays in 1 to 4 interlock groups, each separated by a space. For example<BR> `1,2 3,4` = Group Relay1 and Relay2 in group 1 and Relay3 and Relay4 in group 2 (_note the space between the two groups_) <BR> `1,2,3` = group Relay1, Relay2 and Relay3 in a single interlock group <BR>`1 3 2,4` = Relay1 is in group 1, Relay3 in group 2, Relay2 and Relay4 in group 3
 LedMask<a id="ledmask"></a>|Set a  [bitmask](https://en.wikipedia.org/wiki/Mask_(computing)#Masking_bits_to_1) specifiying which relays control the LED indicator. [Read more...](LedMask) <br>`<bitmask>` = [bitwise](https://whatis.techtarget.com/definition/bitwise) value representing each relay. Values may be entered as either hexadecimal or decimal values (e.g., 0xFFFF = 65535).<BR>`0xFFFF` (= 1111 1111 1111 1111) All relays control the power LED _(default)_<BR>*[LedState](#ledstate) must be enabled (i.e., `!= 0`) in order for `LedMask` to take effect.*
 LedPower<a id="ledpower"></a>|LED power state as on or off <BR> `0` = turn LED OFF and set `LedState 0` <BR> `1` = turn LED ON and set `LedState 8` <BR> `2` = toggle LED and set `LedState 0` <BR>(Use `Backlog LedPower 0; SetOption31 1` to disable LED even when Wi-Fi or MQTT is not connected)
@@ -122,8 +122,6 @@ PulseTime<x\><a id="pulsetime"></a>|Display the amount of `PulseTime` remaining 
 SwitchDebounce<a id="switchdebounce"></a>|User control over switch debounce timing <BR>`40..1000` = set switch debounce time in milliseconds *(default = `50`)*
 SwitchMode<x\><a id="switchmode"></a>|[Switch mode](Buttons-and-Switches#switchmode) <BR> `0` = toggle *(default)* <BR> `1` = follow (0 = off, 1 = on) <BR> `2` = inverted follow (0 = on, 1 = off) <BR> `3` = pushbutton (default 1, 0 = toggle) <BR> `4` = inverted pushbutton (default 0, 1 = toggle) <BR> `5` = pushbutton with hold (default 1, 0 = toggle, Hold = hold) <BR> `6` = inverted pushbutton with hold (default 0, 1 = toggle, hold = hold) <BR> `7` = pushbutton toggle (0 = toggle, 1 = toggle)<BR> `8` = multi change toggle (0 = toggle, 1 = toggle, 2x change = hold)<BR> `9` = multi change follow (0 = off, 1 = on, 2x change = hold)<BR> `10` = inverted multi change follow (0 = on, 1 = off, 2x change = hold)<BR> `11` = pushbutton with dimmer mode <BR> `12` = inverted pushbutton with dimmer mode <BR> `13` = pushon mode (1 = on, switch off using `PulseTime`)<BR> `13` = inverted pushon mode (0 = on, switch off using `PulseTime`) 
 See also|[`SetOption1`](#setoption1) - Set button multipress mode<BR>[`SetOption11`](#setoption11) - Swap pushbutton single and double press functionality<BR>[`SetOption13`](#setoption13) - Allow immediate action on single button press<BR>[`SetOption26`](#setoption26) - Use indexes even when only one relay is present<BR>[`SetOption31`](#setoption31) - Disable Wi-Fi LED status blinking<BR>[`SetOption32`](#setoption32) - Set hold interval before sending `HOLD` action<BR>[`SetOption40`](#setoption40) - Stop detecting any input change on button GPIO<BR>[`SetOption67`](#setoption67) - Enable/Disable Buzzer
-
-<a id="management"></a>
 
 ### Management
 

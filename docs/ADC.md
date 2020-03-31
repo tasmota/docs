@@ -23,8 +23,8 @@ After wiring a peripheral to A0 pin you have to configure it in **Configure Modu
 
 The reading will show in web UI's sensor section as "_%option% %value%_" depending on the selected option. Tasmota calculates the values for temperature and light, analog values can be `1` to `1024`.
 
-> [!NOTE]
-When using Temperature (2) or light (3) a calibration could be needed. In case of shifted values [`AdcParam`](Commands.md#adcparam) can be used to calibrate the output.
+!!! note
+     When using Temperature (2) or light (3) a calibration could be needed. In case of shifted values [`AdcParam`](Commands.md#adcparam) can be used to calibrate the output.
 
 Example: ADC as `Analog (1)`    
 ![ADC in web UI](_media/Analog0.png)
@@ -36,8 +36,8 @@ Example: ADC as `Light (3)`
 18:55:09 MQT: tele/tasmota/SENSOR = {"Time":"2019-10-31T18:55:09","ANALOG":{"Illuminance":8}}
 ```
 
-> [!WARNING] 
->Careful when setting ADC as Button, if there is constant voltage on the pin it might register as a [long press](Buttons-and-Switches#long-press) and reset the device to firmware defaults
+!!! warning
+     Careful when setting ADC as Button, if there is constant voltage on the pin it might register as a [long press](Buttons-and-Switches#long-press) and reset the device to firmware defaults
 
 ### Rule triggers
 Use these triggers in rules:    
