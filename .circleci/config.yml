@@ -56,8 +56,8 @@ jobs:
       - deploy:
           name: "Deploy docs"
           command: |
-            git clone --branch=master --depth=1 "https://$USER_NAME:$GITHUB_TOKEN@github.com/$USER_NAME/$CIRCLE_PROJECT_REPONAME.git" deploy && cd deploy
-            git clone --branch=gh-pages --depth=1 "https://$USER_NAME:$GITHUB_TOKEN@github.com/$USER_NAME/$CIRCLE_PROJECT_REPONAME.git" site
+            git clone --branch=master --depth=1 "https://$USER_NAME:$GITHUB_TOKEN@github.com/tasmota/$CIRCLE_PROJECT_REPONAME.git" deploy && cd deploy
+            git clone --branch=gh-pages --depth=1 "https://$USER_NAME:$GITHUB_TOKEN@github.com/tasmota/$CIRCLE_PROJECT_REPONAME.git" site
             . ../venv/bin/activate
             mkdocs build
             cd site
