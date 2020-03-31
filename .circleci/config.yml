@@ -4,14 +4,13 @@ orbs:
   python: circleci/python@0.2.1
 
 workflows:
+  version: 2
   build_and_deploy:
     jobs:
       - build:
           filters:
             branches:
-              ignore:
-                - gh-pages
-
+              only: master
 jobs:
   build:
     docker:
@@ -48,11 +47,6 @@ jobs:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
 
-      # run tests!
-      # this example uses Django's built-in test-runner
-      # other common Python testing frameworks include pytest and nose
-      # https://pytest.org
-      # https://nose.readthedocs.io
       - deploy:
           name: "Deploy docs"
           command: |
@@ -60,9 +54,10 @@ jobs:
             git clone --branch=gh-pages --depth=1 "https://$USER_NAME:$GITHUB_TOKEN@github.com/tasmota/$CIRCLE_PROJECT_REPONAME.git" site
             . ../venv/bin/activate
             mkdocs build
+            cp -r .circleci site/.circleci
             cd site
             git config user.name "$USER_NAME"
             git config user.email "$USER_EMAIL"
             git add --all
-            git commit -m "[ci skip] Deploy $CIRCLE_BUILD_NUM from CircleCI"
+            git commit -m "[ci skip] CircleCI deploy $CIRCLE_BUILD_NUM"
             git push origin gh-pages
