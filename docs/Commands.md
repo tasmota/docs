@@ -101,9 +101,9 @@ A `Backlog` command without an argument clears an possible existing `Backlog` qu
 
 Command|Parameters
 :---|:---
-Backlog|List of commands to be executed in sequence separated by  `;`<BR> See [Using Backlog](#the-power-of-backlog) for examples.<a class="cmnd" id="blinkcount"></a>
-BlinkCount|Number of relay toggles ([blinks](#power)) **(does not control the status LED)**<BR> `0` = blink many times before restoring power state <BR> `1..32000` = set number of blinks *(default = `10`)*<a class="cmnd" id="blinktime"></a>
-BlinkTime|`2..3600` set duration, in 0.1 second increments, to [blink](#power) aka toggle Power **(does not control the status LED)**<a class="cmnd" id="buttondebounce"></a>
+Backlog<a class="cmnd" id="backlog"></a>|List of commands to be executed in sequence separated by  `;`<BR> See [Using Backlog](#the-power-of-backlog) for examples.<a class="cmnd" id="blinkcount"></a>
+BlinkCount|Number of relay toggles ([blinks](#power)) **(does not control the status LED)**<BR> `0` = blink many times before restoring power state <BR> `1..32000` = set number of blinks *(default = `10`)*
+BlinkTime<a class="cmnd" id="blinktime"></a>|`2..3600` set duration, in 0.1 second increments, to [blink](#power) aka toggle Power **(does not control the status LED)**<a class="cmnd" id="buttondebounce"></a>
 ButtonDebounce|User control over button debounce timing <BR>`40..1000` = set button debounce time in milliseconds *(default = `50`)*<a class="cmnd" id="buzzer"></a>
 Buzzer|`0` = stop active buzzer cycle<BR>`<count>,<beep>,<silence>,<tune>` = [read more...](Buzzer)<BR>`2,3` = Beep twice with 300 milliseconds duration and 100 milliseconds pause<BR>`2,3,4` = Beep twice with 300 milliseconds duration and 400 milliseconds pause<BR>`1,2,3,0xF54` (0000 0000 0000 0000 0000 1111 0101 0100). Each `1` bit beeps for 200 milliseconds and each bounded `0` bit pauses for 300 milliseconds<BR>`-1` = infinite mode<BR>`-2` = follow LED mode<a class="cmnd" id="devgroupshare"></a>
 DevGroupShare|Set incoming and outgoing shared item mask.<BR>`<in>,<out>` (default = 0xFFFFFFFF,0xFFFFFFFF)<BR>1 = Power, 2 = Light brightness, 4 = Light fade/speed, 8 = Light scheme, 16 = Light color, 32 = Minimum brightness<a class="cmnd" id="fanspeed"></a>
