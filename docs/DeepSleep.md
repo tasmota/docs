@@ -6,7 +6,7 @@ The ESP8266 has a limitation of a maximum of ~71 minutes deep sleep. To overcome
 
 To exit, or "reset" deep sleep, temporarily disconnect power and the RTC will be wiped on the next reboot. Alternatively, you can define a deep sleep input to temporarily disable deep sleep as described below.
 
-Please be aware that the minimum deep sleep time is 10 seconds. In order for the device to wake itself to perform its function during thedeep sleep cycle, the RST pin must be connected to the D0/GPIO16 pin. This is the only pin which can perform this function as the wake-up signal is sent from the RTC through D0/GPIO16 to RST:
+Please be aware that the minimum deep sleep time is 10 seconds. In order for the device to wake itself to perform its function during the deep sleep cycle, the RST pin must be connected to the D0/GPIO16 pin. This is the only pin which can perform this function as the wake-up signal is sent from the RTC through D0/GPIO16 to RST:
 
 ![](_media/deepsleep_minimal.png)
 
@@ -26,7 +26,7 @@ There are a several tried and tested methods to temporarily disable deep sleep m
 
   ![](_media/deepsleep_deepsleep182.png)
 
-  The following GPIOs **CANNOT** be used for the purpose of tempporarily disabling deep sleep as described above:
+  The following GPIOs **CANNOT** be used for the purpose of temporarily disabling deep sleep as described above:
   - GPIO16 (because it is connected to RST),
   - GPIO15 (because of an existing on-board pull-down resistor),
   - GPIO0 (because pulling it down at wake up will enter serial bootload mode).
@@ -86,7 +86,7 @@ Deep sleep is then triggered at the TELEPERIOD event. In this example, it will o
 
 If you want to minimize the time that the device is in operation, decrease TELEPERIOD down to 10 seconds. This period of time is counted **after** MQTT is connected. Also, in this case, the device will wake up at 9:00 am even if the uptime was much smaller. If the device missed a wake-up it will try a start at the next event - in this case 10:00 am.
 
-## WEMOS D1 Deep Sleep Side-effects
+## ESP8266 Deep Sleep Side-effects
 Not all GPIO behave the same during deep sleep. Some GPIO go HIGH, some LOW, some FOLLOW the relay but work only on FET transistors. As soon as current flows they go LOW. I use one GPIO to trigger a BC337 transistor to switch OFF all connected devices during deep sleep.
 
 Findings:
