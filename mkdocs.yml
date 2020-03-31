@@ -48,7 +48,7 @@ plugins:
       minify_html: true
   # - awesome-pages:
   #     collapse_single_pages: true
-  - htmlproofer
+  # - htmlproofer
   # - redirects:
   #     redirect_maps:
   #         '/installation/Flashing.md': 'Getting-Started.md'

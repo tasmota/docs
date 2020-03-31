@@ -38,13 +38,13 @@ See [changelog](changelog-8.2.md) for a complete list of new features, changes a
 
     Merry Christmas and Happy New Year from the Tasmota Development Team.
 
-    Tasmota v8.1 Doris is released. See [changelog for all changes](changelogs/changelog-8.1.md).
+    Tasmota v8.1 Doris is released. See [changelog for all changes](changelog-8.1.md).
 
     This release supports downgrade only to **version 7.2.0.x**. There are major changes in configuration code and layout which will completely break any downgrade to versions prior to v7.2. 
 
 === "2019-12-21 - Tasmota v7.2"
 
-    Tasmota v7.2 Constance is released. See [changelog for all changes](changelogs/changelog-7.2.md).
+    Tasmota v7.2 Constance is released. See [changelog for all changes](changelog-7.2.md).
 
     Breaking change: tasmota-basic.bin is renamed to **tasmota-lite.bin**. Update your OtaUrl accordingly.
 
