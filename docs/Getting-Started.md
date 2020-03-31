@@ -16,11 +16,11 @@ The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?
 * [RaspberryPi](Flash-Sonoff-using-Raspberry-Pi) - only for advanced users. External 3.3V supply necessary.
 * [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) and [D1 mini](https://cleanuri.com/x60JQ9) (Pro/Lite) boards have a micro USB upload port and don't require an adapter.
 
-> [!NOTE]
->Don't forget to install drivers for your serial-to-USB adapter.
+!!! note 
+    Don't forget to install drivers for your serial-to-USB adapter.
 
-> [!DANGER]
->Some adapters can be switched between 3.3V and 5V for the data pins, but still provide 5V on the power pin which will fry your device.  You MUST make sure both the data and VCC pins are set for 3.3V.
+!!! danger
+    Some adapters can be switched between 3.3V and 5V for the data pins, but still provide 5V on the power pin which will fry your       device.  You MUST make sure both the data and VCC pins are set for 3.3V.
 
 #### Soldering Tools
 To solder you'll of course need a soldering iron, soldering tin and some flux. If you're new to soldering check out some soldering tutorial videos while you're at it.
@@ -64,7 +64,8 @@ This is an optional way to configure your device using [Commands](Commands) and 
 * **[Putty](https://www.putty.org/)** - popular client available on every platform
 * **[Minicom](https://www.acmesystems.it/minicom)** - one of many Linux terminals
 
-> [!TIP] Enable _local echo_ so that you can see what is typed and transmitted to the device. Enable **Append CR+LF** since every request needs to end with `<CR><LF>`. 
+!!! tip 
+    Enable _local echo_ so that you can see what is typed and transmitted to the device. Enable **Append CR+LF** since every request needs to end with `<CR><LF>`. 
 
 ### MQTT Knowledge
 Tasmota is designed to be controlled and communicate via [MQTT](http://mqtt.org/). To use it to its fullest potential you need an [MQTT broker](https://www.hivemq.com/blog/mqtt-essentials-part-3-client-broker-connection-establishment/). 
