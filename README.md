@@ -3,8 +3,9 @@ This is the repo for documentation of the Tasmota open source alternative firmwa
 
 Built on [MkDocs](https://www.mkdocs.org/) using [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) theme.
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/caaaee27-4f61-436d-a6ca-52d00984850f/deploy-status)](https://app.netlify.com/sites/sharp-ardinghelli-27f036/deploys)
+![CircleCI status](https://circleci.com/gh/tasmota/docs.svg?style=shield)
 
+[![CircleCI](https://circleci.com/gh/tasmota/docs.svg?style=shield&](https://circleci.com/gh/tasmota/docs/tree/master)
 ## Editing Articles
 
 Edit only articles in `/docs` folder. 

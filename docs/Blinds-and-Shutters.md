@@ -1,11 +1,3 @@
-!!! failure "This feature is not included in precompiled binaries"     
-To use it you must [compile your build](Compile-your-build.md). Add the following to `user_config_override.h`:
-```
-#ifndef USE_SHUTTER
-#define USE_SHUTTER           // Add Shutter support (+6k code)
-#endif
-```
-----
 !!! info "Control blinds and roller shades connected to regular ON/OFF motors or stepper motors"
 
 Your device must have at least two relays (see [Shutters with Sonoff Dual R2](#using-sonoff-dual-r2)). 
