@@ -1,11 +1,10 @@
+[![CircleCI](https://circleci.com/gh/tasmota/docs.svg?style=shield)](https://circleci.com/gh/tasmota/docs/tree/master)
+
 # Tasmota Documentation
 This is the repo for documentation of the Tasmota open source alternative firmware for ESP8266 available from https://github.com/arendst/Tasmota 
 
 Built on [MkDocs](https://www.mkdocs.org/) using [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) theme.
 
-![CircleCI status](https://circleci.com/gh/tasmota/docs.svg?style=shield)
-
-[![CircleCI](https://circleci.com/gh/tasmota/docs.svg?style=shield&](https://circleci.com/gh/tasmota/docs/tree/master)
 ## Editing Articles
 
 Edit only articles in `/docs` folder. 
