@@ -357,6 +357,8 @@ Configure your device using [Templates](Templates) in **Configuration - Configur
 
 Your device running Tasmota is now ready to be [controlled](Commands).
 
+!!! quote "Check out all the supported devices in [Tasmota Device Templates Repository](https://templates.blakadder.com/)"
+
 ### Using Serial Terminal
 If you flashed the device using serial-to-USB adapter (or it is a NodeMCU/D1 mini) you can take advantage of the existing connection and configure your device over the serial connection using [Commands](Commands).
 
@@ -397,4 +399,4 @@ Commands and Backlog are powerful and in time you can learn to configure almost 
 
 Your device is connected to your network and to the MQTT broker. One last thing to do is configure your device using [Templates](Templates) in **Configuration - Configure Template** or [Modules](Modules) in **Configuration - Configure Module**. 
 
-Check out all the supported devices in [Tasmota Device Templates Repository](https://templates.blakadder.com/)
+!!! quote "Check out all the supported devices in [Tasmota Device Templates Repository](https://templates.blakadder.com/)"
