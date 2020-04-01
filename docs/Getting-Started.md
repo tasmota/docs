@@ -305,13 +305,15 @@ Tasmota provides a wireless access point for easy Wi-Fi configuration.
 
 !!! note "If you flashed using Tuya Convert this is the only option to set up your device."
 
-<img alt="Tasmota AP" src="https://user-images.githubusercontent.com/5904370/68963209-b4723200-07d6-11ea-9116-4b0f4f0f4dbc.png" style="margin:10px;float:left;width:250px"></img>Connect your device to a power source and grab your smartphone (or tablet or laptop or any other web and Wi-Fi capable device). Search for a Wi-Fi AP named **tasmota-xxxx** (where **xxxx** is a number) and connect to it. _In this example the Wi-Fi AP is named **tasmota-7718**._ When it connects to the network, you may get a warning that there is no Internet connection and be prompted to connect to a different network. _Do not allow the mobile device to select a different network_.
+<img alt="Tasmota AP" src="../_media/wificonfig1.jpg" style="margin:10px;float:left;width:250px"></img>Connect your device to a power source and grab your smartphone (or tablet or laptop or any other web and Wi-Fi capable device). Search for a Wi-Fi AP named _**tasmota_XXXXXX-####**_ (where _XXXXXX_ is a string derived from the device's MAC address and _####_ is a number) and connect to it. _In this example the Wi-Fi AP is named **tasmota_3D5E26-7718**._ 
+
+When it connects to the network, you may get a warning that there is no Internet connection and be prompted to connect to a different network. _Do not allow the mobile device to select a different network_.
 <p>
 
 !!! warning 
     Wi-Fi manager server is active for only 3 minutes. If you miss the window you might have to disconnect your device from power and reconnect.
 
-<img alt="Sign in to Wi-Fi Network" src="https://user-images.githubusercontent.com/5904370/68963506-5a25a100-07d7-11ea-8d34-91cfc8b658f6.png" style="margin:5px;float:right;width:300px"></img>After you have connected to the Tasmota Wi-Fi AP, open http://192.168.4.1 in a web browser on the smartphone (or whatever device you used). 
+<img alt="Sign in to Wi-Fi Network" src="../_media/wificonfig2.jpg" style="margin:5px;float:right;width:300px"></img>After you have connected to the Tasmota Wi-Fi AP, open http://192.168.4.1 in a web browser on the smartphone (or whatever device you used). 
 Depending on the phone, it will take you to the Tasmota configuration page automatically, or you will get a prompt to *sign in to Wi-Fi network* or *authorize*. Tapping on the AP name should also open the configuration page.
 
 <img alt="Tasmota AP" src="https://user-images.githubusercontent.com/5904370/68961890-a242c480-07d3-11ea-912f-b45464104f2c.png
@@ -328,13 +330,15 @@ Wi-Fi password has to be under 32 characters and without special characters (e.g
 **AP2 SSid** - alternative Wi-Fi network SSID   
 **AP2 Password** - password for your alternative Wi-Fi AP   
 
-Click the checkbox to see the password you enter to ensure that it is correct and that your mobile device has not inadvertently capitalized the first letter if it is supposed to be lower case nor autocorrected what you entered. ~~Double~~ **Triple check the Wi-Fi credentials** and click on **Save** to apply the settings. The device will restart and connect to your home network. The `tasmota-xxxx` network will not longer be present. Therefore your smartphone will automatically be disconnected and should connect back to its data network.
+Click the checkbox to see the password you enter to ensure that it is correct and that your mobile device has not inadvertently capitalized the first letter if it is supposed to be lower case nor autocorrected what you entered. ~~Double~~ **Triple check the Wi-Fi credentials** and click on **Save** to apply the settings. The device will restart and connect to your home network. The _tasmota_XXXXXX-####_ network will not longer be present. Therefore your smartphone will automatically be disconnected and should connect back to its data network.
 
 !!! tip
     If you're not using a second Wi-Fi network you can enter an SSID without a password you can connect to as a backup in case something went wrong with your Wi-Fi credentials.
 
 #### Configure MQTT
-Look in your router for a newly connected device with the same name as the Wi-Fi access point. *(In this example **tasmota-7718**.)*
+Look in your router for a newly connected device with the same name as the Wi-Fi access point. _In our example it is **tasmota_3D5E26-7718**._
+
+!!! tip " `tasmota_XXXXXX` is also the firmware default MQTT topic for that device"
 
 If you don't have access to your router you can find your newly flashed device with an IP scanner:
 

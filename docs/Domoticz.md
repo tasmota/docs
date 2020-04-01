@@ -77,8 +77,8 @@ Configure Domoticz MQTT Discovery plugin.
 ### Tasmota Configuration
 #### Precompiled Binary
 - Each Tasmota device must have it's own topic, the easiest way is to set topic to `tasmota_%06X` (%06X will be replaced by MAC address). See [here](Getting-Started.md) for how to set the topic.
-- Use MQTT or Serial or Web console and execute commands (replace `<tasmota_xxx>` with the device's unique topic)
-    1. `cmnd/<tasmota_xxxx>/SetOption19` with payload `1` to enable MQTT discovery
+- Use MQTT or Serial or Web console and execute commands (replace `%topic%` with the device's unique topic)
+    1. `cmnd/%topic%/SetOption19` with payload `1` to enable MQTT discovery
 
 #### Custom Binary
 - The above settings can be defined in user_config_override.h (TBD)
