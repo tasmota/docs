@@ -686,7 +686,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     E  
     =\print event executed!
 
-    ; Assign tempearture from a Zigbee sensor
+    ; Assign temperature from a Zigbee sensor
     zigbeetemp=ZbReceived#0x2342#Temperature
     ; get HSBColor 1. component  
     tmp=st(HSBColor , 1)
