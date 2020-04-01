@@ -251,6 +251,8 @@ Altitude<a class="cmnd" id="altitude"></a>|`-30000..30000` = altitude in meters
 AmpRes<a class="cmnd" id="sensors-ampres"></a>|Current sensor resolution<BR>`0..3` = maximum number of decimal places
 Counter<x\><a class="cmnd" id="counter"></a>|`0` = reset Counter<x\><BR> `1..64900` = preset Counter<x\><BR>`-1..-64900` = decrease Counter<x\><BR>`+1..+64900` = increase Counter<x\><BR>In order to define and use a Counter, _**you must configure one of the free device GPIO as `Counter<x>`**_
 CounterDebounce<a class="cmnd" id="counterdebounce"></a>|`0` = turn off counter debounce<BR> `1..32000` = set counter debounce time in milliseconds
+CounterDebounceLow<a class="cmnd" id="counterdebouncelow"></a>|Allow individual debounce times for low pulse widths to discard non valid falling edges. These are checked before legacy CounterDebounce checks distance between to valid falling edges.
+CounterDebounceHigh<a class="cmnd" id="counterdebounceHigh"></a>|Allow individual debounce times for high pulse widths to discard non valid falling edges. These are checked before legacy CounterDebounce checks distance between two valid falling edges.
 CounterType<x\><a class="cmnd" id="countertype"></a>|`0` = set Counter<x\> as pulse Counter<BR>`1` = set Counter<x\> as pulse Timer
 HumOffset<a class="cmnd" id="humoffset"></a>|`-10.0..10.0` = Set calibraton offset value for reported humidity telemetry<BR>This setting affects **all** humidity sensors on the device.
 HumRes<a class="cmnd" id="humres"></a>|Humidity sensor resolution<BR>`0..3` = maximum number of decimal places
