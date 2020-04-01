@@ -101,7 +101,7 @@ _Section descriptors (e.g., `E`) are **case sensitive**_
 executed on BOOT time and on save script  
 
 `E`  
-Executed when a Tasmota MQTT `RESULT` message is received, e.g., on `POWER` change
+Executed when a Tasmota MQTT `RESULT` message is received, e.g., on `POWER` change. Also  Zigbee reports to  this section.
 
 `F`  
 Executed every 100 ms  
@@ -114,7 +114,7 @@ Executed on restart. p vars are saved automatically after this call
 
 `T`  
 Executed on [`TelePeriod`](Commands#teleperiod) time (`SENSOR` and `STATE`), only put `tele-` vars in this section  
-Remark: json variable names (like all others) may not contain math operators like - , you should set [`SetOption64 1`](Commands#setoption64) to replace `-` (_dash_) with `_` (_underscore_)
+Remark: json variable names (like all others) may not contain math operators like - , you should set [`SetOption64 1`](Commands#setoption64) to replace `-` (_dash_) with `_` (_underscore_). Zigbee sensors will not report to this section, use E instead.
 
 `H`  
 Alexa Hue interface (up to 32 virtual hue devices) *([example](#hue-emulation))*  
@@ -463,7 +463,8 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     string=&quot;xxx&quot;  
     url=&quot;[_IP_]&quot;  
     hum=0  
-    temp=0  
+    temp=0
+    zigbeetemp=0
     timer=0  
     dimmer=0  
     sw=0  
@@ -608,8 +609,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     endif
 
     ; frost warning  
-    if temp<0  
-    and mt<=0  
+    if ((temp<0 or zigbeetemp<0) and mt<=0)
     then =#sendmail("frost alert")  
     ; alarm only every 5 minutes  
     mt=300  
@@ -686,6 +686,8 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     E  
     =\print event executed!
 
+    ; Assign temperature from a Zigbee sensor
+    zigbeetemp=ZbReceived#0x2342#Temperature
     ; get HSBColor 1. component  
     tmp=st(HSBColor , 1)
 
