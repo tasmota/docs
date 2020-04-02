@@ -138,10 +138,9 @@ Each meter typically provides multiple metrics (voltage, power, current, humidit
    `+1,3,M,1,9600,SBC,1,2,01030023,01030028...`  
    `1,010304UUuuxxxxxxxx@i0:1,Voltage L1,V,Voltage_L1,0` < the `i0:1` refers to: `01030023` with a scaling factor (`:1`) of 1   
    `1,010304UUuuxxxxxxxx@i1:10,Current L1,V,Current_L1,2` < the `i1:10` refers to: `01030028` with a scaling factor (`:10`) of 10       
-  
-- `<scale>` - scaling factor (divisor)  
-  This can be a fraction (e.g., 0.1 => result * 10), or a negative value  
-  When decoding a string result (e.g., a serial meter), use `#` character for this parameter (only in one line per meter). For OBIS, you need a `)` termination character after the `#` character  
+   - `<scale>` - scaling factor (divisor)  
+   This can be a fraction (e.g., 0.1 => result * 10), or a negative value  
+   When decoding a string result (e.g., a serial meter), use `#` character for this parameter (only in one line per meter). For OBIS, you need a `)` termination character after the `#` character  
  Example:
  OBIS: `1,1-0:0.0.0\*255(@#),Meter Nr,, Meter_number,0`  
  SML: `1,77078181c78203ff@#,Service ID,,Meter_id,0`  
@@ -150,6 +149,7 @@ Each meter typically provides multiple metrics (voltage, power, current, humidit
 - `<var>` - MQTT variable name (max 23 chars)  
 - `<precision>` - number of decimal places  
   Add 16 to transmit the data immediately. Otherwise it is transmitted on [`TelePeriod`](Commands#teleperiod)  
+
 !!! example   
  `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,4` > Transmitted on  [`TelePeriod`](Commands#teleperiod)   
 `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,20` > Precision of 4. 4 + 16 = 20 >transmit its value immediately  
@@ -170,7 +170,7 @@ with the '=' char at the beginning of a line you may do some special decoding
 
 !!! example   
   `1,=d 3 10` calculate 10 second interval difference of decoder entry 3  
-- `M,=h` html text (up to 30 chars)  
+  - `M,=h` html text (up to 30 chars)  
   inserts a html line between entries (these lines do not count as decoder entry)  
 
 !!! example     
@@ -184,8 +184,8 @@ with the '=' char at the beginning of a line you may do some special decoding
     
     
 !!! warning 
-With a few meters, it is necessary to request the meter to send its data using a specific character string. This string has to be send at a very low baudrate. (300Baud) 
-  If you reply the meter with an acknowledge and ask the it for a new baudrate of 9600 baud, the baudrate of the SML driver has to be changed, too.
+    With a few meters, it is necessary to request the meter to send its data using a specific character string. This string has to be       send at a very low baudrate. (300Baud) 
+    If you reply the meter with an acknowledge and ask the it for a new baudrate of 9600 baud, the baudrate of the SML driver has to be     changed, too.
 
   
   To change the baudrate:
@@ -199,10 +199,10 @@ With a few meters, it is necessary to request the meter to send its data using a
     
     
   !!! example
-   `>D`  
-    res=0  
-    scnt=0    
-;For this Example in the >F section  
+      `>D`  
+      res=0  
+      scnt=0    
+      ;For this Example in the >F section  
     > `>F`
     ;count 100ms   
     scnt+=1  
