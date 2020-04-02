@@ -4,11 +4,11 @@
 - An AC capable **calibrated** multi-meter
 - A **known** wattage load with a **power factor as close to 1** as possible (e.g., a resistive load) for best results  
 
-> [!NOTE]
->  A resistive load device is any device which draws a constant amount of power. For example, an incandescent or halogen light bulb (best choice since their power draw is declared on them). An electric kettle, heater, or blow dryer are also options but you will also need a power meter since the power draw *could* vary.  
+!!! note
+    A resistive load device is any device which draws a constant amount of power. For example, an incandescent or halogen light bulb         (best choice since their power draw is declared on them). An electric kettle, heater, or blow dryer are also options but you will       also need a power meter since the power draw *could* vary.  
 
-> [!DANGER]
->  Do not use switch mode driven devices such as LED lamps, computer equipment, or inductive/capacitive devices such as motors!
+!!! danger
+    Do not use switch mode driven devices such as LED lamps, computer equipment, or inductive/capacitive devices such as motors!
 
 - *(optional)* A calibrated power meter (a.k.a Kill-a-Watt) or AC multi-meter
 
