@@ -22,9 +22,9 @@ You can then plug a sensor into the jack like you would to a [Sonoff TH](devices
 
 
 # Restrictions  
-> [!DANGER]  
+!!! danger  
 
-If you can avoid it, don't use GPIOs: **0, 1, 2, 6-11, 15 and 16**. That leaves **4, 5, 12, 13, 14** as GPIOs without any constraints. **3** being RX is also good to avoid (PWM is not working on this GPIO).
+    If you can avoid it, don't use GPIOs: **0, 1, 2, 6-11, 15 and 16**. That leaves **4, 5, 12, 13, 14** as GPIOs without any               constraints. **3** being RX is also good to avoid (PWM is not working on this GPIO).
 
 Others ***can*** be used but you have to mind the constraints outlined in [this document](https://tttapa.github.io/ESP8266/Chap04%20-%20Microcontroller.html).
 
