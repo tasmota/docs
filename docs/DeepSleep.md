@@ -17,10 +17,11 @@ When connected to RST for our purposes, GPIO16 may not be used for other functio
 
 ![](_media/deepsleep_gpio16_none.png)
 
-### Temporarily disable deep sleep mode
-There are a several methods to temporarily disable deep sleep mode:
+## Disable deep sleep mode
 
-- Select another GPIO (let's call it "GPIOn") and connect it GND. This can be performed through a switch per the schematic below. Flipping the switch to "ON" will prevent Tasmota to enter DeepSleep again after next wake-up until the switch is flipped back OFF.
+### using a switch
+
+Select another GPIO (let's call it "GPIOn") and connect it GND. This can be performed through a switch per the schematic below. Flipping the switch to "ON" will prevent Tasmota to enter DeepSleep again after next wake-up until the switch is flipped back OFF.
 
   ![](_media/deepsleep_switch.png)
 
@@ -41,7 +42,9 @@ There are a several methods to temporarily disable deep sleep mode:
 
 If the device is not (easily) accessible, methods can be used to disable the DeepSleep loop without physical access.
 
-- Send a retained `DeepSleepTime 0` command to your device. As the message is retained in the MQTT broker, the device will receive it as soon as it connectes to the MQTT broker. 
+### using MQTT
+
+Send a retained `DeepSleepTime 0` command to your device. As the message is retained in the MQTT broker, the device will receive it as soon as it connectes to the MQTT broker. 
 
 You can use console to send from another Tasmota device:<BR>
   `Publish2 cmnd/%topic%/DeepSleepTime 0`
@@ -55,22 +58,24 @@ Don't forget to remove the retained message from the broker with `Publish2 cmnd/
   
   Once you have made your configuration change, you will need to re-enable DeepSleep mode using `DeepSleepTime` command.
 
-- Configure a settable flag in your home automation hub (e.g., Node-Red, openHAB, Home Assistant). The flag should subscribe to the `INFO1` boot time message on the device topic, e.g., `tele/myDeviceTopic/INFO1`.
+### using smart home automation 
+
+Configure a settable flag in your home automation hub (e.g., Node-Red, openHAB, Home Assistant). The flag should subscribe to the `INFO1` boot time message on the device topic, e.g., `tele/myDeviceTopic/INFO1`.
 
   The moment a message is received on this topic, the automation can publish a message to topic `cmnd/%topic%/DeepSleepTime` with payload `0`. This will cause the device to disable deep sleep and allow maintenance such as firmware updates to be performed without having an unexpected deep sleep event. Send the `DeepSleepTime 0` command ==only once==.
 
   Once device maintenance is completed, place it back into deep sleep mode using original configuration.
 
 !!! tip "If you're having issues after wakeup from sleep"
-    Make sure bootloop detection is off [`SetOption36 0`](Commands#setoption36). See issue [#6890(https://github.com/arendst/Tasmota/issues/6890#issuecomment-552181980)
+    Make sure bootloop detection is off [`SetOption36 0`](Commands#setoption36). See issue [#6890](https://github.com/arendst/Tasmota/issues/6890#issuecomment-552181980)
 
-### Executing commands before entering DeepSleep
+## Executing commands before entering DeepSleep
 
   If you want to execute some commands or a special script ==BEFORE== device goes into deep sleep, use FUNC_SAVE_BEFORE_RESTART as a predefined hook to implement your own procedure. This requires you to code your own function and self-compile custom firmware.
 
   To use rules, use the `System#Save` trigger. This will be executed just before the device goes into deep sleep.
 
-### Overcome any Network issue
+## Overcome network issues
 If all requirements (Wifi, NTP time synchronization, MQTT broker connection and TelePeriod) are not met, the device will stay awake while trying to attain the remaining requirements. On battery powered devices this behavior is undesirable because it will quickly deplete the battery. To avoid this when these requirements cannot be met, put the device back into deep sleep for an hour. Do this through a rule that will be triggered 30 seconds after reboot and sends the device into deepsleep for an hour.
 
 ```console
@@ -81,7 +86,7 @@ Rule1
 Rule1 ON
 ```
 
-### Deep Sleep Algorithm General Timing
+## Deep Sleep Algorithm General Timing
 Let's assume you have set `DeepSleepTime 3600` (one hour) and `TelePeriod 300` (five minutes). The device will first wake at 8:00 am. The device will boot and connect Wi-Fi. Next, the correct time must be sync'ed from one of the NTP servers. Now the device has all prerequisites for going into deep sleep.
 
 Deep sleep is then triggered at the TelePeriod event. In this example, it will occur after five minutes. Telemetry will be collected and sent (e.g., via MQTT). Now, deep sleep can happen. First, `Offline` is published to the LWT topic on MQTT. It then calculates the new sleeping time to wake-up at 9:00 am (3600 seconds after the last wake-up). At 9:00 am this same sequence of events happens again.
