@@ -480,9 +480,9 @@ KNX_ENABLED<a class="cmnd" id="KNX_ENABLED"></a>|Status of KNX Communications<BR
 KNX_ENHANCED<a class="cmnd" id="KNX_ENHANCED"></a>|Status of Enhanced mode for KNX Communications<BR>`0` = set to Disable<BR>`1` = set to Enable
 KNX_PA<a class="cmnd" id="KNX_PA"></a>|KNX Physical Address<BR>`0.0.0` = address not set<BR>`x.x.x` = set the device address (example `1.1.0`)
 KNX_GA<a class="cmnd" id="KNX_GA"></a>|Return the amount of Group Address to Send Data/Commands configured
-KNX_GA<x\><a class="cmnd" id="KNX_GAx"></a>|Setup Group Address to Send Data/Commands (<x\> = KNX Group Address number)<BR>`1` = return configuration of GA<x\><BR>`<option>, <area>, <line>, <member>` to set configuration of GA<x\><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<option>` = [see table below for OPTION list](#knxJSON)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<area>, <line>, <member>` = KNX Address to Send Data/Commands<BR>
+KNX_GA<x\><a class="cmnd" id="KNX_GAx"></a>|Setup Group Address to Send Data/Commands (<x\> = KNX Group Address number)<BR>`1` = return configuration of GA<x\><BR>`<option>, <area>, <line>, <member>` to set configuration of GA<x\><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<option>` = see table below for OPTION list<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<area>, <line>, <member>` = KNX Address to Send Data/Commands<BR>
 KNX_CB<a class="cmnd" id="KNX_CB"></a>|Return the amount of Group Address to Receive Data/Commands configured
-KNX_CB<x\><a class="cmnd" id="KNX_CBx"></a>|Setup Group Address to Receive Data/Commands <BR>`1` = return configuration of CB<x\><BR>`<option>, <area>, <line>, <member>` to set configuration of CB<x\><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<option>` = [see table below for OPTION list](#knxJSON)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<area>, <line>, <member>` = KNX Address to Receive Data/Commands
+KNX_CB<x\><a class="cmnd" id="KNX_CBx"></a>|Setup Group Address to Receive Data/Commands <BR>`1` = return configuration of CB<x\><BR>`<option>, <area>, <line>, <member>` to set configuration of CB<x\><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<option>` = see table below for OPTION list<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<area>, <line>, <member>` = KNX Address to Receive Data/Commands
 
 OPTION|OPTION<BR>Value|<BR>OPTION|OPTION<BR>Value
 :---|---|:---|---
