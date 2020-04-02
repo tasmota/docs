@@ -40,7 +40,8 @@ This interface provides a means of specifying these definitions through [meter d
 !!! note
     If no `>M` section is found in the script or if the scripting language is not compiled, the driver reverts to the default `#define` definition(s).  
   
-> [!NOTE]Additional hardware is required to read certain measuring devices. For example: RS485toTTL Adaper for Modbus, IR transistor for electricity meters. Sometimes an additional IR diode and resistors.  
+!!! note
+    Additional hardware is required to read certain measuring devices. For example: RS485toTTL Adaper for Modbus, IR transistor for electricity meters. Sometimes an additional IR diode and resistors.  
   
   
 ## Descriptor Syntax
@@ -57,7 +58,7 @@ Declare a script `>M` section with the number of connected meters (n = `1..5`)
 ### Meter Declaration
 `+<M>,<rxGPIO>,<type>,<flag>,<parameter>,<jsonPrefix>{,<txGPIO>,<txPeriod>,<cmdTelegram>}`  
 
-> [!EXAMPLE]
+!!! example
 `+1,3,o,0,9600,OBIS1,1,2,2F3F210D0A` 
 `+1,3,s,16,9600,SML1`  
 `+1,12,c,1,-10,H20_Cnt`
@@ -89,7 +90,8 @@ Declare a script `>M` section with the number of connected meters (n = `1..5`)
 - `<cmdTelegram>` - comma separated hex coded byte blocks to send to meter device. For modbus each comma separated block is a command to retrieve a certain register from the meter (Optional, only required for measuring devices that have to be triggered with a certain character string.)  
   
 **Modbus:**
-> [!EXAMPLE]  
+
+!!! example  
 `+1,3,m,0,9600,MODBUS,1,1,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010`    
 Components of the character string:  
 `...01040000,01040002,...`    
@@ -104,7 +106,8 @@ Components of the character string:
 ### Meter Metrics
 Each meter typically provides multiple metrics (voltage, power, current, humidity etc.) which it measures. An entry for each metric to be collected as `#define SML_MAX_VARS N` (n = `1..16`) must be specified, in `user_config_override.h` file (see the code at the page top). An entry defines how to decode the data and put it into variables.
 
-> [!EXAMPLE] (OBIS/SML/MODBus): 
+!!! example 
+(OBIS/SML/MODBus): 
 `1,1-0:1.8.1\*255(@1,Total consumption,KWh,Total_in,4`   
 `1,77070100010801ff@1000,W1,kWh,w1,4`  
 `1,010304UUuuxxxxxxxx@i0:1,Spannung L1,V,Voltage_L1,0`  
@@ -130,7 +133,7 @@ Each meter typically provides multiple metrics (voltage, power, current, humidit
     - decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte.   
       e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`  
     - in the case of **MODBus**, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition  
-	> [!EXAMPLE] 
+	!!! example 
    `+1,3,M,1,9600,SBC,1,2,01030023,01030028...`  
    `1,010304UUuuxxxxxxxx@i0:1,Voltage L1,V,Voltage_L1,0` < the `i0:1` refers to: `01030023` with a scaling factor (`:1`) of 1   
    `1,010304UUuuxxxxxxxx@i1:10,Current L1,V,Current_L1,2` < the `i1:10` refers to: `01030028` with a scaling factor (`:10`) of 10       
@@ -146,7 +149,7 @@ Each meter typically provides multiple metrics (voltage, power, current, humidit
 - `<var>` - MQTT variable name (max 23 chars)  
 - `<precision>` - number of decimal places  
   Add 16 to transmit the data immediately. Otherwise it is transmitted on [`TelePeriod`](Commands#teleperiod)  
-> [!EXAMPLE]   
+!!! example   
  `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,4` > Transmitted on  [`TelePeriod`](Commands#teleperiod)   
 `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,20` > Precision of 4. 4 + 16 = 20 >transmit its value immediately  
 
@@ -158,23 +161,25 @@ Each meter typically provides multiple metrics (voltage, power, current, humidit
 with the '=' char at the beginning of a line you may do some special decoding  
 
 - `M,=m` perform arithmetic (`+,-,*,/`) on the metric. Use `#` before a number to designate a constant value  
-> [!EXAMPLE]    
+!!! example    
   `1,=m 3+4+5/#3 @100,Voltage L1+L2+L3/3,V,Volt_avg,2`  
   `1,=m 3+4+5/#3` add result of decoder entry 3,4,5 and divided by 3 (i.e., average)  
 - `M,=d` calculate difference between metric values decoded at time intervals  
-> [!EXAMPLE]   
+!!! example   
   `1,=d 3 10` calculate 10 second interval difference of decoder entry 3  
 - `M,=h` html text (up to 30 chars)  
   inserts a html line between entries (these lines do not count as decoder entry)  
-> [!EXAMPLE]     
+!!! example     
   `1,=h==================` insert a separator line  
 
 !!! tip
     Use: `sensor53 dM` to output the received data in the console. M = the number of the defined meter in the script.  
->[!NOTE]During the output of the data in the console, the data in the WEB UI are not updated. To return write: `sensor53 d0`  
+!!! note
+    During the output of the data in the console, the data in the WEB UI are not updated. To return write: `sensor53 d0`  
     
     
-[!WARNING] With a few meters, it is necessary to request the meter to send its data using a specific character string. This string has to be send at a very low baudrate. (300Baud) 
+!!! warning 
+With a few meters, it is necessary to request the meter to send its data using a specific character string. This string has to be send at a very low baudrate. (300Baud) 
   If you reply the meter with an acknowledge and ask the it for a new baudrate of 9600 baud, the baudrate of the SML driver has to be changed, too.
 
   
@@ -188,7 +193,8 @@ with the '=' char at the beginning of a line you may do some special decoding
   That works like this:  
     
     
-  > [!EXAMPLE] `>D`  
+  !!! example
+   `>D`  
     res=0  
     scnt=0    
 ;For this Example in the >F section  
@@ -217,8 +223,11 @@ with the '=' char at the beginning of a line you may do some special decoding
   
   You can find the example [here.](#landis-gyr-zmr120ares2r2sfcs-obis)  
 
-!>Attention, this procedure is only necessary, if the meter explicitly asks for 300 baud. The most meters work directly with 9600 baud. Therefore it is easier to give this method a try:  
-> [!EXAMPLE] `Meter#,GPIO# Input,TYPE,FLAG,Baudrate,JSONNAME,GPIO# Output,TX Period,Character string`  
+!!! attwntion
+Attention, this procedure is only necessary, if the meter explicitly asks for 300 baud. The most meters work directly with 9600 baud. Therefore it is easier to give this method a try:  
+
+!!! example
+`Meter#,GPIO# Input,TYPE,FLAG,Baudrate,JSONNAME,GPIO# Output,TX Period,Character string`  
   > \+ 1,3, o, 0,9600, energy, 1,4,2F3F210D0A   
 
    Example: [here.](#Iskra-MT-174-obis)
