@@ -6,7 +6,7 @@
 
 * Detailed setting up of sensors and LEDs using Tasmota:
 
-[https://www.instructables.com/id/Home-Automation-Tasmota-Sensors-LEDs-Develo/](https://www.instructables.com/id/Home-Automation-Tasmota-Sensors-LEDs-Develo/)
+[https://www.instructables.com/id/Home-Automation-Sonoff-Tasmota-Sensors-LEDs-Develo//](https://www.instructables.com/id/Home-Automation-Sonoff-Tasmota-Sensors-LEDs-Develo/)
 
 Credits: @MikePRoberts
 
