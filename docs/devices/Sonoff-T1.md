@@ -9,7 +9,7 @@ Based on the ESP8285, but using a Silabs EFM8BB1 microcontroller to extend the n
 * [SYN470R Data Sheet](https://www.birdandgua.net/bird/wp-content/uploads/2016/09/SYN470R-Synoxo.pdf)
 ## Read before flashing
 Tasmota has functionality to perform special actions on multiple button presses and long press for 40 seconds resets firmware to default. This will cause the T1 board to reset if relay board is not connected, because long press on Button1 will be detected.
-**To avoid this, use command [`SetOption13 1`](../Commands.md#setoption13) immediately after flashing Tasmota.**
+**To avoid this, use command [`SetOption13 1`](../Commands#setoption13) immediately after flashing Tasmota.**
 
 When powered solely with 3.3v from the serial-to-USB adapter long press will be detected by Tasmota on Button1.
 
