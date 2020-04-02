@@ -31,6 +31,5 @@ For control of lights, color control (introduced in version 6.5.0.9), on/off, an
 
 Relays and lights with friendly names beginning with a dollar sign (`$`) will cause Tasmota to not "announce" them (i.e., be hidden) to Alexa. If they were previously discovered, they will still continue to work. As there are only four friendly names provided in Tasmota, if `FriendlyName4` begins with `$`, component 4 and all higher numbered discoverable components will not be discovered by Alexa.  
 
-!!! note
-    Hue Bridge emulation does not support sensors.**  
+!!! note "Hue Bridge emulation does not support sensors."  
 
