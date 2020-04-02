@@ -139,7 +139,7 @@ nav:
     - Octoprint.md
     - openHAB.md
     - otto.md
-    - Yeti.md
+    # - Yeti.md
     - IOBroker: "https://github.com/arendst/Tasmota/issues/3769"
     - Mozilla WebThings Adapter: "https://github.com/tim-hellhake/tasmota-adapter"
     - SmartThings: "https://github.com/BrettSheleski/SmartThingsPublic/tree/master/devicetypes/brettsheleski/sonoff-tasmota.src"
