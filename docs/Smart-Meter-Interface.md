@@ -199,6 +199,7 @@ with the '=' char at the beginning of a line you may do some special decoding
     
     
 !!! example
+
       `>D`  
       res=0  
       scnt=0    
@@ -229,7 +230,7 @@ with the '=' char at the beginning of a line you may do some special decoding
   You can find the example [here.](#landis-gyr-zmr120ares2r2sfcs-obis)  
 
 !!! attention
-    Attention, this procedure is only necessary, if the meter explicitly asks for 300 baud. The most meters work directly with 9600         baud. Therefore it is easier to give this method a try:  
+    This procedure is only necessary, if the meter explicitly asks for 300 baud. The most meters work directly with 9600         baud. Therefore it is easier to give this method a try:  
 
 !!! example
 `Meter#,GPIO# Input,TYPE,FLAG,Baudrate,JSONNAME,GPIO# Output,TX Period,Character string`  
