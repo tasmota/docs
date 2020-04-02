@@ -133,7 +133,8 @@ Each meter typically provides multiple metrics (voltage, power, current, humidit
     - decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte.   
       e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`  
     - in the case of **MODBus**, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition  
-	!!! example 
+    
+!!! example 
    `+1,3,M,1,9600,SBC,1,2,01030023,01030028...`  
    `1,010304UUuuxxxxxxxx@i0:1,Voltage L1,V,Voltage_L1,0` < the `i0:1` refers to: `01030023` with a scaling factor (`:1`) of 1   
    `1,010304UUuuxxxxxxxx@i1:10,Current L1,V,Current_L1,2` < the `i1:10` refers to: `01030028` with a scaling factor (`:10`) of 10       
@@ -161,19 +162,23 @@ Each meter typically provides multiple metrics (voltage, power, current, humidit
 with the '=' char at the beginning of a line you may do some special decoding  
 
 - `M,=m` perform arithmetic (`+,-,*,/`) on the metric. Use `#` before a number to designate a constant value  
+
 !!! example    
   `1,=m 3+4+5/#3 @100,Voltage L1+L2+L3/3,V,Volt_avg,2`  
   `1,=m 3+4+5/#3` add result of decoder entry 3,4,5 and divided by 3 (i.e., average)  
 - `M,=d` calculate difference between metric values decoded at time intervals  
+
 !!! example   
   `1,=d 3 10` calculate 10 second interval difference of decoder entry 3  
 - `M,=h` html text (up to 30 chars)  
   inserts a html line between entries (these lines do not count as decoder entry)  
+
 !!! example     
   `1,=h==================` insert a separator line  
 
 !!! tip
     Use: `sensor53 dM` to output the received data in the console. M = the number of the defined meter in the script.  
+
 !!! note
     During the output of the data in the console, the data in the WEB UI are not updated. To return write: `sensor53 d0`  
     
