@@ -51,7 +51,7 @@ Some GPIO are preconfigured with the board:
 - GPIO14 - (PWM1) Red color on the LED strip, second pin from the GND
 - GPIO12 - (PWM3) Blue color on the LED strip, third pin from the GND
 
-For instructions to setup the 24 Button Remote visit the [AL-LC04 device page](Arilux-LC04.md)
+For instructions to setup the 24 Button Remote visit the [AL-LC04 device page](../devices/Arilux-LC04.md)
 
 Check this for Board Version 2.3 : [#1867](https://github.com/arendst/Tasmota/issues/1867#issuecomment-364811579)
 
