@@ -437,6 +437,7 @@ SetOption86<a class="cmnd" id="setoption86"></a>|**PWM Dimmer only!** Turn brigh
 SetOption87<a class="cmnd" id="setoption87"></a>|**PWM Dimmer only!** Turn red LED on when powered off<BR>`0` = disabled _(default)_<BR>`1` = enabled
 SetOption88<a class="cmnd" id="setoption88"></a>|**PWM Dimmer only!** Buttons control remote devices<BR>`0` = disabled _(default)_<BR>`1` = enabled
 SetOption89<a class="cmnd" id="setoption89"></a>|Configure MQTT topic for Zigbee devices (also see `SensorRetain`)<BR>`0` = single `tele/%topic%/SENSOR` topic _(default)_ <BR>`1` = unique device topic based on Zigbee device ShortAddr<br>_Example:_ `tele/Zigbee/5ADF/SENSOR = {"ZbReceived":{"0x5ADF":{"Dimmer":254,"Endpoint":1,"LinkQuality":70}}}`
+SetOption90<a class="cmnd" id="setoption90"></a>|Disable sending MQTT with non-JSON messages<BR>`0` = send all MQTT _(default)_ <BR>`1` = send only MQTT messages with JSON payloads
 
 
 ### Serial Bridge
