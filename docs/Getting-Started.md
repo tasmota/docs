@@ -16,11 +16,11 @@ The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?
 * [RaspberryPi](Flash-Sonoff-using-Raspberry-Pi) - only for advanced users. External 3.3V supply necessary.
 * [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) and [D1 mini](https://cleanuri.com/x60JQ9) (Pro/Lite) boards have a micro USB upload port and don't require an adapter.
 
-> [!NOTE]
->Don't forget to install drivers for your serial-to-USB adapter.
+!!! note 
+    Don't forget to install drivers for your serial-to-USB adapter.
 
-> [!DANGER]
->Some adapters can be switched between 3.3V and 5V for the data pins, but still provide 5V on the power pin which will fry your device.  You MUST make sure both the data and VCC pins are set for 3.3V.
+!!! danger
+    Some adapters can be switched between 3.3V and 5V for the data pins, but still provide 5V on the power pin which will fry your       device.  You MUST make sure both the data and VCC pins are set for 3.3V.
 
 #### Soldering Tools
 To solder you'll of course need a soldering iron, soldering tin and some flux. If you're new to soldering check out some soldering tutorial videos while you're at it.
@@ -64,7 +64,8 @@ This is an optional way to configure your device using [Commands](Commands) and 
 * **[Putty](https://www.putty.org/)** - popular client available on every platform
 * **[Minicom](https://www.acmesystems.it/minicom)** - one of many Linux terminals
 
-> [!TIP] Enable _local echo_ so that you can see what is typed and transmitted to the device. Enable **Append CR+LF** since every request needs to end with `<CR><LF>`. 
+!!! tip 
+    Enable _local echo_ so that you can see what is typed and transmitted to the device. Enable **Append CR+LF** since every request needs to end with `<CR><LF>`. 
 
 ### MQTT Knowledge
 Tasmota is designed to be controlled and communicate via [MQTT](http://mqtt.org/). To use it to its fullest potential you need an [MQTT broker](https://www.hivemq.com/blog/mqtt-essentials-part-3-client-broker-connection-establishment/). 
@@ -304,13 +305,15 @@ Tasmota provides a wireless access point for easy Wi-Fi configuration.
 
 !!! note "If you flashed using Tuya Convert this is the only option to set up your device."
 
-<img alt="Tasmota AP" src="https://user-images.githubusercontent.com/5904370/68963209-b4723200-07d6-11ea-9116-4b0f4f0f4dbc.png" style="margin:10px;float:left;width:250px"></img>Connect your device to a power source and grab your smartphone (or tablet or laptop or any other web and Wi-Fi capable device). Search for a Wi-Fi AP named **tasmota-xxxx** (where **xxxx** is a number) and connect to it. _In this example the Wi-Fi AP is named **tasmota-7718**._ When it connects to the network, you may get a warning that there is no Internet connection and be prompted to connect to a different network. _Do not allow the mobile device to select a different network_.
+<img alt="Tasmota AP" src="../_media/wificonfig1.jpg" style="margin:10px;float:left;width:250px"></img>Connect your device to a power source and grab your smartphone (or tablet or laptop or any other web and Wi-Fi capable device). Search for a Wi-Fi AP named _**tasmota_XXXXXX-####**_ (where _XXXXXX_ is a string derived from the device's MAC address and _####_ is a number) and connect to it. _In this example the Wi-Fi AP is named **tasmota_3D5E26-7718**._ 
+
+When it connects to the network, you may get a warning that there is no Internet connection and be prompted to connect to a different network. _Do not allow the mobile device to select a different network_.
 <p>
 
 !!! warning 
     Wi-Fi manager server is active for only 3 minutes. If you miss the window you might have to disconnect your device from power and reconnect.
 
-<img alt="Sign in to Wi-Fi Network" src="https://user-images.githubusercontent.com/5904370/68963506-5a25a100-07d7-11ea-8d34-91cfc8b658f6.png" style="margin:5px;float:right;width:300px"></img>After you have connected to the Tasmota Wi-Fi AP, open http://192.168.4.1 in a web browser on the smartphone (or whatever device you used). 
+<img alt="Sign in to Wi-Fi Network" src="../_media/wificonfig2.jpg" style="margin:5px;float:right;width:300px"></img>After you have connected to the Tasmota Wi-Fi AP, open http://192.168.4.1 in a web browser on the smartphone (or whatever device you used). 
 Depending on the phone, it will take you to the Tasmota configuration page automatically, or you will get a prompt to *sign in to Wi-Fi network* or *authorize*. Tapping on the AP name should also open the configuration page.
 
 <img alt="Tasmota AP" src="https://user-images.githubusercontent.com/5904370/68961890-a242c480-07d3-11ea-912f-b45464104f2c.png
@@ -327,13 +330,15 @@ Wi-Fi password has to be under 32 characters and without special characters (e.g
 **AP2 SSid** - alternative Wi-Fi network SSID   
 **AP2 Password** - password for your alternative Wi-Fi AP   
 
-Click the checkbox to see the password you enter to ensure that it is correct and that your mobile device has not inadvertently capitalized the first letter if it is supposed to be lower case nor autocorrected what you entered. ~~Double~~ **Triple check the Wi-Fi credentials** and click on **Save** to apply the settings. The device will restart and connect to your home network. The `tasmota-xxxx` network will not longer be present. Therefore your smartphone will automatically be disconnected and should connect back to its data network.
+Click the checkbox to see the password you enter to ensure that it is correct and that your mobile device has not inadvertently capitalized the first letter if it is supposed to be lower case nor autocorrected what you entered. ~~Double~~ **Triple check the Wi-Fi credentials** and click on **Save** to apply the settings. The device will restart and connect to your home network. The _tasmota_XXXXXX-####_ network will not longer be present. Therefore your smartphone will automatically be disconnected and should connect back to its data network.
 
 !!! tip
     If you're not using a second Wi-Fi network you can enter an SSID without a password you can connect to as a backup in case something went wrong with your Wi-Fi credentials.
 
 #### Configure MQTT
-Look in your router for a newly connected device with the same name as the Wi-Fi access point. *(In this example **tasmota-7718**.)*
+Look in your router for a newly connected device with the same name as the Wi-Fi access point. _In our example it is **tasmota_3D5E26-7718**._
+
+!!! tip " `tasmota_XXXXXX` is also the firmware default MQTT topic for that device"
 
 If you don't have access to your router you can find your newly flashed device with an IP scanner:
 
@@ -351,6 +356,8 @@ Now is the time to set up [MQTT](MQTT) and the last remaining, but equally impor
 Configure your device using [Templates](Templates) in **Configuration - Configure Template** or [Modules](Modules) in **Configuration - Configure Module**.
 
 Your device running Tasmota is now ready to be [controlled](Commands).
+
+!!! quote "Check out all the supported devices in [Tasmota Device Templates Repository](https://templates.blakadder.com/)"
 
 ### Using Serial Terminal
 If you flashed the device using serial-to-USB adapter (or it is a NodeMCU/D1 mini) you can take advantage of the existing connection and configure your device over the serial connection using [Commands](Commands).
@@ -392,4 +399,4 @@ Commands and Backlog are powerful and in time you can learn to configure almost 
 
 Your device is connected to your network and to the MQTT broker. One last thing to do is configure your device using [Templates](Templates) in **Configuration - Configure Template** or [Modules](Modules) in **Configuration - Configure Module**. 
 
-Check out all the supported devices in [Tasmota Device Templates Repository](https://templates.blakadder.com/)
+!!! quote "Check out all the supported devices in [Tasmota Device Templates Repository](https://templates.blakadder.com/)"

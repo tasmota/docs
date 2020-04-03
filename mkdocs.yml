@@ -82,8 +82,8 @@ google_analytics:
   - 'UA-140681905-2'
   - 'auto'
 
-# extra_css:
-#   - 'assets/css/dark-theme.css'
+extra_css:
+  - 'assets/css/anchor-fix.css'
 
 nav: 
   - Home: index.md
@@ -117,7 +117,6 @@ nav:
     - Device-Groups.md
     - DeepSleep.md
     - PWM-dimmer-switch.md
-    - Buzzer.md
     - Dynamic-Sleep.md
     - Smart-Meter-Interface.md
     - PIR-Motion-Sensors.md
@@ -139,18 +138,17 @@ nav:
     - Octoprint.md
     - openHAB.md
     - otto.md
-    - Yeti.md
     - IOBroker: "https://github.com/arendst/Tasmota/issues/3769"
     - Mozilla WebThings Adapter: "https://github.com/tim-hellhake/tasmota-adapter"
-    - SmartThings: "https://github.com/BrettSheleski/SmartThingsPublic/blob/master/devicetypes/brettsheleski/sonoff-tasmota.src/readme.md"
+    - SmartThings: "https://github.com/BrettSheleski/SmartThingsPublic/tree/master/devicetypes/brettsheleski/sonoff-tasmota.src"
   - Peripherals:
     - Supported-Peripherals.md
+    - Analog pin: ADC.md
+    - Buzzer.md
     - Displays:
       - Displays.md
-    # - Analog pin: ADC.md
     - A4988 stepper motor controller: A4988-Stepper-Motor-Controller.md
     - AM2301 temperature and humidity sensor: AM2301.md
-    - Analog pin: ADC.md
     - APDS-9960.md
     - AZ-7798.md
     - BH1750.md
@@ -162,7 +160,6 @@ nav:
     - DHT11.md
     - DS18x20.md
     - DS3231.md
-    # - GPS-NTP-server.md
     - HM-10.md
     - HM-17.md
     - HC-SR04.md
@@ -177,7 +174,6 @@ nav:
     - MPU-6050.md
     - NRF24L01.md
     - P1-Smart-Meter.md
-    # - PIR-Motion-Sensors.md
     - PAJ7620.md
     - PCA9685.md
     - PN532.md
@@ -186,7 +182,6 @@ nav:
     - RDM6300.md
     - SDS011.md
     - SHT30.md
-    # - Smart-Meter-Interface.md
     - TX2x.md
     - TSL2561.md
     - VEML6070.md
@@ -201,5 +196,6 @@ nav:
     - FAQ.md
     - Troubleshooting.md
     - Device-Recovery.md
+    - Discord Support: http://thehackbox.org/tasmota/release/ "target=_blank"
   - Contributing: Contributing.md
-  - Discord Community: //discord.gg/Ks2Kzd4  "target=_blank"
+  - Download Tasmota: http://thehackbox.org/tasmota/release/ "target=_blank"

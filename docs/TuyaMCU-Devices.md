@@ -103,8 +103,6 @@ This devices use a Tuya TYWE1S Wi-Fi PCB module. And it uses U1TX (GPIO15) and U
 
 The CE dimmer uses standard Tuya GPIO
 
-[Product Link](https://www.costco.ca/CE-Smart-Home-Wi-Fi-Smart-Dimmer-Light-Switch%2c-2-pack.product.100417574.html)
-
 ### Touch (EU and US) - Multiple manufacturers
 
 #### Flashing

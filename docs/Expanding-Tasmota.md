@@ -22,23 +22,23 @@ You can then plug a sensor into the jack like you would to a [Sonoff TH](devices
 
 
 # Restrictions  
-> [!DANGER]  
+!!! danger  
 
-If you can avoid it, don't use GPIOs: **0, 1, 2, 6-11, 15 and 16**. That leaves **4, 5, 12, 13, 14** as GPIOs without any constraints. **3** being RX is also good to avoid (PWM is not working on this GPIO).
+    If you can avoid it, don't use GPIOs: **0, 1, 2, 6-11, 15 and 16**. That leaves **4, 5, 12, 13, 14** as GPIOs without any               constraints. **3** being RX is also good to avoid (PWM is not working on this GPIO).
 
 Others ***can*** be used but you have to mind the constraints outlined in [this document](https://tttapa.github.io/ESP8266/Chap04%20-%20Microcontroller.html).
 
 ## Voltage and Current
-> [!DANGER]  
+!!! danger
 
-The ESP8266 is a 3.3V microcontroller, so its I/O operates at 3.3V as well. The pins are **not** 5V tolerant, applying more than 3.6V on any pin will release the [magic smoke](https://en.wikipedia.org/wiki/Magic_smoke) (fry the chip).
+    The ESP8266 is a 3.3V microcontroller, so its I/O operates at 3.3V as well. The pins are **not** 5V tolerant, applying more than         3.6V on any pin will release the [magic smoke](https://en.wikipedia.org/wiki/Magic_smoke) (fry the chip).
 
 The maximum current that can be drawn from a single GPIO pin is 12mA.
 
 ## Power Supply
-> [!DANGER]  
+!!! danger  
 
-The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?title=Power) is **one of the most important elements** for stable device operation. Many devices on the market have barely adequate power supplies for normal operation. ***Connected peripherals may strain the ability of the power supply on the device to deliver appropriate power to all the components, both on-board as well as externally connected.***
+    The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?title=Power) is **one of the most important             elements** for stable device operation. Many devices on the market have barely adequate power supplies for normal operation.             ***Connected peripherals may strain the ability of the power supply on the device to deliver appropriate power to all the               components, both on-board as well as externally connected.***
 
 Voltage regulation issues typically result in fatal exception [fault code](https://github.com/esp8266/Arduino/blob/master/doc/exception_causes.rst) `1`. You must ensure that the device receives sufficient power (current **and** appropriate voltage level). Take into account the current that each wired component (f.e. sensor) will draw from the device itself. 
 

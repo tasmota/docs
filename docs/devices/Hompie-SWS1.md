@@ -1,7 +1,5 @@
 Very cheap outlet with USB-charger functionality (supposed to deliver 2A, have to test this though) and real 16A relay:
 
-[Winfuture price comparison](https://winfuture.de/preisvergleich/1417869601)
-
 Device Images
 ![](https://user-images.githubusercontent.com/2738932/46142043-f4362d00-c255-11e8-9244-35f89c34f068.jpg)
 ![](https://user-images.githubusercontent.com/2738932/46142044-f4362d00-c255-11e8-8e95-b0de09f29da0.jpg)

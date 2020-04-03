@@ -1,22 +1,16 @@
 ***Any contribution helps our team and makes Tasmota better for the entire community!***
 
-We need:
+You can contribute by:
 
-- tutorials on using Tasmota features that aren't covered yet
-- guides on wiring and using sensors supported by Tasmota
-- your DIY projects featuring Tasmota
-- new device templates 
-- fixing spelling mistakes, broken links and other errors in the Wiki
+- providing Pull Requests (Features, Proof of Concepts, Language files or Fixes)
+- testing new released features and report issues
+- [donating](https://paypal.me/tasmota) to acquire hardware for testing and implementing or out of gratitude
+- contributing documentation for features and devices
+- submitting [new device templates](https://templates.blakadder.com/new.html) 
+- fixing spelling mistakes, broken links and other errors in the documentation
+- writing guides on wiring and using sensors or your DIY projects featuring Tasmota
 
-The information available is still needed for devices in the field (like Shelly 2) and loss of information makes them unusable in case of debugging or fault analysis.
-
-### Writing guides
-Whenever you feel is a good guide or an article that would help other users just click the New Page icon and write.
-
-### Adding devices to the documentation
-All new devices should be submitted through the [Templates Repository](http://templates.blakadder.com). If you're adding a device with a comprehensive flashing or configuration tutorial you can create a new page in the Wiki and link to it in your template submission.
-
-## Editing articles
+### Editing Articles
 !!! failure "You need a GitHub user account to be able to edit"
 
 If you spot an error in an article use the *pencil icon* link at the top of the page, near the title, to correct it. This version of documentation uses strick markdown syntax with some enchancements. See [Markdown Cheatsheet](https://3os.org/markdownCheatSheet/welcome/) for all features
@@ -40,3 +34,6 @@ Now you wait for one of the Tasmota admins to approve your PR (or deny :smiling_
 _**Congratulations**_! 
 
 You've made a contribution to the Tasmota project making it a better experience for all future users. Thank you!
+
+## Adding devices to the documentation
+If you're adding a new page, go to [documentation GitHub](https://github.com/tasmota/docs/tree/master/docs) and click **Create new file**, name the file with .md extension.

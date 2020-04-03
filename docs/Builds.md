@@ -14,7 +14,7 @@ Features that are not available in any release build have to be enabled in sourc
 - **tasmota-lite.bin**  has a stripped down feature set. This reduces the required CPU cycles in order to reduce power draw to allow devices with a weak power supply to run reliably.
 
 !!! note
-    This is similar to the pre-compiled Tasmota binary that comes bundled within the Tuya-Convert package when you install their OTA flashing tool. If you used Tuya-Convert to flash your device, it is strongly recommended to update to `tasmota.bin`. Otherwise some crucial features (e.g., energy monitoring, auto-discovery, etc.) will not work.
+    This is similar to the pre-compiled Tasmota binary that comes bundled with Tuya-Convert. If you used Tuya-Convert to flash your device, it is strongly recommended to update to `tasmota.bin`. Otherwise some crucial features (e.g., energy monitoring, auto-discovery, etc.) will not work.
 
 - **tasmota-minimal.bin** is a specialised build to subsequently allow OTA uploads. **This version should NOT be used for initial installation!**
 - **tasmota-knx.bin** includes [KNX](KNX) support but omits some features. If you need additional features, compile your own firmware (e.g., [Gitpod](Gitpod)  ).

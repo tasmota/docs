@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/tasmota/docs.svg?style=shield)](https://circleci.com/gh/tasmota/docs/tree/master)
+
 # Tasmota Documentation
 This is the repo for documentation of the Tasmota open source alternative firmware for ESP8266 available from https://github.com/arendst/Tasmota 
 
@@ -19,7 +21,7 @@ If you want higlight text with marker style yellow enclose it in `== ==`. [More 
 
 #### Tabs
 
-Start each tab section with `=== "Tab title`. [More information...](https://facelessuser.github.io/pymdown-extensions/extensions/tabbed/) and indent the tab content by 4 spaces.
+Start each tab section with `=== "Tab title"` and indent the tab content by 4 spaces. [More information...](https://facelessuser.github.io/pymdown-extensions/extensions/tabbed/) .
 
 #### Superscript text
 Enclose text in `^ ^` to superscript it. Example `H^2^0` renders H<sup>2</sup>O

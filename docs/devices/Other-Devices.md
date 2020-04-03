@@ -1,4 +1,4 @@
-This page is here for archival purposes. For new devices use [Tasmota Device Templates Repository](https://templates.blakadder.com)! New submissions here will not be approved.
+This page is here for archival purposes. For new devices use [Tasmota Device Templates Repository](https://templates.blakadder.com/)! New submissions here will not be approved.
 ---
 
 ### Relays/Sonoff Basic Clones
@@ -60,6 +60,6 @@ This page is here for archival purposes. For new devices use [Tasmota Device Tem
 - [CSL (aplic WDP 303075)](../devices/CSL-aplic-WDP-303075.md)
 - [SM-PW701E Socket Board: (Tuya TYWE3S)](../devices/TYWE3S)
 - [WK30 (Tuya TYWE3S)](../devices/wk30)
-- [Hompie-SWS1 (Tuya TYWE3S)](Hompie-SWS1.md)
+- [Hompie-SWS1 (Tuya TYWE3S)](../devices/Hompie-SWS1.md)
 - [Burnett BN K01 Smart Socket](../devices/Burnett-BN-K01)
 - [CNSKOU / CNSANKOU wall switches](../devices/CNSKOU---CNSANKOU-wall-switches) - Chinese Sonoff T1 clones

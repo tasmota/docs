@@ -2,10 +2,7 @@
 
 The PWM Dimmer module adds support for Martin Jerry/acenx/Tessan/NTONPOWER SD0x PWM dimmer switches. The brightness of the load for these dimmers is controlled by a PWM GPIO pin. They typically have power, up and down buttons, a powered-on LED, five brightness LEDs and another status LED. Examples are:[ https://www.amazon.com/dp/B07FXYSVR1](https://www.amazon.com/dp/B07FXYSVR1),[ https://www.amazon.com/dp/B07V26Q3VD](https://www.amazon.com/dp/B07V26Q3VD),[ https://www.amazon.com/dp/B07K67D43J](https://www.amazon.com/dp/B07K67D43J),[ https://www.amazon.com/dp/B07TTGFWFM](https://www.amazon.com/dp/B07TTGFWFM)
 
-To include PWM dimmer support in the build, define USE_PWM_DIMMER in your user_config_override. This adds 4.5K to the code size. The light module is not required for PWM dimmer operation so you can #undef USE_LIGHT to reduce the firmware bin size.
-
-To enable PWM dimmer operation, select the PWM Dimmer module.
-
+The PWM dimmer is supported in the standard Tasmota build. To enable PWM dimmer operation, select the PWM Dimmer module.
 
 ## PWM Dimmer Operation
 

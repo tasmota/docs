@@ -1,6 +1,8 @@
 mkdocs>=1.1
-mkdocs-material==5.0.0rc4
+mkdocs-material>=5.0.0rc4
 Pygments>=2.4
 markdown>=3.2
 pymdown-extensions>=7.0b2
 mkdocs-redirects==1.0.0
+mkdocs-minify-plugin>=0.2.3
+mkdocs-htmlproofer-plugin>=0.0.3

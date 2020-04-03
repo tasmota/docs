@@ -1,11 +1,3 @@
-!!! failure "This feature is not included in precompiled binaries"     
-To use it you must [compile your build](Compile-your-build.md). Add the following to `user_config_override.h`:
-```
-#ifndef USE_SHUTTER
-#define USE_SHUTTER           // Add Shutter support (+6k code)
-#endif
-```
-----
 !!! info "Control blinds and roller shades connected to regular ON/OFF motors or stepper motors"
 
 Your device must have at least two relays (see [Shutters with Sonoff Dual R2](#using-sonoff-dual-r2)). 
@@ -13,7 +5,7 @@ Your device must have at least two relays (see [Shutters with Sonoff Dual R2](#u
 ## Commands
 First enable shutter support with `SetOption80 1`
 
-Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#blinds).
+Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#shutters).
 
 ## Shutter Modes
 There are three shutter modes which are defined according to the [PulseTime](Commands.md#pulsetime) and [Interlock](Commands.md#interlock) settings. The examples below are for a `ShutterRelay1 1` configuration (using Relay1 and Relay2).
@@ -401,18 +393,13 @@ If using a Sonoff Dual R2, use the following Template:
 #### Rules
 Tasmota rule triggers:  
 
-- `Shutter<x>#Position` is triggered at start and and of movement reporting actual position
-- `Shutter<x>#Direction` is triggered at start and and of movement reporting actual direction
-- `Shutter<x>#Target` is triggered at start and and of movement reporting current target
-- `Shutter<x>#Open` and `Shutter<x>#Close`
-- `Shutter#Moving` is triggered every second if the shutter is moving
-- `Shutter#Moved` is triggered ONCE after the shutter stopped
+- `Shutter<x>#Position` is triggered at end of movement reporting actual position
+- `Shutter<x>#Direction` is triggered at end of movement reporting actual direction
+- `Shutter<x>#Target` is triggered at end of movement reporting current target
 - `Shutter<x>#Button<button>=0`  is triggered when `button` is hold
 - `Shutter<x>#Button<button>=<n>`  is triggered when `button` is pressed `n` times
 - `Shutter<x>#Button0=0`  is triggered when all buttons of that shutter are hold simultaneously
 - `Shutter<x>#Button0=<n>`  is triggered when all buttons of that shutter are pressed simultaneously `n` times
-
-With #Direction and var1..var4 you can store the movement ofa shutter and get information which shutter is moving
 
 Examples:  
 - Publish a message with the position of the shutter:

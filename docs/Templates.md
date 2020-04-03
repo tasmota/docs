@@ -70,6 +70,8 @@ When there:
 
 The device will reboot with a name reflecting your template name and `Module 0` selected which has your new template stored.
 
+!!! warning "If your device was previously configured you will have to manually change to `Module 0` in **_Configuration -> Configure Module_**."
+
 ![It is finished](https://i.postimg.cc/28hN4qvf/template-import3.png ":size=250")
 
 
@@ -81,7 +83,8 @@ A user provided template can be stored in Tasmota using the [`Template`](Command
 ` `|Show current Template
 `0`|Create template from active module
 `1..71`|Create template from a supported module
-`{ ... }`|Store template written in a JSON string												
+`{ ... }`|Store template written in a JSON string	
+`255` | Merge configured template and current module											
 
 ``Template {"NAME":"UserModule1","GPIO":[17,148,29,149,7,255,255,255,138,255,139,255,255],"FLAG":0,"BASE":18}`` stores a complete template based on the Generic module
 
@@ -91,7 +94,7 @@ A user provided template can be stored in Tasmota using the [`Template`](Command
 
 ``Template {"BASE":18}`` updates the base of a stored template to Generic
 
-**After setting a template in command line it is necessary to issue `Module 0` command if the device doesn't reboot on its own.**
+!!! warning "After setting a template in command line it is necessary to issue `Module 0` command if the device doesn't reboot on its own."
 
 #### Merge Template with Module
 You can set up your device in module **_Configuration -> Configure Module_** and use command `Template 255` to merge the settings of the Module with current template into a new Template named "Merged".
@@ -107,7 +110,7 @@ The four properties with UPPERCASE property names have the following functionali
 
 Property name | Property value description
 --------------|-----------------------------------------------------------------------------------------------------------
-NAME          | Up to 14 characters for the Module name
+NAME          | Up to 60 characters for the Module name
 [GPIO](#gpio) | Up to 13 decimal numbers from 0 to 255 representing GPIO0 to GPIO5, GPIO09, GPIO10 and GPIO12 to GPIO16
 [FLAG](#flag) | 8 bit mask flag register
 [BASE](#base) | Module number of a hard-coded device to be used when device specific functionality is needed
@@ -129,8 +132,6 @@ The GPIO functionality numbers are the same as shown by command ``GPIOs``. In ad
 
 #### Components
 See [Components](Components) for a complete list
-
-[Google Sheet](https://docs.google.com/spreadsheets/d/10aYCaR3P09omn_vryFGyyq7dS-XK54K2fGAcb4gruik) with the components by number or alphabetically.
 
 ### FLAG
 Used to configure the [ADC](ADC) type. In most templates this should be set to `0`.

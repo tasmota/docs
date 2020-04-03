@@ -75,7 +75,7 @@ Wait until the device restarts. In the Main Menu web UI will display this warnin
 
 ![minimal message](https://user-images.githubusercontent.com/5904370/68962530-1a5dba00-07d5-11ea-83aa-f6f640d9a38f.png)
 
-Proceed to [upgrade](#by-file-upload)
+Proceed to [upgrade](#upgrade-by-file-upload)
 
 ### Using Commands
 

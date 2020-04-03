@@ -6,7 +6,6 @@ This device **_can be most easily flashed using using [Tuya-Convert](https://git
 
 ## Shopping
 
-* [Ali Express](https://www.aliexpress.com/item/Smart-WiFi-USB-Charger-Wall-Outlet-High-Speed-Voice-Control-Dual-Outlets-Individually-Surge-Protection-Remote/32976742669.html)
 * [Amazon](https://www.amazon.com/dp/B07JZ124FK)
 * [Alibaba](https://www.alibaba.com/product-detail/New-Design-2-way-Double-Power_60817067611.html?spm=a2700.7724857.normalList.54.4dfd645aBY3qAH) (10 minimum)
 

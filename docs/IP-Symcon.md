@@ -1,6 +1,6 @@
 For users knowing more about integrating Tasmota with IP-Symcon please update this page.
 
-The Tasmota IP-Symcon interface can be found at https://github.com/Schnittcher/IPS-Tasmota
+The Tasmota IP-Symcon interface can be found at [https://github.com/Schnittcher/IPS-Tasmota](https://github.com/Schnittcher/IPS-Tasmota)
 
 There are currently two modules for IP Symcon
 
