@@ -96,7 +96,7 @@ DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can r
 
 First thing to try when having Wi-Fi issues:
 
-   Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](Getting-Started.md#erase-flash-memory)) using [the latest precompiled binaries](http://thehackbox.org/tasmota/).
+   Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](Getting-Started.md#esptoolpy)) using [the latest precompiled binaries](http://thehackbox.org/tasmota/).
 
    This approach has solved most of the reported issues. Sometimes this is due to a bad flash, a bad OTA or invalid data that remains in the flash where the SDK memory is.
 
