@@ -1,10 +1,6 @@
 Tasmota sensor API documentation for sensor driver development.
 
-*	[**Important things to consider**](#important-things-to-consider)
-*	[**API Structure**](#api-structure)
-*	[**Keeping ESP8266 code compact**](#keeping-esp8266-code-compact)
-
-# Important things to consider
+## Important things to consider
 * There are several I<sup>2</sup>C sensor examples you can take from the development codebase when writing your own and you are encouraged to do this as it is a quick and easy way to see how things fit together.
 * The Tasmota firmware is essentially intended for ESP8266/ESP8285 Wi-Fi SoC based devices and commits to the main development branch will be subject to review based on whether or not what you intend to develop or add to the existing code is relevant to the general ESP device users.
 * That being said, there is a lot of development going into the firmware which extends the functionality of standard off the shelf Sonoff devices. The firmware in itself is also useful for boards such as the WeMos ESP82xx boards. More technically inclined individuals who use generic ESP82xx modules in their own circuits to provide more access to pins and the ability to add more sensors and hardware external to the device or the generic ESP82xx module circuits can also take advantage of Tasmota.
@@ -18,7 +14,7 @@ Tasmota sensor API documentation for sensor driver development.
 * While developing you might want to enable additional debugging provided by file ``xdrv_95_debug.ino`` using `#define USE_DEBUG_DRIVER` which provides some commands for managing configuration settings and CPU timing. In addition you can enable define `PROFILE_XSNS_SENSOR_EVERY_SECOND` to profile your drivers duration.
 * Do not assume others will know immediately how to use your addition and know that you will need to write a Wiki for it in the end.
 
-# Managing a Forked Branch
+## Managing a Forked Branch
 If you plan to submit a PR bigger than a simple change in one file, here is a short intro about how to do a clean PR.
 
 - fork the Tasmota repository in Github
@@ -30,6 +26,7 @@ If you plan to submit a PR bigger than a simple change in one file, here is a sh
 - work on your local version and push as many commits as you want
 
 When you think it is ready to merge and submit a PR:
+
 - `git checkout development` to go back to the main branch
 - `git pull upstream development` to update all the latest changes
 - `git push` to update your fork
@@ -41,16 +38,16 @@ When you think it is ready to merge and submit a PR:
 
 Now you have a clean single commit from which you can create the PR on the Tasmota Github.
 
-# Directory/file structure
+## Directory/file structure
 Sensor libraries are located in the `lib/` directory. Sensor drivers are located in the `tasmota/` directory. The filename of the sensor driver is `xsns_<driver_ID>_<driver_name>.ino`, e.g. `xsns_05_ds18b20.ino` where `<driver_ID>` is a _unique_ number between 01 and 90 and `<driver_name>` is a human-readable name of the driver.
 
 Using generic libraries from external sources for sensors should be avoided as far as possible as they usually include code for other platforms and are not always written in an optimized way.
 
-# API structure
-## Pre-processor directives
+## API structure
+### Pre-processor directives
 Conditional compiling of a sensor driver is achieved by adding a pre-processor directive of the scheme `USE_<driver_name>` in `my_user_config.h`. Accordingly the driver code has to be wrapped in `#ifdef USE_<driver_name> ... #endif  // USE_<driver_name>`. Any Sensor driver must contain a pre-processor directive defining the driver ID by the scheme `#define XSNS_<driver_ID>`.
 
-## Callback function
+### Callback function
 
 Any sensor driver needs a callback function following the scheme
 ```c++
@@ -395,11 +392,11 @@ This pre-processor directive saves RAM by storing strings in flash instead of RA
 
 You may then reference them directly (if the type matches the parameter required) or force it to 4 byte alignment by using the variable as `FPSTR(MyTextStaticVariable)`
 
-# Keeping ESP8266 code compact
+## Keeping ESP8266 code compact
 
 Below are various tips and tricks to keep ESP8266 code compact and save both Flash and Memory. Flash code is limited to 1024k but keep in mind that to allow OTA upgrade, you need Flash memory to contain two firmwares at the same time. To go beyond 512k, you typically use `tasmota-minimal` as an intermediate firmware. `tasmota-minimal` takes roughly 360k, so it's safe not to go `uint32_t` beyond 620k of Flash. Memory is even more limited: 80k. With Arduino Core and basic Tasmota, there are 25k-30k left of heap space. Heap memory is very precious, running out of memory will generally cause a crash.
 
-## About ESP8266
+### About ESP8266
 
 ESP8266 is based on [Xtensa instruction set](https://0x04.net/~mwk/doc/xtensa.pdf). Xtensa is a 32 bits RISC processor core, containing 16 x 32 bits registers. ESP8266 supports integer operations, including 32x32 multiplication. It does not contain an FPU for floating point operations, nor integer divisions.
 
@@ -458,7 +455,7 @@ In conclusion you can easily use `uint32_t` in many places in the code. The main
 * in structures, to save memory. This is the only place where  `uint8_t` will take 1 byte and the compiler will try to pack as much as 4 `uint8_t` in 32 bits
 * when you want to ensure that the value can never exceed 255. Beware though that the compiler will just chunk the last 8 bits of a 32 bits value and will not report any overflow.
 
-#### Loops
+### Loops
 
 Should you use `uint8_t` or `uint32_t` for loops?
 

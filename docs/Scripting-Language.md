@@ -1,3 +1,4 @@
+# Scripting
 !!! failure "This feature is not included in precompiled binaries"
 
 To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
@@ -42,7 +43,7 @@ The maximum script size is 1535 bytes (uses rule set buffers). If the pasted scr
 
 To save code space almost no error messages are provided. However it is taken care of that at least it should not crash on syntax errors.  
 
-## Features
+### Features
 
 - Up to 50 variables (45 numeric and 5 strings - this may be changed by setting a compilation `#define` directive)  
 - Freely definable variable names (all variable names are intentionally _**case sensitive**_)  
@@ -74,6 +75,7 @@ To save code space almost no error messages are provided. However it is taken ca
 - The script itself can't be specified because the size would not fit the MQTT buffers
 
 ## Script Sections
+
 _Section descriptors (e.g., `E`) are **case sensitive**_  
 `D ssize`   
   `ssize` = optional max string size (default=19)  
@@ -201,6 +203,7 @@ If a variable does not exist, `???` is displayed for commands
 If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var` does not exist the destination variable is ==NOT== updated.  
 
 ## Special Variables
+
 (read only)  
 `upsecs` = seconds since start  
 `uptime` = minutes since start  
@@ -272,6 +275,7 @@ Remarks:
 If you define a variable with the same name as a special variable that special variable is discarded  
 
 ## Commands
+
 `= <command` Execute \<command  recursion disabled  
 `+ <command` Execute \<command  recursion enabled  
 `- <command` Execute \<command - do not send MQTT or log messages (i.e., silent execute - useful to reduce traffic)  
@@ -450,7 +454,8 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 ## Scripting Cookbook
 
 ### Scripting Language Example
-**Actually this code is too large**. This is only meant to show some of the possibilities
+
+    **Actually this code is too large**. This is only meant to show some of the possibilities
 
     D  
     ; define all vars here  
@@ -725,10 +730,8 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     R  
     =\print restarting now
 
-
-------------------------------------------------------------------------------
-
 ### Sensor Logging
+
     ; define all vars here  
     ; reserve large strings  
     **D 48**  
@@ -785,10 +788,8 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 
     R  
 
-
-------------------------------------------------------------------------------
-
 ### e-Paper 29 Display with SGP30 and BME280
+
 Some variables are set from ioBroker  
 
     D  
@@ -854,10 +855,8 @@ Some variables are set from ioBroker
 
     R  
 
-
-------------------------------------------------------------------------------
-
 ### e-Paper 42 Display with SHT31 and BME280
+
 This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors, and 2. power statistics  
 
 - The first graph is the battery level of a solar battery (Tesla PowerWall 2)  
@@ -964,11 +963,9 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     sezh=ezh  
     svzh=vzh  
     endif  
-    
-
-------------------------------------------------------------------------------
 
 ### ILI 9488 Color LCD Display with BMP280 and VL5310X
+
 Shows various BMP280 energy graphs  
 Turn display on and off using VL5310X proximity sensor to prevent burn-in
 
@@ -1058,10 +1055,8 @@ Some variables are set from ioBroker
 
     R  
 
-
-------------------------------------------------------------------------------
-
 ### LED Bar Display with WS2812 LED Chain
+
 Used to display home's solar power input/output (+-5000 Watts)
 
     D  
@@ -1162,10 +1157,8 @@ Used to display home's solar power input/output (+-5000 Watts)
 
     R  
 
-
-------------------------------------------------------------------------------
-
 ### Multiple IR Receiver Synchronization
+
 Shows how a Magic Home with IR receiver works  
 Synchronizes 2 Magic Home devices by also sending the commands to a second Magic Home via [`WebSend`](Commands#websend)
 
@@ -1293,9 +1286,6 @@ Synchronizes 2 Magic Home devices by also sending the commands to a second Magic
 
     istr=""  
 
-
-------------------------------------------------------------------------------
-
 ### Fast Polling
 
     ; expand default string length to be able to hold `WebSend [xxx.xxx.xxx.xxx]`  
@@ -1348,25 +1338,197 @@ Synchronizes 2 Magic Home devices by also sending the commands to a second Magic
     hold=0  
     endif
 
+### Web UI
 
-------------------------------------------------------------------------------
+An example to show how to implement a web UI. This example controls a light via `WebSend`  
+
+    D  
+    dimmer=0  
+    sw=0  
+    color=""  
+    col1=""  
+    red=0  
+    green=0  
+    blue=0  
+    ww=0  
+
+    F  
+    color=hn(red)+hn(green)+hn(blue)+hn(ww)  
+    if color!=col1  
+    then  
+    col1=color  
+    =websend [192.168.178.75] color %color%  
+    endif  
+
+    if chg[dimmer]0  
+    then  
+    =websend [192.168.178.75] dimmer %dimmer%  
+    endif  
+
+    if chg[sw]0  
+    then  
+    =websend [192.168.178.75] power1 %sw%  
+    endif  
+
+    W  
+    bu(sw "Light on" "Light off")  
+    ck(sw "Light on/off   ")  
+    sl(0 100 dimmer "0" "Dimmer" "100")  
+    sl(0 255 red "0" "red" "255")  
+    sl(0 255 green "0" "green" "255")  
+    sl(0 255 blue "0" "blue" "255")  
+    sl(0 255 ww "0" "warm white" "255")  
+    tx(color "color:   ")  
+
+### Hue Emulation
+
+An example to show how to respond to Alexa requests via Hue Emulation
+
+When Alexa sends on/off, dimmer, and color (via hsb), send commands to a MagicHome device
+
+    D  
+    pwr1=0  
+    hue1=0  
+    sat1=0  
+    bri1=0  
+    tmp=0  
+      
+    E  
+    if upd[hue1]0  
+    or upd[sat1]0  
+    or upd[bri1]0  
+    then  
+    tmp=hue1/182  
+    -websend [192.168.178.84] hsbcolor %tmp%,%sat1%,%bri1%  
+    endif  
+
+    if upd[pwr1]0  
+    then  
+    -websend [192.168.178.84] power1 %pwr1%  
+    endif  
+      
+    H  
+    ; on,hue,sat,bri,ct  
+    livingroom,E,on=pwr1,hue=hue1,sat=sat1,bri=bri1  
+
+### Alexa Controlled MCP230xx I^2^C GPIO Expander
+
+Uses Tasmota's Hue Emulation capabilities for Alexa interface
+
+    ; define vars  
+    D  
+    p:p1=0  
+    p:p2=0  
+    p:p3=0  
+    p:p4=0  
+      
+    ; init ports  
+    B  
+    -sensor29 0,5,0  
+    -sensor29 1,5,0  
+    -sensor29 2,5,0  
+    -sensor29 3,5,0  
+    -sensor29 0,%0p1%  
+    -sensor29 1,%0p2%  
+    -sensor29 2,%0p3%  
+    -sensor29 3,%0p4%  
+      
+    ; define Alexa virtual devices  
+    H  
+    port1,S,on=p1  
+    port2,S,on=p2  
+    port3,S,on=p3  
+    port4,S,on=p4  
+      
+    ; handle events  
+    E  
+    print EVENT  
+      
+    if upd[p1]0  
+    then  
+    -sensor29 0,%0p1%  
+    endif  
+    if upd[p2]0  
+    then  
+    -sensor29 1,%0p2%  
+    endif  
+    if upd[p3]0  
+    then  
+    -sensor29 2,%0p3%  
+    endif  
+    if upd[p4]0  
+    then  
+    -sensor29 3,%0p4%  
+    endif  
+  
+    =#pub  
+  
+    ; publish routine  
+    #pub  
+    =publish stat/%topic%/RESULT {"MCP23XX":{"p1":%0p1%,"p2":%0p2%,"p3":%0p3%,"p4":%0p4%}}  
+    svars  
+  
+    ; web interface  
+    W  
+    bu(p1 "p1 on" "p1 off")bu(p2 "p2 on" "p2 off")bu(p3 "p3 on" "p3 off")bu(p4 "p4 on" "p4 off")  
+
+### Retrieve network gateway IP Address
+
+    D  
+    gw=""  
+
+    ; Request Status information. The response will trigger the `U` section  
+    B  
+    +status 5  
+
+    ; Read the status JSON payload  
+    U  
+    gw=StatusNET#Gateway  
+    print %gw%  
+
+
+ 
+### Send e-mail
+
+    **D 25**  
+    day1=0  
+    et=0  
+    to="mrx@gmail.com"
+
+    T  
+    et=ENERGY#Total  
+
+    S  
+    ; send at midnight  
+    day1=day  
+    if chg[day1]0  
+    then  
+    =sendmail [\*:\*:\*:\*:\*:\%to\%:energy report]\*  
+    endif  
+
+    m  
+    email report at %tstamp%  
+    your power consumption today was %et% KWh  
+    \#
 
 ### Switching and Dimming By Recognizing Mains Power Frequency
+
 Switching in Tasmota is usually done by High/Low (+3.3V/GND) changes on a GPIO. However, for devices like the [Moes QS-WiFi-D01 Dimmer](https://templates.blakadder.com/qs-wifi_D01_dimmer.html), this is achieved by a pulse frequency when connected to the GPIO, and these pulses are captured by `Counter1` in Tasmota.
+
 ![pushbutton-input](https://user-images.githubusercontent.com/36734573/61955930-5d90e480-afbc-11e9-8d7e-00ac526874d3.png)
 
 - When the **light is OFF** and there is a **short period** of pulses - then turn the light **ON** at the previous dimmer level.
 - When the **light is ON** and there is a **short period** of pulses - then turn the light **OFF**.
 - When there is a longer period of pulses (i.e., **HOLD**) - toggle dimming direction and then adjust the brightness level as long as the button is pressed or until the limits are reached.
 
-[#6085 (comment)](https://github.com/arendst/Tasmota/issues/6085#issuecomment-512353010)
+[Issue 6085](https://github.com/arendst/Tasmota/issues/6085#issuecomment-512353010)
 
 In the Data Section D at the beginning of the Script the following initialization variables may be changed:
 
-- dim multiplier - 0..2.55 set the dimming increment value
-- dim lower limit - range for the dimmer value for push-button operation (set according to your bulb); min 0
-- dim upper limit - range for the dimmer value for push-button operation (set according to your bulb); max 100
-- start dim level - initial dimmer level after power-up or restart; max 100
+    - dim multiplier - `0..2.55` set the dimming increment value
+    - dim lower limit - range for the dimmer value for push-button operation (set according to your bulb); min 0
+    - dim upper limit - range for the dimmer value for push-button operation (set according to your bulb); max 100
+    - start dim level - initial dimmer level after power-up or restart; max 100
 
 
     D  
@@ -1506,186 +1668,4 @@ In the Data Section D at the beginning of the Script the following initializatio
     dim="FF55"+hn(tmp*dimmlp)+"05DC0A"  
     =SerialSend5 %dim%  
     =Dimmer %tmp%  
-    \#  
-
-
-------------------------------------------------------------------------------  
-
-### Web UI
-An example to show how to implement a web UI. This example controls a light via `WebSend`  
-
-    D  
-    dimmer=0  
-    sw=0  
-    color=""  
-    col1=""  
-    red=0  
-    green=0  
-    blue=0  
-    ww=0  
-
-    F  
-    color=hn(red)+hn(green)+hn(blue)+hn(ww)  
-    if color!=col1  
-    then  
-    col1=color  
-    =websend [192.168.178.75] color %color%  
-    endif  
-
-    if chg[dimmer]0  
-    then  
-    =websend [192.168.178.75] dimmer %dimmer%  
-    endif  
-
-    if chg[sw]0  
-    then  
-    =websend [192.168.178.75] power1 %sw%  
-    endif  
-
-    W  
-    bu(sw "Light on" "Light off")  
-    ck(sw "Light on/off   ")  
-    sl(0 100 dimmer "0" "Dimmer" "100")  
-    sl(0 255 red "0" "red" "255")  
-    sl(0 255 green "0" "green" "255")  
-    sl(0 255 blue "0" "blue" "255")  
-    sl(0 255 ww "0" "warm white" "255")  
-    tx(color "color:   ")  
-
-
------------------------------------------------------------------------------- 
-### Hue Emulation
-An example to show how to respond to Alexa requests via Hue Emulation
-
-When Alexa sends on/off, dimmer, and color (via hsb), send commands to a MagicHome device
-
-    D  
-    pwr1=0  
-    hue1=0  
-    sat1=0  
-    bri1=0  
-    tmp=0  
-      
-    E  
-    if upd[hue1]0  
-    or upd[sat1]0  
-    or upd[bri1]0  
-    then  
-    tmp=hue1/182  
-    -websend [192.168.178.84] hsbcolor %tmp%,%sat1%,%bri1%  
-    endif  
-
-    if upd[pwr1]0  
-    then  
-    -websend [192.168.178.84] power1 %pwr1%  
-    endif  
-      
-    H  
-    ; on,hue,sat,bri,ct  
-    livingroom,E,on=pwr1,hue=hue1,sat=sat1,bri=bri1  
-
-
------------------------------------------------------------------------------- 
-
-### Alexa Controlled MCP230xx I^2^C GPIO Expander
-Uses Tasmota's Hue Emulation capabilities for Alexa interface
-
-    ; define vars  
-    D  
-    p:p1=0  
-    p:p2=0  
-    p:p3=0  
-    p:p4=0  
-      
-    ; init ports  
-    B  
-    -sensor29 0,5,0  
-    -sensor29 1,5,0  
-    -sensor29 2,5,0  
-    -sensor29 3,5,0  
-    -sensor29 0,%0p1%  
-    -sensor29 1,%0p2%  
-    -sensor29 2,%0p3%  
-    -sensor29 3,%0p4%  
-      
-    ; define Alexa virtual devices  
-    H  
-    port1,S,on=p1  
-    port2,S,on=p2  
-    port3,S,on=p3  
-    port4,S,on=p4  
-      
-    ; handle events  
-    E  
-    print EVENT  
-      
-    if upd[p1]0  
-    then  
-    -sensor29 0,%0p1%  
-    endif  
-    if upd[p2]0  
-    then  
-    -sensor29 1,%0p2%  
-    endif  
-    if upd[p3]0  
-    then  
-    -sensor29 2,%0p3%  
-    endif  
-    if upd[p4]0  
-    then  
-    -sensor29 3,%0p4%  
-    endif  
-  
-    =#pub  
-  
-    ; publish routine  
-    #pub  
-    =publish stat/%topic%/RESULT {"MCP23XX":{"p1":%0p1%,"p2":%0p2%,"p3":%0p3%,"p4":%0p4%}}  
-    svars  
-  
-    ; web interface  
-    W  
-    bu(p1 "p1 on" "p1 off")bu(p2 "p2 on" "p2 off")bu(p3 "p3 on" "p3 off")bu(p4 "p4 on" "p4 off")  
-
-
------------------------------------------------------------------------------- 
-### Retrieve network gateway IP Address
-
-    D  
-    gw=""  
-
-    ; Request Status information. The response will trigger the `U` section  
-    B  
-    +status 5  
-
-    ; Read the status JSON payload  
-    U  
-    gw=StatusNET#Gateway  
-    print %gw%  
-
-
------------------------------------------------------------------------------- 
-### Send e-mail
-    **D 25**  
-    day1=0  
-    et=0  
-    to="mrx@gmail.com"
-
-    T  
-    et=ENERGY#Total  
-
-    S  
-    ; send at midnight  
-    day1=day  
-    if chg[day1]0  
-    then  
-    =sendmail [\*:\*:\*:\*:\*:\%to\%:energy report]\*  
-    endif  
-
-    m  
-    email report at %tstamp%  
-    your power consumption today was %et% KWh  
-    \#  
-
-
------------------------------------------------------------------------------- 
+    \#

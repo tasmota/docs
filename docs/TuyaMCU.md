@@ -435,6 +435,7 @@ Let's dissect and explain the MCU protocol using serial command `55aa00060005010
 | 55aa00| 06| 0005| 01   | 01| 0001| 01| 0e|
 
 This is the command which powers on the device sending Function Command = `1` to dpID 1 (Switch): 
+
 - Frame Header Version = `0x55aa00` which is a fixed value and always the same
 - Command Word = `0x06` because we're sending a command
 - Data Type = `0x01` since the command sent is a 1 byte boolean
@@ -631,6 +632,7 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 
 
 ### BecaThermostat 
+
 !!! warning "Work in progress"
 
 | DP ID | Function points     | Identifier  | Data type        | Function type | Properties                                 |

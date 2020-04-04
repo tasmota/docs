@@ -101,28 +101,28 @@ nav:
   - Blinds-and-Shutters.md
   - Peripherals: Peripherals.md
   - Buttons-and-Switches.md
-  - IR Communication: Tasmota-IR.md
   - TuyaMCU.md
   - WebUI.md
   - Compiling: Compile-your-build.md
   - Features:
+    - Features.md
     - Scripting: Scripting-Language.md
     - Bluetooth.md
-    - Zigbee:
-      - Zigbee.md
-      - Zigbee-Internals.md
+    - Zigbee.md
     - GPS-NTP-server.md
     - I2C Devices: I2CDevices.md
-    - TasmotaSlave.md
+    - IR Communication: Tasmota-IR.md
+    - PIR-Motion-Sensors.md
+    - PWM-dimmer-switch.md
     - Device-Groups.md
     - DeepSleep.md
-    - PWM-dimmer-switch.md
     - Dynamic-Sleep.md
     - Smart-Meter-Interface.md
-    - PIR-Motion-Sensors.md
+    - TasmotaSlave.md
     - Power-Monitoring-Calibration.md
     - Subscribe-&-Unsubscribe.md
     - TLS.md
+    - For Developers: For-Developers.md
   - Smart Home Integrations:
     - Introduction: Integrations.md
     - Alexa.md
