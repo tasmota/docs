@@ -1525,10 +1525,10 @@ Switching in Tasmota is usually done by High/Low (+3.3V/GND) changes on a GPIO. 
 
 In the Data Section D at the beginning of the Script the following initialization variables may be changed:
 
-dim multiplier = `0..2.55` set the dimming increment value    
-dim lower limit = range for the dimmer value for push-button operation (set according to your bulb); min 0    
-dim upper limit = range for the dimmer value for push-button operation (set according to your bulb); max 100    
-start dim level = initial dimmer level after power-up or restart; max 100   
+- dim multiplier = `0..2.55` set the dimming increment value    
+- dim lower limit = range for the dimmer value for push-button operation (set according to your bulb); min 0    
+- dim upper limit = range for the dimmer value for push-button operation (set according to your bulb); max 100    
+- start dim level = initial dimmer level after power-up or restart; max 100   
 
 
     D  
