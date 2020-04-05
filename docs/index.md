@@ -1,3 +1,4 @@
+description: Documentation (Wiki) for Tasmota: Open source firmware for ESP8266 devices with easy configuration using webUI, OTA updates, automation using timers or rules, expandability and entirely local control over MQTT, HTTP, serial or KNX.
 
 # Open source firmware for ESP8266 devices
 
