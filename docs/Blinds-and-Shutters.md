@@ -90,6 +90,7 @@ Stepper motors can also be used to operate shutters and blinds. Additionally you
 
 #### Increasing Calibration Granularity
 If you desire that the %-opening closely match what `ShutterPosition<x>` and web UI indicate, there is a granular calibration matrix available. Ensure that `ShutterClose<x>` and `ShutterOpen<x>` moves the shutter more or less to the limit positions and follow this procedure:
+
 - `ShutterSetHalfway<x> 50` (reset to default)
 - `ShutterCalibration<x> 30 50 70 90 100`
 - `Restart 1`
