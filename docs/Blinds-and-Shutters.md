@@ -1,3 +1,5 @@
+# Shutters and Blinds
+
 !!! info "Control blinds and roller shades connected to regular ON/OFF motors or stepper motors"
 
 Your device must have at least two relays (see [Shutters with Sonoff Dual R2](#using-sonoff-dual-r2)). 

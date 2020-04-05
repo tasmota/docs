@@ -3,7 +3,7 @@
 
 ![Tasmota logo](_media/logo-blue.png)
 
-Tasmota is an open source firmware for [ESP8266](https://en.wikipedia.org/wiki/ESP8266) based devices created and maintained by Theo Arendst. 
+Tasmota is an open source firmware for [ESP8266](https://en.wikipedia.org/wiki/ESP8266) based devices created and maintained by [Theo Arendst](https://github.com/arendst). 
 
 Everything began as Sonoff-MQTT-OTA-Arduino with a [commit](https://github.com/arendst/Sonoff-MQTT-OTA-Arduino/commit/ab4190db920adc73738ef5a4e3fcdb421c018c69) on 10. March 2016. by Theo Arendst. Its goal was to provide ESP8266 based [ITEAD Sonoff](https://www.itead.cc/sonoff-wifi-wireless-switch.html) devices with MQTT and 'Over the Air' or OTA firmware using Arduino IDE. 
 
