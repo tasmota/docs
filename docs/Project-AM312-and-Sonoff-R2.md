@@ -13,7 +13,7 @@ As the R2 version doesn't have GPIO14 exposed you can use [GPIO3 (RX)](https://w
 
 Remember to remove the lens to lower the sensitivity of the sensor.
 
-#### Configuration the module
+#### Configuration
 
 1. Go to IP of the device, next _Configuration --> Configure Module -->_ set "GPIO3 Serial In" to "Switch1 (9)"
 2. Go to _Console_ and type _"[SwitchMode 4](Commands.md#switchmode)"_ ([detailed description of SwitchModes](Buttons-and-Switches#switchmode)) to enable toggle switch type.

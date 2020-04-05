@@ -68,9 +68,8 @@ nav:
   - Components.md
   - Modules: Modules.md
   - Peripherals: Peripherals.md
-  - Compiling: Compile-your-build.md
   - Features:
-    - Features.md
+    - Introduction: Features.md
     - Buttons-and-Switches.md
     - Device-Groups.md
     - Lights.md
@@ -83,17 +82,17 @@ nav:
     - TuyaMCU.md
     - WebUI.md
     - Bluetooth.md
+    - Zigbee.md
+    - IR Communication: Tasmota-IR.md
     - DeepSleep.md
     - Dynamic-Sleep.md
-    - GPS-NTP-server.md
     - I2C Devices: I2CDevices.md
-    - IR Communication: Tasmota-IR.md
-    - Zigbee.md
     - Scripting: Scripting-Language.md
     - Smart-Meter-Interface.md
     - TasmotaSlave.md
     - Subscribe-&-Unsubscribe.md
     - TLS.md
+    - Tutorials.md
     - For Developers: For-Developers.md
   - Smart Home Integrations:
     - Introduction: Integrations.md
@@ -169,5 +168,6 @@ nav:
     - Troubleshooting.md
     - Device-Recovery.md
     - Discord Support: http://thehackbox.org/tasmota/release/ "target=_blank"
+  - Compiling: Compile-your-build.md
   - Contributing: Contributing.md
-  - Download Tasmota: http://thehackbox.org/tasmota/release/ "target=_blank"
+  - Download: http://thehackbox.org/tasmota/release/ "target=_blank"

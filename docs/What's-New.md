@@ -1,1 +1,0 @@
-[remoteMarkdownUrl](https://raw.githubusercontent.com/arendst/Tasmota/development/tasmota/CHANGELOG.md)

@@ -96,7 +96,7 @@ Corresponding command:
 
     IRSend<x> raw,0,8956,4560,590,615,1710,1001100 ... 0000101
 
-# Understanding IR encoding
+## Understanding IR encoding
 
 Below are several topics that may help you decoding and understanding what your IR remotes are sending (ex: HVAC) or convert from popular IR formats like PRONTO or Broadlink.
 

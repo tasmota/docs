@@ -6,7 +6,7 @@ In this example the Kaifa MA105C meter is used and might work with other meters 
 
 The transistor makes sure that the RxD signal is converted and inverted to 3.3v 
 
-### Tasmota Settings
+## Tasmota Settings
 In the _Configuration -> Configure Module_ page, select module `Generic (18)`
 
 From the web console set the serial delimiter to 10 (newline). This makes Tasmota publish each line of the telegram separately to mqtt. 
@@ -15,7 +15,7 @@ From the web console set the serial delimiter to 10 (newline). This makes Tasmot
 
 `SerialSend`
 
-### Example output
+## Example output
 Below an example of the telegram message published (per line) to mqtt. From here your HA system can process the data required for your needs.
 
 ```json
@@ -47,7 +47,7 @@ Below an example of the telegram message published (per line) to mqtt. From here
 16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"!EE58"}
 ```
 
-### Description of each line 
+## Description of each line 
 see also [DSMR 5.0 - P1 Companion Standard](https://www.netbeheernederland.nl/_upload/Files/Slimme_meter_15_a727fce1f1.pdf)
 
 ``` 
