@@ -184,7 +184,7 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <td class="tg-lboi">temperature, humidity</td>
     <td class="tg-lboi">temperature, humidity, battery</td>
     <td class="tg-lboi">temperature, humidity</td>
-    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility, battery</td>
+    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility</td>
   </tr>
 </table>
    
