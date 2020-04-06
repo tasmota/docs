@@ -147,6 +147,15 @@ All sensors have an additional GATT-interface with more data in it, but it can n
 As we can not use a checksum to test data integrity of the packet, only data of sensors whose adresses showed up more than once (default = 3 times) will be published. 
 Internally from time to time "fake" sensors will be created, when there was data corruption in the address bytes.  These will be removed automatically.  
   
+  
+#### Commands
+
+Command|Parameters
+:---|:---
+NRFPage<a id="nrfpage"></a>|Show the maximum number of sensors shown per page in the webUI list. Default = 4 |`<value>` Set number
+NRFIgnore<a id="nrfignore"></a>| Ignore a certain sensor type. Default = 0 (= all known types are active)|`<value>` Set type
+ 
+  
 ### Supported Devices
 
 !!! note "It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely!"  
