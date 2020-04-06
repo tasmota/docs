@@ -153,7 +153,7 @@ Internally from time to time "fake" sensors will be created, when there was data
 Command|Parameters
 :---|:---
 NRFPage<a id="nrfpage"></a>|Show the maximum number of sensors shown per page in the webUI list. Default = 4<BR>`<value>` Set number
-NRFIgnore<a id="nrfignore"></a>| Ignore a certain sensor type. Default = 0 (= all known types are active)<BR>`<value>` Set type
+NRFIgnore<a id="nrfignore"></a>| Ignore a certain sensor type. Default = 0 (= all known types are active)<BR>`<value>` Set type<BR>1: Flora, 2: MJ_HT_V1, 3: LYWSD02, 4: LYWSD03, 5: CGG1, 6: CGD1
 NRFScan<a id="nrfscan"></a>|Scan for regular BLE-advertisements and show a list in the console<BR>`<value>` = 0: Start a new scan list; 1: Append to the scan list; 2: Stop running scan
 NRFBeacon<a id="nrfbeacon"></a>| Set a BLE-device as a beacon using the (fixed) MAC-address<BR>`<value>` (1-3 digits): Use beacon from scan list<BR>`<value>` (12 characters): Use beacon given the MAC interpreted as an uppercase string `AABBCCDDEEFF`
  
@@ -189,8 +189,15 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
 </table>
    
 #### Unsupported Devices  
- 
+  
 For LYWSD03MMC the sensor data in the advertisements is encrypted. It is highly unlikely to read data with the NRF24L01 out-of-the-box in the future. You can use an HM-1x module for this sensor.
+
+### Beacon  
+  
+A simplified presence dection will scan for regular BLE advertisements of a given BT-device defined by its MAC-address. It is important to know, that many new devices (nearly every Apple-device) will change its MAC every few minutes to prevent tracking.  
+If the driver receives a packet from the "beacon" a counter will be (re-)started with an increment every second. This timer is published in the TELE-message, presented in the webUI and processed as a RULE.
+The stability of regular readings will be strongly influenced by the local environment (many BLE-devices nearby or general noise in the 2.4-GHz-band). 
+
 
 ## Getting data from BT Xiaomi Devices
 
