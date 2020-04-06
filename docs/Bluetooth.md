@@ -152,8 +152,10 @@ Internally from time to time "fake" sensors will be created, when there was data
 
 Command|Parameters
 :---|:---
-NRFPage<a id="nrfpage"></a>|Show the maximum number of sensors shown per page in the webUI list. Default = 4 |`<value>` Set number
-NRFIgnore<a id="nrfignore"></a>| Ignore a certain sensor type. Default = 0 (= all known types are active)|`<value>` Set type
+NRFPage<a id="nrfpage"></a>|Show the maximum number of sensors shown per page in the webUI list. Default = 4<BR>`<value>` Set number
+NRFIgnore<a id="nrfignore"></a>| Ignore a certain sensor type. Default = 0 (= all known types are active)<BR>`<value>` Set type
+NRFScan<a id="nrfscan"></a>|Scan for regular BLE-advertisements and show a list in the console<BR>`<value>` = 0: Start a new scan list; 1: Append to the scan list; 2: Stop running scan
+NRFBeacon<a id="nrfbeacon"></a>| Set a BLE-device as a beacon using the (fixed) MAC-address<BR>`<value>` (1-3 digits): Use beacon from scan list<BR>`<value>` (12 characters): Use beacon given the MAC interpreted as an uppercase string `AABBCCDDEEFF`
  
   
 ### Supported Devices
