@@ -1,7 +1,8 @@
-### Information for tool developers:
-[**JSON Status Responses**](JSON-Status-Responses)  
-[**Sensor API**](Sensor-API)
+## Information for tool developers:
+- [**API**](API.md)
+- [**Sensor API**](Sensor-API)
+- [**JSON Status Responses**](JSON-Status-Responses)  
 
-### Maintained Tasmota forks with additional features:  
-[**Time Proportioned Output Fork**](Time-Proportioned-Output-support)  
-[**PID Control Fork**](PID-Control)  
+## Tasmota forks with added features  
+- [**Time Proportioned Output Fork**](Time-Proportioned-Output-support)  
+- [**PID Control Fork**](PID-Control)  

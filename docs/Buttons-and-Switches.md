@@ -38,7 +38,8 @@ Rule1 on Switch1#state do Publish cmnd/custom-topic/SWITCH %value% endon
 Rule1 1
 ```
 
-> [!ATTENTION] If you define a switch with a number higher than available power outputs it will default to controlling `Power1`. Example: Switch4 on a device with Power1 and Power2 will control `Power1`.
+!!! warning 
+    If you define a switch with a number higher than available power outputs it will default to controlling `Power1`. Example: Switch4 on a device with Power1 and Power2 will control `Power1`.
 
 And now, to make everything completely confusing:  
 A push-button can be configured as a `Switch` and a toggle switch can be configured as a `Button`. Configuring a toggle switch as a `Button` is not recommended!  

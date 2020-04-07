@@ -1,7 +1,7 @@
 The Sonoff RF Bridge has two separate chips to handle the Wi-Fi (ESP8285) and RF (EFM8BB1) communications respectively. It is used to send and receive codes with 433.9MHz frequency RF devices. Codes received from RF devices such as remote controls is passed to the onboard ESP8285 via the serial interface. The code data is relayed via MQTT. Similarly, the Bridge receives commands over Wi-Fi and sends the encoded data to the RF chip to control an RF device. Thus, the Sonoff RF Bridge "bridges" communications between RF and Wi-Fi.
 
 ## Flash Tasmota
-Please [see](../How-to-Flash-the-RF-Bridge.md) for flashing details and the [Hardware Preparation](../Getting-Started.md#hardware-preparation) article for general flashing instructions.
+Please [Hardware Preparation](../Getting-Started.md#hardware-preparation) article for general flashing instructions.
 
 Access the serial interface available on the 5-pin header next to the switch as can be seen in the image.
 
@@ -15,7 +15,7 @@ After flashing the ESP8285, be sure to move the switch position away from the 5-
 
 Configure the device as usual and select module `Sonoff Bridge (25)`. During normal operation the serial interface is used at 19200 baud to communicate with the RF microcontroller. Therefore serial logging ([`SerialLog 0`](../Commands.md#seriallog)) must be disabled.
 
-**IMPORTANT:** In the Module configuration GPIO4 and GPIO5 must be left as **`00 None`** On R2 versions of the Sonoff RF Bridge, a hardware modification is required in order to use these GPIO.
+**IMPORTANT:** In the Module configuration GPIO4 and GPIO5 must be left as **`00 None`** On R2 versions of the Sonoff RF Bridge, a hardware modification is required in order to use these GPIOs.
 
 ### Video tutorial by alsolh
 [![](http://img.youtube.com/vi/XixXbg2T4Ns/0.jpg)](http://www.youtube.com/watch?v=XixXbg2T4Ns "")
@@ -184,9 +184,8 @@ After learning how bitbucket works from  the [Portisch wiki](https://github.com/
 
   For example messages with '_**37D2**_' in the third bucket are good candidates. Messages with '_**0124**_' in the second bucket are also good candidates. First bucket values are very similar; '_**07F8**_' can be a good one.
 
-## Official Sources
+## External Sources
 * [Itead Product Page](http://sonoff.itead.cc/en/products/appliances/sonoff-rf-bridge-433)
 * [Itead Shop](https://www.itead.cc/sonoff-rf-bridge-433.html)
 * [Itead Wiki](https://www.itead.cc/wiki/Sonoff_RF_Bridge_433)
-* [How to Flash the RF Bridge](../How-to-Flash-the-RF-Bridge)   
 * [RF Bridge 433 R2 Information](https://github.com/arendst/Tasmota/issues/1916)

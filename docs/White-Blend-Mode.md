@@ -1,3 +1,5 @@
+# White Blend Mode for lights
+
 White Blend Mode is used for 4 channel (RGBW) and 5 channel (RGBWC) devices. It is enabled by setting the last PWM channel to zero (e.g., [`RGBWWTable 255,255,255,<n>,0`](Commands#rgbwwtable)) to lower the white channel intensity.
 
 Generally, white LEDs are brighter than RGB LEDs. If you want to keep the same brightness, you need to calibrate the white level. In this mode, any white component will be removed from RGB LEDs and sent to the white LEDs. This makes whites look much better.

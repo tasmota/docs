@@ -1,3 +1,21 @@
+## Tips
+
+### Available Characters for HOSTNAME
+
+  - 24 chars max
+  - only a..z A..Z 0..9 '-'
+  - no '-' as last char
+
+**RFC952**  
+>  ASSUMPTIONS  
+>  1. A "name" (Net, Host, Gateway, or Domain name) is a text string up    to 24 characters drawn from the alphabet (A-Z), digits (0-9), minus    sign (-), and period (.).  Note that periods are only allowed when    they serve to delimit components of "domain style names". (See    RFC-921, "Domain Name System Implementation Schedule", for    background).  No blank or space characters are permitted as part of a    name. No distinction is made between upper and lower case.  The first    character must be an alpha character.  The last character must not be    a minus sign or period.  A host which serves as a GATEWAY should have    "-GATEWAY" or "-GW" as part of its name.  Hosts which do not serve as    Internet gateways should not use "-GATEWAY" and "-GW" as part of    their names. A host which is a TAC should have "-TAC" as the last    part of its host name, if it is a DoD host.  Single character names    or nicknames are not allowed.  
+
+### Flash Memory Considerations
+
+- To stop saving parameter changes to Flash or Spiffs use command ```SaveData off```.
+
+- To stop saving power changes only to Flash or Spiffs use command ```SetOption0 off```. This will disable the relay from returning to the same state after power on UNLESS you use the MQTT retain flag in which case the MQTT broker will send the last known MQTT state on restart or power on. The command ```ButtonRetain on``` will configure the button to send a MQTT command with Topic and the MQTT retain flag set.
+
 ## Installation
 
 ### Cannot enter flash mode
@@ -61,7 +79,7 @@ DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can r
 ### I entered the wrong Wi-Fi information
 - If you have a device with a button and the button is configured as a component in the Tasmota settings (e.g., GPIO0 - Button1), you can try pressing the button to force the device into [Wi-Fi configuration mode](Buttons-and-Switches#4-short-presses) with 4 short presses of the button. 
 
-- If that didn't work reset your device using [Fast power cycle device recovery](Fast-power-cycle-device-recovery)
+- If that didn't work reset your device using [Fast power cycle device recovery](Device-Recovery.md#fast-power-cycle-device-recovery)
 
 - If you are unsure what SSID you have entered, you can try to find that with special Wi-Fi sniffing tools. For example [Nirsoft WifiChannelMonitor](https://www.nirsoft.net/utils/wifi_channel_monitor.html) can show your mistakenly configured SSID name.  
   **Linux system example:**
@@ -96,7 +114,7 @@ DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can r
 
 First thing to try when having Wi-Fi issues:
 
-   Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](Getting-Started.md#erase-flash-memory)) using [the latest precompiled binaries](http://thehackbox.org/tasmota/).
+   Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](Getting-Started.md#esptoolpy)) using [the latest precompiled binaries](http://thehackbox.org/tasmota/).
 
    This approach has solved most of the reported issues. Sometimes this is due to a bad flash, a bad OTA or invalid data that remains in the flash where the SDK memory is.
 

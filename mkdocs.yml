@@ -1,11 +1,14 @@
 site_name: Tasmota
-site_description: Tasmota open source firmware for ESP8266 documentation and help
+site_description: Documentation (Wiki) for Tasmota. Open source firmware for ESP8266 devices with easy configuration using webUI, OTA updates, automation using timers or rules, expandability and entirely local control over MQTT, HTTP, serial or KNX.
 site_url: https://tasmota.github.io/docs/
 repo_name: 'arendst/tasmota'
 repo_url: 'https://github.com/arendst/tasmota'
 edit_uri: 'https://github.com/tasmota/docs/blob/master/docs/'
 # copyright: 'Copyright &copy; 2020 Tasmota Development Team'
 # use_directory_urls: false
+
+strict: true
+
 theme: 
   name: material
   # custom_dir: 'theme'
@@ -32,7 +35,6 @@ markdown_extensions:
   - toc:
      permalink: "~"
      toc_depth: 3
-  # - pymdownx.magiclink:
   - pymdownx.mark
   - pymdownx.tabbed
   - pymdownx.emoji:
@@ -46,37 +48,7 @@ plugins:
   - alternate-link
   - minify:
       minify_html: true
-  # - awesome-pages:
-  #     collapse_single_pages: true
   # - htmlproofer
-  # - redirects:
-  #     redirect_maps:
-  #         '/installation/Flashing.md': 'Getting-Started.md'
-  #         '/installation/Prerequisites.md': 'Getting-Started.md'
-  #         '/installation/Hardware-Preparation.md': 'Getting-Started.md'
-  #         '/installation/Initial-Configuration.md': 'Getting-Started.md'
-  #         'help/FAQ.md': 'FAQ.md'
-  #         'peripherals/': 'Supported-Peripherals.md'
-  #         'help/Troubleshooting.md': 'Troubleshooting.md'
-  #         'help/Device-Recovery.md': 'Device-Recovery.md'
-  #         'integrations/Alexa.md': 'Alexa.md'
-  #         'integrations/AWS-IoT.md': 'AWS-IoT.md'
-  #         'integrations/Home-Assistant.md': 'Home-Assistant.md'
-  #         'integrations/Domoticz.md': 'Domoticz.md'
-  #         'integrations/Homebridge.md': 'Homebridge.md'
-  #         'integrations/HomeSeer.md': 'HomeSeer.md'
-  #         'integrations/IP-Symcon.md': 'IP-Symcon.md'
-  #         'integrations/KNX.md': 'KNX.md'
-  #         'integrations/NodeRed.md': 'NodeRed.md'
-  #         'integrations/nymea.md': 'nymea.md'
-  #         'integrations/Octoprint.md': 'Octoprint.md'
-  #         'integrations/openHAB.md': 'openHAB.md'
-  #         'integrations/otto.md': 'otto.md'
-  #         'integrations/TasmoAdmin.md': 'TasmoAdmin.md'
-  #         'integrations/Tasmota-Device-Locator.md': 'Tasmota-Device-Locator.md'
-  #         'integrations/Tasmota-Device-Manager.md': 'Tasmota-Device-Manager.md'
-  #         'integrations/TasUI.md': 'TasUI.md'
-  #         'integrations/Yeti.md': 'Yeti.md'
 
 google_analytics:
   - 'UA-140681905-2'
@@ -95,34 +67,33 @@ nav:
   - Templates: Templates.md
   - Components.md
   - Modules: Modules.md
-  - Rules.md
-  - Timers.md
-  - Lights.md
-  - Blinds-and-Shutters.md
   - Peripherals: Peripherals.md
-  - Buttons-and-Switches.md
-  - IR Communication: Tasmota-IR.md
-  - TuyaMCU.md
-  - WebUI.md
-  - Compiling: Compile-your-build.md
   - Features:
-    - Scripting: Scripting-Language.md
-    - Bluetooth.md
-    - Zigbee:
-      - Zigbee.md
-      - Zigbee-Internals.md
-    - GPS-NTP-server.md
-    - I2C Devices: I2CDevices.md
-    - TasmotaSlave.md
+    - Introduction: Features.md
+    - Buttons-and-Switches.md
     - Device-Groups.md
-    - DeepSleep.md
-    - PWM-dimmer-switch.md
-    - Dynamic-Sleep.md
-    - Smart-Meter-Interface.md
+    - Lights.md
     - PIR-Motion-Sensors.md
     - Power-Monitoring-Calibration.md
+    - PWM-dimmer-switch.md
+    - Rules.md
+    - Blinds-and-Shutters.md
+    - Timers.md
+    - TuyaMCU.md
+    - WebUI.md
+    - Bluetooth.md
+    - Zigbee.md
+    - IR Communication: Tasmota-IR.md
+    - DeepSleep.md
+    - Dynamic-Sleep.md
+    - I2C Devices: I2CDevices.md
+    - Scripting: Scripting-Language.md
+    - Smart-Meter-Interface.md
+    - TasmotaSlave.md
     - Subscribe-&-Unsubscribe.md
     - TLS.md
+    - Tutorials.md
+    - For Developers: For-Developers.md
   - Smart Home Integrations:
     - Introduction: Integrations.md
     - Alexa.md
@@ -197,5 +168,6 @@ nav:
     - Troubleshooting.md
     - Device-Recovery.md
     - Discord Support: http://thehackbox.org/tasmota/release/ "target=_blank"
+  - Compiling: Compile-your-build.md
   - Contributing: Contributing.md
-  - Download Tasmota: http://thehackbox.org/tasmota/release/ "target=_blank"
+  - Download: http://thehackbox.org/tasmota/release/ "target=_blank"

@@ -1,3 +1,5 @@
+# Shutters and Blinds
+
 !!! info "Control blinds and roller shades connected to regular ON/OFF motors or stepper motors"
 
 Your device must have at least two relays (see [Shutters with Sonoff Dual R2](#using-sonoff-dual-r2)). 
@@ -9,6 +11,7 @@ Complete list of commands is available at [Blinds, Shutters and Roller Shades Co
 
 ## Shutter Modes
 There are three shutter modes which are defined according to the [PulseTime](Commands.md#pulsetime) and [Interlock](Commands.md#interlock) settings. The examples below are for a `ShutterRelay1 1` configuration (using Relay1 and Relay2).
+
 1. **ShutterMode 0** - Normal Operation   
    First relay: OFF/DOWN, Second relay: OFF/UP  
    - `Backlog PulseTime1 0; PulseTime2 0`
@@ -30,7 +33,6 @@ There are three shutter modes which are defined according to the [PulseTime](Com
    - `Backlog PulseTime1 0; PulseTime2 0`
    - `Interlock OFF`
    - PWM and COUNTER defined
-   
    
 [Wiring diagrams](#motor-wiring-diagrams) for Normal, Stepper motor, and Short Circuit-Safe configurations are available at the end of this page. Even if the shutter does not have two motors, three wires have to be connected.
 
@@ -88,6 +90,7 @@ Stepper motors can also be used to operate shutters and blinds. Additionally you
 
 #### Increasing Calibration Granularity
 If you desire that the %-opening closely match what `ShutterPosition<x>` and web UI indicate, there is a granular calibration matrix available. Ensure that `ShutterClose<x>` and `ShutterOpen<x>` moves the shutter more or less to the limit positions and follow this procedure:
+
 - `ShutterSetHalfway<x> 50` (reset to default)
 - `ShutterCalibration<x> 30 50 70 90 100`
 - `Restart 1`
@@ -107,6 +110,7 @@ Notice that there is no calibration for the 10\% position. On many shutters, the
 
 ### Motor Movement Delays
 Some motors need up to one second after power is turned on before they start moving. You can confirm if you are having this issue if opening and closing as a single action works properly but doing this in smaller steps result in a shift of the position.  
+
 1. `Shutterposition<x> 30`  
    Measure the shutter position. This is the `reference_position`
 2. `Shutterposition<x> 80`  
@@ -137,13 +141,13 @@ One can remove all button control for shutter `<x>`  by `ShutterButton<x> 0`.
 The assigned button can have one of the following functionalities:<BR>
 
  - Setup for an "up" button: `ShutterButton<x> <button> up <mqtt>`
-Single press will move shutter to 100%, double press to 50% and tripple press to 74%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` to 100% when `<mqtt>` is equal to `1`. When `<mqtt>` is equal to `0` hold action of this button is same as single press. 
+   Single press will move shutter to 100%, double press to 50% and tripple press to 74%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` to 100% when `<mqtt>` is equal to `1`. When `<mqtt>` is equal to `0` hold action of this button is same as single press. 
 
 - Setup for a "down" button: `ShutterButton<x> <button> down <mqtt>`
-Single press will move shutter to 0%, double press to 50% and tripple press to 24%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` to 0% when `<mqtt>` is equal to `1`. When `<mqtt>` is equal to `0` hold action of this button is same as single press. 
+   Single press will move shutter to 0%, double press to 50% and tripple press to 24%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` to 0% when `<mqtt>` is equal to `1`. When `<mqtt>` is equal to `0` hold action of this button is same as single press. 
 
 - Setup for an "updown" button: `ShutterButton<x> <button> updown <mqtt>`
-Single press will move shutter to 100%, double press down to 0% and tripple press to 50%. No hold action and no other shutter control by MQTT, `<mqtt>` is don't care here.
+   Single press will move shutter to 100%, double press down to 0% and tripple press to 50%. No hold action and no other shutter control by MQTT, `<mqtt>` is don't care here.
 
 More advanced control of the button press actions is given by the following `ShutterButton<x>` command syntax:
 
@@ -151,13 +155,14 @@ More advanced control of the button press actions is given by the following `Shu
 
 `<button>` `1..4`: Button number, `0/-`: disable buttons for this shutter<BR>`<p1>` `0..100`: single press position, `-`: disable<BR>`<p2>` `0..100`: double press position, `-`: disable<BR>`<p3>` `0..100`: tripple press position, `-`: disable<BR>`<ph>` `0..100`: hold press position, `-`: disable<BR>`<m1>` `1`: enable single press position MQTT broadcast, `0/-`: disable<BR>`<m2>` `1`: enable double press position MQTT broadcast, `0/-`: disable<BR>`<m3>` `1`: enable tripple press position MQTT broadcast, `0/-`: disable<BR>`<mh>` `1`: enable hold press position MQTT broadcast, `0/-`: disable<BR>`<mi>` `1`: enable MQTT broadcast to all shutter indices, `0/-`: disable
 
-Any parameters are optional: when missing all subsequent parameters are set to `disable`.
+Parameters are optional. When missing, all subsequent parameters are set to `disable`.
 
 By a button single press the shutter is set to position `<p1>`.  Double press will drive the shutter to position `<p2>` and  tripple press to position `<p3>`. Holding the button for more than the `SetOption32` time sets the shutter position to `<ph>`. Any button action `<p1>` to `<ph>` can be disabled by setting the parameter to `-`. Independent from configuration `<p1>` to `<ph>` any press of the button while the shutter is moving will immediately stop the shutter.
 
 Global steering of all your shutters at home is supported by additional MQTT broadcast. By any button action a corresponding MQTT command can be initiated to the `<grouptopic>` of the device. For single press this can be enabled by `<m1>` equal to `1`, disabling is indicated by `-`. Double to hold MQTT configurations are given by `<m2>` to `<mh>`, correspondingly. When `<mi>` is equal to `-` only `cmnd/<grouptopic>/Shutterposition<x> <p1..h>` is fired. When `<mi>` is equal to `1`, `<x>`=`1..4` is used to control any shutter number of a tasmota device having same `<grouptopic>`.
 
-Examples:
+!!! example 
+
 - `ShutterButton<x> <button> 100 50 74 100 0 0 0 1 1` is same as `ShutterButton<x> <button> up 1`.
 - `ShutterButton<x> <button> 0 50 24 0 0 0 0 1 1` is same as `ShutterButton<x> <button> down 1`.
 - `ShutterButton<x> <button> 100 0 50 - 0 0 0 0 0` is same as `ShutterButton<x> <button> updown 0`.

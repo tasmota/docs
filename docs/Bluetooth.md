@@ -90,7 +90,7 @@ HM10Period<a id="hm10period"></a>|Show interval in seconds between sensor read c
 HM10Baud<a id="hm10baud"></a>|Show ESP8266 serial interface baudrate (***Not HM-10 baudrate***)<BR>`<value>` = set baudrate
 HM10AT<a id="hm10at"></a>|`<command>` = send AT commands to HM-10. See [list](http://www.martyncurrey.com/hm-10-bluetooth-4ble-modules/#HM-10%20-%20AT%20commands)
 HM10Time <a id="hm10time"></a>|`<n>` = set time time of a **LYWSD02 only** sensor to Tasmota UTC time and timezone. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).
-HM10Auto <a id="hm10auto"></a>|`<value>` = start an automatic discovery scan with an interval of  `<value>` seconds to receive data in BLE advertisements periodically.<BR>This is an active scan and it should be used **only if necessary**. At the moment that is the case just with MJ_HT_V1. This can change if a future HM-10 firmware starts supporting passive scan.
+HM10Auto <a id="hm10auto"></a>|`<value>` = start an automatic discovery scan with an interval of  `<value>` seconds to receive data in BLE advertisements periodically.<BR>This is an active scan and it should be used **only if necessary**. This can change if a future HM-10 firmware starts supporting passive scan.
 
 ### Supported Devices
 
@@ -147,6 +147,17 @@ All sensors have an additional GATT-interface with more data in it, but it can n
 As we can not use a checksum to test data integrity of the packet, only data of sensors whose adresses showed up more than once (default = 3 times) will be published. 
 Internally from time to time "fake" sensors will be created, when there was data corruption in the address bytes.  These will be removed automatically.  
   
+  
+#### Commands
+
+Command|Parameters
+:---|:---
+NRFPage<a id="nrfpage"></a>|Show the maximum number of sensors shown per page in the webUI list. Default = 4<BR>`<value>` Set number
+NRFIgnore<a id="nrfignore"></a>| Ignore a certain sensor type. Default = 0 (= all known types are active)<BR>`<value>` Set type<BR>1: Flora, 2: MJ_HT_V1, 3: LYWSD02, 4: LYWSD03, 5: CGG1, 6: CGD1
+NRFScan<a id="nrfscan"></a>|Scan for regular BLE-advertisements and show a list in the console<BR>`<value>` = 0: Start a new scan list; 1: Append to the scan list; 2: Stop running scan
+NRFBeacon<a id="nrfbeacon"></a>| Set a BLE-device as a beacon using the (fixed) MAC-address<BR>`<value>` (1-3 digits): Use beacon from scan list<BR>`<value>` (12 characters): Use beacon given the MAC interpreted as an uppercase string `AABBCCDDEEFF`
+ 
+  
 ### Supported Devices
 
 !!! note "It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely!"  
@@ -173,13 +184,20 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <td class="tg-lboi">temperature, humidity</td>
     <td class="tg-lboi">temperature, humidity, battery</td>
     <td class="tg-lboi">temperature, humidity</td>
-    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility, battery</td>
+    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility</td>
   </tr>
 </table>
    
 #### Unsupported Devices  
- 
+  
 For LYWSD03MMC the sensor data in the advertisements is encrypted. It is highly unlikely to read data with the NRF24L01 out-of-the-box in the future. You can use an HM-1x module for this sensor.
+
+### Beacon  
+  
+A simplified presence dection will scan for regular BLE advertisements of a given BT-device defined by its MAC-address. It is important to know, that many new devices (nearly every Apple-device) will change its MAC every few minutes to prevent tracking.  
+If the driver receives a packet from the "beacon" a counter will be (re-)started with an increment every second. This timer is published in the TELE-message, presented in the webUI and processed as a RULE.
+The stability of regular readings will be strongly influenced by the local environment (many BLE-devices nearby or general noise in the 2.4-GHz-band). 
+
 
 ## Getting data from BT Xiaomi Devices
 

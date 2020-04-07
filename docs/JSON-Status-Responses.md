@@ -1,23 +1,8 @@
-
-# Table of Contents
-- [JSON Changes](#json-changes)
-- [Basic Response](#basic-response)
-- [MQTT](#mqtt)
-- [Domoticz](#domoticz)
-- [POW](#pow)
-- [Sensors](#sensors)
-   - [AM2301](#am2301)
-   - [BMP280](#bmp280)
-   - [DHT11](#dht11)
-   - [DS18B20](#ds18b20)
-   - [SHT3X (and DHT11, multiple Sensor example)](#sht3x-and-dht11-multiple-sensor-example)
-   - [Sonoff SC](#sonoff-sc)
-   - [PMS5003 and HTU21](#pms5003-and-htu21)
-
 ## JSON Changes
 temp note: for now (6.0.0a) the statetext overwrites the json power result (e.g. "ON" => "AN" or any other statetext the users enter)
 
 ## Basic Response
+```
     {
       "Status": {
         "Module": 1,
@@ -102,12 +87,13 @@ temp note: for now (6.0.0a) the statetext overwrites the json power result (e.g.
         }
       }
     }
-
+```
 
 ## MQTT
 
 After StatusNET
 
+```
     "StatusMQT": {
         "MqttHost": "192.168.XXX.XX",
         "MqttPort": 1883,
@@ -117,10 +103,11 @@ After StatusNET
         "MAX_PACKET_SIZE": 1000,
         "KEEPALIVE": 15
       },
-
+```
 ## Domoticz
 idx, nvalue, svalue without array
 
+```
       ..."StatusTIM": {
         "UTC": "Thu Feb 01 20:29:40 2018",
         "Local": "Thu Feb 01 21:29:40 2018",
@@ -139,12 +126,13 @@ idx, nvalue, svalue without array
         "TempUnit": "C"
       },
       "StatusSTS": { ...
-
+```
   
 ## POW
 
 After StatusTIM
 
+```
     "StatusPTH": {
         "PowerLow": 0,
         "PowerHigh": 0,
@@ -165,15 +153,13 @@ After StatusTIM
           "Current": 0.000
         }
       },
-   
-   
-
-[Back to Top](#table-of-contents)   
+```   
    
 ## Sensors
 
 ### AM2301
 
+```
     "StatusSNS": {
         "Time": "2018.02.01 22:52:09",
         "AM2301": {
@@ -182,9 +168,9 @@ After StatusTIM
         },
         "TempUnit": "C"
       },
-   
+```   
 ### BMP280
-
+```
     {
       "StatusSNS": {
         "Time": "2018-02-10T22:46:34",
@@ -194,10 +180,11 @@ After StatusTIM
         }
       }
     }
-
+```
 
 ### DHT11
 
+```
     "StatusSNS": {
         "Time": "2018.02.01 22:48:39",
         "DHT11": {
@@ -206,9 +193,11 @@ After StatusTIM
         },
         "TempUnit": "C"
       },
+```
 
 ### DS18B20
 
+```
       "StatusSNS": {
         "Time": "2018.02.01 21:29:40",
         "DS18B20": {
@@ -216,9 +205,11 @@ After StatusTIM
         },
         "TempUnit": "C"
       },
+```
 
 ### SHT3X (and DHT11, multiple Sensor example)
 
+```
     {
       "StatusSNS": {
         "Time": "2018-02-07T20:16:19",
@@ -233,10 +224,11 @@ After StatusTIM
         "TempUnit": "F"
       }
     }
-
+```
 
 ### Sonoff SC
 
+```
       "StatusSNS": {
         "Time": "2018-02-16T16:18:49",
         "Temperature": 25,
@@ -246,9 +238,11 @@ After StatusTIM
         "AirQuality": 100,
         "TempUnit": "C"
       },
+```
 
 ### PMS5003 and HTU21
 
+```
     "StatusSNS": {
         "Time": "2018-02-16T16:22:12",
         "HTU21": {
@@ -271,5 +265,4 @@ After StatusTIM
         },
         "TempUnit": "C"
       },   
-
-[Back to Top](#table-of-contents)
+```
