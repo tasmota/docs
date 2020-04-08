@@ -248,7 +248,6 @@ Add in Home Assistant using the [MQTT Light](https://www.home-assistant.io/compo
 **Optional Commands**   
 `Fade on` - makes transitions smoother   
 `Speed 5` - sets transition speed
-<!-- tabs:start -->
 
 !!! example "Dimming"
 Used for dimmers and dimmable lights (single channel lights).
@@ -483,31 +482,6 @@ sensor:
     device_class: humidity
 ```
 
-<!--  THIS LOOKS COMPLETELY UNNECCESSARY AND JUST CONFUSING TO A NEW USER
-
-#### Manual updates
-
-If you poll your sensor for data using `Status 10` command it would result in a message like this:
-```
-stat/tasmota/STATUS10 {"StatusSNS":{"Time":"2017-02-11T18:06:05", "DHT22":{"Temperature":"21.8", "Humidity":"48.0"}}}
-```
-Home Assistant configuration would then need to be:
-```yaml
-# Example configuration.yaml entry
-sensor:
-  - platform: mqtt
-    name: "Stat Temperature"
-    state_topic: "stat/tasmota/STATUS10"
-    value_template: "{{ value_json.StatusSNS.DHT22.Temperature }}"
-    unit_of_measurement: "°C"
-  - platform: mqtt
-    name: "Stat Humidity"
-    state_topic: "stat/tasmota/STATUS10"
-    value_template: "{{ value_json.StatusSNS.DHT22.Humidity }}"
-    unit_of_measurement: "%"
-```
--->
-
 !!! example "Pressure"
 Check your sensor name in Tasmota and change accordingly. This example uses the BMP280 sensor.
 
@@ -521,26 +495,6 @@ sensor:
     device_class: pressure
 ```
 Change unit_of_measurement to `"mmHg"` if [`SetOption24 1`](Commands.md#setoption24)
-
-<!-- Dead link and not default HA functionality
-### Counter
-
-The tasmota counter is volatile (not saved in case or reset/ reboot) due to flash wear. 
-Common use cases are a water meter that works with a pulse.
-this custom component [counter](https://github.com/hhaim/hass/blob/master/custom_components/sensor/tasmota_counter.py)
- can handle it.
-
-```yaml
-- platform: tasmota_counter
-    name: HASS_NAME
-    s topic: TOPIC
-    counter_id: 1
-    max_valid_diff: 2000
-    unit_of_measurement: 'l'
-    icon: mdi:water-pump
-    expire_after: 300
-    value_template: "{{ (4885 + (value))|int }}"
-```  -->
 
 !!! example "Wi-Fi Signal Quality"
 
@@ -559,10 +513,8 @@ sensor:
     device_class: signal_strength
 ```
 
-<!-- tabs:end -->
-
 ### Power Monitoring
-<img alt="Example of Lovelace UI" src="_media/hax_pow1.png" style="margin:5px;float:right;width:10em"></img>
+<img alt="Example of Lovelace UI" src="../_media/hax_pow1.png" style="margin:5px;float:right;width:10em"></img>
 
 Add in Home Assistant using the [MQTT Sensor](https://www.home-assistant.io/components/sensor.mqtt/) integration.
 
@@ -625,9 +577,9 @@ sensor:
 
 ### Binary Sensors
 Add in Home Assistant using the [MQTT Binary Sensor](https://www.home-assistant.io/components/binary_sensor.mqtt/) integration.
-<!-- tabs:start -->
 
 !!! example "PIR Sensor"
+
 Used for a configured [PIR Sensor](PIR-Motion-Sensors) and requires this rule:
 
 **Required Commands**
@@ -648,6 +600,7 @@ binary_sensor:
 ```
 
 !!! example "Door Sensor"
+
 Requires a reed switch configured in Tasmota.
 
 **Required Commands**
@@ -668,6 +621,7 @@ binary_sensor:
 ```
 
 !!! example "RF Bridge"
+
 An RF door sensor configured with an RF receiver in Tasmota.
 ```yaml
 binary_sensor:
@@ -953,7 +907,14 @@ binary_sensor:
 
 ## Useful Automations
 
-<!-- tabs:start -->
+!!! example "Extended device information"
+
+Wi-Fi signal quality can be added as a parameter to any previous configuration by appending this section to the existing configuration yaml
+
+```yaml
+    json_attributes_topic: "tele/tasmota/STATE"
+    json_attributes_template: "{{ value_json.Wifi | tojson }}"
+```
 
 !!! example "Sync Power State"
 
