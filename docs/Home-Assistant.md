@@ -164,8 +164,6 @@ switch:
     availability_topic: "tele/tasmota/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
-    json_attributes_topic: "tele/tasmota/STATE"
-    json_attributes_template: "{{ value_json_Wifi | tojson }}"
     qos: 1
     retain: false
 ```
@@ -560,6 +558,13 @@ sensor:
     payload_available: "Online"
     payload_not_available: "Offline"
     device_class: signal_strength
+```
+
+*Alternatively* the Wi-Fi signal quality can be added as a parameter (instead of a discrete sensor) to any device by adding the folowing to the config.
+
+```yaml
+    json_attributes_topic: "tele/tasmota/STATE"
+    json_attributes_template: "{{ value_json.Wifi | tojson }}"
 ```
 
 <!-- tabs:end -->
