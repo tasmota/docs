@@ -147,6 +147,8 @@ Add in Home Assistant using the [MQTT Switch](https://www.home-assistant.io/comp
 
 **Required Commands**   
 `SetOption59 1` - enables sending of tele/%topic%/STATE on POWER and light related commands
+ 
+ *json_attributes_topic* and *json_attributes_template* adds Wifi telemetry as parameters to the component
 
 !!! example "Single Switch"
 
@@ -482,7 +484,6 @@ sensor:
     payload_not_available: "Offline"
     device_class: humidity
 ```
-
 <!--  THIS LOOKS COMPLETELY UNNECCESSARY AND JUST CONFUSING TO A NEW USER
 
 #### Manual updates
@@ -557,6 +558,13 @@ sensor:
     payload_available: "Online"
     payload_not_available: "Offline"
     device_class: signal_strength
+```
+
+*Alternatively* the Wi-Fi signal quality can be added as a parameter (instead of a discrete sensor) to any device by adding the folowing to the config.
+
+```yaml
+    json_attributes_topic: "tele/tasmota/STATE"
+    json_attributes_template: "{{ value_json.Wifi | tojson }}"
 ```
 
 <!-- tabs:end -->
