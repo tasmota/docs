@@ -322,7 +322,7 @@ Color<x\><a class="cmnd" id="color"></a>|x = `1..6`<BR>&emsp; `1` = Set color<BR
 CT<a class="cmnd" id="ct"></a>|`153..500` = set color temperature from 153 (cold) to 500 (warm) for CT lights<BR>`+` = increase CT value by 10<BR>`-` = decrease CT value by 10
 Dimmer<a class="cmnd" id="dimmer"></a>|`0..100` = set dimmer value from 0 to 100%<BR>`+` = increase by 10<BR>`-` = decrease by 10
 Dimmer&#60;x>|**Commands available only when `SetOption37 >= 128`** ([#6819](https://github.com/arendst/Tasmota/pull/6819))<br>`<value>` same as in `Dimmer`<br>`Dimmer0 <value>` = set dimming for all channels<BR>`Dimmer1 <value>` = set dimming for RGB channels<BR>`Dimmer2 <value>` = set dimming for white channels
-DimmerRange<a class="cmnd" id="dimmerrange"></a>|Change dimming range. *Works only with TuyaMCU and PS_16_DZ serial dimmers.*<br>`<dimmerMin>,<dimmerMax>` = set dimming range from minimum to maximum value<BR>***Does not change [`Dimmer`](#dimmer) command behavior***
+DimmerRange<a class="cmnd" id="dimmerrange"></a>|Change dimming range. *Works only with TuyaMCU and PS_16_DZ serial dimmers and the PWM Dimmer module.*<br>`<dimmerMin>,<dimmerMax>` = set dimming range from minimum to maximum value<BR>***Does not change [`Dimmer`](#dimmer) command behavior***
 Fade<a class="cmnd" id="fade"></a>|`0` = do not use fade *(default)* <BR>`1` = use fade<BR>See also [`SetOption91`](#setoption91)
 HsbColor<a class="cmnd" id="hsbcolor"></a>|`<hue>,<sat>,<bri>` = set color by hue, saturation and brightness
 HsbColor1<a class="cmnd" id="HsbColor1"></a>|`0..360` = set hue
