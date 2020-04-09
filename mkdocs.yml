@@ -68,6 +68,7 @@ nav:
   - Components.md
   - Modules: Modules.md
   - Peripherals: Peripherals.md
+  - WebUI.md
   - Features:
     - Introduction: Features.md
     - Buttons-and-Switches.md
@@ -80,7 +81,6 @@ nav:
     - Blinds-and-Shutters.md
     - Timers.md
     - TuyaMCU.md
-    - WebUI.md
     - Bluetooth.md
     - Zigbee.md
     - IR Communication: Tasmota-IR.md
