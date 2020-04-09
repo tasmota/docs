@@ -2,6 +2,13 @@ Tasmota's web user interface is a practical way to control and manage your tasmo
 
 To access it use your device's IP address in your favorite web browser.
 
+By default webUI starts in unprotected admin mode which allows complete access to your device to anyone with access to that IP. 
+
+If you want to restrict other users to only controlling the device through the webUI use [`WebServer 1`](Commands#webserver).
+
+Command [`WebPassword`](Commands#webpassword) will set up a password that needs to be entered when trying to access webUI. This is a very thin layer of protection since everything is transmitted over unencrypted http protocol.
+
+## Menus
 #### Configuration
 Configuration menu allows you to configure everything from components to Wi-Fi and gives you the option to backup and restore the configuration in a secure location.
 
@@ -14,7 +21,13 @@ An easy to use menu to initiate a firmware [upgrade](Upgrading.md) from an uploa
 #### Console
 Terminal access to Tasmota. Issue [commands](Commands.md) here or follow the information stream. Useful for debugging when using [˙Weblog 4`](Commands.md#weblog).
 
-## Themes
+## Customizing
+
+### WebButton
+
+Change names of the toggle buttons using [`WebButton`](Commands#webbutton). 
+
+### Themes
 WebUI is themable using [`WebColor`](Commands.md#webcolor) commands. 
 
 To apply the theme copy the entire code block and send it in console or via MQTT. 
