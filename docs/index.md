@@ -28,7 +28,7 @@ Incredibly expandable and flexible.
 #### Notable new features:
 
 - Support for gzipped binaries
-- Added group control of devices using UDP
+- Added group control of devices using UDP [Device Groups](https://tasmota.github.io/docs/Device-Groups)
 - Added support for Mijia BLE sensors using [HM10](HM-10.md) or [NRF24L01](NRF24L01.md) peripherals
 - Added native support for Martin Jerry type [PWM dimmer switches](PWM-dimmer-switch.md)
 - Plenty of new [switchmodes](Buttons-and-Switches#switchmode).
