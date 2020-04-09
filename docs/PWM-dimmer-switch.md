@@ -29,7 +29,7 @@ Holding any button alone for over 10 seconds executes the WiFiConfig 2 command.
 
 SetOption32 defines the button hold time. When the PWM Dimmer module is initially selected, SetOption32 is set to 5 (1/2 second). Button presses and holds execute the normal ButtonTopic and Rule processing. If ButtonTopic is set and SetOption61 is 0 or a the button press/hold matches a rule, the button press/hold is ignored by PWM Dimmer.
 
-PWM Dimmer uses the Light module to control the PWM. Brightness levels are rescaled to PWM values between the <dimmer_min> value specified to the DimmerRange command and the value specified to the PWMRange command. Most LED bulbs do not show a significant difference between a PWM value of 1 and a PWM value of 100. This results in the lower 10% of the dimmer range having no effect. For best results, the DimmerRange <dimmerMin> value should be set to the higest value that results in the lowest bulb brightness. This is typically in the range of 90 - 120.
+PWM Dimmer uses the Light module to control PWM. Brightness levels are rescaled to PWM values between <dimmer_min> value specified with `DimmerRange` and value specified with `PWMRange`. Most LED bulbs do not show a significant difference between PWM value of 1 and PWM value of 100. This results in the lower 10% of the dimmer range having no effect. For best results, `DimmerRange <dimmerMin>` value should be set to the higest value that results in the lowest bulb brightness (Typically in the range of 90 - 120).
 
 When Device Groups are enabled, the PWM Dimmer brightness presets are kept in sync across all switches in the group. The powered-off LED and LED timeout settings are specific to each switch. Changing them does not replicate the change to the other switches in the group.
 
