@@ -120,7 +120,8 @@ PulseTime<x\><a class="cmnd" id="pulsetime"></a>|Display the amount of `PulseTim
 SwitchDebounce<a class="cmnd" id="switchdebounce"></a>|User control over switch debounce timing <BR>`40..1000` = set switch debounce time in milliseconds *(default = `50`)*
 SwitchMode<x\><a class="cmnd" id="switchmode"></a>|[Switch mode](Buttons-and-Switches#switchmode) <BR> `0` = toggle *(default)* <BR> `1` = follow (0 = off, 1 = on) <BR> `2` = inverted follow (0 = on, 1 = off) <BR> `3` = pushbutton (default 1, 0 = toggle) <BR> `4` = inverted pushbutton (default 0, 1 = toggle) <BR> `5` = pushbutton with hold (default 1, 0 = toggle, Hold = hold) <BR> `6` = inverted pushbutton with hold (default 0, 1 = toggle, hold = hold) <BR> `7` = pushbutton toggle (0 = toggle, 1 = toggle)<BR> `8` = multi change toggle (0 = toggle, 1 = toggle, 2x change = hold)<BR> `9` = multi change follow (0 = off, 1 = on, 2x change = hold)<BR> `10` = inverted multi change follow (0 = on, 1 = off, 2x change = hold)<BR> `11` = pushbutton with dimmer mode <BR> `12` = inverted pushbutton with dimmer mode <BR> `13` = pushon mode (1 = on, switch off using `PulseTime`)<BR> `13` = inverted pushon mode (0 = on, switch off using `PulseTime`) 
 See also|[`SetOption1`](#setoption1) - Set button multipress mode<BR>[`SetOption11`](#setoption11) - Swap pushbutton single and double press functionality<BR>[`SetOption13`](#setoption13) - Allow immediate action on single button press<BR>[`SetOption26`](#setoption26) - Use indexes even when only one relay is present<BR>[`SetOption31`](#setoption31) - Disable Wi-Fi LED status blinking<BR>[`SetOption32`](#setoption32) - Set hold interval before sending `HOLD` action<BR>[`SetOption40`](#setoption40) - Stop detecting any input change on button GPIO<BR>[`SetOption67`](#setoption67) - Enable/Disable Buzzer
-
+Webbutton<x\><a class="cmnd" id="webbutton"></a>|Change the name of the toggle buttons of the WEB UI. This command accepts spaces in the name
+    
 ### Management
 
 Command|Parameters
@@ -321,7 +322,7 @@ Color<x\><a class="cmnd" id="color"></a>|x = `1..6`<BR>&emsp; `1` = Set color<BR
 CT<a class="cmnd" id="ct"></a>|`153..500` = set color temperature from 153 (cold) to 500 (warm) for CT lights<BR>`+` = increase CT value by 10<BR>`-` = decrease CT value by 10
 Dimmer<a class="cmnd" id="dimmer"></a>|`0..100` = set dimmer value from 0 to 100%<BR>`+` = increase by 10<BR>`-` = decrease by 10
 Dimmer&#60;x>|**Commands available only when `SetOption37 >= 128`** ([#6819](https://github.com/arendst/Tasmota/pull/6819))<br>`<value>` same as in `Dimmer`<br>`Dimmer0 <value>` = set dimming for all channels<BR>`Dimmer1 <value>` = set dimming for RGB channels<BR>`Dimmer2 <value>` = set dimming for white channels
-DimmerRange<a class="cmnd" id="dimmerrange"></a>|Change dimming range. *Works only with TuyaMCU and PS_16_DZ serial dimmers.*<br>`<dimmerMin>,<dimmerMax>` = set dimming range from minimum to maximum value<BR>***Does not change [`Dimmer`](#dimmer) command behavior***
+DimmerRange<a class="cmnd" id="dimmerrange"></a>|Change dimming range. _**Only** with TuyaMCU, PS_16_DZ and PWM Dimmer._<br>`<dimmerMin>,<dimmerMax>` = set dimming range from minimum to maximum value<BR>***Does not change [`Dimmer`](#dimmer) command behavior***
 Fade<a class="cmnd" id="fade"></a>|`0` = do not use fade *(default)* <BR>`1` = use fade<BR>See also [`SetOption91`](#setoption91)
 HsbColor<a class="cmnd" id="hsbcolor"></a>|`<hue>,<sat>,<bri>` = set color by hue, saturation and brightness
 HsbColor1<a class="cmnd" id="HsbColor1"></a>|`0..360` = set hue

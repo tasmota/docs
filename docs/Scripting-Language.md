@@ -218,7 +218,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `pwr[x]` = power state  (x = 1..N)  
 `pc[x]` = pulse counter value  (x = 1..4)  
 `tbut[x]` = touch screen button state  (x = 1..N)  
-`sw[x]` = switch state  (x = 0..N) (Switch1 = `sw[0]`)
+`sw[x]` = switch state  (x = 0..N) (Switch1 = `sw[0]`)  
 `bt[x]` = button state  (x = 1..N) only valid in section b  (if defined USE_BUTTON_EVENT)  
 `pin[x]` = GPIO pin level (x = 0..16)  
 `pn[x]` = GPIO for sensor code x. 99 if none  
