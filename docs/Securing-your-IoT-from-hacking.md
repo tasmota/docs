@@ -3,10 +3,10 @@
 Whenever you add devices to your network you generate additional points of potential intrusion. This is not only valid for your mobile phones and computers, but also for you Smart TV, you Alexa, or all of your SONOFF devices (ESP8266).
 
 There are following potential risks you have to mitigate:  
-- Someone hacks your device and is able to log in into your WLAN. (why is this a problem? [1](#scenario-1))
-- Someone hacks your device and is able to read and change any value on your MQTT server (why is this a problem? [2](#scenario-2))
-- Someone hacks your network and can interact with your devices (why is this a problem? [3](#scenario-3))
-- Someone hacks your device and use it for different things like mail bot or DOS (Denial of Service) device or WLAN jammer (why is this a problem? [4](#scenario-4))
+* Someone hacks your device and is able to log in into your WLAN. (why is this a problem? [1](#scenario-1))
+* Someone hacks your device and is able to read and change any value on your MQTT server (why is this a problem? [2](#scenario-2))
+* Someone hacks your network and can interact with your devices (why is this a problem? [3](#scenario-3))
+* Someone hacks your device and use it for different things like mail bot or DOS (Denial of Service) device or WLAN jammer (why is this a problem? [4](#scenario-4))
 
 #### Scenario 1  
 If someone is able to get your WLAN key, he can login into your network, if he is nearby and scan for any traffic and for any devices. Many communication is not encrypted in your WLAN by default. Therefore be part of your WLAN gives the attacker a great opportunity to screw-up the rest of your infrastructure. Also be part of your WLAN does mean, that the attacker can use your IP-Address and your traffic to do nasty things.
@@ -34,9 +34,7 @@ At the FritzRouter you can configure _"network separation"_. At Fritz this is do
 Normally a device in the "guest WLAN" can use any internet service. For our IoT devices and for any new device we can create a Router rule, that ONLY MQTT is allowed to our server and any other traffic is blocked. This is a great configuration because it limits the options what a hacker can do. If you have a FritzBox following configuration has to be created to get this working:
 
 1. Create Profile to block all communication except MQTT and NTP Time services.
-
    Internet -> Filters -> List -> "Add Network Application"
-
    "New Protocol" (Add four rules, This will block all but UDP123 for Timeserver and 8883 for MQTT Server)  
    - TCP from any to Port 1 to 8882
    - TCP from any to Port 8884 to 65636
@@ -59,7 +57,9 @@ Normally a device in the "guest WLAN" can use any internet service. For our IoT 
    SELECT "Permit web sites (whitelist)  
 
 Now you will probably ask two questions:   
+
 1. How can I communicate with my MQTT Server in my personal WLAN if only traffic into the internet is allowed?  
+
 2. How can I access the WebConsole of my devices to upload new Firmware and/or make investigations?  
 
 The first topic will be solved by exposing your MQTT server to the Internet (no worries, can be done securely).  
@@ -117,10 +117,10 @@ require_certificate false
 ```
 
 How to generate the certificates in mosquitto please look at:
-- [Mosquitto SSL Configuration - MQTT TLS Security](http://www.steves-internet-guide.com/mosquitto-tls/)
-- [Adding TLS to connect to Mosquitto](https://myles.eftos.id.au/blog/2016/08/07/adding-tls/#.Wlo7EnXiZ9N)
-- [Internet of Things messaging MQTT with TLS](http://lukse.lt/uzrasai/2015-02-internet-of-things-messaging-mqtt-1-installing-mosquitto-server/)
-- [Enable Secure Communication with TLS and the Mosquitto Broker](https://mcuoneclipse.com/2017/04/14/enable-secure-communication-with-tls-and-the-mosquitto-broker/)
+* [Mosquitto SSL Configuration - MQTT TLS Security](http://www.steves-internet-guide.com/mosquitto-tls/)
+* [Adding TLS to connect to Mosquitto](https://myles.eftos.id.au/blog/2016/08/07/adding-tls/#.Wlo7EnXiZ9N)
+* [Internet of Things messaging MQTT with TLS](http://lukse.lt/uzrasai/2015-02-internet-of-things-messaging-mqtt-1-installing-mosquitto-server/)
+* [Enable Secure Communication with TLS and the Mosquitto Broker](https://mcuoneclipse.com/2017/04/14/enable-secure-communication-with-tls-and-the-mosquitto-broker/)
 
 ## SSL/TLS on Tasmota
 
@@ -129,4 +129,4 @@ How to generate the certificates in mosquitto please look at:
 ## Disable unsecured fallback WiFi (WifiManager)
 
 In case your Wifi SSID is not available (i.e. access point dies), the WiFiManager will jump into action and make your tasmota devices available using an unsecured access point.
-Type WifiConfig into the tasmota console. If this parameter is set to 2, you might want to change it after completing the setup of your device. Some less risky options would be: 0/4/5. (For details, see https://tasmota.github.io/docs/#/Commands?id=wi-fi)
+Type WifiConfig into the tasmota console. If this parameter is set to 2, you might want to change it after completing the setup of your device. Some less risky options would be: 0/4/5. (For details, see [Wi-Fi commands](Commands#wi-fi)).
