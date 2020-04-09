@@ -1,3 +1,5 @@
+description: Comprehensive list of Tasmota commands and how to use them
+
 !!! info "Tasmota provides a powerful control interface using commands"   
 Commands can be issued using **MQTT**, **web requests**, **webUI console** and **serial**
 
