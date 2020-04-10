@@ -7,8 +7,6 @@ The ESP8266 has a limitation of a maximum of ~71 minutes deep sleep. To overcome
 !!! example
     With `DeepSleepTime 3600`, the device will wake up exactly every hour (e.g., 8:00am, 9:00am, ...). If you define `DeepSleepTime 86400` (i.e., 60\*60\*24), it will wake-up exactly at 0:00 UTC time - not your local time. If you define `DeepSleepTime 600`, it will wake-up every 10 minutes (e.g., 8:00, 8:10, 8:20, ...).
 
-To exit, or "reset" deep sleep, temporarily disconnect power and the RTC will be wiped on the next reboot. Alternatively, you can define a deep sleep input to temporarily disable deep sleep as described below.
-
 Please be aware that the minimum deep sleep time is 10 seconds. In order for the device to wake itself to perform its function during the deep sleep cycle, the RST pin must be connected to the D0/GPIO16 pin. This is the only pin which can perform this function as the wake-up signal is sent from the RTC through D0/GPIO16 to RST.
 
 ![](_media/deepsleep_minimal.png)
@@ -29,10 +27,10 @@ Select another GPIO (let's call it "GPIOn") and connect it GND. This can be perf
 
   ![](_media/deepsleep_deepsleep182.png)
 
-  The following GPIOs **CANNOT** be used for the purpose of temporarily disabling deep sleep as described above:
-  - GPIO16 (because it is connected to RST),
-  - GPIO15 (because of an existing on-board pull-down resistor),
-  - GPIO0 (because pulling it down at wake up will enter serial bootload mode).
+  The following GPIOs **CANNOT** be used for the purpose of temporarily disabling deep sleep as described above:<BR>
+  - GPIO16 (because it is connected to RST),<BR>
+  - GPIO15 (because of an existing on-board pull-down resistor),<BR>
+  - GPIO0 (because pulling it down at wake up will enter serial bootload mode).<BR>
 
   All others GPIO should be acceptable.
 
@@ -51,16 +49,16 @@ You can use console to send from another Tasmota device:<BR>
 
 Don't forget to remove the retained message from the broker with `Publish2 cmnd/%topic%/DeepSleepTime`
 
-!!! quote "If using mosquitto broker"
-  `mosquitto_pub -t "cmnd/myDeviceTopic/DeepsleepTime" -r -m "0"`
-  Remove retained message
+!!! If using mosquitto broker"
+  `mosquitto_pub -t "cmnd/myDeviceTopic/DeepsleepTime" -r -m "0"`<BR>
+  Remove retained message<BR>
   `mosquitto_pub -t "cmnd/myDeviceTopic/DeepsleepTime" -r -n`<BR>
   
   Once you have made your configuration change, you will need to re-enable DeepSleep mode using `DeepSleepTime` command.
 
 ### using smart home automation 
 
-Configure a settable flag in your home automation hub (e.g., Node-Red, openHAB, Home Assistant). The flag should subscribe to the `INFO1` boot time message on the device topic, e.g., `tele/myDeviceTopic/INFO1`.
+  Configure a settable flag in your home automation hub (e.g., Node-Red, openHAB, Home Assistant). The flag should subscribe to the `tele/%topic%/LWT` topic for the payload `Online`. Alternatively, if testing the payload value is not easy, subscribe to the topic `tele/%topic%/STATE` which is the 2nd topic on which hte device publish right after waking-up.
 
   The moment a message is received on this topic, the automation can publish a message to topic `cmnd/%topic%/DeepSleepTime` with payload `0`. This will cause the device to disable deep sleep and allow maintenance such as firmware updates to be performed without having an unexpected deep sleep event. Send the `DeepSleepTime 0` command ==only once==.
 
