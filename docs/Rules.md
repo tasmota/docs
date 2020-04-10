@@ -1795,6 +1795,30 @@ Rule1
 Rule1 1
 ```
 
+Another way to achieve the same without using variables is linking the relays states of two boards
+On the slave side
+
+```console
+Rule1
+  ON Power1#state=1 do websend [192.168.10.181] power1 on endon
+Rule1 1
+
+Rule2
+ON Power1#state=0 do websend [192.168.10.181] power1 off endon
+Rule2 1
+```
+Now on the master side
+
+```console
+Rule1
+  ON Power1#state=1 do websend [192.168.10.182] power1 on endon
+Rule1 1
+
+Rule2
+ON Power1#state=0 do websend [192.168.10.182] power1 off endon
+Rule2 1
+```
+Now the two tasmotas ip 192.168.10.181 and 192.168.10.182 are sychronyzed.
 
 ------------------------------------------------------------------------------
 
