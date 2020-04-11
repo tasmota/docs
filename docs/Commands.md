@@ -133,8 +133,8 @@ FriendlyName<x\><a class="cmnd" id="friendlyname"></a>|`1` = Reset friendly name
 Gpios<a class="cmnd" id="gpios"></a>|Show list of available [components](Components#components-list) by name and index<BR>`255` / `All` Show list of all [components](Components#components-list) by name and index<BR>
 Gpio<a class="cmnd" id="gpio"></a>|Show current [component](Components#components-list) assignments of the Module's configurable GPIO<BR>`255` / `All` Show [component](Components#components-list) assignments for all the devices available GPIO<BR>
 Gpio<x\><a class="cmnd" id="gpiox"></a>|_For built-in Modules only. This command does not work for devices configured with a Template._<BR>`<component>` = assign a [component](Components) to `Gpio<x>`
-I2Cscan<a class="cmnd" id="I2Cscan"></a>|Scan I<sup>2</sup>C bus and show addresses for found devices
-I2CDriver<a class="cmnd" id="I2CDriver"></a>|Enable / Disable I<sup>2</sup>C sensor drivers. [Read more...](I2CDevices)<BR>
+I2Cscan<a class="cmnd" id="i2cscan"></a>|Scan I<sup>2</sup>C bus and show addresses for found devices
+I2CDriver<a class="cmnd" id="i2cdriver"></a>|Enable / Disable I<sup>2</sup>C sensor drivers. [Read more...](I2CDevices)<BR>
 LogHost<a class="cmnd" id="loghost"></a>|`1` = reset [syslog](https://www.sigmdel.ca/michel/ha/rpi/syslog_en.html) host to firmware default (`SYS_LOG_HOST`)<BR>`<value>` = set syslog host (32 chars max)
 LogPort<a class="cmnd" id="logport"></a>|`1` = reset [syslog](https://www.sigmdel.ca/michel/ha/rpi/syslog_en.html) port to firmware default (`SYS_LOG_PORT`)<BR>`2..32766` = set syslog port
 Modules<a class="cmnd" id="modules"></a>|Show available modules by name and index
