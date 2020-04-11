@@ -1,7 +1,7 @@
 ---
 name: New Command
 about: Add new command to Commands.md
-title: New command
+title: Please add the new command to documentation
 labels: documentation, help wanted
 assignees: ''
 
