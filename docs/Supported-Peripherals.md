@@ -34,7 +34,7 @@ Name|Description
 **Honeywell HPMA115xx** | Particulate Matter Sensor (serial)
 **HTU21** | Temperature and Humidity sensor (I^2^C)
 **HX711** | Load Cell sensor (gpio)
-**iAQ-Core** | Indoor Air Quality sensor (I^2^C)
+[**iAQ-Core**](IAQ) | Indoor Air Quality sensor (I^2^C)
 **INA219** | High-Side DC Current and Voltage sensor (I^2^C)
 [**IR Remote**](IR-Remote) | IR transmitter and receiver
 **K30, K70, S8** | CO<sub>2</sub> sensor (I^2^C) | 
