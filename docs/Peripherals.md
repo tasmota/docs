@@ -1,12 +1,14 @@
 # Peripherals
-!!! info "You can connect all kinds of peripherals (sensors, displays, switches, LED lights, ...) to available pins of your device or even create your own from a development board"
+!!! info "Peripherals are sensors, displays, controllers, LEDs and other devices wired to available GPIO pins of your device"
 
 !!! tip
     A peripheral must have correctly wired power, GND and data pins to the device prior to booting in order for Tasmota to detect it and initialize it properly.
+    
+**[Supported peripherals](Supported-Peripherals.md)** list.
 
 ## Tasmota Settings
 <img src="https://user-images.githubusercontent.com/5904370/68432161-2a154700-01b4-11ea-8ba9-adb7b717490d.png" style="float:right;height:15em;margin:10px 0">
-Tasmota allows for easy selection of peripherals (sensors, switches, etc) and assignment to GPIO pins. 
+Tasmota allows for easy selection of peripherals and assignment to GPIO pins. 
 
 Configuration is possible in the webUI ***Configuration - Configure Module*** page
 
@@ -42,7 +44,7 @@ To change the update interval (TelePeriod) of MQTT messages change the [`TelePer
 `TelePeriod 10` will set the update interval to 10 seconds, so the sensor will update 6 times a minute.
 
 #### Peripheral Specific
-Some peripherals offer, or even require, additional commands. See [Commands](Commands.md#sensors) page for peripheral specific commands.
+Some peripherals offer, or even require, additional commands. See [Sensor commands](Commands.md#sensors) page for peripheral specific commands.
 
 !!! tip
     To make a link between the different naming schemes the [Pin Definition overview](https://github.com/esp8266/esp8266-wiki/wiki/Pin-definition) in the ESP8266 wiki is quite helpful.

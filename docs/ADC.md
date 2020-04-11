@@ -1,10 +1,10 @@
 ESP8266 has a single ADC pin available. It may be used to read voltage at ADC pin or to read module supply voltage (VCC). 
 
-> [!NOTE]
- When referring to the ADC pin these terms are used interchangeably: ADC (Analog-to-digital Converter), TOUT, Pin6, A0 or Analog0.  
+!!! note
+    When referring to the ADC pin these terms are used interchangeably: ADC (Analog-to-digital Converter), TOUT, Pin6, A0 or Analog0.  
 
 !!! warning
-     Check your Wi-Fi module. The ESP8266 A0 pin supports a maximum voltage of 1.0V. Many newer Wi-Fi modules have an on-board voltage divider to support a higher A0 input voltage range (typically in the range between 0 and 3.3 volts). You may need to use an external voltage divider to ensure your input voltage is in the right range.
+     Check your Wi-Fi module! The ESP8266 A0 pin supports a maximum voltage of 1.0V. Many newer Wi-Fi modules have an on-board voltage divider to support a higher A0 input voltage range (typically in the range between 0 and 3.3 volts). You may need to use an external voltage divider to ensure your input voltage is in the right range.
 
 By default Tasmota uses the ADC pin to read voltage. The signal comes from an analog [peripheral](), or sometimes from the device itself (see [Shelly 2.5](/devices/Shelly-2.5)). 
 
@@ -20,6 +20,8 @@ After wiring a peripheral to A0 pin you have to configure it in **Configure Modu
 3|Light | Illuminance _%value%_ lux | `{"Illuminance":%value%}`
 4|Button | none | none
 5|Buttoni | none | none
+6|Range| Range _%value%_ | `{"Range":%value%}`
+7|CT Power| Voltage 230 V<br>Current _%value_ A<br>Power _%value_ W<br>Energy Total _%value_ kWh| `{"Energy":_%value_,"Power":_%value_,"Voltage":230,"Current":_%value_}`
 
 The reading will show in web UI's sensor section as "_%option% %value%_" depending on the selected option. Tasmota calculates the values for temperature and light, analog values can be `1` to `1024`.
 
