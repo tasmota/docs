@@ -2,7 +2,8 @@
 
 Whenever you add devices to your network you generate additional points of potential intrusion. This is not only valid for your mobile phones and computers, but also for you Smart TV, you Alexa, or all of your SONOFF devices (ESP8266).
 
-There are following potential risks you have to mitigate:  
+There are following potential risks you have to mitigate:
+
 * Someone hacks your device and is able to log in into your WLAN. (why is this a problem? [1](#scenario-1))
 * Someone hacks your device and is able to read and change any value on your MQTT server (why is this a problem? [2](#scenario-2))
 * Someone hacks your network and can interact with your devices (why is this a problem? [3](#scenario-3))
@@ -35,7 +36,8 @@ Normally a device in the "guest WLAN" can use any internet service. For our IoT 
 
 1. Create Profile to block all communication except MQTT and NTP Time services.
    Internet -> Filters -> List -> "Add Network Application"
-   "New Protocol" (Add four rules, This will block all but UDP123 for Timeserver and 8883 for MQTT Server)  
+   "New Protocol" (Add four rules, This will block all but UDP123 for Timeserver and 8883 for MQTT Server)
+   
    - TCP from any to Port 1 to 8882
    - TCP from any to Port 8884 to 65636
    - UDP from any to Port 1 to 122
@@ -59,7 +61,6 @@ Normally a device in the "guest WLAN" can use any internet service. For our IoT 
 Now you will probably ask two questions:   
 
 1. How can I communicate with my MQTT Server in my personal WLAN if only traffic into the internet is allowed?  
-
 2. How can I access the WebConsole of my devices to upload new Firmware and/or make investigations?  
 
 The first topic will be solved by exposing your MQTT server to the Internet (no worries, can be done securely).  
@@ -78,7 +79,7 @@ Topic: ESP_123456
 User: ESP_123456 (must be the same to Topic)  
 password: 987654321  
 
-Configurationfile: /etc/mosquitte/conf.d/jp.acl
+Configuration file: /etc/mosquitte/conf.d/jp.acl
 ```
 user root
 topic read #
@@ -98,7 +99,7 @@ sudo mosquitto_passwd -b /etc/mosquitto/conf.d/jp.pw ESP_123456 987654321
 sudo /etc/init.d/mosquitto restart
 ```
 
-If this is running we switch the Mosquitto to secure communication on Port 8883 and disable all insecure options. 
+If this is running, we switch the Mosquitto to secure communication on Port 8883 and disable all insecure options. 
 
 /etc/mosquitto/conf.d/user.conf
 ```
@@ -117,6 +118,7 @@ require_certificate false
 ```
 
 How to generate the certificates in mosquitto please look at:
+
 * [Mosquitto SSL Configuration - MQTT TLS Security](http://www.steves-internet-guide.com/mosquitto-tls/)
 * [Adding TLS to connect to Mosquitto](https://myles.eftos.id.au/blog/2016/08/07/adding-tls/#.Wlo7EnXiZ9N)
 * [Internet of Things messaging MQTT with TLS](http://lukse.lt/uzrasai/2015-02-internet-of-things-messaging-mqtt-1-installing-mosquitto-server/)
