@@ -28,7 +28,8 @@ AHT10 or AH15 are an I<sup>2</sup>C temperature and humidity sensor.
 The driver currently only allows the use of a single LM75AD sensor on any of the addresses configurable through pins A0, A1 and A2. These are conveniently broken out on the breakout board either as pins or as solderable joints as can be seen on the example breakout board.
 
 ### Tasmota Settings 
-In the _Configuration -> Configure Module_ page assign:
+In the **_Configuration -> Configure Module_** page assign:
+
 1. GPIOx to `I2C SDA (6)`
 2. GPIOy to `I2C SCL (5)`
 

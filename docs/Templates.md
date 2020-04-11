@@ -70,7 +70,7 @@ When there:
 
 The device will reboot with a name reflecting your template name and `Module 0` selected which has your new template stored.
 
-!!! warning "If your device was previously configured you will have to manually change to `Module 0` in **_Configuration -> Configure Module_**."
+!!! warning "If your device was previously configured you will have to manually change to `Module 0` in ****_Configuration -> Configure Module_****."
 
 ![It is finished](https://i.postimg.cc/28hN4qvf/template-import3.png ":size=250")
 
@@ -97,7 +97,7 @@ A user provided template can be stored in Tasmota using the [`Template`](Command
 !!! warning "After setting a template in command line it is necessary to issue `Module 0` command if the device doesn't reboot on its own."
 
 #### Merge Template with Module
-You can set up your device in module **_Configuration -> Configure Module_** and use command `Template 255` to merge the settings of the Module with current template into a new Template named "Merged".
+You can set up your device in module ****_Configuration -> Configure Module_**** and use command `Template 255` to merge the settings of the Module with current template into a new Template named "Merged".
 
 ## Anatomy of a Template
 Let's look again at our example template:

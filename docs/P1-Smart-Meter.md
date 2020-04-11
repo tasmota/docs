@@ -7,7 +7,7 @@ In this example the Kaifa MA105C meter is used and might work with other meters 
 The transistor makes sure that the RxD signal is converted and inverted to 3.3v 
 
 ## Tasmota Settings
-In the _Configuration -> Configure Module_ page, select module `Generic (18)`
+In the **_Configuration -> Configure Module_** page, select module `Generic (18)`
 
 From the web console set the serial delimiter to 10 (newline). This makes Tasmota publish each line of the telegram separately to mqtt. 
 

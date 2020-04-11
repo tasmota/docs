@@ -15,7 +15,7 @@ Most builds support only most common IR protocols, but [tasmota-ir.bin](Tasmota-
 |-  |GND    |
 
 ### Tasmota
-In the _Configuration -> Configure Module_ page assign:
+In the **_Configuration -> Configure Module_** page assign:
 
 - GPIOx to `IRsend (8)`   
 
@@ -36,7 +36,7 @@ Example uses the widely available [KY-022](https://arduinomodules.info/ky-022-in
 |-  |GND    |
 
 ### Tasmota
-In the _Configuration -> Configure Module_ page assign:
+In the **_Configuration -> Configure Module_** page assign:
 
 - GPIOx to `IRrecv (51)`   
 

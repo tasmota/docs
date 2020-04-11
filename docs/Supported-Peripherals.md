@@ -3,7 +3,7 @@ Name|Description
 ---|---
 [**A4988**](A4988-Stepper-Motor-Controller)|Stepper Motor Controller 
 [**ADC**](ADC) | Analog input over A0 pin  
-**ADS1x15** | A/D Converter 
+**ADS111x** | A/D Converter 
 [**AHT10<BR>AHT15**](AHT1x.md) | Asair AHT10 / AHT15 Temperature and Humidity Sensor (I^2^C)
 [**AM2301 (DHT21)<BR>AM2302 (DHT22)<BR>AM2321**](AM2301) | Temperature and Humidity Sensor (gpio)
 [**AS3935**](https://github.com/arendst/Tasmota/pull/8130) | Franklin Lightning sensor (I^2^C)
@@ -54,7 +54,7 @@ Name|Description
 [**PIR**](PIR-Motion-Sensors#AM312) | Passive Infrared Sensor (gpio)
 [**PCA9685**](PCA9685) | 16-channel, 12-bit PWM LED controller (I^2^C)
 **PCF8574** | 8-port IO Expander (I^2^C) 
-**PMS3003<BR>PMS5003<BR>PMS7003** | Particle Concentration sensor (serial)
+**PMS3003<BR>[PMS5003](https://www.superhouse.tv/38-diy-air-quality-sensor-part-1-basic-model/)<BR>PMS7003** | Particle Concentration sensor (serial)
 [**PN532**](PN532) | NFC/RFID controller
 [**PZEM-004<BR>PZEM-016**](PZEM-0XX) | Energy Monitor (serial) 
 [**RCWL-0516**](RCWL-0516) |  Microwave Radar Presence detection

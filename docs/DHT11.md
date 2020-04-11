@@ -12,7 +12,7 @@ DHT11 is a basic, ultra low-cost digital temperature and humidity sensor. It is 
 |+  |3.3V    |
 
 ### Tasmota Settings
-In the _Configuration -> Configure Module_ page assign:
+In the **_Configuration -> Configure Module_** page assign:
 
 - GPIOx to `DHT11 (1)`   
 

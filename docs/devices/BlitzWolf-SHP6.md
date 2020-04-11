@@ -64,7 +64,7 @@ esptool.py --port COM3 erase_flash
 Flash Tasmota.
 
 ### Step 9
-Select the correct configuration under _Configuration -> Configure Module_ or apply correct template:
+Select the correct configuration under **_Configuration -> Configure Module_** or apply correct template:
 
 * [SHP6 10A model](https://templates.blakadder.com/blitzwolf_SHP6.html)
 * [SHP6 15A model (compatible with SP111 v2)](https://templates.blakadder.com/gosund_SP111_v2.html)

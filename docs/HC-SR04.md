@@ -25,7 +25,8 @@ There is a variant of the HC-SR04, called HC-SR04P. It mainly operates at 3.3V a
 ![image](https://user-images.githubusercontent.com/5904370/68340827-75155880-00e7-11ea-8f79-efd47bd421bc.png)
 
 ### Tasmota Settings 
-In the _Configuration -> Configure Module_ page assign:
+In the **_Configuration -> Configure Module_** page assign:
+
 1. GPIOx to `SR04 Tri (69)`
 2. GPIOy to `SR04 Ech (70)`
 

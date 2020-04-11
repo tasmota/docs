@@ -13,7 +13,8 @@ The VL53L0X is a Time-of-Flight (ToF) laser-ranging module.
 |SCL   | GPIOy
 
 ### Tasmota Settings 
-In the _Configuration -> Configure Module_ page assign:
+In the **_Configuration -> Configure Module_** page assign:
+
 1. GPIOx to `I2C SDA (6)`
 2. GPIOy to `I2C SCL (5)`
 

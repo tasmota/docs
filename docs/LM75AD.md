@@ -33,7 +33,8 @@ The driver currently only allows the use of a single LM75AD sensor on any of the
 These pins need to be tied down to either GND or VCC (3.3V) and the resulting I<sup>2</sup>C address will be set during power-up according to the table: ![Address MAP](https://github.com/andrethomas/images/raw/master/lm75ad/Address_Map.png)
 
 ### Tasmota Settings 
-In the _Configuration -> Configure Module_ page assign:
+In the **_Configuration -> Configure Module_** page assign:
+
 1. GPIOx to `I2C SDA (6)`
 2. GPIOy to `I2C SCL (5)`
 
