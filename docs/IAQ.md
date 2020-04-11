@@ -46,7 +46,9 @@ When warm-up is finished, sensor will show readings in web UI:
 ![webUI readout](_media/peripherals/iaq-readout.jpg)
 
 and in MQTT topic (according to TelePeriod):    
-`MQT: tele/tasmota_29803A/SENSOR = {"Time":"2020-04-11T11:57:14","IAQ":{"eCO2":450,"TVOC":125,"Resistance":76827}}`
+```
+{"Time":"2020-01-01T00:00:00","IAQ":{"eCO2":450,"TVOC":125,"Resistance":76827}}
+```
 
 ## Usage
 Typical sensor reading should be around 450 ppm eCO2 and 125 ppb TVOC. Resistance is sensor's gas resistance in Ohm and is the baseline reading from which eCO2 and TVOC are calculated from
