@@ -5,12 +5,12 @@ Name|Description|Image
 [**ADC**](ADC) | Analog input over A0 pin  
 **ADS1x15** | A/D Converter 
 **AHT10/AHT15** | Asair AHT10 / AHT15 Temperature and Humidity Sensor (I<sup>2</sup>C)
-[**AM2301 (DHT21), AM2302 (DHT22), AM2321**](AM2301) | Temperature and Humidity Sensor (gpio)
+[**DHT22**](AM2301)<br>**AM2301 (DHT21), AM2302 (DHT22), AM2321** | Temperature and Humidity Sensor (gpio)
 [**AS3935**](https://github.com/arendst/Tasmota/pull/8130) | Franklin Lightning sensor (i^2^c)
 [**APDS-9960**](APDS-9960) |  Ambient Light, RGB Color and Proximity Sensor with Gesture Detection  
 [**AZ 7798**](AZ-7798) | CO<sub>2</sub> Meter Datalogger
 [**BH1750**](BH1750) | Luminosity Sensor
-[**BMP280 (BMP085, BMP180)**](BME280) | Pressure Sensor
+[**BMP280**](BME280)<br>**BMP085, BMP180** | Pressure Sensor
 [**BME280**](BME280) | Temperature, Humidity and Pressure Sensor
 [**BME680**](BME680) | Temperature, Humidity, Pressure and Gas Sensor
 [**Buzzer**](Buzzer) | Audio Signalling Device
@@ -20,16 +20,16 @@ Name|Description|Image
 [**DHT11**](DHT11) | Temperature and Humidity Sensor
 **DHT12** |
 **[DS18x20](DS18x20)** | Temperature sensor (1-Wire)
-**DS1624/DS1621** | Temperature sensor (1-Wire)
+**DS1624<br>DS1621** | Temperature sensor (1-Wire)
 [**DS3231**](DS3231) | Real-Time-Clock (I<sup>2</sup>C)
 **F&F LE-01MR** | F&F LE-01MR Single Phase Modbus Energy meter
 [**GPS-NTP-server**](GPS-NTP-server) | GPS-NTP-server (serial)
 **HDC1080** | Texas Instruments HDC1080 Humidity and Temperature Sensor (I<sup>2</sup>C)
 **[HM-10](HM-10)** |  BLE Bluetooth gateway (serial)
-**[HM-17/HM-16](HM-17)** |  Bluetooth iBeacon reader (serial)
+**[HM-17<br>HM-16](HM-17)** |  Bluetooth iBeacon reader (serial)
 **HR-E** | Water Meter Encoder interface (serial)
 **HRXL** | MaxBotix HRXL line of Sonar Ranging Sensors (gpio)
-**[HC-SR04 (HC-SR04P, JSN-SR04T)](HC-SR04)** | Ultrasonic Sensor
+**[HC-SR04](HC-SR04)<BR>(HC-SR04P, JSN-SR04T)** | Ultrasonic Sensor
 **[Honeywell HIH](Honeywell-HIH)** | Temperature and Humidity sensor (I<sup>2</sup>C)
 **Honeywell HPMA115xx** | Particulate Matter Sensor (serial)
 **HTU21** | Temperature and Humidity sensor (I<sup>2</sup>C)
@@ -54,7 +54,7 @@ Name|Description|Image
 [**PIR**](PIR-Motion-Sensors#AM312) | Passive Infrared Sensor (gpio)
 [**PCA9685**](PCA9685) | 16-channel, 12-bit PWM LED controller (I<sup>2</sup>C)
 **PCF8574** | 8-port IO Expander (I<sup>2</sup>C) 
-**PMS3003-5003-7003** | Particle Concentration sensor (serial)
+**PMS3003<br>PMS5003<br>PMS7003** | Particle Concentration sensor (serial)
 [**PN532**](PN532) | NFC/RFID controller
 [**PZEM-0XX**](PZEM-0XX) | Energy Monitor (serial) 
 [**RCWL-0516**](RCWL-0516) |  Microwave Radar Presence detection
