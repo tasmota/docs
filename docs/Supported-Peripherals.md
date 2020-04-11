@@ -1,16 +1,16 @@
 # Supported Peripherals
-Name|Description|Image
----|---|---
+Name|Description
+---|---
 [**A4988**](A4988-Stepper-Motor-Controller)|Stepper Motor Controller 
 [**ADC**](ADC) | Analog input over A0 pin  
 **ADS1x15** | A/D Converter 
-**AHT10/AHT15** | Asair AHT10 / AHT15 Temperature and Humidity Sensor (I<sup>2</sup>C)
-[**DHT22**](AM2301)<br>**AM2301 (DHT21), AM2302 (DHT22), AM2321** | Temperature and Humidity Sensor (gpio)
+**AHT10<BR>AHT15** | Asair AHT10 / AHT15 Temperature and Humidity Sensor (I<sup>2</sup>C)
+[**AM2301 (DHT21)<BR>AM2302 (DHT22)<BR>AM2321**](AM2301) | Temperature and Humidity Sensor (gpio)
 [**AS3935**](https://github.com/arendst/Tasmota/pull/8130) | Franklin Lightning sensor (i^2^c)
 [**APDS-9960**](APDS-9960) |  Ambient Light, RGB Color and Proximity Sensor with Gesture Detection  
 [**AZ 7798**](AZ-7798) | CO<sub>2</sub> Meter Datalogger
 [**BH1750**](BH1750) | Luminosity Sensor
-[**BMP280**](BME280)<br>**BMP085, BMP180** | Pressure Sensor
+[**BMP280<BR>BMP085<BR>BMP180)**](BME280) | Pressure Sensor
 [**BME280**](BME280) | Temperature, Humidity and Pressure Sensor
 [**BME680**](BME680) | Temperature, Humidity, Pressure and Gas Sensor
 [**Buzzer**](Buzzer) | Audio Signalling Device
@@ -20,16 +20,16 @@ Name|Description|Image
 [**DHT11**](DHT11) | Temperature and Humidity Sensor
 **DHT12** |
 **[DS18x20](DS18x20)** | Temperature sensor (1-Wire)
-**DS1624<br>DS1621** | Temperature sensor (1-Wire)
+**DS1624<BR>DS1621** | Temperature sensor (1-Wire)
 [**DS3231**](DS3231) | Real-Time-Clock (I<sup>2</sup>C)
 **F&F LE-01MR** | F&F LE-01MR Single Phase Modbus Energy meter
 [**GPS-NTP-server**](GPS-NTP-server) | GPS-NTP-server (serial)
 **HDC1080** | Texas Instruments HDC1080 Humidity and Temperature Sensor (I<sup>2</sup>C)
 **[HM-10](HM-10)** |  BLE Bluetooth gateway (serial)
-**[HM-17<br>HM-16](HM-17)** |  Bluetooth iBeacon reader (serial)
+**[HM-17<BR>HM-16](HM-17)** |  Bluetooth iBeacon reader (serial)
 **HR-E** | Water Meter Encoder interface (serial)
 **HRXL** | MaxBotix HRXL line of Sonar Ranging Sensors (gpio)
-**[HC-SR04](HC-SR04)<BR>(HC-SR04P, JSN-SR04T)** | Ultrasonic Sensor
+**[HC-SR04<BR>HC-SR04P<BR>JSN-SR04T)](HC-SR04)** | Ultrasonic Sensor
 **[Honeywell HIH](Honeywell-HIH)** | Temperature and Humidity sensor (I<sup>2</sup>C)
 **Honeywell HPMA115xx** | Particulate Matter Sensor (serial)
 **HTU21** | Temperature and Humidity sensor (I<sup>2</sup>C)
@@ -42,7 +42,7 @@ Name|Description|Image
 **MAX31855** | Thermocouple Sensor (SPI)
 **MAX31865** | RTD Temperature Sensor Amplifier (SPI)
 **MAX44009** | Ambient Light Sensor (I<sup>2</sup>C)
-[**MCP23008 / MCP23017**](MCP230xx) |  I/O Expander (I<sup>2</sup>C)
+[**MCP23008<BR>MCP23017**](MCP230xx) |  I/O Expander (I<sup>2</sup>C)
 [**MGC3130**](MGC3130) | 3D Tracking and Gesture Controller
 [**MH-Z19B**](MH-Z19B) | CO<sub>2</sub> Sensor 
 [**MLX90614**](MLX90614) | MLX9061X Infrared Thermometer (I<sup>2</sup>C) 
@@ -54,16 +54,16 @@ Name|Description|Image
 [**PIR**](PIR-Motion-Sensors#AM312) | Passive Infrared Sensor (gpio)
 [**PCA9685**](PCA9685) | 16-channel, 12-bit PWM LED controller (I<sup>2</sup>C)
 **PCF8574** | 8-port IO Expander (I<sup>2</sup>C) 
-**PMS3003<br>PMS5003<br>PMS7003** | Particle Concentration sensor (serial)
+**PMS3003<BR>PMS5003<BR>PMS7003** | Particle Concentration sensor (serial)
 [**PN532**](PN532) | NFC/RFID controller
-[**PZEM-0XX**](PZEM-0XX) | Energy Monitor (serial) 
+[**PZEM-004<BR>PZEM-016**](PZEM-0XX) | Energy Monitor (serial) 
 [**RCWL-0516**](RCWL-0516) |  Microwave Radar Presence detection
 [**RDM6300**](RDM6300) | 125Khz RFID Module
-**RX-4M50RR30SF / RX-AM8SF** | RF Sensor receiver (gpio)
+**RX-4M50RR30SF<BR>RX-AM8SF** | RF Sensor receiver (gpio)
 **SCD30** | CO<sub>2</sub> sensor (I<sup>2</sup>C)
 **Eastron SDM120** | Modbus Energy Meter (serial)
 **Eastron SDM630** | Modbus Energy Meter (serial)
-[**SDS011 (SDS021)**](SDS011) | Laser Dust Sensor
+[**SDS011<BR>SDS021**](SDS011) | Laser Dust Sensor
 **SGP30** | Gas and Air Quality sensor (I<sup>2</sup>C)
 **SHT1x** | Temperature and Humidity sensor (I<sup>2</sup>C)
 [**SHT30**](SHT30) | Humidity & Temperature Sensor
@@ -75,11 +75,11 @@ Name|Description|Image
 **TM1638** | 8 Switch, LED and 7 Segment Unit sensor (gpio)
 [**TSL2561**](TSL2561) | Luminosity Sensor (I<sup>2</sup>C)
 **TSL2591** | Luminosity Sensor (I<sup>2</sup>C)
-[**TX2x**](TX2x) | La Crosse TX2x Series Anemometer | sensor (gpio)
+[**TX20<BR>TX23**](TX2x) | La Crosse TX2x Series Anemometer | sensor (gpio)
 [**VEML6070**](VEML6070) |  UV Sensor (I<sup>2</sup>C)
 [**VL53L0x**](VL53L0x) | Time of flight sensor (I<sup>2</sup>C)
 [**WS2812B**](WS2812B-RGB-Shield) | Wemos RGB LED Shield
-[**WS2812B/WS2813B**](WS2812B-and-WS2813) | LED Strip
+[**WS2812B<BR>WS2813B**](WS2812B-and-WS2813) | LED Strip
 **Xadow (Grove) Mutichannel Gas Sensor** | gas sensor (I<sup>2</sup>C)
 
 [Google Sheet list of supported peripherals](https://docs.google.com/spreadsheets/d/1VaZrCUjNosUQGYBX0pTVoY_rkSzEIcTP8K3052smOB4/edit?usp=sharing)
