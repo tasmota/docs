@@ -1,7 +1,7 @@
 # AHT1x temperature and humidity sensor
-!!! info "This feature is included only in tasmota-sensors.bin" 
+!!! failure "This feature is not included in precompiled binaries"  
 
-Otherwise you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 ```
 #ifndef USE_AHT1x
 #define USE_AHT1x       // [I2cDriver43] Enable AHT10/15 humidity and temperature sensor (I2C address 0x38) (+0k8 code)
