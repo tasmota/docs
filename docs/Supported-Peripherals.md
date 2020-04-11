@@ -5,8 +5,9 @@ Name|Description|Image
 [**ADC**](ADC) | Analog input over A0 pin  
 **ADS1x15** | A/D Converter 
 **AHT10/AHT15** | Asair AHT10 / AHT15 Temperature and Humidity Sensor (I<sup>2</sup>C)
-[**AM2301 (DHT21), AM2302 (DHT22), AM2321**](AM2301) | Temperature and Humidity Sensor (gpio)|<img src="https://user-images.githubusercontent.com/5904370/53279561-cfb18480-3711-11e9-9889-76ab1d6eafcb.png" style="width:50px"></img>
-[**APDS-9960**](APDS-9960) |  Ambient Light, RGB Color and Proximity Sensor with Gesture Detection  | <img src="https://i.postimg.cc/qRLyPy1n/APDS-9960-1-720x533.jpg" style="width:30px"></img>
+[**AM2301 (DHT21), AM2302 (DHT22), AM2321**](AM2301) | Temperature and Humidity Sensor (gpio)
+[**AS3935**](https://github.com/arendst/Tasmota/pull/8130) | Franklin Lightning sensor (i^2^c)
+[**APDS-9960**](APDS-9960) |  Ambient Light, RGB Color and Proximity Sensor with Gesture Detection  
 [**AZ 7798**](AZ-7798) | CO<sub>2</sub> Meter Datalogger
 [**BH1750**](BH1750) | Luminosity Sensor
 [**BMP280 (BMP085, BMP180)**](BME280) | Pressure Sensor
@@ -33,6 +34,7 @@ Name|Description|Image
 **Honeywell HPMA115xx** | Particulate Matter Sensor (serial)
 **HTU21** | Temperature and Humidity sensor (I<sup>2</sup>C)
 **HX711** | Load Cell sensor (gpio)
+**iAQ-Core** | Indoor Air Quality sensor (i^2^c)
 **INA219** | High-Side DC Current and Voltage sensor (I<sup>2</sup>C)
 [**IR Remote**](IR-Remote) | IR transmitter and receiver
 **K30, K70, S8** | CO<sub>2</sub> sensor (I<sup>2</sup>C) | 
@@ -42,19 +44,19 @@ Name|Description|Image
 **MAX44009** | Ambient Light Sensor (I<sup>2</sup>C)
 [**MCP23008 / MCP23017**](MCP230xx) |  I/O Expander (I<sup>2</sup>C)
 [**MGC3130**](MGC3130) | 3D Tracking and Gesture Controller
-[**MH-Z19B**](MH-Z19B) | CO<sub>2</sub> Sensor |<img src="https://user-images.githubusercontent.com/5904370/53279635-54040780-3712-11e9-8c83-970280003b6d.png" style="width:50px"></img>
-[**MLX90614**](MLX90614) | MLX9061X Infrared Thermometer (I<sup>2</sup>C) | <img src="https://github.com/tasmota/docs/blob/master_media/mlx90614-1.jpg?raw=true" style="width:30px"></img>
+[**MH-Z19B**](MH-Z19B) | CO<sub>2</sub> Sensor 
+[**MLX90614**](MLX90614) | MLX9061X Infrared Thermometer (I<sup>2</sup>C) 
 [**NRF24L01**](NRF24L01) | NRF24L01 as BLE-bridge for Mijia BT sensors (SPI)
 [**MPR121**](MPR121) | Proximity Capacitive Touch Sensor Controller (I<sup>2</sup>C)
 [**MPU6050**](MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer sensor (I<sup>2</sup>C)
 [**P1 Smart Meter**](P1-Smart-Meter) | Energy Meter (serial)
 [**PAJ7620**](PAJ7620) | Gesture & Proximity Detection Sensor
-[**PIR**](PIR-Motion-Sensors#AM312) | Passive Infrared Sensor (gpio) | <img src="https://user-images.githubusercontent.com/5904370/53279530-8c571600-3711-11e9-85c0-27d35be2df48.png"  style="width:1.5em"></img>
+[**PIR**](PIR-Motion-Sensors#AM312) | Passive Infrared Sensor (gpio)
 [**PCA9685**](PCA9685) | 16-channel, 12-bit PWM LED controller (I<sup>2</sup>C)
 **PCF8574** | 8-port IO Expander (I<sup>2</sup>C) 
 **PMS3003-5003-7003** | Particle Concentration sensor (serial)
 [**PN532**](PN532) | NFC/RFID controller
-[**PZEM-0XX**](PZEM-0XX) | Energy Monitor (serial) | <img src="https://user-images.githubusercontent.com/5904370/53279642-7433c680-3712-11e9-9aa2-7fd1adce3def.png"  style="width:1.5em"></img>
+[**PZEM-0XX**](PZEM-0XX) | Energy Monitor (serial) 
 [**RCWL-0516**](RCWL-0516) |  Microwave Radar Presence detection
 [**RDM6300**](RDM6300) | 125Khz RFID Module
 **RX-4M50RR30SF / RX-AM8SF** | RF Sensor receiver (gpio)
@@ -92,4 +94,4 @@ Name|Description|Image
 * [Expand Sonoff S20 with a jack plug](https://github.com/arendst/Tasmota/issues/670)
 * [Expand Sonoff 4CH with a jack plug](Expanding-4CH)
 * [Modify KaKu to WKaKu Power Socket](/devices/Modify-KaKu-to-WKaKu-Power-Socket)
-* [GPIO Locations](GPIO-Locations)
+* [GPIO Locations for some devices](GPIO-Locations)
