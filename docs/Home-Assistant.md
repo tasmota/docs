@@ -14,6 +14,7 @@ To test control of a relay or light, as **Publish a packet topic** enter `cmnd/%
 ![](_media/hass2.png)
 
 Home Assistant has two avenues of adding Tasmota devices:
+
 1. Using MQTT discovery
 2. Adding by editing configuration.yaml 
 
@@ -78,8 +79,7 @@ For a Tasmota device to be automatically discovered by Home Assistant you need t
 SetOption19 1
 ```
 
-!!! failure "Discovery is not built in to tasmota lite. Use the full version for discovery."
-
+!!! failure "Discovery is not built in to tasmota lite. Use the full version (tasmota.bin) for discovery."
 
 After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device.
 
@@ -168,7 +168,7 @@ switch:
 
 
 !!! example "Multiple Switches"
-When a device has more than one relay you need to create a new switch for each relay. For each relay use corresponding POWER\<x\> (POWER1, POWER2, etc)  or if [SetOption26](Commands.md#setoption26) is enabled)
+When a device has more than one relay you need to create a new switch for each relay. For each relay use corresponding POWER<x\> (POWER1, POWER2, etc)  or if [SetOption26](Commands.md#setoption26) is enabled)
 
 ```yaml
 switch:
