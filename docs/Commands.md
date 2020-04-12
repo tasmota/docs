@@ -526,12 +526,13 @@ DisplayFont<a class="cmnd" id="displayfont"></a>|Specify the current font<BR>`0`
 DisplayWidth<a class="cmnd" id="displaywidth"></a>|Specify the display width in pixels *(SSD1306 only)*
 DisplayHeight<a class="cmnd" id="displayheight"></a>|Specify the display height in pixels *(SSD1306 only)*
 
+
 ### Shutters
 
 
 Command<BR> (x = `1..4`)|Parameters
 :---|:---
-ShutterButton&#60;x><a class="cmnd" id="shutterbutton"></a>|`<button> <func> <mqtt>`<BR><BR>Assign a button to control the shutter. For more details please refer to [Blinds and Shutters](Blinds-and-Shutters) support<BR><BR>`<button>`<BR>&emsp;`0`: disable buttons for this shutter<BR>&emsp;`1..4`: Button number<BR>`<func>` `up`/`down`/`updown`: function to assign to the button<BR>`<mqtt>` `1`/`0`: enable/disable MQTT publish for button hold action<BR><BR>For example:<li>To control shutter #1 by two buttons: `Backlog ShutterButton1 1 up 1; ShutterButton1 2 down 1` assigns button #1 to act as an "up" button and button #2 to act as an "down" button for shutter #1 including MQTT publish.</li><li>To control shutter #1 by a single button: `ShutterButton1 1 updown 0` assigns button #1 to act as an "up and down" button.</li>
+ShutterButton&#60;x><a class="cmnd" id="shutterbutton"></a>|`<button> <func> <mqtt>`<BR><BR>Assign a button to control the shutter. For more details please refer to [Blinds and Shutters](Blinds-and-Shutters) support<BR><BR>`<button>`<BR>&emsp;`0`: disable buttons for this shutter<BR>&emsp;`1..4`: Button number<BR>`<func>` `up`/`down`/`updown`: function to assign to the button<BR>`<mqtt>` `1`/`0`: enable/disable MQTT publish for button hold action<BR><BR>For example:<li>To control shutter #1 by two buttons: `Backlog ShutterButton1 1 up 1; ShutterButton1 2 down 1` assigns button #1 to act as an "up" button (1x press open, 2x press 50% position, 3x press 75% position) and button #2 to act as an "down" button (1x press close, 2x press 50% position, 3x press 25% position) for shutter #1 including MQTT publish.</li><li>To control shutter #1 by a single button: `ShutterButton1 1 updown 0` assigns button #1 to act as an "up and down" button (1x press up, 2x press down).</li><li>To control shutter #1 by a single button: `ShutterButton1 1 toggle 0` assigns button #1 to act as a "toggle" button (1x press toggle, 2x press 50% position).</li>
 ShutterCalibration&#60;x><a class="cmnd" id="shuttercalibration"></a>|Granular shutter position calibration. The measured opening position of the shutter at the 30, 50, 70, 90, and 100 percent opened locations. For example: `ShutterCalibration<x> 23 38 56 74 82`
 ShutterCloseDuration&#60;x><a class="cmnd" id="shuttercloseduration"></a>| `1..255` *(default = `10`)*<BR>time, in seconds, it takes to fully close the shutter. A fraction of a second can be specified (e.g. `45.7`).
 ShutterClose&#60;x><a class="cmnd" id="shutterclose"></a>|Engage the relay to close the shutter. This action can be requested at any time. Number of shutter can be the index or the arguement
@@ -548,6 +549,11 @@ ShutterRelay&#60;x><a class="cmnd" id="shutterrelay"></a>|`<value>`<BR>`0` = dis
 ShutterSetClose&#60;x><a class="cmnd" id="shuttersetclose"></a>|shutter closed position. `ShutterPosition` will be reset to fully closed value (e.g., `0` when `ShutterInvert = 0`, `100` otherwise).
 ShutterSetHalfway&#60;x><a class="cmnd" id="shuttersethalfway"></a>| `0..100` *(default = `50`)*<BR>Define shutter half open position (in percent)
 ShutterStop&#60;x><a class="cmnd" id="shutterstop"></a>|Disengage the relays to stop the shutter. Number of shutter can be the index or the argument
+ShutterStopClose&#60;x><a class="cmnd" id="shutterstopclose"></a>|Stop the shutter when currently moving, close it otherwise
+ShutterStopOpen&#60;x><a class="cmnd" id="shutterstopopen"></a>|Stop the shutter when currently moving, open it otherwise
+ShutterStopPosition&#60;x><a class="cmnd" id="shutterstoptoggle"></a>|Stop the shutter when currently moving, set it to position `0..100`, `UP`, `DOWN`, `STOP`, `TOGGLE` otherwise
+ShutterStopToggle&#60;x><a class="cmnd" id="shutterstoptogglee"></a>|Stop the shutter when currently moving, toggle it otherwise
+ShutterToggle&#60;x><a class="cmnd" id="shuttertogglee"></a>|Toggle the shutter - close the shutter when its position is >50, open it otherwise 
 See also| [`SetOption80`](#setoption80) - Enable shutter support
 
 ### Zigbee
