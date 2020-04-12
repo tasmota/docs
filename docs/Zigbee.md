@@ -126,7 +126,7 @@ GPIO15|Zigbee TX (165)|CC_RXD<BR>(A.K.A. P0_2)
 GND | GND 
 
 ### Tasmota Settings 
-In the _Configuration -> Configure Module_ page assign:
+In the **_Configuration -> Configure Module_** page assign:
 
 - GPIO13 to `Zigbee RX (166)`   
 - GPIO15 to `Zigbee TX (165)`

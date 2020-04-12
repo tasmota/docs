@@ -17,7 +17,7 @@ Also if no other I<sup>2</sup>C devices are connected to the Wemos it might be w
 <img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/wemos_sht30_shield_v2.0.0_marked_pads.jpg?raw=true" width=300>
 
 ### Tasmota Settings
-In the _Configuration -> Configure Module_ page assign:
+In the **_Configuration -> Configure Module_** page assign:
 1. D2 GPIO4 to `I2C SDA (6)`
 2. D1 GPIO5 to `I2C SCL (5)`
 

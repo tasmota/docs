@@ -72,7 +72,7 @@ The TX23 sensor is still available under various brand names such as "La Crosse"
 
 ### Tasmota Settings
 
-In the _Configuration -> Configure Module_ page assign:
+In the **_Configuration -> Configure Module_** page assign:
 GPIOx to `TX2x (104)`
 
 The TX2 pin needs a pull-up resistor. The internal pull-up is activated for this so you can use any useful GPIO except GPIO15 and GPIO16 (GPIO15 is always pulled low, GPIO16 has a built-in pull-down resistor).  

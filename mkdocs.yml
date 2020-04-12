@@ -116,9 +116,9 @@ nav:
     - Supported-Peripherals.md
     - Analog pin: ADC.md
     - Buzzer.md
-    - Displays:
-      - Displays.md
+    - Displays.md
     - A4988 stepper motor controller: A4988-Stepper-Motor-Controller.md
+    - AHT1x.md
     - AM2301 temperature and humidity sensor: AM2301.md
     - APDS-9960.md
     - AZ-7798.md
@@ -135,6 +135,7 @@ nav:
     - HM-17.md
     - HC-SR04.md
     - Honeywell-HIH.md
+    - IAQ.md
     - IR-Remote.md
     - LM75AD.md
     - MCP230xx.md
