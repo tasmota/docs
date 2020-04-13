@@ -1,3 +1,4 @@
+
 # Shutters and Blinds
 
 !!! info "Control blinds and roller shades connected to regular ON/OFF motors or stepper motors"
@@ -65,7 +66,7 @@ With four shutters, eight `Relay<x>` components are needed. If manual operation 
 
 Using manual operation `Switch<x>` pairs may require setting `SwitchMode<x> 4` (inverse follow) for proper switch behavior.
 
-Any shutter positioning can be locked `ShutterLock<x> 1`. Once executed an ongoing movement is finished while further positioning commands like `ShutterOpen<x>`, `ShutterClose<x>`, `ShutterStop<x>`, and `ShutterPosition<x>`, as well as web UI buttons, web UI sliders, and shutter buttons are disabled. This can be used to lock an outdoor blind in case of high wind or rain. You may also disable shutter positioning games by your children. Shutter positioning can be unlocked using `ShutterLock<x> 0`. Please be aware that the shutter can still be moved by direct relay control (i.e., `power<x>`), or physical switches and buttons. Use hte `ShutterButton<x>` command prior to `ShutterLock` to be able to lock buttons.
+Any shutter positioning can be locked `ShutterLock<x> 1`. Once executed an ongoing movement is finished while further positioning commands like `ShutterOpen<x>`, `ShutterClose<x>`, `ShutterStop<x>`,  `ShutterPosition<x>`, ... as well as web UI buttons, web UI sliders, and shutter buttons are disabled. This can be used to lock an outdoor blind in case of high wind or rain. You may also disable shutter positioning games by your children. Shutter positioning can be unlocked using `ShutterLock<x> 0`. Please be aware that the shutter can still be moved by direct relay control (i.e., `power<x>`), or physical switches and buttons. Use hte `ShutterButton<x>` command prior to `ShutterLock` to be able to lock buttons.
 
 ### Pulse Motor Support
 There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands.md#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
@@ -149,11 +150,14 @@ The assigned button can have one of the following functionalities:<BR>
 - Setup for an "updown" button: `ShutterButton<x> <button> updown <mqtt>`
    Single press will move shutter to 100%, double press down to 0% and tripple press to 50%. No hold action and no other shutter control by MQTT, `<mqtt>` is don't care here.
 
+- Setup for an "toggle" button: `ShutterButton<x> <button> toggle <mqtt>`
+   Single press will toggle shutter, double press will move it to 50%. No hold action and no other shutter control by MQTT, `<mqtt>` is don't care here.
+
 More advanced control of the button press actions is given by the following `ShutterButton<x>` command syntax:
 
 `ShutterButton<x> <button> <p1> <p2> <p3> <ph> <m1> <m2> <m3> <mh> <mi>` 
 
-`<button>` `1..4`: Button number, `0/-`: disable buttons for this shutter<BR>`<p1>` `0..100`: single press position, `-`: disable<BR>`<p2>` `0..100`: double press position, `-`: disable<BR>`<p3>` `0..100`: tripple press position, `-`: disable<BR>`<ph>` `0..100`: hold press position, `-`: disable<BR>`<m1>` `1`: enable single press position MQTT broadcast, `0/-`: disable<BR>`<m2>` `1`: enable double press position MQTT broadcast, `0/-`: disable<BR>`<m3>` `1`: enable tripple press position MQTT broadcast, `0/-`: disable<BR>`<mh>` `1`: enable hold press position MQTT broadcast, `0/-`: disable<BR>`<mi>` `1`: enable MQTT broadcast to all shutter indices, `0/-`: disable
+`<button>` `1..4`: Button number, `0/-`: disable buttons for this shutter<BR>`<p1>` `0..100`: single press position, `t`: toggle, `-`: disable<BR>`<p2>` `0..100`: double press position, `t`: toggle, `-`: disable<BR>`<p3>` `0..100`: tripple press position, `t`: toggle, `-`: disable<BR>`<ph>` `0..100`: hold press position, `t`: toggle, `-`: disable<BR>`<m1>` `1`: enable single press position MQTT broadcast, `0/-`: disable<BR>`<m2>` `1`: enable double press position MQTT broadcast, `0/-`: disable<BR>`<m3>` `1`: enable tripple press position MQTT broadcast, `0/-`: disable<BR>`<mh>` `1`: enable hold press position MQTT broadcast, `0/-`: disable<BR>`<mi>` `1`: enable MQTT broadcast to all shutter indices, `0/-`: disable
 
 Parameters are optional. When missing, all subsequent parameters are set to `disable`.
 
@@ -166,8 +170,14 @@ Global steering of all your shutters at home is supported by additional MQTT bro
 - `ShutterButton<x> <button> 100 50 74 100 0 0 0 1 1` is same as `ShutterButton<x> <button> up 1`.
 - `ShutterButton<x> <button> 0 50 24 0 0 0 0 1 1` is same as `ShutterButton<x> <button> down 1`.
 - `ShutterButton<x> <button> 100 0 50 - 0 0 0 0 0` is same as `ShutterButton<x> <button> updown 0`.
+- `ShutterButton<x> <button> t 50 - - 0 0 0 0 0` is same as `ShutterButton<x> <button> toggle 0`.
 
 Module WiFi setup, restart, upgrade and reset according to [Buttons and Switches](Buttons-and-Switches) are supported "child and fool save" only when no button restriction (SetOption1) is given and when all configured shutter buttons of that shutter are pressed 5x, 6x, 7x times or hold long simultaneously.
+
+### Button remote control
+One can use any other tasmota module with attached button(s) or switch(es) to remote control a shutter using rules. Similar behavior as direct button control can be achieved by  applying `ShutterStopClose, ShutterStopOpen, ShutterStopToggle, ShutterStopPosition` commands. They stops shutter while movement and carry out close, open, toggle or position commands otherwise.
+
+`rule<n> on switch1#state=2 do publish cmnd/<myTasmotaShutter>/ShutterStopToggle endon`
 
 ## Configuration
 
