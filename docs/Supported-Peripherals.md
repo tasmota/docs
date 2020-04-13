@@ -6,7 +6,7 @@ Name|Description
 **ADS111x** | A/D Converter 
 [**AHT10<BR>AHT15**](AHT1x.md) | Asair AHT10 / AHT15 Temperature and Humidity Sensor (I^2^C)
 [**AM2301 (DHT21)<BR>AM2302 (DHT22)<BR>AM2321**](AM2301) | Temperature and Humidity Sensor (gpio)
-[**AS3935**](https://github.com/arendst/Tasmota/pull/8130) | Franklin Lightning sensor (I^2^C)
+[**AS3935**](AS3935) | Franklin Lightning sensor (I^2^C)
 [**APDS-9960**](APDS-9960) |  Ambient Light, RGB Color and Proximity Sensor with Gesture Detection  
 [**AZ 7798**](AZ-7798) | CO<sub>2</sub> Meter Datalogger
 [**BH1750**](BH1750) | Luminosity Sensor
