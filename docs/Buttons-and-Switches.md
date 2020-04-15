@@ -31,7 +31,7 @@ By default a switch toggles the corresponding power state (f.e. `Switch1` contro
 !!! example
      Make Switch1 publish its value to `cmnd/custom-topic/SWITCH` and not control Power1
 ```haskell
-Backlog SwitchMode1; SwitchTopic 0
+Backlog SwitchMode 1; SwitchTopic 0
 ```
 ```haskell
 Rule1 on Switch1#state do Publish cmnd/custom-topic/SWITCH %value% endon
