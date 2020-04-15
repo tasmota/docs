@@ -38,6 +38,9 @@ Rule1 on Switch1#state do Publish cmnd/custom-topic/SWITCH %value% endon
 Rule1 1
 ```
 
+!!! note
+    When you define this Rule, the SwitchTopic 0 directive will be ignored and the device send %topic%/stat/SWITCH1 message too. 
+
 !!! warning 
     If you define a switch with a number higher than available power outputs it will default to controlling `Power1`. Example: Switch4 on a device with Power1 and Power2 will control `Power1`.
 
