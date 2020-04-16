@@ -1,0 +1,287 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Tasmota: create an AWS IoT Thing for a Tasmota device. This template will create the Private Key for the Thing, sign the certificate and generate the Tasmota commands. This template must be used for each Tasmota device you want to connect to AWS IoT."
+
+Parameters:
+  ThingNameParam:
+    Type: String
+    Default: ""
+    Description: Name of the AWS IoT thing you want to create (leave black to default to the CloudFormation stack name)
+  RetentionPolicy:
+    Type: String
+    AllowedValues: [ "Delete", "Retain" ]
+    Default: "Retain"
+    Description: When you delete the CloudFormation template, "Delete" will also delet this policy, "Retain" will keep it
+  MQTTPolicyName:
+    Type: String
+    Default: "TasmotaMqttPolicy"
+    Description: Name of the MQTTPolicy for Tasmota devices (leave unchanged unless you have specific needs)
+
+Outputs:
+  ThingName:
+    Description: The name of the AWS IoT thing created
+    Value: !If [ Retained, !Ref TasmotaThingRetained, !Ref TasmotaThingNotRetained ]
+  TlsKey1:
+    Description: TlsKey1 command to configure the private key in Tasmota
+    Value: !GetAtt TasmotaGeneratePrivKeyAndCert.tls1
+  TlsKey2:
+    Description: TlsKey2 command to configure the certiicate in Tasmota
+    Value: !GetAtt CertificateGetPEM.tls2
+  MqttHost:
+    Description: MqttHost command to configure Tasmota
+    Value: !GetAtt CertificateGetPEM.endpoint
+
+Conditions:
+  DefaultThingName: !Equals ["", !Ref ThingNameParam]
+  Retained: !Equals [ !Ref RetentionPolicy, "Retain" ]
+  NotRetained: !Not [ !Equals [ !Ref RetentionPolicy, "Retain" ] ]
+
+
+Resources:
+
+  ######################################################################
+  #
+  # The target AWS IoT Thing
+  # This Thing will remain if you delete the CloudFormation template
+  #
+  ######################################################################
+  TasmotaThingRetained:
+    Type: AWS::IoT::Thing
+    Condition: Retained
+    DeletionPolicy: Retain
+    Properties:
+      ThingName: !If [ DefaultThingName, !Ref "AWS::StackName", !Ref ThingNameParam ]
+  TasmotaThingNotRetained:
+    Type: AWS::IoT::Thing
+    Condition: NotRetained
+    DeletionPolicy: Delete
+    Properties:
+      ThingName: !If [ DefaultThingName, !Ref "AWS::StackName", !Ref ThingNameParam ]
+
+  ######################################################################
+  #
+  # Execution Role Policy required by the AWS Lambda function
+  # to create the required AWS IoT objects. It is not used after
+  # initial creation.
+  #
+  ######################################################################
+  LambdaExecRoleProvisioning:
+    Type: "AWS::IAM::Role"
+    Properties:
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+      Policies:
+        -
+          PolicyName: AWSIotProvisioning
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: Allow
+                Action: [ "iot:*" ]
+                Resource: "*"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Sid: ""
+            Effect: Allow
+            Principal:
+              Service: "lambda.amazonaws.com"
+            Action: "sts:AssumeRole"
+
+  ######################################################################
+  #
+  # The Certificate used by the AWS IoT Thing to authenticate
+  #
+  ######################################################################
+  TasmotaCertificateRetained:
+    Type: AWS::IoT::Certificate
+    Condition: Retained
+    DeletionPolicy: Retain
+    Properties: 
+      CertificateSigningRequest: !GetAtt TasmotaGeneratePrivKeyAndCert.csr
+      Status: "ACTIVE"
+  TasmotaCertificateNotRetained:
+    Type: AWS::IoT::Certificate
+    Condition: NotRetained
+    DeletionPolicy: Delete
+    Properties: 
+      CertificateSigningRequest: !GetAtt TasmotaGeneratePrivKeyAndCert.csr
+      Status: "ACTIVE"
+
+  ######################################################################
+  #
+  # Attachment between the Certificate and the Policy
+  #
+  ######################################################################
+  TasmotaPolicyCertificateAttachmentRetained:
+    Type: AWS::IoT::PolicyPrincipalAttachment
+    Condition: Retained
+    DeletionPolicy: Retain
+    Properties: 
+      PolicyName: !Ref MQTTPolicyName
+      Principal: !GetAtt TasmotaCertificateRetained.Arn
+  TasmotaPolicyCertificateAttachmentNotRetained:
+    Type: AWS::IoT::PolicyPrincipalAttachment
+    Condition: NotRetained
+    DeletionPolicy: Delete
+    Properties: 
+      PolicyName: !Ref MQTTPolicyName
+      Principal: !GetAtt TasmotaCertificateNotRetained.Arn
+
+  ######################################################################
+  #
+  # Attachment between the Certificate and the Thing
+  #
+  ######################################################################
+  TasmotaThingCertificateAttachmentRetained:
+    Type: AWS::IoT::ThingPrincipalAttachment
+    Condition: Retained
+    DeletionPolicy: Retain
+    Properties: 
+      ThingName: !Ref TasmotaThingRetained
+      Principal: !GetAtt TasmotaCertificateRetained.Arn
+  TasmotaThingCertificateAttachmentNotRetained:
+    Type: AWS::IoT::ThingPrincipalAttachment
+    Condition: NotRetained
+    DeletionPolicy: Delete
+    Properties: 
+      ThingName: !Ref TasmotaThingNotRetained
+      Principal: !GetAtt TasmotaCertificateNotRetained.Arn
+
+  ######################################################################
+  #
+  # Custom resource used to generate the Thing private and CSR
+  #
+  ######################################################################
+  TasmotaGeneratePrivKeyAndCert:
+    Type: "Custom::TasmotaGeneratePrivKeyAndCertLambda"
+    Version: "1.0"
+    Properties:
+      ServiceToken: !GetAtt TasmotaGeneratePrivKeyAndCertLambda.Arn
+
+  TasmotaGeneratePrivKeyAndCertLambda:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: "index.handler"
+      MemorySize: 512
+      Role: !GetAtt LambdaExecRoleProvisioning.Arn
+      Runtime: python3.7
+      Timeout: 5
+      Code:
+        ZipFile: |
+          import cfnresponse
+          import traceback
+          import json
+          import os
+          import codecs
+
+          def handler(event, context):
+              try:
+                  # generate ec 256 bits private key
+                  cmd = 'openssl ecparam -name prime256v1 -genkey -out /tmp/tasmota-01.key';
+                  ret = os.system(cmd)
+                  if ret != 0:
+                    raise Exception('Error generating private key '+ret)
+                  
+                  with open('/tmp/tasmota-01.key', 'r') as tasmota_key_file:
+                    tasmota_key = tasmota_key_file.read()
+              
+                  cmd = "openssl ec -in /tmp/tasmota-01.key -inform PEM -outform DER | openssl asn1parse -inform DER | head -3 | tail -1 | awk -F':' '{ print $4 }'  > /tmp/tls1.hex"
+                  ret = os.system(cmd)
+                  if ret != 0:
+                    raise Exception('Error generating TLSKey1 command '+ret)
+                  
+                  with open('/tmp/tls1.hex', 'r') as tls1file:
+                    tls1hex = tls1file.read().rstrip()
+
+                  tls1cmd = "TLSKey1 " + codecs.encode(codecs.decode(tls1hex, 'hex'), 'base64').decode().rstrip()
+
+                  # generate CSR
+                  cmd = "openssl req -new -sha256 -key /tmp/tasmota-01.key -nodes -out /tmp/tasmota-01.csr -subj '/C=EU' -days 3650"
+                  ret = os.system(cmd)
+                  if ret != 0:
+                    raise Exception('Error generating CSR '+ret)
+
+                  with open('/tmp/tasmota-01.csr', 'r') as csrfile:
+                    csr = csrfile.read().rstrip()
+
+              except Exception as e:
+                  print(traceback.format_exc())
+                  cfnresponse.send(event, context, cfnresponse.FAILED, { "error": str(e) })
+              else:
+                  cfnresponse.send(event, context, cfnresponse.SUCCESS,{
+                    'Result': 'Ok',
+                    'privkey': tasmota_key,
+                    'tls1': tls1cmd,
+                    'csr': csr
+                  })
+
+  ######################################################################
+  #
+  # Custom resource used to convert the signed certificate into
+  # the target Tlskey2 Tasmota command
+  #
+  ######################################################################
+  CertificateGetPEM:
+    Type: "Custom::CertificateGetPEMLambda"
+    Version: "1.0"
+    Properties:
+      ServiceToken: !GetAtt CertificateGetPEMLambda.Arn
+      certID: !If [ Retained, !Ref TasmotaCertificateRetained, !Ref TasmotaCertificateNotRetained ]
+
+  CertificateGetPEMLambda:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: "index.handler"
+      MemorySize: 512
+      Role: !GetAtt LambdaExecRoleProvisioning.Arn
+      Runtime: python3.7
+      Timeout: 5
+      Code:
+        ZipFile: |
+          import cfnresponse
+          import traceback
+          import json
+          import boto3
+          import os
+
+          def handler(event, context):
+              try:
+                  certID = event['ResourceProperties']['certID']
+
+                  client = boto3.client('iot')
+
+                  # get the ATS endpoint
+                  response = client.describe_endpoint(endpointType='iot:Data-ATS')
+                  ats_endpoint = response['endpointAddress']
+
+                  # create the full Tasmota command
+                  endpoint = f"Backlog MqttHost {ats_endpoint}; MqttPort 8883"
+
+                  # get the PEM
+                  response = client.describe_certificate(certificateId=certID)
+                  pem = response['certificateDescription']['certificatePem']
+                  with open('/tmp/tasmota-01.cert.pem', 'w') as pemfile:
+                      pemfile.write(pem)
+
+                  cmd = 'openssl x509 -in /tmp/tasmota-01.cert.pem -inform PEM -outform DER | base64 > /tmp/tls2.b64'
+                  ret = os.system(cmd)
+                  if ret != 0:
+                    raise Exception('Error generating certificate base64 '+ret)
+                
+                  with open('/tmp/tls2.b64', 'r') as tls2file:
+                      tls2b64 = tls2file.read().rstrip()
+
+                  tls2cmd = "TLSKey2 " + tls2b64
+
+              except Exception as e:
+                  print(traceback.format_exc())
+                  cfnresponse.send(event, context, cfnresponse.FAILED, { "error": str(e) })
+              else:
+                  cfnresponse.send(event, context, cfnresponse.SUCCESS,{
+                      'Result': 'Ok',
+                      'endpoint': endpoint,
+                      'pem': pem,
+                      'tls2': tls2cmd
+                  })

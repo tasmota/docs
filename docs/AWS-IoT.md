@@ -48,9 +48,7 @@ Thanks to the switch of Arduino to BearSSL and aggressive optimization, the amou
 
 AWS IoT requires each Tasmota device to have its own distinct Private Key and Certificate (~800 bytes). Although you could imagine to use the same Private Key in all your devices, this is considered as a very bad practice. You are warned!
 
-Currently the only way to onboard your private key is to custom compile your own firmware, each one with its own private key embedded in C code. We explore later ways to store the keys in EEPROM or somewhere that wouldn't need to burn it into the firmware and that would survive OTA update.
-
-During TLS handshake, a secondary stack of 5.3k is allocated on the heap to allow BearSSL to have enough stack room. Memory is freed at the end of the handshake. Allocating such big chunks of memory can cause issues when heap fragmentation gets too high. During the first testing campaign, I didn't see any crash due to lack of memory - but this is something we need to keep on monitoring. The alternative would be to allocate this memory once and for all, meaning less memory for Tasmota but no possible crash due to fragmentation.
+During TLS handshake, a secondary stack of 5.3k is allocated on the heap to allow BearSSL to have enough stack room. Memory is freed at the end of the handshake. Allocating such big chunks of memory can cause issues when heap fragmentation gets too high. If you see memory going below 15KB, you may experience crashes.
 
 #### Cost
 
