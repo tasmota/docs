@@ -1,6 +1,6 @@
 # Home Assistant
 
-[Home Assistant](https://home-assistant.io/) (Hass) is an open source home automation solution that puts local control and privacy first.
+[Home Assistant](https://home-assistant.io/) (HA) is an open source home automation solution that puts local control and privacy first.
 
 Tasmota communicates with Home Assistant using MQTT. Before going any further, make sure MQTT is [properly set up in Home Assistant](https://www.home-assistant.io/docs/mqtt/broker) and [in Tasmota](MQTT). 
 
