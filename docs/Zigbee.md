@@ -38,7 +38,7 @@ These PCB make all the connections required to flash the CC2530 and to run Z2T.
   User _**h4nc**_ created a [custom PCB](https://github.com/h4nc/Zigbee2Tasmota_PCB) to connect a NodeMCU and a CC2530 board.  
   
   You can also get a complete Z2T module with case, pre-flashed and ready to configure and deploy.  
-  <img src="https://raw.githubusercontent.com/h4nc/Zigbee2Tasmota_PCB/master/images/Z2T_2.jpeg" height="250"> <img src="https://user-images.githubusercontent.com/34340210/65651832-a7f30980-dfdd-11e9-845d-81c2b99babb9.jpg" height="140">
+  <img src="https://raw.githubusercontent.com/h4nc/Zigbee2Tasmota_PCB/master/images/Z2T.jpeg" height="250">
 
 <!-- <table style="text-align:center; width: 80%;">
     <col style="width:30%">
