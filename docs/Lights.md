@@ -158,7 +158,7 @@ Some lights have hardware gamma correction (f.e. Sonoff B1)., in which case soft
 The curve used: orange=ideal, blue=tasmota.
 
 !!! question "How do I know if I have hardware gamma correction?"
-    If you find your light very dark even with `Dimmer 40`, then you have probably hardware gamma correction. Solution: `LedTable 0`.
+    If you find your light very dark even with `Dimmer 40`, it can mean either you have hardware PWM, disable it with `LedTable 0`, or you need to apply a minimum PWM value, use `DimmerRange 40,100` (adapt to the best value).
 
 !!! quote ""
     Internally Tasmota uses 10 bits resolution PWM to get smoother levels at low brightness. 
