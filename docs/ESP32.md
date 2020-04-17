@@ -4,9 +4,7 @@
 
 ## Compiling for ESP32
 
-Rename `platformio_override_sample.ini` to `platformio_override.ini` and uncomment tasmota32 in line #28. Next build will create a `tasmota32.bin`. Flash using esptool.py
-
-`esptool.py --chip esp32 --port <your-port> write_flash 0x1000 tasmota32.bin`
+Rename `platformio_override_sample.ini` to `platformio_override.ini` and uncomment tasmota32 in line #28. Next build will create a `tasmota32.bin`. 
 
 ![platformio_override.ini](_media/esp32-pio.jpg)
 
