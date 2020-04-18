@@ -111,26 +111,19 @@ EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch I
    ![MqttPolicy02](https://user-images.githubusercontent.com/49731213/79642201-6d7cd400-819c-11ea-81c1-f2f2dda9062e.png)
 
 3. At the **Configure stack options** screen, keep all default parameters and click **Next**.
-
- ![MqttPolicy03](https://user-images.githubusercontent.com/49731213/79642200-6d7cd400-819c-11ea-9bec-731bd315ea36.png)
+   ![MqttPolicy03](https://user-images.githubusercontent.com/49731213/79642200-6d7cd400-819c-11ea-9bec-731bd315ea36.png)
 
 4. At the **Review TasmotaMqttPolicy** screen, scroll down and click **Create Stack**.
-
- ![MqttPolicy04](https://user-images.githubusercontent.com/49731213/79642199-6ce43d80-819c-11ea-822a-b5d6b0b2aefd.png)
+   ![MqttPolicy04](https://user-images.githubusercontent.com/49731213/79642199-6ce43d80-819c-11ea-822a-b5d6b0b2aefd.png)
 
 5. The stack usually takes less than 2 minutes to complete. Wait for it to reach `CREATE_COMPLETE` state.
-
- ![MqttPolicy05](https://user-images.githubusercontent.com/49731213/79642197-6ce43d80-819c-11ea-8dda-c8ec717ea6f1.png)
+   ![MqttPolicy05](https://user-images.githubusercontent.com/49731213/79642197-6ce43d80-819c-11ea-8dda-c8ec717ea6f1.png)
 
 6. If you have left the parameter `RetentionPolicy` to `Retain`, then you can delete this CloudFormation stack (it will not delete the Policy). Click on the **Delete** button.
-
- ![MqttPolicy06](https://user-images.githubusercontent.com/49731213/79642195-6c4ba700-819c-11ea-99bb-bec6c9c5dfbb.png)
+   ![MqttPolicy06](https://user-images.githubusercontent.com/49731213/79642195-6c4ba700-819c-11ea-99bb-bec6c9c5dfbb.png)
 
 7. After less than 2 minutes, the stack should have reached the state `DELETE_COMPLETE`
-
- ![MqttPolicy07](https://user-images.githubusercontent.com/49731213/79642194-6bb31080-819c-11ea-98cf-8be4b6b62fce.png)
-
-
+   ![MqttPolicy07](https://user-images.githubusercontent.com/49731213/79642194-6bb31080-819c-11ea-98cf-8be4b6b62fce.png)
 
 ### 5. Create an AWS IoT Thing with Private Key and Certificate (once per Tasmota device)
 
@@ -156,36 +149,29 @@ EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch I
 
 
 1. At the **Create Stack** screen, click **Next**.
-
- ![MqttThing01](https://user-images.githubusercontent.com/49731213/79642402-8639b980-819d-11ea-8447-de9617b3c1cf.png)
+   ![MqttThing01](https://user-images.githubusercontent.com/49731213/79642402-8639b980-819d-11ea-8447-de9617b3c1cf.png)
 
 2. At the **Specify stack details** screen, keep all default parameters and click **Next**.
-
- Note: you can change the name of the Thing in AWS IoT by specifying the parameter ThingParamName.
-
- ![MqttThing02](https://user-images.githubusercontent.com/49731213/79642400-85088c80-819d-11ea-8458-44eeafcbd7e6.png)
+   Note: you can change the name of the Thing in AWS IoT by specifying the parameter ThingParamName.
+   ![MqttThing02](https://user-images.githubusercontent.com/49731213/79642400-85088c80-819d-11ea-8458-44eeafcbd7e6.png)
 
 3. At the **Configure stack options** screen, keep all default parameters and click **Next**.
-
- ![MqttPolicy03](https://user-images.githubusercontent.com/49731213/79642200-6d7cd400-819c-11ea-9bec-731bd315ea36.png)
+   ![MqttPolicy03](https://user-images.githubusercontent.com/49731213/79642200-6d7cd400-819c-11ea-9bec-731bd315ea36.png)
 
 4. At the **Review Tasmota-91** screen, scroll down, check the box **I acknowledge that AWS CloudFormation might create IAM resources.** and click **Create Stack**.
-
- ![MqttThing03](https://user-images.githubusercontent.com/49731213/79642399-846ff600-819d-11ea-84c0-09696c3da661.png)
+   ![MqttThing03](https://user-images.githubusercontent.com/49731213/79642399-846ff600-819d-11ea-84c0-09696c3da661.png)
 
 5. The stack usually takes less than 4 minutes to complete. Wait for it to reach `CREATE_COMPLETE` state.
+   ![MqttThing04](https://user-images.githubusercontent.com/49731213/79642496-18da5880-819e-11ea-8d14-81ab2fb17cea.png)
+   > You need to copy & paste the contents of the **Outputs** tab of the CloudFormation stack: MqttHost, TlsKey1, TlsKey2
 
- ![MqttThing04](https://user-images.githubusercontent.com/49731213/79642496-18da5880-819e-11ea-8d14-81ab2fb17cea.png)
+   ![MqttThing05](https://user-images.githubusercontent.com/49731213/79642605-dcf3c300-819e-11ea-852e-2df80da3917c.png)
 
-> You need to copy & paste the contents of the **Outputs** tab of the CloudFormation stack: MqttHost, TlsKey1, TlsKey2
-
- ![MqttThing05](https://user-images.githubusercontent.com/49731213/79642605-dcf3c300-819e-11ea-852e-2df80da3917c.png)
-
- ![MqttThing06](https://user-images.githubusercontent.com/49731213/79642792-d6b21680-819f-11ea-81a2-682e5310098d.png)
+   ![MqttThing06](https://user-images.githubusercontent.com/49731213/79642792-d6b21680-819f-11ea-81a2-682e5310098d.png)
  
- ![MqttThing07](https://user-images.githubusercontent.com/49731213/79642791-d6198000-819f-11ea-8a12-db4b95a7b4a0.png)
+   ![MqttThing07](https://user-images.githubusercontent.com/49731213/79642791-d6198000-819f-11ea-8a12-db4b95a7b4a0.png)
 
-Keep a copy of those parameters in a file, you might need them again.
+   Keep a copy of those parameters in a file, you might need them again.
 
 **Cleaning**: to avoid having CloudFormation templates piling up in your console, you can delete them. The created resources will remain, if you have left the parameter `RetentionPolicy` to `Retain`.
 
