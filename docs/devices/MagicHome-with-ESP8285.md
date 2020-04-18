@@ -105,7 +105,7 @@ Manual configuration:
 
 With all that done, one of the critical things I needed to do so I could set the colors was to run the command to set `SetOption15 1`. 
 
-After that it is possible to test the lights functionality, e.g. with the console command `color #ff0000ff`.
+After that it is possible to test the lights functionality, e.g. with the command `Color #ff0000ff`.
 
 
 ### RF control
@@ -148,16 +148,7 @@ or like this:
 After choosing the correct module type in your Tasmota configuration, press a key on the remote after boot for the device to learn your code.
 
 ### Full Set of rules for IR remote
-Each rule can only be 511 characters long, some of the colors below use the built in predefined shortcut color numbers. Rules can be sent to the device via MQTT:
-```
-mosquitto_pub -t 'cmnd/RGBled/rule1' -m 'On IrReceived#Data=0x00FF906F Do Dimmer + EndOn On IrReceived#Data=0x00FF9867 Do Color2 1 EndOn On IrReceived#Data=0x00FFE817 Do HSBColor1 13 EndOn On IrReceived#Data=0x00FF02FD Do HSBColor1 23 EndOn On IrReceived#Data=0x00FF50AF Do HSBColor1 33 EndOn On IrReceived#Data=0x00FF38C7 Do HSBColor1 43 EndOn On IrReceived#Data=0x00FFB847 Do Dimmer - EndOn On IrReceived#Data=0x00FFD827 Do Color2 2 EndOn On IrReceived#Data=0x00FF48B7 Do HSBColor1 140 EndOn On IrReceived#Data=0x00FF32CD Do HSBColor1 160 EndOn'
-
-mosquitto_pub -t 'cmnd/RGBled/rule2' -m 'On IrReceived#Data=0x00FF7887 Do HSBColor1 180 EndOn On IrReceived#Data=0x00FF28D7 Do HSBColor1 200 EndOn On IrReceived#Data=0x00FFF807 Do Power 0 EndOn On IrReceived#Data=0x00FF8877 Do Color2 3 EndOn On IrReceived#Data=0x00FF6897 Do HSBColor1 260 EndOn On IrReceived#Data=0x00FF20DF Do HSBColor1 280 EndOn On IrReceived#Data=0x00FF708F Do HSBColor1 300 EndOn On IrReceived#Data=0x00FFF00F Do HSBColor1 320 EndOn'
-
-mosquitto_pub -t 'cmnd/RGBled/rule3' -m 'On IrReceived#Data=0x00FFB04F Do Power 1 EndOn On IrReceived#Data=0x00FFA857 Do Color2 12 EndOn On IrReceived#Data=0x00FFB24D Do Backlog Power 0; WakeupDuration 1; Dimmer 100; Wakeup EndOn On IrReceived#Data=0x00FF00FF Do Backlog Power 0; WakeupDuration 5; Wakeup EndOn On IrReceived#Data=0x00FF58A7 Do Backlog Scheme 2; Speed 1 EndOn On IrReceived#Data=0x00FF30CF Do Backlog Scheme 3; Speed 5 EndOn'
-```
-
-Or via the device's Tasmota console:
+Each rule can only be 511 characters long, some of the colors below use the built in predefined shortcut color numbers. 
 ```
 Rule1 On IrReceived#Data=0x00FF906F Do Dimmer + EndOn On IrReceived#Data=0x00FF9867 Do Color2 1 EndOn On IrReceived#Data=0x00FFE817 Do HSBColor1 13 EndOn On IrReceived#Data=0x00FF02FD Do HSBColor1 23 EndOn On IrReceived#Data=0x00FF50AF Do HSBColor1 33 EndOn On IrReceived#Data=0x00FF38C7 Do HSBColor1 43 EndOn On IrReceived#Data=0x00FFB847 Do Dimmer - EndOn On IrReceived#Data=0x00FFD827 Do Color2 2 EndOn On IrReceived#Data=0x00FF48B7 Do HSBColor1 140 EndOn On IrReceived#Data=0x00FF32CD Do HSBColor1 160 EndOn
 
@@ -168,26 +159,18 @@ Rule3 On IrReceived#Data=0x00FFB04F Do Power 1 EndOn On IrReceived#Data=0x00FFA8
 
 A Google Sheets Document to edit the desired actions and create the three needed rules is linked [here](https://docs.google.com/spreadsheets/d/1tUI5OMcQmaC1vnZVKgn82qKmZt0KDFFnHTbJAl-pY2A/edit?usp=sharing).
 
-After setting the rules you need to activate them with the following via MQTT:
+Don't forget to activate the rules
 ```
-mosquitto_pub -t 'cmnd/RGBled/rule1' -m 'ON'
-mosquitto_pub -t 'cmnd/RGBled/rule2' -m 'ON'
-mosquitto_pub -t 'cmnd/RGBled/rule3' -m 'ON'
-```
-or from the Tasmota console:
-```
-Rule1 ON
-Rule2 ON
-Rule3 ON
+Backlog Rule1 1; Rule2 1; Rule3 1
 ```
 
 The hex codes for the "Data" value come from the data tag when looking at the JSON sent via MQTT. You can also view this data on the Tasmota console screen. From here you can program it to do whatever you want using [Rules](../Rules).
 
-[LC01-banggood]: http://www.banggood.com/ARILUX-AL-LC01-Super-Mini-LED-WIFI-Smart-RGB-Controller-For-RGB-LED-Strip-Light-DC-9-12V-p-1058603.html?rmmds=search
-[LC02-banggood]: http://www.banggood.com/ARILUX-AL-LC02-Super-Mini-LED-WIFI-APP-Controller-Dimmer-for-RGBW-LED-Strip-Light-DC-9-12V-p-1060222.html
-[LC03-banggood]: http://www.banggood.com/ARILUX-AL-LC03-Super-Mini-LED-WIFI-APP-Controller-Remote-Control-For-RGB-LED-Strip-DC-9-12V-p-1060223.html
-[LC04-banggood]: http://www.banggood.com/ARILUX-AL-LC04-Super-Mini-LED-WIFI-APP-Controller-Remote-Control-For-RGBW-LED-Strip-DC-9-12V-p-1060231.html
-[LC08-banggood]: http://www.banggood.com/ARILUX-AL-LC08-Super-Mini-LED-WIFI-APP-Controller-Dimmer-for-RGBWW-LED-Strip-Light-DC-5-28V-p-1081241.html
-[LC09-banggood]: http://www.banggood.com/ARILUX-AL-LC09-Super-Mini-LED-WIFI-APP-Controller-RF-Remote-Control-For-RGB-LED-Strip-DC9-28V-p-1081344.html
-[LC10-banggood]: http://www.banggood.com/ARILUX-AL-LC10-Super-Mini-LED-WIFI-APP-Controller-RF-Remote-Control-For-RGBW-LED-Strip-DC9-28V-p-1085111.html
-[LC11-banggood]: http://www.banggood.com/ARILUX-AL-LC11-Super-Mini-LED-WIFI-APP-Controller-RF-Remote-Control-For-RGBWW-LED-Strip-DC9-28V-p-1085112.html
+[LC01-banggood](http://www.banggood.com/ARILUX-AL-LC01-Super-Mini-LED-WIFI-Smart-RGB-Controller-For-RGB-LED-Strip-Light-DC-9-12V-p-1058603.html)
+[LC02-banggood](http://www.banggood.com/ARILUX-AL-LC02-Super-Mini-LED-WIFI-APP-Controller-Dimmer-for-RGBW-LED-Strip-Light-DC-9-12V-p-1060222.html)
+[LC03-banggood](http://www.banggood.com/ARILUX-AL-LC03-Super-Mini-LED-WIFI-APP-Controller-Remote-Control-For-RGB-LED-Strip-DC-9-12V-p-1060223.html)
+[LC04-banggood](http://www.banggood.com/ARILUX-AL-LC04-Super-Mini-LED-WIFI-APP-Controller-Remote-Control-For-RGBW-LED-Strip-DC-9-12V-p-1060231.html)
+[LC08-banggood](http://www.banggood.com/ARILUX-AL-LC08-Super-Mini-LED-WIFI-APP-Controller-Dimmer-for-RGBWW-LED-Strip-Light-DC-5-28V-p-1081241.html)
+[LC09-banggood](http://www.banggood.com/ARILUX-AL-LC09-Super-Mini-LED-WIFI-APP-Controller-RF-Remote-Control-For-RGB-LED-Strip-DC9-28V-p-1081344.html)
+[LC10-banggood](http://www.banggood.com/ARILUX-AL-LC10-Super-Mini-LED-WIFI-APP-Controller-RF-Remote-Control-For-RGBW-LED-Strip-DC9-28V-p-1085111.html)
+[LC11-banggood](http://www.banggood.com/ARILUX-AL-LC11-Super-Mini-LED-WIFI-APP-Controller-RF-Remote-Control-For-RGBWW-LED-Strip-DC9-28V-p-1085112.html)
