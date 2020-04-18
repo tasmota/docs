@@ -163,14 +163,10 @@ EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch I
 
 5. The stack usually takes less than 4 minutes to complete. Wait for it to reach `CREATE_COMPLETE` state.
    ![MqttThing04](https://user-images.githubusercontent.com/49731213/79642496-18da5880-819e-11ea-8d14-81ab2fb17cea.png)
-   > You need to copy & paste the contents of the **Outputs** tab of the CloudFormation stack: MqttHost, TlsKey1, TlsKey2
-
+   > You need to copy & paste the contents of the **Outputs** tab of the CloudFormation stack: **MqttHost**, **TlsKey1**, **TlsKey2**
    ![MqttThing05](https://user-images.githubusercontent.com/49731213/79642605-dcf3c300-819e-11ea-852e-2df80da3917c.png)
-
    ![MqttThing06](https://user-images.githubusercontent.com/49731213/79642792-d6b21680-819f-11ea-81a2-682e5310098d.png)
- 
    ![MqttThing07](https://user-images.githubusercontent.com/49731213/79642791-d6198000-819f-11ea-8a12-db4b95a7b4a0.png)
-
    Keep a copy of those parameters in a file, you might need them again.
 
 **Cleaning**: to avoid having CloudFormation templates piling up in your console, you can delete them. The created resources will remain, if you have left the parameter `RetentionPolicy` to `Retain`.
