@@ -49,9 +49,12 @@ http://<ip>/cm?cmnd=Power%20On
 http://<ip>/cm?cmnd=Power%20off
 http://<ip>/cm?user=admin&password=joker&cmnd=Power%20Toggle
 ```
-!!! warning "Any spaces or special characters must be replaced with their [ASCII hex codes](https://www.rapidtables.com/code/text/ascii-table.html). 
-    You must precede each hex code with `%`. " 
-    Most used codes are: `space` = `%20` and `;` = `%3B`   
+!!! warning "Any spaces or special characters must be replaced with their [ASCII hex codes](https://www.rapidtables.com/code/text/ascii-table.html)." 
+    You must precede each hex code with `%`.  
+    Most used codes are: `space` = `%20` and `;` = `%3B`. 
+    
+!!! tip 
+    Use [URLencoder.org](https://www.urlencoder.org/) to easily convert your commands.
 
 If you have set a password for web user interface access, this must be included (in plaintext) in the URL of the HTTP request, like so:  
 ```
