@@ -105,12 +105,10 @@ EU (Frankfurt) | <span style="font-family:'Courier';">eu-central-1</span> | [![L
 EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch IotThingGenerator in eu-west-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-3#/stacks/new?stackName=TasmotaMqttPolicy&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-MqttPolicy.yaml)
 
 1. At the **Create Stack** screen, click **Next**.
+   ![MqttPolicy01](https://user-images.githubusercontent.com/49731213/79642169-46be9d80-819c-11ea-8875-55248707c0a2.png)
 
- ![MqttPolicy01](https://user-images.githubusercontent.com/49731213/79642169-46be9d80-819c-11ea-8875-55248707c0a2.png)
-
-2. At the **Specify stack details** screen, keep all default parameters and click **Next**.
-
- ![MqttPolicy02](https://user-images.githubusercontent.com/49731213/79642201-6d7cd400-819c-11ea-81c1-f2f2dda9062e.png)
+1. At the **Specify stack details** screen, keep all default parameters and click **Next**.
+   ![MqttPolicy02](https://user-images.githubusercontent.com/49731213/79642201-6d7cd400-819c-11ea-81c1-f2f2dda9062e.png)
 
 3. At the **Configure stack options** screen, keep all default parameters and click **Next**.
 
