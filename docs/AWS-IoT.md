@@ -1,6 +1,9 @@
+!!! tip "New simplified and automated configuration"
+    We now provide easy to use AWS CloudFormation templates to generate the private key and sign the certificate. The manual method is now in Appendix
+
 !!! failure "This feature is not included in precompiled binaries"
     To use it you must [compile your build](Compile-your-build). 
-    
+
 Add the following to `user_config_override.h`:
 
 ```
@@ -71,61 +74,228 @@ You will need to install/compile the following:
  * Complete environment to compile Tasmota, ex: PlatformIO (PlatformIO)
  * Recent version of `openssl`
 
-### 1.5 Deploy required resources using AWS CloudFormation and skip to Step 6.
 
-The following AWS CloudFormation template will create these resources:
+### 2. Enable AWS IoT in Tasmota
 
-* One IAM Role 
-	* **LambdaExecutionRole** Will allow the Lambda function to write to CloudWatch for Logging.
-* One AWS Lambda function to create a CSR and Private Key as described in Step 3.
-* One Custom Resource to Invoke the Lambda function
-* One IoT Certificate using the Generated CSR
-* One IoT Thing 
-* One IoT Policy
-* One IoT PolicyAssociation
-* One IoT ThingAssociation
+Using your favorite IDE, create `user_config_override.h` and add the required compilation directives as documented at the top of this article.  
+
+Note: TLS handshake takes ~1.2s on ESP8266 @80MHz. You may choose to switch to 160MHz if the power supply of your device supports it. If you do so, handshake time should be ~0.7s.
+
+Compile the firmware and ensure it completes successfully.
+
+> This step is only to check compilation goes well. Your firmware is still not usable since it does not contain the Private Key + Certificate.
+
+### 3. Flash your device
+
+Flash your device the normal way; either through serial or OTA. If you use OTA, first flash a `sonoff-minimal` firmware, then your target firmware.
+
+### 4. Configure AWS IoT Policy (to be done once) 
+
+Open the AWS Console and select the target region. In the example below we will use **(EU) Frankfurt** (eu-central-1).
+
+Download the CloudFormation template [Tasmota-MqttPolicy](https://tasmota.github.io/docs/_media/aws_iot/Tasmota-MqttPolicy.yaml "Tasmota-MqttPolicy CloudFormation template"){target=_blank} and use it in AWS CloudFormation.
 
 
-Click on the link for the region you have chosen:  
+Or click on the link for the region you have chosen:  
 
 Region| Code | Launch
 ------|------|-------
-US East (N. Virginia) | <span style="font-family:'Courier';">us-east-1</span> | [![Launch IotThingGenerator in us-east-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=IotThingGenerator&templateURL=https://tasmota-aws-iot.s3-eu-west-1.amazonaws.com/IotThingGenerator.yaml)
-EU (Ireland) | <span style="font-family:'Courier';">eu-west-1</span> | [![Launch IotThingGenerator in eu-west-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=IotThingGenerator&templateURL=https://tasmota-aws-iot.s3-eu-west-1.amazonaws.com/IotThingGenerator.yaml)
+US East (N. Virginia) | <span style="font-family:'Courier';">us-east-1</span> | [![Launch IotThingGenerator in us-east-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=TasmotaMqttPolicy&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-MqttPolicy.yaml)
+EU (Frankfurt) | <span style="font-family:'Courier';">eu-central-1</span> | [![Launch IotThingGenerator in eu-west-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/new?stackName=TasmotaMqttPolicy&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-MqttPolicy.yaml)
+EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch IotThingGenerator in eu-west-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-3#/stacks/new?stackName=TasmotaMqttPolicy&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-MqttPolicy.yaml)
+
+1. At the **Create Stack** screen, click **Next**.
+
+ ![MqttPolicy01](https://user-images.githubusercontent.com/49731213/79642169-46be9d80-819c-11ea-8875-55248707c0a2.png)
+
+1. At the **Specify stack details** screen, keep all default parameters and click **Next**.
+
+ ![MqttPolicy02](https://user-images.githubusercontent.com/49731213/79642201-6d7cd400-819c-11ea-81c1-f2f2dda9062e.png)
+
+1. At the **Configure stack options** screen, keep all default parameters and click **Next**.
+
+ ![MqttPolicy03](https://user-images.githubusercontent.com/49731213/79642200-6d7cd400-819c-11ea-9bec-731bd315ea36.png)
+
+1. At the **Review TasmotaMqttPolicy** screen, scroll down and click **Create Stack**.
+
+ ![MqttPolicy04](https://user-images.githubusercontent.com/49731213/79642199-6ce43d80-819c-11ea-822a-b5d6b0b2aefd.png)
+
+1. The stack usually takes less than 2 minutes to complete. Wait for it to reach `CREATE_COMPLETE` state.
+
+ ![MqttPolicy05](https://user-images.githubusercontent.com/49731213/79642197-6ce43d80-819c-11ea-8dda-c8ec717ea6f1.png)
+
+1. If you have left the parameter `RetentionPolicy` to `Retain`, then you can delete this CloudFormation stack (it will not delete the Policy). Click on the **Delete** button.
+
+ ![MqttPolicy06](https://user-images.githubusercontent.com/49731213/79642195-6c4ba700-819c-11ea-99bb-bec6c9c5dfbb.png)
+
+1. After less than 2 minutes, the stack should have reached the state `DELETE_COMPLETE`
+
+ ![MqttPolicy07](https://user-images.githubusercontent.com/49731213/79642194-6bb31080-819c-11ea-98cf-8be4b6b62fce.png)
 
 
-<details>
-<summary><strong>AWS CloudFormation Launch Instructions</strong> <i>(expand for details)</i></summary><p>
 
-1. Click the **Launch Stack** link above for the region of your choice.
+### 5. Create an AWS IoT Thing with Private Key and Certificate (once per Tasmota device)
 
-1. Click **Next** on the Select Template page.
+The provided AWS CloudFormation template will create the required resources to create:
 
-1. On the Specify Details page, leave all the defaults and click **Next**.
+* One AWS IoT Thing
+* One Private key
+* One Certificate signed by AWS IoT
+* Temporary resources (AWS Lambda functions, AWS IAM resources) that you can delete once the Tasmota thing is created.
 
-1. On the Options page, leave all the defaults and click **Next**.
+Open the AWS Console and select the target region. In the example below we will use **(EU) Frankfurt** (eu-central-1).
 
-1. On the Review page, Click the checkboxes to give AWS CloudFormation permission to **"create IAM resources"**
+Download the CloudFormation template [Tasmota-Thing](https://tasmota.github.io/docs/_media/aws_iot/Tasmota-Thing.yaml "Tasmota-Thing CloudFormation template"){target=_blank} and use it in AWS CloudFormation.
 
-1. Click **"Create stack"** 
 
-1. Wait for the `IotThingGenerator` stack to reach a status of `CREATE_COMPLETE`.
+Or click on the link for the region you have chosen:  
 
-1. With the `IotThingGenerator` stack selected, click on the **Outputs** tab. You will find your CSR and Private Key which will be referenced in the later steps.  
+Region| Code | Launch
+------|------|-------
+US East (N. Virginia) | <span style="font-family:'Courier';">us-east-1</span> | [![Launch IotThingGenerator in us-east-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Tasmota-01&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-Thing.yaml)
+EU (Frankfurt) | <span style="font-family:'Courier';">eu-central-1</span> | [![Launch IotThingGenerator in eu-west-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/new?stackName=Tasmota-01&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-Thing.yaml)
+EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch IotThingGenerator in eu-west-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-3#/stacks/new?stackName=Tasmota-01&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-Thing.yaml)
 
-</p></details>
 
-> You need to copy & paste the contents of the **Outputs** tab of the CloudFormation stack for the **Key** to a separate text editor and save the file as **tasmota-01.key**.
+1. At the **Create Stack** screen, click **Next**.
 
-To download the IoT certifcate (.cert) key. Navigate to Click on "**Services**" and select "**IoT Core**".
+ ![MqttThing01](https://user-images.githubusercontent.com/49731213/79642402-8639b980-819d-11ea-8447-de9617b3c1cf.png)
 
-On the left panel, click on "**Secure**" > "**Certificates**". 
+1. At the **Specify stack details** screen, keep all default parameters and click **Next**.
 
-Select the three dots on the right of certificate and click on **Download**.
+ Note: you can change the name of the Thing in AWS IoT by specifying the parameter ThingParamName.
 
-skip to Step 6.
+ ![MqttThing02](https://user-images.githubusercontent.com/49731213/79642400-85088c80-819d-11ea-8458-44eeafcbd7e6.png)
 
-> To get the IoT endpoint go to Step 4.
+1. At the **Configure stack options** screen, keep all default parameters and click **Next**.
+
+ ![MqttPolicy03](https://user-images.githubusercontent.com/49731213/79642200-6d7cd400-819c-11ea-9bec-731bd315ea36.png)
+
+1. At the **Review Tasmota-91** screen, scroll down, check the box **I acknowledge that AWS CloudFormation might create IAM resources.** and click **Create Stack**.
+
+ ![MqttThing03](https://user-images.githubusercontent.com/49731213/79642399-846ff600-819d-11ea-84c0-09696c3da661.png)
+
+1. The stack usually takes less than 4 minutes to complete. Wait for it to reach `CREATE_COMPLETE` state.
+
+ ![MqttThing04](https://user-images.githubusercontent.com/49731213/79642496-18da5880-819e-11ea-8d14-81ab2fb17cea.png)
+
+> You need to copy & paste the contents of the **Outputs** tab of the CloudFormation stack: MqttHost, TlsKey1, TlsKey2
+
+ ![MqttThing05](https://user-images.githubusercontent.com/49731213/79642605-dcf3c300-819e-11ea-852e-2df80da3917c.png)
+
+ ![MqttThing06](https://user-images.githubusercontent.com/49731213/79642792-d6b21680-819f-11ea-81a2-682e5310098d.png)
+ 
+ ![MqttThing07](https://user-images.githubusercontent.com/49731213/79642791-d6198000-819f-11ea-8a12-db4b95a7b4a0.png)
+
+Keep a copy of those parameters in a file, you might need them again.
+
+**Cleaning**: to avoid having CloudFormation templates piling up in your console, you can delete them. The created resources will remain, if you have left the parameter `RetentionPolicy` to `Retain`.
+
+### 6. Configure Tasmota device
+
+This is the last step, you need to configure the MQTT parameters. The easiest way is through the web console. We will only cut and paste parameters from the **Outputs** tab of the CloudFormation console.
+
+#### Configure the AWS EndPoint
+
+Copy and paste in the web console the content of **MqttHost**
+
+Example:
+```
+Backlog MqttHost <your_endpoint>-ats.iot.eu-central-1.amazonaws.com; MqttPort 8883
+```
+
+This will trigger a reboot of the device.
+
+Optional, change the topic to distinguish the devices from each others: `Topic sonoff/Tasmota-01`
+
+#### Check that the key store is empty
+
+Type the following command: `TLSKey`
+
+```
+hh:mm:ss CMD: TLSKey
+hh:mm:ss MQT: stat/<topic>/RESULT = {"TLSKey1":-1,"TLSKey2":-1}
+```
+
+If both values are `-1`, it means it does not contain any key.
+
+If you need to reset the key store, use the command `TLSKey 0`.
+
+
+#### Configure the Private Key and Certificate
+
+AWS IoT credentials are composed of two distinct parts, first a Private Key - this is the secret that will allow your device to prove it is who it pretends to be. Consider this as sensitive as a password. The Private Key is exactly 32 bytes (256 bits).
+
+The second part is the Certificate delivered by AWS IoT. Tasmota will also need it to authenticate to the AWS IoT endpoint.
+
+Both credentials must be stored in Tasmota Flash memory, in that order, using the new `TLSKey` command. `TlsKey1` stores the Private Key. `TlsKey2` stores the Certificate. There is no command to retrieve the private key from a Tasmota device, but keep in mind this secret information can easily be dumped via Serial if somebody gets physical access to the device (ESP8266 does not contain any secure storage area).
+
+Simply Copy and Paste the two commands from `TlsKey1` and `TlsKey2`.
+
+
+```
+TLSKey1 <secret_key_secret_key_secret_key>=
+TLSKey2 MIIC<certificate_very_long_string>=
+```
+
+`TLSKey1` and `TLSKey2` must be entered in that order. If successful, you should see a message similar to:
+
+```
+hh:mm:ss MQT: stat/<topic>/RESULT = {"TLSKey1":32,"TLSKey2":641}
+```
+
+You need to check that both values are not "-1". The value for "TLSKey1" should always be 32. The value for "TLSKey2" varies depending on several parameters, and should be within the 640-700 bytes range.
+
+#### Connect to AWS IoT
+
+Once the `TLSKey1` and `TLSKey2` are entered, Tasmota will try to connect to AWS IoT. 
+
+> Keep in mind that AWS IoT does not support 'retained' messages. Whatever the 'retained' configuration in Tasmota, messages are always published as 'retained=false'.
+
+Here is an example of output you should see:
+
+```
+00:00:04 HTP: Web server active on sonoff-4585 with IP address 192.168.1.59
+00:00:04 UPP: Multicast (re)joined
+21:28:25 MQT: Attempting connection...
+21:28:25 MQT: AWS IoT endpoint: xxxxxxxxxxxxx-ats.iot.eu-central-1.amazonaws.com
+21:28:26 MQT: AWS IoT connected in 1279 ms
+21:28:26 MQT: Connected
+21:28:26 MQT: tele/tasmota/LWT = Online
+21:28:26 MQT: cmnd/tasmota/POWER =
+21:28:26 MQT: tele/tasmota/INFO1 = {"Module":"Sonoff Basic","Version":"6.5.0.14(sonoff)","FallbackTopic":
+"cmnd/DVES_67B1E9_fb/","GroupTopic":"sonoffs"}
+```
+
+### 7. Check end-to-end communication
+
+In the AWS IoT console, click on "**Test**" in the left panel.
+
+In the "**Subscription topic**" field, type `+/sonoff/#` then click on "**Subscribe to topic**". This will display all MQTT messages received. Type a command in the Web Tasmota console, you should see MQTT message flow.
+
+Enjoy!
+
+### 8. Cleaning
+
+**Cleaning**: to avoid having CloudFormation templates piling up in your console, you can delete them. The created resources will remain, if you have left the parameter `RetentionPolicy` to `Retain`.
+
+### 9. Troubleshooting
+
+`TLSError` shows any error at the TLS level. See [here](TLS#tls-troubleshooting) for most common error codes.
+
+
+### For implementation details, see [here](TLS)
+
+## Appendix: Manual configuration
+
+
+### 1. Prerequisites
+
+You will need to install/compile the following:
+
+ * Complete environment to compile Tasmota, ex: PlatformIO (PlatformIO)
+ * Recent version of `openssl`
+
 
 ### 2. Configure AWS IoT (to be done once) 
 
@@ -229,20 +399,6 @@ Your setup is done in AWS IoT. Let's proceed to the custom firmware.
 
 <img width="863" alt="Tasmota-01" src="https://user-images.githubusercontent.com/49731213/62428753-6c3a7280-b705-11e9-816e-77ead8e53053.png">
 
-### 6. Enable AWS IoT in Tasmota
-
-Using your favorite IDE, create `user_config_override.h` and add the required compilation directives as documented at the top of this article.  
-
-Note: TLS handshake takes ~1.2s on ESP8266 @80MHz. You may choose to switch to 160MHz if the power supply of your device supports it. If you do so, handshake time should be ~0.7s.
-
-Compile the firmware and ensure it completes successfully.
-
-> This step is only to check compilation goes well. Your firmware is still not usable since it does not contain the Private Key + Certificate.
-
-### 7. Flash your device
-
-Flash your device the normal way; either through serial or OTA. If you use OTA, first flash a `sonoff-minimal` firmware, then your target firmware.
-
 ### 8. Prepare your AWS IoT credentials
 
 You will now need to convert your AWS IoT credentials to Tasmota commands. Credentials are composed of two distinct parts, first a Private Key - this is the secret that will allow your device to prove it is who it pretends to be. Consider this as sensitive as a password. The Private Key is exactly 32 bytes (256 bits).
@@ -344,58 +500,3 @@ Then convert the Certificate to plain base64 in a single line (use `-A` flag):
 `openssl base64 -e -in tasmota-01.cert.der -A -out tasmota-01.cert.b64`
 
 Then use the command `TSLKey2 <base64>` and replace `<base64>` with the content of `tasmota-01.cert.b64`.
-
-### 9. Configure Tasmota device
-
-This is the last step, you need to configure the MQTT parameters. The easiest way is through the web console.
-
-Here is a command per command description. Most commands will trigger a device reboot. You can use `backlog` to launch all commands at once.
-
-Enter the AWS IoT endpoint. `MqttHost <xxxxxxxxxxxxxx>-ats.iot.eu-central-1.amazonaws.com`
-
-Set the MQTT port: `MqttPort 8883`
-
-> Note: the AWS IoT endpoints will not always fit into the 32 bytes MqttHost field. If the endpoints is bigger than 32 chars, it will be transparently split between MqttUser and MqttHost. MqttUser is not used anyways in AWS IoT. You may however notice it if you flash later with a non-AWS IoT Tasmota firmware.
-
-Optional, change the topic to distinguish the devices from each others: `Topic sonoff/Tasmota-01`
-
-There are two ways to check the server certificate. This is controlled with the `#define USE_MQTT_TLS_CA_CERT` option in `sonoff/my_user_config.h` file. If activated, Tasmota will check the server certificate validity with the AmazonCA1 certificate embedded. This is the simplest option but it's a little slower. Alternatively you can use fingerprint validation instead - see appendix.
-
-Here is the wrap-up of commands:
-
-```
-BackLog MqttHost <xxxxxxxxxxxxxx>-ats.iot.eu-central-1.amazonaws.com; MqttPort 8883; Topic sonoff/Tasmota-01; MqttFingerprint1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-```
-
-> Keep in mind that AWS IoT does not support 'retained' messages. Whatever the 'retained' configuration in Tasmota, messages are always published as 'retained=false'.
-
-Here is an example of output you should see:
-
-```
-00:00:04 HTP: Web server active on sonoff-4585 with IP address 192.168.1.59
-00:00:04 UPP: Multicast (re)joined
-21:28:25 MQT: Attempting connection...
-21:28:25 MQT: AWS IoT endpoint: xxxxxxxxxxxxx-ats.iot.eu-central-1.amazonaws.com
-21:28:26 MQT: AWS IoT connected in 1279 ms
-21:28:26 MQT: Connected
-21:28:26 MQT: tele/tasmota/LWT = Online
-21:28:26 MQT: cmnd/tasmota/POWER =
-21:28:26 MQT: tele/tasmota/INFO1 = {"Module":"Sonoff Basic","Version":"6.5.0.14(sonoff)","FallbackTopic":
-"cmnd/DVES_67B1E9_fb/","GroupTopic":"sonoffs"}
-```
-
-### 10. Check end-to-end communication
-
-In the AWS IoT console, click on "**Test**" in the left panel.
-
-In the "**Subscription topic**" field, type `+/sonoff/#` then click on "**Subscribe to topic**". This will display all MQTT messages received. Type a command in the Web Tasmota console, you should see MQTT message flow.
-
-Enjoy!
-
-### For implementation details, see [here](TLS)
-
-### Appendix: Fingerprint validation
-
-If you don't use `#define USE_MQTT_TLS_CA_CERT`, Tasmota will check the fingerprint of the public key of the server. To ease configuration you are advised to activate the 'learn on first connect feature'. Tasmota will learn the fingerprint during the first connection. To do so use: `MqttFingerprint1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00`
-
-Alternatively you can completely disable fingerprint validation and accept any server. Keep in mind that this allows Man-in-the-Middle interception of your data. To do so use: `MqttFingerprint1 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF`
