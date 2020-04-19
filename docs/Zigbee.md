@@ -670,13 +670,12 @@ ZbBind {"Device":"HueMotion","Endpoint":2,"ToDevice":"0x0000","ToEndpoint":1,"Cl
 
 This configuration tells the motion sensor to report attributes on a regulare basis (min once per hour) and whenever a change occurs.
 
-```
+```json
 ZbSend {"Device":"HueMotion","Endpoint":2,"Send":"0001_06/00210020100E30F200"}
 ZbSend {"Device":"HueMotion","Endpoint":2,"Send":"0400_06/000000210000100E0000"}
 ZbSend {"Device":"HueMotion","Endpoint":2,"Send":"0402_06/000000290000100E1900"}
 ZbSend {"Device":"HueMotion","Endpoint":2,"Send":"0406_06/000000180000100E"}
 ```
-
 
 ### Ikea ON/OFF Switch (E1743)
 `"ModelId":"TRADFRI on/off switch","Manufacturer":"IKEA of Sweden"`
