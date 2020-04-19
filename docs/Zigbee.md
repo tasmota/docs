@@ -623,11 +623,16 @@ MQT: stat/%topic%/RESULT = {"ZbLight":{"Kitchen_Light":{"Device":"0x5ADF","Light
 
 <img src="../_media/Philips_motion_sensor_SML001.jpg" style="float:right;width:10em">
 
-Z2T supports Philips Hue Motion Sensor `SML001` and requires some additional configuration. By default the sensor will not report any value unless: 1/ you configure a Zigbee Binding to your coordinator, 2/ you set an explicit Configuration Reporting policy on the sensor.
+Z2T supports Philips Hue Motion Sensor `SML001` and requires some additional configuration. By default the sensor will not report any value unless: 
+
+1. you configure a Zigbee Binding to your coordinator
+2. you set an explicit Configuration Reporting policy on the sensor
+
+<p>
 
 #### 1. Initatiate pairing
    
-```json
+```haskell
 ZbPermitJoin 1   
 xx:xx:xx MQT: stat/<topic>/RESULT = {"ZbPermitJoin":"Done"}
 xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":21,"Message":"Enable Pairing mode for 60 seconds"}}
@@ -637,7 +642,7 @@ xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":21,"Message":"Enable Pa
 
 Press and hold the setup button on the rear of the device for +- 10 seconds (until the green light goes solid) to initiate pairing. Please note that the pairing indicator light is below the main sensor (as oppose to the obvious indicator above the main sensor).
 
-```json
+```haskell
 xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":34,"IEEEAddr":"0x0017880103295B70","ShortAddr":"0xB6CD","ParentNetwork":"0x0000"}}
 xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":30,"IEEEAddr":"0x0017880103295B70","ShortAddr":"0xB6CD","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
 xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":32,"ActiveEndpoints":["0x02","0x01"]}}
@@ -648,7 +653,7 @@ xx:xx:xx MQT: tele/<topic>/SENSOR = {"ZbReceived":{"HueMotion":{"Device":"0xB6CD
 
 Giving the device a name makes it easier to configure than using the short address. When naming a device, it is preferable to use the long address `IEEEAddr` which remains unchanged if you need to pair again your device.
 
-```json
+```haskell
 ZbName 0x0017880103295B70,HueMotion
 xx:xx:xx MQT: stat/<topic>/Zigbee_home/RESULT = {"0xB6CD":{"Name":"HueMotion"}}
 xx:xx:xx ZIG: Zigbee Devices Data store in Flash (0x402FF800 - xxx bytes)
@@ -656,7 +661,7 @@ xx:xx:xx ZIG: Zigbee Devices Data store in Flash (0x402FF800 - xxx bytes)
 
 #### 4. Set the Zigbee bindings
 
-This will tell the device to send attributes readings to the coordinator. Coordinator has always address `0x0000`.
+This will tell the device to send attributes readings to the coordinator. Coordinator's address is always `0x0000`.
 
 ```json
 ZbBind {"Device":"HueMotion","Endpoint":2,"ToDevice":"0x0000","ToEndpoint":1,"Cluster":"0x0001"}
@@ -667,7 +672,7 @@ ZbBind {"Device":"HueMotion","Endpoint":2,"ToDevice":"0x0000","ToEndpoint":1,"Cl
 
 #### 5. Set Configure Reporting
 
-This configuration tells the motion sensor to report attributes on a regulare basis (min once per hour) and whenever a change occurs.
+This configuration tells the motion sensor to report attributes on a regular basis (min once per hour) and whenever a change occurs.
 
 ```json
 ZbSend {"Device":"HueMotion","Endpoint":2,"Send":"0001_06/00210020100E30F200"}
