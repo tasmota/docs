@@ -621,7 +621,7 @@ MQT: stat/%topic%/RESULT = {"ZbLight":{"Kitchen_Light":{"Device":"0x5ADF","Light
 
 ### OSRAM mini switch and plug
 
-<img src="../_media/zigbee/OSRAM_Switch_mini.jpg" style="float:right;width:10em"><img src="../_media/zigbee/Philips_motion_sensor_SML001.jpg" style="float:right;width:10em">
+<img src="../_media/zigbee/OSRAM_Switch_mini.jpg" style="float:right;width:6em"><img src="../_media/zigbee/Philips_motion_sensor_SML001.jpg" style="float:right;width:8em">
 
 Here is a short tutorial to configuring an ORSRAM switch bound to an OSRAM plug.
 
@@ -777,7 +777,8 @@ Z2T supports Philips Hue Motion Sensor `SML001` and requires some additional con
 Initiate pairing mode:
 
 ```haskell
-ZbPermitJoin 1   
+ZbPermitJoin 1
+
 xx:xx:xx MQT: stat/<topic>/RESULT = {"ZbPermitJoin":"Done"}
 xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":21,"Message":"Enable Pairing mode for 60 seconds"}}
 ```
@@ -798,6 +799,7 @@ Giving the device a name makes it easier to configure than using the short addre
 
 ```haskell
 ZbName 0x0017880103295B70,HueMotion
+
 xx:xx:xx MQT: stat/<topic>/RESULT = {"0xB6CD":{"Name":"HueMotion"}}
 xx:xx:xx ZIG: Zigbee Devices Data store in Flash (0x402FF800 - xxx bytes)
 ```
