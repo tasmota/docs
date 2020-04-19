@@ -706,6 +706,8 @@ xx:xx:xx MQT: stat/<topic>/RESULT = {"ZbBind":"Done"}
 xx:xx:xx MQT: stat/<topic>/RESULT = {"ZbBind":{"Device":"0x080C","Name":"OSRAM_Remote","Status":0,"StatusMessage":"SUCCESS"}}
 ```
 
+Make sure you see **`"StatusMessage":"SUCCESS"`**
+
 > **Press any button on the switch** to get it out of sleep mode and immediatly after send the following command:
 
 ```haskell
@@ -715,11 +717,14 @@ xx:xx:xx MQT: stat/<topic>/RESULT = {"ZbBind":"Done"}
 xx:xx:xx MQT: stat/<topic>/RESULT = {"ZbBind":{"Device":"0x080C","Name":"OSRAM_Remote","Status":0,"StatusMessage":"SUCCESS"}}
 ```
 
+Make sure you see **`"StatusMessage":"SUCCESS"`**
+
 Now the switch will only send commands to the group address `101`and no more to all devices.
 
 You can check the current bindings with the following command:
-```
+```haskell
 ZbBindState OSRAM_Remote
+
 xx:xx:xx MQT: stat/<topic>/RESULT = {"ZbBindState":"Done"}
 xx:xx:xx MQT: stat/<topic>/RESULT = {"ZbBindState":{"Device":"0x080C","Name":"OSRAM_Remote","Status":0,"StatusMessage":"SUCCESS","BindingsTotal":2,"Bindings":[{"Cluster":"0x0006","Endpoint":2,"ToGroup":101},{"Cluster":"0x0006","Endpoint":1,"ToGroup":101}]}}
 ```
