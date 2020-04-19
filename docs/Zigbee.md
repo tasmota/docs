@@ -625,15 +625,15 @@ MQT: stat/%topic%/RESULT = {"ZbLight":{"Kitchen_Light":{"Device":"0x5ADF","Light
 
 Z2T supports Philips Hue Motion Sensor `SML001` and requires some additional configuration. By default the sensor will not report any value unless: 1/ you configure a Zigbee Binding to your coordinator, 2/ you set an explicit Configuration Reporting policy on the sensor.
 
-1. Initatiate pairing
+#### 1. Initatiate pairing
    
    ```json
-   ZbPermitJoin 1
-   
+   ZbPermitJoin 1   
    xx:xx:xx MQT: stat/<topic>/RESULT = {"ZbPermitJoin":"Done"}
 	xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":21,"Message":"Enable Pairing mode for 60 seconds"}}
    ```
-2. Pair the device
+   
+#### 2. Pair the device
 
    Press and hold the setup button on the rear of the device for +- 10 seconds (until the green light goes solid) to initiate pairing. Please note that the pairing indicator light is below the main sensor (as oppose to the obvious indicator above the main sensor).
 
@@ -645,20 +645,21 @@ Z2T supports Philips Hue Motion Sensor `SML001` and requires some additional con
 {"Device":"0xB6CD","Manufacturer":"Philips","ModelId":"SML001","Endpoint":2,"LinkQuality":15}}}
    ```
 
-3. Give the device a name (optional)
+#### 3. Give the device a name (optional)
 
    Giving the device a name makes it easier to configure than using the short address. When naming a device, it is preferable to use the long address `IEEEAddr` which remains unchanged if you need to pair again your device.
    
-   ```
+   ```json
    ZbName 0x0017880103295B70,HueMotion
    xx:xx:xx MQT: stat/<topic>/Zigbee_home/RESULT = {"0xB6CD":{"Name":"HueMotion"}}
    xx:xx:xx ZIG: Zigbee Devices Data store in Flash (0x402FF800 - xxx bytes)
    ```
-4. Set the Zigbee bindings
+
+#### 4. Set the Zigbee bindings
 
    This will tell the device to send attributes readings to the coordinator. Coordinator has always address `0x0000`.
    
-   ```
+   ```json
    ZbBind {"Device":"HueMotion","Endpoint":2,"ToDevice":"0x0000","ToEndpoint":1,"Cluster":"0x0001"}
    ZbBind {"Device":"HueMotion","Endpoint":2,"ToDevice":"0x0000","ToEndpoint":1,"Cluster":"0x0400"}
    ZbBind {"Device":"HueMotion","Endpoint":2,"ToDevice":"0x0000","ToEndpoint":1,"Cluster":"0x0402"}
@@ -666,7 +667,7 @@ Z2T supports Philips Hue Motion Sensor `SML001` and requires some additional con
 
    ```
 
-5. Set Configure Reporting
+#### 5. Set Configure Reporting
 
    This configuration tells the motion sensor to report attributes on a regulare basis (min once per hour) and whenever a change occurs.
    
