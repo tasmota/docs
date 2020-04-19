@@ -621,7 +621,7 @@ MQT: stat/%topic%/RESULT = {"ZbLight":{"Kitchen_Light":{"Device":"0x5ADF","Light
 
 ### OSRAM mini switch and plug
 
-<img src="../_media/zigbee/OSRAM_Switch_mini.jpg" style="float:right;width:6em"><img src="../_media/zigbee/Philips_motion_sensor_SML001.jpg" style="float:right;width:8em">
+<img src="../_media/zigbee/OSRAM_Switch_mini.jpg" style="float:right;width:8em"><img src="../_media/zigbee/OSRAM_Plug_AB3257001NJ.jpg" style="float:right;width:8em">
 
 Here is a short tutorial to configuring an ORSRAM switch bound to an OSRAM plug.
 
