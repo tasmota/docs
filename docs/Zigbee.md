@@ -641,8 +641,7 @@ Press and hold the setup button on the rear of the device for +- 10 seconds (unt
 xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":34,"IEEEAddr":"0x0017880103295B70","ShortAddr":"0xB6CD","ParentNetwork":"0x0000"}}
 xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":30,"IEEEAddr":"0x0017880103295B70","ShortAddr":"0xB6CD","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
 xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":32,"ActiveEndpoints":["0x02","0x01"]}}
-xx:xx:xx MQT: tele/<topic>/SENSOR = {"ZbReceived":{"HueMotion":
-{"Device":"0xB6CD","Manufacturer":"Philips","ModelId":"SML001","Endpoint":2,"LinkQuality":15}}}
+xx:xx:xx MQT: tele/<topic>/SENSOR = {"ZbReceived":{"HueMotion":{"Device":"0xB6CD","Manufacturer":"Philips","ModelId":"SML001","Endpoint":2,"LinkQuality":15}}}
 ```
 
 #### 3. Give the device a name (optional)
