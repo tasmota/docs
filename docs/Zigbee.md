@@ -694,7 +694,7 @@ By default the OSRAM switch broadcasts the on/off commands to the entire network
 
 This is often not desirable. We will now bind the remote to a group address so you can selectively turn on and off a group of devices.
 
-We will choose group address `101` below, but you can take any number between 1 and 65535. We need to bind cluster 6 (On/Off) for both endpoints 1 and 2.
+We will choose group address `101` below, but you can take any number between 1 and 65535. We need to bind cluster 6 (On/Off) for **both endpoints 1 and 2**.
 
 
 > **Press any button on the switch** to get it out of sleep mode and immediatly after send the following command:
