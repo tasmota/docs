@@ -628,8 +628,6 @@ Z2T supports Philips Hue Motion Sensor `SML001` and requires some additional con
 1. you configure a Zigbee Binding to your coordinator
 2. you set an explicit Configuration Reporting policy on the sensor
 
-<p>
-
 #### 1. Initatiate pairing
    
 ```haskell
