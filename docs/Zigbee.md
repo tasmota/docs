@@ -794,15 +794,15 @@ On the Plug: hold the on/off button until your hear a click (+- 10 seconds).
 On the Switch: hold the Middle and Arrow Up Buttons for 3 Seconds to connect.
 
 ```haskell
-ZbName 0x7CB03EAA0A0292DD,OSRAM_Plug    (adapt to your actual IEEE Addresses)
-ZbName 0x000D6F00109C732A,OSRAM_Remote
+ZbName 0x7CB03EAA0A0292DD,OSRAM_Plug      (adapt to your actual IEEE Addresses)
+ZbName 0x000D6F00109C732A,OSRAM_Remote    (adapt to your actual IEEE Addresses)
 ZbSend {"Device":"OSRAM_Plug","Send":{"AddGroup":101}}
 ZbLight OSRAM_Plug,0
 ```
 
 Press any button on the switch to get it out of sleep mode.
 
-```
+```haskell
 ZbBind {"Device":"OSRAM_Remote","ToGroup":101,"Endpoint":2,"Cluster":6}
 ZbBind {"Device":"OSRAM_Remote","ToGroup":101,"Endpoint":1,"Cluster":6}
 ```
@@ -869,6 +869,29 @@ ZbSend {"Device":"HueMotion","Endpoint":2,"Send":"0400_06/000000210000100E0000"}
 ZbSend {"Device":"HueMotion","Endpoint":2,"Send":"0402_06/000000290000100E1900"}
 ZbSend {"Device":"HueMotion","Endpoint":2,"Send":"0406_06/000000180000100E"}
 ```
+
+#### Recap of commands
+
+```haskell
+ZbPermitJoin 1
+```
+
+Press and hold the setup button on the rear of the device for +- 10 seconds (until the green light goes solid).
+
+```haskell
+ZbName 0x0017880103295B70,HueMotion       (adapt to your actual IEEE Addresses)
+
+ZbBind {"Device":"HueMotion","Endpoint":2,"ToDevice":"0x0000","ToEndpoint":1,"Cluster":"0x0001"}
+ZbBind {"Device":"HueMotion","Endpoint":2,"ToDevice":"0x0000","ToEndpoint":1,"Cluster":"0x0400"}
+ZbBind {"Device":"HueMotion","Endpoint":2,"ToDevice":"0x0000","ToEndpoint":1,"Cluster":"0x0402"}
+ZbBind {"Device":"HueMotion","Endpoint":2,"ToDevice":"0x0000","ToEndpoint":1,"Cluster":"0x0406"}
+
+ZbSend {"Device":"HueMotion","Endpoint":2,"Send":"0001_06/00210020100E30F200"}
+ZbSend {"Device":"HueMotion","Endpoint":2,"Send":"0400_06/000000210000100E0000"}
+ZbSend {"Device":"HueMotion","Endpoint":2,"Send":"0402_06/000000290000100E1900"}
+ZbSend {"Device":"HueMotion","Endpoint":2,"Send":"0406_06/000000180000100E"}
+```
+
 
 ### Ikea ON/OFF Switch (E1743)
 `"ModelId":"TRADFRI on/off switch","Manufacturer":"IKEA of Sweden"`
