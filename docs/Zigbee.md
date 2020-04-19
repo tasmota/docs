@@ -731,8 +731,8 @@ xx:xx:xx MQT: stat/<topic>/RESULT =
     {"ZbBindState":
       {"Device":"0x080C","Name":"OSRAM_Remote","Status":0,"StatusMessage":"SUCCESS",
        "BindingsTotal":2,"Bindings":[
-	 {"Cluster":"0x0006","Endpoint":2,"ToGroup":101},
-	 {"Cluster":"0x0006","Endpoint":1,"ToGroup":101}]}}
+         {"Cluster":"0x0006","Endpoint":2,"ToGroup":101},
+         {"Cluster":"0x0006","Endpoint":1,"ToGroup":101}]}}
 ```
 
 You can now see what happens when you press the Up and Down arrow:
@@ -756,8 +756,8 @@ xx:xx:xx MQT: stat/<topic>/SENSOR =
       {"ZbReceived":
         {"OSRAM_Plug":
           {"Device":"0xF75D","0004<00":"006500","AddGroup":101,
-	  "AddGroupStatus":0,"AddGroupStatusMsg":"SUCCESS",
-	  "Endpoint":3,"LinkQuality":46}}}
+            "AddGroupStatus":0,"AddGroupStatusMsg":"SUCCESS",
+            "Endpoint":3,"LinkQuality":46}}}
 ```
 
 Make sure you see **`"AddGroupStatusMsg":"SUCCESS"`**
@@ -772,7 +772,7 @@ xx:xx:xx MQT: stat/<topic>/SENSOR =
       {"ZbReceived":
         {"OSRAM_Plug":
           {"Device":"0xF75D","0004<02":"07016500","GetGroupCapacity":7,"GetGroupCount":1,
-	   "GetGroup":[101],"Endpoint":3,"LinkQuality":46}}}
+           "GetGroup":[101],"Endpoint":3,"LinkQuality":46}}}
 ```
 
 #### 5. (Optional) Control the Plug with Alexa
