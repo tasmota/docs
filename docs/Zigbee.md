@@ -23,8 +23,9 @@ Before using Zigbee to Tasmota, you need to understand a few concepts. Here is a
 #### CC2530 Zigbee Adapter
 Any TI CC2530 chip based module can serve as a coordinator. See [list of supported modules](https://zigbee.blakadder.com/zigbee2tasmota.html) with their pinouts and flashing instructions. 
 
-!!! failure "You cannot use any CC2531 based device with Tasmota!"
-    CC2531 supports USB communication and not serial communication required by Zigbee2Tasmota.
+!!! info "Devices based on CC2531 _can_ be used with Tasmota but _not in USB mode_!"
+    Normally CC2531 supports USB communication, but Zigbee2Tasmota requires serial communication.
+    When CC2530 firmware is flashed onto a CC2531, the CC2531 can be wired up for serial serial communication as described below.
 
 These PCB make all the connections required to flash the CC2530 and to run Z2T.  
 
