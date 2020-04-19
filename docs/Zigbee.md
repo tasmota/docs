@@ -783,6 +783,30 @@ You can also control your switch with Alexa through Philip Hue Emulation. It wil
 ZbLight OSRAM_Plug,0
 ```
 
+#### Recap of commands
+
+```haskell
+ZbPermitJoin 1
+```
+
+On the Plug: hold the on/off button until your hear a click (+- 10 seconds).
+
+On the Switch: hold the Middle and Arrow Up Buttons for 3 Seconds to connect.
+
+```haskell
+ZbName 0x7CB03EAA0A0292DD,OSRAM_Plug    (adapt to your actual IEEE Addresses)
+ZbName 0x000D6F00109C732A,OSRAM_Remote
+ZbSend {"Device":"OSRAM_Plug","Send":{"AddGroup":101}}
+ZbLight OSRAM_Plug,0
+```
+
+Press any button on the switch to get it out of sleep mode.
+
+```
+ZbBind {"Device":"OSRAM_Remote","ToGroup":101,"Endpoint":2,"Cluster":6}
+ZbBind {"Device":"OSRAM_Remote","ToGroup":101,"Endpoint":1,"Cluster":6}
+```
+
 ### Philips Hue Motion Sensor
 
 <img src="../_media/zigbee/Philips_motion_sensor_SML001.jpg" style="float:right;width:10em">
