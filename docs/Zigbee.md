@@ -626,13 +626,13 @@ MQT: stat/%topic%/RESULT = {"ZbLight":{"Kitchen_Light":{"Device":"0x5ADF","Light
 Z2T supports Philips Hue Motion Sensor `SML001` and requires some additional configuration. By default the sensor will not report any value unless: 1/ you configure a Zigbee Binding to your coordinator, 2/ you set an explicit Configuration Reporting policy on the sensor.
 
 1. Initatiate pairing
+   
    ```json
    ZbPermitJoin 1
    
    xx:xx:xx MQT: stat/<topic>/RESULT = {"ZbPermitJoin":"Done"}
 	xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":21,"Message":"Enable Pairing mode for 60 seconds"}}
    ```
-
 2. Pair the device
 
    Press and hold the setup button on the rear of the device for +- 10 seconds (until the green light goes solid) to initiate pairing. Please note that the pairing indicator light is below the main sensor (as oppose to the obvious indicator above the main sensor).
