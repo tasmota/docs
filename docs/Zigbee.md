@@ -617,13 +617,68 @@ ZbLight Kitchen_Light
 MQT: stat/%topic%/RESULT = {"ZbLight":{"Kitchen_Light":{"Device":"0x5ADF","Light":2,"Power":0,"Dimmer":130,"Colormode":2,"CT":350}}}
 ```
 
-## Specific Device Configuration
+## Specific Device Tutorials
 
-If your device pairs successfully with Zigbee2Tasmota but doesn't report on standardized endpoint you will see messages like these:   
-`{"ZbReceived":{"0x099F":{"0500!00":"010000FF0000","LinkQuality":70}}}`   
-`{"ZbReceived":{"0x7596":{"0006!01":"","LinkQuality":65}}}`
+### Philips Hue Motion Sensor
 
-In this case you will have to use rules or an external home automation solution to parse the ZbReceived messages. The following section will focus only on rules to utilize the device inside Tasmota ecosystem.
+<img src="../_media/Philips_motion_sensor_SML001.jpg" style="float:right;width:10em">
+
+Z2T supports Philips Hue Motion Sensor `SML001` and requires some additional configuration. By default the sensor will not report any value unless: 1/ you configure a Zigbee Binding to your coordinator, 2/ you set an explicit Configuration Reporting policy on the sensor.
+
+1. Initatiate pairing
+   
+   ```
+   ZbPermitJoin 1
+   
+   xx:xx:xx MQT: stat/<topic>/RESULT = {"ZbPermitJoin":"Done"}
+	xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":21,"Message":"Enable Pairing mode for 60 seconds"}}
+   
+   ```
+
+2. Pair the device
+
+   Press and hold the setup button on the rear of the device for +- 10 seconds (until the green light goes solid) to initiate pairing. Please note that the pairing indicator light is below the main sensor (as oppose to the obvious indicator above the main sensor).
+
+   ```
+   xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":34,"IEEEAddr":"0x0017880103295B70","ShortAddr":"0xB6CD","ParentNetwork":"0x0000"}}
+   xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":30,"IEEEAddr":"0x0017880103295B70","ShortAddr":"0xB6CD","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
+   xx:xx:xx MQT: tele/<topic>/RESULT = {"ZbState":{"Status":32,"ActiveEndpoints":["0x02","0x01"]}}
+   xx:xx:xx MQT: tele/<topic>/SENSOR = {"ZbReceived":{"HueMotion":
+{"Device":"0xB6CD","Manufacturer":"Philips","ModelId":"SML001","Endpoint":2,"LinkQuality":15}}}
+   ```
+
+3. Give the device a name (optional)
+
+   Giving the device a name makes it easier to configure than using the short address. When naming a device, it is preferable to use the long address `IEEEAddr` which remains unchanged if you need to pair again your device.
+   
+   ```
+   ZbName 0x0017880103295B70,HueMotion
+   xx:xx:xx MQT: stat/<topic>/Zigbee_home/RESULT = {"0xB6CD":{"Name":"HueMotion"}}
+   xx:xx:xx ZIG: Zigbee Devices Data store in Flash (0x402FF800 - xxx bytes)
+   ```
+4. Set the Zigbee bindings
+
+   This will tell the device to send attributes readings to the coordinator. Coordinator has always address `0x0000`.
+   
+   ```
+   ZbBind {"Device":"HueMotion","Endpoint":2,"ToDevice":"0x0000","ToEndpoint":1,"Cluster":"0x0001"}
+   ZbBind {"Device":"HueMotion","Endpoint":2,"ToDevice":"0x0000","ToEndpoint":1,"Cluster":"0x0400"}
+   ZbBind {"Device":"HueMotion","Endpoint":2,"ToDevice":"0x0000","ToEndpoint":1,"Cluster":"0x0402"}
+   ZbBind {"Device":"HueMotion","Endpoint":2,"ToDevice":"0x0000","ToEndpoint":1,"Cluster":"0x0406"}
+
+   ```
+
+5. Set Configure Reporting
+
+   This configuration tells the motion sensor to report attributes on a regulare basis (min once per hour) and whenever a change occurs.
+   
+   ```
+   ZbSend {"Device":"HueMotion","Endpoint":2,"Send":"0001_06/00210020100E30F200"}
+   ZbSend {"Device":"HueMotion","Endpoint":2,"Send":"0400_06/000000210000100E0000"}
+   ZbSend {"Device":"HueMotion","Endpoint":2,"Send":"0402_06/000000290000100E1900"}
+   ZbSend {"Device":"HueMotion","Endpoint":2,"Send":"0406_06/000000180000100E"}
+   ```
+
 
 ### Ikea ON/OFF Switch (E1743)
 `"ModelId":"TRADFRI on/off switch","Manufacturer":"IKEA of Sweden"`
@@ -654,6 +709,14 @@ Rule
   on ZbReceived#0x099F#0500!00=010000FF0000 do publish stat/leak_sensor/LEAK ON endon 
   on ZbReceived#0x099F#0500!00=000000FF0000 do publish stat/leak_sensor/LEAK OFF endon 
 ```
+
+### Unrecognized commands or attributes
+
+If your device pairs successfully with Zigbee2Tasmota but doesn't report on standardized endpoint you will see messages like these:   
+`{"ZbReceived":{"0x099F":{"0500!00":"010000FF0000","LinkQuality":70}}}`   
+`{"ZbReceived":{"0x7596":{"0006!01":"","LinkQuality":65}}}`
+
+In this case you will have to use rules or an external home automation solution to parse the ZbReceived messages. The following section will focus only on rules to utilize the device inside Tasmota ecosystem.
 
 ## Zigbee2Tasmota Status Codes
 You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  
