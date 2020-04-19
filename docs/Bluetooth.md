@@ -152,10 +152,10 @@ Internally from time to time "fake" sensors will be created, when there was data
 
 Command|Parameters
 :---|:---
-NRFPage<a id="nrfpage"></a>|Show the maximum number of sensors shown per page in the webUI list. Default = 4<BR>`<value>` Set number
-NRFIgnore<a id="nrfignore"></a>| Ignore a certain sensor type. Default = 0 (= all known types are active)<BR>`<value>` Set type<BR>1: Flora, 2: MJ_HT_V1, 3: LYWSD02, 4: LYWSD03, 5: CGG1, 6: CGD1
-NRFScan<a id="nrfscan"></a>|Scan for regular BLE-advertisements and show a list in the console<BR>`<value>` = 0: Start a new scan list; 1: Append to the scan list; 2: Stop running scan
-NRFBeacon<a id="nrfbeacon"></a>| Set a BLE-device as a beacon using the (fixed) MAC-address<BR>`<value>` (1-3 digits): Use beacon from scan list<BR>`<value>` (12 characters): Use beacon given the MAC interpreted as an uppercase string `AABBCCDDEEFF`
+NRFPage<a id="nrfpage"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
+NRFIgnore<a id="nrfignore"></a>|`0` = all known sensor types active_(default)_<BR>`<value>` =  ignore certain sensor type (`1` = Flora, `2` = MJ_HT_V1, `3` = LYWSD02, `4` = LYWSD03, `5` = CGG1, `6` = CGD1
+NRFScan<a id="nrfscan"></a>| Scan for regular BLE-advertisements and show a list in the console<BR>`0` = start a new scan list<BR>`1` = append to the scan list<BR>`2` = stop running scan
+NRFBeacon<a id="nrfbeacon"></a>| Set a BLE device as a beacon using the (fixed) MAC-address<BR>`<value>` (1-3 digits) = use beacon from scan list<BR>`<value>` (12 characters) = use beacon given the MAC interpreted as an uppercase string `AABBCCDDEEFF`
  
   
 ### Supported Devices
