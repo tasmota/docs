@@ -46,13 +46,17 @@ _**These Python scripts require Python 2.7.**_
 
 2) Install pyserial 3.0.1:
 
-`pip install pyserial==3.0.1`
+```
+pip install pyserial==3.0.1
+```
 
 3) Check for connectivity before flashing:  
 
-`python Python/cc_info.py -p <serial_port>`  
+```
+python Python/cc_info.py -p <serial_port>
+```
 
-where \<serial_port> is the serial port for the ESP82xx device. e.g. `/dev/cu.usbserial-xxxx` or `COM7`
+where `<serial_port>` is the serial port for the ESP82xx device. e.g. `/dev/cu.usbserial-xxxx` or `COM7`
 
 Example of result:
 ```
