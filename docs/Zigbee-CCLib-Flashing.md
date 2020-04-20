@@ -43,10 +43,14 @@ The CC2530 requires `Z-Stack_Home_1.2`, of type `Default` (not `Source Routing`)
 
 _**These Python scripts require Python 2.7.**_  
 1) Ensure that you have Python 2.7 installed
-2) Install pyserial 3.0.1:  
-   `pip install pyserial==3.0.1`
+
+2) Install pyserial 3.0.1:
+
+`pip install pyserial==3.0.1`
+
 3) Check for connectivity before flashing:  
-   `python Python/cc_info.py -p <serial_port>`  
+
+`python Python/cc_info.py -p <serial_port>`  
 
 where \<serial_port> is the serial port for the ESP82xx device. e.g. `/dev/cu.usbserial-xxxx` or `COM7`
 
@@ -94,7 +98,9 @@ python Python/cc_write_flash.py --erase -p <serial_port> -i x.hex
 
 
 4) Flash the Z-Stack firmware using the following command:  
-   _Flashing the CC2530 **takes about 20 minutes**_  
+
+_Flashing the CC2530 **takes about 20 minutes**_  
+
 ```
 python Python/cc_write_flash.py -e -p <serial_port> -i Bin/CC2530_DEFAULT_20190608_CC2530ZNP-Prod.hex
 ```  
@@ -134,6 +140,6 @@ Progress 100%... OK
 Completed
 ```
 
-   _If you don't see any on screen activity that flashing has begun (i.e., progress percentages increasing) within a couple minutes, then abort the command, cycle power on the ESP82xx, and start this step over._
+_If you don't see any on screen activity that flashing has begun (i.e., progress percentages increasing) within a couple minutes, then abort the command, cycle power on the ESP82xx, and start this step over._
 
 Described in greater detail in [this blog post](https://www.zigbee2mqtt.io/information/alternative_flashing_methods.html).
