@@ -209,14 +209,14 @@ You must [compile your build](Compile-your-build) for the ESP32. Change the foll
 #endif // ESP8266
 ```
 
-The driver will start to scan for known sensors automatically using a hybrid approach. In the first place MiBeacons are passively received and only found LYWSD03MMC-sensors will be connected to read data in order to be as energy efficient as possible.
-Battery data is in gerneral of questionable value for the LYWSD0x, CGD1 and (maybe) Flora (some are even hard coded on the device to 99%). That's why only MJ_HT_V1, CGG1 (untested) and LYWSD03 (in form of the battery voltage) will automatically update battery data. The other battery levels can be read by command. 
+The driver will start to scan for known sensors automatically using a hybrid approach. In the first place MiBeacons are passively received and only found LYWSD03MMC-sensors will be connected at the given period to read data in order to be as energy efficient as possible.
+Battery data is in general of questionable value for the LYWSD0x, CGD1 and (maybe) Flora (some are even hard coded on the device to 99%). That's why only MJ_HT_V1, CGG1 (untested) and LYWSD03 (in form of the battery voltage) will automatically update battery data. The other battery levels can be read by command. 
   
 #### Commands
 
 Command|Parameters
 :---|:---
-MI32Period<a id="mi32period"></a>|Show interval in seconds between sensor read cycles. Set to TelePeriod value at boot.<BR>|`<value>` = set interval in seconds
+MI32Period<a id="mi32period"></a>|Show interval in seconds between sensor read cycles for the LYWSD03. Set to TelePeriod value at boot.<BR>|`<value>` = set interval in seconds
 MI32Time <a id="mi32time"></a>|`<n>` = set time time of a **LYWSD02 only** sensor to Tasmota UTC time and timezone. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).
 MI3210Page<a id="mi32page"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
 MI32Battery<a id="mi32battery"></a>|Reads missing battery data for LYWSD02, Flora and CGD1.  
