@@ -199,6 +199,28 @@ A simplified presence dection will scan for regular BLE advertisements of a give
 If the driver receives a packet from the "beacon" a counter will be (re-)started with an increment every second. This timer is published in the TELE-message, presented in the webUI and processed as a RULE.
 The stability of regular readings will be strongly influenced by the local environment (many BLE-devices nearby or general noise in the 2.4-GHz-band). 
 
+## BLE Sensors using built-in Bluetooth on the ESP32
+
+You must [compile your build](Compile-your-build) for the ESP32. Change the following to `my_user_config.h`:
+
+```
+#ifdef ESP32
+  #define USE_MI_ESP32                          // Add support for ESP32 as a BLE-bridge (+9k2 mem, +292k flash)
+#endif // ESP8266
+```
+
+The driver will start to scan for known sensors automatically using a hybrid approach. In the first place MiBeacons are passively received and only found LYWSD03MMC-sensors will be connected to read data in order to be as energy efficient as possible.
+Battery data is in gerneral of questionable value for the LYWSD0x, CGD1 and (maybe) Flora (some are even hard coded on the device to 99%). That's why only MJ_HT_V1, CGG1 (untested) and LYWSD03 (in form of the battery voltage) will automatically update battery data.
+  
+#### Commands
+
+Command|Parameters
+:---|:---
+MI32Scan<a id="mi32scan"></a>|Start a new device discovery scan
+MI32Period<a id="mi32period"></a>|Show interval in seconds between sensor read cycles. Set to TelePeriod value at boot.<BR>|`<value>` = set interval in seconds
+MI32Time <a id="mi32time"></a>|`<n>` = set time time of a **LYWSD02 only** sensor to Tasmota UTC time and timezone. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).
+MI3210Page<a id="mi32page"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
+MI32Battery<a id="mi32battery"></a>|Reads missing battery data for LYWSD02, Flora and CGD1.
 
 ## Getting data from BT Xiaomi Devices
 
