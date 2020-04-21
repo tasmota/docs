@@ -221,7 +221,7 @@ MI32Time <a id="mi32time"></a>|`<n>` = set time time of a **LYWSD02 only** senso
 MI3210Page<a id="mi32page"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
 MI32Battery<a id="mi32battery"></a>|Reads missing battery data for LYWSD02, Flora and CGD1.  
   
-!!! tip If you really want to read battery for LYWSD02, Flora and CGD1, consider doing it once a day with a RULE:  
+!!! tip If you really want to read battery for LYWSD02, Flora and CGD1, consider doing it once a day with a RULE:
 ```
 RULE1 on Time#Minute=30 do MI32Battery endon
 ```
