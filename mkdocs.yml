@@ -5,13 +5,23 @@ repo_name: 'arendst/tasmota'
 repo_url: 'https://github.com/arendst/tasmota'
 edit_uri: 'https://github.com/tasmota/docs/blob/master/docs/'
 # copyright: 'Copyright &copy; 2020 Tasmota Development Team'
-# use_directory_urls: false
+
+plugins:
+  - search:
+      lang:
+        - ro
+        - en
+  - alternate-link
+  - minify:
+      minify_html: true
+  # - htmlproofer
 
 strict: true
 
 theme: 
   name: material
-  # custom_dir: 'theme'
+  language: 'en'
+  custom_dir: 'overrides'
   logo: '_media/logo.svg'
   favicon: _media/favicon.ico
   palette:
@@ -22,9 +32,8 @@ theme:
   font:
     text: Barlow
     code: Roboto Mono
+
 extra:
-  search:
-    language: 'en'
   social:
     - icon: fontawesome/brands/discord
       link: 'https://discord.gg/Ks2Kzd4'
@@ -44,13 +53,6 @@ markdown_extensions:
   - pymdownx.caret
   - codehilite
   - meta
-      
-plugins:
-  - search
-  - alternate-link
-  - minify:
-      minify_html: true
-  # - htmlproofer
 
 google_analytics:
   - 'UA-140681905-2'
