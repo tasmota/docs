@@ -23,6 +23,8 @@ theme:
     text: Barlow
     code: Roboto Mono
 extra:
+  search:
+    language: 'en'
   social:
     - icon: fontawesome/brands/discord
       link: 'https://discord.gg/Ks2Kzd4'
