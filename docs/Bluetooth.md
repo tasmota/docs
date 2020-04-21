@@ -64,7 +64,7 @@ Otherwise you must [compile your build](Compile-your-build). Add the following t
 
 ```
 #ifndef USE_HM10
-#define USE_HM10          // Add support for HM-1x as a BLE-bridge (+5k1 code)
+#define USE_HM10          // Add support for HM-10 as a BLE-bridge (+9k3 code)
 #endif
 ```
 
@@ -210,17 +210,54 @@ You must [compile your build](Compile-your-build) for the ESP32. Change the foll
 ```
 
 The driver will start to scan for known sensors automatically using a hybrid approach. In the first place MiBeacons are passively received and only found LYWSD03MMC-sensors will be connected to read data in order to be as energy efficient as possible.
-Battery data is in gerneral of questionable value for the LYWSD0x, CGD1 and (maybe) Flora (some are even hard coded on the device to 99%). That's why only MJ_HT_V1, CGG1 (untested) and LYWSD03 (in form of the battery voltage) will automatically update battery data.
+Battery data is in gerneral of questionable value for the LYWSD0x, CGD1 and (maybe) Flora (some are even hard coded on the device to 99%). That's why only MJ_HT_V1, CGG1 (untested) and LYWSD03 (in form of the battery voltage) will automatically update battery data. The other battery levels can be read by command. 
   
 #### Commands
 
 Command|Parameters
 :---|:---
-MI32Scan<a id="mi32scan"></a>|Start a new device discovery scan
 MI32Period<a id="mi32period"></a>|Show interval in seconds between sensor read cycles. Set to TelePeriod value at boot.<BR>|`<value>` = set interval in seconds
 MI32Time <a id="mi32time"></a>|`<n>` = set time time of a **LYWSD02 only** sensor to Tasmota UTC time and timezone. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).
 MI3210Page<a id="mi32page"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
-MI32Battery<a id="mi32battery"></a>|Reads missing battery data for LYWSD02, Flora and CGD1.
+MI32Battery<a id="mi32battery"></a>|Reads missing battery data for LYWSD02, Flora and CGD1.  
+  
+### Supported Devices
+
+<table>
+  <tr>
+    <th class="th-lboi">MJ_HT_V1</th>
+    <th class="th-lboi">LYWSD02</th>
+    <th class="th-lboi">LYWSD03MMC</th>
+    <th class="th-lboi">CGD1</th>
+    <th class="th-lboi">MiFlora</th>
+  </tr>
+  <tr>
+    <td class="tg-lboi"><img src="../_media/bluetooth/mj_ht_v1.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/LYWDS02.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/LYWSD03MMC.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/CGD1.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/miflora.png" width=200></td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">temperature, humidity, battery</td>
+    <td class="tg-lboi">temperature, humidity, battery</td>
+    <td class="tg-lboi">temperature, humidity, battery</td>
+    <td class="tg-lboi">temperature, humidity, battery</td>
+    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility, battery</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi"></td>
+    <td class="tg-lboi">set time using "HM10Time"</td>
+    <td class="tg-lboi"></td>
+    <td class="tg-lboi">unsupported time or alarm</td>
+    <td class="tg-lboi"></td>
+  </tr>
+</table>
+
+   
+#### Unconfirmed Devices  
+CGG1 ClearGrass Temperature and Humidity Monitor should be found and may give readings via MiBeacons, but is untested.  
+
 
 ## Getting data from BT Xiaomi Devices
 
