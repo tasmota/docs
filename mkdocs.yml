@@ -9,7 +9,7 @@ edit_uri: 'https://github.com/tasmota/docs/blob/master/docs/'
 plugins:
   - search:
       lang:
-        - ro
+        # - de
         - en
   - alternate-link
   - minify:
