@@ -150,7 +150,7 @@ If everything went well, you are now in Programming Mode and ready to continue w
 
 ## Flashing
 
-If you have followed [Hardware preparation (#Hardware-Preparation), your device should be in Flash Mode and ready for a Tasmota firmware binary file to be flashed. For that you need a **flashing tool**.
+If you have followed [Hardware preparation](#hardware-preparation), your device should be in Flash Mode and ready for a Tasmota firmware binary file to be flashed. For that you need a **flashing tool**.
 
 !!! tip 
     You may want to back up the device manufacturer's firmware on the one in a million chance you don't like Tasmota.
