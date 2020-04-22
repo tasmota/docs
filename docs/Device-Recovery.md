@@ -31,7 +31,7 @@ Implemented for situations where a device cannot be reset to firmware defaults b
 
 If you flashed a precompiled binary you can [reconfigure](Getting-Started.md#configure-wi-fi) the device using the web UI after the reset. 
 
-## After Recovery...
+## After Recovery
 Once recovered, the device should be observed that it operates without instabilities before attempting to configure the device in any way. If the device still does not, follow these steps if you are able to configure its Wi-Fi and connect:
 
 1. Configure the device as `Generic (18)`
@@ -42,4 +42,5 @@ Once the device operates reliably, begin the configuration to set the GPIO confi
 
 If the device exhibits defective behavior immediately after a particular individual setting is changed, then be aware that there may be a problem in the firmware. Please report this behavior via the [Tasmota Discord Chat](https://discord.gg/Ks2Kzd4).  
 
-If none of these methods result in reliable operation, the only remaining option is to connect the device to the serial programming interface, erase the flash memory and [flash](Getting-Started.md#flashing) a different precompiled firmware binary.
+## That Didn't Work, What Now?
+If none of these methods result in a working and reliable device, the only remaining option is to connect the device to the serial programming interface, erase the flash memory and [flash](Getting-Started.md#flashing) a different precompiled firmware binary.
