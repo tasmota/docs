@@ -167,8 +167,8 @@ As said, mostly painless. There are some deviations to this rule as I rearranged
 * Easy migration from **Sonoff-Tasmota 5.2** to **Sonoff-Tasmota 6.x**. 
   As a safeguard perform a **_Backup Configuration_** before installing the new version. If settings are lost after the upgrade perform a **Restore Configuration**.
   
-  !!! warning
-      If you've used development versions between 6.6.0.7 and 6.6.0.11 [**back up your device settings**](#backing-up-settings) as described above. Convert the backup to human readable form as you **MUST** restore these settings manually.
+!!! warning
+    If you've used development versions between 6.6.0.7 and 6.6.0.11 [**back up your device settings**](#backing-up-settings) as described above. Convert the backup to human readable form as you **MUST** restore these settings manually.
 
   - Perform a `Reset 6` before upgrading the firmware and, for safe measure, after the upgrade completes.  
   - Enter your device configurations using the settings saved in the first step.
