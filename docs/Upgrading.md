@@ -136,8 +136,7 @@ If your binary build (yourbinary.bin) is larger than the available free flash pr
 Until now several versions of Tasmota have been released starting with the C version Sonoff-MQTT-OTA followed by Sonoff-MQTT-OTA-Arduino, Sonoff-Tasmota and ultimately **Tasmota**.
 
 Intermediate upgrade steps might be needed to migrate from an older firmware version to the latest.
-The following table lists all relevant firmware versions and a direct link to their minimal build.
-Remember that you **must take each individual step** between the device firmeware version and the latest available.
+Remember that you **must take each individual step** between the device firmware version and the latest available. Do not install only the tasmota-minimal.bin but upgrade to full, working tasmota.bin firmware. You can find all the required binaries in [Tasmota Releases](https://github.com/arendst/Tasmota/releases)
 
 As a safeguard perform "Backup Configuration" before installing a new version. If settings are lost "Restore Configuration" should bring them back.
 
