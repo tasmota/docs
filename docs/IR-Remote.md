@@ -68,3 +68,4 @@ User maintained [codes database for IR](Codes-for-IR-Remotes)
 
 Example circuit with transmitter and receiver:
 ![Example circuit with transmitter and receiver](https://user-images.githubusercontent.com/5904370/68167905-820b3e00-ff67-11e9-978f-d7108a179353.png)
+![](_media/irremote-sheme.jpg)
