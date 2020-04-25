@@ -166,7 +166,7 @@ nav:
     - WS2812B-RGB-Shield.md
     - WS2812B-and-WS2813.md
   - Supported Devices:
-    - Configuring unknown devices: Configuration-Procedure-for-New-Devices.md
+    - Configure Unknown Device: Configuration-Procedure-for-New-Devices.md
     - All Supported Devices: https://templates.blakadder.com/ "target=_blank"
     - Supported-Modules.md
   - Help:
