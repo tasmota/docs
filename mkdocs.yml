@@ -24,6 +24,7 @@ theme:
   # custom_dir: 'overrides'
   logo: '_media/logo.svg'
   favicon: _media/favicon.ico
+  scheme: dark
   palette:
     primary: 'blue'
     accent: 'indigo'
