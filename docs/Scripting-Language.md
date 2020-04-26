@@ -534,7 +534,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     ; show filtered results  
     =>print %median% %movav%
 
-    if chg[rssi]0  
+    if chg[rssi]>0  
     then =>print rssi changed to %rssi%  
     endif
 
@@ -642,7 +642,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     endif
 
     hour=int(time/60)  
-    if chg[hour]0  
+    if chg[hour]>0  
     then  
     ; exactly every hour  
     =>print full hour reached  
@@ -697,7 +697,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 
     ; check if switch changed state  
     sw=sw[1]  
-    if chg[sw]0  
+    if chg[sw]>0  
     then =\power1 %sw%  
     endif
 
@@ -716,9 +716,9 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     chan2=Channel[2]  
     chan3=Channel[3]
 
-    if chg[chan1]0  
-    or chg[chan2]0  
-    or chg[chan3]0  
+    if chg[chan1]>0  
+    or chg[chan2]>0  
+    or chg[chan3]>0  
     then = color has changed  
     endif
 
@@ -946,7 +946,7 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     endif  
       
     hr=hours  
-    if chg[hr]0  
+    if chg[hr]>0  
     and hr==0  
     then  
     mez1=ez1-sez1  
@@ -1047,7 +1047,7 @@ Some variables are set from ioBroker
 
     ; chime every full hour  
     hour=int(time/60)  
-    if chg[hour]0  
+    if chg[hour]>0  
     then =mp3track 4  
     endif
 
@@ -1360,12 +1360,12 @@ An example to show how to implement a web UI. This example controls a light via 
     =>websend [192.168.178.75] color %color%  
     endif  
 
-    if chg[dimmer]0  
+    if chg[dimmer]>0  
     then  
     =>websend [192.168.178.75] dimmer %dimmer%  
     endif  
 
-    if chg[sw]0  
+    if chg[sw]>0  
     then  
     =>websend [192.168.178.75] power1 %sw%  
     endif  
@@ -1501,7 +1501,7 @@ Uses Tasmota's Hue Emulation capabilities for Alexa interface
     >S  
     ; send at midnight  
     day1=day  
-    if chg[day1]0  
+    if chg[day1]>0  
     then  
     =>sendmail [\*:\*:\*:\*:\*:\%to\%:energy report]\*  
     endif  
@@ -1560,7 +1560,7 @@ start dim level = initial dimmer level after power-up or restart; max 100
       
     >F  
     cnt=pc[1]  
-    if chg[cnt]0  
+    if chg[cnt]>0  
     ; sw pressed  
     then sw=1  
     else sw=0  
@@ -1639,7 +1639,7 @@ start dim level = initial dimmer level after power-up or restart; max 100
     slider=Dimmer  
 
     ; slider change  
-    if chg[slider]0  
+    if chg[slider]>0  
     then  
 
     ; dim according slider  
