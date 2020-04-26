@@ -864,6 +864,7 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
 - Since the display is a full update panel it is updated only once a minute  
 - Some values (like power meters) are set remotely from ioBroker  
 
+>
     >D  
     hum=0  
     temp=0  
