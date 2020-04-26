@@ -1,3 +1,5 @@
+description: Getting started with Tasmota. What you need, how to install and do initial configuration.
+
 ## Prerequisites
 ### Needed Hardware
 
