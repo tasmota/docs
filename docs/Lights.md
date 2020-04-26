@@ -208,11 +208,11 @@ When enabling [`SetOption20 1`](Commands.md#setoption20) any change to webUI sli
 
 ### PWM CT 
 
-`Module 48`
+`Module 48` or `SetOption92 1`
 
 Some CCT lights use PWM1 for brightness and PWM2 for color temperature (instead of PWM1 for Cold White and PWM2 for Warm White).
 
-For these lights, use `Module 48` aka Philips Xiaomi mode.
+For these lights, use `Module 48` aka Philips Xiaomi mode, or `SetOption92 1` (supported since v.8.2.0.5)
 
 ## Light Categories
 
