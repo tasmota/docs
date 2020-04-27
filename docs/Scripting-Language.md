@@ -293,12 +293,12 @@ If you define a variable with the same name as a special variable that special v
     slider=Dimmer
     power=POWER
     
-    if upd[slider]0
+    if upd[slider]>0
     then
     =>print slider updated %slider%
     endif
     
-    if upd[power]0
+    if upd[power]>0
     then
     =>print power updated %power%
     endif
@@ -621,7 +621,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     endif
 
     ; var has been updated  
-    if upd[hello]0  
+    if upd[hello]>0  
     then =>print %hello%  
     endif
 
@@ -1394,15 +1394,15 @@ When Alexa sends on/off, dimmer, and color (via hsb), send commands to a MagicHo
     tmp=0  
       
     >E  
-    if upd[hue1]0  
-    or upd[sat1]0  
-    or upd[bri1]0  
+    if upd[hue1]>0  
+    or upd[sat1]>0  
+    or upd[bri1]>0  
     then  
     tmp=hue1/182  
     ->websend [192.168.178.84] hsbcolor %tmp%,%sat1%,%bri1%  
     endif  
 
-    if upd[pwr1]0  
+    if upd[pwr1]>0  
     then  
     ->websend [192.168.178.84] power1 %pwr1%  
     endif  
@@ -1444,19 +1444,19 @@ Uses Tasmota's Hue Emulation capabilities for Alexa interface
     >E  
     print EVENT  
       
-    if upd[p1]0  
+    if upd[p1]>0  
     then  
     ->sensor29 0,%0p1%  
     endif  
-    if upd[p2]0  
+    if upd[p2]>0  
     then  
     ->sensor29 1,%0p2%  
     endif  
-    if upd[p3]0  
+    if upd[p3]>0  
     then  
     ->sensor29 2,%0p3%  
     endif  
-    if upd[p4]0  
+    if upd[p4]>0  
     then  
     ->sensor29 3,%0p4%  
     endif  
