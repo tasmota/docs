@@ -23,7 +23,7 @@ Download binaries from:
 
 Tasmota 8.2 introduced upgrading using gzipped binaries which are smaller in size and will likely skip the intermediary minimal build installation. This makes the upgrade process faster and straightforward. 
 
-To use simply add `.gz` to the existing OTA Url or download the `.bin.gz` binary from the official [OTA Server](http://thehackbox.org/tasmota/release/) and the next upgrade will 
+To use simply add `.gz` to the existing OTA Url or download the `.bin.gz` binary from the official [OTA Server](http://thehackbox.org/tasmota/release/) and the next upgrade will use the compressed file.
 
 ## Upgrade using webUI
 Upgrading the device firmware [over-the-air](https://en.wikipedia.org/wiki/Over-the-air_programming), aka OTA, is the most convenient way to upgrade. 
