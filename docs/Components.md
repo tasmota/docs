@@ -223,3 +223,4 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 199 | CC1101 GDO2     | CC1101 TX Pin            |
 | 200 | HRXL RX     | Data from MaxBotix HRXL sonar range sensor            |
 | 201 | MOODL TX     | ElectriQ iQ-wifiMOODL Serial TX          |
+| 202 | AS3935       | Lightning Detector Interrupt Pin         |
