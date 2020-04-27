@@ -285,7 +285,7 @@ If you define a variable with the same name as a special variable that special v
 - Linefeed and carriage return may be defined by \n and \r  
 
 **Special** commands:  
-`print` or `= print` prints to the log for debugging  
+`print` or `=>print` prints to the log for debugging  
 &nbsp;&nbsp;&nbsp;&nbsp;A Tasmota MQTT RESULT message invokes the script's `E` section. Add `= print` statements to debug a script.  
     
 !!! example
@@ -332,7 +332,7 @@ S
 =(svar)
 
 #subroutine
-=print subroutine was executed
+=>print subroutine was executed
 ```
 
 **For loop** (loop count must not be less than 1)
@@ -538,8 +538,8 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     then =>print rssi changed to %rssi%  
     endif
 
-    if temp\30  
-    and hum\70  
+    if temp>30  
+    and hum>70  
     then =>print damn hot!  
     endif
 
@@ -569,47 +569,47 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     endif
 
     if upsecs%5==0  
-    then =\print %upsecs%  (every 5 seconds)  
+    then =>print %upsecs%  (every 5 seconds)  
     endif
 
     ; not recommended for reliable timers  
     timer+=1  
-    if timer\=5  
+    if timer>=5  
     then =>print 5 seconds over (may be)  
     timer=0  
     endif
 
     dimmer+=1  
-    if dimmer\100  
+    if dimmer>100  
     then dimmer=0  
     endif
 
-    =\dimmer %dimmer%  
-    =\WebSend %url% dimmer %dimmer%
+    =>dimmer %dimmer%  
+    =>WebSend %url% dimmer %dimmer%
 
     ; show on display  
     dp0  
-    =\displaytext [c1l1f1s2p20] dimmer=%dimmer%
+    =>displaytext [c1l1f1s2p20] dimmer=%dimmer%
 
     =>print %upsecs% %uptime% %time% %sunrise% %sunset% %tstamp%
 
-    if time\sunset  
+    if time>sunset  
     and time< sunrise  
     then  
     ; night time  
     if pwr[1]==0  
-    then =\power1 1  
+    then =>power1 1  
     endif  
     else  
     ; day time  
-    if pwr[1]\0  
-    then =\power1 0  
+    if pwr[1]>0  
+    then =>power1 0  
     endif  
     endif
 
     ; clr display on boot  
-    if boot\0  
-    then =\displaytext [z]  
+    if boot>0  
+    then =>displaytext [z]  
     endif
 
     ; frost warning  
@@ -659,8 +659,8 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     and upsecs%tper==0  
     then  
     ; calc abs humidity  
-    tmp=pow(2.718281828 (17.67\*temp)/(temp+243.5))  
-    tmp=(6.112\*tmp\*hum\*18.01534)/((273.15+temp)\*8.31447215)  
+    tmp=pow(2.718281828 (17.67*temp)/(temp+243.5))  
+    tmp=(6.112*tmp*hum*18.01534)/((273.15+temp)*8.31447215)  
     ; publish median filtered value  
     =Publish tele/%topic%/SENSOR {"Script":{"abshum":%med(0 tmp)%}}  
     endif
@@ -674,17 +674,17 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     =>print state=%state%  
     state+=1  
     case 3  
-    =print state=%state%  , reset  
+    =>print state=%state%  , reset  
     state=1  
     ends
 
     ; subroutines  
-    \#sub1(string)  
+    #sub1(string)  
     =>print sub1: %string%  
-    \#sub2(param)  
+    #sub2(param)  
     =>print sub2: %param%
 
-    \#sendmail(string)  
+    #sendmail(string)  
     =sendmail [smtp.gmail.com:465:user:passwd:<sender@gmail.de:<rec@gmail.de:alarm] %string%
 
     >E  
@@ -698,7 +698,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     ; check if switch changed state  
     sw=sw[1]  
     if chg[sw]>0  
-    then =\power1 %sw%  
+    then =>power1 %sw%  
     endif
 
     hello=&quot;event occured&quot;
@@ -1183,49 +1183,49 @@ Synchronizes 2 Magic Home devices by also sending the commands to a second Magic
     ; off  
     if istr=="0x00F740BF"  
     then  
-    =power1 0  
+    =>power1 0  
     =>%ws% power1 0  
     endif
 
     ;white  
     if istr=="0x00F7E01F"  
     then  
-    =color 000000ff  
+    =>color 000000ff  
     =>%ws% color 000000ff  
     endif
 
     ;red  
     if istr=="0x00F720DF"  
     then  
-    =color ff000000  
+    =>color ff000000  
     =>%ws% color ff000000  
     endif
 
     ;green  
     if istr=="0x00F7A05F"  
     then  
-    =color 00ff0000  
+    =>color 00ff0000  
     =>%ws% color 00ff0000  
     endif
 
     ;blue  
     if istr=="0x00F7609F"  
     then  
-    =color 0000ff00  
+    =>color 0000ff00  
     =>%ws% color 0000ff00  
     endif
 
     ; dimmer up  
     if istr=="0x00F700FF"  
     then  
-    =dimmer +  
+    =>dimmer +  
     =>%ws% dimmer +  
     endif
 
     ;dimmer down  
     if istr=="0x00F7807F"  
     then  
-    =dimmer -  
+    =>dimmer -  
     =>%ws% dimmer -  
     endif
 
@@ -1509,7 +1509,7 @@ Uses Tasmota's Hue Emulation capabilities for Alexa interface
     >m  
     email report at %tstamp%  
     your power consumption today was %et% KWh  
-    \#
+    #
 
 ### Switching and Dimming By Recognizing Mains Power Frequency
 
@@ -1668,4 +1668,4 @@ start dim level = initial dimmer level after power-up or restart; max 100
     dim="FF55"+hn(tmp*dimmlp)+"05DC0A"  
     =>SerialSend5 %dim%  
     =>Dimmer %tmp%  
-    \#
+    #
