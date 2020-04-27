@@ -10,7 +10,7 @@ You can contribute by:
 - fixing spelling mistakes, broken links and other errors in the documentation
 - writing guides on wiring and using sensors or your DIY projects featuring Tasmota
 
-### Editing Articles
+## Editing Articles
 !!! failure "You need a GitHub user account to be able to edit"
 
 If you spot an error in an article use the *pencil icon* link at the top of the page, near the title, to correct it. This version of documentation uses strick markdown syntax with some enchancements. See [Markdown Cheatsheet](https://3os.org/markdownCheatSheet/welcome/) for all features
