@@ -166,33 +166,33 @@ You may put any html code here.
 
 A web user interface may be generated containing any of the following elements:  
 **Button:**   
- `bu(<vn <txt1 <txt2)` (up to 4 buttons may be defined in one row)  
- `<vn` = name of variable to hold button state  
- `<txt1` = text of ON state of button  
- `<txt2` = text of OFF state of button
+ `bu(vn txt1 txt2)` (up to 4 buttons may be defined in one row)  
+ `vn` = name of variable to hold button state  
+ `txt1` = text of ON state of button  
+ `txt2` = text of OFF state of button
 **Checkbox:**   
- `ck(<vn <txt)`  
- `<vn` = name of variable to hold checkbox state  
- `<txt` = label text   
+ `ck(vn txt)`  
+ `vn` = name of variable to hold checkbox state  
+ `txt` = label text   
 **Slider:**    
-`sl(<min <max <vn <ltxt <mtxt <rtxt)`  
- `<min` = slider minimum value  
- `<max` = slider maximum value  
- `<vn` = name of variable to hold slider value  
- `<ltxt` = label left of slider  
- `<mtxt` = label middle of slider  
- `<rtxt` = label right of slider  
+`sl(min max vn ltxt mtxt rtxt)`  
+ `min` = slider minimum value  
+ `max` = slider maximum value  
+ `vn` = name of variable to hold slider value  
+ `ltxt` = label left of slider  
+ `mtxt` = label middle of slider  
+ `rtxt` = label right of slider  
 **Text Input:**    
- `tx(<vn <txt)`  
- `<vn` = name of string variable to hold text state  
- `<txt` = label text   
+ `tx(vn txt)`  
+ `vn` = name of string variable to hold text state  
+ `txt` = label text   
 **Number Input:**    
- `nm(<min <max <step <vn <txt)`  
- `<min` = number minimum value  
- `<max` = number maximum value  
- `<step` = number step value for up/down arrows  
- `<vn` = name of number variable to hold number  
- `<txt` = label text 
+ `nm(min max step vn txt)`  
+ `min` = number minimum value  
+ `max` = number maximum value  
+ `step` = number step value for up/down arrows  
+ `vn` = name of number variable to hold number  
+ `txt` = label text 
 
 `>M`  
 [Smart Meter Interface](Smart-Meter-Interface)  
@@ -315,14 +315,14 @@ If you define a variable with the same name as a special variable that special v
 
 `#name` names a subroutine. Subroutine is called with `=#name`  
 `#name(param)` names a subroutine with a parameter. Subroutine is called with `=#name(param)`  
-Subroutines end with the next `#` or `` line or break. Subroutines may be nested  
+Subroutines end with the next `#` or `>` line or break. Subroutines may be nested  
 Parameters can be numbers or strings and on type mismatch are converted  
 
 If `#define USE_SCRIPT_SUB_COMMAND` is included in your `user_config_override.h`, a subroutine may be invoked via the Console or MQTT using the subroutine's name. For example, a declared subroutine `#SETLED(num)` may be invoked by typing `SETLED 1` in the Console. The parameter `1` is passed into the `num` argument. This also works with string parameters.  
 
 It is possible to "replace" internal Tasmota commands. For example, if a `#POWER1(num)` subroutine is declared, the command `POWER1` is processed in the scripter instead of in the main Tasmota code.  
 
-`=(svar)` executes a routine whose name is passed as a string in a variable (dynamic or self modifying code). The string has to start with `=` or `=#` for the routine to be executed.
+`=(svar)` executes a routine whose name is passed as a string in a variable (dynamic or self modifying code). The string has to start with `>` or `=#` for the routine to be executed.
 
 ```
 D
@@ -448,7 +448,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 `fmd("fname")` make directory fname  
 `frd("fname")` remove directory fname  
 `fx("fname")` check if file fname exists  
-`fe("fname")` execute script fname (max 2048 bytes, script must start with the '' character on the first line)  
+`fe("fname")` execute script fname (max 2048 bytes, script must start with the '>' character on the first line)  
 
 ## Scripting Cookbook
 
@@ -463,9 +463,9 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     t:timer1=30  (t:means countdown timer)  
     t:mt=0  
     i:count=0  (i:means auto counter)  
-    hello=&quot;hello world&quot;  
-    string=&quot;xxx&quot;  
-    url=&quot;[_IP_]&quot;  
+    hello="hello world"  
+    string="xxx"  
+    url="[_IP_]";  
     hum=0  
     temp=0
     zigbeetemp=0
@@ -475,8 +475,8 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     rssi=0  
     param=0
 
-    col=&quot;&quot;  
-    ocol=&quot;&quot;  
+    col=""  
+    ocol=""  
     chan1=0  
     chan2=0  
     chan3=0
@@ -594,7 +594,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     =>print %upsecs% %uptime% %time% %sunrise% %sunset% %tstamp%
 
     if time>sunset  
-    and time< sunrise  
+    and time<sunrise  
     then  
     ; night time  
     if pwr[1]==0  
@@ -629,8 +629,8 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     ; average data in between  
     if upsecs%60==0   
     then  
-    ahum/=tcnt  
-    atemp/=tcnt  
+    ahum>=tcnt  
+    atemp>=tcnt  
     =WebSend [_IP_]/update?key=_token_&field1=%atemp%&field2=%ahum%  
     tcnt=0  
     atemp=0  
@@ -655,14 +655,14 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     }
 
     ; publish abs hum every teleperiod time  
-    if mqtts0  
+    if mqtts>0  
     and upsecs%tper==0  
     then  
     ; calc abs humidity  
     tmp=pow(2.718281828 (17.67*temp)/(temp+243.5))  
     tmp=(6.112*tmp*hum*18.01534)/((273.15+temp)*8.31447215)  
     ; publish median filtered value  
-    =Publish tele/%topic%/SENSOR {"Script":{"abshum":%med(0 tmp)%}}  
+    =>Publish tele/%topic%/SENSOR {"Script":{"abshum":%med(0 tmp)%}}  
     endif
 
     ;switch case state machine   
@@ -685,7 +685,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     =>print sub2: %param%
 
     #sendmail(string)  
-    =sendmail [smtp.gmail.com:465:user:passwd:<sender@gmail.de:<rec@gmail.de:alarm] %string%
+    =>sendmail [smtp.gmail.com:465:user:passwd:<sender@gmail.de:<rec@gmail.de:alarm] %string%
 
     >E  
     =>print event executed!
@@ -701,7 +701,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     then =>power1 %sw%  
     endif
 
-    hello=&quot;event occured&quot;
+    hello="event occured"
 
     ; check for Color change (Color is a string)  
     col=Color  
@@ -733,7 +733,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 
     ; define all vars here  
     ; reserve large strings  
-    **>D 48**  
+    >D 48
     hum=0  
     temp=0  
     fr=0  
@@ -753,7 +753,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
     fr=fo("/" 0)  
     for cnt 1 20 1  
     res=fr(str fr)  
-    if res0  
+    if res>0  
     then  
     =>print %cnt% : %str%  
     else  
@@ -829,7 +829,7 @@ Some variables are set from ioBroker
     punit=PressureUnit
 
     >S  
-    // update display every [`TelePeriod`](Commands#teleperiod)  
+    ; update display every [`TelePeriod`](Commands#teleperiod)  
     if upsecs%tper==0  
     then  
     dp2  
@@ -1048,7 +1048,7 @@ Some variables are set from ioBroker
     ; chime every full hour  
     hour=int(time/60)  
     if chg[hour]>0  
-    then =mp3track 4  
+    then =>mp3track 4  
     endif
 
     >E  
@@ -1142,12 +1142,12 @@ Used to display home's solar power input/output (+-5000 Watts)
 
     if cnt<=pixels/2  
     then  
-    if tog0  
+    if tog>0  
     then val=colr1  
     else val=colr2  
     endif  
     else  
-    if tog0  
+    if tog>0  
     then val=colg1  
     else val=colg2  
     endif  
@@ -1289,7 +1289,7 @@ Synchronizes 2 Magic Home devices by also sending the commands to a second Magic
 ### Fast Polling
 
     ; expand default string length to be able to hold `WebSend [xxx.xxx.xxx.xxx]`  
-    **>D 25**  
+    >D 25  
     sw=0  
     ws="WebSend [_IP_]"  
     timer=0  
@@ -1318,7 +1318,7 @@ Synchronizes 2 Magic Home devices by also sending the commands to a second Magic
     =>%ws% power1 %toggle%  
     endif
 
-    if sw0  
+    if sw>0  
     then  
     ;pressed  
     if timer30  
@@ -1326,7 +1326,7 @@ Synchronizes 2 Magic Home devices by also sending the commands to a second Magic
     ; hold  
     hold=1  
     ;=>print hold=%timer%  
-    if toggle0  
+    if toggle>0  
     then  
     =>%ws% dimmer +  
     else  
@@ -1490,7 +1490,7 @@ Uses Tasmota's Hue Emulation capabilities for Alexa interface
  
 ### Send e-mail
 
-    **>D 25**  
+    >D 25  
     day1=0  
     et=0  
     to="mrx@gmail.com"
