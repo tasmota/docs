@@ -107,10 +107,10 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 <br clear="right"/>
 
 !!! failure "There is no White only slider in the UI for 4 channel lights"
-    Use [`White`](Commands.md#white) commands or set up [White Blend Mode](#white-blend-mode).
+    Use [`White`](Commands.md#white) commands or set up [White Blend Mode](#white-blend-mode) or [**RGB and White Split**](#rgb-and-white-split).
 
 !!! danger 
-    Some lights have limited power supply that do not allow all channels to be at full power at the same time. Be careful not to burn out your light if you force all channels via `Color` or [**RGB and White Split**](#rgb-and-white-split).
+    Some lights have limited power supply that do not allow all channels to be at full power at the same time. Be careful not to burn out your light if you force all channels to be on using `Color` or [**RGB and White Split**](#rgb-and-white-split).
 
 ### 5 Channels - RGBCCT Lights
 
