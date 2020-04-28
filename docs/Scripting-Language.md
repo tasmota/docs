@@ -50,7 +50,7 @@ To save code space almost no error messages are provided. However it is taken ca
 - Nested if,then,else up to a level of 8  
 - Math operators  `+`,`-`,`*`,`/`,`%`,`&`,`|`,`^`  
 - All operators may be used in the `op=` form, e.g., `+=`  
-- Comparison operators `==`,`!=`,``,`=`,`<`,`<=`  
+- Comparison operators `==`,`!=`,`>`,`>=`,`<`,`<=`  
 - `and` , `or` support  
 - Hexadecimal numbers with prefix `0x` are supported
 - Strings support `+` and `+=` operators  
@@ -68,8 +68,8 @@ To save code space almost no error messages are provided. However it is taken ca
 
 **Console Commands**   
 
-`script <n` \<n: `0` = switch script off; `1` = switch script on  
-`script <cmdline` execute \<cmdline  
+`script <n>` <n>: `0` = switch script off; `1` = switch script on  
+`script ><cmdline>` execute <cmdline>  
 - Can be used to set variables, e.g., `script mintmp=15`  
 - Multiple statements can be specified by separating each with a semicolon, e.g. `script mintmp=15;maxtemp=40`  
 - The script itself can't be specified because the size would not fit the MQTT buffers
@@ -275,9 +275,9 @@ If you define a variable with the same name as a special variable that special v
 
 ## Commands
 
-`=> <command` Execute \<command  recursion disabled  
-`+> <command` Execute \<command  recursion enabled  
-`-> <command` Execute \<command - do not send MQTT or log messages (i.e., silent execute - useful to reduce traffic)  
+`=> <command>` Execute <command>  recursion disabled  
+`+> <command>` Execute <command>  recursion enabled  
+`-> <command>` Execute <command> - do not send MQTT or log messages (i.e., silent execute - useful to reduce traffic)  
 
 **Variable Substitution**  
 - A single percent sign must be given as `%%`  
@@ -286,23 +286,24 @@ If you define a variable with the same name as a special variable that special v
 
 **Special** commands:  
 `print` or `=>print` prints to the log for debugging  
-&nbsp;&nbsp;&nbsp;&nbsp;A Tasmota MQTT RESULT message invokes the script's `E` section. Add `= print` statements to debug a script.  
+A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` statements to debug a script.  
     
 !!! example
-    ```
+ >
+    >E
     slider=Dimmer
     power=POWER
     
     if upd[slider]>0
     then
-    =>print slider updated %slider%
+    print slider updated %slider%
     endif
     
     if upd[power]>0
     then
-    =>print power updated %power%
+    print power updated %power%
     endif
-    ```
+ 
 
 `break` exits a section or terminates a `for next` loop  
 `dpx` sets decimal precision to x (0-9)  
