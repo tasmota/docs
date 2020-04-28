@@ -46,11 +46,11 @@ When Device Groups are enabled, the PWM Dimmer brightness presets are kept in sy
 
 Remote device mode allows PWM Dimmer switches to control remote devices. With remote device mode enabled, each button controls a different device. Note that dimmer switches with toggle-style down/up buttons have limited functionality as remote device mode switches because you can not push the down and up buttons simultaneously.
 
-To include remote device mode support in the build, define `USE_PWM_DIMMER_REMOTE` in your user_config_override. Remote device mode support requires [device group](Device-Groups.md) support so `USE_DEVICE_GROUPS` is automatically defined if `USE_PWM_DIMMER_REMOTE` is defined. Remote device mode support adds 1.2K to the code size in addition to the code size required for device groups support.
+Remote device mode is included in the default tasmota binary. To include remote device mode support in other builds, define `USE_PWM_DIMMER_REMOTE` and `USE_DEVICE_GROUPS` in your user_config_override. Remote device mode support requires [device group](Device-Groups.md) support. Remote device mode support adds 1K to the code size in addition to the code size required for device groups support.
 
 To enable remote device mode, execute `SetOption88 1` (the device will restart). Each remote device must be running firmware with device group support and have remote device support enabled. Remote devices do not need to be built with PWM dimmer support nor do they need to be switches.
 
-If a remote device is a PWM dimmer, the device acts like a 3-way dimmer switch would and may or may not have a load connected to it. It’s also possible to use a PWM dimmer switch without a load to act as a wall switch to control the power, brightness and color of one or more smart lights with Tasmota with device group support loaded on them.
+If a remote device also uses the PWM Dimmer module, the device acts like a 3-way dimmer switch and may or may not have a load connected to it. It’s also possible to use a PWM dimmer switch without a load to act as a wall switch to control the power, brightness and color of one or more smart lights with Tasmota with device group support loaded on them.
 
 With remote device mode is enabled, button 1 is the power button for the local device while buttons 2 and 3 are the power buttons for remote devices. Group names for buttons 2 and 3 are set by the `GroupTopic2` and `GroupTopic3` commands respectively. Note that the button numbers are defined by the module template and can be in any physical order on the switch (button 1 can be defined as the top button, the middle button or the bottom button). Button combinations that publish MQTT Event commands use a topic in the format `cmnd/%group-topic%/EVENT`.
 
