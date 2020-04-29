@@ -1,9 +1,10 @@
 
 
+
   
 The Shelly RGBW2 is supported by using a template.
 
-<img src="https://shelly.cloud/wp-content/uploads/2018/11/shelly_rgbw2_300.png" width="250" align="right" />
+<img src="https://shelly.cloud/wp-content/uploads/2019/05/RGBW_250.png" width="250" align="right" />
 
 * [Allterco Shelly RGBW2 Product Page](https://shelly.cloud/wifi-smart-shelly-rgbw-2/)
 * [Allterco Shelly RGBW2 Shop](https://shop.shelly.cloud/shelly-rgbw2-wifi-smart-home-automation)
@@ -13,7 +14,7 @@ The Shelly RGBW2 is supported by using a template.
 
 **DO NOT CONNECT ANYTHING TO ANY GPIOs OF THESE DEVICES!!! (No sensors, no switches, nothing)  
 There is no galvanic isolation between the DC Inputs and the GPIOs.**
-**Do not connect AC/DC power and the serial connection at the same time**
+**Do not connect AC/DC power and the serial connection at the same time!**
  Only use a Shelly as designed. 
 
 
@@ -23,13 +24,18 @@ There is no galvanic isolation between the DC Inputs and the GPIOs.**
 
 
 An ESP8266 with 2MB flash LED Controller.
+- Support any 12v or 24v White, RGB, RGBW led strips and 12/24v led bulbs, with up to 288W combined power
+- Support 4 ways PWM, applied to control 4 colors LED(R/G/B/W), meet a requirement for colored lights, color temperature lights, and general lights
+- A separate 12V/24V power supply unit is required.
+- 12V => 144W combined / 45W p. Channel
+- 24V => 288W combined / 90W p. Channel
 
-<img src="https://shelly.cloud/wp-content/uploads/2019/01/s25_size2.jpg" height="250" />
-<img src="https://shelly.cloud/wp-content/uploads/2019/01/s25_size.jpg" height="250" />
+
+
 
 ## Serial Connection
 
-The Shelly 2.5 model comes with a partially exposed programming/debug header which can be used to flash Tasmota on the device. A USB-to-UART adapter is needed as well as a reliable 3.3V with at least 350 mA drive capability. The following diagram shows the device pinout and power source voltage selection jumper.
+The Shelly RGBW2 model comes with a partially exposed programming/debug header which can be used to flash Tasmota on the device. A USB-to-UART adapter is needed as well as a reliable 3.3V with at least 350 mA drive capability. The following diagram shows the device pinout.
 
 <img src="https://i1.wp.com/indomus.it/wp-content/uploads/Shelly-RGBW2-connessioni-per-riprogrammazione.png?w=610&ssl=1" height="250" />
 
@@ -43,63 +49,73 @@ Tasmota 6.5.0.8 and higher supports Shelly 2.5
 
 | GPIO | Component |
 | -- | -- |
-| 0 | LED1i
-| 2 | Button1
-| 4 | Relay1
-| 5 | Switch2n
-| 12 | I2C SDA
-| 13 | Switch1n
-| 14 | I2C SCL
-| 15 | Relay2
-| 16 | ADE7953 IRQ
-| A0 | Internal Temperature
+| 0 | None
+| 1 | None
+| 2 | LEDLink
+| 3 | None
+| 4 | PWM4
+| 5 | USER
+| 9 | None
+| 10 | None
+| 12 | PWM1
+| 13 | Button1
+| 14 | PWM3
+| 15 | PWM2
+| 16 | None
+| A0 | OpAmp Current Monitor
 
-`{"NAME":"Shelly 2.5","GPIO":[56,0,17,0,21,83,0,0,6,82,5,22,156],"FLAG":2,"BASE":18}`  
+[Template:](../Templates/#importing-templates)
+` {"NAME":"ShellyRGBW2","GPIO":[0,0,157,0,40,89,0,0,37,17,39,38,0],"FLAG":7,"BASE":18}`  
 
-Energy metering is done by a ADE7953 chip connected via I2C and IRQ on GPIO16.  
+Energy metering is done by a LM321 OpAmp (1mOhm Shunt lowside) via ADC0 .
 
-If you connect momentary switches, use the following template:  
-`{"NAME":"Shelly 2.5 (buttons)","GPIO":[56,0,19,0,21,127,0,0,6,126,5,22,156],"FLAG":2,"BASE":18}`
-`Button1` and `Button2` are assigned to the SW1 and SW2 external inputs. `Button3` is the button on the back of the device next to the pin header and you can optionally assign the behaviour you want using rules.
+If you want to use a push button, you should take a look at the [Button & Switches.](../Buttons-and-Switches/#button-vs-switch) 
 
 If you want the buttons to respond instantly, go to the console and type `SetOption13 1`.
 But, if you want press/double press/hold functionality, run instead `Backlog SetOption1 1; SetOption11 1; SetOption32 20` to enable all three states and set hold time of 2 seconds. Use [SetOption32](../Commands#setoption32) to set another hold time.
 
-If you want to see Voltage and Frequency also when the relays are off, use `SetOption21 1`
+
 
 ## Flash mode
 To be able to flash the Tasmota firmware you need to get into flash mode. Therefore connect a wire from GPIO0 to ground. For further information have a look at [programming mode](../Getting-Started#programming-mode).
 
 ## Calibration
-Tasmota will disable serial logging after a restart as the communication between Tasmota and the Energy Monitoring chip is using the same serial interface. Make sure not to enable `SerialLog` as it will interfere with the Energy Monitoring functionality.
+After successfully flashing Tasmota and selecting the template for the Shelly RGBW2, you can start configuring the power consumption.
 
-To calibrate the Energy monitoring feature connect a known load and execute the commands shown below. Assumed an AC voltage of 240V, a resistive load of 60W and a line frequency of 50Hz. With a load of 60W the current should be 60W / 240V = 0.25A.  
-```
-FrequencySet 50.000
-PowerSet 60.00
-VoltageSet 240.0
-CurrentSet 250.0
-```
-Pause a few seconds between executing the commands as the communication between Tasmota and the energy monitoring chip is a serial interface which can take over a second to complete.
+1. disconnect the GPIOs and connect the Shelly RGBW to its future power supply.  Set ADC0 to Analog in the [template settings](../Templates/#how-to-use). Save this setting.
+2. After restarting, you will find the acutal ADC Value of the analog input in the main menu. There should be no light on at this time. 
+Make a note of this value. Its the baseValue.
 
-## Use rules to control shutter endpoints
-As the Shelly 2.5 contains energy monitoring you can use rules to power off the shutter when too much current is drawn at the end point. This rule will power off both directions when the current becomes greater than 600mA.
-Before you activate the rule, let your shutter move and pay attention to the current value in the WebGUI.
-Note your value and add 0.050 to your value.
-After that, you change the value for the rule.
+3. In the template settings, set ADC0 to CT-POWER and save the settings.
 
-Eg.: Your Value = 0.520 + 0.050 = 0.570
+4. Use the [AdcParam](../Commands/#sensors) command:<BR> `AdcParam 7, baseValue, Multiplcator, Voltage` <BR>in the webconsole. For a 12VDC PowerSupply and a baseValue of 407 this lines looks like this: <BR>  `AdcParam 7, 407, 3282, 0.012`<BR>
+5. If there are no lights on, the Main Menu should show only the Voltage but no consumption.
+6. Connect a light source with a current consumption known to you. Or measure the current with a multimeter. Compare the displayed values in the menu and those of your meter.
+Please note that the measurement of the Shelly RGBW2 is very inaccurate due to its electrical construction.
 
-`energy#current[X]>0.570`
+!!! tip
+In case the values do not fit at all, you have to perform a recalibration. 
 
-```
-rule1 on energy#current[2]>0.600 do backlog power1 0;power2 0; endon on energy#current[1]>0.600 do backlog power1 0;power2 0 endon
-rule1 1
-rule1 5
-```
+1. Set the ADC0 input back to analog. 
+2. Note the base value when the light is switched off.
+3. Switch on the light and note the displayed analog value (comparison value) and the current value displayed by your meter (real value). 
+4. Calculate: `(ComparisonValue-baseValue)*100/realValue = Multiplicator`
 
-## Use Shelly 2.5 device for Blinds and Shutters
-Further Information: [Blinds and Shutters](../Blinds-and-Shutters)
+!!! example
+`BaseValue 407, ComparisonValue 455, realValue=1.5A
+(455-407)*100/1,5 = 3200`
+
+5. Set the ADC0 input back to CT-Power and start at 4. of the previous list.
+
+
+
+## Use rules to control both switches
+
+If [SetOption37](../Commands/#setoption37) is set to 128 the RGB and White is splited.
+To switch both RGB and W on/off with the connected hardware switch, you can use this Rule:
+>`rule1 on power1#state do power2 %value% endon`<BR> `rule1 1`
+
+
 
 
 ## Ghost switching
@@ -110,17 +126,6 @@ Use command `SwitchDebounce 100` to change it to a less sensitive value, which m
 Some issues were reported for this topic - [search query](https://github.com/arendst/Tasmota/issues?utf8=%E2%9C%93&q=ghost+shelly)
 
 
-## Overheating 
+## Light setup
 
-Due to the built-in temperature sensor, it is possible to switch off the relays when a certain temperature is exceeded. The limit for the original Shelly firmware seems to be around 95 ° C. [Source](https://www.shelly-support.eu/lexikon/index.php?entry/1-shelly-2-5/)
-
-The ambient temperature according to the manufacturer is between - 40 ° C up to 40 ° C
-
-Even at temperatures within this range, a significantly higher temperature can occur when installed behind switches or in walls. There are reports that temperature-related shutdowns occur at high loads.
-A standby temperature between 30-60 ° C seems normal.
-An overtemperature threshold is implemented in the Tasmota firmware. 
-!!! note
-    It is set to 90 ° C
-
-This can be changed via [SetOption42](../Commands.md#setoption42).
-> [!WARNING]It is absolutely not recommended to increase the limit.
+Please read: [Lights](../Lights/#control-lights).
