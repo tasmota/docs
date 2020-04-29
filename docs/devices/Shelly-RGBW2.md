@@ -45,7 +45,7 @@ The onboard connector is 1.27mm raster with 1mm diameter holes. Normal Dupont ca
 <img src="https://user-images.githubusercontent.com/188284/63646333-3dfef000-c711-11e9-9446-82ea0ce88c95.png" height="250" />
 
 ## Template
-Tasmota 6.5.0.8 and higher supports Shelly 2.5  
+ 
 
 | GPIO | Component |
 | -- | -- |
@@ -82,7 +82,7 @@ To be able to flash the Tasmota firmware you need to get into flash mode. Theref
 ## Calibration
 After successfully flashing Tasmota and selecting the template for the Shelly RGBW2, you can start configuring the power consumption.
 
-1. disconnect the GPIOs and connect the Shelly RGBW to its future power supply.  Set ADC0 to Analog in the [template settings](../Templates/#how-to-use). Save this setting.
+1. Disconnect the GPIOs and connect the Shelly RGBW to its future power supply.  Set ADC0 to Analog in the [template settings](../Templates/#how-to-use). Save this setting.
 2. After restarting, you will find the acutal ADC Value of the analog input in the main menu. There should be no light on at this time. 
 Make a note of this value. Its the baseValue.
 
