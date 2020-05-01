@@ -150,7 +150,7 @@ _Parameters are separated by colons._
 * `Gsn:path:` = save graph `n` to path (if optional SD card is present)  
 * `Grn:path:` = restore graph `n` from path (if optional SD card is present)  
 
-<a id="colorcodes"></a>### Color Codes
+### Color Codes<a id="colorcodes"></a>
 
 Small color panels often use a color code in RGB565 mode. This means that color is not represented by a byte (0..255) for each R, G, B component but by a smaller number of bits. The expected `p` value for `Cp` and `Bp` is calculated as:<br>
 - Red on 5 bits = `0..31`<br>
