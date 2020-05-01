@@ -89,8 +89,8 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 align right    
 `sp` = set text scaling for classic GFX font (scaling factor 1...N)  
 `fp` = set font (1=12, 2=24,(opt 3=8)) if font==0 the classic GFX font is used, if font==7 RA8876 internal font is used   
-`Cp` = set foreground color (0,1) for black or white and RGB decimal code for color  
-`Bp` = set background color (0,1) for black or white and RGB decimal code for color  
+`Cp` = set foreground color (0,1) for black or white and RGB decimal code for color (see [color codes](#colorcodes))  
+`Bp` = set background color (0,1) for black or white and RGB decimal code for color (see [color codes](#colorcodes))   
 `Cip` = set foreground index color (0..18) for color displays (see index color table below)  
 `Bip` = set background index color (0..18) for color displays (see index color table below)  
 `wp` = draws an analog watch with radius p  (#define USE_AWATCH)   
@@ -99,8 +99,8 @@ align right
 ### Touch Buttons
 (`#define USE_TOUCH_BUTTONS`)  
 
-Draw up to 16 GFX buttons to switch real Tasmota devices such as relays.
-- Button number + 256 - a virtual touch toggle button is created (MQTT => TBT)
+Draw up to 16 GFX buttons to switch real Tasmota devices such as relays.<br>
+- Button number + 256 - a virtual touch toggle button is created (MQTT => TBT)<br>
 - Button number + 512 - a virtual touch push button is created (MQTT => PBT)
   
 `b#:xp:yp:xa:ys:oc:fc:tc:ts:text:`   
@@ -149,6 +149,17 @@ _Parameters are separated by colons._
 `Gdn:m` sets graph n draw mode `0` = off, `1` = on. When on, redraw graph  
 * `Gsn:path:` = save graph `n` to path (if optional SD card is present)  
 * `Grn:path:` = restore graph `n` from path (if optional SD card is present)  
+
+<a id="colorcodes"></a>### Color Codes
+
+Small color panels often use a color code in RGB565 mode. This means that color is not represented by a byte (0..255) for each R, G, B component but by a smaller number of bits. The expected `p` value for `Cp` and `Bp` is calculated as:<br>
+- Red on 5 bits = `0..31`<br>
+- Green on 6 bits = `0..63`<br>
+- Blue on 5 bits = `0..31`
+
+`p`= `2048 * Red + 64 * Green + Blue`
+
+Example:<br>Red 50% + Green 20% + Blue 100% = 2048 * 16 + 64 * 12 + 31 = 33576 equivalent to web #8033FF
 
 ### Color Indices
 
