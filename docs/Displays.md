@@ -152,14 +152,26 @@ _Parameters are separated by colons._
 
 ### Color Codes<a id="colorcodes"></a>
 
-Small color panels often use a color code in RGB565 mode. This means that color is not represented by a byte (0..255) for each R, G, B component but by a smaller number of bits. The expected `p` value for `Cp` and `Bp` is calculated as:<br>
-- Red on 5 bits = `0..31`<br>
-- Green on 6 bits = `0..63`<br>
-- Blue on 5 bits = `0..31`
+While computers and web design are generally using a 24-bit RGB888 color code built from a byte-triplet such as (255, 136, 56) or #FF8038, small color panels often use a more compact code 16-bit RGB565 color code.  This means that the R, G and B coefficient are coded on less number of bits:<br>
+* Red on 5 bits = `0..31`<br>
+* Green on 6 bits = `0..63`<br>
+* Blue on 5 bits = `0..31`
 
-`p`= `2048 * Red + 64 * Green + Blue`
+For `Cp` and `Bp`, `p` is calculated as `p = 2048 * Red + 64 * Green + Blue`
 
-Example:<br>Red 50% + Green 20% + Blue 100% = 2048 * 16 + 64 * 12 + 31 = 33576 equivalent to web #8033FF
+Example: Red 50% + Green 20% + Blue 100% = 2048 * 16 + 64 * 12 + 31 = 33576 equivalent to web #8033FF
+
+Common colors table:
+| Color | Code | Color | Code | Color | Code |
+| -- | -- | -- | -- | -- | -- |
+| Black	| 0 | Navy	| 15 | Dark green	| 3 |
+| Dark cyan	| 1007 | Maroon	| 30720 | Purple	| 30735 |
+| Olive	| 31712 | Light grey	| 50712 | Dark grey	| 31727 |
+| Blue	| 31 | Green	| 7 | Cyan	| 2047 |
+| Red	| 63488 | Magenta	| 63519 | Yellow	| 65504 |
+| White	| 65535 | Orange	| 64800 | Green yellow	| 45029 |
+| Pink	| 64536 | | | | |
+
 
 ### Color Indices
 
