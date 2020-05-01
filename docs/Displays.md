@@ -162,6 +162,7 @@ For `Cp` and `Bp`, `p` is calculated as `p = 2048 * Red + 64 * Green + Blue`
 Example: Red 50% + Green 20% + Blue 100% = 2048 * 16 + 64 * 12 + 31 = 33576 equivalent to web #8033FF
 
 Common colors table:
+
 | Color | Code | Color | Code | Color | Code |
 | -- | -- | -- | -- | -- | -- |
 | Black	| 0 | Navy	| 15 | Dark green	| 3 |
