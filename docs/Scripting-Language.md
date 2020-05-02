@@ -266,6 +266,7 @@ The following variables are cleared after reading true:
 `heap` = heap size  
 `ram` = used ram size  
 `slen` = script length  
+`freq` = cpu frequency  
 `micros` = running microseconds  
 `millis` = running milliseconds  
 `loglvl` = loglevel of script cmds (_**may be set also**_)  
@@ -420,6 +421,10 @@ Instead of passing the `msg` as a string constant, the body of the e-mail messag
 **Subscribe, Unsubscribe**  
 `#define SUPPORT_MQTT_EVENT`  
 `subscribe` and `unsubscribe` commands are supported. In contrast to rules, no event is generated but the event name specifies a variable defined in `D` section and this variable is automatically set on transmission of the subscribed item  
+within a script the subscribe cmd must be send with +> instead of =>  
+the MQTT decoder may be configured for more space in user config overwrite by  
+#define MQTT_EVENT_MSIZE xxx   (default is 256)  
+#define MQTT_EVENT_JSIZE xxx   (default is 400)  
 
 **SD Card Support** (+ 10k flash)  
 `#define USE_SCRIPT_FATFS` `CARD_CS`  
@@ -453,27 +458,75 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 
 **ESP32 Webcam support**   
 `#define USE_WEBCAM`  
+Template for AI THINKER CAM :  
+{"NAME":"AITHINKER CAM","GPIO":[4992,65504,672,65504,5472,5312,65504,65504,5504,5536,736,704,5568,5440,5280,5248,0,5216,5408,5376,0,5344,5024,5056,0,0,0,0,4928,65504,5120,5088,5184,0,0,5152],"FLAG":0,"BASE":1}  
+
+remark: GPIO0 zero must be disconnected from any wire after programming because this pins drives the cam clock and does not tolerate any capictive load  
+
+file system extension:  
 `fwp(pnum fr)` write picture from RAM buffer number pnum to sdcard file with file reference fr  
-`res=wc(sel p1 p2)` controll webcam, sel = function selector  p1 ... optional parameters
+specific webcam commands:  
+`res=wc(sel p1 p2)` controll webcam, sel = function selector  p1 ... optional parameters  
 `res=wc(0 pres)` init webcam with picture resolution pres, returns 0 when error, 2 when PSRAM found, else 1  
-> pres
-0 = FRAMESIZE_QQVGA,    // 160x120  
-1 = FRAMESIZE_QQVGA2,   // 128x160  
-2 = FRAMESIZE_QCIF,     // 176x144  
-3 = FRAMESIZE_HQVGA,    // 240x176  
-4 = FRAMESIZE_QVGA,     // 320x240  
-5 = FRAMESIZE_CIF,      // 400x296  
-6 = FRAMESIZE_VGA,      // 640x480  
-7 = FRAMESIZE_SVGA,     // 800x600  
-8 = FRAMESIZE_XGA,      // 1024x768  
-9 = FRAMESIZE_SXGA,     // 1280x1024  
-10 = FRAMESIZE_UXGA,     // 1600x1200  
+ pres  
+* `0 = FRAMESIZE_QQVGA,    // 160x120`  
+* `1 = FRAMESIZE_QQVGA2,   // 128x160`  
+* `2 = FRAMESIZE_QCIF,     // 176x144`  
+* `3 = FRAMESIZE_HQVGA,    // 240x176`  
+* `4 = FRAMESIZE_QVGA,     // 320x240`  
+* `5 = FRAMESIZE_CIF,      // 400x296`  
+* `6 = FRAMESIZE_VGA,      // 640x480`  
+* `7 = FRAMESIZE_SVGA,     // 800x600`  
+* `8 = FRAMESIZE_XGA,      // 1024x768`  
+* `9 = FRAMESIZE_SXGA,     // 1280x1024`  
+* `10 = FRAMESIZE_UXGA,     // 1600x1200`  
+
 `res=wc(1 bnum)` capture picture to rambuffer bnum (1..4), returns framesize of picture or 0 when error  
-`res=wc(2 sel p1)` eecute various controls, details below.  
+`res=wc(2 sel p1)` execute various controls, details below.  
 `res=wc(3)` gets picture width  
 `res=wc(4)` gets picture height  
 `res=wc(5 p)` start stop streaming 0=stop, 1=start  
 `res=wc(6 p)` start stop motion detector, p=0 => stop detector, p=1 start detector, -1 get picture difference, -2 get picture brightness  
+
+control cmds sel =  
+* 0 fs = set frame size (see above for constants)    
+* 1 se = set special effect  
+  - `0 = no effect`  
+  - `1 = negative`  
+  - `2 = black and white`  
+  - `3 = reddish`  
+  - `4 = greenish`  
+  - `5 = blue`  
+  - `6 = retro`  
+
+* 2 fl = set horizontal flip 0,1  
+* 3 mi = set vertical mirror 0,1  
+
+to read a value without setting pass -1
+
+* extensions to the email system on ESP32  
+#define SEND_EMAIL and #define USE_ESP32MAIL  
+enables specific ESP32 mail server  
+this server can handle more mail servers by supporting START_TLS  
+remark:  mail adresses must not be enclosed with <> because the server inserts them automatically  
+this server also supports email attachments  
+in the >m section you may write  
+&/file.txt  to attach a file from SD card  
+$N   N=1..4 to attach a picture from picture RAM buffer number N  
+
+* displaying webcam pictures in WEBUI  
+you may display a webcam picture by giving the name /wc.jpg?p=N (1..4) for RAM picturebuffer N 
+<img src="/wc.jpg?p=1" alt="webcam image" >
+you may also provide the picture size  (h and v have to be preset before)  
+<img src="/wc.jpg?p=1" alt="webcam image" style="width:%w%px;height:%h%px;">  
+if you precede the line by & char the image is diplayed in the main section, else in the sensor tab section
+
+the webcam stream can be specified by the following line  
+ip is a string containing the device ip   
+&<br>
+&<img src="http://%ip%:81/stream" style="width:%w%px;height:%h%px">
+&<br><center>webcam stream
+
 
 ## Scripting Cookbook
 
