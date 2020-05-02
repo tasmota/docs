@@ -64,7 +64,7 @@ The onboard connector is 1.27mm raster with 1mm diameter holes. Normal Dupont ca
 | 16 | None
 | A0 | OpAmp Current Monitor
 
-[Template:](../Templates/#importing-templates)
+[Template:](../Templates#importing-templates)
 ` {"NAME":"ShellyRGBW2","GPIO":[0,0,157,0,40,89,0,0,37,17,39,38,0],"FLAG":7,"BASE":18}`  
 
 Energy metering is done by a LM321 OpAmp (1mOhm Shunt lowside) via ADC0 .
