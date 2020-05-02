@@ -533,43 +533,42 @@ lip is a system variable containing the local device ip
 remark: the Flash illumination LED is connected to GPIO4
 
 !!! example
- >
-    >D
-    res=0
-    w=0
-    h=0
-    mot=0
-    bri=0
-
-
-    >B
-    ; init cam with QVGA
-    res=wc(0 4)
-    ; get pixel size
-    w=wc(3)
-    h=wc(4)
-    ; start motion detector, picture every 1000 ms
-    mot=wc(6 1000)
+ >  
+    >D  
+    res=0  
+    w=0  
+    h=0  
+    mot=0  
+    bri=0  
     
-    >S
-    if wific>0
-    then
-    ; when wifi up, start stream
-    res=wc(5 1)
-    endif
+    >B  
+    ; init cam with QVGA  
+    res=wc(0 4)  
+    ; get pixel size  
+    w=wc(3)  
+    h=wc(4)  
+    ; start motion detector, picture every 1000 ms  
+    mot=wc(6 1000)  
     
-    ; get motion detect diff value 
-    mot=wc(6 -1)
-    ; get picture brightnes
-    bri=wc(6 -2)
+    >S  
+    if wific>0  
+    then  
+    ; when wifi up, start stream  
+    res=wc(5 1)  
+    endif  
     
-    >W
-    &lt;center>motion diff = %mot%<br>
-    &lt;center>brightness = %bri%<br>
-    ; show stream on WEBUI
-    &amp;&lt;br>
-    &amp;&lt;img src="http://%lip%:81/stream" style="width:%w%px;height:%h%px">
-    &amp;&lt;br><center>webcam stream
+    ; get motion detect diff value  
+    mot=wc(6 -1)  
+    ; get picture brightnes  
+    bri=wc(6 -2)  
+    
+    >W  
+    &lt;center>motion diff = %mot%<br>  
+    &lt;center>brightness = %bri%<br>  
+    ; show stream on WEBUI  
+    &amp;&lt;br>  
+    &amp;&lt;img src="http://%lip%:81/stream" style="width:%w%px;height:%h%px">  
+    &amp;&lt;br><center>webcam stream  
 
     
 ## Scripting Cookbook
@@ -1006,7 +1005,6 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     vzh=0  
     svzh=0  
     M:mvzh=0 7  
-      
     hr=0  
     t1=0  
     ; DisplayText substituted to save script space
