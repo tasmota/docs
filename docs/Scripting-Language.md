@@ -423,8 +423,8 @@ Instead of passing the `msg` as a string constant, the body of the e-mail messag
 `subscribe` and `unsubscribe` commands are supported. In contrast to rules, no event is generated but the event name specifies a variable defined in `D` section and this variable is automatically set on transmission of the subscribed item  
 within a script the subscribe cmd must be send with +> instead of =>  
 the MQTT decoder may be configured for more space in user config overwrite by  
-#define MQTT_EVENT_MSIZE xxx   (default is 256)  
-#define MQTT_EVENT_JSIZE xxx   (default is 400)  
+`#define MQTT_EVENT_MSIZE` xxx   (default is 256)  
+`#define MQTT_EVENT_JSIZE` xxx   (default is 400)  
 
 **SD Card Support** (+ 10k flash)  
 `#define USE_SCRIPT_FATFS` `CARD_CS`  
@@ -505,7 +505,7 @@ control cmds sel =
 to read a value without setting pass -1
 
 * extensions to the email system on ESP32  
-#define SEND_EMAIL and #define USE_ESP32MAIL  
+`#define SEND_EMAIL` and `#define USE_ESP32MAIL`  
 enables specific ESP32 mail server  
 this server can handle more mail servers by supporting START_TLS  
 remark:  mail adresses must not be enclosed with <> because the server inserts them automatically  
