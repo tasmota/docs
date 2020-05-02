@@ -69,7 +69,7 @@ The onboard connector is 1.27mm raster with 1mm diameter holes. Normal Dupont ca
 
 Energy metering is done by a LM321 OpAmp (1mOhm Shunt lowside) via ADC0 .
 
-If you want to use a push button, you should take a look at the [Button & Switches.](../Buttons-and-Switches/#button-vs-switch) 
+If you want to use a push button, you should take a look at the [Button & Switches.](../Buttons-and-Switches#button-vs-switch) 
 
 If you want the buttons to respond instantly, go to the console and type `SetOption13 1`.
 But, if you want press/double press/hold functionality, run instead `Backlog SetOption1 1; SetOption11 1; SetOption32 20` to enable all three states and set hold time of 2 seconds. Use [SetOption32](../Commands#setoption32) to set another hold time.
@@ -82,13 +82,13 @@ To be able to flash the Tasmota firmware you need to get into flash mode. Theref
 ## Calibration
 After successfully flashing Tasmota and selecting the template for the Shelly RGBW2, you can start configuring the power consumption.
 
-1. Disconnect the GPIOs and connect the Shelly RGBW to its future power supply.  Set ADC0 to Analog in the [template settings](../Templates/#how-to-use). Save this setting.
+1. Disconnect the GPIOs and connect the Shelly RGBW to its future power supply.  Set ADC0 to Analog in the [template settings](../Templates#how-to-use). Save this setting.
 2. After restarting, you will find the acutal ADC Value of the analog input in the main menu. There should be no light on at this time. 
 Make a note of this value. Its the baseValue.
 
 3. In the template settings, set ADC0 to CT-POWER and save the settings.
 
-4. Use the [AdcParam](../Commands/#sensors) command:<BR> `AdcParam 7, baseValue, Multiplcator, Voltage` <BR>in the webconsole. For a 12VDC PowerSupply and a baseValue of 407 this lines looks like this: <BR>  `AdcParam 7, 407, 3282, 0.012`<BR>
+4. Use the [AdcParam](../Commands#sensors) command:<BR> `AdcParam 7, baseValue, Multiplcator, Voltage` <BR>in the webconsole. For a 12VDC PowerSupply and a baseValue of 407 this lines looks like this: <BR>  `AdcParam 7, 407, 3282, 0.012`<BR>
 5. If there are no lights on, the Main Menu should show only the Voltage but no consumption.
 6. Connect a light source with a current consumption known to you. Or measure the current with a multimeter. Compare the displayed values in the menu and those of your meter.
 Please note that the measurement of the Shelly RGBW2 is very inaccurate due to its electrical construction.
@@ -111,7 +111,7 @@ In case the values do not fit at all, you have to perform a recalibration.
 
 ## Use rules to control both switches
 
-If [SetOption37](../Commands/#setoption37) is set to 128 the RGB and White is splited.
+If [SetOption37](../Commands#setoption37) is set to 128 the RGB and White is splited.
 To switch both RGB and W on/off with the connected hardware switch, you can use this Rule:
 >`rule1 on power1#state do power2 %value% endon`<BR> `rule1 1`
 
@@ -128,4 +128,4 @@ Some issues were reported for this topic - [search query](https://github.com/are
 
 ## Light setup
 
-Please read: [Lights](../Lights/#control-lights).
+Please read: [Lights](../Lights#control-lights).
