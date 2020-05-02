@@ -32,7 +32,7 @@ USE_24C256 | enables use of 24C256 I^2^C EEPROM to expand script buffer (default
 USE_SCRIPT_FATFS | enables SD card support (on SPI bus). Specify the CS pin number. Also enables 4k script buffer  
 USE_SCRIPT_FATFS_EXT | enables additional FS commands  
 SDCARD_DIR | enables support for web UI for SD card directory upload and download  
-
+USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 ----
 
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules)"
@@ -450,6 +450,30 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 `frd("fname")` remove directory fname  
 `fx("fname")` check if file fname exists  
 `fe("fname")` execute script fname (max 2048 bytes, script must start with the '>' character on the first line)  
+
+**ESP32 Webcam support**   
+`#define USE_WEBCAM`  
+`fwp(pnum fr)` write picture from RAM buffer number pnum to sdcard file with file reference fr  
+`res=wc(sel p1 p2)` controll webcam, sel = function selector  p1 ... optional parameters
+`res=wc(0 pres)` init webcam with picture resolution pres, returns 0 when error, 2 when PSRAM found, else 1  
+> pres
+0 = FRAMESIZE_QQVGA,    // 160x120  
+1 = FRAMESIZE_QQVGA2,   // 128x160  
+2 = FRAMESIZE_QCIF,     // 176x144  
+3 = FRAMESIZE_HQVGA,    // 240x176  
+4 = FRAMESIZE_QVGA,     // 320x240  
+5 = FRAMESIZE_CIF,      // 400x296  
+6 = FRAMESIZE_VGA,      // 640x480  
+7 = FRAMESIZE_SVGA,     // 800x600  
+8 = FRAMESIZE_XGA,      // 1024x768  
+9 = FRAMESIZE_SXGA,     // 1280x1024  
+10 = FRAMESIZE_UXGA,     // 1600x1200  
+`res=wc(1 bnum)` capture picture to rambuffer bnum (1..4), returns framesize of picture or 0 when error  
+`res=wc(2 sel p1)` eecute various controls, details below.  
+`res=wc(3)` gets picture width  
+`res=wc(4)` gets picture height  
+`res=wc(5 p)` start stop streaming 0=stop, 1=start  
+`res=wc(6 p)` start stop motion detector, p=0 => stop detector, p=1 start detector, -1 get picture difference, -2 get picture brightness  
 
 ## Scripting Cookbook
 
