@@ -213,6 +213,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `tstamp` = timestamp (local date and time)  
 `topic` = mqtt topic  
 `gtopic` = mqtt group topic  
+`lip` = local ip as string  
 `prefixn` = prefix n = 1-3  
 `pwr[x]` = power state  (x = 1..N)  
 `pc[x]` = pulse counter value  (x = 1..4)  
@@ -310,8 +311,9 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
 `dpx` sets decimal precision to x (0-9)  
 `svars` save permanent vars  
 `delay(x)` pauses x milliseconds (should be as short as possible)  
+`beep(x)` (ESP32) beeps with a passive piezo beeper. beep(-x) attaches PIN x to the beeper, beep(f) starts a sound with frequency f. f=0 stops the sound.  
 `spin(x b)` set GPIO `x` (0..16) to value `b` (0,1). Only bit 0 of `b` is used - even values set the GPIO to `0` and uneven values set the GPIO to `1`  
-`spinm(x m)` set GPIO `x` (0..16) to mode `m` (input=0, output=1, input with pullup=2)  
+`spinm(x m)` set GPIO `x` (0..16) to mode `m` (input=0, output=1, input with pullup=2,alternatively b may be: O=out, I=in, P=in with pullup)  
 `ws2812(array)` copies an array (defined with `m:vname`) to the WS2812 LED chain. The array length should be defined as long as the number of pixels. Color is coded as 24 bit RGB.  
 `hsvrgb(h s v)` converts hue (0..360), saturation (0..100) and value (0..100) to RGB color  
 
@@ -440,7 +442,8 @@ Enable SD card directory support (+ 1,2k flash)
 `#define SDCARD_DIR`  
 Shows a web SD card directory (submenu of scripter) where you can upload and download files to/from sd card  
 
-`fr=fo("fname" m)` open file fname, mode 0=read, 1=write (returns file reference (0-3) or -1 for error)  
+`fr=fo("fname" m)` open file fname, mode 0=read, 1=write, 2=append (returns file reference (0-3) or -1 for error) 
+(alternatively m may be: r=read, w=write, a=append)  
 `res=fw("text" fr)` writes text to (the end of) file fr, returns number of bytes written  
 `res=fr(svar fr)` reads a string into svar, returns bytes read. String is read until delimiter (\\t \\n \\r) or eof  
 `fc(fr)` close file  
@@ -486,7 +489,7 @@ specific webcam commands:
 `res=wc(3)` gets picture width  
 `res=wc(4)` gets picture height  
 `res=wc(5 p)` start stop streaming 0=stop, 1=start  
-`res=wc(6 p)` start stop motion detector, p=0 => stop detector, p=1 start detector, -1 get picture difference, -2 get picture brightness  
+`res=wc(6 p)` start stop motion detector, p=0 => stop detector, p=T start detector with picture every T ms, -1 get picture difference, -2 get picture brightness  
 
 control cmds sel =  
 * 0 fs = set frame size (see above for constants)    
@@ -522,12 +525,53 @@ you may also provide the picture size  (h and v have to be preset before)
 if you precede the line by & char the image is diplayed in the main section, else in the sensor tab section  
 
 the webcam stream can be specified by the following line  
-ip is a string containing the device ip   
+lip is a system variable containing the local device ip   
 "&amp;&lt;br>"  
-"&amp;&lt;img src="http://%ip%:81/stream" style="width:%w%px;height:%h%px">"  
+"&amp;&lt;img src="http://%lip%:81/stream" style="width:%w%px;height:%h%px">"  
 "&amp;&lt;br>&lt;center>webcam stream"  
 
+remark: the Flash illumination LED is connected to GPIO4
 
+!!! example
+ >
+    >D
+    res=0
+    w=0
+    h=0
+    mot=0
+    bri=0
+
+
+    >B
+    ; init cam with QVGA
+    res=wc(0 4)
+    ; get pixel size
+    w=wc(3)
+    h=wc(4)
+    ; start motion detector, picture every 1000 ms
+    mot=wc(6 1000)
+    
+    >S
+    if wific>0
+    then
+    ; when wifi up, start stream
+    res=wc(5 1)
+    endif
+    
+    ; get motion detect diff value 
+    mot=wc(6 -1)
+    ; get picture brightnes
+    bri=wc(6 -2)
+    
+    >W
+    &lt;center>motion diff = %mot%<br>
+    &lt;center>brightness = %bri%<br>
+    ; show stream on WEBUI
+    &amp;&lt;br>
+    &amp;&lt;img src="http://%lip%:81/stream" style="width:%w%px;height:%h%px">
+    &amp;&lt;br><center>webcam stream
+
+    
 ## Scripting Cookbook
 
 ### Scripting Language Example
