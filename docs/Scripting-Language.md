@@ -511,21 +511,21 @@ this server can handle more mail servers by supporting START_TLS
 remark:  mail adresses must not be enclosed with <> because the server inserts them automatically  
 this server also supports email attachments  
 in the >m section you may write  
-&/file.txt  to attach a file from SD card  
+&lt;/file.txt  to attach a file from SD card  
 $N   N=1..4 to attach a picture from picture RAM buffer number N  
 
 * displaying webcam pictures in WEBUI  
 you may display a webcam picture by giving the name /wc.jpg?p=N (1..4) for RAM picturebuffer N  
-"<img src="/wc.jpg?p=1" alt="webcam image" >"  
+"&lt;img src="/wc.jpg?p=1" alt="webcam image" >"  
 you may also provide the picture size  (h and v have to be preset before)  
-"<img src="/wc.jpg?p=1" alt="webcam image" style="width:%w%px;height:%h%px;">"  
+"&lt;img src="/wc.jpg?p=1" alt="webcam image" style="width:%w%px;height:%h%px;">"  
 if you precede the line by & char the image is diplayed in the main section, else in the sensor tab section  
 
 the webcam stream can be specified by the following line  
 ip is a string containing the device ip   
-"&<br>"  
-"&<img src="http://%ip%:81/stream" style="width:%w%px;height:%h%px">"  
-"&<br><center>webcam stream"  
+"&amp;&lt;br>"  
+"&amp;&lt;img src="http://%ip%:81/stream" style="width:%w%px;height:%h%px">"  
+"&amp;&lt;br>&lt;center>webcam stream"  
 
 
 ## Scripting Cookbook
