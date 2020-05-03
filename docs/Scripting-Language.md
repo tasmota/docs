@@ -70,8 +70,8 @@ To save code space almost no error messages are provided. However it is taken ca
 
 `script <n>` <n>: `0` = switch script off; `1` = switch script on  
 `script ><cmdline>` execute <cmdline>  
-- Can be used to set variables, e.g., `script mintmp=15`  
-- Multiple statements can be specified by separating each with a semicolon, e.g. `script mintmp=15;maxtemp=40`  
+- Can be used to set variables, e.g., `script >mintmp=15`  
+- Multiple statements can be specified by separating each with a semicolon, e.g. `script >mintmp=15;maxtemp=40`  
 - The script itself can't be specified because the size would not fit the MQTT buffers
 
 ## Script Sections
@@ -169,7 +169,7 @@ A web user interface may be generated containing any of the following elements:
  `bu(vn txt1 txt2)` (up to 4 buttons may be defined in one row)  
  `vn` = name of variable to hold button state  
  `txt1` = text of ON state of button  
- `txt2` = text of OFF state of button
+ `txt2` = text of OFF state of button  
 **Checkbox:**   
  `ck(vn txt)`  
  `vn` = name of variable to hold checkbox state  
