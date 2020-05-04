@@ -514,7 +514,7 @@ this server can handle more mail servers by supporting START_TLS
 remark:  mail adresses must not be enclosed with <> because the server inserts them automatically  
 this server also supports email attachments  
 in the >m section you may write  
-&lt;/file.txt  to attach a file from SD card  
+&amp;/file.txt  to attach a file from SD card  
 $N   N=1..4 to attach a picture from picture RAM buffer number N  
 
 * displaying webcam pictures in WEBUI  
@@ -540,7 +540,7 @@ remark: the Flash illumination LED is connected to GPIO4
     h=0  
     mot=0  
     bri=0  
-    
+
     >B  
     ; init cam with QVGA  
     res=wc(0 4)  
@@ -549,19 +549,19 @@ remark: the Flash illumination LED is connected to GPIO4
     h=wc(4)  
     ; start motion detector, picture every 1000 ms  
     mot=wc(6 1000)  
-    
+
     >S  
     if wific>0  
     then  
     ; when wifi up, start stream  
     res=wc(5 1)  
     endif  
-    
+ 
     ; get motion detect diff value  
     mot=wc(6 -1)  
     ; get picture brightnes  
     bri=wc(6 -2)  
-    
+
     >W  
     &lt;center>motion diff = %mot%<br>  
     &lt;center>brightness = %bri%<br>  
@@ -1009,62 +1009,62 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     t1=0  
     ; DisplayText substituted to save script space
     DT="DisplayText"  
-      
+ 
     >B  
-    =>%DT% [IzD0]  
-    =>%DT% [zG10352:5:40:-350:80:10080:0:100f3x360y40]100 %%[x360y115]0 %%  
-    =>%DT% [f1x100y25]Powerwall - 7 Tage[f1x360y75] 0 %%  
-    =>%DT% [G10353:5:140:-350:80:10080:0:5000f3x360y140]+5000 W[x360y215]0 W  
-    =>%DT% [f1x70y125]Volleinspeisung - 7 Tage[f1x360y180] 0 W  
-    =>%DT% [p13x10y230]WR 1,2,3:  
-    =>%DT% [p13x10y245]H-Einsp.:  
-    =>%DT% [p13x10y260]H-Verbr.:  
-    =>%DT% [p13x10y275]D-Einsp.:  
-    =>%DT% [d]  
-      
+    ->%DT% [IzD0]  
+    ->%DT% [zG10352:5:40:-350:80:10080:0:100f3x360y40]100 %%[x360y115]0 %%  
+    ->%DT% [f1x100y25]Powerwall - 7 Tage[f1x360y75] 0 %%  
+    ->%DT% [G10353:5:140:-350:80:10080:0:5000f3x360y140]+5000 W[x360y215]0 W  
+    ->%DT% [f1x70y125]Volleinspeisung - 7 Tage[f1x360y180] 0 W  
+    ->%DT% [p13x10y230]WR 1,2,3:  
+    ->%DT% [p13x10y245]H-Einsp.:  
+    ->%DT% [p13x10y260]H-Verbr.:  
+    ->%DT% [p13x10y275]D-Einsp.:  
+    ->%DT% [d]  
+ 
     >T  
     press=BMP280#Pressure  
     temp=SHT3X_0x44#Temperature  
     hum=SHT3X_0x44#Humidity  
-      
+ 
     >S  
     if upsecs%60==0  
     then  
     dp2  
-    =>%DT% [f1p7x0y5]%temp% C  
-    =>%DT% [x0y20h400x250y5T][x350t][f1p10x70y5]%hum% %%  
-    =>%DT% [p10x140y5]%press% hPa  
+    ->%DT% [f1p7x0y5]%temp% C  
+    ->%DT% [x0y20h400x250y5T][x350t][f1p10x70y5]%hum% %%  
+    ->%DT% [p10x140y5]%press% hPa  
     dp0  
-    =>%DT% [p5x360y75]%pwl% %%  
-    =>%DT% [p6x360y180]%wr1%W  
-    =>%DT% [g0:%pwl%g1:%wr1%]  
-      
-    =>%DT% [p24x75y230] %wr1% W : %-wr2% W : %-wr3% W  
-    =>%DT% [p-10x75y245]%ezh% kWh  
-    =>%DT% [p-10x75y260]%vzh% kWh  
-    =>%DT% [p-10x75y275]%ez1% kWh  
-      
+    ->%DT% [p5x360y75]%pwl% %%  
+    ->%DT% [p6x360y180]%wr1%W  
+    ->%DT% [g0:%pwl%g1:%wr1%]  
+ 
+    ->%DT% [p24x75y230] %wr1% W : %-wr2% W : %-wr3% W  
+    ->%DT% [p-10x75y245]%ezh% kWh  
+    ->%DT% [p-10x75y260]%vzh% kWh  
+    ->%DT% [p-10x75y275]%ez1% kWh  
+ 
     t1=mezh*7  
-    =>%DT% [p-10x150y245]: %t1% kWh  
+    ->%DT% [p-10x150y245]: %t1% kWh  
     t1=mvzh*7  
-    =>%DT% [p-10x150y260]: %t1% kWh  
+    ->%DT% [p-10x150y260]: %t1% kWh  
     t1=mez1*7  
-    =>%DT% [p-10x150y275]: %t1% kWh  
-      
+    ->%DT% [p-10x150y275]: %t1% kWh  
+ 
     dp1 
     t1=ezh-sezh  
-    =>%DT% [p12x250y245]: %t1% kWh  
+    ->%DT% [p12x250y245]: %t1% kWh  
     t1=vzh-svzh  
-    =>%DT% [p12x250y260]: %t1% kWh  
+    ->%DT% [p12x250y260]: %t1% kWh  
     t1=ez1-sez1  
-    =>%DT% [p12x250y275]: %t1% kWh 
-      
+    ->%DT% [p12x250y275]: %t1% kWh 
+ 
     dp0  
-    =>%DT% [f2p5x320y250] %otmp%C  
-      
-    =>%DT% [d]  
+    ->%DT% [f2p5x320y250] %otmp%C  
+ 
+    ->%DT% [d]  
     endif  
-      
+  
     hr=hours  
     if chg[hr]>0  
     and hr==0  
@@ -1076,7 +1076,7 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     mvzh=vzh-svzh  
     svzh=vzh  
     endif  
-      
+ 
     if sezh==0  
     then  
     sez1=ez1  
