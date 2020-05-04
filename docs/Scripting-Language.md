@@ -534,41 +534,41 @@ remark: the Flash illumination LED is connected to GPIO4
 
 !!! example
 >
-    >D  
-    res=0  
-    w=0  
-    h=0  
-    mot=0  
-    bri=0  
+    >D
+    res=0
+    w=0
+    h=0
+    mot=0
+    bri=0
 
-    >B  
-    ; init cam with QVGA  
-    res=wc(0 4)  
-    ; get pixel size  
-    w=wc(3)  
-    h=wc(4)  
-    ; start motion detector, picture every 1000 ms  
-    mot=wc(6 1000)  
+    >B
+    ; init cam with QVGA
+    res=wc(0 4)
+    ; get pixel size
+    w=wc(3)
+    h=wc(4)
+    ; start motion detector, picture every 1000 ms
+    mot=wc(6 1000)
 
-    >S  
-    if wific>0  
-    then  
-    ; when wifi up, start stream  
-    res=wc(5 1)  
-    endif  
+    >S
+    if wific>0
+    then
+    ; when wifi up, start stream
+    res=wc(5 1)
+    endif
  
-    ; get motion detect diff value  
-    mot=wc(6 -1)  
-    ; get picture brightnes  
-    bri=wc(6 -2)  
+    ; get motion detect diff value
+    mot=wc(6 -1)
+    ; get picture brightnes
+    bri=wc(6 -2)
 
-    >W  
-    &lt;center>motion diff = %mot%<br>  
-    &lt;center>brightness = %bri%<br>  
-    ; show stream on WEBUI  
-    &amp;&lt;br>  
-    &amp;&lt;img src="http://%lip%:81/stream" style="width:%w%px;height:%h%px">  
-    &amp;&lt;br><center>webcam stream  
+    >W
+    <center>motion diff = %mot%<br>
+    <center>brightness = %bri%<br>
+    ; show stream on WEBUI
+    &<br>
+    &<img src="http://%lip%:81/stream" style="width:%w%px;height:%h%px">
+    &<br><center>webcam stream
 
     
 ## Scripting Cookbook
@@ -577,277 +577,277 @@ remark: the Flash illumination LED is connected to GPIO4
 
     **Actually this code is too large**. This is only meant to show some of the possibilities
 
-    >D  
-    ; define all vars here  
-    p:mintmp=10  (p:means permanent)  
-    p:maxtmp=30  
-    t:timer1=30  (t:means countdown timer)  
-    t:mt=0  
-    i:count=0  (i:means auto counter)  
-    hello="hello world"  
-    string="xxx"  
-    url="[_IP_]";  
-    hum=0  
+    >D
+    ; define all vars here
+    p:mintmp=10  (p:means permanent)
+    p:maxtmp=30
+    t:timer1=30  (t:means countdown timer)
+    t:mt=0
+    i:count=0  (i:means auto counter)
+    hello="hello world"
+    string="xxx"
+    url="[_IP_]";
+    hum=0
     temp=0
     zigbeetemp=0
-    timer=0  
-    dimmer=0  
-    sw=0  
-    rssi=0  
+    timer=0
+    dimmer=0
+    sw=0
+    rssi=0
     param=0
 
-    col=""  
-    ocol=""  
-    chan1=0  
-    chan2=0  
+    col=""
+    ocol=""
+    chan1=0
+    chan2=0
     chan3=0
 
-    ahum=0  
-    atemp=0  
-    tcnt=0  
-    hour=0  
-    state=1  
-    m:med5=0  
-    M:movav=0  
-    ; define array with 10 entries  
+    ahum=0
+    atemp=0
+    tcnt=0
+    hour=0
+    state=1
+    m:med5=0
+    M:movav=0
+    ; define array with 10 entries
     m:array=0 10
 
-    >B  
-    string=hello+"how are you?"  
-    =>print BOOT executed  
-    =>print %hello%  
+    >B
+    string=hello+"how are you?"
+    =>print BOOT executed
+    =>print %hello%
     =>mp3track 1
 
-    ; list gpio pin definitions  
-    for cnt 0 16 1  
-    tmp=pd[cnt]  
-    =>print %cnt% = %tmp%  
+    ; list gpio pin definitions
+    for cnt 0 16 1
+    tmp=pd[cnt]
+    =>print %cnt% = %tmp%
     next
 
-    ; get gpio pin for relais 1  
-    tmp=pn[21]  
+    ; get gpio pin for relais 1
+    tmp=pn[21]
     =>print relais 1 is on pin %tmp%
 
-    ; pulse relais over raw gpio  
-    spin(tmp 1)  
-    delay(100)  
+    ; pulse relais over raw gpio
+    spin(tmp 1)
+    delay(100)
     spin(tmp 0)
 
-    ; raw pin level  
+    ; raw pin level
     =>print level of gpio1 %pin[1]%
 
-    ; pulse over tasmota cmd  
-    =>power 1  
-    delay(100)  
+    ; pulse over tasmota cmd
+    =>power 1
+    delay(100)
     =power 0
 
-    >T  
-    hum=BME280#Humidity  
-    temp=BME280#Temperature  
-    rssi=Wifi#RSSI  
+    >T
+    hum=BME280#Humidity
+    temp=BME280#Temperature
+    rssi=Wifi#RSSI
     string=SleepMode
 
-    ; add to median filter  
-    median=temp  
-    ; add to moving average filter  
+    ; add to median filter
+    median=temp
+    ; add to moving average filter
     movav=hum
 
-    ; show filtered results  
+    ; show filtered results
     =>print %median% %movav%
 
-    if chg[rssi]>0  
-    then =>print rssi changed to %rssi%  
+    if chg[rssi]>0
+    then =>print rssi changed to %rssi%
     endif
 
-    if temp>30  
-    and hum>70  
-    then =>print damn hot!  
+    if temp>30
+    and hum>70
+    then =>print damn hot!
     endif
 
-    >S  
-    ; every second but not completely reliable time here  
+    >S
+    ; every second but not completely reliable time here
     ; use upsecs and uptime or best t: for reliable timers
 
-    ; arrays  
-    array[1]=4  
-    array[2]=5  
+    ; arrays
+    array[1]=4
+    array[2]=5
     tmp=array[1]+array[2]
 
-    ; call subrountines with parameters   
-    =#sub1("hallo")  
+    ; call subrountines with parameters
+    =#sub1("hallo")
     =#sub2(999)
 
-    ; stop timer after expired  
-    if timer1==0  
-    then timer1=-1  
-    =>print timer1 expired  
+    ; stop timer after expired
+    if timer1==0
+    then timer1=-1
+    =>print timer1 expired
     endif
 
-    ; auto counter with restart  
-    if count=10  
-    then =>print 10 seconds over  
-    count=0  
+    ; auto counter with restart
+    if count=10
+    then =>print 10 seconds over
+    count=0
     endif
 
-    if upsecs%5==0  
-    then =>print %upsecs%  (every 5 seconds)  
+    if upsecs%5==0
+    then =>print %upsecs%  (every 5 seconds)
     endif
 
-    ; not recommended for reliable timers  
-    timer+=1  
-    if timer>=5  
-    then =>print 5 seconds over (may be)  
-    timer=0  
+    ; not recommended for reliable timers
+    timer+=1
+    if timer>=5
+    then =>print 5 seconds over (may be)
+    timer=0
     endif
 
-    dimmer+=1  
-    if dimmer>100  
-    then dimmer=0  
+    dimmer+=1
+    if dimmer>100
+    then dimmer=0
     endif
 
-    =>dimmer %dimmer%  
+    =>dimmer %dimmer%
     =>WebSend %url% dimmer %dimmer%
 
-    ; show on display  
-    dp0  
+    ; show on display
+    dp0
     =>displaytext [c1l1f1s2p20] dimmer=%dimmer%
 
     =>print %upsecs% %uptime% %time% %sunrise% %sunset% %tstamp%
 
-    if time>sunset  
-    and time<sunrise  
-    then  
-    ; night time  
-    if pwr[1]==0  
-    then =>power1 1  
-    endif  
-    else  
-    ; day time  
-    if pwr[1]>0  
-    then =>power1 0  
-    endif  
+    if time>sunset
+    and time<sunrise
+    then
+    ; night time
+    if pwr[1]==0
+    then =>power1 1
+    endif
+    else
+    ; day time
+    if pwr[1]>0
+    then =>power1 0
+    endif
     endif
 
-    ; clr display on boot  
-    if boot>0  
-    then =>displaytext [z]  
+    ; clr display on boot
+    if boot>0
+    then =>displaytext [z]
     endif
 
-    ; frost warning  
+    ; frost warning
     if ((temp<0 or zigbeetemp<0) and mt<=0)
-    then =#sendmail("frost alert")  
-    ; alarm only every 5 minutes  
-    mt=300  
-    =mp3track 2  
+    then =#sendmail("frost alert")
+    ; alarm only every 5 minutes
+    mt=300
+    =mp3track 2
     endif
 
-    ; var has been updated  
-    if upd[hello]>0  
-    then =>print %hello%  
+    ; var has been updated
+    if upd[hello]>0
+    then =>print %hello%
     endif
 
-    ; send to Thingspeak every 60 seconds  
-    ; average data in between  
-    if upsecs%60==0   
-    then  
-    ahum>=tcnt  
-    atemp>=tcnt  
-    =WebSend [_IP_]/update?key=_token_&field1=%atemp%&field2=%ahum%  
-    tcnt=0  
-    atemp=0  
-    ahum=0   
-    else  
-    ahum+=hum  
-    atemp+=temp  
-    tcnt+=1  
+    ; send to Thingspeak every 60 seconds
+    ; average data in between
+    if upsecs%60==0
+    then
+    ahum>=tcnt
+    atemp>=tcnt
+    =WebSend [_IP_]/update?key=_token_&field1=%atemp%&field2=%ahum%
+    tcnt=0
+    atemp=0
+    ahum=0
+    else
+    ahum+=hum
+    atemp+=temp
+    tcnt+=1
     endif
 
-    hour=int(time/60)  
-    if chg[hour]>0  
-    then  
-    ; exactly every hour  
-    =>print full hour reached  
+    hour=int(time/60)
+    if chg[hour]>0
+    then
+    ; exactly every hour
+    =>print full hour reached
     endif
 
-    if time5 {  
-    =>print more then 5 minutes after midnight   
-    } else {  
-    =print less then 5 minutes after midnight  
+    if time5 {
+    =>print more then 5 minutes after midnight
+    } else {
+    =print less then 5 minutes after midnight
     }
 
-    ; publish abs hum every teleperiod time  
-    if mqtts>0  
-    and upsecs%tper==0  
-    then  
-    ; calc abs humidity  
-    tmp=pow(2.718281828 (17.67*temp)/(temp+243.5))  
-    tmp=(6.112*tmp*hum*18.01534)/((273.15+temp)*8.31447215)  
-    ; publish median filtered value  
-    =>Publish tele/%topic%/SENSOR {"Script":{"abshum":%med(0 tmp)%}}  
+    ; publish abs hum every teleperiod time
+    if mqtts>0
+    and upsecs%tper==0
+    then
+    ; calc abs humidity
+    tmp=pow(2.718281828 (17.67*temp)/(temp+243.5))
+    tmp=(6.112*tmp*hum*18.01534)/((273.15+temp)*8.31447215)
+    ; publish median filtered value
+    =>Publish tele/%topic%/SENSOR {"Script":{"abshum":%med(0 tmp)%}}
     endif
 
-    ;switch case state machine   
-    switch state  
-    case 1  
-    =>print state=%state% , start  
-    state+=1  
-    case 2  
-    =>print state=%state%  
-    state+=1  
-    case 3  
-    =>print state=%state%  , reset  
-    state=1  
+    ;switch case state machine
+    switch state
+    case 1
+    =>print state=%state% , start
+    state+=1
+    case 2
+    =>print state=%state%
+    state+=1
+    case 3
+    =>print state=%state%  , reset
+    state=1
     ends
 
-    ; subroutines  
-    #sub1(string)  
-    =>print sub1: %string%  
-    #sub2(param)  
+    ; subroutines
+    #sub1(string)
+    =>print sub1: %string%
+    #sub2(param)
     =>print sub2: %param%
 
-    #sendmail(string)  
+    #sendmail(string)
     =>sendmail [smtp.gmail.com:465:user:passwd:<sender@gmail.de:<rec@gmail.de:alarm] %string%
 
-    >E  
+    >E
     =>print event executed!
 
     ; Assign temperature from a Zigbee sensor
     zigbeetemp=ZbReceived#0x2342#Temperature
-    ; get HSBColor 1. component  
+    ; get HSBColor 1. component
     tmp=st(HSBColor , 1)
 
-    ; check if switch changed state  
-    sw=sw[1]  
-    if chg[sw]>0  
-    then =>power1 %sw%  
+    ; check if switch changed state
+    sw=sw[1]
+    if chg[sw]>0
+    then =>power1 %sw%
     endif
 
     hello="event occured"
 
-    ; check for Color change (Color is a string)  
-    col=Color  
-    ; color change needs 2 string vars  
-    if col!=ocol  
-    then ocol=col  
-    =>print color changed  %col%  
+    ; check for Color change (Color is a string)
+    col=Color
+    ; color change needs 2 string vars
+    if col!=ocol
+    then ocol=col
+    =>print color changed  %col%
     endif
 
-    ; or check change of color channels  
-    chan1=Channel[1]  
-    chan2=Channel[2]  
+    ; or check change of color channels
+    chan1=Channel[1]
+    chan2=Channel[2]
     chan3=Channel[3]
 
-    if chg[chan1]>0  
-    or chg[chan2]>0  
-    or chg[chan3]>0  
-    then = color has changed  
+    if chg[chan1]>0
+    or chg[chan2]>0
+    or chg[chan3]>0
+    then = color has changed
     endif
 
-    ; compose color string for red  
-    col=hn(255)+hn(0)+hn(0)  
+    ; compose color string for red
+    col=hn(255)+hn(0)+hn(0)
     =color %col%
 
-    >R  
+    >R
     =>print restarting now
 
 ### Sensor Logging
