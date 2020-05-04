@@ -533,7 +533,7 @@ lip is a system variable containing the local device ip
 remark: the Flash illumination LED is connected to GPIO4
 
 !!! example
->
+```
     >D
     res=0
     w=0
@@ -569,7 +569,7 @@ remark: the Flash illumination LED is connected to GPIO4
     &<br>
     &<img src="http://%lip%:81/stream" style="width:%w%px;height:%h%px">
     &<br><center>webcam stream
-
+```
     
 ## Scripting Cookbook
 
@@ -852,128 +852,128 @@ remark: the Flash illumination LED is connected to GPIO4
 
 ### Sensor Logging
 
-    ; define all vars here  
-    ; reserve large strings  
+    ; define all vars here
+    ; reserve large strings
     >D 48
-    hum=0  
-    temp=0  
-    fr=0  
-    res=0  
-    ; moving average for 60 seconds  
-    M:mhum=0 60  
-    M:mtemp=0 60  
+    hum=0
+    temp=0
+    fr=0
+    res=0
+    ; moving average for 60 seconds
+    M:mhum=0 60
+    M:mtemp=0 60
     str=""
 
-    >B  
-    ; set sensor file download link   
-    fl1("slog.txt")  
-    ; delete file in case we want to start fresh  
+    >B
+    ; set sensor file download link
+    fl1("slog.txt")
+    ; delete file in case we want to start fresh
     ;fd("slog.txt")
 
-    ; list all files in root directory  
-    fr=fo("/" 0)  
-    for cnt 1 20 1  
-    res=fr(str fr)  
-    if res>0  
-    then  
-    =>print %cnt% : %str%  
-    else  
-    break  
-    endif  
-    next  
+    ; list all files in root directory
+    fr=fo("/" 0)
+    for cnt 1 20 1
+    res=fr(str fr)
+    if res>0
+    then
+    =>print %cnt% : %str%
+    else
+    break
+    endif
+    next
     fc(fr)
 
-    >T  
-    ; get sensor values  
-    temp=BME280#Temperature  
+    >T
+    ; get sensor values
+    temp=BME280#Temperature
     hum=BME280#Humidity
 
-    >S  
-    ; average sensor values every second  
-    mhum=hum  
+    >S
+    ; average sensor values every second
+    mhum=hum
     mtemp=temp
 
-    ; write average to sensor log every minute  
-    if upsecs%60==0  
-    then  
-    ; open file for write  
-    fr=fo("slog.txt" 1)  
-    ; compose string for tab delimited file entry  
-    str=s(upsecs)+"\t"+s(mhum)+"\t"+s(mtemp)+"\n"  
-    ; write string to log file  
-    res=fw(str fr)  
-    ; close file  
-    fc(fr)  
+    ; write average to sensor log every minute
+    if upsecs%60==0
+    then
+    ; open file for write
+    fr=fo("slog.txt" 1)
+    ; compose string for tab delimited file entry
+    str=s(upsecs)+"\t"+s(mhum)+"\t"+s(mtemp)+"\n"
+    ; write string to log file
+    res=fw(str fr)
+    ; close file
+    fc(fr)
     endif
 
-    >R  
+    >R
 
 ### e-Paper 29 Display with SGP30 and BME280
 
-Some variables are set from ioBroker  
+Some variables are set from ioBroker
 
-    >D  
-    hum=0  
-    temp=0  
-    press=0  
-    ahum=0  
-    tvoc=0  
-    eco2=0  
-    zwz=0  
-    wr1=0  
-    wr2=0  
-    wr3=0  
-    otmp=0  
-    pwl=0  
-    tmp=0  
+    >D
+    hum=0
+    temp=0
+    press=0
+    ahum=0
+    tvoc=0
+    eco2=0
+    zwz=0
+    wr1=0
+    wr2=0
+    wr3=0
+    otmp=0
+    pwl=0
+    tmp=0
     ; DisplayText substituted to save script space
-    DT="DisplayText"  
-    ; preset units in case they are not available   
-    punit="hPa"  
+    DT="DisplayText"
+    ; preset units in case they are not available
+    punit="hPa"
     tunit="C"
 
-    >B  
-    ;reset auto draw  
-    =>%DT% [zD0]  
-    ;clr display and draw a frame  
+    >B
+    ;reset auto draw
+    =>%DT% [zD0]
+    ;clr display and draw a frame
     =>%DT% [x0y20h296x0y40h296]
 
-    T  
-    ; get telemetry sensor values  
-    temp=BME280#Temperature  
-    hum=BME280#Humidity  
-    press=BME280#Pressure  
-    tvoc=SGP30#TVOC  
-    eco2=SGP30#eCO2  
-    ahum=SGP30#aHumidity  
-    tunit=TempUnit  
+    >T
+    ; get telemetry sensor values
+    temp=BME280#Temperature
+    hum=BME280#Humidity
+    press=BME280#Pressure
+    tvoc=SGP30#TVOC
+    eco2=SGP30#eCO2
+    ahum=SGP30#aHumidity
+    tunit=TempUnit
     punit=PressureUnit
 
-    >S  
-    ; update display every [`TelePeriod`](Commands#teleperiod)  
-    if upsecs%tper==0  
-    then  
-    dp2  
-    =>%DT% [f1p7x0y5]%temp% %tunit%  
-    =>%DT% [p5x70y5]%hum% %%[x250y5t]   
-    =>%DT% [p11x140y5]%press% %punit%  
-    =>%DT% [p10x30y25]TVOC: %tvoc% ppb  
-    =>%DT% [p10x160y25]eCO2: %eco2% ppm  
+    >S
+    ; update display every [`TelePeriod`](Commands#teleperiod)
+    if upsecs%tper==0
+    then
+    dp2
+    =>%DT% [f1p7x0y5]%temp% %tunit%
+    =>%DT% [p5x70y5]%hum% %%[x250y5t]
+    =>%DT% [p11x140y5]%press% %punit%
+    =>%DT% [p10x30y25]TVOC: %tvoc% ppb
+    =>%DT% [p10x160y25]eCO2: %eco2% ppm
     =>%DT% [p10c26l5]ahum: %ahum% g^m3
 
-    dp0  
-    =>%DT% [p25c1l5]WR 1 (Dach)  : %wr1% W  
-    =>%DT% [p25c1l6]WR 2 (Garage): %-wr3% W  
-    =>%DT% [p25c1l7]WR 3 (Garten): %-wr2% W  
-    =>%DT% [p25c1l8]Aussentemperatur: %otmp% C  
-    =>%DT% [x170y95r120:30f2p6x185y100] %pwl% %%  
-    ; now update screen  
-    =>%DT% [d]  
+    dp0
+    =>%DT% [p25c1l5]WR 1 (Dach)  : %wr1% W
+    =>%DT% [p25c1l6]WR 2 (Garage): %-wr3% W
+    =>%DT% [p25c1l7]WR 3 (Garten): %-wr2% W
+    =>%DT% [p25c1l8]Aussentemperatur: %otmp% C
+    =>%DT% [x170y95r120:30f2p6x185y100] %pwl% %%
+    ; now update screen
+    =>%DT% [d]
     endif
 
-    >E  
+    >E
 
-    >R  
+    >R
 
 ### e-Paper 42 Display with SHT31 and BME280
 
