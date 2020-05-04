@@ -82,7 +82,7 @@ _Section descriptors (e.g., `>E`) are **case sensitive**_
   `p:vname`   
   specifies permanent variables. The number of permanent variables is limited by Tasmota rules space (50 bytes) - numeric variables are 4 bytes; string variables are one byte longer than the length of string  
   `t:vname`   
-  specifies countdown timers, if 0 they are decremented in seconds  until zero is reached. see example below  
+  specifies countdown timers, if >0 they are decremented in seconds until zero is reached. see example below  
   `i:vname`   
   specifies auto increment counters if =0 (in seconds)  
   `m:vname`   
