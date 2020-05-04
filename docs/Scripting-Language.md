@@ -533,7 +533,7 @@ lip is a system variable containing the local device ip
 remark: the Flash illumination LED is connected to GPIO4
 
 !!! example
-
+>
     >D  
     res=0  
     w=0  
@@ -985,6 +985,8 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
 - Since the display is a full update panel it is updated only once a minute  
 - Some values (like power meters) are set remotely from ioBroker  
 
+----------------  
+
     >D  
     hum=0  
     temp=0  
@@ -1008,7 +1010,7 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     t1=0  
     ; DisplayText substituted to save script space
     DT="DisplayText"  
- 
+
     >B  
     ->%DT% [IzD0]  
     ->%DT% [zG10352:5:40:-350:80:10080:0:100f3x360y40]100 %%[x360y115]0 %%  
@@ -1086,9 +1088,9 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
 ### ILI 9488 Color LCD Display with BMP280 and VL5310X
 
 Shows various BMP280 energy graphs  
-Turn display on and off using VL5310X proximity sensor to prevent burn-in
+Turn display on and off using VL5310X proximity sensor to prevent burn-in  
 
-Some variables are set from ioBroker
+Some variables are set from ioBroker  
 
     >D  
     temp=0  
