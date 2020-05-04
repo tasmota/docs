@@ -526,14 +526,14 @@ if you precede the line by & char the image is diplayed in the main section, els
 
 the webcam stream can be specified by the following line  
 lip is a system variable containing the local device ip   
-"&amp;&lt;br>"  
-"&amp;&lt;img src="http://%lip%:81/stream" style="width:%w%px;height:%h%px">"  
-"&amp;&lt;br>&lt;center>webcam stream"  
+"&&lt;br>"  
+"&&lt;img src="http://%lip%:81/stream" style="width:%w%px;height:%h%px">"  
+"&&lt;br>&lt;center>webcam stream"  
 
 remark: the Flash illumination LED is connected to GPIO4
 
 !!! example
- >  
+
     >D  
     res=0  
     w=0  
@@ -985,7 +985,6 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
 - Since the display is a full update panel it is updated only once a minute  
 - Some values (like power meters) are set remotely from ioBroker  
 
->
     >D  
     hum=0  
     temp=0  
