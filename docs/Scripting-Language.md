@@ -33,6 +33,7 @@ USE_SCRIPT_FATFS | enables SD card support (on SPI bus). Specify the CS pin numb
 USE_SCRIPT_FATFS_EXT | enables additional FS commands  
 SDCARD_DIR | enables support for web UI for SD card directory upload and download  
 USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
+USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 ----
 
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules)"
@@ -490,7 +491,7 @@ specific webcam commands:
 `res=wc(4)` gets picture height  
 `res=wc(5 p)` start stop streaming 0=stop, 1=start  
 `res=wc(6 p)` start stop motion detector, p=0 => stop detector, p=T start detector with picture every T ms, -1 get picture difference, -2 get picture brightness  
-
+`res=wc(7 p)` start stop face detector, p=0 => stop detector, p=T start detector with picture every T ms, -1 get number of faces found in picture (USE_FACE_DETECT must be defined)  
 control cmds sel =  
 * 0 fs = set frame size (see above for constants)    
 * 1 se = set special effect  
