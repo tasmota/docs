@@ -8,6 +8,9 @@ In **_Configuration -> Configure Module_** menu change `GPIO15` to `Switch1`.
 
 If there already is a `Switch1` simply choose the next in line. Same applies if you're connecting more than 1 PIR on a single device.
 
+Note for connecting the PIR to an NodeMCU: Don't use `GPIO15` (D8), since it is used during bootup. The NodeMCU won't start up when the PIR is connected to this pin.  
+Use another GPIO pin instead, like `GPIO12` (D6), `GPIO13` (D7) or `GPIO14` (D5).
+
 A configured PIR will not appear in the web UI in any form. To make it report like a sensor we need a rule that will send movement triggers to an MQTT topic.
 
 ```console
