@@ -1,5 +1,8 @@
 Some new Sonoff devices support the new [Itead DIY architecture](https://www.youtube.com/watch?v=fRS-ukCgD_I) which allows OTA firmware upload. With [Sonoff DIY](https://github.com/itead/Sonoff_Devices_DIY_Tools), a user has more control over the hardware features of the device and also allows for upgrading the firmware without additional hardware. The following procedure upgrades Sonoff eWelink firmware to Tasmota.
 
+!!! warning "There are many reports this procedure has changed with newer versions of Sonoff DIY"
+    Tasmota does not provide any kind of support for flashing using this method. Please contact [Sonoff Support](https://sonoff.tech/support) for help.
+
 **IMPORTANT:** There are [some reports](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/36) suggesting that the Windows version of Sonoff DIY Tool contains a trojan. It is not clear if it actually contains the malicious code or these are just false positives due to the way Python code was converted to native executables. Nevertheless, proceed with care.
 
 # Compatible devices
@@ -10,7 +13,8 @@ Currently the following devices officially support Sonoff DIY:
 
 As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible that other Sonoff devices running eWelink 3.1 or higher will also support it.
 
->[!ATTENTION] The OTA process Sonoff provides through the Sonoff DIY procedure **does not create a backup** of the Itead firmware on the device. If you use this OTA method to flash Tasmota on the Sonoff device, you will not be able to revert to the original factory firmware. :warning:
+!!! note
+    The OTA process Sonoff provides through the Sonoff DIY procedure **does not create a backup** of the Itead firmware on the device. If you use this OTA method to flash Tasmota on the Sonoff device, you will not be able to revert to the original factory firmware. :warning:
 
 # Flash procedure
 ## Using the Itead DIY tool
@@ -32,15 +36,18 @@ As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible tha
 - The utility should discover the device
 - Select the device and toggle it `ON` and `OFF` to verify you are connected to the right device
 - Select `Firmware flash` (`Brush machine` on newer versions of the tool)
-- Select a Tasmota binary (e.g., [`tasmota-wifiman.bin`](http://thehackbox.org/tasmota/tasmota-wifiman.bin)) or your own self-compiled binary. It must fit in the available free program space. _**Do NOT use the tasmota-minimal pre-compiled binary**_ as it does not allow you to change any settings.
+- Select a Tasmota binary (e.g., [`tasmota-wifiman.bin`](http://thehackbox.org/tasmota/tasmota-wifiman.bin)) or your own self-compiled binary. It must fit in the available free program space. _**Do NOT use tasmota-minimal.bin**_ as it does not allow you to change any settings and will make your device inaccessible and you will have to serial flash it to recover.
   
->[!NOTE] You may wish to [compile your own firmware](Gitpod) with all the features you require and disabling the features you do not. This will usually result in a "full" binary that is under 500k. You can use the resulting firmware file instead of the pre-compiled `tasmota-wifiman.bin`.  
-- Select the device in the flash pop-up and then select OK
-- Tasmota will be uploaded and started
+!!! note 
+    You may wish to [compile your own firmware](Gitpod) with all the features you require and disabling the features you do not. This will usually result in a "full" binary that is under 500k. You can use the resulting firmware file instead of the pre-compiled binary.  
+
+    - Select the device in the flash pop-up and then select OK
+    - Tasmota will be uploaded and started
 
   If the firmware update gets stuck at 0%, the Sonoff device could not reach the manufacturer server because your mobile hotspot does not share the Internet connection. If this happens, use the DIY tool to set the SSID and password of your Wi-Fi network on the Sonoff device. The device will connect to your network. Disable the hotspot and use your Wi-Fi for DIY tool laptop as well. Now start `Brush machine` again, flash Tasmota. Then continue with this guide.
 
 ### Clean up
+
 - Quit DIY mode tool
 - Stop mobile hotspot
 - Power off the device and remove DIY jumper as it is no longer needed and might interfere with future Tasmota features that use GPIO16
@@ -48,6 +55,7 @@ As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible tha
 ## Manual Flash
 This procedure is recommended for MacOS, but also works for Linux.  
 ### Requirements
+
 - eWelink firmware updated to at least 3.1
 - OS with `curl` and a network services discovery tool (e.g., `mDNS` for MacOS or `avahi-browse` for Linux)
 - `sonoffDiy` SSID on your local network. Use a router/access point or configure your laptop/smartphone as a hotspot with the proper SSID and password.
@@ -64,11 +72,13 @@ This procedure is recommended for MacOS, but also works for Linux.
   **_`1da0e89be4c01df033fa6da9d0c1db58c3deea354d7ad194f607d1f518db48f9`_**
 
 ### Verify and/or update eWelink firmware version
+
 - Open the device and remove the jumper labeled OTA if present
 - Power on device and connect to eWelink
 - Update eWelink firmware to at least 3.1
 
 ### Discover the device ID
+
 - Power off the Sonoff DIY device and install the DIY OTA jumper
 - Create a new SSID on your router:
   - SSID: `sonoffDiy` (_**case sensitive!**_)
@@ -122,10 +132,14 @@ $ curl http://<deviceIP>:8081/zeroconf/ota_flash -XPOST --data '{"deviceid":"<de
 
 ## Post Installation
 Once the firmware upload completes and the device restarts, the usual `tasmota-xxxx` SSID should now be available.
+
 1. Set up Wi-Fi to connect your device to your network
 2. **_Perform a `Reset 5` to wipe any flash remnants BEFORE attempting a Tasmota OTA flash for the first time_**
 3. If you flashed `tasmota-wifiman.bin`, it is recommended that you upgrade to the firmware and Core variant that is needed for your device and use case (e.g., `tasmota.bin`). You _**must perform this update**_ using the local `File upload` OTA. **Do not use a web OTA** for this step. Download the firmware file from the [repository](http://thehackbox.org/tasmota) to your computer.
-   > **_Some users have reported that upgrading via web OTA from `tasmota-wifiman.bin` to another binary has resulted in an unresponsive device which has required a wired flash to recover._**  
+
+!!! note
+    **_Some users have reported that upgrading via web OTA from `tasmota-wifiman.bin` to another binary has resulted in an unresponsive device which has required a wired flash to recover._**  
+    
 4. Once the desired firmware is on the device, continue the regular Tasmota setup process. Use the the appropriate Template from the [repository](https://templates.blakadder.com/) to assign the device components to the GPIO pins. For example, the  [Sonoff Mini template](https://templates.blakadder.com/sonoff_mini.html) assigns these GPIO:
 
    GPIO | Tasmota Component | Device Function
