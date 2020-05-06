@@ -1,6 +1,6 @@
 "BME280 sensor, an environmental sensor with temperature, barometric pressure and humidity", [see Datasheet.](https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BME280_DS002.pdf)
 
-## Connect BME280 to Sonoff-Basic [based on the GPIO locations](/devices/Sonoff-Basic)
+## Connect BME280 to Sonoff-Basic [based on the GPIO locations](devices/Sonoff-Basic)
 
 * BME280-3.3V -> Sonoff-3.3V
 * BME280-GND -> Sonoff-GND
@@ -15,4 +15,4 @@ YOU NEED TO DISABLE SERIAL LOG COMPLETELY TO ALLOW SENSORS ON TX/RX PINS
 
 On the Tasmota web interface go to `Configuration->Configure Module` and set
 
-![GPIO setting](/_media/BME280-Tasmota-GPIO-Setting.png)
+![GPIO setting](_media/BME280-Tasmota-GPIO-Setting.png)
