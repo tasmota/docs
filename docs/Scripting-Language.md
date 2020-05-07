@@ -34,6 +34,7 @@ USE_SCRIPT_FATFS_EXT | enables additional FS commands
 SDCARD_DIR | enables support for web UI for SD card directory upload and download  
 USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
+USE_SCRIPT_TASK | enables Task in ESP32
 ----
 
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules)"
@@ -461,6 +462,35 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 `frd("fname")` remove directory fname  
 `fx("fname")` check if file fname exists  
 `fe("fname")` execute script fname (max 2048 bytes, script must start with the '>' character on the first line)  
+
+**ESP32 Task support**  
+`#define USE_SCRIPT_TASK` 
+enables support for multitasking scripts  
+res=ct(num timer core)  
+creates a task num (1 or 2)  
+which is executed every timer (ms) time  
+on core 0 or 1  
+  
+the sections are named  
+\>t1 for task 1  
+\>t2 for task 2  
+
+!!! example
+```
+>D
+>B
+; create task 1 every 1000 ms on core 0
+ct(1 1000 0)
+; create task 2 every 3000 ms on core 1
+ct(2 3000 1)
+
+>t1
+print task1 on core %core%
+
+>t2
+print task2 on core %core%
+
+```
 
 **ESP32 Webcam support**   
 `#define USE_WEBCAM`  
