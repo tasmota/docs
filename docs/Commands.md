@@ -103,6 +103,9 @@ A `Backlog` command without an argument clears an possible existing `Backlog` qu
     If you're using Tasmota versions earlier current release some of the commands might not work. 
     Availability of some features and their associated commands depend on the firmware build. Please consult the [builds](Builds) table for a reference of which features are available for each firmware variant.
 
+!!! note
+    Almost all settings using string parameters (except `Rule` and `MqttFingerprint`) share a common area with max 698 chars, i.e. the total length of all these parameters is limited to this size (you will be noted if this limit is exceeded).
+
 ### Control
 
 Command|Parameters
@@ -141,7 +144,7 @@ Gpio<a class="cmnd" id="gpio"></a>|Show current [component](Components#component
 Gpio<x\><a class="cmnd" id="gpiox"></a>|_For built-in Modules only. This command does not work for devices configured with a Template._<BR>`<component>` = assign a [component](Components) to `Gpio<x>`
 I2Cscan<a class="cmnd" id="i2cscan"></a>|Scan I<sup>2</sup>C bus and show addresses for found devices
 I2CDriver<a class="cmnd" id="i2cdriver"></a>|Enable / Disable I<sup>2</sup>C sensor drivers. [Read more...](I2CDevices)<BR>
-LogHost<a class="cmnd" id="loghost"></a>|`1` = reset [syslog](https://www.sigmdel.ca/michel/ha/rpi/syslog_en.html) host to firmware default (`SYS_LOG_HOST`)<BR>`<value>` = set syslog host (32 chars max)
+LogHost<a class="cmnd" id="loghost"></a>|`1` = reset [syslog](https://www.sigmdel.ca/michel/ha/rpi/syslog_en.html) host to firmware default (`SYS_LOG_HOST`)<BR>`<value>` = set syslog host
 LogPort<a class="cmnd" id="logport"></a>|`1` = reset [syslog](https://www.sigmdel.ca/michel/ha/rpi/syslog_en.html) port to firmware default (`SYS_LOG_PORT`)<BR>`2..32766` = set syslog port
 Modules<a class="cmnd" id="modules"></a>|Show available modules by name and index
 Module<a class="cmnd" id="module"></a>|Displays active module by name and index<BR>`<x>` = switch to Module<x\> and restart<BR>`0` = switch to defined [template](Templates) and restart
@@ -195,32 +198,29 @@ See also|[`SetOption55`](#setoption55) - mDNS service control<BR>[`SetOption56`]
 Command|Parameters
 :---|:---
 ButtonRetain<a class="cmnd" id="buttonretain"></a>|`0` = disable use of MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on button press
-ButtonTopic<a class="cmnd" id="buttontopic"></a>|`<value>` = set MQTT button topic (32 chars max)<BR>`0` = disable use of MQTT button topic<BR>`1` = set MQTT button topic to device `%topic%`<BR>`2` = reset MQTT button topic to firmware default (`MQTT_BUTTON_TOPIC`) *(default = `0`)*<BR>_If using MQTT to issue this command, if it is published to the device `GroupTopic`, the command will not be executed._
-FullTopic<a class="cmnd" id="fulltopic"></a>|`1` = reset MQTT fulltopic to firmware default (`MQTT_FULLTOPIC`) and restart<BR>`<value>` = set MQTT fulltopic (100 chars max) and restart. Use of [optional %prefix%, %topic%, %hostname%, and %id% substitution tokens](MQTT#mqtt-topic-definition) is allowed.<br>*If using MQTT to issue this command, if it is published to the device `GroupTopic`, _you must ensure uniqueness of the resulting fulltopic on each destination device by using one or more of these substitution tokens._*
-GroupTopic<x\><a class="cmnd" id="grouptopic"></a>|`1` = reset MQTT group <x\> topic to firmware default (`MQTT_GRPTOPIC`) and restart<BR>`<value>` = set MQTT group <x\> topic (32 chars max) and restart
-MqttClient<a class="cmnd" id="mqttclient"></a>|`1` = reset MQTT client to firmware config (`MQTT_CLIENT_ID`) and restart<BR>`<value>` = set MQTT client (32 chars max) and restart.<BR>You can use the `%06X` substitution token to replace with last six characters of MAC address.<BR>_If using MQTT to issue this command, if it is used with the device `GroupTopic`, the command will not be executed._
+ButtonTopic<a class="cmnd" id="buttontopic"></a>|`<value>` = set MQTT button topic<BR>`0` = disable use of MQTT button topic<BR>`1` = set MQTT button topic to device `%topic%`<BR>`2` = reset MQTT button topic to firmware default (`MQTT_BUTTON_TOPIC`) *(default = `0`)*<BR>_If using MQTT to issue this command, if it is published to the device `GroupTopic`, the command will not be executed._
+FullTopic<a class="cmnd" id="fulltopic"></a>|`1` = reset MQTT fulltopic to firmware default (`MQTT_FULLTOPIC`) and restart<BR>`<value>` = set MQTT fulltopic and restart. Use of [optional %prefix%, %topic%, %hostname%, and %id% substitution tokens](MQTT#mqtt-topic-definition) is allowed.<br>*If using MQTT to issue this command, if it is published to the device `GroupTopic`, _you must ensure uniqueness of the resulting fulltopic on each destination device by using one or more of these substitution tokens._*
+GroupTopic<x\><a class="cmnd" id="grouptopic"></a>|`1` = reset MQTT group <x\> topic to firmware default (`MQTT_GRPTOPIC`) and restart<BR>`<value>` = set MQTT group <x\> topic and restart
+MqttClient<a class="cmnd" id="mqttclient"></a>|`1` = reset MQTT client to firmware config (`MQTT_CLIENT_ID`) and restart<BR>`<value>` = set MQTT client and restart.<BR>You can use the `%06X` substitution token to replace with last six characters of MAC address.<BR>_If using MQTT to issue this command, if it is used with the device `GroupTopic`, the command will not be executed._
 MqttFingerprint<a class="cmnd" id="mqttfingerprint"></a>|*TLS needs to be enabled in firmware for this command*&emsp; <BR>`<value>` =  set current fingerprint as 20 space separated bytes (59 chars max)
-MqttHost<a class="cmnd" id="mqtthost"></a>|`0` = clear MQTT host field and allow mDNS to find MQTT host<BR>`1` = reset MQTT host to firmware default (`MQTT_HOST`) and restart<BR>`<value>` = set MQTT host (32 chars max) and restart (do NOT use `.local`)
-MqttPassword<a class="cmnd" id="mqttpassword"></a>|`0` = clear MQTT password<BR>`1` = reset MQTT password to firmware default (`MQTT_PASS`) and restart<BR>`<value>` = set MQTT password (32 chars max) and restart
+MqttHost<a class="cmnd" id="mqtthost"></a>|`0` = clear MQTT host field and allow mDNS to find MQTT host<BR>`1` = reset MQTT host to firmware default (`MQTT_HOST`) and restart<BR>`<value>` = set MQTT host and restart (do NOT use `.local`)
+MqttPassword<a class="cmnd" id="mqttpassword"></a>|`0` = clear MQTT password<BR>`1` = reset MQTT password to firmware default (`MQTT_PASS`) and restart<BR>`<value>` = set MQTT password and restart
 MqttPort<a class="cmnd" id="mqttport"></a>|`1` = reset MQTT port to firmware default (`MQTT_PORT`) and restart<BR>`<value>` = set MQTT port between 2 and 32766 and restart
 MqttRetry<a class="cmnd" id="mqttretry"></a>|`10..32000` = set MQTT connection retry timer in seconds *(default = `10`)*
-MqttUser<a class="cmnd" id="mqttuser"></a>|`0` = clear MQTT user name<BR>`1` = reset MQTT user name to firmware default (`MQTT_USER`) and restart<BR>`<value>` = set MQTT user name (32 chars max) and restart
+MqttUser<a class="cmnd" id="mqttuser"></a>|`0` = clear MQTT user name<BR>`1` = reset MQTT user name to firmware default (`MQTT_USER`) and restart<BR>`<value>` = set MQTT user name and restart
 PowerRetain<a class="cmnd" id="powerretain"></a>|MQTT [power retain state](MQTT#retained-mqtt-messages)<BR> `0` / `off` = disable MQTT power retain on status update *(default)* <BR> `1` / `on` = enable MQTT power retain on status update <BR>
-Prefix1<a class="cmnd" id="Prefix1"></a>|`1` = reset MQTT command subscription prefix to firmware default (`SUB_PREFIX`) and restart<BR>`<value>` = set MQTT command subscription prefix (10 chars max) and restart
-Prefix2<a class="cmnd" id="Prefix2"></a>|`1` = reset MQTT status prefix to firmware default (`PUB_PREFIX`) and restart<BR>`<value>` = set MQTT status prefix (10 chars max) and restart
-Prefix3<a class="cmnd" id="Prefix3"></a>|`1` = Reset MQTT telemetry prefix to firmware default (`PUB_PREFIX2`) and restart<BR>`<value>` = set MQTT telemetry prefix (10 chars max) and restart
+Prefix1<a class="cmnd" id="Prefix1"></a>|`1` = reset MQTT command subscription prefix to firmware default (`SUB_PREFIX`) and restart<BR>`<value>` = set MQTT command subscription prefix and restart
+Prefix2<a class="cmnd" id="Prefix2"></a>|`1` = reset MQTT status prefix to firmware default (`PUB_PREFIX`) and restart<BR>`<value>` = set MQTT status prefix and restart
+Prefix3<a class="cmnd" id="Prefix3"></a>|`1` = Reset MQTT telemetry prefix to firmware default (`PUB_PREFIX2`) and restart<BR>`<value>` = set MQTT telemetry prefix and restart
 Publish<a class="cmnd" id="publish"></a>|`<topic> <payload>` = MQTT publish any topic and optional payload&emsp; 
 Publish2<a class="cmnd" id="Publish2"></a>|`<topic> <payload>` = MQTT publish any topic and optional payload with retain flag
 SensorRetain<a class="cmnd" id="sensorretain"></a>|`0` = disable use of sensor MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on message `tele/%topic%/SENSOR`
-StateText1<a class="cmnd" id="StateText1"></a>|`<value>` = set `OFF` state text (10 chars max)
-StateText2<a class="cmnd" id="StateText2"></a>|`<value>` = set `ON` state text (10 chars max)
-StateText3<a class="cmnd" id="StateText3"></a>|`<value>` = set `TOGGLE` state text (10 chars max)
-StateText4<a class="cmnd" id="StateText4"></a>|`<value>` = set `HOLD` state text (10 chars max)
+StateText<x\><a class="cmnd" id="StateText"></a>|`<value>` = set state text  (`<x>` = `1..4`)<BR>1 = `OFF` state text<BR>2 = `ON` state text<BR>3 = `TOGGLE` state text<BR>4 = `HOLD` state text<BR>
 SwitchRetain<a class="cmnd" id="switchretain"></a>|`0` = disable use of MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on switch press
 Subscribe<a class="cmnd" id="subscribe"></a>|Subscribes to an MQTT topic and assigns an Event name to it.<BR>`<eventName>, <mqttTopic> [, <key>]` = [Read more...](Subscribe-&-Unsubscribe)<br>`  ` = list all topics currently subscribed
-SwitchTopic<a class="cmnd" id="switchtopic"></a>|`<value>` = set MQTT switch topic (32 chars max)<BR>`0` = disable use of MQTT switch topic<BR>`1` = set MQTT switch topic to device `%topic%`<BR>`2` = reset MQTT switch topic to firmware default (`MQTT_SWITCH_TOPIC`) *(default = `0`)*<BR>[Read more](Buttons-and-Switches) about this.<BR>_If using MQTT to issue this command, if it is used with the device `GroupTopic`, the command will not be executed._
+SwitchTopic<a class="cmnd" id="switchtopic"></a>|`<value>` = set MQTT switch topic<BR>`0` = disable use of MQTT switch topic<BR>`1` = set MQTT switch topic to device `%topic%`<BR>`2` = reset MQTT switch topic to firmware default (`MQTT_SWITCH_TOPIC`) *(default = `0`)*<BR>[Read more](Buttons-and-Switches) about this.<BR>_If using MQTT to issue this command, if it is used with the device `GroupTopic`, the command will not be executed._
 TelePeriod<a class="cmnd" id="teleperiod"></a>|`0` = disable telemetry messages<BR>`1` = reset telemetry period to firmware default (`TELE_PERIOD`)<BR>`10..3600` = set telemetry period in seconds *(default = `300`)*
-Topic<a class="cmnd" id="topic"></a>|`1` = reset MQTT topic to firmware default (`MQTT_TOPIC`) and restart<BR>`<value>` = set MQTT topic (32 chars max) **and** `ButtonTopic` and restart.<BR>*If using MQTT to issue this command, if it is used with the device `GroupTopic`, the command will not be executed. (Mqtt Topic can't be equal to Mqtt Client)*
+Topic<a class="cmnd" id="topic"></a>|`1` = reset MQTT topic to firmware default (`MQTT_TOPIC`) and restart<BR>`<value>` = set MQTT topic **and** `ButtonTopic` and restart.<BR>*If using MQTT to issue this command, if it is used with the device `GroupTopic`, the command will not be executed. (Mqtt Topic can't be equal to Mqtt Client)*
 Unsubscribe<a class="cmnd" id="unsubscribe"></a>|Unsubscribe from topics subsribed to with [`Subscribe`](#subscribe) <BR>`  ` = unsubscribe all topics<BR>`<eventName>` = unsubscribe from a specific MQTT topic
 See also|[`SetOption3`](#setoption3) - Disable//Enable MQTT<BR>[`SetOption4`](#setoption4) - Return MQTT response as `RESULT` or `%COMMAND%` topic<BR>[`SetOption10`](#setoption10) - Main topic change behavior
 
