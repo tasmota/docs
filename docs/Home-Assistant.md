@@ -28,12 +28,12 @@ With MQTT discovery no user interaction or configuration file editing is needed 
 
 !!! note "Automatic discovery is currently supported for:"
 
-=== "Relays"
-    Announced to Home Assistant as [MQTT Switch](https://www.home-assistant.io/integrations/switch.mqtt/).
+=== "Buttons"
+    Announced to Home Assistant as [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
 
-    To make a relay discovered as "light" in Home Assistant use command [`SetOption30 1`](Commands.md#setoption30)   
+    To have buttons discovered `SetOption73` must be set to `1` and it will automatically start to listen and publish using `/stat/%topic%/BUTTON<x>T` topic.
 
-    _Alternatively you can configure it manually using [Light Switch](https://www.home-assistant.io/components/light.switch/) integration._
+    Discovery will follow all the possible combinations made using SetOption1, SetOption11 and Setoption13.
 
 === "Lights"
     Announced to Home Assistant as [MQTT Light](https://www.home-assistant.io/integrations/light.mqtt/).
@@ -43,13 +43,30 @@ With MQTT discovery no user interaction or configuration file editing is needed 
     If you have a light with 4 or 5 channels like an `RGBCCT` bulb you may want to use [`SetOption37 128`](Commands.md#setoption37) to have two separated lights, one for RGB and one for White or Temperature management.  
 
     _Alternatively you can configure it manually using [Light](https://www.home-assistant.io/integrations/light/) integration._
+    
+    !!! warning 
+         Pay attention to the order of the relays when used in conjunction with lights. The relays have priority over the lights, an incorrect order could lead to an erroneous light control. Add them starting from relay1.
+         Entities for relays and lights will not be available in Home Assistant until the configuration will be updated.
+    
+=== "Relays"
+    Announced to Home Assistant as [MQTT Switch](https://www.home-assistant.io/integrations/switch.mqtt/).
 
-=== "Buttons"
-    Announced to Home Assistant as [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
+    To make a relay discovered as "light" in Home Assistant use command [`SetOption30 1`](Commands.md#setoption30)   
 
-    To have buttons discovered `SetOption73` must be set to `1` and it will automatically start to listen and publish using `/stat/%topic%/BUTTON<x>T` topic.
+    _Alternatively you can configure it manually using [Light Switch](https://www.home-assistant.io/components/light.switch/) integration._
+    
+    !!! warning 
+         Pay attention to the order of the relays when used in conjunction with lights. The relays have priority over the lights, an incorrect order could lead to an erroneous light control. Add them starting from relay1.
+         Entities for relays and lights will not be available in Home Assistant until the configuration will be updated.
 
-    Discovery will follow all the possible combinations made using SetOption1, SetOption11 and Setoption13.
+=== "Sensors"
+    Announced to Home Assistant as [MQTT Sensor](https://www.home-assistant.io/integrations/sensor.mqtt/).
+
+    When discovery is enabled Tasmota will send all the sensors information to Home Assistant. For each sensor present, entities will be created in numbers equal to the items present below him.
+    Example: an AM2301 sensor will generate one entity for temperature, one for humidity and one for dew point.   
+
+    !!! warning
+         Please be advised that not all sensors can be correctly rendered under Home Assistant. In those cases a fallback function will be used to create a generic sensor and the correct operation is not guaranteed.
 
 === "Switches"
     Announced to Home Assistant as [MQTT Binary Sensor](https://www.home-assistant.io/integrations/binary_sensor.mqtt/) and/or as a [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
@@ -82,8 +99,6 @@ SetOption19 1
 After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device.
 Tasmota uses the name of the module (or template) to identify the device and it can be easily altered to a more meaningful name directly on the Home Assistant integration page after the first discovery.
 
-**Each time the device is restarted, the configuration will be sent again to Home Assistant**
-
 Enabling discovery will automatically change some SetOptions to suit the new configuration:
 
 **`SetOption4` to `0`**   
@@ -96,9 +111,6 @@ Return MQTT response always as `RESULT` and not as %COMMAND% topic
 Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands `State`, `Power` and any command causing a light to be turned on.
 
 !!! note "For every change you made on your device configuration you will need a reboot or use `SetOption19 1` again to see the changes under Home Assistant."
-
-!!! warning
-     Please be advised that not all sensors can be correctly rendered under Home Assistant. In those cases a fallback function will be used to create a generic sensor and the correct operation is not guaranteed.
 
 ### Disabling 
 To disable MQTT discovery and remove the retained message, execute `SetOption19 0`.  
