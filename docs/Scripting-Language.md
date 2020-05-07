@@ -1322,8 +1322,9 @@ Shows how a Magic Home with IR receiver works
 Synchronizes 2 Magic Home devices by also sending the commands to a second Magic Home via [`WebSend`](Commands#websend)
 
 **Script example using `if then else`**
-    ; expand default string length to be able to hold `WebSend [xxx.xxx.xxx.xxx]`
-    **>D 25**
+    ; expand default string length to be able to hold `WebSend [xxx.xxx.xxx.xxx]`  
+
+    >D 25
     istr=""
     ws="WebSend [_IP_]"
 
@@ -1391,7 +1392,8 @@ Synchronizes 2 Magic Home devices by also sending the commands to a second Magic
     istr=""
 
 **Script example using `switch case ends`**
-    ; expand default string length to be able to hold `WebSend [xxx.xxx.xxx.xxx]`
+    ; expand default string length to be able to hold `WebSend [xxx.xxx.xxx.xxx]`  
+
     >D 25
     istr=""
     ws="WebSend [_IP_]"
@@ -1731,7 +1733,7 @@ start dim level = initial dimmer level after power-up or restart; max 100
 
     ; short press
     if sw==0
-    and tmrshortprl
+    and tmr>shortprl
     and tmr<shortpru
     then
     powert^=1
@@ -1747,7 +1749,7 @@ start dim level = initial dimmer level after power-up or restart; max 100
 
 
     ; long press
-    if sw0
+    if sw>0
     then
     if hold==0
     then
