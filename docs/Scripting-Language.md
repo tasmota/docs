@@ -465,7 +465,8 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 **ESP32 Webcam support**   
 `#define USE_WEBCAM`  
 Template for AI THINKER CAM :  
-{"NAME":"AITHINKER CAM","GPIO":[4992,65504,672,65504,5472,5312,65504,65504,5504,5536,736,704,5568,5440,5280,5248,0,5216,5408,5376,0,5344,5024,5056,0,0,0,0,4928,65504,5120,5088,5184,0,0,5152],"FLAG":0,"BASE":1}  
+{"NAME":"AITHINKER CAM No SPI","GPIO":[4992,65504,65504,65504,65504,5088,65504,65504,65504,65504,65504,65504,65504,65504,5089,5090,0,5091,5184,5152,0,5120,5024,5056,0,0,0,0,4928,65504,5094,5095,5092,0,0,5093],"FLAG":0,"BASE":1}
+
 
 remarks:  
 - GPIO0 zero must be disconnected from any wire after programming because this pin drives the cam clock and does not tolerate any capictive load  
