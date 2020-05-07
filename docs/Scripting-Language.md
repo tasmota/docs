@@ -265,7 +265,9 @@ The following variables are cleared after reading true:
 
 **System variables** (for debugging)  
 `stack` = stack size  
-`heap` = heap size  
+`heap` = free heap size  
+`pheap` = PSRAM free heap size (ESP32)  
+`core` = current core (1 or 2)  (ESP32)  
 `ram` = used ram size  
 `slen` = script length  
 `freq` = cpu frequency  
@@ -465,8 +467,13 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 Template for AI THINKER CAM :  
 {"NAME":"AITHINKER CAM","GPIO":[4992,65504,672,65504,5472,5312,65504,65504,5504,5536,736,704,5568,5440,5280,5248,0,5216,5408,5376,0,5344,5024,5056,0,0,0,0,4928,65504,5120,5088,5184,0,0,5152],"FLAG":0,"BASE":1}  
 
-remark: GPIO0 zero must be disconnected from any wire after programming because this pins drives the cam clock and does not tolerate any capictive load  
-
+remarks:  
+- GPIO0 zero must be disconnected from any wire after programming because this pin drives the cam clock and does not tolerate any capictive load  
+- Only boards with PSRAM should be used. To enable PSRAM board should be se set to esp32cam in common32 of platform_override.ini  
+board                   = esp32cam  
+- To speed up cam processing cpu frequency should be better set to 240Mhz in common32 of platform_override.ini  
+board_build.f_cpu       = 240000000L  
+ 
 file system extension:  
 `fwp(pnum fr)` write picture from RAM buffer number pnum to sdcard file with file reference fr  
 specific webcam commands:  
