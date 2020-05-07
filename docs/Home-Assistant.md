@@ -38,36 +38,34 @@ With MQTT discovery no user interaction or configuration file editing is needed 
 === "Lights"
     Announced to Home Assistant as [MQTT Light](https://www.home-assistant.io/integrations/light.mqtt/).
 
-=== "Dimmers"
-    Announced to Home Assistant as [MQTT Light](https://www.home-assistant.io/integrations/light.mqtt/) with a single channel used for dimming.
+    Discovery supports single channel Dimmer as well as multi-channel RGB, RGBW, RGBCCT and CCT lights.
+    To have multi-channel PWM instead of a single light entity under Home Assistant use [`SetOption68 1`](Commands.md#setoption68).
+    If you have a light with 4 or 5 channels like an `RGBCCT` bulb you may want to use [`SetOption37 128`](Commands.md#setoption37) to have two separated lights, one for RGB and one for White or Temperature management.  
+
+    _Alternatively you can configure it manually using [Light](https://www.home-assistant.io/integrations/light/) integration._
 
 === "Buttons"
     Announced to Home Assistant as [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
 
-    To have buttons discovered `ButtonTopic` must be set to `1` or to a custom name and it will automatically start to listen and publish using `/stat/%topic%/BUTTON<x>` topic.
+    To have buttons discovered `SetOption73` must be set to `1` and it will automatically start to listen and publish using `/stat/%topic%/BUTTON<x>T` topic.
 
-    When using `ButtonTopic 1` the only possible trigger will be `HOLD` (SetOption1 or SetOption11 must be enabled).  
-    When using `ButtonTopic` with a custom name all the possible combination enabled by SetOption1, SetOption11 and Setoption13 will be possible.
-
-    `SwitchMode` default for buttons and switches is `Switchmode 0` (TOGGLE). To change the behavior, [`SwitchMode`](Commands.md#switchmode) must be changed (the Button must be configured as Switch to have effect).  For example setting up a switch to `SwitchMode 1` (follow) will create a switch with ON and OFF payloads.
-
-    **When a Button is set to a different topic than `0` is not possible to use `Button#State` as a trigger for rules.**
+    Discovery will follow all the possible combinations made using SetOption1, SetOption11 and Setoption13.
 
 === "Switches"
     Announced to Home Assistant as [MQTT Binary Sensor](https://www.home-assistant.io/integrations/binary_sensor.mqtt/) and/or as a [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
 
-    To have switches discovered `SwitchTopic` must be set to a custom name and it will automatically start to listen and publish using `/stat/%topic%/SWITCH<x>` topic.
+    To have switches discovered `SwitchTopic` must be set to a custom name and it will automatically start to listen and publish using `/stat/%topic%/SWITCH<x>` (binary sensor) or `/stat/%topic%/SWITCH<x>T` (trigger) topics.
 
     Depending by the `SwitchMode`used, a switch can be a Trigger (`TOGGLE`or `HOLD`), a Binary Sensor (`ON`/`OFF`) or both at the same time.
 
     Example:  
     When using with `SwitchMode 0` Tasmota will create just one Trigger for `TOGGLE`.  
     When using with `SwitchMode 1` Tasmota will create a `Binary Sensor` with `ON` and `OFF` Payloads.  
-    When using with `Switchmode 5` Tasmota will create a `Binary Sensor` with `ON` and `OFF` Payloads and a Trigger for `TOGGLE`  
+    When using with `Switchmode 5` Tasmota will create a `Binary Sensor` with `ON` and `OFF` Payloads and a Trigger for `TOGGLE`.  
 
-    All switchmodes are supported with the exception of SwitchMode11 and SwitchMode12 able to generate just a `TOGGLE` trigger.
+    All switchmodes are supported with the sole exception of `SwitchMode11` and `SwitchMode12` able to generate just a `TOGGLE` trigger.
 
-    **When a Switch is set to a different topic than `0` is not possible to use `Switch#State` as a trigger for rules.**
+    **When a switch is set to a different topic than `0` is not possible to use `Switch#State` as a trigger for rules.**
 
 Types of devices not listed above (fans, covers, etc) require [manual configuration](#fans)
 
@@ -82,6 +80,9 @@ SetOption19 1
 !!! failure "Discovery is not built in to tasmota lite. Use the full version (tasmota.bin) for discovery."
 
 After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device.
+Tasmota uses the name of the module (or template) to identify the device and it can be easily altered to a more meaningful name directly on the Home Assistant integration page after the first discovery.
+
+**Each time the device is restarted, the configuration will be sent again to Home Assistant**
 
 Enabling discovery will automatically change some SetOptions to suit the new configuration:
 
@@ -97,7 +98,7 @@ Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands `Sta
 !!! note "For every change you made on your device configuration you will need a reboot or use `SetOption19 1` again to see the changes under Home Assistant."
 
 !!! warning
-     Please be advised that not all sensors can be correctly rendered under Home Assistant. In those cases a fallback function will be used to create a generic sensor.
+     Please be advised that not all sensors can be correctly rendered under Home Assistant. In those cases a fallback function will be used to create a generic sensor and the correct operation is not guaranteed.
 
 ### Disabling 
 To disable MQTT discovery and remove the retained message, execute `SetOption19 0`.  
