@@ -13,6 +13,10 @@ For further infos see [Issue #4727](https://github.com/arendst/Tasmota/issues/47
 
 Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
+There are currently at least two versions of this device. The (newer) Version has exposed contacts with holes for all connections necessary to flash tasmota, while the old requires soldering of cables to some points.
+
+For the older Version:
+
 ### Step 1
 **Disconnect device from power source!**
 
@@ -69,11 +73,17 @@ Select the correct configuration under **_Configuration -> Configure Module_** o
 * [SHP6 10A model](https://templates.blakadder.com/blitzwolf_SHP6.html)
 * [SHP6 15A model (compatible with SP111 v2)](https://templates.blakadder.com/gosund_SP111_v2.html)
 
-### As an alternative for steps 2 to 5: 
+### As an alternative for steps 3 to 5: 
 The following programming adapter could be an option, which requires no soldering or significant disassembly on the SHP-6.
 It significantly reduces the effort of reflashing multiple SHP-6 units. [Thingiverse link](http://www.thingiverse.com/thing:3476167)
 
 ![adapter](https://cdn.thingiverse.com/renders/e2/cc/49/cc/6a/298542652c3ba493b6d4a284ed505efe_preview_featured.jpg)
+
+### For Version 2 for steps 3 to 5: 
+The new Version has exposed pads with holes for Ground, Reset, TX, RX, Vcc 3.3.V and GPIO0. YOu can use small jumper cables to directly connect a programmer, so no further disassembly is required.
+![V2 Layout](https://raw.githubusercontent.com/Freestila/master-media/master/SHP6_v2.JPG)
+![V2 Contacts](https://raw.githubusercontent.com/Freestila/master-media/master/SHP6_v2_contacts.JPG)
+
 
 ## Other photos
 
