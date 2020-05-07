@@ -302,7 +302,7 @@ This will send an MQTT message to a custom defined topic similarly to option 1.
 
 ### Changing Default Functionality
 
-If a [`ButtonTopic`](Commands.md#buttontopic) (and if [`SetOption1 1`](Commands.md#SetOption1)) or [`SwitchTopic 1`](Commands.md#SwitchTopic) is defined (and [`SwitchMode`](Commands.md#switchmode) is set to `5` or `6`) and a button is pressed longer than defined Key Hold Time ([`SetOption32`](Commands.md#setoption32) default 4 seconds) an MQTT message like `cmnd/%topic%/POWER HOLD` will be sent. `HOLD` can be changed with [`StateText4`](Commands.md#StateText4).
+If a [`ButtonTopic`](Commands.md#buttontopic) (and if [`SetOption1 1`](Commands.md#SetOption1)) or [`SwitchTopic 1`](Commands.md#SwitchTopic) is defined (and [`SwitchMode`](Commands.md#switchmode) is set to `5` or `6`) and a button is pressed longer than defined Key Hold Time ([`SetOption32`](Commands.md#setoption32) default 4 seconds) an MQTT message like `cmnd/%topic%/POWER HOLD` will be sent. `HOLD` can be changed with [`StateText4`](Commands.md#StateText).
 
 Command [`SetOption11`](Commands.md#setoption11) allows for swapping the functionality of the push button.
 
