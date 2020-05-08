@@ -22,6 +22,7 @@ Everybody is welcome and invited to contribute to Tasmota Project by:
 ## Credits
 
 People helping to keep the show on the road:
+
 - David Lang providing initial issue resolution and code optimizations
 - Heiko Krupp for his IRSend, HTU21, SI70xx and Wemo/Hue emulation drivers
 - Wiktor Schmidt for Travis CI implementation
