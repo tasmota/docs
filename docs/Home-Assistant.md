@@ -42,6 +42,10 @@ With MQTT discovery no user interaction or configuration file editing is needed 
     To have multi-channel PWM instead of a single light entity under Home Assistant use [`SetOption68 1`](Commands.md#setoption68).
     If you have a light with 4 or 5 channels like an `RGBCCT` bulb you may want to use [`SetOption37 128`](Commands.md#setoption37) to have two separated lights, one for RGB and one for White or Temperature management.  
 
+    !!! note "Tasmota will no longer switch `%prefix%` and `%topic%` and will keep the default topic structure. This could lead to a very long topic for a light and the Discovery could fail to parse the necessary code for Home Assistant. In this case a warning will be shown on Discovery logs. 
+    To avoid this issue keep your [Topic](Commands.md#topic) and/or [FriendlyName](Commands.md#friendlyname) as short as possible." 
+
+
     _Alternatively you can configure it manually using [Light](https://www.home-assistant.io/integrations/light/) integration._
     
     !!! warning 
