@@ -42,62 +42,72 @@ Insert alternating male Dupont jumpers; one jumper on one side, the next one on 
 The CC2530 requires `Z-Stack_Home_1.2`, of type `Default` (not `Source Routing`). For convenience, ready to use [firmware files](https://github.com/s-hadinger/CCLib/tree/master/Bin) are provided. Select the right one for your hardware: `CC2530`, `CC2530 + CC2591` or `CC2530 + CC2592`.
 
 _**These Python scripts require Python 2.7.**_  
-1. Ensure that you have Python 2.7 installed
-2. Install pyserial 3.0.1:  
-   `pip install pyserial==3.0.1`
-3. Check for connectivity before flashing:  
-   `python Python/cc_info.py -p <serial_port>`  
+1) Ensure that you have Python 2.7 installed
 
-   where \<serial_port> is the serial port for the ESP82xx device. e.g. `/dev/cu.usbserial-xxxx` or `COM7`
+2) Install pyserial 3.0.1:
 
-   Example of result:
-   ```
-   INFO: Found a CC2530 chip on /dev/cu.usbserial-xxxx
-   
-   Chip information:
-         Chip ID : 0xa524
-      Flash size : 16 Kb
-       Page size : 2 Kb
-       SRAM size : 1 Kb
-             USB : No
-   
-   Device information:
-    IEEE Address : 000000000000
-              PC : 0000
-   
-   Debug status:
-    [ ] CHIP_ERASE_BUSY
-    [ ] PCON_IDLE
-    [X] CPU_HALTED
-    [ ] PM_ACTIVE
-    [ ] HALT_STATUS
-    [X] DEBUG_LOCKED
-    [X] OSCILLATOR_STABLE
-    [ ] STACK_OVERFLOW
-   
-   Debug config:
-    [ ] SOFT_POWER_MODE
-    [ ] TIMERS_OFF
-    [ ] DMA_PAUSE
-    [ ] TIMER_SUSPEND
-   ```
-   
-   If your CC2530 is DEBUG_LOCKED, then the flash size will be incorrectly _reported_ as 16kB. Dont worry flashing the Z-Stack firmware will work and reset the DEBUG_LOCKED bit. 
-   
-   In some situation flashing fails with a error message `flash have not enough space`. If this happens do the following:   
+```
+pip install pyserial==3.0.1
+```
 
-   ```
-   python Python/cc_read_flash.py -p <serial_port> -o x.hex
-   python Python/cc_write_flash.py --erase -p <serial_port> -i x.hex
-   ```
+3) Check for connectivity before flashing:  
+
+```
+python Python/cc_info.py -p <serial_port>
+```
+
+where `<serial_port>` is the serial port for the ESP82xx device. e.g. `/dev/cu.usbserial-xxxx` or `COM7`
+
+Example of result:
+```
+INFO: Found a CC2530 chip on /dev/cu.usbserial-xxxx
+
+Chip information:
+      Chip ID : 0xa524
+   Flash size : 16 Kb
+    Page size : 2 Kb
+    SRAM size : 1 Kb
+          USB : No
+
+Device information:
+ IEEE Address : 000000000000
+           PC : 0000
+
+Debug status:
+ [ ] CHIP_ERASE_BUSY
+ [ ] PCON_IDLE
+ [X] CPU_HALTED
+ [ ] PM_ACTIVE
+ [ ] HALT_STATUS
+ [X] DEBUG_LOCKED
+ [X] OSCILLATOR_STABLE
+ [ ] STACK_OVERFLOW
+
+Debug config:
+ [ ] SOFT_POWER_MODE
+ [ ] TIMERS_OFF
+ [ ] DMA_PAUSE
+ [ ] TIMER_SUSPEND
+```
+
+If your CC2530 is DEBUG_LOCKED, then the flash size will be incorrectly _reported_ as 16kB. Dont worry flashing the Z-Stack firmware will work and reset the DEBUG_LOCKED bit. 
+
+In some situation flashing fails with a error message `flash have not enough space`. If this happens do the following:   
+
+```
+python Python/cc_read_flash.py -p <serial_port> -o x.hex
+python Python/cc_write_flash.py --erase -p <serial_port> -i x.hex
+```
    Recheck for connectivity and the correct flash size by repeating step #3.
 
 
-4. Flash the Z-Stack firmware using the following command:  
-   _Flashing the CC2530 **takes about 20 minutes**_  
-   ```
-   python Python/cc_write_flash.py -e -p <serial_port> -i Bin/CC2530_DEFAULT_20190608_CC2530ZNP-Prod.hex
-   ```  
+4) Flash the Z-Stack firmware using the following command:  
+
+_Flashing the CC2530 **takes about 20 minutes**_  
+
+```
+python Python/cc_write_flash.py -e -p <serial_port> -i Bin/CC2530_DEFAULT_20190608_CC2530ZNP-Prod.hex
+```  
    
 ```
 INFO: Found a CC2530 chip on /dev/cu.usbserial-xxxx
@@ -134,6 +144,6 @@ Progress 100%... OK
 Completed
 ```
 
-   _If you don't see any on screen activity that flashing has begun (i.e., progress percentages increasing) within a couple minutes, then abort the command, cycle power on the ESP82xx, and start this step over._
+_If you don't see any on screen activity that flashing has begun (i.e., progress percentages increasing) within a couple minutes, then abort the command, cycle power on the ESP82xx, and start this step over._
 
 Described in greater detail in [this blog post](https://www.zigbee2mqtt.io/information/alternative_flashing_methods.html).

@@ -4,7 +4,7 @@ To include a feature you need (or build completely customized Tasmota) you will 
 
 First you will need Tasmota's source code (either [development](https://github.com/arendst/Tasmota/archive/development.zip) or [master](https://github.com/arendst/Tasmota/archive/master.zip) branch) and a compiling tool.
 
-### Compiling Tools
+## Compiling Tools
 If you want to modify the code or default settings you can use:
 
 - [**PlatformIO**](PlatformIO) -  setup and configure [PlatformIO](https://platformio.org) for Tasmota compilation and upload
@@ -25,6 +25,22 @@ _**Can only create a firmware binary.** Use one of the [tools](Getting-Started.m
 
 Once you have set up the development environment, unzip the source code into a folder.
 
+## Preparing compiler
+
+### PlarformIO based 
+Go to root directory of source code, rename "platformio_override_sample.ini" to "platformio_override.ini". By doing this you enable using `user_config_override.h` and will build the standard `tasmota` variant with your customized features.
+
+Alternatively you can:
+
+Open platformio.ini and uncomment line containing `-DUSE_CONFIG_OVERRIDE` by deleting `;`
+
+```
+; *********************************************************************
+; *** Uncomment, by deleting ";" in line below, to use custom settings from file user_config_override.h 
+                            -DUSE_CONFIG_OVERRIDE
+```
+
+### Arduino IDE
 Navigate to where you unpacked Tasmota and into `/tasmota` folder.
 
 Open `my_user_config.h` and uncomment (remove `//`) line with `#define USE_CONFIG_OVERRIDE`. It should look like this:    
@@ -33,9 +49,7 @@ Open `my_user_config.h` and uncomment (remove `//`) line with `#define USE_CONFI
 #define USE_CONFIG_OVERRIDE                          // Uncomment to use user_config_override.h file. See README.md
 ```
 
-In PlatformIO you can edit platformio_override.ini instead. Go to root directory of source code, rename platformio_override_sample.ini to platformio_override.ini. By doing this you enable the settings done in this file.
-By default the file `user_config_override.h` is enabled and to build the standard `tasmota` variant.
-    
+## Customize your build    
 Create a new file in `/tasmota` folder called `user_config_override.h`.
 
 Open the file in chosen development environment for editing.

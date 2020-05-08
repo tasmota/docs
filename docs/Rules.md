@@ -1647,7 +1647,7 @@ Rule1
   ON ENERGY#Power>=35 DO Backlog PowerDelta 10; Status 8 BREAK 
   ON ENERGY#Power>=15 DO Backlog PowerDelta 25; Status 8 BREAK 
   ON ENERGY#Power>5 DO Backlog PowerDelta 35; Status 8 BREAK 
-  ON ENERGY#Power<=5 DO Backlog PowerDelta 100 ENDON
+  ON ENERGY#Power<=5 DO PowerDelta 100 ENDON
 
 Rule1 1
 ```

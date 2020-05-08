@@ -23,7 +23,7 @@ Download binaries from:
 
 Tasmota 8.2 introduced upgrading using gzipped binaries which are smaller in size and will likely skip the intermediary minimal build installation. This makes the upgrade process faster and straightforward. 
 
-To use simply add `.gz` to the existing OTA Url or download the `.bin.gz` binary from the official [OTA Server](http://thehackbox.org/tasmota/release/) and the next upgrade will 
+To use simply add `.gz` to the existing OTA Url or download the `.bin.gz` binary from the official [OTA Server](http://thehackbox.org/tasmota/release/) and the next upgrade will use the compressed file.
 
 ## Upgrade using webUI
 Upgrading the device firmware [over-the-air](https://en.wikipedia.org/wiki/Over-the-air_programming), aka OTA, is the most convenient way to upgrade. 
@@ -136,8 +136,7 @@ If your binary build (yourbinary.bin) is larger than the available free flash pr
 Until now several versions of Tasmota have been released starting with the C version Sonoff-MQTT-OTA followed by Sonoff-MQTT-OTA-Arduino, Sonoff-Tasmota and ultimately **Tasmota**.
 
 Intermediate upgrade steps might be needed to migrate from an older firmware version to the latest.
-The following table lists all relevant firmware versions and a direct link to their minimal build.
-Remember that you **must take each individual step** between the device firmeware version and the latest available.
+Remember that you **must take each individual step** between the device firmware version and the latest available. Do not install only the tasmota-minimal.bin but upgrade to full, working tasmota.bin firmware. You can find all the required binaries in [Tasmota Releases](https://github.com/arendst/Tasmota/releases)
 
 As a safeguard perform "Backup Configuration" before installing a new version. If settings are lost "Restore Configuration" should bring them back.
 
@@ -167,8 +166,8 @@ As said, mostly painless. There are some deviations to this rule as I rearranged
 * Easy migration from **Sonoff-Tasmota 5.2** to **Sonoff-Tasmota 6.x**. 
   As a safeguard perform a **_Backup Configuration_** before installing the new version. If settings are lost after the upgrade perform a **Restore Configuration**.
   
-  !!! warning
-      If you've used development versions between 6.6.0.7 and 6.6.0.11 [**back up your device settings**](#backing-up-settings) as described above. Convert the backup to human readable form as you **MUST** restore these settings manually.
+!!! warning
+    If you've used development versions between 6.6.0.7 and 6.6.0.11 [**back up your device settings**](#backing-up-settings) as described above. Convert the backup to human readable form as you **MUST** restore these settings manually.
 
   - Perform a `Reset 6` before upgrading the firmware and, for safe measure, after the upgrade completes.  
   - Enter your device configurations using the settings saved in the first step.

@@ -107,10 +107,10 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 <br clear="right"/>
 
 !!! failure "There is no White only slider in the UI for 4 channel lights"
-    Use [`White`](Commands.md#white) commands or set up [White Blend Mode](#white-blend-mode).
+    Use [`White`](Commands.md#white) commands or set up [White Blend Mode](#white-blend-mode) or [**RGB and White Split**](#rgb-and-white-split).
 
 !!! danger 
-    Some lights have limited power supply that do not allow all channels to be at full power at the same time. Be careful not to burn out your light if you force all channels via `Color` or [**RGB and White Split**](#rgb-and-white-split).
+    Some lights have limited power supply that do not allow all channels to be at full power at the same time. Be careful not to burn out your light if you force all channels to be on using `Color` or [**RGB and White Split**](#rgb-and-white-split).
 
 ### 5 Channels - RGBCCT Lights
 
@@ -208,11 +208,11 @@ When enabling [`SetOption20 1`](Commands.md#setoption20) any change to webUI sli
 
 ### PWM CT 
 
-`Module 48`
+`Module 48` or `SetOption92 1`
 
 Some CCT lights use PWM1 for brightness and PWM2 for color temperature (instead of PWM1 for Cold White and PWM2 for Warm White).
 
-For these lights, use `Module 48` aka Philips Xiaomi mode.
+For these lights, use `Module 48` aka Philips Xiaomi mode, or `SetOption92 1` (supported since v.8.2.0.5)
 
 ## Light Categories
 

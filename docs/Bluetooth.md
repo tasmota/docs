@@ -64,7 +64,7 @@ Otherwise you must [compile your build](Compile-your-build). Add the following t
 
 ```
 #ifndef USE_HM10
-#define USE_HM10          // Add support for HM-1x as a BLE-bridge (+5k1 code)
+#define USE_HM10          // Add support for HM-10 as a BLE-bridge (+9k3 code)
 #endif
 ```
 
@@ -91,6 +91,7 @@ HM10Baud<a id="hm10baud"></a>|Show ESP8266 serial interface baudrate (***Not HM-
 HM10AT<a id="hm10at"></a>|`<command>` = send AT commands to HM-10. See [list](http://www.martyncurrey.com/hm-10-bluetooth-4ble-modules/#HM-10%20-%20AT%20commands)
 HM10Time <a id="hm10time"></a>|`<n>` = set time time of a **LYWSD02 only** sensor to Tasmota UTC time and timezone. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).
 HM10Auto <a id="hm10auto"></a>|`<value>` = start an automatic discovery scan with an interval of  `<value>` seconds to receive data in BLE advertisements periodically.<BR>This is an active scan and it should be used **only if necessary**. This can change if a future HM-10 firmware starts supporting passive scan.
+HM10Page<a id="hm10page"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
 
 ### Supported Devices
 
@@ -152,10 +153,10 @@ Internally from time to time "fake" sensors will be created, when there was data
 
 Command|Parameters
 :---|:---
-NRFPage<a id="nrfpage"></a>|Show the maximum number of sensors shown per page in the webUI list. Default = 4<BR>`<value>` Set number
-NRFIgnore<a id="nrfignore"></a>| Ignore a certain sensor type. Default = 0 (= all known types are active)<BR>`<value>` Set type<BR>1: Flora, 2: MJ_HT_V1, 3: LYWSD02, 4: LYWSD03, 5: CGG1, 6: CGD1
-NRFScan<a id="nrfscan"></a>|Scan for regular BLE-advertisements and show a list in the console<BR>`<value>` = 0: Start a new scan list; 1: Append to the scan list; 2: Stop running scan
-NRFBeacon<a id="nrfbeacon"></a>| Set a BLE-device as a beacon using the (fixed) MAC-address<BR>`<value>` (1-3 digits): Use beacon from scan list<BR>`<value>` (12 characters): Use beacon given the MAC interpreted as an uppercase string `AABBCCDDEEFF`
+NRFPage<a id="nrfpage"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
+NRFIgnore<a id="nrfignore"></a>|`0` = all known sensor types active_(default)_<BR>`<value>` =  ignore certain sensor type (`1` = Flora, `2` = MJ_HT_V1, `3` = LYWSD02, `4` = LYWSD03, `5` = CGG1, `6` = CGD1
+NRFScan<a id="nrfscan"></a>| Scan for regular BLE-advertisements and show a list in the console<BR>`0` = start a new scan list<BR>`1` = append to the scan list<BR>`2` = stop running scan
+NRFBeacon<a id="nrfbeacon"></a>| Set a BLE device as a beacon using the (fixed) MAC-address<BR>`<value>` (1-3 digits) = use beacon from scan list<BR>`<value>` (12 characters) = use beacon given the MAC interpreted as an uppercase string `AABBCCDDEEFF`
  
   
 ### Supported Devices
@@ -197,6 +198,71 @@ For LYWSD03MMC the sensor data in the advertisements is encrypted. It is highly 
 A simplified presence dection will scan for regular BLE advertisements of a given BT-device defined by its MAC-address. It is important to know, that many new devices (nearly every Apple-device) will change its MAC every few minutes to prevent tracking.  
 If the driver receives a packet from the "beacon" a counter will be (re-)started with an increment every second. This timer is published in the TELE-message, presented in the webUI and processed as a RULE.
 The stability of regular readings will be strongly influenced by the local environment (many BLE-devices nearby or general noise in the 2.4-GHz-band). 
+
+## BLE Sensors using built-in Bluetooth on the ESP32
+
+You must [compile your build](Compile-your-build) for the ESP32. Change the following to `my_user_config.h`:
+
+```
+#ifdef ESP32
+  #define USE_MI_ESP32                          // Add support for ESP32 as a BLE-bridge (+9k2 mem, +292k flash)
+#endif // ESP8266
+```
+
+The driver will start to scan for known sensors automatically using a hybrid approach. In the first place MiBeacons are passively received and only found LYWSD03MMC-sensors will be connected at the given period to read data in order to be as energy efficient as possible.
+Battery data is in general of questionable value for the LYWSD0x, CGD1 and (maybe) Flora (some are even hard coded on the device to 99%). That's why only MJ_HT_V1, CGG1 (untested) and LYWSD03 (in form of the battery voltage) will automatically update battery data. The other battery levels can be read by command. 
+  
+#### Commands
+
+Command|Parameters
+:---|:---
+MI32Period<a id="mi32period"></a>|Show interval in seconds between sensor read cycles for the LYWSD03. Set to TelePeriod value at boot.<BR>|`<value>` = set interval in seconds
+MI32Time <a id="mi32time"></a>|`<n>` = set time time of a **LYWSD02 only** sensor to Tasmota UTC time and timezone. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).
+MI3210Page<a id="mi32page"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
+MI32Battery<a id="mi32battery"></a>|Reads missing battery data for LYWSD02, Flora and CGD1.  
+  
+!!! tip 
+If you really want to read battery for LYWSD02, Flora and CGD1, consider doing it once a day with a RULE:
+`RULE1 on Time#Minute=30 do MI32Battery endon`
+This will update every day at 00:30 AM.  
+
+  
+### Supported Devices
+
+<table>
+  <tr>
+    <th class="th-lboi">MJ_HT_V1</th>
+    <th class="th-lboi">LYWSD02</th>
+    <th class="th-lboi">LYWSD03MMC</th>
+    <th class="th-lboi">CGD1</th>
+    <th class="th-lboi">MiFlora</th>
+  </tr>
+  <tr>
+    <td class="tg-lboi"><img src="../_media/bluetooth/mj_ht_v1.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/LYWDS02.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/LYWSD03MMC.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/CGD1.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/miflora.png" width=200></td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">temperature, humidity, battery</td>
+    <td class="tg-lboi">temperature, humidity, battery</td>
+    <td class="tg-lboi">temperature, humidity, battery</td>
+    <td class="tg-lboi">temperature, humidity, battery</td>
+    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility, battery</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi"></td>
+    <td class="tg-lboi">set time using "HM10Time"</td>
+    <td class="tg-lboi"></td>
+    <td class="tg-lboi">unsupported time or alarm</td>
+    <td class="tg-lboi"></td>
+  </tr>
+</table>
+
+   
+#### Unconfirmed Devices  
+CGG1 ClearGrass Temperature and Humidity Monitor should be found and may give readings via MiBeacons, but is untested.  
 
 
 ## Getting data from BT Xiaomi Devices

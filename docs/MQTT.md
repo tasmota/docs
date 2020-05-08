@@ -183,7 +183,7 @@ To check, if there is a retain flag set for the switch's power topic, monitor `c
 
 You can use [Tasmota Device Manager](https://github.com/jziolkowski/tdm) to clear all retained messages for selected device with a single click.
 
-![Tasmota Device Manager]_media/tdm-retained.png)
+![Tasmota Device Manager](_media/tdm-retained.png)
 
 or use the following tutorials/forum threads:
 

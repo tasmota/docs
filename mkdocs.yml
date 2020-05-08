@@ -5,15 +5,26 @@ repo_name: 'arendst/tasmota'
 repo_url: 'https://github.com/arendst/tasmota'
 edit_uri: 'https://github.com/tasmota/docs/blob/master/docs/'
 # copyright: 'Copyright &copy; 2020 Tasmota Development Team'
-# use_directory_urls: false
+
+plugins:
+  - search:
+      lang:
+        - de
+        - en
+  - alternate-link
+  - minify:
+      minify_html: true
+  # - htmlproofer
 
 strict: true
 
 theme: 
   name: material
-  # custom_dir: 'theme'
+  language: 'en'
+  # custom_dir: 'overrides'
   logo: '_media/logo.svg'
   favicon: _media/favicon.ico
+  scheme: dark
   palette:
     primary: 'blue'
     accent: 'indigo'
@@ -22,6 +33,7 @@ theme:
   font:
     text: Barlow
     code: Roboto Mono
+
 extra:
   social:
     - icon: fontawesome/brands/discord
@@ -42,13 +54,6 @@ markdown_extensions:
   - pymdownx.caret
   - codehilite
   - meta
-      
-plugins:
-  - search
-  - alternate-link
-  - minify:
-      minify_html: true
-  # - htmlproofer
 
 google_analytics:
   - 'UA-140681905-2'
@@ -162,7 +167,7 @@ nav:
     - WS2812B-RGB-Shield.md
     - WS2812B-and-WS2813.md
   - Supported Devices:
-    - Configuring unknown devices: Configuration-Procedure-for-New-Devices.md
+    - Configure Unknown Device: Configuration-Procedure-for-New-Devices.md
     - All Supported Devices: https://templates.blakadder.com/ "target=_blank"
     - Supported-Modules.md
   - Help:

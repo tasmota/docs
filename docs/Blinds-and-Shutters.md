@@ -16,7 +16,8 @@ There are three shutter modes which are defined according to the [PulseTime](Com
 1. **ShutterMode 0** - Normal Operation   
    First relay: OFF/DOWN, Second relay: OFF/UP  
    - `Backlog PulseTime1 0; PulseTime2 0`
-   - `Backlog Interlock 1,2; Interlock ON` (Interlocked relay pair)
+   - `Interlock 1,2` (Interlocked relay pair)
+   - `Interlock ON`
 
 1. **ShutterMode 1** - Circuit Safe 
    First relay: ON/OFF, Second relay: UP/DOWN
@@ -26,7 +27,8 @@ There are three shutter modes which are defined according to the [PulseTime](Com
 1. **ShutterMode 2** - Pulse Motors   
    First relay: OFF/DOWN PULSE, Second relay: OFF/UP PULSE
    - `Backlog PulseTime1 2; PulseTime2 2`
-   - `Backlog Interlock 1,2; Interlock ON` (Interlocked relay pair)
+   - `Interlock 1,2` (Interlocked relay pair)
+   - `Interlock ON`
    
 1. **ShutterMode 3** - Stepper Motors   
    First relay: ON/OFF, Second relay: UP/DOWN

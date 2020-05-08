@@ -1,4 +1,5 @@
-!!! failure "This feature is not included in precompiled binaries."     
+!!! failure "This feature is not included in precompiled binaries."
+
 To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
 #define directive | Description
@@ -18,9 +19,10 @@ USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays
 SHOW_SPLASH | Enable initialization splash message on the display
 USE_AWATCH | Enables analog watch support
 USE_GRAPH | Enable line charts. Also requires `NUM_GRAPHS`
-
 ----
+
 ## Display Commands
+
 See commands page for full list of available [Display Commands](Commands.md#displays)
 
 ## DisplayMode Parameters
@@ -28,7 +30,7 @@ See commands page for full list of available [Display Commands](Commands.md#disp
 The display driver is able to display predefined setups of text or user defined text. To display text using `DisplayText` set `DisplayMode` to `0`, or set `DisplayMode` to `1` for the HT16K33 dot-matrix display.
 
 Parameter	|	LCD Display	|	OLED Display	|	TFT Display
-------------	|	----------------------	|	-----------------------------------	|	----------------------------
+---	|	---	|	---	|	---
 0	|	DisplayText	|	DisplayText	|	DisplayText
 1	|	Time/Date	|	Time/Date	|	Time/Date
 2	|	Local sensors	|	Local sensors	|	Local sensors
@@ -89,8 +91,8 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 align right    
 `sp` = set text scaling for classic GFX font (scaling factor 1...N)  
 `fp` = set font (1=12, 2=24,(opt 3=8)) if font==0 the classic GFX font is used, if font==7 RA8876 internal font is used   
-`Cp` = set foreground color (0,1) for black or white and RGB decimal code for color  
-`Bp` = set background color (0,1) for black or white and RGB decimal code for color  
+`Cp` = set foreground color (0,1) for black or white and RGB decimal code for color (see [color codes](#colorcodes))  
+`Bp` = set background color (0,1) for black or white and RGB decimal code for color (see [color codes](#colorcodes))   
 `Cip` = set foreground index color (0..18) for color displays (see index color table below)  
 `Bip` = set background index color (0..18) for color displays (see index color table below)  
 `wp` = draws an analog watch with radius p  (#define USE_AWATCH)   
@@ -100,11 +102,13 @@ align right
 (`#define USE_TOUCH_BUTTONS`)  
 
 Draw up to 16 GFX buttons to switch real Tasmota devices such as relays.
+
 - Button number + 256 - a virtual touch toggle button is created (MQTT => TBT)
 - Button number + 512 - a virtual touch push button is created (MQTT => PBT)
   
 `b#:xp:yp:xa:ys:oc:fc:tc:ts:text:`   
 _Parameters are separated by colons._   
+
 * `b#` where # = button number 0-15  
 * `xp` = x position  
 * `yp` = y position  
@@ -116,22 +120,24 @@ _Parameters are separated by colons._
 * `ts` = text size  
 * `text:` = button text (must end with a colon :) (max 9 chars)  
 
-Example:   
-`b0:260:260:100:50:2:11:4:2:Rel 1:`
+!!! example "`b0:260:260:100:50:2:11:4:2:Rel 1:`"
 
 
 ### Line chart
+
 (`#define USE_GRAPH` and `#define NUM_GRAPHS 4` - maximum of 16)  
 
 Up to 4 line charts may be defined.  
 
 Ticks may be defined by adding tick numbers to the `n` parameter.  
+
 !!! example
     `n` = graph number (0..3) + x ticks (16\*number of x ticks) + y ticks (1024\*number of y ticks).  
 
 
 `Gn:xp:yp:xs:ys:t:fmax:fmin` defines a line chart:   
 _Parameters are separated by colons._
+
 * `n` = number up to 4 charts (0..3) + optional ticks  
 * `xp` = x position  
 * `yp` = y position  
@@ -143,12 +149,40 @@ _Parameters are separated by colons._
 * `icol` = line color index (only for color graphs)  
 
 `gn:v` adds a value to the chart buffer:
+
 * `n` = number up to 4 charts (0..3)  
 * `v` = float value to add  
 
 `Gdn:m` sets graph n draw mode `0` = off, `1` = on. When on, redraw graph  
+
 * `Gsn:path:` = save graph `n` to path (if optional SD card is present)  
 * `Grn:path:` = restore graph `n` from path (if optional SD card is present)  
+
+### Color Codes
+
+While computers and web design are generally using a 24-bit RGB888 color code built from a byte-triplet such as (255, 136, 56) or #FF8038, small color panels often use a more compact code 16-bit RGB565 color code.  This means that the R, G and B coefficient are coded on less number of bits:
+
+* Red on 5 bits = `0..31`
+* Green on 6 bits = `0..63`
+* Blue on 5 bits = `0..31`
+
+For `Cp` and `Bp`, `p` is calculated as `p = 2048 * Red + 64 * Green + Blue`
+
+!!! example
+    Red 50% + Green 20% + Blue 100% = 2048 * 16 + 64 * 12 + 31 = 33576 equivalent to web #8033FF
+
+Common colors table:
+
+| Color | Code | Color | Code | Color | Code |
+| -- | -- | -- | -- | -- | -- |
+| Black	| 0 | Navy	| 15 | Dark green	| 3 |
+| Dark cyan	| 1007 | Maroon	| 30720 | Purple	| 30735 |
+| Olive	| 31712 | Light grey	| 50712 | Dark grey	| 31727 |
+| Blue	| 31 | Green	| 7 | Cyan	| 2047 |
+| Red	| 63488 | Magenta	| 63519 | Yellow	| 65504 |
+| White	| 65535 | Orange	| 64800 | Green yellow	| 45029 |
+| Pink	| 64536 | | | | |
+
 
 ### Color Indices
 

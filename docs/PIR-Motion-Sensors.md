@@ -1,10 +1,10 @@
 PIR motion sensors, albeit called sensors, are configured as switches in Tasmota since they basically report _motion_ (`1`) or _no motion_ (`0`) to the device. 
 
-Most PIR's are single wire and they require connecting to VCC, GND and one GPIO. In this guide we will use `GPIO15` as the pin that the PIR output is connected to.
+Most PIR's are single wire and they require connecting to VCC, GND and one GPIO. In this guide we will use `GPIO13` as the pin that the PIR output is connected to. See [PIN Restrictions](Peripherals.md#restrictions) on which pins not to use
 
 ### Tasmota Settings
-In **_Configuration -> Configure Module_** menu change `GPIO15` to `Switch1`.
-![Step 1](https://user-images.githubusercontent.com/5904370/67887920-7e814c80-fb4c-11e9-863d-7219894be506.png)
+In **_Configuration -> Configure Module_** menu change `GPIO13` to `Switch1`.
+![Step 1](_media/GPIO13-switch.png)
 
 If there already is a `Switch1` simply choose the next in line. Same applies if you're connecting more than 1 PIR on a single device.
 
@@ -20,9 +20,9 @@ You can change (`PIR1`) and the message (`ON`/`OFF`) to whatever suits your need
 
 Look in console for motion detection messages ```[20:24:03] stat/%topic%/PIR1 ON``` to verify everything is working
 
-optional:
->Before using rules configure any GPIO that doesn't have anything connected to it as `Relay1`.    
->This creates a dummy relay which is triggered by the PIR so you can see the changes in the web UI. This method is not recommended for daily use and should only be used for testing.
+_optional:_
+Before using rules configure any GPIO that doesn't have anything connected to it as `Relay1`.    
+This creates a dummy relay which is triggered by the PIR so you can see the changes in the web UI. This method is not recommended for daily use and should only be used for testing.
 
 A more [advanced example](Rules#Auto-off-Motion-Sense-Switch) of rules with PIRs.
 
