@@ -22,7 +22,6 @@ Everybody is welcome and invited to contribute to Tasmota Project by:
 ## Credits
 
 People helping to keep the show on the road:
-
 - David Lang providing initial issue resolution and code optimizations
 - Heiko Krupp for his IRSend, HTU21, SI70xx and Wemo/Hue emulation drivers
 - Wiktor Schmidt for Travis CI implementation
@@ -40,7 +39,7 @@ People helping to keep the show on the road:
 - Daniel Ztolnai for his Serial Bridge implementation
 - Gerhard Mutz for multiple sensor & display drivers, Sunrise/Sunset, and scripting
 - Nuno Ferreira for his HC-SR04 driver
-- Adrian Scillato for his (security)fixes and implementing and maintaining KNX
+- Adrian Scillato for his (security) fixes and implementing and maintaining KNX
 - Gennaro Tortone for implementing and maintaining Eastron drivers
 - Raymond Mouthaan for managing Wemos Wiki information
 - Norbert Richter for his [decode-config.py](https://github.com/tasmota/decode-config) tool
@@ -54,7 +53,8 @@ People helping to keep the show on the road:
 - Stefan Bode for his Shutter and Deep sleep drivers
 - Jacek Ziółkowski for his [TDM](https://github.com/jziolkowski/tdm) management tool and [Tasmotizer](https://github.com/tasmota/tasmotizer) flashing tool
 - Christian Staars for NRF24L01 and HM-10 Bluetooth sensor support
-- Pail Diem for UDP Group communication support
+- Paul Diem for UDP Group communication support
+- Jörg Schüler-Maroldt for his initial ESP32 port
 - Many more providing Tips, Wips, Pocs, PRs and Donations
 
 ## License
