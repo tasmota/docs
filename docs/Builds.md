@@ -4,7 +4,10 @@ Many times one just needs to download a pre-compiled binary and perform the nece
 
 The binary files available on [GitHub](https://github.com/arendst/Tasmota/releases) are for the current master release version only. These master release binaries are also available from the [OTA server](http://thehackbox.org/tasmota/release/). However, the latest development branch code binaries are only available from the [development OTA server](http://thehackbox.org/tasmota/).
 
-Features that are not available in any release build have to be enabled in source code and compiled yourself. Read more about [compiling your own build](Compile-your-build).
+Features that are not available in any official release build have to be enabled in source code and compiled yourself. Read more about [compiling your own build](Compile-your-build).
+
+!!! tip
+    You might find some of the features you need included in one of our unofficial experimental builds over at [https://github.com/tasmota/binaries](https://github.com/tasmota/binaries).
 
 ## Firmware Variants
 
