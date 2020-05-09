@@ -1846,3 +1846,17 @@ Notice we use `Rule` which edits `Rule1` rule set. They can be used interchangea
 
 
 ------------------------------------------------------------------------------
+
+### Watchdog for a WiFi router
+
+A Tasmota socket can ping a remote host (router itself or something else connected to the router)
+and power cycle the socket to reboot the router. In this example, ping interval of 2 minutes is used.
+```console
+Rule1
+  ON Time#Minute|2 DO Ping4 192.168.1.10 ENDON
+  ON Ping#192.168.1.10#Success==0 DO backlog Power1 0; Delay 10; Power1 1; ENDON
+Rule1 1
+```
+
+> Note: This requires `#define USE_PING` and Tasmota version 8.2.0.3 or newer.
+------------------------------------------------------------------------------
