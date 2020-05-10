@@ -439,12 +439,14 @@ Custom build with following options is needed:
   `#define SUPPORT_IF_STATEMENT`  
 
 Configuration of 2nd shutter:  
-  `ShutterRelay2 1`            // setup 2nd shutter at same relais as shutter 1  
+  `ShutterRelay2 1`            // setup 2nd shutter at same relay as shutter 1  
   `ShutterOpenDuration2 1.4`   // adjust to real duration  
   `ShutterCloseDuration2 1.4`  // adjust to real duration  
 
-Add rule:  
-  `rule1 on Shutter2#Position DO mem1 %value% ENDON on Shutter1#Position DO var2 %value% ENDON on Shutter1#Direction!=0 DO var1 %value% ENDON on Shutter1#Direction=0 DO IF (var1==1) var1 0; IF (var2!=100) ShutterSetOpen2; shutterposition2 %mem1% ENDIF ENDIF ENDON on Shutter1#Direction=0 DO IF (var1==-1) var1 0; IF (var2!=0) ShutterSetClose2; shutterposition2 %mem1% ENDIF ENDIF ENDON`
+Add rule (requires rules with [Conditional Rules](Rules.md#conditional-rules) enabled :  
+```
+Rule1 on Shutter2#Position DO mem1 %value% ENDON on Shutter1#Position DO var2 %value% ENDON on Shutter1#Direction!=0 DO var1 %value% ENDON on Shutter1#Direction=0 DO IF (var1==1) var1 0; IF (var2!=100) ShutterSetOpen2; shutterposition2 %mem1% ENDIF ENDIF ENDON on Shutter1#Direction=0 DO IF (var1==-1) var1 0; IF (var2!=0) ShutterSetClose2; shutterposition2 %mem1% ENDIF ENDIF ENDON
+```
 
 #### Home Assistant Support
 For shutter position to persist in Home Assistant through device reboots, execute `PowerRetain 1`.
