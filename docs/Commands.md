@@ -659,3 +659,9 @@ TempFormatSet<x><a class="cmnd" id="TempFormatSet"></a>|Sets the temperature for
 TempMeasuredSet<x><a class="cmnd" id="TempMeasuredSet"></a>|Sets the temperature measured by the sensor (for MQTT sensor mode)<BR> `<TempFrostProtectSet..100>` = Temperature (default 18.0° Celsius) </ul>
 TempTargetSet<x><a class="cmnd" id="TempTargetSet"></a>|Sets the target temperature for the controller (setpoint)<BR> `<TempFrostProtectSet..100>` = Temperature (default 18.0° Celsius) </ul>
 TempMeasuredGrdRead<x><a class="cmnd" id="TempMeasuredGrdRead"></a>|Returns the calculated temperature gradient<BR> `<value>` = Temperature gradient in degrees Celsius/Fahrenheit </ul>
+StateEmergencySet<x><a class="cmnd" id="StateEmergencySet"></a>|Sets the thermostat emergency flag<BR> `0` = Emergency flag off (default)<BR> `1` = Emergency flag on (thermostat switches to off state)</ul>
+TimeManualToAutoSet<x><a class="cmnd" id="TimeManualToAutoSet"></a>|Sets the time in manual mode after the last active input  action (f.i. last action from serial connected wall thermostat) to switch to aumatic mode<BR> `0..1440` = time in minutes (default 60 minutes)</ul>
+PropBandSet<x><a class="cmnd" id="PropBandSet"></a>|Sets the value of the proportional band of the PI controller<BR> `0..20` = value in degrees Celsius (default 4 degrees Celsius)</ul>
+TimeResetSet<x><a class="cmnd" id="TimeResetSet"></a>|Sets the value of the reset time of the PI controller<BR> `0..86400` = value in seconds (default 12000 seconds)</ul>
+TimePiCycleSet<x><a class="cmnd" id="TimePiCycleSet"></a>|Sets the value of the cycle for the PI controller<BR> `0..86400` = value in minutes (default 30 minutes)</ul>
+TempAntiWindupResetSet<x><a class="cmnd" id="TempAntiWindupResetSet"></a>|Sets the value of the delta between controlled temperature and setpoint above which the integral part of the PI controller will be set to 0, in degrees Celsius/Fahrenheit<BR> `0..10` = value in degrees (default 0.8° Celsius)</ul>
