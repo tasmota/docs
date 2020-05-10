@@ -646,11 +646,15 @@ MP3Volume<a class="cmnd" id="MP3Volume"></a>|`0..100` = set Volume
 
 Command|Parameters
 :---|:---
-ThermostatModeSet<a class="cmnd" id="ThermostatModeSet"></a>|Sets the thermostat mode<BR> `0` = Thermostat Off (controller inactive, default)<BR> `1` = Thermostat in automatic mode (controller active)<BR> `2` = Thermostat in manual mode (output switch follows the input switch, used to follow an existing wall thermostat)</ul>
-ClimateModeSet<a class="cmnd" id="ClimateModeSet"></a>|Sets the climate mode<BR> `0` = Heating mode (default)<BR> `1` = Cooling mode</ul>
-ControllerModeSet<a class="cmnd" id="ControllerModeSet"></a>|Sets the controller mode (used for thermostat in automatic mode)<BR> `0` = Hybrid controller (Predictive ramp-up controller and PI, default)<BR> `1` = PI controller<BR> `2` = Predictive ramp-up controller</ul>
-TempFrostProtectSet<a class="cmnd" id="TempFrostProtectSet"></a>|Sets the frost protection temperature. The controller, if in automatic mode, will never allow the temperature to sink below this value<BR> <value> = Temperature value in degrees celsius/fahrenheit (default 4.0° Celsius) </ul>
-InputSwitchSet<a class="cmnd" id="InputSwitchSet"></a>|Sets the number of the input used in case in manual control<BR> <1..4> = Number of the input (default 1)</ul>
-InputSwitchUse<a class="cmnd" id="InputSwitchUse"></a>|Switch to decide if the input shall be used to automatically switch to manual mode and assign it to the output (usefull if using a serially connected wall thermostat)<BR> `0` = Input not used (default)<BR> `1` = Input used</ul>
-SensorInputSet<a class="cmnd" id="SensorInputSet"></a>|Sets the temperature sensor to be used<BR> `0` = MQTT (default)<BR> `1` = Local sensor (can be changed by define, default DS18B20)</ul>
-OutputRelaySet<a class="cmnd" id="OutputRelaySet"></a>|Sets the output switch to be used for the thermostat<BR> <1..8> = Number of the output (default 1)</ul>
+ThermostatModeSet<x><a class="cmnd" id="ThermostatModeSet"></a>|Sets the thermostat mode<BR> `0` = Thermostat Off (controller inactive, default)<BR> `1` = Thermostat in automatic mode (controller active)<BR> `2` = Thermostat in manual mode (output switch follows the input switch, used to follow an existing wall thermostat)</ul>
+ClimateModeSet<x><a class="cmnd" id="ClimateModeSet"></a>|Sets the climate mode<BR> `0` = Heating mode (default)<BR> `1` = Cooling mode</ul>
+ControllerModeSet<x><a class="cmnd" id="ControllerModeSet"></a>|Sets the controller mode (used for thermostat in automatic mode)<BR> `0` = Hybrid controller (Predictive ramp-up controller and PI, default)<BR> `1` = PI controller<BR> `2` = Predictive ramp-up controller</ul>
+TempFrostProtectSet<x><a class="cmnd" id="TempFrostProtectSet"></a>|Sets the frost protection temperature. The controller, if in automatic mode, will never allow the temperature to sink below this value<BR> `<0..12>` = Temperature value in degrees celsius/fahrenheit (default 4.0° Celsius) </ul>
+InputSwitchSet<x><a class="cmnd" id="InputSwitchSet"></a>|Sets the number of the input used in case in manual control<BR> `<1..4>` = Number of the input (default 1)</ul>
+InputSwitchUse<x><a class="cmnd" id="InputSwitchUse"></a>|Switch to decide if the input shall be used to automatically switch to manual mode and assign it to the output (usefull if using a serially connected wall thermostat)<BR> `0` = Input not used (default)<BR> `1` = Input used</ul>
+SensorInputSet<x><a class="cmnd" id="SensorInputSet"></a>|Sets the temperature sensor to be used<BR> `0` = MQTT (default)<BR> `1` = Local sensor (can be changed by define, default DS18B20)</ul>
+OutputRelaySet<x><a class="cmnd" id="OutputRelaySet"></a>|Sets the output switch to be used for the thermostat<BR> `<1..8>` = Number of the output (default 1)</ul>
+TimeAllowRampupSet<x><a class="cmnd" id="TimeAllowRampupSet"></a>|Sets the minimum time in minutes since the last control action to be able to switch to the predictive ramp-up controller (used normally in case of big deltas between the setpoint and the room temperature)<BR> `<value>` = Minutes (default 300 minutes) </ul>
+TempFormatSet<x><a class="cmnd" id="TempFormatSet"></a>|Sets the temperature format<BR> `0` = Degrees celsius (default)<BR> `1` = Degrees Fahrenheit</ul>
+TempMeasuredSet<x><a class="cmnd" id="TempMeasuredSet"></a>|Sets the temperature measured by the sensor (for MQTT sensor mode)<BR> `<TempFrostProtectSet..100>` = Temperature (default 18.0° Celsius) </ul>
+TempTargetSet<x><a class="cmnd" id="TempTargetSet"></a>|Sets the target temperature for the controller (setpoint)<BR> `<TempFrostProtectSet..100>` = Temperature (default 18.0° Celsius) </ul>
