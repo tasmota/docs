@@ -641,3 +641,10 @@ MP3Reset<a class="cmnd" id="MP3Reset"></a>|Reset the MP3 player to defaults
 MP3Stop<a class="cmnd" id="MP3Stop"></a>|Stop
 MP3Track<a class="cmnd" id="MP3Track"></a>|`x` = play track <x\>
 MP3Volume<a class="cmnd" id="MP3Volume"></a>|`0..100` = set Volume
+    
+### Thermostat 
+
+Command|Parameters
+:---|:---
+ThermostatModeSet<a class="cmnd" id="ThermostatModeSet"></a>|Sets thermostat mode<BR> `0` = Thermostat Off(controller inactive)<BR> `1` = Thermostat in automatic mode (controller active)<BR> `2` = Thermostat in manual mode (output switch follows the input switch, used to follow an existing wall thermostat)</ul>
+ClimateModeSet<a class="cmnd" id="ClimateModeSet"></a>|Sets the climate mode<BR> `0` = Heating mode<BR> `1` = Cooling mode</ul>
