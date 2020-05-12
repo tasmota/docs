@@ -240,6 +240,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sin(x)` = calculates the sinus(x) (if defined USE_ANGLE_FUNC)  
 `acos(x)` = calculates the acos(x) (if defined USE_ANGLE_FUNC)  
 `sqrt(x)` = calculates the sqrt(x) (if defined USE_ANGLE_FUNC)  
+`sf(F)` = sets the CPU Frequency (ESP32) to 80,160,240 Mhz, returns current Freq.  
 `s(x)` = explicit conversion from number x to string  
 `mqtts` = MQTT connection status: `0` = disconnected, `>0` = connected  
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
@@ -315,7 +316,7 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
 `dpx` sets decimal precision to x (0-9)  
 `svars` save permanent vars  
 `delay(x)` pauses x milliseconds (should be as short as possible)  
-`beep(x)` (ESP32) beeps with a passive piezo beeper. beep(-x) attaches PIN x to the beeper, beep(f) starts a sound with frequency f. f=0 stops the sound.  
+`beep(f l)` (ESP32) beeps with a passive piezo beeper. beep(-f 0) attaches PIN f to the beeper, beep(f l) starts a sound with frequency f (Hz) and len l (ms). f=0 stops the sound.  
 `spin(x b)` set GPIO `x` (0..16) to value `b` (0,1). Only bit 0 of `b` is used - even values set the GPIO to `0` and uneven values set the GPIO to `1`  
 `spinm(x m)` set GPIO `x` (0..16) to mode `m` (input=0, output=1, input with pullup=2,alternatively b may be: O=out, I=in, P=in with pullup)  
 `ws2812(array)` copies an array (defined with `m:vname`) to the WS2812 LED chain. The array length should be defined as long as the number of pixels. Color is coded as 24 bit RGB.  
