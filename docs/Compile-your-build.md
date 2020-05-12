@@ -106,3 +106,4 @@ Save file, compile the custom binary and flash it
 
 !!! note
     There are limits to how many features can be included! If you go overboard code might not compile due to features conflicting _or_ might not be able to be flashed if it exceeds [ESP8266 limits](Sensor-API#keeping-esp8266-code-compact).
+There is [`usefull comment`](https://github.com/arendst/Tasmota/issues/7365#issuecomment-623111662) on how to build Tasmota to run with old 512K flash device.
