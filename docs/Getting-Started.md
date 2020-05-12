@@ -397,11 +397,13 @@ Backlog mqtthost <yourhost>; mqttuser <user>; mqttpassword <password>; topic <un
 !!! tip 
     Keep your personal configuration in a text file and simply copy and paste the backlog commands to a newly flashed device.
 
+## After Configuration
+Your device is connected to your network and to the MQTT broker. One last thing to do is configure your device using [Templates](Templates) in **Configuration - Configure Template** or [Modules](Modules) in **Configuration - Configure Module**. 
+
+!!! quote "Check out all the supported devices in [Tasmota Device Templates Repository](https://templates.blakadder.com/)"
+
 !!! warning
      If you experience power fluctuations in your power grid its best to immediately disable [Power Cycle Recovery](Device-Recovery#fast-power-cycle-device-recovery) feature with command [`SetOption65 1`](Commands.md#setoption65) immediately or you might end up with firmware defaults on your device.
 
 [Commands](Commands) and Backlog are powerful and in time you can learn to configure almost everything (NTP servers, longitude and latitude, custom device options, etc) with a few copy and paste moves.
 
-Your device is connected to your network and to the MQTT broker. One last thing to do is configure your device using [Templates](Templates) in **Configuration - Configure Template** or [Modules](Modules) in **Configuration - Configure Module**. 
-
-!!! quote "Check out all the supported devices in [Tasmota Device Templates Repository](https://templates.blakadder.com/)"
