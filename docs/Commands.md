@@ -560,6 +560,7 @@ ShutterOpen&#60;x><a class="cmnd" id="shutteropen"></a>|Engage the relay to open
 ShutterPosition&#60;x><a class="cmnd" id="shutterposition"></a>|`0..100`, `UP`, `DOWN`, `STOP`<BR>A shutter position change can be requested at any time. The shutter will stop and revert or update to the requested position. The shutter's actual position will be saved _**after**_ the movement is completed. In this case, the position will be restored during reboot. An interruption during shutter movement (e.g., a device restart) will lose the current position.
 ShutterRelay&#60;x><a class="cmnd" id="shutterrelay"></a>|`<value>`<BR>`0` = disable this and all higher numbered shutters<BR>`1,3,5,7,...` (must be an odd number) = `Relay<value>` component used to open the shutter. This relay's mate, the next higher numbered relay, closes the shutter. Depending on the shutter mode, the relays may need to be interlocked using the [`Interlock`](Commands.md#interlock) command.<BR>**The `ShutterRelay` command must be executed first before any other shutter commands for `Shutter<x>` can be executed.**
 ShutterSetClose&#60;x><a class="cmnd" id="shuttersetclose"></a>|shutter closed position. `ShutterPosition` will be reset to fully closed value (e.g., `0` when `ShutterInvert = 0`, `100` otherwise).
+ShutterSetOpen&#60;x><a class="cmnd" id="shuttersetopen"></a>|shutter opened position. `ShutterPosition` will be reset to fully opened value (e.g., `100` when `ShutterInvert = 0`, `0` otherwise).
 ShutterSetHalfway&#60;x><a class="cmnd" id="shuttersethalfway"></a>| `0..100` *(default = `50`)*<BR>Define shutter half open position (in percent)
 ShutterStop&#60;x><a class="cmnd" id="shutterstop"></a>|Disengage the relays to stop the shutter. Number of shutter can be the index or the argument
 ShutterStopClose&#60;x><a class="cmnd" id="shutterstopclose"></a>|Stop the shutter when currently moving, close it otherwise
@@ -642,3 +643,40 @@ MP3Reset<a class="cmnd" id="MP3Reset"></a>|Reset the MP3 player to defaults
 MP3Stop<a class="cmnd" id="MP3Stop"></a>|Stop
 MP3Track<a class="cmnd" id="MP3Track"></a>|`x` = play track <x\>
 MP3Volume<a class="cmnd" id="MP3Volume"></a>|`0..100` = set Volume
+
+### Thermostat 
+
+Command|Parameters
+:---|:---
+ThermostatModeSet<x><a class="cmnd" id="ThermostatModeSet"></a>|Sets the thermostat mode<BR> `0` = Thermostat Off (controller inactive, default)<BR> `1` = Thermostat in automatic mode (controller active)<BR> `2` = Thermostat in manual mode (output switch follows the input switch, used to follow an existing wall thermostat)</ul>
+ClimateModeSet<x><a class="cmnd" id="ClimateModeSet"></a>|Sets the climate mode<BR> `0` = Heating mode (default)<BR> `1` = Cooling mode</ul>
+ControllerModeSet<x><a class="cmnd" id="ControllerModeSet"></a>|Sets the controller mode (used for thermostat in automatic mode)<BR> `0` = Hybrid controller (Predictive ramp-up controller and PI, default)<BR> `1` = PI controller<BR> `2` = Predictive ramp-up controller</ul>
+TempFrostProtectSet<x><a class="cmnd" id="TempFrostProtectSet"></a>|Sets the frost protection temperature. The controller, if in automatic mode, will never allow the temperature to sink below this value<BR> `<0..12>` = Temperature value in degrees Celsius/Fahrenheit (default 4.0° Celsius) </ul>
+InputSwitchSet<x><a class="cmnd" id="InputSwitchSet"></a>|Sets the number of the input used in case in manual control<BR> `<1..4>` = Number of the input (default 1)</ul>
+InputSwitchUse<x><a class="cmnd" id="InputSwitchUse"></a>|Switch to decide if the input shall be used to automatically switch to manual mode and assign it to the output (usefull if using a serially connected wall thermostat)<BR> `0` = Input not used (default)<BR> `1` = Input used</ul>
+SensorInputSet<x><a class="cmnd" id="SensorInputSet"></a>|Sets the temperature sensor to be used<BR> `0` = MQTT (default)<BR> `1` = Local sensor (can be changed by define, default DS18B20)</ul>
+OutputRelaySet<x><a class="cmnd" id="OutputRelaySet"></a>|Sets the output switch to be used for the thermostat<BR> `<1..8>` = Number of the output (default 1)</ul>
+TimeAllowRampupSet<x><a class="cmnd" id="TimeAllowRampupSet"></a>|Sets the minimum time in minutes since the last control action to be able to switch to the predictive ramp-up controller phase (applicable just in case of Hybrid controller, used normally in case of big deltas between the setpoint and the room temperature)<BR> `<value>` = Minutes (default 300 minutes) </ul>
+TempFormatSet<x><a class="cmnd" id="TempFormatSet"></a>|Sets the temperature format<BR> `0` = Degrees celsius (default)<BR> `1` = Degrees Fahrenheit</ul>
+TempMeasuredSet<x><a class="cmnd" id="TempMeasuredSet"></a>|Sets the temperature measured by the sensor (for MQTT sensor mode)<BR> `<TempFrostProtectSet..100>` = Temperature (default 18.0° Celsius) </ul>
+TempTargetSet<x><a class="cmnd" id="TempTargetSet"></a>|Sets the target temperature for the controller (setpoint)<BR> `<TempFrostProtectSet..100>` = Temperature (default 18.0° Celsius) </ul>
+TempMeasuredGrdRead<x><a class="cmnd" id="TempMeasuredGrdRead"></a>|Returns the calculated temperature gradient<BR> `<value>` = Temperature gradient in degrees Celsius/Fahrenheit </ul>
+StateEmergencySet<x><a class="cmnd" id="StateEmergencySet"></a>|Sets the thermostat emergency flag<BR> `0` = Emergency flag off (default)<BR> `1` = Emergency flag on (thermostat switches to off state)</ul>
+TimeManualToAutoSet<x><a class="cmnd" id="TimeManualToAutoSet"></a>|Sets the time in manual mode after the last active input  action (f.i. last action from serial connected wall thermostat) to switch to aumatic mode<BR> `0..1440` = time in minutes (default 60 minutes)</ul>
+PropBandSet<x><a class="cmnd" id="PropBandSet"></a>|Sets the value of the proportional band of the PI controller<BR> `0..20` = value in degrees Celsius (default 4 degrees Celsius)</ul>
+TimeResetSet<x><a class="cmnd" id="TimeResetSet"></a>|Sets the value of the reset time of the PI controller<BR> `0..86400` = value in seconds (default 12000 seconds)</ul>
+TimePiProportRead<x><a class="cmnd" id="TimePiProportRead"></a>|Returns the proportional part of the PI controller calculation in seconds<BR> `value` = value in seconds</ul>
+TimePiIntegrRead<x><a class="cmnd" id="TimePiIntegrRead"></a>|Returns the integral part of the PI controller calculation in seconds<BR> `value` = value in seconds</ul>
+TimePiCycleSet<x><a class="cmnd" id="TimePiCycleSet"></a>|Sets the value of the cycle for the PI controller<BR> `0..1440` = value in minutes (default 30 minutes)</ul>
+TempAntiWindupResetSet<x><a class="cmnd" id="TempAntiWindupResetSet"></a>|Sets the value of the delta between controlled temperature and setpoint above which the integral part of the PI controller will be set to 0, in degrees Celsius/Fahrenheit<BR> `0..10` = value in degrees (default 0.8° Celsius)</ul>
+TempHystSet<x><a class="cmnd" id="TempHystSet"></a>|Sets the value of the temperature hysteresis for the PI controller, in degrees Celsius/Fahrenheit<BR> `-10..10` = value in degrees (default 0.1° Celsius)</ul>
+TimeMaxActionSet<x><a class="cmnd" id="TimeMaxActionSet"></a>|Sets the maximum duty cycle of the PI controller in minutes<BR> `0..1440` = value in minutes (default 20 minutes)</ul>
+TimeMinActionSet<x><a class="cmnd" id="TimeMinActionSet"></a>|Sets the minimum duty cycle of the PI controller in minutes<BR> `0..1440` = value in minutes (default 4 minutes)</ul>
+TimeSensLostSet<x><a class="cmnd" id="TimeSensLostSet"></a>|Sets the maximum time without a temperature sensor update to mark it as lost in minutes<BR> `0..1440` = value in minutes (default 30 minutes)</ul>
+TimeMinTurnoffActionSet<x><a class="cmnd" id="TimeMinTurnoffActionSet"></a>|Sets the minimum time in minutes within a cycle for the PI controller to switch off the output, below it, it will stay on<BR> `0..1440` = value in minutes (default 3 minutes)</ul>
+TempRupDeltInSet<x><a class="cmnd" id="TempRupDeltInSet"></a>|Sets the minimum delta between controlled temperature and setpoint for the controller to switch to ramp-up controller phase (applicable just in Hybrid controller mode)<BR> `0..10` = value in degrees Celsius/Fahrenheit (default 0.4° Celsius)</ul>
+TempRupDeltOutSet<x><a class="cmnd" id="TempRupDeltOutSet"></a>|Sets the maximum delta between controlled temperature and setpoint for the controller to switch to the PI controller phase (applicable just in Hybrid controller mode)<BR> `0..10` = value in degrees Celsius/Fahrenheit (default 0.2° Celsius)</ul>
+TimeRampupMaxSet<x><a class="cmnd" id="TimeRampupMaxSet"></a>|Sets the maximum time in minutes for the controller to stay in the ramp-up phase (applicable just in Hybrid controller mode<BR> `0..1440` = value in minutes (default 960 minutes)</ul>
+TimeRampupCycleSet<x><a class="cmnd" id="TimeRampupCycleSet"></a>|Sets the value of the cycle for the ramp-up controller<BR> `0..1440` = value in minutes (default 30 minutes)</ul>
+TempRampupPiAccErrSet<x><a class="cmnd" id="TempRampupPiAccErrSet"></a>|Sets the initial accumulated error when switching from ramp-up to the PI controller phase if the target temperature has not been reached (applicable just in Hybrid controller mode)<BR> `0..25` = value in degrees Celsius/Fahrenheit (default 2° Celsius)</ul>
+DiagnosticModeSet<x><a class="cmnd" id="DiagnosticModeSet"></a>|Enables/disables the diagnostics flag<BR> `0` = Diagnostics disabled<BR> `1` = Diagnostics enabled (default)</ul>
