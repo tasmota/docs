@@ -344,10 +344,10 @@ S
 =>print subroutine was executed
 ```
 
-**For loop** (loop count must not be less than 1)
+**For loop** (loop count must not be less than 1, no direct nesting supported)
 
 ```
-for var <from <to <inc  
+for var <from> <to> <inc>  
 next  
 ```
   
@@ -703,6 +703,21 @@ remark: the Flash illumination LED is connected to GPIO4
     and hum>70
     then =>print damn hot!
     endif
+
+    =#siren(5)
+
+    ; loop nesting workaround
+    ; by using subroutine
+    #siren(num)
+    for cnt 1 num 1
+    =#stone
+    next
+
+    #stone
+    for tone 2000 1000 -20
+    beep(tone 10);
+    delay(12)
+    next
 
     >S
     ; every second but not completely reliable time here
