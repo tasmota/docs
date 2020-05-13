@@ -1,4 +1,3 @@
-
 !!! info "Zigbee2Tasmota serves as a gateway for devices connected to a Zigbee wireless network to bridge their communications over to Wi-Fi"
 
 Zigbee2Tasmota is a lightweight Zigbee solution running on an ESP82xx Wi-Fi chip. Hence it is easier to deploy wherever you want in your home. It is largely inspired by [Zigbee2mqtt](https://www.zigbee2mqtt.io/) but it's a complete rewrite to make it fit on an ESP82xx with 80kB of RAM and only 1MB of flash memory.
@@ -85,7 +84,9 @@ Flashing options:
 - Flash with a dedicated [CC Debugger](https://ptvo.info/how-to-select-and-flash-cc2530-144/) and Windows PC 
 - Flasing with [RaspberryPi](https://github.com/jmichault/flash_cc2531) (flash_CC2531 from [jmichault](https://github.com/jmichault)) 
 
-Flash the CC2531 USB Stick with the [Z-Stack CC2530](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_Home_1.2/bin/default) firmware file as mentioned above. Not with the CC2531 Firmware!
+
+!!! note
+    Flash the CC2531 USB Stick with the [Z-Stack CC2530](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_Home_1.2/bin/default) firmware file as mentioned above. Not with the CC2531 Firmware!
  
 
 ### Flash Tasmota
@@ -124,7 +125,7 @@ In addition, on some sticks, it is necessary to solder a solder bridge between t
 
 Solderpads:
 
-<img src="_media/zigbee/cc2531_solderpads.jpg" width="360" alt="Solderpads on CC2531">
+<img src=../_media/zigbee/cc2531_solderpads.jpg" width="360" alt="Solderpads on CC2531">
 
 
 !!! failure 
