@@ -125,7 +125,7 @@ In addition, on some sticks, it is necessary to solder a solder bridge between t
 
 Solderpads:
 
-<img src=../_media/zigbee/cc2531_solderpads.jpg" width="360" alt="Solderpads on CC2531">
+<img src="../_media/zigbee/cc2531_solderpads.jpg" width="360" alt="Solderpads on CC2531">
 
 
 !!! failure 
