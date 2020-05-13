@@ -375,7 +375,7 @@ Here is a list of supported commands, see below how to send any command if it's 
 
 Command|Parameters|Cluster
 -|-|-
-Power|`1\|true\|"true"\|"on"`: On<BR>`0\|false\|"false"\|"off"`: Off<BR>`2\|"Toggle"`: Toggle|0x0006
+Power|`1|true|"true"|"on"`: On<BR>`0|false|"false"|"off"`: Off<BR>`2|"Toggle"`: Toggle|0x0006
 Dimmer|`0..254`: Dimmer value<BR>255 is normally considered as invalid, and may be converted to 254|0x0008
 DimmerUp|`null`: no parameter. Increases dimmer by 10%|0x0008
 DimmerDown|`null`: no parameter. Decreases dimmer by 10%|0x0008
