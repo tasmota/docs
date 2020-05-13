@@ -86,7 +86,7 @@ Declare a script `>M` section with the number of connected meters (n = `1..5`)
     - negative value <=0 = debounce time (milliseconds) for irq driven counters  
 - `<jsonPrefix>` - prefix for Web UI and MQTT JSON payload. Up to 7 characters  
 - `<txGPIO>` - meter command transmit GPIO (optional)  
-- `<txPeriod>` - number of 250ms increments (n * 250ms). Period to repeat the transmission of commands to the meter (optional)  
+- `<txPeriod>` - number of 100ms increments (n * 100ms). Period to repeat the transmission of commands to the meter (optional)  
 - `<cmdTelegram>` - comma separated hex coded byte blocks to send to meter device. For modbus each comma separated block is a command to retrieve a certain register from the meter (Optional, only required for measuring devices that have to be triggered with a certain character string.)  
   
 **Modbus:**
@@ -200,11 +200,11 @@ with the '=' char at the beginning of a line you may do some special decoding
     
 !!! example
 
-      `>D`  
-      res=0  
-      scnt=0    
-      ;For this Example in the >F section  
-    > `>F`
+    `>D`  
+    res=0  
+    scnt=0    
+    ;For this Example in the >F section  
+    `>F`
     ;count 100ms   
     scnt+=1  
     switch scnt  
