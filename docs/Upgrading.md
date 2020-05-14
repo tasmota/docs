@@ -140,7 +140,7 @@ Remember that you **must take each individual step** between the device firmware
 
 As a safeguard perform "Backup Configuration" before installing a new version. If settings are lost "Restore Configuration" should bring them back.
 
-<!-- | Project Name | Release | Direct Download |
+| Project Name | Release | Direct Download |
 |-|-|-|
 | Sonoff-Tasmota | [v3.9.22](https://github.com/arendst/Tasmota/releases/tag/v3.9.22) | [`firmware.bin`](https://github.com/arendst/Tasmota/releases/download/v3.9.22/firmware.bin) |
 | Sonoff-Tasmota | [v4.2.0](https://github.com/arendst/Tasmota/releases/tag/v4.2.0) | [`firmware.bin`](https://github.com/arendst/Tasmota/releases/download/v4.2.0/firmware.bin) |
@@ -149,7 +149,7 @@ As a safeguard perform "Backup Configuration" before installing a new version. I
 | Tasmota        | [v7.2.0](https://github.com/arendst/Tasmota/releases/tag/v7.2.0) | [`tasmota-minimal.bin`](https://github.com/arendst/Tasmota/releases/download/v7.2.0/tasmota-minimal.bin) |
 | Tasmota        | [latest](https://github.com/arendst/Tasmota/releases/latest) | (Check "Assets" section) |
 
-Follow the path till you reach the latest Tasmota version. -->
+Follow the path till you reach the latest Tasmota version.
 
 Migrating from one minor version to the next is mostly painless as the settings are saved in the same location in flash and newer settings are appended.
 
