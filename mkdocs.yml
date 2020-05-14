@@ -113,6 +113,7 @@ nav:
     - nymea.md
     - Octoprint.md
     - openHAB.md
+    - OpenTherm.md
     - otto.md
     - IOBroker: "https://github.com/arendst/Tasmota/issues/3769"
     - Mozilla WebThings Adapter: "https://github.com/tim-hellhake/tasmota-adapter"
@@ -122,6 +123,7 @@ nav:
     - Analog pin: ADC.md
     - Buzzer.md
     - Displays.md
+    - ESP32.md
     - A4988 stepper motor controller: A4988-Stepper-Motor-Controller.md
     - AHT1x.md
     - AM2301 temperature and humidity sensor: AM2301.md
