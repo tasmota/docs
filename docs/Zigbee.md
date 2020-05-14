@@ -60,7 +60,7 @@ Flashing options:
 - Flashing with [CCLoader](https://zigbee.blakadder.com/flashing_ccloader.html) and ESP8266 ==(recommended)==
 - Flashing with [CCLib](Zigbee-CCLib-Flashing.md) and ESP8266
 - Flash with a dedicated [CC Debugger](https://ptvo.info/how-to-select-and-flash-cc2530-144/) and Windows PC 
-- Flasing with [RaspberryPi](https://github.com/jmichault/flash_cc2531) (flash_CC2531 from [jmichault](https://github.com/jmichault)) 
+- Flash with [RaspberryPi](https://github.com/jmichault/flash_cc2531) 
 
 !!! note
     Flash the CC2531 USB Stick with the [Z-Stack CC2530](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_Home_1.2/bin/default) firmware file as mentioned above. Not with the CC2531 Firmware!
