@@ -430,6 +430,24 @@ Jarolift shutters operates by the 3 commands up/stop/down. Compile with the KeeL
 
   `Rule1 On Power1#state=0 DO KeeloqSendButton 4 endon On Power2#state=0 DO KeeloqSendButton 4 endon on Power1#state=1 DO KeeloqSendButton 8 endon on Power2#State=1 DO KeeloqSendButton 2 endon`
 
+#### Venetian Blind Support
+A 2nd shutter can be configured to support the adjustment of the horizontal tilt.  
+After movement the tilt will be restored if blind is not fully opened or closed via an additional rule.  
+
+Custom build with following options is needed:  
+  `#define USE_EXPRESSION`  
+  `#define SUPPORT_IF_STATEMENT`  
+
+Configuration of 2nd shutter:  
+  `ShutterRelay2 1`            // setup 2nd shutter at same relay as shutter 1  
+  `ShutterOpenDuration2 1.4`   // adjust to real duration  
+  `ShutterCloseDuration2 1.4`  // adjust to real duration  
+
+Add rule (requires rules with [Conditional Rules](Rules.md#conditional-rules) enabled :  
+```
+Rule1 on Shutter2#Position DO mem1 %value% ENDON on Shutter1#Position DO var2 %value% ENDON on Shutter1#Direction!=0 DO var1 %value% ENDON on Shutter1#Direction=0 DO IF (var1==1) var1 0; IF (var2!=100) ShutterSetOpen2; shutterposition2 %mem1% ENDIF ENDIF ENDON on Shutter1#Direction=0 DO IF (var1==-1) var1 0; IF (var2!=0) ShutterSetClose2; shutterposition2 %mem1% ENDIF ENDIF ENDON
+```
+
 #### Home Assistant Support
 For shutter position to persist in Home Assistant through device reboots, execute `PowerRetain 1`.
 
