@@ -225,8 +225,9 @@ Multipress functions for 2 and more presses cannot be changed using SetOptions o
 !!! danger
     If you [have changed](#Changing-default-functionality) [ButtonTopic](Commands.md#buttontopic), [SetOption1](Commands.md#setoption1), [SetOption11](Commands.md#setoption11) or [SetOption13](Commands.md#setoption13) some of the listed functionality will be changed or removed.
 
-!!! note "`Button1` can directly control up to five relays. The number of the activated relay corresponds to the number of button presses and this feature is not present in the other buttons. 
-When ButtonTopic is set to default `0` a button will always send its state for rules."
+!!! note 
+   `Button1` can directly control up to five relays. The number of the activated relay corresponds to the number of button presses and this feature is not present in the other buttons. 
+   When ButtonTopic is set to default `0` a button will always send its state for rules.
 
 #### 1 short press
 Toggles the power state. This will blink the LED once and send an MQTT status message like `stat/tasmota/POWER = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"SINGLE"}` when SetOption73 is enabled. The button state for rules is `2` (`10` if `Setoption73` is enabled).
