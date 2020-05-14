@@ -20,8 +20,8 @@ Before using Zigbee to Tasmota, you need to understand a few concepts. Here is a
 |**Pairing**<BR>By default the coordinator does not accept new devices unless put in pairing mode. When in pairing mode, it will accept pairing requests from any device within range.<BR>*Default: pairing disabled*|WPS|
 
 ## Required Hardware
-#### CC2530 Zigbee Adapter
-Any TI CC2530 chip based module can serve as a coordinator. See [list of supported modules](https://zigbee.blakadder.com/zigbee2tasmota.html) with their pinouts and flashing instructions. 
+#### TI CC253x Zigbee Adapter
+Any TI CC2530 or CC2531 chip based module can serve as a coordinator. See [list of supported modules](https://zigbee.blakadder.com/zigbee2tasmota.html) with their pinouts and flashing instructions. 
 
 !!! info "Devices based on CC2531 _can_ be used with Tasmota but _not in USB mode_!"
     Normally CC2531 supports USB communication, but Zigbee2Tasmota requires serial communication.
@@ -41,41 +41,19 @@ These PCB make all the connections required to flash the CC2530 and to run Z2T.
   You can also get a complete Z2T module with case, pre-flashed and ready to configure and deploy.  
   <img src="https://raw.githubusercontent.com/h4nc/Zigbee2Tasmota_PCB/master/images/Z2T.jpeg" height="250">
 
-<!-- <table style="text-align:center; width: 80%;">
-    <col style="width:30%">
-    <col style="width:30%">
-    <col style="width:30%">
-  <tr>
-    <th><a href="https://www.aliexpress.com/item/32904763478.html"> CC2530 with PCB antenna, DL-20</a></th>
-    <th><a href="https://www.aliexpress.com/item/33007098493.html">CC2530 with external antenna</a></th>
-    <th><a href="https://www.aliexpress.com/item/4000118023903.html">CC2530 with external antenna and CC2591 RF front end</a></th>
-  </tr>
-  <tr>
-    <td>
-      <img src="https://user-images.githubusercontent.com/34340210/67676080-29301a00-f957-11e9-8799-c819241e0b4c.png" style="width:10em"></img>
-    </td>
-    <td>
-      <img src="https://raw.githubusercontent.com/tasmota/docs/master_media/CC2530%20External%20Antenna.png" style="width:10em"></img>
-    </td>
-    <td>
-      <img src="https://user-images.githubusercontent.com/49731213/64906209-c0ad1680-d6e3-11e9-8703-71ea36c5be72.jpg" style="width:10em"></img>
-    </td>
-</tr>
-</table> -->
-
 #### Wi-Fi Adapter
 Using an ESP82xx device such as a Wemos D1 Mini or a NodeMCU to flash the CC2530 is a lower cost alternative than using a single purpose [CC_DEBUGGER](https://www.aliexpress.com/item/32869263224.html). 
 
 In normal operation two free GPIOs are needed for the serial communication with the CC2530.  
 
 ## Configuration
-### Flash CC2530/CC2531 
-Zigbee2Tasmota requires a TI CC2530 based module flashed with [Z-Stack CC2530 firmware file](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_Home_1.2/bin/default) from [Koen Kanters](https://github.com/Koenkk). 
+### Flash Zigbee Adapter
+Zigbee2Tasmota requires a TI CC253x based module flashed with [Z-Stack CC2530 firmware file](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_Home_1.2/bin/default) from [Koen Kanters](https://github.com/Koenkk). 
 
-Due to memory constraints of the CC2530, you can only pair 16 devices to a coordinator ([See details](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator)). 
+Due to memory constraints of the CC253x, you can only pair 16 devices to a coordinator ([See details](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator)). 
 
 !!! note
-    There is an alternative firmware allowing for Zigbee routers to create a mesh network and go beyond 16 devices. This is currently not tested nor supported by Zigbee2Tasmota. It may be added later.
+    There is an alternative firmware allowing for Zigbee routers to create a mesh network and go beyond 16 devices. This is currently  tested and in development.
 
 Flashing options:
 
@@ -84,12 +62,11 @@ Flashing options:
 - Flash with a dedicated [CC Debugger](https://ptvo.info/how-to-select-and-flash-cc2530-144/) and Windows PC 
 - Flasing with [RaspberryPi](https://github.com/jmichault/flash_cc2531) (flash_CC2531 from [jmichault](https://github.com/jmichault)) 
 
-
 !!! note
     Flash the CC2531 USB Stick with the [Z-Stack CC2530](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_Home_1.2/bin/default) firmware file as mentioned above. Not with the CC2531 Firmware!
  
 ### Flash Tasmota
-Once the CC2530 flashing process completes, you can re-use the  ESP82xx and flash Tasmota with Zigbee2Tasmota enabled firmware. Otherwise, you can use any ESP82xx device.  
+Once the Zigbee adapter flashing process completes, you can re-use the ESP82xx and flash Tasmota with Zigbee2Tasmota enabled firmware. Otherwise, you can use any ESP82xx device.  
 
 !!! failure "Zigbee feature is not included in precompiled binaries"
 
@@ -108,33 +85,13 @@ If you find that your Zigbee2Tasmota operation is unstable, you may have an ESP8
     
 Flash the newly compiled binary usig the [normal flashing process](Getting-Started.md#flashing).
 
-### Connect CC2530/2531 to Tasmota
-If you are using your ESP82xx device to flash the Zigbee adapter as described in tutorials you may want to leave these connections in place in case you ever need to update CC2530 firmware. If not, any of the free GPIOs can be used.
-
-**CC2531 USBStick**
-On the CC2531 USBStick some of the connectors of the CC2531 are connected to extra solder pads. Among others also RX/TX. To see on the picture below. CC_RXD(P0.3), CC_TXD(P0.1).
-
-
-If you want to supply the USB stick via 3.3V and GND from your ESP82xx board, you can use the corresponding pins of the debug header.
-GND is located at pin 1 and 3.3V at pin 9 of the DebugHeader.
-In addition, on some sticks, it is necessary to solder a solder bridge between the two small pads to the left of the "DEBUG" label just below the left side of the button, right next to the "D" of "Debug". You can see that one of the solder pads is connected to pin 9 of the debug header.
-
-<img src="https://cdn-media.itead.cc/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/c/c/cc2531usb_02.jpg" width="360" alt="Copyright: media.itead.cc">
-
-
-Solderpads:
-
-<img src="../_media/zigbee/cc2531_solderpads.jpg" width="360" alt="Solderpads on CC2531">
-
-
-!!! failure 
-    Be careful not to solder a short circuit between the pads and the housing of the button.
-    
+### Connect Zigbee Adapter to Tasmota
+If you are using your ESP82xx device to flash the Zigbee adapter as described in tutorials you may want to leave these connections in place in case you ever need to update Zigbee adapter firmware. If not, any of the free GPIOs can be used.
 
 !!! note "It is recommended that hardware serial pins be used (GPIO1/GPIO3 or GPIO13\[Rx]/GPIO15\[Tx])"
     Due to ESP82xx GPIO pin constraints, GPIO15 can only be used as serial Tx.  
 
-The interface between the ESP82xx Wi-Fi device and the CC2530 Zigbee module uses high speed serial. 
+The interface between the ESP82xx Wi-Fi device and the Zigbee adapter uses high speed serial. 
 
 !!! tip
     Tasmota also provides serial communications emulation through software (i.e., software serial). This allows any GPIO to be used. TasmotaSerial version 2.4.x (PR [#6377](https://github.com/arendst/Tasmota/pull/6377)) has improved the reliability of software serial making it feasible for use in this application. However, if you have an option to use hardware serial, choose that.
@@ -166,7 +123,18 @@ Use this one for the recommended wiring scheme:
 ```json
 {"NAME":"Zigbee","GPIO":[0,0,0,0,0,0,0,0,0,166,0,165,0],"FLAG":0,"BASE":18}
 ```
+#### CC2531 USB Wiring
+On a CC2531 USB adapter some of the connectors of the CC2531 are connected to extra solder pads. Among those are RX/TX as seen on the image (CC_RXD(P0.3), CC_TXD(P0.1)): 
 
+![Pinout](https://cdn-media.itead.cc/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/c/c/cc2531usb_02.jpg)
+
+If you want to supply power to the USB stick via 3.3V and GND from your ESP82xx board, you can use the corresponding pins of the debug header. GND is located at pin 1 and 3.3V at pin 9 of the DebugHeader.
+In addition, on some sticks, it is necessary to solder a solder bridge between the two small pads to the left of the "DEBUG" label just below the left side of the button, right next to the "D" of "Debug". You can see that one of the solder pads is connected to pin 9 of the debug header.
+
+![Solderpads on CC2531](_media/zigbee/cc2531_solderpads.jpg)
+
+!!! failure 
+    Be careful not to solder a short circuit between the pads and the housing of the button.
 
 ### First Run
 
