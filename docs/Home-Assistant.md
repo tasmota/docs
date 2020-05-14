@@ -39,11 +39,14 @@ With MQTT discovery no user interaction or configuration file editing is needed 
     Announced to Home Assistant as [MQTT Light](https://www.home-assistant.io/integrations/light.mqtt/).
 
     Discovery supports single channel Dimmer as well as multi-channel RGB, RGBW, RGBCCT and CCT lights.
-    To have multi-channel PWM instead of a single light entity under Home Assistant use [`SetOption68 1`](Commands.md#setoption68).
-    If you have a light with 4 or 5 channels like an `RGBCCT` bulb you may want to use [`SetOption37 128`](Commands.md#setoption37) to have two separated lights, one for RGB and one for White or Temperature management.  
 
-    !!! note "Tasmota will no longer switch `%prefix%` and `%topic%` and will keep the default topic structure. This could lead to a very long topic for a light and the Discovery could fail to parse the necessary code for Home Assistant. In this case a warning will be shown on Discovery logs. 
-    To avoid this issue keep your [Topic](Commands.md#topic) and/or [FriendlyName](Commands.md#friendlyname) as short as possible." 
+    To have multi-channel PWM instead of a single light entity under Home Assistant use [`SetOption68 1`](Commands.md#setoption68).
+
+    If you have a light with 4 or 5 channels (RGB+W or RGB+CCT) you can [split them](Lights.md#rgb-and-white-split) into two separate lights, first one for RGB and second for White/CT.  
+
+    !!! note 
+        Tasmota will no longer switch `%prefix%` and `%topic%` and will keep the default topic structure. This could lead to a very long topic for a light and autodiscovery could fail to parse the necessary code for Home Assistant. In this case a warning will be shown in the logs and Tasmota Console. 
+        To avoid this issue keep your [Topic](Commands.md#topic) and/or [FriendlyName](Commands.md#friendlyname) as short as possible.
 
 
     _Alternatively you can configure it manually using [Light](https://www.home-assistant.io/integrations/light/) integration._
@@ -67,15 +70,17 @@ With MQTT discovery no user interaction or configuration file editing is needed 
     Announced to Home Assistant as [MQTT Sensor](https://www.home-assistant.io/integrations/sensor.mqtt/).
 
     When discovery is enabled Tasmota will send all the sensors information to Home Assistant. For each sensor present, entities will be created in numbers equal to the items present below him.
-    Example: an AM2301 sensor will generate one entity for temperature, one for humidity and one for dew point.   
+
+    Example:     
+    An AM2301 sensor will generate one entity for Temperature, one for Humidity and one for Dew point.   
 
     !!! warning
          Please be advised that not all sensors can be correctly rendered under Home Assistant. In those cases a fallback function will be used to create a generic sensor and the correct operation is not guaranteed.
 
 === "Switches"
-    Announced to Home Assistant as [MQTT Binary Sensor](https://www.home-assistant.io/integrations/binary_sensor.mqtt/) and/or as a [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
+    Announced to Home Assistant as [MQTT Binary Sensor](https://www.home-assistant.io/integrations/binary_sensor.mqtt/) and/or as an [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
 
-    To have switches discovered `SwitchTopic` must be set to a custom name and it will automatically start to listen and publish using `/stat/%topic%/SWITCH<x>` (binary sensor) or `/stat/%topic%/SWITCH<x>T` (trigger) topics.
+    To have switches discovered `SwitchTopic` must be set to a custom name and it will automatically start to listen and publish using `stat/%topic%/SWITCH<x>` (binary sensor) or `stat/%topic%/SWITCH<x>T` (trigger) topics.
 
     Depending by the `SwitchMode`used, a switch can be a Trigger (`TOGGLE`or `HOLD`), a Binary Sensor (`ON`/`OFF`) or both at the same time.
 
@@ -100,8 +105,8 @@ SetOption19 1
 
 !!! failure "Discovery is not built in to tasmota lite. Use the full version (tasmota.bin) for discovery."
 
-After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device.
-Tasmota uses the name of the module (or template) to identify the device and it can be easily altered to a more meaningful name directly on the Home Assistant integration page after the first discovery.
+After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device.    
+Tasmota uses the configured module (or template) name to identify the device name in Home Assistant integrations which can be easily changed directly in the Home Assistant UI after the discovery is complete.
 
 Enabling discovery will automatically change some SetOptions to suit the new configuration:
 
