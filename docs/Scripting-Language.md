@@ -35,6 +35,7 @@ SDCARD_DIR | enables support for web UI for SD card directory upload and downloa
 USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 USE_SCRIPT_TASK | enables Task in ESP32
+USE_SML_SCRIPT_CMD | enables SML script cmds
 ----
 
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules)"
@@ -244,7 +245,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `s(x)` = explicit conversion from number x to string  
 `mqtts` = MQTT connection status: `0` = disconnected, `>0` = connected  
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
-
+`sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
+`sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
 `hours` = hours  
 `mins` = mins  
 `secs` = seconds  
