@@ -19,8 +19,8 @@ Incredibly expandable and flexible.
 
 :rotating_light: **BREAKING CHANGE** :rotating_light: 
 
-- This update changes the multicast address and port used by device groups. All devices using Device Groups must be upgraded.
-- Upgraded Home Assistant discovery with new features: 
+- This update changes the multicast address and port used by device groups. All devices using [Device Groups](Device-Groups.md) must be upgraded.
+- Upgraded [Home Assistant](Home-Assistant.md) discovery with new features: 
     - Template/Module name is now used as the Device name in autodiscovery;
     - New management for Lights discovery, using directly LIGHT structure;
     - Add support for SetOption37 for color remapping for led channels and independent handling of RGB and white channels;
@@ -33,7 +33,7 @@ Incredibly expandable and flexible.
 
 #### Notable new features:
 
-- Add quick wifi reconnect using saved AP parameters when `SetOption56 0`. Tasmota will now reconnect to your network in under a second.
+- Add quick wifi reconnect using saved AP parameters when [`SetOption56 0`](Commands.md#setoption56). Tasmota will now reconnect to your network in under a second.
 - Add compression of Rules allowing for up to 60% more rules per each rule buffer
 - Add rule trigger at root level such as `on loadavg<50 do power 2 endon` triggered by `state` command
 - Add command `SO` as shortcut for `SetOption`
