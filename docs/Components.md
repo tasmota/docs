@@ -224,3 +224,6 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 200 | HRXL RX     | Data from MaxBotix HRXL sonar range sensor                                                 |
 | 201 | MOODL TX    | ElectriQ iQ-wifiMOODL Serial TX                                                            |
 | 202 | AS3935      | Lightning Detector Interrupt Pin                                                           |
+| 203 | BOILER OT Rx| OpenTherm Boiler RX pin |
+| 204 | BOILER OT Tx| OpenTherm Boiler TX pin |
+| 205 | WINDMETER SPEED | WindMeter speed counter pin |

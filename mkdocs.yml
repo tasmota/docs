@@ -94,7 +94,6 @@ nav:
     - I2C Devices: I2CDevices.md
     - Scripting: Scripting-Language.md
     - Smart-Meter-Interface.md
-    - OpenTherm.md
     - TasmotaSlave.md
     - Subscribe-&-Unsubscribe.md
     - TLS.md
@@ -153,6 +152,7 @@ nav:
     - MPR121.md
     - MPU-6050.md
     - NRF24L01.md
+    - OpenTherm.md
     - P1-Smart-Meter.md
     - PAJ7620.md
     - PCA9685.md

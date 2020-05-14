@@ -47,6 +47,7 @@ Name|Description
 [**MH-Z19B**](MH-Z19B) | CO<sub>2</sub> Sensor 
 [**MLX90614**](MLX90614) | MLX9061X Infrared Thermometer (I^2^C) 
 [**NRF24L01**](NRF24L01) | NRF24L01 as BLE-bridge for Mijia BT sensors (SPI)
+[**OpenTherm**](OpenTherm) | OpenTherm adapter (serial)
 [**MPR121**](MPR121) | Proximity Capacitive Touch Sensor Controller (I^2^C)
 [**MPU6050**](MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer sensor (I^2^C)
 [**P1 Smart Meter**](P1-Smart-Meter) | Energy Meter (serial)
@@ -78,6 +79,7 @@ Name|Description
 [**TX20<BR>TX23**](TX2x) | La Crosse TX2x Series Anemometer | sensor (gpio)
 [**VEML6070**](VEML6070) |  UV Sensor (I^2^C)
 [**VL53L0x**](VL53L0x) | Time of flight sensor (I^2^C)
+**WindMeter** | Analog cup anemometer
 [**WS2812B**](WS2812B-RGB-Shield) | Wemos RGB LED Shield
 [**WS2812B<BR>WS2813B**](WS2812B-and-WS2813) | LED Strip
 **Xadow (Grove) Mutichannel Gas Sensor** | gas sensor (I^2^C)
