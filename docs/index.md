@@ -14,24 +14,20 @@ Incredibly expandable and flexible.
 [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4)
 [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-### Current release
-<a href="https://github.com/arendst/Tasmota/releases/tag/v8.3.0"><span style="font-size:40px;">Tasmota 8.3.0 Fred</span></a> 
-
-:rotating_light: **BREAKING CHANGE** :rotating_light: 
-
-- This update changes the multicast address and port used by device groups. All devices using [Device Groups](Device-Groups.md) must be upgraded.
-- Upgraded [Home Assistant](Home-Assistant.md) discovery with new features: 
+### Current release 
+<a href="https://github.com/arendst/Tasmota/releases/tag/v8.3.0"><span style="font-size:40px;">Tasmota 8.3.0 Fred</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
+ 
+- :rotating_light: **BREAKING CHANGE** :rotating_light: 
+Changed multicast address and port used by device groups. All devices using [Device Groups](Device-Groups.md) must be upgraded. 
+- :rotating_light: **BREAKING CHANGE** :rotating_light: Upgraded [Home Assistant](Home-Assistant.md) discovery with new features: 
     - Template/Module name is now used as the Device name in autodiscovery;
     - New management for Lights discovery, using directly LIGHT structure;
     - Add support for SetOption37 for color remapping for led channels and independent handling of RGB and white channels;
     - Add support for SetOption68 for multi-channel PWM instead of a single light;
     - Add a failsafe to warn about the wrong order of Relay IDs when a light is present, it will block the MQTT generation for Relays/Lights until the issue is fixed;
     - New management for Relays discovery, using GPIO map directly;
-    - Extended the use of Module/Template as root name to all sensors instead of using FriendlyName1. It can be easily changed inside Home Assistant if needed;
     - Updated status sensor and its list of information
-- Buttons have a new configurable multipress feature, to activate AP mode now requires 6 button presses.
-
-#### Notable new features:
+- :rotating_light: **BREAKING CHANGE** :rotating_light:  Buttons have a new configurable multipress feature, to activate AP mode now requires 6 button presses.
 
 - Add quick wifi reconnect using saved AP parameters when [`SetOption56 0`](Commands.md#setoption56). Tasmota will now reconnect to your network in under a second.
 - Add compression of Rules allowing for up to 60% more rules per each rule buffer
