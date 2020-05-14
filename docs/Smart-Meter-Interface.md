@@ -73,7 +73,7 @@ Declare a script `>M` section with the number of connected meters (n = `1..5`)
   - `c` = Counter type  
   - `e` = EBus binary coding  
   - `m` = MODBus binary coding with serial mode 8N1   
-  - `M` = MODBus binary coding with serial mode 8E1 
+  - `M` = MODBus binary coding with serial mode 8E1  
   - `r` = Raw binary coding (any binary telegram)  
 - `<flag>` - options flag:  
   - `0` = counter without pullup  
@@ -118,18 +118,18 @@ Each meter typically provides multiple metrics (voltage, power, current, humidit
   - OBIS: ASCII OBIS code terminated with `(` character which indicates the start of the meter value  
   - SML: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value  
   - EBUS, MODBus, RAW: hex values of EBUS, MODBus, RAW block to compare  
-    - `xx` means ignore value  (1 byte)
+    - `xx` means ignore value  (1 byte)  
     - `ss` = extract a signed byte  
     - `uu` = extract an unsigned byte  
     - `UUuu` = extract an unsigned word (high order byte first)  
-    - `uuUU` = extract an unsigned word (low order byte first) 
+    - `uuUU` = extract an unsigned word (low order byte first)  
     - `UUuuUUuu` = extract an unsigned long word (high order byte first)  
     - `SSss` = extract a signed word (high order byte first)   
     - `ssSS` = extract a signed word (low order byte first)  
     - `SSssSSss` = extract an signed long word (high order byte first)  
     - `ffffffff` = extract a float value  
     - `FFffFFff` = extract a reverse float value  
-    - `@` decoding definition termination character
+    - `@` decoding definition termination character  
     - decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte.   
       e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`  
     - in the case of **MODBus**, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition  
@@ -212,18 +212,18 @@ with the '=' char at the beginning of a line you may do some special decoding
     ;set sml driver to 300 baud and send /?! as HEX to trigger the Meter   
     res=sml(1 0 300)  
     res=sml(1 1 "2F3F210D0A")  
-    >;1800ms later \> Send ACK and ask for switching to 9600 baud  
+    ;1800ms later \> Send ACK and ask for switching to 9600 baud  
     case 18  
     res=sml(1 1 "063035300D0A")  
-    >;2000ms later \> Switching sml driver to 9600 baud    
+    ;2000ms later \> Switching sml driver to 9600 baud    
     case 20  
     res=sml(1 0 9600)   
-    >;Restart sequence after 50x100ms    
+    ;Restart sequence after 50x100ms    
     case 50  
     ; 5000ms later \> restart sequence    
     scnt=0  
     ends        
-    > `>M 1`  
+    >`>M 1`  
     +1,3,o,0,9600, ,1  
     ...etc.  
   
