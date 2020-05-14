@@ -226,8 +226,8 @@ Multipress functions for 2 and more presses cannot be changed using SetOptions o
     If you [have changed](#Changing-default-functionality) [ButtonTopic](Commands.md#buttontopic), [SetOption1](Commands.md#setoption1), [SetOption11](Commands.md#setoption11) or [SetOption13](Commands.md#setoption13) some of the listed functionality will be changed or removed.
 
 !!! note 
-   `Button1` can directly control up to five relays. The number of the activated relay corresponds to the number of button presses and this feature is not present in the other buttons. 
-   When ButtonTopic is set to default `0` a button will always send its state for rules.
+    `Button1` can directly control up to five relays. The number of the activated relay corresponds to the number of button presses and this feature is not present in the other buttons.    
+    When ButtonTopic is set to default `0` a button will always send its state for rules.
 
 #### 1 short press
 Toggles the power state. This will blink the LED once and send an MQTT status message like `stat/tasmota/POWER = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"SINGLE"}` when SetOption73 is enabled. The button state for rules is `2` (`10` if `Setoption73` is enabled).
@@ -256,7 +256,7 @@ There are two separate functions associated with a button long press based on ho
 !!! note "If [ButtonRetain](Commands.md#ButtonRetain) has been enabled the MQTT message will also contain the MQTT retain flag."
 
 !!! danger 
-    When a button is configured as inverted or as a switch with a [Switchmode](Commands.md#switchmode) that keeps it as ON while depressed it activates the reset to firmware defaults function. Change switchmode to avoid repeated resets to defaults or use `Setoption1 1`.
+    When a button is configured as inverted or with a [Switchmode](Commands.md#switchmode) that keeps it as ON while depressed it activates the reset to firmware defaults function. Change the Button configuration or SwitchMode to avoid repeated reset to defaults or use `Setoption1 1` to disable that function.
 
 !!! warning 
     If you define a button with a number higher than available power outputs it will default to controlling `Power1`. Example: Button4 on a device with Power1 and Power2 will control `Power1`.
