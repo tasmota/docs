@@ -400,6 +400,40 @@ Conditional expressions may be enclosed in parentheses. The statement must be on
 if ((a==b) and ((c==d) or (c==e)) and (s!="x"))
 ```
 
+***mapping function***  
+
+mp(x str1 str2 ... str<n>)  
+It addresses a standard task with less code and much flexibility: mapping an arbitrary incoming numeric value into the allowed range.  
+The numeric value x passed as the first parameter is compared to the rules in the order they are provided as subsequent sting parameters. If the value matches the criteria, the defined value is returned. Subsequent rules are skipped. If x matches none of the rules, x is returned unchanged.  
+
+Rules consist of one of the comparison operators < > = followed by a numeric value v1, optionally followed by a colon and another numeric value v2.  
+
+```
+
+<|>|=v1[:v2] 
+Example 1: "<8:0" - this rule reads: If x is less than 8, return 0.
+Example 2: ">100" - this rule reads: If x is greater than 100, return 100.
+
+Example 3:
+
+y=mp(x "<8:0" ">100")
+Assigns 0 to y if x is less than 8.
+Assigns 100 to y if x is greater than 100.
+Assigns x to y for all values of x that do not meet the above criteria (8 to 100).
+
+The above code of example 3 does the same as the following code - with just one line of code and 15 characters less:
+
+y=x
+if x<8 {
+y=0
+}
+if x>100 {
+y=100
+}
+
+```
+
+
 **E-mail**  
 `#define USE_SENDMAIL`  
 Enabling this feature also enables [Tasmota TLS](TLS) as `sendmail` uses SSL.  
