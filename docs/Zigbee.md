@@ -126,15 +126,14 @@ Use this one for the recommended wiring scheme:
 #### CC2531 USB Wiring
 On a CC2531 USB adapter some of the connectors of the CC2531 are connected to extra solder pads. Among those are RX/TX as seen on the image (CC_RXD(P0.3), CC_TXD(P0.1)): 
 
-![Pinout](https://cdn-media.itead.cc/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/c/c/cc2531usb_02.jpg)
+![Pinout](_media/zigbee/cc2531usb.jpg)
 
 If you want to supply power to the USB stick via 3.3V and GND from your ESP82xx board, you can use the corresponding pins of the debug header. GND is located at pin 1 and 3.3V at pin 9 of the DebugHeader.
 In addition, on some sticks, it is necessary to solder a solder bridge between the two small pads to the left of the "DEBUG" label just below the left side of the button, right next to the "D" of "Debug". You can see that one of the solder pads is connected to pin 9 of the debug header.
 
 ![Solderpads on CC2531](_media/zigbee/cc2531_solderpads.jpg)
 
-!!! failure 
-    Be careful not to solder a short circuit between the pads and the housing of the button.
+!!! failure "Be careful not to solder a short circuit between the pads and the housing of the button"
 
 ### First Run
 
