@@ -69,7 +69,7 @@ Using an ESP82xx device such as a Wemos D1 Mini or a NodeMCU to flash the CC2530
 In normal operation two free GPIOs are needed for the serial communication with the CC2530.  
 
 ## Configuration
-### Flash CC2530 
+### Flash CC2530/CC2531 
 Zigbee2Tasmota requires a TI CC2530 based module flashed with [Z-Stack CC2530 firmware file](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_Home_1.2/bin/default) from [Koen Kanters](https://github.com/Koenkk). 
 
 Due to memory constraints of the CC2530, you can only pair 16 devices to a coordinator ([See details](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator)). 
@@ -82,7 +82,12 @@ Flashing options:
 - Flashing with [CCLoader](https://zigbee.blakadder.com/flashing_ccloader.html) and ESP8266 ==(recommended)==
 - Flashing with [CCLib](Zigbee-CCLib-Flashing.md) and ESP8266
 - Flash with a dedicated [CC Debugger](https://ptvo.info/how-to-select-and-flash-cc2530-144/) and Windows PC 
+- Flasing with [RaspberryPi](https://github.com/jmichault/flash_cc2531) (flash_CC2531 from [jmichault](https://github.com/jmichault)) 
 
+
+!!! note
+    Flash the CC2531 USB Stick with the [Z-Stack CC2530](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_Home_1.2/bin/default) firmware file as mentioned above. Not with the CC2531 Firmware!
+ 
 ### Flash Tasmota
 Once the CC2530 flashing process completes, you can re-use the  ESP82xx and flash Tasmota with Zigbee2Tasmota enabled firmware. Otherwise, you can use any ESP82xx device.  
 
@@ -103,8 +108,28 @@ If you find that your Zigbee2Tasmota operation is unstable, you may have an ESP8
     
 Flash the newly compiled binary usig the [normal flashing process](Getting-Started.md#flashing).
 
-### Connect CC2530 to Tasmota
+### Connect CC2530/2531 to Tasmota
 If you are using your ESP82xx device to flash the Zigbee adapter as described in tutorials you may want to leave these connections in place in case you ever need to update CC2530 firmware. If not, any of the free GPIOs can be used.
+
+**CC2531 USBStick**
+On the CC2531 USBStick some of the connectors of the CC2531 are connected to extra solder pads. Among others also RX/TX. To see on the picture below. CC_RXD(P0.3), CC_TXD(P0.1).
+
+
+If you want to supply the USB stick via 3.3V and GND from your ESP82xx board, you can use the corresponding pins of the debug header.
+GND is located at pin 1 and 3.3V at pin 9 of the DebugHeader.
+In addition, on some sticks, it is necessary to solder a solder bridge between the two small pads to the left of the "DEBUG" label just below the left side of the button, right next to the "D" of "Debug". You can see that one of the solder pads is connected to pin 9 of the debug header.
+
+<img src="https://cdn-media.itead.cc/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/c/c/cc2531usb_02.jpg" width="360" alt="Copyright: media.itead.cc">
+
+
+Solderpads:
+
+<img src="../_media/zigbee/cc2531_solderpads.jpg" width="360" alt="Solderpads on CC2531">
+
+
+!!! failure 
+    Be careful not to solder a short circuit between the pads and the housing of the button.
+    
 
 !!! note "It is recommended that hardware serial pins be used (GPIO1/GPIO3 or GPIO13\[Rx]/GPIO15\[Tx])"
     Due to ESP82xx GPIO pin constraints, GPIO15 can only be used as serial Tx.  
