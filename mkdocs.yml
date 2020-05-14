@@ -18,7 +18,7 @@ plugins:
 
 strict: true
 
-theme: 
+theme:
   name: material
   language: 'en'
   # custom_dir: 'overrides'
@@ -62,7 +62,7 @@ google_analytics:
 extra_css:
   - 'assets/css/anchor-fix.css'
 
-nav: 
+nav:
   - Home: index.md
   - About.md
   - Getting Started: Getting-Started.md
@@ -96,6 +96,7 @@ nav:
     - Smart-Meter-Interface.md
     - TasmotaSlave.md
     - Subscribe-&-Unsubscribe.md
+    - OpenTherm.md
     - TLS.md
     - Tutorials.md
     - For Developers: For-Developers.md
