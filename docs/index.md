@@ -39,8 +39,8 @@ Incredibly expandable and flexible.
 - Add command `SO` as shortcut for `SetOption`
 - Add command [`SetOption73`](Commands.md#setoption73) to decouple button from relays
 - Implemented [Zigbee](Zigbee.md) bind commands
-- Add [`Palette`](Palette) to specify a palette of colors used in schemes
-- Add support for [OpenTherm](OpenTherm), Thermostat control, [iAQ-core](IAQ.md) air quality sensor, [AS3935](AS3935) lightning sensor, analog anemometer, 64x48 SSD1306 OLED, Seven Segment display using HT16K33 and _highly experimental_ support of [ESP32](ESP32.md)
+- Add [`Palette`](Commands.md#palette) to specify a palette of colors used in schemes
+- Add support for OpenTherm, Thermostat control, [iAQ-core](IAQ.md) air quality sensor, [AS3935](AS3935) lightning sensor, analog anemometer, 64x48 SSD1306 OLED, Seven Segment display using HT16K33 and _highly experimental_ support of [ESP32](ESP32.md)
 - Add console command history
 - Add support for longer template names
 - Fix possible Relay toggles on (OTA) restart
