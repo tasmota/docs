@@ -32,14 +32,13 @@ These PCB make all the connections required to flash the CC2530 and to run Z2T.
 #### SuperHouse.tv  
   Jon Oxer created a [custom PCB](https://github.com/SuperHouse/Z2T) to connect a Wemos D1 Mini and a CC2530 board (with or without CC2591).  
 
-  **Complete module**  
-  <img src="https://user-images.githubusercontent.com/49731213/72688606-3c432800-3b09-11ea-9e56-ed24a7c07017.jpg" height="120"> <img src="https://user-images.githubusercontent.com/49731213/72688611-4533f980-3b09-11ea-9c10-9202d1f60f4d.jpg" height="120">  
+  ![Pinout](_media/zigbee/superhouse-z2t.jpg)
 
 #### H4NC
   User _**h4nc**_ created a [custom PCB](https://github.com/h4nc/Zigbee2Tasmota_PCB) to connect a NodeMCU and a CC2530 board.  
   
   You can also get a complete Z2T module with case, pre-flashed and ready to configure and deploy.  
-  <img src="https://raw.githubusercontent.com/h4nc/Zigbee2Tasmota_PCB/master/images/Z2T.jpeg" height="250">
+  ![Pinout](_media/zigbee/Z2T.jpg)
 
 #### Wi-Fi Adapter
 Using an ESP82xx device such as a Wemos D1 Mini or a NodeMCU to flash the CC2530 is a lower cost alternative than using a single purpose [CC_DEBUGGER](https://www.aliexpress.com/item/32869263224.html). 
@@ -129,7 +128,7 @@ On a CC2531 USB adapter some of the connectors of the CC2531 are connected to ex
 ![Pinout](_media/zigbee/cc2531usb.jpg)
 
 If you want to supply power to the USB stick via 3.3V and GND from your ESP82xx board, you can use the corresponding pins of the debug header. GND is located at pin 1 and 3.3V at pin 9 of the DebugHeader.
-In addition, on some sticks, it is necessary to solder a solder bridge between the two small pads to the left of the "DEBUG" label just below the left side of the button, right next to the "D" of "Debug". You can see that one of the solder pads is connected to pin 9 of the debug header.
+In addition, on some sticks, it is necessary to solder a bridge between the two small pads to the left of the "DEBUG" label just below the left side of the button, right next to the "D" of "Debug". You can see that one of the solder pads is connected to pin 9 of the debug header.
 
 ![Solderpads on CC2531](_media/zigbee/cc2531_solderpads.jpg)
 
