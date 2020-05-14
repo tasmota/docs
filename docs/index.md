@@ -38,7 +38,8 @@ Incredibly expandable and flexible.
 - Add rule trigger at root level such as `on loadavg<50 do power 2 endon` triggered by `state` command
 - Add command `SO` as shortcut for `SetOption`
 - Add command [`SetOption73`](Commands.md#setoption73) to decouple button from relays
-- Implemented [Zigbee](Zigbee.md) bind commands
+- Add command [`SetOption41`](Commands.md#setoption41) to fix possible webUI unresponsiveness due to bad ARP implementation in routers
+- Implemented [Zigbee](Zigbee.md#zigbee-binding) bind commands
 - Add [`Palette`](Commands.md#palette) to specify a palette of colors used in schemes
 - Add support for [OpenTherm](OpenTherm), Thermostat control, [iAQ-core](IAQ.md) air quality sensor, [AS3935](AS3935) lightning sensor, analog anemometer, 64x48 SSD1306 OLED, Seven Segment display using HT16K33 and _highly experimental_ support of [ESP32](ESP32.md)
 - Add console command history

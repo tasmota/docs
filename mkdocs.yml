@@ -94,9 +94,9 @@ nav:
     - I2C Devices: I2CDevices.md
     - Scripting: Scripting-Language.md
     - Smart-Meter-Interface.md
+    - OpenTherm.md
     - TasmotaSlave.md
     - Subscribe-&-Unsubscribe.md
-    - OpenTherm.md
     - TLS.md
     - Tutorials.md
     - For Developers: For-Developers.md
@@ -114,7 +114,6 @@ nav:
     - nymea.md
     - Octoprint.md
     - openHAB.md
-    - OpenTherm.md
     - otto.md
     - IOBroker: "https://github.com/arendst/Tasmota/issues/3769"
     - Mozilla WebThings Adapter: "https://github.com/tim-hellhake/tasmota-adapter"
