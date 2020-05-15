@@ -651,15 +651,15 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 >`>M 1`  
 +1,3,m,0,9600,MODBUS,1,1,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010  
 >
->1,010404ffffffffxxxx@i0:1,Voltage P1,V,Voltage_P1,2  
-1,010404ffffffffxxxx@i1:1,Voltage P2,V,Voltage_P2,2  
-1,010404ffffffffxxxx@i2:1,Voltage P3,V,Voltage_P3,2  
-1,010404ffffffffxxxx@i3:1,Current P1,A,Current_P1,2  
-1,010404ffffffffxxxx@i4:1,Current P2,A,Current_P2,2  
-1,010404ffffffffxxxx@i5:1,Current P3,A,Current_P3,2  
-1,010404ffffffffxxxx@i6:1,Active Power P1,W,Power_P1,2  
-1,010404ffffffffxxxx@i7:1,Active Power P2,W,Power_P2,2  
-1,010404ffffffffxxxx@i8:1,Active Power P3,W,Power_P3,2  
+>1,010404ffffffff@i0:1,Voltage P1,V,Voltage_P1,2  
+1,010404ffffffff@i1:1,Voltage P2,V,Voltage_P2,2  
+1,010404ffffffff@i2:1,Voltage P3,V,Voltage_P3,2  
+1,010404ffffffff@i3:1,Current P1,A,Current_P1,2  
+1,010404ffffffff@i4:1,Current P2,A,Current_P2,2  
+1,010404ffffffff@i5:1,Current P3,A,Current_P3,2  
+1,010404ffffffff@i6:1,Active Power P1,W,Power_P1,2  
+1,010404ffffffff@i7:1,Active Power P2,W,Power_P2,2  
+1,010404ffffffff@i8:1,Active Power P3,W,Power_P3,2  
 \#  
 
 
@@ -676,15 +676,15 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 >`>M 1`  
 +1,3,m,0,9600,Janitza,1,1,01034A38,01034A3A,01034A3C,01034A4C,01034A4E,01034A50,01034A72,01034A7A,01034A82  
 >
->1,010304ffffffffxxxx@i0:1,Voltage L1-N,V,Voltage_L1-N,2  
-1,010304ffffffffxxxx@i1:1,Voltage L2-N,V,Voltage_L2-N,2  
-1,010304ffffffffxxxx@i2:1,Voltage L3-N,V,Voltage_L3-N,2  
-1,010304ffffffffxxxx@i3:1,Real power L1-N,W,Real_power_L1-N,2  
-1,010304ffffffffxxxx@i4:1,Real power L2-N,W,Real_power_L2-N,2  
-1,010304ffffffffxxxx@i5:1,Real power L3-N,W,Real_power_L3-N,2  
-1,010304ffffffffxxxx@i6:1,Real energy L3,Wh,Real_energy_L3,2  
-1,010304ffffffffxxxx@i7:1,Real energy L3-consumed,Wh,Real_energy_L3_consumed,2  
-1,010304ffffffffxxxx@i8:1,Real energy L3-delivered,Wh,Real_energy_L3_delivered,2   
+>1,010304ffffffff@i0:1,Voltage L1-N,V,Voltage_L1-N,2  
+1,010304ffffffff@i1:1,Voltage L2-N,V,Voltage_L2-N,2  
+1,010304ffffffff@i2:1,Voltage L3-N,V,Voltage_L3-N,2  
+1,010304ffffffff@i3:1,Real power L1-N,W,Real_power_L1-N,2  
+1,010304ffffffff@i4:1,Real power L2-N,W,Real_power_L2-N,2  
+1,010304ffffffff@i5:1,Real power L3-N,W,Real_power_L3-N,2  
+1,010304ffffffff@i6:1,Real energy L3,Wh,Real_energy_L3,2  
+1,010304ffffffff@i7:1,Real energy L3-consumed,Wh,Real_energy_L3_consumed,2  
+1,010304ffffffff@i8:1,Real energy L3-delivered,Wh,Real_energy_L3_delivered,2   
 \#
 
 
@@ -775,27 +775,27 @@ Tageseinspeisung: {m} %po_d% kWh
 >`>M 1`  
 +1,3,M,1,9600,SBC,1,1,02030023,02030028,0203002d,02030025,0203002a,0203002f,02030032,02030027,0203002c,02030031,02030021,02030015,02030018  
 >  
->1,020304UUuuxxxxxxxx@i0:1,Spannung L1,V,Voltage_L1,0  
-1,020304UUuuxxxxxxxx@i1:1,Spannung L2,V,Voltage_L2,0  
-1,020304UUuuxxxxxxxx@i2:1,Spannung L3,V,Voltage_L3,0  
-1,020304xxxxUUuuxxxx@i0:10,Strom L1,A,Current_L1,2  
-1,020304xxxxUUuuxxxx@i1:10,Strom L2,A,Current_L2,2  
-1,020304xxxxUUuuxxxx@i2:10,Strom L3,A,Current_L3,2  
+>1,020304UUuu@i0:1,Spannung L1,V,Voltage_L1,0  
+1,020304UUuu@i1:1,Spannung L2,V,Voltage_L2,0  
+1,020304UUuu@i2:1,Spannung L3,V,Voltage_L3,0  
+1,020304xxxxUUuu@i0:10,Strom L1,A,Current_L1,2  
+1,020304xxxxUUuu@i1:10,Strom L2,A,Current_L2,2  
+1,020304xxxxUUuu@i2:10,Strom L3,A,Current_L3,2  
 1,=h=  
-1,020304UUuuxxxxxxxx@i3:100,Leistung L1,kW,Power_L1,3  
-1,020304UUuuxxxxxxxx@i4:100,Leistung L2,kW,Power_L2,3  
-1,020304UUuuxxxxxxxx@i5:100,Leistung L3,kW,Power_L3,3  
-1,020304UUuuxxxxxxxx@i6:100,Leistung Total,kW,Power_Total,3  
-1,020304xxxxSSssxxxx@i3:100,BlindLeistung L1,kVAr,ReaktivePower_L1,3  
-1,020304xxxxSSssxxxx@i4:100,BlindLeistung L2,kVAr,ReaktivePower_L2,3  
-1,020304xxxxSSssxxxx@i5:100,BlindLeistung L3,kVAr,ReaktivePower_L3,3  
-1,020304xxxxSSssxxxx@i6:100,BLeistung Total,kVAr,ReaktivePower_Total,3  
+1,020304UUuu@i3:100,Leistung L1,kW,Power_L1,3  
+1,020304UUuu@i4:100,Leistung L2,kW,Power_L2,3  
+1,020304UUuu@i5:100,Leistung L3,kW,Power_L3,3  
+1,020304UUuu@i6:100,Leistung Total,kW,Power_Total,3  
+1,020304xxxxSSss@i3:100,BlindLeistung L1,kVAr,ReaktivePower_L1,3  
+1,020304xxxxSSss@i4:100,BlindLeistung L2,kVAr,ReaktivePower_L2,3  
+1,020304xxxxSSss@i5:100,BlindLeistung L3,kVAr,ReaktivePower_L3,3  
+1,020304xxxxSSss@i6:100,BLeistung Total,kVAr,ReaktivePower_Total,3  
 1,=h=  
-1,020304UUuuxxxxxxxx@i7:100,CosPhi L1,,CosPhi_L1,2  
-1,020304UUuuxxxxxxxx@i8:100,CosPhi L2,,CosPhi_L2,2  
-1,020304UUuuxxxxxxxx@i9:100,CosPhi L3,,CosPhi_L3,2  
+1,020304UUuu@i7:100,CosPhi L1,,CosPhi_L1,2  
+1,020304UUuu@i8:100,CosPhi L2,,CosPhi_L2,2  
+1,020304UUuu@i9:100,CosPhi L3,,CosPhi_L3,2  
 1,=h=  
-1,020304UUuuUUuuxxxx@i10:100,T2 Wert,kWh,T2_Value,2  
+1,020304UUuuUUuu@i10:100,T2 Wert,kWh,T2_Value,2  
 \#
 
 
@@ -808,49 +808,49 @@ Tageseinspeisung: {m} %po_d% kWh
 >+1,3,M,1,9600,Meter,1,1,01030023,01030028,0103002d,01030025,0103002a,0103002f,01030032,01030027,0103002c,01030031,0103001B,0103001d,03030023,03030028,0303002d,03030025,0303002a,0303002f,03030032,03030027,0303002c,03030031,0303001B,0303001d  
 >  
 >1,=h Domestic Electricity:  
-1,010304UUuuUUuuxxxx@i10:100,1 Tariff 1 total,kWh,M1_T1_total,2  
-1,010304UUuuUUuuxxxx@i11:100,1 Tariff 1 partial,kWh,M1_T1_par,2  
+1,010304UUuuUUuu@i10:100,1 Tariff 1 total,kWh,M1_T1_total,2  
+1,010304UUuuUUuu@i11:100,1 Tariff 1 partial,kWh,M1_T1_par,2  
 1,=h Readings:  
-1,010304UUuuxxxxxxxx@i0:1,1 Voltage L1,V,M1_Voltage_L1,0  
-1,010304UUuuxxxxxxxx@i1:1,1 Voltage L2,V,M1_Voltage_L2,0  
-1,010304UUuuxxxxxxxx@i2:1,1 Voltage L3,V,M1_Voltage_L3,0  
-1,010304xxxxUUuuxxxx@i0:10,1 Current L1,A,M1_Current_L1,2  
-1,010304xxxxUUuuxxxx@i1:10,1 Current L2,A,M1_Current_L2,2  
-1,010304xxxxUUuuxxxx@i2:10,1 Current L3,A,M1_Current_L3,2  
-1,010304UUuuxxxxxxxx@i3:100,1 Active Power L1,kW,M1_PRMS_L1,3  
-1,010304UUuuxxxxxxxx@i4:100,1 Active Power L2,kW,M1_PRMS_L2,3  
-1,010304UUuuxxxxxxxx@i5:100,1 Active Power L3,kW,M1_PRMS_L3,3  
-1,010304UUuuxxxxxxxx@i6:100,1 Active Power total,kW,M1_PRMS_total,3  
-1,010304xxxxSSssxxxx@i3:100,1 Reactive Power L1,kVAr,M1_QRMS_L1,3  
-1,010304xxxxSSssxxxx@i4:100,1 Reactive Power L2,kVAr,M1_QRMS_L2,3  
-1,010304xxxxSSssxxxx@i5:100,1 Reactive Power L3,kVAr,M1_QRMS_L3,3  
-1,010304xxxxSSssxxxx@i6:100,1 Reactive Power total,kVAr,M1_QRMS_total,3  
-1,010304UUuuxxxxxxxx@i7:100,1 CosPhi L1,,M1_CosPhi_L1,2  
-1,010304UUuuxxxxxxxx@i8:100,1 CosPhi L2,,M1_CosPhi_L2,2  
-1,010304UUuuxxxxxxxx@i9:100,1 CosPhi L3,,M1_CosPhi_L3,2  
+1,010304UUuu@i0:1,1 Voltage L1,V,M1_Voltage_L1,0  
+1,010304UUuu@i1:1,1 Voltage L2,V,M1_Voltage_L2,0  
+1,010304UUuu@i2:1,1 Voltage L3,V,M1_Voltage_L3,0  
+1,010304xxxxUUuu@i0:10,1 Current L1,A,M1_Current_L1,2  
+1,010304xxxxUUuu@i1:10,1 Current L2,A,M1_Current_L2,2  
+1,010304xxxxUUuu@i2:10,1 Current L3,A,M1_Current_L3,2  
+1,010304UUuu@i3:100,1 Active Power L1,kW,M1_PRMS_L1,3  
+1,010304UUuu@i4:100,1 Active Power L2,kW,M1_PRMS_L2,3  
+1,010304UUuu@i5:100,1 Active Power L3,kW,M1_PRMS_L3,3  
+1,010304UUuu@i6:100,1 Active Power total,kW,M1_PRMS_total,3  
+1,010304xxxxSSss@i3:100,1 Reactive Power L1,kVAr,M1_QRMS_L1,3  
+1,010304xxxxSSss@i4:100,1 Reactive Power L2,kVAr,M1_QRMS_L2,3  
+1,010304xxxxSSss@i5:100,1 Reactive Power L3,kVAr,M1_QRMS_L3,3  
+1,010304xxxxSSss@i6:100,1 Reactive Power total,kVAr,M1_QRMS_total,3  
+1,010304UUuu@i7:100,1 CosPhi L1,,M1_CosPhi_L1,2  
+1,010304UUuu@i8:100,1 CosPhi L2,,M1_CosPhi_L2,2  
+1,010304UUuu@i9:100,1 CosPhi L3,,M1_CosPhi_L3,2  
 1,=h________________________________________________  
 ; meter 2 +12 offset  
 1,=h Heat Pump  
-1,030304UUuuUUuuxxxx@i22:100,2 Tariff 1 total,kWh,M2_T1_total,2  
-1,030304UUuuUUuuxxxx@i23:100,2 Tariff 1 partial,kWh,M2_T1_par,2  
+1,030304UUuuUUuu@i22:100,2 Tariff 1 total,kWh,M2_T1_total,2  
+1,030304UUuuUUuu@i23:100,2 Tariff 1 partial,kWh,M2_T1_par,2  
 1,=h Readings:  
-1,030304UUuuxxxxxxxx@i12:1,2 Voltage L1,V,M2_Voltage_L1,0  
-1,030304UUuuxxxxxxxx@i13:1,2 Voltage L2,V,M2_Voltage_L2,0  
-1,030304UUuuxxxxxxxx@i14:1,2 Voltage L3,V,M2_Voltage_L3,0  
-1,030304xxxxUUuuxxxx@i12:10,2 Current L1,A,M2_Current_L1,2  
-1,030304xxxxUUuuxxxx@i13:10,2 Current L2,A,M2_Current_L2,2  
-1,030304xxxxUUuuxxxx@i14:10,2 Current L3,A,M2_Current_L3,2  
-1,030304UUuuxxxxxxxx@i15:100,2 Active Power L1,kW,M2_PRMS_L1,3  
-1,030304UUuuxxxxxxxx@i16:100,2 Active Power L2,kW,M2_PRMS_L2,3  
-1,030304UUuuxxxxxxxx@i17:100,2 Active Power L3,kW,M2_PRMS_L3,3  
-1,030304UUuuxxxxxxxx@i18:100,2 Active Power total,kW,M2_PRMS_total,3  
-1,030304xxxxSSssxxxx@i15:100,2 Reactive Power L1,kVAr,M2_QRMS_L1,3  
-1,030304xxxxSSssxxxx@i16:100,2 Reactive Power L2,kVAr,M2_QRMS_L2,3  
-1,030304xxxxSSssxxxx@i16:100,2 Reactive Power L3,kVAr,M2_QRMS_L3,3  
-1,030304xxxxSSssxxxx@i18:100,2 Reactive Power total,kVAr,M2_QRMS_total,3  
-1,030304UUuuxxxxxxxx@i19:100,2 CosPhi L1,,M2_CosPhi_L1,2  
-1,030304UUuuxxxxxxxx@i20:100,2 CosPhi L2,,M2_CosPhi_L2,2  
-1,030304UUuuxxxxxxxx@i21:100,2 CosPhi L3,,M2_CosPhi_L3,2  
+1,030304UUuu@i12:1,2 Voltage L1,V,M2_Voltage_L1,0  
+1,030304UUuu@i13:1,2 Voltage L2,V,M2_Voltage_L2,0  
+1,030304UUuu@i14:1,2 Voltage L3,V,M2_Voltage_L3,0  
+1,030304xxxxUUuu@i12:10,2 Current L1,A,M2_Current_L1,2  
+1,030304xxxxUUuu@i13:10,2 Current L2,A,M2_Current_L2,2  
+1,030304xxxxUUuu@i14:10,2 Current L3,A,M2_Current_L3,2  
+1,030304UUuu@i15:100,2 Active Power L1,kW,M2_PRMS_L1,3  
+1,030304UUuu@i16:100,2 Active Power L2,kW,M2_PRMS_L2,3  
+1,030304UUuu@i17:100,2 Active Power L3,kW,M2_PRMS_L3,3  
+1,030304UUuu@i18:100,2 Active Power total,kW,M2_PRMS_total,3  
+1,030304xxxxSSss@i15:100,2 Reactive Power L1,kVAr,M2_QRMS_L1,3  
+1,030304xxxxSSss@i16:100,2 Reactive Power L2,kVAr,M2_QRMS_L2,3  
+1,030304xxxxSSss@i16:100,2 Reactive Power L3,kVAr,M2_QRMS_L3,3  
+1,030304xxxxSSss@i18:100,2 Reactive Power total,kVAr,M2_QRMS_total,3  
+1,030304UUuu@i19:100,2 CosPhi L1,,M2_CosPhi_L1,2  
+1,030304UUuu@i20:100,2 CosPhi L2,,M2_CosPhi_L2,2  
+1,030304UUuu@i21:100,2 CosPhi L3,,M2_CosPhi_L3,2  
 \#  
 
 
