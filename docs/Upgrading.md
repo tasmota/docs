@@ -153,7 +153,7 @@ Follow the path strictly to ensure success. **Do not install only tasmota-minima
 !!! warning "Tasmota v8.1 introduced a major change in parameter storage."
     Downgrading is not recommended and upgrading to 8.1 **has to follow** the recommended path and **can still** fail in some cases. Don't forget to backup!
 
-!!! quote "Special notive for versions between 6.6.0.7 and 6.6.0.11"
+!!! quote "Notice for versions between 6.6.0.7 and 6.6.0.11"
     If you've used development versions between 6.6.0.7 and 6.6.0.11 [**back up your device settings**](#backing-up-settings). Convert the backup to human readable form as you **MUST** restore these settings manually.    
     Perform a `Reset 6` before upgrading the firmware and, for safe measure, after the upgrade completes.  
 
