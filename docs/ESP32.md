@@ -14,11 +14,11 @@ To use your `user_config_override.h` in tasmota32 you need to uncomment line 254
 
 ![user_config_override.ini](_media/esp32-uco.jpg)
 
-## Templates and known devices
+## Templates and Known Devices
 
 Some known device templates and configurations
 
-### LilyGO TTGO T-Camera OV2640_V05:
+### LilyGO TTGO T-Camera OV2640_V05
 
 In `platformio_override.ini` uncomment the line with `tasmota32-camera.bin` and set the correct COM port. 
 
@@ -32,11 +32,13 @@ In `user_config_override.h` add:
 
 Upload via USB, then apply the following Template:
 
-```{"NAME":"TTGO_V05","GPIO":[65504,65504,65504,65504,5090,5088,65504,65504,5056,5024,5089,5091,65504,65504,5092,5184,0,640,608,5093,0,5152,4928,5120,0,0,0,0,4992,160,65,65504,5094,0,0,5095],"FLAG":0,"BASE":2}```
+```json
+{"NAME":"TTGO_V05","GPIO":[65504,65504,65504,65504,5090,5088,65504,65504,5056,5024,5089,5091,65504,65504,5092,5184,0,640,608,5093,0,5152,4928,5120,0,0,0,0,4992,160,65,65504,5094,0,0,5095],"FLAG":0,"BASE":2}
+```
 
 To make the device work nicely, change the following settings in the Console:
 
-Camera Settings to correct orientation (USB on the bottom):
+Camera settings to correct orientation (USB on the bottom):
 ```
 WCFlip ON
 WCMirror ON
