@@ -130,32 +130,34 @@ If your binary build (yourbinary.bin) is larger than the available free flash pr
 
 ## Migration Path
 
-!!! warning
-    While fallback or downgrading is common practice it was never supported due to Settings additions or changes in newer releases. Starting with release v8.1.0 Doris the Settings are re-allocated in such a way that fallback is only allowed and possible to release v7.2.0 Constance. Once at v7.2.0 you're on your own when downgrading even further.
+Until now several versions of Tasmota have been released starting with the C version Sonoff-MQTT-OTA followed by Sonoff-MQTT-OTA-Arduino, Sonoff-Tasmota and ultimately Tasmota.
 
-Until now several versions of Tasmota have been released starting with the C version Sonoff-MQTT-OTA followed by Sonoff-MQTT-OTA-Arduino, Sonoff-Tasmota and ultimately **Tasmota**.
+Intermediate upgrade steps are needed to migrate from older firmware to the current version. No migration is possible from original **Sonoff-MQTT-OTA** to **Sonoff-MQTT-OTA-Arduino v1.0.11**.
 
-Intermediate upgrade steps might be needed to migrate from an older firmware version to the latest.
-Remember that you **must take each individual step** between the device firmware version and the latest available. Do not install only the tasmota-minimal.bin but upgrade to full, working tasmota.bin firmware. You can find all the required binaries in [Tasmota Releases](https://github.com/arendst/Tasmota/releases)
+!!! failure "DO NOT ATTEMPT TO UPGRADE VERSIONS PRIOR TO v7.x STRAIGHT TO THE CURRENT VERSION"
 
-As a safeguard perform "Backup Configuration" before installing a new version. If settings are lost "Restore Configuration" should bring them back.
+Remember that you **must take each individual step** between the device firmware version and the latest available.You can find all the required binaries in [Tasmota Releases](https://github.com/arendst/Tasmota/tags) listed by version number.
 
-<!-- | Project Name | Release | Direct Download |
-|-|-|-|
-| Sonoff-Tasmota | [v3.9.22](https://github.com/arendst/Tasmota/releases/tag/v3.9.22) | [`firmware.bin`](https://github.com/arendst/Tasmota/releases/download/v3.9.22/firmware.bin) |
-| Sonoff-Tasmota | [v4.2.0](https://github.com/arendst/Tasmota/releases/tag/v4.2.0) | [`firmware.bin`](https://github.com/arendst/Tasmota/releases/download/v4.2.0/firmware.bin) |
-| Sonoff-Tasmota | [v5.14.0](https://github.com/arendst/Tasmota/releases/tag/v5.14.0) | [`sonoff-minimal.bin`](https://github.com/arendst/Tasmota/releases/download/v5.14.0/sonoff-minimal.bin)|
-| Sonoff-Tasmota | [v6.7.1](https://github.com/arendst/Tasmota/releases/tag/v6.7.1) | [`sonoff-minimal.bin`](https://github.com/arendst/Tasmota/releases/download/v6.7.1/sonoff-minimal.bin) |
-| Tasmota        | [v7.2.0](https://github.com/arendst/Tasmota/releases/tag/v7.2.0) | [`tasmota-minimal.bin`](https://github.com/arendst/Tasmota/releases/download/v7.2.0/tasmota-minimal.bin) |
-| Tasmota        | [latest](https://github.com/arendst/Tasmota/releases/latest) | (Check "Assets" section) |
+!!! tip 
+    As a safeguard perform "Backup Configuration" before upgrading. If settings are lost "Restore Configuration" should bring them back.
 
-Follow the path till you reach the latest Tasmota version. -->
+Upgrading from one minor version to the next is mostly painless as the settings are saved in the same location in flash and newer settings are appended.
 
-Migrating from one minor version to the next is mostly painless as the settings are saved in the same location in flash and newer settings are appended.
+As said, mostly painless! There are some deviations to this rule as the flash settings changed. 
 
-As said, mostly painless. There are some deviations to this rule as I rearranged the flash. In the next list you'll find an overview of supported migrations paths.
+### Upgrade Flow
+ **v1.0.11** &nbsp;:twisted_rightwards_arrows:&nbsp; [**v3.9.22**](https://github.com/arendst/Tasmota/releases/download/v3.9.22/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v4.2.0**](https://github.com/arendst/Tasmota/releases/download/v4.2.0/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v5.14.0**](https://github.com/arendst/Tasmota/releases/download/v5.14.0/sonoff-classic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v6.1.1**](https://github.com/arendst/Tasmota/releases/download/v6.1.1/sonoff-classic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v7.2.0**](https://github.com/arendst/Tasmota/releases/download/v7.2.0/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v8.1.0**](https://github.com/arendst/Tasmota/releases/download/v8.1.0/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**Current release**](https://github.com/arendst/Tasmota/releases/)
 
-* No migration from **Sonoff-MQTT-OTA** to **Sonoff-MQTT-OTA-Arduino** or **Tasmota**.  
+Follow the path strictly to ensure success. **Do not install only tasmota-minimal.bin** but upgrade to full, working firmware. Linked `-lite/-classic.bin` binaries will do the job.  
+
+!!! warning "Tasmota v8.1 introduced a major change in parameter storage."
+    Downgrading is not recommended and upgrading to 8.1 **has to follow** the recommended path and **can still** fail in some cases. Don't forget to backup!
+
+!!! quote
+    If you've used development versions between 6.6.0.7 and 6.6.0.11 [**back up your device settings**](#backing-up-settings). Convert the backup to human readable form as you **MUST** restore these settings manually.    
+    Perform a `Reset 6` before upgrading the firmware and, for safe measure, after the upgrade completes.  
+
+<!-- 
   The settings flash layout and OTA image locations are different from the Arduino versions
 * Easy migration from **Sonoff-MQTT-OTA-Arduino 1.0.11** to **Sonoff-Tasmota 3.9.x**.  
   After installing Tasmota for the first time some settings need to be adjusted via web configuration or MQTT commands.
@@ -164,25 +166,23 @@ As said, mostly painless. There are some deviations to this rule as I rearranged
 * Easy migration from **Sonoff-Tasmota 4.x** to **Sonoff-Tasmota 5.14**.
   As a safeguard perform a Backup Configuration before installing the new version. If settings are lost after the upgrade perform a Restore Configuration.
 * Easy migration from **Sonoff-Tasmota 5.2** to **Sonoff-Tasmota 6.x**. 
-  As a safeguard perform a **_Backup Configuration_** before installing the new version. If settings are lost after the upgrade perform a **Restore Configuration**.
+  As a safeguard perform a **_Backup Configuration_** before installing the new version. If settings are lost after the upgrade perform a **Restore Configuration**. 
   
-!!! warning
-    If you've used development versions between 6.6.0.7 and 6.6.0.11 [**back up your device settings**](#backing-up-settings) as described above. Convert the backup to human readable form as you **MUST** restore these settings manually.
-
-  - Perform a `Reset 6` before upgrading the firmware and, for safe measure, after the upgrade completes.  
   - Enter your device configurations using the settings saved in the first step.
 * Easy migration from **Tasmota 6.x** to **Tasmota 7.x**. 
   As a safeguard perform a **Backup Configuration** before installing the new version. If settings are lost after the upgrade perform a **Restore Configuration**.
 
-!!! warning
-    Tasmota 8.1 introduced a major change in parameter storage. Downgrading is not recommended and upgrading to 8.1 has to follow the recommended path and **can still** fail in some cases.
 
   * Upgrade from **Tasmota 7.2** to **Tasmota 8.1**
   * Upgrade from **Tasmota 8.1** to **Tasmota 8.x**
+-->
 
 
-!!! tip
-    If ***Backup Configuration -> Restore Configuration*** fails, reset to firmware defaults and use [decode-config tool](#decode-config-tool) to restore your backed up configuration.
+## Downgrading
+
+While fallback or downgrading is common practice it was never supported due to Settings additions or changes in newer releases. 
+
+Starting with release v8.1.0 Doris settings in flash are re-allocated in such a way that fallback is only allowed and possible to v7.2.0. Once at v7.2.0 you're on your own when downgrading even further.
 
 ## Backing Up Settings
 
@@ -223,3 +223,5 @@ Erase flash settings area but keep Wi-Fi and MQTT settings
 
 If you can't restore configuration directly you can configure the device manually referring to the [Commands article](Commands.md) and the settings (e.g., SetOptions, Rules, etc.) in the JSON file you created in step #1. You can paste the JSON into a [JSON parser](https://jsonformatter.org/json-parser) to make it easily readable. 
 
+!!! tip
+    If ***Backup Configuration -> Restore Configuration*** fails, reset to firmware defaults and use [decode-config tool](#decode-config-tool) to restore your backed up configuration.
