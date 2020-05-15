@@ -132,7 +132,7 @@ If your binary build (yourbinary.bin) is larger than the available free flash pr
 
 Until now several versions of Tasmota have been released starting with the C version Sonoff-MQTT-OTA followed by Sonoff-MQTT-OTA-Arduino, Sonoff-Tasmota and ultimately Tasmota.
 
-Intermediate upgrade steps are needed to migrate from older firmware to the current version. No migration is possible from original **Sonoff-MQTT-OTA** to **Sonoff-MQTT-OTA-Arduino v1.0.11**.
+Intermediate upgrade steps are needed to migrate from older firmware to the current version. No migration is possible from original [_Sonoff-MQTT-OTA_](https://github.com/arendst/Sonoff-MQTT-OTA) to [_Sonoff-MQTT-OTA-Arduino_](https://github.com/arendst/Sonoff-MQTT-OTA-Arduino) v1.0.11.
 
 !!! failure "DO NOT ATTEMPT TO UPGRADE VERSIONS PRIOR TO v7.x STRAIGHT TO THE CURRENT VERSION"
 
@@ -153,7 +153,7 @@ Follow the path strictly to ensure success. **Do not install only tasmota-minima
 !!! warning "Tasmota v8.1 introduced a major change in parameter storage."
     Downgrading is not recommended and upgrading to 8.1 **has to follow** the recommended path and **can still** fail in some cases. Don't forget to backup!
 
-!!! quote
+!!! quote "Special notive for versions between 6.6.0.7 and 6.6.0.11"
     If you've used development versions between 6.6.0.7 and 6.6.0.11 [**back up your device settings**](#backing-up-settings). Convert the backup to human readable form as you **MUST** restore these settings manually.    
     Perform a `Reset 6` before upgrading the firmware and, for safe measure, after the upgrade completes.  
 
