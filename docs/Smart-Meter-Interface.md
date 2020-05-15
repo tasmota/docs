@@ -28,10 +28,10 @@ components in Tasmota. If the interface detects that a meter descriptor GPIO con
 The Smart Meter Interface provides a means to connect many kinds of meters to Tasmota. **The following types of meter protocols are supported:**  
 - ASCII OBIS telegrams emitted from many smart meters and also from P1 meter interface  
 - Binary SML OBIS telegram emitted from many smart meters  
-- Binary EBUS telegram emitted by many heaters and heat pumps  (e.g., Vaillant, Wolf)
-- Binary MODBUS telegram used by many power meters
-- Binary RAW telegram decodes all kinds of binary data eg EMS heater bus
-- Counter interface (uses Tasmota counter storage) for e.g., reed contacts either in polling or IRQ mode
+- Binary EBUS telegram emitted by many heaters and heat pumps  (e.g., Vaillant, Wolf)  
+- Binary MODBUS telegram used by many power meters  
+- Binary RAW telegram decodes all kinds of binary data eg EMS heater bus  
+- Counter interface (uses Tasmota counter storage) for e.g., reed contacts either in polling or IRQ mode  
 
 There are many different meters that use the same protocol. There are multitudes of variants and use cases. A meter can be defined by using compilation time `#define` pragmas. This requires recompiling the firmware to make modifications.  
 
@@ -59,9 +59,10 @@ Declare a script `>M` section with the number of connected meters (n = `1..5`)
 `+<M>,<rxGPIO>,<type>,<flag>,<parameter>,<jsonPrefix>{,<txGPIO>,<txPeriod>,<cmdTelegram>}`  
 
 !!! example
+
 `+1,3,o,0,9600,OBIS1,1,2,2F3F210D0A` 
 `+1,3,s,16,9600,SML1`  
-`+1,12,c,1,-10,H20_Cnt`
+`+1,12,c,1,-10,H20_Cnt`  
 `+1,3,m,0,9600,MODBUS,1,1,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010`  
 
 `+<M>,<rxGPIO>,<type>,<flag>,<parameter>,<jsonPrefix>{,<txGPIO>,<txPeriod>,<cmdTelegram>}`  
@@ -91,13 +92,13 @@ Declare a script `>M` section with the number of connected meters (n = `1..5`)
   
 **Modbus:**
 
-!!! example  
+!!! example
 `+1,3,m,0,9600,MODBUS,1,1,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010`    
 Components of the character string:  
 `...01040000,01040002,...`    
 `01` = Modbus slave device ID   
 `04` = Instruction to read an Input Register (alternatively, `03` = Instruction to read an Holding Register)
-`0000`/`0002` = Register # (as Hexadecimal codification, without the prefix `0x`. Example: `0x0079` -> `0079`)
+`0000`/`0002` = Register # (as Hexadecimal codification, without the prefix `0x`. Example: `0x0079` -> `0079`)  
 the number of requested registers is fixed to 2, however with the char 'r' before the hex string the complete request string may be specified  
 `...r010400000001,r010400020003,...`    
 
@@ -108,9 +109,9 @@ the number of requested registers is fixed to 2, however with the char 'r' befor
 ### Meter Metrics
 Each meter typically provides multiple metrics (voltage, power, current etc.) which it measures. An entry for each metric to be collected as `#define SML_MAX_VARS N` (n = `1..16`) must be specified, in `user_config_override.h` file (see the code at the page top). An entry defines how to decode the data and put it into variables.
 
-!!! example 
-(OBIS/SML/MODBus): 
-`1,1-0:1.8.1\*255(@1,Total consumption,KWh,Total_in,4`   
+!!! example  
+(OBIS/SML/MODBus):  
+`1,1-0:1.8.1\*255(@1,Total consumption,KWh,Total_in,4`  
 `1,77070100010801ff@1000,W1,kWh,w1,4`  
 `1,010304UUuuxxxxxxxx@i0:1,Spannung L1,V,Voltage_L1,0`  
 
@@ -136,7 +137,7 @@ Each meter typically provides multiple metrics (voltage, power, current etc.) wh
       e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`  
     - in the case of **MODBus**, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition  
     
-!!! example 
+!!! example    
    `+1,3,M,1,9600,SBC,1,2,01030023,01030028...`  
    `1,010304UUuuxxxxxxxx@i0:1,Voltage L1,V,Voltage_L1,0` < the `i0:1` refers to: `01030023` with a scaling factor (`:1`) of 1   
    `1,010304UUuuxxxxxxxx@i1:10,Current L1,V,Current_L1,2` < the `i1:10` refers to: `01030028` with a scaling factor (`:10`) of 10       
@@ -152,7 +153,7 @@ Each meter typically provides multiple metrics (voltage, power, current etc.) wh
 - `<precision>` - number of decimal places  
   Add 16 to transmit the data immediately. Otherwise it is transmitted on [`TelePeriod`](Commands#teleperiod)  
 
-!!! example   
+!!! example    
  `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,4` > Transmitted on  [`TelePeriod`](Commands#teleperiod)   
 `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,20` > Precision of 4. 4 + 16 = 20 >transmit its value immediately  
 
