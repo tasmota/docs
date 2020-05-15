@@ -321,7 +321,7 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
 `beep(f l)` (ESP32) beeps with a passive piezo beeper. beep(-f 0) attaches PIN f to the beeper, beep(f l) starts a sound with frequency f (Hz) and len l (ms). f=0 stops the sound.  
 `spin(x b)` set GPIO `x` (0..16) to value `b` (0,1). Only bit 0 of `b` is used - even values set the GPIO to `0` and uneven values set the GPIO to `1`  
 `spinm(x m)` set GPIO `x` (0..16) to mode `m` (input=0, output=1, input with pullup=2,alternatively b may be: O=out, I=in, P=in with pullup)  
-`ws2812(array)` copies an array (defined with `m:vname`) to the WS2812 LED chain. The array length should be defined as long as the number of pixels. Color is coded as 24 bit RGB.  
+`ws2812(array dstoffset)` copies an array (defined with `m:vname`) to the WS2812 LED chain. The array length should be defined as long as the number of pixels. Color is coded as 24 bit RGB. optionally the destinationoffset in the LED chain may be given  
 `hsvrgb(h s v)` converts hue (0..360), saturation (0..100) and value (0..100) to RGB color  
 
 `#name` names a subroutine. Subroutine is called with `=#name`  
