@@ -98,13 +98,15 @@ Components of the character string:
 `01` = Modbus slave device ID   
 `04` = Instruction to read an Input Register (alternatively, `03` = Instruction to read an Holding Register)
 `0000`/`0002` = Register # (as Hexadecimal codification, without the prefix `0x`. Example: `0x0079` -> `0079`)
+the number of requested registers is fixed to 2, however with the char 'r' before the hex string the complete request string may be specified  
+`...r010400000001,r010400020003,...`    
 
 !!! note
     `ID`, `Instruction to read the Register` value (Input vs Holding) and `Register #` may differ depending on the measuring device.  
    
 ------------------------------------------------------------------------------  
 ### Meter Metrics
-Each meter typically provides multiple metrics (voltage, power, current, humidity etc.) which it measures. An entry for each metric to be collected as `#define SML_MAX_VARS N` (n = `1..16`) must be specified, in `user_config_override.h` file (see the code at the page top). An entry defines how to decode the data and put it into variables.
+Each meter typically provides multiple metrics (voltage, power, current etc.) which it measures. An entry for each metric to be collected as `#define SML_MAX_VARS N` (n = `1..16`) must be specified, in `user_config_override.h` file (see the code at the page top). An entry defines how to decode the data and put it into variables.
 
 !!! example 
 (OBIS/SML/MODBus): 
@@ -144,7 +146,7 @@ Each meter typically provides multiple metrics (voltage, power, current, humidit
  Example:
  OBIS: `1,1-0:0.0.0\*255(@#),Meter Nr,, Meter_number,0`  
  SML: `1,77078181c78203ff@#,Service ID,,Meter_id,0`  
-- `<label>` - web UI label (max 23 chars)  
+- `<label>` - web UI label (max 23 chars) if this label is the single char '*' the WEB UI is discarded for this line  
 - `<UoM>` - unit of measure (max 7 chars)  
 - `<var>` - MQTT variable name (max 23 chars)  
 - `<precision>` - number of decimal places  
@@ -155,6 +157,10 @@ Each meter typically provides multiple metrics (voltage, power, current, humidit
 `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,20` > Precision of 4. 4 + 16 = 20 >transmit its value immediately  
 
 `#` character terminates the list  
+
+!!! note
+    in the decoding section of the meter defintions before the @ char no space chars are allowed  
+    
 
 ------------------------------------------------------------------------------
 **Special Commands**
@@ -182,7 +188,7 @@ with the '=' char at the beginning of a line you may do some special decoding
 !!! note
     During the output of the data in the console, the data in the WEB UI are not updated. To return write: `sensor53 d0`  
     
-    
+
 !!! warning 
     With a few meters, it is necessary to request the meter to send its data using a specific character string. This string has to be       send at a very low baudrate. (300Baud) 
     If you reply the meter with an acknowledge and ask the it for a new baudrate of 9600 baud, the baudrate of the SML driver has to be     changed, too.
