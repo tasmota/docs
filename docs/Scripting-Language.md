@@ -35,6 +35,7 @@ SDCARD_DIR | enables support for web UI for SD card directory upload and downloa
 USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 USE_SCRIPT_TASK | enables Task in ESP32
+USE_SML_SCRIPT_CMD | enables SML script cmds
 ----
 
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules)"
@@ -244,7 +245,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `s(x)` = explicit conversion from number x to string  
 `mqtts` = MQTT connection status: `0` = disconnected, `>0` = connected  
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
-
+`sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
+`sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
 `hours` = hours  
 `mins` = mins  
 `secs` = seconds  
@@ -319,7 +321,7 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
 `beep(f l)` (ESP32) beeps with a passive piezo beeper. beep(-f 0) attaches PIN f to the beeper, beep(f l) starts a sound with frequency f (Hz) and len l (ms). f=0 stops the sound.  
 `spin(x b)` set GPIO `x` (0..16) to value `b` (0,1). Only bit 0 of `b` is used - even values set the GPIO to `0` and uneven values set the GPIO to `1`  
 `spinm(x m)` set GPIO `x` (0..16) to mode `m` (input=0, output=1, input with pullup=2,alternatively b may be: O=out, I=in, P=in with pullup)  
-`ws2812(array)` copies an array (defined with `m:vname`) to the WS2812 LED chain. The array length should be defined as long as the number of pixels. Color is coded as 24 bit RGB.  
+`ws2812(array dstoffset)` copies an array (defined with `m:vname`) to the WS2812 LED chain. The array length should be defined as long as the number of pixels. Color is coded as 24 bit RGB. optionally the destinationoffset in the LED chain may be given  
 `hsvrgb(h s v)` converts hue (0..360), saturation (0..100) and value (0..100) to RGB color  
 
 `#name` names a subroutine. Subroutine is called with `=#name`  
@@ -397,6 +399,40 @@ Conditional expressions may be enclosed in parentheses. The statement must be on
 ```
 if ((a==b) and ((c==d) or (c==e)) and (s!="x"))
 ```
+
+***mapping function***  
+
+mp(x str1 str2 ... str<n>)  
+It addresses a standard task with less code and much flexibility: mapping an arbitrary incoming numeric value into the allowed range.  
+The numeric value x passed as the first parameter is compared to the rules in the order they are provided as subsequent sting parameters. If the value matches the criteria, the defined value is returned. Subsequent rules are skipped. If x matches none of the rules, x is returned unchanged.  
+
+Rules consist of one of the comparison operators < > = followed by a numeric value v1, optionally followed by a colon and another numeric value v2.  
+
+```
+
+<|>|=v1[:v2] 
+Example 1: "<8:0" - this rule reads: If x is less than 8, return 0.
+Example 2: ">100" - this rule reads: If x is greater than 100, return 100.
+
+Example 3:
+
+y=mp(x "<8:0" ">100")
+Assigns 0 to y if x is less than 8.
+Assigns 100 to y if x is greater than 100.
+Assigns x to y for all values of x that do not meet the above criteria (8 to 100).
+
+The above code of example 3 does the same as the following code - with just one line of code and 15 characters less:
+
+y=x
+if x<8 {
+y=0
+}
+if x>100 {
+y=100
+}
+
+```
+
 
 **E-mail**  
 `#define USE_SENDMAIL`  

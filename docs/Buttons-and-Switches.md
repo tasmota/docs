@@ -202,11 +202,14 @@ For Tasmota, a `Button` is typically a momentary push-button (or a capacitive to
 
 A push-to-make button should use a `Button<x>` component while a push-to-break button should use `Button<x>i` (i.e., inverted).
 
-To ignore default button behaviour define a rule which triggers on `Button<x>#State` or use [`ButtonTopic`](#ButtonTopic). Take note: If the rule matches only certain states, default button behaviour is supressed only for those states.
+To ignore default button behaviour of controlling power outputs you can:
+
+1. use [`SetOption73 1`](Commands.md#setoption73)
+2. use [`ButtonTopic`](#ButtonTopic) 
+3. define a rule which triggers on `Button<x>#State`. Take note: If the rule trigger only certain states, default behaviour is supressed only for those states.
 
 
-!!! example
-     Make Button1 publish its value to `cmnd/custom-topic/BUTTON` and not control Power1
+!!! example "Make Button1 publish its value to `cmnd/custom-topic/BUTTON` and not control Power1"
 ```haskell
 Backlog ButtonTopic 0
 ```
@@ -222,41 +225,41 @@ Multipress functions for 2 and more presses cannot be changed using SetOptions o
 !!! danger
     If you [have changed](#Changing-default-functionality) [ButtonTopic](Commands.md#buttontopic), [SetOption1](Commands.md#setoption1), [SetOption11](Commands.md#setoption11) or [SetOption13](Commands.md#setoption13) some of the listed functionality will be changed or removed.
 
+!!! note 
+    `Button1` can directly control up to five relays. The number of the activated relay corresponds to the number of button presses and this feature is not present in the other buttons.    
+    When ButtonTopic is set to default `0` a button will always send its state for rules.
+
 #### 1 short press
-Toggles the power state. This will blink the LED twice and send an MQTT status message like `stat/tasmota/POWER1 ON`. If `cmnd/tasmota/ButtonRetain on` has been used the MQTT message will also contain the MQTT retain flag.
+Toggles the power state. This will blink the LED once and send an MQTT status message like `stat/tasmota/POWER = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"SINGLE"}` when SetOption73 is enabled. The button state for rules is `2` (`10` if `Setoption73` is enabled).
 
 #### 2 short presses
-Toggles the second power state (if available on the device). This will blink the LED twice and send an MQTT status message like `stat/tasmota/POWER2 on`.
-
-Any device with more than one power output can be configured to act on a double press to switch the second power state (or for Blitzwolf SHP5 the USB power). To be sure not to activate accidental three button press it is wise to set `SetOption1 1`.
+When using Button1 toggles the second power state (if available on the device). This will blink the LED twice and send an MQTT status message like `stat/tasmota/POWER2 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"DOUBLE"}` when SetOption73 is enabled. The button state for rules is `11`.
 
 #### 3 short presses
-
-!!! failure "OBSOLETED IN PRECOMPILED BINARIES"
-Start Wi-Fi smart config allowing for SSID and password configuration using an Android mobile phone with the [ESP8266 SmartConfig](https://play.google.com/store/apps/details?id=com.cmmakerclub.iot.esptouch) app. The LED will blink during the config period. A single button press during this period will abort and restart the device. 
+When using Button1 toggles the third power state (if available on the device). This will blink the LED three times and send an MQTT status message like `stat/tasmota/POWER3 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"TRIPLE"}` when SetOption73 is enabled. The button state for rules is `12`.
 
 #### 4 short presses
-Start Wi-Fi manager providing an Access Point with IP address 192.168.4.1 and a web server allowing the configuration of Wi-Fi. The LED will blink during the config period. A single button press during this period will abort and restart the device.
+When using Button1 toggles the fourth power state (if available on the device). This will blink the LED for times and send an MQTT status message like `stat/tasmota/POWER4 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"QUAD"}` when SetOption73 is enabled. The button state for rules is `13`.
 
 #### 5 short presses
-
-!!! failure "OBSOLETED IN PRECOMPILED BINARIES"
-Start Wi-Fi Protected Setup (WPS) allowing for SSID and password configuration using the router's WPS button or web page. The LED will blink during the config period. A single button press during this period will abort and restart the device. 
+When using Button1 toggles the fifth power state (if available on the device). This will blink the LED five times and send an MQTT status message like `stat/tasmota/POWER5 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"PENTA"}` when SetOption73 is enabled. The button state for rules is `14`. 
 
 #### 6 short presses
-Restarts the device.
-
-#### 7 short presses
-Start OTA update of firmware using [OtaUrl](Commands.md#otaurl). The green LED is lit during the update.
+Start [`WifiConfig 2`](Commands.md#wificonfig). Can be disabled using [SetOption1 1](Commands.md#setoption1)
 
 #### **Long press**
 There are two separate functions associated with a button long press based on how long it is held:
 
 1. When held continuously for 40 seconds (Configurable with [SetOption32](Commands.md#setoption32), value is 10x the configured hold time) Tasmota will reset to firmware defaults and restart.
-2. If enabled, button pressed for 4 seconds (Configurable with [SetOption32](Commands.md#setoption32)) creates a HOLD action. Check [table below](#changing-default-functionality) on how to enable this function.
+2. If enabled, button pressed for 4 seconds (Configurable with [SetOption32](Commands.md#setoption32)) creates a HOLD action and send an MQTT status message like `stat/tasmota/BUTTON<x> = {"ACTION":"HOLD"}` when SetOption73 is enabled. The button state for rules is `3`.
+
+!!! note "If [ButtonRetain](Commands.md#ButtonRetain) has been enabled the MQTT message will also contain the MQTT retain flag."
 
 !!! danger 
-    When a button is configured with a [Switchmode](Commands.md#switchmode) that keeps it as ON while depressed it activates the reset to firmware defaults function. Change that button to switch or change switchmode to avoid repeated resets to defaults.
+    When a button is configured as inverted or with a [Switchmode](Commands.md#switchmode) that keeps it as ON while depressed it activates the reset to firmware defaults function. Change the Button configuration or SwitchMode to avoid repeated reset to defaults or use `Setoption1 1` to disable that function.
+
+!!! warning 
+    If you define a button with a number higher than available power outputs it will default to controlling `Power1`. Example: Button4 on a device with Power1 and Power2 will control `Power1`.
 
 ### ButtonTopic
 
@@ -300,11 +303,13 @@ This will send an MQTT message to a custom defined topic similarly to option 1.
 `ButtonTopic 1` sends an MQTT message to the device topic. This sets the state of the devices power state accordingly.  
 `ButtonTopic <value>` sends an MQTT message command to the custom topic. This does not change the state of the devices power state.
 
+!!! warning "**When a Button is set to a different topic than `0` is not possible to use `Button#State` as a trigger for rules.**"
+
 ### Changing Default Functionality
 
 If a [`ButtonTopic`](Commands.md#buttontopic) (and if [`SetOption1 1`](Commands.md#SetOption1)) or [`SwitchTopic 1`](Commands.md#SwitchTopic) is defined (and [`SwitchMode`](Commands.md#switchmode) is set to `5` or `6`) and a button is pressed longer than defined Key Hold Time ([`SetOption32`](Commands.md#setoption32) default 4 seconds) an MQTT message like `cmnd/%topic%/POWER HOLD` will be sent. `HOLD` can be changed with [`StateText4`](Commands.md#StateText).
 
-Command [`SetOption11`](Commands.md#setoption11) allows for swapping the functionality of the push button.
+Command [`SetOption11`](Commands.md#setoption11) allows for swapping the functionality between the SINGLE and DOUBLE press of the push button.
 
 These changes result in the following:
 

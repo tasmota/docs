@@ -28,10 +28,10 @@ components in Tasmota. If the interface detects that a meter descriptor GPIO con
 The Smart Meter Interface provides a means to connect many kinds of meters to Tasmota. **The following types of meter protocols are supported:**  
 - ASCII OBIS telegrams emitted from many smart meters and also from P1 meter interface  
 - Binary SML OBIS telegram emitted from many smart meters  
-- Binary EBUS telegram emitted by many heaters and heat pumps  (e.g., Vaillant, Wolf)
-- Binary MODBUS telegram used by many power meters
-- Binary RAW telegram decodes all kinds of binary data eg EMS heater bus
-- Counter interface (uses Tasmota counter storage) for e.g., reed contacts either in polling or IRQ mode
+- Binary EBUS telegram emitted by many heaters and heat pumps  (e.g., Vaillant, Wolf)  
+- Binary MODBUS telegram used by many power meters  
+- Binary RAW telegram decodes all kinds of binary data eg EMS heater bus  
+- Counter interface (uses Tasmota counter storage) for e.g., reed contacts either in polling or IRQ mode  
 
 There are many different meters that use the same protocol. There are multitudes of variants and use cases. A meter can be defined by using compilation time `#define` pragmas. This requires recompiling the firmware to make modifications.  
 
@@ -59,9 +59,10 @@ Declare a script `>M` section with the number of connected meters (n = `1..5`)
 `+<M>,<rxGPIO>,<type>,<flag>,<parameter>,<jsonPrefix>{,<txGPIO>,<txPeriod>,<cmdTelegram>}`  
 
 !!! example
+
 `+1,3,o,0,9600,OBIS1,1,2,2F3F210D0A` 
 `+1,3,s,16,9600,SML1`  
-`+1,12,c,1,-10,H20_Cnt`
+`+1,12,c,1,-10,H20_Cnt`  
 `+1,3,m,0,9600,MODBUS,1,1,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010`  
 
 `+<M>,<rxGPIO>,<type>,<flag>,<parameter>,<jsonPrefix>{,<txGPIO>,<txPeriod>,<cmdTelegram>}`  
@@ -73,7 +74,7 @@ Declare a script `>M` section with the number of connected meters (n = `1..5`)
   - `c` = Counter type  
   - `e` = EBus binary coding  
   - `m` = MODBus binary coding with serial mode 8N1   
-  - `M` = MODBus binary coding with serial mode 8E1 
+  - `M` = MODBus binary coding with serial mode 8E1  
   - `r` = Raw binary coding (any binary telegram)  
 - `<flag>` - options flag:  
   - `0` = counter without pullup  
@@ -86,29 +87,31 @@ Declare a script `>M` section with the number of connected meters (n = `1..5`)
     - negative value <=0 = debounce time (milliseconds) for irq driven counters  
 - `<jsonPrefix>` - prefix for Web UI and MQTT JSON payload. Up to 7 characters  
 - `<txGPIO>` - meter command transmit GPIO (optional)  
-- `<txPeriod>` - number of 250ms increments (n * 250ms). Period to repeat the transmission of commands to the meter (optional)  
+- `<txPeriod>` - number of 100ms increments (n * 100ms). Period to repeat the transmission of commands to the meter (optional)  
 - `<cmdTelegram>` - comma separated hex coded byte blocks to send to meter device. For modbus each comma separated block is a command to retrieve a certain register from the meter (Optional, only required for measuring devices that have to be triggered with a certain character string.)  
   
 **Modbus:**
 
-!!! example  
+!!! example
 `+1,3,m,0,9600,MODBUS,1,1,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010`    
 Components of the character string:  
 `...01040000,01040002,...`    
 `01` = Modbus slave device ID   
 `04` = Instruction to read an Input Register (alternatively, `03` = Instruction to read an Holding Register)
-`0000`/`0002` = Register # (as Hexadecimal codification, without the prefix `0x`. Example: `0x0079` -> `0079`)
+`0000`/`0002` = Register # (as Hexadecimal codification, without the prefix `0x`. Example: `0x0079` -> `0079`)  
+the number of requested registers is fixed to 2, however with the char 'r' before the hex string the complete request string may be specified  
+`...r010400000001,r010400020003,...`    
 
 !!! note
     `ID`, `Instruction to read the Register` value (Input vs Holding) and `Register #` may differ depending on the measuring device.  
    
 ------------------------------------------------------------------------------  
 ### Meter Metrics
-Each meter typically provides multiple metrics (voltage, power, current, humidity etc.) which it measures. An entry for each metric to be collected as `#define SML_MAX_VARS N` (n = `1..16`) must be specified, in `user_config_override.h` file (see the code at the page top). An entry defines how to decode the data and put it into variables.
+Each meter typically provides multiple metrics (voltage, power, current etc.) which it measures. An entry for each metric to be collected as `#define SML_MAX_VARS N` (n = `1..16`) must be specified, in `user_config_override.h` file (see the code at the page top). An entry defines how to decode the data and put it into variables.
 
-!!! example 
-(OBIS/SML/MODBus): 
-`1,1-0:1.8.1\*255(@1,Total consumption,KWh,Total_in,4`   
+!!! example  
+(OBIS/SML/MODBus):  
+`1,1-0:1.8.1\*255(@1,Total consumption,KWh,Total_in,4`  
 `1,77070100010801ff@1000,W1,kWh,w1,4`  
 `1,010304UUuuxxxxxxxx@i0:1,Spannung L1,V,Voltage_L1,0`  
 
@@ -118,23 +121,23 @@ Each meter typically provides multiple metrics (voltage, power, current, humidit
   - OBIS: ASCII OBIS code terminated with `(` character which indicates the start of the meter value  
   - SML: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value  
   - EBUS, MODBus, RAW: hex values of EBUS, MODBus, RAW block to compare  
-    - `xx` means ignore value  (1 byte)
+    - `xx` means ignore value  (1 byte)  
     - `ss` = extract a signed byte  
     - `uu` = extract an unsigned byte  
     - `UUuu` = extract an unsigned word (high order byte first)  
-    - `uuUU` = extract an unsigned word (low order byte first) 
+    - `uuUU` = extract an unsigned word (low order byte first)  
     - `UUuuUUuu` = extract an unsigned long word (high order byte first)  
     - `SSss` = extract a signed word (high order byte first)   
     - `ssSS` = extract a signed word (low order byte first)  
     - `SSssSSss` = extract an signed long word (high order byte first)  
     - `ffffffff` = extract a float value  
     - `FFffFFff` = extract a reverse float value  
-    - `@` decoding definition termination character
+    - `@` decoding definition termination character  
     - decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte.   
       e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`  
     - in the case of **MODBus**, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition  
     
-!!! example 
+!!! example    
    `+1,3,M,1,9600,SBC,1,2,01030023,01030028...`  
    `1,010304UUuuxxxxxxxx@i0:1,Voltage L1,V,Voltage_L1,0` < the `i0:1` refers to: `01030023` with a scaling factor (`:1`) of 1   
    `1,010304UUuuxxxxxxxx@i1:10,Current L1,V,Current_L1,2` < the `i1:10` refers to: `01030028` with a scaling factor (`:10`) of 10       
@@ -144,17 +147,21 @@ Each meter typically provides multiple metrics (voltage, power, current, humidit
  Example:
  OBIS: `1,1-0:0.0.0\*255(@#),Meter Nr,, Meter_number,0`  
  SML: `1,77078181c78203ff@#,Service ID,,Meter_id,0`  
-- `<label>` - web UI label (max 23 chars)  
+- `<label>` - web UI label (max 23 chars) if this label is the single char '*' the WEB UI is discarded for this line  
 - `<UoM>` - unit of measure (max 7 chars)  
 - `<var>` - MQTT variable name (max 23 chars)  
 - `<precision>` - number of decimal places  
   Add 16 to transmit the data immediately. Otherwise it is transmitted on [`TelePeriod`](Commands#teleperiod)  
 
-!!! example   
+!!! example    
  `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,4` > Transmitted on  [`TelePeriod`](Commands#teleperiod)   
 `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,20` > Precision of 4. 4 + 16 = 20 >transmit its value immediately  
 
 `#` character terminates the list  
+
+!!! note
+    in the decoding section of the meter defintions before the @ char no space chars are allowed  
+    
 
 ------------------------------------------------------------------------------
 **Special Commands**
@@ -182,7 +189,7 @@ with the '=' char at the beginning of a line you may do some special decoding
 !!! note
     During the output of the data in the console, the data in the WEB UI are not updated. To return write: `sensor53 d0`  
     
-    
+
 !!! warning 
     With a few meters, it is necessary to request the meter to send its data using a specific character string. This string has to be       send at a very low baudrate. (300Baud) 
     If you reply the meter with an acknowledge and ask the it for a new baudrate of 9600 baud, the baudrate of the SML driver has to be     changed, too.
@@ -200,11 +207,11 @@ with the '=' char at the beginning of a line you may do some special decoding
     
 !!! example
 
-      `>D`  
-      res=0  
-      scnt=0    
-      ;For this Example in the >F section  
-    > `>F`
+    `>D`  
+    res=0  
+    scnt=0    
+    ;For this Example in the >F section  
+    `>F`
     ;count 100ms   
     scnt+=1  
     switch scnt  
@@ -212,18 +219,18 @@ with the '=' char at the beginning of a line you may do some special decoding
     ;set sml driver to 300 baud and send /?! as HEX to trigger the Meter   
     res=sml(1 0 300)  
     res=sml(1 1 "2F3F210D0A")  
-    >;1800ms later \> Send ACK and ask for switching to 9600 baud  
+    ;1800ms later \> Send ACK and ask for switching to 9600 baud  
     case 18  
     res=sml(1 1 "063035300D0A")  
-    >;2000ms later \> Switching sml driver to 9600 baud    
+    ;2000ms later \> Switching sml driver to 9600 baud    
     case 20  
     res=sml(1 0 9600)   
-    >;Restart sequence after 50x100ms    
+    ;Restart sequence after 50x100ms    
     case 50  
     ; 5000ms later \> restart sequence    
     scnt=0  
     ends        
-    > `>M 1`  
+    >`>M 1`  
     +1,3,o,0,9600, ,1  
     ...etc.  
   
@@ -645,15 +652,15 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 >`>M 1`  
 +1,3,m,0,9600,MODBUS,1,1,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010  
 >
->1,010404ffffffffxxxx@i0:1,Voltage P1,V,Voltage_P1,2  
-1,010404ffffffffxxxx@i1:1,Voltage P2,V,Voltage_P2,2  
-1,010404ffffffffxxxx@i2:1,Voltage P3,V,Voltage_P3,2  
-1,010404ffffffffxxxx@i3:1,Current P1,A,Current_P1,2  
-1,010404ffffffffxxxx@i4:1,Current P2,A,Current_P2,2  
-1,010404ffffffffxxxx@i5:1,Current P3,A,Current_P3,2  
-1,010404ffffffffxxxx@i6:1,Active Power P1,W,Power_P1,2  
-1,010404ffffffffxxxx@i7:1,Active Power P2,W,Power_P2,2  
-1,010404ffffffffxxxx@i8:1,Active Power P3,W,Power_P3,2  
+>1,010404ffffffff@i0:1,Voltage P1,V,Voltage_P1,2  
+1,010404ffffffff@i1:1,Voltage P2,V,Voltage_P2,2  
+1,010404ffffffff@i2:1,Voltage P3,V,Voltage_P3,2  
+1,010404ffffffff@i3:1,Current P1,A,Current_P1,2  
+1,010404ffffffff@i4:1,Current P2,A,Current_P2,2  
+1,010404ffffffff@i5:1,Current P3,A,Current_P3,2  
+1,010404ffffffff@i6:1,Active Power P1,W,Power_P1,2  
+1,010404ffffffff@i7:1,Active Power P2,W,Power_P2,2  
+1,010404ffffffff@i8:1,Active Power P3,W,Power_P3,2  
 \#  
 
 
@@ -670,15 +677,15 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 >`>M 1`  
 +1,3,m,0,9600,Janitza,1,1,01034A38,01034A3A,01034A3C,01034A4C,01034A4E,01034A50,01034A72,01034A7A,01034A82  
 >
->1,010304ffffffffxxxx@i0:1,Voltage L1-N,V,Voltage_L1-N,2  
-1,010304ffffffffxxxx@i1:1,Voltage L2-N,V,Voltage_L2-N,2  
-1,010304ffffffffxxxx@i2:1,Voltage L3-N,V,Voltage_L3-N,2  
-1,010304ffffffffxxxx@i3:1,Real power L1-N,W,Real_power_L1-N,2  
-1,010304ffffffffxxxx@i4:1,Real power L2-N,W,Real_power_L2-N,2  
-1,010304ffffffffxxxx@i5:1,Real power L3-N,W,Real_power_L3-N,2  
-1,010304ffffffffxxxx@i6:1,Real energy L3,Wh,Real_energy_L3,2  
-1,010304ffffffffxxxx@i7:1,Real energy L3-consumed,Wh,Real_energy_L3_consumed,2  
-1,010304ffffffffxxxx@i8:1,Real energy L3-delivered,Wh,Real_energy_L3_delivered,2   
+>1,010304ffffffff@i0:1,Voltage L1-N,V,Voltage_L1-N,2  
+1,010304ffffffff@i1:1,Voltage L2-N,V,Voltage_L2-N,2  
+1,010304ffffffff@i2:1,Voltage L3-N,V,Voltage_L3-N,2  
+1,010304ffffffff@i3:1,Real power L1-N,W,Real_power_L1-N,2  
+1,010304ffffffff@i4:1,Real power L2-N,W,Real_power_L2-N,2  
+1,010304ffffffff@i5:1,Real power L3-N,W,Real_power_L3-N,2  
+1,010304ffffffff@i6:1,Real energy L3,Wh,Real_energy_L3,2  
+1,010304ffffffff@i7:1,Real energy L3-consumed,Wh,Real_energy_L3_consumed,2  
+1,010304ffffffff@i8:1,Real energy L3-delivered,Wh,Real_energy_L3_delivered,2   
 \#
 
 
@@ -769,27 +776,27 @@ Tageseinspeisung: {m} %po_d% kWh
 >`>M 1`  
 +1,3,M,1,9600,SBC,1,1,02030023,02030028,0203002d,02030025,0203002a,0203002f,02030032,02030027,0203002c,02030031,02030021,02030015,02030018  
 >  
->1,020304UUuuxxxxxxxx@i0:1,Spannung L1,V,Voltage_L1,0  
-1,020304UUuuxxxxxxxx@i1:1,Spannung L2,V,Voltage_L2,0  
-1,020304UUuuxxxxxxxx@i2:1,Spannung L3,V,Voltage_L3,0  
-1,020304xxxxUUuuxxxx@i0:10,Strom L1,A,Current_L1,2  
-1,020304xxxxUUuuxxxx@i1:10,Strom L2,A,Current_L2,2  
-1,020304xxxxUUuuxxxx@i2:10,Strom L3,A,Current_L3,2  
+>1,020304UUuu@i0:1,Spannung L1,V,Voltage_L1,0  
+1,020304UUuu@i1:1,Spannung L2,V,Voltage_L2,0  
+1,020304UUuu@i2:1,Spannung L3,V,Voltage_L3,0  
+1,020304xxxxUUuu@i0:10,Strom L1,A,Current_L1,2  
+1,020304xxxxUUuu@i1:10,Strom L2,A,Current_L2,2  
+1,020304xxxxUUuu@i2:10,Strom L3,A,Current_L3,2  
 1,=h=  
-1,020304UUuuxxxxxxxx@i3:100,Leistung L1,kW,Power_L1,3  
-1,020304UUuuxxxxxxxx@i4:100,Leistung L2,kW,Power_L2,3  
-1,020304UUuuxxxxxxxx@i5:100,Leistung L3,kW,Power_L3,3  
-1,020304UUuuxxxxxxxx@i6:100,Leistung Total,kW,Power_Total,3  
-1,020304xxxxSSssxxxx@i3:100,BlindLeistung L1,kVAr,ReaktivePower_L1,3  
-1,020304xxxxSSssxxxx@i4:100,BlindLeistung L2,kVAr,ReaktivePower_L2,3  
-1,020304xxxxSSssxxxx@i5:100,BlindLeistung L3,kVAr,ReaktivePower_L3,3  
-1,020304xxxxSSssxxxx@i6:100,BLeistung Total,kVAr,ReaktivePower_Total,3  
+1,020304UUuu@i3:100,Leistung L1,kW,Power_L1,3  
+1,020304UUuu@i4:100,Leistung L2,kW,Power_L2,3  
+1,020304UUuu@i5:100,Leistung L3,kW,Power_L3,3  
+1,020304UUuu@i6:100,Leistung Total,kW,Power_Total,3  
+1,020304xxxxSSss@i3:100,BlindLeistung L1,kVAr,ReaktivePower_L1,3  
+1,020304xxxxSSss@i4:100,BlindLeistung L2,kVAr,ReaktivePower_L2,3  
+1,020304xxxxSSss@i5:100,BlindLeistung L3,kVAr,ReaktivePower_L3,3  
+1,020304xxxxSSss@i6:100,BLeistung Total,kVAr,ReaktivePower_Total,3  
 1,=h=  
-1,020304UUuuxxxxxxxx@i7:100,CosPhi L1,,CosPhi_L1,2  
-1,020304UUuuxxxxxxxx@i8:100,CosPhi L2,,CosPhi_L2,2  
-1,020304UUuuxxxxxxxx@i9:100,CosPhi L3,,CosPhi_L3,2  
+1,020304UUuu@i7:100,CosPhi L1,,CosPhi_L1,2  
+1,020304UUuu@i8:100,CosPhi L2,,CosPhi_L2,2  
+1,020304UUuu@i9:100,CosPhi L3,,CosPhi_L3,2  
 1,=h=  
-1,020304UUuuUUuuxxxx@i10:100,T2 Wert,kWh,T2_Value,2  
+1,020304UUuuUUuu@i10:100,T2 Wert,kWh,T2_Value,2  
 \#
 
 
@@ -802,49 +809,49 @@ Tageseinspeisung: {m} %po_d% kWh
 >+1,3,M,1,9600,Meter,1,1,01030023,01030028,0103002d,01030025,0103002a,0103002f,01030032,01030027,0103002c,01030031,0103001B,0103001d,03030023,03030028,0303002d,03030025,0303002a,0303002f,03030032,03030027,0303002c,03030031,0303001B,0303001d  
 >  
 >1,=h Domestic Electricity:  
-1,010304UUuuUUuuxxxx@i10:100,1 Tariff 1 total,kWh,M1_T1_total,2  
-1,010304UUuuUUuuxxxx@i11:100,1 Tariff 1 partial,kWh,M1_T1_par,2  
+1,010304UUuuUUuu@i10:100,1 Tariff 1 total,kWh,M1_T1_total,2  
+1,010304UUuuUUuu@i11:100,1 Tariff 1 partial,kWh,M1_T1_par,2  
 1,=h Readings:  
-1,010304UUuuxxxxxxxx@i0:1,1 Voltage L1,V,M1_Voltage_L1,0  
-1,010304UUuuxxxxxxxx@i1:1,1 Voltage L2,V,M1_Voltage_L2,0  
-1,010304UUuuxxxxxxxx@i2:1,1 Voltage L3,V,M1_Voltage_L3,0  
-1,010304xxxxUUuuxxxx@i0:10,1 Current L1,A,M1_Current_L1,2  
-1,010304xxxxUUuuxxxx@i1:10,1 Current L2,A,M1_Current_L2,2  
-1,010304xxxxUUuuxxxx@i2:10,1 Current L3,A,M1_Current_L3,2  
-1,010304UUuuxxxxxxxx@i3:100,1 Active Power L1,kW,M1_PRMS_L1,3  
-1,010304UUuuxxxxxxxx@i4:100,1 Active Power L2,kW,M1_PRMS_L2,3  
-1,010304UUuuxxxxxxxx@i5:100,1 Active Power L3,kW,M1_PRMS_L3,3  
-1,010304UUuuxxxxxxxx@i6:100,1 Active Power total,kW,M1_PRMS_total,3  
-1,010304xxxxSSssxxxx@i3:100,1 Reactive Power L1,kVAr,M1_QRMS_L1,3  
-1,010304xxxxSSssxxxx@i4:100,1 Reactive Power L2,kVAr,M1_QRMS_L2,3  
-1,010304xxxxSSssxxxx@i5:100,1 Reactive Power L3,kVAr,M1_QRMS_L3,3  
-1,010304xxxxSSssxxxx@i6:100,1 Reactive Power total,kVAr,M1_QRMS_total,3  
-1,010304UUuuxxxxxxxx@i7:100,1 CosPhi L1,,M1_CosPhi_L1,2  
-1,010304UUuuxxxxxxxx@i8:100,1 CosPhi L2,,M1_CosPhi_L2,2  
-1,010304UUuuxxxxxxxx@i9:100,1 CosPhi L3,,M1_CosPhi_L3,2  
+1,010304UUuu@i0:1,1 Voltage L1,V,M1_Voltage_L1,0  
+1,010304UUuu@i1:1,1 Voltage L2,V,M1_Voltage_L2,0  
+1,010304UUuu@i2:1,1 Voltage L3,V,M1_Voltage_L3,0  
+1,010304xxxxUUuu@i0:10,1 Current L1,A,M1_Current_L1,2  
+1,010304xxxxUUuu@i1:10,1 Current L2,A,M1_Current_L2,2  
+1,010304xxxxUUuu@i2:10,1 Current L3,A,M1_Current_L3,2  
+1,010304UUuu@i3:100,1 Active Power L1,kW,M1_PRMS_L1,3  
+1,010304UUuu@i4:100,1 Active Power L2,kW,M1_PRMS_L2,3  
+1,010304UUuu@i5:100,1 Active Power L3,kW,M1_PRMS_L3,3  
+1,010304UUuu@i6:100,1 Active Power total,kW,M1_PRMS_total,3  
+1,010304xxxxSSss@i3:100,1 Reactive Power L1,kVAr,M1_QRMS_L1,3  
+1,010304xxxxSSss@i4:100,1 Reactive Power L2,kVAr,M1_QRMS_L2,3  
+1,010304xxxxSSss@i5:100,1 Reactive Power L3,kVAr,M1_QRMS_L3,3  
+1,010304xxxxSSss@i6:100,1 Reactive Power total,kVAr,M1_QRMS_total,3  
+1,010304UUuu@i7:100,1 CosPhi L1,,M1_CosPhi_L1,2  
+1,010304UUuu@i8:100,1 CosPhi L2,,M1_CosPhi_L2,2  
+1,010304UUuu@i9:100,1 CosPhi L3,,M1_CosPhi_L3,2  
 1,=h________________________________________________  
 ; meter 2 +12 offset  
 1,=h Heat Pump  
-1,030304UUuuUUuuxxxx@i22:100,2 Tariff 1 total,kWh,M2_T1_total,2  
-1,030304UUuuUUuuxxxx@i23:100,2 Tariff 1 partial,kWh,M2_T1_par,2  
+1,030304UUuuUUuu@i22:100,2 Tariff 1 total,kWh,M2_T1_total,2  
+1,030304UUuuUUuu@i23:100,2 Tariff 1 partial,kWh,M2_T1_par,2  
 1,=h Readings:  
-1,030304UUuuxxxxxxxx@i12:1,2 Voltage L1,V,M2_Voltage_L1,0  
-1,030304UUuuxxxxxxxx@i13:1,2 Voltage L2,V,M2_Voltage_L2,0  
-1,030304UUuuxxxxxxxx@i14:1,2 Voltage L3,V,M2_Voltage_L3,0  
-1,030304xxxxUUuuxxxx@i12:10,2 Current L1,A,M2_Current_L1,2  
-1,030304xxxxUUuuxxxx@i13:10,2 Current L2,A,M2_Current_L2,2  
-1,030304xxxxUUuuxxxx@i14:10,2 Current L3,A,M2_Current_L3,2  
-1,030304UUuuxxxxxxxx@i15:100,2 Active Power L1,kW,M2_PRMS_L1,3  
-1,030304UUuuxxxxxxxx@i16:100,2 Active Power L2,kW,M2_PRMS_L2,3  
-1,030304UUuuxxxxxxxx@i17:100,2 Active Power L3,kW,M2_PRMS_L3,3  
-1,030304UUuuxxxxxxxx@i18:100,2 Active Power total,kW,M2_PRMS_total,3  
-1,030304xxxxSSssxxxx@i15:100,2 Reactive Power L1,kVAr,M2_QRMS_L1,3  
-1,030304xxxxSSssxxxx@i16:100,2 Reactive Power L2,kVAr,M2_QRMS_L2,3  
-1,030304xxxxSSssxxxx@i16:100,2 Reactive Power L3,kVAr,M2_QRMS_L3,3  
-1,030304xxxxSSssxxxx@i18:100,2 Reactive Power total,kVAr,M2_QRMS_total,3  
-1,030304UUuuxxxxxxxx@i19:100,2 CosPhi L1,,M2_CosPhi_L1,2  
-1,030304UUuuxxxxxxxx@i20:100,2 CosPhi L2,,M2_CosPhi_L2,2  
-1,030304UUuuxxxxxxxx@i21:100,2 CosPhi L3,,M2_CosPhi_L3,2  
+1,030304UUuu@i12:1,2 Voltage L1,V,M2_Voltage_L1,0  
+1,030304UUuu@i13:1,2 Voltage L2,V,M2_Voltage_L2,0  
+1,030304UUuu@i14:1,2 Voltage L3,V,M2_Voltage_L3,0  
+1,030304xxxxUUuu@i12:10,2 Current L1,A,M2_Current_L1,2  
+1,030304xxxxUUuu@i13:10,2 Current L2,A,M2_Current_L2,2  
+1,030304xxxxUUuu@i14:10,2 Current L3,A,M2_Current_L3,2  
+1,030304UUuu@i15:100,2 Active Power L1,kW,M2_PRMS_L1,3  
+1,030304UUuu@i16:100,2 Active Power L2,kW,M2_PRMS_L2,3  
+1,030304UUuu@i17:100,2 Active Power L3,kW,M2_PRMS_L3,3  
+1,030304UUuu@i18:100,2 Active Power total,kW,M2_PRMS_total,3  
+1,030304xxxxSSss@i15:100,2 Reactive Power L1,kVAr,M2_QRMS_L1,3  
+1,030304xxxxSSss@i16:100,2 Reactive Power L2,kVAr,M2_QRMS_L2,3  
+1,030304xxxxSSss@i16:100,2 Reactive Power L3,kVAr,M2_QRMS_L3,3  
+1,030304xxxxSSss@i18:100,2 Reactive Power total,kVAr,M2_QRMS_total,3  
+1,030304UUuu@i19:100,2 CosPhi L1,,M2_CosPhi_L1,2  
+1,030304UUuu@i20:100,2 CosPhi L2,,M2_CosPhi_L2,2  
+1,030304UUuu@i21:100,2 CosPhi L3,,M2_CosPhi_L3,2  
 \#  
 
 

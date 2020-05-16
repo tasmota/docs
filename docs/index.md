@@ -14,43 +14,35 @@ Incredibly expandable and flexible.
 [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4)
 [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-### Current release
-<a href="https://github.com/arendst/Tasmota/releases/tag/v8.2.0"><span style="font-size:40px;">Tasmota 8.2 Elliot</span></a> 
+### Current release 
+<a href="https://github.com/arendst/Tasmota/releases/tag/v8.3.0"><span style="font-size:40px;">Tasmota 8.3.0 Fred</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
+ 
+- :rotating_light: **BREAKING CHANGE** :rotating_light: 
+Changed multicast address and port used by device groups. All devices using [Device Groups](Device-Groups.md) must be upgraded. 
+- :rotating_light: **BREAKING CHANGE** :rotating_light: Upgraded [Home Assistant](Home-Assistant.md) discovery with new features: 
+    - Template/Module name is now used as the Device name in autodiscovery;
+    - New management for Lights discovery, using directly LIGHT structure;
+    - Add support for SetOption37 for color remapping for led channels and independent handling of RGB and white channels;
+    - Add support for SetOption68 for multi-channel PWM instead of a single light;
+    - Add a failsafe to warn about the wrong order of Relay IDs when a light is present, it will block the MQTT generation for Relays/Lights until the issue is fixed;
+    - New management for Relays discovery, using GPIO map directly;
+    - Updated status sensor and its list of information
+- :rotating_light: **BREAKING CHANGE** :rotating_light:  Buttons have a new configurable multipress feature, to activate AP mode now requires 6 button presses.
 
-:rotating_light: **BREAKING CHANGE** :rotating_light: 
+- Add quick wifi reconnect using saved AP parameters when [`SetOption56 0`](Commands.md#setoption56). Tasmota will now reconnect to your network in under a second.
+- Add compression of Rules allowing for up to 60% more rules per each rule buffer
+- Add rule trigger at root level such as `on loadavg<50 do power 2 endon` triggered by `state` command
+- Add command `SO` as shortcut for `SetOption`
+- Add command [`SetOption73`](Commands.md#setoption73) to decouple button from relays
+- Add command [`SetOption41`](Commands.md#setoption41) to fix possible webUI unresponsiveness due to bad ARP implementation in routers
+- Implemented [Zigbee](Zigbee.md#zigbee-binding) bind commands
+- Add [`Palette`](Commands.md#palette) to specify a palette of colors used in schemes
+- Add support for [OpenTherm](OpenTherm), [Thermostat](Commands.md#thermostat) control, [iAQ-core](IAQ.md) air quality sensor, [AS3935](AS3935) lightning sensor, analog anemometer, 64x48 SSD1306 OLED, Seven Segment display using HT16K33 and _highly experimental_ support of [ESP32](ESP32.md)
+- Add console command history
+- Add support for longer template names
+- Fix possible Relay toggles on (OTA) restart
 
-#### Most of the sensor support is moved to tasmota-sensors.bin!
-
-- ==If your sensor didn't come with the device, it is most likely **not** supported in the default tasmota.bin firmware build anymore.== Consult [Builds table](Builds) for complete information.
-- Enabling `SetOption19` will no longer switch %prefix% and %topic% and will keep the default topic structure
-- Zigbee command prefixes have changed from `Zigbee*` to `Zb*`
-
-#### Notable new features:
-
-- Support for gzipped binaries
-- Added group control of devices using UDP [Device Groups](https://tasmota.github.io/docs/Device-Groups)
-- Added support for Mijia BLE sensors using [HM10](HM-10.md) or [NRF24L01](NRF24L01.md) peripherals
-- Added native support for Martin Jerry type [PWM dimmer switches](PWM-dimmer-switch.md)
-- Plenty of new [switchmodes](Buttons-and-Switches#switchmode).
-
-See [changelog](changelog-8.2.md) for a complete list of new features, changes and fixes.
-
-<!-- === "2019-12-25 - Tasmota v8.1"
-
-    Merry Christmas and Happy New Year from the Tasmota Development Team.
-
-    Tasmota v8.1 Doris is released. See [changelog for all changes](changelog-8.1.md).
-
-    This release supports downgrade only to **version 7.2.0.x**. There are major changes in configuration code and layout which will completely break any downgrade to versions prior to v7.2. 
-
-=== "2019-12-21 - Tasmota v7.2"
-
-    Tasmota v7.2 Constance is released. See [changelog for all changes](changelog-7.2.md).
-
-    Breaking change: tasmota-basic.bin is renamed to **tasmota-lite.bin**. Update your OtaUrl accordingly.
-
-    :warning: :warning: :warning:    
-    This will be the only release that supports fallback from future **release 8.0 and development versions 7.2.0.x** which will be released shortly. Tasmota v8.0 will have major changes in configuration code and layout which will completely break any downgrade to versions below v7.2.  -->
+See [changelog](changelog.md) for a complete list of new features, changes and fixes.
 
 ### Join our community
 See [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota) or [Community Forum](https://groups.google.com/d/forum/sonoffusers) for feedback, questions and troubleshooting.

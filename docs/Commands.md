@@ -112,11 +112,14 @@ Command|Parameters
 :---|:---
 Backlog<a class="cmnd" id="backlog"></a>|List of commands to be executed in sequence separated by  `;`<BR> See [Using Backlog](#the-power-of-backlog) for examples.<a class="cmnd" id="blinkcount"></a>
 BlinkCount|Number of relay toggles ([blinks](#power)) **(does not control the status LED)**<BR> `0` = blink many times before restoring power state <BR> `1..32000` = set number of blinks *(default = `10`)*
-BlinkTime<a class="cmnd" id="blinktime"></a>|`2..3600` set duration, in 0.1 second increments, to [blink](#power) aka toggle Power **(does not control the status LED)**<a class="cmnd" id="buttondebounce"></a>
-ButtonDebounce|User control over button debounce timing <BR>`40..1000` = set button debounce time in milliseconds *(default = `50`)*<a class="cmnd" id="buzzer"></a>
-Buzzer|`0` = stop active buzzer cycle<BR>`<count>,<beep>,<silence>,<tune>` = [read more...](Buzzer)<BR>`2,3` = Beep twice with 300 milliseconds duration and 100 milliseconds pause<BR>`2,3,4` = Beep twice with 300 milliseconds duration and 400 milliseconds pause<BR>`1,2,3,0xF54` (0000 0000 0000 0000 0000 1111 0101 0100). Each `1` bit beeps for 200 milliseconds and each bounded `0` bit pauses for 300 milliseconds<BR>`-1` = infinite mode<BR>`-2` = follow LED mode<a class="cmnd" id="devgroupshare"></a>
-DevGroupShare|Set incoming and outgoing shared item mask.<BR>`<in>,<out>` (default = 0xFFFFFFFF,0xFFFFFFFF)<BR>1 = Power, 2 = Light brightness, 4 = Light fade/speed, 8 = Light scheme, 16 = Light color, 32 = Minimum brightness<a class="cmnd" id="fanspeed"></a>
-FanSpeed|Fan speed control *(iFan02/iFan03 only)*<BR>`0` = turn fan OFF<BR>`1..3` = set fan speed<BR>`+` = increase fan speed <BR>`-` = decrease fan speed <BR>
+BlinkTime<a class="cmnd" id="blinktime"></a>|`2..3600` set duration, in 0.1 second increments, to [blink](#power) aka toggle Power **(does not control the status LED)**
+ButtonDebounce<a class="cmnd" id="buttondebounce"></a>|User control over button debounce timing <BR>`40..1000` = set button debounce time in milliseconds *(default = `50`)*
+Buzzer<a class="cmnd" id="buzzer"></a>|`0` = stop active buzzer cycle<BR>`<count>,<beep>,<silence>,<tune>` = [read more...](Buzzer)<BR>`2,3` = Beep twice with 300 milliseconds duration and 100 milliseconds pause<BR>`2,3,4` = Beep twice with 300 milliseconds duration and 400 milliseconds pause<BR>`1,2,3,0xF54` (0000 0000 0000 0000 0000 1111 0101 0100). Each `1` bit beeps for 200 milliseconds and each bounded `0` bit pauses for 300 milliseconds<BR>`-1` = infinite mode<BR>`-2` = follow LED mode
+|DevGroupName<x\><a class="cmnd" id="devgroupname"></a>|0 = clear device group <x\> name and restart<br><value\> = set device group <x\> name and restart.<br>Prior to 8.2.0.3, the GroupTopic command was used to specify the device group name.
+|DevGroupSend<x\><a class="cmnd" id="devgroupsend"></a>|<item\>=<value\>[ ...] = send an update to device group <x\>. The device group name must have been previously set with DevGroupName<x\>. Multiple item/value pairs can be specified separated by a space. Spaces in <value\> must be escaped with a backslash (\\). The message sent is also processed on the local device as if it had been received from the network.<br><br>For items with numeric values, <value\> can be specified as @<operator\>[<operand\>] to send a value after performing an operation on the current value. <operator\> can be + (add), - (subtract) or ^ (invert). If <operand\> is not specified, it defaults to 0xffffffff for the invert operator and 1 for other operators.<br><br>Examples:<br>DevGroupSend 4=90 128=1 - send an update to set the light brightness to 90 and turn relay 1 on.<br>DevGroupSend 193=Buzzer\\ 2,3 - send the Buzzer 2,3 command.<br>DevGroupSend 6=@+ 4=@-10 - set the next fixed color and decrease the brightness by 10.<br>DevGroupSend 128=^ - toggle all the relays.<br><br>2 = Light fade (0 = Off, 1 = On)<br>3 = Light speed (1..40)<br>4 = Light brightness (0..255)<br>5 = Light [`Scheme`](#scheme)</a>)<br>6 = Light fixed color (0 = white (using CT channels), other values according to [Color Command](#color)</a>)<br>7 = PWM dimmer low preset (0..255)<br>8 = PWM dimmer high preset (0..255)<br>9 = PWM dimmer power-on brightness (0..255)<br>128 = Relay Power - bitmask with bits set for relays to be powered on. The number of relays can be specified in bits 24 - 31. If the number of relays is not specified, only relay 1 is set<br>192 = Event - event name and arguments<br>193 = Command - command and arguments<br>224 = Light channels - comma separated list of brightness levels (0..255) for channels 1 - 5 (e.g. 255,128,0,0,0  will turn the red channel on at 100% and the green channel on at 50% on an RBG light)
+|DevGroupShare<a class="cmnd" id="devgroupshare"></a>|`<in>,<out>` = set incoming and outgoing shared items (default = 0xffffffff,0xffffffff). <in\> and <out\> are bit masks where each mask is the sum of the values for the categories (listed below) to be shared. For example, to receive only power (1), light brightness (2) and light color (16) and send only power (1), enter the command DevGroupShare 19,1.<br><br>1 = Power<br>2 = Light brightness<br>4 = Light fade/speed<br>8 = Light scheme<br>16 = Light color<br>32 = Dimmer settings (presets)<br>64 = Event
+|DevGroupStatus<x\><a class="cmnd" id="devgroupstatus"></a>|Show the status of device group <x\> including a list of the currently known members.
+FanSpeed|Fan speed control *(iFan02/iFan03 only)*<BR>`0` = turn fan OFF<BR>`1..3` = set fan speed<BR>`+` = increase fan speed <BR>`-` = decrease fan speed
 Interlock<a class="cmnd" id="interlock"></a>|Relay interlock mode and group selection.<BR>`0` = disable relay interlock for all relays (i.e., each relay is self-locking) *(default)*<BR> `1` = set interlock mode for selected relays<br>Add up to 8 relays in 1 to 4 interlock groups, each separated by a space. For example<BR> `1,2 3,4` = Group Relay1 and Relay2 in group 1 and Relay3 and Relay4 in group 2 (_note the space between the two groups_) <BR> `1,2,3` = group Relay1, Relay2 and Relay3 in a single interlock group <BR>`1 3 2,4` = Relay1 is in group 1, Relay3 in group 2, Relay2 and Relay4 in group 3
 LedMask<a class="cmnd" id="ledmask"></a>|Set a  [bitmask](https://en.wikipedia.org/wiki/Mask_(computing)#Masking_bits_to_1) specifiying which relays control the LED indicator. [Read more...](LedMask) <br>`<bitmask>` = [bitwise](https://whatis.techtarget.com/definition/bitwise) value representing each relay. Values may be entered as either hexadecimal or decimal values (e.g., 0xFFFF = 65535).<BR>`0xFFFF` (= 1111 1111 1111 1111) All relays control the power LED _(default)_<BR>*[LedState](#ledstate) must be enabled (i.e., `!= 0`) in order for `LedMask` to take effect.*
 LedPower<a class="cmnd" id="ledpower"></a>|LED power state as on or off <BR> `0` = turn LED OFF and set `LedState 0` <BR> `1` = turn LED ON and set `LedState 8` <BR> `2` = toggle LED and set `LedState 0` <BR>(Use `Backlog LedPower 0; SetOption31 1` to disable LED even when Wi-Fi or MQTT is not connected)
@@ -273,13 +276,14 @@ Sensor15<a class="cmnd" id="sensor15"></a>|[Automatic Baseline Correction](https
 Sensor18<a class="cmnd" id="sensor18"></a>|PMSx003 particle dust sensor<BR>`0..32000` = control sensor polling interval to extend lifetime
 Sensor20<a class="cmnd" id="sensor20"></a>|[Nova Fitness SDS011](SDS011) dust sensor.<BR>`1..255` = number of seconds before TelePeriod to poll the sensor
 Sensor27<a class="cmnd" id="sensor27"></a>|[APDS-9960](APDS-9960) sensor commands<BR>`0` = enable light level and proximity sensor / disable gestures *(default)* <BR> `1` = enable gesture mode/ disable light level and proximity sensor<BR> `2` = enable gestures with half gain / disable light and proximity sensor<BR>`3..255` = Set [ATIME register](APDS-9960#known-issues) for different integration times
-Sensor29<a class="cmnd" id="sensor29"></a>|MCP23008 / MCP23017 I<sup>2</sup>C GPIO Expander configuration.  [Read more...](MCP230xx)<BR>`Reset<x>` = reset all pins<BR>x = `1..6`<BR>`1` = INPUT mode, no reporting, no pull-up<BR>`2` = INPUT mode, report on CHANGE, pull-up enabled<BR>`3` = INPUT mode, report on LOW, pull-up enabled<BR>`4` = INPUT mode, report on HIGH, pull-up enabled<BR>`5` = OUTPUT mode (if enabled by `#define USE_MCP230xx_OUTPUT`)<BR>`6` = inverted OUTPUT mode (if enabled by `#define USE_MCP230xx_OUTPUT`)<BR><BR>`pin,pinmode{,intpullup\|outstate{,repmode}}`<br>[Continue reading...](MCP230xx#device-configuration)
+Sensor29<a class="cmnd" id="sensor29"></a>|MCP23008 / MCP23017 I<sup>2</sup>C GPIO Expander configuration.  [Read more...](MCP230xx)<BR>`Reset<x>` = reset all pins<BR>x = `1..6`<BR>`1` = INPUT mode, no reporting, no pull-up<BR>`2` = INPUT mode, report on CHANGE, pull-up enabled<BR>`3` = INPUT mode, report on LOW, pull-up enabled<BR>`4` = INPUT mode, report on HIGH, pull-up enabled<BR>`5` = OUTPUT mode (if enabled by `#define USE_MCP230xx_OUTPUT`)<BR>`6` = inverted OUTPUT mode (if enabled by `#define USE_MCP230xx_OUTPUT`)<BR><BR>`pin,pinmode{,intpullup|outstate{,repmode}}`<br>[Continue reading...](MCP230xx#device-configuration)
 Sensor34<a class="cmnd" id="sensor34"></a>|<BR>[HX711 load cell](https://github.com/bogde/HX711) sensor calibration<BR>`1` = reset display to 0<BR>`2` = start calibration<BR>`2` `<value>` = set reference weight in grams and start calibration<BR>`3` = show reference weight in grams<BR>`3` `<value>` = set reference weight in grams<BR>`4` = show calibrated scale value<BR>`4` `<value>` = set calibrated scale value<BR>`5` = show max weight in gram<BR>`5` `<value>` = set max weight in grams<BR>`6` = show single item weight in grams<BR>`6` `<value>` = set single item weight in grams. Once the item weight is set, when items are added to the scale, the telemetry message will report `Count` as the number of items on the scale<BR>`7` = save current weight to be used as start weight on restart<BR>`8` `0/1` <BR>&emsp;`0` = disable JSON message on weight change over 4 grams<BR>&emsp;`1` = enable JSON message on weight change (see below)<BR>`9` `<value>` = set minimum delta to trigger JSON message (see above). <BR>&emsp;`0` = 4 grams (old default)<BR>&emsp;`1..100` = set delta to 0-99 grams<BR>&emsp;`101-255` = set delta to 110-1650 grams (10g increments)
 Sensor50<a class="cmnd" id="Sensor50"></a>|[PAJ7620](PAJ7620) gesture sensor<BR>`0` = sensor muted, no readings in Tasmota<BR>`1`= gesture mode<BR>`2` = proximity mode<BR>`3` = corner mode<br>`4` = PIN mode<br>`5` = cursor mode
 Sensor52<a class="cmnd" id="sensor52"></a>|iBeacon driver with [HM10](HM-10) or [HM17/HM16](HM-17)<BR>`1` and `2` = required only once to initialize the module  <BR>`u<x>` = sets update interval in seconds (scan tags every <x\> seconds) _(default = 10)_<BR>`t<x>` = set timeout interval in seconds (send RSSI=0 if tag is not detected after <x\> seconds) _(default = 30)_<BR>`d1` = enable debug mode (shows all serial traffic in console)<BR>`d0` = disable debug mode_(default = 30)_<BR>`c` = clears iBeacon list<BR>`s AT+<command>`  = send native AT commands 
 Sensor53<a class="cmnd" id="sensor53"></a>|[Smart Meter Interface](Smart-Meter-Interface)<BR>`r` = reset the driver with a new descriptor specified with the Tasmota [Scripting](Scripting-Language) language.<BR>`c<x> <value>` = preset counter (x = `1..5`) to `value` when the driver is set to counter mode<BR>`d<x>` = disable data decoding and dump meter (x = `1..5`) data to the Console. This is used to decipher the meter's data format to define the variable encoding in the meter's descriptor.<BR>`d0` = disable data dump mode and revert to decoding mode.
 Sensor54<a class="cmnd" id="sensor54"></a>|INA226 Current Sensor<BR> `1` = rescan for devices and return the number of slaves found.<BR>`2` = save the configuration and restart<BR>`10` = return channel 1 shunt resistance and full scale current<BR>`11 <resistance>` = set INA226 channel 1 shunt <resistance> in ohms, floating point<BR>`12 <current>` = set INA226 channel 1 full scale <current> in amperes, floating point<BR>`20` = return channel 2 shunt resistance and full scale current<BR>`21 <resistance>` = set INA226 channel 2 shunt <resistance> in ohms, floating point<BR>`22 <current>` = set INA226 channel 2 full scale <current> in amperes, floating point<BR>`30` = return channel 1 shunt resistance and full scale current<BR>`31 <resistance>` = set INA226 channel 1 shunt <resistance> in ohms, floating point<BR>`32 <current>` = set INA226 channel 1 full scale <current> in amperes, floating point<BR>`40` = return channel 1 shunt resistance and full scale current<BR>`41 <resistance>` = set INA226 channel 1 shunt <resistance> in ohms, floating point<BR>`42 <current>` = set INA226 channel 1 full scale <current> in amperes, floating point
 Sensor60<a class="cmnd" id="sensor60"></a>|GPS<BR>`0` = write to all available sectors, then restart and overwrite the older ones<BR>`1` = write to all available sectors, then restart and overwrite the older ones<BR>`2` = filter out horizontal drift noise<BR>`3` = turn off noise filter<BR>`4` = start recording, new data will be appended<BR>`5` = start new recording, old data will lost<BR>`6` = stop recording, download link will be visible in webUI<BR>`7` = send mqtt on new postion + TELE _(consider to set TELE to a very high value)_<BR>`8` = only TELE message<BR>`9` = start NTP server<BR>`10` = deactivate NTP server<BR>`11` = force update of Tasmota-system-UTC with every new GPS-time-message<BR>`12` = do not update of Tasmota-system-UTC with every new GPS-time-message<BR>`13` = set latitude and longitude in settings<BR>`14` = open virtual serial port over TCP, usable for u-center<BR>`15` = pause virtual serial port over TCP
+Sensor68<a class="cmnd" id="sensor68"></a>|Analog (pulse count) anemometer<BR>`1 <value>` = set radius in millimeters (measured from centre to the edge of one of the cups)<BR>`2 <value>` = set number of pulses for a complete turn<BR>`3 <value>` = set pulse counter debounce time in milliseconds<BR>`4 <value>` = set speed compensation factor<BR>`5 <value>` = set minimum percentage change between current and last reported speed trigger a new tele message (0...100, 255 means off)
 SpeedUnit<a class="cmnd" id="SpeedUnit"></a>|[TX20/TX23](TX2x) anemometer speed unit<BR>`1` = m/s<BR>`2`= km/h<BR>`3` = kn<br>`4` = mph<BR>`5` = ft/s<BR>`6` = yd/s
 TempRes<a class="cmnd" id="tempres"></a>|Temperature sensor resolution<BR>`0..3` = maximum number of decimal places
 TempOffset<a class="cmnd" id="tempoffset"></a>|`-12.6..12.6` = Set calibraton offset value for reported temperature telemetry<BR>This setting affects **all** temperature sensors on the device.
@@ -321,9 +325,6 @@ WattRes<a class="cmnd" id="wattres"></a>|Power sensor resolution<BR>`0..3` = max
 See Also|[`SetOption21`](#setoption21) - Energy monitoring when power is off<BR>[`SetOption33`](#setoption33) - Configure power monitoring Max_Power_Retry count number<BR>[`SetOption39`](#setoption39) - Control handling of invalid power measurements<BR>[`SetOption72`](#setoption72) - Set reference used for total energy
 
 ### Light
-<!--- 
-<a class="cmnd" id="Brightness>"></a>Brightness|`0..255` = set brightness value from 0 to 255
- -->
 
 Command|Parameters
 :---|:---
@@ -350,38 +351,28 @@ Scheme<a class="cmnd" id="scheme"></a>|Light effects<BR>`+` = next scheme<BR>`-`
 Speed<a class="cmnd" id="speed"></a>|`1..40` = set fade speed from fast `1` to very slow `40`<BR>`+` = increase speed<BR>`-` = decrease speed<BR>The `Speed` value represents the time in 0.5s to fade from 0 to 100% (or the reverse). Example: `Speed 4` takes 2.0s to fade from full brightness to black, or 0.5s to move from 75% to 100%.
 Wakeup<a class="cmnd" id="wakeup"></a>|Start wake up sequence from OFF to stored `Dimmer` value<BR>`0..100` = Start wake up sequence from OFF to provided `Dimmer` value
 WakeupDuration<a class="cmnd" id="wakeupduration"></a>|`1..3000` = set wake up duration in seconds
-White<a class="cmnd" id="white"></a>|<BR>`1..100` = set white channel brightness in single white channel lights (single W or RGBW lights)
+White<a class="cmnd" id="white"></a>|`1..100` = set white channel brightness in single white channel lights (single W or RGBW lights)
 Width&#60;x><a class="cmnd" id="width"></a>|x = `1..4`<BR>`1` = `0..4` = LED group width *([Scheme](#Scheme) `6..12` only)*<BR>`2` = `0..32` = seconds hand width *([Scheme](#Scheme) `5` only)*<BR>`3` = `0..32` = minutes hand width *([Scheme](#Scheme) `5` only)*<BR>`4` = `0..32` = hour hand width *([Scheme](#Scheme) `5` only)*
 See also|[`SetOption15`](#setoption15), [`SetOption16`](#setoption16), [`SetOption17`](#setoption17), [`SetOption20`](#setoption20), [`SetOption37`](#setoption37) and [`SetOption68`](#setoption68) 
 
-### RF Bridge
-
-
-Command|Parameters
-:---|:---
-RfCode<a class="cmnd" id="rfcode"></a>|Show last sent 24-bit user code<BR>`1..8388607` = send 24-bit user code<BR>`#1..#7FFFFF` = send 24-bit hexadecimal user code using RfSync, RfLow and RfHigh timing
-RfHigh<a class="cmnd" id="rfhigh"></a>|`1` = reset high pulse time to 840 microseconds<BR>`2..32767` = set high pulse time in microseconds<BR>`#2..#7FFF` = set high pulse time in hexadecimal microseconds
-RfHost<a class="cmnd" id="rfhost"></a>|Show 16-bit host part of user code<BR>`1` = reset 16-bit host part of user code to 11802 (#2E1A)<BR>`2..32767` = set 16-bit host part of user code<BR>`#2..7FFF` = set 16-bit host part of user code in hexadecimal
-RfKey<x\><a class="cmnd" id="rfkey"></a>|Send learned or default RF data for RfKey<x\> (x = `1 – 16`)<BR>`1` = send default RF data for RfKey<x\> using RfSync, RfLow, RfHigh and RfHost parameters<BR>`2` = learn RF data for RfKey<x\><BR>`3` = unlearn RF data for RfKey<x\><BR>`4` = save RF data using RfSync, RfLow, RfHigh and last RfCode parameters<BR>`5` = show default or learned RF data<BR>`6` = send learned RF data
-RfLow<a class="cmnd" id="rflow"></a>|`1` = reset low pulse time to 270 microseconds<BR>`2..32767` = set low pulse time in microseconds<BR>`#2..#7FFF` = set low pulse time in hexadecimal microseconds
-RfRaw<a class="cmnd" id="rfraw"></a>|**This command only works when the firmware has been updated with [Portisch firmware](https://github.com/Portisch/RF-Bridge-EFM8BB1/releases).** Refer to the [Portisch wiki](https://github.com/Portisch/RF-Bridge-EFM8BB1/wiki) for details.<BR>[Learning and Decoding RF Codes with Portisch Firmware](devices/Sonoff-RF-Bridge-433#portisch-firmware-specific-usage)<BR>`0` = Set iTead default firmware support and messages *(default on restart)*<BR> `1` = set Portisch firmware support and messages<BR> `166` or `AAA655` = start sniffing/reading RF signals disabling iTead default RF handling<BR> `167` or `AAA755` = stop sniffing/reading RF signals enabling iTead default RF handling<BR> `168` or `AAA855` = transmitting iTead default RF protocols<BR> `169` or `AAA955` = start sniffing and learning predefined protocols<BR> `176` or `AAB055` = bucket Transmitting using command 0xB0<BR> `177` or `AAB155` = start Bucket sniffing using command 0xB1<BR> `192` or `AAC000C055` = beep (`00C0` is the length of the sound)<BR> `255` or `AAFF55` = show Rf firmware version (result AA02FF means Version 02)<BR> `<value>` = hexadecimal data to be sent to RF chip. This must be immediately followed by the `RfRaw 0` command (e.g., `Backlog RfRaw <value>; RfRaw 0`
-RfSync<a class="cmnd" id="rfsync"></a>|`1` = reset start sync pulse time to 8470 microseconds<BR>`2..32767` = set start sync pulse time in microseconds<BR>`#2..#7FFF` = set start sync pulse time in hexadecimal microseconds
-See also|[`SetOption28`](#setoption28) - Set RF received data format
-
-### IR Remote
+### Device Groups
 
 Command|Parameters
 :---|:---
-IRsend`<x>`<a class="cmnd" id="irsend"></a>|Send an IR remote control code as a decimal or hexadecimal string in a JSON payload. In order to send IR data, _**you must configure one of the free device GPIO as `IRsend (8)`. GPIO01 nor GPIO03 can be used.**_<BR>`<x>` [_optional_] = number of times the IR message is sent. If not specified or `0..1`, the message is sent only once (i.e., not repeated) _(default)_<BR>`>1` = emulate a long-press on the remote control, sending the message `<x>` times, or sending a repeat message for specific protocols (like NEC)<BR><BR>`{"Protocol":"<value>","Bits":<value>,"Data":<value>}`<BR><BR>`"Protocol"` (select one of the following):<ul><li>`"NEC"`</li><li>`"SONY"`</li><li>`"RC5"`</li><li>`"RC6"`</li><li>`"DISH"`</li><li>`"JVC"`</li><li>`"PANASONIC"`</li><li>`"SAMSUNG"`</li><li>`"PIONEER"`</li></ul>`"Bits":1..32` = required number of data bits<BR>&nbsp;&nbsp;&nbsp;&nbsp;for PANASONIC protocol this parameter is the the address, not the number of bits<BR><BR>`"Data":1..(2^32)-1` = data frame as 32 bit decimal.<BR>&nbsp;&nbsp;&nbsp;&nbsp;e.g., `IRsend {"Protocol":"NEC","Bits":32,"Data":2170978686}`<BR>**or**<BR>`"Data":0x1..0xFFFFFFFF` = data frame as 32 bit hexadecimal.<BR>&nbsp;&nbsp;&nbsp;&nbsp;e.g., `IRsend {"Protocol":"NEC","Bits":32,"Data":0x8166817E}`<BR><BR>Alternatively, you can send IR remote control codes using [RAW command encoding](IRSend-RAW-Encoding).<BR><BR>[Read more...](Tasmota-IR#receiving-ir-commands)
-IRhvac<a class="cmnd" id="irhvac"></a>|Send HVAC IR remote control code as JSON payload<Br>`{"Vendor":"<value>","Power":<value>,"Mode":”<value>”, "FanSpeed":”<value>”,"Temp":<value>}`<BR>`"Vendor":"Toshiba"\|"Mitsubishi"\|"LG"\|"Fujitsu"`<BR>`"Power":0\|1`<BR>`"Mode":"Hot"\|"Cold"\|"Dry"\|"Auto"`<BR>`"FanSpeed":"1"\|"2"\|"3"\|"4"\|"5"\|"Auto"\|"Silence"` <BR>`"Temp":17..30`
-|See also|[`SetOption29`](#setoption29)  - Set IR received data format<BR>[`SetOption38`](#setoption38)  - Set IR received protocol sensitivity<BR>[`SetOption58`](#setoption58) - [IR Raw data in JSON payload](https://github.com/arendst/Tasmota/issues/2116#issuecomment-440716483)
+DevGroupName<x\><a class="cmnd" id="devgroupname"></a>|`0` = clear device group <x\> name and restart<br>`<value>` = set device group <x\> name and restart.<br>Prior to 8.2.0.3, `GroupTopic` was used to specify the device group name.
+DevGroupSend<x\><a class="cmnd" id="devgroupsend"></a>|`<item>`=`<value>[ ...]` = send an update to device group <x\>. The device group name must have been previously set with DevGroupName<x\>. Multiple item/value pairs can be specified separated by a space. Spaces in `<value>` must be escaped with a backslash (\\). The message sent is also processed on the local device as if it had been received from the network.<br><br>For items with numeric values, `<value>` can be specified as @<operator\>[<operand\>] to send a value after performing an operation on the current value. <operator\> can be + (add), - (subtract) or ^ (invert). If <operand\> is not specified, it defaults to 0xffffffff for the invert operator and 1 for other operators.<br><br>Examples:<br>`DevGroupSend 4=90 128=1` - send an update to set the light brightness to 90 and turn relay 1 on.<br>`DevGroupSend 193=Buzzer\\ 2,3` - send the Buzzer 2,3 command.<br>`DevGroupSend 6=@+ 4=@-10` - set the next fixed color and decrease the brightness by 10.<br>`DevGroupSend 128=^` - toggle all the relays.<br><br>`2` = Light fade (0 = Off, 1 = On)<br>`3` = Light speed (1..40)<br>`4` = Light brightness (0..255)<br>`5` = Light [`Scheme`](#scheme)<br>`6` = Light fixed color (0 = white (using CT channels), other values according to [`Color`](#color)</a>)<br>`7` = PWM dimmer low preset (0..255)<br>`8` = PWM dimmer high preset (0..255)<br>`9` = PWM dimmer power-on brightness (0..255)<br>`128` = Relay Power - bitmask with bits set for relays to be powered on. The number of relays can be specified in bits 24 - 31. If the number of relays is not specified, only relay 1 is set<br>`192` = Event - event name and arguments<br>`193` = Command - command and arguments<br>`224` = Light channels - comma separated list of brightness levels (0..255) for channels 1 - 5 (e.g. 255,128,0,0,0  will turn the red channel on at 100% and the green channel on at 50% on an RBG light)
+DevGroupShare<a class="cmnd" id="devgroupshare"></a>|`<in>,<out>` = set incoming and outgoing shared items _(default = `0xffffffff,0xffffffff`)_<BR> <in\> and <out\> are bit masks where each mask is the sum of the values for the categories (listed below) to be shared. For example, to receive only power (1), light brightness (2) and light color (16) and send only power (1), enter the command DevGroupShare 19,1.<br><br>`1` = Power<br>`2` = Light brightness<br>`4` = Light fade/speed<br>`8` = Light scheme<br>`16` = Light color<br>`32` = Dimmer settings (presets)<br>`64` = Event
+DevGroupStatus<x\><a class="cmnd" id="devgroupstatus"></a>|Show the status of device group <x\> including a list of the currently known members.
 
 ### SetOptions
+
+!!! tip
+    Instead of typing `SetOption` you can use shorter form of `SO`. so instead of `SetOption19 1` you can use `SO19 1`
 
 Command|Parameters
 :---:|:---
 SetOption0<a class="cmnd" id="setoption0"></a>|Save power state and use after restart (=SaveState)<BR> `0` = disable<BR> `1` = enable *(default)*
-SetOption1<a class="cmnd" id="setoption1"></a>|Set [button multipress](Buttons-and-Switches#multi-press-functions) mode to<BR> `0` = allow all button actions *(default)*<BR> `1` = restrict to single, double and hold actions (i.e., disable inadvertent reset due to long press)
+SetOption1<a class="cmnd" id="setoption1"></a>|Set [button multipress](Buttons-and-Switches#multi-press-functions) mode to<BR> `0` = allow all button actions *(default)*<BR> `1` = restrict to single to penta press and hold actions (i.e., disable inadvertent reset due to long press)
 SetOption3<a class="cmnd" id="setoption3"></a>|[MQTT](MQTT) <BR>`0` = disable MQTT<BR> `1` = enable MQTT *(default)* 
 SetOption4<a class="cmnd" id="setoption4"></a>|Return MQTT response as<BR> `0` = RESULT topic *(default)*<BR> `1` = %COMMAND% topic
 SetOption8<a class="cmnd" id="setoption8"></a>|Show temperature in<BR> `0`= Celsius *(default)*<BR> `1` = Fahrenheit
@@ -434,7 +425,7 @@ SetOption68<a class="cmnd" id="setoption68"></a>|Multi-channel PWM instead of a 
 SetOption69<a class="cmnd" id="setoption69"></a>|**Deprecated** in favor of [DimmerRange](#DimmerRange) <br>By default Tuya dimmers won't dim below 10% because some don't function very well that way.<BR>`0` = disable Tuya dimmer 10% lower limit<BR>`1` = enable Tuya dimmer 10% lower limit *(default)*
 SetOption71<a class="cmnd" id="setoption71"></a>|Set DDS238 Modbus register for active energy<BR>`0` = set primary register *(default)*<BR>`1` = set alternate register
 SetOption72<a class="cmnd" id="setoption72"></a>|Set reference used for total energy <BR>`0` = use firmware counter *(default)*<BR>`1` = use energy monitor (e.g., PZEM-0xx, SDM120, SDM630, DDS238, DDSU666) hardware counter
-SetOption73<a class="cmnd" id="setoption73"></a>|*Deprecated in version 7.1.2.4 in favor of CORS command*<BR>Set HTTP Cross-Origin Resource Sharing (CORS) <BR>`0` = disable CORS *(default)*<BR>`1` = enable CORS
+SetOption73<a class="cmnd" id="setoption73"></a>|Enable Buttons decoupling and send multi-press and hold MQTT messages <BR>`0` = disable  decoupling *(default)*<BR>`1` = enable decoupling
 SetOption74<a class="cmnd" id="setoption74"></a>|Enable internal pullup for single DS18x20 sensor <BR>`0` = disabled *(default)*<BR>`1` = internal pullup enabled
 SetOption75<a class="cmnd" id="setoption75"></a>|Set grouptopic behaviour ([#6779](https://github.com/arendst/Tasmota/issues/6779))<BR>`0` = GroupTopic using FullTopic replacing %topic% _(default)_<BR>`1` =  GroupTopic is `cmnd/%grouptopic%/` 
 SetOption76<a class="cmnd" id="setoption76"></a>|Bootcount incrementing when [DeepSleep](DeepSleep) is enabled ([#6930](https://github.com/arendst/Tasmota/issues/6930))<BR>`0` = disable bootcount incrementing _(default)_<BR>`1` = enable bootcount incrementing 
@@ -454,6 +445,7 @@ SetOption89<a class="cmnd" id="setoption89"></a>|Configure MQTT topic for Zigbee
 SetOption90<a class="cmnd" id="setoption90"></a>|Disable sending MQTT with non-JSON messages<BR>`0` = send all MQTT _(default)_ <BR>`1` = send only MQTT messages with JSON payloads
 SetOption91<a class="cmnd" id="setoption91"></a>|Enable `Fade` at boot and power on. By default fading is not enabled at boot because of stuttering caused by wi-fi connection<BR>`0` = don't Fade at startup _(default)_ <BR>`1` = Fade at startup
 SetOption92<a class="cmnd" id="setoption92"></a>|Alternative to `Module 38`: for Cold/Warm white bulbs, enable the second PWM as CT (Color Temp) instead of Warm White, as required for Philips-Xiaomi bulbs.<BR>`0` = normal Cold/Warm PWM _(default)_ <BR>`1` = Brightness/CT PWM<BR>See [PWM CT in Lights](Lights.md#pwm-ct)
+SetOption93<a class="cmnd" id="setoption93"></a>|Control caching of compressed rules<BR>`0` = Disable memory caching of uncompressed rules <BR>`1` = Keep uncompressed rules in memory to avoid CPU load of uncompressing at each tick _(default)_
 
 ### Serial Bridge
 Both hardware and software Serial Bridge are supported.
@@ -475,49 +467,27 @@ SerialSend&#60;x><a class="cmnd" id="serialsend"></a>|`<string>`<BR>Disable seri
 SSerialSend&#60;x><a class="cmnd" id="sserialsend"></a>|`<string>`<BR>Send using software serial protocol<BR>x = `1..5`<BR>`1` = send appending `\n` (newline) ()<BR>`2` = send<BR>`3` = replace escape characters and send <BR>`4` = send as binary data. Data in serial response messages is encoded as hex strings<BR>`5` = send as hex. Data in serial response messages is encoded as hex strings 
 TuyaSend&#60;x><a class="cmnd" id="tuyasend"></a>|Send data to MCU with [TuyaMCU](TuyaMCU)<br>x = `1..4`<br>`TuyaSend1 <dpId>,<boolean>` = send boolean (`0`/`1`) data type to dpId (1 byte max length)<br>`TuyaSend2 <dpId>,<int>` = send integer data to dpId (4 bytes max length)<br>`TuyaSend2 <dpId>,<0xAABBCCDD>` = send 4 byte data to dpId (4 bytes max length)<br>`TuyaSend3 <dpId>,<value>` = send any data type to dpId (unknown max length)<br>`TuyaSend4 <dpId>,<enum>` = send enumerated (`0`/`1`/`2`/`3`/`4`/`5`) data type to dpId (1 byte max length)<br>
 
-### Domoticz
+### RF Bridge
 
 
 Command|Parameters
 :---|:---
-<a class="cmnd" id="domoticzidx"></a>DomoticzIdx<x\>|Show Domoticz Relay idx <x\> (x = `1..4`)<BR>`0` = disable use of Relay idx <x\> *(default)*<BR>`<value>` = Show Relay idx <x\>
-<a class="cmnd" id="domoticzkeyidx"></a>DomoticzKeyIdx<x\>|Show Domoticz Key idx <x\> (x = `1..4`)<BR>`0` = disable use of Key idx <x\> *(default)*<BR>`<value>` = Show Key idx <x\> (to use enable [ButtonTopic](#buttontopic))
-<a class="cmnd" id="domoticzsensoridx"></a>DomoticzSensorIdx<x\>|Show Domoticz Sensor idx <x\> (x = `1..5`)<BR>`0` = disable use of Sensor idx <x\> *(default)*<BR>`<value>` = Show Sensor idx <x\> 
-<a class="cmnd" id="domoticzswitchidx"></a>DomoticzSwitchIdx<x\>|Show Domoticz Switch idx <x\> (x = `1..4`)<BR>`0` = disable use of Switch idx <x\> *(default)*<BR>`<value>` = Show Switch idx <x\> (to use enable [SwitchTopic](#switchtopic))
-<a class="cmnd" id="domoticzupdatetimer"></a>DomoticzUpdateTimer|Show current update timer value in seconds<BR>`0` = disable sending interim Domoticz status *(default)*<BR>`1..3600` = send status to Domoticz in defined intervals
+RfCode<a class="cmnd" id="rfcode"></a>|Show last sent 24-bit user code<BR>`1..8388607` = send 24-bit user code<BR>`#1..#7FFFFF` = send 24-bit hexadecimal user code using RfSync, RfLow and RfHigh timing
+RfHigh<a class="cmnd" id="rfhigh"></a>|`1` = reset high pulse time to 840 microseconds<BR>`2..32767` = set high pulse time in microseconds<BR>`#2..#7FFF` = set high pulse time in hexadecimal microseconds
+RfHost<a class="cmnd" id="rfhost"></a>|Show 16-bit host part of user code<BR>`1` = reset 16-bit host part of user code to 11802 (#2E1A)<BR>`2..32767` = set 16-bit host part of user code<BR>`#2..7FFF` = set 16-bit host part of user code in hexadecimal
+RfKey<x\><a class="cmnd" id="rfkey"></a>|Send learned or default RF data for RfKey<x\> (x = `1 – 16`)<BR>`1` = send default RF data for RfKey<x\> using RfSync, RfLow, RfHigh and RfHost parameters<BR>`2` = learn RF data for RfKey<x\><BR>`3` = unlearn RF data for RfKey<x\><BR>`4` = save RF data using RfSync, RfLow, RfHigh and last RfCode parameters<BR>`5` = show default or learned RF data<BR>`6` = send learned RF data
+RfLow<a class="cmnd" id="rflow"></a>|`1` = reset low pulse time to 270 microseconds<BR>`2..32767` = set low pulse time in microseconds<BR>`#2..#7FFF` = set low pulse time in hexadecimal microseconds
+RfRaw<a class="cmnd" id="rfraw"></a>|**This command only works when the firmware has been updated with [Portisch firmware](https://github.com/Portisch/RF-Bridge-EFM8BB1/releases).** Refer to the [Portisch wiki](https://github.com/Portisch/RF-Bridge-EFM8BB1/wiki) for details.<BR>[Learning and Decoding RF Codes with Portisch Firmware](devices/Sonoff-RF-Bridge-433#portisch-firmware-specific-usage)<BR>`0` = Set iTead default firmware support and messages *(default on restart)*<BR> `1` = set Portisch firmware support and messages<BR> `166` or `AAA655` = start sniffing/reading RF signals disabling iTead default RF handling<BR> `167` or `AAA755` = stop sniffing/reading RF signals enabling iTead default RF handling<BR> `168` or `AAA855` = transmitting iTead default RF protocols<BR> `169` or `AAA955` = start sniffing and learning predefined protocols<BR> `176` or `AAB055` = bucket Transmitting using command 0xB0<BR> `177` or `AAB155` = start Bucket sniffing using command 0xB1<BR> `192` or `AAC000C055` = beep (`00C0` is the length of the sound)<BR> `255` or `AAFF55` = show Rf firmware version (result AA02FF means Version 02)<BR> `<value>` = hexadecimal data to be sent to RF chip. This must be immediately followed by the `RfRaw 0` command (e.g., `Backlog RfRaw <value>; RfRaw 0`
+RfSync<a class="cmnd" id="rfsync"></a>|`1` = reset start sync pulse time to 8470 microseconds<BR>`2..32767` = set start sync pulse time in microseconds<BR>`#2..#7FFF` = set start sync pulse time in hexadecimal microseconds
+See also|[`SetOption28`](#setoption28) - Set RF received data format
 
-### KNX
+### IR Remote
 
 Command|Parameters
 :---|:---
-KnxTx_Cmnd<x\><a class="cmnd" id="KnxTx_Cmnd"></a>|`0` or `1` = send command using slot <x\> set in KNX Menu at KNX_TX
-KnxTx_Val<x\><a class="cmnd" id="KnxTx_Val"></a>|`<value>` = send float value using slot <x\> set in KNX Menu at KNX_TX
-KNX_ENABLED<a class="cmnd" id="KNX_ENABLED"></a>|Status of KNX Communications<BR>`0` = set to Disable<BR>`1` = set to Enable
-KNX_ENHANCED<a class="cmnd" id="KNX_ENHANCED"></a>|Status of Enhanced mode for KNX Communications<BR>`0` = set to Disable<BR>`1` = set to Enable
-KNX_PA<a class="cmnd" id="KNX_PA"></a>|KNX Physical Address<BR>`0.0.0` = address not set<BR>`x.x.x` = set the device address (example `1.1.0`)
-KNX_GA<a class="cmnd" id="KNX_GA"></a>|Return the amount of Group Address to Send Data/Commands configured
-KNX_GA<x\><a class="cmnd" id="KNX_GAx"></a>|Setup Group Address to Send Data/Commands (<x\> = KNX Group Address number)<BR>`1` = return configuration of GA<x\><BR>`<option>, <area>, <line>, <member>` to set configuration of GA<x\><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<option>` = see table below for OPTION list<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<area>, <line>, <member>` = KNX Address to Send Data/Commands<BR>
-KNX_CB<a class="cmnd" id="KNX_CB"></a>|Return the amount of Group Address to Receive Data/Commands configured
-KNX_CB<x\><a class="cmnd" id="KNX_CBx"></a>|Setup Group Address to Receive Data/Commands <BR>`1` = return configuration of CB<x\><BR>`<option>, <area>, <line>, <member>` to set configuration of CB<x\><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<option>` = see table below for OPTION list<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<area>, <line>, <member>` = KNX Address to Receive Data/Commands
-
-OPTION|OPTION<BR>Value|<BR>OPTION|OPTION<BR>Value
-:---|---|:---|---
-1|Relay 1|17|TEMPERATURE
-2|Relay 2|18|HUMIDITY
-3|Relay 3|19|ENERGY_VOLTAGE
-4|Relay 4|20|ENERGY_CURRENT
-5|Relay 5|21|ENERGY_POWER
-6|Relay 6|22|ENERGY_POWERFACTOR
-7|Relay 7|23|ENERGY_DAILY
-8|Relay 8|24|ENERGY_START
-9|Button 1|25|ENERGY_TOTAL
-10|Button 2|26|KNX_SLOT1
-11|Button 3|27|KNX_SLOT2
-12|Button 4|28|KNX_SLOT3
-13|Button 5|29|KNX_SLOT4
-14|Button 6|30|KNX_SLOT5
-15|Button 7|255|EMPTY
-16|Button 8|
+IRsend`<x>`<a class="cmnd" id="irsend"></a>|Send an IR remote control code as a decimal or hexadecimal string in a JSON payload. In order to send IR data, _**you must configure one of the free device GPIO as `IRsend (8)`. GPIO01 nor GPIO03 can be used.**_<BR>`<x>` [_optional_] = number of times the IR message is sent. If not specified or `0..1`, the message is sent only once (i.e., not repeated) _(default)_<BR>`>1` = emulate a long-press on the remote control, sending the message `<x>` times, or sending a repeat message for specific protocols (like NEC)<BR><BR>`{"Protocol":"<value>","Bits":<value>,"Data":<value>}`<BR><BR>`"Protocol"` (select one of the following):<ul><li>`"NEC"`</li><li>`"SONY"`</li><li>`"RC5"`</li><li>`"RC6"`</li><li>`"DISH"`</li><li>`"JVC"`</li><li>`"PANASONIC"`</li><li>`"SAMSUNG"`</li><li>`"PIONEER"`</li></ul>`"Bits":1..32` = required number of data bits<BR>&nbsp;&nbsp;&nbsp;&nbsp;for PANASONIC protocol this parameter is the the address, not the number of bits<BR><BR>`"Data":1..(2^32)-1` = data frame as 32 bit decimal.<BR>&nbsp;&nbsp;&nbsp;&nbsp;e.g., `IRsend {"Protocol":"NEC","Bits":32,"Data":2170978686}`<BR>**or**<BR>`"Data":0x1..0xFFFFFFFF` = data frame as 32 bit hexadecimal.<BR>&nbsp;&nbsp;&nbsp;&nbsp;e.g., `IRsend {"Protocol":"NEC","Bits":32,"Data":0x8166817E}`<BR><BR>Alternatively, you can send IR remote control codes using [RAW command encoding](IRSend-RAW-Encoding).<BR><BR>[Read more...](Tasmota-IR#receiving-ir-commands)
+IRhvac<a class="cmnd" id="irhvac"></a>|Send HVAC IR remote control code as JSON payload<Br>`{"Vendor":"<value>","Power":<value>,"Mode":”<value>”, "FanSpeed":”<value>”,"Temp":<value>}`<BR>`"Vendor":"Toshiba"|"Mitsubishi"|"LG"|"Fujitsu"`<BR>`"Power":0|1`<BR>`"Mode":"Hot"|"Cold"|"Dry"|"Auto"`<BR>`"FanSpeed":"1"|"2"|"3"|"4"|"5"|"Auto"|"Silence"` <BR>`"Temp":17..30`
+|See also|[`SetOption29`](#setoption29)  - Set IR received data format<BR>[`SetOption38`](#setoption38)  - Set IR received protocol sensitivity<BR>[`SetOption58`](#setoption58) - [IR Raw data in JSON payload](https://github.com/arendst/Tasmota/issues/2116#issuecomment-440716483)
 
 ### Displays
 
@@ -559,6 +529,7 @@ ShutterOpen&#60;x><a class="cmnd" id="shutteropen"></a>|Engage the relay to open
 ShutterPosition&#60;x><a class="cmnd" id="shutterposition"></a>|`0..100`, `UP`, `DOWN`, `STOP`<BR>A shutter position change can be requested at any time. The shutter will stop and revert or update to the requested position. The shutter's actual position will be saved _**after**_ the movement is completed. In this case, the position will be restored during reboot. An interruption during shutter movement (e.g., a device restart) will lose the current position.
 ShutterRelay&#60;x><a class="cmnd" id="shutterrelay"></a>|`<value>`<BR>`0` = disable this and all higher numbered shutters<BR>`1,3,5,7,...` (must be an odd number) = `Relay<value>` component used to open the shutter. This relay's mate, the next higher numbered relay, closes the shutter. Depending on the shutter mode, the relays may need to be interlocked using the [`Interlock`](Commands.md#interlock) command.<BR>**The `ShutterRelay` command must be executed first before any other shutter commands for `Shutter<x>` can be executed.**
 ShutterSetClose&#60;x><a class="cmnd" id="shuttersetclose"></a>|shutter closed position. `ShutterPosition` will be reset to fully closed value (e.g., `0` when `ShutterInvert = 0`, `100` otherwise).
+ShutterSetOpen&#60;x><a class="cmnd" id="shuttersetopen"></a>|shutter opened position. `ShutterPosition` will be reset to fully opened value (e.g., `100` when `ShutterInvert = 0`, `0` otherwise).
 ShutterSetHalfway&#60;x><a class="cmnd" id="shuttersethalfway"></a>| `0..100` *(default = `50`)*<BR>Define shutter half open position (in percent)
 ShutterStop&#60;x><a class="cmnd" id="shutterstop"></a>|Disengage the relays to stop the shutter. Number of shutter can be the index or the argument
 ShutterStopClose&#60;x><a class="cmnd" id="shutterstopclose"></a>|Stop the shutter when currently moving, close it otherwise
@@ -641,3 +612,83 @@ MP3Reset<a class="cmnd" id="MP3Reset"></a>|Reset the MP3 player to defaults
 MP3Stop<a class="cmnd" id="MP3Stop"></a>|Stop
 MP3Track<a class="cmnd" id="MP3Track"></a>|`x` = play track <x\>
 MP3Volume<a class="cmnd" id="MP3Volume"></a>|`0..100` = set Volume
+
+### Thermostat 
+
+Command|Parameters
+:---|:---
+ThermostatModeSet<x><a class="cmnd" id="ThermostatModeSet"></a>|Sets the thermostat mode<BR> `0` = Thermostat Off (controller inactive, default)<BR> `1` = Thermostat in automatic mode (controller active)<BR> `2` = Thermostat in manual mode (output switch follows the input switch, used to follow an existing wall thermostat)</ul>
+ClimateModeSet<x><a class="cmnd" id="ClimateModeSet"></a>|Sets the climate mode<BR> `0` = Heating mode (default)<BR> `1` = Cooling mode</ul>
+ControllerModeSet<x><a class="cmnd" id="ControllerModeSet"></a>|Sets the controller mode (used for thermostat in automatic mode)<BR> `0` = Hybrid controller (Predictive ramp-up controller and PI, default)<BR> `1` = PI controller<BR> `2` = Predictive ramp-up controller</ul>
+TempFrostProtectSet<x><a class="cmnd" id="TempFrostProtectSet"></a>|Sets the frost protection temperature. The controller, if in automatic mode, will never allow the temperature to sink below this value<BR> `<0..12>` = Temperature value in degrees Celsius/Fahrenheit (default 4.0° Celsius) </ul>
+InputSwitchSet<x><a class="cmnd" id="InputSwitchSet"></a>|Sets the number of the input used in case in manual control<BR> `<1..4>` = Number of the input (default 1)</ul>
+InputSwitchUse<x><a class="cmnd" id="InputSwitchUse"></a>|Switch to decide if the input shall be used to automatically switch to manual mode and assign it to the output (usefull if using a serially connected wall thermostat)<BR> `0` = Input not used (default)<BR> `1` = Input used</ul>
+SensorInputSet<x><a class="cmnd" id="SensorInputSet"></a>|Sets the temperature sensor to be used<BR> `0` = MQTT (default)<BR> `1` = Local sensor (can be changed by define, default DS18B20)</ul>
+OutputRelaySet<x><a class="cmnd" id="OutputRelaySet"></a>|Sets the output switch to be used for the thermostat<BR> `<1..8>` = Number of the output (default 1)</ul>
+TimeAllowRampupSet<x><a class="cmnd" id="TimeAllowRampupSet"></a>|Sets the minimum time in minutes since the last control action to be able to switch to the predictive ramp-up controller phase (applicable just in case of Hybrid controller, used normally in case of big deltas between the setpoint and the room temperature)<BR> `<value>` = Minutes (default 300 minutes) </ul>
+TempFormatSet<x><a class="cmnd" id="TempFormatSet"></a>|Sets the temperature format<BR> `0` = Degrees celsius (default)<BR> `1` = Degrees Fahrenheit</ul>
+TempMeasuredSet<x><a class="cmnd" id="TempMeasuredSet"></a>|Sets the temperature measured by the sensor (for MQTT sensor mode)<BR> `<TempFrostProtectSet..100>` = Temperature (default 18.0° Celsius) </ul>
+TempTargetSet<x><a class="cmnd" id="TempTargetSet"></a>|Sets the target temperature for the controller (setpoint)<BR> `<TempFrostProtectSet..100>` = Temperature (default 18.0° Celsius) </ul>
+TempMeasuredGrdRead<x><a class="cmnd" id="TempMeasuredGrdRead"></a>|Returns the calculated temperature gradient<BR> `<value>` = Temperature gradient in degrees Celsius/Fahrenheit </ul>
+StateEmergencySet<x><a class="cmnd" id="StateEmergencySet"></a>|Sets the thermostat emergency flag<BR> `0` = Emergency flag off (default)<BR> `1` = Emergency flag on (thermostat switches to off state)</ul>
+TimeManualToAutoSet<x><a class="cmnd" id="TimeManualToAutoSet"></a>|Sets the time in manual mode after the last active input  action (f.i. last action from serial connected wall thermostat) to switch to aumatic mode<BR> `0..1440` = time in minutes (default 60 minutes)</ul>
+PropBandSet<x><a class="cmnd" id="PropBandSet"></a>|Sets the value of the proportional band of the PI controller<BR> `0..20` = value in degrees Celsius (default 4 degrees Celsius)</ul>
+TimeResetSet<x><a class="cmnd" id="TimeResetSet"></a>|Sets the value of the reset time of the PI controller<BR> `0..86400` = value in seconds (default 12000 seconds)</ul>
+TimePiProportRead<x><a class="cmnd" id="TimePiProportRead"></a>|Returns the proportional part of the PI controller calculation in seconds<BR> `value` = value in seconds</ul>
+TimePiIntegrRead<x><a class="cmnd" id="TimePiIntegrRead"></a>|Returns the integral part of the PI controller calculation in seconds<BR> `value` = value in seconds</ul>
+TimePiCycleSet<x><a class="cmnd" id="TimePiCycleSet"></a>|Sets the value of the cycle for the PI controller<BR> `0..1440` = value in minutes (default 30 minutes)</ul>
+TempAntiWindupResetSet<x><a class="cmnd" id="TempAntiWindupResetSet"></a>|Sets the value of the delta between controlled temperature and setpoint above which the integral part of the PI controller will be set to 0, in degrees Celsius/Fahrenheit<BR> `0..10` = value in degrees (default 0.8° Celsius)</ul>
+TempHystSet<x><a class="cmnd" id="TempHystSet"></a>|Sets the value of the temperature hysteresis for the PI controller, in degrees Celsius/Fahrenheit<BR> `-10..10` = value in degrees (default 0.1° Celsius)</ul>
+TimeMaxActionSet<x><a class="cmnd" id="TimeMaxActionSet"></a>|Sets the maximum duty cycle of the PI controller in minutes<BR> `0..1440` = value in minutes (default 20 minutes)</ul>
+TimeMinActionSet<x><a class="cmnd" id="TimeMinActionSet"></a>|Sets the minimum duty cycle of the PI controller in minutes<BR> `0..1440` = value in minutes (default 4 minutes)</ul>
+TimeSensLostSet<x><a class="cmnd" id="TimeSensLostSet"></a>|Sets the maximum time without a temperature sensor update to mark it as lost in minutes<BR> `0..1440` = value in minutes (default 30 minutes)</ul>
+TimeMinTurnoffActionSet<x><a class="cmnd" id="TimeMinTurnoffActionSet"></a>|Sets the minimum time in minutes within a cycle for the PI controller to switch off the output, below it, it will stay on<BR> `0..1440` = value in minutes (default 3 minutes)</ul>
+TempRupDeltInSet<x><a class="cmnd" id="TempRupDeltInSet"></a>|Sets the minimum delta between controlled temperature and setpoint for the controller to switch to ramp-up controller phase (applicable just in Hybrid controller mode)<BR> `0..10` = value in degrees Celsius/Fahrenheit (default 0.4° Celsius)</ul>
+TempRupDeltOutSet<x><a class="cmnd" id="TempRupDeltOutSet"></a>|Sets the maximum delta between controlled temperature and setpoint for the controller to switch to the PI controller phase (applicable just in Hybrid controller mode)<BR> `0..10` = value in degrees Celsius/Fahrenheit (default 0.2° Celsius)</ul>
+TimeRampupMaxSet<x><a class="cmnd" id="TimeRampupMaxSet"></a>|Sets the maximum time in minutes for the controller to stay in the ramp-up phase (applicable just in Hybrid controller mode<BR> `0..1440` = value in minutes (default 960 minutes)</ul>
+TimeRampupCycleSet<x><a class="cmnd" id="TimeRampupCycleSet"></a>|Sets the value of the cycle for the ramp-up controller<BR> `0..1440` = value in minutes (default 30 minutes)</ul>
+TempRampupPiAccErrSet<x><a class="cmnd" id="TempRampupPiAccErrSet"></a>|Sets the initial accumulated error when switching from ramp-up to the PI controller phase if the target temperature has not been reached (applicable just in Hybrid controller mode)<BR> `0..25` = value in degrees Celsius/Fahrenheit (default 2° Celsius)</ul>
+DiagnosticModeSet<x><a class="cmnd" id="DiagnosticModeSet"></a>|Enables/disables the diagnostics flag<BR> `0` = Diagnostics disabled<BR> `1` = Diagnostics enabled (default)</ul>
+
+### Domoticz
+
+Command|Parameters
+:---|:---
+<a class="cmnd" id="domoticzidx"></a>DomoticzIdx<x\>|Show Domoticz Relay idx <x\> (x = `1..4`)<BR>`0` = disable use of Relay idx <x\> *(default)*<BR>`<value>` = Show Relay idx <x\>
+<a class="cmnd" id="domoticzkeyidx"></a>DomoticzKeyIdx<x\>|Show Domoticz Key idx <x\> (x = `1..4`)<BR>`0` = disable use of Key idx <x\> *(default)*<BR>`<value>` = Show Key idx <x\> (to use enable [ButtonTopic](#buttontopic))
+<a class="cmnd" id="domoticzsensoridx"></a>DomoticzSensorIdx<x\>|Show Domoticz Sensor idx <x\> (x = `1..5`)<BR>`0` = disable use of Sensor idx <x\> *(default)*<BR>`<value>` = Show Sensor idx <x\> 
+<a class="cmnd" id="domoticzswitchidx"></a>DomoticzSwitchIdx<x\>|Show Domoticz Switch idx <x\> (x = `1..4`)<BR>`0` = disable use of Switch idx <x\> *(default)*<BR>`<value>` = Show Switch idx <x\> (to use enable [SwitchTopic](#switchtopic))
+<a class="cmnd" id="domoticzupdatetimer"></a>DomoticzUpdateTimer|Show current update timer value in seconds<BR>`0` = disable sending interim Domoticz status *(default)*<BR>`1..3600` = send status to Domoticz in defined intervals
+
+### KNX
+
+Command|Parameters
+:---|:---
+KnxTx_Cmnd<x\><a class="cmnd" id="KnxTx_Cmnd"></a>|`0` or `1` = send command using slot <x\> set in KNX Menu at KNX_TX
+KnxTx_Val<x\><a class="cmnd" id="KnxTx_Val"></a>|`<value>` = send float value using slot <x\> set in KNX Menu at KNX_TX
+KNX_ENABLED<a class="cmnd" id="KNX_ENABLED"></a>|Status of KNX Communications<BR>`0` = set to Disable<BR>`1` = set to Enable
+KNX_ENHANCED<a class="cmnd" id="KNX_ENHANCED"></a>|Status of Enhanced mode for KNX Communications<BR>`0` = set to Disable<BR>`1` = set to Enable
+KNX_PA<a class="cmnd" id="KNX_PA"></a>|KNX Physical Address<BR>`0.0.0` = address not set<BR>`x.x.x` = set the device address (example `1.1.0`)
+KNX_GA<a class="cmnd" id="KNX_GA"></a>|Return the amount of Group Address to Send Data/Commands configured
+KNX_GA<x\><a class="cmnd" id="KNX_GAx"></a>|Setup Group Address to Send Data/Commands (<x\> = KNX Group Address number)<BR>`1` = return configuration of GA<x\><BR>`<option>, <area>, <line>, <member>` to set configuration of GA<x\><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<option>` = see table below for OPTION list<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<area>, <line>, <member>` = KNX Address to Send Data/Commands<BR>
+KNX_CB<a class="cmnd" id="KNX_CB"></a>|Return the amount of Group Address to Receive Data/Commands configured
+KNX_CB<x\><a class="cmnd" id="KNX_CBx"></a>|Setup Group Address to Receive Data/Commands <BR>`1` = return configuration of CB<x\><BR>`<option>, <area>, <line>, <member>` to set configuration of CB<x\><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<option>` = see table below for OPTION list<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<area>, <line>, <member>` = KNX Address to Receive Data/Commands
+
+OPTION|OPTION<BR>Value|<BR>OPTION|OPTION<BR>Value
+:---|---|:---|---
+1|Relay 1|17|TEMPERATURE
+2|Relay 2|18|HUMIDITY
+3|Relay 3|19|ENERGY_VOLTAGE
+4|Relay 4|20|ENERGY_CURRENT
+5|Relay 5|21|ENERGY_POWER
+6|Relay 6|22|ENERGY_POWERFACTOR
+7|Relay 7|23|ENERGY_DAILY
+8|Relay 8|24|ENERGY_START
+9|Button 1|25|ENERGY_TOTAL
+10|Button 2|26|KNX_SLOT1
+11|Button 3|27|KNX_SLOT2
+12|Button 4|28|KNX_SLOT3
+13|Button 5|29|KNX_SLOT4
+14|Button 6|30|KNX_SLOT5
+15|Button 7|255|EMPTY
+16|Button 8|

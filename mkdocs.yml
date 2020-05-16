@@ -18,7 +18,7 @@ plugins:
 
 strict: true
 
-theme: 
+theme:
   name: material
   language: 'en'
   # custom_dir: 'overrides'
@@ -62,7 +62,7 @@ google_analytics:
 extra_css:
   - 'assets/css/anchor-fix.css'
 
-nav: 
+nav:
   - Home: index.md
   - About.md
   - Getting Started: Getting-Started.md
@@ -122,6 +122,7 @@ nav:
     - Analog pin: ADC.md
     - Buzzer.md
     - Displays.md
+    - ESP32.md
     - A4988 stepper motor controller: A4988-Stepper-Motor-Controller.md
     - AHT1x.md
     - AM2301 temperature and humidity sensor: AM2301.md
@@ -151,6 +152,7 @@ nav:
     - MPR121.md
     - MPU-6050.md
     - NRF24L01.md
+    - OpenTherm.md
     - P1-Smart-Meter.md
     - PAJ7620.md
     - PCA9685.md

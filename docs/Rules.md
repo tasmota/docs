@@ -11,23 +11,30 @@ Rules perform actions based on triggers (e.g., switch state change, temperature 
 
 ## Rule Syntax
 
-Rule definition statement 
+Rule definition syntax 
 
-> `ON <trigger> DO <command> [ENDON | BREAK]`  
+```
+ON <trigger> DO <command> [ENDON | BREAK]
+```  
 
-- **`ON`** - marks the beginning of a rule definition  
-- **`<trigger>`** - what condition needs to occur for the rule to execute  
-- **`DO`** - what <command> the rule is to perform if the `<trigger>` condition is met  
+- **`ON`** - marks the beginning of a rule   
+- **`<trigger>`** - what condition needs to occur for the rule to trigger  
+- **`DO`** - statement marking end of trigger and beginning of command part
+- **<command>** - command that is executed if the `<trigger>` condition is met  
 - **`ENDON`**  - marks the end of a rule. It can be followed by another rule.
 - **`BREAK`**  - marks the end of a rule. `BREAK` will stop the execution of the remaining rules that follow this rule within the rule set. If a rule that ends with `BREAK` is triggered, the following rules in that rule set will not be executed. This allows the rules to somewhat simulate an "IF/ELSE" statement.  
 
 Rule sets are defined by using the [`Rule<x>`](Commands.md#rule) command. After defining a rule set, you have to enable it (turn it on) using `Rule<x> 1`. Similarly you can disable the rule set using `Rule<x> 0`.  
   
-There are three separate rule sets called `Rule1`, `Rule2` and `Rule3`. Each rule set can contain as many rules as can fit within the 511 character limit. Whenever a rule set is enabled all the rules in it will be active. If the character count of the rules in the set exceed the limit, split the rules into another rule set. If you have a long list of rules, verify the rules have all fit by inspecting the resulting log.
+There are three separate **rule sets** called `Rule1`, `Rule2` and `Rule3`. Each rule set can contain many rules which are dynamically compressed. Number of rules that can fit in a rule set varies. Expect at least 1000 characters available per rule set.
+
+Whenever a rule set is enabled all the rules in it will be active. If the character count of the rules in one set actually exceeds the limit, start using the next rule set. If you have a long list of rules, verify the rules have all fit by inspecting the resulting log.
 
 Rules inside a rule set `Rule<x>` are concatenated and entered as a single statement.  
 
-> `Rule<x> ON <trigger1> DO <command> ENDON ON <trigger2> DO <command> ENDON ...`  
+```
+Rule<x> ON <trigger1> DO <command> ENDON ON <trigger2> DO <command> ENDON ...
+```
 
 Spaces after `ON`, around `DO`, and before `ENDON` or `BREAK` are mandatory. A rule is **not** case sensitive.  
 
@@ -53,7 +60,7 @@ A trigger may be used in more than one rule. This may be required for some cases
 |`!=`| not equal to|
 |`>=`| greater than or equal to|
 |`<=`| lesser than or equal to|
-|`\|`| used for [modulo operation](https://en.wikipedia.org/wiki/Modulo_operation) with remainder = 0 (exact division)|
+|`|`| used for [modulo operation](https://en.wikipedia.org/wiki/Modulo_operation) with remainder = 0 (exact division)|
 
 #### Examples of Available Triggers
 
@@ -80,7 +87,7 @@ System#Save<a id="SystemSave"></a>|executed just before a planned restart
 Time#Initialized<a id="TimeInitialized"></a>|once when NTP is initialized and time is in sync
 Time#Initialized>120|once, 120 seconds after NTP is initialized and time is in sync
 Time#Minute<a id="TimeMinute"></a>|every minute
-Time#Minute\|5|every five minutes
+Time#Minute|5|every five minutes
 Time#Minute=241|every day once at 04:01 (241 minutes after midnight)
 Time#Set<a id="TimeSet"></a>|every hour when NTP makes time in sync
 Var&lt;x\>\#State<a id="VarState"></a>|when the value for Var&lt;x\> is changed (triggers whenever a value is written to `Var<x>` even if its the same value)
@@ -245,7 +252,7 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 
 `<comparison-expression>`  
 
-- `<expression>` {`=` \| `<` \| `>` \| `|` \| `==` \| `<=` \| `>=` \| `!=`} `<expression>`  
+- `<expression>` {`=` | `<` | `>` | `|` | `==` | `<=` | `>=` | `!=`} `<expression>`  
 
 `<statement-list>`  
 
