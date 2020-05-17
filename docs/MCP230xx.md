@@ -165,6 +165,23 @@ The intmode parameter is optional for pin modes 2 through 4 (those that support 
 
 _Keep in mind that the MCP23008/MCP23017 chip will only store the last interrupt registered in the interrupt register and capture register - Because the interrupt register is only checked every 50 milliseconds by the Tasmota firmware you may experience missed interrupts if your incoming signals fluctuate/change faster than 20 times per second._
 
+### HOME ASSISTANT TIPS
+
+You can use `SetOption59 1` in order to get extra SENSOR status telemetry messages in addition to event-triggered RESULT messages. This allows very good integration with Home Assistant because it needs to monitor only one payload for both periodic and instant messages using `binary_sensor`:
+```
+- platform: mqtt
+  name: "MCP23017 Teszt D0 SENSOR"
+  state_topic: "tele/tasmota/SENSOR"
+  value_template: "{{ value_json['MCP230XX'].D0 }}"
+  payload_on: "1"
+  payload_off: "0"
+  availability_topic: "tele/tasmota/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  qos: 0
+  device_class: door
+```
+
 ### ADVANCED FUNCTIONS
 
 Several advanced functions have been added to extend the flexibility and interoperability of the MCP23008/MCP23017 with specific focus on adding functionality which is not present on the hardware's built-in GPIO pins and offloading some of the functionality that would normally be performed by rules or counters on the Tasmota device into the driver of the MCP23008/MCP23017.
