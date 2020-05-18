@@ -4,8 +4,14 @@ The Thermostat driver allows the tasmota device, provided it receives the temper
 
 ![Pinout](_media/thermostat/Feature_rich_thermostat.png)
 
-## Typical setup, bypassing existing room thermostat
+## Typical setup: Heating floor system
 
-The tasmota device running the thermostat driver can be installed bypassing a conventional room thermostat:
+A typical setup for heating room systems can be found in the picture below. A conventional room thermostat is connected to a heating floor valve actuator, both running at AC voltage (f.i. 220V). The thermostat is connected to neutral as well as to the phase, the actuator to the same neutral connection of the thermostat and to its actuation signal. The actuation signal will switch between the neutral voltage (actuation Off) and the phase voltage (actuation On).
+
+The conventional room thermostats offer nowadays either 2 point control with hysteresis or a more advanced PI (Proportional-Integral) control. The result of the PI control is typically transformed into a PWM signal with a pre-defined period and a variable duty cycle.
 
 ![Pinout](_media/thermostat/conventional_thermostat.png)
+
+### Use of tasmota switch to bypass an existing wall thermostat
+
+A tasmota switch can be installed in a way that it bypasses the existing wall thermostat. The advantage of this setup is that the thermostat driver offers the possibility to follow the output of the existing wall thermostat (if active) or acting autonomously. This setup allows a seamless integration with existing wall thermostats.
