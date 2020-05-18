@@ -54,7 +54,29 @@ There are several ways to send the MQTT room temperature. For the development an
 
 The thermostat controller includes a default parameter set that targets a typical floor heating application for mid-sized rooms (< 20m2) with one heating circuit. The controller is however highly configurable via MQTT. The following sections will guide the user to adapt the main parameters to improve the performance of the thermostat controller via customization.
 
-### 
+### Set your controller in degrees Celsius or Fahrenheit
+
+The default temperature format is degrees Celsius. The format can be easily switched to degrees Fahrenheit via MQTT command, see below:
+
+```
+cmnd/Tasmota_Name/TEMPFORMATSET 1
+```
+
+### PI controller main parameters
+
+#### Proportional Band 
+
+Depending on the dimensioning of your heating system, the proportional band of the controller might be increased (if it takes too long to reach setpoint) or reduced (very high overshoot). The default proportional gain is 4, which means that the duty cycle due to the proportional part of the PI controller will be 100% for temperature deltas between setpoint and room temperature equal or bigger than 4°C. Below you can find the command to adapt the proportional band:
+
+```
+cmnd/Tasmota_Name/PROPBANDSET 1
+```
+
+Note: With the command above, the PI controller will output a proportional time equivalent to 100% of the duty cycle for delta temperatures between setpoint and room temp. above 1°C (f.i. for big rooms with weak dimensioned heating circuit).
+
+#### Reset Time
+The reset time
+
 
 ## Advanced features
 
