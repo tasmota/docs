@@ -271,7 +271,7 @@ The following variables are cleared after reading true:
 `stack` = stack size  
 `heap` = free heap size  
 `pheap` = PSRAM free heap size (ESP32)  
-`core` = current core (1 or 2)  (ESP32)  
+`core` = current core (0 or 1)  (ESP32)  
 `ram` = used ram size  
 `slen` = script length  
 `freq` = cpu frequency  
@@ -1073,6 +1073,9 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
 - The first graph is the battery level of a solar battery (Tesla PowerWall 2)  
 - The second graph shows the solar yield of the roof panels in Watts  
 - Another special feature is that this script displays daily and weekly averages (via moving average) of all power IO of the house.  
+- it sends an email every sunday night with the weekly data  
+- it displays a google bar chart on the webui with values for each weekday of the last week  
+- ESP32 CPU with SD card 
 - Since the display is a full update panel it is updated only once a minute  
 - Some values (like power meters) are set remotely from ioBroker  
 
@@ -1097,12 +1100,17 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     vzh=0
     svzh=0
     M:mvzh=0 7
+    wd=0
+    res=0    
     hr=0
     t1=0
-    ; DisplayText substituted to save script space
     DT="DisplayText"
-
+    res=0
+    
     >B
+    ->setoption64 1
+    tper=30
+    
     ->%DT% [IzD0]
     ->%DT% [zG10352:5:40:-350:80:10080:0:100f3x360y40]100 %%[x360y115]0 %%
     ->%DT% [f1x100y25]Powerwall - 7 Tage[f1x360y75] 0 %%
@@ -1113,13 +1121,20 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     ->%DT% [p13x10y260]H-Verbr.:
     ->%DT% [p13x10y275]D-Einsp.:
     ->%DT% [d]
- 
+    
+    ->%DT% [Gr0:/g0_sav.txt:]
+    ->%DT% [Gr1:/g1_sav.txt:]
+    
+    beep(-25 0)
+    beep(1000 100)
+    
     >T
     press=BMP280#Pressure
     temp=SHT3X_0x44#Temperature
     hum=SHT3X_0x44#Humidity
- 
+    
     >S
+    
     if upsecs%60==0
     then
     dp2
@@ -1130,19 +1145,19 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     ->%DT% [p5x360y75]%pwl% %%
     ->%DT% [p6x360y180]%wr1%W
     ->%DT% [g0:%pwl%g1:%wr1%]
- 
+    
     ->%DT% [p24x75y230] %wr1% W : %-wr2% W : %-wr3% W
     ->%DT% [p-10x75y245]%ezh% kWh
     ->%DT% [p-10x75y260]%vzh% kWh
     ->%DT% [p-10x75y275]%ez1% kWh
- 
+    
     t1=mezh*7
     ->%DT% [p-10x150y245]: %t1% kWh
     t1=mvzh*7
     ->%DT% [p-10x150y260]: %t1% kWh
     t1=mez1*7
     ->%DT% [p-10x150y275]: %t1% kWh
- 
+    
     dp1
     t1=ezh-sezh
     ->%DT% [p12x250y245]: %t1% kWh
@@ -1150,13 +1165,14 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     ->%DT% [p12x250y260]: %t1% kWh
     t1=ez1-sez1
     ->%DT% [p12x250y275]: %t1% kWh
- 
+    
     dp0
     ->%DT% [f2p5x320y250] %otmp%C
- 
+    
     ->%DT% [d]
+    print updating display
     endif
-  
+    
     hr=hours
     if chg[hr]>0
     and hr==0
@@ -1168,13 +1184,53 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     mvzh=vzh-svzh
     svzh=vzh
     endif
- 
+    
     if sezh==0
     then
     sez1=ez1
     sezh=ezh
     svzh=vzh
     endif
+    
+    wd=wday
+    if chg[wd]>0
+    and wd==1
+    then
+    =>sendmail [*:*:*:*:*:user.tasmota@gmail.com: Wochenbericht]*
+    print sening email
+    endif
+
+
+    if upsecs%300==0
+    then
+    =#savgraf
+    print saving graph
+    endif
+    
+    #savgraf
+    ->%DT% [Gs0:/g0_sav.txt:]
+    ->%DT% [Gs1:/g1_sav.txt:]
+
+    >m
+    Wochenbericht Einspeisung und Verbrauch<br><br>
+    w1=%mez1[1]%,%mez1[2]%,%mez1[3]%,%mez1[4]%,%mez1[5]%,%mez1[6]%,%mez1[7]%,%mez1[8]%<br>
+    w2=%mezh[1]%,%mezh[2]%,%mezh[3]%,%mezh[4]%,%mezh[5]%,%mezh[6]%,%mezh[7]%,%mezh[8]%<br>
+    w3=%mvzh[1]%,%mvzh[2]%,%mvzh[3]%,%mvzh[4]%,%mvzh[5]%,%mvzh[6]%,%mvzh[7]%,%mvzh[8]%<br>
+    #
+    >W
+    &<br><div id="container"style="width:640px;height:480px;margin:0 auto"></div><br>
+    &<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    &<script type="text/javascript">google.charts.load('current',{packages:['corechart']});</script>
+    &<script language="JavaScript">function drawChart(){var data=
+    &google.visualization.arrayToDataTable([
+    &['weekday','Power'],['Mo',%mvzh[1]%],['Di',%mvzh[2]%],['Mi',%mvzh[3]%],['Do',%mvzh[4]%],
+    &['Fr',%mvzh[5]%],['Sa',%mvzh[6]%],['So',%mvzh[7]%]]);
+    &var options={title:'daily solar feed',isStacked:true};
+    &var chart=new 
+    &google.visualization.ColumnChart(document.getElementById('container'));chart.draw(data,options);}
+    &google.charts.setOnLoadCallback(drawChart);</script>
+    #
+
 
 ### ILI 9488 Color LCD Display with BMP280 and VL5310X
 
