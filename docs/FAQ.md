@@ -77,7 +77,7 @@ All you can really do is check the solder joints, move the device closer to your
 On an ESP82xx, Wi-Fi calibration is sensitive to the power supplied. If this changes substantially (e.g., you add a sensor, configure a new Tasmota feature, upgrade the firmware or Arduino Core, etc.), the device's Wi-Fi calibration may not be set properly any longer. The Wi-Fi signal strength (RSSI) can drop significantly and impact Wi-Fi performance. In such a case, the Wi-Fi calibration needs to be deleted to force the device to re-calibrate Wi-Fi after it restarts.  
 
 1. **Save the device configuration**
-2. Run [`Reset 5`](Commands.md#reset) in the Console. This command deletes Wi-Fi calibration data, erases all flash memory, and resets parameters to firmware defaults _but keeps your Wi-Fi network credentials_
+2. Run [`Reset 3`](Commands.md#reset) in the Console. This command deletes Wi-Fi calibration data, erases all flash memory, and resets parameters to firmware defaults _but keeps your Wi-Fi network credentials_
 3. The device will restart
 4. Cycle the power on the device. Wi-Fi calibration will not be done unless the device performs a cold boot from power up.
 5. **Restore your device configuration from the _step 1_ backup**  
