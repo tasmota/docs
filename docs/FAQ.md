@@ -115,7 +115,7 @@ or your mosquitto broker log shows messages like this -
 ```
 You have more than one device connected with the same %topic% defined. Its important that each device has a unique %topic% instead of the default `sonoff`.
 
-If that is not the issue, erase all flash using esptool.py or esptool.exe and flash again by wire (as explained [here](Esptool#upload-tasmota)) using [the latest precompiled bins with core v2.6](http://thehackbox.org/tasmota/pre-2.6/).
+If that is not the issue, erase all flash using esptool.py or esptool.exe and flash again by wire (as explained [here](Esptool#upload-tasmota)) using [the latest precompiled bins with core v2.7.1](http://thehackbox.org/tasmota/).
 
 ## Configuration
 
