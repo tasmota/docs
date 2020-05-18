@@ -23,7 +23,7 @@ Incredibly expandable and flexible.
 - Fix HASS autodiscovery
 - Add command ``DeviceName`` - defaults to `FriendlyName1` and replaces FriendlyName1 in GUI
 
-8.3.0
+##### 8.3.0
 
 - :rotating_light: **BREAKING CHANGE** :rotating_light: 
 Changed multicast address and port used by device groups. All devices using [Device Groups](Device-Groups.md) must be upgraded. 
