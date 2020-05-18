@@ -88,14 +88,25 @@ cmnd/Tasmota_Name/TEMPANTIWINDUPRESETSET 0.8
 ```
 
 #### Temperature hysteresis
-
 A temperature hysteresis can be set to avoid any PI controller actions within a certain value arround the setpoint. The default value for the hysteresis is 0.1°C. In well configured controller this value should be as low as possible to avoid unwanted temperature oscillations which reduce efficiency and therefore increase costs. Below the command to adapt the anti-windup temperature can be found:
 
 ```
 cmnd/Tasmota_Name/TEMPHYSTSET 0.1
 ```
 
+#### Maximum action of the controller
+The maximum On time (Duty Cycle) in minutes within a cycle can be set by this parameter. The default value is 20 minutes. This represents for the default cycle time of 30 minutes 2 thirds of the complete cycle. In case the controller takes too long to reach the setpoint, this value can be increased to values closer to the cycle time. Below the command to adapt the maximum action time can be found:
 
+```
+cmnd/Tasmota_Name/TIMEMAXACTIONSET 20
+```
+
+#### Minimum action of the controller
+The minimum On time (Duty Cycle) in minutes within a cycle can be set by this parameter. The default value is 4 minutes. This represents for the default cycle time of 30 minutes 2 thirds of the complete cycle. In case the controller is not capable of mantaining the temperature arround the setpoint without integral action and generates oscillations, the value should be increased. Below the command to adapt the maximum action time can be found:
+
+```
+cmnd/Tasmota_Name/TIMEMINACTIONSET 4
+```
 
 ## Advanced features
 
