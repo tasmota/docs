@@ -8,4 +8,4 @@ The Thermostat driver allows the tasmota device, provided it receives the temper
 
 The tasmota device running the thermostat driver can be installed bypassing a conventional room thermostat:
 
-![Pinout](_media/thermostat/conventional_busch_jaeger.jpg)
+![Pinout](_media/thermostat/conventional_thermostat.png)
