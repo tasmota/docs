@@ -34,7 +34,7 @@ The tasmota driver can be compiled to be used in devices with more than one outp
 
 ![Pinout](_media/thermostat/multi_thermostat.png)
 
-To increase the number of controller outputs, modify the value of thermostat controller outputs in my_user_config.h or redefine it in user_config_override.h and compile a customized tasmota software.
+To increase the number of controller outputs, modify the value of the thermostat controller outputs in my_user_config.h or redefine it in user_config_override.h and compile a customized tasmota software.
 
 ```
 #define THERMOSTAT_CONTROLLER_OUTPUTS         1         // Number of outputs to be controlled independently
