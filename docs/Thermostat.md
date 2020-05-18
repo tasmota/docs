@@ -14,4 +14,6 @@ The conventional room thermostats offer nowadays either 2 point control with hys
 
 ### Use of tasmota switch to bypass an existing wall thermostat
 
-A tasmota switch can be installed in a way that it bypasses the existing wall thermostat. The advantage of this setup is that the thermostat driver offers the possibility to follow the output of the existing wall thermostat (if active) or acting autonomously. This setup allows a seamless integration with existing wall thermostats.
+A tasmota switch can be installed in a way that it bypasses the existing wall thermostat. The advantage of this setup is that the thermostat driver offers the possibility to follow the output of the existing wall thermostat or acting autonomously. This setup allows a seamless integration with existing wall thermostats and gives the user the freedom to still use them.
+
+Below you can find an example of a Shelly switch bypassing a wall thermostat:
