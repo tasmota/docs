@@ -39,3 +39,17 @@ To increase the number of controller outputs, modify the value of the thermostat
 ```
 #define THERMOSTAT_CONTROLLER_OUTPUTS         1         // Number of outputs to be controlled independently
 ```
+
+### Future improvements
+
+A PI autotune feature following the Zigler-Nichols closed loop algorithm has been implemented. This feature is untested and will be further developed soon. To enable it for testing purposes add the following define in user_config_override.h and compile a customized tasmota software
+
+```
+#define USE_PI_AUTOTUNING // (Ziegler-Nichols closed loop method)
+```
+
+The "Ramp-Up" controller will be improved by a learning process to evaluate how accurate the target value has been reached without overshoot. This feature will improve the behavior of the current controller which depending on the application and thermal capacity of the system might produce some overshoot. If you are not satisfied with the performance of this controller in your system, you can disable it by MQTT and using exclusively the PI controller.
+
+```
+cmnd/Tasmota_Name/CONTROLLERMODESET 1
+```
