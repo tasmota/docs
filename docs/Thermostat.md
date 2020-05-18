@@ -34,14 +34,6 @@ The default temperature input is MQTT. The following command can be used to sele
 cmnd/Tasmota_Name/SENSORINPUTSET 1
 ```
 
-### Enable the thermostat driver
-
-The thermostat driver is by default disabled. To enable it the following command can be used:
-
-```
-cmnd/Tasmota_Name/THERMOSTATMODESET 1
-```
-
 ### MQTT temperature value and setpoint
 
 The following commands can be used to provide the driver with the temperature value of the room and the desired setpoint:
@@ -61,6 +53,14 @@ There are several ways to send the MQTT room temperature. For the development an
 ## Customize the controller for best results
 
 The thermostat controller includes a default parameter set that targets a typical floor heating application for mid-sized rooms (< 20m2) with one heating circuit. The controller is however highly configurable via MQTT. The following sections will guide the user to adapt the main parameters to improve the performance of the thermostat controller via customization.
+
+### Enable the thermostat driver
+
+The thermostat driver is by default disabled. To enable it the following command can be used:
+
+```
+cmnd/Tasmota_Name/THERMOSTATMODESET 1
+```
 
 ### Set the controller in degrees Celsius or Fahrenheit
 
