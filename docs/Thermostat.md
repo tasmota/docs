@@ -33,3 +33,9 @@ The tasmota driver can receive the temperature either via the related MQTT comma
 The tasmota driver can be compiled to be used in devices with more than one output, allowing independant controllers for each one of the outputs. This feature has been successfully tested with an Sonoff 4CH PRO R2.
 
 ![Pinout](_media/thermostat/multi_thermostat.png)
+
+To increase the number of controller outputs, modify the value of thermostat controller outputs in my_user_config.h or redefine it in user_config_override.h and compile a customized tasmota software.
+
+```
+#define THERMOSTAT_CONTROLLER_OUTPUTS         1         // Number of outputs to be controlled independently
+```
