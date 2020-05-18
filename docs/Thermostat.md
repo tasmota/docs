@@ -20,15 +20,37 @@ Below you can find an example of a Shelly switch bypassing a wall thermostat:
 
 ![Pinout](_media/thermostat/bypass_thermostat.png)
 
-### Temperature sensors
+### Temperature
+
+#### Local temperature sensor
 
 The tasmota driver can receive the temperature either via the related MQTT command or via a local temperature sensor (see example of a DS18B20 temperature sensor and a shelly temperature sensor addon below).
 
 ![Pinout](_media/thermostat/sensors.png)
 
+To default temperature input is MQTT. The following command can be used to select the local sensor as default input:
+
+```
+cmnd/Tasmota_Name/TEMPMEASUREDSET 22.5
+```
+
+```
+cmnd/Tasmota_Name/TEMPTARGETSET 22.5
+```
+
+#### MQTT temperature value and setpoint
+
+The following commands can be used to provide the driver with the temperature value of the room and the desired setpoint:
+
+```
+cmnd/Tasmota_Name/SENSORINPUTSET 1
+```
+
 ## Customize your controller for the best results
 
-The thermostat controller includes a default parameter set that targets a typical floor heating application for mid-sized rooms (< 20m2) with one heating circuit. The controller is however highly configurable via MQTT. Below you can find a list of the main parameters that might help you to improve the 
+The thermostat controller includes a default parameter set that targets a typical floor heating application for mid-sized rooms (< 20m2) with one heating circuit. The controller is however highly configurable via MQTT. The following sections will guide the user to adapt the main parameters to improve the performance of the thermostat controller via customization.
+
+### 
 
 ## Advanced features
 
@@ -50,23 +72,23 @@ To increase the number of controller outputs, modify the value of the thermostat
 
 The controller offers the possibility to switch from heating to cooling. Due to lack of cooling setup at the time of the development of the driver, this feature has however not been propertly tested. Testers for cooling are therefore welcomed.
 
-The following MQTT command can be used to switch from heating (default) to cooling
-
-```
-cmnd/Tasmota_Name/CONTROLLERMODESET 1
-```
-
-#### Improvement in "Ramp-Up" controller
-
-The "Ramp-Up" controller evaluates the time constant of the system and predicts when to switch off the actuator to reach the desired temperature as fast as possible. This controller offers the best speed to reach the Setpoint. This controller will be improved by a learning process to evaluate how accurate the target value has been reached without overshoot. This feature will improve the behavior of the current controller which depending on the application and thermal capacity of the system might produce some overshoot. By default the controller set is the Hybrid one, enabling "Ramp-Up" for big temperature deltas between Setpoint and measured temperature and PI for smaller ones. If you are not satisfied with the performance of this controller in your system, you can disable it by MQTT and force the use of the PI controller exclusively.
+The following MQTT command can be used to switch from heating (default) to cooling:
 
 ```
 cmnd/Tasmota_Name/CLIMATEMODESET 1
 ```
 
+#### Improvement in "Ramp-Up" controller
+
+The "Ramp-Up" controller evaluates the time constant of the system and predicts when to switch off the actuator to reach the desired temperature as fast as possible. This controller offers the best speed to reach the Setpoint. This controller will be improved by a learning process to evaluate how accurate the target value has been reached without overshoot. This feature will improve the behavior of the current controller which depending on the application and thermal capacity of the system might produce some overshoot. By default the controller set is the Hybrid one, enabling "Ramp-Up" for big temperature deltas between Setpoint and measured temperature and PI for smaller ones. If you are not satisfied with the performance of this controller in your system, you can disable it by MQTT and force the use of the PI controller exclusively. For that purpose the following command can be used:
+
+```
+cmnd/Tasmota_Name/CONTROLLERMODESET 1
+```
+
 #### PI Autotune
 
-A PI autotune feature following the Zigler-Nichols closed loop algorithm has been implemented. This feature is untested and will be further developed soon. To enable it for testing purposes add the following define in user_config_override.h and compile a customized tasmota software
+A PI autotune feature following the Zigler-Nichols closed loop algorithm has been implemented. This feature is untested and will be further developed soon. To enable it for testing purposes add the following define in user_config_override.h and compile a customized tasmota software.
 
 ```
 #define USE_PI_AUTOTUNING // (Ziegler-Nichols closed loop method)
