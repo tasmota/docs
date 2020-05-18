@@ -62,6 +62,14 @@ The default temperature format is degrees Celsius. The format can be easily swit
 cmnd/Tasmota_Name/TEMPFORMATSET 1
 ```
 
+### Adapt the cycle time of the controller
+
+Depending on the heating system, the cycle time (PMW period) can be adapted. Very slow systems (high time constants) such as heating floor systems might need higher values (default value is 30 minutes), faster systems might need smaller cycle times. Below the command to adapt the cycle time can be found (in minutes, applies to all controller strategies):
+
+```
+cmnd/Tasmota_Name/TIMERAMPUPCYCLESET 30
+```
+
 ### PI controller main parameters
 
 #### Proportional Band 
