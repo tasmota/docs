@@ -1,72 +1,3 @@
-## Tips
-
-### Available Characters for HOSTNAME
-
-  - 24 chars max
-  - only a..z A..Z 0..9 '-'
-  - no '-' as last char
-
-**RFC952**  
->  ASSUMPTIONS  
->  1. A "name" (Net, Host, Gateway, or Domain name) is a text string up    to 24 characters drawn from the alphabet (A-Z), digits (0-9), minus    sign (-), and period (.).  Note that periods are only allowed when    they serve to delimit components of "domain style names". (See    RFC-921, "Domain Name System Implementation Schedule", for    background).  No blank or space characters are permitted as part of a    name. No distinction is made between upper and lower case.  The first    character must be an alpha character.  The last character must not be    a minus sign or period.  A host which serves as a GATEWAY should have    "-GATEWAY" or "-GW" as part of its name.  Hosts which do not serve as    Internet gateways should not use "-GATEWAY" and "-GW" as part of    their names. A host which is a TAC should have "-TAC" as the last    part of its host name, if it is a DoD host.  Single character names    or nicknames are not allowed.  
-
-### Flash Memory Considerations
-
-- To stop saving parameter changes to Flash or Spiffs use command ```SaveData off```.
-
-- To stop saving power changes only to Flash or Spiffs use command ```SetOption0 off```. This will disable the relay from returning to the same state after power on UNLESS you use the MQTT retain flag in which case the MQTT broker will send the last known MQTT state on restart or power on. The command ```ButtonRetain on``` will configure the button to send a MQTT command with Topic and the MQTT retain flag set.
-
-## Installation
-
-### Cannot enter flash mode
-Be sure to press the button correctly, you must "feel" a click. If your on-device button doesn't allow you to enter flash mode or there is no GPIO0 broken out to the PCB, you can always bridge GND to GPIO0 pin directly on the chip. Search on the Internet for your chip's pinouts and use [the tutorial](Getting-Started.md#programming-mode). Be sure to keep GPIO0 grounded long enough (3-5 seconds) before disconnecting to ensure the chip has booted completely into programming mode. On devices that do not provide a GPIO0 connected button, it may be easier to leave the wired bridge in place throughout the entire flashing process (erase & upload). Doing so will not create any problems for flashing the device. After the firmware is uploaded successfully, remove the bridge. This allows the device to boot normally.
-
-### Flashing issues
-- Double check if you wired the device the serial-to-USB adapter correctly. Almost every device needs RX and TX pins switched to TX and RX. See [Hardware Preparation](Getting-Started.md) for more.
-
-- Another common problem are the jumper cables used. Try another cable if you keep getting connection errors or check the cables for connectivity. Most of them are made cheaply and it happens quite often that those cables do not offer a good connection because of bad crimping or broken copper lines in them.
-
-- Be sure to use a **USB Data Cable** and not a cheap loading cable for mobile phones for connecting the serial-to-USB adapter to your computer. If you are unsure, just try another USB cable. Data USB cables are often thicker than the normal loading cables (and more expensive).
-
-- Another problem can be the difficulties in getting the ESP chip into [programming mode](#cannot-enter-flash-mode) when it boots. 
-
-- If the flash still fails or the progress interrupts, it could be that your computer or serial-to-USB adapter doesn't provide enough power to the device. Try another computer or use an external power supply (3.3V one).
-   
-- Use the correct serial-to-USB adapter driver. Check the model of your adapter chip and get the correct driver.
-
-- If the flash completes successfully, but you get a hash mismatch (esptool.py error message `A fatal error occurred: MD5 of file does not match data in flash!`) ensure that your 3.3v current is sufficient. Workarounds include using a dedicated _bread board power supply_ or using the 3.3v output of an additional microcontroller. If using an additional power supply to power the device, be sure to use a common ground for the power supply, the device to be flashed and the serial-to-USB adapter.
-
-- If esptool.py stops at "Uploading stub...", use --no-stub 
-
-- If the flash fails or the device does not operate as expected, try using the default ESP82xx boot ROM baud rate - `74880`. This is the baud rate the ESP82xx is set to by default when it boots into programming mode. It can be specified as a command line option in [esptool.py](Getting-Started.md#esptoolpy) (`-b`) and [esptool.exe](Getting-Started.md#esptool-executable) (`-cb`).
-
-  You may also want to select a serial monitor/terminal capable of setting this "unusual" baud rate. In Termite, type this value (`74880`) in the baud rate selection text box when configuring the port. Having the option to specify this unusual baud rate will allow you to view the [ESP8266 boot ROM log](https://github.com/espressif/esptool/wiki/ESP8266-Boot-ROM-Log) while the device is booting.
-
-### Device is hot to the touch
-Remember - **NEVER EVER FLASH WITH 5V!**?
-
-Better unpower your device and check if the wiring is correct and the voltage is on your FTDI is set to 3.3V. 
-If you've connected VCC to the wrong pin it might cause your device to overheat and destroy it.
-
-### There was white smoke and the device does not work anymore!
-Yes, you've released the fabled "white smoke", the mysterious substance all electronic devices work on. 
-
-In the immortal words of Doctor Bones: **It's dead Jim!**
-
-### Sonoff 4CH V2 / Sonoff Dual V2 will not flash
-Testing with two different (fairly new) FTDI boards and two Sonoff 4CH v2.0 and the Sonoff Dual v2.0 boards I found that I was getting errors uploading sketches i.e. "warning: espcomm_sync failed" basically a lack of communication between the two devices.
-
-I found that the problem in both Sonoff's was that instead of the FTDI Sonoff cross-over TX->RX and RX->TX I had to do TX->TX RX->RX this then allowed me to upload the sketch.
-
-### Flashing fails on MacOS High Sierra
-Related to issue [#957](https://github.com/arendst/Tasmota/issues/957#issuecomment-338779258).
-
-Solution:
-1. Install the VCP drivers for Mac from the [FTDI website](http://www.ftdichip.com/Drivers/VCP.htm)
-2. After install, reboot (it does not work if you do not reboot).
-3. After reboot, plug the FTDI USB/serial converter. Accept the security alert from MacOS.
-4. Restart the flash process. It works!
-
 ## Wi-Fi
 
 ### Cannot connect to Wi-Fi 
@@ -76,12 +7,12 @@ With some Wi-Fi routers (i.e. Linksys with DD-WRT), you may have conflicts with 
 
 DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can resolve connectivity issues.
 
-### I entered the wrong Wi-Fi information
-- If you have a device with a button and the button is configured as a component in the Tasmota settings (e.g., GPIO0 - Button1), you can try pressing the button to force the device into [Wi-Fi configuration mode](Buttons-and-Switches#4-short-presses) with 4 short presses of the button. 
+### I entered wrong Wi-Fi information
+If you have a device with a button and the button is configured as a component in the Tasmota settings (e.g., GPIO0 - Button1), you can try pressing the button to force the device into [Wi-Fi configuration mode](Buttons-and-Switches#4-short-presses) with 4 short presses of the button. 
 
-- If that didn't work reset your device using [Fast power cycle device recovery](Device-Recovery.md#fast-power-cycle-device-recovery)
+If that didn't work reset your device using [Fast power cycle device recovery](Device-Recovery.md#fast-power-cycle-device-recovery)
 
-- If you are unsure what SSID you have entered, you can try to find that with special Wi-Fi sniffing tools. For example [Nirsoft WifiChannelMonitor](https://www.nirsoft.net/utils/wifi_channel_monitor.html) can show your mistakenly configured SSID name.  
+If you are unsure what SSID you have entered, you can try to find that with special Wi-Fi sniffing tools. For example [Nirsoft WifiChannelMonitor](https://www.nirsoft.net/utils/wifi_channel_monitor.html) can show your mistakenly configured SSID name.  
   **Linux system example:**
   ```
   apt install aircrack-ng wireshark
@@ -91,7 +22,7 @@ DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can r
   ```
   Select your Wi-Fi device from the list. Plug in the mis-configured device and immediately watch SSIDs. You should see your mis-configured SSID fairly soon.  
 
-- If these methods don't work, it may still be possible to save the device without opening it to perform a serial flash. Since Tasmota uses GET request for forms, the password may be in your browser history.  
+If these methods don't work, it may still be possible to save the device without opening it to perform a serial flash. Since Tasmota uses GET request for forms, the password may be in your browser history.  
   1. Search in your browser history for 192.168.4.1 (or whatever address you used for configuring it)
   2. There should be an entry similar to this:  
      `http://192.168.4.1/wi?s1=<mySSID>&p1=<myPassword>-********&s2=&p2=********&h=hostName&save=`  
@@ -102,7 +33,7 @@ DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can r
   3. After getting the incorrectly entered configuration from this URL, configure an access point with these settings as described above
   4. Access your device and set the correct Wi-Fi credentials
 
-- If you flashed a light bulb or any device without a built-in button and entered wrong Wi-Fi password you now have a device that won't connect to your Wi-Fi and you have no button to force it into Wi-Fi configuration mode.
+If you flashed a light bulb or any device without a built-in button and entered wrong Wi-Fi password you now have a device that won't connect to your Wi-Fi and you have no button to force it into Wi-Fi configuration mode.
 
   **This tip takes advantage of a security risk present in Arduino Cores prior to 2.6.0. It will not work with Tasmota binaries compiled with 2.6.0 or later.**  
 
@@ -112,19 +43,22 @@ DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can r
 
 ### Device disconnects from Wi-Fi often
 
-First thing to try when having Wi-Fi issues:
 
-   Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](Getting-Started.md#esptoolpy)) using [the latest precompiled binaries](http://thehackbox.org/tasmota/).
+First thing to try when having Wi-Fi issues: `Reset 3` which will erase wi-fi calibration data only and will keep configuration intact. Make sure to power cycle restart after that. If that doesn't help try rebooting the router as well
 
-   This approach has solved most of the reported issues. Sometimes this is due to a bad flash, a bad OTA or invalid data that remains in the flash where the SDK memory is.
+As a last resort try :
+Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](Getting-Started.md#esptoolpy)) using [the latest precompiled binaries](http://thehackbox.org/tasmota/).
+
+This approach has solved many of the reported issues. Sometimes this is due to a bad flash, a bad OTA or invalid data that remains in the flash where the SDK memory is.
 
 If you still have issues, you should look into your Wi-Fi network:
 
-   - Check the Wi-Fi channel availability and noise with an Android app like Wi-Fi Analyzer. Disable Auto Channel in your Wi-Fi router and select any Wi-Fi channel that is not very congested in your area.
-   - Disable Wi-Fi Repeaters and Mesh Networks.
-   - Check Wi-Fi signal in your device.
+- Some new routers have many modern features enabled with default which don't work well with the old ESP82xx chip. Disable any channel surfing, band changing and similar features.
+- Check the Wi-Fi channel availability and noise with an Android app like Wi-Fi Analyzer. Disable Auto Channel in your Wi-Fi router and select any Wi-Fi channel that is not very congested in your area.
+- Disable Wi-Fi Repeaters and Mesh Networks.
+- Check Wi-Fi signal in your device.
 
-   The same Mesh may be stable in one area and lead to unwanted Tasmota reconnects in other areas, presumably when the signals of access points overlap with similar strength. If disabling Mesh Networks is not an option, then keeping the network busy, e.g. by issuing a Ping from another host every 20 seconds has helped to avoid the reconnects.
+The same Mesh may be stable in one area and lead to unwanted Tasmota reconnects in other areas, presumably when the signals of access points overlap with similar strength. If disabling Mesh Networks is not an option, then keeping the network busy, e.g. by issuing a Ping from another host every 20 seconds has helped to avoid the reconnects.
 
 ### Wi-Fi Stops Working
 There have been many reports of Wi-Fi no longer working after it was working for a while.
@@ -144,6 +78,9 @@ On an ESP82xx, Wi-Fi calibration is sensitive to the power supplied. If this cha
 3. The device will restart
 4. Cycle the power on the device. Wi-Fi calibration will not be done unless the device performs a cold boot from power up.
 5. **Restore your device configuration from the _step 1_ backup**  
+
+### WebUI unavailable but device can be controlled
+Some routers have issues with ARP implementation. To help with that use [`SetOption41`](Commands.md#setoption41) to make your device send grauitous ARP in a desired interval (try 30 or 60 seconds for start).
 
 ## MQTT
 
@@ -179,7 +116,23 @@ You have more than one device connected with the same %topic% defined. Its impor
 
 If that is not the issue, erase all flash using esptool.py or esptool.exe and flash again by wire (as explained [here](Esptool#upload-tasmota)) using [the latest precompiled bins with core v2.6](http://thehackbox.org/tasmota/pre-2.6/).
 
-## Device
+## Configuration
+
+### Device reset to defaults on its own
+#### Bad power supply
+Most common culprit is [Power Cycle Recovery](Device-Recovery#fast-power-cycle-device-recovery) which can be activated if the device has a bad power supply or your power grid has fluctuations/brownouts. Disable the feature with `SetOption65 1`
+
+#### Button in ON state when depressed
+If a button is configure to be in ON state when depressed it will activate "Firmware Reset" feature. Either change the button mode or use `SetOption1 1` to disable factory reset mode.
+
+#### Frequent reboots/bootloops
+Your device may be in a boot loop - a restart caused by any exception or watchdog timer within less than `BOOT_LOOP_TIME` (_default 10 seconds_). The number of boot loops allowed before beginning to reset settings is determined by [`SetOption36`](Commands.md#setoption36). When Tasmota reaches this situation, it will begin restoring default settings as follows:
+
+- 1<sup>st</sup> restart: disable ESP8285 generic GPIOs interfering with flash SPI
+- 2<sup>nd</sup> restart: disable rules causing boot loop
+- 3<sup>rd</sup> restart: disable all rules
+- 4<sup>th</sup> restart: reset user defined GPIOs to disable any attached peripherals
+- 5<sup>th</sup> restart: reset module to Sonoff Basic (1)
 
 ### Relay clicks and LED flashes at 1 second intervals
 This indicates that your device did not get flashed properly. In this case it will toggle all it's pins at 1 sec intervals. A flash erase and a new flash is required.
@@ -199,14 +152,6 @@ This short [10 minute video by TheHookUp](https://www.youtube.com/watch?v=31IyfM
 
 Other cause can be of electrical nature. If you have connected an external switch using long wires they can pick up stray signals and cause the voltage on the GPIO to vary. [Solution here](Expanding-Tasmota#electrical-considerations) 
 
-### Device resets to defaults every minute or so
-Your device may be in a boot loop - a restart caused by any exception or watchdog timer within less than `BOOT_LOOP_TIME` (_default 10 seconds_). The number of boot loops allowed before beginning to reset settings is determined by [`SetOption36`](Commands.md#setoption36). When Tasmota reaches this situation, it will begin restoring default settings as follows:
-- 1<sup>st</sup> restart: disable ESP8285 generic GPIOs interfering with flash SPI
-- 2<sup>nd</sup> restart: disable rules causing boot loop
-- 3<sup>rd</sup> restart: disable all rules
-- 4<sup>th</sup> restart: reset user defined GPIOs to disable any attached peripherals
-- 5<sup>th</sup> restart: reset module to Sonoff Basic (1)
-
 ### Cannot find my device in Modules
 
 If you flashed a device which is not listed in the Modules list, use [Templates](Templates) to configure your device. Try looking for it first in the [Templates Repository](http://templates.blakadder.com).
@@ -223,13 +168,7 @@ Read also:
 - [#2658 (comment)](https://github.com/arendst/Tasmota/issues/2658#issuecomment-387112217)
 - [#2716](https://github.com/arendst/Tasmota/issues/2716)
 
-### Can you add this unsupported sensor to Tasmota
-
-Short answer: **NO!**
-
-Long answer: There is not enough time in our coders lives to take requests, if you can code a driver for that sensor and submit a PR it will be considered, otherwise you can only wait for someone else to do it.
-
-### Tasmota is sending a lengthy status update every 5 seconds. What's going on?
+### Tasmota is sending many status updates every 5 seconds
 Turn off [TasmoAdmin](TasmoAdmin)! It is polling your device with `STATUS 0` command with a HTTP request every 5 seconds which causes the status updates and unnecessary stress load on the device. In some cases it might even interfere with normal device operation.
 
 ### Web Interface Asks for Password
@@ -319,57 +258,85 @@ On every start the device compares the header of FCA with the CFG_HOLDER from yo
 ### How do I invert the output of the green LED on the Sonoff Basic so the LED is on when the relay is off?
 [`LedState`](Commands.md#ledstate) default value is `1` (on) - Show power state on LED. The LED can be disabled completely with `LedState 0` (off).  However, there is no option to invert the output of the green LED on the Sonoff Basic.
 
+## Flashing
+
+### Cannot enter flash mode
+Be sure to press the button correctly, you must "feel" a click. If your on-device button doesn't allow you to enter flash mode or there is no GPIO0 broken out to the PCB, you can always bridge GND to GPIO0 pin directly on the chip. Search on the Internet for your chip's pinouts and use [the tutorial](Getting-Started.md#programming-mode). Be sure to keep GPIO0 grounded long enough (3-5 seconds) before disconnecting to ensure the chip has booted completely into programming mode. On devices that do not provide a GPIO0 connected button, it may be easier to leave the wired bridge in place throughout the entire flashing process (erase & upload). Doing so will not create any problems for flashing the device. After the firmware is uploaded successfully, remove the bridge. This allows the device to boot normally.
+
+### Flashing issues
+- Double check if you wired the device the serial-to-USB adapter correctly. Almost every device needs RX and TX pins switched to TX and RX. See [Hardware Preparation](Getting-Started.md) for more.
+
+- Another common problem are the jumper cables used. Try another cable if you keep getting connection errors or check the cables for connectivity. Most of them are made cheaply and it happens quite often that those cables do not offer a good connection because of bad crimping or broken copper lines in them.
+
+- Be sure to use a **USB Data Cable** and not a cheap loading cable for mobile phones for connecting the serial-to-USB adapter to your computer. If you are unsure, just try another USB cable. Data USB cables are often thicker than the normal loading cables (and more expensive).
+
+- Another problem can be the difficulties in getting the ESP chip into [programming mode](#cannot-enter-flash-mode) when it boots. 
+
+- If the flash still fails or the progress interrupts, it could be that your computer or serial-to-USB adapter doesn't provide enough power to the device. Try another computer or use an external power supply (3.3V one).
+   
+- Use the correct serial-to-USB adapter driver. Check the model of your adapter chip and get the correct driver.
+
+- If the flash completes successfully, but you get a hash mismatch (esptool.py error message `A fatal error occurred: MD5 of file does not match data in flash!`) ensure that your 3.3v current is sufficient. Workarounds include using a dedicated _bread board power supply_ or using the 3.3v output of an additional microcontroller. If using an additional power supply to power the device, be sure to use a common ground for the power supply, the device to be flashed and the serial-to-USB adapter.
+
+- If esptool.py stops at "Uploading stub...", use --no-stub 
+
+- If the flash fails or the device does not operate as expected, try using the default ESP82xx boot ROM baud rate - `74880`. This is the baud rate the ESP82xx is set to by default when it boots into programming mode. It can be specified as a command line option in [esptool.py](Getting-Started.md#esptoolpy) (`-b`) and [esptool.exe](Getting-Started.md#esptool-executable) (`-cb`).
+
+  You may also want to select a serial monitor/terminal capable of setting this "unusual" baud rate. In Termite, type this value (`74880`) in the baud rate selection text box when configuring the port. Having the option to specify this unusual baud rate will allow you to view the [ESP8266 boot ROM log](https://github.com/espressif/esptool/wiki/ESP8266-Boot-ROM-Log) while the device is booting.
+
+### Device is hot to the touch
+Remember - **NEVER EVER FLASH WITH 5V!**?
+
+Better unpower your device and check if the wiring is correct and the voltage is on your FTDI is set to 3.3V. 
+If you've connected VCC to the wrong pin it might cause your device to overheat and destroy it.
+
+### There was white smoke and the device does not work anymore!
+Yes, you've released the fabled "white smoke", the mysterious substance all electronic devices work on. 
+
+In the immortal words of Doctor Bones: **It's dead Jim!**
+
+### Sonoff 4CH V2 / Sonoff Dual V2 will not flash
+Testing with two different (fairly new) FTDI boards and two Sonoff 4CH v2.0 and the Sonoff Dual v2.0 boards I found that I was getting errors uploading sketches i.e. "warning: espcomm_sync failed" basically a lack of communication between the two devices.
+
+I found that the problem in both Sonoff's was that instead of the FTDI Sonoff cross-over TX->RX and RX->TX I had to do TX->TX RX->RX this then allowed me to upload the sketch.
+
+### Flashing fails on MacOS High Sierra
+Related to issue [#957](https://github.com/arendst/Tasmota/issues/957#issuecomment-338779258).
+
+Solution:
+1. Install the VCP drivers for Mac from the [FTDI website](http://www.ftdichip.com/Drivers/VCP.htm)
+2. After install, reboot (it does not work if you do not reboot).
+3. After reboot, plug the FTDI USB/serial converter. Accept the security alert from MacOS.
+4. Restart the flash process. It works!
+
+## Miscellaneous
+### Can you add this unsupported sensor to Tasmota
+
+Short answer: **NO!**
+
+Long answer: There is not enough time in our coders lives to take requests, if you can code a driver for that sensor and submit a PR it will be considered, otherwise you can only wait for someone else to do it.
+
+### Available Characters for HOSTNAME
+
+  - 24 chars max
+  - only a..z A..Z 0..9 '-'
+  - no '-' as last char
+
+**RFC952**  
+>  ASSUMPTIONS  
+>  1. A "name" (Net, Host, Gateway, or Domain name) is a text string up    to 24 characters drawn from the alphabet (A-Z), digits (0-9), minus    sign (-), and period (.).  Note that periods are only allowed when    they serve to delimit components of "domain style names". (See    RFC-921, "Domain Name System Implementation Schedule", for    background).  No blank or space characters are permitted as part of a    name. No distinction is made between upper and lower case.  The first    character must be an alpha character.  The last character must not be    a minus sign or period.  A host which serves as a GATEWAY should have    "-GATEWAY" or "-GW" as part of its name.  Hosts which do not serve as    Internet gateways should not use "-GATEWAY" and "-GW" as part of    their names. A host which is a TAC should have "-TAC" as the last    part of its host name, if it is a DoD host.  Single character names    or nicknames are not allowed.  
+
+### Flash Memory Considerations
+
+- To stop saving parameter changes to Flash or Spiffs use command ```SaveData off```.
+
+- To stop saving power changes only to Flash or Spiffs use command ```SetOption0 off```. This will disable the relay from returning to the same state after power on UNLESS you use the MQTT retain flag in which case the MQTT broker will send the last known MQTT state on restart or power on. The command ```ButtonRetain on``` will configure the button to send a MQTT command with Topic and the MQTT retain flag set.
+
 ### What is an Arduino Core
 
-Arduino Core (open source) are the core libraries for ESP8266/ESP8285 chips to make them Arduino Framework Compatible. This Core is programmed on top of the Espressif SDK (closed source). 
+Arduino Core (open source) are the core libraries for ESP8266/ESP8285 chips to make them Arduino Framework Compatible. This Core is programmed on top of the Espressif SDK (closed source). Tasmota is only using the core and does not maintain it or can help in solving issues with it.
 
 You can see the Arduino Core Version and the Espressif SDK Version on the Tasmota WebUI under the Information Menu entry.
-Example: Core-/SDK-Version: **2_3_0**/1.5.3(aec24ac9)
-
-* 2.6.1 (**recommended version**): 
-  - All Tasmota features work
-  - mqtt reconnect and lagging fixed
-  - fixed [Esp8266 IP Address not reachable](https://github.com/esp8266/Arduino/issues/2330)
-  - [umm_malloc](https://github.com/esp8266/Arduino/pull/6161) error fixed
-  - Extend PWM resolution for low brightness lights ([Details](https://github.com/arendst/Tasmota/pull/5742))
-  - Modem Sleep doesn't work but Tasmota has a CPU dynamic sleep to save energy, so it is not a big issue for this core
-  - Alexa works
-  - Web UI is fast
-  - Serial Software exceptions of 2.3.0 are solved
-  - Krack Vulnerability is solved
-  - Security fix [Beacon Frame Crash](https://github.com/arendst/Tasmota/issues/6348)
-  - More RAM is available
-  - Firmware is a little bigger in size compared to 2.4.2
-  - Most Wi-Fi Repeaters don't produces conflicts or disconnections
-  - Mesh Networks are supported
-  - Most Routers of brands Ubiquity and Fritzbox don't produces conflicts or disconnections
-
-* 2.3.0 (**this core has many security issues, not supported beginning with 6.7.0.x**)
-  - Not all Tasmota features work
-  - Modem Sleep works to save energy (see [Energy Saving](Energy-Saving))
-  - Web UI is slower
-  - Low RAM Available - Not many features can be enabled at once (sensors, etc.)
-  - **Has the Krack Vulnerability**
-  - Software Serial can produce a restart exception (not enough RAM) if several features are enabled. (So, in this case only hardware serial will work - TX and RX pins)
-  - Most Wi-Fi Repeaters produces conflicts and disconnections
-  - Mesh Networks are not supported
-  - Some Routers of brands (Ubiquiti and Fritzbox) produce conflicts and disconnections
-  - If the Wi-Fi router has auto channel, channel switching is reliably  managed by this core 
-
-* 2.4.2 (**avoid this core version, has security issues too, not supported beginning with 6.7.0.x**):
-  - All Tasmota features work
-  - Modem Sleep doesn't work but Tasmota has a CPU dynamic sleep to save energy, so it is not a big issue for this core
-  - Web UI is faster
-  - Serial Software exceptions of 2.3.0 are solved
-  - Krack Vulnerability is solved
-  - More RAM is available
-  - Firmware is a little bigger in flash size
-  - Most Wi-Fi Repeaters produce conflicts and disconnections
-  - Mesh Networks are not supported
-  - Some Routers of brands (Ubiquiti and Fritzbox) produce conflicts and disconnections
-  - If the Wi-Fi router has auto channel, channel switching is not reliably  managed by this core. Use Fixed Channels in the router instead
-
-* 2.5.2 **Not supported beginning with 6.6.0.18**  
 
 ## I Cannot Find An Answer Here!
 Check the [Troubleshooting](Troubleshooting) section or join [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), or the [Community Forum](https://groups.google.com/d/forum/sonoffusers) for assistance from other Tasmota users.  
