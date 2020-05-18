@@ -102,11 +102,13 @@ cmnd/Tasmota_Name/TIMEMAXACTIONSET 20
 ```
 
 #### Minimum action of the controller
-The minimum On time (Duty Cycle) in minutes within a cycle can be set by this parameter. The default value is 4 minutes. This represents for the default cycle time of 30 minutes 2 thirds of the complete cycle. In case the controller is not capable of mantaining the temperature arround the setpoint without integral action and generates oscillations, the value should be increased. Below the command to adapt the maximum action time can be found:
+The minimum On time (Duty Cycle) in minutes within a cycle can be set by this parameter. The default value is 4 minutes. In case the controller is not capable of mantaining the temperature arround the setpoint without integral action and generates oscillations, the value should be increased. Below the command to adapt the minimum action time can be found:
 
 ```
 cmnd/Tasmota_Name/TIMEMINACTIONSET 4
 ```
+
+Note: It is very important to adapt this value to your heating system to obtain accurate temperature control. If the value is very low, in case of floor heating systems, the heating actuators might not have enough time to open the valves (depending on the actuator it could take from 1 to 3 minutes).
 
 ## Advanced features
 
