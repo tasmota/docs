@@ -22,7 +22,7 @@ Below you can find an example of a Shelly switch bypassing a wall thermostat:
 
 ### Temperature sensors
 
-The tasmota driver can receive the temperature either via the related MQTT command or via a local temperature sensor (see example of DS18B20 and shelly addon below).
+The tasmota driver can receive the temperature either via the related MQTT command or via a local temperature sensor (see example of a DS18B20 temperature sensor and a shelly temperature sensor addon below).
 
 ![Pinout](_media/thermostat/sensors.png)
 
