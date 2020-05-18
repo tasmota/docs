@@ -46,7 +46,9 @@ cmnd/Tasmota_Name/TEMPMEASUREDSET 22.5
 cmnd/Tasmota_Name/TEMPTARGETSET 21.8
 ```
 
-Note: Examples for current temperature of 21.8°C and temperature setpoint of 22.5°C.
+Note: Examples for room temperature of 21.8°C and temperature setpoint of 22.5°C.
+
+There are several ways to send the MQTT room temperature. For the development and testing of this driver, a Raspberry Pi with Domoticz and a Z-Wave stick has been used to gather all room temperatures from Z-Wave sensors and send them to the respective room Tasmota room thermostats.
 
 ## Customize your controller for the best results
 
