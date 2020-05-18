@@ -196,7 +196,22 @@ A web user interface may be generated containing any of the following elements:
  `step` = number step value for up/down arrows  
  `vn` = name of number variable to hold number  
  `txt` = label text 
-
+ 
+ **Google Charts:**   
+  `tb(array1 ... array4 "name" "label1" ... "label4" "entrylabels" "header" flag)`  
+  `array` = up to 4 arrays of data  
+  `name` = name of chart
+  `label` = label for up to the 4 datasets in chart  
+  `entrylabel` = labels of each entry separated by '|' char  
+  `header` = visible header name of chart  
+  `flag` = optional flag b=barchart, c=columnchart, p=piechart, l=linechart  
+  additionally you have to define the html frame to put the chart in (both lines must be preceded by a & char)
+  e.g.  
+  &<div id="chart1"style="width:640px;height:480px;margin:0 auto">\</div>  
+  &tb(array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed" c)  
+  you may define more then one chart. The charts id is chart1 ... chartN
+  
+  
 `>M`  
 [Smart Meter Interface](Smart-Meter-Interface)  
 

@@ -15,12 +15,19 @@ Incredibly expandable and flexible.
 [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
 ### Current release 
-<a href="https://github.com/arendst/Tasmota/releases/tag/v8.3.0"><span style="font-size:40px;">Tasmota 8.3.0 Fred</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
- 
+<a href="https://github.com/arendst/Tasmota/releases/tag/v8.3.1"><span style="font-size:40px;">Tasmota 8.3.1 Fred</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
+
+- Change HA discovery from using Template or Module name to new DeviceName 
+- Change Quick Power Cycle detection from 4 to 7 power interrupts
+- Fix default state of ``SetOption73 0`` for button decoupling and send multi-press and hold MQTT messages
+- Fix HASS autodiscovery
+- Add command ``DeviceName`` - defaults to `FriendlyName1` and replaces FriendlyName1 in GUI
+
+##### 8.3.0
+
 - :rotating_light: **BREAKING CHANGE** :rotating_light: 
 Changed multicast address and port used by device groups. All devices using [Device Groups](Device-Groups.md) must be upgraded. 
 - :rotating_light: **BREAKING CHANGE** :rotating_light: Upgraded [Home Assistant](Home-Assistant.md) discovery with new features: 
-    - Template/Module name is now used as the Device name in autodiscovery;
     - New management for Lights discovery, using directly LIGHT structure;
     - Add support for SetOption37 for color remapping for led channels and independent handling of RGB and white channels;
     - Add support for SetOption68 for multi-channel PWM instead of a single light;
