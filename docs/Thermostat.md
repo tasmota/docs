@@ -60,7 +60,7 @@ The thermostat controller includes a default parameter set that targets a typica
 
 ### Multi-controller
 
-The tasmota driver can be compiled to be used in devices with more than one output, allowing independant controllers for each one of the outputs. This feature has been successfully tested with an Sonoff 4CH PRO R2.
+The tasmota driver can be compiled to be used in devices with more than one output, allowing independant controllers for each one of the outputs. This feature has been successfully tested with a Sonoff 4CH PRO R2.
 
 ![Pinout](_media/thermostat/multi_thermostat.png)
 
