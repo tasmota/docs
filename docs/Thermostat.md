@@ -42,13 +42,17 @@ To increase the number of controller outputs, modify the value of the thermostat
 
 ### Future improvements
 
+#### PI Autotune
+
 A PI autotune feature following the Zigler-Nichols closed loop algorithm has been implemented. This feature is untested and will be further developed soon. To enable it for testing purposes add the following define in user_config_override.h and compile a customized tasmota software
 
 ```
 #define USE_PI_AUTOTUNING // (Ziegler-Nichols closed loop method)
 ```
 
-The "Ramp-Up" controller will be improved by a learning process to evaluate how accurate the target value has been reached without overshoot. This feature will improve the behavior of the current controller which depending on the application and thermal capacity of the system might produce some overshoot. If you are not satisfied with the performance of this controller in your system, you can disable it by MQTT and using exclusively the PI controller.
+#### Improvement in "Ramp-Up" controller
+
+The "Ramp-Up" predicts evaluates the time constant of the system and predicts when to switch off the actuator to reach the desired temperature. This controller offers the best speed to reach the Setpoint. This controller will be improved by a learning process to evaluate how accurate the target value has been reached without overshoot. This feature will improve the behavior of the current controller which depending on the application and thermal capacity of the system might produce some overshoot. By default the controller set is the Hybrid one, enabling "Ramp-Up" for big temperature deltas between Setpoint and measured temperature and PI for smaller ones. If you are not satisfied with the performance of this controller in your system, you can disable it by MQTT and force the use of the PI controller.
 
 ```
 cmnd/Tasmota_Name/CONTROLLERMODESET 1
