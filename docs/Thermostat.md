@@ -28,14 +28,10 @@ The tasmota driver can receive the temperature either via the related MQTT comma
 
 ![Pinout](_media/thermostat/sensors.png)
 
-To default temperature input is MQTT. The following command can be used to select the local sensor as default input:
+The default temperature input is MQTT. The following command can be used to select the local sensor as default input:
 
 ```
-cmnd/Tasmota_Name/TEMPMEASUREDSET 22.5
-```
-
-```
-cmnd/Tasmota_Name/TEMPTARGETSET 22.5
+cmnd/Tasmota_Name/SENSORINPUTSET 1
 ```
 
 ### MQTT temperature value and setpoint
@@ -43,7 +39,11 @@ cmnd/Tasmota_Name/TEMPTARGETSET 22.5
 The following commands can be used to provide the driver with the temperature value of the room and the desired setpoint:
 
 ```
-cmnd/Tasmota_Name/SENSORINPUTSET 1
+cmnd/Tasmota_Name/TEMPMEASUREDSET 22.5
+```
+
+```
+cmnd/Tasmota_Name/TEMPTARGETSET 22.5
 ```
 
 ## Customize your controller for the best results
