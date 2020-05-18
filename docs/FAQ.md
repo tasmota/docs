@@ -23,9 +23,11 @@ If you are unsure what SSID you have entered, you can try to find that with spec
   Select your Wi-Fi device from the list. Plug in the mis-configured device and immediately watch SSIDs. You should see your mis-configured SSID fairly soon.  
 
 If these methods don't work, it may still be possible to save the device without opening it to perform a serial flash. Since Tasmota uses GET request for forms, the password may be in your browser history.  
+
   1. Search in your browser history for 192.168.4.1 (or whatever address you used for configuring it)
   2. There should be an entry similar to this:  
      `http://192.168.4.1/wi?s1=<mySSID>&p1=<myPassword>-********&s2=&p2=********&h=hostName&save=`  
+
      - `s1` is your first AP SSID
      - `p1` is the first AP password
      - `s2` and `p2` are the same parameters but for the second AP
@@ -73,6 +75,7 @@ All you can really do is check the solder joints, move the device closer to your
 
 ### Weaker Wi-Fi signal after upgrade
 On an ESP82xx, Wi-Fi calibration is sensitive to the power supplied. If this changes substantially (e.g., you add a sensor, configure a new Tasmota feature, upgrade the firmware or Arduino Core, etc.), the device's Wi-Fi calibration may not be set properly any longer. The Wi-Fi signal strength (RSSI) can drop significantly and impact Wi-Fi performance. In such a case, the Wi-Fi calibration needs to be deleted to force the device to re-calibrate Wi-Fi after it restarts.  
+
 1. **Save the device configuration**
 2. Run [`Reset 5`](Commands.md#reset) in the Console. This command deletes Wi-Fi calibration data, erases all flash memory, and resets parameters to firmware defaults _but keeps your Wi-Fi network credentials_
 3. The device will restart
@@ -164,6 +167,7 @@ The restart is normal if you change something at the device configuration.
 You need to clear the retain messages of your HA/Broker/MQTT Server.
 
 Read also:
+
 - [#2140](https://github.com/arendst/Tasmota/issues/2140)
 - [#2658 (comment)](https://github.com/arendst/Tasmota/issues/2658#issuecomment-387112217)
 - [#2716](https://github.com/arendst/Tasmota/issues/2716)
@@ -247,6 +251,7 @@ To prevent that the following Tasmota starts will overwrite your FCA settings ag
 On every start the device compares the header of FCA with the CFG_HOLDER from your source code and only if this header value is not identical, Tasmotat will copy the data from my_user_config.h/user_config_override.h to flash settings area - this is normally only the case on a fresh device or if you has changed the CFG_HOLDER value.
 
 **Summary**: To force Tasmota to overwrite current (valid or invalid) settings in FCA with your settings from _my_user_config.h_/_user_config_override.h_ you can
+
 - change CFG_HOLDER value once, compile, reflash device (as described above). To avoid overwriting settings by new versions don't forget either
   - repeat the step above using original CFG_HOLDER value
   - or never forget to change CFG_HOLDER value for even all upcoming version to your value
@@ -264,6 +269,7 @@ On every start the device compares the header of FCA with the CFG_HOLDER from yo
 Be sure to press the button correctly, you must "feel" a click. If your on-device button doesn't allow you to enter flash mode or there is no GPIO0 broken out to the PCB, you can always bridge GND to GPIO0 pin directly on the chip. Search on the Internet for your chip's pinouts and use [the tutorial](Getting-Started.md#programming-mode). Be sure to keep GPIO0 grounded long enough (3-5 seconds) before disconnecting to ensure the chip has booted completely into programming mode. On devices that do not provide a GPIO0 connected button, it may be easier to leave the wired bridge in place throughout the entire flashing process (erase & upload). Doing so will not create any problems for flashing the device. After the firmware is uploaded successfully, remove the bridge. This allows the device to boot normally.
 
 ### Flashing issues
+
 - Double check if you wired the device the serial-to-USB adapter correctly. Almost every device needs RX and TX pins switched to TX and RX. See [Hardware Preparation](Getting-Started.md) for more.
 
 - Another common problem are the jumper cables used. Try another cable if you keep getting connection errors or check the cables for connectivity. Most of them are made cheaply and it happens quite often that those cables do not offer a good connection because of bad crimping or broken copper lines in them.
@@ -304,6 +310,7 @@ I found that the problem in both Sonoff's was that instead of the FTDI Sonoff cr
 Related to issue [#957](https://github.com/arendst/Tasmota/issues/957#issuecomment-338779258).
 
 Solution:
+
 1. Install the VCP drivers for Mac from the [FTDI website](http://www.ftdichip.com/Drivers/VCP.htm)
 2. After install, reboot (it does not work if you do not reboot).
 3. After reboot, plug the FTDI USB/serial converter. Accept the security alert from MacOS.
@@ -323,8 +330,9 @@ Long answer: There is not enough time in our coders lives to take requests, if y
   - no '-' as last char
 
 **RFC952**  
->  ASSUMPTIONS  
->  1. A "name" (Net, Host, Gateway, or Domain name) is a text string up    to 24 characters drawn from the alphabet (A-Z), digits (0-9), minus    sign (-), and period (.).  Note that periods are only allowed when    they serve to delimit components of "domain style names". (See    RFC-921, "Domain Name System Implementation Schedule", for    background).  No blank or space characters are permitted as part of a    name. No distinction is made between upper and lower case.  The first    character must be an alpha character.  The last character must not be    a minus sign or period.  A host which serves as a GATEWAY should have    "-GATEWAY" or "-GW" as part of its name.  Hosts which do not serve as    Internet gateways should not use "-GATEWAY" and "-GW" as part of    their names. A host which is a TAC should have "-TAC" as the last    part of its host name, if it is a DoD host.  Single character names    or nicknames are not allowed.  
+ASSUMPTIONS  
+
+1. A "name" (Net, Host, Gateway, or Domain name) is a text string up    to 24 characters drawn from the alphabet (A-Z), digits (0-9), minus    sign (-), and period (.).  Note that periods are only allowed when    they serve to delimit components of "domain style names". (See    RFC-921, "Domain Name System Implementation Schedule", for    background).  No blank or space characters are permitted as part of a    name. No distinction is made between upper and lower case.  The first    character must be an alpha character.  The last character must not be    a minus sign or period.  A host which serves as a GATEWAY should have    "-GATEWAY" or "-GW" as part of its name.  Hosts which do not serve as    Internet gateways should not use "-GATEWAY" and "-GW" as part of    their names. A host which is a TAC should have "-TAC" as the last    part of its host name, if it is a DoD host.  Single character names    or nicknames are not allowed.  
 
 ### Flash Memory Considerations
 
