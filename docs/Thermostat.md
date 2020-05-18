@@ -20,9 +20,9 @@ Below you can find an example of a Shelly switch bypassing a wall thermostat:
 
 ![Pinout](_media/thermostat/bypass_thermostat.png)
 
-### Temperature
+## Temperature input / setpoint
 
-#### Local temperature sensor
+### Local temperature sensor
 
 The tasmota driver can receive the temperature either via the related MQTT command or via a local temperature sensor (see example of a DS18B20 temperature sensor and a shelly temperature sensor addon below).
 
@@ -38,7 +38,7 @@ cmnd/Tasmota_Name/TEMPMEASUREDSET 22.5
 cmnd/Tasmota_Name/TEMPTARGETSET 22.5
 ```
 
-#### MQTT temperature value and setpoint
+### MQTT temperature value and setpoint
 
 The following commands can be used to provide the driver with the temperature value of the room and the desired setpoint:
 
