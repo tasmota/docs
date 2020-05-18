@@ -65,8 +65,7 @@ cmnd/Tasmota_Name/TEMPFORMATSET 1
 ### PI controller main parameters
 
 #### Proportional Band 
-
-Depending on the dimensioning of your heating system, the proportional band of the controller might be increased (if it takes too long to reach setpoint) or reduced (very high overshoot). The default proportional gain is 4, which means that the duty cycle due to the proportional part of the PI controller will be 100% for temperature deltas between setpoint and room temperature equal or bigger than 4°C. Below you can find the command to adapt the proportional band:
+Depending on the dimensioning of your heating system, the proportional band of the controller might be increased (if it takes too long to reach setpoint) or reduced (very high overshoot). The default proportional gain is 4, which means that the duty cycle due to the proportional part of the PI controller will be 100% for temperature deltas between setpoint and room temperature equal or bigger than 4°C. Below the command to adapt the proportional band can be found:
 
 ```
 cmnd/Tasmota_Name/PROPBANDSET 1
@@ -75,8 +74,13 @@ cmnd/Tasmota_Name/PROPBANDSET 1
 Note: With the command above, the PI controller will output a proportional time equivalent to 100% of the duty cycle for delta temperatures between setpoint and room temp. above 1°C (f.i. for big rooms with weak dimensioned heating circuit).
 
 #### Reset Time
-The reset time
+The reset time is the time the PI controller takes to overcome steady-state errors. The default value for the reset time is 1800 seconds. This value can be for instance increased in case a stronger integral reaction of the controller is desired. Below the command to adapt the proportional band can be found:
 
+```
+cmnd/Tasmota_Name/TIMERESETSET 1800
+```
+
+#### Temperature of the anti-windup reset
 
 ## Advanced features
 
