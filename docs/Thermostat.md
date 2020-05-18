@@ -70,9 +70,9 @@ To increase the number of controller outputs, modify the value of the thermostat
 #define THERMOSTAT_CONTROLLER_OUTPUTS         1         // Number of outputs to be controlled independently
 ```
 
-### Future improvements
+## Future improvements
 
-#### Cooling
+### Cooling
 
 The controller offers the possibility to switch from heating to cooling. Due to lack of cooling setup at the time of the development of the driver, this feature has however not been propertly tested. Testers for cooling are therefore welcomed.
 
@@ -82,7 +82,7 @@ The following MQTT command can be used to switch from heating (default) to cooli
 cmnd/Tasmota_Name/CLIMATEMODESET 1
 ```
 
-#### "Ramp-Up" controller
+### "Ramp-Up" controller
 
 The "Ramp-Up" controller evaluates the time constant of the system and predicts when to switch off the actuator to reach the desired temperature as fast as possible. This controller offers the best speed to reach the Setpoint. This controller will be improved by a learning process to evaluate how accurate the target value has been reached without overshoot. This feature will improve the behavior of the current controller which depending on the application and thermal capacity of the system might produce some overshoot. By default the controller set is the Hybrid one, enabling "Ramp-Up" for big temperature deltas between Setpoint and measured temperature and PI for smaller ones. If you are not satisfied with the performance of this controller in your system, you can disable it by MQTT and force the use of the PI controller exclusively. For that purpose the following command can be used:
 
@@ -90,7 +90,7 @@ The "Ramp-Up" controller evaluates the time constant of the system and predicts 
 cmnd/Tasmota_Name/CONTROLLERMODESET 1
 ```
 
-#### PI Autotune
+### PI Autotune
 
 A PI autotune feature following the Zigler-Nichols closed loop algorithm has been implemented. This feature is untested and will be further developed soon. To enable it for testing purposes add the following define in user_config_override.h and compile a customized tasmota software.
 
