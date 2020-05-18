@@ -25,3 +25,11 @@ Below you can find an example of a Shelly switch bypassing a wall thermostat:
 The tasmota driver can receive the temperature either via the related MQTT command or via a local temperature sensor (see example of DS18B20 and shelly addon below).
 
 ![Pinout](_media/thermostat/sensors.png)
+
+## Advanced features
+
+### Multi-controller
+
+The tasmota driver can be compiled to be used in devices with more than one output, allowing independant controllers for each one of the outputs. This feature has been successfully tested with an Sonoff 4CH PRO R2.
+
+![Pinout](_media/thermostat/sonoff_4ch_pro_r2.png)
