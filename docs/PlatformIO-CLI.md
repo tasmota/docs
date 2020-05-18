@@ -11,7 +11,7 @@ How to flash the Tasmota firmware onto a device using the `platformio` command l
 
 Either download the latest Tasmota Source code from https://github.com/arendst/Tasmota/ and extract it or clone the Git repository:  
 
-'git clone https://github.com/arendst/Tasmota.git`
+`git clone https://github.com/arendst/Tasmota.git`
 
 ## Select the environment
 The default environment configuration can be used to easily generate Tasmota firmware variants (sonoff, sensors, display, etc.). If you're not sure which binary is the right one for you, consult the [builds table](Builds) or just start with `tasmota.bin`. To build and/or flash exactly one of these, use the `-e` command line argument (e.g., `-e tasmota-sensors`). Alternatively, uncomment (i.e., remove the leading `;`) the desired *env_default* line in the *platformio.ini* file and do not use the `-e` argument on the command.
