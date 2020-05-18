@@ -31,7 +31,7 @@ With MQTT discovery no user interaction or configuration file editing is needed 
 === "Buttons"
     Announced to Home Assistant as [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
 
-    To have buttons discovered `SetOption73` must be set to `1` and it will automatically start to listen and publish using `/stat/%topic%/BUTTON<x>T` topic.
+    To have buttons discovered [`SetOption73`](Commands.md#setoption73) must be set to `1` and it will automatically start to listen and publish using `/stat/%topic%/BUTTON<x>T` topic.
 
     Discovery will follow all the possible combinations made using SetOption1, SetOption11 and Setoption13.
 
@@ -103,10 +103,11 @@ For a Tasmota device to be automatically discovered by Home Assistant you need t
 SetOption19 1
 ```
 
-!!! failure "Discovery is not built in to tasmota lite. Use the full version (tasmota.bin) for discovery."
+!!! failure "Discovery is not built in to tasmota-lite.bin. Use the full version (tasmota.bin) for discovery."
 
 After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device.    
-Tasmota uses the configured module (or template) name to identify the device name in Home Assistant integrations which can be easily changed directly in the Home Assistant UI after the discovery is complete.
+
+Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device name in Home Assistant integrations.
 
 Enabling discovery will automatically change some SetOptions to suit the new configuration:
 
@@ -123,7 +124,7 @@ Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands `Sta
 
 ### Disabling 
 To disable MQTT discovery and remove the retained message, execute `SetOption19 0`.  
-The "homeassistant/" topic is removed from Home Assistant and MQTT broker. 
+The "homeassistant/" topic is removed from Home Assistant and MQTT broker.  Changed setoptions will not revert to defaults!
 
 ### Finalizing Setup
 All automatically discovered entities will show up under:  

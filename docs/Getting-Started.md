@@ -361,6 +361,13 @@ Your device running Tasmota is now ready to be [controlled](Commands).
 
 !!! quote "Check out all the supported devices in [Tasmota Device Templates Repository](https://templates.blakadder.com/)"
 
+#### Configure Other (optional)
+
+Configure your device name which is displayed in webUI and used for [Home Assistant autodiscovery](Home-Assistant.md). 
+
+Configure web admin password for the webUI. Default username is `admin`. This type of security is rudimentary since Tasmota doesn't use HTTPS, do not expose your device outside of your local network.
+
+
 ### Using Serial Terminal
 If you flashed the device using serial-to-USB adapter (or it is a NodeMCU/D1 mini) you can take advantage of the existing connection and configure your device over the serial connection using [Commands](Commands).
 
