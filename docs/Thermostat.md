@@ -1,6 +1,6 @@
 # Thermostat
 
-The Thermostat driver allows the tasmota device, provided it receives the temperature input via MQTT or a locally connected sensor, to follow control heating/cooling strategies to reach the desired setpoint. The thermostat offers similar functions as feature reach commercial ones, such as:
+The Thermostat driver allows the tasmota device, provided it receives the temperature input via MQTT or a locally connected sensor, to follow control heating/cooling strategies to reach the desired setpoint. The thermostat offers similar functions as feature reach commercial ones, similar to the ones found below:
 
 ![Pinout](_media/thermostat/Feature_rich_thermostat.png)
 
@@ -19,3 +19,17 @@ A tasmota switch can be installed in a way that it bypasses the existing wall th
 Below you can find an example of a Shelly switch bypassing a wall thermostat:
 
 ![Pinout](_media/thermostat/bypass_thermostat.png)
+
+### Temperature sensors
+
+The tasmota driver can receive the temperature either via the related MQTT command or via a local temperature sensor (see example of DS18B20 and shelly addon below).
+
+![Pinout](_media/thermostat/sensors.png)
+
+## Advanced features
+
+### Multi-controller
+
+The tasmota driver can be compiled to be used in devices with more than one output, allowing independant controllers for each one of the outputs. This feature has been successfully tested with an Sonoff 4CH PRO R2.
+
+![Pinout](_media/thermostat/sonoff_4ch_pro_r2.png)
