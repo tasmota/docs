@@ -34,6 +34,14 @@ The default temperature input is MQTT. The following command can be used to sele
 cmnd/Tasmota_Name/SENSORINPUTSET 1
 ```
 
+### Enable the thermostat driver
+
+The thermostat driver is by default disabled. To enable it the following command can be used:
+
+```
+cmnd/Tasmota_Name/THERMOSTATMODESET 1
+```
+
 ### MQTT temperature value and setpoint
 
 The following commands can be used to provide the driver with the temperature value of the room and the desired setpoint:
@@ -62,15 +70,14 @@ The default temperature format is degrees Celsius. The format can be easily swit
 cmnd/Tasmota_Name/TEMPFORMATSET 1
 ```
 
-### Adapt the cycle time of the controller
-
-Depending on the heating system, the cycle time (PMW period) can be adapted. Very slow systems (high time constants) such as heating floor systems might need higher values (default value is 30 minutes), faster systems might need smaller cycle times. Below the command to adapt the cycle time can be found (in minutes, applies to all controller strategies):
-
-```
-cmnd/Tasmota_Name/TIMERAMPUPCYCLESET 30
-```
-
 ### PI controller main parameters
+
+#### Cycle time
+Depending on the heating system, the cycle time (PMW period) can be adapted. Very slow systems (high time constants) such as heating floor systems might need higher values (default value is 30 minutes), faster systems might need smaller cycle times. Below the command to adapt the cycle time can be found:
+
+```
+cmnd/Tasmota_Name/TIMEPICYCLESET 30
+```
 
 #### Proportional Band 
 Depending on the dimensioning of your heating system, the proportional band of the controller might be increased (if it takes too long to reach setpoint) or reduced (very high overshoot). The default proportional gain is 4, which means that the duty cycle due to the proportional part of the PI controller will be 100% for temperature deltas between setpoint and room temperature equal or bigger than 4°C. Below the command to adapt the proportional band can be found:
@@ -117,6 +124,22 @@ cmnd/Tasmota_Name/TIMEMINACTIONSET 4
 ```
 
 Note: It is very important to adapt this value to your heating system to obtain accurate temperature control. If the value is very low, in case of floor heating systems, the heating actuators might not have enough time to open the valves (depending on the actuator it could take from 1 to 3 minutes).
+
+### Ramp-Up controller main parameters
+
+#### Cycle time
+Depending on the heating system, the cycle time (PMW period) can be adapted. Very slow systems (high time constants) such as heating floor systems might need higher values (default value is 30 minutes), faster systems might need smaller cycle times. Below the command to adapt the cycle time can be found:
+
+```
+cmnd/Tasmota_Name/TIMERAMPUPCYCLESET 30
+```
+
+#### Maximum Ramp-Up time
+The maximum time the ramp-up phase of the controller shall be active can be configured. The default value is 960 minutes. Below the command to adapt this time can be found:
+
+```
+cmnd/Tasmota_Name/TIMERAMPUPMAXSET 960
+```
 
 ## Advanced features
 
