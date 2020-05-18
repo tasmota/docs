@@ -80,12 +80,22 @@ The reset time is the time the PI controller takes to overcome steady-state erro
 cmnd/Tasmota_Name/TIMERESETSET 1800
 ```
 
-#### Temperature of the anti-windup reset
+#### Temperature for the anti-windup reset
 To avoid the accummulated error and therefore integral component of the PI controller to grow too much and produce a high overshoot, a temperature delta can be defined within the integrator will work. Outside this range the accummulated error and integral part will be set to 0. The default value for the integrator to work is 0.8°C. Below the command to adapt the anti-windup temperature can be found:
 
 ```
 cmnd/Tasmota_Name/TEMPANTIWINDUPRESETSET 0.8
 ```
+
+#### Temperature hysteresis
+
+A temperature hysteresis can be set to avoid any PI controller actions within a certain value arround the setpoint. The default value for the hysteresis is 0.1°C. In well configured controller this value should be as low as possible to avoid unwanted temperature oscillations which reduce efficiency and therefore increase costs. Below the command to adapt the anti-windup temperature can be found:
+
+```
+cmnd/Tasmota_Name/TEMPHYSTSET 0.1
+```
+
+
 
 ## Advanced features
 
