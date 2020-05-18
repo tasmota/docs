@@ -50,11 +50,11 @@ Note: Examples for room temperature of 21.8°C and temperature setpoint of 22.5�
 
 There are several ways to send the MQTT room temperature. For the development and testing of this driver, a Raspberry Pi with Domoticz and a Z-Wave stick has been used to gather all room temperatures from Z-Wave sensors and send them to the respective Tasmota room thermostats.
 
-## Customize your controller for the best results
+## Customize the controller for best results
 
 The thermostat controller includes a default parameter set that targets a typical floor heating application for mid-sized rooms (< 20m2) with one heating circuit. The controller is however highly configurable via MQTT. The following sections will guide the user to adapt the main parameters to improve the performance of the thermostat controller via customization.
 
-### Set your controller in degrees Celsius or Fahrenheit
+### Set the controller in degrees Celsius or Fahrenheit
 
 The default temperature format is degrees Celsius. The format can be easily switched to degrees Fahrenheit via MQTT command, see below:
 
@@ -81,6 +81,11 @@ cmnd/Tasmota_Name/TIMERESETSET 1800
 ```
 
 #### Temperature of the anti-windup reset
+To avoid the accummulated error and therefore integral component of the PI controller to grow too much and produce a high overshoot, a temperature delta can be defined within the integrator will work. Outside this range the accummulated error and integral part will be set to 0. The default value for the integrator to work is 0.8°C. Below the command to adapt the anti-windup temperature can be found:
+
+```
+cmnd/Tasmota_Name/TEMPANTIWINDUPRESETSET 0.8
+```
 
 ## Advanced features
 
