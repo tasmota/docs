@@ -43,8 +43,10 @@ cmnd/Tasmota_Name/TEMPMEASUREDSET 22.5
 ```
 
 ```
-cmnd/Tasmota_Name/TEMPTARGETSET 22.5
+cmnd/Tasmota_Name/TEMPTARGETSET 21.8
 ```
+
+Note: Examples for current temperature of 21.8°C and temperature setpoint of 22.5°C.
 
 ## Customize your controller for the best results
 
