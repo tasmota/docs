@@ -1,5 +1,5 @@
 site_name: Tasmota
-# site_description: Documentation (Wiki) for Tasmota. Open source firmware for ESP8266 devices with easy configuration using webUI, OTA updates, automation using timers or rules, expandability and entirely local control over MQTT, HTTP, serial or KNX.
+site_description: Documentation (Wiki) for Tasmota
 site_url: https://tasmota.github.io/docs/
 repo_name: 'arendst/tasmota'
 repo_url: 'https://github.com/arendst/tasmota'

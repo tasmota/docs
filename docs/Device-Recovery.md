@@ -1,3 +1,5 @@
+description: Device recovery procedures
+
 # Device Recovery
 Configuration problems can cause boot loops, erratic behavior, devices which will not appear (i.e., no `tasmota-xxxx` AP) or connect to Wi-Fi, etc. In cases such as these when there is no proper operation a **recovery process** is required.
 

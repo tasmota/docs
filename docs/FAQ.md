@@ -1,3 +1,5 @@
+description: Tasmota FAQ
+
 ## Wi-Fi
 
 ### Cannot connect to Wi-Fi 

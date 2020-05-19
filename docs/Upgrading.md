@@ -1,3 +1,5 @@
+description: Easily upgrade Tasmota to a newer version or different build while keeping all your settings
+
 !!! info "Easily upgrade Tasmota to a newer version or different build while keeping all your settings"
 
 <span style="font-size:30px;font-weight: bold">The first rule of upgrading: If it ain't broke, don't fix it!</span>
