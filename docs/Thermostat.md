@@ -62,7 +62,7 @@ The default temperature input is MQTT. The following command can be used to sele
 cmnd/Tasmota_Name/SENSORINPUTSET 1
 ```
 
-!!! note  The default local temperature sensor is a DS18B20. In case a different Tasmota supported sensor is used, the following define in my_user_config.h is to be changed (or redefined in user_config_override.h) and a user specific tasmota software needs to be compiled:
+!!! note  The default local temperature sensor is a DS18B20. In case a different Tasmota supported sensor is used, the following define in `my_user_config.h` is to be changed (or redefined in `user_config_override.h`) and a user specific tasmota software needs to be compiled:
 
 ```
 #define THERMOSTAT_SENSOR_NAME                "DS18B20" // Name of the local sensor to be used
@@ -213,7 +213,7 @@ The tasmota driver can be compiled to be used in devices with more than one outp
 
 ![Pinout](_media/thermostat/multi_thermostat.png)
 
-To increase the number of controller outputs, modify the value of the thermostat controller outputs in my_user_config.h or redefine it in user_config_override.h and compile a customized tasmota software.
+To increase the number of controller outputs, modify the value of the thermostat controller outputs in `my_user_config.h` or redefine it in `user_config_override.h` and compile a customized tasmota software.
 
 ```
 #define THERMOSTAT_CONTROLLER_OUTPUTS         1         // Number of outputs to be controlled independently
@@ -237,7 +237,7 @@ The "Ramp-Up" controller evaluates the time constant of the system and predicts 
 
 ### PI Autotune
 
-A PI autotune feature following the Zigler-Nichols closed loop algorithm has been implemented. This feature is untested and will be further developed soon. To enable it for testing purposes add the following define in user_config_override.h and compile a customized tasmota software.
+A PI autotune feature following the Zigler-Nichols closed loop algorithm has been implemented. This feature is untested and will be further developed soon. To enable it for testing purposes add the following define in `user_config_override.h` and compile a customized tasmota software.
 
 ```
 #define USE_PI_AUTOTUNING // (Ziegler-Nichols closed loop method)
