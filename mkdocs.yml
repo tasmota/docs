@@ -74,31 +74,33 @@ nav:
   - Modules: Modules.md
   - Peripherals: Peripherals.md
   - WebUI.md
+
   - Features:
     - Introduction: Features.md
+    - Blinds-and-Shutters.md
+    - Bluetooth.md
     - Buttons-and-Switches.md
+    - DeepSleep.md
     - Device-Groups.md
+    - Dynamic-Sleep.md
+    - I2C Devices: I2CDevices.md
+    - IR Communication: Tasmota-IR.md
     - Lights.md
+    - OpenTherm.md
     - PIR-Motion-Sensors.md
     - Power-Monitoring-Calibration.md
     - PWM-dimmer-switch.md
     - Rules.md
-    - Blinds-and-Shutters.md
-    - Timers.md
-    - TuyaMCU.md
-    - Bluetooth.md
-    - Zigbee.md
-    - IR Communication: Tasmota-IR.md
-    - DeepSleep.md
-    - Dynamic-Sleep.md
-    - I2C Devices: I2CDevices.md
     - Scripting: Scripting-Language.md
     - Smart-Meter-Interface.md
-    - TasmotaSlave.md
     - Subscribe-&-Unsubscribe.md
-    - TLS.md
+    - TasmotaSlave.md
     - Thermostat.md
-    - Tutorials.md
+    - Timers.md
+    - TLS.md
+    - TuyaMCU.md
+    - Zigbee.md
+    - Tutorials.md: Projects and Tutorials
     - For Developers: For-Developers.md
   - Smart Home Integrations:
     - Introduction: Integrations.md
@@ -133,7 +135,6 @@ nav:
     - BH1750.md
     - BME280.md
     - BME680.md
-    # - Buzzer.md
     - CC2530.md
     - Chirp! moisture sensor: Moisture-Sensor-and-Chirp!-Sensor.md
     - DHT11.md
