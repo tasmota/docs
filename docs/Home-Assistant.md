@@ -95,6 +95,8 @@ With MQTT discovery no user interaction or configuration file editing is needed 
 
     **When a switch is set to a different topic than `0` is not possible to use `Switch#State` as a trigger for rules.**
 
+<hr>
+
 Types of devices not listed above (fans, covers, etc) require [manual configuration](#fans)
 
 ### Enabling 
@@ -109,43 +111,37 @@ SetOption19 1
 
 After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device.    
 
-Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device name in Home Assistant integrations.
+Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Home Assistant MQTT integration and [`Friendlyname<x>`](Commands.md#friendlyname) to identify power outputs (switch or light entities in HA).
 
-Enabling discovery will automatically change some SetOptions to suit the new configuration:
+!!! note "When changing some settings you might need a reboot or use `SetOption19 1` again to see the new changes under Home Assistant."
 
-**`SetOption4` to `0`**   
-Return MQTT response always as `RESULT` and not as %COMMAND% topic
+### Finalising Setup
+All automatically discovered entities will show up under **Configuration -> Integrations -> MQTT** card.
 
-**`SetOption17` to `1`**
-  Show Color as a comma-separated decimal string instead of hexadecimal
+The entities are grouped under a device defined by DeviceName and identified by Tasmota as the "manufacturer":
+![Integration](_media/hass_integrations_screen.jpg)
 
-**`SetOption59` to `1`**
-Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands `State`, `Power` and any command causing a light to be turned on.
+Overview of a Tasmota device in Home Assistant integration compared to **Configuration -> Configure Other**:
 
-!!! note "For every change you made on your device configuration you will need a reboot or use `SetOption19 1` again to see the changes under Home Assistant."
+![Device layout](_media/hass_1.jpg)![Device layout](_media/hass_0.jpg)
 
-### Disabling 
+For every device an informative sensor will be created automatically:
+
+![Informative sensor](_media/hass_information_sensor.jpg)
+
+You can further customise your device in Home Assistant by clicking on the entity name.
+
+!!! note "Enabling discovery will automatically change some SetOptions to suit the new configuration"
+
+**`SetOption4` to `0`**: Return MQTT response always as `RESULT` and not as %COMMAND% topic
+
+**`SetOption17` to `1`**: Show Color as a comma-separated decimal string instead of hexadecimal
+
+**`SetOption59` to `1`**: Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands `State`, `Power` and any command causing a light to be turned on.
+
+### Disabling
 To disable MQTT discovery and remove the retained message, execute `SetOption19 0`.  
 The "homeassistant/" topic is removed from Home Assistant and MQTT broker.  Changed setoptions will not revert to defaults!
-
-### Finalizing Setup
-All automatically discovered entities will show up under:  
-**Configuration -> Integrations -> Configured -> MQTT**  
-
-The entities are grouped by hardware, example for a Sonoff Basic:
-
-![image](https://user-images.githubusercontent.com/7702766/67961116-082b2b80-fbda-11e9-8552-ce2bd85d2a3f.png ':size=80')
-
-By clicking on one of the entities, and then on the cog wheel, name in Home Assistant and `entity_id` can be customized:
-
-![image](https://user-images.githubusercontent.com/14281572/50020005-f4cc9d00-ffd4-11e8-9881-b04ed6e85468.png ':size=80')
-![image](https://user-images.githubusercontent.com/14281572/50020040-09109a00-ffd5-11e8-8026-74293753783a.png ':size=80')
-
-For every device discovered with `SetOption19` an informative sensor will be created automatically:
-
-![image](https://user-images.githubusercontent.com/7702766/67965278-88ed2600-fbe0-11e9-9de5-29ecd2c78fac.png ':size=80')
-
-[Home Assistant](https://home-assistant.io/) (Hass) is an open-source home automation platform running on Python 3.
 
 ## configuration.yaml editing
 
