@@ -145,6 +145,24 @@ Note: It is very important to adapt this value to your heating system to obtain 
 
 ### Ramp-Up controller main parameters
 
+#### Temperature delta to get into "Ramp-Up" mode
+When the controller is configured in Hybrid mode (default), the control strategy will be a mix-up between "Ramp-Up" (for big deltas between room temperature and setpoint) and PI (arround the setpoint). The following parameter can be set to define at above which delta temperature between measured and setpoint the "Ramp-Up" controller shall be active:
+
+```
+cmnd/Tasmota_Name/TEMPRUPDELTINSET 30
+```
+
+The default value is 0.4°C.
+
+#### Time passed after latest setpoint change to get into "Ramp-Up" mode
+When the controller is configured in Hybrid mode (default), the activation of the "Ramp-Up" mode will not just depend on the defined temperature delta between measured and setpoint, but as well on the time in minutes passed since the last setpoint change occurred. This strategy matches the purpose of the "Ramp-Up" controller, which was developed to reach the desired temperature as soon as fast as possible in very specific scenarios, f.i. after a night keeping the room temperature low. In hybrid mode, the controller active most part of the time should be the PI one. The following parameter can be used to define the time to allow switching to "Ramp-Up" in minutes.
+
+```
+cmnd/Tasmota_Name/TIMEALLOWRAMPUPSET 300
+```
+
+The default value is 300 minutes.
+
 #### Cycle time
 Depending on the heating system, the cycle time (PMW period) can be adapted. Very slow systems (high time constants) such as heating floor systems might need higher values (default value is 30 minutes), faster systems might need smaller cycle times. Below the command to adapt the cycle time can be found:
 
