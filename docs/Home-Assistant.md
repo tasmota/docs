@@ -20,13 +20,13 @@ Home Assistant has two avenues of adding Tasmota devices:
 1. Using MQTT discovery
 2. Adding by editing configuration.yaml 
 
-!!! note "After every change to the configuration file you'll need to restart Home Assistant to make it aware of the changes."
+!!! note "After every change to the configuration.yaml file you'll need to restart Home Assistant to make it aware of the changes."
 
 If you don't want to use MQTT discovery, skip to [Manual Configuration](#configurationyaml-editing) 
 
 ## Automatic Discovery
 Home Assistant has a feature called [MQTT discovery](https://www.home-assistant.io/docs/mqtt/discovery/).
-With MQTT discovery no user interaction or configuration file editing is needed to add new devices in Home Assistant.
+With MQTT discovery no user interaction or configuration file editing is needed to add new devices in Home Assistant. Most of the changes will be updated in HA automatically.
 
 !!! note "Automatic discovery is currently supported for:"
 
@@ -101,17 +101,17 @@ Types of devices not listed above (fans, covers, etc) require [manual configurat
 
 ### Enabling 
 
-For a Tasmota device to be automatically discovered by Home Assistant you need to enable MQTT discovery with command:
+For a Tasmota device to be automatically discovered by Home Assistant you need to enable MQTT autodiscovery for each device with command:
 
 ```console
 SetOption19 1
 ```
 
-!!! failure "Discovery is not built in to tasmota-lite.bin. Use the full version (tasmota.bin) for discovery."
+!!! failure "Discovery is not built in to tasmota-lite.bin. Use the full version (tasmota.bin) or other binaries that support discovery."
 
-After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device.    
+After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device to MQTT integrations.    
 
-Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Home Assistant MQTT integration and [`Friendlyname<x>`](Commands.md#friendlyname) to identify power outputs (switch or light entities in HA).
+Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Home Assistant MQTT integration and [`FriendlyName<x>`](Commands.md#friendlyname) to identify power outputs (switch or light entities in HA).
 
 !!! note "When changing some settings you might need a reboot or use `SetOption19 1` again to see the new changes under Home Assistant."
 
