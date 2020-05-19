@@ -36,6 +36,7 @@ USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 USE_SCRIPT_TASK | enables Task in ESP32
 USE_SML_SCRIPT_CMD | enables SML script cmds
+USE_RULES_COMPRESSION | enables compression of scripts (2560 chars buffer)  
 ----
 
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules)"
@@ -522,7 +523,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 `fx("fname")` check if file fname exists  
 `fe("fname")` execute script fname (max 2048 bytes, script must start with the '>' character on the first line)  
 
-**ESP32 Task support**  
+**ESP32 real Multitasking support**  
 `#define USE_SCRIPT_TASK` 
 enables support for multitasking scripts  
 res=ct(num timer core)  
@@ -550,6 +551,12 @@ print task1 on core %core%
 print task2 on core %core%
 
 ```
+
+**Script compression**  
+`#define USE_RULES_COMPRESSION`  
+enables compression of script storage to about 40%. The script buffer is set to 2560 instead of 1535 chars.  
+no backward compatibility. first save your old script before updating.  
+
 
 **ESP32 Webcam support**   
 `#define USE_WEBCAM`  
