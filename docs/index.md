@@ -17,11 +17,11 @@ Incredibly expandable and flexible.
 ### Current release 
 <a href="https://github.com/arendst/Tasmota/releases/tag/v8.3.1"><span style="font-size:40px;">Tasmota 8.3.1 Fred</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
 
-- Change HA discovery from using Template or Module name to new DeviceName 
-- Change Quick Power Cycle detection from 4 to 7 power interrupts
+- Change [Home Assistant autodiscovery](Home-Assistant#automatic-discovery) from using Template or Module name to new **Device Name**
+- Add command [``DeviceName``](Commands.md#devicename) - defaults to `FriendlyName1`
+- Change [Quick Power Cycle detection](Device-Recovery#fast-power-cycle-device-recovery) from 4 to 7 power interrupts
 - Fix default state of ``SetOption73 0`` for button decoupling and send multi-press and hold MQTT messages
-- Fix HASS autodiscovery
-- Add command ``DeviceName`` - defaults to `FriendlyName1` and replaces FriendlyName1 in GUI
+- Fix autodiscovery issues
 
 ##### 8.3.0
 
