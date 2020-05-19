@@ -129,6 +129,9 @@ For every device an informative sensor will be created automatically:
 
 ![Informative sensor](_media/hass_information_sensor.jpg)
 
+!!! warning "This sensor will update on `TelePeriod` which is 5 minutes by default"
+    It will show as "Unavailable" until the first TelePeriod MQTT message
+
 You can further customise your device in Home Assistant by clicking on the entity name.
 
 !!! note "Enabling discovery will automatically change some SetOptions to suit the new configuration"
