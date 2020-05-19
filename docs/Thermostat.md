@@ -52,6 +52,12 @@ The default temperature input is MQTT. The following command can be used to sele
 cmnd/Tasmota_Name/SENSORINPUTSET 1
 ```
 
+Note: The default local temperature sensor is a DS18B20. In case a different Tasmota supported sensor is used, the following define in my_user_config.h is to be changed (or redefined in user_config_override.h) and a user specific tasmota software needs to be compiled:
+
+```
+#define THERMOSTAT_SENSOR_NAME                "DS18B20" // Name of the local sensor to be used
+```
+
 ### MQTT temperature value and setpoint
 
 The following commands can be used to provide the driver with the temperature value of the room and the desired setpoint:
