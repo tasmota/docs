@@ -20,6 +20,22 @@ Below you can find an example of a Shelly switch bypassing a wall thermostat:
 
 ![Pinout](_media/thermostat/bypass_thermostat.png)
 
+## Configuration for standalone application or bypass of existing wall thermostat
+
+The driver by default does not consider the input switch states, if available. If the application requires to follow the command of the input once active (see setup explained in previous section), the following command is to be sent to the tasmota device:
+
+```
+cmnd/Tasmota_Name/INPUTSWITCHUSE 1
+```
+
+Once active, the thermostat, in case of its input being active, will switch to manual mode and set as output the same state. The thermostat will switch back from manual to automatic mode after a defined time where the input is inactive. The following parameter can be set to modify the time window in minutes to switch back to automatic in case the input is inactive:
+
+```
+cmnd/Tasmota_Name/TIMEMANUALTOAUTOSET 60
+```
+
+The default value for the time window to switch from manual to automatic is 60 minutes.
+
 ## Temperature input / setpoint
 
 ### Local temperature sensor
