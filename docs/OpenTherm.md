@@ -1,4 +1,3 @@
-
 !!! failure "This feature is not included in precompiled binaries."
 To use it, you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
@@ -9,10 +8,9 @@ To use it, you must [compile your build](Compile-your-build). Add the following 
 ```
 ----
 
-This integration provides an implementation of the OpenTherm protocol.
+!!! info "Implementation of OpenTherm protocol"
 
 OpenTherm integration is based on OpenTherm protocol specification v2.2 and works with all OpenTherm compatible boilers.
-
 
 OpenTherm protocol requires a simple low voltage two-wire connection to the boiler, but voltage levels (7..15V) still much higher than ESP8266 levels, which requires OpenTherm Adapter.
 

@@ -1,6 +1,16 @@
-# Thermostat
+!!! failure "This feature is not included in precompiled binaries."
+To use it, you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
-The Thermostat driver allows the tasmota device, provided it receives the temperature input via MQTT or a locally connected sensor, to follow control heating/cooling strategies to reach the desired setpoint. The thermostat offers similar functions as feature reach commercial ones as the models found below:
+```
+#ifndef USE_THERMOSTAT
+#define USE_THERMOSTAT
+#endif
+```
+----
+
+!!! info "Control over heating and cooling as a true HVAC unit"
+
+Thermostat driver allows a Tasmota device, provided it receives the temperature input via MQTT or a locally connected sensor, to follow control heating/cooling strategies to reach the desired setpoint. The thermostat offers similar functions as feature rich commercial ones as the models found below:
 
 ![Pinout](_media/thermostat/Feature_rich_thermostat.png)
 
