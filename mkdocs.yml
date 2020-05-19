@@ -77,7 +77,6 @@ nav:
 
   - Features:
     - Introduction: Features.md
-    - Blinds-and-Shutters.md
     - Bluetooth.md
     - Buttons-and-Switches.md
     - DeepSleep.md
@@ -86,12 +85,13 @@ nav:
     - I2C Devices: I2CDevices.md
     - IR Communication: Tasmota-IR.md
     - Lights.md
-    - OpenTherm.md
+    - OpenTherm: OpenTherm.md
     - PIR-Motion-Sensors.md
     - Power-Monitoring-Calibration.md
     - PWM-dimmer-switch.md
     - Rules.md
     - Scripting: Scripting-Language.md
+    - Blinds-and-Shutters.md
     - Smart-Meter-Interface.md
     - Subscribe-&-Unsubscribe.md
     - TasmotaSlave.md
