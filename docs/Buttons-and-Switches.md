@@ -1,4 +1,4 @@
-!!! info "Buttons and switches are primarily used to toggle (turn ON or OFF) relays or lights"
+!!! info "Buttons and switches: why the difference and how to configure them"
 
 A typical device usually has at least one button (exception being bulbs and some lights) to control the power state(s). Additional buttons and switches can be [wired](Expanding-Tasmota#connect-switch) to a free GPIO and configured in Module or Template settings.
 

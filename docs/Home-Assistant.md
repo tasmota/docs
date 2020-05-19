@@ -1,3 +1,5 @@
+description: Everything about using Tasmota in Home Assistant
+
 # Home Assistant
 
 [Home Assistant](https://home-assistant.io/) (HA) is an open source home automation solution that puts local control and privacy first.
