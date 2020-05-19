@@ -20,6 +20,24 @@ Below you can find an example of a Shelly switch bypassing a wall thermostat:
 
 ![Pinout](_media/thermostat/bypass_thermostat.png)
 
+## Configuration for standalone application or bypass of existing wall thermostat
+
+The driver by default does not consider the input switch states even if available and its therefore suitable for standalone use. If the application requires to follow the command of the input once active (see bypass setup explained in previous section. This bypass function is specially useful to allow the user to use the device bypassed, in case of a wall thermostat, to allow this thermostat to be used if desired. To enable this bypass function, the following command is to be sent to the tasmota device:
+
+```
+cmnd/Tasmota_Name/INPUTSWITCHUSE 1
+```
+
+Note: Some devices (such as the Sonoff 4CH Pro R2) even if having input buttons to manually switch the state of the output, report always its inputs in active state no matter if the button is pressed or not. For these devices the parameter above needs to be set to 0, otherwise the thermostat driver will activate the output continuously and stay permanently in manual mode.
+
+Once active, the thermostat, in case of its input being active, will switch to manual mode and set as output the same state of its input. The thermostat will switch back from manual to automatic mode after a defined time where the input is inactive. The following parameter can be set to modify the time window in minutes to switch back to automatic in case the input is inactive:
+
+```
+cmnd/Tasmota_Name/TIMEMANUALTOAUTOSET 60
+```
+
+The default value for the time window to switch from manual to automatic is 60 minutes.
+
 ## Temperature input / setpoint
 
 ### Local temperature sensor
@@ -39,18 +57,18 @@ cmnd/Tasmota_Name/SENSORINPUTSET 1
 The following commands can be used to provide the driver with the temperature value of the room and the desired setpoint:
 
 ```
-cmnd/Tasmota_Name/TEMPMEASUREDSET 22.5
+cmnd/Tasmota_Name/TEMPTARGETSET 22.5
 ```
 
 ```
-cmnd/Tasmota_Name/TEMPTARGETSET 21.8
+cmnd/Tasmota_Name/TEMPMEASUREDSET 21.8
 ```
 
 Note: Examples for room temperature of 21.8°C and temperature setpoint of 22.5°C.
 
 There are several ways to send the MQTT room temperature. For the development and testing of this driver, a Raspberry Pi with Domoticz and a Z-Wave stick has been used to gather all room temperatures from Z-Wave sensors and send them to the respective Tasmota room thermostats.
 
-## Customize the controller for best results
+## Customization of the controller for best results
 
 The thermostat controller includes a default parameter set that targets a typical floor heating application for mid-sized rooms (< 20m2) with one heating circuit. The controller is however highly configurable via MQTT. The following sections will guide the user to adapt the main parameters to improve the performance of the thermostat controller via customization.
 
@@ -69,6 +87,18 @@ The default temperature format is degrees Celsius. The format can be easily swit
 ```
 cmnd/Tasmota_Name/TEMPFORMATSET 1
 ```
+
+### Set the control strategy
+
+The control strategy by default is a Hybrid one. The hybrid control strategy mixes a so called "Ramp-Up" strategy (invention during the development of this driver, initially as a LUA script and ported to Tasmota later) and a PI one. The "Ramp-Up" strategy is typically used to reach as fast as possible the setpoint for big deltas between desired temperature and setpoint, the PI on the other hand for most part of the normal thermostat operation.
+
+The control strategy can be however modified, if the Hybrid one is not desired, the PI or "Ramp-Up" mode, can be forced. For that purpose the following command can be used:
+
+```
+cmnd/Tasmota_Name/CONTROLLERMODESET 1
+```
+
+The value 1 forces the PI operation and the value 2 the "Ramp-Up" one.
 
 ### PI controller main parameters
 
@@ -117,15 +147,33 @@ cmnd/Tasmota_Name/TIMEMAXACTIONSET 20
 ```
 
 #### Minimum action of the controller
-The minimum On time (Duty Cycle) in minutes within a cycle can be set by this parameter. The default value is 4 minutes. In case the controller is not capable of mantaining the temperature arround the setpoint without integral action and generates oscillations, the value should be increased. Below the command to adapt the minimum action time can be found:
+The minimum On time (Duty Cycle) in minutes within a cycle can be set by this parameter. The default value is 4 minutes. Below the command to adapt the minimum action time can be found:
 
 ```
 cmnd/Tasmota_Name/TIMEMINACTIONSET 4
 ```
 
-Note: It is very important to adapt this value to your heating system to obtain accurate temperature control. If the value is very low, in case of floor heating systems, the heating actuators might not have enough time to open the valves (depending on the actuator it could take from 1 to 3 minutes).
+Note: It is very important to adapt this value to your heating system to obtain accurate temperature control. If the value is very low, in case of floor heating systems for instance, the heating actuators might not have enough time to open the valves and the temperature will drop (depending on the actuator open/close time could take from 1 to 3 minutes) if it is too high, there will be unwanted oscillations arround the setpoint. One way to configure this value in heating mode is to manually tune it in worst case conditions (highest typically desired room temperature and lower winter temperature outside) checking that the proportional action generated by the controller is sufficient to raise slightly the temperature. If the temperature still goes down after the pulse plus delay time of the system and rises just once the accumulated error triggers integral actions then the value set is too low.
 
 ### Ramp-Up controller main parameters
+
+#### Temperature delta to get into "Ramp-Up" mode
+When the controller is configured in Hybrid mode (default), the control strategy will be a mix-up between "Ramp-Up" (for big deltas between room temperature and setpoint) and PI (arround the setpoint). The following parameter can be set to define at above which delta temperature between measured and setpoint the "Ramp-Up" controller shall be active:
+
+```
+cmnd/Tasmota_Name/TEMPRUPDELTINSET 30
+```
+
+The default value is 0.4°C.
+
+#### Time passed after latest setpoint change to get into "Ramp-Up" mode
+When the controller is configured in Hybrid mode (default), the activation of the "Ramp-Up" mode will not just depend on the defined temperature delta between measured and setpoint, but as well on the time in minutes passed since the last setpoint change occurred. This strategy matches the purpose of the "Ramp-Up" controller, which was developed to reach the desired temperature as fast as possible in very specific scenarios, f.i. after a night keeping the room temperature low. In hybrid mode, the controller active most part of the time should be the PI one. The following parameter can be used to define the time to allow switching to "Ramp-Up" in minutes.
+
+```
+cmnd/Tasmota_Name/TIMEALLOWRAMPUPSET 300
+```
+
+The default value is 300 minutes.
 
 #### Cycle time
 Depending on the heating system, the cycle time (PMW period) can be adapted. Very slow systems (high time constants) such as heating floor systems might need higher values (default value is 30 minutes), faster systems might need smaller cycle times. Below the command to adapt the cycle time can be found:
@@ -167,13 +215,9 @@ The following MQTT command can be used to switch from heating (default) to cooli
 cmnd/Tasmota_Name/CLIMATEMODESET 1
 ```
 
-### "Ramp-Up" controller
+### Self learning process of the "Ramp-Up" controller to reduce overshoot
 
-The "Ramp-Up" controller evaluates the time constant of the system and predicts when to switch off the actuator to reach the desired temperature as fast as possible. This controller offers the best speed to reach the Setpoint. This controller will be improved by a learning process to evaluate how accurate the target value has been reached without overshoot. This feature will improve the behavior of the current controller which depending on the application and thermal capacity of the system might produce some overshoot. By default the controller set is the Hybrid one, enabling "Ramp-Up" for big temperature deltas between Setpoint and measured temperature and PI for smaller ones. If you are not satisfied with the performance of this controller in your system, you can disable it by MQTT and force the use of the PI controller exclusively. For that purpose the following command can be used:
-
-```
-cmnd/Tasmota_Name/CONTROLLERMODESET 1
-```
+The "Ramp-Up" controller evaluates the time constant of the system and predicts when to switch off the actuator to reach the desired temperature as fast as possible. This controller offers the best speed to reach the Setpoint. This controller will be improved by a learning process to evaluate how accurate the target value has been reached and therefore minimize gradually the overshoot. This feature will improve the behavior of the current controller which depending on the application and thermal capacity of the system might produce some overshoot. By default the controller set is the Hybrid one, enabling "Ramp-Up" for big temperature deltas between Setpoint and measured temperature and PI for smaller ones. If you are not satisfied with the performance of this controller in your system, you can disable it by MQTT and force the use of the PI controller exclusively (see Controller configuration section above).
 
 ### PI Autotune
 
