@@ -204,7 +204,14 @@ A web user interface may be generated containing any of the following elements:
   `label` = label for up to the 4 datasets in chart  
   `entrylabel` = labels of each entry separated by '|' char  
   `header` = visible header name of chart  
-  `flag` = optional flag b=barchart, c=columnchart, p=piechart, l=linechart  
+  `flag` = optional flag:
+  + b=barchart  
+  + c=columnchart  
+  + p=piechart  
+  + l=linechart  
+  + h=histogram  
+  + t=data table
+  
   additionally you have to define the html frame to put the chart in (both lines must be preceded by a & char)
   e.g.  
   &<div id="chart1"style="width:640px;height:480px;margin:0 auto">\</div>  
