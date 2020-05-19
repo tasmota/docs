@@ -100,7 +100,7 @@ nav:
     - TLS.md
     - TuyaMCU.md
     - Zigbee.md
-    - Tutorials.md: Projects and Tutorials
+    - Projects and Tutorials: Tutorials.md
     - For Developers: For-Developers.md
   - Smart Home Integrations:
     - Introduction: Integrations.md
