@@ -39,11 +39,11 @@ cmnd/Tasmota_Name/SENSORINPUTSET 1
 The following commands can be used to provide the driver with the temperature value of the room and the desired setpoint:
 
 ```
-cmnd/Tasmota_Name/TEMPMEASUREDSET 22.5
+cmnd/Tasmota_Name/TEMPTARGETSET 22.5
 ```
 
 ```
-cmnd/Tasmota_Name/TEMPTARGETSET 21.8
+cmnd/Tasmota_Name/TEMPMEASUREDSET 21.8
 ```
 
 Note: Examples for room temperature of 21.8°C and temperature setpoint of 22.5°C.
