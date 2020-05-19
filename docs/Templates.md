@@ -1,3 +1,5 @@
+description: Template is a definition of a device and how its GPIOs are assigned
+
 !!! info "**Template** is a definition of a device and how its GPIOs are assigned."
 
 Templates provide an easy way for you to create, modify and share configurations for various devices that have features supported in Tasmota. 
