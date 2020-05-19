@@ -155,7 +155,7 @@ cmnd/Tasmota_Name/TEMPRUPDELTINSET 30
 The default value is 0.4°C.
 
 #### Time passed after latest setpoint change to get into "Ramp-Up" mode
-When the controller is configured in Hybrid mode (default), the activation of the "Ramp-Up" mode will not just depend on the defined temperature delta between measured and setpoint, but as well on the time in minutes passed since the last setpoint change occurred. This strategy matches the purpose of the "Ramp-Up" controller, which was developed to reach the desired temperature as soon as fast as possible in very specific scenarios, f.i. after a night keeping the room temperature low. In hybrid mode, the controller active most part of the time should be the PI one. The following parameter can be used to define the time to allow switching to "Ramp-Up" in minutes.
+When the controller is configured in Hybrid mode (default), the activation of the "Ramp-Up" mode will not just depend on the defined temperature delta between measured and setpoint, but as well on the time in minutes passed since the last setpoint change occurred. This strategy matches the purpose of the "Ramp-Up" controller, which was developed to reach the desired temperature as fast as possible in very specific scenarios, f.i. after a night keeping the room temperature low. In hybrid mode, the controller active most part of the time should be the PI one. The following parameter can be used to define the time to allow switching to "Ramp-Up" in minutes.
 
 ```
 cmnd/Tasmota_Name/TIMEALLOWRAMPUPSET 300
