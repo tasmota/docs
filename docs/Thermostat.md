@@ -88,6 +88,18 @@ The default temperature format is degrees Celsius. The format can be easily swit
 cmnd/Tasmota_Name/TEMPFORMATSET 1
 ```
 
+### Set the control strategy
+
+The control strategy by default is a Hybrid one. The hybrid control strategy mixes a so called "Ramp-Up" strategy (invention during the development of this driver, initially as a LUA script and ported to Tasmota later) and a PI one. The "Ramp-Up" strategy is typically used to reach as fast as possible the setpoint for big deltas between desired temperature and setpoint, the PI on the other hand for most part of the normal thermostat operation.
+
+The control strategy can be however modified, if the Hybrid one is not desired, the PI or "Ramp-Up" mode, can be forced. For that purpose the following command can be used:
+
+```
+cmnd/Tasmota_Name/CONTROLLERMODESET 1
+```
+
+The value 1 forces the PI operation and the value 2 the "Ramp-Up" one.
+
 ### PI controller main parameters
 
 #### Cycle time
@@ -203,13 +215,9 @@ The following MQTT command can be used to switch from heating (default) to cooli
 cmnd/Tasmota_Name/CLIMATEMODESET 1
 ```
 
-### "Ramp-Up" controller
+### Self learning process of the "Ramp-Up" controller to reduce overshoot
 
-The "Ramp-Up" controller evaluates the time constant of the system and predicts when to switch off the actuator to reach the desired temperature as fast as possible. This controller offers the best speed to reach the Setpoint. This controller will be improved by a learning process to evaluate how accurate the target value has been reached without overshoot. This feature will improve the behavior of the current controller which depending on the application and thermal capacity of the system might produce some overshoot. By default the controller set is the Hybrid one, enabling "Ramp-Up" for big temperature deltas between Setpoint and measured temperature and PI for smaller ones. If you are not satisfied with the performance of this controller in your system, you can disable it by MQTT and force the use of the PI controller exclusively. For that purpose the following command can be used:
-
-```
-cmnd/Tasmota_Name/CONTROLLERMODESET 1
-```
+The "Ramp-Up" controller evaluates the time constant of the system and predicts when to switch off the actuator to reach the desired temperature as fast as possible. This controller offers the best speed to reach the Setpoint. This controller will be improved by a learning process to evaluate how accurate the target value has been reached and therefore minimize gradually the overshoot. This feature will improve the behavior of the current controller which depending on the application and thermal capacity of the system might produce some overshoot. By default the controller set is the Hybrid one, enabling "Ramp-Up" for big temperature deltas between Setpoint and measured temperature and PI for smaller ones. If you are not satisfied with the performance of this controller in your system, you can disable it by MQTT and force the use of the PI controller exclusively (see Controller configuration section above).
 
 ### PI Autotune
 
