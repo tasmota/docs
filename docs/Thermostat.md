@@ -250,3 +250,7 @@ A PI autotune feature following the Zigler-Nichols closed loop algorithm has bee
 ```
 #define USE_PI_AUTOTUNING // (Ziegler-Nichols closed loop method)
 ```
+
+### Alternative outputs: PWM duty cycle
+
+The driver will be improved to allow choosing as alternative output the duty cycle in %, instead of a PWM actuating the relay. This application could be useful to be able to integrate the driver with other ones via rules.
