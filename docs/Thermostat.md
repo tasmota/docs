@@ -35,7 +35,7 @@ Below you can find an example of a Shelly switch bypassing a wall thermostat:
 
 ## Configuration for standalone application or bypass of existing wall thermostat
 
-The driver by default does not consider the input switch states even if available and its therefore suitable for standalone use. If the application requires to follow the command of the input once active (see bypass setup explained in previous section. This bypass function is specially useful to allow the user to use the device bypassed, in case of a wall thermostat, to allow this thermostat to be used if desired. To enable this bypass function, the following command is to be sent to the tasmota device:
+The driver by default does not consider the input switch states even if available and its therefore suitable for standalone use. If the application requires to follow the command of the input once active (see bypass setup explained in previous section). This bypass function is specially useful to allow the user to use the device bypassed, in case of a wall thermostat, to allow this thermostat to be used if desired. To enable this bypass function, the following command is to be sent to the tasmota device:
 
 ```
 cmnd/Tasmota_Name/INPUTSWITCHUSE 1
