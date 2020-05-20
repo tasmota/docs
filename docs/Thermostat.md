@@ -227,6 +227,20 @@ To increase the number of controller outputs, modify the value of the thermostat
 #define THERMOSTAT_CONTROLLER_OUTPUTS         1         // Number of outputs to be controlled independently
 ```
 
+### Alternative outputs: PWM duty cycle
+
+The driver provides the possibility to read the duty cycle in % (0-100) of the actuated relay. Below the command to read the duty cycle can be found:
+
+```
+cmnd/Tasmota_Name/CTRDUTYCYCLEREAD
+```
+
+The physical switch of the output can as well be disabled via command. Below the command to disable it can be found:
+
+```
+cmnd/Tasmota_Name/DISABLEOUTPUTSET
+```
+
 ## Future improvements
 
 ### Cooling
@@ -251,6 +265,3 @@ A PI autotune feature following the Zigler-Nichols closed loop algorithm has bee
 #define USE_PI_AUTOTUNING // (Ziegler-Nichols closed loop method)
 ```
 
-### Alternative outputs: PWM duty cycle
-
-The driver will be improved to allow choosing as alternative output the duty cycle in %, instead of a PWM actuating the relay. This application could be useful to be able to integrate the driver with other ones via rules.
