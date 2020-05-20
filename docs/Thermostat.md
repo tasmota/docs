@@ -238,7 +238,7 @@ cmnd/Tasmota_Name/CTRDUTYCYCLEREAD
 The physical switch of the output can as well be disabled via command. Below the command to disable it can be found:
 
 ```
-cmnd/Tasmota_Name/DISABLEOUTPUTSET 1
+cmnd/Tasmota_Name/ENABLEOUTPUTSET 1
 ```
 
 ## Future improvements
