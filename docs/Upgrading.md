@@ -83,7 +83,7 @@ Proceed to [upgrade](#upgrade-by-file-upload)
 
 Your device can be upgraded using [commands](Commands.md) via MQTT, web requests or Console in the web UI.
 
-[OtaUrl](Commands.md#OtaUrl) is used to set your OTA address. 
+[OtaUrl](Commands.md#otaurl) is used to set your OTA address. 
 ```haskell
 OtaUrl http://thehackbox.org/tasmota/tasmota-sensors.bin
 ```
