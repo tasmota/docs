@@ -198,7 +198,7 @@ TYA: RX Dim State=7
 ```	
 
 Now using the hardware buttons increase the dimmer to its maximum and observe the log. The `Dim State=XXX` shows the current dimmer level reported by MCU. Once the dimmer is at max, note this number. Again using hardware buttons decrease dimmer to minimum and note the number for minimum.	
-Now we need to tell Tasmota to use maximum and minimum values. This controlled by [DimmerRange](Commands.md#DimmerRange) command. We can set it using `DimmerRange <Min>,<Max>` where `<Min>` is the minimum dimmer state and `<Max>` maximum dimmer state reported in logs.	
+Now we need to tell Tasmota to use maximum and minimum values. This controlled by [DimmerRange](Commands.md#dimmerrange) command. We can set it using `DimmerRange <Min>,<Max>` where `<Min>` is the minimum dimmer state and `<Max>` maximum dimmer state reported in logs.	
 
 Once set, try `dimmer 100` in the Console and check if the brightness of bulb is same is the same as when the maximum was set using hardware buttons.	
 
