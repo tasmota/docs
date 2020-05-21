@@ -52,7 +52,7 @@ Name|Description
 [**MPU6050**](MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer sensor (I^2^C)
 [**P1 Smart Meter**](P1-Smart-Meter) | Energy Meter (serial)
 [**PAJ7620**](PAJ7620) | Gesture & Proximity Detection Sensor
-[**PIR**](PIR-Motion-Sensors#AM312) | Passive Infrared Sensor (gpio)
+[**PIR**](PIR-Motion-Sensors#am312) | Passive Infrared Sensor (gpio)
 [**PCA9685**](PCA9685) | 16-channel, 12-bit PWM LED controller (I^2^C)
 **PCF8574** | 8-port IO Expander (I^2^C) 
 **PMS3003<BR>[PMS5003](https://www.superhouse.tv/38-diy-air-quality-sensor-part-1-basic-model/)<BR>PMS7003** | Particle Concentration sensor (serial)
