@@ -1,1 +1,1 @@
-redirect: ../Getting-Started
+redirect: /Getting-Started

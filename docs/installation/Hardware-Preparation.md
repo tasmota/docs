@@ -1,1 +1,1 @@
-redirect: Getting-Started#hardware-preparation
+redirect: ../../Getting-Started#hardware-preparation
