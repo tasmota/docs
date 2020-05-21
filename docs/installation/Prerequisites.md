@@ -1,1 +1,1 @@
-redirect: ../Prerequisites/
+redirect: ../Getting-Started
