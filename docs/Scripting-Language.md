@@ -36,7 +36,7 @@ USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 USE_SCRIPT_TASK | enables Task in ESP32
 USE_SML_SCRIPT_CMD | enables SML script cmds
-USE_RULES_COMPRESSION | enables compression of scripts (2560 chars buffer)  
+USE_SCRIPT_COMPRESSION | enables compression of scripts (2560 chars buffer)  
 ----
 
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules)"
@@ -209,9 +209,12 @@ A web user interface may be generated containing any of the following elements:
   + b=barchart  
   + c=columnchart  
   + p=piechart  
-  + l=linechart  
+  + l=linechart up to 4 lines with same scaling
+  + l2=linechart with exactly 2 lines and 2 y scales (must be given after this flag)
+  + 2f2 like above but with splined lines 
   + h=histogram  
   + t=data table
+  + g=simple gauges
   
   additionally you have to define the html frame to put the chart in (both lines must be preceded by a & char)
   e.g.  
@@ -553,7 +556,7 @@ print task2 on core %core%
 ```
 
 **Script compression**  
-`#define USE_RULES_COMPRESSION`  
+`#define USE_SCRIPT_COMPRESSION`  
 enables compression of script storage to about 40%. The script buffer is set to 2560 instead of 1535 chars.  
 no backward compatibility. first save your old script before updating.  
 
