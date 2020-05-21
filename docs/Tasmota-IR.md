@@ -6,7 +6,7 @@ There are two additional Tasmota firmware variants that provide almost all IRrem
 - `sonoff-ir` is pre-packaged for IR blasters, like [Eachen IR Bridge](https://templates.blakadder.com/eachen-IR-DC6.html) or [YTF IR Bridge](https://templates.blakadder.com/ytf_ir_bridge.html). Choose `sonoff-ir` if you are using an IR blaster.  
 - `sonoff-ircustom` is used if you want to customize your features (additional sensors, language, etc.). This variant is required because it triggers a special compilation flag for IRremoteESP8266. Edit the `IRremoteESP8266.h` header in the `IRremoteESP8266-x.x.x/src` folder to disable (i.e., set to `false`) any unneeded/unwanted protocols. Then [compile your own firmware](Compile-your-build).
 
-You can [flash](Getting-Started#Flashing) the binary or [upgrade](Upgrading) your existing one.
+You can [flash](Getting-Started#flashing) the binary or [upgrade](Upgrading) your existing one.
 
 To test that you have the correct firmware on your device  issue the following command in the web UI Console: 
 
@@ -23,7 +23,7 @@ Send an IR remote control code as a decimal or hexadecimal string in a JSON payl
 Command|Parameters
 :---|:---
 IRsend`<x>`<a id="IRsend"></a>|`<x>` [_optional_] = number of times the IR message is sent. If not specified or `0..1`, the message is sent only once (i.e., not repeated) _(default)_<BR>`>1` = emulate a long-press on the remote control, sending the message `<x>` times, or sending a repeat message for specific protocols (like NEC)<BR><BR>`{"Protocol":"<value>","Bits":<value>,"Data":<value>,"DataLSB":<value>,"Repeat":<value>}`<BR><BR>`"Protocol"` or `"Vendor"` (select one of the following): <BR>`RC5, RC6, NEC, SONY, PANASONIC, JVC, SAMSUNG, WHYNTER, AIWA_RC_T501, LG, MITSUBISHI, DISH, SHARP, DENON, SHERWOOD, RCMM, SANYO_LC7461, RC5X, NEC (non-strict), NIKAI, MAGIQUEST, LASERTAG, CARRIER_AC, MITSUBISHI2, HITACHI_AC1, HITACHI_AC2, GICABLE, LUTRON, PIONEER, LG2, SAMSUNG36, LEGOPF, INAX, DAIKIN152`<BR><BR>`"Bits":1..64` = required number of data bits<BR>&nbsp;&nbsp;&nbsp;&nbsp;for PANASONIC protocol this parameter is the the address, not the number of bits<BR><BR>`"Data":0x1..0xFFFFFFFFFFFFFFFF` = data frame as 64 bit hexadecimal.<BR>&nbsp;&nbsp;&nbsp;&nbsp;e.g., `IRsend {"Protocol":"NEC","Bits":32,"Data":0x8166817E}`<BR>**Or**<BR>`"DataLSB":0x1..0xFFFFFFFFFFFFFFFF` = data frame as 64 bit hexadecimal with LSB (each byte with bits reversed).<BR>&nbsp;&nbsp;&nbsp;&nbsp;e.g., `IRsend {"Protocol":"NEC","Bits":32,"Data":0x8166817E}`<BR>`DataLSB` comes handy with LSB-first (Least Significant Bit First) protocols like NEC, and makes decoding/encoding easier.<BR><BR>`"Repeat":0..<x>` if `0` send the frame once, if `>0` simulates a long press; Note: `"Repeat":1` sends the message twice.<BR><BR>Alternatively, you can send IR remote control codes using [RAW command encoding](IRSend-RAW-Encoding).
-|See also|[`SetOption29`](Commands#SetOption29)  - Set IR received data format<BR>[`SetOption38`](Commands#SetOption38)  - Set IR received protocol sensitivity<BR>[`SetOption58`](Commands#SetOption58) - [IR Raw data in JSON payload](https://github.com/arendst/Tasmota/issues/2116#issuecomment-440716483)
+|See also|[`SetOption29`](Commands#setoption29)  - Set IR received data format<BR>[`SetOption38`](Commands#setoption38)  - Set IR received protocol sensitivity<BR>[`SetOption58`](Commands#setoption58) - [IR Raw data in JSON payload](https://github.com/arendst/Tasmota/issues/2116#issuecomment-440716483)
 
 ## Sending IRHVAC Commands
 
