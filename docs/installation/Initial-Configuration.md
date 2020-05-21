@@ -1,1 +1,1 @@
-redirect: ../Getting-Started
+redirect: https://tasmota.github.io/docs/Getting-Started#initial-configuration
