@@ -8,7 +8,7 @@
 !!! tip
      Use Generic module `Module 18` to have almost all GPIO pins available.
 
-Each module is assigned a number which is used in [Template configuration](Templates#BASE) or when using [`Module`](Commands.md#module) command.
+Each module is assigned a number which is used in [Template configuration](Templates#base) or when using [`Module`](Commands.md#module) command.
 
 | #| Name| Module specifics
 | ---: | :--- | :---
