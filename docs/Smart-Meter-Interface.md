@@ -35,7 +35,7 @@ The Smart Meter Interface provides a means to connect many kinds of meters to Ta
 
 There are many different meters that use the same protocol. There are multitudes of variants and use cases. A meter can be defined by using compilation time `#define` pragmas. This requires recompiling the firmware to make modifications.  
 
-This interface provides a means of specifying these definitions through [meter descriptors](#Smart-Meter-Descriptors). This method uses the [scripting language](Scripting-Language) editor to define the descriptors. In this way, only one firmware binary version is required and a modification can be made easily "on the fly".  
+This interface provides a means of specifying these definitions through [meter descriptors](#smart-meter-descriptors). This method uses the [scripting language](Scripting-Language) editor to define the descriptors. In this way, only one firmware binary version is required and a modification can be made easily "on the fly".  
 
 !!! note
     If no `>M` section is found in the script or if the scripting language is not compiled, the driver reverts to the default `#define` definition(s).  
@@ -243,24 +243,24 @@ with the '=' char at the beginning of a line you may do some special decoding
 `Meter#,GPIO# Input,TYPE,FLAG,Baudrate,JSONNAME,GPIO# Output,TX Period,Character string`  
   > \+ 1,3, o, 0,9600, energy, 1,4,2F3F210D0A   
 
-   Example: [here.](#Iskra-MT-174-obis)
+   Example: [here.](#iskra-mt-174-obis)
 
 
 	  
 
 ## Smart Meter Descriptors
-- [EMH ED300L (SML)](#EMH-ED300L-SML)
-- [Hager EHZ363 (SML)](#Hager-EHZ363-SML)
-- [Hager EHZ161 (OBIS)](#Hager-EHZ161-OBIS)
+- [EMH ED300L (SML)](#emh-ed300l-sml)
+- [Hager EHZ363 (SML)](#hager-ehz363-sml)
+- [Hager EHZ161 (OBIS)](#hager-ehz161-obis)
 - [Landis + Gyr ZMR120AR (OBIS)](#landis-gyr-zmr120ares2r2sfcs-obis)
-- [COMBO Meter (Water,Gas,SML)](#COMBO-Meter-WaterGasSML)
-- [WOLF CSZ 11/300 Heater](#WOLF-CSZ-11300-Heater)
-- [SDM530 (MODBUS)](#SDM530)
-- [Janitza B23 (MODBUS)](#Janitza-B23)
-- [Hager EHZ363 (SML) with daily values](#Hager-EHZ363-SML-with-daily-values)
-- [Iskra MT 174](#Iskra-MT-174-obis)
-- [SBC ALE3 (MODBUS)](#SBC-ALE3-MODBUS)
-- [2 * SBC ALE3 (MODBUS)](#_2-SBC-ALE3-MODBUS)
+- [COMBO Meter (Water,Gas,SML)](#combo-meter-watergasSml)
+- [WOLF CSZ 11/300 Heater](#wolf-csz-11300-heater)
+- [SDM530 (MODBUS)](#sdm530)
+- [Janitza B23 (MODBUS)](#janitza-b23)
+- [Hager EHZ363 (SML) with daily values](#hager-ehz363-sml-with-daily-values)
+- [Iskra MT 174](#iskra-mt-174-obis)
+- [SBC ALE3 (MODBUS)](#sbc-ale3-modbus)
+- [2 * SBC ALE3 (MODBUS)](#2-sbc-ale3-modbus)
 --------------------------------------------------------
 
 
