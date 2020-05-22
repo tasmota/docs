@@ -2,23 +2,23 @@
 
 !!! note "PZEM is a dedicated separate energy monitor, device calibration in Tasmota is not supported."
 
-# PZEM-004
+## PZEM-004
 ![](https://user-images.githubusercontent.com/5904370/67893137-58f94080-fb56-11e9-877e-9675149c0fd6.png)
 
 <img src="https://github.com/arendst/arendst.github.io/blob/master/media/pzem/pzem-done.jpg?raw=true" width="250" align="right" />
 The PZEM-004T together with a Sonoff Basic provide a good clamp on energy monitor.
 
-## Parts needed
+### Parts needed
 - Sonoff Basic
 - PZEM-004T
 - Resistor 1k
 - [Enclosure](https://www.itead.cc/smart-home/sonoff-ip66.html)
 - Power cable
 
-## Preparation
+### Preparation
 Install Tasmota on the Sonoff Basic and confirm it is functional before connecting the PZEM-004T to its serial interface.
 
-## Hardware connections
+### Hardware connections
 As the PZEM-004T expects 5V serial data and the Sonoff Basic only provides up to 3V3, the expected optocoupler input power of the PZEM-004T has to be reduced. This can be accomplished by soldering a 1k resistor between the joints shown below (modification works for version v.1.0 and v.3.0).
 
 PZEM-004T v.1.0  
@@ -47,7 +47,7 @@ Cut the power cable in two and connect the input wires to both Sonoff Basic and 
 
 As most parts are connected to high voltage AC it is recommended to fit the hardware in a solid enclosure.
 
-## Software configuration
+### Software configuration
 Configure the GPIO's for hardware serial connection as shown below.
 
 **IMPORTANT: If using the connections as following, the communication works in all cores due to TASMOTA using hardware serial. If the user wants to use other GPIOs for communication, TASMOTA will emulate a serial interface using software serial. This feature does not work using core 2.3.0 due to insufficient RAM. To use the software serial feature, you must use a core version of 2.4.2 or greater.**
@@ -58,7 +58,7 @@ Configure the GPIO's for hardware serial connection as shown below.
 `{"NAME":"HW-655 PZEM","GPIO":[0,62,0,63,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}`
 
 
-**PZEM-004T version V3:**
+## PZEM-004T version V3
 
 `{"NAME":"HW-655 PZEM","GPIO":[0,62,0,98,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}`
 
@@ -66,7 +66,7 @@ Configure the GPIO's for hardware serial connection as shown below.
 
 The PZEM-004T together with a HW-655 Relay provide a good clamp-on energy monitor for a 240V clothes dryer.
 
-## Parts needed
+### Parts needed
 * [Circuit Box](https://www.lowes.com/pd/CARLON-1-Gang-Blue-Plastic-Interior-New-Work-Standard-Switch-Outlet-Wall-Electrical-Box/3286106)
 * [3-prong Dryer Electrical Cord](https://smile.amazon.com/gp/product/B002RL9JB6) (Note - some households use a 4-prong plug)
 * [3-prong Dryer Receptacle](https://smile.amazon.com/gp/product/B000BQSU8C) (Note - some households use a 4-prong plug)
@@ -76,10 +76,10 @@ The PZEM-004T together with a HW-655 Relay provide a good clamp-on energy monito
 * [4-pin Serial Connector](https://www.aliexpress.com/item/10Set-4Pin-JST-XH-Connectors-Plug-2-54mm-1007-26AWG-With-100mm-150mm-200mm-300mm-Length/32883270859.html?spm=a2g0s.9042311.0.0.68b94c4drsAK0r)
 * DuPont Connectors & 22 AWG wire
 
-## Preparation
+### Preparation
 Install Tasmota on the ESP-01 and confirm it is functional before connecting the PZEM-004T to its serial interface. Use of pins other that the default hardware serial GPIO (01 & 03) in order for TASMOTA to emulate a serial interface using software serial.
 
-## Hardware connections
+### Hardware connections
 <img src="https://user-images.githubusercontent.com/34340210/51444410-2536e380-1cc5-11e9-8989-b181c2851863.png" height="400" /><br>
 
 Connect the serial interface of the HW-655 with the serial interface of the PZEM-004T.
@@ -91,7 +91,7 @@ As most parts are connected to high voltage AC it is recommended to fit the hard
 
 <img src="https://user-images.githubusercontent.com/34340210/50610462-123caa80-0ea1-11e9-9c52-e9ff7722b9a8.jpg" height="400" /><br>
 
-## Software configuration
+### Software configuration
 
 [Device Template](Templates)<BR>
 **PZEM-004T version prior to V3:**
@@ -99,7 +99,7 @@ As most parts are connected to high voltage AC it is recommended to fit the hard
 `{"NAME":"HW-655 PZEM","GPIO":[0,63,0,62,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
 
 
-**PZEM-004T version V3:**
+## PZEM-004T version V3
 
 `{"NAME":"HW-655 PZEM","GPIO":[0,98,0,62,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
 
@@ -109,7 +109,7 @@ Use the module template to configure the GPIO's for hardware serial connection.
 
 # Connected Power Meter using PZEM-004T, Wemos D1 Mini and a 1602 I<sup>2</sup>C display
 
-## Parts needed
+### Parts needed
 - Wemos D1 Mini
 - PZEM-004T
 - 1kOhm Resistor (optional - see alternate wiring)
@@ -119,12 +119,12 @@ Use the module template to configure the GPIO's for hardware serial connection.
 - Mains Power cable
 - Mammuth Clamps
 
-## Preparation
+### Preparation
 **You need to compile your own Tasmota firmware as none of the pre-compiled binaries have support for _display and PZEM_ module.**  
 
 **Set up your preferred IDE as described in [wiki](/docs/Compile-your-build)**  
 
-### Enable IDE to Use Custom Settings
+#### Enable IDE to Use Custom Settings
 Create _**user_config_override.h**_ in the `tasmota` folder and paste the contents of this [sample configuration file](https://pastebin.com/WkfyKYnh).
 
 #### PlatformIO
@@ -149,7 +149,7 @@ Create _**user_config_override.h**_ in the `tasmota` folder and paste the conten
 `{"NAME":"HW-655 PZEM","GPIO":[0,63,0,62,6,5,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
 
 
-**PZEM-004T version V3:**
+## PZEM-004T version V3
 
 `{"NAME":"HW-655 PZEM","GPIO":[0,98,0,62,6,5,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
 
@@ -163,7 +163,7 @@ Rule1 ON Tele-ENERGY#Power DO DisplayText [z] [x1y0]%value%W ENDON ON Tele-ENERG
 ```
 - remember to enable the rule, with **`Rule1 1`**
 
-## Images and Wiring diagram
+### Images and Wiring diagram
 
 **DANGER - MAINS VOLTAGE**. Be sure to crimp connectors and use heat-shrinking tube wherever possible/needed, and tightly secure any screw.
 
@@ -195,10 +195,10 @@ PZEM-004T v.3.0
 
 <img src="https://user-images.githubusercontent.com/21192010/51847858-d4eeff80-231c-11e9-9c13-41172a6924ee.png" height="400" />
 
-## Calibration
+### Calibration
 [Per Theo](https://github.com/arendst/Tasmota/issues/3208#issuecomment-405048466) - As the PZEM is a dedicated energy monitor, device calibration in TASMOTA is currently not supported.
 
-# PZEM-016
+## PZEM-016
 
 ![](https://user-images.githubusercontent.com/5904370/67893552-0cfacb80-fb57-11e9-9a9b-67482ca905d1.png)
 
