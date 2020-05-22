@@ -69,23 +69,23 @@ Due to variants, you can configure:
 If you have a variant with an IR Remote (as per the opening picture), you can use the new `rule` command to make the remote buttons change the light levels. For example, this rule allows me to turn it on and off, change the brightness, and turn it on to full white:
 
 ```
-mosquitto_pub -t 'cmnd/light/rule1' -m 'on IrReceived#Data=0xFFF807 do power OFF endon on IrReceived#Data=0xFFB04F do WAKEUP endon on IrReceived#Data=0xFF906F do dimmer + endon on IrReceived#Data=0xFFB847 do dimmer - endon on IrReceived#Data=0xFFA857 do color #000000ff endon'
+rule1 on IrReceived#Data=0xFFF807 do power OFF endon on IrReceived#Data=0xFFB04F do WAKEUP endon on IrReceived#Data=0xFF906F do dimmer + endon on IrReceived#Data=0xFFB847 do dimmer - endon on IrReceived#Data=0xFFA857 do color #000000ff endon
 ```
 
 ### Full Set of rules for IR remote
 Each rule can only be 511 characters long, some of the colors below use the built in predefined shortcut color numbers.
 ```
-mosquitto_pub -t 'cmnd/light/rule1' -m 'on IrReceived#Data=0xFFF807 do power OFF endon on IrReceived#Data=0xFFB04F do WAKEUP endon on IrReceived#Data=0xFF906F do dimmer + endon on IrReceived#Data=0xFFB847 do dimmer - endon on IrReceived#Data=0xFFA857 do color 12 endon on IrReceived#Data=0xFF9867 do color 1 endon on IrReceived#Data=0xFFD827 do color 2 endon on IrReceived#Data=0xFF8877 do color 3 endon on IrReceived#Data=0xFF28D7 do color  #007FFF endon  on IrReceived#Data=0xFF38C7 do color 4 endon'
+rule1 on IrReceived#Data=0xFFF807 do power OFF endon on IrReceived#Data=0xFFB04F do WAKEUP endon on IrReceived#Data=0xFF906F do dimmer + endon on IrReceived#Data=0xFFB847 do dimmer - endon on IrReceived#Data=0xFFA857 do color 12 endon on IrReceived#Data=0xFF9867 do color 1 endon on IrReceived#Data=0xFFD827 do color 2 endon on IrReceived#Data=0xFF8877 do color 3 endon on IrReceived#Data=0xFF28D7 do color  #007FFF endon  on IrReceived#Data=0xFF38C7 do color 4 endon
 
-mosquitto_pub -t 'cmnd/light/rule2' -m 'on IrReceived#Data=0xFFE817 do color #FF3F00 endon on IrReceived#Data=0xFF48B7 do color #00FF3F endon on IrReceived#Data=0xFF6897 do color #3F00FF endon on IrReceived#Data=0xFF02FD do color 4 endon on IrReceived#Data=0xFF32CD do color #00FFBF endon on IrReceived#Data=0xFF20DF do color #7F00FF endon on IrReceived#Data=0xFF50AF do color #FF7F00 endon on IrReceived#Data=0xFF7887 do color #00BFFF endon on IrReceived#Data=0xFF708F do color #FF00FF endon on IrReceived#Data=0xFFF00F do color #FF003F endon'
+rule2 on IrReceived#Data=0xFFE817 do color #FF3F00 endon on IrReceived#Data=0xFF48B7 do color #00FF3F endon on IrReceived#Data=0xFF6897 do color #3F00FF endon on IrReceived#Data=0xFF02FD do color 4 endon on IrReceived#Data=0xFF32CD do color #00FFBF endon on IrReceived#Data=0xFF20DF do color #7F00FF endon on IrReceived#Data=0xFF50AF do color #FF7F00 endon on IrReceived#Data=0xFF7887 do color #00BFFF endon on IrReceived#Data=0xFF708F do color #FF00FF endon on IrReceived#Data=0xFFF00F do color #FF003F endon
 
-mosquitto_pub -t 'cmnd/light/rule3' -m 'on IrReceived#Data=0xFF00FF do scheme 4 endon on IrReceived#Data=0xFF58A7 do scheme 3 endon on IrReceived#Data=0xFF30CF do scheme 2 endon on IrReceived#Data=0xFFB24D do backlog BlinkCount 600; Power 3 endon'
+rule3 on IrReceived#Data=0xFF00FF do scheme 4 endon on IrReceived#Data=0xFF58A7 do scheme 3 endon on IrReceived#Data=0xFF30CF do scheme 2 endon on IrReceived#Data=0xFFB24D do backlog BlinkCount 600; Power 3 endon
 ```
 After setting the rules you need to activate them with the following:
 ```
-mosquitto_pub -t 'cmnd/light/rule1' -m '1'
-mosquitto_pub -t 'cmnd/light/rule2' -m '1'
-mosquitto_pub -t 'cmnd/light/rule3' -m '1'
+rule1 1
+rule2 1
+rule3 1
 ```
 
 The hex codes for the "Data" value come from the data tag when looking at the JSON sent via MQTT. You can also view this data on the Tasmota console screen. From here you can program it to do what ever you want. See here for more details: devices/Rules
