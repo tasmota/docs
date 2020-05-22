@@ -61,4 +61,4 @@ and then activate the rules
 
 `Backlog rule1 1; rule2 1; rule3 1`
 
-[Learn more about Arilux devices](/docs/devices/MagicHome-LED-strip-controller)
+[Learn more about Arilux devices](MagicHome-LED-strip-controller.md)
