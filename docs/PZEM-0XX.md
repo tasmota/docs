@@ -35,7 +35,7 @@ Connect the serial interface of the Sonoff Basic with the serial interface of th
 - Tx Green
 - Gnd Grey
 
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/pzem/pzem-basic.png" height="400" />
+![](https://github.com/arendst/arendst.github.io/blob/master/media/pzem/pzem-basic.png)
 
 _(Image re-used from https://www.instructables.com/id/Use-Homie-Firmware-to-Drive-Sonoff-Switch-Module-E/ Thanks @amayii0)_
 
@@ -141,7 +141,7 @@ Create _**user_config_override.h**_ in the `tasmota` folder and paste the conten
 
 [Flash](Getting-Started#flashing) the binary on the Wemos D1 Mini and confirm it is functional before connecting the PZEM-004T to its serial interface.
 
-## Tasmota Parameter Configuration
+### Tasmota Parameter Configuration
 
 [Device Template](Templates)<BR>
 **PZEM-004T version prior to V3:**
@@ -216,7 +216,7 @@ PZEM-016 modules can be converted from RS485 to TTL serial level devices by simp
 You can use a voltage level shifter to power the ESP82xx from the PZEM-016 module's 5V power. This may also require a 470uf 35V capacitor across the 5V line to work reliably.
 <img src="https://user-images.githubusercontent.com/34340210/66046722-57efd780-e4f4-11e9-912b-bab0da3818a9.jpeg" />
 
-**Tasmota Configuration**  
+### Tasmota Configuration
 It is recommended to use GPIO1/GPIO3 or GPIO13/GPIO15 for the most reliable serial communications. You can use any GPIO but anything else will use serial emulation (software). Software serial is not supported with the 2.3 Arduino Core.  
 
 GPIO|Component|PZEM
