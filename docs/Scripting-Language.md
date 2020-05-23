@@ -203,23 +203,23 @@ A web user interface may be generated containing any of the following elements:
   draws a google chart with up to 4 data sets per chart  
   `gc( T array1 ... array4 "name" "label1" ... "label4" "entrylabels" "header" {"maxy1"} {"maxy2"})`   
   `T` = type
-  + b=barchart  
-  + c=columnchart  
-  + p=piechart  
-  + l=linechart up to 4 lines with same scaling
-  + l2=linechart with exactly 2 lines and 2 y scales (must be given at end)
-  + 2f2 like above but with splined lines 
-  + h=histogram  
-  + t=data table
-  + g=simple gauges
-  + T=Timeline (special type arrays contains start,stop pairs in minutes timeofday)
+  - b=barchart  
+  - c=columnchart  
+  - p=piechart  
+  - l=linechart up to 4 lines with same scaling
+  - l2=linechart with exactly 2 lines and 2 y scales (must be given at end)
+  - 2f2 like above but with splined lines 
+  - h=histogram  
+  - t=data table
+  - g=simple gauges
+  - T=Timeline (special type arrays contains start,stop pairs in minutes timeofday)
   
   b,l,h type may have the '2' option to specify exactly 2 arrays with 2 y scales given at the end of paramter list.  
   
   `array` = up to 4 arrays of data  
   `name` = name of chart  
   `label` = label for up to the 4 datasets in chart  
-  `entrylabel` = labels of each entry separated by '|' char  
+  `entrylabel` = labels of each entry separated by '|' char ("cntN" starts numbering entries with the number N)  
   `header` = visible header name of chart  
   
   additionally you have to define the html frame to put the chart in (both lines must be preceded by a & char)
