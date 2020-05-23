@@ -342,6 +342,9 @@ HsbColor1<a class="cmnd" id="HsbColor1"></a>|`0..360` = set hue
 HsbColor2<a class="cmnd" id="HsbColor2"></a>|`0..100` = set saturation 
 HsbColor3<a class="cmnd" id="HsbColor3"></a>|`0..100` = set brightness
 Led<x\><a class="cmnd" id="led"></a>|`#RRGGBB` = set hex color value where `<x>` is the pixel number of the LED<br> *(applies only to addressable LEDs)*
+LedPwmMode<x\><a class="cmnd" id="ledpwmmode"></a>|Control status LED light mode<br>`0` = digital on/off _(default)_<BR>`1` = PWM mode<BR>`2` = toggle mode
+LedPwmOff<a class="cmnd" id="ledpwmoff"></a>|`0..255` = set LED brightness when OFF
+LedPwmOn<a class="cmnd" id="ledpwmon"></a>|`0..255` = set LED brightness when ON
 LedTable<a class="cmnd" id="ledtable"></a>|`0` = do not use [LED gamma correction](https://learn.adafruit.com/led-tricks-gamma-correction?view=all) *(default &laquo;6.5.0.9)*<BR>`1` = use gamma correction *(default &raquo;6.5.0.9)*
 Palette<a class="cmnd" id="palette"></a>| `0` = Clear color palette<br>`[ ...]` = Set list of colors used by `Color<1,2>` and `Scheme<2,3,4>` commands with each color separated by a space. 
 Pixels<a class="cmnd" id="pixels"></a>|`1..512` = set amount of pixels in strip or ring and reset [`Rotation`](#rotation) *(applies only to addressable LEDs)*

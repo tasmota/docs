@@ -78,6 +78,8 @@ Name|Description
 **TSL2591** | Luminosity Sensor (I^2^C)
 [**TX20<BR>TX23**](TX2x) | La Crosse TX2x Series Anemometer | sensor (gpio)
 [**VEML6070**](VEML6070) |  UV Sensor (I^2^C)
+VEML6075 | UVA/UVB/UVINDEX Sensor (I^2^C)
+VEML7700 | Ambient Light Intensity Sensor (I^2^C)
 [**VL53L0x**](VL53L0x) | Time of flight sensor (I^2^C)
 **WindMeter** | Analog cup anemometer
 [**WS2812B**](WS2812B-RGB-Shield) | Wemos RGB LED Shield
