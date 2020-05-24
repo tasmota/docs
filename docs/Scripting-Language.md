@@ -188,9 +188,10 @@ A web user interface may be generated containing any of the following elements:
  `mtxt` = label middle of slider  
  `rtxt` = label right of slider  
 **Text Input:**    
- `tx(vn txt)`  
+ `tx(preset lbl vn)`  
+ `preset` = preset input (may be same as vn)  
+ `lbl` = label text  
  `vn` = name of string variable to hold text state  
- `txt` = label text   
 **Number Input:**    
  `nm(min max step vn txt)`  
  `min` = number minimum value  
