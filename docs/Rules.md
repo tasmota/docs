@@ -435,6 +435,70 @@ It meets the 'hard thermostat' requests that have been common.
 
 ------------------------------------------------------------------------------
 
+### Button with single press, double press, and hold
+You can have all 3 actions but only if defining your GPIO as button. In this case the double press will toggle the relay.
+
+There is also an [option](Buttons-and-Switches#changing-default-functionality) to swap the actions of the **single press** and **double press**.
+
+**_BUTTON WITH 3 DIFFERENT ACTIONS_**
+
+- As an example:
+  **_[assuming Button1]_**
+
+  **single press**: Turn relay 1  
+  **double press**: send a mqtt message  
+  **hold 2 secs**: send another mqtt message
+
+  ```console
+  Backlog ButtonTopic 0; SetOption1 1; SetOption11 1; SetOption32 20
+  
+  Rule1
+    ON button1#state=3 DO publish cmnd/topicHOLD/power 2 ENDON
+    ON button1#state=2 DO publish cmnd/topicDOUBLEPRESS/power 2 ENDON 
+  
+  Rule1 1
+  ```
+
+- Another example:
+  **_[assuming Button1]_**
+
+  **single press**: send a mqtt message  
+  **double press**: Turn relay 1  
+  **hold 2 secs**: send another mqtt message  
+
+  ```console
+  Backlog ButtonTopic 0; SetOption1 1; SetOption11 0; SetOption32 20  
+  
+  Rule1
+    ON button1#state=3 DO publish cmnd/topicHOLD/power 2 ENDON
+    ON button1#state=2 DO publish cmnd/topicSINGLEPRESS/power 2 ENDON 
+  
+  Rule1 1
+  ```
+
+  _**Note:**_ `SetOption11 0`  
+
+**_SWITCHES WITH 2 DIFFERENT ACTIONS_**  
+
+**Switches do not have double press feature**  
+
+- Example:
+  **_[assuming a connected pushbutton configured as Switch1]_**
+
+  **single press**: Do nothing  
+  **hold 2 secs**: Toggle relay 1
+
+  ```console
+  Backlog SwitchTopic1 0; SwitchMode1 5; SetOption32 20  
+  
+  Rule1
+    ON Switch1#State=3 DO Power1 2 ENDON
+    ON Switch1#State=2 DO Delay ENDON  
+  
+  Rule1 1
+  ```
+------------------------------------------------------------------------------
+
 ### Use a potentiometer
 Connecting a potentiometer to the Analog A0 input and a rule can be used to control the dimmer state of any device.
 
@@ -557,13 +621,9 @@ Rule1
 ```
 
 !!! note "The following won't work:"
-    ```console
-    Rule1 ON event#setvar1 DO Backlog var1 %value%; Power1 %var1% ENDON
-    ```
+    `Rule1 ON event#setvar1 DO Backlog var1 %value%; Power1 %var1% ENDON`
 
-At least not as you probably would expect. The `var1` value used by the `Power1` command will be the value present before the `Backlog` command is executed. This is so, because the rule will replace `%var1%` BEFORE the `Backlog` commands are put in the `Backlog` command stream.
-
-
+    At least not as you probably would expect. The `var1` value used by the `Power1` command will be the value present before the `Backlog` command is executed. This is so, because the rule will replace `%var1%` BEFORE the `Backlog` commands are put in the `Backlog` command stream.
 
 ------------------------------------------------------------------------------
 
@@ -899,71 +959,6 @@ Rule2 1
 
 ------------------------------------------------------------------------------
 
-### Button with single press, double press, and hold
-You can have all 3 actions but only if defining your GPIO as button. In this case the double press will toggle the relay.
-
-There is also an [option](Buttons-and-Switches#changing-default-functionality) to swap the actions of the **single press** and **double press**.
-
-**_BUTTON WITH 3 DIFFERENT ACTIONS_**
-
-- As an example:
-  **_[assuming Button1]_**
-
-  **single press**: Turn relay 1  
-  **double press**: send a mqtt message  
-  **hold 2 secs**: send another mqtt message
-
-  ```console
-  Backlog ButtonTopic 0; SetOption1 1; SetOption11 1; SetOption32 20
-  
-  Rule1
-    ON button1#state=3 DO publish cmnd/topicHOLD/power 2 ENDON
-    ON button1#state=2 DO publish cmnd/topicDOUBLEPRESS/power 2 ENDON 
-  
-  Rule1 1
-  ```
-
-- Another example:
-  **_[assuming Button1]_**
-
-  **single press**: send a mqtt message  
-  **double press**: Turn relay 1  
-  **hold 2 secs**: send another mqtt message  
-
-  ```console
-  Backlog ButtonTopic 0; SetOption1 1; SetOption11 0; SetOption32 20  
-  
-  Rule1
-    ON button1#state=3 DO publish cmnd/topicHOLD/power 2 ENDON
-    ON button1#state=2 DO publish cmnd/topicSINGLEPRESS/power 2 ENDON 
-  
-  Rule1 1
-  ```
-
-  _**Note:**_ `SetOption11 0`  
-
-**_SWITCHES WITH 2 DIFFERENT ACTIONS_**  
-
-**Switches do not have double press feature**  
-
-- Example:
-  **_[assuming a connected pushbutton configured as Switch1]_**
-
-  **single press**: Do nothing  
-  **hold 2 secs**: Toggle relay 1
-
-  ```console
-  Backlog SwitchTopic1 0; SwitchMode1 5; SetOption32 20  
-  
-  Rule1
-    ON Switch1#State=3 DO Power1 2 ENDON
-    ON Switch1#State=2 DO Delay ENDON  
-  
-  Rule1 1
-  ```
-
-------------------------------------------------------------------------------
-
 ### Perform any action on single/double press (for switches AND buttons)
 
 #### Rule
@@ -996,6 +991,7 @@ Every time you press the switch, your light toggles state (as it should). If you
 When you want to send MQTT messages ( we use domoticz in this example ) and choose when you want the relay on or off, by simply sending HTTP commands to trigger an event.  
 
 **Initial Config:**
+
 - PushButton Doorbell
 - (Sonoff Basic R1) GPIO14 - Switch4 (12)
 
@@ -1004,6 +1000,7 @@ Connect the Switch to GND and the GPIO on your device. Be sure put a 4.7k resist
 _Dont forget to change the IDX value_
 
 **Commands:**
+
 ```console
 Backlog SwitchTopic 0; SwitchMode4 2; SetOption0 0; PowerOnState 0
 
@@ -1040,7 +1037,8 @@ On:
 
 In order to search for the MQTT server using SD-DNS service (a.k.a. Bonjour or Zero Network Configuration) the suggested configuration is to leave the MQTT Host field blank.
 
-The standard behavior of Tasmota is  
+The standard behavior of Tasmota is 
+
 - searches for _mqtt._tcp service
 - resolve that to the proper IP address
 - connect to it 
@@ -1150,6 +1148,7 @@ Rule1 1
 ```
 
 description:
+
 - turn off switchtopic as it is necessary to trigger Switch2#state
 - on system boot set var1 to 0
 - on switch2 click (person pushing doorbell) - var1 += 1; trigger event START
@@ -1167,6 +1166,7 @@ In this case we have lock for 60 seconds for multiple people calls or to be resi
 As a WS2812 24 led ring draws approximately 24x3x20 mA = 1.44A and the Wemos D1 mini powered from a PC's USB port can only provide up to 0.5A it would be nice to have some kind of mechanism in place to limit the amount of current to the WS2812 LEDring to 0.1A. This is still enough to light all 24 leds up to color 202020.
 
 Hardware
+
 - Wemos D1 mini
 - INA219 I<sup>2</sup>C sensor
 - WS2812 LEDring with 24 LEDs powered by the Wemos D1 mini 5V thru the INA219 sensor
