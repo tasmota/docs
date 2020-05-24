@@ -188,10 +188,10 @@ A web user interface may be generated containing any of the following elements:
  `mtxt` = label middle of slider  
  `rtxt` = label right of slider  
 **Text Input:**    
- `tx(preset lbl vn)`  
- `preset` = preset input (may be same as vn)  
- `lbl` = label text  
+ `tx(vn lbl)`  
  `vn` = name of string variable to hold text state  
+ `lbl` = label text  
+ 
 **Number Input:**    
  `nm(min max step vn txt)`  
  `min` = number minimum value  
@@ -212,7 +212,7 @@ A web user interface may be generated containing any of the following elements:
   - 2f2 like above but with splined lines 
   - h=histogram  
   - t=data table
-  - g=simple gauges
+  - g=simple gauges (must give extra 3 vars after header, yellow start, red start, maxval)  
   - T=Timeline (special type arrays contains start,stop pairs in minutes timeofday)
   
   b,l,h type may have the '2' option to specify exactly 2 arrays with 2 y scales given at the end of paramter list.  
