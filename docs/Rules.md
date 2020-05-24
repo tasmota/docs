@@ -397,14 +397,10 @@ A problem with this solution is that on a Sonoff 4CH all four buttons will be se
 
 By using a rule a single button can now send any MQTT message allowing much more flexibility.
 
-Hardware
-- Sonoff 4CH
-
-Software
-- Tasmota compiled with `#define USE_RULES`
-- Disable ButtonTopic as it overrides rules for buttons: `ButtonTopic 0`
+Disable ButtonTopic as it overrides rules for buttons: `ButtonTopic 0`
 
 Rule
+
 ```console
 Rule1
   on button1#state do publish cmnd/ring2/power %value% endon
@@ -414,8 +410,8 @@ Rule1
 (You will likely need to enable this rule if it's the first time you've used them)
 "Rule1 on".
 
-Result
-- When button 1 is pressed the rule kicks in and sends a MQTT message substituting variable `%value%` with the button state like `cmnd/ring2/power 2`. When button 2 is pressed a MQTT message like `cmnd/strip1/power 2` will be sent.
+Result:    
+When button 1 is pressed the rule kicks in and sends a MQTT message substituting variable `%value%` with the button state like `cmnd/ring2/power 2`. When button 2 is pressed a MQTT message like `cmnd/strip1/power 2` will be sent.
 
 
 
@@ -424,26 +420,22 @@ Result
 ### Execute several commands when a Timer expires
 The default Timer1..16 functionality allows for controlling one output to either off, on, toggle or blink. When rules are enabled the blink option will be replaced by rule functionality allowing much more flexibility.
 
-Hardware
-- Sonoff 4CH
+Configure timer5 for rule execution when activated:  
 
-Software
-- Tasmota compiled with `#define USE_RULES`
-- Configure timer5 for rule execution when activated:  
-  ```console
+```console
   Timer5 {"Arm":1,"Mode":0,"Time":"16:00","Days":"1111111","Repeat":1,"Action":3}
-  ```
-- Rule  
-  ```console
-  Rule1 on clock#Timer=5 do backlog power2 on;power1 off;power3 2 endon
-  ```
+```
 
-Result
-- When the timer expires the rule kicks in and set Power1 to OFF, Power2 to ON and Toggles Power3
+#### Rule  
+
+```console
+  Rule1 on clock#Timer=5 do backlog power2 on;power1 off;power3 2 endon
+```
+
+#### Result
+When the timer expires the rule kicks in and sets Power1 to OFF, Power2 to ON and Toggles Power3
 
 If you want to have blink functionality define a rule like `on clock#Timer=5 do power 3 endon`
-
-
 
 ------------------------------------------------------------------------------
 
@@ -461,38 +453,27 @@ This creates a rule to publish MQTT commands whenever a Sonoff POW has current p
 
 `Rule 5`
 
-Now the MQTT message will be sent once, and only once, while the condition is met. This is perfect for thermostat on/off depending on temperature, bathroom extractor fan on/off depending on humidity, workshop dust collector on/off depending on whether some dust-producing machine is running.
-
-It meets the 'hard thermostat' requests that have been common.
-
-
+Now the MQTT message will be sent once, and only once, while the condition is met. This is perfect for simple thermostat on/off depending on temperature, bathroom extractor fan on/off depending on humidity, workshop dust collector on/off depending on whether some dust-producing machine is running.
 
 ------------------------------------------------------------------------------
 
 ### Use of variables and tele-
 Using variables allows for storing sensor results to be used in composing a single HA message like used with Domoticz. To prevent flooding Domoticz with messages we only want to send a message at TelePeriod time. This is achieved by prefixing the `<SensorName>` with the label `tele-`. This example will use a variable storing the temperature to be used together with humidity in one Domoticz MQTT message.
 
-Hardware
-- Sonoff TH or Wemos D1 mini
-- AM2301 Temperature and Humidity sensor
+Home Automation tool Domoticz configured with a virtual sensor Temp+Hum using Idx 134
 
-Software
-- Tasmota compiled with `#define USE_RULES`
-- Home Automation tool Domoticz configured with a virtual sensor Temp+Hum using Idx 134
+#### Rule
 
-Rule
 ```console
 Rule
   on tele-am2301-12#temperature do var1 %value% endon
   on tele-am2301-12#humidity do publish domoticz/in {"idx":134,"svalue":"%var1%;%value%;1"} endon
 ```
 
-Result
-- As a result of the `tele-` prefix the rules will be checked at TelePeriod time for sensor AM2301-12 Temperature and Humidity. The first rule will use the Temperature stored in `%value%` and save it in `%var1%` for future use. The second rule will use the Humidity stored in `%value%` and the Temperature stored in `%var1%` to compose a single MQTT message suitable for Domoticz. 
+#### Result
+As a result of the `tele-` prefix the rules will be checked at TelePeriod time for sensor AM2301-12 Temperature and Humidity. The first rule will use the Temperature stored in `%value%` and save it in `%var1%` for future use. The second rule will use the Humidity stored in `%value%` and the Temperature stored in `%var1%` to compose a single MQTT message suitable for Domoticz. 
 
 Clever Dickies now finally have a way to send Temperatures from multiple DS18B20 to Domoticz.
-
-
 
 ------------------------------------------------------------------------------
 
@@ -504,33 +485,30 @@ Hardware
 - Potentiometer of 2k2 connected to Gnd, A0 and 3V3
 - WS2812 LED
 
-Software
-- Tasmota compiled with `#define USE_RULES`
-
+### Rule
 ```console
 Rule on analog#a0div10 do dimmer %value% endon
 ```
 
-Result
-- Turning the potentiometer the voltage on the analog input will change resulting in a value change of 0 (Off) to 100 for the trigger. Using this value to control the dimmer of the WS2812 will control the brightness of the led(s)
+#### Result
+Turning the potentiometer the voltage on the analog input will change resulting in a value change of 0 (Off) to 100 for the trigger. Using this value to control the dimmer of the WS2812 will control the brightness of the led(s)
 
+#### Rule
 ```console
 Rule on analog#a0div10 do publish cmnd/grouplight/dimmer %value% endon
 ```
 
-Result
-- This time all lights configured with GroupTopic `grouplight` will change their brightness according to the potentiometer position.
+#### Result
+This time all lights configured with GroupTopic `grouplight` will change their brightness according to the potentiometer position.
 
-NOTE: You might want to execute command `SaveData 2` to reduce flash writes ;-)
-
-
+!!! note "You might want to use command `SaveData 2` to reduce flash writes"
 
 ------------------------------------------------------------------------------
 
-### Setting variables
+### Setting Variables
 Demonstrate the use of variables. Make sure to execute commands `Rule 4`(Disable one-shot detection) first when trying the following example.
 
-Set a variable
+#### Set a variable
 
 ```console
 Rule on event#setvar1 do var1 %value% endon
@@ -538,14 +516,14 @@ Rule on event#setvar1 do var1 %value% endon
 
 Command:  `event setvar1=1`
 
-View a variable
+#### View a variable
 ```console
 rule on event#getvar1 do var1 endon
 ```
 
 Command:  `event getvar1`
 
-* Toggle a variable
+#### Toggle a variable
 
 ```console
 Rule
@@ -553,11 +531,11 @@ Rule
   on event#toggling1<1 do event setvar1=1 endon
   on event#toggling1>0 do event setvar1=0 endon
   on event#setvar1 do var1 %value% endon
- ```
+```
 
 Command:  `event togglevar1`
 
-Show Messages:
+#### Show Messages
 
 ```console
 Rule on event#message do publish stat/[topic]/log %value% endon
@@ -568,9 +546,10 @@ Command:  `event message=INIT`
 All event commands can be executed from:
 
 - console: `event anyname=number`
--  mqtt:    `cmnd/[topic]/event anyname=number`
+-  mqtt:    `cmnd/%topic&/event anyname=number`
 
-Everything together:  
+#### Everything together
+
 ```console
 Rule1 
   on event#togglevar1 do event toggling1=%var1% endon 
@@ -581,37 +560,40 @@ Rule1
   on event#message do publish stat/mqttTopic/log %value% endon
 ```
 
-!!! note "The following won't work:"
+!!! note "The following will not work!"
+
     ```console
     Rule1 on event#setvar1 do backlog var1 %value%; power1 %var1% endon
     ```
 
-At least not as you probably would expect. The `var1` value used by the `power1` command will be the value present before the `backlog` command is executed. This is so, because the rule will replace `%var1%` BEFORE the `backlog` commands are put in the `backlog` command stream.
+At least not as you probably would expect. The `var1` value used by the `power1` command will be the value present before the `backlog` command is executed. This is so, because the rule will replace `Var1` **BEFORE** the `backlog` commands are put in the `backlog` command stream.
 
 
 
 ------------------------------------------------------------------------------
-### Control device LEDs with Relays
+<!--- ### Control device LEDs with Relays
 If a device has more than one relay and LEDs on different GPIOs (not connected to the relay) you need to use rules to display current relay status on LEDs. This example is a 3 gang wall switch. Instead of LEDs you need to assign 3 dummy relays that will be controlled when the real relays are switched to reflect their status.
 
 ```console
 Backlog ledmask 0x0000; setoption13 1; seriallog 0
+```
 
+#### Rule
+```console
 rule1 
   on power1#state do power4 %value% endon 
   on power2#state do power5 %value% endon 
   on power3#state do power6 %value% endon
-
-rule1 1
 ```
 Note: This method doubles the number of flash writes. [Link to the device](https://templates.blakadder.com/DS-102_3.html)
 
+--->
 
 ------------------------------------------------------------------------------
 
-### Thermostat Example
+### Simulated Thermostat
 
-As example, to be used on a Sonoff TH10 with Sensor Si7021
+Used on a Sonoff TH10 with Sensor Si7021.
 
 This example turn on and off an output based on the temperature value and the upper set point and the lower set point.
 It waits until is enabled by pressing the button or by mqtt message 1 to mem1. This value is remembered. So if power cycle occurs, will resume operation.
@@ -639,14 +621,16 @@ Initial config on console:
 * `Mem3 23`        <- setpoint Temp lower limit - View or set by MQTT cmnd/mqttTopic/mem3
 * `Var1 0 `       <- thermostat actual status: 1-OK 0-NOT READY - View by MQTT cmnd/mqttTopic/var1
 
-Rules:
+#### Rules
 
 On boot start a watchdog timer to check temp sensor connection.  
+
 ```console
 Rule on system#boot do RuleTimer1 70 endon
 ```
 
 An available button is configured as switch to set thermostat ON or OFF
+
 ```console
 Rule1
   on switch1#state do backlog event toggling1=%mem1% endon
@@ -655,16 +639,19 @@ Rule1
 ```
 
 Check temp sensor connection. If fails, set to off and turn off thermostat. Also continue checking  
+
 ```console
 Rule on Rules#Timer=1 do backlog var1 0; RuleTimer1 70; power1 0 endon
 ```
 
 Resets checking timer if temperature is connected  
+
 ```console
 Rule on tele-SI7021#temperature do backlog var1 1; RuleTimer1 30; event ctrl_ready=1; event temp_demand=%value% endon
 ```
 
 Thermostat control - upper limit and lower limit and enabled  
+
 ```console
 Rule1
   on event#ctrl_ready>%mem1% do var1 0 endon
@@ -672,34 +659,39 @@ Rule1
   on event#temp_demand<%mem3% do power1 %var1% endon
 ```
 
+#### Result
 
 Thermostat can be turned On by:  
+
 * pushing button
 * by command on local console: mem1 1
 * by command on any other console: publish cmnd/mqttTopic/mem1 1
 * or MQTT at: cmnd/mqttTopic/mem1 1
 
 Thermostat can be turned Off by:  
+
 * pushing button
 * by command on local console: mem1 0
 * by command on any other console: publish cmnd/mqttTopic/mem1 0
 * or MQTT at: cmnd/mqttTopic/mem1 0
 
 To get the status:  
+
 * `mem1`        <- thermostat status: 0-off 1-enabled - View or set by MQTT cmnd/mqttTopic/mem1
 * `mem2`       <- setpoint Temp upper limit - View or set by MQTT cmnd/mqttTopic/mem2
 * `mem3`         <- setpoint Temp lower limit - View or set by MQTT cmnd/mqttTopic/mem3
 * `var1`        <- thermostat actual status: 1-OK 0-NOT READY - View by MQTT cmnd/mqttTopic/var1
 
-Everything together:
+#### Everything together
 
-INITIAL CONFIG: (Note: RuleTimer1 must be greater that TelePeriod for expected results)
+Initial Config:    
+(Note: RuleTimer1 must be greater that TelePeriod for expected results)
 
 ```console
 backlog SwitchMode1 3; Rule 1; Rule 4; TelePeriod 60; SetOption26 1; SetOption0 0; poweronstate 0; mem1 0; mem2 25; mem3 23; var1 0
 ```
 
-RULES:
+Rules:
 
 ```console
 Rule1 
