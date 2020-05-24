@@ -253,7 +253,7 @@ with the '=' char at the beginning of a line you may do some special decoding
 - [Hager EHZ363 (SML)](#hager-ehz363-sml)
 - [Hager EHZ161 (OBIS)](#hager-ehz161-obis)
 - [Landis + Gyr ZMR120AR (OBIS)](#landis-gyr-zmr120ares2r2sfcs-obis)
-- [COMBO Meter (Water,Gas,SML)](#combo-meter-watergasSml)
+- [COMBO Meter (Water,Gas,SML)](#combo-meter-watergassml)
 - [WOLF CSZ 11/300 Heater](#wolf-csz-11300-heater)
 - [SDM530 (MODBUS)](#sdm530)
 - [Janitza B23 (MODBUS)](#janitza-b23)
