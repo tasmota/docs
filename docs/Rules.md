@@ -1511,7 +1511,7 @@ Starting with the slave, the rule to toggle the master is pretty simple:
 
 ```console
 Rule1
-  ON Event sendPower DO WebSend [192.168.0.74] POWER%value% TOGGLE ENDON
+  ON Event#sendPower DO WebSend [192.168.0.74] POWER%value% TOGGLE ENDON
   ON Button1#State DO Event sendPower=1 ENDON
   ON Button2#State DO Event sendPower=2 ENDON
   ON Button3#State DO Event sendPower=3 ENDON
@@ -1523,7 +1523,7 @@ Note that having a rule for the Button#State disables the power toggling of the 
 
 ```console
 Rule1
-  ON Event sendPower DO WebSend [192.168.0.144] POWER%Var1% %value% ENDON
+  ON Event#sendPower DO WebSend [192.168.0.144] POWER%Var1% %value% ENDON
   ON Power1#state DO Backlog Var1 1;Event sendPower=%value% ENDON
   ON Power2#state DO Backlog Var1 2;Event sendPower=%value% ENDON
   ON Power3#state DO Backlog Var1 3;Event sendPower=%value% ENDON
