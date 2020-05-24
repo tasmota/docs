@@ -459,6 +459,21 @@ This time all lights configured with GroupTopic `grouplight` will change their b
 
 NOTE: You might want to execute command `SaveData 2` to reduce flash writes ;-)
 
+------------------------------------------------------------------------------------
+
+### Use Zigbee to control Tasmota devices
+This setup uses a [Zigbee](Zigbee) gateway with an [Ikea remote switch](https://zigbee.blakadder.com/Ikea_E1743.html) paired. 
+
+Ikea switch's name was set with `ZbName ikea_switch`.
+
+#### Rule
+```console
+Rule1 on zbreceived#ikea_switch#power=1 do publish cmnd/backyard/POWER TOGGLE endon on zbreceived#ikea_switch#power=0 do publish cmnd/hall_light/POWER TOGGLE endon
+```
+
+#### Result
+Pressing `I` on the Ikea switch will toggle `backyard` device and pressing `O` toggles `hall_light` device.
+
 ------------------------------------------------------------------------------
 
 ### Execute several commands when a Timer expires
@@ -512,7 +527,7 @@ Rule
   ON event#toggling1<1 DO event setvar1=1 ENDON
   ON event#toggling1>0 DO event setvar1=0 ENDON
   ON event#setvar1 DO var1 %value% ENDON
- ```
+```
 
 Command:  `event togglevar1`
 
@@ -529,7 +544,8 @@ All event commands can be executed from:
 - console: `event anyname=number`
 -  mqtt:    `cmnd/[topic]/event anyname=number`
 
-Everything together:  
+Everything together: 
+ 
 ```console
 Rule1 
   ON event#togglevar1 DO event toggling1=%var1% ENDON 
