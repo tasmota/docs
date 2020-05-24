@@ -449,15 +449,15 @@ There is also an [option](Buttons-and-Switches#changing-default-functionality) t
   **double press**: send a mqtt message  
   **hold 2 secs**: send another mqtt message
 
-  ```console
-  Backlog ButtonTopic 0; SetOption1 1; SetOption11 1; SetOption32 20
-  
-  Rule1
-    ON button1#state=3 DO publish cmnd/topicHOLD/power 2 ENDON
-    ON button1#state=2 DO publish cmnd/topicDOUBLEPRESS/power 2 ENDON 
-  
-  Rule1 1
-  ```
+```console
+Backlog ButtonTopic 0; SetOption1 1; SetOption11 1; SetOption32 20
+
+Rule1
+  ON button1#state=3 DO publish cmnd/topicHOLD/power 2 ENDON
+  ON button1#state=2 DO publish cmnd/topicDOUBLEPRESS/power 2 ENDON 
+
+Rule1 1
+```
 
 - Another example:
   **_[assuming Button1]_**
@@ -466,15 +466,15 @@ There is also an [option](Buttons-and-Switches#changing-default-functionality) t
   **double press**: Turn relay 1  
   **hold 2 secs**: send another mqtt message  
 
-  ```console
-  Backlog ButtonTopic 0; SetOption1 1; SetOption11 0; SetOption32 20  
-  
-  Rule1
-    ON button1#state=3 DO publish cmnd/topicHOLD/power 2 ENDON
-    ON button1#state=2 DO publish cmnd/topicSINGLEPRESS/power 2 ENDON 
-  
-  Rule1 1
-  ```
+```console
+Backlog ButtonTopic 0; SetOption1 1; SetOption11 0; SetOption32 20  
+
+Rule1
+  ON button1#state=3 DO publish cmnd/topicHOLD/power 2 ENDON
+  ON button1#state=2 DO publish cmnd/topicSINGLEPRESS/power 2 ENDON 
+
+Rule1 1
+```
 
   _**Note:**_ `SetOption11 0`  
 
@@ -488,15 +488,15 @@ There is also an [option](Buttons-and-Switches#changing-default-functionality) t
   **single press**: Do nothing  
   **hold 2 secs**: Toggle relay 1
 
-  ```console
-  Backlog SwitchTopic1 0; SwitchMode1 5; SetOption32 20  
-  
-  Rule1
-    ON Switch1#State=3 DO Power1 2 ENDON
-    ON Switch1#State=2 DO Delay ENDON  
-  
-  Rule1 1
-  ```
+```console
+Backlog SwitchTopic1 0; SwitchMode1 5; SetOption32 20  
+
+Rule1
+  ON Switch1#State=3 DO Power1 2 ENDON
+  ON Switch1#State=2 DO Delay ENDON  
+
+Rule1 1
+```
 ------------------------------------------------------------------------------
 
 ### Use a potentiometer
