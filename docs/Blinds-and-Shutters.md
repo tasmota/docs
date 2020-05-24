@@ -392,7 +392,7 @@ D8|15|Counter2|STP
 ### using Sonoff Dual R2 
 If using a Sonoff Dual R2, use the following Template:
 ```  
-{"NAME":"Sonoff Dual R2","GPIO":[17,255,0,255,0,22,18,0,21,56,0,0,0,0],"FLAG":0,"BASE":39}
+{"NAME":"Sonoff Dual R2","GPIO":[17,255,0,255,0,22,18,0,21,56,0,0,0],"FLAG":0,"BASE":39}
 ```
 
 #### Checklist
