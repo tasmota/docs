@@ -6,7 +6,7 @@ Table Of Contents:
 * [Device Features](#device-features)
 * * [Breakdown](#breakdown)
 * * [Capacitive Touch IC](#capacitive-touch-ic)
-* [Re-Programming](#Re-Programming)
+* [Re-Programming](#re-programming)
 * * [Tools](#tools)
 * * [Setup](#setup)
 * * [Programming Mode](#programming-mode)
