@@ -433,71 +433,6 @@ Now the MQTT message will be sent once, and only once, while the condition is me
 
 It meets the 'hard thermostat' requests that have been common.
 
-------------------------------------------------------------------------------
-
-### Button with single press, double press, and hold
-You can have all 3 actions but only if defining your GPIO as button. In this case the double press will toggle the relay.
-
-There is also an [option](Buttons-and-Switches#changing-default-functionality) to swap the actions of the **single press** and **double press**.
-
-**_BUTTON WITH 3 DIFFERENT ACTIONS_**
-
-- As an example:
-  **_[assuming Button1]_**
-
-  **single press**: Turn relay 1  
-  **double press**: send a mqtt message  
-  **hold 2 secs**: send another mqtt message
-
-```console
-Backlog ButtonTopic 0; SetOption1 1; SetOption11 1; SetOption32 20
-
-Rule1
-  ON button1#state=3 DO publish cmnd/topicHOLD/power 2 ENDON
-  ON button1#state=2 DO publish cmnd/topicDOUBLEPRESS/power 2 ENDON 
-
-Rule1 1
-```
-
-- Another example:
-  **_[assuming Button1]_**
-
-  **single press**: send a mqtt message  
-  **double press**: Turn relay 1  
-  **hold 2 secs**: send another mqtt message  
-
-```console
-Backlog ButtonTopic 0; SetOption1 1; SetOption11 0; SetOption32 20  
-
-Rule1
-  ON button1#state=3 DO publish cmnd/topicHOLD/power 2 ENDON
-  ON button1#state=2 DO publish cmnd/topicSINGLEPRESS/power 2 ENDON 
-
-Rule1 1
-```
-
-  _**Note:**_ `SetOption11 0`  
-
-**_SWITCHES WITH 2 DIFFERENT ACTIONS_**  
-
-**Switches do not have double press feature**  
-
-- Example:
-  **_[assuming a connected pushbutton configured as Switch1]_**
-
-  **single press**: Do nothing  
-  **hold 2 secs**: Toggle relay 1
-
-```console
-Backlog SwitchTopic1 0; SwitchMode1 5; SetOption32 20  
-
-Rule1
-  ON Switch1#State=3 DO Power1 2 ENDON
-  ON Switch1#State=2 DO Delay ENDON  
-
-Rule1 1
-```
-------------------------------------------------------------------------------
 
 ### Use a potentiometer
 Connecting a potentiometer to the Analog A0 input and a rule can be used to control the dimmer state of any device.
@@ -528,7 +463,7 @@ NOTE: You might want to execute command `SaveData 2` to reduce flash writes ;-)
 ### Use Zigbee to control Tasmota devices
 This setup uses a [Zigbee](Zigbee) gateway with an [Ikea remote switch](https://zigbee.blakadder.com/Ikea_E1743.html) paired. 
 
-Ikea switch's name was set with `ZbName ikea_switch`.
+Ikea switch's name was set with `ZbName` to make it more user friendly.
 
 #### Rule
 ```console
@@ -537,6 +472,73 @@ Rule1 on zbreceived#ikea_switch#power=1 do publish cmnd/backyard/POWER TOGGLE en
 
 #### Result
 Pressing `I` on the Ikea switch will toggle `backyard` device and pressing `O` toggles `hall_light` device.
+
+------------------------------------------------------------------------------
+
+### Button single press, double press and hold
+
+_[assuming Button1 and Setoption73 0]_
+
+* single press: Toggle Power1  
+* double press: send a mqtt message  
+* hold 2 secs: send a different mqtt message
+
+```console
+Backlog ButtonTopic 0; SetOption1 1; SetOption11 1; SetOption32 20
+```
+
+```console
+Rule1
+  ON button1#state=3 DO publish cmnd/topicHOLD/power 2 ENDON
+  ON button1#state=2 DO publish cmnd/topicDOUBLEPRESS/power 2 ENDON 
+```
+
+`Rule1 1`
+
+#### Another example:
+_[assuming Button1 and Setoption73 0]_
+
+* single press: send MQTT message
+* double press: Toggle Power1 (SetOption11 swaps single and double press)
+* hold 2 secs: send another mqtt message  
+
+```console
+Backlog ButtonTopic 0; SetOption1 1; SetOption11 0; SetOption32 20  
+```
+
+```console
+Rule1
+  ON button1#state=3 DO publish cmnd/topicHOLD/power 2 ENDON
+  ON button1#state=2 DO publish cmnd/topicSINGLEPRESS/power 2 ENDON 
+```
+
+`Rule1 1`
+
+----------------------------------------------------------------------------
+
+### Disable switch single press and use long press
+
+`SetOption11 0`  
+
+**Switches do not have double press feature**  
+
+_[assuming a connected pushbutton configured as Switch1]_
+
+* single press: Does nothing (empty `Delay` commands)  
+* hold 2 secs: Toggle Power1
+
+```console
+Backlog SwitchTopic1 0; SwitchMode1 5; SetOption32 20  
+```
+
+```console
+Rule1
+  ON Switch1#State=3 DO Power1 2 ENDON
+  ON Switch1#State=2 DO Delay ENDON  
+```
+
+`Rule1 1`
+
 
 ------------------------------------------------------------------------------
 
@@ -559,9 +561,6 @@ Rule1 ON clock#Timer=5 DO Backlog Power2 on; Power1 off; Power3 2 ENDON
 When the timer expires the rule kicks in and set Power1 to OFF, Power2 to ON and Power3 TOGGLE.
 
 If you want to have blink functionality define a rule like `ON clock#Timer=5 DO power 3 ENDON`
-
-
-
 
 ------------------------------------------------------------------------------
 
@@ -1516,9 +1515,9 @@ Rule1
   ON Button1#State DO Event sendPower=1 ENDON
   ON Button2#State DO Event sendPower=2 ENDON
   ON Button3#State DO Event sendPower=3 ENDON
-
-Rule1 1
 ```
+`Rule1 1`
+
 
 Note that having a rule for the Button#State disables the power toggling of the slave's relay(s).  This is desirable because we want the master to control the slave's relay state(s) according to its own as follows:
 
@@ -1528,9 +1527,9 @@ Rule1
   ON Power1#state DO Backlog Var1 1;Event sendPower=%value% ENDON
   ON Power2#state DO Backlog Var1 2;Event sendPower=%value% ENDON
   ON Power3#state DO Backlog Var1 3;Event sendPower=%value% ENDON
-
-Rule1 1
 ```
+`Rule1 1`
+
 
 
 ------------------------------------------------------------------------------
