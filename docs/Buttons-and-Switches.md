@@ -1,4 +1,4 @@
-!!! info "Buttons and switches are primarily used to toggle (turn ON or OFF) relays or lights"
+!!! info "Buttons and switches: why the difference and how to configure them"
 
 A typical device usually has at least one button (exception being bulbs and some lights) to control the power state(s). Additional buttons and switches can be [wired](Expanding-Tasmota#connect-switch) to a free GPIO and configured in Module or Template settings.
 
@@ -25,7 +25,7 @@ In Tasmota a `Switch` is any switch or push-button additionally connected to a f
 - [PIR sensor](https://en.wikipedia.org/wiki/Passive_infrared_sensor) - even though it's technically a  sensor it is [configured as a switch in Tasmota](PIR-Motion-Sensors)
 - [mechanical push-button](https://en.wikipedia.org/wiki/Push-button) 
 
-By default a switch toggles the corresponding power state (f.e. `Switch1` controls `Power1`). Every time the switch gets flipped the power state changes (ON or OFF). Instead of the default toggling of the power state, switches can be configured to send messages to different MQTT topics or send commands to other Tasmota devices. To ignore the default behaviour define a rule which triggers on `Switch<x>#State` or use [`Switchtopic`](#Switchtopic). Take note: If the rule matches only certain states, default switch behaviour is supressed only for those states.
+By default a switch toggles the corresponding power state (f.e. `Switch1` controls `Power1`). Every time the switch gets flipped the power state changes (ON or OFF). Instead of the default toggling of the power state, switches can be configured to send messages to different MQTT topics or send commands to other Tasmota devices. To ignore the default behaviour define a rule which triggers on `Switch<x>#State` or use [`Switchtopic`](#switchtopic). Take note: If the rule matches only certain states, default switch behaviour is supressed only for those states.
 
 
 !!! example
@@ -96,7 +96,7 @@ Set inverted push-button with long press mode (`0 = OFF` (_default_), `1 = TOGGL
 
 Tasmota will send a `TOGGLE` command when the button pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Default state is OFF and when pressed it's ON. When held for the time set in `SetOption32` (_default = 4s_), Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
-!!! tip "Long press or hold can be used in [conjunction with rules](Rules#use-long-press-action-on-a-switch) to create additional features or to control another Tasmota device"
+!!! tip "Long press or hold can be used in [conjunction with rules](Rules#long-press-on-a-switch) to create additional features or to control another Tasmota device"
 
 **`SwitchMode 7`**   
 Set toggle push-button mode. Same as `SwitchMode 0`.
@@ -131,7 +131,7 @@ Set switch to pushbutton with dimmer mode
 Tasmota will send a `TOGGLE` command (use Switch<x>#state=2 in rules) when the button is pressed for a short time and is then released. When pressing the button (closing the circuit) for a long time (set in `SetOption32`) Tasmota sends repeated `INC_DEC` (increment or decrement the dimmer) commands (use Switch<x>#state=4 in rules) as long as the button is pressed. Releasing the button starts a internal timer, the time is set in `SetOption32`. When released for the time set in `SetOption32` Tasmota sends a `CLEAR` command (use Switch<x>#state=6 in rules). If the button is pressed again before the timeout Tasmota sends a `INV` command (use Switch<x>#state=5 in rules). The `INV` command is for the controlling software (home assistant) to switch between incrementing and decrementing the dimmer.
 
 !!! tip
-    The dimmer mode can be used in [conjunction with rules](Rules#Control-a-dimmer-with-one-switch) to create additional features or to control another Tasmota device.
+    The dimmer mode can be used in [conjunction with rules](Rules#control-a-dimmer-with-one-switch) to create additional features or to control another Tasmota device.
     The dimmer mode can be used to turn a media player on and off and to control the volume of a media player with one switch.
 
 
@@ -205,7 +205,7 @@ A push-to-make button should use a `Button<x>` component while a push-to-break b
 To ignore default button behaviour of controlling power outputs you can:
 
 1. use [`SetOption73 1`](Commands.md#setoption73)
-2. use [`ButtonTopic`](#ButtonTopic) 
+2. use [`ButtonTopic`](#buttontopic) 
 3. define a rule which triggers on `Button<x>#State`. Take note: If the rule trigger only certain states, default behaviour is supressed only for those states.
 
 
@@ -223,7 +223,7 @@ Rule1 1
 Multipress functions for 2 and more presses cannot be changed using SetOptions or rules.
 
 !!! danger
-    If you [have changed](#Changing-default-functionality) [ButtonTopic](Commands.md#buttontopic), [SetOption1](Commands.md#setoption1), [SetOption11](Commands.md#setoption11) or [SetOption13](Commands.md#setoption13) some of the listed functionality will be changed or removed.
+    If you [have changed](#changing-default-functionality) [ButtonTopic](Commands.md#buttontopic), [SetOption1](Commands.md#setoption1), [SetOption11](Commands.md#setoption11) or [SetOption13](Commands.md#setoption13) some of the listed functionality will be changed or removed.
 
 !!! note 
     `Button1` can directly control up to five relays. The number of the activated relay corresponds to the number of button presses and this feature is not present in the other buttons.    
@@ -253,7 +253,7 @@ There are two separate functions associated with a button long press based on ho
 1. When held continuously for 40 seconds (Configurable with [SetOption32](Commands.md#setoption32), value is 10x the configured hold time) Tasmota will reset to firmware defaults and restart.
 2. If enabled, button pressed for 4 seconds (Configurable with [SetOption32](Commands.md#setoption32)) creates a HOLD action and send an MQTT status message like `stat/tasmota/BUTTON<x> = {"ACTION":"HOLD"}` when SetOption73 is enabled. The button state for rules is `3`.
 
-!!! note "If [ButtonRetain](Commands.md#ButtonRetain) has been enabled the MQTT message will also contain the MQTT retain flag."
+!!! note "If [ButtonRetain](Commands.md#buttonretain) has been enabled the MQTT message will also contain the MQTT retain flag."
 
 !!! danger 
     When a button is configured as inverted or with a [Switchmode](Commands.md#switchmode) that keeps it as ON while depressed it activates the reset to firmware defaults function. Change the Button configuration or SwitchMode to avoid repeated reset to defaults or use `Setoption1 1` to disable that function.
@@ -307,7 +307,7 @@ This will send an MQTT message to a custom defined topic similarly to option 1.
 
 ### Changing Default Functionality
 
-If a [`ButtonTopic`](Commands.md#buttontopic) (and if [`SetOption1 1`](Commands.md#SetOption1)) or [`SwitchTopic 1`](Commands.md#SwitchTopic) is defined (and [`SwitchMode`](Commands.md#switchmode) is set to `5` or `6`) and a button is pressed longer than defined Key Hold Time ([`SetOption32`](Commands.md#setoption32) default 4 seconds) an MQTT message like `cmnd/%topic%/POWER HOLD` will be sent. `HOLD` can be changed with [`StateText4`](Commands.md#StateText).
+If a [`ButtonTopic`](Commands.md#buttontopic) (and if [`SetOption1 1`](Commands.md#setoption1)) or [`SwitchTopic 1`](Commands.md#switchtopic) is defined (and [`SwitchMode`](Commands.md#switchmode) is set to `5` or `6`) and a button is pressed longer than defined Key Hold Time ([`SetOption32`](Commands.md#setoption32) default 4 seconds) an MQTT message like `cmnd/%topic%/POWER HOLD` will be sent. `HOLD` can be changed with [`StateText4`](Commands.md#StateText).
 
 Command [`SetOption11`](Commands.md#setoption11) allows for swapping the functionality between the SINGLE and DOUBLE press of the push button.
 
@@ -323,7 +323,7 @@ If your standard topic of Sonoff Touch is `light` and the ceiling fan topic is `
 ButtonTopic ceilingfan
 SetOption11 1
 ```
-All of the above is easier accomplished using [Rules](Rules#button-with-single-press-double-press-and-hold)!
+All of the above is easier accomplished using [Rules](Rules#button-single-press-double-press-and-hold)!
 
 ---
 

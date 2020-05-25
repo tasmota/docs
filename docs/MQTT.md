@@ -74,7 +74,7 @@ cmnd/tasmota_switch/Power ← "TOGGLE"
 
 !!! tip
     By default, Tasmota replies to all commands through `.../RESULT`.
-    This behavior can be changed using [SetOption4](Commands.md#SetOption4), which makes the commands reply on the endpoint matching the command name, ex. `cmnd/tasmota/PowerOnState` will send a response on `cmnd/tasmota/POWERONSTATE`.
+    This behavior can be changed using [SetOption4](Commands.md#setoption4), which makes the commands reply on the endpoint matching the command name, ex. `cmnd/tasmota/PowerOnState` will send a response on `cmnd/tasmota/POWERONSTATE`.
 
 ### Examples
 In the following examples `%topic%` is `tasmota`, FullTopic is `%prefix%/%topic%/`, and prefixes are default `cmnd/stat/tele`:
@@ -97,7 +97,7 @@ In the following examples `%topic%` is `tasmota`, FullTopic is `%prefix%/%topic%
 
 - The button can send a MQTT message to the broker that in turn will switch the relay. To configure this you need to perform `cmnd/tasmota/ButtonTopic tasmota` where tasmota equals to Topic. The message can also be provided with the retain flag by `cmnd/tasmota/ButtonRetain on`.
 
-- Sonoff Pow (and any device with sensors) status can be requested manually with `cmnd/tasmota/status 8`. Additionally, Tasmota periodically sends telemetry every [TelePeriod](Commands.md#Teleperiod), which defaults to 300 seconds (5 minutes).
+- Sonoff Pow (and any device with sensors) status can be requested manually with `cmnd/tasmota/status 8`. Additionally, Tasmota periodically sends telemetry every [TelePeriod](Commands.md#teleperiod), which defaults to 300 seconds (5 minutes).
 
 - When a Sonoff Pow (and any device with power metering sensors) threshold like PowerLow has been met a message `tele/tasmota/POWER_LOW ON` will be sent. When the error is corrected a message `tele/tasmota/POWER_LOW OFF` will be sent.
 

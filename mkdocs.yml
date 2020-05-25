@@ -1,5 +1,5 @@
 site_name: Tasmota
-site_description: Documentation (Wiki) for Tasmota. Open source firmware for ESP8266 devices with easy configuration using webUI, OTA updates, automation using timers or rules, expandability and entirely local control over MQTT, HTTP, serial or KNX.
+site_description: Documentation (Wiki) for Tasmota
 site_url: https://tasmota.github.io/docs/
 repo_name: 'arendst/tasmota'
 repo_url: 'https://github.com/arendst/tasmota'
@@ -74,30 +74,33 @@ nav:
   - Modules: Modules.md
   - Peripherals: Peripherals.md
   - WebUI.md
+
   - Features:
     - Introduction: Features.md
+    - Bluetooth.md
     - Buttons-and-Switches.md
+    - DeepSleep.md
     - Device-Groups.md
+    - Dynamic-Sleep.md
+    - I2C Devices: I2CDevices.md
+    - IR Communication: Tasmota-IR.md
     - Lights.md
+    - OpenTherm: OpenTherm.md
     - PIR-Motion-Sensors.md
     - Power-Monitoring-Calibration.md
     - PWM-dimmer-switch.md
     - Rules.md
-    - Blinds-and-Shutters.md
-    - Timers.md
-    - TuyaMCU.md
-    - Bluetooth.md
-    - Zigbee.md
-    - IR Communication: Tasmota-IR.md
-    - DeepSleep.md
-    - Dynamic-Sleep.md
-    - I2C Devices: I2CDevices.md
     - Scripting: Scripting-Language.md
+    - Blinds-and-Shutters.md
     - Smart-Meter-Interface.md
-    - TasmotaSlave.md
     - Subscribe-&-Unsubscribe.md
+    - TasmotaSlave.md
+    - Thermostat.md
+    - Timers.md
     - TLS.md
-    - Tutorials.md
+    - TuyaMCU.md
+    - Zigbee.md
+    - Projects and Tutorials: Tutorials.md
     - For Developers: For-Developers.md
   - Smart Home Integrations:
     - Introduction: Integrations.md
@@ -132,7 +135,6 @@ nav:
     - BH1750.md
     - BME280.md
     - BME680.md
-    # - Buzzer.md
     - CC2530.md
     - Chirp! moisture sensor: Moisture-Sensor-and-Chirp!-Sensor.md
     - DHT11.md

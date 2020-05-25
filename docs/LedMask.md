@@ -3,7 +3,7 @@ LedMask command allows setting a [bitmask](https://en.wikipedia.org/wiki/Mask_(c
 `<bitmask>` = [bitwise](https://whatis.techtarget.com/definition/bitwise) value representing each relay. Values may be entered as either hexadecimal or decimal values (e.g., 0xFFFF = 65535).    
 `0xFFFF` (= 1111 1111 1111 1111) All relays control the power LED _(default)_
 
-*[LedState](Commands#LedState) must be enabled (i.e., `!= 0`) in order for `LedMask` to take effect.*
+*[LedState](Commands#ledstate) must be enabled (i.e., `!= 0`) in order for `LedMask` to take effect.*
 
 !!! example "Examples:"
 

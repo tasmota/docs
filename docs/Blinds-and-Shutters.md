@@ -257,7 +257,7 @@ Tasmota supports a maximum of four shutters with one stepper motor per shutter s
     - [DRV8825](https://lastminuteengineers.com/drv8825-stepper-motor-driver-arduino-tutorial/)
     - [TMC2208](https://wiki.fysetc.com/TMC2208/)  
 - Modifying a 28BYJ-48 12V stepper motor from unipolar to bipolar [tutorial](https://coeleveld.com/wp-content/uploads/2016/10/Modifying-a-28BYJ-48-step-motor-from-unipolar-to-bipolar.pdf)  
-- [Bill of Materials](#Bill-of-materials)  
+- [Bill of Materials](#bill-of-materials)  
 
 #### Example configuration  
 `EN` and `DIR` are on `Relay1i` and `Relay2` respectively. Please be aware to use the **inverse** relay for the enable signal.  
@@ -392,7 +392,7 @@ D8|15|Counter2|STP
 ### using Sonoff Dual R2 
 If using a Sonoff Dual R2, use the following Template:
 ```  
-{"NAME":"Sonoff Dual R2","GPIO":[17,255,0,255,0,22,18,0,21,56,0,0,0,0],"FLAG":0,"BASE":39}
+{"NAME":"Sonoff Dual R2","GPIO":[17,255,0,255,0,22,18,0,21,56,0,0,0],"FLAG":0,"BASE":39}
 ```
 
 #### Checklist

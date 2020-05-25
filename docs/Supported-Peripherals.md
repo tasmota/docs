@@ -52,7 +52,7 @@ Name|Description
 [**MPU6050**](MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer sensor (I^2^C)
 [**P1 Smart Meter**](P1-Smart-Meter) | Energy Meter (serial)
 [**PAJ7620**](PAJ7620) | Gesture & Proximity Detection Sensor
-[**PIR**](PIR-Motion-Sensors#AM312) | Passive Infrared Sensor (gpio)
+[**PIR**](PIR-Motion-Sensors#am312) | Passive Infrared Sensor (gpio)
 [**PCA9685**](PCA9685) | 16-channel, 12-bit PWM LED controller (I^2^C)
 **PCF8574** | 8-port IO Expander (I^2^C) 
 **PMS3003<BR>[PMS5003](https://www.superhouse.tv/38-diy-air-quality-sensor-part-1-basic-model/)<BR>PMS7003** | Particle Concentration sensor (serial)
@@ -78,6 +78,8 @@ Name|Description
 **TSL2591** | Luminosity Sensor (I^2^C)
 [**TX20<BR>TX23**](TX2x) | La Crosse TX2x Series Anemometer | sensor (gpio)
 [**VEML6070**](VEML6070) |  UV Sensor (I^2^C)
+[**VEML6075**](VEML6075) |  UVA/UVB/UVINDEX Sensor (I^2^C)
+[**VEML7700**](VEML7700) |  Ambient light intensity Sensor (I^2^C)
 [**VL53L0x**](VL53L0x) | Time of flight sensor (I^2^C)
 **WindMeter** | Analog cup anemometer
 [**WS2812B**](WS2812B-RGB-Shield) | Wemos RGB LED Shield

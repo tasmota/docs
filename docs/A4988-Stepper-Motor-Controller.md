@@ -50,7 +50,7 @@ The DRV8825 is directly pin compatible with the A4988. The microstepping increme
 ![DRV8825 -Truth-Table](https://user-images.githubusercontent.com/34340210/66860425-2d256a80-ef5b-11e9-95cf-6625833eea87.png)
 
 ## Operation
-Refer to the [Stepper Motor Commands](Commands.md#Stepper-Motors)  
+Refer to the [Stepper Motor Commands](Commands.md#stepper-motors)  
 
 `MotorRPM` is an imprecise setting due to the implementation method. Also, if the value is too high for the combination of chosen micro stepping increment (`MotorMIS`) and the number of steps the given motor needs for one revolution (`MotorSPR`), the motor will not turn but make a whining noise. You will have to experiment some to find the optimal combination for your use case.
 

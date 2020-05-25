@@ -36,6 +36,8 @@ USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 USE_SCRIPT_TASK | enables Task in ESP32
 USE_SML_SCRIPT_CMD | enables SML script cmds
+USE_SCRIPT_COMPRESSION | enables compression of scripts (2560 chars buffer)  
+USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
 ----
 
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules)"
@@ -186,9 +188,10 @@ A web user interface may be generated containing any of the following elements:
  `mtxt` = label middle of slider  
  `rtxt` = label right of slider  
 **Text Input:**    
- `tx(vn txt)`  
+ `tx(vn lbl)`  
  `vn` = name of string variable to hold text state  
- `txt` = label text   
+ `lbl` = label text  
+ 
 **Number Input:**    
  `nm(min max step vn txt)`  
  `min` = number minimum value  
@@ -196,7 +199,37 @@ A web user interface may be generated containing any of the following elements:
  `step` = number step value for up/down arrows  
  `vn` = name of number variable to hold number  
  `txt` = label text 
-
+ 
+ **Google Charts:**  
+  draws a google chart with up to 4 data sets per chart  
+  `gc( T array1 ... array4 "name" "label1" ... "label4" "entrylabels" "header" {"maxy1"} {"maxy2"})`   
+  `T` = type
+  - b=barchart  
+  - c=columnchart  
+  - p=piechart  
+  - l=linechart up to 4 lines with same scaling
+  - l2=linechart with exactly 2 lines and 2 y scales (must be given at end)
+  - 2f2 like above but with splined lines 
+  - h=histogram  
+  - t=data table
+  - g=simple gauges (must give extra 3 vars after header, yellow start, red start, maxval)  
+  - T=Timeline (special type arrays contains start,stop pairs in minutes timeofday)
+  
+  b,l,h type may have the '2' option to specify exactly 2 arrays with 2 y scales given at the end of paramter list.  
+  
+  `array` = up to 4 arrays of data  
+  `name` = name of chart  
+  `label` = label for up to the 4 datasets in chart  
+  `entrylabel` = labels of each entry separated by '|' char ("cntN" starts numbering entries with the number N)  
+  `header` = visible header name of chart  
+  
+  additionally you have to define the html frame to put the chart in (both lines must be preceded by a $ char)
+  e.g.  
+  $<div id="chart1"style="width:640px;height:480px;margin:0 auto">\</div>  
+  $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")  
+  you may define more then one chart. The charts id is chart1 ... chartN
+  
+  
 `>M`  
 [Smart Meter Interface](Smart-Meter-Interface)  
 
@@ -247,6 +280,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
 `sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
 `sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
+`sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
+`enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
 `hours` = hours  
 `mins` = mins  
 `secs` = seconds  
@@ -500,7 +535,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 `fx("fname")` check if file fname exists  
 `fe("fname")` execute script fname (max 2048 bytes, script must start with the '>' character on the first line)  
 
-**ESP32 Task support**  
+**ESP32 real Multitasking support**  
 `#define USE_SCRIPT_TASK` 
 enables support for multitasking scripts  
 res=ct(num timer core)  
@@ -528,6 +563,12 @@ print task1 on core %core%
 print task2 on core %core%
 
 ```
+
+**Script compression**  
+`#define USE_SCRIPT_COMPRESSION`  
+enables compression of script storage to about 40%. The script buffer is set to 2560 instead of 1535 chars.  
+no backward compatibility. first save your old script before updating.  
+
 
 **ESP32 Webcam support**   
 `#define USE_WEBCAM`  

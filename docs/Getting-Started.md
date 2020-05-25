@@ -139,7 +139,7 @@ You can test whether your device is in Programming Mode by attempting to read in
 - `esptool.py -p COM5 read_mac` (It should read the MAC address. It may fail afterwards during Uploading and running a "stub". This is normal.)
 - `esptool.py -p COM5 flash_id`
 
-If everything went well, you are now in Programming Mode and ready to continue with [flashing](#Flashing). If the flashing process is unable to start, disconnect the device and retry the steps.
+If everything went well, you are now in Programming Mode and ready to continue with [flashing](#flashing). If the flashing process is unable to start, disconnect the device and retry the steps.
 
 ### Common Mistakes
 - Wire connections and solder joints - Double check all connections and also check for solder overflow.
@@ -215,7 +215,7 @@ If the flash was successful the _Console_ window will display:
 
 ![Flash succeeded](https://user-images.githubusercontent.com/5904370/55690010-489c3100-598c-11e9-8135-e44469037e11.png)
 
-Unplug your serial programming adapter or device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](#Initial-Configuration).  -->
+Unplug your serial programming adapter or device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](#initial-configuration).  -->
 
 ### esptool.py
 
@@ -259,7 +259,7 @@ Load the chosen Tasmota firmware file with the following command (e.g., `tasmota
 esptool.py --port COM5 write_flash -fs 1MB -fm dout 0x0 tasmota.bin
 ```
 
-Unplug your serial programming adapter or your device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](#Initial-Configuration). 
+Unplug your serial programming adapter or your device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](#initial-configuration). 
 
 !!! tip "For proper device initialization after the firmware upload completes, power down and power up the device."
 
@@ -288,7 +288,7 @@ Once the erase is complete, put device back into programming mode and upload the
 esptool -cp COM5 -bm dout -cf tasmota.bin -v
 ```
 
-Unplug your serial programming adapter or your device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](#Initial-Configuration). 
+Unplug your serial programming adapter or your device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](#initial-configuration). 
 
 !!! tip "For proper device initialization after the firmware upload completes, power down and power up the device."
 
@@ -360,6 +360,13 @@ Configure your device using [Templates](Templates) in **Configuration - Configur
 Your device running Tasmota is now ready to be [controlled](Commands).
 
 !!! quote "Check out all the supported devices in [Tasmota Device Templates Repository](https://templates.blakadder.com/)"
+
+#### Configure Other (optional)
+
+Configure your device name which is displayed in webUI and used for [Home Assistant autodiscovery](Home-Assistant.md). 
+
+Configure web admin password for the webUI. Default username is `admin`. This type of security is rudimentary since Tasmota doesn't use HTTPS, do not expose your device outside of your local network.
+
 
 ### Using Serial Terminal
 If you flashed the device using serial-to-USB adapter (or it is a NodeMCU/D1 mini) you can take advantage of the existing connection and configure your device over the serial connection using [Commands](Commands).

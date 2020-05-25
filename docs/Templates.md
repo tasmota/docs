@@ -1,3 +1,5 @@
+description: Template is a definition of a device and how its GPIOs are assigned
+
 !!! info "**Template** is a definition of a device and how its GPIOs are assigned."
 
 Templates provide an easy way for you to create, modify and share configurations for various devices that have features supported in Tasmota. 
@@ -150,7 +152,7 @@ FLAG |  Feature description
 BASE is the starting module setup for the custom template. Some modules include special programming. If your device is similar to an existing built-in module it is best to use that as a starting point. When you're not sure which BASE module is suitable for your device use the `Generic (18)` module. A list of hard-coded devices can be found in [Modules](Modules).
 
 !!! example
-    In the [RGB Smart Plug](https://templates.blakadder.com/rgbpow.html) template we used the `BlitzWolf SHP (45)` module as BASE since the power monitoring circuitry is identical but GPIO00 and GPIO02 were changed and an unused GPIO04 was added to enable the RGB LED function. Using that specific module we took advantage of that module's calibrated power monitoring special programming which the `Generic (18)` module does not use.
+    In the [RGB Smart Plug](https://templates.blakadder.com/XS-A12.html) template we used the `BlitzWolf SHP (45)` module as BASE since the power monitoring circuitry is identical but GPIO00 and GPIO02 were changed and an unused GPIO04 was added to enable the RGB LED function. Using that specific module we took advantage of that module's calibrated power monitoring special programming which the `Generic (18)` module does not use.
 
 
 

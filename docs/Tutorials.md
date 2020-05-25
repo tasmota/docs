@@ -1,4 +1,7 @@
+# Projects and Tutorials
+
 !!! note "Share your projects in our [Discord server](https://discord.gg/Ks2Kzd4)!"
+
 
 ## External Links to cool/amazing projects made with Tasmota
 
