@@ -223,10 +223,10 @@ A web user interface may be generated containing any of the following elements:
   `entrylabel` = labels of each entry separated by '|' char ("cntN" starts numbering entries with the number N)  
   `header` = visible header name of chart  
   
-  additionally you have to define the html frame to put the chart in (both lines must be preceded by a & char)
+  additionally you have to define the html frame to put the chart in (both lines must be preceded by a $ char)
   e.g.  
-  &<div id="chart1"style="width:640px;height:480px;margin:0 auto">\</div>  
-  &gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")  
+  $<div id="chart1"style="width:640px;height:480px;margin:0 auto">\</div>  
+  $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")  
   you may define more then one chart. The charts id is chart1 ... chartN
   
   
