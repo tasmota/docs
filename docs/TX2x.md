@@ -112,7 +112,7 @@ Sensor sends a  `tele/%topic%/SENSOR` JSON reponse:
 ### Commands
 
 The wind speed unit is set to km/h as default. You can change the unit using the command  
-`SpeedUnit <x>` where \<x> = `1…6`:
+`SpeedUnit <x>` where <x\> = `1…6`:
 - 1 = m/s (meter per second)
 - 2 = km/h (kilometer per hour)
 - 3 = kn (knots)
