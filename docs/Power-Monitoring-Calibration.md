@@ -55,10 +55,10 @@ Repeat the procedure below for each of the readings: Current, Power, and Voltage
 3. If there is an observed difference, change the offset value by issuing the calibration command in the Console (e.g., `PowerCal 10000`)
 4. Adjust the offset value up or down until the readings on the multi-meter and the web page are as close as possible
 
-The `CurrentCal`, `PowerCal`, `VoltageCal` commands accept only values up to 32000. If the offset values you would like to specify are larger than that, you may have configured an incorrect power monitoring chip. This happens, for example, if you specify the BL0937 (134) in your template while you actually have an HLW8012 (133). Change 134 to 133 in your template to fix this.
+The `CurrentCal`, `PowerCal`, `VoltageCal` commands accept values up to 32000. If the offset values you would like to specify are larger, you may have configured an incorrect power monitoring chip in the template. For example: if you specify the BL0937 (134) while you actually have an HLW8012 (133). Change the template to proper power monitoring chip to fix.
 
 ## Known Issues
 
-Power monitoring chips like the HLW8032 (Blitzwolf SHP5) and CSE7766 (Sonoff S31, Sonoff POW R2) occasionally report invalid power measurements for load values below 5W. During this situation it sometimes reports a valid load. By setting [SetOption39](Commands#setoption39) to `128` (default) it must read at least 128 invalid power readings before reporting there is no load.
+Power monitoring chips such as HLW8032 (Blitzwolf SHP5) and CSE7766 (Sonoff S31, Sonoff POW R2) occasionally report invalid power measurements for load values below 5W. During this situation it sometimes reports a valid load. By setting [SetOption39](Commands#setoption39) to `128` (default) it must read at least 128 invalid power readings before reporting there is no load.
 
 To discard all loads below 6W simply set `SetOption39 1` (`0` will reset to default on next restart) so it will report no load below 6W.
