@@ -20,13 +20,10 @@ Before using Zigbee to Tasmota, you need to understand a few concepts. Here is a
 |**Pairing**<BR>By default the coordinator does not accept new devices unless put in pairing mode. When in pairing mode, it will accept pairing requests from any device within range.<BR>*Default: pairing disabled*|WPS|
 
 ## Required Hardware
-#### CC2530 Zigbee Adapter
-Any TI CC2530 chip based module can serve as a coordinator. See [list of supported modules](https://zigbee.blakadder.com/zigbee2tasmota.html) with their pinouts and flashing instructions. 
+#### Zigbee Adapter
+Any TI CC2530 or CC2531 chip based module can serve as a coordinator. See [list of supported modules](https://zigbee.blakadder.com/zigbee2tasmota.html) with their pinouts and flashing instructions. 
 
-!!! failure "You cannot use any CC2531 based device with Tasmota!"
-    CC2531 supports USB communication and not serial communication required by Zigbee2Tasmota.
-
-These PCB make all the connections required to flash the CC2530 and to run Z2T.  
+These PCBs make all the connections required to flash the CC2530 and to run Z2T:
 
 #### SuperHouse.tv  
   Jon Oxer created a [custom PCB](https://github.com/SuperHouse/Z2T) to connect a Wemos D1 Mini and a CC2530 board (with or without CC2591).  
@@ -68,7 +65,7 @@ Using an ESP82xx device such as a Wemos D1 Mini or a NodeMCU to flash the CC2530
 In normal operation two free GPIOs are needed for the serial communication with the CC2530.  
 
 ## Configuration
-### Flash CC2530 
+### Flash Zigbee Adapter 
 Zigbee2Tasmota requires a TI CC2530 based module flashed with [Z-Stack CC2530 firmware file](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_Home_1.2/bin/default) from [Koen Kanters](https://github.com/Koenkk). 
 
 Due to memory constraints of the CC2530, you can only pair 16 devices to a coordinator ([See details](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator)). 
@@ -83,7 +80,7 @@ Flashing options:
 - Flash with a dedicated [CC Debugger](https://ptvo.info/how-to-select-and-flash-cc2530-144/) and PC 
 
 ### Flash Tasmota
-Once the CC2530 flashing process completes, you can re-use the  ESP82xx and flash Tasmota with Zigbee2Tasmota enabled firmware. Otherwise, you can use any ESP82xx device.  
+Once the flashing process completes, you can re-use the ESP82xx and flash Tasmota with Zigbee2Tasmota enabled firmware. Otherwise, you can use any ESP82xx device.  
 
 !!! failure "Zigbee feature is not included in precompiled binaries"
 
@@ -103,12 +100,12 @@ If you find that your Zigbee2Tasmota operation is unstable, you may have an ESP8
 Flash the newly compiled binary usig the [normal flashing process](Getting-Started.md#flashing).
 
 ### Connect CC2530 to Tasmota
-If you are using your ESP82xx device to flash the Zigbee adapter as described in tutorials you may want to leave these connections in place in case you ever need to update CC2530 firmware. If not, any of the free GPIOs can be used.
+If you are using your ESP82xx device to flash the Zigbee adapter as described in tutorials you may want to leave these connections in place in case you ever need to update Zigbee firmware. If not, any of the free GPIOs can be used.
 
 !!! note "It is recommended that hardware serial pins be used (GPIO1/GPIO3 or GPIO13\[Rx]/GPIO15\[Tx])"
     Due to ESP82xx GPIO pin constraints, GPIO15 can only be used as serial Tx.  
 
-The interface between the ESP82xx Wi-Fi device and the CC2530 Zigbee module uses high speed serial. 
+The interface between the ESP82xx Wi-Fi device and the Zigbee module uses high speed serial. 
 
 !!! tip
     Tasmota also provides serial communications emulation through software (i.e., software serial). This allows any GPIO to be used. TasmotaSerial version 2.4.x (PR [#6377](https://github.com/arendst/Tasmota/pull/6377)) has improved the reliability of software serial making it feasible for use in this application. However, if you have an option to use hardware serial, choose that.
@@ -118,7 +115,7 @@ The interface between the ESP82xx Wi-Fi device and the CC2530 Zigbee module uses
 
 Recommended wiring:  
 
-ESP<BR>Device|Tasmota|<BR>CC2530
+ESP<BR>Device|Tasmota|<BR>Zigbee Module
 :--:|:--:|:--:
 GPIO13|Zigbee RX (166)|CC_TXD<BR>(A.K.A. P0_3)
 GPIO15|Zigbee TX (165)|CC_RXD<BR>(A.K.A. P0_2)
