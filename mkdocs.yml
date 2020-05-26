@@ -74,7 +74,6 @@ nav:
   - Modules: Modules.md
   - Peripherals: Peripherals.md
   - WebUI.md
-
   - Features:
     - Introduction: Features.md
     - Bluetooth.md
@@ -179,6 +178,7 @@ nav:
     - Troubleshooting.md
     - Device-Recovery.md
     - Discord Support: http://thehackbox.org/tasmota/release/ "target=_blank"
+  - Builds.md
   - Compiling: Compile-your-build.md
   - Contributing: Contributing.md
   - Download: http://thehackbox.org/tasmota/release/ "target=_blank"
