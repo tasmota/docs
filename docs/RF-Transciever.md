@@ -27,7 +27,7 @@ In the **_Configuration -> Configure Module_** page assign:
 
 - GPIOx to `RFSend (105)`   
 
-See [RF commands](Commands.md#rf-communication) for use. 
+See [RF commands](Commands.md#rf-transciever) for use. 
 
 ## RF Receiver
 ![](_media/peripherals/SRX882.jpg)
