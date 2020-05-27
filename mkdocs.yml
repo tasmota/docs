@@ -88,6 +88,7 @@ nav:
     - PIR-Motion-Sensors.md
     - Power-Monitoring-Calibration.md
     - PWM-dimmer-switch.md
+    - RF-Protocol.md
     - Rules.md
     - Scripting: Scripting-Language.md
     - Blinds-and-Shutters.md
@@ -161,6 +162,7 @@ nav:
     - PZEM-0XX.md
     - RCWL-0516.md
     - RDM6300.md
+    - RF-Transciever.md
     - SDS011.md
     - SHT30.md
     - TX2x.md
