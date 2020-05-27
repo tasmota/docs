@@ -88,7 +88,7 @@ nav:
     - PIR-Motion-Sensors.md
     - Power-Monitoring-Calibration.md
     - PWM-dimmer-switch.md
-    - RF-Protocol.md
+    - RF 433MHz Protocol: RF-Protocol.md
     - Rules.md
     - Scripting: Scripting-Language.md
     - Blinds-and-Shutters.md
