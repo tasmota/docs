@@ -1,6 +1,6 @@
 RC Switch driver enables sending RF codes through an RF transmitter and receiving them through an RF receiver via [rc-switch library](https://github.com/sui77/rc-switch/).
 
-## IR Transmitter
+## RF Transmitter
 ![](_media/peripherals/STX882.jpg)
 
 Not all transmitter modules will work with the rc-switch library.
