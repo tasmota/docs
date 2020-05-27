@@ -46,7 +46,3 @@ ON RfReceived#Data=<hex-value> DO <command> ENDON
 Examples:  
 **Sonoff RM433 Remote**  
 `MQT: tele/tasmota/RESULT = {"Time":"2020-05-27T18:59:06","RfReceived":{"Data":"0x7028D2","Bits":24,"Protocol":1,"Pulse":238}}`
-
-**Pioneer Vol-**  
-`tele/tasmota/RF1/RESULT = {"IrReceived":{"Protocol":"PIONEER","Bits":64,"Data":"0xA55AD02FA55AD02F","DataLSB":"0xA55A0BF4A55A0BF4","Repeat":0}}`
-
