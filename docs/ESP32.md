@@ -2,6 +2,13 @@
 
 !!! warning "ESP32 support is in early alpha and only basic functions will work"
 
+You can download precompiled development binaries from [https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32)
+
+Command syntax for flashing Tasmota32 firmware on ESP32 via Esptool (**replace COM port number!**):
+```
+esptool.py --chip esp32 --port COM5 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dout --flash_freq 40m --flash_size detect 0x1000 bootloader_dout_40m.bin 0x8000 partitions.bin 0xe000 boot_app0.bin 0x10000 tasmota32.bin
+```
+
 ## Compiling for ESP32
 
 Rename `platformio_override_sample.ini` to `platformio_override.ini` and uncomment tasmota32 in line #28. Next build will create a `tasmota32.bin`. 
