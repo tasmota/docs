@@ -15,11 +15,7 @@ Rename `platformio_override_sample.ini` to `platformio_override.ini` and uncomme
 
 ![platformio_override.ini](_media/esp32-pio.jpg)
 
-## Activate user_config_override.h
-
-To use your `user_config_override.h` in tasmota32 you need to uncomment line 254.
-
-![user_config_override.ini](_media/esp32-uco.jpg)
+All binaries use `user_config_override.h` if it exists.
 
 ## Templates and Known Devices
 
