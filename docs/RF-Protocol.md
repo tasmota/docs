@@ -15,9 +15,10 @@ Tasmota uses the [rc-switch library](https://github.com/sui77/rc-switch/) to dec
 ## Sending RF Codes
 Send an RF control code as a decimal or hexadecimal string in a JSON payload. An inexpensive RF receiver such as a [STX882](https://www.nicerf.com/product_132_82.html) can be connected to a device running Tasmota. In order to send RF data you need to _**configure the connected GPIO as `RFSend (105)`**_  
 
+### RF Transciever
 Command|Parameters
 :---|:---
-RFsend<a id="rfsend"></a>|`<value>` = code decimal or JSON. Data value is required and can be decimal or hexadecimal (using the 0x prefix), other values are optional.<BR><BR>_JSON_<BR>`{"Data":"<value>","Bits":<value>,"Protocol":<value>,"Pulse":<value>}`<BR>`"Data":"<value>"` = hexadecimal code<BR>`"Bits":<value>` = required number of data bits _(default = `24`)_<BR>`"Protocol":<value>` = protocol number _(default = `1`)_<BR>`"Repeat":<value>` = repeat value _(default = `10`)_<BR>`"Pulse":<value>` = pulse value _(`350` = default for protocol 1)_<BR>&emsp;e.g., `RFsend {"Data":"0x7028DC","Bits":24,"Protocol":1,"Pulse":238}`<BR><BR>_Decimal_<BR>data, bits, protocol, repeat, pulse <BR>&emsp;e.g., `RFsend 7350492, 24, 1, 238` or `RFsend 0x7028DC, 24, 1, 238`
+RFsend<a id="rfsend"></a>|`<value>` = code decimal or JSON. Data value is required and can be decimal or hexadecimal (using the 0x prefix), other values are optional.<BR><BR>_JSON_<BR>`{"Data":"<value>","Bits":<value>,"Protocol":<value>,"Pulse":<value>}`<BR>`"Data":"<value>"` = hexadecimal code<BR>`"Bits":<value>` = required number of data bits _(default = `24`)_<BR>`"Protocol":<value>` = protocol number _(default = `1`)_<BR>`"Repeat":<value>` = repeat value _(default = `10`)_<BR>`"Pulse":<value>` = pulse value _(`350` = default for protocol 1)_<BR>&emsp;e.g., `RFsend {"Data":"0x7028DC","Bits":24,"Protocol":1,"Pulse":238}`<BR><BR>_Decimal_<BR>`data, bits, protocol, repeat, pulse` <BR>&emsp;e.g., `RFsend 7350492, 24, 1, 10, 238` or `RFsend 0x7028DC, 24, 1, 10, 238`
 
 If you send only the "Data" value in decimal or hexadecimal other values will be sent as default.
 
@@ -25,6 +26,11 @@ If you send only the "Data" value in decimal or hexadecimal other values will be
     `RfSend 123456`
 
     will be sent as `{"Data":"0x1E240","Bits":24,"Protocol":1,"Pulse":351}`
+
+When sending decimal formatted command you need to follow the pattern otherwise a part of the command will be ignored. 
+
+!!! example
+    `RfSend 123456, 24, 1, 238` is missing the `repeat` value so the last number intended as pulse value won't be sent
 
 ## Receiving RF Codes
 An inexpensive RF receiver such as a [SRX882](https://www.nicerf.com/product_132_82.html) can be connected to a device running Tasmota. Configure the GPIO connected to Data pin on the RF receiver as 'RFrecv (106)'. 
