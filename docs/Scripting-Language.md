@@ -29,14 +29,15 @@ USE_WEBSEND_RESPONSE | enable receiving the response of a [`WebSend`](Commands#w
 SCRIPT_STRIP_COMMENTS | enables stripping comments when attempting to paste a script that is too large to fit
 USE_ANGLE_FUNC | add sin(x),acos(x) and sqrt(x) e.g. to allow calculation of horizontal cylinder volume
 USE_24C256 | enables use of 24C256 I^2^C EEPROM to expand script buffer (defaults to 4k)
-USE_SCRIPT_FATFS | enables SD card support (on SPI bus). Specify the CS pin number. Also enables 4k script buffer  
+USE_SCRIPT_FATFS | enables SD card support (on SPI bus). Specify the CS pin number. Also enables 4k script buffer on ESP8266 if using device with 4 or more Mb can enable FS by specifying -1 (using linker files with enabled FS Buffer e.g. eagle.flash.4m1m.ld)  
 USE_SCRIPT_FATFS_EXT | enables additional FS commands  
 SDCARD_DIR | enables support for web UI for SD card directory upload and download  
 USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 USE_SCRIPT_TASK | enables Task in ESP32
 USE_SML_SCRIPT_CMD | enables SML script cmds
-USE_SCRIPT_COMPRESSION | enables compression of scripts (2560 chars buffer)  
+USE_SCRIPT_COMPRESSION | enables compression of scripts (2560 chars buffer, ESP8266 only)  
+LITTLEFS_SCRIPT_SIZE S | enables script buffer of size S (e.g.8192, ESP32)  
 USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
 ----
 
