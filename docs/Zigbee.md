@@ -86,7 +86,7 @@ Once the flashing process completes, you can re-use the ESP82xx and flash Tasmot
 
 To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 ```arduino
-#define ZIGBEE 
+#define USE_ZIGBEE 
 ```
 #### Optional 
 Run the ESP at 160MHz instead of 80MHz which ensures higher reliability in serial communication with CC2530.
