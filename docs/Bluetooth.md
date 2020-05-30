@@ -254,7 +254,7 @@ This will update every day at 00:30 AM.
   </tr>
   <tr>
     <td class="tg-lboi"></td>
-    <td class="tg-lboi">set time using "MI32Time"<p>set temperature units with "MI32Unit"</td>
+    <td class="tg-lboi">set time using "MI32Time"<p>toggle temperature units with "MI32Unit"</td>
     <td class="tg-lboi"></td>
     <td class="tg-lboi">unsupported time or alarm</td>
     <td class="tg-lboi"></td>
