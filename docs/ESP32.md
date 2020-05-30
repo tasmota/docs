@@ -64,4 +64,32 @@ BME280 Settings (it is not very trustable):
 HumOffset 10
 TempOffset -15
 ```
+### displays, sensors and other options confirmed to work
+
+displays: (most probably all I2C displays will work)    
+
+USE_DISPLAY_SH1106  
+USE_DISPLAY_EPAPER_29  
+USE_DISPLAY_EPAPER_42  
+USE_DISPLAY_ILI9488  
+USE_DISPLAY_SSD1351  
+USE_DISPLAY_RA8876  
+
+
+sensors:  (most probably all I2C sensors will work)    
+
+USE_SHT3X  
+USE_BMP  
+USE_VL53L0X  
+USE_MLX90614  
+USE_IBEACON  
+USE_SML_M  
+
+misc:  
+USE_MP3_PLAYER  
+USE_SCRIPT (scripting and all its options)  
+USE_24C256  
+USE_SENDMAIL  
+
+
 
