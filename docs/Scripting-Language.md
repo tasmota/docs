@@ -34,10 +34,10 @@ USE_SCRIPT_FATFS_EXT | enables additional FS commands
 SDCARD_DIR | enables support for web UI for SD card directory upload and download  
 USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
-USE_SCRIPT_TASK | enables Task in ESP32
+USE_SCRIPT_TASK | enables multitasking Task in ESP32
 USE_SML_SCRIPT_CMD | enables SML script cmds
-USE_SCRIPT_COMPRESSION | enables compression of scripts (2560 chars buffer, ESP8266 only)  
-LITTLEFS_SCRIPT_SIZE S | enables script buffer of size S (e.g.8192, ESP32)  
+USE_SCRIPT_COMPRESSION | enables compression of scripts (2560 chars buffer) 
+LITTLEFS_SCRIPT_SIZE S | enables script buffer of size S (e.g.4096)  
 USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
 ----
 
@@ -71,6 +71,20 @@ To save code space almost no error messages are provided. However it is taken ca
 - All _**numbers are float**_, e.g., temp=hum\*(100/37.5)+temp-(timer\*hum%10)  
 - _**No spaces are allowed between math operators**_
 - Comments start with `;`  
+
+**Script buffer size**  
+the script language normally shares script buffer with rules buffer which is 1536 chars.
+with below options script buffer size may be expanded. PVARS is size for permanant vars.
+
+| Feature | ESP8266 | ESP32 | PVARS | remarks |
+| -- | -- | -- | -- | -- |
+| default | 1536 | 1536 | 40 ||
+| #define USE_SCRIPT_COMPRESSION | 2560 | 2560 | 40 |actual compression rate may vary |
+| #define LITTLEFS_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
+| #define SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | not supported | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
+| #define SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
+| #define EEP_SCRIPT_SIZE S | S<=4096 | S<=8192 | 1536 | requires I2C 24C256 eeprom |
+
 
 **Console Commands**   
 
@@ -509,13 +523,14 @@ the MQTT decoder may be configured for more space in user config overwrite by
 `#define USE_SCRIPT_FATFS` `CARD_CS`  
 `CARD_CS` = GPIO of card chip select   
 SD card uses standard hardware SPI GPIO: mosi,miso,sclk  
+with 4M flash on ESP8266 and special linker file you may specify -1 for CS and get a flash file system with the same functionality but but very low capacity (e.g. 2 MB)  
 A maximum of four files may be open at a time  
 e.g., allows for logging sensors to a tab delimited file and then downloading the file ([see Sensor Logging example](#sensor-logging))  
 The downloading of files may be executed in a kind of "multitasking" when bit 7 of loglvl is set (128+loglevel)  
 Without multitasking 150kb/s (all processes are stopped during downloading), with multitasking 50kb/s (other Tasmota processes are running)  
 The script itself is also stored on the SD card with a default size of 4096 characters  
 
-Enable SD card directory support (+ 1,2k flash)  
+**SD card directory support** (+ 1,2k flash)  
 `#define SDCARD_DIR`  
 Shows a web SD card directory (submenu of scripter) where you can upload and download files to/from sd card  
 
