@@ -28,8 +28,6 @@ If you use the ETS (KNX Configurator Software) you can add any TasmotaTasmota KN
 
 If the Tasmotadevice is connecting to a Wifi Repeater you might experience some issues receiving KNX Telegrams. This also applies to mDNS and Emulation features.
 
-Also, if using KNX IP Protocol, sleep needs to be 0 in order to avoid losing any telegram.
-
 ## Implemented Features 
 
 The implemented features, up to now, in KNX for Tasmota are:
