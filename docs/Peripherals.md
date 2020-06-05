@@ -115,6 +115,7 @@ Just like a normal Arduino, the ESP8266 has digital input/output pins (I/O or GP
 The ESP8266 and ESP8285 have 17 GPIO pins (0-16) but several are [reserved or have constraints](https://i.imgur.com/IH1fYqF.jpg). Do not use any of the _**reserved**_ pins. If you do, you might crash your program. On the ESP8266, six pins (GPIO 6 - 11) are used to interface the flash memory (the small 8-legged chip usually right next to the ESP8266). The ESP8285 has its flash memory integrated into the chip which frees up GPIO 9 and 10.
 
 GPIO 1 and 3 are used as TX and RX of the hardware Serial port (UART), so in most cases, you can’t use them as normal I/O while sending/receiving serial data.
+GPIO 1, 2 and 3 will cause boot failure if LOW on boot - use with care.
 
 #### Boot Mode Pins
 Some I/O pins have a special function during boot: They select 1 of 3 boot modes:
@@ -160,8 +161,8 @@ The ESP8266 has one SPI connection available to the user, referred to as HSPI. I
 [NodeMCU Labelled Pin](https://techtutorialsx.com/2017/04/02/esp8266-nodemcu-pin-mappings/) | GPIO# | 	Function | 	State	 | Restrictions
 -|-|-|-|-
 D3 | 0 | 	Boot mode select	 | 3.3V	 | No Hi-Z
-D10 | 1 | 	TX0 | 	-	 | Not usable during Serial transmission
-D4 | 2 | 	Boot mode select TX1 | 	3.3V (boot only) | 	Don’t connect to ground at boot time Sends debug data at boot time
+D10 | 1 | 	TX0 | 	-	 | Not usable during Serial transmission - Boot will fail if LOW at boot
+D4 | 2 | 	Boot mode select TX1 | 	3.3V (boot only) | 	Don’t connect to ground at boot time - boot will fail. Sends debug data at boot time
 D9 | 3 | 	RX0 | 	-	 | Not usable during Serial transmission
 D2 | 4 | 	SDA (I²C) | 	-	 | - 
 D1 | 5 | 	SCL (I²C) | 	-	 | -
