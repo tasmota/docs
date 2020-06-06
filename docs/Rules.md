@@ -177,7 +177,7 @@ Rule
 
 ### Rule Variables
 
-There are ten available variables (double precision reals) in Tasmota: `Var1..Var5` and `Mem1..Mem5`. They provide a means to store the trigger `%value%` to be used in any rule.         
+There are ten available variables (single precision reals) in Tasmota: `Var1..Var5` and `Mem1..Mem5`. They provide a means to store the trigger `%value%` to be used in any rule.         
 All `Var` will be empty strings when the program starts. The value of all `Mem` persists after a reboot. 
 
 The value of a `Var<x>` and `Mem<x>` can be: 

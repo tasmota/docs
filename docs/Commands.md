@@ -156,7 +156,7 @@ MqttLog<a class="cmnd" id="mqttlog"></a>|`0` =  disable logging via MQTT *(defau
 NtpServer<x\><a class="cmnd" id="ntpserver"></a>|NTP server setup (x= `1..3`)<BR>`0` = clear NtpServer<x\> settings<BR>`1` = reset NtpServer<x\> settings to firmware defaults<BR>`<value>` = set NtpServer<x\> host or IP address (32 char limit)
 OtaUrl<a class="cmnd" id="otaurl"></a>|Display current OTA URL<BR> `1` = Reset OtaUrl to firmware default<BR> `url` = set address for OTA (100 char limit)
 Pwm<x\><a class="cmnd" id="pwm"></a>|`0..1023` = set PWM value for channel
-PwmFrequency<a class="cmnd" id="pwmfrequency"></a>|`1` = reset PWM frequency to 223Hz<BR>`100..4000` = set PWM frequency (100Hz to 4kHz)<BR>_As of v8.2.0.4 the default frequency changed from 880Hz to 223Hz_
+PwmFrequency<a class="cmnd" id="pwmfrequency"></a>|`1` = reset PWM frequency to 223Hz<BR>`100..4000` = set PWM frequency (100Hz to 4kHz)<BR>_As of v8.3.0 the default frequency changed to 977Hz_
 PwmRange<a class="cmnd" id="pwmrange"></a>|`1` = reset maximum PWM range to 1023<BR>`255..1023` = set maximum PWM range
 Reset<a class="cmnd" id="reset"></a>|`1` = reset device settings to firmware defaults and restart<BR>`2` = erase flash, reset device settings to firmware defaults and restart<BR> `3` = erase System Parameter Area in flash (Wi-Fi calibration and related data) and restart<BR>`4` = reset device settings to firmware defaults but retain Wi-Fi credentials and restart<BR> `5` = erase all flash and reset parameters to firmware defaults but keep Wi-Fi settings and restart<BR>`6` = erase all flash and reset parameters to firmware defaults but keep Wi-Fi and MQTT settings and restart<BR>*(Erase of flash can take a few seconds to complete and there is no output during the erase process on the serial or web console)*<BR>`99` = reset device bootcount to zero
 Restart<a class="cmnd" id="restart"></a>|`1` = restart device with configuration saved to flash<BR>`99` = force restart device without configuration save<BR>_For debug and testing stack trace dumps only:_<BR>`-1` = force an Exception (28) crash<BR>`-2` = force a Soft WDT reset (after a freeze of 2 seconds)<BR>`-3` = force an OS watchdog reset (after a freeze of 120 seconds, **caution!**)
@@ -225,7 +225,7 @@ Subscribe<a class="cmnd" id="subscribe"></a>|Subscribes to an MQTT topic and ass
 SwitchTopic<a class="cmnd" id="switchtopic"></a>|`<value>` = set MQTT switch topic<BR>`0` = disable use of MQTT switch topic<BR>`1` = set MQTT switch topic to device `%topic%`<BR>`2` = reset MQTT switch topic to firmware default (`MQTT_SWITCH_TOPIC`) *(default = `0`)*<BR>[Read more](Buttons-and-Switches) about this.<BR>_If using MQTT to issue this command, if it is used with the device `GroupTopic`, the command will not be executed._
 TelePeriod<a class="cmnd" id="teleperiod"></a>|`0` = disable telemetry messages<BR>`1` = reset telemetry period to firmware default (`TELE_PERIOD`)<BR>`10..3600` = set telemetry period in seconds *(default = `300`)*
 Topic<a class="cmnd" id="topic"></a>|`1` = reset MQTT topic to firmware default (`MQTT_TOPIC`) and restart<BR>`<value>` = set MQTT topic **and** `ButtonTopic` and restart.<BR>*If using MQTT to issue this command, if it is used with the device `GroupTopic`, the command will not be executed. (Mqtt Topic can't be equal to Mqtt Client)*
-Unsubscribe<a class="cmnd" id="unsubscribe"></a>|Unsubscribe from topics subsribed to with [`Subscribe`](#subscribe) <BR>`  ` = unsubscribe all topics<BR>`<eventName>` = unsubscribe from a specific MQTT topic
+Unsubscribe<a class="cmnd" id="unsubscribe"></a>|Unsubscribe from topics subscribed to with [`Subscribe`](#subscribe) <BR>`  ` = unsubscribe all topics<BR>`<eventName>` = unsubscribe from a specific MQTT topic
 See also|[`SetOption3`](#setoption3) - Disable//Enable MQTT<BR>[`SetOption4`](#setoption4) - Return MQTT response as `RESULT` or `%COMMAND%` topic<BR>[`SetOption10`](#setoption10) - Main topic change behavior
 
 ### Rules
@@ -470,7 +470,6 @@ TuyaSend&#60;x><a class="cmnd" id="tuyasend"></a>|Send data to MCU with [TuyaMCU
 
 ### RF Bridge
 
-
 Command|Parameters
 :---|:---
 RfCode<a class="cmnd" id="rfcode"></a>|Show last sent 24-bit user code<BR>`1..8388607` = send 24-bit user code<BR>`#1..#7FFFFF` = send 24-bit hexadecimal user code using RfSync, RfLow and RfHigh timing
@@ -481,6 +480,11 @@ RfLow<a class="cmnd" id="rflow"></a>|`1` = reset low pulse time to 270 microseco
 RfRaw<a class="cmnd" id="rfraw"></a>|**This command only works when the firmware has been updated with [Portisch firmware](https://github.com/Portisch/RF-Bridge-EFM8BB1/releases).** Refer to the [Portisch wiki](https://github.com/Portisch/RF-Bridge-EFM8BB1/wiki) for details.<BR>[Learning and Decoding RF Codes with Portisch Firmware](devices/Sonoff-RF-Bridge-433#portisch-firmware-specific-usage)<BR>`0` = Set iTead default firmware support and messages *(default on restart)*<BR> `1` = set Portisch firmware support and messages<BR> `166` or `AAA655` = start sniffing/reading RF signals disabling iTead default RF handling<BR> `167` or `AAA755` = stop sniffing/reading RF signals enabling iTead default RF handling<BR> `168` or `AAA855` = transmitting iTead default RF protocols<BR> `169` or `AAA955` = start sniffing and learning predefined protocols<BR> `176` or `AAB055` = bucket Transmitting using command 0xB0<BR> `177` or `AAB155` = start Bucket sniffing using command 0xB1<BR> `192` or `AAC000C055` = beep (`00C0` is the length of the sound)<BR> `255` or `AAFF55` = show Rf firmware version (result AA02FF means Version 02)<BR> `<value>` = hexadecimal data to be sent to RF chip. This must be immediately followed by the `RfRaw 0` command (e.g., `Backlog RfRaw <value>; RfRaw 0`
 RfSync<a class="cmnd" id="rfsync"></a>|`1` = reset start sync pulse time to 8470 microseconds<BR>`2..32767` = set start sync pulse time in microseconds<BR>`#2..#7FFF` = set start sync pulse time in hexadecimal microseconds
 See also|[`SetOption28`](#setoption28) - Set RF received data format
+
+### RF Transciever
+Command|Parameters
+:---|:---
+RFsend<a id="rfsend"></a>|`<value>` = code decimal or JSON. Data value is required and can be decimal or hexadecimal (using the 0x prefix), other values are optional.<BR><BR>_JSON_<BR>`{"Data":"<value>","Bits":<value>,"Protocol":<value>,"Pulse":<value>}`<BR>`"Data":"<value>"` = hexadecimal code<BR>`"Bits":<value>` = required number of data bits _(default = `24`)_<BR>`"Protocol":<value>` = protocol number _(default = `1`)_<BR>`"Repeat":<value>` = repeat value _(default = `10`)_<BR>`"Pulse":<value>` = pulse value _(`350` = default for protocol 1)_<BR>&emsp;e.g., `RFsend {"Data":"0x7028DC","Bits":24,"Protocol":1,"Pulse":238}`<BR><BR>_Decimal_<BR>`data, bits, protocol, repeat, pulse` <BR>&emsp;e.g., `RFsend 7350492, 24, 1, 10, 238` or `RFsend 0x7028DC, 24, 1, 10, 238`
 
 ### IR Remote
 

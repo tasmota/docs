@@ -1,7 +1,7 @@
 # Basic API information
 
 Tasmota can easily be extended by developers using provided function pointers as callback Ids. This document lists the available callback function Ids. Read [Sensor API](https://tasmota.github.io/docs/Sensor-API) for more information.
-
+½
 Callback availability can be checked by searching for either XdrvCall, XsnsCall, XdspCall, XnrgCall and XlgtCall.
 
 ## Driver, Sensor, Energy and Light Callback Ids
@@ -27,8 +27,8 @@ FUNC_AFTER_TELEPERIOD       |      |  2   |  1   |      |      | At end of telep
 FUNC_JSON_APPEND            |      |  2   |  1   |  3   |      | Extend teleperiod JSON text
 FUNC_WEB_SENSOR             |      |  2   |  1   |  3   |      | Add sensor data to web GUI
 FUNC_COMMAND                |  x   |  1   |  2   |  3   |  4   | When a command is not recognized
-FUNC_COMMAND_DRIVER         |  x   |  x   |      |      |      | When command Driver\<id\> is executed
-FUNC_COMMAND_SENSOR         |  x   |      |  x   |      |      | When command Sensor\<id\> is executed
+FUNC_COMMAND_DRIVER         |  x   |  x   |      |      |      | When command Driver<id\> is executed
+FUNC_COMMAND_SENSOR         |  x   |      |  x   |      |      | When command Sensor<id\> is executed
 FUNC_MQTT_SUBSCRIBE         |      |  x   |      |      |      | At end of MQTT subscriptions
 FUNC_MQTT_INIT              |      |  x   |      |      |      | Once at end of MQTT connection
 FUNC_MQTT_DATA              |  x   |  x   |      |      |      | Before decoding command
