@@ -232,15 +232,15 @@ See also|[`SetOption3`](#setoption3) - Disable//Enable MQTT<BR>[`SetOption4`](#s
 
 Command|Parameters
 :---|:---
-Add<x\><a class="cmnd" id="add"></a>|`<value>` = add value to Var<x\> ([example](Rules#arithmetic-commands-to-be-used-with-vars))
+Add<x\><a class="cmnd" id="add"></a>|`<value>` = add value to Var<x\> ([example](Rules#arithmetic-commands-used-with-var))
 CalcRes<a class="cmnd" id="calcres"></a>|Current calculation resolution<BR>`0..7` = set number of decimal places to be used in `Add`, `Sub`, `Mult` and `Scale`
 Event<a class="cmnd" id="event"></a>|Execute an event to trigger a rule as [documented](Rules#rule-trigger)&emsp; 
 Mem<x\><a class="cmnd" id="mem"></a>|Manage up to 16 variables stored on flash (x = `1..16`)<BR>`Mem` returns all current values. `Mem<x>` returns the variable's current value.<BR>`<value>` = store a string value in a variable<BR>`"` = clear stored value in Mem<x\>
-Mult<x\><a class="cmnd" id="mult"></a>|`<value>` = multiply value to Var<x\> ([example](Rules#arithmetic-commands-to-be-used-with-vars))<BR>
+Mult<x\><a class="cmnd" id="mult"></a>|`<value>` = multiply value to Var<x\> ([example](Rules#arithmetic-commands-used-with-var))<BR>
 Rule<x\><a class="cmnd" id="rule"></a>|Rules. [Read more...](Rules)<BR>`0` = disable Rule<x\><BR>`1` = enable Rule<x\><BR>`2` = toggle Rule<x\><BR>`4` = disable one-shot detection (perform commands as long as trigger is met)<BR>`5` = enable one-shot (e.g., sometimes used for slow changing sensors like temperature) detection<BR>`6` = toggle one-shot detection<BR>`8` = disable stop-on-error after exception restart<BR>`9` = enable stop-on-error after exception restart<BR>`10` = toggle stop-on-error after exception restart<BR>`<value>` = define Rule<x\><BR>`+<value>` = append to Rule<x\><BR>`"` = clear Rule<x\>
 RuleTimer<x\><a class="cmnd" id="ruletimer"></a>|Up to eight timers to be used as countdown event (x = `1..8`)&emsp; <BR>`0..32766` = set countdown rule timer in seconds
-Scale<x\><a class="cmnd" id="scale"></a>|Scale value from a low and high limit to another low and high limits and save in Var<x\> ([example](Rules#arithmetic-commands-to-be-used-with-vars))<BR>`v` = value: the number to scale<BR>`fl` = fromLow: the lower bound of the value’s current range<BR>`fh` = fromHigh: the upper bound of the value’s current range<BR>`tl` = toLow: the lower bound of the value’s target range<BR>`th` = toHigh: the upper bound of the value’s target range
-Sub<x\><a class="cmnd" id="sub"></a>|`<value>` = subtract value to Var<x\> ([example](Rules#arithmetic-commands-to-be-used-with-vars))
+Scale<x\><a class="cmnd" id="scale"></a>|Scale value from a low and high limit to another low and high limits and save in Var<x\> ([example](Rules#arithmetic-commands-used-with-var))<BR>`v` = value: the number to scale<BR>`fl` = fromLow: the lower bound of the value’s current range<BR>`fh` = fromHigh: the upper bound of the value’s current range<BR>`tl` = toLow: the lower bound of the value’s target range<BR>`th` = toHigh: the upper bound of the value’s target range
+Sub<x\><a class="cmnd" id="sub"></a>|`<value>` = subtract value to Var<x\> ([example](Rules#arithmetic-commands-used-with-var))
 Var<x\><a class="cmnd" id="var"></a>|Manage up to 16 variables stored in memory (x = `1..16`)<BR>`Var` returns all current values. `Var<x>` returns the variable's current value.<BR>`<string>` = store a string value in a variable<BR>`"` = clear stored value in Var<x\>
 
 ### Timers
@@ -393,7 +393,7 @@ SetOption26<a class="cmnd" id="setoption26"></a>|Use indexes even when only one 
 SetOption28<a class="cmnd" id="setoption28"></a>|RF received data format<BR> `0` = hex *(default)*<BR> `1` = decimal 
 SetOption29<a class="cmnd" id="setoption29"></a>|IR received data format<BR> `0` = hex *(default)*<BR> `1` = decimal 
 SetOption30<a class="cmnd" id="setoption30"></a>|Enforce Home Assistant auto-discovery as light<BR> `0` = relays are announced as a switch and PWM as a light *(default)*<BR> `1` = both relays and PWM are announced as light
-SetOption31<a class="cmnd" id="setoption31"></a>|Set status LED  blinking during Wi-Fi and MQTT connection problems.<br> _[`LedPower`](#LedPower) must be set to `0` for this feature to work_<BR>`0` = Enabled *(default)*<BR> `1` = Disabled
+SetOption31<a class="cmnd" id="setoption31"></a>|Set status LED  blinking during Wi-Fi and MQTT connection problems.<br> _[`LedPower`](#ledpower) must be set to `0` for this feature to work_<BR>`0` = Enabled *(default)*<BR> `1` = Disabled
 SetOption32<a class="cmnd" id="setoption32"></a>|Number of 0.1 seconds to hold button before sending `HOLD` action message.<BR> `1..100` to set button hold time *(default = `40`)*. This option also affects the time required to perform a firmware defaults reset (10x `HOLD` action time)
 SetOption33<a class="cmnd" id="setoption33"></a>|Number of seconds for which the maximum power limit can be exceeded before the power is turned off<BR> `1..250` = set number of seconds *(default = `5`)*
 SetOption34<a class="cmnd" id="setoption34"></a>|`0..255` = set [Backlog](#backlog) inter-command delay in milliseconds *(default = `200`)*
@@ -454,7 +454,7 @@ Both hardware and software Serial Bridge are supported.
 Hardware Serial Bridge uses `GPIO1 (Tx)` and `GPIO3 (Rx)` or `GPIO13 (Tx)` and `GPIO15 (Rx)` pins of your device.   
 Software Serial Bridge can use any other GPIO to be configured as components `Serial Tx` and `Serial Rx` (or `SerBr Tx` and `SerBr Rx`). If `Tx` and `Rx` components are not assigned in the Template or Module, `GPIO1` and `GPIO3` will be used. Note that changing serial logging ([`SerialLog`](#seriallog) 0) will disable the hardware Serial Bridge.  
 
-Information received by Tasmota over the serial bridge is captured automatically. Before data will be received, a properly formatted [`SerialSend<x>` or `SSerialSend<x>`](#serialsend) command must be executed. This must be done any time the device restarts (e.g., via a `System#Boot` triggered rule). This command is required in order to set how the expected serial data will be formatted and interpreted (i.e., which &#60;x> option). A `{"SSerialReceived":{"Data":"<string>"}}` message will be posted. You can use [a rule](Rules#switch-relays-via-serial-interface) to process the string which will be contained in `SSerialReceived#Data`.
+Information received by Tasmota over the serial bridge is captured automatically. Before data will be received, a properly formatted [`SerialSend<x>` or `SSerialSend<x>`](#serialsend) command must be executed. This must be done any time the device restarts (e.g., via a `System#Boot` triggered rule). This command is required in order to set how the expected serial data will be formatted and interpreted (i.e., which &#60;x> option). A `{"SSerialReceived":{"Data":"<string>"}}` message will be posted. You can use [a rule](Rules#control-relays-via-serial) to process the string which will be contained in `SSerialReceived#Data`.
 
 Expect possible communication errors when additional sensors are configured.  
 
