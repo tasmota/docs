@@ -91,7 +91,7 @@ you may use a special external editor with syntax highlighting to edit the scrip
 you may use any number of comments and indents to make it better readable.
 then with cmd r the script is transfered to the ESP and immediately started.
 (all comments and indents are removed before transfering)
-see further info and download here: https://www.dropbox.com/sh/0us18ohui4c3k82/AACcVmpZ4AfpdrWE_MPFGmbma?dl=0  
+see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/AACcVmpZ4AfpdrWE_MPFGmbma?dl=0)  
 
 **Console Commands**   
 
