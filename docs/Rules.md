@@ -24,7 +24,10 @@ ON <trigger> DO <command> [ENDON | BREAK]
 - **`ENDON`**  - marks the end of a rule. It can be followed by another rule.
 - **`BREAK`**  - marks the end of a rule. `BREAK` will stop the execution of the remaining rules that follow this rule within the rule set. If a rule that ends with `BREAK` is triggered, the following rules in that rule set will not be executed. This allows the rules to somewhat simulate an "IF/ELSE" statement.  
 
-Rule sets are defined by using the [`Rule<x>`](Commands.md#rule) command. After defining a rule set, you have to enable it (turn it on) using `Rule<x> 1`. Similarly you can disable the rule set using `Rule<x> 0`.  
+Rule sets are defined by using the [`Rule<x>`](Commands.md#rule) command. After defining a rule set, you have to enable it (turn it on) using `Rule<x> 1`. Similarly you can disable the rule set using `Rule<x> 0`.
+
+!!! note
+    If bootloops are detected all rules will be disabled as a precaution. See [SetOption36](Commands.md#setoption36).
   
 There are three separate **rule sets** called `Rule1`, `Rule2` and `Rule3`. Each rule set can contain many rules which are dynamically compressed. Number of rules that can fit in a rule set varies. Expect at least 1000 characters available per rule set.
 
