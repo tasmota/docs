@@ -85,6 +85,13 @@ with below options script buffer size may be expanded. PVARS is size for permana
 | #define SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
 | #define EEP_SCRIPT_SIZE S | S<=4096 | S<=8192 | 1536 | requires I2C 24C256 eeprom |
 
+**Optional external editor**   
+
+you may use a special external editor with syntax highlighting to edit the scripts. (mac and pc)
+you may use any number of comments and indents to make it better readable.
+then with cmd r the script is transfered to the ESP and immediately started.
+(all comments and indents are removed before transfering)
+see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/AACcVmpZ4AfpdrWE_MPFGmbma?dl=0)  
 
 **Console Commands**   
 
@@ -289,6 +296,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sin(x)` = calculates the sinus(x) (if defined USE_ANGLE_FUNC)  
 `acos(x)` = calculates the acos(x) (if defined USE_ANGLE_FUNC)  
 `sqrt(x)` = calculates the sqrt(x) (if defined USE_ANGLE_FUNC)  
+`mpt(x)` = measure pulse time, x>=0 defines pin to use, -1 returns low pulse time,-2 return high pulse time (if defined USE_ANGLE_FUNC)  
+`rnd(x)` = return a random number between 0 and x, (seed may be set by rnd(-x))  
 `sf(F)` = sets the CPU Frequency (ESP32) to 80,160,240 Mhz, returns current Freq.  
 `s(x)` = explicit conversion from number x to string  
 `mqtts` = MQTT connection status: `0` = disconnected, `>0` = connected  

@@ -635,10 +635,11 @@ In this example Tradfri switch reports on `0x7596` and is used to control anothe
 
 ```haskell
 Rule
-  on ZbReceived#0x7596#0006!00= do publish cmnd/%topic%/POWER OFF endon 
-  on ZbReceived#0x7596#0006!01= do publish cmnd/%topic%/POWER OFF endon 
-  on ZbReceived#0x7596#0008!01= do publish cmnd/%topic%/Dimmer - endon 
-  on ZbReceived#0x7596#0008!05= do publish cmnd/%topic%/Dimmer + endon
+  on ZbReceived#0x7596#0006!00 do publish cmnd/%topic%/POWER OFF endon 
+  on ZbReceived#0x7596#0006!01 do publish cmnd/%topic%/POWER ON endon 
+  on ZbReceived#0x7596#0008!01 do publish cmnd/%topic%/Dimmer - endon 
+  on ZbReceived#0x7596#0008!05 do publish cmnd/%topic%/Dimmer + endon
+  on ZbReceived#0x030E#0008!07 do publish %topic%/ikeaonoff/Dimmer STOP endon
 ```
 
 ### Aqara Water Leak Sensor (SJCGQ11LM)
