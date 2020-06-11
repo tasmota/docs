@@ -10,8 +10,7 @@ First, test if the two can communicate.
 
 In Home Assistant web UI go to **Developer Tools - MQTT**. Subscribe to `tele/%topic%/STATE` and click **START LISTENING**. You should see a JSON response from your device.
 
-To test control of a relay or light, as **Publish a packet topic** enter `cmnd/%topic%/POWER` with payload `toggle`. When you click **PUBLISH** your device should switch state and a JSON response will be visible in **Listen to a topic** window.
-
+To test control of a relay or light, as **Publish a packet topic** enter `cmnd/%topic%/POWER` with payload `toggle`. When you click **PUBLISH** your device should switch state and a JSON resc
 ![](_media/hass1.png)
 ![](_media/hass2.png)
 
@@ -708,10 +707,9 @@ Add in Home Assistant using the [MQTT Cover](https://www.home-assistant.io/compo
 
 !!! example "TuyaMCU Curtain/Shade Motor"
 
-
-```yaml
 Requires `SetOption65 1`. In this example dpId1 is for open/close/stop of the motor, dpId2 sets position and dpId3 displays the current position.
 
+```yaml
 # Example configuration.yaml entry
 cover:
   - platform: mqtt
