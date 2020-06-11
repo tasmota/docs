@@ -21,7 +21,7 @@ If your device is similar to the existing built-in module (e.g., a particular MC
         `{"NAME":"ID Componentsb2","GPIO":[0,0,0,0,0,0,21,22,0,0,0,0,0],"FLAG":0,"BASE":18}`
       - Repeat step _2a_.  
 
-   _b._ Once you have found which GPIOs control the relays and LEDs, set these "active" GPIO to associate them with the corresponding `Relay<x>`, `LED<x>`, or `LEDLink` (Some may require the use of inverted (i.e., `Relay<x>i`/`LED<x>i`/`LEDLinki`) component).  
+   _b._ Once you have found which GPIOs control the relays and LEDs, set these "active" GPIO to associate them with the corresponding `Relay<x>`, `LED<x>`, or `LEDLink` or `PWM<x>` (Some may require the use of inverted (i.e., `Relay<x>i`/`LED<x>i`/`LEDLinki`) component). Bulbs have mainly `PWM`.  
 
       **For proper operation, in the final device configuration, assignment of like components must begin from `1` and be assigned sequentially!** Regular and inverted components can be intermixed.  
       (e.g., `Relay1`, then `Relay2`; `Led1`, then `Led2i` and so on)  
@@ -31,7 +31,9 @@ If your device is similar to the existing built-in module (e.g., a particular MC
    _a._ Save the configuration. Once the device reboots, use the web UI Console to run the `Status 8` (sensors) command. This will display the current state of each GPIO.
 
    _b._ Then, while either holding down the physical button or having flipped the position of the physical switch, display `Status 8` again. Whichever GPIO changes state from what was shown in step _3a_ is the GPIO connected to the input.
-
+      
+      - If you have a bulb, GPIO which are in state `on` will probably be SM16716 CLK or SM16716 DAT component.
+      
       - If none of the GPIO change state, then assign the remaining GPIO and retry step _3a_.
 
    _c._ Once you have found which GPIO are connected to each input, change the GPIO setting in the configuration to a `Button<x>` or `Switch<x>` according to your input component or use case. Proper operation may dictate the use regular or inverted (i.e., `Switch<x>i`/`Button<x>i`) settings. For buttons, you may need to determine whether the internal pull-up is used or not. If so, select `Button<x>`_**n**_, where _**n**_ indicates no pull-up.
