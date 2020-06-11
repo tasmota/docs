@@ -701,6 +701,47 @@ fan:
 ```
 <!-- tabs:end -->
 
+### Covers
+Add in Home Assistant using the [MQTT Cover](https://www.home-assistant.io/components/cover.mqtt/) integration.
+
+<!-- tabs:start -->
+
+!!! example "TuyaMCU Curtain/Shade Motor"
+
+
+```yaml
+Requires `SetOption65 1`. In this example dpId1 is for open/close/stop of the motor, dpId2 sets position and dpId3 displays the current position.
+
+# Example configuration.yaml entry
+cover:
+  - platform: mqtt
+    name: "Tuya Curtain"
+    command_topic: "cmnd/tasmota/TuyaSend4"
+    payload_close: "1,0"
+    payload_stop: "1,1"
+    payload_open: "1,2"
+    position_open: 100
+    position_closed: 0
+    position_topic: "tele/tasmota/RESULT"
+    value_template: >-
+          {% if value_json.TuyaReceived.DpType2Id3 is defined %}
+          {{ value_json.TuyaReceived.DpType2Id3 }}
+          {% else %}  
+          {{ state_attr('cover.tuya_curtain','current_position') | int }}
+          {% endif %}  
+    set_position_topic: "cmnd/tasmota/TuyaSend2"
+    set_position_template: '2,{{ position }}'
+    availability_topic: "tele/tasmota/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    qos: 0
+    retain: false
+```
+
+If you change `name:` make sure to reflect that change in the value_template cover name!
+
+<!-- tabs:end -->
+
 ### Device Specific
 
 <!-- tabs:start -->
