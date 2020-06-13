@@ -35,6 +35,7 @@ SDCARD_DIR | enables support for web UI for SD card directory upload and downloa
 USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 USE_SCRIPT_TASK | enables multitasking Task in ESP32
+USE_SCRIPT_GLOBVARS | enables global variables and >G section
 USE_SML_SCRIPT_CMD | enables SML script cmds
 USE_SCRIPT_COMPRESSION | enables compression of scripts (2560 chars buffer) 
 LITTLEFS_SCRIPT_SIZE S | enables script buffer of size S (e.g.4096)  
@@ -112,6 +113,9 @@ _Section descriptors (e.g., `>E`) are **case sensitive**_
   specifies countdown timers, if >0 they are decremented in seconds until zero is reached. see example below  
   `i:vname`   
   specifies auto increment counters if =0 (in seconds)  
+  `g:vname`   
+  specifies global variable which is linked to all gloabl variables with the same defintion on all devices in the homenet.
+  when a variable is updated in one device it is instantly updated in all other devices. if a section >G exists it is executed when a variable is updated from another device  
   `m:vname`   
    specifies a median filter variable with 5 entries (for elimination of outliers)  
   `M:vname`   
@@ -158,6 +162,10 @@ Remark: hue values have a range from 0-65535. Divide by 182 to assign HSBcolors 
 
 `>U`  
 status JSON Messages arrive here
+
+`>G`  
+global variable updated section
+
 
 `>b` _(note lower case)_  
 executed on button state change  
@@ -272,6 +280,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `topic` = mqtt topic  
 `gtopic` = mqtt group topic  
 `lip` = local ip as string  
+`luip` = udp ip as string (from updating device when USE_SCRIPT_GLOBVARS defined)  
 `prefixn` = prefix n = 1-3  
 `pwr[x]` = power state  (x = 1..N)  
 `pc[x]` = pulse counter value  (x = 1..4)  
@@ -293,6 +302,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `st(svar c n)` = string token - retrieve the n^th^ element of svar delimited by c  
 `sl(svar)` = gets the length of a string  
 `sb(svar p n)` = gets a substring from svar at position p (if p<0 counts from end) and length n  
+`is(index "string1|string2|....|stringn")` = gets a substring from immediate string separated by '|' (this immediate string may be up to 255 chars long) index = 0..n  
 `sin(x)` = calculates the sinus(x) (if defined USE_ANGLE_FUNC)  
 `acos(x)` = calculates the acos(x) (if defined USE_ANGLE_FUNC)  
 `sqrt(x)` = calculates the sqrt(x) (if defined USE_ANGLE_FUNC)  
