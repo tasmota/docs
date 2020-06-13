@@ -715,9 +715,9 @@ cover:
   - platform: mqtt
     name: "Tuya Curtain"
     command_topic: "cmnd/tasmota/TuyaSend4"
+    payload_open: "1,2"
     payload_close: "1,0"
     payload_stop: "1,1"
-    payload_open: "1,2"
     position_open: 100
     position_closed: 0
     position_topic: "tele/tasmota/RESULT"
@@ -732,8 +732,6 @@ cover:
     availability_topic: "tele/tasmota/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
-    qos: 0
-    retain: false
 ```
 
 If you change `name:` make sure to reflect that change in the value_template cover name!
