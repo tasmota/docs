@@ -137,7 +137,10 @@ _Section descriptors (e.g., `>E`) are **case sensitive**_
     Copying a string to a number or reverse is supported  
 
 `>B`  
-executed on BOOT time and on save script  
+executed on BOOT time before sensors are initialized and on save script  
+
+`>BS`  
+executed on BOOT time after sensors are initialized  
 
 `>E`  
 Executed when a Tasmota MQTT `RESULT` message is received, e.g., on `POWER` change. Also  Zigbee reports to  this section.
