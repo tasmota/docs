@@ -39,6 +39,7 @@ Name|Description
 [**IR Remote**](IR-Remote) | IR transmitter and receiver
 **K30, K70, S8** | CO<sub>2</sub> sensor (I^2^C) | 
 [**LM75AD**](LM75AD) |  Temperature Sensor (I^2^C)
+[**LMT01**](LMT01) | Temperature Sensor (gpio)
 **MAX31855** | Thermocouple Sensor (SPI)
 **MAX31865** | RTD Temperature Sensor Amplifier (SPI)
 **MAX44009** | Ambient Light Sensor (I^2^C)
