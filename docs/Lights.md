@@ -296,10 +296,15 @@ It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (i
 !!! note 
     Depending on the device design, some LEDs are connected to the same GPIO as the relay. Those cannot be independently controlled since they have to follow the relay state.
 
-If you have more than one LED wired independently and you want it to show the power state of the relay, you must assign an `LedLink` GPIO.
+If you have more than one LED wired independently and you want it to show the power state of the relay, you **must** assign an `LedLink` GPIO.
 
-#### Using LedLink
-`LedLink` / `LedLinki` was introduced with Tasmota version 6.5.0.12. It is used to assign the link status LED. If your device does not have an LED for link status (or you want to use that LED for a different purpose), you can assign `LedLink` to an available free GPIO. When `LedLink(i)` is assigned, other LEDs are automatically linked to their corresponding relay and serve as that relay's power status LED - i.e., `Led<x>(i)` links to `Relay<x>(i)`
+#### PWM LED Mode
+Using [`LedPwmMode`](Commands#ledpwmmode) you can change the LED display mode from simple on/off to a PWM controlled LED which will enable you to f.e. display a brighter LED when the relay is on and a dimmer LED when its OFF so you can locate the switch in the dark but not have it obnoxiously bright.
+
+`LedPwmOff` and `LedPwmOn` control the preset LED brightness in their respective states.
 
 #### LedPower Command
 When you use [`LedPower`](Commands#ledpower) you take over control of that particular LED and it stops being linked to its corresponding relay and being its power status LED.
+
+#### Using LedLink
+`LedLink` / `LedLinki` is used to assign the link status LED. If your device does not have an LED for link status (or you want to use that LED for a different purpose), you can assign `LedLink` to an available free GPIO. When `LedLink(i)` is assigned, other LEDs are automatically linked to their corresponding relay and serve as that relay's power status LED - i.e., `Led<x>(i)` links to `Relay<x>(i)`
