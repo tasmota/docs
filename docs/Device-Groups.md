@@ -14,6 +14,8 @@ The device group name is set with the `DevGroupName` command (GroupTopic prior t
 
 The items sent and received from the group are selected with the `DevGroupShare` command. By default all items are sent and received. An example of when the `DevGroupShare` command would be used is when you have a group of lights that you control with a dimmer switch and home automation software. You want the dimmer switch to be able to control all items. The home automation software controls each light individually. When it controls the whole group, it actually sends command to each light in the group. If you use the home automation software to turn an individual light on or off or change it's brightness, color or scheme, you do not want the change to be replicated to the other lights. In this case, you would set the incoming and outgoing item masks to 0xffffffff (all items) on the dimmer switch (`DevGroupShare 0xffffffff,0xffffffff`) and set the incoming item mask to 0xffffffff and outgoing item mask to 0 on all the lights (`DevGroupShare 0xffffffff,0`).
 
+By default, the state of all relays is sent to and received from device group 1. To enable each relay to be in a separate device group, enable option 88 (`SetOption88 1`). Relay 1 updates will be sent to/received from device group 1, relay 2 updates will be sent to/received from device group 2, etc.
+
 ## Troubleshooting
 
 If no values seem to be shared between devices, perform the following checks:
