@@ -37,6 +37,8 @@ USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 USE_SCRIPT_TASK | enables multitasking Task in ESP32
 USE_SCRIPT_GLOBVARS | enables global variables and >G section
 USE_SML_SCRIPT_CMD | enables SML script cmds
+USE_SCRIPT_TIMER | enables up to 4 timers
+SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
 USE_SCRIPT_COMPRESSION | enables compression of scripts (2560 chars buffer) 
 LITTLEFS_SCRIPT_SIZE S | enables script buffer of size S (e.g.4096)  
 USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
@@ -84,7 +86,12 @@ with below options script buffer size may be expanded. PVARS is size for permana
 | #define LITTLEFS_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
 | #define SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | not supported | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
 | #define SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
-| #define EEP_SCRIPT_SIZE S | S<=4096 | S<=8192 | 1536 | requires I2C 24C256 eeprom |
+| #define EEP_SCRIPT_SIZE S, #define USE_EEPROM | S<=4096 | S<=8192 | 1536 | may also use I2C 24C256 eeprom #define USE_24C256 |
+
+most usefull defintion for larger scripts would be  
+ESP8266: #define USE_EEPROM and #define EEP_SCRIPT_SIZE 4000  
+ESP32: #define LITTLEFS_SCRIPT_SIZE 8192  
+
 
 **Optional external editor**   
 
@@ -130,7 +137,10 @@ _Section descriptors (e.g., `>E`) are **case sensitive**_
     Copying a string to a number or reverse is supported  
 
 `>B`  
-executed on BOOT time and on save script  
+executed on BOOT time before sensors are initialized and on save script  
+
+`>BS`  
+executed on BOOT time after sensors are initialized  
 
 `>E`  
 Executed when a Tasmota MQTT `RESULT` message is received, e.g., on `POWER` change. Also  Zigbee reports to  this section.
@@ -165,6 +175,18 @@ status JSON Messages arrive here
 
 `>G`  
 global variable updated section
+
+`>P`  
+any power change triggers here
+
+`>jp`  
+https webpage json parse arrives here  
+
+`>ti1`  
+`>ti2`  
+`>ti3`  
+`>ti4`  
+ticker callback after timer expiration
 
 
 `>b` _(note lower case)_  
@@ -316,6 +338,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
 `sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
 `enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
+`gjp("host" "path")` = trigger HTTPS JSON page read as used by Tesla Powerwall (if defined SCRIPT_GET_HTTPS_JP)  
+`tsN(ms)` = set up to 4 timers (N=1..4) to millisecond time on expiration triggers section >tiN  (if defined USE_SCRIPT_TIMER)  
 `hours` = hours  
 `mins` = mins  
 `secs` = seconds  

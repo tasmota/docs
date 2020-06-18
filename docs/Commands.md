@@ -441,7 +441,7 @@ SetOption84<a class="cmnd" id="setoption84"></a>|(Experimental) When using AWS I
 SetOption85<a class="cmnd" id="setoption85"></a>|[Device group](Device-Groups) support<BR>`0` = disabled _(default)_<BR>`1` = enabled
 SetOption86<a class="cmnd" id="setoption86"></a>|**PWM Dimmer only!** Turn brightness LED's off 5 seconds after last change<BR>`0` = disabled _(default)_<BR>`1` = enabled
 SetOption87<a class="cmnd" id="setoption87"></a>|**PWM Dimmer only!** Turn red LED on when powered off<BR>`0` = disabled _(default)_<BR>`1` = enabled
-SetOption88<a class="cmnd" id="setoption88"></a>|**PWM Dimmer only!** Buttons control remote devices<BR>`0` = disabled _(default)_<BR>`1` = enabled
+SetOption88<a class="cmnd" id="setoption88"></a>|Make each relay part of a separate device group. Relay 1 updates are sent to/received from device group 1, relay 2 updates are sent to/received from device group 2, etc. For the PWM Dimmer module, make each button be associated with a different device group.<BR>`0` = disabled _(default)_<BR>`1` = enabled
 SetOption89<a class="cmnd" id="setoption89"></a>|Configure MQTT topic for Zigbee devices (also see `SensorRetain`)<BR>`0` = single `tele/%topic%/SENSOR` topic _(default)_ <BR>`1` = unique device topic based on Zigbee device ShortAddr<br>_Example:_ `tele/Zigbee/5ADF/SENSOR = {"ZbReceived":{"0x5ADF":{"Dimmer":254,"Endpoint":1,"LinkQuality":70}}}`
 SetOption90<a class="cmnd" id="setoption90"></a>|Disable sending MQTT with non-JSON messages<BR>`0` = send all MQTT _(default)_ <BR>`1` = send only MQTT messages with JSON payloads
 SetOption91<a class="cmnd" id="setoption91"></a>|Enable `Fade` at boot and power on. By default fading is not enabled at boot because of stuttering caused by wi-fi connection<BR>`0` = don't Fade at startup _(default)_ <BR>`1` = Fade at startup
@@ -630,6 +630,7 @@ InputSwitchSet<x><a class="cmnd" id="InputSwitchSet"></a>|Sets the number of the
 InputSwitchUse<x><a class="cmnd" id="InputSwitchUse"></a>|Switch to decide if the input shall be used to automatically switch to manual mode and assign it to the output (usefull if using a serially connected wall thermostat)<BR> `0` = Input not used (default)<BR> `1` = Input used</ul>
 SensorInputSet<x><a class="cmnd" id="SensorInputSet"></a>|Sets the temperature sensor to be used<BR> `0` = MQTT (default)<BR> `1` = Local sensor (can be changed by define, default DS18B20)</ul>
 OutputRelaySet<x><a class="cmnd" id="OutputRelaySet"></a>|Sets the output switch to be used for the thermostat<BR> `<1..8>` = Number of the output (default 1)</ul>
+EnableOutputSet<x><a class="cmnd" id="EnableOutputSet"></a>|Enables or disables the physical output<BR> `0` = Output disabled<BR> `1` = Output enabled (default)</ul>
 TimeAllowRampupSet<x><a class="cmnd" id="TimeAllowRampupSet"></a>|Sets the minimum time in minutes since the last control action to be able to switch to the predictive ramp-up controller phase (applicable just in case of Hybrid controller, used normally in case of big deltas between the setpoint and the room temperature)<BR> `<value>` = Minutes (default 300 minutes) </ul>
 TempFormatSet<x><a class="cmnd" id="TempFormatSet"></a>|Sets the temperature format<BR> `0` = Degrees celsius (default)<BR> `1` = Degrees Fahrenheit</ul>
 TempMeasuredSet<x><a class="cmnd" id="TempMeasuredSet"></a>|Sets the temperature measured by the sensor (for MQTT sensor mode)<BR> `<TempFrostProtectSet..100>` = Temperature (default 18.0° Celsius) </ul>
@@ -653,6 +654,7 @@ TempRupDeltOutSet<x><a class="cmnd" id="TempRupDeltOutSet"></a>|Sets the maximum
 TimeRampupMaxSet<x><a class="cmnd" id="TimeRampupMaxSet"></a>|Sets the maximum time in minutes for the controller to stay in the ramp-up phase (applicable just in Hybrid controller mode<BR> `0..1440` = value in minutes (default 960 minutes)</ul>
 TimeRampupCycleSet<x><a class="cmnd" id="TimeRampupCycleSet"></a>|Sets the value of the cycle for the ramp-up controller<BR> `0..1440` = value in minutes (default 30 minutes)</ul>
 TempRampupPiAccErrSet<x><a class="cmnd" id="TempRampupPiAccErrSet"></a>|Sets the initial accumulated error when switching from ramp-up to the PI controller phase if the target temperature has not been reached (applicable just in Hybrid controller mode)<BR> `0..25` = value in degrees Celsius/Fahrenheit (default 2° Celsius)</ul>
+CtrDutyCycleRead<x><a class="cmnd" id="CtrDutyCycleRead"></a>|Returns the duty cycle of the controller<BR> `0..100` = value in %</ul>
 DiagnosticModeSet<x><a class="cmnd" id="DiagnosticModeSet"></a>|Enables/disables the diagnostics flag<BR> `0` = Diagnostics disabled<BR> `1` = Diagnostics enabled (default)</ul>
 
 ### Domoticz

@@ -35,7 +35,7 @@ Below you can find an example of a Shelly switch bypassing a wall thermostat:
 
 ## Configuration for standalone application or bypass of existing wall thermostat
 
-The driver by default does not consider the input switch states even if available and its therefore suitable for standalone use. If the application requires to follow the command of the input once active (see bypass setup explained in previous section. This bypass function is specially useful to allow the user to use the device bypassed, in case of a wall thermostat, to allow this thermostat to be used if desired. To enable this bypass function, the following command is to be sent to the tasmota device:
+The driver by default does not consider the input switch states even if available and its therefore suitable for standalone use. If the application requires to follow the command of the input once active (see bypass setup explained in previous section). This bypass function is specially useful to allow the user to use the device bypassed, in case of a wall thermostat, to allow this thermostat to be used if desired. To enable this bypass function, the following command is to be sent to the tasmota device:
 
 ```
 cmnd/Tasmota_Name/INPUTSWITCHUSE 1
@@ -227,6 +227,20 @@ To increase the number of controller outputs, modify the value of the thermostat
 #define THERMOSTAT_CONTROLLER_OUTPUTS         1         // Number of outputs to be controlled independently
 ```
 
+### Alternative outputs: PWM duty cycle
+
+The driver provides the possibility to read the duty cycle in % (0-100) of the actuated relay. Below the command to read the duty cycle can be found:
+
+```
+cmnd/Tasmota_Name/CTRDUTYCYCLEREAD
+```
+
+The physical switch of the output can as well be disabled via command. Below the command to disable it can be found:
+
+```
+cmnd/Tasmota_Name/ENABLEOUTPUTSET 0
+```
+
 ## Future improvements
 
 ### Cooling
@@ -250,3 +264,4 @@ A PI autotune feature following the Zigler-Nichols closed loop algorithm has bee
 ```
 #define USE_PI_AUTOTUNING // (Ziegler-Nichols closed loop method)
 ```
+
