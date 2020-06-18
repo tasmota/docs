@@ -121,8 +121,8 @@ _Section descriptors (e.g., `>E`) are **case sensitive**_
   `i:vname`   
   specifies auto increment counters if =0 (in seconds)  
   `g:vname`   
-  specifies global variable which is linked to all gloabl variables with the same defintion on all devices in the homenet.
-  when a variable is updated in one device it is instantly updated in all other devices. if a section >G exists it is executed when a variable is updated from another device  
+  specifies global variable which is linked to all global variables with the same defintion on all devices in the homenet.
+  when a variable is updated in one device it is instantly updated in all other devices. if a section >G exists it is executed when a variable is updated from another device (this is done via UDP-multicast, so not always reliable)  
   `m:vname`   
    specifies a median filter variable with 5 entries (for elimination of outliers)  
   `M:vname`   
