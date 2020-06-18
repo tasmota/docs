@@ -31,7 +31,7 @@ If not done yet, you first need to **install and activate** the [MQTTv1](https:/
 ****
 
 !!! info "MQTTv1 vs. MQTTv2 Binding Information"
-    The openHAB community has released a new native openHAB 2 MQTT Binding, which complies with enhancements and significantly changes. Be aware that if you update your openHAB instance, the new MQTT binding may be get installed and `mqtt1` could be uninstalled! This means that any MQTT openHAB automations in your openHAB environment will exhibit odd behavior or not operate at all. If you are using `mqtt1`, jump to the `mqtt1` section [below](#mqttv1-Integration).
+    The openHAB community has released a new native openHAB 2 MQTT Binding, which complies with enhancements and significantly changes. Be aware that if you update your openHAB instance, the new MQTT binding may be get installed and `mqtt1` could be uninstalled! This means that any MQTT openHAB automations in your openHAB environment will exhibit odd behavior or not operate at all. If you are using `mqtt1`, jump to the `mqtt1` section [below](#mqttv1-integration).
 
 ## MQTTv2 Integration
 
@@ -97,7 +97,7 @@ end
 
 Please note that since `mqtt1` is a legacy binding, it will no longer receive updates or fixes. If you update your openHAB instance, the new MQTT binding will be installed and `mqtt1` will be uninstalled! This means that any MQTT openHAB automations in your openHAB environment will exhibit odd behavior or not operate at all. Fortunately, the `mqtt1` Binding can be reinstalled. To do so, turn on "Include Legacy 1.x Bindings" via PaperUI (Configuration > System) or set `legacy = true` in `addons.cfg`. Then reinstall the `mqtt1` Binding. Installing both `mqtt2` and `mqtt1` bindings will allow you to migrate over time to be ready for the eventuality of `mqtt1` end of life.
 
-For users that intend to migrate to the new MQTT Binding some examples for the integration have been added [above](#MQTTv2-Integration).
+For users that intend to migrate to the new MQTT Binding some examples for the integration have been added [above](#mqttv2-integration).
 
 ----
 

@@ -62,6 +62,7 @@ Name|Description
 [**PZEM-004<BR>PZEM-016**](PZEM-0XX) | Energy Monitor (serial) 
 [**RCWL-0516**](RCWL-0516) |  Microwave Radar Presence detection
 [**RDM6300**](RDM6300) | 125Khz RFID Module
+[**RF Transciever**](RF-Transciever) | IR receiver and/or transmitter
 **RX-4M50RR30SF<BR>RX-AM8SF** | RF Sensor receiver (gpio)
 **SCD30** | CO<sub>2</sub> sensor (I^2^C)
 **Eastron SDM120** | Modbus Energy Meter (serial)

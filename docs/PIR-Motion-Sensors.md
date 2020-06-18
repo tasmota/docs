@@ -24,7 +24,7 @@ _optional:_
 Before using rules configure any GPIO that doesn't have anything connected to it as `Relay1`.    
 This creates a dummy relay which is triggered by the PIR so you can see the changes in the web UI. This method is not recommended for daily use and should only be used for testing.
 
-A more [advanced example](Rules#Auto-off-Motion-Sense-Switch) of rules with PIRs.
+A more [advanced example](Rules#auto-off-motion-sense-switch) of rules with PIRs.
 
 ## AM312 
 

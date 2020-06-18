@@ -3,14 +3,14 @@
 This is a relatively cheap Premium glass fronted touch panel, looks clean and minimal when installed too.  
  
 Table Of Contents:
-* [Device Features](#Device-Features)
-* * [Breakdown](#Breakdown)
-* * [Capacitive Touch IC](#Capacitive-Touch-IC)
-* [Re-Programming](#Re-Programming)
-* * [Tools](#Tools)
-* * [Setup](#Setup)
-* * [Programming Mode](#Programming-Mode)
-* [Reference](#Reference)
+* [Device Features](#device-features)
+* * [Breakdown](#breakdown)
+* * [Capacitive Touch IC](#capacitive-touch-ic)
+* [Re-Programming](#re-programming)
+* * [Tools](#tools)
+* * [Setup](#setup)
+* * [Programming Mode](#programming-mode)
+* [Reference](#reference)
 
 ***
 
@@ -30,7 +30,7 @@ Removing the front glass panel you have access to the main control PCB.  This ho
 
 The control board runs off a 5V fed from the Power-Relay board at the read of the unit - a 3v3 reg is the control board for all the logic.
 The back of the control board has the touch controller and the 8way header to the Power-Relay board.  
-There are only touch pads on the back of the control board as a means to interface with the microcontroller. **There is no SonOff type programming header arrangement.**, see [Re-Programming](#Re-Programming).
+There are only touch pads on the back of the control board as a means to interface with the microcontroller. **There is no SonOff type programming header arrangement.**, see [Re-Programming](#re-programming).
 
 * Control and Interface PCB
 ![front](http://www.logicmetaworks.com/robin/GIT/sonoff-tasmota/images/img-module-front1.jpeg)

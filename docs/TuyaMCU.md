@@ -298,6 +298,7 @@ By default, the TuyaMCU module expects a 1 gang switch. There is currenty no way
 #### Power Metering	
 Power metering configuration is same as for [dimmers](#power-metering).	
 
+<!--
 ### Curtain Motors	
 The Zemismart WiFi curtain motor uses a Tuya TYWE1S inside the little white dongle as a radio modem.	
 `U1TX` is connected to "USB D+", `U1RX` is connected to "USB D-", and there is a blue LED in the dongle connected to "USB3 R-" controlled by the MCU. To flash Tasmota, we need `U0RX`, `U0TX`, and `GPIO0`. None of which are broken out on the PCB, so soldering or Tuya-Convert are necessary.	
@@ -338,7 +339,7 @@ Having 0x66 declared a button caused the motor to oscillate - open part way and 
 tuyamcu 11,102 # make 0x66 a relay	
 tuyamcu 11,103 # make 0x67 a relay	
 ```	
-Does not appear to have any impact on the curtain.
+Does not appear to have any impact on the curtain. -->
 
 ### Aromatherapy Diffuser
 Applies to devices using the PCB marked GD-HDFW05-v1.0. 

@@ -91,8 +91,8 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 align right    
 `sp` = set text scaling for classic GFX font (scaling factor 1...N)  
 `fp` = set font (1=12, 2=24,(opt 3=8)) if font==0 the classic GFX font is used, if font==7 RA8876 internal font is used   
-`Cp` = set foreground color (0,1) for black or white and RGB decimal code for color (see [color codes](#colorcodes))  
-`Bp` = set background color (0,1) for black or white and RGB decimal code for color (see [color codes](#colorcodes))   
+`Cp` = set foreground color (0,1) for black or white and RGB decimal code for color (see [color codes](#color-codes))  
+`Bp` = set background color (0,1) for black or white and RGB decimal code for color (see [color codes](#color-codes))   
 `Cip` = set foreground index color (0..18) for color displays (see index color table below)  
 `Bip` = set background index color (0..18) for color displays (see index color table below)  
 `wp` = draws an analog watch with radius p  (#define USE_AWATCH)   

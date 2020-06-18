@@ -12,7 +12,8 @@
 
 |Click on name for larger image||
 |---|---|
-[Whole house heating](https://i.postimg.cc/3xghrNPg/20191108-081206.jpg) |![Whole house heating](https://user-images.githubusercontent.com/5904370/68471359-51a0f980-021e-11ea-9400-277b6d27ed3a.png)
+[TrDA's 3xINA219 (Solar+Sensor+Display)](https://github.com/TrDA-hab/Projects/tree/master/x3%20INA219) |[![TrDA's 3xINA219 (Solar+Sensor+Display)](https://raw.githubusercontent.com/TrDA-hab/Projects/master/x3%20INA219/U-02.jpg)](https://github.com/TrDA-hab/Projects/tree/master/x3%20INA219)
+[TrDA's Motorised Roller Blinds](https://www.thingiverse.com/thing:4301158) |[![TrDA's Motorised Roller Blinds](https://i.postimg.cc/qBwbBqd7/featured-preview-20200416-163055.jpg)](https://postimg.cc/XXZcQVqM)
 [Solar and battery power monitoring station](https://i.postimg.cc/63236twn/20190901-182855.jpg)<br><br>[Schematic](https://i.postimg.cc/G2Qj6PcV/Solar-v2.jpg)| ![Solar and battery power monitoring station](https://user-images.githubusercontent.com/5904370/68471324-3afaa280-021e-11ea-9d56-a602f262983b.png)
 Water tank monitor|![Water tank monitor](https://user-images.githubusercontent.com/5904370/68471400-6a111400-021e-11ea-8c2c-e57ea2d36b95.png)
 [Multisensor](https://i.postimg.cc/rmF40BkZ/IMG-20190731-205332.jpg)| ![image](https://user-images.githubusercontent.com/5904370/68471177-f0792600-021d-11ea-8b3a-db324f1537ef.png)

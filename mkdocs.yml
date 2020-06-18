@@ -74,7 +74,6 @@ nav:
   - Modules: Modules.md
   - Peripherals: Peripherals.md
   - WebUI.md
-
   - Features:
     - Introduction: Features.md
     - Bluetooth.md
@@ -89,6 +88,7 @@ nav:
     - PIR-Motion-Sensors.md
     - Power-Monitoring-Calibration.md
     - PWM-dimmer-switch.md
+    - RF 433MHz Protocol: RF-Protocol.md
     - Rules.md
     - Scripting: Scripting-Language.md
     - Blinds-and-Shutters.md
@@ -119,7 +119,7 @@ nav:
     - otto.md
     - IOBroker: "https://github.com/arendst/Tasmota/issues/3769"
     - Mozilla WebThings Adapter: "https://github.com/tim-hellhake/tasmota-adapter"
-    - SmartThings: "https://github.com/BrettSheleski/SmartThingsPublic/tree/master/devicetypes/brettsheleski/sonoff-tasmota.src"
+    - SmartThings: "https://github.com/hongtat/tasmota-connect"
   - Peripherals:
     - Supported-Peripherals.md
     - Analog pin: ADC.md
@@ -162,6 +162,7 @@ nav:
     - PZEM-0XX.md
     - RCWL-0516.md
     - RDM6300.md
+    - RF-Transciever.md
     - SDS011.md
     - SHT30.md
     - TX2x.md
@@ -178,7 +179,8 @@ nav:
     - FAQ.md
     - Troubleshooting.md
     - Device-Recovery.md
-    - Discord Support: http://thehackbox.org/tasmota/release/ "target=_blank"
+    - Discord Support: https://discord.gg/Ks2Kzd4 "target=_blank"
+  - Builds.md
   - Compiling: Compile-your-build.md
   - Contributing: Contributing.md
   - Download: http://thehackbox.org/tasmota/release/ "target=_blank"

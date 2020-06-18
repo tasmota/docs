@@ -29,14 +29,18 @@ USE_WEBSEND_RESPONSE | enable receiving the response of a [`WebSend`](Commands#w
 SCRIPT_STRIP_COMMENTS | enables stripping comments when attempting to paste a script that is too large to fit
 USE_ANGLE_FUNC | add sin(x),acos(x) and sqrt(x) e.g. to allow calculation of horizontal cylinder volume
 USE_24C256 | enables use of 24C256 I^2^C EEPROM to expand script buffer (defaults to 4k)
-USE_SCRIPT_FATFS | enables SD card support (on SPI bus). Specify the CS pin number. Also enables 4k script buffer  
+USE_SCRIPT_FATFS | enables SD card support (on SPI bus). Specify the CS pin number. Also enables 4k script buffer on ESP8266 if using device with 4 or more Mb can enable FS by specifying -1 (using linker files with enabled FS Buffer e.g. eagle.flash.4m1m.ld)  
 USE_SCRIPT_FATFS_EXT | enables additional FS commands  
 SDCARD_DIR | enables support for web UI for SD card directory upload and download  
 USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
-USE_SCRIPT_TASK | enables Task in ESP32
+USE_SCRIPT_TASK | enables multitasking Task in ESP32
+USE_SCRIPT_GLOBVARS | enables global variables and >G section
 USE_SML_SCRIPT_CMD | enables SML script cmds
-USE_SCRIPT_COMPRESSION | enables compression of scripts (2560 chars buffer)  
+USE_SCRIPT_TIMER | enables up to 4 timers
+SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
+USE_SCRIPT_COMPRESSION | enables compression of scripts (2560 chars buffer) 
+LITTLEFS_SCRIPT_SIZE S | enables script buffer of size S (e.g.4096)  
 USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
 ----
 
@@ -71,6 +75,32 @@ To save code space almost no error messages are provided. However it is taken ca
 - _**No spaces are allowed between math operators**_
 - Comments start with `;`  
 
+**Script buffer size**  
+the script language normally shares script buffer with rules buffer which is 1536 chars.
+with below options script buffer size may be expanded. PVARS is size for permanant vars.
+
+| Feature | ESP8266 | ESP32 | PVARS | remarks |
+| -- | -- | -- | -- | -- |
+| default | 1536 | 1536 | 40 ||
+| #define USE_SCRIPT_COMPRESSION | 2560 | 2560 | 40 |actual compression rate may vary |
+| #define LITTLEFS_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
+| #define SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | not supported | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
+| #define SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
+| #define EEP_SCRIPT_SIZE S, #define USE_EEPROM | S<=4096 | S<=8192 | 1536 | may also use I2C 24C256 eeprom #define USE_24C256 |
+
+most usefull defintion for larger scripts would be  
+ESP8266: #define USE_EEPROM and #define EEP_SCRIPT_SIZE 4000  
+ESP32: #define LITTLEFS_SCRIPT_SIZE 8192  
+
+
+**Optional external editor**   
+
+you may use a special external editor with syntax highlighting to edit the scripts. (mac and pc)
+you may use any number of comments and indents to make it better readable.
+then with cmd r the script is transfered to the ESP and immediately started.
+(all comments and indents are removed before transfering)
+see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/AACcVmpZ4AfpdrWE_MPFGmbma?dl=0)  
+
 **Console Commands**   
 
 `script <n>` <n>: `0` = switch script off; `1` = switch script on  
@@ -90,6 +120,9 @@ _Section descriptors (e.g., `>E`) are **case sensitive**_
   specifies countdown timers, if >0 they are decremented in seconds until zero is reached. see example below  
   `i:vname`   
   specifies auto increment counters if =0 (in seconds)  
+  `g:vname`   
+  specifies global variable which is linked to all global variables with the same defintion on all devices in the homenet.
+  when a variable is updated in one device it is instantly updated in all other devices. if a section >G exists it is executed when a variable is updated from another device (this is done via UDP-multicast, so not always reliable)  
   `m:vname`   
    specifies a median filter variable with 5 entries (for elimination of outliers)  
   `M:vname`   
@@ -104,7 +137,10 @@ _Section descriptors (e.g., `>E`) are **case sensitive**_
     Copying a string to a number or reverse is supported  
 
 `>B`  
-executed on BOOT time and on save script  
+executed on BOOT time before sensors are initialized and on save script  
+
+`>BS`  
+executed on BOOT time after sensors are initialized  
 
 `>E`  
 Executed when a Tasmota MQTT `RESULT` message is received, e.g., on `POWER` change. Also  Zigbee reports to  this section.
@@ -136,6 +172,22 @@ Remark: hue values have a range from 0-65535. Divide by 182 to assign HSBcolors 
 
 `>U`  
 status JSON Messages arrive here
+
+`>G`  
+global variable updated section
+
+`>P`  
+any power change triggers here
+
+`>jp`  
+https webpage json parse arrives here  
+
+`>ti1`  
+`>ti2`  
+`>ti3`  
+`>ti4`  
+ticker callback after timer expiration
+
 
 `>b` _(note lower case)_  
 executed on button state change  
@@ -188,9 +240,10 @@ A web user interface may be generated containing any of the following elements:
  `mtxt` = label middle of slider  
  `rtxt` = label right of slider  
 **Text Input:**    
- `tx(vn txt)`  
+ `tx(vn lbl)`  
  `vn` = name of string variable to hold text state  
- `txt` = label text   
+ `lbl` = label text  
+ 
 **Number Input:**    
  `nm(min max step vn txt)`  
  `min` = number minimum value  
@@ -203,29 +256,29 @@ A web user interface may be generated containing any of the following elements:
   draws a google chart with up to 4 data sets per chart  
   `gc( T array1 ... array4 "name" "label1" ... "label4" "entrylabels" "header" {"maxy1"} {"maxy2"})`   
   `T` = type
-  + b=barchart  
-  + c=columnchart  
-  + p=piechart  
-  + l=linechart up to 4 lines with same scaling
-  + l2=linechart with exactly 2 lines and 2 y scales (must be given at end)
-  + 2f2 like above but with splined lines 
-  + h=histogram  
-  + t=data table
-  + g=simple gauges
-  + T=Timeline (special type arrays contains start,stop pairs in minutes timeofday)
+  - b=barchart  
+  - c=columnchart  
+  - p=piechart  
+  - l=linechart up to 4 lines with same scaling
+  - l2=linechart with exactly 2 lines and 2 y scales (must be given at end)
+  - 2f2 like above but with splined lines 
+  - h=histogram  
+  - t=data table
+  - g=simple gauges (must give extra 3 vars after header, yellow start, red start, maxval)  
+  - T=Timeline (special type arrays contains start,stop pairs in minutes timeofday)
   
   b,l,h type may have the '2' option to specify exactly 2 arrays with 2 y scales given at the end of paramter list.  
   
   `array` = up to 4 arrays of data  
   `name` = name of chart  
   `label` = label for up to the 4 datasets in chart  
-  `entrylabel` = labels of each entry separated by '|' char  
+  `entrylabel` = labels of each entry separated by '|' char ("cntN" starts numbering entries with the number N)  
   `header` = visible header name of chart  
   
-  additionally you have to define the html frame to put the chart in (both lines must be preceded by a & char)
+  additionally you have to define the html frame to put the chart in (both lines must be preceded by a $ char)
   e.g.  
-  &<div id="chart1"style="width:640px;height:480px;margin:0 auto">\</div>  
-  &gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")  
+  $<div id="chart1"style="width:640px;height:480px;margin:0 auto">\</div>  
+  $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")  
   you may define more then one chart. The charts id is chart1 ... chartN
   
   
@@ -249,6 +302,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `topic` = mqtt topic  
 `gtopic` = mqtt group topic  
 `lip` = local ip as string  
+`luip` = udp ip as string (from updating device when USE_SCRIPT_GLOBVARS defined)  
 `prefixn` = prefix n = 1-3  
 `pwr[x]` = power state  (x = 1..N)  
 `pc[x]` = pulse counter value  (x = 1..4)  
@@ -270,9 +324,12 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `st(svar c n)` = string token - retrieve the n^th^ element of svar delimited by c  
 `sl(svar)` = gets the length of a string  
 `sb(svar p n)` = gets a substring from svar at position p (if p<0 counts from end) and length n  
+`is(index "string1|string2|....|stringn")` = gets a substring from immediate string separated by '|' (this immediate string may be up to 255 chars long) index = 0..n  
 `sin(x)` = calculates the sinus(x) (if defined USE_ANGLE_FUNC)  
 `acos(x)` = calculates the acos(x) (if defined USE_ANGLE_FUNC)  
 `sqrt(x)` = calculates the sqrt(x) (if defined USE_ANGLE_FUNC)  
+`mpt(x)` = measure pulse time, x>=0 defines pin to use, -1 returns low pulse time,-2 return high pulse time (if defined USE_ANGLE_FUNC)  
+`rnd(x)` = return a random number between 0 and x, (seed may be set by rnd(-x))  
 `sf(F)` = sets the CPU Frequency (ESP32) to 80,160,240 Mhz, returns current Freq.  
 `s(x)` = explicit conversion from number x to string  
 `mqtts` = MQTT connection status: `0` = disconnected, `>0` = connected  
@@ -281,6 +338,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
 `sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
 `enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
+`gjp("host" "path")` = trigger HTTPS JSON page read as used by Tesla Powerwall (if defined SCRIPT_GET_HTTPS_JP)  
+`tsN(ms)` = set up to 4 timers (N=1..4) to millisecond time on expiration triggers section >tiN  (if defined USE_SCRIPT_TIMER)  
 `hours` = hours  
 `mins` = mins  
 `secs` = seconds  
@@ -507,13 +566,14 @@ the MQTT decoder may be configured for more space in user config overwrite by
 `#define USE_SCRIPT_FATFS` `CARD_CS`  
 `CARD_CS` = GPIO of card chip select   
 SD card uses standard hardware SPI GPIO: mosi,miso,sclk  
+with 4M flash on ESP8266 and special linker file you may specify -1 for CS and get a flash file system with the same functionality but but very low capacity (e.g. 2 MB)  
 A maximum of four files may be open at a time  
 e.g., allows for logging sensors to a tab delimited file and then downloading the file ([see Sensor Logging example](#sensor-logging))  
 The downloading of files may be executed in a kind of "multitasking" when bit 7 of loglvl is set (128+loglevel)  
 Without multitasking 150kb/s (all processes are stopped during downloading), with multitasking 50kb/s (other Tasmota processes are running)  
 The script itself is also stored on the SD card with a default size of 4096 characters  
 
-Enable SD card directory support (+ 1,2k flash)  
+**SD card directory support** (+ 1,2k flash)  
 `#define SDCARD_DIR`  
 Shows a web SD card directory (submenu of scripter) where you can upload and download files to/from sd card  
 
