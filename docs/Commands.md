@@ -151,7 +151,8 @@ I2CDriver<a class="cmnd" id="i2cdriver"></a>|Enable / Disable I<sup>2</sup>C sen
 LogHost<a class="cmnd" id="loghost"></a>|`1` = reset [syslog](https://www.sigmdel.ca/michel/ha/rpi/syslog_en.html) host to firmware default (`SYS_LOG_HOST`)<BR>`<value>` = set syslog host
 LogPort<a class="cmnd" id="logport"></a>|`1` = reset [syslog](https://www.sigmdel.ca/michel/ha/rpi/syslog_en.html) port to firmware default (`SYS_LOG_PORT`)<BR>`2..32766` = set syslog port
 Modules<a class="cmnd" id="modules"></a>|Show available modules by name and index
-Module<a class="cmnd" id="module"></a>|Displays active module by name and index<BR>`<x>` = switch to Module<x\> and restart<BR>`0` = switch to defined [template](Templates) and restart
+Module<a class="cmnd" id="module"></a>|Displays active module by name and index<BR>`<value>` = switch to module <value\> and restart<BR>`0` = switch to defined [template](Templates) and restart
+Module2<a class="cmnd" id="module2"></a>|Displays active [fast reboot](Device-Recovery#fast-power-cycle-device-recovery) fallback module by name and index<BR>`<value>` = set fast reboot fallback module to <value\><BR>`0` = Set fast reboot fallback module to defined [template](Templates)
 MqttLog<a class="cmnd" id="mqttlog"></a>|`0` =  disable logging via MQTT *(default)*<BR> `1` = show only error messages<BR> `2` = show error and info messages<BR>`3` = show error, info and debug messages<BR>`4` = show error, info and more debug messsages
 NtpServer<x\><a class="cmnd" id="ntpserver"></a>|NTP server setup (x= `1..3`)<BR>`0` = clear NtpServer<x\> settings<BR>`1` = reset NtpServer<x\> settings to firmware defaults<BR>`<value>` = set NtpServer<x\> host or IP address (32 char limit)
 OtaUrl<a class="cmnd" id="otaurl"></a>|Display current OTA URL<BR> `1` = Reset OtaUrl to firmware default<BR> `url` = set address for OTA (100 char limit)
