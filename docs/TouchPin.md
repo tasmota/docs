@@ -23,11 +23,15 @@ TouchNum x - sets number of ignored measurements below the threshold, because th
    
 # Tasmota Serial Plotter  
   
-This little tool should be helpful to get a feel for the touch values.
-Usage:
-./serial-plotter.py --port /dev/XXX --baud 115200
+This little tool should be helpful to get a feel for the touch values.  
+Usage:  
+./serial-plotter.py --port /dev/XXX --baud 115200  
 
 You can send commands to Tasmota via SEND-box.
 Example for the touch button driver:
 TouchCal 255 - turns on calibration mode for all buttons  
+  
+  
+![](https://user-images.githubusercontent.com/5481060/83327677-f730be80-a27d-11ea-85a2-bf72e644cb4e.gif)  
+(Note the short spikes, which in this config only would need TouchNum 1 to get filtered out)  
   
