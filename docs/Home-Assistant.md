@@ -707,7 +707,7 @@ Add in Home Assistant using the [MQTT Cover](https://www.home-assistant.io/compo
 
 !!! example "TuyaMCU Curtain/Shade Motor"
 
-Requires `SetOption65 1`. In this example dpId1 is for open/close/stop of the motor, dpId2 sets position and dpId3 displays the current position.
+Requires `SetOption66 1`. In this example dpId1 is for open/close/stop of the motor, dpId2 sets position and dpId3 displays the current position.
 
 ```yaml
 # Example configuration.yaml entry
