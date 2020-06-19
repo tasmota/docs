@@ -194,11 +194,12 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
    
 #### Devices with payload encryption  
   
-The LYWSD03MMC will start to send advertisements with encrypted sensor data after pairing it with the official Xiaomi app. Out-of-the-box the sensor does only publish a static advertisement. 
+The LYWSD03MMC will start to send advertisements with encrypted sensor data after pairing it with the official Xiaomi app. Out-of-the-box the sensor does only publish a static advertisement.  
 It is possible to get the necessary decryption key ("bind_key") with the help of 3rd-party-apps on a smart phone. (iOS-example: https://community.home-assistant.io/t/xiaomi-passive-ble-monitor-sensor-platform/177352/101?u=magalex)  
 This key and the corresponding MAC of the sensor can be injected with the NRFKEY-command. It is probably a good idea to save the whole config as RULE like that:  
-`rule1 on System#Init do backlog NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFPage 6; NRFignore 5 endon` (key for two sensors, 6 sensors per page in the WebUI, do not try to read the CGG1)  
-LYWSD03MMC sensd encrypted sensor data every 10 minutes. As there are no confirmed reports about correct battery presentation of the sensor (always shows 99%), this function is currently not supported.  
+`rule1 on System#Init do backlog NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFPage 6; NRFignore 5 endon`  
+(key for two sensors, 6 sensors per page in the WebUI, do not try to read the CGG1)  
+LYWSD03MMC sends encrypted sensor data every 10 minutes. As there are no confirmed reports about correct battery presentation of the sensor (always shows 99%), this function is currently not supported.  
 
 
 
