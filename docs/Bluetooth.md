@@ -172,6 +172,7 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <th class="th-lboi">CGG1</th>
     <th class="th-lboi">CGD1</th>
     <th class="th-lboi">MiFlora</th>
+    <th class="th-lboi">LYWSD03MMC</th>
   </tr>
   <tr>
     <td class="tg-lboi"><img src="../_media/bluetooth/mj_ht_v1.png" width=200></td>
@@ -179,6 +180,7 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <td class="tg-lboi"><img src="../_media/bluetooth/CGG1.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/CGD1.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/miflora.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/LYWSD03MMC.png" width=200></td>
   </tr>
   <tr>
     <td class="tg-lboi">temperature, humidity, battery</td>
@@ -186,12 +188,19 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <td class="tg-lboi">temperature, humidity, battery</td>
     <td class="tg-lboi">temperature, humidity</td>
     <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility</td>
+    <td class="tg-lboi">temperature, humidity</td>
   </tr>
 </table>
    
-#### Unsupported Devices  
+#### Devices with payload encryption  
   
-For LYWSD03MMC the sensor data in the advertisements is encrypted. It is highly unlikely to read data with the NRF24L01 out-of-the-box in the future. You can use an HM-1x module for this sensor.
+The LYWSD03MMC will start to send advertisements with encrypted sensor data after pairing it with the official Xiaomi app. Out-of-the-box the sensor does only publish a static advertisement. 
+It is possible to get the necessary decryption key ("bind_key") with the help of 3rd-party-apps on a smart phone. (iOS-example: https://community.home-assistant.io/t/xiaomi-passive-ble-monitor-sensor-platform/177352/101?u=magalex)  
+This key and the corresponding MAC of the sensor can be injected with the NRFKEY-command. It is probably a good idea to save the whole config as RULE like that:  
+`rule1 on System#Init do backlog NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFPage 6; NRFignore 5 endon` (key for two sensors, 6 sensors per page in the WebUI, do not try to read the CGG1)  
+LYWSD03MMC sensd encrypted sensor data every 10 minutes. As there are no confirmed reports about correct battery presentation of the sensor (always shows 99%), this function is currently not supported.  
+
+
 
 ### Beacon  
   
