@@ -513,6 +513,18 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 
 > [Complete document on protocols](https://github.com/arendst/Tasmota/files/3658412/protocol_CurtainM_20190926.pdf)
 
+| DP ID | Function points       | Identifier      | Data type        | Function type | Properties                              |
+|----|--------------------------|-----------------|------------------|---------|-----------------------------------------------|
+| 1  | Control (required)       | control         | Issue and report | Enum    | Enumerated values:open, stop, close, continue |
+| 2  | Curtain position setting | percent_control | Issue and report | Integer | Values range:0-100, Pitch1, Scale0, Unit:%    |
+| 3  | Current curtain position | percent_state   | Only report      | Integer | Values range:0-100, Pitch1, Scale0, Unit:%    |
+| 4  | Mode                     | mode            | Issue and report | Enum    | Enumerated values:morning, night              |
+| 5  | Motor Direction          | control_back    | Issue and report | Enum    | Enumerated values:forward, back               | 
+| 6  | Auto Power               | auto_power      | Issue and report | Boolean |                                               |
+| 7  | Work State (required)       | work_state      | Only report      | Enum    | Enumerated values:opening, closing            | 
+| 11 | Situation_set            | situation_set   | Only report      | Enum    | Enumerated values:fully_open, fully_close     | 
+| 12 | Fault  (required)            | fault           | Only report      | Fault   | Barrier values:motor_fault                    | 
+
 ### Power Monitoring Plug
 
 | DP ID | Function points        | Identifier      | Data type          | Function type | Properties                                    |
