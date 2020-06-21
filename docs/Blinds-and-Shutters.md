@@ -13,25 +13,29 @@ Complete list of commands is available at [Blinds, Shutters and Roller Shades Co
 ## Shutter Modes
 There are three shutter modes which are defined according to the [PulseTime](Commands.md#pulsetime) and [Interlock](Commands.md#interlock) settings. The examples below are for a `ShutterRelay1 1` configuration (using Relay1 and Relay2).
 
-1. **ShutterMode 0** - Normal Operation   
-   First relay: OFF/DOWN, Second relay: OFF/UP  
+**ShutterMode 0** - Normal Operation   
+
+First relay: OFF/DOWN, Second relay: OFF/UP  
    - `Backlog PulseTime1 0; PulseTime2 0`
    - `Interlock 1,2` (Interlocked relay pair)
    - `Interlock ON`
 
-1. **ShutterMode 1** - Circuit Safe 
-   First relay: ON/OFF, Second relay: UP/DOWN
+**ShutterMode 1** - Circuit Safe 
+
+First relay: ON/OFF, Second relay: UP/DOWN
    - `Backlog PulseTime1 0; PulseTime2 0`
    - `Interlock OFF`
 
-1. **ShutterMode 2** - Pulse Motors   
-   First relay: OFF/DOWN PULSE, Second relay: OFF/UP PULSE
+**ShutterMode 2** - Pulse Motors   
+
+First relay: OFF/DOWN PULSE, Second relay: OFF/UP PULSE
    - `Backlog PulseTime1 2; PulseTime2 2`
    - `Interlock 1,2` (Interlocked relay pair)
    - `Interlock ON`
    
-1. **ShutterMode 3** - Stepper Motors   
-   First relay: ON/OFF, Second relay: UP/DOWN
+**ShutterMode 3** - Stepper Motors   
+
+First relay: ON/OFF, Second relay: UP/DOWN
    PWM: Stepper signal, COUNTER: Stepper position signal
    - `Backlog PulseTime1 0; PulseTime2 0`
    - `Interlock OFF`
