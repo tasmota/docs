@@ -271,7 +271,7 @@ All configurations require `SetOption59 1` - enables sending of tele/%topic%/STA
 `Speed 5` - set transition speed
 
 !!! example "Dimmable"
-Used for dimmers and dimmable lights (single channel lights).
+    Used with dimmers and dimmable only lights (single channel lights).
 
 ```yaml
 light:
@@ -295,6 +295,7 @@ light:
 ```
 
 !!! example "RGB Light"
+    Should also be used with lights using [White Blend Mode](Lights.md#white-blend-mode)
 
 `SetOption17 1` - enables color status in decimals
 
@@ -332,6 +333,7 @@ light:
 ```
 
 !!! example "RGB+W Light"
+    In this configuration RGB and white cannot be on at the same time. See [Lights](Lights.md#4-channels-rgbw-lights) for options.
 
 `SetOption17 1` - enables color status in decimals
 
@@ -373,7 +375,7 @@ light:
 ```
 
 !!! example "RGB+CCT Light"
-Also known as RGBWW or 5 channel lights
+    Also called RGBWW, RGBCW or 5 channel lights
 
 `SetOption17 1` - enables color status in decimals
 
@@ -414,8 +416,7 @@ light:
 ```
 
 !!! example "Addressable LED"
-
-Applies only to [WS281x](WS2812B-and-WS2813) lights. 
+    Applies only to [WS281x](WS2812B-and-WS2813) lights. 
 
 ```yaml
 light:
@@ -472,6 +473,7 @@ to
 ```
 
 !!! example "Control RGB and White independently"
+    Using color picker will keep white light on. If you use the white slider RGB light will get turned off. White value and dimmer value are connected, to have more granular control you will have to [split the lights](Lights.md#rgb-and-white-split).
 
 Replace 
 
@@ -484,7 +486,7 @@ to
   rgb_value_template: "{{ (value_json.Color[0:2]|int(base=16),value_json.Color[2:4]|int(base=16),value_json.Color[4:6]|int(base=16)) | join(',')}}"
 ```
 
-The key is the `=` after color string in hex. It will retain current white value while changing color. If you use the white slider RGB will get turned off. 
+The key is the `=` after color string in hex. It will retain current white value while changing color. 
 
 <!-- tabs:end -->
 
@@ -492,8 +494,6 @@ The key is the `=` after color string in hex. It will retain current white value
 Add in Home Assistant using the [MQTT Sensor](https://www.home-assistant.io/components/sensor.mqtt/) integration.
 
 A sensor will send its data in set intervals defined by [`TelePeriod`](Commands.md#teleperiod) (default every 5 minutes).
-
-<!-- tabs:start -->
 
 !!! example "Temperature"
 
@@ -569,8 +569,6 @@ Power monitoring sensors will send their data in set intervals defined by [`Tele
 
 To get all the data in Home Assistant requires multiple sensors which you can later group to your liking in [Lovelace UI](https://www.home-assistant.io/lovelace/)
 
-<!-- tabs:start -->
-
 !!! example "Power Monitoring"
 
 ```yaml
@@ -598,27 +596,6 @@ sensor:
 ```
 !!! tip
     For additional sensors use "Total";"Yesterday";"Period","ApparentPower","ReactivePower";"Factor" in `value_template` string
-
-<!-- AGAIN WITH THIS MANUAL UPDATE MALARKEY
-
-#### Manual updates
-
-The manual message retrieved with command ``Status 8`` or ``cmnd/pow1/status 8`` will show:
-```
-stat/pow1/STATUS8 = {"StatusPWR":{"Yesterday":0.002, "Today":0.002, "Power":4, "Factor":0.37, "Voltage":227, "Current":0.056}}
-```
-The HA configuration for Power Factor would then be:
-```yaml
-# Example configuration.yaml entry
-sensor:
-  - platform: mqtt
-    name: "Power Factor"
-    state_topic: "stat/pow1/STATUS8"
-    value_template: "{{ value_json.StatusPWR.Factor }}"
-
-```
- -->
-<!-- tabs:end -->
 
 [Video tutorial](https://www.youtube.com/watch?v=ktHQrhAF8VQ) on a power monitoring plug setup by Digiblur
 

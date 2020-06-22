@@ -15,8 +15,6 @@ plugins:
   - minify:
       minify_html: true
   # - htmlproofer
-  - git-revision-date-localized:
-      type: timeago
 
 strict: true
 
