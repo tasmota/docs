@@ -1019,7 +1019,7 @@ automation:
       data:
         topic: cmnd/tasmotas/state
         payload: ''
-    # sync state for autodiscovery devices
+    # sync state for pre8.2 autodiscovery devices
     - service: mqtt.publish
       data:
         topic: tasmotas/cmnd/state
