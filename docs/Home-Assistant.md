@@ -264,15 +264,13 @@ Simply replace `switch:` with `light:` in the configuration keeping everything e
 ### Lights
 Add in Home Assistant using the [MQTT Light](https://www.home-assistant.io/components/light.mqtt/) integration.
 
-**Required Commands**   
-`SetOption17 1` - enables decimal colors\
-`SetOption59 1` - enables sending of tele/%topic%/STATE on POWER and light related commands
+All configurations require `SetOption59 1` - enables sending of tele/%topic%/STATE on POWER and light related commands
 
 **Optional Commands**   
 `Fade on` - makes transitions smoother   
-`Speed 5` - sets transition speed
+`Speed 5` - set transition speed
 
-!!! example "Dimming"
+!!! example "Dimmable"
 Used for dimmers and dimmable lights (single channel lights).
 
 ```yaml
@@ -281,13 +279,13 @@ light:
     name: "Dimmer"
     command_topic: "cmnd/tasmota/POWER"
     state_topic: "tele/tasmota/STATE"
-    state_value_template: "{{value_json.POWER}}"
+    state_value_template: "{{ value_json.POWER }}"
     availability_topic: "tele/tasmota/LWT"
     brightness_command_topic: "cmnd/tasmota/Dimmer"
     brightness_state_topic: "tele/tasmota/STATE"
     brightness_scale: 100
     on_command_type: "brightness"
-    brightness_value_template: "{{value_json.Dimmer}}"
+    brightness_value_template: "{{ value_json.Dimmer }}"
     payload_on: "ON"
     payload_off: "OFF"
     payload_available: "Online"
@@ -298,25 +296,27 @@ light:
 
 !!! example "RGB Light"
 
+`SetOption17 1` - enables color status in decimals
+
 ```yaml
 light:
   - platform: mqtt
     name: "RGB Light"
     command_topic: "cmnd/tasmota/POWER"
     state_topic: "tele/tasmota/STATE"
-    state_value_template: "{{value_json.POWER}}"
+    state_value_template: "{{ value_json.POWER }}"
     availability_topic: "tele/tasmota/LWT"
     brightness_command_topic: "cmnd/tasmota/Dimmer"
     brightness_state_topic: "tele/tasmota/STATE"
     brightness_scale: 100
     on_command_type: "brightness"
-    brightness_value_template: "{{value_json.Dimmer}}"
+    brightness_value_template: "{{ value_json.Dimmer }}"
     rgb_command_topic: "cmnd/tasmota/Color2"
     rgb_state_topic: "tele/tasmota/STATE"
-    rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
+    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
     effect_command_topic: "cmnd/tasmota/Scheme"
     effect_state_topic: "tele/tasmota/STATE"
-    effect_value_template: "{{value_json.Scheme}}"
+    effect_value_template: "{{ value_json.Scheme }}"
     effect_list:
       - 0
       - 1
@@ -330,7 +330,10 @@ light:
     qos: 1
     retain: false
 ```
+
 !!! example "RGB+W Light"
+
+`SetOption17 1` - enables color status in decimals
 
 ```yaml
 light:
@@ -338,20 +341,20 @@ light:
     name: "RGB+W Light"
     command_topic: "cmnd/tasmota/POWER"
     state_topic: "tele/tasmota/STATE"
-    state_value_template: "{{value_json.POWER}}"
+    state_value_template: "{{ value_json.POWER }}"
     availability_topic: "tele/tasmota/LWT"
     brightness_command_topic: "cmnd/tasmota/Dimmer"
     brightness_state_topic: "tele/tasmota/STATE"
     brightness_scale: 100
     on_command_type: "brightness"
-    brightness_value_template: "{{value_json.Dimmer}}"
+    brightness_value_template: "{{ value_json.Dimmer }}"
     white_value_state_topic: "tele/tasmota/STATE"
     white_value_command_topic: "cmnd/tasmota/White"
     white_value_scale: 100
-    white_value_template: "{{ value_json.Channel[3] }}"
+    white_value_template: "{{ value_json.White }}"
     rgb_command_topic: "cmnd/tasmota/Color2"
     rgb_state_topic: "tele/tasmota/STATE"
-    rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
+    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
     effect_command_topic: "cmnd/tasmota/Scheme"
     effect_state_topic: "tele/tasmota/STATE"
     effect_value_template: "{{value_json.Scheme}}"
@@ -368,8 +371,11 @@ light:
     qos: 1
     retain: false
 ```
+
 !!! example "RGB+CCT Light"
 Also known as RGBWW or 5 channel lights
+
+`SetOption17 1` - enables color status in decimals
 
 ```yaml
 light:
@@ -377,22 +383,22 @@ light:
     name: "RGBCCT Light"
     command_topic: "cmnd/tasmota/POWER"
     state_topic: "tele/tasmota/STATE"
-    state_value_template: "{{value_json.POWER}}"
+    state_value_template: "{{ value_json.POWER }}"
     availability_topic: "tele/tasmota/LWT"
     brightness_command_topic: "cmnd/tasmota/Dimmer"
     brightness_state_topic: "tele/tasmota/STATE"
     brightness_scale: 100
     on_command_type: "brightness"
-    brightness_value_template: "{{value_json.Dimmer}}"
+    brightness_value_template: "{{ value_json.Dimmer }}"
     color_temp_command_topic: "cmnd/tasmota/CT"
     color_temp_state_topic: "tele/tasmota/STATE"
-    color_temp_value_template: "{{value_json.CT}}"
+    color_temp_value_template: "{{ value_json.CT }}"
     rgb_command_topic: "cmnd/tasmota/Color2"
     rgb_state_topic: "tele/tasmota/STATE"
-    rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
+    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
     effect_command_topic: "cmnd/tasmota/Scheme"
     effect_state_topic: "tele/tasmota/STATE"
-    effect_value_template: "{{value_json.Scheme}}"
+    effect_value_template: "{{ value_json.Scheme }}"
     effect_list:
       - 0
       - 1
@@ -417,19 +423,19 @@ light:
     name: "Addressable LED"
     command_topic: "cmnd/tasmota/POWER"
     state_topic: "stat/tasmota/STATE"
-    state_value_template: "{{value_json.POWER}}"
+    state_value_template: "{{ value_json.POWER }}"
     availability_topic: "tele/tasmota/LWT"
     brightness_command_topic: "cmnd/tasmota/Dimmer"
     brightness_state_topic: "stat/tasmota/STATE"
     brightness_scale: 100
     on_command_type: "brightness"
-    brightness_value_template: "{{value_json.Dimmer}}"
+    brightness_value_template: "{{ value_json.Dimmer }}"
     rgb_command_topic: "cmnd/tasmota/Color2"
     rgb_state_topic: "tele/tasmota/STATE"
-    rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
+    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
     effect_command_topic: "cmnd/tasmota/Scheme"
     effect_state_topic: "stat/tasmota/STATE"
-    effect_value_template: "{{value_json.Scheme}}"
+    effect_value_template: "{{ value_json.Scheme }}"
     effect_list:
       - 0
       - 1
@@ -452,16 +458,34 @@ light:
     retain: false
 ```
 
-!!! example "No SetOption17 RGB"
+!!! example "RGB with hex values"
 
- If you don't want to use `SetOption17 1` you can change
-  ```yaml
-  rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
-  ```
+If you don't want to use `SetOption17 1` with decimal values and use default hex values, change:
+
+```yaml
+rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
+```
 to
 ```yaml
-  rgb_value_template: "{% if value_json.Color is defined %}{{ (value_json.Color[0:2]|int(base=16),value_json.Color[2:4]|int(base=16),value_json.Color[4:6]|int(base=16)) | join(',')}}{% endif %}"
+  rgb_command_template: "{{ '%02X%02X%02X' | format(red, green, blue)}}"
+  rgb_value_template: "{{ (value_json.Color[0:2]|int(base=16),value_json.Color[2:4]|int(base=16),value_json.Color[4:6]|int(base=16)) | join(',')}}"
 ```
+
+!!! example "Control RGB and White independently"
+
+Replace 
+
+```yaml
+rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
+```
+to
+```yaml
+  rgb_command_template: "{{ '%02X%02X%02X=' | format(red, green, blue)}}"
+  rgb_value_template: "{{ (value_json.Color[0:2]|int(base=16),value_json.Color[2:4]|int(base=16),value_json.Color[4:6]|int(base=16)) | join(',')}}"
+```
+
+The key is the `=` after color string in hex. It will retain current white value while changing color. If you use the white slider RGB will get turned off. 
+
 <!-- tabs:end -->
 
 ### Sensors
@@ -715,11 +739,11 @@ cover:
   - platform: mqtt
     name: "Tuya Curtain"
     command_topic: "cmnd/tasmota/TuyaSend4"
-    payload_open: "1,2"
-    payload_close: "1,0"
+    payload_open: "1,0"
+    payload_close: "1,2"
     payload_stop: "1,1"
-    position_open: 100
-    position_closed: 0
+    position_open: 0
+    position_closed: 100
     position_topic: "tele/tasmota/RESULT"
     value_template: >-
           {% if value_json.TuyaReceived.DpType2Id3 is defined %}
