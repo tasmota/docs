@@ -248,7 +248,8 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 
 - `IF (<logical-expression>) <statement-list> {ELSEIF (<logical-expression>) <statement-list>} [ELSE <statement-list>] ENDIF`  
 
-`<logical-expression>`  
+`(<logical-expression>)`  
+Parentheses must enclose the expression. They can also be used to explicitly control the order of evaluation.  
 
 - `<comparison-expression>`  
 - `(` `<comparison-expression>` | `<logical-expression>` `)` {{`AND` | `OR`} `<logical-expression>`}  
@@ -273,12 +274,12 @@ IF statement supports 3 formats:
 - `IF (<logical-expression>) <statement-list> ELSE <statement-list> ENDIF`  
 - `IF (<logical-expression>) <statement-list> [ELSEIF (<logical-expression>) <statement-list> ] ELSE <statement-list> ENDIF`  
 
-The outermost `<if-statement>` cannot be chained with other Tasmota commands in a `Backlog `. For example, `Backlog Power1 0; IF var1==1 Power1 1 ENDIF`, is **NOT** permitted. Commands chained with `<if-statement>` are allowed in a `<statement-list>`. For example, `IF ENERGY#Current>10 Power1 0; IF var1==1 Power1 1 ENDIF ENDIF`, **is** permitted.  
+The outermost `<if-statement>` cannot be chained with other Tasmota commands in a `Backlog `. For example, `Backlog Power1 0; IF (var1==1) Power1 1 ENDIF`, is **NOT** permitted. Commands chained with `<if-statement>` are allowed in a `<statement-list>`. For example, `ON ENERGY#Current>10 DO Power1 0; IF (var1==1) Power1 1 ENDIF ENDON`, **is** permitted.  
 
-`<logical-expression>` example: `VAR1>=10`  
+`(<logical-expression>)` example: `(VAR1>=10)`  
 - Multiple comparison expressions with logical operator `AND` or `OR` between them. `AND` has higher priority than `OR`. For example:  
-`UPTIME>100 AND MEM1==1 OR MEM2==1`  
-- Parenthesis can be used to change the priority of logical expression. For example:  `UPTIME>100 AND (MEM1==1 OR MEM2==1)`  
+`(UPTIME>100 AND MEM1==1 OR MEM2==1)`  
+- Parenthesis can be used to change the priority of logical expression. For example:  `(UPTIME>100 AND (MEM1==1 OR MEM2==1))`  
 
 - Following variables can be used in `<condition>`:  
 
@@ -341,7 +342,7 @@ Once the feature is enabled, the use of expressions is supported in the followin
 #### Syntax
 Expressions can use of the following operators. They are listed by the order of operations priority, from higher to lower.
 
-* `(  )` (parentheses are used to explicitly control the order of operations)
+* `(  )` (parentheses can be used to explicitly control the order of operations)
 * `^` (power)
 * `%` (modulo, division by zero returns modulo "0")
 * `*` and `/`  (multiplication and division; division by zero returns "0")
