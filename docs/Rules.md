@@ -634,15 +634,15 @@ Rule1
 If a device has more than one relay and LEDs ON different GPIOs (not connected to the relay) you need to use rules to display current relay status on LEDs. This example is a 3 gang wall switch. Instead of LEDs you need to assign 3 dummy relays that will be controlled when the real relays are switched to reflect their status.
 
 ```haskell
-Backlog ledmask 0x0000; setoption13 1; seriallog 0
+Backlog LedMask 0x0000; setoption13 1; seriallog 0
 
-rule1 
+Rule1 
   ON Power1#state DO Power4 %value% ENDON 
   ON Power2#state DO Power5 %value% ENDON 
   ON Power3#state DO Power6 %value% ENDON
 
-rule1 1
-```haskell
+Rule1 1
+```
 Note: This method doubles the number of flash writes. [Link to the device](https://templates.blakadder.com/DS-102_3.html)
 
 
