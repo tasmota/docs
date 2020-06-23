@@ -278,8 +278,9 @@ The outermost `<if-statement>` cannot be chained with other Tasmota commands in 
 
 `(<logical-expression>)` example: `(VAR1>=10)`  
 - Multiple comparison expressions with logical operator `AND` or `OR` between them. `AND` has higher priority than `OR`. For example:  
-`(UPTIME>100 AND MEM1==1 OR MEM2==1)`  
-- Parenthesis can be used to change the priority of logical expression. For example:  `(UPTIME>100 AND (MEM1==1 OR MEM2==1))`  
+  `((UPTIME>100) AND (MEM1==1) OR (MEM2==1))`  
+- Parenthesis can be used to change the priority of the logical expression evaluation. For example:  
+  `((UPTIME>100) AND ((MEM1==1) OR (MEM2==1)))`  
 
 - Following variables can be used in `<condition>`:  
 
