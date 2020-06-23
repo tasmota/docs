@@ -1,4 +1,4 @@
-(For information on the iFan02 please see here - [iFan02](/docs/devices/Sonoff-iFan02.md))
+(For information on the iFan02 please see here - [iFan02](devices/Sonoff-iFan02.md))
 
 ## Serial Flashing
 Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
