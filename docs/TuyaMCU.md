@@ -33,8 +33,7 @@ Whenever a command is sent to the MCU, this dpId determines which component need
 
 **There is no way to autodetect dpId's and their functions.**
 
-To assist in the process of determining what dpId does what, there is a bookmarklet available here that can be used on the console screen: https://github.com/sillyfrog/Tasmota-Tuya-Helper
-This will send the `weblog` and other required commands automatically, and present the TuyaMCU information in a single table.
+To assist in the process of determining what dpId does what, there is a [bookmarklet available](https://github.com/sillyfrog/Tasmota-Tuya-Helper) that can be used on the console screen. This will send the `weblog` and other required commands automatically, and present the TuyaMCU information in a single table allowing for easier testing.
 
 Use this procedure to determine which dpId's are available:
 
