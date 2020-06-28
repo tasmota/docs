@@ -24,6 +24,7 @@ SCRIPT_POWER_SECTION | enable `>P` section (execute on power changes)
 SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe  
 USE_SENDMAIL | enable `>m` section and support for sending e-mail   
 USE_SCRIPT_WEB_DISPLAY | enable `>W` section (modify web UI)
+SCRIPT_FULL_WEBPAGE | enable `>w` section (seperate full web page and webserver)
 USE_TOUCH_BUTTONS | enable virtual touch button support with touch displays
 USE_WEBSEND_RESPONSE | enable receiving the response of a [`WebSend`](Commands#websend) command (received in section >E)
 SCRIPT_STRIP_COMMENTS | enables stripping comments when attempting to paste a script that is too large to fit
@@ -277,10 +278,20 @@ A web user interface may be generated containing any of the following elements:
   
   additionally you have to define the html frame to put the chart in (both lines must be preceded by a $ char)
   e.g.  
-  $<div id="chart1"style="width:640px;height:480px;margin:0 auto">\</div>  
+  $\<div id="chart1"style="width:640px;height:480px;margin:0 auto">\</div>  
   $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")  
   you may define more then one chart. The charts id is chart1 ... chartN
   
+`>w` ButtonLabel
+generates a button with the name "ButtonLabel" in Tasmota main menu.  
+Clicking  this button displays a web page with the HTML data of this section.
+all cmds like in >W apply here. these lines are refreshed frequently to show e.g. sensor values.
+lines preceeded by $ are static and not refreshed and display below lines without $.  
+this option also enables a full webserver interface when USE_SCRIPT_FATFS is activ.  
+you may display files from the flash or SD filesystem by specifying the url:  IP/sdc/path  .
+(supported files: *.jpg, *.html, *.txt)  
+==Requires compiling with `#define SCRIPT_FULL_WEBPAGE`.== 
+
   
 `>M`  
 [Smart Meter Interface](Smart-Meter-Interface)  
@@ -667,9 +678,11 @@ specific webcam commands:
 `res=wc(5 p)` start stop streaming 0=stop, 1=start  
 `res=wc(6 p)` start stop motion detector, p=0 => stop detector, p=T start detector with picture every T ms, -1 get picture difference, -2 get picture brightness  
 `res=wc(7 p)` start stop face detector, p=0 => stop detector, p=T start detector with picture every T ms, -1 get number of faces found in picture (USE_FACE_DETECT must be defined)  
+
 control cmds sel =  
 * 0 fs = set frame size (see above for constants)    
 * 1 se = set special effect  
+
   - `0 = no effect`  
   - `1 = negative`  
   - `2 = black and white`  

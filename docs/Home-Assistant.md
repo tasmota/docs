@@ -488,6 +488,9 @@ to
 
 The key is the `=` after color string in hex. It will retain current white value while changing color. 
 
+!!! example "Using schema: template light"
+
+    Thorough explanation of template: schema lights and its features on [https://blakadder.com/template_schema_lights/](https://blakadder.com/template_schema_lights/)
 <!-- tabs:end -->
 
 ### Sensors
