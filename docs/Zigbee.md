@@ -622,7 +622,7 @@ If your device pairs successfully with Zigbee2Tasmota but doesn't report on stan
 
 In this case you will have to use rules or an external home automation solution to parse the ZbReceived messages. The following section will focus only on rules to utilize the device inside Tasmota ecosystem.
 
-### Ikea ON/OFF Switch (E1743)
+### Ikea ON/OFF Switch
 `"ModelId":"TRADFRI on/off switch","Manufacturer":"IKEA of Sweden"`
 
 - Short press `O` - `0006!00`
@@ -639,11 +639,10 @@ Rule
   on ZbReceived#0x7596#0006!01 do publish cmnd/%topic%/POWER ON endon 
   on ZbReceived#0x7596#0008!01 do publish cmnd/%topic%/Dimmer - endon 
   on ZbReceived#0x7596#0008!05 do publish cmnd/%topic%/Dimmer + endon
-  on ZbReceived#0x030E#0008!07 do publish %topic%/ikeaonoff/Dimmer STOP endon
 ```
 
-### Aqara Water Leak Sensor (SJCGQ11LM)
-`"ModelId":"lumi.sensor_wleak.aq1","Manufacturer":"LUMI"`
+### Aqara Water Leak Sensor
+`"ModelId":"lumi.sensor_wleak.aq1"`
 
 In this example sensor reports on `0x099F` and sends an mqtt message to topic `stat/leak_sensor/LEAK`:
 
@@ -652,6 +651,29 @@ Rule
   on ZbReceived#0x099F#0500!00=010000FF0000 do publish stat/leak_sensor/LEAK ON endon 
   on ZbReceived#0x099F#0500!00=000000FF0000 do publish stat/leak_sensor/LEAK OFF endon 
 ```
+
+### Aqara Vibration Sensor
+`"ModelId":"lumi.vibration.aq1"`
+
+To modify sensor sensitivity use command. Replace `"device"` with your own device name:
+```haskell
+# for high sensitivity
+ZbSend {"device":"vibration","Endpoint":1,"Cluster":0,"Manuf":"0x115F","Write":{"0000/FF0D%20":"0x01"}} 
+# for medium sensitivity
+ZbSend {"device":"vibration","Endpoint":1,"Cluster":0,"Manuf":"0x115F","Write":{"0000/FF0D%20":"0x0B"}} 
+# for low sensitivity
+ZbSend {"device":"vibration","Endpoint":1,"Cluster":0,"Manuf":"0x115F","Write":{"0000/FF0D%20":"0x15"}}
+```
+Command needs to be issued shortly after pressing the device button. There will be no response to the command but you can check if the new option is active by using
+
+```haskell
+ZbSend {"Device":"vibration","Endpoint":1,"Cluster":0,"Manuf":"0x115F","Read":"0xFF0D"}
+```
+Received response will be :
+```haskell
+{"ZbReceived":{"vibration":{"Device":"0x0B2D","Name":"vibration","0000/FF0D":1,"Endpoint":1,"LinkQuality":72}}}
+```
+`"0000/FF0D"` is the key, value `1` is high sensitivity, `11` medium and `21` is low.
 
 ## Zigbee2Tasmota Status Codes
 You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  
@@ -678,3 +700,7 @@ You can inspect the log output to determine whether Zigbee2Tasmota started corre
     - `99`: general error, ==Zigbee2Tasmota was unable to start==
 * `Message` (optional) a human-readable message
 * other fields depending on the message (e.g., Status=`50` or Status=`51`)
+
+## Zigbee Internals
+
+If you want a more technical explanation on how all this works read [Zigbee-Internals](Zigbee-Internals.md)
