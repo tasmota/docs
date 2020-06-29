@@ -335,7 +335,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `st(svar c n)` = string token - retrieve the n^th^ element of svar delimited by c  
 `sl(svar)` = gets the length of a string  
 `sb(svar p n)` = gets a substring from svar at position p (if p<0 counts from end) and length n  
-`is(index "string1|string2|....|stringn")` = gets a substring from immediate string separated by '|' (this immediate string may be up to 255 chars long) index = 0..n  
+`is(num "string1|string2|....|stringn|")` = defines a string array optionally preset with immediate strings separated by '|' (this immediate string may be up to 255 chars long) num = 0 read only string array, num > 0 number of elements in read write string array  
+`is[index]` = gets string `index` from string array, if read-write also write string of index  
 `sin(x)` = calculates the sinus(x) (if defined USE_ANGLE_FUNC)  
 `acos(x)` = calculates the acos(x) (if defined USE_ANGLE_FUNC)  
 `sqrt(x)` = calculates the sqrt(x) (if defined USE_ANGLE_FUNC)  
