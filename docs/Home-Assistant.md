@@ -658,7 +658,10 @@ binary_sensor:
     payload_off: "0"
     device_class: opening
     state_topic: "tele/tasmota/RESULT"
-    value_template: '{{ value_json.RfReceived.RfKey }}'
+    value_template: >-
+        {% if value_json.RfReceived.RfKey %}
+            {{'ON'}}
+        {% endif %}
 ```
 <!-- tabs:end -->
 
