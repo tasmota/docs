@@ -96,7 +96,7 @@ With MQTT discovery no user interaction or configuration file editing is needed 
 
 <hr>
 
-Types of devices not listed above (fans, covers, etc) require [manual configuration](#fans)
+Types of devices not listed above (fans, covers, TuyaMCU devices, etc) require [manual configuration](#fans)
 
 ### Enabling 
 
