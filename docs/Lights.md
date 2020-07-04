@@ -54,6 +54,13 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 
 **Alexa**: you can use Philips Hue emulation, the light will appear as White light with Dimmer.
 
+**Leading edge dimmer** You can also configure a leading edge dimmer on 230V with the 1 Channel configuration. In this case you need a TRIAC and a zero-Cross detection that give a pulse with every crossing of the 0V of the sinus curve. 
+
+For example:
+<img style="float:right;height:120px" alt="CCT" src="https://ae01.alicdn.com/kf/HTB1TrhBQpXXXXbsaFXXq6xXFXXX8/AC-Licht-lampe-dimmen-LED-lampe-und-motor-Dimmer-Modul-1-Kanal-3-3-V-5.jpg">
+
+Define a COUNTER with the same number as the PWM (e.g. COUNTER1, PWM1). Set COUNTERDEBOUNCELOW 1 to enable detection of the raising edge of the zero-crossing. Connect zero-Crossing to COUNTER and PWM to PWM. Set PWMFREQUENCY 100 or 120 depending on the frequency of the main in your country. Additionally it is recommended to set LEDTABLE 0
+
 |Configuration|(see below)|
 |---|---|
 |Commands|`Power`, `Dimmer`|
