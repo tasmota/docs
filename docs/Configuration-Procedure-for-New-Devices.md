@@ -17,16 +17,15 @@ If your device is similar to the existing built-in module (e.g., a particular MC
    ```  
 
    a. Save the configuration. Once the device reboots, use the virtual buttons on the web UI to find which of the assigned GPIO actually control the physical relays and LEDs on the device. Make note of which GPIO act on which device peripheral.
-   
-      - If you are unable to control some of the relays or LEDs on the device, they may be attached to the "dedicated" GPIO skipped in the initial probe. Now assign those GPIO:       ```json
-      {"NAME":"ID Relays 2","GPIO":[21,22,23,24,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}
-      ```
-      - Repeat step _2a_.  
-      - If you device is based on the ESP8285 and you are still unable to control some of the relays or LEDs on the device, they may be attached to GPIO9 or GPIO10. Now assign those remaining GPIO:  
-       ```json
-       {"NAME":"ID Relays 3","GPIO":[0,0,0,0,0,0,21,22,0,0,0,0,0],"FLAG":0,"BASE":18}
-       ```
-      - Repeat step _2a_.  
+   If you are unable to control some of the relays or LEDs on the device, they may be attached to the "dedicated" GPIO skipped in the initial probe. Now assign those GPIO:          ```json
+   {"NAME":"ID Relays 2","GPIO":[21,22,23,24,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}
+   ```
+   - Repeat step _2a_.  
+   - If you device is based on the ESP8285 and you are still unable to control some of the relays or LEDs on the device, they may be attached to GPIO9 or GPIO10. Now assign those remaining GPIO:  
+    ```json
+    {"NAME":"ID Relays 3","GPIO":[0,0,0,0,0,0,21,22,0,0,0,0,0],"FLAG":0,"BASE":18}
+    ```
+    - Repeat step _2a_.  
 
    b. Once you have found which GPIOs control the relays and LEDs, set these "active" GPIO to associate them with the corresponding `Relay<x>`, `LED<x>`, or `LEDLink` or `PWM<x>` (Some may require the use of inverted (i.e., `Relay<x>i`/`LED<x>i`/`LEDLinki`) component). Bulbs have mainly `PWM`.  
 
