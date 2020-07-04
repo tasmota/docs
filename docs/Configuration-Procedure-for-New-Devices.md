@@ -11,37 +11,44 @@ If your device is similar to the existing built-in module (e.g., a particular MC
    `Backlog SetOption0 0; SetOption36 1`  
 
 2. Assign every available GPIO to successive `Relay<x>` components. For the initial GPIO probe, exclude "dedicated" GPIO such as GPIO0/GPIO2 and Tx/Rx, etc. You can use a [Template](Templates) to easily perform these assignments:  
-   `{"NAME":"ID ComponentsR","GPIO":[0,0,0,0,21,22,0,0,23,24,25,26,27],"FLAG":0,"BASE":18}`  
 
-   _a._ Save the configuration. Once the device reboots, use the virtual buttons on the web UI to find which of the assigned GPIO actually control the physical relays and LEDs on the device. Make note of which GPIO act on which device peripheral.  
-      - If you are unable to control some of the relays or LEDs on the device, they may be attached to the "dedicated" GPIO skipped in the initial probe. Now assign those GPIO:  
-        `{"NAME":"ID Componentsb1","GPIO":[21,22,23,24,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
+   ```json
+   {"NAME":"ID Relays","GPIO":[0,0,0,0,21,22,0,0,23,24,25,26,27],"FLAG":0,"BASE":18}
+   ```  
+
+   a. Save the configuration. Once the device reboots, use the virtual buttons on the web UI to find which of the assigned GPIO actually control the physical relays and LEDs on the device. Make note of which GPIO act on which device peripheral.
+   
+      - If you are unable to control some of the relays or LEDs on the device, they may be attached to the "dedicated" GPIO skipped in the initial probe. Now assign those GPIO:       ```json
+      {"NAME":"ID Relays 2","GPIO":[21,22,23,24,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}
+      ```
       - Repeat step _2a_.  
       - If you device is based on the ESP8285 and you are still unable to control some of the relays or LEDs on the device, they may be attached to GPIO9 or GPIO10. Now assign those remaining GPIO:  
-        `{"NAME":"ID Componentsb2","GPIO":[0,0,0,0,0,0,21,22,0,0,0,0,0],"FLAG":0,"BASE":18}`
+       ```json
+       {"NAME":"ID Relays 3","GPIO":[0,0,0,0,0,0,21,22,0,0,0,0,0],"FLAG":0,"BASE":18}
+       ```
       - Repeat step _2a_.  
 
-   _b._ Once you have found which GPIOs control the relays and LEDs, set these "active" GPIO to associate them with the corresponding `Relay<x>`, `LED<x>`, or `LEDLink` or `PWM<x>` (Some may require the use of inverted (i.e., `Relay<x>i`/`LED<x>i`/`LEDLinki`) component). Bulbs have mainly `PWM`.  
+   b. Once you have found which GPIOs control the relays and LEDs, set these "active" GPIO to associate them with the corresponding `Relay<x>`, `LED<x>`, or `LEDLink` or `PWM<x>` (Some may require the use of inverted (i.e., `Relay<x>i`/`LED<x>i`/`LEDLinki`) component). Bulbs have mainly `PWM`.  
 
-      **For proper operation, in the final device configuration, assignment of like components must begin from `1` and be assigned sequentially!** Regular and inverted components can be intermixed.  
-      (e.g., `Relay1`, then `Relay2`; `Led1`, then `Led2i` and so on)  
+   **For proper operation, in the final device configuration, assignment of like components must begin from `1` and be assigned sequentially!** Regular and inverted components can be intermixed.  
+   (e.g., `Relay1`, then `Relay2`; `Led1`, then `Led2i` and so on)  
 
 3. Now, assign every remaining GPIO (excluding, once again, remaining "dedicated" GPIO like GPIO0/GPIO2 and Tx/Rx, etc.) to successive `Switch1`..`Switch8` components (`9`..`16`). You can once again use a Template using `0` for the GPIO identified in step 2.
 
-   _a._ Save the configuration. Once the device reboots, use the web UI Console to run the `Status 8` (sensors) command. This will display the current state of each GPIO.
+   a. Save the configuration. Once the device reboots, use the web UI Console to run the `Status 8` (sensors) command. This will display the current state of each GPIO.
 
-   _b._ Then, while either holding down the physical button or having flipped the position of the physical switch, display `Status 8` again. Whichever GPIO changes state from what was shown in step _3a_ is the GPIO connected to the input.
+   b. Then, while either holding down the physical button or having flipped the position of the physical switch, display `Status 8` again. Whichever GPIO changes state from what was shown in step _3a_ is the GPIO connected to the input.
       
-      - If you have a bulb, GPIO which are in state `on` will probably be SM16716 CLK or SM16716 DAT component.
-      
+      - If you have a bulb, GPIO which are in state `on` will probably be SM16716 CLK or SM16716 DAT component.   
       - If none of the GPIO change state, then assign the remaining GPIO and retry step _3a_.
 
-   _c._ Once you have found which GPIO are connected to each input, change the GPIO setting in the configuration to a `Button<x>` or `Switch<x>` according to your input component or use case. Proper operation may dictate the use regular or inverted (i.e., `Switch<x>i`/`Button<x>i`) settings. For buttons, you may need to determine whether the internal pull-up is used or not. If so, select `Button<x>`_**n**_, where _**n**_ indicates no pull-up.
+   c. Once you have found which GPIO are connected to each input, change the GPIO setting in the configuration to a `Button<x>` or `Switch<x>` according to your input component or use case. Proper operation may dictate the use regular or inverted (i.e., `Switch<x>i`/`Button<x>i`) settings. For buttons, you may need to determine whether the internal pull-up is used or not. If so, select `Button<x>`_**n**_, where _**n**_ indicates no pull-up.
 
 4. Once you have determined which GPIO your device uses, set any remaining GPIOs to `None (0)` including the Analog A0 pin.
+   
    - Save the configuration.
 
-5. In case your device is a Tuya device with a MCU which controls everything see [TuyaMCU](TuyaMCU) for instructions on how to configure it.
+5. In case your device is a Tuya device with an MCU which controls everything see [TuyaMCU](TuyaMCU) for instructions on how to configure it.
 
 6. Once the device reboots, set the device to save power state changes ([`SetOption0 1`](Commands#setoption0)).
 
