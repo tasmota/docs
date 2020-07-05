@@ -249,6 +249,7 @@ with the '=' char at the beginning of a line you may do some special decoding
 	  
 
 ## Smart Meter Descriptors
+- [JANZ C3801 (SML - MODBUS)](#janz-c3801-sml-modbus)
 - [EMH ED300L (SML)](#emh-ed300l-sml)
 - [Hager EHZ363 (SML)](#hager-ehz363-sml)
 - [Hager EHZ161 (OBIS)](#hager-ehz161-obis)
@@ -263,6 +264,27 @@ with the '=' char at the beginning of a line you may do some special decoding
 - [2 * SBC ALE3 (MODBUS)](#2-sbc-ale3-modbus)
 --------------------------------------------------------
 
+### JANZ C3801 (SML - MODBUS)
+
+This is an example for one of the many quite similar smart meters implemented in Portugal, by `EDP Distribuição S.A.`. May be valid for many more models, as stated.
+
+```
+>D 
+
+>B
+=>sensor53 r
+
+>M 1
+
++1,14,m,1,9600,EB,5,50,0104006C,01040079,0104007F,0104007A
+ 
+1,010404UUuuxxxx@i0:10,Tensão,V,Voltage_P1,1
+1,010404xxxxUUuu@i0:10,Corrente,A,Current_P1,1
+1,010408UUuuUUuuxxxxxxxxxxxx@i1:1,Potência ativa,W,Power_P1,0
+1,01040aUUuuxxxx@i2:10,Frequência,Hz,Frequency_P1,1
+1,010406xxxxxxxxUUuu@i3:1000,Fator de potência,pu,PFactor_P1,3
+#
+```
 
 ### EMH ED300L (SML)  
   
