@@ -202,9 +202,9 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <th class="th-lboi">YEE RC</th>
   </tr>
   <tr>
-    <td class="tg-lboi"><img src="../_media/bluetooth/nlight.jpg" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.jpg" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.jpg" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/nlight.jpg" width=100></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.jpg" width=100></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.jpg" width=100></td>
   </tr>
   <tr>
     <td class="tg-lboi">motion</td>
