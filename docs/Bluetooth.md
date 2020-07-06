@@ -134,6 +134,17 @@ CGG1 ClearGrass Temperature and Humidity Monitor should be found and may give re
 
 ### Configuration
   
+You must [compile your build](Compile-your-build). Change the following in `my_user_config.h`:
+
+```
+// -- SPI sensors ---------------------------------
+#define USE_SPI                                  // Hardware SPI using GPIO12(MISO), GPIO13(MOSI) and GPIO14(CLK) in addition to two user selectable GPIOs(CS and DC)
+#ifdef USE_SPI
+  #define USE_NRF24                              // Add SPI support for NRF24L01(+) (+2k6 code)
+  #ifdef USE_NRF24
+    #define USE_MIBLE                            // BLE-bridge for some Mijia-BLE-sensors (+4k7 code)
+```    
+    
 Sensors will be discriminated by using the Product-ID of the MiBeacon. A human readable short product name will be shown instead of the company-assigned ID of the BLE Public Device Address (= the "lower" 24 bits). 
 
 A TELE message could like look this:  
@@ -215,17 +226,16 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
    
 #### Devices with payload encryption  
   
-The LYWSD03MMC will start to send advertisements with encrypted sensor data after pairing it with the official Xiaomi app. Out-of-the-box the sensor does only publish a static advertisement.  
+The LYWSD03MMC and the MJYD2S will start to send advertisements with encrypted sensor data after pairing it with the official Xiaomi app. Out-of-the-box the sensors do only publish a static advertisement.  
 It is possible to get the necessary decryption key ("bind_key") with the help of 3rd-party-apps on a smart phone.  
 (iOS-example: https://community.home-assistant.io/t/xiaomi-passive-ble-monitor-sensor-platform/177352/101?u=magalex)  
-This key and the corresponding MAC of the sensor can be injected with the NRFKEY-command. It is probably a good idea to save the whole config as RULE like that:  
+This key and the corresponding MAC of the sensor can be injected with the NRFKEY-command (or NRFMJYD2S). It is probably a good idea to save the whole config as RULE like that:  
   
-```rule1 on System#Init do backlog NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFPage 6; NRFignore 5 endon```  
-(key for two sensors, 6 sensors per page in the WebUI, do not try to read the CGG1)  
+```rule1 on System#Init do backlog NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFPage 6; NRFUse 0; NRFUse 4 endon```  
+(key for two sensors, 6 sensors per page in the WebUI, turn off all sensors, turn on LYWS03)  
   
 LYWSD03MMC sends encrypted sensor data every 10 minutes. As there are no confirmed reports about correct battery presentation of the sensor (always shows 99%), this function is currently not supported.  
-
-
+MJYD2S sends motion detection events and 2 discrete illuminance levels (1 lux or 100 lux for a dark or bright environment). Additionally battery level and contiguous time without motion in discrete growing steps (no motion time = NMT).  
 
 ### Beacon  
   
@@ -306,11 +316,12 @@ Different vendors offer BT-solutions with different accessibilities under the MI
 
 Most of the „older“ BT-sensor-devices use unencrypted messages, which can be read by all kinds of BLE-devices or even a NRF24L01. The big advantage is the power efficiency as no active bi-directional connection has to be established. This is therefore the preferred option, if technically possible (= for the supported sensors).
 
-With the arrival of the (cheap) LYWSD03 came the problem of encrypted data in MiBeacons, which to date has only been successfully decrypted in open source projects in a quite complicated way (getting the 16-byte-key with 3rd-party-software while pairing the device with the original Xiaomi Apps).
-At least the device allows the use of a simple BLE connection without any encrypted authentication and the reading of the sensor data using normal subscription methods to GATT-services. This is more power hungry than the passive reading of BLE advertisements.   
+With the arrival of "newer" sensors came the problem of encrypted data in MiBeacons, which can be decrypted in Tasmota in a quite complicated way (getting the 16-byte-key with 3rd-party-software while pairing the device with the original Xiaomi Apps).
+At least the LYWSD03 allows the use of a simple BLE connection without any encrypted authentication and the reading of the sensor data using normal subscription methods to GATT-services. This is more power hungry than the passive reading of BLE advertisements.  
+Other sensors like the MJYD2S are not usable without the "bind_key".
   
 #### Working principle of both Tasmota drivers (>8.2.0.1)
   
 The idea is to provide drivers with as many automatic functions as possible. Besides the hardware setup, there are zero or very few things to configure.  
 The sensor namings are based on the original sensor names and shortened if appropriate (Flower care -> Flora). A part of the MAC will be added to the name as a suffix.  
-All sensors are treated as if they are physically connected to the ESP8266 device.
+All sensors are treated as if they are physically connected to the ESP8266 device. For motion and remote control sensors MQTT-messages will be published in (nearly) real time.
