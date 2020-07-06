@@ -190,6 +190,24 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility</td>
     <td class="tg-lboi">temperature, humidity</td>
   </tr>
+</table>  
+  
+ <table>
+  <tr>
+    <th class="th-lboi">NLIGHT</th>
+    <th class="th-lboi">MJYD2S</th>
+    <th class="th-lboi">YEE RC</th>
+  </tr>
+  <tr>
+    <td class="tg-lboi"><img src="../_media/bluetooth/nlight.jpg" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.jpg" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.jpg" width=200></td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">motion</td>
+    <td class="tg-lboi">motion, illuminance, battery, no-motion-time</td>
+    <td class="tg-lboi">button press (single and long)</td>
+  </tr>
 </table>
    
 #### Devices with payload encryption  
