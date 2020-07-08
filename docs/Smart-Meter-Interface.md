@@ -249,6 +249,7 @@ with the '=' char at the beginning of a line you may do some special decoding
 	  
 
 ## Smart Meter Descriptors
+- [JANZ C3801 (SML - MODBUS)](#janz-c3801-sml-modbus)
 - [EMH ED300L (SML)](#emh-ed300l-sml)
 - [Hager EHZ363 (SML)](#hager-ehz363-sml)
 - [Hager EHZ161 (OBIS)](#hager-ehz161-obis)
@@ -263,6 +264,55 @@ with the '=' char at the beginning of a line you may do some special decoding
 - [2 * SBC ALE3 (MODBUS)](#2-sbc-ale3-modbus)
 --------------------------------------------------------
 
+### JANZ C3801 (SML - MODBUS)
+
+This is an example for one of the many quite similar smart meters implemented in Portugal, by `EDP Distribuição S.A.`. May be valid for many more models, as stated.
+
+You should configure your `user_config_override.h` as:
+
+```
+#ifndef USE_SCRIPT
+#define USE_SCRIPT
+#endif
+#ifndef USE_SML_M
+#define USE_SML_M
+#endif
+#ifdef USE_RULES
+#undef USE_RULES
+#endif
+
+#define SML_MAX_VARS 10
+```
+Your Tasmota SML `script`:
+
+```
+>D
+ 
+>B
+=>sensor53 r
+ 
+>M 1
+ 
++1,14,m,1,9600,EB,5,50,0104006C,01040079,0104007A,0104007F,01040026,01040027,01040028,0104000B,01040084
+ 
+1,=hVALORES TÉCNICOS
+1,010404UUuuxxxx@i0:10,Tensão,V,Voltage_P1,17
+1,010404xxxxUUuu@i0:10,Corrente,A,Current_P1,17
+1,010408UUuuUUuuxxxxxxxxxxxx@i1:1,Potência ativa,W,Power_P1,16
+1,010406xxxxxxxxUUuu@i2:1000,Fator de potência,pu,PFactor_P1,19
+1,01040aUUuuxxxx@i3:10,Frequência,Hz,Frequency_P1,17
+1,=h&#8205;
+1,=hTOTALIZADORES DE ENERGIA
+1,010408UUuuUUuuxxxxxxxxxxxx@i4:1000,Vazio (1),kWh,Energy_P1_R1,17
+1,010408UUuuUUuuxxxxxxxxxxxx@i5:1000,Ponta (2),kWh,Energy_P1_R2,17
+1,010408UUuuUUuuxxxxxxxxxxxx@i6:1000,Cheia (3),kWh,Energy_P1_R3,17
+1,=h&#8205;
+1,=hESTADOS
+1,010406uuxxxxxxxx@i7:1,Tarifa,,Tariff_P1,16
+1,010406uuxxxxxxxx@i8:1,DCP,,DCP_P1,16
+ 
+#
+```
 
 ### EMH ED300L (SML)  
   

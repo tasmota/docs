@@ -19,11 +19,12 @@ USE_BUTTON_EVENT | enable `>b` section (detect button state changes)
 USE_SCRIPT_JSON_EXPORT | enable `>J` section (publish JSON payload on [TelePeriod](Commands#teleperiod))
 USE_SCRIPT_SUB_COMMAND | enables invoking named script subroutines via the Console or MQTT
 USE_SCRIPT_HUE | enable `>H` section (Alexa Hue emulation)
-USE_SCRIPT_STATUS | enable `>U` section (receive JSON payloads)
+USE_SCRIPT_STATUS | enable `>U` section (receive JSON payloads from cmd status)
 SCRIPT_POWER_SECTION | enable `>P` section (execute on power changes)
 SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe  
 USE_SENDMAIL | enable `>m` section and support for sending e-mail   
 USE_SCRIPT_WEB_DISPLAY | enable `>W` section (modify web UI)
+SCRIPT_FULL_WEBPAGE | enable `>w` section (seperate full web page and webserver)
 USE_TOUCH_BUTTONS | enable virtual touch button support with touch displays
 USE_WEBSEND_RESPONSE | enable receiving the response of a [`WebSend`](Commands#websend) command (received in section >E)
 SCRIPT_STRIP_COMMENTS | enables stripping comments when attempting to paste a script that is too large to fit
@@ -121,8 +122,8 @@ _Section descriptors (e.g., `>E`) are **case sensitive**_
   `i:vname`   
   specifies auto increment counters if =0 (in seconds)  
   `g:vname`   
-  specifies global variable which is linked to all gloabl variables with the same defintion on all devices in the homenet.
-  when a variable is updated in one device it is instantly updated in all other devices. if a section >G exists it is executed when a variable is updated from another device  
+  specifies global variable which is linked to all global variables with the same defintion on all devices in the homenet.
+  when a variable is updated in one device it is instantly updated in all other devices. if a section >G exists it is executed when a variable is updated from another device (this is done via UDP-multicast, so not always reliable)  
   `m:vname`   
    specifies a median filter variable with 5 entries (for elimination of outliers)  
   `M:vname`   
@@ -171,7 +172,7 @@ Remark: hue values have a range from 0-65535. Divide by 182 to assign HSBcolors 
     `lamp1,E,on=pwr1,hue=hue1,sat=sat1,bri=bri1,ct=ct1`
 
 `>U`  
-status JSON Messages arrive here
+JSON messages from cmd status arrive here
 
 `>G`  
 global variable updated section
@@ -277,10 +278,20 @@ A web user interface may be generated containing any of the following elements:
   
   additionally you have to define the html frame to put the chart in (both lines must be preceded by a $ char)
   e.g.  
-  $<div id="chart1"style="width:640px;height:480px;margin:0 auto">\</div>  
+  $\<div id="chart1"style="width:640px;height:480px;margin:0 auto">\</div>  
   $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")  
   you may define more then one chart. The charts id is chart1 ... chartN
   
+`>w` ButtonLabel
+generates a button with the name "ButtonLabel" in Tasmota main menu.  
+Clicking  this button displays a web page with the HTML data of this section.
+all cmds like in >W apply here. these lines are refreshed frequently to show e.g. sensor values.
+lines preceeded by $ are static and not refreshed and display below lines without $.  
+this option also enables a full webserver interface when USE_SCRIPT_FATFS is activ.  
+you may display files from the flash or SD filesystem by specifying the url:  IP/sdc/path  .
+(supported files: *.jpg, *.html, *.txt)  
+==Requires compiling with `#define SCRIPT_FULL_WEBPAGE`.== 
+
   
 `>M`  
 [Smart Meter Interface](Smart-Meter-Interface)  
@@ -324,7 +335,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `st(svar c n)` = string token - retrieve the n^th^ element of svar delimited by c  
 `sl(svar)` = gets the length of a string  
 `sb(svar p n)` = gets a substring from svar at position p (if p<0 counts from end) and length n  
-`is(index "string1|string2|....|stringn")` = gets a substring from immediate string separated by '|' (this immediate string may be up to 255 chars long) index = 0..n  
+`is(num "string1|string2|....|stringn|")` = defines a string array optionally preset with immediate strings separated by '|' (this immediate string may be up to 255 chars long) num = 0 read only string array, num > 0 number of elements in read write string array  
+`is[index]` = gets string `index` from string array, if read-write also write string of index  
 `sin(x)` = calculates the sinus(x) (if defined USE_ANGLE_FUNC)  
 `acos(x)` = calculates the acos(x) (if defined USE_ANGLE_FUNC)  
 `sqrt(x)` = calculates the sqrt(x) (if defined USE_ANGLE_FUNC)  
@@ -667,9 +679,11 @@ specific webcam commands:
 `res=wc(5 p)` start stop streaming 0=stop, 1=start  
 `res=wc(6 p)` start stop motion detector, p=0 => stop detector, p=T start detector with picture every T ms, -1 get picture difference, -2 get picture brightness  
 `res=wc(7 p)` start stop face detector, p=0 => stop detector, p=T start detector with picture every T ms, -1 get number of faces found in picture (USE_FACE_DETECT must be defined)  
+
 control cmds sel =  
 * 0 fs = set frame size (see above for constants)    
 * 1 se = set special effect  
+
   - `0 = no effect`  
   - `1 = negative`  
   - `2 = black and white`  
