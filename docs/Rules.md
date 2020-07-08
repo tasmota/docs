@@ -1820,23 +1820,24 @@ Result
 
 ------------------------------------------------------------------------------
 
-### RF-Repeater/ IR-Repeater
+### RF Repeater / IR Repeater
 
 In some applications, an RF-Repeater may come in handy to increase the range of RF based devices. We need to use RF reciever and RF transmitter modules with tasmota powered controllers. The following rule looks for data received by the RF receiver and re transmits the same over the transmitter. 
 
-```
+```haskell
 Rule1
   on RfReceived#data do Rfsend {"Data":%value%,"Bits":24,"Protocol":1,"Pulse":454} endon
 ```
-`Rule1 1`
+Enable it with `Rule1 1`
 
 
 A similar concept can also work for IR- Repeater. Connect IR receiver module and IR trnasmitter to Tasmotized device and the following rule retransmits any data over IR
-```
+```haskell
 Rule1
   on IrReceived#Data do IRsend {"Protocol":"NEC","Bits":32,"Data":%value%} endon
 ```
-`Rule1 1`
+Enable it with `Rule1 1`
+
 The only catch is that the protocol needs to be setup in the rule. Most likely this can be taken care of by using a more complex rule maybe using variables. Would update in future
 
 
