@@ -154,8 +154,9 @@ The curtain motor also presents DpId 0x67 as a Boolean. I have only seen value 0
 This is a 240V Leading Edge Dimmer with a TYWE3S controller and an STM8 MCU
 
 ### Flashing:
+The simplest approach is to use [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert) to flash the device
 
-The NRST pin of the STM8 needs to be grounded upon boot to disable it, this is brought out to a header pin, along with ground and VCC from the TYWE3S. Confirm by checking continuity with a multimeter
+In order to flash via serial, the NRST pin of the STM8 needs to be grounded upon boot to disable it, this is brought out to a header pin, along with ground and VCC from the TYWE3S. Confirm by checking continuity with a multimeter
 
 IO0 from the TYWE3s also needs to be grounded upon boot, otherwise it's normal tasmota flashing procedure.
 
@@ -178,6 +179,8 @@ As per main TuyaMCU page using
    :-:|-
    01 | Tuya Rx (108)
    03 | Tuya Tx (107)
+
+Note that the push button is wired to the MCU so it cannot be used by Tasmota. Similarlly the devices has a bi-color LED where one color is wired to the TYWE3S and the other one to the MCU.
 
 ### More information:
 Bought from [ebay](https://www.ebay.co.uk/itm/Smart-Wifi-Dimmer-Switch-Support-Tuya-Smart-Life-LED-Light-Timing-Remote-Control/233233166207)
