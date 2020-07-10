@@ -243,7 +243,7 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 - Support for nested IF statements  
 - Available free RAM is the only limit for logical operators, parenthesis, and nested IF statements.  
 
-#### Syntax  
+#### Grammar  
 `<if-statement>`  
 
 - `IF (<logical-expression>) <statement-list> {ELSEIF (<logical-expression>) <statement-list>} [ELSE <statement-list>] ENDIF`  
@@ -267,14 +267,20 @@ Parentheses must enclose the expression. They can also be used to explicitly con
 
 - {`<Tasmota-command>` | `<if-statement>`}  
 
-#### In English
+#### Syntax
 IF statement supports 3 formats:  
 
 - `IF (<logical-expression>) <statement-list> ENDIF`  
 - `IF (<logical-expression>) <statement-list> ELSE <statement-list> ENDIF`  
 - `IF (<logical-expression>) <statement-list> [ELSEIF (<logical-expression>) <statement-list> ] ELSE <statement-list> ENDIF`  
 
-The outermost `<if-statement>` cannot be chained with other Tasmota commands in a `Backlog `. For example, `Backlog Power1 0; IF (var1==1) Power1 1 ENDIF`, is **NOT** permitted. Commands chained with `<if-statement>` are allowed in a `<statement-list>`. For example, `ON ENERGY#Current>10 DO Power1 0; IF (var1==1) Power1 1 ENDIF ENDON`, **is** permitted.  
+The outermost `<if-statement>` can be chained with other Tasmota commands using `Backlog `, e.g.  
+  `Rule1 ON ENERGY#Current>10 Backlog Power1 0; IF (%var1%==1) Power1 1 ENDIF;Power 2 0;Power3 1 ENDON` is **permitted**
+Outermost chain without backlog `<if-statement>` is not allowed, in that case use `Backlog`, e.g.  
+  `Rule1 ON ENERGY#Current>10 DO Power1 0; IF (%var1%==1) Power1 1 ENDIF ENDON` is **not permitted**
+Innermost chain for `<statement-list>` is possible with and without `Backlog`, e.g.  
+  `Rule1 ON Power1#State DO IF (%value%==1) Backlog Power2 1;Power3 1 ENDIF ENDON` is **permitted**
+  `Rule1 ON Power1#State DO IF (%value%==1) Power2 1;Power3 1 ENDIF ENDON` is also **permitted**
 
 `(<logical-expression>)` example: `(VAR1>=10)`  
 - Multiple comparison expressions with logical operator `AND` or `OR` between them. `AND` has higher priority than `OR`. For example:  
