@@ -1,5 +1,5 @@
 !!! warning "Most builds will not compile successfully with Arduino IDE anymore"
-    Tasmota is now optimised for and built with Visual Studio Code and [PlatformIO](PlatformIO.md). Any error when attempting compiling with Arduino IDE will have to be solved by your and no support will be given.
+    Tasmota is now optimised for and built with Visual Studio Code and [PlatformIO](PlatformIO.md). Any error when attempting compiling with Arduino IDE will have to be solved by you. No support will be given in GitHub or Discord.
 
 ## Download Arduino IDE
 Download Arduino IDE from https://www.arduino.cc/en/main/software  
