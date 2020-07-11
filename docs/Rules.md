@@ -243,7 +243,7 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 - Support for nested IF statements  
 - Available free RAM is the only limit for logical operators, parenthesis, and nested IF statements.  
 
-#### Syntax  
+#### Grammar  
 `<if-statement>`  
 
 - `IF (<logical-expression>) <statement-list> {ELSEIF (<logical-expression>) <statement-list>} [ELSE <statement-list>] ENDIF`  
@@ -267,14 +267,20 @@ Parentheses must enclose the expression. They can also be used to explicitly con
 
 - {`<Tasmota-command>` | `<if-statement>`}  
 
-#### In English
+#### Syntax
 IF statement supports 3 formats:  
 
 - `IF (<logical-expression>) <statement-list> ENDIF`  
 - `IF (<logical-expression>) <statement-list> ELSE <statement-list> ENDIF`  
 - `IF (<logical-expression>) <statement-list> [ELSEIF (<logical-expression>) <statement-list> ] ELSE <statement-list> ENDIF`  
 
-The outermost `<if-statement>` cannot be chained with other Tasmota commands in a `Backlog `. For example, `Backlog Power1 0; IF (var1==1) Power1 1 ENDIF`, is **NOT** permitted. Commands chained with `<if-statement>` are allowed in a `<statement-list>`. For example, `ON ENERGY#Current>10 DO Power1 0; IF (var1==1) Power1 1 ENDIF ENDON`, **is** permitted.  
+The outermost `<if-statement>` can be chained with other Tasmota commands using `Backlog `, e.g.  
+  `Rule1 ON ENERGY#Current>10 Backlog Power1 0; IF (%var1%==1) Power1 1 ENDIF;Power 2 0;Power3 1 ENDON` is **permitted**
+Outermost chain without backlog `<if-statement>` is not allowed, in that case use `Backlog`, e.g.  
+  `Rule1 ON ENERGY#Current>10 DO Power1 0; IF (%var1%==1) Power1 1 ENDIF ENDON` is **not permitted**
+Innermost chain for `<statement-list>` is possible with and without `Backlog`, e.g.  
+  `Rule1 ON Power1#State DO IF (%value%==1) Backlog Power2 1;Power3 1 ENDIF ENDON` is **permitted**
+  `Rule1 ON Power1#State DO IF (%value%==1) Power2 1;Power3 1 ENDIF ENDON` is also **permitted**
 
 `(<logical-expression>)` example: `(VAR1>=10)`  
 - Multiple comparison expressions with logical operator `AND` or `OR` between them. `AND` has higher priority than `OR`. For example:  
@@ -801,7 +807,7 @@ Rule1
   ON switch1#state=2 DO delay ENDON
 
 Rule1 1
-```haskell
+```
 
 ------------------------------------------------------------------------------
 
@@ -1817,3 +1823,29 @@ Result
 - As a result of the `tele-` prefix the rules will be checked at TelePeriod time for sensor AM2301-12 Temperature and Humidity. The first rule will use the Temperature stored in `%value%` and save it in `%var1%` for future use. The second rule will use the Humidity stored in `%value%` and the Temperature stored in `%var1%` to compose a single MQTT message suitable for Domoticz. 
 
 -----------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+
+### RF Repeater / IR Repeater
+
+In some applications, an RF-Repeater may come in handy to increase the range of RF based devices. We need to use RF reciever and RF transmitter modules with tasmota powered controllers. The following rule looks for data received by the RF receiver and re transmits the same over the transmitter. 
+
+```haskell
+Rule1
+  on RfReceived#data do Rfsend {"Data":%value%,"Bits":24,"Protocol":1,"Pulse":454} endon
+```
+Enable it with `Rule1 1`
+
+
+A similar concept can also work for IR- Repeater. Connect IR receiver module and IR trnasmitter to Tasmotized device and the following rule retransmits any data over IR
+```haskell
+Rule1
+  on IrReceived#Data do IRsend {"Protocol":"NEC","Bits":32,"Data":%value%} endon
+```
+Enable it with `Rule1 1`
+
+The only catch is that the protocol needs to be setup in the rule. Most likely this can be taken care of by using a more complex rule maybe using variables. Would update in future
+
+
+------------------------------------------------------------------------------
+

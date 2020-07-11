@@ -19,7 +19,7 @@ USE_BUTTON_EVENT | enable `>b` section (detect button state changes)
 USE_SCRIPT_JSON_EXPORT | enable `>J` section (publish JSON payload on [TelePeriod](Commands#teleperiod))
 USE_SCRIPT_SUB_COMMAND | enables invoking named script subroutines via the Console or MQTT
 USE_SCRIPT_HUE | enable `>H` section (Alexa Hue emulation)
-USE_SCRIPT_STATUS | enable `>U` section (receive JSON payloads)
+USE_SCRIPT_STATUS | enable `>U` section (receive JSON payloads from cmd status)
 SCRIPT_POWER_SECTION | enable `>P` section (execute on power changes)
 SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe  
 USE_SENDMAIL | enable `>m` section and support for sending e-mail   
@@ -172,7 +172,7 @@ Remark: hue values have a range from 0-65535. Divide by 182 to assign HSBcolors 
     `lamp1,E,on=pwr1,hue=hue1,sat=sat1,bri=bri1,ct=ct1`
 
 `>U`  
-status JSON Messages arrive here
+JSON messages from cmd status arrive here
 
 `>G`  
 global variable updated section
