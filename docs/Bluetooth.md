@@ -169,7 +169,7 @@ NRFIgnore<a id="nrfignore"></a>|`0` = all known sensor types active_(default)_<B
 NRFUse<a id="nrfuse"></a>|`0` = all known sensor types inactive<BR>`<value>` =  ignore certain sensor type (`1` = Flora, `2` = MJ_HT_V1, `3` = LYWSD02, `4` = LYWSD03, `5` = CGG1, `6` = CGD1, `7` = NLIGHT,`8` = MJYD2S,`9` = YEERC
 NRFScan<a id="nrfscan"></a>| Scan for regular BLE-advertisements and show a list in the console<BR>`0` = start a new scan list<BR>`1` = append to the scan list<BR>`2` = stop running scan
 NRFBeacon<a id="nrfbeacon"></a>| Set a BLE device as a beacon using the (fixed) MAC-address<BR>`<value>` (1-3 digits) = use beacon from scan list<BR>`<value>` (12 characters) = use beacon given the MAC interpreted as an uppercase string `AABBCCDDEEFF`
-NRFKey<a id="nrfkey"></a>| Set a "bind_key" for a MAC-address to decrypt sensor data of the LYWSD03MMC. The argument is a 44 characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string
+NRFKey<a id="nrfkey"></a>| Set a "bind_key" for a MAC-address to decrypt (LYWSD03MMC & MHO-C401). The argument is a 44 characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string
 NRFMjyd2s<a id="nrfmjyd2s"></a>| Set a "bind_key" for a MAC-address to decrypt sensor data of the MJYD2S. The argument is a 44 characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string
 NRFNlight<a id="nrfnlight"></a>| Set the MAC of an NLIGHT<BR>`<value>` (12 characters) =  MAC interpreted as an uppercase string `AABBCCDDEEFF`
   
@@ -211,22 +211,25 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <th class="th-lboi">NLIGHT</th>
     <th class="th-lboi">MJYD2S</th>
     <th class="th-lboi">YEE RC</th>
+    <th class="th-lboi">MHO-C401</th>
   </tr>
   <tr>
     <td class="tg-lboi"><img src="../_media/bluetooth/nlight.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/MHO-C401.png" width=200></td>
   </tr>
   <tr>
     <td class="tg-lboi">motion</td>
     <td class="tg-lboi">motion, illuminance, battery, no-motion-time</td>
     <td class="tg-lboi">button press (single and long)</td>
+    <td class="tg-lboi">temperature, humidity</td>
   </tr>
 </table>
    
 #### Devices with payload encryption  
   
-The LYWSD03MMC and the MJYD2S will start to send advertisements with encrypted sensor data after pairing it with the official Xiaomi app. Out-of-the-box the sensors do only publish a static advertisement.  
+The LYWSD03MMC, MHO-C401 and the MJYD2S will start to send advertisements with encrypted sensor data after pairing it with the official Xiaomi app. Out-of-the-box the sensors do only publish a static advertisement.  
 It is possible to get the necessary decryption key ("bind_key") with the help of 3rd-party-apps on a smart phone.  
 (iOS-example: https://community.home-assistant.io/t/xiaomi-passive-ble-monitor-sensor-platform/177352/101?u=magalex)  
 This key and the corresponding MAC of the sensor can be injected with the NRFKEY-command (or NRFMJYD2S). It is probably a good idea to save the whole config as RULE like that:  
