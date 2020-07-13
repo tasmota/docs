@@ -215,7 +215,7 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
   <tr>
     <td class="tg-lboi"><img src="../_media/bluetooth/nlight.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.png" height=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.png" width=200></td>
   </tr>
   <tr>
     <td class="tg-lboi">motion</td>
@@ -321,7 +321,7 @@ This will update every day at 00:30 AM.
   <tr>
     <td class="tg-lboi"><img src="../_media/bluetooth/nlight.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.png" height=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.png" width=200></td>
   </tr>
   <tr>
     <td class="tg-lboi">motion, no-motion-time (computed by the driver)</td>
