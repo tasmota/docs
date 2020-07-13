@@ -264,7 +264,8 @@ MI32Period<a id="mi32period"></a>|Show interval in seconds between sensor read c
 MI32Time <a id="mi32time"></a>|`<n>` = set time time of a **LYWSD02 only** sensor to Tasmota UTC time and timezone. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).
 MI32Unit <a id="mi32unit"></a>|`<n>` = toggle the displayed temperature units of a **LYWSD02 only** sensor. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).  Reporting of the temperature is always in Celcius, this only changes the value shown on the device.
 MI32Page<a id="mi32page"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
-MI32Battery<a id="mi32battery"></a>|Reads missing battery data for LYWSD02, Flora and CGD1.  
+MI32Battery<a id="mi32battery"></a>|Reads missing battery data for LYWSD02, Flora and CGD1.
+MI32Key<a id="mi32key"></a>| Set a "bind_key" for a MAC-address to decrypt sensor data (LYWSD03MMC, MJYD2S). The argument is a 44 characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string  
   
 !!! tip 
 If you really want to read battery for LYWSD02, Flora and CGD1, consider doing it once a day with a RULE:
@@ -302,6 +303,24 @@ This will update every day at 00:30 AM.
     <td class="tg-lboi"></td>
     <td class="tg-lboi">unsupported time or alarm</td>
     <td class="tg-lboi"></td>
+  </tr>
+</table>  
+  
+ <table>
+  <tr>
+    <th class="th-lboi">NLIGHT</th>
+    <th class="th-lboi">MJYD2S</th>
+    <th class="th-lboi">YEE RC</th>
+  </tr>
+  <tr>
+    <td class="tg-lboi"><img src="../_media/bluetooth/nlight.jpg" width=100></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.jpg" width=100></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.jpg" width=100></td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">motion, no-motion-time (computed by the driver)</td>
+    <td class="tg-lboi">motion, illuminance, battery, no-motion-time</td>
+    <td class="tg-lboi">button press (single and long)</td>
   </tr>
 </table>
 
