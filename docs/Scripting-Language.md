@@ -332,8 +332,10 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `int(x)` = gets the integer part of x (like floor)  
 `hn(x)` = converts x (0..255) to a hex nibble string  
 `hx(x)` = converts x (0..65535) to a hex string  
+`hd("hstr")` = converts hex number string to a decimal number  
 `st(svar c n)` = string token - retrieve the n^th^ element of svar delimited by c  
 `sl(svar)` = gets the length of a string  
+`asc(svar)` = gets the binary value of 1. char of a string  
 `sb(svar p n)` = gets a substring from svar at position p (if p<0 counts from end) and length n  
 `is(num "string1|string2|....|stringn|")` = defines a string array optionally preset with immediate strings separated by '|' (this immediate string may be up to 255 chars long) num = 0 read only string array, num > 0 number of elements in read write string array  
 `is[index]` = gets string `index` from string array, if read-write also write string of index  
@@ -347,7 +349,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `mqtts` = MQTT connection status: `0` = disconnected, `>0` = connected  
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
 `sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
-`sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
+`sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD) 
+`sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)(if defined USE_SML_SCRIPT_CMD) 
 `sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
 `enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
 `gjp("host" "path")` = trigger HTTPS JSON page read as used by Tesla Powerwall (if defined SCRIPT_GET_HTTPS_JP)  
