@@ -363,6 +363,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `month` = month  
 `year` = year  
 `epoch` = epoch time (from 2019-1-1 00:00)  
+`eres` = result of >E section set this var to 1 in section >E to tell Tasmota event is handled (prevents MQTT)  
 
 The following variables are cleared after reading true:  
 `chg[var]` = true if a variables value was changed (numeric vars only)  
