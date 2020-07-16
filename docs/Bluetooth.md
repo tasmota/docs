@@ -223,7 +223,7 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <td class="tg-lboi">motion</td>
     <td class="tg-lboi">motion, illuminance, battery, no-motion-time</td>
     <td class="tg-lboi">button press (single and long)</td>
-    <td class="tg-lboi">temperature, humidity</td>
+    <td class="tg-lboi">temperature, humidity, battery</td>
   </tr>
 </table>
    
@@ -262,8 +262,9 @@ To turn on/off support for decyrption, change the following in the driver code:
 ```  
 Without encryption support the driver will read data from found LYWSD03MMC via connection. This will increase power consumption of the sensor, but no "bind_key" is needed.  
 
-The driver will start to scan for known sensors automatically using a hybrid approach, when encryption support is deactivated. In the first place MiBeacons are passively received and only found LYWSD03MMC-sensors will be connected at the given period to read data in order to be as energy efficient as possible.
-Battery data is in general of questionable value for the LYWSD0x, CGD1 and (maybe) Flora (some are even hard coded on the device to 99%). That's why only MJ_HT_V1, CGG1 (untested) and LYWSD03 (calculated battery level) will automatically update battery data. The other battery levels can be read by command. 
+The driver will start to scan for known sensors automatically using a hybrid approach, when encryption support is deactivated. In the first place MiBeacons are passively received and only found LYWSD03MMC- and MHO-C401-sensors will be connected at the given period to read data in order to be as energy efficient as possible.
+Battery data is in general of questionable value for the LYWSD0x, CGD1, MHO-C401 and (maybe) Flora (some are even hard coded on the device to 99%). That's why only MJ_HT_V1, CGG1 (untested) and LYWSD03 (calculated battery level) will automatically update battery data. The other battery levels can be read by command. 
+The internally very similiar LYWS03MMC and MHO-C401 behave very confusing in delivering battery status. Both report (fixed) 99% or 100% via encrypted payload or connected reading of the battery characteristic. But they can deliver a correct battery voltage in their payload of the temperature and humidity data, which will be mapped to a percentage level by the driver.  
   
 #### Commands
 
@@ -320,16 +321,19 @@ This will update every day at 00:30 AM.
     <th class="th-lboi">NLIGHT</th>
     <th class="th-lboi">MJYD2S</th>
     <th class="th-lboi">YEE RC</th>
+    <th class="th-lboi">MHO-C401</th>
   </tr>
   <tr>
     <td class="tg-lboi"><img src="../_media/bluetooth/nlight.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/MHO-C401.png" width=200></td>
   </tr>
   <tr>
     <td class="tg-lboi">motion, no-motion-time (computed by the driver)</td>
     <td class="tg-lboi">motion, illuminance, battery, no-motion-time</td>
     <td class="tg-lboi">button press (single and long)</td>
+    <td class="tg-lboi">temperature, humidity, battery</td>
   </tr>
 </table>
 
