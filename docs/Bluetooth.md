@@ -186,7 +186,7 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <th class="th-lboi">CGG1</th>
     <th class="th-lboi">CGD1</th>
     <th class="th-lboi">MiFlora</th>
-    <th class="th-lboi">LYWSD03MMC</th>
+
   </tr>
   <tr>
     <td class="tg-lboi"><img src="../_media/bluetooth/mj_ht_v1.png" width=200></td>
@@ -194,7 +194,7 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <td class="tg-lboi"><img src="../_media/bluetooth/CGG1.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/CGD1.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/miflora.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/LYWSD03MMC.png" width=200></td>
+
   </tr>
   <tr>
     <td class="tg-lboi">temperature, humidity, battery</td>
@@ -202,24 +202,26 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <td class="tg-lboi">temperature, humidity, battery</td>
     <td class="tg-lboi">temperature, humidity</td>
     <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility</td>
-    <td class="tg-lboi">temperature, humidity</td>
   </tr>
 </table>  
   
  <table>
   <tr>
+    <th class="th-lboi">LYWSD03MMC</th>
     <th class="th-lboi">NLIGHT</th>
     <th class="th-lboi">MJYD2S</th>
     <th class="th-lboi">YEE RC</th>
     <th class="th-lboi">MHO-C401</th>
   </tr>
   <tr>
+    <td class="tg-lboi"><img src="../_media/bluetooth/LYWSD03MMC.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/nlight.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/MHO-C401.png" width=200></td>
   </tr>
   <tr>
+    <td class="tg-lboi">temperature, humidity</td>
     <td class="tg-lboi">motion</td>
     <td class="tg-lboi">motion, illuminance, battery, no-motion-time</td>
     <td class="tg-lboi">button press (single and long)</td>
@@ -234,7 +236,9 @@ It is possible to get the necessary decryption key ("bind_key") with the help of
 (iOS-example: https://community.home-assistant.io/t/xiaomi-passive-ble-monitor-sensor-platform/177352/101?u=magalex)  
 This key and the corresponding MAC of the sensor can be injected with the NRFKEY-command (or NRFMJYD2S). It is probably a good idea to save the whole config as RULE like that:  
   
-```rule1 on System#Init do backlog NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFPage 6; NRFUse 0; NRFUse 4 endon```  
+```haskell
+rule1 on System#Init do backlog NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFPage 6; NRFUse 0; NRFUse 4 endon
+```  
 (key for two sensors, 6 sensors per page in the WebUI, turn off all sensors, turn on LYWS03)  
   
 LYWSD03MMC sends encrypted sensor data every 10 minutes. As there are no confirmed reports about correct battery presentation of the sensor (always shows 99%), this function is currently not supported.  
@@ -246,9 +250,9 @@ A simplified presence dection will scan for regular BLE advertisements of a give
 If the driver receives a packet from the "beacon" a counter will be (re-)started with an increment every second. This timer is published in the TELE-message, presented in the webUI and processed as a RULE.
 The stability of regular readings will be strongly influenced by the local environment (many BLE-devices nearby or general noise in the 2.4-GHz-band). 
 
-## BLE Sensors using built-in Bluetooth on the ESP32
+## BLE Sensors on ESP using built-in Bluetooth
 
-You must [compile your build](Compile-your-build) for the ESP32. Change the following to `my_user_config.h`:
+You must [compile your build](Compile-your-build) for the ESP32. Change the following to `user_config_override.h`:
 
 ```
 #ifdef ESP32
@@ -257,7 +261,8 @@ You must [compile your build](Compile-your-build) for the ESP32. Change the foll
 ```
   
 To turn on/off support for decyrption, change the following in the driver code:  
-```
+
+```haskell
 #define USE_MI_DECRYPTION
 ```  
 Without encryption support the driver will read data from found LYWSD03MMC via connection. This will increase power consumption of the sensor, but no "bind_key" is needed.  
@@ -291,7 +296,6 @@ This will update every day at 00:30 AM.
     <th class="th-lboi">LYWSD02</th>
     <th class="th-lboi">LYWSD03MMC</th>
     <th class="th-lboi">CGD1</th>
-    <th class="th-lboi">MiFlora</th>
   </tr>
   <tr>
     <td class="tg-lboi"><img src="../_media/bluetooth/mj_ht_v1.png" width=200></td>
@@ -305,31 +309,32 @@ This will update every day at 00:30 AM.
     <td class="tg-lboi">temperature, humidity, battery</td>
     <td class="tg-lboi">temperature, humidity, battery</td>
     <td class="tg-lboi">temperature, humidity, battery</td>
-    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility, battery</td>
   </tr>
   <tr>
     <td class="tg-lboi"></td>
     <td class="tg-lboi">set time using "MI32Time"<p>toggle temperature units with "MI32Unit"</td>
     <td class="tg-lboi"></td>
     <td class="tg-lboi">unsupported time or alarm</td>
-    <td class="tg-lboi"></td>
   </tr>
 </table>  
   
  <table>
   <tr>
+    <th class="th-lboi">MiFlora</th>
     <th class="th-lboi">NLIGHT</th>
     <th class="th-lboi">MJYD2S</th>
     <th class="th-lboi">YEE RC</th>
     <th class="th-lboi">MHO-C401</th>
   </tr>
   <tr>
+    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility, battery</td>
     <td class="tg-lboi"><img src="../_media/bluetooth/nlight.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/MHO-C401.png" width=200></td>
   </tr>
   <tr>
+    <td class="tg-lboi"></td>
     <td class="tg-lboi">motion, no-motion-time (computed by the driver)</td>
     <td class="tg-lboi">motion, illuminance, battery, no-motion-time</td>
     <td class="tg-lboi">button press (single and long)</td>
