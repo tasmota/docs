@@ -302,7 +302,6 @@ This will update every day at 00:30 AM.
     <td class="tg-lboi"><img src="../_media/bluetooth/LYWDS02.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/LYWSD03MMC.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/CGD1.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/miflora.png" width=200></td>
   </tr>
   <tr>
     <td class="tg-lboi">temperature, humidity, battery</td>
@@ -327,14 +326,14 @@ This will update every day at 00:30 AM.
     <th class="th-lboi">MHO-C401</th>
   </tr>
   <tr>
-    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility, battery</td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/miflora.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/nlight.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/MHO-C401.png" width=200></td>
   </tr>
   <tr>
-    <td class="tg-lboi"></td>
+    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility, battery</td>
     <td class="tg-lboi">motion, no-motion-time (computed by the driver)</td>
     <td class="tg-lboi">motion, illuminance, battery, no-motion-time</td>
     <td class="tg-lboi">button press (single and long)</td>
