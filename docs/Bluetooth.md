@@ -250,7 +250,7 @@ A simplified presence dection will scan for regular BLE advertisements of a give
 If the driver receives a packet from the "beacon" a counter will be (re-)started with an increment every second. This timer is published in the TELE-message, presented in the webUI and processed as a RULE.
 The stability of regular readings will be strongly influenced by the local environment (many BLE-devices nearby or general noise in the 2.4-GHz-band). 
 
-## BLE Sensors on ESP using built-in Bluetooth
+## BLE Sensors on ESP32 using built-in Bluetooth
 
 You must [compile your build](Compile-your-build) for the ESP32. Change the following to `user_config_override.h`:
 
