@@ -245,7 +245,7 @@ MQT: tele/%topic%/RESULT = {"ZbReceived":{"0x128F":{"AqaraVibrationMode":"tilt",
 
 Setting its friendly name to `Vibration_sensor`:
 ```json
-ZigbeeName 0x128F,Vibration_sensor
+ZbName 0x128F,Vibration_sensor
 CMD: ZbName 0x128F,Vibration_sensor
 MQT: stat/%topic%/RESULT = {"0x128F":{"Name":"Vibration_sensor"}}
 
