@@ -112,6 +112,7 @@ see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/
 
 ## Script Sections
 _Section descriptors (e.g., `>E`) are **case sensitive**_  
+a valid script must start with >D in the first line  
 `>D ssize`   
   `ssize` = optional max string size (default=19)  
   define and init variables here, must be the first section, no other code allowed  
@@ -769,6 +770,9 @@ remark: the Flash illumination LED is connected to GPIO4
 
 ### Scripting Language Example
 
+    a valid script must start with >D in the first line!  
+    some samples still contain comment lines before >D. This is no longer valid!  
+    
     **Actually this code is too large**. This is only meant to show some of the possibilities
 
     >D
