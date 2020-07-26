@@ -91,7 +91,7 @@ System#Save<a id="SystemSave"></a>|executed just before a planned restart
 Time#Initialized<a id="TimeInitialized"></a>|once when NTP is initialized and time is in sync
 Time#Initialized>120|once, 120 seconds after NTP is initialized and time is in sync
 Time#Minute<a id="TimeMinute"></a>|every minute
-Time#Minute|5|every five minutes
+Time#Minute\|5|every five minutes
 Time#Minute=241|every day once at 04:01 (241 minutes after midnight)
 Time#Set<a id="TimeSet"></a>|every hour when NTP makes time in sync
 Var&lt;x\>\#State<a id="VarState"></a>|when the value for Var&lt;x\> is changed (triggers whenever a value is written to `Var<x>` even if its the same value)
