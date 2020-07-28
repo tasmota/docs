@@ -544,8 +544,10 @@ ShutterStop&#60;x><a class="cmnd" id="shutterstop"></a>|Disengage the relays to 
 ShutterStopClose&#60;x><a class="cmnd" id="shutterstopclose"></a>|Stop the shutter when currently moving, close it otherwise
 ShutterStopOpen&#60;x><a class="cmnd" id="shutterstopopen"></a>|Stop the shutter when currently moving, open it otherwise
 ShutterStopPosition&#60;x><a class="cmnd" id="shutterstoptoggle"></a>|Stop the shutter when currently moving, set it to position `0..100`, `UP`, `DOWN`, `STOP`, `TOGGLE` otherwise
-ShutterStopToggle&#60;x><a class="cmnd" id="shutterstoptogglee"></a>|Stop the shutter when currently moving, toggle it otherwise
+ShutterStopToggle&#60;x><a class="cmnd" id="shutterstoptogglee"></a>|Stop the shutter when currently moving, do `ShutterToggle` otherwise
+ShutterStopToggleDir&#60;x><a class="cmnd" id="shutterstoptoggledir"></a>|Stop the shutter when currently moving, do `ShutterToggleDir` otherwise
 ShutterToggle&#60;x><a class="cmnd" id="shuttertogglee"></a>|Toggle the shutter - close the shutter when its position is >50, open it otherwise 
+ShutterToggleDir&#60;x><a class="cmnd" id="shuttertoggledir"></a>|Toggle the shutter - close the shutter when it previously moved to open, open it otherwise 
 See also| [`SetOption80`](#setoption80) - Enable shutter support
 
 ### Zigbee
