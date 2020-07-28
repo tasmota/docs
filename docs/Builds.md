@@ -27,6 +27,7 @@ Features that are not available in any official release build have to be enabled
 - **tasmota-knx.bin** includes [KNX](KNX) support but omits some features. If you need additional features, compile your own firmware (e.g., [Gitpod](Gitpod)  ).
 - **tasmota-display.bin**  built for connecting displays but omits some features such as energy monitoring. If you need additional features, compile your own firmware (e.g., [Gitpod](Gitpod)  ).
 - [**tasmota-ir.bin**](Tasmota-IR) provides almost all `IRremoteESP8266` protocols. If you need additional features, compile your own firmware (e.g., [Gitpod](Gitpod)) to compile [`ircustom`](Tasmota-IR).
+- **tasmota-zbbridge.bin** built speciically for Sonoff Zigbee Bridge device.
 
 ## Available Features and Sensors
 
