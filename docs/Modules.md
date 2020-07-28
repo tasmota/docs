@@ -86,7 +86,8 @@ Each module is assigned a number which is used in [Template configuration](Templ
 <a id="SonoffIFan03">	</a>	71	|	Sonoff iFan03	|	
 <a id="EXSDimmer">	</a>	72	|	EX-Store Dimmer	|	
 <a id="PWMDimmerSwitch">	</a>	73	|	PWM Dimmer	|	For MJ-SD01/acenx/NTONPOWER PWM dimmers. [Read more...](PWM-dimmer-switch.md)
-<a id="PWMDimmerSwitch">	</a>	74	|	Sonoff D1 Dimmer	|	
+<a id="D1">	</a>	74	|	Sonoff D1 Dimmer	|	
+75 | Sonoff ZBBridge | Sonoff Zigbee bridge |
 
 **Serial logging** is disabled by the Tasmota code for several modules and components (e.g., Sonoff POW, Sonoff S31, Sonoff Dual (v1), Tuya dimmers, PZEM components, etc.). Serial communication is used by these devices to transfer the data from the MCU chip to the ESP chip. Do not enable serial logging ([SerialLog 0](Commands.md#seriallog)) on these devices. It can cause the device software to crash.
 
