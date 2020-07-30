@@ -193,22 +193,22 @@ Tasmota uses flash memory to store options and settings. New versions add (or re
 To avoid this use our decode-config tool to easily create and restore backups in Tasmota:
 
 ## decode-config tool 
-* [decode-config.py](https://github.com/tasmota/decode-config/blob/master/decode-config.py) - [installation instructions](https://github.com/tasmota/decode-config/blob/master/README.md) in Python for Windows or Linux
-* [decode-config.exe](https://github.com/tasmota/decode-config/releases) - Windows only executable. If using this replace `decode-config.py` with `decode-config.exe` or `decode-config_x64.exe`  in the instruction examples.
+* [decode-config](https://github.com/tasmota/decode-config/releases) - OS independent Python program to backup and restore Tasmota configuration data, also available as precompiled executables for Windows, MacOS and Linux. See [Using instructions](https://github.com/tasmota/decode-config/blob/master/README.md) for details.  
+If using one of the precompiled binary for your OS replace `decode-config.py` with `decode-config_win32.exe`, `decode-config_win64.exe`, `decode-config_mac` or `decode-config_linux` from the instruction examples.
 
 #### 1. make a configuration backup:
 
   * Create a new backup straight from your device   
 
-    `decode-config.py -d <deviceIP> --backup-file Config-@f --backup-type json`
+    `decode-config.py --source <deviceIP> --backup-file Config-@f`
 
     `@f` will be replaced by decode-config to device's FriendlyName
 
   **_or_**
 
-* Convert a previously made `.dmp` backup into a JSON file   
+* Create a backup from previously made `.dmp` file
   
-  `decode-config.py -f <dmp_filename> --backup-file Config-@f --backup-type json`
+  `decode-config.py --source <dmp_filename> --backup-file Config-@f`
 
 #### 2. perform a device reset 
 Erase flash settings area but keep Wi-Fi and MQTT settings
@@ -218,7 +218,7 @@ Erase flash settings area but keep Wi-Fi and MQTT settings
 #### 3. upgrade the firmware via OTA or file upload
 #### 4. restore configuration
 
-`decode-config.py -d <deviceIP> --restore-file <config-filename>`
+`decode-config.py --source <deviceIP> --restore-file <backupfile>`
 
 ...and you're done!
 
