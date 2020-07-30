@@ -13,7 +13,7 @@ Rules perform actions based on triggers (e.g., switch state change, temperature 
 
 Rule definition syntax 
 
-```
+```haskell
 ON <trigger> DO <command> [ENDON | BREAK]
 ```  
 
@@ -35,7 +35,7 @@ Whenever a rule set is enabled all the rules in it will be active. If the charac
 
 Rules inside a rule set `Rule<x>` are concatenated and entered as a single statement.  
 
-```
+```haskell
 Rule<x> ON <trigger1> DO <command> ENDON ON <trigger2> DO <command> ENDON ...
 ```
 
@@ -91,7 +91,7 @@ System#Save<a id="SystemSave"></a>|executed just before a planned restart
 Time#Initialized<a id="TimeInitialized"></a>|once when NTP is initialized and time is in sync
 Time#Initialized>120|once, 120 seconds after NTP is initialized and time is in sync
 Time#Minute<a id="TimeMinute"></a>|every minute
-Time#Minute|5|every five minutes
+Time#Minute\|5|every five minutes
 Time#Minute=241|every day once at 04:01 (241 minutes after midnight)
 Time#Set<a id="TimeSet"></a>|every hour when NTP makes time in sync
 Var&lt;x\>\#State<a id="VarState"></a>|when the value for Var&lt;x\> is changed (triggers whenever a value is written to `Var<x>` even if its the same value)
@@ -230,7 +230,7 @@ Rule1 "
 
 !!! failure "This feature is not included in precompiled binaries."    
 To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-```
+```arduino
 #define USE_EXPRESSION         // Add support for expression evaluation in rules (+3k2 code, +64 bytes mem)  
 #define SUPPORT_IF_STATEMENT   // Add support for IF statement in rules (+4k2 code, -332 bytes mem)  
 ```
@@ -243,12 +243,13 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 - Support for nested IF statements  
 - Available free RAM is the only limit for logical operators, parenthesis, and nested IF statements.  
 
-#### Syntax  
+#### Grammar  
 `<if-statement>`  
 
 - `IF (<logical-expression>) <statement-list> {ELSEIF (<logical-expression>) <statement-list>} [ELSE <statement-list>] ENDIF`  
 
-`<logical-expression>`  
+`(<logical-expression>)`  
+Parentheses must enclose the expression. They can also be used to explicitly control the order of evaluation.  
 
 - `<comparison-expression>`  
 - `(` `<comparison-expression>` | `<logical-expression>` `)` {{`AND` | `OR`} `<logical-expression>`}  
@@ -266,19 +267,26 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 
 - {`<Tasmota-command>` | `<if-statement>`}  
 
-#### In English
+#### Syntax
 IF statement supports 3 formats:  
 
 - `IF (<logical-expression>) <statement-list> ENDIF`  
 - `IF (<logical-expression>) <statement-list> ELSE <statement-list> ENDIF`  
 - `IF (<logical-expression>) <statement-list> [ELSEIF (<logical-expression>) <statement-list> ] ELSE <statement-list> ENDIF`  
 
-The outermost `<if-statement>` cannot be chained with other Tasmota commands in a `Backlog `. For example, `Backlog Power1 0; IF var1==1 Power1 1 ENDIF`, is **NOT** permitted. Commands chained with `<if-statement>` are allowed in a `<statement-list>`. For example, `IF ENERGY#Current>10 Power1 0; IF var1==1 Power1 1 ENDIF ENDIF`, **is** permitted.  
+The outermost `<if-statement>` can be chained with other Tasmota commands using `Backlog `, e.g.  
+  `Rule1 ON ENERGY#Current>10 Backlog Power1 0; IF (%var1%==1) Power1 1 ENDIF;Power 2 0;Power3 1 ENDON` is **permitted**
+Outermost chain without backlog `<if-statement>` is not allowed, in that case use `Backlog`, e.g.  
+  `Rule1 ON ENERGY#Current>10 DO Power1 0; IF (%var1%==1) Power1 1 ENDIF ENDON` is **not permitted**
+Innermost chain for `<statement-list>` is possible with and without `Backlog`, e.g.  
+  `Rule1 ON Power1#State DO IF (%value%==1) Backlog Power2 1;Power3 1 ENDIF ENDON` is **permitted**
+  `Rule1 ON Power1#State DO IF (%value%==1) Power2 1;Power3 1 ENDIF ENDON` is also **permitted**
 
-`<logical-expression>` example: `VAR1>=10`  
+`(<logical-expression>)` example: `(VAR1>=10)`  
 - Multiple comparison expressions with logical operator `AND` or `OR` between them. `AND` has higher priority than `OR`. For example:  
-`UPTIME>100 AND MEM1==1 OR MEM2==1`  
-- Parenthesis can be used to change the priority of logical expression. For example:  `UPTIME>100 AND (MEM1==1 OR MEM2==1)`  
+  `((UPTIME>100) AND (MEM1==1) OR (MEM2==1))`  
+- Parenthesis can be used to change the priority of the logical expression evaluation. For example:  
+  `((UPTIME>100) AND ((MEM1==1) OR (MEM2==1)))`  
 
 - Following variables can be used in `<condition>`:  
 
@@ -309,7 +317,7 @@ The outermost `<if-statement>` cannot be chained with other Tasmota commands in 
 
 !!! example
      Rule used to control pressure cooker with a Sonoff S31. Once it is finished cooking, shut off the power immediately.  
-```
+```haskell
 Rule1
  ON system#boot DO var1 0 ENDON
  ON energy#power>100 DO if (var1!=1) ruletimer1 0;var1 1 endif ENDON
@@ -322,7 +330,7 @@ Rule1
 !!! failure "This feature is not included in precompiled binaries."    
 
 To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-```
+```arduino
 #define USE_EXPRESSION         // Add support for expression evaluation in rules (+3k2 code, +64 bytes mem)  
 #define SUPPORT_IF_STATEMENT   // Add support for IF statement in rules (+4k2 code, -332 bytes mem)  
 ```
@@ -341,7 +349,7 @@ Once the feature is enabled, the use of expressions is supported in the followin
 #### Syntax
 Expressions can use of the following operators. They are listed by the order of operations priority, from higher to lower.
 
-* `(  )` (parentheses are used to explicitly control the order of operations)
+* `(  )` (parentheses can be used to explicitly control the order of operations)
 * `^` (power)
 * `%` (modulo, division by zero returns modulo "0")
 * `*` and `/`  (multiplication and division; division by zero returns "0")
@@ -384,7 +392,7 @@ Statement|Var1 Result
 
 Activate long press action with `Switchmode 5` and shorten long press time to 2 seconds (`Setoption32 20`).
 
-```console
+```haskell
 Backlog SwitchMode 5; SetOption32 20
 Rule ON switch1#state=3 DO publish cmnd/tasmota02/POWER 2 ENDON
 ```
@@ -406,7 +414,7 @@ Disable ButtonTopic as it overrides rules for buttons: `ButtonTopic 0`
 
 #### Rule
 
-```console
+```haskell
 Rule1
   ON button1#state DO publish cmnd/ring2/power %value% ENDON
   ON button2#state DO publish cmnd/strip1/power %value% ENDON
@@ -423,7 +431,7 @@ When Button1 is pressed the rule kicks in and sends a MQTT message substituting 
 The rule command once option provides the possibility to trigger only once ON a slow change while the change is still within the bounds of the test.
 
 
-```console
+```haskell
 Rule
   ON ENERGY#Current>0.100 DO publish tool/tablesaw/power 1 ENDON
   ON ENERGY#Current<0.100 DO publish tool/tablesaw/power 0 ENDON
@@ -446,14 +454,14 @@ Hardware
 - Potentiometer of 2k2 connected to Gnd, A0 and 3V3
 - WS2812 LED
 
-```console
+```haskell
 Rule ON analog#a0div10 DO dimmer %value% ENDON
 ```
 
 #### Result
 Turning the potentiometer the voltage on the analog input will change resulting in a value change of 0 (Off) to 100 for the trigger. Using this value to control the dimmer of the WS2812 will control the brightness of the led(s)
 
-```console
+```haskell
 Rule ON analog#a0div10 DO publish cmnd/grouplight/dimmer %value% ENDON
 ```
 
@@ -470,7 +478,7 @@ This setup uses a [Zigbee](Zigbee) gateway with an [Ikea remote switch](https://
 Ikea switch's name was set with `ZbName` to make it more user friendly.
 
 #### Rule
-```console
+```haskell
 Rule1 on zbreceived#ikea_switch#power=1 do publish cmnd/backyard/POWER TOGGLE endon on zbreceived#ikea_switch#power=0 do publish cmnd/hall_light/POWER TOGGLE endon
 ```
 
@@ -487,11 +495,11 @@ _[assuming Button1 and Setoption73 0]_
 * double press: send a mqtt message  
 * hold 2 secs: send a different mqtt message
 
-```console
+```haskell
 Backlog ButtonTopic 0; SetOption1 1; SetOption11 1; SetOption32 20
 ```
 
-```console
+```haskell
 Rule1
   ON button1#state=3 DO publish cmnd/topicHOLD/power 2 ENDON
   ON button1#state=2 DO publish cmnd/topicDOUBLEPRESS/power 2 ENDON 
@@ -506,11 +514,11 @@ _[assuming Button1 and Setoption73 0]_
 * double press: Toggle Power1 (SetOption11 swaps single and double press)
 * hold 2 secs: send another mqtt message  
 
-```console
+```haskell
 Backlog ButtonTopic 0; SetOption1 1; SetOption11 0; SetOption32 20  
 ```
 
-```console
+```haskell
 Rule1
   ON button1#state=3 DO publish cmnd/topicHOLD/power 2 ENDON
   ON button1#state=2 DO publish cmnd/topicSINGLEPRESS/power 2 ENDON 
@@ -531,11 +539,11 @@ _[assuming a connected pushbutton configured as Switch1]_
 * single press: Does nothing (empty `Delay` commands)  
 * hold 2 secs: Toggle Power1
 
-```console
+```haskell
 Backlog SwitchTopic1 0; SwitchMode1 5; SetOption32 20  
 ```
 
-```console
+```haskell
 Rule1
   ON Switch1#State=3 DO Power1 2 ENDON
   ON Switch1#State=2 DO Delay ENDON  
@@ -551,13 +559,13 @@ The default Timer1..16 functionality allows for controlling one output to either
 
 Configure timer5 for rule execution when activated:  
 
-```console
+```haskell
 Timer5 {"Arm":1,"Mode":0,"Time":"16:00","Days":"1111111","Repeat":1,"Action":3}
 ```
 
 #### Rule  
 
-```console
+```haskell
 Rule1 ON clock#Timer=5 DO Backlog Power2 on; Power1 off; Power3 2 ENDON
 ```
 
@@ -573,14 +581,14 @@ Demonstrate the use of variables. Make sure to execute commands `Rule 4`(Disable
 
 Set a variable
 
-```console
+```haskell
 Rule ON event#setvar1 DO var1 %value% ENDON
 ```
 
 Command:  `event setvar1=1`
 
 View a variable
-```console
+```haskell
 rule ON event#getvar1 DO var1 ENDON
 ```
 
@@ -588,7 +596,7 @@ Command:  `event getvar1`
 
 * Toggle a variable
 
-```console
+```haskell
 Rule
   ON event#togglevar1 DO event toggling1=%var1% ENDON
   ON event#toggling1<1 DO event setvar1=1 ENDON
@@ -600,7 +608,7 @@ Command:  `event togglevar1`
 
 Show Messages:
 
-```console
+```haskell
 Rule ON event#message DO publish stat/[topic]/log %value% ENDON
 ```
 
@@ -613,7 +621,7 @@ All event commands can be executed from:
 
 Everything together: 
  
-```console
+```haskell
 Rule1 
   ON event#togglevar1 DO event toggling1=%var1% ENDON 
   ON event#toggling1<1 DO event setvar1=1 ENDON 
@@ -633,15 +641,15 @@ Rule1
 <!-- ### Control device LEDs with Relays
 If a device has more than one relay and LEDs ON different GPIOs (not connected to the relay) you need to use rules to display current relay status on LEDs. This example is a 3 gang wall switch. Instead of LEDs you need to assign 3 dummy relays that will be controlled when the real relays are switched to reflect their status.
 
-```console
-Backlog ledmask 0x0000; setoption13 1; seriallog 0
+```haskell
+Backlog LedMask 0x0000; setoption13 1; seriallog 0
 
-rule1 
+Rule1 
   ON Power1#state DO Power4 %value% ENDON 
   ON Power2#state DO Power5 %value% ENDON 
   ON Power3#state DO Power6 %value% ENDON
 
-rule1 1
+Rule1 1
 ```
 Note: This method doubles the number of flash writes. [Link to the device](https://templates.blakadder.com/DS-102_3.html)
 
@@ -652,7 +660,7 @@ Note: This method doubles the number of flash writes. [Link to the device](https
 ### Time-delayed Auto-off Switch
 
 #### Rule
-```console
+```haskell
 Rule1
   ON button1#state DO Backlog Power1 %value%; RuleTimer1 600 ENDON
   ON Rules#Timer=1 DO Power1 off ENDON
@@ -674,11 +682,11 @@ After the RuleTimer1 expires the light will be turned off (if you forgot to turn
 ### Time-delay After Switch Off
 
 #### Rule
-```console
+```haskell
 Backlog switchmode1 1; rule1 1
 ```
 
-```console
+```haskell
 Rule1 ON switch1#state=1 DO Backlog Power1 on; ruletimer1 0 ENDON
 ON switch1#state=0 DO ruletimer1 300 ENDON
 ON rules#timer=1 DO Power1 0 ENDON
@@ -701,18 +709,18 @@ Connect an LED Strip WS2812 on D1 and the PIR on D2 and a LDR on A0 (voltage div
 `SwitchMode1 1`
 
 #### Rule   
-```console
+```haskell
 Rule1
   ON analog#a0<400 DO Backlog Rule3 0; Rule2 1 ENDON
   ON analog#a0>500 DO Backlog Rule2 0; Rule3 1 ENDON
 ```
-```console
+```haskell
 Rule2
   ON switch1#state DO Backlog Power1 1; RuleTimer1 30 ENDON
   ON Rules#Timer=1 DO Power1 off ENDON
 ```
 
-```console
+```haskell
 Rule3
   ON switch1#state DO Power1 off ENDON
 ```
@@ -749,7 +757,7 @@ If you don't set `Switchmode1` or it is equal 0, it will only have `Switch1#stat
 
 #### Rule
 
-```console
+```haskell
 Rule1
   ON Switch1#state=1 DO Timers 0 ENDON
   ON Switch1#state=0 DO Timers 1 ENDON
@@ -763,16 +771,16 @@ The following example is to explain how to catch and use the HOLD feature for bu
 
 Behavior: Disable Button1 Short Press and Toggle Relay1 only when holding button1 for 2 Seconds.
 
-```console
+```haskell
 Backlog ButtonTopic 0; SetOption1 1; SetOption32 20
 ```
 
-```console
+```haskell
 Rule1
   ON button1#state=3 DO Power1 2 ENDON
   ON button1#state=2 DO delay ENDON
 ```
-```console
+```haskell
 Rule1 1
 ```
 
@@ -791,7 +799,7 @@ In the case you do not want the double press feature you can configure your butt
 
 **Another example but using switch instead of button:**
 
-```console
+```haskell
 Backlog SwitchTopic1 0; SwitchMode1 5; SetOption32 20
 
 Rule1
@@ -811,7 +819,7 @@ Set Timers to turn on your light at Sunset and Turn off at sunrise.
 Use `poweronstate 0` in order to start with lights off when powering up your device.
 Set the following rules:
 
-```console
+```haskell
 Rule1
   ON Time#Initialized DO Backlog event checksunrise=%time%; event checksunset=%time% ENDON
   ON event#checksunset>%sunset% DO Power1 1 ENDON
@@ -830,7 +838,7 @@ Turn on light at dusk until your nighttime and again in the morning before dawn.
 What if the sun sets after your nighttime, as in during the summer? Then the timer will turn off the light at "night", but then the Sunset timer will turn it on again, so it stays on all night.  
 
 #### Rule
-```console
+```haskell
 Rule1
   ON Time#Initialized DO event chkSun ENDON
   ON Time#Minute=%sunset% DO event chkSun ENDON
@@ -839,7 +847,7 @@ Rule1
   ON Time#Minute=%mem1% DO event chkSun ENDON
 ```
 
-```console
+```haskell
 Rule2
   ON event#chkSun DO Backlog var1 0; event chkSunrise=%time%; event chkSunset=%time%; event chkmorn=%time%; event chknight=%time%; event setPower ENDON
   ON event#chkSunrise<%sunrise% DO var1 1 ENDON
@@ -849,7 +857,7 @@ Rule2
   ON event#setPower DO Power1 %var1% ENDON
 ```
 
-```console
+```haskell
 Backlog mem1 360; mem2 1350; Rule1 1; Rule2 1
 ```
 
@@ -903,7 +911,7 @@ Latitude and Longitude need to be set in config.
 
 `SwitchMode1 1`
 
-```console
+```haskell
 Rule1
   ON Switch1#state=1 DO Backlog event checksunrise=%time%; event checksunset=%time% ENDON
   ON event#checksunrise<%sunrise% DO Power1 1 ENDON
@@ -924,35 +932,35 @@ Used a combination of Clock Timers and Rule to do this.
 
 **Timer 1:** Power ON switch at Sunset  
 Powers on the switch at sunset with an offset of 20 minutes. Repeats every day.  
-```console
+```haskell
 Timer1 {"Arm":1,"Mode":2,"Time":"-00:20","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":1}
 ```
 
 **Timer 2:** Power OFF switch at Night.  
 Turns power OFF at 23.00hrs. Repeats every day.  
-```console
+```haskell
 Timer2 {"Arm":1,"Mode":0,"Time":"23:00","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":0}
 ```
 
 **Timer 3:** Trigger Luminance Rule at Sunrise  
 Start watching the Lux sensor 15 minutes after sunrise.  
-```console
+```haskell
 Timer3 {"Arm":1,"Mode":1,"Time":"00:15","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":3}
 ```
 
 **Rule 1:** Main Rule to check Luminance  
 If Luminance is less than 150lx, power ON. If it goes beyond 175lx, power OFF.  
-```console
+```haskell
 Rule1
   ON tele-TSL2561#Illuminance<150 DO Power1 1 ENDON
   ON tele-TSL2561#Illuminance>175 DO Power1 0 ENDON 
 
 Rule1 1
-```
+```haskell
 
 **Rule 2:** Trigger Rule1 only in the Mornings  
 This ensures that Rule1 is triggered when Timer3 starts (in the morning) and stops when Timer1 starts (in the evenings).  
-```console
+```haskell
 Rule2
   ON Clock#Timer=3 DO Rule1 1 ENDON
   ON Clock#Timer=4 DO  Rule1 0  ENDON
@@ -968,7 +976,7 @@ Rule2 1
 
 `SwitchMode 5`
 
-```console
+```haskell
 Rule1
   ON switch1#state==2 DO add1 1 ENDON
   ON switch1#state==2 DO Power1 2 ENDON
@@ -1004,7 +1012,7 @@ _Dont forget to change the IDX value_
 
 **Commands:**
 
-```console
+```haskell
 Backlog SwitchTopic 0; SwitchMode4 2; SetOption0 0; PowerOnState 0
 
 var1 1
@@ -1052,14 +1060,14 @@ In such case, when the active MQTT fails for any reason, the expected behavior i
 
 That can be easily configured defining the following rule on the device console:
 
-```console
+```haskell
 Rule1 ON Mqtt#Disconnected DO MqttHost 0 ENDON
 Rule1 1
 ```
 
 If the MqttHost field already contains an IP, you have to delete it using the web interface or the following MQTT command:
 
-```
+```console
 mosquitto_pub -h mqtt_server.local -t "cmnd/mqttTopic/MqttHost" -m ''
 ```
 
@@ -1069,7 +1077,7 @@ mosquitto_pub -h mqtt_server.local -t "cmnd/mqttTopic/MqttHost" -m ''
 
 When measuring distance and you have the need to see it in percentage of distance. In the example 100% is everything below 69cm and 0% is everything above 128cm. This is used for showing fill percentage of a wood pellets storage.
 
-```console
+```haskell
 Rule1
   ON tele-SR04#distance DO Backlog var1 %value%; event checklimit=%value%; event senddistance ENDON
   ON event#checklimit>128 DO var1 128 ENDON
@@ -1093,12 +1101,12 @@ When two (or more) switches are defined as input and you want to distinguish the
   `SwitchMode2 1`
 
 - Publish json with key POWER1 and value %value%
-```console
+```haskell
 Rule1 ON switch1#state DO publish stat/wemos-4/RESULT {"POWER1":"%value%"} ENDON
 ```
 
 - Publish json with key POWER2 and value %value%  
-```console
+```haskell
 Rule2 ON switch2#state DO publish stat/wemos-4/RESULT {"POWER2":"%value%"} ENDON
 ```
 
@@ -1136,7 +1144,7 @@ MQT: cmnd/doorbell/POWER2 = OFF (retained)
 ```
 
 To solve it we can use rules.
-```console
+```haskell
 SwitchTopic 0
 
 Rule1
@@ -1175,7 +1183,7 @@ Hardware
 - WS2812 LEDring with 24 LEDs powered by the Wemos D1 mini 5V thru the INA219 sensor
 
 
-```console
+```haskell
 Rule1 ON INA219#Current>0.100 DO Backlog Dimmer 10;Color 10,0,0 ENDON
 Rule1 on
 ```
@@ -1189,7 +1197,7 @@ Result
 
 By having a device that controls all its features through an MCU and reports the states in serial codes to the ESP8266 we have to create some rules to control it using the Web UI or standard Power commands.
 
-```console
+```haskell
 Rule1
   ON Power1#state=1 DO serialsend5 55AA00060005020400010213 ENDON 
   ON Power1#state=0 DO serialsend5 55AA00060005020400010011 ENDON 
@@ -1200,7 +1208,7 @@ Power1 controls the device, Power2 turn on and off the light on the device.
 
 Another rule was created to issue commands on boot so the serial interface works every time and to control the built in fan using Event triggers and have its state retained in an MQTT message for Home Assistant.
 
-```console
+```haskell
 Rule2 
   ON system#boot DO Backlog baudrate 9600; seriallog 2; serialsend5 55aa000300010306 ENDON 
   ON event#high DO Backlog serialsend5 55AA00060005650400010175; publish2 stat/diffuser/FAN high ENDON 
@@ -1253,7 +1261,7 @@ Rule2
 
 Send only when the sensor value changes by a certain amount.  
 
-```console
+```haskell
 Rule1
   ON SI7021#temperature>%var1% DO Backlog var1 %value%; publish stat/mqttTopic/temp %value%; var2 %value%; add1 2; sub2 2 ENDON
   ON SI7021#temperature<%var2% DO Backlog var2 %value%; publish stat/mqttTopic/temp %value%; var1 %value%; add1 2; sub2 2 ENDON
@@ -1263,7 +1271,7 @@ Rule1
 ### Adjust a value and send it over MQTT
 This example adds 2 degrees to the measured temperature and then sends that value to an MQTT topic.
 
-```console
+```haskell
 Rule1
   ON tele-SI7021#temperature DO Backlog var1 %value%; add1 2; event sendtemp ENDON
   ON event#sendtemp DO publish stat/mqttTopic/temp %var1% ENDON
@@ -1277,7 +1285,7 @@ This example switches connected relays over the software serial on and off.
 
 Write the following rules:
 
-```console
+```haskell
 rule1
   ON SSerialReceived#Data=on DO Power1 1 ENDON
   ON SSerialReceived#Data=off DO Power1 0 ENDON
@@ -1303,7 +1311,7 @@ MQT: stat/mqttTopic/POWER = OFF
 ``BREAK`` is an alternative to ``ENDON``. ``BREAK`` will stop the execution for the triggers that follow. If a trigger that ends with ``BREAK`` fires, then the following triggers of that rule will not be executed. This allows to simulate ``IF..ELSEIF..ELSE..ENDIF``
 
 **Example:**
-```
+```console
 IF temp > 85 then
   VAR1 more85
 ELSEIF temp > 83 then
@@ -1318,7 +1326,7 @@ ENDIF
 ```
 
 With the actual rules, if we use a set like the following:
-```console
+```haskell
 Rule1
   ON event#temp>85 DO VAR1 more85 ENDON
   ON event#temp>83 DO VAR1 more83 ENDON
@@ -1345,7 +1353,7 @@ RUL: EVENT#TEMP>81 performs "VAR1 more81"
 MQT: stat/living/RESULT = {"Var1":"more81"}
 ```
 So, all the triggers where TEMP>100, are firing. With the ``BREAK`` statement the rule set can be changed to:
-```console
+```haskell
 Rule
   on event#temp>85 do VAR1 more85 break
   on event#temp>83 do VAR1 more83 break
@@ -1379,7 +1387,7 @@ Power sensor reporting thresholds are set by a percentage change in the Power va
 
 This rule also uses the [one-shot feature of rules](#usage-of-one-shot-once) to avoid reporting of every small change within a threshold window. The rule (a ON/DO/ENDON rule in this the set) will trigger only once when a threshold is crossed.
 
-```console
+```haskell
 Backlog PowerDelta 0; Rule1 0; Rule1 5
  
 Rule1
@@ -1391,9 +1399,8 @@ Rule1
 Rule1 1
 ```
 
-Which translates to:
-```
-Rule Pseudo Code
+Which translates (pseudo code):
+```haskell
 IF ENERGY#Power>=35  // ENERGY#Power GE 35
   DO Backlog PowerDelta 10; Status 8
 ELSE IF ENERGY#Power>=15  // ENERGY#Power GE 15 and LT 35
@@ -1409,7 +1416,7 @@ ELSE  // ENERGY#Power changed (i.e. LE 5)
 ### Forward IR signals
 
 Using one IR receiver and one sender (or both extender) you can simply forward signals from one to another using the following rule
-```console
+```haskell
 rule1 ON IRreceived#Data DO publish cmnd/irsideboard/irsend {Protocol:NEC,Bits:32,Data:%value%} ENDON
 ```
 
@@ -1423,7 +1430,7 @@ rule1 ON IRreceived#Data DO publish cmnd/irsideboard/irsend {Protocol:NEC,Bits:3
 `PulseTime 7`
 
 // Send ON and OFF as the switch is ON or OFF  
-```console
+```haskell
 Backlog SwitchMode1 1; SwitchMode2 1; SwitchMode3 1
 ```
 
@@ -1434,12 +1441,12 @@ Backlog SwitchMode1 1; SwitchMode2 1; SwitchMode3 1
 `PowerOnState 0`
 
 //One shot Detection off  
-```console
+```haskell
 Backlog Rule1 0; Rule1 4; Rule2 0; Rule2 4; Rule2 0; Rule2 4
 ```
 
 //Set Counter to measure the period between on and off, check if its blinking because of an obstruction  
-```console
+```haskell
 Backlog CounterType 1; CounterDebounce 100
 ```
 
@@ -1450,7 +1457,7 @@ Backlog CounterType 1; CounterDebounce 100
 // var3=1 Only When OPENING  
 // var4=1 Only When CLOSING  
 ```
-```console
+```haskell
 Rule1
   ON Switch1#Boot=1 DO Backlog delay 99; event Opened ENDON
   ON Switch2#Boot=1 DO Backlog delay 99; event Closed ENDON
@@ -1477,7 +1484,7 @@ Rule3
 ```
 
 //Turn on Rules  
-```console
+```haskell
 Backlog Rule1 1; Rule2 1; Rule3 1
 ```
 
@@ -1493,7 +1500,7 @@ Specify the rule set
 - `<topic>` corresponds to the device transmitting the code (e.g., [YTF IR Bridge](devices/YTF-IR-Bridge)). This could also be modified to send an RF code from a [Sonoff RF Bridge](devices/Sonoff-RF-Bridge-433).  
 - The `Delay` may not be necessary in your environment or may need to be adjusted according to your device characteristics. 
 
-```console
+```haskell
 Rule 1
   ON Event#tora DO Backlog Publish cmnd/<topic>/IRSend {"Protocol":"NEC","Bits":32,"Data":"0x00FF30CF"}; Delay 10 ENDON
   ON <trigger> DO Backlog Event tora; Event tora; Event tora ENDON
@@ -1513,7 +1520,7 @@ Using the `WebSend` command, the two switches can talk to each other without an 
 
 Starting with the slave, the rule to toggle the master is pretty simple:
 
-```console
+```haskell
 Rule1
   ON Event#sendPower DO WebSend [192.168.0.74] POWER%value% TOGGLE ENDON
   ON Button1#State DO Event sendPower=1 ENDON
@@ -1525,7 +1532,7 @@ Rule1
 
 Note that having a rule for the Button#State disables the power toggling of the slave's relay(s).  This is desirable because we want the master to control the slave's relay state(s) according to its own as follows:
 
-```console
+```haskell
 Rule1
   ON Event#sendPower DO WebSend [192.168.0.144] POWER%Var1% %value% ENDON
   ON Power1#state DO Backlog Var1 1;Event sendPower=%value% ENDON
@@ -1542,7 +1549,7 @@ Rule1
 
 With a two relay device (e.g., Shelly 2.5) configured for a roller shutter, you can also connect push-buttons (configured as switch components in this example) and set them for inverted toggle behavior. Pressing a push-button once makes the roller shutter move in one direction. Pressing it again stops it. These rules each use a variable to remember the shutter state where `0 == Stopped` and `1 == Moving`.
 
-```console
+```haskell
 Backlog SwitchTopic 0; SwitchMode1 4; SwitchMode2 4
 
 Rule1
@@ -1568,7 +1575,7 @@ Activate dimmer mode with `Switchmode 11` and shorten long press time to 1 secon
 
 A short press of the switch sends a `TOGGLE` message to toggle the dimmer. A long press sends repeated `INC_DEC` messages to increment the dimmer. If a second press of the switch follows the first press a `INV` message is sent to invert the function from increment to decrement and repeatet `INC_DEC` messages are sent to decrement the dimmer. After releasing the switch a timeout message `CLEAR` resets the automation
 
-```console
+```haskell
 Backlog SwitchMode 5; SetOption32 20
 
 Rule1
@@ -1589,7 +1596,7 @@ Notice we use `Rule` which edits `Rule1` rule set. They can be used interchangea
 A Tasmota socket can ping a remote host (router itself or something else connected to the router)
 and power cycle the socket to reboot the router. In this example, ping interval of 2 minutes is used.
 
-```console
+```haskell
 Rule1
   ON Time#Minute|2 DO Ping4 192.168.1.10 ENDON
   ON Ping#192.168.1.10#Success==0 DO Backlog Power1 0; Delay 10; Power1 1; ENDON
@@ -1632,13 +1639,13 @@ Initial config on console:
 #### Rules
 
 On boot start a watchdog timer to check temp sensor connection.  
-```console
+```haskell
 Rule ON system#boot DO RuleTimer1 70 ENDON
 ```
 
 An available button is configured as switch to set thermostat ON or OFF
 
-```console
+```haskell
 Rule1
   ON switch1#state DO Backlog event toggling1=%mem1% ENDON
   ON event#toggling1=0 DO mem1 1 ENDON
@@ -1647,19 +1654,19 @@ Rule1
 
 Check temp sensor connection. If fails, set to off and turn off thermostat. Also continue checking  
 
-```console
+```haskell
 Rule ON Rules#Timer=1 DO Backlog var1 0; RuleTimer1 70; Power1 0 ENDON
 ```
 
 Resets checking timer if temperature is connected  
 
-```console
+```haskell
 Rule ON tele-SI7021#temperature DO Backlog var1 1; RuleTimer1 30; event ctrl_ready=1; event temp_demand=%value% ENDON
 ```
 
 Thermostat control - upper limit and lower limit and enabled  
 
-```console
+```haskell
 Rule1
   ON event#ctrl_ready>%mem1% DO var1 0 ENDON
   ON event#temp_demand>%mem2% DO Power1 0 ENDON
@@ -1691,13 +1698,13 @@ Initial config:
 
 !!! note "RuleTimer1 must be greater that TelePeriod for expected results"
 
-```console
+```haskell
 Backlog SwitchMode1 3; Rule 1; Rule 4; TelePeriod 60; SetOption26 1; SetOption0 0; poweronstate 0; mem1 0; mem2 25; mem3 23; var1 0
 ```
 
 Rules
 
-```console
+```haskell
 Rule1 
   ON system#boot DO RuleTimer1 70 ENDON 
   ON Switch1#State DO event toggling1=%mem1% ENDON 
@@ -1712,7 +1719,7 @@ Rule1
 
 Example rules without temp sensor to test the thermostat rules
 
-```console
+```haskell
 Rule1 
   ON system#boot DO RuleTimer1 70 ENDON 
   ON Switch1#State DO event toggling1=%mem1% ENDON 
@@ -1760,11 +1767,11 @@ In a swimming pool, a filter pump and a solar panel is installed. When the sun i
 `var3`: on threshold temp for panel  
 `mem3`: lowest valid panel temp  
 
-```console
+```haskell
 mem3 25
 ```
 
-```console
+```haskell
 rule1
   ON DS18B20-1#temperature DO event t1=%value% ENDON
   ON DS18B20-2#temperature DO event t2=%value% ENDON
@@ -1791,7 +1798,7 @@ Example of a switch controlling a light with a condition of a required amount of
 
 When the switch is on, the light will turn on but only when you have less than 100 lux in that room. While if the switch is off the light will be off.
 
-```console
+```haskell
 Rule1
   ON switch1#state=1 DO var1 100 ENDON
   ON switch1#state=0 DO Backlog var1 0; Power1 off ENDON
@@ -1806,7 +1813,7 @@ Using variables allows for storing sensor results to be used in composing a sing
 - Domoticz configured with a virtual sensor Temp+Hum using Idx 134
 
 Rule
-```console
+```haskell
 Rule
   ON tele-am2301-12#temperature DO var1 %value% ENDON
   ON tele-am2301-12#humidity DO publish domoticz/in {"idx":134,"svalue":"%var1%;%value%;1"} ENDON
@@ -1815,6 +1822,30 @@ Rule
 Result
 - As a result of the `tele-` prefix the rules will be checked at TelePeriod time for sensor AM2301-12 Temperature and Humidity. The first rule will use the Temperature stored in `%value%` and save it in `%var1%` for future use. The second rule will use the Humidity stored in `%value%` and the Temperature stored in `%var1%` to compose a single MQTT message suitable for Domoticz. 
 
-Clever Dickies now finally have a way to send Temperatures from multiple DS18B20 to Domoticz.
-
 -----------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+
+### RF Repeater / IR Repeater
+
+In some applications, an RF-Repeater may come in handy to increase the range of RF based devices. We need to use RF reciever and RF transmitter modules with tasmota powered controllers. The following rule looks for data received by the RF receiver and re transmits the same over the transmitter. 
+
+```haskell
+Rule1
+  on RfReceived#data do Rfsend {"Data":%value%,"Bits":24,"Protocol":1,"Pulse":454} endon
+```
+Enable it with `Rule1 1`
+
+
+A similar concept can also work for IR- Repeater. Connect IR receiver module and IR trnasmitter to Tasmotized device and the following rule retransmits any data over IR
+```haskell
+Rule1
+  on IrReceived#Data do IRsend {"Protocol":"NEC","Bits":32,"Data":%value%} endon
+```
+Enable it with `Rule1 1`
+
+The only catch is that the protocol needs to be setup in the rule. Most likely this can be taken care of by using a more complex rule maybe using variables. Would update in future
+
+
+------------------------------------------------------------------------------
+

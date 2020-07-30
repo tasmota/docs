@@ -1,6 +1,6 @@
 # Tasmota Device Locator
 
-Locate Tasmota Devices on your network when you only know the subnet of the device. The search is done with JavaScript in a browser and no software installation is required. Only newer devices with HTTP Cross-Origin Resource Sharing (CORS) support will be found. CORS is disabled in Tasmota by default. Use [`SetOption73`](Commands.md#setoption73) to change this setting.
+Locate Tasmota Devices on your network when you only know the subnet of the device. The search is done with JavaScript in a browser and no software installation is required. Only newer devices with HTTP Cross-Origin Resource Sharing (CORS) support will be found. CORS is disabled in Tasmota by default. Use the [`CORS`](Commands.md#cors) command to change this setting.
 
 ![Tasmota Device Locator](https://user-images.githubusercontent.com/34340210/67679904-8e3c3d80-f960-11e9-93a6-c163dd5b4a9c.png)
 

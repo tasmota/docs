@@ -497,7 +497,7 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
    - Issue and report: command data can be sent and status data can be reported back to the Wi-Fi module
    - Report only: supports only status reporting, no control options
 
-- Function Type (Referred as Data Type in [Tuya Protocols](Tuya-Protocols) article):
+- Function Type (Referred as Data Type):
    - Boolean (bool): non-true or false binary variable, such as: switch function, on / off
    - Value (value): suitable for linear adjustment of the type of data, such as: temperature regulation, temperature range 20-40 ℃
    - Enum (enum): custom finite set value, such as: working levels, low / mid / high
@@ -549,6 +549,18 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 5     | Total Time      | time_total    | Only report      | Integer       | Values range:0-120000, Pitch1, Scale0, Unit:m |
 
 > [Complete document on protocols](https://github.com/arendst/Tasmota/files/3658412/protocol_CurtainM_20190926.pdf)
+
+| DP ID | Function points       | Identifier      | Data type        | Function type | Properties                              |
+|----|--------------------------|-----------------|------------------|---------|-----------------------------------------------|
+| 1  | Control (required)       | control         | Issue and report | Enum    | Enumerated values:open, stop, close, continue |
+| 2  | Curtain position setting | percent_control | Issue and report | Integer | Values range:0-100, Pitch1, Scale0, Unit:%    |
+| 3  | Current curtain position | percent_state   | Only report      | Integer | Values range:0-100, Pitch1, Scale0, Unit:%    |
+| 4  | Mode                     | mode            | Issue and report | Enum    | Enumerated values:morning, night              |
+| 5  | Motor Direction          | control_back    | Issue and report | Enum    | Enumerated values:forward, back               | 
+| 6  | Auto Power               | auto_power      | Issue and report | Boolean |                                               |
+| 7  | Work State (required)       | work_state      | Only report      | Enum    | Enumerated values:opening, closing            | 
+| 11 | Situation_set            | situation_set   | Only report      | Enum    | Enumerated values:fully_open, fully_close     | 
+| 12 | Fault  (required)            | fault           | Only report      | Fault   | Barrier values:motor_fault                    | 
 
 ### Power Monitoring Plug
 

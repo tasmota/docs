@@ -19,11 +19,12 @@ USE_BUTTON_EVENT | enable `>b` section (detect button state changes)
 USE_SCRIPT_JSON_EXPORT | enable `>J` section (publish JSON payload on [TelePeriod](Commands#teleperiod))
 USE_SCRIPT_SUB_COMMAND | enables invoking named script subroutines via the Console or MQTT
 USE_SCRIPT_HUE | enable `>H` section (Alexa Hue emulation)
-USE_SCRIPT_STATUS | enable `>U` section (receive JSON payloads)
+USE_SCRIPT_STATUS | enable `>U` section (receive JSON payloads from cmd status)
 SCRIPT_POWER_SECTION | enable `>P` section (execute on power changes)
 SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe  
 USE_SENDMAIL | enable `>m` section and support for sending e-mail   
 USE_SCRIPT_WEB_DISPLAY | enable `>W` section (modify web UI)
+SCRIPT_FULL_WEBPAGE | enable `>w` section (seperate full web page and webserver)
 USE_TOUCH_BUTTONS | enable virtual touch button support with touch displays
 USE_WEBSEND_RESPONSE | enable receiving the response of a [`WebSend`](Commands#websend) command (received in section >E)
 SCRIPT_STRIP_COMMENTS | enables stripping comments when attempting to paste a script that is too large to fit
@@ -86,10 +87,10 @@ with below options script buffer size may be expanded. PVARS is size for permana
 | #define LITTLEFS_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
 | #define SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | not supported | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
 | #define SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
-| #define EEP_SCRIPT_SIZE S, #define USE_EEPROM | S<=4096 | S<=8192 | 1536 | may also use I2C 24C256 eeprom #define USE_24C256 |
+| #define EEP_SCRIPT_SIZE S, #define USE_EEPROM, #define USE_24C256 | S<=4096 | S<=8192 | 1536 |only hardware eeprom is usefull, because Flash EEPROM is also used by Tasmota |
 
 most usefull defintion for larger scripts would be  
-ESP8266: #define USE_EEPROM and #define EEP_SCRIPT_SIZE 4000  
+ESP8266: with 1M flash only default compressed mode is usefull, with 4M Flash best mode would be SCRIPT_FATFS -1  
 ESP32: #define LITTLEFS_SCRIPT_SIZE 8192  
 
 
@@ -111,6 +112,7 @@ see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/
 
 ## Script Sections
 _Section descriptors (e.g., `>E`) are **case sensitive**_  
+a valid script must start with >D in the first line  
 `>D ssize`   
   `ssize` = optional max string size (default=19)  
   define and init variables here, must be the first section, no other code allowed  
@@ -171,7 +173,7 @@ Remark: hue values have a range from 0-65535. Divide by 182 to assign HSBcolors 
     `lamp1,E,on=pwr1,hue=hue1,sat=sat1,bri=bri1,ct=ct1`
 
 `>U`  
-status JSON Messages arrive here
+JSON messages from cmd status arrive here
 
 `>G`  
 global variable updated section
@@ -277,10 +279,20 @@ A web user interface may be generated containing any of the following elements:
   
   additionally you have to define the html frame to put the chart in (both lines must be preceded by a $ char)
   e.g.  
-  $<div id="chart1"style="width:640px;height:480px;margin:0 auto">\</div>  
+  $\<div id="chart1"style="width:640px;height:480px;margin:0 auto">\</div>  
   $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")  
   you may define more then one chart. The charts id is chart1 ... chartN
   
+`>w` ButtonLabel
+generates a button with the name "ButtonLabel" in Tasmota main menu.  
+Clicking  this button displays a web page with the HTML data of this section.
+all cmds like in >W apply here. these lines are refreshed frequently to show e.g. sensor values.
+lines preceeded by $ are static and not refreshed and display below lines without $.  
+this option also enables a full webserver interface when USE_SCRIPT_FATFS is activ.  
+you may display files from the flash or SD filesystem by specifying the url:  IP/sdc/path  .
+(supported files: *.jpg, *.html, *.txt)  
+==Requires compiling with `#define SCRIPT_FULL_WEBPAGE`.== 
+
   
 `>M`  
 [Smart Meter Interface](Smart-Meter-Interface)  
@@ -321,10 +333,13 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `int(x)` = gets the integer part of x (like floor)  
 `hn(x)` = converts x (0..255) to a hex nibble string  
 `hx(x)` = converts x (0..65535) to a hex string  
+`hd("hstr")` = converts hex number string to a decimal number  
 `st(svar c n)` = string token - retrieve the n^th^ element of svar delimited by c  
 `sl(svar)` = gets the length of a string  
+`asc(svar)` = gets the binary value of 1. char of a string  
 `sb(svar p n)` = gets a substring from svar at position p (if p<0 counts from end) and length n  
-`is(index "string1|string2|....|stringn")` = gets a substring from immediate string separated by '|' (this immediate string may be up to 255 chars long) index = 0..n  
+`is(num "string1|string2|....|stringn|")` = defines a string array optionally preset with immediate strings separated by '|' (this immediate string may be up to 255 chars long) num = 0 read only string array, num > 0 number of elements in read write string array  
+`is[index]` = gets string `index` from string array, if read-write also write string of index  
 `sin(x)` = calculates the sinus(x) (if defined USE_ANGLE_FUNC)  
 `acos(x)` = calculates the acos(x) (if defined USE_ANGLE_FUNC)  
 `sqrt(x)` = calculates the sqrt(x) (if defined USE_ANGLE_FUNC)  
@@ -335,7 +350,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `mqtts` = MQTT connection status: `0` = disconnected, `>0` = connected  
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
 `sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
-`sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
+`sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD) 
+`sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)(if defined USE_SML_SCRIPT_CMD) 
 `sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
 `enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
 `gjp("host" "path")` = trigger HTTPS JSON page read as used by Tesla Powerwall (if defined SCRIPT_GET_HTTPS_JP)  
@@ -348,6 +364,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `month` = month  
 `year` = year  
 `epoch` = epoch time (from 2019-1-1 00:00)  
+`eres` = result of >E section set this var to 1 in section >E to tell Tasmota event is handled (prevents MQTT)  
 
 The following variables are cleared after reading true:  
 `chg[var]` = true if a variables value was changed (numeric vars only)  
@@ -667,9 +684,11 @@ specific webcam commands:
 `res=wc(5 p)` start stop streaming 0=stop, 1=start  
 `res=wc(6 p)` start stop motion detector, p=0 => stop detector, p=T start detector with picture every T ms, -1 get picture difference, -2 get picture brightness  
 `res=wc(7 p)` start stop face detector, p=0 => stop detector, p=T start detector with picture every T ms, -1 get number of faces found in picture (USE_FACE_DETECT must be defined)  
+
 control cmds sel =  
 * 0 fs = set frame size (see above for constants)    
 * 1 se = set special effect  
+
   - `0 = no effect`  
   - `1 = negative`  
   - `2 = black and white`  
@@ -751,6 +770,9 @@ remark: the Flash illumination LED is connected to GPIO4
 
 ### Scripting Language Example
 
+    a valid script must start with >D in the first line!  
+    some samples still contain comment lines before >D. This is no longer valid!  
+    
     **Actually this code is too large**. This is only meant to show some of the possibilities
 
     >D

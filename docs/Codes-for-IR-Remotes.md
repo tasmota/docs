@@ -503,6 +503,27 @@ Stop	{"Protocol":"NEC","Bits":32,"Data":"0x2662B34C"}
 
 Record	{"Protocol":"NEC","Bits":32,"Data":"0x26624BB4"}
 
+1	{"Protocol":"NEC","Bits":32,"Data":"0x266240BF"}
+
+2	{"Protocol":"NEC","Bits":32,"Data":"0x2662C03F"}
+
+3	{"Protocol":"NEC","Bits":32,"Data":"0x266220DF"}
+
+4	{"Protocol":"NEC","Bits":32,"Data":"0x2662A05F"}
+
+5	{"Protocol":"NEC","Bits":32,"Data":"0x2662609F"}
+
+6	{"Protocol":"NEC","Bits":32,"Data":"0x2662E01F"}
+
+7	{"Protocol":"NEC","Bits":32,"Data":"0x266210EF"}
+
+8	{"Protocol":"NEC","Bits":32,"Data":"0x2662906F"}
+
+9	{"Protocol":"NEC","Bits":32,"Data":"0x266250AF"}
+
+0	{"Protocol":"NEC","Bits":32,"Data":"0x2662D02F"}
+
+
 ## Smart Reveiver VX/CX
 ****
 button | code

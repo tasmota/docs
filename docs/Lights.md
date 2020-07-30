@@ -54,6 +54,13 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 
 **Alexa**: you can use Philips Hue emulation, the light will appear as White light with Dimmer.
 
+**Leading edge dimmer** You can also configure a leading edge dimmer on 230V with the 1 Channel configuration. In this case you need a TRIAC and a zero-Cross detection that give a pulse with every crossing of the 0V of the sinus curve. 
+
+For example:
+<img style="float:right;height:120px" alt="CCT" src="https://ae01.alicdn.com/kf/HTB1TrhBQpXXXXbsaFXXq6xXFXXX8/AC-Licht-lampe-dimmen-LED-lampe-und-motor-Dimmer-Modul-1-Kanal-3-3-V-5.jpg">
+
+Define a COUNTER with the same number as the PWM (e.g. COUNTER1, PWM1). Set SETOPTION99 1 to enable detection of the raising edge of the zero-crossing. Connect zero-Crossing to COUNTER and PWM to PWM. Set PWMFREQUENCY 100 or 120 depending on the frequency of the main in your country. Additionally it is recommended to set LEDTABLE 0 for normal lamps or motors.
+
 |Configuration|(see below)|
 |---|---|
 |Commands|`Power`, `Dimmer`|
@@ -288,7 +295,7 @@ For example, on a Sonoff Basic the green LED is used as the link status LED. Onc
 
 **Link status LED** shows the network state, more specifically the Wi-Fi and MQTT connection status.
 
-It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (if MQTT is enabled). You can change this behaviour with [`LedState`](Commands#ledstate) or turn it off with [`SetOption31`](Commands#SetOption31).
+It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (if MQTT is enabled). You can change this behaviour with [`LedState`](Commands#ledstate) or turn it off with [`SetOption31`](Commands#setoption31).
 
 #### Power status LED
 **Power status LED** shows the power status of relay component(s). [`LedMask`](Commands#ledmask) determines which relay(s) are associated with the power status LED. This behavior can be modified with the [`LedState`](Commands#ledstate) command. The LED is turned off by default when the relay is OFF and turned on when the relay switches ON.

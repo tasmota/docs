@@ -96,7 +96,7 @@ With MQTT discovery no user interaction or configuration file editing is needed 
 
 <hr>
 
-Types of devices not listed above (fans, covers, etc) require [manual configuration](#fans)
+Types of devices not listed above (fans, covers, TuyaMCU devices, etc) require [manual configuration](#fans)
 
 ### Enabling 
 
@@ -264,16 +264,14 @@ Simply replace `switch:` with `light:` in the configuration keeping everything e
 ### Lights
 Add in Home Assistant using the [MQTT Light](https://www.home-assistant.io/components/light.mqtt/) integration.
 
-**Required Commands**   
-`SetOption17 1` - enables decimal colors\
-`SetOption59 1` - enables sending of tele/%topic%/STATE on POWER and light related commands
+All configurations require `SetOption59 1` - enables sending of tele/%topic%/STATE on POWER and light related commands
 
 **Optional Commands**   
 `Fade on` - makes transitions smoother   
-`Speed 5` - sets transition speed
+`Speed 5` - set transition speed
 
-!!! example "Dimming"
-Used for dimmers and dimmable lights (single channel lights).
+!!! example "Dimmable"
+    Used with dimmers and dimmable only lights (single channel lights).
 
 ```yaml
 light:
@@ -281,13 +279,13 @@ light:
     name: "Dimmer"
     command_topic: "cmnd/tasmota/POWER"
     state_topic: "tele/tasmota/STATE"
-    state_value_template: "{{value_json.POWER}}"
+    state_value_template: "{{ value_json.POWER }}"
     availability_topic: "tele/tasmota/LWT"
     brightness_command_topic: "cmnd/tasmota/Dimmer"
     brightness_state_topic: "tele/tasmota/STATE"
     brightness_scale: 100
     on_command_type: "brightness"
-    brightness_value_template: "{{value_json.Dimmer}}"
+    brightness_value_template: "{{ value_json.Dimmer }}"
     payload_on: "ON"
     payload_off: "OFF"
     payload_available: "Online"
@@ -297,6 +295,9 @@ light:
 ```
 
 !!! example "RGB Light"
+    Should also be used with lights using [White Blend Mode](Lights.md#white-blend-mode)
+
+`SetOption17 1` - enables color status in decimals
 
 ```yaml
 light:
@@ -304,19 +305,19 @@ light:
     name: "RGB Light"
     command_topic: "cmnd/tasmota/POWER"
     state_topic: "tele/tasmota/STATE"
-    state_value_template: "{{value_json.POWER}}"
+    state_value_template: "{{ value_json.POWER }}"
     availability_topic: "tele/tasmota/LWT"
     brightness_command_topic: "cmnd/tasmota/Dimmer"
     brightness_state_topic: "tele/tasmota/STATE"
     brightness_scale: 100
     on_command_type: "brightness"
-    brightness_value_template: "{{value_json.Dimmer}}"
+    brightness_value_template: "{{ value_json.Dimmer }}"
     rgb_command_topic: "cmnd/tasmota/Color2"
     rgb_state_topic: "tele/tasmota/STATE"
-    rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
+    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
     effect_command_topic: "cmnd/tasmota/Scheme"
     effect_state_topic: "tele/tasmota/STATE"
-    effect_value_template: "{{value_json.Scheme}}"
+    effect_value_template: "{{ value_json.Scheme }}"
     effect_list:
       - 0
       - 1
@@ -330,7 +331,11 @@ light:
     qos: 1
     retain: false
 ```
+
 !!! example "RGB+W Light"
+    In this configuration RGB and white cannot be on at the same time. See [Lights](Lights.md#4-channels-rgbw-lights) for options.
+
+`SetOption17 1` - enables color status in decimals
 
 ```yaml
 light:
@@ -338,20 +343,20 @@ light:
     name: "RGB+W Light"
     command_topic: "cmnd/tasmota/POWER"
     state_topic: "tele/tasmota/STATE"
-    state_value_template: "{{value_json.POWER}}"
+    state_value_template: "{{ value_json.POWER }}"
     availability_topic: "tele/tasmota/LWT"
     brightness_command_topic: "cmnd/tasmota/Dimmer"
     brightness_state_topic: "tele/tasmota/STATE"
     brightness_scale: 100
     on_command_type: "brightness"
-    brightness_value_template: "{{value_json.Dimmer}}"
+    brightness_value_template: "{{ value_json.Dimmer }}"
     white_value_state_topic: "tele/tasmota/STATE"
     white_value_command_topic: "cmnd/tasmota/White"
     white_value_scale: 100
-    white_value_template: "{{ value_json.Channel[3] }}"
+    white_value_template: "{{ value_json.White }}"
     rgb_command_topic: "cmnd/tasmota/Color2"
     rgb_state_topic: "tele/tasmota/STATE"
-    rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
+    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
     effect_command_topic: "cmnd/tasmota/Scheme"
     effect_state_topic: "tele/tasmota/STATE"
     effect_value_template: "{{value_json.Scheme}}"
@@ -368,8 +373,11 @@ light:
     qos: 1
     retain: false
 ```
+
 !!! example "RGB+CCT Light"
-Also known as RGBWW or 5 channel lights
+    Also called RGBWW, RGBCW or 5 channel lights
+
+`SetOption17 1` - enables color status in decimals
 
 ```yaml
 light:
@@ -377,22 +385,22 @@ light:
     name: "RGBCCT Light"
     command_topic: "cmnd/tasmota/POWER"
     state_topic: "tele/tasmota/STATE"
-    state_value_template: "{{value_json.POWER}}"
+    state_value_template: "{{ value_json.POWER }}"
     availability_topic: "tele/tasmota/LWT"
     brightness_command_topic: "cmnd/tasmota/Dimmer"
     brightness_state_topic: "tele/tasmota/STATE"
     brightness_scale: 100
     on_command_type: "brightness"
-    brightness_value_template: "{{value_json.Dimmer}}"
+    brightness_value_template: "{{ value_json.Dimmer }}"
     color_temp_command_topic: "cmnd/tasmota/CT"
     color_temp_state_topic: "tele/tasmota/STATE"
-    color_temp_value_template: "{{value_json.CT}}"
+    color_temp_value_template: "{{ value_json.CT }}"
     rgb_command_topic: "cmnd/tasmota/Color2"
     rgb_state_topic: "tele/tasmota/STATE"
-    rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
+    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
     effect_command_topic: "cmnd/tasmota/Scheme"
     effect_state_topic: "tele/tasmota/STATE"
-    effect_value_template: "{{value_json.Scheme}}"
+    effect_value_template: "{{ value_json.Scheme }}"
     effect_list:
       - 0
       - 1
@@ -408,8 +416,7 @@ light:
 ```
 
 !!! example "Addressable LED"
-
-Applies only to [WS281x](WS2812B-and-WS2813) lights. 
+    Applies only to [WS281x](WS2812B-and-WS2813) lights. 
 
 ```yaml
 light:
@@ -417,19 +424,19 @@ light:
     name: "Addressable LED"
     command_topic: "cmnd/tasmota/POWER"
     state_topic: "stat/tasmota/STATE"
-    state_value_template: "{{value_json.POWER}}"
+    state_value_template: "{{ value_json.POWER }}"
     availability_topic: "tele/tasmota/LWT"
     brightness_command_topic: "cmnd/tasmota/Dimmer"
     brightness_state_topic: "stat/tasmota/STATE"
     brightness_scale: 100
     on_command_type: "brightness"
-    brightness_value_template: "{{value_json.Dimmer}}"
+    brightness_value_template: "{{ value_json.Dimmer }}"
     rgb_command_topic: "cmnd/tasmota/Color2"
     rgb_state_topic: "tele/tasmota/STATE"
-    rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
+    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
     effect_command_topic: "cmnd/tasmota/Scheme"
     effect_state_topic: "stat/tasmota/STATE"
-    effect_value_template: "{{value_json.Scheme}}"
+    effect_value_template: "{{ value_json.Scheme }}"
     effect_list:
       - 0
       - 1
@@ -452,24 +459,44 @@ light:
     retain: false
 ```
 
-!!! example "No SetOption17 RGB"
+!!! example "RGB with hex values"
 
- If you don't want to use `SetOption17 1` you can change
-  ```yaml
-  rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
-  ```
+If you don't want to use `SetOption17 1` with decimal values and use default hex values, change:
+
+```yaml
+rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
+```
 to
 ```yaml
-  rgb_value_template: "{% if value_json.Color is defined %}{{ (value_json.Color[0:2]|int(base=16),value_json.Color[2:4]|int(base=16),value_json.Color[4:6]|int(base=16)) | join(',')}}{% endif %}"
+  rgb_command_template: "{{ '%02X%02X%02X' | format(red, green, blue)}}"
+  rgb_value_template: "{{ (value_json.Color[0:2]|int(base=16),value_json.Color[2:4]|int(base=16),value_json.Color[4:6]|int(base=16)) | join(',')}}"
 ```
+
+!!! example "Control RGB and White independently"
+    Using color picker will keep white light on. If you use the white slider RGB light will get turned off. White value and dimmer value are connected, to have more granular control you will have to [split the lights](Lights.md#rgb-and-white-split).
+
+Replace 
+
+```yaml
+rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
+```
+to
+```yaml
+  rgb_command_template: "{{ '%02X%02X%02X=' | format(red, green, blue)}}"
+  rgb_value_template: "{{ (value_json.Color[0:2]|int(base=16),value_json.Color[2:4]|int(base=16),value_json.Color[4:6]|int(base=16)) | join(',')}}"
+```
+
+The key is the `=` after color string in hex. It will retain current white value while changing color. 
+
+!!! example "Using schema: template light"
+
+    Thorough explanation of template: schema lights and its features on [https://blakadder.com/template_schema_lights/](https://blakadder.com/template_schema_lights/)
 <!-- tabs:end -->
 
 ### Sensors
 Add in Home Assistant using the [MQTT Sensor](https://www.home-assistant.io/components/sensor.mqtt/) integration.
 
 A sensor will send its data in set intervals defined by [`TelePeriod`](Commands.md#teleperiod) (default every 5 minutes).
-
-<!-- tabs:start -->
 
 !!! example "Temperature"
 
@@ -545,8 +572,6 @@ Power monitoring sensors will send their data in set intervals defined by [`Tele
 
 To get all the data in Home Assistant requires multiple sensors which you can later group to your liking in [Lovelace UI](https://www.home-assistant.io/lovelace/)
 
-<!-- tabs:start -->
-
 !!! example "Power Monitoring"
 
 ```yaml
@@ -574,27 +599,6 @@ sensor:
 ```
 !!! tip
     For additional sensors use "Total";"Yesterday";"Period","ApparentPower","ReactivePower";"Factor" in `value_template` string
-
-<!-- AGAIN WITH THIS MANUAL UPDATE MALARKEY
-
-#### Manual updates
-
-The manual message retrieved with command ``Status 8`` or ``cmnd/pow1/status 8`` will show:
-```
-stat/pow1/STATUS8 = {"StatusPWR":{"Yesterday":0.002, "Today":0.002, "Power":4, "Factor":0.37, "Voltage":227, "Current":0.056}}
-```
-The HA configuration for Power Factor would then be:
-```yaml
-# Example configuration.yaml entry
-sensor:
-  - platform: mqtt
-    name: "Power Factor"
-    state_topic: "stat/pow1/STATUS8"
-    value_template: "{{ value_json.StatusPWR.Factor }}"
-
-```
- -->
-<!-- tabs:end -->
 
 [Video tutorial](https://www.youtube.com/watch?v=ktHQrhAF8VQ) on a power monitoring plug setup by Digiblur
 
@@ -707,7 +711,7 @@ Add in Home Assistant using the [MQTT Cover](https://www.home-assistant.io/compo
 
 !!! example "TuyaMCU Curtain/Shade Motor"
 
-Requires `SetOption65 1`. In this example dpId1 is for open/close/stop of the motor, dpId2 sets position and dpId3 displays the current position.
+Requires `SetOption66 1`. In this example dpId1 is for open/close/stop of the motor, dpId2 sets position and dpId3 displays the current position.
 
 ```yaml
 # Example configuration.yaml entry
@@ -715,11 +719,11 @@ cover:
   - platform: mqtt
     name: "Tuya Curtain"
     command_topic: "cmnd/tasmota/TuyaSend4"
-    payload_open: "1,2"
-    payload_close: "1,0"
+    payload_open: "1,0"
+    payload_close: "1,2"
     payload_stop: "1,1"
-    position_open: 100
-    position_closed: 0
+    position_open: 0
+    position_closed: 100
     position_topic: "tele/tasmota/RESULT"
     value_template: >-
           {% if value_json.TuyaReceived.DpType2Id3 is defined %}
@@ -995,7 +999,7 @@ automation:
       data:
         topic: cmnd/tasmotas/state
         payload: ''
-    # sync state for autodiscovery devices
+    # sync state for pre8.2 autodiscovery devices
     - service: mqtt.publish
       data:
         topic: tasmotas/cmnd/state
