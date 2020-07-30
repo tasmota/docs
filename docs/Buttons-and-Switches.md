@@ -326,9 +326,11 @@ SetOption11 1
 All of the above is easier accomplished using [Rules](Rules#button-single-press-double-press-and-hold)!
 
 ## AC Frequency Detection Switch
-Some devices, such as [BlitzWolf BW-SS5](https://templates.blakadder.com/blitzwolf_BW-SS5.html) or [Moes MS-104B](https://templates.blakadder.com/moes-MS-104B.html), use mains frequency detection on their switch inputs. Whenever the connected switch or button is pressed there are 50/60 Hz pulses on the switch input. Inside the switch there's a frequency detection circuit which is connected to a GPIO of the ESP8266 chip which counts those pulses.
+Some devices, such as [BlitzWolf BW-SS5](https://templates.blakadder.com/blitzwolf_BW-SS5.html) or [Moes MS-104B](https://templates.blakadder.com/moes-MS-104B.html), use mains frequency detection on their switch inputs. Whenever the connected switch or button is pressed there are 50/60 Hz pulses on the switch input. Inside the switch there's a frequency detection circuit which is connected to a GPIO of the ESP8266 chip which counts those pulses. Prior to Tasmota 8.4 this kind of switching was handled using Counter sensors and scripting which is now simplified.
 
-Using ['SwitchDebounce'](Commands.md#switchdebounce) command you set number of pulses required for the switch to be recognized as on or off. `SwitchDebounce 69` will turn the switch on after three pulses and turn it off after three missing ones. You will probably have to experiment with the values depending on your AC frequency and the device frequency detection implementation. 
+After you have assigned a Switch<x\> to the GPIO connected to the AC frequency detection circuit use the ['SwitchDebounce'](Commands.md#switchdebounce) command to set the number of pulses required for the switch to be recognized as on or off. For example: `SwitchDebounce 69` will turn the switch on after three pulses and turn it off after three missing ones. You will probably have to experiment with the values depending on your AC frequency and the devices frequency detection implementation. 
+
+Once the feature is enabled you can use this switch as any regular switch!
 
 ---
 
