@@ -414,9 +414,11 @@ If using a Sonoff Dual R2, use the following Template:
 #### Rules
 Tasmota rule triggers:  
 
-- `Shutter<x>#Position` is triggered at end of movement reporting actual position
-- `Shutter<x>#Direction` is triggered at end of movement reporting actual direction
-- `Shutter<x>#Target` is triggered at end of movement reporting current target
+- `Shutter<x>#Position` is triggered at start, during and at the end of movement reporting actual position (`%value%`=0-100)
+- `Shutter<x>#Direction` is triggered at start, during and at the end of movement reporting actual direction (`%value%`: `-1`=close direction, `0`=no movement, `1`=open direction)
+- `Shutter<x>#Target` is triggered at start, during and at the end of movement reporting current target (`%value%`0-100)
+- `Shutter#Moving` is triggered during movement (shutter independently)
+- `Shutter#Moved` is triggered at end of movement (shutter independently)
 - `Shutter<x>#Button<button>=0`  is triggered when `button` is hold
 - `Shutter<x>#Button<button>=<n>`  is triggered when `button` is pressed `n` times
 - `Shutter<x>#Button0=0`  is triggered when all buttons of that shutter are hold simultaneously

@@ -39,6 +39,7 @@ Name|Description
 [**IR Remote**](IR-Remote) | IR transmitter and receiver
 **K30, K70, S8** | CO<sub>2</sub> sensor (I^2^C) | 
 [**LM75AD**](LM75AD) |  Temperature Sensor (I^2^C)
+[**LMT01**](LMT01) | Temperature Sensor (gpio)
 **MAX31855** | Thermocouple Sensor (SPI)
 **MAX31865** | RTD Temperature Sensor Amplifier (SPI)
 **MAX44009** | Ambient Light Sensor (I^2^C)
@@ -48,6 +49,7 @@ Name|Description
 [**MLX90614**](MLX90614) | MLX9061X Infrared Thermometer (I^2^C) 
 [**NRF24L01**](NRF24L01) | NRF24L01 as BLE-bridge for Mijia BT sensors (SPI)
 [**OpenTherm**](OpenTherm) | OpenTherm adapter (serial)
+[**MCP9808**](MCP9808) |  Temperature Sensor (I^2^C)
 [**MPR121**](MPR121) | Proximity Capacitive Touch Sensor Controller (I^2^C)
 [**MPU6050**](MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer sensor (I^2^C)
 [**P1 Smart Meter**](P1-Smart-Meter) | Energy Meter (serial)

@@ -33,6 +33,8 @@ Whenever a command is sent to the MCU, this dpId determines which component need
 
 **There is no way to autodetect dpId's and their functions.**
 
+To assist in the process of determining what dpId does what, there is a [bookmarklet available](https://github.com/sillyfrog/Tasmota-Tuya-Helper) that can be used on the console screen. This will send the `weblog` and other required commands automatically, and present the TuyaMCU information in a single table allowing for easier testing.
+
 Use this procedure to determine which dpId's are available:
 
 1. Go to `Configure` -> `Console` option in Tasmota web interface.
@@ -40,31 +42,31 @@ Use this procedure to determine which dpId's are available:
 3. Observe the log. After every 9-10 seconds you should see TYA messages.
 
 ```
-TYA: Heartbeat
-TYA: RX Packet: "55aa0107000501010001000f"
-TYA: FnId=0 is set for dpId=1
-TYA: RX Packet: "55aa01070005020100010010"
-TYA: FnId=0 is set for dpId=2
-TYA: RX Packet: "55aa01070005030100010011"
-TYA: FnId=0 is set for dpId=3
-TYA: RX Packet: "55aa01070005040100010012"
-TYA: FnId=0 is set for dpId=4
-TYA: RX Packet: "55aa0107000807020004000000001c"
-TYA: FnId=0 is set for dpId=7
-TYA: RX Packet: "55aa0107000808020004000000001d"
-TYA: FnId=0 is set for dpId=8
-TYA: RX Packet: "55aa0107000809020004000000001e"
-TYA: FnId=0 is set for dpId=9
-TYA: RX Packet: "55aa010700080a020004000000001f"
-TYA: FnId=0 is set for dpId=0
-TYA: RX Packet: "55aa0107000865020004000000007a"
-TYA: FnId=0 is set for dpId=101
-TYA: RX Packet: "55aa0107000866020004000000007b"
-TYA: FnId=0 is set for dpId=102
-TYA: RX Packet: "55aa0107000867020004000000007c"
-TYA: FnId=0 is set for dpId=103
-TYA: RX Packet: "55aa0107000868020004000009870d"
-TYA: FnId=0 is set for dpId=104
+{"TuyaReceived":{"Data":"55AA0107000501010001000F","Cmnd":7,"CmndData":"0101000100","DpType1Id1":0,"1":{"DpId":1,"DpIdType":1,"DpIdData":"00"}}}
+TYA: fnId=11 is set for dpId=1
+TYA: RX Relay-1 --> MCU State: Off Current State:Off
+{"TuyaReceived":{"Data":"55AA01070005020100010010","Cmnd":7,"CmndData":"0201000100","DpType1Id2":0,"2":{"DpId":2,"DpIdType":1,"DpIdData":"00"}}}
+TYA: fnId=0 is set for dpId=2
+{"TuyaReceived":{"Data":"55AA01070005030100010011","Cmnd":7,"CmndData":"0301000100","DpType1Id3":0,"3":{"DpId":3,"DpIdType":1,"DpIdData":"00"}}}
+TYA: fnId=0 is set for dpId=3
+{"TuyaReceived":{"Data":"55AA01070005040100010012","Cmnd":7,"CmndData":"0401000100","DpType1Id4":0,"4":{"DpId":4,"DpIdType":1,"DpIdData":"00"}}}
+TYA: fnId=0 is set for dpId=4
+{"TuyaReceived":{"Data":"55AA0107000807020004000000001C","Cmnd":7,"CmndData":"0702000400000000","DpType2Id7":0,"7":{"DpId":7,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=7
+{"TuyaReceived":{"Data":"55AA0107000808020004000000001D","Cmnd":7,"CmndData":"0802000400000000","DpType2Id8":0,"8":{"DpId":8,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=8
+{"TuyaReceived":{"Data":"55AA0107000809020004000000001E","Cmnd":7,"CmndData":"0902000400000000","DpType2Id9":0,"9":{"DpId":9,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=9
+{"TuyaReceived":{"Data":"55AA010700080A020004000000001F","Cmnd":7,"CmndData":"0A02000400000000","DpType2Id10":0,"10":{"DpId":10,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=10
+{"TuyaReceived":{"Data":"55AA0107000865020004000000007A","Cmnd":7,"CmndData":"6502000400000000","DpType2Id101":0,"101":{"DpId":101,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=101
+{"TuyaReceived":{"Data":"55AA0107000866020004000000007B","Cmnd":7,"CmndData":"6602000400000000","DpType2Id102":0,"102":{"DpId":102,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=102
+{"TuyaReceived":{"Data":"55AA0107000867020004000000007C","Cmnd":7,"CmndData":"6702000400000000","DpType2Id103":0,"103":{"DpId":103,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=103
+{"TuyaReceived":{"Data":"55AA01070008680200040000099117","Cmnd":7,"CmndData":"6802000400000991","DpType2Id104":2449,"104":{"DpId":104,"DpIdType":2,"DpIdData":"00000991"}}}
+TYA: fnId=0 is set for dpId=104
 ```
 
 4. Observe all lines printed as `TYA: FnId=0 is set for dpId=XXX` and note all dpId values. 
@@ -73,7 +75,7 @@ TYA: FnId=0 is set for dpId=104
 Now that you have a list of usable dpId's you need to determine what their functions are:
 
 1. Consulting our [list of commonly used](#dpid-function-tables) dpId's and existing device configurations
-2. Observing Tasmota logs while activating features of the device (with a remote or on device controls) and correlating log messages
+2. Observing Tasmota logs while activating features of the device (with a remote or on device controls) and correlating log messages and looking at the DpIdType and DpIdData values (eg: boolean vs value)
 3. Extrapolating possible function of the dpId based on Data Type and Function Command, then testing using `TuyaSend<x>`
 
 ## fnId
@@ -210,75 +212,110 @@ Some Tuya MCU devices support Power measurement support over serial. For this it
 Observe the logs in the Console  	
 
 ```	
-TYA: RX Packet: "55aa03070005010100010011"	
-TYA: FnId=11 is set for dpId=1	
-TYA: RX Device-1 --> MCU State: Off Current State:Off	
-TYA: RX Packet: "55aa03070008020200040000000720"	
-TYA: FnId=21 is set for dpId=2	
-TYA: RX Dim State=7	
-TYA: RX Packet: "55aa0307000803020004000000001a"	
-TYA: FnId=0 is set for dpId=3	
-TYA: RX Packet: "55aa0307000804020004000000251b"	
-TYA: FnId=0 is set for dpId=4	
-TYA: RX Packet: "55aa0307000805020004000000591c"	
-TYA: FnId=0 is set for dpId=5	
-TYA: RX Packet: "55aa03070008060200040000098fb5"	
-TYA: FnId=0 is set for dpId=6	
+TYA: Heartbeat
+{"TuyaReceived":{"Data":"55AA0107000501010001000F","Cmnd":7,"CmndData":"0101000100","DpType1Id1":0,"1":{"DpId":1,"DpIdType":1,"DpIdData":"00"}}}
+TYA: fnId=11 is set for dpId=1
+TYA: RX Relay-1 --> MCU State: Off Current State:Off
+{"TuyaReceived":{"Data":"55AA01070005020100010111","Cmnd":7,"CmndData":"0201000101","DpType1Id2":1,"2":{"DpId":2,"DpIdType":1,"DpIdData":"01"}}}
+TYA: fnId=0 is set for dpId=2
+{"TuyaReceived":{"Data":"55AA01070005030100010011","Cmnd":7,"CmndData":"0301000100","DpType1Id3":0,"3":{"DpId":3,"DpIdType":1,"DpIdData":"00"}}}
+TYA: fnId=0 is set for dpId=3
+{"TuyaReceived":{"Data":"55AA01070005040100010113","Cmnd":7,"CmndData":"0401000101","DpType1Id4":1,"4":{"DpId":4,"DpIdType":1,"DpIdData":"01"}}}
+TYA: fnId=0 is set for dpId=4
+{"TuyaReceived":{"Data":"55AA0107000807020004000000001C","Cmnd":7,"CmndData":"0702000400000000","DpType2Id7":0,"7":{"DpId":7,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=7
+{"TuyaReceived":{"Data":"55AA0107000808020004000000001D","Cmnd":7,"CmndData":"0802000400000000","DpType2Id8":0,"8":{"DpId":8,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=8
+{"TuyaReceived":{"Data":"55AA0107000809020004000000001E","Cmnd":7,"CmndData":"0902000400000000","DpType2Id9":0,"9":{"DpId":9,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=9
+{"TuyaReceived":{"Data":"55AA010700080A020004000000001F","Cmnd":7,"CmndData":"0A02000400000000","DpType2Id10":0,"10":{"DpId":10,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=10
+{"TuyaReceived":{"Data":"55AA0107000865020004000000007A","Cmnd":7,"CmndData":"6502000400000000","DpType2Id101":0,"101":{"DpId":101,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=101
+{"TuyaReceived":{"Data":"55AA01070008660200040000009813","Cmnd":7,"CmndData":"6602000400000098","DpType2Id102":152,"102":{"DpId":102,"DpIdType":2,"DpIdData":"00000098"}}}
+TYA: fnId=0 is set for dpId=102
+{"TuyaReceived":{"Data":"55AA01070008670200040000017EFB","Cmnd":7,"CmndData":"670200040000017E","DpType2Id103":382,"103":{"DpId":103,"DpIdType":2,"DpIdData":"0000017E"}}}
+TYA: fnId=0 is set for dpId=103
+{"TuyaReceived":{"Data":"55AA0107000868020004000009951B","Cmnd":7,"CmndData":"6802000400000995","DpType2Id104":2453,"104":{"DpId":104,"DpIdType":2,"DpIdData":"00000995"}}}
+TYA: fnId=0 is set for dpId=104
 ```	
 
-In the `RX Packet` we are interested in the 3 digits before last 2 digits. For example:	
-`98f` in `"55aa03070008060200040000098fb5"`	
+In the `TuyaReceived` we are interested in `DpIdData`. For example: `00000995` is the second last entry.	
 
-1. Make sure the bulb if off.	
-2. Find out the voltage standard of your country (generally 220, 240, 120v) from this [table](https://www.worldstandards.eu/electricity/plug-voltage-by-country/).	
-3. Multiply that number by 10 (2400) and Convert that number (2400) to Hex using any [hex converter](https://www.binaryhexconverter.com/decimal-to-hex-converter) (2400 = 0x960)	
-4. Now look for the number nearest to `960` in the logs. In our case it is `98f`. So we expect that's the voltage which is `ID=6` in our example.	
-5. Set voltage functionId `33` by entering `TuyaMCU 33,6`.	
-6. Now set dimmer to 100% using the `dimmer 100` command and observe the logs.	
-7. Now we need the power rating of your bulb example `9W`. Multiply by 10 (90) and convert to hex which gives us 0x5A. Check which unknown ID is close to `5A`. I this example it is `59` for `ID=5`. This is the Id of `Active Power` function.	
-8. Set the active power functionId `31` by entering `TuyaMCU 31,5`.	
-9. Once Power and Voltage are set you should see something such as this in the logs:	
-   ```
-   TYA: RX Packet: "55aa03070005010100010011"	
-   TYA: FnId=11 is set for dpId=1	
-   TYA: RX Device-1 --> MCU State: Off Current State:Off	
-   TYA: RX Packet: "55aa03070008020200040000000720"	
-   TYA: FnId=21 is set for dpId=2	
-   TYA: RX Dim State=7	
-   TYA: RX Packet: "55aa0307000803020004000000001a"	
-   TYA: FnId=0 is set for dpId=3	
-   TYA: RX Packet: "55aa0307000804020004000000251b"	
-   TYA: FnId=0 is set for dpId=4	
-   TYA: RX Packet: "55aa0307000805020004000000591c"	
-   TYA: FnId=31 is set for dpId=5	
-   TYA: Rx ID=5 Active_Power=9	
-   TYA: RX Packet: "55aa03070008060200040000098fb5"	
-   TYA: FnId=33 is set for dpId=6	
-   TYA: Rx ID=6 Voltage=244.7	
-   ```	
-10. To get the Id for the current, calculate Current = Power / Voltage ( 9 / 244.7 ) = 0.0367. Multiply this by 1000 = 36.77. Now convert 36 to hex which is 0x24. This is closest to `25` which is Id 4. 	
-11. Set the current FunctionId `32` using command `TuyaMCU 32,4`.	
-12. Observe the logs should start showing	
-   ```
-   TYA: RX Packet: "55aa03070005010100010011"	
-   TYA: FnId=11 is set for dpId=1	
-   TYA: RX Device-1 --> MCU State: Off Current State:Off	
-   TYA: RX Packet: "55aa03070008020200040000000720"	
-   TYA: FnId=21 is set for dpId=2	
-   TYA: RX Dim State=7	
-   TYA: RX Packet: "55aa0307000803020004000000001a"	
-   TYA: FnId=0 is set for dpId=3	
-   TYA: RX Packet: "55aa0307000804020004000000251b"	
-   TYA: FnId=32 is set for dpId=4	
-   TYA: Rx ID=4 Current=312	
-   TYA: RX Packet: "55aa0307000805020004000000591c"	
-   TYA: FnId=31 is set for dpId=5	
-   TYA: Rx ID=5 Active_Power=9	
-   TYA: RX Packet: "55aa03070008060200040000098fb5"	
-   TYA: FnId=33 is set for dpId=6	
-   TYA: Rx ID=6 Voltage=2447	
-   ```	
-13. Power and current should change on dimming high / low. The Tasmota web UI should show power values now.	
+* Make sure the bulb if off.	
+* Find out the voltage standard of your country (generally 220, 240, 120v) from this [table](https://www.worldstandards.eu/electricity/plug-voltage-by-country/).	
+* Multiply that number by 10 (2400) and Convert that number (2400) to Hex using any [hex converter](https://www.binaryhexconverter.com/decimal-to-hex-converter) (2400 = 0x960)	
+* Now look for the number nearest to `960` in the logs. In our case it is `00000995`. So we expect that's the voltage which is `"DpId":104` in our example.
+* Set voltage functionId `33` by entering `TuyaMCU 33,104`.	
+* Now set dimmer to 100% using the `dimmer 100` command, or power on using `power1 on` (depending on the device) and observe the logs.	
+* Now we need the power rating of your bulb, for example `40W`. Multiply by 10 (400) and convert to hex which gives us 0x190. Check which unknown ID is close to `190`. I this example it is `17E` for `"DpId":103`. This is the Id of `Active Power` function.	
+* Set the active power functionId `31` by entering `TuyaMCU 31,103`.	
+* Once Power and Voltage are set you should see something such as this in the logs:	
+```
+TYA: Heartbeat
+{"TuyaReceived":{"Data":"55AA0107000501010001000F","Cmnd":7,"CmndData":"0101000100","DpType1Id1":0,"1":{"DpId":1,"DpIdType":1,"DpIdData":"00"}}}
+TYA: fnId=11 is set for dpId=1
+TYA: RX Relay-1 --> MCU State: Off Current State:Off
+{"TuyaReceived":{"Data":"55AA01070005020100010111","Cmnd":7,"CmndData":"0201000101","DpType1Id2":1,"2":{"DpId":2,"DpIdType":1,"DpIdData":"01"}}}
+TYA: fnId=0 is set for dpId=2
+{"TuyaReceived":{"Data":"55AA01070005030100010011","Cmnd":7,"CmndData":"0301000100","DpType1Id3":0,"3":{"DpId":3,"DpIdType":1,"DpIdData":"00"}}}
+TYA: fnId=0 is set for dpId=3
+{"TuyaReceived":{"Data":"55AA01070005040100010113","Cmnd":7,"CmndData":"0401000101","DpType1Id4":1,"4":{"DpId":4,"DpIdType":1,"DpIdData":"01"}}}
+TYA: fnId=0 is set for dpId=4
+{"TuyaReceived":{"Data":"55AA0107000807020004000000001C","Cmnd":7,"CmndData":"0702000400000000","DpType2Id7":0,"7":{"DpId":7,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=7
+{"TuyaReceived":{"Data":"55AA0107000808020004000000001D","Cmnd":7,"CmndData":"0802000400000000","DpType2Id8":0,"8":{"DpId":8,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=8
+{"TuyaReceived":{"Data":"55AA0107000809020004000000001E","Cmnd":7,"CmndData":"0902000400000000","DpType2Id9":0,"9":{"DpId":9,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=9
+{"TuyaReceived":{"Data":"55AA010700080A020004000000001F","Cmnd":7,"CmndData":"0A02000400000000","DpType2Id10":0,"10":{"DpId":10,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=10
+{"TuyaReceived":{"Data":"55AA0107000865020004000000007A","Cmnd":7,"CmndData":"6502000400000000","DpType2Id101":0,"101":{"DpId":101,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=101
+{"TuyaReceived":{"Data":"55AA01070008660200040000009712","Cmnd":7,"CmndData":"6602000400000097","DpType2Id102":151,"102":{"DpId":102,"DpIdType":2,"DpIdData":"00000097"}}}
+TYA: fnId=0 is set for dpId=102
+{"TuyaReceived":{"Data":"55AA01070008670200040000017BF8","Cmnd":7,"CmndData":"670200040000017B","DpType2Id103":379,"103":{"DpId":103,"DpIdType":2,"DpIdData":"0000017B"}}}
+TYA: fnId=31 is set for dpId=103
+TYA: Rx ID=103 Active_Power=379
+{"TuyaReceived":{"Data":"55AA0107000868020004000009961C","Cmnd":7,"CmndData":"6802000400000996","DpType2Id104":2454,"104":{"DpId":104,"DpIdType":2,"DpIdData":"00000996"}}}
+TYA: fnId=33 is set for dpId=104
+TYA: Rx ID=104 Voltage=2454
+```	
+* To get the Id for the current, calculate Current = Power / Voltage ( 37.9 / 245.4 ) = ~0.1544 (Remember to divide each value by 10). Multiply this by 1000 = 154. Now convert 154 to hex which is 0x9A. This is closest to `97` which is Id `"DpId":102`. 	
+* Set the current FunctionId `32` using command `TuyaMCU 32,102`.	
+* Observe the logs should start showing Current in addition to Active_Power and Voltage
+```
+TYA: Heartbeat
+{"TuyaReceived":{"Data":"55AA0107000501010001000F","Cmnd":7,"CmndData":"0101000100","DpType1Id1":0,"1":{"DpId":1,"DpIdType":1,"DpIdData":"00"}}}
+TYA: fnId=11 is set for dpId=1
+TYA: RX Relay-1 --> MCU State: Off Current State:Off
+{"TuyaReceived":{"Data":"55AA01070005020100010111","Cmnd":7,"CmndData":"0201000101","DpType1Id2":1,"2":{"DpId":2,"DpIdType":1,"DpIdData":"01"}}}
+TYA: fnId=0 is set for dpId=2
+{"TuyaReceived":{"Data":"55AA01070005030100010011","Cmnd":7,"CmndData":"0301000100","DpType1Id3":0,"3":{"DpId":3,"DpIdType":1,"DpIdData":"00"}}}
+TYA: fnId=0 is set for dpId=3
+{"TuyaReceived":{"Data":"55AA01070005040100010113","Cmnd":7,"CmndData":"0401000101","DpType1Id4":1,"4":{"DpId":4,"DpIdType":1,"DpIdData":"01"}}}
+TYA: fnId=0 is set for dpId=4
+{"TuyaReceived":{"Data":"55AA0107000807020004000000001C","Cmnd":7,"CmndData":"0702000400000000","DpType2Id7":0,"7":{"DpId":7,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=7
+{"TuyaReceived":{"Data":"55AA0107000808020004000000001D","Cmnd":7,"CmndData":"0802000400000000","DpType2Id8":0,"8":{"DpId":8,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=8
+{"TuyaReceived":{"Data":"55AA0107000809020004000000001E","Cmnd":7,"CmndData":"0902000400000000","DpType2Id9":0,"9":{"DpId":9,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=9
+{"TuyaReceived":{"Data":"55AA010700080A020004000000001F","Cmnd":7,"CmndData":"0A02000400000000","DpType2Id10":0,"10":{"DpId":10,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=10
+{"TuyaReceived":{"Data":"55AA0107000865020004000000007A","Cmnd":7,"CmndData":"6502000400000000","DpType2Id101":0,"101":{"DpId":101,"DpIdType":2,"DpIdData":"00000000"}}}
+TYA: fnId=0 is set for dpId=101
+{"TuyaReceived":{"Data":"55AA01070008660200040000009712","Cmnd":7,"CmndData":"6602000400000097","DpType2Id102":151,"102":{"DpId":102,"DpIdType":2,"DpIdData":"00000097"}}}
+TYA: fnId=32 is set for dpId=102
+TYA: Rx ID=102 Current=151
+{"TuyaReceived":{"Data":"55AA01070008670200040000017BF8","Cmnd":7,"CmndData":"670200040000017B","DpType2Id103":379,"103":{"DpId":103,"DpIdType":2,"DpIdData":"0000017B"}}}
+TYA: fnId=31 is set for dpId=103
+TYA: Rx ID=103 Active_Power=379
+{"TuyaReceived":{"Data":"55AA0107000868020004000009961C","Cmnd":7,"CmndData":"6802000400000996","DpType2Id104":2454,"104":{"DpId":104,"DpIdType":2,"DpIdData":"00000996"}}}
+TYA: fnId=33 is set for dpId=104
+TYA: Rx ID=104 Voltage=2454
+```	
+* Power and current should change on dimming high / low or turning the device on and off. The Tasmota web UI should show power values now on the home page.
 
 ### Switches	
 For switches we need to  	

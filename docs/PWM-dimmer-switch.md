@@ -29,8 +29,7 @@ Holding any button alone for over 10 seconds executes the WiFiConfig 2 command.
 
 SetOption32 defines the button hold time. When the PWM Dimmer module is initially selected, SetOption32 is set to 5 (1/2 second). Button presses and holds execute the normal ButtonTopic and Rule processing. If ButtonTopic is set and SetOption61 is 0 or a the button press/hold matches a rule, the button press/hold is ignored by PWM Dimmer.
 
-PWM Dimmer uses the Light module to control PWM. Brightness levels are rescaled to PWM values between the <dimmer_min> and <dimmer_max) values specified with `DimmerRange`. Most LED bulbs do not show a significant difference between PWM value of 1 and PWM value of 100. This results in the lower 10% of the dimmer range having no effect. For best results, `DimmerRange <dimmerMin>` value should be set to the higest value that results in the lowest bulb brightness (Typically in the range of 90 - 120).
-
+PWM Dimmer uses the Light module to control PWM. Brightness levels are rescaled to PWM values between the `dimmer_min` and `dimmer_max` values specified with [DimmerRange](Commands.md#dimmerrange). Most LED bulbs do not show a significant difference between PWM value of 1 and PWM value of 100. This results in the lower 10% of the dimmer range having no effect. For best results, `DimmerRange <dimmerMin>` value should be set to the highest value that results in the lowest bulb brightness (Typically in the range of 90 - 120). 
 When Device Groups are enabled, the PWM Dimmer brightness presets are kept in sync across all switches in the group. The powered-off LED and LED timeout settings are specific to each switch. Changing them does not replicate the change to the other switches in the group.
 
 ## Commands
@@ -46,7 +45,7 @@ When Device Groups are enabled, the PWM Dimmer brightness presets are kept in sy
 
 Remote device mode allows PWM Dimmer switches to control remote devices. With remote device mode enabled, each button controls a different device. Note that dimmer switches with toggle-style down/up buttons have limited functionality as remote device mode switches because you can not push the down and up buttons simultaneously.
 
-Remote device mode is included in the default tasmota binary. To include remote device mode support in other builds, define `USE_PWM_DIMMER_REMOTE` and `USE_DEVICE_GROUPS` in your user_config_override. Remote device mode support requires [device group](Device-Groups.md) support. Remote device mode support adds 1K to the code size in addition to the code size required for device groups support.
+Remote device mode is included in the default Tasmota binary. To include remote device mode support in other builds, define `USE_PWM_DIMMER_REMOTE` and `USE_DEVICE_GROUPS` in your user_config_override. Remote device mode support requires [device group](Device-Groups.md) support. Remote device mode support adds 1K to the code size in addition to the code size required for device groups support.
 
 To enable remote device mode, execute `SetOption88 1` (the device will restart). Each remote device must be running firmware with device group support and have remote device support enabled. Remote devices do not need to be built with PWM dimmer support nor do they need to be switches.
 
