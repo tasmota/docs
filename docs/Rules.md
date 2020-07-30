@@ -52,7 +52,6 @@ A rule trigger can consist of:
 - `[SensorName]#[ValueName][comparison][value]`
 - `Tele-[SensorName]#[ValueName]`
 - `[TriggerName1]#[TriggerName2]#[ValueName]`
-- `#Data`- only if it is a one level message i.e. no JSON formatting
 - `[TriggerName1]#?#[ValueName]`
 
 Use `?` as a wildcard for a single trigger level. Rule will trigger on `[TriggerName]#?#[Value]` where `?` is any value.
