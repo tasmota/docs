@@ -205,10 +205,10 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 181 | SM2135 DAT  | SM2135 Dat                                                                                 |
 | 182 | DeepSleep   | DeepSleep wake switch                                                                      |
 | 183 | EXS Enable  | EXS Dimmer MCU Enable                                                                      |
-| 184 | Slave TX    | TasmotaSlave TX                                                                            |
-| 185 | Slave RX    | TasmotaSlave RX                                                                            |
-| 186 | Slave RST   | TasmotaSlave Reset Pin                                                                     |
-| 187 | Slave RSTi  | TasmotaSlave Reset Inverted                                                                |
+| 184 | Slave TX    | TasmotaClient TX                                                                            |
+| 185 | Slave RX    | TasmotaClient RX                                                                            |
+| 186 | Slave RST   | TasmotaClient Reset Pin                                                                     |
+| 187 | Slave RSTi  | TasmotaClient Reset Inverted                                                                |
 | 188 | HPMA RX     | Honeywell HPMA115S0 Serial Rx                                                              |
 | 189 | HPMA TX     | Honeywell HPMA115S0 Serial Tx                                                              |
 | 190 | GPS RX      | GPS Serial Tx                                                                              |
@@ -225,7 +225,15 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 201 | MOODL TX    | ElectriQ iQ-wifiMOODL Serial TX                                                            |
 | 202 | AS3935      | Lightning Detector Interrupt Pin                                                           |
 | 203 | PMS5003 TX  | Plantower PMS5003 Serial interface                                                         |
-| 204 | BOILER OT Rx| OpenTherm Boiler RX pin                                                                    |
-| 205 | BOILER OT Tx| OpenTherm Boiler TX pin                                                                    |
-| 206 | WINDMETER SPEED | WindMeter speed counter pin                                                            |
+| 204 | Boiler OT Rx| OpenTherm Boiler RX pin                                                                    |
+| 205 | Boiler OT Tx| OpenTherm Boiler TX pin                                                                    |
+| 206 | Windmeter Speed | WindMeter speed counter pin                                                            |
 | 207 | BL0940 RX   | BL0940 serial interface                                                                    |
+| 208 | TCP TX      | TCP Serial bridge |
+| 209 | TCP RX      | TCP Serial bridge |
+| 210 | TELEINFO RX | TELEINFO serial interface |
+| 211 | TELEINFO Enable | TELEINFO Enable PIN |
+| 212 | LMT01       | LMT01 input counting pin |
+| 213 | IEM3000 TX  | IEM3000 Serial interface |
+| 214 | IEM3000 RX  | IEM3000 Serial interface |
+| 215 | Zigbee RST  | Zigbee reset |

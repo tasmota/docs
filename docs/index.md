@@ -22,8 +22,9 @@ Incredibly expandable and flexible.
 - :rotating_light: **BREAKING CHANGE** :rotating_light: Limited support of Arduino IDE as an increasing amount of features cannot be compiled with it. PlatformIO is now the only recommended tool for compiling Tasmota.
 - Experimental support for [Sonoff Zigbee Bridge](https://templates.blakadder.com/sonoff_ZBBridge.html) with a dedicated binary and device module
 - Support for switches/relays using AC detection circuitry e.g. [Moes MS-104B](https://templates.blakadder.com/moes-MS-104B.html) or [BlitzWolf BW-SS5](https://templates.blakadder.com/blitzwolf_BW-SS5.html)
-- Support for VEML6075, VEML7700, BH1750, BL0940, HP303B, iEM3000, LMT01 and Telegram bot
+- Support for [VEML6075](VEML6075), [VEML7700](VEML7070), [BH1750](BH1750), BL0940, HP303B, iEM3000, [LMT01](LMT01.md), [Teleinfo](http://hallard.me/category/tinfo/) and Telegram bot
 - Initial support for rotary encoder as light controller
+- Led<x\> can now be PWM controlled. See [LedPwmMode](Commands.md#ledpwmmode)
 
 See [changelog](changelog.md) for a complete list of new features, changes and fixes.
 
