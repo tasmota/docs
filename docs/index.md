@@ -15,7 +15,7 @@ Incredibly expandable and flexible.
 [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
 ### Current release 
-<a href="https://github.com/arendst/Tasmota/releases/tag/v8.4"><span style="font-size:40px;">Tasmota 8.4 George</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
+<a href="https://github.com/arendst/Tasmota/releases/tag/v8.4.0"><span style="font-size:40px;">Tasmota 8.4 George</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
 
 - :rotating_light: **BREAKING CHANGE** :rotating_light: Change Domoticz commands prefix from `Domoticz` to `Dz`
 - :rotating_light: **BREAKING CHANGE** :rotating_light: Support for Arduino Core versions before 2.7.1 has been removed
