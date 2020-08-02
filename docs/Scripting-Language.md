@@ -43,6 +43,7 @@ SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall
 USE_SCRIPT_COMPRESSION | enables compression of scripts (2560 chars buffer) 
 LITTLEFS_SCRIPT_SIZE S | enables script buffer of size S (e.g.4096)  
 USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
+USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
 ----
 
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules)"
@@ -108,6 +109,9 @@ see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/
 `script ><cmdline>` execute <cmdline>  
 - Can be used to set variables, e.g., `script >mintmp=15`  
 - Multiple statements can be specified by separating each with a semicolon, e.g. `script >mintmp=15;maxtemp=40`  
+  
+`script?<var>` queries a script variable `var`  
+
 - The script itself can't be specified because the size would not fit the MQTT buffers
 
 ## Script Sections
