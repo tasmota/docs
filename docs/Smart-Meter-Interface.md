@@ -15,7 +15,7 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 #ifdef USE_RULES
 #undef USE_RULES
 #endif
-// see bellow instructions to set the value N accordingly
+// define max number of decoder entries (defaults to 20 if not defined)
 #define SML_MAX_VARS N
 ```
 ----
@@ -107,7 +107,8 @@ the number of requested registers is fixed to 2, however with the char 'r' befor
    
 ------------------------------------------------------------------------------  
 ### Meter Metrics
-Each meter typically provides multiple metrics (voltage, power, current etc.) which it measures. An entry for each metric to be collected as `#define SML_MAX_VARS N` (n = `1..16`) must be specified, in `user_config_override.h` file (see the code at the page top). An entry defines how to decode the data and put it into variables.
+Each meter typically provides multiple metrics (voltage, power, current etc.) which it measures. An entry for each metric to be collected must be specified. up to 20 entries may be defined (default or `#define SML_MAX_VARS N` a larger number may be defined 
+in `user_config_override.h` file). An entry defines how to decode the data and put it into variables.
 
 !!! example  
 (OBIS/SML/MODBus):  
@@ -173,7 +174,7 @@ with the '=' char at the beginning of a line you may do some special decoding
 !!! example    
   `1,=m 3+4+5/#3 @100,Voltage L1+L2+L3/3,V,Volt_avg,2`  
   `1,=m 3+4+5/#3` add result of decoder entry 3,4,5 and divided by 3 (i.e., average)  
-- `M,=d` calculate difference between metric values decoded at time intervals  
+- `M,=d` calculate difference between metric values decoded at time intervals (up to 10 =d lines possible)  
 
 !!! example   
   `1,=d 3 10` calculate 10 second interval difference of decoder entry 3  
