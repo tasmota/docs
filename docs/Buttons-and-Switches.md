@@ -41,6 +41,13 @@ Rule1 1
 !!! warning 
     If you define a switch with a number higher than available power outputs it will default to controlling `Power1`. Example: Switch4 on a device with Power1 and Power2 will control `Power1`.
 
+!!! example
+    Make switch2 (such as an additional reed contact) instant publish a change notification with regular updates, but not controlling relay1. Maintain normal operation of switch1 which controls relay1.
+```haskell
+SwitchMode2 <1 or 2>
+Rule1 on Switch2#state do status 10 endon on Time#Minute|5 do status 10 endonRule1 1
+```
+
 And now, to make everything completely confusing:  
 A push-button can be configured as a `Switch` and a toggle switch can be configured as a `Button`. Configuring a toggle switch as a `Button` is not recommended!  
 
