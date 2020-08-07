@@ -1866,3 +1866,24 @@ The only catch is that the protocol needs to be setup in the rule. Most likely t
 
 ------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------
+
+### Additional switch on a relay module which doesn't affect the regular operation
+
+!!! info If you define a switch with a number higher than available power outputs it will default to controlling `Power1`
+
+Especially if you have added a reed contact, or other sensors as `Switch2` it is not desired that it controls the `Relay1`. A rule which subscribes this topic will prevent the relay controlling and allows you to send directly to any topic. If you need regular updates of your value it gets a little more tricky, because the value cant be so easy accessed via rules later. It could be saved after change but after boot the value will be unknown until the first change - not to forget that this is a unneeded redundant data storage. Therefore `Status 8` or `Status 10` is used which can access the value of all switches.
+
+```haskell
+SwitchMode2 <1 or 2>
+Rule1 on Switch2#state do status 10 endon on Time#Minute|5 do status 10 endon
+```
+Enable it with `Rule1 1`
+
+So now:
+* `Switch1` controls `Relay1` like before
+* `Switch2` changes get catched by the rule and make an instant message
+* all 5 minutes the state of `Switch2` gets retransmitted on the same topic
+
+------------------------------------------------------------------------------
+
