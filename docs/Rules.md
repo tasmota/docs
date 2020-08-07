@@ -1611,13 +1611,29 @@ Notice we use `Rule` which edits `Rule1` rule set. They can be used interchangea
 ### Watchdog for Wi-Fi router
 
 A Tasmota socket can ping a remote host (router itself or something else connected to the router)
-and power cycle the socket to reboot the router. In this example, ping interval of 2 minutes is used.
+and power cycle the socket to reboot the router. In this example, ping interval of 3 minutes is used.
+The simplest watchdog rule does not use variables:
 
 ```haskell
 Rule1
-  ON Time#Minute|2 DO Ping4 192.168.1.10 ENDON
+  ON Time#Minute|3 DO Ping4 192.168.1.10 ENDON
   ON Ping#192.168.1.10#Success==0 DO Backlog Power1 0; Delay 10; Power1 1; ENDON
 Rule1 1
+```
+
+However, if the router becomes unreachable for a long time, the watchdog will keep cycling it every three minutes. 
+This could reduce the watchdog's relay lifetime to months, at most years. Safer option would be to use an 
+**exponential backoff** algorithm. `Var1` contains the current ping interval in minutes, which is trippled
+after each failed ping, but limited to 1439 minutes (1 day).
+
+```haskell
+Rule1
+  ON system#boot do Var1 3 ENDON
+  ON Var1#State>1439 DO Var1 1439 ENDON
+  
+  ON Time#Minute|%var1% DO Ping4 192.168.1.10 ENDON
+  ON Ping#192.168.1.10#Success==0 DO backlog Mult1 3; Power1 0; Delay 10; Power1 1 ENDON
+  ON Ping#192.168.1.10#Success>0 DO Var1 3 ENDON
 ```
 
 !!! note "This requires `#define USE_PING` and Tasmota version 8.2.0.3 or newer"
@@ -1863,27 +1879,6 @@ Enable it with `Rule1 1`
 
 The only catch is that the protocol needs to be setup in the rule. Most likely this can be taken care of by using a more complex rule maybe using variables. Would update in future
 
-
-------------------------------------------------------------------------------
-
-------------------------------------------------------------------------------
-
-### Additional switch on a relay module which doesn't affect the regular operation
-
-!!! info If you define a switch with a number higher than available power outputs it will default to controlling `Power1`
-
-Especially if you have added a reed contact, or other sensors as `Switch2` it is not desired that it controls the `Relay1`. A rule which subscribes this topic will prevent the relay controlling and allows you to send directly to any topic. If you need regular updates of your value it gets a little more tricky, because the value cant be so easy accessed via rules later. It could be saved after change but after boot the value will be unknown until the first change - not to forget that this is a unneeded redundant data storage. Therefore `Status 8` or `Status 10` is used which can access the value of all switches.
-
-```haskell
-SwitchMode2 <1 or 2>
-Rule1 on Switch2#state do status 10 endon on Time#Minute|5 do status 10 endon
-```
-Enable it with `Rule1 1`
-
-So now:
-* `Switch1` controls `Relay1` like before
-* `Switch2` changes get catched by the rule and make an instant message
-* all 5 minutes the state of `Switch2` gets retransmitted on the same topic
 
 ------------------------------------------------------------------------------
 
