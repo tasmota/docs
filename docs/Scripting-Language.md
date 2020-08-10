@@ -93,8 +93,8 @@ with below options script buffer size may be expanded. PVARS is size for permana
 most usefull defintion for larger scripts would be  
 ESP8266: with 1M flash only default compressed mode is usefull, with 4M Flash best mode would be SCRIPT_FATFS -1  
 ESP32: #define LITTLEFS_SCRIPT_SIZE 8192 with standard linker file or better:  
-#define SCRIPT_FATFS -1
-#define FAT_SCRIPT_SIZE 8192
+\#define SCRIPT_FATFS -1
+\#define FAT_SCRIPT_SIZE 8192
 with linker file "esp32_partition_app1572k_ffat983k.csv"  
 
 **Optional external editor**   
