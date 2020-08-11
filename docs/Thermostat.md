@@ -213,6 +213,19 @@ The maximum time the ramp-up phase of the controller shall be active can be conf
 cmnd/Tasmota_Name/TIMERAMPUPMAXSET 960
 ```
 
+## Thermostat persistent storage for configuration
+
+The thermostat driver stores all configured parameters over MQTT exclusively in RAM, it does not use flash due to the amount of the parameters. This means that at every restart the default parameters will be set again. To avoid this behavior rules can be set-up to reconfigure desired parameters at every restart. See below an example:
+
+```
+ON Power1#boot DO sensorinputset 1 ENDON  ON power1#boot DO controllermodeset 2 ENDON
+ON Power1#boot DO thermostatmodeset 1 ENDON
+ON Power1#boot DO temptargetset %mem1% ENDON
+ON mqtt#connected DO Publish2 stat/TestTopic/targetTempValue {"Temp":%mem1%} ENDON
+ON mem1#state DO temptargetset %value% ENDON
+ON mem1#state DO Publish2 stat/TestTopic/targetTempValue {"Temp":%mem1%} ENDON
+```
+
 ## Advanced features
 
 ### Multi-controller
