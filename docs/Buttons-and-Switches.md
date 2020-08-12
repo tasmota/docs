@@ -130,7 +130,7 @@ Set switch to pushbutton with dimmer mode incl. double press feature
 !!! note
 Setoption32 must be smaller than 64, when you use switchmode 11 and 12 !!
 
-Tasmota will send a `TOGGLE` command **(use Switch<x>#state=2 in rules)** when the button is pressed for a short time and is then released.
+Tasmota will send a `TOGGLE` command **(use Switch<x>#state=2 in rules)** when the button is pressed for a short time and then is released.
 
 When pressing the button (closing the circuit) for a long time (set in `SetOption32`), Tasmota will send repeated `INC_DEC` (increment or decrement the dimmer) commands **(use Switch<x>#state=4 in rules)** for as long as the button is pressed.
 
