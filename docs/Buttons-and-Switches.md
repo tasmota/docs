@@ -150,7 +150,7 @@ If button is pressed twice (within time set in `SetOption32`), Tasmota will send
 
 
 **`SwitchMode 12`**   
-Set switch to pushbutton with dimmer mode incl. double press feature.
+Set switch to inverted pushbutton with dimmer mode incl. double press feature.
 Same as `Switchmode 11` but with inverted behaviour.
 !!! note  
 Setoption32 must be smaller than 64, when you use switchmode 11 and 12 !!
