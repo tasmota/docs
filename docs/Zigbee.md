@@ -60,7 +60,7 @@ MQT: tele/%topic%/RESULT = {"ZbState":{"Status":20,"Message":"Disable Pairing mo
 !!! info
      Although this is highly discouraged, you can permanently enable Zigbee pairing, until the next reboot, with `ZbPermitJoin 99`.
 
-After the device has successfully paired it will be shown in the webui with its short address and its link quality number (LQI). When it is a battery powered device, the battery percentage will be display as soon as it is received from the device.
+After the device has successfully paired it will be shown in the webui with its short address and its link quality number (LQI). When it is a battery powered device, the battery percentage will be displayed as soon as it is received from the device.
 
 ![Zigbee in webUI](_media/zigbeeinwebui.jpg)
 
