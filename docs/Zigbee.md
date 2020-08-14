@@ -31,7 +31,7 @@ Before using Zigbee with Tasmota, you need to understand a few concepts. Here is
 
 ## Usage
 
-For a list of available command see [Zigbee Commands](Commands.md#zigbee).  
+For a list of available commands see [Zigbee Commands](Commands.md#zigbee).  
 
 ## Pairing Devices
 When you create a new Zigbee network, it contains no devices except the coordinator. The first step is to add devices to the network, which is called **pairing**.
@@ -60,24 +60,11 @@ MQT: tele/%topic%/RESULT = {"ZbState":{"Status":20,"Message":"Disable Pairing mo
 !!! info
      Although this is highly discouraged, you can permanently enable Zigbee pairing, until the next reboot, with `ZbPermitJoin 99`.
 
-### Pairing Example 
+After the device has successfully paired it will be shown in the webui with its short address and its link quality number (LQI). When it is a battery powered device, the battery percentage will be display as soon as it is received from the device.
 
-This is an example of a pairing process for the [Aqara Temperature & Humidity Sensor](https://zigbee.blakadder.com/Xiaomi_WSDCGQ11LM.html). To pair this sensor, issue `ZbPermitJoin 1` and then press and hold the reset button for 5 seconds. The sensor LED will flash several times and you will see log entries in the console, especially this one:
+![Zigbee in webUI](_media/zigbeeinwebui.jpg)
 
-```
-MQT: tele/%topic%/SENSOR = {"ZbState":{"Status":30,"IEEEAddr":"0x00158D00036B50AE","ShortAddr":"0x8F20","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
-```
-
-Message with `"Status":30` shows some characteristics of the device:
-
-|Field name|Value|
-|---|---|
-|`Status`|`30` indicates a device connect or reconnect. This is the opportunity to match IEEEAddress and short address|
-|`IEEEAddr`|Long unique address (64 bits) of the device - factory set|
-|`ShortAddr`|Short address (16 bits) randomly assigned to the device on this Zigbee network|
-|`PowerSource`|`true` = the device is connected to a power source<BR>`false` = the device runs on battery|
-|`ReceiveWhenIdle`|`true` = the device can receive commands when idle<BR>`false` = the device is not listening. Commands should be sent when the device reconnects and is idle|
-|`Security`|Security capability (meaning unknown, to be determined)|
+Devices will show friendly name once you set it.
 
 ### Setting Friendly Name
 
@@ -109,6 +96,29 @@ If you set [`SetOption83 1`](Commands.md#setoption83) sensor readings will use t
 ```json
 MQT: tele/%topic%/RESULT = {"ZbReceived":{"Vibration_sensor":{"Device":"0x128F","AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":171,"AqaraAccelerometer":[-691,8,136],"AqaraAngles":[-78,1,11],"LinkQuality":153}}}
 ```
+
+### Removing Devices
+To remove a device from Zigbee2Tasmota use command `ZbForget <device>` or `ZbForget <friendlyname>`.
+
+### Pairing Example 
+
+This is an example of a pairing process for the [Aqara Temperature & Humidity Sensor](https://zigbee.blakadder.com/Xiaomi_WSDCGQ11LM.html). To pair this sensor, issue `ZbPermitJoin 1` and then press and hold the reset button for 5 seconds. The sensor LED will flash several times and you will see log entries in the console, especially this one:
+
+```
+MQT: tele/%topic%/SENSOR = {"ZbState":{"Status":30,"IEEEAddr":"0x00158D00036B50AE","ShortAddr":"0x8F20","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
+```
+
+Message with `"Status":30` shows some characteristics of the device:
+
+|Field name|Value|
+|---|---|
+|`Status`|`30` indicates a device connect or reconnect. This is the opportunity to match IEEEAddress and short address|
+|`IEEEAddr`|Long unique address (64 bits) of the device - factory set|
+|`ShortAddr`|Short address (16 bits) randomly assigned to the device on this Zigbee network|
+|`PowerSource`|`true` = the device is connected to a power source<BR>`false` = the device runs on battery|
+|`ReceiveWhenIdle`|`true` = the device can receive commands when idle<BR>`false` = the device is not listening. Commands should be sent when the device reconnects and is idle|
+|`Security`|Security capability (meaning unknown, to be determined)|
+
 
 ## Reading Sensors
 Most sensors will publish their readings regularly or once a significant change has happened: temperature, pressure, humidity, presence, illuminance...
