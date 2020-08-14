@@ -8,6 +8,7 @@ This integration works with [Sonoff ZbBridge](https://zigbee.blakadder.com/Sonof
 While initially designed for CC253x (Z-Stack firmware), the appearance of Sonoff ZbBridge required using a different protocol (EZSP). Once the coordinator is started and communicates with Tasmota, the end result is the same and there is no difference in their operation.
 
 Flashing and installation instructions for:
+
 - [Sonoff ZbBridge](https://zigbee.blakadder.com/Sonoff_ZBBridge.html)
 - [CC2530x](CC2530.md) based devices
 
