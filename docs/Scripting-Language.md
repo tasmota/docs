@@ -330,6 +330,9 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `pin[x]` = GPIO pin level (x = 0..16)  
 `pn[x]` = GPIO for sensor code x. 99 if none  
 `pd[x]` = defined sensor for GPIO x. 999 if none  
+`pl[path]` = plays the mp3 path (ESP32 and if I2S Device defined)  
+`say[svar]` = text to speach (if I2S Device defined)  
+`adc(fac (pin))` = get adc value (on ESP32 can select pin) fac is number of averaged samples (power of 2: 0..7) 
 `sht[x]` = shutter position (x = 1..N) (if defined USE_SHUTTER)  
 `gtmp` = global temperature  
 `ghum` = global humidity  
