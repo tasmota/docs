@@ -46,6 +46,7 @@ Don't have 3D printer? Depending on where you live, you may be able to find a th
 * [Kiril Peyanski - Tasmota Tutorials](https://www.youtube.com/kpeyanski/search?query=tasmota)
 
 ## Non-English Tutorials
+* ES - [Cayetano YouTube Channel](https://www.youtube.com/user/esfacilhacerlo/videos)
 * DE - [Tuya Geräte Flashen](https://www.youtube.com/watch?v=0MAPHmvPGFM)
 * DE - [ESP8266 flashen von A - Z](https://www.youtube.com/watch?v=Xfb8Y1R-y1U)
 * FR - [Ajouter un bouton physique au Sonoff basic](https://www.domo-blog.fr/ajouter-un-bouton-physique-au-sonoff-basic/)
