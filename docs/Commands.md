@@ -177,6 +177,13 @@ Upload<a class="cmnd" id="upload"></a>|`1` = download firmware from `OtaUrl` and
 WebLog<a class="cmnd" id="weblog"></a>|`0` = disable web logging<BR> `1` = show only error messages<BR> `2` = show error and info messages *(default)*<BR>`3` = show error, info and debug messages<BR>`4` = show error, info and more debug messages
 See also|[`SetOption68`](#setoption68) - PWM Channel control<BR>[`SetOption76`](#setoption76) - DeepSleep disable bootcount incrementing
 
+### Location
+
+Command|Parameters
+:---|:---
+Latitude<a class="cmnd" id="latitude"></a>|`<value>` = set latitude in decimal degrees format, e.g. -33.893681
+Longitude<a class="cmnd" id="longitude"></a>|`<value>` = set longitude in decimal degrees format, e.g. 18.619954
+
 ### Wi-Fi
 
 Command|Parameters
@@ -249,8 +256,6 @@ Var<x\><a class="cmnd" id="var"></a>|Manage up to 16 variables stored in memory 
 
 Command|Parameters
 :---|:---
-Latitude<a class="cmnd" id="latitude"></a>|`<value>` = set latitude in decimal degrees format, e.g. -33.893681
-Longitude<a class="cmnd" id="longitude"></a>|`<value>` = set longitude in decimal degrees format, e.g. 18.619954
 Timers<a class="cmnd" id="timers"></a>|Timers control<br>`0` = disable all timers<BR>`1` = enable all timers<BR>`2` = toggle all timers<BR>
 Timer<x\><a class="cmnd" id="timer"></a>|Parameters for Timer<x\> where x = `1..16`<BR>`0` = clear parameters for Timer<x\><BR>`1..16` = copy Timer<y\> parameters to Timer<x\><BR>`{ "name":value ; .. }` = set all or individual parameters using JSON payload with names and values of data pairs from the [table](Timers#json-payload-anatomy) 
 
