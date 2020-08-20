@@ -158,22 +158,22 @@ ESP8266 doesn’t have a hardware TWI (Two Wire Interface) but it is implemented
 The ESP8266 has one SPI connection available to the user, referred to as HSPI. It uses GPIO14 as CLK, 12 as MISO, 13 as MOSI and 15 as Slave Select (SS). It can be used in both Slave and Master mode (in software).
 
 ### GPIO Overview
-[NodeMCU Labelled Pin](https://techtutorialsx.com/2017/04/02/esp8266-nodemcu-pin-mappings/) | GPIO# | 	Function | 	State	 | Restrictions
--|-|-|-|-
-D3 | 0 | 	Boot mode select	 | 3.3V	 | No Hi-Z
-D10 | 1 | 	TX0 | 	-	 | Not usable during Serial transmission - Boot will fail if LOW at boot
-D4 | 2 | 	Boot mode select TX1 | 	3.3V (boot only) | 	Don’t connect to ground at boot time - boot will fail. Sends debug data at boot time
-D9 | 3 | 	RX0 | 	-	 | Not usable during Serial transmission
-D2 | 4 | 	SDA (I²C) | 	-	 | - 
-D1 | 5 | 	SCL (I²C) | 	-	 | -
- x | 6 - 8  | 	Flash connection | 	x | 	Not usable, and not broken out
- x | 9, 10  | 	Flash connection * |  | 	*Only available on the ESP8285*
- x | 11 | 	Flash connection | 	x | 	Not usable, and not broken out
-D6 | 12 | MISO (SPI) | 	- | 	-
-D7 | 13 | 	MOSI (SPI)	 | - | 	-
-D5 | 14 | 	SCK (SPI)	 | - | 	-
-D8 | 15 | 	SS (SPI)	 | 0V	 | Pull-up resistor not usable (extern pull down resistor)
-D0 | 16 | 	Wake up from sleep	 | - | 	No pull-up resistor, but pull-down instead Should be connected to RST to wake up
+GPIO# | [NodeMCU Labelled Pin](https://techtutorialsx.com/2017/04/02/esp8266-nodemcu-pin-mappings/) |	ESP8285 pin |  Function | 	State	 | Restrictions
+-|-|-|-|-|-
+0 | D3 | 15 | 	Boot mode select	 | 3.3V	 | No Hi-Z
+1 | D10 | 26 | 	TX0 | 	-	 | Not usable during Serial transmission - Boot will fail if LOW at boot
+2 | D4 | 14 | 	Boot mode select TX1 | 	3.3V (boot only) | 	Don’t connect to ground at boot time - boot will fail. Sends debug data at boot time
+3 | D9 | 25 | 	RX0 | 	-	 | Not usable during Serial transmission
+4 | D2 | 16 | 	SDA (I²C) | 	-	 | - 
+5 | D1 | 24 | 	SCL (I²C) | 	-	 | -
+6 - 8  |  x | 21 - 23 | 	Flash connection | 	x | 	Not usable, and not broken out
+9, 10  |  x | 18, 19 | 	Flash connection * |  | 	*Only available on the ESP8285*
+11 |  x | 20 | 	Flash connection | 	x | 	Not usable, and not broken out
+12 | D6 | 10 | MISO (SPI) | 	- | 	-
+13 | D7 | 12 | 	MOSI (SPI)	 | - | 	-
+14 | D5 | 9 | 	SCK (SPI)	 | - | 	-
+15 | D8 | 13 | 	SS (SPI)	 | 0V	 | Pull-up resistor not usable (extern pull down resistor)
+16 | D0 | 8 | 	Wake up from sleep	 | - | 	No pull-up resistor, but pull-down instead Should be connected to RST to wake up
 
 <!-- 
 I2C: 
