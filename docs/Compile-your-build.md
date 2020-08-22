@@ -27,18 +27,9 @@ Once you have set up the development environment, unzip the source code into a f
 
 ## Preparing compiler
 
-### PlarformIO based 
-Go to root directory of source code, rename "platformio_override_sample.ini" to "platformio_override.ini". By doing this you enable using `user_config_override.h` and will build the standard `tasmota` variant with your customized features.
+### PlatformIO based 
+Nothing to do :-)
 
-Alternatively you can:
-
-Open platformio.ini and uncomment line containing `-DUSE_CONFIG_OVERRIDE` by deleting `;`
-
-```
-; *********************************************************************
-; *** Uncomment, by deleting ";" in line below, to use custom settings from file user_config_override.h 
-                            -DUSE_CONFIG_OVERRIDE
-```
 
 ### Arduino IDE
 Navigate to where you unpacked Tasmota and into `/tasmota` folder.
