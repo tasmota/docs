@@ -1,4 +1,8 @@
+!!! info "This feature is included only in tasmota-sensors.bin"
+
 "BME280 sensor, an environmental sensor with temperature, barometric pressure and humidity", [see Datasheet.](https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BME280_DS002.pdf)
+
+"tasmota-sensors.bin is needed for this to work. tasmota.bin an tasmota-lite.bin do not include the necessary driver."
 
 ## Connect BME280 to Sonoff-Basic [based on the GPIO locations](Sonoff-Basic.md)
 
