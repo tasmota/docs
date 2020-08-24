@@ -10,7 +10,7 @@ With some Wi-Fi routers (i.e. Linksys with DD-WRT), you may have conflicts with 
 DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can resolve connectivity issues.
 
 ### I entered wrong Wi-Fi information
-If you have a device with a button and the button is configured as a component in the Tasmota settings (e.g., GPIO0 - Button1), you can try pressing the button to force the device into [Wi-Fi configuration mode](Buttons-and-Switches#multi-press-functions) with 4 short presses of the button. **Note:** Since version 8.3.0 this requires 6 short presses instead.
+If you have a device with a button and the button is configured as a component in the Tasmota settings (e.g., GPIO0 - Button1), you can try pressing the button to force the device into [Wi-Fi configuration mode](Buttons-and-Switches#multi-press-functions) with 4&nbsp;short presses of the button. **Note:** Since version 8.3.0 this requires 6&nbsp;short presses instead.
 
 If that didn't work reset your device using [Fast power cycle device recovery](Device-Recovery.md#fast-power-cycle-device-recovery)
 
