@@ -1,6 +1,6 @@
 # ESP32 Support (Beta development)
 
-!!! warning "ESP32 support is in early alpha and only basic functions will work"
+!!! warning "ESP32 support is in beta and not all functions will work"
 
 You can download precompiled development binaries from [https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32)
 
