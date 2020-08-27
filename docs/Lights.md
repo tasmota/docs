@@ -134,8 +134,6 @@ Define a COUNTER with the same number as the PWM (e.g. COUNTER1, PWM1). Set SETO
 |Commands|`Power`, `Dimmer`, `Color`, `HSBColor`, `White`, `CT`|
 |Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction), [**Channel Remapping**](#channel-remapping), [**White Blend Mode**](#white-blend-mode), [**RGB and White Split**](#rgb-and-white-split)|
 
-<br clear="right"/>
-
 !!! danger
     Some lights have limited power supply that do not allow all channels to be at full power at the same time. Be careful not to burn out your light if you force all channels via `Color` or [**RGB and White Split**](#rgb-and-white-split)
 
