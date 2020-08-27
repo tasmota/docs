@@ -64,6 +64,43 @@ BME280 Settings (it is not very trustable):
 HumOffset 10
 TempOffset -15
 ```
+
+### ODROID-GO
+
+In `user_config_override.h` add:
+```
+#define USE_DISPLAY
+#define USE_SPI
+#define USE_DISPLAY_ILI9341
+```
+
+Upload via USB, then apply the following Template:
+
+```json
+{"NAME":"Odroid","GPIO":[0,1,0,1,1,768,1,1,1,0,416,1,1,1,736,672,0,800,1,704,0,1,1,0,0,0,0,0,0,0,4704,3329,4866,0,0,0],"FLAG":0,"BASE":1}
+```
+
+To make the device work nicely, change the following settings in the Console:
+
+```
+adcparam3 6,0,4095,0,6160
+```
+
+Display Settings:
+```
+DisplayRotate 3
+DisplayCols 53
+DisplayRows 30
+DisplayMode 5
+```
+
+
+Rule for Joystick to dim the display:
+```
+on analog#joy2=1 do dimmer - endon on analog#joy2=2 do dimmer + endon
+```
+
+
 ### displays, sensors and other options confirmed to work
 
 displays: (most probably all I2C displays will work)    
