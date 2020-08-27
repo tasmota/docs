@@ -106,7 +106,7 @@ Define a COUNTER with the same number as the PWM (e.g. COUNTER1, PWM1). Set SETO
 
 **Alexa**: you can use Philips Hue emulation, the light will appear as Color light and White light with CT control. The CT control is only present to force pure white instead of RGB white. Changin CT will have no effect.
 
-<p>
+<br clear="right"/>
 
 !!! failure "There is no White only slider in the UI for 4 channel lights"
     Use [`White`](Commands.md#white) commands or set up [White Blend Mode](#white-blend-mode) or [**RGB and White Split**](#rgb-and-white-split).
