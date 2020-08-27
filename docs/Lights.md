@@ -106,15 +106,17 @@ Define a COUNTER with the same number as the PWM (e.g. COUNTER1, PWM1). Set SETO
 
 **Alexa**: you can use Philips Hue emulation, the light will appear as Color light and White light with CT control. The CT control is only present to force pure white instead of RGB white. Changin CT will have no effect.
 
+<p>
+
+!!! failure "There is no White only slider in the UI for 4 channel lights"
+    Use [`White`](Commands.md#white) commands or set up [White Blend Mode](#white-blend-mode) or [**RGB and White Split**](#rgb-and-white-split).
+
 |Configuration|(see below)|
 |---|---|
 |Commands|`Power`, `Dimmer`, `Color`, `HSBColor`, `White`|
 |Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction), [**Channel Remapping**](#channel-remapping), [**White Blend Mode**](#white-blend-mode), [**RGB and White Split**](#rgb-and-white-split)|
 
 <br clear="right"/>
-
-!!! failure "There is no White only slider in the UI for 4 channel lights"
-    Use [`White`](Commands.md#white) commands or set up [White Blend Mode](#white-blend-mode) or [**RGB and White Split**](#rgb-and-white-split).
 
 !!! danger 
     Some lights have limited power supply that do not allow all channels to be at full power at the same time. Be careful not to burn out your light if you force all channels to be on using `Color` or [**RGB and White Split**](#rgb-and-white-split).
