@@ -14,6 +14,13 @@ Incredibly expandable and flexible.
 [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4)
 [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
+## OTA server thehackbox.org is currently down! 
+OTA updates and Tasmotizer's binary download feature do not work.
+
+**For OTA updates please use the temporary server [http://sidweb.nl/tasmota](http://sidweb.nl/tasmota) and [http://sidweb.nl/tasmota32](http://sidweb.nl/tasmota32)**
+
+For Tasmotizer download the firmware binary to your computer first and use the "BIN File" option.
+
 ### Current release 
 <a href="https://github.com/arendst/Tasmota/releases/tag/v8.4.0"><span style="font-size:40px;">Tasmota 8.4 George</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
 
