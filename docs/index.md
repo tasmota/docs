@@ -17,7 +17,7 @@ Incredibly expandable and flexible.
 ## OTA server thehackbox.org is currently down! 
 OTA updates and Tasmotizer's binary download feature do not work.
 
-**For OTA updates please use the temporary server [http://sidweb.nl/tasmota](http://sidweb.nl/tasmota) and [http://sidweb.nl/tasmota32](http://sidweb.nl/tasmota32)**
+**For OTA updates please use the new server [http://ota.tasmota.com/tasmota](http://ota.tasmota.com/tasmota) and [http://ota.tasmota.com/tasmota32](http://ota.tasmota.com/tasmota32)**
 
 Download [Tasmotizer v1.1b](https://github.com/tasmota/tasmotizer/releases/tag/v.1.1b) to use the temporary OTA server during flashing.
 
