@@ -19,7 +19,7 @@ As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible tha
 ## Flash procedure
 _Guide originally from [@Brunas](https://github.com/Brunas/HomeAutomation/edit/master/doc/Sonoff%20Mini%203.6.0%20to%20Tasmota.md)_
 
-1. Follow instructions how to enter DIY mode from https://github.com/itead/Sonoff_Devices_DIY_Tools/blob/master/SONOFF%20DIY%20MODE%20Protocol%20Doc%20v2.0%20Doc.pdf. This is the excerpt from it:
+1. Follow instructions how to enter DIY mode from [Sonoff](https://github.com/itead/Sonoff_Devices_DIY_Tools/blob/master/SONOFF%20DIY%20MODE%20Protocol%20Doc%20v2.0%20Doc.pdf). This is the excerpt from it:
 
 	1. Power on;
 	2. Long press the button for 5 seconds for entering Compatible Pairing Mode (AP)
@@ -37,11 +37,12 @@ Note: I needed to manually change IP address to 10.10.7.2, 255.0.0.0 with gatewa
 5. To test your device DIY mode create new request in **Rester**:
 	1. Method: **POST**
 	2. URL: http://<*IP of your device*>:8081/zeroconf/info
-	3. Body: <code>{"data": {}}</code>
+	3. Body: `{"data": {}}`
 	4. You might need to add Header **Content-Type** with value **application/json**
 	5. Press **SEND**
 	6. If all is OK, status code *200* should be returned with bunch of data:
-	<code>{
+```json
+{
     "seq": 1,
     "error": 0,
     "data": {
@@ -56,12 +57,13 @@ Note: I needed to manually change IP address to 10.10.7.2, 255.0.0.0 with gatewa
         "bssid": "YourBSSId",
         "signalStrength": -52
     }
-}</code>
+}
+```
 	7. If that doesn't return *200*, try going back to 5s+5s reset above.
 6. If all above works, let's unlock OTA:
 	1. Method: **POST**
 	2. URL: http://<*IP of your device*>:8081/zeroconf/ota_unlock
-	3. Body: <code>{"data": {}}</code>
+	3. Body: `{"data": {}}`
 	4. You might need to add Header **Content-Type** with value **application/json**
 	5. Press **SEND**
 	6. You should get status code *200*
