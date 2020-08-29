@@ -19,7 +19,7 @@ OTA updates and Tasmotizer's binary download feature do not work.
 
 **For OTA updates please use the new server [http://ota.tasmota.com/tasmota](http://ota.tasmota.com/tasmota) and [http://ota.tasmota.com/tasmota32](http://ota.tasmota.com/tasmota32)**
 
-Download [Tasmotizer v1.1c](https://github.com/tasmota/tasmotizer/releases/tag/v.1.1c) to use the Tasmota OTA server during flashing.
+Download [Tasmotizer v1.1c](https://github.com/tasmota/tasmotizer/releases/tag/v.1.1c) to use the new OTA server during flashing.
 
 ### Current release 
 <a href="https://github.com/arendst/Tasmota/releases/tag/v8.4.0"><span style="font-size:40px;">Tasmota 8.4 George</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
