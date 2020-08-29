@@ -89,7 +89,7 @@ In the following examples `%topic%` is `tasmota`, FullTopic is `%prefix%/%topic%
 
 - MQTT topic can be changed with `cmnd/tasmota/Topic tasmota1` which reboots Tasmota and changes the `%topic%` to `tasmota1`. From that point on MQTT commands should look like `cmnd/tasmota1/POWER on`.
 
-- The OTA firmware location can be made known to tasmota with `cmnd/tasmota/OtaUrl http://thehackbox.org/tasmota/release/tasmota.bin`. Reset to default with `cmnd/tasmota/OtaUrl 1`.
+- The OTA firmware location can be made known to tasmota with `cmnd/tasmota/OtaUrl http://ota.tasmota.com/tasmota/release/tasmota.bin`. Reset to default with `cmnd/tasmota/OtaUrl 1`.
 
 - Upgrade OTA firmware from the OtaUrl server with `cmnd/tasmota/Upgrade 1`.
 

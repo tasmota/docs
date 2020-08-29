@@ -91,7 +91,7 @@ Note: I needed to manually change IP address to 10.10.7.2, 255.0.0.0 with gatewa
 - The utility should discover the device
 - Select the device and toggle it `ON` and `OFF` to verify you are connected to the right device
 - Select `Firmware flash` (`Brush machine` on newer versions of the tool)
-- Select a Tasmota binary (e.g., [`tasmota-wifiman.bin`](http://thehackbox.org/tasmota/tasmota-wifiman.bin)) or your own self-compiled binary. It must fit in the available free program space. _**Do NOT use tasmota-minimal.bin**_ as it does not allow you to change any settings and will make your device inaccessible and you will have to serial flash it to recover.
+- Select a Tasmota binary (e.g., [`tasmota-wifiman.bin`](http://ota.tasmota.com/tasmota/tasmota-wifiman.bin)) or your own self-compiled binary. It must fit in the available free program space. _**Do NOT use tasmota-minimal.bin**_ as it does not allow you to change any settings and will make your device inaccessible and you will have to serial flash it to recover.
   
 !!! note 
     You may wish to [compile your own firmware](Gitpod) with all the features you require and disabling the features you do not. This will usually result in a "full" binary that is under 500k. You can use the resulting firmware file instead of the pre-compiled binary.  
@@ -115,7 +115,7 @@ This procedure is recommended for MacOS, but also works for Linux.
 - OS with `curl` and a network services discovery tool (e.g., `mDNS` for MacOS or `avahi-browse` for Linux)
 - `sonoffDiy` SSID on your local network. Use a router/access point or configure your laptop/smartphone as a hotspot with the proper SSID and password.
 - A `<webServer>` available on the same local network. Very simple web servers like `SimpleHTTPServer` will not work. For Mac, the [OSX built-in web server](MacOSX-Server) is recommended.  
-- A Tasmota binary (e.g., [`tasmota-wifiman.bin`](http://thehackbox.org/tasmota/tasmota-wifiman.bin)) or your own self-compiled binary. It must fit in the available free program space. You can use the 2.3.0 Core for this initial flash since it has the smallest program memory footprint. _**Do NOT use the tasmota-minimal pre-compiled binary**_ as it does not allow you to change any settings.
+- A Tasmota binary (e.g., [`tasmota-wifiman.bin`](http://ota.tasmota.com/tasmota/tasmota-wifiman.bin)) or your own self-compiled binary. It must fit in the available free program space. You can use the 2.3.0 Core for this initial flash since it has the smallest program memory footprint. _**Do NOT use the tasmota-minimal pre-compiled binary**_ as it does not allow you to change any settings.
   >You may wish to [compile your own firmware](Gitpod) with all the features you require and disabling the features you do not. This will usually result in a "full" binary that is under 500k. You can use the resulting firmware file instead of the pre-compiled `tasmota-wifiman.bin`. This way you will not have to perform the secondary OTA firmware update. _**Nevertheless, it is still recommended that you perform a `Reset 5` immediately after the Sonoff DIY flash completes.**_  
 
   Upload the firmware file to the `<webServer>` available on the same local network.  
@@ -190,7 +190,7 @@ Once the firmware upload completes and the device restarts, the usual `tasmota-x
 
 1. Set up Wi-Fi to connect your device to your network
 2. **_Perform a `Reset 5` to wipe any flash remnants BEFORE attempting a Tasmota OTA flash for the first time_**
-3. If you flashed `tasmota-wifiman.bin`, it is recommended that you upgrade to the firmware and Core variant that is needed for your device and use case (e.g., `tasmota.bin`). You _**must perform this update**_ using the local `File upload` OTA. **Do not use a web OTA** for this step. Download the firmware file from the [repository](http://thehackbox.org/tasmota) to your computer.
+3. If you flashed `tasmota-wifiman.bin`, it is recommended that you upgrade to the firmware and Core variant that is needed for your device and use case (e.g., `tasmota.bin`). You _**must perform this update**_ using the local `File upload` OTA. **Do not use a web OTA** for this step. Download the firmware file from the [repository](http://ota.tasmota.com/tasmota) to your computer.
 
 !!! note
     **_Some users have reported that upgrading via web OTA from `tasmota-wifiman.bin` to another binary has resulted in an unresponsive device which has required a wired flash to recover._**  

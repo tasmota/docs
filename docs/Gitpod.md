@@ -74,7 +74,7 @@ Watch a [livestream video by digiblurDIY](https://www.youtube.com/watch?v=vod3Wo
 #### OTA Flash
 If you already have Tasmota flashed on your device, you can use the `File Upload` OTA method to load the new firmware binary file.
 
-1. Download [`tasmota-minimal.bin`](http://thehackbox.org/tasmota/tasmota-minimal.bin)
+1. Download [`tasmota-minimal.bin`](http://ota.tasmota.com/tasmota/tasmota-minimal.bin)
 2. Make a backup of the device configuration using the web UI `Configuration` menu option.
 3. Upload `tasmota-minimal.bin` to your device using the web UI `Firmware Upgrade` selection. Choose `Upgrade by file upload`.
 3. After `tasmota-minimal.bin` is successfully loaded, select `Firmware Upgrade` once again and upload the firmware file compiled using Gitpod.

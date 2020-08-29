@@ -14,8 +14,8 @@ If you wish to switch to a different [build](Builds) or use development branch y
 Download binaries from:
 
 - GitHub [releases](https://github.com/arendst/Tasmota/releases)
-- official [OTA Server](http://thehackbox.org/tasmota/release/)
-- development branch [OTA Server](http://thehackbox.org/tasmota/)
+- official [OTA Server](http://ota.tasmota.com/tasmota/release/)
+- development branch [OTA Server](http://ota.tasmota.com/tasmota/)
 - your [personal OTA server](#private-ota-server)
 
 ### Gzipped binaries
@@ -25,7 +25,7 @@ Download binaries from:
 
 Tasmota 8.2 introduced upgrading using gzipped binaries which are smaller in size and will likely skip the intermediary minimal build installation. This makes the upgrade process faster and straightforward. 
 
-To use simply add `.gz` to the existing OTA Url or download the `.bin.gz` binary from the official [OTA Server](http://thehackbox.org/tasmota/release/) and the next upgrade will use the compressed file.
+To use simply add `.gz` to the existing OTA Url or download the `.bin.gz` binary from the official [OTA Server](http://ota.tasmota.com/tasmota/release/) and the next upgrade will use the compressed file.
 
 ## Upgrade using webUI
 Upgrading the device firmware [over-the-air](https://en.wikipedia.org/wiki/Over-the-air_programming), aka OTA, is the most convenient way to upgrade. 
@@ -85,7 +85,7 @@ Your device can be upgraded using [commands](Commands.md) via MQTT, web requests
 
 [OtaUrl](Commands.md#otaurl) is used to set your OTA address. 
 ```haskell
-OtaUrl http://thehackbox.org/tasmota/tasmota-sensors.bin
+OtaUrl http://ota.tasmota.com/tasmota/tasmota-sensors.bin
 ```
 *In this example we chose a development branch version with additional sensors support*
 

@@ -45,9 +45,9 @@ Tasmota installed from a precompiled binary needs to be configured to work with 
 #### Tasmota Firmware Binary
 Download a Tasmota firmware binary file (.bin). If you're not sure which binary is the right one for you just start with `tasmota.bin` or consult the [builds table](Builds) to see which features you need. 
 
-Official release binaries can be downloaded from [GitHub releases](https://github.com/arendst/Tasmota/releases) or from our [OTA server](http://thehackbox.org/tasmota/release/). 
+Official release binaries can be downloaded from [GitHub releases](https://github.com/arendst/Tasmota/releases) or from our [OTA server](http://ota.tasmota.com/tasmota/release/). 
 
-Latest _**development**_ branch binaries are available only from our [OTA server](http://thehackbox.org/tasmota). The latest merged development code is compiled hourly. 
+Latest _**development**_ branch binaries are available only from our [OTA server](http://ota.tasmota.com/tasmota). The latest merged development code is compiled hourly. 
 
 #### Flashing Tool
 - [**Tasmotizer**](https://github.com/tasmota/tasmotizer) - NEW flashing and firmware download tool just for Tasmota. (Windows, Linux or Mac)
@@ -399,7 +399,7 @@ Device will restart and connect to your network. It will display your devices ne
 
 Configure MQTT broker address, MQTT credentials, unique device topic and OTA url to the latest official release
 ```console
-Backlog mqtthost <yourhost>; mqttuser <user>; mqttpassword <password>; topic <unique_topic>; otaurl http://thehackbox.org/tasmota/release/tasmota.bin
+Backlog mqtthost <yourhost>; mqttuser <user>; mqttpassword <password>; topic <unique_topic>; otaurl http://ota.tasmota.com/tasmota/release/tasmota.bin
 ```
 !!! tip 
     Keep your personal configuration in a text file and simply copy and paste the backlog commands to a newly flashed device.
