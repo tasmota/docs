@@ -136,7 +136,7 @@ a valid script must start with >D in the first line
   `M:vname`   
   specifies a moving average filter variable with 8 entries (for smoothing data)  
   (max 5 filters in total m+M) optional another filter length (1..127) can be given after the definition.  
-  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer)  
+  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer, x = `-1` returns arry lenght)  
   Using this filter, vars can be used as arrays  
 
 !!! tip
@@ -263,7 +263,7 @@ A web user interface may be generated containing any of the following elements:
  **Google Charts:**  
   draws a google chart with up to 4 data sets per chart  
   `gc( T array1 ... array4 "name" "label1" ... "label4" "entrylabels" "header" {"maxy1"} {"maxy2"})`   
-  `T` = type
+  `T` = type  
   - b=barchart  
   - c=columnchart  
   - p=piechart  
@@ -285,8 +285,9 @@ A web user interface may be generated containing any of the following elements:
   
   additionally you have to define the html frame to put the chart in (both lines must be preceded by a $ char)
   e.g.  
-  $\<div id="chart1"style="width:640px;height:480px;margin:0 auto">\</div>  
-  $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")  
+  <pre><code>$&lt;div id="chart1"style="width:640px;height:480px;margin:0 auto">&lt;/div>
+  $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")</pre></code>
+  
   you may define more then one chart. The charts id is chart1 ... chartN
   
 `>w` ButtonLabel
@@ -357,8 +358,16 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sf(F)` = sets the CPU Frequency (ESP32) to 80,160,240 Mhz, returns current Freq.  
 `s(x)` = explicit conversion from number x to string  
 `mqtts` = MQTT connection status: `0` = disconnected, `>0` = connected  
+`wbut` = button status of watch side button (if defined USE_TTGO_WATCH)  
+`wdclk` = double tapped on display (if defined USE_TTGO_WATCH)  
+`wtch(sel)` = gets state from touch panel sel=0 => touched, sel=1 => x position, sel=2 => y position (if defined USE_TTGO_WATCH)  
+`slp(time)` = sleep time in seconds, pos values => light sleep, neg values => deep sleep (if defined USE_TTGO_WATCH)  
+`play(path)` = play mp3 audio from filesystem (if defined USE_TTGO_WATCH) 
+`say("text")` = plays specified text to speech (if defined USE_TTGO_WATCH) 
+
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
-`sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
+
+`sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud)   
 `sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD) 
 `sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)(if defined USE_SML_SCRIPT_CMD) 
 `sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
