@@ -14,8 +14,6 @@ Incredibly expandable and flexible.
 [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4)
 [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-## OTA server thehackbox.org is currently down! 
-OTA updates and Tasmotizer's binary download feature do not work.
 
 **For OTA updates please use the new server [http://ota.tasmota.com/tasmota](http://ota.tasmota.com/tasmota) and [http://ota.tasmota.com/tasmota32](http://ota.tasmota.com/tasmota32)**
 
