@@ -40,7 +40,7 @@ USE_SCRIPT_GLOBVARS | enables global variables and >G section
 USE_SML_SCRIPT_CMD | enables SML script cmds
 USE_SCRIPT_TIMER | enables up to 4 timers
 SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
-USE_SCRIPT_COMPRESSION | enables compression of scripts (2560 chars buffer) 
+LARGE_ARRAYS | enables arrays of up to 1000 entries instead of max 127  
 LITTLEFS_SCRIPT_SIZE S | enables script buffer of size S (e.g.4096)  
 USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
 USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
@@ -83,18 +83,23 @@ with below options script buffer size may be expanded. PVARS is size for permana
 
 | Feature | ESP8266 | ESP32 | PVARS | remarks |
 | -- | -- | -- | -- | -- |
-| default | 1536 | 1536 | 40 ||
-| #define USE_SCRIPT_COMPRESSION | 2560 | 2560 | 40 |actual compression rate may vary |
+| default | 1536 | 1536 | 50 ||
+| #define USE_SCRIPT_COMPRESSION | 2560 | 2560 | 50 |actual compression rate may vary |
 | #define LITTLEFS_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
 | #define SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld, ESP32 must use linker file "esp32_partition_app1572k_ffat983k.csv"(4M chips) or "esp32_partition_app1984k_ffat12M.csv" (16M chips)|
 | #define SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
 | #define EEP_SCRIPT_SIZE S, #define USE_EEPROM, #define USE_24C256 | S<=4096 | S<=8192 | 1536 |only hardware eeprom is usefull, because Flash EEPROM is also used by Tasmota |
 
 most usefull defintion for larger scripts would be  
-ESP8266: with 1M flash only default compressed mode is usefull, with 4M Flash best mode would be SCRIPT_FATFS -1  
-ESP32: #define LITTLEFS_SCRIPT_SIZE 8192 with standard linker file or better:  
-\#define SCRIPT_FATFS -1
-\#define FAT_SCRIPT_SIZE 8192
+ESP8266:  
+with 1M flash only default compressed mode is usefull,  
+with 4M Flash best mode would be  
+\#define SCRIPT_FATFS -1  
+with linker file "eagle.flash.4m2m.ld"  
+ESP32:  
+#define LITTLEFS_SCRIPT_SIZE 8192 with standard linker file or better:  
+\#define SCRIPT_FATFS -1  
+\#define FAT_SCRIPT_SIZE 8192  
 with linker file "esp32_partition_app1572k_ffat983k.csv"  
 
 **Optional external editor**   
@@ -137,7 +142,9 @@ a valid script must start with >D in the first line
   specifies a moving average filter variable with 8 entries (for smoothing data)  
   (max 5 filters in total m+M) optional another filter length (1..127) can be given after the definition.  
   Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer, x = `-1` returns arry lenght)  
-  Using this filter, vars can be used as arrays  
+  Using this filter, vars can be used as arrays, #define LARGE_ARRAYS allows for arrays up to 1000 entries  
+  array may also be permanent by specifying an extra :p  
+  m:p:vname defines a permanent array. Keep in mind however that in 1M Flash standard configurations you only have 50 bytes permanent storage which stands for a maximum of 12 numbers. (see list above for permanent storage in other configurations)  
 
 !!! tip
     Keep variable names as short as possible. The length of all variable names taken together may not exceed 256 characters.  
@@ -271,9 +278,9 @@ A web user interface may be generated containing any of the following elements:
   - l2=linechart with exactly 2 lines and 2 y scales (must be given at end)
   - 2f2 like above but with splined lines 
   - h=histogram  
-  - t=data table
+  - t=data table  
   - g=simple gauges (must give extra 3 vars after header, yellow start, red start, maxval)  
-  - T=Timeline (special type arrays contains start,stop pairs in minutes timeofday)
+  - T=Timeline (special type arrays contains start,stop pairs in minutes timeofday)  
   
   b,l,h type may have the '2' option to specify exactly 2 arrays with 2 y scales given at the end of paramter list.  
   
