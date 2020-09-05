@@ -118,15 +118,20 @@ If you have an RF variant, you will want to configure the GPIOs like this:
      GPIO_USER,        // GPIO01 Serial RXD and Optional sensor
      GPIO_LED1_INV,    // GPIO02 Blue onboard LED (optional)
      GPIO_USER,        // GPIO03 Serial TXD and Optional sensor0
-     GPIO_ARIRFRCV,    // GPIO04 RF receiver input 
+     GPIO_ARIRFRCV,    // GPIO04 RF receiver input (New Tasmota ALux IrRcv 147)
      GPIO_PWM2,        // GPIO05 RGB LED Green
      0, 0, 0, 0, 0, 0, // Flash connection
      GPIO_PWM3,        // GPIO12 RGB LED Blue
      GPIO_PWM4,        // GPIO13 RGBW LED White
      GPIO_PWM1,        // GPIO14 RGB LED Red
-     GPIO_LED2_INV,    // GPIO15 RF receiver control
+     GPIO_LED2_INV,    // GPIO15 RF receiver control (New Tasmota ALuxIrSel 159)
      0, 0
   },
+ 
+```
+Tasmota template
+```
+'{"NAME":"MagicHome RGBW RF","GPIO":[0,0,56,0,147,38,0,0,39,40,37,159,0],"FLAG":0,"BASE":18}'
 ```
 
 or like this:
@@ -145,7 +150,7 @@ or like this:
      0, 0, 0
   },
 ```
-After choosing the correct module type in your Tasmota configuration, press a key on the remote after boot for the device to learn your code.
+After choosing the correct module type in your Tasmota configuration, press a key on the remote after boot for the device to learn your code. No need for the below rules for the RF varient
 
 ### Full Set of rules for IR remote
 Each rule can only be 511 characters long, some of the colors below use the built in predefined shortcut color numbers. 
