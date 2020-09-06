@@ -1,7 +1,7 @@
 Even though Tasmota offers several pre-compiled firmware variants, sometimes the ready-to-flash binaries aren't enough.
 If you need to enable or disable some features, or simply change some parameters, then you need to compile a firmware binary yourself.  
 
-If you are not experienced enough or don't want to install an IDE (Integrated Development Environment) like PlatformIO or Arduino-IDE on your computer, compiling your own firmware is a breeze using [Gitpod](https://www.gitpod.io/).
+If you are not experienced enough or don't want to install an IDE (Integrated Development Environment) like PlatformIO or ATOM on your computer, compiling your own firmware is a breeze using [Gitpod](https://www.gitpod.io/).
 
 Gitpod is a web browser based online IDE. All you need to use it is to link your GitHub account (or make a new one [here](https://github.com/join?source=header)). Gitpod will take care of all the necessary software package dependencies for you.
 
