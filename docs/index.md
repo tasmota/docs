@@ -15,7 +15,7 @@ Incredibly expandable and flexible.
 [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
 
-**For OTA updates please use the new server [http://ota.tasmota.com/tasmota](http://ota.tasmota.com/tasmota) and [http://ota.tasmota.com/tasmota32](http://ota.tasmota.com/tasmota32)**
+**For OTA updates please use the new server [http://ota.tasmota.com/tasmota](http://ota.tasmota.com/tasmota/) and [http://ota.tasmota.com/tasmota32](http://ota.tasmota.com/tasmota32/)**
 
 Download [Tasmotizer v1.1c](https://github.com/tasmota/tasmotizer/releases/tag/v.1.1c) to use the new OTA server during flashing.
 
