@@ -62,7 +62,7 @@ Examples:
 - `platformio run -e tasmota-sensors`  
 - `platformio run -e tasmota-DE`
 
-Compilation normally takes only a couple of minutes. The time it takes is directly related to the configurations you selected; the more features selected means more time is needed to compile. When done, you will find the firmware file in the folder `/Tasmota/build_output/<variant-name>.bin/` in the Explorer (1) pane.
+Compilation normally takes only a couple of minutes. The time it takes is directly related to how many variants you build. When done, you will find the firmware file in the folder `/Tasmota/build_output/<variant-name>.bin/` in the Explorer (1) pane.
 
 <!-- ![folders](https://i.imgur.com/SEqyGy2.png) -->
 
