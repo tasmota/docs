@@ -37,7 +37,7 @@ If you flashed a precompiled binary you can [reconfigure](Getting-Started.md#con
 Once recovered, the device should be observed that it operates without instabilities before attempting to configure the device in any way. If the device still does not, follow these steps if you are able to configure its Wi-Fi and connect:
 
 1. Configure the device as `Generic (18)`
-2. Perform an OTA upgrade specifically to [`tasmota-minimal.bin`](http://thehackbox.org/tasmota/tasmota-minimal.bin). Taking this intermediate step ensures that the firmware will be reloaded. Since Tasmota performs a version comparison before performing the OTA update, explicitly changing the firmware that is on the device will ensure that the firmware is indeed replaced in the next step.
+2. Perform an OTA upgrade specifically to [`tasmota-minimal.bin`](http://ota.tasmota.com/tasmota/tasmota-minimal.bin). Taking this intermediate step ensures that the firmware will be reloaded. Since Tasmota performs a version comparison before performing the OTA update, explicitly changing the firmware that is on the device will ensure that the firmware is indeed replaced in the next step.
 3. Perform an OTA upgrade to the desired firmware variant.
 
 Once the device operates reliably, begin the configuration to set the GPIO configuration (via a Template or Module). Take any further configuration steps one at a time to ensure that after each setting is applied, the device continues to operate reliably.  

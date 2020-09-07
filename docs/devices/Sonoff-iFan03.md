@@ -5,7 +5,7 @@ Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) p
 
 Next, please see the [Flashing](../Getting-Started#flashing) page for general information on the flashing process.
 
-Flash the latest version of [`tasmota.bin`](http://thehackbox.org/tasmota/release/tasmota.bin):
+Flash the latest version of [`tasmota.bin`](http://ota.tasmota.com/tasmota/release/tasmota.bin):
 
 1. Connect your serial flashing device pins to the iFan03 (for connection locations see the pin out on the left hand side of the picture below).  
    ![](https://github.com/tim-dcl/BRUH3-Home-Assistant-Configuration/blob/master/IMG_20190817_155847511_HDR.jpg)

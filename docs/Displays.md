@@ -13,8 +13,10 @@ USE_DISPLAY_EPAPER_29 | Enable EPAPER_29 display. Also requires `USE_SPI`
 USE_DISPLAY_EPAPER_42 | Enable EPAPER_42 display. Also requires `USE_SPI`
 USE_DISPLAY_SH1106 | Enable OLED SH1106 display. Also requires `USE_I2C`
 USE_DISPLAY_ILI9488 | Enable TFT ILI9488 display. Also requires `USE_SPI`
-USE_DISPLAY_SSD1351 | Enable OLED SSD1351 display. Also requires `USE_SPI`
+USE_DISPLAY_SSD1351 | Enable color OLED SSD1351 display. Also requires `USE_SPI`
 USE_DISPLAY_RA8876  | Enable TFT RA8876 display. Also requires `USE_SPI` 
+USE_DISPLAY_SEVENSEG  | Enable 7 segment display. Also requires `USE_I2C` 
+USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI` 
 USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
 SHOW_SPLASH | Enable initialization splash message on the display
 USE_AWATCH | Enables analog watch support
@@ -186,7 +188,7 @@ Common colors table:
 
 ### Color Indices
 
-Selected with `Ci` and `Bi` in the ILI9488, SSD1351, and RA8876 color panels  
+Selected with `Ci` and `Bi` in the ILI9488, SSD1351, RA8876 and ST7789 color panels  
 
 | Index | Color | Index | Color | Index | Color |
 | -- | -- | -- | -- | -- | -- |
@@ -232,6 +234,8 @@ E-Paper displays are connected via software 3-wire SPI `(CS, SCLK, MOSI)`. The o
 The ILI9488, ILI9341 and SSD1351 are connected via hardware 3-wire SPI `(MOSI=GPIO13, SCLK=GPIO14, CS=GPIO15)`. The ILI9488 must also be connected to the backlight pin (dimmer supported on SSD1351). [Wiring](https://github.com/arendst/Tasmota/issues/2557#issuecomment-444454436)
 
 The RA8876 is connected via standard hardware 4-wire SPI `(MOSI=GPIO13, SCLK=GPIO14, CS=GPIO15, MISO=GPIO12)`. No backlight pin is needed (dimmer supported).  
+
+The ST7789 is connected via 4 Wire software SPI ((CS), SCLK, MOSI, DC, (RES), BL )  
 
 ## Examples
 

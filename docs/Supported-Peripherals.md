@@ -27,6 +27,7 @@ Name|Description
 **HDC1080** | Texas Instruments HDC1080 Humidity and Temperature Sensor (I^2^C)
 **[HM-10](HM-10)** |  BLE Bluetooth gateway (serial)
 **[HM-17<BR>HM-16](HM-17)** |  Bluetooth iBeacon reader (serial)
+**HP303B** | Barometric Pressure Shield (I^2^C)
 **HR-E** | Water Meter Encoder interface (serial)
 **HRXL** | MaxBotix HRXL line of Sonar Ranging Sensors (gpio)
 **[HC-SR04<BR>HC-SR04P<BR>JSN-SR04T)](HC-SR04)** | Ultrasonic Sensor
@@ -35,6 +36,7 @@ Name|Description
 **HTU21** | Temperature and Humidity sensor (I^2^C)
 **HX711** | Load Cell sensor (gpio)
 [**iAQ-Core**](IAQ) | Indoor Air Quality sensor (I^2^C)
+**iEM3000** | Schenider Electric modbus energy meter (serial)
 **INA219** | High-Side DC Current and Voltage sensor (I^2^C)
 [**IR Remote**](IR-Remote) | IR transmitter and receiver
 **K30, K70, S8** | CO<sub>2</sub> sensor (I^2^C) | 
@@ -76,6 +78,7 @@ Name|Description
 [**Smart Meter Interface**](Smart-Meter-Interface) | (serial)
 **SolaX X1** | SolaX X1 inverter (serial)
 **SPS30** | Particulate Matter (PM) | sensor (I^2^C)
+[**Téléinfo**](http://hallard.me/category/tinfo/) |  French energy measuring system (serial)
 **TM1638** | 8 Switch, LED and 7 Segment Unit sensor (gpio)
 [**TSL2561**](TSL2561) | Luminosity Sensor (I^2^C)
 **TSL2591** | Luminosity Sensor (I^2^C)

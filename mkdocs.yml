@@ -94,7 +94,7 @@ nav:
     - Blinds-and-Shutters.md
     - Smart-Meter-Interface.md
     - Subscribe-&-Unsubscribe.md
-    - TasmotaSlave.md
+    - TasmotaClient.md
     - Thermostat.md
     - Timers.md
     - TLS.md
@@ -168,6 +168,8 @@ nav:
     - TX2x.md
     - TSL2561.md
     - VEML6070.md
+    - VEML6075.md
+    - VEML7700.md
     - VL53L0x.md
     - WS2812B-RGB-Shield.md
     - WS2812B-and-WS2813.md
@@ -183,4 +185,4 @@ nav:
   - Builds.md
   - Compiling: Compile-your-build.md
   - Contributing: Contributing.md
-  - Download: http://thehackbox.org/tasmota/release/ "target=_blank"
+  - Download: http://ota.tasmota.com/tasmota/release/ "target=_blank"

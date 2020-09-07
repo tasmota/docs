@@ -42,6 +42,8 @@ Rule<x> ON <trigger1> DO <command> ENDON ON <trigger2> DO <command> ENDON ...
 Spaces after `ON`, around `DO`, and before `ENDON` or `BREAK` are mandatory. A rule is **not** case sensitive.  
 
 ### Rule Trigger
+Rule trigger names are derived from the JSON message displayed in the console. Each JSON level (all values enclosed in `{...}`) is separated in the trigger with a `#`.
+
 A rule trigger can consist of:  
 
 - `[TriggerName]#[ValueName]`
@@ -49,8 +51,16 @@ A rule trigger can consist of:
 - `[SensorName]#[ValueName]`
 - `[SensorName]#[ValueName][comparison][value]`
 - `Tele-[SensorName]#[ValueName]`
+- `[TriggerName1]#[TriggerName2]#[ValueName]`
+- `[TriggerName1]#?#[ValueName]`
 
-A trigger may be used in more than one rule. This may be required for some cases of using `IF/ELSE` since an `IF` statement cannot be used within a `Backlog`.
+Use `?` as a wildcard for a single trigger level. Rule will trigger on `[TriggerName]#?#[Value]` where `?` is any value.
+
+!!! example
+    Rule with a trigger of `ZBReceived#?#Power=0` will trigger on `{"ZBReceived":{"0x4773":{"Power":0}}}` and on `{"ZBReceived":{"aqara_switch":{"Power":0}}}` both.
+
+!!! note
+    Same trigger may be used in more than one rule. This may be required for some cases of using `IF/ELSE` since an `IF` statement cannot be used within a `Backlog`.
 
 #### Rule Trigger Comparison Operators
 
@@ -66,6 +76,8 @@ A trigger may be used in more than one rule. This may be required for some cases
 |`|`| used for [modulo operation](https://en.wikipedia.org/wiki/Modulo_operation) with remainder = 0 (exact division)|
 
 #### Examples of Available Triggers
+
+_This is just a sampling of available triggers to showcase what is possible and not a definitive list_
 
 Trigger|When it occurs 
 :-|:-
@@ -109,8 +121,13 @@ Every [command](Commands.md) with a JSON payload response has an associated rule
 
 |Trigger           | When it occurs |
 |------------------|----------------|
-|&lt;command\>#Data|A one level JSON payload such as `{"command":"value"}`. For example, for {"Fanspeed":3}, the trigger is`Fanspeed#Data`.|
-|&lt;command\>#level1#level2#levelN|A multi-level level JSON payload such as `{"level1":{"level2":{"levelN":"value"}}}` does **NOT** have the `#Data` trigger. Instead, the trigger for these responses is `level1#level2#levelN`. For example, for {"PulseTime2":{"Set":0,"Remaining":0}}, the triggers are `PulseTime2#Set` and `PulseTime2#Remaining`.|
+|&lt;command\>#Data|A one level JSON payload such as `{"Command":"value"}`. For example, for {"Fanspeed":3}, the trigger is`Fanspeed#Data`.|
+|&lt;command\>#level1#level2#levelN|A multi-level JSON payload such as `{"TriggerLevel1":{"TriggerLevel2":{"ValueName":"value"}}}` does **NOT** have the `#Data` trigger. Instead, the trigger for these responses is `TriggerLevel1#TriggerLevel2#ValueName`. 
+
+!!! example
+    For `{"PulseTime2":{"Set":0,"Remaining":0}}`, the triggers are `PulseTime2#Set` and `PulseTime2#Remaining`.|
+
+    For a 3 level JSON message such as `{"ZbReceived":{"test_switch":{"Device":"0x0C94","Power":1,"Endpoint":8,"LinkQuality":70}}}` one possible trigger is `ZbReceived#test_switch#Power` or another `ZbReceived#test_switch#LinkQuality` 
 
 Connected sensors can be a trigger in the form as they are represented in the `TelePeriod` and `Status 8` JSON payloads.  
 
@@ -1594,13 +1611,29 @@ Notice we use `Rule` which edits `Rule1` rule set. They can be used interchangea
 ### Watchdog for Wi-Fi router
 
 A Tasmota socket can ping a remote host (router itself or something else connected to the router)
-and power cycle the socket to reboot the router. In this example, ping interval of 2 minutes is used.
+and power cycle the socket to reboot the router. In this example, ping interval of 3 minutes is used.
+The simplest watchdog rule does not use variables:
 
 ```haskell
 Rule1
-  ON Time#Minute|2 DO Ping4 192.168.1.10 ENDON
+  ON Time#Minute|3 DO Ping4 192.168.1.10 ENDON
   ON Ping#192.168.1.10#Success==0 DO Backlog Power1 0; Delay 10; Power1 1; ENDON
 Rule1 1
+```
+
+However, if the router becomes unreachable for a long time, the watchdog will keep cycling it every three minutes. 
+This could reduce the watchdog's relay lifetime to months, at most years. Safer option would be to use an 
+**exponential backoff** algorithm. `Var1` contains the current ping interval in minutes, which is trippled
+after each failed ping, but limited to 1439 minutes (1 day).
+
+```haskell
+Rule1
+  ON system#boot do Var1 3 ENDON
+  ON Var1#State>1439 DO Var1 1439 ENDON
+  
+  ON Time#Minute|%var1% DO Ping4 192.168.1.10 ENDON
+  ON Ping#192.168.1.10#Success==0 DO backlog Mult1 3; Power1 0; Delay 10; Power1 1 ENDON
+  ON Ping#192.168.1.10#Success>0 DO Var1 3 ENDON
 ```
 
 !!! note "This requires `#define USE_PING` and Tasmota version 8.2.0.3 or newer"

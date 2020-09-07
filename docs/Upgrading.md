@@ -14,8 +14,8 @@ If you wish to switch to a different [build](Builds) or use development branch y
 Download binaries from:
 
 - GitHub [releases](https://github.com/arendst/Tasmota/releases)
-- official [OTA Server](http://thehackbox.org/tasmota/release/)
-- development branch [OTA Server](http://thehackbox.org/tasmota/)
+- official [OTA Server](http://ota.tasmota.com/tasmota/release/)
+- development branch [OTA Server](http://ota.tasmota.com/tasmota/)
 - your [personal OTA server](#private-ota-server)
 
 ### Gzipped binaries
@@ -25,7 +25,7 @@ Download binaries from:
 
 Tasmota 8.2 introduced upgrading using gzipped binaries which are smaller in size and will likely skip the intermediary minimal build installation. This makes the upgrade process faster and straightforward. 
 
-To use simply add `.gz` to the existing OTA Url or download the `.bin.gz` binary from the official [OTA Server](http://thehackbox.org/tasmota/release/) and the next upgrade will use the compressed file.
+To use simply add `.gz` to the existing OTA Url or download the `.bin.gz` binary from the official [OTA Server](http://ota.tasmota.com/tasmota/release/) and the next upgrade will use the compressed file.
 
 ## Upgrade using webUI
 Upgrading the device firmware [over-the-air](https://en.wikipedia.org/wiki/Over-the-air_programming), aka OTA, is the most convenient way to upgrade. 
@@ -85,7 +85,7 @@ Your device can be upgraded using [commands](Commands.md) via MQTT, web requests
 
 [OtaUrl](Commands.md#otaurl) is used to set your OTA address. 
 ```haskell
-OtaUrl http://thehackbox.org/tasmota/tasmota-sensors.bin
+OtaUrl http://ota.tasmota.com/tasmota/tasmota-sensors.bin
 ```
 *In this example we chose a development branch version with additional sensors support*
 
@@ -193,22 +193,22 @@ Tasmota uses flash memory to store options and settings. New versions add (or re
 To avoid this use our decode-config tool to easily create and restore backups in Tasmota:
 
 ## decode-config tool 
-* [decode-config.py](https://github.com/tasmota/decode-config/blob/master/decode-config.py) - [installation instructions](https://github.com/tasmota/decode-config/blob/master/README.md) in Python for Windows or Linux
-* [decode-config.exe](https://github.com/tasmota/decode-config/releases) - Windows only executable. If using this replace `decode-config.py` with `decode-config.exe` or `decode-config_x64.exe`  in the instruction examples.
+* [decode-config](https://github.com/tasmota/decode-config/releases) - OS independent Python program to backup and restore Tasmota configuration data, also available as precompiled executables for Windows, MacOS and Linux. See [Using instructions](https://github.com/tasmota/decode-config/blob/master/README.md) for details.  
+If using one of the precompiled binary for your OS replace `decode-config.py` with `decode-config_win32.exe`, `decode-config_win64.exe`, `decode-config_mac` or `decode-config_linux` from the instruction examples.
 
 #### 1. make a configuration backup:
 
   * Create a new backup straight from your device   
 
-    `decode-config.py -d <deviceIP> --backup-file Config-@f --backup-type json`
+    `decode-config.py --source <deviceIP> --backup-file Config-@f`
 
     `@f` will be replaced by decode-config to device's FriendlyName
 
   **_or_**
 
-* Convert a previously made `.dmp` backup into a JSON file   
+* Create a backup from previously made `.dmp` file
   
-  `decode-config.py -f <dmp_filename> --backup-file Config-@f --backup-type json`
+  `decode-config.py --source <dmp_filename> --backup-file Config-@f`
 
 #### 2. perform a device reset 
 Erase flash settings area but keep Wi-Fi and MQTT settings
@@ -218,7 +218,7 @@ Erase flash settings area but keep Wi-Fi and MQTT settings
 #### 3. upgrade the firmware via OTA or file upload
 #### 4. restore configuration
 
-`decode-config.py -d <deviceIP> --restore-file <config-filename>`
+`decode-config.py --source <deviceIP> --restore-file <backupfile>`
 
 ...and you're done!
 

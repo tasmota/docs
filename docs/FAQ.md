@@ -10,7 +10,7 @@ With some Wi-Fi routers (i.e. Linksys with DD-WRT), you may have conflicts with 
 DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can resolve connectivity issues.
 
 ### I entered wrong Wi-Fi information
-If you have a device with a button and the button is configured as a component in the Tasmota settings (e.g., GPIO0 - Button1), you can try pressing the button to force the device into [Wi-Fi configuration mode](Buttons-and-Switches#4-short-presses) with 4 short presses of the button. 
+If you have a device with a button and the button is configured as a component in the Tasmota settings (e.g., GPIO0 - Button1), you can try pressing the button to force the device into [Wi-Fi configuration mode](Buttons-and-Switches#multi-press-functions) with 4&nbsp;short presses of the button. **Note:** Since version 8.3.0 this requires 6&nbsp;short presses instead.
 
 If that didn't work reset your device using [Fast power cycle device recovery](Device-Recovery.md#fast-power-cycle-device-recovery)
 
@@ -51,7 +51,7 @@ If you flashed a light bulb or any device without a built-in button and entered 
 First thing to try when having Wi-Fi issues: `Reset 3` which will erase wi-fi calibration data only and will keep configuration intact. Make sure to power cycle restart after that. If that doesn't help try rebooting the router as well
 
 As a last resort try :
-Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](Getting-Started.md#esptoolpy)) using [the latest precompiled binaries](http://thehackbox.org/tasmota/).
+Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](Getting-Started.md#esptoolpy)) using [the latest precompiled binaries](http://ota.tasmota.com/tasmota/).
 
 This approach has solved many of the reported issues. Sometimes this is due to a bad flash, a bad OTA or invalid data that remains in the flash where the SDK memory is.
 
@@ -117,7 +117,7 @@ or your mosquitto broker log shows messages like this -
 ```
 You have more than one device connected with the same %topic% defined. Its important that each device has a unique %topic% instead of the default `sonoff`.
 
-If that is not the issue, erase all flash using esptool.py or esptool.exe and flash again by wire (as explained [here](Esptool#upload-tasmota)) using [the latest precompiled bins with core v2.7.1](http://thehackbox.org/tasmota/).
+If that is not the issue, erase all flash using esptool.py or esptool.exe and flash again by wire (as explained [here](Esptool#upload-tasmota)) using [the latest precompiled bins with core v2.7.1](http://ota.tasmota.com/tasmota/).
 
 ## Configuration
 

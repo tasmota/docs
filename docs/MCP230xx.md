@@ -319,6 +319,8 @@ sensor29 0,OFF  // Turn pin OFF (LOW if pinmode 5 or HIGH if pinmode 6(inverted)
 sensor29 0,T    // Toggle the current state of pin from ON to OFF, or OFF to ON
 ```
 
+Additionally all OUTPUT pins will be exposed as RELAYS and ordered behind the normal GPIO based RELAYS. Instead of the above sensor command you can also use the POWERxx command like for any RELAY. If you define INTERLOCK and/or INTERLOCK groups these will also take care about the out pins. The numbering of the RELAY's is following the standard tasmota behavior. Counting from D0 any defined OUT pin will add a new RELAY. Example: D0, D2, D3, D7 are out pins, then D0=POWER1, D2=POWER2, D3=POWER3 and D7=POWER4. Same behavior you can expect when defining PULSETIME for RELAYS.
+
 Telemetry response will be provided accordingly, for example:
 ```
 MQT: stat/tasmota/RESULT = {"S29cmnd_D0":{"COMMAND":"ON","STATE":"ON"}}
@@ -330,13 +332,12 @@ MQT: stat/tasmota/RESULT = {"S29cmnd_D0":{"COMMAND":"TOGGLE","STATE":"ON"}}
 
 `STATE = New state after execution of command`
 
-Telemetry data is provided for pins which are enabled for output. For example, if pin 0 was enabled for OUTPUT the following additional telemetry message will be sent by MQTT at the same time as the normal telemetry interval occurs which reports the current states of pins.
+Telemetry data is provided for pins which are enabled for output. For example, if pin 0 was enabled for OUTPUT the following additional telemetry message will be sent by MQTT at the same time as the normal telemetry interval occurs which reports the current states of pins. Additionally you can also use the standard POWERxx reporting.
 
 ```
-MQT: tele/tasmota/SENSOR = {"Time":"2018-08-18T16:41:20","MCP230XX":{"D0":0,"D1":0,"D2":1,"D3":0,"D4":0,"D5":0,"D6":0,"D7":0}}
-MQT: tele/tasmota/SENSOR = {"Time":"2018-08-18T16:41:20","MCP230_OUT": {"OUT_D4":"OFF","END":1}}
+MQT: tele/tasmota/SENSOR = {"Time":"2018-08-18T16:41:20","MCP230XX":{"D0":0,"D1":0,"D2":1,"D3":0,"D4":0,"D5":0,"D6":0,"D7":0},"MCP230_OUT": {"OUT_D4":"OFF","END":1}}
 ```
 
 Note the MCP230XX telemetry which provides the current logic state of all the pins and then the second MQT telemetry as MCP230_OUT which indicates the current state of pins configured for OUTPUT - In this case pin 4 or D4
 
-Remember to adhere to the current limitations of OUTPUT pins when using the device for switching external devices such as LED's - Relay's will need additional circuitry as the MCP23008/MCP23017 cannot drive relays directly - That being said most readily available relay pc boards available from vendors are optically isolated from the input so these will work perfectly.
+Remember to adhere to the current limitations of OUTPUT pins when using the device for switching external devices such as LED's. That being said most readily available relay pc boards available from vendors are optically isolated from the input so these will work perfectly.

@@ -768,4 +768,18 @@ irsend 0,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400,1000, 
 irsend 0,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400, 400,1100,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400, 400,1100,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400, 400,1100,1000, 400, 400,2000,5600
 
 
+## Vinkor Flameless Flickering Candles (and clones probably)
+
+*  on     `{"Protocol":"NEC","Bits":32,"Data":"0x10ED00FF","Repeat":0}`
+*  off    `{"Protocol":"NEC","Bits":32,"Data":"0x10ED40BF","Repeat":0}`
+*  dim    `{"Protocol":"NEC","Bits":32,"Data":"0x10ED08F7","Repeat":0}`
+*  bright `{"Protocol":"NEC","Bits":32,"Data":"0x10ED48B7","Repeat":0}`
+
+*  candle `{"Protocol":"NEC","Bits":32,"Data":"0x10ED30CF","Repeat":0}`
+*  light  `{"Protocol":"NEC","Bits":32,"Data":"0x10ED708F","Repeat":0}`
+
+*  2H     `{"Protocol":"NEC","Bits":32,"Data":"0x10ED20DF","Repeat":0}`
+*  4H     `{"Protocol":"NEC","Bits":32,"Data":"0x10ED609F","Repeat":0}`
+*  6H     `{"Protocol":"NEC","Bits":32,"Data":"0x10ED10EF","Repeat":0}`
+*  8H     `{"Protocol":"NEC","Bits":32,"Data":"0x10ED50AF","Repeat":0}`
 
