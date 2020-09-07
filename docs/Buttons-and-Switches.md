@@ -1,4 +1,4 @@
-!!! info "Buttons and switches: why the difference and how to configure them"
+﻿!!! info "Buttons and switches: why the difference and how to configure them"
 
 A typical device usually has at least one button (exception being bulbs and some lights) to control the power state(s). Additional buttons and switches can be [wired](Expanding-Tasmota#connect-switch) to a free GPIO and configured in Module or Template settings.
 
@@ -126,17 +126,34 @@ Same as `SwitchMode 2` but when the state of the circuit changes within 0.5s twi
      When you change switch states fast (within 0.5s) some extra actions can be triggered using rules. ON/OFFpower state is only changed when there is no second switch change within 0.5s. 
 
 **`SwitchMode 11`**   
-Set switch to pushbutton with dimmer mode
+Set switch to pushbutton with dimmer mode incl. double press feature
+!!! note
+Setoption32 must be smaller than 64, when you use switchmode 11 and 12 !!
 
-Tasmota will send a `TOGGLE` command (use Switch<x>#state=2 in rules) when the button is pressed for a short time and is then released. When pressing the button (closing the circuit) for a long time (set in `SetOption32`) Tasmota sends repeated `INC_DEC` (increment or decrement the dimmer) commands (use Switch<x>#state=4 in rules) as long as the button is pressed. Releasing the button starts a internal timer, the time is set in `SetOption32`. When released for the time set in `SetOption32` Tasmota sends a `CLEAR` command (use Switch<x>#state=6 in rules). If the button is pressed again before the timeout Tasmota sends a `INV` command (use Switch<x>#state=5 in rules). The `INV` command is for the controlling software (home assistant) to switch between incrementing and decrementing the dimmer.
+Tasmota will send a `TOGGLE` command **(use Switch<x>#state=2 in rules)** when the button is pressed for a short time and then is released.
+
+When pressing the button (closing the circuit) for a long time (set in `SetOption32`), Tasmota will send repeated `INC_DEC` (increment or decrement the dimmer) commands **(use Switch<x>#state=4 in rules)** for as long as the button is pressed.
+
+Two different `CLEAR` commands are available. An immediate `CLEAR` command is send  **(use Switch<x>#state=7 in rules)**  upon button release (no delay).
+
+Releasing the button also starts an internal timer (time is set in `SetOption32`). When released for the time set in `SetOption32`, Tasmota will send a 'delayed' `CLEAR` command **(use Switch<x>#state=6 in rules)**.
+
+If the button is pressed again before the timeout, Tasmota will send an `INV` command **(use Switch<x>#state=5 in rules)**. The `INV` command is for the controlling software (Home Assistant) to switch between incrementing and decrementing the dimmer.
+
+If button is pressed twice (within time set in `SetOption32`), Tasmota will send a `DOUBLE` command **(use Switch<x>#state=8 in rules)**. Note that this **doesn't** change behaviour of other switch states. So along with the `DOUBLE` command, `TOGGLE` command will also be fired twice upon a double press.
 
 !!! tip
-    The dimmer mode can be used in [conjunction with rules](Rules#control-a-dimmer-with-one-switch) to create additional features or to control another Tasmota device.
-    The dimmer mode can be used to turn a media player on and off and to control the volume of a media player with one switch.
+    The dimmer mode has several use cases:
+    - In [conjunction with rules](Rules#control-a-dimmer-with-one-switch) to create additional features or to control another Tasmota device.
+    - In [conjunction with ControllerX (HA Appdeamon app)](https://xaviml.github.io/controllerx/examples/tasmota-switchmode11) to implement easy toggle and dimming of smart lights, with an 'in wall' hw Tasmota switch.
+    - Turn a media player on and off and to control the volume of a media player with one switch.
 
 
 **`SwitchMode 12`**   
-Set switch to inverted pushbutton with dimmer mode. The same as `Switchmode 11` but with inverted behaviour.
+Set switch to inverted pushbutton with dimmer mode incl. double press feature.
+Same as `Switchmode 11` but with inverted behaviour.
+!!! note  
+Setoption32 must be smaller than 64, when you use switchmode 11 and 12 !!
 
 **`SwitchMode 13`**   
 Set switch to "push to on" mode (`1 = ON`, `0 = nothing`)
@@ -337,3 +354,4 @@ Once the feature is enabled you can use this switch as any regular switch!
 ---
 
 For a practical application of everything mentioned in this article read about this excellent [LEGO nightstand switch project](https://jeff.noxon.cc/2018/11/21/lego-nightstand-light-switch/).
+
