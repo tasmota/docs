@@ -60,4 +60,4 @@ jobs:
             git config user.email "$USER_EMAIL"
             git add --all
             git commit -m "CircleCI deploy no. $CIRCLE_BUILD_NUM [ci skip]"
-            git push origin gh-pages
+            git push --force origin gh-pages
