@@ -20,16 +20,14 @@ Incredibly expandable and flexible.
 Download [Tasmotizer v1.1c](https://github.com/tasmota/tasmotizer/releases/tag/v.1.1c) to use the new OTA server during flashing.
 
 ### Current release 
-<a href="https://github.com/arendst/Tasmota/releases/tag/v8.4.0"><span style="font-size:40px;">Tasmota 8.4 George</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
+<a href="https://github.com/arendst/Tasmota/releases/tag/v8.5.0"><span style="font-size:40px;">Tasmota 8.5 Hellen</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
 
-- :rotating_light: **BREAKING CHANGE** :rotating_light: Change Domoticz commands prefix from `Domoticz` to `Dz`
-- :rotating_light: **BREAKING CHANGE** :rotating_light: Support for Arduino Core versions before 2.7.1 has been removed
-- :rotating_light: **BREAKING CHANGE** :rotating_light: Limited support of Arduino IDE as an increasing amount of features cannot be compiled with it. PlatformIO is now the only recommended tool for compiling Tasmota.
-- Experimental support for [Sonoff Zigbee Bridge](https://templates.blakadder.com/sonoff_ZBBridge.html) with a dedicated binary and device module
-- Support for switches/relays using AC detection circuitry e.g. [Moes MS-104B](https://templates.blakadder.com/moes-MS-104B.html) or [BlitzWolf BW-SS5](https://templates.blakadder.com/blitzwolf_BW-SS5.html)
-- Support for [VEML6075](VEML6075), [VEML7700](VEML7700), [BH1750](BH1750), BL0940, HP303B, iEM3000, [LMT01](LMT01.md), [Teleinfo](http://hallard.me/category/tinfo/) and Telegram bot
-- Initial support for rotary encoder as light controller
-- Led<x\> can now be PWM controlled. See [LedPwmMode](Commands.md#ledpwmmode)
+- :rotating_light: **BREAKING CHANGE** :rotating_light: Removed support for direct upgrade from versions before 6.6.0.11 to versions after 8.4.0.1
+- :rotating_light: **BREAKING CHANGE** :rotating_light: Change White blend mode to using command ``SetOption105`` instead of ``RGBWWTable``
+- Improvements for Zigbee UI display and ZbBridge
+- Experimental virtual CT for 4 channels lights, emulating a 5th channel
+- Support for DYP ME007 ultrasonic distance sensor 
+
 
 See [changelog](changelog.md) for a complete list of new features, changes and fixes.
 

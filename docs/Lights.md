@@ -172,8 +172,9 @@ The curve used: orange=ideal, blue=tasmota.
 
 ### White Blend Mode
 
-White Blend Mode mixes in the white channel with RGB colors while controlling the RGB light which results in a better and brighter color output. It is used only with 4 channel (RGBW) and 5 channel (RGBCCT) lights. 
-Enable it by setting the last PWM channel to zero using [`RGBWWTable 255,255,255,255,0`](Commands.md#rgbwwtable).
+White Blend Mode mixes in the white channel with RGB colors while controlling the RGB light which results in a better and brighter color output. It is used only with 4 channel (RGBW) and 5 channel (RGBCCT) lights.
+
+Enable it with [`SetOption105 1`](Commands.md#setoption105).
 
 #### Calibration (optional)
 Generally white LEDs are brighter than RGB LEDs. If you want to keep the same brightness, you need to calibrate the white level. In this mode, any white component will be removed from RGB LEDs and sent to the white LEDs. This makes whites look much better.
