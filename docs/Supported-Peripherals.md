@@ -19,6 +19,7 @@ Name|Description
 [**Chirp! Soil Moisture Sensor**](Moisture-Sensor-and-Chirp!-Sensor) | Moisture Sensor (I^2^C)
 [**DHT11**](DHT11) | Temperature and Humidity Sensor
 **DHT12** |
+**DYP-ME007** | Ultrasonic distance sensor (serial)
 **[DS18x20](DS18x20)** | Temperature sensor (1-Wire)
 **DS1624<BR>DS1621** | Temperature sensor (1-Wire)
 [**DS3231**](DS3231) | Real-Time-Clock (I^2^C)
