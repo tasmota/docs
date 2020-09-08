@@ -24,7 +24,7 @@ Download [Tasmotizer v1.1c](https://github.com/tasmota/tasmotizer/releases/tag/v
 
 - :rotating_light: **BREAKING CHANGE** :rotating_light: Removed support for direct upgrade from versions before 6.6.0.11 to versions after 8.4.0.1
 - :rotating_light: **BREAKING CHANGE** :rotating_light: PlatformIO 5.0 is **required** to compile Tasmota 8.5+
-- :rotating_light: **BREAKING CHANGE** :rotating_light: Change White blend mode to using command ``SetOption105`` instead of ``RGBWWTable``
+- :rotating_light: **BREAKING CHANGE** :rotating_light: Change White blend mode to using command [`SetOption105`](Commands.md#setoption105) instead of ``RGBWWTable``
 - Improvements for Zigbee UI display and ZbBridge
 - Experimental virtual CT for 4 channels lights, emulating a 5th channel
 - Support for DYP ME007 ultrasonic distance sensor 
