@@ -465,7 +465,7 @@ SetOption104<a class="cmnd" id="setoption104"></a>|Disable MQTT retained message
 SetOption105<a class="cmnd" id="setoption105"></a>|[White Blend Mode](Lights#white-blend-mode)<BR>`0` = disabled _(default)_ <BR>`1` = enabled
 SetOption106<a class="cmnd" id="setoption106"></a>|Virtual CT channel (experimental feature)<BR>`0` = disabled _(default)_ <BR>`1` = create a virtual second white channel using RGB channels<BR>_only if light is RGBW (4 channels),`SetOption68 0` and `SetOption37 < 128`
 SetOption107<a class="cmnd" id="setoption107"></a>|Set virtual CT channel light type (experimental feature)<BR>`0` = Warm White <BR>`1` = Cold White
-SetOption108<a class="cmnd" id="setoption108"></a>|`0` = [Teleinfo](Teleinfo) telemetry into Energy MQTT JSON _(default)_<BR>`1` = Teleinfo raw data only
+SetOption108<a class="cmnd" id="setoption108"></a>|`0` = Teleinfo telemetry into Energy MQTT JSON _(default)_<BR>`1` = Teleinfo raw data only
 SetOption109<a class="cmnd" id="setoption109"></a>|`0` = _(default)_<BR>`1` = force gen1 Alexa mode, for Echo Dot 2nd gen devices only
 
 ### Serial Bridge
