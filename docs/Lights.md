@@ -222,6 +222,14 @@ Some CCT lights use PWM1 for brightness and PWM2 for color temperature (instead 
 
 For these lights, use `Module 48` aka Philips Xiaomi mode, or `SetOption92 1` (supported since v.8.2.0.5)
 
+### Virtual CT 
+
+_this feature is experimental and will probably not give brilliant results_
+
+Used with 4 channel RGBW lights to simulate the missing white channel (cold or warm) using RGB channels.
+
+Enable Virtual CT with [`SetOption 106 1`](Commands.md#setoption106) then choose which type of white you're simulating with [`SetOption 107`](Commands.md#setoption107) where `0` is warm white and `1` is cold white 
+
 ## Light Categories
 
 Lights come in various shapes (bulb, strips, ceiling lights, ...) but in Tasmota they are separated in 3 categories:
