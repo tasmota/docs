@@ -1,4 +1,4 @@
-### Version 8.5.0 Hellen
+### Version 8.5.0 Hannah
 
 - Remove support for direct upgrade from versions before 6.6.0.11 to versions after 8.4.0.1
 - Change references from http://thehackbox.org/tasmota/ to http://ota.tasmota.com/tasmota/
@@ -9,6 +9,7 @@
 - Add command ``SetOption102 0/1`` to set Baud rate for Teleinfo communication (0 = 1200 or 1 = 9600)
 - Add command ``SetOption103 0/1`` to set TLS mode when TLS is selected
 - Add command ``SetOption104 1`` to disable all MQTT retained messages
+- Add command ``SetOption105 1`` to enable White Blend Mode
 - Add command ``SetOption106 1`` to create a virtual White ColorTemp for RGBW lights
 - Add command ``SetOption107 0/1`` to select virtual White as (0) Warm or (1) Cold
 - Add command ``SetOption108 0/1`` to enable Teleinfo telemetry into Tasmota Energy MQTT (0) or Teleinfo only (1)
