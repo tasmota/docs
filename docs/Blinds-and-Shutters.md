@@ -35,9 +35,10 @@ First relay: ON/OFF, Second relay: UP/DOWN
    - PWM and COUNTER defined
    
 **Shutter mode 5** - Servo Motors (PWM position based servo)  
-First relay: ON/OFF, Second relay: UP/DOWN
+First relay: ON/OFF, Second relay: UP/DOWN (optional not used)
    PWM: Stepper signal
    PWMfrequency 200   ( This is mandatory for most relay to get correct PWM duty cylces)
+   SetOption15 0 (required to store value and make it reboot save)
    
 [Wiring diagrams](#motor-wiring-diagrams) for Normal, Stepper motor, and Short Circuit-Safe configurations are available at the end of this page. Even if the shutter does not have two motors, three wires have to be connected.
 
