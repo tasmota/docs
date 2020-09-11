@@ -2,6 +2,8 @@
 
 Tasmota supports several I2C devices but to use them they mostly need to be enabled at compile time to solve possible address conflicts.
 
+### Look at [Pre-Compiled Builds](https://github.com/arendst/Tasmota/blob/development/BUILDS.md) to see, which Driver is compiled in the release binarys.
+
 Using command ``I2cDriver`` individual drivers can be enabled or disabled at runtime allowing duplicate I2C addresses at compile time. Use the Index from the table below to control I2C drivers like ``I2cDriver10 0`` for disabling BMP support.
 
 ## Supported I2C devices
