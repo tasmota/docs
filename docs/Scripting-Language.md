@@ -273,6 +273,7 @@ A web user interface may be generated containing any of the following elements:
   `T` = type  
   - b=barchart  
   - c=columnchart  
+  - C=combochart  
   - p=piechart  
   - l=linechart up to 4 lines with same scaling  
   - l2=linechart with exactly 2 lines and 2 y scales (must be given at end)  
@@ -284,10 +285,14 @@ A web user interface may be generated containing any of the following elements:
   
   b,l,h type may have the '2' option to specify exactly 2 arrays with 2 y scales given at the end of paramter list.  
   
+  a very individual chart may be specified by splitting the chart definition and inserting the chart options directly see example below  
+  
   `array` = up to 4 arrays of data  
   `name` = name of chart  
   `label` = label for up to the 4 datasets in chart  
-  `entrylabel` = labels of each entry separated by '|' char ("cntN" starts numbering entries with the number N)  
+  `entrylabel` = labels of each entry separated by '|' char  
+  ("cntN" starts numbering entries with the number N an optional /X generates only an devides by X range)  
+  ("wdh: before a week defintion generates a week with full hours)  
   `header` = visible header name of chart  
   
   additionally you have to define the html frame to put the chart in (both lines must be preceded by a $ char)
@@ -296,6 +301,23 @@ A web user interface may be generated containing any of the following elements:
   $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")</pre></code>
   
   you may define more then one chart. The charts id is chart1 ... chartN
+  
+  very cosumized chart definition:  
+  define a chart like above, but add a t to the definition  
+  this generates a google table from the arrays e.g.:  
+  &gc(lt array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so")
+  
+  then define the options as from the doku of google e.g.:  
+  $var options = {  
+  $vAxes:{0:{maxValue:40,title:'Außentemperatur'},1:{maxValue:60,title:'Solarspeicher'}},  
+  $series:{0:{targetAxisIndex:0},1:{targetAxisIndex:1}},  
+  $hAxis: {title: 'Wochenverlauf'},  
+  $};  
+  then gc(e) closes the definition   
+  $gc(e)  
+  
+  
+  
   
 `>w` ButtonLabel
 generates a button with the name "ButtonLabel" in Tasmota main menu.  
@@ -425,7 +447,8 @@ If you define a variable with the same name as a special variable that special v
 
 **Variable Substitution**  
 - A single percent sign must be given as `%%`  
-- Variable replacement within commands is allowed using `%varname%`. Optionally, the decimal places precision for numeric values may be specified by placing a digit (`%Nvarname%`, N = `0..9`) in front of the substitution variable (e.g., `Humidity: %3hum%%%` will output `Humidity: 43.271%`)   
+- Variable replacement within commands is allowed using `%varname%`. Optionally, the decimal places precision for numeric values may be specified by placing a digit (`%Nvarname%`, N = `0..9`) in front of the substitution variable (e.g., `Humidity: %3hum%%%` will output `Humidity: 43.271%`)  
+- instead of variables arbitrary calculations my be inserted by bracketing %N(formula)%  
 - Linefeed and carriage return may be defined by \n and \r  
 
 **Special** commands:  
