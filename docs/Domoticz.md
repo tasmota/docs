@@ -40,13 +40,13 @@ Tasmota provides different ways to configure Domoticz parameters. Choose the met
     2. Set `Out topic` to `domoticz/out` as hardcoded in Domoticz
     3. Configure `Idx 1` to the value read in step 2.i
 - Use MQTT and execute commands (if necessary, replace `tasmota` with unique topic you configured in Initital Configuration, see point 5 [there](Getting-Started.md#initial-configuration)):
-    1. `cmnd/tasmota/DomoticzInTopic` with payload `domoticz/in` as hardcoded in Domoticz
-    2. `cmnd/tasmota/DomoticzOutTopic` with payload `domoticz/out` as hardcoded in Domoticz
-    3. `cmnd/tasmota/DomoticzIdx1` with payload value read in step 2.i
+    1. `cmnd/tasmota/DzInTopic` with payload `domoticz/in` as hardcoded in Domoticz
+    2. `cmnd/tasmota/DzOutTopic` with payload `domoticz/out` as hardcoded in Domoticz
+    3. `cmnd/tasmota/DzIdx1` with payload value read in step 2.i
 - Use the serial interface and execute commands:
-    1. `DomoticzInTopic` with `domoticz/in` as hardcoded in Domoticz
-    2. `DomoticzOutTopic` with `domoticz/out` as hardcoded in Domoticz
-    3. `DomoticzIdx1` with the value read in step 2.i
+    1. `DzInTopic` with `domoticz/in` as hardcoded in Domoticz
+    2. `DzOutTopic` with `domoticz/out` as hardcoded in Domoticz
+    3. `DzIdx1` with the value read in step 2.i
 
 #### Usage    
 That's it! You can now control your device from the Domoticz user interface.

@@ -84,7 +84,7 @@ then
             case "queryFW" :
                 actionsBroker.publishMQTT( "cmnd/" + device_id + "/status", "2")
             case "upgrade" : {
-                actionsBroker.publishMQTT( "cmnd/" + device_id + "/otaurl", "http://thehackbox.org/tasmota/release/tasmota.bin")  // Replace with your preferred build
+                actionsBroker.publishMQTT( "cmnd/" + device_id + "/otaurl", "http://ota.tasmota.com/tasmota/release/tasmota.bin")  // Replace with your preferred build
                 actionsBroker.publishMQTT( "cmnd/" + device_id + "/upgrade", "1")
             }
         }
@@ -243,7 +243,7 @@ then
             case "queryFW" :
                 publish("broker", "cmnd/" + device_id + "/status", "2")
             case "upgrade" : {
-                publish("broker", "cmnd/" + device_id + "/otaurl", "http://thehackbox.org/tasmota/tasmota.bin")
+                publish("broker", "cmnd/" + device_id + "/otaurl", "http://ota.tasmota.com/tasmota/tasmota.bin")
                 publish("broker", "cmnd/" + device_id + "/upgrade", "1")
             }
         }

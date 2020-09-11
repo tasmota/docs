@@ -1,4 +1,4 @@
-!!! info "Buttons and switches: why the difference and how to configure them"
+﻿!!! info "Buttons and switches: why the difference and how to configure them"
 
 A typical device usually has at least one button (exception being bulbs and some lights) to control the power state(s). Additional buttons and switches can be [wired](Expanding-Tasmota#connect-switch) to a free GPIO and configured in Module or Template settings.
 
@@ -126,17 +126,32 @@ Same as `SwitchMode 2` but when the state of the circuit changes within 0.5s twi
      When you change switch states fast (within 0.5s) some extra actions can be triggered using rules. ON/OFFpower state is only changed when there is no second switch change within 0.5s. 
 
 **`SwitchMode 11`**   
-Set switch to pushbutton with dimmer mode
+Set switch to pushbutton with dimmer mode incl. double press feature
 
-Tasmota will send a `TOGGLE` command (use Switch<x>#state=2 in rules) when the button is pressed for a short time and is then released. When pressing the button (closing the circuit) for a long time (set in `SetOption32`) Tasmota sends repeated `INC_DEC` (increment or decrement the dimmer) commands (use Switch<x>#state=4 in rules) as long as the button is pressed. Releasing the button starts a internal timer, the time is set in `SetOption32`. When released for the time set in `SetOption32` Tasmota sends a `CLEAR` command (use Switch<x>#state=6 in rules). If the button is pressed again before the timeout Tasmota sends a `INV` command (use Switch<x>#state=5 in rules). The `INV` command is for the controlling software (home assistant) to switch between incrementing and decrementing the dimmer.
+!!! note
+    Setoption32 must be smaller than 64, when you use switchmode 11 and 12 !!
+
+Tasmota will send a `TOGGLE` command when the button is pressed for a short time and then is released (use `Switch<x>#state=2` in rules).
+
+When pressing the button (closing the circuit) for a long time (set in `SetOption32`), Tasmota will send repeated `INC_DEC` (increment or decrement the dimmer) commands for as long as the button is pressed (use `Switch<x>#state=4` in rules).
+
+Two different `CLEAR` commands are available. An immediate `CLEAR` command is send upon button release - no delay (use `Switch<x>#state=7` in rules).
+
+Releasing the button also starts an internal timer (time is set in `SetOption32`). When released for the time set in `SetOption32`, Tasmota will send a 'delayed' `CLEAR` command (use `Switch<x>#state=6` in rules).
+
+If the button is pressed again before the timeout, Tasmota will send an `INV` command. The `INV` command is for the controlling software (Home Assistant) to switch between incrementing and decrementing the dimmer (use `Switch<x>#state=5` in rules).
+
+If button is pressed twice (within time set in `SetOption32`), Tasmota will send a `DOUBLE` command. Note that this **doesn't** change behaviour of other switch states. So along with the `DOUBLE` command, `TOGGLE` command will also be fired twice upon a double press (use `Switch<x>#state=8` in rules).
 
 !!! tip
-    The dimmer mode can be used in [conjunction with rules](Rules#control-a-dimmer-with-one-switch) to create additional features or to control another Tasmota device.
-    The dimmer mode can be used to turn a media player on and off and to control the volume of a media player with one switch.
-
+    The dimmer mode has several use cases: In [conjunction with rules](Rules#control-a-dimmer-with-one-switch) to create additional features or to control another Tasmota device. In [conjunction with ControllerX (HA Appdeamon app)](https://xaviml.github.io/controllerx/examples/tasmota-switchmode11) to implement easy toggle and dimming of smart lights, with an 'in wall' hw Tasmota switch. Turn a media player on and off and to control the volume of a media player with one switch.
 
 **`SwitchMode 12`**   
-Set switch to inverted pushbutton with dimmer mode. The same as `Switchmode 11` but with inverted behaviour.
+Set switch to inverted pushbutton with dimmer mode incl. double press feature.
+Same as `Switchmode 11` but with inverted behaviour.
+
+!!! note  
+    Setoption32 must be smaller than 64, when you use switchmode 11 and 12 !!
 
 **`SwitchMode 13`**   
 Set switch to "push to on" mode (`1 = ON`, `0 = nothing`)
@@ -325,6 +340,16 @@ SetOption11 1
 ```
 All of the above is easier accomplished using [Rules](Rules#button-single-press-double-press-and-hold)!
 
+## AC Frequency Detection Switch
+Some devices, such as [BlitzWolf BW-SS5](https://templates.blakadder.com/blitzwolf_BW-SS5.html) or [Moes MS-104B](https://templates.blakadder.com/moes-MS-104B.html), use mains frequency detection on their switch inputs. Whenever the connected switch or button is pressed there are 50/60 Hz pulses on the switch input. Inside the switch there's a frequency detection circuit which is connected to a GPIO of the ESP8266 chip which counts those pulses. Prior to Tasmota 8.4 this kind of switching was handled using Counter sensors and scripting which is now simplified.
+
+You can imagine this algorithm as a leaking bucket. Every pulse adds water to the bucket (little more than leaking out in a cycle), but the water is dripping countinously. If the bucket is full, we will treat the switch on. If there's no pulses, the bucket will be empty, and the we will turn off the switch. The size of the bucket is the debouncing time which controls the sensitivity of the algorithm. If the mains frequency is 50 Hz, a whole AC wave is 20 msec long (for 60 Hz it's about 17 msec; 1000 / frequeny if we want the result in milliseconds). The exact frequency is not really important, because we add more water for every pulse.
+
+After you have assigned a Switch<x\> to the GPIO connected to the AC frequency detection circuit use the ['SwitchDebounce'](Commands.md#switchdebounce) command to set the number of pulses required for the switch to be recognized as on or off. For example: `SwitchDebounce 69` will turn the switch on after three pulses and turn it off after three missing ones (3 * 20 msec is 60 and the last digit must be 9 to activate the AC detection). You will probably have to experiment with the values depending on your AC frequency and the devices frequency detection implementation. 
+
+Once the feature is enabled you can use this switch as any regular switch!
+
 ---
 
 For a practical application of everything mentioned in this article read about this excellent [LEGO nightstand switch project](https://jeff.noxon.cc/2018/11/21/lego-nightstand-light-switch/).
+

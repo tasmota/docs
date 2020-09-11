@@ -54,7 +54,7 @@ The R2 revision boards connect the GPIO4 and GPIO5 pins to the USB data lines of
    - For `R1`: Connect `GPIO4 to C2Ck` and `GPIO5 to C2D`.
    - For `R2`: Connect `GPIO4 to C2D` and `GPIO5 to C2Ck`.
      (:warning: The text on the R2 PCB silkscreen is switched. Therefore this is the same wiring as on the R1)
-4. Switch the ON/OFF switch on the board to 'OFF' to turn off the RF.
+4. Switch the ON/OFF switch on the board to 'ON'.
 5. Power up the bridge via the 3.3V & GND pins. (See below if you need to power the device through the USB power port)
 6. Obtain the Portisch firmware file:  
    (Clicking on the file link on the GitHub web site does **not** work since this will download the GitHub preview/content of the file rather than the raw file contents)

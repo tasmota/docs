@@ -17,9 +17,9 @@ When the power is off, pressing and releasing the down or up button turns the po
 
 When the power is off, holding the down or up button publishes an MQTT EVENT command. The topic follows the format of the Full Topic with a prefix of Event (ex. `cmnd/LightSwitch1/EVENT`). The MQTT payload is Trigger#, where # is 1 if the down button is held or 2 if the up button is held. These triggers can be used in rules on remote devices  (ON `Event#Trigger1`) or by automation software to trigger automations such as scene changes. For example, the Event topic Trigger1 payload could trigger the automation software to turn on the previous scene in a list and the Trigger2 payload could trigger the automation software to turn on the next scene in a list.
 
-If there are LED’s defined in the template, they are turned on to indicate the current brightness. More LEDs are turned on at higher brightnesses. The LedTimeout command enables/disables an LED timeout. If LED timeout is enabled, the LED’s turn off five seconds after the last change in brightness. Note that the lowest LED and the blue power LED are always on when the power is on. The LED timeout can also be enabled/disabled by holding the power button while tapping (pressing and releasing quickly) the down button.
+If there are LED’s defined in the template, they are turned on to indicate the current brightness. More LEDs are turned on at higher brightnesses. Option 86 enables/disables an LED timeout. If `SetOption86` is enabled, the LED’s turn off five seconds after the last change in brightness. Note that the lowest LED and the blue power LED are always on when the power is on. The LED timeout can also be enabled/disabled by holding the power button while tapping (pressing and releasing quickly) the down button.
 
-The LEDLink LED can be used as a nightlight/powered-off indicator. The PoweredOffLed command enables/disables turning the LEDLink LED on when the power is off. The powered-off indicator can also be enabled/disabled by holding the power button and tapping the up button.
+The LEDLink LED can be used as a nightlight/powered-off indicator. `SetOption 87` enables/disables turning the LEDLink LED on when the power is off. The powered-off indicator can also be enabled/disabled by holding the power button and tapping the up button.
 
 Holding the power button, tapping the down button and then tapping or holding the down or up button sends a device group message to set RGB lights in the device group to the previous/next fixed color. The command is sent/value is adjusted once every .5 seconds for as long as the button is held. The color sequence as defined by the Light module is red, green, blue, orange, light green, light blue, amber, cyan, purple, yellow, pink, white using RGB channels, white using CT channels.
 
@@ -29,8 +29,7 @@ Holding any button alone for over 10 seconds executes the WiFiConfig 2 command.
 
 SetOption32 defines the button hold time. When the PWM Dimmer module is initially selected, SetOption32 is set to 5 (1/2 second). Button presses and holds execute the normal ButtonTopic and Rule processing. If ButtonTopic is set and SetOption61 is 0 or a the button press/hold matches a rule, the button press/hold is ignored by PWM Dimmer.
 
-PWM Dimmer uses the Light module to control PWM. Brightness levels are rescaled to PWM values between the <dimmer_min> and <dimmer_max) values specified with `DimmerRange`. Most LED bulbs do not show a significant difference between PWM value of 1 and PWM value of 100. This results in the lower 10% of the dimmer range having no effect. For best results, `DimmerRange <dimmerMin>` value should be set to the higest value that results in the lowest bulb brightness (Typically in the range of 90 - 120).
-
+PWM Dimmer uses the Light module to control PWM. Brightness levels are rescaled to PWM values between the `dimmer_min` and `dimmer_max` values specified with [DimmerRange](Commands.md#dimmerrange). Most LED bulbs do not show a significant difference between PWM value of 1 and PWM value of 100. This results in the lower 10% of the dimmer range having no effect. For best results, `DimmerRange <dimmerMin>` value should be set to the highest value that results in the lowest bulb brightness (Typically in the range of 90 - 120). 
 When Device Groups are enabled, the PWM Dimmer brightness presets are kept in sync across all switches in the group. The powered-off LED and LED timeout settings are specific to each switch. Changing them does not replicate the change to the other switches in the group.
 
 ## Commands
@@ -46,7 +45,7 @@ When Device Groups are enabled, the PWM Dimmer brightness presets are kept in sy
 
 Remote device mode allows PWM Dimmer switches to control remote devices. With remote device mode enabled, each button controls a different device. Note that dimmer switches with toggle-style down/up buttons have limited functionality as remote device mode switches because you can not push the down and up buttons simultaneously.
 
-Remote device mode is included in the default tasmota binary. To include remote device mode support in other builds, define `USE_PWM_DIMMER_REMOTE` and `USE_DEVICE_GROUPS` in your user_config_override. Remote device mode support requires [device group](Device-Groups.md) support. Remote device mode support adds 1K to the code size in addition to the code size required for device groups support.
+Remote device mode is included in the default Tasmota binary. To include remote device mode support in other builds, define `USE_PWM_DIMMER_REMOTE` and `USE_DEVICE_GROUPS` in your user_config_override. Remote device mode support requires [device group](Device-Groups.md) support. Remote device mode support adds 1K to the code size in addition to the code size required for device groups support.
 
 To enable remote device mode, execute `SetOption88 1` (the device will restart). Each remote device must be running firmware with device group support and have remote device support enabled. Remote devices do not need to be built with PWM dimmer support nor do they need to be switches.
 

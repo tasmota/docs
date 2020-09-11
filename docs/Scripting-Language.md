@@ -40,9 +40,10 @@ USE_SCRIPT_GLOBVARS | enables global variables and >G section
 USE_SML_SCRIPT_CMD | enables SML script cmds
 USE_SCRIPT_TIMER | enables up to 4 timers
 SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
-USE_SCRIPT_COMPRESSION | enables compression of scripts (2560 chars buffer) 
+LARGE_ARRAYS | enables arrays of up to 1000 entries instead of max 127  
 LITTLEFS_SCRIPT_SIZE S | enables script buffer of size S (e.g.4096)  
 USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
+USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
 ----
 
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules)"
@@ -82,17 +83,24 @@ with below options script buffer size may be expanded. PVARS is size for permana
 
 | Feature | ESP8266 | ESP32 | PVARS | remarks |
 | -- | -- | -- | -- | -- |
-| default | 1536 | 1536 | 40 ||
-| #define USE_SCRIPT_COMPRESSION | 2560 | 2560 | 40 |actual compression rate may vary |
+| default | 1536 | 1536 | 50 ||
+| #define USE_SCRIPT_COMPRESSION | 2560 | 2560 | 50 |actual compression rate may vary |
 | #define LITTLEFS_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
-| #define SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | not supported | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
+| #define SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld, ESP32 must use linker file "esp32_partition_app1572k_ffat983k.csv"(4M chips) or "esp32_partition_app1984k_ffat12M.csv" (16M chips)|
 | #define SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
-| #define EEP_SCRIPT_SIZE S, #define USE_EEPROM | S<=4096 | S<=8192 | 1536 | may also use I2C 24C256 eeprom #define USE_24C256 |
+| #define EEP_SCRIPT_SIZE S, #define USE_EEPROM, #define USE_24C256 | S<=4096 | S<=8192 | 1536 |only hardware eeprom is usefull, because Flash EEPROM is also used by Tasmota |
 
 most usefull defintion for larger scripts would be  
-ESP8266: #define USE_EEPROM and #define EEP_SCRIPT_SIZE 4000  
-ESP32: #define LITTLEFS_SCRIPT_SIZE 8192  
-
+ESP8266:  
+with 1M flash only default compressed mode is usefull,  
+with 4M Flash best mode would be  
+\#define SCRIPT_FATFS -1  
+with linker file "eagle.flash.4m2m.ld"  
+ESP32:  
+#define LITTLEFS_SCRIPT_SIZE 8192 with standard linker file or better:  
+\#define SCRIPT_FATFS -1  
+\#define FAT_SCRIPT_SIZE 8192  
+with linker file "esp32_partition_app1572k_ffat983k.csv"  
 
 **Optional external editor**   
 
@@ -108,10 +116,14 @@ see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/
 `script ><cmdline>` execute <cmdline>  
 - Can be used to set variables, e.g., `script >mintmp=15`  
 - Multiple statements can be specified by separating each with a semicolon, e.g. `script >mintmp=15;maxtemp=40`  
+  
+`script?<var>` queries a script variable `var`  
+
 - The script itself can't be specified because the size would not fit the MQTT buffers
 
 ## Script Sections
 _Section descriptors (e.g., `>E`) are **case sensitive**_  
+a valid script must start with >D in the first line  
 `>D ssize`   
   `ssize` = optional max string size (default=19)  
   define and init variables here, must be the first section, no other code allowed  
@@ -129,8 +141,10 @@ _Section descriptors (e.g., `>E`) are **case sensitive**_
   `M:vname`   
   specifies a moving average filter variable with 8 entries (for smoothing data)  
   (max 5 filters in total m+M) optional another filter length (1..127) can be given after the definition.  
-  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer)  
-  Using this filter, vars can be used as arrays  
+  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer, x = `-1` returns arry lenght)  
+  Using this filter, vars can be used as arrays, #define LARGE_ARRAYS allows for arrays up to 1000 entries  
+  array may also be permanent by specifying an extra :p  
+  m:p:vname defines a permanent array. Keep in mind however that in 1M Flash standard configurations you only have 50 bytes permanent storage which stands for a maximum of 12 numbers. (see list above for permanent storage in other configurations)  
 
 !!! tip
     Keep variable names as short as possible. The length of all variable names taken together may not exceed 256 characters.  
@@ -256,17 +270,17 @@ A web user interface may be generated containing any of the following elements:
  **Google Charts:**  
   draws a google chart with up to 4 data sets per chart  
   `gc( T array1 ... array4 "name" "label1" ... "label4" "entrylabels" "header" {"maxy1"} {"maxy2"})`   
-  `T` = type
+  `T` = type  
   - b=barchart  
   - c=columnchart  
   - p=piechart  
-  - l=linechart up to 4 lines with same scaling
-  - l2=linechart with exactly 2 lines and 2 y scales (must be given at end)
-  - 2f2 like above but with splined lines 
+  - l=linechart up to 4 lines with same scaling  
+  - l2=linechart with exactly 2 lines and 2 y scales (must be given at end)  
+  - 2f2 like above but with splined lines  
   - h=histogram  
-  - t=data table
+  - t=data table  
   - g=simple gauges (must give extra 3 vars after header, yellow start, red start, maxval)  
-  - T=Timeline (special type arrays contains start,stop pairs in minutes timeofday)
+  - T=Timeline (special type arrays contains start,stop pairs in minutes timeofday)  
   
   b,l,h type may have the '2' option to specify exactly 2 arrays with 2 y scales given at the end of paramter list.  
   
@@ -278,8 +292,9 @@ A web user interface may be generated containing any of the following elements:
   
   additionally you have to define the html frame to put the chart in (both lines must be preceded by a $ char)
   e.g.  
-  $\<div id="chart1"style="width:640px;height:480px;margin:0 auto">\</div>  
-  $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")  
+  <pre><code>$&lt;div id="chart1"style="width:640px;height:480px;margin:0 auto">&lt;/div>
+  $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")</pre></code>
+  
   you may define more then one chart. The charts id is chart1 ... chartN
   
 `>w` ButtonLabel
@@ -323,6 +338,9 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `pin[x]` = GPIO pin level (x = 0..16)  
 `pn[x]` = GPIO for sensor code x. 99 if none  
 `pd[x]` = defined sensor for GPIO x. 999 if none  
+`pl[path]` = plays the mp3 path (ESP32 and if I2S Device defined)  
+`say[svar]` = text to speach (if I2S Device defined)  
+`adc(fac (pin))` = get adc value (on ESP32 can select pin) fac is number of averaged samples (power of 2: 0..7) 
 `sht[x]` = shutter position (x = 1..N) (if defined USE_SHUTTER)  
 `gtmp` = global temperature  
 `ghum` = global humidity  
@@ -332,8 +350,10 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `int(x)` = gets the integer part of x (like floor)  
 `hn(x)` = converts x (0..255) to a hex nibble string  
 `hx(x)` = converts x (0..65535) to a hex string  
+`hd("hstr")` = converts hex number string to a decimal number  
 `st(svar c n)` = string token - retrieve the n^th^ element of svar delimited by c  
 `sl(svar)` = gets the length of a string  
+`asc(svar)` = gets the binary value of 1. char of a string  
 `sb(svar p n)` = gets a substring from svar at position p (if p<0 counts from end) and length n  
 `is(num "string1|string2|....|stringn|")` = defines a string array optionally preset with immediate strings separated by '|' (this immediate string may be up to 255 chars long) num = 0 read only string array, num > 0 number of elements in read write string array  
 `is[index]` = gets string `index` from string array, if read-write also write string of index  
@@ -345,9 +365,18 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sf(F)` = sets the CPU Frequency (ESP32) to 80,160,240 Mhz, returns current Freq.  
 `s(x)` = explicit conversion from number x to string  
 `mqtts` = MQTT connection status: `0` = disconnected, `>0` = connected  
+`wbut` = button status of watch side button (if defined USE_TTGO_WATCH)  
+`wdclk` = double tapped on display (if defined USE_TTGO_WATCH)  
+`wtch(sel)` = gets state from touch panel sel=0 => touched, sel=1 => x position, sel=2 => y position (if defined USE_TTGO_WATCH)  
+`slp(time)` = sleep time in seconds, pos values => light sleep, neg values => deep sleep (if defined USE_TTGO_WATCH)  
+`play(path)` = play mp3 audio from filesystem (if defined USE_TTGO_WATCH) 
+`say("text")` = plays specified text to speech (if defined USE_TTGO_WATCH) 
+
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
-`sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
-`sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
+
+`sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud)   
+`sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD) 
+`sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)(if defined USE_SML_SCRIPT_CMD) 
 `sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
 `enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
 `gjp("host" "path")` = trigger HTTPS JSON page read as used by Tesla Powerwall (if defined SCRIPT_GET_HTTPS_JP)  
@@ -360,6 +389,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `month` = month  
 `year` = year  
 `epoch` = epoch time (from 2019-1-1 00:00)  
+`eres` = result of >E section set this var to 1 in section >E to tell Tasmota event is handled (prevents MQTT)  
 
 The following variables are cleared after reading true:  
 `chg[var]` = true if a variables value was changed (numeric vars only)  
@@ -428,6 +458,7 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
 `spinm(x m)` set GPIO `x` (0..16) to mode `m` (input=0, output=1, input with pullup=2,alternatively b may be: O=out, I=in, P=in with pullup)  
 `ws2812(array dstoffset)` copies an array (defined with `m:vname`) to the WS2812 LED chain. The array length should be defined as long as the number of pixels. Color is coded as 24 bit RGB. optionally the destinationoffset in the LED chain may be given  
 `hsvrgb(h s v)` converts hue (0..360), saturation (0..100) and value (0..100) to RGB color  
+`dt` display text command (if #define USE_DISPLAY)  
 
 `#name` names a subroutine. Subroutine is called with `=#name`  
 `#name(param)` names a subroutine with a parameter. Subroutine is called with `=#name(param)`  
@@ -765,6 +796,9 @@ remark: the Flash illumination LED is connected to GPIO4
 
 ### Scripting Language Example
 
+    a valid script must start with >D in the first line!  
+    some samples still contain comment lines before >D. This is no longer valid!  
+    
     **Actually this code is too large**. This is only meant to show some of the possibilities
 
     >D

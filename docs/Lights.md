@@ -59,7 +59,7 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 For example:
 <img style="float:right;height:120px" alt="CCT" src="https://ae01.alicdn.com/kf/HTB1TrhBQpXXXXbsaFXXq6xXFXXX8/AC-Licht-lampe-dimmen-LED-lampe-und-motor-Dimmer-Modul-1-Kanal-3-3-V-5.jpg">
 
-Define a COUNTER with the same number as the PWM (e.g. COUNTER1, PWM1). Set COUNTERDEBOUNCELOW 1 to enable detection of the raising edge of the zero-crossing. Connect zero-Crossing to COUNTER and PWM to PWM. Set PWMFREQUENCY 100 or 120 depending on the frequency of the main in your country. Additionally it is recommended to set LEDTABLE 0
+Define a COUNTER with the same number as the PWM (e.g. COUNTER1, PWM1). Set SETOPTION99 1 to enable detection of the raising edge of the zero-crossing. Connect zero-Crossing to COUNTER and PWM to PWM. Set PWMFREQUENCY 100 or 120 depending on the frequency of the main in your country. Additionally it is recommended to set LEDTABLE 0 for normal lamps or motors.
 
 |Configuration|(see below)|
 |---|---|
@@ -106,15 +106,17 @@ Define a COUNTER with the same number as the PWM (e.g. COUNTER1, PWM1). Set COUN
 
 **Alexa**: you can use Philips Hue emulation, the light will appear as Color light and White light with CT control. The CT control is only present to force pure white instead of RGB white. Changin CT will have no effect.
 
+<br clear="right"/>
+
+!!! failure "There is no White only slider in the UI for 4 channel lights"
+    Use [`White`](Commands.md#white) commands or set up [White Blend Mode](#white-blend-mode) or [**RGB and White Split**](#rgb-and-white-split).
+
 |Configuration|(see below)|
 |---|---|
 |Commands|`Power`, `Dimmer`, `Color`, `HSBColor`, `White`|
 |Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction), [**Channel Remapping**](#channel-remapping), [**White Blend Mode**](#white-blend-mode), [**RGB and White Split**](#rgb-and-white-split)|
 
 <br clear="right"/>
-
-!!! failure "There is no White only slider in the UI for 4 channel lights"
-    Use [`White`](Commands.md#white) commands or set up [White Blend Mode](#white-blend-mode) or [**RGB and White Split**](#rgb-and-white-split).
 
 !!! danger 
     Some lights have limited power supply that do not allow all channels to be at full power at the same time. Be careful not to burn out your light if you force all channels to be on using `Color` or [**RGB and White Split**](#rgb-and-white-split).
@@ -131,8 +133,6 @@ Define a COUNTER with the same number as the PWM (e.g. COUNTER1, PWM1). Set COUN
 |---|---|
 |Commands|`Power`, `Dimmer`, `Color`, `HSBColor`, `White`, `CT`|
 |Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction), [**Channel Remapping**](#channel-remapping), [**White Blend Mode**](#white-blend-mode), [**RGB and White Split**](#rgb-and-white-split)|
-
-<br clear="right"/>
 
 !!! danger
     Some lights have limited power supply that do not allow all channels to be at full power at the same time. Be careful not to burn out your light if you force all channels via `Color` or [**RGB and White Split**](#rgb-and-white-split)
@@ -172,8 +172,9 @@ The curve used: orange=ideal, blue=tasmota.
 
 ### White Blend Mode
 
-White Blend Mode mixes in the white channel with RGB colors while controlling the RGB light which results in a better and brighter color output. It is used only with 4 channel (RGBW) and 5 channel (RGBCCT) lights. 
-Enable it by setting the last PWM channel to zero using [`RGBWWTable 255,255,255,255,0`](Commands.md#rgbwwtable).
+White Blend Mode mixes in the white channel with RGB colors while controlling the RGB light which results in a better and brighter color output. It is used only with 4 channel (RGBW) and 5 channel (RGBCCT) lights.
+
+Enable it with [`SetOption105 1`](Commands.md#setoption105).
 
 #### Calibration (optional)
 Generally white LEDs are brighter than RGB LEDs. If you want to keep the same brightness, you need to calibrate the white level. In this mode, any white component will be removed from RGB LEDs and sent to the white LEDs. This makes whites look much better.
@@ -220,6 +221,14 @@ When enabling [`SetOption20 1`](Commands.md#setoption20) any change to webUI sli
 Some CCT lights use PWM1 for brightness and PWM2 for color temperature (instead of PWM1 for Cold White and PWM2 for Warm White).
 
 For these lights, use `Module 48` aka Philips Xiaomi mode, or `SetOption92 1` (supported since v.8.2.0.5)
+
+### Virtual CT 
+
+_this feature is experimental and will probably not give brilliant results_
+
+Used with 4 channel RGBW lights to simulate the missing white channel (cold or warm) using RGB channels.
+
+Enable Virtual CT with [`SetOption 106 1`](Commands.md#setoption106) then choose which type of white you're simulating with [`SetOption 107`](Commands.md#setoption107) where `0` is warm white and `1` is cold white 
 
 ## Light Categories
 
@@ -295,7 +304,7 @@ For example, on a Sonoff Basic the green LED is used as the link status LED. Onc
 
 **Link status LED** shows the network state, more specifically the Wi-Fi and MQTT connection status.
 
-It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (if MQTT is enabled). You can change this behaviour with [`LedState`](Commands#ledstate) or turn it off with [`SetOption31`](Commands#SetOption31).
+It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (if MQTT is enabled). You can change this behaviour with [`LedState`](Commands#ledstate) or turn it off with [`SetOption31`](Commands#setoption31).
 
 #### Power status LED
 **Power status LED** shows the power status of relay component(s). [`LedMask`](Commands#ledmask) determines which relay(s) are associated with the power status LED. This behavior can be modified with the [`LedState`](Commands#ledstate) command. The LED is turned off by default when the relay is OFF and turned on when the relay switches ON.
@@ -303,10 +312,15 @@ It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (i
 !!! note 
     Depending on the device design, some LEDs are connected to the same GPIO as the relay. Those cannot be independently controlled since they have to follow the relay state.
 
-If you have more than one LED wired independently and you want it to show the power state of the relay, you must assign an `LedLink` GPIO.
+If you have more than one LED wired independently and you want it to show the power state of the relay, you **must** assign an `LedLink` GPIO.
 
-#### Using LedLink
-`LedLink` / `LedLinki` was introduced with Tasmota version 6.5.0.12. It is used to assign the link status LED. If your device does not have an LED for link status (or you want to use that LED for a different purpose), you can assign `LedLink` to an available free GPIO. When `LedLink(i)` is assigned, other LEDs are automatically linked to their corresponding relay and serve as that relay's power status LED - i.e., `Led<x>(i)` links to `Relay<x>(i)`
+#### PWM LED Mode
+Using [`LedPwmMode`](Commands#ledpwmmode) you can change the LED display mode from simple on/off to a PWM controlled LED which will enable you to f.e. display a brighter LED when the relay is on and a dimmer LED when its OFF so you can locate the switch in the dark but not have it obnoxiously bright.
+
+`LedPwmOff` and `LedPwmOn` control the preset LED brightness in their respective states.
 
 #### LedPower Command
 When you use [`LedPower`](Commands#ledpower) you take over control of that particular LED and it stops being linked to its corresponding relay and being its power status LED.
+
+#### Using LedLink
+`LedLink` / `LedLinki` is used to assign the link status LED. If your device does not have an LED for link status (or you want to use that LED for a different purpose), you can assign `LedLink` to an available free GPIO. When `LedLink(i)` is assigned, other LEDs are automatically linked to their corresponding relay and serve as that relay's power status LED - i.e., `Led<x>(i)` links to `Relay<x>(i)`

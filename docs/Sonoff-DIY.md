@@ -5,18 +5,73 @@ Some new Sonoff devices support the new [Itead DIY architecture](https://www.you
 
 **IMPORTANT:** There are [some reports](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/36) suggesting that the Windows version of Sonoff DIY Tool contains a trojan. It is not clear if it actually contains the malicious code or these are just false positives due to the way Python code was converted to native executables. Nevertheless, proceed with care.
 
-# Compatible devices
+## Compatible devices
 Currently the following devices officially support Sonoff DIY:
 - Sonoff Basic R3
 - Sonoff RF R3
 - Sonoff Mini
 
-As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible that other Sonoff devices running eWelink 3.1 or higher will also support it.
+As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible that other Sonoff devices running eWelink will support it.
 
 !!! note
     The OTA process Sonoff provides through the Sonoff DIY procedure **does not create a backup** of the Itead firmware on the device. If you use this OTA method to flash Tasmota on the Sonoff device, you will not be able to revert to the original factory firmware. :warning:
 
-# Flash procedure
+## Flash procedure
+_Guide originally from [@Brunas](https://github.com/Brunas/HomeAutomation/edit/master/doc/Sonoff%20Mini%203.6.0%20to%20Tasmota.md)_
+
+1. Follow instructions how to enter DIY mode from [Sonoff](https://github.com/itead/Sonoff_Devices_DIY_Tools/blob/master/SONOFF%20DIY%20MODE%20Protocol%20Doc%20v2.0%20Doc.pdf). This is the excerpt from it:
+
+	1. Power on;
+	2. Long press the button for 5 seconds for entering Compatible Pairing Mode (AP)
+	User tips: If the device has been paired with eWeLink APP, reset the device is necessary by	long press the pairing button for 5 seconds, then press another 5 seconds for entering Compatible Pairing Mode (AP)
+	3. The LED indicator will blink continuously;
+	4. From mobile phone or PC WiFi setting, an Access Point of the device named **ITEAD-XXXXXXXX** will be found, connect it with default password **12345678**
+	5. Open the browser and access http://10.10.7.1/
+	6. Next, Fill in WiFi SSID and password that the device would have connected with
+	7. Succeed, Now the device is in DIY mode.
+
+Note: I needed to manually change IP address to 10.10.7.2, 255.0.0.0 with gateway 10.10.7.1 in adapter TCP/IPv4 settings to access that IP address.
+
+3. Use Fing or any similar local network scanning app on your smartphone or PC to find IP address of your Sonoff Mini device. MAC Vendor most likely is **Espressif** and the device has **8081** port open.
+4. Install **Rester** extension in Chrome or Firefox or any other preferred tool to perform REST API operations.
+5. To test your device DIY mode create new request in **Rester**:
+	1. Method: **POST**
+	2. URL: http://<*IP of your device*>:8081/zeroconf/info
+	3. Body: `{"data": {}}`
+	4. You might need to add Header **Content-Type** with value **application/json**
+	5. Press **SEND**
+	6. If all is OK, status code *200* should be returned with bunch of data:
+```json
+{
+    "seq": 1,
+    "error": 0,
+    "data": {
+        "switch": "off",
+        "startup": "off",
+        "pulse": "off",
+        "pulseWidth": 2000,
+        "ssid": "YourWiFi",
+        "otaUnlock": false,
+        "fwVersion": "3.6.0",
+        "deviceid": "YourDeviceId",
+        "bssid": "YourBSSId",
+        "signalStrength": -52
+    }
+}
+```
+	7. If that doesn't return *200*, try going back to 5s+5s reset above.
+6. If all above works, let's unlock OTA:
+	1. Method: **POST**
+	2. URL: http://<*IP of your device*>:8081/zeroconf/ota_unlock
+	3. Body: `{"data": {}}`
+	4. You might need to add Header **Content-Type** with value **application/json**
+	5. Press **SEND**
+	6. You should get status code *200*
+	7. Optionally for curiousity you could retry *info* query to check if *otaUnlock* value now is *true*
+7. Sonoff's flashing tool should see your device now! 
+8. Download Tasmota-lite.bin from https://github.com/arendst/Tasmota/releases and flash it according to instructions everywhere on the Internet. Just the WiFi AP name is **TASMOTA_XXXX** and not sonoff_XXX.
+
+<!--
 ## Using the Itead DIY tool
 ### Verify and/or update eWelink firmware version
 <img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/w10mobile_hotspot.png" style="float:right"></img>
@@ -36,7 +91,7 @@ As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible tha
 - The utility should discover the device
 - Select the device and toggle it `ON` and `OFF` to verify you are connected to the right device
 - Select `Firmware flash` (`Brush machine` on newer versions of the tool)
-- Select a Tasmota binary (e.g., [`tasmota-wifiman.bin`](http://thehackbox.org/tasmota/tasmota-wifiman.bin)) or your own self-compiled binary. It must fit in the available free program space. _**Do NOT use tasmota-minimal.bin**_ as it does not allow you to change any settings and will make your device inaccessible and you will have to serial flash it to recover.
+- Select a Tasmota binary (e.g., [`tasmota-wifiman.bin`](http://ota.tasmota.com/tasmota/tasmota-wifiman.bin)) or your own self-compiled binary. It must fit in the available free program space. _**Do NOT use tasmota-minimal.bin**_ as it does not allow you to change any settings and will make your device inaccessible and you will have to serial flash it to recover.
   
 !!! note 
     You may wish to [compile your own firmware](Gitpod) with all the features you require and disabling the features you do not. This will usually result in a "full" binary that is under 500k. You can use the resulting firmware file instead of the pre-compiled binary.  
@@ -60,7 +115,7 @@ This procedure is recommended for MacOS, but also works for Linux.
 - OS with `curl` and a network services discovery tool (e.g., `mDNS` for MacOS or `avahi-browse` for Linux)
 - `sonoffDiy` SSID on your local network. Use a router/access point or configure your laptop/smartphone as a hotspot with the proper SSID and password.
 - A `<webServer>` available on the same local network. Very simple web servers like `SimpleHTTPServer` will not work. For Mac, the [OSX built-in web server](MacOSX-Server) is recommended.  
-- A Tasmota binary (e.g., [`tasmota-wifiman.bin`](http://thehackbox.org/tasmota/tasmota-wifiman.bin)) or your own self-compiled binary. It must fit in the available free program space. You can use the 2.3.0 Core for this initial flash since it has the smallest program memory footprint. _**Do NOT use the tasmota-minimal pre-compiled binary**_ as it does not allow you to change any settings.
+- A Tasmota binary (e.g., [`tasmota-wifiman.bin`](http://ota.tasmota.com/tasmota/tasmota-wifiman.bin)) or your own self-compiled binary. It must fit in the available free program space. You can use the 2.3.0 Core for this initial flash since it has the smallest program memory footprint. _**Do NOT use the tasmota-minimal pre-compiled binary**_ as it does not allow you to change any settings.
   >You may wish to [compile your own firmware](Gitpod) with all the features you require and disabling the features you do not. This will usually result in a "full" binary that is under 500k. You can use the resulting firmware file instead of the pre-compiled `tasmota-wifiman.bin`. This way you will not have to perform the secondary OTA firmware update. _**Nevertheless, it is still recommended that you perform a `Reset 5` immediately after the Sonoff DIY flash completes.**_  
 
   Upload the firmware file to the `<webServer>` available on the same local network.  
@@ -135,7 +190,7 @@ Once the firmware upload completes and the device restarts, the usual `tasmota-x
 
 1. Set up Wi-Fi to connect your device to your network
 2. **_Perform a `Reset 5` to wipe any flash remnants BEFORE attempting a Tasmota OTA flash for the first time_**
-3. If you flashed `tasmota-wifiman.bin`, it is recommended that you upgrade to the firmware and Core variant that is needed for your device and use case (e.g., `tasmota.bin`). You _**must perform this update**_ using the local `File upload` OTA. **Do not use a web OTA** for this step. Download the firmware file from the [repository](http://thehackbox.org/tasmota) to your computer.
+3. If you flashed `tasmota-wifiman.bin`, it is recommended that you upgrade to the firmware and Core variant that is needed for your device and use case (e.g., `tasmota.bin`). You _**must perform this update**_ using the local `File upload` OTA. **Do not use a web OTA** for this step. Download the firmware file from the [repository](http://ota.tasmota.com/tasmota) to your computer.
 
 !!! note
     **_Some users have reported that upgrading via web OTA from `tasmota-wifiman.bin` to another binary has resulted in an unresponsive device which has required a wired flash to recover._**  
@@ -148,6 +203,7 @@ Once the firmware upload completes and the device restarts, the usual `tasmota-x
    4 | Switch1 (9) | S1/S2
    12 | Relay1 (21) | L Out
    13 | LED1 (56) | Link/Power Indicator
+-->
 
 ### Video tutorials
 - [Andreas Spiess](https://youtu.be/fzEDFmB0UYU?t=239)

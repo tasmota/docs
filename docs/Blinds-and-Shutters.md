@@ -11,35 +11,34 @@ First enable shutter support with `SetOption80 1`
 Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#shutters).
 
 ## Shutter Modes
-There are three shutter modes which are defined according to the [PulseTime](Commands.md#pulsetime) and [Interlock](Commands.md#interlock) settings. The examples below are for a `ShutterRelay1 1` configuration (using Relay1 and Relay2).
+There are five shutter modes which defines how the relays operate. Additional you can define on any relay [PulseTime](Commands.md#pulsetime) to change the relay into a pulse relay whre the pulse changes start/stop. Additionaly we recomment at least for mode=1 to define an [Interlock](Commands.md#interlock) settings. The examples below are for a `ShutterRelay1 1` configuration (using Relay1 and Relay2).
 
-**Shutter mode 0** - Normal Operation   
+**Shutter mode 1** - Normal Operation   
 
 First relay: OFF/DOWN, Second relay: OFF/UP  
-   - `Backlog PulseTime1 0; PulseTime2 0`
    - `Interlock 1,2` (Interlocked relay pair)
    - `Interlock ON`
 
-**Shutter mode 1** - Circuit Safe 
+**Shutter mode 2** - Circuit Safe 
 
 First relay: ON/OFF, Second relay: UP/DOWN
-   - `Backlog PulseTime1 0; PulseTime2 0`
    - `Interlock OFF`
 
-**Shutter mode 2** - Pulse Motors   
+**Shutter mode 3** - Garage Motors   
 
 First relay: OFF/DOWN PULSE, Second relay: OFF/UP PULSE
-   - `Backlog PulseTime1 2; PulseTime2 2`
-   - `Interlock 1,2` (Interlocked relay pair)
-   - `Interlock ON`
    
-**Shutter mode 3** - Stepper Motors   
+**Shutter mode 4** - Stepper Motors   
 
 First relay: ON/OFF, Second relay: UP/DOWN
    PWM: Stepper signal, COUNTER: Stepper position signal
-   - `Backlog PulseTime1 0; PulseTime2 0`
-   - `Interlock OFF`
    - PWM and COUNTER defined
+   
+**Shutter mode 5** - Servo Motors (PWM position based servo)  
+First relay: ON/OFF, Second relay: UP/DOWN (optional not used)
+   PWM: Stepper signal
+   PWMfrequency 200   ( This is mandatory for most relay to get correct PWM duty cylces)
+   SetOption15 0 (required to store value and make it reboot save)
    
 [Wiring diagrams](#motor-wiring-diagrams) for Normal, Stepper motor, and Short Circuit-Safe configurations are available at the end of this page. Even if the shutter does not have two motors, three wires have to be connected.
 
@@ -47,6 +46,7 @@ First relay: ON/OFF, Second relay: UP/DOWN
     **After setting the options for shutter mode, the device must be rebooted.** Otherwise, the sliders won't be available in the web UI, and the `ShutterOpenDuration<x>`and  `ShutterCloseDuration<x>` commands will report "Shutter unknown". 
 
 Issue `ShutterRelay<x> 1` command and check in console which **ShutterMode** is displayed:
+Issue `Status 13` command and check in console how the shutter is defined
 
 ```
 Shutter accuracy digits: 1
@@ -79,6 +79,12 @@ There are shutters that have two relays but only need a pulse to start or stop. 
 
 ### Stepper Motor Support
 Stepper motors can also be used to operate shutters and blinds. Additionally you can operate sliding doors with this configuration.
+
+### Servo Motor Support
+Servos are small devices with typical 180° or 360" rotation movement. The position will be drived by the PWM duty cycle time. This will all automatically calculated
+
+### Smooth RAMP-UP and RAMP-DOWN Support
+Servos and Steppers also have a velocity control. With `ShutterMotorDelay<x> 1.5` you can define a 1.5second soft start/stop before the device reaches it final moving speed. Usefull for moving heavy items like doors.
     
 ### Calibration
 [Shutter calibration video tutorial](https://www.youtube.com/watch?v=Z-grrvnu2bU)  
@@ -414,9 +420,11 @@ If using a Sonoff Dual R2, use the following Template:
 #### Rules
 Tasmota rule triggers:  
 
-- `Shutter<x>#Position` is triggered at end of movement reporting actual position
-- `Shutter<x>#Direction` is triggered at end of movement reporting actual direction
-- `Shutter<x>#Target` is triggered at end of movement reporting current target
+- `Shutter<x>#Position` is triggered at start, during and at the end of movement reporting actual position (`%value%`=0-100)
+- `Shutter<x>#Direction` is triggered at start, during and at the end of movement reporting actual direction (`%value%`: `-1`=close direction, `0`=no movement, `1`=open direction)
+- `Shutter<x>#Target` is triggered at start, during and at the end of movement reporting current target (`%value%`0-100)
+- `Shutter#Moving` is triggered during movement (shutter independently)
+- `Shutter#Moved` is triggered at end of movement (shutter independently)
 - `Shutter<x>#Button<button>=0`  is triggered when `button` is hold
 - `Shutter<x>#Button<button>=<n>`  is triggered when `button` is pressed `n` times
 - `Shutter<x>#Button0=0`  is triggered when all buttons of that shutter are hold simultaneously
