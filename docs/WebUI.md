@@ -7,7 +7,7 @@ By default, webUI starts in unprotected admin mode which allows complete access 
 If you want to restrict other users to only control through the webUI, use [`WebServer 1`](Commands#webserver).
 
 Command [`WebPassword`](Commands#webpassword) will set up a password that needs to be entered when trying to access webUI. This is a very thin layer of protection since everything is transmitted over unencrypted http protocol.
-
+ 
 ## Menus
 #### Configuration
 Configuration menu allows you to configure everything from components to Wi-Fi and gives you the option to backup and restore the configuration in a secure location.
