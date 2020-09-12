@@ -40,7 +40,9 @@ Open `my_user_config.h` and uncomment (remove `//`) line with `#define USE_CONFI
 #define USE_CONFIG_OVERRIDE                          // Uncomment to use user_config_override.h file. See README.md
 ```
 
-## Customize your build    
+## Customize your build
+The base for your self compiled version has to be **Tasmota**. Do NOT use a other Tasmota build variant for.
+
 Create a new file in `/tasmota` folder called `user_config_override.h`.
 
 Open the file in chosen development environment for editing.

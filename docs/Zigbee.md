@@ -287,9 +287,9 @@ ZbSend { "device":"0x4773", "send":{"Power":"Toggle"} }
 Read the On/Off status: (all three commands below are synonyms)
 
 ```json
-ZbRead { "device":"0x4773", "endpoint":"0x03", "cluster":"0x0006", "read":"0x0000" }
-ZbRead { "device":"0x4773", "endpoint":"0x03", "cluster":"0x0006", "read":["0x0000"] }
-ZbRead { "device":"0x4773", "endpoint":3, "cluster":6, "read":0 }
+ZbSend { "device":"0x4773", "endpoint":"0x03", "cluster":"0x0006", "read":"0x0000" }
+ZbSend { "device":"0x4773", "endpoint":"0x03", "cluster":"0x0006", "read":["0x0000"] }
+ZbSend { "device":"0x4773", "endpoint":3, "cluster":6, "read":0 }
 ```
 
 ```json

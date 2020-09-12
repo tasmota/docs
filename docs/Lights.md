@@ -172,8 +172,9 @@ The curve used: orange=ideal, blue=tasmota.
 
 ### White Blend Mode
 
-White Blend Mode mixes in the white channel with RGB colors while controlling the RGB light which results in a better and brighter color output. It is used only with 4 channel (RGBW) and 5 channel (RGBCCT) lights. 
-Enable it by setting the last PWM channel to zero using [`RGBWWTable 255,255,255,255,0`](Commands.md#rgbwwtable).
+White Blend Mode mixes in the white channel with RGB colors while controlling the RGB light which results in a better and brighter color output. It is used only with 4 channel (RGBW) and 5 channel (RGBCCT) lights.
+
+Enable it with [`SetOption105 1`](Commands.md#setoption105).
 
 #### Calibration (optional)
 Generally white LEDs are brighter than RGB LEDs. If you want to keep the same brightness, you need to calibrate the white level. In this mode, any white component will be removed from RGB LEDs and sent to the white LEDs. This makes whites look much better.
@@ -220,6 +221,14 @@ When enabling [`SetOption20 1`](Commands.md#setoption20) any change to webUI sli
 Some CCT lights use PWM1 for brightness and PWM2 for color temperature (instead of PWM1 for Cold White and PWM2 for Warm White).
 
 For these lights, use `Module 48` aka Philips Xiaomi mode, or `SetOption92 1` (supported since v.8.2.0.5)
+
+### Virtual CT 
+
+_this feature is experimental and will probably not give brilliant results_
+
+Used with 4 channel RGBW lights to simulate the missing white channel (cold or warm) using RGB channels.
+
+Enable Virtual CT with [`SetOption 106 1`](Commands.md#setoption106) then choose which type of white you're simulating with [`SetOption 107`](Commands.md#setoption107) where `0` is warm white and `1` is cold white 
 
 ## Light Categories
 

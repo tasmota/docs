@@ -40,7 +40,7 @@ USE_SCRIPT_GLOBVARS | enables global variables and >G section
 USE_SML_SCRIPT_CMD | enables SML script cmds
 USE_SCRIPT_TIMER | enables up to 4 timers
 SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
-USE_SCRIPT_COMPRESSION | enables compression of scripts (2560 chars buffer) 
+LARGE_ARRAYS | enables arrays of up to 1000 entries instead of max 127  
 LITTLEFS_SCRIPT_SIZE S | enables script buffer of size S (e.g.4096)  
 USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
 USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
@@ -83,18 +83,23 @@ with below options script buffer size may be expanded. PVARS is size for permana
 
 | Feature | ESP8266 | ESP32 | PVARS | remarks |
 | -- | -- | -- | -- | -- |
-| default | 1536 | 1536 | 40 ||
-| #define USE_SCRIPT_COMPRESSION | 2560 | 2560 | 40 |actual compression rate may vary |
+| default | 1536 | 1536 | 50 ||
+| #define USE_SCRIPT_COMPRESSION | 2560 | 2560 | 50 |actual compression rate may vary |
 | #define LITTLEFS_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
 | #define SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld, ESP32 must use linker file "esp32_partition_app1572k_ffat983k.csv"(4M chips) or "esp32_partition_app1984k_ffat12M.csv" (16M chips)|
 | #define SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
 | #define EEP_SCRIPT_SIZE S, #define USE_EEPROM, #define USE_24C256 | S<=4096 | S<=8192 | 1536 |only hardware eeprom is usefull, because Flash EEPROM is also used by Tasmota |
 
 most usefull defintion for larger scripts would be  
-ESP8266: with 1M flash only default compressed mode is usefull, with 4M Flash best mode would be SCRIPT_FATFS -1  
-ESP32: #define LITTLEFS_SCRIPT_SIZE 8192 with standard linker file or better:  
-\#define SCRIPT_FATFS -1
-\#define FAT_SCRIPT_SIZE 8192
+ESP8266:  
+with 1M flash only default compressed mode is usefull,  
+with 4M Flash best mode would be  
+\#define SCRIPT_FATFS -1  
+with linker file "eagle.flash.4m2m.ld"  
+ESP32:  
+#define LITTLEFS_SCRIPT_SIZE 8192 with standard linker file or better:  
+\#define SCRIPT_FATFS -1  
+\#define FAT_SCRIPT_SIZE 8192  
 with linker file "esp32_partition_app1572k_ffat983k.csv"  
 
 **Optional external editor**   
@@ -136,8 +141,10 @@ a valid script must start with >D in the first line
   `M:vname`   
   specifies a moving average filter variable with 8 entries (for smoothing data)  
   (max 5 filters in total m+M) optional another filter length (1..127) can be given after the definition.  
-  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer)  
-  Using this filter, vars can be used as arrays  
+  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer, x = `-1` returns arry lenght)  
+  Using this filter, vars can be used as arrays, #define LARGE_ARRAYS allows for arrays up to 1000 entries  
+  array may also be permanent by specifying an extra :p  
+  m:p:vname defines a permanent array. Keep in mind however that in 1M Flash standard configurations you only have 50 bytes permanent storage which stands for a maximum of 12 numbers. (see list above for permanent storage in other configurations)  
 
 !!! tip
     Keep variable names as short as possible. The length of all variable names taken together may not exceed 256 characters.  
@@ -263,31 +270,54 @@ A web user interface may be generated containing any of the following elements:
  **Google Charts:**  
   draws a google chart with up to 4 data sets per chart  
   `gc( T array1 ... array4 "name" "label1" ... "label4" "entrylabels" "header" {"maxy1"} {"maxy2"})`   
-  `T` = type
+  `T` = type  
   - b=barchart  
   - c=columnchart  
+  - C=combochart  
   - p=piechart  
-  - l=linechart up to 4 lines with same scaling
-  - l2=linechart with exactly 2 lines and 2 y scales (must be given at end)
-  - 2f2 like above but with splined lines 
+  - l=linechart up to 4 lines with same scaling  
+  - l2=linechart with exactly 2 lines and 2 y scales (must be given at end)  
+  - 2f2 like above but with splined lines  
   - h=histogram  
-  - t=data table
+  - t=data table  
   - g=simple gauges (must give extra 3 vars after header, yellow start, red start, maxval)  
-  - T=Timeline (special type arrays contains start,stop pairs in minutes timeofday)
+  - T=Timeline (special type arrays contains start,stop pairs in minutes timeofday)  
   
   b,l,h type may have the '2' option to specify exactly 2 arrays with 2 y scales given at the end of paramter list.  
+  
+  a very individual chart may be specified by splitting the chart definition and inserting the chart options directly see example below  
   
   `array` = up to 4 arrays of data  
   `name` = name of chart  
   `label` = label for up to the 4 datasets in chart  
-  `entrylabel` = labels of each entry separated by '|' char ("cntN" starts numbering entries with the number N)  
+  `entrylabel` = labels of each entry separated by '|' char  
+  ("cntN" starts numbering entries with the number N an optional /X generates only an devides by X range)  
+  ("wdh: before a week defintion generates a week with full hours)  
   `header` = visible header name of chart  
   
   additionally you have to define the html frame to put the chart in (both lines must be preceded by a $ char)
   e.g.  
-  $\<div id="chart1"style="width:640px;height:480px;margin:0 auto">\</div>  
-  $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")  
+  <pre><code>$&lt;div id="chart1"style="width:640px;height:480px;margin:0 auto">&lt;/div>
+  $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")</pre></code>
+  
   you may define more then one chart. The charts id is chart1 ... chartN
+  
+  very cosumized chart definition:  
+  define a chart like above, but add a t to the definition  
+  this generates a google table from the arrays e.g.:  
+  &gc(lt array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so")
+  
+  then define the options as from the doku of google e.g.:  
+  $var options = {  
+  $vAxes:{0:{maxValue:40,title:'Außentemperatur'},1:{maxValue:60,title:'Solarspeicher'}},  
+  $series:{0:{targetAxisIndex:0},1:{targetAxisIndex:1}},  
+  $hAxis: {title: 'Wochenverlauf'},  
+  $};  
+  then gc(e) closes the definition   
+  $gc(e)  
+  
+  
+  
   
 `>w` ButtonLabel
 generates a button with the name "ButtonLabel" in Tasmota main menu.  
@@ -357,8 +387,16 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sf(F)` = sets the CPU Frequency (ESP32) to 80,160,240 Mhz, returns current Freq.  
 `s(x)` = explicit conversion from number x to string  
 `mqtts` = MQTT connection status: `0` = disconnected, `>0` = connected  
+`wbut` = button status of watch side button (if defined USE_TTGO_WATCH)  
+`wdclk` = double tapped on display (if defined USE_TTGO_WATCH)  
+`wtch(sel)` = gets state from touch panel sel=0 => touched, sel=1 => x position, sel=2 => y position (if defined USE_TTGO_WATCH)  
+`slp(time)` = sleep time in seconds, pos values => light sleep, neg values => deep sleep (if defined USE_TTGO_WATCH)  
+`play(path)` = play mp3 audio from filesystem (if defined USE_TTGO_WATCH) 
+`say("text")` = plays specified text to speech (if defined USE_TTGO_WATCH) 
+
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
-`sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
+
+`sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud)   
 `sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD) 
 `sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)(if defined USE_SML_SCRIPT_CMD) 
 `sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
@@ -409,7 +447,8 @@ If you define a variable with the same name as a special variable that special v
 
 **Variable Substitution**  
 - A single percent sign must be given as `%%`  
-- Variable replacement within commands is allowed using `%varname%`. Optionally, the decimal places precision for numeric values may be specified by placing a digit (`%Nvarname%`, N = `0..9`) in front of the substitution variable (e.g., `Humidity: %3hum%%%` will output `Humidity: 43.271%`)   
+- Variable replacement within commands is allowed using `%varname%`. Optionally, the decimal places precision for numeric values may be specified by placing a digit (`%Nvarname%`, N = `0..9`) in front of the substitution variable (e.g., `Humidity: %3hum%%%` will output `Humidity: 43.271%`)  
+- instead of variables arbitrary calculations my be inserted by bracketing %N(formula)%  
 - Linefeed and carriage return may be defined by \n and \r  
 
 **Special** commands:  
