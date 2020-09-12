@@ -1,7 +1,7 @@
 Tasmota's web user interface is a practical way to control and manage your tasmotized device. 
 
 !!! warning
-    WebUI **does not** and **can not** have all the fetaures and commands implemented. For precise and complete control use Console or MQTT commands!
+    WebUI **does not** and **can not** have all the features and commands implemented. For precise and complete control use Console or MQTT commands!
 
 To access the webUI use your device's IP address in your favorite web browser.
 
