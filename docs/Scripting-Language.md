@@ -86,19 +86,19 @@ with below options script buffer size may be expanded. PVARS is size for permana
 | default | 1536 | 1536 | 50 ||
 | #define USE_SCRIPT_COMPRESSION | 2560 | 2560 | 50 |actual compression rate may vary |
 | #define LITTLEFS_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
-| #define SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld, ESP32 must use linker file "esp32_partition_app1572k_ffat983k.csv"(4M chips) or "esp32_partition_app1984k_ffat12M.csv" (16M chips)|
-| #define SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
+| #define USE_SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld, ESP32 must use linker file "esp32_partition_app1572k_ffat983k.csv"(4M chips) or "esp32_partition_app1984k_ffat12M.csv" (16M chips)|
+| #define USE_SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
 | #define EEP_SCRIPT_SIZE S, #define USE_EEPROM, #define USE_24C256 | S<=4096 | S<=8192 | 1536 |only hardware eeprom is usefull, because Flash EEPROM is also used by Tasmota |
 
 most usefull defintion for larger scripts would be  
 ESP8266:  
 with 1M flash only default compressed mode is usefull,  
 with 4M Flash best mode would be  
-\#define SCRIPT_FATFS -1  
+\#define USE_SCRIPT_FATFS -1  
 with linker file "eagle.flash.4m2m.ld"  
 ESP32:  
 #define LITTLEFS_SCRIPT_SIZE 8192 with standard linker file or better:  
-\#define SCRIPT_FATFS -1  
+\#define USE_SCRIPT_FATFS -1  
 \#define FAT_SCRIPT_SIZE 8192  
 with linker file "esp32_partition_app1572k_ffat983k.csv"  
 
