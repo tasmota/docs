@@ -37,6 +37,9 @@ USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 USE_SCRIPT_TASK | enables multitasking Task in ESP32
 USE_SCRIPT_GLOBVARS | enables global variables and >G section
+USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
+USE_SML_SCRIPT_CMD | enables SML script cmds
+SML_REPLACE_VARS | enables posibility to replace the lines from the (SML) descriptor with Vars
 USE_SML_SCRIPT_CMD | enables SML script cmds
 USE_SCRIPT_TIMER | enables up to 4 timers
 SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
