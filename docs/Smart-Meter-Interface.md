@@ -197,7 +197,8 @@ in `user_config_override.h` file). An entry defines how to decode the data and p
 
 - With an asterisk `*`character as JSON Prefix in the Meter definiton suppresses the JSON output ("#define USE_SML_SCRIPT_CMD" required)
 
-!!! example 
+!!! example
+
   `+1,14,m,0,9600,*,12,2,01040000,01040002,01040004`
 
 
