@@ -185,6 +185,7 @@ in `user_config_override.h` file). An entry defines how to decode the data and p
   `1,=h==================` insert a separator line 
 
 - With an asterisk `*` character replacing the name in a descriptor line, this line can be hidden in the main menu. ("#define USE_SML_SCRIPT_CMD" required)
+
 !!! example
 ```
   1,010304ffffffff@i0:1,*,V,Voltage_L1-N,2  
@@ -195,11 +196,13 @@ in `user_config_override.h` file). An entry defines how to decode the data and p
 
 
 - With an asterisk `*`character as JSON Prefix in the Meter definiton suppresses the JSON output ("#define USE_SML_SCRIPT_CMD" required)
+
 !!! example 
   `+1,14,m,0,9600,*,12,2,01040000,01040002,01040004`
 
 
 - To get the value of one of the descriptor lines, use sml[X]. X = Line number. Starts with 1.  ("#define  USE_SML_SCRIPT_CMD" required)
+
 !!! example
 ```
   >D
