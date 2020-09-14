@@ -167,7 +167,7 @@ in `user_config_override.h` file). An entry defines how to decode the data and p
 ------------------------------------------------------------------------------
 **Special Commands**
 
-with the '=' char at the beginning of a line you may do some special decoding  
+- With the '=' char at the beginning of a line you may do some special decoding  
 
 - `M,=m` perform arithmetic (`+,-,*,/`) on the metric. Use `#` before a number to designate a constant value  
 
@@ -182,7 +182,36 @@ with the '=' char at the beginning of a line you may do some special decoding
   inserts a html line between entries (these lines do not count as decoder entry)  
 
 !!! example     
-  `1,=h==================` insert a separator line  
+  `1,=h==================` insert a separator line 
+
+- With an asterisk `*` character replacing the name in a descriptor line, this line can be hidden in the main menu. ("#define USE_SML_SCRIPT_CMD" required)
+!!! example
+```
+  1,010304ffffffff@i0:1,*,V,Voltage_L1-N,2  
+  1,010304ffffffff@i1:1,*,V,Voltage_L2-N,2  
+  1,010304ffffffff@i2:1,*,V,Voltage_L3-N,2
+  etc...
+```
+
+
+- With an asterisk `*`character as JSON Prefix in the Meter definiton suppresses the JSON output ("#define USE_SML_SCRIPT_CMD" required)
+!!! example 
+  `+1,14,m,0,9600,*,12,2,01040000,01040002,01040004`
+
+
+- To get the value of one of the descriptor lines, use sml[X]. X = Line number. Starts with 1.  ("#define  USE_SML_SCRIPT_CMD" required)
+!!! example
+```
+  >D
+  v1=0
+  v2=0
+  >S
+  ;Writes the value of Descriptorline 1 to v1
+  v1=sml[1] 
+  ;Writes the value of Descriptorline 2 to v2
+  v2=sml[2]
+```
+ 
 
 !!! tip
     Use: `sensor53 dM` to output the received data in the console. M = the number of the defined meter in the script.  
@@ -258,6 +287,7 @@ with the '=' char at the beginning of a line you may do some special decoding
 - [COMBO Meter (Water,Gas,SML)](#combo-meter-watergassml)
 - [WOLF CSZ 11/300 Heater](#wolf-csz-11300-heater)
 - [SDM530 (MODBUS)](#sdm530)
+- [SDM230 (MODBUS)](#sdm230)
 - [Janitza B23 (MODBUS)](#janitza-b23)
 - [Hager EHZ363 (SML) with daily values](#hager-ehz363-sml-with-daily-values)
 - [Iskra MT 174](#iskra-mt-174-obis)
@@ -717,6 +747,41 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 
 ------------------------------------------------------------------------------
 
+
+ ### SDM230
+  
+`>D`
+ms="1,010404ffffffff@"
+`>B`
+=>sensor53 r
+`>M 1`
++1,3,m,0,9600,PV,1,2,01040000,01040006,0104000C,01040012,01040018,0104001E,01040024,01040046,01040048,0104004A,0104004C,0104004E,01040054,01040056,01040058,0104005A,0104005C,0104005E,01040102,01040108,01040152,01040158,01040180,01040182
+%ms%i0:1,Volt,V,Volt,2
+%ms%i1:1,Strom P1,A,Strom,3
+%ms%i2:1,*,W,Leistung,2
+%ms%i3:1,Scheinleistung,VA,ScheinLeistung,2
+%ms%i4:1,Blindleistung,VAr,Blindleistung,2
+%ms%i5:1,P-Faktor,,P_Faktor,1
+%ms%i6:1,cosPhi,°,cosPhi,2
+%ms%i7:1,Frequenz,Hz, Frequenz,1
+%ms%i8:1,Wirkleistung Import,kWh,Wirkleistung_Im1,3
+%ms%i9:1,Wirkleistung Export,kWh,Wirkleistung_Ex,3
+%ms%i10:1,Blindleistung Import,VkkVARh,Blindleistung_Im,3
+%ms%i11:1,Blindleistung Export,VkkVARh,Blindleistung_Ex,3
+%ms%i12:1,Gesamtleistungsbedarf,W,GesLeistBed,2
+%ms%i13:1,GesamtLeistung Max,W,GesLeistMax,2
+%ms%i14:1,Akt.Nachfrage,W,AktNachfrage,2
+%ms%i15:1,Rückleistungs Bed,W,RueckLeistBed,2
+%ms%i16:1,Rückleistungs Bed Max,W,RueckLeistBedMax,2
+%ms%i17:1,Strom Nachfrage,A,StromNachfrage2,2
+%ms%i19:1,Max Strombedarf,A,StromBedMax,2
+%ms%i20:1,Wirkleistung Gesamt,kWh,Wirkleistung_total,2
+%ms%i21:1,Blindleistung Gesamt,kVARh,Blindleistung_total,2
+%ms%i22:1,Temp Gesamtleistung,kWh,TempGesamtLeist,2
+\#
+
+
+------------------------------------------------------------------------------
 
 ### Janitza B23
 
