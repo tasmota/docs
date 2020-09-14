@@ -65,6 +65,9 @@ http://<ip>/cm?user=<username>&password=<password>&cmnd=Power%20On
 
 **Console** menu in the web UI is a convenient place to send commands and it behaves similar to a terminal connection via serial bridge. 
 
+!!! warning
+    The GUI controls **do not** and **can not** have all the features and commands implemented. For precise and complete control use Console commands!
+
 ### over Serial Bridge
 
 If you flashed the device via serial method you can connect to it with a terminal application (e.g. [Termite](https://www.compuphase.com/software_termite.htm) or Arduino IDE Serial Monitor) to issue commands and follow responses. This is a practical way to do a `Backlog` setup of your new device.

@@ -26,6 +26,8 @@ In **Configuration - Configure Other** page in the webUI select emulation type.
 #### Belkin WeMo Emulation
 Use Belkin WeMo for devices with a single relay or Hue Bridge for devices with one or more relays or for lights. Tasmota devices will be discovered by the Alexa app.
 
+You do not need to install the Wemo app or enable the Wemo skill in Alexa. Just tell Alexa to discover devices of the appropriate type (plug, switch, etc.) and when it asks what brand device, scroll to the end and choose "Other".
+
 #### Hue Bridge Emulation
 For control of lights, color control (introduced in version 6.5.0.9), on/off, and dimming is supported. Enable `Hue Bridge` emulation and perform a device discovery in the Alexa app. No skill needs to be added to Alexa. Select Hue Bridge V1 as the device type.
 

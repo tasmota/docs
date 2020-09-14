@@ -50,6 +50,7 @@ Name|Description
 [**MGC3130**](MGC3130) | 3D Tracking and Gesture Controller
 [**MH-Z19B**](MH-Z19B) | CO<sub>2</sub> Sensor 
 [**MLX90614**](MLX90614) | MLX9061X Infrared Thermometer (I^2^C) 
+[**MLX90640**](MLX90640) | MLX90640 Far Infrared Thermal Sensor Array (I^2^C) 
 [**NRF24L01**](NRF24L01) | NRF24L01 as BLE-bridge for Mijia BT sensors (SPI)
 [**OpenTherm**](OpenTherm) | OpenTherm adapter (serial)
 [**MCP9808**](MCP9808) |  Temperature Sensor (I^2^C)
