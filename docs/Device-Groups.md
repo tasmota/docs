@@ -19,13 +19,12 @@ By default, the state of all relays is sent to and received from device group 1.
 ## Troubleshooting
 
 If no values seem to be shared between devices, perform the following checks:
-<ul>
-<li>Enter the command SetOption85 on all devices in the group and make sure the result is ON on all devices.
-<li>Enter the command DevGroupName on all devices in the group and make sure the result for device group 1 is the exact same (case-sensitive) name on all devices.
-<li>Enter the command DevGroupShare -1,-1 on all devices in the group to enable sharing of all items.
-<li>Enter the command DevGroupSend 128=1 on one device in the group. If the power turns on on the other devices, the device groups feature is working.
-<li>Enter the command DevGroupStatus on all devices in the group. If you do not see all the other devices in the group listed as members, multicast packets are not being received by the devices. Check the network infrastructure that connects the devices together to make sure multicasts are enabled are not being filtered.
-</ul>
+
+- Enter the command` SetOption85` on all devices in the group and make sure the result is ON on all devices.
+- Enter the command `DevGroupName` on all devices in the group and make sure the result for device group 1 is the exact same (case-sensitive) name on all devices.
+- Enter the command `DevGroupShare -1,-1` on all devices in the group to enable sharing of all items.
+- Enter the command `DevGroupSend 128=1` on one device in the group. If the power turns on on the other devices, the device groups feature is working.
+- Enter the command `DevGroupStatus` on all devices in the group. If you do not see all the other devices in the group listed as members, multicast packets are not being received by the devices. Check the network infrastructure that connects the devices together to make sure multicasts are enabled are not being filtered.
 
 ## Commands
 
