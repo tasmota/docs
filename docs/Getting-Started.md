@@ -157,6 +157,12 @@ If you have followed [Hardware preparation](#hardware-preparation), your device 
 !!! tip 
     You may want to back up the device manufacturer's firmware on the one in a million chance you don't like Tasmota.
 
+!!! tip
+    If your NodeMCU, WEMOS or may be another sort of ESP822 module does not respond to the flash commands, you can try to "unbrick" it like that:
+    + connect GPIO 0 (D3 on the D1 mini WEMOS) to GND
+    + connect GPIO 15 (D8 on the D1 mini WEMOS) to GND
+    + connect GPIO 2 (D4 on the D1 mini WEMOS) to 3.3V
+
 ### Tasmotizer!
 Tasmotizer! is specifically designed for use with Tasmota with an easy to use GUI and [esptool.py](https://github.com/espressif/esptool) under the hood.
 
