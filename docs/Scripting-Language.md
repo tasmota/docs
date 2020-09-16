@@ -409,7 +409,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `mins` = mins  
 `secs` = seconds  
 `day` = day of month  
-`wday` = day of week  (Sunday=1,Monday=2;Tuesday=3;Wednesday=4,Thursday=5,Friday=6,Saturday=7)
+`wday` = day of week  (Sunday=1,Monday=2;Tuesday=3;Wednesday=4,Thursday=5,Friday=6,Saturday=7)  
 `month` = month   
 `year` = year  
 `epoch` = epoch time (from 2019-1-1 00:00)  
