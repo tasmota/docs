@@ -113,10 +113,10 @@ When you have identified pins on your device, connect wires according to the tab
 You can use the USB-to-serial adaptor of a NODEMCU (and probably other ESP8266 boards with a serial chip). You do not need to overwrite the existing firmware of your NODEMCU so it can be done using one already pre-installed with Tasmota - when you unplug and reset the NODEMCU it will revert to its previous state. 
 
 !!! tip
-    If your NodeMCU or similar ESP8266 module does not respond to the flash commands, you can try to "unbrick" it like that:
-    + connect GPIO 0 (D3 on the D1 mini WEMOS) to GND
-    + connect GPIO 15 (D8 on the D1 mini WEMOS) to GND
-    + connect GPIO 2 (D4 on the D1 mini WEMOS) to 3.3V
+    If your NodeMCU or similar ESP8266 module does not respond to the flash commands, you can try to "unbrick" it like that:    
+    + connect GPIO 0 (D3 on the D1 mini WEMOS) to GND    
+    + connect GPIO 15 (D8 on the D1 mini WEMOS) to GND    
+    + connect GPIO 2 (D4 on the D1 mini WEMOS) to 3.3V    
 
 Simply connect the EN pin to ground to prevent the ESP8266 chip on your NODEMCU from starting. Then connect as a normal USB-to-serial *except* connect TX to TX and RX to RX, ie no crossover required. 
 
