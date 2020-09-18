@@ -42,7 +42,7 @@ Bridge mqtt:broker:myMQTTBroker [ host="IPofBroker", secure=false, username="myU
 {
     Thing topic tasmota_TH_Thing "Light_TH" {
     Channels:
-        Type switch : PowerSwitch  [ stateTopic="stat/tasmota_TH/POWER" , transformationPattern="JSONPATH:$.POWER" , commandTopic="cmnd/tasmota_TH/POWER", on="ON", off="OFF" ]
+        Type switch : PowerSwitch  [ stateTopic="stat/tasmota_TH/POWER" , commandTopic="cmnd/tasmota_TH/POWER", on="ON", off="OFF" ]
         Type string : Version [stateTopic="stat/tasmota_TH/STATUS2", transformationPattern="JSONPATH:$.StatusFWR.Version"]
         Type string : Temperature [stateTopic="tele/tasmota_TH/SENSOR", transformationPattern="JSONPATH:$.AM2301.Temperature"]
       }
