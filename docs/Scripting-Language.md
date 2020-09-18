@@ -43,6 +43,7 @@ USE_SML_SCRIPT_CMD | enables SML script cmds
 USE_SCRIPT_TIMER | enables up to 4 timers
 SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
 LARGE_ARRAYS | enables arrays of up to 1000 entries instead of max 127  
+SCRIPT_LARGE_VNBUFF | enables to use 4096 in stead of 256 bytes buffer for variable names  
 LITTLEFS_SCRIPT_SIZE S | enables script buffer of size S (e.g.4096)  
 USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
 USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
@@ -384,6 +385,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sin(x)` = calculates the sinus(x) (if defined USE_ANGLE_FUNC)  
 `acos(x)` = calculates the acos(x) (if defined USE_ANGLE_FUNC)  
 `sqrt(x)` = calculates the sqrt(x) (if defined USE_ANGLE_FUNC)  
+`abs(x)` = calculates the absolute value of x  
 `mpt(x)` = measure pulse time, x>=0 defines pin to use, -1 returns low pulse time,-2 return high pulse time (if defined USE_ANGLE_FUNC)  
 `rnd(x)` = return a random number between 0 and x, (seed may be set by rnd(-x))  
 `sf(F)` = sets the CPU Frequency (ESP32) to 80,160,240 Mhz, returns current Freq.  
@@ -654,6 +656,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 `fd("fname")` delete file fname  
 `flx(fname)` create download link for file (x=1 or 2) fname = file name of file to download  
 `fsm` return 1 if filesystem is mounted, (valid SD card found)  
+`res=fsi(sel)` gets file system information, sel=0 returns total media size, sel=1 returns free space both in kB   
 
 **Extended commands**   (+0,9k flash)  
 `#define USE_SCRIPT_FATFS_EXT`  
