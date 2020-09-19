@@ -1,6 +1,6 @@
 Pinout for flashing TYWE3S devices. Module has a nearly identical pinout to ESP-12 module series.
 
-![Flashing pinout](/docs/_media/TYWE3S_pinout.png)
+![Flashing pinout](https://tasmota.github.io/docs/_media/TYWE3S_pinout.png)
 
 ### TYWE3S Wiring for Flashing
 Vcc - 3.3V  
@@ -14,7 +14,7 @@ Make sure to ground GPIO0 during boot.
  
 ### Additional Information
 
-![Full pinout](/docs/_media/TYWE3S_fullpinout.png)
+![Full pinout](https://tasmota.github.io/docs/_media/TYWE3S_fullpinout.png)
 
 | Pin Number | Symbol | IO type |                                       Function                                      |
 |:----------:|:------:|:-------:|:-----------------------------------------------------------------------------------:|
