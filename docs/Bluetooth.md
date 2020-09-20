@@ -232,8 +232,8 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
 #### Devices with payload encryption  
   
 The LYWSD03MMC, MHO-C401 and the MJYD2S will start to send advertisements with encrypted sensor data after pairing it with the official Xiaomi app. Out-of-the-box the sensors do only publish a static advertisement.  
-It is possible to get the necessary decryption key ("bind_key") with the help of 3rd-party-apps on a smart phone.  
-(iOS-example: https://community.home-assistant.io/t/xiaomi-passive-ble-monitor-sensor-platform/177352/101?u=magalex)  
+It is possible to get the necessary decryption key ("bind_key"): https://atc1441.github.io/TelinkFlasher.html  
+This project also provides a custom firmware for the LYWSD03MMC, which then becomes a ATC and is supported by Tasmota too.  
 This key and the corresponding MAC of the sensor can be injected with the NRFKEY-command (or NRFMJYD2S). It is probably a good idea to save the whole config as RULE like that:  
   
 ```haskell
@@ -352,7 +352,9 @@ Different vendors offer BT-solutions with different accessibilities under the MI
 
 Most of the „older“ BT-sensor-devices use unencrypted messages, which can be read by all kinds of BLE-devices or even a NRF24L01. The big advantage is the power efficiency as no active bi-directional connection has to be established. This is therefore the preferred option, if technically possible (= for the supported sensors).
 
-With the arrival of "newer" sensors came the problem of encrypted data in MiBeacons, which can be decrypted in Tasmota in a quite complicated way (getting the 16-byte-key with 3rd-party-software while pairing the device with the original Xiaomi Apps).
+With the arrival of "newer" sensors came the problem of encrypted data in MiBeacons, which can be decrypted in Tasmota.  
+Meanwhile it is possible to get the needed "bind_key" with the help of an open-source project: https://atc1441.github.io/TelinkFlasher.html  
+
 At least the LYWSD03 allows the use of a simple BLE connection without any encrypted authentication and the reading of the sensor data using normal subscription methods to GATT-services. This is more power hungry than the passive reading of BLE advertisements.  
 Other sensors like the MJYD2S are not usable without the "bind_key".
   
