@@ -41,29 +41,40 @@ To configure an LC Technology ESP8266 Relay X2, use the following settings...
   ```
 * Enable the rule (type `rule1 1` in the Tasmota console)  
 
-## LC Technology WiFi Relay - Quad Relay (note, older versions of this board used a baud rate of 9600, so if 115200 doesn't work, try 9600)
+## LC Technology WiFi Relay - 4x or Quad Relay (note, older versions of this board used a baud rate of 9600, so if 115200 doesn't work, try 9600)
 
 Note: The template provided below did not work on an ESP-01 running Tasmota 8.1.0. It was necessary to manually enter the template in the `Configure Template` menu.
 
-* In configuration open `Configure Other` paste this template and select activate
-`{"NAME":"LC Technology 4CH Relay","GPIO":[52,255,17,255,255,255,255,255,21,22,23,24,255],"FLAG":0,"BASE":18}`
 * Open `Configure Module` and set GPIO0, GPIO2, GPIO4 and GPIO5 as Relay1, Relay2, Relay3 and Relay4. Click Save.
 * Disable SerialLog (type ``seriallog 0`` in the Tasmota console)
 
 Enter this command in console (configure the 1st rule)  
 ```
 Rule1
- on System#Boot do Backlog Baudrate 9600; SerialSend5 0 endon
- on Power1#State=1 do SerialSend5 A00101A2 endon
- on Power1#State=0 do SerialSend5 A00100A1 endon
- on Power2#State=1 do SerialSend5 A00201A3 endon
- on Power2#State=0 do SerialSend5 A00200A2 endon
- on Power3#State=1 do SerialSend5 A00301A4 endon
- on Power3#State=0 do SerialSend5 A00300A3 endon
- on Power4#State=1 do SerialSend5 A00401A5 endon
- on Power4#State=0 do SerialSend5 A00400A4 endon
+on Power1#Boot=1 do RuleTimer1 5 endon
+on Power2#Boot=1 do RuleTimer2 6 endon
+on Power3#Boot=1 do RuleTimer3 7 endon
+on Power4#Boot=1 do RuleTimer4 8 endon
+on Power1#State=1 do SerialSend5 A0 01 01 A2 endon
+on Power1#State=0 do SerialSend5 A0 01 0 0A1 endon
+on Power2#State=1 do SerialSend5 A0 02 01 A3 endon
+on Power2#State=0 do SerialSend5 A0 02 00 A2 endon
+on Power3#State=1 do SerialSend5 A0 03 01 A4 endon
+on Power3#State=0 do SerialSend5 A0 03 00 A3 endon
+on Power4#State=1 do SerialSend5 A0 04 01 A5 endon
+on Power4#State=0 do SerialSend5 A0 04 00 A4 endon
 ```
 Enable the rule (type `rule1 1` in the Tasmota console)  
+
+Then enter this command in console (configure the 2nd rule)  
+```
+Rule2
+on Rules#Timer=1 do SerialSend5 A0 01 01 A2 endon
+on Rules#Timer=2 do SerialSend5 A0 02 01 A3 endon
+on Rules#Timer=3 do SerialSend5 A0 03 01 A4 endon
+on Rules#Timer=4 do SerialSend5 A0 04 01 A5 endon
+```
+Enable the rule (type `rule1 2` in the Tasmota console). Note that second rule and timer in the first rule required so that 4x relay can "remember" state after power cycle. 
 
 ## LC Technology WiFi Relay X2 with Nuvoton N76E003AT20
 
