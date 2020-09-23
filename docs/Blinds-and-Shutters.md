@@ -558,7 +558,7 @@ In addition, add to your home assistant start up automation a query for the curr
         payload: ""       
 ```
 
-### using Servo Motor (Servo)
+### using Servo Motor 120°/180°/270° (Servo)
 Servo controlled by PWM pulses. The angle to which the servo should be set is regulated by the pulse width.  
 To operate a servo requires signal uses EN (enable) and PLS (Pulse) for controls rotation angl. 
 
@@ -583,8 +583,8 @@ Using the `ShutterPwmRange` command to set the pulse width range:
 
 The calculation of parameters for `ShutterPwmRange` is obtained by dividing by 5 the minimum and maximum values of the pulse width range. 
 For example the pulse width range for different servos:
-1. Servo mg90s: pulse width range 544 - 2400ms (1520ms center position), `ShutterPwmRange` 109, 480
-2. Servo TD-8130MG: pulse width range 500 - 2500ms (1500ms center position), `ShutterPwmRange` 100, 500
+1. Servo mg90s (180°): pulse width range 544 - 2400ms (1520ms center position), `ShutterPwmRange` 109, 480
+2. Servo TD-8130MG (180°): pulse width range 500 - 2500ms (1500ms center position), `ShutterPwmRange` 100, 500
 
 !!! note 
     Even within the same servo model, there may be manufacturing tolerances that result in a different operating range of pulse lengths. For accurate operation, each specific servo must be calibrated: through experiments, it is necessary to select the correct range that is specific to it. 
