@@ -586,6 +586,9 @@ For example the pulse width range for different servos:
 1. Servo mg90s: pulse width range 544 - 2400ms (1520ms center position), `ShutterPwmRange` 109, 480
 2. Servo TD-8130MG: pulse width range 500 - 2500ms (1500ms center position), `ShutterPwmRange` 100, 500
 
+!!! note 
+    Even within the same servo model, there may be manufacturing tolerances that result in a different operating range of pulse lengths. For accurate operation, each specific servo must be calibrated: through experiments, it is necessary to select the correct range that is specific to it. 
+
 Wemos Pin|GPIO|Component|Servo Signal
 :-:|:-:|:-:|:-:
 D3|0|Relay1|EN
