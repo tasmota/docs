@@ -382,6 +382,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sb(svar p n)` = gets a substring from svar at position p (if p<0 counts from end) and length n  
 `is(num "string1|string2|....|stringn|")` = defines a string array optionally preset with immediate strings separated by '|' (this immediate string may be up to 255 chars long) num = 0 read only string array, num > 0 number of elements in read write string array  
 `is[index]` = gets string `index` from string array, if read-write also write string of index  
+`is1(..)`, `is2(...)` string array see above  
+`is1[x]`, `is2[x]` string array see above  
 `sin(x)` = calculates the sinus(x) (if defined USE_ANGLE_FUNC)  
 `acos(x)` = calculates the acos(x) (if defined USE_ANGLE_FUNC)  
 `sqrt(x)` = calculates the sqrt(x) (if defined USE_ANGLE_FUNC)  
@@ -609,7 +611,7 @@ Enabling this feature also enables [Tasmota TLS](TLS) as `sendmail` uses SSL.
     ```  
 
     Remark:  
-    A number of e-mail servers (such as Gmail) require the receiver's e-mail address to be enclosed by `< ... ` as in example above. Most other e-mail servers also accept this format.  
+    A number of e-mail servers (such as Gmail) require the receiver's e-mail address to be enclosed by `< ... ` as in example above. Most other e-mail servers also accept this format. While ESP8266 sendmail needs brackets, ESP32 sendmail inserts brackets itself so you should not specify brackets here.  
 
 The following parameters can be specified during compilation via `#define` directives in `user_config_override.h`:  
 * `EMAIL_SERVER`  
@@ -622,7 +624,11 @@ To use any of these values, pass an `*` as its corresponding argument placeholde
 
 !!! example "`sendmail [*:*:*:*:*:<rec@gmail.com:theSubject] theMessage`  "
 
-Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `m` _(note lower case)_ section. The specified text in this script section must end with an `#` character. `sendmail` will use the `m` section if `*` is passed as the `msg` parameter. See [Scripting Cookbook Example].(#send-e-mail)  
+Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `m` _(note lower case)_ section. The specified text in this script section must end with an `#` character. `sendmail` will use the `m` section if `*` is passed as the `msg` parameter. in this >m section you may also specify email attachments.
+@/filename specifies a file to be attached (if file system is present)  
+&arrayname specifies an array attachment (as tab delimeted text, no file system needed)  
+
+See [Scripting Cookbook Example].(#send-e-mail)  
  
 **Subscribe, Unsubscribe**  
 `#define SUPPORT_MQTT_EVENT`  
