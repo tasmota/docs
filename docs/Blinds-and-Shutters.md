@@ -581,7 +581,7 @@ Using the `ShutterPwmRange` command to set the pulse width range:
  - position 90° pulse width ~1500ms (center position is calculated automatically).
  - position 180° pulse width 2000...2500ms.
 
-The calculation of parameters for `ShutterPwmRange` is obtained by dividing by 4 the minimum and maximum values of the pulse width range. 
+The calculation of parameters for `ShutterPwmRange` is obtained by dividing by 5 the minimum and maximum values of the pulse width range. 
 For example the pulse width range for different servos:
 1. Servo mg90s: pulse width range 544 - 2400ms (1520ms center position), `ShutterPwmRange` 109, 480
 2. Servo TD-8130MG: pulse width range 500 - 2500ms (1500ms center position), `ShutterPwmRange` 100, 500
