@@ -100,6 +100,41 @@ Rule for Joystick to dim the display:
 on analog#joy2=1 do dimmer - endon on analog#joy2=2 do dimmer + endon
 ```
 
+### AITHINKER CAM
+
+```json
+{"NAME":"AITHINKER CAM","GPIO":[4992,1,1,1,1,5088,1,1,1,1,1,1,1,1,5089,5090,0,5091,5184,5152,0,5120,5024,5056,0,0,0,0,4928,1,5094,5095,5092,0,0,5093],"FLAG":0,"BASE":1}
+```
+
+### wESP32
+
+```json
+{"NAME":"wESP32","GPIO":[1,1,1,1,1,1,0,0,0,1,1,1,5568,5600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1],"FLAG":0,"BASE":1}
+```
+
+### Denky (Teleinfo)
+
+```json
+{"NAME":"Denky (Teleinfo)","GPIO":[1,1,1,1,5664,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1376,1,1,0,0,0,0,1,5632,1,1,1,0,0,1],"FLAG":0,"BASE":1}
+```
+
+### Olimex ESP32-PoE
+
+```json
+{"NAME":"Olimex ESP32-PoE","GPIO":[1,1,1,1,1,1,0,0,5536,1,1,1,1,0,5600,0,0,0,0,5568,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1],"FLAG":0,"BASE":1}
+```
+
+### LilyGO ttgo-t-eth-poe
+
+```json
+{"NAME":"LilyGO ttgo-t-eth-poe","GPIO":[0,1,1,1,1,1,1,1,1,1,1,1,1,1,5600,1,0,1,1,5568,0,1,1,1,0,0,0,0,1,1,1,1,1,0,0,1],"FLAG":0,"BASE":1}
+```
+
+For working Ethernet, change the following setting in the Console:
+```
+EthClockMode 1
+```
+
 
 ### displays, sensors and other options confirmed to work
 
