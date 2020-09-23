@@ -416,7 +416,7 @@ Rule ON switch1#state=3 DO publish cmnd/tasmota02/POWER 2 ENDON
 
 Long pressing on switch1 sends `POWER 2` (toggle action) command to the `tasmota02` device
 
-Notice we use `Rule` which edits `Rule1` rule set. They can be used interchangeably.
+Notice we use `Rule` which edits `Rule1` rule set. They can be used interchangeably. If your rule does not trigger there could some constraints, in this case if SwitchTopic has a value it will override rules for switches and will need to be disabled: `SwitchTopic 0`.
 
 ------
 
@@ -1177,7 +1177,7 @@ Rule1 1
 
 description:
 
-- turn off switchtopic as it is necessary to trigger Switch2#state
+- Disable SwitchTopic as it overrides rules for switches: `SwitchTopic 0`
 - on system boot set var1 to 0
 - on switch2 click (person pushing doorbell) - var1 += 1; trigger event START
 - on START - set event BELL equal to var1
