@@ -280,7 +280,7 @@ A web user interface may be generated containing any of the following elements:
   - p=piechart  
   - l=linechart up to 4 lines with same scaling  
   - l2=linechart with exactly 2 lines and 2 y scales (must be given at end)  
-  - 2f2 like above but with splined lines  
+  - lf2 like above but with splined lines  
   - h=histogram  
   - t=data table  
   - g=simple gauges (must give extra 3 vars after header, yellow start, red start, maxval)  
