@@ -86,21 +86,27 @@ with below options script buffer size may be expanded. PVARS is size for permana
 
 | Feature | ESP8266 | ESP32 | PVARS | remarks |
 | -- | -- | -- | -- | -- |
-| default | 1536 | 1536 | 50 ||
-| #define USE_SCRIPT_COMPRESSION | 2560 | 2560 | 50 |actual compression rate may vary |
+| fallback | 1536 | 1536 | 50 ||
+| compression (default)| 2560 | 2560 | 50 |actual compression rate may vary |
 | #define LITTLEFS_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
 | #define USE_SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld, ESP32 must use linker file "esp32_partition_app1572k_ffat983k.csv"(4M chips) or "esp32_partition_app1984k_ffat12M.csv" (16M chips)|
 | #define USE_SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
 | #define EEP_SCRIPT_SIZE S, #define USE_EEPROM, #define USE_24C256 | S<=4096 | S<=8192 | 1536 |only hardware eeprom is usefull, because Flash EEPROM is also used by Tasmota |
 
 most usefull defintion for larger scripts would be  
+
 ESP8266:  
+
 with 1M flash only default compressed mode is usefull,  
 with 4M Flash best mode would be  
 \#define USE_SCRIPT_FATFS -1  
 with linker file "eagle.flash.4m2m.ld"  
+
 ESP32:  
-#define LITTLEFS_SCRIPT_SIZE 8192 with standard linker file or better:  
+
+with standard linker file  
+\#define LITTLEFS_SCRIPT_SIZE 8192  
+or better:  
 \#define USE_SCRIPT_FATFS -1  
 \#define FAT_SCRIPT_SIZE 8192  
 with linker file "esp32_partition_app1572k_ffat983k.csv"  
@@ -293,8 +299,8 @@ A web user interface may be generated containing any of the following elements:
   `array` = up to 4 arrays of data  
   `name` = name of chart  
   `label` = label for up to the 4 datasets in chart  
-  `entrylabel` = labels of each entry separated by '|' char  
-  ("cntN" starts numbering entries with the number N an optional /X generates only an devides by X range)  
+  `entrylabel` = labels of each x axis entry separated by '|' char  
+  ("cntN" starts numbering entries with the number N an optional /X generates numbers devided by X)  
   ("wdh: before a week defintion generates a week with full hours)  
   `header` = visible header name of chart  
   
@@ -305,12 +311,12 @@ A web user interface may be generated containing any of the following elements:
   
   you may define more then one chart. The charts id is chart1 ... chartN
   
-  very cosumized chart definition:  
+  very customized chart definition:  
   define a chart like above, but add a t to the definition  
   this generates a google table from the arrays e.g.:  
   &gc(lt array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so")
   
-  then define the options as from the doku of google e.g.:  
+  then define the options for the graph as from the doku of google e.g.:  
   $var options = {  
   $vAxes:{0:{maxValue:40,title:'Außentemperatur'},1:{maxValue:60,title:'Solarspeicher'}},  
   $series:{0:{targetAxisIndex:0},1:{targetAxisIndex:1}},  
