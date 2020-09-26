@@ -11,7 +11,7 @@ esptool.py --chip esp32 --port COM5 --baud 921600 --before default_reset --after
 
 ## Compiling for ESP32
 
-Rename `platformio_override_sample.ini` to `platformio_override.ini` and uncomment tasmota32 in line #28. Next build will create a `tasmota32.bin`. 
+Uncomment in `platformio_tasmota32.ini` tasmota32 in line #9. Next build will create a `tasmota32.bin`. 
 
 ![platformio_override.ini](_media/esp32-pio.jpg)
 
