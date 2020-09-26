@@ -111,6 +111,11 @@ If your board just [continuously flashes its led when powered on](https://www.yo
 
 Additionally, once programmed, you may also have to remove r4. Some issues exist where r3 and r4 are swapped, but just removing r4 works.
 
+## ESP-01S 5V Relay Module V1.0 Relay
+
+This board will not boot unless R2 is removed or the easier hardware fix below is carried out.
+A template is available ([here] (https://templates.blakadder.com/ESP-01S-Relay-v1.html))
+
 ## Easier hardware fix
 
 This is an easier fix for the ESP-01S relay v1.0 board, which does not require pcb cuts or resistor desoldering, just a 10K resistor soldered as in image: this mod prevents the relay flicker, and connects ch_pd, too
