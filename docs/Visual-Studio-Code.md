@@ -43,7 +43,8 @@ upload_port = COM5
 upload_speed = 115200
 ;upload_resetmethod = nodemcu
 ```
-Enable desired options in _platformio_override.ini_ for upload to your local OTA server like:
+Special options (not needed for compiling Tasmota!) are enabled in _platformio_override.ini_ :
+
 ```
 ; *** Upload file to OTA server using HTTP
 upload_port = domus1:80/api/upload-arduino.php
