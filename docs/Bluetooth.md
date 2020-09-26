@@ -1,3 +1,8 @@
+The Bluetooth section of Tasmota currently consists of 2 driver classes, which, not least due to hardware restrictions, cannot be used together.  
+On the one hand there is support for the use of "iBeacons" on some modules of the HM-1x family.  
+The second part consists of 3 drivers that can read the data from BLE sensors from the relatively diverse Xiaomi universe.  
+  
+  
 !!! info "Presence detection with iBeacons or BLE sensor gateway using HM-1x or nRF24L01(+) peripherals"
 
 ## iBeacon  
