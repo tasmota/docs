@@ -614,8 +614,10 @@ ZbRead<a class="cmnd" id="zbread"></a>|Read Zigbee device attributes using comma
 ZbReset<a class="cmnd" id="zbreset"></a>|`1` = perform a factory reset and reconfiguration of the CC2530 chip.<BR>:warning: **You will need to re-pair all Zigbee devices**
 ZbRestore<a class="cmnd" id="zbrestore"></a>|Restores a device configuration previously dumped with `ZbStatus2`. This command does not pair a device, but lets you get back device configuration like ModelId or IEEEAddress.<BR>`<json>` = json contains the fields dumped with `ZbStatus2`. `<json>` can contain multiple devices (if they fit).
 ZbSave<a class="cmnd" id="zbsave"></a>|Forces saving the Zigbee device information to Flash. Auto-saving happens 10 seconds after a new Device parameter was changed, this command is normally not useful
-ZbZNPSend<a class="cmnd" id="zbznpsend"></a>|Send a raw ZCL message to a Zigbee device. This is a low-level command, and requires to manually build the ZCL parameters. Most common usage will be provided as high-level functions.
-ZbZNPReceive<a class="cmnd" id="zbznpreceive"></a>|Simulates a received message<BR>`<hex>` = hex string of the simulated message, same format as `ZbZNPReceived` debug logs
+ZbZNPSend <hex><a class="cmnd" id="zbznpsend"></a>|(CC2530 only) Send a raw ZCL message to a Zigbee device. This is a low-level command, and requires to manually build the ZCL parameters. Most common usage will be provided as high-level functions.
+ZbZNPReceive <hex><a class="cmnd" id="zbznpreceive"></a>|(CC2530 only) Simulates a received message<BR>`<hex>` = hex string of the simulated message, same format as `ZbZNPReceived` debug logs
+ZbEZSPSend<x> <hex><a class="cmnd" id="zbezspsend"></a>|(EZSP only) Send a raw EZSP message. This is a low-level command, and requires to manually build the ZCL parameters. Most common usage will be provided as high-level functions.<BR>`<x>`: `1`=high-level EZSP command, `2`=low-level EZSP frame, `3`=low-level EZSP/ASH frame<BR>`<hex>` = hex string of the message
+ZbEZSPReceive<x> <hex><a class="cmnd" id="zbezspreceive"></a>|(EZSP only) Simulates a received message<BR>`<x>`: `1`=high-level EZSP command, `2`=low-level EZSP frame, `3`=low-level EZSP/ASH frame<BR>`<hex>` = hex string of the simulated message, same format as `ZbZNPReceived` debug logs
 
 ### Bluetooth
 Command|Parameters
