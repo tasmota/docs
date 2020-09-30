@@ -1,4 +1,19 @@
-## GPIO Conversions
+
+GPIO functions define the action being taken by a device connected to it's pin. The current ESP8266 GPIO function configuration supports 216 GPIO functions like Relay1 (21) or Inverted Button1 (122).
+
+The current implementation supports up to 250 functions as it is confined to 8-bits uint8_t arrays.
+
+As more devices need to be connected it would become impossible to have them addressed with this 8-bit scheme. Another problem is that the current implementation would need GUI drop down boxes with up to 250 items which is hard to use. Also user templates still need to be able to address all possible GPIO functions.
+
+To solve this issue I needed to change from 8-bit uint8_t to 16-bit uint16_t arrays. Without further action this would result in even more entries in the GUI drop down boxes and made adding more relays/buttons/switches etc also very cumbersome. As the ESP32 would need to be supported too a challenge lay ahead.
+
+I decided for the following option where every GPIO function type (relays, buttons, switches) would have an id allowing for 32 devices. So every GPIO function would be offset by 32 (or 5-bits). These 5-bits can be used in the future to easily expand current max values like 4 buttons or 8 relays to max 32. How this works could have been seen in the ESP32 implementation as released some month ago. The GUI now contains two drop down boxes, one for the GPIO function (Relay) and one for the function index (1 to 8).
+
+For the ESP8266 the current maxed GPIO functions of 216 will be fixed an any new device will be using the GPIO addressing scheme. To make transistion transparent a table is used to convert current 216 GPIO 8-bit function numbers to new 16-bit function numbers. As both are offset from 0 there will be some duplication in numbering so the only way to distinguish them by external programs like TDM is by checking the Tasmota verion number; Below 9.0 will be 8-bit GPIO, Starting with development version 9.0.0.1 it will be 16-bit GPIO.
+
+See below how the numbers are being converted. The first number is 8-bit GPIO, the second the 16-bit GPIO.
+
+## GPIO Conversion
 
 |Old GPIO|New GPIO|
 |-----|------|
