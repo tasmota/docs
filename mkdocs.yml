@@ -29,7 +29,8 @@ theme:
     accent: 'indigo'
     scheme: preference
   features:
-    - tabs
+    - navigation.tabs
+    - navigation.instant
   font:
     text: Barlow
     code: Roboto Mono
