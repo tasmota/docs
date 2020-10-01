@@ -176,6 +176,8 @@ White Blend Mode mixes in the white channel with RGB colors while controlling th
 
 Enable it with [`SetOption105 1`](Commands.md#setoption105).
 
+For Tasmota versions before 8.5 use command `RGBWWTable 255,255,255,0` instead.
+
 #### Calibration (optional)
 Generally white LEDs are brighter than RGB LEDs. If you want to keep the same brightness, you need to calibrate the white level. In this mode, any white component will be removed from RGB LEDs and sent to the white LEDs. This makes whites look much better.
 
