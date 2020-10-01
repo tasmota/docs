@@ -992,6 +992,11 @@ Tageseinspeisung: {m} %po_d% kWh
 
 This is an example for 4 MODBUS devices on the same bus  
 
+![94788926-930d3b00-03d4-11eb-8951-7b379c65f9ca](https://user-images.githubusercontent.com/11647075/94828106-6cb5c280-0409-11eb-9f8c-c907b56a6707.png)
+
+
+![94792441-45470180-03d9-11eb-86a2-0c79506226fc](https://user-images.githubusercontent.com/11647075/94828277-95d65300-0409-11eb-9cd0-1d647179f875.png)
+
 ```
 
 >D  
