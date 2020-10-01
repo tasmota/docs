@@ -38,6 +38,7 @@ There are two command syntax forms for sending a remote control code in RAW form
 1. `IRSend<x> <frequency>,<rawdata1>,<rawdata2>,..,<rawdataN>`
 
    e.g., `IRsend 0,926,844,958,832,1798,868,902,848,900,870,900,852,908,918,958,794,934,874,928,1738,934,856,1764`
+   or    `IRSend 0,+8570-4240+550-1580C-510+565-1565F-505Fh+570gFhIdChIgFeFgFgIhFgIhF-525C-1560IhIkI-520ChFhFhFgFhIkIhIgIgIkIkI-25270A-4225IkIhIgIhIhIkFhIkFjCgIhIkIkI-500IkIhIhIkFhIgIl+545hIhIoIgIhIkFhFgIkIgFgI
 
 2. `IRSend<x> raw,<frequency>[,<header_mark>,<header_space>,<bit_mark>],<zero_space>[, [<one_multiple>] | <one_space>],<bit_stream>`
 
