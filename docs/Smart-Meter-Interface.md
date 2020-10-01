@@ -297,6 +297,7 @@ in `user_config_override.h` file). An entry defines how to decode the data and p
 - [Iskra MT 174](#iskra-mt-174-obis)
 - [SBC ALE3 (MODBUS)](#sbc-ale3-modbus)
 - [2 * SBC ALE3 (MODBUS)](#2-sbc-ale3-modbus)
+- [4 *  Hiking DDS238-2 ZN/S (MODBUS)](#4-Hiking-DDS238-2-ZN/S3-modbus)
 --------------------------------------------------------
 
 ### JANZ C3801 (SML - MODBUS)
@@ -350,72 +351,70 @@ Your Tasmota SML `script`:
 ```
 
 ### EMH ED300L (SML)  
-  
->`>D`    
-  
->`>B`   
-=>sensor53 r  
->`>M 2`  
+
+```
+>D    
+>B   
+->sensor53 r  
+>M 2  
 +1,13,s,0,9600,Haus  
 +2,12,s,0,9600,Heizung  
->
->1,770701000F0700FF@1,Aktuell,W,Power_curr,0  
+1,770701000F0700FF@1,Aktuell,W,Power_curr,0  
 1,77070100010800FF@1000,Zählerstand Verb.,kWh,Tariflos,2  
 1,77070100020800FF@1000,Zählerstand Einsp.,kWh,Tariflos,2  
 2,=h==================  
 2,770701000F0700FF@1,Aktuell,W,Power_curr,0  
 2,77070100010800FF@1000,Zählerstand Verb.,kWh,Tariflos,2  
 2,77070100020800FF@1000,Zählerstand Einsp.,kWh,Tariflos,2  
-\#    
-  
+#    
+```
 
 
 ------------------------------------------------------------------------------
 
 ### Hager EHZ363 (SML)
 
->`>D`  
+```
+>D  
 
->`>B`  
-=>sensor53 r
+>B  
+->sensor53 r
 
->`>M 1`  
+>M 1  
 +1,3,s,0,9600,SML  
->
->1,77070100010800ff@1000,Total consumption,KWh,Total_in,4  
+1,77070100010800ff@1000,Total consumption,KWh,Total_in,4  
 1,77070100020800ff@1000,Total Feed,KWh,Total_out,4  
 1,77070100100700ff@1,Current consumption,W,Power_curr,0  
 1,77070100000009ff@#,Meter Nr,,Meter_number,0  
-\#  
+#  
 
-
+```
 
 ------------------------------------------------------------------------------
 
 ### Hager EHZ161 (OBIS)
 
->`>D`  
-
->`>B`  
-=>sensor53 r
-
->`>M 1`  
+```
+>D  
+>B  
+->sensor53 r
+>M 1  
 +1,3,o,0,9600,OBIS  
->
->1,1-0:1.8.1\*255(@1,Total consumption,KWh,Total_in,4  
+1,1-0:1.8.1\*255(@1,Total consumption,KWh,Total_in,4  
 1,1-0:2.8.1\*255(@1,Total Feed,KWh,Total_out,4  
 1,=d 2 10 @1,Current consumption,W,Power_curr,0  
 1,1-0:0.0.0\*255(@#),Meter Nr,, Meter_number,0  
-\#  
+#  
 
-
+```
 ------------------------------------------------------------------------------
 
 ### Landis + Gyr ZMR120AReS2R2sfCS (OBIS)
   
  Example: Changing the baud rate during operation.
-    
-> `>D`  
+
+```
+>D  
 ;Var Power consumption total HT+NT  
 v1=0  
 ;HT Main electricity tariff consumption total   
@@ -431,8 +430,7 @@ v6=0
 ;recent Energie L3  
 v7=0  
   
-  
->;Var minute   
+;Var minute   
 min=0  
 ;Var hour  
 hr=0  
@@ -445,7 +443,7 @@ scnt=0
 ;Var for baudrate changeing 
 res=0  
   
->;Permanent Var Meter1 0:00   
+;Permanent Var Meter1 0:00   
 p:sm=0  
 p:HT_sm=0  
 p:NT_sm=0  
@@ -470,8 +468,8 @@ syn=0
 HT_syn=0  
 NT_syn=0  
   
->;Fill vars with content on teleperiod    
-> `>T`  
+;Fill vars with content on teleperiod    
+>T  
 v1=#Total_in  
 v2=#HT_Total_in  
 v3=#NT_Total_in  
@@ -480,13 +478,13 @@ v5=#kw_L1
 v6=#kw_L2  
 v7=#kw_L3  
   
-> `>B`  
+>B  
 ;Restart driver  
-=>sensor53 r  
+->sensor53 r  
 ;Set teleperiod to 20sec  
 tper=20  
   
-> `>F`  
+>F  
 ; count 100ms   
 scnt+=1  
 switch scnt  
@@ -495,21 +493,21 @@ case 6
 res=sml(1 0 300)  
 res=sml(1 1 "2F3F210D0A")  
   
->;1800ms later \> Ack and ask for switching to 9600 baud  
+;1800ms later \> Ack and ask for switching to 9600 baud  
 case 18  
 res=sml(1 1 "063035300D0A")  
   
->;2000ms later \> Switching sml driver to 9600 baud    
+;2000ms later \> Switching sml driver to 9600 baud    
 case 20  
 res=sml(1 0 9600)  
   
->;Restart sequence after 50x100ms    
+;Restart sequence after 50x100ms    
 case 50  
 ; 5000ms later \> restart sequence    
 scnt=0  
 ends  
   
-> `>S`  
+>S  
 ;daily usage  
 hr=hours  
 if chg[hr]>0  
@@ -522,13 +520,13 @@ NT_sm=v3
 svars  
 endif  
   
->if upsecs%tper==0{  
+if upsecs%tper==0{  
 sd=v1-sm  
 HT_sd=v2-HT_sm  
 NT_sd=v3-NT_sm  
 }  
 
->;Monthly usage  
+;Monthly usage  
 md=day  
 if chg[md]>0  
 and md==1  
@@ -540,13 +538,13 @@ NT_sma=v3
 svars  
 endif  
   
->if upsecs%tper==0{  
+if upsecs%tper==0{  
 smn=v1-sma  
 HT_smn=v2-HT_sma  
 NT_smn=v3-NT_sma  
 }  
   
-> ;Yearly usage  
+;Yearly usage  
 yr=year  
 if chg[yr]>0  
 and v1>0  
@@ -557,15 +555,13 @@ NT_sya=v3
 svars  
 endif  
   
->if upsecs%tper==0{  
+if upsecs%tper==0{  
 syn=v1-sya  
 HT_syn=v2-HT_sya  
 NT_syn=v3-NT_sya  
 
-  
-
->; Json payload \> send on teleperiod  
-> `>J`  
+; Json payload \> send on teleperiod  
+>J  
 ,"Strom_Vb_Tag":%3sd%  
 ,"HT_Strom_Vb_Tag":%3HT_sd%  
 ,"NT_Strom_Vb_Tag":%3NT_sd%  
@@ -584,62 +580,58 @@ NT_syn=v3-NT_sya
 ,"Strom_Ja":%3sya%  
 ,"HT_Strom_Ja":%3HT_sya%  
 ,"NT_Strom_Ja":%3NT_sya%  
-  
 
-
-
->;Webdisplay stuff  
-> `>W`  
-\----------------------  
->0:00 Uhr Σ HT+NT: {m} %0sm% KWh  
+;Webdisplay stuff  
+>W  
+----------------------  
+0:00 Uhr Σ HT+NT: {m} %0sm% KWh  
 HT: {m} %0HT_sm% KWh  
 NT: {m} %0NT_sm% KWh  
-\----------------------  
->Monatsanfang: {m} %1sma% KWh  
+----------------------  
+Monatsanfang: {m} %1sma% KWh  
 HT: {m} %1HT_sma% KWh  
 NT: {m} %1NT_sma% KWh  
-\----------------------  
->Jahresanfang: {m} %0sya% KWh  
+----------------------  
+Jahresanfang: {m} %0sya% KWh  
 HT: {m} %0HT_sya% KWh  
 NT: {m} %0NT_sya% KWh  
-\.............................  
+.............................  
 Tagesverbrauch: {m} %1sd% KWh  
 HT: {m} %1HT_sd% KWh  
 NT: {m} %1NT_sd% KWh  
-\----------------------  
->Monatsverbrauch: {m} %0smn% KWh  
+----------------------  
+Monatsverbrauch: {m} %0smn% KWh  
 HT: {m} %0HT_smn% KWh  
 NT: {m} %0NT_smn% KWh  
-\---------------------  
->Jahresverbrauch: {m} %0syn% KWh  
+---------------------  
+Jahresverbrauch: {m} %0syn% KWh  
 HT: {m} %0HT_syn% KWh  
-> 0:00 Uhr Σ HT+NT: {m} %0sm% KWh  
+0:00 Uhr Σ HT+NT: {m} %0sm% KWh  
 HT: {m} %0HT_sm% KWh  
 NT: {m} %0NT_sm% KWh  
-\----------------------  
->Monatsanfang: {m} %1sma% KWh  
+----------------------  
+Monatsanfang: {m} %1sma% KWh  
 HT: {m} %1HT_sma% KWh  
 NT: {m} %1NT_sma% KWh  
-\----------------------  
->Jahresanfang: {m} %0sya% KWh  
+----------------------  
+Jahresanfang: {m} %0sya% KWh  
 HT: {m} %0HT_sya% KWh  
 NT: {m} %0NT_sya% KWh  
-\.............................  
+.............................  
 Tagesverbrauch: {m} %1sd% KWh  
 HT: {m} %1HT_sd% KWh  
 NT: {m} %1NT_sd% KWh  
-\----------------------  
->Monatsverbrauch: {m} %0smn% KWh  
+----------------------  
+Monatsverbrauch: {m} %0smn% KWh  
 HT: {m} %0HT_smn% KWh  
 NT: {m} %0NT_smn% KWh  
-\---------------------  
->Jahresverbrauch: {m} %0syn% KWh  
+---------------------  
+Jahresverbrauch: {m} %0syn% KWh  
 HT: {m} %0HT_syn% KWh  
 NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh  
   
-> `>M 1`  
->
->+1,3,o,0,9600,,1  
+>M 1  
++1,3,o,0,9600,,1  
 1,0.0.1(@1,Zählernummer,,Meter_number,0  
 1,0.9.1(@#),Zeitstempel,Uhr,time-stamp,0  
 1,=h===================  
@@ -655,24 +647,25 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 1,31.7.0(@1,Strom_L1,A,I_L1,2  
 1,51.7.0(@1,Strom_L2,A,I_L2,2  
 1,71.7.0(@1,Strom_L3,A,I_L3,2  
-\#
+#
 
-
+```
 ------------------------------------------------------------------------------
 
 ### COMBO Meter (Water,Gas,SML)
 
->`>D`  
+```
 
->`>B`  
-=>sensor53 r
+>D  
 
->`>M 3`  
+>B  
+->sensor53 r
+
+>M 3  
 +1,1,c,0,10,H20  
 +2,4,c,0,50,GAS  
 +3,3,s,0,9600,SML  
->
->1,1-0:1.8.0\*255(@10000,Water reading,cbm,Count,4  
+1,1-0:1.8.0\*255(@10000,Water reading,cbm,Count,4  
 2,=h==================  
 2,1-0:1.8.0\*255(@100,Gas reading,cbm,Count,3  
 3,77070100010800ff@1000,Total consumption,KWh,Total_in,3  
@@ -696,22 +689,24 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 3,=h==================  
 3,77070100000009ff@#,Service ID,,Meter_id,0  
 3,=h--------------------------------  
-\#  
+#  
 
+```
 
 ------------------------------------------------------------------------------
 
 ### WOLF CSZ 11/300 Heater
 
->`>D`  
+```
 
->`>B`  
-=>sensor53 r
+>D  
 
->`>M 1`  
+>B  
+->sensor53 r
+
+>M 1  
 +1,3,e,0,2400,EBUS  
->
->1,xxxx0503xxxxxxxxxxxxxxxxss@1,Outside temperature,C,Outsidetemp,0  
+1,xxxx0503xxxxxxxxxxxxxxxxss@1,Outside temperature,C,Outsidetemp,0  
 1,xxxx5014xxxxxxxxxxuu@1,Romm temperature,C,Roomtemp,0  
 1,xxxx0503xxxxxxxxxxxxxxuu@1,Warmwater,C,Warmwater,0  
 1,xxxx0503xxxxxxxxxxuu@1,Boiler,C,Boiler,0  
@@ -721,23 +716,23 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 1,xxxx5017xxxxxxuuuu@16,Solar collektor,C,Collector,1  
 1,xxxx5017xxxxxxxxxxuuuu@16,Solar storage,C,Solarstorage,1  
 1,xxxx5017xxuu@b0:1,Solar pump on,,Solarpump,0  
-\#  
+#  
 
+```
 
 ------------------------------------------------------------------------------
 
 ### MODBUS Devices
 ### SDM530
 
->`>D`  
+```
 
->`>B`  
-=>sensor53 r
-
->`>M 1`  
+>D  
+>B  
+->sensor53 r
+>M 1  
 +1,3,m,0,9600,MODBUS,1,1,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010  
->
->1,010404ffffffff@i0:1,Voltage P1,V,Voltage_P1,2  
+1,010404ffffffff@i0:1,Voltage P1,V,Voltage_P1,2  
 1,010404ffffffff@i1:1,Voltage P2,V,Voltage_P2,2  
 1,010404ffffffff@i2:1,Voltage P3,V,Voltage_P3,2  
 1,010404ffffffff@i3:1,Current P1,A,Current_P1,2  
@@ -746,58 +741,63 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 1,010404ffffffff@i6:1,Active Power P1,W,Power_P1,2  
 1,010404ffffffff@i7:1,Active Power P2,W,Power_P2,2  
 1,010404ffffffff@i8:1,Active Power P3,W,Power_P3,2  
-\#  
+#  
 
+```
 
 ------------------------------------------------------------------------------
 
 
  ### SDM230
-  
-`>D`
-ms="1,010404ffffffff@"
-`>B`
-=>sensor53 r
-`>M 1`
-+1,3,m,0,9600,PV,1,2,01040000,01040006,0104000C,01040012,01040018,0104001E,01040024,01040046,01040048,0104004A,0104004C,0104004E,01040054,01040056,01040058,0104005A,0104005C,0104005E,01040102,01040108,01040152,01040158,01040180,01040182
-%ms%i0:1,Volt,V,Volt,2
-%ms%i1:1,Strom P1,A,Strom,3
-%ms%i2:1,*,W,Leistung,2
-%ms%i3:1,Scheinleistung,VA,ScheinLeistung,2
-%ms%i4:1,Blindleistung,VAr,Blindleistung,2
-%ms%i5:1,P-Faktor,,P_Faktor,1
-%ms%i6:1,cosPhi,°,cosPhi,2
-%ms%i7:1,Frequenz,Hz, Frequenz,1
-%ms%i8:1,Wirkleistung Import,kWh,Wirkleistung_Im1,3
-%ms%i9:1,Wirkleistung Export,kWh,Wirkleistung_Ex,3
-%ms%i10:1,Blindleistung Import,VkkVARh,Blindleistung_Im,3
-%ms%i11:1,Blindleistung Export,VkkVARh,Blindleistung_Ex,3
-%ms%i12:1,Gesamtleistungsbedarf,W,GesLeistBed,2
-%ms%i13:1,GesamtLeistung Max,W,GesLeistMax,2
-%ms%i14:1,Akt.Nachfrage,W,AktNachfrage,2
-%ms%i15:1,Rückleistungs Bed,W,RueckLeistBed,2
-%ms%i16:1,Rückleistungs Bed Max,W,RueckLeistBedMax,2
-%ms%i17:1,Strom Nachfrage,A,StromNachfrage2,2
-%ms%i19:1,Max Strombedarf,A,StromBedMax,2
-%ms%i20:1,Wirkleistung Gesamt,kWh,Wirkleistung_total,2
-%ms%i21:1,Blindleistung Gesamt,kVARh,Blindleistung_total,2
-%ms%i22:1,Temp Gesamtleistung,kWh,TempGesamtLeist,2
-\#
 
+```
+
+>D  
+ms="1,010404ffffffff@"  
+>B  
+->sensor53 r  
+>M 1  
++1,3,m,0,9600,PV,1,2,01040000,01040006,0104000C,01040012,01040018,0104001E,01040024,01040046,01040048,0104004A,0104004C,0104004E,01040054,01040056,01040058,0104005A,0104005C,0104005E,01040102,01040108,01040152,01040158,01040180,01040182  
+%ms%i0:1,Volt,V,Volt,2  
+%ms%i1:1,Strom P1,A,Strom,3  
+%ms%i2:1,*,W,Leistung,2  
+%ms%i3:1,Scheinleistung,VA,ScheinLeistung,2  
+%ms%i4:1,Blindleistung,VAr,Blindleistung,2  
+%ms%i5:1,P-Faktor,,P_Faktor,1  
+%ms%i6:1,cosPhi,°,cosPhi,2  
+%ms%i7:1,Frequenz,Hz, Frequenz,1  
+%ms%i8:1,Wirkleistung Import,kWh,Wirkleistung_Im1,3  
+%ms%i9:1,Wirkleistung Export,kWh,Wirkleistung_Ex,3  
+%ms%i10:1,Blindleistung Import,VkkVARh,Blindleistung_Im,3  
+%ms%i11:1,Blindleistung Export,VkkVARh,Blindleistung_Ex,3  
+%ms%i12:1,Gesamtleistungsbedarf,W,GesLeistBed,2  
+%ms%i13:1,GesamtLeistung Max,W,GesLeistMax,2  
+%ms%i14:1,Akt.Nachfrage,W,AktNachfrage,2  
+%ms%i15:1,Rückleistungs Bed,W,RueckLeistBed,2  
+%ms%i16:1,Rückleistungs Bed Max,W,RueckLeistBedMax,2  
+%ms%i17:1,Strom Nachfrage,A,StromNachfrage2,2  
+%ms%i19:1,Max Strombedarf,A,StromBedMax,2  
+%ms%i20:1,Wirkleistung Gesamt,kWh,Wirkleistung_total,2  
+%ms%i21:1,Blindleistung Gesamt,kVARh,Blindleistung_total,2  
+%ms%i22:1,Temp Gesamtleistung,kWh,TempGesamtLeist,2  
+#  
+
+```
 
 ------------------------------------------------------------------------------
 
 ### Janitza B23
 
->`>D`
+```
 
->`>B`  
-=>sensor53 r
+>D
+>B  
+->sensor53 r
 
->`>M 1`  
+>M 1  
 +1,3,m,0,9600,Janitza,1,1,01034A38,01034A3A,01034A3C,01034A4C,01034A4E,01034A50,01034A72,01034A7A,01034A82  
->
->1,010304ffffffff@i0:1,Voltage L1-N,V,Voltage_L1-N,2  
+
+1,010304ffffffff@i0:1,Voltage L1-N,V,Voltage_L1-N,2  
 1,010304ffffffff@i1:1,Voltage L2-N,V,Voltage_L2-N,2  
 1,010304ffffffff@i2:1,Voltage L3-N,V,Voltage_L3-N,2  
 1,010304ffffffff@i3:1,Real power L1-N,W,Real_power_L1-N,2  
@@ -806,15 +806,18 @@ ms="1,010404ffffffff@"
 1,010304ffffffff@i6:1,Real energy L3,Wh,Real_energy_L3,2  
 1,010304ffffffff@i7:1,Real energy L3-consumed,Wh,Real_energy_L3_consumed,2  
 1,010304ffffffff@i8:1,Real energy L3-delivered,Wh,Real_energy_L3_delivered,2   
-\#
+#
 
+```
 
 ------------------------------------------------------------------------------
 
 
 ### Hager EHZ363 (SML) with daily values
 
->`>D`  
+```
+
+>D  
 pin=0  
 pout=0  
 pi_d=0  
@@ -824,15 +827,15 @@ hr=0
 p:pi_m=0  
 p:po_m=0  
 
->`>B`  
-=>sensor53 r  
+>B  
+->sensor53 r  
 
->`>T`  
+>T  
 ; get total consumption and total feed  
 pin=SML#Total_in  
 pout=SML#Total_out  
 
->`>S`  
+>S  
 ; at midnight, save meter total values  
 hr=hours  
 if chg[hr]>0  
@@ -842,61 +845,67 @@ pi_m=pin
 po_m=pout  
 svars  
 endif  
->
->; on teleperiod calculate current daily values from midnight  
+
+; on teleperiod calculate current daily values from midnight  
 if upsecs%tper==0  
 then  
 pi_d=pin-pi_m  
 po_d=pout-po_m  
 endif  
 
->; show these values on WEB UI  
->`>W`  
+; show these values on WEB UI  
+>W  
 Tagesverbrauch: {m} %pi_d% kWh  
 Tageseinspeisung: {m} %po_d% kWh    
 
->; transmit these values with MQTT  
->`>J`  
+; transmit these values with MQTT  
+>J  
 ,"daily_consumption":%pi_d%,"daily_feed":%po_d%  
 
->; meter definition  
->`>M 1`  
+; meter definition  
+>M 1  
 +1,3,s,0,9600,SML  
->  
->1,77070100010800ff@1000,Total Consumed,KWh,Total_in,4  
+
+1,77070100010800ff@1000,Total Consumed,KWh,Total_in,4  
 1,77070100020800ff@1000,Total Delivered,KWh,Total_out,4  
 1,77070100100700ff@1,Current Consumption,W,Power_curr,0  
 1,77070100000009ff@#,Meter Number,,Meter_number,0  
-\#
+#
 
+```
 
 ------------------------------------------------------------------------------
 
 
 ### Iskra MT 174 (OBIS)
 
->`>D`
+```
 
->`>B`  
-=>sensor53 r
+>D
+>B  
+->sensor53 r
 
->`>M 1`  
+>M 1  
 +1,3,o,0,300,STROM,1,100,2F3F210D0A  
->
->1,1-0:1.8.1*255(@1,Total Consumed,KWh,Total_in,3  
+
+1,1-0:1.8.1*255(@1,Total Consumed,KWh,Total_in,3  
 1,1-0:2.8.1*255(@1,Total Delivered,KWh,Total_out,3  
 1,1-0:0.0.0*255(@#),Meter Number,,Meter_number,0    
-\#
+#
 
+```
 
 ### SBC ALE3 MODBUS
->`>D`  
->`>B`  
-=>sensor53 r  
->`>M 1`  
+
+```
+
+>D  
+>B  
+->sensor53 r  
+>M 1  
 +1,3,M,1,9600,SBC,1,1,02030023,02030028,0203002d,02030025,0203002a,0203002f,02030032,02030027,0203002c,02030031,02030021,02030015,02030018  
->  
->1,020304UUuu@i0:1,Spannung L1,V,Voltage_L1,0  
+
+1,020304UUuu@i0:1,Spannung L1,V,Voltage_L1,0  
 1,020304UUuu@i1:1,Spannung L2,V,Voltage_L2,0  
 1,020304UUuu@i2:1,Spannung L3,V,Voltage_L3,0  
 1,020304xxxxUUuu@i0:10,Strom L1,A,Current_L1,2  
@@ -917,18 +926,21 @@ Tageseinspeisung: {m} %po_d% kWh
 1,020304UUuu@i9:100,CosPhi L3,,CosPhi_L3,2  
 1,=h=  
 1,020304UUuuUUuu@i10:100,T2 Wert,kWh,T2_Value,2  
-\#
+#
 
+```
 
 ### 2 * SBC ALE3 MODBUS
->`>D`  
->`>B`  
-=>sensor53 r  
->`>M 1`  
->
->+1,3,M,1,9600,Meter,1,1,01030023,01030028,0103002d,01030025,0103002a,0103002f,01030032,01030027,0103002c,01030031,0103001B,0103001d,03030023,03030028,0303002d,03030025,0303002a,0303002f,03030032,03030027,0303002c,03030031,0303001B,0303001d  
->  
->1,=h Domestic Electricity:  
+
+```
+
+>D  
+>B  
+->sensor53 r  
+>M 1  
++1,3,M,1,9600,Meter,1,1,01030023,01030028,0103002d,01030025,0103002a,0103002f,01030032,01030027,0103002c,01030031,0103001B,0103001d,03030023,03030028,0303002d,03030025,0303002a,0303002f,03030032,03030027,0303002c,03030031,0303001B,0303001d  
+  
+1,=h Domestic Electricity:  
 1,010304UUuuUUuu@i10:100,1 Tariff 1 total,kWh,M1_T1_total,2  
 1,010304UUuuUUuu@i11:100,1 Tariff 1 partial,kWh,M1_T1_par,2  
 1,=h Readings:  
@@ -972,7 +984,46 @@ Tageseinspeisung: {m} %po_d% kWh
 1,030304UUuu@i19:100,2 CosPhi L1,,M2_CosPhi_L1,2  
 1,030304UUuu@i20:100,2 CosPhi L2,,M2_CosPhi_L2,2  
 1,030304UUuu@i21:100,2 CosPhi L3,,M2_CosPhi_L3,2  
-\#  
+#  
 
+```
 
+### 4 * Hiking DDS238-2 ZN/S3 MODBUS
+
+This is an example for 4 MODBUS devices on the same bus  
+
+```
+
+>D  
+>B 
+->sensor53 r
+>`>M 1`  
+>  
++1,3,m,1,9600,Hiking,1,10,0103000c,0103000e,0303000c,0303000e,0403000c,0403000e,0503000c,0503000e  
+;---> two groups of registrers for each device --> default 2 registers returned ---> 4 values per device  
+1,=h Contatore 1  
+1,010304UUuu@i0:10,C1_Voltage,V,C1Voltage,1  
+;---> decoder for the first registry returned for the first group  
+1,010304xxxxUUuu@i0:1000,C1_Current,A,C1Current,3  
+;---> decoder for the second registry returned for the first group  
+1,010304SSss@i1:1,C1_ActivePower,W,C1ActivePower,0  
+1,010304xxxxUUuu@i1:1,C1_ReactivePower,Var,C1ReactivePower,0  
+1,=h Contatore 3  
+1,030304UUuu@i2:10,C3_Voltage,V,C3Voltage,1  
+1,030304xxxxUUuu@i2:1000,C3_Current,A,C3Current,3  
+1,030304SSss@i3:1,C3_ActivePower,W,C3ActivePower,0  
+1,030304xxxxUUuu@i3:1,C3_ReactivePower,Var,C3ReactivePower,0  
+1,=h Contatore 4  
+1,040304UUuu@i4:10,C4_Voltage,V,C4Voltage,1  
+1,040304xxxxUUuu@i4:1000,C4_Current,A,C4Current,3  
+1,040304SSss@i5:1,C4_ActivePower,W,C4ActivePower,0  
+1,040304xxxxUUuu@i5:1,C4_ReactivePower,Var,C4ReactivePower,0  
+1,=h Contatore 5  
+1,050304UUuu@i6:10,C5_Voltage,V,C5Voltage,1  
+1,050304xxxxUUuu@i6:1000,C5_Current,A,C5Current,3  
+1,050304SSss@i7:1,C5_ActivePower,W,C5ActivePower,0  
+1,050304xxxxUUuu@i7:1,C5_ReactivePower,Var,C5ReactivePower,0  
+#  
+
+```
 ------------------------------------------------------------------------------
