@@ -1,5 +1,5 @@
-## New IR Raw compact encoding (tasmota-ir only)
-(available since v8.5.0.1)
+## New IR Raw compact encoding
+(available since v9.0)
 
 We had numerous requests from users to expand the buffer sizes because many IR codes would exceed the MQTT/Web/Serial buffer size. Instead, we changed the IR Raw encoding to shrink the size necessary to encode almost any IR code.
 
