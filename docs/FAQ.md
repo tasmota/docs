@@ -278,7 +278,7 @@ Be sure to press the button correctly, you must "feel" a click. If your on-devic
 
 - Another problem can be the difficulties in getting the ESP chip into [programming mode](#cannot-enter-flash-mode) when it boots. 
 
-- If the flash still fails or the progress interrupts, it could be that your computer or serial-to-USB adapter doesn't provide enough power to the device. Try another computer or use an external power supply (3.3V one).
+- If the flash still fails or the progress interrupts, it could be that your computer or serial-to-USB adapter doesn't provide enough power to the device. Try another computer or use an external power supply (3.3V one). [More infos about insufficient power](https://github.com/espressif/esptool#insufficient-power)
    
 - Use the correct serial-to-USB adapter driver. Check the model of your adapter chip and get the correct driver.
 
