@@ -109,6 +109,7 @@ When you have identified pins on your device, connect wires according to the tab
 **Note that TX from your adapter goes to RX on the ESP8266 device and RX from adapter goes to TX on the device!**
 ![Image courtesy of https://www.domo-blog.fr/](https://user-images.githubusercontent.com/5904370/57880182-69bf2f80-781e-11e9-8953-88599cb89155.png)
 
+<!--
 #### Serial Connection using NODEMCU ESP8266
 You can use the USB-to-serial adaptor of a NODEMCU (and probably other ESP8266 boards with a serial chip). You do not need to overwrite the existing firmware of your NODEMCU so it can be done using one already pre-installed with Tasmota - when you unplug and reset the NODEMCU it will revert to its previous state. 
 
@@ -126,6 +127,7 @@ Simply connect the EN pin to ground to prevent the ESP8266 chip on your NODEMCU 
 |         RX | RX                 |
 |         TX | TX                 |
 |        GND | GND                |
+-->
 
 ### Programming Mode
 <img alt="Typical GPIO0 Location" src="https://raw.githubusercontent.com/tasmota/docs/master/docs/_media/gpio0.png" style="margin:5px;float:right;width:180px"></img>
