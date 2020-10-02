@@ -1,8 +1,12 @@
-# Kaifa MA105C Energy Meter
-In this example the Kaifa MA105C meter is used and might work with other meters as well.
+# P1 Smart Meter
+ Reading serial data from a P1 smart meter using a Wemos with Tasmota installed.
+
+ Tested on the following smart meters:
+  - Kaifa MA105C
+  - De Landis + Gyr, E350 (ZCF110)
 
 ## Schematics
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/wemos_kaifa_energy_meter_scematic.png?raw=true" >
+![](_media/p1-smartmeter/p1-smartmeter.png) 
 
 The transistor makes sure that the RxD signal is converted and inverted to 3.3v 
 
@@ -11,40 +15,41 @@ In the **_Configuration -> Configure Module_** page, select module `Generic (18)
 
 From the web console set the serial delimiter to 10 (newline). This makes Tasmota publish each line of the telegram separately to mqtt. 
 
-`SerialDelimiter 10`
+- `SerialDelimiter 10`
+- `SerialSend 1`
 
-`SerialSend`
+For more details see [serial-bridge](Commands.md#serial-bridge).
 
 ## Example output
 Below an example of the telegram message published (per line) to mqtt. From here your HA system can process the data required for your needs.
 
 ```json
-16:59:39 MQT: tele/wemos-9/RESULT = {"SerialReceived":"/KFM5KAIFA-METER"}
-16:59:39 MQT: tele/wemos-9/RESULT = {"SerialReceived":""}
-16:59:39 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-3:0.2.8(42)"}
-16:59:39 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-0:1.0.0(190104170020W)"}
-16:59:39 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-0:96.1.1(4530303235303030303639363432393136)"}
-16:59:39 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:1.8.1(002342.060*kWh)"}
-16:59:39 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:1.8.2(002566.728*kWh)"}
-16:59:39 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:2.8.1(000000.000*kWh)"}
-16:59:39 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:2.8.2(000000.000*kWh)"}
-16:59:39 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-0:96.14.0(0002)"}
-16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:1.7.0(00.428*kW)"}
-16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:2.7.0(00.000*kW)"}
-16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-0:96.7.21(00000)"}
-16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-0:96.7.9(00000)"}
-16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:99.97.0(1)(0-0:96.7.19)(000101000001W)(2147483647*s)"}
-16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:32.32.0(00000)"}
-16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:32.36.0(00000)"}
-16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-0:96.13.1()"}
-16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-0:96.13.0()"}
-16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:31.7.0(002*A)"}
-16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:21.7.0(00.453*kW)"}
-16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:22.7.0(00.000*kW)"}
-16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-1:24.1.0(003)"}
-16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-1:96.1.0(4730303332353631323736373836373136)"}
-16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-1:24.2.1(190104160000W)(02949.209*m3)"}
-16:59:40 MQT: tele/wemos-9/RESULT = {"SerialReceived":"!EE58"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"/KFM5KAIFA-METER\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-3:0.2.8(42)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-0:1.0.0(200913101618S)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-0:96.1.1(4530303235303030303639363432393136)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:1.8.1(005779.835*kWh)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:1.8.2(005583.617*kWh)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:2.8.1(000000.000*kWh)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:2.8.2(000000.000*kWh)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-0:96.14.0(0001)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:1.7.0(00.498*kW)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:2.7.0(00.000*kW)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-0:96.7.21(00000)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-0:96.7.9(00000)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:99.97.0(1)(0-0:96.7.19)(000101000001W)(2147483647*s)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:32.32.0(00000)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:32.36.0(00000)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-0:96.13.1()\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-0:96.13.0()\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:31.7.0(002*A)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:21.7.0(00.496*kW)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"1-0:22.7.0(00.000*kW)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-1:24.1.0(003)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-1:96.1.0(4730303332353631323736373836373136)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"0-1:24.2.1(200913100000S)(04139.079*m3)\r"}
+09:16:17 MQT: tele/wemos-9/RESULT = {"SerialReceived":"!F798\r"}
 ```
 
 ## Description of each line 

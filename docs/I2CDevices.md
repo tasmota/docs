@@ -2,6 +2,8 @@
 
 Tasmota supports several I2C devices but to use them they mostly need to be enabled at compile time to solve possible address conflicts.
 
+### Look at [Pre-Compiled Builds](https://github.com/arendst/Tasmota/blob/development/BUILDS.md) to see, which Driver is compiled in the release binarys.
+
 Using command ``I2cDriver`` individual drivers can be enabled or disabled at runtime allowing duplicate I2C addresses at compile time. Use the Index from the table below to control I2C drivers like ``I2cDriver10 0`` for disabling BMP support.
 
 ## Supported I2C devices
@@ -64,7 +66,8 @@ Index | Define              | Driver  | Device   | Address(es) | Description
   41  | USE_DHT12           | xsns_58 | DHT12    | 0x5C        | Temperature and humidity sensor
   42  | USE_DS1624          | xsns_59 | DS1621   | 0x48 - 0x4F | Temperature sensor
   42  | USE_DS1624          | xsns_59 | DS1624   | 0x48 - 0x4F | Temperature sensor
-  43  | USE_AHT1x           | xsns_63 | AHT10/15 | 0x38        | Temperature and humidity sensor
+  43  | USE_AHT1x           | xsns_63 | AHT10/15 | 0x38 or 0x39 | Temperature and humidity sensor
+  43  | USE_AHT2x           | xsns_63 | AHT20    | 0x38        | Temperature and humidity sensor
   44  | USE_WEMOS_MOTOR_V1  | xdrv_34 |          | 0x2D - 0x30 | WEMOS motor shield v1.0.0 (6612FNG)
   45  | USE_HDC1080         | xsns_65 | HDC1080  | 0x40        | Temperature and Humidity sensor
   46  | USE_IAQ             | xsns_66 | IAQ      | 0x5a        | Air quality sensor
