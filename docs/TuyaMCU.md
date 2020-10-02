@@ -159,7 +159,7 @@ Above `TYA: fnId=11 is set for dpId=1` you can see the JSON response for that dp
 "Data" field contains the complete response and the rest of the key/value pairs show the protocol broken into parts. "DpId", "DpIdData" and "DpIdType" are the ones we're most interested in since we can use them for `TuyaSend`.
 
 !!! tip
-    Use command `SerialSend5 55aa0001000000` at any time to request statuses of all dpId's from the MCU. 
+    Use command `SerialSend5 55aa0001000000` and/or `serialsend5 55AA0008000007` at any time to request statuses of all dpId's from the MCU. 
 #### Use in Rules
 This data can also be used as a trigger for rules using `TuyaReceivedData#Data=hex_string`
 

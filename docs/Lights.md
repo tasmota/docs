@@ -176,6 +176,8 @@ White Blend Mode mixes in the white channel with RGB colors while controlling th
 
 Enable it with [`SetOption105 1`](Commands.md#setoption105).
 
+For Tasmota versions before 8.5 use command `RGBWWTable 255,255,255,0` instead.
+
 #### Calibration (optional)
 Generally white LEDs are brighter than RGB LEDs. If you want to keep the same brightness, you need to calibrate the white level. In this mode, any white component will be removed from RGB LEDs and sent to the white LEDs. This makes whites look much better.
 
@@ -221,6 +223,14 @@ When enabling [`SetOption20 1`](Commands.md#setoption20) any change to webUI sli
 Some CCT lights use PWM1 for brightness and PWM2 for color temperature (instead of PWM1 for Cold White and PWM2 for Warm White).
 
 For these lights, use `Module 48` aka Philips Xiaomi mode, or `SetOption92 1` (supported since v.8.2.0.5)
+
+### Virtual CT 
+
+_this feature is experimental and will probably not give brilliant results_
+
+Used with 4 channel RGBW lights to simulate the missing white channel (cold or warm) using RGB channels.
+
+Enable Virtual CT with [`SetOption 106 1`](Commands.md#setoption106) then choose which type of white you're simulating with [`SetOption 107`](Commands.md#setoption107) where `0` is warm white and `1` is cold white 
 
 ## Light Categories
 

@@ -19,6 +19,7 @@ Name|Description
 [**Chirp! Soil Moisture Sensor**](Moisture-Sensor-and-Chirp!-Sensor) | Moisture Sensor (I^2^C)
 [**DHT11**](DHT11) | Temperature and Humidity Sensor
 **DHT12** |
+**DYP-ME007** | Ultrasonic distance sensor (serial)
 **[DS18x20](DS18x20)** | Temperature sensor (1-Wire)
 **DS1624<BR>DS1621** | Temperature sensor (1-Wire)
 [**DS3231**](DS3231) | Real-Time-Clock (I^2^C)
@@ -42,13 +43,14 @@ Name|Description
 **K30, K70, S8** | CO<sub>2</sub> sensor (I^2^C) | 
 [**LM75AD**](LM75AD) |  Temperature Sensor (I^2^C)
 [**LMT01**](LMT01) | Temperature Sensor (gpio)
-**MAX31855** | Thermocouple Sensor (SPI)
+**MAX31855**<br>**MAX6675** | Thermocouple Sensor (SPI)
 **MAX31865** | RTD Temperature Sensor Amplifier (SPI)
 **MAX44009** | Ambient Light Sensor (I^2^C)
 [**MCP23008<BR>MCP23017**](MCP230xx) |  I/O Expander (I^2^C)
 [**MGC3130**](MGC3130) | 3D Tracking and Gesture Controller
 [**MH-Z19B**](MH-Z19B) | CO<sub>2</sub> Sensor 
 [**MLX90614**](MLX90614) | MLX9061X Infrared Thermometer (I^2^C) 
+[**MLX90640**](MLX90640) | MLX90640 Far Infrared Thermal Sensor Array (I^2^C) 
 [**NRF24L01**](NRF24L01) | NRF24L01 as BLE-bridge for Mijia BT sensors (SPI)
 [**OpenTherm**](OpenTherm) | OpenTherm adapter (serial)
 [**MCP9808**](MCP9808) |  Temperature Sensor (I^2^C)
@@ -87,6 +89,7 @@ Name|Description
 [**VEML6075**](VEML6075) |  UVA/UVB/UVINDEX Sensor (I^2^C)
 [**VEML7700**](VEML7700) |  Ambient light intensity Sensor (I^2^C)
 [**VL53L0x**](VL53L0x) | Time of flight sensor (I^2^C)
+**VL53L1x** | Time of flight sensor (I^2^C)
 **WindMeter** | Analog cup anemometer
 [**WS2812B**](WS2812B-RGB-Shield) | Wemos RGB LED Shield
 [**WS2812B<BR>WS2813B**](WS2812B-and-WS2813) | LED Strip

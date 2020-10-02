@@ -237,3 +237,4 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 213 | IEM3000 TX  | IEM3000 Serial interface |
 | 214 | IEM3000 RX  | IEM3000 Serial interface |
 | 215 | Zigbee RST  | Zigbee reset |
+| 216 | DYP Rx  | DYP-ME007 Rx pin |

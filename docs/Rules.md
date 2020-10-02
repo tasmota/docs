@@ -96,7 +96,7 @@ Power1#Boot<a id="PowerBoot"></a>|`Relay1` state before Wi-Fi and MQTT are conne
 Power1#State<a id="PowerState"></a>|when a power output is changed<br>use `Power1#state=0` and `Power1#state=1` for comparison, not =off or =on<br>Power2 for Relay2, etc.
 Rules#Timer=1<a id="RulesTimer"></a>|when countdown `RuleTimer1` expires
 Switch1#Boot<a id="SwitchBoot"></a>|occurs after Tasmota starts before it is initializated.
-Switch1#State<a id="SwitchState"></a>|when a switch changes to state<br>use `Switch1#state=0` and `Switch1#state=1` for comparison, not =off or =on<br>`0` = OFF<BR>`1` = ON<BR>`2` = TOGGLE<BR>`3` = HOLD (`SwitchTopic 0` must be set for this to trigger)<BR>`4` = INC_DEC (increment or decrement dimmer)<BR>`5` = INV (change from increment to decrement dimmer and vice versa)<BR>`6` = CLEAR (button released for the time set with `SetOption32`)
+Switch1#State<a id="SwitchState"></a>|when a switch changes to state. Will not trigger if SwitchTopic is set.<br>use `Switch1#state=0` and `Switch1#state=1` for comparison, not =off or =on<br>`0` = OFF<BR>`1` = ON<BR>`2` = TOGGLE<BR>`3` = HOLD (`SwitchTopic 0` must be set for this to trigger)<BR>`4` = INC_DEC (increment or decrement dimmer)<BR>`5` = INV (change from increment to decrement dimmer and vice versa)<BR>`6` = CLEAR (button released for the time set with `SetOption32`)
 System#Boot<a id="SystemBoot"></a>|occurs once after Tasmota is fully intialized (after the INFO1, INFO2 and INFO3 console messages). `System#Boot` triggers after Wi-Fi and MQTT (if enabled) are connected. If you need a trigger prior to every service being initialized, use `Power1#Boot`
 System#Init<a id="SystemInit"></a>|occurs once after restart before Wi-Fi and MQTT are initialized
 System#Save<a id="SystemSave"></a>|executed just before a planned restart
@@ -416,7 +416,7 @@ Rule ON switch1#state=3 DO publish cmnd/tasmota02/POWER 2 ENDON
 
 Long pressing on switch1 sends `POWER 2` (toggle action) command to the `tasmota02` device
 
-Notice we use `Rule` which edits `Rule1` rule set. They can be used interchangeably.
+Notice we use `Rule` which edits `Rule1` rule set. They can be used interchangeably. If your rule does not trigger there could some constraints, in this case if SwitchTopic has a value it will override rules for switches and will need to be disabled: `SwitchTopic 0`.
 
 ------
 
@@ -1177,7 +1177,7 @@ Rule1 1
 
 description:
 
-- turn off switchtopic as it is necessary to trigger Switch2#state
+- Disable SwitchTopic as it overrides rules for switches: `SwitchTopic 0`
 - on system boot set var1 to 0
 - on switch2 click (person pushing doorbell) - var1 += 1; trigger event START
 - on START - set event BELL equal to var1

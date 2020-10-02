@@ -29,7 +29,8 @@ theme:
     accent: 'indigo'
     scheme: preference
   features:
-    - tabs
+    - navigation.tabs
+    - navigation.instant
   font:
     text: Barlow
     code: Roboto Mono
@@ -151,6 +152,7 @@ nav:
     - MGC3130.md
     - MH-Z19B.md
     - MLX90614.md
+    - MLX90640.md
     - MPR121.md
     - MPU-6050.md
     - NRF24L01.md

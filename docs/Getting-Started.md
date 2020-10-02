@@ -112,6 +112,12 @@ When you have identified pins on your device, connect wires according to the tab
 #### Serial Connection using NODEMCU ESP8266
 You can use the USB-to-serial adaptor of a NODEMCU (and probably other ESP8266 boards with a serial chip). You do not need to overwrite the existing firmware of your NODEMCU so it can be done using one already pre-installed with Tasmota - when you unplug and reset the NODEMCU it will revert to its previous state. 
 
+!!! tip
+    If your NodeMCU or similar ESP8266 module does not respond to the flash commands, you can try to "unbrick" it like that:    
+    + connect GPIO 0 (D3 on the D1 mini WEMOS) to GND    
+    + connect GPIO 15 (D8 on the D1 mini WEMOS) to GND    
+    + connect GPIO 2 (D4 on the D1 mini WEMOS) to 3.3V    
+
 Simply connect the EN pin to ground to prevent the ESP8266 chip on your NODEMCU from starting. Then connect as a normal USB-to-serial *except* connect TX to TX and RX to RX, ie no crossover required. 
 
 |NODEMCU  | ESP8266 device |
@@ -122,10 +128,13 @@ Simply connect the EN pin to ground to prevent the ESP8266 chip on your NODEMCU 
 |        GND | GND                |
 
 ### Programming Mode
-<img alt="Example without button" src="https://user-images.githubusercontent.com/5904370/55689595-8dbd6480-5986-11e9-81c6-a13c6b7e5971.png" style="margin:5px;float:right;width:180px"></img>
+<img alt="Typical GPIO0 Location" src="https://raw.githubusercontent.com/tasmota/docs/master/docs/_media/gpio0.png" style="margin:5px;float:right;width:180px"></img>
+
 ESP8266 needs to be put into **programming mode** or **flash mode** before the firmware can be uploaded. This is done by pulling the GPIO0 pin to GND while the chip is booting. 
 
-On most devices the installed control button is connected to GPIO0 and GND, making entering Programming Mode very easy. On others you will need to bridge the pins on the PCB or directly on the chip with a jumper wire. Device specific instructions are documented in [Tasmota Device Templates Repository](https://templates.blakadder.com/).
+On most devices the installed control button is connected to GPIO0 and GND, making entering Programming Mode very easy. On others you will need to bridge the pins on the PCB or directly on the chip with a jumper wire. GPIO0 is always in the same location on ESP8266 and ESP8255!
+
+Device specific instructions are documented in [Tasmota Device Templates Repository](https://templates.blakadder.com/).
 
 To put the ESP8266 into Programming Mode:
 
@@ -156,6 +165,7 @@ If you have followed [Hardware preparation](#hardware-preparation), your device 
 
 !!! tip 
     You may want to back up the device manufacturer's firmware on the one in a million chance you don't like Tasmota.
+
 
 ### Tasmotizer!
 Tasmotizer! is specifically designed for use with Tasmota with an easy to use GUI and [esptool.py](https://github.com/espressif/esptool) under the hood.

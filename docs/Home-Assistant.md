@@ -8,7 +8,7 @@ Tasmota communicates with Home Assistant using MQTT. Before going any further, m
 
 First, test if the two can communicate. 
 
-In Home Assistant web UI go to **Developer Tools - MQTT**. Subscribe to `tele/%topic%/STATE` and click **START LISTENING**. You should see a JSON response from your device.
+In Home Assistant web UI go to **Settings - Integrations - Configure MQTT Broker **. Subscribe to `tele/%topic%/STATE` and click **START LISTENING**. You should see a JSON response from your device.
 
 To test control of a relay or light, as **Publish a packet topic** enter `cmnd/%topic%/POWER` with payload `toggle`. When you click **PUBLISH** your device should switch state and a JSON resc
 ![](_media/hass1.png)

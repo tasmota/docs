@@ -110,6 +110,12 @@ I figured out the pinout for flashing the device:
 
 * Before assembling it back remove as much solder as possible from input and output pole pads. The device fits together very tight, so everything should be perfectly in place. Don't forget to glue the case back.
 
+## Alternative to disasselmy: Drilling two holes.
+_With all this information at hand it is also possible to drill two simple holes into the case to get to the necesarry contact pads.
+I recommend a 6mm drill, carfully drill trough the case at he center of the ledge from the high power side opposite the power button. 
+See pictures.
+Now you can solder on a few temporary flash cables. Don't forget to pull IO0 to GND to get into flash mode.
+
 Few observations:
 * It has ESP8266EX with FM25F08 8Mbit flash. The module has lots of connections, some of them have only pads without tracks on the main board. High chances to find RX and TX there. Obviously, there should be VCC and GND to power up the module.
 * Uses HJL-01 with a shunt for power monitoring, so every mains power track that looks like it should be covered with solder but is not, probably should be covered with solder :)

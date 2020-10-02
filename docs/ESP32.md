@@ -2,7 +2,7 @@
 
 !!! warning "ESP32 support is in beta and not all functions will work"
 
-You can download precompiled development binaries from [https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32)
+You can download precompiled development binaries from [https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32) and the needed ESP32 flash files.
 
 Command syntax for flashing Tasmota32 firmware on ESP32 via Esptool (**replace COM port number!**):
 ```
@@ -11,7 +11,7 @@ esptool.py --chip esp32 --port COM5 --baud 921600 --before default_reset --after
 
 ## Compiling for ESP32
 
-Rename `platformio_override_sample.ini` to `platformio_override.ini` and uncomment tasmota32 in line #28. Next build will create a `tasmota32.bin`. 
+Uncomment in `platformio_tasmota32.ini` tasmota32 in line #9. Next build will create a `tasmota32.bin`. 
 
 ![platformio_override.ini](_media/esp32-pio.jpg)
 
@@ -98,6 +98,41 @@ DisplayMode 5
 Rule for Joystick to dim the display:
 ```
 on analog#joy2=1 do dimmer - endon on analog#joy2=2 do dimmer + endon
+```
+
+### AITHINKER CAM
+
+```json
+{"NAME":"AITHINKER CAM","GPIO":[4992,1,1,1,1,5088,1,1,1,1,1,1,1,1,5089,5090,0,5091,5184,5152,0,5120,5024,5056,0,0,0,0,4928,1,5094,5095,5092,0,0,5093],"FLAG":0,"BASE":1}
+```
+
+### wESP32
+
+```json
+{"NAME":"wESP32","GPIO":[1,1,1,1,1,1,0,0,0,1,1,1,5568,5600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1],"FLAG":0,"BASE":1}
+```
+
+### Denky (Teleinfo)
+
+```json
+{"NAME":"Denky (Teleinfo)","GPIO":[1,1,1,1,5664,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1376,1,1,0,0,0,0,1,5632,1,1,1,0,0,1],"FLAG":0,"BASE":1}
+```
+
+### Olimex ESP32-PoE
+
+```json
+{"NAME":"Olimex ESP32-PoE","GPIO":[1,1,1,1,1,1,0,0,5536,1,1,1,1,0,5600,0,0,0,0,5568,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1],"FLAG":0,"BASE":1}
+```
+
+### LilyGO ttgo-t-eth-poe
+
+```json
+{"NAME":"LilyGO ttgo-t-eth-poe","GPIO":[0,1,1,1,1,1,1,1,1,1,1,1,1,1,5600,1,0,1,1,5568,0,1,1,1,0,0,0,0,1,1,1,1,1,0,0,1],"FLAG":0,"BASE":1}
+```
+
+For working Ethernet, change the following setting in the Console:
+```
+EthClockMode 1
 ```
 
 

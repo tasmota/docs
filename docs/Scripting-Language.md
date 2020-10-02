@@ -37,10 +37,13 @@ USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 USE_SCRIPT_TASK | enables multitasking Task in ESP32
 USE_SCRIPT_GLOBVARS | enables global variables and >G section
+USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
+SML_REPLACE_VARS | enables posibility to replace the lines from the (SML) descriptor with Vars
 USE_SML_SCRIPT_CMD | enables SML script cmds
 USE_SCRIPT_TIMER | enables up to 4 timers
 SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
 LARGE_ARRAYS | enables arrays of up to 1000 entries instead of max 127  
+SCRIPT_LARGE_VNBUFF | enables to use 4096 in stead of 256 bytes buffer for variable names  
 LITTLEFS_SCRIPT_SIZE S | enables script buffer of size S (e.g.4096)  
 USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
 USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
@@ -83,22 +86,28 @@ with below options script buffer size may be expanded. PVARS is size for permana
 
 | Feature | ESP8266 | ESP32 | PVARS | remarks |
 | -- | -- | -- | -- | -- |
-| default | 1536 | 1536 | 50 ||
-| #define USE_SCRIPT_COMPRESSION | 2560 | 2560 | 50 |actual compression rate may vary |
+| fallback | 1536 | 1536 | 50 ||
+| compression (default)| 2560 | 2560 | 50 |actual compression rate may vary |
 | #define LITTLEFS_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
-| #define SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld, ESP32 must use linker file "esp32_partition_app1572k_ffat983k.csv"(4M chips) or "esp32_partition_app1984k_ffat12M.csv" (16M chips)|
-| #define SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
+| #define USE_SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld, ESP32 must use linker file "esp32_partition_app1572k_ffat983k.csv"(4M chips) or "esp32_partition_app1984k_ffat12M.csv" (16M chips)|
+| #define USE_SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
 | #define EEP_SCRIPT_SIZE S, #define USE_EEPROM, #define USE_24C256 | S<=4096 | S<=8192 | 1536 |only hardware eeprom is usefull, because Flash EEPROM is also used by Tasmota |
 
 most usefull defintion for larger scripts would be  
+
 ESP8266:  
+
 with 1M flash only default compressed mode is usefull,  
 with 4M Flash best mode would be  
-\#define SCRIPT_FATFS -1  
+\#define USE_SCRIPT_FATFS -1  
 with linker file "eagle.flash.4m2m.ld"  
+
 ESP32:  
-#define LITTLEFS_SCRIPT_SIZE 8192 with standard linker file or better:  
-\#define SCRIPT_FATFS -1  
+
+with standard linker file  
+\#define LITTLEFS_SCRIPT_SIZE 8192  
+or better:  
+\#define USE_SCRIPT_FATFS -1  
 \#define FAT_SCRIPT_SIZE 8192  
 with linker file "esp32_partition_app1572k_ffat983k.csv"  
 
@@ -273,10 +282,11 @@ A web user interface may be generated containing any of the following elements:
   `T` = type  
   - b=barchart  
   - c=columnchart  
+  - C=combochart  
   - p=piechart  
   - l=linechart up to 4 lines with same scaling  
   - l2=linechart with exactly 2 lines and 2 y scales (must be given at end)  
-  - 2f2 like above but with splined lines  
+  - lf2 like above but with splined lines  
   - h=histogram  
   - t=data table  
   - g=simple gauges (must give extra 3 vars after header, yellow start, red start, maxval)  
@@ -284,10 +294,14 @@ A web user interface may be generated containing any of the following elements:
   
   b,l,h type may have the '2' option to specify exactly 2 arrays with 2 y scales given at the end of paramter list.  
   
+  a very individual chart may be specified by splitting the chart definition and inserting the chart options directly see example below  
+  
   `array` = up to 4 arrays of data  
   `name` = name of chart  
   `label` = label for up to the 4 datasets in chart  
-  `entrylabel` = labels of each entry separated by '|' char ("cntN" starts numbering entries with the number N)  
+  `entrylabel` = labels of each x axis entry separated by '|' char  
+  ("cntN" starts numbering entries with the number N an optional /X generates numbers devided by X)  
+  ("wdh: before a week defintion generates a week with full hours)  
   `header` = visible header name of chart  
   
   additionally you have to define the html frame to put the chart in (both lines must be preceded by a $ char)
@@ -296,6 +310,23 @@ A web user interface may be generated containing any of the following elements:
   $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")</pre></code>
   
   you may define more then one chart. The charts id is chart1 ... chartN
+  
+  very customized chart definition:  
+  define a chart like above, but add a t to the definition  
+  this generates a google table from the arrays e.g.:  
+  &gc(lt array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so")
+  
+  then define the options for the graph as from the doku of google e.g.:  
+  $var options = {  
+  $vAxes:{0:{maxValue:40,title:'Außentemperatur'},1:{maxValue:60,title:'Solarspeicher'}},  
+  $series:{0:{targetAxisIndex:0},1:{targetAxisIndex:1}},  
+  $hAxis: {title: 'Wochenverlauf'},  
+  $};  
+  then gc(e) closes the definition   
+  $gc(e)  
+  
+  
+  
   
 `>w` ButtonLabel
 generates a button with the name "ButtonLabel" in Tasmota main menu.  
@@ -357,9 +388,12 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sb(svar p n)` = gets a substring from svar at position p (if p<0 counts from end) and length n  
 `is(num "string1|string2|....|stringn|")` = defines a string array optionally preset with immediate strings separated by '|' (this immediate string may be up to 255 chars long) num = 0 read only string array, num > 0 number of elements in read write string array  
 `is[index]` = gets string `index` from string array, if read-write also write string of index  
+`is1(..)`, `is2(...)` string array see above  
+`is1[x]`, `is2[x]` string array see above  
 `sin(x)` = calculates the sinus(x) (if defined USE_ANGLE_FUNC)  
 `acos(x)` = calculates the acos(x) (if defined USE_ANGLE_FUNC)  
 `sqrt(x)` = calculates the sqrt(x) (if defined USE_ANGLE_FUNC)  
+`abs(x)` = calculates the absolute value of x  
 `mpt(x)` = measure pulse time, x>=0 defines pin to use, -1 returns low pulse time,-2 return high pulse time (if defined USE_ANGLE_FUNC)  
 `rnd(x)` = return a random number between 0 and x, (seed may be set by rnd(-x))  
 `sf(F)` = sets the CPU Frequency (ESP32) to 80,160,240 Mhz, returns current Freq.  
@@ -385,8 +419,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `mins` = mins  
 `secs` = seconds  
 `day` = day of month  
-`wday` = day of week  
-`month` = month  
+`wday` = day of week  (Sunday=1,Monday=2;Tuesday=3;Wednesday=4,Thursday=5,Friday=6,Saturday=7)  
+`month` = month   
 `year` = year  
 `epoch` = epoch time (from 2019-1-1 00:00)  
 `eres` = result of >E section set this var to 1 in section >E to tell Tasmota event is handled (prevents MQTT)  
@@ -425,7 +459,8 @@ If you define a variable with the same name as a special variable that special v
 
 **Variable Substitution**  
 - A single percent sign must be given as `%%`  
-- Variable replacement within commands is allowed using `%varname%`. Optionally, the decimal places precision for numeric values may be specified by placing a digit (`%Nvarname%`, N = `0..9`) in front of the substitution variable (e.g., `Humidity: %3hum%%%` will output `Humidity: 43.271%`)   
+- Variable replacement within commands is allowed using `%varname%`. Optionally, the decimal places precision for numeric values may be specified by placing a digit (`%Nvarname%`, N = `0..9`) in front of the substitution variable (e.g., `Humidity: %3hum%%%` will output `Humidity: 43.271%`)  
+- instead of variables arbitrary calculations my be inserted by bracketing %N(formula)%  
 - Linefeed and carriage return may be defined by \n and \r  
 
 **Special** commands:  
@@ -582,7 +617,7 @@ Enabling this feature also enables [Tasmota TLS](TLS) as `sendmail` uses SSL.
     ```  
 
     Remark:  
-    A number of e-mail servers (such as Gmail) require the receiver's e-mail address to be enclosed by `< ... ` as in example above. Most other e-mail servers also accept this format.  
+    A number of e-mail servers (such as Gmail) require the receiver's e-mail address to be enclosed by `< ... ` as in example above. Most other e-mail servers also accept this format. While ESP8266 sendmail needs brackets, ESP32 sendmail inserts brackets itself so you should not specify brackets here.  
 
 The following parameters can be specified during compilation via `#define` directives in `user_config_override.h`:  
 * `EMAIL_SERVER`  
@@ -595,7 +630,11 @@ To use any of these values, pass an `*` as its corresponding argument placeholde
 
 !!! example "`sendmail [*:*:*:*:*:<rec@gmail.com:theSubject] theMessage`  "
 
-Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `m` _(note lower case)_ section. The specified text in this script section must end with an `#` character. `sendmail` will use the `m` section if `*` is passed as the `msg` parameter. See [Scripting Cookbook Example].(#send-e-mail)  
+Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `m` _(note lower case)_ section. The specified text in this script section must end with an `#` character. `sendmail` will use the `m` section if `*` is passed as the `msg` parameter. in this >m section you may also specify email attachments.
+@/filename specifies a file to be attached (if file system is present)  
+&arrayname specifies an array attachment (as tab delimeted text, no file system needed)  
+
+See [Scripting Cookbook Example].(#send-e-mail)  
  
 **Subscribe, Unsubscribe**  
 `#define SUPPORT_MQTT_EVENT`  
@@ -629,6 +668,7 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 `fd("fname")` delete file fname  
 `flx(fname)` create download link for file (x=1 or 2) fname = file name of file to download  
 `fsm` return 1 if filesystem is mounted, (valid SD card found)  
+`res=fsi(sel)` gets file system information, sel=0 returns total media size, sel=1 returns free space both in kB   
 
 **Extended commands**   (+0,9k flash)  
 `#define USE_SCRIPT_FATFS_EXT`  
