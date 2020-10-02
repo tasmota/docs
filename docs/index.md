@@ -19,8 +19,17 @@ For OTA updates please use the new server [http://ota.tasmota.com/tasmota](http:
 Download [latest Tasmotizer](https://github.com/tasmota/tasmotizer/releases/) to use the new OTA server during flashing.
 
 ### Current release 
-<a href="https://github.com/arendst/Tasmota/releases/tag/v8.5.0"><span style="font-size:40px;">Tasmota 8.5 Hannah</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
+<a href="https://github.com/arendst/Tasmota/releases/tag/v8.5.1"><span style="font-size:40px;">Tasmota 8.5.1 Hannah</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
 
+- Replace ArduinoJson with JSMN for JSON parsing
+- Add new [shutter](Blinds-and-Shutters) modes 
+- Add Zigbee auto-config when pairing
+- Add command ``SetOption110``, ``SetOption111 1`` and ``SetOption112 1`` 
+- ``WakeUp`` uses 256 steps instead of 100 
+- Add support for MLX90640 IR array temperature sensor and VL53L1X time of flight sensor
+- Fix Shelly 2.5 higher temperature bug
+
+#### 8.5.0
 - :rotating_light: **BREAKING CHANGE** :rotating_light: Removed support for direct upgrade from versions before 6.6.0.11 to versions after 8.4.0.1
 - :rotating_light: **BREAKING CHANGE** :rotating_light: PlatformIO 5.0 is **required** to compile Tasmota 8.5+
 - :rotating_light: **BREAKING CHANGE** :rotating_light: Change White blend mode to using command [`SetOption105`](Commands.md#setoption105) instead of ``RGBWWTable``

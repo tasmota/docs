@@ -89,6 +89,7 @@ Name|Description
 [**VEML6075**](VEML6075) |  UVA/UVB/UVINDEX Sensor (I^2^C)
 [**VEML7700**](VEML7700) |  Ambient light intensity Sensor (I^2^C)
 [**VL53L0x**](VL53L0x) | Time of flight sensor (I^2^C)
+**VL53L1x** | Time of flight sensor (I^2^C)
 **WindMeter** | Analog cup anemometer
 [**WS2812B**](WS2812B-RGB-Shield) | Wemos RGB LED Shield
 [**WS2812B<BR>WS2813B**](WS2812B-and-WS2813) | LED Strip
