@@ -27,9 +27,9 @@ Ex:
 
 Which translates to:
 ```
-+8570-4240+550-1580+550-510+565-1565+556-505+565-505
++8570-4240+550-1580+550-510+565-1565+565-505+565-505
 or
-8570,4240,550,1580,550,510,565,1565,556,505,565,505
+8570,4240,550,1580,550,510,565,1565,565,505,565,505
 ```
 
 If you need to transform the compact format in the legacy format, you can use the online tool: https://tasmota.hadinger.fr/util
