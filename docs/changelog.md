@@ -1,3 +1,31 @@
+<!-- 
+
+find: \(#(\d{4})\) 
+replace with: [#$1](https://github.com/arendst/Tasmota/issues/$1)
+     
+-->
+
+### Version 8.5.1 Hannah
+
+- Fix energy total counters [#9263](https://github.com/arendst/Tasmota/issues/9263), [#9266](https://github.com/arendst/Tasmota/issues/9266)
+- Fix crash in ``ZbRestore``
+- Fix reset BMP sensors when executing command ``SaveData`` and define USE_DEEPSLEEP enabled [#9300](https://github.com/arendst/Tasmota/issues/9300)
+- Fix ``status 0`` message when using define USE_MQTT_TLS due to small log buffer [#9305](https://github.com/arendst/Tasmota/issues/9305)
+- Fix ``status 13`` exception 9 when more than one shutter is configured
+- Fix ``status 13`` json message
+- Fix Shelly 2.5 higher temperature regression from 8.2.0.1 [#7991](https://github.com/arendst/Tasmota/issues/7991)
+- Change replace ArduinoJson with JSMN for JSON parsing
+- Change ``WakeUp`` uses 256 steps instead of 100 [#9241](https://github.com/arendst/Tasmota/issues/9241)
+- Add command ``SetOption110 1`` to disable Zigbee auto-config when pairing new devices
+- Add command ``SetOption111 1`` to enable frequency output for buzzer GPIO [#8994](https://github.com/arendst/Tasmota/issues/8994)
+- Add command ``SetOption112 1`` to enable friendly name in zigbee topic (use with SetOption89)
+- Add ``#define USE_MQTT_AWS_IOT_LIGHT`` for password based AWS IoT authentication
+- Add ``#define MQTT_LWT_OFFLINE`` and ``#define MQTT_LWT_ONLINE`` to user_config.h [#9395](https://github.com/arendst/Tasmota/issues/9395)
+- Add new shutter modes [#9244](https://github.com/arendst/Tasmota/issues/9244)
+- Add Zigbee auto-config when pairing
+- Add support for MLX90640 IR array temperature sensor by Christian Baars
+- Add support for VL53L1X time of flight sensor by Johann Obermeier
+
 ### Version 8.5.0 Hannah
 
 - Remove support for direct upgrade from versions before 6.6.0.11 to versions after 8.4.0.1
@@ -5,7 +33,7 @@
 - Change triple-mode TLS via configuration in a single firmware (TLS AWS IoT, Letsencrypt and No-TLS)
 - Change White blend mode to using command ``SetOption 105`` instead of ``RGBWWTable``
 - Fix ESP32 PWM range
-- Fix display power control (#9114)
+- Fix display power control [#9114](https://github.com/arendst/Tasmota/issues/9114)
 - Add command ``SetOption102 0/1`` to set Baud rate for Teleinfo communication (0 = 1200 or 1 = 9600)
 - Add command ``SetOption103 0/1`` to set TLS mode when TLS is selected
 - Add command ``SetOption104 1`` to disable all MQTT retained messages
@@ -14,15 +42,15 @@
 - Add command ``SetOption107 0/1`` to select virtual White as (0) Warm or (1) Cold
 - Add command ``SetOption108 0/1`` to enable Teleinfo telemetry into Tasmota Energy MQTT (0) or Teleinfo only (1)
 - Add command ``SetOption109 1`` to force gen1 Alexa mode, for Echo Dot 2nd gen devices only
-- Add command ``Restart 2`` to halt system. Needs hardware reset or power cycle to restart (#9046)
-- Add command ``PowerDelta1`` to ``PowerDelta3`` to trigger on up to three phases (#9134)
+- Add command ``Restart 2`` to halt system. Needs hardware reset or power cycle to restart [#9046](https://github.com/arendst/Tasmota/issues/9046)
+- Add command ``PowerDelta1`` to ``PowerDelta3`` to trigger on up to three phases [#9134](https://github.com/arendst/Tasmota/issues/9134)
 - Add Zigbee options to ``ZbSend`` ``Config`` and ``ReadCondig``
 - Add Zigbee better support for IKEA Motion Sensor
 - Add Zigbee web gui widget for Battery and Temp/Humidity/Pressure sensors
 - Add Zigbee web ui for power metering plugs
-- Add better configuration corruption recovery (#9046)
+- Add better configuration corruption recovery [#9046](https://github.com/arendst/Tasmota/issues/9046)
 - Add virtual CT for 4 channels lights, emulating a 5th channel
-- Add support for DYP ME007 ultrasonic distance sensor by Janusz Kostorz (#9113)
+- Add support for DYP ME007 ultrasonic distance sensor by Janusz Kostorz [#9113](https://github.com/arendst/Tasmota/issues/9113)
 - Add ESP32 Analog input support for GPIO32 to GPIO39
 - Add experimental support for ESP32 TTGO Watch and I2S Audio by Gerhard Mutz
 
