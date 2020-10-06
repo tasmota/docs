@@ -34,8 +34,7 @@ By default a switch toggles the corresponding power state (f.e. `Switch1` contro
 Backlog SwitchMode 1; SwitchTopic 0
 ```
 ```haskell
-Rule1 on Switch1#state do Publish cmnd/custom-topic/SWITCH %value% endon
-Rule1 1
+Backlog Rule1 on Switch1#state do Publish cmnd/%topic%/SWITCH1 %value% endon; Rule1 1
 ```
 
 !!! warning 
