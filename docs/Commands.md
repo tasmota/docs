@@ -180,7 +180,7 @@ Upload<a class="cmnd" id="upload"></a>|`1` = download firmware from `OtaUrl` and
 WebLog<a class="cmnd" id="weblog"></a>|`0` = disable web logging<BR> `1` = show only error messages<BR> `2` = show error and info messages *(default)*<BR>`3` = show error, info and debug messages<BR>`4` = show error, info and more debug messages
 See also|[`SetOption68`](#setoption68) - PWM Channel control<BR>[`SetOption76`](#setoption76) - DeepSleep disable bootcount incrementing
 
-### Wi-Fi
+### Wi-Fi (review CORS default value)
 
 Command|Parameters
 :---|:---
