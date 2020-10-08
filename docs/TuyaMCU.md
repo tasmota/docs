@@ -85,7 +85,7 @@ Component| FunctionId|Note
 -|-|-
 Switch1 to Switch4 | 1 to 4 | Map only to dpId with on / off function
 Relay1 to Relay8 | 11 to 18 | Map only to dpId with on / off function
-Lights | 21 to 28 | 21 for Dimmer<br>22 for Dimmer1<br>23 for CCT Light<br>24 for RGB light<br>25 for white light<br>26 for light mode set (0 = white and 1 = color)<br>27 to report the state of Dimmer1<br>28 to report the state of Dimmer2
+Lights | 21 to 28 | 21 for Dimmer<br>22 for Dimmer2<br>23 for CCT Light<br>24 for RGB light<br>25 for white light<br>26 for light mode set (0 = white and 1 = color)<br>27 to report the state of Dimmer1<br>28 to report the state of Dimmer2
 Power Monitoring | 31 to 33 | 31 for Power (in deci Watt)<br>32 for Current (in milli Amps)<br>33 for Voltage (in deci Volt)
 Relay1i to Relay8i | 41 to 48 | Map only to dpId with on / off function
 Battery powered sensor mode | 51 | Battery powered devices use a slightly different protocol
