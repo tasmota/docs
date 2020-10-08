@@ -259,7 +259,7 @@ To enable an RGB+CCT light use RGB Light configuration and assign fnId `23` as C
 #### Light mode selector
 The majority of  TuyaMCU devices with an RGB+W or an RGB+CCT light have a button or app function to switch between White and Colored light. 
 
-To do the same assign function (fnId) `26` to the mode select dpId. The possible values are 0 (white) and 1 (colorful). A button on the WebUI will be available.
+To do the same in Tasmota, assign function (fnId) `26` to the mode select dpId. The possible values are 0 (white) and 1 (colorful). A button on the WebUI will be available once configured.
 
 When the ModeSet function is enabled it is not  possible to update both lights at the same time. Only the currently selected light mode will be updated. 
 
@@ -280,8 +280,8 @@ Different from other fan controllers like the Ifan03, the value of `0` doesn't m
 Single Shutter or double shutters devices can be managed with a dimmer setup
 For devices that are reporting position to a another dpId assign fnId's:
 
-- 27 to report the state of Dimmer1
-- 28 to report the state of Dimmer2
+- `27` to report the state of Dimmer1
+- `28` to report the state of Dimmer2
 
 If your cover device has a motor direction change option assign fnId `97` for motor direction.
 
