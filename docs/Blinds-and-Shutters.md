@@ -423,7 +423,14 @@ Tasmota rule triggers:
 - `Shutter<x>#Position` is triggered at start, during and at the end of movement reporting actual position (`%value%`=0-100)
 - `Shutter<x>#Direction` is triggered at start, during and at the end of movement reporting actual direction (`%value%`: `-1`=close direction, `0`=no movement, `1`=open direction)
 - `Shutter<x>#Target` is triggered at start, during and at the end of movement reporting current target (`%value%`0-100)
-- `Shutter#Moving` is triggered during movement (shutter independently)
+- `Shutter#Moving` is triggered during movement and just before moving (shutter independently). If VAR<x> is set to 99 then this trigger will be executed BEFORE the shutter starts. You can start the shutter after rule execution by setting VAR<x> to 0 or wait 10seconds before the timeout kicks in. After the movement with shutter#moved the var must be set back to 99 and the inital rule must be enabled again. The inital rule has to be defined to run ONCE. 
+   EXAMPLE: power3 on and wait 2sec before start. After movement: power off
+   ```
+   rule1 on shutter#moving=1 do backlog power3 on;delay 20;var1 0 endon
+   rule1 5
+   rule2 on shutter#moved do backlog power2 off;var1 99;rule1 5 endon
+   rule2 1
+   ```
 - `Shutter#Moved` is triggered at end of movement (shutter independently)
 - `Shutter<x>#Button<button>=0`  is triggered when `button` is hold
 - `Shutter<x>#Button<button>=<n>`  is triggered when `button` is pressed `n` times
