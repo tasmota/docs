@@ -238,6 +238,7 @@ Tasmota will automatically enable `SetOption68` and the dimmers will respond to 
 #### CCT Light
 
 To enable a CCT light assign fnId's:
+
 - `21` as Dimmer1
 - `11` as Relay1
 - `23` as CT channel
@@ -245,16 +246,15 @@ To enable a CCT light assign fnId's:
 #### RGB Light
 
 To enable an RGB light assign fnId's:
+
 - `21` as Dimmer1
 - `11` as Relay1
 - `24` as RGB controller
 
 #### RGB+X Light
-To enable an RGB+W light use RGB Light configuration and assign fnId:
-- `25` as white color
+To enable an RGB+W light use RGB Light configuration and assign fnId `25` as white color.
 
-To enable an RGB+CCT light use RGB Light configuration and assign fnId:
-- `23` as CT channel
+To enable an RGB+CCT light use RGB Light configuration and assign fnId `23` as CT channel.
 
 #### Light mode selector
 The majority of  TuyaMCU devices with an RGB+W or an RGB+CCT light have a button or app function to switch between White and Colored light. 
@@ -268,6 +268,7 @@ When the ModeSet function is enabled it is not  possible to update both lights a
 
 ### Fans
 To setup a fan controller select one of the available functions:
+
 - `61` for 3 speed fan (possible values 0,1,2)
 - `62` for 4 speed fan (possible values 0,1,2,3)
 - `63` for 5 speed fan (possible values 0,1,2,3,4)
@@ -278,6 +279,7 @@ Different from other fan controllers like the Ifan03, the value of `0` doesn't m
 ### Covers
 Single Shutter or double shutters devices can be managed with a dimmer setup
 For devices that are reporting position to a another dpId assign fnId's:
+
 - 27 to report the state of Dimmer1
 - 28 to report the state of Dimmer2
 
