@@ -428,7 +428,7 @@ Tasmota rule triggers:
    ```
    rule1 on shutter#moving=1 do backlog power3 on;delay 20;var1 0 endon
    rule1 5
-   rule2 on shutter#moved do backlog power2 off;var1 99;rule1 5 endon
+   rule2 on shutter#moved do backlog power3 off;var1 99;rule1 5 endon
    rule2 1
    ```
 - `Shutter#Moved` is triggered at end of movement (shutter independently)
