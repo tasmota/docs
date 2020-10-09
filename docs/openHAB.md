@@ -19,7 +19,7 @@ The screenshot of an openHAB Sitemap below features a few Sonoff modules for lig
 
 ----
 
-If not done yet, you first need to **install and activate** the [MQTTv1](https://www.openhab.org/addons/bindings/mqtt1/)/[MQTTv2](https://www.openhab.org/addons/bindings/mqtt/)&ast;, the [MQTT action](https://www.openhab.org/addons/actions/mqtt/) and the [JsonPath transformation](https://www.openhab.org/addons/transformations/jsonpath/), e.g. via the openHAB Paper UI Add-ons section.
+If not done yet, you first need to **install and activate** the [MQTT](https://www.openhab.org/addons/bindings/mqtt/) binding, the [MQTT action](https://www.openhab.org/addons/actions/mqtt/) and the [JsonPath transformation](https://www.openhab.org/addons/transformations/jsonpath/), e.g. via the openHAB Paper UI Add-ons section.
 
 ****
 
