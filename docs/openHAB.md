@@ -15,7 +15,7 @@ The screenshot of an openHAB Sitemap below features a few Sonoff modules for lig
 * MQTT broker available (e.g. Eclipse Mosquitto via [openHABian](https://www.openhab.org/docsopenhabian.html))
 * A [basic understanding of MQTT](http://www.hivemq.com/blog/mqtt-essentials) 
 * Working and tested connection between openHAB and the MQTT broker
-* (optional) Standalone [MQTT client](http://www.hivemq.com/blog/seven-best-mqtt-client-tools) (e.g. [mqtt-spy](https://kamilfb.github.io/mqtt-spy)) to observe and identify messages on the MQTT broker
+* (optional) Standalone [MQTT client](http://www.hivemq.com/blog/seven-best-mqtt-client-tools) (e.g. [MQTT Explorer](https://mqtt-explorer.com/)) to observe and identify messages on the MQTT broker
 
 **Highly recommended:** If you are new to openHAB + MQTT, go through this tutorial: <br>
 ⇨ [MQTT Binding - Getting Started 101](https://community.openhab.org/t/mqtt-binding-v1-11-getting-started-101/33958)
