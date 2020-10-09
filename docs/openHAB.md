@@ -17,8 +17,6 @@ The screenshot of an openHAB Sitemap below features a few Sonoff modules for lig
 * Working and tested connection between openHAB and the MQTT broker
 * (optional) Standalone [MQTT client](http://www.hivemq.com/blog/seven-best-mqtt-client-tools) (e.g. [MQTT Explorer](https://mqtt-explorer.com/)) to observe and identify messages on the MQTT broker
 
-<!-- ![Example Tasmota MQTT settings](https://community-openhab-org.s3-eu-central-1.amazonaws.com/original/2X/8/8fe9008fb24b0b70e6eddf7cf0f0c70c8ac21b92.png "Example Tasmota MQTT settings") -->
-
 ----
 
 If not done yet, you first need to **install and activate** the [MQTTv1](https://www.openhab.org/addons/bindings/mqtt1/)/[MQTTv2](https://www.openhab.org/addons/bindings/mqtt/)&ast;, the [MQTT action](https://www.openhab.org/addons/actions/mqtt/) and the [JsonPath transformation](https://www.openhab.org/addons/transformations/jsonpath/), e.g. via the openHAB Paper UI Add-ons section.
