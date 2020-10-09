@@ -17,8 +17,6 @@ The screenshot of an openHAB Sitemap below features a few Sonoff modules for lig
 * Working and tested connection between openHAB and the MQTT broker
 * (optional) Standalone [MQTT client](http://www.hivemq.com/blog/seven-best-mqtt-client-tools) (e.g. [MQTT Explorer](https://mqtt-explorer.com/)) to observe and identify messages on the MQTT broker
 
-Before continuing, please make sure you assigned **unique MQTT "Topics"** in the Tasmota configuration interface of each pf your devices. The default MQTT topic is "tasmota", in the examples below we will use names like "tasmota-A00EEA".
-
 <!-- ![Example Tasmota MQTT settings](https://community-openhab-org.s3-eu-central-1.amazonaws.com/original/2X/8/8fe9008fb24b0b70e6eddf7cf0f0c70c8ac21b92.png "Example Tasmota MQTT settings") -->
 
 ----
