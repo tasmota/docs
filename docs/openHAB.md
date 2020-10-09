@@ -48,7 +48,7 @@ Bridge mqtt:broker:myMQTTBroker [ host="IPofBroker", secure=false, username="myU
 Switch Switch_TH "Switch_TH"  { channel="mqtt:topic:myMQTTBroker:tasmota_TH_Thing:PowerSwitch" }
 
 String  Switch_TH_Temperatur "Temperatur [%s °C]" <temperature> {channel="mqtt:topic:myMQTTBroker:tasmota_TH_Thing:Temperature"}
-String  Sonoff_Version "Tasmota Version: [%s]" <tasmota_basic> { channel="mqtt:topic:myMQTTBroker:tasmota_6_Thing:Version"}
+String  Tasmota_Version "Tasmota Version: [%s]" <tasmota_basic> { channel="mqtt:topic:myMQTTBroker:tasmota_TH_Thing:Version"}
 ```
 
 **.rules File for the Maintenance Action:**
@@ -56,9 +56,9 @@ String  Sonoff_Version "Tasmota Version: [%s]" <tasmota_basic> { channel="mqtt:t
 ```js
 // Work with a list of selected Tasmota modules
 val tasmota_device_ids = newArrayList(
-    "tasmota-A00EEA",
+    "Tasmota_A00EEA",
     //… add all your modules here!
-    "tasmota-E8A6E4"
+    "Tasmota_E8A6E4"
 )
 // OR
 // Work with the grouptopic, addressing ALL modules at once
@@ -66,7 +66,7 @@ val tasmota_device_ids = newArrayList(
 
 rule "TasmotaMaintenance"
 when
-    Item Sonoff_Action received command
+    Item Tasmota_Action received command
 then
     logInfo("tasmota.rules", "TasmotaMaintenance on all devices: " + receivedCommand)
     val actionsBroker = getActions("mqtt","mqtt:broker:MyMQTTBroker") // change to your broker name!
@@ -82,7 +82,7 @@ then
             }
         }
     }
-    Sonoff_Action.postUpdate(NULL)
+    Tasmota_Action.postUpdate(NULL)
 end
 ```
 
@@ -198,21 +198,24 @@ The example below includes upgrading the firmware of all devices. A shoutout to 
 ![Tasmota Maintenance Actions](https://community-openhab-org.s3-eu-central-1.amazonaws.com/original/2X/9/97f0bdf6a81ffe94068e596804adf94839a5580b.png)
 
 **tasmota.items:**
+
 ```js
 //... all the above
 
 //Maintenance
-String  Sonoff_Action "Tasmota Action" <tasmota_basic>
+String  Tasmota_Action "Tasmota Action" <tasmota_basic>
 ```
 
 **yourhome.sitemap:**
+
 ```js
 //...
-Switch item=Sonoff_Action mappings=[restart="Restart", queryFW="Query FW", upgrade="Upgrade FW"]
+Switch item=Tasmota_Action mappings=[restart="Restart", queryFW="Query FW", upgrade="Upgrade FW"]
 //...
 ```
 
 **tasmota.rules:**
+
 ```js
 // Work with a list of selected Tasmota modules
 val tasmota_device_ids = newArrayList(
@@ -226,7 +229,7 @@ val tasmota_device_ids = newArrayList(
 
 rule "Tasmota Maintenance"
 when
-    Item Sonoff_Action received command
+    Item Tasmota_Action received command
 then 
     logInfo("tasmota.rules", "TasmotaMaintenance on all devices: " + receivedCommand)
     for (String device_id : tasmota_device_ids) {
@@ -241,7 +244,7 @@ then
             }
         }
     }
-    Sonoff_Action.postUpdate(NULL)
+    Tasmota_Action.postUpdate(NULL)
 end
 ```
 
@@ -261,8 +264,9 @@ tasmotaRelease.updateInterval=43200000
 ```
 
 **tasmota.items:**
+
 ```js
-String Sonoff_Current_FW_Available "Current Release [%s]" <tasmota_basic> (Sonoff_Maintenance) { http="<[tasmotaRelease:10000:JSONPATH($[0].name)]"}
+String Tasmota_Current_FW_Available "Current Release [%s]" <tasmota_basic> { http="<[tasmotaRelease:10000:JSONPATH($[0].name)]"}
 ```
 
 With the item in your sitemap, you will now see the latest release/tag from the tasmota repository.
