@@ -21,34 +21,44 @@ The screenshot of an openHAB Sitemap below features a few Sonoff modules for lig
 
 If not done yet, you first need to **install and activate** the [MQTT](https://www.openhab.org/addons/bindings/mqtt/) binding, the [MQTT action](https://www.openhab.org/addons/actions/mqtt/) and the [JsonPath transformation](https://www.openhab.org/addons/transformations/jsonpath/), e.g. via the openHAB Paper UI Add-ons section.
 
-****
+----
 
 !!! info "MQTTv1 vs. MQTTv2 Binding Information"
     Please note that since `mqtt1` is a legacy binding for years now, it will no longer receive updates or fixes. See [older version of this tutorial](https://github.com/tasmota/docs/blob/4c7240ddd5d81146ea148f471b1544283e655ec3/docs/openHAB.md#mqttv1-integration) on how to integrate Tasmota using this binding if you are using `mqtt1` - but be advised that it's not recommended anymore, it's better to upgrade to MQTTv2 binding.
 
 ## MQTTv2 Integration
 
+Configuration is split throughout some openHAB configuration files. First we need to set up a MQTT connection and Tasmota things - you will need a separate thing for every Tasmota device you use.
+
 **.things File:**
 
 ```js
-Bridge mqtt:broker:myMQTTBroker [ host="IPofBroker", secure=false, username="myUser", password="myPassword" , clientID="myMQTTClient" ]
-{
-    Thing topic tasmota_TH_Thing "Light_TH" {
+Bridge mqtt:broker:myMQTTBroker "My only one and best MQTT server"
+[
+    host="IPofBroker",
+    username="myUser",
+    password="myPassword",
+    clientID="myopenHABMQTTClient"
+]
+
+Thing mqtt:topic:tasmota:tasmota_TH_Thing "Light_TH" (mqtt:broker:myMQTTBroker) {
     Channels:
-        Type switch : PowerSwitch  [ stateTopic="stat/tasmota_TH/POWER" , commandTopic="cmnd/tasmota_TH/POWER", on="ON", off="OFF" ]
-        Type string : Version [stateTopic="stat/tasmota_TH/STATUS2", transformationPattern="JSONPATH:$.StatusFWR.Version"]
-        Type string : Temperature [stateTopic="tele/tasmota_TH/SENSOR", transformationPattern="JSONPATH:$.AM2301.Temperature"]
-      }
+        Type switch : PowerSwitch  [stateTopic="stat/tasmota_TH/POWER",   commandTopic="cmnd/tasmota_TH/POWER", on="ON", off="OFF"]
+        Type string : Version      [stateTopic="stat/tasmota_TH/STATUS2", transformationPattern="JSONPATH:$.StatusFWR.Version"]
+        Type number : Temperature  [stateTopic="tele/tasmota_TH/SENSOR",  transformationPattern="JSONPATH:$.AM2301.Temperature"]
 }
+
 ```
 
 **.items File:**
 
-```js
-Switch Switch_TH "Switch_TH"  { channel="mqtt:topic:myMQTTBroker:tasmota_TH_Thing:PowerSwitch" }
+For every property your device exposes, you need to define an item, linked to corresponding channel of your Tasmota thing.
 
-String  Switch_TH_Temperatur "Temperatur [%s °C]" <temperature> {channel="mqtt:topic:myMQTTBroker:tasmota_TH_Thing:Temperature"}
-String  Tasmota_Version "Tasmota Version: [%s]" <tasmota_basic> { channel="mqtt:topic:myMQTTBroker:tasmota_TH_Thing:Version"}
+```js
+Switch             Switch_TH              "Switch_TH"                            {channel="mqtt:topic:tasmota:tasmota_TH_Thing:PowerSwitch"}
+
+Number:Temperature Switch_TH_Temperature "Temperature [%.1f °C]"   <temperature> {channel="mqtt:topic:tasmota:tasmota_TH_Thing:Temperature"}
+String             Tasmota_Version       "Tasmota Version: [%s]"                 {channel="mqtt:topic:tasmota:tasmota_TH_Thing:Version"}
 ```
 
 **.rules File for the Maintenance Action:**
@@ -124,18 +134,21 @@ Following this method, the behavior-linked messages can be identified and bound 
 
 ### Mandatory Topics / Items
 
-This it the minimal set of items for the basic functionality of different Tasmota devices. You'll need to replace the given example dive name (e.g. "tasmota-A00EEA") by the one chosen for your module. 
+This it the minimal set of items for the basic functionality of different Tasmota devices. You'll need to replace the given example dive name (e.g. "Tasmota_A00EEA") by the one chosen for your module.
 <br /> (*Note: Lines have been wrapped for better presentation*)
 
 **tasmota.items:**
 
 * Sonoff Basic / Sonoff S20 Smart Socket (Read and switch on-state)
+
   ```js
   Switch LivingRoom_Light "Living Room Light" <light> (LR,gLight)
       { mqtt=">[broker:cmnd/tasmota-A00EEA/POWER:command:*:default],
               <[broker:stat/tasmota-A00EEA/POWER:state:default]" }
   ```
+
 * Sonoff Pow (Read and switch on-state, read current wattage)
+
   ```js
   // compare with example message stream above!
   Switch BA_Washingmachine "Washingmachine" <washer> (BA)
