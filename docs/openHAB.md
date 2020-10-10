@@ -140,41 +140,44 @@ A home automation system setup would not be complete without a certain maintenan
 
 Add the following elements to your openHAB setup to be able to perform actions on your Tasmota devices by the press of a simple sitemap button.
 
-The example below includes upgrading the firmware of all devices. A shoutout to @evilgreen for the idea and a big thanks to @smadds for [providing](https://github.com/arendst/Tasmota/issues/19) the public firmware server used in the example.
+The example below includes upgrading the firmware of all devices. A shoutout to @evilgreen for the idea and a big thanks to @smadds for [providing](https://github.com/arendst/Tasmota/issues/19) the idea of a public firmware server.
 
 ![Tasmota Maintenance Actions](https://community-openhab-org.s3-eu-central-1.amazonaws.com/original/2X/9/97f0bdf6a81ffe94068e596804adf94839a5580b.png)
 
-**.rules File for the Maintenance Action:**
+**tasmota_maintenance.rules File for Maintenance Actions:**
 
 ```js
-// Work with a list of selected Tasmota modules
-val tasmota_device_ids = newArrayList(
-    "tasmota-A00EEA",
-    //... add all your modules here!
-    "tasmota-E8A6E4"
-)
+// Work with grouptopic, addressing ALL modules at once, easiest solution
+val tasmota_device_ids = newArrayList("tasmotas")
 // OR
-// Work with the grouptopic, addressing ALL modules at once
-//val tasmota_device_ids = newArrayList("tasmotas")
+// Work with a list of selected Tasmota modules
+//val tasmota_device_ids = newArrayList(
+//    "tasmota_A00EEA",
+//    //… add all your modules here, don't forget some!
+//    "tasmota_E8A6E4"
+//)
 
 rule "Tasmota Maintenance"
 when
     Item Tasmota_Action received command
-then 
-    logInfo("tasmota.rules", "TasmotaMaintenance on all devices: " + receivedCommand)
+then
+    logInfo("tasmota_maintenance.rules", "Tasmota Maintenance on all devices: " + receivedCommand)
+    val actionsBroker = getActions("mqtt","mqtt:broker:MyMQTTBroker") // change to your broker name!
     for (String device_id : tasmota_device_ids) {
         switch (receivedCommand) {
             case "restart" :
-                publish("broker", "cmnd/" + device_id + "/restart", "1") 
+                actionsBroker.publishMQTT( "cmnd/" + device_id + "/restart", "1")
             case "queryFW" :
-                publish("broker", "cmnd/" + device_id + "/status", "2")
+                actionsBroker.publishMQTT( "cmnd/" + device_id + "/status", "2")
             case "upgrade" : {
-                publish("broker", "cmnd/" + device_id + "/otaurl", "http://ota.tasmota.com/tasmota/release/tasmota.bin")
-                publish("broker", "cmnd/" + device_id + "/upgrade", "1")
+                // one could change OTA URL using MQTT but if you use different breeds (basic, ir, sensor, ...) of Tasmota, you would lose them
+                // it's better to configure OTA url at each device (default) and just trigger upgrade - they will use OTA URL saved in your device.
+                //actionsBroker.publishMQTT( "cmnd/" + device_id + "/otaurl", "http://ota.tasmota.com/tasmota/release/tasmota.bin")
+                actionsBroker.publishMQTT( "cmnd/" + device_id + "/upgrade", "1")
             }
         }
     }
-    Tasmota_Action.postUpdate(NULL)
+    createTimer(now.plusSeconds(1))[|Tasmota_Action.postUpdate(UNDEF)]
 end
 ```
 
