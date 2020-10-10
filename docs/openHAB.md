@@ -30,6 +30,10 @@ If not done yet, you first need to **install and activate** the [MQTT](https://w
 
 Configuration is split throughout some openHAB configuration files. First we need to set up a MQTT connection and Tasmota things - you will need a separate thing for every Tasmota device you use.
 
+In the example configuration you can see a non-default **Full Topic** definition. For your real world device simply **set up items** for all Tasmota [MQTT topics](MQTT#mqtt-topic-definition) you are interested in. Examples for most needed topics are given below, see section [Discovering Interesting Topics](#discovering-interesting-topics) below on how to watch the raw MQTT data. Some Tasmota topics are JSON encoded, the `JSONPATH` transformation can be used to extract this data.
+
+You'll need to replace the given example device topic name (e.g. "Tasmota_TH") by the one chosen for your module.
+
 **.things File:**
 
 ```js
@@ -41,11 +45,32 @@ Bridge mqtt:broker:myMQTTBroker "My only one and best MQTT server"
     clientID="myopenHABMQTTClient"
 ]
 
-Thing mqtt:topic:tasmota:tasmota_TH_Thing "Light_TH" (mqtt:broker:myMQTTBroker) {
+Thing mqtt:topic:tasmota:tasmota_TH "Light_TH" (mqtt:broker:myMQTTBroker) {
     Channels:
+        // Sonoff Basic / Sonoff S20 Smart Socket (Read and switch on-state)
         Type switch : PowerSwitch  [stateTopic="stat/tasmota_TH/POWER",   commandTopic="cmnd/tasmota_TH/POWER", on="ON", off="OFF"]
-        Type string : Version      [stateTopic="stat/tasmota_TH/STATUS2", transformationPattern="JSONPATH:$.StatusFWR.Version"]
+
+        // Sonoff Pow (read current wattage; for read and switch on-state see above)
+        Type number : Power        [stateTopic="tele/tasmota_TH/SENSOR", transformationPattern="JSONPATH:$.ENERGY.Power"}
+
+        // devices including AM2301 temperature sensor
         Type number : Temperature  [stateTopic="tele/tasmota_TH/SENSOR",  transformationPattern="JSONPATH:$.AM2301.Temperature"]
+
+        // Tasmota Status
+        Type string : Version      [stateTopic="stat/tasmota_TH/STATUS2", transformationPattern="JSONPATH:$.StatusFWR.Version"]
+        Type switch : Reachable    [stateTopic="tele/tasmota_TH/LWT",     transformationPattern="MAP:tasmota-reachable.map"]
+
+        // Diagnostics: Define specific for what you really need on a regular basis, use standalone MQTT client for troubleshooting
+        Type string : RestartReason [stateTopic="tele/tasmota_TH/INFO3", transformationPattern="JSONPATH:$.RestartReason"]
+        // old one, have to query it
+        Type string : Version2      [stateTopic="stat/tasmota_TH/STATUS2", transformationPattern="JSONPATH:$.StatusFWR.Version"]
+        // new one - comes for free at startup
+        Type string : Version       [stateTopic="tele/tasmota_TH/INFO1", transformationPattern="JSONPATH:$.Version"]
+        Type number : RSSI          [stateTopic="tele/tasmota_TH/STATE", transformationPattern="JSONPATH:$.Wifi.RSSI"]
+        Type string : WifiDowntime  [stateTopic="tele/tasmota_TH/STATE", transformationPattern="JSONPATH:$.Wifi.Downtime"]
+        Type number : LoadAvg       [stateTopic="tele/tasmota_TH/STATE", transformationPattern="JSONPATH:$.LoadAvg"]
+        Type number : Uptime        [stateTopic="tele/tasmota_TH/STATE", transformationPattern="JSONPATH:$.UptimeSec"]
+        Type string : Result        [stateTopic="stat/tasmota_TH/RESULT"]
 }
 
 ```
@@ -55,146 +80,55 @@ Thing mqtt:topic:tasmota:tasmota_TH_Thing "Light_TH" (mqtt:broker:myMQTTBroker) 
 For every property your device exposes, you need to define an item, linked to corresponding channel of your Tasmota thing.
 
 ```js
-Switch             Switch_TH              "Switch_TH"                            {channel="mqtt:topic:tasmota:tasmota_TH_Thing:PowerSwitch"}
+// device specific properties
+Switch             Switch_TH      "Switch_TH"                           {channel="mqtt:topic:tasmota:tasmota_TH:PowerSwitch"}
+Number:Temperature Switch_TH_Temp "Temperature [%.1f °C]" <temperature> {channel="mqtt:topic:tasmota:tasmota_TH:Temperature"}
+Number:Power       Power          "Power [%.1f W]"                      {channel="mqtt:topic:tasmota:tasmota_TH:Power"}
 
-Number:Temperature Switch_TH_Temperature "Temperature [%.1f °C]"   <temperature> {channel="mqtt:topic:tasmota:tasmota_TH_Thing:Temperature"}
-String             Tasmota_Version       "Tasmota Version: [%s]"                 {channel="mqtt:topic:tasmota:tasmota_TH_Thing:Version"}
+// Tasmota Status
+String             Tasmota_Version   "Tasmota Version [%s]" {channel="mqtt:topic:tasmota:tasmota_TH:Version", channel="mqtt:topic:tasmota:tasmota_TH:Version2"}
+Switch             Tasmota_Reachable "Reachable"            {channel="mqtt:topic:tasmota:tasmota_TH:Reachable"}
+
+// Diagnostics
+String               Tasmota_RestartReason "Restart Reason [%s]"  {channel="mqtt:topic:tasmota:tasmota_TH:RestartReason"}
+Number:Dimensionless Tasmota_RSSI          "Signal [%d %%]"       {channel="mqtt:topic:tasmota:tasmota_TH:RSSI"}
+String               Tasmota_WifiDowntime  "Wifi Downtime [%s]"   {channel="mqtt:topic:tasmota:tasmota_TH:WifiDowntime"}
+Number:Dimensionless Tasmota_LoadAvg       "Load [%d %%]"         {channel="mqtt:topic:tasmota:tasmota_TH:LoadAvg"}
+String               Tasmota_Result        "Result [%s]"          {channel="mqtt:topic:tasmota:tasmota_TH:Result"}
+Number:Time          Tasmota_Uptime        "Uptime [%.1f s]"      {channel="mqtt:topic:tasmota:tasmota_TH:Uptime"}
+
+// Maintenance (described below)
+String Tasmota_Action "Tasmota Action"
 ```
 
-**.rules File for the Maintenance Action:**
+**.sitemap File:**
 
 ```js
-// Work with a list of selected Tasmota modules
-val tasmota_device_ids = newArrayList(
-    "Tasmota_A00EEA",
-    //… add all your modules here!
-    "Tasmota_E8A6E4"
-)
-// OR
-// Work with the grouptopic, addressing ALL modules at once
-//val tasmota_device_ids = newArrayList("tasmotas")
+// device specific properties
+Switch item=Switch_TH
+Text   item=Switch_TH_Temp
+Text   item=Power
 
-rule "TasmotaMaintenance"
-when
-    Item Tasmota_Action received command
-then
-    logInfo("tasmota.rules", "TasmotaMaintenance on all devices: " + receivedCommand)
-    val actionsBroker = getActions("mqtt","mqtt:broker:MyMQTTBroker") // change to your broker name!
-    for (String device_id : tasmota_device_ids) {
-        switch (receivedCommand) {
-            case "restart" :
-                actionsBroker.publishMQTT( "cmnd/" + device_id + "/restart", "1")
-            case "queryFW" :
-                actionsBroker.publishMQTT( "cmnd/" + device_id + "/status", "2")
-            case "upgrade" : {
-                actionsBroker.publishMQTT( "cmnd/" + device_id + "/otaurl", "http://ota.tasmota.com/tasmota/release/tasmota.bin")  // Replace with your preferred build
-                actionsBroker.publishMQTT( "cmnd/" + device_id + "/upgrade", "1")
-            }
-        }
-    }
-    Tasmota_Action.postUpdate(NULL)
-end
+// Maintenance
+Switch item=Tasmota_Action mappings=[restart="Restart", queryFW="Query FW", upgrade="Upgrade FW"]
+
+// Tasmota Status
+Text item=Tasmota_Version
+Text item=Tasmota_Reachable
+
+// Diagnostics
+Text item=Tasmota_RestartReason
+Text item=Tasmota_RSSI
+Text item=Tasmota_WifiDowntime
+Text item=Tasmota_LoadAvg
+Text item=Tasmota_Uptime label="Uptime [%.1f d]"
+Text item=Tasmota_Result
 ```
 
-## MQTTv1 Integration
+The "LWT" topic (["Last Will and Testament"](http://www.hivemq.com/blog/mqtt-essentials-part-9-last-will-and-testament)) will receive regular "Online" messages by the module and an "Offline" message a short time after the module is disconnected, generated by the MQTT broker. These messages are transformed to a valid `ON`/`OFF` state by the [MAP](https://www.openhab.org/addons/transformations/map/) transformation. Of course you can implement `Unreachable` instead of `Reachable` if you prefer. The following transformation file is needed:
 
-Please note that since `mqtt1` is a legacy binding, it will no longer receive updates or fixes. If you update your openHAB instance, the new MQTT binding will be installed and `mqtt1` will be uninstalled! This means that any MQTT openHAB automations in your openHAB environment will exhibit odd behavior or not operate at all. Fortunately, the `mqtt1` Binding can be reinstalled. To do so, turn on "Include Legacy 1.x Bindings" via PaperUI (Configuration > System) or set `legacy = true` in `addons.cfg`. Then reinstall the `mqtt1` Binding. Installing both `mqtt2` and `mqtt1` bindings will allow you to migrate over time to be ready for the eventuality of `mqtt1` end of life.
+**reachable.map Fíle:**
 
-For users that intend to migrate to the new MQTT Binding some examples for the integration have been added [above](#mqttv2-integration).
-
-----
-
-
-In the example configuration you can see a non-default **Full Topic** definition, which is **not** used in the following examples (but which can be recommended).
-
-Simply **set up items** for all Tasmota [MQTT topics](MQTT#mqtt-topic-definition) you are interested in. Examples for most needed topics are given below. Some Tasmota topics are JSON encoded, the `JSONPATH` transformation can be used to extract this data.
- 
-Additional or further interesting topics are easily identified by reading up on the Tasmota wiki and by subscribing to the modules topics. Subscribe to all topics of one module with the [MQTT wildcard](http://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices) topic string `+/tasmota-XYZ/#` (String depends on your user-configured Topic/FullTopic). Configure items for the identified topics similar to the ones below.
-
-**Example:**
-MQTT messages published by a Sonoff Pow module are shown below (using [mosquitto_sub](https://mosquitto.org/man/mosquitto_sub-1.html)).
-The module reports its device state and energy readings periodically.
-In the second half of the example the module relay was switched into the OFF position.
-
-```js
-$ mosquitto_sub -h localhost -t "+/tasmota-E8A6E4/#" -v
-
-tele/tasmota-E8A6E4/LWT Online
-tele/tasmota-E8A6E4/UPTIME {"Time":"2017-07-25T12:02:00", "Uptime":68}
-tele/tasmota-E8A6E4/STATE {"Time":"2017-07-25T12:06:28", "Uptime":68, "Vcc":3.122, "POWER":"POWER", "Wifi":{"AP":1, "SSID":"HotelZurBirke", "RSSI":100, "APMac":"24:65:11:BF:12:D8"}}
-tele/tasmota-E8A6E4/ENERGY {"Time":"2017-07-25T12:06:28", "Total":0.640, "Yesterday":0.007, "Today":0.003, "Period":0, "Power":0, "Factor":0.00, "Voltage":0, "Current":0.000}
-tele/tasmota-E8A6E4/STATE {"Time":"2017-07-25T12:11:28", "Uptime":68, "Vcc":3.122, "POWER":"POWER", "Wifi":{"AP":1, "SSID":"HotelZurBirke", "RSSI":100, "APMac":"24:65:11:BF:12:D8"}}
-tele/tasmota-E8A6E4/ENERGY {"Time":"2017-07-25T12:11:28", "Total":0.640, "Yesterday":0.007, "Today":0.003, "Period":0, "Power":0, "Factor":0.00, "Voltage":0, "Current":0.000}
-cmnd/tasmota-E8A6E4/POWER OFF
-stat/tasmota-E8A6E4/RESULT {"POWER":"OFF"}
-stat/tasmota-E8A6E4/POWER OFF
-```
-
-Following this method, the behavior-linked messages can be identified and bound to openHAB items.
-
-### Mandatory Topics / Items
-
-This it the minimal set of items for the basic functionality of different Tasmota devices. You'll need to replace the given example dive name (e.g. "Tasmota_A00EEA") by the one chosen for your module.
-<br /> (*Note: Lines have been wrapped for better presentation*)
-
-**tasmota.items:**
-
-* Sonoff Basic / Sonoff S20 Smart Socket (Read and switch on-state)
-
-  ```js
-  Switch LivingRoom_Light "Living Room Light" <light> (LR,gLight)
-      { mqtt=">[broker:cmnd/tasmota-A00EEA/POWER:command:*:default],
-              <[broker:stat/tasmota-A00EEA/POWER:state:default]" }
-  ```
-
-* Sonoff Pow (Read and switch on-state, read current wattage)
-
-  ```js
-  // compare with example message stream above!
-  Switch BA_Washingmachine "Washingmachine" <washer> (BA)
-      { mqtt=">[broker:cmnd/tasmota-E8A6E4/POWER:command:*:default],
-              <[broker:stat/tasmota-E8A6E4/POWER:state:default]" }
-  
-  Number BA_Washingmachine_Power "Washingmachine Power [%.1f W]" (BA,gPower)
-      { mqtt="<[broker:tele/tasmota-E8A6E4/SENSOR:state:JSONPATH($.ENERGY.Power)]" }
-  ```
-
-* RGB(CW) LED stripes or other devices which support `Color` command (Read and switch on-state)
-  ```js
-  Switch LivingRoom_Light "Living Room Light" <light> (LR,gLight)
-      { mqtt=">[broker:cmnd/tasmota-000000/POWER:command:*:default],
-              <[broker:stat/tasmota-000000/RESULT:state:JSONPATH($.POWER)]" }
-  ```
-### Status Topics / Items
-
-It is furthermore recommended, to add the following status items for every Tasmota device.
-
-**tasmota.items:** 
-
-* A switch being 'ON' as long as the device is reachable 💬
-  ```js
-  Switch LivingRoom_Light_Reachable "Living Room Light: reachable" (gReachable)
-      { mqtt="<[broker:tele/tasmota-A00EEA/LWT:state:MAP(reachable.map)]" }
-  ```
-
-* Wifi Signal Strength in Percent
-  ```js
-  Number LivingRoom_Light_RSSI "Living Room Light: RSSI [%d %%]" (gRSSI)
-      { mqtt="<[broker:tele/tasmota-A00EEA/STATE:state:JSONPATH($.Wifi.RSSI)]" }
-  ```
-
-* Optional! A collection of return messages by the Sonoff module
-<br>Recommendation: Define specific items for what you really need on a regular basis, use standalone MQTT client for troubleshooting
-  ```js
-  String LivingRoom_Light_Verbose "Living Room Light: MQTT return message [%s]"
-      { mqtt="<[broker:tele/tasmota-A00EEA/INFO1:state:default],
-              <[broker:stat/tasmota-A00EEA/STATUS2:state:default],
-              <[broker:stat/tasmota-A00EEA/RESULT:state:default]" }
-  ```
-
-💬 The "LWT" topic (["Last Will and Testament"](http://www.hivemq.com/blog/mqtt-essentials-part-9-last-will-and-testament)) will receive regular "Online" messages by the module and an "Offline" message a short time after the module is disconnected, generated by the MQTT broker. These messages are transformed to a valid `ON`/`OFF` state by the [MAP](https://www.openhab.org/addons/transformations/map/) transformation. Of course you can implement `Unreachable` instead of `Reachable` if you prefer. The following transformation file is needed:
-
-**reachable.map:**
 ```js
 Online=ON
 Offline=OFF
@@ -210,24 +144,7 @@ The example below includes upgrading the firmware of all devices. A shoutout to 
 
 ![Tasmota Maintenance Actions](https://community-openhab-org.s3-eu-central-1.amazonaws.com/original/2X/9/97f0bdf6a81ffe94068e596804adf94839a5580b.png)
 
-**tasmota.items:**
-
-```js
-//... all the above
-
-//Maintenance
-String  Tasmota_Action "Tasmota Action" <tasmota_basic>
-```
-
-**yourhome.sitemap:**
-
-```js
-//...
-Switch item=Tasmota_Action mappings=[restart="Restart", queryFW="Query FW", upgrade="Upgrade FW"]
-//...
-```
-
-**tasmota.rules:**
+**.rules File for the Maintenance Action:**
 
 ```js
 // Work with a list of selected Tasmota modules
@@ -279,10 +196,35 @@ tasmotaRelease.updateInterval=43200000
 **tasmota.items:**
 
 ```js
-String Tasmota_Current_FW_Available "Current Release [%s]" <tasmota_basic> { http="<[tasmotaRelease:10000:JSONPATH($[0].name)]"}
+String Tasmota_Current_FW_Available "Current Release [%s]" {http="<[tasmotaRelease:10000:JSONPATH($[0].name)]"}
 ```
 
-With the item in your sitemap, you will now see the latest release/tag from the tasmota repository.
+With this item in your sitemap, you will now see the latest release/tag from Tasmota repository.
+
+## Discovering Interesting Topics
+
+Additional or further interesting topics are easily identified by reading up on the Tasmota wiki and by subscribing to the modules topics. Subscribe to all topics of one module with the [MQTT wildcard](http://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices) topic string `+/tasmota_XYZ/#` (String depends on your user-configured Topic/FullTopic). Configure items for the identified topics similar to the ones below.
+
+**Example:**
+MQTT messages published by a Sonoff Pow module are shown below (using [mosquitto_sub](https://mosquitto.org/man/mosquitto_sub-1.html)).
+The module reports its device state and energy readings periodically.
+In the second half of the example the module relay was switched into the OFF position.
+
+```js
+$ mosquitto_sub -h localhost -t "+/tasmota_E8A6E4/#" -v
+
+tele/tasmota-E8A6E4/LWT Online
+tele/tasmota-E8A6E4/UPTIME {"Time":"2017-07-25T12:02:00", "Uptime":68}
+tele/tasmota-E8A6E4/STATE {"Time":"2017-07-25T12:06:28", "Uptime":68, "Vcc":3.122, "POWER":"POWER", "Wifi":{"AP":1, "SSID":"HotelZurBirke", "RSSI":100, "APMac":"24:65:11:BF:12:D8"}}
+tele/tasmota-E8A6E4/ENERGY {"Time":"2017-07-25T12:06:28", "Total":0.640, "Yesterday":0.007, "Today":0.003, "Period":0, "Power":0, "Factor":0.00, "Voltage":0, "Current":0.000}
+tele/tasmota-E8A6E4/STATE {"Time":"2017-07-25T12:11:28", "Uptime":68, "Vcc":3.122, "POWER":"POWER", "Wifi":{"AP":1, "SSID":"HotelZurBirke", "RSSI":100, "APMac":"24:65:11:BF:12:D8"}}
+tele/tasmota-E8A6E4/ENERGY {"Time":"2017-07-25T12:11:28", "Total":0.640, "Yesterday":0.007, "Today":0.003, "Period":0, "Power":0, "Factor":0.00, "Voltage":0, "Current":0.000}
+cmnd/tasmota-E8A6E4/POWER OFF
+stat/tasmota-E8A6E4/RESULT {"POWER":"OFF"}
+stat/tasmota-E8A6E4/POWER OFF
+```
+
+Following this method, the behavior-linked messages can be identified and bound to openHAB items.
 
 ## Community Forum
 
