@@ -1,7 +1,7 @@
 
-The "open Home Automation Bus" ([openHAB](http://www.openhab.org/)) is an open source, technology agnostic home automation platform which runs as the center of your smart home. Besides 200 other add-ons for all kinds of technologies, openHAB provides an MQTT add-on ("binding") to interface with systems like Tasmota.
+The "open Home Automation Bus" ([openHAB](http://www.openhab.org/)) is an open source, technology agnostic home automation platform which runs as the center of your smart home. Besides more than 400 other add-ons for all kinds of technologies, openHAB provides an MQTT add-on ("binding") to interface with systems like Tasmota.
 
-By following the guide below you'll be able to observe, control and manage your Tasmotamodules from your openHAB system. If you are new to openHAB, please learn about the basic concepts and the initial setup. The below article will not cover any basics which are out of scope to the Tasmota integration.
+By following the guide below you'll be able to observe, control and manage your Tasmota modules from your openHAB system. If you are new to openHAB, please learn about the basic concepts and the initial setup. The below article will not cover any basics which are out of scope to the Tasmota integration.
 
 **Example Result:**
 The screenshot of an openHAB Sitemap below features a few Sonoff modules for lighting, two modified Sonoff Basic with sensors for temperature and humidity readings and two Sonoff Pow for power measurements of a washing machine and dishwasher:
@@ -10,7 +10,7 @@ The screenshot of an openHAB Sitemap below features a few Sonoff modules for lig
 
 ## Requirements
 
-* Working openHAB installation (https://www.openhab.org/docs/)
+* Working openHAB installation ([see documentation](https://www.openhab.org/docs/))
 * Configured Tasmota device (accessible from your local network)
 * MQTT broker available (e.g. Eclipse Mosquitto via [openHABian](https://www.openhab.org/docsopenhabian.html))
 * A [basic understanding of MQTT](http://www.hivemq.com/blog/mqtt-essentials) 
@@ -181,17 +181,18 @@ then
 end
 ```
 
-#### Comparing your device firmware with the current Tasmota GitHub Release
+### Comparing your device firmware with the current Tasmota GitHub Release
 
 Knowing your devices firmware version(s) is good.
 Being able to compare it with the current release directly, is even better.
-You can archive this by combining the maintenance actions with the openHAB http binding, the jsonpath transformation and the GitHub API.
+You can archive this by combining the maintenance actions with the openHAB http binding, the JsonPath transformation and the GitHub API.
 
 Just extend the maintenance setup with the following Item and config:
 
 **http.cfg:**
+
 ```js
-# Tasmota Release Status (cached twice a day)
+# Tasmota Release Version (cached twice a day)
 tasmotaRelease.url=https://api.github.com/repos/arendst/Tasmota/tags
 tasmotaRelease.updateInterval=43200000
 ```
@@ -206,7 +207,7 @@ With this item in your sitemap, you will now see the latest release/tag from Tas
 
 ## Discovering Interesting Topics
 
-Additional or further interesting topics are easily identified by reading up on the Tasmota wiki and by subscribing to the modules topics. Subscribe to all topics of one module with the [MQTT wildcard](http://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices) topic string `+/tasmota_XYZ/#` (String depends on your user-configured Topic/FullTopic). Configure items for the identified topics similar to the ones below.
+Additional or further interesting topics are easily identified by reading up on the Tasmota wiki and by subscribing to the modules topics. Subscribe to all topics of one module using [MQTT wildcard](http://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices) topic string `+/tasmota_XYZ/#` (string depends on your user-configured Topic/FullTopic). Configure items for the identified topics similar to the ones below.
 
 **Example:**
 MQTT messages published by a Sonoff Pow module are shown below (using [mosquitto_sub](https://mosquitto.org/man/mosquitto_sub-1.html)).
