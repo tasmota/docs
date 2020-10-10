@@ -24,7 +24,7 @@ If not done yet, you first need to **install and activate** the [MQTT](https://w
 ----
 
 !!! info "MQTTv1 vs. MQTTv2 Binding Information"
-    Please note that since `mqtt1` is a legacy binding for years now, it will no longer receive updates or fixes. See [older version of this tutorial](https://github.com/tasmota/docs/blob/4c7240ddd5d81146ea148f471b1544283e655ec3/docs/openHAB.md#mqttv1-integration) on how to integrate Tasmota using this binding if you are using `mqtt1` - but be advised that it's not recommended anymore, it's better to upgrade to MQTTv2 binding.
+    Please note that since `mqtt1` is a legacy binding for years now, it will no longer receive updates or fixes. See [older version of this tutorial](https://github.com/tasmota/docs/blob/4c7240ddd5d81146ea148f471b1544283e655ec3/docs/openHAB.md#mqttv1-integration) on how to integrate Tasmota using this binding if you are using `mqtt1` - but be advised that it's not recommended anymore, it's better to upgrade to MQTTv2 binding. See [openHAB announcement of MQTTv2 for details](https://www.openhab.org/blog/2018-12-16-mqtt-arrives-in-the-modern-openhab-2-x-architecture.html) on how to change your configuration.
 
 ## MQTTv2 Integration
 
