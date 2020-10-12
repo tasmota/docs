@@ -19,14 +19,17 @@ The PZEM-004T together with a Sonoff Basic provide a good clamp on energy monito
 Install Tasmota on the Sonoff Basic and confirm it is functional before connecting the PZEM-004T to its serial interface.
 
 ### Hardware connections
-As the PZEM-004T expects 5V serial data and the Sonoff Basic only provides up to 3V3, the expected optocoupler input power of the PZEM-004T has to be reduced. This can be accomplished by soldering a 1k resistor between the joints shown below (modification works for version v.1.0 and v.3.0).
+As the PZEM-004T RX optocoupler series resistor (1K ohm, R15 for v.1 .0 and R8 for v.3.0 ) is designed for 5V, that resistor value had to be reduced in order to achieve the current for driving the RX optocoupler diode.
+This can be accomplished by soldering a 1k resistor between the joints shown below (modification works for version v.1.0 and v.3.0).
+The resistor has to be connected between VDD (5V/3.3V) terminal and the RX opto terminal 1.
 
 PZEM-004T v.1.0  
 <img src="https://github.com/arendst/arendst.github.io/blob/master/media/pzem/pzem-fix.jpg?raw=true" height="400" />
 
-PZEM-004T v.3.0  
-<img src="https://user-images.githubusercontent.com/34340210/63592015-8508ac00-c57e-11e9-9e20-2b41b2662161.jpeg" height="400" />
-<img src="https://user-images.githubusercontent.com/34340210/63591794-cf3d5d80-c57d-11e9-9945-eb062bebf71b.jpeg" height="400" />
+PZEM-004T v.3.0
+<img src="https://user-images.githubusercontent.com/17679049/95775726-999c8c00-0ccb-11eb-8e0d-36af1220de36.jpg" height="600" />
+It can be used a SMD resistor 102 or 1001 (1K) soldered near/parallel with R8 or a normal resistor (THT) similar to that used on the image of v.1.0
+The resistor is placed in different place on v.3.0 because the optocouplers RX and TX are reversed compared to v.1.0
 
 Connect the serial interface of the Sonoff Basic with the serial interface of the PZEM-004T. See pictures regarding used colors and connections.
 
@@ -39,8 +42,7 @@ Connect the serial interface of the Sonoff Basic with the serial interface of th
 
 _(Image re-used from https://www.instructables.com/id/Use-Homie-Firmware-to-Drive-Sonoff-Switch-Module-E/ Thanks @amayii0)_
 
-
-As the PZEM004T is functioning better on 5V, it can be obtained from the Voltage regulator as shown in this image.
+If you need 5V you can use directly from Sonoff (for something else) but do not connect to PZEM logic because this will result in a big flash (kaboom!, the sonoff LIVE line may reach the PZEM NEUTRAL or viceversa). Using 5V from Sonoff for PZEM TTL port is safe but the resistor mod explained above must be undoed and another mod is needed for dropping the PZEM TX line from 5V to 3.3V. So, the simplest way is to use 3.3V from Sonoff to 5V TTL terminal of the PZEM and the resistor mod explained in the above images.
 <img src="https://camo.githubusercontent.com/f014130fdde36f97f37a5af20fc223621b192e1b/687474703a2f2f74696e6b65726d616e2e6361742f77702d636f6e74656e742f75706c6f6164732f323031362f30362f70696e6f75745f6261636b2e6a7067" height="400" />
 
 Cut the power cable in two and connect the input wires to both Sonoff Basic and PZEM-004T. Route one of the power output wires through the PZEM-004T core and connect the output wires to the Sonoff Basic output.
@@ -184,15 +186,13 @@ Mains IN, mains OUT, all sealed:
 <img src="https://user-images.githubusercontent.com/21192010/51847837-c99bd400-231c-11e9-9b7b-2d68bd177b21.png" height="400" /><br><br>
 
 **Wiring Diagram:**
-* Check images below for more information about the 1kOhm resistor needed to shift the voltage to 5V from 3V3 for the PZEM-004T serial connection.  
+* Check images below for more information about the 1kOhm resistor needed to use 3.3V instead of 5V for the PZEM-004T serial connection.  
 
 PZEM-004T v.1.0  
 <img src="https://github.com/arendst/arendst.github.io/blob/master/media/pzem/pzem-fix.jpg?raw=true" height="400" />
 
 PZEM-004T v.3.0  
-<img src="https://user-images.githubusercontent.com/34340210/63592015-8508ac00-c57e-11e9-9e20-2b41b2662161.jpeg" height="400" />
-<img src="https://user-images.githubusercontent.com/34340210/63591794-cf3d5d80-c57d-11e9-9945-eb062bebf71b.jpeg" height="400" />
-
+<img src="https://user-images.githubusercontent.com/17679049/95775726-999c8c00-0ccb-11eb-8e0d-36af1220de36.jpg" height="600" />
 <img src="https://user-images.githubusercontent.com/21192010/51847858-d4eeff80-231c-11e9-9c13-41172a6924ee.png" height="400" />
 
 ### Calibration
