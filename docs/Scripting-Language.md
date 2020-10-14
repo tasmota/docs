@@ -222,11 +222,15 @@ read button state (x = `1.. MAX_KEYS`)
 !!! example
 
 ```
-if bt[1]==0  
+>D
+tmp=0
+>b
+tmp=bt[1]
+if tmp==0  
 then  
 print falling edge of button1  
 endif  
-if bt[1]==1  
+if tmp==1  
 then  
 print rising edge of button1  
 endif
