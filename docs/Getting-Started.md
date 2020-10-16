@@ -134,7 +134,7 @@ Simply connect the EN pin to ground to prevent the ESP8266 chip on your NODEMCU 
 
 ESP8266 needs to be put into **programming mode** or **flash mode** before the firmware can be uploaded. This is done by pulling the GPIO0 pin to GND while the chip is booting. 
 
-On most devices the installed control button is connected to GPIO0 and GND, making entering Programming Mode very easy. On others you will need to bridge the pins on the PCB or directly on the chip with a jumper wire. GPIO0 is always in the same location on ESP8266 and ESP8255!
+On most devices the installed control button is connected to GPIO0 and GND, making entering Programming Mode very easy. On others you will need to bridge the pins on the PCB or directly on the chip with a jumper wire. GPIO0 is always in the same location on ESP8266 and ESP8285!
 
 Device specific instructions are documented in [Tasmota Device Templates Repository](https://templates.blakadder.com/).
 
