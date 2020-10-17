@@ -124,7 +124,6 @@ EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch T
 
 7. After less than 2 minutes, the stack should have reached the state `DELETE_COMPLETE`
    ![MqttAuth07](https://user-images.githubusercontent.com/49731213/96349863-a138a800-10b2-11eb-9406-b254699102c5.png)
-   ![MqttAuth08](https://user-images.githubusercontent.com/49731213/96349875-b44b7800-10b2-11eb-8aeb-cc4b4ab29bc4.png)
 
 ### 6. Configure Tasmota device
 
