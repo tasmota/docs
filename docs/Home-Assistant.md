@@ -27,7 +27,26 @@ If you don't want to use MQTT discovery, skip to [Manual Configuration](#configu
 Home Assistant has a feature called [MQTT discovery](https://www.home-assistant.io/docs/mqtt/discovery/).
 With MQTT discovery no user interaction or configuration file editing is needed to add new devices in Home Assistant. Most of the changes will be updated in HA automatically.
 
-!!! note "Automatic discovery is currently supported for:"
+!!! note "Automatic discovery is currently supported for (see details below):
+- Buttons
+- Lights
+- Relays
+- Sensors
+- Switches"
+
+Enable auto discovery on each device with the command:
+```console
+SetOption19 1
+```
+!!! failure "Discovery is not built in to tasmota-lite.bin. Use the full version (tasmota.bin) or other binaries that support discovery."
+
+After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device to MQTT integrations.    
+
+Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Home Assistant MQTT integration and [`FriendlyName<x>`](Commands.md#friendlyname) to identify power outputs (switch or light entities in HA).
+
+!!! note "When changing some settings you might need a reboot or use `SetOption19 1` again to see the new changes under Home Assistant."
+
+!!! note "Special settings for each device type:"
 
 === "Buttons"
     Announced to Home Assistant as [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
@@ -97,22 +116,6 @@ With MQTT discovery no user interaction or configuration file editing is needed 
 <hr>
 
 Types of devices not listed above (fans, covers, TuyaMCU devices, etc) require [manual configuration](#fans)
-
-### Enabling 
-
-For a Tasmota device to be automatically discovered by Home Assistant you need to enable MQTT autodiscovery for each device with command:
-
-```console
-SetOption19 1
-```
-
-!!! failure "Discovery is not built in to tasmota-lite.bin. Use the full version (tasmota.bin) or other binaries that support discovery."
-
-After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device to MQTT integrations.    
-
-Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Home Assistant MQTT integration and [`FriendlyName<x>`](Commands.md#friendlyname) to identify power outputs (switch or light entities in HA).
-
-!!! note "When changing some settings you might need a reboot or use `SetOption19 1` again to see the new changes under Home Assistant."
 
 ### Finalising Setup
 All automatically discovered entities will show up under **Configuration -> Integrations -> MQTT** card.
