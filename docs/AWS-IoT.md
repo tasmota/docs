@@ -120,7 +120,7 @@ EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch T
    ![MqttAuth05](https://user-images.githubusercontent.com/49731213/96349843-7ea68f00-10b2-11eb-8fe0-5c1da253e384.png)
 
 6. Copy the commands under `BackLogComman`, you will need it to configure Tasmota devices.
-   ![MqttAuth06]https://user-images.githubusercontent.com/49731213/96350152-8d8e4100-10b4-11eb-997b-748e3f44563f.png)
+   ![MqttAuth06](https://user-images.githubusercontent.com/49731213/96350152-8d8e4100-10b4-11eb-997b-748e3f44563f.png)
 
 7. If you have left the parameter `RetentionPolicy` to `Retain`, then you can delete this CloudFormation stack (it will not delete the Policy). Click on the **Delete** button.
    ![MqttAuth07](https://user-images.githubusercontent.com/49731213/96349854-9120c880-10b2-11eb-9919-25386d19ec13.png)
