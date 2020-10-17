@@ -1,5 +1,4 @@
-!!! failure "This feature is not included in precompiled binaries"
-    To use it you must [compile your build](Compile-your-build).
+!!! failure This page contains deprecated information. We advise to use the AWS IoT password based authentication.
 
 !!! tip "New simplified and automated configuration"
     We now provide easy to use AWS CloudFormation templates to generate the private key and sign the certificate. The manual method is now in Appendix
