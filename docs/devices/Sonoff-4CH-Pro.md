@@ -22,6 +22,8 @@ On the R2 module the GPIO0 pin is broken out to [a small pad to the right of the
 
 <img title="R2 module - GPIO0 pad" src="https://user-images.githubusercontent.com/3594528/37109801-58fb97a4-223b-11e8-969c-1131dcfa6ee1.jpg" align="middle" />
 
+If you have 4CH R2 v1.0 hardware, the GPIO0 is available as L1 switch - you don't need to solder additional cable to the PCB. Just push it during powering on for 3 seconds and release. 
+
 ## Solving Sonoff 4CH Pro programing issues
 
 If you have problems to program the 4CH Pro, you might find below tips useful:
