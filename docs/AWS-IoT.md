@@ -104,10 +104,9 @@ EU (Frankfurt) | <span style="font-family:'Courier';">eu-central-1</span> | [![L
 EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch TasmotaAuth in eu-west-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-3#/stacks/new?stackName=TasmotaAuth&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/TasmotaAuth.yaml)
 
 1. At the **Create Stack** screen, click **Next**.
-
    ![MqttAuth01](https://user-images.githubusercontent.com/49731213/96349739-e4dee200-10b1-11eb-94df-b0e006c3f010.png)
 
-1. At the **Specify stack details** screen, keep all default parameters and click **Next**.
+2. At the **Specify stack details** screen, keep all default parameters and click **Next**.
    ![MqttAuth02](https://user-images.githubusercontent.com/49731213/96349765-0fc93600-10b2-11eb-80b1-d97ac69012bc.png)
 
 3. At the **Configure stack options** screen, keep all default parameters and click **Next**.
@@ -117,17 +116,16 @@ EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch T
    ![MqttAuth04](https://user-images.githubusercontent.com/49731213/96349826-62a2ed80-10b2-11eb-8702-591a363d231b.png)
 
 5. The stack usually takes less than 1 minute to complete. Wait for it to reach `CREATE_COMPLETE` state.
-   ![MqttAuth05](https://user-images.githubusercontent.com/49731213/96349843-7ea68f00-10b2-11eb-8fe0-5c1da253e384.png)
+   <img width="50%" src="https://user-images.githubusercontent.com/49731213/96349843-7ea68f00-10b2-11eb-8fe0-5c1da253e384.png">
 
 6. Copy the commands under `BackLogComman`, you will need it to configure Tasmota devices.
-   ![MqttAuth06](https://user-images.githubusercontent.com/49731213/96350152-8d8e4100-10b4-11eb-997b-748e3f44563f.png)
-   <img width="50%" src="https://user-images.githubusercontent.com/49731213/96350152-8d8e4100-10b4-11eb-997b-748e3f44563f.png">
+   <img width="70%" src="https://user-images.githubusercontent.com/49731213/96350152-8d8e4100-10b4-11eb-997b-748e3f44563f.png">
 
 7. If you have left the parameter `RetentionPolicy` to `Retain`, then you can delete this CloudFormation stack (it will not delete the Policy). Click on the **Delete** button.
    ![MqttAuth07](https://user-images.githubusercontent.com/49731213/96349854-9120c880-10b2-11eb-9919-25386d19ec13.png)
 
 8. After less than 2 minutes, the stack should have reached the state `DELETE_COMPLETE`
-   ![MqttAuth08](https://user-images.githubusercontent.com/49731213/96349863-a138a800-10b2-11eb-9406-b254699102c5.png)
+   <img width="70%" src="https://user-images.githubusercontent.com/49731213/96349863-a138a800-10b2-11eb-9406-b254699102c5.png">
 
 ### 6. Configure Tasmota device
 
