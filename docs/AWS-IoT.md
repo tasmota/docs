@@ -1,3 +1,6 @@
+!!! tip New simplified configuration, since AWS IoT does no more require private certificates, and can use password authentication. Requires v8.5.0.1 or higher. The certificate based authentication is kept for reference.
+
+
 !!! tip "New simplified and automated configuration"
     We now provide easy to use AWS CloudFormation templates to generate the private key and sign the certificate. The manual method is now in Appendix
 
@@ -11,15 +14,15 @@ Add the following to `user_config_override.h`:
 #define USE_MQTT_TLS
 #define USE_MQTT_TLS_CA_CERT // Optional but highly recommended
 #endif
-#ifndef USE_MQTT_AWS_IOT
-#define USE_MQTT_AWS_IOT
+#ifndef USE_MQTT_AWS_IOT_LIGHT
+#define USE_MQTT_AWS_IOT_LIGHT
 #endif
 #ifdef USE_DISCOVERY
 #undef USE_DISCOVERY
 #endif
 ```
 
-As of Tasmota version 6.6.0.3, the device-specific credentials are no longer restricted to being set at compile time only. You can now use the same firmware for all your devices. AWS IoT credentials can be set through the Console at runtime and are stored in flash memory. Credentials will survive firmware updates and OTA. Credentials will not survive a full Flash reset `Reset 5` or `Reset 6` nor will it survive a System Parameter Flash reset `Reset 3`
+As of Tasmota version 8.5.0.1, device-specific private key and certificate are no more required. We introduces AWS_IOT_LIGHT to use password based authentication. Legacy private certificate authentication can be found [here](AWS-IoT-cert).
 
 ## Benefits
 
