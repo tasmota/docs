@@ -116,14 +116,17 @@ EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch T
 4. At the **Review TasmotaMqttPolicy** screen, scroll down and click **Create Stack**.
    ![MqttAuth04](https://user-images.githubusercontent.com/49731213/96349826-62a2ed80-10b2-11eb-8702-591a363d231b.png)
 
-5. The stack usually takes less than 2 minutes to complete. Wait for it to reach `CREATE_COMPLETE` state.
+5. The stack usually takes less than 1 minute to complete. Wait for it to reach `CREATE_COMPLETE` state.
    ![MqttAuth05](https://user-images.githubusercontent.com/49731213/96349843-7ea68f00-10b2-11eb-8fe0-5c1da253e384.png)
 
-6. If you have left the parameter `RetentionPolicy` to `Retain`, then you can delete this CloudFormation stack (it will not delete the Policy). Click on the **Delete** button.
-   ![MqttAuth06](https://user-images.githubusercontent.com/49731213/96349854-9120c880-10b2-11eb-9919-25386d19ec13.png)
+6. Copy the commands under `BackLogComman`, you will need it to configure Tasmota devices.
+   ![MqttAuth06]https://user-images.githubusercontent.com/49731213/96350152-8d8e4100-10b4-11eb-997b-748e3f44563f.png)
 
-7. After less than 2 minutes, the stack should have reached the state `DELETE_COMPLETE`
-   ![MqttAuth07](https://user-images.githubusercontent.com/49731213/96349863-a138a800-10b2-11eb-9406-b254699102c5.png)
+7. If you have left the parameter `RetentionPolicy` to `Retain`, then you can delete this CloudFormation stack (it will not delete the Policy). Click on the **Delete** button.
+   ![MqttAuth07](https://user-images.githubusercontent.com/49731213/96349854-9120c880-10b2-11eb-9919-25386d19ec13.png)
+
+8. After less than 2 minutes, the stack should have reached the state `DELETE_COMPLETE`
+   ![MqttAuth08](https://user-images.githubusercontent.com/49731213/96349863-a138a800-10b2-11eb-9406-b254699102c5.png)
 
 ### 6. Configure Tasmota device
 
