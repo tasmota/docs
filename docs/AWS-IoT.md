@@ -1,5 +1,5 @@
-!!! tip New simplified configuration, since AWS IoT does no more require private certificates, and can use password authentication. Requires v8.5.0.1 or higher. The certificate based authentication is kept for reference.
-
+!!! tip 
+    New simplified configuration, since AWS IoT doesn't require private certificates anymore and can use password authentication. Requires v8.5.0.1 or higher. The certificate based authentication is kept for reference.
 
 !!! tip "New simplified and automated configuration"
     We now provide easy to use AWS CloudFormation templates to generate the private key and sign the certificate. The manual method is now in Appendix
