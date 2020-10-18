@@ -5,9 +5,9 @@ Tasmota easily integrates with many home automation solutions reporting status a
 <hr>  
 <p>
 
-[![HomeAssistant](_media/logo/home-assistant.png)](Home-Assistant.md)
-[![openHAB](_media/logo/openhab.png)](openHAB.md)
-[![Domoticz](_media/logo/domoticz.png)](Domoticz.md)
+[![HomeAssistant](_media/logo/home-assistant.png)](Home-Assistant.md) 
+[![openHAB](_media/logo/openhab.png)](openHAB.md) 
+[![Domoticz](_media/logo/domoticz.png)](Domoticz.md) 
+[![KNX](_media/logo/knx.png)](KNX.md) 
+[![Alexa](_media/logo/alexa.png)](Alexa.md) 
 ![ioBroker](_media/logo/iobroker.png)
-[![KNX](_media/logo/knx.png)](KNX.md)
-[![Alexa](_media/logo/alexa.png)](Alexa.md)
