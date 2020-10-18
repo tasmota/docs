@@ -160,7 +160,7 @@ Here is an example of output you should see:
 21:28:26 MQT: Connected
 21:28:26 MQT: tele/tasmota/LWT = Online
 21:28:26 MQT: cmnd/tasmota/POWER =
-21:28:26 MQT: tele/tasmota/INFO1 = {"Module":"Sonoff Basic","Version":"6.5.0.14(sonoff)","FallbackTopic":
+21:28:26 MQT: tele/tasmota/INFO1 = {"Module":"Sonoff Basic","Version":"9.0.0.2(sonoff)","FallbackTopic":
 "cmnd/DVES_67B1E9_fb/","GroupTopic":"sonoffs"}
 ```
 
