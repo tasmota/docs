@@ -90,8 +90,6 @@ Flash your device the normal way; either through serial or OTA. If you use OTA, 
 
 Open the AWS Console and select the target region. In the example below we will use **(EU) Frankfurt** (eu-central-1).
 
-**Under construction**
-
 Download the CloudFormation template [TasmotaAuth](https://tasmota.github.io/docs/_media/aws_iot/TasmotaAuth.yaml "TasmotaAuth CloudFormation template") and use it in AWS CloudFormation.
 
 
@@ -118,8 +116,8 @@ EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch T
 5. The stack usually takes less than 1 minute to complete. Wait for it to reach `CREATE_COMPLETE` state.
    <img width="50%" src="https://user-images.githubusercontent.com/49731213/96349843-7ea68f00-10b2-11eb-8fe0-5c1da253e384.png">
 
-6. Copy the commands under `BackLogComman`, you will need it to configure Tasmota devices.
-   <img width="70%" src="https://user-images.githubusercontent.com/49731213/96350152-8d8e4100-10b4-11eb-997b-748e3f44563f.png">
+6. Copy the commands under `BackLogCommand`, you will need it to configure Tasmota devices.
+   <img width="90%" src="https://user-images.githubusercontent.com/49731213/96370798-5de84300-115f-11eb-87a7-b4c01ddbe421.png">
 
 7. If you have left the parameter `RetentionPolicy` to `Retain`, then you can delete this CloudFormation stack (it will not delete the Policy). Click on the **Delete** button.
    ![MqttAuth07](https://user-images.githubusercontent.com/49731213/96349854-9120c880-10b2-11eb-9919-25386d19ec13.png)
@@ -131,6 +129,19 @@ EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch T
 
 This is the last step, you need to configure the MQTT parameters. The easiest way is through the web console. We will only cut and paste parameters from the **Outputs** tab of the CloudFormation console.
 
+Example:
+```
+BackLog SetOption3 1; SetOption103 1; MqttHost a............u-ats.iot.eu-central-1.amazonaws.com; MqttPort 443; MqttUser tasmota?x-amz-customauthorizer-name=TasmotaAuth; MqttPassword YknLuSd2tBY2HodwI/7RqA==
+
+11:28:44 CMD: BackLog SetOption3 1; SetOption103 1; MqttHost a............u-ats.iot.eu-central-1.amazonaws.com; MqttPort 443; MqttUser tasmota?x-amz-customauthorizer-name=TasmotaAuth; MqttPassword YknLuSd2tBY2HodwI/7RqA==
+11:28:44 MQT: stat/tasmota_4B3316/RESULT = {"SetOption3":"ON"}
+11:28:44 MQT: stat/tasmota_4B3316/RESULT = {"SetOption103":"ON"}
+11:28:45 MQT: stat/tasmota_4B3316/RESULT = {"MqttHost":"a...........u-ats.iot.eu-central-1.amazonaws.com"}
+11:28:45 MQT: stat/tasmota_4B3316/RESULT = {"MqttPort":443}
+11:28:45 MQT: stat/tasmota_4B3316/RESULT = {"MqttUser":"tasmota?x-amz-customauthorizer-name=TasmotaAuth"}
+11:28:45 MQT: stat/tasmota_4B3316/RESULT = {"MqttPassword":"YknLuSd2tBY2HodwI/7RqA=="}
+11:28:47 APP: Restarting
+```
 
 #### Connect to AWS IoT
 
