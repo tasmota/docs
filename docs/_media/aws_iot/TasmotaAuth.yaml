@@ -21,7 +21,7 @@ Outputs:
     Value: !GetAtt GeneratePassword.Password
   BackLogCommand:
     Description: The complete `backlog` command to configure the Tasmota device
-    Value: !Sub "BackLog MqttHost ${GeneratePassword.Endpoint}; MqttPort 443; MqttUser tasmota?x-amz-customauthorizer-name=${MQTTAuthorizerName}; MqttPassword ${GeneratePassword.Password}"
+    Value: !Sub "BackLog SetOption3 1; SetOption103 1; MqttHost ${GeneratePassword.Endpoint}; MqttPort 443; MqttUser tasmota?x-amz-customauthorizer-name=${MQTTAuthorizerName}; MqttPassword ${GeneratePassword.Password}"
 
 Conditions:
   Retained: !Equals [ !Ref RetentionPolicy, "Retain" ]
