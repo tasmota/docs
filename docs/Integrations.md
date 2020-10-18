@@ -2,7 +2,7 @@
 <div style="font-size:150%;">
 Tasmota easily integrates with many home automation solutions reporting status and sensor data and allowing complete control.
 </div>
-<hr>
+<hr>  
 <p>
 
 [![HomeAssistant](_media/logo/home-assistant.png)](Home-Assistant.md)
