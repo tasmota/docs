@@ -4,6 +4,7 @@
 * [Wifi Smart Power Strip 4 EU Outlets Plug with 4 USBCharging Port at aliexpress](https://www.aliexpress.com/item/Wifi-Smart-Power-Strip-4-EU-Outlets-Plug-with-4-USBCharging-Port-Timing-App-Voice-Control/32939654903.html) also at [Amazon.de as AOFO ZLD-44EU-W](https://www.amazon.de/gp/product/B07SKTBC47/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1)
 * [Koogeek Wifi Smart USB Power Strip Socket at aliexpress](https://nl.aliexpress.com/item/Koogeek-Smart-Power-Strip-4-Port-USB-4-AC-Outlets-Plug-Socket-Voor-Alexa-Google-Thuis/32932078575.html)
 * AKA: 0710033644644 / KLOE4
+* [Woox R4028 EU Smart Power Strip with 3 EU Plug and 4 USB charging Ports](https://www.amazon.de/Woox-Smart-Steckdosenleiste-kompatibel-Amazon/dp/B07GFNL67Z/ref=sr_1_2?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&dchild=1&keywords=r4028&qid=1603097680&sr=8-2)
 
 ![vierfachdose](https://user-images.githubusercontent.com/3671232/51432807-25d86700-1c3e-11e9-871e-bffdbd35eefc.jpg)
 
@@ -30,4 +31,12 @@ This is the configuration:
 * Socket 2: 	GPIO4
 * Socket 3: 	GPIO12
 * Socket 4: 	GPIO13
+* USB: 		GPIO14
+
+* For the model Woox R4028 the GPIO connections are a bit different ( only 3 EU Plugs):
+* LED: 		GPIO1
+* Switch: 	GPIO3
+* Socket 1: 	GPIO5
+* Socket 2: 	GPIO4
+* Socket 3: 	GPIO13
 * USB: 		GPIO14
