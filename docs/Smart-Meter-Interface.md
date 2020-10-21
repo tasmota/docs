@@ -23,7 +23,8 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 **Driver for various meters , heating devices, and reed like contacts**
 
 To use this interface, connect the meter to available GPIO pins. These GPIOs must be set as `None (0)`
-components in Tasmota. If the interface detects that a meter descriptor GPIO conflicts with a Tasmota GPIO setting, the interface will generate a "duplicate GPIO defined" error in the log and the meter descriptor will be ignored.  
+components in Tasmota. If the interface detects that a meter descriptor GPIO conflicts with a Tasmota GPIO setting, the interface will generate a "duplicate GPIO defined" error in the log and the meter descriptor will be ignored. (only for script driven descriptors) if you use the deprecated hard coded interface and no meter script the default harcoded descriptor uses Pin 3 (REC) for receive and thus may interfere with other Tasmota Defintions without warning.
+
 
 The Smart Meter Interface provides a means to connect many kinds of meters to Tasmota. **The following types of meter protocols are supported:**  
 - ASCII OBIS telegrams emitted from many smart meters and also from P1 meter interface  
