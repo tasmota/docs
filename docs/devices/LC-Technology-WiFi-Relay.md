@@ -4,6 +4,7 @@ The LC Technology relay devices use GPIO1 and GPIO3 for the serial communication
 
 In order to use LC Technology WiFi Relay for 1 relay version:  
 ![](https://www.dhresource.com/0x0s/f2-albu-g6-M01-AB-F1-rBVaR1sFGr6AbvbGAANcsjYxEtQ983.jpg/esp8266-esp-01s-5v-esp01s-modulo-rel-wifi.jpg)
+
 * Set module to Generic (18) (in module configuration and click save)
 * Set D3 GPIO0 as Relay1 (21) (in module configuration and click save)
 * Disable SerialLog (type `seriallog 0` in the Tasmota console)
