@@ -115,9 +115,11 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Ho
 
 <hr>
 
+
 Types of devices not listed above (fans, covers, TuyaMCU devices, etc) require [manual configuration](#fans)
 
 ### Finalising Setup
+
 All automatically discovered entities will show up under **Configuration -> Integrations -> MQTT** card.
 
 The entities are grouped under a device defined by DeviceName and identified by Tasmota as the "manufacturer":
@@ -145,6 +147,7 @@ You can further customise your device in Home Assistant by clicking on the entit
 **`SetOption59` to `1`**: Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands `State`, `Power` and any command causing a light to be turned on.
 
 ### Disabling
+
 To disable MQTT discovery and remove the retained message, execute `SetOption19 0`.  
 The "homeassistant/" topic is removed from Home Assistant and MQTT broker.  Changed setoptions will not revert to defaults!
 
@@ -169,6 +172,7 @@ If you are using a localized (non-english) version be sure to check the correct 
     If you want the power states to be persistent in Tasmota and Home Assistant set `PowerRetain 1` instead of using `retain: true` in Home Assistant
 
 ### Switches
+
 Add in Home Assistant using the [MQTT Switch](https://www.home-assistant.io/components/switch.mqtt/) integration.
 
 **Required Commands**   
@@ -497,6 +501,7 @@ The key is the `=` after color string in hex. It will retain current white value
 <!-- tabs:end -->
 
 ### Sensors
+
 Add in Home Assistant using the [MQTT Sensor](https://www.home-assistant.io/components/sensor.mqtt/) integration.
 
 A sensor will send its data in set intervals defined by [`TelePeriod`](Commands.md#teleperiod) (default every 5 minutes).
@@ -567,6 +572,7 @@ sensor:
 ```
 
 ### Power Monitoring
+
 <img alt="Example of Lovelace UI" src="../_media/hax_pow1.png" style="margin:5px;float:right;width:10em"></img>
 
 Add in Home Assistant using the [MQTT Sensor](https://www.home-assistant.io/components/sensor.mqtt/) integration.
@@ -666,6 +672,7 @@ binary_sensor:
 <!-- tabs:end -->
 
 ### Fans
+
 Add in Home Assistant using the [MQTT Fan](https://www.home-assistant.io/components/fan.mqtt/) integration.
 
 <!-- tabs:start -->
@@ -708,6 +715,7 @@ fan:
 <!-- tabs:end -->
 
 ### Covers
+
 Add in Home Assistant using the [MQTT Cover](https://www.home-assistant.io/components/cover.mqtt/) integration.
 
 <!-- tabs:start -->
