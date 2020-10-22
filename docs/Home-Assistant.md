@@ -36,11 +36,13 @@ With MQTT discovery no user interaction or configuration file editing is needed 
     - Sensors
     - Switches
 
-Enable auto discovery on each device with the command:
+### Enable Autodiscovery
+Enable autodiscovery on a device with the command:
 
 ```console
 SetOption19 1
 ```
+
 !!! failure "Discovery is not built in to tasmota-lite.bin. Use the full version (tasmota.bin) or other binaries that support discovery."
 
 After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device to MQTT integrations.    
