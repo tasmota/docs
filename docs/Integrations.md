@@ -3,7 +3,7 @@
 Tasmota easily integrates with many home automation solutions reporting status and sensor data and allowing complete control.
 </div>
 
-----
+
 
 <p>
 
