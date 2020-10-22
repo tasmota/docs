@@ -51,6 +51,8 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Ho
 
 !!! note "Special settings for each device type:"
 
+### Supported Entities
+
 === "Buttons"
     Announced to Home Assistant as [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
 
