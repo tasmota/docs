@@ -116,8 +116,6 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Ho
 
     **When a switch is set to a different topic than `0` is not possible to use `Switch#State` as a trigger for rules.**
 
-<hr>
-
 
 Types of devices not listed above (fans, covers, TuyaMCU devices, etc) require [manual configuration](#fans)
 
