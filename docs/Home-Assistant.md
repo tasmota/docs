@@ -24,17 +24,20 @@ Home Assistant has two avenues of adding Tasmota devices:
 If you don't want to use MQTT discovery, skip to [Manual Configuration](#configurationyaml-editing) 
 
 ## Automatic Discovery
+
 Home Assistant has a feature called [MQTT discovery](https://www.home-assistant.io/docs/mqtt/discovery/).
 With MQTT discovery no user interaction or configuration file editing is needed to add new devices in Home Assistant. Most of the changes will be updated in HA automatically.
 
-!!! note "Automatic discovery is currently supported for (see details below):
-- Buttons
-- Lights
-- Relays
-- Sensors
-- Switches"
+!!! note 
+    Automatic discovery is currently supported for (see details below):
+    - Buttons
+    - Lights
+    - Relays
+    - Sensors
+    - Switches
 
 Enable auto discovery on each device with the command:
+
 ```console
 SetOption19 1
 ```
