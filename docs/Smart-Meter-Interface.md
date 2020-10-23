@@ -28,6 +28,10 @@ components in Tasmota. If the interface detects that a meter descriptor GPIO con
 !!! note
     on an ESP32 due to a different implementation serial ports may not be used in conjunction with other Tasmota serial devices.  
 
+!!! note
+    when changing GPIO configurations especially in conjunction with other Tasmota drivers a restart may be required  
+
+
 The Smart Meter Interface provides a means to connect many kinds of meters to Tasmota. **The following types of meter protocols are supported:**  
 - ASCII OBIS telegrams emitted from many smart meters and also from P1 meter interface  
 - Binary SML OBIS telegram emitted from many smart meters  
