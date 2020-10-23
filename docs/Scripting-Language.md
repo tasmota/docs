@@ -248,6 +248,13 @@ You may put any html code here.
 - HTML statements are displayed in the sensor section of the main page  
 - HTML statements preceded with a `@` are displayed at the top of the page  
 - USER IO elements are displayed at the top of the page  
+for next loops are supported to repeat HTML code (precede with % char)
+%for var from to inc
+%next
+script subroutines may be called sub=name of subroutine, like normal subroutines
+%=#sub
+in this subroutine a web line may be sent by wcs (see below) thus allowing dynamic HTML pages
+
 
 A web user interface may be generated containing any of the following elements:  
 **Button:**   
@@ -411,6 +418,9 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `say("text")` = plays specified text to speech (if defined USE_TTGO_WATCH) 
 
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
+
+`wcs` = send this line to webpage (WebContentSend)  
+`wm` = contains source of web request code e.g. 0 = Sensor display (FUNC_WEB_SENSOR)  
 
 `sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud)   
 `sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD) 
