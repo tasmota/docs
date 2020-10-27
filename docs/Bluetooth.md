@@ -101,22 +101,22 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
   </tr>
   <tr>
     <td class="tg-lboi">temperature, humidity, battery</td>
-    <td class="tg-lboi">temperature, humidity</td>
+    <td class="tg-lboi">temperature, humidity, battery</td>
     <td class="tg-lboi">temperature, humidity, battery</td>
     <td class="tg-lboi">temperature, humidity</td>
   </tr>
     <tr>
-    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
-    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
-    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
-    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
+    <td class="tg-lboi">passive for all entities, reliable battery value</td>
+    <td class="tg-lboi">battery only active, thus not on the NRF24L01</td>
+    <td class="tg-lboi">passive for all entities, reliable battery value</td>
+    <td class="tg-lboi">battery only active, thus not on the NRF24L01, no reliable battery value, no clock functions</td>
   </tr>
 </table>  
   
  <table>
   <tr>
     <th class="th-lboi">MiFlora</th>
-    <th class="th-lboi">LYWSD03MMC</th>
+    <th class="th-lboi">LYWSD03MMC / ATC</th>
     <th class="th-lboi">NLIGHT</th>
     <th class="th-lboi">MJYD2S</th>
   </tr>
@@ -127,16 +127,16 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.png" width=200></td>
   </tr>
   <tr>
-    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility</td>
-    <td class="tg-lboi">temperature, humidity</td>
+    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility, battery, firmware version</td>
+    <td class="tg-lboi">temperature, humidity, battery</td>
     <td class="tg-lboi">motion</td>
     <td class="tg-lboi">motion, illuminance, battery, no-motion-time</td>
   </tr>
   <tr>
-    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
-    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
+    <td class="tg-lboi">passive only with newer firmware (>3.0?), battery only active, thus not on the NRF24L01</td>
+    <td class="tg-lboi">passive only with decryption or using custom ATC-firmware, no reliable battery value with stock firmware</td>
     <td class="tg-lboi">NRF24L01, ESP32</td>
-    <td class="tg-lboi">NRF24L01, ESP32</td>
+    <td class="tg-lboi">passive only with decryption, thus only NRF24L01, ESP32</td>
   </tr>
 </table>  
   
@@ -157,11 +157,13 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <td class="tg-lboi">temperature, humidity, battery</td>
   </tr>
      <tr>
-    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
-    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
-    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
+    <td class="tg-lboi">passive</td>
+    <td class="tg-lboi">equal to the LYWS03MMC, but no custom firmware yet</td>
+    <td class="tg-lboi">passive for all entities, no alarm clock functions</td>
   </tr>
 </table> 
+passive: data is received via BLE advertisments  
+active: data is received via bidrectional connection to the sensor  
   
 #### Devices with payload encryption  
   
