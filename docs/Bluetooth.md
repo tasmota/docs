@@ -80,6 +80,91 @@ Meanwhile it is possible to get the needed "bind_key" with the help of an open-s
 At least the LYWSD03 allows the use of a simple BLE connection without any encrypted authentication and the reading of the sensor data using normal subscription methods to GATT-services (currently used on the HM-1x). This is more power hungry than the passive reading of BLE advertisements.  
 Other sensors like the MJYD2S are not usable without the "bind_key".  
   
+### Supported Devices
+
+!!! note "It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely!"  
+
+The naming conventions in the product range of bluetooth sensors in XIAOMI-universe can be a bit confusing. The exact same sensor can be advertised under slightly different names depending on the seller (Mijia, Xiaomi, Cleargrass, ...).
+
+ <table>
+  <tr>
+    <th class="th-lboi">MJ_HT_V1</th>
+    <th class="th-lboi">LYWSD02</th>
+    <th class="th-lboi">CGG1</th>
+    <th class="th-lboi">CGD1</th>
+    <th class="th-lboi">MiFlora</th>
+
+  </tr>
+  <tr>
+    <td class="tg-lboi"><img src="../_media/bluetooth/mj_ht_v1.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/LYWDS02.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/CGG1.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/CGD1.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/miflora.png" width=200></td>
+
+  </tr>
+  <tr>
+    <td class="tg-lboi">temperature, humidity, battery</td>
+    <td class="tg-lboi">temperature, humidity</td>
+    <td class="tg-lboi">temperature, humidity, battery</td>
+    <td class="tg-lboi">temperature, humidity</td>
+    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility</td>
+  </tr>
+    <tr>
+    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
+    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
+    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
+    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
+    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
+  </tr>
+</table>  
+  
+ <table>
+  <tr>
+    <th class="th-lboi">LYWSD03MMC</th>
+    <th class="th-lboi">NLIGHT</th>
+    <th class="th-lboi">MJYD2S</th>
+    <th class="th-lboi">YEE RC</th>
+    <th class="th-lboi">MHO-C401</th>
+  </tr>
+  <tr>
+    <td class="tg-lboi"><img src="../_media/bluetooth/LYWSD03MMC.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/nlight.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/MHO-C401.png" width=200></td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">temperature, humidity</td>
+    <td class="tg-lboi">motion</td>
+    <td class="tg-lboi">motion, illuminance, battery, no-motion-time</td>
+    <td class="tg-lboi">button press (single and long)</td>
+    <td class="tg-lboi">temperature, humidity, battery</td>
+  </tr>
+     <tr>
+    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
+    <td class="tg-lboi">NRF24L01, ESP32</td>
+    <td class="tg-lboi">NRF24L01, ESP32</td>
+    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
+    <td class="tg-lboi">HM-1x, NRF24L01, ESP32</td>
+  </tr>
+</table>  
+  
+#### Devices with payload encryption  
+  
+The LYWSD03MMC, MHO-C401 and the MJYD2S will start to send advertisements with encrypted sensor data after pairing it with the official Xiaomi app. Out-of-the-box the sensors do only publish a static advertisement.  
+It is possible to get the necessary decryption key ("bind_key"): https://atc1441.github.io/TelinkFlasher.html  
+This project also provides a custom firmware for the LYWSD03MMC, which then becomes a ATC and is supported by Tasmota too.  
+This key and the corresponding MAC of the sensor can be injected with the NRFKEY-command (or NRFMJYD2S). It is probably a good idea to save the whole config as RULE like that:  
+  
+```haskell
+rule1 on System#Init do backlog NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFPage 6; NRFUse 0; NRFUse 4 endon
+```  
+(key for two sensors, 6 sensors per page in the WebUI, turn off all sensors, turn on LYWS03)  
+  
+LYWSD03MMC sends encrypted sensor data every 10 minutes. As there are no confirmed reports about correct battery presentation of the sensor (always shows 99%), this function is currently not supported.  
+MJYD2S sends motion detection events and 2 discrete illuminance levels (1 lux or 100 lux for a dark or bright environment). Additionally battery level and contiguous time without motion in discrete growing steps (no motion time = NMT).    
+ 
   
 #### Working principle of Tasmota BLE drivers (>8.5.)
   
@@ -123,42 +208,8 @@ HM10AT<a id="hm10at"></a>|`<command>` = send AT commands to HM-10. See [list](ht
 HM10Time <a id="hm10time"></a>|`<n>` = set time time of a **LYWSD02 only** sensor to Tasmota UTC time and timezone. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).
 HM10Auto <a id="hm10auto"></a>|`<value>` = start an automatic discovery scan with an interval of  `<value>` seconds to receive data in BLE advertisements periodically.<BR>This is a passive scan and does not produce a scan response from the BLE sensor. It does not increase the sensors battery drain.
 HM10Page<a id="hm10page"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
-
-### Supported Devices
-
-<table>
-  <tr>
-    <th class="th-lboi">MJ_HT_V1</th>
-    <th class="th-lboi">LYWSD02</th>
-    <th class="th-lboi">LYWSD03MMC</th>
-    <th class="th-lboi">CGD1</th>
-    <th class="th-lboi">MiFlora</th>
-  </tr>
-  <tr>
-    <td class="tg-lboi"><img src="../_media/bluetooth/mj_ht_v1.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/LYWDS02.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/LYWSD03MMC.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/CGD1.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/miflora.png" width=200></td>
-  </tr>
-  <tr>
-    <td class="tg-lboi">temperature, humidity, battery</td>
-    <td class="tg-lboi">temperature, humidity, battery</td>
-    <td class="tg-lboi">temperature, humidity, battery</td>
-    <td class="tg-lboi">temperature, humidity, battery</td>
-    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility, battery</td>
-  </tr>
-  <tr>
-    <td class="tg-lboi"></td>
-    <td class="tg-lboi">set time using "HM10Time"</td>
-    <td class="tg-lboi"></td>
-    <td class="tg-lboi">unsupported time or alarm</td>
-    <td class="tg-lboi"></td>
-  </tr>
-</table>
-
-   
-
+  
+  
 ## BLE Sensors using nRF24L01(+)
 
 ### Configuration
@@ -202,77 +253,7 @@ NRFKey<a id="nrfkey"></a>| Set a "bind_key" for a MAC-address to decrypt (LYWSD0
 NRFMjyd2s<a id="nrfmjyd2s"></a>| Set a "bind_key" for a MAC-address to decrypt sensor data of the MJYD2S. The argument is a 44 characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string
 NRFNlight<a id="nrfnlight"></a>| Set the MAC of an NLIGHT<BR>`<value>` (12 characters) =  MAC interpreted as an uppercase string `AABBCCDDEEFF`
   
-### Supported Devices
-
-!!! note "It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely!"  
-
-The naming conventions in the product range of bluetooth sensors in XIAOMI-universe can be a bit confusing. The exact same sensor can be advertised under slightly different names depending on the seller (Mijia, Xiaomi, Cleargrass, ...).
-
- <table>
-  <tr>
-    <th class="th-lboi">MJ_HT_V1</th>
-    <th class="th-lboi">LYWSD02</th>
-    <th class="th-lboi">CGG1</th>
-    <th class="th-lboi">CGD1</th>
-    <th class="th-lboi">MiFlora</th>
-
-  </tr>
-  <tr>
-    <td class="tg-lboi"><img src="../_media/bluetooth/mj_ht_v1.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/LYWDS02.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/CGG1.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/CGD1.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/miflora.png" width=200></td>
-
-  </tr>
-  <tr>
-    <td class="tg-lboi">temperature, humidity, battery</td>
-    <td class="tg-lboi">temperature, humidity</td>
-    <td class="tg-lboi">temperature, humidity, battery</td>
-    <td class="tg-lboi">temperature, humidity</td>
-    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility</td>
-  </tr>
-</table>  
   
- <table>
-  <tr>
-    <th class="th-lboi">LYWSD03MMC</th>
-    <th class="th-lboi">NLIGHT</th>
-    <th class="th-lboi">MJYD2S</th>
-    <th class="th-lboi">YEE RC</th>
-    <th class="th-lboi">MHO-C401</th>
-  </tr>
-  <tr>
-    <td class="tg-lboi"><img src="../_media/bluetooth/LYWSD03MMC.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/nlight.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/MHO-C401.png" width=200></td>
-  </tr>
-  <tr>
-    <td class="tg-lboi">temperature, humidity</td>
-    <td class="tg-lboi">motion</td>
-    <td class="tg-lboi">motion, illuminance, battery, no-motion-time</td>
-    <td class="tg-lboi">button press (single and long)</td>
-    <td class="tg-lboi">temperature, humidity, battery</td>
-  </tr>
-</table>
-   
-#### Devices with payload encryption  
-  
-The LYWSD03MMC, MHO-C401 and the MJYD2S will start to send advertisements with encrypted sensor data after pairing it with the official Xiaomi app. Out-of-the-box the sensors do only publish a static advertisement.  
-It is possible to get the necessary decryption key ("bind_key"): https://atc1441.github.io/TelinkFlasher.html  
-This project also provides a custom firmware for the LYWSD03MMC, which then becomes a ATC and is supported by Tasmota too.  
-This key and the corresponding MAC of the sensor can be injected with the NRFKEY-command (or NRFMJYD2S). It is probably a good idea to save the whole config as RULE like that:  
-  
-```haskell
-rule1 on System#Init do backlog NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFPage 6; NRFUse 0; NRFUse 4 endon
-```  
-(key for two sensors, 6 sensors per page in the WebUI, turn off all sensors, turn on LYWS03)  
-  
-LYWSD03MMC sends encrypted sensor data every 10 minutes. As there are no confirmed reports about correct battery presentation of the sensor (always shows 99%), this function is currently not supported.  
-MJYD2S sends motion detection events and 2 discrete illuminance levels (1 lux or 100 lux for a dark or bright environment). Additionally battery level and contiguous time without motion in discrete growing steps (no motion time = NMT).  
-
 ### Beacon  
   
 A simplified presence dection will scan for regular BLE advertisements of a given BT-device defined by its MAC-address. It is important to know, that many new devices (nearly every Apple-device) will change its MAC every few minutes to prevent tracking.  
@@ -316,61 +297,8 @@ MI32Beaconx <a id="mi32key"></a>| Set a BLE device as a beacon using the (fixed)
 If you really want to read battery for LYWSD02, Flora and CGD1, consider doing it once a day with a RULE:
 `RULE1 on Time#Minute=30 do MI32Battery endon`
 This will update every day at 00:30 AM.  
-
   
-### Supported Devices
-
-<table>
-  <tr>
-    <th class="th-lboi">MJ_HT_V1</th>
-    <th class="th-lboi">LYWSD02</th>
-    <th class="th-lboi">LYWSD03MMC</th>
-    <th class="th-lboi">CGD1</th>
-  </tr>
-  <tr>
-    <td class="tg-lboi"><img src="../_media/bluetooth/mj_ht_v1.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/LYWDS02.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/LYWSD03MMC.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/CGD1.png" width=200></td>
-  </tr>
-  <tr>
-    <td class="tg-lboi">temperature, humidity, battery</td>
-    <td class="tg-lboi">temperature, humidity, battery</td>
-    <td class="tg-lboi">temperature, humidity, battery</td>
-    <td class="tg-lboi">temperature, humidity, battery</td>
-  </tr>
-  <tr>
-    <td class="tg-lboi"></td>
-    <td class="tg-lboi">set time using "MI32Time"<p>toggle temperature units with "MI32Unit"</td>
-    <td class="tg-lboi"></td>
-    <td class="tg-lboi">unsupported time or alarm</td>
-  </tr>
-</table>  
-  
- <table>
-  <tr>
-    <th class="th-lboi">MiFlora</th>
-    <th class="th-lboi">NLIGHT</th>
-    <th class="th-lboi">MJYD2S</th>
-    <th class="th-lboi">YEE RC</th>
-    <th class="th-lboi">MHO-C401</th>
-  </tr>
-  <tr>
-    <td class="tg-lboi"><img src="../_media/bluetooth/miflora.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/nlight.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/MHO-C401.png" width=200></td>
-  </tr>
-  <tr>
-    <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility, battery</td>
-    <td class="tg-lboi">motion, no-motion-time (computed by the driver)</td>
-    <td class="tg-lboi">motion, illuminance, battery, no-motion-time</td>
-    <td class="tg-lboi">button press (single and long)</td>
-    <td class="tg-lboi">temperature, humidity, battery</td>
-  </tr>
-</table> 
-  
+   
 ### Beacon  
   
 A count-up-timer starts for every beacon a  with every received advertisement, starting with 0.  
