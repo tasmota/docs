@@ -103,11 +103,11 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <td class="tg-lboi">temperature, humidity, battery</td>
     <td class="tg-lboi">temperature, humidity, battery</td>
     <td class="tg-lboi">temperature, humidity, battery</td>
-    <td class="tg-lboi">temperature, humidity</td>
+    <td class="tg-lboi">temperature, humidity, battery</td>
   </tr>
     <tr>
     <td class="tg-lboi">passive for all entities, reliable battery value</td>
-    <td class="tg-lboi">battery only active, thus not on the NRF24L01</td>
+    <td class="tg-lboi">battery only active, thus not on the NRF24L01, set clock and unit, very frequent data sending</td>
     <td class="tg-lboi">passive for all entities, reliable battery value</td>
     <td class="tg-lboi">battery only active, thus not on the NRF24L01, no reliable battery value, no clock functions</td>
   </tr>
@@ -159,7 +159,7 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
      <tr>
     <td class="tg-lboi">passive</td>
     <td class="tg-lboi">equal to the LYWS03MMC, but no custom firmware yet</td>
-    <td class="tg-lboi">passive for all entities, no alarm clock functions</td>
+    <td class="tg-lboi">passive for all entities,  set clock and unit, no alarm functions, very frequent data sending</td>
   </tr>
 </table> 
 passive: data is received via BLE advertisments  
@@ -168,8 +168,8 @@ active: data is received via bidrectional connection to the sensor
 #### Devices with payload encryption  
   
 The LYWSD03MMC, MHO-C401 and the MJYD2S will start to send advertisements with encrypted sensor data after pairing it with the official Xiaomi app. Out-of-the-box the sensors do only publish a static advertisement.  
-It is possible to get the necessary decryption key ("bind_key"): https://atc1441.github.io/TelinkFlasher.html  
-This project also provides a custom firmware for the LYWSD03MMC, which then becomes a ATC and is supported by Tasmota too.  
+It is possible to do a pairing and get the necessary decryption key ("bind_key") here: https://atc1441.github.io/TelinkFlasher.html  
+This project also provides a custom firmware for the LYWSD03MMC, which then becomes an ATC and is supported by Tasmota too. Default ATC-setting will drain the battery more than stock firmware, because of very frequent data sending.  
 This key and the corresponding MAC of the sensor can be injected with the NRFKEY-command (or NRFMJYD2S). It is probably a good idea to save the whole config as RULE like that:  
   
 ```haskell
