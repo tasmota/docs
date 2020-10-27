@@ -4,8 +4,8 @@ Tasmota uses the [IRremoteESP8266 library](https://github.com/crankyoldgit/IRrem
 
 There are two additional Tasmota firmware variants that provide almost all IRremoteESP8266 protocols. This requires disabling some other features to keep code size manageable.
 
-- `tasmota-ir` is pre-packaged for IR blasters, like [Eachen IR Bridge](https://templates.blakadder.com/eachen-IR-DC6.html) or [YTF IR Bridge](https://templates.blakadder.com/ytf_ir_bridge.html). Choose `tasmota-ir` if you are using an IR blaster.  
-- `tasmota-ircustom` is used if you want to customize your features (additional sensors, language, etc.). This variant is required because it triggers a special compilation flag for IRremoteESP8266. Edit the `IRremoteESP8266.h` header in the `IRremoteESP8266-x.x.x/src` folder to disable (i.e., set to `false`) any unneeded/unwanted protocols. Then [compile your own firmware](Compile-your-build).
+- `tasmota-ir` is pre-packaged for IR blasters, like [Eachen IR Bridge](https://templates.blakadder.com/eachen-IR-DC6.html) or [YTF IR Bridge](https://templates.blakadder.com/ytf_ir_bridge.html). Choose `tasmota-ir` if you are using an IR blaster. 
+- `tasmota-ircustom` is used if you want to customize your features (additional sensors, language, etc.). See [compile your own firmware](Compile-your-build).
 
 You can [flash](Getting-Started#flashing) the binary or [upgrade](Upgrading) your existing one.
 
