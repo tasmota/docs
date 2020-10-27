@@ -309,7 +309,8 @@ MI32Time <a id="mi32time"></a>|`<n>` = set time time of a **LYWSD02 only** senso
 MI32Unit <a id="mi32unit"></a>|`<n>` = toggle the displayed temperature units of a **LYWSD02 only** sensor. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).  Reporting of the temperature is always in Celcius, this only changes the value shown on the device.
 MI32Page<a id="mi32page"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
 MI32Battery<a id="mi32battery"></a>|Reads missing battery data for LYWSD02, Flora and CGD1.
-MI32Key<a id="mi32key"></a>| Set a "bind_key" for a MAC-address to decrypt sensor data (LYWSD03MMC, MJYD2S). The argument is a 44 uppercase characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string  
+MI32Key<a id="mi32key"></a>| Set a "bind_key" for a MAC-address to decrypt sensor data (LYWSD03MMC, MJYD2S). The argument is a 44 uppercase characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string
+MI32Beaconx <a id="mi32key"></a>| Set a BLE device as a beacon using the (fixed) MAC-address<BR>x - set beacon 1 .. 4 <BR> x= 0 - will start a BLE scan and print result to the console <BR>`<value>` (12 or 17 characters) = use beacon given the MAC interpreted as a string `AABBCCDDEEFF` (also valid: `aa:BB:cc:dd:EE:FF`)  MAC of `00:00:00:00:00:00` will stop beacon x   
   
 !!! tip 
 If you really want to read battery for LYWSD02, Flora and CGD1, consider doing it once a day with a RULE:
@@ -368,4 +369,21 @@ This will update every day at 00:30 AM.
     <td class="tg-lboi">button press (single and long)</td>
     <td class="tg-lboi">temperature, humidity, battery</td>
   </tr>
-</table>
+</table> 
+  
+### Beacon  
+  
+A count-up-timer starts for every beacon a  with every received advertisement, starting with 0.  
+  
+TELE-output:  
+`Beacon1":{"MAC":"11:22:33:44:55:66","CID":"0x0000","SVC":"0x0000","UUID":"0x0000","Time":4,"RSSI":0}}`  
+  
+RULE-example:  
+`on Beacon2#time==30 do SOMETHING endon` - is triggered 30 seconds after last packet was received  
+  
+  
+(following AD type, read here: https://www.bluetooth.com/specifications/assigned-numbers/generic-access-profile/)  
+CID - company identifier  
+SVC - service data  
+UUID - service or class UUID  
+
