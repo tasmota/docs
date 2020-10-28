@@ -319,10 +319,11 @@ This will update every day at 00:30 AM.
 A count-up-timer starts for every beacon a  with every received advertisement, starting with 0.  
   
 TELE-output:  
-`Beacon1":{"MAC":"11:22:33:44:55:66","CID":"0x0000","SVC":"0x0000","UUID":"0x0000","Time":4,"RSSI":0}}`  
+`"Beacon1":{"MAC":"11:22:33:44:55:66","CID":"0x0000","SVC":"0x0000","UUID":"0x0000","Time":4,"RSSI":0}}`  
   
 RULE-example:  
 `on Beacon2#time==30 do SOMETHING endon` - is triggered 30 seconds after last packet was received  
+`on system#boot do MI32Beacon2 AABBCCDDEEFF endon` - save configuration for beacon 2 
   
   
 (following AD type, read here: https://www.bluetooth.com/specifications/assigned-numbers/generic-access-profile/)  
