@@ -98,7 +98,7 @@ Extra functions | 97 to 99 | 97 for motor direction<br>98 for error logging (rep
 Since the majority of devices have a power on/off functions on dpId 1 its mapped to fnId 11 (Relay1) by default. If you don't need it, map it to fnId 99  with `TuyaMcu 99,1`
 
 !!! danger
-    Mapping a relay or switch to a dpId that is not a simple on/off function (data Type 1) might result in unwanted power toggling (f.e. dpId sends value of 4 which toggles the relay to Power 4 aka blink mode)
+    Mapping a relay or switch to a dpId that is not a simple on/off function (data Type 1) might result in unwanted power toggling (i.e. dpId sends value of 4 which toggles the relay to Power 4 aka blink mode)
 
 ## TuyaSend Command
 Command `TuyaSend` is used to send commands to dpId's. It is required for dpId's that shouldn't be mapped to a fnId. 
@@ -478,7 +478,7 @@ Rule1 on TuyaReceived#data=55AA000700056E040001007E do publish2 stat/GD-30W/EFFE
 Rule1 1
 ```
 
-*Optional rule used to prevent the device going into countdown mode (f.e. using on device controls) and complete MCU status update on restart*
+*Optional rule used to prevent the device going into countdown mode (i.e. using on device controls) and complete MCU status update on restart*
 
 ```haskell
 Rule3 on TuyaReceived#data=55AA000700050D040001011E do tuyasend4 13,0 endon on TuyaReceived#data=55AA000700050D040001021F do tuyasend4 13,0 endon on mqtt#connected do serialsend5 55aa0001000000 endon
