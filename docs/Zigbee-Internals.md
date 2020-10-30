@@ -147,3 +147,44 @@ Finally query for the following general attributes: Manufacturer Id and Model Id
 16:39:26 ZIG: ZbZCLRawReceived: {"0xF75D":{"0000/0004":"OSRAM","0000/0005":"Plug 01"}}
 16:39:26 MQT: tele/tasmota/Zigbee_home/SENSOR = {"ZbReceived":{"0xF75D":{"Manufacturer":"OSRAM","ModelId":"Plug 01","Endpoint":3,"LinkQuality":36}}}
 ```
+
+## Code flow when a message is received
+
+### Message Serial decoding
+
+Here is a detailed view of the code flow and transformations applied when a Zigbee message is received. It's simple but has many ramifications.
+
+During the Tasmota event loop, Z2T first checks any incoming message by calling `ZigbeeInputLoop()`, and after parsing incoming messages, it sends any outgoing message by calling `ZigbeeOutputLoop()`.
+
+Note: outgoing messages are not sent directly but stacked into a buffer and sent once per event tick. This avoids lost messages when sending them too fast.
+
+For **ZNP**, the serial buffer is read if there is any incoming data. The message is checked for checksum and put into a `SBuffer` object of maximum size of 256 bytes. If a message is ready, it calls `ZigbeeProcessInput(znp_buffer)`
+
+For **EZSP**, the flow is a little more complex because multiple layers of decoding are required. The first layer receives the message and handles UART-EZSP protocol messages: ignores XON/XOFF, decodes ESCAPE characters, CANCEL... It then decodes according to the pseudo-random generator, and checks the final CRC. If ok, it calls the second stage via `ZigbeeProcessInputRaw(ezsp_buffer)`.
+
+Note: the green light of the ZBBridge `Led_i 1` is set to blink when a message is received from EZSP (which does not mean an actual Zigbee radio message was received).
+
+EZSP second stage decodes the ASH protocol, including ACK/NAK of messages, RSTACK (reset confirmation) and ERROR. In case of ERROR, the EZSP stack is not able to respond anymore and requires a complete reset. In this case a log entry is produced and the entire Tasmota is automatically restarted. This stage automatically sends ACK messages to confirm reception of messages. If a DATA frame is received, it then calls the third stage via `ZigbeeProcessInputEZSP(buf)`.
+
+The third stage of EZSP decoding extracts the message, logs if needed and then calls `ZigbeeProcessInput(buf)`.
+
+### State machine handling
+
+The message is passed to the state machine that will either automatically match the message and pass to the next state, or pass it to the default handler.
+
+When the stack is fully initialized, `zigbee.init_phase == false`, the default handler is `ZNP_Recv_Default()` for ZNP or `EZ_Recv_Default()` for EZSP.
+
+For **ZNP**, `ZDO` messages are dispatched to the relevant handlers: `ZDO_END_DEVICE_ANNCE_IND`, `ZDO_TC_DEV_IND`, `ZDO_PERMIT_JOIN_IND`, `ZDO_NODE_DESC_RSP`, `ZDO_ACTIVE_EP_RSP`, `ZDO_SIMPLE_DESC_RSP`, `ZDO_IEEE_ADDR_RSP`, `ZDO_BIND_RSP`, `ZDO_UNBIND_RSP`, `ZDO_MGMT_LQI_RSP`, `ZDO_MGMT_BIND_RSP`. Note: `PARENT_ANNCE` is handled at ZNP level and not passed to the application.
+
+`AF_DATA_CONFIRM` emits a log message, and data messages are handled in `ZNP_ReceiveAfIncomingMessage()`. The ZCL frame is decoded into a `ZCLFrame` object and sent to `Z_IncomingMessage()`.
+
+For **EZSP**, messages are directly dispatched for `trustCenterJoinHandler`, `incomingRouteErrorHandler`, `permitJoining` and `messageSentHandler`. All other incoming messages, including ZDO, are sent to `EZ_IncomingMessage()`.
+
+**EZSP**: `EZ_IncomingMessage()` then decodes ZDO messages and dispatches them: `ZDO_Device_annce`, `ZDO_Active_EP_rsp`, `ZDO_IEEE_addr_rsp`, `ZDO_Simple_Desc_rsp`, `ZDO_Bind_rsp`, `Z_UnbindRsp`, `Z_MgmtLqiRsp`, `Z_MgmtBindRsp`, `ZDO_Parent_annce`, `ZDO_Parent_annce_rsp`.
+
+Other non-ZDO messages decoded into a `ZCLFrame` object and sent to `Z_IncomingMessage()`.
+
+### Incoming messages handling
+
+The starting point is `Z_IncomingMessage()` with a `ZCLFrame` object corresponding to the received Zigbee message.
+
