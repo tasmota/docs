@@ -2,7 +2,7 @@
 
 !!! warning "ESP32 support is in beta and not all functions will work"
 
-You can download precompiled development binaries from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/) or [https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32) and the needed ESP32 flash files.
+You can download precompiled development binaries from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/) or [https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32) and the needed ESP32 flash files [https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32/ESP32_needed_files](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32/ESP32_needed_files).
 
 Command syntax for flashing Tasmota32 firmware on ESP32 via Esptool (**replace COM port number!**):
 ```
