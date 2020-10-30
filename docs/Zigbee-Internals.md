@@ -184,7 +184,75 @@ For **EZSP**, messages are directly dispatched for `trustCenterJoinHandler`, `in
 
 Other non-ZDO messages decoded into a `ZCLFrame` object and sent to `Z_IncomingMessage()`.
 
-### Incoming messages handling
+### Incoming messages handling: `Z_IncomingMessage`
 
 The starting point is `Z_IncomingMessage()` with a `ZCLFrame` object corresponding to the received Zigbee message.
 
+Details of `Z_IncomingMessage()`:
+
+#### 1. Log the raw message at LogLevel 3 (DEBUG)
+#### 2. Update the `LQI` for the device
+#### 3. Update the `last_seen` value
+#### 4. Dispatch according to message type
+
+1. If `ZCL_DEFAULT_RESPONSE`, log and ignore (it's just the device acknowledge for the last message).
+	
+2. If `ZCL_REPORT_ATTRIBUTES`, call `parseReportAttributes()`. This is the general case for sensor values (temperature...)
+	
+3. If `ZCL_READ_ATTRIBUTES_RESPONSE`, call `parseReadAttributesResponse()`. This happens as a response to reading attributes, and the handling is similar to the attribute reporting (although the syntax of the message is slightly differen).
+	
+4. If `ZCL_READ_ATTRIBUTES`, call `parseReadAttributes()`. This happens rarely, typically when a device asks the coordinator for attributes like the `local_time`.
+	
+5. If `ZCL_READ_REPORTING_CONFIGURATION_RESPONSE`, call `parseReadConfigAttributes()`. This is the response to `ZbBindState` command.
+	
+6. If `ZCL_CONFIGURE_REPORTING_RESPONSE`, call `parseConfigAttributes()`. This is the response to `ZbBind` command.
+	
+7. For cluster specific commands, call `parseClusterSpecificCommand()`. This is the general case when a command is received (for ex `"Power":"toggle"`).
+	
+All the previous commands add attributes to a local `attr_list` object. These attributes are have a key of eiher Cluster/Attribute type of String type.
+
+Note: it is important to keep attributes as Cluster/Attribute types so that we can later apply transformations on them.
+
+Note2: `LinkQuality`, `Device`, `Name`, `Group` and `Endpoint` are _special_ values that do are not registered as actual attributes.
+
+#### 6. Apply transoformations to the attributes.
+
+There are many transformations that are required because some device use proprietary values, or we need to compute new values out of the existing attributes.
+
+1. Generate synthetic attributes `generateSyntheticAttributes()`.
+This is mainly used for Xiaomi Aqara devices. Aqara uses cluster 0xFF01 and 0xFF02 to send structured messages. The good side is that it allows to send attributes from different clusters in a single message, whereas the ZCL standard would have required several messages. The bad side is that Aqara reuses the same attribute numbers for different value, and you need to know the device type to decode; which makes the whole process work only if the pairing process sucessfully got the ModelId.
+
+2. Compute synthetic attributes `computeSyntheticAttributes()`.
+This is used to add computed attributes or fix some bugs in devices.
+Currently it computes the `BatteryPercentage` from the `BatteryVoltage` if the `BatteryPercentage` is not already present.
+It computes `SeaPressure` using the Tasmota `Altitude` setting.
+It fixes an Eurotronic bug in the encoding of `Pi Heating Demand` which is sent in the 0..255 range instead of 0..100 range.
+It fixes the IKEA Remote battery value which is half what it needs to be.
+	
+3. Generate callbacks and timers `generateCallBacks()`.
+This is used to register deferres callbacks. It is only used for `Occypancy` for now. Many PIR sensors report `"Occupancy":1` but don't report the lack of occupancy. This function sets a timer to artificially generate `"Occupancy":0` after a definite amount of time (defaults to 90 seconds).
+
+4. Post-process attributes `Z_postProcessAttributes()`.
+This function does the final transformation of attributes to their human readable format.
+
+First the endpoint is added as suffix if `SetOption101 1` is set, if the source endpoint is not `1`, and if the device is known to have more than one endpoint (check with `ZbStatus2`).
+
+Then the attribute is looked-up from the global `Z_PostProcess` table.
+
+If the attribute is mapped into `Z_Data`, the value is saved into its corresponding object. See `ZbData`. This allows for keeping last seen values for the Web UI.
+
+Similarly, some device specific values are recorded: `ModelId`, `ManufacturerId`, `BatteryPercent`.
+
+If the attribute as a `multiplier` value, the raw value is multiplied/divided by this value (ex: Temperature raw value is 1/100th of degrees, so the raw value is divided by 100).
+
+Finally the attribute name is replaced by its string value (ex: `0402/0000` is replace with `Temperature`).
+
+#### 7. Publish the final message to MQTT or defer the message.
+
+In the general case, attributes are not published immediately but kept in memory for a short period of time. This allows for debouncing of identical messages, and coalescing of values (Temperature, Pressure, Humidity) in a single MQTT message, even if there were received in 3 seperate messages.
+
+The default timer is a compile time `#define USE_ZIGBEE_COALESCE_ATTR_TIMER` with a default value of 350 ms.
+
+Once a message is ready, it first checks if the value conflict with previously held values. If so, the previous message is immediately sent, and the new values are held in memory.
+
+Then is sets a timer to publish the values after the timer expired.
