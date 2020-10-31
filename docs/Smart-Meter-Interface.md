@@ -305,6 +305,7 @@ in `user_config_override.h` file). An entry defines how to decode the data and p
 - [SBC ALE3 (MODBUS)](#sbc-ale3-modbus)
 - [2 * SBC ALE3 (MODBUS)](#2-sbc-ale3-modbus)
 - [4 *  Hiking DDS238-2 ZN/S (MODBUS)](#4-Hiking-DDS238-2-ZN/S3-modbus)
+- [Trovis 557x](#trovis-557x)
 --------------------------------------------------------
 
 ### JANZ C3801 (SML - MODBUS)
@@ -1036,5 +1037,26 @@ This is an example for 4 MODBUS devices on the same bus
 1,050304xxxxUUuu@i7:1,C5_ReactivePower,Var,C5ReactivePower,0  
 #  
 
+```
+
+### Trovis 557x
+
+These heating regulators have a [lot of registers](https://raw.githubusercontent.com/Tom-Bom-badil/samson_trovis_557x/master/_register.py).
+```
+>D
+>B
+->sensor53 r
+>M 1
++1,3,m,0,19200,Trovis,1,2,rF7030009000E,rF703001C0004,F703006A
+1,F7031CUUuu@i0:10,Außentemp.,°C,Temp_Outside,1
+1,F7031CxxxxxxxxxxxxUUuu@i0:10,Vorlauftemp.,°C,Temp_Flow,1
+1,F7031CxxxxxxxxxxxxxxxxxxxxxxxxxxxxUUuu@i0:10,Rücklauftemp.,°C,Temp_Return,1
+1,F7031CxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxUUuu@i0:10,Speichertemp.,°C,Temp_Vessel,1
+1,F70308UUuu@i1:1,MesswertImp-h,imp/h,Metric_ImpH,0
+1,F70308xxxxUUuu@i1:100,Messwertm3-h,m³/h,Metric_M3H,2
+1,F70308xxxxxxxxUUuu@i1:10,AA10-10V,V,Metric_AA10,1
+1,F70308xxxxxxxxxxxxUUuu@i1:10,AA20-10V,V,Metric_AA20,1
+1,F70304UUuu@i2:1,StellsignalRk1,%,CtrlSig_RK1,0
+#
 ```
 ------------------------------------------------------------------------------
