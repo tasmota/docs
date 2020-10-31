@@ -325,7 +325,7 @@ When it connects to the network, you may get a warning that there is no Internet
 <p>
 
 !!! warning 
-    Wi-Fi manager server is active for only 3 minutes. If you miss the window you might have to disconnect your device from power and reconnect.
+    "Wi-Fi manager server is active for only 3 minutes. If you miss the window you might have to disconnect your device from power and reconnect."
 
 <img alt="Sign in to Wi-Fi Network" src="../_media/wificonfig2.jpg" style="margin:5px;float:right;width:300px"></img>After you have connected to the Tasmota Wi-Fi AP, open http://192.168.4.1 in a web browser on the smartphone (or whatever device you used). 
 Depending on the phone, it will take you to the Tasmota configuration page automatically, or you will get a prompt to *sign in to Wi-Fi network* or *authorize*. Tapping on the AP name should also open the configuration page.
