@@ -11,3 +11,4 @@ Tasmota easily integrates with many home automation solutions reporting status a
 ![ioBroker](_media/logo/iobroker.png)
 [![KNX](_media/logo/knx.png)](KNX.md)
 [![Alexa](_media/logo/alexa.png)](Alexa.md)
+[![Gladys Assistant](_media/logo/gladys.png)](GladysAssistant.md)
