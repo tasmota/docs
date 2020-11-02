@@ -1,6 +1,6 @@
 The Bluetooth section of Tasmota currently consists of 2 driver classes, which, not least due to hardware restrictions, cannot be used together.  
 On the one hand there is support for the use of "iBeacons" on some modules of the HM-1x family.  
-The second part consists of 3 drivers that can read the data from BLE sensors from the relatively diverse Xiaomi universe.  
+The second part consists of 3 drivers that can read the data from BLE sensors from the relatively diverse Xiaomi universe. These drivers offer very basic beacon finctionality too.  
   
   
 !!! info "Presence detection with iBeacons or BLE sensor gateway using HM-1x or nRF24L01(+) peripherals"
@@ -223,6 +223,7 @@ HM10AT<a id="hm10at"></a>|`<command>` = send AT commands to HM-10. See [list](ht
 HM10Time <a id="hm10time"></a>|`<n>` = set time time of a **LYWSD02 only** sensor to Tasmota UTC time and timezone. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).
 HM10Auto <a id="hm10auto"></a>|`<value>` = start an automatic discovery scan with an interval of  `<value>` seconds to receive data in BLE advertisements periodically.<BR>This is a passive scan and does not produce a scan response from the BLE sensor. It does not increase the sensors battery drain.
 HM10Page<a id="hm10page"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
+HM10Beaconx <a id="HM10beacon"></a>| Set a BLE device as a beacon using the (fixed) MAC-address<BR>x - set beacon 1 .. 4 <BR> x= 0 - will start a BLE scan and print result to the console <BR>`<value>` (12 or 17 characters) = use beacon given the MAC interpreted as a string `AABBCCDDEEFF` (also valid: `aa:BB:cc:dd:EE:FF`)  MAC of `00:00:00:00:00:00` will stop beacon x
   
   
 ## BLE Sensors using nRF24L01(+)
