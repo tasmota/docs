@@ -25,17 +25,9 @@ In Tasmota a `Switch` is any switch or push-button additionally connected to a f
 - [PIR sensor](https://en.wikipedia.org/wiki/Passive_infrared_sensor) - even though it's technically a  sensor it is [configured as a switch in Tasmota](PIR-Motion-Sensors)
 - [mechanical push-button](https://en.wikipedia.org/wiki/Push-button) 
 
-By default a switch toggles the corresponding power state (f.e. `Switch1` controls `Power1`). Every time the switch gets flipped the power state changes (ON or OFF). Instead of the default toggling of the power state, switches can be configured to send messages to different MQTT topics or send commands to other Tasmota devices. To ignore the default behaviour define a rule which triggers on `Switch<x>#State` or use [`Switchtopic`](#switchtopic). Take note: If the rule matches only certain states, default switch behaviour is supressed only for those states.
+By default a switch toggles the corresponding power state (f.e. `Switch1` controls `Power1`). Every time the switch gets flipped the power state of the relay toggles.
 
-
-!!! example
-     Make Switch1 publish its value to `cmnd/custom-topic/SWITCH` and not control Power1
-```haskell
-Backlog SwitchMode 1; SwitchTopic 0
-```
-```haskell
-Backlog Rule1 on Switch1#state do Publish cmnd/%topic%/SWITCH1 %value% endon; Rule1 1
-```
+To detach switches
 
 !!! warning 
     If you define a switch with a number higher than available power outputs it will default to controlling `Power1`. Example: Switch4 on a device with Power1 and Power2 will control `Power1`.
@@ -162,52 +154,8 @@ Set switch to inverted "push to on" mode (`0 = ON`, `1 = nothing`)
 
 !!! tip "This mode is useful with [PIR sensors](PIR-Motion-Sensors)" 
 
-### SwitchTopic
-
-!!! warning
-    When using `SwitchTopic 1` or `2` (or `ButtonTopic 1` or `2`)  and your MQTT broker becomes unavailable, Tasmota falls back to default `SwitchTopic 0` (or `ButtonTopic 0`), which is not optimal.<br>To avoid this, we recommend using [rules](Rules). They simply always work!
-
-If you still need to use SwitchTopic read on!
-
-**`SwitchTopic 0`**
-
- _Default mode_
-
-By default a switch controls the corresponding power state and doesn't send any MQTT messages itself.
-
-No MQTT message will be published on account of the new switch state. The message you see in console is the new power state that is controlled and not the switch state.
-
-**`SwitchTopic 1`**
-
-_Sets MQTT switch topic to device %topic%_
-
-When changing the state of the switch an MQTT message is sent to the device topic with the payload according to `SwitchMode` set.  
-
-!!! example
-    Device topic _tasmota_ with `SwitchMode 3` yields the following message: `MQT: cmnd/tasmota/POWER = TOGGLE`
-
-    Notice the _cmnd_ instead of the _stat_ at the beginning.
-
-This is the same as sending an MQTT commands to this device, the device power state will be set to the defined state.
-
-**`SwitchTopic <value>`**
-
-_Set switch topic to a custom topic (32 characters max)_
-
-This will send an MQTT message to a custom defined topic similarly to option 1.
-
-In the following example, we set the topic to `tasmota02` with `SwitchTopic tasmota02`. 
-
-!!! example
-     Device topic _tasmota_ with `SwitchMode 1` and custom topic _tasmota02_ yields the following message: `MQT: cmnd/tasmota02/POWER = ON`
->
->If you have another device with the topic _tasmota02_ this action will turn on its power while not affecting anything on the _tasmota_ device.
-
-#### SwitchTopic Summary
-
-`SwitchTopic 0` controls the power state directly.  
-`SwitchTopic 1` sends an MQTT message to the device topic. This sets the state of the devices power accordingly.  
-`SwitchTopic <value>` sends an MQTT message command to the custom topic. This does not change the state of the devices power.
+**`SwitchMode 15`**   
+Send only MQTT message on switch change
 
 ## Button
 <img style="float:right;width:6em" src="https://user-images.githubusercontent.com/5904370/57244172-2273ba80-7038-11e9-89ce-49ef46cb36d6.png"> </img> 
@@ -347,6 +295,81 @@ You can imagine this algorithm as a leaking bucket. Every pulse adds water to th
 After you have assigned a Switch<x\> to the GPIO connected to the AC frequency detection circuit use the ['SwitchDebounce'](Commands.md#switchdebounce) command to set the number of pulses required for the switch to be recognized as on or off. For example: `SwitchDebounce 69` will turn the switch on after three pulses and turn it off after three missing ones (3 * 20 msec is 60 and the last digit must be 9 to activate the AC detection). You will probably have to experiment with the values depending on your AC frequency and the devices frequency detection implementation. 
 
 Once the feature is enabled you can use this switch as any regular switch!
+
+## Detach Switches or Buttons from Relays
+
+### Detach Switches Based On..
+
+#### SetOption114
+
+**Only in Tasmota 9.1+** When `SetOption114 1` all switches are detached from their respective relays and will send MQTT messages instead in the form of `{"Switch<x>":{"Action":"<state>"}}`. 
+
+!!! example  
+    When switch one is toggle to "ON":`{"Switch1":{"Action":"ON"}}`
+
+
+
+#### Rules
+
+Use rules to send messages to different MQTT topics or send commands to other Tasmota devices when switch state (defined by [SwitchMode](#switchmode)) changes. 
+
+To ignore the default behaviour define a rule which triggers on `Switch<x>` for all state changes or on `Switch<x>#State` for specific state changes. If a rule matches only certain states, default switch behaviour is suppressed only for those states.
+
+!!! example
+     Make Switch1 publish any value change to `cmnd/custom-topic/SWITCH1` and not control Power1
+```haskell
+Backlog SwitchMode 1; SwitchTopic 0
+```
+```haskell
+Backlog Rule1 on Switch1#state do Publish cmnd/%topic%/SWITCH1 %value% endon; Rule1 1
+```
+
+#### SwitchTopic
+
+!!! warning
+    When using `SwitchTopic 1` or `2` (or `ButtonTopic 1` or `2`)  and your MQTT broker becomes unavailable, Tasmota falls back to default `SwitchTopic 0` (or `ButtonTopic 0`), which is not optimal.<br>To avoid this, we recommend using first two options instead. 
+
+If you still need to use SwitchTopic read on!
+
+**`SwitchTopic 0`**
+
+ _Default mode_
+
+By default a switch controls the corresponding power state and doesn't send any MQTT messages itself.
+
+No MQTT message will be published on account of the new switch state. The message you see in console is the new power state that is controlled and not the switch state.
+
+**`SwitchTopic 1`**
+
+_Sets MQTT switch topic to device %topic%_
+
+When changing the state of the switch an MQTT message is sent to the device topic with the payload according to `SwitchMode` set.  
+
+!!! example
+    Device topic _tasmota_ with `SwitchMode 3` yields the following message: `MQT: cmnd/tasmota/POWER = TOGGLE`
+
+    Notice the _cmnd_ instead of the _stat_ at the beginning.
+
+This is the same as sending an MQTT commands to this device, the device power state will be set to the defined state.
+
+**`SwitchTopic <value>`**
+
+_Set switch topic to a custom topic (32 characters max)_
+
+This will send an MQTT message to a custom defined topic similarly to option 1.
+
+In the following example, we set the topic to `tasmota02` with `SwitchTopic tasmota02`. 
+
+!!! example
+     Device topic _tasmota_ with `SwitchMode 1` and custom topic _tasmota02_ yields the following message: `MQT: cmnd/tasmota02/POWER = ON`
+>
+>If you have another device with the topic _tasmota02_ this action will turn on its power while not affecting anything on the _tasmota_ device.
+
+##### SwitchTopic Summary
+
+`SwitchTopic 0` controls the power state directly.  
+`SwitchTopic 1` sends an MQTT message to the device topic. This sets the state of the devices power accordingly.  
+`SwitchTopic <value>` sends an MQTT message command to the custom topic. This does not change the state of the devices power.
 
 ---
 

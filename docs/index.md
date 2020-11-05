@@ -19,33 +19,21 @@ For OTA updates please use the new server [http://ota.tasmota.com/tasmota/releas
 Download [latest Tasmotizer](https://github.com/tasmota/tasmotizer/releases/) to use the new OTA server during flashing.
 
 ### Current release 
-<a href="https://github.com/arendst/Tasmota/releases/tag/v8.5.1"><span style="font-size:40px;">Tasmota 8.5.1 Hannah</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
+<a href="https://github.com/arendst/Tasmota/releases/tag/v9.1.0"><span style="font-size:40px;">Tasmota 9.1.0 Imogen</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
 
-- Replace ArduinoJson with JSMN for JSON parsing
-- Add new [shutter](Blinds-and-Shutters) modes 
-- Add Zigbee auto-config when pairing
-- Add command ``SetOption110``, ``SetOption111 1`` and ``SetOption112 1`` 
-- ``WakeUp`` uses 256 steps instead of 100 
-- Add support for MLX90640 IR array temperature sensor and VL53L1X time of flight sensor
-- Fix Shelly 2.5 higher temperature bug
-- TuyaMCU updates:
-    - Support for two dimmers devices
-    - Initial support for RGB, RGB+W and RGB+CT lights
-    - New ModeSet Function to switch between white and RGB light
-    - Support for Fan controllers (or any other enum Type4 dpId)
-    - Initial support for shutters
-    - Extra functions
-    - New optional topic ready to be used with any home automation system
-    - TuyaSend command updated
+Christmas has come early: 
+- Detach switches from relays and lights using command [`SetOption114 1`](Commands#setoption114)
+- Added official [Tasmota integration](https://www.home-assistant.io/integrations/tasmota/) for Home Assistant. _Still in beta_
 
-#### 8.5.0
-- :rotating_light: **BREAKING CHANGE** :rotating_light: Removed support for direct upgrade from versions before 6.6.0.11 to versions after 8.4.0.1
-- :rotating_light: **BREAKING CHANGE** :rotating_light: PlatformIO 5.0 is **required** to compile Tasmota 8.5+
-- :rotating_light: **BREAKING CHANGE** :rotating_light: Change White blend mode to using command [`SetOption105`](Commands.md#setoption105) instead of ``RGBWWTable``
-- Improvements for Zigbee UI display and ZbBridge
-- Experimental virtual CT for 4 channels lights, emulating a 5th channel
-- Support for DYP ME007 ultrasonic distance sensor 
+- :warning: **BREAKING CHANGE** :warning: Redesigned GPIO representation changing Template layout. [Read more...](GPIO-Conversion)
+- :warning: **BREAKING CHANGE** :warning: Changed `SetOption73 1` JSON result from {"ACTION":"SINGLE"} to {"Button1":{"Action":"SINGLE"}} 
 
+- Added support for [EZO](EZO.md) sensors
+- Removed support for direct upgrade from Tasmota versions before v7.0. You **have to follow** the [migration path](Upgrading#migration-path).
+- Support for analog buttons indexed within standard button range
+- PlatformIO library structure redesigned for improved compilation speed 
+- Added Vietnamese language tranlation
+- New commands: [`DimmerStep`](Commands#dimmerstep), [`NoDelay`](Commands#nodelay), [`PulseTime<x>`](Commands#pulsetime), [`ShutterChange`](Commands#nodelay), [`SO114`](Commands#setoption114), [`SwitchMode 15`](Commands#nodelay), [`SwitchText`](Commands#switchtext), [`SO113`](Commands#nodelay), [`ZbMap`](Commands#zbmap), [`ZbOccupancy`](Commands#zboccupancy), 
 
 See [changelog](changelog.md) for a complete list of new features, changes and fixes.
 

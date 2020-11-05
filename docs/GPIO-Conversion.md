@@ -248,4 +248,4 @@ See below how the numbers are being converted. The first number is 8-bit GPIO, t
 | 5       | 4832    | Buttoni     | none                                                                  | none                                                                  |
 | 6       | 4864    | Range       | Range %value%                                                         | {"Range":%value%}                                                     |
 | 7       | 4896    | CT Power    | Voltage 230 V Current %value A Power %value W Energy Total %value kWh | {"Energy":_%value_,"Power":_%value_,"Voltage":230,"Current":_%value_} |
-| 8       | 3328    | Joystick    | none                                                                  | {"ANALOG":{"Joy1":%value%}}                                                                      |
+| 8       | 3328    | Joystick    | none                                                                  | {"ANALOG":{"Joy1":%value%}                                            |

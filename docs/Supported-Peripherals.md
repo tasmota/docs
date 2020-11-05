@@ -23,6 +23,7 @@ Name|Description
 **[DS18x20](DS18x20)** | Temperature sensor (1-Wire)
 **DS1624<BR>DS1621** | Temperature sensor (1-Wire)
 [**DS3231**](DS3231) | Real-Time-Clock (I^2^C)
+**[EZO](EZO)** | EZO series of chemical sensors (I^2^C)
 **F&F LE-01MR** | F&F LE-01MR Single Phase Modbus Energy meter
 [**GPS-NTP-server**](GPS-NTP-server) | GPS-NTP-server (serial)
 **HDC1080** | Texas Instruments HDC1080 Humidity and Temperature Sensor (I^2^C)
