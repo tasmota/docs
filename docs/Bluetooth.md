@@ -1,5 +1,5 @@
 The Bluetooth section of Tasmota currently consists of 2 driver classes, which, not least due to hardware restrictions, cannot be used together.  
-On the one hand there is support for the use of "iBeacons" on some modules of the HM-1x family.  
+On the one hand there is support for the use of "iBeacons" on some modules of the HM-1x family and on ESP32 internal Bluetooth.  
 The second part consists of 3 drivers that can read the data from BLE sensors from the relatively diverse Xiaomi universe. These drivers offer very basic beacon functionality too.  
   
   
@@ -15,9 +15,18 @@ Otherwise you must [compile your build](Compile-your-build). Add the following t
 #define USE_IBEACON          // Add support for bluetooth LE passive scan of ibeacon devices 
 #endif
 ```
-----
   
 Tasmota uses a BLE 4.x module to scan for [iBeacon](https://en.wikipedia.org/wiki/IBeacon) devices. This driver is working with [HM-10 and clones](HM-10) and [HM16/HM17](HM-17) Bluetooth modules and potentially with other HM-1x modules depending on firmware capabilities.
+
+## iBeacons on ESP32 using built-in Bluetooth
+
+You must [compile your build](Compile-your-build) for the ESP32 (since v9.0.0.3). Change the following to `user_config_override.h`:
+
+```
+#ifdef ESP32
+  #define USE_IBEACON_ESP32    // Use internal ESP32 Bluetooth module
+#endif // ESP8266
+```
 
 ### Features
 For a list of all available commands see [Sensor52](Commands.md#sensor52) command.  
