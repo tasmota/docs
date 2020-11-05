@@ -24,10 +24,36 @@ Home Assistant has two avenues of adding Tasmota devices:
 If you don't want to use MQTT discovery, skip to [Manual Configuration](#configurationyaml-editing) 
 
 ## Automatic Discovery
+
 Home Assistant has a feature called [MQTT discovery](https://www.home-assistant.io/docs/mqtt/discovery/).
 With MQTT discovery no user interaction or configuration file editing is needed to add new devices in Home Assistant. Most of the changes will be updated in HA automatically.
 
-!!! note "Automatic discovery is currently supported for:"
+!!! note 
+    Automatic discovery is currently supported for (see details below):
+    - Buttons
+    - Lights
+    - Relays
+    - Sensors
+    - Switches
+
+### Enable Autodiscovery
+Enable autodiscovery on a device with the command:
+
+```console
+SetOption19 1
+```
+
+!!! failure "Discovery is not built in to tasmota-lite.bin. Use the full version (tasmota.bin) or other binaries that support discovery."
+
+After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device to MQTT integrations.    
+
+Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Home Assistant MQTT integration and [`FriendlyName<x>`](Commands.md#friendlyname) to identify power outputs (switch or light entities in HA).
+
+!!! note "When changing some settings you might need a reboot or use `SetOption19 1` again to see the new changes under Home Assistant."
+
+!!! note "Special settings for each device type:"
+
+### Supported Entities
 
 === "Buttons"
     Announced to Home Assistant as [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
@@ -94,27 +120,11 @@ With MQTT discovery no user interaction or configuration file editing is needed 
 
     **When a switch is set to a different topic than `0` is not possible to use `Switch#State` as a trigger for rules.**
 
-<hr>
 
 Types of devices not listed above (fans, covers, TuyaMCU devices, etc) require [manual configuration](#fans)
 
-### Enabling 
-
-For a Tasmota device to be automatically discovered by Home Assistant you need to enable MQTT autodiscovery for each device with command:
-
-```console
-SetOption19 1
-```
-
-!!! failure "Discovery is not built in to tasmota-lite.bin. Use the full version (tasmota.bin) or other binaries that support discovery."
-
-After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device to MQTT integrations.    
-
-Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Home Assistant MQTT integration and [`FriendlyName<x>`](Commands.md#friendlyname) to identify power outputs (switch or light entities in HA).
-
-!!! note "When changing some settings you might need a reboot or use `SetOption19 1` again to see the new changes under Home Assistant."
-
 ### Finalising Setup
+
 All automatically discovered entities will show up under **Configuration -> Integrations -> MQTT** card.
 
 The entities are grouped under a device defined by DeviceName and identified by Tasmota as the "manufacturer":
@@ -142,6 +152,7 @@ You can further customise your device in Home Assistant by clicking on the entit
 **`SetOption59` to `1`**: Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands `State`, `Power` and any command causing a light to be turned on.
 
 ### Disabling
+
 To disable MQTT discovery and remove the retained message, execute `SetOption19 0`.  
 The "homeassistant/" topic is removed from Home Assistant and MQTT broker.  Changed setoptions will not revert to defaults!
 
@@ -166,6 +177,7 @@ If you are using a localized (non-english) version be sure to check the correct 
     If you want the power states to be persistent in Tasmota and Home Assistant set `PowerRetain 1` instead of using `retain: true` in Home Assistant
 
 ### Switches
+
 Add in Home Assistant using the [MQTT Switch](https://www.home-assistant.io/components/switch.mqtt/) integration.
 
 **Required Commands**   
@@ -494,6 +506,7 @@ The key is the `=` after color string in hex. It will retain current white value
 <!-- tabs:end -->
 
 ### Sensors
+
 Add in Home Assistant using the [MQTT Sensor](https://www.home-assistant.io/components/sensor.mqtt/) integration.
 
 A sensor will send its data in set intervals defined by [`TelePeriod`](Commands.md#teleperiod) (default every 5 minutes).
@@ -564,6 +577,7 @@ sensor:
 ```
 
 ### Power Monitoring
+
 <img alt="Example of Lovelace UI" src="../_media/hax_pow1.png" style="margin:5px;float:right;width:10em"></img>
 
 Add in Home Assistant using the [MQTT Sensor](https://www.home-assistant.io/components/sensor.mqtt/) integration.
@@ -663,6 +677,7 @@ binary_sensor:
 <!-- tabs:end -->
 
 ### Fans
+
 Add in Home Assistant using the [MQTT Fan](https://www.home-assistant.io/components/fan.mqtt/) integration.
 
 <!-- tabs:start -->
@@ -705,6 +720,7 @@ fan:
 <!-- tabs:end -->
 
 ### Covers
+
 Add in Home Assistant using the [MQTT Cover](https://www.home-assistant.io/components/cover.mqtt/) integration.
 
 <!-- tabs:start -->

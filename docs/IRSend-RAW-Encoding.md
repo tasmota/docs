@@ -1,12 +1,14 @@
 ## New IR Raw compact encoding
-(available since v9.0)
+(available since v9.0.0.1)
 
 We had numerous requests from users to expand the buffer sizes because many IR codes would exceed the MQTT/Web/Serial buffer size. Instead, we changed the IR Raw encoding to shrink the size necessary to encode almost any IR code.
 
 **Before** (buffer overflow):
+
 `{"IrReceived":{"Protocol":"PIONEER","Bits":64,"Data":"0xA55A50AFA55A50AF","DataLSB":"0xA55A0AF5A55A0AF5","Repeat":0,"RawData":[8574,4224,574,1558,572,502,570,1562,570,502,572,502,570,1562,570,502,570,1562,572,500,572,1560,572,500,572,1560,572,1560,570,504,568,1560,570,502,572,502,570,1562,570,502,570,1560,570,502,572,500,570,502,572,502,570,1560,570,504,572,1558,572,502,570,1564,568,1562,570,1560,572,1560,572,25258,8574,4222,572,1560,570,502,572,1558,572,502,570,502,572,1558,572,500,570,1560,570,502,570,1560,570,502,570,1560,570,1560,570,504,570,1560,572,502,570,502,570,1560,572,502,570,1560,570,502,570,502,570,502,570,502,570,1560,570,502,570,1560,572,502,570 ...`
 
 **After** (no overflow):
+
 `{"IrReceived":{"Protocol":"PIONEER","Bits":64,"Data":"0xA55A50AFA55A50AF","DataLSB":"0xA55A0AF5A55A0AF5","Repeat":0,"RawData":[+8570-4240+550-1580C-510+565-1565F-505Fh+570gFhIdChIgFeFgFgIhFgIhF-525C-1560IhIkI-520ChFhFhFgFhIkIhIgIgIkIkI-25270A-4225IkIhIgIhIhIkFhIkFjCgIhIkIkI-500IkIhIhIkFhIgIl+545hIhIoIgIhIkFhFgIkIgFgI],"RawDataInfo":[135,135,0]}}`
 
 The new format still encodes timings for High/low pulses.
@@ -19,15 +21,15 @@ Ex:
 
 ```
 +8570-4240+550-1580C-510+565-1565F-505Fh
-\___/ \__/ \_/ \__/C \_/ \_/ \__/F \_/Fh
+ \__/ \__/ \_/ \__/C \_/ \_/ \__/F \_/Fh
   A    B    C   D     E   F   G     H
 ```
 
 Which translates to:
 ```
-+8570-4240+550-1580+550-510+565-1565+556-505+565-505
++8570-4240+550-1580+550-510+565-1565+565-505+565-505
 or
-8570,4240,550,1580,550,510,565,1565,556,505,565,505
+8570,4240,550,1580,550,510,565,1565,565,505,565,505
 ```
 
 If you need to transform the compact format in the legacy format, you can use the online tool: https://tasmota.hadinger.fr/util

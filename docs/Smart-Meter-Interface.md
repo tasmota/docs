@@ -23,7 +23,14 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 **Driver for various meters , heating devices, and reed like contacts**
 
 To use this interface, connect the meter to available GPIO pins. These GPIOs must be set as `None (0)`
-components in Tasmota. If the interface detects that a meter descriptor GPIO conflicts with a Tasmota GPIO setting, the interface will generate a "duplicate GPIO defined" error in the log and the meter descriptor will be ignored.  
+components in Tasmota. If the interface detects that a meter descriptor GPIO conflicts with a Tasmota GPIO setting, the interface will generate a "duplicate GPIO defined" error in the log and the meter descriptor will be ignored. (only for script driven descriptors) if you use the deprecated hard coded interface and no meter script the default harcoded descriptor uses Pin 3 (REC) for receive and thus may interfere with other Tasmota Defintions without warning.  
+
+!!! note
+    on an ESP32 due to a different implementation serial ports may not be used in conjunction with other Tasmota serial devices.  
+
+!!! note
+    when changing GPIO configurations especially in conjunction with other Tasmota drivers a restart may be required  
+
 
 The Smart Meter Interface provides a means to connect many kinds of meters to Tasmota. **The following types of meter protocols are supported:**  
 - ASCII OBIS telegrams emitted from many smart meters and also from P1 meter interface  
@@ -297,7 +304,9 @@ in `user_config_override.h` file). An entry defines how to decode the data and p
 - [Iskra MT 174](#iskra-mt-174-obis)
 - [SBC ALE3 (MODBUS)](#sbc-ale3-modbus)
 - [2 * SBC ALE3 (MODBUS)](#2-sbc-ale3-modbus)
+- [Trovis 557x](#trovis-557x)
 - [4 * Hiking DDS238-2 ZN/S (MODBUS)](#4--hiking-dds238-2-zns3-modbus)
+
 --------------------------------------------------------
 
 ### JANZ C3801 (SML - MODBUS)
@@ -747,8 +756,7 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 
 ------------------------------------------------------------------------------
 
-
- ### SDM230
+### SDM230
 
 ```
 
@@ -1030,5 +1038,26 @@ This is an example for 4 MODBUS devices on the same bus
 1,050304xxxxUUuu@i7:1,C5_ReactivePower,Var,C5ReactivePower,0  
 #  
 
+```
+
+### Trovis 557x
+
+These heating regulators have a [lot of registers](https://raw.githubusercontent.com/Tom-Bom-badil/samson_trovis_557x/master/_register.py).
+```
+>D
+>B
+->sensor53 r
+>M 1
++1,3,m,0,19200,Trovis,1,2,rF7030009000E,rF703001C0004,F703006A
+1,F7031CUUuu@i0:10,Außentemp.,°C,Temp_Outside,1
+1,F7031CxxxxxxxxxxxxUUuu@i0:10,Vorlauftemp.,°C,Temp_Flow,1
+1,F7031CxxxxxxxxxxxxxxxxxxxxxxxxxxxxUUuu@i0:10,Rücklauftemp.,°C,Temp_Return,1
+1,F7031CxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxUUuu@i0:10,Speichertemp.,°C,Temp_Vessel,1
+1,F70308UUuu@i1:1,MesswertImp-h,imp/h,Metric_ImpH,0
+1,F70308xxxxUUuu@i1:100,Messwertm3-h,m³/h,Metric_M3H,2
+1,F70308xxxxxxxxUUuu@i1:10,AA10-10V,V,Metric_AA10,1
+1,F70308xxxxxxxxxxxxUUuu@i1:10,AA20-10V,V,Metric_AA20,1
+1,F70304UUuu@i2:1,StellsignalRk1,%,CtrlSig_RK1,0
+#
 ```
 ------------------------------------------------------------------------------

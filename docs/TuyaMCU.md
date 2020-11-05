@@ -85,20 +85,20 @@ Component| FunctionId|Note
 -|-|-
 Switch1 to Switch4 | 1 to 4 | Map only to dpId with on / off function
 Relay1 to Relay8 | 11 to 18 | Map only to dpId with on / off function
-Dimmer | 21 | Only on dpId with dimming function
-Power (in deci Watt) | 31 |
-Current (in milli Amps) | 32 |
-Voltage (in deci Volt) | 33 |
-Relay Inverted1 to Relay Inverted8 | 41 to 48 | Map only to dpId with on / off function
-Battery powered sensor mode | 51 | 
+Lights | 21 to 28 | 21 for Dimmer<br>22 for Dimmer2<br>23 for CCT Light<br>24 for RGB light<br>25 for white light<br>26 for light mode set (0 = white and 1 = color)<br>27 to report the state of Dimmer1<br>28 to report the state of Dimmer2
+Power Monitoring | 31 to 33 | 31 for Power (in deci Watt)<br>32 for Current (in milli Amps)<br>33 for Voltage (in deci Volt)
+Relay1i to Relay8i | 41 to 48 | Map only to dpId with on / off function
+Battery powered sensor mode | 51 | Battery powered devices use a slightly different protocol
+Fan control | 61 to 64 | 61 for 3 speeds fan controller (possible values 0,1,2)<br>62 for 4 speeds fan controller (possible values 0,1,2,3)<br>63 for 5 speeds fan controller (possible values 0,1,2,3,4)<br>64 for 6 speeds fan controller (possible values 0,1,2,3,4,5)
+Extra functions | 97 to 99 | 97 for motor direction<br>98 for error logging (report only)<br>99 as a dummy function<br>
 
 !!! note
     This component is under active development which means the function list may expand in the future.
 
-Since the majority of devices have a power on/off functions on dpId 1 its mapped to fnId 11 (Relay1) by default.
+Since the majority of devices have a power on/off functions on dpId 1 its mapped to fnId 11 (Relay1) by default. If you don't need it, map it to fnId 99  with `TuyaMcu 99,1`
 
 !!! danger
-    Mapping a relay or switch to a dpId that is not a simple on/off function (data Type 1) might result in unwanted power toggling (f.e. dpId sends value of 4 which toggles the relay to Power 4 aka blink mode)
+    Mapping a relay or switch to a dpId that is not a simple on/off function (data Type 1) might result in unwanted power toggling (i.e. dpId sends value of 4 which toggles the relay to Power 4 aka blink mode)
 
 ## TuyaSend Command
 Command `TuyaSend` is used to send commands to dpId's. It is required for dpId's that shouldn't be mapped to a fnId. 
@@ -110,6 +110,9 @@ Command's value consists of two comma separated parameters: dpId and data.
 `TuyaSend<x> dpId,data`
 
 There are 4 different commands, one for each [data type](#data-type-table).
+
+#### `TuyaSend0` 
+Used without payload to query states of dpID's.
 
 #### `TuyaSend1` 
 Sends boolean (Type 1) data (`0/1`) to dpId (Max data length 1 byte)
@@ -137,6 +140,19 @@ Sends enum (Type 4) data (`0/1/2/3/4/5`) to dpId (Max data length 1 bytes)
 !!! example
     `TuyaSend4 103,2` sends value `2` to dpId=103 to set fan speed to high
 
+#### `TuyaSend8`
+Used without payload to get device information and dpId states.  Replaces `SerialSend5 55aa000100000`
+
+#### `TuyaSend9`
+Use without any payload to toggle a `STAT` topic reporting the equivalent `TuyaSend<x>` command needed to update a dpId, for example:
+
+```haskell
+17:45:38 CMD: power 1
+17:45:38 MQT: stat/tasmota_49A3BC/RESULT = {"POWER":"ON"}
+17:45:38 MQT: stat/tasmota_49A3BC/POWER = ON
+17:45:38 MQT: stat/tasmota_49A3BC/TUYASEND1 = 1,1
+```
+
 ## TuyaReceived
 Every status message from the MCU gets a JSON response named `TuyaReceived` which contains the MCU protocol status message inside key/value pairs which are hidden from the user by default.
 
@@ -159,7 +175,8 @@ Above `TYA: fnId=11 is set for dpId=1` you can see the JSON response for that dp
 "Data" field contains the complete response and the rest of the key/value pairs show the protocol broken into parts. "DpId", "DpIdData" and "DpIdType" are the ones we're most interested in since we can use them for `TuyaSend`.
 
 !!! tip
-    Use command `SerialSend5 55aa0001000000` and/or `serialsend5 55AA0008000007` at any time to request statuses of all dpId's from the MCU. 
+    Use command `TuyaSend8` and/or `TuyaSend0` at any time to request statuses of all dpId's from the MCU. 
+    
 #### Use in Rules
 This data can also be used as a trigger for rules using `TuyaReceivedData#Data=hex_string`
 
@@ -171,13 +188,12 @@ will publish a status message to a custom topic when `55AA000700056E040001007E` 
 ##  Device Configurations
 Before proceeding identify dpId's and their function.
 
-### Dimmers	
+### Dimmer	
 We need to configure four functions of a dimmer: 
 	
 1. Dimming dpId	
 2. Dimming Range	
-3. Power metering if supported.	
-4. Dimming less than 10%	
+3. Dimming less than 10%	
 
 #### Dimming dpId	
 The dimmer FunctionId is `21`. On a dimmer dpId generally is `2` or `3`. Try both.  	
@@ -204,10 +220,82 @@ Now we need to tell Tasmota to use maximum and minimum values. This controlled b
 
 Once set, try `dimmer 100` in the Console and check if the brightness of bulb is same is the same as when the maximum was set using hardware buttons.	
 
-[Video instructions](https://www.youtube.com/embed/_3WW4NVYHrU) by Digiblur
+### Dual Dimmer
+To enable a dual dimmer setup assign fnId's:
 
-#### Power Metering	
-Some Tuya MCU devices support Power measurement support over serial. For this its better to use a bulb with known wattage rating.  	
+- `21` as Dimmer1
+- `22` as Dimmer2
+- `11` as Relay1
+- `12` as Relay2
+
+Tasmota will automatically enable `SetOption68` and the dimmers will respond to `Channel1` and `Channel2` commands.
+
+!!! warning
+    The use of SetOption68 is limited to two channels and will be automatically disabled if any other combination of lights is used.
+
+### Lights
+
+#### CCT Light
+
+To enable a CCT light assign fnId's:
+
+- `21` as Dimmer1
+- `11` as Relay1
+- `23` as CT channel
+
+#### RGB Light
+
+To enable an RGB light assign fnId's:
+
+- `21` as Dimmer1
+- `11` as Relay1
+- `24` as RGB controller
+
+#### RGB+X Light
+To enable an RGB+W light use RGB Light configuration and assign fnId `25` as white color.
+
+To enable an RGB+CCT light use RGB Light configuration and assign fnId `23` as CT channel.
+
+#### Light mode selector
+The majority of  TuyaMCU devices with an RGB+W or an RGB+CCT light have a button or app function to switch between White and Colored light. 
+
+To do the same in Tasmota, assign function (fnId) `26` to the mode select dpId. The possible values are 0 (white) and 1 (colorful). A button on the WebUI will be available once configured.
+
+When the ModeSet function is enabled it is not  possible to update both lights at the same time. Only the currently selected light mode will be updated. 
+
+!!! warning
+    Use of `SetOption68` for more than two channels and the light split option (`SetOption37 >= 128`) are not supported in TuyaMCU mode.
+
+### Fans
+To setup a fan controller select one of the available functions:
+
+- `61` for 3 speed fan (possible values 0,1,2)
+- `62` for 4 speed fan (possible values 0,1,2,3)
+- `63` for 5 speed fan (possible values 0,1,2,3,4)
+- `64` for 6 speed fan (possible values 0,1,2,3,4,5)
+
+Different from other fan controllers like the Ifan03, the value of `0` doesn't mean `OFF`. In TuyaMCU `0` is the lowest speed possible. On/Off states for a fan are always managed by another dpId which you need to map to a relay function.
+
+### Covers
+Single Shutter or double shutters devices can be managed with a dimmer setup
+For devices that are reporting position to a another dpId assign fnId's:
+
+- `27` to report the state of Dimmer1
+- `28` to report the state of Dimmer2
+
+If your cover device has a motor direction change option assign fnId `97` for motor direction.
+
+### Switches	
+There is currenty no way to detect the number of relays present in an MCU based switch. We need to tell the number of relays to Tasmota using FunctionIDs 12 to 18 for Relay2 to Relay4. 	
+
+!!! example
+    For a 4 gang switch set `TuyaMCU 12,2`, `TuyaMCU 13,3` and `TuyaMCU 14,4` if the dpIds for Relays 2-4 are `2`,`3`,`4`.	
+
+!!! tip
+    You can configure all at once by using `Backlog TuyaMCU 12,2; TuyaMCU 13,3; TuyaMCU 14,4`	
+
+### Power Metering	
+Some Tuya MCU devices support Power measurement support over serial. For this it is better to use a bulb with known wattage rating.  	
 
 Observe the logs in the Console  	
 
@@ -317,24 +405,6 @@ TYA: Rx ID=104 Voltage=2454
 ```	
 * Power and current should change on dimming high / low or turning the device on and off. The Tasmota web UI should show power values now on the home page.
 
-### Switches	
-For switches we need to  	
-
-1. Configure the number of relays.	
-2. Configure Power metering.	
-
-#### Number of Relays	
-By default, the TuyaMCU module expects a 1 gang switch. There is currenty no way to detect the number of relays present in an MCU based switch. We need to tell the number of relays to Tasmota using FunctionIDs 12 to 18 for Relay2 to Relay4. 	
-
-!!! example
-    For a 4 gang switch set `TuyaMCU 12,2`, `TuyaMCU 13,3` and `TuyaMCU 14,4` if the dpIds for Relays 2-4 are `2`,`3`,`4`.	
-
-!!! tip
-    You can configure all at once by using `Backlog TuyaMCU 12,2; TuyaMCU 13,3; TuyaMCU 14,4`	
-
-#### Power Metering	
-Power metering configuration is same as for [dimmers](#power-metering).	
-
 <!--
 ### Curtain Motors	
 The Zemismart WiFi curtain motor uses a Tuya TYWE1S inside the little white dongle as a radio modem.	
@@ -376,7 +446,7 @@ Having 0x66 declared a button caused the motor to oscillate - open part way and 
 tuyamcu 11,102 # make 0x66 a relay	
 tuyamcu 11,103 # make 0x67 a relay	
 ```	
-Does not appear to have any impact on the curtain. -->
+Does not appear to have any impact on the curtain. 
 
 ### Aromatherapy Diffuser
 Applies to devices using the PCB marked GD-HDFW05-v1.0. 
@@ -408,7 +478,7 @@ Rule1 on TuyaReceived#data=55AA000700056E040001007E do publish2 stat/GD-30W/EFFE
 Rule1 1
 ```
 
-*Optional rule used to prevent the device going into countdown mode (f.e. using on device controls) and complete MCU status update on restart*
+*Optional rule used to prevent the device going into countdown mode (i.e. using on device controls) and complete MCU status update on restart*
 
 ```haskell
 Rule3 on TuyaReceived#data=55AA000700050D040001011E do tuyasend4 13,0 endon on TuyaReceived#data=55AA000700050D040001021F do tuyasend4 13,0 endon on mqtt#connected do serialsend5 55aa0001000000 endon
@@ -429,10 +499,21 @@ Color can be changed using `TuyaSend3 108,RRGGBB64646464` (RR, GG and BB are hex
 
 Dimming works using slider and `Dimmer` command but only when in color mode, in rgb_cycle there are no brightness controls.
 
-Long press on device's power button initiates Tasmota's Wi-Fi config
+Long press on device's power button initiates Tasmota's Wi-Fi config -->
 
-### Battery Powered Door Window Sensor
-[Read more here...](https://templates.blakadder.com/TYMC-1.html)
+### Battery Powered Sensors
+- [TYMC-1 Door/Window Sensor](https://templates.blakadder.com/TYMC-1.html)
+- [TY-01 Door/Window Sensor](https://templates.blakadder.com/TY01.html)
+- [Gas Sensor](https://templates.blakadder.com/PA-210WYS.html)
+- [Smoke Sensor](https://templates.blakadder.com/YG400A.html)
+- [PIR Sensor](https://templates.blakadder.com/lenovo_ZG38C02927.html)
+
+### Specific Devices
+ - [Aromatherapy Diffuser](https://templates.blakadder.com/blitzwolf_BW-FUN3.html)
+ - [Water Kettle](https://templates.blakadder.com/proficook_PC-WKS_1167.html)
+ - [Air Purifier](https://templates.blakadder.com/alfawise_P2.html)
+ - [Mouse Trap](https://templates.blakadder.com/neo_coolcam_NAS-MA01W.html)
+ - [Humidifer](https://templates.blakadder.com/proscenic_807C.html)
 
 ## Tuya Protocols
 The MCU communicates with the Wi-Fi module through the serial port with a Tuya specified protocol. Those are classified into basic and functional protocols. 

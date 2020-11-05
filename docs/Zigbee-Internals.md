@@ -147,3 +147,112 @@ Finally query for the following general attributes: Manufacturer Id and Model Id
 16:39:26 ZIG: ZbZCLRawReceived: {"0xF75D":{"0000/0004":"OSRAM","0000/0005":"Plug 01"}}
 16:39:26 MQT: tele/tasmota/Zigbee_home/SENSOR = {"ZbReceived":{"0xF75D":{"Manufacturer":"OSRAM","ModelId":"Plug 01","Endpoint":3,"LinkQuality":36}}}
 ```
+
+## Code flow when a message is received
+
+### Message Serial decoding
+
+Here is a detailed view of the code flow and transformations applied when a Zigbee message is received. It's simple but has many ramifications.
+
+During the Tasmota event loop, Z2T first checks any incoming message by calling `ZigbeeInputLoop()`, and after parsing incoming messages, it sends any outgoing message by calling `ZigbeeOutputLoop()`.
+
+Note: outgoing messages are not sent directly but stacked into a buffer and sent once per event tick. This avoids lost messages when sending them too fast.
+
+For **ZNP**, the serial buffer is read if there is any incoming data. The message is checked for checksum and put into a `SBuffer` object of maximum size of 256 bytes. If a message is ready, it calls `ZigbeeProcessInput(znp_buffer)`
+
+For **EZSP**, the flow is a little more complex because multiple layers of decoding are required. The first layer receives the message and handles UART-EZSP protocol messages: ignores XON/XOFF, decodes ESCAPE characters, CANCEL... It then decodes according to the pseudo-random generator, and checks the final CRC. If ok, it calls the second stage via `ZigbeeProcessInputRaw(ezsp_buffer)`.
+
+Note: the green light of the ZBBridge `Led_i 1` is set to blink when a message is received from EZSP (which does not mean an actual Zigbee radio message was received).
+
+EZSP second stage decodes the ASH protocol, including ACK/NAK of messages, RSTACK (reset confirmation) and ERROR. In case of ERROR, the EZSP stack is not able to respond anymore and requires a complete reset. In this case a log entry is produced and the entire Tasmota is automatically restarted. This stage automatically sends ACK messages to confirm reception of messages. If a DATA frame is received, it then calls the third stage via `ZigbeeProcessInputEZSP(buf)`.
+
+The third stage of EZSP decoding extracts the message, logs if needed and then calls `ZigbeeProcessInput(buf)`.
+
+### State machine handling
+
+The message is passed to the state machine that will either automatically match the message and pass to the next state, or pass it to the default handler.
+
+When the stack is fully initialized, `zigbee.init_phase == false`, the default handler is `ZNP_Recv_Default()` for ZNP or `EZ_Recv_Default()` for EZSP.
+
+For **ZNP**, `ZDO` messages are dispatched to the relevant handlers: `ZDO_END_DEVICE_ANNCE_IND`, `ZDO_TC_DEV_IND`, `ZDO_PERMIT_JOIN_IND`, `ZDO_NODE_DESC_RSP`, `ZDO_ACTIVE_EP_RSP`, `ZDO_SIMPLE_DESC_RSP`, `ZDO_IEEE_ADDR_RSP`, `ZDO_BIND_RSP`, `ZDO_UNBIND_RSP`, `ZDO_MGMT_LQI_RSP`, `ZDO_MGMT_BIND_RSP`. Note: `PARENT_ANNCE` is handled at ZNP level and not passed to the application.
+
+`AF_DATA_CONFIRM` emits a log message, and data messages are handled in `ZNP_ReceiveAfIncomingMessage()`. The ZCL frame is decoded into a `ZCLFrame` object and sent to `Z_IncomingMessage()`.
+
+For **EZSP**, messages are directly dispatched for `trustCenterJoinHandler`, `incomingRouteErrorHandler`, `permitJoining` and `messageSentHandler`. All other incoming messages, including ZDO, are sent to `EZ_IncomingMessage()`.
+
+**EZSP**: `EZ_IncomingMessage()` then decodes ZDO messages and dispatches them: `ZDO_Device_annce`, `ZDO_Active_EP_rsp`, `ZDO_IEEE_addr_rsp`, `ZDO_Simple_Desc_rsp`, `ZDO_Bind_rsp`, `Z_UnbindRsp`, `Z_MgmtLqiRsp`, `Z_MgmtBindRsp`, `ZDO_Parent_annce`, `ZDO_Parent_annce_rsp`.
+
+Other non-ZDO messages decoded into a `ZCLFrame` object and sent to `Z_IncomingMessage()`.
+
+### Incoming messages handling: `Z_IncomingMessage`
+
+The starting point is `Z_IncomingMessage()` with a `ZCLFrame` object corresponding to the received Zigbee message.
+
+Details of `Z_IncomingMessage()`:
+
+#### 1. Log the raw message at LogLevel 3 (DEBUG)
+#### 2. Update the `LQI` for the device
+#### 3. Update the `last_seen` value
+#### 4. Dispatch according to message type
+
+1. If `ZCL_DEFAULT_RESPONSE`, log and ignore (it's just the device acknowledge for the last message).
+	
+2. If `ZCL_REPORT_ATTRIBUTES`, call `parseReportAttributes()`. This is the general case for sensor values (temperature...)
+	
+3. If `ZCL_READ_ATTRIBUTES_RESPONSE`, call `parseReadAttributesResponse()`. This happens as a response to reading attributes, and the handling is similar to the attribute reporting (although the syntax of the message is slightly differen).
+	
+4. If `ZCL_READ_ATTRIBUTES`, call `parseReadAttributes()`. This happens rarely, typically when a device asks the coordinator for attributes like the `local_time`.
+	
+5. If `ZCL_READ_REPORTING_CONFIGURATION_RESPONSE`, call `parseReadConfigAttributes()`. This is the response to `ZbBindState` command.
+	
+6. If `ZCL_CONFIGURE_REPORTING_RESPONSE`, call `parseConfigAttributes()`. This is the response to `ZbBind` command.
+	
+7. For cluster specific commands, call `parseClusterSpecificCommand()`. This is the general case when a command is received (for ex `"Power":"toggle"`).
+	
+All the previous commands add attributes to a local `attr_list` object. These attributes are have a key of eiher Cluster/Attribute type of String type.
+
+Note: it is important to keep attributes as Cluster/Attribute types so that we can later apply transformations on them.
+
+Note2: `LinkQuality`, `Device`, `Name`, `Group` and `Endpoint` are _special_ values that do are not registered as actual attributes.
+
+#### 6. Apply transoformations to the attributes.
+
+There are many transformations that are required because some device use proprietary values, or we need to compute new values out of the existing attributes.
+
+1. Generate synthetic attributes `generateSyntheticAttributes()`.
+This is mainly used for Xiaomi Aqara devices. Aqara uses cluster 0xFF01 and 0xFF02 to send structured messages. The good side is that it allows to send attributes from different clusters in a single message, whereas the ZCL standard would have required several messages. The bad side is that Aqara reuses the same attribute numbers for different value, and you need to know the device type to decode; which makes the whole process work only if the pairing process sucessfully got the ModelId.
+
+2. Compute synthetic attributes `computeSyntheticAttributes()`.
+This is used to add computed attributes or fix some bugs in devices.
+Currently it computes the `BatteryPercentage` from the `BatteryVoltage` if the `BatteryPercentage` is not already present.
+It computes `SeaPressure` using the Tasmota `Altitude` setting.
+It fixes an Eurotronic bug in the encoding of `Pi Heating Demand` which is sent in the 0..255 range instead of 0..100 range.
+It fixes the IKEA Remote battery value which is half what it needs to be.
+	
+3. Generate callbacks and timers `generateCallBacks()`.
+This is used to register deferres callbacks. It is only used for `Occypancy` for now. Many PIR sensors report `"Occupancy":1` but don't report the lack of occupancy. This function sets a timer to artificially generate `"Occupancy":0` after a definite amount of time (defaults to 90 seconds).
+
+4. Post-process attributes `Z_postProcessAttributes()`.
+This function does the final transformation of attributes to their human readable format.
+
+First the endpoint is added as suffix if `SetOption101 1` is set, if the source endpoint is not `1`, and if the device is known to have more than one endpoint (check with `ZbStatus2`).
+
+Then the attribute is looked-up from the global `Z_PostProcess` table.
+
+If the attribute is mapped into `Z_Data`, the value is saved into its corresponding object. See `ZbData`. This allows for keeping last seen values for the Web UI.
+
+Similarly, some device specific values are recorded: `ModelId`, `ManufacturerId`, `BatteryPercent`.
+
+If the attribute as a `multiplier` value, the raw value is multiplied/divided by this value (ex: Temperature raw value is 1/100th of degrees, so the raw value is divided by 100).
+
+Finally the attribute name is replaced by its string value (ex: `0402/0000` is replace with `Temperature`).
+
+#### 7. Publish the final message to MQTT or defer the message.
+
+In the general case, attributes are not published immediately but kept in memory for a short period of time. This allows for debouncing of identical messages, and coalescing of values (Temperature, Pressure, Humidity) in a single MQTT message, even if there were received in 3 seperate messages.
+
+The default timer is a compile time `#define USE_ZIGBEE_COALESCE_ATTR_TIMER` with a default value of 350 ms.
+
+Once a message is ready, it first checks if the value conflict with previously held values. If so, the previous message is immediately sent, and the new values are held in memory.
+
+Then is sets a timer to publish the values after the timer expired.

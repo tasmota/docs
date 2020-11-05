@@ -222,11 +222,15 @@ read button state (x = `1.. MAX_KEYS`)
 !!! example
 
 ```
-if bt[1]==0  
+>D
+tmp=0
+>b
+tmp=bt[1]
+if tmp==0  
 then  
 print falling edge of button1  
 endif  
-if bt[1]==1  
+if tmp==1  
 then  
 print rising edge of button1  
 endif
@@ -244,6 +248,13 @@ You may put any html code here.
 - HTML statements are displayed in the sensor section of the main page  
 - HTML statements preceded with a `@` are displayed at the top of the page  
 - USER IO elements are displayed at the top of the page  
+for next loops are supported to repeat HTML code (precede with % char)
+%for var from to inc
+%next
+script subroutines may be called sub=name of subroutine, like normal subroutines
+%=#sub
+in this subroutine a web line may be sent by wcs (see below) thus allowing dynamic HTML pages
+
 
 A web user interface may be generated containing any of the following elements:  
 **Button:**   
@@ -407,6 +418,9 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `say("text")` = plays specified text to speech (if defined USE_TTGO_WATCH) 
 
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
+
+`wcs` = send this line to webpage (WebContentSend)  
+`wm` = contains source of web request code e.g. 0 = Sensor display (FUNC_WEB_SENSOR)  
 
 `sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud)   
 `sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD) 
@@ -989,7 +1003,7 @@ remark: the Flash illumination LED is connected to GPIO4
 
     ; show on display
     dp0
-    =>displaytext [c1l1f1s2p20] dimmer=%dimmer%
+    dt [c1l1f1s2p20] dimmer=%dimmer%
 
     =>print %upsecs% %uptime% %time% %sunrise% %sunset% %tstamp%
 
@@ -1009,7 +1023,7 @@ remark: the Flash illumination LED is connected to GPIO4
 
     ; clr display on boot
     if boot>0
-    then =>displaytext [z]
+    then dt [z]
     endif
 
     ; frost warning
@@ -1205,17 +1219,15 @@ Some variables are set from ioBroker
     otmp=0
     pwl=0
     tmp=0
-    ; DisplayText substituted to save script space
-    DT="DisplayText"
     ; preset units in case they are not available
     punit="hPa"
     tunit="C"
 
     >B
     ;reset auto draw
-    =>%DT% [zD0]
+    dt [zD0]
     ;clr display and draw a frame
-    =>%DT% [x0y20h296x0y40h296]
+    dt [x0y20h296x0y40h296]
 
     >T
     ; get telemetry sensor values
@@ -1233,21 +1245,21 @@ Some variables are set from ioBroker
     if upsecs%tper==0
     then
     dp2
-    =>%DT% [f1p7x0y5]%temp% %tunit%
-    =>%DT% [p5x70y5]%hum% %%[x250y5t]
-    =>%DT% [p11x140y5]%press% %punit%
-    =>%DT% [p10x30y25]TVOC: %tvoc% ppb
-    =>%DT% [p10x160y25]eCO2: %eco2% ppm
-    =>%DT% [p10c26l5]ahum: %ahum% g^m3
+    dt [f1p7x0y5]%temp% %tunit%
+    dt [p5x70y5]%hum% %%[x250y5t]
+    dt [p11x140y5]%press% %punit%
+    dt [p10x30y25]TVOC: %tvoc% ppb
+    dt [p10x160y25]eCO2: %eco2% ppm
+    dt [p10c26l5]ahum: %ahum% g^m3
 
     dp0
-    =>%DT% [p25c1l5]WR 1 (Dach)  : %wr1% W
-    =>%DT% [p25c1l6]WR 2 (Garage): %-wr3% W
-    =>%DT% [p25c1l7]WR 3 (Garten): %-wr2% W
-    =>%DT% [p25c1l8]Aussentemperatur: %otmp% C
-    =>%DT% [x170y95r120:30f2p6x185y100] %pwl% %%
+    dt [p25c1l5]WR 1 (Dach)  : %wr1% W
+    dt [p25c1l6]WR 2 (Garage): %-wr3% W
+    dt [p25c1l7]WR 3 (Garten): %-wr2% W
+    dt [p25c1l8]Aussentemperatur: %otmp% C
+    dt [x170y95r120:30f2p6x185y100] %pwl% %%
     ; now update screen
-    =>%DT% [d]
+    dt [d]
     endif
 
     >E
@@ -1292,26 +1304,25 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     res=0    
     hr=0
     t1=0
-    DT="DisplayText"
     res=0
     
     >B
     ->setoption64 1
     tper=30
     
-    ->%DT% [IzD0]
-    ->%DT% [zG10352:5:40:-350:80:10080:0:100f3x360y40]100 %%[x360y115]0 %%
-    ->%DT% [f1x100y25]Powerwall - 7 Tage[f1x360y75] 0 %%
-    ->%DT% [G10353:5:140:-350:80:10080:0:5000f3x360y140]+5000 W[x360y215]0 W
-    ->%DT% [f1x70y125]Volleinspeisung - 7 Tage[f1x360y180] 0 W
-    ->%DT% [p13x10y230]WR 1,2,3:
-    ->%DT% [p13x10y245]H-Einsp.:
-    ->%DT% [p13x10y260]H-Verbr.:
-    ->%DT% [p13x10y275]D-Einsp.:
-    ->%DT% [d]
+    dt [IzD0]
+    dt [zG10352:5:40:-350:80:10080:0:100f3x360y40]100 %%[x360y115]0 %%
+    dt [f1x100y25]Powerwall - 7 Tage[f1x360y75] 0 %%
+    dt [G10353:5:140:-350:80:10080:0:5000f3x360y140]+5000 W[x360y215]0 W
+    dt [f1x70y125]Volleinspeisung - 7 Tage[f1x360y180] 0 W
+    dt [p13x10y230]WR 1,2,3:
+    dt [p13x10y245]H-Einsp.:
+    dt [p13x10y260]H-Verbr.:
+    dt [p13x10y275]D-Einsp.:
+    dt [d]
     
-    ->%DT% [Gr0:/g0_sav.txt:]
-    ->%DT% [Gr1:/g1_sav.txt:]
+    dt [Gr0:/g0_sav.txt:]
+    dt [Gr1:/g1_sav.txt:]
     
     beep(-25 0)
     beep(1000 100)
@@ -1326,38 +1337,38 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     if upsecs%60==0
     then
     dp2
-    ->%DT% [f1p7x0y5]%temp% C
-    ->%DT% [x0y20h400x250y5T][x350t][f1p10x70y5]%hum% %%
-    ->%DT% [p10x140y5]%press% hPa
+    dt [f1p7x0y5]%temp% C
+    dt [x0y20h400x250y5T][x350t][f1p10x70y5]%hum% %%
+    dt [p10x140y5]%press% hPa
     dp0
-    ->%DT% [p5x360y75]%pwl% %%
-    ->%DT% [p6x360y180]%wr1%W
-    ->%DT% [g0:%pwl%g1:%wr1%]
+    dt [p5x360y75]%pwl% %%
+    dt [p6x360y180]%wr1%W
+    dt [g0:%pwl%g1:%wr1%]
     
-    ->%DT% [p24x75y230] %wr1% W : %-wr2% W : %-wr3% W
-    ->%DT% [p-10x75y245]%ezh% kWh
-    ->%DT% [p-10x75y260]%vzh% kWh
-    ->%DT% [p-10x75y275]%ez1% kWh
+    dt [p24x75y230] %wr1% W : %-wr2% W : %-wr3% W
+    dt [p-10x75y245]%ezh% kWh
+    dt [p-10x75y260]%vzh% kWh
+    dt [p-10x75y275]%ez1% kWh
     
     t1=mezh*7
-    ->%DT% [p-10x150y245]: %t1% kWh
+    dt [p-10x150y245]: %t1% kWh
     t1=mvzh*7
-    ->%DT% [p-10x150y260]: %t1% kWh
+    dt [p-10x150y260]: %t1% kWh
     t1=mez1*7
-    ->%DT% [p-10x150y275]: %t1% kWh
+    dt [p-10x150y275]: %t1% kWh
     
     dp1
     t1=ezh-sezh
-    ->%DT% [p12x250y245]: %t1% kWh
+    dt [p12x250y245]: %t1% kWh
     t1=vzh-svzh
-    ->%DT% [p12x250y260]: %t1% kWh
+    dt [p12x250y260]: %t1% kWh
     t1=ez1-sez1
-    ->%DT% [p12x250y275]: %t1% kWh
+    dt [p12x250y275]: %t1% kWh
     
     dp0
-    ->%DT% [f2p5x320y250] %otmp%C
+    dt [f2p5x320y250] %otmp%C
     
-    ->%DT% [d]
+    dt [d]
     print updating display
     endif
     
@@ -1396,8 +1407,8 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     endif
     
     #savgraf
-    ->%DT% [Gs0:/g0_sav.txt:]
-    ->%DT% [Gs1:/g1_sav.txt:]
+    dt [Gs0:/g0_sav.txt:]
+    dt [Gs1:/g1_sav.txt:]
 
     >m
     Wochenbericht Einspeisung und Verbrauch<br><br>
@@ -1438,20 +1449,18 @@ Some variables are set from ioBroker
     pwl=0
     tmp=0
     dist=0
-    ; DisplayText substituted to save script space
-    DT="DisplayText"
     punit="hPa"
     tunit="C"
     hour=0
 
     >B
-    =>%DT% [z]
+    dt [z]
 
     // define 2 graphs, 2. has 3 tracks
-    =>%DT% [zCi1G2656:5:20:400:80:1440:-5000:5000:3Ci7f3x410y20]+5000 W[x410y95]-5000 W [Ci7f1x70y3] Zweirichtungsz~80hler - 24 Stunden
-    =>%DT%  [Ci1G2657:5:120:400:80:1440:0:5000:3Ci7f3x410y120]+5000 W[x410y195]0 W [Ci7f1x70y103] Wechselrichter 1-3 - 24 Stunden
-    =>%DT% [Ci1G2658:5:120:400:80:1440:0:5000:16][Ci1G2659:5:120:400:80:1440:0:5000:5]
-    =>%DT% [f1s1b0:260:260:100&#8203;:50:2:11:4:2:Rel 1:b1:370:260:100&#8203;:50:2:11:4:2:Dsp off:]
+    dt [zCi1G2656:5:20:400:80:1440:-5000:5000:3Ci7f3x410y20]+5000 W[x410y95]-5000 W [Ci7f1x70y3] Zweirichtungsz~80hler - 24 Stunden
+    dt  [Ci1G2657:5:120:400:80:1440:0:5000:3Ci7f3x410y120]+5000 W[x410y195]0 W [Ci7f1x70y103] Wechselrichter 1-3 - 24 Stunden
+    dt [Ci1G2658:5:120:400:80:1440:0:5000:16][Ci1G2659:5:120:400:80:1440:0:5000:5]
+    dt [f1s1b0:260:260:100&#8203;:50:2:11:4:2:Rel 1:b1:370:260:100&#8203;:50:2:11:4:2:Dsp off:]
     =>mp3volume 100
     =>mp3track 4
 
@@ -1482,23 +1491,23 @@ Some variables are set from ioBroker
     if upsecs%tper==0
     then
     dp2
-    ->%DT% [f1Ci3x40y260w30Ci1]
-    ->%DT% [Ci7x120y220t]
-    ->%DT% [Ci7x180y220T]
-    ->%DT% [Ci7p8x120y240]%temp% %tunit%
-    ->%DT% [Ci7x120y260]%press% %punit%
-    ->%DT% [Ci7x120y280]%dist% mm
+    dt [f1Ci3x40y260w30Ci1]
+    dt [Ci7x120y220t]
+    dt [Ci7x180y220T]
+    dt [Ci7p8x120y240]%temp% %tunit%
+    dt [Ci7x120y260]%press% %punit%
+    dt [Ci7x120y280]%dist% mm
     dp0
-    ->%DT% [g0:%zwz%g1:%wr1%g2:%-wr2%g3:%-wr3%]
+    dt [g0:%zwz%g1:%wr1%g2:%-wr2%g3:%-wr3%]
     if zwz0
     then
-    ->%DT% [p-8x410y55Ci2Bi0]%zwz% W
+    dt [p-8x410y55Ci2Bi0]%zwz% W
     else
-    ->%DT% [p-8x410y55Ci3Bi0]%zwz% W
+    dt [p-8x410y55Ci3Bi0]%zwz% W
     endif
-    ->%DT% [p-8x410y140Ci3Bi0]%wr1% W
-    ->%DT% [p-8x410y155Ci16Bi0]%-wr2% W
-    ->%DT% [p-8x410y170Ci5Bi0]%-wr3% W
+    dt [p-8x410y140Ci3Bi0]%wr1% W
+    dt [p-8x410y155Ci16Bi0]%-wr2% W
+    dt [p-8x410y170Ci5Bi0]%-wr3% W
     endif
 
     ; chime every full hour

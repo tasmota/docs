@@ -12,7 +12,6 @@ If you want to modify the code or default settings you can use:
 - [**PlatformIO-Core**](Create-your-own-Firmware-Build-without-IDE) - automate firmware builds using PlatformIO-Core and flash with esptool
 - [**Visual Studio Code**](Visual-Studio-Code) -  setup and configure [Visual Studio Code](https://code.visualstudio.com) with PlatformIO for Tasmota
 - [**Atom**](Create-your-own-Firmware-Build-without-IDE) - beginner guide building Tasmota firmware using [Atom](https://atom.io/) with PlatformIO plugin
-- [**Arduino IDE**](Arduino-IDE) - setup and configure Arduino IDE for Tasmota compilation and upload
 - [**Docker Tasmota**](https://github.com/tasmota/docker-tasmota) - compile from a Docker container using PlatformIO
 
 #### Online Compilers
@@ -24,21 +23,6 @@ _**Can only create a firmware binary.** Use one of the [tools](Getting-Started.m
 **Simplest way to compile is with [GitPod](Gitpod), requires only a web browser.**
 
 Once you have set up the development environment, unzip the source code into a folder.
-
-## Preparing compiler
-
-### PlatformIO based 
-Nothing to do :-)
-
-
-### Arduino IDE
-Navigate to where you unpacked Tasmota and into `/tasmota` folder.
-
-Open `my_user_config.h` and uncomment (remove `//`) line with `#define USE_CONFIG_OVERRIDE`. It should look like this:    
-
-```
-#define USE_CONFIG_OVERRIDE                          // Uncomment to use user_config_override.h file. See README.md
-```
 
 ## Customize your build
 The base for your self compiled version has to be **Tasmota**. Do NOT use a other Tasmota build variant for.

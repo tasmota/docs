@@ -270,7 +270,7 @@ SM16716 LEDs, sometimes mislabelled as WS2801.
 
 Configured in Tasmota by assigning `SM16716 CLK`, `SM16716 DAT` and `SM16716 PWR` component to their GPIOs. 
 
-Some SM16716 bulbs have BGR order and need [`SetOption37 54`](Commands.md#setoption57) to work properly.
+Some SM16716 bulbs have BGR order and need [`SetOption37 54`](Commands.md#setoption37) to work properly.
 
 ### PWM Dimmer Switches
 

@@ -109,6 +109,7 @@ When you have identified pins on your device, connect wires according to the tab
 **Note that TX from your adapter goes to RX on the ESP8266 device and RX from adapter goes to TX on the device!**
 ![Image courtesy of https://www.domo-blog.fr/](https://user-images.githubusercontent.com/5904370/57880182-69bf2f80-781e-11e9-8953-88599cb89155.png)
 
+<!--
 #### Serial Connection using NODEMCU ESP8266
 You can use the USB-to-serial adaptor of a NODEMCU (and probably other ESP8266 boards with a serial chip). You do not need to overwrite the existing firmware of your NODEMCU so it can be done using one already pre-installed with Tasmota - when you unplug and reset the NODEMCU it will revert to its previous state. 
 
@@ -126,13 +127,14 @@ Simply connect the EN pin to ground to prevent the ESP8266 chip on your NODEMCU 
 |         RX | RX                 |
 |         TX | TX                 |
 |        GND | GND                |
+-->
 
 ### Programming Mode
 <img alt="Typical GPIO0 Location" src="https://raw.githubusercontent.com/tasmota/docs/master/docs/_media/gpio0.png" style="margin:5px;float:right;width:180px"></img>
 
 ESP8266 needs to be put into **programming mode** or **flash mode** before the firmware can be uploaded. This is done by pulling the GPIO0 pin to GND while the chip is booting. 
 
-On most devices the installed control button is connected to GPIO0 and GND, making entering Programming Mode very easy. On others you will need to bridge the pins on the PCB or directly on the chip with a jumper wire. GPIO0 is always in the same location on ESP8266 and ESP8255!
+On most devices the installed control button is connected to GPIO0 and GND, making entering Programming Mode very easy. On others you will need to bridge the pins on the PCB or directly on the chip with a jumper wire. GPIO0 is always in the same location on ESP8266 and ESP8285!
 
 Device specific instructions are documented in [Tasmota Device Templates Repository](https://templates.blakadder.com/).
 
@@ -323,7 +325,7 @@ When it connects to the network, you may get a warning that there is no Internet
 <p>
 
 !!! warning 
-    Wi-Fi manager server is active for only 3 minutes. If you miss the window you might have to disconnect your device from power and reconnect.
+    "Wi-Fi manager server is active for only 3 minutes. If you miss the window you might have to disconnect your device from power and reconnect."
 
 <img alt="Sign in to Wi-Fi Network" src="../_media/wificonfig2.jpg" style="margin:5px;float:right;width:300px"></img>After you have connected to the Tasmota Wi-Fi AP, open http://192.168.4.1 in a web browser on the smartphone (or whatever device you used). 
 Depending on the phone, it will take you to the Tasmota configuration page automatically, or you will get a prompt to *sign in to Wi-Fi network* or *authorize*. Tapping on the AP name should also open the configuration page.

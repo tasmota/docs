@@ -4,6 +4,7 @@ The LC Technology relay devices use GPIO1 and GPIO3 for the serial communication
 
 In order to use LC Technology WiFi Relay for 1 relay version:  
 ![](https://www.dhresource.com/0x0s/f2-albu-g6-M01-AB-F1-rBVaR1sFGr6AbvbGAANcsjYxEtQ983.jpg/esp8266-esp-01s-5v-esp01s-modulo-rel-wifi.jpg)
+
 * Set module to Generic (18) (in module configuration and click save)
 * Set D3 GPIO0 as Relay1 (21) (in module configuration and click save)
 * Disable SerialLog (type `seriallog 0` in the Tasmota console)
@@ -105,6 +106,37 @@ AT+CIPSERVER=1,8080
 AT+CIPSTO=360
 ```
 After these messages are sent back by Nuvoton to the ESP, the green LED beside the green LED will start blinking once a second. From here you can verify that the relay indeed starts to receive commands from the ESP.
+
+## LC Technology WiFi Relay X4 with Nuvoton N76E003AT20
+
+Note: This version of the board has the Nuvoton N76E003AT20 as its host microcontroller instead of  STC15F104W. Becareful, not working with Nuvoton MS51FB9AE.
+Same special configuration than with X2 relay version with Nuvoton N76E003AT20.
+
+Use the following device template, configureable in `Configure Other`:
+```
+{"NAME":"LC-ESP01-4R-12V","GPIO":[0,148,0,149,0,0,0,0,21,22,23,24,0],"FLAG":0,"BASE":18}
+```
+
+Add the following rules:
+```
+Rule1
+on System#Boot do Backlog Baudrate 115200
+on SerialReceived#Data=41542B5253540D0A do SerialSend5 5749464920434f4e4e45435445440a5749464920474f542049500a41542b4349504d55583d310a41542b4349505345525645523d312c383038300a41542b43495053544f3d333630 endon
+on Power1#State=1 do SerialSend5 A00101A2 endon
+on Power1#State=0 do SerialSend5 A00100A1 endon
+on Power2#State=1 do SerialSend5 A00201A3 endon
+on Power2#State=0 do SerialSend5 A00200A2 endon
+on Power3#State=1 do SerialSend5 A00301A4 endon
+on Power3#State=0 do SerialSend5 A00300A3 endon
+on Power4#State=1 do SerialSend5 A00401A5 endon
+on Power4#State=0 do SerialSend5 A00400A4 endon
+Rule1 1
+```
+
+Activate the rules:
+```
+Rule1 1
+```
 
 ## Beware of counterfeit modules
 If your board just [continuously flashes its led when powered on](https://www.youtube.com/watch?v=5Le9kNT_Bm4) and no esp-01 is entered, the onboard STC15F104W needs to be programmed! For more details ([link](https://www.esp8266.com/viewtopic.php?f=160&t=13164&start=68#p74262))

@@ -15,7 +15,7 @@ Incredibly expandable and flexible.
 [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
 
-For OTA updates please use the new server [http://ota.tasmota.com/tasmota](http://ota.tasmota.com/tasmota/) and [http://ota.tasmota.com/tasmota32](http://ota.tasmota.com/tasmota32/). <br>
+For OTA updates please use the new server [http://ota.tasmota.com/tasmota/release](http://ota.tasmota.com/tasmota/release) and [http://ota.tasmota.com/tasmota32/release](http://ota.tasmota.com/tasmota32/release/). <br>
 Download [latest Tasmotizer](https://github.com/tasmota/tasmotizer/releases/) to use the new OTA server during flashing.
 
 ### Current release 
@@ -28,6 +28,15 @@ Download [latest Tasmotizer](https://github.com/tasmota/tasmotizer/releases/) to
 - ``WakeUp`` uses 256 steps instead of 100 
 - Add support for MLX90640 IR array temperature sensor and VL53L1X time of flight sensor
 - Fix Shelly 2.5 higher temperature bug
+- TuyaMCU updates:
+    - Support for two dimmers devices
+    - Initial support for RGB, RGB+W and RGB+CT lights
+    - New ModeSet Function to switch between white and RGB light
+    - Support for Fan controllers (or any other enum Type4 dpId)
+    - Initial support for shutters
+    - Extra functions
+    - New optional topic ready to be used with any home automation system
+    - TuyaSend command updated
 
 #### 8.5.0
 - :rotating_light: **BREAKING CHANGE** :rotating_light: Removed support for direct upgrade from versions before 6.6.0.11 to versions after 8.4.0.1

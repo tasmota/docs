@@ -170,8 +170,8 @@ See below how the numbers are being converted. The first number is 8-bit GPIO, t
 | 149      | 3232     | Serial Rx       | Serial Receive pin                                                                         |
 | 150      | 3264     | Rotary1a        | Rotary Encoder (Mi Desk Lamp)                                                              |
 | 151      | 3296     | Rotary1b        | Rotary Encoder (Mi Desk Lamp)                                                              |
-| 152      | 3265     | Rotary1c        | Rotary Encoder (Mi Desk Lamp)                                                              |
-| 153      | 3297     | Rotary1d        | Rotary Encoder (Mi Desk Lamp)                                                              |
+| 152      | 3265     | Rotary2a        | Rotary Encoder (Mi Desk Lamp)                                                              |
+| 153      | 3297     | Rotary2b        | Rotary Encoder (Mi Desk Lamp)                                                              |
 | 154      | 3392     | HRE CLOCK       | Clock/Power line for HR-E Water Meter                                                      |
 | 155      | 3424     | HRE DATA        | Data line for HR-E Water Meter                                                             |
 | 156      | 3456     | ADE7953_IRQ     | ADE7953 IRQ                                                                                |
@@ -192,8 +192,8 @@ See below how the numbers are being converted. The first number is 8-bit GPIO, t
 | 171      | 3744     | A4988 STP       | A4988 Step motor                                                                           |
 | 172      | 3776     | A4988 ENA       | A4988 Enable motor                                                                         |
 | 173      | 3808     | A4988 MS1       | A4988 Microstep increment select pin1                                                      |
-| 174      | 3840     | A4988 MS2       | A4988 Microstep increment select pin2                                                      |
-| 175      | 3872     | A4988 MS3       | A4988 Microstep increment select pin3                                                      |
+| 174      | 3809     | A4988 MS2       | A4988 Microstep increment select pin2                                                      |
+| 175      | 3810     | A4988 MS3       | A4988 Microstep increment select pin3                                                      |
 | 176      | 3904     | DDS238-2 Tx     | DDS2382 Serial interface Tx                                                                |
 | 177      | 3936     | DDS238-2 Rx     | DDS2382 Serial interface Rx                                                                |
 | 178      | 3968     | DDSU666 Tx      | DDSU666 Serial interface Tx                                                                |
@@ -248,4 +248,4 @@ See below how the numbers are being converted. The first number is 8-bit GPIO, t
 | 5       | 4832    | Buttoni     | none                                                                  | none                                                                  |
 | 6       | 4864    | Range       | Range %value%                                                         | {"Range":%value%}                                                     |
 | 7       | 4896    | CT Power    | Voltage 230 V Current %value A Power %value W Energy Total %value kWh | {"Energy":_%value_,"Power":_%value_,"Voltage":230,"Current":_%value_} |
-| 8       | 3328    |             |                                                                       |                                                                       |
+| 8       | 3328    | Joystick    | none                                                                  | {"ANALOG":{"Joy1":%value%}}                                                                      |

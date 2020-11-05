@@ -1,0 +1,337 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Tasmota: create an AWS IoT authorizer for user/password authentication of Tasmota devices over TLS."
+
+Parameters:
+  RetentionPolicy:
+    Type: String
+    AllowedValues: [ "Delete", "Retain" ]
+    Default: "Retain"
+    Description: When you delete the CloudFormation template, "Delete" will all objetcs, "Retain" will keep it what is necessary for Tasmota to authenticate (you can later delete manually the Lambda function and the IOA Custom Authorizer)
+  MQTTAuthorizerName:
+    Type: String
+    Default: "TasmotaAuth"
+    Description: The Name of the authorizer that will need to be added in the user name for Tasmota devices (leave unchanged unless you have specific needs)
+
+Outputs:
+  MQTTUser:
+    Description: The user to be used by Tasmota devices
+    Value: !Sub "tasmota?x-amz-customauthorizer-name=${MQTTAuthorizerName}"
+  MQTTPassword:
+    Description: The password to be used by Tasmota devices
+    Value: !GetAtt GeneratePassword.Password
+  BackLogCommand:
+    Description: The complete `backlog` command to configure the Tasmota device
+    Value: !Sub "BackLog SetOption3 1; SetOption103 1; MqttHost ${GeneratePassword.Endpoint}; MqttPort 443; MqttUser tasmota?x-amz-customauthorizer-name=${MQTTAuthorizerName}; MqttPassword ${GeneratePassword.Password}"
+
+Conditions:
+  Retained: !Equals [ !Ref RetentionPolicy, "Retain" ]
+  NotRetained: !Not [ !Equals [ !Ref RetentionPolicy, "Retain" ] ]
+
+Resources:
+
+  ######################################################################
+  #
+  # Generate a truly random strong password
+  # using hardware high-entropy random generators
+  #
+  ######################################################################
+  GeneratePassword:
+    Type: "Custom::GeneratePassword"
+    Properties:
+      ServiceToken: !GetAtt LambdaGeneratePassword.Arn
+
+  # Lambda funtion invoking the content Lambda function and stores in S3
+  LambdaGeneratePassword:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: "index.handler"
+      Description: "Tasmota: temporary function used to generate a random password (can be deleted safely)"
+      MemorySize: 256
+      Role: !GetAtt LambdaBasicExecRoleRandomGenerator.Arn
+      Runtime: python3.7
+      Timeout: 10
+      Code:
+        ZipFile: |
+          import cfnresponse
+          import traceback
+          import boto3
+          import base64
+
+          def handler(event, context):
+            try:
+              # generate random password
+              kms = boto3.client('kms')
+              response = kms.generate_random(NumberOfBytes=16)
+              bytes = response['Plaintext']
+              password = base64.b64encode(bytes).decode('utf-8')
+              # get endpoint
+              iot = boto3.client('iot')
+              response = iot.describe_endpoint(endpointType='iot:Data-ATS')
+              ats_endpoint = response['endpointAddress']
+              # return results
+              cfnresponse.send(event, context, cfnresponse.SUCCESS, { "Password": password, "Endpoint": ats_endpoint })
+            except Exception as e:
+              print(traceback.format_exc())
+              cfnresponse.send(event, context, cfnresponse.FAILED, { "error": str(e) })
+
+  # Generic role for AWS Lamdda functions
+  LambdaBasicExecRoleRandomGenerator:
+    Type: "AWS::IAM::Role"
+    Properties:
+      Policies:
+        -
+          PolicyName: GenerateRandom
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: Allow
+                Action: [ "kms:GenerateRandom", "iot:DescribeEndpoint"]
+                Resource: "*"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Sid: ""
+            Effect: Allow
+            Principal:
+              Service: "lambda.amazonaws.com"
+            Action: "sts:AssumeRole"
+
+  ######################################################################
+  #
+  # Lambda function for authorizer
+  # Accepts two passwords as ENV variables
+  #
+  ######################################################################
+  # Lambda funtion invoking the content Lambda function and stores in S3
+  LambdaIOTAuthorizer:
+    Type: "AWS::Lambda::Function"
+    Condition: NotRetained
+    Properties:
+      Handler: "index.lambda_handler"
+      Description: "Tasmota: custom authorizer for Tasmota MQTT using password credentials"
+      MemorySize: 128
+      Role: !GetAtt LambdaBasicExecRole.Arn
+      Runtime: python3.7
+      Timeout: 2
+      Environment:
+        Variables:
+          PASSWD: !GetAtt GeneratePassword.Password
+      Code:
+        ZipFile: |
+          import json
+          import base64
+          import os
+
+          PASSWD  = os.environ.get('PASSWD', "")
+          PASSWD2 = os.environ.get('PASSWD2', "")
+
+          # https://stackoverflow.com/questions/3405073/generating-dictionary-keys-on-the-fly/3405143#3405143
+          class D(dict):
+            def __missing__(self, key):
+              self[key] = D()
+              return self[key]
+
+          def lambda_handler(event, context):
+            # print("event="+json.dumps(event))
+            event = D(event)    # make it safe to dereference
+            
+            uname = event['protocolData']['mqtt']['username'] or ""
+            pwd = event['protocolData']['mqtt']['password'] or ""
+            passwd = base64.b64decode(pwd).decode('utf-8')
+            client_id = event['protocolData']['mqtt']['clientId'] or ""
+
+            passwd_ok = False
+            if (PASSWD) and (passwd == PASSWD): passwd_ok = True
+            if (PASSWD2) and (passwd == PASSWD2): passwd_ok = True
+            
+            # print("passwd = {}, PASSWD = {}, passwd_ok = {}".format(passwd, PASSWD, passwd_ok))
+            
+            if passwd_ok:
+              return generateAuthResponse(client_id, 'Allow')
+            else:
+              return generateAuthResponse(client_id, 'Deny')
+
+          def generateAuthResponse(token, effect):
+            auth_response = {
+              'isAuthenticated': True,
+              'principalId': 'Tasmota',
+              'disconnectAfterInSeconds': 86400,
+              'refreshAfterInSeconds': 86400,
+              'policyDocuments': [
+                {
+                  'Version': '2012-10-17',
+                  'Statement': [
+                    {
+                      'Action': [
+                        'iot:Connect',
+                        'iot:Publish',
+                        'iot:Subscribe',
+                        'iot:Receive',
+                      ],
+                      'Effect': effect,
+                      'Resource': '*'
+                    }
+                  ]
+                }
+              ]
+            }
+            # print("auth_response = "+json.dumps(auth_response))
+            return auth_response
+
+  LambdaIOTAuthorizerRetain:
+    Type: "AWS::Lambda::Function"
+    Condition: Retained
+    DeletionPolicy: Retain
+    Properties:
+      Handler: "index.lambda_handler"
+      Description: "Tasmota: custom authorizer for Tasmota MQTT using password credentials"
+      MemorySize: 128
+      Role: !GetAtt LambdaBasicExecRoleRetain.Arn
+      Runtime: python3.7
+      Timeout: 2
+      Environment:
+        Variables:
+          PASSWD: !GetAtt GeneratePassword.Password
+      Code:
+        ZipFile: |
+          import json
+          import base64
+          import os
+
+          PASSWD  = os.environ.get('PASSWD', "")
+          PASSWD2 = os.environ.get('PASSWD2', "")
+
+          # https://stackoverflow.com/questions/3405073/generating-dictionary-keys-on-the-fly/3405143#3405143
+          class D(dict):
+            def __missing__(self, key):
+              self[key] = D()
+              return self[key]
+
+          def lambda_handler(event, context):
+            # print("event="+json.dumps(event))
+            event = D(event)    # make it safe to dereference
+            
+            uname = event['protocolData']['mqtt']['username'] or ""
+            pwd = event['protocolData']['mqtt']['password'] or ""
+            passwd = base64.b64decode(pwd).decode('utf-8')
+            client_id = event['protocolData']['mqtt']['clientId'] or ""
+
+            passwd_ok = False
+            if (PASSWD) and (passwd == PASSWD): passwd_ok = True
+            if (PASSWD2) and (passwd == PASSWD2): passwd_ok = True
+            
+            # print("passwd = {}, PASSWD = {}, passwd_ok = {}".format(passwd, PASSWD, passwd_ok))
+            
+            if passwd_ok:
+              return generateAuthResponse(client_id, 'Allow')
+            else:
+              return generateAuthResponse(client_id, 'Deny')
+
+          def generateAuthResponse(token, effect):
+            auth_response = {
+              'isAuthenticated': True,
+              'principalId': 'Tasmota',
+              'disconnectAfterInSeconds': 86400,
+              'refreshAfterInSeconds': 86400,
+              'policyDocuments': [
+                {
+                  'Version': '2012-10-17',
+                  'Statement': [
+                    {
+                      'Action': [
+                        'iot:Connect',
+                        'iot:Publish',
+                        'iot:Subscribe',
+                        'iot:Receive',
+                      ],
+                      'Effect': effect,
+                      'Resource': '*'
+                    }
+                  ]
+                }
+              ]
+            }
+            # print("auth_response = "+json.dumps(auth_response))
+            return auth_response
+  # Generic role for AWS Lamdda functions
+  LambdaBasicExecRole:
+    Type: "AWS::IAM::Role"
+    Condition: NotRetained
+    Properties:
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Sid: ""
+            Effect: Allow
+            Principal:
+              Service: "lambda.amazonaws.com"
+            Action: "sts:AssumeRole"
+
+  LambdaBasicExecRoleRetain:
+    Type: "AWS::IAM::Role"
+    Condition: Retained
+    DeletionPolicy: Retain
+    Properties:
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Sid: ""
+            Effect: Allow
+            Principal:
+              Service: "lambda.amazonaws.com"
+            Action: "sts:AssumeRole"
+
+  # Invoke permission for AWS IoT
+  LambdaAuthorizerInvokePermission:
+    Type: "AWS::Lambda::Permission"
+    Condition: NotRetained
+    Properties:
+      FunctionName: !GetAtt LambdaIOTAuthorizer.Arn
+      Action: "lambda:InvokeFunction"
+      Principal: "iot.amazonaws.com"
+      SourceArn: !Sub "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:authorizer/${MQTTAuthorizerName}"
+
+  LambdaAuthorizerInvokePermissionRetain:
+    Type: "AWS::Lambda::Permission"
+    Condition: Retained
+    DeletionPolicy: Retain
+    Properties:
+      FunctionName: !GetAtt LambdaIOTAuthorizerRetain.Arn
+      Action: "lambda:InvokeFunction"
+      Principal: "iot.amazonaws.com"
+      SourceArn: !Sub "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:authorizer/${MQTTAuthorizerName}"
+
+  ######################################################################
+  #
+  # Custom authorizer
+  #
+  ######################################################################
+  TasmotaCustomAuthorizer:
+    Type: "AWS::IoT::Authorizer"
+    Condition: NotRetained
+    Properties:
+      AuthorizerFunctionArn: !GetAtt LambdaIOTAuthorizer.Arn
+      AuthorizerName: !Ref MQTTAuthorizerName
+      SigningDisabled: True
+      Status: ACTIVE
+  # Retained version
+  TasmotaCustomAuthorizerRetain:
+    Type: "AWS::IoT::Authorizer"
+    Condition: Retained
+    DeletionPolicy: Retain
+    Properties:
+      AuthorizerFunctionArn: !GetAtt LambdaIOTAuthorizerRetain.Arn
+      AuthorizerName: !Ref MQTTAuthorizerName
+      SigningDisabled: True
+      Status: ACTIVE
+
