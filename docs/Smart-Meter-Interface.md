@@ -304,8 +304,9 @@ in `user_config_override.h` file). An entry defines how to decode the data and p
 - [Iskra MT 174](#iskra-mt-174-obis)
 - [SBC ALE3 (MODBUS)](#sbc-ale3-modbus)
 - [2 * SBC ALE3 (MODBUS)](#2-sbc-ale3-modbus)
-- [4 *  Hiking DDS238-2 ZN/S (MODBUS)](#4-Hiking-DDS238-2-ZN/S3-modbus)
 - [Trovis 557x](#trovis-557x)
+- [4 * Hiking DDS238-2 ZN/S (MODBUS)](#4--hiking-dds238-2-zns3-modbus)
+
 --------------------------------------------------------
 
 ### JANZ C3801 (SML - MODBUS)
