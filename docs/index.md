@@ -22,6 +22,7 @@ Download [latest Tasmotizer](https://github.com/tasmota/tasmotizer/releases/) to
 <a href="https://github.com/arendst/Tasmota/releases/tag/v9.1.0"><span style="font-size:40px;">Tasmota 9.1.0 Imogen</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
 
 Christmas has come early: 
+
 - Detach switches from relays and lights using command [`SetOption114 1`](Commands#setoption114)
 - Added official [Tasmota integration](https://www.home-assistant.io/integrations/tasmota/) for Home Assistant. _Still in beta_
 
@@ -35,7 +36,7 @@ Christmas has come early:
 - Added Vietnamese language tranlation
 - New commands: [`DimmerStep`](Commands#dimmerstep), [`NoDelay`](Commands#nodelay), [`PulseTime<x>`](Commands#pulsetime), [`ShutterChange`](Commands#nodelay), [`SO114`](Commands#setoption114), [`SwitchMode 15`](Commands#nodelay), [`SwitchText`](Commands#switchtext), [`SO113`](Commands#nodelay), [`ZbMap`](Commands#zbmap), [`ZbOccupancy`](Commands#zboccupancy), 
 
-See [changelog](changelog.md) for a complete list of new features, changes and fixes.
+See [changelog](https://github.com/arendst/Tasmota/blob/development/CHANGELOG.md) for a complete list of new features, changes and fixes.
 
 ### Join our community
 See [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota) or [Community Forum](https://groups.google.com/d/forum/sonoffusers) for feedback, questions and troubleshooting.
