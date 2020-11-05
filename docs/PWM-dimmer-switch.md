@@ -19,7 +19,7 @@ When the power is off, holding the down or up button publishes an MQTT EVENT com
 
 If there are LED’s defined in the template, they are turned on to indicate the current brightness. More LEDs are turned on at higher brightnesses. Option 86 enables/disables an LED timeout. If `SetOption86` is enabled, the LED’s turn off five seconds after the last change in brightness. Note that the lowest LED and the blue power LED are always on when the power is on. The LED timeout can also be enabled/disabled by holding the power button while tapping (pressing and releasing quickly) the down button.
 
-The LEDLink LED can be used as a nightlight/powered-off indicator. `SetOption 87` enables/disables turning the LEDLink LED on when the power is off. The powered-off indicator can also be enabled/disabled by holding the power button and tapping the up button.
+The LedLink LED can be used as a nightlight/powered-off indicator. `SetOption 87` enables/disables turning the LedLink LED on when the power is off. The powered-off indicator can also be enabled/disabled by holding the power button and tapping the up button.
 
 Holding the power button, tapping the down button and then tapping or holding the down or up button sends a device group message to set RGB lights in the device group to the previous/next fixed color. The command is sent/value is adjusted once every .5 seconds for as long as the button is held. The color sequence as defined by the Light module is red, green, blue, orange, light green, light blue, amber, cyan, purple, yellow, pink, white using RGB channels, white using CT channels.
 

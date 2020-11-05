@@ -3,7 +3,7 @@ site_description: Documentation (Wiki) for Tasmota
 site_url: https://tasmota.github.io/docs/
 repo_name: 'arendst/tasmota'
 repo_url: 'https://github.com/arendst/tasmota'
-edit_uri: 'https://github.com/tasmota/docs/blob/master/docs/'
+edit_uri: 'https://github.com/tasmota/docs/blob/development/docs/'
 # copyright: 'Copyright &copy; 2020 Tasmota Development Team'
 
 plugins:
@@ -141,6 +141,7 @@ nav:
     - DHT11.md
     - DS18x20.md
     - DS3231.md
+    - EZO.md
     - HM-10.md
     - HM-17.md
     - HC-SR04.md

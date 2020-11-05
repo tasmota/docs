@@ -4,37 +4,62 @@ description: Everything about using Tasmota in Home Assistant
 
 [Home Assistant](https://home-assistant.io/) (HA) is an open source home automation solution that puts local control and privacy first.
 
+!!! failure "Home Assistant support is not built in to tasmota-lite.bin. Use the standard tasmota.bin or other binaries that include Home Assistant support."
+
 Tasmota communicates with Home Assistant using MQTT. Before going any further, make sure MQTT is [properly set up in Home Assistant](https://www.home-assistant.io/docs/mqtt/broker) and [in Tasmota](MQTT). 
 
 First, test if the two can communicate. 
 
-In Home Assistant web UI go to **Settings - Integrations - Configure MQTT Broker **. Subscribe to `tele/%topic%/STATE` and click **START LISTENING**. You should see a JSON response from your device.
+In Home Assistant web UI go to **Settings - Integrations - Configure MQTT Broker **. Subscribe to `tele/%topic%/STATE` and click **START LISTENING**. You should see a JSON response from your device inside 5 minutes.
 
 To test control of a relay or light, as **Publish a packet topic** enter `cmnd/%topic%/POWER` with payload `toggle`. When you click **PUBLISH** your device should switch state and a JSON resc
 ![](_media/hass1.png)
 ![](_media/hass2.png)
 
-Home Assistant has two avenues of adding Tasmota devices:
+Home Assistant has different options of adding Tasmota devices:
 
-1. Using MQTT discovery
-2. Adding by editing configuration.yaml 
+1. Official Tasmota integration _beta_
+2. MQTT discovery
+3. Manual editing configuration.yaml 
 
 !!! note "After every change to the configuration.yaml file you'll need to restart Home Assistant to make it aware of the changes."
 
-If you don't want to use MQTT discovery, skip to [Manual Configuration](#configurationyaml-editing) 
 
-## Automatic Discovery
+## Tasmota Integration _beta_
+
+Lights, relays, sensors and switches are currently supported.
+
+Once you configure [Home Assistant](https://www.home-assistant.io/integrations/tasmota/) every new Tasmota device will be discovered instantly.
+
+Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Home Assistant MQTT integration and [`FriendlyName<x>`](Commands.md#friendlyname) to identify power outputs (switch or light entities in HA).
+
+!!! warning 
+    If you have been using `SetOption19 1` setting it to `SetOption19 0` will remove your Tasmota device from the MQTT device list and add it to the Tasmota integrations in HA. They will be treated as different entities in HA!
+
+### Supported Entities
+
+- Lights will be added as Home Assistant light entities.
+- Relays will be added as Home Assistant switch entities, if [`SetOption30 = 0`](Commands#setoption30). If [`SetOption30 = 1`](Commands#setoption30), relays will be added as light entities.
+- Sensors will be added as Home Assistant sensor entities.
+- Switches will be added as Home Assistant binary_sensor entities or automation triggers when [`SetOption114`](Commands#setoption114) is enabled
+- Buttons will be added as Home Assistant automation triggers when [`SetOption73`](Commands#setoption73) is enabled.
+
+
+Types of devices not listed above (covers, etc) require [manual configuration](#fans)
+
+## MQTT Discovery
 
 Home Assistant has a feature called [MQTT discovery](https://www.home-assistant.io/docs/mqtt/discovery/).
 With MQTT discovery no user interaction or configuration file editing is needed to add new devices in Home Assistant. Most of the changes will be updated in HA automatically.
 
 !!! note 
-    Automatic discovery is currently supported for (see details below):
+    Automatic discovery is currently supported for:
     - Buttons
     - Lights
     - Relays
     - Sensors
     - Switches
+    - Fans
 
 ### Enable Autodiscovery
 Enable autodiscovery on a device with the command:
@@ -43,8 +68,6 @@ Enable autodiscovery on a device with the command:
 SetOption19 1
 ```
 
-!!! failure "Discovery is not built in to tasmota-lite.bin. Use the full version (tasmota.bin) or other binaries that support discovery."
-
 After the automatic discovery feature is enabled a retained MQTT message starting with topic "homeassistant/" is sent to the broker. That message contains your device configuration which will be picked up and used by Home Assistant to automatically add your device to MQTT integrations.    
 
 Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Home Assistant MQTT integration and [`FriendlyName<x>`](Commands.md#friendlyname) to identify power outputs (switch or light entities in HA).
@@ -52,6 +75,34 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Ho
 !!! note "When changing some settings you might need a reboot or use `SetOption19 1` again to see the new changes under Home Assistant."
 
 !!! note "Special settings for each device type:"
+
+### Finalising Setup
+
+All automatically discovered entities will show up under **Configuration -> Integrations -> MQTT** card.
+
+The entities are grouped under a device defined by DeviceName and identified by Tasmota as the "manufacturer":
+![Integration](_media/hass_integrations_screen.jpg)
+
+Overview of a Tasmota device in Home Assistant integration compared to **Configuration -> Configure Other**:
+
+![Device layout](_media/hass_1.jpg)![Device layout](_media/hass_0.jpg)
+
+For every device an informative sensor will be created automatically:
+
+![Informative sensor](_media/hass_information_sensor.jpg)
+
+!!! warning "This sensor will update on `TelePeriod` which is 5 minutes by default"
+    It will show as "Unavailable" until the first TelePeriod MQTT message
+
+You can further customise your device in Home Assistant by clicking on the entity name.
+
+!!! note "Enabling discovery will automatically change some SetOptions to suit the new configuration"
+
+**`SetOption4` to `0`**: Return MQTT response always as `RESULT` and not as %COMMAND% topic
+
+**`SetOption17` to `1`**: Show Color as a comma-separated decimal string instead of hexadecimal
+
+**`SetOption59` to `1`**: Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands `State`, `Power` and any command causing a light to be turned on.
 
 ### Supported Entities
 
@@ -121,35 +172,7 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Ho
     **When a switch is set to a different topic than `0` is not possible to use `Switch#State` as a trigger for rules.**
 
 
-Types of devices not listed above (fans, covers, TuyaMCU devices, etc) require [manual configuration](#fans)
-
-### Finalising Setup
-
-All automatically discovered entities will show up under **Configuration -> Integrations -> MQTT** card.
-
-The entities are grouped under a device defined by DeviceName and identified by Tasmota as the "manufacturer":
-![Integration](_media/hass_integrations_screen.jpg)
-
-Overview of a Tasmota device in Home Assistant integration compared to **Configuration -> Configure Other**:
-
-![Device layout](_media/hass_1.jpg)![Device layout](_media/hass_0.jpg)
-
-For every device an informative sensor will be created automatically:
-
-![Informative sensor](_media/hass_information_sensor.jpg)
-
-!!! warning "This sensor will update on `TelePeriod` which is 5 minutes by default"
-    It will show as "Unavailable" until the first TelePeriod MQTT message
-
-You can further customise your device in Home Assistant by clicking on the entity name.
-
-!!! note "Enabling discovery will automatically change some SetOptions to suit the new configuration"
-
-**`SetOption4` to `0`**: Return MQTT response always as `RESULT` and not as %COMMAND% topic
-
-**`SetOption17` to `1`**: Show Color as a comma-separated decimal string instead of hexadecimal
-
-**`SetOption59` to `1`**: Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands `State`, `Power` and any command causing a light to be turned on.
+Types of devices not listed above (covers, etc) require [manual configuration](#configuration.yaml-editing)
 
 ### Disabling
 

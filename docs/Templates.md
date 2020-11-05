@@ -4,6 +4,10 @@ description: Template is a definition of a device and how its GPIOs are assigned
 
 Templates provide an easy way for you to create, modify and share configurations for various devices that have features supported in Tasmota. 
 
+!!! bug 
+    Tasmota 9.1 completely redesigned template layout to allow for future expansion. Read more about the [GPIO Conversion](GPIO-Conversion.md). 
+    **Information in this article still refers to pre 9.1 templating**  
+
 To provide easy processing by Tasmota a template is written as a JSON string and could look like this:
 ```json
 {"NAME":"UserModule1","GPIO":[17,148,29,149,7,255,255,255,138,255,139,255,255],"FLAG":0,"BASE":18}
