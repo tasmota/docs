@@ -24,7 +24,6 @@ Some known device templates and configurations
 ### LilyGO TTGO T-Camera OV2640_V05
 
 In `platformio_override.ini` uncomment the line with `tasmota32` and set the correct COM port. 
-In `platformio_tasmota32.ini` uncomment the line with `tasmota32`.
 
 In `user_config_override.h` add:
 ```
