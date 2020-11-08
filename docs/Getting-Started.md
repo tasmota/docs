@@ -331,8 +331,7 @@ When it connects to the network, you may get a warning that there is no Internet
 After you have connected to the Tasmota Wi-Fi AP, open http://192.168.4.1 in a web browser on the smartphone (or whatever device you used). 
 Depending on the phone, it will take you to the Tasmota configuration page automatically, or you will get a prompt to *sign in to Wi-Fi network* or *authorize*. Tapping on the AP name should also open the configuration page.
 
-<img alt="Tasmota AP" src="https://user-images.githubusercontent.com/5904370/68961890-a242c480-07d3-11ea-912f-b45464104f2c.png
-" style="margin:5px;float:right;width:300px"></img>
+<img alt="Tasmota AP" src="https://user-images.githubusercontent.com/5904370/68961890-a242c480-07d3-11ea-912f-b45464104f2c.png" style="margin:5px;float:right;width:300px"></img>
 
 At this page you can have Tasmota scan for available Wi-Fi networks. Select the right network from the list or enter the following:
 
