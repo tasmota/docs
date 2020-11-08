@@ -322,6 +322,7 @@ Tasmota provides a wireless access point for easy Wi-Fi configuration.
 <img alt="Tasmota AP" src="../_media/wificonfig1.jpg" style="margin:10px;float:left;width:250px"></img>Connect your device to a power source and grab your smartphone (or tablet or laptop or any other web and Wi-Fi capable device). Search for a Wi-Fi AP named _**tasmota_XXXXXX-####**_ (where _XXXXXX_ is a string derived from the device's MAC address and _####_ is a number) and connect to it. _In this example the Wi-Fi AP is named **tasmota_3D5E26-7718**._ 
 
 When it connects to the network, you may get a warning that there is no Internet connection and be prompted to connect to a different network. _Do not allow the mobile device to select a different network_.
+
 <p>
 
 !!! warning "Wi-Fi manager server is active for only 3 minutes. If you miss the window you might have to disconnect your device from power and reconnect."
@@ -331,7 +332,7 @@ When it connects to the network, you may get a warning that there is no Internet
 After you have connected to the Tasmota Wi-Fi AP, open http://192.168.4.1 in a web browser on the smartphone (or whatever device you used). 
 Depending on the phone, it will take you to the Tasmota configuration page automatically, or you will get a prompt to *sign in to Wi-Fi network* or *authorize*. Tapping on the AP name should also open the configuration page.
 
-<img alt="Tasmota AP" src="https://user-images.githubusercontent.com/5904370/68961890-a242c480-07d3-11ea-912f-b45464104f2c.png" style="margin:5px;float:right;width:300px"></img>
+<!-- <img alt="Tasmota AP" src="https://user-images.githubusercontent.com/5904370/68961890-a242c480-07d3-11ea-912f-b45464104f2c.png" style="margin:5px;float:right;width:300px"></img> -->
 
 At this page you can have Tasmota scan for available Wi-Fi networks. Select the right network from the list or enter the following:
 
