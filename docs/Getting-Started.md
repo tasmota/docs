@@ -323,7 +323,7 @@ Tasmota provides a wireless access point for easy Wi-Fi configuration.
 
 When it connects to the network, you may get a warning that there is no Internet connection and be prompted to connect to a different network. _Do not allow the mobile device to select a different network_.
 
-<p>
+<p></p>
 
 !!! warning 
     Wi-Fi manager server is active for only 3 minutes. If you miss the window you might have to disconnect your device from power and reconnect.
