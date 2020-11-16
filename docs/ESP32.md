@@ -23,22 +23,26 @@ Some known device templates and configurations
 
 ### LilyGO TTGO T-Camera OV2640_V05
 
-In `platformio_override.ini` uncomment the line with `tasmota32-camera.bin` and set the correct COM port. 
+In `platformio_override.ini` uncomment the line with `tasmota32` and set the correct COM port. 
 
 In `user_config_override.h` add:
 ```
 #define USE_BMP
+#define USE_I2C
+#define USE_SPI
 #define USE_DISPLAY
 #define USE_DISPLAY_SSD1306
 #define HOW_SPLASH
+#define USE_WEBCAM
 ```
 
 Upload via USB, then apply the following Template:
 
 ```json
-{"NAME":"TTGO_V05","GPIO":[65504,65504,65504,65504,5090,5088,65504,65504,5056,5024,5089,5091,65504,65504,5092,5184,0,640,608,5093,0,5152,4928,5120,0,0,0,0,4992,160,65,65504,5094,0,0,5095],"FLAG":0,"BASE":2}
+{"NAME":"TTGO_V05","GPIO":[1,1,1,1,5090,5088,1,1,5056,5024,5089,5091,1,1,5092,5184,0,640,608,5093,0,5152,4928,5120,0,0,0,0,4992,160,32,1,5094,0,0,5095],"FLAG":0,"BASE":2}
 ```
 
+The PIR will turn ON/OFF the display and send over MQTT the POWER status. The display shows the sensor data.
 To make the device work nicely, change the following settings in the Console:
 
 Camera settings to correct orientation (USB on the bottom):
@@ -63,6 +67,12 @@ BME280 Settings (it is not very trustable):
 ```
 HumOffset 10
 TempOffset -15
+```
+
+PIR/Button Settings:
+```
+SwitchMode1 1
+SetOption73 1
 ```
 
 ### ODROID-GO

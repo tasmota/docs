@@ -296,20 +296,16 @@ After you have assigned a Switch<x\> to the GPIO connected to the AC frequency d
 
 Once the feature is enabled you can use this switch as any regular switch!
 
-## Detach Switches or Buttons from Relays
+## Detach Switches Based On..
 
-### Detach Switches Based On..
-
-#### SetOption114
+### SetOption114
 
 **Only in Tasmota 9.1+** When `SetOption114 1` all switches are detached from their respective relays and will send MQTT messages instead in the form of `{"Switch<x>":{"Action":"<state>"}}`. 
 
 !!! example  
     When switch one is toggle to "ON":`{"Switch1":{"Action":"ON"}}`
 
-
-
-#### Rules
+### Rules
 
 Use rules to send messages to different MQTT topics or send commands to other Tasmota devices when switch state (defined by [SwitchMode](#switchmode)) changes. 
 
@@ -324,7 +320,7 @@ Backlog SwitchMode 1; SwitchTopic 0
 Backlog Rule1 on Switch1#state do Publish cmnd/%topic%/SWITCH1 %value% endon; Rule1 1
 ```
 
-#### SwitchTopic
+### SwitchTopic
 
 !!! warning
     When using `SwitchTopic 1` or `2` (or `ButtonTopic 1` or `2`)  and your MQTT broker becomes unavailable, Tasmota falls back to default `SwitchTopic 0` (or `ButtonTopic 0`), which is not optimal.<br>To avoid this, we recommend using first two options instead. 
@@ -365,7 +361,7 @@ In the following example, we set the topic to `tasmota02` with `SwitchTopic tasm
 >
 >If you have another device with the topic _tasmota02_ this action will turn on its power while not affecting anything on the _tasmota_ device.
 
-##### SwitchTopic Summary
+#### SwitchTopic Summary
 
 `SwitchTopic 0` controls the power state directly.  
 `SwitchTopic 1` sends an MQTT message to the device topic. This sets the state of the devices power accordingly.  
