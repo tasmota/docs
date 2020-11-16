@@ -48,13 +48,13 @@ Apply this modification **_only_** if you intend to use USB for powering the dev
 The R2 revision boards connect the GPIO4 and GPIO5 pins to the USB data lines of the power connector. Compliant USB chargers/power supplies are expected to short the two pins together, which is a problem. These lines are not used by the original firmware, nor by Tasmota. The traces toward the USB power connector need to be cut to avoid interference by the USB wiring. Removing these connections does not interfere with the normal Bridge functionality.
 
 #### Flashing RF Firmware
-1. Make sure you have previously flashed a Tasmota binary built with `RF_FLASH`. Refer to the [builds table](../Builds) for pre-compiled binaries which include this feature. Otherwise the "Magic byte is not 0xE9" error will occur.
+1. Make sure you have previously flashed a Tasmota binary built with `RF_FLASH`. Refer to the [builds table](https://github.com/arendst/Tasmota/blob/development/BUILDS.md) for pre-compiled binaries which include this feature. Otherwise the "Magic byte is not 0xE9" error will occur.
 2. Set the module type to `Sonoff Bridge (25)`
 3. Connect two wires (this will be different depending on the `Sonoff RF Bridge 433` hardware version):
    - For `R1`: Connect `GPIO4 to C2Ck` and `GPIO5 to C2D`.
    - For `R2`: Connect `GPIO4 to C2D` and `GPIO5 to C2Ck`.
      (:warning: The text on the R2 PCB silkscreen is switched. Therefore this is the same wiring as on the R1)
-4. Switch the ON/OFF switch on the board to 'ON'.
+4. Switch the ON/OFF switch on the board to 'OFF'.
 5. Power up the bridge via the 3.3V & GND pins. (See below if you need to power the device through the USB power port)
 6. Obtain the Portisch firmware file:  
    (Clicking on the file link on the GitHub web site does **not** work since this will download the GitHub preview/content of the file rather than the raw file contents)
