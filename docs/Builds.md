@@ -17,7 +17,7 @@ Features that are not available in any official release build have to be enabled
 
 - **tasmota.bin**  supports most features. **THIS IS THE RECOMMENDED BINARY**  
   **tasmota-BG.bin** to **tasmota-TW.bin** the same features as _tasmota.bin_ with localized language support. *(Note: tasmota-UK.bin is for the Ukrainian language)*
-- **tasmota-sensors.bin** enables the same features as _tasmota.bin_ and includes support for connectable sensors
+- **tasmota-sensors.bin** enables many features as _tasmota.bin_ - not all - and includes support for connectable sensors
 - **tasmota-lite.bin**  has a stripped down feature set. This reduces the required CPU cycles in order to reduce power draw to allow devices with a weak power supply to run reliably.
 
 !!! note

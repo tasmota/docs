@@ -691,6 +691,31 @@ IR Remote Codes for Acer K132 projector (and possibly other models using a remot
 * 0x400405380538="Bluetooth"
 * 0x400405006164="Input"
 
+## IR Codes Soundcore Infini Pro
+
+**Example received Code:**
+**tele/sonoffIRBridge_1/RESULT = {"IrReceived":{"Protocol":"NEC","Bits":32,"Data":"0xFD256897"}}**
+
+**Example IRsend Command:**
+**{"Protocol":"NEC","Bits":32,"Data":"0xFD256897"}**
+
+* 0xFD2502FD="ON/OFF"
+* 0xFD2518E7="Mute"
+* 0xFD2508F7="Input"
+* 0xFD259867="Bluetooth"
+* 0xFD2548B7="TV"
+* 0xFD256897="Vol+"
+* 0xFD2558A7="Vol-"
+* 0xFD258A75="Previous"
+* 0xFD250AF5="Next"
+* 0xFD25C837="Play/Pause"
+* 0xFD2554AB="Movie"
+* 0xFD255CA3="Music"
+* 0xFD2552AD="Voice"
+* 0xFD2532CD="Bass-"
+* 0xFD258877="Bass+"
+* 0xFD2538C7="Surround"
+
 # Vacuum Cleaners
 ## IR Codes Vacuum Cleaner Ecovacs Deebot Slim2
 

@@ -148,7 +148,7 @@ Upgrading from one minor version to the next is mostly painless as the settings 
 As said, mostly painless! There are some deviations to this rule as the flash settings changed. 
 
 ### Upgrade Flow
- **v1.0.11** &nbsp;:twisted_rightwards_arrows:&nbsp; [**v3.9.22**](https://github.com/arendst/Tasmota/releases/download/v3.9.22/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v4.2.0**](https://github.com/arendst/Tasmota/releases/download/v4.2.0/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v5.14.0**](https://github.com/arendst/Tasmota/releases/download/v5.14.0/sonoff-classic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v6.1.1**](https://github.com/arendst/Tasmota/releases/download/v6.1.1/sonoff-classic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v7.2.0**](https://github.com/arendst/Tasmota/releases/download/v7.2.0/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v8.1.0**](https://github.com/arendst/Tasmota/releases/download/v8.1.0/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**Current release**](https://github.com/arendst/Tasmota/releases/)
+ **v1.0.11** &nbsp;:twisted_rightwards_arrows:&nbsp; [**v3.9.22**](https://github.com/arendst/Tasmota/releases/download/v3.9.22/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v4.2.0**](https://github.com/arendst/Tasmota/releases/download/v4.2.0/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v5.14.0**](https://github.com/arendst/Tasmota/releases/download/v5.14.0/sonoff-classic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v6.7.1**](https://github.com/arendst/Tasmota/releases/download/v6.7.1/sonoff-classic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v7.2.0**](https://github.com/arendst/Tasmota/releases/download/v7.2.0/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v8.5.1**](https://github.com/arendst/Tasmota/releases/download/v8.5.1/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**Current release**](https://github.com/arendst/Tasmota/releases/)
 
 Follow the path strictly to ensure success. **Do not install only tasmota-minimal.bin** but upgrade to full, working firmware. Linked `-lite/-classic.bin` binaries will do the job.  
 
@@ -175,8 +175,8 @@ Follow the path strictly to ensure success. **Do not install only tasmota-minima
   As a safeguard perform a **Backup Configuration** before installing the new version. If settings are lost after the upgrade perform a **Restore Configuration**.
 
 
-  * Upgrade from **Tasmota 7.2** to **Tasmota 8.1**
-  * Upgrade from **Tasmota 8.1** to **Tasmota 8.x**
+  * Upgrade from **Tasmota 7.2** to **Tasmota 8.5.1**
+  * Upgrade from **Tasmota 8.5.1** to **Tasmota 9.x**
 -->
 
 
