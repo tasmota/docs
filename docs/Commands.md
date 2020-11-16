@@ -741,6 +741,7 @@ Command|Parameters
 :---|:---
 KnxTx_Cmnd<x\><a class="cmnd" id="KnxTx_Cmnd"></a>|`0` or `1` = send command using slot <x\> set in KNX Menu at KNX_TX
 KnxTx_Val<x\><a class="cmnd" id="KnxTx_Val"></a>|`<value>` = send float value using slot <x\> set in KNX Menu at KNX_TX
+KnxTx_Scene<a class="cmnd" id="KnxTx_Scene"></a>|`<value>` = send scene number to the GA set in KNX Menu
 KNX_ENABLED<a class="cmnd" id="KNX_ENABLED"></a>|Status of KNX Communications<BR>`0` = set to Disable<BR>`1` = set to Enable
 KNX_ENHANCED<a class="cmnd" id="KNX_ENHANCED"></a>|Status of Enhanced mode for KNX Communications<BR>`0` = set to Disable<BR>`1` = set to Enable
 KNX_PA<a class="cmnd" id="KNX_PA"></a>|KNX Physical Address<BR>`0.0.0` = address not set<BR>`x.x.x` = set the device address (example `1.1.0`)
