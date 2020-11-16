@@ -95,12 +95,6 @@ Upgrade 1
 ```
 Wait for the upgrade process to complete and check the Tasmota version. In console you can use `Status 2`.
 
-### Using Device Button
-
-Devices with a built in button (the one used to put your device into [flash mode](Getting-Started#programming-mode)) can initiate OTA upgrade with it.
-
-7 short presses of the button will start OTA download of firmware using the Ota Url. Device LED is lit during the update.
-
 ## Serial Upgrade
 
 Upgrade over the serial connection using serial-to-USB adapter.
