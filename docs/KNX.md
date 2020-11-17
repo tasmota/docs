@@ -125,7 +125,7 @@ Example: ``rule on event#knxrx_val1 do var1 %value% endon`` to store the value r
 
 Also, if a Read request is received from KNX Network, we can use that in a rule as for example: ``rule on event#knxrx_req1 do knxtx_val1 %var3% endon``
 
-NOTE: KnxTX_valn command, KNXRX_Reqn trigger and sensors' telegrams, uses KNX DPT14 (32 bits float) since 9.1.0.1. Old versions use DPT9 (16 bits float). Old and new versions can not send values between each other. Only commands. It is recommended to have all devices on the same version.
+NOTE: KnxTX_valn command, KNXRX_Reqn trigger and sensors' telegrams, uses KNX DPT14 (32 bits float) since 9.1.0.2 . Old versions use DPT9 (16 bits float). Old and new versions can not send values between each other. Only commands. It is recommended to have all devices on the same version.
 
 ### 6) Rule to send KNX Telegram with BH1750 Sensor Data: ###
 
