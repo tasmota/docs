@@ -47,6 +47,7 @@ For using rules:
 * receive KNX command (on/off)
 * send values by KNX (any float type, temperature for example)
 * receive a KNX read request
+* send and receive SCENE commands
 
 ## Usage Examples ##
 
@@ -99,7 +100,7 @@ DEVICE 2
 
 ### 4) Setting a Temperature sensor:
 
-We can configure to send the value of temperature or humidity every teleperiod. This teleperiod can be configured. See TasmotaTasmota [wiki](Commands.md). It is recommended also to set the reply temperature address.
+We can configure to send the value of temperature or humidity every teleperiod. This teleperiod can be configured. See TasmotaTasmota [docs](Commands.md). It is recommended also to set the reply temperature address.
 
 <img src="https://raw.githubusercontent.com/ascillato/Tasmota_KNX/KNX_development/.github/7.jpg" />
 
@@ -123,6 +124,8 @@ In rules we can use the events to catch the reception of VALUES from KNX to thos
 Example: ``rule on event#knxrx_val1 do var1 %value% endon`` to store the value received in the variable VAR1
 
 Also, if a Read request is received from KNX Network, we can use that in a rule as for example: ``rule on event#knxrx_req1 do knxtx_val1 %var3% endon``
+
+NOTE: KnxTX_valn command, KNXRX_Reqn trigger and sensors' telegrams, uses KNX DPT14 (32 bits float) since 9.1.0.2 . Old versions use DPT9 (16 bits float). Old and new versions can not send values between each other. Only commands. It is recommended to have all devices on the same version.
 
 ### 6) Rule to send KNX Telegram with BH1750 Sensor Data: ###
 
