@@ -33,16 +33,19 @@ If the Tasmotadevice is connecting to a Wifi Repeater you might experience some 
 The implemented features, up to now, in KNX for Tasmota are:
 
 General:
+
 * buttons (just push)
 * relays (on/off/toggle)
 * lights (led strips, etc. but just on/off)
 
 Sensor lists that you can use in KNX is (only one sensor per type):
+
 * Temperature
 * Humidity
 * Energy (v, i, power)
 
 For using rules:
+
 * send KNX command (on/off)
 * receive KNX command (on/off)
 * send values by KNX (any float type, temperature for example)
