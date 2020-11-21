@@ -36,6 +36,9 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Ho
 !!! warning 
     If you have been using `SetOption19 1` setting it to `SetOption19 0` will remove your Tasmota device from the MQTT device list and add it to the Tasmota integrations in HA. They will be treated as different entities in HA!
 
+!!! warning 
+    Do not change the fulltopic in order to use this feature. Leave it as default.
+
 ### Supported Entities
 
 - Lights will be added as Home Assistant light entities.
