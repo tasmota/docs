@@ -206,10 +206,10 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 181      | 4064     | SM2135 DAT      | SM2135 Dat                                                                                 |
 | 182      | 4096     | DeepSleep       | DeepSleep wake switch                                                                      |
 | 183      | 4128     | EXS Enable      | EXS Dimmer MCU Enable                                                                      |
-| 184      | 4160     | Slave TX        | TasmotaClient TX                                                                           |
-| 185      | 4192     | Slave RX        | TasmotaClient RX                                                                           |
-| 186      | 4224     | Slave RST       | TasmotaClient Reset Pin                                                                    |
-| 187      | 4256     | Slave RSTi      | TasmotaClient Reset Inverted                                                               |
+| 184      | 4160     | Client TX       | TasmotaClient TX                                                                           |
+| 185      | 4192     | Client RX       | TasmotaClient RX                                                                           |
+| 186      | 4224     | Client RST      | TasmotaClient Reset Pin                                                                    |
+| 187      | 4256     | Client RSTi     | TasmotaClient Reset Inverted                                                               |
 | 188      | 4288     | HPMA RX         | Honeywell HPMA115S0 Serial Rx                                                              |
 | 189      | 4320     | HPMA TX         | Honeywell HPMA115S0 Serial Tx                                                              |
 | 190      | 4352     | GPS RX          | GPS Serial Tx                                                                              |
