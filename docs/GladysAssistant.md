@@ -1,4 +1,4 @@
-<img src="_media/logo/gladys.png" title="Gladys Assistant" style="float:right"/>
+<img src="../_media/logo/gladys.png" title="Gladys Assistant" style="float:right"/>
 Tasmota supports [Gladys Assistant](https://gladysassistant.com/) MQTT for both relays and sensors.
 HTTP protocol incoming soon.
 
@@ -15,6 +15,7 @@ The following servers should be made available:
 [Gladys Assistant](https://gladysassistant.com/) automatically discovers Tasmota devices (once all are connected on same MQTT broker).
 
 On [Gladys Assistant](https://gladysassistant.com/) application:
+
 1. Go to `Integration` page
 2. Look for `Tasmota` element, click on it
 3. Then, `MQTT discover`
