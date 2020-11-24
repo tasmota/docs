@@ -707,7 +707,7 @@ Backlog switchmode1 1; rule1 1
 ```haskell
 Rule1 ON switch1#state=1 DO Backlog Power1 on; ruletimer1 0 ENDON
 ON switch1#state=0 DO ruletimer1 300 ENDON
-ON rules#timer=1 DO Power1 0 ENDON
+ON rules#timer=1 DO Power1 off ENDON
 ```
 
 
@@ -981,7 +981,7 @@ This ensures that Rule1 is triggered when Timer3 starts (in the morning) and sto
 ```haskell
 Rule2
   ON Clock#Timer=3 DO Rule1 1 ENDON
-  ON Clock#Timer=4 DO  Rule1 0  ENDON
+  ON Clock#Timer=1 DO Rule1 0 ENDON
 
 Rule2 1
 ```
