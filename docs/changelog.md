@@ -5,6 +5,8 @@ replace with: [#$1](https://github.com/arendst/Tasmota/issues/$1)
      
 -->
 
+[CHANGELOG.md](https://github.com/arendst/Tasmota/blob/development/CHANGELOG.md) tracks changes after 8.5.1
+
 ### Version 8.5.1 Hannah
 
 - Fix energy total counters [#9263](https://github.com/arendst/Tasmota/issues/9263), [#9266](https://github.com/arendst/Tasmota/issues/9266)
