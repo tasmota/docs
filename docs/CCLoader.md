@@ -1,5 +1,5 @@
 # CCLoader
-!(development version feature)
+!!! info "development version feature"  
 
 This is a port of the CCLoader utility from RedBearLab in form of a driver for Tasmota. The main difference is, that now only one ESP8266 is needed to do all the tasks. As a result OTA-upgrades are possible too.  
   
@@ -20,8 +20,19 @@ The driver must be enabled manually for a self compiled Tasmota binary.
   
   
 After reboot the connect CC25xx chip will be reported in the console and the WebUI.  
-Then chose „Firmware Upgrade“ in the WebUI and chose the correct firmware as a .bin-file. 
-This will start the upgrade. The progress will be printed to the console and after the finish, the device gets rebooted. 
+
+Then chose **Firmware Upgrade** in the WebUI.  
+  
+![Upgrading_1](https://user-images.githubusercontent.com/5904370/68962045-fbaaf380-07d3-11ea-9736-a44c13ef7653.png)
+  
+Now download the correct firmware as a .bin-file, if you haven't done already. Do not use a .hex-file. These can be found for various chips here:  
+https://github.com/Jason2866/CCLoader/tree/master/Bin 
+
+Select **_Ugprade by file upload_**, like you would do for a OTA upgrade of the Tasmota firmware. If a CC25xx chip was successfully detected and the selected file passes a (very minimalistic) check, this will trigger the upload to the CC25xx.  
+  
+![Upgrading_2](https://user-images.githubusercontent.com/5904370/68962130-301eaf80-07d4-11ea-87bb-54c018fe7794.png)
+  
+This will start the upgrade, which will take several seconds. The progress will be printed to the console and after the finish, the device gets rebooted. 
 A power cycle is recommended. That’s it.  
   
 Now it might be a good time to upload a Zigbee- or HM1x-firmware to your ESP8266.  
