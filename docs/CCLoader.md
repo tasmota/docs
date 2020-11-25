@@ -19,18 +19,20 @@ The driver must be enabled manually for a self compiled Tasmota binary.
 `#define USE_CCLOADER`  
   
   
-After reboot the connect CC25xx chip will be reported in the console and the WebUI.  
+After reboot the connected CC25xx chip will be reported in the console and the WebUI.  
+  
+![CCLoader_1](./_media/ccloader.png)
 
 Then chose **Firmware Upgrade** in the WebUI.  
   
-![Upgrading_1](https://user-images.githubusercontent.com/5904370/68962045-fbaaf380-07d3-11ea-9736-a44c13ef7653.png)
+![CCLoader_2](https://user-images.githubusercontent.com/5904370/68962045-fbaaf380-07d3-11ea-9736-a44c13ef7653.png)
   
 Now download the correct firmware as a .bin-file, if you haven't done already. Do not use a .hex-file. These can be found for various chips here:  
 https://github.com/Jason2866/CCLoader/tree/master/Bin 
 
 Select **_Ugprade by file upload_**, like you would do for a OTA upgrade of the Tasmota firmware. If a CC25xx chip was successfully detected and the selected file passes a (very minimalistic) check, this will trigger the upload to the CC25xx.  
   
-![Upgrading_2](https://user-images.githubusercontent.com/5904370/68962130-301eaf80-07d4-11ea-87bb-54c018fe7794.png)
+![CCLoader_3](https://user-images.githubusercontent.com/5904370/68962130-301eaf80-07d4-11ea-87bb-54c018fe7794.png)
   
 This will start the upgrade, which will take several seconds. The progress will be printed to the console and after the finish, the device gets rebooted. 
 A power cycle is recommended. That’s it.  
