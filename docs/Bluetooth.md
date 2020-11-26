@@ -288,13 +288,7 @@ The stability of regular readings will be strongly influenced by the local envir
 
 ## BLE Sensors on ESP32 using built-in Bluetooth
 
-You must [compile your build](Compile-your-build) for the ESP32. Change the following to `user_config_override.h`:
-
-```
-#ifdef ESP32
-  #define USE_MI_ESP32                          // Add support for ESP32 as a BLE-bridge (+9k2 mem, +292k flash)
-#endif // ESP8266
-```
+Since Tasmota v9.1.0.1 this driver is part of the standard build 'tasmota32'. It must be enabled at runtime via `setoption115 1`. 
   
 To turn on/off support for decyrption, change the following in the driver code:  
 
@@ -317,7 +311,9 @@ MI32Unit <a id="mi32unit"></a>|`<n>` = toggle the displayed temperature units of
 MI32Page<a id="mi32page"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
 MI32Battery<a id="mi32battery"></a>|Reads missing battery data for LYWSD02, Flora and CGD1.
 MI32Key<a id="mi32key"></a>| Set a "bind_key" for a MAC-address to decrypt sensor data (LYWSD03MMC, MJYD2S). The argument is a 44 uppercase characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string
-MI32Beaconx <a id="mi32key"></a>| Set a BLE device as a beacon using the (fixed) MAC-address<BR>x - set beacon 1 .. 4 <BR> x= 0 - will start a BLE scan and print result to the console <BR>`<value>` (12 or 17 characters) = use beacon given the MAC interpreted as a string `AABBCCDDEEFF` (also valid: `aa:BB:cc:dd:EE:FF`)  MAC of `00:00:00:00:00:00` will stop beacon x   
+MI32Beaconx <a id="mi32beacon"></a>| Set a BLE device as a beacon using the (fixed) MAC-address<BR>x - set beacon 1 .. 4 <BR> x=0 - will start a BLE scan and send result via TELE-message <BR>`<value>` (12 or 17 characters) = use beacon given the MAC interpreted as a string `AABBCCDDEEFF` (also valid: `aa:BB:cc:dd:EE:FF`)  MAC of `00:00:00:00:00:00` will stop beacon x
+MI32Blockx <a id="mi32block"></a>| Ignore Xiaomi sensors using the (fixed) MAC-address<BR>x=1 - show block list<BR>x=0 - delete block list<BR> x=1 + MAC-address - add MAC to to be blocked to the block list<BR>x=0 + MAC-address - remove MAC to to be blocked to the block list<BR>`<value>` (12 or 17 characters) = MAC interpreted as a string `AABBCCDDEEFF` (also valid: `aa:BB:cc:dd:EE:FF`)
+MI32Optionx 0/1<a id="mi32option"></a>| Set driver options at runtime<BR> x=0 - 0 -> sends only recently received sensor data, 1 -> aggregates all recent sensors data types<BR>x=1 - 0 -> shows full sensor data at TELEPERIOD, 1 -> shows no sensor data at TELEPERIOD<BR>x=2 - 0 -> sensor data only at TELEPERIOD (default and "usual" Tasmota style), 1 -> direct bridging of BLE-data to mqtt-messages
   
 !!! tip 
 If you really want to read battery for LYWSD02, Flora and CGD1, consider doing it once a day with a RULE:
