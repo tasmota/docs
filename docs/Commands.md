@@ -625,7 +625,7 @@ Command|Parameters
 :---|:---
 ZbModelId<a class="cmnd" id="zbmodelid"></a>|Manually force the `ModelId` field of a Zigbee device. This is used to simulate devicesnot physically present on the network, for debugging only.<BR>`<device>,<modelid>` = set new ModelId<BR>`<device>,` = (empty modelid) clear ModelId<BR>`<device>` = display current ModelId (also displayed in `ZbStatus2`)
 ZbProbe<a class="cmnd" id="zbprobe"></a>|`<device>`= probe a Zigbee device to get additional information including its IEEEaddress, vendor and model names, endpoints, and supported clusters per endpoint.<BR>Device probe is performed automatically when a new Zigbee device connects.<BR>Battery powered Zigbee devices can not be probed in general because they are usually in sleep mode.
-ZbRead<a class="cmnd" id="zbread"></a>|Removed in favor of `ZbSend` with "Read" attribute.
+ZbRead<a class="cmnd" id="zbread"></a>|[Removed](https://github.com/arendst/Tasmota/pull/8572) in favor of `ZbSend` with "Read" attribute.
 ZbReset<a class="cmnd" id="zbreset"></a>|`1` = perform a factory reset and reconfiguration of the CC2530 chip.<BR>:warning: **You will need to re-pair all Zigbee devices**
 ZbRestore<a class="cmnd" id="zbrestore"></a>|Restores a device configuration previously dumped with `ZbStatus2`. This command does not pair a device, but lets you get back device configuration like ModelId or IEEEAddress.<BR>`<json>` = json contains the fields dumped with `ZbStatus2`. `<json>` can contain multiple devices (if they fit).
 ZbSave &#60;hex><a class="cmnd" id="zbsave"></a>|Forces saving the Zigbee device information to Flash. Auto-saving happens 10 seconds after a new Device parameter was changed, this command is normally not useful
