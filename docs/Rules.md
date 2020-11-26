@@ -981,7 +981,7 @@ This ensures that Rule1 is triggered when Timer3 starts (in the morning) and sto
 ```haskell
 Rule2
   ON Clock#Timer=3 DO Rule1 1 ENDON
-  ON Clock#Timer=4 DO  Rule1 0  ENDON
+  ON Clock#Timer=1 DO Rule1 0 ENDON
 
 Rule2 1
 ```
