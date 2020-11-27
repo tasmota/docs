@@ -26,7 +26,7 @@ You must [compile your build](Compile-your-build) for the ESP32 (since v9.1). Ch
 ```
 #ifdef ESP32
   #define USE_IBEACON_ESP32    // Use internal ESP32 Bluetooth module
-#endif // ESP8266
+#endif // ESP32
 ```
 
 ### Features
