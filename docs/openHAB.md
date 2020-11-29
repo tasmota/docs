@@ -51,7 +51,7 @@ Thing mqtt:topic:tasmota:tasmota_TH "Light_TH" (mqtt:broker:myMQTTBroker) {
         Type switch : PowerSwitch  [stateTopic="stat/tasmota_TH/POWER",   commandTopic="cmnd/tasmota_TH/POWER", on="ON", off="OFF"]
 
         // Sonoff Pow (read current wattage; for read and switch on-state see above)
-        Type number : Power        [stateTopic="tele/tasmota_TH/SENSOR", transformationPattern="JSONPATH:$.ENERGY.Power"}
+        Type number : Power        [stateTopic="tele/tasmota_TH/SENSOR", transformationPattern="JSONPATH:$.ENERGY.Power"]
 
         // devices including AM2301 temperature sensor
         Type number : Temperature  [stateTopic="tele/tasmota_TH/SENSOR",  transformationPattern="JSONPATH:$.AM2301.Temperature"]
