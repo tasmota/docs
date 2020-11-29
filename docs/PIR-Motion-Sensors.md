@@ -40,7 +40,8 @@ Pin marked VOUT is connected to a free GPIO pin on the device.
 
 This PIR goes to off state after a few seconds so we need to use this rule *instead* of the one in the example. 
 ```console
-Rule1 on Switch1#state=1 do Backlog Publish stat/%topic%/PIR1 ON; RuleTimer1 30 endon on Rules#Timer=1 do Publish stat/%topic%/PIR1 OFF endon
+SwitchMode1 14
+Rule1 on Switch1#state=1 do Backlog Publish stat/%topic%/PIR1 ON; Power1 ON; RuleTimer1 30 endon on Rules#Timer=1 do Backlog Publish stat/%topic%/PIR1 OFF; Power1 OFF endon
 ```
 With this it will stay ON for 30 seconds then send OFF message and the timer restarts every time there's an ON trigger.
 
