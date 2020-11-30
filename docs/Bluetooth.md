@@ -198,6 +198,17 @@ The sensor namings are based on the original sensor names and shortened if appro
 All sensors are treated as if they are physically connected to the ESP8266 device. For motion and remote control sensors MQTT-messages will be published in (nearly) real time.
 The ESP32 and the HM-1x-modules are real BLE devices whereas the NRF24L01 (+) is only a generic 2.4 GHz transceiver with very limited capabilities.  
   
+##### Options to read out the LYWSD03MMC  
+  
+1. Generate a bind_key  
+The web-tool https://atc1441.github.io/TelinkFlasher.html allows the generation of a so-called bind_key by faking a pairing with the Xiaomi cloud. You can copy-paste this key and add the MAC to use this resultig key-MAC-string with key-command (NRFkey or MI32key). Then the driver will receive the sensors data roughly every 10 minutes (in two chunks for humidity and temperature with about a minute in between) and decode the data. This is the most energy efficient way. 
+This option is currently not available for the HM-10 because of memory considerations as part of the standard sensor-firmware package.  
+  
+2. Use the same https://atc1441.github.io/TelinkFlasher.html to flash a custom ATC-firmware on the LYWSD03MMC. This will work out of the box with all three Tasmota-drivers. There is a slight chance of bricking the sensor, which would require some soldering and compiling skills to un-brick. This firmware does send data more frequently and is a little bit more power hungry than the stock firmware.  
+  
+3. By default on the HM-10 (for legacy reasons) and at compile-time selectable on the ESP32 is the method to connect to the sensor from time to time. This circumvents the data encryption. This is very power hungry and drains the battery fast. Thus it is only recommended as fallback mechanism.
+
+  
 ## BLE Sensors using HM-1x
 
 !!! info "This feature is included only in tasmota-sensors.bin"
