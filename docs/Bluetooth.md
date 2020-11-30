@@ -183,7 +183,7 @@ This project also provides a custom firmware for the LYWSD03MMC, which then beco
 This key and the corresponding MAC of the sensor can be injected with the NRFKEY-command (or NRFMJYD2S). It is probably a good idea to save the whole config as RULE like that:  
   
 ```haskell
-rule1 on System#Init do backlog NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFPage 6; NRFUse 0; NRFUse 4 endon
+rule1 on System#Boot do backlog NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFPage 6; NRFUse 0; NRFUse 4 endon
 ```  
 (key for two sensors, 6 sensors per page in the WebUI, turn off all sensors, turn on LYWS03)  
   
@@ -202,6 +202,10 @@ The ESP32 and the HM-1x-modules are real BLE devices whereas the NRF24L01 (+) is
   
 1. Generate a bind_key  
 The web-tool https://atc1441.github.io/TelinkFlasher.html allows the generation of a so-called bind_key by faking a pairing with the Xiaomi cloud. You can copy-paste this key and add the MAC to use this resultig key-MAC-string with key-command (NRFkey or MI32key). Then the driver will receive the sensors data roughly every 10 minutes (in two chunks for humidity and temperature with about a minute in between) and decode the data. This is the most energy efficient way. 
+The current way of storing these keys on the ESP32 is to use RULES like that (for the NRF24L01 you would use NRFkey):  
+```haskell
+rule1 on System#Boot do backlog MI32key 00112233445566778899AABBCCDDEEFF112233445566; MI32key 00112233445566778899AABBCCDDEEFFAABBCCDDEEFF endon
+```  
 This option is currently not available for the HM-10 because of memory considerations as part of the standard sensor-firmware package.  
   
 2. Flash custom ATC-firmware  
