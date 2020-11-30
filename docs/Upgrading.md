@@ -67,7 +67,7 @@ When you try to immediately upgrade with the new binary without using smaller mi
 ![Upgrading_4](https://user-images.githubusercontent.com/5904370/68962296-85f35780-07d4-11ea-90ae-86fcd7d14681.png)
 
 #### Minimal build upgrade step
-==This step is necessary only if you get the above error==    
+==This step is necessary only if you get the "Upload buffer miscompare" error==    
 Browse to the minimal binary with ***Choose File***. The chosen filename should be visible.    
 _In our example its `tasmota-minimal.bin`._
 
