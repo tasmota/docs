@@ -4,7 +4,7 @@ EZO is a series of chemical sensors provided by [Atlas Scientific](https://atlas
 
 ## Configuration
 
-All EZO devices must operate under the I2C mode to be compatible with Tastmota.  One of the easiest way to achieve this is to short **SDA/Tx to PGND** while powering the device through **VCC & GND**.  For more details, see [Instructables](https://www.instructables.com/UART-AND-I2C-MODE-SWITCHING-FOR-ATLAS-SCIENTIFIC-E/).
+All EZO devices must operate under the I2C mode to be compatible with Tasmota.  One of the easiest way to achieve this is to short **SDA/Tx to PGND** while powering the device through **VCC & GND**.  For more details, see [Instructables](https://www.instructables.com/UART-AND-I2C-MODE-SWITCHING-FOR-ATLAS-SCIENTIFIC-E/).
 
 <img src="https://myhydropi.com/wp-content/uploads/2016/07/temp-manual-i2c-config.png" />
 
