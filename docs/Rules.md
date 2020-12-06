@@ -926,8 +926,12 @@ Backlog mem1 360; mem2 1350; Rule1 1; Rule2 1
 ### Enable a PIR Switch only at night
 
 Latitude and Longitude need to be set in config.
+Use PulseTime to specify the duration the light should remains on. Every PIR trigger will restart for that amount of time.
 
-`SwitchMode1 1`
+```haskell
+SwitchMode1 14
+PulseTime 60
+```
 
 ```haskell
 Rule1
