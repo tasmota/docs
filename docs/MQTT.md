@@ -190,3 +190,24 @@ or use the following tutorials/forum threads:
 * [Clearing retained messages with mosquitto](https://community.openhab.org/t/clearing-mqtt-retained-messages/58221)
 * [Remove retained messages in Home Assistant](https://community.home-assistant.io/t/mqtt-how-to-remove-retained-messages/79029)
 * [Remove retained messages in hass.io MQTT addon](https://community.home-assistant.io/t/clear-hass-io-mosquitto-broker-add-on-retain-messages/57250/3)
+
+## Return codes (rc)
+
+Sometimes, something wrong can happen and you might need to check return codes.
+
+A return code can be found in the console, example output for Return Code = `5` : `MQT: Connect failed to xxxx:1883, rc 5. Retry in 10 sec`
+
+Below table provides more information about it. The original values are related to [PubSubClient.h constants](https://pubsubclient.knolleary.net/api.html#state).
+
+|Code |Constant name |Description |
+|-|-|-|
+|-4|MQTT_CONNECTION_TIMEOUT|the server didn't respond within the keepalive time|
+|-3|MQTT_CONNECTION_LOST|the network connection was broken|
+|-2|MQTT_CONNECT_FAILED|the network connection failed|
+|-1|MQTT_DISCONNECTED|the client is disconnected cleanly|
+|0|MQTT_CONNECTED|the client is connected|
+|1|MQTT_CONNECT_BAD_PROTOCOL|the server doesn't support the requested version of MQTT|
+|2|MQTT_CONNECT_BAD_CLIENT_ID|the server rejected the client identifier|
+|3|MQTT_CONNECT_UNAVAILABLE|the server was unable to accept the connection|
+|4|MQTT_CONNECT_BAD_CREDENTIALS|the username/password were rejected|
+|5|MQTT_CONNECT_UNAUTHORIZED|the client was not authorized to connect|
