@@ -66,8 +66,10 @@ When you try to immediately upgrade with the new binary without using smaller mi
 
 ![Upgrading_4](https://user-images.githubusercontent.com/5904370/68962296-85f35780-07d4-11ea-90ae-86fcd7d14681.png)
 
-#### Minimal build upgrade step
-==This step is necessary only if you get the "Upload buffer miscompare" error==    
+### Upload Buffer Miscompare Error
+==This step is necessary only if you get the "Upload buffer miscompare" error== 
+
+This means your flash doesn't have enough free space to install the binary you're trying to upload. Use a .gz binary instead of the .bin one. If you still receive the same error download tasmota-minimal.bin(.gz) and follow instructions:
 
 Browse to the minimal binary with ***Choose File***. The chosen filename should be visible.    
 _In our example its `tasmota-minimal.bin`._
