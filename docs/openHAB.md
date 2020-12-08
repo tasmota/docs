@@ -12,7 +12,7 @@ The screenshot of an openHAB Sitemap below features a few Sonoff modules for lig
 
 * Working openHAB installation ([see documentation](https://www.openhab.org/docs/))
 * Configured Tasmota device (accessible from your local network)
-* MQTT broker available (e.g. Eclipse Mosquitto via [openHABian](https://www.openhab.org/docsopenhabian.html))
+* MQTT broker available (e.g. Eclipse Mosquitto via [openHABian](https://www.openhab.org/docs/installation/openhabian.html#openhabian-hassle-free-openhab-setup))
 * A [basic understanding of MQTT](http://www.hivemq.com/blog/mqtt-essentials) 
 * Working and tested connection between openHAB and the MQTT broker
 * (optional) Standalone [MQTT client](http://www.hivemq.com/blog/seven-best-mqtt-client-tools) (e.g. [MQTT Explorer](https://mqtt-explorer.com/)) to observe and identify messages on the MQTT broker

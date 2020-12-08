@@ -1,6 +1,6 @@
 The Shelly 1 is supported in Tasmota from version 6.2.1.7<br>
 
-<img src="https://shelly.cloud/wp-content/uploads/2018/11/shelly1_thumb.png" width="250" align="right" />
+<img src="https://shelly.cloud/wp-content/uploads/2020/06/shelly1.jpg" width="250" align="right" />
 
 * [Allterco Shelly 1 Product Page](https://shelly.cloud/shelly1-open-source/)
 * [Allterco Shelly 1 Shop](https://shelly.cloud/product/shelly-1-open-source/)
@@ -9,6 +9,9 @@ The Shelly 1 is supported in Tasmota from version 6.2.1.7<br>
 
 **DO NOT CONNECT ANYTHING TO ANY GPIOs OF THESE DEVICES!!! (No sensors, no switches, nothing) <br>
 The GPIOs on the Shelly are connected to AC power!** Only use a Shelly as designed. 
+
+**There is possibility to attach DS18B20 or other sensors BUT only using Digital Voltage Isolator**
+For example the company sells [Temperature Sensor AddOn for Shelly 1/1PM](https://shop.shelly.cloud/temperature-sensor-addon-for-shelly-1-1pm-wifi-smart-home-automation#312) with DS18B20. This should not fool you, **never ever attach any sensor directly to the GPIOs** - this expansion board uses TexasInstruments ISO7221 for voltage isolation. More information and Tasmota support for the extension board at https://github.com/arendst/Tasmota/issues/7469.
 
 **Do not connect AC power and the serial connection at the same time**
 The GND connection of the Shelly is connected to the live AC wire. Connecting serial with your PC will fry your PC.

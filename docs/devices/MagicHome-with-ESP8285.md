@@ -60,13 +60,13 @@ Manual configuration:
 
 **Arilux LC02 (ZJ-WFMN-B V1.1)**
 
-| Field | Value |
-|---|---|
-|Module type|18 Generic| 
-|GPIO5|38 PWM2|
-|GPIO12|39 PWM3|
-|GPIO13|40 PWM4|
-|GPIO14|37 PWM1|
+| Field | Value | Function |
+|---|---|---|
+|Module type|18 Generic|Module type|
+|GPIO5|38 PWM2|GREEN|
+|GPIO12|39 PWM3|BLUE|
+|GPIO13|40 PWM4|WHITE|
+|GPIO14|37 PWM1|RED|
 
 **Arilux LC03 (ZJ-WFMN-A V1.1)**
 
