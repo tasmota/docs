@@ -67,7 +67,8 @@ When you try to immediately upgrade with the new binary without using smaller mi
 ![Upgrading_4](https://user-images.githubusercontent.com/5904370/68962296-85f35780-07d4-11ea-90ae-86fcd7d14681.png)
 
 #### Minimal build upgrade step
-==This step is necessary only if you get the above "Upload buffer miscompare" error==    
+==This step is necessary only if you get the "Upload buffer miscompare" error==    
+
 Browse to the minimal binary with ***Choose File***. The chosen filename should be visible.    
 _In our example its `tasmota-minimal.bin`._
 
@@ -142,9 +143,12 @@ Upgrading from one minor version to the next is mostly painless as the settings 
 As said, mostly painless! There are some deviations to this rule as the flash settings changed. 
 
 ### Upgrade Flow
- **v1.0.11** &nbsp;:twisted_rightwards_arrows:&nbsp; [**v3.9.22**](https://github.com/arendst/Tasmota/releases/download/v3.9.22/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v4.2.0**](https://github.com/arendst/Tasmota/releases/download/v4.2.0/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v5.14.0**](https://github.com/arendst/Tasmota/releases/download/v5.14.0/sonoff-classic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v6.7.1**](https://github.com/arendst/Tasmota/releases/download/v6.7.1/sonoff-classic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v7.2.0**](https://github.com/arendst/Tasmota/releases/download/v7.2.0/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v8.5.1**](https://github.com/arendst/Tasmota/releases/download/v8.5.1/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**Current release**](https://github.com/arendst/Tasmota/releases/)
+ **v1.0.11** &nbsp;:twisted_rightwards_arrows:&nbsp; [**v3.9.22**](https://github.com/arendst/Tasmota/releases/download/v3.9.22/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v4.2.0**](https://github.com/arendst/Tasmota/releases/download/v4.2.0/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v5.14.0**](https://github.com/arendst/Tasmota/releases/download/v5.14.0/sonoff-classic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v6.7.1**](https://github.com/arendst/Tasmota/releases/download/v6.7.1/sonoff-basic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v7.2.0**](https://github.com/arendst/Tasmota/releases/download/v7.2.0/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v8.5.1**](https://github.com/arendst/Tasmota/releases/download/v8.5.1/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v9.1**](https://github.com/arendst/Tasmota/releases/download/v9.1.0/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**Current release**](https://github.com/arendst/Tasmota/releases/)
 
 Follow the path strictly to ensure success. **Do not install only tasmota-minimal.bin** but upgrade to full, working firmware. Linked `-lite/-classic.bin` binaries will do the job.  
+
+!!! warning "Tasmota v9.1 introduced a major change in GPIO mapping"
+    Downgrading is not recommended and will probably not work correctly.
 
 !!! warning "Tasmota v8.1 introduced a major change in parameter storage."
     Downgrading is not recommended and upgrading to 8.1 **has to follow** the recommended path and **can still** fail in some cases. Don't forget to backup!

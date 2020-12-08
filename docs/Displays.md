@@ -293,8 +293,6 @@ The display dispatcher only does the class initialization call. All other calls 
 
 In black and white displays, a local RAM buffer must be allocated before calling the driver. This must be set to zero on character or TFT color displays.
 
-**Remark**: To use the 400x300 e-Paper display, the Arduino library 2.4 or later must be used because it leaves much more RAM available than prior versions. This display requires 15k of RAM!
-
 The EPD fonts use about 9k space, which can be selected at compile time using \#ifdef directives.
 
 - SSD1306 - 1.15k
