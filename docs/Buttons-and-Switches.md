@@ -52,17 +52,17 @@ Tasmota sends `TOGGLE` command each time the state of the circuit changes (closi
      When the button is pressed, toggle the power to ring the doorbell; when the button is released, ring the doorbell again.
 
 **`SwitchMode 1`**
+Set switch to inverted follow mode (`0 = ON`, `1 = OFF`)
+
+At the time when the circuit is closed, Tasmota will send `OFF` and opening the circuit sends `ON`.
+
+**`SwitchMode 2`**
 Set switch to follow mode (`0 = OFF`, `1 = ON`)
 
 At the time when the circuit is closed, Tasmota will send `ON` and opening the circuit sends `OFF`.
 
 !!! tip
-    You want to use `SwitchMode 1` when connecting a [toggle switch](https://en.wikipedia.org/wiki/Switch#Toggle_switch) (e.g. a classic light switch) to your  device. This way the "software switch" will mirror the state of the "hardware switch". If the real switch is in the "ON" position, the state in Tasmota  is `ON` as well.
-
-**`SwitchMode 2`**
-Set switch to inverted follow mode (`0 = ON`, `1 = OFF`)
-
-At the time when the circuit is closed, Tasmota will send `OFF` and opening the circuit sends `ON`.
+    You want to use `SwitchMode 2` when connecting a [toggle switch](https://en.wikipedia.org/wiki/Switch#Toggle_switch) (e.g. a classic light switch) to your  device. This way the "software switch" will mirror the state of the "hardware switch". If the real switch is in the "ON" position, the state in Tasmota  is `ON` as well.
 
 !!! tip
     When connecting a momentary switch (i.e., a push-button) you will want to use `SwitchMode 3..7`.
