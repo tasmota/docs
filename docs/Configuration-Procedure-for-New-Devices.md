@@ -15,7 +15,7 @@ Backlog SetOption0 0; SetOption36 1
 Assign every available GPIO to successive `Relay<x>` components. For the initial GPIO probe, exclude "dedicated" GPIO such as GPIO0/GPIO2 and Tx/Rx, etc. You can use a [Template](Templates) to easily perform these assignments:  
 
 ```json
-{"NAME":"ID Relays","GPIO":[0,0,0,0,21,22,0,0,23,24,25,26,27],"FLAG":0,"BASE":18}
+{"NAME":"ID Relays","GPIO":[0,0,0,0,224,225,0,0,226,227,228,229,230,0],"FLAG":0,"BASE":18}
 ```  
 
 #### Step 2a. 
@@ -23,12 +23,12 @@ Save the configuration. Once the device reboots, use the virtual buttons on the 
 
 - If you are unable to control some of the relays or LEDs on the device, they may be attached to the "dedicated" GPIO skipped in the initial probe. Now assign those GPIOs and repeat step _2a_:          
 ```json
-{"NAME":"ID Relays 2","GPIO":[21,22,23,24,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}
+{"NAME":"ID Relays 2","GPIO":[224,225,226,227,0,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}
 ```
 
 - If your device is based on the ESP8285 and you are still unable to control some of the relays or LEDs on the device, they may be attached to GPIO9 or GPIO10. Now assign those remaining GPIO and repeat step _2a_:  
 ```json
-{"NAME":"ID Relays 3","GPIO":[0,0,0,0,0,0,21,22,0,0,0,0,0],"FLAG":0,"BASE":18}
+{"NAME":"ID Relays 3","GPIO":[0,0,0,0,0,0,224,225,0,0,0,0,0,0],"FLAG":0,"BASE":18}
 ```
 
 #### Step 2b. 
