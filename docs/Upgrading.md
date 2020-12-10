@@ -18,7 +18,7 @@ Download binaries from:
 - development branch [OTA Server](http://ota.tasmota.com/tasmota/)
 - your [personal OTA server](#private-ota-server)
 
-### Gzipped binaries
+## Gzipped binaries
 
 !!! failure "Gzipped binaries can be used **only** once you've upgraded to atleast Tasmota 8.2"
     Trying to upgrade with a gzipped binary using versions older than 8.2 will fail.
@@ -27,7 +27,20 @@ Tasmota 8.2 introduced upgrading using gzipped binaries which are smaller in siz
 
 To use simply add `.gz` to the existing OTA Url or download the `.bin.gz` binary from the official [OTA Server](http://ota.tasmota.com/tasmota/release/) and the next upgrade will use the compressed file.
 
+## Upgrade Flow
+
+**v1.0.11** &nbsp;:twisted_rightwards_arrows:&nbsp; [**v3.9.22**](https://github.com/arendst/Tasmota/releases/download/v3.9.22/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v4.2.0**](https://github.com/arendst/Tasmota/releases/download/v4.2.0/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v5.14.0**](https://github.com/arendst/Tasmota/releases/download/v5.14.0/sonoff-classic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v6.7.1**](https://github.com/arendst/Tasmota/releases/download/v6.7.1/sonoff-basic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v7.2.0**](https://github.com/arendst/Tasmota/releases/download/v7.2.0/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v8.5.1**](https://github.com/arendst/Tasmota/releases/download/v8.5.1/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v9.1**](https://github.com/arendst/Tasmota/releases/download/v9.1.0/tasmota-lite.bin.gz) &nbsp;:twisted_rightwards_arrows:&nbsp; [**Current release**](https://github.com/arendst/Tasmota/releases/)
+
+Follow the path strictly to ensure success. **Do not install only tasmota-minimal.bin** but upgrade to full, working firmware. Linked `-lite.bin` binaries will do the job.  
+
+!!! warning "Tasmota v9.1 introduced a major change in GPIO mapping"
+    Downgrading is not recommended and will probably not work correctly.
+
+!!! warning "Tasmota v8.1 introduced a major change in parameter storage."
+    Downgrading is not recommended and upgrading to 8.1 **has to follow** the recommended path and **can still** fail in some cases. Don't forget to backup!
+
 ## Upgrade using webUI
+
 Upgrading the device firmware [over-the-air](https://en.wikipedia.org/wiki/Over-the-air_programming), aka OTA, is the most convenient way to upgrade. 
 
 To start the upgrade, open a web browser to your device's web UI and select **Firmware Upgrade**.
@@ -143,17 +156,6 @@ Remember that you **must take each individual step** between the device firmware
 Upgrading from one minor version to the next is mostly painless as the settings are saved in the same location in flash and newer settings are appended.
 
 As said, mostly painless! There are some deviations to this rule as the flash settings changed. 
-
-### Upgrade Flow
- **v1.0.11** &nbsp;:twisted_rightwards_arrows:&nbsp; [**v3.9.22**](https://github.com/arendst/Tasmota/releases/download/v3.9.22/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v4.2.0**](https://github.com/arendst/Tasmota/releases/download/v4.2.0/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v5.14.0**](https://github.com/arendst/Tasmota/releases/download/v5.14.0/sonoff-classic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v6.7.1**](https://github.com/arendst/Tasmota/releases/download/v6.7.1/sonoff-basic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v7.2.0**](https://github.com/arendst/Tasmota/releases/download/v7.2.0/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v8.5.1**](https://github.com/arendst/Tasmota/releases/download/v8.5.1/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v9.1**](https://github.com/arendst/Tasmota/releases/download/v9.1.0/tasmota-lite.bin.gz) &nbsp;:twisted_rightwards_arrows:&nbsp; [**Current release**](https://github.com/arendst/Tasmota/releases/)
-
-Follow the path strictly to ensure success. **Do not install only tasmota-minimal.bin** but upgrade to full, working firmware. Linked `-lite/-classic.bin` binaries will do the job.  
-
-!!! warning "Tasmota v9.1 introduced a major change in GPIO mapping"
-    Downgrading is not recommended and will probably not work correctly.
-
-!!! warning "Tasmota v8.1 introduced a major change in parameter storage."
-    Downgrading is not recommended and upgrading to 8.1 **has to follow** the recommended path and **can still** fail in some cases. Don't forget to backup!
 
 !!! quote "Notice for versions between 6.6.0.7 and 6.6.0.11"
     If you've used development versions between 6.6.0.7 and 6.6.0.11 [**back up your device settings**](#backing-up-settings). Convert the backup to human readable form as you **MUST** restore these settings manually.    
