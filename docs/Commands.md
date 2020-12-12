@@ -461,7 +461,7 @@ SetOption92<a class="cmnd" id="setoption92"></a>|Alternative to `Module 38`: for
 SetOption93<a class="cmnd" id="setoption93"></a>|Control caching of compressed rules<BR>`0` = Disable memory caching of uncompressed rules <BR>`1` = Keep uncompressed rules in memory to avoid CPU load of uncompressing at each tick _(default)_
 SetOption94<a class="cmnd" id="setoption94"></a>|Select MAX31855 or MAX6675 thermocouple support<BR>`0` = Use MAX31855 protocol _(default)_ <BR>`1` = Use simpler MAX6675 protocol instead of MAX31855 
 SetOption97<a class="cmnd" id="setoption97"></a>|Set TuyaMCU serial baudrate<BR>`0` = 9600 bps _(default)_ <BR>`1` = 115200 bps     
-SetOption98<a class="cmnd" id="setoption98"></a>|Provide rotary dimmer rule triggers<BR>`0` = disabled _(default)_ <BR>`1` = enabled     
+SetOption98<a class="cmnd" id="setoption98"></a>|Provide rotary dimmer rule triggers<BR>`0` = disabled _(default)_ <BR>`1` = enabled (see [Rules](Rules#use-a-rotary-encoder))
 SetOption99<a class="cmnd" id="setoption99"></a>|Enable zero-cross capable AC dimmer<BR>`0` = no zero-cross AC dimmer connected _(default)_ <BR>`1` = zero-cross AC dimmer attached. Focus on raising edge and sync frequency     
 SetOption100<a class="cmnd" id="setoption100"></a>|remove Zigbee `ZbReceived` value from `{"ZbReceived":{xxx:yyy}}` JSON message<BR>`0` = disabled _(default)_ <BR>`1` = enabled     
 SetOption101<a class="cmnd" id="setoption101"></a>|Add Zigbee source endpoint as suffix to attributes<BR>`0` = disabled _(default)_ <BR>`1` = enabled<BR>e.g. `Power3` instead of `Power` if sent from endpoint `3`.
