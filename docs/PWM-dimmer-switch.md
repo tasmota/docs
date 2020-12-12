@@ -9,7 +9,7 @@ PWM Dimmer module adds support for PWM dimmer switches and devices with one or m
 
 Any other device with one or more buttons, such as any typical Tasmota-capable wall switch, can make use of the PWM Dimmer module to control the power, brightness and light channels of one or more device groups. For single-button devices or multi-button devices with remote device mode enabled, only the operations controlled by the power button in the instruction below apply. Examples include:
 
-[![Treatlife](http://64.135.196.196/srv/pwmdimmer4.jpg)](https://www.amazon.com/Treatlife-Smart-Light-Switch-Assistant/dp/B07SB5RW14)[![gosund](http://64.135.196.196/srv/pwmdimmer5.jpg)](https://www.amazon.com/gp/product/B07MV1RTSV)
+[![Treatlife](_media/pwmdimmer5.jpg)](https://www.amazon.com/Treatlife-Smart-Light-Switch-Assistant/dp/B07SB5RW14)[![gosund](_media/pwmdimmer6.jpg)](https://www.amazon.com/gp/product/B07MV1RTSV)
 
 ## PWM Dimmer Operation
 
