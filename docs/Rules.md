@@ -94,7 +94,7 @@ Mqtt#Connected<a id="MqttConnected"></a>|when MQTT is connected
 Mqtt#Disconnected<a id="MqttDisconnected"></a>|when MQTT is disconnected
 Power1#Boot<a id="PowerBoot"></a>|`Relay1` state before Wi-Fi and MQTT are connected and before Time sync but after `PowerOnState` is executed. Power#Boot triggers before System#Boot.<BR>This trigger's value will be the last state of `Relay1` if [`PowerOnState`](Commands.md#poweronstate) is set to its default value (`3`).
 Power1#State<a id="PowerState"></a>|when a power output is changed<br>use `Power1#state=0` and `Power1#state=1` for comparison, not =off or =on<br>Power2 for Relay2, etc.
-Rules#Timer=1<a id="RulesTimer"></a>|when countdown `RuleTimer1` expires
+Rotary1#Pos1<a id="Rotary"></a>|when rotary encoder change. See [Use a rotary encoder](#use-a-rotary-encoder).Rules#Timer=1<a id="RulesTimer"></a>|when countdown `RuleTimer1` expires
 Switch1#Boot<a id="SwitchBoot"></a>|occurs after Tasmota starts before it is initializated.
 Switch1#State<a id="SwitchState"></a>|when a switch changes to state. Will not trigger if SwitchTopic is set.<br>use `Switch1#state=0` and `Switch1#state=1` for comparison, not =off or =on<br>`0` = OFF<BR>`1` = ON<BR>`2` = TOGGLE<BR>`3` = HOLD (`SwitchTopic 0` must be set for this to trigger)<BR>`4` = INC_DEC (increment or decrement dimmer)<BR>`5` = INV (change from increment to decrement dimmer and vice versa)<BR>`6` = CLEAR (button released for the time set with `SetOption32`)
 System#Boot<a id="SystemBoot"></a>|occurs once after Tasmota is fully intialized (after the INFO1, INFO2 and INFO3 console messages). `System#Boot` triggers after Wi-Fi and MQTT (if enabled) are connected. If you need a trigger prior to every service being initialized, use `Power1#Boot`
@@ -487,6 +487,25 @@ Result
 This time all lights configured with GroupTopic `grouplight` will change their brightness according to the potentiometer position.
 
 NOTE: You might want to execute command `SaveData 2` to reduce flash writes ;-)
+
+### Use a rotary encoder
+You can capture in rules the value of a rotary encoder connected to 2 GPIOs configured as `Rotary_a|<n>` and `Rotary_b|<n>`. Optionally the button of the rotary encoder can be connected to another GPIO configured as `Button|<n>`. `<n>` must be the same to allow the encoder to manage 2 absolute counters from the same rotary encoder.
+
+To get triggers from the rotary encoder into rules, you must enable [`SetOption98 1`](Commands#setoption98). The rotary encoder `<n>` provides a JSON in the form of `{'Rotary<n>': {'Pos1': value, 'Pos2': value}}`. You can use the following rules triggers:
+
+```haskell
+SetOption98 1
+Rule1
+  ON Rotary1#Pos1 DO something_with %value% ENDON
+  ON Rotary1#Pos2 DO something_with %value% ENDON
+```
+
+#### Result
+`Pos1` is changed when the rotary encoder is turned while button is not pressed. `Pos2` is changed while button is pressed. Both `Pos1` and `Pos2` are published whatever is the button position, so both trig at the same time.
+
+The button will still have it's default action (such as toggling power). If you want to avoid that, you need to capture the button into a dummy rule such as `ON Button1#state DO Delay 0 ENDON`.
+
+The range of the rotary encoder is hardcoded in `#define ROTARY_MAX_STEPS 10`. If you want to change the range, you must change the value in your `user_config_override.h` and [recompile](Compile-your-build).
 
 ------------------------------------------------------------------------------------
 
