@@ -11,7 +11,7 @@ If there already is a `Switch1` simply choose the next in line. Same applies if 
 A configured PIR will not appear in the web UI in any form. To make it report like a sensor we need a rule that will send movement triggers to an MQTT topic.
 
 ```console
-SwitchMode1 1
+SwitchMode1 14
 SwitchTopic 0
 Rule1 on Switch1#state=1 do publish stat/%topic%/PIR1 ON endon on Switch1#state=0 do Publish stat/%topic%/PIR1 OFF endon
 Rule1 1

@@ -5,7 +5,7 @@ Tasmota easily integrates with many home automation solutions reporting status a
 
 
 
-<p>
+<p></p>
 
 [![HomeAssistant](_media/logo/home-assistant.png)](Home-Assistant.md) 
 [![openHAB](_media/logo/openhab.png)](openHAB.md) 
