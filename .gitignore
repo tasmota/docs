@@ -13,3 +13,7 @@
 # Ignore all local history of files
 .history
 site/
+
+# Python
+venv
+.venv
