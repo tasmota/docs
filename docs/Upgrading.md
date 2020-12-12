@@ -18,7 +18,7 @@ Download binaries from:
 - development branch [OTA Server](http://ota.tasmota.com/tasmota/)
 - your [personal OTA server](#private-ota-server)
 
-## Gzipped binaries
+## .gz binaries
 
 !!! failure "Gzipped binaries can be used **only** once you've upgraded to atleast Tasmota 8.2"
     Trying to upgrade with a gzipped binary using versions older than 8.2 will fail.

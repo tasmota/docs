@@ -198,15 +198,15 @@ Rule
 
 ### Rule Variables
 
-There are ten available variables (single precision reals) in Tasmota: `Var1..Var5` and `Mem1..Mem5`. They provide a means to store the trigger `%value%` to be used in any rule.         
+There are thirty-two (32) available variables (single precision reals) in Tasmota: `Var1..Var16` and `Mem1..Mem16`. They provide a means to store the trigger `%value%` to be used in any rule.         
 All `Var` will be empty strings when the program starts. The value of all `Mem` persists after a reboot. 
 
 The value of a `Var<x>` and `Mem<x>` can be: 
 
 - any number
 - any text
-- %var1% to %var5%
-- %mem1% to %mem5% 
+- %var1% to %var16%
+- %mem1% to %mem16% 
 - %time%
 - %timestamp%
 - %uptime%
@@ -1732,18 +1732,21 @@ Rule1
 
 
 Thermostat can be turned On by:  
+
 * pushing button
 * by command on local console: mem1 1
 * by command on any other console: publish cmnd/mqttTopic/mem1 1
 * or MQTT at: cmnd/mqttTopic/mem1 1
 
 Thermostat can be turned Off by:  
+
 * pushing button
 * by command on local console: mem1 0
 * by command on any other console: publish cmnd/mqttTopic/mem1 0
 * or MQTT at: cmnd/mqttTopic/mem1 0
 
 To get the status:  
+
 * `mem1`        <- thermostat status: 0-off 1-enabled - View or set by MQTT cmnd/mqttTopic/mem1
 * `mem2`       <- setpoint Temp upper limit - View or set by MQTT cmnd/mqttTopic/mem2
 * `mem3`         <- setpoint Temp lower limit - View or set by MQTT cmnd/mqttTopic/mem3
