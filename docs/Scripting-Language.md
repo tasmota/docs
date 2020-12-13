@@ -92,12 +92,16 @@ with below options script buffer size may be expanded. PVARS is size for permana
 | #define USE_SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld, ESP32 must use linker file "esp32_partition_app1572k_ffat983k.csv"(4M chips) or "esp32_partition_app1984k_ffat12M.csv" (16M chips)|
 | #define USE_SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
 | #define EEP_SCRIPT_SIZE S, #define USE_EEPROM, #define USE_24C256 | S<=4096 | S<=8192 | 1536 |only hardware eeprom is usefull, because Flash EEPROM is also used by Tasmota |
+| #define EEP_SCRIPT_SIZE S, #define ALT_EEPROM | S<=6500 | | 1536 | you must use setoption12 1 to disable flash rotation |
 
 most usefull defintion for larger scripts would be  
 
 ESP8266:  
 
-with 1M flash only default compressed mode is usefull,  
+with 1M flash only default compressed mode should be used  
+a special mode can enable up to 6500 chars by defining #define ALT_EEPROM  
+however this has some side effects. the script is deleted on OTA or serial update and has to be installed fresh after update. 
+
 with 4M Flash best mode would be  
 \#define USE_SCRIPT_FATFS -1  
 with linker file "eagle.flash.4m2m.ld"  
@@ -415,8 +419,9 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `wtch(sel)` = gets state from touch panel sel=0 => touched, sel=1 => x position, sel=2 => y position (if defined USE_TTGO_WATCH)  
 `slp(time)` = sleep time in seconds, pos values => light sleep, neg values => deep sleep (if defined USE_TTGO_WATCH)  
 `play(path)` = play mp3 audio from filesystem (if defined USE_TTGO_WATCH) 
-`say("text")` = plays specified text to speech (if defined USE_TTGO_WATCH) 
-
+`say("text")` = plays specified text to speech (if defined USE_TTGO_WATCH)  
+`pwmN(-pin freq)` = defines a pwm channel N (1..5) with pin Nr and frequency (pin 0 beeing -64)  
+`pwmN(val)` = outputs a pwm signal on channel N (1..5) with val (0-1023)  
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
 
 `wcs` = send this line to webpage (WebContentSend)  
