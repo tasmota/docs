@@ -527,42 +527,61 @@ Pressing `I` on the Ikea switch will toggle `backyard` device and pressing `O` t
 
 ### Button single press, double press and hold
 
-_[assuming Button1 and Setoption73 0]_
+This example show how to assign different behavior to a button **other than Button1**. Button1
+has special multi-press behaviors associated with it (see _Note_ in [Multi-Press Functions](Buttons-and-Switches#multi-press-functions)), examples 1 and 2 cannot be applied to Button1.
 
-* single press: Toggle Power1  
+#### 1st example:
+_[assuming Button2 (or >2) and Setoption73 0]_
+
+* single press: Toggle Power2 _(or >2)_
 * double press: send a mqtt message  
 * hold 2 secs: send a different mqtt message
 
 ```haskell
-Backlog ButtonTopic 0; SetOption1 1; SetOption11 1; SetOption32 20
-```
-
-```haskell
+Backlog ButtonTopic 0; SetOption1 1; SetOption11 0; SetOption32 20
 Rule1
-  ON button1#state=3 DO publish cmnd/topicHOLD/power 2 ENDON
-  ON button1#state=2 DO publish cmnd/topicDOUBLEPRESS/power 2 ENDON 
+  ON button2#state=3 DO publish cmnd/topicHOLD/power2 2 ENDON
+  ON button2#state=2 DO publish cmnd/topicDOUBLEPRESS/power2 2 ENDON 
+Rule1 1
 ```
 
-`Rule1 1`
-
-#### Another example:
-_[assuming Button1 and Setoption73 0]_
+#### 2nd example with `Setoption11 1`:
+_[assuming Button2 (or >2) and Setoption73 0]_
 
 * single press: send MQTT message
-* double press: Toggle Power1 (SetOption11 swaps single and double press)
+* double press: Toggle Power2 _(or >2)_ (SetOption11 swaps single and double press)
 * hold 2 secs: send another mqtt message  
 
 ```haskell
-Backlog ButtonTopic 0; SetOption1 1; SetOption11 0; SetOption32 20  
+Backlog ButtonTopic 0; SetOption1 1; SetOption11 1; SetOption32 20  
+Rule1
+  ON button2#state=3 DO publish cmnd/topicHOLD/power2 2 ENDON
+  ON button2#state=2 DO publish cmnd/topicSINGLEPRESS/power2 2 ENDON 
+Rule1 1
 ```
+
+#### 3rd example for Button1:
+For assigning different actions to multi-press on Button1, it is mandatory to detach buttons from 
+their default function using `SetOption73 1`. With `SetOption73 1` buttons only publish a MQTT
+message (`stat/tasmota/BUTTON<x> = {"ACTION":"xxxx"}`). To re-assign a specific action, rules must
+be used like below:
+
+* single press: Toggle Power1
+* double press: send a mqtt message  
+* hold 2 secs: send a different mqtt message
 
 ```haskell
+Backlog ButtonTopic 0;  SetOption73 1; SetOption32 20
 Rule1
+  ON button1#state=10 DO power1 2 ENDON
   ON button1#state=3 DO publish cmnd/topicHOLD/power 2 ENDON
-  ON button1#state=2 DO publish cmnd/topicSINGLEPRESS/power 2 ENDON 
+  ON button1#state=11 DO publish cmnd/topicDOUBLEPRESS/power 2 ENDON
+Rule1 1
 ```
 
-`Rule1 1`
+!!! note
+    `SetOption73 1` detaches ALL buttons. If you have more than 1 button, you must create rules
+    for each buttons where you want an action (other than publishing `stat/tasmota/BUTTON<x> = {"ACTION":"xxxx"}`)
 
 ----------------------------------------------------------------------------
 
