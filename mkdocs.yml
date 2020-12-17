@@ -92,6 +92,7 @@ nav:
     - RF 433MHz Protocol: RF-Protocol.md
     - Rules.md
     - Scripting: Scripting-Language.md
+    - Serial-to-TCP-Bridge.md
     - Blinds-and-Shutters.md
     - Smart-Meter-Interface.md
     - Subscribe-&-Unsubscribe.md
