@@ -19,7 +19,7 @@ For OTA updates please use the new server [http://ota.tasmota.com/tasmota/releas
 Download [latest Tasmotizer](https://github.com/tasmota/tasmotizer/releases/) to use the new OTA server during flashing.
 
 ### Current release 
-<a href="https://github.com/arendst/Tasmota/releases/tag/v9.2.0"><span style="font-size:40px;">Tasmota 9.2.0</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
+<a href="https://github.com/arendst/Tasmota/releases/tag/v9.2.0"><span style="font-size:40px;">Tasmota 9.2.0 Julie</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
 
 Tasmota team wishes you happy holidays and a prosperous New Year!
 
