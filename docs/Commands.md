@@ -369,6 +369,8 @@ Width&#60;x><a class="cmnd" id="width"></a>|x = `1..4`<BR>`1` = `0..4` = LED gro
 See also|[`SetOption15`](#setoption15), [`SetOption16`](#setoption16), [`SetOption17`](#setoption17), [`SetOption20`](#setoption20), [`SetOption37`](#setoption37) and [`SetOption68`](#setoption68) 
 
 ### TuyaMCU
+Command|Parameters
+:---|:---
 TuyaEnum&#60;x><a class="cmnd" id="tuyaenum"></a>|Send value inside configured range to enum&#60;x> (x = `0..4`)`<value>` = a numerical value from range configured with `TuyaEnumList`
 TuyaEnumList<a class="cmnd" id="tuyaenumlist"></a>|`<enum>,<range>` = declare the range for a configured enum fnId<BR>`<enum>` = `1..4`<BR>`<range>` = `0..31` (starts counting from `0`)
 TuyaMCU<a class="cmnd" id="tuyamcu"></a>|Used to map functions for TuyaMCU (54) module<br>`<fnId>,<dpId>` = [read more...](TuyaMCU)<BR>`<fnId>,0` = remove setting for fnId
