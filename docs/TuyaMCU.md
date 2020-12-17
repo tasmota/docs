@@ -109,8 +109,6 @@ Command's value consists of two comma separated parameters: dpId and data.
 
 `TuyaSend<x> dpId,data`
 
-There are 4 different commands, one for each [data type](#data-type-table).
-
 #### `TuyaSend0` 
 Used without payload to query states of dpID's.
 
@@ -144,13 +142,10 @@ Sends enum (Type 4) data (`0/1/2/3/4/5`) to dpId (Max data length 1 bytes)
 Used without payload to get device information and dpId states.  Replaces `SerialSend5 55aa000100000`
 
 #### `TuyaSend9`
-Use without any payload to toggle a `STAT` topic reporting the equivalent `TuyaSend<x>` command needed to update a dpId, for example:
+Use without any payload to toggle a new `STAT` topic reporting changes to a dpId, for example:
 
 ```haskell
-17:45:38 CMD: power 1
-17:45:38 MQT: stat/tasmota_49A3BC/RESULT = {"POWER":"ON"}
-17:45:38 MQT: stat/tasmota_49A3BC/POWER = ON
-17:45:38 MQT: stat/tasmota_49A3BC/TUYASEND1 = 1,1
+17:45:38 MQT: stat/TuyaMCU/DPTYPE1ID1 = 1
 ```
 
 ## TuyaReceived
@@ -220,6 +215,9 @@ Now we need to tell Tasmota to use maximum and minimum values. This controlled b
 
 Once set, try `dimmer 100` in the Console and check if the brightness of bulb is same is the same as when the maximum was set using hardware buttons.	
 
+!!! warning
+    Some Tuya devices automatically send the state of a dimmer after a power off. Tasmota could misunderstand the command and try to turn on the light even with `SetOption20` and `SetOption54` enabled.
+
 ### Dual Dimmer
 To enable a dual dimmer setup assign fnId's:
 
@@ -251,6 +249,17 @@ To enable an RGB light assign fnId's:
 - `11` as Relay1
 - `24` as RGB controller
 
+TuyaMCU uses different types of RGB Hex format where the most recent is `0HUE0SAT0BRI0` (type 1) and the older being `RRGGBBFFFF6464` (type 2). Depending on the MCU, code can be case sensitive.
+
+After enabling the RGB function check the TuyaReceived information and use `TuyaRGB` to configure and store the correct (or the closest) format:
+
+- `TuyaRGB 0` - Type 1, 12 characters uppercase. Example: `00DF00DC0244` _(default)_
+- `TuyaRGB 1` - Type 1, 12 characters lowercase. Example: `008003e8037a`
+- `TuyaRGB 2` - Type 2, 14 characters uppercase. Example: `00FF00FFFF6464`
+- `TuyaRGB 3` - Type 2, 14 characters lowercase. Example: `00e420ffff6464`
+
+`TuyaRGB` without payload will return the actual configured format.
+
 #### RGB+X Light
 To enable an RGB+W light use RGB Light configuration and assign fnId `25` as white color.
 
@@ -266,18 +275,75 @@ When the ModeSet function is enabled it is not  possible to update both lights a
 !!! warning
     Use of `SetOption68` for more than two channels and the light split option (`SetOption37 >= 128`) are not supported in TuyaMCU mode.
 
-### Fans
-To setup a fan controller select one of the available functions:
+### Enums
 
-- `61` for 3 speed fan (possible values 0,1,2)
-- `62` for 4 speed fan (possible values 0,1,2,3)
-- `63` for 5 speed fan (possible values 0,1,2,3,4)
-- `64` for 6 speed fan (possible values 0,1,2,3,4,5)
+Better control over Type4 or enum dpId's. Up to four can be added, with a range from 0 to 31.
 
-Different from other fan controllers like the Ifan03, the value of `0` doesn't mean `OFF`. In TuyaMCU `0` is the lowest speed possible. On/Off states for a fan are always managed by another dpId which you need to map to a relay function.
+- `61` as Enum1
+- `62` as Enum2
+- `63` as Enum3
+- `64` as Enum4
+
+After an enum is configured, use `TuyaEnumList` to declare the range it must respect (note `0` is always the first item in range).
+
+`TuyaEnumlist <enum>,<range>` where `<enum>` is declared using `TuyaMCU` and `<range>` is `0..31`.
+
+Example: configure Enum 1 with a range from 0 to 8.
+```py
+21:14:52 CMD: tuyaenumlist 1,8
+21:14:52 MQT: stat/TuyaMCU/RESULT = {"TuyaEnumList":{"Enum1":8,"Enum2":9,"Enum4":1}}
+```
+!!! warning "Entering a value greater than `31` will return an error"
+
+`TuyaEnumList` without payload will return the configuration of all the enums enabled in the list.
+
+To update an enum use the command `TuyaEnum`:
+
+Usage `TuyaEnum [1|2|3|4],[TuyaEnumList range]`
+
+Example: update Enum 2 to 4.
+```py
+21:14:12 CMD: tuyaenum2 4
+21:14:12 MQT: stat/TuyaMCU/RESULT = {"TuyaEnum2":4}
+```
+!!! warning  "ntering a value not in range will return an error"
+
+`TuyaEnum` without payload will return the state of all the enums configured.
+
+### Sensors
+
+These are the currently available sensors:
+
+- `71` as Temperature Sensor
+- `73` as Humidity Sensor
+- `75` as Illuminance Sensor
+- `76` as TVOC Sensor
+- `77` as CO2 Sensor
+- `78` as ECO2 Sensor
+
+If your device has a dpId for setting a specific Temperature and/or Humidity:
+
+- `72` for Temperature Set
+- `74` for Humidity Set
+
+Use `TuyaSend2` to manage them.
+
+Temperature and Temperature Set default to `°C`. If you need `°F` change `SetOption8` to `1`.
+
+Please note this will not update the value sent by the MCU but will just change the unit of measure reported on `/SENSOR` topic. You have to find a dpid to set the correct unit and change reported values (if it exists).
+
+### Timers
+4 Type2 (integer) timers can be managed directly from Tasmota
+
+- `81` as Timer1
+- `82` as Timer2
+- `83` as Timer3
+- `84` as Timer4
+
+Timers can be managed with `TuyaSend2` and are visible in the WebUI.
 
 ### Covers
-Single Shutter or double shutters devices can be managed with a dimmer setup
+Single shutter or double shutters devices can be managed with a dimmer setup
 For devices that are reporting position to a another dpId assign fnId's:
 
 - `27` to report the state of Dimmer1
@@ -294,6 +360,101 @@ There is currenty no way to detect the number of relays present in an MCU based 
 !!! tip
     You can configure all at once by using `Backlog TuyaMCU 12,2; TuyaMCU 13,3; TuyaMCU 14,4`	
 
+<!--
+### Curtain Motors	
+The Zemismart WiFi curtain motor uses a Tuya TYWE1S inside the little white dongle as a radio modem.	
+`U1TX` is connected to "USB D+", `U1RX` is connected to "USB D-", and there is a blue LED in the dongle connected to "USB3 R-" controlled by the MCU. To flash Tasmota, we need `U0RX`, `U0TX`, and `GPIO0`. None of which are broken out on the PCB, so soldering or Tuya-Convert are necessary.	
+
+The stock Tuya App communicates with the PIC Micro inside the motor housing at 9600 8N1. 	
+
+* `dpId 101` is the "partial open/partial close" command with a 4 byte field of 0-100%. 	
+* `dpId 102` is a "fully open/fully close" command with a 1-byte Boolean field. 	
+* `dpId 103` is unknown.	
+
+#### Debugging	
+```
+55 aa 00 06 "deliver dp" 0005 "len=5" 66 04 00 01 <00=close100%,01=open0%> <chksum> is the fully open/close command	
+07 "report dp" 0005 (len) 66 04 00 01 <00 or 01> <chksum> is the reply.	
+55 aa 00 06 "deliver dp" 0008 (len=8) 65 02 00 04  <value.32 <chksum> is the move partial command	
+55 aa 00 07 "report dp" 0008 (len=8) 65 02 00 04 <value.32> <chksum> is the reply. 	
+```	
+
+There may first be a reply of 65 02 00 04 <oldvalue.32> <chksum> before the motor engages	
+
+#### dpId Configuration	
+1. `module 54` # TuyaMCU (will reboot)	
+2. `backlog gpio1 0; gpio3 0; gpio15 107; gpio13 108` # change GPIO assignments. The dongle uses gpio15 for U1TX and gpio13 for U1RX (will reboot)	
+3. `tuyamcu 21,101` # declare curtain as a dimmer (will reboot)	
+4. \# no idea what a good tuyamcu xx,102 is	
+5. \# no idea what a good tuyamcu xx,103 is	
+6. `setoption 69 0` # allow dimmer below 25% or 10%. (won't reboot)	
+
+With these settings, the `dimmer` command can adjust the curtain from 100% (closed) to 1% (almost fully open, 0% is the motor limit, but 1% is the Tasmota limit?)	
+
+#### Things That Did Not Work	
+```lua
+tuyamcu 1,102 # make 0x66 a button	
+tuyamcu 1,103 # make 0x67 a button	
+```	
+Having 0x66 declared a button caused the motor to oscillate - open part way and then close again. Like Tasmota was sending the "fully open" command and then immediately cancelling it with a "partial close" command.	
+```lua
+tuyamcu 11,102 # make 0x66 a relay	
+tuyamcu 11,103 # make 0x67 a relay	
+```	
+Does not appear to have any impact on the curtain. 
+
+### Aromatherapy Diffuser
+Applies to devices using the PCB marked GD-HDFW05-v1.0. 
+
+![image](https://user-images.githubusercontent.com/5904370/67526288-c4559500-f6b4-11e9-867f-2b3ae0b82437.png ":size=100")
+
+This diffuser uses the same dpId scheme as the [example protocol](#aromatherapy-machine-oil-diffuser)
+
+#### Functions
+`dpID 1` device power: 0 = off / 1 = on    
+`dpID 11` led power: 0 = off / 1 = on    
+`dpID 12` error notification: 0 = ok / 1 = error  
+`dpID 13` countdown mode options: 0 = off / 1 = 1hr / 2 = 3hr *not needed with Tasmota*    
+`dpID 14` countdown status: reports value of 0...360 minutes *not needed with Tasmota*    
+`dpID 103` mist strength: 0 = low / 1 = high    
+`dpID 108` led color: 14 char value in hex (can define only RGB and send HSV value as max: `RRGGBBffff6464`)    
+`dpID 110` led mode: 0 = rgb_cycle / 1 = color / 2 = white    
+`dpID 110` led dimmer **color and white modes only** *it is important to define 'DimmerRange 1,255'*
+
+#### Configuration
+
+After applying the template and configuring Wi-Fi and MQTT issue
+
+```lua
+Backlog SetOption66 1; TuyaMCU 21,111; TuyaMCU 11,1; TuyaMCU 12,11; TuyaMCU 13,103; TuyaMCU 14,12; TuyaMCU 15,110; DimmerRange 1,255; SetOption59 1
+```
+```lua
+Rule1 on TuyaReceived#data=55AA000700056E040001007E do publish2 stat/GD-30W/EFFECT rgb_cycle endon on TuyaReceived#data=55AA000700056E040001017F do publish2 stat/GD-30W/EFFECT color endon on event#rgb_cycle do tuyasend4 110,0 endon on event#color do tuyasend4 110,1 endon on event#ON do backlog tuyasend4 110,1; tuyasend 11,1 endon on event#off do tuyasend1 11,0 endon on power3#state=1 do tuyasend4 103,1 endon on power3#state=0 do tuyasend4 103,0 endon
+Rule1 1
+```
+
+*Optional rule used to prevent the device going into countdown mode (i.e. using on device controls) and complete MCU status update on restart*
+
+```haskell
+Rule3 on TuyaReceived#data=55AA000700050D040001011E do tuyasend4 13,0 endon on TuyaReceived#data=55AA000700050D040001021F do tuyasend4 13,0 endon on mqtt#connected do serialsend5 55aa0001000000 endon
+Rule3 1
+```
+[All commands in .txt](https://gist.github.com/blakadder/2d112b50edd8f75f2d7fb0dddd9310c4)
+
+#### What you get
+- Relay1 turns the diffuser on or off in stored mist strength mode, turns led on or off in stored mode and serves as device power status
+- Relay2 turns light on or off and serves as light power status.
+- Relay3 mist strength status and control using `Rule1`
+- Relay4 is used for error status (ON = error), no control
+- Relay5 is used for light mode status (0 = rgb_cycle, 1 = color), no control
+
+LED mode status is reported to mqtt topic `stat/GD-30W/EFFECT` and command [`Event`](Commands.md#event) is used to control some functions using [`TuyaSend4`](Commands.md#tuyasend4) command. All this is defined in `Rule1`
+
+Color can be changed using `TuyaSend3 108,RRGGBB64646464` (RR, GG and BB are hex value) only in color mode.
+
+Dimming works using slider and `Dimmer` command but only when in color mode, in rgb_cycle there are no brightness controls.
+
+Long press on device's power button initiates Tasmota's Wi-Fi config -->
 ### Power Metering	
 Some Tuya MCU devices support Power measurement support over serial. For this it is better to use a bulb with known wattage rating.  	
 
@@ -404,102 +565,6 @@ TYA: fnId=33 is set for dpId=104
 TYA: Rx ID=104 Voltage=2454
 ```	
 * Power and current should change on dimming high / low or turning the device on and off. The Tasmota web UI should show power values now on the home page.
-
-<!--
-### Curtain Motors	
-The Zemismart WiFi curtain motor uses a Tuya TYWE1S inside the little white dongle as a radio modem.	
-`U1TX` is connected to "USB D+", `U1RX` is connected to "USB D-", and there is a blue LED in the dongle connected to "USB3 R-" controlled by the MCU. To flash Tasmota, we need `U0RX`, `U0TX`, and `GPIO0`. None of which are broken out on the PCB, so soldering or Tuya-Convert are necessary.	
-
-The stock Tuya App communicates with the PIC Micro inside the motor housing at 9600 8N1. 	
-
-* `dpId 101` is the "partial open/partial close" command with a 4 byte field of 0-100%. 	
-* `dpId 102` is a "fully open/fully close" command with a 1-byte Boolean field. 	
-* `dpId 103` is unknown.	
-
-#### Debugging	
-```
-55 aa 00 06 "deliver dp" 0005 "len=5" 66 04 00 01 <00=close100%,01=open0%> <chksum> is the fully open/close command	
-07 "report dp" 0005 (len) 66 04 00 01 <00 or 01> <chksum> is the reply.	
-55 aa 00 06 "deliver dp" 0008 (len=8) 65 02 00 04  <value.32 <chksum> is the move partial command	
-55 aa 00 07 "report dp" 0008 (len=8) 65 02 00 04 <value.32> <chksum> is the reply. 	
-```	
-
-There may first be a reply of 65 02 00 04 <oldvalue.32> <chksum> before the motor engages	
-
-#### dpId Configuration	
-1. `module 54` # TuyaMCU (will reboot)	
-2. `backlog gpio1 0; gpio3 0; gpio15 107; gpio13 108` # change GPIO assignments. The dongle uses gpio15 for U1TX and gpio13 for U1RX (will reboot)	
-3. `tuyamcu 21,101` # declare curtain as a dimmer (will reboot)	
-4. \# no idea what a good tuyamcu xx,102 is	
-5. \# no idea what a good tuyamcu xx,103 is	
-6. `setoption 69 0` # allow dimmer below 25% or 10%. (won't reboot)	
-
-With these settings, the `dimmer` command can adjust the curtain from 100% (closed) to 1% (almost fully open, 0% is the motor limit, but 1% is the Tasmota limit?)	
-
-#### Things That Did Not Work	
-```lua
-tuyamcu 1,102 # make 0x66 a button	
-tuyamcu 1,103 # make 0x67 a button	
-```	
-Having 0x66 declared a button caused the motor to oscillate - open part way and then close again. Like Tasmota was sending the "fully open" command and then immediately cancelling it with a "partial close" command.	
-```lua
-tuyamcu 11,102 # make 0x66 a relay	
-tuyamcu 11,103 # make 0x67 a relay	
-```	
-Does not appear to have any impact on the curtain. 
-
-### Aromatherapy Diffuser
-Applies to devices using the PCB marked GD-HDFW05-v1.0. 
-
-![image](https://user-images.githubusercontent.com/5904370/67526288-c4559500-f6b4-11e9-867f-2b3ae0b82437.png ":size=100")
-
-This diffuser uses the same dpId scheme as the [example protocol](#aromatherapy-machine-oil-diffuser)
-
-#### Functions
-`dpID 1` device power: 0 = off / 1 = on    
-`dpID 11` led power: 0 = off / 1 = on    
-`dpID 12` error notification: 0 = ok / 1 = error  
-`dpID 13` countdown mode options: 0 = off / 1 = 1hr / 2 = 3hr *not needed with Tasmota*    
-`dpID 14` countdown status: reports value of 0...360 minutes *not needed with Tasmota*    
-`dpID 103` mist strength: 0 = low / 1 = high    
-`dpID 108` led color: 14 char value in hex (can define only RGB and send HSV value as max: `RRGGBBffff6464`)    
-`dpID 110` led mode: 0 = rgb_cycle / 1 = color / 2 = white    
-`dpID 110` led dimmer **color and white modes only** *it is important to define 'DimmerRange 1,255'*
-
-#### Configuration
-
-After applying the template and configuring Wi-Fi and MQTT issue
-
-```lua
-Backlog SetOption66 1; TuyaMCU 21,111; TuyaMCU 11,1; TuyaMCU 12,11; TuyaMCU 13,103; TuyaMCU 14,12; TuyaMCU 15,110; DimmerRange 1,255; SetOption59 1
-```
-```lua
-Rule1 on TuyaReceived#data=55AA000700056E040001007E do publish2 stat/GD-30W/EFFECT rgb_cycle endon on TuyaReceived#data=55AA000700056E040001017F do publish2 stat/GD-30W/EFFECT color endon on event#rgb_cycle do tuyasend4 110,0 endon on event#color do tuyasend4 110,1 endon on event#ON do backlog tuyasend4 110,1; tuyasend 11,1 endon on event#off do tuyasend1 11,0 endon on power3#state=1 do tuyasend4 103,1 endon on power3#state=0 do tuyasend4 103,0 endon
-Rule1 1
-```
-
-*Optional rule used to prevent the device going into countdown mode (i.e. using on device controls) and complete MCU status update on restart*
-
-```haskell
-Rule3 on TuyaReceived#data=55AA000700050D040001011E do tuyasend4 13,0 endon on TuyaReceived#data=55AA000700050D040001021F do tuyasend4 13,0 endon on mqtt#connected do serialsend5 55aa0001000000 endon
-Rule3 1
-```
-[All commands in .txt](https://gist.github.com/blakadder/2d112b50edd8f75f2d7fb0dddd9310c4)
-
-#### What you get
-- Relay1 turns the diffuser on or off in stored mist strength mode, turns led on or off in stored mode and serves as device power status
-- Relay2 turns light on or off and serves as light power status.
-- Relay3 mist strength status and control using `Rule1`
-- Relay4 is used for error status (ON = error), no control
-- Relay5 is used for light mode status (0 = rgb_cycle, 1 = color), no control
-
-LED mode status is reported to mqtt topic `stat/GD-30W/EFFECT` and command [`Event`](Commands.md#event) is used to control some functions using [`TuyaSend4`](Commands.md#tuyasend4) command. All this is defined in `Rule1`
-
-Color can be changed using `TuyaSend3 108,RRGGBB64646464` (RR, GG and BB are hex value) only in color mode.
-
-Dimming works using slider and `Dimmer` command but only when in color mode, in rgb_cycle there are no brightness controls.
-
-Long press on device's power button initiates Tasmota's Wi-Fi config -->
 
 ### Battery Powered Sensors
 - [TYMC-1 Door/Window Sensor](https://templates.blakadder.com/TYMC-1.html)
