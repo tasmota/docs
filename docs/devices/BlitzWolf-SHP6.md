@@ -71,7 +71,7 @@ Flash Tasmota.
 Select the correct configuration under **_Configuration -> Configure Module_** or apply correct template:
 
 * [SHP6 10A model](https://templates.blakadder.com/blitzwolf_SHP6.html)
-* [SHP6 15A model (compatible with SP111 v2)](https://templates.blakadder.com/gosund_SP111_v2.html)
+* [SHP6 15A model](https://templates.blakadder.com/blitzwolf_SHP6-15A.html)
 
 ### As an alternative for steps 3 to 5: 
 The following programming adapter could be an option, which requires no soldering or significant disassembly on the SHP-6.
