@@ -479,6 +479,7 @@ SetOption111<a class="cmnd" id="setoption111"></a>|`0` = _(default)_<BR>`1` = us
 SetOption112<a class="cmnd" id="setoption112"></a>|`0` = _(default)_<BR>`1` = use friendly name in Zigbee topic (use with `SetOption89)
 SetOption113<a class="cmnd" id="setoption113"></a>|_works only with rotary dial button_<BR>`0` = _(default)_<BR>`1` = set dimmer low on rotary dial after power off
 SetOption114<a class="cmnd" id="setoption114"></a>|Detach switches from relays and send MQTT messages instead<BR>`0` = disabled *(default)*<BR>`1` = enabled<BR> Example result: `{"Switch1":{"Action":"ON"}}`
+SetOption115<a class="cmnd" id="setoption115"></a>|Enable ESP32 MI32 BLE<BR>`0` = disabled *(default)*<BR>`1` = enabled
 
 ### Serial Bridge
 Both hardware and software Serial Bridge are supported.
