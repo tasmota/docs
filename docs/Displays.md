@@ -17,6 +17,7 @@ USE_DISPLAY_SSD1351 | Enable color OLED SSD1351 display. Also requires `USE_SPI`
 USE_DISPLAY_RA8876  | Enable TFT RA8876 display. Also requires `USE_SPI` 
 USE_DISPLAY_SEVENSEG  | Enable 7 segment display. Also requires `USE_I2C` 
 USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI` 
+USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`
 USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
 SHOW_SPLASH | Enable initialization splash message on the display
 USE_AWATCH | Enables analog watch support
