@@ -152,6 +152,18 @@ For working Ethernet, change the following setting in the Console:
 EthClockMode 1
 ```
 
+these 3 devices are also fully supported, more detailed info will be added later  
+
+### TTGO ESP32 watch  
+fully supported with all sensors  
+
+### TTGO T4 
+fully supported
+
+### m5stack CORE2  
+fully supported with all sensors, except microphone 
+no pin definition needed except GPIO 33,34 for SCL,SDA
+
 
 ### Displays, sensors and other options 
 
@@ -164,7 +176,9 @@ USE_DISPLAY_ILI9341
 USE_DISPLAY_ILI9488  
 USE_DISPLAY_SSD1351  
 USE_DISPLAY_RA8876  
-
+USE_DISPLAY_ST7789  
+USE_DISPLAY_ILI9341_2  
+USE_DISPLAY_ILI9342  
 
 sensors:  (most probably all I2C sensors will work)    
 
