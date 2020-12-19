@@ -418,8 +418,9 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `wdclk` = double tapped on display (if defined USE_TTGO_WATCH)  
 `wtch(sel)` = gets state from touch panel sel=0 => touched, sel=1 => x position, sel=2 => y position (if defined USE_TTGO_WATCH)  
 `slp(time)` = sleep time in seconds, pos values => light sleep, neg values => deep sleep (if defined USE_TTGO_WATCH)  
-`play(path)` = play mp3 audio from filesystem (if defined USE_TTGO_WATCH) 
-`say("text")` = plays specified text to speech (if defined USE_TTGO_WATCH)  
+`play(path)` = play mp3 audio from filesystem (if defined USE_I2S_AUDIO or USE_TTGO_WATCH or USE_M5STACK_CORE2)  
+`say("text")` = plays specified text to speech (if defined USE_I2S_AUDIO or USE_TTGO_WATCH or USE_M5STACK_CORE2)   
+`c2ps(sel val)` = gets, sets values on ESP32 CORE2 sel=0 green led, sel=1 vibration motor, sel=2,3,4 get touch button state 1,2,3 (if defined USE_M5STACK_CORE2)  
 `pwmN(-pin freq)` = defines a pwm channel N (1..5) with pin Nr and frequency (pin 0 beeing -64)  
 `pwmN(val)` = outputs a pwm signal on channel N (1..5) with val (0-1023)  
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
@@ -519,7 +520,7 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
 Subroutines end with the next `#` or `>` line or break. Subroutines may be nested  
 Parameters can be numbers or strings and on type mismatch are converted  
 
-If `#define USE_SCRIPT_SUB_COMMAND` is included in your `user_config_override.h`, a subroutine may be invoked via the Console or MQTT using the subroutine's name. For example, a declared subroutine `#SETLED(num)` may be invoked by typing `SETLED 1` in the Console. The parameter `1` is passed into the `num` argument. This also works with string parameters.  
+If `#define USE_SCRIPT_SUB_COMMAND` is included in your `user_config_override.h`, a subroutine may be invoked via the Console or MQTT using the subroutine's name. For example, a declared subroutine `#SETLED(num)` may be invoked by typing `SETLED 1` in the Console. The parameter `1` is passed into the `num` argument. This also works with string parameters. since Tasmota capitalizes all commands you must use upper case labels.  
 
 It is possible to "replace" internal Tasmota commands. For example, if a `#POWER1(num)` subroutine is declared, the command `POWER1` is processed in the scripter instead of in the main Tasmota code.  
 
