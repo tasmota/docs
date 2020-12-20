@@ -355,7 +355,7 @@ LedPwmMode<x\><a class="cmnd" id="ledpwmmode"></a>|Control status LED light mode
 LedPwmOff<a class="cmnd" id="ledpwmoff"></a>|`0..255` = set LED brightness when OFF
 LedPwmOn<a class="cmnd" id="ledpwmon"></a>|`0..255` = set LED brightness when ON
 LedTable<a class="cmnd" id="ledtable"></a>|`0` = do not use [LED gamma correction](https://learn.adafruit.com/led-tricks-gamma-correction?view=all) *(default &laquo;6.5.0.9)*<BR>`1` = use gamma correction *(default &raquo;6.5.0.9)*
-Palette<a class="cmnd" id="palette"></a>| `0` = Clear color palette<br>`[ ...]` = Set list of colors used by `Color<1,2>` and `Scheme<2,3,4>` commands with each color separated by a space. 
+Palette<a class="cmnd" id="palette"></a>| `0` = Clear color palette<br>`[...]` = Set list of colors in RGB used by `Color` and `Scheme` commands with each color separated by a space. Example: `Palette 255,0,0 0,255,0 255,255,153` to use only red, green, yellow colors
 Pixels<a class="cmnd" id="pixels"></a>|`1..512` = set amount of pixels in strip or ring and reset [`Rotation`](#rotation) *(applies only to addressable LEDs)*
 RGBWWTable<a class="cmnd" id="rgbwwtable"></a>|Control lightintensity of unbalanced PWM channels<br>`PWM1,PWM2,PWM3,PWM4,PWM5` = channel range with values `0..255` *(default =`255,255,255,255,255`)*<BR>Range adjustment is computed **after** Gamma correction.
 Rotation<a class="cmnd" id="rotation"></a>|`<value>` = set amount of pixels to rotate (up to `Pixels` value) *(applies only to addressable LEDs)*
