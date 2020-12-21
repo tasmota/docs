@@ -1,3 +1,6 @@
+---
+description: How to integrate Tasmota into your smart home automation system
+---
 # Introduction
 <div style="font-size:150%;">
 Tasmota easily integrates with many home automation solutions reporting status and sensor data and allowing complete control.
