@@ -33,7 +33,7 @@ Pressing and releasing the power button and then holding the power button publis
 
 Button presses and holds execute the normal ButtonTopic and Rule processing. If ButtonTopic is set and SetOption61 is 0 or a the button press/hold matches a rule, the button press/hold is ignored by PWM Dimmer. Operations invoked by holding the power button in combination with the up/dowm buttons can not be overidden by rules. Standard Tasmota multi-press button presses operate as normal.
 
-PWM Dimmer uses the Light module to control the PWM. Brightness levels are rescaled to PWM values between the `dimmer_min` and `dimmer_max` values specified with [DimmerRange](Commands.md#dimmerrange). Most LED bulbs do not show a significant difference between PWM value of 1 and PWM value of 100. This results in the lower 10% of the dimmer range having no effect. For best results, `DimmerRange <dimmerMin>` value should be set to the highest value that results in the lowest bulb brightness (Typically in the range of 90 - 120).
+PWM Dimmer uses the Light module to control the PWM. Brightness levels are rescaled to PWM values between the `dimmer_min` and `dimmer_max` values specified with [DimmerRange](Commands.md#dimmerrange). Most LED bulbs do not show a significant difference between PWM value of 1 and PWM value of 100. This results in the lower 10% of the dimmer range having no effect. For best results, `DimmerRange <dimmerMin>` value should be set to the highest value that results in the lowest bulb brightness (Typically in the range of 8 - 18).
 
 When Device Groups are enabled, the PWM Dimmer brightness presets are kept in sync across all switches in the group. The powered-off LED and LED timeout settings are specific to each switch. Changing them does not replicate the change to the other switches in the group.
 
@@ -44,6 +44,7 @@ When CW/RGB/RGBW/RGBCW lights are in the same device group as the PWM Dimmer dev
 Command|Parameters
 :---|:---
 BriPreset|`<low>,<high>` = set brightness low and high presets<br>`1..255` = set brightness preset<br>`+` = increase brightness preset<br>`-` = decrease brightness preset
+LedMask|Set a bitmask specifiying which LEDs are used to indicate the current brightness. LEDs not included in the bitmask can be controlled with [LedPower<x>](Commands.md#ledpower).<br>`<bitmask>` = bitwise value representing each LED. Values may be entered as either hexadecimal or decimal values (e.g., 0xFFFF = 65535). Note that LED 0 is tied to the relay and is always used to indicate the first level of brightness. 0xFFFF (= 1111 1111 1111 1111) All LEDs are used to indicate the  brightness (default)<br>Ex.: LedMask 3 = Use LEDs 0, 1 and 2 to indicate the brightness.
 PWMDimmerPWMs|Set the PWM (channel) count of lights in the device group controlled by the module (CW=2, RGB=3, RGBW=4, RGBCW=5).
 SetOption86|Set brightness LED timeout<br>`0` = disable timeout (default)<br>`1` = enable timeout
 SetOption87|Set powered-off LED (nightlight)<br>`0` = disable powered-off LED (default)<br>`1` = enable powered-off LED
