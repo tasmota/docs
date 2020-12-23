@@ -164,6 +164,13 @@ fully supported
 fully supported with all sensors, except microphone 
 no pin definition needed except GPIO 33,34 for SCL,SDA
 
+### Heltec WiFi Kit 32
+OLED display needs the below pin assigment/template
+
+```json
+{"NAME":"WiFi Kit 32","GPIO":[1,1,1,1,640,1,1,1,1,1,1,608,3840,1,1,1,0,1,1,1,0,224,1,1,0,0,0,0,1,1,1,1,1,0,0,1],"FLAG":0,"BASE":1}
+```
+
 
 ### Displays, sensors and other options 
 
