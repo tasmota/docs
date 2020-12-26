@@ -95,7 +95,7 @@ In most cases those pins are available on the PCB in the form of pin holes or so
 If you are not careful, your own health will be in danger. Shorting your serial interface with mains AC power will fry your device and serial adapter and will also harm or destroy your computer. It is important to _**always have all mains power cables disconnected from the device**_ while being connected via serial or even while the case of the device is opened.
 
 ### Serial Connection
-Each device has its pins labelled differently. If the labelling isn't visible on the PCB please refer to the devices flashing guide or search the Internet for correct pin locations. Device specific instructions and restrictions are documented in the [Tasmota Device Templates Repository](https://templates.blakadder.com/)
+Each device has its pins labelled differently. If the labelling isn't visible on the PCB please refer to the devices flashing guide or search the Internet for correct pin locations. Device specific instructions and restrictions are documented in the [Tasmota Device Templates Repository](https://templates.blakadder.com/). Pinouts for commonly used Wi-Fi modules are [found here](Pinouts.md)
 
 When you have identified pins on your device, connect wires according to the table:
 
