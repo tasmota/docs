@@ -1,5 +1,5 @@
 ---
-redirect: Pinouts
+redirect: Pinouts.md
 ---
 ## Wi-Fi Module Pinouts
 
