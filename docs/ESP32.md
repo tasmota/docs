@@ -26,7 +26,8 @@ Some known device templates and configurations
 In `platformio_override.ini` uncomment the line with `tasmota32` and set the correct COM port. 
 
 In `user_config_override.h` add:
-```
+
+```c
 #define USE_BMP
 #define USE_I2C
 #define USE_SPI
@@ -160,7 +161,8 @@ fully supported with all sensors
 ### TTGO T4 
 fully supported
 
-### m5stack CORE2  
+### m5stack CORE2
+```c  
 #define USE_M5STACK_CORE2  
 #define USE_SCRIPT_FATFS 4  
 #define FAT_SCRIPT_SIZE 8192  
@@ -177,19 +179,24 @@ fully supported
 #define JPEG_PICTS  
 #define USE_FT5206  
 #define USE_MPU6886  
+```
 
-add this define to build_flags  
+add this define to `build_flags`
+
+```c  
 -DBOARD_HAS_PSRAM  
+```
 
 fully supported with all sensors and SD card  
 all pin definitions hardcoded except GPIO 33,34 for extern SCL,SDA on grove bus  
 console cmd:  
-core2shutdown seconds   shut down hardware and wake up after N seconds (>=30)  
-core2shutdown HH:MM   shut down hardware and wake up on HH:MM time  
+
+`core2shutdown seconds` - shut down hardware and wake up after N seconds (>=30)  
+`core2shutdown HH:MM` - shut down hardware and wake up on HH:MM time  
 
 
 ### Heltec WiFi Kit 32
-OLED display needs the below pin assigment/template
+OLED display needs the following template
 
 ```json
 {"NAME":"WiFi Kit 32","GPIO":[1,1,1,1,640,1,1,1,1,1,1,608,3840,1,1,1,0,1,1,1,0,224,1,1,0,0,0,0,1,1,1,1,1,0,0,1],"FLAG":0,"BASE":1}
@@ -200,6 +207,7 @@ OLED display needs the below pin assigment/template
 
 displays: (most probably all I2C displays will work)    
 
+```c
 USE_DISPLAY_SH1106  
 USE_DISPLAY_EPAPER_29  
 USE_DISPLAY_EPAPER_42  
@@ -210,21 +218,23 @@ USE_DISPLAY_RA8876
 USE_DISPLAY_ST7789  
 USE_DISPLAY_ILI9341_2  
 USE_DISPLAY_ILI9342  
+```
 
 sensors:  (most probably all I2C sensors will work)    
 
+```c
 USE_SHT3X  
 USE_BMP  
 USE_VL53L0X  
 USE_MLX90614  
 USE_IBEACON  
 USE_SML_M  
+```
 
 misc:  
+```c
 USE_MP3_PLAYER  
 USE_SCRIPT (scripting and all its options)  
 USE_24C256  
 USE_SENDMAIL  
-
-
-
+```
