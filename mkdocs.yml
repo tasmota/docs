@@ -180,6 +180,7 @@ nav:
   - Supported Devices:
     - Configure Unknown Device: Configuration-Procedure-for-New-Devices.md
     - All Supported Devices: https://templates.blakadder.com/ "target=_blank"
+    - Wi-Fi Module Pinouts: Pinouts.md
     - Supported-Modules.md
   - Help:
     - FAQ.md

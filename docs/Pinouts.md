@@ -4,8 +4,7 @@
 ![ESP8266 pinout](_media/pinouts/ESP8266_pinout.jpg)
 
 ### ESP-12S Pinout
-![ESP-12S
- pinout](_media/pinouts/esp-12s_pinout.jpg)
+![ESP-12S pinout](_media/pinouts/esp-12s_pinout.jpg)
 
 ### LM1 Pinout
 ![LM1 Pinout](_media/pinouts/LM1_pinout.jpg)
