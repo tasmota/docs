@@ -376,6 +376,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `lip` = local ip as string  
 `luip` = udp ip as string (from updating device when USE_SCRIPT_GLOBVARS defined)  
 `prefixn` = prefix n = 1-3  
+`frnm` = friendly name  
 `pwr[x]` = power state  (x = 1..N)  
 `pc[x]` = pulse counter value  (x = 1..4)  
 `tbut[x]` = touch screen button state  (x = 1..N)  
@@ -421,8 +422,9 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `play(path)` = play mp3 audio from filesystem (if defined USE_I2S_AUDIO or USE_TTGO_WATCH or USE_M5STACK_CORE2)  
 `say("text")` = plays specified text to speech (if defined USE_I2S_AUDIO or USE_TTGO_WATCH or USE_M5STACK_CORE2)   
 `c2ps(sel val)` = gets, sets values on ESP32 CORE2 sel=0 green led, sel=1 vibration motor, sel=2,3,4 get touch button state 1,2,3 (if defined USE_M5STACK_CORE2)  
-`pwmN(-pin freq)` = defines a pwm channel N (1..5) with pin Nr and frequency (pin 0 beeing -64)  
-`pwmN(val)` = outputs a pwm signal on channel N (1..5) with val (0-1023)  
+`rec(path seconds)` = rec n seconds wav audio file from i2s microphone to filesystem path (if defined USE_I2S_AUDIO or USE_M5STACK_CORE2)  
+`pwmN(-pin freq)` = defines a pwm channel N (1..N) with pin Nr and frequency (pin 0 beeing -64, N=5 with esp8266 and N=8 with esp32)  
+`pwmN(val)` = outputs a pwm signal on channel N (1..N) with val (0-1023)  
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
 
 `wcs` = send this line to webpage (WebContentSend)  
