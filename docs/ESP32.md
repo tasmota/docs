@@ -161,8 +161,12 @@ fully supported with all sensors
 fully supported
 
 ### m5stack CORE2  
-fully supported with all sensors, except microphone 
+fully supported with all sensors  
 no pin definition needed except GPIO 33,34 for SCL,SDA
+console cmd:  
+core2shutdown seconds   shut down hardware and wake up after N seconds (>=30)  
+core2shutdown HH:MM   shut down hardware and wake up on HH:MM time  
+
 
 ### Heltec WiFi Kit 32
 OLED display needs the below pin assigment/template
