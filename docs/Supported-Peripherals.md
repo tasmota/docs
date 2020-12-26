@@ -110,4 +110,4 @@ Name|Description
 * [Expand Sonoff S20 with a jack plug](https://github.com/arendst/Tasmota/issues/670)
 * [Expand Sonoff 4CH with a jack plug](Expanding-4CH)
 * [Modify KaKu to WKaKu Power Socket](/devices/Modify-KaKu-to-WKaKu-Power-Socket)
-* [GPIO Locations for some devices](GPIO-Locations)
+* [GPIO Locations for some devices](Pinouts)
