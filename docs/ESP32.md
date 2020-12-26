@@ -32,7 +32,7 @@ In `user_config_override.h` add:
 #define USE_SPI
 #define USE_DISPLAY
 #define USE_DISPLAY_SSD1306
-#define HOW_SPLASH
+#define SHOW_SPLASH
 #define USE_WEBCAM
 ```
 
@@ -161,8 +161,28 @@ fully supported with all sensors
 fully supported
 
 ### m5stack CORE2  
-fully supported with all sensors  
-no pin definition needed except GPIO 33,34 for SCL,SDA
+#define USE_M5STACK_CORE2  
+#define USE_SCRIPT_FATFS 4  
+#define FAT_SCRIPT_SIZE 8192  
+#define USE_SCRIPT  
+#define USE_I2C  
+#define USE_BMA423  
+#define SAY_TIME  
+#define USE_WEBRADIO  
+#define USE_DISPLAY  
+#define USE_SPI  
+
+#define USE_DISPLAY_ILI9342  
+#define USE_TOUCH_BUTTONS  
+#define JPEG_PICTS  
+#define USE_FT5206  
+#define USE_MPU6886  
+
+add this define to build_flags  
+-DBOARD_HAS_PSRAM  
+
+fully supported with all sensors and SD card  
+all pin definitions hardcoded except GPIO 33,34 for extern SCL,SDA on grove bus  
 console cmd:  
 core2shutdown seconds   shut down hardware and wake up after N seconds (>=30)  
 core2shutdown HH:MM   shut down hardware and wake up on HH:MM time  
