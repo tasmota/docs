@@ -1059,5 +1059,23 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
 1,F70308xxxxxxxxxxxxUUuu@i1:10,AA20-10V,V,Metric_AA20,1
 1,F70304UUuu@i2:1,StellsignalRk1,%,CtrlSig_RK1,0
 #
+
+```
+
+### EasyMeter Q3A
+
+A 2-Tarif Meter which for Example SWM (Stadtwerke München) uses. Unfortunately this Version sends only whole kWh (precision 0).
+
+```
+>D
+>B
+=>sensor53 r
+>M 1
++1,3,s,0,9600,SML
+1,77070100010801ff@1000,Verbrauch_Tarif_1,kWh,Total_Tarif1,0
+1,77070100010802ff@1000,Verbrauch_Tarif_2,kWh,Total_Tarif2,0
+1,77070100010800ff@1000,Verbrauch_Summe,kWh,Total_Summe,0
+#
+
 ```
 ------------------------------------------------------------------------------
