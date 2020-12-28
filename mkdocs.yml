@@ -16,12 +16,14 @@ plugins:
       minify_html: true
   - redirects:
       redirect_maps:
-        'GPIO-Locations.md': 'Pinouts.md'
-        'BMP280.md': 'BME280.md'
-        'Rule-Cookbook.md': 'Rules.md'
-        'Sensor-Configuration.md': 'Peripherals.md'
-        'Scripting-Cookbook.md': 'Scripting-Language.md'
-        'Status-LED.md': 'Lights.md'
+        'GPIO-Locations.md': 'docs/Pinouts.md'
+        'BMP280.md': 'docs/BME280.md'
+        'Rule-Cookbook.md': 'docs/Rules.md'
+        'Sensor-Configuration.md': docs/'Peripherals.md'
+        'Scripting-Cookbook.md': 'docs/Scripting-Language.md'
+        'Status-LED.md': 'docs/Lights.md'
+        'Tuya-Protocols.md': 'docs/TuyaMCU.md'
+        'Upgrade.md': 'docs/Upgrading.md'
 # - htmlproofer
 
 strict: true
