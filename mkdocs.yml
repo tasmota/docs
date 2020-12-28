@@ -4,6 +4,7 @@ site_url: https://tasmota.github.io/docs/
 repo_name: 'arendst/tasmota'
 repo_url: 'https://github.com/arendst/tasmota'
 edit_uri: 'https://github.com/tasmota/docs/blob/master/docs/'
+docs_dir: docs
 # copyright: 'Copyright &copy; 2020 Tasmota Development Team'
 
 plugins:
@@ -15,7 +16,6 @@ plugins:
   - minify:
       minify_html: true
   - redirects:
-      use_directory_urls: true
       redirect_maps:
         'GPIO-Locations.md': 'Pinouts.md'
         'BMP280.md': 'BME280.md'
