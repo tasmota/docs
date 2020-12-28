@@ -691,6 +691,8 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 `flx(fname)` create download link for file (x=1 or 2) fname = file name of file to download  
 `fsm` return 1 if filesystem is mounted, (valid SD card found)  
 `res=fsi(sel)` gets file system information, sel=0 returns total media size, sel=1 returns free space both in kB   
+`fra(array fr)` reads array from open file with fr (assumes tab delimeted entries)  
+`fwa(array fr)` writes array to open file with fr (writes tab delimited entries)  
 
 **Extended commands**   (+0,9k flash)  
 `#define USE_SCRIPT_FATFS_EXT`  

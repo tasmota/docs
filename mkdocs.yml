@@ -4,6 +4,7 @@ site_url: https://tasmota.github.io/docs/
 repo_name: 'arendst/tasmota'
 repo_url: 'https://github.com/arendst/tasmota'
 edit_uri: 'https://github.com/tasmota/docs/blob/master/docs/'
+docs_dir: docs
 # copyright: 'Copyright &copy; 2020 Tasmota Development Team'
 
 plugins:

@@ -1,10 +1,14 @@
-## Wi-Fi Module Pinouts
+# Wi-Fi Module Pinouts
 
+## ESP82xx Based
 ### ESP8266 and ESP8285 
 ![ESP8266 pinout](_media/pinouts/ESP8266_pinout.jpg)
 
 ### ESP-12S 
 ![ESP-12S pinout](_media/pinouts/ESP-12s_pinout.jpg)
+
+### ESP-WROOM-02
+![ESP-WROOM-02 Pinout](_media/pinouts/ESP-WROOM-02_pinout.jpg)
 
 ### LM1 
 ![LM1 Pinout](_media/pinouts/LM1_pinout.jpg)
@@ -24,18 +28,23 @@
 ### TYWE3L 
 ![TYWE3L Pinout](_media/pinouts/TYWE3L_pinout.jpg)
 
+### TYLC4 
+![TYLC4](_media/pinouts/TYLC4.png)![TYLC4 Pinout](_media/pinouts/TYLC4_pinout.jpg)
+
 ### TYWE5P 
 ![TYWE5P](_media/pinouts/TYWE5P.jpg)![TYWE5P Pinout](_media/pinouts/TYWE5P_pinout.jpg)
 
 ### PSF-B85/PSF-B01/PSF-B04
 ![PSF-B85 Pinout](_media/pinouts/PSF-B85_pinout.jpg)
 
+## ESP32 Based
 ### ESP32-WROVER
 ![ESP32-WROVER Pinout](_media/pinouts/ESP32-WROVER_pinout.jpg)
 
 ### ESP32-ESP-WROOM-32
 ![ESP32-ESP-WROOM-32 Pinout](_media/pinouts/ESP-WROOM-32_pinout.jpg)
 
+## Devices
 ### Sonoff Mini
 ![Sonoff Mini](_media/pinouts/sonoff_mini.jpg)
 
