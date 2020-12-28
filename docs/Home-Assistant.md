@@ -27,21 +27,22 @@ All Tasmota devices will be listed in their own Tasmota (beta) card in **Configu
 
 Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmota (beta) integration and [`FriendlyName<x>`](Commands.md#friendlyname) to name power outputs (switch or light entities in HA).
 
-Each discovered device will by default add 8 disabled sensors. Enable the ones you need. You cannot delete them, they will simply be re-on a restart.
-
 ### Supported Entities
 
-- Lights as light entities
-- Relays as switch entities
-  a. with [`SetOption30 1`](Commands#setoption30) all relays one the device will be added as light entities instead
-- Sensors as sensor entities
-- Switches as binary_sensor entities 
-  a. when [`SetOption114 1`](Commands#setoption114) they're added as automation triggers
+- Lights as `light` entities.  
+  Single channel Dimmers, RGB lights, RGB lights with Color Temperature control and RGB lights with White control are supported.
+- Relays as `switch` entities
+  With [`SetOption30 1`](Commands#setoption30) all relays one the device will be added as light entities instead
+- Sensors as `sensor` entities
+- Switches as `binary_sensor` entities or `automation triggers` depending on `SwitchMode` used when [`SetOption114 1`](Commands#setoption114)
 - Buttons as automation triggers when [`SetOption73`](Commands#setoption73) is enabled
-- Shutters as cover entities
+- Shutters as cover entities. 
+  Currently only shutter modes 1 to 4 are supported. Shutter mode 5 and Tuya shutters are not supported.
 - Devices configured as iFan02 or iFan03 as fan entities. Tuya fans are not supported.
+- Each discovered device will by default add 8 disabled sensors. Enable the ones you need. You cannot delete them, they will simply be re-added on a restart.
 
 Types of devices not listed above still require [manual configuration](##editing-configurationyaml)
+
 
 !!! warning "Zigbee devices paired in Tasmota will **NOT** be discovered in Home Assistant"
 
