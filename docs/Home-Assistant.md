@@ -597,31 +597,31 @@ Derived from [#2839](https://github.com/arendst/Tasmota/issues/2839) by @kbickar
 # Example configuration.yaml entry
 fan:
 - platform: mqtt  
-    name: "Tasmota Fan"
-    command_topic: "cmnd/tasmota/FanSpeed"
-    speed_command_topic: "cmnd/tasmota/FanSpeed"    
-    state_topic: "stat/tasmota/RESULT"
-    speed_state_topic: "stat/tasmota/RESULT"
-    state_value_template: >
-      {% if value_json.FanSpeed is defined %}
-        {% if value_json.FanSpeed == 0 -%}0{%- elif value_json.FanSpeed > 0 -%}4{%- endif %}
-      {% else %}
-        {% if states.fan.tasmota.state == 'off' -%}0{%- elif states.fan.tasmota.state == 'on' -%}4{%- endif %}
-      {% endif %}
-    speed_value_template: "{{ value_json.FanSpeed }}"
-    availability_topic: tele/tasmota/LWT
-    payload_off: "0"
-    payload_on: "4"
-    payload_low_speed: "1"
-    payload_medium_speed: "2"
-    payload_high_speed: "3"
-    payload_available: Online
-    payload_not_available: Offline
-    speeds:
-      - off
-      - low
-      - medium
-      - high
+  name: "Tasmota Fan"
+  command_topic: "cmnd/tasmota/FanSpeed"
+  speed_command_topic: "cmnd/tasmota/FanSpeed"    
+  state_topic: "stat/tasmota/RESULT"
+  speed_state_topic: "stat/tasmota/RESULT"
+  state_value_template: >
+    {% if value_json.FanSpeed is defined %}
+      {% if value_json.FanSpeed == 0 -%}0{%- elif value_json.FanSpeed > 0 -%}4{%- endif %}
+    {% else %}
+      {% if states.fan.tasmota.state == 'off' -%}0{%- elif states.fan.tasmota.state == 'on' -%}4{%- endif %}
+    {% endif %}
+  speed_value_template: "{{ value_json.FanSpeed }}"
+  availability_topic: tele/tasmota/LWT
+  payload_off: "0"
+  payload_on: "4"
+  payload_low_speed: "1"
+  payload_medium_speed: "2"
+  payload_high_speed: "3"
+  payload_available: Online
+  payload_not_available: Offline
+  speeds:
+    - off
+    - low
+    - medium
+    - high
 ```
 <!-- tabs:end -->
 
