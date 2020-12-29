@@ -81,33 +81,27 @@ With four shutters, eight `Relay<x>` components are needed. If manual operation 
 Using manual operation `Switch<x>` pairs may require setting `SwitchMode<x> 4` (inverse follow) for proper switch behavior.
 
 Any shutter positioning can be locked `ShutterLock<x> 1`. Once executed an ongoing movement is finished while further positioning commands like `ShutterOpen<x>`, `ShutterClose<x>`, `ShutterStop<x>`,  `ShutterPosition<x>`, ... as well as web UI buttons, web UI sliders, and shutter buttons are disabled. This can be used to lock an outdoor blind in case of high wind or rain. You may also disable shutter positioning games by your children. Shutter positioning can be unlocked using `ShutterLock<x> 0`. Please be aware that the shutter can still be moved by direct relay control (i.e., `Power<x>`), or physical switches and buttons. Use the `ShutterButton<x>` command prior to `ShutterLock` to be able to lock buttons.
-
-### Pulse Motor Support
-There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands.md#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
-
-### Stepper Motor Support
-Stepper motors can also be used to operate shutters and blinds. Additionally you can operate sliding doors with this configuration.
-
-### Servo Motor Support
-Servos are small devices with typical 180° or 360" rotation movement. The position will be drived by the PWM duty cycle time. This will all automatically calculated
-
-### Smooth RAMP-UP and RAMP-DOWN Support
-Servos and Steppers also have a velocity control. With `ShutterMotorDelay<x> 1.5` you can define a 1.5second soft start/stop before the device reaches it final moving speed. Usefull for moving heavy items like doors.
     
 ### Calibration
 [Shutter calibration video tutorial](https://www.youtube.com/watch?v=Z-grrvnu2bU)  
 
-- Set the `ShutterOpenDuration<x>` to the time the shutter needs to open completely.
-- Set the `ShutterCloseDuration<x>` at least to the time the shutter needs to close completely. If the shutter does not close completely or runs too long, the calibration point of a closed shutter can be defined with `ShutterSetClose<x>`. Move the shutter to the close position and execute `ShutterSetClose<x>` command. `ShutterPosition<x>` will be reset to 0 (`ShutterClose<x>`).
-- Set the 50% open position of the shutter. Some shutters need some time from totally closed until they begin moving the bottom-most part and opening. This often results a shutter that is less than 50% open when the shutter has been operating for 50% of the set duration. This can be corrected by using `ShutterSetHalfway<x>`. Use this procedure to calibrate the half-open position:
-  1. `ShutterClose<x>` (confirm that the shutter is completely closed)
-  2. `ShutterSetHalfway<x> 50` (reset to default)
-  3. Move the shutter to actual 50% open position.
-  4. Use `ShutterPosition<x>` to inquire the shutter's current position and record the value. This value is a **percentage of the total opening** (e.g., `63` = 63% of opening).
-  5. `ShutterClose<x>`
-  6. `ShutterSetHalfway<x> 63` (using the value from step #4 above)
-  7. `Restart 1`
-- After calibration you might want to enable an additional 1s motor movement by `ShutterEnableEndStopTime<x> 1` when the shutter is asked to move to its end positions (0% and 100%). By this you can guarantee that end positions are still reached in case of inaccuracies. Take care to disable this by `ShutterEnableEndStopTime<x> 0` before further open or close duration measurements.
+- Start your shutter in a closed position preferably. Set internal position to closed with `ShutterSetClose<x>`. 
+- Set the time needed to open the shutter completely with `ShutterOpenDuration<x>`. 
+  * If the shutter opens more than needed, move it to the desired position with `ShutterSetPosition<x>` then set the position to fully open (100) with `ShutterSetOpen<x>` and decrease the open time. 
+- Set the time needed to close the shutters with `ShutterCloseDuration<x>`. 
+  * If the shutter does not close completely, open again and adjust close time.
+  * If it runs too long, move it back to desired closed position with `ShutterSetPosition<x>`, reset to 0 with `ShutterSetClose<x>` and decrease open time.
+- Alternate between opening and closing the shutter until you find out the exact times needed to get the same positions multiple times
+- Now set the 50% open position of the shutter. Some shutters need some time from totally closed until they begin moving the bottom-most part and opening. This often results in a shutter that is less than 50% open when the shutter has been operating for 50% of the set time. This can be corrected by using `ShutterSetHalfway<x>`. Use this procedure to calibrate the half-open position:
+   1. `ShutterClose<x>` (confirm that the shutter is completely closed)
+   2. `ShutterSetHalfway<x> 50` (reset to default)
+   3. Move the shutter to actual 50% open position.
+   4. Use `ShutterPosition<x>` to inquire the shutter's current position and record the value. This value is a **percentage of the total opening** (e.g., `63` = 63% of opening).
+   5. `ShutterClose<x>`
+   6. `ShutterSetHalfway<x> 63` (using the value from step #4 above)
+   7. `Restart 1`
+
+After calibration is complete, you might want to enable an additional 1 second motor movement with `ShutterEnableEndStopTime<x> 1` when the shutter is asked to move to its end positions (0% and 100%). With this you can guarantee that end positions are still reached in case of inaccuracies. Take care to disable this with `ShutterEnableEndStopTime<x> 0` before further open or close duration measurements.
 
 #### Increasing Calibration Granularity
 If you desire that the %-opening closely match what `ShutterPosition<x>` and web UI indicate, there is a granular calibration matrix available. Ensure that `ShutterClose<x>` and `ShutterOpen<x>` moves the shutter more or less to the limit positions and follow this procedure:
@@ -117,17 +111,16 @@ If you desire that the %-opening closely match what `ShutterPosition<x>` and web
 - `Restart 1`
 - `ShutterClose<x>`
 - Move the shutter to each of the following opening percentages and measure the shutter's position for each. 
-  - `ShutterPosition<x> 30` (e.g., measurement = `15`)
-  - `ShutterPosition<x> 50` (e.g., measurement = `50`)
-  - `ShutterPosition<x> 70` (e.g., measurement = `100`)
-  - `ShutterPosition<x> 90` (e.g., measurement = `150`)
-  - `ShutterPosition<x> 100` (e.g., measurement = `180`)
-- Finally, enter the position measurements as the calibration values:
-  `ShutterCalibration<x> 15 50 100 150 180`  
+   - `ShutterPosition<x> 30` (e.g., measurement = `15`)
+   - `ShutterPosition<x> 50` (e.g., measurement = `50`)
+   - `ShutterPosition<x> 70` (e.g., measurement = `100`)
+   - `ShutterPosition<x> 90` (e.g., measurement = `150`)
+   - `ShutterPosition<x> 100` (e.g., measurement = `180`)
+- Finally, enter the position measurements as the calibration values: `ShutterCalibration<x> 15 50 100 150 180`  
 
 `ShutterCalibration<x>` takes position measurements (**not** the time it takes to move). During calibration you position the shutter to an indicated percentage (e.g., `30%`) of opening and measure the shutter position (e.g., `15`). Use the same unit of measure for all your measurements (e.g., centimeters, inches, steps, etc.). After calibration `ShutterPosition<x> 30` will move to `30%` opening which will correspond to the position you provided (`15`).  
 
-Notice that there is no calibration for the 10\% position. On many shutters, there is no movement during the initial phase (i.e., nearly 10% of total time). Therefore the opening could be `0`. This measurement would cause an execution DIV 0 exception. Therefore the first calibration point is 30%. In most cases this is not a large opening so the calibration will be near enough. Yes, until ~10%, the position will be a bit "off" but not enough for concern.  
+Notice that there is no calibration for the 10% position. On many shutters, there is no movement during the initial phase (i.e., nearly 10% of total time). Therefore the opening could be `0`. This measurement would cause an execution DIV 0 exception. Therefore the first calibration point is 30%. In most cases this is not a large opening so the calibration will be near enough. Yes, until ~10%, the position will be a bit "off" but not enough for concern.  
 
 ### Motor Movement Delays
 Some motors need up to one second after power is turned on before they start moving. You can confirm if you are having this issue if opening and closing as a single action works properly but doing this in smaller steps result in a shift of the position.  
@@ -148,7 +141,7 @@ Some motors need up to one second after power is turned on before they start mov
 
 Close the shutter and repeat this procedure until the motor delay is set properly.  
 
-### Button control
+### Button Control
 When shutter is running in default `ShutterMode 0`, you already have basic control over the shutter movement using switches or buttons in the module configuration to directly drive the shutter relays.  For short circuit safe operation `ShutterMode 1` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch or button and 2nd switch on the power by the other switch or button. 
 
 To have shutter mode independent button control over the shutter and not over its relays one can use the `ShutterButton<x>` command. It also introduces some more features, see below:
@@ -194,12 +187,26 @@ Global steering of all your shutters at home is supported by additional MQTT bro
 
 Module WiFi setup, restart, upgrade and reset according to [Buttons and Switches](Buttons-and-Switches.md) are supported "child and fool proof" only when no button restriction ([`SetOption1`](Commands.md#setoption1)) is given and when all configured shutter buttons of that shutter are pressed 5x, 6x, 7x times or hold long simultaneously.
 
-### Button remote control
-One can use any other Tasmota module with attached button(s) or switch(es) to remote control a shutter using rules. Similar behavior as direct button control can be achieved by  applying `ShutterStopClose, ShutterStopOpen, ShutterStopToggle, ShutterStopPosition` commands. They stops shutter while movement and carry out close, open, toggle or position commands otherwise.
+### Remote Control
+Use any other Tasmota device with buttons or switches to control remotely a shutter using rules. Similar behavior as direct button control can be achieved by applying `ShutterStopClose, ShutterStopOpen, ShutterStopToggle, ShutterStopPosition` commands. They stop shutter movement if it is in motion and otherwise execute close, open, toggle or position commands.
 
-`rule1 on switch1#state=2 do publish cmnd/%topic%/ShutterStopToggle endon`
+!!! example
+    Run this rule on another Tasmota device with a switch configured.
+    `rule1 on switch1#state=2 do publish cmnd/%shutter-topic%/ShutterStopToggle endon`
 
-## Configuration
+## Specific Configuration
+
+### Pulse Motor Support
+There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands.md#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
+
+### Stepper Motor Support
+Stepper motors can also be used to operate shutters and blinds. Additionally you can operate sliding doors with this configuration.
+
+### Servo Motor Support
+Servos are small devices with typical 180° or 360" rotation movement. The position will be drived by the PWM duty cycle time. This will all automatically calculated
+
+### Smooth RAMP-UP and RAMP-DOWN Support
+Servos and Steppers also have a velocity control. With `ShutterMotorDelay<x> 1.5` you can define a 1.5second soft start/stop before the device reaches it final moving speed. Usefull for moving heavy items like doors.
 
 ### using Pulse Motors
 #### Normal wire configuration with a PCF as digital I/O
