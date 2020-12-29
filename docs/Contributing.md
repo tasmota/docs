@@ -38,3 +38,49 @@ You've made a contribution to the Tasmota project making it a better experience 
 
 ## Adding devices to the documentation
 If you're adding a new page, go to [documentation GitHub](https://github.com/tasmota/docs/tree/master/docs) and click **Create new file**, name the file with .md extension.
+
+## Doc Cookbook
+
+On top of standard Marksown, the documentation is using standardized presentations:
+
+### Note and warning
+
+!!! note   
+    You can insert a 'note' like this one with the following code.
+```haskel
+!!! note
+    You can insert a 'note' like this one with the following code.
+```
+
+!!! warning  "Warning with title in bold"
+    You can insert a 'warning' like this one with the following code.<br>
+    Also you can have a text in bold in the title by using quotes.
+```haskel
+!!! warning  "Warning with title in bold"
+    You can insert a 'warning' like this one with the following code.<br>
+    Also you can have a text in bold in the title by using quotes.
+```
+
+Other possibilities include :
+
+!!! example
+    Use `!!! example`
+
+!!! info
+    Use `!!! info`
+
+!!! tip         
+    Use `!!! tip`
+
+!!! failure     
+    Use `!!! failure`
+
+In places where it is not possible ot insert a block, like in tables used in 
+`Commands.md`, you can use an Emoji :
+
+* :pencil: **Note:** Use `:pencil: **Note:** `
+* :warning: **Warning:** Use `:warning: **Warning:** `
+* :page_facing_up: **Example:** Use `:page_facing_up: **Example:** `
+* :information_source: **Info:** Use `:information_source: **Info:** `
+* :fire: **Tip:** Use `:fire: **Tip:** `
+* :x: **Failure:** Use `:x: **Failure:** `
