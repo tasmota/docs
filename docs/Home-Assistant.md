@@ -806,6 +806,109 @@ sensor:
 
 <!-- tabs:end -->
 
+<!-- tabs:start -->
+
+!!! example "Covers"
+For shutter position to persist in Home Assistant through device reboots, execute `PowerRetain 1`.
+
+These sample configurations should allow the shutter work in Home Assistant. This is only an example and may need further modification to work in your environment.
+
+This example uses a new configuration for roller shutters with options for positioning. It assumes that `%prefix%/%topic%/` is configured in the Tasmota Full Topic MQTT parameter.  
+
+```yaml
+cover:
+  - platform: mqtt
+    name: "Balcony Blinds"
+    availability_topic: "tele/%topic%/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    position_topic: stat/%topic%/Shutter1
+    position_open: 100
+    position_closed: 0
+    set_position_topic: "cmnd/%topic%/ShutterPosition1"
+    command_topic: "cmnd/%topic%/Backlog"
+    payload_open: "ShutterOpen1"
+    payload_close: "ShutterClose1"
+    payload_stop: "ShutterStop1"
+    retain: false
+    optimistic: false
+    qos: 1
+```
+Check [Issue 130](https://github.com/stefanbode/Sonoff-Tasmota/issues/130) for more information about this configuration.
+
+Another integration example:  
+```yaml
+cover:
+  - platform: mqtt
+    name: "Test"
+    availability_topic: "tele/%topic%/LWT"
+    state_topic: "stat/%topic%/RESULT"
+    command_topic: "cmnd/%topic%/Backlog"
+    value_template: '{{ value | int }}'
+    qos: 1
+    retain: false
+    payload_open: "ShutterOpen1"
+    payload_close: "ShutterClose1"
+    payload_stop: "ShutterStop1"
+    state_open: "ON"
+    state_closed: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    optimistic: false
+    tilt_command_topic: 'cmnd/%topic%/ShutterPosition1'
+    tilt_status_topic: 'cmnd/%topic%/ShutterPosition1'
+    set_position_topic: 'cmnd/%topic%/ShutterPosition1'
+    position_topic: "stat/%topic%/SHUTTER1"
+    tilt_min: 0
+    tilt_max: 100
+    tilt_closed_value: 0
+    tilt_opened_value: 100
+```
+Integration example with position updated during movement (Tasmota versions >= v8.1.0.5):  
+
+```yaml
+cover:
+  - platform: mqtt
+    name: "Balcony Blinds"
+    availability_topic: "tele/%topic%/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    position_topic: "stat/%topic%/RESULT"
+    value_template: >
+      {% if ('Shutter1' in value_json) and ('Position' in value_json.Shutter1) %}
+        {{ value_json.Shutter1.Position }}
+      {% else %}
+        {% if is_state('cover.balcony_blinds', 'unknown') %}
+          50
+        {% else %}
+          {{ state_attr('cover.balcony_blinds','current_position') }}
+        {% endif %}
+      {% endif %}    
+    position_open: 100
+    position_closed: 0
+    set_position_topic: "cmnd/%topic%/ShutterPosition1"
+    command_topic: "cmnd/%topic%/Backlog"
+    payload_open: "ShutterOpen1"
+    payload_close: "ShutterClose1"
+    payload_stop: "ShutterStop1"
+    retain: false
+    optimistic: false
+    qos: 1
+```
+
+In addition, add to your home assistant start up automation a query for the current shutter position:
+```yaml
+- alias: "Power state on HA start-up"
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/%shutters grouptopic%/shutterposition"
+        payload: ""       
+```
+
 ### Zigbee Devices
 
 <!-- tabs:start -->
