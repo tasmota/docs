@@ -229,8 +229,8 @@ I<sup>2</sup>C displays are connected in the usual manner and defined via the GP
 
 The I<sup>2</sup>C address must be specified using `DisplayAddress XX`, e.g., `60`. The model must be spedified with `DisplayModel`, e.g., `2` for SSD1306. To permanently turn the display on set `DisplayDimmer 100`. Display rotation can be permanently set using `DisplayRotate X` (x = `0..3`).  
 
-E-Paper displays are connected via software 3-wire SPI `(CS, SCLK, MOSI)`. The other three interface lines of the display
-(DC, Reset, busy) may be left unconnected. The jumper on the circuit board of the display must be set to 3-wire SPI.  
+E-Paper displays are connected via software 3-wire SPI `(CS, SCLK, MOSI)`. DC should be connected to GND , Reset to 3.3 V 
+and busy may be left unconnected. The jumper on the circuit board of the display must be set to 3-wire SPI.  
 
 The ILI9488, ILI9341 and SSD1351 are connected via hardware 3-wire SPI `(MOSI=GPIO13, SCLK=GPIO14, CS=GPIO15)`. The ILI9488 must also be connected to the backlight pin (dimmer supported on SSD1351). [Wiring](https://github.com/arendst/Tasmota/issues/2557#issuecomment-444454436)
 
