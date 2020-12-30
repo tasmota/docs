@@ -215,6 +215,7 @@ Servos and Steppers also have a velocity control. With `ShutterMotorDelay<x> 1.5
 #### Short Circuit safe wire configuration with a PCF as digital I/O
 ![ShortCicuitSafe](https://user-images.githubusercontent.com/34340210/65997877-3517e180-e468-11e9-9b8c-2f0787f977f6.png)
 
+<!-- outdated log output
 #### Sample Log Output
 Typical log output (log level `3`) when starting from `ShutterOpen1`. The first command is `ShutterClose1`. After closing, open it to 50% with `ShutterPosition1 50`  
 ```
@@ -272,6 +273,7 @@ MQT: stat/%topic%/POWER1 = OFF
 MQT: tele/%topic%/RESULT = {"Shutter1":{"Position":50,"direction":0}}
 CFG: Saved to flash at FA, Count 728, Bytes 4096
 ```
+-->
 ### using Stepper Motors
 Stepper motors can be used to operate shutters and blinds. The configuration is very similar to the  Circuit Safe (Shuttermode 1) configuration. To operate a stepper motor requires driver module such as the A4988 and uses EN (enable), DIR (direction), STP (Stepper) for controls. If everything is defined correctly Shuttermode 3 will be reported at boot time.
 
@@ -452,19 +454,19 @@ Tasmota rule triggers:
 - `Shutter<x>#Button0=0`  is triggered when all buttons of that shutter are hold simultaneously
 - `Shutter<x>#Button0=<n>`  is triggered when all buttons of that shutter are pressed simultaneously `n` times
 
-Examples:  
+!!! example "Examples"
+
 - Publish a message with the position of the shutter:
   `Rule1 ON Shutter1#Position DO Publish status/%topic%/level {"%value%"} ENDON`
-
 - Open/Close or set a specific position for a shutter. This example drives the second shutter to the same position as the first shutter:  
   `Rule1 ON Shutter1#Position DO ShutterPosition2 %value%" ENDON`
 
-#### Jarolift Shutter Support
+### Jarolift Shutter Support
 Jarolift shutters operates by the 3 commands up/stop/down. Compile with the KeeLoq Option and provide the extracted master keys to communicate. Please see KeeLoq description how to do that. After this create a rule to allow the shutter to control the Jarolift devices. Shutter must be in ShutterMode 0.
 
   `Rule1 On Power1#state=0 DO KeeloqSendButton 4 endon On Power2#state=0 DO KeeloqSendButton 4 endon on Power1#state=1 DO KeeloqSendButton 8 endon on Power2#State=1 DO KeeloqSendButton 2 endon`
 
-#### Venetian Blind Support
+### Venetian Blind Support
 A 2nd shutter can be configured to support the adjustment of the horizontal tilt.  
 After movement the tilt will be restored if blind is not fully opened or closed via an additional rule.  
 
@@ -482,100 +484,4 @@ Add rule (requires rules with [Conditional Rules](Rules.md#conditional-rules) en
 Rule1 on Shutter2#Position DO mem1 %value% ENDON on Shutter1#Position DO var2 %value% ENDON on Shutter1#Direction!=0 DO var1 %value% ENDON on Shutter1#Direction=0 DO IF (var1==1) var1 0; IF (var2!=100) ShutterSetOpen2; shutterposition2 %mem1% ENDIF ENDIF ENDON on Shutter1#Direction=0 DO IF (var1==-1) var1 0; IF (var2!=0) ShutterSetClose2; shutterposition2 %mem1% ENDIF ENDIF ENDON
 ```
 
-#### Home Assistant Support
-For shutter position to persist in Home Assistant through device reboots, execute `PowerRetain 1`.
 
-These sample configurations should allow the shutter work in Home Assistant. Change the device MQTT topic and templates to match your settings. This is only an example and may need further modification to work in your environment.
-
-The configuration requirements changed starting with Home Assistant version 0.82.0. This example uses a new configuration for roller shutters with options for positioning. It assumes that `%prefix%/%topic%/` is configured in the Tasmota Full Topic MQTT parameter.  
-```yaml
-cover:
-  - platform: mqtt
-    name: "Balcony Blinds"
-    availability_topic: "tele/%topic%/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    position_topic: stat/%topic%/Shutter1
-    position_open: 100
-    position_closed: 0
-    set_position_topic: "cmnd/%topic%/ShutterPosition1"
-    command_topic: "cmnd/%topic%/Backlog"
-    payload_open: "ShutterOpen1"
-    payload_close: "ShutterClose1"
-    payload_stop: "ShutterStop1"
-    retain: false
-    optimistic: false
-    qos: 1
-```
-Check [Issue 130](https://github.com/stefanbode/Sonoff-Tasmota/issues/130) for more information about this configuration.
-
-Another Home Assistant integration example:  
-```yaml
-cover:
-  - platform: mqtt
-    name: "Test"
-    availability_topic: "tele/%topic%/LWT"
-    state_topic: "stat/%topic%/RESULT"
-    command_topic: "cmnd/%topic%/Backlog"
-    value_template: '{{ value | int }}'
-    qos: 1
-    retain: false
-    payload_open: "ShutterOpen1"
-    payload_close: "ShutterClose1"
-    payload_stop: "ShutterStop1"
-    state_open: "ON"
-    state_closed: "OFF"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    optimistic: false
-    tilt_command_topic: 'cmnd/%topic%/ShutterPosition1'
-    tilt_status_topic: 'cmnd/%topic%/ShutterPosition1'
-    set_position_topic: 'cmnd/%topic%/ShutterPosition1'
-    position_topic: "stat/%topic%/SHUTTER1"
-    tilt_min: 0
-    tilt_max: 100
-    tilt_closed_value: 0
-    tilt_opened_value: 100
-```
-Another Home Assistant integration example with position update while movement (Tasmota versions >= v8.1.0.5):  
-```yaml
-cover:
-  - platform: mqtt
-    name: "Balcony Blinds"
-    availability_topic: "tele/%topic%/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    position_topic: "stat/%topic%/RESULT"
-    value_template: >
-      {% if ('Shutter1' in value_json) and ('Position' in value_json.Shutter1) %}
-        {{ value_json.Shutter1.Position }}
-      {% else %}
-        {% if is_state('cover.balcony_blinds', 'unknown') %}
-          50
-        {% else %}
-          {{ state_attr('cover.balcony_blinds','current_position') }}
-        {% endif %}
-      {% endif %}    
-    position_open: 100
-    position_closed: 0
-    set_position_topic: "cmnd/%topic%/ShutterPosition1"
-    command_topic: "cmnd/%topic%/Backlog"
-    payload_open: "ShutterOpen1"
-    payload_close: "ShutterClose1"
-    payload_stop: "ShutterStop1"
-    retain: false
-    optimistic: false
-    qos: 1
-```
-In addition, add to your home assistant start up automation a query for the current shutter position:
-```yaml
-- alias: "Power state on HA start-up"
-  trigger:
-    platform: homeassistant
-    event: start
-  action:
-    - service: mqtt.publish
-      data:
-        topic: "cmnd/%shutters grouptopic%/shutterposition"
-        payload: ""       
-```
