@@ -10,7 +10,7 @@ By default Tasmota uses the ADC pin to read voltage. The signal comes from an an
 
 After wiring a peripheral to GPIO17 (A0) pin you have to configure it in **Configure Module**:
 
-![ADC configuration](https://i.postimg.cc/qqYmYG3v/ADC.png)
+![ADC configuration](_media/A0.png)
 
 #|Option|WebUI display|MQTT mesage
 -|-|-|-

@@ -25,15 +25,15 @@ Go to **Configuration - Configure Template** ...
 
 ... and you'll end up looking at this screen.
 
-![Configure Template](https://i.postimg.cc/SR9375nG/template2.png)
+![Configure Template](_media/template2.png)
 
 Time to create your template.
 
 ### Creating Your Template 
-1. Change<img src="https://i.postimg.cc/SQwp2Lnr/template4.png" align="right"> the template name (also defines the name for the module).
+1. Change<img src="_media/template4.png" align="right"> the template name (also defines the name for the module).
 2. Select a module to [**BASE** your template on](#base). If you're not sure, `Module 18` is the best choice. In this example the device is based on Blitzwolf SHP (45) module.
 3. Configure the components assigned to the [**GPIOs**](#gpio) to match your device. If you do not know what pins your device uses, read about the [new device configuration procedure](Configuration-Procedure-for-New-Devices) to determine the correct pin assignments.
-![GPIO configuration](https://i.postimg.cc/d1j4sYZp/template5.png)
+![GPIO configuration](_media/template5.png)
  
     - Any unused GPIO that has cannot have a peripheral connected should be set to `None (0)`. In our example the device has no exposed GPIO's so the unused ones are set to `0` compared to the original BlitzWolf module.     
     - GPIOs that can have peripherals connected to (exposed GPIOs) should be set to `User (255)`. This allows future configuration through the **Configure Module** dialog without the need to create a new template.  
