@@ -688,16 +688,6 @@ MP3Stop<a class="cmnd" id="MP3Stop"></a>|Stop
 MP3Track<a class="cmnd" id="MP3Track"></a>|`x` = play track <x\>
 MP3Volume<a class="cmnd" id="MP3Volume"></a>|`0..100` = set Volume
 
-### ESP32 
-
-Command|Parameters
-:---|:---
-Ethernet<a class="cmnd" id="ethernet"></a>|*Currently only for Olimex ESP32-PoE board*<BR>`0` = disable Ethernet<BR>`1` = enable Ethernet _(default)_
-EthAddress<a class="cmnd" id="ethaddress"></a>|Set ethernet address. *Currently only for Olimex ESP32-PoE board*<BR>`0..31` = PHYxx address
-EthClockMode<a class="cmnd" id="ethclockmode"></a>|Ethernet clock mode. *Currently only for Olimex ESP32-PoE board*<BR>`0` = ETH_CLOCK_GPIO0_IN *(default)*<BR>`1` = ETH_CLOCK_GPIO0_OUT <BR>`2` = ETH_CLOCK_GPIO16_OUT<BR>`3` = ETH_CLOCK_GPIO17_OUT
-EthType<a class="cmnd" id="ethtype"></a>|Ethernet type. *Currently only for Olimex ESP32-PoE board<BR>`0` = ETH_PHY_LAN8720 *(default)*<BR>`1` = ETH_PHY_TLK110 <BR>`2` = ETH_PHY_IP101
-Wi-Fi<a class="cmnd" id="wi-fi"></a>|*Currently only for Olimex ESP32-PoE board*<BR>`0` = disable Wi-Fi<BR>`1` = enable Wi-Fi _(default)_
-
 ### Thermostat 
 
 Command|Parameters
@@ -781,3 +771,29 @@ OPTION|OPTION<BR>Value|<BR>OPTION|OPTION<BR>Value
 14|Button 6|30|KNX_SLOT5
 15|Button 7|255|EMPTY
 16|Button 8|
+
+### ESP32 
+
+#### Camera 
+Command|Parameters
+:---|:---
+WcBrightness<a class="cmnd" id="wcbrightness"></a>|`-2..+2` = set picture brightness
+WcContrast<a class="cmnd" id="wcconstrast"></a>|`-2..+2` = set picture contrast
+WcMirror<a class="cmnd" id="wcmirror"></a>|Mirror camera. <BR>`0` = disabled *(default)*<BR>`1` = enabled
+WcResolution<a class="cmnd" id="wcresolution"></a>|Set camera resolution.<BR>`0` = 96x96 (96x96)<BR>`1` = QQVGA2 (128x160)<BR>`2` = QCIF (176x144)<BR>`3` = HQVGA (240x176)<BR>`4` = QVGA (320x240)<BR>`5` = CIF (400x296)<BR>`6` = VGA (640x480)<BR>`7` = SVGA (800x600)<BR>`8` = XGA (1024x768)<BR>`9` = SXGA (1280x1024)<BR>`10` = UXGA (1600x1200)
+WcSaturation<a class="cmnd" id="wcsaturation"></a>|`-2..+2` = set picture saturation
+WcStream<a class="cmnd" id="wcstream"></a>|Control streaming<BR>`0` = stop<BR>`1` = start
+
+#### Ethernet
+Command|Parameters
+:---|:---
+Ethernet<a class="cmnd" id="ethernet"></a>|<BR>`0` = disable Ethernet<BR>`1` = enable Ethernet _(default)_
+EthAddress<a class="cmnd" id="ethaddress"></a>|Set ethernet address. <BR>`0..31` = PHYxx address
+EthClockMode<a class="cmnd" id="ethclockmode"></a>|Ethernet clock mode. <BR>`0` = ETH_CLOCK_GPIO0_IN *(default)*<BR>`1` = ETH_CLOCK_GPIO0_OUT <BR>`2` = ETH_CLOCK_GPIO16_OUT<BR>`3` = ETH_CLOCK_GPIO17_OUT
+EthType<a class="cmnd" id="ethtype"></a>|Ethernet type. *Currently only for Olimex ESP32-PoE board<BR>`0` = ETH_PHY_LAN8720 *(default)*<BR>`1` = ETH_PHY_TLK110 <BR>`2` = ETH_PHY_IP101
+Wi-Fi<a class="cmnd" id="wi-fi"></a>|<BR>`0` = disable Wi-Fi<BR>`1` = enable Wi-Fi _(default)_
+
+#### M5Stack
+Command|Parameters
+:---|:---
+Core2shutdown<a class="cmnd" id="core2shutdown"></a>|`<seconds>` =  shut down hardware and wake up after N seconds (>=30)<BR>`<HH:MM>` =  shut down hardware and wake up at set time
