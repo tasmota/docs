@@ -29,7 +29,7 @@ Go to **Configuration - Configure Template** ...
 Time to create your template.
 
 ### Creating Your Template 
-1. Change<img src="_media/template4.png" align="right"> the template name (also defines the name for the module).
+1. Chang <img src="../_media/template4.png" align="right"> the template name (also defines the name for the module).
 2. Select a module to [**BASE** your template on](#base). If you're not sure, `Module 18` is the best choice. In this example the device is based on Blitzwolf SHP (45) module.
 3. Configure the components assigned to the [**GPIOs**](#gpio) to match your device. If you do not know what pins your device uses, read about the [new device configuration procedure](Configuration-Procedure-for-New-Devices) to determine the correct pin assignments.
 ![GPIO configuration](_media/template5.png)
