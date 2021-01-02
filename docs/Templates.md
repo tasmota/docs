@@ -136,7 +136,7 @@ The GPIO functionality numbers are the same as shown by command ``GPIOs``. In ad
     In our example the GPIO 12 data element is `32` which corresponds to the `Button1` component, according to the [components table](Components.md). If you change that template element to `160` it would then be assigned as a `Switch1` component instead.
 
 #### Components
-See [Components](Components.md) for a complete list
+See [Components](Components.md) for a complete list or use command `Gpios 255` in console.
 
 ### FLAG
 Before Tasmota 9.1 used to configure the [ADC](ADC) type. In new templates this should be set to `0` and the analog pin should be configured on GPIO17
