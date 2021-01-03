@@ -1603,6 +1603,19 @@ Rule1
 `Rule1 1`
 
 
+------------------------------------------------------------------------------
+
+### Control remote light on switch double press
+
+Toggling the switch controls local POWER state while toggling twice fast controls another device.
+
+Great with two SONOFF MINI in adjacent rooms, to control both rooms with either switch.
+
+```haskell
+SwitchMode 8
+Rule1 ON switch1#state=3 DO websend [ip/hostname of remote] power1 toggle ENDON
+Rule1 1
+```
 
 ------------------------------------------------------------------------------
 
