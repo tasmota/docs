@@ -72,7 +72,7 @@ To save code space almost no error messages are provided. However it is taken ca
 - String comparison `==`, `!=`  
 - String size is 19 characters (default). This can be increased or decreased by the optional parameter on the `D` section definition
 
-**Script Interpreter**  
+#### Script Interpreter
 
 - Execution is _**strictly sequential**_, _**line by line**_
 - Evaluation is _**left to right**_ with optional brackets  
@@ -80,42 +80,42 @@ To save code space almost no error messages are provided. However it is taken ca
 - _**No spaces are allowed between math operators**_
 - Comments start with `;`  
 
-**Script buffer size**  
+#### Script buffer size
 the script language normally shares script buffer with rules buffer which is 1536 chars.
 with below options script buffer size may be expanded. PVARS is size for permanant vars.
 
 | Feature | ESP8266 | ESP32 | PVARS | remarks |
-| -- | -- | -- | -- | -- |
+| :---    | :---:   | :---: | :---: | :--- |
 | fallback | 1536 | 1536 | 50 ||
 | compression (default)| 2560 | 2560 | 50 |actual compression rate may vary |
-| #define LITTLEFS_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
-| #define USE_SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld, ESP32 must use linker file "esp32_partition_app1572k_ffat983k.csv"(4M chips) or "esp32_partition_app1984k_ffat12M.csv" (16M chips)|
+| #define LITTLEFS_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section<BR>use linker option `-Wl,-Teagle.flash.4m2m.ld`|
+| #define USE_SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section, use linker option `-Wl,-Teagle.flash.4m2m.ld`<BR>ESP32 must use linker file "esp32_partition_app1572k_ffat983k.csv" (4M chips) or "esp32_partition_app1984k_ffat12M.csv" (16M chips)|
 | #define USE_SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
 | #define EEP_SCRIPT_SIZE S, #define USE_EEPROM, #define USE_24C256 | S<=4096 | S<=8192 | 1536 |only hardware eeprom is usefull, because Flash EEPROM is also used by Tasmota |
 | #define EEP_SCRIPT_SIZE S, #define ALT_EEPROM | S<=6500 | | 1536 | you must use setoption12 1 to disable flash rotation |
 
-most usefull defintion for larger scripts would be  
+most useful definition for larger scripts would be  
 
-ESP8266:  
+##### ESP8266
 
 with 1M flash only default compressed mode should be used  
 a special mode can enable up to 6500 chars by defining #define ALT_EEPROM  
 however this has some side effects. the script is deleted on OTA or serial update and has to be installed fresh after update. 
 
-with 4M Flash best mode would be  
-\#define USE_SCRIPT_FATFS -1  
+with 4M Flash best mode would be     
+`#define USE_SCRIPT_FATFS -1`     
 with linker file "eagle.flash.4m2m.ld"  
 
-ESP32:  
+##### ESP32
 
 with standard linker file  
-\#define LITTLEFS_SCRIPT_SIZE 8192  
+`#define LITTLEFS_SCRIPT_SIZE 8192`
 or better:  
-\#define USE_SCRIPT_FATFS -1  
-\#define FAT_SCRIPT_SIZE 8192  
+`#define USE_SCRIPT_FATFS -1`   
+`#define FAT_SCRIPT_SIZE 8192`   
 with linker file "esp32_partition_app1572k_ffat983k.csv"  
 
-**Optional external editor**   
+#### Optional external editor
 
 you may use a special external editor with syntax highlighting to edit the scripts. (mac and pc)
 you may use any number of comments and indents to make it better readable.
@@ -123,7 +123,7 @@ then with cmd r the script is transfered to the ESP and immediately started.
 (all comments and indents are removed before transfering)
 see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/AACcVmpZ4AfpdrWE_MPFGmbma?dl=0)  
 
-**Console Commands**   
+#### Console Commands
 
 `script <n>` <n>: `0` = switch script off; `1` = switch script on  
 `script ><cmdline>` execute <cmdline>  
