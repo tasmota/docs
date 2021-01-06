@@ -129,8 +129,7 @@ _Parameters are separated by colons._
 !!! example "`b0:260:260:100:50:2:11:4:2:Rel 1:`"
 
 to create picture touch buttons (ESP32 only):  
-#define JPEG_PICTS  
-#define USE_UFILESYS  
+(`#define JPEG_PICTS` and `#define USE_UFILESYS`)  
 and provide pictures on UFILESYSTEM with ending ".jpg"  
 then give the path to the picture as button text omitting the ending .jpg  
 the example below would create a picture button with a picture file named wifi.jpg  
