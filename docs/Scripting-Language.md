@@ -21,18 +21,15 @@ USE_SCRIPT_SUB_COMMAND | enables invoking named script subroutines via the Conso
 USE_SCRIPT_HUE | enable `>H` section (Alexa Hue emulation)
 USE_SCRIPT_STATUS | enable `>U` section (receive JSON payloads from cmd status)
 SCRIPT_POWER_SECTION | enable `>P` section (execute on power changes)
-SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe  
-USE_SENDMAIL | enable `>m` section and support for sending e-mail   
+SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe
+USE_SENDMAIL | enable `>m` section and support for sending e-mail<br>(on ESP32 you must add USE_ESP32MAIL)  
 USE_SCRIPT_WEB_DISPLAY | enable `>W` section (modify web UI)
 SCRIPT_FULL_WEBPAGE | enable `>w` section (seperate full web page and webserver)
 USE_TOUCH_BUTTONS | enable virtual touch button support with touch displays
 USE_WEBSEND_RESPONSE | enable receiving the response of a [`WebSend`](Commands#websend) command (received in section >E)
 SCRIPT_STRIP_COMMENTS | enables stripping comments when attempting to paste a script that is too large to fit
 USE_ANGLE_FUNC | add sin(x),acos(x) and sqrt(x) e.g. to allow calculation of horizontal cylinder volume
-USE_24C256 | enables use of 24C256 I^2^C EEPROM to expand script buffer (defaults to 4k)
-USE_SCRIPT_FATFS | enables SD card support (on SPI bus). Specify the CS pin number. Also enables 4k script buffer on ESP8266 if using device with 4 or more Mb can enable FS by specifying -1 (using linker files with enabled FS Buffer e.g. eagle.flash.4m1m.ld)  
-USE_SCRIPT_FATFS_EXT | enables additional FS commands  
-SDCARD_DIR | enables support for web UI for SD card directory upload and download  
+USE_SCRIPT_FATFS_EXT | enables additional FS commands   
 USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 USE_SCRIPT_TASK | enables multitasking Task in ESP32
@@ -40,11 +37,10 @@ USE_SCRIPT_GLOBVARS | enables global variables and >G section
 USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
 SML_REPLACE_VARS | enables posibility to replace the lines from the (SML) descriptor with Vars
 USE_SML_SCRIPT_CMD | enables SML script cmds
-USE_SCRIPT_TIMER | enables up to 4 timers
+USE_SCRIPT_TIMER | enables up to 4 Arduino timers (so called tickers)  
 SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
 LARGE_ARRAYS | enables arrays of up to 1000 entries instead of max 127  
 SCRIPT_LARGE_VNBUFF | enables to use 4096 in stead of 256 bytes buffer for variable names  
-LITTLEFS_SCRIPT_SIZE S | enables script buffer of size S (e.g.4096)  
 USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
 USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
 ----
@@ -86,34 +82,29 @@ with below options script buffer size may be expanded. PVARS is size for permana
 
 | Feature | ESP8266 | ESP32 | PVARS | remarks |
 | :---    | :---:   | :---: | :---: | :--- |
-| fallback | 1536 | 1536 | 50 ||
+| fallback | 1536 | 1536 | 50 | no longer supported |
 | compression (default)| 2560 | 2560 | 50 |actual compression rate may vary |
-| #define LITTLEFS_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section<BR>use linker option `-Wl,-Teagle.flash.4m2m.ld`|
-| #define USE_SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section, use linker option `-Wl,-Teagle.flash.4m2m.ld`<BR>ESP32 must use linker file "esp32_partition_app1572k_ffat983k.csv" (4M chips) or "esp32_partition_app1984k_ffat12M.csv" (16M chips)|
-| #define USE_SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
-| #define EEP_SCRIPT_SIZE S, #define USE_EEPROM, #define USE_24C256 | S<=4096 | S<=8192 | 1536 |only hardware eeprom is usefull, because Flash EEPROM is also used by Tasmota |
-| #define EEP_SCRIPT_SIZE S, #define ALT_EEPROM | S<=6500 | | 1536 | you must use setoption12 1 to disable flash rotation |
+| #define USE_UFILESYS,  #define UFSYS_SIZE S | S<=8192 | S<=16384 | 1536 | ESP8266 must use 4M Flash use linker option `-Wl,-Teagle.flash.4m2m.ld` or SDCARD  <BR>ESP32 can use any linker file size of Filesystem depends on linker file 
+| #define EEP_SCRIPT_SIZE S, #define USE_EEPROM, #define USE_24C256 | S<=8192 | S<=16384 | 1536 |for hardware eeprom only|
+| #define EEP_SCRIPT_SIZE 6200, #define USE_EEPROM | S=6200 | not supported | 1536 | you must use setoption12 1 to disable flash rotation |
 
 most useful definition for larger scripts would be  
 
 ##### ESP8266
 
-with 1M flash only default compressed mode should be used  
-a special mode can enable up to 6500 chars by defining #define ALT_EEPROM  
+with 1M flash only default compressed mode should be used (or an SDCARD)  
+a special compressed mode can enable up to 6200 chars by defining #define USE_EEPROM, #define EEP_SCRIPT_SIZE 6200  
 however this has some side effects. the script is deleted on OTA or serial update and has to be installed fresh after update. 
+and you must use setoption12 1 to disable flash rotation, caution: may cause early flash wear out.  
 
 with 4M Flash best mode would be     
-`#define USE_SCRIPT_FATFS -1`     
+`#define USE_UFILESYS`     
 with linker file "eagle.flash.4m2m.ld"  
 
 ##### ESP32
 
-with standard linker file  
-`#define LITTLEFS_SCRIPT_SIZE 8192`
-or better:  
-`#define USE_SCRIPT_FATFS -1`   
-`#define FAT_SCRIPT_SIZE 8192`   
-with linker file "esp32_partition_app1572k_ffat983k.csv"  
+with all linker files  
+`#define USE_UFILESYS`    
 
 #### Optional external editor
 
@@ -348,7 +339,7 @@ generates a button with the name "ButtonLabel" in Tasmota main menu.
 Clicking  this button displays a web page with the HTML data of this section.
 all cmds like in >W apply here. these lines are refreshed frequently to show e.g. sensor values.
 lines preceeded by $ are static and not refreshed and display below lines without $.  
-this option also enables a full webserver interface when USE_SCRIPT_FATFS is activ.  
+this option also enables a full webserver interface when USE_UFILESYS is activ.  
 you may display files from the flash or SD filesystem by specifying the url:  IP/sdc/path  .
 (supported files: *.jpg, *.html, *.txt)  
 ==Requires compiling with `#define SCRIPT_FULL_WEBPAGE`.== 
@@ -666,20 +657,16 @@ the MQTT decoder may be configured for more space in user config overwrite by
 `#define MQTT_EVENT_MSIZE` xxx   (default is 256)  
 `#define MQTT_EVENT_JSIZE` xxx   (default is 400)  
 
-**SD Card Support** (+ 10k flash)  
-`#define USE_SCRIPT_FATFS` `CARD_CS`  
-`CARD_CS` = GPIO of card chip select   
+**File System Support**    
+`#define USE_UFILESYS`  
+optional for SD_CARD:  
+`#define USE_SDCARD`  
+`#define SDCARD_CS_PIN X` X = GPIO of card chip select   
 SD card uses standard hardware SPI GPIO: mosi,miso,sclk  
-with 4M flash on ESP8266 and special linker file you may specify -1 for CS and get a flash file system with the same functionality but but very low capacity (e.g. 2 MB)  
+depending on used linker file you get a flash file system with the same functionality but very low capacity (e.g. 2 MB)  
 A maximum of four files may be open at a time  
-e.g., allows for logging sensors to a tab delimited file and then downloading the file ([see Sensor Logging example](#sensor-logging))  
-The downloading of files may be executed in a kind of "multitasking" when bit 7 of loglvl is set (128+loglevel)  
-Without multitasking 150kb/s (all processes are stopped during downloading), with multitasking 50kb/s (other Tasmota processes are running)  
-The script itself is also stored on the SD card with a default size of 4096 characters  
-
-**SD card directory support** (+ 1,2k flash)  
-`#define SDCARD_DIR`  
-Shows a web SD card directory (submenu of scripter) where you can upload and download files to/from sd card  
+e.g., allows for logging sensors to a tab delimited file and then downloading the file ([see Sensor Logging example](#sensor-logging))   
+The script itself is also stored on the file system with a default size of 8192 characters  
 
 `fr=fo("fname" m)` open file fname, mode 0=read, 1=write, 2=append (returns file reference (0-3) or -1 for error) 
 (alternatively m may be: r=read, w=write, a=append)  
@@ -729,12 +716,6 @@ print task1 on core %core%
 print task2 on core %core%
 
 ```
-
-**Script compression**  
-`#define USE_SCRIPT_COMPRESSION`  
-enables compression of script storage to about 40%. The script buffer is set to 2560 instead of 1535 chars.  
-no backward compatibility. first save your old script before updating.  
-
 
 **ESP32 Webcam support**   
 `#define USE_WEBCAM`  
