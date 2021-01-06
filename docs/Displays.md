@@ -17,11 +17,14 @@ USE_DISPLAY_SSD1351 | Enable color OLED SSD1351 display. Also requires `USE_SPI`
 USE_DISPLAY_RA8876  | Enable TFT RA8876 display. Also requires `USE_SPI` 
 USE_DISPLAY_SEVENSEG  | Enable 7 segment display. Also requires `USE_I2C` 
 USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI` 
-USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`
+USE_DISPLAY_ILI9341_2  | Enable TFT ILI9431 display on ESP32 second SPI bus<br>(must use SSPI definition). Also requires `USE_SPI` 
+USE_DISPLAY_ILI9342  | Enable TFT ILI9432 display. Also requires `USE_SPI` 
+USE_DISPLAY_SD1331  | Enable TFT SD1331 display. Also requires `USE_SPI` 
+USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`  
 USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
-SHOW_SPLASH | Enable initialization splash message on the display
-USE_AWATCH | Enables analog watch support
-USE_GRAPH | Enable line charts. Also requires `NUM_GRAPHS`
+SHOW_SPLASH | Enable initialization splash message on the display  
+USE_AWATCH | Enables analog watch support  
+USE_GRAPH | Enable line charts. Also requires `NUM_GRAPHS`  
 ----
 
 ## Display Commands
@@ -124,6 +127,21 @@ _Parameters are separated by colons._
 * `text:` = button text (must end with a colon :) (max 9 chars)  
 
 !!! example "`b0:260:260:100:50:2:11:4:2:Rel 1:`"
+
+to create picture touch buttons (ESP32 only):  
+#define JPEG_PICTS  
+#define USE_UFILESYS  
+and provide pictures on UFILESYSTEM with ending ".jpg"  
+then give the path to the picture as button text omitting the ending .jpg  
+the example below would create a picture button with a picture file named wifi.jpg  
+the size of the picture is NOT scaled and the dimensions of the button must fit the picture size.  
+selected buttons invert the colors of the picture  
+
+!!! example "`b0:260:260:100:50:2:11:4:2:/wifi:`"
+
+you may also specify a picture for selected and unselected button state  
+if the picture name ends with '1' this picture is used for unselected state and a picture with ending '2' is used for selected state  
+
 
 
 ### Line chart
