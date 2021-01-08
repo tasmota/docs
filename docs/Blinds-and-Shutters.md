@@ -205,6 +205,8 @@ Stepper motors can also be used to operate shutters and blinds. Additionally you
 ### Servo Motor Support
 Servos are small devices with typical 180° or 360" rotation movement. The position will be drived by the PWM duty cycle time. This will all automatically calculated
 
+[More info](https://github.com/arendst/Tasmota/discussions/10443#discussion-1627790)
+
 ### Smooth RAMP-UP and RAMP-DOWN Support
 Servos and Steppers also have a velocity control. With `ShutterMotorDelay<x> 1.5` you can define a 1.5second soft start/stop before the device reaches it final moving speed. Usefull for moving heavy items like doors.
 
