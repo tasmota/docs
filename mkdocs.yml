@@ -76,17 +76,18 @@ extra_css:
   - 'assets/css/anchor-fix.css'
 
 nav:
-  - Home: index.md
-  - About.md
-  - Getting Started: Getting-Started.md
-  - Upgrading.md
-  - MQTT.md
-  - Commands: Commands.md
-  - Templates: Templates.md
-  - Components.md
-  - Modules: Modules.md
-  - Peripherals: Peripherals.md
-  - WebUI.md
+  - Home:
+    - Home: index.md
+    - About.md
+    - Getting Started: Getting-Started.md
+    - Upgrading.md
+    - MQTT.md
+    - Commands: Commands.md
+    - Templates: Templates.md
+    - Components.md
+    - Modules: Modules.md
+    - Peripherals: Peripherals.md
+    - WebUI.md
   - Features:
     - Introduction: Features.md
     - Bluetooth.md
