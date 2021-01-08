@@ -76,8 +76,8 @@ extra_css:
   - 'assets/css/anchor-fix.css'
 
 nav:
-  - Home:
-    - Home: index.md
+  - Home: index.md
+  - Instructions:
     - About.md
     - Getting Started: Getting-Started.md
     - Upgrading.md
@@ -88,6 +88,10 @@ nav:
     - Modules: Modules.md
     - Peripherals: Peripherals.md
     - WebUI.md
+    - Builds.md
+    - Compiling: Compile-your-build.md
+    - Contributing: Contributing.md
+    - Download: http://ota.tasmota.com/tasmota/release/ "target=_blank"
   - Features:
     - Introduction: Features.md
     - Bluetooth.md
@@ -200,7 +204,3 @@ nav:
     - Troubleshooting.md
     - Device-Recovery.md
     - Discord Support: https://discord.gg/Ks2Kzd4 "target=_blank"
-  - Builds.md
-  - Compiling: Compile-your-build.md
-  - Contributing: Contributing.md
-  - Download: http://ota.tasmota.com/tasmota/release/ "target=_blank"
