@@ -6,21 +6,22 @@ _Note these plugins are not necessarily specific to Sonoff devices._
 The [`homebridge-mqttthing`](https://www.npmjs.com/package/homebridge-mqttthing) package has support for many types of devices and is quite flexible with different options especially for RGB/RGBW LED strips.
 
 As of 1.0.11 [`homebridge-mqttthing`](https://www.npmjs.com/package/homebridge-mqttthing) supports the following Homekit device types:
-*  Light bulb
-*  Switch
-*  Outlet
-*  Motion Sensor
-*  Occupancy Sensor
-*  Light Sensor
-*  Contact Sensor
-*  Doorbell
-*  Security System
-*  Smoke Sensor
-*  Temperature Sensor
-*  Humidity Sensor
-*  Stateless Programmable Switch
-*  Garage Door
-*  Garage Door Opener
+
+  - Light bulb
+  - Switch
+  - Outlet
+  - Motion Sensor
+  - Occupancy Sensor
+  - Light Sensor
+  - Contact Sensor
+  - Doorbell
+  - Security System
+  - Smoke Sensor
+  - Temperature Sensor
+  - Humidity Sensor
+  - Stateless Programmable Switch
+  - Garage Door
+  - Garage Door Opener
 
 Check out [macwyznawca's packages](https://www.npmjs.com/~macwyznawca) for supported functions, each in a separate package.
 
