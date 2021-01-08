@@ -91,7 +91,7 @@ nav:
     - Compiling: Compile-your-build.md
     - Contributing: Contributing.md
     - Download.md
-
+    - Project Showcase: "https://github.com/arendst/Tasmota/discussions/categories/show-and-tell"
   - Features:
     - Introduction: Features.md
     - Bluetooth.md

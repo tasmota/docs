@@ -196,16 +196,20 @@ Use any other Tasmota device with buttons or switches to control remotely a shut
 
 ## Specific Configuration
 
-### Pulse Motor Support
+### Pulse Motors
 There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands.md#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
 
-### Stepper Motor Support
+### Stepper Motors
 Stepper motors can also be used to operate shutters and blinds. Additionally you can operate sliding doors with this configuration.
 
-### Servo Motor Support
+### Servo Motors
 Servos are small devices with typical 180° or 360" rotation movement. The position will be drived by the PWM duty cycle time. This will all automatically calculated
 
 [More info](https://github.com/arendst/Tasmota/discussions/10443#discussion-1627790)
+
+### DC Motors
+
+[More info](https://github.com/arendst/Tasmota/discussions/10387)
 
 ### Smooth RAMP-UP and RAMP-DOWN Support
 Servos and Steppers also have a velocity control. With `ShutterMotorDelay<x> 1.5` you can define a 1.5second soft start/stop before the device reaches it final moving speed. Usefull for moving heavy items like doors.
