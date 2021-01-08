@@ -42,6 +42,7 @@ theme:
   features:
     - navigation.tabs
     - navigation.instant
+    - navigation.tabs.sticky
   font:
     text: Barlow
     code: Roboto Mono
