@@ -66,6 +66,12 @@ Rule1
 ```
 Enable the rule (type `rule1 1` in the Tasmota console)  
 
+If your relay is still not switching, check the LED on the board.
+If LED D5 is on (blue on my board, the middle LED) then the controller is in Mode 2.
+By pressing S2 while power up you can change back to Mode 1.
+After that the LED D7 is on ( red in my case) an the device works like a charm.
+Be carefull when you press S1 you change the mode again!
+
 ## LC Technology WiFi Relay X2 with Nuvoton N76E003AT20
 
 Note: This version of the board has the Nuvoton N76E003AT20 as its host microcontroller instead of  STC15F104W. This device requires a special configuration for it to start listening to serial commands.
