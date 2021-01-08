@@ -4,7 +4,7 @@ description: Comprehensive list of Tasmota commands and how to use them
 !!! info "Tasmota provides a powerful control interface using commands"   
 Commands can be issued using **MQTT**, **web requests**, **webUI console** and **serial**
 
-## How to use 
+## How to use commands
 Every command **used without a parameter (payload) returns the current setting**.
 
 > `Power` returns the status of first defined power output (usually Relay1)"
