@@ -37,8 +37,14 @@ Tasmota team wishes you happy holidays and a prosperous New Year!
 
 See [changelog](https://github.com/arendst/Tasmota/blob/development/CHANGELOG.md) for a complete list of new features, changes and bug fixes.
 
-### Join our community
-See [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), [Reddit](https://www.reddit.com/r/tasmota/) or [Google Groups](https://groups.google.com/d/forum/sonoffusers) for feedback, questions and troubleshooting.
+### Join our communities an chat
+See [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), [Reddit](https://www.reddit.com/r/tasmota/) or [Google Groups](https://groups.google.com/d/forum/sonoffusers) for general chat, feedback, questions and live troubleshooting.
 
-### If you like Tasmota
+### Report bugs and suggest features
+Open a new topic on [Tasmota discussions](https://github.com/arendst/Tasmota/discussions).
+
+Report a bug in [Tasmota issues](https://github.com/arendst/Tasmota/issues).
+
+
+#### If you like Tasmota
 <iframe src="https://ghbtns.com/github-btn.html?user=arendst&repo=tasmota&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe><iframe src="https://ghbtns.com/github-btn.html?user=arendst&repo=tasmota&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> 
