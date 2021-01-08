@@ -88,6 +88,10 @@ nav:
     - Modules: Modules.md
     - Peripherals: Peripherals.md
     - WebUI.md
+    - Compiling: Compile-your-build.md
+    - Contributing: Contributing.md
+    - Download.md
+
   - Features:
     - Introduction: Features.md
     - Bluetooth.md
@@ -201,6 +205,3 @@ nav:
     - Device-Recovery.md
     - Discord Support: https://discord.gg/Ks2Kzd4 "target=_blank"
   - Builds.md
-  - Compiling: Compile-your-build.md
-  - Contributing: Contributing.md
-  - Download: http://ota.tasmota.com/tasmota/release/ "target=_blank"
