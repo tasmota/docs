@@ -37,7 +37,7 @@ Tasmota team wishes you happy holidays and a prosperous New Year!
 
 See [changelog](https://github.com/arendst/Tasmota/blob/development/CHANGELOG.md) for a complete list of new features, changes and bug fixes.
 
-### Join our communities an chat
+### Join our communities and chat
 See [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), [Reddit](https://www.reddit.com/r/tasmota/) or [Google Groups](https://groups.google.com/d/forum/sonoffusers) for general chat, feedback, questions and live troubleshooting.
 
 ### Report bugs and suggest features
