@@ -94,8 +94,7 @@ most useful definition for larger scripts would be
 
 with 1M flash only default compressed mode should be used (or an SDCARD)  
 a special compressed mode can enable up to 6200 chars by defining #define USE_EEPROM, #define EEP_SCRIPT_SIZE 6200  
-however this has some side effects. the script is deleted on OTA or serial update and has to be installed fresh after update. 
-and you must use setoption12 1 to disable flash rotation, caution: may cause early flash wear out.  
+however this has some side effects. the script is deleted on OTA or serial update and has to be installed fresh after update.  
 
 with 4M Flash best mode would be     
 `#define USE_UFILESYS`     
@@ -104,7 +103,27 @@ with linker file "eagle.flash.4m2m.ld"
 ##### ESP32
 
 with all linker files  
-`#define USE_UFILESYS`    
+`#define USE_UFILESYS` 
+
+
+#### script init error codes
+after initizialisation the script reports some info in the console e.g:  
+20:21:28.259 Script: nv=51, tv=13, vns=279, ram=4656  
+nv = number of used variables in total (numeric and strings)  
+tv = number of used string variables  
+vns = total size of name strings in bytes (may not exeed 255) or #define SCRIPT_LARGE_VNBUFF extents the size to 4095  
+ram = used heap ram by the script (excluding script buffer itself)  
+
+if the script init fails an error code is reported:  
+-1 = too many numerical variables defined  
+-2 = too many string variables defined  
+-3 = too many variables in total  
+-4 = not enough memory  
+-5 = variable name length too long in total  
+-7 = not enough memory  
+
+you may increase the number of allowed variables with defines in user_config_override
+
 
 #### Optional external editor
 
