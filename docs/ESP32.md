@@ -170,10 +170,10 @@ fully supported
 #define USE_MPU6886  
 ```
 
-add this define to `build_flags`
+add this defines to `build_flags`
 
 ```c  
--DBOARD_HAS_PSRAM  
+-DBOARD_HAS_PSRAM -mfix-esp32-psram-cache-issue
 ```
 
 fully supported with all sensors and SD card  
