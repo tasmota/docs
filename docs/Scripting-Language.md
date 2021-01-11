@@ -548,7 +548,7 @@ S
 =(svar)
 
 #subroutine
-=>print subroutine was executed
+print subroutine was executed
 ```
 
 **For loop** (loop count must not be less than 1, no direct nesting supported)
@@ -904,19 +904,19 @@ remark: the Flash illumination LED is connected to GPIO4
 
     >B
     string=hello+"how are you?"
-    =>print BOOT executed
-    =>print %hello%
+    print BOOT executed
+    print %hello%
     =>mp3track 1
 
     ; list gpio pin definitions
     for cnt 0 16 1
     tmp=pd[cnt]
-    =>print %cnt% = %tmp%
+    print %cnt% = %tmp%
     next
 
     ; get gpio pin for relais 1
     tmp=pn[21]
-    =>print relais 1 is on pin %tmp%
+    print relais 1 is on pin %tmp%
 
     ; pulse relais over raw gpio
     spin(tmp 1)
@@ -924,7 +924,7 @@ remark: the Flash illumination LED is connected to GPIO4
     spin(tmp 0)
 
     ; raw pin level
-    =>print level of gpio1 %pin[1]%
+    print level of gpio1 %pin[1]%
 
     ; pulse over tasmota cmd
     =>power 1
@@ -943,15 +943,15 @@ remark: the Flash illumination LED is connected to GPIO4
     movav=hum
 
     ; show filtered results
-    =>print %median% %movav%
+    print %median% %movav%
 
     if chg[rssi]>0
-    then =>print rssi changed to %rssi%
+    then print rssi changed to %rssi%
     endif
 
     if temp>30
     and hum>70
-    then =>print damn hot!
+    then print damn hot!
     endif
 
     =#siren(5)
@@ -985,23 +985,23 @@ remark: the Flash illumination LED is connected to GPIO4
     ; stop timer after expired
     if timer1==0
     then timer1=-1
-    =>print timer1 expired
+    print timer1 expired
     endif
 
     ; auto counter with restart
     if count=10
-    then =>print 10 seconds over
+    then print 10 seconds over
     count=0
     endif
 
     if upsecs%5==0
-    then =>print %upsecs%  (every 5 seconds)
+    then print %upsecs%  (every 5 seconds)
     endif
 
     ; not recommended for reliable timers
     timer+=1
     if timer>=5
-    then =>print 5 seconds over (may be)
+    then print 5 seconds over (may be)
     timer=0
     endif
 
@@ -1017,7 +1017,7 @@ remark: the Flash illumination LED is connected to GPIO4
     dp0
     dt [c1l1f1s2p20] dimmer=%dimmer%
 
-    =>print %upsecs% %uptime% %time% %sunrise% %sunset% %tstamp%
+    print %upsecs% %uptime% %time% %sunrise% %sunset% %tstamp%
 
     if time>sunset
     and time<sunrise
@@ -1048,7 +1048,7 @@ remark: the Flash illumination LED is connected to GPIO4
 
     ; var has been updated
     if upd[hello]>0
-    then =>print %hello%
+    then print %hello%
     endif
 
     ; send to Thingspeak every 60 seconds
@@ -1071,13 +1071,13 @@ remark: the Flash illumination LED is connected to GPIO4
     if chg[hour]>0
     then
     ; exactly every hour
-    =>print full hour reached
+    print full hour reached
     endif
 
     if time5 {
-    =>print more then 5 minutes after midnight
+    print more then 5 minutes after midnight
     } else {
-    =print less then 5 minutes after midnight
+    print less then 5 minutes after midnight
     }
 
     ; publish abs hum every teleperiod time
@@ -1094,27 +1094,27 @@ remark: the Flash illumination LED is connected to GPIO4
     ;switch case state machine
     switch state
     case 1
-    =>print state=%state% , start
+    print state=%state% , start
     state+=1
     case 2
-    =>print state=%state%
+    print state=%state%
     state+=1
     case 3
-    =>print state=%state%  , reset
+    print state=%state%  , reset
     state=1
     ends
 
     ; subroutines
     #sub1(string)
-    =>print sub1: %string%
+    print sub1: %string%
     #sub2(param)
-    =>print sub2: %param%
+    print sub2: %param%
 
     #sendmail(string)
     =>sendmail [smtp.gmail.com:465:user:passwd:<sender@gmail.de:<rec@gmail.de:alarm] %string%
 
     >E
-    =>print event executed!
+    print event executed!
 
     ; Assign temperature from a Zigbee sensor
     zigbeetemp=ZbReceived#0x2342#Temperature
@@ -1134,7 +1134,7 @@ remark: the Flash illumination LED is connected to GPIO4
     ; color change needs 2 string vars
     if col!=ocol
     then ocol=col
-    =>print color changed  %col%
+    print color changed  %col%
     endif
 
     ; or check change of color channels
@@ -1153,7 +1153,7 @@ remark: the Flash illumination LED is connected to GPIO4
     =color %col%
 
     >R
-    =>print restarting now
+    print restarting now
 
 ### Sensor Logging
 
@@ -1181,7 +1181,7 @@ remark: the Flash illumination LED is connected to GPIO4
     res=fr(str fr)
     if res>0
     then
-    =>print %cnt% : %str%
+    print %cnt% : %str%
     else
     break
     endif
@@ -1408,7 +1408,7 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     and wd==1
     then
     =>sendmail [*:*:*:*:*:user.tasmota@gmail.com: Wochenbericht]*
-    print sening email
+    print sending email
     endif
 
 
@@ -1791,7 +1791,7 @@ Synchronizes 2 Magic Home devices by also sending the commands to a second Magic
     and timer<30
     then
     ; short press
-    ;=>print short press
+    ;print short press
     toggle^=1
     =>%ws% power1 %toggle%
     endif
@@ -1803,7 +1803,7 @@ Synchronizes 2 Magic Home devices by also sending the commands to a second Magic
     then
     ; hold
     hold=1
-    ;=>print hold=%timer%
+    ;print hold=%timer%
     if toggle>0
     then
     =>%ws% dimmer +
@@ -2028,7 +2028,7 @@ start dim level = initial dimmer level after power-up or restart; max 100
     dimval=70  ;start dim level
       
     >B
-    =>print "WiFi-Dimmer-Script-v0.2"
+    print "WiFi-Dimmer-Script-v0.2"
     =>Counter1 0
     =>Baudrate 9600
     ; boot sequence
