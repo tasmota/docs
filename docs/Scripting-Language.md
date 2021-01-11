@@ -387,6 +387,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `luip` = udp ip as string (from updating device when USE_SCRIPT_GLOBVARS defined)  
 `prefixn` = prefix n = 1-3  
 `frnm` = friendly name  
+`dvnm` = device name  
 `pwr[x]` = power state  (x = 1..N)  
 `pc[x]` = pulse counter value  (x = 1..4)  
 `tbut[x]` = touch screen button state  (x = 1..N)  
