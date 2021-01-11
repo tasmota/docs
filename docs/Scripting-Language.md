@@ -528,7 +528,8 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
 `dt` display text command (if #define USE_DISPLAY)  
 
 `#name` names a subroutine. Subroutine is called with `=#name`  
-`#name(param)` names a subroutine with a parameter. Subroutine is called with `=#name(param)`  
+`#name(param)` names a subroutine with a parameter. Subroutine is called with `=#name(param)`,only one parameter is supported  
+parameter variables must be declared in >D (no support for local variables)  
 Subroutines end with the next `#` or `>` line or break. Subroutines may be nested  
 Parameters can be numbers or strings and on type mismatch are converted  
 
