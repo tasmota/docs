@@ -162,7 +162,7 @@ Send only MQTT message on switch change
 
 For Tasmota, a `Button` is typically a momentary push-button (or a capacitive touch button in some light switches). By default a button toggles the corresponding power state. Every time the button gets pressed a relay or light changes its `Power` state (ON or OFF). Besides toggling  the `Power` state, a button is also used to activate [multi press button functions](#multi-press-functions), to do long press (HOLD) actions, or send messages to different MQTT topics.
 
-<a href="../_media/tasmota-buttons.svg">[<img style="float:right;width:6em" src="../_media/tasmota-buttons-small.png"></a>
+<a href="../_media/tasmota-buttons.svg"><img style="float:right;width:6em" src="../_media/tasmota-buttons-small.png"></a>
 Depending if you are using a push-to-make button or push-to-break button, as well as connecting the button between GPIO and GND or GPIO and VCC, different configurations are possible. The diagram beside (click to enlarge) present the various options:
 
 To ignore default button behaviour of controlling power outputs you can:
