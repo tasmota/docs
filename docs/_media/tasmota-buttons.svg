@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Circuit Diagram, cdlibrary.dll 1.0.0.0 -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" width="740" height="620" xmlns="http://www.w3.org/2000/svg">
+<svg version="1.1" width="740" height="620" style="background-color:white" xmlns="http://www.w3.org/2000/svg">
 	<text x="210" y="370" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 210, 370)">Button_n (external pull up)</text>
 	<text x="190" y="580" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 190, 580)">All boards are supposed to have those to insure proper boot conditions</text>
 	<text x="190" y="560" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 190, 560)">No need for external pull-down on GPIO15</text>
