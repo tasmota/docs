@@ -74,6 +74,9 @@ Use `?` as a wildcard for a single trigger level. Rule will trigger on `[Trigger
 |`>=`| greater than or equal to|
 |`<=`| lesser than or equal to|
 |`|`| used for [modulo operation](https://en.wikipedia.org/wiki/Modulo_operation) with remainder = 0 (exact division)|
+|`$>`| string ends with
+|`$<`| string starts with
+|`$|`| string contains
 
 #### Examples of Available Triggers
 
