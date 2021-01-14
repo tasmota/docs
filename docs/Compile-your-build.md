@@ -35,7 +35,7 @@ Enter lines required to enable or disable desired feature. All features and thei
 
 Best practice to enable a feature is to use
 
-```arduino
+```c
 #ifndef %identifier%
 #define %identifier%
 #endif
@@ -51,7 +51,7 @@ Best practice to enable a feature is to use
 
 Example: enable blinds and shutters support
 
-```arduino
+```c
 #ifndef USE_SHUTTER
 #define USE_SHUTTER             // Add Shutter support for up to 4 shutter with different motortypes (+6k code)
 #endif
@@ -65,7 +65,7 @@ identifier = `USE_SHUTTER`
 
 Example: disable Domoticz support
 
-```arduino
+```c
 #ifdef USE_DOMOTICZ
 #undef USE_DOMOTICZ                              
 #endif 
