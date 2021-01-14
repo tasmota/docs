@@ -84,9 +84,9 @@ with below options script buffer size may be expanded. PVARS is size for permana
 | :---    | :---:   | :---: | :---: | :--- |
 | fallback | 1536 | 1536 | 50 | no longer supported |
 | compression (default)| 2560 | 2560 | 50 |actual compression rate may vary |
-| #define USE_UFILESYS,  #define UFSYS_SIZE S | S<=8192 | S<=16384 | 1536 | ESP8266 must use 4M Flash use linker option `-Wl,-Teagle.flash.4m2m.ld` or SDCARD  <BR>ESP32 can use any linker file size of Filesystem depends on linker file 
-| #define EEP_SCRIPT_SIZE S, #define USE_EEPROM, #define USE_24C256 | S<=8192 | S<=16384 | 1536 |for hardware eeprom only|
-| #define EEP_SCRIPT_SIZE 6200, #define USE_EEPROM | S=6200 | not supported | 1536 | you must use setoption12 1 to disable flash rotation |
+| #define USE_UFILESYS<br>#define UFSYS_SIZE S | S<=8192 | S<=16384 | 1536 | ESP8266 must use 4M Flash use linker option `-Wl,-Teagle.flash.4m2m.ld` or SDCARD  <BR>ESP32 can use any linker file, size of Filesystem depends on linker file 
+| #define EEP_SCRIPT_SIZE S<br>#define USE_EEPROM<br>#define USE_24C256 | S<=8192 | S<=16384 | 1536 |for hardware eeprom only|
+| #define EEP_SCRIPT_SIZE 6200<br>#define USE_EEPROM | S=6200 | not supported | 1536 | script is lost on OTA and serial flash, not on restart |
 
 most useful definition for larger scripts would be  
 
@@ -94,8 +94,7 @@ most useful definition for larger scripts would be
 
 with 1M flash only default compressed mode should be used (or an SDCARD)  
 a special compressed mode can enable up to 6200 chars by defining #define USE_EEPROM, #define EEP_SCRIPT_SIZE 6200  
-however this has some side effects. the script is deleted on OTA or serial update and has to be installed fresh after update. 
-and you must use setoption12 1 to disable flash rotation, caution: may cause early flash wear out.  
+however this has some side effects. the script is deleted on OTA or serial update and has to be installed fresh after update.  
 
 with 4M Flash best mode would be     
 `#define USE_UFILESYS`     
@@ -104,7 +103,27 @@ with linker file "eagle.flash.4m2m.ld"
 ##### ESP32
 
 with all linker files  
-`#define USE_UFILESYS`    
+`#define USE_UFILESYS` 
+
+
+#### script init error codes
+after initizialisation the script reports some info in the console e.g:  
+20:21:28.259 Script: nv=51, tv=13, vns=279, ram=4656  
+nv = number of used variables in total (numeric and strings)  
+tv = number of used string variables  
+vns = total size of name strings in bytes (may not exeed 255) or #define SCRIPT_LARGE_VNBUFF extents the size to 4095  
+ram = used heap ram by the script (excluding script buffer itself)  
+
+if the script init fails an error code is reported:  
+-1 = too many numerical variables defined  
+-2 = too many string variables defined  
+-3 = too many variables in total  
+-4 = not enough memory  
+-5 = variable name length too long in total  
+-7 = not enough memory  
+
+you may increase the number of allowed variables with defines in user_config_override
+
 
 #### Optional external editor
 
@@ -368,6 +387,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `luip` = udp ip as string (from updating device when USE_SCRIPT_GLOBVARS defined)  
 `prefixn` = prefix n = 1-3  
 `frnm` = friendly name  
+`dvnm` = device name  
 `pwr[x]` = power state  (x = 1..N)  
 `pc[x]` = pulse counter value  (x = 1..4)  
 `tbut[x]` = touch screen button state  (x = 1..N)  
@@ -509,7 +529,8 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
 `dt` display text command (if #define USE_DISPLAY)  
 
 `#name` names a subroutine. Subroutine is called with `=#name`  
-`#name(param)` names a subroutine with a parameter. Subroutine is called with `=#name(param)`  
+`#name(param)` names a subroutine with a parameter. Subroutine is called with `=#name(param)`,only one parameter is supported  
+parameter variables must be declared in >D (no support for local variables)  
 Subroutines end with the next `#` or `>` line or break. Subroutines may be nested  
 Parameters can be numbers or strings and on type mismatch are converted  
 
@@ -527,7 +548,7 @@ S
 =(svar)
 
 #subroutine
-=>print subroutine was executed
+print subroutine was executed
 ```
 
 **For loop** (loop count must not be less than 1, no direct nesting supported)
@@ -883,19 +904,19 @@ remark: the Flash illumination LED is connected to GPIO4
 
     >B
     string=hello+"how are you?"
-    =>print BOOT executed
-    =>print %hello%
+    print BOOT executed
+    print %hello%
     =>mp3track 1
 
     ; list gpio pin definitions
     for cnt 0 16 1
     tmp=pd[cnt]
-    =>print %cnt% = %tmp%
+    print %cnt% = %tmp%
     next
 
     ; get gpio pin for relais 1
     tmp=pn[21]
-    =>print relais 1 is on pin %tmp%
+    print relais 1 is on pin %tmp%
 
     ; pulse relais over raw gpio
     spin(tmp 1)
@@ -903,7 +924,7 @@ remark: the Flash illumination LED is connected to GPIO4
     spin(tmp 0)
 
     ; raw pin level
-    =>print level of gpio1 %pin[1]%
+    print level of gpio1 %pin[1]%
 
     ; pulse over tasmota cmd
     =>power 1
@@ -922,15 +943,15 @@ remark: the Flash illumination LED is connected to GPIO4
     movav=hum
 
     ; show filtered results
-    =>print %median% %movav%
+    print %median% %movav%
 
     if chg[rssi]>0
-    then =>print rssi changed to %rssi%
+    then print rssi changed to %rssi%
     endif
 
     if temp>30
     and hum>70
-    then =>print damn hot!
+    then print damn hot!
     endif
 
     =#siren(5)
@@ -964,23 +985,23 @@ remark: the Flash illumination LED is connected to GPIO4
     ; stop timer after expired
     if timer1==0
     then timer1=-1
-    =>print timer1 expired
+    print timer1 expired
     endif
 
     ; auto counter with restart
     if count=10
-    then =>print 10 seconds over
+    then print 10 seconds over
     count=0
     endif
 
     if upsecs%5==0
-    then =>print %upsecs%  (every 5 seconds)
+    then print %upsecs%  (every 5 seconds)
     endif
 
     ; not recommended for reliable timers
     timer+=1
     if timer>=5
-    then =>print 5 seconds over (may be)
+    then print 5 seconds over (may be)
     timer=0
     endif
 
@@ -996,7 +1017,7 @@ remark: the Flash illumination LED is connected to GPIO4
     dp0
     dt [c1l1f1s2p20] dimmer=%dimmer%
 
-    =>print %upsecs% %uptime% %time% %sunrise% %sunset% %tstamp%
+    print %upsecs% %uptime% %time% %sunrise% %sunset% %tstamp%
 
     if time>sunset
     and time<sunrise
@@ -1027,7 +1048,7 @@ remark: the Flash illumination LED is connected to GPIO4
 
     ; var has been updated
     if upd[hello]>0
-    then =>print %hello%
+    then print %hello%
     endif
 
     ; send to Thingspeak every 60 seconds
@@ -1050,13 +1071,13 @@ remark: the Flash illumination LED is connected to GPIO4
     if chg[hour]>0
     then
     ; exactly every hour
-    =>print full hour reached
+    print full hour reached
     endif
 
     if time5 {
-    =>print more then 5 minutes after midnight
+    print more then 5 minutes after midnight
     } else {
-    =print less then 5 minutes after midnight
+    print less then 5 minutes after midnight
     }
 
     ; publish abs hum every teleperiod time
@@ -1073,27 +1094,27 @@ remark: the Flash illumination LED is connected to GPIO4
     ;switch case state machine
     switch state
     case 1
-    =>print state=%state% , start
+    print state=%state% , start
     state+=1
     case 2
-    =>print state=%state%
+    print state=%state%
     state+=1
     case 3
-    =>print state=%state%  , reset
+    print state=%state%  , reset
     state=1
     ends
 
     ; subroutines
     #sub1(string)
-    =>print sub1: %string%
+    print sub1: %string%
     #sub2(param)
-    =>print sub2: %param%
+    print sub2: %param%
 
     #sendmail(string)
     =>sendmail [smtp.gmail.com:465:user:passwd:<sender@gmail.de:<rec@gmail.de:alarm] %string%
 
     >E
-    =>print event executed!
+    print event executed!
 
     ; Assign temperature from a Zigbee sensor
     zigbeetemp=ZbReceived#0x2342#Temperature
@@ -1113,7 +1134,7 @@ remark: the Flash illumination LED is connected to GPIO4
     ; color change needs 2 string vars
     if col!=ocol
     then ocol=col
-    =>print color changed  %col%
+    print color changed  %col%
     endif
 
     ; or check change of color channels
@@ -1132,7 +1153,7 @@ remark: the Flash illumination LED is connected to GPIO4
     =color %col%
 
     >R
-    =>print restarting now
+    print restarting now
 
 ### Sensor Logging
 
@@ -1160,7 +1181,7 @@ remark: the Flash illumination LED is connected to GPIO4
     res=fr(str fr)
     if res>0
     then
-    =>print %cnt% : %str%
+    print %cnt% : %str%
     else
     break
     endif
@@ -1387,7 +1408,7 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     and wd==1
     then
     =>sendmail [*:*:*:*:*:user.tasmota@gmail.com: Wochenbericht]*
-    print sening email
+    print sending email
     endif
 
 
@@ -1770,7 +1791,7 @@ Synchronizes 2 Magic Home devices by also sending the commands to a second Magic
     and timer<30
     then
     ; short press
-    ;=>print short press
+    ;print short press
     toggle^=1
     =>%ws% power1 %toggle%
     endif
@@ -1782,7 +1803,7 @@ Synchronizes 2 Magic Home devices by also sending the commands to a second Magic
     then
     ; hold
     hold=1
-    ;=>print hold=%timer%
+    ;print hold=%timer%
     if toggle>0
     then
     =>%ws% dimmer +
@@ -2007,7 +2028,7 @@ start dim level = initial dimmer level after power-up or restart; max 100
     dimval=70  ;start dim level
       
     >B
-    =>print "WiFi-Dimmer-Script-v0.2"
+    print "WiFi-Dimmer-Script-v0.2"
     =>Counter1 0
     =>Baudrate 9600
     ; boot sequence

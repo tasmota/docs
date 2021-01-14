@@ -51,19 +51,20 @@ The R2 revision boards connect the GPIO4 and GPIO5 pins to the USB data lines of
 1. Make sure you have previously flashed a Tasmota binary built with `RF_FLASH`. Refer to the [builds table](https://github.com/arendst/Tasmota/blob/development/BUILDS.md) for pre-compiled binaries which include this feature. Otherwise the "Magic byte is not 0xE9" error will occur.
 2. Set the module type to `Sonoff Bridge (25)`
 3. Connect two wires (this will be different depending on the `Sonoff RF Bridge 433` hardware version):
-   - For `R1`: Connect `GPIO4 to C2Ck` and `GPIO5 to C2D`.
-   - For `R2`: Connect `GPIO4 to C2D` and `GPIO5 to C2Ck`.
-     (:warning: The text on the R2 PCB silkscreen is switched. Therefore this is the same wiring as on the R1)
+    - For `R1`: Connect `GPIO4 to C2Ck` and `GPIO5 to C2D`.
+    - For `R2`: Connect `GPIO4 to C2D` and `GPIO5 to C2Ck`.
+   (:warning: The text on the R2 PCB silkscreen is switched. Therefore this is the same wiring as on the R1)
 4. Switch the ON/OFF switch on the board to 'OFF'.
 5. Power up the bridge via the 3.3V & GND pins. (See below if you need to power the device through the USB power port)
-6. Obtain the Portisch firmware file:  
-   (Clicking on the file link on the GitHub web site does **not** work since this will download the GitHub preview/content of the file rather than the raw file contents)
-   - Download the entire contents of the [Tasmota GitHub project](https://github.com/arendst/Tasmota/tree/master/) project via the green `Clone or Download` button to ensure that the firmware hex files are downloaded properly. The firmware files are located in the `./tools/fw_SonoffRfBridge_efm8bb1/` folder. **Select the newest available hex file. Otherwise you may get `error "Magic byte is not 0xE9"`**.
-   - As an alternative use wget/curl to download the raw file (https://github.com/arendst/Tasmota/tree/master/tools/fw_SonoffRfBridge_efm8bb1) directly. **Select the newest available hex file. Otherwise you may get `error "Magic byte is not 0xE9"`**.  
-      PowerShell example:
-      ```
-      wget https://github.com/arendst/Tasmota/raw/master/tools/fw_SonoffRfBridge_efm8bb1/RF-Bridge-EFM8BB1-XXXXXXXX.hex -OutFile .\RF-Bridge-EFM8BB1-XXXXXXXX.hex
-      ```
+6. Obtain the Portisch firmware file:
+    (Clicking on the file link on the GitHub web site does **not** work since this will download the GitHub preview/content of the file rather than the raw file contents)
+    - Download the entire contents of the [Tasmota GitHub project](https://github.com/arendst/Tasmota/tree/master/) project via the green `Clone or Download` button to ensure that the firmware hex files are downloaded properly. The firmware files are located in the `./tools/fw_SonoffRfBridge_efm8bb1/` folder. **Select the newest available hex file. Otherwise you may get `error "Magic byte is not 0xE9"`**.
+    - As an alternative use wget/curl to download the raw file (https://github.com/arendst/Tasmota/tree/master/tools/fw_SonoffRfBridge_efm8bb1) directly. **Select the newest available hex file. Otherwise you may get `error "Magic byte is not 0xE9"`**.
+    PowerShell example:
+
+    ```
+    wget https://github.com/arendst/Tasmota/raw/master/tools/fw_SonoffRfBridge_efm8bb1/RF-Bridge-EFM8BB1-XXXXXXXX.hex -OutFile .\RF-Bridge-EFM8BB1-XXXXXXXX.hex
+    ```
 7. Go to the Web UI **Firmware Upgrade** > **Upgrade by File Upload** (introduced in v6.0.0a)
 8. In the file selection dialog, navigate to the folder on your computer where you saved the hex file from step 6.
 9. Click **Start Upgrade**. The flashing should complete within 60 seconds. Device will restart after upgrade completes.
