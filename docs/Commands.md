@@ -351,7 +351,7 @@ HsbColor<a class="cmnd" id="hsbcolor"></a>|`<hue>,<sat>,<bri>` = set color by hu
 HsbColor1<a class="cmnd" id="HsbColor1"></a>|`0..360` = set hue
 HsbColor2<a class="cmnd" id="HsbColor2"></a>|`0..100` = set saturation 
 HsbColor3<a class="cmnd" id="HsbColor3"></a>|`0..100` = set brightness
-Led<x\><a class="cmnd" id="led"></a>|`#RRGGBB` = set hex color value where `<x>` is the pixel number of the LED<br>. A blank-delimited list of colors sets multiple successive pixels. *(applies only to addressable LEDs)*
+Led<x\><a class="cmnd" id="led"></a>|`#RRGGBB` = set hex color value where `<x>` is the pixel number of the LED. A blank-delimited list of colors sets multiple successive pixels.<br> *(applies only to addressable LEDs)*
 LedPwmMode<x\><a class="cmnd" id="ledpwmmode"></a>|Control status LED light mode (x = `0..4`)<br>`0` = digital on/off mode _(default)_<BR>`1` = PWM mode<BR>`2` = toggle between modes
 LedPwmOff<a class="cmnd" id="ledpwmoff"></a>|`0..255` = set LED brightness when OFF
 LedPwmOn<a class="cmnd" id="ledpwmon"></a>|`0..255` = set LED brightness when ON
