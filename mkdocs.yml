@@ -65,7 +65,8 @@ markdown_extensions:
   - pymdownx.emoji:
   - pymdownx.betterem
   - pymdownx.caret
-  - codehilite
+  - pymdownx.highlight
+  - pymdownx.superfences
   - meta
 
 google_analytics:
