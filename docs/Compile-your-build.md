@@ -35,7 +35,7 @@ Enter lines required to enable or disable desired feature. All features and thei
 
 Best practice to enable a feature is to use
 
-```
+```arduino
 #ifndef %identifier%
 #define %identifier%
 #endif
@@ -51,7 +51,7 @@ Best practice to enable a feature is to use
 
 Example: enable blinds and shutters support
 
-```
+```arduino
 #ifndef USE_SHUTTER
 #define USE_SHUTTER             // Add Shutter support for up to 4 shutter with different motortypes (+6k code)
 #endif
@@ -65,7 +65,7 @@ identifier = `USE_SHUTTER`
 
 Example: disable Domoticz support
 
-```
+```arduino
 #ifdef USE_DOMOTICZ
 #undef USE_DOMOTICZ                              
 #endif 
@@ -94,7 +94,7 @@ You may want to generate multiple custom firmwares such as one for switches/rela
 
 #### Sample `platformio_tasmota_cenv.ini`
 
-``` ini
+```ini
 ; *********************************************************************
 [platformio]
 ; For best Gitpod performance remove the ";" in the next line. Needed 
@@ -144,7 +144,7 @@ build_flags             = ${common32.build_flags} -DFIRMWARE_GRIZZLY
 
 #### Sample `user_config_override.h`
 
-``` C
+```c
 #ifndef _USER_CONFIG_OVERRIDE_H_
 #define _USER_CONFIG_OVERRIDE_H_
 
