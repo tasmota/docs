@@ -1327,6 +1327,22 @@ Rule1
   ON SI7021#temperature>%var1% DO Backlog var1 %value%; publish stat/mqttTopic/temp %value%; var2 %value%; add1 2; sub2 2 ENDON
   ON SI7021#temperature<%var2% DO Backlog var2 %value%; publish stat/mqttTopic/temp %value%; var1 %value%; add1 2; sub2 2 ENDON
 ```
+
+This example explains expands on the above example while matching typical sensor data. 
+Helpful for HA tasmota integration sensors when polling and adding in delta value changes.
+
+Normal polling data below
+```haskell
+23:58:41 MQT: tele/ds1820/SENSOR = {"Time":"2021-01-13T23:58:41","DS18B20":{"Id":"030597946B04","Temperature":20.9},"TempUnit":"C"}
+```
+The matching rule.
+
+```haskell
+Rule1 
+  ON DS18B20#temperature>%var1% DO Backlog var1 %value%; publish tele/ds1820/SENSOR {"Time":"%timestamp%","DS18B20":{"Id":"030597946B04","Temperature":%value%},"TempUnit":"C"}; var2 %value%; add1 0.5; sub2 0.5 ENDON 
+  ON DS18B20#temperature<%var2% DO Backlog var2 %value%; publish tele/ds1820/SENSOR {"Time":"%TIMESTAMP%","DS18B20":{"Id":"030597946B04","Temperature":%value%},"TempUnit":"C"}; var1 %value%; add1 0.5; sub2 0.5 ENDON
+```
+
 -----------------------------------------------------------------------------
 
 ### Adjust a value and send it over MQTT
