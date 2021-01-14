@@ -92,7 +92,7 @@ You may want to generate multiple custom firmwares such as one for switches/rela
 1. Create a file `platformio_tasmota_cenv.ini` like the sample below. This will allow you to define your own binaries. `cenv` stands for Custom ENVironment where an environment is a specific binary to generate.
 1. In your `user_config_override.h` you can create sections with specific settings for each type of firmware. SSID and MQTT can be outside of the section so they apply to every binary.
 
-### Sample `platformio_tasmota_cenv.ini`
+#### Sample `platformio_tasmota_cenv.ini`
 
 ``` ini
 ; *********************************************************************
@@ -142,7 +142,7 @@ extends = env:tasmota32
 build_flags             = ${common32.build_flags} -DFIRMWARE_GRIZZLY
 ```
 
-### Sample `user_config_override.h`
+#### Sample `user_config_override.h`
 
 ``` C
 #ifndef _USER_CONFIG_OVERRIDE_H_
