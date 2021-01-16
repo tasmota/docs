@@ -27,7 +27,7 @@ In Tasmota a `Switch` is any switch or push-button additionally connected to a f
 
 By default a switch toggles the corresponding power state (f.e. `Switch1` controls `Power1`). Every time the switch gets flipped the power state of the relay toggles.
 
-To detach switches
+If you want to detach switches from relays read [here](#detach-switches-based-on).
 
 !!! warning
     If you define a switch with a number higher than available power outputs it will default to controlling `Power1`. Example: Switch4 on a device with Power1 and Power2 will control `Power1`.
