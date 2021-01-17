@@ -86,7 +86,10 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 `i` = (re)init the display (in e-Paper mode with partial update)  
 `I` = (re)init the display (in e-Paper mode with full update)  
 `d` = update the display  
-`Dp` = switch display auto updates on(`p`=1)/off(`p`=0), when off display must be updated with `d`  
+`Dp` = switch display drawing options:  
+  bit 0: auto updates => 1 auto draw on each displaytext cmd, 0 display must be updated manually with `d`  
+  ( only valid for bw oled and epaper displays, color displays draw always immediately)  
+  bit 1: character drawing => 0 opaque character drawing, 1 transparent character drawing  
 `o` = switch display off  
 `O` = switch display on  
 `ap` =  `p` (0..3) set rotation angle  
