@@ -77,3 +77,7 @@ Index | Define              | Driver  | Device   | Address(es) | Description
   50  | USE_VEML7700        | xsns_71 | VEML7700 | 0x10        | Ambient light intensity sensor
   51  | USE_MCP9808         | xsns_72 | MCP9808  | 0x18 - 0x1F | Temperature sensor
   52  | USE_HP303B          | xsns_73 | HP303B   | 0x76 - 0x77 | Pressure and temperature sensor
+  53  | USE_MLX90640        | xdrv_43 | MLX90640 | 0x33        | 32x24 IR/Thermal image sensor
+  54  | USE_VL53L1X         | xsns_77 | VL53L1X  | 0x29        | Time-of-flight (ToF) distance sensor
+  55  | USE_EZO             | xsns_78 | EZO_*    | 0x61 - 0x70 | EZO family of sensors (DO, ORP, PH...)
+  56  | USE_SEESAW_SOIL     | xsns_81 | ADA4026  | 0x36 - 0x39 | Adafruit capacitve soil sensor (https://www.adafruit.com/product/4026)
