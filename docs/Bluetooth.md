@@ -15,7 +15,6 @@ Otherwise you must [compile your build](Compile-your-build). Add the following t
 #define USE_IBEACON          // Add support for bluetooth LE passive scan of ibeacon devices 
 #endif
 ```
-----
   
 Tasmota uses a BLE 4.x module to scan for [iBeacon](https://en.wikipedia.org/wiki/IBeacon) devices. This driver is working with [HM-10 and clones](HM-10) and [HM16/HM17](HM-17) Bluetooth modules and potentially with other HM-1x modules depending on firmware capabilities.
 
