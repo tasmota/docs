@@ -306,7 +306,7 @@ Example: update Enum 2 to 4.
 21:14:12 CMD: tuyaenum2 4
 21:14:12 MQT: stat/TuyaMCU/RESULT = {"TuyaEnum2":4}
 ```
-!!! warning  "ntering a value not in range will return an error"
+!!! warning  "Entering a value not in range will return an error"
 
 `TuyaEnum` without payload will return the state of all the enums configured.
 
