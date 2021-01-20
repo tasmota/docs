@@ -663,6 +663,9 @@ MotorTurn<a class="cmnd" id="motorturn"></a>|`float` Spin the motor the given nu
 
 The MP3 Player driver is based on the one from DFRobot. They named it [DFPlayer mini](https://www.dfrobot.com/wiki/index.php/DFPlayer_Mini_SKU:DFR0299). All MP3 Players with the identical Serial Control Command structure can be used.
 
+!!! Note
+    Player module pin RX should be connected to a GPIO defined as "MP3 Player" from the drop-down list. The driver uses a Software Serial and do not requires usage of hardware TX/RX pins.
+
 Command|Parameters
 :---|:---
 MP3DAC<a class="cmnd" id="MP3DAC"></a>|`0` = DAC on *(default)*<BR>`1` = DAC off
