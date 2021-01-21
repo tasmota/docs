@@ -122,7 +122,13 @@ if the script init fails an error code is reported:
 -5 = variable name length too long in total  
 -7 = not enough memory  
 
-you may increase the number of allowed variables with defines in user_config_override
+you may increase the number of allowed variables with defines in user_config_override  
+defaults and override defines:  
+Numer of total variables = 50  (#define MAXVARS)  
+Numer of string variables = 5  (#define MAXSVARS)  
+Number of filters (arrays) = 5 (#define MAXFILT)  
+Max string size            = 20 (override with >D size up to 48)  
+
 
 
 #### Optional external editor
