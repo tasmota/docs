@@ -13,6 +13,8 @@ SP108E (1st Gen)
 
 SP108E (2nd Gen)
 
-New generation of the WS2812 controller. A modification of the hardware is also necessary. See [**here**](/devices/SP108E-HardwareMod2ndGen) for details.
+New generation of the WS2812 controller. A modification of the hardware is also necessary. See page for SP108E-HardwareMod from above.
 
 ![sp108e 2nd gen](https://user-images.githubusercontent.com/6609851/105413393-53de5080-5c36-11eb-992f-1fd67ee9c34b.jpg)
+
+Working 
