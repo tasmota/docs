@@ -141,6 +141,8 @@ in `user_config_override.h` file). An entry defines how to decode the data and p
     - `ffffffff` = extract a float value  
     - `FFffFFff` = extract a reverse float value  
     - `@` decoding definition termination character  
+    - `(` following the `@` character in case of obis decoder indicates to fetch the 2. value in brackets, not the 1. value.  
+	e.g. in this obis paylod the second value is extracted 0-1:24.2.3(210117125004W)(01524.450*m3)  
     - decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte.   
       e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`  
     - in the case of **MODBus**, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition  
