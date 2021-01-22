@@ -54,7 +54,19 @@ Traces on bottom side from STM to HC245 (actually R3 and R4)
 
 ![sp108e-traces-to-hc245](https://user-images.githubusercontent.com/19874899/46249954-1edcdd00-c432-11e8-8ad9-bcf360485a50.png)
 
-For the hardware mod to make it working without the STM32F0, there are several ways:
+Known differences to the 2nd gen
+
+The following picture shows the pcb of the 2nd generation of the SP108E. 
+
+![hardware 2nd gen](https://user-images.githubusercontent.com/6609851/105417021-42e40e00-5c3b-11eb-937d-306eee90cdd4.jpg)
+
+The ESP12F was replaced to a proprietary ESP8285 pcb. Fortunately the pinout is printed on the back of the pcb so we can use it to connect the cables for flashing. As the pcb were already soldered out for taking the following picture it was flashed in this unmounted state. It should work as well while the ESP is soldered. Pay attention to the information below. 
+
+![esp8285 sp108e 2nd gen](https://user-images.githubusercontent.com/6609851/105417173-863e7c80-5c3b-11eb-8396-aecd6df6c5bc.jpg)
+
+The STM32F0 was replaced through a Geehy APM32F030C8T6 ARM-Cortex M0 microcontroller. At least the reset pin is at the same place. So the hardware modification of the first gen can also be applied.
+
+For the hardware mod to make it working without the STM32F0/Geehy, there are several ways:
 ### 1. Cut traces and add wires
 We need to break one of the traces on the bottom of the PCB. Then connect GPIO4 of ESP-12 with R4.
 Also RX/TX connection between STM32F0 and ESP-12 need to be broken up.
@@ -64,7 +76,7 @@ This is the simpler method, no cuts on the PCB required, just two additional wir
 - NRST of STM32F0 to GND
 - IO4 of ESP-12 to R4
 
-See [**here**](/devices/SP108E-HardwareMod) for details.
+See [**here**](SP108E-HardwareMod.md) for details.
 
 ### Flashing prohibited
 Major problem right now is that IO0 is directly connected to VCC, so we cannot bring ESP-12 into flash mode.
