@@ -4,7 +4,7 @@
 !!! tip
     A peripheral must have correctly wired power, GND and data pins to the device prior to booting in order for Tasmota to detect it and initialize it properly.
     
-**[Supported peripherals](Supported-Peripherals.md)** list.
+## [Supported peripherals](Supported-Peripherals.md)
 
 ## Tasmota Settings
 <img src="https://user-images.githubusercontent.com/5904370/68432161-2a154700-01b4-11ea-8ba9-adb7b717490d.png" style="float:right;height:15em;margin:10px 0">

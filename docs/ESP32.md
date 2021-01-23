@@ -1,4 +1,4 @@
-# ESP32 Support (Beta development)
+# ESP32 (beta)
 
 !!! warning "ESP32 support is in beta and not all functions will work"
 

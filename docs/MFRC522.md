@@ -49,7 +49,7 @@ If the device was not found please check your wiring and configuration and confi
 !!! example 
     Configured using NodeMCU on pins: D1 (connected to RC522 Rst) and D8 (connected to RC522 CS)
 
-![MFRC522 Module Configuration](/_media/peripherals/MFRC522_webui.jpg)
+![MFRC522 Module Configuration](_media/peripherals/MFRC522_webui.jpg)
 
 ## Usage
 
@@ -76,4 +76,4 @@ rule1 on RC522#UID=BA839D07 do power on endon
 
 ## Breakout Boards
 
-![MFRC522 Module Configuration](/_media/peripherals/MFRC522.jpg)
+![MFRC522 Module Configuration](_media/peripherals/MFRC522.jpg)
