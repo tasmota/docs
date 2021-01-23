@@ -49,7 +49,7 @@ Name|Description
 **MAX31865** | RTD Temperature Sensor Amplifier (SPI)
 **MAX44009** | Ambient Light Sensor (I^2^C)
 [**MCP23008<BR>MCP23017**](MCP230xx) |  I/O Expander (I^2^C)
-**MFRC522** | NFC Tag Reader (SPI)
+[**MFRC522**](MFRC522) | NFC Tag Reader (SPI)
 [**MGC3130**](MGC3130) | 3D Tracking and Gesture Controller
 [**MH-Z19B**](MH-Z19B) | CO<sub>2</sub> Sensor 
 [**MLX90614**](MLX90614) | MLX9061X Infrared Thermometer (I^2^C) 
