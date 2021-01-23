@@ -60,6 +60,17 @@ Deleting them from Home Assistant while Tasmota device is still active will simp
 
 If you opt to switch to MQTT Discovery, issuing `SetOption19 1` command will remove all Tasmota (beta) entities and add new entities under the MQTT integration.
 
+### Supplemental Custom Discovery Message
+
+You can use [MQTT Discovery](https://www.home-assistant.io/docs/mqtt/discovery/) in HA to add sensors and other entities that are not covered with Tasmota integration and associate them with an already discovered device.
+
+When creating the MQTT discovery JSON add this device identifier `,"device":{"connections":[["mac","%macaddr%"]]}` where %macaddr% is the mac address of the device without `:`. When used in a rule variable `%macaddr%` will be replaced automatically.
+
+Examples of custom discovery:
+
+- [PIR sensor](https://blakadder.com/tasmota-tags/)
+- [RFID Tag](https://blakadder.com/pir-in-tasmota-integration/)
+
 ## Editing configuration.yaml
 
 Adding devices manually is done by editing the `configuration.yaml` file and adding appropriate blocks of yaml code to the corresponding section.
