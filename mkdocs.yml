@@ -145,9 +145,7 @@ nav:
     - SmartThings: "https://github.com/hongtat/tasmota-connect"
   - Peripherals:
     - Supported-Peripherals.md
-    - Analog pin: ADC.md
     - Buzzer.md
-    - Displays.md
     - A4988 stepper motor controller: A4988-Stepper-Motor-Controller.md
     - AHT1x.md
     - AM2301 temperature and humidity sensor: AM2301.md
