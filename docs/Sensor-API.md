@@ -829,3 +829,156 @@ _Z20ExampleStringConcat3R6Stringhh:
 	addi	sp, sp, 16	#,,
 	ret.n
 ```
+## Extension to `(v)snprintf()`
+
+Tasmota code uses extensively `snprintf()` to build Web UI, MQTT messages and logs.
+
+However there are some limitations. First we use a stripped down version of `(v)snprintf()` to save a big amount of code size; and types like `float` or `uint64` or not supported. Second Arduino core often uses high level objects like `IPAddress` that are not natively supported by `snprintf()`.
+
+GCC libc normally includes a way to extend `printf` to new data types, but again the reduced lib in Arduino does not provide such a standard extension mechanism.
+
+We have now build an extension mechanism to `snprintf()` to allow for simpler code and less flash space.
+
+### How to use
+
+All extensions are using `%_<x>` where `<x>` is one of the following:
+
+**Warning**: most high-level values must be passed **by address**
+
+* `%_X`: support for `uint64_t`.
+
+  Example:
+  
+  ```
+  uint64_t u64 = 0x1122334455667788LL;
+  ext_snprintf(PSTR("Int64 = 0x%_X"), &u64);
+  ```
+
+* `%_I`: support for IPv4 ip address in the form of `uint32_t`. Note: it is passed by value, not by address.
+
+  Example:
+  
+  ```
+  uint32_t ip = 0x10203040;
+  ext_snprintf(PSTR("IP = 0x%_I"), ip);
+  ```
+* `%_f` or `%*_f`: support for `float`. Note: `float` must be passed **by address** (otherwise it is silently converted to double).
+
+  When using `%*_f`, the first argument specifies the number `d` of decimal for the `float`. Value is a signed int. If `d > 0` we output exactly `d` decimals (even zeros), if `d < 0` we output `d` decimals but remove any trailing zeros. Default value is `-2` (2 decimals).
+
+  Example:
+  
+  ```
+  float fl = 3.14;
+  ext_snprintf(PSTR("f1=%*_f f2=%*_f"), 4, &fl, -4, &fl);
+  // outputs:
+  // "f1=3.1400 f2=3.14"
+  ```
+
+### Code size reduction
+
+#### Floats
+
+It is not needed to call explicitly `dtostrfd()` anymore:
+
+Before:
+
+```
+int ResponseAppendTHD(float f_temperature, float f_humidity)
+{
+  char temperature[FLOATSZ];
+  dtostrfd(f_temperature, Settings.flag2.temperature_resolution, temperature);
+  char humidity[FLOATSZ];
+  dtostrfd(f_humidity, Settings.flag2.humidity_resolution, humidity);
+  char dewpoint[FLOATSZ];
+  dtostrfd(CalcTempHumToDew(f_temperature, f_humidity), Settings.flag2.temperature_resolution, dewpoint);
+
+  return ResponseAppend_P(PSTR("\"" D_JSON_TEMPERATURE "\":%s,\"" D_JSON_HUMIDITY "\":%s,\"" D_JSON_DEWPOINT "\":%s"), temperature, humidity, dewpoint);
+}
+```
+
+Assembly (117 bytes):
+
+```asm
+_Z17ResponseAppendTHDff:
+	addi	sp, sp, -64	#,,
+	s32i.n	a0, sp, 60	#,
+	s32i.n	a12, sp, 56	#,
+	s32i.n	a13, sp, 52	#,
+	s32i.n	a14, sp, 48	#,
+	mov.n	a13, a3	# f_humidity, f_humidity
+	mov.n	a14, a2	# f_temperature, f_temperature
+	call0	__extendsfdf2	#
+	l32r	a12, .LC658	#, tmp57
+	addi	a5, sp, 32	#,,
+	addmi	a12, a12, 0x500	# tmp60, tmp57,
+	l32i	a4, a12, 188	# Settings, Settings
+	extui	a4, a4, 30, 2	#, Settings,
+	call0	_Z8dtostrfddhPc	#
+	mov.n	a2, a13	#, f_humidity
+	call0	__extendsfdf2	#
+	l32i	a4, a12, 188	# Settings, Settings
+	addi	a5, sp, 16	#,,
+	extui	a4, a4, 28, 2	#, Settings,,
+	call0	_Z8dtostrfddhPc	#
+	mov.n	a3, a13	#, f_humidity
+	mov.n	a2, a14	#, f_temperature
+	call0	_Z16CalcTempHumToDewff	#
+	call0	__extendsfdf2	#
+	l32i	a4, a12, 188	# Settings, Settings
+	mov.n	a5, sp	#,
+	extui	a4, a4, 30, 2	#, Settings,
+	call0	_Z8dtostrfddhPc	#
+	l32r	a2, .LC659	#,
+	addi	a3, sp, 32	#,,
+	addi	a4, sp, 16	#,,
+	mov.n	a5, sp	#,
+	call0	_Z16ResponseAppend_PPKcz	#
+	l32i.n	a0, sp, 60	#,
+	l32i.n	a12, sp, 56	#,
+	l32i.n	a13, sp, 52	#,
+	l32i.n	a14, sp, 48	#,
+	addi	sp, sp, 64	#,,
+	ret.n
+```
+
+After:
+
+```c
+int ResponseAppendTHD(float f_temperature, float f_humidity)
+{
+  float dewpoint = CalcTempHumToDew(f_temperature, f_humidity);
+
+  return ResponseAppend_P(PSTR("\"" D_JSON_TEMPERATURE "\":%*_f,\"" D_JSON_HUMIDITY "\":%*_f,\"" D_JSON_DEWPOINT "\":%*_f"),
+                          Settings.flag2.temperature_resolution, &f_temperature,
+                          Settings.flag2.humidity_resolution, &f_humidity,
+                          Settings.flag2.temperature_resolution, &dewpoint);
+}
+```
+
+Assembly (61 bytes):
+
+```asm
+_Z17ResponseAppendTHDff:
+	addi	sp, sp, -64	#,,
+	s32i.n	a0, sp, 60	#,
+	s32i.n	a3, sp, 36	# f_humidity, f_humidity
+	s32i.n	a2, sp, 32	# f_temperature, f_temperature
+	call0	_Z16CalcTempHumToDewff	#
+	s32i.n	a2, sp, 16	# dewpoint,
+	l32r	a2, .LC658	#, tmp51
+	addi	a4, sp, 32	#,,
+	addmi	a2, a2, 0x500	# tmp54, tmp51,
+	l32i	a5, a2, 188	# Settings, Settings
+	addi	a2, sp, 16	# tmp68,,
+	extui	a7, a5, 30, 2	# D.156427, Settings,
+	s32i.n	a2, sp, 0	#, tmp68
+	l32r	a2, .LC659	#,
+	addi	a6, sp, 36	#,,
+	mov.n	a3, a7	#, D.156427
+	extui	a5, a5, 28, 2	#, Settings,,
+	call0	_Z16ResponseAppend_PPKcz	#
+	l32i.n	a0, sp, 60	#,
+	addi	sp, sp, 64	#,,
+	ret.n
+```
