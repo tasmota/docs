@@ -41,7 +41,7 @@
 ### ESP32-WROVER
 ![ESP32-WROVER Pinout](_media/pinouts/ESP32-WROVER_pinout.jpg)
 
-### ESP32-ESP-WROOM-32
+### ESP-WROOM-32
 ![ESP32-ESP-WROOM-32 Pinout](_media/pinouts/ESP-WROOM-32_pinout.jpg)
 
 ## Devices
