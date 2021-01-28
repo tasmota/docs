@@ -44,9 +44,7 @@ Includes ESP32-WROVER-B and ESP32-WROVER-BI
 
 ![ESP32-WROVER Pinout](_media/pinouts/ESP32-WROVER_pinout.jpg)
 
-### ESP-WROOM-32
-
-Includes ESP32-WROOM-32D, ESP32-WROOM-32U
+### ESP32-WROOM-32x
 
 ![ESP32-ESP-WROOM-32 Pinout](_media/pinouts/ESP-WROOM-32_pinout.jpg)
 
