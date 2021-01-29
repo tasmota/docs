@@ -862,17 +862,48 @@ All extensions are using `%_<x>` where `<x>` is one of the following:
   uint32_t ip = 0x10203040;
   ext_snprintf(PSTR("IP = 0x%_I"), ip);
   ```
-* `%_f` or `%*_f`: support for `float`. Note: `float` must be passed **by address** (otherwise it is silently converted to double).
 
-  When using `%*_f`, the first argument specifies the number `d` of decimal for the `float`. Value is a signed int. If `d > 0` we output exactly `d` decimals (even zeros), if `d < 0` we output `d` decimals but remove any trailing zeros. Default value is `-2` (2 decimals).
+* `%_f` or `%*_f` or `%<number>_f`: support for `float`. Note: `float` must be passed **by address** (otherwise it is silently converted to double and creates alignment issues on the stack).
+
+  When using `%*_f`, the first argument specifies the number `d` of decimal for the `float`, as a signed int. `d` can also be directly coded in the format ex: `%2_f` of `%-2_f`.
+  
+  If `d > 0` we output exactly `d` decimals (even zeros), if `d < 0` we output `d` decimals but remove any trailing zeros. Default value is `-2` (2 decimals).
 
   Example:
   
   ```
+  char s[128];
   float fl = 3.14;
-  ext_snprintf(PSTR("f1=%*_f f2=%*_f"), 4, &fl, -4, &fl);
+  ext_snprintf(s, sizeof(s), PSTR("f1=%*_f f2=%*_f f3=%4_f f4=%-4_f"), 4, &fl, -4, &fl, &fl, &fl);
   // outputs:
-  // "f1=3.1400 f2=3.14"
+  // "f1=3.1400 f2=3.14 f3=3.1400 f4=3.14"
+  ```
+
+* `%*_H`: prints an array of bytes as Hex (uppercase). The first argument is the length in bytes of the array (if zero or negative, it outputs an empty string). The second argument is the pointer to the array of bytes. The pointer can be null if the length is zero or negative. The pointer can be in PROGMEM. Note: `%_H` will output an empty string because it is missing the length.
+
+  Example:
+  
+  ```
+  char s[16];
+  const uint8_t b[] PROGMEM = { 0x00, 0x01, 0x80, 0xFF };
+  ext_snprintf(s, sizeof(s), PSTR("Hex=%*_H"), sizeof(b), b);
+  // outputs:
+  // "Hex=000180FF"
+  ```
+
+* `%_B`: this is equivalent to `%*_H` but directly takes an `SBuffer()` object.
+
+  Example:
+  
+  ```
+  char s[16];
+  SBuffer b(8);    // statically allocate 8 bytes
+  b.add8(0x5A);
+  b.add8(0xA5);
+  
+  ext_snprintf(s, sizeof(s), PSTR("Hex=%_B"), &b);
+  // outputs:
+  // "Hex=5AA5"
   ```
 
 ### Code size reduction

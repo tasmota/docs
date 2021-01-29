@@ -38,10 +38,26 @@
 ![PSF-B85 Pinout](_media/pinouts/PSF-B85_pinout.jpg)
 
 ## ESP32 Based
+### ESP32-CAM
+
+![ESP32-CAM Pinout](_media/pinouts/ESP32-CAM_pinout.jpg)
+
+### ESP32-S
+
+![ESP32-S Pinout](_media/pinouts/ESP32-S_pinout.jpg)
+
+### ESP32-SOLO-1
+
+![ESP32-SOLO-1 Pinout](_media/pinouts/ESP32-SOLO-1_pinout.jpg)
+
 ### ESP32-WROVER
+
+Includes ESP32-WROVER-B and ESP32-WROVER-BI
+
 ![ESP32-WROVER Pinout](_media/pinouts/ESP32-WROVER_pinout.jpg)
 
-### ESP32-ESP-WROOM-32
+### ESP32-WROOM-32x
+
 ![ESP32-ESP-WROOM-32 Pinout](_media/pinouts/ESP-WROOM-32_pinout.jpg)
 
 ## Devices
