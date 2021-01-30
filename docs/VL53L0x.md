@@ -18,7 +18,7 @@ In the **_Configuration -> Configure Module_** page assign:
 1. GPIOx to `I2C SDA (6)`
 2. GPIOy to `I2C SCL (5)`
 
-After a reboot the driver will detect VL530L0x automatically and display Illuminance.
+After a reboot the driver will detect VL530L0x automatically and display distance in mm.
 
 ![image](_media/peripherals/vl53l0x.png)
 
