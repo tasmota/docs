@@ -73,10 +73,10 @@ Use `?` as a wildcard for a single trigger level. Rule will trigger on `[Trigger
 |`!=`| number not equal to (for string see below)|
 |`>=`| greater than or equal to|
 |`<=`| lesser than or equal to|
-|`$<`| string start with|
+|`$<`| string starts with|
 |`$>`| string ends with|
 |`$|`| string contains|
-|`$!`| string not equal|
+|`$!`| string is not equal to|
 |`$^`| string do not contains|
 |`|`| used for [modulo operation](https://en.wikipedia.org/wiki/Modulo_operation) with remainder = 0 (exact division)|
 
