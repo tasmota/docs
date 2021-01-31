@@ -41,7 +41,7 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmot
 - Devices configured as iFan02 or iFan03 as fan entities. Tuya fans are not supported.
 - Each discovered device will by default add 8 disabled sensors. Enable the ones you need. You cannot delete them, they will simply be re-added on a restart.
 
-Types of devices not listed above still require [manual configuration](##editing-configurationyaml)
+Types of devices not listed above still require [manual configuration](#editing-configurationyaml)
 
 
 !!! warning "Zigbee devices paired in Tasmota will **NOT** be discovered in Home Assistant"
@@ -1218,7 +1218,7 @@ You can further customise your device in Home Assistant by clicking on the entit
     **When a switch is set to a different topic than `0` is not possible to use `Switch#State` as a trigger for rules.**
 
 
-Types of devices not listed above (covers, etc) require [manual configuration](#configuration.yaml-editing)
+Types of devices not listed above (covers, etc) require [manual configuration](#editing-configurationyaml)
 
 ### Disabling
 
