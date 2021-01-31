@@ -148,8 +148,8 @@ DeepSleepTime<a class="cmnd" id="deepsleeptime"></a>|Time to enter [deep sleep m
 DeviceName<a class="cmnd" id="devicename"></a>|Device name displayed in the webUI and used for HA autodiscovery.<br>`<value>` = set device name _(default = `FriendlyName1` value)_
 Emulation<a class="cmnd" id="emulation"></a>|`0` = disable emulation *(default)*<BR>`1` = enable Belkin WeMo emulation for [Alexa](Alexa)<BR>`2` = enable Hue Bridge emulation for [Alexa](Alexa)
 FriendlyName<x\><a class="cmnd" id="friendlyname"></a>|`1` = Reset friendly name to firmware default<BR>`<value>` = set friendly name (32 char limit)
-Gpios<a class="cmnd" id="gpios"></a>|Show list of available [components](Components#components-list) by name and index<BR>`255` / `All` Show list of all [components](Components#components-list) by name and index<BR>
-Gpio<a class="cmnd" id="gpio"></a>|Show current [component](Components#components-list) assignments of the Module's configurable GPIO<BR>`255` / `All` Show [component](Components#components-list) assignments for all the devices available GPIO<BR>
+Gpios<a class="cmnd" id="gpios"></a>|Show list of available [components](Components#gpio-conversion) by name and index<BR>`255` / `All` Show list of all [components](Components#gpio-conversion) by name and index<BR>
+Gpio<a class="cmnd" id="gpio"></a>|Show current [component](Components#gpio-conversion) assignments of the Module's configurable GPIO<BR>`255` / `All` Show [component](Components#gpio-conversion) assignments for all the devices available GPIO<BR>
 Gpio<x\><a class="cmnd" id="gpiox"></a>|`<component>` = assign a [component](Components) to `Gpio<x>`
 I2Cscan<a class="cmnd" id="i2cscan"></a>|Scan I<sup>2</sup>C bus and show addresses for found devices
 I2CDriver<a class="cmnd" id="i2cdriver"></a>|Enable / Disable I<sup>2</sup>C sensor drivers. [Read more...](I2CDevices)<BR>
