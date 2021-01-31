@@ -70,9 +70,14 @@ Use `?` as a wildcard for a single trigger level. Rule will trigger on `[Trigger
 |`==`| equal to (used for numerical comparison)|
 |`>`| greater than|
 |`<`| lesser than|
-|`!=`| not equal to|
+|`!=`| number not equal to (for string see below)|
 |`>=`| greater than or equal to|
 |`<=`| lesser than or equal to|
+|`$<`| string starts with|
+|`$>`| string ends with|
+|`$|`| string contains|
+|`$!`| string is not equal to|
+|`$^`| string do not contains|
 |`|`| used for [modulo operation](https://en.wikipedia.org/wiki/Modulo_operation) with remainder = 0 (exact division)|
 
 #### Examples of Available Triggers
