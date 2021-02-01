@@ -17,7 +17,7 @@ The S31 is pretty easy to take apart.
 1. Connect to your serial converter and 3V3.
 1. You need to press the switch (GPIO0) before applying power to put into bootloader mode.
 
-> :wavy_dash: For exact energy monitoring you might need to [calibrate the device](../Power-Monitoring-Calibration.md).
+For exact energy monitoring you might need to [calibrate the device](../Power-Monitoring-Calibration.md).
 
 Tinkerman's review of [Sonoff S31](http://tinkerman.cat/sonoff-s31-now-serious/)
 
