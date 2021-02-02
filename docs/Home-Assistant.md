@@ -16,7 +16,7 @@ Home Assistant has different options of adding Tasmota devices:
 
 ## Tasmota (beta) Integration
 
-Once you configure the [Home Assistant](https://www.home-assistant.io/integrations/tasmota/) integration every new Tasmota device with `SetOption19 0` set, will be discovered automatically. 
+Once you configure the [Home Assistant](https://www.home-assistant.io/integrations/tasmota/) integration every new Tasmota device with `SetOption19 0` set, will be discovered automatically. Make sure that you have configured the MQTT server settings on your Tasmota device in order to make this discovery process happen.
 
 All Tasmota devices will be listed in their own Tasmota (beta) card in **Configuration - Integrations** menu in Home Assistant.
 
