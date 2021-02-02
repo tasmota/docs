@@ -318,7 +318,7 @@ To ignore the default behaviour define a rule which triggers on `Switch<x>` for 
 Backlog SwitchMode 1; SwitchTopic 0
 ```
 ```haskell
-Backlog Rule1 on Switch1#state do Publish cmnd/%topic%/SWITCH1 %value% endon; Rule1 1
+Backlog Rule1 on Switch1#state do Publish stat/custom-topic/SWITCH1 %value% endon; Rule1 1
 ```
 
 ### SwitchTopic
