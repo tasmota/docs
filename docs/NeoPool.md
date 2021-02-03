@@ -20,13 +20,13 @@ Optional set Modbus address matching the address of your device (default is 1) b
 
 ----
 
-![](https://github.com/curzon01/media/raw/master/pics/neopool_s.png)
+![](_media/neopool_s.png)
 
 Sugar Valley NeoPool are water treatment systems also known under the names Hidrolife, Aquascenic, Oxilife, Bionet, Hidroniser, UVScenic, Station, Brilix, Bayrol and Hay. It uses a RS485 interface for enhancment equipments like Wifi-Interface or a second attached control panel. Most functions and parameters can be queried and controlled via the RS485 interface.
 
 The sensor shows the most of parameters such as the built-in display:
 
-![](https://raw.githubusercontent.com/curzon01/media/master/pics/xsns_83_neopool_s.png)
+![](_media/xsns_83_neopool_s.png)
 
 Basic commands to control filtration and light are implemented.
 However, the sensor provides commands to read and write the NeoPool controller Modbus register, means that everyone has the option of implementing their own commands via their home automation system or using the Tasmota build-in possibilities with [Rules](https://tasmota.github.io/docs/Commands/#rules) and [Backlog](https://tasmota.github.io/docs/Commands/#the-power-of-backlog).
@@ -41,7 +41,7 @@ Note that your TTL UART to RS485 converter also works with a operation voltage o
 
 The Sugar Valley NeoPool RS485 connector pins are located under the connection cover, for the Sugar-Valley products on the right-hand side next to the relay connections:
 
-![](https://raw.githubusercontent.com/curzon01/media/master/pics/xsns_83_neopool_connector.jpg)
+![](_media/xsns_83_neopool_connector.jpg)
 
 The pin assignment (from top to bottom):
 
@@ -66,7 +66,7 @@ After restart
 
 so it looks like this
 
-![](https://raw.githubusercontent.com/curzon01/media/master/pics/xsns_83_neopool_config.png)
+![](_media/xsns_83_neopool_config.png)
 
 After Tasmota restarts the main screen should display the controller data as shown above.
 
@@ -209,7 +209,7 @@ Backlog WebButton1 Filtration;WebButton2 Light
 
 Now we have the WebGUI buttons like this:
 
-![](https://github.com/curzon01/media/raw/master/pics/xsns_83_neopool_ctrl.png)
+![](_media/xsns_83_neopool_ctrl.png)
 
 but missing the functionality behind. For that we use [Rules](https://tasmota.github.io/docs/Rules) and connect the states for Tasmota Power, Neopool filtration and light:
 
@@ -237,7 +237,7 @@ Here it is important to enable the Rule ONCE function, which prevents that the t
 
 You can now control filtration and light using the WebGUI and get the current status of the device elements when they are switched by auto-mode or manually on the device directly.
 
-![](https://github.com/curzon01/media/raw/master/pics/xsns_83_neopool_do_ctrl.png)
+![](_media/xsns_83_neopool_do_ctrl.png)
 
 Additional advantage is that you can also use Tasmota Timer switching Power1 (=filtration) and Power2 (light) for your needs.
 
@@ -283,4 +283,4 @@ Backlog Rule2 4;Rule2 1
 
 Configure Tasmota Timer 10 for your needs (for example using same rule to sync time to Tasmota local time every day at 4:01 h).
 
-![](https://github.com/curzon01/media/raw/master/pics/xsns_83_neopool_timer.png)
+![](_media/xsns_83_neopool_timer.png)
