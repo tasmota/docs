@@ -2151,3 +2151,92 @@ start dim level = initial dimmer level after power-up or restart; max 100
     =>SerialSend5 %dim%
     =>Dimmer %tmp%
     #
+
+### Multiplexing a single adc with CD4067 breakout
+
+    >D
+    ; this script works with an CD4067 breakout to multiplex a single ADC channel
+    ; of an ESP
+    IP=192.168.178.177
+    SB=8192
+    res=0
+    cnt=0
+    mcnt=0
+    m:mux=0 16
+    
+    >B
+    ; define output pins for multiplexer
+    spinm(12 O)
+    spinm(13 O)
+    spinm(14 O)
+    spinm(15 O)
+    ; define string array with 16 entries
+    res=is1(16 "")
+    is1[1]="Azalea"
+    is1[2]="Aster"
+    is1[3]="Bougainvillea"
+    is1[4]="Camellia"
+    is1[5]="Carnation"
+    is1[6]="Chrysanthemum"
+    is1[7]="Clematis"
+    is1[8]="Daffodil"
+    is1[9]="Dahlia"
+    is1[10]="Daisy"
+    is1[11]="Edelweiss"
+    is1[12]="Fuchsia"
+    is1[13]="Gladiolus"
+    is1[14]="Iris"
+    is1[15]="Lily"
+    is1[16]="Periwinkle"
+    
+    >F
+    ; get adc value into array, average 4 values
+    ; this is for ESP32 here on pin 32
+    mux[mcnt+1]=adc(4 32)
+    ; this is for ESP8266 it has only 1 ADC input
+    ; mux[mcnt+1]=adc(4)
+    mcnt+=1
+    if mcnt>=16
+    then
+    mcnt=0
+    endif
+    ; set multiplexer
+    spin(12 mcnt)
+    spin(13 mcnt/2)
+    spin(14 mcnt/4)
+    spin(15 mcnt/8)
+    
+    ; display web UI
+    #wsub
+    if wm==0
+    then
+    for cnt 1 16 1
+    wcs  {s}Ch %0cnt%: %is1[cnt]%{m}%mux[cnt]% %%{e}
+    next
+    endif
+    
+    >J
+    ; send to mqtt
+    ,"CD4067":{
+    "%is1[1]%":%mux[1]%,
+    "%is1[2]%":%mux[2]%,
+    "%is1[3]%":%mux[3]%,
+    "%is1[4]%":%mux[4]%,
+    "%is1[5]%":%mux[5]%,
+    "%is1[6]%":%mux[6]%,
+    "%is1[7]%":%mux[7]%,
+    "%is1[8]%":%mux[8]%,
+    "%is1[9]%":%mux[9]%,
+    "%is1[10]%":%mux[10]%,
+    "%is1[11]%":%mux[11]%,
+    "%is1[12]%":%mux[12]%,
+    "%is1[13]%":%mux[13]%,
+    "%is1[14]%":%mux[14]%,
+    "%is1[15]%":%mux[15]%,
+    "%is1[16]%":%mux[16]%
+    }
+    
+    >W
+    ; call web subroutine
+    %=#wsub
+
