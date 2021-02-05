@@ -383,7 +383,7 @@ Your Tasmota SML `script`:
 
 ------------------------------------------------------------------------------
 
-### Hager EHZ363 (SML)
+### Hager EHZ363 (SML) & Apator Norax 3D
 
 ```
 >D  
