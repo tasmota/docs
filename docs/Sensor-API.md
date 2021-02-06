@@ -167,13 +167,14 @@ mpr121 mpr121[MPR121_I2C_ADDR_NUM];
 
 // Sensor specific init function
 void mpr121_init() {
-
+    bool anyConnected = false;
     // Loop through I2C addresses
     for (uint8_t i = 0; i < MPR121_I2C_ADDR_NUM); i++) {
 
         // Check if sensor is connected on I2C address
         mpr121[i].connected = (MPR121_I2C_ID_VAL == I2cRead8(MPR121_I2C_ADDR_1ST + i, MPR121_I2C_ID_REG);
         if(mpr121[i].connected) {
+            anyConnected = true;
 
             // Log sensor found
             snprintf_P(log_data, sizeof(log_data), PSTR(D_LOG_I2C "MPR121-%d " D_FOUND_AT " 0x%X"), i, MPR121_I2C_ADDR_1ST + i);
@@ -188,7 +189,7 @@ void mpr121_init() {
             mpr121[i].running = true;
         }
     }
-    if(!(mpr121[0].connected || mpr121[1].connected || mpr121[2].connected || mpr121[3].connected)){
+    if(!anyConnected){
         snprintf_P(log_data, sizeof(log_data), PSTR(D_LOG_I2C "MPR121: No sensors found"));
         AddLog(LOG_LEVEL_INFO);
     }
@@ -196,6 +197,7 @@ void mpr121_init() {
 ```
 
 **Four advanced methods to use `FUNC_EVERY_SECOND` (Food for thought) :**
+
 * If a sensor needs an action which takes a long time, like more than 100mS, the action will be started here for a future follow-up. Using the uptime variable for testing like (uptime &1) will happen every 2 seconds. An example is the DS18B20 driver where readings (conversions they call it) can take up to 800mS from the initial request.
 * If a sensor needed the previous action it is now time to gather the information and store it in a safe place to be used by `FUNC_JSON_APPEND` and/or `FUNC_WEB_APPEND`. Using the else function of the previous test (uptime &1) will happen every 2 seconds too but just 1 second later than the previous action.
 * If a sensor does not respond for 10 times the sensor detection flag could be reset which will stop further processing until the sensor is re-detected. This is currently not being used actively as some users complain about disappearing sensors for whatever reason - Could be hardware related but easier to make Tasmota a little more flexible.
