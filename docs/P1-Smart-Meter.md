@@ -4,11 +4,13 @@
  Tested on the following smart meters:
   - Kaifa MA105C
   - De Landis + Gyr, E350 (ZCF110)
+  - Sanxing SX631 (S34U18)
 
 ## Schematics
-![](_media/p1-smartmeter/p1-smartmeter.png) 
+![](_media/p1-smartmeter/p1-smartmeter-v2.png) 
 
-The transistor makes sure that the RxD signal is converted and inverted to 3.3v 
+The transistor makes sure that the RxD signal is converted and inverted to 3.3V.
+According to the [DSMR v5.0.2 P1 specification](https://www.netbeheernederland.nl/_upload/Files/Slimme_meter_15_a727fce1f1.pdf) the P1 connector on the meter provides 5V DC output for the OSM (Other Service Module) connected to this port, which is able to continuously supply maximum current of 250mA. A Wemos D1 mini module draws way less than 100mA so it is perfectly safe to use this as a power source. It can be powered through the 5V pin just inserting a protection diode.
 
 ## Tasmota Settings
 In the **_Configuration -> Configure Module_** page, select module `Generic (18)`
