@@ -38,14 +38,14 @@ At this point in time, the following EZO sensors are supported:
 
 | Required build #define | Sensor ID | Sensor Name |
 |---|---|---|
-| USE_EZO_DO | EZO-D.O. | Disolved Oxygen |
-| USE_EZO_ORP | EZO-ORP | Oxygen Reduction Potential |
-| USE_EZO_PH | EZO-pH | pH |
-| USE_EZO_EC | EZO-EC | Electric Conductivity |
-| USE_EZO_RTD | EZO-RTD | Temperature |
-| USE_EZO_FLO | EZO-FLO | Flow Meter |
-| USE_EZO_CO2 | EZO-CO2 | Carbon Dioxyde (gas) |
-| USE_EZO_PRS | EZO-PRS | Pressure |
-| USE_EZO_O2 | EZO-O2 | Oxygen (gas) |
-| USE_EZO_HUM | EZO-HUM | Humidity |
-| USE_EZO_RGB | EZO-RGB | Color |
+| USE_EZODO | EZO-D.O. | Disolved Oxygen |
+| USE_EZOORP | EZO-ORP | Oxygen Reduction Potential |
+| USE_EZOPH | EZO-pH | pH |
+| USE_EZOEC | EZO-EC | Electric Conductivity |
+| USE_EZORTD | EZO-RTD | Temperature |
+| USE_EZOFLO | EZO-FLO | Flow Meter |
+| USE_EZOCO2 | EZO-CO2 | Carbon Dioxyde (gas) |
+| USE_EZOPRS | EZO-PRS | Pressure |
+| USE_EZOO2 | EZO-O2 | Oxygen (gas) |
+| USE_EZOHUM | EZO-HUM | Humidity |
+| USE_EZORGB | EZO-RGB | Color |
