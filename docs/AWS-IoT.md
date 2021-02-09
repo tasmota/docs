@@ -74,7 +74,7 @@ You will need to install/compile the following:
 
 ### 2. Enable AWS IoT in Tasmota
 
-Using your favorite IDE, create `user_config_override.h` and add the required compilation directives as documented at the top of this article.  
+Add the required compilation directives to `user_config_override.h` as documented at the top of this article.
 
 Note: TLS handshake takes ~1.2s on ESP8266 @80MHz. You may choose to switch to 160MHz if the power supply of your device supports it. If you do so, handshake time should be ~0.7s.
 
@@ -84,7 +84,7 @@ Compile the firmware and ensure it completes successfully.
 
 ### 3. Flash your device
 
-Flash your device the normal way; either through serial or OTA. If you use OTA, first flash a `sonoff-minimal` firmware, then your target firmware.
+Flash your device the normal way; either through serial or OTA.
 
 ### 4. Configure AWS IoT Policy (to be done once) 
 
