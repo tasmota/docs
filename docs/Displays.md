@@ -107,10 +107,10 @@ align right
 `wp` = draws an analog watch with radius p  (#define USE_AWATCH)   
 `Pfilename:` = display an rgb 16-bit color image when SD card file system is present  
 
-### Touch Buttons
+### Touch Buttons and Sliders
 (`#define USE_TOUCH_BUTTONS`)  
 
-Draw up to 16 GFX buttons to switch real Tasmota devices such as relays.
+Draw up to 16 GFX buttons to switch real Tasmota devices such as relays or draw Sliders to dimm e.g. a lamp
 
 - Button number + 256 - a virtual touch toggle button is created (MQTT => TBT)
 - Button number + 512 - a virtual touch push button is created (MQTT => PBT)
@@ -118,7 +118,7 @@ Draw up to 16 GFX buttons to switch real Tasmota devices such as relays.
 `b#:xp:yp:xa:ys:oc:fc:tc:ts:text:`   
 _Parameters are separated by colons._   
 
-* `b#` where # = button number 0-15  
+* `b#` where # = define a button number 0-15  
 * `xp` = x position  
 * `yp` = y position  
 * `xa` = x size  
@@ -126,12 +126,12 @@ _Parameters are separated by colons._
 * `oc` = outline index color  
 * `fc` = fill index color  
 * `tc` = text index color  
-* `ts` = text size  
+* `ts` = text size on buttons  
 * `text:` = button text (must end with a colon :) (max 9 chars)  
 
 !!! example "`b0:260:260:100:50:2:11:4:2:Rel 1:`"
 
-to create picture touch buttons (ESP32 only):  
+to create picture touch buttons (jpeg on ESP32 only):  
 (`#define JPEG_PICTS` and `#define USE_UFILESYS`)  
 and provide pictures on UFILESYSTEM with ending ".jpg"  
 then give the path to the picture as button text omitting the ending .jpg  
@@ -144,7 +144,22 @@ selected buttons invert the colors of the picture
 you may also specify a picture for selected and unselected button state  
 if the picture name ends with '1' this picture is used for unselected state and a picture with ending '2' is used for selected state  
 
+Sliders:
 
+* `bs#` where # = define a slider number 0-15  
+* `xp` = x position  
+* `yp` = y position  
+* `xa` = x size  
+* `ys` = y size  
+* `ne` = number of elements  
+* `bc` = background color  
+* `fc` = frame color  
+* `bc` = bar color  
+
+you may set the state of a button or slider with:  
+
+* `b#s` where # = number 0-15  
+* `val` for buttons 0 or 1, for sliders 0-100  
 
 ### Line chart
 
