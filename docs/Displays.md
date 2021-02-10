@@ -108,7 +108,9 @@ align right
 `Pfilename:` = display an rgb 16-bit color image when SD card file system is present  
 
 ### Touch Buttons and Sliders
-(`#define USE_TOUCH_BUTTONS`)  
+(`#define USE_TOUCH_BUTTONS`)
+
+![touch elements](https://user-images.githubusercontent.com/11647075/107513682-dbb9d980-6ba8-11eb-9716-18f788f8b08d.jpg)
 
 Draw up to 16 GFX buttons to switch real Tasmota devices such as relays or draw Sliders to dimm e.g. a lamp
 
