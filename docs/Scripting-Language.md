@@ -534,12 +534,16 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
 `hsvrgb(h s v)` converts hue (0..360), saturation (0..100) and value (0..100) to RGB color  
 `dt` display text command (if #define USE_DISPLAY)  
 
-`#name` names a subroutine. Subroutine is called with `=#name`  
-`#name(param)` names a subroutine with a parameter. Subroutine is called with `=#name(param)`,only one parameter is supported  
-parameter variables must be declared in >D (no support for local variables)  
-Subroutines end with the next `#` or `>` line or break. Subroutines may be nested  
+Subroutines and Parameters  
+#name names a subroutine. Subroutine is called with =#name  
+#name(param) names a subroutine with a parameter.  
+Each parameter variable must be declared in the '>D' section.  
+A subroutine with multiple parameters is declared as '#name(p1 p2 p3)', i.e. spaces between parameters.  
+A subroutine is invoked with =#name(param) or '=#name(p1 p2)  
+Invoking a subroutine sets the parameter variable to the corresponding expression of the invocation. This means that parameter variables have script wide scope, i.e. they are not local variables to the subroutine.
+Subroutines end with the next # or > line or break. Subroutine invocations may be nested.  
 Parameters can be numbers or strings and on type mismatch are converted  
-
+  
 If `#define USE_SCRIPT_SUB_COMMAND` is included in your `user_config_override.h`, a subroutine may be invoked via the Console or MQTT using the subroutine's name. For example, a declared subroutine `#SETLED(num)` may be invoked by typing `SETLED 1` in the Console. The parameter `1` is passed into the `num` argument. This also works with string parameters. since Tasmota capitalizes all commands you must use upper case labels.  
 
 It is possible to "replace" internal Tasmota commands. For example, if a `#POWER1(num)` subroutine is declared, the command `POWER1` is processed in the scripter instead of in the main Tasmota code.  
