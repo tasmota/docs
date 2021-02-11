@@ -534,7 +534,8 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
 `hsvrgb(h s v)` converts hue (0..360), saturation (0..100) and value (0..100) to RGB color  
 `dt` display text command (if #define USE_DISPLAY)  
 
-Subroutines and Parameters  
+**Subroutines and Parameters**  
+
 #name names a subroutine. Subroutine is called with =#name  
 #name(param) names a subroutine with a parameter.  
 Each parameter variable must be declared in the '>D' section.  
