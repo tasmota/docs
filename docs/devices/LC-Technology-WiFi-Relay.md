@@ -115,7 +115,7 @@ After these messages are sent back by Nuvoton to the ESP, the green LED beside t
 
 ## LC Technology WiFi Relay X4 with Nuvoton N76E003AT20
 
-Note: This version of the board has the Nuvoton N76E003AT20 as its host microcontroller instead of  STC15F104W. Becareful, not working with Nuvoton MS51FB9AE.
+Note: This version of the board has the Nuvoton N76E003AT20 as its host microcontroller instead of  STC15F104W. Becareful, not working with Nuvoton MS51FB9AE.  (Not sure why this 'be careful' comment is here, the following did work on LC x4 board with Nuvoton MS51FB9AE rec'd Jan 2021, and Tasmota 9.2.0  If the board LEDs are not solid red + 1 sec green blink, press button S2 when powering up board.  If buttons are pressed and solid blue is shown, it will not work.)
 Same special configuration than with X2 relay version with Nuvoton N76E003AT20.
 
 Use the following device template, configureable in `Configure Other`:
@@ -146,6 +146,9 @@ Activate the rules:
 ```
 Rule1 1
 ```
+* Open `Configure Module` and set GPIO0, GPIO2, GPIO4 and GPIO5 as Relay1, Relay2, Relay3 and Relay4. Click Save.
+* Disable SerialLog (type ``seriallog 0`` in the Tasmota console)
+
 
 ## Beware of counterfeit modules
 
