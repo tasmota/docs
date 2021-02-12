@@ -275,7 +275,7 @@ The RA8876 is connected via standard hardware 4-wire SPI `(MOSI=GPIO13, SCLK=GPI
 
 The ST7789 is connected via 4 Wire software SPI ((CS), SCLK, MOSI, DC, (RES), BL )  
 
-## Examples
+## Rule Examples, for scripting examples see scripting docs
 
 Print Text at size 1 on line 1, column 1:  
 `DisplayText [s1l1c1]Hello how are you?`
