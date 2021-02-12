@@ -17,8 +17,8 @@ USE_DISPLAY_SSD1351 | Enable color OLED SSD1351 display. Also requires `USE_SPI`
 USE_DISPLAY_RA8876  | Enable TFT RA8876 display. Also requires `USE_SPI` 
 USE_DISPLAY_SEVENSEG  | Enable 7 segment display. Also requires `USE_I2C` 
 USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI` 
-USE_DISPLAY_ILI9341_2  | Enable TFT ILI9431 display on ESP32 second SPI bus<br>(must use SSPI definition). Also requires `USE_SPI` 
-USE_DISPLAY_ILI9342  | Enable TFT ILI9432 display. Also requires `USE_SPI` 
+USE_DISPLAY_ILI9341_2  | Enable TFT ILI9341 display on ESP32 second SPI bus<br>(must use SSPI definition). Also requires `USE_SPI` 
+USE_DISPLAY_ILI9342  | Enable TFT ILI9342 display. Also requires `USE_SPI` 
 USE_DISPLAY_SD1331  | Enable TFT SD1331 display. Also requires `USE_SPI` 
 USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`  
 USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
@@ -318,6 +318,8 @@ rule1 on tele-BME280#Temperature do DisplayText [s1p21x0y0]Temp: %value% C endon
 ```
 
 ## Display Drivers
+
+All but one (ILI9341) of the pixel oriented display drivers rely on a intermediate display class called renderer. This class adds 4 additional fonts, index colors and other features like graphs and touch buttons.
 
 Waveshare has two kinds of display controllers: with partial update and without partial update. The 2.9 inch driver is for partial update and should also support other Waveshare partial update models with modified WIDTH and HEIGHT parameters. The 4.2 inch driver is a hack which makes the full update display behave like a partial update and should probably work with other full update displays.  
 
