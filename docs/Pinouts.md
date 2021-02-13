@@ -37,6 +37,9 @@
 ### PSF-B85/PSF-B01/PSF-B04
 ![PSF-B85 Pinout](_media/pinouts/PSF-B85_pinout.jpg)
 
+### ESP8266-S3
+![ESP8266-S3 Pinout](_media/pinouts/ESP-8266-S3_pinout.jpg)
+
 ## ESP32 Based
 ### ESP32-CAM
 
