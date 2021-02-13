@@ -1080,6 +1080,28 @@ Apator APOX+ behaves same as the EasyMeter while pin locked, just precision 0 wi
 #
 
 ```
+### EasyMeter Q3B
+
+Two 2-Tarif meters (e.g. from Fairenergie Reutlingen) are readout at the same time. The first one is for general purpose and is connected to GPIO14. The JSON prefix is set to "Power". The second one is for the heat pump and connected to GPIO13. The JSON prefix is set to "Pump". For both meters, tarif 1 & 2 are whole kWh (precision 0), current consumption in W has a higher precision (1).
+
+```
+>D
+>B
+=>sensor53 r
+>M 2
++1,14,s,0,9600,Power
+1,77070100010801ff@1000,Tarif 1,kWh,Power_T1,0
+1,77070100010802ff@1000,Tarif 2,kWh,Power_T2,0
+1,77070100010800ff@1000,Summe,kWh,Power_Sum,0
+1,77070100010700ff@1000,Verbrauch,W,Power_Use_Sum,1 
++2,13,s,0,9600,Pump
+2,77070100010801ff@1000,Tarif 1,kWh,HP_T1,0
+2,77070100010802ff@1000,Tarif 2,kWh,HP_T2,0
+2,77070100010800ff@1000,Summe,kWh,HP_Sum,0
+2,77070100010700ff@1000,Verbrauch,W,HP_Use_Sum,1 
+#
+
+```
 ### Apator APOX+ (additional data enabled)
 Energy provider supplied a PIN code to enable output of additional data.
 
