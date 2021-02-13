@@ -3,8 +3,6 @@
 
 !!! info "Control blinds and roller shades connected to regular ON/OFF motors or stepper motors"
 
-Only available in normal Tasmota.bin!
-
 Before starting you have to enable shutter support with `SetOption80 1`
 
 ## Commands

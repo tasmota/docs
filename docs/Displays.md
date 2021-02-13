@@ -17,8 +17,8 @@ USE_DISPLAY_SSD1351 | Enable color OLED SSD1351 display. Also requires `USE_SPI`
 USE_DISPLAY_RA8876  | Enable TFT RA8876 display. Also requires `USE_SPI` 
 USE_DISPLAY_SEVENSEG  | Enable 7 segment display. Also requires `USE_I2C` 
 USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI` 
-USE_DISPLAY_ILI9341_2  | Enable TFT ILI9431 display on ESP32 second SPI bus<br>(must use SSPI definition). Also requires `USE_SPI` 
-USE_DISPLAY_ILI9342  | Enable TFT ILI9432 display. Also requires `USE_SPI` 
+USE_DISPLAY_ILI9341_2  | Enable TFT ILI9341 display on ESP32 second SPI bus<br>(must use SSPI definition). Also requires `USE_SPI` 
+USE_DISPLAY_ILI9342  | Enable TFT ILI9342 display. Also requires `USE_SPI` 
 USE_DISPLAY_SD1331  | Enable TFT SD1331 display. Also requires `USE_SPI` 
 USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`  
 USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
@@ -86,7 +86,10 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 `i` = (re)init the display (in e-Paper mode with partial update)  
 `I` = (re)init the display (in e-Paper mode with full update)  
 `d` = update the display  
-`Dp` = switch display auto updates on(`p`=1)/off(`p`=0), when off display must be updated with `d`  
+`Dp` = switch display drawing options:  
+  bit 0: auto updates => 1 auto draw on each displaytext cmd, 0 display must be updated manually with `d`  
+  ( only valid for bw oled and epaper displays, color displays draw always immediately)  
+  bit 1: character drawing => 0 opaque character drawing, 1 transparent character drawing  
 `o` = switch display off  
 `O` = switch display on  
 `ap` =  `p` (0..3) set rotation angle  
@@ -96,7 +99,7 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 `pp` = pad text with spaces, positive values align left, negative values
 align right    
 `sp` = set text scaling for classic GFX font (scaling factor 1...N)  
-`fp` = set font (1=12, 2=24,(opt 3=8)) if font==0 the classic GFX font is used, if font==7 RA8876 internal font is used   
+`fp` = set font (1=12, 2=24,(opt 3=8)) if font==0 the classic GFX font is used, if font==7 RA8876 internal font is used, if font==4  special 7 segment 24 pixel number font is used   
 `Cp` = set foreground color (0,1) for black or white and RGB decimal code for color (see [color codes](#color-codes))  
 `Bp` = set background color (0,1) for black or white and RGB decimal code for color (see [color codes](#color-codes))   
 `Cip` = set foreground index color (0..18) for color displays (see index color table below)  
@@ -104,10 +107,12 @@ align right
 `wp` = draws an analog watch with radius p  (#define USE_AWATCH)   
 `Pfilename:` = display an rgb 16-bit color image when SD card file system is present  
 
-### Touch Buttons
-(`#define USE_TOUCH_BUTTONS`)  
+### Touch Buttons and Sliders
+(`#define USE_TOUCH_BUTTONS`)
 
-Draw up to 16 GFX buttons to switch real Tasmota devices such as relays.
+![touch elements](https://user-images.githubusercontent.com/11647075/107513682-dbb9d980-6ba8-11eb-9716-18f788f8b08d.jpg)
+
+Draw up to 16 GFX buttons to switch real Tasmota devices such as relays or draw Sliders to dimm e.g. a lamp
 
 - Button number + 256 - a virtual touch toggle button is created (MQTT => TBT)
 - Button number + 512 - a virtual touch push button is created (MQTT => PBT)
@@ -115,7 +120,7 @@ Draw up to 16 GFX buttons to switch real Tasmota devices such as relays.
 `b#:xp:yp:xa:ys:oc:fc:tc:ts:text:`   
 _Parameters are separated by colons._   
 
-* `b#` where # = button number 0-15  
+* `b#` where # = define a button number 0-15  
 * `xp` = x position  
 * `yp` = y position  
 * `xa` = x size  
@@ -123,12 +128,12 @@ _Parameters are separated by colons._
 * `oc` = outline index color  
 * `fc` = fill index color  
 * `tc` = text index color  
-* `ts` = text size  
+* `ts` = text size on buttons  
 * `text:` = button text (must end with a colon :) (max 9 chars)  
 
 !!! example "`b0:260:260:100:50:2:11:4:2:Rel 1:`"
 
-to create picture touch buttons (ESP32 only):  
+to create picture touch buttons (jpeg on ESP32 only):  
 (`#define JPEG_PICTS` and `#define USE_UFILESYS`)  
 and provide pictures on UFILESYSTEM with ending ".jpg"  
 then give the path to the picture as button text omitting the ending .jpg  
@@ -141,7 +146,22 @@ selected buttons invert the colors of the picture
 you may also specify a picture for selected and unselected button state  
 if the picture name ends with '1' this picture is used for unselected state and a picture with ending '2' is used for selected state  
 
+Sliders:
 
+* `bs#` where # = define a slider number 0-15  
+* `xp` = x position  
+* `yp` = y position  
+* `xa` = x size  
+* `ys` = y size  
+* `ne` = number of elements  
+* `bc` = background color  
+* `fc` = frame color  
+* `bc` = bar color  
+
+you may set the state of a button or slider with:  
+
+* `b#s` where # = number 0-15  
+* `val` for buttons 0 or 1, for sliders 0-100  
 
 ### Line chart
 
@@ -255,7 +275,7 @@ The RA8876 is connected via standard hardware 4-wire SPI `(MOSI=GPIO13, SCLK=GPI
 
 The ST7789 is connected via 4 Wire software SPI ((CS), SCLK, MOSI, DC, (RES), BL )  
 
-## Examples
+## Rule Examples, for scripting examples see scripting docs
 
 Print Text at size 1 on line 1, column 1:  
 `DisplayText [s1l1c1]Hello how are you?`
@@ -298,6 +318,8 @@ rule1 on tele-BME280#Temperature do DisplayText [s1p21x0y0]Temp: %value% C endon
 ```
 
 ## Display Drivers
+
+All but one (ILI9341) of the pixel oriented display drivers rely on a intermediate display class called renderer. This class adds 4 additional fonts, index colors and other features like graphs and touch buttons.
 
 Waveshare has two kinds of display controllers: with partial update and without partial update. The 2.9 inch driver is for partial update and should also support other Waveshare partial update models with modified WIDTH and HEIGHT parameters. The 4.2 inch driver is a hack which makes the full update display behave like a partial update and should probably work with other full update displays.  
 

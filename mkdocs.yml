@@ -95,10 +95,12 @@ nav:
     - Project Showcase: "https://github.com/arendst/Tasmota/discussions/categories/show-and-tell"
   - Features:
     - Introduction: Features.md
+    - Analog pin: ADC.md
     - Bluetooth.md
     - Buttons-and-Switches.md
     - DeepSleep.md
     - Device-Groups.md
+    - Displays.md
     - Dynamic-Sleep.md
     - I2C Devices: I2CDevices.md
     - IR Communication: Tasmota-IR.md
@@ -122,6 +124,7 @@ nav:
     - Zigbee.md
     - Projects and Tutorials: Tutorials.md
     - For Developers: For-Developers.md
+  - ESP32.md
   - Smart Home Integrations:
     - Introduction: Integrations.md
     - Alexa.md
@@ -142,10 +145,7 @@ nav:
     - SmartThings: "https://github.com/hongtat/tasmota-connect"
   - Peripherals:
     - Supported-Peripherals.md
-    - Analog pin: ADC.md
     - Buzzer.md
-    - Displays.md
-    - ESP32.md
     - A4988 stepper motor controller: A4988-Stepper-Motor-Controller.md
     - AHT1x.md
     - AM2301 temperature and humidity sensor: AM2301.md
@@ -169,6 +169,7 @@ nav:
     - IR-Remote.md
     - LM75AD.md
     - MCP230xx.md
+    - MFRC522.md
     - MGC3130.md
     - MH-Z19B.md
     - MLX90614.md
@@ -206,3 +207,4 @@ nav:
     - Device-Recovery.md
     - Discord Support: https://discord.gg/Ks2Kzd4 "target=_blank"
   - Builds.md
+

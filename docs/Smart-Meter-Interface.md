@@ -141,6 +141,8 @@ in `user_config_override.h` file). An entry defines how to decode the data and p
     - `ffffffff` = extract a float value  
     - `FFffFFff` = extract a reverse float value  
     - `@` decoding definition termination character  
+    - `(` following the `@` character in case of obis decoder indicates to fetch the 2. value in brackets, not the 1. value.  
+	e.g. in this obis paylod the second value is extracted 0-1:24.2.3(210117125004W)(01524.450*m3)  
     - decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte.   
       e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`  
     - in the case of **MODBus**, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition  
@@ -381,7 +383,7 @@ Your Tasmota SML `script`:
 
 ------------------------------------------------------------------------------
 
-### Hager EHZ363 (SML)
+### Hager EHZ363 (SML) & Apator Norax 3D
 
 ```
 >D  
@@ -1062,10 +1064,10 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
 
 ```
 
-### EasyMeter Q3A
+### EasyMeter Q3A / Apator APOX+ (additional data disabled / PIN locked)
 
 A 2-Tarif Meter which for Example SWM (Stadtwerke München) uses. Unfortunately this Version sends only whole kWh (precision 0).
-
+Apator APOX+ behaves same as the EasyMeter while pin locked, just precision 0 without additional data. After calling the energy provider they send a letter with the unlock pin. 
 ```
 >D
 >B
@@ -1100,4 +1102,30 @@ Two 2-Tarif meters (e.g. from Fairenergie Reutlingen) are readout at the same ti
 #
 
 ```
+### Apator APOX+ (additional data enabled)
+Energy provider supplied a PIN code to enable output of additional data.
+
+```
+>D  
+
+>B  
+->sensor53 r
+
+>M 1  
++1,3,s,0,9600,SML
+1,77070100010801ff@1000,Verbrauch_Tarif_1,kWh,Total_Tarif1,3
+1,77070100010802ff@1000,Verbrauch_Tarif_2,kWh,Total_Tarif2,3
+1,77070100010800ff@1000,Verbrauch_Summe,kWh,Total_Summe,3
+1,77070100100700ff@1,Current consumption,W,Power_curr,3
+1,=h -------------------------------  
+1,770701001f0700ff@1,Current L1,A,Curr_p1,3  
+1,77070100330700ff@1,Current L2,A,Curr_p2,3  
+1,77070100470700ff@1,Current L3,A,Curr_p3,3  
+1,=h -------------------------------  
+1,77070100200700ff@1,Voltage L1,V,Volt_p1,3 
+1,77070100340700ff@1,Voltage L2,V,Volt_p2,3  
+1,77070100480700ff@1,Voltage L3,V,Volt_p3,3
+#
+```
+
 ------------------------------------------------------------------------------

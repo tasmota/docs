@@ -79,7 +79,7 @@ Use the following device template, configureable in `Configure Other`:
 Add the following rules:
 
 ```
-on System#Boot do Backlog Baudrate 115200
+on System#Boot do Backlog Baudrate 115200 endon
 on SerialReceived#Data=41542B5253540D0A do SerialSend5 5749464920434f4e4e45435445440a5749464920474f542049500a41542b4349504d55583d310a41542b4349505345525645523d312c383038300a41542b43495053544f3d333630 endon
 on Power1#State=1 do SerialSend5 A00101A2 endon
 on Power1#State=0 do SerialSend5 A00100A1 endon
@@ -115,7 +115,7 @@ After these messages are sent back by Nuvoton to the ESP, the green LED beside t
 
 ## LC Technology WiFi Relay X4 with Nuvoton N76E003AT20
 
-Note: This version of the board has the Nuvoton N76E003AT20 as its host microcontroller instead of  STC15F104W. Becareful, not working with Nuvoton MS51FB9AE.
+Note: This version of the board has the Nuvoton N76E003AT20 as its host microcontroller instead of  STC15F104W. Becareful, not working with Nuvoton MS51FB9AE.  (Not sure why this 'be careful' comment is here, the following did work on LC x4 board with Nuvoton MS51FB9AE rec'd Jan 2021, and Tasmota 9.2.0  If the board LEDs are not solid red + 1 sec green blink, press button S2 when powering up board.  If buttons are pressed and solid blue is shown, it will not work.)
 Same special configuration than with X2 relay version with Nuvoton N76E003AT20.
 
 Use the following device template, configureable in `Configure Other`:
@@ -128,7 +128,7 @@ Add the following rules:
 
 ```
 Rule1
-on System#Boot do Backlog Baudrate 115200
+on System#Boot do Backlog Baudrate 115200 endon
 on SerialReceived#Data=41542B5253540D0A do SerialSend5 5749464920434f4e4e45435445440a5749464920474f542049500a41542b4349504d55583d310a41542b4349505345525645523d312c383038300a41542b43495053544f3d333630 endon
 on Power1#State=1 do SerialSend5 A00101A2 endon
 on Power1#State=0 do SerialSend5 A00100A1 endon
@@ -146,6 +146,9 @@ Activate the rules:
 ```
 Rule1 1
 ```
+* Open `Configure Module` and set GPIO0, GPIO2, GPIO4 and GPIO5 as Relay1, Relay2, Relay3 and Relay4. Click Save.
+* Disable SerialLog (type ``seriallog 0`` in the Tasmota console)
+
 
 ## Beware of counterfeit modules
 

@@ -33,8 +33,7 @@ The onboard connector is 1.27mm raster with 1mm diameter holes. Normal Dupont ca
 <img src="https://user-images.githubusercontent.com/188284/63646333-3dfef000-c711-11e9-9446-82ea0ce88c95.png" height="250" />
 
 Otherwise you could simply buy an adapter that converts Dupont to 1.27mm raster at
-* [tindie](https://www.tindie.com/products/21512/) or
-* [amazon](https://www.amazon.de/shelly-2-5-Adpter/dp/B07TS2KPW7/ref=sr_1_30?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&dchild=1&keywords=shelly&qid=1608802224&sr=8-30)
+[tindie](https://www.tindie.com/products/21512/)
 
 ## Template
 Tasmota 6.5.0.8 and higher supports Shelly 2.5  

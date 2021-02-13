@@ -122,7 +122,13 @@ if the script init fails an error code is reported:
 -5 = variable name length too long in total  
 -7 = not enough memory  
 
-you may increase the number of allowed variables with defines in user_config_override
+you may increase the number of allowed variables with defines in user_config_override  
+defaults and override defines:  
+Numer of total variables = 50  (#define MAXVARS)  
+Numer of string variables = 5  (#define MAXSVARS)  
+Number of filters (arrays) = 5 (#define MAXFILT)  
+Max string size            = 20 (override with >D size up to 48)  
+
 
 
 #### Optional external editor
@@ -396,8 +402,6 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `pin[x]` = GPIO pin level (x = 0..16)  
 `pn[x]` = GPIO for sensor code x. 99 if none  
 `pd[x]` = defined sensor for GPIO x. 999 if none  
-`pl[path]` = plays the mp3 path (ESP32 and if I2S Device defined)  
-`say[svar]` = text to speach (if I2S Device defined)  
 `adc(fac (pin))` = get adc value (on ESP32 can select pin) fac is number of averaged samples (power of 2: 0..7) 
 `sht[x]` = shutter position (x = 1..N) (if defined USE_SHUTTER)  
 `gtmp` = global temperature  
@@ -430,7 +434,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `wdclk` = double tapped on display (if defined USE_TTGO_WATCH)  
 `wtch(sel)` = gets state from touch panel sel=0 => touched, sel=1 => x position, sel=2 => y position (if defined USE_TTGO_WATCH)  
 `slp(time)` = sleep time in seconds, pos values => light sleep, neg values => deep sleep (if defined USE_TTGO_WATCH)  
-`play(path)` = play mp3 audio from filesystem (if defined USE_I2S_AUDIO or USE_TTGO_WATCH or USE_M5STACK_CORE2)  
+`pl("path")` = play mp3 audio from filesystem (if defined USE_I2S_AUDIO or USE_TTGO_WATCH or USE_M5STACK_CORE2)  
 `say("text")` = plays specified text to speech (if defined USE_I2S_AUDIO or USE_TTGO_WATCH or USE_M5STACK_CORE2)   
 `c2ps(sel val)` = gets, sets values on ESP32 CORE2 sel=0 green led, sel=1 vibration motor, sel=2,3,4 get touch button state 1,2,3 (if defined USE_M5STACK_CORE2)  
 `rec(path seconds)` = rec n seconds wav audio file from i2s microphone to filesystem path (if defined USE_I2S_AUDIO or USE_M5STACK_CORE2)  
@@ -447,6 +451,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
 `enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
 `gjp("host" "path")` = trigger HTTPS JSON page read as used by Tesla Powerwall (if defined SCRIPT_GET_HTTPS_JP)  
+`gwr("del" index)` = gets non JSON element from webresponse del = delimiter char or string, index = n´th element (if defined USE_WEBSEND_RESPONSE)  
+`http("url" "payload")` = does a GET or POST request on an URL (http:// is internally added)  
 `tsN(ms)` = set up to 4 timers (N=1..4) to millisecond time on expiration triggers section >tiN  (if defined USE_SCRIPT_TIMER)  
 `hours` = hours  
 `mins` = mins  
@@ -528,12 +534,17 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
 `hsvrgb(h s v)` converts hue (0..360), saturation (0..100) and value (0..100) to RGB color  
 `dt` display text command (if #define USE_DISPLAY)  
 
-`#name` names a subroutine. Subroutine is called with `=#name`  
-`#name(param)` names a subroutine with a parameter. Subroutine is called with `=#name(param)`,only one parameter is supported  
-parameter variables must be declared in >D (no support for local variables)  
-Subroutines end with the next `#` or `>` line or break. Subroutines may be nested  
-Parameters can be numbers or strings and on type mismatch are converted  
+**Subroutines and Parameters**  
 
+#name names a subroutine. Subroutine is called with =#name  
+#name(param) names a subroutine with a parameter.  
+Each parameter variable must be declared in the '>D' section.  
+A subroutine with multiple parameters is declared as '#name(p1 p2 p3)', i.e. spaces between parameters.  
+A subroutine is invoked with =#name(param) or '=#name(p1 p2)  
+Invoking a subroutine sets the parameter variable to the corresponding expression of the invocation. This means that parameter variables have script wide scope, i.e. they are not local variables to the subroutine.
+Subroutines end with the next # or > line or break. Subroutine invocations may be nested.  
+Parameters can be numbers or strings and on type mismatch are converted  
+  
 If `#define USE_SCRIPT_SUB_COMMAND` is included in your `user_config_override.h`, a subroutine may be invoked via the Console or MQTT using the subroutine's name. For example, a declared subroutine `#SETLED(num)` may be invoked by typing `SETLED 1` in the Console. The parameter `1` is passed into the `num` argument. This also works with string parameters. since Tasmota capitalizes all commands you must use upper case labels.  
 
 It is possible to "replace" internal Tasmota commands. For example, if a `#POWER1(num)` subroutine is declared, the command `POWER1` is processed in the scripter instead of in the main Tasmota code.  
@@ -2145,3 +2156,92 @@ start dim level = initial dimmer level after power-up or restart; max 100
     =>SerialSend5 %dim%
     =>Dimmer %tmp%
     #
+
+### Multiplexing a single adc with CD4067 breakout
+
+    >D
+    ; this script works with an CD4067 breakout to multiplex a single ADC channel
+    ; of an ESP
+    IP=192.168.178.177
+    SB=8192
+    res=0
+    cnt=0
+    mcnt=0
+    m:mux=0 16
+    
+    >B
+    ; define output pins for multiplexer
+    spinm(12 O)
+    spinm(13 O)
+    spinm(14 O)
+    spinm(15 O)
+    ; define string array with 16 entries
+    res=is1(16 "")
+    is1[1]="Azalea"
+    is1[2]="Aster"
+    is1[3]="Bougainvillea"
+    is1[4]="Camellia"
+    is1[5]="Carnation"
+    is1[6]="Chrysanthemum"
+    is1[7]="Clematis"
+    is1[8]="Daffodil"
+    is1[9]="Dahlia"
+    is1[10]="Daisy"
+    is1[11]="Edelweiss"
+    is1[12]="Fuchsia"
+    is1[13]="Gladiolus"
+    is1[14]="Iris"
+    is1[15]="Lily"
+    is1[16]="Periwinkle"
+    
+    >F
+    ; get adc value into array, average 4 values
+    ; this is for ESP32 here on pin 32
+    mux[mcnt+1]=adc(4 32)
+    ; this is for ESP8266 it has only 1 ADC input
+    ; mux[mcnt+1]=adc(4)
+    mcnt+=1
+    if mcnt>=16
+    then
+    mcnt=0
+    endif
+    ; set multiplexer
+    spin(12 mcnt)
+    spin(13 mcnt/2)
+    spin(14 mcnt/4)
+    spin(15 mcnt/8)
+    
+    ; display web UI
+    #wsub
+    if wm==0
+    then
+    for cnt 1 16 1
+    wcs  {s}Ch %0cnt%: %is1[cnt]%{m}%mux[cnt]% %%{e}
+    next
+    endif
+    
+    >J
+    ; send to mqtt
+    ,"CD4067":{
+    "%is1[1]%":%mux[1]%,
+    "%is1[2]%":%mux[2]%,
+    "%is1[3]%":%mux[3]%,
+    "%is1[4]%":%mux[4]%,
+    "%is1[5]%":%mux[5]%,
+    "%is1[6]%":%mux[6]%,
+    "%is1[7]%":%mux[7]%,
+    "%is1[8]%":%mux[8]%,
+    "%is1[9]%":%mux[9]%,
+    "%is1[10]%":%mux[10]%,
+    "%is1[11]%":%mux[11]%,
+    "%is1[12]%":%mux[12]%,
+    "%is1[13]%":%mux[13]%,
+    "%is1[14]%":%mux[14]%,
+    "%is1[15]%":%mux[15]%,
+    "%is1[16]%":%mux[16]%
+    }
+    
+    >W
+    ; call web subroutine
+    %=#wsub
+

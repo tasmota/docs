@@ -172,12 +172,12 @@ To ignore default button behaviour of controlling power outputs you can:
 3. define a rule which triggers on `Button<x>#State`. Take note: If the rule trigger only certain states, default behaviour is supressed only for those states.
 
 
-!!! example "Make Button1 publish its value to `cmnd/custom-topic/BUTTON` and not control Power1"
+!!! example "Make Button1 publish its value to `stat/custom-topic/BUTTON` and not control Power1"
 ```haskell
 Backlog ButtonTopic 0
 ```
 ```haskell
-Rule1 on Button1#state do Publish cmnd/custom-topic/BUTTON %value% endon
+Rule1 on Button1#state do Publish stat/custom-topic/BUTTON %value% endon
 Rule1 1
 ```
 
@@ -313,12 +313,12 @@ Use rules to send messages to different MQTT topics or send commands to other Ta
 To ignore the default behaviour define a rule which triggers on `Switch<x>` for all state changes or on `Switch<x>#State` for specific state changes. If a rule matches only certain states, default switch behaviour is suppressed only for those states.
 
 !!! example
-     Make Switch1 publish any value change to `cmnd/custom-topic/SWITCH1` and not control Power1
+     Make Switch1 publish any value change to `stat/custom-topic/SWITCH1` and not control Power1
 ```haskell
 Backlog SwitchMode 1; SwitchTopic 0
 ```
 ```haskell
-Backlog Rule1 on Switch1#state do Publish cmnd/%topic%/SWITCH1 %value% endon; Rule1 1
+Backlog Rule1 on Switch1#state do Publish stat/custom-topic/SWITCH1 %value% endon; Rule1 1
 ```
 
 ### SwitchTopic

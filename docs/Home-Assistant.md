@@ -41,7 +41,7 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmot
 - Devices configured as iFan02 or iFan03 as fan entities. Tuya fans are not supported.
 - Each discovered device will by default add 8 disabled sensors. Enable the ones you need. You cannot delete them, they will simply be re-added on a restart.
 
-Types of devices not listed above still require [manual configuration](##editing-configurationyaml)
+Types of devices not listed above still require [manual configuration](#editing-configurationyaml)
 
 
 !!! warning "Zigbee devices paired in Tasmota will **NOT** be discovered in Home Assistant"
@@ -59,6 +59,17 @@ You cannot as long as Home Assistant support is enabled in your Tasmota binary. 
 Deleting them from Home Assistant while Tasmota device is still active will simply rediscover all the entities. 
 
 If you opt to switch to MQTT Discovery, issuing `SetOption19 1` command will remove all Tasmota (beta) entities and add new entities under the MQTT integration.
+
+### Supplemental Custom Discovery Message
+
+You can use [MQTT Discovery](https://www.home-assistant.io/docs/mqtt/discovery/) in HA to add sensors and other entities that are not covered with Tasmota integration and associate them with an already discovered device.
+
+When creating the MQTT discovery JSON add this device identifier `,"device":{"connections":[["mac","%macaddr%"]]}` where %macaddr% is the mac address of the device without `:`. When used in a rule variable `%macaddr%` will be replaced automatically.
+
+Examples of custom discovery:
+
+- [PIR sensor](https://blakadder.com/tasmota-tags/)
+- [RFID Tag](https://blakadder.com/pir-in-tasmota-integration/)
 
 ## Editing configuration.yaml
 
@@ -1207,7 +1218,7 @@ You can further customise your device in Home Assistant by clicking on the entit
     **When a switch is set to a different topic than `0` is not possible to use `Switch#State` as a trigger for rules.**
 
 
-Types of devices not listed above (covers, etc) require [manual configuration](#configuration.yaml-editing)
+Types of devices not listed above (covers, etc) require [manual configuration](#editing-configurationyaml)
 
 ### Disabling
 
