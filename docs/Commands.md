@@ -686,7 +686,7 @@ Ethernet<a class="cmnd" id="ethernet"></a>|*Currently only for Olimex ESP32-PoE 
 EthAddress<a class="cmnd" id="ethaddress"></a>|Set ethernet address. *Currently only for Olimex ESP32-PoE board*<BR>`0..31` = PHYxx address
 EthClockMode<a class="cmnd" id="ethclockmode"></a>|Ethernet clock mode. *Currently only for Olimex ESP32-PoE board*<BR>`0` = ETH_CLOCK_GPIO0_IN *(default)*<BR>`1` = ETH_CLOCK_GPIO0_OUT <BR>`2` = ETH_CLOCK_GPIO16_OUT<BR>`3` = ETH_CLOCK_GPIO17_OUT
 EthType<a class="cmnd" id="ethtype"></a>|Ethernet type. *Currently only for Olimex ESP32-PoE board<BR>`0` = ETH_PHY_LAN8720 *(default)*<BR>`1` = ETH_PHY_TLK110 <BR>`2` = ETH_PHY_IP101
-Wi-Fi<a class="cmnd" id="wi-fi"></a>|*Currently only for Olimex ESP32-PoE board*<BR>`0` = disable Wi-Fi<BR>`1` = enable Wi-Fi _(default)_
+WiFi<a class="cmnd" id="wi-fi"></a>|*Currently only for Olimex ESP32-PoE board*<BR>`0` = disable Wi-Fi<BR>`1` = enable Wi-Fi _(default)_
 
 ### Thermostat 
 
