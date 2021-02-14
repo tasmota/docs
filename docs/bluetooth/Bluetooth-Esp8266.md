@@ -1,57 +1,42 @@
-The Bluetooth section of Tasmota currently consists of 2 driver classes, which, not least due to hardware restrictions, cannot be used together.  
-On the one hand there is support for the use of "iBeacons" on some modules of the HM-1x family and on ESP32 internal Bluetooth.  
-The second part consists of 3 drivers that can read the data from BLE sensors from the relatively diverse Xiaomi universe. These drivers offer very basic beacon functionality too.  
-  
-  
-!!! info "Presence detection with iBeacons or BLE sensor gateway using HM-1x or nRF24L01(+) peripherals"
+Bluetooth Low Energy in Tasmota on Esp8266 consists of:
+
+## ESP8266 via HM-1x or nRF24L01(+)
+This allows for the receiving of BLE advertisments from BLE devices, including "iBeacons"
 
 ## iBeacon  
 
 !!! info "This feature is included only in tasmota-sensors.bin"
-Otherwise you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+Otherwise you must [compile your build](../Compile-your-build). Add the following to `user_config_override.h`:
 
-```
-#ifndef USE_IBEACON
-#define USE_IBEACON          // Add support for bluetooth LE passive scan of ibeacon devices 
-#endif
-```
-----
+### For ESP8266 via HM-1x or nRF24L01(+)
   
-Tasmota uses a BLE 4.x module to scan for [iBeacon](https://en.wikipedia.org/wiki/IBeacon) devices. This driver is working with [HM-10 and clones](HM-10) and [HM16/HM17](HM-17) Bluetooth modules and potentially with other HM-1x modules depending on firmware capabilities.
+Tasmota uses a BLE 4.x module to scan for [iBeacon](https://en.wikipedia.org/wiki/IBeacon) devices. This driver is working with [HM-10 and clones](../HM-10) and [HM16/HM17](../HM-17) Bluetooth modules and potentially with other HM-1x modules depending on firmware capabilities.
 
-### Using ESP32 built-in Bluetooth
-
-You must [compile your build](Compile-your-build) for the ESP32 (since v9.1). Change the following to `user_config_override.h`:
-
-```
-#ifdef ESP32
-  #define USE_IBEACON_ESP32    // Use internal ESP32 Bluetooth module
-#endif // ESP32
-```
+!!! tip
+    If using an extenral module, When first connected some modules will be in peripheral mode. You have to change it to central mode using commands `Sensor52 1` and `Sensor52 2`.
 
 ### Features
-For a list of all available commands see [Sensor52](Commands.md#sensor52) command.  
+For a list of all available commands see [Sensor52](../Commands.md#sensor52) command.  
 
 This driver reports all beacons found during a scan with its ID (derived from beacon's MAC address) prefixed with `IBEACON_` and RSSI value.
 
 Every beacon report is published as an MQTT tele/%topic%/SENSOR in a separate message:
 
 ```json
-tele/ibeacon/SENSOR = {"Time":"2020-03-24T20:09:40","IBEACON_FF34C21G2174":{"RSSI":-81}}
-tele/ibeacon/SENSOR = {"Time":"2020-03-24T20:09:42","IBEACON_DEAABC788BC1":{"RSSI":-60}}
+tele/ibeacon/SENSOR = {"Time":"2021-01-02T12:08:40","IBEACON":{"MAC":"A4C1387FC1E1","RSSI":-56,"STATE":"ON"}}
 ```
 
 If the beacon can no longer be found during a scan and the timeout interval has passed the beacon's RSSI is set to zero (0) and it is no longer displayed in the webUI
 
 ```json
-tele/ibeacon/SENSOR = {"Time":"2020-03-24T20:05:00","IBEACON_DEAABC788BC1":{"RSSI":-0}}
+tele/ibeacon/SENSOR = {"Time":"2021-01-02T12:08:40","IBEACON":{"MAC":"A4C1387FC1E1","RSSI":-56,"STATE":"OFF"}}
 ```
 
-!!! tip
-    When first connected some modules will be in peripheral mode. You have to change it to central mode using commands `Sensor52 1` and `Sensor52 2`.
+Additional fields will be present depending upon the beacon, e.g. NAME, UID, MAJOR, MINOR.
+
 
 ### Supported Devices
-<img src="../_media/bluetooth/nRF51822.png" width=155 align="right">
+<img src="../../_media/bluetooth/nRF51822.png" width=155 align="right">
 
 All Apple compatible iBeacon devices should be discoverable. 
 
@@ -67,15 +52,14 @@ Cheap "iTag" beacons with a beeper. The battery on these lasts only about a mont
 - [eBay](https://www.ebay.de/sch/i.html?_from=R40&_trksid=m570.l1313&_nkw=Smart-Tag-GPS-Tracker-Bluetooth-Anti-verlorene-Alarm-Key-Finder-Haustier-Kind&_sacat=0)
 - [Amazon.com](https://www.amazon.com/s?k=itag+tracker+4.0)
 
-<img src="../_media/bluetooth/itag.png" width=225><img src="../_media/bluetooth/itag2.png" width=225><img src="../_media/bluetooth/itag3.png" width=225>
+<img src="../../_media/bluetooth/itag.png" width=225><img src="../../_media/bluetooth/itag2.png" width=225><img src="../../_media/bluetooth/itag3.png" width=225>
 
 !!! tip
-    You can activate a beacon with a beeper using command `IBEACON_%BEACONID%_RSSI 99` (ID is visible in webUI and SENSOR reports). This command can freeze the Bluetooth module and beacon scanning will stop. After a reboot of Tasmota the beacon will start beeping and scanning will resume.
+    You can activate a beacon with a beeper using command `IBEACON_%BEACONID%_RSSI 99` (ID is visible in webUI and SENSOR reports). This command can freeze the Bluetooth module and beacon scanning will stop. After a reboot of Tasmota the beacon will start beeping and scanning will resume. (untested on ESP32 native BLE)
   
   
   
-  
-## Tasmota and BLE-sensors
+## Bluetooth Low Energy Sensors
 
 Different vendors offer Bluetooth solutions as part of the XIAOMI family often under the MIJIA-brand (while AQUARA is the typical name for a ZigBee sensor).  
 The sensors supported by Tasmota use BLE (Bluetooth Low Energy) to transmit the sensor data, but they differ in their accessibilities quite substantially.  
@@ -104,10 +88,10 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <th class="th-lboi">CGD1</th>
   </tr>
   <tr>
-    <td class="tg-lboi"><img src="../_media/bluetooth/mj_ht_v1.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/LYWDS02.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/CGG1.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/CGD1.png" width=200></td>
+    <td class="tg-lboi"><img src="../../_media/bluetooth/mj_ht_v1.png" width=200></td>
+    <td class="tg-lboi"><img src="../../_media/bluetooth/LYWDS02.png" width=200></td>
+    <td class="tg-lboi"><img src="../../_media/bluetooth/CGG1.png" width=200></td>
+    <td class="tg-lboi"><img src="../../_media/bluetooth/CGD1.png" width=200></td>
   </tr>
   <tr>
     <td class="tg-lboi">temperature, humidity, battery</td>
@@ -131,10 +115,10 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <th class="th-lboi">MJYD2S</th>
   </tr>
   <tr>
-    <td class="tg-lboi"><img src="../_media/bluetooth/miflora.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/LYWSD03MMC.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/nlight.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.png" width=200></td>
+    <td class="tg-lboi"><img src="../../_media/bluetooth/miflora.png" width=200></td>
+    <td class="tg-lboi"><img src="../../_media/bluetooth/LYWSD03MMC.png" width=200></td>
+    <td class="tg-lboi"><img src="../../_media/bluetooth/nlight.png" width=200></td>
+    <td class="tg-lboi"><img src="../../_media/bluetooth/mjyd2s.png" width=200></td>
   </tr>
   <tr>
     <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility, battery, firmware version</td>
@@ -157,9 +141,9 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <th class="th-lboi">MHO-C303</th>
   </tr>
   <tr>
-    <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/MHO-C401.png" width=200></td>
-    <td class="tg-lboi"><img src="../_media/bluetooth/MHO-C303.png" width=200></td>
+    <td class="tg-lboi"><img src="../../_media/bluetooth/yeerc.png" width=200></td>
+    <td class="tg-lboi"><img src="../../_media/bluetooth/MHO-C401.png" width=200></td>
+    <td class="tg-lboi"><img src="../../_media/bluetooth/MHO-C303.png" width=200></td>
   </tr>
   <tr>
     <td class="tg-lboi">button press (single and long)</td>
@@ -177,16 +161,19 @@ active: data is received via bidrectional connection to the sensor
   
 #### Devices with payload encryption  
   
-The LYWSD03MMC, MHO-C401 and the MJYD2S will start to send advertisements with encrypted sensor data after pairing it with the official Xiaomi app. Out-of-the-box the sensors do only publish a static advertisement.  
-It is possible to do a pairing and get the necessary decryption key ("bind_key") here: https://atc1441.github.io/TelinkFlasher.html  
+The LYWSD03MMC, MHO-C401 and the MJYD2S will start to send advertisements with encrypted sensor data after pairing it with the official Xiaomi app (using TelinkFlasher to get the key also acts as a trigger to start sending?). Out-of-the-box the sensors do only publish a static advertisement.  
+It is possible to do a pairing and get the necessary decryption key ("bind_key") here: https://atc1441.github.io/TelinkFlasher.html - note you do not have to flash the ATC firmware! 
 This project also provides a custom firmware for the LYWSD03MMC, which then becomes an ATC and is supported by Tasmota too. Default ATC-setting will drain the battery more than stock firmware, because of very frequent data sending.  
+
+For NRF based BLE:
 This key and the corresponding MAC of the sensor can be injected with the NRFKEY-command (or NRFMJYD2S). It is probably a good idea to save the whole config as RULE like that:  
   
 ```haskell
 rule1 on System#Boot do backlog NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFPage 6; NRFUse 0; NRFUse 4 endon
 ```  
 (key for two sensors, 6 sensors per page in the WebUI, turn off all sensors, turn on LYWS03)  
-  
+
+
 LYWSD03MMC sends encrypted sensor data every 10 minutes. As there are no confirmed reports about correct battery presentation of the sensor (always shows 99%), this function is currently not supported.  
 MJYD2S sends motion detection events and 2 discrete illuminance levels (1 lux or 100 lux for a dark or bright environment). Additionally battery level and contiguous time without motion in discrete growing steps (no motion time = NMT).    
  
@@ -197,7 +184,8 @@ The idea is to provide drivers with as many automatic functions as possible. Bes
 The sensor namings are based on the original sensor names and shortened if appropriate (Flower care -> Flora). A part of the MAC will be added to the name as a suffix.  
 All sensors are treated as if they are physically connected to the ESP8266 device. For motion and remote control sensors MQTT-messages will be published in (nearly) real time.
 The ESP32 and the HM-1x-modules are real BLE devices whereas the NRF24L01 (+) is only a generic 2.4 GHz transceiver with very limited capabilities.  
-  
+
+
 ##### Options to read out the LYWSD03MMC  
   
 1. Generate a bind_key  
@@ -207,18 +195,20 @@ The current way of storing these keys on the ESP32 is to use RULES like that (fo
 rule1 on System#Boot do backlog MI32key 00112233445566778899AABBCCDDEEFF112233445566; MI32key 00112233445566778899AABBCCDDEEFFAABBCCDDEEFF endon
 ```  
 This option is currently not available for the HM-10 because of memory considerations as part of the standard sensor-firmware package.  
-  
+
 2. Flash custom ATC-firmware  
 Use the same https://atc1441.github.io/TelinkFlasher.html to flash a custom ATC-firmware on the LYWSD03MMC. This will work out of the box with all three Tasmota-drivers. There is a slight chance of bricking the sensor, which would require some soldering and compiling skills to un-brick. This firmware does send data more frequently and is a little bit more power hungry than the stock firmware.  
+There is also another new custom firmware here https://github.com/pvvx/ATC_MiThermometer with it's own flasher/config page.
+The Custom mode is supported in latest Tasmota ESP32, but beware not to use 'All' mode.
   
 3. Use active connections  
-By default on the HM-10 (for legacy reasons) and at compile-time selectable on the ESP32 is the method to connect to the sensor from time to time. This circumvents the data encryption. This is very power hungry and drains the battery fast. Thus it is only recommended as fallback mechanism.
+By default on the HM-10 (for legacy reasons) the method to connect to the sensor from time to time. This circumvents the data encryption. This is very power hungry and drains the battery fast. Thus it is only recommended as fallback mechanism.
 
   
 ## BLE Sensors using HM-1x
 
 !!! info "This feature is included only in tasmota-sensors.bin"
-Otherwise you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+Otherwise you must [compile your build](../Compile-your-build). Add the following to `user_config_override.h`:
 
 ```
 #ifndef USE_HM10
@@ -257,7 +247,7 @@ HM10Beaconx <a id="HM10beacon"></a>| Set a BLE device as a beacon using the (fix
 
 ### Configuration
   
-You must [compile your build](Compile-your-build). Change the following in `my_user_config.h`:
+You must [compile your build](../Compile-your-build). Change the following in `my_user_config.h`:
 
 ```
 // -- SPI sensors ---------------------------------
@@ -303,55 +293,4 @@ A simplified presence dection will scan for regular BLE advertisements of a give
 If the driver receives a packet from the "beacon" a counter will be (re-)started with an increment every second. This timer is published in the TELE-message, presented in the webUI and processed as a RULE.
 The stability of regular readings will be strongly influenced by the local environment (many BLE-devices nearby or general noise in the 2.4-GHz-band). 
 
-## BLE Sensors on ESP32 using built-in Bluetooth
-
-Since Tasmota v9.1.0.1 this driver is part of the standard build 'tasmota32'. It must be enabled at runtime via `setoption115 1`. 
   
-To turn on/off support for decyrption, change the following in the driver code:  
-
-```haskell
-#define USE_MI_DECRYPTION
-```  
-Without encryption support the driver will read data from found LYWSD03MMC via connection. This will increase power consumption of the sensor, but no "bind_key" is needed.  
-
-The driver will start to scan for known sensors automatically using a hybrid approach, when encryption support is deactivated. In the first place MiBeacons are passively received and only found LYWSD03MMC- and MHO-C401-sensors will be connected at the given period to read data in order to be as energy efficient as possible.
-Battery data is in general of questionable value for the LYWSD0x, CGD1, MHO-C401 and (maybe) Flora (some are even hard coded on the device to 99%). That's why only MJ_HT_V1, CGG1 (untested) and LYWSD03 (calculated battery level) will automatically update battery data. The other battery levels can be read by command. 
-The internally very similiar LYWS03MMC and MHO-C401 behave very confusing in delivering battery status. Both report (fixed) 99% or 100% via encrypted payload or connected reading of the battery characteristic. But they can deliver a correct battery voltage in their payload of the temperature and humidity data, which will be mapped to a percentage level by the driver.  
-  
-#### Commands
-
-Command|Parameters
-:---|:---
-MI32Period<a id="mi32period"></a>|Show interval in seconds between sensor read cycles for the LYWSD03. Set to TelePeriod value at boot.<BR>|`<value>` = set interval in seconds
-MI32Time <a id="mi32time"></a>|`<n>` = set time time of a **LYWSD02 only** sensor to Tasmota UTC time and timezone. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).
-MI32Unit <a id="mi32unit"></a>|`<n>` = toggle the displayed temperature units of a **LYWSD02 only** sensor. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).  Reporting of the temperature is always in Celcius, this only changes the value shown on the device.
-MI32Page<a id="mi32page"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
-MI32Battery<a id="mi32battery"></a>|Reads missing battery data for LYWSD02, Flora and CGD1.
-MI32Key<a id="mi32key"></a>| Set a "bind_key" for a MAC-address to decrypt sensor data (LYWSD03MMC, MJYD2S). The argument is a 44 uppercase characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string
-MI32Beaconx <a id="mi32beacon"></a>| Set a BLE device as a beacon using the (fixed) MAC-address<BR>x - set beacon 1 .. 4 <BR> x=0 - will start a BLE scan and send result via TELE-message <BR>`<value>` (12 or 17 characters) = use beacon given the MAC interpreted as a string `AABBCCDDEEFF` (also valid: `aa:BB:cc:dd:EE:FF`)  MAC of `00:00:00:00:00:00` will stop beacon x
-MI32Blockx <a id="mi32block"></a>| Ignore Xiaomi sensors using the (fixed) MAC-address<BR>x=1 - show block list<BR>x=0 - delete block list<BR> x=1 + MAC-address - add MAC to to be blocked to the block list<BR>x=0 + MAC-address - remove MAC to to be blocked to the block list<BR>`<value>` (12 or 17 characters) = MAC interpreted as a string `AABBCCDDEEFF` (also valid: `aa:BB:cc:dd:EE:FF`)
-MI32Optionx 0/1<a id="mi32option"></a>| Set driver options at runtime<BR> x=0 - 0 -> sends only recently received sensor data, 1 -> aggregates all recent sensors data types<BR>x=1 - 0 -> shows full sensor data at TELEPERIOD, 1 -> shows no sensor data at TELEPERIOD<BR>x=2 - 0 -> sensor data only at TELEPERIOD (default and "usual" Tasmota style), 1 -> direct bridging of BLE-data to mqtt-messages
-  
-!!! tip 
-If you really want to read battery for LYWSD02, Flora and CGD1, consider doing it once a day with a RULE:
-`RULE1 on Time#Minute=30 do MI32Battery endon`
-This will update every day at 00:30 AM.  
-  
-   
-### Beacon  
-  
-A count-up-timer starts for every beacon a  with every received advertisement, starting with 0.  
-  
-TELE-output:  
-`"Beacon1":{"MAC":"11:22:33:44:55:66","CID":"0x0000","SVC":"0x0000","UUID":"0x0000","Time":4,"RSSI":0}}`  
-  
-RULE-example:  
-`on Beacon2#time==30 do SOMETHING endon` - is triggered 30 seconds after last packet was received  
-`on system#boot do MI32Beacon2 AABBCCDDEEFF endon` - save configuration for beacon 2 
-  
-  
-(following AD type, read here: https://www.bluetooth.com/specifications/assigned-numbers/generic-access-profile/)  
-CID - company identifier  
-SVC - service data  
-UUID - service or class UUID  
-

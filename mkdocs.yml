@@ -14,7 +14,7 @@ plugins:
   - alternate-link
   - minify:
       minify_html: true
-  # - htmlproofer
+# - htmlproofer
 
 strict: true
 
@@ -77,7 +77,8 @@ nav:
   - WebUI.md
   - Features:
     - Introduction: Features.md
-    - Bluetooth.md
+    - Bluetooth ESP32: bluetooth/Bluetooth-Esp32.md
+    - Bluetooth ESP8266: bluetooth/Bluetooth-Esp8266.md
     - Buttons-and-Switches.md
     - DeepSleep.md
     - Device-Groups.md
