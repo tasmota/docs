@@ -8,7 +8,7 @@ USE_DISPLAY | Enable display support. Also requires at least one of the followin
 USE_DISPLAY_LCD | Enable LCD display. Also requires `USE_I2C`
 USE_DISPLAY_SSD1306 | Enable OLED SSD1306 display. Also requires `USE_I2C`
 USE_DISPLAY_MATRIX | Enable MATRIX display
-USE_DISPLAY_ILI9341 | Enable TFT display. Also requires `USE_SPI`
+USE_DISPLAY_ILI9341 | Enable TFT ILI9341 display. Also requires `USE_SPI`<br>if seconds SPI bus on ESP32 shall be used SSPI must be defined instead of SPI
 USE_DISPLAY_EPAPER_29 | Enable EPAPER_29 display. Also requires `USE_SPI`
 USE_DISPLAY_EPAPER_42 | Enable EPAPER_42 display. Also requires `USE_SPI`
 USE_DISPLAY_SH1106 | Enable OLED SH1106 display. Also requires `USE_I2C`
@@ -16,8 +16,7 @@ USE_DISPLAY_ILI9488 | Enable TFT ILI9488 display. Also requires `USE_SPI`
 USE_DISPLAY_SSD1351 | Enable color OLED SSD1351 display. Also requires `USE_SPI`
 USE_DISPLAY_RA8876  | Enable TFT RA8876 display. Also requires `USE_SPI` 
 USE_DISPLAY_SEVENSEG  | Enable 7 segment display. Also requires `USE_I2C` 
-USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI` 
-USE_DISPLAY_ILI9341_2  | Enable TFT ILI9341 display on ESP32 second SPI bus<br>(must use SSPI definition). Also requires `USE_SPI` 
+USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI`  
 USE_DISPLAY_ILI9342  | Enable TFT ILI9342 display. Also requires `USE_SPI` 
 USE_DISPLAY_SD1331  | Enable TFT SD1331 display. Also requires `USE_SPI` 
 USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`  
@@ -98,7 +97,7 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 `T` = display Tasmota date in DD.MM.YY  
 `pp` = pad text with spaces, positive values align left, negative values
 align right    
-`sp` = set text scaling for classic GFX font (scaling factor 1...N)  
+`sp` = set text scaling for all fonts (scaling factor 1...N)  
 `fp` = set font (1=12, 2=24,(opt 3=8)) if font==0 the classic GFX font is used, if font==7 RA8876 internal font is used, if font==4  special 7 segment 24 pixel number font is used   
 `Cp` = set foreground color (0,1) for black or white and RGB decimal code for color (see [color codes](#color-codes))  
 `Bp` = set background color (0,1) for black or white and RGB decimal code for color (see [color codes](#color-codes))   
@@ -318,8 +317,6 @@ rule1 on tele-BME280#Temperature do DisplayText [s1p21x0y0]Temp: %value% C endon
 ```
 
 ## Display Drivers
-
-All but one (ILI9341) of the pixel oriented display drivers rely on a intermediate display class called renderer. This class adds 4 additional fonts, index colors and other features like graphs and touch buttons.
 
 Waveshare has two kinds of display controllers: with partial update and without partial update. The 2.9 inch driver is for partial update and should also support other Waveshare partial update models with modified WIDTH and HEIGHT parameters. The 4.2 inch driver is a hack which makes the full update display behave like a partial update and should probably work with other full update displays.  
 
