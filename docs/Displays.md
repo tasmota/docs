@@ -105,6 +105,7 @@ align right
 `Bip` = set background index color (0..18) for color displays (see index color table below)  
 `wp` = draws an analog watch with radius p  (#define USE_AWATCH)   
 `Pfilename:` = display an rgb 16-bit color image when SD card file system is present  
+`dcI:V` = define index color entry Index 0-31, V 16 bit color value  
 
 ### Touch Buttons and Sliders
 (`#define USE_TOUCH_BUTTONS`)
@@ -197,6 +198,27 @@ _Parameters are separated by colons._
 * `Gsn:path:` = save graph `n` to path (if optional SD card is present)  
 * `Grn:path:` = restore graph `n` from path (if optional SD card is present)  
 
+### Batch files
+
+When USE_UFILESYSTEM is defined and a file system is present you may define displaytext batch files.
+the file may contain any number of diplaytext cmds, one at a line.
+you may have comment lines beginning with a ;
+if a file named display.ini is present in the file system this batch file is executed.
+
+example file:
+
+; clr screen
+[z]
+; draw full screen picture
+[x0y0P/corona.rgb:]
+; define index color
+[dc19:31000]
+; draw transparent text with new index color over picture
+[x60y30f2Ci19D2]Tasmota
+
+a displaytext batch file may be executed from console by displaybatch /file
+
+
 ### Color Codes
 
 While computers and web design are generally using a 24-bit RGB888 color code built from a byte-triplet such as (255, 136, 56) or #FF8038, small color panels often use a more compact code 16-bit RGB565 color code.  This means that the R, G and B coefficient are coded on less number of bits:
@@ -236,6 +258,9 @@ Selected with `Ci` and `Bi` in the ILI9488, SSD1351, RA8876 and ST7789 color pan
 | 12 | PURPLE | 13 | OLIVE | 14 | LIGHTGREY |
 | 15 | DARKGREY | 16 | ORANGE | 17 | GREENYELLOW |
 | 18 | PINK |
+
+You may override and expand the index color table up to 32 values.
+the cmd [dcI:V] defines the index color with index I (0-31) to the 16 bit color value V
 
 #### Notes on e-Paper Displays
 
