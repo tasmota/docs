@@ -207,6 +207,7 @@ if a file named display.ini is present in the file system this batch file is exe
 
 example file:
 
+```haskell
 ; clr screen
 [z]
 ; draw full screen picture
@@ -215,8 +216,8 @@ example file:
 [dc19:31000]
 ; draw transparent text with new index color over picture
 [x60y30f2Ci19D2]Tasmota
-
-a displaytext batch file may be executed from console by displaybatch /file
+```
+a displaytext batch file may be executed from console by displaybatch /file  
 
 
 ### Color Codes
