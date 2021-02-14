@@ -1758,6 +1758,7 @@ Resets checking timer if temperature is connected
 ```haskell
 Rule ON tele-SI7021#temperature DO Backlog var1 1; RuleTimer1 30; event ctrl_ready=1; event temp_demand=%value% ENDON
 ```
+use `tele-DS18B20#temperature` for the DS18B20 device. An incorrect device setting will cause polling to happen every 1-2 seconds.
 
 Thermostat control - upper limit and lower limit and enabled  
 
