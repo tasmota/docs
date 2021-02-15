@@ -163,6 +163,36 @@ you may set the state of a button or slider with:
 * `b#s` where # = number 0-15  
 * `val` for buttons 0 or 1, for sliders 0-100  
 
+
+### Display JSON variables
+
+enabled by #define USE_DT_VARS  
+
+you may display variables that are exposed in JSON MQTT strings e.g. in Teleperiod messages.  
+the values are updated every second  
+
+`dv#:xp:yp:gc:fc:fo:ts:tl:dp:JSON:ut:`   
+_Parameters are separated by colons._   
+
+* `dv#` where # = defines a variable number 0-7  (may be expanded by #define MAX_DT_VARS N)
+* `xp` = x position  
+* `yp` = y position  
+* `gc` = text background color (index color)  
+* `fc` = text foreground color (index color)  
+* `fo` = text font  
+* `ts` = text size (negativ value denotes transparent text)  
+* `tl` = text field length (if negative align right)  
+* `dp` = decimal precision (if < 0 denotes a string)  
+* `jt` = JSON VARIABLE NAME (uppercase)   
+* `ut` = unit string (max 5 chars and must end with a colon :)  
+
+examples:
+```haskell
+[dv0:10:100:0:3:2:1:11:0:COUNTER#C1:cnt:]
+[dv1:10:150:0:3:2:-1:-11:-1:WIFI#SSID::]
+[dv2:10:200:0:3:2:1:-11:-1:HEAP:KB:]
+```
+
 ### Line chart
 
 (`#define USE_GRAPH` and `#define NUM_GRAPHS 4` - maximum of 16)  
