@@ -18,6 +18,7 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 // define max number of decoder entries (defaults to 20 if not defined)
 #define SML_MAX_VARS N
 ```
+
 ----
 
 **Driver for various meters , heating devices, and reed like contacts**
@@ -418,6 +419,7 @@ Your Tasmota SML `script`:
 #  
 
 ```
+
 ------------------------------------------------------------------------------
 
 ### Landis + Gyr ZMR120AReS2R2sfCS (OBIS)
@@ -661,6 +663,7 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 #
 
 ```
+
 ------------------------------------------------------------------------------
 
 ### COMBO Meter (Water,Gas,SML)
