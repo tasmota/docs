@@ -77,8 +77,8 @@ nav:
   - WebUI.md
   - Features:
     - Introduction: Features.md
-    - Bluetooth ESP32: bluetooth/Bluetooth-Esp32.md
-    - Bluetooth ESP8266: bluetooth/Bluetooth-Esp8266.md
+    - Bluetooth ESP32: ble/Bluetooth-Esp32.md
+    - Bluetooth ESP8266: ble/Bluetooth-Esp8266.md
     - Buttons-and-Switches.md
     - DeepSleep.md
     - Device-Groups.md
