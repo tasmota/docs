@@ -31,6 +31,9 @@
 ### TYLC4 
 ![TYLC4](_media/pinouts/TYLC4.png)![TYLC4 Pinout](_media/pinouts/TYLC4_pinout.jpg)
 
+### TYLC5 
+![TYLC5](_media/pinouts/TYLC5.png)![TYLC5 Pinout](_media/pinouts/TYLC5_pinout.png)
+
 ### TYWE5P 
 ![TYWE5P](_media/pinouts/TYWE5P.jpg)![TYWE5P Pinout](_media/pinouts/TYWE5P_pinout.jpg)
 
