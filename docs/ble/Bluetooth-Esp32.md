@@ -30,7 +30,7 @@ BLEMode<a id="blemode"></a>|Set the mode of the driver<BR>`<value>` 0 = Stop and
 BLEDetails<a id="bledetails"></a>|Display details about adverts for one or more devices.<BR>`BLEDetails0` - don't show any. `BLEDetails2 MAC|Alias` - show all advert details for the MAC or Alias. `BLEDetails3` - show ALL advert details.
 BLEScan<a id="blescan"></a>|Set the scan mode, or start a manual scan.<BR>`BLEScan0 <value>` 0 = passive scan, 1 = active scan. `BLEScan1 <ss>` start a manual scan for ss seconds (2-40), or 20s if ss not given.
 BLEAlias<a id="blealias"></a>|Set one or more aliases for device MAC addresses.<BR>`MAC=Alias <mac2=Alias2>`
-BLEName<a id="blename"></a>|Read or Write the BLE name for a device.<BR>`MAC|Alias` = read. `MAC|Alias name` = write.
+BLEName<a id="blename"></a>|Read or Write the BLE name for a device.<BR>`MAC|Alias` = read. `MAC|Alias name` = write.<BR>NOTE: This attempts to use BLE to actually write a name to a device - success is indicated in a BLEOperation.
 BLEDebug<a id="bledebug"></a>|Display more BLE related logs.<BR>`BLEDebug0` = less. `BLEDebug|BLEDebug1` = more.
 BLEDevices<a id="bledevices"></a>|Display or Clear seen BLE devices.<BR>`BLEDevices0` = clear device list. `BLEDevices1` = publish tele mesg.
 BLEMaxAge<a id="blemaxage"></a>|Display or Set the age at which a seen BLE device will be forgotten.<BR>`BLEMaxage` = display. `BLEMaxAge ss` = set to ss seconds.
@@ -307,7 +307,7 @@ MI32Battery<a id="mi32battery"></a>|Reads missing battery data for LYWSD02, Flor
 MI32Key<a id="mi32key"></a>| (depreciated - pls use MI32Keys) Set a "bind_key" for a MAC-address to decrypt sensor data (LYWSD03MMC, MJYD2S). The argument is a 44 uppercase characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string
 MI32Keys<a id="mi32keys"></a>| Set one or more "bind_key" for a MAC-address to decrypt sensor data (LYWSD03MMC, MJYD2S).<BR>`MI32Keys mac=key (mac=key)` = set the 32 character key for `<mac>` (more than one mac=key may be specified).
 MI32Blockx <a id="mi32block"></a>| Ignore Xiaomi sensors using the (fixed) MAC-address<BR>x=1 - show block list<BR>x=0 - delete block list<BR> x=1 + MAC-address - add MAC to to be blocked to the block list<BR>x=0 + MAC-address - remove MAC to to be blocked to the block list<BR>`<value>` (12 or 17 characters) = MAC interpreted as a string `AABBCCDDEEFF` (also valid: `aa:BB:cc:dd:EE:FF`)
-MI32Optionx 0/1<a id="mi32option"></a>| Set driver options at runtime<BR> x=0 - 0 -> sends only recently received sensor data, 1 -> aggregates all recent sensors data types<BR>x=1 - 0 -> shows full sensor data at TELEPERIOD, 1 -> shows no sensor data at TELEPERIOD<BR>x=2 - 0 -> sensor data only at TELEPERIOD (default and "usual" Tasmota style), 1 -> direct bridging of BLE-data to mqtt-messages<BR>x=5 - 0 -> show all relevant BLE sensors, 1 -> show only sensors with a BLEAlias
+MI32Optionx n<a id="mi32option"></a>| Set driver options at runtime<BR> x=0 - 0 -> sends only recently received sensor data, 1 -> aggregates all recent sensors data types<BR>x=1 - 0 -> shows full sensor data at TELEPERIOD, 1 -> shows no sensor data at TELEPERIOD<BR>x=2 - 0 -> sensor data only at TELEPERIOD (default and "usual" Tasmota style), 1 -> direct bridging of BLE-data to mqtt-messages<BR>x=5 - 0 -> show all relevant BLE sensors, 1 -> show only sensors with a BLEAlias<BR>x=6 (from v 9.0.2.1) 1 -> always use MQTT Topic like `tele/tasmota_ble/<name>` containing only one sensor
   
 !!! tip 
 If you really want to read battery for LYWSD02, Flora and CGD1, consider doing it once a day with a RULE:
@@ -320,6 +320,7 @@ This will update every day at 00:30 AM.
 Because we can have MANY sensors reporting, tele messages are chunked to have a maximum of four sensors per message.
 
 If you enable HASS discovery (setoption19 1), the ADDITIONAL MQTT messages are send.
+(note: from 9.0.2.1, you can enable the below style of MQTT using 'MI32Option6 1' - even if not using HASS discovery mode.)
 
 Primarily, at teleperiod or MI32period, discovery messages are sent.  These inform homeassistant of the devices.  Device names can be dependent upon BLEAlias, so set BLEAlias at boot....
 
