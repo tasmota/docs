@@ -101,11 +101,11 @@ align right
 `fp` = set font (1=12, 2=24,(opt 3=8)) if font==0 the classic GFX font is used, if font==7 RA8876 internal font is used, if font==4  special 7 segment 24 pixel number font is used   
 `Cp` = set foreground color (0,1) for black or white and RGB decimal code for color (see [color codes](#color-codes))  
 `Bp` = set background color (0,1) for black or white and RGB decimal code for color (see [color codes](#color-codes))   
-`Cip` = set foreground index color (0..18) for color displays (see index color table below)  
-`Bip` = set background index color (0..18) for color displays (see index color table below)  
+`Cip` = set foreground index color (0..31) for color displays (see index color table below)  
+`Bip` = set background index color (0..31) for color displays (see index color table below)  
 `wp` = draws an analog watch with radius p  (#define USE_AWATCH)   
 `Pfilename:` = display an rgb 16-bit color image when SD card file system is present  
-`dcI:V` = define index color entry Index 0-31, V 16 bit color value  
+`dcI:V` = define index color entry Index 19-31, V 16 bit color value (index 0-18 is fixed)  
 
 ### Touch Buttons and Sliders
 (`#define USE_TOUCH_BUTTONS`)
@@ -171,7 +171,7 @@ enabled by #define USE_DT_VARS
 you may display variables that are exposed in JSON MQTT strings e.g. in Teleperiod messages.  
 the values are updated every second  
 
-`dv#:xp:yp:gc:fc:fo:ts:tl:dp:JSON:ut:`   
+`dv#:xp:yp:gc:fc:fo:ts:tl:dp:ut:JSON:ut:`   
 _Parameters are separated by colons._   
 
 * `dv#` where # = defines a variable number 0-7  (may be expanded by #define MAX_DT_VARS N)
@@ -182,15 +182,29 @@ _Parameters are separated by colons._
 * `fo` = text font  
 * `ts` = text size (negativ value denotes transparent text)  
 * `tl` = text field length (if negative align right)  
-* `dp` = decimal precision (if < 0 denotes a string)  
-* `jt` = JSON VARIABLE NAME (uppercase)   
+* `dp` = decimal precision (if < 0 denotes a string) 
+* `ut` = update time in seconds  (1...N)  
+* `jt` = JSON VARIABLE NAME (uppercase) if you specify a string in brackets here it is treated as displaytext cmd   
 * `ut` = unit string (max 5 chars and must end with a colon :)  
 
-examples:
+example:
 ```haskell
-[dv0:10:100:0:3:2:1:11:0:COUNTER#C1:cnt:]
-[dv1:10:150:0:3:2:-1:-11:-1:WIFI#SSID::]
-[dv2:10:200:0:3:2:1:-11:-1:HEAP:KB:]
+;ILI9341 320x240 portrait mode
+[x0y0P/corona.rgb:]
+[dc19:31000]
+[x60y30f2Ci3D2]Tasmota
+; display text cmd displays time with seconds
+[dv0:50:70:19:3:2:1:11:1:1:[tS]::]
+; display text cmd displays analog watch
+[dv1:120:250:19:2:2:1:11:1:5:[w40]::]
+; displays Wifi SSID JSON
+[dv2:10:10:0:3:1:-1:10:-1:1:WIFI#SSID::]
+[x10y150f1s1Ci3Bi19]Counter:
+; displays a sensor JSON variable (here counter1)
+[dv3:80:150:0:7:1:1:11:0:1:COUNTER#C1:cnt:]
+[x10y300f1s1Ci3Bi19]memory free:
+; displays pre memory space JSON (heap)
+[dv4:100:300:0:7:1:1:-7:-1:1:HEAP:kb:]
 ```
 
 ### Line chart
@@ -290,8 +304,8 @@ Selected with `Ci` and `Bi` in the ILI9488, SSD1351, RA8876 and ST7789 color pan
 | 15 | DARKGREY | 16 | ORANGE | 17 | GREENYELLOW |
 | 18 | PINK |
 
-You may override and expand the index color table up to 32 values.
-the cmd [dcI:V] defines the index color with index I (0-31) to the 16 bit color value V
+You may expand the index color table up from index 19 to 31.
+the cmd [dcI:V] defines the index color with index I (19-31) to the 16 bit color value V
 
 #### Notes on e-Paper Displays
 
@@ -321,14 +335,16 @@ I<sup>2</sup>C displays are connected in the usual manner and defined via the GP
 
 The I<sup>2</sup>C address must be specified using `DisplayAddress XX`, e.g., `60`. The model must be spedified with `DisplayModel`, e.g., `2` for SSD1306. To permanently turn the display on set `DisplayDimmer 100`. Display rotation can be permanently set using `DisplayRotate X` (x = `0..3`).  
 
+On SPI the CS and DC pins when needed must use the pin definition with Display_ID + CS e.g. ST7789_CS
+
 E-Paper displays are connected via software 3-wire SPI `(CS, SCLK, MOSI)`. DC should be connected to GND , Reset to 3.3 V 
 and busy may be left unconnected. The jumper on the circuit board of the display must be set to 3-wire SPI.  
 
-The ILI9488, ILI9341 and SSD1351 are connected via hardware 3-wire SPI `(MOSI=GPIO13, SCLK=GPIO14, CS=GPIO15)`. The ILI9488 must also be connected to the backlight pin (dimmer supported on SSD1351). [Wiring](https://github.com/arendst/Tasmota/issues/2557#issuecomment-444454436)
+The ILI9488, ILI9341 and SSD1351 are connected via hardware 3-wire SPI `(SPI_MOSI=GPIO13, SPI_SCLK=GPIO14, CS=GPIO15)`. The ILI9488 must also be connected to the backlight pin (dimmer supported on SSD1351). [Wiring](https://github.com/arendst/Tasmota/issues/2557#issuecomment-444454436)
 
-The RA8876 is connected via standard hardware 4-wire SPI `(MOSI=GPIO13, SCLK=GPIO14, CS=GPIO15, MISO=GPIO12)`. No backlight pin is needed (dimmer supported).  
+The RA8876 is connected via standard hardware 4-wire SPI `(SPI_MOSI=GPIO13, SPI_SCLK=GPIO14, RA_8876_CS=GPIO15, SSPI_MISO=GPIO12)`. No backlight pin is needed, dimmer supported, on ESP32 gpio pins may be freeley defined (below gpio 33).  
 
-The ST7789 is connected via 4 Wire software SPI ((CS), SCLK, MOSI, DC, (RES), BL )  
+The ST7789 is connected via 4 Wire software SPI ((ST7789_CS), SSPI_SCLK, SSPI_MOSI, ST7789_DC, OLEDRESET, Backlight )  
 
 ## Rule Examples, for scripting examples see scripting docs
 
