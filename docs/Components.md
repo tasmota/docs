@@ -240,6 +240,9 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 214      | 5280     | IEM3000 RX      | IEM3000 Serial interface                                                                   |
 | 215      | 5312     | Zigbee RST      | Zigbee reset                                                                               |
 | 216      | 5344     | DYP Rx          | DYP-ME007 Rx pin                                                                           |
+|          | 5872     | Option_a1       | Enable PWM2 high impedance if powered off as used by Wyze bulbs                            |
+|          |          | RotaryA_n       | Rotary Encoder                                                                             |
+|          |          | RotaryB_n       | Rotary Encoder                                                                             |
 
 ## ADC Conversion
 
