@@ -96,7 +96,8 @@ nav:
   - Features:
     - Introduction: Features.md
     - Analog pin: ADC.md
-    - Bluetooth.md
+    - Bluetooth ESP32: ble/Bluetooth-Esp32.md
+    - Bluetooth ESP8266: ble/Bluetooth-Esp8266.md
     - Buttons-and-Switches.md
     - DeepSleep.md
     - Device-Groups.md

@@ -303,6 +303,46 @@ WattRes<a class="cmnd" id="sensors-wattres"></a>|Power sensor resolution<BR>`0..
 WeightRes<a class="cmnd" id="weightres"></a>|Load cell sensor resolution<BR>`0..3` = maximum number of decimal places
 See also|[`SetOption8`](#setoption8)  - Show temperature in Celsius *(default)* or Fahrenheit<BR>[`SetOption18`](#setoption18) - Set status of signal light paired with CO<sub>2</sub> sensor<BR>[`SetOption24`](#setoption24) - Set pressure units
 
+### Bluetooth Low Energy - BLE
+
+Command|Parameters
+:---|:---
+BLEMode<a class="cmnd" id="blemode"></a>|Change the operational mode of the BLE driver.<BR>`BLEMode0` = disable regular BLE scans.<BR>`BLEMode1` = BLE scan on command only.<BR>`BLEMode2` = regular BLE scanning (default).
+BLEPeriod<a class="cmnd" id="bleperiod"></a>|Set the period for publish of BLE data<BR>`<value>` = set interval in seconds
+BLEScan<a class="cmnd" id="blescan"></a>|Cause/Configure BLE a scan<BR>`BLEScan0 0..1` = enable or disable Active scanning. (an active scan will gather extra data from devices, including name)<BR>`BLEScan` = Trigger a 20s scan now if in BLEMode1<BR>`BLEScan n` = Trigger a scan now for n seconds if in BLEMode1
+BLEDetails<a class="cmnd" id="bledetails"></a>|Display details about recevied adverts<BR>`BLEDetails0` = disable showing of details.<BR>`BLEDetails1 mac|alias` = show the next advert from device mac|alias<BR>`BLEDetails2 mac|alias` = show all advert from device mac|alias (some may be lost).<BR>`BLEDetails3` = show all adverts from all devices (some will be lost).
+BLEAlias<a class="cmnd" id="blealias"></a>|Set Alias names for devices.  A device may be referred to by it's alias in subsequent commands<BR>`BLEAlias mac=alias mac=alias ...` = set one or more aliases from devices.<BR>`BLEAlias2` = clear all aliases.
+BLEName<a class="cmnd" id="blename"></a>|Read or write the name of a BLE device.<BR>`BLEName mac|alias` = read the name of a device using 1800/2A00.<BR>`BLEName mac|alias` = write the name of a device using 1800/2A00 - many devices are read only.
+BLEDevices<a class="cmnd" id="bledevices"></a>|Cause a list of known devices to be sent on MQTT, or Empty the list of known devices.<BR>`BLEDevices0` = clear the known devices list.<BR>`BLEDevices` = Cause the known devices list to be published on stat/TASName/BLE.
+BLEMaxAge<a class="cmnd" id="blemaxage"></a>|Set the timeout for device adverts.<BR>`BLEMaxAge n` = set the devices timeout to n seconds.<BR>`BLEMaxAge` = display the device timeout.
+BLEOp<a class="cmnd" id="bleop"></a>|Perform a simple active BLE operation (read/write/notify).<BR>see separate description in source code
+BLEDebug<a class="cmnd" id="bledebug"></a>|Set BLE debug level.<BR>`BLEDebug` = show extra debug information<BR>`BLEDebug0` = suppress extra debug
+BLEAddrFilter<a class="cmnd" id="bleaddrfilter"></a>|Set BLE Address type filter.<BR>`BLEAddrFilter` = show filter level<BR>`BLEAddrFilter n` = set BLE address type filter 0..3 - default 3.  Ignores BLE address types > filter value.  Set 0 to ONLY see public addresses.
+
+### BLE iBeacon (ESP32)
+
+Command|Parameters
+:---|:---
+iBeacon<a class="cmnd" id="ibeacon"></a>|Show or set enable for the iBeacon driver<BR>`iBeacon` = Display 0|1<BR>`iBeacon 0` = disable<BR>`iBeacon 1` = enable.
+iBeaconOnlyAliased<a class="cmnd" id="ibeacononlyaliased"></a>|Show or set OnlyAliased for the iBeacon driver<BR>`iBeaconOnlyAliased` = Display 0|1<BR>`iBeaconOnlyAliased 0` = enable iBeacon to hear ALL BLE devices<BR>`iBeaconOnlyAliased 1` = enable iBeacon to hear ONLY devices with valid BLEAlias<BR>`iBeaconOnlyAliased 2` = enable iBeacon to hear ONLY devices with valid BLEAlias starting `iB`
+iBeaconClear<a class="cmnd" id="ibeaconclear"></a>|Clear iBeacon list
+iBeaconPeriod<a class="cmnd" id="ibeaconperiod"></a>|Display or Set the period for publish of iBeacon data<BR>`iBeaconPeriod` = display interval<BR>`iBeaconPeriod ss` = set interval in seconds
+iBeaconTimeout<a class="cmnd" id="ibeacontimeout"></a>|Display or Set the timeout for iBeacon devices<BR>`iBeaconTimeout` = display timeout<BR>`iBeaconTimeout ss` = set timeout in seconds
+
+
+### BLE MI/Xiaomi sensors (ESP32)
+
+Command|Parameters
+:---|:---
+MI32Period<a class="cmnd" id="mi32block"></a>|Display/Set the active scan and tele period for the MI32 driver.<BR>`MI32Period` = diisplay the period in seconds.<BR>`MI32Period n` = Set the MI driver active read and tele period to n seconds.
+MI32Time<a class="cmnd" id="mi32time"></a>|Set the time on a device.<BR>`MI32Time n` = set the time on the device in slot n.
+MI32Page<a class="cmnd" id="mi32page"></a>|Display/Set the sensors per page in the web view.<BR>`MI32page` = show sensors per page.<BR>`MI32page n` = Set sensors per page to n.
+MI32Battery<a class="cmnd" id="mi32battery"></a>|Trigger an active read of battery values.<BR>`MI32Battery` = request the driver read the battery from all sensors which have active battery read requirements.
+MI32Unit<a class="cmnd" id="mi32unit"></a>|Write the current Tasmota temperature unit to a sensor.<BR>`MI32Unit s` = set the Temp unit on sensor in slot s.
+MI32Key<a class="cmnd" id="mi32key"></a>|Add a decryption key.<BR>`MI32Key hexkey` = add a 44 character decryption key to the keys list.
+MI32Keys<a class="cmnd" id="mi32keys"></a>|Add one or more decryption keys by mac or alias.<BR>`MI32Keys` = list keys.<BR>`MI32Keys mac|alias=key mac|alias=key ...` = add keys for mac|alias.<BR>`MI32Keys mac|alias=` - remove keys for one mac|alias.<BR>`MI32Keys2` - remove all keys.
+MI32Block<a class="cmnd" id="mi32block"></a>|Block or unblock a sensor device.<BR>`MI32Block` = list blocked devices by mac.<BR>`MI32Block mac|alias` = Block one mac/alias.
+MI32Optionx n<a class="cmnd" id="mi32option"></a>| Set driver options at runtime<BR> x=0 - 0 -> sends only recently received sensor data, 1 -> aggregates all recent sensors data types<BR>x=1 - 0 -> shows full sensor data at TELEPERIOD, 1 -> shows no sensor data at TELEPERIOD<BR>x=2 - 0 -> sensor data only at TELEPERIOD (default and "usual" Tasmota style), 1 -> direct bridging of BLE-data to mqtt-messages<BR>x=5 - 0 -> show all relevant BLE sensors, 1 -> show only sensors with a BLEAlias<BR>x=6 (from v 9.0.2.1) 1 -> always use MQTT Topic like `tele/tasmota_ble/<name>` containing only one sensor
 ### Power Monitoring
 
 Command|Parameters
