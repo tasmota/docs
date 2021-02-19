@@ -329,7 +329,6 @@ iBeaconClear<a class="cmnd" id="ibeaconclear"></a>|Clear iBeacon list
 iBeaconPeriod<a class="cmnd" id="ibeaconperiod"></a>|Display or Set the period for publish of iBeacon data<BR>`iBeaconPeriod` = display interval<BR>`iBeaconPeriod ss` = set interval in seconds
 iBeaconTimeout<a class="cmnd" id="ibeacontimeout"></a>|Display or Set the timeout for iBeacon devices<BR>`iBeaconTimeout` = display timeout<BR>`iBeaconTimeout ss` = set timeout in seconds
 
-
 ### BLE MI/Xiaomi sensors (ESP32)
 
 Command|Parameters
@@ -343,6 +342,7 @@ MI32Key<a class="cmnd" id="mi32key"></a>|Add a decryption key.<BR>`MI32Key hexke
 MI32Keys<a class="cmnd" id="mi32keys"></a>|Add one or more decryption keys by mac or alias.<BR>`MI32Keys` = list keys.<BR>`MI32Keys mac|alias=key mac|alias=key ...` = add keys for mac|alias.<BR>`MI32Keys mac|alias=` - remove keys for one mac|alias.<BR>`MI32Keys2` - remove all keys.
 MI32Block<a class="cmnd" id="mi32block"></a>|Block or unblock a sensor device.<BR>`MI32Block` = list blocked devices by mac.<BR>`MI32Block mac|alias` = Block one mac/alias.
 MI32Optionx n<a class="cmnd" id="mi32option"></a>| Set driver options at runtime<BR> x=0 - 0 -> sends only recently received sensor data, 1 -> aggregates all recent sensors data types<BR>x=1 - 0 -> shows full sensor data at TELEPERIOD, 1 -> shows no sensor data at TELEPERIOD<BR>x=2 - 0 -> sensor data only at TELEPERIOD (default and "usual" Tasmota style), 1 -> direct bridging of BLE-data to mqtt-messages<BR>x=5 - 0 -> show all relevant BLE sensors, 1 -> show only sensors with a BLEAlias<BR>x=6 (from v 9.0.2.1) 1 -> always use MQTT Topic like `tele/tasmota_ble/<name>` containing only one sensor
+
 ### Power Monitoring
 
 Command|Parameters
