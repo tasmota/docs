@@ -20,8 +20,6 @@ Optional set Modbus address matching the address of your device (default is 1) b
 
 ----
 
-![](_media/neopool_s.png)
-
 Sugar Valley NeoPool are water treatment systems also known under the names Hidrolife, Aquascenic, Oxilife, Bionet, Hidroniser, UVScenic, Station, Brilix, Bayrol and Hay. It uses a RS485 interface for enhancment equipments like Wifi-Interface or a second attached control panel. Most functions and parameters can be queried and controlled via the RS485 interface.
 
 The sensor shows the most of parameters such as the built-in display:
