@@ -1,6 +1,7 @@
 !!! info "**Component** is anything wired to the ESP8266/ESP8255 chip to be controlled by or send data to it."
 
 <a href="../_media/components.png" target="_blank"><img src="../_media/components.png" style="float:right;height:10em;margin:10px"></img></a>
+
 Components can be: buttons, switches, relays, LEDs, sensors, displays, MCU units, etc. Every component is assigned in the device template to the GPIO it is wired (connected) to.
 
 Every Tasmota device has some components configured by default. Most often there is a relay, a button and a LED configured as is the case for a Sonoff Basic in the following image.

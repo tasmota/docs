@@ -1,4 +1,4 @@
-!!! failure "This feature is not included in precompiled binaries."
+!!! info "This feature is included only in tasmota-displays.bin"
 
 To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 

@@ -225,3 +225,4 @@ br tasmota.timereached(t)
 20:36:36.806 CMD: br tasmota.timereached(t)
 20:36:36.813 RSL: stat/tasmota_67B1E9/RESULT = {"Br":"true"}
 ```
+

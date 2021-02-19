@@ -58,6 +58,9 @@ To do so, set one of the Fingerprints to all 0xFF:
 ```
 #define MQTT_FINGERPRINT1     "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF"
 ```
+Tasmota also provide an option to authenticate clients using an x509 certificate and a public key for authentication, instead of username/password.
+
+For details on how to set up your local instance of Mosquitto, check the article [Self-signed-Mosquitto](Self-signed-Mosquitto).
 
 ## Limitations
 

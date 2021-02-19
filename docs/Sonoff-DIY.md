@@ -17,30 +17,40 @@ As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible tha
     The OTA process Sonoff provides through the Sonoff DIY procedure **does not create a backup** of the Itead firmware on the device. If you use this OTA method to flash Tasmota on the Sonoff device, you will not be able to revert to the original factory firmware. :warning:
 
 ## Flash procedure
-_Guide originally from [@Brunas](https://github.com/Brunas/HomeAutomation/edit/master/doc/Sonoff%20Mini%203.6.0%20to%20Tasmota.md)_
+_Guide originally from [@Brunas](https://github.com/Brunas/HomeAutomation/blob/master/doc/Sonoff%20Mini%203.6.0%20to%20Tasmota.md)_
 
+0. Pair the device with the eWeLink app and update firmware. [The wifi network you connect to during this step will need to be reachable in order to enter DIY mode.](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/90)
 1. Follow instructions how to enter DIY mode from [Sonoff](https://github.com/itead/Sonoff_Devices_DIY_Tools/blob/master/SONOFF%20DIY%20MODE%20Protocol%20Doc%20v2.0%20Doc.pdf). This is the excerpt from it:
 
-	1. Power on;
-	2. Long press the button for 5 seconds for entering Compatible Pairing Mode (AP)
-	User tips: If the device has been paired with eWeLink APP, reset the device is necessary by	long press the pairing button for 5 seconds, then press another 5 seconds for entering Compatible Pairing Mode (AP)
-	3. The LED indicator will blink continuously;
-	4. From mobile phone or PC WiFi setting, an Access Point of the device named **ITEAD-XXXXXXXX** will be found, connect it with default password **12345678**
-	5. Open the browser and access http://10.10.7.1/
-	6. Next, Fill in WiFi SSID and password that the device would have connected with
-	7. Succeed, Now the device is in DIY mode.
+	1. Long press the button for 5 seconds to enter pairing mode, then press another 5 seconds to ender Compatible Pairing Mode (AP). The LED indicator should blink continuously.
+	2. From mobile phone or PC WiFi setting, an Access Point of the device named **ITEAD-XXXXXXXX** will be found, connect it with default password **12345678**
+	3. Open the browser and access http://10.10.7.1/
+	4. Next, Fill in WiFi SSID and password. Once successfully connected, the device is in DIY mode.
 
 Note: I needed to manually change IP address to 10.10.7.2, 255.0.0.0 with gateway 10.10.7.1 in adapter TCP/IPv4 settings to access that IP address.
 
-3. Use Fing or any similar local network scanning app on your smartphone or PC to find IP address of your Sonoff Mini device. MAC Vendor most likely is **Espressif** and the device has **8081** port open.
-4. Install **Rester** extension in Chrome or Firefox or any other preferred tool to perform REST API operations.
-5. To test your device DIY mode create new request in **Rester**:
+2. Use Fing or any similar local network scanning app on your smartphone or PC to find IP address of your Sonoff Mini device. MAC Vendor most likely is **Espressif** and the device has **8081** port open.
+3. Check that diy mode is working properly.
+
+With curl:
+
+```sh
+curl -XPOST --header "Content-Type: application/json" --data-raw '{"deviceid": "", "data": {}}' http://$SONOFF_IP:8081/zeroconf/info
+```
+
+<details>
+<summary> Or with the Rester browser extension:</summary>
+Install **Rester** extension in Chrome or Firefox or any other preferred tool to perform REST API operations.
+
+To test your device DIY mode create new request in **Rester**:
 	1. Method: **POST**
 	2. URL: http://<*IP of your device*>:8081/zeroconf/info
 	3. Body: `{"data": {}}`
 	4. You might need to add Header **Content-Type** with value **application/json**
 	5. Press **SEND**
-	6. If all is OK, status code *200* should be returned with bunch of data:
+</details>
+
+If all is OK, status code *200* should be returned with bunch of data:
 ```json
 {
     "seq": 1,
@@ -59,17 +69,35 @@ Note: I needed to manually change IP address to 10.10.7.2, 255.0.0.0 with gatewa
     }
 }
 ```
-	7. If that doesn't return *200*, try going back to 5s+5s reset above.
-6. If all above works, let's unlock OTA:
+If that doesn't return *200*, try going back to 5s+5s reset above.
+4. If all above works, let's unlock OTA:
+
+With curl:
+
+```sh
+curl -XPOST --header "Content-Type: application/json" --data-raw '{"deviceid": "", "data": {}}' http://$SONOFF_IP:8081/zeroconf/ota_unlock
+```
+
+<details>
+<summary> Or with the Rester browser extension:</summary>
 	1. Method: **POST**
 	2. URL: http://<*IP of your device*>:8081/zeroconf/ota_unlock
 	3. Body: `{"data": {}}`
 	4. You might need to add Header **Content-Type** with value **application/json**
 	5. Press **SEND**
 	6. You should get status code *200*
-	7. Optionally for curiousity you could retry *info* query to check if *otaUnlock* value now is *true*
-7. Sonoff's flashing tool should see your device now! 
-8. Download Tasmota-lite.bin from https://github.com/arendst/Tasmota/releases and flash it according to instructions everywhere on the Internet. Just the WiFi AP name is **TASMOTA_XXXX** and not sonoff_XXX.
+</details>
+
+Optionally for curiousity you could retry *info* query to check if *otaUnlock* value now is *true*
+5. Download the appropriate binary from https://github.com/arendst/Tasmota/releases and flash it. *NOTE: The maximum firmware size is 508kb, which precludes the standard release binary.*
+
+There are a number of [reported](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/10) [issues](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/95) with the stock firmware's OTA behavior, so it may be easier to use [an existing server](http://sonoff-ota.aelius.com/) that works around these issues. For example:
+
+```sh
+curl -XPOST --data "{\"deviceid\":\"\",\"data\":{\"downloadUrl\": \"http://sonoff-ota.aelius.com/tasmota-latest-lite.bin\", \"sha256sum\": \"$HASH\"} }" http://$SONOFF_IP:8081/zeroconf/ota_flash
+```
+
+You're now ready to [configure tasmota](https://tasmota.github.io/docs/Getting-Started/#using-web-ui).
 
 <!--
 ## Using the Itead DIY tool
