@@ -74,7 +74,9 @@ Name|Description
 [**RF Transciever**](RF-Transciever) | IR receiver and/or transmitter
 **RX-4M50RR30SF<BR>RX-AM8SF** | RF Sensor receiver (gpio)
 **SCD30** | CO<sub>2</sub> Sensor (I^2^C)
+**Eastron SDM72** | Modbus Energy Meter (serial)
 **Eastron SDM120** | Modbus Energy Meter (serial)
+**Eastron SDM220** | Modbus Energy Meter (serial)
 **Eastron SDM630** | Modbus Energy Meter (serial)
 [**SDS011<BR>SDS021**](SDS011) | Laser Dust Sensor
 **SGP30** | Gas and Air Quality Sensor (I^2^C)
