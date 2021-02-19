@@ -79,6 +79,9 @@ Use `?` as a wildcard for a single trigger level. Rule will trigger on `[Trigger
 |`$!`| string is not equal to|
 |`$^`| string do not contains|
 |`|`| used for [modulo operation](https://en.wikipedia.org/wiki/Modulo_operation) with remainder = 0 (exact division)|
+|`$>`| string ends with
+|`$<`| string starts with
+|`$|`| string contains
 
 #### Examples of Available Triggers
 
