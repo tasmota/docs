@@ -104,7 +104,7 @@ To remove a device from Zigbee2Tasmota use command `ZbForget <device>` or `ZbFor
 
 This is an example of a pairing process for the [Aqara Temperature & Humidity Sensor](https://zigbee.blakadder.com/Xiaomi_WSDCGQ11LM.html). To pair this sensor, issue `ZbPermitJoin 1` and then press and hold the reset button for 5 seconds. The sensor LED will flash several times and you will see log entries in the console, especially this one:
 
-```
+```json
 MQT: tele/%topic%/SENSOR = {"ZbState":{"Status":30,"IEEEAddr":"0x00158D00036B50AE","ShortAddr":"0x8F20","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
 ```
 
@@ -322,7 +322,7 @@ Once Z2T receives a command related to a light (Power, Dimmer, Color, ColorTemp)
 
 !!! example
 
-```
+```json
 16:02:04 MQT: tele/%topic%/SENSOR = {"ZbReceived":{"IKEA_remote":{"Device":"0xF72F","0006!02":"","Power":2,"Endpoint":1,"Group":100,"LinkQuality":75}}}
 16:02:05 MQT: tele/%topic%/SENSOR = {"ZbReceived":{"IKEA_Light":{"Device":"0x5ADF","Power":true,"Endpoint":1,"LinkQuality":80}}}
 16:02:06 MQT: tele/%topic%/SENSOR = {"ZbReceived":{"IKEA_remote":{"Device":"0xF72F","0008!06":"002B0500","DimmerUp":true,"Endpoint":1,"Group":100,"LinkQuality":75}}}
@@ -356,7 +356,7 @@ Example of group binding
 This command links the device `0xC2EF` that will send all commands for cluster `6` (On/off clustre) and from endpoint `1` to the group `100`.
 
 Reponse in case of success
-```
+```json
 MQT: tele/%topic%/RESULT = {"ZbBind":{"Device":"0xF72F","Name":"IKEA_Remote","Status":0,"StatusMessage":"SUCCESS"}}
 ```
 
@@ -383,7 +383,7 @@ Configuring groups for devices requires to send commands. Make sure the device i
 
 `ZbSend {"device":"IKEA_Light","Send":{"GetAllGroups":true}}`
 
-```
+```json
 MQT: tele/%topic%/SENSOR = {"ZbReceived":{"IKEA_Light":{"Device":"0x5ADF","0004<02":"FF00","GetGroupCapacity":255,"GetGroupCount":0,"GetGroup":[],"Endpoint":1,"LinkQuality":80}}}
 ```
 
@@ -391,7 +391,7 @@ The following response tells you:
 `"GetGroupCount":1` the light belongs to one group
 `"GetGroup":[100]` and the group number is `100`.
 
-```
+```json
 MQT: tele/%topic%/SENSOR = {"ZbReceived":{"IKEA_Light":{"Device":"0x5ADF","0004<02":"FF016400","GetGroupCapacity":255,"GetGroupCount":1,"GetGroup":[100],"Endpoint":1,"LinkQuality":80}}}
 ```
 
@@ -399,13 +399,13 @@ MQT: tele/%topic%/SENSOR = {"ZbReceived":{"IKEA_Light":{"Device":"0x5ADF","0004<
 
 `ZbSend {"device":"IKEA_Light","Send":{"AddGroup":100}}`
 
-```
+```json
 MQT: tele/%topic%/SENSOR = {"ZbReceived":{"IKEA_Light":{"Device":"0x5ADF","0004<00":"006400","AddGroup":100,"AddGroupStatus":0,"AddGroupStatusMsg":"SUCCESS","Endpoint":1,"LinkQuality":80}}}
 ```
 
 Or if the group already exists:
 
-```
+```json
 MQT: tele/%topic%/SENSOR = {"ZbReceived":{"IKEA_Light":{"Device":"0x5ADF","0004<00":"8A6400","AddGroup":100,"AddGroupStatus":138,"AddGroupStatusMsg":"DUPLICATE_EXISTS","Endpoint":1,"LinkQuality":80}}}
 ```
 
@@ -413,13 +413,13 @@ MQT: tele/%topic%/SENSOR = {"ZbReceived":{"IKEA_Light":{"Device":"0x5ADF","0004<
 
 `ZbSend {"device":"IKEA_Light","Send":{"RemoveGroup":100}}`
 
-```
+```json
 MQT: tele/%topic%/SENSOR = {"ZbReceived":{"IKEA_Light":{"Device":"0x5ADF","0004<03":"006400","RemoveGroup":100,"RemoveGroupStatus":0,"RemoveGroupStatusMsg":"SUCCESS","Endpoint":1,"LinkQuality":80}}}
 ```
 
 or if the group does not exist
 
-```
+```json
 MQT: tele/%topic%/SENSOR = {"ZbReceived":{"IKEA_Light":{"Device":"0x5ADF","0004<03":"8B6400","RemoveGroup":100,"RemoveGroupStatus":139,"RemoveGroupStatusMsg":"NOT_FOUND","Endpoint":1,"LinkQuality":80}}}
 ```
 
@@ -427,7 +427,7 @@ MQT: tele/%topic%/SENSOR = {"ZbReceived":{"IKEA_Light":{"Device":"0x5ADF","0004<
 
 `ZbSend {"device":"IKEA_Light","Send":{"RemoveAllGroups":true}}`
 
-```
+```json
 MQT: tele/%topic%/SENSOR = {"ZbResponse":{"Device":"0x5ADF","Name":"IKEA_Light","Command":"0004!04","Status":0,"StatusMessage":"SUCCESS","Endpoint":1,"LinkQuality":80}}
 ```
 
@@ -454,7 +454,7 @@ Command `ZbLight` configures a Zigbee device to be Alexa controllable. Specify t
 
 To set the light, use `ZbLight <device>,<nb_of_channels`.
 Ex:
-```
+```haskell
 ZbLight 0x1234,2
 ZbLight Kitchen_Light,1   (see ZbName)
 ```
@@ -467,7 +467,7 @@ To read the last known status of a light, use `ZbLight <device>`
 
 `ZbLight Kitchen_Light`
 
-```
+```json
 MQT: stat/%topic%/RESULT = {"ZbLight":{"Kitchen_Light":{"Device":"0x5ADF","Light":2,"Power":0,"Dimmer":130,"Colormode":2,"CT":350}}}
 ```
 
@@ -535,7 +535,7 @@ Received response will be :
 ## Zigbee2Tasmota Status Codes
 You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  
 
-```
+```json
 {"ZbState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}
 ```
 

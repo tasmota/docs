@@ -7,6 +7,9 @@
 
 Board is essentially a ESP-12S  (or ESP-2M) with necessary voltage converters, little bit of flash, 3 or 4 MOSFETs to drive LED strip (depending on the model), connector for LED strip and optional IR receiver. 
 
+!!! warning
+    There are new versions of these boards that use an incompatible module, Tasmota cannot be flashed on them! Before anything, make sure your board has a compatible chip. 
+
 Module is powered by 12V that is used to power LED strip as well. RGB models are declared as 144W, RGBW models as 192W.
 
 Module comes in (at least) 3 variants: 

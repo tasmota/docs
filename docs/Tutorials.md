@@ -1,12 +1,8 @@
 # Projects and Tutorials
 
-!!! note "Share your projects in our [Discord server](https://discord.gg/Ks2Kzd4)!"
+!!! note "Find more projects and share them in [Show and Tell](https://github.com/arendst/Tasmota/discussions/categories/show-and-tell)!"
 
 
-## External Links to cool/amazing projects made with Tasmota
-
-* [LEGO Nightstand Switch](https://jeff.noxon.cc/2018/11/21/lego-nightstand-light-switch/)  
-* [Tasmota based drop pin door lock](https://community.home-assistant.io/t/tasmota-based-drop-pin-door-lock-30/145389)
 
 ## Gallery of projects running Tasmota
 
@@ -18,6 +14,11 @@
 Water tank monitor|![Water tank monitor](https://user-images.githubusercontent.com/5904370/68471400-6a111400-021e-11ea-8c2c-e57ea2d36b95.png)
 [Multisensor](https://i.postimg.cc/rmF40BkZ/IMG-20190731-205332.jpg)| ![image](https://user-images.githubusercontent.com/5904370/68471177-f0792600-021d-11ea-8b3a-db324f1537ef.png)
 [Aquarium controller](https://i.postimg.cc/fLL3TYc6/image0.jpg)| ![Aquarium controller](https://user-images.githubusercontent.com/5904370/68471558-c116e900-021e-11ea-82f2-69060187f090.png)
+
+## External Links to cool/amazing projects made with Tasmota
+
+* [LEGO Nightstand Switch](https://jeff.noxon.cc/2018/11/21/lego-nightstand-light-switch/)  
+* [Tasmota based drop pin door lock](https://community.home-assistant.io/t/tasmota-based-drop-pin-door-lock-30/145389)
 
 ## Installation Tutorials
 * [Installing Tasmota using Tasmotizer](https://www.superhouse.tv/37-installing-tasmota-using-tasmotizer/)

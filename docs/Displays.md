@@ -8,7 +8,7 @@ USE_DISPLAY | Enable display support. Also requires at least one of the followin
 USE_DISPLAY_LCD | Enable LCD display. Also requires `USE_I2C`
 USE_DISPLAY_SSD1306 | Enable OLED SSD1306 display. Also requires `USE_I2C`
 USE_DISPLAY_MATRIX | Enable MATRIX display
-USE_DISPLAY_ILI9341 | Enable TFT display. Also requires `USE_SPI`
+USE_DISPLAY_ILI9341 | Enable TFT ILI9341 display. Also requires `USE_SPI`<br>if seconds SPI bus on ESP32 shall be used SSPI must be defined instead of SPI
 USE_DISPLAY_EPAPER_29 | Enable EPAPER_29 display. Also requires `USE_SPI`
 USE_DISPLAY_EPAPER_42 | Enable EPAPER_42 display. Also requires `USE_SPI`
 USE_DISPLAY_SH1106 | Enable OLED SH1106 display. Also requires `USE_I2C`
@@ -16,11 +16,14 @@ USE_DISPLAY_ILI9488 | Enable TFT ILI9488 display. Also requires `USE_SPI`
 USE_DISPLAY_SSD1351 | Enable color OLED SSD1351 display. Also requires `USE_SPI`
 USE_DISPLAY_RA8876  | Enable TFT RA8876 display. Also requires `USE_SPI` 
 USE_DISPLAY_SEVENSEG  | Enable 7 segment display. Also requires `USE_I2C` 
-USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI` 
+USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI`  
+USE_DISPLAY_ILI9342  | Enable TFT ILI9342 display. Also requires `USE_SPI` 
+USE_DISPLAY_SD1331  | Enable TFT SD1331 display. Also requires `USE_SPI` 
+USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`  
 USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
-SHOW_SPLASH | Enable initialization splash message on the display
-USE_AWATCH | Enables analog watch support
-USE_GRAPH | Enable line charts. Also requires `NUM_GRAPHS`
+SHOW_SPLASH | Enable initialization splash message on the display  
+USE_AWATCH | Enables analog watch support  
+USE_GRAPH | Enable line charts. Also requires `NUM_GRAPHS`  
 ----
 
 ## Display Commands
@@ -82,7 +85,10 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 `i` = (re)init the display (in e-Paper mode with partial update)  
 `I` = (re)init the display (in e-Paper mode with full update)  
 `d` = update the display  
-`Dp` = switch display auto updates on(`p`=1)/off(`p`=0), when off display must be updated with `d`  
+`Dp` = switch display drawing options:  
+  bit 0: auto updates => 1 auto draw on each displaytext cmd, 0 display must be updated manually with `d`  
+  ( only valid for bw oled and epaper displays, color displays draw always immediately)  
+  bit 1: character drawing => 0 opaque character drawing, 1 transparent character drawing  
 `o` = switch display off  
 `O` = switch display on  
 `ap` =  `p` (0..3) set rotation angle  
@@ -91,19 +97,22 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 `T` = display Tasmota date in DD.MM.YY  
 `pp` = pad text with spaces, positive values align left, negative values
 align right    
-`sp` = set text scaling for classic GFX font (scaling factor 1...N)  
-`fp` = set font (1=12, 2=24,(opt 3=8)) if font==0 the classic GFX font is used, if font==7 RA8876 internal font is used   
+`sp` = set text scaling for all fonts (scaling factor 1...N)  
+`fp` = set font (1=12, 2=24,(opt 3=8)) if font==0 the classic GFX font is used, if font==7 RA8876 internal font is used, if font==4  special 7 segment 24 pixel number font is used   
 `Cp` = set foreground color (0,1) for black or white and RGB decimal code for color (see [color codes](#color-codes))  
 `Bp` = set background color (0,1) for black or white and RGB decimal code for color (see [color codes](#color-codes))   
-`Cip` = set foreground index color (0..18) for color displays (see index color table below)  
-`Bip` = set background index color (0..18) for color displays (see index color table below)  
+`Cip` = set foreground index color (0..31) for color displays (see index color table below)  
+`Bip` = set background index color (0..31) for color displays (see index color table below)  
 `wp` = draws an analog watch with radius p  (#define USE_AWATCH)   
 `Pfilename:` = display an rgb 16-bit color image when SD card file system is present  
+`dcI:V` = define index color entry Index 19-31, V 16 bit color value (index 0-18 is fixed)  
 
-### Touch Buttons
-(`#define USE_TOUCH_BUTTONS`)  
+### Touch Buttons and Sliders
+(`#define USE_TOUCH_BUTTONS`)
 
-Draw up to 16 GFX buttons to switch real Tasmota devices such as relays.
+![touch elements](https://user-images.githubusercontent.com/11647075/107513682-dbb9d980-6ba8-11eb-9716-18f788f8b08d.jpg)
+
+Draw up to 16 GFX buttons to switch real Tasmota devices such as relays or draw Sliders to dimm e.g. a lamp
 
 - Button number + 256 - a virtual touch toggle button is created (MQTT => TBT)
 - Button number + 512 - a virtual touch push button is created (MQTT => PBT)
@@ -111,7 +120,7 @@ Draw up to 16 GFX buttons to switch real Tasmota devices such as relays.
 `b#:xp:yp:xa:ys:oc:fc:tc:ts:text:`   
 _Parameters are separated by colons._   
 
-* `b#` where # = button number 0-15  
+* `b#` where # = define a button number 0-15  
 * `xp` = x position  
 * `yp` = y position  
 * `xa` = x size  
@@ -119,11 +128,84 @@ _Parameters are separated by colons._
 * `oc` = outline index color  
 * `fc` = fill index color  
 * `tc` = text index color  
-* `ts` = text size  
+* `ts` = text size on buttons  
 * `text:` = button text (must end with a colon :) (max 9 chars)  
 
 !!! example "`b0:260:260:100:50:2:11:4:2:Rel 1:`"
 
+to create picture touch buttons (jpeg on ESP32 only):  
+(`#define JPEG_PICTS` and `#define USE_UFILESYS`)  
+and provide pictures on UFILESYSTEM with ending ".jpg"  
+then give the path to the picture as button text omitting the ending .jpg  
+the example below would create a picture button with a picture file named wifi.jpg  
+the size of the picture is NOT scaled and the dimensions of the button must fit the picture size.  
+selected buttons invert the colors of the picture  
+
+!!! example "`b0:260:260:100:50:2:11:4:2:/wifi:`"
+
+you may also specify a picture for selected and unselected button state  
+if the picture name ends with '1' this picture is used for unselected state and a picture with ending '2' is used for selected state  
+
+Sliders:
+
+* `bs#` where # = define a slider number 0-15  
+* `xp` = x position  
+* `yp` = y position  
+* `xa` = x size  
+* `ys` = y size  
+* `ne` = number of elements  
+* `bc` = background color  
+* `fc` = frame color  
+* `bc` = bar color  
+
+you may set the state of a button or slider with:  
+
+* `b#s` where # = number 0-15  
+* `val` for buttons 0 or 1, for sliders 0-100  
+
+
+### Display JSON variables
+
+enabled by #define USE_DT_VARS  
+
+you may display variables that are exposed in JSON MQTT strings e.g. in Teleperiod messages.  
+the values are updated every second  
+
+`dv#:xp:yp:gc:fc:fo:ts:tl:dp:ut:JSON:ut:`   
+_Parameters are separated by colons._   
+
+* `dv#` where # = defines a variable number 0-7  (may be expanded by #define MAX_DT_VARS N)
+* `xp` = x position  
+* `yp` = y position  
+* `gc` = text background color (index color)  
+* `fc` = text foreground color (index color)  
+* `fo` = text font  
+* `ts` = text size (negativ value denotes transparent text)  
+* `tl` = text field length (if negative align right)  
+* `dp` = decimal precision (if < 0 denotes a string) 
+* `ut` = update time in seconds  (1...N)  
+* `jt` = JSON VARIABLE NAME (uppercase) if you specify a string in brackets here it is treated as displaytext cmd   
+* `ut` = unit string (max 5 chars and must end with a colon :)  
+
+example:
+```haskell
+;ILI9341 320x240 portrait mode
+[x0y0P/corona.rgb:]
+[dc19:31000]
+[x60y30f2Ci3D2]Tasmota
+; display text cmd displays time with seconds
+[dv0:50:70:19:3:2:1:11:1:1:[tS]::]
+; display text cmd displays analog watch
+[dv1:120:250:19:2:2:1:11:1:5:[w40]::]
+; displays Wifi SSID JSON
+[dv2:10:10:0:3:1:-1:10:-1:1:WIFI#SSID::]
+[x10y150f1s1Ci3Bi19]Counter:
+; displays a sensor JSON variable (here counter1)
+[dv3:80:150:0:7:1:1:11:0:1:COUNTER#C1:cnt:]
+[x10y300f1s1Ci3Bi19]memory free:
+; displays pre memory space JSON (heap)
+[dv4:100:300:0:7:1:1:-7:-1:1:HEAP:kb:]
+```
 
 ### Line chart
 
@@ -159,6 +241,28 @@ _Parameters are separated by colons._
 
 * `Gsn:path:` = save graph `n` to path (if optional SD card is present)  
 * `Grn:path:` = restore graph `n` from path (if optional SD card is present)  
+
+### Batch files
+
+When USE_UFILESYSTEM is defined and a file system is present you may define displaytext batch files.
+the file may contain any number of diplaytext cmds, one at a line.
+you may have comment lines beginning with a ;
+if a file named display.ini is present in the file system this batch file is executed.
+
+example file:
+
+```haskell
+; clr screen
+[z]
+; draw full screen picture
+[x0y0P/corona.rgb:]
+; define index color
+[dc19:31000]
+; draw transparent text with new index color over picture
+[x60y30f2Ci19D2]Tasmota
+```
+a displaytext batch file may be executed from console by displaybatch /file  
+
 
 ### Color Codes
 
@@ -200,6 +304,9 @@ Selected with `Ci` and `Bi` in the ILI9488, SSD1351, RA8876 and ST7789 color pan
 | 15 | DARKGREY | 16 | ORANGE | 17 | GREENYELLOW |
 | 18 | PINK |
 
+You may expand the index color table up from index 19 to 31.
+the cmd [dcI:V] defines the index color with index I (19-31) to the 16 bit color value V
+
 #### Notes on e-Paper Displays
 
 E-Paper displays have 2 operating modes: full update and partial update. While full update delivers a clean and sharp picture, it has the disadvantage of taking several seconds for the screen update and shows severe flickering during update. Partial update is quite fast (300 ms) with no flickering but there is the possibility that erased content is still slightly visible. It is therefore useful to perform a full update in regular intervals (e.g., each hour) to fully refresh the display.
@@ -228,16 +335,18 @@ I<sup>2</sup>C displays are connected in the usual manner and defined via the GP
 
 The I<sup>2</sup>C address must be specified using `DisplayAddress XX`, e.g., `60`. The model must be spedified with `DisplayModel`, e.g., `2` for SSD1306. To permanently turn the display on set `DisplayDimmer 100`. Display rotation can be permanently set using `DisplayRotate X` (x = `0..3`).  
 
-E-Paper displays are connected via software 3-wire SPI `(CS, SCLK, MOSI)`. The other three interface lines of the display
-(DC, Reset, busy) may be left unconnected. The jumper on the circuit board of the display must be set to 3-wire SPI.  
+On SPI the CS and DC pins when needed must use the pin definition with Display_ID + CS e.g. ST7789_CS
 
-The ILI9488, ILI9341 and SSD1351 are connected via hardware 3-wire SPI `(MOSI=GPIO13, SCLK=GPIO14, CS=GPIO15)`. The ILI9488 must also be connected to the backlight pin (dimmer supported on SSD1351). [Wiring](https://github.com/arendst/Tasmota/issues/2557#issuecomment-444454436)
+E-Paper displays are connected via software 3-wire SPI `(CS, SCLK, MOSI)`. DC should be connected to GND , Reset to 3.3 V 
+and busy may be left unconnected. The jumper on the circuit board of the display must be set to 3-wire SPI.  
 
-The RA8876 is connected via standard hardware 4-wire SPI `(MOSI=GPIO13, SCLK=GPIO14, CS=GPIO15, MISO=GPIO12)`. No backlight pin is needed (dimmer supported).  
+The ILI9488, ILI9341 and SSD1351 are connected via hardware 3-wire SPI `(SPI_MOSI=GPIO13, SPI_SCLK=GPIO14, CS=GPIO15)`. The ILI9488 must also be connected to the backlight pin (dimmer supported on SSD1351). [Wiring](https://github.com/arendst/Tasmota/issues/2557#issuecomment-444454436)
 
-The ST7789 is connected via 4 Wire software SPI ((CS), SCLK, MOSI, DC, (RES), BL )  
+The RA8876 is connected via standard hardware 4-wire SPI `(SPI_MOSI=GPIO13, SPI_SCLK=GPIO14, RA_8876_CS=GPIO15, SSPI_MISO=GPIO12)`. No backlight pin is needed, dimmer supported, on ESP32 gpio pins may be freeley defined (below gpio 33).  
 
-## Examples
+The ST7789 is connected via 4 Wire software SPI ((ST7789_CS), SSPI_SCLK, SSPI_MOSI, ST7789_DC, OLEDRESET, Backlight )  
+
+## Rule Examples, for scripting examples see scripting docs
 
 Print Text at size 1 on line 1, column 1:  
 `DisplayText [s1l1c1]Hello how are you?`

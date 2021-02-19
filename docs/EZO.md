@@ -35,6 +35,7 @@ Many EZO devices require calibration in order to accurately report values.  Cali
 By default, the EZO sensor is NOT built in the Tasmota binary.  The Tasmota web build interface can be used to produce the proper binary.  The following #define must be enabled in order to compile the following supported sensors:
 
 At this point in time, the following EZO sensors are supported:
+
 | Required build #define | Sensor ID | Sensor Name |
 |---|---|---|
 | USE_EZODO | EZO-D.O. | Disolved Oxygen |

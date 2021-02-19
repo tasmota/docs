@@ -23,6 +23,8 @@ In **Configuration - Configure Other** page in the webUI select emulation type.
 !!! warning
      Alexa Hue integration requires a physical Alexa device. The app alone is not enough.
 
+!!! info "Check your router settings. You have to enable **IGMP**"
+
 #### Belkin WeMo Emulation
 Use Belkin WeMo for devices with a single relay or Hue Bridge for devices with one or more relays or for lights. Tasmota devices will be discovered by the Alexa app.
 

@@ -21,18 +21,15 @@ USE_SCRIPT_SUB_COMMAND | enables invoking named script subroutines via the Conso
 USE_SCRIPT_HUE | enable `>H` section (Alexa Hue emulation)
 USE_SCRIPT_STATUS | enable `>U` section (receive JSON payloads from cmd status)
 SCRIPT_POWER_SECTION | enable `>P` section (execute on power changes)
-SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe  
-USE_SENDMAIL | enable `>m` section and support for sending e-mail   
+SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe
+USE_SENDMAIL | enable `>m` section and support for sending e-mail<br>(on ESP32 you must add USE_ESP32MAIL)  
 USE_SCRIPT_WEB_DISPLAY | enable `>W` section (modify web UI)
 SCRIPT_FULL_WEBPAGE | enable `>w` section (seperate full web page and webserver)
 USE_TOUCH_BUTTONS | enable virtual touch button support with touch displays
 USE_WEBSEND_RESPONSE | enable receiving the response of a [`WebSend`](Commands#websend) command (received in section >E)
 SCRIPT_STRIP_COMMENTS | enables stripping comments when attempting to paste a script that is too large to fit
 USE_ANGLE_FUNC | add sin(x),acos(x) and sqrt(x) e.g. to allow calculation of horizontal cylinder volume
-USE_24C256 | enables use of 24C256 I^2^C EEPROM to expand script buffer (defaults to 4k)
-USE_SCRIPT_FATFS | enables SD card support (on SPI bus). Specify the CS pin number. Also enables 4k script buffer on ESP8266 if using device with 4 or more Mb can enable FS by specifying -1 (using linker files with enabled FS Buffer e.g. eagle.flash.4m1m.ld)  
-USE_SCRIPT_FATFS_EXT | enables additional FS commands  
-SDCARD_DIR | enables support for web UI for SD card directory upload and download  
+USE_SCRIPT_FATFS_EXT | enables additional FS commands   
 USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 USE_SCRIPT_TASK | enables multitasking Task in ESP32
@@ -40,11 +37,10 @@ USE_SCRIPT_GLOBVARS | enables global variables and >G section
 USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
 SML_REPLACE_VARS | enables posibility to replace the lines from the (SML) descriptor with Vars
 USE_SML_SCRIPT_CMD | enables SML script cmds
-USE_SCRIPT_TIMER | enables up to 4 timers
+USE_SCRIPT_TIMER | enables up to 4 Arduino timers (so called tickers)  
 SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
 LARGE_ARRAYS | enables arrays of up to 1000 entries instead of max 127  
 SCRIPT_LARGE_VNBUFF | enables to use 4096 in stead of 256 bytes buffer for variable names  
-LITTLEFS_SCRIPT_SIZE S | enables script buffer of size S (e.g.4096)  
 USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
 USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
 ----
@@ -72,7 +68,7 @@ To save code space almost no error messages are provided. However it is taken ca
 - String comparison `==`, `!=`  
 - String size is 19 characters (default). This can be increased or decreased by the optional parameter on the `D` section definition
 
-**Script Interpreter**  
+#### Script Interpreter
 
 - Execution is _**strictly sequential**_, _**line by line**_
 - Evaluation is _**left to right**_ with optional brackets  
@@ -80,42 +76,62 @@ To save code space almost no error messages are provided. However it is taken ca
 - _**No spaces are allowed between math operators**_
 - Comments start with `;`  
 
-**Script buffer size**  
+#### Script buffer size
 the script language normally shares script buffer with rules buffer which is 1536 chars.
 with below options script buffer size may be expanded. PVARS is size for permanant vars.
 
 | Feature | ESP8266 | ESP32 | PVARS | remarks |
-| -- | -- | -- | -- | -- |
-| fallback | 1536 | 1536 | 50 ||
+| :---    | :---:   | :---: | :---: | :--- |
+| fallback | 1536 | 1536 | 50 | no longer supported |
 | compression (default)| 2560 | 2560 | 50 |actual compression rate may vary |
-| #define LITTLEFS_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld|
-| #define USE_SCRIPT_FATFS -1,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | ESP8266 must use 4M Flash with SPIFFS section use linker option -Wl,-Teagle.flash.4m2m.ld, ESP32 must use linker file "esp32_partition_app1572k_ffat983k.csv"(4M chips) or "esp32_partition_app1984k_ffat12M.csv" (16M chips)|
-| #define USE_SCRIPT_FATFS CS,  #define FAT_SCRIPT_SIZE S | S<=4096 | S<=16384 | 1536 | requires SPI SD card, CS is chip select pin of SD card|
-| #define EEP_SCRIPT_SIZE S, #define USE_EEPROM, #define USE_24C256 | S<=4096 | S<=8192 | 1536 |only hardware eeprom is usefull, because Flash EEPROM is also used by Tasmota |
-| #define EEP_SCRIPT_SIZE S, #define ALT_EEPROM | S<=6500 | | 1536 | you must use setoption12 1 to disable flash rotation |
+| #define USE_UFILESYS<br>#define UFSYS_SIZE S | S<=8192 | S<=16384 | 1536 | ESP8266 must use 4M Flash use linker option `-Wl,-Teagle.flash.4m2m.ld` or SDCARD  <BR>ESP32 can use any linker file, size of Filesystem depends on linker file 
+| #define EEP_SCRIPT_SIZE S<br>#define USE_EEPROM<br>#define USE_24C256 | S<=8192 | S<=16384 | 1536 |for hardware eeprom only|
+| #define EEP_SCRIPT_SIZE 6200<br>#define USE_EEPROM | S=6200 | not supported | 1536 | script is lost on OTA and serial flash, not on restart |
 
-most usefull defintion for larger scripts would be  
+most useful definition for larger scripts would be  
 
-ESP8266:  
+##### ESP8266
 
-with 1M flash only default compressed mode should be used  
-a special mode can enable up to 6500 chars by defining #define ALT_EEPROM  
-however this has some side effects. the script is deleted on OTA or serial update and has to be installed fresh after update. 
+with 1M flash only default compressed mode should be used (or an SDCARD)  
+a special compressed mode can enable up to 6200 chars by defining #define USE_EEPROM, #define EEP_SCRIPT_SIZE 6200  
+however this has some side effects. the script is deleted on OTA or serial update and has to be installed fresh after update.  
 
-with 4M Flash best mode would be  
-\#define USE_SCRIPT_FATFS -1  
+with 4M Flash best mode would be     
+`#define USE_UFILESYS`     
 with linker file "eagle.flash.4m2m.ld"  
 
-ESP32:  
+##### ESP32
 
-with standard linker file  
-\#define LITTLEFS_SCRIPT_SIZE 8192  
-or better:  
-\#define USE_SCRIPT_FATFS -1  
-\#define FAT_SCRIPT_SIZE 8192  
-with linker file "esp32_partition_app1572k_ffat983k.csv"  
+with all linker files  
+`#define USE_UFILESYS` 
 
-**Optional external editor**   
+
+#### script init error codes
+after initizialisation the script reports some info in the console e.g:  
+20:21:28.259 Script: nv=51, tv=13, vns=279, ram=4656  
+nv = number of used variables in total (numeric and strings)  
+tv = number of used string variables  
+vns = total size of name strings in bytes (may not exeed 255) or #define SCRIPT_LARGE_VNBUFF extents the size to 4095  
+ram = used heap ram by the script (excluding script buffer itself)  
+
+if the script init fails an error code is reported:  
+-1 = too many numerical variables defined  
+-2 = too many string variables defined  
+-3 = too many variables in total  
+-4 = not enough memory  
+-5 = variable name length too long in total  
+-7 = not enough memory  
+
+you may increase the number of allowed variables with defines in user_config_override  
+defaults and override defines:  
+Numer of total variables = 50  (#define MAXVARS)  
+Numer of string variables = 5  (#define MAXSVARS)  
+Number of filters (arrays) = 5 (#define MAXFILT)  
+Max string size            = 20 (override with >D size up to 48)  
+
+
+
+#### Optional external editor
 
 you may use a special external editor with syntax highlighting to edit the scripts. (mac and pc)
 you may use any number of comments and indents to make it better readable.
@@ -123,7 +139,7 @@ then with cmd r the script is transfered to the ESP and immediately started.
 (all comments and indents are removed before transfering)
 see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/AACcVmpZ4AfpdrWE_MPFGmbma?dl=0)  
 
-**Console Commands**   
+#### Console Commands
 
 `script <n>` <n>: `0` = switch script off; `1` = switch script on  
 `script ><cmdline>` execute <cmdline>  
@@ -183,7 +199,7 @@ Executed every second
 Executed on restart. p vars are saved automatically after this call  
 
 `>T`  
-Executed on [`TelePeriod`](Commands#teleperiod) time (`SENSOR` and `STATE`), only put `tele-` vars in this section  
+Executed at least at [`TelePeriod`](Commands#teleperiod) time (`SENSOR` and `STATE`) but mostly faster up to every 100 ms, only put `tele-` vars in this section  
 Remark: json variable names (like all others) may not contain math operators like - , you should set [`SetOption64 1`](Commands#setoption64) to replace `-` (_dash_) with `_` (_underscore_). Zigbee sensors will not report to this section, use E instead.
 
 `>H`  
@@ -348,7 +364,7 @@ generates a button with the name "ButtonLabel" in Tasmota main menu.
 Clicking  this button displays a web page with the HTML data of this section.
 all cmds like in >W apply here. these lines are refreshed frequently to show e.g. sensor values.
 lines preceeded by $ are static and not refreshed and display below lines without $.  
-this option also enables a full webserver interface when USE_SCRIPT_FATFS is activ.  
+this option also enables a full webserver interface when USE_UFILESYS is activ.  
 you may display files from the flash or SD filesystem by specifying the url:  IP/sdc/path  .
 (supported files: *.jpg, *.html, *.txt)  
 ==Requires compiling with `#define SCRIPT_FULL_WEBPAGE`.== 
@@ -376,6 +392,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `lip` = local ip as string  
 `luip` = udp ip as string (from updating device when USE_SCRIPT_GLOBVARS defined)  
 `prefixn` = prefix n = 1-3  
+`frnm` = friendly name  
+`dvnm` = device name  
 `pwr[x]` = power state  (x = 1..N)  
 `pc[x]` = pulse counter value  (x = 1..4)  
 `tbut[x]` = touch screen button state  (x = 1..N)  
@@ -384,8 +402,6 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `pin[x]` = GPIO pin level (x = 0..16)  
 `pn[x]` = GPIO for sensor code x. 99 if none  
 `pd[x]` = defined sensor for GPIO x. 999 if none  
-`pl[path]` = plays the mp3 path (ESP32 and if I2S Device defined)  
-`say[svar]` = text to speach (if I2S Device defined)  
 `adc(fac (pin))` = get adc value (on ESP32 can select pin) fac is number of averaged samples (power of 2: 0..7) 
 `sht[x]` = shutter position (x = 1..N) (if defined USE_SHUTTER)  
 `gtmp` = global temperature  
@@ -418,10 +434,12 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `wdclk` = double tapped on display (if defined USE_TTGO_WATCH)  
 `wtch(sel)` = gets state from touch panel sel=0 => touched, sel=1 => x position, sel=2 => y position (if defined USE_TTGO_WATCH)  
 `slp(time)` = sleep time in seconds, pos values => light sleep, neg values => deep sleep (if defined USE_TTGO_WATCH)  
-`play(path)` = play mp3 audio from filesystem (if defined USE_TTGO_WATCH) 
-`say("text")` = plays specified text to speech (if defined USE_TTGO_WATCH)  
-`pwmN(-pin freq)` = defines a pwm channel N (1..5) with pin Nr and frequency (pin 0 beeing -64)  
-`pwmN(val)` = outputs a pwm signal on channel N (1..5) with val (0-1023)  
+`pl("path")` = play mp3 audio from filesystem (if defined USE_I2S_AUDIO or USE_TTGO_WATCH or USE_M5STACK_CORE2)  
+`say("text")` = plays specified text to speech (if defined USE_I2S_AUDIO or USE_TTGO_WATCH or USE_M5STACK_CORE2)   
+`c2ps(sel val)` = gets, sets values on ESP32 CORE2 sel=0 green led, sel=1 vibration motor, sel=2,3,4 get touch button state 1,2,3 (if defined USE_M5STACK_CORE2)  
+`rec(path seconds)` = rec n seconds wav audio file from i2s microphone to filesystem path (if defined USE_I2S_AUDIO or USE_M5STACK_CORE2)  
+`pwmN(-pin freq)` = defines a pwm channel N (1..N) with pin Nr and frequency (pin 0 beeing -64, N=5 with esp8266 and N=8 with esp32)  
+`pwmN(val)` = outputs a pwm signal on channel N (1..N) with val (0-1023)  
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
 
 `wcs` = send this line to webpage (WebContentSend)  
@@ -433,6 +451,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
 `enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
 `gjp("host" "path")` = trigger HTTPS JSON page read as used by Tesla Powerwall (if defined SCRIPT_GET_HTTPS_JP)  
+`gwr("del" index)` = gets non JSON element from webresponse del = delimiter char or string, index = n´th element (if defined USE_WEBSEND_RESPONSE)  
+`http("url" "payload")` = does a GET or POST request on an URL (http:// is internally added)  
 `tsN(ms)` = set up to 4 timers (N=1..4) to millisecond time on expiration triggers section >tiN  (if defined USE_SCRIPT_TIMER)  
 `hours` = hours  
 `mins` = mins  
@@ -522,9 +542,9 @@ A subroutine with multiple parameters is declared as '#name(p1 p2 p3)', i.e. spa
 A subroutine is invoked with `=#name(param)` or '=#name(p1 p2)  
 Invoking a subroutine sets the parameter variable to the corresponding expression of the invocation. This means that parameter variables have script wide scope, i.e. they are not local variables to the subroutine.  
 Subroutines end with the next `#` or `>` line or break. Subroutine invocations may be nested (each level uses about 600 bytes stack space, so nesting level should not exeed 4).  
-Parameters can be numbers or strings and on type mismatch are converted  
+Parameters can be numbers or strings and on type mismatch are converted.  
 
-If `#define USE_SCRIPT_SUB_COMMAND` is included in your `user_config_override.h`, a subroutine may be invoked via the Console or MQTT using the subroutine's name. For example, a declared subroutine `#SETLED(num)` may be invoked by typing `SETLED 1` in the Console. The parameter `1` is passed into the `num` argument. This also works with string parameters.  
+If `#define USE_SCRIPT_SUB_COMMAND` is included in your `user_config_override.h`, a subroutine may be invoked via the Console or MQTT using the subroutine's name. For example, a declared subroutine `#SETLED(num)` may be invoked by typing `SETLED 1` in the Console. The parameter `1` is passed into the `num` argument. This also works with string parameters. since Tasmota capitalizes all commands you must use upper case labels.  
 
 It is possible to "replace" internal Tasmota commands. For example, if a `#POWER1(num)` subroutine is declared, the command `POWER1` is processed in the scripter instead of in the main Tasmota code.  
 
@@ -538,7 +558,7 @@ S
 =(svar)
 
 #subroutine
-=>print subroutine was executed
+print subroutine was executed
 ```
 
 **For loop** (loop count must not be less than 1, no direct nesting supported)
@@ -668,20 +688,16 @@ the MQTT decoder may be configured for more space in user config overwrite by
 `#define MQTT_EVENT_MSIZE` xxx   (default is 256)  
 `#define MQTT_EVENT_JSIZE` xxx   (default is 400)  
 
-**SD Card Support** (+ 10k flash)  
-`#define USE_SCRIPT_FATFS` `CARD_CS`  
-`CARD_CS` = GPIO of card chip select   
+**File System Support**    
+`#define USE_UFILESYS`  
+optional for SD_CARD:  
+`#define USE_SDCARD`  
+`#define SDCARD_CS_PIN X` X = GPIO of card chip select   
 SD card uses standard hardware SPI GPIO: mosi,miso,sclk  
-with 4M flash on ESP8266 and special linker file you may specify -1 for CS and get a flash file system with the same functionality but but very low capacity (e.g. 2 MB)  
+depending on used linker file you get a flash file system with the same functionality but very low capacity (e.g. 2 MB)  
 A maximum of four files may be open at a time  
-e.g., allows for logging sensors to a tab delimited file and then downloading the file ([see Sensor Logging example](#sensor-logging))  
-The downloading of files may be executed in a kind of "multitasking" when bit 7 of loglvl is set (128+loglevel)  
-Without multitasking 150kb/s (all processes are stopped during downloading), with multitasking 50kb/s (other Tasmota processes are running)  
-The script itself is also stored on the SD card with a default size of 4096 characters  
-
-**SD card directory support** (+ 1,2k flash)  
-`#define SDCARD_DIR`  
-Shows a web SD card directory (submenu of scripter) where you can upload and download files to/from sd card  
+e.g., allows for logging sensors to a tab delimited file and then downloading the file ([see Sensor Logging example](#sensor-logging))   
+The script itself is also stored on the file system with a default size of 8192 characters  
 
 `fr=fo("fname" m)` open file fname, mode 0=read, 1=write, 2=append (returns file reference (0-3) or -1 for error) 
 (alternatively m may be: r=read, w=write, a=append)  
@@ -693,6 +709,8 @@ Shows a web SD card directory (submenu of scripter) where you can upload and dow
 `flx(fname)` create download link for file (x=1 or 2) fname = file name of file to download  
 `fsm` return 1 if filesystem is mounted, (valid SD card found)  
 `res=fsi(sel)` gets file system information, sel=0 returns total media size, sel=1 returns free space both in kB   
+`fra(array fr)` reads array from open file with fr (assumes tab delimeted entries)  
+`fwa(array fr)` writes array to open file with fr (writes tab delimited entries)  
 
 **Extended commands**   (+0,9k flash)  
 `#define USE_SCRIPT_FATFS_EXT`  
@@ -729,12 +747,6 @@ print task1 on core %core%
 print task2 on core %core%
 
 ```
-
-**Script compression**  
-`#define USE_SCRIPT_COMPRESSION`  
-enables compression of script storage to about 40%. The script buffer is set to 2560 instead of 1535 chars.  
-no backward compatibility. first save your old script before updating.  
-
 
 **ESP32 Webcam support**   
 `#define USE_WEBCAM`  
@@ -902,19 +914,19 @@ remark: the Flash illumination LED is connected to GPIO4
 
     >B
     string=hello+"how are you?"
-    =>print BOOT executed
-    =>print %hello%
+    print BOOT executed
+    print %hello%
     =>mp3track 1
 
     ; list gpio pin definitions
     for cnt 0 16 1
     tmp=pd[cnt]
-    =>print %cnt% = %tmp%
+    print %cnt% = %tmp%
     next
 
     ; get gpio pin for relais 1
     tmp=pn[21]
-    =>print relais 1 is on pin %tmp%
+    print relais 1 is on pin %tmp%
 
     ; pulse relais over raw gpio
     spin(tmp 1)
@@ -922,7 +934,7 @@ remark: the Flash illumination LED is connected to GPIO4
     spin(tmp 0)
 
     ; raw pin level
-    =>print level of gpio1 %pin[1]%
+    print level of gpio1 %pin[1]%
 
     ; pulse over tasmota cmd
     =>power 1
@@ -941,15 +953,15 @@ remark: the Flash illumination LED is connected to GPIO4
     movav=hum
 
     ; show filtered results
-    =>print %median% %movav%
+    print %median% %movav%
 
     if chg[rssi]>0
-    then =>print rssi changed to %rssi%
+    then print rssi changed to %rssi%
     endif
 
     if temp>30
     and hum>70
-    then =>print damn hot!
+    then print damn hot!
     endif
 
     =#siren(5)
@@ -983,23 +995,23 @@ remark: the Flash illumination LED is connected to GPIO4
     ; stop timer after expired
     if timer1==0
     then timer1=-1
-    =>print timer1 expired
+    print timer1 expired
     endif
 
     ; auto counter with restart
     if count=10
-    then =>print 10 seconds over
+    then print 10 seconds over
     count=0
     endif
 
     if upsecs%5==0
-    then =>print %upsecs%  (every 5 seconds)
+    then print %upsecs%  (every 5 seconds)
     endif
 
     ; not recommended for reliable timers
     timer+=1
     if timer>=5
-    then =>print 5 seconds over (may be)
+    then print 5 seconds over (may be)
     timer=0
     endif
 
@@ -1015,7 +1027,7 @@ remark: the Flash illumination LED is connected to GPIO4
     dp0
     dt [c1l1f1s2p20] dimmer=%dimmer%
 
-    =>print %upsecs% %uptime% %time% %sunrise% %sunset% %tstamp%
+    print %upsecs% %uptime% %time% %sunrise% %sunset% %tstamp%
 
     if time>sunset
     and time<sunrise
@@ -1046,7 +1058,7 @@ remark: the Flash illumination LED is connected to GPIO4
 
     ; var has been updated
     if upd[hello]>0
-    then =>print %hello%
+    then print %hello%
     endif
 
     ; send to Thingspeak every 60 seconds
@@ -1069,13 +1081,13 @@ remark: the Flash illumination LED is connected to GPIO4
     if chg[hour]>0
     then
     ; exactly every hour
-    =>print full hour reached
+    print full hour reached
     endif
 
     if time5 {
-    =>print more then 5 minutes after midnight
+    print more then 5 minutes after midnight
     } else {
-    =print less then 5 minutes after midnight
+    print less then 5 minutes after midnight
     }
 
     ; publish abs hum every teleperiod time
@@ -1092,27 +1104,27 @@ remark: the Flash illumination LED is connected to GPIO4
     ;switch case state machine
     switch state
     case 1
-    =>print state=%state% , start
+    print state=%state% , start
     state+=1
     case 2
-    =>print state=%state%
+    print state=%state%
     state+=1
     case 3
-    =>print state=%state%  , reset
+    print state=%state%  , reset
     state=1
     ends
 
     ; subroutines
     #sub1(string)
-    =>print sub1: %string%
+    print sub1: %string%
     #sub2(param)
-    =>print sub2: %param%
+    print sub2: %param%
 
     #sendmail(string)
     =>sendmail [smtp.gmail.com:465:user:passwd:<sender@gmail.de:<rec@gmail.de:alarm] %string%
 
     >E
-    =>print event executed!
+    print event executed!
 
     ; Assign temperature from a Zigbee sensor
     zigbeetemp=ZbReceived#0x2342#Temperature
@@ -1132,7 +1144,7 @@ remark: the Flash illumination LED is connected to GPIO4
     ; color change needs 2 string vars
     if col!=ocol
     then ocol=col
-    =>print color changed  %col%
+    print color changed  %col%
     endif
 
     ; or check change of color channels
@@ -1151,7 +1163,7 @@ remark: the Flash illumination LED is connected to GPIO4
     =color %col%
 
     >R
-    =>print restarting now
+    print restarting now
 
 ### Sensor Logging
 
@@ -1179,7 +1191,7 @@ remark: the Flash illumination LED is connected to GPIO4
     res=fr(str fr)
     if res>0
     then
-    =>print %cnt% : %str%
+    print %cnt% : %str%
     else
     break
     endif
@@ -1406,7 +1418,7 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
     and wd==1
     then
     =>sendmail [*:*:*:*:*:user.tasmota@gmail.com: Wochenbericht]*
-    print sening email
+    print sending email
     endif
 
 
@@ -1789,7 +1801,7 @@ Synchronizes 2 Magic Home devices by also sending the commands to a second Magic
     and timer<30
     then
     ; short press
-    ;=>print short press
+    ;print short press
     toggle^=1
     =>%ws% power1 %toggle%
     endif
@@ -1801,7 +1813,7 @@ Synchronizes 2 Magic Home devices by also sending the commands to a second Magic
     then
     ; hold
     hold=1
-    ;=>print hold=%timer%
+    ;print hold=%timer%
     if toggle>0
     then
     =>%ws% dimmer +
@@ -2026,7 +2038,7 @@ start dim level = initial dimmer level after power-up or restart; max 100
     dimval=70  ;start dim level
       
     >B
-    =>print "WiFi-Dimmer-Script-v0.2"
+    print "WiFi-Dimmer-Script-v0.2"
     =>Counter1 0
     =>Baudrate 9600
     ; boot sequence
@@ -2143,3 +2155,92 @@ start dim level = initial dimmer level after power-up or restart; max 100
     =>SerialSend5 %dim%
     =>Dimmer %tmp%
     #
+
+### Multiplexing a single adc with CD4067 breakout
+
+    >D
+    ; this script works with an CD4067 breakout to multiplex a single ADC channel
+    ; of an ESP
+    IP=192.168.178.177
+    SB=8192
+    res=0
+    cnt=0
+    mcnt=0
+    m:mux=0 16
+    
+    >B
+    ; define output pins for multiplexer
+    spinm(12 O)
+    spinm(13 O)
+    spinm(14 O)
+    spinm(15 O)
+    ; define string array with 16 entries
+    res=is1(16 "")
+    is1[1]="Azalea"
+    is1[2]="Aster"
+    is1[3]="Bougainvillea"
+    is1[4]="Camellia"
+    is1[5]="Carnation"
+    is1[6]="Chrysanthemum"
+    is1[7]="Clematis"
+    is1[8]="Daffodil"
+    is1[9]="Dahlia"
+    is1[10]="Daisy"
+    is1[11]="Edelweiss"
+    is1[12]="Fuchsia"
+    is1[13]="Gladiolus"
+    is1[14]="Iris"
+    is1[15]="Lily"
+    is1[16]="Periwinkle"
+    
+    >F
+    ; get adc value into array, average 4 values
+    ; this is for ESP32 here on pin 32
+    mux[mcnt+1]=adc(4 32)
+    ; this is for ESP8266 it has only 1 ADC input
+    ; mux[mcnt+1]=adc(4)
+    mcnt+=1
+    if mcnt>=16
+    then
+    mcnt=0
+    endif
+    ; set multiplexer
+    spin(12 mcnt)
+    spin(13 mcnt/2)
+    spin(14 mcnt/4)
+    spin(15 mcnt/8)
+    
+    ; display web UI
+    #wsub
+    if wm==0
+    then
+    for cnt 1 16 1
+    wcs  {s}Ch %0cnt%: %is1[cnt]%{m}%mux[cnt]% %%{e}
+    next
+    endif
+    
+    >J
+    ; send to mqtt
+    ,"CD4067":{
+    "%is1[1]%":%mux[1]%,
+    "%is1[2]%":%mux[2]%,
+    "%is1[3]%":%mux[3]%,
+    "%is1[4]%":%mux[4]%,
+    "%is1[5]%":%mux[5]%,
+    "%is1[6]%":%mux[6]%,
+    "%is1[7]%":%mux[7]%,
+    "%is1[8]%":%mux[8]%,
+    "%is1[9]%":%mux[9]%,
+    "%is1[10]%":%mux[10]%,
+    "%is1[11]%":%mux[11]%,
+    "%is1[12]%":%mux[12]%,
+    "%is1[13]%":%mux[13]%,
+    "%is1[14]%":%mux[14]%,
+    "%is1[15]%":%mux[15]%,
+    "%is1[16]%":%mux[16]%
+    }
+    
+    >W
+    ; call web subroutine
+    %=#wsub
+

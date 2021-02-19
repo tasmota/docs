@@ -33,6 +33,47 @@ The Tasmota integration is far from complete and the following will be added lat
 - LVGL integration
 - (much more...)
 
+## Loading code from filesystem
+
+You can upload Berry code in the filesytem and load them at runtime. Just be careful to use the `*.be` extensions.
+
+To load a Berry file, use the `load(filename)` function. It takes a filename and must end by `.be` or `.bec`.
+
+Note: you don't need to prefix with `/`. A leading `/` will be added automatically if it is not present.
+
+When loading a Berry script, the compiled bytecode is automatically saved to the filesystem, with the extension `.bec` (this is similar to Python's `.py`/`.pyc` mechanism). The `save(filename,closure)` function is used internally to save the bytecode.
+
+Currently the precompiled is not loaded unless you explicitly use `load("filename.bec")` extension, this may change in the future.
+
+Here is the Berry code in the `load()` function:
+
+```python
+# simple wrapper to load a file
+# prefixes '/' if needed, and simpler to use than `compile()`
+def load(f)
+  try
+    # check that the file ends with '.be' of '.bec'
+    var fl = string.split(f,'.')
+    if (size(fl) <= 1 || (fl[-1] != 'be' && fl[-1] != 'bec'))
+      raise "file extension is not '.be' or '.bec'"
+    end
+    var native = f[size(f)-1] == 'c'
+    # add prefix if needed
+    if f[0] != '/' f = '/' + f end
+    # load - works the same for .be and .bec
+    var c = compile(f,'file')
+    # save the compiled bytecode
+    if !native
+      save(f+'c', c)
+    end
+    # call the compiled code
+    c()
+  except .. as e
+    log(string.format(\"BRY: could not load file '%s' - %s\",f,e))
+  end
+end
+```
+
 ## Examples
 
 ### Interactive mode
@@ -84,13 +125,26 @@ Example:
 12:56:05.706 RSL: stat/tasmota_B90B50/RESULT = {"Br":"3"}
 ```
 
+#### `load(filename:string) -> int`
+
+Loads a Berry script from the filesystem, and returns an error code; `0` means no error. Filename does not need to start with `/`, but needs to end with `.be` (Berry source code) or `.bec` (precompiled bytecode).
+
+When loading a source file, the precompiled bytecode is saved to filesystem using the `.bec` extension.
+
+
+#### `save(filename:string, f:closuer) -> nil`
+
+Internally used function to save bytecode. It's a wrapper to the Berry's internal API `be_savecode()`. There is no check made on the filename.
+
+Note: there is generally no need to use this function, it is used internally by `load()`.
+
 ### `module tasmota`
 
 
 Tasmota specific functions are now in the `tasmota` module.
 Tasmota automatically imports all modules; i.e. the following commands are done at startup:
 
-```
+```python
 import string
 import json
 import gc
@@ -171,3 +225,4 @@ br tasmota.timereached(t)
 20:36:36.806 CMD: br tasmota.timereached(t)
 20:36:36.813 RSL: stat/tasmota_67B1E9/RESULT = {"Br":"true"}
 ```
+

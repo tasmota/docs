@@ -347,4 +347,4 @@ Arduino Core (open source) are the core libraries for ESP8266/ESP8285 chips to m
 You can see the Arduino Core Version and the Espressif SDK Version on the Tasmota WebUI under the Information Menu entry.
 
 ## I Cannot Find An Answer Here!
-Check the [Troubleshooting](Troubleshooting) section or join [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), or the [Community Forum](https://groups.google.com/d/forum/sonoffusers) for assistance from other Tasmota users.  
+Check the [Troubleshooting](Troubleshooting) section or join [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), [Reddit](https://www.reddit.com/r/tasmota/) or [Google Groups](https://groups.google.com/d/forum/sonoffusers) for assistance from other Tasmota users.  

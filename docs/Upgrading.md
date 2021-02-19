@@ -14,8 +14,10 @@ If you wish to switch to a different [build](Builds) or use development branch y
 Download binaries from:
 
 - GitHub [releases](https://github.com/arendst/Tasmota/releases)
-- official [OTA Server](http://ota.tasmota.com/tasmota/release/)
-- development branch [OTA Server](http://ota.tasmota.com/tasmota/)
+- Official OTA server:
+   - [Current release](http://ota.tasmota.com/tasmota/release/)
+   - [Development branch](http://ota.tasmota.com/tasmota/)
+   - Older release binaries: [9.1.0](http://ota.tasmota.com/tasmota/release-9.1.0/), [8.5.1](http://ota.tasmota.com/tasmota/release-8.5.1/), [7.2.0](http://ota.tasmota.com/tasmota/release-7.2.0/), [6.7.1](http://ota.tasmota.com/tasmota/release-6.7.1/)
 - your [personal OTA server](#private-ota-server)
 
 ## .gz binaries

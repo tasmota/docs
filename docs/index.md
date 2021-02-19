@@ -19,27 +19,36 @@ For OTA updates please use the new server [http://ota.tasmota.com/tasmota/releas
 Download [latest Tasmotizer](https://github.com/tasmota/tasmotizer/releases/) to use the new OTA server during flashing.
 
 ### Current release 
-<a href="https://github.com/arendst/Tasmota/releases/tag/v9.1.0"><span style="font-size:40px;">Tasmota 9.1.0 Imogen</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
+<a href="https://github.com/arendst/Tasmota/releases/tag/v9.3.0"><span style="font-size:40px;">Tasmota 9.3.0 Kenneth</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
 
-Christmas has come early: 
+- Support for filesystem ``autoexec.bat`` to execute sequential commands like backlog
+- Filesystem commands ``Ufs``, ``UfsType``, ``UfsSize``, ``UfsFree``, ``UfsDelete``, ``UfsRename`` and ``UfsRun``- Support for Afrikaans and Frysk language translations
+- Added BSSID and Signal Strength Indicator to GUI wifi scan result [#10253](https://github.com/arendst/Tasmota/issues/10253)
+- Rule trigger string comparisons for EndsWith ``$>``, StartsWith ``$<`` and Contains ``$|`` [#10538](https://github.com/arendst/Tasmota/issues/10538)
+- New commands: ``CTRange``, ``L1MusicSync <0|Off>|<1|On>|<2|Toggle>, 1..10, 1..100>``, ``RuleTimer0``, ``Speed2``, ``VirtualCT``, ``SetOption40 0..250``, ``SetOption43 1..255``, ``SetOption118 1``, ``SetOption119 1``, ``SetOption120 1`` or ``ZbEndpointTopic 1``, ``ZbScan``
+- Command synonims: ``ChannelRemap``, ``MultiPWM``, ``AlexaCTRange``, ``PowerOnFade``, ``PWMCT``, ``WhiteBlend`` and ``VirtualCT`` as synonyms for ``SetOption37, 68, 82, 91, 92, 105`` and ``106``
+- Commands ``ZbNameKey``, ``ZbDeviceTopic``, ``ZbNoPrefix``, ``ZbEndpointSuffix``, ``ZbNoAutoBind`` and ``ZbNameTopic`` as synonyms for ``SetOption83, 89, 100, 101, 110`` and ``112``
+- Commands ``ZbNoAutoBind``, ``ZbReceivedTopic`` and ``ZbOmitDevice`` as synonyms for ``SetOption116, 118`` and ``119``
+- Commands ``BuzzerActive`` and ``BuzzerPwm`` as synonyms for ``SetOption67`` and ``111``
+- Milliseconds to console output [#10152](https://github.com/arendst/Tasmota/issues/10152)
+- Gpio ``Option_a1`` enabling PWM2 high impedance if powered off as used by Wyze bulbs [#10196](https://github.com/arendst/Tasmota/issues/10196)
+- Rotary No Pullup GPIO selection ``Rotary A/B_n`` [#10407](https://github.com/arendst/Tasmota/issues/10407)
+- Support for P9813 RGB Led MOSFET controller, FTC532 8-button touch controller, BS814A-2 8-button touch buttons, up to 4 I2C SEESAW_SOIL Capacitance & Temperature sensors, TOF10120 time of flight sensor, SPI display driver for ST7789 TFT, TM1637 seven segment display, RFID Wiegand interface, Sugar Valley NeoPool Controller, Eastron SDM72D-M three phase 100A Modbus energy meter, SPI display driver SSD1331 Color OLED
+- Support for ESP32 ``Module 3`` Odroid Go 16MB binary tasmota32-odroidgo.bin [#8630](https://github.com/arendst/Tasmota/issues/8630)
+- Support for ESP32 ``Module 5`` Wireless Tag ETH01 [#9496](https://github.com/arendst/Tasmota/issues/9496)
+- Support for ESP32 ``Module 7`` M5stack core2 16MB binary tasmota32-core2.bin [#10635](https://github.com/arendst/Tasmota/issues/10635)
+- Berry language on ESP32
 
-- Detach switches from relays and lights using command [`SetOption114 1`](Commands#setoption114)
-- Added official [Tasmota integration](https://www.home-assistant.io/integrations/tasmota/) for Home Assistant. _Still in beta_
+See [changelog](https://github.com/arendst/Tasmota/blob/development/CHANGELOG.md) for a complete list of new features, changes and bug fixes.
 
-- :warning: **BREAKING CHANGE** :warning: Redesigned GPIO representation changing Template layout. [Read more...](GPIO-Conversion)
-- :warning: **BREAKING CHANGE** :warning: Changed `SetOption73 1` JSON result from {"ACTION":"SINGLE"} to {"Button1":{"Action":"SINGLE"}} 
+### Join our communities and chat
+See [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), [Reddit](https://www.reddit.com/r/tasmota/) or [Google Groups](https://groups.google.com/d/forum/sonoffusers) for general chat, feedback, questions and live troubleshooting.
 
-- Added support for [EZO](EZO.md) sensors
-- Removed support for direct upgrade from Tasmota versions before v7.0. You **have to follow** the [migration path](Upgrading#migration-path).
-- Support for analog buttons indexed within standard button range
-- PlatformIO library structure redesigned for improved compilation speed 
-- Added Vietnamese language tranlation
-- New commands: [`DimmerStep`](Commands#dimmerstep), [`NoDelay`](Commands#nodelay), [`PulseTime<x>`](Commands#pulsetime), [`ShutterChange`](Commands#nodelay), [`SO114`](Commands#setoption114), [`SwitchMode 15`](Commands#nodelay), [`SwitchText`](Commands#switchtext), [`SO113`](Commands#nodelay), [`ZbMap`](Commands#zbmap), [`ZbOccupancy`](Commands#zboccupancy), 
+### Report bugs and suggest features
+Open a new topic on [Tasmota discussions](https://github.com/arendst/Tasmota/discussions).
 
-See [changelog](https://github.com/arendst/Tasmota/blob/development/CHANGELOG.md) for a complete list of new features, changes and fixes.
+Report a bug in [Tasmota issues](https://github.com/arendst/Tasmota/issues).
 
-### Join our community
-See [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota) or [Community Forum](https://groups.google.com/d/forum/sonoffusers) for feedback, questions and troubleshooting.
 
-### If you like Tasmota
+#### If you like Tasmota
 <iframe src="https://ghbtns.com/github-btn.html?user=arendst&repo=tasmota&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe><iframe src="https://ghbtns.com/github-btn.html?user=arendst&repo=tasmota&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> 

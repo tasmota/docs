@@ -2,7 +2,7 @@
   
 The Shelly 2.5 is supported from Tasmota 6.5.0.8 using a template.
 
-<img src="https://old.shelly.cloud/wp-content/uploads/2019/02/shelly_25_250.png" width="250" align="right" />
+<img src="https://shelly.cloud/wp-content/uploads/2020/06/shelly25.jpg" width="250" align="right" />
 
 * [Allterco Shelly 2.5 Product Page](https://shelly.cloud/shelly-25-wifi-smart-relay-roller-shutter-home-automation/)
 * [Allterco Shelly 2.5 Shop](https://shelly.cloud/product/wifi-smart-home-automation-shelly-25-switch-relay-roller-shutter/)
@@ -21,19 +21,19 @@ The GND connection of the Shelly is connected to the live AC wire. Connecting se
 
 An ESP8266 with 2MB flash dual relay device with Energy Monitoring. Slightly smaller than the original Shelly 2.
 
-<img src="https://old.shelly.cloud/wp-content/uploads/2019/01/s25_size2.jpg" height="250" />
-<img src="https://old.shelly.cloud/wp-content/uploads/2019/01/s25_size.jpg" height="250" />
-
 ## Serial Connection
 
 The Shelly 2.5 model comes with a partially exposed programming/debug header which can be used to flash Tasmota on the device. A USB-to-UART adapter is needed as well as a reliable 3.3V with at least 350 mA drive capability. The following diagram shows the device pinout and power source voltage selection jumper.
 
-<img src="https://old.shelly.cloud/wp-content/uploads/2019/01/pin_out-650x397.png" height="250" />
+<img src="https://shelly.cloud/wp-content/uploads/2020/06/pin_out.png" height="250" />
 
 The onboard connector is 1.27mm raster with 1mm diameter holes. Normal Dupont cables won't fit. To avoid damaging the pcb, use either a stripped 24 AWG Ethernet cable and breadboard as an adapter, or female header socket legs (see image below). The legs of a female header socket fit nicely. Solder them to custom-crimped Dupont wires for use with your USB-to-UART adapter. These often come with Wemos D1 Mini boards in multiple lengths.
 
 <img src="https://user-images.githubusercontent.com/188284/63646301-aef1d800-c710-11e9-9bf7-5b45ca470144.png" height="250" />
 <img src="https://user-images.githubusercontent.com/188284/63646333-3dfef000-c711-11e9-9446-82ea0ce88c95.png" height="250" />
+
+Otherwise you could simply buy an adapter that converts Dupont to 1.27mm raster at
+[tindie](https://www.tindie.com/products/21512/)
 
 ## Template
 Tasmota 6.5.0.8 and higher supports Shelly 2.5  

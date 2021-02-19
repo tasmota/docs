@@ -8,9 +8,9 @@ ESP8266 has a single ADC pin available. It may be used to read voltage at ADC pi
 
 By default Tasmota uses the ADC pin to read voltage. The signal comes from an analog [peripheral](), or sometimes from the device itself (see [Shelly 2.5](/devices/Shelly-2.5)). 
 
-After wiring a peripheral to A0 pin you have to configure it in **Configure Module**:
+After wiring a peripheral to GPIO17 (A0) pin you have to configure it in **Configure Module**:
 
-![ADC configuration](https://i.postimg.cc/qqYmYG3v/ADC.png)
+![ADC configuration](_media/A0.png)
 
 #|Option|WebUI display|MQTT mesage
 -|-|-|-

@@ -18,6 +18,7 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 // define max number of decoder entries (defaults to 20 if not defined)
 #define SML_MAX_VARS N
 ```
+
 ----
 
 **Driver for various meters , heating devices, and reed like contacts**
@@ -141,6 +142,8 @@ in `user_config_override.h` file). An entry defines how to decode the data and p
     - `ffffffff` = extract a float value  
     - `FFffFFff` = extract a reverse float value  
     - `@` decoding definition termination character  
+    - `(` following the `@` character in case of obis decoder indicates to fetch the 2. value in brackets, not the 1. value.  
+	e.g. in this obis paylod the second value is extracted 0-1:24.2.3(210117125004W)(01524.450*m3)  
     - decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte.   
       e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`  
     - in the case of **MODBus**, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition  
@@ -381,7 +384,7 @@ Your Tasmota SML `script`:
 
 ------------------------------------------------------------------------------
 
-### Hager EHZ363 (SML)
+### Hager EHZ363 (SML) & Apator Norax 3D
 
 ```
 >D  
@@ -416,6 +419,7 @@ Your Tasmota SML `script`:
 #  
 
 ```
+
 ------------------------------------------------------------------------------
 
 ### Landis + Gyr ZMR120AReS2R2sfCS (OBIS)
@@ -659,6 +663,7 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 #
 
 ```
+
 ------------------------------------------------------------------------------
 
 ### COMBO Meter (Water,Gas,SML)
@@ -1059,5 +1064,71 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
 1,F70308xxxxxxxxxxxxUUuu@i1:10,AA20-10V,V,Metric_AA20,1
 1,F70304UUuu@i2:1,StellsignalRk1,%,CtrlSig_RK1,0
 #
+
 ```
+
+### EasyMeter Q3A / Apator APOX+ (additional data disabled / PIN locked)
+
+A 2-Tarif Meter which for Example SWM (Stadtwerke München) uses. Unfortunately this Version sends only whole kWh (precision 0).
+Apator APOX+ behaves same as the EasyMeter while pin locked, just precision 0 without additional data. After calling the energy provider they send a letter with the unlock pin. 
+```
+>D
+>B
+=>sensor53 r
+>M 1
++1,3,s,0,9600,SML
+1,77070100010801ff@1000,Verbrauch_Tarif_1,kWh,Total_Tarif1,0
+1,77070100010802ff@1000,Verbrauch_Tarif_2,kWh,Total_Tarif2,0
+1,77070100010800ff@1000,Verbrauch_Summe,kWh,Total_Summe,0
+#
+
+```
+### EasyMeter Q3B
+
+Two 2-Tarif meters (e.g. from Fairenergie Reutlingen) are readout at the same time. The first one is for general purpose and is connected to GPIO14. The JSON prefix is set to "Power". The second one is for the heat pump and connected to GPIO13. The JSON prefix is set to "Pump". For both meters, tarif 1 & 2 are whole kWh (precision 0), current consumption in W has a higher precision (1).
+
+```
+>D
+>B
+=>sensor53 r
+>M 2
++1,14,s,0,9600,Power
+1,77070100010801ff@1000,Tarif 1,kWh,Power_T1,0
+1,77070100010802ff@1000,Tarif 2,kWh,Power_T2,0
+1,77070100010800ff@1000,Summe,kWh,Power_Sum,0
+1,77070100010700ff@1000,Verbrauch,W,Power_Use_Sum,1 
++2,13,s,0,9600,Pump
+2,77070100010801ff@1000,Tarif 1,kWh,HP_T1,0
+2,77070100010802ff@1000,Tarif 2,kWh,HP_T2,0
+2,77070100010800ff@1000,Summe,kWh,HP_Sum,0
+2,77070100010700ff@1000,Verbrauch,W,HP_Use_Sum,1 
+#
+
+```
+### Apator APOX+ (additional data enabled)
+Energy provider supplied a PIN code to enable output of additional data.
+
+```
+>D  
+
+>B  
+->sensor53 r
+
+>M 1  
++1,3,s,0,9600,SML
+1,77070100010801ff@1000,Verbrauch_Tarif_1,kWh,Total_Tarif1,3
+1,77070100010802ff@1000,Verbrauch_Tarif_2,kWh,Total_Tarif2,3
+1,77070100010800ff@1000,Verbrauch_Summe,kWh,Total_Summe,3
+1,77070100100700ff@1,Current consumption,W,Power_curr,3
+1,=h -------------------------------  
+1,770701001f0700ff@1,Current L1,A,Curr_p1,3  
+1,77070100330700ff@1,Current L2,A,Curr_p2,3  
+1,77070100470700ff@1,Current L3,A,Curr_p3,3  
+1,=h -------------------------------  
+1,77070100200700ff@1,Voltage L1,V,Volt_p1,3 
+1,77070100340700ff@1,Voltage L2,V,Volt_p2,3  
+1,77070100480700ff@1,Voltage L3,V,Volt_p3,3
+#
+```
+
 ------------------------------------------------------------------------------

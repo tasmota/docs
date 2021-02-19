@@ -28,7 +28,7 @@ Then chose **Firmware Upgrade** in the WebUI.
 ![CCLoader_2](https://user-images.githubusercontent.com/5904370/68962045-fbaaf380-07d3-11ea-9736-a44c13ef7653.png)
   
 Now download the correct firmware as a .bin-file, if you haven't done already. Do not use a .hex-file. These can be found for various chips here:  
-https://github.com/Jason2866/CCLoader/tree/master/Bin 
+https://github.com/arendst/Tasmota/tree/development/tools
 
 Select **_Ugprade by file upload_**, like you would do for a OTA upgrade of the Tasmota firmware. If a CC25xx chip was successfully detected and the selected file passes a (very minimalistic) check, this will trigger the upload to the CC25xx.  
   

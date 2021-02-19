@@ -27,7 +27,7 @@ Once you have set up the development environment, unzip the source code into a f
 ## Customize your build
 The base for your self compiled version has to be **Tasmota**. Do NOT use a other Tasmota build variant for.
 
-Create a new file in `/tasmota` folder called `user_config_override.h`.
+Create a new file in `/tasmota` folder called `user_config_override.h`. You can copy the sample file `user_config_override_sample.h` that is already there and which include some sample definition for coding your own Wifi SSID and pasword inside the Tasmota firmware.
 
 Open the file in chosen development environment for editing.
 
@@ -35,7 +35,7 @@ Enter lines required to enable or disable desired feature. All features and thei
 
 Best practice to enable a feature is to use
 
-```
+```c++
 #ifndef %identifier%
 #define %identifier%
 #endif
@@ -51,7 +51,7 @@ Best practice to enable a feature is to use
 
 Example: enable blinds and shutters support
 
-```
+```c++
 #ifndef USE_SHUTTER
 #define USE_SHUTTER             // Add Shutter support for up to 4 shutter with different motortypes (+6k code)
 #endif
@@ -65,7 +65,7 @@ identifier = `USE_SHUTTER`
 
 Example: disable Domoticz support
 
-```
+```c++
 #ifdef USE_DOMOTICZ
 #undef USE_DOMOTICZ                              
 #endif 
@@ -83,3 +83,130 @@ Save file, compile the custom binary and flash it
 
 !!! note
     There are limits to how many features can be included! If you go overboard code might not compile due to features conflicting _or_ might not be able to be flashed if it exceeds [ESP8266 limits](Sensor-API#keeping-esp8266-code-compact).
+
+## Defining multiple custom firmwares
+
+You may want to generate multiple custom firmwares such as one for switches/relays, one for sensors, in a similar way as Tasmota provides different binaries. This can be achieved very simply.
+
+1. Rename the file `platformio_override_sample.ini` as `platformio_override.ini`. Do not change anything inside.
+1. Create a file `platformio_tasmota_cenv.ini` like the sample below. This will allow you to define your own binaries. `cenv` stands for Custom ENVironment where an environment is a specific binary to generate.
+1. In your `user_config_override.h` you can create sections with specific settings for each type of firmware. SSID and MQTT can be outside of the section so they apply to every binary.
+
+#### Sample `platformio_tasmota_cenv.ini`
+
+```ini
+; *********************************************************************
+[platformio]
+; For best Gitpod performance remove the ";" in the next line. Needed 
+; Platformio files are cached and installed at first run
+;core_dir = .platformio
+
+; *** Build/upload environment
+default_envs =
+; *** Uncomment the line(s) below to select version(s) that will be build
+;     by default. Commented versions can still be build individually from
+;     VSCode or command line
+                tasmota-foo
+                tasmota-bar
+                tasmota32-foo
+                tasmota32-grizzly
+
+; *********************************************************************
+; Common section can override global parameters for all builds
+[common]
+
+; *** Upload Serial reset method for Wemos and NodeMCU
+upload_port               = COM4
+
+; *********************************************************************
+; This section show how to create 2 alternative binaries : tasmota-foo.bin
+; and tasmota-bar.bin. Those binaries are derived form tasmota.bin and 
+; customization is defined in user_config_override.h 
+; Those binaries are for ESP8266
+; The name after the env: tag will give its name to the binary
+[env:tasmota-foo]
+build_flags = ${common.build_flags} -DFIRMWARE_FOO
+
+[env:tasmota-bar]
+build_flags = ${common.build_flags} -DFIRMWARE_BAR
+
+; *********************************************************************
+; Similar exemple for ESP32
+; Note that you must explicitly state that they derive from `tasmota32`
+[env:tasmota32-foo]
+extends = env:tasmota32
+build_flags             = ${common32.build_flags} -DFIRMWARE_FOO
+
+[env:tasmota32-grizzly]
+extends = env:tasmota32
+build_flags             = ${common32.build_flags} -DFIRMWARE_GRIZZLY
+```
+
+#### Sample `user_config_override.h`
+
+```c++
+#ifndef _USER_CONFIG_OVERRIDE_H_
+#define _USER_CONFIG_OVERRIDE_H_
+
+// force the compiler to show a warning to confirm that this file is included
+#warning **** user_config_override.h: Using Settings from this File ****
+
+// ***********************************************
+// ** Global settings for all binaries ***********
+
+// -- Setup your own Wifi settings  ---------------
+#undef  STA_SSID1
+#define STA_SSID1         "YourSSID"             // [Ssid1] Wifi SSID
+#undef  STA_PASS1
+#define STA_PASS1         "YourWifiPassword"     // [Password1] Wifi password
+
+// You can also define your IP settings or your MQTT settings
+
+// ***********************************************
+// ** Firmare specific settings ******************
+
+// -- Options for firmware tasmota-foo and tasmota32-foo ------
+#ifdef FIRMWARE_FOO
+    // This line will issue a warning during the build (yellow in 
+    // VSCode) so you see which section is used
+    #warning **** Build: FOO ****
+    // -- CODE_IMAGE_STR is the name shown between brackets on the 
+    //    Information page or in INFO MQTT messages
+    #undef CODE_IMAGE_STR
+    #define CODE_IMAGE_STR "foo"
+
+    // Put here your override for firmware tasmota-foo
+    #define USE_I2C
+    #define USE_SENSOR_FOO  // Beware this doesn't exist !!!
+
+#endif
+
+// -- Options for firmware tasmota-bar ------
+#ifdef FIRMWARE_BAR
+    #warning **** Build: BAR ****
+    #undef CODE_IMAGE_STR
+    #define CODE_IMAGE_STR "bar"
+
+    // Put here your override for firmware tasmota-bar
+
+#endif
+
+// -- Options for firmware tasmota32-grizzly ------
+#ifdef FIRMWARE_GRIZZLY
+
+    // If these settings are only for ESP32, you can check these
+    // are used only when building for ESP32
+    #ifndef ESP32
+    #error *** This setup of for tasmota32 only ***
+    #endif
+    
+    #warning **** Build: GRIZZLY ****
+    #undef CODE_IMAGE_STR
+    #define CODE_IMAGE_STR "grizzly"
+
+    // Put here your override for firmware tasmota32-grizzly
+
+#endif
+
+#endif  // _USER_CONFIG_OVERRIDE_H_
+```

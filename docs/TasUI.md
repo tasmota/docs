@@ -1,3 +1,6 @@
+!!! warning 
+    Development of TasUI has stopped!!!
+
 TasUI is a zero-install device management interface web application for all your Tasmota devices. 
 It will discover your deployed devices and allow you to set up and configure every device from a single dashboard. 
 This initial version includes multiple views (Control, Health, Firmware, Wi-Fi, & MQTT) to allow you to quickly assess the state of your devices. There is also a detailed view (e.g., SetOptions, Status, etc.) available. 

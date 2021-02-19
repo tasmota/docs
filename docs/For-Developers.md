@@ -5,4 +5,3 @@
 
 ## Tasmota forks with added features  
 - [**Time Proportioned Output Fork**](Time-Proportioned-Output-support)  
-- [**PID Control Fork**](PID-Control)  

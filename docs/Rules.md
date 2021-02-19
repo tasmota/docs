@@ -29,7 +29,7 @@ Rule sets are defined by using the [`Rule<x>`](Commands.md#rule) command. After 
 !!! note
     If bootloops are detected all rules will be disabled as a precaution. See [SetOption36](Commands.md#setoption36).
   
-There are three separate **rule sets** called `Rule1`, `Rule2` and `Rule3`. Each rule set can contain many rules which are dynamically compressed. Number of rules that can fit in a rule set varies. Expect at least 1000 characters available per rule set.
+There are three separate **rule sets** called `Rule1`, `Rule2` and `Rule3`. Each rule set can contain many rules. The number of rules that can fit in a rule set varies, but expect at least 1000 characters available per set. Additionally, rules are dynamically compressed, meaning they will be compressed automatically when doing so is required, but left uncompressed until that point.
 
 Whenever a rule set is enabled all the rules in it will be active. If the character count of the rules in one set actually exceeds the limit, start using the next rule set. If you have a long list of rules, verify the rules have all fit by inspecting the resulting log.
 
@@ -1335,6 +1335,22 @@ Rule1
   ON SI7021#temperature>%var1% DO Backlog var1 %value%; publish stat/mqttTopic/temp %value%; var2 %value%; add1 2; sub2 2 ENDON
   ON SI7021#temperature<%var2% DO Backlog var2 %value%; publish stat/mqttTopic/temp %value%; var1 %value%; add1 2; sub2 2 ENDON
 ```
+
+This example explains expands on the above example while matching typical sensor data. 
+Helpful for HA tasmota integration sensors when polling and adding in delta value changes.
+
+Normal polling data below
+```haskell
+23:58:41 MQT: tele/ds1820/SENSOR = {"Time":"2021-01-13T23:58:41","DS18B20":{"Id":"030597946B04","Temperature":20.9},"TempUnit":"C"}
+```
+The matching rule.
+
+```haskell
+Rule1 
+  ON DS18B20#temperature>%var1% DO Backlog var1 %value%; publish tele/ds1820/SENSOR {"Time":"%timestamp%","DS18B20":{"Id":"030597946B04","Temperature":%value%},"TempUnit":"C"}; var2 %value%; add1 0.5; sub2 0.5 ENDON 
+  ON DS18B20#temperature<%var2% DO Backlog var2 %value%; publish tele/ds1820/SENSOR {"Time":"%TIMESTAMP%","DS18B20":{"Id":"030597946B04","Temperature":%value%},"TempUnit":"C"}; var1 %value%; add1 0.5; sub2 0.5 ENDON
+```
+
 -----------------------------------------------------------------------------
 
 ### Adjust a value and send it over MQTT

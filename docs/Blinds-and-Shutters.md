@@ -3,27 +3,29 @@
 
 !!! info "Control blinds and roller shades connected to regular ON/OFF motors or stepper motors"
 
-Your device must have at least two relays (see [Shutters with Sonoff Dual R2](#using-sonoff-dual-r2)). 
-Only available in normal tasmota.bin!
+Before starting you have to enable shutter support with `SetOption80 1`
 
 ## Commands
-First enable shutter support with `SetOption80 1`
 
 Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#shutters).
 
 ## Shutter Modes
-There are five shutter modes which defines how the relays operate. Additional you can define on any relay [PulseTime](Commands.md#pulsetime) to change the relay into a pulse relay whre the pulse changes start/stop. Additionaly we recomment at least for mode=1 to define an [Interlock](Commands.md#interlock) settings. The examples below are for a `ShutterRelay1 1` configuration (using Relay1 and Relay2).
+There are five shutter modes which define how the relays operate. Additionally you can define [PulseTime](Commands.md#pulsetime) on any relay to change the relay into a pulse relay where the pulse changes start/stop. We recommend at least for Shutter mode 1 to define an [Interlock](Commands.md#interlock) setting. 
+
+The examples below are for a `ShutterRelay1 1` configuration (using Relay1 and Relay2).
 
 **Shutter mode 1** - Normal Operation   
 
 First relay: OFF/DOWN, Second relay: OFF/UP  
-   - `Interlock 1,2` (Interlocked relay pair)
-   - `Interlock ON`
+   
+- `Interlock 1,2` (Interlocked relay pair)
+- `Interlock ON`
 
 **Shutter mode 2** - Circuit Safe 
 
 First relay: ON/OFF, Second relay: UP/DOWN
-   - `Interlock OFF`
+
+- `Interlock OFF`
 
 **Shutter mode 3** - Garage Motors   
 
@@ -32,14 +34,17 @@ First relay: OFF/DOWN PULSE, Second relay: OFF/UP PULSE
 **Shutter mode 4** - Stepper Motors   
 
 First relay: ON/OFF, Second relay: UP/DOWN
-   PWM: Stepper signal, COUNTER: Stepper position signal
-   - PWM and COUNTER defined
+
+- PWM: Stepper signal, COUNTER: Stepper position signal
+- PWM and COUNTER defined
    
 **Shutter mode 5** - Servo Motors (PWM position based servo)  
+
 First relay: ON/OFF, Second relay: UP/DOWN (optional not used)
-   PWM: Stepper signal
-   PWMfrequency 200   ( This is mandatory for most relay to get correct PWM duty cylces)
-   SetOption15 0 (required to store value and make it reboot save)
+
+- PWM: Stepper signal
+- `PWMfrequency 200`   ( This is mandatory for most relay to get correct PWM duty cylces)
+- `SetOption15 0` (required to store value and make it reboot save)
    
 [Wiring diagrams](#motor-wiring-diagrams) for Normal, Stepper motor, and Short Circuit-Safe configurations are available at the end of this page. Even if the shutter does not have two motors, three wires have to be connected.
 
@@ -57,7 +62,7 @@ Shutter 0 (Relay:1): Init. Pos: 20000 [100 %], Open Vel.: 100 Close Vel.: 100 , 
 ## Operation
 Turning a device relay on or off directly (i.e., using `Power`) will function to affect a shutter's movement. In momentary mode (i.e., stepper motor), the relays start or stop the motor. The driver takes care of the direction and proper update of the shutter position.
 
-The shutter reports its position and can also be sent to a dedicated position. `ShutterPosition` = `0` means the shutter is closed and `ShutterPosition` = `100` means the shutter is open. If you need the position values reversed (`0` = open, `100` = closed), define and [calibrate your shutter as documented below](#calibration). Then tell Tasmota to reverse the shutter position meaning via the `ShutterInvert<x> 1` command. All internal calculations are the same (the log output is the same). Only the interaction with the user and other systems changes. Now `ShutterPosition<x> 0` will open the shutter and `ShutterPosition<x> 100` will close the shutter.
+The shutter reports its position and can also be sent to a dedicated position. `ShutterPosition 0` means the shutter is closed and `ShutterPosition 100` means the shutter is open. If you need the position values reversed (`0` = open, `100` = closed), define and [calibrate your shutter as documented below](#calibration). Then tell Tasmota to reverse the shutter position meaning via the `ShutterInvert<x> 1` command. All internal calculations are the same (the log output is the same). Only the interaction with the user and other systems changes. Now `ShutterPosition<x> 0` will open the shutter and `ShutterPosition<x> 100` will close the shutter.
 
 By default, only `Shutter1` is enabled when `SetOption80 1` is invoked.  
 ![](https://user-images.githubusercontent.com/34340210/65997878-3517e180-e468-11e9-950e-bfe299771233.png)
@@ -65,42 +70,36 @@ By default, only `Shutter1` is enabled when `SetOption80 1` is invoked.
 A maximum of four shutters per device are supported.  
 ![](https://user-images.githubusercontent.com/34340210/65997879-3517e180-e468-11e9-9c44-9ad4a4a970cc.png) 
 
-To enable additional shutters, `ShutterRelay<x> <value>` must be executed for each additional shutter. Additional shutter declarations must be sequentially numbered, and without gaps (i.e., second shutter is 2, then shutter 3, and finally shutter 4).
+To enable additional shutters, `ShutterRelay<x> <value>` must be executed for each additional shutter. Additional shutter declarations must be sequentially numbered, and without gaps (i.e., second shutter is 2, next shutter 3 and finally shutter 4).
 
 Disabling a shutter in the middle of the defined set of shutters will disable all other higher numbered shutters. If the disabled shutter is restored, the higher numbered shutters previously declared will also be restored. When a shutter is added or removed, a list of the active shutters, with their parameters, is output to the log. If you intend to remove shutters, explicitly remove each one beginning with the highest numbered shutter.
 
-With four shutters, eight `Relay<x>` components are needed. If manual operation switches (`Switch<x>` or `Button<x>` pairs) are also used, additional input GPIO are required. The ESP82xx device may not have enough free GPIO to support all the shutter connections required. A GPIO expander such as a PCF8574 or [MCP230xx](MCP230xx) can be used.
+With four shutters, eight `Relay<x>` components are needed. If manual operation switches (`Switch<x>` or `Button<x>` pairs) are also used, additional input GPIO are required. The ESP82xx device may not have enough free GPIO to support all the shutter connections required. A GPIO expander such as a PCF8574 or [MCP230xx](MCP230xx) can be used with additional effort.
 
 Using manual operation `Switch<x>` pairs may require setting `SwitchMode<x> 4` (inverse follow) for proper switch behavior.
 
-Any shutter positioning can be locked `ShutterLock<x> 1`. Once executed an ongoing movement is finished while further positioning commands like `ShutterOpen<x>`, `ShutterClose<x>`, `ShutterStop<x>`,  `ShutterPosition<x>`, ... as well as web UI buttons, web UI sliders, and shutter buttons are disabled. This can be used to lock an outdoor blind in case of high wind or rain. You may also disable shutter positioning games by your children. Shutter positioning can be unlocked using `ShutterLock<x> 0`. Please be aware that the shutter can still be moved by direct relay control (i.e., `power<x>`), or physical switches and buttons. Use hte `ShutterButton<x>` command prior to `ShutterLock` to be able to lock buttons.
-
-### Pulse Motor Support
-There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands.md#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
-
-### Stepper Motor Support
-Stepper motors can also be used to operate shutters and blinds. Additionally you can operate sliding doors with this configuration.
-
-### Servo Motor Support
-Servos are small devices with typical 180° or 360" rotation movement. The position will be drived by the PWM duty cycle time. This will all automatically calculated
-
-### Smooth RAMP-UP and RAMP-DOWN Support
-Servos and Steppers also have a velocity control. With `ShutterMotorDelay<x> 1.5` you can define a 1.5second soft start/stop before the device reaches it final moving speed. Usefull for moving heavy items like doors.
+Any shutter positioning can be locked `ShutterLock<x> 1`. Once executed an ongoing movement is finished while further positioning commands like `ShutterOpen<x>`, `ShutterClose<x>`, `ShutterStop<x>`,  `ShutterPosition<x>`, ... as well as web UI buttons, web UI sliders, and shutter buttons are disabled. This can be used to lock an outdoor blind in case of high wind or rain. You may also disable shutter positioning games by your children. Shutter positioning can be unlocked using `ShutterLock<x> 0`. Please be aware that the shutter can still be moved by direct relay control (i.e., `Power<x>`), or physical switches and buttons. Use the `ShutterButton<x>` command prior to `ShutterLock` to be able to lock buttons.
     
 ### Calibration
 [Shutter calibration video tutorial](https://www.youtube.com/watch?v=Z-grrvnu2bU)  
 
-- Set the `ShutterOpenDuration<x>` to the time the shutter needs to open completely.
-- Set the `ShutterCloseDuration<x>` at least to the time the shutter needs to close completely. If the shutter does not close completely or runs too long, the calibration point of a closed shutter can be defined with `ShutterSetClose<x>`. Move the shutter to the close position and execute `ShutterSetClose<x>` command. `ShutterPosition<x>` will be reset to 0 (`ShutterClose<x>`).
-- Set the 50% open position of the shutter. Some shutters need some time from totally closed until they begin moving the bottom-most part and opening. This often results a shutter that is less than 50% open when the shutter has been operating for 50% of the set duration. This can be corrected by using `ShutterSetHalfway<x>`. Use this procedure to calibrate the half-open position:
-  1. `ShutterClose<x>` (confirm that the shutter is completely closed)
-  2. `ShutterSetHalfway<x> 50` (reset to default)
-  3. Move the shutter to actual 50% open position.
-  4. Use `ShutterPosition<x>` to inquire the shutter's current position and record the value. This value is a **percentage of the total opening** (e.g., `63` = 63% of opening).
-  5. `ShutterClose<x>`
-  6. `ShutterSetHalfway<x> 63` (using the value from step #4 above)
-  7. `Restart 1`
-- After calibration you might want to enable an additional 1s motor movement by `ShutterEnableEndStopTime<x> 1` when the shutter is asked to move to its end positions (0% and 100%). By this you can guarantee that end positions are still reached in case of inaccuracies. Take care to disable this by `ShutterEnableEndStopTime<x> 0` before further open or close duration measurements.
+- Start your shutter in a closed position preferably. Set internal position to closed with `ShutterSetClose<x>`. 
+- Set the time needed to open the shutter completely with `ShutterOpenDuration<x>`. 
+  * If the shutter opens more than needed, move it to the desired position with `ShutterSetPosition<x>` then set the position to fully open (100) with `ShutterSetOpen<x>` and decrease the open time. 
+- Set the time needed to close the shutters with `ShutterCloseDuration<x>`. 
+  * If the shutter does not close completely, open again and adjust close time.
+  * If it runs too long, move it back to desired closed position with `ShutterSetPosition<x>`, reset to 0 with `ShutterSetClose<x>` and decrease open time.
+- Alternate between opening and closing the shutter until you find out the exact times needed to get the same positions multiple times
+- Now set the 50% open position of the shutter. Some shutters need some time from totally closed until they begin moving the bottom-most part and opening. This often results in a shutter that is less than 50% open when the shutter has been operating for 50% of the set time. This can be corrected by using `ShutterSetHalfway<x>`. Use this procedure to calibrate the half-open position:
+   1. `ShutterClose<x>` (confirm that the shutter is completely closed)
+   2. `ShutterSetHalfway<x> 50` (reset to default)
+   3. Move the shutter to actual 50% open position.
+   4. Use `ShutterPosition<x>` to inquire the shutter's current position and record the value. This value is a **percentage of the total opening** (e.g., `63` = 63% of opening).
+   5. `ShutterClose<x>`
+   6. `ShutterSetHalfway<x> 63` (using the value from step #4 above)
+   7. `Restart 1`
+
+After calibration is complete, you might want to enable an additional 1 second motor movement with `ShutterEnableEndStopTime<x> 1` when the shutter is asked to move to its end positions (0% and 100%). With this you can guarantee that end positions are still reached in case of inaccuracies. Take care to disable this with `ShutterEnableEndStopTime<x> 0` before further open or close duration measurements.
 
 #### Increasing Calibration Granularity
 If you desire that the %-opening closely match what `ShutterPosition<x>` and web UI indicate, there is a granular calibration matrix available. Ensure that `ShutterClose<x>` and `ShutterOpen<x>` moves the shutter more or less to the limit positions and follow this procedure:
@@ -110,17 +109,16 @@ If you desire that the %-opening closely match what `ShutterPosition<x>` and web
 - `Restart 1`
 - `ShutterClose<x>`
 - Move the shutter to each of the following opening percentages and measure the shutter's position for each. 
-  - `ShutterPosition<x> 30` (e.g., measurement = `15`)
-  - `ShutterPosition<x> 50` (e.g., measurement = `50`)
-  - `ShutterPosition<x> 70` (e.g., measurement = `100`)
-  - `ShutterPosition<x> 90` (e.g., measurement = `150`)
-  - `ShutterPosition<x> 100` (e.g., measurement = `180`)
-- Finally, enter the position measurements as the calibration values:
-  `ShutterCalibration<x> 15 50 100 150 180`  
+   - `ShutterPosition<x> 30` (e.g., measurement = `15`)
+   - `ShutterPosition<x> 50` (e.g., measurement = `50`)
+   - `ShutterPosition<x> 70` (e.g., measurement = `100`)
+   - `ShutterPosition<x> 90` (e.g., measurement = `150`)
+   - `ShutterPosition<x> 100` (e.g., measurement = `180`)
+- Finally, enter the position measurements as the calibration values: `ShutterCalibration<x> 15 50 100 150 180`  
 
 `ShutterCalibration<x>` takes position measurements (**not** the time it takes to move). During calibration you position the shutter to an indicated percentage (e.g., `30%`) of opening and measure the shutter position (e.g., `15`). Use the same unit of measure for all your measurements (e.g., centimeters, inches, steps, etc.). After calibration `ShutterPosition<x> 30` will move to `30%` opening which will correspond to the position you provided (`15`).  
 
-Notice that there is no calibration for the 10\% position. On many shutters, there is no movement during the initial phase (i.e., nearly 10% of total time). Therefore the opening could be `0`. This measurement would cause an execution DIV 0 exception. Therefore the first calibration point is 30%. In most cases this is not a large opening so the calibration will be near enough. Yes, until ~10%, the position will be a bit "off" but not enough for concern.  
+Notice that there is no calibration for the 10% position. On many shutters, there is no movement during the initial phase (i.e., nearly 10% of total time). Therefore the opening could be `0`. This measurement would cause an execution DIV 0 exception. Therefore the first calibration point is 30%. In most cases this is not a large opening so the calibration will be near enough. Yes, until ~10%, the position will be a bit "off" but not enough for concern.  
 
 ### Motor Movement Delays
 Some motors need up to one second after power is turned on before they start moving. You can confirm if you are having this issue if opening and closing as a single action works properly but doing this in smaller steps result in a shift of the position.  
@@ -141,29 +139,29 @@ Some motors need up to one second after power is turned on before they start mov
 
 Close the shutter and repeat this procedure until the motor delay is set properly.  
 
-### Button control
-When shutter is running in normal `ShutterMode: 0`, you already have basic control over the shutter movement using tasmota switches or tasmota buttons in the module configuration to directly drive the shutter relays.  For  short circuit safe operation `ShutterMode: 1` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch or button and 2nd switch on the power by the other switch or button. 
+### Button Control
+When shutter is running in default `ShutterMode 0`, you already have basic control over the shutter movement using switches or buttons in the module configuration to directly drive the shutter relays.  For short circuit safe operation `ShutterMode 1` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch or button and 2nd switch on the power by the other switch or button. 
 
 To have shutter mode independent button control over the shutter and not over its relays one can use the `ShutterButton<x>` command. It also introduces some more features, see below:
 
 `ShutterButton<x> <button> <func> <mqtt>` 
 
-This assigns a tasmota button `<button>` to control your shutter `<x>` having functionality `<func>`. The tasmota button `<button>` must already be configured in the module configuration. You can assign multiple buttons to a single shutter. Any button can only control one shutter (beside the `<mqtt>` broadcast feature, see description below). Any press of the button while the shutter is moving will immediately stop the shutter.
+This assigns a Tasmota button `<button>` to control your shutter `<x>` having functionality `<func>`. The Tasmota button `<button>` must already be configured in the module configuration. You can assign multiple buttons to a single shutter. Any button can only control one shutter (beside the `<mqtt>` broadcast feature, see description below). Any press of the button while the shutter is moving will immediately stop the shutter.
 
-One can remove all button control for shutter `<x>`  by `ShutterButton<x> 0`. 
+One can remove all button control for shutter `<x>` by `ShutterButton<x> 0`. 
 
 The assigned button can have one of the following functionalities:<BR>
 
- - Setup for an "up" button: `ShutterButton<x> <button> up <mqtt>`
-   Single press will move shutter to 100%, double press to 50% and tripple press to 74%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` to 100% when `<mqtt>` is equal to `1`. When `<mqtt>` is equal to `0` hold action of this button is same as single press. 
+- Setup for an "up" button: `ShutterButton<x> <button> up <mqtt>`    
+   Single press will move shutter to 100%, double press to 50% and tripple press to 74%. Holding the button for more than the hold time ([`SetOption32`](Commands.md#setoption32)) moves all shutters with same `<grouptopic>` to 100% when `<mqtt>` is equal to `1`. When `<mqtt>` is equal to `0` hold action of this button is same as single press. 
 
-- Setup for a "down" button: `ShutterButton<x> <button> down <mqtt>`
-   Single press will move shutter to 0%, double press to 50% and tripple press to 24%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` to 0% when `<mqtt>` is equal to `1`. When `<mqtt>` is equal to `0` hold action of this button is same as single press. 
+- Setup for a "down" button: `ShutterButton<x> <button> down <mqtt>`    
+   Single press will move shutter to 0%, double press to 50% and triple press to 24%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` to 0% when `<mqtt>` is equal to `1`. When `<mqtt>` is equal to `0` hold action of this button is same as single press. 
 
-- Setup for an "updown" button: `ShutterButton<x> <button> updown <mqtt>`
-   Single press will move shutter to 100%, double press down to 0% and tripple press to 50%. No hold action and no other shutter control by MQTT, `<mqtt>` is don't care here.
+- Setup for an "updown" button: `ShutterButton<x> <button> updown <mqtt>`    
+   Single press will move shutter to 100%, double press down to 0% and triple press to 50%. No hold action and no other shutter control by MQTT, `<mqtt>` is don't care here.
 
-- Setup for an "toggle" button: `ShutterButton<x> <button> toggle <mqtt>`
+- Setup for an "toggle" button: `ShutterButton<x> <button> toggle <mqtt>`    
    Single press will toggle shutter, double press will move it to 50%. No hold action and no other shutter control by MQTT, `<mqtt>` is don't care here.
 
 More advanced control of the button press actions is given by the following `ShutterButton<x>` command syntax:
@@ -174,9 +172,9 @@ More advanced control of the button press actions is given by the following `Shu
 
 Parameters are optional. When missing, all subsequent parameters are set to `disable`.
 
-By a button single press the shutter is set to position `<p1>`.  Double press will drive the shutter to position `<p2>` and  tripple press to position `<p3>`. Holding the button for more than the `SetOption32` time sets the shutter position to `<ph>`. Any button action `<p1>` to `<ph>` can be disabled by setting the parameter to `-`. Independent from configuration `<p1>` to `<ph>` any press of the button while the shutter is moving will immediately stop the shutter.
+By a button single press the shutter is set to position `<p1>`.  Double press will drive the shutter to position `<p2>` and  triple press to position `<p3>`. Holding the button for more than the `SetOption32` time sets the shutter position to `<ph>`. Any button action `<p1>` to `<ph>` can be disabled by setting the parameter to `-`. Independent from configuration `<p1>` to `<ph>` any press of the button while the shutter is moving will immediately stop the shutter.
 
-Global steering of all your shutters at home is supported by additional MQTT broadcast. By any button action a corresponding MQTT command can be initiated to the `<grouptopic>` of the device. For single press this can be enabled by `<m1>` equal to `1`, disabling is indicated by `-`. Double to hold MQTT configurations are given by `<m2>` to `<mh>`, correspondingly. When `<mi>` is equal to `-` only `cmnd/<grouptopic>/Shutterposition<x> <p1..h>` is fired. When `<mi>` is equal to `1`, `<x>`=`1..4` is used to control any shutter number of a tasmota device having same `<grouptopic>`.
+Global steering of all your shutters at home is supported by additional MQTT broadcast. By any button action a corresponding MQTT command can be initiated to the `<grouptopic>` of the device. For single press this can be enabled by `<m1>` equal to `1`, disabling is indicated by `-`. Double to hold MQTT configurations are given by `<m2>` to `<mh>`, correspondingly. When `<mi>` is equal to `-` only `cmnd/<grouptopic>/Shutterposition<x> <p1..h>` is fired. When `<mi>` is equal to `1`, `<x>`=`1..4` is used to control any shutter number of a Tasmota device having same `<grouptopic>`.
 
 !!! example 
 
@@ -185,14 +183,34 @@ Global steering of all your shutters at home is supported by additional MQTT bro
 - `ShutterButton<x> <button> 100 0 50 - 0 0 0 0 0` is same as `ShutterButton<x> <button> updown 0`.
 - `ShutterButton<x> <button> t 50 - - 0 0 0 0 0` is same as `ShutterButton<x> <button> toggle 0`.
 
-Module WiFi setup, restart, upgrade and reset according to [Buttons and Switches](Buttons-and-Switches) are supported "child and fool save" only when no button restriction (SetOption1) is given and when all configured shutter buttons of that shutter are pressed 5x, 6x, 7x times or hold long simultaneously.
+Module WiFi setup, restart, upgrade and reset according to [Buttons and Switches](Buttons-and-Switches.md) are supported "child and fool proof" only when no button restriction ([`SetOption1`](Commands.md#setoption1)) is given and when all configured shutter buttons of that shutter are pressed 5x, 6x, 7x times or hold long simultaneously.
 
-### Button remote control
-One can use any other tasmota module with attached button(s) or switch(es) to remote control a shutter using rules. Similar behavior as direct button control can be achieved by  applying `ShutterStopClose, ShutterStopOpen, ShutterStopToggle, ShutterStopPosition` commands. They stops shutter while movement and carry out close, open, toggle or position commands otherwise.
+### Remote Control
+Use any other Tasmota device with buttons or switches to control remotely a shutter using rules. Similar behavior as direct button control can be achieved by applying `ShutterStopClose, ShutterStopOpen, ShutterStopToggle, ShutterStopPosition` commands. They stop shutter movement if it is in motion and otherwise execute close, open, toggle or position commands.
 
-`rule<n> on switch1#state=2 do publish cmnd/<myTasmotaShutter>/ShutterStopToggle endon`
+!!! example
+    Run this rule on another Tasmota device with a switch configured.
+    `rule1 on switch1#state=2 do publish cmnd/%shutter-topic%/ShutterStopToggle endon`
 
-## Configuration
+## Specific Configuration
+
+### Pulse Motors
+There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands.md#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
+
+### Stepper Motors
+Stepper motors can also be used to operate shutters and blinds. Additionally you can operate sliding doors with this configuration.
+
+### Servo Motors
+Servos are small devices with typical 180° or 360" rotation movement. The position will be drived by the PWM duty cycle time. This will all automatically calculated
+
+[More info](https://github.com/arendst/Tasmota/discussions/10443#discussion-1627790)
+
+### DC Motors
+
+[More info](https://github.com/arendst/Tasmota/discussions/10387)
+
+### Smooth RAMP-UP and RAMP-DOWN Support
+Servos and Steppers also have a velocity control. With `ShutterMotorDelay<x> 1.5` you can define a 1.5second soft start/stop before the device reaches it final moving speed. Usefull for moving heavy items like doors.
 
 ### using Pulse Motors
 #### Normal wire configuration with a PCF as digital I/O
@@ -201,6 +219,7 @@ One can use any other tasmota module with attached button(s) or switch(es) to re
 #### Short Circuit safe wire configuration with a PCF as digital I/O
 ![ShortCicuitSafe](https://user-images.githubusercontent.com/34340210/65997877-3517e180-e468-11e9-9b8c-2f0787f977f6.png)
 
+<!-- outdated log output
 #### Sample Log Output
 Typical log output (log level `3`) when starting from `ShutterOpen1`. The first command is `ShutterClose1`. After closing, open it to 50% with `ShutterPosition1 50`  
 ```
@@ -258,10 +277,11 @@ MQT: stat/%topic%/POWER1 = OFF
 MQT: tele/%topic%/RESULT = {"Shutter1":{"Position":50,"direction":0}}
 CFG: Saved to flash at FA, Count 728, Bytes 4096
 ```
+-->
 ### using Stepper Motors
-Stepper motors can be used to operate shutters and blinds. The configuration is very similar to the  Circuit Safe (Shuttermode 1) configuration. To operate a stepper motor requires driver module such as the A4988 and uses EN (enable), DIR (direction), STP (Stepper) for controls. If everything is defined correctly the shuttermode 3 will be reported at boot time.
+Stepper motors can be used to operate shutters and blinds. The configuration is very similar to the  Circuit Safe (Shuttermode 1) configuration. To operate a stepper motor requires driver module such as the A4988 and uses EN (enable), DIR (direction), STP (Stepper) for controls. If everything is defined correctly Shuttermode 3 will be reported at boot time.
 
-Tasmota supports a maximum of four shutters with one stepper motor per shutter simultanously. In very rare conditions where two or more shutters simoultanously move the last mm it can happen than one shutter moves to far.   
+Tasmota supports a maximum of four shutters with one stepper motor per shutter simultaneously. In very rare conditions where two or more shutters simultaneously move the last mm it can happen than one shutter moves to far.   
 
 - Stepper drivers configuration tutorials:  
     - [A4988](https://lastminuteengineers.com/a4988-stepper-motor-driver-arduino-tutorial/)
@@ -285,7 +305,7 @@ You must properly configure the stepper motor driver (see above).
 
 `ShutterOpenDuration` and `ShutterCloseDuration` can be different. Shutter with Stepper motors always match positions exact. There is no need to vary `ShutterOpenDuration` and `ShutterCloseDuration`. Anyhow, if you decrease `ShutterCloseDuration` the Shutter will close with a higher speed on a virtual higher `ShutterFrequency` if possible. Same vice versa.
 
-You can define a soft start/stop by defining a `ShutterMotorDelay`. This causes the driver to ramp the speed up and down during the defined duration. The change of the `ShutterMotorDelay` does NOT change the distance the shutter makes. This is very convinent to trim the accelerate and decelerate rate without changeing the distance.
+You can define a soft start/stop by defining a `ShutterMotorDelay`. This causes the driver to ramp the speed up and down during the defined duration. The change of the `ShutterMotorDelay` does NOT change the distance the shutter makes. This is very convenient to trim the accelerate and decelerate rate without changing the distance.
 
 Wemos Pin|GPIO|Component|Stepper Signal
 :-:|:-:|:-:|:-:
@@ -424,7 +444,7 @@ Tasmota rule triggers:
 - `Shutter<x>#Position` is triggered at start, during and at the end of movement reporting actual position (`%value%`=0-100)
 - `Shutter<x>#Direction` is triggered at start, during and at the end of movement reporting actual direction (`%value%`: `-1`=close direction, `0`=no movement, `1`=open direction)
 - `Shutter<x>#Target` is triggered at start, during and at the end of movement reporting current target (`%value%`0-100)
-- `Shutter#Moving` is triggered during movement and just before moving (shutter independently). If VAR<x> is set to 99 then this trigger will be executed BEFORE the shutter starts. You can start the shutter after rule execution by setting VAR<x> to 0 or wait 10seconds before the timeout kicks in. After the movement with shutter#moved the var must be set back to 99 and the inital rule must be enabled again. The inital rule has to be defined to run ONCE. 
+- `Shutter#Moving` is triggered during movement and just before moving (shutter independently). If VAR&#60;x> is set to 99 then this trigger will be executed BEFORE the shutter starts. You can start the shutter after rule execution by setting VAR&#60;x> to 0 or wait 10seconds before the timeout kicks in. After the movement with shutter#moved the `VAR` must be set back to 99 and the initial rule must be enabled again. The initial rule has to be defined to run ONCE. 
    EXAMPLE: power3 on and wait 2sec before start. After movement: power off
    ```
    rule1 on shutter#moving=1 do backlog power3 on;delay 20;var1 0 endon
@@ -438,19 +458,19 @@ Tasmota rule triggers:
 - `Shutter<x>#Button0=0`  is triggered when all buttons of that shutter are hold simultaneously
 - `Shutter<x>#Button0=<n>`  is triggered when all buttons of that shutter are pressed simultaneously `n` times
 
-Examples:  
+!!! example "Examples"
+
 - Publish a message with the position of the shutter:
   `Rule1 ON Shutter1#Position DO Publish status/%topic%/level {"%value%"} ENDON`
-
 - Open/Close or set a specific position for a shutter. This example drives the second shutter to the same position as the first shutter:  
   `Rule1 ON Shutter1#Position DO ShutterPosition2 %value%" ENDON`
 
-#### Jarolift Shutter Support
-Jarolift shutters operates by the 3 commands up/stop/down. Compile with the KeeLoq Option and provide the extracted master keys to communicate. Please see KeeLog description how to do that. After this create a rule to allow the shutter to control the Jarolift devices. Shutter must be in ShutterMode 0.
+### Jarolift Shutter Support
+Jarolift shutters operates by the 3 commands up/stop/down. Compile with the KeeLoq Option and provide the extracted master keys to communicate. Please see KeeLoq description how to do that. After this create a rule to allow the shutter to control the Jarolift devices. Shutter must be in ShutterMode 0.
 
   `Rule1 On Power1#state=0 DO KeeloqSendButton 4 endon On Power2#state=0 DO KeeloqSendButton 4 endon on Power1#state=1 DO KeeloqSendButton 8 endon on Power2#State=1 DO KeeloqSendButton 2 endon`
 
-#### Venetian Blind Support
+### Venetian Blind Support
 A 2nd shutter can be configured to support the adjustment of the horizontal tilt.  
 After movement the tilt will be restored if blind is not fully opened or closed via an additional rule.  
 
@@ -468,100 +488,4 @@ Add rule (requires rules with [Conditional Rules](Rules.md#conditional-rules) en
 Rule1 on Shutter2#Position DO mem1 %value% ENDON on Shutter1#Position DO var2 %value% ENDON on Shutter1#Direction!=0 DO var1 %value% ENDON on Shutter1#Direction=0 DO IF (var1==1) var1 0; IF (var2!=100) ShutterSetOpen2; shutterposition2 %mem1% ENDIF ENDIF ENDON on Shutter1#Direction=0 DO IF (var1==-1) var1 0; IF (var2!=0) ShutterSetClose2; shutterposition2 %mem1% ENDIF ENDIF ENDON
 ```
 
-#### Home Assistant Support
-For shutter position to persist in Home Assistant through device reboots, execute `PowerRetain 1`.
 
-These sample configurations should allow the shutter work in Home Assistant. Change the device MQTT topic and templates to match your settings. This is only an example and may need further modification to work in your environment.
-
-The configuration requirements changed starting with Home Assistant version 0.82.0. This example uses a new configuration for roller shutters with options for positioning. It assumes that `%prefix%/%topic%/` is configured in the Tasmota Full Topic MQTT parameter.  
-```yaml
-cover:
-  - platform: mqtt
-    name: "Balcony Blinds"
-    availability_topic: "tele/%topic%/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    position_topic: stat/%topic%/Shutter1
-    position_open: 100
-    position_closed: 0
-    set_position_topic: "cmnd/%topic%/ShutterPosition1"
-    command_topic: "cmnd/%topic%/Backlog"
-    payload_open: "ShutterOpen1"
-    payload_close: "ShutterClose1"
-    payload_stop: "ShutterStop1"
-    retain: false
-    optimistic: false
-    qos: 1
-```
-Check [Issue 130](https://github.com/stefanbode/Sonoff-Tasmota/issues/130) for more information about this configuration.
-
-Another Home Assistant integration example:  
-```yaml
-cover:
-  - platform: mqtt
-    name: "Test"
-    availability_topic: "tele/%topic%/LWT"
-    state_topic: "stat/%topic%/RESULT"
-    command_topic: "cmnd/%topic%/Backlog"
-    value_template: '{{ value | int }}'
-    qos: 1
-    retain: false
-    payload_open: "ShutterOpen1"
-    payload_close: "ShutterClose1"
-    payload_stop: "ShutterStop1"
-    state_open: "ON"
-    state_closed: "OFF"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    optimistic: false
-    tilt_command_topic: 'cmnd/%topic%/ShutterPosition1'
-    tilt_status_topic: 'cmnd/%topic%/ShutterPosition1'
-    set_position_topic: 'cmnd/%topic%/ShutterPosition1'
-    position_topic: "stat/%topic%/SHUTTER1"
-    tilt_min: 0
-    tilt_max: 100
-    tilt_closed_value: 0
-    tilt_opened_value: 100
-```
-Another Home Assistant integration example with position update while movement (Tasmota versions >= v8.1.0.5):  
-```yaml
-cover:
-  - platform: mqtt
-    name: "Balcony Blinds"
-    availability_topic: "tele/%topic%/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    position_topic: "stat/%topic%/RESULT"
-    value_template: >
-      {% if ('Shutter1' in value_json) and ('Position' in value_json.Shutter1) %}
-        {{ value_json.Shutter1.Position }}
-      {% else %}
-        {% if is_state('cover.balcony_blinds', 'unknown') %}
-          50
-        {% else %}
-          {{ state_attr('cover.balcony_blinds','current_position') }}
-        {% endif %}
-      {% endif %}    
-    position_open: 100
-    position_closed: 0
-    set_position_topic: "cmnd/%topic%/ShutterPosition1"
-    command_topic: "cmnd/%topic%/Backlog"
-    payload_open: "ShutterOpen1"
-    payload_close: "ShutterClose1"
-    payload_stop: "ShutterStop1"
-    retain: false
-    optimistic: false
-    qos: 1
-```
-In addition, add to your home assistant start up automation a query for the current shutter position:
-```yaml
-- alias: "Power state on HA start-up"
-  trigger:
-    platform: homeassistant
-    event: start
-  action:
-    - service: mqtt.publish
-      data:
-        topic: "cmnd/%shutters grouptopic%/shutterposition"
-        payload: ""       
-```

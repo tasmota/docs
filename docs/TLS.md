@@ -1,7 +1,8 @@
 # TLS Secured MQTT
 !!! failure "This feature is not included in precompiled binaries"     
 
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+To use it you must [compile your build](Compile-your-build) do the follow changes:
+1 - Add the following to `user_config_override.h`:
 
 ```C
 #ifndef USE_MQTT_TLS 
@@ -11,9 +12,15 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 //  #define USE_MQTT_TLS_FORCE_EC_CIPHER           // Force Elliptic Curve cipher (higher security) required by some servers (automatically enabled with USE_MQTT_AWS_IOT) (+11.4k code, +0.4k mem)
 #endif
 ```
-and change port to 8883
+
+2 - Change port to 8883
 ```
 #define MQTT_PORT              8883              // [MqttPort] MQTT port (10123 on CloudMQTT)
+```
+
+3 - Ensure that for the environment you have selected, `lib/lib_ssl` is included on `platformio_tasmota_env.ini` :
+```
+lib_extra_dirs          = lib/lib_ssl
 ```
 
 TLS offers increased security between your connected devices and your MQTT server, providing server authentication and encryption. Please refer to the general discussion in [Securing-your-IoT-from-hacking](Securing-your-IoT-from-hacking)
@@ -36,13 +43,11 @@ So to simplify your task, we have added two more options: 1/ auto-learning of th
 If set, Tasmota will automatically learn the fingerprint during the first connection and will set the Fingerprint settings to the target fingerprint. To do so, use one of the following commands:
 
 ```
-MqttFingerprint1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+#define MQTT_FINGERPRINT1     "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
 ```
-
 or
-
 ```
-MqttFingerprint2 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+#define MQTT_FINGERPRINT2     "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
 ```
 
 #### Option 2: Disable Fingerprint
@@ -51,7 +56,7 @@ You can completely disable server fingerprint validation, which means that Tasmo
 To do so, set one of the Fingerprints to all 0xFF:
 
 ```
-MqttFingerprint2 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+#define MQTT_FINGERPRINT1     "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF"
 ```
 Tasmota also provide an option to authenticate clients using an x509 certificate and a public key for authentication, instead of username/password.
 
