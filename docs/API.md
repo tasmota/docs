@@ -88,9 +88,6 @@ FUNC_DISPLAY_SEVENSEG_TEXT *  |      |
 FUNC_DISPLAY_SEVENSEG_TEXTNC *|      |
 FUNC_DISPLAY_SCROLLDELAY *    |      |
 FUNC_DISPLAY_CLOCK *          |      |
-FUNC_DISPLAY_SETLEDS *        |      |
-FUNC_DISPLAY_SETLED *         |      |
-FUNC_DISPLAY_BUTTONS *        |      |
 FUNC_DISPLAY_SCROLLTEXT *     |      |
 FUNC_DISPLAY_TYPE *           |      |
 
