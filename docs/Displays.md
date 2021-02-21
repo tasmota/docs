@@ -29,7 +29,7 @@ USE_GRAPH | Enable line charts. Also requires `NUM_GRAPHS`
 
 ## Display Commands
 
-See commands page for full list of available [Display Commands](Commands.md#displays)
+See commands page for full list of available [Display Commands](Commands.md#displays)  
 
 ## DisplayMode Parameters
 
@@ -46,7 +46,8 @@ Parameter	|	LCD Display	|	OLED Display	|	TFT Display
 
 ## DisplayType Parameters *(TM1637 only)*
 
-The **TM1637** driver supports multiple variants of displays. These can be selected by setting the `DisplayType` appropriately.
+The **TM1637** driver supports multiple variants of displays. These can be selected by setting the `DisplayType` appropriately. see [here](TM1637.md) for details.
+
 Parameter	|	Display variant
 ---	|	---	|	
 0	|	4-digit
