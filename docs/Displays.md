@@ -19,6 +19,7 @@ USE_DISPLAY_SEVENSEG  | Enable 7 segment display. Also requires `USE_I2C`
 USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI`  
 USE_DISPLAY_ILI9342  | Enable TFT ILI9342 display. Also requires `USE_SPI` 
 USE_DISPLAY_SD1331  | Enable TFT SD1331 display. Also requires `USE_SPI` 
+USE_DISPLAY_TM1637  | Enable 7-segment TM1637 display. 
 USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`  
 USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
 SHOW_SPLASH | Enable initialization splash message on the display  
@@ -42,6 +43,14 @@ Parameter	|	LCD Display	|	OLED Display	|	TFT Display
 3	|	MQTT and Time/Date	|	Local sensors and Time/Date	|	Local sensors and Time/Date
 4	|	Local sensors	|	MQTT and local sensors	|	MQTT and local sensors
 5	|	MQTT and Time/Date	|	MQTT, local sensors and Time/Date	|	MQTT, local sensors and Time/Date
+
+## DisplayType Parameters *(TM1637 only)*
+
+The **TM1637** driver supports multiple variants of displays. These can be selected by setting the `DisplayType` appropriately.
+Parameter	|	Display variant
+---	|	---	|	
+0	|	4-digit
+1	|	6-digit
 
 ## DisplayText Use
 
