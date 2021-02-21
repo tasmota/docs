@@ -549,12 +549,27 @@ DisplayModel<a class="cmnd" id="displaymodel"></a>|Set display model:<BR>`1` = [
 DisplayRefresh<a class="cmnd" id="displayrefresh"></a>|`1..7` Set time in seconds to update predefined content when using `DisplayMode` &ne; `0`
 DisplaySize<a class="cmnd" id="displaysize"></a>|`1..4` Set display scale-up size *(SSD1306  and ILI9341 only)*
 DisplayRotate<a class="cmnd" id="displayrotate"></a>|Set rotation angle<BR> `0` = 0°<BR> `1` = 90°<BR> `2` = 180°<BR> `3` = 270°
-DisplayText<a class="cmnd" id="displaytext"></a>|`<value>` = See [DisplayText use](Displays#displaytext-use)
+DisplayText<a class="cmnd" id="displaytext"></a>|`<value>` = See [DisplayText use](Displays#displaytext-use)<br>For TM1637, see below
+DisplayText<br>*(TM1637 only)* | Clears and then displays basic text on the 7-segment display. <br> Command parameters: `text`[, `position`[, `length`]] <br><br> `length` can be `1` to `NUM_DIGITS` , <br> `position` can be `0` (left-most) to `NUM_DIGITS-1` (right-most) <br><br>  A caret(`^`) symbol in the text input is dispayed as the degrees(`°`) symbol. This is useful for displaying Temperature (or angle)!
+DisplayTextNC<br>*(TM1637 only)*  | Clears first, then displays text. Usage is same as above. 
 DisplayCols<a class="cmnd" id="displaycols"></a>|`1..44` Set number of display columns *(for display modes>0)*
 DisplayRows <a class="cmnd" id="displayrows"></a>|`1..32` Set number of display rows *(for display modes>0)*
 DisplayFont<a class="cmnd" id="displayfont"></a>|Specify the current font<BR>`0` use classic GFX font<BR>`1` = 12<BR>`2` = 24<BR>`3` = 8 (opt)<BR>`7` use RA8876 internal font
 DisplayWidth<a class="cmnd" id="displaywidth"></a>|Specify the display width in pixels *(SSD1306 only)*
 DisplayHeight<a class="cmnd" id="displayheight"></a>|Specify the display height in pixels *(SSD1306 only)*
+DisplayType<br>*(TM1637 only)*<a class="cmnd" id="displaytype"></a>|Specify the variant of 7-segment display <br>`0` TM1637 4-digit<br>`1` TM1637 6-digit
+DisplayClear<br>*(TM1637 only)*<a class="cmnd" id="displayclear"></a>|Clears the display
+DisplayNumber <br>*(TM1637 only)*<a class="cmnd" id="displaynumber"></a>|Clears and then displays number `num` without decimal.<br>Command parameters: `num` [, `position`[, `leading_zeros`[, `length`]]] <br><br> `leading zeros` can be `1` or `0` (default),<br> `length` can be `1` to `NUM_DIGITS` (4 or 6), <br> `position` can be `0` (left-most) to `NUM_DIGITS` (right-most). 
+DisplayNumberNC <br>*(TM1637 only)* | Display integer number as above, but without clearing first. Usage is same as above.
+DisplayFloat <br>*(TM1637 only)* | Clears and then displays float (with decimal point).<br>Command parameters: `num`[, `position`[, `precision`[, `length`]]] <br><br> `precision` can be `0` to `NUM_DIGITS` (default), <br> `length` can be `1` to `NUM_DIGITS` (4 or 6), <br> `position` can be `0` (left-most) to `NUM_DIGITS` (right-most).
+DisplayFloatNC <br>*(TM1637 only)* | Displays float (with decimal point) as above, but without clearing first. Usage same as above
+DisplayBrightness | Set brightness of the display. <br>valid values are `1` (lowest) to `8` (highest)
+DisplayRaw <br>*(TM1637 only)* | Takes upto `NUM_DIGITS` comma-separated integers (0-255) and displays raw segments. <br> Command parameters:  `position`, `length`,  `num1` [, `num2`[, `num3`[, `num4`[, ...upto `NUM_DIGITS` numbers]]...] <br><br> `length` can be `1` to `NUM_DIGITS` (4 or 6), <br> `position` can be `0` (left-most) to `NUM_DIGITS` (right-most). <br>`num1`, `num2`, ...  are numbers representing a 7-segment digit. Each number represents all segments of one digit. <br> Segment a=1, b=2, c=4, d=8, e=16, f=32, g=64 and h (decimal point)=128.<br> To turn on all segments, the number would be 1+2+4+8+16+32+64+128 = 255
+DisplayScrollText<br>*(TM1637 only)* | Displays scrolling text, upto 50 characters. Command example: `DisplayScrollText tasmota is awesome`
+DisplayScrollDelay<br>*(TM1637 only)* | Sets the speed of text scroll. Smaller delay implies faster scrolling. <br> valid values are `0` (highest speed) to `15` (lowest speed)
+DisplayLevel<br>*(TM1637 only)* | Display a horizontal bar graph. <br>valid values are `0` (level 0) to `100` (level 100%)
+DisplayClock<br>*(TM1637 only)* | Displays a clock. <br> `1` displays a clock in 12-hour format. <br> `2` displays a clock in 24-hour format. <br> `0` turns off the clock and clears the display  | 1 or 2 or 0
+
 
 
 ### Shutters
