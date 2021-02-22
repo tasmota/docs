@@ -33,16 +33,17 @@ See commands page for full list of available [Display Commands](Commands.md#disp
 
 ## DisplayMode Parameters
 
-The display driver is able to display predefined setups of text or user defined text. To display text using `DisplayText` set `DisplayMode` to `0`, or set `DisplayMode` to `1` for the HT16K33 dot-matrix display.
+The display driver (except the 7-segment TM1637 driver) is able to display predefined setups of text or user defined text. To display text using `DisplayText` set `DisplayMode` to `0`, or set `DisplayMode` to `1` for the HT16K33 dot-matrix display.
 
-Parameter	|	LCD Display	|	OLED Display	|	TFT Display
----	|	---	|	---	|	---
-0	|	DisplayText	|	DisplayText	|	DisplayText
-1	|	Time/Date	|	Time/Date	|	Time/Date
-2	|	Local sensors	|	Local sensors	|	Local sensors
-3	|	MQTT and Time/Date	|	Local sensors and Time/Date	|	Local sensors and Time/Date
-4	|	Local sensors	|	MQTT and local sensors	|	MQTT and local sensors
-5	|	MQTT and Time/Date	|	MQTT, local sensors and Time/Date	|	MQTT, local sensors and Time/Date
+
+Parameter	|	LCD Display	|	OLED Display	|	TFT Display  | 7-segment Display (TM1637)
+---	|	---	|	---	|	---     |    ----
+0	|	DisplayText	|	DisplayText	|	DisplayText  |    All [TM1637](TM1637.md) _Display-_ functions
+1	|	Time/Date	|	Time/Date	|	Time/Date    |    All [TM1637](TM1637.md) _Display-_ functions
+2	|	Local sensors	|	Local sensors	|	Local sensors   |   All [TM1637](TM1637.md) _Display-_ functions
+3	|	MQTT and Time/Date	|	Local sensors and Time/Date	|	Local sensors and Time/Date  |   All [TM1637](TM1637.md) _Display-_ functions
+4	|	Local sensors	|	MQTT and local sensors	|	MQTT and local sensors  |  All [TM1637](TM1637.md) _Display-_ functions
+5	|	MQTT and Time/Date	|	MQTT, local sensors and Time/Date	|	MQTT, local sensors and Time/Date | All [TM1637](TM1637.md) _Display-_ functions
 
 ## DisplayType Parameters *(TM1637 only)*
 
