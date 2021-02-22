@@ -45,7 +45,8 @@ Parameter	|	LCD Display	|	OLED Display	|	TFT Display  | 7-segment Display (TM163
 4	|	Local sensors	|	MQTT and local sensors	|	MQTT and local sensors  |  All [TM1637](TM1637.md) _Display-_ functions
 5	|	MQTT and Time/Date	|	MQTT, local sensors and Time/Date	|	MQTT, local sensors and Time/Date | All [TM1637](TM1637.md) _Display-_ functions
 
-## DisplayType Parameters *(TM1637 only)*
+## DisplayType Parameters *(TM1637 only)*  
+
 
 The **TM1637** driver supports multiple variants of displays. These can be selected by setting the `DisplayType` appropriately. see [here](TM1637.md) for details.
 
