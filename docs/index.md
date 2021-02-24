@@ -19,7 +19,7 @@ For OTA updates please use the new server [http://ota.tasmota.com/tasmota/releas
 Download [latest Tasmotizer](https://github.com/tasmota/tasmotizer/releases/) to use the new OTA server during flashing.
 
 ### Current release 
-<a href="https://github.com/arendst/Tasmota/releases/tag/v9.3.0"><span style="font-size:40px;">Tasmota 9.3.0 Kenneth</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
+<a href="https://github.com/arendst/Tasmota/releases/tag/v9.3.1"><span style="font-size:40px;">Tasmota 9.3.1 Kenneth</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
 
 - Support for filesystem ``autoexec.bat`` to execute sequential commands like backlog
 - Filesystem commands [`Ufs`](Commands.md#Ufs), [`UfsType`](Commands.md#UfsType), [`UfsSize`](Commands.md#UfsSize), [`UfsFree`](Commands.md#UfsFree), [`UfsDelete`](Commands.md#UfsDelete), [`UfsRename`](Commands.md#UfsRename) and [`UfsRun`](Commands.md#UfsRun)
