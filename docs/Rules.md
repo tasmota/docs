@@ -245,7 +245,7 @@ Rule1
 
 #### Delete rule
 
-To [clear / delete](Commands.md#rule) use quote(s):
+To [clear / delete](Commands.md#rule) use double quote(s):
 
 ```haskell
 Rule1 "
