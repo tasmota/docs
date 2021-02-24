@@ -1,7 +1,7 @@
 
 # Shutters and Blinds
 
-!!! info "Control blinds and roller shades connected to regular ON/OFF motors or stepper motors"
+!!! info "Control blinds and roller shades connected to regular ON/OFF motors,stepper motors or position servos"
 
 Before starting you have to enable shutter support with `SetOption80 1`
 
@@ -162,7 +162,7 @@ The assigned button can have one of the following functionalities:<BR>
    Single press will move shutter to 100%, double press down to 0% and triple press to 50%. No hold action and no other shutter control by MQTT, `<mqtt>` is don't care here.
 
 - Setup for an "toggle" button: `ShutterButton<x> <button> toggle <mqtt>`    
-   Single press will toggle shutter, double press will move it to 50%. No hold action and no other shutter control by MQTT, `<mqtt>` is don't care here.
+   Single press will toggle shutter, double press will move it to 50%. Be aware that the toggle select direction based on the current position. If the position is between 0..50% the shutter move to 100%. If the position is 51%..100% it moves to 0%. No hold action and no other shutter control by MQTT, `<mqtt>` is don't care here.
 
 More advanced control of the button press actions is given by the following `ShutterButton<x>` command syntax:
 
@@ -223,59 +223,47 @@ Servos and Steppers also have a velocity control. With `ShutterMotorDelay<x> 1.5
 #### Sample Log Output
 Typical log output (log level `3`) when starting from `ShutterOpen1`. The first command is `ShutterClose1`. After closing, open it to 50% with `ShutterPosition1 50`  
 ```
-SHT: Accuracy digits: 1
-SHT: Shutter 0 (Relay:1): Init. Pos: 20000 [100 %], Open Vel.: 100 Close Vel.: 100 , Max Way: 20000, Opentime 10.0 [s], Closetime 10.0 [s], CoedffCalc: c0: 0, c1 200, c2: 200, c3: 0, c4: 0, binmask 3, is inverted 0, ShutterMode 0
-....
-CMD: ShutterClose
-SRC: Serial
-SHT: Position in: payload 0, index 1, source 7
-SHT: lastsource 7:, realpos 20000, target 0, payload 0
-SHT: Start shutter in direction -1
-SRC: Shutter
-MQT: stat/%topic%/RESULT = {"POWER2":"ON"}
-MQT: stat/%topic%/POWER2 = ON
-MQT: stat/%topic%/RESULT = {"ShutterClose1":0}
-SHT: Shutter 0: Real Pos: 19000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 0.5  [s]
-CFG: Saved to flash at F5, Count 725, Bytes 4096
-SHT: Shutter 0: Real Pos: 17000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 1.5  [s]
-SHT: Shutter 0: Real Pos: 15000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 2.5  [s]
-SHT: Shutter 0: Real Pos: 13000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 3.5  [s]
-SHT: Shutter 0: Real Pos: 11000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 4.5  [s]
-SHT: Shutter 0: Real Pos: 9000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 5.5  [s]
-SHT: Shutter 0: Real Pos: 7000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 6.5  [s]
-SHT: Shutter 0: Real Pos: 5000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 7.5  [s]
-SHT: Shutter 0: Real Pos: 3000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 8.5  [s]
-SHT: Shutter 0: Real Pos: 1000, Target 0, source: Shutter, start-pos: 100 %, direction: -1, rtcshutter: 9.5  [s]
-SHT: Shutter 0: Real Pos. 0, Stoppos: 0, relay: 1, direction -1, pulsetimer: 0, rtcshutter: 10.1 [s], operationtime 0
-MQT: stat/%topic%/SHUTTER1 = 0
-SRC: Shutter
-MQT: stat/%topic%/RESULT = {"POWER2":"OFF"}
-MQT: stat/%topic%/POWER2 = OFF
-MQT: tele/%topic%/RESULT = {"Shutter1":{"Position":0,"direction":0}}
-CFG: Saved to flash at F4, Count 726, Bytes 4096
-....
-CMD: ShutterPosition 50
-SRC: Serial
-SHT: Position in: payload 50, index 1, source 23
-SHT: lastsource 23:, realpos 0, target 10000, payload 50
-SHT: Start shutter in direction 1
-SRC: Shutter
-MQT: stat/%topic%/RESULT = {"POWER1":"ON"}
-MQT: stat/%topic%/POWER1 = ON
-MQT: stat/%topic%/RESULT = {"ShutterPosition1":50}
-SHT: Shutter 0: Real Pos: 1500, Target 10000, source: Shutter, start-pos: 0 %, direction: 1, rtcshutter: 0.8  [s]
-CFG: Saved to flash at FB, Count 727, Bytes 4096
-SHT: Shutter 0: Real Pos: 3500, Target 10000, source: Shutter, start-pos: 0 %, direction: 1, rtcshutter: 1.8  [s]
-SHT: Shutter 0: Real Pos: 5500, Target 10000, source: Shutter, start-pos: 0 %, direction: 1, rtcshutter: 2.7  [s]
-SHT: Shutter 0: Real Pos: 7500, Target 10000, source: Shutter, start-pos: 0 %, direction: 1, rtcshutter: 3.7  [s]
-SHT: Shutter 0: Real Pos: 9500, Target 10000, source: Shutter, start-pos: 0 %, direction: 1, rtcshutter: 4.7  [s]
-SHT: Shutter 0: Real Pos. 10000, Stoppos: 50, relay: 0, direction 1, pulsetimer: 0, rtcshutter: 5.0 [s], operationtime 2
-MQT: stat/%topic%/SHUTTER1 = 50
-SRC: Shutter
-MQT: stat/%topic%/RESULT = {"POWER1":"OFF"}
-MQT: stat/%topic%/POWER1 = OFF
-MQT: tele/%topic%/RESULT = {"Shutter1":{"Position":50,"direction":0}}
-CFG: Saved to flash at FA, Count 728, Bytes 4096
+13:56:56.073 RSL: RESULT = {"ShutterClose1":0}
+13:56:59.763 CMD: shutteropen
+13:56:59.779 RSL: RESULT = {"POWER2":"OFF"}
+13:56:59.781 RSL: POWER2 = OFF
+13:56:59.787 RSL: RESULT = {"POWER1":"ON"}
+13:56:59.788 RSL: POWER1 = ON
+13:56:59.790 RSL: RESULT = {"ShutterOpen1":100}
+13:56:59.817 RSL: RESULT = {"Shutter1":{"Position":0,"Direction":1,"Target":100}}
+13:57:00.429 RSL: RESULT = {"Shutter1":{"Position":7,"Direction":1,"Target":100}}
+13:57:01.451 RSL: RESULT = {"Shutter1":{"Position":17,"Direction":1,"Target":100}}
+13:57:02.427 RSL: RESULT = {"Shutter1":{"Position":27,"Direction":1,"Target":100}}
+13:57:03.409 RSL: RESULT = {"Shutter1":{"Position":36,"Direction":1,"Target":100}}
+13:57:04.432 RSL: RESULT = {"Shutter1":{"Position":47,"Direction":1,"Target":100}}
+13:57:05.455 RSL: RESULT = {"Shutter1":{"Position":57,"Direction":1,"Target":100}}
+13:57:06.429 RSL: RESULT = {"Shutter1":{"Position":67,"Direction":1,"Target":100}}
+13:57:07.449 RSL: RESULT = {"Shutter1":{"Position":77,"Direction":1,"Target":100}}
+13:57:08.420 RSL: RESULT = {"Shutter1":{"Position":86,"Direction":1,"Target":100}}
+13:57:09.445 RSL: RESULT = {"Shutter1":{"Position":97,"Direction":1,"Target":100}}
+13:57:09.802 RSL: RESULT = {"POWER1":"OFF"}
+13:57:09.804 RSL: POWER1 = OFF
+13:57:10.308 RSL: SHUTTER1 = 100
+13:57:10.309 RSL: RESULT = {"Shutter1":{"Position":100,"Direction":0,"Target":100}}
+13:57:16.174 CMD: shutterposition 50
+13:57:16.190 RSL: RESULT = {"POWER2":"ON"}
+13:57:16.192 RSL: POWER2 = ON
+13:57:16.198 RSL: RESULT = {"POWER1":"ON"}
+13:57:16.199 RSL: POWER1 = ON
+13:57:16.201 RSL: RESULT = {"ShutterPosition1":50}
+13:57:16.229 RSL: RESULT = {"Shutter1":{"Position":100,"Direction":-1,"Target":50}}
+13:57:16.433 RSL: RESULT = {"Shutter1":{"Position":98,"Direction":-1,"Target":50}}
+13:57:17.422 RSL: RESULT = {"Shutter1":{"Position":89,"Direction":-1,"Target":50}}
+13:57:18.445 RSL: RESULT = {"Shutter1":{"Position":78,"Direction":-1,"Target":50}}
+13:57:19.413 RSL: RESULT = {"Shutter1":{"Position":69,"Direction":-1,"Target":50}}
+13:57:20.436 RSL: RESULT = {"Shutter1":{"Position":58,"Direction":-1,"Target":50}}
+13:57:21.265 RSL: RESULT = {"POWER1":"OFF"}
+13:57:21.267 RSL: POWER1 = OFF
+13:57:21.273 RSL: RESULT = {"POWER2":"OFF"}
+13:57:21.274 RSL: POWER2 = OFF
+13:57:21.778 RSL: SHUTTER1 = 50
+13:57:21.780 RSL: RESULT = {"Shutter1":{"Position":50,"Direction":0,"Target":50}}
+
 ```
 -->
 ### using Stepper Motors
