@@ -98,12 +98,12 @@ As most parts are connected to high voltage AC it is recommended to fit the hard
 [Device Template](Templates)<BR>
 **PZEM-004T version prior to V3:**
 
-`{"NAME":"HW-655 PZEM","GPIO":[0,63,0,62,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
+`{"NAME":"HW-655 PZEM","GPIO":[0,62,0,63,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
 
 
 ## PZEM-004T version V3
 
-`{"NAME":"HW-655 PZEM","GPIO":[0,98,0,62,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
+`{"NAME":"HW-655 PZEM","GPIO":[0,62,0,98,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
 
 Use the module template to configure the GPIO's for hardware serial connection.
 
@@ -148,12 +148,12 @@ Create _**user_config_override.h**_ in the `tasmota` folder and paste the conten
 [Device Template](Templates)<BR>
 **PZEM-004T version prior to V3:**
 
-`{"NAME":"HW-655 PZEM","GPIO":[0,63,0,62,6,5,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
+`{"NAME":"HW-655 PZEM","GPIO":[0,62,0,63,6,5,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
 
 
 ## PZEM-004T version V3
 
-`{"NAME":"HW-655 PZEM","GPIO":[0,98,0,62,6,5,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
+`{"NAME":"HW-655 PZEM","GPIO":[0,62,0,98,6,5,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
 
 - use **`I2CScan`** to detect your device address
 - use **`DeviceAddress XXX`** (where XXX is the decimal converted address found) to set the I<sup>2</sup>C address
