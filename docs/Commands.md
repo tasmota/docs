@@ -705,7 +705,7 @@ Ethernet<a class="cmnd" id="ethernet"></a>|*Only for ESP32 boards with additiona
 EthAddress<a class="cmnd" id="ethaddress"></a>|`0..31` = PHYxx address
 EthClockMode<a class="cmnd" id="ethclockmode"></a>|Ethernet clock mode.<BR>`0` = ETH_CLOCK_GPIO0_IN *(default)*<BR>`1` = ETH_CLOCK_GPIO0_OUT <BR>`2` = ETH_CLOCK_GPIO16_OUT<BR>`3` = ETH_CLOCK_GPIO17_OUT
 EthType<a class="cmnd" id="ethtype"></a>|Ethernet type.<BR>`0` = ETH_PHY_LAN8720 *(default)*<BR>`1` = ETH_PHY_TLK110 <BR>`2` = ETH_PHY_IP101
-Wi-Fi<a class="cmnd" id="wi-fi"></a>|<BR>`0` = disable Wi-Fi<BR>`1` = enable Wi-Fi _(default)_
+Wi-Fi<a class="cmnd" id="wi-fi"></a>|`0` = disable Wi-Fi<BR>`1` = enable Wi-Fi _(default)_
 
 ### Thermostat
 
