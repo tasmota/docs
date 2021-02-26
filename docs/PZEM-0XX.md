@@ -217,7 +217,7 @@ You can use a voltage level shifter to power the ESP82xx from the PZEM-016 modul
 <img src="https://user-images.githubusercontent.com/34340210/66046722-57efd780-e4f4-11e9-912b-bab0da3818a9.jpeg" />
 
 ### Tasmota Configuration
-It is recommended to use GPIO1/GPIO3 or GPIO13/GPIO15 for the most reliable serial communications. You can use any GPIO but anything else will use serial emulation (software). Software serial is not supported with the 2.3 Arduino Core.  
+It is recommended to use GPIO1/GPIO3 or GPIO13/GPIO15 for the most reliable serial communications. When using other GPIOs software serial will be activated and used. 
 
 GPIO|Component|PZEM
 -:|:-:|:-:
