@@ -9,6 +9,8 @@ Command syntax for flashing Tasmota32 firmware on ESP32 via Esptool (**replace C
 esptool.py --chip esp32 --port COM5 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dout --flash_freq 40m --flash_size detect 0x1000 bootloader_dout_40m.bin 0x8000 partitions.bin 0xe000 boot_app0.bin 0x10000 tasmota32.bin
 ```
 
+or you can try [ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) for flashing an ESP82xx / ESP32 (only Windows executable is tested and working verified)
+
 ## Compiling for ESP32
 
 Uncomment in `platformio_tasmota32.ini` tasmota32 in line #9. Next build will create a `tasmota32.bin`. 
