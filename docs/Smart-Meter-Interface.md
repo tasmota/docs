@@ -22,65 +22,64 @@ SML_BSIZ n| (default 48) Maximum number of characters per line in serial input b
 MAX_METERS n| (default 5) Maximum number of meters. Decrease this to 1 for example if you havea meter with many lines and lots of characters per descriptorline.
 TMSBSIZ n| (default 256) Maximum number of characters in serial IRQ buffer (should always be larger than SML_BSIZ and even larger on high baud rates)
 USE_SML_SCRIPT_CMD | If present, this allows access to sml vars in scripts.
-SML_REPLACE_VARS | If present, this allows replacement of any text in descriptor by script text variables. Useful if several occurrences of a text occupies a lot of space and you get short of script buffer. Readability gets worse so only makes sense on large descriptors. To use `%` symbol un measurement units, you need to escape it like `%%`.
+SML_REPLACE_VARS | If present, this allows replacement of any text in descriptor by script text variables. Useful if several occurrences of a text occupies a lot of space and you get short of script buffer. Readability may get worse so only makes sense on large descriptors. Note: to use `%` symbol un measurement units, you need to escape it like `%%`.
 
-**General description**
+### General description
 
-To use this interface, connect the meter to available GPIO pins. These GPIOs must be set as `None (0)` in Tasmota. If the interface detects that a meter descriptor GPIO conflicts with a Tasmota GPIO setting, the interface will generate a "duplicate GPIO defined" error in the log and the meter descriptor will be ignored. (only for script driven descriptors) if you use the deprecated hard coded interface and no meter script the default harcoded descriptor uses Pin 3 (REC) for receive and thus may interfere with other Tasmota Defintions without warning.  
+To use this interface, connect the meter to available GPIO pins. These GPIOs must be set as `None` in Tasmota. If the interface detects that a script driven meter descriptor GPIO conflicts with a Tasmota GPIO setting, the interface will generate a `duplicate GPIO defined` error in the log and the meter descriptor will be ignored. 
+    
+!!! note
+    When changing GPIO configurations, especially in conjunction with other Tasmota drivers, a restart may be required.
 
 !!! note
-    When changing GPIO configurations especially in conjunction with other Tasmota drivers a restart may be required  
-
-!!! note
-    On an ESP32 due to a different implementation serial ports may not be used in conjunction with other Tasmota serial devices.  
+    On an ESP32, due to a different implementation, serial ports may not be used in conjunction with other Tasmota serial devices.  
 
 
 The Smart Meter Interface provides a means to connect many kinds of meters to Tasmota. **The following types of meter protocols are supported:**
 
 | Protocol | Description |
 | -- | -- |
-| ASCII OBIS | telegrams emitted from many smart meters, including [P1 Smart Meters](https://tasmota.github.io/docs/P1-Smart-Meter/) |
-| Binary SML OBIS | telegrams emitted from many smart meters |
-| Binary EBus | telegrams emitted by many heaters and heat pumps  (e.g. Vaillant, Wolf) |
-| Binary VBus | telegrams emitted by many solar thermal systems boilers (e.g. Resol, Viessmann) |
-| Binary MODBUS | telegrams used by many power meters and industrial devices |
-| Binary RAW | decodes all kinds of binary data eg EMS heater bus |
+| OBIS ASCII | telegrams emitted from many smart meters, including [P1 Smart Meters](https://tasmota.github.io/docs/P1-Smart-Meter/) |
+| OBIS Binary SML| telegrams emitted from many smart meters |
+| EBus Binary | telegrams emitted by many heaters and heat pumps  (e.g. Vaillant, Wolf) |
+| VBus Binary | telegrams emitted by many solar thermal systems boilers (e.g. Resol, Viessmann) |
+| MODBus Binary | telegrams used by many power meters and industrial devices |
+| RAW Binary | decodes all kinds of binary data eg EMS heater bus |
 | Counter interface | uses Tasmota counter storage (for e.g. REED contacts either in polling or IRQ mode) |
 
-There are many different meters that use the same protocol. There are multitudes of variants and use cases. A meter can be defined by using compilation time `#define` pragmas. This requires recompiling the firmware to make modifications.  
-
-This interface provides a means of specifying these definitions through [meter descriptors](#smart-meter-descriptors). This method uses the [scripting language](Scripting-Language) editor to define the descriptors. In this way, only one firmware binary version is required and a modification can be made easily "on the fly".  
+There are many different meters that use the same protocol. There are multitudes of variants and use cases. This interface provides a means of specifying these definitions through [meter descriptors](#meter-metrics). This method uses the [scripting language](Scripting-Language) editor to define the descriptors. In this way, only one firmware binary version is required and a modification can be made easily _on the fly_. A meter can also be defined by using compilation time `#define` pragmas (deprecated). This requires recompiling the firmware to make modifications.
 
 !!! note
-    If no `>M` section is found in the script or if the scripting language is not compiled, the driver reverts to the default `#define` definition(s).  
+    If no `>M` section is found in the script or if the scripting language is not compiled, the driver reverts to the default hardcoded `#define` definitions. If no meter script is defined, the default harcoded descriptor interface (deprecated) uses `RX GPIO3` for receiving data and thus may interfere with other Tasmota Defintions without warning. 
+ 
   
 !!! note
     Additional hardware may be required to read certain measuring devices. For example: RS485toTTL Adaper for Modbus, IR transistor for electricity meters. Sometimes an additional IR diode and resistors.  
   
   
 ## Descriptor Syntax
-This section must be present, even if it's empty. If compiled with `SML_REPLACE_VARS`, here is the place where text variables can be defined for the script.
+This section must be present, even if it's empty. If compiled with `SML_REPLACE_VARS`, here is the place where text variables can be defined for the script:
 > `>D`  
 ------------------------------------------------------------------------------
-Declare `>B` (boot) section to inform the interface to read the meter descriptor(s)
+Declare `>B` (boot) section to inform the interface to read the meter descriptor(s):
 > `>B`  
 =>[sensor53 r](Commands#sensor53)
 ------------------------------------------------------------------------------
-(Optional) declare `>S` section with additional scripting commands
+(Optional) declare `>S` section with additional scripting commands:
 > `>S <n>`
 ------------------------------------------------------------------------------
-Declare `>M` section with the number of connected meters (n = `1..5`)
+Declare `>M` section with the number of connected meters (n = `1..5`):
 > `>M <n>`  
 ------------------------------------------------------------------------------
 
 
-### Meter Definition
+## Meter Definition
 
 > `+<M>,<rxGPIO>,<type>,<flag>,<parameter>,<jsonPrefix>{,<txGPIO>,<txPeriod>,<cmdTelegram>}`  
 
 | Parameter | Description |
 | -- | -- |
-| `+<M>` | Meter number. The number must be increased with each additional Meter (default 1 to 5)|
+| `+<M>` | Meter number. The number must be increased with each additional Meter (default 1 to 5).|
 | `<rxGPIO>` | The GPIO pin number where meter data is received. |
 | `<type>` | The type of meter: |
 ||`o` - OBIS ASCII type of coding |
@@ -122,12 +121,12 @@ Declare `>M` section with the number of connected meters (n = `1..5`)
     `0000`/`0002` = Register # (as Hexadecimal codification, without the prefix `0x`. Example: `0x0079` -> `0079`)  
     the number of requested registers is fixed to 2, however with the char 'r' before the hex string the complete request string may be specified  
     `...r010400000001,r010400020003,...`    
-
-!!! note
+    **Note:**
     `ID`, `Instruction to read the Register` value (Input vs Holding) and `Register #` may differ depending on the measuring device.  
    
-------------------------------------------------------------------------------  
-### Meter Metrics
+
+## Meter Metrics
+
 Each meter typically provides multiple metrics (enegry, voltage, power, current etc.) which it measures. An entry for each metric to be collected must be specified. Up to 20 entries may be defined (unless stated differently by `SML_MAX_VARS` as a larger number in `user_config_override.h`). An entry defines how to decode the data and put it into variables.
 
 > `<M>,<decoder>@<scale>,<label>,<UoM>,<var>,<precision>`  
@@ -135,7 +134,7 @@ Each meter typically provides multiple metrics (enegry, voltage, power, current 
 | Parameter | Description |
 | -- | -- |
 | `<M>` | The meter number to which this decoder belongs |
-| `<decoder>` | **Decoding specification**. Decode OBIS as ASCII; SML, EBus, VBus, MODBus, RAW as HEX ASCII etc. _No space characters allowed in this section!_|
+| `<decoder>` | **Decoding specification**: OBIS as ASCII; SML, EBus, VBus, MODBus, RAW as HEX ASCII etc. _No space characters allowed in this section!_|
 || **OBIS**: ASCII OBIS code terminated with `(` character which indicates the start of the meter value |
 || **SML**: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value |
 || **EBus, MODBus, RAW** - hex values of data blocks to compare: |
@@ -152,7 +151,7 @@ Each meter typically provides multiple metrics (enegry, voltage, power, current 
 ||  - `FFffFFff` = extract a reverse float value  |
 || **VBus** - hex values of data blocks to compare: |
 ||  - `AAffffaddrff0001ffff` = VBus-specific hex header: `AA`-sync byte, `addr`-the reversed address of the device. To find his out first look up the known [hex address of the device](http://danielwippermann.github.io/resol-vbus/vbus-packets.html). E.g. Resol DeltaSol BS Plus is `0x4221`. Reverse it (without `0x`) and you will get `21 42` hex characters. Now turn on raw dump mode using command `sensor53 d1` and look for rows starting with `aa`, containing your reversed address at position 4 and 5 and `00 01` hex characters at position 7 and 8. If found, the entire header will be 10 hex characters long including `aa` (20 ascii chars without space, e.g. for Resol DeltaSol BS Plus this will be `AA100021421000010774`). At position 9 you see the number of frames containing readable data. To turn off raw dump use `sensor53 d0`. |
-||  - `v` = for VBus protocol indicator |
+||  - `v` = VBus protocol indicator |
 ||  - `oN` = extract data from offset `N` (see offsets of your device in [VBus protocol documentation](http://danielwippermann.github.io/resol-vbus/vbus-packets.html))|
 ||  - `u` or `s` = extract unsigned or signed data
 ||  - `w` or `b` = extract word or byte |
@@ -199,20 +198,18 @@ Each meter typically provides multiple metrics (enegry, voltage, power, current 
     During the output of the data in the console, the data in the WEB UI are not updated. To return write: `sensor53 d0`  
 
 
-------------------------------------------------------------------------------
-### Special Commands
+## Special Commands
 
-With the '=' char at the beginning of a line you can do some special decoding.
+With `=` character at the beginning of a line you can do some special decoding. With `*` character fields can be hidden or skipped.
 
 | Command | Description |
 | -- | -- |
-|`M,=m` | To perform arithmetic (`+,-,*,/`) on the metric. Use `#` before a number to designate a constant value |
-||`1,=m 3+4+5/#3 @100,Voltage L1+L2+L3/3,V,Volt_avg,2` |
-||`1,=m 3+4+5/#3` add result of decoder entry 3,4,5 and divided by 3 (i.e., average)  |
-||`M,=d` calculate difference between metric values decoded at time intervals (up to 10 =d lines possible)  |
-||`1,=d 3 10` calculate 10 second interval difference of decoder entry 3  |
+| `M,=m` | Perform arithmetic (`+,-,*,/`) on the measured data. Use `#` before a number to designate a constant value |
+||e.g. `1,=m 3+4+5/#3 @100,Voltage L1+L2+L3/3,V,Volt_avg,2` to sum results of decoder entries 3,4,5 and divide by 3 (average) |
+| `M,=d` | Calculate difference between metric values decoded at time intervals (up to 10 =d lines possible)  |
+||e.g. `1,=d 3 10` calculate 10 second interval difference of decoder entry 3  |
 | `M,=h` | Insert text on the web interface (html text up to 30 chars). These lines do not count as decoder entry.
-|| `1,=h<hr/>` to insert a separator line|
+||e.g. `1,=h<hr/>` to insert a separator line on the web UI |
 | `*` character | To hide fields from result output or disable output completely. Compiling with `USE_SML_SCRIPT_CMD` required. |
 || as single character in `<label>` of the metrics line will hide that value from the web UI |
 || as single character in `<label>` of the meter definition line will suppress the entire json output on MQTT |
@@ -231,7 +228,7 @@ With the '=' char at the beginning of a line you can do some special decoding.
     ```
 
 !!! example
-    To disable and enable publishing of MQTT data on teleperiods, use `smlj=0` and `smlj=1`, respectively. For example to skip first MQTT publishing after boot (may contain errorneous data id meter is slow):
+    To disable and enable publishing of MQTT data on teleperiods, use `smlj=0` and `smlj=1`, respectively. For example to skip first MQTT publishing after boot (may contain errorneous data id meter is slow, see [Sanxing SX6x1](#sanxing-sx6x1-sxxu1x-ascii-obis)):
     ```
     >B
     ;disable publishing at MQTT teleperiod, on boot
@@ -245,17 +242,20 @@ With the '=' char at the beginning of a line you can do some special decoding.
     ```
 
 !!! example
-    If you have lagre meter descriptors and want to extract multiple values from the same descriptor, you can save flash space using `#defineSML_REPLACE_VARS` at compile time:
+    If you have lagre meter descriptors and want to extract multiple values from the same descriptor, you can save flash space using `SML_REPLACE_VARS` at compile time (see [Resol Deltasol BS Plus](#resol-deltasol-bs-plus-vbus)):
     ```
     >D
     ;define a text variable
-    r="1,0-0:98.1.0(@("
+    r="1,AA100021421000010774"
     >M 1
-    ;in your meter definition you can use your variable for the same descriptor
-    %r%1:1,Havi import,kWh,havi_import,3
-    %r%2:1,Havi export,kWh,havi_export,3
-    %r%3:1,Havi adat3,kWh,havi_adat3,3
-    ;%r% inserts the text variable and saves some space (3 instead of 15 chars)
+    ;in your meter definitions you can use your variable for the same descriptor
+    +1,3,v,0,9600,Solar
+    %r%vo12ut@#,time,,zeit,1
+    %r%vo0uw@10,S1 COL,°C,sens1,1
+    %r%vo2uw@10,S2 TST1,°C,sens2,1
+    %r%vo4uw@10,S3 TST2,°C,sens3,1
+    %r%vo6uw@10,S4 TR,°C,sens4,1
+    ;%r% inserts the text variable and saves script storage space (3 instead of 22 chars for each line)
     ```
 
 !!! attention 
@@ -263,6 +263,7 @@ With the '=' char at the beginning of a line you can do some special decoding.
     
     To change the baudrate:
     >sml(`METERNUMBER` 0 `BAUDRATE`)  
+    
     For sending a specific character string:
     >sml(`METERNUMBER` 1 `STRING`)
     
@@ -297,12 +298,10 @@ With the '=' char at the beginning of a line you can do some special decoding.
     ```
     You can find the detailed example [here](#landis-gyr-zmr120ares2r2sfcs-obis).
 
-!!! attention
-    This procedure is only necessary, if the meter explicitly asks for 300 baud. The most meters work directly with 9600 baud. Therefore it is easier to give this method a try:  
+    **Note**: This procedure is only necessary, if the meter explicitly asks for 300 baud. The most meters work directly with 9600 baud. Therefore it is easier to give this method a try (see [Iskra MT 174](#iskra-mt-174-obis)):  
 
     `Meter#,GPIO# Input,TYPE,FLAG,Baudrate,JSONNAME,GPIO# Output,TX Period,Character string`  
     `+1,3,o,0,9600,energy,1,4,2F3F210D0A`
-    Example: [Iskra MT 174](#iskra-mt-174-obis)
 
 
 !!! tip
@@ -324,27 +323,30 @@ With the '=' char at the beginning of a line you can do some special decoding.
 	  
 -----
 
-## Smart Meter Descriptors
+## Smart Meter Descriptor examples
 Look down below for script examples based on the following metering devices:
 
-- [JANZ C3801](#janz-c3801-sml-modbus)(SML - MODBus)
-- [EMH ED300L](#emh-ed300l-sml)(SML)
-- [Hager EHZ363, Apator Norax 3D](#hager-ehz363-sml)(SML)
-- [Hager EHZ161](#hager-ehz161-obis)(OBIS)
-- [Landis + Gyr ZMR120AR](#landis-gyr-zmr120ares2r2sfcs-obis)(OBIS)
-- [COMBO Meter](#combo-meter-watergassml)(Water,Gas,SML)
-- [WOLF CSZ 11/300 Heater](#wolf-csz-11300-heater)
-- [SDM530](#sdm530)(MODBus)
-- [SDM230](#sdm230)(MODBus)
-- [Janitza B23](#janitza-b23)(MODBus)
-- [Hager EHZ363](#hager-ehz363-sml-with-daily-values)(SML, with daily values)
-- [Iskra MT 174](#iskra-mt-174-obis)(OBIS)
-- [SBC ALE3](#sbc-ale3-modbus)(MODBus)
-- [2 * SBC ALE3](#2-sbc-ale3-modbus)(MODBus)
-- [Trovis 557x](#trovis-557x)(MODBus)
-- [4 * Hiking DDS238-2 ZN/S](#4--hiking-dds238-2-zns3-modbus)(MODBus)
-- [Sanxing SX6x1 (SxxU1x)](#sanxing-sx6x1-sxxu1x)(OBIS - Ascii)
-- [Resol Deltasol BS Plus](#resol-deltasol-bs-plus)(VBus)
+- [JANZ C3801](#janz-c3801-modbus) (SML - MODBus)
+- [EMH ED300L](#emh-ed300l-sml) (SML)
+- [Hager EHZ363, Apator Norax 3D](#hager-ehz363-apator-norax-3d-sml) (SML)
+- [Hager EHZ161](#hager-ehz161-obis) (OBIS)
+- [Landis + Gyr ZMR120AR](#landis-gyr-zmr120ares2r2sfcs-obis) (OBIS)
+- [COMBO Meter](#combo-meter-watergassml) (Water,Gas,SML)
+- [WOLF CSZ 11/300 Heater](#wolf-csz-11300-heater-ebus) (EBUs)
+- [SDM530](#sdm530-modbus) (MODBus)
+- [SDM230](#sdm230-modbus) (MODBus)
+- [Janitza B23](#janitza-b23-modbus) (MODBus)
+- [Hager EHZ363](#hager-ehz363-sml-with-daily-values) (SML, with daily values)
+- [Iskra MT 174](#iskra-mt-174-obis) (OBIS)
+- [SBC ALE3](#sbc-ale3-modbus) (MODBus)
+- [SBC ALE3](#2-sbc-ale3-modbus) (MODBus, alternate)
+- [Trovis 557x](#trovis-557x-modbus) (MODBus)
+- [Hiking DDS238-2 ZN/S](#4-hiking-dds238-2-zns3-modbus) (MODBus, 4 devices in parallel)
+- [EasyMeter Q3A / Apator APOX+](#easymeter-q3a-apator-apox-sml) (SML)
+- [EasyMeter Q3B](#easymeter-q3b-sml) (SML, 2 meters)
+- [Apator APOX+](#apator-apox-sml) (SML, with pin code for extra data)
+- [Sanxing SX6x1 (SxxU1x)](#sanxing-sx6x1-sxxu1x-ascii-obis) (OBIS - Ascii)
+- [Resol Deltasol BS Plus](#resol-deltasol-bs-plus-vbus) (VBus)
 
 --------------------------------------------------------
 
@@ -371,14 +373,10 @@ The Tasmota SML script:
 
 ```
 >D
- 
 >B
 =>sensor53 r
- 
 >M 1
- 
 +1,14,m,1,9600,EB,5,50,0104006C,01040079,0104007A,0104007F,01040026,01040027,01040028,0104000B,01040084
- 
 1,=hVALORES TÉCNICOS
 1,010404UUuuxxxx@i0:10,Tensão,V,Voltage_P1,17
 1,010404xxxxUUuu@i0:10,Corrente,A,Current_P1,17
@@ -394,7 +392,6 @@ The Tasmota SML script:
 1,=hESTADOS
 1,010406uuxxxxxxxx@i7:1,Tarifa,,Tariff_P1,16
 1,010406uuxxxxxxxx@i8:1,DCP,,DCP_P1,16
- 
 #
 ```
 ------------------------------------------------------------------------------
@@ -418,7 +415,6 @@ The Tasmota SML script:
 #    
 ```
 
-
 ------------------------------------------------------------------------------
 
 ### Hager EHZ363, Apator Norax 3D (SML)
@@ -436,7 +432,6 @@ The Tasmota SML script:
 1,77070100100700ff@1,Current consumption,W,Power_curr,0  
 1,77070100000009ff@#,Meter Nr,,Meter_number,0  
 #  
-
 ```
 
 ------------------------------------------------------------------------------
@@ -454,7 +449,6 @@ The Tasmota SML script:
 1,=d 2 10 @1,Current consumption,W,Power_curr,0  
 1,1-0:0.0.0\*255(@#),Meter Nr,, Meter_number,0  
 #  
-
 ```
 
 ------------------------------------------------------------------------------
@@ -698,7 +692,6 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 1,51.7.0(@1,Strom_L2,A,I_L2,2  
 1,71.7.0(@1,Strom_L3,A,I_L3,2  
 #
-
 ```
 
 ------------------------------------------------------------------------------
@@ -706,12 +699,9 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 ### COMBO Meter (Water,Gas,SML)
 
 ```
-
 >D  
-
 >B  
 ->sensor53 r
-
 >M 3  
 +1,1,c,0,10,H20  
 +2,4,c,0,50,GAS  
@@ -741,7 +731,6 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 3,77070100000009ff@#,Service ID,,Meter_id,0  
 3,=h--------------------------------  
 #  
-
 ```
 
 ------------------------------------------------------------------------------
@@ -749,12 +738,9 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 ### WOLF CSZ 11/300 Heater (EBus)
 
 ```
-
 >D  
-
 >B  
 ->sensor53 r
-
 >M 1  
 +1,3,e,0,2400,EBUS  
 1,xxxx0503xxxxxxxxxxxxxxxxss@1,Outside temperature,C,Outsidetemp,0  
@@ -768,7 +754,6 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 1,xxxx5017xxxxxxxxxxuuuu@16,Solar storage,C,Solarstorage,1  
 1,xxxx5017xxuu@b0:1,Solar pump on,,Solarpump,0  
 #  
-
 ```
 
 ------------------------------------------------------------------------------
@@ -828,7 +813,6 @@ ms="1,010404ffffffff@"
 %ms%i21:1,Blindleistung Gesamt,kVARh,Blindleistung_total,2  
 %ms%i22:1,Temp Gesamtleistung,kWh,TempGesamtLeist,2  
 #  
-
 ```
 
 ------------------------------------------------------------------------------
@@ -839,10 +823,8 @@ ms="1,010404ffffffff@"
 >D
 >B  
 ->sensor53 r
-
 >M 1  
 +1,3,m,0,9600,Janitza,1,1,01034A38,01034A3A,01034A3C,01034A4C,01034A4E,01034A50,01034A72,01034A7A,01034A82  
-
 1,010304ffffffff@i0:1,Voltage L1-N,V,Voltage_L1-N,2  
 1,010304ffffffff@i1:1,Voltage L2-N,V,Voltage_L2-N,2  
 1,010304ffffffff@i2:1,Voltage L3-N,V,Voltage_L3-N,2  
@@ -853,7 +835,6 @@ ms="1,010404ffffffff@"
 1,010304ffffffff@i7:1,Real energy L3-consumed,Wh,Real_energy_L3_consumed,2  
 1,010304ffffffff@i8:1,Real energy L3-delivered,Wh,Real_energy_L3_delivered,2   
 #
-
 ```
 
 ------------------------------------------------------------------------------
@@ -861,7 +842,6 @@ ms="1,010404ffffffff@"
 ### Hager EHZ363 (SML) with daily values
 
 ```
-
 >D  
 pin=0  
 pout=0  
@@ -871,15 +851,12 @@ hr=0
 ; permanent midnight values  
 p:pi_m=0  
 p:po_m=0  
-
 >B  
 ->sensor53 r  
-
 >T  
 ; get total consumption and total feed  
 pin=SML#Total_in  
 pout=SML#Total_out  
-
 >S  
 ; at midnight, save meter total values  
 hr=hours  
@@ -890,33 +867,27 @@ pi_m=pin
 po_m=pout  
 svars  
 endif  
-
 ; on teleperiod calculate current daily values from midnight  
 if upsecs%tper==0  
 then  
 pi_d=pin-pi_m  
 po_d=pout-po_m  
 endif  
-
 ; show these values on WEB UI  
 >W  
 Tagesverbrauch: {m} %pi_d% kWh  
 Tageseinspeisung: {m} %po_d% kWh    
-
 ; transmit these values with MQTT  
 >J  
 ,"daily_consumption":%pi_d%,"daily_feed":%po_d%  
-
 ; meter definition  
 >M 1  
 +1,3,s,0,9600,SML  
-
 1,77070100010800ff@1000,Total Consumed,KWh,Total_in,4  
 1,77070100020800ff@1000,Total Delivered,KWh,Total_out,4  
 1,77070100100700ff@1,Current Consumption,W,Power_curr,0  
 1,77070100000009ff@#,Meter Number,,Meter_number,0  
 #
-
 ```
 
 ------------------------------------------------------------------------------
@@ -924,32 +895,26 @@ Tageseinspeisung: {m} %po_d% kWh
 ### Iskra MT 174 (OBIS)
 
 ```
-
 >D
 >B  
 ->sensor53 r
-
 >M 1  
 +1,3,o,0,300,STROM,1,100,2F3F210D0A  
-
 1,1-0:1.8.1*255(@1,Total Consumed,KWh,Total_in,3  
 1,1-0:2.8.1*255(@1,Total Delivered,KWh,Total_out,3  
 1,1-0:0.0.0*255(@#),Meter Number,,Meter_number,0    
 #
-
 ```
 ------------------------------------------------------------------------------
 
 ### SBC ALE3 (MODBus)
 
 ```
-
 >D  
 >B  
 ->sensor53 r  
 >M 1  
 +1,3,M,1,9600,SBC,1,1,02030023,02030028,0203002d,02030025,0203002a,0203002f,02030032,02030027,0203002c,02030031,02030021,02030015,02030018  
-
 1,020304UUuu@i0:1,Spannung L1,V,Voltage_L1,0  
 1,020304UUuu@i1:1,Spannung L2,V,Voltage_L2,0  
 1,020304UUuu@i2:1,Spannung L3,V,Voltage_L3,0  
@@ -972,20 +937,17 @@ Tageseinspeisung: {m} %po_d% kWh
 1,=h=  
 1,020304UUuuUUuu@i10:100,T2 Wert,kWh,T2_Value,2  
 #
-
 ```
 ------------------------------------------------------------------------------
 
 ### 2 * SBC ALE3 (MODBus)
 
 ```
-
 >D  
 >B  
 ->sensor53 r  
 >M 1  
 +1,3,M,1,9600,Meter,1,1,01030023,01030028,0103002d,01030025,0103002a,0103002f,01030032,01030027,0103002c,01030031,0103001B,0103001d,03030023,03030028,0303002d,03030025,0303002a,0303002f,03030032,03030027,0303002c,03030031,0303001B,0303001d  
-  
 1,=h Domestic Electricity:  
 1,010304UUuuUUuu@i10:100,1 Tariff 1 total,kWh,M1_T1_total,2  
 1,010304UUuuUUuu@i11:100,1 Tariff 1 partial,kWh,M1_T1_par,2  
@@ -1031,7 +993,6 @@ Tageseinspeisung: {m} %po_d% kWh
 1,030304UUuu@i20:100,2 CosPhi L2,,M2_CosPhi_L2,2  
 1,030304UUuu@i21:100,2 CosPhi L3,,M2_CosPhi_L3,2  
 #  
-
 ```
 ------------------------------------------------------------------------------
 
@@ -1047,8 +1008,7 @@ This is an example for 4 MODBus devices on the same bus (at different addresses)
 >D  
 >B 
 ->sensor53 r
->`>M 1`  
->  
+>M 1
 +1,3,m,1,9600,Hiking,1,10,0103000c,0103000e,0303000c,0303000e,0403000c,0403000e,0503000c,0503000e  
 ;---> two groups of registrers for each device --> default 2 registers returned ---> 4 values per device  
 1,=h Contatore 1  
@@ -1074,7 +1034,6 @@ This is an example for 4 MODBus devices on the same bus (at different addresses)
 1,050304SSss@i7:1,C5_ActivePower,W,C5ActivePower,0  
 1,050304xxxxUUuu@i7:1,C5_ReactivePower,Var,C5ReactivePower,0  
 #  
-
 ```
 ------------------------------------------------------------------------------
 
@@ -1097,7 +1056,6 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
 1,F70308xxxxxxxxxxxxUUuu@i1:10,AA20-10V,V,Metric_AA20,1
 1,F70304UUuu@i2:1,StellsignalRk1,%,CtrlSig_RK1,0
 #
-
 ```
 ------------------------------------------------------------------------------
 
@@ -1115,7 +1073,6 @@ Apator APOX+ behaves same as the EasyMeter while pin locked, just precision 0 wi
 1,77070100010802ff@1000,Verbrauch_Tarif_2,kWh,Total_Tarif2,0
 1,77070100010800ff@1000,Verbrauch_Summe,kWh,Total_Summe,0
 #
-
 ```
 ------------------------------------------------------------------------------
 
@@ -1139,20 +1096,16 @@ Two 2-Tarif meters (e.g. from Fairenergie Reutlingen) are readout at the same ti
 2,77070100010800ff@1000,Summe,kWh,HP_Sum,0
 2,77070100010700ff@1000,Verbrauch,W,HP_Use_Sum,1 
 #
-
 ```
 ------------------------------------------------------------------------------
 
 ### Apator APOX+ (SML)
 
 Energy provider supplied a PIN code to enable output of additional data.
-
 ```
 >D  
-
 >B  
 ->sensor53 r
-
 >M 1  
 +1,3,s,0,9600,SML
 1,77070100010801ff@1000,Verbrauch_Tarif_1,kWh,Total_Tarif1,3
@@ -1175,7 +1128,8 @@ Energy provider supplied a PIN code to enable output of additional data.
 Tested on SX631 (S34U18). Needs an RJ12 cable and a small adaptor circuit:
 ![](_media/p1-smartmeter/p1-smartmeter_v2.png)
 (Note how power for the Wemos module is drawn directly from the meter. No external power supply needed)
-This meter sends bursts of data at 115200 baud. Some data lines exceed 526 characters. To adapt to these conditions, compile firmware with:
+
+This meter sends bursts of data at 115200 baud every 10 seconds. Some data lines exceed 526 characters. To adapt to these conditions, compile firmware with:
 ```
 #define SML_MAX_VARS 60
 #define MAX_METERS 1
@@ -1189,14 +1143,20 @@ The script:
 
 >D
 r="1,0-0:98.1.0(@("
+;use a variable to store the decode string
 >B
 smlj=0
+;don't send teleperiod MQTT at boot, because we can have 0 values (meter didn't send data yet)
 ->sensor53 r
+>R
+smlj=0
+;don't send teleperiod MQTT at script restart, because we can have 0 values (meter didn't send data yet)
 >S
 if upsecs>22
 then
 smlj=1
 endif
+;only send teleperiod MQTT if 22 seconds passed since boot (during this time meter most probably sent data)
 >M 1
 +1,3,o,16,115200,Name,1
 1,1-0:32.7.0(@1,L1 Voltage,V,fesz_l1,1
@@ -1294,7 +1254,6 @@ Sample data:
 0-0:98.1.0(202056789012W)(000000.000*kWh)(000000.000*kWh)(000000.000*kWh)(000000.000*kWh)(000000.000*kWh)(000000.000*kWh)(000000.000*kvarh)(000000.000*kvarh)(000000.000*kvarh)(000000.000*kvarh)(000000.000*kvarh)(000000.000*kvarh)(000000.000*kWh)(00.000*kW)(00.000*kW)(00.000*kW)(00.000*kW)(00.000*kW)(00.000*kW)
 0-0:96.13.0(��������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������)
 !FB50
-
 ```
 ------------------------------------------------------------------------------
 
