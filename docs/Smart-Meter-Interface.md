@@ -1,7 +1,7 @@
 <a id="top">
 !!! failure "This feature is not included in precompiled binaries"     
 
-This driver extracts selected values from Smart Meters over various protocols, filters and publishes them to MQTT as regular sensors. Based on Tasmota's [scripting language](https://tasmota.github.io/docs/Scripting-Language/). To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+This driver extracts selected values from Smart Meters over various protocols, filters and publishes them to MQTT as regular sensors. Based on Tasmota's [scripting language](Scripting-Language). To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 ```
 #ifndef USE_SCRIPT
 #define USE_SCRIPT
@@ -215,7 +215,7 @@ With `=` character at the beginning of a line you can do some special decoding. 
 || as single character in `<label>` of the meter definition line will suppress the entire json output on MQTT |
 
 !!! example
-    To get the value of one of the descriptor lines, use sml[X]. X = Line number. Starts with 1.  ("#define  USE_SML_SCRIPT_CMD" required)
+    To get the value of one of the descriptor lines, use `sml[X]`. `X` = Line number. Starts with `1`. (compiling with `USE_SML_SCRIPT_CMD` required)
     ```
     >D
     v1=0
@@ -228,7 +228,7 @@ With `=` character at the beginning of a line you can do some special decoding. 
     ```
 
 !!! example
-    To disable and enable publishing of MQTT data on teleperiods, use `smlj=0` and `smlj=1`, respectively. For example to skip first MQTT publishing after boot (may contain errorneous data id meter is slow, see [Sanxing SX6x1](#sanxing-sx6x1-sxxu1x-ascii-obis)):
+    To disable and enable publishing of MQTT data on teleperiods, use `smlj=0` and `smlj=1`, respectively. For example to skip first MQTT publishing after boot (may contain errorneous data at after restart if meter is slow, see [Sanxing SX6x1](#sanxing-sx6x1-sxxu1x-ascii-obis)):
     ```
     >B
     ;disable publishing at MQTT teleperiod, on boot
@@ -259,7 +259,7 @@ With `=` character at the beginning of a line you can do some special decoding. 
     ```
 
 !!! attention 
-    With a few meters, it is necessary to request the meter to send its data using a specific character string. This string has to be sent at a very low baudrate (300Baud). If you reply the meter with an acknowledge and ask the it for a new baudrate of 9600 baud, the baudrate of the SML driver has to be changed, too.
+    With a few meters, it is necessary to request the meter to send data using a specific character string. This string has to be sent at a very low baudrate (300Baud). If you reply the meter with an acknowledge and ask the it for a new baudrate of 9600 baud, the baudrate of the SML driver has to be changed, too (see [Landis + Gyr ZMR120AR](#landis-gyr-zmr120ares2r2sfcs-obis)).
     
     To change the baudrate:
     >sml(`METERNUMBER` 0 `BAUDRATE`)  
@@ -330,7 +330,7 @@ Look down below for script examples based on the following metering devices:
 - [EMH ED300L](#emh-ed300l-sml) (SML)
 - [Hager EHZ363, Apator Norax 3D](#hager-ehz363-apator-norax-3d-sml) (SML)
 - [Hager EHZ161](#hager-ehz161-obis) (OBIS)
-- [Landis + Gyr ZMR120AR](#landis-gyr-zmr120ares2r2sfcs-obis) (OBIS)
+- [Landis + Gyr ZMR120AR](#landis-gyr-zmr120ares2r2sfcs-obis) (OBIS, changing the baud rate during operation)
 - [COMBO Meter](#combo-meter-watergassml) (Water,Gas,SML)
 - [WOLF CSZ 11/300 Heater](#wolf-csz-11300-heater-ebus) (EBUs)
 - [SDM530](#sdm530-modbus) (MODBus)
@@ -354,23 +354,11 @@ Look down below for script examples based on the following metering devices:
 
 This is an example for one of the many quite similar smart meters implemented in Portugal, by `EDP Distribuição S.A.`. May be valid for many more models, as stated.
 
-You should configure your `user_config_override.h` as:
-
+You should additionally configure in your `user_config_override.h`:
 ```
-#ifndef USE_SCRIPT
-#define USE_SCRIPT
-#endif
-#ifndef USE_SML_M
-#define USE_SML_M
-#endif
-#ifdef USE_RULES
-#undef USE_RULES
-#endif
-
 #define SML_MAX_VARS 10
 ```
 The Tasmota SML script:
-
 ```
 >D
 >B
@@ -455,7 +443,7 @@ The Tasmota SML script:
 
 ### Landis + Gyr ZMR120AReS2R2sfCS (OBIS)
   
- Example: Changing the baud rate during operation.
+Example: Changing the baud rate during operation.
 
 ```
 >D  
@@ -894,105 +882,108 @@ Tageseinspeisung: {m} %po_d% kWh
 
 ### Iskra MT 174 (OBIS)
 
+The script:
 ```
 >D
->B  
+>B
 ->sensor53 r
->M 1  
-+1,3,o,0,300,STROM,1,100,2F3F210D0A  
-1,1-0:1.8.1*255(@1,Total Consumed,KWh,Total_in,3  
-1,1-0:2.8.1*255(@1,Total Delivered,KWh,Total_out,3  
-1,1-0:0.0.0*255(@#),Meter Number,,Meter_number,0    
+>M 1
++1,3,o,0,300,STROM,1,100,2F3F210D0A
+1,1-0:1.8.1*255(@1,Total Consumed,KWh,Total_in,3
+1,1-0:2.8.1*255(@1,Total Delivered,KWh,Total_out,3
+1,1-0:0.0.0*255(@#),Meter Number,,Meter_number,0
 #
 ```
 ------------------------------------------------------------------------------
 
 ### SBC ALE3 (MODBus)
 
+The script:
 ```
->D  
->B  
-->sensor53 r  
->M 1  
-+1,3,M,1,9600,SBC,1,1,02030023,02030028,0203002d,02030025,0203002a,0203002f,02030032,02030027,0203002c,02030031,02030021,02030015,02030018  
-1,020304UUuu@i0:1,Spannung L1,V,Voltage_L1,0  
-1,020304UUuu@i1:1,Spannung L2,V,Voltage_L2,0  
-1,020304UUuu@i2:1,Spannung L3,V,Voltage_L3,0  
-1,020304xxxxUUuu@i0:10,Strom L1,A,Current_L1,2  
-1,020304xxxxUUuu@i1:10,Strom L2,A,Current_L2,2  
-1,020304xxxxUUuu@i2:10,Strom L3,A,Current_L3,2  
-1,=h=  
-1,020304UUuu@i3:100,Leistung L1,kW,Power_L1,3  
-1,020304UUuu@i4:100,Leistung L2,kW,Power_L2,3  
-1,020304UUuu@i5:100,Leistung L3,kW,Power_L3,3  
-1,020304UUuu@i6:100,Leistung Total,kW,Power_Total,3  
-1,020304xxxxSSss@i3:100,BlindLeistung L1,kVAr,ReaktivePower_L1,3  
-1,020304xxxxSSss@i4:100,BlindLeistung L2,kVAr,ReaktivePower_L2,3  
-1,020304xxxxSSss@i5:100,BlindLeistung L3,kVAr,ReaktivePower_L3,3  
-1,020304xxxxSSss@i6:100,BLeistung Total,kVAr,ReaktivePower_Total,3  
-1,=h=  
-1,020304UUuu@i7:100,CosPhi L1,,CosPhi_L1,2  
-1,020304UUuu@i8:100,CosPhi L2,,CosPhi_L2,2  
-1,020304UUuu@i9:100,CosPhi L3,,CosPhi_L3,2  
-1,=h=  
-1,020304UUuuUUuu@i10:100,T2 Wert,kWh,T2_Value,2  
+>DH
+>B
+->sensor53 r
+>M 1
++1,3,M,1,9600,SBC,1,1,02030023,02030028,0203002d,02030025,0203002a,0203002f,02030032,02030027,0203002c,02030031,02030021,02030015,02030018
+1,020304UUuu@i0:1,Spannung L1,V,Voltage_L1,0
+1,020304UUuu@i1:1,Spannung L2,V,Voltage_L2,0
+1,020304UUuu@i2:1,Spannung L3,V,Voltage_L3,0
+1,020304xxxxUUuu@i0:10,Strom L1,A,Current_L1,2
+1,020304xxxxUUuu@i1:10,Strom L2,A,Current_L2,2
+1,020304xxxxUUuu@i2:10,Strom L3,A,Current_L3,2
+1,=h=
+1,020304UUuu@i3:100,Leistung L1,kW,Power_L1,3
+1,020304UUuu@i4:100,Leistung L2,kW,Power_L2,3
+1,020304UUuu@i5:100,Leistung L3,kW,Power_L3,3
+1,020304UUuu@i6:100,Leistung Total,kW,Power_Total,3
+1,020304xxxxSSss@i3:100,BlindLeistung L1,kVAr,ReaktivePower_L1,3
+1,020304xxxxSSss@i4:100,BlindLeistung L2,kVAr,ReaktivePower_L2,3
+1,020304xxxxSSss@i5:100,BlindLeistung L3,kVAr,ReaktivePower_L3,3
+1,020304xxxxSSss@i6:100,BLeistung Total,kVAr,ReaktivePower_Total,3
+1,=h=
+1,020304UUuu@i7:100,CosPhi L1,,CosPhi_L1,2
+1,020304UUuu@i8:100,CosPhi L2,,CosPhi_L2,2
+1,020304UUuu@i9:100,CosPhi L3,,CosPhi_L3,2
+1,=h=
+1,020304UUuuUUuu@i10:100,T2 Wert,kWh,T2_Value,2
 #
 ```
 ------------------------------------------------------------------------------
 
 ### 2 * SBC ALE3 (MODBus)
 
+The script:
 ```
->D  
->B  
-->sensor53 r  
->M 1  
-+1,3,M,1,9600,Meter,1,1,01030023,01030028,0103002d,01030025,0103002a,0103002f,01030032,01030027,0103002c,01030031,0103001B,0103001d,03030023,03030028,0303002d,03030025,0303002a,0303002f,03030032,03030027,0303002c,03030031,0303001B,0303001d  
-1,=h Domestic Electricity:  
-1,010304UUuuUUuu@i10:100,1 Tariff 1 total,kWh,M1_T1_total,2  
-1,010304UUuuUUuu@i11:100,1 Tariff 1 partial,kWh,M1_T1_par,2  
-1,=h Readings:  
-1,010304UUuu@i0:1,1 Voltage L1,V,M1_Voltage_L1,0  
-1,010304UUuu@i1:1,1 Voltage L2,V,M1_Voltage_L2,0  
-1,010304UUuu@i2:1,1 Voltage L3,V,M1_Voltage_L3,0  
-1,010304xxxxUUuu@i0:10,1 Current L1,A,M1_Current_L1,2  
-1,010304xxxxUUuu@i1:10,1 Current L2,A,M1_Current_L2,2  
-1,010304xxxxUUuu@i2:10,1 Current L3,A,M1_Current_L3,2  
-1,010304UUuu@i3:100,1 Active Power L1,kW,M1_PRMS_L1,3  
-1,010304UUuu@i4:100,1 Active Power L2,kW,M1_PRMS_L2,3  
-1,010304UUuu@i5:100,1 Active Power L3,kW,M1_PRMS_L3,3  
-1,010304UUuu@i6:100,1 Active Power total,kW,M1_PRMS_total,3  
-1,010304xxxxSSss@i3:100,1 Reactive Power L1,kVAr,M1_QRMS_L1,3  
-1,010304xxxxSSss@i4:100,1 Reactive Power L2,kVAr,M1_QRMS_L2,3  
-1,010304xxxxSSss@i5:100,1 Reactive Power L3,kVAr,M1_QRMS_L3,3  
-1,010304xxxxSSss@i6:100,1 Reactive Power total,kVAr,M1_QRMS_total,3  
-1,010304UUuu@i7:100,1 CosPhi L1,,M1_CosPhi_L1,2  
-1,010304UUuu@i8:100,1 CosPhi L2,,M1_CosPhi_L2,2  
-1,010304UUuu@i9:100,1 CosPhi L3,,M1_CosPhi_L3,2  
-1,=h________________________________________________  
-; meter 2 +12 offset  
-1,=h Heat Pump  
-1,030304UUuuUUuu@i22:100,2 Tariff 1 total,kWh,M2_T1_total,2  
-1,030304UUuuUUuu@i23:100,2 Tariff 1 partial,kWh,M2_T1_par,2  
-1,=h Readings:  
-1,030304UUuu@i12:1,2 Voltage L1,V,M2_Voltage_L1,0  
-1,030304UUuu@i13:1,2 Voltage L2,V,M2_Voltage_L2,0  
-1,030304UUuu@i14:1,2 Voltage L3,V,M2_Voltage_L3,0  
-1,030304xxxxUUuu@i12:10,2 Current L1,A,M2_Current_L1,2  
-1,030304xxxxUUuu@i13:10,2 Current L2,A,M2_Current_L2,2  
-1,030304xxxxUUuu@i14:10,2 Current L3,A,M2_Current_L3,2  
-1,030304UUuu@i15:100,2 Active Power L1,kW,M2_PRMS_L1,3  
-1,030304UUuu@i16:100,2 Active Power L2,kW,M2_PRMS_L2,3  
-1,030304UUuu@i17:100,2 Active Power L3,kW,M2_PRMS_L3,3  
-1,030304UUuu@i18:100,2 Active Power total,kW,M2_PRMS_total,3  
-1,030304xxxxSSss@i15:100,2 Reactive Power L1,kVAr,M2_QRMS_L1,3  
-1,030304xxxxSSss@i16:100,2 Reactive Power L2,kVAr,M2_QRMS_L2,3  
-1,030304xxxxSSss@i16:100,2 Reactive Power L3,kVAr,M2_QRMS_L3,3  
-1,030304xxxxSSss@i18:100,2 Reactive Power total,kVAr,M2_QRMS_total,3  
-1,030304UUuu@i19:100,2 CosPhi L1,,M2_CosPhi_L1,2  
-1,030304UUuu@i20:100,2 CosPhi L2,,M2_CosPhi_L2,2  
-1,030304UUuu@i21:100,2 CosPhi L3,,M2_CosPhi_L3,2  
-#  
+>D
+>B
+->sensor53 r
+>M 1
++1,3,M,1,9600,Meter,1,1,01030023,01030028,0103002d,01030025,0103002a,0103002f,01030032,01030027,0103002c,01030031,0103001B,0103001d,03030023,03030028,0303002d,03030025,0303002a,0303002f,03030032,03030027,0303002c,03030031,0303001B,0303001d
+1,=h Domestic Electricity:
+1,010304UUuuUUuu@i10:100,1 Tariff 1 total,kWh,M1_T1_total,2
+1,010304UUuuUUuu@i11:100,1 Tariff 1 partial,kWh,M1_T1_par,2
+1,=h Readings:
+1,010304UUuu@i0:1,1 Voltage L1,V,M1_Voltage_L1,0
+1,010304UUuu@i1:1,1 Voltage L2,V,M1_Voltage_L2,0
+1,010304UUuu@i2:1,1 Voltage L3,V,M1_Voltage_L3,0
+1,010304xxxxUUuu@i0:10,1 Current L1,A,M1_Current_L1,2
+1,010304xxxxUUuu@i1:10,1 Current L2,A,M1_Current_L2,2
+1,010304xxxxUUuu@i2:10,1 Current L3,A,M1_Current_L3,2
+1,010304UUuu@i3:100,1 Active Power L1,kW,M1_PRMS_L1,3
+1,010304UUuu@i4:100,1 Active Power L2,kW,M1_PRMS_L2,3
+1,010304UUuu@i5:100,1 Active Power L3,kW,M1_PRMS_L3,3
+1,010304UUuu@i6:100,1 Active Power total,kW,M1_PRMS_total,3
+1,010304xxxxSSss@i3:100,1 Reactive Power L1,kVAr,M1_QRMS_L1,3
+1,010304xxxxSSss@i4:100,1 Reactive Power L2,kVAr,M1_QRMS_L2,3
+1,010304xxxxSSss@i5:100,1 Reactive Power L3,kVAr,M1_QRMS_L3,3
+1,010304xxxxSSss@i6:100,1 Reactive Power total,kVAr,M1_QRMS_total,3
+1,010304UUuu@i7:100,1 CosPhi L1,,M1_CosPhi_L1,2
+1,010304UUuu@i8:100,1 CosPhi L2,,M1_CosPhi_L2,2
+1,010304UUuu@i9:100,1 CosPhi L3,,M1_CosPhi_L3,2
+1,=h________________________________________________
+; meter 2 +12 offset
+1,=h Heat Pump
+1,030304UUuuUUuu@i22:100,2 Tariff 1 total,kWh,M2_T1_total,2
+1,030304UUuuUUuu@i23:100,2 Tariff 1 partial,kWh,M2_T1_par,2
+1,=h Readings:
+1,030304UUuu@i12:1,2 Voltage L1,V,M2_Voltage_L1,0
+1,030304UUuu@i13:1,2 Voltage L2,V,M2_Voltage_L2,0
+1,030304UUuu@i14:1,2 Voltage L3,V,M2_Voltage_L3,0
+1,030304xxxxUUuu@i12:10,2 Current L1,A,M2_Current_L1,2
+1,030304xxxxUUuu@i13:10,2 Current L2,A,M2_Current_L2,2
+1,030304xxxxUUuu@i14:10,2 Current L3,A,M2_Current_L3,2
+1,030304UUuu@i15:100,2 Active Power L1,kW,M2_PRMS_L1,3
+1,030304UUuu@i16:100,2 Active Power L2,kW,M2_PRMS_L2,3
+1,030304UUuu@i17:100,2 Active Power L3,kW,M2_PRMS_L3,3
+1,030304UUuu@i18:100,2 Active Power total,kW,M2_PRMS_total,3
+1,030304xxxxSSss@i15:100,2 Reactive Power L1,kVAr,M2_QRMS_L1,3
+1,030304xxxxSSss@i16:100,2 Reactive Power L2,kVAr,M2_QRMS_L2,3
+1,030304xxxxSSss@i16:100,2 Reactive Power L3,kVAr,M2_QRMS_L3,3
+1,030304xxxxSSss@i18:100,2 Reactive Power total,kVAr,M2_QRMS_total,3
+1,030304UUuu@i19:100,2 CosPhi L1,,M2_CosPhi_L1,2
+1,030304UUuu@i20:100,2 CosPhi L2,,M2_CosPhi_L2,2
+1,030304UUuu@i21:100,2 CosPhi L3,,M2_CosPhi_L3,2
+#
 ```
 ------------------------------------------------------------------------------
 
@@ -1004,36 +995,37 @@ This is an example for 4 MODBus devices on the same bus (at different addresses)
 
 ![94792441-45470180-03d9-11eb-86a2-0c79506226fc](https://user-images.githubusercontent.com/11647075/94828277-95d65300-0409-11eb-9cd0-1d647179f875.png)
 
+The script:
 ```
->D  
->B 
+>D
+>B
 ->sensor53 r
 >M 1
-+1,3,m,1,9600,Hiking,1,10,0103000c,0103000e,0303000c,0303000e,0403000c,0403000e,0503000c,0503000e  
-;---> two groups of registrers for each device --> default 2 registers returned ---> 4 values per device  
-1,=h Contatore 1  
-1,010304UUuu@i0:10,C1_Voltage,V,C1Voltage,1  
-;---> decoder for the first registry returned for the first group  
-1,010304xxxxUUuu@i0:1000,C1_Current,A,C1Current,3  
-;---> decoder for the second registry returned for the first group  
-1,010304SSss@i1:1,C1_ActivePower,W,C1ActivePower,0  
-1,010304xxxxUUuu@i1:1,C1_ReactivePower,Var,C1ReactivePower,0  
-1,=h Contatore 3  
-1,030304UUuu@i2:10,C3_Voltage,V,C3Voltage,1  
-1,030304xxxxUUuu@i2:1000,C3_Current,A,C3Current,3  
-1,030304SSss@i3:1,C3_ActivePower,W,C3ActivePower,0  
-1,030304xxxxUUuu@i3:1,C3_ReactivePower,Var,C3ReactivePower,0  
-1,=h Contatore 4  
-1,040304UUuu@i4:10,C4_Voltage,V,C4Voltage,1  
-1,040304xxxxUUuu@i4:1000,C4_Current,A,C4Current,3  
-1,040304SSss@i5:1,C4_ActivePower,W,C4ActivePower,0  
-1,040304xxxxUUuu@i5:1,C4_ReactivePower,Var,C4ReactivePower,0  
-1,=h Contatore 5  
-1,050304UUuu@i6:10,C5_Voltage,V,C5Voltage,1  
-1,050304xxxxUUuu@i6:1000,C5_Current,A,C5Current,3  
-1,050304SSss@i7:1,C5_ActivePower,W,C5ActivePower,0  
-1,050304xxxxUUuu@i7:1,C5_ReactivePower,Var,C5ReactivePower,0  
-#  
++1,3,m,1,9600,Hiking,1,10,0103000c,0103000e,0303000c,0303000e,0403000c,0403000e,0503000c,0503000e
+;---> two groups of registrers for each device --> default 2 registers returned ---> 4 values per device
+1,=h Contatore 1
+1,010304UUuu@i0:10,C1_Voltage,V,C1Voltage,1
+;---> decoder for the first registry returned for the first group
+1,010304xxxxUUuu@i0:1000,C1_Current,A,C1Current,3
+;---> decoder for the second registry returned for the first group
+1,010304SSss@i1:1,C1_ActivePower,W,C1ActivePower,0
+1,010304xxxxUUuu@i1:1,C1_ReactivePower,Var,C1ReactivePower,0
+1,=h Contatore 3
+1,030304UUuu@i2:10,C3_Voltage,V,C3Voltage,1
+1,030304xxxxUUuu@i2:1000,C3_Current,A,C3Current,3
+1,030304SSss@i3:1,C3_ActivePower,W,C3ActivePower,0
+1,030304xxxxUUuu@i3:1,C3_ReactivePower,Var,C3ReactivePower,0
+1,=h Contatore 4
+1,040304UUuu@i4:10,C4_Voltage,V,C4Voltage,1
+1,040304xxxxUUuu@i4:1000,C4_Current,A,C4Current,3
+1,040304SSss@i5:1,C4_ActivePower,W,C4ActivePower,0
+1,040304xxxxUUuu@i5:1,C4_ReactivePower,Var,C4ReactivePower,0
+1,=h Contatore 5
+1,050304UUuu@i6:10,C5_Voltage,V,C5Voltage,1
+1,050304xxxxUUuu@i6:1000,C5_Current,A,C5Current,3
+1,050304SSss@i7:1,C5_ActivePower,W,C5ActivePower,0
+1,050304xxxxUUuu@i7:1,C5_ReactivePower,Var,C5ReactivePower,0
+#
 ```
 ------------------------------------------------------------------------------
 
@@ -1089,7 +1081,7 @@ Two 2-Tarif meters (e.g. from Fairenergie Reutlingen) are readout at the same ti
 1,77070100010801ff@1000,Tarif 1,kWh,Power_T1,0
 1,77070100010802ff@1000,Tarif 2,kWh,Power_T2,0
 1,77070100010800ff@1000,Summe,kWh,Power_Sum,0
-1,77070100010700ff@1000,Verbrauch,W,Power_Use_Sum,1 
+1,77070100010700ff@1000,Verbrauch,W,Power_Use_Sum,1
 +2,13,s,0,9600,Pump
 2,77070100010801ff@1000,Tarif 1,kWh,HP_T1,0
 2,77070100010802ff@1000,Tarif 2,kWh,HP_T2,0
