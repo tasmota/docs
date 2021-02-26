@@ -7,7 +7,7 @@ Commands can be issued using **MQTT**, **web requests**, **webUI console** and *
 ## How to use commands
 Every command **used without a parameter (payload) returns the current setting**.
 
-> `Power` returns the status of first defined power output (usually Relay1)"
+> `Power` returns the status of first defined power output (usually Relay1)
 
 Instead of `0` you can use `off` or `false` and instead of `1` you can use `on` or `true`.
 
