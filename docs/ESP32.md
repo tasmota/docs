@@ -204,5 +204,6 @@ misc:
 USE_MP3_PLAYER  
 USE_SCRIPT (scripting and all its options)  
 USE_24C256  
-USE_SENDMAIL  
+USE_SENDMAIL
+USE_ESP32MAIL
 ```
