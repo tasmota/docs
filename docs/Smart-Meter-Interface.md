@@ -1,7 +1,8 @@
 <a id="top">
-!!! failure "This feature is not included in precompiled binaries"     
+!!! failure "This feature is not included in precompiled binaries"
 
 This driver extracts selected values from Smart Meters over various protocols, filters and publishes them to MQTT as regular sensors. Based on Tasmota's [scripting language](Scripting-Language). To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+
 ```
 #ifndef USE_SCRIPT
 #define USE_SCRIPT
@@ -122,7 +123,7 @@ Declare `>M` section with the number of connected meters (n = `1..5`):
     the number of requested registers is fixed to 2, however with the char 'r' before the hex string the complete request string may be specified  
     `...r010400000001,r010400020003,...`    
     **Note:**
-    `ID`, `Instruction to read the Register` value (Input vs Holding) and `Register #` may differ depending on the measuring device.  
+    `ID`, `Instruction` to read the register value (Input vs Holding) and `Register#` may differ depending on the measuring device.  
    
 
 ## Meter Metrics
@@ -194,7 +195,7 @@ Each meter typically provides multiple metrics (enegry, voltage, power, current 
     ```
 
 !!! tip
-    Use: `sensor53 dM` to output the received data in the console. M = the number of the defined meter in the script.  
+    Use: `sensor53 dM` to output the received data in the console. `M` = the number of the meter in the definitin line.  
     During the output of the data in the console, the data in the WEB UI are not updated. To return write: `sensor53 d0`  
 
 
@@ -296,7 +297,6 @@ With `=` character at the beginning of a line you can do some special decoding. 
     +1,3,o,0,9600, ,1  
     ;...etc.  
     ```
-    You can find the detailed example [here](#landis-gyr-zmr120ares2r2sfcs-obis).
 
     **Note**: This procedure is only necessary, if the meter explicitly asks for 300 baud. The most meters work directly with 9600 baud. Therefore it is easier to give this method a try (see [Iskra MT 174](#iskra-mt-174-obis)):  
 
@@ -341,9 +341,9 @@ Look down below for script examples based on the following metering devices:
 - [SBC ALE3](#sbc-ale3-modbus) (MODBus)
 - [SBC ALE3](#2-sbc-ale3-modbus) (MODBus, alternate)
 - [Trovis 557x](#trovis-557x-modbus) (MODBus)
-- [Hiking DDS238-2 ZN/S](#4-hiking-dds238-2-zns3-modbus) (MODBus, 4 devices in parallel)
+- [Hiking DDS238-2 ZN/S](#4-hiking-dds238-2-zns3-modbus) (MODBus, 4 meters in parallel)
 - [EasyMeter Q3A / Apator APOX+](#easymeter-q3a-apator-apox-sml) (SML)
-- [EasyMeter Q3B](#easymeter-q3b-sml) (SML, 2 meters)
+- [EasyMeter Q3B](#easymeter-q3b-sml) (SML, 2 meters with 1 Tasmota)
 - [Apator APOX+](#apator-apox-sml) (SML, with pin code for extra data)
 - [Sanxing SX6x1 (SxxU1x)](#sanxing-sx6x1-sxxu1x-ascii-obis) (OBIS - Ascii)
 - [Resol Deltasol BS Plus](#resol-deltasol-bs-plus-vbus) (VBus)
@@ -352,7 +352,7 @@ Look down below for script examples based on the following metering devices:
 
 ### JANZ C3801 (MODBus)
 
-This is an example for one of the many quite similar smart meters implemented in Portugal, by `EDP Distribuição S.A.`. May be valid for many more models, as stated.
+This is an example for one of the many quite similar smart meters implemented in Portugal, by EDP Distribuição S.A. May be valid for many more models, as stated.
 
 You should additionally configure in your `user_config_override.h`:
 ```
@@ -1070,7 +1070,7 @@ Apator APOX+ behaves same as the EasyMeter while pin locked, just precision 0 wi
 
 ### EasyMeter Q3B (SML)
 
-Two 2-Tarif meters (e.g. from Fairenergie Reutlingen) are readout at the same time. The first one is for general purpose and is connected to GPIO14. The JSON prefix is set to "Power". The second one is for the heat pump and connected to GPIO13. The JSON prefix is set to "Pump". For both meters, tarif 1 & 2 are whole kWh (precision 0), current consumption in W has a higher precision (1).
+Two separate 2-Tariff meters (e.g. from Fairenergie Reutlingen) are readout by the same Tasmota device. The first one is for general purpose and is connected to `GPIO14`. The JSON prefix is set to `Power`. The second one is for the heat pump and connected to `GPIO13`. The JSON prefix is set to `Pump`. For both meters, tariff 1 & 2 are whole kWh (precision 0), current consumption in W has a higher precision (1).
 
 ```
 >D
