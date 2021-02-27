@@ -1,7 +1,8 @@
 <a id="top">
 !!! failure "This feature is not included in precompiled binaries"
 
-This driver extracts selected values from Smart Meters over various protocols, filters and publishes them to MQTT as regular sensors. Based on Tasmota's [scripting language](Scripting-Language). To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+This driver extracts selected values from Smart Meters over various protocols, filters and publishes them to MQTT as regular sensors.
+Based on Tasmota's [scripting language](Scripting-Language). To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
 ```
 #ifndef USE_SCRIPT
@@ -51,10 +52,6 @@ The Smart Meter Interface provides a means to connect many kinds of meters to Ta
 There are many different meters that use the same protocol. There are multitudes of variants and use cases. This interface provides a means of specifying these definitions through [meter descriptors](#meter-metrics). This method uses the [scripting language](Scripting-Language) editor to define the descriptors. In this way, only one firmware binary version is required and a modification can be made easily _on the fly_. A meter can also be defined by using compilation time `#define` pragmas (deprecated). This requires recompiling the firmware to make modifications.
 
 !!! note
-    If no `>M` section is found in the script or if the scripting language is not compiled, the driver reverts to the default hardcoded `#define` definitions. If no meter script is defined, the default harcoded descriptor interface (deprecated) uses `RX GPIO3` for receiving data and thus may interfere with other Tasmota Defintions without warning. 
- 
-  
-!!! note
     Additional hardware may be required to read certain measuring devices. For example: RS485toTTL Adaper for Modbus, IR transistor for electricity meters. Sometimes an additional IR diode and resistors.  
   
   
@@ -71,7 +68,9 @@ Declare `>B` (boot) section to inform the interface to read the meter descriptor
 ------------------------------------------------------------------------------
 Declare `>M` section with the number of connected meters (n = `1..5`):
 > `>M <n>`  
-------------------------------------------------------------------------------
+
+!!! note
+    If no `>M` section is found in the script or if the scripting language is not compiled, the driver reverts to the default hardcoded `#define` definitions. If no meter script is defined, the default harcoded descriptor interface (deprecated) uses `RX GPIO3` for receiving data and thus may interfere with other Tasmota Defintions without warning. 
 
 
 ## Meter Definition
@@ -162,7 +161,7 @@ Each meter typically provides multiple metrics (enegry, voltage, power, current 
 || decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte. (e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`) |
 || in case of MODBus, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition |
 | `<scale>` | scaling factor (divisor) or string definition |
-|| This can be a fraction (e.g., 0.1 => result * 10), or a negative value. When decoding a string result (e.g. meter serial number), use `#` character for this parameter _(Note: only one string can be decoded per meter!)_. For OBIS, you need a `)` termination character after the `#` character. |
+|| This can be a fraction (e.g., `0.1` = result * 10), or a negative value. When decoding a string result (e.g. meter serial number), use `#` character for this parameter _(Note: only one string can be decoded per meter!)_. For OBIS, you need a `)` termination character after the `#` character. |
 | `<label>` | web UI label (max. 23 characters) |
 | `<UoM>` | unit of measurement (max. 7 characters) |
 | `<var>` | MQTT label (max. 23 characters) | 
@@ -184,15 +183,14 @@ Each meter typically provides multiple metrics (enegry, voltage, power, current 
     ```
 
     OBIS: `1,1-0:0.0.0\*255(@#),Meter Nr,, Meter_number,0`  
-     SML: `1,77078181c78203ff@#,Service ID,,Meter_id,0`  
+    SML: `1,77078181c78203ff@#,Service ID,,Meter_id,0`  
     `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,4` precision of 4, transmitted only on [`TelePeriod`](Commands#teleperiod)   
     `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,20` precision of 4, transmitted immediately (4 + 16 = 20)
     
-    ```
-    +1,3,M,1,9600,SBC,1,2,01030023,01030028...
-    1,010304UUuuxxxxxxxx@i0:1,Voltage L1,V,Voltage_L1,0` < the `i0:1` refers to: `01030023` with a scaling factor (`:1`) of 1   
-    1,010304UUuuxxxxxxxx@i1:10,Current L1,V,Current_L1,2` < the `i1:10` refers to: `01030028` with a scaling factor (`:10`) of 10
-    ```
+    MODBus: `+1,3,M,1,9600,SBC,1,2,01030023,01030028...`
+    `1,010304UUuuxxxxxxxx@i0:1,Voltage L1,V,Voltage_L1,0` < the `i0:1` refers to: `01030023` with a scaling factor (`:1`) for 1   
+    `1,010304UUuuxxxxxxxx@i1:10,Current L1,V,Current_L1,2` < the `i1:10` refers to: `01030028` with a scaling factor (`:10`) for 10
+
 
 !!! tip
     Use: `sensor53 dM` to output the received data in the console. `M` = the number of the meter in the definitin line.  
@@ -1066,7 +1064,9 @@ Apator APOX+ behaves same as the EasyMeter while pin locked, just precision 0 wi
 1,77070100010800ff@1000,Verbrauch_Summe,kWh,Total_Summe,0
 #
 ```
-------------------------------------------------------------------------------
+
+
+-----
 
 ### EasyMeter Q3B (SML)
 
@@ -1089,7 +1089,8 @@ Two separate 2-Tariff meters (e.g. from Fairenergie Reutlingen) are readout by t
 2,77070100010700ff@1000,Verbrauch,W,HP_Use_Sum,1 
 #
 ```
-------------------------------------------------------------------------------
+-----
+
 
 ### Apator APOX+ (SML)
 
@@ -1256,7 +1257,7 @@ To connect to this and read data from the bus a level shifting is needed as the 
 
 ![](_media/Resol_VBus_adaptor_to_WemosD1Mini.png)
 
-The script: 
+The script (compile firmware with `SML_REPLACE_VARS`): 
 ```
 >D
 r="1,AA100021421000010774"
