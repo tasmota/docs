@@ -2,6 +2,8 @@
 
 To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
+when you want to add a display to Tasmoata is is best to buy one from the table below where the drivers are already there. keep in mind that there are also many variants of each display available and not all variants may be supported.  
+
 #define directive | Description
  ---|---
 USE_DISPLAY | Enable display support. Also requires at least one of the following compilation directives 
@@ -13,7 +15,7 @@ USE_DISPLAY_EPAPER_29 | Enable EPAPER_29 display. Also requires `USE_SPI`
 USE_DISPLAY_EPAPER_42 | Enable EPAPER_42 display. Also requires `USE_SPI`
 USE_DISPLAY_SH1106 | Enable OLED SH1106 display. Also requires `USE_I2C`
 USE_DISPLAY_ILI9488 | Enable TFT ILI9488 display. Also requires `USE_SPI`
-USE_DISPLAY_SSD1351 | Enable color OLED SSD1351 display. Also requires `USE_SPI`<br>currently only 3 wire SPI mode supported. there are versions that can NOT be jumpered to 3 wire mode   
+USE_DISPLAY_SSD1351 | Enable color OLED SSD1351 display. Also requires `USE_SPI`
 USE_DISPLAY_RA8876  | Enable TFT RA8876 display. Also requires `USE_SPI` 
 USE_DISPLAY_SEVENSEG  | Enable 7 segment display. Also requires `USE_I2C` 
 USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI`  
@@ -340,7 +342,10 @@ On SPI the CS and DC pins when needed must use the pin definition with Display_I
 E-Paper displays are connected via software 3-wire SPI `(CS, SCLK, MOSI)`. DC should be connected to GND , Reset to 3.3 V 
 and busy may be left unconnected. The jumper on the circuit board of the display must be set to 3-wire SPI.  
 
-The ILI9488, ILI9341 and SSD1351 are connected via hardware 3-wire SPI `(SPI_MOSI=GPIO13, SPI_SCLK=GPIO14, CS=GPIO15)`. The ILI9488 must also be connected to the backlight pin (dimmer supported on SSD1351). [Wiring](https://github.com/arendst/Tasmota/issues/2557#issuecomment-444454436)
+The ILI9488 is connected via hardware 3-wire SPI `(SPI_MOSI=GPIO13, SPI_SCLK=GPIO14, CS=GPIO15)` and must also be connected to the backlight pin 
+The SSD1351 may be connected via hardware 3-wire SPI or 4-wire SPI with support for dimmer.
+The ILI9341 is connected via hardware 4-wire SPI, Backlight and OLEDRESET (dimmer supported on ESP32)
+ [Wiring](https://github.com/arendst/Tasmota/issues/2557#issuecomment-444454436)
 
 The RA8876 is connected via standard hardware 4-wire SPI `(SPI_MOSI=GPIO13, SPI_SCLK=GPIO14, RA_8876_CS=GPIO15, SSPI_MISO=GPIO12)`. No backlight pin is needed, dimmer supported, on ESP32 gpio pins may be freeley defined (below gpio 33).  
 
