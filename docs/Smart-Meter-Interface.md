@@ -1288,3 +1288,19 @@ r="1,AA100021421000010774"
 Result (with unneeded values commented out):
 
 ![](_media/Resol_VBus_TasmotaShot.png)
+
+### Logarex LK13BE (OBIS)
+
+>D
+>B
+=>sensor53 r
+>M 1
++1,3,o,0,9600,LK13BE,13,30,2F3F210D0A,063035310D0A
+
+1,1-0:1.8.0*255(@1,Gesamtverbrauch,KWh,total,4
+1,1-0:1.8.0*96(@1,Verbrauch 1 Tag,KWh,total_1d,4
+1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,KWh,total_7d,4
+1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,KWh,total_30d,4
+1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,KWh,total_365d,4
+1,1-0:16.7.0*255(@1,Verbrauch aktuell,W,current,20
+#
