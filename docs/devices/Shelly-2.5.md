@@ -90,7 +90,7 @@ Eg.: Your Value = 0.520 + 0.050 = 0.570
 `energy#current[X]>0.570`
 
 ```
-rule1 on energy#current[2]>0.600 do backlog power1 0;power2 0; endon on energy#current[1]>0.600 do backlog power1 0;power2 0 endon
+rule1 on energy#current[2]>0.600 do shutterstop endon on energy#current[1]>0.600 do shutterstop endon
 rule1 1
 rule1 5
 ```
