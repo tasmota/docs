@@ -1,7 +1,7 @@
 <a id="top">
 !!! failure "This feature is not included in precompiled binaries"
 
-This driver extracts selected values from Smart Meters over various protocols, filters and publishes them to MQTT as regular sensors.
+This driver extracts selected values from Smart Meters over various protocols, filters and publishes them to MQTT as regular sensors.<BR>
 Based on Tasmota's [scripting language](Scripting-Language). To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
 ```
@@ -182,14 +182,14 @@ Each meter typically provides multiple metrics (enegry, voltage, power, current 
     1,0:98.1.0(@(2:1,Havi adat, KWh,havi3,3`
     ```
 
-    OBIS: `1,1-0:0.0.0\*255(@#),Meter Nr,, Meter_number,0`  
-    SML: `1,77078181c78203ff@#,Service ID,,Meter_id,0`  
-    `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,4` precision of 4, transmitted only on [`TelePeriod`](Commands#teleperiod)   
+    OBIS: `1,1-0:0.0.0\*255(@#),Meter Nr,, Meter_number,0`<BR>
+    SML: `1,77078181c78203ff@#,Service ID,,Meter_id,0`<BR>
+    `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,4` precision of 4, transmitted only on [`TelePeriod`](Commands#teleperiod)<BR>
     `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,20` precision of 4, transmitted immediately (4 + 16 = 20)
     
-    MODBus: `+1,3,M,1,9600,SBC,1,2,01030023,01030028...`
-    `1,010304UUuuxxxxxxxx@i0:1,Voltage L1,V,Voltage_L1,0` < the `i0:1` refers to: `01030023` with a scaling factor (`:1`) for 1   
-    `1,010304UUuuxxxxxxxx@i1:10,Current L1,V,Current_L1,2` < the `i1:10` refers to: `01030028` with a scaling factor (`:10`) for 10
+    MODBus: `+1,3,M,1,9600,SBC,1,2,01030023,01030028...`<BR>
+    `1,010304UUuuxxxxxxxx@i0:1,Voltage L1,V,Voltage_L1,0` the `i0:1` refers to: `01030023` with a scaling factor (`:1`) for 1<BR>
+    `1,010304UUuuxxxxxxxx@i1:10,Current L1,V,Current_L1,2` the `i1:10` refers to: `01030028` with a scaling factor (`:10`) for 10
 
 
 !!! tip
@@ -203,15 +203,10 @@ With `=` character at the beginning of a line you can do some special decoding. 
 
 | Command | Description |
 | -- | -- |
-| `M,=m` | Perform arithmetic (`+,-,*,/`) on the measured data. Use `#` before a number to designate a constant value |
-||e.g. `1,=m 3+4+5/#3 @100,Voltage L1+L2+L3/3,V,Volt_avg,2` to sum results of decoder entries 3,4,5 and divide by 3 (average) |
-| `M,=d` | Calculate difference between metric values decoded at time intervals (up to 10 =d lines possible)  |
-||e.g. `1,=d 3 10` calculate 10 second interval difference of decoder entry 3  |
-| `M,=h` | Insert text on the web interface (html text up to 30 chars). These lines do not count as decoder entry.
-||e.g. `1,=h<hr/>` to insert a separator line on the web UI |
-| `*` character | To hide fields from result output or disable output completely. Compiling with `USE_SML_SCRIPT_CMD` required. |
-|| as single character in `<label>` of the metrics line will hide that value from the web UI |
-|| as single character in `<label>` of the meter definition line will suppress the entire json output on MQTT |
+| `M,=m` | Perform arithmetic (`+,-,*,/`) on the measured data. Use `#` before a number to designate a constant value <BR>e.g. `1,=m 3+4+5/#3 @100,Voltage L1+L2+L3/3,V,Volt_avg,2` to sum results of decoder entries 3,4,5 and divide by 3 (average) |
+| `M,=d` | Calculate difference between metric values decoded at time intervals (up to 10 =d lines possible) <BR>e.g. `1,=d 3 10` calculate 10 second interval difference of decoder entry 3  |
+| `M,=h` | Insert text on the web interface (html text up to 30 chars). These lines do not count as decoder entry.<BR> e.g. `1,=h<hr/>` to insert a separator line on the web UI |
+| `*` character | To hide fields from result output or disable output completely. Compiling with `USE_SML_SCRIPT_CMD` required. <BR> - as single character in `<label>` of the metrics line will hide that value from the web UI <BR> - as single character in `<label>` of the meter definition line will suppress the entire json output on MQTT |
 
 !!! example
     To get the value of one of the descriptor lines, use `sml[X]`. `X` = Line number. Starts with `1`. (compiling with `USE_SML_SCRIPT_CMD` required)
@@ -317,7 +312,7 @@ With `=` character at the beginning of a line you can do some special decoding. 
     #define USE_UFILESYS
     #define GUI_TRASH_FILE
     ```
-    Also recommended to free up the image from unused drivers. You should get some inspiration from the `tasmota-lite` image definition in `tasmota_configurations.h`. 
+    Also recommended, if you use lots of vars and increased buffer sizes to free up the image from unused drivers. You should get some inspiration from the `tasmota-lite` image definition in `tasmota_configurations.h`. 
 	  
 -----
 
@@ -352,10 +347,8 @@ Look down below for script examples based on the following metering devices:
 
 This is an example for one of the many quite similar smart meters implemented in Portugal, by EDP Distribuição S.A. May be valid for many more models, as stated.
 
-You should additionally configure in your `user_config_override.h`:
-```
-#define SML_MAX_VARS 10
-```
+You should additionally configure in your `user_config_override.h` `#define SML_MAX_VARS 10`.
+
 The Tasmota SML script:
 ```
 >D
@@ -1051,7 +1044,7 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
 
 ### EasyMeter Q3A / Apator APOX+ (SML)
 
-A 2-Tarif Meter which for Example SWM (Stadtwerke München) uses. Unfortunately this Version sends only whole kWh (precision 0).
+A 2-Tariff Meter which for Example SWM (Stadtwerke München) uses. Unfortunately this Version sends only whole kWh (precision 0).
 Apator APOX+ behaves same as the EasyMeter while pin locked, just precision 0 without additional data. After calling the energy provider they send a letter with the unlock pin. 
 ```
 >D
@@ -1070,7 +1063,7 @@ Apator APOX+ behaves same as the EasyMeter while pin locked, just precision 0 wi
 
 ### EasyMeter Q3B (SML)
 
-Two separate 2-Tariff meters (e.g. from Fairenergie Reutlingen) are readout by the same Tasmota device. The first one is for general purpose and is connected to `GPIO14`. The JSON prefix is set to `Power`. The second one is for the heat pump and connected to `GPIO13`. The JSON prefix is set to `Pump`. For both meters, tariff 1 & 2 are whole kWh (precision 0), current consumption in W has a higher precision (1).
+Two separate 2-Tariff meters (e.g. from Fairenergie Reutlingen) are readout by the same Tasmota device. The first one is for general purpose and is connected to `GPIO14`. The JSON prefix is set to `Power`. The second one is for the heat pump and connected to `GPIO13`. The JSON prefix is set to `Pump`. For both meters, tariff 1 & 2 are rounded kWh (precision 0), actual consumption in W has a higher precision (1).
 
 ```
 >D
@@ -1089,6 +1082,8 @@ Two separate 2-Tariff meters (e.g. from Fairenergie Reutlingen) are readout by t
 2,77070100010700ff@1000,Verbrauch,W,HP_Use_Sum,1 
 #
 ```
+
+
 -----
 
 
@@ -1122,12 +1117,12 @@ Tested on SX631 (S34U18). Needs an RJ12 cable and a small adaptor circuit:
 ![](_media/p1-smartmeter/p1-smartmeter_v2.png)
 (Note how power for the Wemos module is drawn directly from the meter. No external power supply needed)
 
-This meter sends bursts of data at 115200 baud every 10 seconds. Some data lines exceed 526 characters. To adapt to these conditions, compile firmware with:
+This meter sends bursts of data at 115200 baud every 10 seconds. Some data lines exceed 1038 characters. To adapt to these conditions, compile firmware with:
 ```
 #define SML_MAX_VARS 60
+#define SML_BSIZ 1060
 #define MAX_METERS 1
-#define SML_BSIZ 530
-#define TMSBSIZ 1024
+#define TMSBSIZ 2048
 #define USE_SML_SCRIPT_CMD
 #define SML_REPLACE_VARS
 ```
@@ -1152,9 +1147,9 @@ endif
 ;only send teleperiod MQTT if 22 seconds passed since boot (during this time meter most probably sent data)
 >M 1
 +1,3,o,16,115200,Name,1
-1,1-0:32.7.0(@1,L1 Voltage,V,fesz_l1,1
-1,1-0:52.7.0(@1,L2 Voltage,V,fesz_l2,1
-1,1-0:72.7.0(@1,L3 Voltage,V,fesz_l3,1
+1,1-0:32.7.0(@1,L1 Voltage,V,volts_l1,1
+1,1-0:52.7.0(@1,L2 Voltage,V,volts_l2,1
+1,1-0:72.7.0(@1,L3 Voltage,V,volts_l3,1
 1,1-0:14.7.0(@1,Frequency,Hz,freq,2
 1,0-0:96.14.0(@1,Current tariff,,tariff,0
 1,=h<hr/>
@@ -1168,8 +1163,8 @@ endif
 1,1-0:2.7.0(@1,Power export,kW,pwr_exp,3
 1,1-0:13.7.0(@1,Power factor,,factor,3
 1,=h<hr/>
-1,1-0:3.8.0(@1,Reactive energy import,kvarh,enrg_imp_med,3
-1,1-0:4.8.0(@1,Reactive energy export,kvarh,enrg_imp_med,3
+1,1-0:3.8.0(@1,Reactive nrg import,kvarh,nrg_reac_imp,3
+1,1-0:4.8.0(@1,Reactive nrg export,kvarh,nrg_reac_exp,3
 1,1-0:5.8.0(@1,Reactive energy QI,kvarh,nrg_reac_q1,3
 1,1-0:6.8.0(@1,Reactive energy QII,kvarh,nrg_reac_q2,3
 1,1-0:7.8.0(@1,Reactive energy QIII,kvarh,nrg_reac_q3,3
@@ -1179,74 +1174,75 @@ endif
 1,1-0:7.7.0(@1,Reactive power QIII,kvar,pwr_reac_q3,3
 1,1-0:8.7.0(@1,Reactive power QIV,kvar,pwr_reac_q4,3
 1,=h<hr/>
-%r%1:1,Monthly adat1,kWh,adat1,3
-%r%2:1,Monthly adat2,kWh,adat2,3
-%r%3:1,Monthly adat3,kWh,adat3,3
-%r%4:1,Monthly adat4,kWh,adat4,3
-%r%5:1,Monthly adat5,kWh,adat5,3
-%r%6:1,Monthly adat6,kWh,adat6,3
-%r%7:1,Monthly adat7,kvarh,adat7,3
-%r%8:1,Monthly adat8,kvarh,adat8,3
-%r%9:1,Monthly adat9,kvarh,adat9,3
-%r%10:1,Monthly adat10,kvarh,adat10,3
-%r%11:1,Monthly adat11,kvarh,adat11,3
-%r%12:1,Monthly adat12,kvarh,adat12,3
-%r%13:1,Monthly adat13,kvarh,adat13,3
-%r%14:1,Monthly adat14,kW,adat14,3
-%r%15:1,Monthly adat15,kW,adat15,3
-%r%16:1,Monthly adat16,kW,adat16,3
-%r%17:1,Monthly adat17,kW,adat17,3
-%r%18:1,Monthly adat18,kW,adat18,3
-%r%19:1,Monthly adat19,kW,adat19,3
+1,=hPrevious month stats:
+%r%1:1,Energy import,kWh,mo_enrg_imp,3
+%r%2:1,Energy import T1,kWh,mo_enrg_impt1,3
+%r%3:1,Energy import T2,kWh,mo_enrg_impt2,3
+%r%4:1,Energy export,kWh,mo_enrg_exp,3
+%r%5:1,Energy export T1,kWh,mo_enrg_expt1,3
+%r%6:1,Energy export T2,kWh,mo_enrg_expt2,3
+%r%7:1,Reactive nrg import,kvarh,mo_nrg_reac_imp,3
+%r%8:1,Reactive nrg export,kvarh,mo_nrg_reac_exp,3
+%r%9:1,Reactive energy QI,kvarh,mo_nrg_reac_q1,3
+%r%10:1,Reactive energy QII,kvarh,mo_nrg_reac_q2,3
+%r%11:1,Reactive energy QIII,kvarh,mo_nrg_reac_q3,3
+%r%12:1,Reactive energy QIV,kvarh,mo_nrg_reac_q4,3
+%r%13:1,Reactive energy SUM?,kvarh,mo_nrg_reac_sum,3
+%r%14:1,Peak power import L1,kW,mo_pw_pk_in_l1,3
+%r%15:1,Peak power import L2,kW,mo_pw_pk_in_l2,3
+%r%16:1,Peak power import L3,kW,mo_pw_pk_in_l3,3
+%r%17:1,Peak power export L1,kW,mo_pw_pk_ex_l1,3
+%r%18:1,Peak power export L2,kW,mo_pw_pk_ex_l2,3
+%r%19:1,Peak power export L3,kW,mo_pw_pk_ex_l3,3
 #
 ```
 Sample data:
 ```
-/AUX59902722892
+/1234567890123
 
 0-0:1.0.0(202056789012W)
 0-0:42.0.0(AUX1234567890123)
 0-0:96.1.0(1234567890)
-0-0:96.14.0(0002)
+0-0:96.14.0(0001)
 0-0:96.50.68(ON)
 0-0:17.0.0(90.000*kW)
-1-0:1.8.0(000071.318*kWh)
-1-0:1.8.1(000030.104*kWh)
-1-0:1.8.2(000041.214*kWh)
+1-0:1.8.0(000258.072*kWh)
+1-0:1.8.1(000103.782*kWh)
+1-0:1.8.2(000154.290*kWh)
 1-0:1.8.3(000000.000*kWh)
 1-0:1.8.4(000000.000*kWh)
-1-0:2.8.0(000003.762*kWh)
-1-0:2.8.1(000003.762*kWh)
-1-0:2.8.2(000000.000*kWh)
+1-0:2.8.0(000048.367*kWh)
+1-0:2.8.1(000032.813*kWh)
+1-0:2.8.2(000015.554*kWh)
 1-0:2.8.3(000000.000*kWh)
 1-0:2.8.4(000000.000*kWh)
-1-0:3.8.0(000000.569*kvarh)
-1-0:4.8.0(000032.521*kvarh)
-1-0:5.8.0(000000.568*kvarh)
-1-0:6.8.0(000000.001*kvarh)
-1-0:7.8.0(000001.988*kvarh)
-1-0:8.8.0(000030.533*kvarh)
-1-0:15.8.0(000075.081*kWh)
-1-0:32.7.0(228.7*V)
-1-0:52.7.0(229.1*V)
-1-0:72.7.0(226.6*V)
-1-0:31.7.0(003*A)
+1-0:3.8.0(000003.513*kvarh)
+1-0:4.8.0(000156.910*kvarh)
+1-0:5.8.0(000003.498*kvarh)
+1-0:6.8.0(000000.015*kvarh)
+1-0:7.8.0(000027.718*kvarh)
+1-0:8.8.0(000129.192*kvarh)
+1-0:15.8.0(000306.440*kWh)
+1-0:32.7.0(233.0*V)
+1-0:52.7.0(230.6*V)
+1-0:72.7.0(228.7*V)
+1-0:31.7.0(002*A)
 1-0:51.7.0(002*A)
 1-0:71.7.0(001*A)
-1-0:13.7.0(0.921)
-1-0:33.7.0(0.933)
-1-0:53.7.0(0.829)
-1-0:73.7.0(0.988)
-1-0:14.7.0(50.01*Hz)
-1-0:1.7.0(01.418*kW)
-1-0:2.7.0(00.000*kW)
+1-0:13.7.0(0.758)
+1-0:33.7.0(0.615)
+1-0:53.7.0(0.746)
+1-0:73.7.0(0.937)
+1-0:14.7.0(49.98*Hz)
+1-0:1.7.0(00.000*kW)
+1-0:2.7.0(00.854*kW)
 1-0:5.7.0(00.000*kvar)
 1-0:6.7.0(00.000*kvar)
-1-0:7.7.0(00.000*kvar)
-1-0:8.7.0(00.599*kvar)
-0-0:98.1.0(202056789012W)(000000.000*kWh)(000000.000*kWh)(000000.000*kWh)(000000.000*kWh)(000000.000*kWh)(000000.000*kWh)(000000.000*kvarh)(000000.000*kvarh)(000000.000*kvarh)(000000.000*kvarh)(000000.000*kvarh)(000000.000*kvarh)(000000.000*kWh)(00.000*kW)(00.000*kW)(00.000*kW)(00.000*kW)(00.000*kW)(00.000*kW)
-0-0:96.13.0(��������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������)
-!FB50
+1-0:7.7.0(00.735*kvar)
+1-0:8.7.0(00.000*kvar)
+0-0:98.1.0(210301000000W)(000249.070*kWh)(000100.816*kWh)(000148.254*kWh)(000047.903*kWh)(000032.349*kWh)(000015.554*kWh)(000003.513*kvarh)(000150.665*kvarh)(000003.498*kvarh)(000000.015*kvarh)(000027.119*kvarh)(000123.546*kvarh)(000296.974*kWh)(04.872*kW)(04.872*kW)(04.072*kW)(01.844*kW)(01.672*kW)(01.844*kW)
+0-0:96.13.0(����������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������)
+!DA6A
 ```
 ------------------------------------------------------------------------------
 
