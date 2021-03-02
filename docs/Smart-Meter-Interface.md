@@ -19,12 +19,13 @@ Additional features can be enabled by adding the following `#define` compiler di
 
 | Feature | Description |
 | -- | -- |
-SML_MAX_VARS n| (default 20) Maximum number of decode lines (html lines not counted).
-SML_BSIZ n| (default 48) Maximum number of characters per line in serial input buffer. Complete chunk of serial data must fit into this size, so include any CR/LF if that applies
-MAX_METERS n| (default 5) Maximum number of meters. Decrease this to 1 for example if you havea meter with many lines and lots of characters per descriptorline.
-TMSBSIZ n| (default 256) Maximum number of characters in serial IRQ buffer (should always be larger than SML_BSIZ and even larger on high baud rates)
-USE_SML_SCRIPT_CMD | If present, this allows access to sml vars in scripts.
-SML_REPLACE_VARS | If present, this allows replacement of any text in descriptor by script text variables. Useful if several occurrences of a text occupies a lot of space and you get short of script buffer. Readability may get worse so only makes sense on large descriptors. Note: to use `%` symbol un measurement units, you need to escape it like `%%`.
+|SML_MAX_VARS n| (default 20) Maximum number of decode lines (html lines not counted).|
+|SML_BSIZ n| (default 48) Maximum number of characters per line in serial input buffer. Complete chunk of serial data must fit into this size, so include any CR/LF if that applies.|
+|MAX_METERS n| (default 5) Maximum number of meters. Decrease this to 1 for example if you havea meter with many lines and lots of characters per descriptorline.|
+|TMSBSIZ n| (default 256) Maximum number of characters in serial IRQ buffer (should always be larger than SML_BSIZ and even larger on high baud rates).|
+|SML_DUMP_SIZE n | (default 128) Maximum number of characters per line in dump mode. Only use if you have long strings comin in and they truncate. |
+|USE_SML_SCRIPT_CMD | If present, this allows access to sml vars in other parts of the script.
+|SML_REPLACE_VARS | If present, this allows replacement of any text in descriptor by script text variables. Useful if several occurrences of a text occupies a lot of space and you get short of script buffer. Readability may get worse so only makes sense on large descriptors. Note: to use `%` symbol un measurement units, you need to escape it like `%%`.
 
 ### General description
 
@@ -43,9 +44,9 @@ The Smart Meter Interface provides a means to connect many kinds of meters to Ta
 | -- | -- |
 | OBIS ASCII | telegrams emitted from many smart meters, including [P1 Smart Meters](https://tasmota.github.io/docs/P1-Smart-Meter/) |
 | OBIS Binary SML| telegrams emitted from many smart meters |
+| MODBus Binary | telegrams used by many power meters and industrial devices |
 | EBus Binary | telegrams emitted by many heaters and heat pumps  (e.g. Vaillant, Wolf) |
 | VBus Binary | telegrams emitted by many solar thermal systems boilers (e.g. Resol, Viessmann) |
-| MODBus Binary | telegrams used by many power meters and industrial devices |
 | RAW Binary | decodes all kinds of binary data eg EMS heater bus |
 | Counter interface | uses Tasmota counter storage (for e.g. REED contacts either in polling or IRQ mode) |
 
@@ -81,22 +82,22 @@ Declare `>M` section with the number of connected meters (n = `1..5`):
 | -- | -- |
 | `+<M>` | Meter number. The number must be increased with each additional Meter (default 1 to 5).|
 | `<rxGPIO>` | The GPIO pin number where meter data is received. |
-| `<type>` | The type of meter: |
-||`o` - OBIS ASCII type of coding |
-||`s` - SML binary smart message coding |
-||`e` - EBus binary coding |
-||`v` - VBus binary coding |
-||`m` - MODBus binary coding with serial mode 8N1 |
-||`M` - MODBus binary coding with serial mode 8E1 |
-||`c` - Counter type |
-||`r` - Raw binary coding (any binary telegram) |
-| `<flag>` | Options flag: |
-||`0` - counter without pullup |
-||`1` - counter with pullup |
-||`16` - enable median filter for that meter. Can help with sporadic dropouts, reading errors (not available for counters). |
-| `<parameter>` | Parameters according to meter type: |
-|| for `o,s,e,v,m,M,r` types: serial baud rate e.g. `9600` |
-|| for `c` type: a positive value = counter poll interval or a negative value = debounce time (milliseconds) for irq driven counters |
+| `<type>` | The type of meter: <BR> 
+- `o` - OBIS ASCII type of coding<BR>
+- `s` - SML binary smart message coding<BR>
+- `e` - EBus binary coding<BR>
+- `v` - VBus binary coding<BR>
+- `m` - MODBus binary coding with serial mode 8N1<BR>
+- `M` - MODBus binary coding with serial mode 8E1<BR>
+- `c` - Counter type<BR>
+- `r` - Raw binary coding (any binary telegram) |
+| `<flag>` | Options flag:<BR>
+- `0` - counter without pullup<BR>
+- `1` - counter with pullup<BR>
+- `16` - enable median filter for that meter. Can help with sporadic dropouts, reading errors (not available for counters). |
+| `<parameter>` | Parameters according to meter type:<BR>
+- for `o,s,e,v,m,M,r` types: serial baud rate e.g. `9600`.<BR>
+- for `c` type: a positive value = counter poll interval or a negative value = debounce time (milliseconds) for irq driven counters. |
 | `<jsonPrefix>` | Prefix for Web UI and MQTT JSON payload. Up to 7 characters.|
 | `<txGPIO>` | The GPIO pin number where meter command is transmitted (optional).|
 | `<txPeriod>` | Period to repeat the transmission of commands to the meter (optional). Number of 100ms increments (n * 100ms).|
@@ -116,8 +117,8 @@ Declare `>M` section with the number of connected meters (n = `1..5`):
     `+1,3,m,0,9600,MODBUS,1,1,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010`    
     Components of the character string:  
     `...01040000,01040002,...`    
-    `01` = Modbus slave device ID   
-    `04` = Instruction to read an Input Register (alternatively, `03` = Instruction to read an Holding Register)
+    `01` = Modbus slave device ID<BR>
+    `04` = Instruction to read an Input Register (alternatively, `03` = Instruction to read an Holding Register)<BR>
     `0000`/`0002` = Register # (as Hexadecimal codification, without the prefix `0x`. Example: `0x0079` -> `0079`)  
     the number of requested registers is fixed to 2, however with the char 'r' before the hex string the complete request string may be specified  
     `...r010400000001,r010400020003,...`    
@@ -134,34 +135,34 @@ Each meter typically provides multiple metrics (enegry, voltage, power, current 
 | Parameter | Description |
 | -- | -- |
 | `<M>` | The meter number to which this decoder belongs |
-| `<decoder>` | **Decoding specification**: OBIS as ASCII; SML, EBus, VBus, MODBus, RAW as HEX ASCII etc. _No space characters allowed in this section!_|
-|| **OBIS**: ASCII OBIS code terminated with `(` character which indicates the start of the meter value |
-|| **SML**: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value |
-|| **EBus, MODBus, RAW** - hex values of data blocks to compare: |
-||  - `xx` = ignore value  (1 byte) or `xN` = ignore N bytes |
-||  - `ss` = extract a signed byte  |
-||  - `uu` = extract an unsigned byte | 
-||  - `UUuu` = extract an unsigned word (high order byte first)  |
-||  - `uuUU` = extract an unsigned word (low order byte first)  |
-||  - `UUuuUUuu` = extract an unsigned long word (high order byte first)  |
-||  - `SSss` = extract a signed word (high order byte first)   |
-||  - `ssSS` = extract a signed word (low order byte first)  |
-||  - `SSssSSss` = extract an signed long word (high order byte first)  |
-||  - `ffffffff` = extract a float value  |
-||  - `FFffFFff` = extract a reverse float value  |
-|| **VBus** - hex values of data blocks to compare: |
-||  - `AAffffaddrff0001ffff` = VBus-specific hex header: `AA`-sync byte, `addr`-the reversed address of the device. To find his out first look up the known [hex address of the device](http://danielwippermann.github.io/resol-vbus/vbus-packets.html). E.g. Resol DeltaSol BS Plus is `0x4221`. Reverse it (without `0x`) and you will get `21 42` hex characters. Now turn on raw dump mode using command `sensor53 d1` and look for rows starting with `aa`, containing your reversed address at position 4 and 5 and `00 01` hex characters at position 7 and 8. If found, the entire header will be 10 hex characters long including `aa` (20 ascii chars without space, e.g. for Resol DeltaSol BS Plus this will be `AA100021421000010774`). At position 9 you see the number of frames containing readable data. To turn off raw dump use `sensor53 d0`. |
-||  - `v` = VBus protocol indicator |
-||  - `oN` = extract data from offset `N` (see offsets of your device in [VBus protocol documentation](http://danielwippermann.github.io/resol-vbus/vbus-packets.html))|
-||  - `u` or `s` = extract unsigned or signed data
-||  - `w` or `b` = extract word or byte |
-|| **End of decoding**: `@` indicates termination of the decoding procedure.   |
-|| `(` following the `@` character in case of obis decoder indicates to fetch the 2. value in brackets, not the 1. value.  (e.g. to get the second value from an obis like `0-1:24.2.3(210117125004W)(01524.450*m3)`) |
-|| decoding multiple values coming in brackets after each other is possible with `(@(0:1`, `(@(1:1`, `(@(2:1` and so on  (e.g. to get values from an obis like `0-0:98.1.0(210201000000W)(000000.000*kWh)(000000.000*kWh)`) |
-|| decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte. (e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`) |
-|| in case of MODBus, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition |
-| `<scale>` | scaling factor (divisor) or string definition |
-|| This can be a fraction (e.g., `0.1` = result * 10), or a negative value. When decoding a string result (e.g. meter serial number), use `#` character for this parameter _(Note: only one string can be decoded per meter!)_. For OBIS, you need a `)` termination character after the `#` character. |
+| `<decoder>` | **Decoding specification**: OBIS as ASCII; SML, EBus, VBus, MODBus, RAW as HEX ASCII etc. _No space characters allowed in this section!_ <BR>
+**OBIS**: ASCII OBIS code terminated with `(` character which indicates the start of the meter value<BR>
+**SML**: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value<BR>
+**EBus, MODBus, RAW** - hex values of data blocks to compare:<BR>
+ - `xx` = ignore value  (1 byte) or `xN` = ignore N bytes<BR>
+ - `ss` = extract a signed byte<BR>
+ - `uu` = extract an unsigned byte<BR> 
+ - `UUuu` = extract an unsigned word (high order byte first)<BR>
+ - `uuUU` = extract an unsigned word (low order byte first)<BR>
+ - `UUuuUUuu` = extract an unsigned long word (high order byte first)<BR>
+ - `SSss` = extract a signed word (high order byte first)<BR>
+ - `ssSS` = extract a signed word (low order byte first)<BR>
+ - `SSssSSss` = extract an signed long word (high order byte first)<BR>
+ - `ffffffff` = extract a float value<BR>
+ - `FFffFFff` = extract a reverse float value<BR>
+**VBus** - hex values of data blocks to compare:<BR>
+ - `AAffffaddrff0001ffff` = VBus-specific hex header: `AA`-sync byte, `addr`-the reversed address of the device. To find his out first look up the known [hex address of the device](http://danielwippermann.github.io/resol-vbus/vbus-packets.html). E.g. Resol DeltaSol BS Plus is `0x4221`. Reverse it (without `0x`) and you will get `21 42` hex characters. Now turn on raw dump mode using command `sensor53 d1` and look for rows starting with `aa`, containing your reversed address at position 4 and 5 and `00 01` hex characters at position 7 and 8. If found, the entire header will be 10 hex characters long including `aa` (20 ascii chars without space, e.g. for Resol DeltaSol BS Plus this will be `AA100021421000010774`). At position 9 you see the number of frames containing readable data. To turn off raw dump use `sensor53 d0`.<BR>
+ - `v` = VBus protocol indicator<BR>
+ - `oN` = extract data from offset `N` (see offsets of your device in [VBus protocol documentation](http://danielwippermann.github.io/resol-vbus/vbus-packets.html))<BR>
+ - `u` or `s` = extract unsigned or signed data<BR>
+ - `w` or `b` = extract word or byte<BR>
+**End of decoding**: `@` indicates termination of the decoding procedure.<BR>
+- `(` following the `@` character in case of obis decoder indicates to fetch the 2. value in brackets, not the 1. value.  (e.g. to get the second value from an obis like `0-1:24.2.3(210117125004W)(01524.450*m3)`)<BR>
+- decoding multiple values coming in brackets after each other is possible with `(@(0:1`, `(@(1:1`, `(@(2:1` and so on  (e.g. to get values from an obis like `0-0:98.1.0(210201000000W)(000000.000*kWh)(000000.000*kWh)`)<BR>
+- decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte. (e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`)<BR>
+- in case of MODBus, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition<BR>
+| `<scale>` | scaling factor (divisor) or string definition<BR>
+This can be a fraction (e.g., `0.1` = result * 10), or a negative value. When decoding a string result (e.g. meter serial number), use `#` character for this parameter _(Note: only one string can be decoded per meter!)_. For OBIS, you need a `)` termination character after the `#` character. |
 | `<label>` | web UI label (max. 23 characters) |
 | `<UoM>` | unit of measurement (max. 7 characters) |
 | `<var>` | MQTT label (max. 23 characters) | 
@@ -313,7 +314,11 @@ With `=` character at the beginning of a line you can do some special decoding. 
     #define GUI_TRASH_FILE
     ```
     Also recommended, if you use lots of vars and increased buffer sizes to free up the image from unused drivers. You should get some inspiration from the `tasmota-lite` image definition in `tasmota_configurations.h`. 
-	  
+
+
+!!! tip
+    You can dump to your PC the raw data coming in if you use the module's hardware serial ports (1 and 3) as GPIOs of the script, [using Serial to TCP Bridge](https://tasmota.github.io/docs/Serial-to-TCP-Bridge/). Compile your firmware with `USE_TCP_BRIDGE`, disable the script and configure in module parameters `TCP Tx` and `TCP Rx`. After module reboot, start the server with command `TCPStart 8888`. Connect to this port from your PC to see or dump the data, in Linux it's as easy as `cat < /dev/tcp/IP.OF.YOUR.TASMOTA/8888 > rawdump.txt`. To revert to SML you need to set back both GPIO ports to `None`, enable the script and restart.
+
 -----
 
 ## Smart Meter Descriptor examples
