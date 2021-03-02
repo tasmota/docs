@@ -79,25 +79,12 @@ Declare `>M` section with the number of connected meters (n = `1..5`):
 > `+<M>,<rxGPIO>,<type>,<flag>,<parameter>,<jsonPrefix>{,<txGPIO>,<txPeriod>,<cmdTelegram>}`  
 
 | Parameter | Description |
-| -- | -- |
+| :--- | :--- |
 | `+<M>` | Meter number. The number must be increased with each additional Meter (default 1 to 5).|
 | `<rxGPIO>` | The GPIO pin number where meter data is received. |
-| `<type>` | The type of meter: <BR> 
-- `o` - OBIS ASCII type of coding<BR>
-- `s` - SML binary smart message coding<BR>
-- `e` - EBus binary coding<BR>
-- `v` - VBus binary coding<BR>
-- `m` - MODBus binary coding with serial mode 8N1<BR>
-- `M` - MODBus binary coding with serial mode 8E1<BR>
-- `c` - Counter type<BR>
-- `r` - Raw binary coding (any binary telegram) |
-| `<flag>` | Options flag:<BR>
-- `0` - counter without pullup<BR>
-- `1` - counter with pullup<BR>
-- `16` - enable median filter for that meter. Can help with sporadic dropouts, reading errors (not available for counters). |
-| `<parameter>` | Parameters according to meter type:<BR>
-- for `o,s,e,v,m,M,r` types: serial baud rate e.g. `9600`.<BR>
-- for `c` type: a positive value = counter poll interval or a negative value = debounce time (milliseconds) for irq driven counters. |
+| `<type>` | The type of meter: <BR>- `o` - OBIS ASCII type of coding<BR>- `s` - SML binary smart message coding<BR>- `e` - EBus binary coding<BR>- `v` - VBus binary coding<BR>- `m` - MODBus binary coding with serial mode 8N1<BR>- `M` - MODBus binary coding with serial mode 8E1<BR>- `c` - Counter type<BR>- `r` - Raw binary coding (any binary telegram) |
+| `<flag>` | Options flag:<BR>- `0` - counter without pullup<BR>- `1` - counter with pullup<BR>- `16` - enable median filter for that meter. Can help with sporadic dropouts, reading errors (not available for counters). |
+| `<parameter>` | Parameters according to meter type:<BR>- for `o,s,e,v,m,M,r` types: serial baud rate e.g. `9600`.<BR>- for `c` type: a positive value = counter poll interval or a negative value = debounce time (milliseconds) for irq driven counters. |
 | `<jsonPrefix>` | Prefix for Web UI and MQTT JSON payload. Up to 7 characters.|
 | `<txGPIO>` | The GPIO pin number where meter command is transmitted (optional).|
 | `<txPeriod>` | Period to repeat the transmission of commands to the meter (optional). Number of 100ms increments (n * 100ms).|
@@ -133,36 +120,10 @@ Each meter typically provides multiple metrics (enegry, voltage, power, current 
 > `<M>,<decoder>@<scale>,<label>,<UoM>,<var>,<precision>`  
 
 | Parameter | Description |
-| -- | -- |
+| :--- | :--- |
 | `<M>` | The meter number to which this decoder belongs |
-| `<decoder>` | **Decoding specification**: OBIS as ASCII; SML, EBus, VBus, MODBus, RAW as HEX ASCII etc. _No space characters allowed in this section!_ <BR>
-**OBIS**: ASCII OBIS code terminated with `(` character which indicates the start of the meter value<BR>
-**SML**: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value<BR>
-**EBus, MODBus, RAW** - hex values of data blocks to compare:<BR>
- - `xx` = ignore value  (1 byte) or `xN` = ignore N bytes<BR>
- - `ss` = extract a signed byte<BR>
- - `uu` = extract an unsigned byte<BR> 
- - `UUuu` = extract an unsigned word (high order byte first)<BR>
- - `uuUU` = extract an unsigned word (low order byte first)<BR>
- - `UUuuUUuu` = extract an unsigned long word (high order byte first)<BR>
- - `SSss` = extract a signed word (high order byte first)<BR>
- - `ssSS` = extract a signed word (low order byte first)<BR>
- - `SSssSSss` = extract an signed long word (high order byte first)<BR>
- - `ffffffff` = extract a float value<BR>
- - `FFffFFff` = extract a reverse float value<BR>
-**VBus** - hex values of data blocks to compare:<BR>
- - `AAffffaddrff0001ffff` = VBus-specific hex header: `AA`-sync byte, `addr`-the reversed address of the device. To find his out first look up the known [hex address of the device](http://danielwippermann.github.io/resol-vbus/vbus-packets.html). E.g. Resol DeltaSol BS Plus is `0x4221`. Reverse it (without `0x`) and you will get `21 42` hex characters. Now turn on raw dump mode using command `sensor53 d1` and look for rows starting with `aa`, containing your reversed address at position 4 and 5 and `00 01` hex characters at position 7 and 8. If found, the entire header will be 10 hex characters long including `aa` (20 ascii chars without space, e.g. for Resol DeltaSol BS Plus this will be `AA100021421000010774`). At position 9 you see the number of frames containing readable data. To turn off raw dump use `sensor53 d0`.<BR>
- - `v` = VBus protocol indicator<BR>
- - `oN` = extract data from offset `N` (see offsets of your device in [VBus protocol documentation](http://danielwippermann.github.io/resol-vbus/vbus-packets.html))<BR>
- - `u` or `s` = extract unsigned or signed data<BR>
- - `w` or `b` = extract word or byte<BR>
-**End of decoding**: `@` indicates termination of the decoding procedure.<BR>
-- `(` following the `@` character in case of obis decoder indicates to fetch the 2. value in brackets, not the 1. value.  (e.g. to get the second value from an obis like `0-1:24.2.3(210117125004W)(01524.450*m3)`)<BR>
-- decoding multiple values coming in brackets after each other is possible with `(@(0:1`, `(@(1:1`, `(@(2:1` and so on  (e.g. to get values from an obis like `0-0:98.1.0(210201000000W)(000000.000*kWh)(000000.000*kWh)`)<BR>
-- decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte. (e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`)<BR>
-- in case of MODBus, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition<BR>
-| `<scale>` | scaling factor (divisor) or string definition<BR>
-This can be a fraction (e.g., `0.1` = result * 10), or a negative value. When decoding a string result (e.g. meter serial number), use `#` character for this parameter _(Note: only one string can be decoded per meter!)_. For OBIS, you need a `)` termination character after the `#` character. |
+| `<decoder>` | **Decoding specification**: OBIS as ASCII; SML, EBus, VBus, MODBus, RAW as HEX ASCII etc. _No space characters allowed in this section!_ <BR> **OBIS**: ASCII OBIS code terminated with `(` character which indicates the start of the meter value<BR>**SML**: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value<BR>**EBus, MODBus, RAW** - hex values of data blocks to compare:<BR> - `xx` = ignore value  (1 byte) or `xN` = ignore N bytes<BR> - `ss` = extract a signed byte<BR> - `uu` = extract an unsigned byte<BR>  - `UUuu` = extract an unsigned word (high order byte first)<BR> - `uuUU` = extract an unsigned word (low order byte first)<BR> - `UUuuUUuu` = extract an unsigned long word (high order byte first)<BR> - `SSss` = extract a signed word (high order byte first)<BR> - `ssSS` = extract a signed word (low order byte first)<BR> - `SSssSSss` = extract an signed long word (high order byte first)<BR> - `ffffffff` = extract a float value<BR> - `FFffFFff` = extract a reverse float value<BR>**VBus** - hex values of data blocks to compare:<BR> - `AAffffaddrff0001ffff` = VBus-specific hex header: `AA`-sync byte, `addr`-the reversed address of the device. To find his out first look up the known [hex address of the device](http://danielwippermann.github.io/resol-vbus/vbus-packets.html). E.g. Resol DeltaSol BS Plus is `0x4221`. Reverse it (without `0x`) and you will get `21 42` hex characters. Now turn on raw dump mode using command `sensor53 d1` and look for rows starting with `aa`, containing your reversed address at position 4 and 5 and `00 01` hex characters at position 7 and 8. If found, the entire header will be 10 hex characters long including `aa` (20 ascii chars without space, e.g. for Resol DeltaSol BS Plus this will be `AA100021421000010774`). At position 9 you see the number of frames containing readable data. To turn off raw dump use `sensor53 d0`.<BR> - `v` = VBus protocol indicator<BR> - `oN` = extract data from offset `N` (see offsets of your device in [VBus protocol documentation](http://danielwippermann.github.io/resol-vbus/vbus-packets.html))<BR> - `u` or `s` = extract unsigned or signed data<BR> - `w` or `b` = extract word or byte<BR>**End of decoding**: `@` indicates termination of the decoding procedure.<BR>- `(` following the `@` character in case of obis decoder indicates to fetch the 2. value in brackets, not the 1. value.  (e.g. to get the second value from an obis like `0-1:24.2.3(210117125004W)(01524.450*m3)`)<BR>- decoding multiple values coming in brackets after each other is possible with `(@(0:1`, `(@(1:1`, `(@(2:1` and so on  (e.g. to get values from an obis like `0-0:98.1.0(210201000000W)(000000.000*kWh)(000000.000*kWh)`)<BR>- decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte. (e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`)<BR>- in case of MODBus, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition
+| `<scale>` | scaling factor (divisor) or string definition<BR>This can be a fraction (e.g., `0.1` = result * 10), or a negative value. When decoding a string result (e.g. meter serial number), use `#` character for this parameter _(Note: only one string can be decoded per meter!)_. For OBIS, you need a `)` termination character after the `#` character. |
 | `<label>` | web UI label (max. 23 characters) |
 | `<UoM>` | unit of measurement (max. 7 characters) |
 | `<var>` | MQTT label (max. 23 characters) | 
@@ -203,7 +164,7 @@ This can be a fraction (e.g., `0.1` = result * 10), or a negative value. When de
 With `=` character at the beginning of a line you can do some special decoding. With `*` character fields can be hidden or skipped.
 
 | Command | Description |
-| -- | -- |
+| :--- | :--- |
 | `M,=m` | Perform arithmetic (`+,-,*,/`) on the measured data. Use `#` before a number to designate a constant value <BR>e.g. `1,=m 3+4+5/#3 @100,Voltage L1+L2+L3/3,V,Volt_avg,2` to sum results of decoder entries 3,4,5 and divide by 3 (average) |
 | `M,=d` | Calculate difference between metric values decoded at time intervals (up to 10 =d lines possible) <BR>e.g. `1,=d 3 10` calculate 10 second interval difference of decoder entry 3  |
 | `M,=h` | Insert text on the web interface (html text up to 30 chars). These lines do not count as decoder entry.<BR> e.g. `1,=h<hr/>` to insert a separator line on the web UI |
@@ -345,6 +306,7 @@ Look down below for script examples based on the following metering devices:
 - [Apator APOX+](#apator-apox-sml) (SML, with pin code for extra data)
 - [Sanxing SX6x1 (SxxU1x)](#sanxing-sx6x1-sxxu1x-ascii-obis) (OBIS - Ascii)
 - [Resol Deltasol BS Plus](#resol-deltasol-bs-plus-vbus) (VBus)
+- [Logarex LK13BE](#logarex-lk13be-obis) (OBIS)
 
 --------------------------------------------------------
 
@@ -1292,6 +1254,9 @@ Result (with unneeded values commented out):
 
 ### Logarex LK13BE (OBIS)
 
+The script:
+
+```
 >D
 >B
 =>sensor53 r
@@ -1305,3 +1270,4 @@ Result (with unneeded values commented out):
 1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,KWh,total_365d,4
 1,1-0:16.7.0*255(@1,Verbrauch aktuell,W,current,20
 #
+```
