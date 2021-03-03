@@ -2,7 +2,7 @@
 
 To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
-when you want to add a display to Tasmoata is is best to buy one from the table below where the drivers are already there. keep in mind that there are also many variants of each display available and not all variants may be supported.  
+when you want to add a display to Tasmoata it is best to buy one from the table below where the drivers are already there. keep in mind that there are also many variants of each display available and not all variants may be supported.  
 
 #define directive | Description
  ---|---
@@ -10,7 +10,7 @@ USE_DISPLAY | Enable display support. Also requires at least one of the followin
 USE_DISPLAY_LCD | Enable LCD display. Also requires `USE_I2C`
 USE_DISPLAY_SSD1306 | Enable OLED SSD1306 display. Also requires `USE_I2C`
 USE_DISPLAY_MATRIX | Enable MATRIX display
-USE_DISPLAY_ILI9341 | Enable TFT ILI9341 display. Also requires `USE_SPI`<br>if seconds SPI bus on ESP32 shall be used SSPI must be defined instead of SPI
+USE_DISPLAY_ILI9341 | Enable TFT ILI9341 display. Also requires `USE_SPI`<br>if seconds SPI bus on ESP32 shall be used SSPI must be defined instead of SPI<br>ILI9342 also supported, select with cmd displayilimode 3, default is: displayilimode 1 (ILI9341)
 USE_DISPLAY_EPAPER_29 | Enable EPAPER_29 display. Also requires `USE_SPI`
 USE_DISPLAY_EPAPER_42 | Enable EPAPER_42 display. Also requires `USE_SPI`
 USE_DISPLAY_SH1106 | Enable OLED SH1106 display. Also requires `USE_I2C`
@@ -19,7 +19,6 @@ USE_DISPLAY_SSD1351 | Enable color OLED SSD1351 display. Also requires `USE_SPI`
 USE_DISPLAY_RA8876  | Enable TFT RA8876 display. Also requires `USE_SPI` 
 USE_DISPLAY_SEVENSEG  | Enable 7 segment display. Also requires `USE_I2C` 
 USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI`  
-USE_DISPLAY_ILI9342  | Enable TFT ILI9342 display. Also requires `USE_SPI` 
 USE_DISPLAY_SD1331  | Enable TFT SD1331 display. Also requires `USE_SPI`
 USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`  
 USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
@@ -78,8 +77,8 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 `Kp` = draws a filled circle with radius `p`  
 `rp:p` = draws a rectangle with `p` with and `p` height  
 `Rp:p` = draws a filled rectangle with `p` with and `p` height  
-`up:p:p` = draws a rounded rectangle with `p` with, `p` height and `p` radius (_not for ILI9341_)  
-`Up:p:p` = draws a filled rounded rectangle with `p` with, `p` height and `p` radius (_not for ILI9341_)  
+`up:p:p` = draws a rounded rectangle with `p` with, `p` height and `p` radius v
+`Up:p:p` = draws a filled rounded rectangle with `p` with, `p` height and `p` radius  
 
 ### Miscellaneous
 
