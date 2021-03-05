@@ -626,13 +626,13 @@ fan:
   payload_low_speed: "1"
   payload_medium_speed: "2"
   payload_high_speed: "3"
-  payload_available: Online
-  payload_not_available: Offline
+  payload_available: "Online"
+  payload_not_available: "Offline"
   speeds:
-    - off
-    - low
-    - medium
-    - high
+    - "off"
+    - "low"
+    - "medium"
+    - "high"
 ```
 <!-- tabs:end -->
 
@@ -699,8 +699,8 @@ fan:
         {% endif %}
     speed_value_template: "{{ value_json.FanSpeed }}"
     availability_topic: tele/ifan02/LWT
-    payload_available: Online
-    payload_not_available: Offline
+    payload_available: "Online"
+    payload_not_available: "Offline"
     speed_command_topic: "cmnd/ifan02/FanSpeed"
     payload_low_speed: "1"
     payload_medium_speed: "2"
@@ -711,9 +711,9 @@ fan:
     qos: 1
     retain: false
     speeds:
-      - low
-      - medium
-      - high
+      - "low"
+      - "medium"
+      - "high"
 light:
   - platform: mqtt
     name: "Pat Ceiling Light"
