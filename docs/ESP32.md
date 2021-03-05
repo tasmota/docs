@@ -133,6 +133,12 @@ on analog#joy2=1 do dimmer - endon on analog#joy2=2 do dimmer + endon
 {"NAME":"Olimex ESP32-PoE","GPIO":[1,1,1,1,1,1,0,0,5536,1,1,1,1,0,5600,0,0,0,0,5568,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1],"FLAG":0,"BASE":1}
 ```
 
+### M5Stack Atom lite
+
+```json
+{"NAME":"M5 Stack Atom Lite","GPIO":[1,1,1,1,1,1,1,1,1088,1,1,1,1,1,1,1,0,1,1,1,0,1,640,1376,0,0,0,0,608,1,1,1,1,0,0,32],"FLAG":0,"BASE":1}
+```
+
 ### LilyGO ttgo-t-eth-poe
 
 ```json
