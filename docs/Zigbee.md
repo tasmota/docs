@@ -586,6 +586,14 @@ MQT: stat/zigbeeTas/RESULT = {"ZbStatus1":[{"Device":"0xA548","Name":"lampDesk"}
 MQT: stat/zigbeeTas/RESULT = {"ZbStatus2":[{"Device":"0xA548","Name":"lampDesk","IEEEAddr":"0x00158D0002D608BD","ModelId":"ZBT-ColorTemperature","Manufacturer":"MLI","Endpoints":[1],"Config":["O01","L01.2"]}]}
 ```
 
+### ZbStatus3
+Similar to `ZbStatus2`, but will include last known staus of values. Example:
+
+`ZbStatus3 lampDesk`
+```json
+stat/zigbeeTas/RESULT {"ZbStatus3":[{"Device":"0xA548","Name":"lampDesk","IEEEAddr":"0x00158D0002D608BD","ModelId":"ZBT-ColorTemperature","Manufacturer":"MLI","Endpoints":[1],"Config":["O01","L01.2"],"Power":0,"Dimmer":128,"X":27667,"Y":26082,"CT":310,"ColorMode":2,"Reachable":true,"LastSeen":353,"LastSeenEpoch":1615115465,"LinkQuality":63}]}
+```
+
 ### ZbRestore
 Zigbee command `ZbRestore` to restore device configuration dumped with `ZbStatus2`.
 
@@ -646,6 +654,94 @@ Probes the zigbee device and tries to identify available endpoints. Example:
 ```
 
 Note: For passive devices (buttons, motion sensors, temperature sensors, ...) probing only works during binding process. The passive devices will not respond to ZbProbe when operating in low-power mode.
+
+### ZbLeave
+Command `ZbLeave` is used to ask for a device to leave the network. Example:
+
+`ZbLeave lampDesk`
+```json
+MQT: stat/zigbeeTas/RESULT = {"ZbLeave":"Done"}
+```
+The device will still be reported on the Tasmota screen, you can still use `ZbStatus`, `ZbStatus2`, `ZbStatus3` or `ZbLight` command, they will just report unreachable state for the device. Example:
+
+`zblight lampDesk`
+```json
+MQT: tele/lampDesk/SENSOR = {"lampDesk":{"Device":"0xA548","Name":"lampDesk","Reachable":false,"Power":0,"Dimmer":128,"X":27667,"Y":26082,"CT":310,"ColorMode":2,"Light":2}}
+```
+
+To fully remove the device, use `ZbForget`.
+
+### ZbRestore
+Restore a device configuration previously exported via `ZbStatus2` or `ZbStatus3`.
+
+Format:
+
+Either the entire `ZbStatus3` export, or an array or just the device configuration.
+
+Export data using `ZbStatus3`:
+
+```json
+ZbRestore {"ZbStatus3":[{"Device":"0x5ADF","Name":"Petite_Lampe","IEEEAddr":"0x90FD9FFFFE03B051","ModelId":"TRADFRI bulb E27 WS opal 980lm","Manufacturer":"IKEA of Sweden","Endpoints":["0x01","0xF2"]}]}
+```
+
+Then restore them using `ZbRestore`:
+
+```json
+ZbRestore {"Device":"0x5ADF","Name":"Petite_Lampe","IEEEAddr":"0x90FD9FFFFE03B051","ModelId":"TRADFRI bulb E27 WS opal 980lm","Manufacturer":"IKEA of Sweden","Endpoints":["0x01","0xF2"]}
+```
+
+If you want to restore multiple devices, you can use array:
+
+```json
+ZbRestore [{"Device":"0x5ADF","Name":"Petite_Lampe","IEEEAddr":"0x90FD9FFFFE03B051","ModelId":"TRADFRI bulb E27 WS opal 980lm","Manufacturer":"IKEA of Sweden","Endpoints":["0x01","0xF2"]}]
+```
+
+### ZbConfig
+Reads or writes configuration values into the zigbee device. Example:
+
+`ZbConfig`
+
+```json
+MQT: stat/zigbeeTas/RESULT = {"ZbConfig":{"Channel":11,"PanID":"0x1A63","ExtPanID":"0xCCCCCCCC04962BC8","KeyL":"0x0F0D0B0907050301L","KeyH":"0x04962BC8D2B540A1","TxRadio":20}}
+```
+
+### ZbData
+Displays or modifies the last status of the device.
+
+To list all the current data, use:
+
+`ZbData`
+
+Example output:
+```json
+stat/zigbeeTas/RESULT {"ZbData":"ZbData 0xF6AC,06FABB44605CFF0506010F00010E0101020002FEFFFFFA00BA751D69"}
+stat/zigbeeTas/RESULT {"ZbData":"ZbData 0xEC5F,0664D143602DFF0506010F00010E0101020002FEFFFFFA00BA751D69"}
+stat/zigbeeTas/RESULT {"ZbData":"ZbData 0x306A,06AFC3446015FF"}
+stat/zigbeeTas/RESULT {"ZbData":"ZbData 0x0E9A,06B0C3446044FF0506010F00000E0101020002FEFFFF72016B617D60"}
+stat/zigbeeTas/RESULT {"ZbData":"ZbData 0xCAEC,0681C3446047FF0E01000000FFFFFFFFFFFFFFFFFFFF0506010F0000"}
+```
+
+To modify the last known status of device, use `ZbData <deviceShortId>,<deviceData>`.
+
+Example:
+
+`ZbData 0x0E9A,06AAC144603FFF0506010F00010E0101020002FEFFFF72016B617D60`
+
+```json
+stat/zigbeeTas/RESULT {"ZbData":"ZbData 0x0E9A,06AAC144603FFF0506010F00010E0101020002FEFFFF72016B617D60"}
+```
+
+This will only modify the last known status from Tasmota's perspective, it will not send any commands towards the device on the zigbee network.
+
+### ZbBind/ZbUnBind
+Commands used to bind device endpoints fo other devices or groups.
+
+Usage:
+
+```
+ZbBind {"Device":"<device>", "Endpoint":<endpoint>, "Cluster":<cluster>, "ToDevice":"<to_device>", "ToEndpoint":<to_endpoint>, "ToGroup":<to_group> }
+ZbUnbind {"Device":"<device>", "Endpoint":<endpoint>, "Cluster":<cluster>, "ToDevice":"<to_device>", "ToEndpoint":<to_endpoint>, "ToGroup":<to_group> }
+```
 
 ### SetOption66
 All zigbee ZbZNP and ZbZCL received data is published to MQTT. Example:
@@ -745,22 +841,12 @@ Command `SetOption116 1` to disable auto-query of zigbee light devices (avoids n
 ----------------
 
 ## To be document
-`ZbLeave`
 
-ZbRestore (#9641)
+ZbSend Config and ReadConfig *-- not available in Tasmota 9.2.0*
 
-ZbData
-
-ZbSend Config and ReadConfig
-
-ZbConfig
-
-Zigbee command ZbUnbind
-
-ZbBind (experimental) and bug fixes
 
 `ZbNoAutoBind` is a synonym for [`SetOption110`](Commands.md#setoption110)
 
-Command SetOption118 1 to move ZbReceived from JSON message and into the subtopic replacing "SENSOR" default (#10353) *-- no relevant difference visible*
+Command SetOption118 1 to move ZbReceived from JSON message and into the subtopic replacing "SENSOR" default (#10353) *-- no relevant difference visible with version Tasmota 9.2.0*
 
-Command SetOption119 1 to remove the device addr from json payload, can be used with zb_topic_fname where the addr is already known from the topic (#10355) *-- no relevant difference visible*
+Command SetOption119 1 to remove the device addr from json payload, can be used with zb_topic_fname where the addr is already known from the topic (#10355) *-- no relevant difference visible with version Tasmota 9.2.0*
