@@ -21,7 +21,7 @@ All binaries use `user_config_override.h` if it exists.
 
 ## Templates and Known Devices
 
-Some known device templates and configurations
+Some known device templates and configurations. [Touch control pins](https://tasmota.github.io/docs/TouchPin/) are also supported.
 
 ### LilyGO TTGO T-Camera OV2640_V05
 
