@@ -37,7 +37,7 @@ When a command mentions resetting to *"firmware default"* it means the setting w
 
 To send commands and view responses you'll need an [MQTT client](http://www.hivemq.com/blog/seven-best-mqtt-client-tools).
 
-Commands over MQTT are issued by using `cmnd/%topic%/<command> <parameter>` where `%topic%` is the topic of the device you're sending the command to. If there is no `<parameter>` (an empty MQTT message/payload), a query is sent for current status of the `<command>`.
+Commands over MQTT are issued by using topic `cmnd/%topic%/<command>` and payload `<parameter>` where `%topic%` is the topic of the device you're sending the command to. If there is no `<parameter>` (an empty MQTT message/payload), a query is sent for current status of the `<command>`.
 
 See [MQTT](MQTT) article to find out more.
 
