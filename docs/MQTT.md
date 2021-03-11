@@ -39,7 +39,7 @@ After a reboot all necessary MQTT settings are configured. Don't forget, you can
 ## Commands over MQTT
 To send commands and view responses you'll need an [MQTT client](http://www.hivemq.com/blog/seven-best-mqtt-client-tools).
 
-Commands over MQTT are issued to Tasmota by using `cmnd/%topic%/<command> <parameter>`. If there is no `<parameter>` (an empty MQTT message/payload), a query is sent for current status of the `<command>`.
+Commands over MQTT are issued to Tasmota by using topic `cmnd/%topic%/<command>` and payload `<parameter>`. If there is no `<parameter>` (an empty MQTT message/payload), a query is sent for current status of the `<command>`.
 
 !!! tip
     If you are using *mosquitto_pub*, you can issue an empty payload using the `-n` command line option. 
