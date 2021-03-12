@@ -1939,8 +1939,6 @@ Rule
 Result
 - As a result of the `tele-` prefix the rules will be checked at TelePeriod time for sensor AM2301-12 Temperature and Humidity. The first rule will use the Temperature stored in `%value%` and save it in `%var1%` for future use. The second rule will use the Humidity stored in `%value%` and the Temperature stored in `%var1%` to compose a single MQTT message suitable for Domoticz. 
 
------------------------------------------------------------------------------
-
 ------------------------------------------------------------------------------
 
 ### RF Repeater / IR Repeater
@@ -1963,6 +1961,50 @@ Enable it with `Rule1 1`
 
 The only catch is that the protocol needs to be setup in the rule. Most likely this can be taken care of by using a more complex rule maybe using variables. Would update in future
 
-
 ------------------------------------------------------------------------------
 
+### RfRaw command duplicator
+
+Sonoff RF bridge with Tasmota firmware is able to send out the radio-frequency commands very quickly. If some of your covers 'miss' the commands occassionally (you can see that from the fact that the state shown in Home Assistant does not correspond to reality), it may be that those cover motors do not pick up the codes immediately when they are sent (from Home Assistant).
+
+This can be handled by sending out the RF code immediately again. While this is possible by repeating the automation sequence in Home Assistant, it is also possible to do the repetition in Tasmota, and send the code only once from Home Assistant.
+
+Unfortunately Tasmota can't handle more than 100 characters in an event variable, and since some RF codes can be longer than this, a workaround is needed. You need to split the code in two parts: first 32 characters will be assigned to a variable, and the rest of the characters will be sent through the event variable. Our rule will then take these two, combine them back, and issue the RfRaw command with the same, twice.
+
+So originally in Home Assistant you had something like this, in order to trigger an RF cover movement with Sonoff RF bridge:
+```yaml
+    - service: mqtt.publish
+      data:
+        topic: 'cmnd/rf-bridge-1/backlog'
+        payload: 'rfraw AAB035050412FC061802BC019022F6A481A3B2B2A3B2A3A3B2B2B2A3A3B2B2A3B2A3B2A3A3B2A3A3B2A3B2A3A3B2B2A3A3B2A3B2A3B2A3B255;rfraw 0'
+```
+
+To make it work with our RfRaw repeater rule, it should be modified like this:
+```yaml
+    - service: mqtt.publish
+      data:
+        topic: 'cmnd/rf-bridge-1/backlog'
+        payload: 'var1 AAB035050412FC061802BC019022F6A4; Event varf=81A3B2B2A3B2A3A3B2B2B2A3A3B2B2A3B2A3B2A3A3B2A3A3B2A3B2A3A3B2B2A3A3B2A3B2A3B2A3B255'
+```
+
+The payload will be `var1 first-32-chars; Event varf=rest-of-the-chars` from the code.
+
+#### Rule
+```haskell
+rule1 on event#varf do backlog RfRaw %var1%%value%; RfRaw %var1%%value%; RfRaw 0 endon
+```
+Enable it with `rule1 1`
+
+#### Result
+The backlog coming through MQTT will: 
+- first set the first 32 characters of the code in variable `var1`;
+- fire an event with variable `varf` containing the rest of the characters
+
+The rule will detect the event (`on event`) and run a new backlog which will:
+- run command RfRaw with code concatenated of `var1``varf`
+- run command RfRaw with code concatenated of `var1``varf` again
+- run command RfRaw 0
+
+If you want to repeat the RfRaw 3 times, all you need to do is to simply add in the rule a new `RfRaw %var1%%value%;` before `RfRaw 0`.
+
+-----------------------------------------------------------------------------
