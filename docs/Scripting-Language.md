@@ -19,6 +19,7 @@ USE_BUTTON_EVENT | enable `>b` section (detect button state changes)
 USE_SCRIPT_JSON_EXPORT | enable `>J` section (publish JSON payload on [TelePeriod](Commands#teleperiod))
 USE_SCRIPT_SUB_COMMAND | enables invoking named script subroutines via the Console or MQTT
 USE_SCRIPT_HUE | enable `>H` section (Alexa Hue emulation)
+USE_HOMEKIT | enable `>h` section (Siri Homekit support (ESP32 only))
 USE_SCRIPT_STATUS | enable `>U` section (receive JSON payloads from cmd status)
 SCRIPT_POWER_SECTION | enable `>P` section (execute on power changes)
 SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe
@@ -214,6 +215,32 @@ Remark: hue values have a range from 0-65535. Divide by 182 to assign HSBcolors 
 !!! example 
     `lamp1,E,on=pwr1,hue=hue1,sat=sat1,bri=bri1,ct=ct1`
 
+`>h` passcode  
+Siri Homekit interface (up to 16 virtual Homekit devices)  
+passcode = 111-11-111  keep this format, numbers 0-9  
+`name`,`type`,`opt`,`var1`,`var2`...  
+
+`name` device name  
+`type` device type (HAP_CID)  
+- `7` = outled, on/off  
+- `5` = light, on/off,hue,sat,bri  
+- `10` = sensor  
+
+
+`opt` sensor type  
+- `0` = Temperature,val  
+- `1` = Humidty,val  
+- `2` = Lightlevel,val  
+- `3` = Battery status,level,lowbat,charging  
+
+!!! example  
+
+    `>h 111-11-111`  
+    `lamp1,5,0,pwr,hue,sat,bri`  
+    `temperature,10,0,tval` 
+    
+    a restart is required after modification of descriptor!  
+    
 `>U`  
 JSON messages from cmd status arrive here
 
