@@ -657,11 +657,15 @@ Enabling this feature also enables [Tasmota TLS](TLS) as `sendmail` uses SSL.
 
 !!! example
     ```
-    sendmail [smtp.gmail.com:465:user:passwd:sender@gmail.com:<rec@gmail.com:alarm] %string%
+    sendmail [smtp.gmail.com:465:user:passwd:<sender@gmail.com>:<rec@gmail.com>:alarm] %string%
     ```  
 
     Remark:  
-    A number of e-mail servers (such as Gmail) require the receiver's e-mail address to be enclosed by `< ... ` as in example above. Most other e-mail servers also accept this format. While ESP8266 sendmail needs brackets, ESP32 sendmail inserts brackets itself so you should not specify brackets here.  
+    A number of e-mail servers (such as Gmail) require the receiver's e-mail address to be enclosed by angle brackets `< ... >` as in example above. Most other e-mail servers also accept this format. While ESP8266 sendmail needs brackets, ESP32 sendmail inserts brackets itself so you should not specify brackets here.  
+
+!!! warning
+    Don't use your Google account password with GMAIL SMTP server.<br>
+    You must create an [Application specific password](https://support.google.com/accounts/answer/185833)
 
 The following parameters can be specified during compilation via `#define` directives in `user_config_override.h`:  
 * `EMAIL_SERVER`  
@@ -672,7 +676,7 @@ The following parameters can be specified during compilation via `#define` direc
 
 To use any of these values, pass an `*` as its corresponding argument placeholder.  
 
-!!! example "`sendmail [*:*:*:*:*:<rec@gmail.com:theSubject] theMessage`  "
+!!! example "`sendmail [*:*:*:*:*:<rec@gmail.com>:theSubject] theMessage`  "
 
 Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `m` _(note lower case)_ section. The specified text in this script section must end with an `#` character. `sendmail` will use the `m` section if `*` is passed as the `msg` parameter. in this >m section you may also specify email attachments.
 @/filename specifies a file to be attached (if file system is present)  
