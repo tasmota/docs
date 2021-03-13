@@ -72,7 +72,9 @@ Declare `>M` section with the number of connected meters (n = `1..5`):
 
 !!! note
     If no `>M` section is found in the script or if the scripting language is not compiled, the driver reverts to the default hardcoded `#define` definitions. If no meter script is defined, the default harcoded descriptor interface (deprecated) uses `RX GPIO3` for receiving data and thus may interfere with other Tasmota Defintions without warning. 
-
+    
+!!! note
+    Software serial only supports 8N1 serial format. Must use hardware serial for e.g. 8E1!  
 
 ## Meter Definition
 
