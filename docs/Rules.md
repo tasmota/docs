@@ -1991,17 +1991,21 @@ Enable it with `rule1 1`.
 
 #### Result
 
-The backlog coming through MQTT will:<br> 
-- first set the first 32 characters of the code in variable `var1`;<br>
-- fire an event with variable `varf` containing the rest of the characters<br>
+The backlog coming through MQTT will:
 
-The rule will detect the event (`on event`) and run a new backlog which will:<br>
-- run command RfRaw with code concatenated of `var1varf`;<br>
-- run command RfRaw with code concatenated of `var1varf` again;<br>
-- run command RfRaw 0<br>
+- first set the first 32 characters of the code in variable `var1`;
+- fire an event with variable `varf` containing the rest of the characters
 
-If you want to repeat the RfRaw 3 times, all you need to do is to simply add in the rule a new `RfRaw %var1%%value%;` before `RfRaw 0`.<br>
+The rule will detect the event (`on event`) and run a new backlog which will:
+
+- run command RfRaw with code concatenated of `var1varf`;
+- run command RfRaw with code concatenated of `var1varf` again;
+- run command RfRaw 0
+
+If you want to repeat the RfRaw 3 times, all you need to do is to simply add in the rule a new `RfRaw %var1%%value%;` before `RfRaw 0`.
+
 Backlog introduces an [inter-command delay](https://tasmota.github.io/docs/Commands/#setoption34) of 200 milliseconds by default. If you feel the reaction time between your HA system and the covers is too long, you can tweak it by reducing the delay to, for example 60 milliseconds with `SetOption34 60`.
+
 
 
 ------------------------------------------------------------------------------
