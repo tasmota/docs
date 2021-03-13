@@ -1941,8 +1941,6 @@ Result
 
 -----------------------------------------------------------------------------
 
-------------------------------------------------------------------------------
-
 ### RF Repeater / IR Repeater
 
 In some applications, an RF-Repeater may come in handy to increase the range of RF based devices. We need to use RF reciever and RF transmitter modules with tasmota powered controllers. The following rule looks for data received by the RF receiver and re transmits the same over the transmitter. 
@@ -1966,3 +1964,48 @@ The only catch is that the protocol needs to be setup in the rule. Most likely t
 
 ------------------------------------------------------------------------------
 
+### RfRaw command duplicator
+
+Sonoff RF bridge with Tasmota firmware is able to send out the radio-frequency commands very quickly. If some of your RF covers 'miss' the commands occassionally (you can see that from the fact that the state shown in the HA system does not correspond to reality), it may be that those cover motors do not pick up the codes immediately when they are sent (it may happen not only with RF covers).
+
+This can be handled by sending out the RF code immediately again. While this is possible by repeating the automation sequence in HA system, it is also possible to do the repetition in Tasmota, and send the code only once from your home automation.
+
+Unfortunately Tasmota can't handle more than 100 characters in an event variable, and since some RF codes can be longer than this, a workaround is needed. You need to split the code in two parts: first 32 characters will be assigned to a variable, and the rest of the characters will be sent through the event variable. Our rule will then take these two, combine them back, and issue the RfRaw command with the same, twice.
+
+So originally in your HA system you had this payload, sent to the topic `cmnd/rf-bridge-1/backlog` in order to trigger an RF cover movement with Sonoff RF bridge. This sent your RF codes with RfRaw only once:
+
+`rfraw AAB035050412FC061802BC019022F6A481A3B2B2A3B2A3A3B2B2B2A3A3B2B2A3B2A3B2A3A3B2A3A3B2A3B2A3A3B2B2A3A3B2A3B2A3B2A3B255;rfraw 0`
+
+To make it work with our RfRaw repeater rule and send it multiple times, it should be modified like this:
+
+`var1 AAB035050412FC061802BC019022F6A4; Event varf=81A3B2B2A3B2A3A3B2B2B2A3A3B2B2A3B2A3B2A3A3B2A3A3B2A3B2A3A3B2B2A3A3B2A3B2A3B2A3B255`
+
+The payload will have be `var1 first-32-chars; Event varf=rest-of-the-chars` from the code.
+
+#### Rule
+
+```haskell
+rule1 on event#varf do backlog RfRaw %var1%%value%; RfRaw %var1%%value%; RfRaw 0 endon
+```
+Enable it with `rule1 1`.
+
+#### Result
+
+The backlog coming through MQTT will:
+
+- first set the first 32 characters of the code in variable `var1`;
+- fire an event with variable `varf` containing the rest of the characters
+
+The rule will detect the event (`on event`) and run a new backlog which will:
+
+- run command RfRaw with code concatenated of `var1varf`;
+- run command RfRaw with code concatenated of `var1varf` again;
+- run command RfRaw 0
+
+If you want to repeat the RfRaw 3 times, all you need to do is to simply add in the rule a new `RfRaw %var1%%value%;` before `RfRaw 0`.
+
+Backlog introduces an [inter-command delay](https://tasmota.github.io/docs/Commands/#setoption34) of 200 milliseconds by default. If you feel the reaction time between your HA system and the covers is too long, you can tweak it by reducing the delay to, for example 60 milliseconds with `SetOption34 60`.
+
+
+
+------------------------------------------------------------------------------
