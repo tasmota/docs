@@ -448,7 +448,7 @@ SetOption77<a class="cmnd" id="setoption77"></a>|Do not power off if a slider is
 SetOption78<a class="cmnd" id="setoption78"></a>|Version check on Tasmota upgrade<BR>`0` = enabled _(default)_<BR>`1` = disabled
 SetOption79<a class="cmnd" id="setoption79"></a>|Reset counters at TelePeriod time<BR>`0` = disabled _(default)_<BR>`1` = enabled
 SetOption80<a class="cmnd" id="setoption80"></a>|[Blinds and shutters](Blinds-and-Shutters) support<BR>`0` = disable blinds and shutters support *(default)*<BR>`1` = enable blinds and shutters support
-SetOption81<a class="cmnd" id="setoption81"></a>|Set PCF8574 component behavior for all ports<BR>`0` = set as regular state *(default)*<BR>`1` = set as inverted state
+SetOption81<a class="cmnd" id="setoption81"></a>|Set [PCF8574](PCF8574) component behavior for all ports<BR>`0` = set as regular state *(default)*<BR>`1` = set as inverted state
 SetOption82<a class="cmnd" id="setoption82"></a>|Reduce the CT range from 153..500 to 200.380 to accomodate with Alexa range<BR>`0` = CT ranges from 153 to 500 *(default)*<BR>`1` = CT ranges from 200 to 380 (although you can still set in from 153 to 500)
 SetOption83<a class="cmnd" id="setoption83"></a>|Uses Zigbee device friendly name instead of 16 bits short addresses as JSON key when reporting values and commands<BR>`0` = JSON key as short address<BR>`1` = JSON key as friendly name<BR>See [`ZbName <device>,<name>`](#zbname)
 SetOption84<a class="cmnd" id="setoption84"></a>|(Experimental) When using AWS IoT, sends a device shadow update (alternative to retained)<BR>`0` = don't update device shadow (default)<BR>`1` = update device shadow<BR>Note: if the `Topic` contains `'/'` they are replaced with `'_'`
