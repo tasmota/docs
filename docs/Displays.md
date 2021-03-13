@@ -50,8 +50,9 @@ Parameter	|	LCD Display	|	OLED Display	|	TFT Display  | 7-segment Display (TM163
 
 The **TM1637** driver supports multiple variants of displays. These can be selected by setting the `DisplayType` appropriately. see [here](TM1637.md) for details.
 
+
 Parameter	|	Display variant
----	|	---	|	
+---	|	---
 0	|	4-digit
 1	|	6-digit
 
