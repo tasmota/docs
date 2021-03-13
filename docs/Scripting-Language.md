@@ -239,7 +239,15 @@ passcode = 111-11-111  keep this format, numbers 0-9
     `lamp1,5,0,pwr,hue,sat,bri`  
     `temperature,10,0,tval` 
     
-    a restart is required after modification of descriptor!  
+    a restart is required after modification of descriptor! 
+    
+    needs to add in linker to  
+    
+    build_flags  
+    -DUSE_HOMEKIT  
+    
+    lib_extra_dirs  
+    lib/libesp32_div  
     
 `>U`  
 JSON messages from cmd status arrive here
