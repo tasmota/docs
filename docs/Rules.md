@@ -1996,8 +1996,8 @@ The backlog coming through MQTT will:<br>
 - fire an event with variable `varf` containing the rest of the characters<br>
 
 The rule will detect the event (`on event`) and run a new backlog which will:<br>
-- run command RfRaw with code concatenated of `var1``varf`;<br>
-- run command RfRaw with code concatenated of `var1``varf` again;<br>
+- run command RfRaw with code concatenated of `var1varf`;<br>
+- run command RfRaw with code concatenated of `var1varf` again;<br>
 - run command RfRaw 0<br>
 
 If you want to repeat the RfRaw 3 times, all you need to do is to simply add in the rule a new `RfRaw %var1%%value%;` before `RfRaw 0`.<br>
