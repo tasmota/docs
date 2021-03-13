@@ -330,7 +330,11 @@ Use `TuyaSend2` to manage them.
 
 Temperature and Temperature Set default to `°C`. If you need `°F` change `SetOption8` to `1`.
 
-Please note this will not update the value sent by the MCU but will just change the unit of measure reported on `/SENSOR` topic. You have to find a dpid to set the correct unit and change reported values (if it exists).
+The TuyaMCU driver sends the temperature as a byte integer. As of 9.3.x, the integer is converted by Tasmota to a float based on the "TempRes" setting which indicates the number of places after the decimal. The TempRes setting is by default "1" which means a device which sends 101 will be intepreted as 10.1. If your device normaly returns an integer temperature, you may need to set TempRes to "0". 
+
+If your device requires the temperature to be divided (eg. increases in .5° increments), you may need to use the [rules](Rules.md#adjust-a-value-and-send-it-over-mqtt) functionality to convert the temperature value.
+
+Please note this will not update the value sent by the MCU but will just change the unit of measure reported on `/SENSOR` topic. You have to find a dpid to set the correct unit and change reported values (if it exists) or perhaps use the [rules](Rules.md#adjust-a-value-and-send-it-over-mqtt) functionality to do the conversion.
 
 ### Timers
 4 Type2 (integer) timers can be managed directly from Tasmota
