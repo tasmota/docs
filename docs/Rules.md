@@ -266,8 +266,7 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 - Support IF, ELSEIF, ELSE  
 - Support for `<comparison>` and `<logical expression>` as condition  
 - Support for executing multiple commands  
-- Support for nested IF statements  
-- Available free RAM is the only limit for logical operators, parenthesis, and nested IF statements.  
+- Available free RAM is the only limit for logical operators and parenthesis.  
 
 #### Grammar  
 `<if-statement>`  
