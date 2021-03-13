@@ -8,6 +8,8 @@ Buy example:
 - [AliExpress](https://www.aliexpress.com/item/4000124226294.html)
 - [Sparkfun](https://www.sparkfun.com/products/13959)
 
+The [US-100](https://www.adafruit.com/product/4019) can also be use as a HC-SR04 if you remove the jumper at the back (check Adafruit documentation).
+
 ## Configuration
 
 ### Wiring<img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/wemos/wemos_hc-sr04_schematic.jpg" align=right></img>
