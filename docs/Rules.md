@@ -2001,7 +2001,7 @@ The rule will detect the event (`on event`) and run a new backlog which will:<br
 - run command RfRaw 0<br>
 
 If you want to repeat the RfRaw 3 times, all you need to do is to simply add in the rule a new `RfRaw %var1%%value%;` before `RfRaw 0`.<br>
-Backlog introduces and [inter-command delay](https://tasmota.github.io/docs/Commands/#setoption34) of 200 milliseconds by default. If you feel the reaction time between your HA system and the covers is too long, you can tweak it by reducing the delay to 60 milliseconds with `SetOption34 60`.
+Backlog introduces an [inter-command delay](https://tasmota.github.io/docs/Commands/#setoption34) of 200 milliseconds by default. If you feel the reaction time between your HA system and the covers is too long, you can tweak it by reducing the delay to, for example 60 milliseconds with `SetOption34 60`.
 
 
 ------------------------------------------------------------------------------
