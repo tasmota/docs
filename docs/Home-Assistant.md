@@ -10,22 +10,22 @@ Tasmota communicates with Home Assistant using MQTT. Before going any further, m
 
 Home Assistant has different options of adding Tasmota devices:
 
-1. Official Tasmota (beta) integration (**preferred**)
+1. Official Tasmota integration (**preferred**)
 2. MQTT discovery (_development halted_)
 3. Manual configuration by editing configuration.yaml
 
-## Tasmota (beta) Integration
+## Tasmota Integration
 
 Once you configure the [Home Assistant](https://www.home-assistant.io/integrations/tasmota/) integration every new Tasmota device with `SetOption19 0` set, will be discovered automatically. 
 
-All Tasmota devices will be listed in their own Tasmota (beta) card in **Configuration - Integrations** menu in Home Assistant.
+All Tasmota devices will be listed in their own Tasmota card in **Configuration - Integrations** menu in Home Assistant.
 
 !!! warning 
     Do not change the FullTopic in order to use this feature. Leave it as default.
 
 ![Informative sensor](_media/tasmota_integration_showcase.png)
 
-Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmota (beta) integration and [`FriendlyName<x>`](Commands.md#friendlyname) to name power outputs (switch or light entities in HA).
+Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmota integration and [`FriendlyName<x>`](Commands.md#friendlyname) to name power outputs (switch or light entities in HA).
 
 ### Supported Entities
 
@@ -58,7 +58,7 @@ You cannot as long as Home Assistant support is enabled in your Tasmota binary. 
 
 Deleting them from Home Assistant while Tasmota device is still active will simply rediscover all the entities. 
 
-If you opt to switch to MQTT Discovery, issuing `SetOption19 1` command will remove all Tasmota (beta) entities and add new entities under the MQTT integration.
+If you opt to switch to MQTT Discovery, issuing `SetOption19 1` command will remove all Tasmota entities and add new entities under the MQTT integration.
 
 ### Supplemental Custom Discovery Message
 
