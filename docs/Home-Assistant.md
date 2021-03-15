@@ -68,8 +68,8 @@ When creating the MQTT discovery JSON add this device identifier `,"device":{"co
 
 Examples of custom discovery:
 
-- [PIR sensor](https://blakadder.com/tasmota-tags/)
-- [RFID Tag](https://blakadder.com/pir-in-tasmota-integration/)
+- [RFID Tag](https://blakadder.com/tasmota-tags/)
+- [PIR sensor](https://blakadder.com/pir-in-tasmota-integration/)
 
 ## Editing configuration.yaml
 
