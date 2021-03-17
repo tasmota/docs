@@ -19,7 +19,7 @@ USE_BUTTON_EVENT | enable `>b` section (detect button state changes)
 USE_SCRIPT_JSON_EXPORT | enable `>J` section (publish JSON payload on [TelePeriod](Commands#teleperiod))
 USE_SCRIPT_SUB_COMMAND | enables invoking named script subroutines via the Console or MQTT
 USE_SCRIPT_HUE | enable `>H` section (Alexa Hue emulation)
-USE_HOMEKIT | enable `>h` section (Siri Homekit support (ESP32 only))
+USE_HOMEKIT | enable `>h` section (Siri Homekit support (ESP32 only),<br>define must be given in platform_override see below)
 USE_SCRIPT_STATUS | enable `>U` section (receive JSON payloads from cmd status)
 SCRIPT_POWER_SECTION | enable `>P` section (execute on power changes)
 SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe
@@ -220,7 +220,7 @@ Siri Homekit interface (up to 16 virtual Homekit devices)
 passcode = 111-11-111  keep this format, numbers 0-9  
 `name`,`type`,`opt`,`var1`,`var2`...  
 
-`name` device name  
+`name` device name  (max 23 characters)  
 `type` device type (HAP_CID)  
 - `7` = outled, on/off  
 - `5` = light, on/off,hue,sat,bri  
@@ -232,14 +232,28 @@ passcode = 111-11-111  keep this format, numbers 0-9
 - `1` = Humidty,val  
 - `2` = Lightlevel,val  
 - `3` = Battery status,level,lowbat,charging  
+- `4` = Ambient light level with extended range -10000,+10000  
+- `5` = Contact Sensor (switch)
+
+`var1 ...` variable name (max 11 characters)
+the variables denote scripting variables that need to be set by script  
+the special variables  
+@px x (1..9) directly set, read power states e.g. relais  
+@sx x (1..9) directly read switch state  
+@bx x (1..9) directly read button state  
 
 !!! example  
 
     `>h 111-11-111`  
+    `outlet,7,0,@p1`
     `lamp1,5,0,pwr,hue,sat,bri`  
     `temperature,10,0,tval` 
     
-    a restart is required after modification of descriptor! 
+    a restart is required after modification of descriptor!  
+    by faulty parameters the homekit dataset may get corrupted  
+    to reset the homekit dataset completely type in console script>hki(89)  
+    
+    compilation:
     
     needs to add in linker to  
     
