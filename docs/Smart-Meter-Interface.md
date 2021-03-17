@@ -299,6 +299,7 @@ Look down below for script examples based on the following metering devices:
 - [Janitza B23](#janitza-b23-modbus) (MODBus)
 - [Hager EHZ363](#hager-ehz363-sml-with-daily-values) (SML, with daily values)
 - [Iskra MT 174](#iskra-mt-174-obis) (OBIS)
+- [Iskra MT 681](#iskra-mt-681-sml) (SML)
 - [SBC ALE3](#sbc-ale3-modbus) (MODBus)
 - [SBC ALE3](#2-sbc-ale3-modbus) (MODBus, alternate)
 - [Trovis 557x](#trovis-557x-modbus) (MODBus)
@@ -854,6 +855,30 @@ The script:
 1,1-0:0.0.0*255(@#),Meter Number,,Meter_number,0
 #
 ```
+
+------------------------------------------------------------------------------
+
+### Iskra MT 681 (SML)
+
+This is script for a two-direction meter (consumption and delivery) for the Isra MT 681, that is widely used in Germany. If you don't deliver energy, just delete the "Total Delivered" line. If the meter provides the consumption values for the 3 phases depends also on the configuration by your local energy provider.
+
+The script:
+```
+>D
+>B
+=>sensor53 r
+>M 1
++1,3,s,0,9600,MT681
+1,77070100010800ff@1000,Total Consumed,KWh,Total_in,3
+1,77070100100700ff@1,Current Consumption,W,Power_cur,0
+1,77070100240700ff@1,Current Consumption P1,W,Power_p1,0
+1,77070100380700ff@1,Current Consumption P2,W,Power_p2,0
+1,770701004c0700ff@1,Current Consumption P3,W,Power_p3,0
+1,77070100020800ff@1000,Total Delivered,KWh,Total_out,3
+1,77070100000009ff@#,Service ID,,Meter_id,0|
+#
+```
+
 ------------------------------------------------------------------------------
 
 ### SBC ALE3 (MODBus)
