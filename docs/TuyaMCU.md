@@ -844,7 +844,7 @@ After receiving a command from Tasmota (Command Word `0x06`), the MCU performs c
 | 102   | Floor Temperature   | FloorCurrent| Issue and report | Integer       | Values range:0-37, Pitch1, Scale0, Unit:℃ |
 
 
-### Inkbird ITC-308-Wifi 
+### Inkbird ITC-308-Wifi
 Temperature controller with individual plug in sockets for heating/cooling
 
 | DP ID | Function points            | Identifier | Data type        | Function type | Properties                                                  |
@@ -873,6 +873,16 @@ Example:
 | TuyaSend2 106,250 | Change set-point to 25.0C               |
 | TuyaSend2 101,1   | Change units to Fahrenheit              |
 
+### Inkbird IHC-200-Wifi
+Humidity controller with two relay sockets very similar to the ITC-308-WIFI
+This unit ships with a RTL based WR3 module which cannot be flashed with Tasmota, however the WR3 module is pin compatible with a ESP12-F module and is on a daughter board similar to the one in the ITC-308-WIFI
+
+| DP ID | Function points            | Identifier | Data type        | Function type | Properties                                                  |
+|-------|----------------------------|------------|------------------|---------------|-------------------------------------------------------------|
+| 104   | Humidity sensor            |            | Only report      | Integer       | Unit is 0.1C                                                |
+| 106   | Humidity set point         | HS         | Issue and report | Integer       | Unit is 0.1C                                                |
+
+Dpid 102,108,109,110,106,117,118 return data and are not yet reverse engineered but are likely similar to ITC-308 but related to humidity. 
 
 ## Further Reading
 
