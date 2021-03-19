@@ -2,7 +2,8 @@ description: Everything about using Tasmota in Home Assistant
 
 # Home Assistant
 
-!!! failure "Home Assistant support is not built in to tasmota-lite.bin. Use the standard tasmota.bin or other binaries that include Home Assistant support."
+!!! failure "Home Assistant support is not built in to tasmota-lite.bin. Use the standard tasmota.bin or other binaries that include Home Assistant support." 
+    Check the "Program Version" in the webUI **Information** page to make sure which version of Tasmota you're running.
 
 [Home Assistant](https://home-assistant.io/) is an open source home automation solution that puts local control and privacy first.
 
