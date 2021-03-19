@@ -1298,3 +1298,28 @@ The script:
 1,1-0:16.7.0*255(@1,Verbrauch aktuell,W,current,20
 #
 ```
+
+### ABB B23 (MODBus)
+
+Meter is basically the same as [Janitza B23](#janitza-b23-modbus) and also inteface is the same. It's just missing whole section of registers which are used in Janitza B23 example.
+
+Beware that A and B MODBus connectors are switched!
+
+```
+>D
+>B
+->sensor53 r
+>M 1
++1,3,m,0,9600,ABB,1,10,01035B00,01035B02,01035B04,01035B14,01035B16,01035B18,01035B1A,r010350080004,r010350000004,r010350040004
+1,010304UUuuUUuu@i0:10,Voltage L1-N,V,Voltage_L1,1
+1,010304UUuuUUuu@i1:10,Voltage L2-N,V,Voltage_L2,1
+1,010304UUuuUUuu@i2:10,Voltage L3-N,V,Voltage_L3,1
+1,010304SSssSSss@i3:100,Active power Total,W,Active_power_Total,2
+1,010304SSssSSss@i4:100,Active power L1-N,W,Active_power_L1,2
+1,010304SSssSSss@i5:100,Active power L2-N,W,Active_power_L2,2
+1,010304SSssSSss@i6:100,Active power L3-N,W,Active_power_L3,2
+1,010308xxxxxxxxSSssSSss@i7:100,Real energy,kWh,Real_energy,2
+1,010308xxxxxxxxUUuuUUuu@i8:100,Real energy consumed,kWh,Real_energy_consumed,2
+1,010308xxxxxxxxUUuuUUuu@i9:100,Real energy delivered,kWh,Real_energy_delivered,2
+#
+```
