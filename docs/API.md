@@ -89,10 +89,9 @@ FUNC_DISPLAY_SEVENSEG_TEXTNC *|      |
 FUNC_DISPLAY_SCROLLDELAY *    |      |
 FUNC_DISPLAY_CLOCK *          |      |
 FUNC_DISPLAY_SCROLLTEXT *     |      |
-FUNC_DISPLAY_TYPE *           |      |
 
 
-\* TM1637 Only
+\* TM1637 and TM1638 Only
 
 ## Init sequence
 

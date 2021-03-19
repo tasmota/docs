@@ -19,7 +19,7 @@ USE_DISPLAY_SEVENSEG  | Enable 7 segment display. Also requires `USE_I2C`
 USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI`  
 USE_DISPLAY_ILI9342  | Enable TFT ILI9342 display. Also requires `USE_SPI` 
 USE_DISPLAY_SD1331  | Enable TFT SD1331 display. Also requires `USE_SPI` 
-USE_DISPLAY_TM1637  | Enable 7-segment TM1637 display. 
+USE_DISPLAY_TM1637  | Enable 7-segment TM1637 and TM1738 display. 
 USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`  
 USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
 SHOW_SPLASH | Enable initialization splash message on the display  
@@ -36,25 +36,15 @@ See commands page for full list of available [Display Commands](Commands.md#disp
 The display driver (except the 7-segment TM1637 driver) is able to display predefined setups of text or user defined text. To display text using `DisplayText` set `DisplayMode` to `0`, or set `DisplayMode` to `1` for the HT16K33 dot-matrix display.
 
 
-Parameter	|	LCD Display	|	OLED Display	|	TFT Display  | 7-segment Display (TM1637)
+Parameter	|	LCD Display	|	OLED Display	|	TFT Display  | 7-segment Display (TM163x)
 ---	|	---	|	---	|	---     |    ----
-0	|	DisplayText	|	DisplayText	|	DisplayText  |    All [TM1637](TM1637.md) _Display-_ functions
-1	|	Time/Date	|	Time/Date	|	Time/Date    |    All [TM1637](TM1637.md) _Display-_ functions
-2	|	Local sensors	|	Local sensors	|	Local sensors   |   All [TM1637](TM1637.md) _Display-_ functions
-3	|	MQTT and Time/Date	|	Local sensors and Time/Date	|	Local sensors and Time/Date  |   All [TM1637](TM1637.md) _Display-_ functions
-4	|	Local sensors	|	MQTT and local sensors	|	MQTT and local sensors  |  All [TM1637](TM1637.md) _Display-_ functions
-5	|	MQTT and Time/Date	|	MQTT, local sensors and Time/Date	|	MQTT, local sensors and Time/Date | All [TM1637](TM1637.md) _Display-_ functions
+0	|	DisplayText	|	DisplayText	|	DisplayText  |    All [TM163x](TM163x.md) _Display-_ functions
+1	|	Time/Date	|	Time/Date	|	Time/Date    |    All [TM163x](TM163x.md) _Display-_ functions
+2	|	Local sensors	|	Local sensors	|	Local sensors   |   All [TM163x](TM163x.md) _Display-_ functions
+3	|	MQTT and Time/Date	|	Local sensors and Time/Date	|	Local sensors and Time/Date  |   All [TM163x](TM163x.md) _Display-_ functions
+4	|	Local sensors	|	MQTT and local sensors	|	MQTT and local sensors  |  All [TM163x](TM163x.md) _Display-_ functions
+5	|	MQTT and Time/Date	|	MQTT, local sensors and Time/Date	|	MQTT, local sensors and Time/Date | All [TM163x](TM163x.md) _Display-_ functions
 
-## DisplayType Parameters *(TM1637 only)*  
-
-
-The **TM1637** driver supports multiple variants of displays. These can be selected by setting the `DisplayType` appropriately. see [here](TM1637.md) for details.
-
-
-Parameter	|	Display variant
----	|	---
-0	|	4-digit
-1	|	6-digit
 
 ## DisplayText Use
 
