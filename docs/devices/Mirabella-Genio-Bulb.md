@@ -107,7 +107,13 @@ I based these settings on the RGBW settings. I would have thought PWM1-3 were re
 
 ![Mirabella RGBW Bulb Tasmota Settings](https://i.ibb.co/BBM0Xyw/mirabella-genio-rgbw-tasmota-settings.png)
 
+### RGBW colour bulbs (12w version) 
+Newer versions operate under the SM2135 chipset. This can be confirmed when disassembled by inspecting the pins which connect the main board up to the LED board. They will be marked SDA1, CLK alongside the two other pins for the 12v and ground rails. 
 
+These newer globes will require the following settings:
+* Module type = Generic
+* D5 GPIO14 = SM2135DAT (2)
+* D1 GPIO5 = SM2135CLK
 
 ## Re-assembly
 
