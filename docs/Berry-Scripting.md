@@ -1,5 +1,5 @@
 # Berry Scripting Language
-!!! failure "This feature is experimental, ESP32 only and currently not included in precompiled binaries"
+!!! failure "This feature is experimental, ESP32 only and currently included in selected precompiled binaries"
 
 To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
@@ -9,12 +9,25 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 
 ## Introduction to Berry
 
-Berry is a ultra-lightweight dynamically typed embedded scripting language. It is designed for lower-performance embedded devices. 
+Berry is the next generation scripting for Tasmota. It is based on the open-source Berry project, deliveting an ultra-lightweight dynamically typed embedded scripting language. It is designed for lower-performance embedded devices. 
 
 https://github.com/Skiars/berry
 
-Berry has the following advantages:
+Berry Scripting allows simple and advanced extension of Tasmota, for example:
+- simple scripting and advanced Rules
+- advanced rules, beyond what is possible with native rules
+- advanced automation
 
+Berry Scripting takes it one step further and allows to build dynamic extensions to Tasmota, that would previously require native code:
+- build light animations
+- build I2C drivers
+- build complete Tasmota drivers
+- integrate native libraries like `lvgl` (coming soon)
+
+
+### About the Berry language
+
+Berry has the following advantages:
 - Lightweight: A well-optimized interpreter with very little resources. Ideal for use in microprocessors.
 - Fast: optimized one-pass bytecode compiler and register-based virtual machine.
 - Powerful: supports imperative programming, object-oriented programming, functional programming.
@@ -22,16 +35,156 @@ Berry has the following advantages:
 - Simple: simple and natural syntax, support garbage collection, and easy to use FFI (foreign function interface).
 - RAM saving: With compile-time object construction, most of the constant objects are stored in read-only code data segments, so the RAM usage of the interpreter is very low when it starts.
 
-## Tasmota port
+### Tasmota port
 
-This version is primarily targeted for ESP32. The RAM usage starts at ~10kb which makes it tight for ESP8266. However, for development purpose, the Berry module does compile on ESP8266, although it is not optimized nor supported (this might change in the future).
+Berry Scripting in only supported on Tasmota32 for ESP32. The RAM usage starts at ~10kb and will be later optimized. Berry uses PSRAM on ESP32 if available (PSRAM is external RAM attached to Esp32 via SPI, it is slower but larger than internal RAM.
 
-The Tasmota integration is far from complete and the following will be added later:
+## Quick Tutorial
 
-- file system support to save scripts and bytecode
-- use of a native Tasmota module (it is currently emulated with a Class)
-- LVGL integration
-- (much more...)
+Make sure you compile Tasmota32 with `#define USE_BERRY`.
+
+You should see similare lines in the Tasmota logs:
+
+```
+00:00:00.098 BRY: Berry initialized, RAM used=10002
+00:00:00.264 BRY: No 'autoexec.be' file
+```
+
+Click on *Configuration* then *Berry Scripting Console* and enjoy the colorful Berry console, also called REPL (Read-Eval-Print-Loop).
+
+![Berry console](https://user-images.githubusercontent.com/49731213/111880607-c193c800-89ac-11eb-81c9-a3558e26a1de.png)
+
+### Getting familiar with the REPL
+
+Try typing simple commands in the REPL. Since the input can be multi-lines, press 'Enter' twice to run the code. Use Up/Down arrows to navigate through history of previous commands.
+
+```python
+> 1+1
+2
+```
+
+```python
+> 2.0/3
+0.666667
+```
+
+```python
+> print('Hello Tasmota!')
+Hello Tasmota!
+```
+
+Note: Berry's native `print()` command displays text in the Berry Console and in the Tasmota logs. To log with finer control, you can also use the `log()` function, but it will not display in the Berry Console.
+
+
+```python
+> print('Hello Tasmota!')
+  log('Hello again')
+Hello Tasmota!
+```
+
+Meanwhile the Tasmota log shows:
+
+```
+10:47:45.235 Hello Tasmota!
+10:47:45.236 Hello again
+```
+
+### Interacting with Tasmota
+
+The `tasmota` object provides numerous functions to interact with Tasmota. See reference for the list of functions.
+
+For example `tasmota.publish()` is similar to `Publish` and allows to publish arbitrary MQTT messages.
+
+#### Sending native Tasmota commands
+
+Use `tasmota.cmd()` to send arbitrary commands, as strings, like if they were entered via the Tasmota console. For example:
+
+```python
+> tasmota.cmd("Dimmer 50")
+{"POWER":"ON","Dimmer":50,"Color":"80523A","HSBColor":"21,55,50","Channel":[50,32,23]}
+```
+
+If the command sends a reponse, the returned string is parsed as JSON and converted to native Berry `map` object.
+
+#### Invoking Berry commands from Tasmota
+
+Use Tasmota `Br` command to send arbitrary Berry commands.
+
+Example (from the Tasmota console, not the Berry console):
+
+```
+12:34:04.085 CMD: Br 1+1
+12:34:04.092 RSL: stat/tasmota_923B34/RESULT = {"Br":"2"}
+```
+
+### Rules
+
+Berry supports the equivalent of Tasmota rules, using a very similar MQTT Json pattern.
+
+Pattern has the format `<level1>#<level2#...#<levelN>` when parsing a JSON message. Pattern matching is case-insensitive. Using `?` in a sub-level matches any value (first occurence only). Add conditions to the last level, as you would do with rules.
+
+
+Operator|Effect
+:---|:---
+`==` `!==`|Compare as strings
+`=` `!=` `<` `<=` `>` `>=`|Compare a numers
+
+
+Important: you don't need `DATA` sub-level with Berry when parsing JSON root level messages.
+
+Example: `Dimmer>=50` will trigger the rule if there is a `Dimmer` field with a numerical value greater than `50`.
+
+Example:
+
+```python
+> def dimmer_over_50()
+    print("The light is bright")
+  end
+  tasmota.add_rule("Dimmer>50", dimmer_over_50)
+```
+
+```python
+> tasmota.cmd("Dimmer 30")
+{"POWER":"ON","Dimmer":30,"Color":"4D3223","HSBColor":"21,55,30","Channel":[30,20,14]}
+
+> tasmota.cmd("Dimmer 60")
+{"POWER":"ON","Dimmer":60,"Color":"996245","HSBColor":"21,55,60","Channel":[60,38,27]}
+The light is bright
+```
+
+
+### A word on functions and closure
+
+Berry is a functional language, and includes the very powerful concept of a *closure*. In a nutshell, it means that when you create a function, it can capture the values of variables when the function was created. This roughly means that it does what intuitively you would expect it to do.
+
+When using Rules or Timers, you always pass a Berry functions.
+
+### Timers
+
+Berry code, when it is running, blocks the rest of Tasmota. This means that you should not block for too long, or you may encounter problems. As a rule of thumb, try to never block more than 50ms. If you need to wait longer before the next action, use timers. As you will see, timers are very easy to create thanks to Berry's functional nature.
+
+All times are in milliseconds. You can know the current running time in milliseconds since the last boot:
+
+```python
+> tasmota.millis()
+9977038
+```
+
+Sending a timer is as easy as `tasmota.set_timer(<delay in ms>,<function>)`
+
+Example:
+```python
+> def t() print("Booh!" end
+
+> tasmota.set_timer(5000, t)
+[5 seconds later]
+Booh!
+```
+
+### Lights and Relays
+
+To be completed
+
 
 ## Loading code from filesystem
 
@@ -74,41 +227,11 @@ def load(f)
 end
 ```
 
-## Examples
-
-### Interactive mode
-
-Initialization:
-
-```
-00:00:00.079 BRY: Berry initialized, RAM consumed=14160 (Heap=301040)
-```
-
-Use the command `Br` to use interactive mode commands:
-
-```
-12:50:56.830 CMD: br 1+1
-12:50:56.837 RSL: stat/tasmota_B90B50/RESULT = {"Br":"2"}
-12:51:07.880 CMD: br a=3
-12:51:07.888 RSL: stat/tasmota_B90B50/RESULT = {"Br":"3"}
-12:51:11.430 CMD: br a=a+1
-12:51:11.438 RSL: stat/tasmota_B90B50/RESULT = {"Br":"4"}
-12:51:15.180 CMD: br b
-12:51:15.187 RSL: stat/tasmota_B90B50/RESULT = {"Br":"[syntax_error] input:1: 'b' undeclared (first use in this function)"}
-12:51:22.880 CMD: br tasmota.getfreeheap()
-12:51:22.887 RSL: stat/tasmota_B90B50/RESULT = {"Br":"230092"}
-12:51:32.080 CMD: br log("Hello Tasmota!")
-12:51:32.085 Hello Tasmota!
-12:51:32.087 RSL: stat/tasmota_B90B50/RESULT = {"Br":"Hello Tasmota!"}
-```
-
 ## Reference
 
 Below are the Tasmota specific functions and modules implemented on top of Berry.
 
-### Differences with native Berry
-
-The Berry native `print()` function outputs to Hardware Serial and should not be used, except for very specific debug purposes.
+### Extensions to native Berry
 
 #### `log(msg:string [, level:int = 3]) -> string`
 
@@ -117,12 +240,8 @@ Logs a message to the Tasmota console. Optional second argument is log_level (0.
 Example:
 
 ```
-12:55:50.949 CMD: br log("a")
-12:55:50.954 a
-
-(log_level is 2)
-12:56:05.699 CMD: br log("b",3)
-12:56:05.706 RSL: stat/tasmota_B90B50/RESULT = {"Br":"3"}
+> log("A")
+A
 ```
 
 #### `load(filename:string) -> int`
@@ -138,91 +257,48 @@ Internally used function to save bytecode. It's a wrapper to the Berry's interna
 
 Note: there is generally no need to use this function, it is used internally by `load()`.
 
-### `module tasmota`
+### `tasmota` object
+
+A root level object called `tasmota` is created and contains numerous functions to interact with Tasmota.
+
+Tasmota Function|Parameters and details
+:---|:---
+`tasmota.get_free_heap`<a class="cmnd" id="tasmota_get_free_heap"></a>|`() -> int`<br>Returns the number of free bytes on the Tasmota heap.
+`tasmota.publish`<a class="cmnd" id="tasmota_publish"></a>|`(topic:string, payload:string[, retain:bool]) -> nil`<br>Equivalent of `publish` command, publishes a MQTT message on `topic` with `payload`. Optional `retain` parameter.
+`tasmota.cmd`<a class="cmnd" id="tasmota_cmd"></a>|`(command:string) -> string`<br>Sends any command to Tasmota, like it was type in the console. It returns the result of the command if any.
+`tasmota.millis`<a class="cmnd" id="tasmota_millis"></a>|`([delay:int]) -> int`<br>Returns the number of milliseconds since last reboot. The optional parameter lets you specify the number of milliseconds in the future; useful for timers.
+`tasmota.time_reached`<a class="cmnd" id="tasmota_time_reached"></a>|`(timer:int) -> bool`<br>Checks whether the timer (in milliseconds) has been reached or not. Always use this function and don't do compares between `millis()` and timers, because of potential sign and overflow issues.
+`tasmota.yield`<a class="cmnd" id="tasmota_yield"></a>|`() -> nil`<br>Calls Arduino framework `yield()` function to give back some time to low-level functions, like Wifi. Prevents WDT watchdog from happening.
+`tasmota.delay`<a class="cmnd" id="tasmota_delay"></a>|`([delay:int]) -> int`<br>Waits and blocks execution for `delay` milliseconds. Should ideally never wait more than 10ms and absolute max 50ms. Otherwise use `set_timer`.
+`tasmota.add_rule`<a class="cmnd" id="tasmota_add_rule"></a>|`(pattern:string, f:function) ->nil`<br>Adds a rule to the rule engine. See above for rule patterns.
+`tasmota.gc`<a class="cmnd" id="tasmota_gc"></a>|`() -> int`<br>Triggers a garbage collaction of Berry objects and returns the bytes currently allocated. This is for debug only and shouldn't be normally used. GC is otherwise automatically triggeredd when necessary.
+
+Functions used to retrieve Tasmota configuration
+
+Tasmota Function|Parameters and details
+:---|:---
+`tasmota.get_option`<a class="cmnd" id="tasmota_get_option"></a>|`(index:int) -> int`<br>Returns the value of `SetOption <index>`
+`tasmota.i2c_enabled`<a class="cmnd" id="tasmota_i2c_enabled"></a>|`(index:int) -> bool`<br>Returns true if the I2C module is enabled, see I2C page.
 
 
-Tasmota specific functions are now in the `tasmota` module.
-Tasmota automatically imports all modules; i.e. the following commands are done at startup:
+Functions used to respond to a command.
 
-```python
-import string
-import json
-import gc
-import tasmota
-import tasmota as t
-```
+Tasmota Function|Parameters and details
+:---|:---
+`tasmota.add_cmd`<a class="cmnd" id="tasmota_add_cmd"></a>|`(name:string, f:function) -> nil`<br>Adds a command to Tasmota commands. Command names are case-insensitive. Command names are analyzed after native commands and after most commands, so you can't override a native command
+`tasmota.resp_cmnd_str`<a class="cmnd" id="tasmota_resp_cmnd_str"></a>|`(message:string) -> nil`<br>Sets the output for the command to `message`.
+`tasmota.resp_cmnd_str_done`<a class="cmnd" id="tasmota_resp_cmnd_done"></a>|`(message:string) -> nil`<br>Sets the output for the command to "Done" (localized message).
+`tasmota.resp_cmnd_str_error`<a class="cmnd" id="tasmota_resp_cmnd_error"></a>|`(message:string) -> nil`<br>Sets the output for the command to "Error" (localized message).
+`tasmota.resp_cmnd_str_fail`<a class="cmnd" id="tasmota_resp_cmnd_fail"></a>|`(message:string) -> nil`<br>Sets the output for the command to "Fail" (localized message).
+`tasmota.resp_cmnd`<a class="cmnd" id="tasmota_resp_cmnd"></a>|`(message:string) -> nil`<br>Overrides the entire command response. Should be a valid JSON string.
+
+Functions to manage Relay/Lights
 
 
-#### `tasmota.getfreeheap() -> int`
-
-Returns the number of free bytes on the Tasmota heap.
-
-Example:
-
-```
-br tasmota.getfreeheap()
-
-20:29:08.758 CMD: br tasmota.getfreeheap()
-20:29:08.765 RSL: stat/tasmota_67B1E9/RESULT = {"Br":"25408"}
-```
-
-#### `tasmota.publish(topic:string, payload:string[, retain:bool]) -> nil`
-
-Equivalent of `publish` command, publishes a MQTT message on `topic` with `payload`. Optional `retain` parameter.
-
-Example:
-
-```
-br tasmota.publish('my_topic','message')
-
-20:28:30.504 CMD: br tasmota.publish('my_topic','message')
-20:28:30.510 RSL: my_topic = message
-20:28:30.512 RSL: stat/tasmota_67B1E9/RESULT = {"Br":"message"}
-```
-
-#### `tasmota.cmd(command:string) -> string`
-
-Sends any command to Tasmota, like it was type in the console. It returns the result of the command if any.
-
-Example:
-
-```
-br tasmota.cmd("Dimmer 50")
-
-20:32:19.227 CMD: br tasmota.cmd("Dimmer 50")
-20:32:19.235 RSL: stat/tasmota_67B1E9/RESULT = {"POWER":"ON","Dimmer":50,"Color":"808080","HSBColor":"0,0,50","Channel":[50,50,50]}
-20:32:19.238 BRY: Error be_top is non zero=1
-20:32:19.242 RSL: stat/tasmota_67B1E9/RESULT = {"Br":"{"POWER":"ON","Dimmer":50,"Color":"808080","HSBColor":"0,0,50","Channel":[50,50,50]}"}
-```
-
-#### `tasmota.millis([delay:int]) -> int`
-
-Returns the number of milliseconds since last reboot. The optional parameter lets you specify the number of milliseconds in the future; useful for timers.
-
-Example:
-
-```
-br tasmota.millis()
-
-20:33:52.671 CMD: br tasmota.millis()
-20:33:52.677 RSL: stat/tasmota_67B1E9/RESULT = {"Br":"1207263"}
-```
-
-#### `tasmota.timereached(timer:int) -> bool`
-
-Checks whether the timer (in milliseconds) has been reached or not. Always use this function and don't do compares between `millis()` and timers, because of potential sign and overflow issues.
-
-Example:
-
-```
-br t = tasmota.millis(5000)
-
-20:36:23.523 CMD: br t = tasmota.millis(5000)
-20:36:23.532 RSL: stat/tasmota_67B1E9/RESULT = {"Br":"1363118"}
-
-br tasmota.timereached(t)
-
-20:36:36.806 CMD: br tasmota.timereached(t)
-20:36:36.813 RSL: stat/tasmota_67B1E9/RESULT = {"Br":"true"}
-```
+Tasmota Function|Parameters and details
+:---|:---
+`tasmota.get_power`<a class="cmnd" id="tasmota_get_power"></a>|`() -> list[bool]`<br>Returns the state On/Off of each Relay and Light as a list of bool.
+`tasmota.set_power`<a class="cmnd" id="tasmota_set_power"></a>|`(index:int, onoff:bool) -> bool`<br>Sets the on/off state of a Relay/Light. Returns the previous status of the Relay/Light of `nil` if index is invalid.<br>Example:<br>```> tasmota.get_power()```<br>```[true]```
+`tasmota.get_light`<a class="cmnd" id="tasmota_get_light"></a>|`(index:int) -> map`<br>Get the current status if light number `index` (default:0).<br>Example:<br>```> tasmota.get_light()```<br>```{'bri': 77, 'hue': 21, 'power': true, 'sat': 140, 'rgb': '4D3223', 'channels': [77, 50, 35]}```
+`tasmota.set_light`<a class="cmnd" id="tasmota_set_light"></a>|`(settings:map[, index:int]) -> map`<br>Sets the current state for light `index` (default: 0.<br>Example:<br>```> tasmota.set_light({'hue':120,'bri':50,'power':true})```<br>```{'bri': 50, 'hue': 120, 'power': true, 'sat': 140, 'rgb': '173217', 'channels': [23, 50, 23]}```
 
