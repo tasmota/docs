@@ -11,7 +11,7 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 
 Berry is the next generation scripting for Tasmota. It is based on the open-source Berry project, deliveting an ultra-lightweight dynamically typed embedded scripting language. It is designed for lower-performance embedded devices. 
 
-https://github.com/Skiars/berry
+[**Berry Github**](https://github.com/Skiars/berry)
 
 Berry Scripting allows simple and advanced extension of Tasmota, for example:
 - simple scripting and advanced Rules
@@ -263,7 +263,7 @@ A root level object called `tasmota` is created and contains numerous functions 
 
 Tasmota Function|Parameters and details
 :---|:---
-`tasmota.get_free_heap`<a class="cmnd" id="tasmota_get_free_heap"></a>|`() -> int`<br>Returns the number of free bytes on the Tasmota heap.
+tasmota.get_free_heap<a class="cmnd" id="tasmota_get_free_heap"></a>|`() -> int`<br>Returns the number of free bytes on the Tasmota heap.
 `tasmota.publish`<a class="cmnd" id="tasmota_publish"></a>|`(topic:string, payload:string[, retain:bool]) -> nil`<br>Equivalent of `publish` command, publishes a MQTT message on `topic` with `payload`. Optional `retain` parameter.
 `tasmota.cmd`<a class="cmnd" id="tasmota_cmd"></a>|`(command:string) -> string`<br>Sends any command to Tasmota, like it was type in the console. It returns the result of the command if any.
 `tasmota.millis`<a class="cmnd" id="tasmota_millis"></a>|`([delay:int]) -> int`<br>Returns the number of milliseconds since last reboot. The optional parameter lets you specify the number of milliseconds in the future; useful for timers.
