@@ -50,8 +50,6 @@ USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section
 
 To enter a script, go to **Configuration - Edit script** in the Tasmota web UI menu
 
-The maximum script size is 1535 bytes (uses rule set buffers). If the pasted script is larger than 1535 characters, comments will be stripped to attempt to  make the script fit.  
-
 To save code space almost no error messages are provided. However it is taken care of that at least it should not crash on syntax errors.  
 
 ### Features
@@ -414,7 +412,7 @@ Clicking  this button displays a web page with the HTML data of this section.
 all cmds like in >W apply here. these lines are refreshed frequently to show e.g. sensor values.
 lines preceeded by $ are static and not refreshed and display below lines without $.  
 this option also enables a full webserver interface when USE_UFILESYS is activ.  
-you may display files from the flash or SD filesystem by specifying the url:  IP/sdc/path  .
+you may display files from the flash or SD filesystem by specifying the url:  IP/ufs/path  .
 (supported files: *.jpg, *.html, *.txt)  
 ==Requires compiling with `#define SCRIPT_FULL_WEBPAGE`.== 
 
@@ -1271,6 +1269,33 @@ remark: the Flash illumination LED is connected to GPIO4
     endif
 
     >R
+    
+### global variables example
+
+make temperature and humidity of an SHT sensor public  
+all devices in the local network may use the global variables
+needs #define USE_SCRIPT_GLOBVARS  
+
+Sender:
+
+    >D
+    g:temp=0
+    g:hum=0
+    
+    >T
+    temp=SHT3X_0x44#Temperature
+    hum=SHT3X_0x44#Humidity
+    
+Receiver(s) displays the value on a display
+
+    >D
+    g:temp=0
+    g:hum=0
+    
+    >S
+    dt [l1c1p10]temp=%temp% C
+    dt [l2c1p10]hum=%hum% %%
+    
 
 ### e-Paper 29 Display with SGP30 and BME280
 
