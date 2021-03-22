@@ -11,8 +11,8 @@ USE_DISPLAY_LCD | Enable LCD display. Also requires `USE_I2C`
 USE_DISPLAY_SSD1306 | Enable OLED SSD1306 display. Also requires `USE_I2C`
 USE_DISPLAY_MATRIX | Enable MATRIX display
 USE_DISPLAY_ILI9341 | Enable TFT ILI9341 display. Also requires `USE_SPI`<br>if seconds SPI bus on ESP32 shall be used SSPI must be defined instead of SPI<br>ILI9342 also supported, select with cmd displayilimode 3, default is: displayilimode 1 (ILI9341)
-USE_DISPLAY_EPAPER_29 | Enable Waveshare EPAPER_29 display.(bw, partial update)<br>Also requires `USE_SPI`
-USE_DISPLAY_EPAPER_42 | Enable Waveshare EPAPER_42 display.(bw, full update)<br>Also requires `USE_SPI`
+USE_DISPLAY_EPAPER_29 | Enable Waveshare EPAPER_29 display.(black/white, partial update)<br>Also requires `USE_SPI`
+USE_DISPLAY_EPAPER_42 | Enable Waveshare EPAPER_42 display.(black/white, full update)<br>Also requires `USE_SPI`
 USE_DISPLAY_SH1106 | Enable OLED SH1106 display. Also requires `USE_I2C`
 USE_DISPLAY_ILI9488 | Enable TFT ILI9488 display. Also requires `USE_SPI`
 USE_DISPLAY_SSD1351 | Enable color OLED SSD1351 display. Also requires `USE_SPI`
