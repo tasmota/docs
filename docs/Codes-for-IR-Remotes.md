@@ -297,6 +297,44 @@ Digital TV	{"Protocol":"SONY","Bits":15,"Data":"0x25EE"}
 * 0x20DF5FA0="Enter Password"
 * 0x20DF3FC0="Warning: Reset to factory"
 
+## Generic VEON TV (eg model SRO322016)
+****
+button | code
+--- | ---
+On/Off | {"Protocol":"NEC","Bits":32,"Data":"0x00FEA857"}
+Mute | {"Protocol":"NEC","Bits":32,"Data":"0x00FE6897"}
+Sleep | {"Protocol":"NEC","Bits":32,"Data":"0x00FE38C7"}
+Source | {"Protocol":"NEC","Bits":32,"Data":"0x00FE48B7"}
+Info | {"Protocol":"NEC","Bits":32,"Data":"0x00FE28D7"}
+EPG | {"Protocol":"NEC","Bits":32,"Data":"0x00FEAA55"}
+Vol+ | {"Protocol":"NEC","Bits":32,"Data":"0x00FED827"}
+Vol- | {"Protocol":"NEC","Bits":32,"Data":"0x00FE58A7"}
+Chan+ | {"Protocol":"NEC","Bits":32,"Data":"0x00FE9867"}
+Chan- | {"Protocol":"NEC","Bits":32,"Data":"0x00FE18E7"}
+Play/Pause | {"Protocol":"NEC","Bits":32,"Data":"0x00FE52AD"}
+Stop | {"Protocol":"NEC","Bits":32,"Data":"0x00FED22D"}
+Rwd | {"Protocol":"NEC","Bits":32,"Data":"0x00FEE21D"}
+FFd | {"Protocol":"NEC","Bits":32,"Data":"0x00FE629D"}
+Back | {"Protocol":"NEC","Bits":32,"Data":"0x00FEA25D"}
+Skip | {"Protocol":"NEC","Bits":32,"Data":"0x00FE22DD"}
+1 | {"Protocol":"NEC","Bits":32,"Data":"0x00FE807F"}
+2 | {"Protocol":"NEC","Bits":32,"Data":"0x00FE40BF"}
+3 | {"Protocol":"NEC","Bits":32,"Data":"0x00FEC03F"}
+4 | {"Protocol":"NEC","Bits":32,"Data":"0x00FE20DF"}
+5 | {"Protocol":"NEC","Bits":32,"Data":"0x00FEA05F"}
+6 | {"Protocol":"NEC","Bits":32,"Data":"0x00FE609F"}
+7 | {"Protocol":"NEC","Bits":32,"Data":"0x00FEE01F"}
+8 | {"Protocol":"NEC","Bits":32,"Data":"0x00FE10EF"}
+9 | {"Protocol":"NEC","Bits":32,"Data":"0x00FE906F"}
+0 | {"Protocol":"NEC","Bits":32,"Data":"0x00FE00FF"}
+Menu | {"Protocol":"NEC","Bits":32,"Data":"0x00FE8877"}
+Up | {"Protocol":"NEC","Bits":32,"Data":"0x00FE30CF"}
+Down | {"Protocol":"NEC","Bits":32,"Data":"0x00FEB04F"}
+Left | {"Protocol":"NEC","Bits":32,"Data":"0x00FEF00F"}
+Right | {"Protocol":"NEC","Bits":32,"Data":"0x00FE708F"}
+OK | {"Protocol":"NEC","Bits":32,"Data":"0x00FE08F7"}
+Exit | {"Protocol":"NEC","Bits":32,"Data":"0x00FEC837"}
+
 
 # Set-top Boxes
 
@@ -524,7 +562,7 @@ Record	{"Protocol":"NEC","Bits":32,"Data":"0x26624BB4"}
 0	{"Protocol":"NEC","Bits":32,"Data":"0x2662D02F"}
 
 
-## Smart Reveiver VX/CX
+## Smart Receiver VX/CX
 ****
 button | code
 --- | ---
