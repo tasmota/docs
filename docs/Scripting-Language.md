@@ -490,6 +490,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
 
 `wcs` = send this line to webpage (WebContentSend)  
+`rapp` = append this line to MQTT (ResponseAppend)  
 `wm` = contains source of web request code e.g. 0 = Sensor display (FUNC_WEB_SENSOR)  
 
 `sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud)   
