@@ -11,7 +11,7 @@ D1 GPIO5 Relay 2<br>
 D6 GPIO12 Relay 4<br>
 D7 GPIO13 Button 1<br>
 D5 GPIO14 Relay 3<br>
-D8 GPIO15 Relay 1<br><br>
+D8 GPIO15 Relay 1<br>
 
 Power strip has RGB LEDs in button, but I think Tasmota won't be able to take advantage of that, so I didn't look for further LEDs.
 
