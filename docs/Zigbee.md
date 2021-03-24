@@ -476,25 +476,6 @@ If your device pairs successfully with Zigbee2Tasmota but doesn't report on stan
 
 In this case you will have to use rules or an external home automation solution to parse those messages. The following section will focus only on rules to utilize the device inside Tasmota ecosystem.
 
-### Ikea ON/OFF Switch
-`"ModelId":"TRADFRI on/off switch","Manufacturer":"IKEA of Sweden"`
-
-- Short press `O` - `0006!00`
-- Short press `I` - `0006!01`
-- Long press `O` - `0008!01`
-- Long press `I` - `0008!05`
-- Long press release `O` or `I` - `0008!07`
-
-In this example Tradfri switch reports on `0x7596` and is used to control another Tasmota light device:
-
-```haskell
-Rule
-  on ZbReceived#0x7596#0006!00 do publish cmnd/%topic%/POWER OFF endon 
-  on ZbReceived#0x7596#0006!01 do publish cmnd/%topic%/POWER ON endon 
-  on ZbReceived#0x7596#0008!01 do publish cmnd/%topic%/Dimmer - endon 
-  on ZbReceived#0x7596#0008!05 do publish cmnd/%topic%/Dimmer + endon
-```
-
 ### Aqara Water Leak Sensor
 `"ModelId":"lumi.sensor_wleak.aq1"`
 
