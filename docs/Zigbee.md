@@ -452,11 +452,9 @@ Command `ZbLight` configures a Zigbee device to be Alexa controllable. Specify t
 * `4` RGBW Light
 * `5` RGBCW Light, RGB and  Cold/Warm White
 
-To set the light, use `ZbLight <device>,<nb_of_channels>`. Example:
-```haskell
-ZbLight 0x1234,2
-ZbLight Kitchen_Light,1   (see ZbName)
-```
+!!! example "set the light, use `ZbLight <device>,<nb_of_channels>`"
+    `Baklog ZbLight 0x1234,2; ZbLight Kitchen_Light,1` (see [ZbName](Commands.md#zbname))
+
 
 Once a light is declared, Z2T will monitor any change made to the light via Z2T or via remotes, either from a direct message or via a group message. Z2T will then send a read command to the light, between 200ms and 1000ms later, and memorize the last value.
 
