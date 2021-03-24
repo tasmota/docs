@@ -1,4 +1,5 @@
-# LCD/DLP Projector serial power control
+# LCD/DLP Projector Serial Control
+
 !!! failure "This feature is not included in precompiled binaries"
 
 To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
@@ -17,19 +18,19 @@ Mandatory: choose the communication protocol for your Projector (either NEC or O
 #define USE_PROJECTOR_CTRL_OPTOMA
 ```
 
-Optional: set the Relay that powers your device (default is 1) by adding the following to `user_config_override.h`:
+_Optional:_ set the Relay that powers your device (default is 1) by adding the following to `user_config_override.h`:
 
 ```C
 #define PROJECTOR_CTRL_PWR_BY_RELAY 1  //the relay that powers the Projector
 ```
 
-Optional: set the baudrate to communicate to your device (default is 9600) by adding the following to `user_config_override.h`:
+_Optional:_ set the baudrate to communicate to your device (default is 9600) by adding the following to `user_config_override.h`:
 
 ```C
 #define PROJECTOR_CTRL_SERIAL_BAUDRATE 9600
 ```
 
-Optional: enable debugging messages by adding the following to `user_config_override.h`:
+_Optional:_ enable debugging messages by adding the following to `user_config_override.h`:
 
 ```C
 #define DEBUG_PROJECTOR_CTRL
