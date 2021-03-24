@@ -4,7 +4,7 @@ Spacetronik SMART SL-PS26 Power Strip with 4 main ports and 4 USB ports. All USB
 ![SL-PS26-power_strip](https://raw.githubusercontent.com/fast-potat0/images/master/sl-ps26powerstrip.jpg)
 
 ### TASMOTA CONFIGURATION
-![SWB1-Power_strip_tasmota_configs](https://raw.githubusercontent.com/fast-potat0/images/master/RelayGPIO.png)
+![SWB1-Power_strip_tasmota_configs](https://raw.githubusercontent.com/fast-potat0/images/master/RelayGPIO.png)<br>
 D3 GPIO0 LED_i 1<br>
 D2 GPIO4 Relay 5<br>
 D1 GPIO5 Relay 2<br>
