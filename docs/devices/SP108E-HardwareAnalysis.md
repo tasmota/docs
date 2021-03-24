@@ -78,6 +78,13 @@ This is the simpler method, no cuts on the PCB required, just two additional wir
 
 See [**here**](SP108E-HardwareMod.md) for details.
 
-### Flashing prohibited
-Major problem right now is that IO0 is directly connected to VCC, so we cannot bring ESP-12 into flash mode.
-Working on a solution.
+### Flashing prohibited (not anymore with a cut in the PCB)
+Major problem is that IO0 is directly connected to VCC, so we cannot bring ESP-12 into flash mode.
+This is for the older rev of the PCB and showing the same physical device seen in my very first posts a few years ago.
+
+After removing the ESP-12, the trace was visible and now it is easy to see where to cut the PCB.
+See the "cut here" in blue letters. I also sketched the VCC-trace in red.
+After the cut cut you can connect the IO0 to GND for reflashing. Later you need to connect back to VCC.
+
+![SP108E-CutHere](https://user-images.githubusercontent.com/19874899/112361445-adfd9f80-8cd3-11eb-81c7-36afc19ef683.png)
+
