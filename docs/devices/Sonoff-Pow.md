@@ -1,4 +1,4 @@
-Sonoff Pow has been obsoleted with [Sonoff Pow R2](https://blakadder.github.io/sonoff_dual_R2.html). Before configuring your device check which revision you have.
+Sonoff Pow has been obsoleted with [Sonoff Pow R2](https://tasmota.github.io/docs/devices/Sonoff-Pow-R2/). Before configuring your device check which revision you have.
 
 ## ⚠️️Special Attention   ⚠️️
 
