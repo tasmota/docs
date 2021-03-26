@@ -34,6 +34,7 @@ You do not need to solder a header to flash the board, an empty 4 pin header con
 ![](https://github.com/lvgeek/KS-602S/blob/master/images/IMG_0289.jpg)
 
 Hold the button(GPIO0) and plug in programmer.
+**Note for newer / touch button devices (as of March 2021):** If you have the newer version without a physical switch, you will not be able to hold down a button to ender programming mode! The only way to enter programming mode is to physically short GPIO0 and GND (a picture of the GPIO0 location is here: https://raw.githubusercontent.com/tasmota/docs/master/docs/\_media/gpio0.png ). Make the connection, plug in the device, let go of the connection, and you should be in programming mode.
 
 Device works perfectly as a Sonoff Basic but the LED will be backwards as designed.  The Red LED is hardwired to the relay and the green is controllable over GPIO pins.  If you wish to change the functionality to have the green LED when the device is off, you can utilize or change the template to a generic device type and map the suggested names except you will choose Led1 instead of Led1i. 
 
