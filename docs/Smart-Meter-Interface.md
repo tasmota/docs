@@ -655,9 +655,9 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 +1,1,c,0,10,H20  
 +2,4,c,0,50,GAS  
 +3,3,s,0,9600,SML  
-1,1-0:1.8.0\*255(@10000,Water reading,cbm,Count,4  
+1,1-0:1.8.0*255(@10000,Water reading,cbm,Count,4  
 2,=h==================  
-2,1-0:1.8.0\*255(@100,Gas reading,cbm,Count,3  
+2,1-0:1.8.0*255(@100,Gas reading,cbm,Count,3  
 3,77070100010800ff@1000,Total consumption,KWh,Total_in,3  
 3,=h==================  
 3,77070100100700ff@1,Current consumption,W,Power_curr,2  
