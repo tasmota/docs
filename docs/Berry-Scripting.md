@@ -213,8 +213,7 @@ true
 
 For light control, `tasmota.get\_light()` and `tasmota.set\_light()` accept a structured object containing the following arguments:
 
-
-Argument|Details
+Attributes|Details
 :---|:---
 power|`boolean`<br>Turns the light off or on. Equivalent to `tasmota.set\_power()`. When brightness is set to `0`, power is automatically set to off. On the contrary, you need to specify `power:true` to turn the light on.
 bri|`int range 0..255`<br>Set the overall brightness. Be aware that the range is `0..255` and not `0..100` as Dimmer.
@@ -223,6 +222,8 @@ sat|`int 0..255`<br>Set the color Saturation (0 is grey).
 ct|`int 153..500`<br>Set the white color temperature in mireds, ranging from 153 (cold white) to 500 (warm white)
 rgb|`string 6 hex digits`<br>Set the color as hex `RRGGBB`, changing color and brightness.
 channels|`array of int, ranges 0..255`<br>Set the value for each channel, as an array of numbers
+
+When setting attributes, they are evaluated in the following order, the latter overriding the previous: `power`, `ct`, `hue`, `sat`, `rgb`, `channles`, `bri`.
 
 Example:
 
@@ -312,6 +313,7 @@ Functions used to retrieve Tasmota configuration
 Tasmota Function|Parameters and details
 :---|:---
 tasmota.get\_option<a class="cmnd" id="tasmota_get_option"></a>|`(index:int) -> int`<br>Returns the value of `SetOption <index>`
+tasmota.wire\_scan<a class="cmnd" id="tasmota_wire_scan"></a>|`(addr:int [, index:int]) -> wire instance or nil`<br>Scan both I2C buses for a device of address addr, optionally taking into account disabled devices via `I2CDevice`. Returns a `wire` object corresponding to the bus where the device is, or `nil` if device is not connected or disabled.
 tasmota.i2c\_enabled<a class="cmnd" id="tasmota_i2c_enabled"></a>|`(index:int) -> bool`<br>Returns true if the I2C module is enabled, see I2C page.
 
 
@@ -336,3 +338,50 @@ tasmota.set\_power<a class="cmnd" id="tasmota_set_power"></a>|`(index:int, onoff
 tasmota.get\_light<a class="cmnd" id="tasmota_get_light"></a>|`(index:int) -> map`<br>Get the current status if light number `index` (default:0).<br>Example:<br>```> tasmota.get_light()```<br>```{'bri': 77, 'hue': 21, 'power': true, 'sat': 140, 'rgb': '4D3223', 'channels': [77, 50, 35]}```
 tasmota.set\_light<a class="cmnd" id="tasmota_set_light"></a>|`(settings:map[, index:int]) -> map`<br>Sets the current state for light `index` (default: 0.<br>Example:<br>```> tasmota.set_light({'hue':120,'bri':50,'power':true})```<br>```{'bri': 50, 'hue': 120, 'power': true, 'sat': 140, 'rgb': '173217', 'channels': [23, 50, 23]}```
 
+### `wire` object
+
+Berry Scripting provides 2 objects `wire1` and `wire2` to communicate with both I2C buses.
+
+Use `wire1.scan()` and `wire2.scan()` to scan both buses:
+
+```
+> wire1.scan()
+[]
+
+> wire2.scan()
+[140]
+```
+
+You generally use `tasmota.wire_scan()` to find a device and the corresponding I2C bus.
+
+Example with MPU6886 on bus 2:
+
+```
+> mpuwire = tasmota.wire_scan(0x68, 58)
+> mpuwire
+<instance: Wire()>
+```
+
+
+Wire Function|Parameters and details
+:---|:---
+bus<a class="cmnd" id="wire_bus">|`read only attribute, 1 or 2`<br>Bus number for this wire instance.
+scan<a class="cmnd" id="wire_scan">|`() -> array of int`<br>Scan the bus and return all responding addresses. Note: addresses are displayed as decimal ints, not hex.
+detect<a class="cmnd" id="wire_detect">|`(addr:int) -> bool`<br>Returns `true` if the device of address `addr` is connected to this bus.
+read<a class="cmnd" id="wire_read">|`(addr:int, reg:int, size:int) -> int or nil`<br>Read a value of 1..4 bytes from address `addr` and register `reg`. Returns `nil` if no response.
+write<a class="cmnd" id="wire_write">|`(addr:int, reg:int, val:int, size:int) -> bool`<br>Writes a value of 1..4 bytes to address `addr`, register `reg` with value `val`. Returns `true` if successful, `false` if not.
+read\_bytes<a class="cmnd" id="wire_read_bytes">|`(addr:int, reg:int ,size:int) -> instance of bytes()`<br>Reads a sequence of `size` bytes from address `addr` register `reg`. Result is a `bytes()` instance or `bytes()` if not succesful.`
+write\_bytes<a class="cmnd" id="wire_write_bytes">|`(addr:int, reg:int, val:bytes) -> nil`<br>Writes the `val` bytes sequence as `bytes()` to address `addr` register `reg`.
+
+The following are low-level commands if you need finer control:
+
+
+
+Wire Function|Parameters and details
+:---|:---
+\_begin\_transmission<a class="cmnd" id="wire_begin_transmission">|`(address:int) -> nil`
+\_end\_transmission<a class="cmnd" id="wire_end_transmission">|`([stop:bool]) -> nil`<br>Send stop if `stop` is `true`.
+\_request\_from<a class="cmnd" id="wire_request_from">|`(addr:int, size:int [stop:bool = true]) -> nil`
+\_available<a class="cmnd" id="wire_available">|`() -> bool`
+\_read<a class="cmnd" id="wire_read">|`read() -> int`<br>Reads a single byte.
+\_write<a class="cmnd" id="wire_write">|`(value:int | s:string) -> nil`<br>Sends either single byte or an arbitrary string.
