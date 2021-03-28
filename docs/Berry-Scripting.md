@@ -382,4 +382,4 @@ Wire Function|Parameters and details
 \_request\_from<a class="cmnd" id="wire_request_from">|`(addr:int, size:int [stop:bool = true]) -> nil`
 \_available<a class="cmnd" id="wire_available">|`() -> bool`
 \_read<a class="cmnd" id="wire_read">|`read() -> int`<br>Reads a single byte.
-\_write<a class="cmnd" id="wire_write">|`(value:int | s:string) -> nil`<br>Sends either single byte or an arbitrary string.
+\_write<a class="cmnd" id="wire_write">|`(value:int or s:string) -> nil`<br>Sends either single byte or an arbitrary string.
