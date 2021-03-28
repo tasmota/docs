@@ -1,8 +1,6 @@
 # Berry Scripting Language
 !!! failure "This feature is experimental, ESP32 only and currently included in selected precompiled binaries"
 
-See [**Berry Cookbook**](Berry-Cookbook.md) for full examples.
-
 To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
 ```arduino
