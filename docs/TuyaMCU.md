@@ -39,7 +39,7 @@ Use this procedure to determine which dpId's are available:
 
 1. Go to `Configure` -> `Console` option in Tasmota web interface.
 2. Use command `weblog 4` to enable verbose logging in web interface.
-3. Observe the log. After every 9-10 seconds you should see TYA messages.
+3. Observe the log. After every 9-10 seconds you should see Tuya specific messages labelled as `TYA:`.
 
 ```
 {"TuyaReceived":{"Data":"55AA0107000501010001000F","Cmnd":7,"CmndData":"0101000100","DpType1Id1":0,"1":{"DpId":1,"DpIdType":1,"DpIdData":"00"}}}
@@ -51,22 +51,6 @@ TYA: fnId=0 is set for dpId=2
 TYA: fnId=0 is set for dpId=3
 {"TuyaReceived":{"Data":"55AA01070005040100010012","Cmnd":7,"CmndData":"0401000100","DpType1Id4":0,"4":{"DpId":4,"DpIdType":1,"DpIdData":"00"}}}
 TYA: fnId=0 is set for dpId=4
-{"TuyaReceived":{"Data":"55AA0107000807020004000000001C","Cmnd":7,"CmndData":"0702000400000000","DpType2Id7":0,"7":{"DpId":7,"DpIdType":2,"DpIdData":"00000000"}}}
-TYA: fnId=0 is set for dpId=7
-{"TuyaReceived":{"Data":"55AA0107000808020004000000001D","Cmnd":7,"CmndData":"0802000400000000","DpType2Id8":0,"8":{"DpId":8,"DpIdType":2,"DpIdData":"00000000"}}}
-TYA: fnId=0 is set for dpId=8
-{"TuyaReceived":{"Data":"55AA0107000809020004000000001E","Cmnd":7,"CmndData":"0902000400000000","DpType2Id9":0,"9":{"DpId":9,"DpIdType":2,"DpIdData":"00000000"}}}
-TYA: fnId=0 is set for dpId=9
-{"TuyaReceived":{"Data":"55AA010700080A020004000000001F","Cmnd":7,"CmndData":"0A02000400000000","DpType2Id10":0,"10":{"DpId":10,"DpIdType":2,"DpIdData":"00000000"}}}
-TYA: fnId=0 is set for dpId=10
-{"TuyaReceived":{"Data":"55AA0107000865020004000000007A","Cmnd":7,"CmndData":"6502000400000000","DpType2Id101":0,"101":{"DpId":101,"DpIdType":2,"DpIdData":"00000000"}}}
-TYA: fnId=0 is set for dpId=101
-{"TuyaReceived":{"Data":"55AA0107000866020004000000007B","Cmnd":7,"CmndData":"6602000400000000","DpType2Id102":0,"102":{"DpId":102,"DpIdType":2,"DpIdData":"00000000"}}}
-TYA: fnId=0 is set for dpId=102
-{"TuyaReceived":{"Data":"55AA0107000867020004000000007C","Cmnd":7,"CmndData":"6702000400000000","DpType2Id103":0,"103":{"DpId":103,"DpIdType":2,"DpIdData":"00000000"}}}
-TYA: fnId=0 is set for dpId=103
-{"TuyaReceived":{"Data":"55AA01070008680200040000099117","Cmnd":7,"CmndData":"6802000400000991","DpType2Id104":2449,"104":{"DpId":104,"DpIdType":2,"DpIdData":"00000991"}}}
-TYA: fnId=0 is set for dpId=104
 ```
 
 4. Observe all lines printed as `TYA: FnId=0 is set for dpId=XXX` and note all dpId values. 
@@ -81,16 +65,18 @@ Now that you have a list of usable dpId's you need to determine what their funct
 ## fnId
 Identifier used in `TuyaMCU` command to map a dpId to a Tasmota component.
 
-Component| FunctionId|Note
--|-|-
-Switch1 to Switch4 | 1 to 4 | Map only to dpId with on / off function
-Relay1 to Relay8 | 11 to 18 | Map only to dpId with on / off function
-Lights | 21 to 28 | 21 for Dimmer<br>22 for Dimmer2<br>23 for CCT Light<br>24 for RGB light<br>25 for white light<br>26 for light mode set (0 = white and 1 = color)<br>27 to report the state of Dimmer1<br>28 to report the state of Dimmer2
-Power Monitoring | 31 to 33 | 31 for Power (in deci Watt)<br>32 for Current (in milli Amps)<br>33 for Voltage (in deci Volt)
+Component		   | FnId     | Note
+---                | ---      | ---
+Switch1 to Switch4 | 1 to 4   | Map only to dpId with on / off function
+Relay1 to Relay8   | 11 to 18 | Map only to dpId with on / off function
+Lights             | 21 to 28 | 21 for Dimmer<br>22 for Dimmer2<br>23 for CCT Light<br>24 for RGB light<br>25 for white light<br>26 for light mode set (0 = white and 1 = color)<br>27 to report the state of Dimmer1<br>28 to report the state of Dimmer2
+Power Monitoring   | 31 to 33 | 31 for Power (in deci Watt)<br>32 for Current (in milli Amps)<br>33 for Voltage (in deci Volt)
 Relay1i to Relay8i | 41 to 48 | Map only to dpId with on / off function
 Battery powered sensor mode | 51 | Battery powered devices use a slightly different protocol
-Fan control | 61 to 64 | 61 for 3 speeds fan controller (possible values 0,1,2)<br>62 for 4 speeds fan controller (possible values 0,1,2,3)<br>63 for 5 speeds fan controller (possible values 0,1,2,3,4)<br>64 for 6 speeds fan controller (possible values 0,1,2,3,4,5)
-Extra functions | 97 to 99 | 97 for motor direction<br>98 for error logging (report only)<br>99 as a dummy function<br>
+Enum dpId          | 61 to 64 | Range for each enum is 0 to 31
+Sensors            | 71 to 78 | Range of sensors (temperature, humidity, co2, etc)
+Timers             | 81 to 84 | Manage integer based timers
+Extra functions    | 97 to 99 | 97 for motor direction<br>98 for error logging (report only)<br>99 as a dummy function
 
 !!! note
     This component is under active development which means the function list may expand in the future.
