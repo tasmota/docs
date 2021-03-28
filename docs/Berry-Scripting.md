@@ -9,6 +9,8 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 
 <img style="float:right;height:40px" alt="Berry logo" src="../_media/berry/berry.svg">
 
+See full examples in the [Berry Cookbook](Berry-Cookbook.md)
+
 ## Introduction to Berry
 
 Berry is the next generation scripting for Tasmota. It is based on the open-source Berry project, deliveting an ultra-lightweight dynamically typed embedded scripting language. It is designed for lower-performance embedded devices. 
