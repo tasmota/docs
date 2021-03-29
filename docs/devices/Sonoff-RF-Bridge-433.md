@@ -98,7 +98,7 @@ Refer to [issue #3973](https://github.com/arendst/Tasmota/issues/3973) for furth
 ### B1 to B0 Conversion Tools
 After learning how bitbucket works from  the [Portisch wiki](https://github.com/Portisch/RF-Bridge-EFM8BB1/issues/23), use one of these tools to help convert received `B1` sniffing messages to the right 'B0' format to send in the ['RfRaw'](../Commands.md#rfraw) command.
 
-- [**Online**](http://bbconv.hrbl.pl/)  
+- [**Online**](https://bbconv.hrbl.pl/)  
   Process:  
   1. Enter `rfraw 177` in the Sonoff Bridge web UI Console
   2. Press a function (each Button 2-3 times) on your remote control
