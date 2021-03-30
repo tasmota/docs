@@ -134,11 +134,11 @@ build_flags = ${common.build_flags} -DFIRMWARE_BAR
 ; Similar exemple for ESP32
 ; Note that you must explicitly state that they derive from `tasmota32`
 [env:tasmota32-foo]
-extends = env:tasmota32
+extends = env:tasmota32_base
 build_flags             = ${common32.build_flags} -DFIRMWARE_FOO
 
 [env:tasmota32-grizzly]
-extends = env:tasmota32
+extends = env:tasmota32_base
 build_flags             = ${common32.build_flags} -DFIRMWARE_GRIZZLY
 ```
 
