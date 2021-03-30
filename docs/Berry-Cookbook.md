@@ -1,6 +1,163 @@
 # Berry Cookbook
 
+## Adding commands to Tasmota
+
+It is very easy to dynamically add a command to Tasmota with Berry.
+
+### Trivial example
+
+Let's start with the most simple command.
+
+Let's define a command `BrGC` that triggers a garbage collection and returns the memory allocated by Berry. We first define the function:
+
+```python
+def br_gc()
+  var allocated = tasmota.gc()    #- trigger gc and return allocated memory -#
+  import string
+  tasmota.resp_cmnd(string.format('{"BrGc":%i}', allocated))
+end
+```
+
+And register the function:
+
+```python
+tasmota.add_cmd('BrGc', br_gc)
+```
+
+Then in Tasmota Console:
+
+```yaml
+brgc
+
+21:04:30.369 CMD: brgc
+21:04:30.376 RSL: stat/tasmota_923B34/RESULT = {"BrGc":5767}
+```
+
+### More complete example
+
+In this example, we will create a new command called `LightGold` that turns the light on and sets it to color gold #FFD700. This command accepts an optional JSON payload with the argument `Dimmer` ranging from 0..100.
+
+First we define a new Berry function with the logic. This function takes 4 arguments:
+
+1. `cmd`: the command name (with same case as it was registered). This is useful if you want to share the same code in multiple commands. Here `cmd` is `LightGold`
+2. `idx`: the command index used, default to 1.
+3. `payload`: the raw payload of the command as string
+4. `payload_json`: the payload parsed as JSON, or `nil` if the payload is not JSON
+
+Example:
+
+- command `lightgold`: `cmd`=`LightGold`, `idx`=1, `payload`=`""`, `payload_json`=`nil`
+- command `LIGHTGOLD2`: `cmd`=`LightGold`, `idx`=2, `payload`=`""`, `payload_json`=`nil`
+- command `lightgold not sure`: `cmd`=`LightGold`, `idx`=1, `payload`=`'not sure'`, `payload_json`=`nil`
+- command `lightgold {"value":"some"}`: `cmd`=`LightGold`, `idx`=1, `payload`=`'{"value":"some"}'`, `payload_json`=`{'value':'some'}`
+
+In Berry, arguments are always optional, so you don't need to define them if you don't need them.
+
+```python
+def light_gold(cmd, idx, payload, payload_json)
+  var dimmer = 50      #- default brightness to 50% -#
+  var bri
+  
+  # parse payload
+  if payload_json != nil && payload_json.find("Dimmer") != nil    # does the payload contain a 'dimmer' field
+    dimmer = int(payload_json.find("Dimmer"))
+  end
+
+  # set_light expects a brightness in range 0..255
+  bri = tasmota.scale_uint(dimmer, 0, 100, 0, 255)
+  
+  # build the payload for set_light
+  var light_payload = {'power':true, 'rgb':'FFD700', 'bri':bri}
+
+  #- set the light values -#
+  tasmota.set_light(light_payload)
+  
+  # report the command as successful
+  tasmota.resp_cmnd_done()
+end
+```
+
+Finally you need to register the command:
+
+```python
+tasmota.add_cmd('LightGold', light_gold)
+```
+
+Example (in Tasmota console, not Berry console):
+
+```yaml
+lightgold
+
+20:53:28.142 CMD: lightgold
+20:53:28.151 RSL: stat/tasmota_923B34/RESULT = {"POWER":"ON"}
+20:53:28.153 RSL: stat/tasmota_923B34/POWER = ON
+20:53:28.160 RSL: stat/tasmota_923B34/RESULT = {"LightGold":"Done"}
+
+lightgold {"Dimmer":20}
+
+20:54:16.837 CMD: lightgold {"Dimmer":20}
+20:54:16.848 RSL: stat/tasmota_923B34/RESULT = {"LightGold":"Done"}
+```
+
+### Responding to commands
+
+Tasmota expects that you send a response to commands. You can use the following methods:
+
+- `tasmota.resp_cmnd_done()`: report command as `Done` (including trasnlated versions)
+- `tasmota.resp_cmnd_error()`: report command as `Error`
+- `tasmota.resp_cmnd_failed()`: report command as `Failed`
+- `tasmota.resp_cmnd_str(<msg>)`: report an arbitrary string
+- `tasmota.resp_cmd(<json>)`: report a custom JSON message (not prefixed by command name).
+
+
 ## Creating a Tasmota driver
+
+You can easily create a complete Tasmota driver with Berry.
+
+As a convenience, a skeleton class `Driver` is provided. A Driver responds to messages from Tasmota. For each message type, the method with the same name is called.
+
+- `every_second()`: called every second
+- `every_100ms()`: called every 100ms (i.e. 10 times per second)
+- `web_sensor()`: display sensor information on the Web UI
+- `json_append()`: display sensor information in JSON format for TelePeriod reporting
+- `web_add_button()`:
+- `web_add_main_button()`:
+- `save_before_restart()`:
+- `button_pressed()`:
+
+Then register the driver with `tasmota.add_driver(<driver>)`.
+
+There are basically two ways to respond to an event:
+
+**Method 1: create a sub-class**
+
+Define a sub-class of the `Driver` class and override methods.
+
+```python
+class MyDriver : Driver
+  def every_second()
+    # do something
+  end
+end
+
+d1 = MyDriver()
+
+tasmota.add_driver(d1)
+```
+
+**Method 2: redefine the attribute with a function**
+
+Just use the `Driver` class and set the attribute to a new function:
+
+```python
+d2 = Driver()
+
+d2.every_second = def ()
+  # do something
+end
+
+tasmota.add_driver(d2)
+```
 
 ## Creating an I2C driver
 
