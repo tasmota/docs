@@ -163,6 +163,183 @@ tasmota.add_driver(d2)
 
 Berry Scripting provides all necessary primitves for a complete I2C driver.
 
+### Step by step approach
+
+We will explore the different steps to write an I2C driver, and will take the MPU6886 as an example. The native driver already exists, and we'll rewrite it in Berry code.
+
+**Step 1: detect the device**
+
+I2C device are identified by address, only one device per address is allowed per I2C physical bus. Tasmota32 supports up to 2 I2C buses, using `wire1` or `wire2` objects.
+
+To simplify device detection, we provide the convenience method `tasmota.scan_wire()`. The first argument is the device address (0x68 for MPU6886). The optional second argument is the I2C Tasmota index, allowing to selectively disable some device families. See `I2CDevice` command and page XXX. The index number for MPU6886 is 58.
+
+```python
+class MPU6886 : Driver
+  var wire     # contains the wire object if the device was detected
+  
+  def init()
+    self.wire = tasmota.wire_scan(0x68, 58)
+  end
+end
+```
+
+`self.wire` contains a reference to `wire1` if the device was detected on I2C bus 1, a reference to `wire2` if the device was detected on bus 2, or `nil` if the device was not detected, or if I2C index 58 was disabled through `I2CEnable`.
+
+**Step 2: verify the device**
+
+To make sure the device is actually an MPU6886, we check it's signature by reading register 0x75. It should respond 0x19 (see datasheet for MPU6886).
+
+```python
+[...]
+    if self.wire
+      var v = self.wire.read(0x68,0x75,1)
+      if v != 0x19 return end  #- wrong device -#
+[...]
+```
+
+**Step 3: initialize the device**
+
+We write a series of values in registers to configure the device as expected (see datasheet).
+
+```python
+[...]
+      self.wire.write(0x68, 0x6B, 0, 1)
+      tasmota.delay(10)
+      self.wire.write(0x68, 0x6B, 1<<7, 1)    # MPU6886_PWR_MGMT_1
+      tasmota.delay(10)
+      self.wire.write(0x68, 0x6B, 1<<0, 1)    # MPU6886_PWR_MGMT_1
+      tasmota.delay(10)
+      self.wire.write(0x68, 0x1C, 0x10, 1)    # MPU6886_ACCEL_CONFIG - AFS_8G
+      tasmota.delay(1)
+      self.wire.write(0x68, 0x1B, 0x18, 1)    # MPU6886_GYRO_CONFIG - GFS_2000DPS
+      tasmota.delay(1)
+      self.wire.write(0x68, 0x1A, 0x01, 1)    # MPU6886_CONFIG
+      tasmota.delay(1)
+      self.wire.write(0x68, 0x19, 0x05, 1)    # MPU6886_SMPLRT_DIV
+      tasmota.delay(1)
+      self.wire.write(0x68, 0x38, 0x00, 1)    # MPU6886_INT_ENABLE
+      tasmota.delay(1)
+      self.wire.write(0x68, 0x1D, 0x00, 1)    # MPU6886_ACCEL_CONFIG2
+      tasmota.delay(1)
+      self.wire.write(0x68, 0x6A, 0x00, 1)    # MPU6886_USER_CTRL
+      tasmota.delay(1)
+      self.wire.write(0x68, 0x23, 0x00, 1)    # MPU6886_FIFO_EN
+      tasmota.delay(1)
+      self.wire.write(0x68, 0x37, 0x22, 1)    # MPU6886_INT_PIN_CFG
+      tasmota.delay(1)
+      self.wire.write(0x68, 0x38, 0x01, 1)    # MPU6886_INT_ENABLE
+      tasmota.delay(100)
+[...]
+```
+
+We also pre-compute multipler to convert raw values to actual values:
+
+```python
+[...]
+      self.gres = 2000.0/32768.0
+      self.ares = 8.0/32678.0
+      print("I2C: MPU6886 detected on bus "+str(self.wire.bus))
+[...]
+```
+
+**Step 4: read sensor value**
+
+We will detail here the acceleration senor; gyroscope works similarly and is not further detailed.
+
+Reading the x/y/z sensor requires to read 6 bytes as a `bytes()` object
+
+```python
+    var b = self.wire.read_bytes(0x68,0x3B,6)
+```
+
+Each value is 2 bytes. We use `bytes.get(offset,size)` to extract 2-bytes values at offsets 0/2/4. The size is `-2` to indicate that values are encoded in Big Endian instead of Little Endian.
+
+```python
+    var a1 = b.get(0,-2)
+```
+
+Finally the read value is unsigned 16 bits, but the sensor value is signed 16 bits. We convert 16 bits unsigned to 16 bits signed.
+
+```python
+    if a1 >= 0x8000 a1 -= 0x10000 end
+```
+
+We then repeat for y and z:
+
+```python
+  def read_accel()
+    if !self.wire return nil end  #- exit if not initialized -#
+    var b = self.wire.read_bytes(0x68,0x3B,6)
+    var a1 = b.get(0,-2)
+    if a1 >= 0x8000 a1 -= 0x10000 end
+    var a2 = b.get(2,-2)
+    if a2 >= 0x8000 a2 -= 0x10000 end
+    var a3 = b.get(4,-2)
+    if a3 >= 0x8000 a3 -= 0x10000 end
+    self.accel = [a1 * self.ares, a2 * self.ares, a3 * self.ares]
+    return self.accel
+  end
+```
+
+**Step 5: read sensor every second**
+
+Simply override `every_second()`
+
+```python
+  def every_second()
+    if !self.wire return nil end  #- exit if not initialized -#
+    self.read_accel()
+    self.read_gyro()
+  end
+```
+
+**Step 6: display sensor value in Web UI**
+
+You need to override `web_sensor()` and provide the formatted string. `tasmota.web_send_decimal()` sends a string to the Web UI, and converts decimal numbers according to the locale settings.
+
+Tasmota uses specific markers:
+
+- `{s}`: start of line
+- `{m}`: separator between name and value
+- `{e}`: end of line
+
+```python
+  #- display sensor value in the web UI -#
+  def web_sensor()
+    if !self.wire return nil end  #- exit if not initialized -#
+    import string
+    var msg = string.format(
+             "{s}MPU6886 acc_x{m}%.3f G{e}"..
+             "{s}MPU6886 acc_y{m}%.3f G{e}"..
+             "{s}MPU6886 acc_z{m}%.3f G{e}"..
+             "{s}MPU6886 gyr_x{m}%i dps{e}"..
+             "{s}MPU6886 gyr_y{m}%i dps{e}"..
+             "{s}MPU6886 gyr_z{m}%i dps{e}",
+              self.accel[0], self.accel[1], self.accel[2], self.gyro[0], self.gyro[1], self.gyro[2])
+    tasmota.web_send_decimal(msg)
+  end
+```
+
+**Step 7: publish JSON TelePeriod sensor value**
+
+Similarly to Web UI, publish sensor value as JSON.
+
+```python
+  #- add sensor value to teleperiod -#
+  def json_append()
+    if !self.wire return nil end  #- exit if not initialized -#
+    import string
+    var ax = int(self.accel[0] * 1000)
+    var ay = int(self.accel[1] * 1000)
+    var az = int(self.accel[2] * 1000)
+    var msg = string.format(",\"MPU6886\":{\"AX\":%i,\"AY\":%i,\"AZ\":%i,\"GX\":%i,\"GY\":%i,\"GZ\":%i}",
+              ax, ay, az, self.gyro[0], self.gyro[1], self.gyro[2])
+    tasmota.response_append(msg)
+  end
+```
+
+### Full example
+
 The code can be loaded manually with copy/paste, or stored in flash and loaded at startup in `autoexec.be` as `load("mpu6886.be")`. Alternatively it can be loaded with a Tasmota native command or rule:
 
 ```
