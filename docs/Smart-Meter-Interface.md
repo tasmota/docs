@@ -91,6 +91,15 @@ Declare `>M` section with the number of connected meters (n = `1..5`):
 | `<txGPIO>` | The GPIO pin number where meter command is transmitted (optional).|
 | `<txPeriod>` | Period to repeat the transmission of commands to the meter (optional). Number of 100ms increments (n * 100ms).|
 | `<cmdTelegram>` | Comma separated hex coded byte blocks to send to meter device. For MODBus each comma separated block is a command to retrieve a certain register from the meter (optional: only required for measuring devices that have to be triggered with a certain character string).|
+    
+!!! note
+for other serial protocols you may specify the exact mode (only for hardware serial) by the follwing code after the type specifier:  
+N =no parity  
+E =even parity  
+O =odd parity  
+and number of stop-bits  
+
+e.g for modbus:  mN1,mN2,mE1,mE2,mO1,mO2  
 
 !!! example
     ```
