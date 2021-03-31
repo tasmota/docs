@@ -93,7 +93,7 @@ Declare `>M` section with the number of connected meters (n = `1..5`):
 | `<cmdTelegram>` | Comma separated hex coded byte blocks to send to meter device. For MODBus each comma separated block is a command to retrieve a certain register from the meter (optional: only required for measuring devices that have to be triggered with a certain character string).|
     
 !!! note
-for other serial protocols you may specify the exact mode (only for hardware serial) by the follwing code after the type specifier:  
+    for other serial protocols you may specify the exact mode (only for hardware serial) by the follwing code after the type specifier:  
 N =no parity  
 E =even parity  
 O =odd parity  
