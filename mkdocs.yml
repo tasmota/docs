@@ -36,13 +36,31 @@ theme:
   logo: '_media/logo.svg'
   favicon: _media/favicon.ico
   palette:
-    primary: 'blue'
-    accent: 'indigo'
-    scheme: preference
+
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: deep purple
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
   features:
     - navigation.tabs
-    - navigation.instant
     - navigation.tabs.sticky
+    - navigation.instant
+    - navigation.top
+    - navigation.tracking
   font:
     text: Barlow
     code: Roboto Mono
