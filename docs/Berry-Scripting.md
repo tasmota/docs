@@ -181,7 +181,7 @@ Sending a timer is as easy as `tasmota.set_timer(<delay in ms>,<function>)`
 Example:
 
 ```python
-> def t() print("Booh!" end
+> def t() print("Booh!") end
 
 > tasmota.set_timer(5000, t)
 [5 seconds later]
