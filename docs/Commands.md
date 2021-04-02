@@ -488,7 +488,7 @@ SetOption109<a class="cmnd" id="setoption109"></a>|`0` = _(default)_<BR>`1` = fo
 SetOption113<a class="cmnd" id="setoption113"></a>|_works only with rotary dial button_<BR>`0` = _(default)_<BR>`1` = set dimmer low on rotary dial after power off
 SetOption114<a class="cmnd" id="setoption114"></a>|Detach switches from relays and send MQTT messages instead<BR>`0` = disabled *(default)*<BR>`1` = enabled<BR> Example result: `{"Switch1":{"Action":"ON"}}`
 SetOption116<a class="cmnd" id="setoption116"></a>|Auto-query of lights and devices<BR>`0` = enabled *(default)*<BR>`1` = disabled
-
+SetOption126<a class="cmnd" id="setoption126"></a>|(DS18x20) Enable arithmetic mean over teleperiod for JSON temperature (1)
 
 ### Serial Bridge
 Both hardware and software Serial Bridge are supported.
