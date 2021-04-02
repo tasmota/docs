@@ -22,6 +22,12 @@ From the web console set the serial delimiter to 10 (newline). This makes Tasmot
 
 For more details see [serial-bridge](Commands.md#serial-bridge).
 
+Should you run into problems with serial buffer overflows, then try to increase the serial buffer size using `SerialBuffer 520`. This will **not be automatically persisted**, so try the command first and when the device works fine after having increased the serial buffer size, then try to add a rule like:
+
+```haskell
+Rule1 ON Power1#Boot DO SerialBuffer 520 ENDON
+```
+
 ## Example output
 Below an example of the telegram message published (per line) to mqtt. From here your HA system can process the data required for your needs.
 
