@@ -478,12 +478,12 @@ SetOption94<a class="cmnd" id="setoption94"></a>|Select MAX31855 or MAX6675 ther
 SetOption97<a class="cmnd" id="setoption97"></a>|Set TuyaMCU serial baudrate<BR>`0` = 9600 bps _(default)_ <BR>`1` = 115200 bps     
 SetOption98<a class="cmnd" id="setoption98"></a>|Provide rotary dimmer rule triggers<BR>`0` = disabled _(default)_ <BR>`1` = enabled     
 SetOption99<a class="cmnd" id="setoption99"></a>|Enable zero-cross capable AC dimmer<BR>`0` = no zero-cross AC dimmer connected _(default)_ <BR>`1` = zero-cross AC dimmer attached. Focus on raising edge and sync frequency     
-SetOption102<a class="cmnd" id="setoption102"></a>|Set baudrate for Teleinfo communication<BR>`0` = 1200 _(default)_ <BR>`1` = 9600
+SetOption102<a class="cmnd" id="setoption102"></a>|Set baudrate for Teleinfo communication<BR>`0` = 1200 Legacy mode _(default)_ <BR>`1` = 9600 Linky Standard
 SetOption103<a class="cmnd" id="setoption103"></a>|Set TLS mode<BR>`0` = disable TLS<BR>`1` = enable TLS
 SetOption104<a class="cmnd" id="setoption104"></a>|Disable MQTT retained messages (some brokers don't support them)<BR>`0` = retained messages enabled _(default)_ <BR>`1` = retained messages disabled
 SetOption106<a class="cmnd" id="setoption106"></a>|Virtual CT channel (experimental feature)<BR>`0` = disabled _(default)_ <BR>`1` = create a virtual second white channel using RGB channels<BR>_only if light is RGBW (4 channels),`SetOption68 0` and `SetOption37 < 128`
 SetOption107<a class="cmnd" id="setoption107"></a>|Set virtual CT channel light type (experimental feature)<BR>`0` = Warm White <BR>`1` = Cold White
-SetOption108<a class="cmnd" id="setoption108"></a>|`0` = Teleinfo telemetry into Energy MQTT JSON _(default)_<BR>`1` = Teleinfo raw data only
+SetOption108<a class="cmnd" id="setoption108"></a>|`0` = Teleinfo telemetry only sent into Energy MQTT JSON _(default)_<BR>`1` = Each Teleinfo received frame is also sent by MQTT (mainly to be able to display real time data)
 SetOption109<a class="cmnd" id="setoption109"></a>|`0` = _(default)_<BR>`1` = force gen1 Alexa mode, for Echo Dot 2nd gen devices only
 SetOption113<a class="cmnd" id="setoption113"></a>|_works only with rotary dial button_<BR>`0` = _(default)_<BR>`1` = set dimmer low on rotary dial after power off
 SetOption114<a class="cmnd" id="setoption114"></a>|Detach switches from relays and send MQTT messages instead<BR>`0` = disabled *(default)*<BR>`1` = enabled<BR> Example result: `{"Switch1":{"Action":"ON"}}`
