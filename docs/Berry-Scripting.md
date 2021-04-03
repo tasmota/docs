@@ -192,30 +192,30 @@ Booh!
 
 Berry provides complete support for Relays and Lights.
 
-You can control individual Relays or lights with `tasmota.get\_power()` and `tasmota.set\_power()`.
+You can control individual Relays or lights with `tasmota.get_power()` and `tasmota.set_power()`.
 
-`tasmota.get\_power()` returns an array of booleans represnting the state of each relays and light (light comes last).
+`tasmota.get_power()` returns an array of booleans represnting the state of each relays and light (light comes last).
 
-`tasmota.set\_light(relay, onoff)` changes the state of a single relay/light.
+`tasmota.set_light(relay, onoff)` changes the state of a single relay/light.
 
 Example (2 relays and 1 light):
 
 ```python
-> tasmota.get_powet()
+> tasmota.get_power()
 [false, true, false]
 
 > tasmota.set_power(0, true)
 true
 
-> tasmota.get_powet()
+> tasmota.get_power()
 [true, true, false]
 ```
 
-For light control, `tasmota.get\_light()` and `tasmota.set\_light()` accept a structured object containing the following arguments:
+For light control, `tasmota.get_light()` and `tasmota.set_light()` accept a structured object containing the following arguments:
 
 Attributes|Details
 :---|:---
-power|`boolean`<br>Turns the light off or on. Equivalent to `tasmota.set\_power()`. When brightness is set to `0`, power is automatically set to off. On the contrary, you need to specify `power:true` to turn the light on.
+power|`boolean`<br>Turns the light off or on. Equivalent to `tasmota.set_power()`. When brightness is set to `0`, power is automatically set to off. On the contrary, you need to specify `power:true` to turn the light on.
 bri|`int range 0..255`<br>Set the overall brightness. Be aware that the range is `0..255` and not `0..100` as Dimmer.
 hue|`int 0..360`<br>Set the color Hue in degree, range 0..360 (0=red).
 sat|`int 0..255`<br>Set the color Saturation (0 is grey).
