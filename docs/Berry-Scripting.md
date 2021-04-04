@@ -1,7 +1,7 @@
 # Berry Scripting Language
-!!! failure "This feature is experimental, ESP32 only and currently included in selected precompiled binaries"
+!!! info "This feature is experimental, ESP32 only and included in all ESP32 pre-compiled builds"
 
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+If you compile your own version, make sure the following is defined:
 
 ```arduino
 #define USE_BERRY
@@ -196,7 +196,7 @@ You can control individual Relays or lights with `tasmota.get_power()` and `tasm
 
 `tasmota.get_power()` returns an array of booleans represnting the state of each relays and light (light comes last).
 
-`tasmota.set_light(relay, onoff)` changes the state of a single relay/light.
+`tasmota.set_power(relay, onoff)` changes the state of a single relay/light.
 
 Example (2 relays and 1 light):
 
@@ -211,7 +211,7 @@ true
 [true, true, false]
 ```
 
-For light control, `tasmota.get_light()` and `tasmota.set_light()` accept a structured object containing the following arguments:
+For light control, `light.get()` and `light.set` accept a structured object containing the following arguments:
 
 Attributes|Details
 :---|:---
@@ -229,23 +229,23 @@ Example:
 
 ```python
   # set to yellow, 25% brightness
-> tasmota.set_light({"power": true, "hue":60, "bri":64, "sat":255})
+> light.set({"power": true, "hue":60, "bri":64, "sat":255})
 {'bri': 64, 'hue': 60, 'power': true, 'sat': 255, 'rgb': '404000', 'channels': [64, 64, 0]}
 
   # set to RGB 000080 (blue 50%)
-> tasmota.set_light({"rgb": "000080"})
+> light.set({"rgb": "000080"})
 {'bri': 128, 'hue': 240, 'power': true, 'sat': 255, 'rgb': '000080', 'channels': [0, 0, 128]}
 
   # set bri to zero, also powers off
-> tasmota.set_light({"bri": 0})
+> light.set({"bri": 0})
 {'bri': 0, 'hue': 240, 'power': false, 'sat': 255, 'rgb': '000000', 'channels': [0, 0, 0]}
 
   # chaning bri doesn't automatically power
-> tasmota.set_light({"bri": 32, "power":true})
+> light.set({"bri": 32, "power":true})
 {'bri': 32, 'hue': 240, 'power': true, 'sat': 255, 'rgb': '000020', 'channels': [0, 0, 32]}
 
   # set channels as numbers (purple 12%)
-> tasmota.set_light({"channels": [32,0,32]})
+> light.set({"channels": [32,0,32]})
 {'bri': 32, 'hue': 300, 'power': true, 'sat': 255, 'rgb': '200020', 'channels': [32, 0, 32]}
 ``` 
 
@@ -306,6 +306,7 @@ tasmota.time\_reached<a class="cmnd" id="tasmota_time_reached"></a>|`(timer:int)
 tasmota.yield<a class="cmnd" id="tasmota_yield"></a>|`() -> nil`<br>Calls Arduino framework `yield()` function to give back some time to low-level functions, like Wifi. Prevents WDT watchdog from happening.
 tasmota.delay<a class="cmnd" id="tasmota_delay"></a>|`([delay:int]) -> int`<br>Waits and blocks execution for `delay` milliseconds. Should ideally never wait more than 10ms and absolute max 50ms. Otherwise use `set_timer`.
 tasmota.add\_rule<a class="cmnd" id="tasmota_add_rule"></a>|`(pattern:string, f:function) ->nil`<br>Adds a rule to the rule engine. See above for rule patterns.
+tasmota.remove\_rule<a class="cmnd" id="tasmota_remove_rule"></a>|`(pattern:string) ->nil`<br>Removes a rule to the rule engine. Silently ignores the pattern if no rule matches.
 tasmota.gc<a class="cmnd" id="tasmota_gc"></a>|`() -> int`<br>Triggers a garbage collaction of Berry objects and returns the bytes currently allocated. This is for debug only and shouldn't be normally used. GC is otherwise automatically triggeredd when necessary.
 
 Functions used to retrieve Tasmota configuration
@@ -335,8 +336,24 @@ Tasmota Function|Parameters and details
 :---|:---
 tasmota.get\_power<a class="cmnd" id="tasmota_get_power"></a>|`() -> list[bool]`<br>Returns the state On/Off of each Relay and Light as a list of bool.
 tasmota.set\_power<a class="cmnd" id="tasmota_set_power"></a>|`(index:int, onoff:bool) -> bool`<br>Sets the on/off state of a Relay/Light. Returns the previous status of the Relay/Light of `nil` if index is invalid.<br>Example:<br>```> tasmota.get_power()```<br>```[true]```
-tasmota.get\_light<a class="cmnd" id="tasmota_get_light"></a>|`(index:int) -> map`<br>Get the current status if light number `index` (default:0).<br>Example:<br>```> tasmota.get_light()```<br>```{'bri': 77, 'hue': 21, 'power': true, 'sat': 140, 'rgb': '4D3223', 'channels': [77, 50, 35]}```
-tasmota.set\_light<a class="cmnd" id="tasmota_set_light"></a>|`(settings:map[, index:int]) -> map`<br>Sets the current state for light `index` (default: 0.<br>Example:<br>```> tasmota.set_light({'hue':120,'bri':50,'power':true})```<br>```{'bri': 50, 'hue': 120, 'power': true, 'sat': 140, 'rgb': '173217', 'channels': [23, 50, 23]}```
+tasmota.get\_light<a class="cmnd" id="tasmota_get_light"></a>|_deprecated_ use `light.get`
+tasmota.set\_light<a class="cmnd" id="tasmota_set_light"></a>|_deprecated_ use `light.set`
+
+
+### `light` object
+
+Module `light` is automatically imported via a hidden `import light` command.
+
+
+Tasmota Function|Parameters and details
+:---|:---
+light.get<a class="cmnd" id="light_get"></a>|`(index:int) -> map`<br>Get the current status if light number `index` (default:0).<br>Example:<br>```> light.get```<br>```{'bri': 77, 'hue': 21, 'power': true, 'sat': 140, 'rgb': '4D3223', 'channels': [77, 50, 35]}```
+light.set<a class="cmnd" id="light_set"></a>|`(settings:map[, index:int]) -> map`<br>Sets the current state for light `index` (default: 0.<br>Example:<br>```> light.set({'hue':120,'bri':50,'power':true})```<br>```{'bri': 50, 'hue': 120, 'power': true, 'sat': 140, 'rgb': '173217', 'channels': [23, 50, 23]}```
+light.gamma10<a class="cmnd" id="light_gamma10"></a>|`(channel) -> int`<br>Computes the gamma corrected value with 10 bits resolution for input and output. Note: Gamma is optimized for speed and smooth fading, and is not 100% mathematically accurate.<br>Input and output are in range 0..1023.
+light.reverse\_gamma10<a class="cmnd" id="light_reverse_gamma10"></a>|`(gamma) -> int`<br>Computes the reverse gamma with 10 bits resolution for input and output.<br>Input and output are in range 0..1023.
+light.gamma8<a class="cmnd" id="light_gamma8"></a>|`(channel) -> int`<br>Computes the gamma corrected value with 8 bits resolution for input and output.<br>Input and output are in range 0..255.
+
+
 
 ### `wire` object
 
