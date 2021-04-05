@@ -33,6 +33,23 @@ brgc
 21:04:30.376 RSL: stat/tasmota_923B34/RESULT = {"BrGc":5767}
 ```
 
+### General form of the custom command function
+
+The custom command function have the general form below where parameters are optionals:
+
+```python
+def function_name(cmd, idx, payload, payload_json)
+  ...
+end
+```
+
+Parameter|Description
+:---|:---
+`cmd`|`string` name of the command in lower case. Can be used if same function is used for multiple similar commands for example.
+`idx`|Command's index is the unsigned `integer` (optionally) added at the end of the command name before the parameters (like `Demo1`). Default to 1 if not specified.
+`payload`|`string` of the command line as without any parsing.
+`payload_json`|if the payload is a valid JSON, it is converted into a Berry `map` object.
+
 ### More complete example
 
 In this example, we will create a new command called `LightGold` that turns the light on and sets it to color gold #FFD700. This command accepts an optional JSON payload with the argument `Dimmer` ranging from 0..100.
