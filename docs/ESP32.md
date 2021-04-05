@@ -183,6 +183,12 @@ OLED display needs the following template
 ```
 
 
+### WEMOS / LOLIN D32
+verified support for board plus I2C sensors
+
+to use I2C, set IO21 to SDA and IO22 to SCL
+
+
 ### Displays, sensors and other options 
 
 displays: (most probably all I2C displays will work)    
