@@ -98,7 +98,7 @@ MQT: tele/%topic%/RESULT = {"ZbReceived":{"Vibration_sensor":{"Device":"0x128F",
 ```
 ### Sending sensor values to separated MQTT topics
 
-It is possible to publish the sensor values to there own MQTT topic. For this functionality the folowing rule can be applied in the console:
+It is possible to publish the sensor values to their own MQTT topic. For this functionality the following rule can be applied in the console:
 ```
 Rule<x>
   on zbreceived#<zigbee_id>#<zigbee_sensorname> do publish home/zigbee/<zigbee_name>/<sensorname> %value% endon
@@ -115,7 +115,7 @@ Rule1
 Rule1 1
 ```
 
-If retained values are preffered use publish2 instead of publish.
+If retained values are prefered use publish2 instead of publish.
 
 
 ### Removing Devices
