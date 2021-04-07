@@ -5,14 +5,14 @@ The file partition does NOT get erased by reset commands or factory default. Onl
 There are some special files that you can upload and use:<br>
 
 **autoexec.bat**<br>
-Stores commands that will be executed at every boot.<br>
+Stores commands that will be executed at every boot, similar to the backlog commands in rules trigger at `System#Boot`.<br>
 Almost any commands can be used.<br>
 However, avoid commands that will make the device to reboot (examples: changing Wifi setting, MQTT settings, Templates & GPIO, etc)<br>
 otherwise it will reboot continuously (in fact 3 or 4 times then autoexec will be disabled after boot loop detection)<br>
 Commands must be kept to one command per line; they will be executed sequentially.<br>
 
 **display.ini**<br>
-Stores data that will be displayed at every boot (as long as you have a display attached).<br>
+Stores data that will be displayed at every boot, similar to the DisplayText commands in rules trigger at `System#Init` (as long as you have a display driver initializated).<br>
 example:<br>
 ```; clr screen
 [z]
