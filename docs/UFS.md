@@ -10,8 +10,8 @@ There are some special files that you can upload and use to execute actions.
 
 Copy `platformio_override_sample.ini` as `platformio_override.ini`
 
-Activate/uncomment the line:
-`board_build.ldscript = eagle.flash.4m2m.ld` for 2Mb file system
+Activate/uncomment one line.<br>
+`board_build.ldscript = eagle.flash.4m2m.ld` for 2Mb file system<br>
 `board_build.ldscript = eagle.flash.4m1m.ld` for 1Mb file system
 
 Add or uncomment `#define ...` lines in your `user_config_override.h`:
@@ -21,8 +21,8 @@ Add or uncomment `#define ...` lines in your `user_config_override.h`:
 // This line will allow to delete files from GUI
 #define GUI_TRASH_FILE
 ```
-Compile, flash and you will find a new entry in Tasmota web GUI menu:<br>
-Configuration - Manage File system.<br>
+Compile, flash and you will find a new entry in Tasmota web GUI menu:
+Configuration - Manage File system.
 ![fs-1](https://user-images.githubusercontent.com/18531150/113911368-31da8000-97da-11eb-8f57-b08f371bdfd3.jpg)
 ![fs-2](https://user-images.githubusercontent.com/18531150/113911396-3868f780-97da-11eb-8726-d720180e013c.jpg)
 ![fs-3](https://user-images.githubusercontent.com/18531150/113980065-58ce9b80-9846-11eb-9f4b-a1c6b199e8fb.jpg)
