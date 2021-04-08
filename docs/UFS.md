@@ -34,7 +34,7 @@ https://tasmota.github.io/docs/Commands/#ufs
 more info here:<br>
 https://tasmota.github.io/docs/Berry-Scripting/#loading-code-from-filesystem
 
-**Special files**
+## Special files
 
 **autoexec.bat**
 
