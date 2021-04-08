@@ -121,8 +121,8 @@ nav:
     - Thermostat.md
     - Timers.md
     - TLS.md
-    - UFS.md
     - TuyaMCU.md
+    - UFS.md
     - Zigbee.md
     - Projects and Tutorials: Tutorials.md
     - For Developers: For-Developers.md
