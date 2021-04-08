@@ -2,7 +2,7 @@
 
 Since ESP8266-12F has 4MB flash you can build a variant with a `filesystem` and store your files there (data, images, commands, etc).<br>
 The file partition does NOT get erased by reset commands or factory default. Only a flash erase will wipe it.<br>
-There are some special files that you can upload and use to execute action.
+There are some special files that you can upload and use to execute actions.
 
 ## How to activate UFS ?
 
