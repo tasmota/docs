@@ -180,7 +180,7 @@ Time<a class="cmnd" id="time"></a>|`0` = enable NTP *(default)*<BR>`1` = format 
 TimeStd<BR>TimeDst<a class="cmnd" id="timestd"></a><a class="cmnd" id="timedst"></a>|Set policies for the beginning of daylight saving time (Dst) and return back to standard time (Std)&emsp; <BR>`0` = reset parameters to firmware defaults<BR>`H`,`W`,`M`,`D`,`h`,`T`<BR>   `H` = hemisphere (`0` = northern hemisphere / `1` = southern hemisphere)<BR>   `W` = week (`0` = last week of month, `1..4` = first .. fourth)<BR>   `M` = month (`1..12`)<BR>   `D` = day of week (`1..7` `1` = sunday `7` = saturday)<BR>   `h` = hour (`0..23`)<BR>   `T` = timezone (`-780..780`) (offset from UTC in **MINUTES** - 780min / 60min=13hrs)<BR>_Example:_ `TIMEDST 1,1,10,1,2,660`<BR>_If timezone is **NOT** 99, DST is not used (even if displayed) [see](https://github.com/arendst/Tasmota/issues/8528#issuecomment-633247984)
 Timezone<a class="cmnd" id="timezone"></a>|`-13..+13` = set timezone offset from UTC in hours<BR>`-13:00..+13:00` = set timezone offset from UTC in hours and minutes<BR>`99` = use timezone configured with `TimeDst` and `TimeStd`
 TuyaMCU<a class="cmnd" id="tuyamcu"></a>|Used to map functions in TuyaMCU <br>`<fnId>,<dpId>` = [read more...](TuyaMCU)<BR>`<fnId>,0` = remove setting for fnId
-Ufs<a class="cmnd" id="ufs"></a>|Filesystem info
+Ufs<a class="cmnd" id="ufs"></a>|Filesystem info [read more...](UFS.md)
 UfsDelete<a class="cmnd" id="ufsdelete"></a>|Delete SD card or Flash FS file if only of them available
 UfsDelete2<a class="cmnd" id="ufsdelete2"></a>|Deleten only Flash FS file if available
 UfsFree<a class="cmnd" id="ufsfree"></a>|Filesystem free size in kb
