@@ -1,7 +1,7 @@
 !!! failure "This feature is not included in precompiled binaries."
 To use it, you must [compile your build](Compile-your-build).
 
-Since ESP8266-12F has 4MB flash you can build a variant with a _universal file system or UFS_ and store your files there (data, images, commands, etc). There are some special files that you can upload and use to execute actions.
+For modules that have 4MB or more flash memory you can build a variant with a _universal file system or UFS_ and store your files there (data, images, commands, etc). There are some special files that you can upload and use to execute actions.
 
 !!! warning
     The file partition **DOES NOT** get erased by reset commands. Only a complete flash erase will remove it.
@@ -12,26 +12,30 @@ Since ESP8266-12F has 4MB flash you can build a variant with a _universal file s
 Copy `platformio_override_sample.ini` as `platformio_override.ini`
 
 Activate/uncomment one line.    
-`board_build.ldscript = eagle.flash.4m2m.ld` for 2Mb file system    
-`board_build.ldscript = eagle.flash.4m1m.ld` for 1Mb file system
+`board_build.ldscript = eagle.flash.4m2m.ld` for 2Mb universal file system    
+`board_build.ldscript = eagle.flash.4m1m.ld` for 1Mb universal file system
 
-Add or uncomment `#define ...` lines in your `user_config_override.h`:
+Add or uncomment `#define ...` lines in `user_config_override.h`:
 ```
 // UFS filesystem
 #define USE_UFILESYS
 // This line will allow to delete files from GUI
 #define GUI_TRASH_FILE
 ```
-Compile, flash and you will find a new entry in Tasmota web GUI menu:
-Configuration - Manage File system.
+After compiling and flashing you will find a new entry in Tasmota webUI: ***Configuration - Manage File system***
+
 ![fs-1](https://user-images.githubusercontent.com/18531150/113911368-31da8000-97da-11eb-8f57-b08f371bdfd3.jpg)
+
+Upload files:    
 ![fs-2](https://user-images.githubusercontent.com/18531150/113911396-3868f780-97da-11eb-8726-d720180e013c.jpg)
+
+See all uploaded files. Use the _fire_ icon to delete the file:    
 ![fs-3](https://user-images.githubusercontent.com/18531150/113980065-58ce9b80-9846-11eb-9f4b-a1c6b199e8fb.jpg)
 
 ## Commands
 Complete list of [UFS commands](https://tasmota.github.io/docs/Commands/#ufs)
 
-[Berry scripting language](https://tasmota.github.io/docs/Berry-Scripting/#loading-code-from-filesystem) can benefit from UFS.
+Also look into [Berry scripting language](https://tasmota.github.io/docs/Berry-Scripting/#loading-code-from-filesystem) for ESP32 which works with UFS.
 
 ## Special files
 
