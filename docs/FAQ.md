@@ -329,7 +329,7 @@ Long answer: There is not enough time in our coders lives to take requests, if y
   - only a..z A..Z 0..9 '-'
   - no '-' as last char
   
-Notice: Hostnames containing ```%``` will reset to ```MQTT_TOPIC-<4digits>```.
+Notice: Hostnames containing ```%``` will reset to ```MQTT_TOPIC-<4digits>```. It is not intended to use internal Tasmota variables here.
 
 **RFC952**  
 ASSUMPTIONS  
