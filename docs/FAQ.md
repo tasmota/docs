@@ -328,6 +328,8 @@ Long answer: There is not enough time in our coders lives to take requests, if y
   - 24 chars max
   - only a..z A..Z 0..9 '-'
   - no '-' as last char
+  
+Notice: Hostnames containing ```%``` will reset to ```MQTT_TOPIC-<4digits>```.
 
 **RFC952**  
 ASSUMPTIONS  
