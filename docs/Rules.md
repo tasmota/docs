@@ -1036,6 +1036,39 @@ Rule2
 
 Rule2 1
 ```
+### Automatically vary the color temperature of a CCT light
+
+**Background:**
+Tasmota powers a CCT light which is adjustable from cool white to warm white. You want the color temperature to automatically vary between cool (CT=153) at midday to warm (CT=500) at midnight.
+
+**Approach:**
+Check that your timezone and DST (if applicable) are set correctly and the time is correctly set on your light using NTP. Create the two rules to scale the CT based on the time of day. If Wifi is unavailable or NTP can't determine the time of day then the light will default to the mid point for neutral white (CT=326). Adjusting the CT will switch the light on so Rule 2 disables and enables Rule 1 according to the state of the light.
+
+**Rule 1:** Set the CT according to the time of day.
+ 
+```haskell
+rule1 
+    on Power1#Boot do CT 326 endon
+    on Time#Initialized do backlog event myCT=%time% endon
+    on Time#Minute do backlog event myCT=%time% endon
+    on event#myCT<=720 do backlog scale1 %time%,0,720,500,153; event updateCT endon
+    on event#myCT>720 do backlog scale1 %time%,720,1440,153,500; event updateCT endon
+    on event#updateCT do CT %var1% endon
+rule1 1
+```
+**Rule 2:** Toggle rule 1 on and off with the light and also update the CT for the current time when the light is switched on.
+ 
+```haskell
+Rule2 on Power1#State do backlog Rule1 %value%; event myCT=%time% endon
+Rule2 1
+```
+Notes:
+
+When the light is powered up on it should change to neutral white for a few seconds while Wifi, MQTT and NTP are initialised then switch to the correct color temperature for the time of day. If the light is switched off in software then it will come back on with the previous CT then update to the current CT after a few seconds.
+
+If you have a RGBCCT light then the CT light may be Power2 rather than Power1.
+
+It is possible to use %sunrise% and %sunset% to adjust the CT if you set your latitude, longitude and elevation but it's much more complex especially at extreme Northern and Southern latitudes. 
 
 ------------------------------------------------------------------------------
 
