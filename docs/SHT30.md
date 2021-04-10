@@ -9,7 +9,7 @@ From the [Wemos SHT30 shield specs](https://www.wemos.cc/en/latest/d1_mini_shiel
 
 ## Configuration
 
-As a default the SHT30 uses I<sup>2</sup>C address 0x45 and is user changeable by short-circuiting the two soldering pads at the **lower** left-side of the sensor (see image below marked green). 
+As a default the SHT30 uses I<sup>2</sup>C address 0x45 and is user changeable by short-circuiting the two soldering pads at the **lower** left-side of the sensor (see image below marked green).
 
 Also if no other I<sup>2</sup>C devices are connected to the Wemos it might be wise to short-circuit the three soldering pads at the **upper** left-side of the sensor (see image below marked red). This connects the pull-up resistors for I<sup>2</sup>C and biases the SCL and SDA pins to VCC. This is to avoid possible false detections of other sensors like VEML6070.
 
