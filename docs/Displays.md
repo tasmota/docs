@@ -23,6 +23,7 @@ USE_DISPLAY_SD1331  | Enable TFT SD1331 display. Also requires `USE_SPI`
 USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`  
 USE_DISPLAY_TM1637 | Enable TM1637 display
 USE_LILYGO47  | Enable LILGO 4.7 Epaper display ESP32 combo
+USE_UNIVERSAL_DISPLAY  | Enable universal display driver
 USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
 SHOW_SPLASH | Enable initialization splash message on the display  
 USE_AWATCH | Enables analog watch support  
@@ -419,6 +420,8 @@ The EPD fonts use about 9k space, which can be selected at compile time using \#
 ## universal Display Driver
 
 Driver 17 is a universal display driver for most pixel driven displays.
+The driver is enabled by compiling with #define USE_UNIVERSAL_DISPLAY
+and selecting GPIO Option A3 on any pin.
 the display is defined by a descriptor file which may be provided with 3 methods.
 1. a special section in scripter >d
 2. a file which must be present in the file system ("dspdesc.txt")
