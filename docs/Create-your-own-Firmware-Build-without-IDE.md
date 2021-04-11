@@ -142,9 +142,7 @@ Now you may want to configure the sources for your needs.
 
 Actually, the sources do build fine right out-of-the box, only it'll be a full build, including all the language localisation and all the build flavours as well, while you are usually interested only in one language and one build flavour only.
 
-In `platformio.ini` choose the environment (or flavour, if you like) you want to build.
-
-In `tasmota/user_config_override.h` fine tune the default values for the module, the wifi, the MQTT server, and so on. Refer to the Tasmota Wiki for details.
+In `tasmota/user_config_override.h` fine tune the default values for the module, the wifi, the MQTT server, and so on.
 
 ## Build the firmware
 
@@ -176,37 +174,7 @@ PlatformIO seems to handle the rebuilds and dependencies well, but if you want a
 
 ## Collect the results
 
-The result will be here: `./.pioenvs/<build-flavour>/firmware.bin`
-
-```
-(platformio-core) [tasmota_builder@jtest Tasmota]$ find .pioenvs -name '*.bin'
-.pioenvs/tasmota-FR/firmware.bin
-.pioenvs/tasmota-GR/firmware.bin
-.pioenvs/tasmota-HE/firmware.bin
-.pioenvs/tasmota-HU/firmware.bin
-.pioenvs/tasmota-IT/firmware.bin
-.pioenvs/tasmota-NL/firmware.bin
-.pioenvs/tasmota-PL/firmware.bin
-.pioenvs/tasmota-PT/firmware.bin
-.pioenvs/tasmota-RU/firmware.bin
-.pioenvs/tasmota-SE/firmware.bin
-.pioenvs/tasmota-SK/firmware.bin
-.pioenvs/tasmota-TR/firmware.bin
-.pioenvs/tasmota-TW/firmware.bin
-.pioenvs/tasmota-UK/firmware.bin
-.pioenvs/tasmota/firmware.bin
-.pioenvs/tasmota-minimal/firmware.bin
-.pioenvs/tasmota-basic/firmware.bin
-.pioenvs/tasmota-knx/firmware.bin
-.pioenvs/tasmota-sensors/firmware.bin
-.pioenvs/tasmota-display/firmware.bin
-.pioenvs/tasmota-BG/firmware.bin
-.pioenvs/tasmota-BR/firmware.bin
-.pioenvs/tasmota-CN/firmware.bin
-.pioenvs/tasmota-CZ/firmware.bin
-.pioenvs/tasmota-DE/firmware.bin
-.pioenvs/tasmota-ES/firmware.bin
-```
+The results will be here: `build_output`
 
 ## About build times
 
