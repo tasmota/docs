@@ -288,7 +288,7 @@ Or use '!' instead of '_' to specify cluster-specific commands:
 `"<cluster>!<cmd>/<bytes>"`: send a cluster specific command for cluster id `<cluster>`, command id `<cmd>` and payload `<bytes>`.
 
 !!! example
-    `ZbSend {"Device":"0x1234","Send":"0008_04/800A00"}`
+    `ZbSend {"Device":"0x1234","Send":"0008!04/800A00"}`
     Send a Dimmer command (0x04) from Level Control cluster (0x0008) with payload being: Dimmer value 0x80, and transition time of 1 second (0x000A = 10 tenths of seconds).
 
 Of course the latter example could be simply:
