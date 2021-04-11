@@ -9,15 +9,8 @@ Install PlatformIO to a known folder.
 ## Download Tasmota
 Download the latest Tasmota Source code from https://github.com/arendst/Tasmota and unzip to another known folder.
 
-## Configure PlatformIO
-### Copy files
-Copy all files from the Tasmota Source code into your PlatformIO base folder.
-
-### Change IDE parameters
-The default environment configuration can be used to easily generate Tasmota firmware variants (sonoff, sensors, display, etc.). If you're not sure which binary is the right one for you, consult the [builds table](Builds) or just start with `tasmota.bin`. To build and/or flash exactly one of these, uncomment (i.e., remove the leading `;`) the *env_default* line for the variant you need. To compile more than one binary variant, uncomment all of the desired *env_default* lines in the *platformio.ini* file.
-
 ## Compile Tasmota
-Select ``Build`` from the menu.
+Select ``Build`` and choose the Tasmota variant from the Platformio menu.
 
 ## Upload Tasmota
 PlatformIO uses the serial interface to upload the firmware to your device. On Windows these interfaces are named COM ports (COM1, COM2, etc.). On Linux these interfaces are named [TTY ports](https://unix.stackexchange.com/questions/144029/command-to-determine-ports-of-a-device-like-dev-ttyusb0) (e.g., /dev/ttyUSB0, /dev/ttyUSB1, etc.).
