@@ -414,3 +414,245 @@ The EPD fonts use about 9k space, which can be selected at compile time using \#
 - EPD42   - 2.57k
 - EPD29   - 2.1k
 - Display and Render class - ~12k
+
+
+## universal Display Driver
+
+Driver 17 is a universal display driver for most pixel driven displays.
+the display is defined by a descriptor file which may be provided with 3 methods.
+1. a special section in scripter >d
+2. a file which must be present in the file system ("dspdesc.txt")
+3. a flash section in driver 17 (const char)
+
+the descriptor text file has the following elements:  
+
+:H
+header line describes the main features of the display (comma seperated, no spaces allowed)
+1. name
+2. x size in pixels
+3. y size in pixels
+4. bits per pixel (1 for bw displays, 16 for color displays)
+5. hardware interface used either I2C or SPI
+
+I2C 
+1. I2C address in HEX
+2. SCL pin
+3. SDA pin
+4. RESET pin
+
+SPI
+1. CS pin
+2. CLK pin
+3. MOSI pin
+4. DC pin
+5. Backlight pin
+6. RESET pin
+7. MISO pin
+8. SPI Speed in Hz
+all signal must be given. unused pins may be set to -1
+if you specify a * char the pin number is derived from the Tasmota GPIO GUI.  
+example:  
+
+```haskell
+:H
+SH1106,128,64,1,I2C,3c,*,*,*
+```
+
+```haskell
+:H
+ILI9341,240,320,16,SPI,3,-1,14,13,5,4,15,*,40000000
+```
+
+:S
+splash setup, also defines initial colors.
+1. Font number
+2. Font size
+3. FG color (as index color)
+4. BG color (as index color)
+5. x position of text
+6. y position of text  
+example:  
+
+```haskell
+:S
+2,1,1,0,40,20
+```
+:I
+initial register setup for the display controler.  
+all values are in hex.  
+example:  
+
+```haskell
+:I
+EF,3,03,80,02
+CF,3,00,C1,30
+ED,4,64,03,12,81
+E8,3,85,00,78
+CB,5,39,2C,00,34,02
+F7,1,20
+EA,2,00,00
+C0,1,23
+C1,1,10
+C5,2,3e,28
+C7,1,86
+36,1,48
+37,1,00
+3A,1,55
+B1,2,00,18
+B6,3,08,82,27
+F2,1,00
+26,1,01
+E0,0F,0F,31,2B,0C,0E,08,4E,F1,37,07,10,03,0E,09,00
+E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
+11,80
+29,80
+```
+
+:o
+Off , Controller OPCODE to switch display off
+
+:O
+On Controller OPCODE to switch display on
+
+:0
+:1
+:2
+:3
+OPCODEs for all 4 rotations (color display only)
+
+:A
+3 OPCODES for set adress window (color display only)
+
+
+full examples for SH1106 and ILI9341: (comment lines starting with ; are allowed)  
+
+```haskell
+:H
+SH1106,128,64,1,I2C,3c,*,*,*
+; splash settings, font, size, fgcol, bgcol, x,y
+:S
+0,1,1,0,40,20
+; init register settings
+:I
+AE
+D5,80
+A8,3f
+D3,00
+40
+8D,14
+20,00
+A1
+C8
+DA,12
+81,CF
+D9F1
+DB,40
+A4
+A6
+AF
+; switch display off
+:o
+AE
+; switch display on
+:O
+AF
+#
+
+```
+
+```haskell
+:H
+ILI9341,240,320,16,SPI,3,-1,14,13,5,4,15,*,40000000
+;ILI9341,240,320,16,SPI,3,*,*,*,*,*,*,*,40000000
+; splash settings, font, size, fgcol, bgcol, x,y
+:S
+2,1,1,0,40,20
+; initialyze
+:I
+EF,3,03,80,02
+CF,3,00,C1,30
+ED,4,64,03,12,81
+E8,3,85,00,78
+CB,5,39,2C,00,34,02
+F7,1,20
+EA,2,00,00
+C0,1,23
+C1,1,10
+C5,2,3e,28
+C7,1,86
+36,1,48
+37,1,00
+3A,1,55
+B1,2,00,18
+B6,3,08,82,27
+F2,1,00
+26,1,01
+E0,0F,0F,31,2B,0C,0E,08,4E,F1,37,07,10,03,0E,09,00
+E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
+11,80
+29,80    
+; off
+:o
+28
+; on
+:O
+29
+; set adress window
+:A
+2A,2B,2C
+; rotation
+:0
+48
+:1
+28
+:2
+88
+:3
+E8
+#
+```
+
+the most conveniant editing is done via scripter.  
+on every scripter save the display is reinitialized and you see
+immediately the result of your changes.  
+
+example of scripter driven display descriptor:  
+
+```haskell
+>D
+>B
+=>displayreinit
+>d
+; name,xs,ys,bpp,interface, address, scl,sda,reset
+:H
+SH1106,128,64,1,I2C,3c,*,*,*
+; splash settings, font, size, fgcol, bgcol, x,y
+:S
+0,1,1,0,40,20
+; init register settings
+:I
+AE
+D5,80
+A8,3f
+D3,00
+40
+8D,14
+20,00
+A1
+C8
+DA,12
+81,CF
+D9F1
+DB,40
+A4
+A6
+AF
+; switch display off
+:o
+AE
+; switch display on
+:O
+AF
+#
+```
+
