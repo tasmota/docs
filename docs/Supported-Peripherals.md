@@ -87,7 +87,7 @@ Name|Description
 [**Smart Meter Interface**](Smart-Meter-Interface) | (serial)
 **SolaX X1** | SolaX X1 inverter (serial)
 **SPS30** | Particulate Matter (PM) | Sensor (I^2^C)
-[**Téléinfo**](http://hallard.me/category/tinfo/) |  French energy measuring system (serial)
+[**Téléinfo**](Teleinfo) |  French energy measuring system (serial)
 **TM1638** | 8 Switch, LED and 7 Segment Unit Sensor (gpio)
 [**TSL2561**](TSL2561) | Luminosity Sensor (I^2^C)
 **TSL2591** | Luminosity Sensor (I^2^C)

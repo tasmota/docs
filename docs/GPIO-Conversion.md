@@ -228,8 +228,8 @@ See below how the numbers are being converted. The first number is 8-bit GPIO, t
 | 207      | 5056     | BL0940 RX       | BL0940 serial interface                                                                    |
 | 208      | 5088     | TCP TX          | TCP Serial bridge                                                                          |
 | 209      | 5120     | TCP RX          | TCP Serial bridge                                                                          |
-| 210      | 5152     | TELEINFO RX     | TELEINFO serial interface                                                                  |
-| 211      | 5184     | TELEINFO Enable | TELEINFO Enable PIN                                                                        |
+| 210      | 5152     | TELEINFO RX     | [Teleinfo](Teleinfo) serial interface                                                                  |
+| 211      | 5184     | TELEINFO Enable | [Teleinfo](Teleinfo) Enable PIN                                                                        |
 | 212      | 5216     | LMT01           | LMT01 input counting pin                                                                   |
 | 213      | 5248     | IEM3000 TX      | IEM3000 Serial interface                                                                   |
 | 214      | 5280     | IEM3000 RX      | IEM3000 Serial interface                                                                   |
