@@ -468,13 +468,11 @@ SetOption98<a class="cmnd" id="setoption98"></a>|Provide rotary dimmer rule trig
 SetOption99<a class="cmnd" id="setoption99"></a>|Enable zero-cross capable AC dimmer<BR>`0` = no zero-cross AC dimmer connected _(default)_ <BR>`1` = zero-cross AC dimmer attached. Focus on raising edge and sync frequency     
 SetOption100<a class="cmnd" id="setoption100"></a>|remove Zigbee `ZbReceived` value from `{"ZbReceived":{xxx:yyy}}` JSON message<BR>`0` = disabled _(default)_ <BR>`1` = enabled     
 SetOption101<a class="cmnd" id="setoption101"></a>|Add Zigbee source endpoint as suffix to attributes<BR>`0` = disabled _(default)_ <BR>`1` = enabled<BR>e.g. `Power3` instead of `Power` if sent from endpoint `3`.
-SetOption102<a class="cmnd" id="setoption102"></a>|Set baudrate for Teleinfo communication<BR>`0` = 1200 _(default)_ <BR>`1` = 9600
 SetOption103<a class="cmnd" id="setoption103"></a>|Set TLS mode<BR>`0` = disable TLS<BR>`1` = enable TLS
 SetOption104<a class="cmnd" id="setoption104"></a>|Disable MQTT retained messages (some brokers don't support them)<BR>`0` = retained messages enabled _(default)_ <BR>`1` = retained messages disabled
 SetOption105<a class="cmnd" id="setoption105"></a>|[White Blend Mode](Lights#white-blend-mode)<BR>`0` = disabled _(default)_ <BR>`1` = enabled
 SetOption106<a class="cmnd" id="setoption106"></a>|Virtual CT channel (experimental feature)<BR>`0` = disabled _(default)_ <BR>`1` = create a virtual second white channel using RGB channels<BR>_only if light is RGBW (4 channels),`SetOption68 0` and `SetOption37 < 128`
 SetOption107<a class="cmnd" id="setoption107"></a>|Set virtual CT channel light type (experimental feature)<BR>`0` = Warm White <BR>`1` = Cold White
-SetOption108<a class="cmnd" id="setoption108"></a>|`0` = Teleinfo telemetry into Energy MQTT JSON _(default)_<BR>`1` = Teleinfo raw data only
 SetOption109<a class="cmnd" id="setoption109"></a>|`0` = _(default)_<BR>`1` = force gen1 Alexa mode, for Echo Dot 2nd gen devices only
 SetOption110<a class="cmnd" id="setoption110"></a>|`0` = _(default)_<BR>`1` = disable Zigbee auto-binding and auto-attribute reporting when pairing a new device. Use only if you want to manually configure devices
 SetOption111<a class="cmnd" id="setoption111"></a>|`0` = _(default)_<BR>`1` = use frequency output for buzzer pin instead of on/off signal, for piezo buzzers
