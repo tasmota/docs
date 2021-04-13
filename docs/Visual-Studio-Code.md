@@ -29,7 +29,7 @@ Start VSC and select ``File`` - ``Open Folder...`` to point to the working folde
 
 **Note:** Press `Ctrl` + `Shift` + `P` and type `PlatformIO` to see all options.
 
-Select the desired firmware via VSC [menu](https://docs.platformio.org/en/latest/integration/ide/vscode.html#project-tasks)
+Select the desired firmware via VSC menu.
 
 Easy compilation can be performed from the icons at the bottom of the VSC screen. 
 
