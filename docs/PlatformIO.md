@@ -10,7 +10,7 @@ Install PlatformIO to a known folder.
 Download the latest Tasmota Source code from https://github.com/arendst/Tasmota and unzip to another known folder.
 
 ## Compile Tasmota
-Choose the Tasmota variant from the Platformio [menu](https://docs.platformio.org/en/latest/integration/ide/vscode.html#project-tasks).
+Choose the Tasmota variant from the Platformio [menu](https://docs.platformio.org/en/latest/integration/ide/vscode.html).
 
 ## Upload Tasmota
 PlatformIO uses the serial interface to upload the firmware to your device. On Windows these interfaces are named COM ports (COM1, COM2, etc.). On Linux these interfaces are named [TTY ports](https://unix.stackexchange.com/questions/144029/command-to-determine-ports-of-a-device-like-dev-ttyusb0) (e.g., /dev/ttyUSB0, /dev/ttyUSB1, etc.).
