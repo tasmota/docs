@@ -2,8 +2,6 @@ PIR motion sensors, albeit called sensors, are configured as switches in Tasmota
 
 Most PIR's are single wire and they require connecting to VCC, GND and one GPIO. In this guide we will use `GPIO13` as the pin that the PIR output is connected to. See [PIN Restrictions](Peripherals.md#restrictions) on which pins not to use
 
-WARNING: Default settings write to flash every time a switch changes state, so flash writes with PIRs can add up quickly. Best practice is to change Setoption0 to 0 (Save power state and use after restart=OFF). Be sure your switch state is off when you change this, otherwise with PowerOnState defaulting to last saved state, your light/relay will turn on every time you power cycle.
-
 ### Tasmota Settings
 In **_Configuration -> Configure Module_** menu change `GPIO13` to `Switch1`.
 ![Step 1](_media/GPIO13-switch.png)
