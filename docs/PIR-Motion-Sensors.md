@@ -2,6 +2,8 @@ PIR motion sensors, albeit called sensors, are configured as switches in Tasmota
 
 Most PIR's are single wire and they require connecting to VCC, GND and one GPIO. In this guide we will use `GPIO13` as the pin that the PIR output is connected to. See [PIN Restrictions](Peripherals.md#restrictions) on which pins not to use
 
+WARNING: Default settings write to flash every time a switch changes state, so flash writes with PIRs can add up quickly. Best practice is to change Setoption0 to 0 (Save power state and use after restart=OFF). Be sure your switch state is off when you change this, otherwise with PowerOnState defaulting to last saved state, your light/relay will turn on every time you power cycle.
+
 ### Tasmota Settings
 In **_Configuration -> Configure Module_** menu change `GPIO13` to `Switch1`.
 ![Step 1](_media/GPIO13-switch.png)
@@ -44,6 +46,8 @@ Rule1 on Switch1#state=1 do Backlog Publish stat/%topic%/PIR1 ON; RuleTimer1 30 
 ```
 With this it will stay ON for 30 seconds then send OFF message and the timer restarts every time there's an ON trigger.
 
+Another configuration option is to change Switchmode to 14 with Pulsetime of 130 (30 seconds on every time the AM312 is triggered)
+
 Another use case as a [hand wave switch](Project-AM312-and-Sonoff-R2).
 
 ## HC-SR501
@@ -52,6 +56,8 @@ Another use case as a [hand wave switch](Project-AM312-and-Sonoff-R2).
 
 ### Pinout
 <img src="https://user-images.githubusercontent.com/5904370/67890814-b212a580-fb51-11e9-9e7e-35ff669b4d7b.png" width=300>
+
+Configuration with HC-SR501 is easiest with Switchmode 1, since this module has a built-in trigger/delay potentiometers and the state remains ON during the trigger period.
 
 ## MH-SR602
 This is a very small version of a PIR that is able to modify the sensitivity and delay by soldering resistors.
