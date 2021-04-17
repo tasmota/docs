@@ -696,6 +696,19 @@ MP3Volume<a class="cmnd" id="MP3Volume"></a>|`0..100` = set Volume
 
 ### ESP32
 
+### Camera
+
+Command|Parameters
+:---|:---
+WcBrightness<a class="cmnd" id="wcbrightness"></a>|`-2..+2` = set picture brightness
+WcContrast<a class="cmnd" id="wcconstrast"></a>|`-2..+2` = set picture contrast
+WcMirror<a class="cmnd" id="wcmirror"></a>|Mirror camera. <BR>`0` = disabled *(default)*<BR>`1` = enabled
+WcResolution<a class="cmnd" id="wcresolution"></a>|Set camera resolution.<BR>`0` = 96x96 (96x96)<BR>`1` = QQVGA2 (128x160)<BR>`2` = QCIF (176x144)<BR>`3` = HQVGA (240x176)<BR>`4` = QVGA (320x240)<BR>`5` = CIF (400x296)<BR>`6` = VGA (640x480)<BR>`7` = SVGA (800x600)<BR>`8` = XGA (1024x768)<BR>`9` = SXGA (1280x1024)<BR>`10` = UXGA (1600x1200)
+WcSaturation<a class="cmnd" id="wcsaturation"></a>|`-2..+2` = set picture saturation
+WcStream<a class="cmnd" id="wcstream"></a>|Control streaming<BR>`0` = stop<BR>`1` = start
+
+### Ethernet
+
 Command|Parameters
 :---|:---
 Ethernet<a class="cmnd" id="ethernet"></a>|*Currently only for Olimex ESP32-PoE board*<BR>`0` = disable Ethernet<BR>`1` = enable Ethernet _(default)_
