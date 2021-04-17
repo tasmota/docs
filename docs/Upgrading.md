@@ -54,7 +54,7 @@ You are presented with two choices:
 - **_Upgrade by webserver_** - use an OTA server 
 - **_Ugprade by file upload_** - uploading a downloaded or self-compiled binary file from your computer
 
-![Upgrading_2](https://user-images.githubusercontent.com/5904370/68962130-301eaf80-07d4-11ea-87bb-54c018fe7794.png)
+![Upgrading_2](_media/upgrading_2.png)
 
 ### Upgrade by web server
 If you want to upgrade to the latest release version click the first **Start Upgrade** button. This screen should appear
