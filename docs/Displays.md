@@ -102,13 +102,14 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 `pp` = pad text with spaces, positive values align left, negative values
 align right    
 `sp` = set text scaling for all fonts (scaling factor 1...N)  
-`fp` = set font (1=12, 2=24,(opt 3=8)) if font==0 the classic GFX font is used, if font==7 RA8876 internal font is used, if font==4  special 7 segment 24 pixel number font is used   
+`fp` = set font (1=12, 2=24,(opt 3=8)) if font==0 the classic GFX font is used, if font==7 RA8876 internal font is used, if font==4  special 7 segment 24 pixel number font is used, a ram based font is selected if font==5  
 `Cp` = set foreground color (0,1) for black or white and RGB decimal code for color (see [color codes](#color-codes))  
 `Bp` = set background color (0,1) for black or white and RGB decimal code for color (see [color codes](#color-codes))   
 `Cip` = set foreground index color (0..31) for color displays (see index color table below)  
 `Bip` = set background index color (0..31) for color displays (see index color table below)  
 `wp` = draws an analog watch with radius p  (#define USE_AWATCH)   
-`Pfilename:` = display an rgb 16-bit color image when SD card file system is present  
+`Pfilename:` = display an rgb 16-bit color image when file system is present  
+`Ffilename:` = load RAM font file when file system is present. the font is selected with font Nr. 5, these fonts are special binary versions of GFX fonts of any type. they end with .fnt. an initial collection is found in Folder BinFonts  
 `dcI:V` = define index color entry Index 19-31, V 16 bit color value (index 0-18 is fixed)  
 
 ### Touch Buttons and Sliders
@@ -243,8 +244,8 @@ _Parameters are separated by colons._
 
 `Gdn:m` sets graph n draw mode `0` = off, `1` = on. When on, redraw graph  
 
-* `Gsn:path:` = save graph `n` to path (if optional SD card is present)  
-* `Grn:path:` = restore graph `n` from path (if optional SD card is present)  
+* `Gsn:path:` = save graph `n` to path (if optional file system is present)  
+* `Grn:path:` = restore graph `n` from path (if optional file system is present)  
 
 ### Batch files
 
@@ -456,6 +457,8 @@ SPI
 9. SPI Speed in MHz
 all signals must be given. unused pins may be set to -1
 if you specify a * char the pin number is derived from the Tasmota GPIO GUI.  
+the CS and DC pins must be the standard pins e.g. SPI_CS or SPI_DC.  
+
 example:  
 
 ```haskell
@@ -480,7 +483,7 @@ example:
 :S,2,1,1,0,40,20
 ```
 :I  
-initial register setup for the display controler.  
+initial register setup for the display controler. (`IC` marks that the controller is using command mode even with command parameters)  
 all values are in hex. On SPI the first value is the command, then the number of arguments and the the arguments itself.
 Bi7 7 on the number of arguments set indicate a wait of 150 ms. On I2C all hex values are sent to i2c
 example:  
@@ -625,9 +628,10 @@ E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
 #
 ```
 
-the most conveniant editing is done via scripter.  
+the most conveniant editing when developing or modifying is done via scripter.  
 on every scripter save the display is reinitialized and you see
 immediately the result of your changes.  
+however the normal use would be to store the descriptor in file system.
 
 example of scripter driven display descriptor:  
 
