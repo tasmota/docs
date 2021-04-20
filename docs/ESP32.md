@@ -2,7 +2,10 @@
 
 !!! warning "ESP32 support is in beta and not all functions or supported peripherals will work reliably"
 
-You can download precompiled development binaries from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/) or [https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32) and the needed ESP32 flash files [https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32/ESP32_needed_files](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32/ESP32_needed_files).
+You can download precompiled binaries:
+  - development branch from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/) 
+  - stable releases from [https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32) 
+  - the required ESP32 flash files at [https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32/ESP32_needed_files](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32/ESP32_needed_files)
 
 Command syntax for flashing Tasmota32 firmware on ESP32 via Esptool (**replace COM port number!**):
 ```
@@ -13,7 +16,7 @@ or you can try [ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) 
 
 ## Compiling for ESP32
 
-Uncomment in `platformio_tasmota32.ini` tasmota32 in line #9. Next build will create a `tasmota32.bin`. 
+Uncomment the tasmota32xxx build you want to compile in `platformio_tasmota32.ini`. For exampple, uncommenting tasmota32 in line #9 will build `tasmota32.bin` on the next Build task in Platformio. 
 
 ![platformio_override.ini](_media/esp32-pio.jpg)
 
