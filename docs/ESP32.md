@@ -1,20 +1,90 @@
-# ESP32 (beta)
+---
+desription: Everything about Tasmota on ESP32
+---
+!!! warning "ESP32 support is in beta and not all functions or supported peripherals will work reliably."
+     Due to the scope and activity of development there might be breaking changes and incompatibilities between major and minor versions of Tasmota32. In case of problems first erase flash and serial flash the latest development binary.
 
-!!! warning "ESP32 support is in beta and not all functions or supported peripherals will work reliably"
+## Flashing
 
-You can download precompiled binaries:
-  - development branch from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/) 
-  - stable releases from [https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32) 
-  - the required ESP32 flash files at [https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32/ESP32_needed_files](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32/ESP32_needed_files)
 
-Command syntax for flashing Tasmota32 firmware on ESP32 via Esptool (**replace COM port number!**):
+Use [ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) for flashing an ESP32 or ESP82xx (Windows and MacOs executables are tested and verified as working).
+
+With esptool.py use the following command syntax (**replace COM port number!**):
 ```
 esptool.py --chip esp32 --port COM5 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dout --flash_freq 40m --flash_size detect 0x1000 bootloader_dout_40m.bin 0x8000 partitions.bin 0xe000 boot_app0.bin 0x10000 tasmota32.bin
 ```
 
-or you can try [ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) for flashing an ESP82xx / ESP32 (Windows and MacOs executables are tested and working verified)
+You can download precompiled binaries:
 
-## Compiling for ESP32
+  - development branch from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/) 
+  - stable releases from [https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32) 
+  - the required [flash files](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32/ESP32_needed_files) _(not needed when using ESP_Flasher)_
+
+OTA upgrade from older versions of tasmota32 might fail due to significant changes in partition tables.
+
+Every OTA upgrade currently fails on tasmotasolo1.bin builds. Upgrade by File upload should work instead.
+
+## ESP32 Differences
+All ESP32 systems on a chip (SoC) are 32-bit MCUs with 2.4 GHz Wi-Fi & Bluetooth/Bluetooth LE built in. There are distinct product lines which are different from each other in varying degrees. 
+
+### ESP32
+
+Tasmota32 is initially developed and tested with dual core version of ESP32
+
+| Module          | Core    | Core clock | Flash (MB)     | PSRAM (MB) | Touch Sensor | Hall sensor |   |
+|---------------------------------|-------------------------|--------------------------|----------------|------------|--------------|-------------|-------------------|
+| [ESP32-WROOM-32E](/media/datasheets/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf)<br>[ESP32-WROOM-32UE](/media/datasheets/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf) | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16         | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
+| [ESP32-WROVER-E](/media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)<br>[ESP32-WROVER-IE](/media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)   | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16         | 8          | Yes          | Yes         | Bluetooth 4.2 LE  |
+| ESP32-MINI-1    | ESP32-U4WDH Single Core | 160 MHz  | 4              | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
+| [ESP32-SOLO-1](/media/datasheets/esp32-solo-1_datasheet_en.pdf)    | ESP32-S0WD Single Core  | 160 MHz  | 4              | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
+| [ESP32-WROOM-32SE](/media/datasheets/esp32-wroom-32se_datasheet_en.pdf)                | ESP32-D0WD Dual Core    | 240 MHz  | 4,8,16         | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
+
+Single core SoCs do not work with standard binaries, for those use only `tasmota32solo1.bin` or compile your own binary using the tasmota32solo1 environment.
+
+ESP32 line is later expanded with [ESP32-PICO-V3](/media/datasheets/esp32-pico-v3_datasheet_en.pdf), [ESP32-PICO-V3-02](/media/datasheets/esp32-pico-v3-02_datasheet_en.pdf) and [ESP32-PICO-D4](http://espressif.com/sites/default/files/documentation/esp32-pico-d4_datasheet_en.pdf)
+
+### ESP32-S2
+A more cost-efficient version of ESP32, cut down to a single core and several dedicated hardware security features (eFuse, flash encryption, secure boot, signature verification, integrated AES, SHA and RSA algorithms). It has 43 available GPIOs. [Product page for ESP32-S2](https://www.espressif.com/en/products/socs/esp32-s2)
+
+Tasmota does not boot correctly on this line.
+
+### ESP32-S3
+Keeping the security improvements the S3 line now again features the dual core SoC with Bluetooth upgraded to V5 . [Product page for ESP32-S3](https://www.espressif.com/en/products/socs/esp32-s3). 
+
+Untested with Tasmota.
+
+### ESP32-C3
+Unlike previous versions, C3 is a single-core Wi-Fi and Bluetooth 5 (LE) microcontroller SoC based on the open-source RISC-V architecture. It will be available as [ESP32-C3-MINI-1](/media/datasheets/esp32-c3-mini-1_datasheet_en.pdf) and [ESP32-C3-WROOM-02](/media/datasheets/esp32-c3-wroom-02_datasheet_en.pdf) modules. [Product page for ESP32-C3](https://www.espressif.com/en/products/socs/esp32-c3)
+
+Work has already begun on adapting Tasmota32 for RISC-V architecture.
+
+## Exclusive Features
+
+### CPU Temperature Sensor
+Every tasmota32 binary will create and display internal chip temperature sensor in the webUI and in MQTT.
+
+```json
+MQT: tele/tasmota_17A5A0/SENSOR = {"Time":"2021-01-01T00:00:00","ESP32":{"Temperature":41.7},"TempUnit":"C"}
+```
+
+### Hall Sensor
+ESP32 has a built in hall effect sensor that detects changes in the magnetic field in its surroundings. It is located behind the metal lid of the module and connected to GPIO36 and GPIO39. 
+
+To enable set in module configuration or template:
+ - GPIO36 as `HallEffect 1`
+ - GPIO39 as `HallEffect 2`
+
+### Touch Pins
+
+ESP32 has 10 capacitive touch GPIOs. More on configuring and [using them...](https://tasmota.github.io/docs/TouchPin/).
+
+### Berry Scripting
+[Berry](Berry.md) language as a more approachable scripting language. 
+
+### LVGL
+Use [LVGL](https://lvgl.io/) in conjunction with Berry on devices with displays and touch displays to design your own UI.
+
+## Compiling ESP32 Binaries
 
 Uncomment the tasmota32xxx build you want to compile in `platformio_tasmota32.ini`. For exampple, uncommenting tasmota32 in line #9 will build `tasmota32.bin` on the next Build task in Platformio. 
 
@@ -22,9 +92,9 @@ Uncomment the tasmota32xxx build you want to compile in `platformio_tasmota32.in
 
 All binaries use `user_config_override.h` if it exists.
 
-## Templates and Known Devices
+## Working Devices
 
-Some known device templates and configurations. [Touch control pins](https://tasmota.github.io/docs/TouchPin/) are also supported.
+Tasmota Device Templates Repository has a more extenstive list of [ESP32 based](https://templates.blakadder.com/esp32.html) devices.
 
 ### LilyGO TTGO T-Camera OV2640_V05
 

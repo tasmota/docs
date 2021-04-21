@@ -33,9 +33,6 @@ The new values for a personal configuration can be stored in RULE:
     ```rule1 on System#Init do TouchNum 1 endon
     ```  
 
- 
-     
-   
 ### Tasmota Serial Plotter  
   
 This little tool should be helpful to get a feel for the touch values. It is located in the /tools folder of the Tasmota repository and needs the installation of "mathplotlib" and "pyserial" in the active python environment. It is confirmed to work under Windows 10 and macOS Catalina.  

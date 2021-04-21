@@ -144,7 +144,10 @@ nav:
     - Zigbee.md
     - Projects and Tutorials: Tutorials.md
     - For Developers: For-Developers.md
-  - ESP32.md
+  - ESP32 (beta):
+    - Features: ESP32.md
+    - Berry.md
+    - Touch GPIOs: TouchPin.md
   - Smart Home Integrations:
     - Introduction: Integrations.md
     - Alexa.md

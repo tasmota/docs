@@ -61,7 +61,7 @@ Changes can be discarded by clicking on the button "Manage File System" to retur
 ## Commands
 Complete list of [UFS commands](Commands#ufs)
 
-Also look into [Berry scripting language](Berry-Scripting#loading-code-from-filesystem) for ESP32 which works with UFS.
+Also look into [Berry scripting language](Berry.md#loading-code-from-filesystem) for ESP32 which works with UFS.
 
 ## Special files
 
@@ -94,5 +94,5 @@ Stores data that will be displayed at every boot, similar to the DisplayText com
 
 ### autoexec.be
 
-For ESP32 with [Berry scripting language](Berry-Scripting), `autoexec.be` file will be automatically
+For ESP32 with [Berry scripting language](Berry.md), `autoexec.be` file will be automatically
 loaded and executed at the start of the VM.

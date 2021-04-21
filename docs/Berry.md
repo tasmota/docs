@@ -22,7 +22,6 @@ Berry Scripting allows simple and advanced extension of Tasmota, for example:
 - simple scripting and advanced Rules
 - advanced rules, beyond what is possible with native rules
 - advanced automation
-<<<<<<< HEAD
 
 Berry Scripting takes it one step further and allows to build dynamic extensions to Tasmota, that would previously require native code:
 
@@ -32,17 +31,6 @@ Berry Scripting takes it one step further and allows to build dynamic extensions
 - integrate native libraries like `lvgl` (coming soon)
 
 
-=======
-
-Berry Scripting takes it one step further and allows to build dynamic extensions to Tasmota, that would previously require native code:
-
-- build light animations
-- build I2C drivers
-- build complete Tasmota drivers
-- integrate native libraries like `lvgl` (coming soon)
-
-
->>>>>>> development
 ### About the Berry language
 
 Berry has the following advantages:

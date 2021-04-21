@@ -233,14 +233,16 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 207      | 5056     | BL0940 RX       | BL0940 serial interface                                                                    |
 | 208      | 5088     | TCP TX          | TCP Serial bridge                                                                          |
 | 209      | 5120     | TCP RX          | TCP Serial bridge                                                                          |
-| 210      | 5152     | TELEINFO RX     | [Teleinfo](Teleinfo) serial interface                                                                  |
-| 211      | 5184     | TELEINFO Enable | [Teleinfo](Teleinfo) Enable PIN                                                                        |
+| 210      | 5152     | TELEINFO RX     | [Teleinfo](Teleinfo) serial interface                                                      |
+| 211      | 5184     | TELEINFO Enable | [Teleinfo](Teleinfo) Enable PIN                                                            |
 | 212      | 5216     | LMT01           | LMT01 input counting pin                                                                   |
 | 213      | 5248     | IEM3000 TX      | IEM3000 Serial interface                                                                   |
 | 214      | 5280     | IEM3000 RX      | IEM3000 Serial interface                                                                   |
 | 215      | 5312     | Zigbee RST      | Zigbee reset                                                                               |
 | 216      | 5344     | DYP Rx          | DYP-ME007 Rx pin                                                                           |
-|          | 5872     | Option_a1       | Enable PWM2 high impedance if powered off as used by Wyze bulbs                            |
+|          | 5728     | Option_a1       | Enable PWM2 high impedance if powered off as used by Wyze bulbs                            |
+|          | 5729     | Option_a2       | Enable dummy energy monitor                                                                |
+|          | 5730     | Option_a3       | Enable UDisplay universal display driver                                                   |
 |          |          | RotaryA_n       | Rotary Encoder                                                                             |
 |          |          | RotaryB_n       | Rotary Encoder                                                                             |
 
