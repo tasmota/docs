@@ -17,8 +17,9 @@ Incredibly expandable and flexible.
 
 OTA update servers: [http://ota.tasmota.com/tasmota/release](http://ota.tasmota.com/tasmota/release) and [http://ota.tasmota.com/tasmota32/release](http://ota.tasmota.com/tasmota32/release/).
 
+<small><span style="float:right">\*all documentation is for current release only</small></span>
 ### Current release 
-<a href="https://github.com/arendst/Tasmota/releases/tag/v9.4.0"><span style="font-size:40px;">Tasmota 9.4.0 Leslie</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
+<a href="https://github.com/arendst/Tasmota/releases/tag/v9.4.0"><span style="font-size:40px;">Tasmota 9.4.0 Leslie</span></a><br>
 
 
 - :warning: BREAKING :warning: ESP32 partition layout changed to accommodate more file space on most boards and more code space on Core2 and Odroid-GO [#11746](https://github.com/arendst/Tasmota/issues/11746)

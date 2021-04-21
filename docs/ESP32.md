@@ -1,7 +1,7 @@
 ---
 desription: Everything about Tasmota on ESP32
 ---
-!!! warning "ESP32 support is in beta and not all functions or supported peripherals will work reliably."
+!!! danger "ESP32 support is in beta and not all functions or supported peripherals will work reliably."
      Due to the scope and activity of development there might be breaking changes and incompatibilities between major and minor versions of Tasmota32. In case of problems first erase flash and serial flash the latest development binary.
 
 ## Flashing
@@ -87,7 +87,7 @@ Use [LVGL](https://lvgl.io/) in conjunction with Berry on devices with displays 
 
 ## Compiling ESP32 Binaries
 
-Uncomment the tasmota32xxx build you want to compile in `platformio_tasmota32.ini`. For exampple, uncommenting tasmota32 in line #9 will build `tasmota32.bin` on the next Build task in Platformio. 
+Uncomment the tasmota32xxx build you want to compile in `platformio_override.ini`. For example, uncommenting tasmota32 will build `tasmota32.bin` on the next Build task in Platformio. 
 
 ![platformio_override.ini](_media/esp32-pio.jpg)
 
@@ -95,7 +95,7 @@ All binaries use `user_config_override.h` if it exists.
 
 ## Working Devices
 
-Tasmota Device Templates Repository has a more extenstive list of [ESP32 based](https://templates.blakadder.com/esp32.html) devices.
+[Tasmota Device Templates Repository](https://templates.blakadder.com/esp32.html) has a more extenstive list of [ESP32 based](https://templates.blakadder.com/esp32.html) devices.
 
 ### LilyGO TTGO T-Camera OV2640_V05
 
