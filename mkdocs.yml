@@ -147,6 +147,7 @@ nav:
   - ESP32 (beta):
     - Features: ESP32.md
     - Berry.md
+    - Bluetooth Low Energy: Bluetooth_ESP32.md
     - Touch GPIOs: TouchPin.md
   - Smart Home Integrations:
     - Introduction: Integrations.md
