@@ -35,10 +35,10 @@ Download [latest Tasmotizer](https://github.com/tasmota/tasmotizer/releases/) to
 - Optional GUI file editor enabled with define ``GUI_EDIT_FILE`` [#11668](https://github.com/arendst/Tasmota/issues/11668)
 - Initial support for universal display driver UDisplay by Gerhard Mutz. Enable by selecting any GPIO as ``Option A3`` [#11665](https://github.com/arendst/Tasmota/issues/11665)
 - ESP32
-  - Berry improvements [#11163](https://github.com/arendst/Tasmota/issues/11163)
-  - Extent BLE [#11212](https://github.com/arendst/Tasmota/issues/11212)
-  - Support for WS2812 hardware driver via RMT or I2S, secondary I2C controller, internal Hall Effect sensor connected to both GPIO36 and GPIO39, LVGL 7.11 with Berry binding
-  - Build changes: tasmota32-knx.bin, tasmota32-sensors.bin and tasmota32-lite.bin binaries consolidated in *tasmota32.bin* binary
+    - Berry improvements [#11163](https://github.com/arendst/Tasmota/issues/11163)
+    - Extent BLE [#11212](https://github.com/arendst/Tasmota/issues/11212)
+    - Support for WS2812 hardware driver via RMT or I2S, secondary I2C controller, internal Hall Effect sensor connected to both GPIO36 and GPIO39, LVGL 7.11 with Berry binding
+    - Build changes: tasmota32-knx.bin, tasmota32-sensors.bin and tasmota32-lite.bin binaries consolidated in *tasmota32.bin* binary
 
 See [changelog](https://github.com/arendst/Tasmota/blob/development/CHANGELOG.md) for a complete list of new features, changes and bug fixes.
 
