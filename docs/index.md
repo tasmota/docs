@@ -25,7 +25,8 @@ Download [latest Tasmotizer](https://github.com/tasmota/tasmotizer/releases/) to
 - :warning: BREAKING :warning: ESP32 partition layout changed to accommodate more file space on most boards and more code space on Core2 and Odroid-GO [#11746](https://github.com/arendst/Tasmota/issues/11746)
 
 - Redesigned initial GUI wifi configuration by Adrian Scillato [#11693](https://github.com/arendst/Tasmota/issues/11693)
-- Support [NEC and OPTOMA LCD/DLP Projector](Projector.md) serial power control, XPT2046 touch screen digitizer on ILI9341 display, 
+- Support to control [NEC and OPTOMA LCD/DLP Projector](Projector.md)
+- Support XPT2046 touch screen digitizer on ILI9341 display 
 - Support for CSE7761 energy monitor as used in ESP32 based Sonoff Dual R3 Pow [#10793](https://github.com/arendst/Tasmota/issues/10793)
 - Support for Frequency monitoring and zero-cross detection on CSE7761 (Sonoff Dual R3)
 - Support for dummy energy monitor using user values set by commands ``VoltageSet``, ``CurrentSet``, ``PowerSet`` and ``FrequencySet``. Enable by selecting any GPIO as ``Option A2`` [#10640](https://github.com/arendst/Tasmota/issues/10640)
