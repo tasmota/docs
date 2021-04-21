@@ -31,7 +31,7 @@ To use simply add `.gz` to the existing OTA Url or download the `.bin.gz` binary
 
 ## Upgrade Flow
 
-**v1.0.11** &nbsp;:twisted_rightwards_arrows:&nbsp; [**v3.9.22**](https://github.com/arendst/Tasmota/releases/download/v3.9.22/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v4.2.0**](https://github.com/arendst/Tasmota/releases/download/v4.2.0/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v5.14.0**](https://github.com/arendst/Tasmota/releases/download/v5.14.0/sonoff-classic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v6.7.1**](https://github.com/arendst/Tasmota/releases/download/v6.7.1/sonoff-basic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v7.2.0**](https://github.com/arendst/Tasmota/releases/download/v7.2.0/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v8.5.1**](https://github.com/arendst/Tasmota/releases/download/v8.5.1/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v9.1**](https://github.com/arendst/Tasmota/releases/download/v9.1.0/tasmota-lite.bin.gz) &nbsp;:twisted_rightwards_arrows:&nbsp; [**Current release**](https://github.com/arendst/Tasmota/releases/)
+**v1.0.11** &nbsp;:twisted_rightwards_arrows:&nbsp; [**v3.9.22**](https://github.com/arendst/Tasmota/releases/download/v3.9.22/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v4.2.0**](https://github.com/arendst/Tasmota/releases/download/v4.2.0/firmware.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v5.14.0**](https://github.com/arendst/Tasmota/releases/download/v5.14.0/sonoff-classic.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v6.7.1**](http://ota.tasmota.com/tasmota/release-6.7.1/sonoff.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v7.2.0**](http://ota.tasmota.com/tasmota/release-7.2.0/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v8.5.1**](http://ota.tasmota.com/tasmota/release-8.5.1/tasmota-lite.bin) &nbsp;:twisted_rightwards_arrows:&nbsp; [**v9.1**](http://ota.tasmota.com/tasmota/release-9.1.0/tasmota-lite.bin.gz) &nbsp;:twisted_rightwards_arrows:&nbsp; [**Current release**](http://ota.tasmota.com/tasmota/release/)
 
 Follow the path strictly to ensure success. **Do not install only tasmota-minimal.bin** but upgrade to full, working firmware. Linked `-lite.bin` binaries will do the job.  
 
@@ -54,7 +54,7 @@ You are presented with two choices:
 - **_Upgrade by webserver_** - use an OTA server 
 - **_Ugprade by file upload_** - uploading a downloaded or self-compiled binary file from your computer
 
-![Upgrading_2](https://user-images.githubusercontent.com/5904370/68962130-301eaf80-07d4-11ea-87bb-54c018fe7794.png)
+![Upgrading_2](_media/upgrading_2.png)
 
 ### Upgrade by web server
 If you want to upgrade to the latest release version click the first **Start Upgrade** button. This screen should appear

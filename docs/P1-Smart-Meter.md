@@ -2,6 +2,7 @@
  Reading serial data from a P1 smart meter using a Wemos with Tasmota installed.
 
  Tested on the following smart meters:
+ 
   - Kaifa MA105C
   - De Landis + Gyr, E350 (ZCF110)
   - Sanxing SX631 (S34U18)
@@ -91,6 +92,7 @@ Equipment identifier (Gas) - {"SerialReceived":"0-1:96.1.0(473030333235363132373
 GasMeterReadingFiveMinutes >> Last 5-minute value (temperature converted), gas delivered to client in m3, including decimal values and capture time - {"SerialReceived":"0-1:24.2.1(181227090000W)(02910.491*m3)"}
 {"SerialReceived":"!5E3E"}
 ```
+Also see Tasmota's [Smart Meter Interface](https://tasmota.github.io/docs/Smart-Meter-Interface) if you want to have these OBIS lines translated in selected sensors populatinng MQTT payloads.
 
 Additional info
 * [Kaifa Meters (Dutch)](https://www.liander.nl/sites/default/files/Meters-Handleidingen-elektriciteit-Kaifa-uitgebreid.pdf)

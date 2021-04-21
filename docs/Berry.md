@@ -91,55 +91,10 @@ Hello Tasmota!
 
 Meanwhile the Tasmota log shows:
 
+> tasmota.cmd("Dimmer 60")
+{"POWER":"ON","Dimmer":60,"Color":"996245","HSBColor":"21,55,60","Channel":[60,38,27]}
+The light is bright
 ```
-10:47:45.235 Hello Tasmota!
-10:47:45.236 Hello again
-```
-
-### Interacting with Tasmota
-
-The `tasmota` object provides numerous functions to interact with Tasmota. See reference for the list of functions.
-
-For example `tasmota.publish()` is similar to `Publish` and allows to publish arbitrary MQTT messages.
-
-#### Sending native Tasmota commands
-
-Use `tasmota.cmd()` to send arbitrary commands, as strings, like if they were entered via the Tasmota console. For example:
-
-```python
-> tasmota.cmd("Dimmer 50")
-{"POWER":"ON","Dimmer":50,"Color":"80523A","HSBColor":"21,55,50","Channel":[50,32,23]}
-```
-
-If the command sends a reponse, the returned string is parsed as JSON and converted to native Berry `map` object.
-
-#### Invoking Berry commands from Tasmota
-
-Use Tasmota `Br` command to send arbitrary Berry commands.
-
-Example (from the Tasmota console, not the Berry console):
-
-```
-12:34:04.085 CMD: Br 1+1
-12:34:04.092 RSL: stat/tasmota_923B34/RESULT = {"Br":"2"}
-```
-
-## Rules
-
-Berry supports the equivalent of Tasmota rules, using a very similar MQTT Json pattern.
-
-Pattern has the format `<level1>#<level2#...#<levelN>` when parsing a JSON message. Pattern matching is case-insensitive. Using `?` in a sub-level matches any value (first occurence only). Add conditions to the last level, as you would do with rules.
-
-
-Operator|Effect
-:---|:---
-`==` `!==`|Compare as strings
-`=` `!=` `<` `<=` `>` `>=`|Compare a numers
-
-Important: you don't need `DATA` sub-level with Berry when parsing JSON root level messages.
-
-Example: `Dimmer>=50` will trigger the rule if there is a `Dimmer` field with a numerical value greater than `50`.
-
 The rule function have the general form below where parameters are optionals:
 
 ```python
@@ -272,7 +227,6 @@ channels|`array of int, ranges 0..255`<br>Set the value for each channel, as an 
 
 When setting attributes, they are evaluated in the following order, the latter overriding the previous: `power`, `ct`, `hue`, `sat`, `rgb`, `channles`, `bri`.
 
-Example:
 
 ```python
   # set to yellow, 25% brightness

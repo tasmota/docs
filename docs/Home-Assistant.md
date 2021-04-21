@@ -2,7 +2,8 @@ description: Everything about using Tasmota in Home Assistant
 
 # Home Assistant
 
-!!! failure "Home Assistant support is not built in to tasmota-lite.bin. Use the standard tasmota.bin or other binaries that include Home Assistant support."
+!!! failure "Home Assistant support is not built in to tasmota-lite.bin. Use the standard tasmota.bin or other binaries that include Home Assistant support." 
+    Check the "Program Version" in the webUI **Information** page to make sure which version of Tasmota you're running.
 
 [Home Assistant](https://home-assistant.io/) is an open source home automation solution that puts local control and privacy first.
 
@@ -10,22 +11,22 @@ Tasmota communicates with Home Assistant using MQTT. Before going any further, m
 
 Home Assistant has different options of adding Tasmota devices:
 
-1. Official Tasmota (beta) integration (**preferred**)
+1. Official Tasmota integration (**preferred**)
 2. MQTT discovery (_development halted_)
 3. Manual configuration by editing configuration.yaml
 
-## Tasmota (beta) Integration
+## Tasmota Integration
 
 Once you configure the [Home Assistant](https://www.home-assistant.io/integrations/tasmota/) integration every new Tasmota device with `SetOption19 0` set, will be discovered automatically. 
 
-All Tasmota devices will be listed in their own Tasmota (beta) card in **Configuration - Integrations** menu in Home Assistant.
+All Tasmota devices will be listed in their own Tasmota card in **Configuration - Integrations** menu in Home Assistant.
 
 !!! warning 
     Do not change the FullTopic in order to use this feature. Leave it as default.
 
 ![Informative sensor](_media/tasmota_integration_showcase.png)
 
-Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmota (beta) integration and [`FriendlyName<x>`](Commands.md#friendlyname) to name power outputs (switch or light entities in HA).
+Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmota integration and [`FriendlyName<x>`](Commands.md#friendlyname) to name power outputs (switch or light entities in HA).
 
 ### Supported Entities
 
@@ -58,7 +59,7 @@ You cannot as long as Home Assistant support is enabled in your Tasmota binary. 
 
 Deleting them from Home Assistant while Tasmota device is still active will simply rediscover all the entities. 
 
-If you opt to switch to MQTT Discovery, issuing `SetOption19 1` command will remove all Tasmota (beta) entities and add new entities under the MQTT integration.
+If you opt to switch to MQTT Discovery, issuing `SetOption19 1` command will remove all Tasmota entities and add new entities under the MQTT integration.
 
 ### Supplemental Custom Discovery Message
 
@@ -68,8 +69,8 @@ When creating the MQTT discovery JSON add this device identifier `,"device":{"co
 
 Examples of custom discovery:
 
-- [PIR sensor](https://blakadder.com/tasmota-tags/)
-- [RFID Tag](https://blakadder.com/pir-in-tasmota-integration/)
+- [RFID Tag](https://blakadder.com/tasmota-tags/)
+- [PIR sensor](https://blakadder.com/pir-in-tasmota-integration/)
 
 ## Editing configuration.yaml
 
@@ -626,13 +627,13 @@ fan:
   payload_low_speed: "1"
   payload_medium_speed: "2"
   payload_high_speed: "3"
-  payload_available: Online
-  payload_not_available: Offline
+  payload_available: "Online"
+  payload_not_available: "Offline"
   speeds:
-    - off
-    - low
-    - medium
-    - high
+    - "off"
+    - "low"
+    - "medium"
+    - "high"
 ```
 <!-- tabs:end -->
 
@@ -699,8 +700,8 @@ fan:
         {% endif %}
     speed_value_template: "{{ value_json.FanSpeed }}"
     availability_topic: tele/ifan02/LWT
-    payload_available: Online
-    payload_not_available: Offline
+    payload_available: "Online"
+    payload_not_available: "Offline"
     speed_command_topic: "cmnd/ifan02/FanSpeed"
     payload_low_speed: "1"
     payload_medium_speed: "2"
@@ -711,9 +712,9 @@ fan:
     qos: 1
     retain: false
     speeds:
-      - low
-      - medium
-      - high
+      - "low"
+      - "medium"
+      - "high"
 light:
   - platform: mqtt
     name: "Pat Ceiling Light"

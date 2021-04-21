@@ -11,7 +11,6 @@ If you want to modify the code or default settings you can use:
 - [**PlatformIO CLI**](PlatformIO-CLI) - how to flash Tasmota using the PlatformIO command line interface on Linux
 - [**PlatformIO-Core**](Create-your-own-Firmware-Build-without-IDE) - automate firmware builds using PlatformIO-Core and flash with esptool
 - [**Visual Studio Code**](Visual-Studio-Code) -  setup and configure [Visual Studio Code](https://code.visualstudio.com) with PlatformIO for Tasmota
-- [**Atom**](Create-your-own-Firmware-Build-without-IDE) - beginner guide building Tasmota firmware using [Atom](https://atom.io/) with PlatformIO plugin
 - [**Docker Tasmota**](https://github.com/tasmota/docker-tasmota) - compile from a Docker container using PlatformIO
 
 #### Online Compilers
@@ -134,11 +133,11 @@ build_flags = ${common.build_flags} -DFIRMWARE_BAR
 ; Similar exemple for ESP32
 ; Note that you must explicitly state that they derive from `tasmota32`
 [env:tasmota32-foo]
-extends = env:tasmota32
+extends = env:tasmota32_base
 build_flags             = ${common32.build_flags} -DFIRMWARE_FOO
 
 [env:tasmota32-grizzly]
-extends = env:tasmota32
+extends = env:tasmota32_base
 build_flags             = ${common32.build_flags} -DFIRMWARE_GRIZZLY
 ```
 

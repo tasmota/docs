@@ -98,12 +98,12 @@ As most parts are connected to high voltage AC it is recommended to fit the hard
 [Device Template](Templates)<BR>
 **PZEM-004T version prior to V3:**
 
-`{"NAME":"HW-655 PZEM","GPIO":[0,63,0,62,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
+`{"NAME":"HW-655 PZEM","GPIO":[0,62,0,63,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
 
 
 ## PZEM-004T version V3
 
-`{"NAME":"HW-655 PZEM","GPIO":[0,98,0,62,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
+`{"NAME":"HW-655 PZEM","GPIO":[0,62,0,98,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
 
 Use the module template to configure the GPIO's for hardware serial connection.
 
@@ -148,12 +148,12 @@ Create _**user_config_override.h**_ in the `tasmota` folder and paste the conten
 [Device Template](Templates)<BR>
 **PZEM-004T version prior to V3:**
 
-`{"NAME":"HW-655 PZEM","GPIO":[0,63,0,62,6,5,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
+`{"NAME":"HW-655 PZEM","GPIO":[0,62,0,63,6,5,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
 
 
 ## PZEM-004T version V3
 
-`{"NAME":"HW-655 PZEM","GPIO":[0,98,0,62,6,5,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
+`{"NAME":"HW-655 PZEM","GPIO":[0,62,0,98,6,5,0,0,0,0,0,0,0],"FLAG":0,"BASE":18}`
 
 - use **`I2CScan`** to detect your device address
 - use **`DeviceAddress XXX`** (where XXX is the decimal converted address found) to set the I<sup>2</sup>C address
@@ -217,7 +217,7 @@ You can use a voltage level shifter to power the ESP82xx from the PZEM-016 modul
 <img src="https://user-images.githubusercontent.com/34340210/66046722-57efd780-e4f4-11e9-912b-bab0da3818a9.jpeg" />
 
 ### Tasmota Configuration
-It is recommended to use GPIO1/GPIO3 or GPIO13/GPIO15 for the most reliable serial communications. You can use any GPIO but anything else will use serial emulation (software). Software serial is not supported with the 2.3 Arduino Core.  
+It is recommended to use GPIO1/GPIO3 or GPIO13/GPIO15 for the most reliable serial communications. When using other GPIOs software serial will be activated and used. 
 
 GPIO|Component|PZEM
 -:|:-:|:-:

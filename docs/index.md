@@ -15,29 +15,32 @@ Incredibly expandable and flexible.
 [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
 
-For OTA updates please use the new server [http://ota.tasmota.com/tasmota/release](http://ota.tasmota.com/tasmota/release) and [http://ota.tasmota.com/tasmota32/release](http://ota.tasmota.com/tasmota32/release/). <br>
-Download [latest Tasmotizer](https://github.com/tasmota/tasmotizer/releases/) to use the new OTA server during flashing.
+OTA update servers: [http://ota.tasmota.com/tasmota/release](http://ota.tasmota.com/tasmota/release) and [http://ota.tasmota.com/tasmota32/release](http://ota.tasmota.com/tasmota32/release/).
 
+<small><span style="float:right">\*all documentation is for current release only</small></span>
 ### Current release 
-<a href="https://github.com/arendst/Tasmota/releases/tag/v9.3.0"><span style="font-size:40px;">Tasmota 9.3.0 Kenneth</span></a><small><span style="float:right">\*all documentation is for current release only</small></span><br>
+<a href="https://github.com/arendst/Tasmota/releases/tag/v9.4.0"><span style="font-size:40px;">Tasmota 9.4.0 Leslie</span></a><br>
 
-- Support for filesystem ``autoexec.bat`` to execute sequential commands like backlog
-- Filesystem commands ``Ufs``, ``UfsType``, ``UfsSize``, ``UfsFree``, ``UfsDelete``, ``UfsRename`` and ``UfsRun``- Support for Afrikaans and Frysk language translations
-- Added BSSID and Signal Strength Indicator to GUI wifi scan result [#10253](https://github.com/arendst/Tasmota/issues/10253)
-- Rule trigger string comparisons for EndsWith ``$>``, StartsWith ``$<`` and Contains ``$|`` [#10538](https://github.com/arendst/Tasmota/issues/10538)
-- New commands: ``CTRange``, ``L1MusicSync <0|Off>|<1|On>|<2|Toggle>, 1..10, 1..100>``, ``RuleTimer0``, ``Speed2``, ``VirtualCT``, ``SetOption40 0..250``, ``SetOption43 1..255``, ``SetOption118 1``, ``SetOption119 1``, ``SetOption120 1`` or ``ZbEndpointTopic 1``, ``ZbScan``
-- Command synonims: ``ChannelRemap``, ``MultiPWM``, ``AlexaCTRange``, ``PowerOnFade``, ``PWMCT``, ``WhiteBlend`` and ``VirtualCT`` as synonyms for ``SetOption37, 68, 82, 91, 92, 105`` and ``106``
-- Commands ``ZbNameKey``, ``ZbDeviceTopic``, ``ZbNoPrefix``, ``ZbEndpointSuffix``, ``ZbNoAutoBind`` and ``ZbNameTopic`` as synonyms for ``SetOption83, 89, 100, 101, 110`` and ``112``
-- Commands ``ZbNoAutoBind``, ``ZbReceivedTopic`` and ``ZbOmitDevice`` as synonyms for ``SetOption116, 118`` and ``119``
-- Commands ``BuzzerActive`` and ``BuzzerPwm`` as synonyms for ``SetOption67`` and ``111``
-- Milliseconds to console output [#10152](https://github.com/arendst/Tasmota/issues/10152)
-- Gpio ``Option_a1`` enabling PWM2 high impedance if powered off as used by Wyze bulbs [#10196](https://github.com/arendst/Tasmota/issues/10196)
-- Rotary No Pullup GPIO selection ``Rotary A/B_n`` [#10407](https://github.com/arendst/Tasmota/issues/10407)
-- Support for P9813 RGB Led MOSFET controller, FTC532 8-button touch controller, BS814A-2 8-button touch buttons, up to 4 I2C SEESAW_SOIL Capacitance & Temperature sensors, TOF10120 time of flight sensor, SPI display driver for ST7789 TFT, TM1637 seven segment display, RFID Wiegand interface, Sugar Valley NeoPool Controller, Eastron SDM72D-M three phase 100A Modbus energy meter, SPI display driver SSD1331 Color OLED
-- Support for ESP32 ``Module 3`` Odroid Go 16MB binary tasmota32-odroidgo.bin [#8630](https://github.com/arendst/Tasmota/issues/8630)
-- Support for ESP32 ``Module 5`` Wireless Tag ETH01 [#9496](https://github.com/arendst/Tasmota/issues/9496)
-- Support for ESP32 ``Module 7`` M5stack core2 16MB binary tasmota32-core2.bin [#10635](https://github.com/arendst/Tasmota/issues/10635)
-- Berry language on ESP32
+
+- :warning: BREAKING :warning: ESP32 partition layout changed to accommodate more file space on most boards and more code space on Core2 and Odroid-GO [#11746](https://github.com/arendst/Tasmota/issues/11746)
+
+- Redesigned initial GUI wifi configuration by Adrian Scillato [#11693](https://github.com/arendst/Tasmota/issues/11693)
+- Support to control [NEC and OPTOMA LCD/DLP Projector](Projector.md)
+- Support XPT2046 touch screen digitizer on ILI9341 display 
+- Support for CSE7761 energy monitor as used in ESP32 based Sonoff Dual R3 Pow [#10793](https://github.com/arendst/Tasmota/issues/10793)
+- Support for Frequency monitoring and zero-cross detection on CSE7761 (Sonoff Dual R3)
+- Support for dummy energy monitor using user values set by commands ``VoltageSet``, ``CurrentSet``, ``PowerSet`` and ``FrequencySet``. Enable by selecting any GPIO as ``Option A2`` [#10640](https://github.com/arendst/Tasmota/issues/10640)
+- Support for TM1638 and MAX7219 seven segment displays 
+- Tasmota discovery as alternative to Home Assistant discovery using define ``USE_TASMOTA_DISCOVERY``
+- New commands: [`Sensor80`](Commands.md#sensor80), [`SerialBuffer`](Commands.md#serialbuffer), [`SetOption126`](Commands.md#setoption126), [`Backlog0`](Commands.md#backlog0), [`TuyaTempSetRes 0..3`](Commands.md#tuyatempsetres), [`MqttKeepAlive 1..100`](Commands.md#mqttkeepalive), [`MqttTimeout 1..100`](Commands.md#mqtttimeout), [`DisplayType`](Commands.md#displaytype), [`DisplayInvert`](Commands.md#displayinvert)
+- Optional GUI file editor enabled with define ``GUI_EDIT_FILE`` [#11668](https://github.com/arendst/Tasmota/issues/11668)
+- Initial support for universal display driver UDisplay by Gerhard Mutz. Enable by selecting any GPIO as ``Option A3`` [#11665](https://github.com/arendst/Tasmota/issues/11665)
+- ESP32
+    - Berry improvements [#11163](https://github.com/arendst/Tasmota/issues/11163)
+    - Extent BLE [#11212](https://github.com/arendst/Tasmota/issues/11212)
+    - Support for WS2812 hardware driver via RMT or I2S, secondary I2C controller, internal temperature sensor and internal Hall Effect sensor connected to both GPIO36 and GPIO39, LVGL 7.11 with Berry binding
+    - tasmota32-knx.bin, tasmota32-sensors.bin and tasmota32-lite.bin binaries consolidated in *tasmota32.bin* binary. 
+    - New *tasmota32solo1.bin* for single core ESP32 SoCs
 
 See [changelog](https://github.com/arendst/Tasmota/blob/development/CHANGELOG.md) for a complete list of new features, changes and bug fixes.
 

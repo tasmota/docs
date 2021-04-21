@@ -36,13 +36,31 @@ theme:
   logo: '_media/logo.svg'
   favicon: _media/favicon.ico
   palette:
-    primary: 'blue'
-    accent: 'indigo'
-    scheme: preference
+
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: deep purple
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
   features:
     - navigation.tabs
-    - navigation.instant
     - navigation.tabs.sticky
+    - navigation.instant
+    - navigation.top
+    - navigation.tracking
   font:
     text: Barlow
     code: Roboto Mono
@@ -122,10 +140,15 @@ nav:
     - Timers.md
     - TLS.md
     - TuyaMCU.md
+    - Universal File System: UFS.md
     - Zigbee.md
     - Projects and Tutorials: Tutorials.md
     - For Developers: For-Developers.md
-  - ESP32.md
+  - ESP32 (beta):
+    - Features: ESP32.md
+    - Berry.md
+    - Bluetooth Low Energy: Bluetooth_ESP32.md
+    - Touch GPIOs: TouchPin.md
   - Smart Home Integrations:
     - Introduction: Integrations.md
     - Alexa.md

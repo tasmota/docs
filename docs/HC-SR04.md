@@ -2,11 +2,13 @@
 
 !!! info "This feature is included only in tasmota-sensors.bin" 
 
-HC-SR04 (HC-SR04P and JSN-SR04T) is an ultrasonic ranging sensor. Provides 2cm to 400cm of non-contact measurement functionality with a ranging accuracy that can reach up to 3mm. Each HC-SR04 module includes an ultrasonic transmitter, a receiver and a control circuit. See [HC-SR04 Ultrasonic Sensor](https://www.sparkfun.com/products/13959) for more information.
+HC-SR04 (HC-SR04P and JSN-SR04T) is an ultrasonic ranging sensor. Provides 2cm to 300cm of non-contact measurement functionality with a ranging accuracy that can reach up to 3mm. Each HC-SR04 module includes an ultrasonic transmitter, a receiver and a control circuit. See [HC-SR04 Ultrasonic Sensor](https://www.sparkfun.com/products/13959) for more information.
 
 Buy example: 
 - [AliExpress](https://www.aliexpress.com/item/4000124226294.html)
 - [Sparkfun](https://www.sparkfun.com/products/13959)
+
+The [US-100](https://www.adafruit.com/product/4019) can also be use as a HC-SR04 if you remove the jumper at the back (check Adafruit documentation).
 
 ## Configuration
 

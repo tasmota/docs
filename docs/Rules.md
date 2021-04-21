@@ -245,7 +245,7 @@ Rule1
 
 #### Delete rule
 
-To [clear / delete](Commands.md#rule) use quote(s):
+To [clear / delete](Commands.md#rule) use double quote(s):
 
 ```haskell
 Rule1 "
@@ -266,8 +266,7 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 - Support IF, ELSEIF, ELSE  
 - Support for `<comparison>` and `<logical expression>` as condition  
 - Support for executing multiple commands  
-- Support for nested IF statements  
-- Available free RAM is the only limit for logical operators, parenthesis, and nested IF statements.  
+- Available free RAM is the only limit for logical operators and parenthesis.  
 
 #### Grammar  
 `<if-statement>`  
@@ -1973,6 +1972,23 @@ Result
 - As a result of the `tele-` prefix the rules will be checked at TelePeriod time for sensor AM2301-12 Temperature and Humidity. The first rule will use the Temperature stored in `%value%` and save it in `%var1%` for future use. The second rule will use the Humidity stored in `%value%` and the Temperature stored in `%var1%` to compose a single MQTT message suitable for Domoticz. 
 
 -----------------------------------------------------------------------------
+
+### Publish Maximum Value from sensor in a time period
+
+This rule stores the sensor value in `var1`. When the current value is greater than the previous, `var1` is updated. If the current value is smaller, 
+`var1` remains  unchanged. Then every minute, `var1` is published and reset.
+This results in publication of the maximum/peak value for the last minute. Useful, for example in a decibel meter, when the peak value is important, rather than the value that is occurring by chance at normal telemetry time.
+
+This example uses Analog Range mode (trigger `analog#range`) which is a scaled output value (the raw analog value would be `analog#a0`). 
+On ESP32 which supports multiple ADC inputs, the ADC index must be appended such as `analog#range1` for ADC#1.
+
+``` haskel
+Rule
+  ON analog#range>%var1% DO VAR1 %value% ENDON
+  ON Time#Minute DO Backlog publish shed/tele/maxdb %var1%; var1 0 ENDON
+
+Rule 1 1
+```
 
 ------------------------------------------------------------------------------
 

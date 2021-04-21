@@ -2,15 +2,17 @@
 
 To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
+when you want to add a display to Tasmoata it is best to buy one from the table below where the drivers are already there. keep in mind that there are also many variants of each display available and not all variants may be supported.  
+
 #define directive | Description
  ---|---
 USE_DISPLAY | Enable display support. Also requires at least one of the following compilation directives 
 USE_DISPLAY_LCD | Enable LCD display. Also requires `USE_I2C`
 USE_DISPLAY_SSD1306 | Enable OLED SSD1306 display. Also requires `USE_I2C`
 USE_DISPLAY_MATRIX | Enable MATRIX display
-USE_DISPLAY_ILI9341 | Enable TFT ILI9341 display. Also requires `USE_SPI`<br>if seconds SPI bus on ESP32 shall be used SSPI must be defined instead of SPI
-USE_DISPLAY_EPAPER_29 | Enable EPAPER_29 display. Also requires `USE_SPI`
-USE_DISPLAY_EPAPER_42 | Enable EPAPER_42 display. Also requires `USE_SPI`
+USE_DISPLAY_ILI9341 | Enable TFT ILI9341 display. Also requires `USE_SPI`<br>if seconds SPI bus on ESP32 shall be used SSPI must be defined instead of SPI<br>ILI9342 also supported, select with cmd displayilimode 3, default is: displayilimode 1 (ILI9341)
+USE_DISPLAY_EPAPER_29 | Enable Waveshare EPAPER_29 display.(black/white, partial update)<br>Also requires `USE_SPI`
+USE_DISPLAY_EPAPER_42 | Enable Waveshare EPAPER_42 display.(black/white, full update)<br>Also requires `USE_SPI`
 USE_DISPLAY_SH1106 | Enable OLED SH1106 display. Also requires `USE_I2C`
 USE_DISPLAY_ILI9488 | Enable TFT ILI9488 display. Also requires `USE_SPI`
 USE_DISPLAY_SSD1351 | Enable color OLED SSD1351 display. Also requires `USE_SPI`
@@ -21,10 +23,16 @@ USE_DISPLAY_ILI9342  | Enable TFT ILI9342 display. Also requires `USE_SPI`
 USE_DISPLAY_SD1331  | Enable TFT SD1331 display. Also requires `USE_SPI` 
 USE_DISPLAY_TM1637  | Enable 7-segment [TM1637, TM1638 and MAX7219](TM163x.md) display. 
 USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`  
+USE_DISPLAY_TM1637 | Enable TM1637 display
+USE_LILYGO47  | Enable LILGO 4.7 Epaper display ESP32 combo
+USE_UNIVERSAL_DISPLAY  | Enable universal display driver
 USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
 SHOW_SPLASH | Enable initialization splash message on the display  
+`USE_RAMFONT` | Enable loadable Fonts  
+USE_MULTI_DISPLAY | Enable mutiple display support (up to 3)  
 USE_AWATCH | Enables analog watch support  
 USE_GRAPH | Enable line charts. Also requires `NUM_GRAPHS`  
+  
 ----
 
 ## Display Commands
@@ -82,8 +90,8 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 `Kp` = draws a filled circle with radius `p`  
 `rp:p` = draws a rectangle with `p` with and `p` height  
 `Rp:p` = draws a filled rectangle with `p` with and `p` height  
-`up:p:p` = draws a rounded rectangle with `p` with, `p` height and `p` radius (_not for ILI9341_)  
-`Up:p:p` = draws a filled rounded rectangle with `p` with, `p` height and `p` radius (_not for ILI9341_)  
+`up:p:p` = draws a rounded rectangle with `p` with, `p` height and `p` radius v
+`Up:p:p` = draws a filled rounded rectangle with `p` with, `p` height and `p` radius  
 
 ### Miscellaneous
 
@@ -104,13 +112,16 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 `pp` = pad text with spaces, positive values align left, negative values
 align right    
 `sp` = set text scaling for all fonts (scaling factor 1...N)  
-`fp` = set font (1=12, 2=24,(opt 3=8)) if font==0 the classic GFX font is used, if font==7 RA8876 internal font is used, if font==4  special 7 segment 24 pixel number font is used   
+`fp` = set font (1=12, 2=24,(opt 3=8)) if font==0 the classic GFX font is used, if font==7 RA8876 internal font is used, if font==4  special 7 segment 24 pixel number font is used, a ram based font is selected if font==5  
 `Cp` = set foreground color (0,1) for black or white and RGB decimal code for color (see [color codes](#color-codes))  
 `Bp` = set background color (0,1) for black or white and RGB decimal code for color (see [color codes](#color-codes))   
 `Cip` = set foreground index color (0..31) for color displays (see index color table below)  
 `Bip` = set background index color (0..31) for color displays (see index color table below)  
 `wp` = draws an analog watch with radius p  (#define USE_AWATCH)   
-`Pfilename:` = display an rgb 16-bit color image when SD card file system is present  
+`Pfilename:` = display an rgb 16-bit color image when file system is present  
+`Ffilename:` = load RAM font file when file system is present. the font is selected with font Nr. 5, these fonts are special binary versions of GFX fonts of any type. they end with .fnt. an initial collection is found in Folder BinFonts  
+`SXfilename:` = load display descriptor for multiple display support (X = 1..3) for up to 3 displays. 
+`SX:` = switch to display number (X = 1..3).  
 `dcI:V` = define index color entry Index 19-31, V 16 bit color value (index 0-18 is fixed)  
 
 ### Touch Buttons and Sliders
@@ -245,8 +256,8 @@ _Parameters are separated by colons._
 
 `Gdn:m` sets graph n draw mode `0` = off, `1` = on. When on, redraw graph  
 
-* `Gsn:path:` = save graph `n` to path (if optional SD card is present)  
-* `Grn:path:` = restore graph `n` from path (if optional SD card is present)  
+* `Gsn:path:` = save graph `n` to path (if optional file system is present)  
+* `Grn:path:` = restore graph `n` from path (if optional file system is present)  
 
 ### Batch files
 
@@ -346,7 +357,10 @@ On SPI the CS and DC pins when needed must use the pin definition with Display_I
 E-Paper displays are connected via software 3-wire SPI `(CS, SCLK, MOSI)`. DC should be connected to GND , Reset to 3.3 V 
 and busy may be left unconnected. The jumper on the circuit board of the display must be set to 3-wire SPI.  
 
-The ILI9488, ILI9341 and SSD1351 are connected via hardware 3-wire SPI `(SPI_MOSI=GPIO13, SPI_SCLK=GPIO14, CS=GPIO15)`. The ILI9488 must also be connected to the backlight pin (dimmer supported on SSD1351). [Wiring](https://github.com/arendst/Tasmota/issues/2557#issuecomment-444454436)
+The ILI9488 is connected via hardware 3-wire SPI `(SPI_MOSI=GPIO13, SPI_SCLK=GPIO14, CS=GPIO15)` and must also be connected to the backlight pin 
+The SSD1351 may be connected via hardware 3-wire SPI or 4-wire SPI with support for dimmer.
+The ILI9341 is connected via hardware 4-wire SPI, Backlight and OLEDRESET (dimmer supported on ESP32)
+ [Wiring](https://github.com/arendst/Tasmota/issues/2557#issuecomment-444454436)
 
 The RA8876 is connected via standard hardware 4-wire SPI `(SPI_MOSI=GPIO13, SPI_SCLK=GPIO14, RA_8876_CS=GPIO15, SSPI_MISO=GPIO12)`. No backlight pin is needed, dimmer supported, on ESP32 gpio pins may be freeley defined (below gpio 33).  
 
@@ -414,3 +428,253 @@ The EPD fonts use about 9k space, which can be selected at compile time using \#
 - EPD42   - 2.57k
 - EPD29   - 2.1k
 - Display and Render class - ~12k
+
+
+## universal Display Driver
+
+Driver 17 is a universal display driver for most pixel driven displays.
+it supports I2C and hardware and software SPI (3 or 4 wire)
+The driver is enabled by compiling with #define USE_UNIVERSAL_DISPLAY
+and selecting GPIO Option A3 on any pin.
+the display is defined by a descriptor file which may be provided with 3 methods.
+1. a special section in scripter >d
+2. a file which must be present in the flash file system ("dspdesc.txt")
+3. a flash section in driver 17 (const char)
+
+the descriptor text file has the following elements:  
+
+:H  
+header line describes the main features of the display (comma seperated, no spaces allowed)
+1. name
+2. x size in pixels
+3. y size in pixels
+4. bits per pixel (1 for bw displays, 16 for color displays)
+5. hardware interface used either I2C or SPI
+
+I2C  
+1. I2C address in HEX
+2. SCL pin
+3. SDA pin
+4. RESET pin
+
+SPI  
+1. SPI Nr (1 = hardware SPI 1, 2 = Hardware SPI 2 (ESP32), 3 = software SPI
+2. CS pin
+3. CLK pin
+4. MOSI pin
+5. DC pin
+6. Backlight pin
+7. RESET pin
+8. MISO pin
+9. SPI Speed in MHz
+all signals must be given. unused pins may be set to -1
+if you specify a * char the pin number is derived from the Tasmota GPIO GUI.  
+the CS and DC pins must be the standard pins e.g. SPI_CS or SPI_DC.  
+
+example:  
+
+```haskell
+:H,SH1106,128,64,1,I2C,3c,*,*,*
+```
+
+```haskell
+:H,ILI9341,240,320,16,SPI,1,-1,14,13,5,4,15,*,40
+```
+
+:S  
+splash setup, also defines initial colors.
+1. Font number
+2. Font size
+3. FG color (as index color)
+4. BG color (as index color)
+5. x position of text
+6. y position of text  
+example:  
+
+```haskell
+:S,2,1,1,0,40,20
+```
+:I  
+initial register setup for the display controler. (`IC` marks that the controller is using command mode even with command parameters)  
+all values are in hex. On SPI the first value is the command, then the number of arguments and the the arguments itself.
+Bi7 7 on the number of arguments set indicate a wait of 150 ms. On I2C all hex values are sent to i2c
+example:  
+
+```haskell
+:I
+EF,3,03,80,02
+CF,3,00,C1,30
+ED,4,64,03,12,81
+E8,3,85,00,78
+CB,5,39,2C,00,34,02
+F7,1,20
+EA,2,00,00
+C0,1,23
+C1,1,10
+C5,2,3e,28
+C7,1,86
+36,1,48
+37,1,00
+3A,1,55
+B1,2,00,18
+B6,3,08,82,27
+F2,1,00
+26,1,01
+E0,0F,0F,31,2B,0C,0E,08,4E,F1,37,07,10,03,0E,09,00
+E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
+11,80
+29,80
+```
+
+:o  
+Off , Controller OPCODE to switch display off  
+
+:O  
+On Controller OPCODE to switch display on  
+
+:R  
+1. rotation opcode
+2. startline opcode (optional)  
+
+:0  
+:1  
+:2  
+:3  
+register values for all 4 rotations (color display only)
+1. rotation code
+2. x offset
+3. y offset
+4. rotation pseudo opcode for touch panel
+
+:A  
+3 OPCODES to set adress window (color display only)  
+1. set column opcode  
+2. set row opcode  
+3. start write opcode  
+4. pixel size (optional)  
+
+:P  
+pixel transfer size (optional) default = 16 bit RGB  
+
+:i  
+invert display opcodes  
+1. inversion off  
+2. inversion on  
+
+:D  
+dimmer opcode (optional)  
+
+:TIx,AA,SCL,SDA  
+defines a touch panel an I2C bus nr x (1 or 2)  
+AA is device address  
+SCL, SDA are the pins used (or * for tasmota definition)  
+
+:TS,CS_PIN  
+defines a touch panel an SPI bus with chip select CS_PIN (or *)  
+
+the appropriate coordinate convervsions are defined via pseudo opcodes, see above  
+( code 0 to 3 currently defined)  
+
+full examples for SH1106 and ILI9341: (comment lines starting with ; are allowed)  
+
+```haskell
+:H,SH1106,128,64,1,I2C,3c,*,*,*
+:S,0,2,1,0,30,20
+:I
+AE
+D5,80
+A8,3f
+D3,00
+40
+8D,14
+20,00
+A1
+C8
+DA,12
+81,CF
+D9F1
+DB,40
+A4
+A6
+AF
+:o,AE
+:O,AF
+:A,00,10,40
+#
+```
+
+```haskell
+:H,ILI9341,240,320,16,SPI,1,*,*,*,*,*,*,*,40
+:S,2,1,1,0,40,20
+:I
+EF,3,03,80,02
+CF,3,00,C1,30
+ED,4,64,03,12,81
+E8,3,85,00,78
+CB,5,39,2C,00,34,02
+F7,1,20
+EA,2,00,00
+C0,1,23
+C1,1,10
+C5,2,3e,28
+C7,1,86
+36,1,48
+37,1,00
+3A,1,55
+B1,2,00,18
+B6,3,08,82,27
+F2,1,00
+26,1,01
+E0,0F,0F,31,2B,0C,0E,08,4E,F1,37,07,10,03,0E,09,00
+E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
+11,80
+29,80
+:o,28
+:O,29
+:A,2A,2B,2C
+:R,36
+:0,48,00,00,00
+:1,28,00,00,01
+:2,88,00,00,02
+:3,E8,00,00,02
+#
+```
+
+the most conveniant editing when developing or modifying is done via scripter.  
+on every scripter save the display is reinitialized and you see
+immediately the result of your changes.  
+however the normal use would be to store the descriptor in file system.
+
+example of scripter driven display descriptor:  
+
+```haskell
+>D
+>B
+=>displayreinit
+>d
+; name,xs,ys,bpp,interface, address, scl,sda,reset
+:H,SH1106,128,64,1,I2C,3c,*,*,*
+:S,0,2,1,0,30,20
+:I
+AE
+D5,80
+A8,3f
+D3,00
+40
+8D,14
+20,00
+A1
+C8
+DA,12
+81,CF
+D9F1
+DB,40
+A4
+A6
+AF
+:o,AE
+:O,AF
+:A,00,10,40
+#
+```
+

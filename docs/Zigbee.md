@@ -96,6 +96,27 @@ If you set [`SetOption83 1`](Commands.md#setoption83) sensor readings will use t
 ```json
 MQT: tele/%topic%/RESULT = {"ZbReceived":{"Vibration_sensor":{"Device":"0x128F","AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":171,"AqaraAccelerometer":[-691,8,136],"AqaraAngles":[-78,1,11],"LinkQuality":153}}}
 ```
+### Sending sensor values to separated MQTT topics
+
+It is possible to publish the sensor values to their own MQTT topic. For this functionality the following rule can be applied in the console:
+```
+Rule<x>
+  on zbreceived#<zigbee_id>#<zigbee_sensorname> do publish home/zigbee/<zigbee_name>/<sensorname> %value% endon
+	
+Rule<x> 1
+```
+
+For example:
+```
+Rule1
+  on zbreceived#0xAA7C#humidity do publish home/zigbee/office/humidity %value% endon
+  on zbreceived#0xAA7C#temperature do publish home/zigbee/office/temperature %value% endon
+
+Rule1 1
+```
+
+If retained values are prefered use publish2 instead of publish.
+
 
 ### Removing Devices
 To remove a device from Zigbee2Tasmota use command `ZbForget <device>` or `ZbForget <friendlyname>`.
@@ -267,7 +288,7 @@ Or use '!' instead of '_' to specify cluster-specific commands:
 `"<cluster>!<cmd>/<bytes>"`: send a cluster specific command for cluster id `<cluster>`, command id `<cmd>` and payload `<bytes>`.
 
 !!! example
-    `ZbSend {"Device":"0x1234","Send":"0008_04/800A00"}`
+    `ZbSend {"Device":"0x1234","Send":"0008!04/800A00"}`
     Send a Dimmer command (0x04) from Level Control cluster (0x0008) with payload being: Dimmer value 0x80, and transition time of 1 second (0x000A = 10 tenths of seconds).
 
 Of course the latter example could be simply:

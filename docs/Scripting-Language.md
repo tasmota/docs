@@ -19,6 +19,7 @@ USE_BUTTON_EVENT | enable `>b` section (detect button state changes)
 USE_SCRIPT_JSON_EXPORT | enable `>J` section (publish JSON payload on [TelePeriod](Commands#teleperiod))
 USE_SCRIPT_SUB_COMMAND | enables invoking named script subroutines via the Console or MQTT
 USE_SCRIPT_HUE | enable `>H` section (Alexa Hue emulation)
+USE_HOMEKIT | enable `>h` section (Siri Homekit support (ESP32 only),<br>define must be given in platform_override see below)
 USE_SCRIPT_STATUS | enable `>U` section (receive JSON payloads from cmd status)
 SCRIPT_POWER_SECTION | enable `>P` section (execute on power changes)
 SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe
@@ -48,8 +49,6 @@ USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules)"
 
 To enter a script, go to **Configuration - Edit script** in the Tasmota web UI menu
-
-The maximum script size is 1535 bytes (uses rule set buffers). If the pasted script is larger than 1535 characters, comments will be stripped to attempt to  make the script fit.  
 
 To save code space almost no error messages are provided. However it is taken care of that at least it should not crash on syntax errors.  
 
@@ -214,6 +213,54 @@ Remark: hue values have a range from 0-65535. Divide by 182 to assign HSBcolors 
 !!! example 
     `lamp1,E,on=pwr1,hue=hue1,sat=sat1,bri=bri1,ct=ct1`
 
+`>h` passcode  
+Siri Homekit interface (up to 16 virtual Homekit devices)  
+passcode = 111-11-111  keep this format, numbers 0-9  
+`name`,`type`,`opt`,`var1`,`var2`...  
+
+`name` device name  (max 23 characters)  
+`type` device type (HAP_CID)  
+- `7` = outled, on/off  
+- `5` = light, on/off,hue,sat,bri  
+- `10` = sensor  
+
+
+`opt` sensor type  
+- `0` = Temperature,val  
+- `1` = Humidty,val  
+- `2` = Lightlevel,val  
+- `3` = Battery status,level,lowbat,charging  
+- `4` = Ambient light level with extended range -10000,+10000  
+- `5` = Contact Sensor (switch)
+
+`var1 ...` variable name (max 11 characters)
+the variables denote scripting variables that need to be set by script  
+the special variables  
+@px x (1..9) directly set, read power states e.g. relais  
+@sx x (1..9) directly read switch state  
+@bx x (1..9) directly read button state  
+
+!!! example  
+
+    `>h 111-11-111`  
+    `outlet,7,0,@p1`
+    `lamp1,5,0,pwr,hue,sat,bri`  
+    `temperature,10,0,tval` 
+    
+    a restart is required after modification of descriptor!  
+    by faulty parameters the homekit dataset may get corrupted  
+    to reset the homekit dataset completely type in console script>hki(89)  
+    
+    compilation:
+    
+    needs to add in linker to  
+    
+    build_flags  
+    -DUSE_HOMEKIT  
+    
+    lib_extra_dirs  
+    lib/libesp32_div  
+    
 `>U`  
 JSON messages from cmd status arrive here
 
@@ -365,7 +412,7 @@ Clicking  this button displays a web page with the HTML data of this section.
 all cmds like in >W apply here. these lines are refreshed frequently to show e.g. sensor values.
 lines preceeded by $ are static and not refreshed and display below lines without $.  
 this option also enables a full webserver interface when USE_UFILESYS is activ.  
-you may display files from the flash or SD filesystem by specifying the url:  IP/sdc/path  .
+you may display files from the flash or SD filesystem by specifying the url:  IP/ufs/path  .
 (supported files: *.jpg, *.html, *.txt)  
 ==Requires compiling with `#define SCRIPT_FULL_WEBPAGE`.== 
 
@@ -443,12 +490,13 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
 
 `wcs` = send this line to webpage (WebContentSend)  
+`rapp` = append this line to MQTT (ResponseAppend)  
 `wm` = contains source of web request code e.g. 0 = Sensor display (FUNC_WEB_SENSOR)  
 
-`sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud)   
-`sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD) 
-`sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)(if defined USE_SML_SCRIPT_CMD) 
-`sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
+`sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
+`sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
+`sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)(if defined USE_SML_SCRIPT_CMD)  
+`sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)   
 `enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
 `gjp("host" "path")` = trigger HTTPS JSON page read as used by Tesla Powerwall (if defined SCRIPT_GET_HTTPS_JP)  
 `gwr("del" index)` = gets non JSON element from webresponse del = delimiter char or string, index = n´th element (if defined USE_WEBSEND_RESPONSE)  
@@ -1226,6 +1274,33 @@ remark: the Flash illumination LED is connected to GPIO4
     endif
 
     >R
+    
+### global variables example
+
+make temperature and humidity of an SHT sensor public  
+all devices in the local network may use the global variables
+needs #define USE_SCRIPT_GLOBVARS  
+
+Sender:
+
+    >D
+    g:temp=0
+    g:hum=0
+    
+    >T
+    temp=SHT3X_0x44#Temperature
+    hum=SHT3X_0x44#Humidity
+    
+Receiver(s) displays the value on a display
+
+    >D
+    g:temp=0
+    g:hum=0
+    
+    >S
+    dt [l1c1p10]temp=%temp% C
+    dt [l2c1p10]hum=%hum% %%
+    
 
 ### e-Paper 29 Display with SGP30 and BME280
 
@@ -2159,6 +2234,24 @@ start dim level = initial dimmer level after power-up or restart; max 100
     =>SerialSend5 %dim%
     =>Dimmer %tmp%
     #
+
+### Dual display example
+
+    >D
+    >B
+    ; load sh1106 driver
+    dt [S2/SH1106_desc.txt:]
+    ; clear screen, switch to LCD font; set auto draw
+    dt [zf4s1D1]
+    dt [S1:]
+    >S
+    ; switch to display 2
+    dt [S2:]
+    ; show time
+    dt [x20y20t]
+    ; switch back to display 1
+    dt [S1:]
+
 
 ### Multiplexing a single adc with CD4067 breakout
 

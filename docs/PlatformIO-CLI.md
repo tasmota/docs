@@ -14,39 +14,7 @@ Either download the latest Tasmota Source code from https://github.com/arendst/T
 `git clone https://github.com/arendst/Tasmota.git`
 
 ## Select the environment
-The default environment configuration can be used to easily generate Tasmota firmware variants (sonoff, sensors, display, etc.). If you're not sure which binary is the right one for you, consult the [builds table](Builds) or just start with `tasmota.bin`. To build and/or flash exactly one of these, use the `-e` command line argument (e.g., `-e tasmota-sensors`). Alternatively, uncomment (i.e., remove the leading `;`) the desired *env_default* line in the *platformio.ini* file and do not use the `-e` argument on the command.
-```
-; *** Uncomment one of the lines below to build/upload only one environment
-;default_envs = tasmota
-;default_envs = tasmota-ircustom     ; alternative to 'tasmota' with full IR protocols activated, you will need to disable some features to keep code not too big
-;default_envs = tasmota-minimal
-;default_envs = tasmota-basic
-;default_envs = tasmota-knx
-;default_envs = tasmota-sensors
-;default_envs = tasmota-display
-;default_envs = tasmota-ir
-;default_envs = tasmota-BG
-;default_envs = tasmota-BR
-;default_envs = tasmota-CN
-;default_envs = tasmota-CZ
-;default_envs = tasmota-DE
-;default_envs = tasmota-ES
-;default_envs = tasmota-FR
-;default_envs = tasmota-GR
-;default_envs = tasmota-HE
-;default_envs = tasmota-HU
-;default_envs = tasmota-IT
-;default_envs = tasmota-KO
-;default_envs = tasmota-NL
-;default_envs = tasmota-PL
-;default_envs = tasmota-PT
-;default_envs = tasmota-RU
-;default_envs = tasmota-SE
-;default_envs = tasmota-SK
-;default_envs = tasmota-TR
-;default_envs = tasmota-TW
-;default_envs = tasmota-UK 
-```
+The default environment configuration can be used to easily generate Tasmota firmware variants (tasmota, sensors, display, etc.). If you're not sure which binary is the right one for you, consult the [builds table](Builds) or just start with `tasmota.bin`. To build and/or flash exactly one of these, use the `-e` command line argument (e.g., `-e tasmota-sensors`). 
 
 # Compile and upload
 Once all the prerequisites are in place, compiling and uploading is one simple command. Execute this from within the `Tasmota` source code directory:  

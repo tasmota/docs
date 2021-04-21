@@ -46,7 +46,7 @@ To modify the stock configuration:
 
 1. Open the `platformio.ini` file located in the `/tasmota` root directory (scroll to the bottom of the file Explorer (1) pane). In this file, removing a leading semicolon `;` enables a statement.
 2. In the Editor (2) pane:
-   - If you are using your own `user_config_override.h`, you must tell the compiler to use it. Rename `platformio_override_sample.ini` to `platformio_override.ini`. This enables `-DUSE_CONFIG_OVERRIDE`.
+   - If you are using your own `user_config_override.h`, you must tell the compiler to use it. Rename `platformio_override_sample.ini` to `platformio_override.ini`.
    - Default Tasmota Arduino Core will be compiled. If you wish to use a different Core, find the `[core_active]` section in the file and enable the `platform` and `build_flags` lines for the desired Core. Then click 'File' on the menu bar and 'Save' your edits.
 
 ### Compile Your Firmware
