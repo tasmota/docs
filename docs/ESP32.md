@@ -33,15 +33,15 @@ Tasmota32 is initially developed and tested with dual core version of ESP32
 
 | Module          | Core    | Core clock | Flash (MB)     | PSRAM (MB) | Touch Sensor | Hall sensor |   |
 |---------------------------------|-------------------------|--------------------------|----------------|------------|--------------|-------------|-------------------|
-| [ESP32-WROOM-32E](/_media/datasheets/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf)<br>[ESP32-WROOM-32UE](/_media/datasheets/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf) | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16         | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
-| [ESP32-WROVER-E](/_media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)<br>[ESP32-WROVER-IE](/_media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)   | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16         | 8          | Yes          | Yes         | Bluetooth 4.2 LE  |
+| [ESP32-WROOM-32E](../../_media/datasheets/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf)<br>[ESP32-WROOM-32UE](../../_media/datasheets/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf) | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16         | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
+| [ESP32-WROVER-E](../../_media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)<br>[ESP32-WROVER-IE](../../_media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)   | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16         | 8          | Yes          | Yes         | Bluetooth 4.2 LE  |
 | ESP32-MINI-1    | ESP32-U4WDH Single Core | 160 MHz  | 4              | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
-| [ESP32-SOLO-1](/_media/datasheets/esp32-solo-1_datasheet_en.pdf)    | ESP32-S0WD Single Core  | 160 MHz  | 4              | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
-| [ESP32-WROOM-32SE](/_media/datasheets/esp32-wroom-32se_datasheet_en.pdf)                | ESP32-D0WD Dual Core    | 240 MHz  | 4,8,16         | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
+| [ESP32-SOLO-1](../../_media/datasheets/esp32-solo-1_datasheet_en.pdf)    | ESP32-S0WD Single Core  | 160 MHz  | 4              | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
+| [ESP32-WROOM-32SE](../../_media/datasheets/esp32-wroom-32se_datasheet_en.pdf)                | ESP32-D0WD Dual Core    | 240 MHz  | 4,8,16         | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
 
 Single core SoCs do not work with standard binaries, for those use only `tasmota32solo1.bin` or compile your own binary using the tasmota32solo1 environment.
 
-ESP32 line is later expanded with [ESP32-PICO-V3](/_media/datasheets/esp32-pico-v3_datasheet_en.pdf), [ESP32-PICO-V3-02](/_media/datasheets/esp32-pico-v3-02_datasheet_en.pdf) and [ESP32-PICO-D4](http://espressif.com/sites/default/files/documentation/esp32-pico-d4_datasheet_en.pdf)
+ESP32 line is later expanded with [ESP32-PICO-V3](../../_media/datasheets/esp32-pico-v3_datasheet_en.pdf), [ESP32-PICO-V3-02](../../_media/datasheets/esp32-pico-v3-02_datasheet_en.pdf) and [ESP32-PICO-D4](http://espressif.com/sites/default/files/documentation/esp32-pico-d4_datasheet_en.pdf)
 
 ### ESP32-S2
 A more cost-efficient version of ESP32, cut down to a single core and several dedicated hardware security features (eFuse, flash encryption, secure boot, signature verification, integrated AES, SHA and RSA algorithms). It has 43 available GPIOs. [Product page for ESP32-S2](https://www.espressif.com/en/products/socs/esp32-s2)
@@ -54,7 +54,7 @@ Keeping the security improvements the S3 line now again features the dual core S
 Untested with Tasmota.
 
 ### ESP32-C3
-Unlike previous versions, C3 is a single-core Wi-Fi and Bluetooth 5 (LE) microcontroller SoC based on the open-source RISC-V architecture. It will be available as [ESP32-C3-MINI-1](/_media/datasheets/esp32-c3-mini-1_datasheet_en.pdf) and [ESP32-C3-WROOM-02](/_media/datasheets/esp32-c3-wroom-02_datasheet_en.pdf) modules. [Product page for ESP32-C3](https://www.espressif.com/en/products/socs/esp32-c3)
+Unlike previous versions, C3 is a single-core Wi-Fi and Bluetooth 5 (LE) microcontroller SoC based on the open-source RISC-V architecture. It will be available as [ESP32-C3-MINI-1](../../_media/datasheets/esp32-c3-mini-1_datasheet_en.pdf) and [ESP32-C3-WROOM-02](../../_media/datasheets/esp32-c3-wroom-02_datasheet_en.pdf) modules. [Product page for ESP32-C3](https://www.espressif.com/en/products/socs/esp32-c3)
 
 Work has already begun on adapting Tasmota32 for RISC-V architecture.
 
@@ -88,7 +88,7 @@ Use [LVGL](https://lvgl.io/) in conjunction with Berry on devices with displays 
 
 Uncomment the tasmota32xxx build you want to compile in `platformio_tasmota32.ini`. For exampple, uncommenting tasmota32 in line #9 will build `tasmota32.bin` on the next Build task in Platformio. 
 
-![platformio_override.ini](/_media/esp32-pio.jpg)
+![platformio_override.ini](../../_media/esp32-pio.jpg)
 
 All binaries use `user_config_override.h` if it exists.
 
