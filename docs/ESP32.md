@@ -64,13 +64,14 @@ Work has already begun on adapting Tasmota32 for RISC-V architecture.
 Every tasmota32 binary will create and display internal chip temperature sensor in the webUI and in MQTT.
 
 ```json
-MQT: tele/tasmota_17A5A0/SENSOR = {"Time":"2021-01-01T00:00:00","ESP32":{"Temperature":41.7},"TempUnit":"C"}
+{"Time":"2021-01-01T00:00:00","ESP32":{"Temperature":41.7},"TempUnit":"C"}
 ```
 
 ### Hall Sensor
 ESP32 has a built in hall effect sensor that detects changes in the magnetic field in its surroundings. It is located behind the metal lid of the module and connected to GPIO36 and GPIO39. 
 
 To enable set in module configuration or template:
+
  - GPIO36 as `HallEffect 1`
  - GPIO39 as `HallEffect 2`
 
