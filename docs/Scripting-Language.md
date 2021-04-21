@@ -2231,6 +2231,24 @@ start dim level = initial dimmer level after power-up or restart; max 100
     =>Dimmer %tmp%
     #
 
+### Dual display example
+
+    >D
+    >B
+    ; load sh1106 driver
+    dt [S2/SH1106_desc.txt:]
+    ; clear screen, switch to LCD font; set auto draw
+    dt [zf4s1D1]
+    dt [S1:]
+    >S
+    ; switch to display 2
+    dt [S2:]
+    ; show time
+    dt [x20y20t]
+    ; switch back to display 1
+    dt [S1:]
+
+
 ### Multiplexing a single adc with CD4067 breakout
 
     >D
