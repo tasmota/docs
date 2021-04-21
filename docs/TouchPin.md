@@ -30,23 +30,21 @@ h - number of continous hits below current threshold, useful to see the number a
 The new values for a personal configuration can be stored in RULE:  
   
 !!! example
-    ```rule1 on System#Init do TouchNum 1 endon
-    ```  
+    `rule1 on System#Init do TouchNum 1 endon`  
 
 ### Tasmota Serial Plotter  
   
 This little tool should be helpful to get a feel for the touch values. It is located in the /tools folder of the Tasmota repository and needs the installation of "mathplotlib" and "pyserial" in the active python environment. It is confirmed to work under Windows 10 and macOS Catalina.  
 
-Usage:  
-./serial-plotter.py --port /dev/XXX --baud 115200  
+Example: `./serial-plotter.py --port /dev/XXX --baud 115200`
 
 You can send commands to Tasmota via SEND-box.  
   
-!!! example for the touch button driver:
-    TouchCal 255 - turns on calibration mode for all buttons  
+!!! example "For the touch button driver:"
+    `TouchCal 255` - turns on calibration mode for all buttons  
   
- 
   
 ![](https://user-images.githubusercontent.com/5481060/83327677-f730be80-a27d-11ea-85a2-bf72e644cb4e.gif)  
+
 (Note the short spikes, which in this config only would need TouchNum 1 to get filtered out)  
   
