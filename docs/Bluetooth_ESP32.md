@@ -123,7 +123,7 @@ Rule1 1
 ```
 
 ### Supported Devices
-<img src="../../_media/bluetooth/nRF51822.png" width=155 align="right">
+<img src="../_media/bluetooth/nRF51822.png" width=155 align="right">
 
 All Apple compatible iBeacon devices should be discoverable. 
 
@@ -138,7 +138,7 @@ Cheap "iTag" beacons with a beeper. The battery on these lasts only about a mont
 - [eBay](https://www.ebay.de/sch/i.html?_from=R40&_trksid=m570.l1313&_nkw=Smart-Tag-GPS-Tracker-Bluetooth-Anti-verlorene-Alarm-Key-Finder-Haustier-Kind&_sacat=0)
 - [Amazon.com](https://www.amazon.com/s?k=itag+tracker+4.0)
 
-<img src="../../_media/bluetooth/itag.png" width=225><img src="../../_media/bluetooth/itag2.png" width=225><img src="../../_media/bluetooth/itag3.png" width=225>
+<img src="../_media/bluetooth/itag.png" width=225><img src="../_media/bluetooth/itag2.png" width=225><img src="../_media/bluetooth/itag3.png" width=225>
 
 !!! tip
     You can activate a beacon with a beeper using command `IBEACON_%BEACONID%_RSSI 99` (ID is visible in webUI and SENSOR reports). This command can freeze the Bluetooth module and beacon scanning will stop. After a reboot of Tasmota the beacon will start beeping and scanning will resume. (untested on ESP32 native BLE)  
@@ -177,10 +177,10 @@ The naming conventions in the product range of Bluetooth sensors in XIAOMI-unive
     <th class="th-lboi">CGD1</th>
   </tr>
   <tr>
-    <td class="tg-lboi"><img src="../../_media/bluetooth/mj_ht_v1.png" width=200></td>
-    <td class="tg-lboi"><img src="../../_media/bluetooth/LYWDS02.png" width=200></td>
-    <td class="tg-lboi"><img src="../../_media/bluetooth/CGG1.png" width=200></td>
-    <td class="tg-lboi"><img src="../../_media/bluetooth/CGD1.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/mj_ht_v1.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/LYWDS02.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/CGG1.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/CGD1.png" width=200></td>
   </tr>
   <tr>
     <td class="tg-lboi">temperature, humidity, battery</td>
@@ -204,10 +204,10 @@ The naming conventions in the product range of Bluetooth sensors in XIAOMI-unive
     <th class="th-lboi">MJYD2S</th>
   </tr>
   <tr>
-    <td class="tg-lboi"><img src="../../_media/bluetooth/miflora.png" width=200></td>
-    <td class="tg-lboi"><img src="../../_media/bluetooth/LYWSD03MMC.png" width=200></td>
-    <td class="tg-lboi"><img src="../../_media/bluetooth/nlight.png" width=200></td>
-    <td class="tg-lboi"><img src="../../_media/bluetooth/mjyd2s.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/miflora.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/LYWSD03MMC.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/nlight.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/mjyd2s.png" width=200></td>
   </tr>
   <tr>
     <td class="tg-lboi">temperature, illuminance, soil humidity, soil fertility, battery, firmware version</td>
@@ -230,9 +230,9 @@ The naming conventions in the product range of Bluetooth sensors in XIAOMI-unive
     <th class="th-lboi">MHO-C303</th>
   </tr>
   <tr>
-    <td class="tg-lboi"><img src="../../_media/bluetooth/yeerc.png" width=200></td>
-    <td class="tg-lboi"><img src="../../_media/bluetooth/MHO-C401.png" width=200></td>
-    <td class="tg-lboi"><img src="../../_media/bluetooth/MHO-C303.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/MHO-C401.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/MHO-C303.png" width=200></td>
   </tr>
   <tr>
     <td class="tg-lboi">button press (single and long)</td>
