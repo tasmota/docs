@@ -74,7 +74,7 @@ cmnd/tasmota_switch/Power ← "TOGGLE"
 
 !!! tip
     By default, Tasmota replies to all commands through `.../RESULT`.
-    This behavior can be changed using [SetOption4](Commands.md#setoption4), which makes the commands reply on the endpoint matching the command name, ex. `cmnd/tasmota/PowerOnState` will send a response on `cmnd/tasmota/POWERONSTATE`.
+    This behavior can be changed using [SetOption4](Commands.md#setoption4), which makes the commands reply on the endpoint matching the command name, ex. `cmnd/tasmota/PowerOnState` will send a response on `stat/tasmota/POWERONSTATE`.
 
 ### Examples
 In the following examples `%topic%` is `tasmota`, FullTopic is `%prefix%/%topic%/`, and prefixes are default `cmnd/stat/tele`:

@@ -65,7 +65,7 @@ Name|Description
 [**PAJ7620**](PAJ7620) | Gesture & Proximity Detection Sensor
 [**PIR**](PIR-Motion-Sensors#am312) | Passive Infrared Sensor (gpio)
 [**PCA9685**](PCA9685) | 16-channel, 12-bit PWM LED controller (I^2^C)
-**PCF8574** | 8-port IO Expander (I^2^C) 
+[**PCF8574(A)**](PCF8574) 8-port IO Expander (I^2^C) 
 **PMS3003<BR>[PMS5003](https://www.superhouse.tv/38-diy-air-quality-Sensor-part-1-basic-model/)<BR>PMS7003** | Particle Concentration Sensor (serial)
 [**PN532**](PN532) | NFC/RFID controller
 [**PZEM-004<BR>PZEM-016**](PZEM-0XX) | Energy Monitor (serial) 
@@ -87,7 +87,7 @@ Name|Description
 [**Smart Meter Interface**](Smart-Meter-Interface) | (serial)
 **SolaX X1** | SolaX X1 inverter (serial)
 **SPS30** | Particulate Matter (PM) | Sensor (I^2^C)
-[**Téléinfo**](http://hallard.me/category/tinfo/) |  French energy measuring system (serial)
+[**Téléinfo**](Teleinfo) |  French energy measuring system (serial)
 **TM1638** | 8 Switch, LED and 7 Segment Unit Sensor (gpio)
 [**TSL2561**](TSL2561) | Luminosity Sensor (I^2^C)
 **TSL2591** | Luminosity Sensor (I^2^C)

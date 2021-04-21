@@ -21,6 +21,7 @@ Adding the following `#define` in your `user_config_override.h` will enable thos
 
 * `#define USE_UFILESYS`   Enable the Universal File System including Flash File System
 * `#define GUI_TRASH_FILE` Allows to delete files from the GUI File Manager
+* `#define GUI_EDIT_FILE` Allows to edit text files in the Web GUI
 
 !!! warning "About ESP32"
     **ESP32** boards with default 4MB flash only support a file system **limited to 64KB**. You need a board with more 
@@ -45,9 +46,17 @@ The "Manage File System" page provides:
 * On top, the total size of the file system and the free size
 * A button to upload a file from the host (1st select the file with the `Choose File` button, then `Start Upload`)
 * A list of available files with timestamp of upload and size in bytes
-* If GUI_TRASH_FILe is enabled, the 'fire' icon allows to delete the file **without any confirmation**.
+* If GUI_TRASH_FILE is enabled, the 'fire' icon allows to delete the file **without any confirmation**
+* If GUI_EDIT_FILE is enabled, the 'memo' icon allows to edit the file and the "Create and edit new file"
+button launches the editor with a new file.
 
 ![Manage File System page](_media/ufs_manage_file_system.png)
+
+The file editor allows to edit the content of a text file online, save it back to the UFS. 
+By changing the name at the top, it will be saved-as the new name (original file remains unchanged).
+Changes can be discarded by clicking on the button "Manage File System" to returns to the manager.
+
+![File editor](_media/ufs_file_editor.png)
 
 ## Commands
 Complete list of [UFS commands](Commands#ufs)

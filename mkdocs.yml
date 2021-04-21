@@ -122,6 +122,7 @@ nav:
     - Dynamic-Sleep.md
     - I2C Devices: I2CDevices.md
     - IR Communication: Tasmota-IR.md
+    - LCD/DLP Projector Control: Projector.md
     - Lights.md
     - OpenTherm: OpenTherm.md
     - PIR-Motion-Sensors.md

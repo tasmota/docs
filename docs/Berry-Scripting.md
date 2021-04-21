@@ -22,6 +22,7 @@ Berry Scripting allows simple and advanced extension of Tasmota, for example:
 - simple scripting and advanced Rules
 - advanced rules, beyond what is possible with native rules
 - advanced automation
+<<<<<<< HEAD
 
 Berry Scripting takes it one step further and allows to build dynamic extensions to Tasmota, that would previously require native code:
 
@@ -31,6 +32,17 @@ Berry Scripting takes it one step further and allows to build dynamic extensions
 - integrate native libraries like `lvgl` (coming soon)
 
 
+=======
+
+Berry Scripting takes it one step further and allows to build dynamic extensions to Tasmota, that would previously require native code:
+
+- build light animations
+- build I2C drivers
+- build complete Tasmota drivers
+- integrate native libraries like `lvgl` (coming soon)
+
+
+>>>>>>> development
 ### About the Berry language
 
 Berry has the following advantages:
@@ -91,55 +103,23 @@ Hello Tasmota!
 
 Meanwhile the Tasmota log shows:
 
+> tasmota.cmd("Dimmer 60")
+{"POWER":"ON","Dimmer":60,"Color":"996245","HSBColor":"21,55,60","Channel":[60,38,27]}
+The light is bright
 ```
-10:47:45.235 Hello Tasmota!
-10:47:45.236 Hello again
-```
-
-### Interacting with Tasmota
-
-The `tasmota` object provides numerous functions to interact with Tasmota. See reference for the list of functions.
-
-For example `tasmota.publish()` is similar to `Publish` and allows to publish arbitrary MQTT messages.
-
-#### Sending native Tasmota commands
-
-Use `tasmota.cmd()` to send arbitrary commands, as strings, like if they were entered via the Tasmota console. For example:
+The rule function have the general form below where parameters are optionals:
 
 ```python
-> tasmota.cmd("Dimmer 50")
-{"POWER":"ON","Dimmer":50,"Color":"80523A","HSBColor":"21,55,50","Channel":[50,32,23]}
+def function_name(value, trigger, msg)
+  ...
+end
 ```
 
-If the command sends a reponse, the returned string is parsed as JSON and converted to native Berry `map` object.
-
-#### Invoking Berry commands from Tasmota
-
-Use Tasmota `Br` command to send arbitrary Berry commands.
-
-Example (from the Tasmota console, not the Berry console):
-
-```
-12:34:04.085 CMD: Br 1+1
-12:34:04.092 RSL: stat/tasmota_923B34/RESULT = {"Br":"2"}
-```
-
-## Rules
-
-Berry supports the equivalent of Tasmota rules, using a very similar MQTT Json pattern.
-
-Pattern has the format `<level1>#<level2#...#<levelN>` when parsing a JSON message. Pattern matching is case-insensitive. Using `?` in a sub-level matches any value (first occurence only). Add conditions to the last level, as you would do with rules.
-
-
-Operator|Effect
+Parameter|Description
 :---|:---
-`==` `!==`|Compare as strings
-`=` `!=` `<` `<=` `>` `>=`|Compare a numers
-
-
-Important: you don't need `DATA` sub-level with Berry when parsing JSON root level messages.
-
-Example: `Dimmer>=50` will trigger the rule if there is a `Dimmer` field with a numerical value greater than `50`.
+`value`|The value of the trigger. Similar to `%value%` in native rules.
+`trigger`|`string` of the trigger with all levels. Can be used if the same function is used with multiple triggers.
+`msg`|`string` of the message that triggered the rule. If it is a JSON, it has to be explicitly converted to a map object with `json.load(msg)`.
 
 Example:
 
@@ -157,6 +137,40 @@ Example:
 > tasmota.cmd("Dimmer 60")
 {"POWER":"ON","Dimmer":60,"Color":"996245","HSBColor":"21,55,60","Channel":[60,38,27]}
 The light is bright
+```
+
+The same fucntion can be used with multiple triggers.
+
+Example if the function to process an ADC input should be triggered both by the `tele/SENSOR`
+message and the result of a `Status 10` command:
+
+```python
+tasmota.add_rule("ANALOG#A1", rule_adc_1)
+tasmota.add_rule("StatusSNS#ANALOG#A1", rule_adc_1)
+```
+
+Or if the same function is used to process similar triggers:
+```python
+import string
+
+def rule_adc(value, trigger)
+  i=string.find(trigger,"#A")
+  tr=string.split(trigger,i+2)
+  adc=number(tr[1])
+  print("value of adc",adc," is ",value)
+end
+
+tasmota.add_rule("ANALOG#A1",rule_adc)
+tasmota.add_rule("ANALOG#A2",rule_adc)
+```
+
+Another way to address the same using anonymous functions created dynamically
+```python
+def rule_adc(adc, value)
+  print("value of adc",adc," is ",value)
+end
+tasmota.add_rule("ANALOG#A1",def (value) rule_adc(1,value) end )
+tasmota.add_rule("ANALOG#A2",def (value) rule_adc(2,value) end )
 ```
 
 ## A word on functions and closure
@@ -225,7 +239,6 @@ channels|`array of int, ranges 0..255`<br>Set the value for each channel, as an 
 
 When setting attributes, they are evaluated in the following order, the latter overriding the previous: `power`, `ct`, `hue`, `sat`, `rgb`, `channles`, `bri`.
 
-Example:
 
 ```python
   # set to yellow, 25% brightness
@@ -286,7 +299,7 @@ Loads a Berry script from the filesystem, and returns an error code; `0` means n
 When loading a source file, the precompiled bytecode is saved to filesystem using the `.bec` extension.
 
 
-#### `save(filename:string, f:closuer) -> nil`
+#### `save(filename:string, f:closure) -> nil`
 
 Internally used function to save bytecode. It's a wrapper to the Berry's internal API `be_savecode()`. There is no check made on the filename.
 
@@ -318,16 +331,19 @@ tasmota.wire\_scan<a class="cmnd" id="tasmota_wire_scan"></a>|`(addr:int [, inde
 tasmota.i2c\_enabled<a class="cmnd" id="tasmota_i2c_enabled"></a>|`(index:int) -> bool`<br>Returns true if the I2C module is enabled, see I2C page.
 
 
-Functions used to respond to a command.
+Functions to create custom Tasmota command.
 
 Tasmota Function|Parameters and details
 :---|:---
-tasmota.add\_cmd<a class="cmnd" id="tasmota_add_cmd"></a>|`(name:string, f:function) -> nil`<br>Adds a command to Tasmota commands. Command names are case-insensitive. Command names are analyzed after native commands and after most commands, so you can't override a native command
+tasmota.add\_cmd<a class="cmnd" id="tasmota_add_cmd"></a>|`(name:string, f:function) -> nil`<br>Adds a command to Tasmota commands. Command names are case-insensitive. Command names are analyzed after native commands and after most commands, so you can't override a native command.
 tasmota.resp\_cmnd_str<a class="cmnd" id="tasmota_resp_cmnd_str"></a>|`(message:string) -> nil`<br>Sets the output for the command to `message`.
-tasmota.resp\_cmnd\_done<a class="cmnd" id="tasmota_resp_cmnd_done"></a>|`(message:string) -> nil`<br>Sets the output for the command to "Done" (localized message).
-tasmota.resp\_cmnd\_error<a class="cmnd" id="tasmota_resp_cmnd_error"></a>|`(message:string) -> nil`<br>Sets the output for the command to "Error" (localized message).
-tasmota.resp\_cmnd\_fail<a class="cmnd" id="tasmota_resp_cmnd_fail"></a>|`(message:string) -> nil`<br>Sets the output for the command to "Fail" (localized message).
+tasmota.resp\_cmnd\_str\_done<a class="cmnd" id="tasmota_resp_cmnd_done"></a>|`(message:string) -> nil`<br>Sets the output for the command to "Done" (localized message).
+tasmota.resp\_cmnd\_str\_error<a class="cmnd" id="tasmota_resp_cmnd_error"></a>|`(message:string) -> nil`<br>Sets the output for the command to "Error" (localized message).
+tasmota.resp\_cmnd\_str\_fail<a class="cmnd" id="tasmota_resp_cmnd_fail"></a>|`(message:string) -> nil`<br>Sets the output for the command to "Fail" (localized message).
 tasmota.resp\_cmnd<a class="cmnd" id="tasmota_resp_cmnd"></a>|`(message:string) -> nil`<br>Overrides the entire command response. Should be a valid JSON string.
+tasmota.remove\_cmd<a class="cmnd" id="tasmota_remove_cmd"></a>|`(name:string) -> nil`<br>Remove a command to Tasmota commands. Removing an non-existing command is skipped silently.
+
+See examples in the [Berry-Cookbook](Berry-Cookbook#adding-commands-to-tasmota)
 
 Functions to manage Relay/Lights
 

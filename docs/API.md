@@ -77,6 +77,21 @@ FUNC_DISPLAY_FONT_SIZE        |      |
 FUNC_DISPLAY_ROTATION         |      |
 FUNC_DISPLAY_DRAW_STRING      |      |
 FUNC_DISPLAY_ONOFF            |      |
+FUNC_DISPLAY_NUMBER *         |      | 
+FUNC_DISPLAY_FLOAT *          |      |
+FUNC_DISPLAY_NUMBERNC *       |      |
+FUNC_DISPLAY_FLOATNC *        |      |
+FUNC_DISPLAY_BRIGHTNESS *     |      |
+FUNC_DISPLAY_RAW *            |      |
+FUNC_DISPLAY_LEVEL *          |      |
+FUNC_DISPLAY_SEVENSEG_TEXT *  |      |
+FUNC_DISPLAY_SEVENSEG_TEXTNC *|      |
+FUNC_DISPLAY_SCROLLDELAY *    |      |
+FUNC_DISPLAY_CLOCK *          |      |
+FUNC_DISPLAY_SCROLLTEXT *     |      |
+
+
+\* TM1637 driver Only
 
 ## Init sequence
 

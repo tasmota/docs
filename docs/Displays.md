@@ -19,7 +19,9 @@ USE_DISPLAY_SSD1351 | Enable color OLED SSD1351 display. Also requires `USE_SPI`
 USE_DISPLAY_RA8876  | Enable TFT RA8876 display. Also requires `USE_SPI` 
 USE_DISPLAY_SEVENSEG  | Enable 7 segment display. Also requires `USE_I2C` 
 USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI`  
-USE_DISPLAY_SD1331  | Enable TFT SD1331 display. Also requires `USE_SPI`
+USE_DISPLAY_ILI9342  | Enable TFT ILI9342 display. Also requires `USE_SPI` 
+USE_DISPLAY_SD1331  | Enable TFT SD1331 display. Also requires `USE_SPI` 
+USE_DISPLAY_TM1637  | Enable 7-segment [TM1637, TM1638 and MAX7219](TM163x.md) display. 
 USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`  
 USE_DISPLAY_TM1637 | Enable TM1637 display
 USE_LILYGO47  | Enable LILGO 4.7 Epaper display ESP32 combo
@@ -35,20 +37,23 @@ USE_GRAPH | Enable line charts. Also requires `NUM_GRAPHS`
 
 ## Display Commands
 
-See commands page for full list of available [Display Commands](Commands.md#displays)
+See commands page for full list of available [Display Commands](Commands.md#displays)  
 
 ## DisplayMode Parameters
 
-The display driver is able to display predefined setups of text or user defined text. To display text using `DisplayText` set `DisplayMode` to `0`, or set `DisplayMode` to `1` for the HT16K33 dot-matrix display.
+The display driver is able to display predefined setups of text or user defined text. To display text using `DisplayText` set `DisplayMode` to `0`, or set `DisplayMode` to `1` for the HT16K33 dot-matrix display.  
 
-Parameter	|	LCD Display	|	OLED Display	|	TFT Display
----	|	---	|	---	|	---
-0	|	DisplayText	|	DisplayText	|	DisplayText
-1	|	Time/Date	|	Time/Date	|	Time/Date
-2	|	Local sensors	|	Local sensors	|	Local sensors
-3	|	MQTT and Time/Date	|	Local sensors and Time/Date	|	Local sensors and Time/Date
-4	|	Local sensors	|	MQTT and local sensors	|	MQTT and local sensors
-5	|	MQTT and Time/Date	|	MQTT, local sensors and Time/Date	|	MQTT, local sensors and Time/Date
+To use the seven-segment-specific [TM1637, TM1638 or MAX7219](TM163x.md) _Display-_ commands, set `DisplayMode` to `0`.
+
+Parameter	|	LCD Display	|	OLED Display	|	TFT Display  | 7-segment Display (TM163x and MAX7219)
+---	|	---	|	---	|	---     |    ----
+0	|	DisplayText	|	DisplayText	|	DisplayText  |    All [TM163x](TM163x.md) _Display-_ functions
+1	|	Time/Date	|	Time/Date	|	Time/Date    |    Time
+2	|	Local sensors	|	Local sensors	|	Local sensors   |   Date
+3	|	MQTT and Time/Date	|	Local sensors and Time/Date	|	Local sensors and Time/Date  |   Time/Date
+4	|	Local sensors	|	MQTT and local sensors	|	MQTT and local sensors  |  NA
+5	|	MQTT and Time/Date	|	MQTT, local sensors and Time/Date	|	MQTT, local sensors and Time/Date | NA
+
 
 ## DisplayText Use
 
@@ -56,7 +61,9 @@ The `DisplayText` command is used to display text as well as graphics and graphs
 displays (EPD). The command argument is a string that is printed on the display at the current position.
 The string can be prefixed by embedded control commands enclosed in brackets `[]`.
 
-In order to use the `DisplayText` command the `DisplayMode` must be set to `0` (or optional `1` on LCD displays) or other modes must be disabled before compilation with `#undef USE_DISPLAY_MODES1TO5`.
+In order to use the `DisplayText` command the `DisplayMode` must be set to `0` (or optional `1` on LCD displays) or other modes must be disabled before compilation with `#undef USE_DISPLAY_MODES1TO5`.  
+
+The `DisplayText` command is customised for the TM1637, TM1638 and MAX7219 seven-segment display modules. This is documented [here](TM163x.md).  
 
 ### DisplayText parameters
 
