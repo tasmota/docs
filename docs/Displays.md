@@ -26,8 +26,11 @@ USE_LILYGO47  | Enable LILGO 4.7 Epaper display ESP32 combo
 USE_UNIVERSAL_DISPLAY  | Enable universal display driver
 USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
 SHOW_SPLASH | Enable initialization splash message on the display  
+`USE_RAMFONT` | Enable loadable Fonts  
+USE_MULTI_DISPLAY | Enable mutiple display support (up to 3)  
 USE_AWATCH | Enables analog watch support  
 USE_GRAPH | Enable line charts. Also requires `NUM_GRAPHS`  
+  
 ----
 
 ## Display Commands
@@ -110,6 +113,8 @@ align right
 `wp` = draws an analog watch with radius p  (#define USE_AWATCH)   
 `Pfilename:` = display an rgb 16-bit color image when file system is present  
 `Ffilename:` = load RAM font file when file system is present. the font is selected with font Nr. 5, these fonts are special binary versions of GFX fonts of any type. they end with .fnt. an initial collection is found in Folder BinFonts  
+`SXfilename:` = load display descriptor for multiple display support (X = 1..3) for up to 3 displays. 
+`SX:` = switch to display number (X = 1..3).  
 `dcI:V` = define index color entry Index 19-31, V 16 bit color value (index 0-18 is fixed)  
 
 ### Touch Buttons and Sliders
