@@ -37,6 +37,9 @@ To use this interface, connect the meter to available GPIO pins. These GPIOs mus
 !!! note
     On an ESP32, due to a different implementation, serial ports may not be used in conjunction with other Tasmota serial devices.  
 
+!!! note
+    when using bidirectional serial io (receive and transmit), hardwareserial is recommended.
+    
 
 The Smart Meter Interface provides a means to connect many kinds of meters to Tasmota. **The following types of meter protocols are supported:**
 
