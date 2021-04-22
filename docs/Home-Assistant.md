@@ -676,6 +676,14 @@ If you change `name:` make sure to reflect that change in the value_template cov
 
 <!-- tabs:end -->
 
+### Covers
+
+<!-- tabs:start -->
+
+[Detailed guide](https://blakadder.com/tuya-climate/) when using MQTT Climate or Generic Thermostat in Home Assistant
+
+<!-- tabs:end -->
+
 ### Device Specific
 
 <!-- tabs:start -->
