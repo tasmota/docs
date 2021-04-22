@@ -17,7 +17,7 @@ esptool.py --chip esp32 --port COM5 --baud 921600 --before default_reset --after
 You can download precompiled binaries:
 
   - development branch from [http://ota.tasmota.com/tasmota32/](http://ota.tasmota.com/tasmota32/) 
-  - stable releases from [https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32) 
+  - stable releases from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/) 
   - the required [flash files](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32/ESP32_needed_files) _(not needed when using ESP_Flasher)_
 
 OTA upgrade from older versions of tasmota32 might fail due to significant changes in partition tables.
