@@ -1089,6 +1089,43 @@ Two separate 2-Tariff meters (e.g. from Fairenergie Reutlingen) are readout by t
 #
 ```
 
+-----
+
+### EasyMeter Q3D, Q3DA1024 (OBIS)
+
+The Q3D is a three-phase model energy meter, which was sold in a number of different configurations. This is a legacy device, however still available new in some shops. The most popular model seems to be the two-direction model for solar power metering. The D0 port is read-only with a fixed time interval of two seconds. The communication settings are unusual: 7 data bits, even parity, one stop bit, 9600 baud (9600 7E1).
+
+Because the 7E1 serial mode is not supported by Tasmota software serial, the hardware serial port must be used, i.e. GPIO 3. This will /not/ work using GPIO 0 or 2.
+
+Also, the source code has to be patched from 8N1 to 7E1 mode for the hardware serial in file src/TasmotaSerial.cpp, please see the patch further down below.
+
+Example reading of the two-direction model using GPIO 3 - P_in power reading will be negative in case of inverse power flow:
+```
+>D
+>B
+=>sensor53 r
+>M 1
++1,3,o,0,9600,bf69,1
+1,1-0:1.7.0*255(@1,P_in,W,P_in,18
+1,1-0:1.8.0*255(@1,E_in,kWh,E_in,23
+1,1-0:2.8.0*255(@1,E_out,kWh,E_out,23
+#
+```
+
+Apply following patch to src/TasmotaSerial.cpp:
+```
+--- a/lib/default/TasmotaSerial-3.2.0/src/TasmotaSerial.cpp
++++ b/lib/default/TasmotaSerial-3.2.0/src/TasmotaSerial.cpp
+@@ -117,7 +117,7 @@ bool TasmotaSerial::begin(long speed, int stop_bits) {
+     if (2 == m_stop_bits) {
+       Serial.begin(speed, SERIAL_8N2);
+     } else {
+-      Serial.begin(speed, SERIAL_8N1);
++      Serial.begin(speed, SERIAL_7E1);
+     }
+     if (m_hardswap) {
+       Serial.swap();
+```
 
 -----
 
