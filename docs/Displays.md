@@ -463,7 +463,7 @@ header line describes the main features of the display (comma seperated, no spac
 
 `SPI`  
 
-1. SPI Nr (1 = hardware SPI 1, 2 = Hardware SPI 2 (ESP32), 3 = software SPI
+1. Number (1 = hardware SPI 1, 2 = Hardware SPI 2 (ESP32), 3 = software SPI
 2. CS pin
 3. CLK pin
 4. MOSI pin
