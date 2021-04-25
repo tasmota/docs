@@ -48,7 +48,7 @@ USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section
 
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules)"
 
-To enter a script, go to **Configuration - Edit script** in the Tasmota web UI menu
+To enter a script, go to **Consoles -> Edit Script** in the Tasmota web UI menu (for version before 9.4, go to **Configuration -> Edit script**)
 
 To save code space almost no error messages are provided. However it is taken care of that at least it should not crash on syntax errors.  
 
