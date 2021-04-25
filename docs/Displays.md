@@ -436,14 +436,16 @@ Driver 17 is a universal display driver for most pixel driven displays.
 it supports I2C and hardware and software SPI (3 or 4 wire)
 The driver is enabled by compiling with #define USE_UNIVERSAL_DISPLAY
 and selecting GPIO Option A3 on any pin.
-the display is defined by a descriptor file which may be provided with 3 methods.
+the display is defined by a descriptor file which may be provided with 3 methods:
+
 1. a special section in scripter >d
 2. a file which must be present in the flash file system ("dspdesc.txt")
 3. a flash section in driver 17 (const char)
 
-the descriptor text file has the following elements:  
+Descriptor text file has the following elements:  
 
-:H  
+`:H`  
+
 header line describes the main features of the display (comma seperated, no spaces allowed)
 1. name
 2. x size in pixels
@@ -451,13 +453,15 @@ header line describes the main features of the display (comma seperated, no spac
 4. bits per pixel (1 for bw displays, 16 for color displays)
 5. hardware interface used either I2C or SPI
 
-I2C  
+`I2C`  
+
 1. I2C address in HEX
 2. SCL pin
 3. SDA pin
 4. RESET pin
 
-SPI  
+`SPI`  
+
 1. SPI Nr (1 = hardware SPI 1, 2 = Hardware SPI 2 (ESP32), 3 = software SPI
 2. CS pin
 3. CLK pin
@@ -467,11 +471,11 @@ SPI
 7. RESET pin
 8. MISO pin
 9. SPI Speed in MHz
-all signals must be given. unused pins may be set to -1
-if you specify a * char the pin number is derived from the Tasmota GPIO GUI.  
-the CS and DC pins must be the standard pins e.g. SPI_CS or SPI_DC.  
 
-example:  
+All signals must be given. Unused pins may be set to -1. If you specify a `*` char the pin number is derived from the Tasmota GPIO GUI.  
+The CS and DC pins must be the standard pins e.g. SPI_CS or SPI_DC.  
+
+!!! example "Example"
 
 ```haskell
 :H,SH1106,128,64,1,I2C,3c,*,*,*
@@ -481,24 +485,27 @@ example:
 :H,ILI9341,240,320,16,SPI,1,-1,14,13,5,4,15,*,40
 ```
 
-:S  
+`:S`  
 splash setup, also defines initial colors.
+
 1. Font number
 2. Font size
 3. FG color (as index color)
 4. BG color (as index color)
 5. x position of text
 6. y position of text  
-example:  
+
+!!! example "Example"
 
 ```haskell
 :S,2,1,1,0,40,20
 ```
-:I  
-initial register setup for the display controler. (`IC` marks that the controller is using command mode even with command parameters)  
-all values are in hex. On SPI the first value is the command, then the number of arguments and the the arguments itself.
-Bi7 7 on the number of arguments set indicate a wait of 150 ms. On I2C all hex values are sent to i2c
-example:  
+`:I`  
+Initial register setup for the display controler. (`IC` marks that the controller is using command mode even with command parameters)  
+All values are in hex. On SPI the first value is the command, then the number of arguments and the the arguments itself.
+`Bi7 7` on the number of arguments set indicate a wait of 150 ms. On I2C all hex values are sent to i2c
+
+!!! example "Example"
 
 ```haskell
 :I
@@ -526,56 +533,60 @@ E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
 29,80
 ```
 
-:o  
+ `:o`  
 Off , Controller OPCODE to switch display off  
 
-:O  
+`:O`  
 On Controller OPCODE to switch display on  
 
-:R  
+`:R`  
+
 1. rotation opcode
 2. startline opcode (optional)  
 
-:0  
-:1  
-:2  
-:3  
+`:0`  
+`:1`  
+`:2`  
+`:3`  
+
 register values for all 4 rotations (color display only)
+
 1. rotation code
 2. x offset
 3. y offset
 4. rotation pseudo opcode for touch panel
 
-:A  
+`:A`  
 3 OPCODES to set adress window (color display only)  
+
 1. set column opcode  
 2. set row opcode  
 3. start write opcode  
 4. pixel size (optional)  
 
-:P  
+`:P`  
 pixel transfer size (optional) default = 16 bit RGB  
 
-:i  
+`:i`  
 invert display opcodes  
 1. inversion off  
 2. inversion on  
 
-:D  
+`:D`  
 dimmer opcode (optional)  
 
-:TIx,AA,SCL,SDA  
+`:TIx,AA,SCL,SDA`  
 defines a touch panel an I2C bus nr x (1 or 2)  
 AA is device address  
 SCL, SDA are the pins used (or * for tasmota definition)  
 
-:TS,CS_PIN  
+`:TS,CS_PIN`   
 defines a touch panel an SPI bus with chip select CS_PIN (or *)  
 
 the appropriate coordinate convervsions are defined via pseudo opcodes, see above  
 ( code 0 to 3 currently defined)  
 
-full examples for SH1106 and ILI9341: (comment lines starting with ; are allowed)  
+!!! example "Full examples for SH1106 and ILI9341: (comment lines starting with ; are allowed)"  
 
 ```haskell
 :H,SH1106,128,64,1,I2C,3c,*,*,*
@@ -640,12 +651,11 @@ E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
 #
 ```
 
-the most conveniant editing when developing or modifying is done via scripter.  
-on every scripter save the display is reinitialized and you see
-immediately the result of your changes.  
-however the normal use would be to store the descriptor in file system.
+Most conveniant editing when developing or modifying is done via scripter. On every scripter save the display is reinitialized and you immediately see results of your changes.  
 
-example of scripter driven display descriptor:  
+However the normal use would be to store the descriptor in file system.
+
+!!! example "Scripter driven display descriptor"  
 
 ```haskell
 >D
