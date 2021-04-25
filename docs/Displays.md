@@ -447,6 +447,7 @@ Descriptor text file has the following elements:
 `:H`  
 
 header line describes the main features of the display (comma seperated, no spaces allowed)
+
 1. name
 2. x size in pixels
 3. y size in pixels
