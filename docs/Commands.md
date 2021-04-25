@@ -92,7 +92,7 @@ Backlog Status 1; Power2 on; Delay 20; Power2 off; Status 4
 ```
 When using [web requests](#with-web-requests) *(Don't forget to encode "space" as '%20' and ";" as '%3B')*
 ```
-http://<ip>/cm?user=admin&password=joker&cmnd=Backlog%20Power%20Toggle%3BPower1%20ff
+http://<ip>/cm?user=admin&password=joker&cmnd=Backlog%20Power%20Toggle%3BPower1%20off
 ```
 
 A `Backlog` command without an argument clears an possible existing `Backlog` queue.
