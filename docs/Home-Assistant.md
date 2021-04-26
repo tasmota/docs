@@ -67,7 +67,11 @@ You can use [MQTT Discovery](https://www.home-assistant.io/docs/mqtt/discovery/)
 
 When creating the MQTT discovery JSON add this device identifier `,"device":{"connections":[["mac","%macaddr%"]]}` where %macaddr% is the mac address of the device without `:`. When used in a rule variable `%macaddr%` will be replaced automatically.
 
-Examples of custom discovery:
+There are Home Assistant Blueprints for specific device types to create needed entities at out blueprints GitHub. Look for the icon in templates to one-click import the configuration automation.
+
+<a href="https://github.com/tasmota/blueprints/" title="Blueprints"><img loading="lazy" src="https://templates.blakadder.com/assets/blueprint_import.svg"></a>
+
+Examples of creating custom discovery messages:
 
 - [RFID Tag](https://blakadder.com/tasmota-tags/)
 - [PIR sensor](https://blakadder.com/pir-in-tasmota-integration/)
