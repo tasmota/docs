@@ -18,4 +18,4 @@ The ESP8266 will run the PID algorithm at 1 cycle per second, which is much fast
 
 Help with using the PID algorithm and with loop tuning can be found at  http://blog.clanlaw.org.uk/2018/01/09/PID-tuning-with-node-red-contrib-pid.html  This is directed towards using the algorithm in the node-red node node-red-contrib-pid but the algorithm here is based on the same code so the tuning technique described there should work just the same.
 
-Due to limited hardware availability this has so far only been tested in a Sonoff Basic with a TH10, and a Sonoff Mini with a DS18B20 coneected. If there are any issues running this on other hardware let us know.
+Due to limited hardware availability this has so far only been tested in a Sonoff Basic with a TH10, and a Sonoff Mini with a DS18B20 connected. If there are any issues running this on other hardware let us know.
