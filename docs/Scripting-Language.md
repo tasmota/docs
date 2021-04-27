@@ -34,6 +34,7 @@ USE_SCRIPT_FATFS_EXT | enables additional FS commands
 USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 USE_SCRIPT_TASK | enables multitasking Task in ESP32
+USE_SCRIPT_I2C | enables I2C support
 USE_SCRIPT_GLOBVARS | enables global variables and >G section
 USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
 SML_REPLACE_VARS | enables posibility to replace the lines from the (SML) descriptor with Vars
