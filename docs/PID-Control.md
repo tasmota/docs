@@ -1,6 +1,3 @@
-!!! bug "This fork is outdated and does not compile with current version of Tasmota"
-    Do not ask for support!!!
-
 This extension adds a PID (Proportional Integral Derivative) feature into the Tasmota software.  
 
 The PID algorithm is designed to be used to control real-world processes.  This includes room heating/cooling, temperature control when brewing, and a multitude of other processes.  The PID tuning parameters are designed to be meaningful in the real world (rather than the abstract Ki Kd Kp that are often used which are completely meaningless to most). The algorithm is based on that in the node-red node [node-red-contrib-pid](https://www.npmjs.com/package/node-red-contrib-pid) which has been well received.
