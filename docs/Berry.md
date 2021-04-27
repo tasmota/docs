@@ -293,7 +293,7 @@ Internally used function to save bytecode. It's a wrapper to the Berry's interna
 
 Note: there is generally no need to use this function, it is used internally by `load()`.
 
-### `tasmota` object
+### **`tasmota` object**
 
 A root level object called `tasmota` is created and contains numerous functions to interact with Tasmota.
 
@@ -344,7 +344,7 @@ tasmota.get\_light<a class="cmnd" id="tasmota_get_light"></a>|_deprecated_ use `
 tasmota.set\_light<a class="cmnd" id="tasmota_set_light"></a>|_deprecated_ use `light.set`
 
 
-### `light` object
+### **`light` object**
 
 Module `light` is automatically imported via a hidden `import light` command.
 
@@ -357,7 +357,7 @@ light.gamma10<a class="cmnd" id="light_gamma10"></a>|`(channel) -> int`<br>Compu
 light.reverse\_gamma10<a class="cmnd" id="light_reverse_gamma10"></a>|`(gamma) -> int`<br>Computes the reverse gamma with 10 bits resolution for input and output.<br>Input and output are in range 0..1023.
 light.gamma8<a class="cmnd" id="light_gamma8"></a>|`(channel) -> int`<br>Computes the gamma corrected value with 8 bits resolution for input and output.<br>Input and output are in range 0..255.
 
-### `gpio` module
+### **`gpio` module**
 
 This module allows to retrieve the GPIO configuration set in the templates. You need to distinguish between **logical gpio** (like PWM, or I2C) and **physical gpio** which represent the GPIO number of the physicla pin. `gpio.pin()` transforms a logical gpio to a physical gpio, or `-1` if the logical gpio is not set.
 
