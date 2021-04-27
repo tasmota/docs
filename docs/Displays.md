@@ -26,6 +26,7 @@ USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requir
 USE_DISPLAY_TM1637 | Enable TM1637 display
 USE_LILYGO47  | Enable LILGO 4.7 Epaper display ESP32 combo
 USE_UNIVERSAL_DISPLAY  | Enable universal display driver
+USE_LVGL  | Enable LVGL, currently only supported by berry scripting  
 USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
 SHOW_SPLASH | Enable initialization splash message on the display  
 `USE_RAMFONT` | Enable loadable Fonts  
@@ -438,9 +439,12 @@ The driver is enabled by compiling with #define USE_UNIVERSAL_DISPLAY
 and selecting GPIO Option A3 on any pin.
 the display is defined by a descriptor file which may be provided with 3 methods:
 
-1. a special section in scripter >d
-2. a file which must be present in the flash file system ("dspdesc.txt")
-3. a flash section in driver 17 (const char)
+1. a file which must be present in the flash file system ("dspdesc.txt"), prefered option
+2. a special section in scripter >d
+3. rule buffer 3
+4. a flash section in driver 17 (const char)
+
+options 1-3 work also on 1M devices
 
 Descriptor text file has the following elements:  
 
@@ -487,7 +491,7 @@ The CS and DC pins must be the standard pins e.g. SPI_CS or SPI_DC.
 ```
 
 `:S`  
-splash setup, also defines initial colors.
+splash setup, also defines initial colors. (optional, if omitted screen is not cleared initially)
 
 1. Font number
 2. Font size
@@ -496,7 +500,7 @@ splash setup, also defines initial colors.
 5. x position of text
 6. y position of text  
 
-!!! example "Example"
+!!! example
 
 ```haskell
 :S,2,1,1,0,40,20
@@ -506,7 +510,7 @@ Initial register setup for the display controler. (`IC` marks that the controlle
 All values are in hex. On SPI the first value is the command, then the number of arguments and the the arguments itself.
 `Bi7 7` on the number of arguments set indicate a wait of 150 ms. On I2C all hex values are sent to i2c
 
-!!! example "Example"
+!!! example
 
 ```haskell
 :I
@@ -534,16 +538,16 @@ E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
 29,80
 ```
 
- `:o`  
+ `:o`,OP  
 Off , Controller OPCODE to switch display off  
 
-`:O`  
+`:O`,OP  
 On Controller OPCODE to switch display on  
 
-`:R`  
+`:R`,OP,SL  
 
-1. rotation opcode
-2. startline opcode (optional)  
+1. OP = rotation opcode
+2. SL = startline opcode (optional)  
 
 `:0`  
 `:1`  
@@ -575,6 +579,28 @@ invert display opcodes
 
 `:D`  
 dimmer opcode (optional)  
+
+`:B`  
+LVGL (optional)  
+1. number of display lines flushed at once (min 10) the lower the lesser memory needed  
+2. 0 for no DMA, 1 use DMA (not supported on all displays)  
+
+`:T`  
+Wait times used for E-paper display  
+1. full refresh wait in ms  
+2. partial refresh wait in ms  
+3. wait after update in ms  
+
+`:L`  
+Lookuptable for full refresh (Waveshare 29)
+
+`:l`  
+Lookuptable for partial refresh (Waveshare 29)
+
+`:LX`,OP  
+Lookuptable for full refresh (Waveshare 42) 
+X = 1..5  
+OP = opcode for sending refresh table  
 
 `:TIx,AA,SCL,SDA`  
 defines a touch panel an I2C bus nr x (1 or 2)  
