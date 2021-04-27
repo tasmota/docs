@@ -57,7 +57,7 @@ To save code space almost no error messages are provided. However it is taken ca
 - Up to 50 variables (45 numeric and 5 strings - this may be changed by setting a compilation `#define` directive)  
 - Freely definable variable names (all variable names are intentionally _**case sensitive**_)  
 - Nested if,then,else up to a level of 8  
-- Math operators  `+`,`-`,`*`,`/`,`%`,`&`,`|`,`^`  
+- Math operators  `+`,`-`,`*`,`/`,`%`,`&`,`|`,`^`,`<<`,`>>`  
 - All operators may be used in the `op=` form, e.g., `+=`  
 - Comparison operators `==`,`!=`,`>`,`>=`,`<`,`<=`  
 - `and` , `or` support  
@@ -492,6 +492,10 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `wcs` = send this line to webpage (WebContentSend)  
 `rapp` = append this line to MQTT (ResponseAppend)  
 `wm` = contains source of web request code e.g. 0 = Sensor display (FUNC_WEB_SENSOR)  
+
+`ia(addr)` = test and set i2c address ia2(addr) for bus 2 on ESP32    
+`ir(reg)` = read i2c register default = uint8, ir2(), ir3(), ir4() read number of bytes  
+`iw(reg val)` = write i2c register  
 
 `sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
 `sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
@@ -2251,6 +2255,28 @@ start dim level = initial dimmer level after power-up or restart; max 100
     dt [x20y20t]
     ; switch back to display 1
     dt [S1:]
+
+### read I2C example (AXP192)
+
+    >D
+    volt=0
+    curr=0
+    found=0
+    >B
+    ; check device on I2C bus Nr.2
+    found=ia2(0x34)
+    
+    >S
+    ; if found read registers, (this example takes 2ms to read both values)
+    if found>0 {
+    volt=ir(0x5a)<<4|ir(0x5b)*1.7/1000
+    curr=ir(0x58)<<4|ir(0x59)*0.625
+    }
+    
+    >W
+    ; show on webui
+    Bus Voltage{m}%volt% V
+    Bus Current{m}%curr% mA
 
 
 ### Multiplexing a single adc with CD4067 breakout
