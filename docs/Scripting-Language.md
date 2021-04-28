@@ -1231,6 +1231,7 @@ remark: the Flash illumination LED is connected to GPIO4
     temp=0
     fr=0
     res=0
+    cnt=0
     ; moving average for 60 seconds
     M:mhum=0 60
     M:mtemp=0 60
@@ -1238,7 +1239,7 @@ remark: the Flash illumination LED is connected to GPIO4
 
     >B
     ; set sensor file download link
-    fl1("slog.txt")
+    ;fl1("slog.txt")
     ; delete file in case we want to start fresh
     ;fd("slog.txt")
 
