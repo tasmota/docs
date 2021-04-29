@@ -19,6 +19,7 @@ Name|Description
 [**CC2530**](CC2530) | TI CC2530 Zigbee Adapter (serial)
 **CCS811** | Gas and Air Quality Sensor (I^2^C)
 [**Chirp! Soil Moisture Sensor**](Moisture-Sensor-and-Chirp!-Sensor) | Moisture Sensor (I^2^C)
+[**DFR0299**](DFR0299) | DFRobot DFPlayer Mini MP3 Player (serial)
 [**DHT11**](DHT11) | Temperature and Humidity Sensor
 **DHT12** |
 **DYP-ME007** | Ultrasonic distance Sensor (serial)
