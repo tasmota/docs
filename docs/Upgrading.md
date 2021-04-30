@@ -16,7 +16,11 @@ Download binaries from:
 - Official firmware server:
    - [Current release](http://ota.tasmota.com/tasmota/release/)
    - [Development branch](http://ota.tasmota.com/tasmota/)
+<<<<<<< HEAD
    - Older release binaries: [9.1.0](http://ota.tasmota.com/tasmota/release-9.3.1/),[9.1.0](http://ota.tasmota.com/tasmota/release-9.1.0/), [8.5.1](http://ota.tasmota.com/tasmota/release-8.5.1/), [7.2.0](http://ota.tasmota.com/tasmota/release-7.2.0/), [6.7.1](http://ota.tasmota.com/tasmota/release-6.7.1/)
+=======
+   - Older release binaries: [9.1.0](http://ota.tasmota.com/tasmota/release-9.1.0/), [8.5.1](http://ota.tasmota.com/tasmota/release-8.5.1/), [7.2.0](http://ota.tasmota.com/tasmota/release-7.2.0/), [6.7.1](http://ota.tasmota.com/tasmota/release-6.7.1/). You can build a similar URL for another release.
+>>>>>>> 364a417a87a21bd1cd5b29c77c5541ed2f452bcf
 - your [personal OTA server](#private-ota-server)
 
 ## .gz binaries
