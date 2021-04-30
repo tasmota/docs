@@ -439,7 +439,7 @@ The driver is enabled by compiling with #define USE_UNIVERSAL_DISPLAY
 and selecting GPIO Option A3 on any pin.
 the display is defined by a descriptor file which may be provided with 3 methods:
 
-1. a file which must be present in the flash file system ("dspdesc.txt"), prefered option
+1. a file which must be present in the flash file system ("dispdesc.txt"), prefered option
 2. a special section in scripter >d
 3. rule buffer 3
 4. a flash section in driver 17 (const char)
