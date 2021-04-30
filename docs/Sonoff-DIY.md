@@ -89,7 +89,7 @@ curl -XPOST --header "Content-Type: application/json" --data-raw '{"deviceid": "
 </details>
 
 Optionally for curiousity you could retry *info* query to check if *otaUnlock* value now is *true*
-5. Download the appropriate binary from https://github.com/arendst/Tasmota/releases and flash it. *NOTE: The maximum firmware size is 508kb, which precludes the standard release binary.*
+5. Download the appropriate binary from http://ota.tasmota.com/tasmota/release and flash it. *NOTE: The maximum firmware size is 508kb, which precludes the standard release binary.*
 
 There are a number of [reported](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/10) [issues](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/95) with the stock firmware's OTA behavior, so it may be easier to use [an existing server](http://sonoff-ota.aelius.com/) that works around these issues. For example:
 

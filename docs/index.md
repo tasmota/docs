@@ -9,7 +9,6 @@ Automate using timers, rules or scripts.
 Integration with home automation solutions.    
 Incredibly expandable and flexible.     
 
-[![GitHub download](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](https://github.com/arendst/Tasmota/releases/latest)
 [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt)
 [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4)
 [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
@@ -19,7 +18,7 @@ OTA update servers: [http://ota.tasmota.com/tasmota/release](http://ota.tasmota.
 
 <small><span style="float:right">\*all documentation is for current release only</small></span>
 ### Current release 
-<a href="https://github.com/arendst/Tasmota/releases/tag/v9.4.0"><span style="font-size:40px;">Tasmota 9.4.0 Leslie</span></a><br>
+<a href="http://ota.tasmota.com/tasmota/release-9.4.0/"><span style="font-size:40px;">Tasmota 9.4.0 Leslie</span></a><br>
 
 
 - :warning: BREAKING :warning: ESP32 partition layout changed to accommodate more file space on most boards and more code space on Core2 and Odroid-GO [#11746](https://github.com/arendst/Tasmota/issues/11746)

@@ -46,7 +46,7 @@ Tasmota installed from a precompiled binary needs to be configured to work with 
 #### Tasmota Firmware Binary
 Download a Tasmota firmware binary file (.bin). If you're not sure which binary is the right one for you just start with `tasmota.bin` or consult the [builds table](Builds) to see which features you need. 
 
-Official release binaries can be downloaded from [GitHub releases](https://github.com/arendst/Tasmota/releases) or from our [OTA server](http://ota.tasmota.com/tasmota/release/). 
+Official release binaries can be downloaded from [firmware server](http://ota.tasmota.com/tasmota/release/). 
 
 Latest _**development**_ branch binaries are available only from our [OTA server](http://ota.tasmota.com/tasmota). The latest merged development code is compiled hourly. 
 
