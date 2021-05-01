@@ -265,7 +265,7 @@ _Parameters are separated by colons._
 When USE_UFILESYSTEM is defined and a file system is present you may define displaytext batch files.
 the file may contain any number of diplaytext cmds, one at a line.
 you may have comment lines beginning with a ;
-if a file named display.ini is present in the file system this batch file is executed.
+if a file named "display.bat" is present in the file system this batch file is executed.
 
 example file:
 
@@ -439,12 +439,12 @@ The driver is enabled by compiling with #define USE_UNIVERSAL_DISPLAY
 and selecting GPIO Option A3 on any pin.
 the display is defined by a descriptor file which may be provided with 3 methods:
 
-1. a file which must be present in the flash file system ("dispdesc.txt"), prefered option
+1. a file which must be present in the flash file system ("display.ini"), prefered option
 2. a special section in scripter >d
 3. rule buffer 3
 4. a flash section in driver 17 (const char)
 
-options 1-3 work also on 1M devices
+options 2-4 work also on 1M devices
 
 Descriptor text file has the following elements:  
 
