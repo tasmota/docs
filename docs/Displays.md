@@ -29,7 +29,7 @@ USE_UNIVERSAL_DISPLAY  | Enable universal display driver
 USE_LVGL  | Enable LVGL, currently only supported by berry scripting  
 USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
 SHOW_SPLASH | Enable initialization splash message on the display  
-`USE_RAMFONT` | Enable loadable Fonts  
+USE_RAMFONT | Enable loadable Fonts  
 USE_MULTI_DISPLAY | Enable mutiple display support (up to 3)  
 USE_AWATCH | Enables analog watch support  
 USE_GRAPH | Enable line charts. Also requires `NUM_GRAPHS`  
