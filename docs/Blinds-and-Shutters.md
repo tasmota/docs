@@ -267,7 +267,7 @@ Typical log output (log level `3`) when starting from `ShutterOpen1`. The first 
 ```
 -->
 ### using Stepper Motors
-Stepper motors can be used to operate shutters and blinds. The configuration is very similar to the  Circuit Safe (Shuttermode 1) configuration. To operate a stepper motor requires driver module such as the A4988 and uses EN (enable), DIR (direction), STP (Stepper) for controls. If everything is defined correctly Shuttermode 3 will be reported at boot time.
+Stepper motors can be used to operate shutters and blinds. The configuration is very similar to the  Circuit Safe (Shuttermode 1) configuration. To operate a stepper motor requires driver module such as the A4988 and uses EN (enable), DIR (direction), STP (Stepper) for controls. If everything is defined correctly Shuttermode 4 will be reported at boot time.
 
 Tasmota supports a maximum of four shutters with one stepper motor per shutter simultaneously. In very rare conditions where two or more shutters simultaneously move the last mm it can happen than one shutter moves to far.   
 
@@ -302,7 +302,7 @@ D2|4|Relay2|DIR
 D3|0|PWM1|STP
 D4|2|Counter1|STP
 
-**a) Set ShutterMode 3**  
+**a) Set ShutterMode 4**  
    `Backlog PulseTime1 0; PulseTime2 0`   // for relay Relay1i and Relay2  
    `Interlock OFF`                        // this is a global variable for all Relays or at least the RELAYS NOT in the Interlock group
    PWM1 and COUNTER1 defined
@@ -340,7 +340,7 @@ D6|12|Relay4|DIR
 D7|13|PWM2|STP
 D8|15|Counter2|STP
 
-**a) Set ShutterMode 3**  
+**a) Set ShutterMode 4**  
   `Backlog PulseTime3 0; PulseTime4 0`   // for relay Relay3i and Relay4  
   PWM2 and COUNTER2 defined
 
