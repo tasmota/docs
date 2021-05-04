@@ -152,7 +152,7 @@ Take note that only the ESP32 and the HM-1x modules are real BLE devices whereas
 !!! info "This feature is included only in tasmota-sensors.bin"
 Otherwise you must [compile your build]Compile-your-build). Add the following to `user_config_override.h`:
 
-```
+```c++
 #ifndef USE_HM10
 #define USE_HM10          // Add support for HM-10 as a BLE-bridge (+9k3 code)
 #endif
@@ -208,7 +208,7 @@ Full list of available [Bluetooth commands](Commands.md#bluetooth).
 
 Otherwise you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
-```
+```c++
 #ifndef USE_IBEACON
 #define USE_IBEACON          // Add support for bluetooth LE passive scan of ibeacon devices 
 #endif
