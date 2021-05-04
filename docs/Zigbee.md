@@ -1,9 +1,9 @@
 !!! info "Zigbee2Tasmota serves as a gateway for devices connected to a Zigbee wireless network to bridge their communications over to Wi-Fi"
 
-Zigbee2Tasmota (Z2T) is a lightweight Zigbee solution running on an ESP82xx Wi-Fi chip. Hence it is easier to deploy wherever you want in your home. It is largely inspired by [Zigbee2mqtt](https://www.zigbee2mqtt.io/) but it's a complete rewrite to make it fit on an ESP82xx with 80kB of RAM and only 1MB of flash memory.
+Zigbee2Tasmota (Z2T) is a lightweight Zigbee gateway/bridge solution running on ESP8266/ESP8285 or ESP32 Wi-Fi chips. Hence it is easier to deploy wherever you want in your home. It was largely inspired by [Zigbee2MQTT](https://www.zigbee2mqtt.io/) but it was written from scratch to make it fit into the resource constraints of a ESP82xx chip with just 80kB of RAM and only 1MB of flash memory.
 
 ## Hardware
-This integration works with any Texas Instruments [CC2530](CC2530.md) chip based device as well as with Silicon Labs EFR32 chip based devices like [Sonoff ZBBridge](https://zigbee.blakadder.com/Sonoff_ZBBridge.html). A complete list of compatible Zigbee coordinators and Zigbee devices compatible with Z2T is in the [Zigbee Device Compatibility Repository](https://zigbee.blakadder.com/zigbee2tasmota.html). 
+This integration works with any Texas Instruments [CC2530](CC2530.md) chip based device as well as with Silicon Labs EFR32 (EFR32MG12/EFRMG21) chip based devices, like example [Sonoff ZBBridge](https://zigbee.blakadder.com/Sonoff_ZBBridge.html), [Tube's Zigbee Gateways (varient based on Silabs EFR32)](https://github.com/tube0013/tube_gateways), and DIY Zigbee gateway/bridge devices. A complete list of compatible Zigbee coordinators and Zigbee devices compatible with Z2T is in the [Zigbee Device Compatibility Repository](https://zigbee.blakadder.com/zigbee2tasmota.html). 
 
 While Z2T was initially designed for Texas Instruments Z-Stack firmware and protocol for CC253x based device, since then support for Silicon Labs EZSP (EmberZNet Serial Protocol) firmware has also been added. Once the Zigbee coordinator is started and communicates with Tasmota, the end result is the same and there is no difference in their operation.
 
@@ -11,6 +11,7 @@ Flashing and installation instructions for:
 
 - [Sonoff ZBBridge by ITead](https://zigbee.blakadder.com/Sonoff_ZBBridge.html)
 - [CC2530 based devices](CC2530.md)
+- [DIY Zigbee gateway/bridge device example](https://github.com/zigpy/zigpy/discussions/584)
 
 ## Introduction
 Before using Zigbee with Tasmota, you need to understand a few concepts. Here is a simplified comparison to the Wi-Fi equivalent (sort of).
