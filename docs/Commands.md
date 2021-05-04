@@ -850,12 +850,12 @@ Command|Parameters
 MI32Battery<a class="cmnd" id="mi32battery"></a>|Trigger an active read of battery values.<BR>`MI32Battery` = request the driver read the battery from all sensors which have active battery read requirements.
 MI32Block<a class="cmnd" id="mi32block"></a>|Block or unblock a sensor device.<BR>`MI32Block` = list blocked devices by mac.<BR>`MI32Block <mac or blealias>` = Block one mac/alias.
 MI32Key<a class="cmnd" id="mi32key"></a>|Add a decryption key.<BR>`MI32Key hexkey` = add a 44 character decryption key to the keys list.
-MI32Keys<a class="cmnd" id="mi32keys"></a>|Add one or more decryption keys by mac or alias.<BR>`MI32Keys` = list keys.<BR>`MI32Keys <mac or blealias>=<bind_key> <mac or blealias>=<key> ...` = add keys for MAC or ble_alias.<BR>`MI32Keys <mac or blealias>=` - remove keys for one mac|alias.<BR>`MI32Keys2` - remove all keys.
+MI32Keys<a class="cmnd" id="mi32keys"></a>|Add one or more decryption keys by mac or alias.<BR>`MI32Keys` = list keys.<BR>`MI32Keys <mac or blealias>=<bind_key> <mac or blealias>=<bind_key> ...` = add keys for MAC or ble_alias.<BR>`MI32Keys <mac or blealias>=` - remove keys for one mac|alias.<BR>`MI32Keys2` - remove all keys.
 MI32Option<x\> n<a class="cmnd" id="mi32option"></a>| Set driver options at runtime<BR> `x=0` - 0 -> sends only recently received sensor data, 1 -> aggregates all recent sensors data types<BR>`x=1` - 0 -> shows full sensor data at TELEPERIOD, 1 -> shows no sensor data at TELEPERIOD<BR>`x=2` - 0 -> sensor data only at TELEPERIOD (default and "usual" Tasmota style), 1 -> direct bridging of BLE-data to mqtt-messages<BR>`x=5` - 0 -> show all relevant BLE sensors, 1 -> show only sensors with a BLEAlias<BR>x=6 (from v 9.0.2.1) 1 -> always use MQTT Topic like `tele/tasmota_ble/<name>` containing only one sensor
 MI32Page<a class="cmnd" id="mi32page"></a>|Display/Set the sensors per page in the web view.<BR>`MI32page` = show sensors per page.<BR>`MI32page n` = Set sensors per page to n.
 MI32Period<a class="cmnd" id="mi32block"></a>|Display/Set the active scan and tele period for the MI32 driver.<BR>`MI32Period` = diisplay the period in seconds.<BR>`MI32Period n` = Set the MI driver active read and tele period to n seconds.
-MI32Time<a class="cmnd" id="mi32time"></a>`<x>` = set the time on the device in slot `x`.
-MI32Unit<a class="cmnd" id="mi32unit"></a>`<x>` = set the current Tasmota temperature unit as the temp unit for sensor in slot `x`.
+MI32Time<a class="cmnd" id="mi32time"></a>|`<x>` = set the time on the device in slot `x`.
+MI32Unit<a class="cmnd" id="mi32unit"></a>|`<x>` = set the current Tasmota temperature unit as the temp unit for sensor in slot `x`.
 
 ### Camera
 
