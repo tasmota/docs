@@ -11,7 +11,8 @@ Flashing and installation instructions for:
 
 - [Sonoff ZBBridge by ITead](https://zigbee.blakadder.com/Sonoff_ZBBridge.html)
 - [CC2530 based devices](CC2530.md)
-- [DIY Zigbee gateway/bridge device example](https://github.com/zigpy/zigpy/discussions/584)
+- [DIY Zigbee gateway/bridge device example based on Ebyte E180-ZG120B or E180-ZG120B-TB](https://github.com/zigpy/zigpy/discussions/584)
+- [DIY Zigbee gateway/bridge device example based on IKEA TRÅDFRI ICC-A-1 Module](https://github.com/MattWestb/IKEA-TRADFRI-ICC-A-1-Module/tree/master/Tasmota)
 
 ## Introduction
 Before using Zigbee with Tasmota, you need to understand a few concepts. Here is a simplified comparison to the Wi-Fi equivalent (sort of).
