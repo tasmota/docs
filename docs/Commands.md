@@ -698,10 +698,13 @@ HM10Baud<a class="cmnd" id="hm10baud"></a>|Show ESP8266 serial interface baudrat
 HM10AT<a class="cmnd" id="hm10at"></a>|`<command>` = send AT commands to HM-10. See [list](http://www.martyncurrey.com/hm-10-bluetooth-4ble-modules/#HM-10%20-%20AT%20commands)
 HM10Time <a class="cmnd" id="hm10time"></a>|`<n>` = set time time of a **LYWSD02 only** sensor to Tasmota UTC time and timezone. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).
 HM10Auto <a class="cmnd" id="hm10auto"></a>|`<value>` = start an automatic discovery scan with an interval of  `<value>` seconds to receive data in BLE advertisements periodically.<BR>This is an active scan and it should be used **only if necessary**. At the moment that is the case just with MJ_HT_V1. This can change if a future HM-10 firmware starts supporting passive scan.
-NRFPage<a id="nrfpage"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
-NRFIgnore<a id="nrfignore"></a>|`0` = all known sensor types active_(default)_<BR>`<value>` =  ignore certain sensor type (`1` = Flora, `2` = MJ_HT_V1, `3` = LYWSD02, `4` = LYWSD03, `5` = CGG1, `6` = CGD1
-NRFScan<a id="nrfscan"></a>| Scan for regular BLE-advertisements and show a list in the console<BR>`0` = start a new scan list<BR>`1` = append to the scan list<BR>`2` = stop running scan
 NRFBeacon<a id="nrfbeacon"></a>| Set a BLE device as a beacon using the (fixed) MAC-address<BR>`<value>` (1-3 digits) = use beacon from scan list<BR>`<value>` (12 characters) = use beacon given the MAC interpreted as an uppercase string `AABBCCDDEEFF`
+NRFIgnore<a id="nrfignore"></a>|`0` = all known sensor types active_(default)_<BR>`<value>` =  ignore certain sensor type (`1` = Flora, `2` = MJ_HT_V1, `3` = LYWSD02, `4` = LYWSD03, `5` = CGG1, `6` = CGD1
+NRFKey<a id="nrfkey"></a>| Set a "bind_key" for a MAC-address to decrypt (LYWSD03MMC & MHO-C401). The argument is a 44 uppercase characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string
+NRFMjyd2s<a id="nrfmjyd2s"></a>| Set a "bind_key" for a MAC-address to decrypt sensor data of the MJYD2S. The argument is a 44 characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string
+NRFNlight<a id="nrfnlight"></a>| Set the MAC of an NLIGHT<BR>`<value>` (12 characters) =  MAC interpreted as an uppercase string `AABBCCDDEEFF`
+NRFPage<a id="nrfpage"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
+NRFScan<a id="nrfscan"></a>| Scan for regular BLE-advertisements and show a list in the console<BR>`0` = start a new scan list<BR>`1` = append to the scan list<BR>`2` = stop running scan
 
 ### Stepper Motors
 
@@ -819,7 +822,7 @@ OPTION|OPTION<BR>Value|<BR>OPTION|OPTION<BR>Value
 
 ## ESP32
 
-### ESP32 Bluetooth Low Energy
+### BLE ESP32
 
 Command|Parameters
 :---|:---
@@ -845,14 +848,14 @@ iBeaconTimeout<a class="cmnd" id="ibeacontimeout"></a>|Display or Set the timeou
 Command|Parameters
 :---|:---
 MI32Battery<a class="cmnd" id="mi32battery"></a>|Trigger an active read of battery values.<BR>`MI32Battery` = request the driver read the battery from all sensors which have active battery read requirements.
-MI32Block<a class="cmnd" id="mi32block"></a>|Block or unblock a sensor device.<BR>`MI32Block` = list blocked devices by mac.<BR>`MI32Block mac|alias` = Block one mac/alias.
+MI32Block<a class="cmnd" id="mi32block"></a>|Block or unblock a sensor device.<BR>`MI32Block` = list blocked devices by mac.<BR>`MI32Block <mac or blealias>` = Block one mac/alias.
 MI32Key<a class="cmnd" id="mi32key"></a>|Add a decryption key.<BR>`MI32Key hexkey` = add a 44 character decryption key to the keys list.
-MI32Keys<a class="cmnd" id="mi32keys"></a>|Add one or more decryption keys by mac or alias.<BR>`MI32Keys` = list keys.<BR>`MI32Keys mac|alias=key mac|alias=key ...` = add keys MI32Optionx n<a class="cmnd" id="mi32option"></a>| Set driver options at runtime<BR> x=0 - 0 -> sends only recently received sensor data, 1 -> aggregates all recent sensors data types<BR>x=1 - 0 -> shows full sensor data at TELEPERIOD, 1 -> shows no sensor data at TELEPERIOD<BR>x=2 - 0 -> sensor data only at TELEPERIOD (default and "usual" Tasmota style), 1 -> direct bridging of BLE-data to mqtt-messages<BR>x=5 - 0 -> show all relevant BLE sensors, 1 -> show only sensors with a BLEAlias<BR>x=6 (from v 9.0.2.1) 1 -> always use MQTT Topic like `tele/tasmota_ble/<name>` containing only one sensor
+MI32Keys<a class="cmnd" id="mi32keys"></a>|Add one or more decryption keys by mac or alias.<BR>`MI32Keys` = list keys.<BR>`MI32Keys <mac or blealias>=<bind_key> <mac or blealias>=<key> ...` = add keys for MAC or ble_alias.<BR>`MI32Keys <mac or blealias>=` - remove keys for one mac|alias.<BR>`MI32Keys2` - remove all keys.
+MI32Option<x\> n<a class="cmnd" id="mi32option"></a>| Set driver options at runtime<BR> `x=0` - 0 -> sends only recently received sensor data, 1 -> aggregates all recent sensors data types<BR>`x=1` - 0 -> shows full sensor data at TELEPERIOD, 1 -> shows no sensor data at TELEPERIOD<BR>`x=2` - 0 -> sensor data only at TELEPERIOD (default and "usual" Tasmota style), 1 -> direct bridging of BLE-data to mqtt-messages<BR>`x=5` - 0 -> show all relevant BLE sensors, 1 -> show only sensors with a BLEAlias<BR>x=6 (from v 9.0.2.1) 1 -> always use MQTT Topic like `tele/tasmota_ble/<name>` containing only one sensor
 MI32Page<a class="cmnd" id="mi32page"></a>|Display/Set the sensors per page in the web view.<BR>`MI32page` = show sensors per page.<BR>`MI32page n` = Set sensors per page to n.
 MI32Period<a class="cmnd" id="mi32block"></a>|Display/Set the active scan and tele period for the MI32 driver.<BR>`MI32Period` = diisplay the period in seconds.<BR>`MI32Period n` = Set the MI driver active read and tele period to n seconds.
-MI32Time<a class="cmnd" id="mi32time"></a>|Set the time on a device.<BR>`MI32Time n` = set the time on the device in slot n.
-MI32Unit<a class="cmnd" id="mi32unit"></a>|Write the current Tasmota temperature unit to a sensor.<BR>`MI32Unit s` = set the Temp unit on sensor in slot s.
-for mac|alias.<BR>`MI32Keys mac|alias=` - remove keys for one mac|alias.<BR>`MI32Keys2` - remove all keys.
+MI32Time<a class="cmnd" id="mi32time"></a>`<x>` = set the time on the device in slot `x`.
+MI32Unit<a class="cmnd" id="mi32unit"></a>`<x>` = set the current Tasmota temperature unit as the temp unit for sensor in slot `x`.
 
 ### Camera
 
