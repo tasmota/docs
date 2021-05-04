@@ -171,7 +171,7 @@ Rule1 ON HM10#Found<6 DO Add1 1 ENDON ON Var1#State<=3 DO HM10Scan ENDON
 ```
 This will re-scan up to 3 times if less than 6 sensors are found.
   
-## BLE Sensors using nRF24L01(+)
+## using nRF24L01(+)
 
 ### Configuration
   
