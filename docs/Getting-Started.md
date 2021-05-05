@@ -207,8 +207,6 @@ If the flash was successful it will display:
 
 Unplug your serial programming adapter or device and plug it back in or connect to another power source. 
 
-!!! tip "You can use **Send Config** Tasmotizer! button for the initial configuration of your device instead of webUI."
-
 <!-- ## Tasmota PyFlasher
 <img src="https://raw.githubusercontent.com/tasmota/tasmota-pyflasher/v1/images/splash.png" style="margin:5px;float:left;width:150px"></img>
 Tasmota PyFlasher is specifically designed for use with Tasmota binaries with an easy to use GUI. It is based on [NodeMcu Pyflasher](https://github.com/marcelstoer/nodemcu-pyflasher) and [esptool.py](https://github.com/espressif/esptool).
