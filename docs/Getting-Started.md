@@ -145,7 +145,7 @@ To put the ESP8266 into Programming Mode:
 1. Disconnect serial-to-USB adapter and power
 2. Bridge GPIO0 and GND (by pressing the on-board button or connection with a wire)
 3. Connect the serial-to-USB adapter to your computer
-4. After a few seconds disconnect GPIO0 from GND (release button or remove the wire connection). On devices that do not provide the GPIO0 connected button, it may be easier to leave the wired bridge in place throughout the entire flashing process (erase & upload). Doing so will not create any problems. After the firmware is uploaded successfully, remove the bridge. This allows the device to boot normally.
+4. After a few seconds disconnect GPIO0 from GND (release button or remove the wire connection). On devices that do not provide the GPIO0 connected button, it may be easier and there are no problems leaving the wired bridge in place throughout the entire flashing process (erase & upload). After the firmware is uploaded successfully, remove the bridge so the device will boot normally into **run mode**.
 
 You can test whether your device is in Programming Mode by attempting to read information from the ESP82xx chip. This requires `esptool.py`. Instructions on installing and using `esptool` are provided [below](#esptoolpy). For example (`COM5` will be your COM port):  
 
@@ -159,7 +159,7 @@ If everything went well, you are now in Programming Mode and ready to continue w
 - Use a USB _**data**_ cable - Some USB cables are for charging only and do not connect the data lines needed to load the firmware onto the device.
 - Insufficient power delivered over the serial-to-USB adapter. This leads to flashing failures or corrupted flash altogether. Supply more power with a separate 3.3V power supply or get an adapter with a better power supply. Be sure all DC voltages use the same GND reference.
 - Recheck your serial-to-USB adapter so to ensure that it supplies 3.3V voltage and **NOT 5V**. _**5V will damage the ESP chip!**_
-- Releasing GPIO0 button/wire before booting is finished - It is safe to leave GPIO0 connected to GND during the entire programming process (erase & upload). Just be sure to remove the GPIO0 to GND bridge before booting the device for regular operation.
+- Releasing GPIO0 button/wire before booting is finished - It is safe to leave GPIO0 connected to GND during the entire programming process (erase & upload). Just be sure to remove the GPIO0 to GND bridge before booting the device for regular operation (**run mode**).
 - Make sure that the RX pin is connected to the TX pin between the serial adapter and your ESP device, and vice versa.
 - Erase the flash memory first and cycle power afterwards before uploading the Tasmota firmware binary. Not erasing can leave behind remnants of the previous flash contents which can interfere with the new firmware operation.
 
@@ -227,7 +227,7 @@ If the flash was successful the _Console_ window will display:
 
 ![Flash succeeded](https://user-images.githubusercontent.com/5904370/55690010-489c3100-598c-11e9-8135-e44469037e11.png)
 
-Unplug your serial programming adapter or device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](#initial-configuration).  -->
+The device can be powered up with another power source but if the serial programming adapter is used, and GPIO0 and GND are connected with a wired bridge, then remove the bridge before powering up the device into **run mode**. Your device is now ready for [Initial configuration](#initial-configuration).  -->
 
 ### esptool.py
 
@@ -271,9 +271,9 @@ Load the chosen Tasmota firmware file with the following command (e.g., `tasmota
 esptool.py --port COM5 write_flash -fs 1MB -fm dout 0x0 tasmota.bin
 ```
 
-Unplug your serial programming adapter or your device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](#initial-configuration). 
-
 !!! tip "For proper device initialization after the firmware upload completes, power down and power up the device."
+
+The device can be powered up with another power source but if the serial programming adapter is used, and GPIO0 and GND are connected with a wired bridge, then remove the bridge before powering up the device into **run mode**. Your device is now ready for [Initial configuration](#initial-configuration). 
 
 ### Esptool Executable
 The executable version of esptool is maintained by Ivan Grokhotkov and releases are kept at [https://github.com/igrr/esptool-ck/releases](https://github.com/igrr/esptool-ck/releases). Supports Linux, Linux ARM, Windows 32-bit and Mac
@@ -300,9 +300,9 @@ Once the erase is complete, put device back into programming mode and upload the
 esptool -cp COM5 -bm dout -cf tasmota.bin -v
 ```
 
-Unplug your serial programming adapter or your device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](#initial-configuration). 
-
 !!! tip "For proper device initialization after the firmware upload completes, power down and power up the device."
+
+The device can be powered up with another power source but if the serial programming adapter is used, and GPIO0 and GND are connected with a wired bridge, then remove the bridge before powering up the device into **run mode**. Your device is now ready for [Initial configuration](#initial-configuration). 
 
 #### OTA Conversion
 **Tasmota is NOT a developer of these tools. For help and troubleshooting you will need to _get support from those projects_.**
@@ -426,4 +426,3 @@ Your device is connected to your network and to the MQTT broker. One last thing 
      If you experience power fluctuations in your power grid its best to immediately disable [Power Cycle Recovery](Device-Recovery#fast-power-cycle-device-recovery) feature with command [`SetOption65 1`](Commands.md#setoption65) immediately or you might end up with firmware defaults on your device.
 
 [Commands](Commands) and Backlog are powerful and in time you can learn to configure almost everything (NTP servers, longitude and latitude, custom device options, etc) with a few copy and paste moves.
-
