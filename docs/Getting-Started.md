@@ -417,7 +417,7 @@ Backlog mqtthost <yourhost>; mqttuser <user>; mqttpassword <password>; topic <un
 !!! tip 
     Keep your personal configuration in a text file and simply copy and paste the backlog commands to a newly flashed device.
 
-## After Configuration
+## Final Configuration
 Your device is connected to your network and to the MQTT broker. One last thing to do is configure your device using [Templates](Templates) in **Configuration - Configure Template** or [Modules](Modules) in **Configuration - Configure Module**. 
 
 !!! quote "Check out all the supported devices in [Tasmota Device Templates Repository](https://templates.blakadder.com/)"
