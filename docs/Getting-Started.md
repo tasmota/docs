@@ -161,7 +161,7 @@ If everything went well, you are now in Programming Mode and ready to continue w
 - Recheck your serial-to-USB adapter so to ensure that it supplies 3.3V voltage and **NOT 5V**. _**5V will damage the ESP chip!**_
 - Releasing GPIO0 button/wire before booting is finished - It is safe to leave GPIO0 connected to GND during the entire programming process (erase & upload). Just be sure to remove the GPIO0 to GND bridge before booting the device for regular operation.
 - Make sure that the RX pin is connected to the TX pin between the serial adapter and your ESP device, and vice versa.
-- Erase the flash memory first and cycle power afterwards before uploading the Tasmota firmware binary. Not erasing can leave behind remnants of the previous flash contents which can interfere with the new firmware operation.
+- Erase the flash memory when uploading the Tasmota firmware binary the first time. Not erasing can leave behind remnants of the previous flash contents which can interfere with the new firmware operation.
 
 ## Flashing
 
