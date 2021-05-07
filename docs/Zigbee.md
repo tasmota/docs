@@ -538,6 +538,24 @@ Received response will be :
 ```
 `"0000/FF0D"` is the key, value `1` is high sensitivity, `11` medium and `21` is low.
 
+### Osram/Ledvance Smart+ Switch Mini
+
+`"ModelId":"Lightify Switch Mini"`
+
+To pair the Smart+ Switch Mini with the Bridge you need to hold `Arrow Up` and `Middel Button` for 3 Seconds.
+Each Button is linked to another Endpoint. `Arrow Up`is Endpoint 1, `Arrow Down` is Endpoint 2 and `Middle Button`is Endpoint 3.
+To link the Smart+ Switch Mini with IKEA Tradfri dimmable lights i used the followin commands
+
+The IKEA light needs to be `Group 100`for this example.
+```haskell
+# for Power On and Power Off
+ZbBind {"Device":"Name","ToGroup":100,"Endpoint":1,"Cluster":6}
+ZbBind {"Device":"Name","ToGroup":100,"Endpoint":2,"Cluster":6}
+# for dimming
+ZbBind {"Device":"Name","ToGroup":100,"Endpoint":1,"Cluster":8}
+ZbBind {"Device":"Name","ToGroup":100,"Endpoint":2,"Cluster":8}
+```
+
 ## Zigbee2Tasmota Status Codes
 You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  
 
