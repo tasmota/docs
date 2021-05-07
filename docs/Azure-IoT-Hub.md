@@ -31,11 +31,11 @@ In additon to Azure IoT Hub which is a Platform as a Service (PaaS), Tasmota als
 
 ### 0. Open an Azure Subscription
 
-If you don't already have a subscription (one is included with most MSDN subscriptions), you can get started here: https://azure.microsoft.com/account/free
+If you don't already have an Azure Subscription (one is included with most MSDN subscriptions), you can get started here: [https://azure.microsoft.com/account/free](https://azure.microsoft.com/account/free)
 
 ### 1. Create an Azure IoT Hub and a Device
 
-The following steps will walk you through creating an IoT Hub and your first device using a web browser: https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-create-through-portal
+The following steps will walk you through creating an IoT Hub and your first device using a web browser: [https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-create-through-portal](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-create-through-portal)
 
 You will need 3 pieces of information from this step:
 
@@ -47,7 +47,7 @@ Primary Key|  | <i>i2B6TVRnpWGS5i5aZaRddaGTc+tIte1gg4PUkh0t+30=</i>
 
 ### 2. Compile your binary including support for Azure IoT
 
-Following the directions here: https://tasmota.github.io/docs/Compile-your-build/ compile your binary adding the following settings to your [my_user_config.h](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h).
+Following the directions here: [https://tasmota.github.io/docs/Compile-your-build/](https://tasmota.github.io/docs/Compile-your-build/) compile your binary adding the following settings to your [my_user_config.h](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h).
 ```
 #ifndef USE_MQTT_TLS
 #define USE_MQTT_TLS
@@ -63,31 +63,31 @@ Flash your device as [discussed here](https://tasmota.github.io/docs/Getting-Sta
 
 In the web portal, click the configuration button and then the configure MQTT button.
 
-Following the diagram below, type in the Host (IoT Hub Full Name), TLS Port of 8883, select MQTT TLS, type in the Client and User name (your Device Id) and the Password (your Primary Key) and click Save.  Your device will reboot and connect.
+Following the diagram below, set the: <b>Host</b> (IoT Hub Full Name), <b>Port</b> of 8883, select <b>MQTT TLS</b>, type in the <b>Client</b> and <b>User</b> (your Device Id) and the <b>Password</b> (your Primary Key) and click `Save`.  Your device will reboot and connect.
 
 ![image](https://user-images.githubusercontent.com/15837044/117373396-c0e9bf00-ae90-11eb-8e45-81d9480e611c.png)
 
-### 5. Verify your connection
+### 5. Verify the connection
 
 In the Console of Tasmota, you will see it was authenticated with a token, connected and it will start sending state:
 
 ![image](https://user-images.githubusercontent.com/15837044/117373656-479e9c00-ae91-11eb-82b5-80ca096e1220.png)
 
-Using a tool like the [Azure IoT Explorer](https://github.com/Azure/azure-iot-explorer/releases/), you can see the message in the cloud:
+Using a tool like the [Azure IoT Explorer](https://github.com/Azure/azure-iot-explorer/releases/), you can see message received in IoT Hub.  Note the topic property.
 
 ![image](https://user-images.githubusercontent.com/15837044/117373712-669d2e00-ae91-11eb-9bcd-86f2f457d5dc.png)
 
 ### 6. Send a message to your Tasmota
 
-Using a tool like the [Azure IoT Explorer](https://github.com/Azure/azure-iot-explorer/releases/), select Cloud-to-device message set a property of Topic to ```/power```, add ```toggle``` to the message body and click Send message to device.
+Using a tool like the [Azure IoT Explorer](https://github.com/Azure/azure-iot-explorer/releases/), select Cloud-to-device message set a property of `Topic` to `/power`, add `toggle` to the message body and click `Send message to device` button.  All of the Tasmota Commands are discussed here [https://tasmota.github.io/docs/Commands/](https://tasmota.github.io/docs/Commands/).
 
 ![image](https://user-images.githubusercontent.com/15837044/117373865-afed7d80-ae91-11eb-8824-25a690f97c59.png)
 
 ## How to configure (with Device Provisioning Service)
 
-Device Provisioning Services (DPS) allows for automatic deployment at scale.  Simular to Tasmota authenticating to IoT Hub without DPS, authenticating to DPS uses a time bound SHA256 signature to authenticate over TLS 1.2.
+Azure Device Provisioning Services (DPS) allows for automatic deployment at scale.  Simular to Tasmota authenticating to IoT Hub without DPS, authenticating to DPS uses a time bound SHA256 signature to authenticate over TLS 1.2.
 
-For this setup, we configure the following settings when building our binary.  For full automation, you will want to add ```STA_SSID1``` and ```STA_PASS1``` to your `user_config_override.h`.
+For this setup, we configure the following settings when building our binary.  For full automation, you will want to add `STA_SSID1` and `STA_PASS1` to your `user_config_override.h`.
 
 Add the following to `user_config_override.h`:
 
@@ -102,11 +102,11 @@ Add the following to `user_config_override.h`:
 
 ### 0. Open an Azure Subscription
 
-If you don't already have a subscription (one is included with most MSDN subscriptions), you can get started here: https://azure.microsoft.com/account/free
+If you don't already have an Azure Subscription (one is included with most MSDN subscriptions), you can get started here: [https://azure.microsoft.com/account/free](https://azure.microsoft.com/account/free)
 
 ### 1. Create a Device Provisioning Service, IoT Hub and link them together
 
-Following: https://docs.microsoft.com/en-us/azure/iot-dps/tutorial-set-up-cloud create your DPS and IoT Hub.  Note your Scope Id for later use as shown below:
+Following: [https://docs.microsoft.com/en-us/azure/iot-dps/tutorial-set-up-cloud](https://docs.microsoft.com/en-us/azure/iot-dps/tutorial-set-up-cloud) to create your DPS and IoT Hub.  Note your Scope Id for later use as shown below:
 
 ![image](https://user-images.githubusercontent.com/15837044/117375578-e5479a80-ae94-11eb-87b5-71ff977b95e4.png)
 
@@ -114,20 +114,19 @@ Following: https://docs.microsoft.com/en-us/azure/iot-dps/tutorial-set-up-cloud 
 
 In your Device Provisiniong Service, click `Manage enrollments` and then click `Add enrollment group`.
 
-As shown below, name your group, select Symmetric Key, select your linked IoT Hub and then click Save.
+As shown below, name your group, select <b>Symmetric Key</b>, select your linked IoT Hub and then click `Save`.
 
 ![image](https://user-images.githubusercontent.com/15837044/117375387-7d914f80-ae94-11eb-84b0-e795c844a1fb.png)
 
-Once created you can select the enrollment group to retrieve the Primary Key, as shown below:
+Once created you can select the enrollment group to retrieve the <b>Primary Key</b>, as shown below:
 
 ![image](https://user-images.githubusercontent.com/15837044/117375492-b4fffc00-ae94-11eb-9658-af29508e45bf.png)
 
 ### 3. Compile your binary including support for Azure IoT Device Provisioning Service
 
-Following the directions here: https://tasmota.github.io/docs/Compile-your-build/ compile your binary adding the following settings to your [my_user_config.h](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h) adding your Scope Id and your Primary Key.
+Following the directions here: [https://tasmota.github.io/docs/Compile-your-build/](https://tasmota.github.io/docs/Compile-your-build/) compile your binary adding the following settings to your [my_user_config.h](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h) adding your Scope Id and your Primary Key.
 
-!!! tip 
-  Don't foget your WiFi for complete automation.
+!!! tip Don't foget your WiFi settings for complete automation.
 
 ```
 #ifndef USE_MQTT_TLS
@@ -140,8 +139,7 @@ Following the directions here: https://tasmota.github.io/docs/Compile-your-build
 
 ### 4. Flash your device and configure for WiFi
 
-!!! tip 
-  If you configured the WiFi in the config file, no WiFi configuration needed.
+!!! tip If you configured the WiFi in the config file, no WiFi configuration needed.
 
 Flash your device as [discussed here](https://tasmota.github.io/docs/Getting-Started/#flashing) and then configure the WiFi as [discussed here](https://tasmota.github.io/docs/Getting-Started/#using-web-ui).
 
@@ -151,18 +149,16 @@ In the Console of Tasmota, you will see it was registered with Device Provisioni
 
 ![image](https://user-images.githubusercontent.com/15837044/117375783-59823e00-ae95-11eb-8045-6e7ff369192e.png)
 
-If you look at the properties, you will see it automatically definded the Host name, port, TLS and MQTT Client (device Id) -- which defaulted to the MAC address:
+If you look at the Information, you will see it automatically definded: <b>Host</b>, <b>Port</b>, <b>TLS</b> and <b>MQTT Client</b> (device Id) -- which defaulted to the MAC address which is unique:
 
 ![image](https://user-images.githubusercontent.com/15837044/117376026-e88f5600-ae95-11eb-8b2f-197d0f4d1511.png)
 
-Using a tool like the [Azure IoT Explorer](https://github.com/Azure/azure-iot-explorer/releases/), you can see the message in the cloud:
+Using a tool like the [Azure IoT Explorer](https://github.com/Azure/azure-iot-explorer/releases/), you can see message received in IoT Hub.  Note the topic property.
 
 ![image](https://user-images.githubusercontent.com/15837044/117373712-669d2e00-ae91-11eb-9bcd-86f2f457d5dc.png)
 
 ### 6. Send a message to your Tasmota
 
-Using a tool like the [Azure IoT Explorer](https://github.com/Azure/azure-iot-explorer/releases/), select Cloud-to-device message set a property of Topic to ```/power```, add ```toggle``` to the message body and click Send message to device.
+Using a tool like the [Azure IoT Explorer](https://github.com/Azure/azure-iot-explorer/releases/), select Cloud-to-device message set a property of Topic to `/power`, add `toggle` to the message body and click the `Send message to device` button.
 
 ![image](https://user-images.githubusercontent.com/15837044/117373865-afed7d80-ae91-11eb-8824-25a690f97c59.png)
-
-
