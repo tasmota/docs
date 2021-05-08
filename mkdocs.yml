@@ -80,7 +80,7 @@ markdown_extensions:
      toc_depth: 3
   - pymdownx.mark
   - pymdownx.tabbed
-  - pymdownx.emoji:
+  - pymdownx.emoji
   - pymdownx.betterem
   - pymdownx.caret
   - pymdownx.highlight
