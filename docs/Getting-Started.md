@@ -190,9 +190,9 @@ Download the [latest release](https://github.com/tasmota/tasmotizer/releases) fo
 1. Connect your device to the serial-to-USB adapter or plug in NodeMCU/D1 mini.
 1. Check whether the correct **serial port** (COM or tty port) is selected. Tasmotizer! will try its best to select the right one for you.
 1. Choose Tasmota firmware binary:
-   * **BIN file** - browse to the Tasmota firmware binary you downloaded or compiled.
-   * **Release** - select from a list of available release binaries
-   * **Development** - select from a list of latest development binaries
+    * **BIN file** - browse to the Tasmota firmware binary you downloaded or compiled.
+    * **Release** - select from a list of available release binaries
+    * **Development** - select from a list of latest development binaries
 4. _optional_ Backup the original device firmware
 5. Erase flash
 
