@@ -15,6 +15,14 @@ Use strict markdown syntax. See [Markdown Cheatsheet](https://3os.org/markdownCh
 
 ### Markdown Enhancements
 
+#### Admonitions
+
+[Reference](https://squidfunk.github.io/mkdocs-material/reference/admonitions/) of all possibilities
+
+#### Definition Lists
+
+[Usage](https://squidfunk.github.io/mkdocs-material/reference/lists/#using-definition-lists) 
+
 #### Marker Highlight
 
 If you want higlight text with marker style yellow enclose it in `== ==`. [More details...](https://squidfunk.github.io/mkdocs-material/extensions/pymdown/#magiclink)
