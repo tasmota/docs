@@ -289,7 +289,7 @@ At the top of the page you can select one of the discovered Wi-Fi networks or ha
 Selecting the desired network name from the list will enter it automatically in this field. _SSID's are case sensitive_
 
 **WiFi Password** - password for your Wi-Fi network   
-Wi-Fi password has to be under 32 characters and without special characters (e.g. asterisks) or white spaces
+Wi-Fi password has to be under 64 characters and without special characters (e.g. asterisks) or white spaces
 
 Click the checkbox if you want to see the password you enter to ensure that it is correct. Click on **Save** to apply the settings. The device will try to connect to the network entered. 
 
