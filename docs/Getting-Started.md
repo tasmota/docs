@@ -178,7 +178,7 @@ Tasmotizer! is specifically designed for use with Tasmota with an easy to use GU
 
 Download the [latest release](https://github.com/tasmota/tasmotizer/releases) for your platform. In Windows just double click the downloaded file and it'll start, no installation required. For python follow the installation [instructions](https://github.com/tasmota/tasmotizer#installation-and-how-to-run). 
 
-!!! tip "[Video tutorial](https://youtu.be/hIwIhu5OWiA) by SuperHouseTV"
+<!-- !!! tip "[Video tutorial](https://youtu.be/hIwIhu5OWiA) by SuperHouseTV" -->
 
 !!! note 
     If you get an anti-virus infection warning don't fret, it is a [known false positive](https://stackoverflow.com/questions/43777106/program-made-with-pyinstaller-now-seen-as-a-trojan-horse-by-avg). If you're still apprehensive you can always run the Python version. 
