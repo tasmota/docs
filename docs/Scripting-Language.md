@@ -35,6 +35,7 @@ USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 USE_SCRIPT_TASK | enables multitasking Task in ESP32
 USE_SCRIPT_I2C | enables I2C support
+USE_LVGL | enables support for LVGL
 USE_SCRIPT_GLOBVARS | enables global variables and >G section
 USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
 SML_REPLACE_VARS | enables posibility to replace the lines from the (SML) descriptor with Vars
@@ -495,8 +496,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `wm` = contains source of web request code e.g. 0 = Sensor display (FUNC_WEB_SENSOR)  
 
 `ia(addr)` = test and set i2c address ia2(addr) for bus 2 on ESP32    
-`ir(reg)` = read i2c register default = uint8, ir2(), ir3(), ir4() read number of bytes  
-`iw(reg val)` = write i2c register  
+`ir(reg)` = read i2c register default = uint8, ir2(), ir3() read number of bytes  
+`iw(reg val)` = write i2c register default = uint8, iw2(), iw3() write number of bytes   
 
 `sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
 `sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
@@ -804,6 +805,26 @@ print task1 on core %core%
 print task2 on core %core%
 
 ```
+**minimal LVGL support**  
+`#define USE_LVGL`  
+to test LVGL a few functions are implemented:  
+`lvgl(sel ...)` general lvgl call  
+each object gets a concurrent number 1 ... N with which you can reference the object
+sel = 0 => initialyze LVGL with current display
+sel = 1 => clear screen  
+sel = 2 xp yp xs ys text => create a button. the button press is reported in section >lvb  
+sel = 3 xp yp xs ys => create a slider. the slider move is reported in section >lvs  
+sel = 4 xp yp xs ys min max => create a gauge.    
+set = 5 objnr value => set gauge value.  
+sel = 6 xp yp xs ys text => create a label.  
+sel = 7 objnr text => set label text  
+sel = 8 create a keyboard, just get a look and feel  
+
+sel = 50 => get obj nr from caller in callback >lvb or >lvs  
+sel = 51 => get event nr from caller in callback >lvb or >lvs  
+sel = 52 => get slider value from caller in callback >lvs  
+
+
 
 **ESP32 Webcam support**   
 `#define USE_WEBCAM`  
