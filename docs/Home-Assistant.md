@@ -33,7 +33,7 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmot
 - Lights as `light` entities.  
   Single channel Dimmers, RGB lights, RGB lights with Color Temperature control and RGB lights with White control are supported.
 - Relays as `switch` entities
-  With [`SetOption30 1`](Commands#setoption30) all relays one the device will be added as light entities instead
+  With [`SetOption30 1`](Commands#setoption30) all relays on the device will be added as light entities instead
 - Sensors as `sensor` entities
 - Switches as `binary_sensor` entities or `automation triggers` depending on `SwitchMode` used when [`SetOption114 1`](Commands#setoption114)
 - Buttons as automation triggers when [`SetOption73`](Commands#setoption73) is enabled
