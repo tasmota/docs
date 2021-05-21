@@ -2,7 +2,7 @@
 
 Otherwise you must [compile your build](Compile-your-build.md). Add the following to `user_config_override.h`:
 ```
-#ifndef USE_RCSWITCH
+#ifndef USE_RC_SWITCH
 #define USE_RC_SWITCH         // Add support for RF transceiver using library RcSwitch (+2k7 code, 460 iram)
 #endif
 ```
