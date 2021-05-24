@@ -23,6 +23,7 @@
 ![TYWE2L Pinout](_media/pinouts/TYWE2L_pinout.jpg)
 
 ### TYWE3S 
+![TYWE3S Pinout](_media/TYWE3S_pinout.png)
 ![TYWE3S Pinout](_media/pinouts/TYWE3S_pinout.jpg)
 
 ### TYWE3L 
