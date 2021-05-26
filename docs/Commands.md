@@ -14,7 +14,7 @@ Instead of `0` you can use `off` or `false` and instead of `1` you can use `on` 
 > `Power ON` turns first defined power output (usually Relay1) on
 
 > `Power1 1` also turns first defined power output (usually Relay1) on
-
+dela
 > `Power1 True` also turns first defined power output (usually Relay1) on
 
 Replace `<x>` in a command with the appropriate index number. Leave it empty to use the first available.
@@ -147,7 +147,7 @@ See also|[`SetOption1`](#setoption1) - Set button multipress mode<BR>[`SetOption
 
 Command|Parameters
 :---|:---
-Delay<a class="cmnd" id="delay"></a>|`2..3600` = set delay between two backlog commands with 0.1 second increment
+Delay<a class="cmnd" id="delay"></a>|`2..3600` = set a delay between two backlog commands with 0.1 second increment. *Not recommended for precision timing!*
 DeepSleepTime<a class="cmnd" id="deepsleeptime"></a>|Time to enter [deep sleep mode](DeepSleep)<BR>`0` = disable deep sleep mode *(default)*<BR>`11..86400` = set deep sleep mode time period in seconds
 DeviceName<a class="cmnd" id="devicename"></a>|Device name displayed in the webUI and used for HA autodiscovery.<br>`<value>` = set device name _(default = `FriendlyName1` value)_
 Emulation<a class="cmnd" id="emulation"></a>|`0` = disable emulation *(default)*<BR>`1` = enable Belkin WeMo emulation for [Alexa](Alexa)<BR>`2` = enable Hue Bridge emulation for [Alexa](Alexa)
