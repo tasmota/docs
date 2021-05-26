@@ -90,7 +90,7 @@ Hello Tasmota!
 ```
 
 Meanwhile the Tasmota log shows:
-
+```
 > tasmota.cmd("Dimmer 60")
 {"POWER":"ON","Dimmer":60,"Color":"996245","HSBColor":"21,55,60","Channel":[60,38,27]}
 The light is bright
@@ -99,7 +99,6 @@ The rule function have the general form below where parameters are optionals:
 
 ```python
 def function_name(value, trigger, msg)
-  ...
 end
 ```
 
