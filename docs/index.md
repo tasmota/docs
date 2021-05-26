@@ -21,7 +21,7 @@ OTA update servers: [http://ota.tasmota.com/tasmota/release](http://ota.tasmota.
 ### Current release 
 <a href="http://ota.tasmota.com/tasmota/release-9.4.0/"><span style="font-size:40px;">Tasmota 9.4.0 Leslie</span></a><br>
 
-
+- :warning: BREAKING :warning: Lights using MQTT discovery will not work correcty in Home Assistant 2015.5 due to new [color modes](https://www.home-assistant.io/blog/2021/05/05/release-20215/#color-modes). Upgrade to latest Tasmota and use [Tasmota integration](https://www.home-assistant.io/integrations/tasmota)
 - :warning: BREAKING :warning: ESP32 partition layout changed to accommodate more file space on most boards and more code space on Core2 and Odroid-GO [#11746](https://github.com/arendst/Tasmota/issues/11746)
 
 - Redesigned initial GUI wifi configuration by Adrian Scillato [#11693](https://github.com/arendst/Tasmota/issues/11693)
