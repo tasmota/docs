@@ -1377,3 +1377,19 @@ Beware that A and B MODBus connectors are switched!
 1,010308xxxxxxxxUUuuUUuu@i9:100,Real energy delivered,kWh,Real_energy_delivered,2
 #
 ```
+
+### Itron (SML V1.04)
+    
+The electrical Meter is an German End-User Meter installed by EnBW. To read values is used an IR Sensor. The following script showes the meter number an the consuption and the egneration of an Photovoltaik generator. 
+
+```
+>D
+>B
+=>sensor53 r
+>M 1
++1,12,s,0,9600,ELZ
+1,77070100600100ff@#,Zählernummer,,Wert,0
+1,77070100010800ff@1000,Verbrauch,kWh,ELZ_PV_1.8.0,1
+1,77070100020800ff@1000,Erzeugung,kWh,ELZ_PV_2.8.0,1
+#
+```
