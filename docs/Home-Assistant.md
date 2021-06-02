@@ -33,10 +33,10 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmot
 - Lights as `light` entities.  
   Single channel Dimmers, RGB lights, RGB lights with Color Temperature control and RGB lights with White control are supported.
 - Relays as `switch` entities
-  With [`SetOption30 1`](Commands#setoption30) all relays one the device will be added as light entities instead
+  With [`SetOption30 1`](Commands.md#setoption30) all relays one the device will be added as light entities instead
 - Sensors as `sensor` entities
-- Switches as `binary_sensor` entities or `automation triggers` depending on `SwitchMode` used when [`SetOption114 1`](Commands#setoption114)
-- Buttons as automation triggers when [`SetOption73`](Commands#setoption73) is enabled
+- Switches as `binary_sensor` entities or `automation triggers` depending on `SwitchMode` used when [`SetOption114 1`](Commands.md#setoption114)
+- Buttons as automation triggers when [`SetOption73`](Commands.md#setoption73) is enabled
 - Shutters as cover entities. 
   Currently only shutter modes 1 to 4 are supported. Shutter mode 5 and Tuya shutters are not supported.
 - Devices configured as iFan02 or iFan03 as fan entities. Tuya fans are not supported.
@@ -743,7 +743,7 @@ light:
 ```
 
 !!! example "Sonoff S31"
-Configure the device as Sonoff S31, and run: [`SetOption4 1`](Commands#setoption4), [`SetOption59 1`](commands#setoption59).
+Configure the device as Sonoff S31, and run: [`SetOption4 1`](Commands.md#setoption4), [`SetOption59 1`](Commands.md#setoption59).
 
 ```yaml
 switch:
@@ -934,12 +934,12 @@ In addition, add to your home assistant start up automation a query for the curr
 ### Zigbee Devices
 
 <!-- tabs:start -->
-!!! warning "The following Zigbee examples assume [`SetOption83`](Commands#setoption83),
-[`SetOption89`](Commands#setoption89),
-[`SetOption100`](Commands#setoption100),
-[`SetOption112`](Commands#setoption112),
-[`SetOption118`](Commands#setoption118),
-[`SetOption119`](Commands#setoption119) are all set to `0`.
+!!! warning "The following Zigbee examples assume [`SetOption83`](Commands.md#setoption83),
+[`SetOption89`](Commands.md#setoption89),
+[`SetOption100`](Commands.md#setoption100),
+[`SetOption112`](Commands.md#setoption112),
+[`SetOption118`](Commands.md#setoption118),
+[`SetOption119`](Commands.md#setoption119) are all set to `0`.
 Setting any of these to `1` will change topic and/or payload structure from that used in the examples."
 
 !!! example "Dimmable Light"
