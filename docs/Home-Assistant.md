@@ -743,9 +743,7 @@ light:
 ```
 
 !!! example "Sonoff S31"
-Configure the device as Sonoff S31, and run:\
-`SetOption4 1`   
-`SetOption59 1`
+Configure the device as Sonoff S31, and run: [`SetOption4 1`](Commands#setoption4), [`SetOption59 1`](commands#setoption59).
 
 ```yaml
 switch:
@@ -936,6 +934,13 @@ In addition, add to your home assistant start up automation a query for the curr
 ### Zigbee Devices
 
 <!-- tabs:start -->
+!!! warning "The following Zigbee examples assume [`SetOption83`](Commands#setoption83),
+[`SetOption89`](Commands#setoption89),
+[`SetOption100`](Commands#setoption100),
+[`SetOption112`](Commands#setoption112),
+[`SetOption118`](Commands#setoption118),
+[`SetOption119`](Commands#setoption119) are all set to `0`.
+Setting any of these to `1` will change topic and/or payload structure from that used in the examples."
 
 !!! example "Dimmable Light"
 This configuration is for a dimmable light reporting on `0xE1F9` using endpoint 1, cluster 8 for brightness. `ZbRead` part in the template is needed to always update the brightness values.
