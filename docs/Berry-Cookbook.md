@@ -176,7 +176,7 @@ end
 tasmota.add_driver(d2)
 ```
 
-**Adding a button to the Main menu**
+## Adding a button to the Main menu
 
 Adding a button to the e.g. main menu can be achieved by using the message type `web_add_main_button()`. 
 
@@ -187,6 +187,7 @@ The method to be performed, when the user clicks the button is achieved by using
 - `webserver.arg(argName:string)`: -> string or integer // returns the value of the argument
 
 Additionally the webserver class provides a new function of sending information to the Web UI by using the following methods
+
 - `webserver.content_send(content:string)`
 - `webserver.content_send_style(content:string)`
 
