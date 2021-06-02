@@ -137,8 +137,8 @@ As a convenience, a skeleton class `Driver` is provided. A Driver responds to me
 - `every_100ms()`: called every 100ms (i.e. 10 times per second)
 - `web_sensor()`: display sensor information on the Web UI
 - `json_append()`: display sensor information in JSON format for TelePeriod reporting
-- `web_add_button()`:
-- `web_add_main_button()`:
+- `web_add_button()`: add a button to Tasmotas Web UI (Configuration page)
+- `web_add_main_button()`: add a button to Tasmotas Web UI (Main page)
 - `save_before_restart()`:
 - `button_pressed()`:
 
@@ -174,6 +174,63 @@ d2.every_second = def ()
 end
 
 tasmota.add_driver(d2)
+```
+
+**Adding a button to the Main menu**
+
+Adding a button to the e.g. main menu can be achieved by using the message type `web_add_main_button()`. 
+
+The method to be performed, when the user clicks the button is achieved by using the `web_sensor()` method checking for the presence of an argument and a possible value assigned to the argument. The webserver class provides the necessary methods to read the arguments:
+
+- `webserver.has_arg(argName:string)`: -> boolean // checks for a specific argument with the name and returns a boolean
+- `webserver.args()`: -> integer // returns the number of arguments
+- `webserver.arg(argName:string)`: -> string or integer // returns the value of the argument
+
+Additionally the webserver class provides a new function of sending information to the Web UI by using the following methods
+- `webserver.content_send(content:string)`
+- `webserver.content_send_style(content:string)`
+
+Let's see an example implementation of button methods in a Driver class
+
+```python
+import webserver # import webserver class
+
+class MyButtonMethods : Driver
+
+  def myOtherFunction(myValue)
+    #- do something -#
+  end
+
+  #- create a method for adding a button to the main menu -#
+  def web_add_main_button()
+    webserver.content_send("<p></p><button onclick='la(\"&m_toggle_main=1\");'>Toggle Main</button>")
+  end
+
+  #- create a method for adding a button to the configuration menu-#
+  def web_add_button()
+    #- the onclick function "la" takes the function name and the respective value you want to send as an argument -#
+    webserver.content_send("<p></p><button onclick='la(\"&m_toggle_conf=1\");'>Toggle Conf</button>")
+  end
+
+  #- As we can add only one sensor method we will have to combine them besides all other sensor readings in one method -#
+
+  def web_sensor()
+
+    if webserver.has_arg("m_toggle_main")
+      print("button pressed")
+    end
+
+    if webserver.has_arg("m_toggle_conf") # takes a string as argument name and returns a boolean
+
+      # we can even call another function and use the value as a parameter
+      var myValue = int(webserver.arg("m_toggle_conf")) # takes a string or integer(index of arguments) to get the value of the argument
+      self.myOtherFunction(myValue)
+    end
+
+    end
+  end
+d1 = MyButtonMethods()
+tasmota.add_driver(d1)
 ```
 
 ## Creating an I2C driver
