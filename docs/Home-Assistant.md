@@ -934,13 +934,8 @@ In addition, add to your home assistant start up automation a query for the curr
 ### Zigbee Devices
 
 <!-- tabs:start -->
-!!! warning "The following Zigbee examples assume [`SetOption83`](Commands.md#setoption83),
-[`SetOption89`](Commands.md#setoption89),
-[`SetOption100`](Commands.md#setoption100),
-[`SetOption112`](Commands.md#setoption112),
-[`SetOption118`](Commands.md#setoption118),
-[`SetOption119`](Commands.md#setoption119) are all set to `0`.
-Setting any of these to `1` will change topic and/or payload structure from that used in the examples."
+!!! warning 
+    The following Zigbee examples assume [`SetOption83`](Commands.md#setoption83), [`SetOption89`](Commands.md#setoption89), [`SetOption100`](Commands.md#setoption100), [`SetOption112`](Commands.md#setoption112), [`SetOption118`](Commands.md#setoption118), [`SetOption119`](Commands.md#setoption119) are all set to `0`. Setting any of these to `1` will change topic and/or payload structure from that used in the examples.
 
 !!! example "Dimmable Light"
 This configuration is for a dimmable light reporting on `0xE1F9` using endpoint 1, cluster 8 for brightness. `ZbRead` part in the template is needed to always update the brightness values.
