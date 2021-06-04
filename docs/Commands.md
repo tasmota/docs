@@ -876,4 +876,4 @@ Ethernet<a class="cmnd" id="ethernet"></a>|*Only for ESP32 boards with additiona
 EthAddress<a class="cmnd" id="ethaddress"></a>|`0..31` = PHYxx address
 EthClockMode<a class="cmnd" id="ethclockmode"></a>|Ethernet clock mode.<BR>`0` = ETH_CLOCK_GPIO0_IN *(default)*<BR>`1` = ETH_CLOCK_GPIO0_OUT <BR>`2` = ETH_CLOCK_GPIO16_OUT<BR>`3` = ETH_CLOCK_GPIO17_OUT
 EthType<a class="cmnd" id="ethtype"></a>|Ethernet type.<BR>`0` = ETH_PHY_LAN8720 *(default)*<BR>`1` = ETH_PHY_TLK110 <BR>`2` = ETH_PHY_IP101
-Wifi<a class="cmnd" id="wifi"></a>|`0` = disable Wi-Fi<BR>`1` = enable Wi-Fi _(default)_ <BR> When wifi is Off it is always returned On after a restart except for a wake-up from deepsleep.
+Wifi<a class="cmnd" id="wifi"></a>|`0` = disable Wi-Fi<BR>`1` = enable Wi-Fi _(default)_ <BR>`2` = Wi-Fi mode 802.11b<BR>`3` = Wi-Fi mode 802.11b/g<BR>`4` = Wi-Fi mode 802.11b/g/n<BR> When wifi is Off it is always returned On after a restart except for a wake-up from deepsleep.
