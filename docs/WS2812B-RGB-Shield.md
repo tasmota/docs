@@ -3,13 +3,10 @@
 
 From the [Wemos ws2812b shield specs](https://cleanuri.com/a8jX2Q) the DATA  pin is connected to D2 of the Wemos.
 
-### Tasmota Settings
-In the Configuration -> Configure Module page, select the following:
-* **D2 GPIO4** : **07 WS2812**
+## Tasmota Settings
 
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/wemos_ws2812b_config_marked.jpg?raw=true"/>
+In *Configuration -> Configure Module* page assign:
 
-### Tasmota Main
-After reboot of the device the dark-bright slider and toggle button are displayed to control the led.
+- D2 GPIO4 to `WS2812`
 
-<img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/wemos_ws2812b_main_marked.jpg?raw=true"/>
+After a reboot of the device the toggle button and light controls are displayed in the webUI.
