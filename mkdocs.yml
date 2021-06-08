@@ -27,7 +27,7 @@ plugins:
         'Upgrade.md': 'Upgrading.md'
 # - htmlproofer
 
-strict: true
+# strict: true
 
 theme:
   name: material
