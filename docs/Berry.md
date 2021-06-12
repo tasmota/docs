@@ -279,9 +279,9 @@ Example:
 A
 ```
 
-#### `load(filename:string) -> int`
+#### `load(filename:string) -> bool`
 
-Loads a Berry script from the filesystem, and returns an error code; `0` means no error. Filename does not need to start with `/`, but needs to end with `.be` (Berry source code) or `.bec` (precompiled bytecode).
+Loads a Berry script from the filesystem, and returns true if loaded successfully, false if file not found, or raises an exception in runtime. Filename does not need to start with `/`, but needs to end with `.be` (Berry source code) or `.bec` (precompiled bytecode).
 
 When loading a source file, the precompiled bytecode is saved to filesystem using the `.bec` extension.
 
