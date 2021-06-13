@@ -84,6 +84,9 @@ The new Version has exposed pads with holes for Ground, Reset, TX, RX, Vcc 3.3.V
 ![V2 Layout](https://raw.githubusercontent.com/Freestila/master-media/master/SHP6_v2.JPG)
 ![V2 Contacts](https://raw.githubusercontent.com/Freestila/master-media/master/SHP6_v2_contacts.JPG)
 
+_NOTE: If Tasmotizer or esptool timeouts, can't find your socket and nothing seems working, before tearing your hair out try swapping TX and RX connections on your serial adapter, i.e. TX on board connect to RX on adapter and similarly RX on board to TX on adapter._
+
+_NOTE2: GPIO0 can stay connected to GND always._
 
 ## Other photos
 
