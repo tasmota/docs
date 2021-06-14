@@ -731,7 +731,7 @@ light:
   - platform: mqtt
     name: "Pat Ceiling Light"
     state_topic: "tele/ifan02/STATE"
-    value_template: "{{ value_json.POWER }}"
+    state_value_template: "{{ value_json.POWER }}"
     command_topic: "cmnd/ifan02/POWER"
     availability_topic: "tele/ifan02/LWT"
     qos: 1
