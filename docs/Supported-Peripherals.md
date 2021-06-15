@@ -85,6 +85,7 @@ Name|Description
 [**SHT30**](SHT30) | Humidity & Temperature Sensor
 **SI114x** | UV Index, IR and Visible Light Sensor (I^2^C)
 **Si7021** | Humidity and Temperature Sensor (I^2^C)
+[**SK6812**](SK6812.md) | Addressable LEDs
 [**Smart Meter Interface**](Smart-Meter-Interface) | (serial)
 **SolaX X1** | SolaX X1 inverter (serial)
 [**SPS30**](SPS30) | Particulate Matter (PM) | Sensor (I^2^C)
@@ -99,8 +100,8 @@ Name|Description
 [**VL53L0x**](VL53L0x) | Time of flight Sensor (I^2^C)
 **VL53L1x** | Time of flight Sensor (I^2^C)
 **WindMeter** | Analog cup anemometer
-[**WS2812B**](WS2812B-RGB-Shield) | Wemos RGB LED Shield
-[**WS2812B<BR>WS2813B**](WS2812B-and-WS2813) | LED Strip
+[**WS2812B**](WS2812B-RGB-Shield) | Wemos Shield with Addressable LED 
+[**WS2812B<BR>WS2813B**](WS2812B-and-WS2813) | Addressable LEDs
 **Xadow (Grove) Mutichannel Gas Sensor** | gas Sensor (I^2^C)
 
 [Google Sheet list of supported peripherals](https://docs.google.com/spreadsheets/d/1VaZrCUjNosUQGYBX0pTVoY_rkSzEIcTP8K3052smOB4/edit?usp=sharing)
