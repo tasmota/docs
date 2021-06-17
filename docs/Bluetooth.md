@@ -175,7 +175,7 @@ This will re-scan up to 3 times if less than 6 sensors are found.
 
 ### Configuration
   
-You must [compile your build](Compile-your-build). Change the following in `my_user_config.h`:
+You must [compile your build]Compile-your-build). Change the following in `my_user_config.h`:
 
 ```c++
 #define USE_SPI                                  // Hardware SPI using GPIO12(MISO), GPIO13(MOSI) and GPIO14(CLK) in addition to two user selectable GPIOs(CS and DC)
