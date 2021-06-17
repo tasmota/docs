@@ -34,6 +34,8 @@ USE_SCRIPT_FATFS_EXT | enables additional FS commands
 USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 USE_SCRIPT_TASK | enables multitasking Task in ESP32
+USE_SCRIPT_I2C | enables I2C support
+USE_LVGL | enables support for LVGL
 USE_SCRIPT_GLOBVARS | enables global variables and >G section
 USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
 SML_REPLACE_VARS | enables posibility to replace the lines from the (SML) descriptor with Vars
@@ -50,7 +52,7 @@ USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section
 
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules)"
 
-To enter a script, go to **Configuration - Edit script** in the Tasmota web UI menu
+To enter a script, go to **Consoles -> Edit Script** in the Tasmota web UI menu (for version before 9.4, go to **Configuration -> Edit script**)
 
 To save code space almost no error messages are provided. However it is taken care of that at least it should not crash on syntax errors.  
 
@@ -59,7 +61,7 @@ To save code space almost no error messages are provided. However it is taken ca
 - Up to 50 variables (45 numeric and 5 strings - this may be changed by setting a compilation `#define` directive)  
 - Freely definable variable names (all variable names are intentionally _**case sensitive**_)  
 - Nested if,then,else up to a level of 8  
-- Math operators  `+`,`-`,`*`,`/`,`%`,`&`,`|`,`^`  
+- Math operators  `+`,`-`,`*`,`/`,`%`,`&`,`|`,`^`,`<<`,`>>`  
 - All operators may be used in the `op=` form, e.g., `+=`  
 - Comparison operators `==`,`!=`,`>`,`>=`,`<`,`<=`  
 - `and` , `or` support  
@@ -499,6 +501,10 @@ I2C support #define USE_SCRIPT_I2C
 `rapp` = append this line to MQTT (ResponseAppend)  
 `wm` = contains source of web request code e.g. 0 = Sensor display (FUNC_WEB_SENSOR)  
 
+`ia(addr)` = test and set i2c address ia2(addr) for bus 2 on ESP32    
+`ir(reg)` = read i2c register default = uint8, ir2(), ir3() read number of bytes  
+`iw(reg val)` = write i2c register default = uint8, iw2(), iw3() write number of bytes   
+
 `sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
 `sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
 `sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)(if defined USE_SML_SCRIPT_CMD)  
@@ -805,6 +811,26 @@ print task1 on core %core%
 print task2 on core %core%
 
 ```
+**minimal LVGL support**  
+`#define USE_LVGL`  
+to test LVGL a few functions are implemented:  
+`lvgl(sel ...)` general lvgl call  
+each object gets a concurrent number 1 ... N with which you can reference the object
+sel = 0 => initialyze LVGL with current display
+sel = 1 => clear screen  
+sel = 2 xp yp xs ys text => create a button. the button press is reported in section >lvb  
+sel = 3 xp yp xs ys => create a slider. the slider move is reported in section >lvs  
+sel = 4 xp yp xs ys min max => create a gauge.    
+set = 5 objnr value => set gauge value.  
+sel = 6 xp yp xs ys text => create a label.  
+sel = 7 objnr text => set label text  
+sel = 8 create a keyboard, just get a look and feel  
+
+sel = 50 => get obj nr from caller in callback >lvb or >lvs  
+sel = 51 => get event nr from caller in callback >lvb or >lvs  
+sel = 52 => get slider value from caller in callback >lvs  
+
+
 
 **minimal LVGL support**  
 `#define USE_LVGL`  
@@ -1251,6 +1277,7 @@ remark: the Flash illumination LED is connected to GPIO4
     temp=0
     fr=0
     res=0
+    cnt=0
     ; moving average for 60 seconds
     M:mhum=0 60
     M:mtemp=0 60
@@ -1258,7 +1285,7 @@ remark: the Flash illumination LED is connected to GPIO4
 
     >B
     ; set sensor file download link
-    fl1("slog.txt")
+    ;fl1("slog.txt")
     ; delete file in case we want to start fresh
     ;fd("slog.txt")
 
@@ -2276,6 +2303,28 @@ start dim level = initial dimmer level after power-up or restart; max 100
     dt [x20y20t]
     ; switch back to display 1
     dt [S1:]
+
+### read I2C example (AXP192)
+
+    >D
+    volt=0
+    curr=0
+    found=0
+    >B
+    ; check device on I2C bus Nr.2
+    found=ia2(0x34)
+    
+    >S
+    ; if found read registers, (this example takes 2ms to read both values)
+    if found>0 {
+    volt=ir(0x5a)<<4|ir(0x5b)*1.7/1000
+    curr=ir(0x58)<<4|ir(0x59)*0.625
+    }
+    
+    >W
+    ; show on webui
+    Bus Voltage{m}%volt% V
+    Bus Current{m}%curr% mA
 
 
 ### Multiplexing a single adc with CD4067 breakout

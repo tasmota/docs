@@ -42,120 +42,125 @@ To change the behavior of a physical input peripheral configured as a Tasmota `S
 SwitchMode, as the name implies, applies _**ONLY**_ to GPIO configured in Tasmota as a `Switch<x>` [component](Components). SwitchMode has _**NO**_ impact on the behavior of GPIO configured as `Button<x>` [components](Components). SwitchMode sets the desired behavior of a `Switch<x>` component based on whether it's a switch or a push-button (i.e., a momentary switch) that is physically connected to the GPIO.
 
 **`SwitchMode 0`**
-_Default mode_
+:    _Default mode_
 
-Set switch to toggle mode (`0 = TOGGLE`, `1 = TOGGLE`).
+    Set switch to toggle mode (`0 = TOGGLE`, `1 = TOGGLE`).
 
-Tasmota sends `TOGGLE` command each time the state of the circuit changes (closing or opening). In case of a push button attached Tasmota will send a `TOGGLE` command when pressed and another `TOGGLE` command when released.
+    Tasmota sends `TOGGLE` command each time the state of the circuit changes (closing or opening). In case of a push button attached Tasmota will send a `TOGGLE` command when pressed and another `TOGGLE` command when released.
 
-!!! example
-     When the button is pressed, toggle the power to ring the doorbell; when the button is released, ring the doorbell again.
+    !!! example
+        When the button is pressed, toggle the power to ring the doorbell; when the button is released, ring the doorbell again.
 
 **`SwitchMode 1`**
-Set switch to follow mode (`0 = OFF`, `1 = ON`)
+:   Set switch to follow mode (`0 = OFF`, `1 = ON`)
 
-At the time when the circuit is closed, Tasmota will send `ON` and opening the circuit sends `OFF`.
+    At the time when the circuit is closed, Tasmota will send `ON` and opening the circuit sends `OFF`.
 
-!!! tip
-    You want to use `SwitchMode 1` when connecting a [toggle switch](https://en.wikipedia.org/wiki/Switch#Toggle_switch) (e.g. a classic light switch) to your  device. This way the "software switch" will mirror the state of the "hardware switch". If the real switch is in the "ON" position, the state in Tasmota  is `ON` as well.
+    !!! tip
+        You want to use `SwitchMode 1` when connecting a [toggle switch](https://en.wikipedia.org/wiki/Switch#Toggle_switch) (e.g. a classic light switch) to your  device. This way the "software switch" will mirror the state of the "hardware switch". If the real switch is in the "ON" position, the state in Tasmota  is `ON` as well.
 
 **`SwitchMode 2`**
-Set switch to inverted follow mode (`0 = ON`, `1 = OFF`)
 
-At the time when the circuit is closed, Tasmota will send `OFF` and opening the circuit sends `ON`.
+:   Set switch to inverted follow mode (`0 = ON`, `1 = OFF`)
 
-!!! tip
-    When connecting a momentary switch (i.e., a push-button) you will want to use `SwitchMode 3..7`.
+    At the time when the circuit is closed, Tasmota will send `OFF` and opening the circuit sends `ON`.
+
+    !!! tip
+        When connecting a momentary switch (i.e., a push-button) you will want to use `SwitchMode 3..7`.
 
 **`SwitchMode 3`**
-Set inverted push-button mode (`0 = OFF` (_default_), `1 = TOGGLE`)
+:    Set inverted push-button mode (`0 = OFF` (_default_), `1 = TOGGLE`)
 
-Tasmota will send a `TOGGLE` command when the button is pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Default state is OFF and when pressed it's ON. (This trigger is known as [rising-edge](https://en.wikipedia.org/wiki/Signal_edge))
+    Tasmota will send a `TOGGLE` command when the button is pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Default state is OFF and when pressed it's ON. (This trigger is known as [rising-edge](https://en.wikipedia.org/wiki/Signal_edge))
 
 **`SwitchMode 4`**
-Set push-button mode (`0 = TOGGLE`, `1 = ON` (_default_))
+:    Set push-button mode (`0 = TOGGLE`, `1 = ON` (_default_))
 
-Tasmota will send a `TOGGLE` command when the button is released (opening the circuit). When pressing the button (closing the circuit) nothing will happen. Default state is ON and when pressed it's OFF. (This trigger is known as [falling-edge](https://en.wikipedia.org/wiki/Signal_edge))
+    Tasmota will send a `TOGGLE` command when the button is released (opening the circuit). When pressing the button (closing the circuit) nothing will happen. Default state is ON and when pressed it's OFF. (This trigger is known as [falling-edge](https://en.wikipedia.org/wiki/Signal_edge))
 
 **`SwitchMode 5`**
-Set push-button with long press mode (`0 = TOGGLE`, `1 = ON` (_default_), `long press = HOLD`)
+:    Set push-button with long press mode (`0 = TOGGLE`, `1 = ON` (_default_), `long press = HOLD`)
 
-Tasmota will send a `TOGGLE` command when the button is released (opening the circuit). When pressing the button (closing the circuit) nothing will happen. Default state is ON and when pressed it's OFF. When held for the time set in `SetOption32` (_default = 4s_), Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
+    Tasmota will send a `TOGGLE` command when the button is released (opening the circuit). When pressing the button (closing the circuit) nothing will happen. Default state is ON and when pressed it's OFF. When held for the time set in `SetOption32` (_default = 4s_), Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
 **`SwitchMode 6`**
-Set inverted push-button with long press mode (`0 = OFF` (_default_), `1 = TOGGLE`, `long press = HOLD`)
+:    Set inverted push-button with long press mode (`0 = OFF` (_default_), `1 = TOGGLE`, `long press = HOLD`)
 
-Tasmota will send a `TOGGLE` command when the button pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Default state is OFF and when pressed it's ON. When held for the time set in `SetOption32` (_default = 4s_), Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
+    Tasmota will send a `TOGGLE` command when the button pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Default state is OFF and when pressed it's ON. When held for the time set in `SetOption32` (_default = 4s_), Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
-!!! tip "Long press or hold can be used in [conjunction with rules](Rules#long-press-on-a-switch) to create additional features or to control another Tasmota device"
+    !!! tip "Long press or hold can be used in [conjunction with rules](Rules#long-press-on-a-switch) to create additional features or to control another Tasmota device"
 
 **`SwitchMode 7`**
-Set toggle push-button mode. Same as `SwitchMode 0`.
+:    Set toggle push-button mode. Same as `SwitchMode 0`.
 
 **`SwitchMode 8`**
-Set switch to multi change toggle mode (`0 = TOGGLE`, `1 = TOGGLE`, `2x change = HOLD`).
+:    Set switch to multi change toggle mode (`0 = TOGGLE`, `1 = TOGGLE`, `2x change = HOLD`).
 
-Same as `SwitchMode 0` but when the state of the circuit changes within 0.5s twice no `TOGGLE` commands are send but Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
+    Same as `SwitchMode 0` but when the state of the circuit changes within 0.5s twice no `TOGGLE` commands are send but Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
-!!! warning
-     When you change switch states fast (within 0.5s) some extra actions can be triggered using rules. ON/OFFpower state is only changed when there is no second switch change within 0.5s.
+    !!! warning
+        When you change switch states fast (within 0.5s) some extra actions can be triggered using rules. ON and OFF power states are only changed when there is no second switch change within 0.5s.
 
 **`SwitchMode 9`**
-Set switch to multi change follow mode (`0 = OFF`, `1 = ON`, `2x change = HOLD`)
+:    Set switch to multi change follow mode (`0 = OFF`, `1 = ON`, `2x change = HOLD`)
 
-Same as `SwitchMode 1` but when the state of the circuit changes within 0.5s twice no `OFF/ON` commands are send but Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
+    Same as `SwitchMode 1` but when the state of the circuit changes within 0.5s twice no `OFF/ON` commands are send but Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
-!!! warning
-     When you change switch states fast (within 0.5s) some extra actions can be triggered using rules. ON/OFFpower state is only changed when there is no second switch change within 0.5s.
+    !!! warning
+        When you change switch states fast (within 0.5s) some extra actions can be triggered using rules. ON/OFFpower state is only changed when there is no second switch change within 0.5s.
 
 **`SwitchMode 10`**
-Set switch to multi change inverted follow mode (`0 = ON`, `1 = OFF`, `2x change = HOLD`)
+:    Set switch to multi change inverted follow mode (`0 = ON`, `1 = OFF`, `2x change = HOLD`)
 
-Same as `SwitchMode 2` but when the state of the circuit changes within 0.5s twice no `ON/OFF` commands are send but Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
+    Same as `SwitchMode 2` but when the state of the circuit changes within 0.5s twice no `ON/OFF` commands are send but Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
-!!! warning
-     When you change switch states fast (within 0.5s) some extra actions can be triggered using rules. ON/OFFpower state is only changed when there is no second switch change within 0.5s.
+    !!! warning
+        When you change switch states fast (within 0.5s) some extra actions can be triggered using rules. ON/OFFpower state is only changed when there is no second switch change within 0.5s.
 
 **`SwitchMode 11`**
-Set switch to pushbutton with dimmer mode incl. double press feature
+:    Set switch to pushbutton with dimmer mode incl. double press feature
 
-!!! note
-    Setoption32 must be smaller than 64, when you use switchmode 11 and 12 !!
+    !!! note
+        Setoption32 must be smaller than 64, when you use switchmode 11 and 12 !!
 
-Tasmota will send a `TOGGLE` command when the button is pressed for a short time and then is released (use `Switch<x>#state=2` in rules).
+    Tasmota will send a `TOGGLE` command when the button is pressed for a short time and then is released (use `Switch<x>#state=2` in rules).
 
-When pressing the button (closing the circuit) for a long time (set in `SetOption32`), Tasmota will send repeated `INC_DEC` (increment or decrement the dimmer) commands for as long as the button is pressed (use `Switch<x>#state=4` in rules).
+    When pressing the button (closing the circuit) for a long time (set in `SetOption32`), Tasmota will send repeated `INC_DEC` (increment or decrement the dimmer) commands for as long as the button is pressed (use `Switch<x>#state=4` in rules).
 
-Two different `CLEAR` commands are available. An immediate `CLEAR` command is send upon button release - no delay (use `Switch<x>#state=7` in rules).
+    Two different `CLEAR` commands are available. An immediate `CLEAR` command is send upon button release - no delay (use `Switch<x>#state=7` in rules).
 
-Releasing the button also starts an internal timer (time is set in `SetOption32`). When released for the time set in `SetOption32`, Tasmota will send a 'delayed' `CLEAR` command (use `Switch<x>#state=6` in rules).
+    Releasing the button also starts an internal timer (time is set in `SetOption32`). When released for the time set in `SetOption32`, Tasmota will send a 'delayed' `CLEAR` command (use `Switch<x>#state=6` in rules).
 
-If the button is pressed again before the timeout, Tasmota will send an `INV` command. The `INV` command is for the controlling software (Home Assistant) to switch between incrementing and decrementing the dimmer (use `Switch<x>#state=5` in rules).
+    If the button is pressed again before the timeout, Tasmota will send an `INV` command. The `INV` command is for the controlling software (Home Assistant) to switch between incrementing and decrementing the dimmer (use `Switch<x>#state=5` in rules).
 
-If button is pressed twice (within time set in `SetOption32`), Tasmota will send a `DOUBLE` command. Note that this **doesn't** change behaviour of other switch states. So along with the `DOUBLE` command, `TOGGLE` command will also be fired twice upon a double press (use `Switch<x>#state=8` in rules).
+    If button is pressed twice (within time set in `SetOption32`), Tasmota will send a `DOUBLE` command. Note that this **doesn't** change behaviour of other switch states. So along with the `DOUBLE` command, `TOGGLE` command will also be fired twice upon a double press (use `Switch<x>#state=8` in rules).
 
-!!! tip
-    The dimmer mode has several use cases: In [conjunction with rules](Rules#control-a-dimmer-with-one-switch) to create additional features or to control another Tasmota device. In [conjunction with ControllerX (HA Appdeamon app)](https://xaviml.github.io/controllerx/examples/tasmota-switchmode11) to implement easy toggle and dimming of smart lights, with an 'in wall' hw Tasmota switch. Turn a media player on and off and to control the volume of a media player with one switch.
+    !!! tip
+        Possible use case: [using rules](Rules.md#control-a-dimmer-with-one-switch) to create additional features or to control another Tasmota device. 
 
 **`SwitchMode 12`**
-Set switch to inverted pushbutton with dimmer mode incl. double press feature.
-Same as `Switchmode 11` but with inverted behaviour.
+:    Set switch to inverted pushbutton with dimmer mode incl. double press feature.
+    Same as `Switchmode 11` but with inverted behaviour.
 
-!!! note
-    Setoption32 must be smaller than 64, when you use switchmode 11 and 12 !!
+    !!! note
+        Setoption32 must be smaller than 64, when you use switchmode 11 and 12 !!
 
 **`SwitchMode 13`**
-Set switch to "push to on" mode (`1 = ON`, `0 = nothing`)
+:    Set switch to "push to on" mode (`1 = ON`, `0 = nothing`)
 
-Tasmota will send an `ON` command when the button pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Switch off using `PulseTime`.
+    Tasmota will send an `ON` command when the button pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Switch off using `PulseTime`.
 
 **`SwitchMode 14`**
-Set switch to inverted "push to on" mode (`0 = ON`, `1 = nothing`)
+:    Set switch to inverted "push to on" mode (`0 = ON`, `1 = nothing`)
 
-!!! tip "This mode is useful with [PIR sensors](PIR-Motion-Sensors)"
+    !!! tip "This mode is useful with [PIR sensors](PIR-Motion-Sensors)"
 
 **`SwitchMode 15`**
-Send only MQTT message on switch change
+:    Send only MQTT message on switch change. This will stop the switch from controlling power outputs.
+
+    ```console
+    tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:00","Switch1":"OFF"}
+    tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:00","Switch1":"ON"}
 
 ## Button
 <img style="float:right;width:6em" src="https://user-images.githubusercontent.com/5904370/57244172-2273ba80-7038-11e9-89ce-49ef46cb36d6.png"> </img>
@@ -192,73 +197,70 @@ Multipress functions for 2 and more presses cannot be changed using SetOptions o
     `Button1` can directly control up to five relays. The number of the activated relay corresponds to the number of button presses and this feature is not present in the other buttons.
     When ButtonTopic is set to default `0` a button will always send its state for rules.
 
-#### 1 short press
-Toggles the power state. This will blink the LED once and send an MQTT status message like `stat/tasmota/POWER = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"SINGLE"}` when SetOption73 is enabled. The button state for rules is `2` (`10` if `Setoption73` is enabled).
+`1 short press`
+:    Toggles the power state. This will blink the LED once and send an MQTT status message like `stat/tasmota/POWER = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"SINGLE"}` when SetOption73 is enabled. The button state for rules is `2` (`10` if `Setoption73` is enabled).
 
-#### 2 short presses
-When using Button1 toggles the second power state (if available on the device). This will blink the LED twice and send an MQTT status message like `stat/tasmota/POWER2 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"DOUBLE"}` when SetOption73 is enabled. The button state for rules is `11`.
+`2 short presses`
+:    When using Button1 toggles the second power state (if available on the device). This will blink the LED twice and send an MQTT status message like `stat/tasmota/POWER2 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"DOUBLE"}` when SetOption73 is enabled. The button state for rules is `11`.
 
-#### 3 short presses
-When using Button1 toggles the third power state (if available on the device). This will blink the LED three times and send an MQTT status message like `stat/tasmota/POWER3 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"TRIPLE"}` when SetOption73 is enabled. The button state for rules is `12`.
+`3 short presses`
+:    When using Button1 toggles the third power state (if available on the device). This will blink the LED three times and send an MQTT status message like `stat/tasmota/POWER3 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"TRIPLE"}` when SetOption73 is enabled. The button state for rules is `12`.
 
-#### 4 short presses
-When using Button1 toggles the fourth power state (if available on the device). This will blink the LED for times and send an MQTT status message like `stat/tasmota/POWER4 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"QUAD"}` when SetOption73 is enabled. The button state for rules is `13`.
+`4 short presses`
+:    When using Button1 toggles the fourth power state (if available on the device). This will blink the LED for times and send an MQTT status message like `stat/tasmota/POWER4 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"QUAD"}` when SetOption73 is enabled. The button state for rules is `13`.
 
-#### 5 short presses
-When using Button1 toggles the fifth power state (if available on the device). This will blink the LED five times and send an MQTT status message like `stat/tasmota/POWER5 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"PENTA"}` when SetOption73 is enabled. The button state for rules is `14`.
+`5 short presses`
+:    When using Button1 toggles the fifth power state (if available on the device). This will blink the LED five times and send an MQTT status message like `stat/tasmota/POWER5 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"PENTA"}` when SetOption73 is enabled. The button state for rules is `14`.
 
-#### 6 short presses
-Start [`WifiConfig 2`](Commands.md#wificonfig). Can be disabled using [SetOption1 1](Commands.md#setoption1)
+`6 short presses`
+:    Start [`WifiConfig 2`](Commands.md#wificonfig). Can be disabled using [SetOption1 1](Commands.md#setoption1)
 
-#### **Long press**
-There are two separate functions associated with a button long press based on how long it is held:
+`**Long press**`
+:    There are two separate functions associated with a button long press based on how long it is held:
 
-1. When held continuously for 40 seconds (Configurable with [SetOption32](Commands.md#setoption32), value is 10x the configured hold time) Tasmota will reset to firmware defaults and restart.
-2. If enabled, button pressed for 4 seconds (Configurable with [SetOption32](Commands.md#setoption32)) creates a HOLD action and send an MQTT status message like `stat/tasmota/BUTTON<x> = {"ACTION":"HOLD"}` when SetOption73 is enabled. The button state for rules is `3`.
+    1. When held continuously for 40 seconds (Configurable with [SetOption32](Commands.md#setoption32), value is 10x the configured hold time) Tasmota will reset to firmware defaults and restart.
+    2. If enabled, button pressed for 4 seconds (Configurable with [SetOption32](Commands.md#setoption32)) creates a HOLD action and send an MQTT status message like `stat/tasmota/BUTTON<x> = {"ACTION":"HOLD"}` when SetOption73 is enabled. The button state for rules is `3`.
 
-!!! note "If [ButtonRetain](Commands.md#buttonretain) has been enabled the MQTT message will also contain the MQTT retain flag."
+    !!! note "If [ButtonRetain](Commands.md#buttonretain) has been enabled the MQTT message will also contain the MQTT retain flag."
 
-!!! danger
-    When a button is configured as inverted or with a [Switchmode](Commands.md#switchmode) that keeps it as ON while depressed it activates the reset to firmware defaults function. Change the Button configuration or SwitchMode to avoid repeated reset to defaults or use `Setoption1 1` to disable that function.
+    !!! danger
+        When a button is configured as inverted or with a [Switchmode](Commands.md#switchmode) that keeps it as ON while depressed it activates the reset to firmware defaults function. Change the Button configuration or SwitchMode to avoid repeated reset to defaults or use `Setoption1 1` to disable that function.
 
-!!! warning
-    If you define a button with a number higher than available power outputs it will default to controlling `Power1`. Example: Button4 on a device with Power1 and Power2 will control `Power1`.
+    !!! warning
+        If you define a button with a number higher than available power outputs it will default to controlling `Power1`. Example: Button4 on a device with Power1 and Power2 will control `Power1`.
 
 ### ButtonTopic
 
 **`ButtonTopic 0`**
+:    _Default option_
 
-_Default option_
+    By default a button controls the corresponding power state and doesn't send any MQTT messages itself.
 
-By default a button controls the corresponding power state and doesn't send any MQTT messages itself.
-
-No MQTT message will be published on account of the new button state. The message you see in console is the new power state that is controlled and not the button state.
+    No MQTT message will be published on account of the new button state. The message you see in console is the new power state that is controlled and not the button state.
 
 **`ButtonTopic 1`**
+:    Sets MQTT button topic to device %topic%.
 
-Sets MQTT button topic to device %topic%.
+    When changing the state of the button an MQTT message is sent to the device topic with the payload according to `SwitchMode` set.
 
-When changing the state of the button an MQTT message is sent to the device topic with the payload according to `SwitchMode` set.
+    !!! example
+        Device topic _tasmota_ with `SwitchMode 3` yields the following message: `MQT: cmnd/tasmota/POWER = ON`
 
-!!! example
-    Device topic _tasmota_ with `SwitchMode 3` yields the following message: `MQT: cmnd/tasmota/POWER = ON`
-
-    Notice the _cmnd_ instead of the _stat_ at the beginning.
+        Notice the _cmnd_ instead of the _stat_ at the beginning.
 
     This is the same as sending an MQTT command to this device, the device power state will be set to the defined state.
 
 **`ButtonTopic <value>`**
+:    Set button topic to a custom topic (32 characters max).
 
-Set button topic to a custom topic (32 characters max).
-
-This will send an MQTT message to a custom defined topic similarly to option 1.
+    This will send an MQTT message to a custom defined topic similarly to option 1.
 
 
-!!! example
-     For example, we set the topic to _tasmota02_ with `ButtonTopic tasmota02`.
-     With `SwitchMode 1` the device yields the following message: `MQT: cmnd/tasmota02/POWER = TOGGLE`
+    !!! example
+        For example, we set the topic to _tasmota02_ with `ButtonTopic tasmota02`.
+        With `SwitchMode 1` the device yields the following message: `MQT: cmnd/tasmota02/POWER = TOGGLE`
 
-    If you have another device with the topic _tasmota02_ this action will toggle its power state while not affecting anything on the _tasmota_ device.
+        If you have another device with the topic _tasmota02_ this action will toggle its power state while not affecting anything on the _tasmota_ device.
 
 #### ButtonTopic Summary
 
@@ -297,14 +299,24 @@ After you have assigned a Switch<x\> to the GPIO connected to the AC frequency d
 
 Once the feature is enabled you can use this switch as any regular switch!
 
-## Detach Switches Based On..
+## Detach Switches with...
 
 ### SetOption114
 
-**Only in Tasmota 9.1+** When `SetOption114 1` all switches are detached from their respective relays and will send MQTT messages instead in the form of `{"Switch<x>":{"Action":"<state>"}}`.
+When `SetOption114 1` all switches are detached from their respective relays and will send MQTT messages instead in the form of `{"Switch<x>":{"Action":"<state>"}}`.
 
 !!! example
     When switch one is toggle to "ON":`{"Switch1":{"Action":"ON"}}`
+
+### SwitchMode 15
+
+With command `SwitchMode<x> 15` you can decouple Switch<x\> from its power output and it will instead send MQTT messages in the following format:
+
+```json
+MQT: tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:00","Switch1":"OFF"}
+MQT: tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:01","Switch1":"ON"}
+```
+You can globally change the status text with [`StateText`](Commands.md#statetext) command.
 
 ### Rules
 
@@ -329,38 +341,35 @@ Backlog Rule1 on Switch1#state do Publish stat/custom-topic/SWITCH1 %value% endo
 If you still need to use SwitchTopic read on!
 
 **`SwitchTopic 0`**
+:    _Default mode_
 
- _Default mode_
+    By default a switch controls the corresponding power state and doesn't send any MQTT messages itself.
 
-By default a switch controls the corresponding power state and doesn't send any MQTT messages itself.
-
-No MQTT message will be published on account of the new switch state. The message you see in console is the new power state that is controlled and not the switch state.
+    No MQTT message will be published on account of the new switch state. The message you see in console is the new power state that is controlled and not the switch state.
 
 **`SwitchTopic 1`**
+:    _Sets MQTT switch topic to device %topic%_
 
-_Sets MQTT switch topic to device %topic%_
+    When changing the state of the switch an MQTT message is sent to the device topic with the payload according to `SwitchMode` set.
 
-When changing the state of the switch an MQTT message is sent to the device topic with the payload according to `SwitchMode` set.
+    !!! example
+        Device topic _tasmota_ with `SwitchMode 3` yields the following message: `MQT: cmnd/tasmota/POWER = TOGGLE`
 
-!!! example
-    Device topic _tasmota_ with `SwitchMode 3` yields the following message: `MQT: cmnd/tasmota/POWER = TOGGLE`
+        Notice the _cmnd_ instead of the _stat_ at the beginning.
 
-    Notice the _cmnd_ instead of the _stat_ at the beginning.
-
-This is the same as sending an MQTT commands to this device, the device power state will be set to the defined state.
+    This is the same as sending an MQTT commands to this device, the device power state will be set to the defined state.
 
 **`SwitchTopic <value>`**
+:    _Set switch topic to a custom topic (32 characters max)_
 
-_Set switch topic to a custom topic (32 characters max)_
+    This will send an MQTT message to a custom defined topic similarly to option 1.
 
-This will send an MQTT message to a custom defined topic similarly to option 1.
+    In the following example, we set the topic to `tasmota02` with `SwitchTopic tasmota02`.
 
-In the following example, we set the topic to `tasmota02` with `SwitchTopic tasmota02`.
-
-!!! example
-     Device topic _tasmota_ with `SwitchMode 1` and custom topic _tasmota02_ yields the following message: `MQT: cmnd/tasmota02/POWER = ON`
->
->If you have another device with the topic _tasmota02_ this action will turn on its power while not affecting anything on the _tasmota_ device.
+    !!! example
+        Device topic _tasmota_ with `SwitchMode 1` and custom topic _tasmota02_ yields the following message: `MQT: cmnd/tasmota02/POWER = ON`
+    
+        If you have another device with the topic _tasmota02_ this action will turn on its power while not affecting anything on the _tasmota_ device.
 
 #### SwitchTopic Summary
 

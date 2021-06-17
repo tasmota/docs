@@ -26,9 +26,10 @@ USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requir
 USE_DISPLAY_TM1637 | Enable TM1637 display
 USE_LILYGO47  | Enable LILGO 4.7 Epaper display ESP32 combo
 USE_UNIVERSAL_DISPLAY  | Enable universal display driver
+USE_LVGL  | Enable LVGL, currently only supported by berry scripting  
 USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
 SHOW_SPLASH | Enable initialization splash message on the display  
-`USE_RAMFONT` | Enable loadable Fonts  
+USE_RAMFONT | Enable loadable Fonts  
 USE_MULTI_DISPLAY | Enable mutiple display support (up to 3)  
 USE_AWATCH | Enables analog watch support  
 USE_GRAPH | Enable line charts. Also requires `NUM_GRAPHS`  
@@ -264,7 +265,7 @@ _Parameters are separated by colons._
 When USE_UFILESYSTEM is defined and a file system is present you may define displaytext batch files.
 the file may contain any number of diplaytext cmds, one at a line.
 you may have comment lines beginning with a ;
-if a file named display.ini is present in the file system this batch file is executed.
+if a file named "display.bat" is present in the file system this batch file is executed.
 
 example file:
 
@@ -436,29 +437,37 @@ Driver 17 is a universal display driver for most pixel driven displays.
 it supports I2C and hardware and software SPI (3 or 4 wire)
 The driver is enabled by compiling with #define USE_UNIVERSAL_DISPLAY
 and selecting GPIO Option A3 on any pin.
-the display is defined by a descriptor file which may be provided with 3 methods.
-1. a special section in scripter >d
-2. a file which must be present in the flash file system ("dspdesc.txt")
-3. a flash section in driver 17 (const char)
+the display is defined by a descriptor file which may be provided with 3 methods:
 
-the descriptor text file has the following elements:  
+1. a file which must be present in the flash file system ("display.ini"), prefered option
+2. a special section in scripter >d
+3. rule buffer 3
+4. a flash section in driver 17 (const char)
 
-:H  
+options 2-4 work also on 1M devices
+
+Descriptor text file has the following elements:  
+
+`:H`  
+
 header line describes the main features of the display (comma seperated, no spaces allowed)
+
 1. name
 2. x size in pixels
 3. y size in pixels
 4. bits per pixel (1 for bw displays, 16 for color displays)
 5. hardware interface used either I2C or SPI
 
-I2C  
+`I2C`  
+
 1. I2C address in HEX
 2. SCL pin
 3. SDA pin
 4. RESET pin
 
-SPI  
-1. SPI Nr (1 = hardware SPI 1, 2 = Hardware SPI 2 (ESP32), 3 = software SPI
+`SPI`  
+
+1. Number (1 = hardware SPI 1, 2 = Hardware SPI 2 (ESP32), 3 = software SPI
 2. CS pin
 3. CLK pin
 4. MOSI pin
@@ -467,11 +476,11 @@ SPI
 7. RESET pin
 8. MISO pin
 9. SPI Speed in MHz
-all signals must be given. unused pins may be set to -1
-if you specify a * char the pin number is derived from the Tasmota GPIO GUI.  
-the CS and DC pins must be the standard pins e.g. SPI_CS or SPI_DC.  
 
-example:  
+All signals must be given. Unused pins may be set to -1. If you specify a `*` char the pin number is derived from the Tasmota GPIO GUI.  
+The CS and DC pins must be the standard pins e.g. SPI_CS or SPI_DC.  
+
+!!! example "Example"
 
 ```haskell
 :H,SH1106,128,64,1,I2C,3c,*,*,*
@@ -481,24 +490,27 @@ example:
 :H,ILI9341,240,320,16,SPI,1,-1,14,13,5,4,15,*,40
 ```
 
-:S  
-splash setup, also defines initial colors.
+`:S`  
+splash setup, also defines initial colors. (optional, if omitted screen is not cleared initially)
+
 1. Font number
 2. Font size
 3. FG color (as index color)
 4. BG color (as index color)
 5. x position of text
 6. y position of text  
-example:  
+
+!!! example
 
 ```haskell
 :S,2,1,1,0,40,20
 ```
-:I  
-initial register setup for the display controler. (`IC` marks that the controller is using command mode even with command parameters)  
-all values are in hex. On SPI the first value is the command, then the number of arguments and the the arguments itself.
-Bi7 7 on the number of arguments set indicate a wait of 150 ms. On I2C all hex values are sent to i2c
-example:  
+`:I`  
+Initial register setup for the display controler. (`IC` marks that the controller is using command mode even with command parameters)  
+All values are in hex. On SPI the first value is the command, then the number of arguments and the the arguments itself.
+`Bi7 7` on the number of arguments set indicate a wait of 150 ms. On I2C all hex values are sent to i2c
+
+!!! example
 
 ```haskell
 :I
@@ -526,56 +538,82 @@ E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
 29,80
 ```
 
-:o  
+ `:o`,OP  
 Off , Controller OPCODE to switch display off  
 
-:O  
+`:O`,OP  
 On Controller OPCODE to switch display on  
 
-:R  
-1. rotation opcode
-2. startline opcode (optional)  
+`:R`,OP,SL  
 
-:0  
-:1  
-:2  
-:3  
+1. OP = rotation opcode
+2. SL = startline opcode (optional)  
+
+`:0`  
+`:1`  
+`:2`  
+`:3`  
+
 register values for all 4 rotations (color display only)
+
 1. rotation code
 2. x offset
 3. y offset
 4. rotation pseudo opcode for touch panel
 
-:A  
+`:A`  
 3 OPCODES to set adress window (color display only)  
+
 1. set column opcode  
 2. set row opcode  
 3. start write opcode  
 4. pixel size (optional)  
 
-:P  
+`:P`  
 pixel transfer size (optional) default = 16 bit RGB  
 
-:i  
+`:i`  
 invert display opcodes  
 1. inversion off  
 2. inversion on  
 
-:D  
+`:D`  
 dimmer opcode (optional)  
 
-:TIx,AA,SCL,SDA  
+`:B`  
+LVGL (optional)  
+1. number of display lines flushed at once (min 10) the lower the lesser memory needed  
+2. 0 for no DMA, 1 use DMA (not supported on all displays) bit 1 selects color swap, 2 = swap 16 bit color  
+
+`:T`  
+Wait times used for E-paper display  
+1. full refresh wait in ms  
+2. partial refresh wait in ms  
+3. wait after update in ms  
+
+`:L`  
+Lookuptable for full refresh (Waveshare 29)
+
+`:l`  
+Lookuptable for partial refresh (Waveshare 29)
+
+`:LX`,OP  
+Lookuptable for full refresh (Waveshare 42) 
+X = 1..5  
+OP = opcode for sending refresh table  
+
+`:TIx,AA,SCL,SDA`  
 defines a touch panel an I2C bus nr x (1 or 2)  
 AA is device address  
 SCL, SDA are the pins used (or * for tasmota definition)  
 
-:TS,CS_PIN  
+`:TS,CS_PIN`   
 defines a touch panel an SPI bus with chip select CS_PIN (or *)  
 
 the appropriate coordinate convervsions are defined via pseudo opcodes, see above  
 ( code 0 to 3 currently defined)  
 
-full examples for SH1106 and ILI9341: (comment lines starting with ; are allowed)  
+!!! example "Full examples for SH1106 and ILI9341: (comment lines starting with ; are allowed)"  
 
 ```haskell
 :H,SH1106,128,64,1,I2C,3c,*,*,*
@@ -640,12 +678,11 @@ E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
 #
 ```
 
-the most conveniant editing when developing or modifying is done via scripter.  
-on every scripter save the display is reinitialized and you see
-immediately the result of your changes.  
-however the normal use would be to store the descriptor in file system.
+Most convenient editing when developing or modifying is done via scripter. On every scripter save the display is reinitialized and you immediately see results of your changes.  
 
-example of scripter driven display descriptor:  
+However the normal use would be to store the descriptor in file system.
+
+!!! example "Scripter driven display descriptor"  
 
 ```haskell
 >D

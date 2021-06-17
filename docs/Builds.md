@@ -6,7 +6,7 @@ There are many available features programmed into Tasmota. Not all devices need 
 
 Many times one just needs to download a pre-compiled binary and perform the necessary run-time configuration. It is not necessary to compile your own binary if these pre-compiled builds meet your needs. These available files provide a simpler approach to get up and going with Tasmota quickly.
 
-The binary files available on [GitHub](https://github.com/arendst/Tasmota/releases) are for the current master release version only. These master release binaries are also available from the [OTA server](http://ota.tasmota.com/tasmota/release/). However, the latest development branch code binaries are only available from the [development OTA server](http://ota.tasmota.com/tasmota/).
+Release binaries are from the [official OTA server](http://ota.tasmota.com/tasmota/release/). Firmware built from development branch code is available from the [development OTA server](http://ota.tasmota.com/tasmota/).
 
 Features that are not available in any official release build have to be enabled in source code and compiled yourself. Read more about [compiling your own build](Compile-your-build).
 

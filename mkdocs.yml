@@ -25,6 +25,7 @@ plugins:
         'Status-LED.md': 'Lights.md'
         'Tuya-Protocols.md': 'TuyaMCU.md'
         'Upgrade.md': 'Upgrading.md'
+        'Berry-Scripting.md': '/docs/Berry.md'
 # - htmlproofer
 
 # strict: true
@@ -80,12 +81,13 @@ markdown_extensions:
      toc_depth: 3
   - pymdownx.mark
   - pymdownx.tabbed
-  - pymdownx.emoji:
+  - pymdownx.emoji
   - pymdownx.betterem
   - pymdownx.caret
   - pymdownx.highlight
   - pymdownx.superfences
   - meta
+  - def_list
 
 google_analytics:
   - 'UA-140681905-2'
@@ -181,6 +183,7 @@ nav:
     - BME680.md
     - CC2530.md
     - Chirp! moisture sensor: Moisture-Sensor-and-Chirp!-Sensor.md
+    - DFR0299.md
     - DHT11.md
     - DS18x20.md
     - DS3231.md
@@ -212,6 +215,8 @@ nav:
     - RF-Transciever.md
     - SDS011.md
     - SHT30.md
+    - SK6812.md
+    - SPS30.md
     - TX2x.md
     - TSL2561.md
     - VEML6070.md

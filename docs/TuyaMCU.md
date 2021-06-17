@@ -74,7 +74,7 @@ Power Monitoring   | 31 to 33 | 31 for Power (in deci Watt)<br>32 for Current (i
 Relay1i to Relay8i | 41 to 48 | Map only to dpId with on / off function
 Battery powered sensor mode | 51 | Battery powered devices use a slightly different protocol
 Enum dpId          | 61 to 64 | Range for each enum is 0 to 31
-Sensors            | 71 to 78 | Range of sensors (temperature, humidity, co2, etc)
+Sensors            | 71 to 79 | Range of sensors (temperature, humidity, co2, gas, etc)
 Timers             | 81 to 84 | Manage integer based timers
 Extra functions    | 97 to 99 | 97 for motor direction<br>98 for error logging (report only)<br>99 as a dummy function
 
@@ -317,6 +317,7 @@ These are the currently available sensors:
 - `76` as TVOC Sensor
 - `77` as CO2 Sensor
 - `78` as ECO2 Sensor
+- `79` as %LEL gas Sensor
 
 If your device has a dpId for setting a specific Temperature and/or Humidity:
 

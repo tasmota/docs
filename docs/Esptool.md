@@ -13,7 +13,7 @@ Go to the known folder and install Esptool with command ``python setup.py instal
 Packages for Esptool are maintained for [Debian](https://packages.debian.org/stretch/esptool) and [Ubuntu](https://packages.ubuntu.com/cosmic/esptool) and can be installed with `sudo apt install esptool`.
 
 ## Download Tasmota
-Download the latest Tasmota release firmware file [tasmota.bin](https://github.com/arendst/Tasmota/releases) to a known folder. A second source is [thehackbox](http://ota.tasmota.com/tasmota/release/) This source can be used for OTA too.
+Download the latest Tasmota release firmware file [tasmota.bin](http://ota.tasmota.com/tasmota/release/) to a known folder. 
 
 ## Upload Tasmota
 
@@ -76,7 +76,7 @@ Download the latest release from [https://github.com/igrr/esptool-ck/releases](h
 
 ### Download Tasmota
 
-Download the latest Tasmota release firmware file [tasmota.bin](https://github.com/arendst/Tasmota/releases) to a known folder (The same folder as where you have the esptool executable will work well for this process to be simpler)
+Download the latest Tasmota release firmware file [tasmota.bin](http://ota.tasmota.com/tasmota/release/) to a known folder (The same folder as where you have the esptool executable will work well for this process to be simpler)
 
 If you want features from the current development codebase which has not been included in the last release please download this [tasmota.bin](http://ota.tasmota.com/tasmota/) to a known folder (The same folder as where you have the esptool executable will work well for this process to be simpler)
 

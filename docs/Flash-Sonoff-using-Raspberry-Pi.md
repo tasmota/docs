@@ -87,7 +87,7 @@ This is how it looks in real-life 😆
    ➜  ~ 
    ```
 
-2. Flash .bin, which you can download from the [release-section](https://github.com/arendst/Tasmota/releases):
+2. Flash .bin, which you can download from the [release server](http://ota.tasmota.com/tasmota/release/):
 
    Again connect 3.3V while pressing button for 10 seconds. Then release and run:
 

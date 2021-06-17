@@ -12,8 +12,8 @@ Tasmota communicates with Home Assistant using MQTT. Before going any further, m
 Home Assistant has different options of adding Tasmota devices:
 
 1. Official Tasmota integration (**preferred**)
-2. MQTT discovery (_development halted_)
-3. Manual configuration by editing configuration.yaml
+2. Manual configuration by editing configuration.yaml
+3. MQTT discovery (_deprecated due to breaking changes for light in Home Assistant 2021.5_)
 
 ## Tasmota Integration
 
@@ -33,10 +33,10 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmot
 - Lights as `light` entities.  
   Single channel Dimmers, RGB lights, RGB lights with Color Temperature control and RGB lights with White control are supported.
 - Relays as `switch` entities
-  With [`SetOption30 1`](Commands#setoption30) all relays on the device will be added as light entities instead
+  With [`SetOption30 1`](Commands.md#setoption30) all relays one the device will be added as light entities instead
 - Sensors as `sensor` entities
-- Switches as `binary_sensor` entities or `automation triggers` depending on `SwitchMode` used when [`SetOption114 1`](Commands#setoption114)
-- Buttons as automation triggers when [`SetOption73`](Commands#setoption73) is enabled
+- Switches as `binary_sensor` entities or `automation triggers` depending on `SwitchMode` used when [`SetOption114 1`](Commands.md#setoption114)
+- Buttons as automation triggers when [`SetOption73`](Commands.md#setoption73) is enabled
 - Shutters as cover entities. 
   Currently only shutter modes 1 to 4 are supported. Shutter mode 5 and Tuya shutters are not supported.
 - Devices configured as iFan02 or iFan03 as fan entities. Tuya fans are not supported.
@@ -67,7 +67,11 @@ You can use [MQTT Discovery](https://www.home-assistant.io/docs/mqtt/discovery/)
 
 When creating the MQTT discovery JSON add this device identifier `,"device":{"connections":[["mac","%macaddr%"]]}` where %macaddr% is the mac address of the device without `:`. When used in a rule variable `%macaddr%` will be replaced automatically.
 
-Examples of custom discovery:
+There are Home Assistant Blueprints for specific device types to create needed entities at out blueprints GitHub. Look for the icon in templates to one-click import the configuration automation.
+
+<a href="https://github.com/tasmota/blueprints/" title="Blueprints"><img loading="lazy" src="https://templates.blakadder.com/assets/blueprint_import.svg"></a>
+
+Examples of creating custom discovery messages:
 
 - [RFID Tag](https://blakadder.com/tasmota-tags/)
 - [PIR sensor](https://blakadder.com/pir-in-tasmota-integration/)
@@ -543,7 +547,7 @@ Used for a configured [PIR Sensor](PIR-Motion-Sensors) and requires this rule:
 
 **Required Commands**
 ```console
-Rule1 on Switch1#State=1 do Publish stat/hall/MOTION ON endon on Switch1#State=1 do Publish stat/hall/MOTION OFF endon
+Rule1 on Switch1#State=1 do Publish stat/tasmota/MOTION ON endon on Switch1#State=1 do Publish stat/tasmota/MOTION OFF endon
 Rule1 1
 ```
 ```yaml
@@ -564,7 +568,7 @@ Requires a reed switch configured in Tasmota.
 
 **Required Commands**
 ```console
-Rule1 on Switch1#State=1 do Publish stat/hall/MOTION ON endon on Switch1#State=1 do Publish stat/hall/MOTION OFF endon
+Rule1 on Switch1#State=1 do Publish stat/tasmota/MOTION ON endon on Switch1#State=1 do Publish stat/tasmota/MOTION OFF endon
 Rule1 1
 ```
 ```yaml
@@ -676,6 +680,14 @@ If you change `name:` make sure to reflect that change in the value_template cov
 
 <!-- tabs:end -->
 
+### Covers
+
+<!-- tabs:start -->
+
+[Detailed guide](https://blakadder.com/tuya-climate/) when using MQTT Climate or Generic Thermostat in Home Assistant
+
+<!-- tabs:end -->
+
 ### Device Specific
 
 <!-- tabs:start -->
@@ -719,7 +731,7 @@ light:
   - platform: mqtt
     name: "Pat Ceiling Light"
     state_topic: "tele/ifan02/STATE"
-    value_template: "{{ value_json.POWER }}"
+    state_value_template: "{{ value_json.POWER }}"
     command_topic: "cmnd/ifan02/POWER"
     availability_topic: "tele/ifan02/LWT"
     qos: 1
@@ -731,9 +743,7 @@ light:
 ```
 
 !!! example "Sonoff S31"
-Configure the device as Sonoff S31, and run:\
-`SetOption4 1`   
-`SetOption59 1`
+Configure the device as Sonoff S31, and run: [`SetOption4 1`](Commands.md#setoption4), [`SetOption59 1`](Commands.md#setoption59).
 
 ```yaml
 switch:
@@ -924,6 +934,8 @@ In addition, add to your home assistant start up automation a query for the curr
 ### Zigbee Devices
 
 <!-- tabs:start -->
+!!! warning 
+    The following Zigbee examples assume [`SetOption83`](Commands.md#setoption83), [`SetOption89`](Commands.md#setoption89), [`SetOption100`](Commands.md#setoption100), [`SetOption112`](Commands.md#setoption112), [`SetOption118`](Commands.md#setoption118), [`SetOption119`](Commands.md#setoption119) are all set to `0`. Setting any of these to `1` will change topic and/or payload structure from that used in the examples.
 
 !!! example "Dimmable Light"
 This configuration is for a dimmable light reporting on `0xE1F9` using endpoint 1, cluster 8 for brightness. `ZbRead` part in the template is needed to always update the brightness values.

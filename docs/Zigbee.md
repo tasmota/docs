@@ -1,9 +1,9 @@
 !!! info "Zigbee2Tasmota serves as a gateway for devices connected to a Zigbee wireless network to bridge their communications over to Wi-Fi"
 
-Zigbee2Tasmota (Z2T) is a lightweight Zigbee solution running on an ESP82xx Wi-Fi chip. Hence it is easier to deploy wherever you want in your home. It is largely inspired by [Zigbee2mqtt](https://www.zigbee2mqtt.io/) but it's a complete rewrite to make it fit on an ESP82xx with 80kB of RAM and only 1MB of flash memory.
+Zigbee2Tasmota (Z2T) is a lightweight Zigbee gateway/bridge solution running on ESP8266/ESP8285 or ESP32 Wi-Fi chips. Hence it is easier to deploy wherever you want in your home. It was largely inspired by [Zigbee2MQTT](https://www.zigbee2mqtt.io/) but it was written from scratch to make it fit into the resource constraints of a ESP82xx chip with just 80kB of RAM and only 1MB of flash memory.
 
 ## Hardware
-This integration works with any Texas Instruments [CC2530](CC2530.md) chip based device as well as with Silicon Labs EFR32 chip based devices like [Sonoff ZBBridge](https://zigbee.blakadder.com/Sonoff_ZBBridge.html). A complete list of compatible Zigbee coordinators and Zigbee devices compatible with Z2T is in the [Zigbee Device Compatibility Repository](https://zigbee.blakadder.com/zigbee2tasmota.html). 
+This integration works with any Texas Instruments [CC2530](CC2530.md) chip based device as well as with Silicon Labs EFR32 (EFR32MG12/EFRMG21) chip based devices, like example [Sonoff ZBBridge](https://zigbee.blakadder.com/Sonoff_ZBBridge.html), [Tube's Zigbee Gateways (varient based on Silabs EFR32)](https://github.com/tube0013/tube_gateways), and DIY Zigbee gateway/bridge devices. A complete list of compatible Zigbee coordinators and Zigbee devices compatible with Z2T is in the [Zigbee Device Compatibility Repository](https://zigbee.blakadder.com/zigbee2tasmota.html). 
 
 While Z2T was initially designed for Texas Instruments Z-Stack firmware and protocol for CC253x based device, since then support for Silicon Labs EZSP (EmberZNet Serial Protocol) firmware has also been added. Once the Zigbee coordinator is started and communicates with Tasmota, the end result is the same and there is no difference in their operation.
 
@@ -11,6 +11,8 @@ Flashing and installation instructions for:
 
 - [Sonoff ZBBridge by ITead](https://zigbee.blakadder.com/Sonoff_ZBBridge.html)
 - [CC2530 based devices](CC2530.md)
+- [DIY Zigbee gateway/bridge device example based on Ebyte E180-ZG120B or E180-ZG120B-TB](https://github.com/zigpy/zigpy/discussions/584)
+- [DIY Zigbee gateway/bridge device example based on IKEA TRÅDFRI ICC-A-1 Module](https://github.com/MattWestb/IKEA-TRADFRI-ICC-A-1-Module/tree/master/Tasmota)
 
 ## Introduction
 Before using Zigbee with Tasmota, you need to understand a few concepts. Here is a simplified comparison to the Wi-Fi equivalent (sort of).
@@ -500,26 +502,8 @@ If your device pairs successfully with Zigbee2Tasmota but doesn't report on stan
 
 In this case you will have to use rules or an external home automation solution to parse those messages. The following section will focus only on rules to utilize the device inside Tasmota ecosystem.
 
-<!-- ### Ikea ON/OFF Switch
-`"ModelId":"TRADFRI on/off switch","Manufacturer":"IKEA of Sweden"`
-
-- Short press `O` - `0006!00`
-- Short press `I` - `0006!01`
-- Long press `O` - `0008!01`
-- Long press `I` - `0008!05`
-- Long press release `O` or `I` - `0008!07`
-
-In this example Tradfri switch reports on `0x7596` and is used to control another Tasmota light device:
-
-```haskell
-Rule
-  on ZbReceived#0x7596#0006!00 do publish cmnd/%topic%/POWER OFF endon 
-  on ZbReceived#0x7596#0006!01 do publish cmnd/%topic%/POWER ON endon 
-  on ZbReceived#0x7596#0008!01 do publish cmnd/%topic%/Dimmer - endon 
-  on ZbReceived#0x7596#0008!05 do publish cmnd/%topic%/Dimmer + endon
-``` -->
-
 ### Aqara Water Leak Sensor
+
 `"ModelId":"lumi.sensor_wleak.aq1"`
 
 In this example sensor reports on `0x099F` and sends an mqtt message to topic `stat/leak_sensor/LEAK`:
@@ -531,6 +515,7 @@ Rule
 ```
 
 ### Aqara Vibration Sensor
+
 `"ModelId":"lumi.vibration.aq1"`
 
 To modify sensor sensitivity use command. Replace `"device"` with your own device name:
@@ -552,6 +537,24 @@ Received response will be :
 {"ZbReceived":{"vibration":{"Device":"0x0B2D","Name":"vibration","0000/FF0D":1,"Endpoint":1,"LinkQuality":72}}}
 ```
 `"0000/FF0D"` is the key, value `1` is high sensitivity, `11` medium and `21` is low.
+
+### Osram/Ledvance Smart+ Switch Mini
+
+`"ModelId":"Lightify Switch Mini"`
+
+To pair the Smart+ Switch Mini with the Bridge you need to hold `Arrow Up` and `Middel Button` for 3 Seconds.
+Each Button is linked to another Endpoint. `Arrow Up`is Endpoint 1, `Arrow Down` is Endpoint 2 and `Middle Button`is Endpoint 3.
+To link the Smart+ Switch Mini with IKEA Tradfri dimmable lights i used the followin commands
+
+The IKEA light needs to be `Group 100`for this example.
+```haskell
+# for Power On and Power Off
+ZbBind {"Device":"Name","ToGroup":100,"Endpoint":1,"Cluster":6}
+ZbBind {"Device":"Name","ToGroup":100,"Endpoint":2,"Cluster":6}
+# for dimming
+ZbBind {"Device":"Name","ToGroup":100,"Endpoint":1,"Cluster":8}
+ZbBind {"Device":"Name","ToGroup":100,"Endpoint":2,"Cluster":8}
+```
 
 ## Zigbee2Tasmota Status Codes
 You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  

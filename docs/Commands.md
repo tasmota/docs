@@ -14,7 +14,7 @@ Instead of `0` you can use `off` or `false` and instead of `1` you can use `on` 
 > `Power ON` turns first defined power output (usually Relay1) on
 
 > `Power1 1` also turns first defined power output (usually Relay1) on
-
+dela
 > `Power1 True` also turns first defined power output (usually Relay1) on
 
 Replace `<x>` in a command with the appropriate index number. Leave it empty to use the first available.
@@ -92,7 +92,7 @@ Backlog Status 1; Power2 on; Delay 20; Power2 off; Status 4
 ```
 When using [web requests](#with-web-requests) *(Don't forget to encode "space" as '%20' and ";" as '%3B')*
 ```
-http://<ip>/cm?user=admin&password=joker&cmnd=Backlog%20Power%20Toggle%3BPower1%20ff
+http://<ip>/cm?user=admin&password=joker&cmnd=Backlog%20Power%20Toggle%3BPower1%20off
 ```
 
 A `Backlog` command without an argument clears an possible existing `Backlog` queue.
@@ -147,7 +147,7 @@ See also|[`SetOption1`](#setoption1) - Set button multipress mode<BR>[`SetOption
 
 Command|Parameters
 :---|:---
-Delay<a class="cmnd" id="delay"></a>|`2..3600` = set delay between two backlog commands with 0.1 second increment
+Delay<a class="cmnd" id="delay"></a>|`2..3600` = set a delay between two backlog commands with 0.1 second increment. *Not recommended for precision timing!*
 DeepSleepTime<a class="cmnd" id="deepsleeptime"></a>|Time to enter [deep sleep mode](DeepSleep)<BR>`0` = disable deep sleep mode *(default)*<BR>`11..86400` = set deep sleep mode time period in seconds
 DeviceName<a class="cmnd" id="devicename"></a>|Device name displayed in the webUI and used for HA autodiscovery.<br>`<value>` = set device name _(default = `FriendlyName1` value)_
 Emulation<a class="cmnd" id="emulation"></a>|`0` = disable emulation *(default)*<BR>`1` = enable Belkin WeMo emulation for [Alexa](Alexa)<BR>`2` = enable Hue Bridge emulation for [Alexa](Alexa)
@@ -175,6 +175,7 @@ SerialLog<a class="cmnd" id="seriallog"></a>|Disable hardware serial bridge and<
 Sleep<a class="cmnd" id="sleep"></a>|`0` = turn sleep off<BR>`1..250` = set sleep duration in milliseconds to enable [energy saving](Energy-Saving) *(default = `50`)*
 State<a class="cmnd" id="state"></a>|Display current device state and publish to `%prefix%/%topic%/RESULT` topic&emsp;
 Status<a class="cmnd" id="status"></a>|` ` = show abbreviated [status information](JSON-Status-Responses#basic-response)<BR>`0` = show all status information (1 - 11)<BR>`1` = show device parameters information<BR>`2` = show firmware information<BR>`3` = show logging and telemetry information<BR>`4` = show memory information<BR>`5` = show network information<BR>`6` = show MQTT information<BR>`7` = show time information<BR>`8` = show connected sensor information<BR>`9` = show power thresholds *(only on modules with power monitoring)*<BR>`10` = same as `Status 8` *(retained for backwards compatibility)*<BR>`11` = show information equal to [`TelePeriod`](#teleperiod) state message<BR>`12` = in case of crash to dump the call stack saved in RT memory
+Status0<a class="cmnd" id="status0"></a>|`0` = show all status information in a single line
 SysLog<a class="cmnd" id="syslog"></a>|`0` = disable syslog logging *(default)*<BR> `1` = show only error messages<BR> `2` = show error and info messages<BR>`3` = show error, info and debug messages<BR>`4` = show error, info and more debug messages
 Template<a class="cmnd" id="template"></a>|Show current [Template](Templates)<BR>`0` = create template from active module<BR>`x` = create template from a [supported module](Modules)<BR>`255` = merge current module and template settings into new template<BR>`{ ... }` = store template in a [JSON payload](Templates#anatomy-of-a-template)<BR>Does not activate the template. To activate use `Module 0`.
 Time<a class="cmnd" id="time"></a>|`0` = enable NTP *(default)*<BR>`1` = format JSON message timestamp in ISO format<BR>`2` = format JSON message timestamp in both ISO and Epoch format<BR>`3` = format JSON message timestamp in Epoch format<BR>`4` = format JSON message timestamp in milliseconds<BR>`<value>` = disable NTP and set UTC time as epoch value if greater than `1451602800` (January 1, 2016)
@@ -211,6 +212,7 @@ WebRefresh<a class="cmnd" id="webrefresh"></a>|Web page refresh<BR>`1000..10000`
 WebSend<a class="cmnd" id="websend"></a>|Send a command to Tasmota host over http. If a command starts with a `/` it will be used as a link.<BR>`[<host>:<port>,<user>:<password>] <command>`<BR>`<host>` = hostname or IP address.<BR>`<port>` = port for the device if not the default `80`<BR>`<user>` = enter username of the device you're sending the command to<BR>`<password>` = enter password of the device you're sending the command to<BR>`<command>` = command and payload<BR>*example 1: `[<ip>] POWER1 ON` sends `http://<ip>/cm?cmnd=POWER1 ON`*<BR>*example 2: `WebSend [myserver.com] /fancy/data.php?log=1234` sends `http://myserver.com/fancy/data.php?log=1234`*
 WebSensor<x\><a class="cmnd" id="websensor"></a>|Control display of sensor telemetry in the web UI<BR>`0` = Do not display sensor's telemetry<BR>`1` = Display sensor's telemetry (*default*)<BR>`<x>` = number corresponding to the sensor - listed in the `sns` section of the [supported sensor spreadsheet](https://docs.google.com/spreadsheets/d/e/2PACX-1vRBFqaP5QAFmT8iIYBxrn-EQp7-SrkxL6tb0OjpqtBxDEsmkiWCFei3sFyA_UXoqlbs3CqtEdOfC6Pa/pubhtml?gid=1029939700&single=true)<BR>`<x>` = `3` Energy telemetry<BR>Issue a `Status 4` to obtain a list of sensor types enabled in the firmware loaded on the device.
 WebServer<a class="cmnd" id="webserver"></a>|`0` = stop web server<BR>`1` = start web server in user mode<BR>`2` = start web server in admin mode
+Wifi<a class="cmnd" id="wifi"></a>|`0` = disable Wi-Fi<BR>`1` = enable Wi-Fi _(default)_ <BR>When wifi is off, it is always turned on after a restart except for wake-up from deepsleep.
 WifiConfig<a class="cmnd" id="wificonfig"></a>|`0` = disable Wi-Fi Manager and reboot (used with alternate AP)<BR>`2` = set [Wi-Fi Manager](https://github.com/tzapu/WiFiManager/blob/master/README.md#how-it-works) as the current configuration tool and start Wi-Fi Manager (web server at 192.168.4.1) for 3 minutes, then reboot and try to connect Wi-Fi network<BR>`4` = retry other AP without rebooting _(default)_<BR>`5` = wait until selected AP is available again without rebooting<BR>`6` = Wi-Fi parameters can only be entered via commands in the serial console<BR>`7` = set [Wi-Fi Manager](https://github.com/tzapu/WiFiManager/blob/master/README.md#how-it-works) (web server at 192.168.4.1) as the current configuration tool restricted to reset settings only. <BR>_This setting is recommended for devices without an external control/reset button_.<BR>&emsp;_No longer supported_ <BR>`1` = set [SmartConfig](https://community.particle.io/t/smart-config-the-missing-manual-now-available/442) ([Android](https://play.google.com/store/apps/details?id=com.iotmaker&hl=en_US)/iOS) for 3 minutes<BR>`3` = set [WPS](https://en.wikipedia.org/wiki/Wi-Fi_Protected_Setup) for 3 minutes
 [WifiPower](WifiPower)<a class="cmnd" id="wifipower"></a>|set Wi-Fi transmit power level in decibel-milliwatts (dBm) *(default = `17`)*
 See also|[`SetOption55`](#setoption55) - mDNS service control<BR>[`SetOption56`](#setoption56) - Wi-Fi network scan to select strongest signal on restart<BR>[`SetOption57`](#setoption57) - Wi-Fi network re-scan, alternate AP
@@ -230,8 +232,9 @@ MqttKeepAlive<a class="cmnd" id="mqttkeepalive"></a>|`1..100` = set MQTT Keep Al
 MqttPassword<a class="cmnd" id="mqttpassword"></a>|`0` = clear MQTT password<BR>`1` = reset MQTT password to firmware default (`MQTT_PASS`) and restart<BR>`<value>` = set MQTT password and restart
 MqttPort<a class="cmnd" id="mqttport"></a>|`1` = reset MQTT port to firmware default (`MQTT_PORT`) and restart<BR>`<value>` = set MQTT port between 2 and 32766 and restart
 MqttRetry<a class="cmnd" id="mqttretry"></a>|`10..32000` = set MQTT connection retry timer in seconds *(default = `10`)*
-MqttTimeout<a class="cmnd" id="mqtttimeour"></a>|`1..100` = set MQTT socket timeout *(default = `4`)*
+MqttTimeout<a class="cmnd" id="mqtttimeout"></a>|`1..100` = set MQTT socket timeout *(default = `4`)*
 MqttUser<a class="cmnd" id="mqttuser"></a>|`0` = clear MQTT user name<BR>`1` = reset MQTT user name to firmware default (`MQTT_USER`) and restart<BR>`<value>` = set MQTT user name and restart
+MqttWifiTimeout<a class="cmnd" id="mqttwifitimeout"></a>|`100..20000` = set MQTT Wi-Fi connection timeout in miliseconds *(default = `200`)*
 PowerRetain<a class="cmnd" id="powerretain"></a>|MQTT [power retain state](MQTT#retained-mqtt-messages)<BR> `0` / `off` = disable MQTT power retain on status update *(default)* <BR> `1` / `on` = enable MQTT power retain on status update <BR>
 Prefix1<a class="cmnd" id="Prefix1"></a>|`1` = reset MQTT command subscription prefix to firmware default (`SUB_PREFIX`) and restart<BR>`<value>` = set MQTT command subscription prefix and restart
 Prefix2<a class="cmnd" id="Prefix2"></a>|`1` = reset MQTT status prefix to firmware default (`PUB_PREFIX`) and restart<BR>`<value>` = set MQTT status prefix and restart
@@ -243,7 +246,7 @@ StateText<x\><a class="cmnd" id="StateText"></a>|`<value>` = set state text  (`<
 SwitchRetain<a class="cmnd" id="switchretain"></a>|`0` = disable use of MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on switch press
 Subscribe<a class="cmnd" id="subscribe"></a>|Subscribes to an MQTT topic and assigns an Event name to it.<BR>`<eventName>, <mqttTopic> [, <key>]` = [Read more...](Subscribe-&-Unsubscribe)<br>`  ` = list all topics currently subscribed
 SwitchTopic<a class="cmnd" id="switchtopic"></a>|`<value>` = set MQTT switch topic<BR>`0` = disable use of MQTT switch topic<BR>`1` = set MQTT switch topic to device `%topic%`<BR>`2` = reset MQTT switch topic to firmware default (`MQTT_SWITCH_TOPIC`) *(default = `0`)*<BR>[Read more](Buttons-and-Switches) about this.<BR>_If using MQTT to issue this command, if it is used with the device `GroupTopic`, the command will not be executed._
-TelePeriod<a class="cmnd" id="teleperiod"></a>|See current value and force publish STATE message<BR>`0` = disable telemetry messages<BR>`1` = reset telemetry period to firmware default (`TELE_PERIOD`)<BR>`10..3600` = set telemetry period in seconds _(default = `300`)_
+TelePeriod<a class="cmnd" id="teleperiod"></a>|See current value and force publish STATE and SENSOR message<BR>`0` = disable telemetry messages<BR>`1` = reset telemetry period to firmware default (`TELE_PERIOD`)<BR>`10..3600` = set telemetry period in seconds _(default = `300`)_
 Topic<a class="cmnd" id="topic"></a>|`1` = reset MQTT topic to firmware default (`MQTT_TOPIC`) and restart<BR>`<value>` = set MQTT topic **and** `ButtonTopic` and restart.<BR>*If using MQTT to issue this command, if it is used with the device `GroupTopic`, the command will not be executed. **Topic can not be identical to [`MqttClient`](#mqttclient)**
 Unsubscribe<a class="cmnd" id="unsubscribe"></a>|Unsubscribe from topics subscribed to with [`Subscribe`](#subscribe) <BR>`  ` = unsubscribe all topics<BR>`<eventName>` = unsubscribe from a specific MQTT topic
 See also|[`SetOption3`](#setoption3) - Disable//Enable MQTT<BR>[`SetOption4`](#setoption4) - Return MQTT response as `RESULT` or `%COMMAND%` topic<BR>[`SetOption10`](#setoption10) - Main topic change behavior
@@ -361,7 +364,7 @@ Color<x\><a class="cmnd" id="color"></a>|x = `1..6`<BR>&emsp; `1` = Set color<BR
 CT<a class="cmnd" id="ct"></a>|`153..500` = set color temperature from 153 (cold) to 500 (warm) for CT lights<BR>`+` = increase CT value by 10<BR>`-` = decrease CT value by 10
 CTRange<a class="cmnd" id="ctrange"></a>|Specify CT range of the bulb. The slider will still allow to set CT from 153 to 500, but the rendering will be done within the new range.<BR>`<ct_min>,<ct_max>` = set color temperature from 153 (cold) to 500 (warm) for CT lights _default = `153,500`_<BR>**This settings is not persisted in flash**
 Dimmer<a class="cmnd" id="dimmer"></a>|`0..100` = set dimmer value from 0 to 100%<BR>`+` = increase by `DimmerStep` value *(default =`10`)*<BR>`-` = decrease by `DimmerStep` value *(default =`10`)*<BR>*Use of these parameters with `Fade` on enables dimmer level "move down," "move up," and "stop" commands* ([#11269](https://github.com/arendst/Tasmota/pull/11269))<BR>`<` = decrease to 1<BR>`>` = increase to 100<BR>`!` = stop any dimmer fade in progress at current dimmer level
-Dimmer&#60;x>|**Commands available only when `SetOption37 >= 128`** ([#6819](https://github.com/arendst/Tasmota/pull/6819))<br>`<value>` same as in `Dimmer`<br>`Dimmer0 <value>` = set dimming for all channels<BR>`Dimmer1 <value>` = set dimming for RGB channels<BR>`Dimmer2 <value>` = set dimming for white channels
+Dimmer&#60;x>|**Commands available only when `SetOption37 >= 128`** ([#6819](https://github.com/arendst/Tasmota/pull/6819))<br>`<value>` same as in `Dimmer`<br>`Dimmer0 <value>` = set dimming for all channels<BR>`Dimmer1 <value>` = set dimming for RGB channels<BR>`Dimmer2 <value>` = set dimming for white channels<BR>`Dimmer4 <value>` = allow retaining brightness ratio between white and color channels when setting dimmer for linked lights
 DimmerRange<a class="cmnd" id="dimmerrange"></a>|Change dimming range. <br>`<dimmerMin>,<dimmerMax>` = set the internal dimming range from minimum to maximum value (0..100, 0..100)<BR>***Does not change [`Dimmer`](#dimmer) command behavior***
 DimmerStep<a class="cmnd" id="dimmerstep"></a>|`1..50` - set `Dimmer +/-` step value. *(default =`10`)*
 Fade<a class="cmnd" id="fade"></a>|`0` = do not use fade *(default)* <BR>`1` = use fade<BR>See also [`SetOption91`](#setoption91)
@@ -698,10 +701,13 @@ HM10Baud<a class="cmnd" id="hm10baud"></a>|Show ESP8266 serial interface baudrat
 HM10AT<a class="cmnd" id="hm10at"></a>|`<command>` = send AT commands to HM-10. See [list](http://www.martyncurrey.com/hm-10-bluetooth-4ble-modules/#HM-10%20-%20AT%20commands)
 HM10Time <a class="cmnd" id="hm10time"></a>|`<n>` = set time time of a **LYWSD02 only** sensor to Tasmota UTC time and timezone. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).
 HM10Auto <a class="cmnd" id="hm10auto"></a>|`<value>` = start an automatic discovery scan with an interval of  `<value>` seconds to receive data in BLE advertisements periodically.<BR>This is an active scan and it should be used **only if necessary**. At the moment that is the case just with MJ_HT_V1. This can change if a future HM-10 firmware starts supporting passive scan.
-NRFPage<a id="nrfpage"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
-NRFIgnore<a id="nrfignore"></a>|`0` = all known sensor types active_(default)_<BR>`<value>` =  ignore certain sensor type (`1` = Flora, `2` = MJ_HT_V1, `3` = LYWSD02, `4` = LYWSD03, `5` = CGG1, `6` = CGD1
-NRFScan<a id="nrfscan"></a>| Scan for regular BLE-advertisements and show a list in the console<BR>`0` = start a new scan list<BR>`1` = append to the scan list<BR>`2` = stop running scan
 NRFBeacon<a id="nrfbeacon"></a>| Set a BLE device as a beacon using the (fixed) MAC-address<BR>`<value>` (1-3 digits) = use beacon from scan list<BR>`<value>` (12 characters) = use beacon given the MAC interpreted as an uppercase string `AABBCCDDEEFF`
+NRFIgnore<a id="nrfignore"></a>|`0` = all known sensor types active_(default)_<BR>`<value>` =  ignore certain sensor type (`1` = Flora, `2` = MJ_HT_V1, `3` = LYWSD02, `4` = LYWSD03, `5` = CGG1, `6` = CGD1
+NRFKey<a id="nrfkey"></a>| Set a "bind_key" for a MAC-address to decrypt (LYWSD03MMC & MHO-C401). The argument is a 44 uppercase characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string
+NRFMjyd2s<a id="nrfmjyd2s"></a>| Set a "bind_key" for a MAC-address to decrypt sensor data of the MJYD2S. The argument is a 44 characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string
+NRFNlight<a id="nrfnlight"></a>| Set the MAC of an NLIGHT<BR>`<value>` (12 characters) =  MAC interpreted as an uppercase string `AABBCCDDEEFF`
+NRFPage<a id="nrfpage"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
+NRFScan<a id="nrfscan"></a>| Scan for regular BLE-advertisements and show a list in the console<BR>`0` = start a new scan list<BR>`1` = append to the scan list<BR>`2` = stop running scan
 
 ### Stepper Motors
 
@@ -819,7 +825,7 @@ OPTION|OPTION<BR>Value|<BR>OPTION|OPTION<BR>Value
 
 ## ESP32
 
-### ESP32 Bluetooth Low Energy
+### BLE ESP32
 
 Command|Parameters
 :---|:---
@@ -845,14 +851,14 @@ iBeaconTimeout<a class="cmnd" id="ibeacontimeout"></a>|Display or Set the timeou
 Command|Parameters
 :---|:---
 MI32Battery<a class="cmnd" id="mi32battery"></a>|Trigger an active read of battery values.<BR>`MI32Battery` = request the driver read the battery from all sensors which have active battery read requirements.
-MI32Block<a class="cmnd" id="mi32block"></a>|Block or unblock a sensor device.<BR>`MI32Block` = list blocked devices by mac.<BR>`MI32Block mac|alias` = Block one mac/alias.
+MI32Block<a class="cmnd" id="mi32block"></a>|Block or unblock a sensor device.<BR>`MI32Block` = list blocked devices by mac.<BR>`MI32Block <mac or blealias>` = Block one mac/alias.
 MI32Key<a class="cmnd" id="mi32key"></a>|Add a decryption key.<BR>`MI32Key hexkey` = add a 44 character decryption key to the keys list.
-MI32Keys<a class="cmnd" id="mi32keys"></a>|Add one or more decryption keys by mac or alias.<BR>`MI32Keys` = list keys.<BR>`MI32Keys mac|alias=key mac|alias=key ...` = add keys MI32Optionx n<a class="cmnd" id="mi32option"></a>| Set driver options at runtime<BR> x=0 - 0 -> sends only recently received sensor data, 1 -> aggregates all recent sensors data types<BR>x=1 - 0 -> shows full sensor data at TELEPERIOD, 1 -> shows no sensor data at TELEPERIOD<BR>x=2 - 0 -> sensor data only at TELEPERIOD (default and "usual" Tasmota style), 1 -> direct bridging of BLE-data to mqtt-messages<BR>x=5 - 0 -> show all relevant BLE sensors, 1 -> show only sensors with a BLEAlias<BR>x=6 (from v 9.0.2.1) 1 -> always use MQTT Topic like `tele/tasmota_ble/<name>` containing only one sensor
+MI32Keys<a class="cmnd" id="mi32keys"></a>|Add one or more decryption keys by mac or alias.<BR>`MI32Keys` = list keys.<BR>`MI32Keys <mac or blealias>=<bind_key> <mac or blealias>=<bind_key> ...` = add keys for MAC or ble_alias.<BR>`MI32Keys <mac or blealias>=` - remove keys for one mac|alias.<BR>`MI32Keys2` - remove all keys.
+MI32Option<x\> n<a class="cmnd" id="mi32option"></a>| Set driver options at runtime<BR> `x=0` - 0 -> sends only recently received sensor data, 1 -> aggregates all recent sensors data types<BR>`x=1` - 0 -> shows full sensor data at TELEPERIOD, 1 -> shows no sensor data at TELEPERIOD<BR>`x=2` - 0 -> sensor data only at TELEPERIOD (default and "usual" Tasmota style), 1 -> direct bridging of BLE-data to mqtt-messages<BR>`x=5` - 0 -> show all relevant BLE sensors, 1 -> show only sensors with a BLEAlias<BR>x=6 (from v 9.0.2.1) 1 -> always use MQTT Topic like `tele/tasmota_ble/<name>` containing only one sensor
 MI32Page<a class="cmnd" id="mi32page"></a>|Display/Set the sensors per page in the web view.<BR>`MI32page` = show sensors per page.<BR>`MI32page n` = Set sensors per page to n.
 MI32Period<a class="cmnd" id="mi32block"></a>|Display/Set the active scan and tele period for the MI32 driver.<BR>`MI32Period` = diisplay the period in seconds.<BR>`MI32Period n` = Set the MI driver active read and tele period to n seconds.
-MI32Time<a class="cmnd" id="mi32time"></a>|Set the time on a device.<BR>`MI32Time n` = set the time on the device in slot n.
-MI32Unit<a class="cmnd" id="mi32unit"></a>|Write the current Tasmota temperature unit to a sensor.<BR>`MI32Unit s` = set the Temp unit on sensor in slot s.
-for mac|alias.<BR>`MI32Keys mac|alias=` - remove keys for one mac|alias.<BR>`MI32Keys2` - remove all keys.
+MI32Time<a class="cmnd" id="mi32time"></a>|`<x>` = set the time on the device in slot `x`.
+MI32Unit<a class="cmnd" id="mi32unit"></a>|`<x>` = set the current Tasmota temperature unit as the temp unit for sensor in slot `x`.
 
 ### Camera
 
@@ -873,4 +879,5 @@ Ethernet<a class="cmnd" id="ethernet"></a>|*Only for ESP32 boards with additiona
 EthAddress<a class="cmnd" id="ethaddress"></a>|`0..31` = PHYxx address
 EthClockMode<a class="cmnd" id="ethclockmode"></a>|Ethernet clock mode.<BR>`0` = ETH_CLOCK_GPIO0_IN *(default)*<BR>`1` = ETH_CLOCK_GPIO0_OUT <BR>`2` = ETH_CLOCK_GPIO16_OUT<BR>`3` = ETH_CLOCK_GPIO17_OUT
 EthType<a class="cmnd" id="ethtype"></a>|Ethernet type.<BR>`0` = ETH_PHY_LAN8720 *(default)*<BR>`1` = ETH_PHY_TLK110 <BR>`2` = ETH_PHY_IP101
-Wi-Fi<a class="cmnd" id="wi-fi"></a>|`0` = disable Wi-Fi<BR>`1` = enable Wi-Fi _(default)_
+Wifi<a class="cmnd" id="wifi"></a>|`0` = disable Wi-Fi<BR>`1` = enable Wi-Fi _(default)_ <BR>`2` = Wi-Fi mode 802.11b<BR>`3` = Wi-Fi mode 802.11b/g<BR>`4` = Wi-Fi mode 802.11b/g/n<BR> When wifi is Off it is always returned On after a restart except for a wake-up from deepsleep.
+

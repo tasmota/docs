@@ -37,6 +37,9 @@ To use this interface, connect the meter to available GPIO pins. These GPIOs mus
 !!! note
     On an ESP32, due to a different implementation, serial ports may not be used in conjunction with other Tasmota serial devices.  
 
+!!! note
+    when using bidirectional serial io (receive and transmit), hardwareserial is recommended.
+    
 
 The Smart Meter Interface provides a means to connect many kinds of meters to Tasmota. **The following types of meter protocols are supported:**
 
@@ -887,6 +890,20 @@ The script:
 1,77070100000009ff@#,Service ID,,Meter_id,0|
 #
 ```
+>D
+>B
+=>sensor53 r
+>M 1
++1,3,s,0,9600,MT681
+1,77070100010800ff@1000,Total Consumed,KWh,Total_in,3
+1,77070100100700ff@1,Current Consumption,W,Power_cur,0
+1,77070100240700ff@1,Current Consumption P1,W,Power_p1,0
+1,77070100380700ff@1,Current Consumption P2,W,Power_p2,0
+1,770701004c0700ff@1,Current Consumption P3,W,Power_p3,0
+1,77070100020800ff@1000,Total Delivered,KWh,Total_out,3
+1,77070100000009ff@#,Service ID,,Meter_id,0|
+#
+```
 
 ------------------------------------------------------------------------------
 
@@ -1086,6 +1103,48 @@ Two separate 2-Tariff meters (e.g. from Fairenergie Reutlingen) are readout by t
 #
 ```
 
+-----
+
+### EasyMeter Q3D, Q3DA1024 (OBIS)
+
+The Q3D is a three-phase model energy meter, which was sold in a number of different configurations. This is a legacy device, however still available new in some shops. The most popular model seems to be the two-direction model for solar power metering. The D0 port is read-only with a fixed time interval of two seconds. The communication settings are unusual: 7 data bits, even parity, one stop bit, 9600 baud (9600 7E1).
+
+Because the 7E1 serial mode is not supported by Tasmota software serial, the hardware serial port must be used, i.e. GPIO 3. This will /not/ work using GPIO 0 or 2.
+
+Also, the source code has to be patched from 8N1 to 7E1 mode for the hardware serial in file src/TasmotaSerial.cpp, please see the patch further down below.
+
+Example reading of the two-direction model using GPIO 3 - P_in power reading will be negative in case of inverse power flow:
+```
+>D
+>B
+=>sensor53 r
+>M 1
++1,12,o,0,9600,SML,1
+1,1-0:1.7.255*255(@1,P_in,W,P_in,18
+1,1-0:21.7.255*255(@1,L1,W,L1,18
+1,1-0:41.7.255*255(@1,L2,W,L2,18
+1,1-0:61.7.255*255(@1,L3,W,L3,18
+1,1-0:1.8.0*255(@1,E_in,kWh,E_in,19
+1,1-0:2.8.0*255(@1,E_out,kWh,E_out,19
+1,1-0:0.0.0*255(@1,Netzbetreiber-ID,,NetID,0
+1,0-0:96.1.255*255(@#),Seriennummer,,serial,0
+#
+```
+
+Apply following patch to src/TasmotaSerial.cpp:
+```
+--- a/lib/default/TasmotaSerial-3.2.0/src/TasmotaSerial.cpp
++++ b/lib/default/TasmotaSerial-3.2.0/src/TasmotaSerial.cpp
+@@ -117,7 +117,7 @@ bool TasmotaSerial::begin(long speed, int stop_bits) {
+     if (2 == m_stop_bits) {
+       Serial.begin(speed, SERIAL_8N2);
+     } else {
+-      Serial.begin(speed, SERIAL_8N1);
++      Serial.begin(speed, SERIAL_7E1);
+     }
+     if (m_hardswap) {
+       Serial.swap();
+```
 
 -----
 
@@ -1330,5 +1389,21 @@ Beware that A and B MODBus connectors are switched!
 1,010308xxxxxxxxSSssSSss@i7:100,Real energy,kWh,Real_energy,2
 1,010308xxxxxxxxUUuuUUuu@i8:100,Real energy consumed,kWh,Real_energy_consumed,2
 1,010308xxxxxxxxUUuuUUuu@i9:100,Real energy delivered,kWh,Real_energy_delivered,2
+#
+```
+
+### Itron (SML V1.04)
+    
+The electrical Meter is an German End-User Meter installed by EnBW. To read values is used an IR Sensor. The following script showes the meter number an the consuption and the egneration of an Photovoltaik generator. 
+
+```
+>D
+>B
+=>sensor53 r
+>M 1
++1,12,s,0,9600,ELZ
+1,77070100600100ff@#,Zählernummer,,Wert,0
+1,77070100010800ff@1000,Verbrauch,kWh,ELZ_PV_1.8.0,1
+1,77070100020800ff@1000,Erzeugung,kWh,ELZ_PV_2.8.0,1
 #
 ```
