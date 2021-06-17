@@ -231,8 +231,9 @@ MqttKeepAlive<a class="cmnd" id="mqttkeepalive"></a>|`1..100` = set MQTT Keep Al
 MqttPassword<a class="cmnd" id="mqttpassword"></a>|`0` = clear MQTT password<BR>`1` = reset MQTT password to firmware default (`MQTT_PASS`) and restart<BR>`<value>` = set MQTT password and restart
 MqttPort<a class="cmnd" id="mqttport"></a>|`1` = reset MQTT port to firmware default (`MQTT_PORT`) and restart<BR>`<value>` = set MQTT port between 2 and 32766 and restart
 MqttRetry<a class="cmnd" id="mqttretry"></a>|`10..32000` = set MQTT connection retry timer in seconds *(default = `10`)*
-MqttTimeout<a class="cmnd" id="mqtttimeour"></a>|`1..100` = set MQTT socket timeout *(default = `4`)*
+MqttTimeout<a class="cmnd" id="mqtttimeout"></a>|`1..100` = set MQTT socket timeout *(default = `4`)*
 MqttUser<a class="cmnd" id="mqttuser"></a>|`0` = clear MQTT user name<BR>`1` = reset MQTT user name to firmware default (`MQTT_USER`) and restart<BR>`<value>` = set MQTT user name and restart
+MqttWifiTimeout<a class="cmnd" id="mqttwifitimeout"></a>|`100..20000` = set MQTT Wi-Fi connection timeout in miliseconds *(default = `200`)*
 PowerRetain<a class="cmnd" id="powerretain"></a>|MQTT [power retain state](MQTT#retained-mqtt-messages)<BR> `0` / `off` = disable MQTT power retain on status update *(default)* <BR> `1` / `on` = enable MQTT power retain on status update <BR>
 Prefix1<a class="cmnd" id="Prefix1"></a>|`1` = reset MQTT command subscription prefix to firmware default (`SUB_PREFIX`) and restart<BR>`<value>` = set MQTT command subscription prefix and restart
 Prefix2<a class="cmnd" id="Prefix2"></a>|`1` = reset MQTT status prefix to firmware default (`PUB_PREFIX`) and restart<BR>`<value>` = set MQTT status prefix and restart
