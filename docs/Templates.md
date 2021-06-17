@@ -29,7 +29,7 @@ Go to **Configuration - Configure Template** ...
 Time to create your template.
 
 ### Creating Your Template 
-1. Change <img src="../_media/template4.png" align="right"> the template name (also defines the name for the module).
+1. Chang <img src="../_media/template4.png" align="right"> the template name (also defines the name for the module).
 2. Select a module to [**BASE** your template on](#base). If you're not sure, `Module 18` is the best choice. In this example the device is based on Blitzwolf SHP (45) module.
 3. Configure the components assigned to the [**GPIOs**](#gpio) to match your device. If you do not know what pins your device uses, read about the [new device configuration procedure](Configuration-Procedure-for-New-Devices) to determine the correct pin assignments.
 ![GPIO configuration](_media/template5.png)
@@ -99,6 +99,8 @@ A user provided template can be stored in Tasmota using the [`Template`](Command
 
 ``Template {"BASE":18}`` updates the base of a stored template to Generic
 
+``Template {"CMND":"LedTable 1"}`` adds `LedTable 1` command to the stored template
+
 !!! warning "After setting a template in command line it is necessary to issue `Module 0` command if the device doesn't reboot on its own."
 
 #### Merge Template with Module
@@ -117,8 +119,9 @@ Property name | Property value description
 --------------|-----------------------------------------------------------------------------------------------------------
 NAME          | Up to 60 characters for the Module name
 [GPIO](#gpio) | Numbers from 0 to 65535 representing GPIO0 to GPIO5, GPIO09, GPIO10 and GPIO12 to GPIO16 and GPIO17 for A0 pin for ESP8266. ESP32 has more configurable GPIO's
-[FLAG](#flag) | 8 bit mask flag register
+[FLAG](#flag) | **Deprecated* Replaced with GPIO17. 8 bit mask flag register. 
 [BASE](#base) | Module number of a hard-coded device to be used when device specific functionality is needed
+[CMND](#cmnd) | (Optional) Commands executed after activating the template
 
 ### GPIO
 
@@ -152,10 +155,23 @@ FLAG |  Feature description
   15 | User configured (same as `User`)
 
 ### BASE
+
 BASE is the starting module setup for the custom template. Some modules include special programming. If your device is similar to an existing built-in module it is best to use that as a starting point. When you're not sure which BASE module is suitable for your device use the `Generic (18)` module. A list of hard-coded devices can be found in [Modules](Modules).
 
 !!! example
     In the [RGB Smart Plug](https://templates.blakadder.com/XS-A12.html) template we used the `BlitzWolf SHP (45)` module as BASE since the power monitoring circuitry is identical but GPIO00 and GPIO02 were changed and an unused GPIO04 was added to enable the RGB LED function. Using that specific module we took advantage of that module's calibrated power monitoring special programming which the `Generic (18)` module does not use.
 
+### CMND 
 
+CMND is an optional field in the template JSON string. It is used to embed commands for configuring the device instead of needing to type them in console. Multiple commands are separated with `|`. 
 
+`"CMND":"<any template related command>|<any template related command>|..."`
+
+Commands will only be executed if the template is enabled (device module is set to 0), either before the template is loaded, when the activate box in the UI is selected or if the module 0 command is included in the CMND string itself.
+
+!!! example "Disable LED gamma correction and remap RGB channels"
+    ```json
+    {"NAME":"Example","GPIO":[416,0,418,0,417,2720,0,0,2624,32,2656,224,0,0],"FLAG":0,"BASE":45,"CMND":"LedTable 1|ChannelRemap 36"}
+    ```
+
+Total size of the template string should not exceed 500 chars. 
