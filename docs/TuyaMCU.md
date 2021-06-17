@@ -110,7 +110,7 @@ Sends integer or 4 byte (Type 2) data to dpId (Max data length 4 bytes)
     `TuyaSend2 14,100` sends value `100` to dpId=14 setting timer to 100 minutes
 
 #### `TuyaSend3` 
-Sends string (Type 3) data to dpId (Max data length? Not known at this time).  
+Sends an ASCII string (Type 3) data to dpId (Max data length? Not known at this time).  
 
 !!! warning
     Note that when sending color values, the MCU may interpret lower case and upper case hex codes differently. You may need to test with your specific MCU to ensure that the values sent properly render the color you desire.  
@@ -123,6 +123,17 @@ Sends enum (Type 4) data (`0/1/2/3/4/5`) to dpId (Max data length 1 bytes)
 
 !!! example
     `TuyaSend4 103,2` sends value `2` to dpId=103 to set fan speed to high
+
+#### `TuyaSend5` 
+Sends an HEX string (Type 3) data to dpId (Max data length? Not known at this time). Does NOT require `0x` prefix.
+
+!!! example
+    `TuyaSend5 108, ABCD` sends a string of 2 bytes defined by hex codes to dpId=108
+
+Differences between `TuyaSend3` and `TuyaSend5`:
+
+* `TuyaSend3 108, ABCD` sends `55aa000600086c030004414243448a` where the payload is `441424344` which is the ASCII bytes representing the string `ABCD`
+* `TuyaSend5 108, ABCD` sends `55aa000600066c030002abcdf4` where the payload is a `abcd` which is a string of 2 bytes 0xAB and 0xCD 
 
 #### `TuyaSend8`
 Used without payload to get device information and dpId states.  Replaces `SerialSend5 55aa000100000`

@@ -74,26 +74,49 @@ Sensor data are send by `tele/%topic%/SENSOR` JSON reponse:
 
 ```json
 {
-  "Time": "2020-08-31T10:20:54+00:00",
-   "NeoPool":{
-    "Time": "2020-08-31T10:20:55",
-      "Type":"Oxilife (green)",
-      "Temperature":23.1,
-      "pH":7.26,
-      "Redox":0,
-      "Hydrolysis":0.0,
-      "Filtration":{
-         "State":1,
-         "Speed":1,
-         "Mode":1
-      },
-      "Light":0,
-      "Relay":{
-         "State":262,
-         "Acid":1
-      }
-   },
-   "TempUnit":"C"
+  "Time": "2021-06-01T11:00:00+02:00",
+  "NeoPool": {
+    "Time": "2021-06-01T11:00:00",
+    "Type": "Oxilife (green)",
+    "Temperature": 23.5,
+    "pH": {
+      "Data": 7.2,
+      "Max": 7.1,
+      "State": 0,
+      "Pump": 2,
+      "FL1": 0,
+      "Tank": 1
+    },
+    "Redox": 752,
+    "Hydrolysis": {
+      "Data": 100,
+      "Unit": "%",
+      "State": "Pol2",
+      "Cover": 0,
+      "Boost": 0,
+      "Low": 0
+    },
+    "Filtration": {
+      "State": 1,
+      "Speed": 2,
+      "Mode": 1
+    },
+    "Light": 0,
+    "Relay": {
+      "State": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "Acid": 0
+    }
+  },
+  "TempUnit": "C"
 }
 ```
 
@@ -106,10 +129,10 @@ Modbus register addresses and their meaning are described in [xsns_83_neopool.in
 
 Command|Parameters
 :---|:---
-NPFiltration<a id="NPFiltration"></a>|`{<state>}`<BR>get/set manual filtration (state = `0|1`). Get if state is omitted, otherwise set accordingly  `<state>`:<ul><li>`0` - turn off filtration pump manually</li><li>`1` - turn on filtration pump manually</li>
+NPFiltration<a id="NPFiltration"></a>|`{<state> {speed}}`<BR>get/set manual filtration (state = `0|1`, speed = `1..3`). Get if state is omitted, otherwise set accordingly  `<state>`:<ul><li>`0` - manual turn filtration pump off</li><li>`1` - manual turn filtration pump on</li></ul>optional speed control is possible for non-standard filtration types:<ul><li>`1` - slow</li><li>`2` - medium</li><li>`3` - fast</li></ul>
 NPFiltrationMode<a id="NPFiltrationMode"></a>|`{<mode>}`<BR>get/set filtration mode (mode = `0..4|13`). Get if mode is omitted, otherwise set accordingly `<mode>`:<ul><li>`0` - *MANUAL* allows to turn the filtration (and all other systems that depend on it) on and off</li><li>`1` - *AUTO* allows filtering to be turned on and off according to the settings of the *MBF_PAR_TIMER_BLOCK_FILT_INT* timers.</li><li>`2` - *HEATING* similar to the AUTO mode, but includes setting the temperature for the heating function. This mode is activated only if the BF_PAR_HEATING_MODE register is at 1 and there is a heating relay assigned.</li><li>`3` - *SMART* adjusts the pump operating times depending on the temperature. This mode is activated only if the MBF_PAR_TEMPERATURE_ACTIVE register is at 1.</li><li>`4` - *INTELLIGENT* performs an intelligent filtration process in combination with the heating function. This mode is activated only if the MBF_PAR_HEATING_MODE register is at 1 and there is a heating relay assigned.</li><li>`13` - *BACKWASH* started when the backwash operation is activated.</ul>
 NPTime<a id="NPTime"></a>|`{<time>}`<BR>get/set device time. Get if time is omitted, otherwise set device time accordingly `<time>`:<ul><li>`0` - sync with Tasmota local time</li><li>`1` - sync with Tasmota utc time</li><li>`2..4294967295` - set time as epoch</li></ul>
-NPLight<a id="NPLight"></a>|`{<state> {delay}}`<BR>get/set light (state = `0..3`, delay = `5..100` in 1/10 sec). Get if state is omitted, otherwise set accordingly `<state>`:<ul><li>`0` - turn off light manually</li><li>`1` - turn on light manually</li><li>`2` - switch light into auto mode according MBF_PAR_TIMER_BLOCK_LIGHT_INT settings</li><li>`3` - select light RGB LED to next program. This is normally done by power the light on (if currently off), then power off the light for a given time (delay) and power on again. The default delay is 15 (=1.5 sec).</ul>
+NPLight<a id="NPLight"></a>|`{<state> {delay}}`<BR>get/set light (state = `0..4`, delay = `5..100` in 1/10 sec). Get if state is omitted, otherwise set accordingly `<state>`:<ul><li>`0` - manual turn light off</li><li>`1` - manual turn light on</li><li>`2` - manual toogle light</li><li>`3` - switch light into auto mode according MBF_PAR_TIMER_BLOCK_LIGHT_INT settings</li><li>`4` - select light RGB LED to next program. This is normally done by power the light on (if currently off), then power off the light for a given time (delay) and power on again. The default delay is 15 (=1.5 sec).</ul>
 NPResult<a id="NPResult"></a>|`{<format>}`get/set addr/data result format for read/write commands (format = `0|1`). Get if format is omitted, otherwise set accordingly `<format>`:<ul><li>`0` - output decimal numbers</li><li>`1` - output hexadecimal strings, this is the default</li></ul>
 NPRead<a id="NPRead"></a>|`<addr> {<cnt>}`<BR>read 16-bit register (addr = `0..0x060F`, cnt = `1..30`). cnt = `1` if omitted
 NPReadL<a id="NPReadL"></a>|`<addr> {<cnt>}`<BR>read 32-bit register (addr = `0..0x060F`, cnt = `1..15`). cnt = `1` if omitted
@@ -117,6 +140,7 @@ NPWrite<a id="NPWrite"></a>|`<addr> <data> {<data>...}`<BR>write 16-bit register
 NPWriteL<a id="NPWriteL"></a>|`<addr> <data> {<data>...}`<BR>write 32-bit register (addr = `0..0x060F`, data = `0..0xFFFFFFFF`). Use of data max 10 times
 NPBit<a id="NPBit"></a>|`<addr> <bit> {<data>}`<BR>read/write a 16-bit register single bit (addr = `0..0x060F`, bit = `0..15`, data = `0|1`). Read if data is omitted, otherwise set single bit
 NPBitL<a id="NPBitL"></a>|`<addr> <bit> {<data>}`<BR>read/write a 32-bit register single bit (addr = `0..0x060F`, bit = `0..31`, data = `0|1`). Read if data is omitted, otherwise set single bit
+NPEscape<a id="NPEscape"></a>|clears possible errors (like pump exceeded time etc.)
 NPExec<a id="NPExec"></a>|take over changes without writing to EEPROM. This command is necessary e.g. on changes in *Installer page* (addr 0x0400..0x04EE).
 NPSave<a id="NPSave"></a>|write data permanently into EEPROM.<BR>During the EEPROM write procedure the NeoPool device may be unresponsive to MODBUS requests, this process always takes less than 1 second.<BR>Since this process is limited by the number of EEPROM write cycles, it is recommend to write all necessary changes to the registers and only then execute EEPROM write process using this command.<BR>__Note: The number of EEPROM writes for Sugar Valley NeoPool devices is guaranteed 100,000 cycles. As soon as this number is exceeded, further storage of information can no longer be guaranteed__.
 
@@ -183,6 +207,20 @@ RESULT = {"NPReadL":{"Address":1107,"Data":[0,0,86400,0,0,1,0]}} *
 ```json
 NPWriteL 0x435,32400 0 86400 12600
 RESULT = {"NPWriteL":{"Address":1077,"Data":[32400,0,86400,12600]}}
+```
+
+##### Manual switch relay 7 (Aux4) to on (to do this we set MBF_PAR_TIMER_BLOCK_AUX4_INT1+MBV_TIMER_OFFMB_TIMER_ENABLE to MBV_PAR_CTIMER_ALWAYS_ON)
+```json
+Backlog NPWrite 0x4D9,3;NPExec
+RESULT = {"NPWrite":{"Address":"0x04D9","Data":"0x0003"}}
+RESULT = {"NPExec":"Done"}
+```
+
+##### Manual switch relay 7 (Aux4) to off (to do this we set MBF_PAR_TIMER_BLOCK_AUX4_INT1+MBV_TIMER_OFFMB_TIMER_ENABLE to MBV_PAR_CTIMER_ALWAYS_OFF)
+```json
+Backlog NPWrite 0x4D9,4;NPExec
+RESULT = {"NPWrite":{"Address":"0x04D9","Data":"0x0004"}}
+RESULT = {"NPExec":"Done"}
 ```
 
 ### Enhancements

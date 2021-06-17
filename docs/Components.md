@@ -21,7 +21,7 @@ Read more about [peripherals](Supported-Peripherals.md).
 ## GPIO Conversion
 
 | Old GPIO | New GPIO | Name            | Description                                                                                |
-|----------|----------|-----------------|--------------------------------------------------------------------------------------------|
+| -------- | -------- | --------------- | ------------------------------------------------------------------------------------------ |
 | 255      | 1        | User            | User                                                                                       |
 | 0        | 0        | None            | Not used                                                                                   |
 | 1        | 1184     | DHT11           | DHT11 sensor                                                                               |
@@ -32,57 +32,57 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 6        | 640      | I2C SDA         | I2C serial data pin, used with any I2C component (sensors, displays, ...)                  |
 | 7        | 1376     | WS2812          | Addressable LEDs such as WS281X or Neopixel                                                |
 | 8        | 1056     | IRsend          | IR Transmitter LED                                                                         |
-| 9        | 160      | Switch1         | Switch                                                                                     |
-| 10       | 161      | Switch2         | Switch                                                                                     |
-| 11       | 162      | Switch3         | Switch                                                                                     |
-| 12       | 163      | Switch4         | Switch                                                                                     |
-| 13       | 164      | Switch5         | Switch                                                                                     |
-| 14       | 165      | Switch6         | Switch                                                                                     |
-| 15       | 166      | Switch7         | Switch                                                                                     |
-| 16       | 167      | Switch8         | Switch                                                                                     |
-| 17       | 32       | Button1         | Button                                                                                     |
-| 18       | 33       | Button2         | Button                                                                                     |
-| 19       | 34       | Button3         | Button                                                                                     |
-| 20       | 35       | Button4         | Button                                                                                     |
-| 21       | 224      | Relay1          | Relay                                                                                      |
-| 22       | 225      | Relay2          | Relay                                                                                      |
-| 23       | 226      | Relay3          | Relay                                                                                      |
-| 24       | 227      | Relay4          | Relay                                                                                      |
-| 25       | 228      | Relay5          | Relay                                                                                      |
-| 26       | 229      | Relay6          | Relay                                                                                      |
-| 27       | 230      | Relay7          | Relay                                                                                      |
-| 28       | 231      | Relay8          | Relay                                                                                      |
-| 29       | 256      | Relay1i         | Relay inverted                                                                             |
-| 30       | 257      | Relay2i         | Relay inverted                                                                             |
-| 31       | 258      | Relay3i         | Relay inverted                                                                             |
-| 32       | 259      | Relay4i         | Relay inverted                                                                             |
-| 33       | 260      | Relay5i         | Relay inverted                                                                             |
-| 34       | 261      | Relay6i         | Relay inverted                                                                             |
-| 35       | 262      | Relay7i         | Relay inverted                                                                             |
-| 36       | 263      | Relay8i         | Relay inverted                                                                             |
-| 37       | 416      | PWM1            | Pulse Width Modulated Output                                                               |
-| 38       | 417      | PWM2            | Pulse Width Modulated Output                                                               |
-| 39       | 418      | PWM3            | Pulse Width Modulated Output                                                               |
-| 40       | 419      | PWM4            | Pulse Width Modulated Output                                                               |
-| 41       | 420      | PWM5            | Pulse Width Modulated Output                                                               |
-| 42       | 352      | Counter1        | Counter Input                                                                              |
-| 43       | 353      | Counter2        | Counter Input                                                                              |
-| 44       | 354      | Counter3        | Counter Input                                                                              |
-| 45       | 355      | Counter4        | Counter Input                                                                              |
-| 46       | 448      | PWM1i           | Pulse Width Modulated inverted Output                                                      |
-| 47       | 449      | PWM2i           | Pulse Width Modulated inverted Output                                                      |
-| 48       | 450      | PWM3i           | Pulse Width Modulated inverted Output                                                      |
-| 49       | 451      | PWM4i           | Pulse Width Modulated inverted Output                                                      |
-| 50       | 452      | PWM5i           | Pulse Width Modulated inverted Output                                                      |
+| 9        | 160      | Switch 1        | Switch                                                                                     |
+| 10       | 161      | Switch 2        | Switch                                                                                     |
+| 11       | 162      | Switch 3        | Switch                                                                                     |
+| 12       | 163      | Switch 4        | Switch                                                                                     |
+| 13       | 164      | Switch 5        | Switch                                                                                     |
+| 14       | 165      | Switch 6        | Switch                                                                                     |
+| 15       | 166      | Switch 7        | Switch                                                                                     |
+| 16       | 167      | Switch 8        | Switch                                                                                     |
+| 17       | 32       | Button 1        | Button                                                                                     |
+| 18       | 33       | Button 2        | Button                                                                                     |
+| 19       | 34       | Button 3        | Button                                                                                     |
+| 20       | 35       | Button 4        | Button                                                                                     |
+| 21       | 224      | Relay 1         | Relay                                                                                      |
+| 22       | 225      | Relay 2         | Relay                                                                                      |
+| 23       | 226      | Relay 3         | Relay                                                                                      |
+| 24       | 227      | Relay 4         | Relay                                                                                      |
+| 25       | 228      | Relay 5         | Relay                                                                                      |
+| 26       | 229      | Relay 6         | Relay                                                                                      |
+| 27       | 230      | Relay 7         | Relay                                                                                      |
+| 28       | 231      | Relay 8         | Relay                                                                                      |
+| 29       | 256      | Relay_i 1       | Relay inverted                                                                             |
+| 30       | 257      | Relay_i 2       | Relay inverted                                                                             |
+| 31       | 258      | Relay_i 3       | Relay inverted                                                                             |
+| 32       | 259      | Relay_i 4       | Relay inverted                                                                             |
+| 33       | 260      | Relay_i 5       | Relay inverted                                                                             |
+| 34       | 261      | Relay_i 6       | Relay inverted                                                                             |
+| 35       | 262      | Relay_i 7       | Relay inverted                                                                             |
+| 36       | 263      | Relay_i 8       | Relay inverted                                                                             |
+| 37       | 416      | PWM 1           | Pulse Width Modulated Output                                                               |
+| 38       | 417      | PWM 2           | Pulse Width Modulated Output                                                               |
+| 39       | 418      | PWM 3           | Pulse Width Modulated Output                                                               |
+| 40       | 419      | PWM 4           | Pulse Width Modulated Output                                                               |
+| 41       | 420      | PWM 5           | Pulse Width Modulated Output                                                               |
+| 42       | 352      | Counter 1       | Counter Input                                                                              |
+| 43       | 353      | Counter 2       | Counter Input                                                                              |
+| 44       | 354      | Counter 3       | Counter Input                                                                              |
+| 45       | 355      | Counter 4       | Counter Input                                                                              |
+| 46       | 448      | PWM_i 1         | Pulse Width Modulated inverted Output                                                      |
+| 47       | 449      | PWM_i 2         | Pulse Width Modulated inverted Output                                                      |
+| 48       | 450      | PWM_i 3         | Pulse Width Modulated inverted Output                                                      |
+| 49       | 451      | PWM_i 4         | Pulse Width Modulated inverted Output                                                      |
+| 50       | 452      | PWM_i 5         | Pulse Width Modulated inverted Output                                                      |
 | 51       | 1088     | IRrecv          | IR Receiver Input (for example TSOP1838)                                                   |
-| 52       | 288      | Led1            | LED                                                                                        |
-| 53       | 289      | Led2            | LED                                                                                        |
-| 54       | 290      | Led3            | LED                                                                                        |
-| 55       | 291      | Led4            | LED                                                                                        |
-| 56       | 320      | Led1i           | Inverted LED - default state ON                                                            |
-| 57       | 321      | Led2i           | Inverted LED - default state ON                                                            |
-| 58       | 322      | Led3i           | Inverted LED - default state ON                                                            |
-| 59       | 323      | Led4i           | Inverted LED - default state ON                                                            |
+| 52       | 288      | Led 1           | LED                                                                                        |
+| 53       | 289      | Led 2           | LED                                                                                        |
+| 54       | 290      | Led 3           | LED                                                                                        |
+| 55       | 291      | Led 4           | LED                                                                                        |
+| 56       | 320      | Led_i 1         | Inverted LED - default state ON                                                            |
+| 57       | 321      | Led_i 2         | Inverted LED - default state ON                                                            |
+| 58       | 322      | Led_i 3         | Inverted LED - default state ON                                                            |
+| 59       | 323      | Led_i 4         | Inverted LED - default state ON                                                            |
 | 60       | 1408     | MHZ Rx          | MHZ 19 CO2 Sensor                                                                          |
 | 61       | 1440     | MHZ Tx          | MHZ 19 CO2 Sensor                                                                          |
 | 62       | 1472     | PZEM0XX Tx      | Peacefair Pzem-0XX Power Meter Tx pin                                                      |
@@ -105,22 +105,22 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 79       | 2048     | TM16 CLK        | TM1638 Switch Module                                                                       |
 | 80       | 2080     | TM16 DIO        | TM1638 Switch Module                                                                       |
 | 81       | 2112     | TM16 STB        | TM1638 Switch Module                                                                       |
-| 82       | 192      | Switch1n        | Switch, no pullup resistor                                                                 |
-| 83       | 193      | Switch2n        | Switch, no pullup resistor                                                                 |
-| 84       | 194      | Switch3n        | Switch, no pullup resistor                                                                 |
-| 85       | 195      | Switch4n        | Switch, no pullup resistor                                                                 |
-| 86       | 196      | Switch5n        | Switch, no pullup resistor                                                                 |
-| 87       | 197      | Switch6n        | Switch, no pullup resistor                                                                 |
-| 88       | 198      | Switch7n        | Switch, no pullup resistor                                                                 |
-| 89       | 199      | Switch8n        | Switch, no pullup resistor                                                                 |
-| 90       | 64       | Button1n        | Button, no pullup resistor                                                                 |
-| 91       | 65       | Button2n        | Button, no pullup resistor                                                                 |
-| 92       | 66       | Button3n        | Button, no pullup resistor                                                                 |
-| 93       | 67       | Button4n        | Button, no pullup resistor                                                                 |
-| 94       | 384      | Counter1n       | Counter sensor, no pullup resistor                                                         |
-| 95       | 385      | Counter2n       | Counter sensor, no pullup resistor                                                         |
-| 96       | 386      | Counter3n       | Counter sensor, no pullup resistor                                                         |
-| 97       | 387      | Counter4n       | Counter sensor, no pullup resistor                                                         |
+| 82       | 192      | Switch_n 1      | Switch, no pullup resistor                                                                 |
+| 83       | 193      | Switch_n 2      | Switch, no pullup resistor                                                                 |
+| 84       | 194      | Switch_n 3      | Switch, no pullup resistor                                                                 |
+| 85       | 195      | Switch_n 4      | Switch, no pullup resistor                                                                 |
+| 86       | 196      | Switch_n 5      | Switch, no pullup resistor                                                                 |
+| 87       | 197      | Switch_n 6      | Switch, no pullup resistor                                                                 |
+| 88       | 198      | Switch_n 7      | Switch, no pullup resistor                                                                 |
+| 89       | 199      | Switch_n 8      | Switch, no pullup resistor                                                                 |
+| 90       | 64       | Button_n 1      | Button, no pullup resistor                                                                 |
+| 91       | 65       | Button_n 2      | Button, no pullup resistor                                                                 |
+| 92       | 66       | Button_n 3      | Button, no pullup resistor                                                                 |
+| 93       | 67       | Button_n 4      | Button, no pullup resistor                                                                 |
+| 94       | 384      | Counter_n 1     | Counter sensor, no pullup resistor                                                         |
+| 95       | 385      | Counter_n 2     | Counter sensor, no pullup resistor                                                         |
+| 96       | 386      | Counter_n 3     | Counter sensor, no pullup resistor                                                         |
+| 97       | 387      | Counter_n 4     | Counter sensor, no pullup resistor                                                         |
 | 98       | 1536     | PZEM016 Rx      | Peacefair Pzem-016 Power Meter Rx pin                                                      |
 | 99       | 1568     | PZEM017 Rx      | Peacefair Pzem-017 Power Meter Rx pin                                                      |
 | 100      | 2144     | MP3 Player      | DF MP3 Player mini (Input)                                                                 |
@@ -145,14 +145,14 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 119      | 2496     | MX31855 CS      | MAX31855 Thermocouple Sensor Chip Select pin                                               |
 | 120      | 2528     | MX31855 CLK     | MAX31855 Thermocouple Sensor Serial Clock pin                                              |
 | 121      | 2560     | MX31855 DO      | MAX31855 Thermocouple Sensor Digital Output pin                                            |
-| 122      | 96       | Button1i        | Button inverted                                                                            |
-| 123      | 97       | Button2i        | Button inverted                                                                            |
-| 124      | 98       | Button3i        | Button inverted                                                                            |
-| 125      | 99       | Button4i        | Button inverted                                                                            |
-| 126      | 128      | Button1in       | Button inverted, no pullup resistor                                                        |
-| 127      | 129      | Button2in       | Button inverted, no pullup resistor                                                        |
-| 128      | 130      | Button3in       | Button inverted, no pullup resistor                                                        |
-| 129      | 131      | Button4in       | Button inverted, no pullup resistor                                                        |
+| 122      | 96       | Button_i 1      | Button inverted                                                                            |
+| 123      | 97       | Button_i 2      | Button inverted                                                                            |
+| 124      | 98       | Button_i 3      | Button inverted                                                                            |
+| 125      | 99       | Button_i 4      | Button inverted                                                                            |
+| 126      | 128      | Button_in 1     | Button inverted, no pullup resistor                                                        |
+| 127      | 129      | Button_in 2     | Button inverted, no pullup resistor                                                        |
+| 128      | 130      | Button_in 3     | Button inverted, no pullup resistor                                                        |
+| 129      | 131      | Button_in 4     | Button inverted, no pullup resistor                                                        |
 | 130      | 2592     | HLWBL SEL       | Energy Monitoring (for example Pow)                                                        |
 | 131      | 2624     | HLWBL SELi      | Energy Monitoring (for example Pow)                                                        |
 | 132      | 2656     | HLWBL CF1       | Energy Monitoring (for example Pow)                                                        |
@@ -173,10 +173,10 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 147      | 3136     | ALux IrRcv      | AriLux RGB Controller IR receive (Input)                                                   |
 | 148      | 3200     | Serial Tx       | Serial Transfer pin                                                                        |
 | 149      | 3232     | Serial Rx       | Serial Receive pin                                                                         |
-| 150      | 3264     | Rotary1a        | Rotary Encoder (Mi Desk Lamp)                                                              |
-| 151      | 3296     | Rotary1b        | Rotary Encoder (Mi Desk Lamp)                                                              |
-| 152      | 3265     | Rotary2a        | Rotary Encoder (Mi Desk Lamp)                                                              |
-| 153      | 3297     | Rotary2b        | Rotary Encoder (Mi Desk Lamp)                                                              |
+| 150      | 3264     | Rotary A 1      | Rotary Encoder (Mi Desk Lamp)                                                              |
+| 151      | 3296     | Rotary B 1      | Rotary Encoder (Mi Desk Lamp)                                                              |
+| 152      | 3265     | Rotary A 2      | Rotary Encoder (Mi Desk Lamp)                                                              |
+| 153      | 3297     | Rotary B 2      | Rotary Encoder (Mi Desk Lamp)                                                              |
 | 154      | 3392     | HRE CLOCK       | Clock/Power line for HR-E Water Meter                                                      |
 | 155      | 3424     | HRE DATA        | Data line for HR-E Water Meter                                                             |
 | 156      | 3456     | ADE7953_IRQ     | ADE7953 IRQ                                                                                |
@@ -240,11 +240,11 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 214      | 5280     | IEM3000 RX      | IEM3000 Serial interface                                                                   |
 | 215      | 5312     | Zigbee RST      | Zigbee reset                                                                               |
 | 216      | 5344     | DYP Rx          | DYP-ME007 Rx pin                                                                           |
-|          | 5728     | Option_a1       | Enable PWM2 high impedance if powered off as used by Wyze bulbs                            |
-|          | 5729     | Option_a2       | Enable dummy energy monitor                                                                |
-|          | 5730     | Option_a3       | Enable UDisplay universal display driver                                                   |
-|          |          | RotaryA_n       | Rotary Encoder                                                                             |
-|          |          | RotaryB_n       | Rotary Encoder                                                                             |
+|          | 5728     | Option a 1      | Enable PWM2 high impedance if powered off as used by Wyze bulbs                            |
+|          | 5729     | Option a 2      | Enable dummy energy monitor                                                                |
+|          | 5730     | Option a 3      | Enable UDisplay universal display driver                                                   |
+|          |          | Rotary A_n      | Rotary Encoder                                                                             |
+|          |          | Rotary B_n      | Rotary Encoder                                                                             |
 
 ## ADC Conversion
 
