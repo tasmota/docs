@@ -25,7 +25,7 @@ plugins:
         'Status-LED.md': 'Lights.md'
         'Tuya-Protocols.md': 'TuyaMCU.md'
         'Upgrade.md': 'Upgrading.md'
-        'Berry-Scripting.md': '/docs/Berry.md'
+        'Berry-Scripting.md': '/Berry.md'
 # - htmlproofer
 
 # strict: true

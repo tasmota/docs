@@ -18,7 +18,7 @@ Read more about [peripherals](Supported-Peripherals.md).
 !!! tip
      GPIOs configured as User (1) are the GPIOs that can be assigned to components in the **Configure Module** page. 
 
-## GPIOs
+## GPIO Conversion
 
 | Old GPIO | New GPIO | Name            | Description                                                                                |
 | -------- | -------- | --------------- | ------------------------------------------------------------------------------------------ |
@@ -102,8 +102,6 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 76       | 1952     | SDMx20 Rx       | SDMx20-Modbus Multifunction Power Analyser Rx pin                                          |
 | 77       | 1984     | SDM630 Tx       | SDM630-Modbus Multifunction Power Analyser Tx pin                                          |
 | 78       | 2016     | SDM630 Rx       | SDM630-Modbus Multifunction Power Analyser Rx pin                                          |
-|        |       | SDM72 Tx       | SDM72 Power Analyser Tx pin                                          |
-|        |       | SDM72 Rx       | SDM72 Power Analyser Rx pin                                          |
 | 79       | 2048     | TM16 CLK        | TM1638 Switch Module                                                                       |
 | 80       | 2080     | TM16 DIO        | TM1638 Switch Module                                                                       |
 | 81       | 2112     | TM16 STB        | TM1638 Switch Module                                                                       |
@@ -201,8 +199,6 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 173      | 3808     | A4988 MS1       | A4988 Microstep increment select pin1                                                      |
 | 174      | 3809     | A4988 MS2       | A4988 Microstep increment select pin2                                                      |
 | 175      | 3810     | A4988 MS3       | A4988 Microstep increment select pin3                                                      |
-|          | 3840     | Output Hi       | Fixed output state to high                                                                 |
-|          | 3872     | Output Lo       | Fixed output state to low                                                                  |
 | 176      | 3904     | DDS238-2 Tx     | DDS2382 Serial interface Tx                                                                |
 | 177      | 3936     | DDS238-2 Rx     | DDS2382 Serial interface Rx                                                                |
 | 178      | 3968     | DDSU666 Tx      | DDSU666 Serial interface Tx                                                                |
@@ -235,8 +231,8 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 205      | 4960     | Boiler OT Tx    | OpenTherm Boiler TX pin                                                                    |
 | 206      | 4992     | Windmeter Speed | WindMeter speed counter pin                                                                |
 | 207      | 5056     | BL0940 RX       | BL0940 serial interface                                                                    |
-| 208      | 5088     | TCP TX          | TCP to serial bridge                                                                       |
-| 209      | 5120     | TCP RX          | TCP to serial bridge                                                                       |
+| 208      | 5088     | TCP TX          | TCP Serial bridge                                                                          |
+| 209      | 5120     | TCP RX          | TCP Serial bridge                                                                          |
 | 210      | 5152     | TELEINFO RX     | [Teleinfo](Teleinfo) serial interface                                                      |
 | 211      | 5184     | TELEINFO Enable | [Teleinfo](Teleinfo) Enable PIN                                                            |
 | 212      | 5216     | LMT01           | LMT01 input counting pin                                                                   |
@@ -244,68 +240,27 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 214      | 5280     | IEM3000 RX      | IEM3000 Serial interface                                                                   |
 | 215      | 5312     | Zigbee RST      | Zigbee reset                                                                               |
 | 216      | 5344     | DYP Rx          | DYP-ME007 Rx pin                                                                           |
-|          |          | Miel Hvac Tx    | Mitsubishi Electric HVAC TX pin                                                            |
-|          |          | Miel Hvac Rx    | Mitsubishi Electric HVAC RX pin                                                            |
-|          |          | We517 Tx        | ORNO WE517 Serial interface                                                                |
-|          |          | We517 Rx        | ORNO WE517 Serial interface                                                                |
-|          |          | As608 Tx        | Serial interface AS608 / R503                                                              |
-|          |          | As608 Rx        | Serial interface AS608 / R503                                                              |
-|          |          | Rc522 RST       | RC522 reset                                                              |
-|          |          | P9813 Clk       | P9813 Clock                                                            |
-|          |          | P9813 Dat       | P9813 Data                                                             |
 |          | 5728     | Option a 1      | Enable PWM2 high impedance if powered off as used by Wyze bulbs                            |
 |          | 5729     | Option a 2      | Enable dummy energy monitor                                                                |
 |          | 5730     | Option a 3      | Enable UDisplay universal display driver                                                   |
-|          |          | Ftc532          | FTC532 touch controller serial input                                                            |
-|          | 6336     | ADC pH          | Analog PH sensor                                                            |
-|          |          | Bs814 Clk       | Bs814 Clock                                                            |
-|          |          | Bs814 Dat       | Bs814 Data                                                             |
-|          |          | Wiegand D0      | Wiegand data lines                                                            |
-|          |          | Wiegand D1      | Wiegand data lines                                                             |
-|          |          | Neopool Tx      | Sugar Valley RS485 interface                                                             |
-|          |          | Neopool Rx      | Sugar Valley RS485 interface                                                             |
-|          |          | TM1637 Tx      | TM1637 interface                                                             |
-|          |          | TM1637 Rx      | TM1637 interface                                                             |
-|          |          | Projector Ctrl Tx      | LCD/DLP Projector Serial Control                                                             |
-|          |          | Projector Ctrl Rx      | LCD/DLP Projector Serial Control                                                            |
-|          |          | XPT2046 Cs      | XPT2046 SPI Chip Select                                                         |
-|        |       | CSE7761 Tx      | CSE7761 Single Phase Energy Monitor Chip Tx pin                                            |
-|        |       | CSE7761 Rx      | CSE7761 Single Phase Energy Monitor Chip Rx pin                                            |
-|          |          | VL53L0X XSHUT1     | VL53L0X_XSHUT (the max number of sensors is VL53L0X_MAX_SENSORS) Used when connecting multiple VL53L0X|
-|          |          | MAX7219 Clk     | MAX7219 interface                                                         |
-|          |          | MAX7219 Din      | MAX7219 interface                                                         |
-|          |          | MAX7219 Cs      | MAX7219 interface                                                         |
-|          |          | TFMINIPLUS Tx      | TFmini Plus ToF sensor interface                                                             |
-|          |          | TFMINIPLUS Rx      | TFmini Plus ToF sensor interface                                                             |
-|          |          | Zerocross      | Zerocross detection                                                             |
 |          |          | Rotary A_n      | Rotary Encoder                                                                             |
 |          |          | Rotary B_n      | Rotary Encoder                                                                             |
-
-## ESP32 Only
-| New GPIO | Name            | Description                                                                                |
-| -------- | --------------- | ------------------------------------------------------------------------------------------ |
-|          | Button_d 1      | Button, active low with internal pull-down resistor                                        |
-|          | Button_d 2      | Button, active low with internal pull-down resistor                                        |
-|          | Button_d 3      | Button, active low with internal pull-down resistor                                        |
-|          | Button_d 4      | Button, active low with internal pull-down resistor                                        |
-|          | Button_id 1     | Button inverted, active high with internal pull-down resistor                              |
-|          | Button_id 2     | Button inverted, active high with internal pull-down resistor                              |
-|          | Button_id 3     | Button inverted, active high with internal pull-down resistor                              |
-|          | Button_id 4     | Button inverted, active high with internal pull-down resistor                              |
-|          | EPD Data         |  Base connection EPD driver                                                                  |
-|          | Halleffect         | Built in hall sensor                                                                  |
-|          | Key1 TC         | ESP32 Touch pin as button                                                                  |
-|          | Key1 PD         | ESP32 Touch pin as button                                                                  |
-|          | Key1 Inv PD         | ESP32 Touch pin as button                                                                  |
-|          | Switch_d 1      | Switch, with pull-down resistor                                                            |
-|          | Switch_d 2      | Switch, with pull-down resistor                                                            |
-|          | Switch_d 3      | Switch, with pull-down resistor                                                            |
-|          | Switch_d 4      | Switch, with pull-down resistor                                                            |
-|          | Switch_d 5      | Switch, with pull-down resistor                                                            |
-|          | Switch_d 6      | Switch, with pull-down resistor                                                            |
-|          | Switch_d 7      | Switch, with pull-down resistor                                                            |
-|          | Switch_d 8      | Switch, with pull-down resistor                                                            |
-|          | Swt1 PD         | ESP32 Touch pin as button                                                                  |
+|          |          | Button_d 1      | Button, active low with internal pull-down resistor                                        |
+|          |          | Button_d 2      | Button, active low with internal pull-down resistor                                        |
+|          |          | Button_d 3      | Button, active low with internal pull-down resistor                                        |
+|          |          | Button_d 4      | Button, active low with internal pull-down resistor                                        |
+|          |          | Button_id 1     | Button inverted, active high with internal pull-down resistor                              |
+|          |          | Button_id 2     | Button inverted, active high with internal pull-down resistor                              |
+|          |          | Button_id 3     | Button inverted, active high with internal pull-down resistor                              |
+|          |          | Button_id 4     | Button inverted, active high with internal pull-down resistor                              |
+|          |          | Switch_d 1      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 2      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 3      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 4      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 5      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 6      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 7      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 8      | Switch, with pull-down resistor                                                            |
 
 ## ADC Conversion
 
