@@ -25,6 +25,7 @@ OTA update servers: [http://ota.tasmota.com/tasmota/release](http://ota.tasmota.
 
 - new optional Template configuration field [`"CMND"`](Templates.md#cmnd) to embed crucial configuration commands in the template string [#11788](https://github.com/arendst/Tasmota/discussions/11788)
 - Support for MQTT using [Azure IoT Hub](Azure-IoT-Hub.md)
+- new binary `tasmota-zigbee.bin` for CC25xx Zigbee Bridge version for 4M+ flash.
 - new device IP is displayed in the UI after Wi-Fi initial config [#12091](https://github.com/arendst/Tasmota/discussions/12091)
 - Allow discovery of MCP2300xx output as relay [#12037](https://github.com/arendst/Tasmota/discussions/12037)
 - Defines `USER_RULE1`, `USER_RULE2` and `USER_RULE3` to store rules at compile time
