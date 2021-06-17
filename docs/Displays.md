@@ -678,7 +678,7 @@ E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
 #
 ```
 
-Most conveniant editing when developing or modifying is done via scripter. On every scripter save the display is reinitialized and you immediately see results of your changes.  
+Most convenient editing when developing or modifying is done via scripter. On every scripter save the display is reinitialized and you immediately see results of your changes.  
 
 However the normal use would be to store the descriptor in file system.
 

@@ -1249,7 +1249,7 @@ To solve it we can use rules.
 SwitchTopic 0
 
 Rule1
-  on System#Boot var1 0 ENDON
+  on System#Boot DO var1 0 ENDON
   ON Switch2#State DO Backlog add1 1; event START ENDON
   ON event#START DO event BELL=%var1% ENDON
   ON event#BELL=1.000 DO Backlog publish cmnd/bell/power on; RuleTimer1 60 ENDON

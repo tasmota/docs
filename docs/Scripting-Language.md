@@ -40,6 +40,8 @@ USE_SCRIPT_GLOBVARS | enables global variables and >G section
 USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
 SML_REPLACE_VARS | enables posibility to replace the lines from the (SML) descriptor with Vars
 USE_SML_SCRIPT_CMD | enables SML script cmds
+USE_SCRIPT_I2C | enables support for I2C cmds
+USE_LVGL | enables support for LVGL
 USE_SCRIPT_TIMER | enables up to 4 Arduino timers (so called tickers)  
 SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
 LARGE_ARRAYS | enables arrays of up to 1000 entries instead of max 127  
@@ -478,6 +480,10 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `rnd(x)` = return a random number between 0 and x, (seed may be set by rnd(-x))  
 `sf(F)` = sets the CPU Frequency (ESP32) to 80,160,240 Mhz, returns current Freq.  
 `s(x)` = explicit conversion from number x to string  
+I2C support #define USE_SCRIPT_I2C  
+`ia[AA]`, `ia2[AA]` test and set I2C device with adress AA (on BUS 1 or 2), returns 1 if device is present  
+`iw[aa val]` write val to register aa (1 Byte)  
+`ir[aa]`, `ir1[aa]`, `ir2[aa]`, `ir3[aa]` read 1..4 bytes from register aa   
 `mqtts` = MQTT connection status: `0` = disconnected, `>0` = connected  
 `wbut` = button status of watch side button (if defined USE_TTGO_WATCH)  
 `wdclk` = double tapped on display (if defined USE_TTGO_WATCH)  
@@ -825,6 +831,25 @@ sel = 51 => get event nr from caller in callback >lvb or >lvs
 sel = 52 => get slider value from caller in callback >lvs  
 
 
+
+**minimal LVGL support**  
+`#define USE_LVGL`  
+to test LVGL a few functions are implemented:  
+`lvgl(sel ...)` general lvgl call  
+each object gets a concurrent number 1 ... N with which you can reference the object
+sel = 0 => initialyze LVGL with current display
+sel = 1 => clear screen  
+sel = 2 xp yp xs ys text => create a button. the button press is reported in section >lvb  
+sel = 3 xp yp xs ys => create a slider. the slider move is reported in section >lvs  
+sel = 4 xp yp xs ys min max => create a gauge.    
+set = 5 objnr value => set gauge value.  
+sel = 6 xp yp xs ys text => create a label.  
+sel = 7 objnr text => set label text  
+sel = 8 create a keyboard, just get a look and feel  
+
+sel = 50 => get obj nr from caller in callback >lvb or >lvs  
+sel = 51 => get event nr from caller in callback >lvb or >lvs  
+sel = 52 => get slider value from caller in callback >lvs  
 
 **ESP32 Webcam support**   
 `#define USE_WEBCAM`  

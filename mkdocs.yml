@@ -25,9 +25,10 @@ plugins:
         'Status-LED.md': 'Lights.md'
         'Tuya-Protocols.md': 'TuyaMCU.md'
         'Upgrade.md': 'Upgrading.md'
+        'Berry-Scripting.md': '/docs/Berry.md'
 # - htmlproofer
 
-strict: true
+# strict: true
 
 theme:
   name: material
@@ -214,6 +215,7 @@ nav:
     - RF-Transciever.md
     - SDS011.md
     - SHT30.md
+    - SK6812.md
     - SPS30.md
     - TX2x.md
     - TSL2561.md

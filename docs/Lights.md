@@ -279,14 +279,17 @@ Specific module (requires a custom binary) for Martin Jerry/acenx/Tessan/NTONPOW
 ### Addressable LEDs
 Lights where each LED is individually controlled. In these lights it is possible to adjust each LEDs power, color and brightness, all just with the use of a single GPIO pin.
 
-WebUI shows hue, saturation and brightness sliders and power toggle for these lights. Red and green color may be mixed up (observed for clone of [Wemos RGB shield](WS2812B-RGB-Shield) using Tasmota 8.1.0).
+WebUI shows hue, saturation and brightness sliders and power toggle for these lights. Red and green color may be mixed up (observed for clone of [Wemos RGB shield](WS2812B-RGB-Shield)).
 
 #### WS2812
-Any light using WS2811, WS2812b, WS2813 or SK6812 LEDs falls into this component. They're also commonly called Neopixel lights.
+These are also commonly called Neopixel lights.
 
 Configured in Tasmota by assigning `WS2812 (7)` component to its GPIO. 
 
 For wiring, see instructions for [LED strip](WS2812B-and-WS2813) or [Wemos RGB shield](WS2812B-RGB-Shield).
+
+#### SK6812
+SK6812 RGBW LEDs are not supported in standard binaries and need custom compiled firmware. See [instructions](SK6812.md).
 
 ### Status LEDs
 

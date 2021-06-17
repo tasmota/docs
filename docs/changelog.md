@@ -1,7 +1,7 @@
 <!-- 
 
-find: \(#(\d{4})\) 
-replace with: [#$1](https://github.com/arendst/Tasmota/issues/$1)
+find: \(#(\d{5})\) 
+replace with: [#$1](https://github.com/arendst/Tasmota/discussions/$1)
      
 -->
 

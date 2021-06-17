@@ -19,28 +19,28 @@ OTA update servers: [http://ota.tasmota.com/tasmota/release](http://ota.tasmota.
 
 <small><span style="float:right">\*all documentation is for current release only</small></span>
 ### Current release 
-<a href="http://ota.tasmota.com/tasmota/release-9.4.0/"><span style="font-size:40px;">Tasmota 9.4.0 Leslie</span></a><br>
+<a href="http://ota.tasmota.com/tasmota/release-9.5.0/"><span style="font-size:40px;">Tasmota 9.5.0 Michael</span></a><br>
 
-- :warning: BREAKING :warning: Lights using MQTT discovery will not work correcty in Home Assistant 2015.5 due to new [color modes](https://www.home-assistant.io/blog/2021/05/05/release-20215/#color-modes). Upgrade to latest [development build](http://ota.tasmota.com/tasmota/) of Tasmota and use [Tasmota integration](https://www.home-assistant.io/integrations/tasmota)
-- :warning: BREAKING :warning: ESP32 partition layout changed to accommodate more file space on most boards and more code space on Core2 and Odroid-GO [#11746](https://github.com/arendst/Tasmota/issues/11746)
+- :warning: BREAKING :warning: Lights using MQTT discovery will not work correcty in Home Assistant 2015.5 due to new [color modes](https://www.home-assistant.io/blog/2021/05/05/release-20215/#color-modes). Upgrade to [v9.5](http://ota.tasmota.com/release/tasmota/) of Tasmota and use [Tasmota integration](https://www.home-assistant.io/integrations/tasmota)
 
-- Redesigned initial GUI wifi configuration by Adrian Scillato [#11693](https://github.com/arendst/Tasmota/issues/11693)
-- Support to control [NEC and OPTOMA LCD/DLP Projector](Projector.md)
-- Support XPT2046 touch screen digitizer on ILI9341 display 
-- Support for CSE7761 energy monitor as used in ESP32 based Sonoff Dual R3 Pow [#10793](https://github.com/arendst/Tasmota/issues/10793)
-- Support for Frequency monitoring and zero-cross detection on CSE7761 (Sonoff Dual R3)
-- Support for dummy energy monitor using user values set by commands ``VoltageSet``, ``CurrentSet``, ``PowerSet`` and ``FrequencySet``. Enable by selecting any GPIO as ``Option A2`` [#10640](https://github.com/arendst/Tasmota/issues/10640)
-- Support for TM1638 and MAX7219 seven segment displays 
-- Tasmota discovery as alternative to Home Assistant discovery using define ``USE_TASMOTA_DISCOVERY``
-- New commands: [`Sensor80`](Commands.md#sensor80), [`SerialBuffer`](Commands.md#serialbuffer), [`SetOption126`](Commands.md#setoption126), [`Backlog0`](Commands.md#backlog0), [`TuyaTempSetRes 0..3`](Commands.md#tuyatempsetres), [`MqttKeepAlive 1..100`](Commands.md#mqttkeepalive), [`MqttTimeout 1..100`](Commands.md#mqtttimeout), [`DisplayType`](Commands.md#displaytype), [`DisplayInvert`](Commands.md#displayinvert)
-- Optional GUI file editor enabled with define ``GUI_EDIT_FILE`` [#11668](https://github.com/arendst/Tasmota/issues/11668)
-- Initial support for universal display driver UDisplay by Gerhard Mutz. Enable by selecting any GPIO as ``Option A3`` [#11665](https://github.com/arendst/Tasmota/issues/11665)
+- new optional Template configuration field [`"CMND"`](Templates.md#cmnd) to embed crucial configuration commands in the template string [#11788](https://github.com/arendst/Tasmota/discussions/11788)
+- Support for MQTT using [Azure IoT Hub](Azure-IoT-Hub.md)
+- new device IP is displayed in the UI after Wi-Fi initial config [#12091](https://github.com/arendst/Tasmota/discussions/12091)
+- Allow discovery of MCP2300xx output as relay [#12037](https://github.com/arendst/Tasmota/discussions/12037)
+- Defines `USER_RULE1`, `USER_RULE2` and `USER_RULE3` to store rules at compile time
+- Define `USER_BACKLOG` to store commands at compile time to be executed at firmware load or when executing command reset
+- New commands: [`TuyaSend5`](Commansd.md#tuyasend), [`Status0`](Commansd.md#status), [`MqttWifiTimeout`](Commansd.md#mqttwifitimeout)
+- Acer projector support [#12190](https://github.com/arendst/Tasmota/discussions/12190)
 - ESP32
-    - Berry improvements [#11163](https://github.com/arendst/Tasmota/issues/11163)
-    - Extent BLE [#11212](https://github.com/arendst/Tasmota/issues/11212)
-    - Support for WS2812 hardware driver via RMT or I2S, secondary I2C controller, internal temperature sensor and internal Hall Effect sensor connected to both GPIO36 and GPIO39, LVGL 7.11 with Berry binding
-    - tasmota32-knx.bin, tasmota32-sensors.bin and tasmota32-lite.bin binaries consolidated in *tasmota32.bin* binary. 
-    - New *tasmota32solo1.bin* for single core ESP32 SoCs
+    - Preliminary **alpha** support for ESP32-C3 (RiscV based)
+    - pull-down buttons `Button_d` and `Button_id` and switches `Switch_d` [#10814](https://github.com/arendst/Tasmota/discussions/10814)
+    - LVGL support for 3 buttons as rotary encoder [#12035](https://github.com/arendst/Tasmota/discussions/12035)
+    - LVGL support for touchscreen [#12039](https://github.com/arendst/Tasmota/discussions/12039)
+    - LVGL support for TrueType fonts via FreeType library [#12087](https://github.com/arendst/Tasmota/discussions/12087)
+    - LVGL support for PSRAM [#12062](https://github.com/arendst/Tasmota/discussions/12062)
+    - LVGL support for PNG images [#12148](https://github.com/arendst/Tasmota/discussions/12148)
+    - Support for BM8563 RTC chip (I2C) found in M5Stack Core2 and M5StickC [#12199](https://github.com/arendst/Tasmota/discussions/12199)
+    - I2S and Interrupt GPIO types [#12192](https://github.com/arendst/Tasmota/discussions/12192)
 
 See [changelog](https://github.com/arendst/Tasmota/blob/development/CHANGELOG.md) for a complete list of new features, changes and bug fixes.
 
