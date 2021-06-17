@@ -256,6 +256,7 @@ Read more about [peripherals](Supported-Peripherals.md).
 |          | 5728     | Option a 1      | Enable PWM2 high impedance if powered off as used by Wyze bulbs                            |
 |          | 5729     | Option a 2      | Enable dummy energy monitor                                                                |
 |          | 5730     | Option a 3      | Enable UDisplay universal display driver                                                   |
+|          | 5731     | Option a 4      | Enable CCLoader using Zigbee Rx/Tx/Rst Gpios                                |
 |          |          | Ftc532          | FTC532 touch controller serial input                                                            |
 |          | 6336     | ADC pH          | Analog PH sensor                                                            |
 |          |          | Bs814 Clk       | Bs814 Clock                                                            |
