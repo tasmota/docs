@@ -40,10 +40,10 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 14       | 165      | Switch 6        | Switch                                                                                     |
 | 15       | 166      | Switch 7        | Switch                                                                                     |
 | 16       | 167      | Switch 8        | Switch                                                                                     |
-| 17       | 32       | Button 1        | Button                                                                                     |
-| 18       | 33       | Button 2        | Button                                                                                     |
-| 19       | 34       | Button 3        | Button                                                                                     |
-| 20       | 35       | Button 4        | Button                                                                                     |
+| 17       | 32       | Button 1        | Button active low, internal pull-up resistor                                                |
+| 18       | 33       | Button 2        | Button active low, internal pull-up resistor                                                |
+| 19       | 34       | Button 3        | Button active low, internal pull-up resistor                                                |
+| 20       | 35       | Button 4        | Button active low, internal pull-up resistor                                                |
 | 21       | 224      | Relay 1         | Relay                                                                                      |
 | 22       | 225      | Relay 2         | Relay                                                                                      |
 | 23       | 226      | Relay 3         | Relay                                                                                      |
@@ -105,22 +105,22 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 79       | 2048     | TM16 CLK        | TM1638 Switch Module                                                                       |
 | 80       | 2080     | TM16 DIO        | TM1638 Switch Module                                                                       |
 | 81       | 2112     | TM16 STB        | TM1638 Switch Module                                                                       |
-| 82       | 192      | Switch_n 1      | Switch, no pullup resistor                                                                 |
-| 83       | 193      | Switch_n 2      | Switch, no pullup resistor                                                                 |
-| 84       | 194      | Switch_n 3      | Switch, no pullup resistor                                                                 |
-| 85       | 195      | Switch_n 4      | Switch, no pullup resistor                                                                 |
-| 86       | 196      | Switch_n 5      | Switch, no pullup resistor                                                                 |
-| 87       | 197      | Switch_n 6      | Switch, no pullup resistor                                                                 |
-| 88       | 198      | Switch_n 7      | Switch, no pullup resistor                                                                 |
-| 89       | 199      | Switch_n 8      | Switch, no pullup resistor                                                                 |
-| 90       | 64       | Button_n 1      | Button, no pullup resistor                                                                 |
-| 91       | 65       | Button_n 2      | Button, no pullup resistor                                                                 |
-| 92       | 66       | Button_n 3      | Button, no pullup resistor                                                                 |
-| 93       | 67       | Button_n 4      | Button, no pullup resistor                                                                 |
-| 94       | 384      | Counter_n 1     | Counter sensor, no pullup resistor                                                         |
-| 95       | 385      | Counter_n 2     | Counter sensor, no pullup resistor                                                         |
-| 96       | 386      | Counter_n 3     | Counter sensor, no pullup resistor                                                         |
-| 97       | 387      | Counter_n 4     | Counter sensor, no pullup resistor                                                         |
+| 82       | 192      | Switch_n 1      | Switch, no pull-up resistor                                                                 |
+| 83       | 193      | Switch_n 2      | Switch, no pull-up resistor                                                                 |
+| 84       | 194      | Switch_n 3      | Switch, no pull-up resistor                                                                 |
+| 85       | 195      | Switch_n 4      | Switch, no pull-up resistor                                                                 |
+| 86       | 196      | Switch_n 5      | Switch, no pull-up resistor                                                                 |
+| 87       | 197      | Switch_n 6      | Switch, no pull-up resistor                                                                 |
+| 88       | 198      | Switch_n 7      | Switch, no pull-up resistor                                                                 |
+| 89       | 199      | Switch_n 8      | Switch, no pull-up resistor                                                                 |
+| 90       | 64       | Button_n 1      | Button, active low, no internal pull-up resistor                                            |
+| 91       | 65       | Button_n 2      | Button, active low, no internal pull-up resistor                                            |
+| 92       | 66       | Button_n 3      | Button, active low, no internal pull-up resistor                                            |
+| 93       | 67       | Button_n 4      | Button, active low, no internal pull-up resistor                                            |
+| 94       | 384      | Counter_n 1     | Counter sensor, no pull-up resistor                                                         |
+| 95       | 385      | Counter_n 2     | Counter sensor, no pull-up resistor                                                         |
+| 96       | 386      | Counter_n 3     | Counter sensor, no pull-up resistor                                                         |
+| 97       | 387      | Counter_n 4     | Counter sensor, no pull-up resistor                                                         |
 | 98       | 1536     | PZEM016 Rx      | Peacefair Pzem-016 Power Meter Rx pin                                                      |
 | 99       | 1568     | PZEM017 Rx      | Peacefair Pzem-017 Power Meter Rx pin                                                      |
 | 100      | 2144     | MP3 Player      | DF MP3 Player mini (Input)                                                                 |
@@ -145,14 +145,14 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 119      | 2496     | MX31855 CS      | MAX31855 Thermocouple Sensor Chip Select pin                                               |
 | 120      | 2528     | MX31855 CLK     | MAX31855 Thermocouple Sensor Serial Clock pin                                              |
 | 121      | 2560     | MX31855 DO      | MAX31855 Thermocouple Sensor Digital Output pin                                            |
-| 122      | 96       | Button_i 1      | Button inverted                                                                            |
-| 123      | 97       | Button_i 2      | Button inverted                                                                            |
-| 124      | 98       | Button_i 3      | Button inverted                                                                            |
-| 125      | 99       | Button_i 4      | Button inverted                                                                            |
-| 126      | 128      | Button_in 1     | Button inverted, no pullup resistor                                                        |
-| 127      | 129      | Button_in 2     | Button inverted, no pullup resistor                                                        |
-| 128      | 130      | Button_in 3     | Button inverted, no pullup resistor                                                        |
-| 129      | 131      | Button_in 4     | Button inverted, no pullup resistor                                                        |
+| 122      | 96       | Button_i 1      | Button inverted, active high with internal pull-up resistor                                 |
+| 123      | 97       | Button_i 2      | Button inverted, active high with internal pull-up resistor                                 |
+| 124      | 98       | Button_i 3      | Button inverted, active high with internal pull-up resistor                                 |
+| 125      | 99       | Button_i 4      | Button inverted, active high with internal pull-up resistor                                 |
+| 126      | 128      | Button_in 1     | Button inverted, active high no internal pull-up resistor                                   |
+| 127      | 129      | Button_in 2     | Button inverted, active high no internal pull-up resistor                                   |
+| 128      | 130      | Button_in 3     | Button inverted, active high no internal pull-up resistor                                   |
+| 129      | 131      | Button_in 4     | Button inverted, active high no internal pull-up resistor                                   |
 | 130      | 2592     | HLWBL SEL       | Energy Monitoring (for example Pow)                                                        |
 | 131      | 2624     | HLWBL SELi      | Energy Monitoring (for example Pow)                                                        |
 | 132      | 2656     | HLWBL CF1       | Energy Monitoring (for example Pow)                                                        |
@@ -245,6 +245,22 @@ Read more about [peripherals](Supported-Peripherals.md).
 |          | 5730     | Option a 3      | Enable UDisplay universal display driver                                                   |
 |          |          | Rotary A_n      | Rotary Encoder                                                                             |
 |          |          | Rotary B_n      | Rotary Encoder                                                                             |
+|          |          | Button_d 1      | Button, active low with internal pull-down resistor                                        |
+|          |          | Button_d 2      | Button, active low with internal pull-down resistor                                        |
+|          |          | Button_d 3      | Button, active low with internal pull-down resistor                                        |
+|          |          | Button_d 4      | Button, active low with internal pull-down resistor                                        |
+|          |          | Button_id 1     | Button inverted, active high with internal pull-down resistor                              |
+|          |          | Button_id 2     | Button inverted, active high with internal pull-down resistor                              |
+|          |          | Button_id 3     | Button inverted, active high with internal pull-down resistor                              |
+|          |          | Button_id 4     | Button inverted, active high with internal pull-down resistor                              |
+|          |          | Switch_d 1      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 2      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 3      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 4      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 5      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 6      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 7      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 8      | Switch, with pull-down resistor                                                            |
 
 ## ADC Conversion
 
