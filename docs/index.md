@@ -31,16 +31,18 @@ OTA update servers: [http://ota.tasmota.com/tasmota/release](http://ota.tasmota.
 - Define `USER_BACKLOG` to store commands at compile time to be executed at firmware load or when executing command reset
 - New commands: [`TuyaSend5`](Commansd.md#tuyasend), [`Status0`](Commansd.md#status), [`MqttWifiTimeout`](Commansd.md#mqttwifitimeout)
 - Acer projector support [#12190](https://github.com/arendst/Tasmota/discussions/12190)
-- ESP32
-    - Preliminary **alpha** support for ESP32-C3 (RiscV based)
-    - pull-down buttons `Button_d` and `Button_id` and switches `Switch_d` [#10814](https://github.com/arendst/Tasmota/discussions/10814)
-    - LVGL support for 3 buttons as rotary encoder [#12035](https://github.com/arendst/Tasmota/discussions/12035)
-    - LVGL support for touchscreen [#12039](https://github.com/arendst/Tasmota/discussions/12039)
-    - LVGL support for TrueType fonts via FreeType library [#12087](https://github.com/arendst/Tasmota/discussions/12087)
-    - LVGL support for PSRAM [#12062](https://github.com/arendst/Tasmota/discussions/12062)
-    - LVGL support for PNG images [#12148](https://github.com/arendst/Tasmota/discussions/12148)
-    - Support for BM8563 RTC chip (I2C) found in M5Stack Core2 and M5StickC [#12199](https://github.com/arendst/Tasmota/discussions/12199)
-    - I2S and Interrupt GPIO types [#12192](https://github.com/arendst/Tasmota/discussions/12192)
+
+#### ESP32
+
+- Preliminary **alpha** support for ESP32-C3 (RiscV based)
+- pull-down buttons `Button_d` and `Button_id` and switches `Switch_d` [#10814](https://github.com/arendst/Tasmota/discussions/10814)
+- LVGL support for 3 buttons as rotary encoder [#12035](https://github.com/arendst/Tasmota/discussions/12035)
+- LVGL support for touchscreen [#12039](https://github.com/arendst/Tasmota/discussions/12039)
+- LVGL support for TrueType fonts via FreeType library [#12087](https://github.com/arendst/Tasmota/discussions/12087)
+- LVGL support for PSRAM [#12062](https://github.com/arendst/Tasmota/discussions/12062)
+- LVGL support for PNG images [#12148](https://github.com/arendst/Tasmota/discussions/12148)
+- Support for BM8563 RTC chip (I2C) found in M5Stack Core2 and M5StickC [#12199](https://github.com/arendst/Tasmota/discussions/12199)
+- I2S and Interrupt GPIO types [#12192](https://github.com/arendst/Tasmota/discussions/12192)
 
 See [changelog](https://github.com/arendst/Tasmota/blob/development/CHANGELOG.md) for a complete list of new features, changes and bug fixes.
 
