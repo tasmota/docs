@@ -21,7 +21,7 @@ OTA update servers: [http://ota.tasmota.com/tasmota/release](http://ota.tasmota.
 ### Current release 
 <a href="http://ota.tasmota.com/tasmota/release-9.5.0/"><span style="font-size:40px;">Tasmota 9.5.0 Michael</span></a><br>
 
-- :warning: BREAKING :warning: Lights using MQTT discovery will not work correcty in Home Assistant 2015.5 due to new [color modes](https://www.home-assistant.io/blog/2021/05/05/release-20215/#color-modes). Upgrade to [v9.5](http://ota.tasmota.com/release/tasmota/) of Tasmota and use [Tasmota integration](https://www.home-assistant.io/integrations/tasmota)
+- :warning: BREAKING :warning: Lights using MQTT discovery will not work correcty in Home Assistant 2021.5 due to new [color modes](https://www.home-assistant.io/blog/2021/05/05/release-20215/#color-modes). Upgrade to [v9.5](http://ota.tasmota.com/release/tasmota/) of Tasmota and use [Tasmota integration](https://www.home-assistant.io/integrations/tasmota)
 
 - new optional Template configuration field [`"CMND"`](Templates.md#cmnd) to embed crucial configuration commands in the template string [#11788](https://github.com/arendst/Tasmota/discussions/11788)
 - Support for MQTT using [Azure IoT Hub](Azure-IoT-Hub.md)
