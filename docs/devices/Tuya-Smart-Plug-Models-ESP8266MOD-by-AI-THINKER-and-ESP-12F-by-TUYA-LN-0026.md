@@ -1,3 +1,5 @@
+WARNING! The current version of these plugs does not come with an ESP8266, but with a custom TUYA chip, which can't be flashed with Tasmota.
+
 These are simple, No-Name smart plugs (I bought these at AliExpress). One of them has ESP8266MOD chip (by AI-THINKER), other one has ESP-12F chip (by TUYA L/N 0026). Both are actually same chips and are flashed the same way.
 
 ![](https://github.com/cholek3/Test-repo/blob/master/Resize%20of%201a.jpg?raw=true)  ![](https://github.com/cholek3/Test-repo/blob/master/Resize%20of%201b.jpg?raw=true)  ![](https://github.com/cholek3/Test-repo/blob/master/Resize%20of%201c.jpg?raw=true)
