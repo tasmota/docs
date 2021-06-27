@@ -68,13 +68,58 @@ Once device maintenance is completed, place it back into DeepSleep mode using or
 !!! tip "If you're having issues after wakeup from sleep"
     Make sure bootloop detection is off [`SetOption36 0`](Commands#setoption36). See issue [#6890](https://github.com/arendst/Tasmota/issues/6890#issuecomment-552181980)
 
+## Rules
+
+The following triggers can be used to execute commands upon wake-up or right before entering DeepSleep:
+- `Power1#Boot` : is the earliest trigger. But valid only if you have a `Relay` output defined.
+- `Switch1#Boot` : is the next trigger, also occur very early in the boot process. But valid only if you have `Switch` input defined.
+- `System#Boot` : is occuring later in the Tasmota boot process but is always available.
+- `SYstem#Save` : is occuring right before a restart or before entering DeepSleep.
+
+For exemple the ruleset below turn on power right after Tasmota started, and turn it off just before entering DeepSleep 
+``` haskel
+Rule1 ON Power1#Boot DO Power on ENDON ON System#Save DO Power off ENDON
+```
+
+Sequence is then as follow (only key lines are shown):
+```
+00:00:00.085 CFG: Loaded from File, Count 122
+00:00:00.095 Project tasmota demo-sensor Version 9.5.0(tasmota-sensors)
+00:00:00.105 RUL: POWER1#BOOT performs "Power ON"
+00:00:00.109 RSL: POWER = {"POWER":"ON"}
+00:00:00.111 RSL: POWER = ON
+00:00:04.454 WIF: Connecting to AP1 DEMOAP Channel 1 BSSId XX:XX:XX:XX:XX:XX in mode 11n as demo-sensor...
+00:00:05.756 WIF: Connected
+00:00:06.008 HTP: Web server active on dev-4119 with IP address 192.168.168.199
+15:03:40.010 MQT: Attempting connection...
+15:03:40.024 MQT: Connected
+15:03:40.028 MQT: tele/demo-sensor/LWT = Online (retained)
+15:03:40.032 MQT: cmnd/demo-sensor/POWER = 
+15:03:40.047 MQT: stat/demo-sensor/POWER = {"POWER":"ON"}
+15:03:40.050 MQT: stat/demo-sensor/POWER = ON (retained)
+15:03:44.472 MQT: tele/demo-sensor/STATE = {"Time":"2021-06-27T15:03:44+02:00","Uptime":"0T00:00:13","UptimeSec":13,"Heap":28,"SleepMode":"Dynamic","Sleep":50,"LoadAvg":19,"MqttCount":1,"POWER":"ON","Wifi":{"AP":1,"SSId":"DEMOAP","BSSId":"XX:XX:XX:XX:XX:XX","Channel":1,"Mode":"11n","RSSI":86,"Signal":-57,"LinkCount":1,"Downtime":"0T00:00:07"}}
+15:03:44.500 MQT: tele/demo-sensor/SENSOR = {"Time":"2021-06-27T15:03:44+02:00","Switch1":"OFF","Switch2":"ON"} (retained)
+15:03:44.515 RUL: SYSTEM#SAVE performs "Power OFF"
+15:03:44.524 MQT: stat/demo-sensor/POWER = {"POWER":"OFF"}
+15:03:44.527 MQT: stat/demo-sensor/POWER = OFF (retained)
+15:03:44.539 MQT: stat/demo-sensor/DEEPSLEEP = {"DeepSleep":{"Time":"2021-06-27T15:04:00","Epoch":1624799040}}
+15:03:47.433 APP: Sleeping
+```
+    
 ## Driver writer: Executing commands before entering DeepSleep
 
-When writing a driver for a sensor, if the sensor supports a low power mode, it is a good practice to process the handler `FUNF_BEFORE_DEEPSLEEP` to enable the low power mode. When Tasmota will restart at next wake-upn it will automatically re-initialize the sensor.
+When writing a driver for a sensor, if the sensor supports a low power mode, it is a good practice to set the sensor in such low power mode in the FUNC_SAVE_BEFORE_RESTART handler. When Tasmota will restart at next wake-up, sensor will be automatically re-initialized. 
 
-You can also execute any command or special script ==BEFORE== device goes into DeepSleep using handler FUNC_SAVE_BEFORE_RESTART as a predefined hook to implement your own procedure. This requires you to code your own function and self-compile custom firmware.
-
-To use rules, use the `System#Save` trigger. This will be executed just before the device goes into DeepSleep.
+Exemple from `xsns_09_bmp.ino`:
+``` C++
+#ifdef USE_DEEPSLEEP
+      case FUNC_SAVE_BEFORE_RESTART:
+        BMP_EnterSleep();
+        break;
+#endif // USE_DEEPSLEEP 
+```
+    
+In general you can also execute any command or special script ==BEFORE== device goes into DeepSleep using handler FUNC_SAVE_BEFORE_RESTART as a predefined hook to implement your own procedure. This requires you to code your own function and self-compile custom firmware.
 
 ## Overcome network issues
 If all requirements (Wifi, NTP time synchronization, MQTT broker connection and TelePeriod) are not met, the device will stay awake while trying to attain the remaining requirements. On battery powered devices this behavior is undesirable because it will quickly deplete the battery. To avoid this when these requirements cannot be met, put the device back into DeepSleep for an hour. Do this through a rule that will be triggered 30 seconds after reboot and sends the device into deepsleep for an hour.
