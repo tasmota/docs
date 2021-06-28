@@ -30,7 +30,7 @@ OTA update servers: [http://ota.tasmota.com/tasmota/release](http://ota.tasmota.
 - Allow discovery of MCP2300xx output as relay [#12037](https://github.com/arendst/Tasmota/discussions/12037)
 - Defines `USER_RULE1`, `USER_RULE2` and `USER_RULE3` to store rules at compile time
 - Define `USER_BACKLOG` to store commands at compile time to be executed at firmware load or when executing command reset
-- New commands: [`TuyaSend5`](Commansd.md#tuyasend), [`Status0`](Commansd.md#status), [`MqttWifiTimeout`](Commansd.md#mqttwifitimeout)
+- New commands: [`TuyaSend5`](Commands.md#tuyasend), [`Status0`](Commands.md#status), [`MqttWifiTimeout`](Commands.md#mqttwifitimeout)
 - Acer projector support [#12190](https://github.com/arendst/Tasmota/discussions/12190)
 
 #### ESP32
