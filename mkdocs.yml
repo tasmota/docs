@@ -169,6 +169,7 @@ nav:
     - IOBroker: "https://github.com/arendst/Tasmota/issues/3769"
     - Mozilla WebThings Adapter: "https://github.com/tim-hellhake/tasmota-adapter"
     - SmartThings: "https://github.com/hongtat/tasmota-connect"
+    - Tasmohab: "https://github.com/Gifford47/tasmohab/blob/master/README.md"
   - Peripherals:
     - Supported-Peripherals.md
     - Buzzer.md
