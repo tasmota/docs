@@ -318,7 +318,6 @@ If you don't have access to your router you can find your newly flashed device w
 * [Fing](https://www.fing.com/products/) - for Android or iOS
 * [Angry IP Scanner](https://angryip.org/) - open source for Linux, Windows and Mac. Requires Java.
 * [Super Scan](https://sectools.org/tool/superscan/) - Windows only too (free)
-* [Tasmota Device Locator](http://tasmota.simplethings.work/) - Browser-based
 
 Open the IP address with your web browser and you have full access to Tasmota.
 
