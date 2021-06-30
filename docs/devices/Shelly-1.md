@@ -5,6 +5,14 @@ The Shelly 1 is supported in Tasmota from version 6.2.1.7<br>
 * [Allterco Shelly 1 Product Page](https://shelly.cloud/shelly1-open-source/)
 * [Allterco Shelly 1 Shop](https://shelly.cloud/product/shelly-1-open-source/)
 
+# Flashing
+There are two options to get tasmota onto your shelly:
+1) OTA update with an intermediate firmware (preferred - can be done in an already installed state)
+2) The common way using a serial adapter. DO NOT DO THIS WHEN CONNECTED TO AC MAINS!
+
+## OTA Update
+Follow the guide from this repository: https://github.com/yaourdt/mgos-to-tasmota
+
 ## ⚠️️Special Shelly Attention⚠️️
 
 **DO NOT CONNECT ANYTHING TO ANY GPIOs OF THESE DEVICES!!! (No sensors, no switches, nothing) <br>
