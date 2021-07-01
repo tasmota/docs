@@ -229,7 +229,7 @@ MqttClient<a class="cmnd" id="mqttclient"></a>|`1` = reset MQTT client to firmwa
 MqttFingerprint<a class="cmnd" id="mqttfingerprint"></a>|*TLS needs to be enabled in firmware for this command*&emsp; <BR>`<value>` =  set current fingerprint as 20 space separated bytes (59 chars max)
 MqttHost<a class="cmnd" id="mqtthost"></a>|`0` = clear MQTT host field and allow mDNS to find MQTT host<BR>`1` = reset MQTT host to firmware default (`MQTT_HOST`) and restart<BR>`<value>` = set MQTT host and restart (do NOT use `.local`)
 MqttKeepAlive<a class="cmnd" id="mqttkeepalive"></a>|`1..100` = set MQTT Keep Alive timer *(default = `30`)*
-MqttPassword<a class="cmnd" id="mqttpassword"></a>|`0` = clear MQTT password<BR>`1` = reset MQTT password to firmware default (`MQTT_PASS`) and restart<BR>`<value>` = set MQTT password and restart
+MqttPassword<a class="cmnd" id="mqttpassword"></a>|`0` = clear MQTT password<BR>`1` = reset MQTT password to firmware default (`MQTT_PASS`) and restart<BR>`<value>` = set MQTT password and restart (min 5 chars)
 MqttPort<a class="cmnd" id="mqttport"></a>|`1` = reset MQTT port to firmware default (`MQTT_PORT`) and restart<BR>`<value>` = set MQTT port between 2 and 32766 and restart
 MqttRetry<a class="cmnd" id="mqttretry"></a>|`10..32000` = set MQTT connection retry timer in seconds *(default = `10`)*
 MqttTimeout<a class="cmnd" id="mqtttimeout"></a>|`1..100` = set MQTT socket timeout *(default = `4`)*
