@@ -1703,7 +1703,7 @@ Rule1 1
 
 Activate dimmer mode with `Switchmode 11` and shorten long press time to 1 second (`Setoption32 10`).
 
-A short press of the switch sends a `TOGGLE` message to toggle the dimmer. A long press sends repeated `INC_DEC` messages to increment the dimmer. If a second press of the switch follows the first press a `INV` message is sent to invert the function from increment to decrement and repeatet `INC_DEC` messages are sent to decrement the dimmer. After releasing the switch a timeout message `CLEAR` resets the automation
+A short press of the switch sends a `TOGGLE` message to toggle the dimmer. A long press sends repeated `INC_DEC` messages to increment the dimmer. If a second press of the switch follows the first press a `INV` message is sent to invert the function from increment to decrement and repeated `INC_DEC` messages are sent to decrement the dimmer. After releasing the switch a timeout message `CLEAR` resets the automation
 
 ```haskell
 Backlog SwitchMode 11; SetOption32 10
