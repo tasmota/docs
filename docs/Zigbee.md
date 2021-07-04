@@ -556,6 +556,33 @@ ZbBind {"Device":"Name","ToGroup":100,"Endpoint":1,"Cluster":8}
 ZbBind {"Device":"Name","ToGroup":100,"Endpoint":2,"Cluster":8}
 ```
 
+### Sandy Beach/Tuya Thermostatic Radiator Valve (TS0601)
+	
+To pair the TRV to the Bridge you need to press and hold the Auto/Manual (8 o'clock position) and the Comfort/Energy Saving (4 o'clock position) buttons at the same time until the signal indicator flashes.
+The Bridge will then automatically find the following useful parameters
+
+	Ambient temperature (C)		(LocalTemperature)
+	
+	Temperature set point (C)	(TuyaTempTarget)
+	
+	Valve position (0-100%)		(TuyaValvePosition)
+
+To set the Temperature Set Point use
+```haskell
+	ZbSend {"Device": "0xXXXX", "Write":{"TuyaTempTarget":XX}}
+```
+The 'Device' can be the DeviceID 0x0000 or the ZbName so if a device has been named
+```haskell
+	ZbName 0x1234,Utility
+	ZbSend {"Device": "0x1234", "Write":{"TuyaTempTarget":20}}
+```
+and
+```haskell
+	ZbSend {"Device": "Utility", "Write":{"TuyaTempTarget":20}}
+```
+will set the TRV setpoint to 20C.
+Other commands will be available and will be added when	clarified
+
 ## Zigbee2Tasmota Status Codes
 You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  
 

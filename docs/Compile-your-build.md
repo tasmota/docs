@@ -124,21 +124,21 @@ upload_port               = COM4
 ; Those binaries are for ESP8266
 ; The name after the env: tag will give its name to the binary
 [env:tasmota-foo]
-build_flags = ${common.build_flags} -DFIRMWARE_FOO
+build_flags = ${env.build_flags} -DFIRMWARE_FOO
 
 [env:tasmota-bar]
-build_flags = ${common.build_flags} -DFIRMWARE_BAR
+build_flags = ${env.build_flags} -DFIRMWARE_BAR
 
 ; *********************************************************************
 ; Similar exemple for ESP32
 ; Note that you must explicitly state that they derive from `tasmota32`
 [env:tasmota32-foo]
 extends = env:tasmota32_base
-build_flags             = ${common32.build_flags} -DFIRMWARE_FOO
+build_flags             = ${env:tasmota32_base.build_flags} -DFIRMWARE_FOO
 
 [env:tasmota32-grizzly]
 extends = env:tasmota32_base
-build_flags             = ${common32.build_flags} -DFIRMWARE_GRIZZLY
+build_flags             = ${env:tasmota32_base.build_flags} -DFIRMWARE_GRIZZLY
 ```
 
 #### Sample `user_config_override.h`
