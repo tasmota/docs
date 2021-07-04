@@ -4,6 +4,9 @@
 ### ESP8266 and ESP8285 
 ![ESP8266 pinout](_media/pinouts/ESP8266_pinout.jpg)
 
+### ESP-12E/ESP-12F
+![ESP-12 pinout](_media/pinouts/ESP-12_pinout.jpg)
+
 ### ESP-12S 
 ![ESP-12S pinout](_media/pinouts/ESP-12s_pinout.jpg)
 
