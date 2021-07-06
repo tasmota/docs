@@ -451,7 +451,7 @@ SetOption53<a class="cmnd" id="setoption53"></a>|Display hostname and IP address
 SetOption54<a class="cmnd" id="setoption54"></a>|Apply [`SetOption20`](#setoption20) settings to commands from Tuya device<BR>`0` = disable *(default)*<BR> `1` = enable
 SetOption55<a class="cmnd" id="setoption55"></a>|mDNS service<BR>`0` = disable *(default)* <BR> `1` = enable
 SetOption56<a class="cmnd" id="setoption56"></a>|Wi-Fi network scan to select strongest signal on restart (network has to be visible)<BR>`0` = disable *(default)*<BR> `1` = enable
-SetOption57<a class="cmnd" id="setoption57"></a>|Wi-Fi network re-scan every 44 minutes with alternate to +10dB stronger signal if detected (only visible networks)<BR>`0` = disable *(default)*<BR> `1` = enable
+SetOption57<a class="cmnd" id="setoption57"></a>|Wi-Fi network re-scan every 44 minutes with alternate to +10dB stronger signal if detected (only visible networks)<BR>`0` = disable<BR> `1` = enable *(default)*
 SetOption58<a class="cmnd" id="setoption58"></a>|[IR Raw data in JSON payload](https://github.com/arendst/Tasmota/issues/2116#issuecomment-440716483)<BR>`0` = disable *(default)*<BR> `1` = enable
 SetOption59<a class="cmnd" id="setoption59"></a>|Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands: [`State`](#state), [`Power`](#power) and any command causing a light to be turned on.<BR>`0` = disable *(default)*<BR> `1` = enable
 SetOption60<a class="cmnd" id="setoption60"></a>|Set sleep mode<BR> `0` = [dynamic sleep](Dynamic-Sleep) *(default)*<BR> `1` = normal sleep
