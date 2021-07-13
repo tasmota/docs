@@ -864,6 +864,7 @@ MI32Unit<a class="cmnd" id="mi32unit"></a>|`<x>` = set the current Tasmota tempe
 
 Command|Parameters
 :---|:---
+Wc<a class="cmnd" id="wc"></a>|Query all camera settings
 WcBrightness<a class="cmnd" id="wcbrightness"></a>|`-2..+2` = set picture brightness
 WcContrast<a class="cmnd" id="wcconstrast"></a>|`-2..+2` = set picture contrast
 WcMirror<a class="cmnd" id="wcmirror"></a>|Mirror camera. <BR>`0` = disable *(default)*<BR>`1` = enable
