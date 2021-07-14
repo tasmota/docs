@@ -47,7 +47,8 @@
 ### ESP8266-S3
 ![ESP8266-S3 Pinout](_media/pinouts/ESP-8266-S3_pinout.jpg)
 
-## ESP32 Based
+## ESP32 
+
 ### ESP32-CAM
 
 ![ESP32-CAM Pinout](_media/pinouts/ESP32-CAM_pinout.jpg)
@@ -69,6 +70,24 @@ Includes ESP32-WROVER-B and ESP32-WROVER-BI
 ### ESP32-WROOM-32x
 
 ![ESP32-ESP-WROOM-32 Pinout](_media/pinouts/ESP-WROOM-32_pinout.jpg)
+
+## ESP32-C3
+
+### ESP-C3-12F
+
+![ESP-C3-12F](_media/pinouts/ESP-C3-12F.jpg)
+
+### ESP-C3-32S
+
+![ESP-C3-32S](_media/pinouts/ESP-C3-32S.jpg)
+
+### ESP-C3-13
+
+![ESP-C3-13](_media/pinouts/ESP-C3-13.jpg)
+
+### ESP-C3-01M
+
+![ESP-C3-01M](_media/pinouts/ESP-C3-01M.jpg)
 
 ## Devices
 ### Sonoff Mini
