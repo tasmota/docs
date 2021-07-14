@@ -59,7 +59,7 @@
 
 ### ESP32-SOLO-1
 
-![ESP32-SOLO-1 Pinout](_media/pinouts/ESP32-SOLO-1_pinout.jpg)
+![ESP32-SOLO-1 Pinout](_media/pinouts/ESP32-SOLO-1.png)
 
 ### ESP32-WROVER
 
@@ -71,27 +71,34 @@ Includes ESP32-WROVER-B and ESP32-WROVER-BI
 
 ![ESP32-ESP-WROOM-32 Pinout](_media/pinouts/ESP-WROOM-32_pinout.jpg)
 
+## ESP32-S
+
+### ESP-12K
+
+![ESP-12K Pinout](_media/pinouts/ESP-12K.png)
+
+
 ## ESP32-C3
 
 ### ESP-C3-12F
 
-![ESP-C3-12F](_media/pinouts/ESP-C3-12F.jpg)
+![ESP-C3-12F Pinout](_media/pinouts/ESP-C3-12F.png)
 
 ### ESP-C3-32S
 
-![ESP-C3-32S](_media/pinouts/ESP-C3-32S.jpg)
+![ESP-C3-32S Pinout](_media/pinouts/ESP-C3-32S.png)
 
 ### ESP-C3-13
 
-![ESP-C3-13](_media/pinouts/ESP-C3-13.jpg)
+![ESP-C3-13 Pinout](_media/pinouts/ESP-C3-13.png)
 
 ### ESP-C3-01M
 
-![ESP-C3-01M](_media/pinouts/ESP-C3-01M.jpg)
+![ESP-C3-01M Pinout](_media/pinouts/ESP-C3-01M.png)
 
 ## Devices
 ### Sonoff Mini
-![Sonoff Mini](_media/pinouts/sonoff_mini.jpg)
+![Sonoff Mini Pinout](_media/pinouts/sonoff_mini.jpg)
 
 ### Sonoff TH
 <img alt="TH GPIOs" src="http://tinkerman.cat/wp-content/uploads/2016/10/20161004_220416_LABELSs.jpg"></img>
