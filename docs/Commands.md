@@ -500,6 +500,7 @@ SetOption123<a class="cmnd" id="setoption123"></a>|Wiegand tag number output in 
 SetOption124<a class="cmnd" id="setoption124"></a>|Wiegand key pad stroke format<br>`0` = single char *(default)*<BR>`1` = one tag (ending char #)
 SetOption125<a class="cmnd" id="setoption125"></a>|_ZbBridge only_ Hide bridge topic from zigbee topic (use with [`SetOption89`](#setoption89))<br>`1` = enable
 SetOption126<a class="cmnd" id="setoption126"></a>|Enable arithmetic mean over teleperiod for JSON temperature for DS18x20 sensors<BR>`1` = enable
+SetOption127<a class="cmnd" id="setoption127"></a>|Set Wifi to no-sleep mode. Normally this mode is only enabled when `Sleep 0`. This option fixes some Wifi unresponsiveness for some users.<BR>`1` = enable
 
 ### TuyaMCU
 
