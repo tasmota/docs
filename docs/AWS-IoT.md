@@ -13,6 +13,7 @@ Add the following to `user_config_override.h`:
 #ifndef USE_MQTT_TLS
 #define USE_MQTT_TLS
 #define USE_MQTT_TLS_CA_CERT // Optional but highly recommended
+#define USE_MQTT_TLS_FORCE_EC_CIPHER
 #endif
 #ifndef USE_MQTT_AWS_IOT_LIGHT
 #define USE_MQTT_AWS_IOT_LIGHT
