@@ -434,3 +434,11 @@ Wire Function|Parameters and details
 \_available<a class="cmnd" id="wire_available">|`() -> bool`
 \_read<a class="cmnd" id="wire_read">|`read() -> int`<br>Reads a single byte.
 \_write<a class="cmnd" id="wire_write">|`(value:int or s:string) -> nil`<br>Sends either single byte or an arbitrary string.
+
+### **`path` module**
+
+This module is a simplified version of `os.path` module of standard Berry, but disabled on Tasmota because we don't have a full OS.
+
+Tasmota Function|Parameters and details
+:---|:---
+path.exists<a class="cmnd" id="path_exists"></a>|`(file_name:string) -> bool`<br>returns `true` if the file exists. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
