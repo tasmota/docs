@@ -30,7 +30,7 @@ In the **_Configuration -> Configure Module_** page assign:
 1. GPIOa to `I2C SDA`
 2. GPIOb to `I2C SCL`
 
-After a reboot Tasmota will detect the VL53L0x automatically and display distance in mm.
+After a reboot Tasmota will detect the VL53L0x automatically and will display the distance in mm.
 
 ![image](_media/peripherals/vl53l0x.png)
 
@@ -58,7 +58,7 @@ When using multiple VL53L0X, it is required to also wire the XSHUT pin of all th
 | -    | -     | XSHUT | - | GPIOe
 | -    | -     | -     | XSHUT | GPIOz
 
-### Tasmota Settings for single sensor
+### Tasmota Settings for multiple sensors
 In the **_Configuration -> Configure Module_** page assign:
 
 1. GPIOa to `I2C SDA`
@@ -82,7 +82,7 @@ Sensor sends a  `tele/%topic%/SENSOR` JSON reponse:
 
 ![image](https://user-images.githubusercontent.com/35405447/111363173-7907a200-866e-11eb-83e1-93cfefc45315.png)
 
-### Notes
+## Notes
 
 * **MAXIMUM AMOUNT OF SENSORS:** Tasmota supports by default up to 8 of these sensors in parallel. Expanding this limit is possible but backwards incompatible. The default value of VL53L0X_MAX_SENSORS is set in the file tasmota.h
 
