@@ -4,6 +4,12 @@ The VL53L0X is a Time-of-Flight (ToF) laser-ranging module.
 
 The support for this sensor is included by default in Tasmota-sensors.bin (ESP8266) and in Tasmota32.bin (ESP32).
 
+About how to install this sensor and how to adapt the laser operation for several use-cases, please check:
+https://www.st.com/resource/en/datasheet/vl53l0x.pdf
+
+If you are going to use long I2C wires read this:
+https://hackaday.com/2017/02/08/taking-the-leap-off-board-an-introduction-to-i2c-over-long-wires/
+
 ## Breakout Boards
 ![VL53L0x](_media/peripherals/vl53l0x-1.jpg)
 ![VL53L0x](_media/peripherals/vl53l0x-2.jpg)
@@ -24,7 +30,7 @@ In the **_Configuration -> Configure Module_** page assign:
 1. GPIOa to `I2C SDA`
 2. GPIOb to `I2C SCL`
 
-After a reboot the driver will detect VL53L0x automatically and display distance in mm.
+After a reboot Tasmota will detect the VL53L0x automatically and display distance in mm.
 
 ![image](_media/peripherals/vl53l0x.png)
 
@@ -62,13 +68,13 @@ In the **_Configuration -> Configure Module_** page assign:
 5. GPIOe to `XSHUT 3`
 6. ...
 
-After a reboot the driver will detect each VL53L0x in sequence and display distance in mm.
+After a reboot Tasmota will detect each VL53L0x in sequence and after auto-configuring them, it will display distance in mm.
 
-About how to install this sensor and how to adapt the laser operation for several use-cases, please check:
-https://www.st.com/resource/en/datasheet/vl53l0x.pdf
+Sensor sends a  `tele/%topic%/SENSOR` JSON reponse:
 
-If you are going to use long I2C wires read this:
-https://hackaday.com/2017/02/08/taking-the-leap-off-board-an-introduction-to-i2c-over-long-wires/
+```json
+{"Time":"2019-12-20T11:29:22","VL53L0X_1":{"Distance":263},"VL53L0X_2":{"Distance":344},"VL53L0X_3":{"Distance":729}}
+```
 
 ![image](https://user-images.githubusercontent.com/35405447/111362860-144c4780-866e-11eb-84f1-461d2857ede7.png)
 
@@ -78,9 +84,9 @@ https://hackaday.com/2017/02/08/taking-the-leap-off-board-an-introduction-to-i2c
 
 ### Notes
 
-* MAXIMUM AMOUNT OF SENSORS: Tasmota supports by default up to 8 of these sensors in parallel. Expanding this limit is possible but backwards incompatible. The default value of VL53L0X_MAX_SENSORS is set in the file tasmota.h
+* **MAXIMUM AMOUNT OF SENSORS:** Tasmota supports by default up to 8 of these sensors in parallel. Expanding this limit is possible but backwards incompatible. The default value of VL53L0X_MAX_SENSORS is set in the file tasmota.h
 
-* VL53L0X LONG RANGE: By default VL53L0X reads up to 1.2 meters. If you want to use the long range mode (up to 2.2 meters), you need to add a define in user_config_override.h file:
+* **VL53L0X LONG RANGE:** By default VL53L0X reads up to 1.2 meters. If you want to use the long range mode (up to 2.2 meters), you need to add a define in user_config_override.h file:
 ```cpp
 #define VL53L0X_LONG_RANGE
 ```
