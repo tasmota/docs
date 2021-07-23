@@ -442,4 +442,34 @@ This module is a simplified version of `os.path` module of standard Berry, but d
 
 Tasmota Function|Parameters and details
 :---|:---
-path.exists<a class="cmnd" id="path_exists"></a>|`(file_name:string) -> bool`<br>returns `true` if the file exists. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
+path.exists<a class="cmnd" id="path_exists"></a>|`(file_name:string) -> bool`<br>Returns `true` if the file exists. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
+
+### **`introspect` module**
+
+This modules allows to do introspection on instances and modules, to programmatically list attributes, set and get them.
+
+
+```python
+> class A var a,b def f() return 1 end end
+> ins=A()
+> ins.a = "foo"
+> import introspect
+
+> introspect.members(ins)
+['b', 'a', 'f']
+
+> introspect.get(ins, "a")
+foo
+
+> introspect.set(ins, "a", "bar")
+bar
+
+> ins.a
+bar
+```
+
+Tasmota Function|Parameters and details
+:---|:---
+introspect.members<a class="cmnd" id="introspect_members"></a>|`(nil | instance | module | class) -> list`<br>Returns the list of members of the object. If `nil` is passed, it returns the list of globals (similar to `global` module). Note: virtual dynamic members are not listed.
+introspect.get<a class="cmnd" id="introspect_get"></a>|`(instance | module, name:string) -> any`<br>Returns the member of name `name` or `nil` if it does not exist. Note: virtual dynamic members are not yet supported. Note2: classes are not yet supported.
+introspect.set<a class="cmnd" id="introspect_set"></a>|`(instance | module, name:string, value:any) -> any`<br>Sets the member of name `name` to `value` or ignores the call if the member does not exist. Note: virtual dynamic members are not yet supported.
