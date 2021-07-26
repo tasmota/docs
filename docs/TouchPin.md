@@ -1,7 +1,7 @@
 The ESP32 has 10 capacitive touch GPIOs. It is possible to use a maximum number of 4 as a touch button.  
 
 !!! note
-     Only special pins are usable and not all of these 10 pins are exposed on every dev-board. More info in this [article] (https://randomnerdtutorials.com/esp32-touch-pins-arduino-ide/)
+     Only special pins are usable and not all of these 10 pins are exposed on every dev-board. More info in this [article](https://randomnerdtutorials.com/esp32-touch-pins-arduino-ide/)
   
 
 After wiring a cable or electrode to a supported pin you have to configure it in **Configure Module** as "button_tc".  
