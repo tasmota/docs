@@ -553,9 +553,12 @@ If you define a variable with the same name as a special variable that special v
 
 ## Commands
 
-`=> <command>` Execute <command>  recursion disabled  
-`+> <command>` Execute <command>  recursion enabled  
-`-> <command>` Execute <command> - do not send MQTT or log messages (i.e., silent execute - useful to reduce traffic)  
+`=> <command>` Execute <command> cmd with MQTT output enabled
+`-> <command>` Execute <command> cmd with MQTT output disabled, _**recursion**_  disabled. Do not send MQTT or log messages (i.e., silent execute - useful to reduce traffic)  
+`+> <command>` Execute <command> cmd with MQTT output enabled, _**recursion**_ enabled.
+!!! warning
+  _**recursion**_: If you execute a tasmota cmd in an >E section and this cmd itself executes >E you will get an infinite loop.
+this is disabled normally and enabled by the +> in case you know what you are doing
 
 **Variable Substitution**  
 - A single percent sign must be given as `%%`  
@@ -609,6 +612,8 @@ If `#define USE_SCRIPT_SUB_COMMAND` is included in your `user_config_override.h`
 
 It is possible to "replace" internal Tasmota commands. For example, if a `#POWER1(num)` subroutine is declared, the command `POWER1` is processed in the scripter instead of in the main Tasmota code.  
 
+String parameter should be passed within double quotas: `CUSTOMCMD "Some string here"`
+  
 `=(svar)` executes a routine whose name is passed as a string in a variable (dynamic or self modifying code). The string has to start with `>` or `=#` for the routine to be executed.
 
 ```
