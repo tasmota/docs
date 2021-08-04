@@ -246,7 +246,7 @@ After this, your new config is saved in the default CFG_HOLDER on your device.
 This is necessary to avoid losing your config if you update to a new firmware by using the pre-build images or if you forget to change the CFG_HOLDER to your custom one if you build the firmware yourself.
 
 **How CFG_HOLDER works**: The config of your Tasmota is stored in an area of the flash memory (flash config area or _FCA_). Using a new device (where Tasmota firmware runs the first time) the FCA does not contain a Tasmota configuration so on the very first start of Tasmota it uses your settings from _my_user_config.h_ or _user_config_override.h_ and copy this into the FCA.
-To prevent that the following Tasmota starts will overwrite your FCA settings again (e.g. because you has changed some things using commands) the FCA will be marked by a header value to indicate not copy the values from _my_user_config.h_/_user_config_override.h_ again. This header becomes the value from CFG_HOLDER.
+To prevent the following Tasmota starts from overwriting your FCA settings again (e.g. because you changed some things using commands), the FCA will be marked by a header value indicating not to copy the values from _my_user_config.h_/_user_config_override.h_ again. This header becomes the value from CFG_HOLDER.
 
 On every start the device compares the header of FCA with the CFG_HOLDER from your source code and only if this header value is not identical, Tasmotat will copy the data from my_user_config.h/user_config_override.h to flash settings area - this is normally only the case on a fresh device or if you has changed the CFG_HOLDER value.
 

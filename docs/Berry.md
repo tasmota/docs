@@ -300,6 +300,7 @@ Tasmota Function|Parameters and details
 :---|:---
 tasmota.get\_free\_heap<a class="cmnd" id="tasmota_get_free_heap"></a>|`() -> int`<br>Returns the number of free bytes on the Tasmota heap.
 tasmota.publish<a class="cmnd" id="tasmota_publish"></a>|`(topic:string, payload:string[, retain:bool]) -> nil`<br>Equivalent of `publish` command, publishes a MQTT message on `topic` with `payload`. Optional `retain` parameter.
+tasmota.publish_result<a class="cmnd" id="tasmota_publish_result"></a>|`(payload:string, subtopic:bool) -> nil`<br>Publishes a JSON result and triggers any associated rule. `payload` is expected to be a JSON string, and `subtopic` the subtopic used to publish the payload.
 tasmota.cmd<a class="cmnd" id="tasmota_cmd"></a>|`(command:string) -> string`<br>Sends any command to Tasmota, like it was type in the console. It returns the result of the command if any.
 tasmota.memory<a class="cmnd" id="tasmota_memory"></a>|`() -> map`<br>Returns memory stats similar to the Information page.<br>Example: `{'frag': 51, 'program_free': 1856, 'flash': 4096, 'heap_free': 226, 'program': 1679}`<br>or when PSRAM `{'psram_free': 3703, 'flash': 16384, 'program_free': 3008, 'program': 1854, 'psram': 4086, 'frag': 27, 'heap_free': 150}`
 tasmota.millis<a class="cmnd" id="tasmota_millis"></a>|`([delay:int]) -> int`<br>Returns the number of milliseconds since last reboot. The optional parameter lets you specify the number of milliseconds in the future; useful for timers.
@@ -434,3 +435,41 @@ Wire Function|Parameters and details
 \_available<a class="cmnd" id="wire_available">|`() -> bool`
 \_read<a class="cmnd" id="wire_read">|`read() -> int`<br>Reads a single byte.
 \_write<a class="cmnd" id="wire_write">|`(value:int or s:string) -> nil`<br>Sends either single byte or an arbitrary string.
+
+### **`path` module**
+
+This module is a simplified version of `os.path` module of standard Berry, but disabled on Tasmota because we don't have a full OS.
+
+Tasmota Function|Parameters and details
+:---|:---
+path.exists<a class="cmnd" id="path_exists"></a>|`(file_name:string) -> bool`<br>Returns `true` if the file exists. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
+
+### **`introspect` module**
+
+This modules allows to do introspection on instances and modules, to programmatically list attributes, set and get them.
+
+
+```python
+> class A var a,b def f() return 1 end end
+> ins=A()
+> ins.a = "foo"
+> import introspect
+
+> introspect.members(ins)
+['b', 'a', 'f']
+
+> introspect.get(ins, "a")
+foo
+
+> introspect.set(ins, "a", "bar")
+bar
+
+> ins.a
+bar
+```
+
+Tasmota Function|Parameters and details
+:---|:---
+introspect.members<a class="cmnd" id="introspect_members"></a>|`(nil | instance | module | class) -> list`<br>Returns the list of members of the object. If `nil` is passed, it returns the list of globals (similar to `global` module). Note: virtual dynamic members are not listed.
+introspect.get<a class="cmnd" id="introspect_get"></a>|`(instance | module, name:string) -> any`<br>Returns the member of name `name` or `nil` if it does not exist. Note: virtual dynamic members are not yet supported. Note2: classes are not yet supported.
+introspect.set<a class="cmnd" id="introspect_set"></a>|`(instance | module, name:string, value:any) -> any`<br>Sets the member of name `name` to `value` or ignores the call if the member does not exist. Note: virtual dynamic members are not yet supported.

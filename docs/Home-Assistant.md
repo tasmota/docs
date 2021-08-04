@@ -543,11 +543,11 @@ Add in Home Assistant using the [MQTT Binary Sensor](https://www.home-assistant.
 
 !!! example "PIR Sensor"
 
-Used for a configured [PIR Sensor](PIR-Motion-Sensors) and requires this rule:
+Used for a configured [PIR Sensor](PIR-Motion-Sensors) and requires correct [SwitchMode](Commands.md#switchmode) with ON/OFF states and this rule:
 
 **Required Commands**
 ```console
-Rule1 on Switch1#State=1 do Publish stat/tasmota/MOTION ON endon on Switch1#State=1 do Publish stat/tasmota/MOTION OFF endon
+Rule1 on Switch1#State=1 do Publish stat/tasmota/MOTION ON endon on Switch1#State=0 do Publish stat/tasmota/MOTION OFF endon
 Rule1 1
 ```
 ```yaml
@@ -562,20 +562,21 @@ binary_sensor:
     qos: 1
 ```
 
+
 !!! example "Door Sensor"
 
-Requires a reed switch configured in Tasmota.
+Requires a reed switch configured in Tasmota. Make sure correct [SwitchMode](Commands.md#switchmode) is set
 
 **Required Commands**
 ```console
-Rule1 on Switch1#State=1 do Publish stat/tasmota/MOTION ON endon on Switch1#State=1 do Publish stat/tasmota/MOTION OFF endon
+Rule1 on Switch1#State=1 do Publish stat/tasmota/DOOR ON endon on Switch1#State=0 do Publish stat/tasmota/DOOR OFF endon
 Rule1 1
 ```
 ```yaml
 binary_sensor:
   - platform: mqtt
-    name: "Tasmota Motion Sensor"
-    state_topic: "stat/tasmota/MOTION"
+    name: "Door Sensor"
+    state_topic: "stat/tasmota/GARAGE"
     availability_topic: "tele/tasmota/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
