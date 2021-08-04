@@ -135,6 +135,7 @@ nav:
     - Scripting: Scripting-Language.md
     - Serial-to-TCP-Bridge.md
     - Blinds-and-Shutters.md
+    - Range-Extender.md
     - Smart-Meter-Interface.md
     - Subscribe-&-Unsubscribe.md
     - TasmotaClient.md
