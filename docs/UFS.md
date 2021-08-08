@@ -36,7 +36,7 @@ board                   = esp32_4M
 
 ## UFS in the Web GUI
 
-After compiling and flashing you will find a new entry in Tasmota webUI: ***Configuration - Manage File system***
+After compiling and flashing you will find a new entry in Tasmota webUI: ***Consoles - Manage File system***
 
 ![Manage File System button](_media/ufs_menu_manage.png)
 
