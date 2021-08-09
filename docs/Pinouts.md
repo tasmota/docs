@@ -13,7 +13,7 @@
 ### LM1 
 ![LM1 Pinout](_media/pinouts/LM1_pinout.jpg)
 
-### 2AJK8-LM2
+### LM2
 ![LM2 Pinout](_media/pinouts/LM2_pinout.jpg)
 
 ### TYWE1S 
