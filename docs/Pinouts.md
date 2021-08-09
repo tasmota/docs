@@ -13,6 +13,9 @@
 ### LM1 
 ![LM1 Pinout](_media/pinouts/LM1_pinout.jpg)
 
+### LM2
+![LM2 Pinout](_media/pinouts/LM2_pinout.jpg)
+
 ### TYWE1S 
 ![TYWE1S Pinout](_media/pinouts/TYWE1S_pinout.jpg)
 
