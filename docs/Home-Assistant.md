@@ -76,6 +76,36 @@ Examples of creating custom discovery messages:
 - [RFID Tag](https://blakadder.com/tasmota-tags/)
 - [PIR sensor](https://blakadder.com/pir-in-tasmota-integration/)
 
+### 1.5 ACL Rules
+
+When using this Tasmota native integration in Home Assistant (i.e. `SetOption19 0`), note that the Tasmota devices will have to write to the `tasmota/discovery/#` topic. So, if you have any ACL rules applied, add the following to the ACL file (user section or general section): `topic write tasmota/discovery/#`.
+
+For completeness' sake, below is a snippet of the ACL file with the full recommended structure.
+
+```
+########
+######## General section
+# Commented out all general rules.
+# topic readwrite homeassistant/#
+# topic write tasmota/discovery/#
+########
+########
+######## User section
+user sonoff-living-fan-2
+# This is used when SetOption19 1 is used.
+topic readwrite homeassistant/#
+# This is used when SetOption19 0 is used.
+topic write tasmota/discovery/#
+########
+########
+######## Pattern Section
+# https://tasmota.github.io/docs/Securing-your-IoT-from-hacking/
+pattern read cmnd/%u/#
+pattern write stat/%u/#
+pattern write tele/%u/#
+########
+```
+
 ____
 
 ## 2. Editing configuration.yaml
