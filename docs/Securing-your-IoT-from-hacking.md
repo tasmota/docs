@@ -92,7 +92,42 @@ pattern write tele/%u/#
 
 My user root is allowed to do everything. This is used in my home-automation to control all devices and listen to all devices. The "pattern" is used for ALL other users and the %u is a substitute. The great thing is that the device can read its configuration but cannot write to it. And the status information it posts to the /status/ but is not able to read it afterward. With this minimal configuration, Tasmota devices are running.
 
-To add the different user to Mosquitte the following two commands work fine. There is also a re-read available, but a restart works better for me.
+____
+
+**Note: If you are using Home Assistant**, and using the Tasmota integration, and if you have used `SetOption19 0` on the Tasmota device, then the devices will have to write to the `tasmota/discovery/#` topic. So, add the following to the ACL file (user section or general section): `topic write tasmota/discovery/#`.
+
+For completeness' sake, below is a snippet of the ACL file with the full recommended structure.
+
+```
+########
+######## General section
+# Commented out all general rules.
+# topic readwrite homeassistant/#
+# topic write tasmota/discovery/#
+########
+
+########
+######## User section
+
+user sonoff-living-fan-2
+# This is used when SetOption19 1 is used.
+topic readwrite homeassistant/#
+# This is used when SetOption19 0 is used.
+topic write tasmota/discovery/#
+
+########
+
+########
+######## Pattern Section
+# https://tasmota.github.io/docs/Securing-your-IoT-from-hacking/
+pattern read cmnd/%u/#
+pattern write stat/%u/#
+pattern write tele/%u/#
+########
+```
+____
+
+To add the different user to Mosquitto the following two commands work fine. There is also a re-read available, but a restart works better for me.
 
 ```
 sudo mosquitto_passwd -b /etc/mosquitto/conf.d/jp.pw ESP_123456 987654321
