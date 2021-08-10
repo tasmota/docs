@@ -15,7 +15,7 @@ Home Assistant has different options of adding Tasmota devices:
 2. Manual configuration by editing configuration.yaml
 3. MQTT discovery (_deprecated due to breaking changes for light in Home Assistant 2021.5_)
 
-## Tasmota Integration
+## 1. Tasmota Integration
 
 Once you configure the [Home Assistant](https://www.home-assistant.io/integrations/tasmota/) integration every new Tasmota device with `SetOption19 0` set, will be discovered automatically. 
 
@@ -28,7 +28,7 @@ All Tasmota devices will be listed in their own Tasmota card in **Configuration 
 
 Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmota integration and [`FriendlyName<x>`](Commands.md#friendlyname) to name power outputs (switch or light entities in HA).
 
-### Supported Entities
+### 1.1 Supported Entities
 
 - Lights as `light` entities.  
   Single channel Dimmers, RGB lights, RGB lights with Color Temperature control and RGB lights with White control are supported.
@@ -47,11 +47,11 @@ Types of devices not listed above still require [manual configuration](#editing-
 
 !!! warning "Zigbee devices paired in Tasmota will **NOT** be discovered in Home Assistant"
 
-### Transition from MQTT Discovery
+### 1.2 Transition from MQTT Discovery
 
 If you have been using `SetOption19 1` for device discovery, setting it to `SetOption19 0` will remove your Tasmota device from the MQTT device list and add it to the Tasmota integrations in HA. They will be treated as new entities in Home Assistant but if you previously used default values they will use the same entity_id as the MQTT discovery devices.
 
-### Removing devices
+### 1.3 Removing devices
 
 You cannot as long as Home Assistant support is enabled in your Tasmota binary. Disable the device in Home Assistant instead. There is no setoption to disable all autodiscovery.
 
@@ -61,7 +61,7 @@ Deleting them from Home Assistant while Tasmota device is still active will simp
 
 If you opt to switch to MQTT Discovery, issuing `SetOption19 1` command will remove all Tasmota entities and add new entities under the MQTT integration.
 
-### Supplemental Custom Discovery Message
+### 1.4 Supplemental Custom Discovery Message
 
 You can use [MQTT Discovery](https://www.home-assistant.io/docs/mqtt/discovery/) in HA to add sensors and other entities that are not covered with Tasmota integration and associate them with an already discovered device.
 
@@ -76,7 +76,9 @@ Examples of creating custom discovery messages:
 - [RFID Tag](https://blakadder.com/tasmota-tags/)
 - [PIR sensor](https://blakadder.com/pir-in-tasmota-integration/)
 
-## Editing configuration.yaml
+____
+
+## 2. Editing configuration.yaml
 
 Adding devices manually is done by editing the `configuration.yaml` file and adding appropriate blocks of yaml code to the corresponding section.
 
@@ -98,7 +100,7 @@ If you are using a localized (non-english) version be sure to check the correct 
 !!! tip
     If you want the power states to be persistent in Tasmota and Home Assistant set `PowerRetain 1` instead of using `retain: true` in Home Assistant
 
-### Switches
+### 2.1 Switches
 
 Add in Home Assistant using the [MQTT Switch](https://www.home-assistant.io/components/switch.mqtt/) integration.
 
@@ -195,7 +197,7 @@ light:
     If you are using your device to control a light, you may want to use [`MQTT Light`](https://www.home-assistant.io/components/light.mqtt/) integration instead.   
 Simply replace `switch:` with `light:` in the configuration keeping everything else the same.
 
-### Lights
+### 2.2 Lights
 Add in Home Assistant using the [MQTT Light](https://www.home-assistant.io/components/light.mqtt/) integration.
 
 All configurations require `SetOption59 1` - enables sending of tele/%topic%/STATE on POWER and light related commands
@@ -427,7 +429,7 @@ The key is the `=` after color string in hex. It will retain current white value
     Thorough explanation of template: schema lights and its features on [https://blakadder.com/template_schema_lights/](https://blakadder.com/template_schema_lights/)
 <!-- tabs:end -->
 
-### Sensors
+### 2.3 Sensors
 
 Add in Home Assistant using the [MQTT Sensor](https://www.home-assistant.io/components/sensor.mqtt/) integration.
 
@@ -498,7 +500,7 @@ sensor:
     device_class: signal_strength
 ```
 
-### Power Monitoring
+### 2.4 Power Monitoring
 
 <img alt="Example of Lovelace UI" src="../_media/hax_pow1.png" style="margin:5px;float:right;width:10em"></img>
 
@@ -538,7 +540,7 @@ sensor:
 
 [Video tutorial](https://www.youtube.com/watch?v=ktHQrhAF8VQ) on a power monitoring plug setup by Digiblur
 
-### Binary Sensors
+### 2.5 Binary Sensors
 Add in Home Assistant using the [MQTT Binary Sensor](https://www.home-assistant.io/components/binary_sensor.mqtt/) integration.
 
 !!! example "PIR Sensor"
@@ -599,7 +601,7 @@ binary_sensor:
 ```
 <!-- tabs:end -->
 
-### Fans
+### 2.6 Fans
 
 Add in Home Assistant using the [MQTT Fan](https://www.home-assistant.io/components/fan.mqtt/) integration.
 
@@ -642,7 +644,7 @@ fan:
 ```
 <!-- tabs:end -->
 
-### Covers
+### 2.7 Covers
 
 Add in Home Assistant using the [MQTT Cover](https://www.home-assistant.io/components/cover.mqtt/) integration.
 
@@ -681,7 +683,7 @@ If you change `name:` make sure to reflect that change in the value_template cov
 
 <!-- tabs:end -->
 
-### Covers
+### 2.8 Climate / Thermostat
 
 <!-- tabs:start -->
 
@@ -689,7 +691,7 @@ If you change `name:` make sure to reflect that change in the value_template cov
 
 <!-- tabs:end -->
 
-### Device Specific
+### 2.9 Device Specific
 
 <!-- tabs:start -->
 
@@ -932,7 +934,7 @@ In addition, add to your home assistant start up automation a query for the curr
         payload: ""       
 ```
 
-### Zigbee Devices
+### 2.10 Zigbee Devices
 
 <!-- tabs:start -->
 !!! warning 
@@ -1020,7 +1022,7 @@ binary_sensor:
    
 <!-- tabs:end -->
 
-## Useful Automations
+### 2.11 Useful Automations
 
 !!! example "Extended device information"
 
@@ -1114,14 +1116,16 @@ automation:
 
 ![](https://cdn.pbrd.co/images/HY47i1b.jpg)
 
-## MQTT Discovery
+____
+
+## 3. MQTT Discovery
 
 !!! warning "Development of this component is halted in favor of Tasmota (beta) integration"
 
 Home Assistant has a feature called [MQTT discovery](https://www.home-assistant.io/docs/mqtt/discovery/).
 With MQTT discovery no user interaction or configuration file editing is needed to add new devices in Home Assistant. Most of the changes will be updated in HA automatically.
 
-### Enable Autodiscovery
+### 3.1 Enable Autodiscovery
 Enable autodiscovery on a device with the command:
 
 ```console
@@ -1136,7 +1140,7 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Ho
 
 !!! note "Special settings for each device type:"
 
-### Finalising Setup
+### 3.2 Finalising Setup
 
 All automatically discovered entities will show up under **Configuration -> Integrations -> MQTT** card.
 
@@ -1164,7 +1168,7 @@ You can further customise your device in Home Assistant by clicking on the entit
 
 **`SetOption59` to `1`**: Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands `State`, `Power` and any command causing a light to be turned on.
 
-### Supported Entities
+### 3.3 Supported Entities
 
 === "Buttons"
     Announced to Home Assistant as [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
@@ -1234,12 +1238,14 @@ You can further customise your device in Home Assistant by clicking on the entit
 
 Types of devices not listed above (covers, etc) require [manual configuration](#editing-configurationyaml)
 
-### Disabling
+### 3.4 Disabling
 
 To disable MQTT discovery and remove the retained message, execute `SetOption19 0`.  
 The "homeassistant/" topic is removed from Home Assistant and MQTT broker.  Changed setoptions will not revert to defaults!
 
-## Troubleshooting
+____
+
+## 4. Troubleshooting
 
 Test if Tasmota and Home Assistant can communicate properly. 
 
