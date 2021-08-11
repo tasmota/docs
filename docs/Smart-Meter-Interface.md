@@ -1,7 +1,9 @@
 <a id="top">
+
+!!! info "This driver extracts selected values from Smart Meters over various protocols, filters and publishes them to MQTT as regular sensors."
+
 !!! failure "This feature is not included in precompiled binaries"
 
-This driver extracts selected values from Smart Meters over various protocols, filters and publishes them to MQTT as regular sensors.<BR>
 Based on Tasmota's [scripting language](Scripting-Language). To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
 ```
