@@ -68,7 +68,7 @@ For **2 Channel board version 1.0**, you need to solder (or otherwise permanentl
 
 After having connected GPIO0 and GND, power the board - it will boot directly to flashing mode. Flash your firmware and disconnect the board.
 
-### Sonoff T1 EU 3CH (2018-10-03)
+### Sonoff T1 EU 1CH/2CH/3CH (2018-10-03)
 
 ![Sonoff T1 3CH EU board V1.0](https://i.imgur.com/9dyEw1S.jpg)
 
