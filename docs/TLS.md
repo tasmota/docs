@@ -181,6 +181,7 @@ Here are most common TLS errors:
 | 29 | BR_ERR_NO_CLIENT_AUTH |
 | 31 | BR_ERR_IO |
 | 54 | BR_ERR_X509_EXPIRED X.509 status: certificate is expired or not yet valid. |
+| 56 | BR_ERR_X509_BAD_SERVER_NAME X.509 status: expected server name was not found in the chain. |
 | 62 | X509 not trusted, the server certificate is not signed by the CA (AWS IoT or LetsEncrypt) |
 | 266 | SSL3_ALERT_UNEXPECTED_MESSAGE |
 | 276 | TLS1_ALERT_BAD_RECORD_MAC |
