@@ -497,7 +497,7 @@ SetOption115<a class="cmnd" id="setoption115"></a>|ESP32 MI32 BLE<BR>`0` = disab
 SetOption116<a class="cmnd" id="setoption116"></a>|Auto-query of lights and devices<BR>`1` = disable
 SetOption117<a class="cmnd" id="setoption117"></a>|Run fade at fixed duration instead of fixed slew rate<BR>`1` = enable
 SetOption123<a class="cmnd" id="setoption123"></a>|Wiegand tag number output in hex format<BR>`1` = enable
-SetOption124<a class="cmnd" id="setoption124"></a>|Wiegand key pad stroke format<br>`0` = single char *(default)*<BR>`1` = one tag (ending char #)
+SetOption124<a class="cmnd" id="setoption124"></a>|Wiegand key pad stroke format<br>`0` = one tag (ending char # or *) *(default)*<BR>`1` = one key
 SetOption125<a class="cmnd" id="setoption125"></a>|_ZbBridge only_ Hide bridge topic from zigbee topic (use with [`SetOption89`](#setoption89))<br>`1` = enable
 SetOption126<a class="cmnd" id="setoption126"></a>|Enable arithmetic mean over teleperiod for JSON temperature for DS18x20 sensors<BR>`1` = enable
 
