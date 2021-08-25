@@ -40,6 +40,7 @@ Name|Description
 **Honeywell HPMA115xx** | Particulate Matter Sensor (serial)
 **HTU21** | Temperature and Humidity Sensor (I^2^C)
 **HX711** | Load Cell Sensor (gpio)
+**[HRG15](HRG15)** | Solid State Rain Sensor (serial)
 [**iAQ-Core**](IAQ) | Indoor Air Quality Sensor (I^2^C)
 **iEM3000** | Schenider Electric modbus energy meter (serial)
 **INA219** | High-Side DC Current and Voltage Sensor (I^2^C)
