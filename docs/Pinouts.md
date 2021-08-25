@@ -47,6 +47,9 @@
 ### ESP8266-S3
 ![ESP8266-S3 Pinout](_media/pinouts/ESP-8266-S3_pinout.jpg)
 
+### EcoPlugs 449A
+![EcoPlugs 449A Pinout](_media/pinouts/ECOPLUGS-449A_pinout.jpg)
+
 ## ESP32 Based
 ### ESP32-CAM
 
