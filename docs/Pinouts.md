@@ -47,8 +47,8 @@
 ### ESP8266-S3
 ![ESP8266-S3 Pinout](_media/pinouts/ESP-8266-S3_pinout.jpg)
 
-### 4494A-ECOPLUGS
-![EcoPlugs 449A Pinout](_media/pinouts/ECOPLUGS-449A_pinout.jpg)    
+### 449A-ECOPLUGS
+![EcoPlugs 449A Pinout](_media/pinouts/449A-ECOPLUGS_pinout.jpg)    
 [Datasheet](https://fccid.io/PAGECO-PLUGS/User-Manual/user-manual-2659058.iframe)
 
 ## ESP32 Based
