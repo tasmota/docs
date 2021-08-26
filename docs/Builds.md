@@ -11,7 +11,7 @@ Release binaries are from the [official OTA server](http://ota.tasmota.com/tasmo
 Features that are not available in any official release build have to be enabled in source code and compiled yourself. Read more about [compiling your own build](Compile-your-build).
 
 !!! tip
-    You might find some of the features you need included in one of our unofficial experimental builds over at [https://github.com/tasmota/binaries](https://github.com/tasmota/binaries).
+    You might find some of the features you need included in one of our unofficial experimental builds over at [https://github.com/tasmota/binaries](https://github.com/Jason2866/Tasmota-specials/tree/firmware/firmware).
 
 ## Firmware Variants
 
