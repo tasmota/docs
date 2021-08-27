@@ -80,4 +80,9 @@ Index | Define              | Driver  | Device   | Address(es) | Description
   53  | USE_MLX90640        | xdrv_43 | MLX90640 | 0x33        | 32x24 IR/Thermal image sensor
   54  | USE_VL53L1X         | xsns_77 | VL53L1X  | 0x29        | Time-of-flight (ToF) distance sensor
   55  | USE_EZO             | xsns_78 | EZO_*    | 0x61 - 0x70 | EZO family of sensors (DO, ORP, PH...)
-  56  | USE_SEESAW_SOIL     | xsns_81 | ADA4026  | 0x36 - 0x39 | Adafruit capacitve soil sensor (https://www.adafruit.com/product/4026)
+  56  | USE_SEESAW_SOIL     | xsns_81 | ADA4026  | 0x36 - 0x39 | Adafruit capacitive [soil sensor](https://www.adafruit.com/product/4026)
+    57  | USE_TOF10120        | xsns_84 | TOF10120 | 0x52        | Time-of-flight (ToF) distance sensor
+  58  | USE_MPU_ACCEL       | xsns_85 | MPU_ACCEL| 0x68        | MPU6886/MPU9250 6-axis MotionTracking sensor from M5Stack
+  59  | USE_BM8563          | xdrv_56 | BM8563   | 0x51        | BM8563 RTC from M5Stack
+  60  | USE_AM2320          | xsns_88 | AM2320   | 0x5C        | Temperature and Humidity sensor
+  61  | USE_T67XX           | xsns_89 | T67XX    | 0x15        | CO2 sensor
