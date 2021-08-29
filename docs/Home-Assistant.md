@@ -681,7 +681,7 @@ If you change `name:` make sure to reflect that change in the value_template cov
 
 <!-- tabs:end -->
 
-### Covers
+### Climate
 
 <!-- tabs:start -->
 
