@@ -134,6 +134,8 @@ SwitchMode, as the name implies, applies _**ONLY**_ to GPIO configured in Tasmot
     If the button is pressed again before the timeout, Tasmota will send an `INV` command. The `INV` command is for the controlling software (Home Assistant) to switch between incrementing and decrementing the dimmer (use `Switch<x>#state=5` in rules).
 
     If button is pressed twice (within time set in `SetOption32`), Tasmota will send a `DOUBLE` command. Note that this **doesn't** change behaviour of other switch states. So along with the `DOUBLE` command, `TOGGLE` command will also be fired twice upon a double press (use `Switch<x>#state=8` in rules).
+    
+    If the button is pressed only once and shorter than the time set in `SetOption32`, Tasmota will also send the `POWER_DELAYED` command (use `Switch<x>#state=10` in rules) when no second press occurs within time set in `SetOption32`. You can use this for triggering single press events instead of using `TOGGLE` if you want to use single and double press individually (since `TOGGLE` is triggered for both single and double press). Keep in mind, that this event is delayed in comparison to `TOGGLE`.
 
     !!! tip
         Possible use case: [using rules](Rules.md#control-a-dimmer-with-one-switch) to create additional features or to control another Tasmota device. 
