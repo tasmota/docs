@@ -474,3 +474,68 @@ introspect.members<a class="cmnd" id="introspect_members"></a>|`(nil | instance 
 introspect.get<a class="cmnd" id="introspect_get"></a>|`(instance | module, name:string) -> any`<br>Returns the member of name `name` or `nil` if it does not exist. Note: virtual dynamic members are not yet supported. Note2: classes are not yet supported.
 introspect.set<a class="cmnd" id="introspect_set"></a>|`(instance | module, name:string, value:any) -> any`<br>Sets the member of name `name` to `value` or ignores the call if the member does not exist. Note: virtual dynamic members are not yet supported.
 introspect.vcall<a class="cmnd" id="introspect_vcall"></a>|`(function, [args,]* [list]?) -> any`<br>Calls a function with a dynamically built list of arguments. If the last argument is a list, it is expanded into individual arguments.
+
+### **`webclient` class**
+  
+The class `webclient` provides an implementation of an HTTP/HTTPS web client and make requests on the LAN or over the Internet.
+
+Features:
+
+ - Support HTTP and HTTPS requests to IPv4 addresses and domain names, to arbitrary ports, via a full URL.
+ - Support for HTTPS and TLS via BearSSL (which is much lighter than default mbetTLS)
+ - HTTPS (TLS) only supports cipher ECDHE_RSA_WITH_AES_128_GCM_SHA256 which is both secure and widely supported
+ - Support for URL redirections (tbc)
+ - Ability to set custom User-Agent
+ - Ability to set custom headers
+ - Ability to set Authentication header
+ - Support for Chunked encoding response (so works well with Tasmota devices)
+
+The current implementation is based on a fork of Arduino's HttpClient customized to use BearSSL
+
+Current limitations (if you need extra features please open a feature request on GitHub):
+
+ - Only supports text responses (html, json...) but not binary content yet (no NULL char allowed)
+ - Maximum response size is 32KB, requests are dropped if larger
+ - HTTPS (TLS) is in 'insecure' mode and does not check the server's certificate; it is subject to Man-in-the-Middle attack
+ - No access to response headers
+ - No support for compressed response
+
+ 
+### Example
+ 
+``` python
+> cl = webclient()
+> cl.begin("http://ota.tasmota.com/tasmota32/release/")
+<instance: webclient()>
+
+> r = cl.GET()
+> print(r)
+200
+
+> s = cl.get_string()
+> print(s)
+<pre>
+ <b></b>Alternative firmware for ESP32 based devices with web UI,
+[.../...]
+```
+
+Main functions:
+
+WebClient Function|Parameters and details
+:---|:---
+begin<a class="cmnd" id="wc_begin">|`(url:string) -> self`<br>Set the complete URL, including protocol (`http` or `https`), IPv4 or domain name, port... This should be the first call. The connection is not established at this point.
+GET<a class="cmnd" id="wc_get">|`() -> result_code:int`<br>Establish a connection to server, send GET request and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
+POST<a class="cmnd" id="wc_post">|`(payload:string or bytes) -> result_code:string`<br>Establish a connection to server, send POST request with payload and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
+read<a class="cmnd" id="wire_read">|`(addr:int, reg:int, size:int) -> int or nil`<br>Read a value of 1..4 bytes from address `addr` and register `reg`. Returns `nil` if no response.
+get\_size<a class="cmnd" id="wc_get_string">|`() -> int`<br>Once a connection succeeded (GET or POST), reads the size of the response as returned by the server in headers (before actually reading the content). A value `-1` means that the response size is unknown until you read it.
+get\_string<a class="cmnd" id="wc_get_string">|`() -> string`<br>Once a connection succeeded (GET or POST), reads the content of the response in a string. The response max size is 32KB, any response larger is dropped. Connection is closed and resources are freed after this call completes.
+close<a class="cmnd" id="wc_close">|`() -> nil`<br>Closes the connection and frees buffers. `close` can be called after `GET` or `POST` and is implicitly called by `get_string`. You don't usually need to use `close` unless you are only retrieving the result_code for a request and not interested in the content.
+
+Request customization:
+
+WebClient Function|Parameters and details
+:---|:---
+add\_header<a class="cmnd" id="wc_add_header">|`(name:string, value:string [, first:bool=false [, replace:bool=true]]) -> nil`<br>Sets an arbitrary header for `name`:`value`.<BR>`first` moves the header in the first place, `replace` replaces a header with the same name or adds one line if false.
+set\_timeouts<a class="cmnd" id="wc_set_timeouts">|`(req_timeout:int [, tcp_timeout:int]) -> self`<br>Sets the request timeout in ms and optionally the TCP connection timeout in ms.
+set\_useragent<a class="cmnd" id="wc_set_useragent">|`(useragent:string) -> self`<br>Sets the User-Agent header used in request.
+set\_auth<a class="cmnd" id="wc_set_auth">|`(auth:string) or (user:string, password:string) -> self`<br>Sets the authentication header, either using pre-encoded string, or standard user/password encoding.
