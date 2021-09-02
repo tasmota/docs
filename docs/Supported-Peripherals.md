@@ -12,7 +12,7 @@ Name|Description
 [**APDS-9960**](APDS-9960) |  Ambient Light, RGB Color and Proximity Sensor with Gesture Detection  
 [**AZ 7798**](AZ-7798) | CO<sub>2</sub> Meter Datalogger
 [**BH1750**](BH1750) | Luminosity Sensor
-[**BMP280<BR>BMP085<BR>BMP180)**](BME280) | Pressure Sensor
+[**BMP280<BR>BMP085<BR>BMP180**](BME280) | Pressure Sensor
 [**BME280**](BME280) | Temperature, Humidity and Pressure Sensor
 [**BME680**](BME680) | Temperature, Humidity, Pressure and Gas Sensor
 [**Buzzer**](Buzzer) | Audio Signalling Device
