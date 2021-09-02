@@ -42,7 +42,8 @@ Name|Description
 **HX711** | Load Cell Sensor (gpio)
 [**iAQ-Core**](IAQ) | Indoor Air Quality Sensor (I^2^C)
 **iEM3000** | Schenider Electric modbus energy meter (serial)
-**INA219** | High-Side DC Current and Voltage Sensor (I^2^C)
+**INA219** | 26V DC 12-bit current voltage and power sensor (I^2^C)
+**INA226** | 36V DC 16-bit current voltage and power sensor (I^2^C)
 [**IR Remote**](IR-Remote) | IR transmitter and receiver
 **K30, K70, S8** | CO<sub>2</sub> Sensor (I^2^C) | 
 [**LM75AD**](LM75AD) |  Temperature Sensor (I^2^C)
