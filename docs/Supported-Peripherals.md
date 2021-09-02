@@ -52,17 +52,17 @@ Name|Description
 **MAX31865** | RTD Temperature Sensor Amplifier (SPI)
 **MAX44009** | Ambient Light Sensor (I^2^C)
 [**MCP23008<BR>MCP23017**](MCP230xx) |  I/O Expander (I^2^C)
+[**MCP9808**](MCP9808) |  Temperature Sensor (I^2^C)
 [**MFRC522**](MFRC522) | NFC Tag Reader (SPI)
 [**MGC3130**](MGC3130) | 3D Tracking and Gesture Controller
+[**MPR121**](MPR121) | Proximity Capacitive Touch Sensor Controller (I^2^C)
+[**MPU6050**](MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer Sensor (I^2^C)
 [**MH-Z19B**](MH-Z19B) | CO<sub>2</sub> Sensor 
 [**MLX90614**](MLX90614) | MLX9061X Infrared Thermometer (I^2^C) 
 [**MLX90640**](MLX90640) | MLX90640 Far Infrared Thermal Sensor Array (I^2^C) 
 [**NeoPool**](NeoPool) | Sugar Valley NeoPool Controller (serial)
 [**NRF24L01**](NRF24L01) | NRF24L01 as BLE-bridge for Mijia BT Sensors (SPI)
 [**OpenTherm**](OpenTherm) | OpenTherm adapter (serial)
-[**MCP9808**](MCP9808) |  Temperature Sensor (I^2^C)
-[**MPR121**](MPR121) | Proximity Capacitive Touch Sensor Controller (I^2^C)
-[**MPU6050**](MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer Sensor (I^2^C)
 [**P1 Smart Meter**](P1-Smart-Meter) | Energy Meter (serial)
 [**PAJ7620**](PAJ7620) | Gesture & Proximity Detection Sensor
 [**PIR**](PIR-Motion-Sensors#am312) | Passive Infrared Sensor (gpio)
