@@ -274,6 +274,10 @@ The format of the command is following:
 
 If the device has been correctly paired and its endpoints recorded by Z2T, you shouldn't need to specify a target endpoint. You can use an option `"endpoint":<endpoint>` parameter if Z2T can't find the correct endpoint or if you want to change from the default endpoint. 
 
+!!! MQTT example <BR>
+	MQTT Topic = `cmnd/ZigbeeGateway/ZbSend`<BR>
+	Payload = `{"Device":"0x1234","Send":{"Power":0}}` or `{"Device":"0x1234","Write":{"Power":0}}`
+	
 ### Low-level Commands
 
 There is a special syntax if you want to send arbitrary commands:
