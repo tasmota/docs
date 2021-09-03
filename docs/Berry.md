@@ -501,7 +501,7 @@ Current limitations (if you need extra features please open a feature request on
  - No support for compressed response
 
  
-### Example
+#### Example
  
 ``` python
 > cl = webclient()
