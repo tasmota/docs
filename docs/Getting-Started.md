@@ -5,8 +5,8 @@ description: Getting started with Tasmota. What you need, how to install and do 
 
 <img style="float:right;width:250px" src="../_media/esp8266.png"></img>
 
-#### ESP8266 or ESP8285 Device
-Any [variation](https://en.wikipedia.org/wiki/ESP8266#Espressif_modules) of the [ESP8266 chip](https://www.espressif.com/en/products/hardware/esp8266ex/overview) can be flashed with Tasmota.
+#### ESP Device
+Any [Espressif](https://www.espressif.com/en/products/socs) ESP8255, ESP32, ESP32-S or ESP32-C3 chipset based device can be flashed with Tasmota. Documentation uses the term _ESP_ refers to any of the chips.
 
 #### Serial-to-USB Adapter
 The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?title=Power) is **one of the most important elements** for both flashing the device and for stable operation. You must ensure that the device receives sufficient power (current AND appropriate voltage level) to properly flash the firmware on the device.
@@ -16,7 +16,7 @@ The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?
 * [FTDI FT232](https://www.ftdichip.com/Products/ICs/FT232R.htm) - these adapters have a lot of fakes in the market so buy only from reliable sources ([example](https://www.sparkfun.com/products/13746)). Buy only the variant with a separate 3.3V regulator on PCB! 
 * [CP2102](https://www.silabs.com/documents/public/data-sheets/cp2102-9.pdf) or [PL2303](http://www.prolific.com.tw/UserFiles/files/ds_pl2303HXD_v1_4_4.pdf) - works with certain devices, but using an external 3.3V supply might be necessary. Not recommended for beginners!
 * [RaspberryPi](Flash-Sonoff-using-Raspberry-Pi) - only for advanced users. External 3.3V supply necessary.
-* [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) You can also use a NodeMCU (or similar) as a reliable serial-to-USB adapter if you disable the onboard ESP8266 by bridging the RST and GND pins, and connect TX and RX straight to another ESP82xx instead of crossed.
+* [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) You can also use a NodeMCU (or similar) as a reliable serial-to-USB adapter if you disable the onboard ESP by bridging the RST and GND pins, and connect TX and RX straight to another ESP82xx instead of crossed.
 
 !!! note 
     Don't forget to install drivers for your serial-to-USB adapter.
@@ -24,12 +24,13 @@ The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?
 !!! danger
     Some adapters can be switched between 3.3V and 5V for the data pins, but still provide 5V on the power pin which will irreparably destroy your device.  You **MUST** make sure the data (RX and TX) and VCC pins are set for 3.3V. 
 
-[NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) and [D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html) (Pro/Lite) boards have a micro USB upload port and don't require an adapter.
+Some devices, such as [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU), [D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html) or [M5Stack products](https://m5stack.com/), have an USB upload port and the serial-to-USB adapter built in.
 
 #### Soldering Tools
 To solder you'll of course need a soldering iron, soldering tin and some flux. If you're new to soldering check out some soldering tutorial videos while you're at it.
 
-If you're intimidated by soldering you could get away with holding the headers with jumper wires in the pin holes during flashing but it is not a fool proof process and flashing might fail.
+If you're intimidated by soldering there are 3D printed jigs available for different modules and devices. At worst, you could get away with holding the headers tightly with jumper wires in pin holes during flashing but it is not a foolproof process and flashing might fail.
+
 #### Jumper wires
 
 You could use any kind of wire but [jumper wires](http://blog.sparkfuneducation.com/what-is-jumper-wire) (also called DuPont wires) are more practical than soldering and desoldering.
@@ -82,7 +83,7 @@ If you want to modify the code or default settings and [compile your own Tasmota
 
 ## Hardware Preparation
 
-We need to connect to the serial programming interface of the ESP8266 chip. This is done by connecting our serial-to-USB converter TX and RX pins to the ESP8266 RX and TX pins and powering the chip with the 3.3V and GND pins.
+We need to connect to the serial programming interface of the ESP chip. This is done by connecting our serial-to-USB converter TX and RX pins to the ESP RX and TX pins and powering the chip with the 3.3V and GND pins.
 
 In most cases those pins are available on the PCB in the form of pin holes or solder pads but pin headers or jumper wires need to be soldered or otherwise applied. In some cases you will need to solder wires directly on the chip's pins which requires some experience and good soldering equipment.
 
@@ -102,29 +103,29 @@ Each device has its pins labelled differently. If the labelling isn't visible on
 
 When you have identified pins on your device, connect wires according to the table:
 
-|Serial adapter  | ESP8266 device |
+|Serial adapter  | ESP device |
 |-----------:|:-------------------|
 |        3V3 | 3V3 or VCC         |
 |         TX | RX                 |
 |         RX | TX                 |
 |        GND | GND                |
 
-**Note that TX from your adapter goes to RX on the ESP8266 device and RX from adapter goes to TX on the device!**
+**Note that TX from your adapter goes to RX on the ESP device and RX from adapter goes to TX on the device!**
 ![Image courtesy of https://www.domo-blog.fr/](https://user-images.githubusercontent.com/5904370/57880182-69bf2f80-781e-11e9-8953-88599cb89155.png)
 
 <!--
-#### Serial Connection using NODEMCU ESP8266
-You can use the USB-to-serial adaptor of a NODEMCU (and probably other ESP8266 boards with a serial chip). You do not need to overwrite the existing firmware of your NODEMCU so it can be done using one already pre-installed with Tasmota - when you unplug and reset the NODEMCU it will revert to its previous state. 
+#### Serial Connection using NODEMCU ESP
+You can use the USB-to-serial adaptor of a NODEMCU (and probably other ESP boards with a serial chip). You do not need to overwrite the existing firmware of your NODEMCU so it can be done using one already pre-installed with Tasmota - when you unplug and reset the NODEMCU it will revert to its previous state. 
 
 !!! tip
-    If your NodeMCU or similar ESP8266 module does not respond to the flash commands, you can try to "unbrick" it like that:    
+    If your NodeMCU or similar ESP module does not respond to the flash commands, you can try to "unbrick" it like that:    
     + connect GPIO 0 (D3 on the D1 mini WEMOS) to GND    
     + connect GPIO 15 (D8 on the D1 mini WEMOS) to GND    
     + connect GPIO 2 (D4 on the D1 mini WEMOS) to 3.3V    
 
-Simply connect the EN pin to ground to prevent the ESP8266 chip on your NODEMCU from starting. Then connect as a normal USB-to-serial *except* connect TX to TX and RX to RX, ie no crossover required. 
+Simply connect the EN pin to ground to prevent the ESP chip on your NODEMCU from starting. Then connect as a normal USB-to-serial *except* connect TX to TX and RX to RX, ie no crossover required. 
 
-|NODEMCU  | ESP8266 device |
+|NODEMCU  | ESP device |
 |-----------:|:-------------------|
 |        3V3 | 3V3 or VCC         |
 |         RX | RX                 |
@@ -135,13 +136,13 @@ Simply connect the EN pin to ground to prevent the ESP8266 chip on your NODEMCU 
 ### Programming Mode
 <img alt="Typical GPIO0 Location" src="https://raw.githubusercontent.com/tasmota/docs/master/docs/_media/gpio0.png" style="margin:5px;float:right;width:180px"></img>
 
-ESP8266 needs to be put into **programming mode** or **flash mode** before the firmware can be uploaded. This is done by pulling the GPIO0 pin to GND while the chip is booting. 
+ESP needs to be put into **programming mode** or **flash mode** before the firmware can be uploaded. This is done by pulling the GPIO0 pin to GND while the chip is booting. 
 
-On most devices the installed control button is connected to GPIO0 and GND, making entering Programming Mode very easy. On others you will need to bridge the pins on the PCB or directly on the chip with a jumper wire. GPIO0 is always in the same location on ESP8266 and ESP8285!
+On most devices the installed control button is connected to GPIO0 and GND, making entering Programming Mode very easy. On others you will need to bridge the pins on the PCB or directly on the chip with a jumper wire. GPIO0 locations for popular modules can be found in [Pinouts](Pinouts.md)!
 
 Device specific instructions are documented in [Tasmota Device Templates Repository](https://templates.blakadder.com/).
 
-To put the ESP8266 into Programming Mode:
+To put the ESP into Programming Mode:
 
 1. Disconnect serial-to-USB adapter and power
 2. Bridge GPIO0 and GND (by pressing the on-board button or connection with a wire)
@@ -173,7 +174,7 @@ If you have followed [Hardware preparation](#hardware-preparation), your device 
     You may want to back up the device manufacturer's firmware on the one in a million chance you don't like Tasmota.
 
 
-### Tasmotizer!
+### Tasmotizer! (ESP8266 only)
 Tasmotizer! is specifically designed for use with Tasmota with an easy to use GUI and [esptool.py](https://github.com/espressif/esptool) under the hood.
 
 Download the [latest release](https://github.com/tasmota/tasmotizer/releases) for your platform. In Windows just double click the downloaded file and it'll start, no installation required. For python follow the installation [instructions](https://github.com/tasmota/tasmotizer#installation-and-how-to-run). 
@@ -211,7 +212,7 @@ Unplug your serial programming adapter or device and plug it back in or connect 
 
 ### esptool.py
 
-Esptool is the official Espressif tool for flashing ESP8266 chips. It requires Python, if you do not have an installed copy of Python 2.x or 3.x download and install it from https://www.python.org.
+Esptool is the official Espressif tool for flashing ESP chips. It requires Python, if you do not have an installed copy of Python 2.x or 3.x download and install it from https://www.python.org.
 
 Download the [esptool Source code](https://github.com/espressif/esptool/releases) to a folder of your choice.
 Go to the folder and install Esptool with command 
@@ -259,7 +260,9 @@ Unplug your serial programming adapter or your device and plug it back in or con
 **Tasmota is NOT a developer of these tools. For help and troubleshooting you will need to _get support from those projects_.**
 
 - [**Tuya-Convert**](Tuya-Convert) - easy OTA flash for devices with Tuya chips, no disassembly required
+- [**MgOS to Tasmota**](https://github.com/arendst/mgos-to-tasmota) - OTA flash for Shelly devices
 - [**Sonoff DIY**](Sonoff-DIY) - OTA flash for select Sonoff devices (some disassembly required)
+- [**esp2ino**](https://github.com/elahd/esp2ino) - OTA flash for select Wyze devices
 
 You've successfully flashed your device with a downloaded binary of Tasmota but now you need to connect the tasmotised device to your Wi-Fi network. 
 
