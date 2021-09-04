@@ -68,7 +68,7 @@ E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
 
 Then open the Berry console, and copy/paste the following: (alternatively you      can create a `autoexec.be` file with this content):
 
-```python
+``` ruby
 #- start LVGL and init environment -#
 lv.start()
 
