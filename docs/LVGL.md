@@ -480,6 +480,7 @@ The reference model for LVGL is contained in the following files. They were manu
 - `tools/lv_berry/lv_widgets.h` contains the function signatures of all LVGL APIs in a single file (large file)
 
 The file generated are:
+
 - `tasmota/lvgl_berry/be_lv_c_mapping.h` which contains the signatures used by Tasmota to map LVGL to Berry (large file). The mapping contains the LVGL object structure, and for each function the C API address, expected types of parameters and return type.
 - `lib/libesp32/Berry/default/be_lvgl_widgets_lib.c` Berry C definition of classes
 - `lib/libesp32/Berry/default/be_lv_lvgl_module.c` Berry C definition of `module lvgl` with core functions and constants
