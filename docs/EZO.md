@@ -6,7 +6,7 @@ EZO is a series of chemical sensors provided by [Atlas Scientific](https://atlas
 
 All EZO devices must operate under the I2C mode to be compatible with Tasmota.  One of the easiest way to achieve this is to short **SDA/Tx to PGND** while powering the device through **VCC & GND**.  For more details, see [Instructables](https://www.instructables.com/UART-AND-I2C-MODE-SWITCHING-FOR-ATLAS-SCIENTIFIC-E/).
 
-<img src="https://myhydropi.com/wp-content/uploads/2016/07/temp-manual-i2c-config.png" />
+![Set I2C mode](_media/peripherals/ezo.png)
 
 Tasmota will automatically detect any new device that has an I2C bus address between 0x61-0x70 (which covers the default address range of all EZO devices).  Tasmota supports any multiple of EZO devices (up to 16 of any kind).  When more than one device is detected, the devices will be indexed starting at index 1 (ex: EZO-1) and ordered by their I2C address.  If only one EZO device is connected, there will be no indexing of them.  You may change the address of your device by sending an I2C command to the device.  For example, to change the address of a single EZOpH sensor, the following command can be issued in the console:
 ```

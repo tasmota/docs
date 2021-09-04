@@ -1,7 +1,6 @@
-!!! failure "This feature is not included in precompiled binaries."
-To use it, you must [compile your build](Compile-your-build).
+!!! failure "This feature is included in every precompiled binary with flash size >1M"
 
-For modules that have more than 1MB of flash memory (NodeMCU, Wemos-D1, ESP32) you can build a variant 
+For ESP8266 modules that have more than 1MB of flash memory (NodeMCU, Wemos-D1) you can build a variant 
 with a _universal file system or UFS_ and store your files there (data, images, commands, etc).
 There are some special files that you can upload and use to execute actions.
 
@@ -14,30 +13,30 @@ Copy `platformio_override_sample.ini` as `platformio_override.ini`
 
 For ESP8266 boards, activate by removing the `;` in front of one of the below lines:
 
-* `board_build.ldscript = eagle.flash.4m2m.ld` for 2Mb universal file system    
-* `board_build.ldscript = eagle.flash.4m1m.ld` for 1Mb universal file system
+* `board = esp8266_4M2M` for 2Mb universal file system    
+* `board = esp8266_2M1M` for 1Mb universal file system
 
-Adding the following `#define` in your `user_config_override.h` will enable those features:
-
-* `#define USE_UFILESYS`   Enable the Universal File System including Flash File System
-* `#define GUI_TRASH_FILE` Allows to delete files from the GUI File Manager
-* `#define GUI_EDIT_FILE` Allows to edit text files in the Web GUI
 
 !!! warning "About ESP32"
-    **ESP32** boards with default 4MB flash only support a file system **limited to 64KB**. You need a board with more 
+    **ESP32** boards with default 4MB flash only support a file system **limited to 320KB**. You need a board with more 
     than 4MB to enable a larger file system.
 
 Extending file system size on ESP32 is performed through the `board_build.partitions` setting. 
-This is currently provided only on ODroid-Go and M5Stack Core2 boards with a 12MB file system. No changes
-of any build files are needed for those boards as the proper partition file will be used automatically.
+There are preconfigured settings for 4M, 8M and 16MB ESP32 devices. The are enabled in `platformio_override.ini`
+like for the ESP8266. Comment the standard setting and uncomment the variant you want.
 
-If you have another ESP32 board with more than 4MB and want to enable a larger file system, it is recommended 
-to create your own [custom variant](Compile-your-build#defining-multiple-custom-firmwares)
-by getting inspiration from ODroid-Go and Core variants.
+```
+; Build variant ESP32 4M Flash, Tasmota 1856k Code/OTA, 320k LITTLEFS (UFS) (default)
+board                   = esp32_4M
+; Build variant ESP32 8M Flash, Tasmota 2944k Code/OTA, 2112k LITTLEFS (UFS)
+;board                   = esp32_8M
+; Build variant ESP32 16M Flash, Tasmota 2944k Code/OTA, 10M LITTLEFS (UFS)
+;board                   = esp32_16M
+```
 
 ## UFS in the Web GUI
 
-After compiling and flashing you will find a new entry in Tasmota webUI: ***Configuration - Manage File system***
+After compiling and flashing you will find a new entry in Tasmota webUI: ***Consoles - Manage File system***
 
 ![Manage File System button](_media/ufs_menu_manage.png)
 
@@ -46,8 +45,8 @@ The "Manage File System" page provides:
 * On top, the total size of the file system and the free size
 * A button to upload a file from the host (1st select the file with the `Choose File` button, then `Start Upload`)
 * A list of available files with timestamp of upload and size in bytes
-* If GUI_TRASH_FILE is enabled, the 'fire' icon allows to delete the file **without any confirmation**
-* If GUI_EDIT_FILE is enabled, the 'memo' icon allows to edit the file and the "Create and edit new file"
+* The 'fire' icon allows to delete the file **without any confirmation**
+* The 'memo' icon allows to edit the file and the "Create and edit new file"
 button launches the editor with a new file.
 
 ![Manage File System page](_media/ufs_manage_file_system.png)
@@ -76,7 +75,7 @@ See [SetOption36](Commands#setoption36) for more details.
 
 Commands must be kept one command per line and they will be executed sequentially.
 
-### display.ini
+### display.bat
 
 Stores data that will be displayed at every boot, similar to the DisplayText commands in rules trigger at `System#Init` (as long as you have a display driver initializated).
 

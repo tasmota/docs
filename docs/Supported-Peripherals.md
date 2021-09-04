@@ -12,7 +12,7 @@ Name|Description
 [**APDS-9960**](APDS-9960) |  Ambient Light, RGB Color and Proximity Sensor with Gesture Detection  
 [**AZ 7798**](AZ-7798) | CO<sub>2</sub> Meter Datalogger
 [**BH1750**](BH1750) | Luminosity Sensor
-[**BMP280<BR>BMP085<BR>BMP180)**](BME280) | Pressure Sensor
+[**BMP280<BR>BMP085<BR>BMP180**](BME280) | Pressure Sensor
 [**BME280**](BME280) | Temperature, Humidity and Pressure Sensor
 [**BME680**](BME680) | Temperature, Humidity, Pressure and Gas Sensor
 [**Buzzer**](Buzzer) | Audio Signalling Device
@@ -42,7 +42,8 @@ Name|Description
 **HX711** | Load Cell Sensor (gpio)
 [**iAQ-Core**](IAQ) | Indoor Air Quality Sensor (I^2^C)
 **iEM3000** | Schenider Electric modbus energy meter (serial)
-**INA219** | High-Side DC Current and Voltage Sensor (I^2^C)
+**INA219** | 26V DC 12-bit current voltage and power sensor (I^2^C)
+**INA226** | 36V DC 16-bit current voltage and power sensor (I^2^C)
 [**IR Remote**](IR-Remote) | IR transmitter and receiver
 **K30, K70, S8** | CO<sub>2</sub> Sensor (I^2^C) | 
 [**LM75AD**](LM75AD) |  Temperature Sensor (I^2^C)
@@ -51,22 +52,22 @@ Name|Description
 **MAX31865** | RTD Temperature Sensor Amplifier (SPI)
 **MAX44009** | Ambient Light Sensor (I^2^C)
 [**MCP23008<BR>MCP23017**](MCP230xx) |  I/O Expander (I^2^C)
+[**MCP9808**](MCP9808) |  Temperature Sensor (I^2^C)
 [**MFRC522**](MFRC522) | NFC Tag Reader (SPI)
 [**MGC3130**](MGC3130) | 3D Tracking and Gesture Controller
+[**MPR121**](MPR121) | Proximity Capacitive Touch Sensor Controller (I^2^C)
+[**MPU6050**](MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer Sensor (I^2^C)
 [**MH-Z19B**](MH-Z19B) | CO<sub>2</sub> Sensor 
 [**MLX90614**](MLX90614) | MLX9061X Infrared Thermometer (I^2^C) 
 [**MLX90640**](MLX90640) | MLX90640 Far Infrared Thermal Sensor Array (I^2^C) 
 [**NeoPool**](NeoPool) | Sugar Valley NeoPool Controller (serial)
 [**NRF24L01**](NRF24L01) | NRF24L01 as BLE-bridge for Mijia BT Sensors (SPI)
 [**OpenTherm**](OpenTherm) | OpenTherm adapter (serial)
-[**MCP9808**](MCP9808) |  Temperature Sensor (I^2^C)
-[**MPR121**](MPR121) | Proximity Capacitive Touch Sensor Controller (I^2^C)
-[**MPU6050**](MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer Sensor (I^2^C)
 [**P1 Smart Meter**](P1-Smart-Meter) | Energy Meter (serial)
 [**PAJ7620**](PAJ7620) | Gesture & Proximity Detection Sensor
 [**PIR**](PIR-Motion-Sensors#am312) | Passive Infrared Sensor (gpio)
 [**PCA9685**](PCA9685) | 16-channel, 12-bit PWM LED controller (I^2^C)
-[**PCF8574(A)**](PCF8574) 8-port IO Expander (I^2^C) 
+[**PCF8574(A)**](PCF8574) | 8-port IO Expander (I^2^C) 
 **PMS3003<BR>[PMS5003](https://www.superhouse.tv/38-diy-air-quality-Sensor-part-1-basic-model/)<BR>PMS7003** | Particle Concentration Sensor (serial)
 [**PN532**](PN532) | NFC/RFID controller
 [**PZEM-004<BR>PZEM-016**](PZEM-0XX) | Energy Monitor (serial) 

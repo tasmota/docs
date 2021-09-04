@@ -508,7 +508,8 @@ I2C support #define USE_SCRIPT_I2C
 `sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
 `sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
 `sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)(if defined USE_SML_SCRIPT_CMD)  
-`sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)   
+`sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
+`smlv[n]` = get SML decode valid status of line n (1..N), returns 1 if line decoded. n=0 resets all status codes to zero (if defined USE_SML_SCRIPT_CMD) 
 `enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
 `gjp("host" "path")` = trigger HTTPS JSON page read as used by Tesla Powerwall (if defined SCRIPT_GET_HTTPS_JP)  
 `gwr("del" index)` = gets non JSON element from webresponse del = delimiter char or string, index = n´th element (if defined USE_WEBSEND_RESPONSE)  
@@ -552,9 +553,12 @@ If you define a variable with the same name as a special variable that special v
 
 ## Commands
 
-`=> <command>` Execute <command>  recursion disabled  
-`+> <command>` Execute <command>  recursion enabled  
-`-> <command>` Execute <command> - do not send MQTT or log messages (i.e., silent execute - useful to reduce traffic)  
+`=> <command>` Execute <command> cmd with MQTT output enabled
+`-> <command>` Execute <command> cmd with MQTT output disabled, _**recursion**_  disabled. Do not send MQTT or log messages (i.e., silent execute - useful to reduce traffic)  
+`+> <command>` Execute <command> cmd with MQTT output enabled, _**recursion**_ enabled.
+!!! warning
+  _**recursion**_: If you execute a tasmota cmd in an >E section and this cmd itself executes >E you will get an infinite loop.
+this is disabled normally and enabled by the +> in case you know what you are doing
 
 **Variable Substitution**  
 - A single percent sign must be given as `%%`  
@@ -608,6 +612,8 @@ If `#define USE_SCRIPT_SUB_COMMAND` is included in your `user_config_override.h`
 
 It is possible to "replace" internal Tasmota commands. For example, if a `#POWER1(num)` subroutine is declared, the command `POWER1` is processed in the scripter instead of in the main Tasmota code.  
 
+String parameter should be passed within double quotas: `CUSTOMCMD "Some string here"`
+  
 `=(svar)` executes a routine whose name is passed as a string in a variable (dynamic or self modifying code). The string has to start with `>` or `=#` for the routine to be executed.
 
 ```

@@ -1,7 +1,9 @@
 <a id="top">
+
+!!! info "This driver extracts selected values from Smart Meters over various protocols, filters and publishes them to MQTT as regular sensors."
+
 !!! failure "This feature is not included in precompiled binaries"
 
-This driver extracts selected values from Smart Meters over various protocols, filters and publishes them to MQTT as regular sensors.<BR>
 Based on Tasmota's [scripting language](Scripting-Language). To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
 ```
@@ -1392,3 +1394,83 @@ The electrical Meter is an German End-User Meter installed by EnBW. To read valu
 1,77070100020800ff@1000,Erzeugung,kWh,ELZ_PV_2.8.0,1
 #
 ```
+    
+    
+### eBZ DD3 (OBIS)
+
+The eBZ DD3 by eBZ GmbH is a three-phase model energy meter, which is sold in a number of different configurations. The D0 port is read-only with a fixed time interval of one second. 
+
+There are two communication interfaces:
+  * The INFO interface on the front, with a metal backplate. Pushes a reduces OBIS ASCI datagram every second.
+  * The MSB interface on the top, no metal backplate. Pushes a full OBIS ASCI datagram every second.    
+    
+There are two types available using differen communication settings: 
+  * OD-type: 7 data bits, even parity, one stop bit, 9600 baud (9600 7E1)
+  * SM-type: 8 data bits, no parity, one stop bit, 9600 baud (9600 8N1) 
+
+Tested with a eBZ DD3 2R06 ODZ1 (two-direction model for e. g. solar power metering)
+    
+Because the 7E1 serial mode is not supported by Tasmota software serial, the hardware serial port must be used, i.e. GPIO 3. This will /not/ work using GPIO 0 or 2. Also, the source code has to be patched from 8N1 to 7E1 mode for the hardware serial in file src/TasmotaSerial.cpp, please see the patch further down below.
+
+Example reading of the two-direction model using GPIO 3:
+    
+  * "TelePeriod 30" sets telemetry period to 30 secons (remove if not needed/wanted)
+  * Values for ?6.7.0 (power) are transmit immediately (precision + 16)    
+  * power readings will be negative in case of inverse power flow
+    
+```
+>D
+>B
+TelePeriod 30
+=>sensor53 r
+>M 1
+; Device: eBZ DD3 2R06 ODZ1
+; protocol is D0 OBIS ASCII
+; 9600@7E1 for OP-type devices, 9600@8N1 for SM-type devices
++1,3,o,0,9600,SM,1
+; Zählerstand zu +A, tariflos, 
+; Zählerstände Auflösung 10 µW*h (6 Vorkomma- und 8 Nachkommastellen)
+1,1-0:1.8.0*255(@0.001,Energie Bezung,Wh,1_8_0,8
+; Zählerstand zu +A, Tarif 1
+1,1-0:1.8.1*255(@0.001,Energie Bezung T1,Wh,1_8_1,8
+; Zählerstand zu +A, Tarif 2
+1,1-0:1.8.2*255(@0.001,Energie Bezung T2,Wh,1_8_2,8
+; Zählerstand zu -A, tariflos
+1,1-0:2.8.0*255(@0.001,Energie Export,Wh,2_8_0,8
+; Summe der Momentan-Leistungen in allen Phasen, Auflösung 0,01W (5 Vorkomma- und 2 Nachkommastellen)
+1,1-0:16.7.0*255(@1,Leistung,W,16_7_0,18
+; Momentane Leistung in Phase Lx, Auflösung 0,01W (5 Vorkomma- und 2 Nachkommastellen)
+1,1-0:36.7.0*255(@1,Leistung L1,W,36_7_0,18
+1,1-0:56.7.0*255(@1,Leistung L2,W,56_7_0,18
+1,1-0:76.7.0*255(@1,Leistung L3,W,76_7_0,18
+; Spannung in Phase Lx, Auflösung 0,1V (nur über MSB)
+1,1-0:32.7.0*255(@1,Spannung L1,V,32_7_0,1
+1,1-0:52.7.0*255(@1,Spannung L2,V,52_7_0,1
+1,1-0:72.7.0*255(@1,Spannung L3,V,72_7_0,1
+; Statuswort, 4 Byte Information über den Betriebszustand, HEX string
+; tasmota can decode one string per device only!
+;1,1-0:96.5.0*255(@#),Status1,,96_5_0,0
+;1,1-0:96.8.0*255(@#),Status2,,96_8_0,0
+; Geräte-Identifikation, Nach DIN 43863-5 
+1,1-0:96.1.0*255(@#),Identifikation,,96_1_0,0
+;1,1-0:0.0.0*255(@#),Identifikation,,0_0_0,0
+#
+```
+
+Apply following patch to src/TasmotaSerial.cpp:
+```
+--- a/lib/default/TasmotaSerial-3.2.0/src/TasmotaSerial.cpp
++++ b/lib/default/TasmotaSerial-3.2.0/src/TasmotaSerial.cpp
+@@ -117,7 +117,7 @@ bool TasmotaSerial::begin(long speed, int stop_bits) {
+     if (2 == m_stop_bits) {
+       Serial.begin(speed, SERIAL_8N2);
+     } else {
+-      Serial.begin(speed, SERIAL_8N1);
++      Serial.begin(speed, SERIAL_7E1);
+     }
+     if (m_hardswap) {
+       Serial.swap();
+```
+
+-----
+        

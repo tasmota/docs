@@ -38,15 +38,6 @@ The RF upgrade requires wiring the bridge and then flashing the firmware via the
 **R2 V1.0** RF firmware flashing:  
 <img src="https://github.com/arendst/arendst.github.io/raw/master/media/sonoff_bridge_rffw_upgrade.png" width="300">
 
-#### Hardware Preparation
-_This section applies only to the R2 revision of the Sonoff RF Bridge_
-
-<img src="https://user-images.githubusercontent.com/34340210/53682776-39f49700-3cc7-11e9-9184-4cecf2a3a4c3.png" width="250" align="right" />
-
-Apply this modification **_only_** if you intend to use USB for powering the device during flash process or if you want to use GPIO4 or GPIO5 for other purposes with the RF Bridge.
-
-The R2 revision boards connect the GPIO4 and GPIO5 pins to the USB data lines of the power connector. Compliant USB chargers/power supplies are expected to short the two pins together, which is a problem. These lines are not used by the original firmware, nor by Tasmota. The traces toward the USB power connector need to be cut to avoid interference by the USB wiring. Removing these connections does not interfere with the normal Bridge functionality.
-
 #### Flashing RF Firmware
 1. Make sure you have previously flashed a Tasmota binary built with `RF_FLASH`. Refer to the [builds table](https://github.com/arendst/Tasmota/blob/development/BUILDS.md) for pre-compiled binaries which include this feature. Otherwise the "Magic byte is not 0xE9" error will occur.
 2. Set the module type to `Sonoff Bridge (25)`
@@ -54,7 +45,7 @@ The R2 revision boards connect the GPIO4 and GPIO5 pins to the USB data lines of
     - For `R1`: Connect `GPIO4 to C2Ck` and `GPIO5 to C2D`.
     - For `R2`: Connect `GPIO4 to C2D` and `GPIO5 to C2Ck`.
    (:warning: The text on the R2 PCB silkscreen is switched. Therefore this is the same wiring as on the R1)
-4. Switch the ON/OFF switch on the board to 'OFF'.
+4. Switch the ON/OFF switch on the board to 'ON'.
 5. Power up the bridge via the 3.3V & GND pins. (See below if you need to power the device through the USB power port)
 6. Obtain the Portisch firmware file:
     (Clicking on the file link on the GitHub web site does **not** work since this will download the GitHub preview/content of the file rather than the raw file contents)
@@ -69,6 +60,15 @@ The R2 revision boards connect the GPIO4 and GPIO5 pins to the USB data lines of
 8. In the file selection dialog, navigate to the folder on your computer where you saved the hex file from step 6.
 9. Click **Start Upgrade**. The flashing should complete within 60 seconds. Device will restart after upgrade completes.
 10. Disconnect wiring and put the ON/OFF switch on the board back to 'ON' to enable the RF again.
+
+##### Hardware Preparation for USB powered flashing
+_This section applies only to the R2 revision of the Sonoff RF Bridge_
+
+<img src="https://user-images.githubusercontent.com/34340210/53682776-39f49700-3cc7-11e9-9184-4cecf2a3a4c3.png" width="250" align="right" />
+
+Apply this modification **_only_** if you intend to use USB for powering the device during flash process or if you want to use GPIO4 or GPIO5 for other purposes with the RF Bridge.
+
+The R2 revision boards connect the GPIO4 and GPIO5 pins to the USB data lines of the power connector. Compliant USB chargers/power supplies are expected to short the two pins together, which is a problem. These lines are not used by the original firmware, nor by Tasmota. The traces toward the USB power connector need to be cut to avoid interference by the USB wiring. Removing these connections does not interfere with the normal Bridge functionality.
 
 # Operation
 The Sonoff RF Bridge is able to learn up to 16 different fixed code remote control commands as provided by PT2260, PT2262, PT2264 and EV1527 transmitters. It was not able to recognize the latest Klik Aan Klik Uit (KaKu) remote control signals but some people managed to use the fixed code KaKu devices like PAR-1000 receiver and PAT-103 transmitter.

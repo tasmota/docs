@@ -162,6 +162,9 @@ SwitchMode, as the name implies, applies _**ONLY**_ to GPIO configured in Tasmot
     tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:00","Switch1":"OFF"}
     tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:00","Switch1":"ON"}
 
+    !!! tip "Also see `SetOption114` below."
+
+
 ## Button
 <img style="float:right;width:6em" src="https://user-images.githubusercontent.com/5904370/57244172-2273ba80-7038-11e9-89ce-49ef46cb36d6.png"> </img>
 

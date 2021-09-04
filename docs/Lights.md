@@ -230,7 +230,7 @@ _this feature is experimental and will probably not give brilliant results_
 
 Used with 4 channel RGBW lights to simulate the missing white channel (cold or warm) using RGB channels.
 
-Enable Virtual CT with [`SetOption 106 1`](Commands.md#setoption106) then choose which type of white you're simulating with [`SetOption 107`](Commands.md#setoption107) where `0` is warm white and `1` is cold white 
+Enable Virtual CT with [`SetOption106 1`](Commands.md#setoption106) then choose which type of white you're simulating with [`SetOption107`](Commands.md#setoption107) where `0` is warm white and `1` is cold white 
 
 ## Light Categories
 
