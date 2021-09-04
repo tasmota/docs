@@ -4,9 +4,9 @@
 
 **LVGL** (_Light and Versatile Graphics Library_) is Tasmota's next generation display. It is powerful, lightweight and simple to use. It combines:
 
-- LVGL's powerful graphics and GUI library for embedded
-- Tasmota's stability, richness of features and frugality on resources
-- Berry's powerful language similar to MicroPython
+- **LVGL**'s powerful graphics and GUI library for embedded
+- **Tasmota**'s stability, richness of features and frugality on resources
+- **Berry**'s powerful language similar to MicroPython
 
 
 [LVGL](https://lvgl.io/) LVGL is an open-source graphics library providing everything you need to create embedded GUI with easy-to-use graphical elements, beautiful visual effects and low memory footprint.
