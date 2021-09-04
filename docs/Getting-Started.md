@@ -6,7 +6,7 @@ description: Getting started with Tasmota. What you need, how to install and do 
 <img style="float:right;width:250px" src="../_media/esp8266.png"></img>
 
 #### ESP Device
-Any [Espressif](https://www.espressif.com/en/products/socs) ESP8255, ESP32, ESP32-S or ESP32-C3 chipset based device can be flashed with Tasmota. Documentation uses the term _ESP_ refers to any of the chips.
+Any [Espressif](https://www.espressif.com/en/products/socs) ESP8255, ESP32, ESP32-S or ESP32-C3 chipset based device can be flashed with Tasmota. The term ***ESP** refers to any of the chips.
 
 #### Serial-to-USB Adapter
 The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?title=Power) is **one of the most important elements** for both flashing the device and for stable operation. You must ensure that the device receives sufficient power (current AND appropriate voltage level) to properly flash the firmware on the device.
