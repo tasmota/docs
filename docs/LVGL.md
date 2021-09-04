@@ -220,10 +220,10 @@ Color are created via `lv_color(<int>)` with 0xRRGGBB as 24 bits color. Internal
 
 ```
 > lv_color(0x808080)
-lv_color(0xff838183)
+lv_color(0x838183 - native:0x1084)
 ```
 
-Note that the actual color has an additional 0xFF in the upper byte. This is the alpha channel (transparency). 0xFF is opaque, 0x00 transparent.
+The line above shows the internal color converted back to 24 bits RGB (rounding errors occur) and the native 15 bits RGB internal color.
 
 ### Create the upper text line
 
@@ -381,7 +381,7 @@ lv.start()
 
 # set background color to blue
 scr = lv.scr_act()
-scr.set_style_local_bg_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(lv.BLUE))
+scr.set_style_local_bg_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(lv.COLOR_BLUE))
 
 # create a lv_img object and set it to Tasmota logo
 logo = lv_img(scr)
