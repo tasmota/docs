@@ -6,25 +6,33 @@ desription: Everything about Tasmota on ESP32
 
 ## Flashing
 
-Use [ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) for flashing an ESP32 or ESP82xx (Windows and MacOs executables are tested and verified as working).
+Use [ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) (Windows, MacOS, Linux) or [Tasmota Web Installer](https://tasmota.github.io/install/) (Chrome or Edge) to flash. 
+
+### with esptool.py
+Requires esptool.py 3.1 to identify new ESP chips.
 
 With esptool.py use the following command syntax (**replace COM port number!**):
 ```
 esptool.py --chip esp32 --port COM5 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dout --flash_freq 40m --flash_size detect 0x1000 bootloader_dout_40m.bin 0x8000 partitions.bin 0xe000 boot_app0.bin 0x10000 tasmota32.bin
 ```
+### ESP32-C3
 
-!!! warning "Use a proper power supply!"
-    ESP32 is power hungry and there's a high chance it will not be able to boot properly off the serial-to-USB power. Power it from a separate power supply that can provide at least 1A.
+To flahs ESP32-C3 chip with esptool.py use the following command syntax (**replace COM port number!**):
+```
+esptool.py --chip esp32c3 --port COM5 --baud 460800 --before default_reset --after hard_reset write_flash -z --flash_mode dout --flash_freq 40m --flash_size detect 0x0000 bootloader_dout_40m.bin 0x8000 partitions.bin 0xe000 boot_app0.bin 0x10000 tasmota32c3.bin
+```
 
 You can download precompiled binaries:
 
   - development branch from [http://ota.tasmota.com/tasmota32/](http://ota.tasmota.com/tasmota32/) 
   - stable releases from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/) 
-  - the required [flash files](https://github.com/arendst/Tasmota-firmware/tree/main/release-firmware/tasmota32/ESP32_needed_files) _(not needed when using ESP_Flasher)_
+  - the required chip/board specific [flash files](https://github.com/tasmota/install/tree/main/static) _(not needed when using ESP_Flasher)_
+  - unofficial development builds (ESP32C3, Ethernet, ...) from [https://www.github.com/tasmota/install/](https://github.com/tasmota/install/tree/main/firmware/unofficial)
 
-OTA upgrade from older versions of tasmota32 might fail due to significant changes in partition tables.
+OTA upgrade from much older versions of tasmota32 might fail due to significant changes in partition tables.
 
-Every OTA upgrade currently fails on tasmotasolo1.bin builds. Upgrade by File upload should work instead.
+!!! warning "Use a proper power supply!"
+    ESP32 is power hungry and there's a high chance it will not be able to boot properly off the serial-to-USB power. Power it from a separate power supply that can provide at least 1A.
 
 ## ESP32 Differences
 All ESP32 systems on a chip (SoC) are 32-bit MCUs with 2.4 GHz Wi-Fi & Bluetooth/Bluetooth LE built in. There are distinct product lines which are different from each other in varying degrees. 
@@ -63,7 +71,7 @@ Work has already begun on adapting Tasmota32 for RISC-V architecture.
 ## Exclusive Features
 
 ### CPU Temperature Sensor
-Every tasmota32 binary will create and display internal chip temperature sensor in the webUI and in MQTT.
+Tasmota will create an internal temperature sensor and display the values in the webUI and MQTT.
 
 ```json
 {"Time":"2021-01-01T00:00:00","ESP32":{"Temperature":41.7},"TempUnit":"C"}
@@ -82,18 +90,18 @@ To enable set in module configuration or template:
 ESP32 has 10 capacitive touch GPIOs. More on configuring and [using them...](https://tasmota.github.io/docs/TouchPin/).
 
 ### Berry Scripting
-[Berry](Berry.md) language as a more approachable scripting language. 
+ESP32 introduces [Berry](Berry.md) language as a more approachable scripting language. Berry is very powerful and you can even code an I2C driver using it.
 
 ### LVGL
 Use [LVGL](https://lvgl.io/) in conjunction with Berry on devices with displays and touch displays to design your own UI.
 
 ## Compiling ESP32 Binaries
 
-Uncomment the tasmota32xxx build you want to compile in `platformio_override.ini`. For example, uncommenting tasmota32 will build `tasmota32.bin` on the next Build task in Platformio. 
+Uncomment the tasmota32 build you want to compile in `platformio_override.ini`. For example, uncommenting tasmota32 will build `tasmota32.bin` on the next Build task in Platformio. 
 
 ![platformio_override.ini](_media/esp32-pio.jpg)
 
-All binaries use `user_config_override.h` if it exists.
+All binaries will use flags in `user_config_override.h` if it exists.
 
 ## Working Devices
 
