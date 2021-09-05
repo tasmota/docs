@@ -8,19 +8,15 @@ Berry mapping to LVGL is partially manual, partially automated.
 
 Most of the components are generated C code from the LVGL's C source code, similar to MicroPython approach. However part of the source files have been manually processed to simplify the overall code parsing.
 
-P**hase 1: Parse LVGL source
+**Phase 1: Parse LVGL source**
 
 ```
 > cd tools/lv_berry
 > python3 convert.py
   // Skipping unsupported return type: lv_group_user_data_t *
-  // Skipping unsupported return type: lv_group_focus_cb_t
   // Skipping unsupported return type: lv_indev_t *
   // Skipping unsupported return type: lv_disp_t *
   // Skipping unsupported return type: lv_style_list_t *
-  // Skipping unsupported return type: lv_signal_cb_t
-  // Skipping unsupported return type: lv_design_cb_t
-  // Skipping unsupported return type: lv_event_cb_t
   // Skipping unsupported return type: lv_obj_user_data_t *
   // Skipping unsupported return type: const lv_font_t *
   // Skipping unsupported return type: lv_text_decor_t
@@ -38,13 +34,15 @@ P**hase 1: Parse LVGL source
   // Skipping unsupported return type: lv_chart_cursor_t *
   // Skipping unsupported return type: const char **
   // Skipping unsupported return type: lv_style_list_t *
-  // Skipping unsupported return type: lv_objmask_mask_t *
+  // Skipping unsupported return type: lv_img_src_t
+  // Skipping unsupported return type: lv_draw_mask_res_t
+  // Skipping unsupported return type: lv_img_dsc_t *
 | callback types['lv_group_focus_cb', 'lv_event_cb', 'lv_signal_cb', 'lv_design_cb', 'lv_gauge_format_cb']
 ```
 
 The output should look as above, and indicates the C function that have been ignored if their return type is listed above. It also lists the callback types supported.
 
-Phase 2: pre-compile Berry modules and classes
+**Phase 2: pre-compile Berry modules and classes**
 
 ```
 > cd lib/libesp32/Berry
@@ -98,26 +96,26 @@ const be_constint_t lv0_constants[] = {
 An exception for LVGL colors, they are defined as 32 bits RGB values as follows, and not based on their C representation:
 
 ```C
-WHITE=0xFFFFFF
-SILVER=0xC0C0C0
-GRAY=0x808080
-BLACK=0x000000
-RED=0xFF0000
-MAROON=0x800000
-YELLOW=0xFFFF00
-OLIVE=0x808000
-LIME=0x00FF00
-GREEN=0x008000
-CYAN=0x00FFFF
-AQUA=0x00FFFF
-TEAL=0x008080
-BLUE=0x0000FF
-NAVY=0x000080
-MAGENTA=0xFF00FF
-PURPLE=0x800080
+COLOR_WHITE=0xFFFFFF
+COLOR_SILVER=0xC0C0C0
+COLOR_GRAY=0x808080
+COLOR_BLACK=0x000000
+COLOR_RED=0xFF0000
+COLOR_MAROON=0x800000
+COLOR_YELLOW=0xFFFF00
+COLOR_OLIVE=0x808000
+COLOR_LIME=0x00FF00
+COLOR_GREEN=0x008000
+COLOR_CYAN=0x00FFFF
+COLOR_AQUA=0x00FFFF
+COLOR_TEAL=0x008080
+COLOR_BLUE=0x0000FF
+COLOR_NAVY=0x000080
+COLOR_MAGENTA=0xFF00FF
+COLOR_PURPLE=0x800080
 ```
 
-Example: `lv.RED`
+Example: `lv.COLOR_RED`
 
 # Widgets classes
 
