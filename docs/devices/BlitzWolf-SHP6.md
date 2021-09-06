@@ -1,10 +1,11 @@
 ![BlitzWolf SHP6](https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-01.jpg)
 
-The BlitzWolf BW-SHP6 and the Gosund SP111 are basically the same device, barring the branding.  
+The BlitzWolf BW-SHP6, Gosund SP111, and the Nous A1 are basically the same device, barring the branding.  
 
 Product page:
 - [BlitzWolf® BW-SHP6 - 2300W EU WIFI Smart Socket](https://www.blitzwolf.com/2300W-EU-WIFI-Smart-Socket-p-300.html)
-- [Gosund SP111](https://www.gosund.store/)  
+- [Gosund SP111](https://www.gosund.store/)
+- [Nous A1](https://nous.technology/product/nous-smart-wi-fi-socket-a1.html)
 
 Device needs exact calibration with a load >=60 Watt to gain good results!
 For further infos see [Issue #4727](https://github.com/arendst/Tasmota/issues/4727)
