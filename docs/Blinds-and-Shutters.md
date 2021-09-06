@@ -84,7 +84,7 @@ Any shutter positioning can be locked `ShutterLock<x> 1`. Once executed an ongoi
 ### Calibration
 [Shutter calibration video tutorial](https://www.youtube.com/watch?v=Z-grrvnu2bU)  
 
-[Shutter calibration Google Spreadsheet](https://docs.google.com/spreadsheets/d/1TXzsu6wayoJispmrzOdGPXboIMqcS5COTtbfgtM8xKc/edit?usp=sharing)
+[Shutter calibration Google Spreadsheet](https://docs.google.com/spreadsheets/d/1-okVzGfdltbx8kMcObw4I0B22m9ZCQL3JgifgwjbzTc/edit?usp=sharing)
 
 - Start your shutter in a closed position preferably. Set internal position to closed with `ShutterSetClose<x>`. 
 - Set the time needed to open the shutter completely with `ShutterOpenDuration<x>`. 
