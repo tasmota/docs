@@ -98,7 +98,7 @@ stat_line_height = stat_line.get_height()
 #- display wifi strength indicator icon (for professionals ;) -#
 stat_line.set_style_local_pad_right(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, stat_line_height + 1)
 wifi_bars = lv_wifi_bars(stat_line)
-wifi_bars.set_style_local_bg_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(lv.BLACK))
+wifi_bars.set_style_local_bg_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(lv.COLOR_BLACK))
 wifi_bars.set_height(stat_line_height)
 wifi_bars.set_width(stat_line_height)
 wifi_bars.set_x(stat_line.get_width() - stat_line_height)
