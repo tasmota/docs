@@ -547,7 +547,7 @@ Used for a configured [PIR Sensor](PIR-Motion-Sensors) and requires correct [Swi
 
 **Required Commands**
 ```console
-Rule1 on Switch1#State=1 do Publish stat/tasmota/MOTION ON endon on Switch1#State=0 do Publish stat/tasmota/MOTION OFF endon
+Rule1 on Switch1#State=1 do Publish stat/%topic%/MOTION ON endon on Switch1#State=0 do Publish stat/%topic%/MOTION OFF endon
 Rule1 1
 ```
 ```yaml
@@ -569,7 +569,7 @@ Requires a reed switch configured in Tasmota. Make sure correct [SwitchMode](Com
 
 **Required Commands**
 ```console
-Rule1 on Switch1#State=1 do Publish stat/tasmota/DOOR ON endon on Switch1#State=0 do Publish stat/tasmota/DOOR OFF endon
+Rule1 on Switch1#State=1 do Publish stat/%topic%/DOOR ON endon on Switch1#State=0 do Publish stat/%topic%/DOOR OFF endon
 Rule1 1
 ```
 ```yaml
@@ -664,7 +664,7 @@ cover:
     position_open: 0
     position_closed: 100
     position_topic: "tele/tasmota/RESULT"
-    value_template: >-
+    position_template: >-
           {% if value_json.TuyaReceived.DpType2Id3 is defined %}
           {{ value_json.TuyaReceived.DpType2Id3 }}
           {% else %}  
@@ -693,11 +693,9 @@ If you change `name:` make sure to reflect that change in the value_template cov
 
 <!-- tabs:start -->
 
-!!! example "iFan02"
-Combination of configs found in issue 
-[#2839](https://github.com/arendst/Tasmota/issues/2839)
-and Home Assistant forum thread 
-[Sonoff IFan02 (Tasmota) MQTT Fan](https://community.home-assistant.io/t/sonoff-ifan02-tasmota-mqtt-fan/64083).
+<!--!!! example "iFan02"
+OBSOLETE CONFIGURATION! Combination of configs found in issue [#2839](https://github.com/arendst/Tasmota/issues/2839)
+and Home Assistant forum thread [Sonoff IFan02 (Tasmota) MQTT Fan](https://community.home-assistant.io/t/sonoff-ifan02-tasmota-mqtt-fan/64083). 
 
 ```yaml
 fan:
@@ -741,7 +739,7 @@ light:
     payload_available: "Online"
     payload_not_available: "Offline"
     retain: false
-```
+```-->
 
 !!! example "Sonoff S31"
 Configure the device as Sonoff S31, and run: [`SetOption4 1`](Commands.md#setoption4), [`SetOption59 1`](Commands.md#setoption59).
