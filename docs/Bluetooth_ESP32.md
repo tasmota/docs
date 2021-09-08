@@ -81,21 +81,25 @@ The naming conventions in the product range of Bluetooth sensors in Xiaomi unive
     <th class="th-lboi">YEE RC</th>
     <th class="th-lboi">MHO-C401</th>
     <th class="th-lboi">MHO-C303</th>
+    <th class="th-lboi">MCCGQ02HL</th>
   </tr>
   <tr>
     <td class="tg-lboi"><img src="../_media/bluetooth/yeerc.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/MHO-C401.png" width=200></td>
     <td class="tg-lboi"><img src="../_media/bluetooth/MHO-C303.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/MCCGQ02HL.png" width=200></td>
   </tr>
   <tr>
     <td class="tg-lboi">button press (single and long)</td>
     <td class="tg-lboi">temperature, humidity, battery</td>
     <td class="tg-lboi">temperature, humidity, battery</td>
+    <td class="tg-lboi">door opening/closing, light present</td>
   </tr>
      <tr>
     <td class="tg-lboi">passive</td>
     <td class="tg-lboi">equal to the LYWS03MMC, but no custom firmware yet</td>
     <td class="tg-lboi">passive for all entities,  set clock and unit, no alarm functions, very frequent data sending</td>
+    <td class="tg-lboi">passive, difficult to get key (must be close, press button)</td>
   </tr>
 </table> 
 
@@ -283,6 +287,8 @@ Backlog Rule1 ON System#Boot DO BLEAlias A4C1386A1E24=fred A4C1387FC1E1=james en
 ```
 
 #### Enable static random mac addresses in addition to public mac addresses
+
+If you have a device which does not appear, it may be advertising on a 'static random' address.  Using this command may make it appear, but will also make other devices appear that you may not wish to see... For example phones advertising Covid messages.  To know more, google 'BLE static random'. Be aware you can set 2 or 3....
 
 `BLEAddrFilter 1`
 
