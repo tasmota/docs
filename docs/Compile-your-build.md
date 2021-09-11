@@ -150,7 +150,7 @@ Will automatically load a configuration backup (*.dmp) file based on the MAC add
 ### USER_RULE
 If you need some rules to be automatically populated in you rbinary, you can define `USER_RULE<x>`.
 ```c++
-#define USER_RULE1 "On Switch1#state DO publish cmnd/otherdevice/POWER %value%"
+#define USER_RULE1 "On Switch1#state DO publish cmnd/otherdevice/POWER %value% ENDON"
 ```
 
 ### Defining multiple custom firmwares
