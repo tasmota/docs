@@ -30,7 +30,7 @@ There are mainly 2 type of possible customization:
 
 - Adding or removing features. This is essentially supported only on the base **tasmota** (or **tasmota32** for ESP32). Other variants have been fine tuned and trying to add/remove features to them is most likely to fail and Tasmota development team will provide no support. The typical failure is trying to add sensors to `tasmota-display`or adding displays to `tasmota-sensors`. The proper way is to add both sensors and displays to `tasmota`.
 
-!!! Failure "Do not try to add or remove features to a variant, only to tasmota/tasmota32"
+!!! Failure "Do not try to add or remove features to a variant, only to tasmota or tasmota32"
 
 ### General customization principle
 Create a new file in `/tasmota` folder called `user_config_override.h`. You can copy the sample file `user_config_override_sample.h` that is already there and which include some sample definition for coding your own Wifi SSID and pasword inside the Tasmota firmware.
@@ -38,7 +38,8 @@ Create a new file in `/tasmota` folder called `user_config_override.h`. You can 
 Open the file in chosen development environment for editing.
 
 !!! warning "Do not modify my_user_config.h"
-    It is strongly recommended to customize your build by making changes in `my_user_config.h` because the changes you made would be overwritten if you download/clone a newer version of Tasmota code-base. At least this would make any merge complicated. However, [`my_user_config.h`](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h) is a great reference for available settings and features.
+It is strongly recommended to NOT customize your build by making changes in `my_user_config.h` because the changes you made there will be overwritten if you download/clone a newer version of Tasmota code-base. At least this would make any merge complicated. Add your custom configurations ONLY in `user_config_override.h`.
+The file [`my_user_config.h`](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h) is a great reference for available settings and features.
 
 ### Changing default settings
 Most default settings are defined in [`my_user_config.h`](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h) along with an explanation and the command used to change it dynamically. For example:
@@ -82,6 +83,14 @@ Best practice to disable a feature is to use
 #ifdef %identifier%
 #undef %identifier%
 #endif
+```
+
+If the feature you want to customize have a value like for example: `#define WIFI_CONFIG_TOOL  WIFI_WAIT`, the best practice to modify it is to use
+```c++
+#ifdef %identifier%
+#undef %identifier%
+#endif
+#define %identifier% %value%
 ```
 
 |Directives|Description|
