@@ -260,10 +260,10 @@ Unplug your serial programming adapter or your device and plug it back in or con
 #### OTA Conversion
 **Tasmota is NOT a developer of these tools. For help and troubleshooting you will need to _get support from those projects_.**
 
-- [**Tuya-Convert**](Tuya-Convert) - easy OTA flash for devices with Tuya chips, no disassembly required
+- [**Tuya-Convert**](Tuya-Convert) - OTA flash for devices with Tuya chips. Not working anymore
 - [**MgOS to Tasmota**](https://github.com/arendst/mgos-to-tasmota) - OTA flash for Shelly devices
 - [**Sonoff DIY**](Sonoff-DIY) - OTA flash for select Sonoff devices (some disassembly required)
-- [**esp2ino**](https://github.com/elahd/esp2ino) - OTA flash for select Wyze devices
+- [**esp2ino**](https://github.com/elahd/esp2ino) - OTA flash for select Wyze devices. Not working anymore
 
 You've successfully flashed your device with a downloaded binary of Tasmota but now you need to connect the tasmotised device to your Wi-Fi network. 
 
