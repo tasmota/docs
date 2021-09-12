@@ -53,7 +53,8 @@ Official release binaries can be downloaded from [firmware server](http://ota.ta
 Latest _**development**_ branch binaries are available only from our [OTA server](http://ota.tasmota.com/tasmota). The latest merged development code is compiled hourly. 
 
 #### Flashing Tool
-- [**Tasmotizer**](https://github.com/tasmota/tasmotizer) - NEW flashing and firmware download tool just for Tasmota. (Windows, Linux or Mac)
+- [**Tasmotizer**](https://github.com/tasmota/tasmotizer) - flashing and firmware download tool just for Tasmota. (Windows, Linux or Mac)
+- [**Tasmota Web Installer**](https://tasmota.github.io/install/) flashing Tasmota using a Chrome based browser (all Platforms, for ESP82XX and ESP32XX)
 - [**Tasmota PyFlasher**](https://github.com/tasmota/tasmota-pyflasher) - flashing tool intended for Tasmota. (Windows or Mac)
 - [**ESP-Flasher**](https://github.com/Jason2866/ESP_Flasher) - GUI flasher for Tasmota based on esptool.py for ESP82XX *and* ESP32. (Windows or Mac)
 - [**NodeMCU PyFlasher**](https://github.com/marcelstoer/nodemcu-pyflasher) - easy to use GUI flasher based on esptool.py. (Windows or Mac)
