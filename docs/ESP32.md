@@ -241,6 +241,20 @@ EthClockMode 1
 
 these 3 devices are also fully supported, more detailed info will be added later  
 
+#### LilyGo T-OI-PLUS (esp32c3)
+
+This device is borked, the vReg can't stand normal Wifi or BLE operations. However it is barely usable with the following:
+
+- Flash with Esp32c3. WifiManager will start but you will not see the Tasmota AP (wifi broken at this point)
+- Reduce the Wifi power to 2dBm (that's very low) with `WifiPower 2`
+- Connect via the USB-Serial, enter manually the wifi credentials: `backlog ssid1 <ssid>; password1 <password>`
+- It will reboot and hopefully connect to wifi
+
+
+```json
+{"NAME":"LilyGo T-OI-PLUS","GPIO":[1,1,1,544,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1],"FLAG":0,"BASE":1}
+```
+
 #### TTGO ESP32 watch  
 fully supported with all sensors  
 
