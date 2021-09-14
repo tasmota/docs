@@ -254,8 +254,8 @@ Rule1 "
 
 ## Conditional Rules
 
-!!! failure "This feature is not included in precompiled binaries."    
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+!!! failure "Conditional Rules support is not included in the online precompiled binaries."    
+To use Conditional Rules you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 ```arduino
 #define USE_EXPRESSION         // Add support for expression evaluation in rules (+3k2 code, +64 bytes mem)  
 #define SUPPORT_IF_STATEMENT   // Add support for IF statement in rules (+4k2 code, -332 bytes mem)  
