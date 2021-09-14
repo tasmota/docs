@@ -539,3 +539,30 @@ add\_header<a class="cmnd" id="wc_add_header">|`(name:string, value:string [, fi
 set\_timeouts<a class="cmnd" id="wc_set_timeouts">|`(req_timeout:int [, tcp_timeout:int]) -> self`<br>Sets the request timeout in ms and optionally the TCP connection timeout in ms.
 set\_useragent<a class="cmnd" id="wc_set_useragent">|`(useragent:string) -> self`<br>Sets the User-Agent header used in request.
 set\_auth<a class="cmnd" id="wc_set_auth">|`(auth:string) or (user:string, password:string) -> self`<br>Sets the authentication header, either using pre-encoded string, or standard user/password encoding.
+
+### **`Serial` class**
+
+The `Serial` class provides a low-level interface to hardware UART. The serial GPIOs don't need to be configured in the template.
+
+Example:
+
+```
+# gpio_rx:4 gpio_tx:5
+ser = Serial(4, 5, 9600, Serial.7E1)
+
+ser.write(bytes(203132))   # send binary 203132
+ser.write(bytes().fromstring("Hello))   # send string "Hello"
+
+msg = ser.read()   # read bytes from serial as bytes
+print(msg.asstring())   # print the message as string
+```
+
+Tasmota Function|Parameters and details
+:---|:---
+Serial (constructor)<a class="cmnd" id="serial"></a>|`Serial(gpio_rx:int, gpio_tx:int, baud:int [, mode:int])`<br>Creates a `Serial` object<br>`gpio_rx` receive GPIO (or -1 if transmit only)<br>`gpio_tx` transmit GPIO (or -1 if receive only)<br>`baud` speed, ex: 9600, 115200<br>`mode` serial message format, default is `Serial.SERIAL_8N1` (8 bits, no parity, 1 stop bit).<br>Other mode values are described below.
+write<a class="cmnd" id="serial_write"></a>|`write(val:int || bytes()) -> bytes_sent:int`<br>Send either a single byte if argument is int, or send a binary message from a `bytes()` object.<br>The methods blocks until all messages are sent to the UART hardware buffer; they may not all have been sent over the wire
+read<a class="cmnd" id="serial_read"></a>|`read(void) -> bytes()`<br>Read all bytes received in the incoming buffer. If the buffer is empty, returns an empty `bytes()` object
+flush<a class="cmnd" id="serial_flush"></a>|`flush(void) -> void`<br>Flushes all buffers. Waits for all outgoing messages to be sent over the wire and clear the incoming buffer.
+available<a class="cmnd" id="serial_available"></a>|`available(void) -> int`<br>Returns the number of incoming bytes in the incoming buffer, `0` in none.
+
+Supported serial message formats: `SERIAL_5N1`, `SERIAL_6N1`, `SERIAL_7N1`, `SERIAL_8N1`, `SERIAL_5N2`, `SERIAL_6N2`, `SERIAL_7N2`, `SERIAL_8N2`, `SERIAL_5E1`, `SERIAL_6E1`, `SERIAL_7E1`, `SERIAL_8E1`, `SERIAL_5E2`, `SERIAL_6E2`, `SERIAL_7E2`, `SERIAL_8E2`, `SERIAL_5O1`, `SERIAL_6O1`, `SERIAL_7O1`, `SERIAL_8O1`, `SERIAL_5O2`, `SERIAL_6O2`, `SERIAL_7O2`, `SERIAL_8O2`
