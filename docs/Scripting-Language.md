@@ -291,21 +291,20 @@ executed on button state change
 read button state (x = `1.. MAX_KEYS`)  
 
 !!! example
-
-```
->D
-tmp=0
->b
-tmp=bt[1]
-if tmp==0  
-then  
-print falling edge of button1  
-endif  
-if tmp==1  
-then  
-print rising edge of button1  
-endif
-```
+    ```
+    >D
+    tmp=0
+    >b
+    tmp=bt[1]
+    if tmp==0  
+    then  
+    print falling edge of button1  
+    endif  
+    if tmp==1  
+    then  
+    print rising edge of button1  
+    endif
+    ```
   
 `>J`  
 The lines in this section are published via MQTT in a JSON payload on [TelePeriod](Commands#teleperiod). ==Requires compiling with `#define USE_SCRIPT_JSON_EXPORT `.==  
@@ -553,12 +552,12 @@ If you define a variable with the same name as a special variable that special v
 
 ## Commands
 
-`=> <command>` Execute <command> cmd with MQTT output enabled
+`=> <command>` Execute <command> cmd with MQTT output enabled  
 `-> <command>` Execute <command> cmd with MQTT output disabled, _**recursion**_  disabled. Do not send MQTT or log messages (i.e., silent execute - useful to reduce traffic)  
-`+> <command>` Execute <command> cmd with MQTT output enabled, _**recursion**_ enabled.
+`+> <command>` Execute <command> cmd with MQTT output enabled, _**recursion**_ enabled.  
 !!! warning
-  _**recursion**_: If you execute a tasmota cmd in an >E section and this cmd itself executes >E you will get an infinite loop.
-this is disabled normally and enabled by the +> in case you know what you are doing
+    _**Recursion**_: If you execute a tasmota cmd in an >E section and this cmd itself executes >E you will get an infinite loop.
+    this is disabled normally and enabled by the +> in case you know what you are doing
 
 **Variable Substitution**  
 - A single percent sign must be given as `%%`  
@@ -571,7 +570,6 @@ this is disabled normally and enabled by the +> in case you know what you are do
 A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` statements to debug a script.  
     
 !!! example
- >
     >E
     slider=Dimmer
     power=POWER
@@ -742,7 +740,8 @@ The following parameters can be specified during compilation via `#define` direc
 
 To use any of these values, pass an `*` as its corresponding argument placeholder.  
 
-!!! example "`sendmail [*:*:*:*:*:<rec@gmail.com>:theSubject] theMessage`  "
+!!! example
+    `sendmail [*:*:*:*:*:<rec@gmail.com>:theSubject] theMessage`
 
 Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `m` _(note lower case)_ section. The specified text in this script section must end with an `#` character. `sendmail` will use the `m` section if `*` is passed as the `msg` parameter. in this >m section you may also specify email attachments.
 @/filename specifies a file to be attached (if file system is present)  
