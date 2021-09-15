@@ -549,7 +549,7 @@ Example:
 
 ```
 # gpio_rx:4 gpio_tx:5
-ser = serial(4, 5, 9600, Serial.7E1)
+ser = serial(4, 5, 9600, serial.SERIAL_7E1)
 
 ser.write(bytes(203132))   # send binary 203132
 ser.write(bytes().fromstring("Hello))   # send string "Hello"
@@ -560,7 +560,7 @@ print(msg.asstring())   # print the message as string
 
 Tasmota Function|Parameters and details
 :---|:---
-serial (constructor)<a class="cmnd" id="serial"></a>|`serial(gpio_rx:int, gpio_tx:int, baud:int [, mode:int])`<br>Creates a `Serial` object<br>`gpio_rx` receive GPIO (or -1 if transmit only)<br>`gpio_tx` transmit GPIO (or -1 if receive only)<br>`baud` speed, ex: 9600, 115200<br>`mode` serial message format, default is `Serial.SERIAL_8N1` (8 bits, no parity, 1 stop bit).<br>Other mode values are described below.
+serial (constructor)<a class="cmnd" id="serial"></a>|`serial(gpio_rx:int, gpio_tx:int, baud:int [, mode:int])`<br>Creates a `serial` object<br>`gpio_rx` receive GPIO (or -1 if transmit only)<br>`gpio_tx` transmit GPIO (or -1 if receive only)<br>`baud` speed, ex: 9600, 115200<br>`mode` serial message format, default is `serial.SERIAL_8N1` (8 bits, no parity, 1 stop bit).<br>Other mode values are described below.
 write<a class="cmnd" id="serial_write"></a>|`write(val:int || bytes()) -> bytes_sent:int`<br>Send either a single byte if argument is int, or send a binary message from a `bytes()` object.<br>The methods blocks until all messages are sent to the UART hardware buffer; they may not all have been sent over the wire
 read<a class="cmnd" id="serial_read"></a>|`read(void) -> bytes()`<br>Read all bytes received in the incoming buffer. If the buffer is empty, returns an empty `bytes()` object
 flush<a class="cmnd" id="serial_flush"></a>|`flush(void) -> void`<br>Flushes all buffers. Waits for all outgoing messages to be sent over the wire and clear the incoming buffer.
