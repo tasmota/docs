@@ -11,7 +11,7 @@ Edit only articles in `/docs` folder.
 
 All paths are relative. 
 
-Use strict markdown syntax. See [Markdown Cheatsheet](https://3os.org/markdownCheatSheet/welcome/) for a quick reference.
+Use strict markdown syntax. See [Markdown Cheatsheet](https://3os.org/markdown-cheatsheet/welcome/) for a quick reference.
 
 ### Markdown Enhancements
 
