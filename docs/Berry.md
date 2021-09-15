@@ -443,6 +443,7 @@ This module is a simplified version of `os.path` module of standard Berry, but d
 Tasmota Function|Parameters and details
 :---|:---
 path.exists<a class="cmnd" id="path_exists"></a>|`(file_name:string) -> bool`<br>Returns `true` if the file exists. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
+path.last_modified<a class="cmnd" id="path_last_modified"></a>|`(file_name:string) -> int`<br>Returns the timestamp when the file was last modified, or `nil` if the file does not exist. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
 
 ### **`introspect` module**
 
