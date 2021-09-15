@@ -570,6 +570,7 @@ If you define a variable with the same name as a special variable that special v
 A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` statements to debug a script.  
     
 !!! example
+    ```
     >E
     slider=Dimmer
     power=POWER
@@ -583,7 +584,7 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
     then
     print power updated %power%
     endif
- 
+    ```
 
 `break` exits a section or terminates a `for next` loop  
 `dpx` sets decimal precision to x (0-9)  
