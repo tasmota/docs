@@ -14,7 +14,7 @@ You can contribute by:
 
 !!! failure "You need a GitHub user account to be able to edit"
 
-If you spot an error in an article use the *pencil icon* link at the top of the page, near the title, to correct it. This version of documentation uses strict markdown syntax with some enhancements. See [Markdown Cheatsheet](https://3os.org/markdownCheatSheet/welcome/) for all features
+If you spot an error in an article use the *pencil icon* link at the top of the page, near the title, to correct it. This version of documentation uses strict markdown syntax with some enhancements. See [Markdown Cheatsheet](https://3os.org/markdown-cheatsheet/welcome/) for all features
 
 You'll be taken to the GitHub repository page of that file, after a "fork" (copy) of the docs are made into your own GitHub account.
 
