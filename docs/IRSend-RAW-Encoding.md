@@ -199,6 +199,8 @@ The final sequence is:
 ## Converting Pronto IR codes to Tasmota
 
 `Pronto` is a very common and early format to describe raw IR codes. It is fully described in this excellent series of articles [The Pronto's IR Code Format](http://www.remotecentral.com/irdisp1.htm)
+ 
+ If you don't want to manually convert the pronto IR codes, you can use the [Tasmota-IR-Code-Converter site](https://t-vk.github.io/Tasmota-IR-Code-Converter/) to do it for you.
 
 Pronto is commonly represented as a series of 4-digits HEX numbers in unsigned 16-bits format.
 
