@@ -546,7 +546,7 @@ RfRaw<a class="cmnd" id="rfraw"></a>|**This command only works when the firmware
 RfSync<a class="cmnd" id="rfsync"></a>|`1` = reset start sync pulse time to 8470 microseconds<BR>`2..32767` = set start sync pulse time in microseconds<BR>`#2..#7FFF` = set start sync pulse time in hexadecimal microseconds
 See also|[`SetOption28`](#setoption28) - Set RF received data format
 
-### RF Transciever
+### RF Transceiver
 Command|Parameters
 :---|:---
 RFsend<a id="rfsend"></a>|`<value>` = code decimal or JSON. Data value is required and can be decimal or hexadecimal (using the 0x prefix), other values are optional.<BR><BR>_JSON_<BR>`{"Data":"<value>","Bits":<value>,"Protocol":<value>,"Pulse":<value>}`<BR>`"Data":"<value>"` = hexadecimal code<BR>`"Bits":<value>` = required number of data bits _(default = `24`)_<BR>`"Protocol":<value>` = protocol number _(default = `1`)_<BR>`"Repeat":<value>` = repeat value _(default = `10`)_<BR>`"Pulse":<value>` = pulse value _(`350` = default for protocol 1)_<BR>&emsp;e.g., `RFsend {"Data":"0x7028DC","Bits":24,"Protocol":1,"Pulse":238}`<BR><BR>_Decimal_<BR>`data, bits, protocol, repeat, pulse` <BR>&emsp;e.g., `RFsend 7350492, 24, 1, 10, 238` or `RFsend 0x7028DC, 24, 1, 10, 238`
