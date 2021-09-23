@@ -16,7 +16,7 @@ Some of officially supported modules by rc-switch are:
 This guide was created using STX882 RF transmitter which also works without issues.
 
 ### Wiring
-| RF   | ESP266 |
+| RF   | ESP8266 |
 |---|---|
 |data   |GPIOx   |
 |+   | 3.3v/5v  |
