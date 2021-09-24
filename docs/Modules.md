@@ -1,9 +1,9 @@
 !!! info "**Module** is a firmware supported device which has specific code to enable its features."
 
-**Configure Module** page in the webUI is used to configure your device as one of the modules **_and_** to [configure additional components](Components) connected to one of the free GPIO pins of the device.
+**Configure Module** page in the webUI is used to **[configure additional components](Components)** connected to one of the free GPIO pins of the device.
 
 !!! warning
-    New Modules are added to Tasmota only if a device requires additional code for new functions. Use [Templates](Templates) first to configure your device if it's not in the module list.
+    Use [Templates](Templates) to configure Tasmota for your device if it doesn't exist in the module list. New Modules are added to Tasmota only if a device requires additional code for new functions. 
 
 !!! tip
      Use Generic module `Module 18` to have almost all GPIO pins available.
