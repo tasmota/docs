@@ -254,13 +254,13 @@ When setting attributes, they are evaluated in the following order, the latter o
 
 You can upload Berry code in the filesytem and load them at runtime. Just be careful to use the `*.be` extensions.
 
-To load a Berry file, use the `load(filename)` function. It takes a filename and must end by `.be` or `.bec`.
+To load a Berry file, use the `load(filename)` function. It takes a filename and must end by `.be` or `.bec`; if the file has no extension '.be' is automatically appended.
 
 Note: you don't need to prefix with `/`. A leading `/` will be added automatically if it is not present.
 
 When loading a Berry script, the compiled bytecode is automatically saved to the filesystem, with the extension `.bec` (this is similar to Python's `.py`/`.pyc` mechanism). The `save(filename,closure)` function is used internally to save the bytecode.
 
-Currently the precompiled is not loaded unless you explicitly use `load("filename.bec")` extension, this may change in the future.
+If a precompiled bytecode (extension `.bec`) is present of more recent than the Berry source file, the bytecode is directly loaded which is faster than compiling code. You can eventually remove the `*.be` file and keep only `*.bec` file (even with `load("file.be")`.
 
 ## Reference
 
