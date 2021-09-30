@@ -599,12 +599,30 @@ close<a class="cmnd" id="wc_close">|`() -> nil`<br>Closes the connection and fre
 
 Request customization:
 
-WebClient Function|Parameters and details
+webclient Function|Parameters and details
 :---|:---
 add\_header<a class="cmnd" id="wc_add_header">|`(name:string, value:string [, first:bool=false [, replace:bool=true]]) -> nil`<br>Sets an arbitrary header for `name`:`value`.<BR>`first` moves the header in the first place, `replace` replaces a header with the same name or adds one line if false.
 set\_timeouts<a class="cmnd" id="wc_set_timeouts">|`(req_timeout:int [, tcp_timeout:int]) -> self`<br>Sets the request timeout in ms and optionally the TCP connection timeout in ms.
 set\_useragent<a class="cmnd" id="wc_set_useragent">|`(useragent:string) -> self`<br>Sets the User-Agent header used in request.
 set\_auth<a class="cmnd" id="wc_set_auth">|`(auth:string) or (user:string, password:string) -> self`<br>Sets the authentication header, either using pre-encoded string, or standard user/password encoding.
+
+### **`webserver` module**
+  
+The module `webserver` provides functions to enrich Tasmota's Web UI. It is tightly linked to Tasmota page layout.
+
+See the [Berry Cookbook](Berry-Cookbook.md) for full examples.
+
+
+General Function|Parameters and details
+:---|:---
+on<a class="cmnd" id="ws_on">|`(prefix:string, callback:closure [, method:int]) -> nil`<br>Attaches a handler (any closure or function) to a prefix. An optional `method` argument (defaults to `webserver.HTTP_ANY` specifies the HTTP methods to be received (ANY, GET, POST, OPTIONS, POST)<BR>WARNING - this should be called only when receiving `web_add_handler` event. If called before the WebServer is set up and Wifi on, it will crash. For debug purpose, it can be called later when you are sure that Wifi/Eth is up.
+state<a class="cmnd" id="wc_set_useragent">|`() -> int`<br>Returns the internal state of Tasmota web server. Possible values are `webserver.HTTP_OFF`, `webserver.HTTP_USER`, `webserver.HTTP_ADMIN`, `webserver.HTTP_MANAGER`, `webserver.HTTP_MANAGER_RESET_ONLY`.
+
+
+Module `webserver` also defines the following constants:
+- Tasmota's web server states: `webserver.HTTP_OFF`, `webserver.HTTP_USER`, `webserver.HTTP_ADMIN`, `webserver.HTTP_MANAGER`, `webserver.HTTP_MANAGER_RESET_ONLY`
+- Tasmota's pages: `webserver.BUTTON_CONFIGURATION`, `webserver.BUTTON_INFORMATION`, `webserver.BUTTON_MAIN`, `webserver.BUTTON_MANAGEMENT`, `webserver.BUTTON_MODULE`
+- Methods received by handler: `webserver.HTTP_ANY`, `webserver.HTTP_GET`, `webserver.HTTP_OPTIONS`, `webserver.HTTP_POST`
 
 ### **`serial` class**
 
