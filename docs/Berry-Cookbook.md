@@ -180,11 +180,13 @@ tasmota.add_driver(d2)
 
 Adding a button to the e.g. main menu can be achieved by using the message type `web_add_main_button()`. 
 
-The method to be performed, when the user clicks the button is achieved by using the `web_sensor()` method checking for the presence of an argument and a possible value assigned to the argument. The webserver class provides the necessary methods to read the arguments:
+The method to be performed, when the user clicks the button is achieved by using the `web_sensor()` method checking for the presence of an argument and a possible value assigned to the argument. The 
+class provides the necessary methods to read the arguments:
 
-- `webserver.has_arg(argName:string)`: -> boolean // checks for a specific argument with the name and returns a boolean
-- `webserver.args()`: -> integer // returns the number of arguments
-- `webserver.arg(argName:string)`: -> string or integer // returns the value of the argument
+- `webserver.has_arg(arg_name:string)`: -> boolean, checks if an argument with this name exists
+- `webserver.arg_size()`: -> integer, returns the number of arguments
+- `webserver.arg(arg_name:string or arg_index:int)`: -> string, returns the value of the argument either by name or by position number \[0..arg_size()-1\]. If an argument has multiple values, you need to iterate using ints to get all values
+- `webserver.arg_name(arg_index:int) -> string, get the name of argument by index \[0..arg_size()-1\]
 
 Additionally the webserver class provides a new function of sending information to the Web UI by using the following methods
 
@@ -214,7 +216,6 @@ class MyButtonMethods : Driver
   end
 
   #- As we can add only one sensor method we will have to combine them besides all other sensor readings in one method -#
-
   def web_sensor()
 
     if webserver.has_arg("m_toggle_main")
