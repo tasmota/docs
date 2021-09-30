@@ -1,11 +1,5 @@
 # Berry Scripting Language
-!!! info "This feature is experimental, ESP32 only and included in all ESP32 pre-compiled builds"
-
-If you compile your own version, make sure the following is defined:
-
-```arduino
-#define USE_BERRY
-```
+!!! info "Berry Scripting is included in all ESP32/S2/C3 pre-compiled builds". It is not supported on ESP8266/85
 
 <img style="float:right;height:40px" alt="Berry logo" src="../_media/berry/berry.svg">
 
@@ -638,3 +632,25 @@ flush<a class="cmnd" id="serial_flush"></a>|`flush(void) -> void`<br>Flushes all
 available<a class="cmnd" id="serial_available"></a>|`available(void) -> int`<br>Returns the number of incoming bytes in the incoming buffer, `0` in none.
 
 Supported serial message formats: `SERIAL_5N1`, `SERIAL_6N1`, `SERIAL_7N1`, `SERIAL_8N1`, `SERIAL_5N2`, `SERIAL_6N2`, `SERIAL_7N2`, `SERIAL_8N2`, `SERIAL_5E1`, `SERIAL_6E1`, `SERIAL_7E1`, `SERIAL_8E1`, `SERIAL_5E2`, `SERIAL_6E2`, `SERIAL_7E2`, `SERIAL_8E2`, `SERIAL_5O1`, `SERIAL_6O1`, `SERIAL_7O1`, `SERIAL_8O1`, `SERIAL_5O2`, `SERIAL_6O2`, `SERIAL_7O2`, `SERIAL_8O2`
+
+# Customizing Berry compiles
+
+Berry is included if the following is defined (enabled by default on ESP32/S2/C3):
+
+```arduino
+#define USE_BERRY
+```
+
+Other options that can be changed in `my_user_config.h` or `user_config_override.h`:
+
+Option|Description
+:---|:---
+`#define USE_BERRY_PSRAM`|Use PSRAM to allocate memory instead of main RAM. If no PSRAM is connected, this option has no effect.<BR>Enabled by default
+`#define USE_BERRY_DEBUG`|Provide additional information in case of a Berry exception, adding line number in the call chain. This feature adds ~8% of memory consumption to Berry compiled code.<BR>Disabled by default
+`#define USE_WEBCLIENT`|Enable the `webclient` module allowing to do HTTP requests.<BR>Enabled by default
+`#define USE_WEBCLIENT_HTTPS`|Adds support for HTTPS to `webclient`. This feature adds ~45KB of Flash space for TLS support.<BR>Disabled by default
+`#define USE_BERRY_WEBCLIENT_USERAGENT  "TasmotaClient"`|Specifies the default `User-Agent` field sent by `webclient`. Can be changed on a per request basis.
+`#define USE_BERRY_WEBCLIENT_TIMEOUT  5000`|Specifies the default timeout in millisecond for `webclient`. Can be changed on a per request basis.
+
+
+
