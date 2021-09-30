@@ -127,55 +127,6 @@ Tasmota expects that you send a response to commands. You can use the following 
 - `tasmota.resp_cmd(<json>)`: report a custom JSON message (not prefixed by command name).
 
 
-## Creating a Tasmota driver
-
-You can easily create a complete Tasmota driver with Berry.
-
-As a convenience, a skeleton class `Driver` is provided. A Driver responds to messages from Tasmota. For each message type, the method with the same name is called.
-
-- `every_second()`: called every second
-- `every_100ms()`: called every 100ms (i.e. 10 times per second)
-- `web_sensor()`: display sensor information on the Web UI
-- `json_append()`: display sensor information in JSON format for TelePeriod reporting
-- `web_add_button()`: add a button to Tasmotas Web UI (Configuration page)
-- `web_add_main_button()`: add a button to Tasmotas Web UI (Main page)
-- `save_before_restart()`:
-- `button_pressed()`:
-
-Then register the driver with `tasmota.add_driver(<driver>)`.
-
-There are basically two ways to respond to an event:
-
-**Method 1: create a sub-class**
-
-Define a sub-class of the `Driver` class and override methods.
-
-```python
-class MyDriver : Driver
-  def every_second()
-    # do something
-  end
-end
-
-d1 = MyDriver()
-
-tasmota.add_driver(d1)
-```
-
-**Method 2: redefine the attribute with a function**
-
-Just use the `Driver` class and set the attribute to a new function:
-
-```python
-d2 = Driver()
-
-d2.every_second = def ()
-  # do something
-end
-
-tasmota.add_driver(d2)
-```
-
 ## Adding a button to the Main menu
 
 Adding a button to the e.g. main menu can be achieved by using the message type `web_add_main_button()`. 
