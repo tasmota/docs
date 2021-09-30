@@ -256,6 +256,60 @@ When loading a Berry script, the compiled bytecode is automatically saved to the
 
 If a precompiled bytecode (extension `.bec`) is present of more recent than the Berry source file, the bytecode is directly loaded which is faster than compiling code. You can eventually remove the `*.be` file and keep only `*.bec` file (even with `load("file.be")`.
 
+## Creating a Tasmota driver
+
+You can easily create a complete Tasmota driver with Berry.
+
+As a convenience, a skeleton class `Driver` is provided. A Driver responds to messages from Tasmota. For each message type, the method with the same name is called.
+
+- `every_second()`: called every second
+- `every_100ms()`: called every 100ms (i.e. 10 times per second)
+- `web_sensor()`: display sensor information on the Web UI
+- `json_append()`: display sensor information in JSON format for TelePeriod reporting
+- `web_add_button()`: (deprecated) synonym of `web_add_console_button()`
+- `web_add_main_button()`, `web_add_management_button()`, `web_add_console_button()`, `web_add_config_button()`: add a button to Tasmotas Web UI on a specific page
+- `web_add_handler()`: called when Tasmota web server started, and the right time to call `webserver.on()` to add handlers
+- `button_pressed()`: called when a button is pressed
+- `web_sensor()`: send sensor information as JSON or HTML
+- `json_append()`:
+- `save_before_restart()`: called just before a restart
+- `display()`: called by display driver with the following subtypes: `init_driver`, `model`, `dim`, `power`.
+
+Then register the driver with `tasmota.add_driver(<driver>)`.
+
+There are basically two ways to respond to an event:
+
+**Method 1: create a sub-class**
+
+Define a sub-class of the `Driver` class and override methods.
+
+```python
+class MyDriver : Driver
+  def every_second()
+    # do something
+  end
+end
+
+d1 = MyDriver()
+
+tasmota.add_driver(d1)
+```
+
+**Method 2: redefine the attribute with a function**
+
+Just use the `Driver` class and set the attribute to a new function:
+
+```python
+d2 = Driver()
+
+d2.every_second = def ()
+  # do something
+end
+
+tasmota.add_driver(d2)
+```
+
+
 ## Reference
 
 Below are the Tasmota specific functions and modules implemented on top of Berry.
@@ -612,7 +666,7 @@ The module `webserver` provides functions to enrich Tasmota's Web UI. It is tigh
 
 See the [Berry Cookbook](Berry-Cookbook.md) for full examples.
 
-Functions used to add UI elements like buttons to Tasmota pages, and analyze the current request
+Functions used to add UI elements like buttons to Tasmota pages, and analyze the current request. See above `Driver` to add buttons to Tasmota UI.
 
 General Function|Parameters and details
 :---|:---
