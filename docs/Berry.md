@@ -1,5 +1,5 @@
 # Berry Scripting Language
-!!! info "Berry Scripting is included in all ESP32/S2/C3 pre-compiled builds". It is not supported on ESP8266/85
+!!! info "Berry Scripting is included in all ESP32/S2/C3 pre-compiled builds". It is not supported on ESP8266/85"
 
 <img style="float:right;height:40px" alt="Berry logo" src="../_media/berry/berry.svg">
 
@@ -620,6 +620,7 @@ state<a class="cmnd" id="wc_set_useragent">|`() -> int`<br>Returns the internal 
 
 
 Module `webserver` also defines the following constants:
+
 - Tasmota's web server states: `webserver.HTTP_OFF`, `webserver.HTTP_USER`, `webserver.HTTP_ADMIN`, `webserver.HTTP_MANAGER`, `webserver.HTTP_MANAGER_RESET_ONLY`
 - Tasmota's pages: `webserver.BUTTON_CONFIGURATION`, `webserver.BUTTON_INFORMATION`, `webserver.BUTTON_MAIN`, `webserver.BUTTON_MANAGEMENT`, `webserver.BUTTON_MODULE`
 - Methods received by handler: `webserver.HTTP_ANY`, `webserver.HTTP_GET`, `webserver.HTTP_OPTIONS`, `webserver.HTTP_POST`
