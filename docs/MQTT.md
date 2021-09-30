@@ -65,7 +65,7 @@ cmnd/tasmota_switch/Power ← 	// an empty message/payload sends a status query
 ####Send a command to toggle the relay
 
 ```js
-cmnd/tasmota_switch/Power ← "TOGGLE"
+cmnd/tasmota_switch/Power TOGGLE
     ↳ // Power for relay 1 is toggled
     ↳ stat/tasmota_switch/RESULT → {"POWER":"ON"}  
     ↳ stat/tasmota_switch/POWER → ON
