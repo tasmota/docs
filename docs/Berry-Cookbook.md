@@ -186,7 +186,7 @@ class provides the necessary methods to read the arguments:
 - `webserver.has_arg(arg_name:string)`: -> boolean, checks if an argument with this name exists
 - `webserver.arg_size()`: -> integer, returns the number of arguments
 - `webserver.arg(arg_name:string or arg_index:int)`: -> string, returns the value of the argument either by name or by position number \[0..arg_size()-1\]. If an argument has multiple values, you need to iterate using ints to get all values
-- `webserver.arg_name(arg_index:int) -> string, get the name of argument by index \[0..arg_size()-1\]
+- `webserver.arg_name(arg_index:int)` -> string, get the name of argument by index \[0..arg_size()-1\]
 
 Additionally the webserver class provides a new function of sending information to the Web UI by using the following methods
 
