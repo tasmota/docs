@@ -22,7 +22,7 @@ Berry Scripting takes it one step further and allows to build dynamic extensions
 - build light animations
 - build I2C drivers
 - build complete Tasmota drivers
-- integrate native libraries like `lvgl` (coming soon)
+- integrate native libraries like `lvgl` see [LVGL](LVGL.md)
 
 
 ### About the Berry language
