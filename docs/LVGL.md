@@ -1,6 +1,6 @@
 # LVGL + Berry + Tasmota
 
-!!! info "This feature is experimental, ESP32 only and NOT included in ESP32 pre-compiled builds". See below How to Compile
+!!! info "This feature is experimental, ESP32 only and NOT included in ESP32 pre-compiled builds". See below How to Compile"
 
 **LVGL** (_Light and Versatile Graphics Library_) is Tasmota's next generation display. It is powerful, lightweight and simple to use. It combines:
 
