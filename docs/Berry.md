@@ -397,7 +397,6 @@ See examples in the [Berry-Cookbook](Berry-Cookbook#adding-commands-to-tasmota)
 
 Functions to manage Relay/Lights
 
-
 Tasmota Function|Parameters and details
 :---|:---
 tasmota.get\_power<a class="cmnd" id="tasmota_get_power"></a>|`() -> list[bool]`<br>Returns the state On/Off of each Relay and Light as a list of bool.
@@ -405,6 +404,14 @@ tasmota.set\_power<a class="cmnd" id="tasmota_set_power"></a>|`(index:int, onoff
 tasmota.get\_light<a class="cmnd" id="tasmota_get_light"></a>|_deprecated_ use `light.get`
 tasmota.set\_light<a class="cmnd" id="tasmota_set_light"></a>|_deprecated_ use `light.set`
 
+Low-level access to Tasmota globals. _Use with care and only if you know what you are doing._
+
+The construct is to use `tasmota.global` to read or write attributes. **Warning:** you can do bad things with these features.
+
+Tasmota global|Details
+:---|:---
+tasmota.global.energy_driver<a class="cmnd" id="tasmota_global_energy_driver"></a>|Used for Energy drivers
+tasmota.global.uptime<a class="cmnd" id="tasmota_global_energy_driver"></a>|Uptime in seconds
 
 ### **`light` object**
 
