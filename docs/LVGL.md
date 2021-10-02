@@ -2,7 +2,7 @@
 
 !!! info "ESP32 only and NOT included in ESP32 pre-compiled builds". See below How to Compile"
 
-**Supported LVGL version**: v8.0.2
+**Supported LVGL version**: **v8.0.2**
 
 **LVGL** (_Light and Versatile Graphics Library_) is Tasmota's next generation display. It is powerful, lightweight and simple to use. It combines:
 
@@ -154,6 +154,7 @@ home_btn.add_event_cb(btn_clicked_cb, lv.EVENT_CLICKED, 0)
 ```
 
 You should see this:
+
 ![lvgl8](https://user-images.githubusercontent.com/49731213/135708399-139b0866-ab16-4db0-98f5-e7b2892c1940.png)
 
 ![IMG_1137](https://user-images.githubusercontent.com/49731213/115155634-2d875000-a081-11eb-9089-b2e67ee86b1d.jpg)
@@ -172,46 +173,48 @@ rotary.set_group(g)
 ```
 
 #### Touch Screen support
-![cpicker](https://user-images.githubusercontent.com/49731213/117481000-a5e77f80-af62-11eb-9d7d-d621a434f5a8.png)
+![colorwheel](https://user-images.githubusercontent.com/49731213/135708597-ae589748-417b-46c2-a452-5398cd90ee09.png)
 
 Touch screen are supported natively via Universal Display driver.
 
 Example:
 
 ```python
-colp = lv_cpicker(scr)
-colp.set_size(160, 160)
+colp = lv_colorwheel(scr)
+colp.set_size(130, 130)
 colp.set_pos(10,30)
 ```
-
 
 Let's go into the details of this example.
 
 ### Starting LVGL
 
+Start LVGL
+
 ```python
 lv.start()
 ```
 
-```python
-hres = lv.get_hor_res()   # get horizontal resolution
-vres = lv.get_ver_res()   # get vertical resolution
-
-scr = lv.scr_act()        # get active screen
-f20 = lv.montserrat_font(20)   # load montserrat font with size 20
-```
-
 Use `lv.montserrat_font(<size>)` to load a pre-defined montserrat font. Embedded sizes are: 10, 14, 20, 28. You can also load a font from the file-system but you need to convert them first. See: https://docs.lvgl.io/latest/en/html/overview/font.html
+
+```python
+hres = lv.get_hor_res()       # should be 320
+vres = lv.get_ver_res()       # should be 240
+
+scr = lv.scr_act()            # default screean object
+f20 = lv.montserrat_font(20)  # load embedded Montserrat 20
+```
 
 ### Set the background color
 
 ```python
-scr.set_style_local_bg_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(0x0000A0))
-scr.set_style_local_bg_grad_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(0x000000))
-scr.set_style_local_bg_grad_dir(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv.GRAD_DIR_VER)
+#- Background with a gradient from black #000000 (bottom) to dark blue #0000A0 (top) -#
+scr.set_style_bg_color(lv_color(0x0000A0), lv.PART_MAIN | lv.STATE_DEFAULT)
+scr.set_style_bg_grad_color(lv_color(0x000000), lv.PART_MAIN | lv.STATE_DEFAULT)
+scr.set_style_bg_grad_dir(lv.GRAD_DIR_VER, lv.PART_MAIN | lv.STATE_DEFAULT)
 ```
 
-The display is composed of a virtual screen object `scr`. To change the background you need to change the style of this object. You can either create a full style object or change the style inside the object. This is what we do here. Hence methods: `set_style_local_<xxx>`
+The display is composed of a virtual screen object `scr`. To change the background you need to change the style of this object. You can either create a full style object or change the style inside the object. This is what we do here. Hence methods: `set_style_<xxx>`
 
 In this example we do a vertical color cradient from dark blue (up) to black (down).
 
@@ -229,70 +232,80 @@ The line above shows the internal color converted back to 24 bits RGB (rounding 
 ### Create the upper text line
 
 ```python
-log = lv_label(scr)
-if f20 != nil log.set_style_local_text_font(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, f20) end
-log.set_long_mode(lv.LABEL_LONG_SROLL)
-log.set_width(hres)
-log.set_align(lv.LABEL_ALIGN_LEFT)
-log.set_style_local_bg_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(0xD00000))
-log.set_style_local_bg_opa(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv.OPA_COVER)
-log.set_style_local_text_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(0xFFFFFF))
-log.set_text("Welcome to Tasmota")
+#- Upper state line -#
+stat_line = lv_label(scr)
+if f20 != nil stat_line.set_style_text_font(f20, lv.PART_MAIN | lv.STATE_DEFAULT) end
+stat_line.set_long_mode(lv.LABEL_LONG_SCROLL)                                        # auto scrolling if text does not fit
+stat_line.set_width(hres)
+stat_line.set_align(lv.TEXT_ALIGN_LEFT)                                              # align text left
+stat_line.set_style_bg_color(lv_color(0xD00000), lv.PART_MAIN | lv.STATE_DEFAULT)    # background #000088
+stat_line.set_style_bg_opa(lv.OPA_COVER, lv.PART_MAIN | lv.STATE_DEFAULT)            # 100% background opacity
+stat_line.set_style_text_color(lv_color(0xFFFFFF), lv.PART_MAIN | lv.STATE_DEFAULT)  # text color #FFFFFF
+stat_line.set_text("Tasmota")
+stat_line.refr_size()                                                                # new in LVGL8
+stat_line.refr_pos()                                                                 # new in LVGL8
 ```
 
 Let's decompose:
 
 ```python
-log = lv_label(scr)
+stat_line = lv_label(scr)
 ```
 
 Creates an object of type `lv_label` with parent `scr` (screen).
 
 ```python
-log.set_style_local_text_font(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, f20)
+if f20 != nil stat_line.set_style_text_font(f20, lv.PART_MAIN | lv.STATE_DEFAULT) end
 ```
 
 If `f20` is correctly loaded, set the font to Montserrat 20. Styles are associated to parts of objects and to states. Here we associate to the main part for state default.
 
 ```python
-log.set_long_mode(lv.LABEL_LONG_SROLL)
+stat_line.set_long_mode(lv.LABEL_LONG_SCROLL)                                        # auto scrolling if text does not fit
 ```
-
 
 Set the label to auto roll from right to left and vice versa if the text does not fit in the display.
 
 ```python
-log.set_width(hres)
-log.set_align(lv.LABEL_ALIGN_LEFT)
+stat_line.set_width(hres)
+stat_line.set_align(lv.TEXT_ALIGN_LEFT)                                                      # align text left
 ```
 
 Set the width to full screen resolution, and align text to the left.
 
 ```python
-log.set_style_local_bg_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(0xD00000))
-log.set_style_local_bg_opa(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv.OPA_COVER)
-log.set_style_local_text_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(0xFFFFFF))
+stat_line.set_style_bg_color(lv_color(0xD00000), lv.PART_MAIN | lv.STATE_DEFAULT)    # background #000088
+stat_line.set_style_bg_opa(lv.OPA_COVER, lv.PART_MAIN | lv.STATE_DEFAULT)            # 100% background opacity
+stat_line.set_style_text_color(lv_color(0xFFFFFF), lv.PART_MAIN | lv.STATE_DEFAULT)  # text color #FFFFFF
 ```
 
 Set background color to red, text color to white, opacity to 100%.
 
 ```python
-log.set_text("Welcome to Tasmota")
+stat_line.set_text("Tasmota")
 ```
 
 Set the text of the label.
 
+```python
+stat_line.refr_size()                                                                # new in LVGL8
+stat_line.refr_pos()                                                                 # new in LVGL8
+```
+
+The latter is new in LVGL8, and tells the widget to update its size and position, that we will use right after to position other widgets.
 Please note that the actual display is asynchronous. We describe the objects, in whatever order, they will be all displayed at once.
 
 ### Create a style
 
 ```python
-tastyle = lv_style()
-tastyle.set_bg_color(lv.STATE_DEFAULT, lv_color(0x1fa3ec))
-tastyle.set_text_color(lv.STATE_DEFAULT, lv_color(0xFFFFFF))
-tastyle.set_radius(lv.STATE_DEFAULT, 10)
-tastyle.set_bg_opa(lv.STATE_DEFAULT, lv.OPA_COVER)
-if f20 != nil tastyle.set_text_font(lv.STATE_DEFAULT, f20) end
+#- create a style for the buttons -#
+btn_style = lv_style()
+btn_style.set_radius(10)                        # radius of rounded corners
+btn_style.set_bg_opa(lv.OPA_COVER)              # 100% backgrond opacity
+if f20 != nil btn_style.set_text_font(f20) end  # set font to Montserrat 20
+btn_style.set_bg_color(lv_color(0x1fa3ec))      # background color #1FA3EC (Tasmota Blue)
+btn_style.set_border_color(lv_color(0x0000FF))  # border color #0000FF
+btn_style.set_text_color(lv_color(0xFFFFFF))    # text color white #FFFFFF
 ```
 
 We create a `lv_style` object and associate some attributes. This works similarly to CSS styles. This style sets background color to Tasmota button blue, text to white, opacity to 100%, font to Montserrat 20 and corner rounding to 1 pixel (10 decipixels).
@@ -300,12 +313,13 @@ We create a `lv_style` object and associate some attributes. This works similarl
 ### Create the buttons
 
 ```python
-home_btn = lv_btn(scr)
+home_btn = lv_btn(scr)                            # center button
 home_btn.set_pos(120,vres-40)
 home_btn.set_size(80, 30)
-home_btn.add_style(lv.OBJ_PART_MAIN, tastyle)
+home_btn.add_style(btn_style, lv.PART_MAIN | lv.STATE_DEFAULT)
 home_label = lv_label(home_btn)
-home_label.set_text(lv.SYMBOL_OK)
+home_label.set_text(lv.SYMBOL_OK)                 # set text as Home icon
+home_label.center()
 ```
 
 Finally create a `lv_btn` object with parent `scr`, set its size and position, add the previously defined style and set its text.
@@ -319,6 +333,7 @@ In `my_user_config.h` or in your config override, add:
 ```
 #define USE_LVGL
 #define USE_DISPLAY
+#define USE_DISPLAY_LVGL_ONLY
 #define USE_XPT2046
 #define USE_UNIVERSAL_DISPLAY
   #undef USE_DISPLAY_MODES1TO5
@@ -334,8 +349,8 @@ Be aware that it adds 440Kb to you firmware, so make sure you have a partition w
 
 What's implemented currently:
 
-* LVGL 7.11.0
-* All LVGL widgets are available. We may remove some less useful widgets to save code space
+* LVGL 8.0.2
+* All standard LVGL widgets are available, most of extras
 * Styles
 * File-system
 * Fonts, currently Montserrat fonts are embedded at sizes 10, 14 (default), 20 and 28 (compressed - smaller and slower)
@@ -351,7 +366,7 @@ What's implemented currently:
 
 What will probably not be implemented
 
-* Native LVGL animation engine
+* ~~Native LVGL animation engine~~
 * Styles garbage collection is not done, which means that creating lots of styles leads to memoly leak
 * multi-screens display - I don't know of a single ESP32 based device with multi-screens
 * Bidirectional fonts - unless there is strong demand
@@ -361,12 +376,9 @@ What will probably not be implemented
 
 Simply speaking, you can convert most constants from their C equivalent to berry by just changing the `LV_` prefix to `lv.`.
 
-Example:
+Example: `LV_SYMBOL_OK` becomes `lv.SYMBOL_OK`
 
-- `LV_SYMBOL_OK` becomes `lv.SYMBOL_OK`
-- `LV_WHITE` becomes `lv.WHITE`
-
-Berry provides an object model to `lv_object` and sub-classes for widhets like `lv_btn`, `lv_label`... To create an object, just instantiate the class: `lv_btn(parent[, copy])`
+Berry provides an object model to `lv_object` and sub-classes for widhets like `lv_btn`, `lv_label`... To create an object, just instantiate the class: `lv_btn(parent)`
 
 `lv_style` is created independantly.
 
