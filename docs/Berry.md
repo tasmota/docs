@@ -1,5 +1,9 @@
+---
+description: Berry is a powerful scripting language for Tasmota32 only
+---
 # Berry Scripting Language
-!!! info "Berry Scripting is included in all ESP32/S2/C3 pre-compiled builds". It is not supported on ESP8266/85"
+
+!!! info "Berry Scripting is included in all Tasmota32 builds. It is not supported on ESP82xx"
 
 <img style="float:right;height:40px" alt="Berry logo" src="../_media/berry/berry.svg">
 
@@ -7,7 +11,7 @@ See full examples in the [Berry Cookbook](Berry-Cookbook.md)
 
 ## Introduction to Berry
 
-Berry is the next generation scripting for Tasmota. It is based on the open-source Berry project, deliveting an ultra-lightweight dynamically typed embedded scripting language. It is designed for lower-performance embedded devices. 
+Berry is the next generation scripting for Tasmota. It is based on the open-source Berry project, delivering an ultra-lightweight dynamically typed embedded scripting language. It is designed for lower-performance embedded devices. 
 
 [**Berry Github**](https://github.com/Skiars/berry)
 
@@ -44,7 +48,7 @@ Berry Scripting in only supported on Tasmota32 for ESP32. The RAM usage starts a
 
 Make sure you compile Tasmota32 with `#define USE_BERRY`.
 
-You should see similare lines in the Tasmota logs:
+You should see similar lines in the Tasmota logs:
 
 ```
 00:00:00.098 BRY: Berry initialized, RAM used=10002
@@ -89,7 +93,7 @@ Meanwhile the Tasmota log shows:
 {"POWER":"ON","Dimmer":60,"Color":"996245","HSBColor":"21,55,60","Channel":[60,38,27]}
 The light is bright
 ```
-The rule function have the general form below where parameters are optionals:
+The rule function have the general form below where parameters are optional:
 
 ```python
 def function_name(value, trigger, msg)
@@ -120,7 +124,7 @@ Example:
 The light is bright
 ```
 
-The same fucntion can be used with multiple triggers.
+The same function can be used with multiple triggers.
 
 Example if the function to process an ADC input should be triggered both by the `tele/SENSOR`
 message and the result of a `Status 10` command:
@@ -154,7 +158,7 @@ tasmota.add_rule("ANALOG#A1",def (value) rule_adc(1,value) end )
 tasmota.add_rule("ANALOG#A2",def (value) rule_adc(2,value) end )
 ```
 
-## A word on functions and closure
+#### A word on functions and closure
 
 Berry is a functional language, and includes the very powerful concept of a *closure*. In a nutshell, it means that when you create a function, it can capture the values of variables when the function was created. This roughly means that it does what intuitively you would expect it to do.
 
@@ -189,7 +193,7 @@ Berry provides complete support for Relays and Lights.
 
 You can control individual Relays or lights with `tasmota.get_power()` and `tasmota.set_power()`.
 
-`tasmota.get_power()` returns an array of booleans represnting the state of each relays and light (light comes last).
+`tasmota.get_power()` returns an array of booleans representing the state of each relays and light (light comes last).
 
 `tasmota.set_power(relay, onoff)` changes the state of a single relay/light.
 
@@ -214,7 +218,7 @@ power|`boolean`<br>Turns the light off or on. Equivalent to `tasmota.set_power()
 bri|`int range 0..255`<br>Set the overall brightness. Be aware that the range is `0..255` and not `0..100` as Dimmer.
 hue|`int 0..360`<br>Set the color Hue in degree, range 0..360 (0=red).
 sat|`int 0..255`<br>Set the color Saturation (0 is grey).
-ct|`int 153..500`<br>Set the white color temperature in mireds, ranging from 153 (cold white) to 500 (warm white)
+ct|`int 153..500`<br>Set the white color temperature in mired, ranging from 153 (cold white) to 500 (warm white)
 rgb|`string 6 hex digits`<br>Set the color as hex `RRGGBB`, changing color and brightness.
 channels|`array of int, ranges 0..255`<br>Set the value for each channel, as an array of numbers
 
@@ -246,7 +250,7 @@ When setting attributes, they are evaluated in the following order, the latter o
 
 ## Loading code from filesystem
 
-You can upload Berry code in the filesytem and load them at runtime. Just be careful to use the `*.be` extensions.
+You can upload Berry code in the filesystem and load them at runtime. Just be careful to use the `*.be` extensions.
 
 To load a Berry file, use the `load(filename)` function. It takes a filename and must end by `.be` or `.bec`; if the file has no extension '.be' is automatically appended.
 
@@ -362,7 +366,7 @@ tasmota.add\_rule<a class="cmnd" id="tasmota_add_rule"></a>|`(pattern:string, f:
 tasmota.remove\_rule<a class="cmnd" id="tasmota_remove_rule"></a>|`(pattern:string) ->nil`<br>Removes a rule to the rule engine. Silently ignores the pattern if no rule matches.
 tasmota.add\_driver<a class="cmnd" id="tasmota_add_driver"></a>|`(instance) ->nil`<br>Registers an instance as a driver
 tasmota.remove\_driver<a class="cmnd" id="tasmota_remove_driver"></a>|`(instance) ->nil`<br>Removes a driver
-tasmota.gc<a class="cmnd" id="tasmota_gc"></a>|`() -> int`<br>Triggers a garbage collaction of Berry objects and returns the bytes currently allocated. This is for debug only and shouldn't be normally used. GC is otherwise automatically triggeredd when necessary.
+tasmota.gc<a class="cmnd" id="tasmota_gc"></a>|`() -> int`<br>Triggers garbage collection of Berry objects and returns the bytes currently allocated. This is for debug only and shouldn't be normally used. `gc` is otherwise automatically triggered when necessary.
 
 Functions used to retrieve Tasmota configuration
 
@@ -389,7 +393,7 @@ Functions to add custom responses to JSON and Web UI.
 
 Tasmota Function|Parameters and details
 :---|:---
-tasmota.response\_append<a class="cmnd" id="tasmota_response_append"></a>|`(name:string) -> nil`<br>Adds JSON fragment to the current response. Used for example for sensors to add JSON to teleperiod.
+tasmota.response\_append<a class="cmnd" id="tasmota_response_append"></a>|`(name:string) -> nil`<br>Adds JSON fragment to the current response. Used for example for sensors to add JSON to TelePeriod.
 tasmota.web\_send<a class="cmnd" id="tasmota_web_send"></a>|`(message:string) -> nil`<br>Adds an HTML fragment to the Web output.
 tasmota.web\_send\_decimal<a class="cmnd" id="tasmota_web_send_decimal"></a>|`(message:string) -> nil`<br>Adds an HTML fragment to the Web output, similar to `web_send` but converts decimal dot `.` to the locale decimal separator.
 
@@ -407,7 +411,7 @@ tasmota.get\_switches<a class="cmnd" id="tasmota_get_switches"></a>|`() -> list(
 
 Note: if there are holes in the switch definition, the values will be skipped. I.e. if you define SWITCH1 and SWITCH3, the array will return the two consecutive values for switches 1/3.
 
-Low-level access to Tasmota globals. _Use with care and only if you know what you are doing._
+Low-level access to Tasmota globals. ***Use with care and only if you know what you are doing.***
 
 The construct is to use `tasmota.global` to read or write attributes. **Warning:** you can do bad things with these features.
 
@@ -431,20 +435,22 @@ light.gamma8<a class="cmnd" id="light_gamma8"></a>|`(channel) -> int`<br>Compute
 
 ### **`gpio` module**
 
-This module allows to retrieve the GPIO configuration set in the templates. You need to distinguish between **logical gpio** (like PWM, or I2C) and **physical gpio** which represent the GPIO number of the physicla pin. `gpio.pin()` transforms a logical gpio to a physical gpio, or `-1` if the logical gpio is not set.
+This module allows to retrieve the GPIO configuration set in the templates. You need to distinguish between **logical gpio** (like PWM, or I2C) and **physical gpio** which represent the GPIO number of the physical pin. `gpio.pin()` transforms a logical GPIO to a physical GPIO, or `-1` if the logical GPIO is not set.
 
 Currently there is limited support for GPIO: you can only read/write in digital mode and set the PGIO mode.
 
 Tasmota Function|Parameters and details
 :---|:---
-gpio.pin_used<a class="cmnd" id="gpio_pin_used"></a>|`(gpio [,index]) -> bool`<br>returns if a specific GPIO is used. `index` allows to iterate through gpios. Example: `gpio.pin_used(gpio.REL1)` to check Relay1, or `gpio.pin_used(gpio.REL1,1)` to check Relay2 (index is zero-based)
+gpio.pin_used<a class="cmnd" id="gpio_pin_used"></a>|`(gpio [,index]) -> bool`<br>returns if a specific GPIO is used. `index` allows to iterate through GPIOs. Example: `gpio.pin_used(gpio.REL1)` to check Relay1, or `gpio.pin_used(gpio.REL1,1)` to check Relay2 (index is zero-based)
 gpio.pin<a class="cmnd" id="gpio_pin"></a>|`(gpio [,index]) -> int`<br>returns the physical GPIO number assigned to the Tasmota GPIO, or -1 if the GPIO is not assigned
 gpio.digital\_write<a class="cmnd" id="gpio_digital_write"></a>|`(phy_gpio, val) -> nil` needs the physical GPIO number<br>sets the GPIO to LOW/HIGH. `val` can be `0`, `1`, `gpio.LOW` or `gpio.HIGH`. Example: `gpio.digital_write(gpio.pin(gpio.REL1), gpio.HIGH)` sets Relay1 to High.
 gpio.digital\_read<a class="cmnd" id="gpio_digital_read"></a>|`(phy_gpio) -> int` needs the physical GPIO number<br>reads the value of a GPIO. Returns 0 or 1.
 gpio.pin\_mode<a class="cmnd" id="gpio_pin_mode"></a>|`(phy_gpio, mode) -> nil` needs the physical GPIO number<br>Changes the GPIO mode. It should be called very cautiously. Normally Tasmota handles automatically GPIO modes.<BR>`mode` can have the following values: `gpio.INPUT`, `gpio.OUTPUT`, `gpio.PULLUP`, `gpio.INPUT_PULLUP`, `gpio.PULLDOWN`, `gpio.OPEN_DRAIN`, `gpio.OUTPUT_OPEN_DRAIN`, `gpio.gpio.DAC`
-gpio.dac\_voltage<a class="cmnd" id="gpio_dac_voltage"></a>|`(phy_gpio:int, voltage_mv:int) -> int`<br>Sets the DAC voltage in mV. The resolution is 8 bits over a range of 0..3.3V, i.e. an inctement of ~13mV, this function returns the actual voltage output rounded to the closest value. See below the constraints for DAC GPIOs.
+gpio.dac\_voltage<a class="cmnd" id="gpio_dac_voltage"></a>|`(phy_gpio:int, voltage_mv:int) -> int`<br>Sets the DAC voltage in mV. The resolution is 8 bits over a range of 0..3.3V, i.e. an increment of ~13mV, this function returns the actual voltage output rounded to the closest value. See below for constraints of DAC GPIOs.
 
-#### Support for DAC gpios on ESP32 and ESP32S2 (ESP32C3 does not have DAC)
+#### Support for DAC GPIOs on ESP32 and ESP32-S2 
+
+!!! warning "ESP32-C3 does not have DAC GPIOs"
 
 DAC is limited to specific GPIOs:
 
@@ -455,12 +461,12 @@ DAC can also be used via `Esp8266Audio` through the ESP32 I2S->DAC bridge.
 
 How to use:
 
-- set a gpio to DAC mode: `gpio.pin_mode(25, gpio.DAC)`
-- set a voltage (in mV): `gpio.dac_voltage(25, 1250)` -> returns the closest voltage found (here 1255mV).
+- set a GPIO to DAC mode: `gpio.pin_mode(25, gpio.DAC)`
+- set a voltage (in mV): `gpio.dac_voltage(25, 1250)` -> returns the closest voltage found (in this example: 1255 mV).
 
 Any internal error or using unsupported GPIO yields an Berry exception.
 
-#### GPIOs types
+#### GPIO types
 
 Here are the possible values for Tasmota GPIOS:
 
@@ -494,7 +500,7 @@ energy.read()<a class="cmnd" id="energy_read"></a>|`() -> map`<br>Returns all cu
 
 Below is the list of `energy` attributes that you can read or write:
 
-Attribue|Type|Description
+Attribute|Type|Description
 :---|:---|:---
 voltage<br>voltage\_2<br>voltage\_3|float|Voltage (V) for main phase or 3 phases
 current<br>current\_2<br>current\_3|float|Current (A) for main phase or 3 phases
@@ -569,7 +575,7 @@ scan<a class="cmnd" id="wire_scan">|`() -> array of int`<br>Scan the bus and ret
 detect<a class="cmnd" id="wire_detect">|`(addr:int) -> bool`<br>Returns `true` if the device of address `addr` is connected to this bus.
 read<a class="cmnd" id="wire_read">|`(addr:int, reg:int, size:int) -> int or nil`<br>Read a value of 1..4 bytes from address `addr` and register `reg`. Returns `nil` if no response.
 write<a class="cmnd" id="wire_write">|`(addr:int, reg:int, val:int, size:int) -> bool`<br>Writes a value of 1..4 bytes to address `addr`, register `reg` with value `val`. Returns `true` if successful, `false` if not.
-read\_bytes<a class="cmnd" id="wire_read_bytes">|`(addr:int, reg:int ,size:int) -> instance of bytes()`<br>Reads a sequence of `size` bytes from address `addr` register `reg`. Result is a `bytes()` instance or `bytes()` if not succesful.`
+read\_bytes<a class="cmnd" id="wire_read_bytes">|`(addr:int, reg:int ,size:int) -> instance of bytes()`<br>Reads a sequence of `size` bytes from address `addr` register `reg`. Result is a `bytes()` instance or `bytes()` if not successful.`
 write\_bytes<a class="cmnd" id="wire_write_bytes">|`(addr:int, reg:int, val:bytes) -> nil`<br>Writes the `val` bytes sequence as `bytes()` to address `addr` register `reg`.
 
 The following are low-level commands if you need finer control:
@@ -705,14 +711,14 @@ arg<a class="cmnd" id="ws_arg">|`(arg_name:string or arg_index:int): -> string`<
 arg_name<a class="cmnd" id="ws_arg_name">|`(arg_index:int) -> string`<br>Returns the name of argument by index [0..arg_size()-1]
 has_arg<a class="cmnd" id="ws_has_arg">|`(arg_name:string): -> bool`<br>Checks if an argument with this name exists
 check_privileged_access<a class="cmnd" id="ws_check_privileged_access">|`() -> bool`<br>Returns `true` if the page needs privileged access
-content_send<a class="cmnd" id="ws_content_send">|`(string) -> nil`<br>Sends the HTML content to the client. Tasmota uses Chunked encoding, which means than the content is regulary sent to the client and not buffered in Tasmota's memory
+content_send<a class="cmnd" id="ws_content_send">|`(string) -> nil`<br>Sends the HTML content to the client. Tasmota uses Chunked encoding, which means than the content is regularly sent to the client and not buffered in Tasmota's memory
 content_button<a class="cmnd" id="ws_content_button">|`([button:int]) -> nil`<br>Displays a standard button by code, using Tasmota localization. Possible values are `webserver.BUTTON_CONFIGURATION`, `webserver.BUTTON_INFORMATION`, `webserver.BUTTON_MAIN`, `webserver.BUTTON_MANAGEMENT`, `webserver.BUTTON_MODULE`. Default is `webserver.BUTTON_MAIN`.
 
-The followin are low-level functions if you want to display custom pages and content.
+The following are low-level functions if you want to display custom pages and content.
 
 General Function|Parameters and details
 :---|:---
-on<a class="cmnd" id="ws_on">|`(prefix:string, callback:closure [, method:int]) -> nil`<br>Attaches a handler (any closure or function) to a prefix. An optional `method` argument (defaults to `webserver.HTTP_ANY` specifies the HTTP methods to be received (ANY, GET, POST, OPTIONS, POST)<BR>WARNING - this should be called only when receiving `web_add_handler` event. If called before the WebServer is set up and Wifi on, it will crash. For debug purpose, it can be called later when you are sure that Wifi/Eth is up.
+on<a class="cmnd" id="ws_on">|`(prefix:string, callback:closure [, method:int]) -> nil`<br>Attaches a handler (any closure or function) to a prefix. An optional `method` argument (defaults to `webserver.HTTP_ANY` specifies the HTTP methods to be received (ANY, GET, POST, OPTIONS, POST)<BR>WARNING - this should be called only when receiving `web_add_handler` event. If called before the WebServer is set up and Wi-Fi on, it will crash. For debug purpose, it can be called later when you are sure that Wi-Fi or Ethernet is up.
 state<a class="cmnd" id="wc_set_useragent">|`() -> int`<br>Returns the internal state of Tasmota web server. Possible values are `webserver.HTTP_OFF`, `webserver.HTTP_USER`, `webserver.HTTP_ADMIN`, `webserver.HTTP_MANAGER`, `webserver.HTTP_MANAGER_RESET_ONLY`.
 content_start<a class="cmnd" id="ws_content_start">|`() -> nil`<br>Start response page
 content_send_style<a class="cmnd" id="ws_content_send_style">|`() -> nil`<br>Sends the standard Tasmota style
@@ -752,9 +758,9 @@ available<a class="cmnd" id="serial_available"></a>|`available(void) -> int`<br>
 
 Supported serial message formats: `SERIAL_5N1`, `SERIAL_6N1`, `SERIAL_7N1`, `SERIAL_8N1`, `SERIAL_5N2`, `SERIAL_6N2`, `SERIAL_7N2`, `SERIAL_8N2`, `SERIAL_5E1`, `SERIAL_6E1`, `SERIAL_7E1`, `SERIAL_8E1`, `SERIAL_5E2`, `SERIAL_6E2`, `SERIAL_7E2`, `SERIAL_8E2`, `SERIAL_5O1`, `SERIAL_6O1`, `SERIAL_7O1`, `SERIAL_8O1`, `SERIAL_5O2`, `SERIAL_6O2`, `SERIAL_7O2`, `SERIAL_8O2`
 
-# Customizing Berry compiles
+## Customizing Berry compiles
 
-Berry is included if the following is defined (enabled by default on ESP32/S2/C3):
+Berry is included if the following is defined:
 
 ```arduino
 #define USE_BERRY
