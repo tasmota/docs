@@ -394,21 +394,22 @@ lv.start()
 
 # set background color to blue
 scr = lv.scr_act()
-scr.set_style_local_bg_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(lv.COLOR_BLUE))
+scr.set_style_bg_color(lv_color(lv.COLOR_BLUE), lv.PART_MAIN | lv.STATE_DEFAULT)
 
 # create a lv_img object and set it to Tasmota logo
 logo = lv_img(scr)
 logo.set_tasmota_logo()
-logo.align(0, lv.ALIGN_CENTER, 0, 0)
+logo.center()
 ```
+
 ![screenshot-1618843384](https://user-images.githubusercontent.com/49731213/115389330-3ee56f00-a1dd-11eb-9925-bc91a1d3cf89.png)
 
 The logo is is black, with anti-aliasing and transparency. You can now manipulate the logo: change zoom, rotate or recolor.
 
 ```python
 # recolor logo to white
-logo.set_style_local_image_recolor_opa(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, 255)
-logo.set_style_local_image_recolor(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(lv.WHITE))
+logo.set_style_img_recolor_opa(255, lv.PART_MAIN | lv.STATE_DEFAULT)
+logo.set_style_img_recolor(lv_color(lv.COLOR_WHITE), lv.PART_MAIN | lv.STATE_DEFAULT)
 
 # zoom by 125% - 100% is 256, so 125% is 320
 logo.set_zoom(300)
@@ -416,6 +417,7 @@ logo.set_zoom(300)
 # rotate by 30 degrees - or 300 deci-degrees
 logo.set_angle(300)
 ```
+
 ![screenshot-1618843394](https://user-images.githubusercontent.com/49731213/115389410-5886b680-a1dd-11eb-9b9f-bb901268aeec.png)
 
 Example of animation:
