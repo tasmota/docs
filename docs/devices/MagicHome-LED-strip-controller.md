@@ -21,6 +21,7 @@ Module comes in (at least) 3 variants:
 - LC06: RGBW/WW  with Screw-Headers
 
 A different version of this controller with an ESP8285 is documented [here](../devices/MagicHome-with-ESP8285)
+The new models comes with the BL602 (RISC-V) and still incompatible as the [issue](https://github.com/esphome/feature-requests/issues/1049)
 
 ## Serial Connection
 
