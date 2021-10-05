@@ -560,6 +560,15 @@ register values for all 4 rotations (color display only)
 2. x offset
 3. y offset
 4. rotation pseudo opcode for touch panel
+the appropriate coordinate convervsions are defined via pseudo opcodes
+0 = no conversion
+1 = swap and flip x
+2 = flipx, flip y
+3 = swap and flip y
+4 = flip x
+5 = flip y
+bit 7 = swap x,y
+
 
 `:A`  
 3 OPCODES to set adress window (color display only)  
@@ -610,8 +619,8 @@ SCL, SDA are the pins used (or * for tasmota definition)
 `:TS,CS_PIN`   
 defines a touch panel an SPI bus with chip select CS_PIN (or *)  
 
-the appropriate coordinate convervsions are defined via pseudo opcodes, see above  
-( code 0 to 3 currently defined)  
+`:r,X`
+defines optional display rotation X = 0..3
 
 !!! example "Full examples for SH1106 and ILI9341: (comment lines starting with ; are allowed)"  
 
