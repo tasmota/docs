@@ -119,9 +119,9 @@ To switch both RGB and W on/off with the connected hardware switch, you can use 
 
 
 ## Ghost switching
-The Shelly 2.5 inputs appear to be notoriously susceptible to interference. Therefore ghost switching can happen if the wires are long (>1m / 3ft). If you experience this issue, you might want to experiment with the switch debounce delay. It is set to 50 milliseconds by default.
+The inputs on Shelly devices appear to be notoriously susceptible to interference. Therefore ghost switching can happen if the wires are long (>1m / 3ft). If you experience this issue, you might want to experiment with the switch debounce delay. It is set to 50 milliseconds by default.
 
-Use command `SwitchDebounce 100` to change it to a less sensitive value, which might work better. The value be set up to 1000 milliseconds.
+Use command `SwitchDebounce 100` to change it to a less sensitive value, which might work better. The value can be set up to 1000 milliseconds.
 
 Some issues were reported for this topic - [search query](https://github.com/arendst/Tasmota/issues?utf8=%E2%9C%93&q=ghost+shelly)
 
