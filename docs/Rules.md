@@ -1717,7 +1717,7 @@ on event#upordown=+ do var1 - ENDON
 on event#upordown=- do var1 + ENDON
 
 Rule1 1
-      ```
+```
 Notice we use `Rule` which edits `Rule1` rule set. They can be used interchangeably.
 
 ------------------------------------------------------------------------------
