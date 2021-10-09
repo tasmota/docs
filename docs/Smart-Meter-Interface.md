@@ -1408,7 +1408,7 @@ There are two types available using differen communication settings:
   * OD-type: 7 data bits, even parity, one stop bit, 9600 baud (9600 7E1)
   * SM-type: 8 data bits, no parity, one stop bit, 9600 baud (9600 8N1) 
 
-Tested with a eBZ DD3 2R06 ODZ1 (two-direction model for e. g. solar power metering)
+Tested with a eBZ DD3 2R06 ODZ1 (two-direction model for e. g. solar power metering) and confirmed to work with the TasmotaSerial3.2 source which is in [Tasmota banch 9.3.1](https://github.com/arendst/Tasmota/releases/tag/v9.3.1).
     
 Because the 7E1 serial mode is not supported by Tasmota software serial, the hardware serial port must be used, i.e. GPIO 3. This will /not/ work using GPIO 0 or 2. Also, the source code has to be patched from 8N1 to 7E1 mode for the hardware serial in file src/TasmotaSerial.cpp, please see the patch further down below.
 
