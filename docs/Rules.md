@@ -1706,16 +1706,15 @@ Activate dimmer mode with `Switchmode 11` and shorten long press time to 1 secon
 A short press of the switch sends a `TOGGLE` message to toggle the dimmer. A long press sends repeated `INC_DEC` messages to increment the dimmer. If a second press of the switch follows the first press a `INV` message is sent to invert the function from increment to decrement and repeated `INC_DEC` messages are sent to decrement the dimmer. After releasing the switch a timeout message `CLEAR` resets the automation
 
 ```haskell
-Backlog SwitchMode 11; SetOption32 10
+Backlog SwitchMode 11; SetOption32 10; Rule1 1;
 
-Rule1
-on system#boot mem1 + ENDON
-ON switch1#state=2 DO publish light/cmnd/POWER TOGGLE ENDON
-ON switch1#state=4 DO publish light/cmnd/DIMMER %mem1% ENDON
-ON switch1#state=5 DO mem1 - ENDON
-ON switch1#state=6 DO mem1 + ENDON
-
-Rule1 1
+Rule1 
+on system#boot do var1 + ENDON
+on switch1#state=2 do POWER TOGGLE ENDON
+on switch1#state=4 do DIMMER %var1% ENDON
+on switch1#state=6 do event upordown=%var1% ENDON
+on event#upordown=+ do var1 - ENDON
+on event#upordown=- do var1 + ENDON
 ```
 Notice we use `Rule` which edits `Rule1` rule set. They can be used interchangeably.
 
