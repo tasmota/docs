@@ -90,6 +90,7 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.highlight
   - pymdownx.superfences
+  - pymdownx.snippets
   - meta
   - def_list
 
@@ -239,5 +240,5 @@ nav:
     - Troubleshooting.md
     - Device-Recovery.md
     - Discord Support: https://discord.gg/Ks2Kzd4 "target=_blank"
-  - Install: https://tasmota.github.io/install "target=_blank"
+  - Builds.md
 

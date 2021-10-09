@@ -2,6 +2,8 @@
 title: Tasmota Documentation
 description: Open source firmware for ESP devices with easy configuration using webUI, OTA updates, automation using timers or rules, expandability and entirely local control over MQTT, HTTP, serial or KNX.
 ---
+# Open source firmware for ESP devices
+
 <img style="margin: 10px 10px; float:right; width:35%" src="_media/frontlogo.svg" alt="Tasmota Logo"></img>
 Total local control with quick setup and updates.    
 Control using MQTT, Web UI, HTTP or serial.    
