@@ -80,10 +80,14 @@ markdown_extensions:
      permalink: "~"
      toc_depth: 3
   - pymdownx.mark
-  - pymdownx.tabbed
-  - pymdownx.emoji
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
   - pymdownx.betterem
   - pymdownx.caret
+  - pymdownx.details
   - pymdownx.highlight
   - pymdownx.superfences
   - meta
@@ -235,5 +239,5 @@ nav:
     - Troubleshooting.md
     - Device-Recovery.md
     - Discord Support: https://discord.gg/Ks2Kzd4 "target=_blank"
-  - Builds.md
+  - Install: https://tasmota.github.io/install "target=_blank"
 
