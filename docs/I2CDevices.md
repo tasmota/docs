@@ -10,7 +10,7 @@ Using command ``I2cDriver`` individual drivers can be enabled or disabled at run
 The following table lists the supported I2C devices
 
 Index | Define              | Driver  | Device   | Address(es) | Description
-------|---------------------|---------|----------|-------------|-----------------------------------------------
+------|---------------------|---------|----------|-------------|-----------------------
    1  | USE_PCA9685         | xdrv_15 | PCA9685  | 0x40 - 0x47 | 16-channel 12-bit pwm driver
    2  | USE_PCF8574         | xdrv_28 | PCF8574  | 0x20 - 0x26 | 8-bit I/O expander
    2  | USE_PCF8574         | xdrv_28 | PCF8574A | 0x39 - 0x3F | 8-bit I/O expander
@@ -77,12 +77,26 @@ Index | Define              | Driver  | Device   | Address(es) | Description
   50  | USE_VEML7700        | xsns_71 | VEML7700 | 0x10        | Ambient light intensity sensor
   51  | USE_MCP9808         | xsns_72 | MCP9808  | 0x18 - 0x1F | Temperature sensor
   52  | USE_HP303B          | xsns_73 | HP303B   | 0x76 - 0x77 | Pressure and temperature sensor
-  53  | USE_MLX90640        | xdrv_43 | MLX90640 | 0x33        | 32x24 IR/Thermal image sensor
+  53  | USE_MLX90640        | xdrv_43 | MLX90640 | 0x33        | IR array temperature sensor
   54  | USE_VL53L1X         | xsns_77 | VL53L1X  | 0x29        | Time-of-flight (ToF) distance sensor
-  55  | USE_EZO             | xsns_78 | EZO_*    | 0x61 - 0x70 | EZO family of sensors (DO, ORP, PH...)
-  56  | USE_SEESAW_SOIL     | xsns_81 | ADA4026  | 0x36 - 0x39 | Adafruit capacitive [soil sensor](https://www.adafruit.com/product/4026)
-    57  | USE_TOF10120        | xsns_84 | TOF10120 | 0x52        | Time-of-flight (ToF) distance sensor
+  55  | USE_EZOPH           | xsns_78 | EZOPH    | 0x61 - 0x70 | pH sensor
+  55  | USE_EZOORP          | xsns_78 | EZOORP   | 0x61 - 0x70 | ORP sensor
+  55  | USE_EZORTD          | xsns_78 | EZORTD   | 0x61 - 0x70 | Temperature sensor
+  55  | USE_EZOHUM          | xsns_78 | EZOHUM   | 0x61 - 0x70 | Humidity sensor
+  55  | USE_EZOEC           | xsns_78 | EZOEC    | 0x61 - 0x70 | Electric conductivity sensor
+  55  | USE_EZOCO2          | xsns_78 | EZOCO2   | 0x61 - 0x70 | CO2 sensor
+  55  | USE_EZOO2           | xsns_78 | EZOO2    | 0x61 - 0x70 | O2 sensor
+  55  | USE_EZOPRS          | xsns_78 | EZOPRS   | 0x61 - 0x70 | Pressure sensor
+  55  | USE_EZOFLO          | xsns_78 | EZOFLO   | 0x61 - 0x70 | Flow meter sensor
+  55  | USE_EZODO           | xsns_78 | EZODO    | 0x61 - 0x70 | Disolved Oxygen sensor
+  55  | USE_EZORGB          | xsns_78 | EZORGB   | 0x61 - 0x70 | Color sensor
+  55  | USE_EZOPMP          | xsns_78 | EZOPMP   | 0x61 - 0x70 | Peristaltic Pump
+  56  | USE_SEESAW_SOIL     | xsns_81 | SEESOIL  | 0x36 - 0x39 | Adafruit seesaw soil moisture sensor
+  57  | USE_TOF10120        | xsns_84 | TOF10120 | 0x52        | Time-of-flight (ToF) distance sensor
   58  | USE_MPU_ACCEL       | xsns_85 | MPU_ACCEL| 0x68        | MPU6886/MPU9250 6-axis MotionTracking sensor from M5Stack
   59  | USE_BM8563          | xdrv_56 | BM8563   | 0x51        | BM8563 RTC from M5Stack
   60  | USE_AM2320          | xsns_88 | AM2320   | 0x5C        | Temperature and Humidity sensor
   61  | USE_T67XX           | xsns_89 | T67XX    | 0x15        | CO2 sensor
+  62  | USE_SCD40           | xsns_92 | SCD40    | 0x62        | CO2 sensor Sensirion SCD40/SCD41
+  63  | USE_HM330X          | xsns_93 | HM330X   | 0x40        | Particule sensor
+
