@@ -13,7 +13,7 @@ Home Assistant has different options of adding Tasmota devices:
 
 1. Official Tasmota integration (**preferred**)
 2. Manual configuration by editing configuration.yaml
-3. MQTT discovery (_deprecated due to breaking changes for light in Home Assistant 2021.5_)
+3. MQTT discovery (_deprecated_)
 
 ## Tasmota Integration
 
@@ -28,6 +28,10 @@ All Tasmota devices will be listed in their own Tasmota card in **Configuration 
 
 Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmota integration and [`FriendlyName<x>`](Commands.md#friendlyname) to name power outputs (switch or light entities in HA).
 
+!!! bug 
+    If you are using Home Assistant OS [MQTT add-on](https://github.com/home-assistant/addons/tree/master/mosquitto) add the following to the ACL file (user section or general section): `topic write tasmota/discovery/#` to give Tasmota devices write access to the discovery topic.
+    
+    
 ### Supported Entities
 
 - Lights as `light` entities.  
