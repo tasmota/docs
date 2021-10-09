@@ -100,7 +100,7 @@ In most cases those pins are available on the PCB in the form of pin holes or so
 If you are not careful, your own health will be in danger. Shorting your serial interface with mains AC power will fry your device and serial adapter and will also harm or destroy your computer. It is important to _**always have all mains power cables disconnected from the device**_ while being connected via serial or even while the case of the device is opened.
 
 ### Serial Connection
-Each device has its pins labelled differently. If the labelling isn't visible on the PCB please refer to the devices flashing guide or search the Internet for correct pin locations. Device specific instructions and restrictions are documented in the [Tasmota Device Templates Repository](https://templates.blakadder.com/). Pinouts for commonly used Wi-Fi modules are [found here](Pinouts.md)
+Each device has its pins labelled differently. If the labelling isn't visible on the PCB please refer to the devices flashing guide or search the Internet for correct pin locations. Device specific instructions and restrictions are documented in the [Tasmota Supported Devices Repository](https://templates.blakadder.com/). Pinouts for commonly used Wi-Fi modules are [found here](Pinouts.md)
 
 When you have identified pins on your device, connect wires according to the table:
 
@@ -141,7 +141,7 @@ ESP needs to be put into **programming mode** or **flash mode** before the firmw
 
 On most devices the installed control button is connected to GPIO0 and GND, making entering Programming Mode very easy. On others you will need to bridge the pins on the PCB or directly on the chip with a jumper wire. GPIO0 locations for popular modules can be found in [Pinouts](Pinouts.md)!
 
-Device specific instructions are documented in [Tasmota Device Templates Repository](https://templates.blakadder.com/).
+Device specific instructions are documented in [Tasmota Supported Devices Repository](https://templates.blakadder.com/).
 
 To put the ESP into Programming Mode:
 
@@ -333,7 +333,7 @@ Configure your device using [Templates](Templates) in **Configuration - Configur
 
 Your device running Tasmota is now ready to be [controlled](Commands).
 
-!!! quote "Check out all the supported devices in [Tasmota Device Templates Repository](https://templates.blakadder.com/)"
+!!! quote "Check out all the supported devices in [Tasmota Supported Devices Repository](https://templates.blakadder.com/)"
 
 #### Configure Other (optional)
 

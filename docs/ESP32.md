@@ -105,7 +105,7 @@ All binaries will use flags in `user_config_override.h` if it exists.
 
 ## Working Devices
 
-[Tasmota Device Templates Repository](https://templates.blakadder.com/esp32.html) has an extensive list of [ESP32 based](https://templates.blakadder.com/esp32.html) devices.
+[Tasmota Supported Devices Repository](https://templates.blakadder.com/esp32.html) has an extensive list of [ESP32 based](https://templates.blakadder.com/esp32.html) devices.
 
 #### LilyGO TTGO T-Camera OV2640_V05
 

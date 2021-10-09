@@ -12,7 +12,7 @@ To provide easy processing by Tasmota a template is written as a JSON string and
 {"NAME":"Example Template","GPIO":[416,0,418,0,417,2720,0,0,2624,32,2656,224,0,0],"FLAG":0,"BASE":45}
 ```
 !!! tip
-    [**Tasmota Device Templates Repository**](https://templates.blakadder.com/) has a complete list of supported devices.
+    [**Tasmota Supported Devices Repository**](https://templates.blakadder.com/) has a complete list of supported devices.
     We encourage everyone who creates a template for a [new unknown device](Configuration-Procedure-for-New-Devices) to submit it using [Add New Template form](https://templates.blakadder.com/new.html).
 
 
@@ -57,7 +57,7 @@ Now that you've set up your previously unsupported device in Tasmota it is time 
 MQT: stat/tasmota/RESULT = {"NAME":"Merged","GPIO":[416,0,418,0,417,2720,0,0,2624,32,2656,224,0,0],"FLAG":0,"BASE":45}
 ```
 
-Copy the string `{"NAME":"Merged","GPIO":[416,0,418,0,417,2720,0,0,2624,32,2656,224,0,0],"FLAG":0,"BASE":45}` and share it on the [Tasmota Device Templates Repository](https://templates.blakadder.com/new.html).
+Copy the string `{"NAME":"Merged","GPIO":[416,0,418,0,417,2720,0,0,2624,32,2656,224,0,0],"FLAG":0,"BASE":45}` and share it on the [Tasmota Supported Devices Repository](https://templates.blakadder.com/new.html).
 
 ### Importing Templates
 
