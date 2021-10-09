@@ -92,41 +92,6 @@ pattern write tele/%u/#
 
 My user root is allowed to do everything. This is used in my home-automation to control all devices and listen to all devices. The "pattern" is used for ALL other users and the %u is a substitute. The great thing is that the device can read its configuration but cannot write to it. And the status information it posts to the /status/ but is not able to read it afterward. With this minimal configuration, Tasmota devices are running.
 
-____
-
-**Note: If you are using Home Assistant**, and using the Tasmota integration, and if you have used `SetOption19 0` on the Tasmota device, then the devices will have to write to the `tasmota/discovery/#` topic. So, add the following to the ACL file (user section or general section): `topic write tasmota/discovery/#`.
-
-For completeness' sake, below is a snippet of the ACL file with the full recommended structure.
-
-```
-########
-######## General section
-# Commented out all general rules.
-# topic readwrite homeassistant/#
-# topic write tasmota/discovery/#
-########
-
-########
-######## User section
-
-user sonoff-living-fan-2
-# This is used when SetOption19 1 is used.
-topic readwrite homeassistant/#
-# This is used when SetOption19 0 is used.
-topic write tasmota/discovery/#
-
-########
-
-########
-######## Pattern Section
-# https://tasmota.github.io/docs/Securing-your-IoT-from-hacking/
-pattern read cmnd/%u/#
-pattern write stat/%u/#
-pattern write tele/%u/#
-########
-```
-____
-
 To add the different user to Mosquitto the following two commands work fine. There is also a re-read available, but a restart works better for me.
 
 ```
@@ -169,3 +134,38 @@ How to generate the certificates in mosquitto please look at:
 
 In case your Wifi SSID is not available (i.e. access point dies), the WiFiManager will jump into action and make your tasmota devices available using an unsecured access point.
 Type WifiConfig into the tasmota console. If this parameter is set to 2, you might want to change it after completing the setup of your device. Some less risky options would be: 0/4/5. (For details, see [Wi-Fi commands](Commands#wi-fi)).
+
+## Home Assistant OS MQTT Add-On
+If you are using Home Assistant OS [MQTT add-on](https://github.com/home-assistant/addons/tree/master/mosquitto) with [Tasmota integrationg(https://www.home-assistant.io/integrations/tasmota/) the devices will need write access to the `tasmota/discovery/#` topic.
+
+Add the following to the ACL file (user section or general section): `topic write tasmota/discovery/#`.
+
+For completeness' sake, below is a snippet of the ACL file with the full recommended structure.
+
+```
+########
+######## General section
+# Commented out all general rules.
+# topic readwrite homeassistant/#
+# topic write tasmota/discovery/#
+########
+
+########
+######## User section
+
+user sonoff-living-fan-2
+# This is used when SetOption19 1 is used.
+topic readwrite homeassistant/#
+# This is used when SetOption19 0 is used.
+topic write tasmota/discovery/#
+
+########
+
+########
+######## Pattern Section
+# https://tasmota.github.io/docs/Securing-your-IoT-from-hacking/
+pattern read cmnd/%u/#
+pattern write stat/%u/#
+pattern write tele/%u/#
+########
+```
