@@ -1,5 +1,6 @@
-description: Documentation (Wiki) for Tasmota: Open source firmware for ESP8266 devices with easy configuration using webUI, OTA updates, automation using timers or rules, expandability and entirely local control over MQTT, HTTP, serial or KNX.
-
+---
+description: Documentation (Wiki) for Tasmota: Open source firmware for ESP devices with easy configuration using webUI, OTA updates, automation using timers or rules, expandability and entirely local control over MQTT, HTTP, serial or KNX.
+---
 # Open source firmware for ESP based devices
 
 <img style="margin: 10px 10px; float:right; width:35%" src="_media/frontlogo.svg" alt="Tasmota Logo"></img>
@@ -14,15 +15,13 @@ Incredibly expandable and flexible.
 [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4)
 [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-OTA update servers: [http://ota.tasmota.com/tasmota/release](http://ota.tasmota.com/tasmota/release) and [http://ota.tasmota.com/tasmota32/release](http://ota.tasmota.com/tasmota32/release/).
+<b>Install Tasmota using a Chrome based browser at [https://tasmota.github.io/install/](https://tasmota.github.io/install/).</b>    
 
-<small><span style="float:right">\*all documentation is for current release only</small></span>
 ### Current release 
 <a href="http://ota.tasmota.com/tasmota/release-9.5.0/"><span style="font-size:40px;">Tasmota 9.5.0 Michael</span></a><br>
 
-<b>Install Tasmota using a Chrome based browser at [https://tasmota.github.io/install/](https://tasmota.github.io/install/)</b>
 
-- :warning: BREAKING :warning: Lights using MQTT discovery will not work correcty as of Home Assistant 2021.5 due to new [color modes](https://www.home-assistant.io/blog/2021/05/05/release-20215/#color-modes). Upgrade to [v9.5](http://ota.tasmota.com/release/tasmota/) of Tasmota and use [Tasmota integration](https://www.home-assistant.io/integrations/tasmota)
+- :warning: ==BREAKING== :warning: Lights using MQTT discovery will not work correcty as of Home Assistant 2021.5 due to new [color modes](https://www.home-assistant.io/blog/2021/05/05/release-20215/#color-modes). Upgrade to [v9.5](http://ota.tasmota.com/release/tasmota/) of Tasmota and use [Tasmota integration](https://www.home-assistant.io/integrations/tasmota)
 
 - new optional Template configuration field [`"CMND"`](Templates.md#cmnd) to embed crucial configuration commands in the template string [#11788](https://github.com/arendst/Tasmota/discussions/11788)
 - Support for MQTT using [Azure IoT Hub](Azure-IoT-Hub.md)
@@ -55,7 +54,6 @@ See [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), [Re
 Open a new topic on [Tasmota discussions](https://github.com/arendst/Tasmota/discussions).
 
 Report a bug in [Tasmota issues](https://github.com/arendst/Tasmota/issues).
-
 
 #### If you like Tasmota
 <iframe src="https://ghbtns.com/github-btn.html?user=arendst&repo=tasmota&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe><iframe src="https://ghbtns.com/github-btn.html?user=arendst&repo=tasmota&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> 
