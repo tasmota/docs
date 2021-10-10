@@ -34,7 +34,13 @@ Rule1
 
 where the MQTT message payload is `{"Time":"2017-02-16T10:13:52", "DS18B20":{"Temperature":20.6}}`
 ```
+```console
+Rule1
+  ON mqtt#connected DO Subscribe DnTemp, stat/%topic%/SENSOR, DS18B20.Temperature ENDON
+  ON Event#DnTemp DO TempMeasuredSet %value% ENDON
 
+will allow a thermostat to subscribe to a temperature sensor on another Tasmota device
+```
 ## Unsubscribe
 Unsubscribe from topics which were subscribed to using the [`Subscribe`](#subscribe) command.  
 
