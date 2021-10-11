@@ -1709,7 +1709,7 @@ Rule1
 on system#boot do var1 + ENDON
 on switch1#state=2 do POWER TOGGLE ENDON
 on switch1#state=4 do DIMMER %var1% ENDON
-on switch1#state=6 do event upordown=%var1% ENDON
+on switch1#state=7 do event upordown=%var1% ENDON
 on event#upordown=+ do var1 - ENDON
 on event#upordown=- do var1 + ENDON
 ```
