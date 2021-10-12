@@ -26,7 +26,11 @@ All Tasmota devices will be listed in their own Tasmota card in **Configuration 
 
 ![Informative sensor](_media/tasmota_integration_showcase.png)
 
-Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmota integration and [`FriendlyName<x>`](Commands.md#friendlyname) to name power outputs (switch or light entities in HA).
+Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmota integration and [`FriendlyName<x>`](Commands.md#friendlyname) to name power outputs (switch or light entities in HA). 
+
+!!! tip "Use templates to change the Module name"
+    Setting the [template](Templates) name will change the Module name as well which will be reflected in Home Assistant. This helps in identifying when dealing with a large number of devices. Its nicer than having 10 Sonoff S31's or a bunch of TuyaMCU's"
+    ![Template name as Module name in Home Assistant](_media/templatemodule.png)
 
 ### Supported Entities
 

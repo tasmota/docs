@@ -242,7 +242,7 @@ Choose an installation method:
     - [**Sonoff DIY**](Sonoff-DIY) - OTA flash for select Sonoff devices **Does not work anymore**
     - [**esp2ino**](https://github.com/elahd/esp2ino) - OTA flash for select Wyze devices. **Does not work anymore**
 
-You've successfully flashed your device with a downloaded binary of Tasmota but now you need to connect the tasmotised device to your Wi-Fi network. 
+You've successfully flashed your device with Tasmota but now you need to connect the freshly tasmotised device to your Wi-Fi network. 
 
 ## Initial Configuration
 
