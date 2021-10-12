@@ -27,7 +27,7 @@ The sensor shows the most of parameters such as the built-in display:
 ![](_media/xsns_83_neopool_s.png)
 
 Basic commands to control filtration and light are implemented.
-However, the sensor provides commands to read and write the NeoPool controller Modbus register, means that everyone has the option of implementing their own commands via their home automation system or using the Tasmota build-in possibilities with [Rules](https://tasmota.github.io/docs/Commands/#rules) and [Backlog](https://tasmota.github.io/docs/Commands/#the-power-of-backlog).
+However, the sensor provides commands to read and write the NeoPool controller Modbus register, means that everyone has the option of implementing their own commands via their home automation system or using the Tasmota build-in possibilities with [Rules](Commands/#rules) and [Backlog](Commands/#the-power-of-backlog).
 
 ## Configuration
 
@@ -123,10 +123,12 @@ Sensor data are send by `tele/%topic%/SENSOR` JSON reponse:
 
 ### Commands
 
-This sensor supports some basic commands to control filtration and light.
+This sensor supports some basic [Tasmota commands](Commands).
 
-Regardless, all device registers can be read and written.
-Modbus register addresses and their meaning are described in [xsns_83_neopool.ino](https://github.com/arendst/Tasmota/blob/development/tasmota/xsns_83_neopool.ino) at the beginning and within document [171-Modbus-registers](https://downloads.vodnici.net/uploads/wpforo/attachments/69/171-Modbus-registers.pdf).
+Regardless, all other device registers can be read and write, so you can [enhance](#esp8266-enhancements) your Sugar Valley control by using basic `NPRead`/`NPWrite` commands.
+
+Modbus register addresses and their meaning are described in [xsns_83_neopool.ino](https://github.com/arendst/Tasmota/blob/development/tasmota/xsns_83_neopool.ino) at the beginning and within document [171-Modbus-registers](https://downloads.vodnici.net/uploads/wpforo/attachments/69/171-Modbus-registers.pdf).<BR>
+Please note that Sugar Valley Modbus registers are not byte addresses but modbus registers containing 16-bit values - don't think in byte memory layout.
 
 Command|Parameters
 :---|:---
@@ -134,8 +136,11 @@ NPFiltration<a id="NPFiltration"></a>|`{<state> {speed}}`<BR>get/set manual filt
 NPFiltrationMode<a id="NPFiltrationMode"></a>|`{<mode>}`<BR>get/set filtration mode (mode = `0..4|13`). Get if mode is omitted, otherwise set accordingly `<mode>`:<ul><li>`0` - *MANUAL* allows to turn the filtration (and all other systems that depend on it) on and off</li><li>`1` - *AUTO* allows filtering to be turned on and off according to the settings of the *MBF_PAR_TIMER_BLOCK_FILT_INT* timers.</li><li>`2` - *HEATING* similar to the AUTO mode, but includes setting the temperature for the heating function. This mode is activated only if the BF_PAR_HEATING_MODE register is at 1 and there is a heating relay assigned.</li><li>`3` - *SMART* adjusts the pump operating times depending on the temperature. This mode is activated only if the MBF_PAR_TEMPERATURE_ACTIVE register is at 1.</li><li>`4` - *INTELLIGENT* performs an intelligent filtration process in combination with the heating function. This mode is activated only if the MBF_PAR_HEATING_MODE register is at 1 and there is a heating relay assigned.</li><li>`13` - *BACKWASH* started when the backwash operation is activated.</ul>
 NPTime<a id="NPTime"></a>|`{<time>}`<BR>get/set device time. Get if time is omitted, otherwise set device time accordingly `<time>`:<ul><li>`0` - sync with Tasmota local time</li><li>`1` - sync with Tasmota utc time</li><li>`2..4294967295` - set time as epoch</li></ul>
 NPLight<a id="NPLight"></a>|`{<state> {delay}}`<BR>get/set light (state = `0..4`, delay = `5..100` in 1/10 sec). Get if state is omitted, otherwise set accordingly `<state>`:<ul><li>`0` - manual turn light off</li><li>`1` - manual turn light on</li><li>`2` - manual toogle light</li><li>`3` - switch light into auto mode according MBF_PAR_TIMER_BLOCK_LIGHT_INT settings</li><li>`4` - select light RGB LED to next program. This is normally done by power the light on (if currently off), then power off the light for a given time (delay) and power on again. The default delay is 15 (=1.5 sec).</ul>
-NPOnError<a id="NPOnError"></a>|`{<repeat>}`get/set auto-repeat Modbus read/write commands on error (repeat = `0..10`). Get if repeat is omitted, otherwise set accordingly `<repeat>`:<ul><li>`0` - disable auto-repeat on read/write error</li><li>`1..10` - repeat commands n times until ok</li></ul>
-NPResult<a id="NPResult"></a>|`{<format>}`get/set addr/data result format for read/write commands (format = `0|1`). Get if format is omitted, otherwise set accordingly `<format>`:<ul><li>`0` - output decimal numbers</li><li>`1` - output hexadecimal strings, this is the default</li></ul>
+NPOnError<a id="NPOnError"></a>|`{<repeat>}`<BR>get/set auto-repeat Modbus read/write commands on error (repeat = `0..10`). Get if repeat is omitted, otherwise set accordingly `<repeat>`:<ul><li>`0` - disable auto-repeat on read/write error</li><li>`1..10` - repeat commands n times until ok</li></ul>
+NPResult<a id="NPResult"></a>|`{<format>}`<BR>get/set addr/data result format for read/write commands (format = `0|1`). Get if format is omitted, otherwise set accordingly `<format>`:<ul><li>`0` - output decimal numbers</li><li>`1` - output hexadecimal strings, this is the default</li></ul>
+NPPHRes<a id="NPPHRes"></a>|`{<digits>}`<BR>get/set number of digits in results for PH value (digits = `0..3`).
+NPCLRes<a id="NPPHRes"></a>|`{<digits>}`<BR>get/set number of digits in results for CL value (digits = `0..3`).
+NPIonRes<a id="NPPHRes"></a>|`{<digits>}`<BR>get/set number of digits in results for ION value (digits = `0..3`).
 NPRead<a id="NPRead"></a>|`<addr> {<cnt>}`<BR>read 16-bit register (addr = `0..0x060F`, cnt = `1..30`). cnt = `1` if omitted
 NPReadL<a id="NPReadL"></a>|`<addr> {<cnt>}`<BR>read 32-bit register (addr = `0..0x060F`, cnt = `1..15`). cnt = `1` if omitted
 NPWrite<a id="NPWrite"></a>|`<addr> <data> {<data>...}`<BR>write 16-bit register (addr = `0..0x060F`, data = `0..0xFFFF`). Use of data max 10 times
@@ -255,13 +260,11 @@ NPOnError 3
 RESULT = {"NPOnError":3}
 ```
 
-### Enhancements
-
-Using the command above we are now able to expand the WebGUI.
+### ESP8266 Enhancements
 
 #### Add buttons for filtration and light control
 
-We are now add two dummy buttons to control the filtration pump and the light.
+Add two dummy buttons to control the filtration pump and the light.
 
 First we define two dummy relay (which does not have any physical function) on two unused GPIO (here we use GPIO0 and GPIO4 where we define Tasmota Relay 1 and 2):
 
@@ -279,7 +282,7 @@ Now we have the WebGUI buttons like this:
 
 ![](_media/xsns_83_neopool_ctrl.png)
 
-but missing the functionality behind. For that we use [Rules](https://tasmota.github.io/docs/Rules) and connect the states for Tasmota Power, Neopool filtration and light:
+but missing the functionality behind. For that we use [Rules](Rules) and connect the states for Tasmota Power, Neopool filtration and light:
 
 ```haskell
 Rule1
@@ -352,3 +355,92 @@ Backlog Rule2 4;Rule2 1
 Configure Tasmota Timer 10 for your needs (for example using same rule to sync time to Tasmota local time every day at 4:01 h).
 
 ![](_media/xsns_83_neopool_timer.png)
+
+#### Add rule event macros for easier control
+
+For easier reading/writing of the register with simple named event commands, we can define rules to handle it.
+
+Note: To use the following rules you must [compile your build](Compile-your-build) adding the following to `user_config_override.h`:
+
+```C
+#ifndef USE_NEOPOOL
+#define USE_RULES                                // Add support for rules
+#endif
+
+#ifndef USE_EXPRESSION
+#define USE_EXPRESSION                          // Add support for expression evaluation in rules
+#endif
+
+#ifndef SUPPORT_IF_STATEMENT
+#define SUPPORT_IF_STATEMENT                    // Add support for IF statement in rules
+#endif
+```
+
+Then we can define [rule events](Rules) to control pH, redox and hydrolysis level:
+
+```haskell
+Rule2
+  ON Event#PH DO IF (%value%>=690 AND %value%<=780) NPWrite 0x504,%value%;NPExec ELSE NPRead 0x504 ENDIF ENDON
+  ON Event#Redox DO IF (%value%>=400 AND %value%<=900) NPWrite 0x508,%value%;NPExec ELSE NPRead 0x508 ENDIF ENDON
+  ON Event#Hydrolysis DO IF (%value%>=0 AND %value%<=1000) NPWrite 0x502,%value%;NPExec ENDIF ENDON
+```
+
+At least we activate the rule:
+
+```haskell
+Backlog Rule2 4;Rule2 1
+```
+
+Now we can use the Tasmota command Event to control Sugar Valley values (use `NPResult 0` before for decimal value results)):
+
+##### Read/write pH setpoint
+
+Note: pH setpoint is stored as setpoint*100
+
+Get current pH setpoint:
+
+```json
+Event PH
+RESULT = {"NPRead":{"Address":1284,"Data":710}}
+```
+
+Set new pH setpoint to 7.0
+
+```json
+Event PH=700
+RESULT = {"NPRead":{"Address":1284,"Data":710}}
+```
+
+##### Read/write redox setpoint
+
+Get current redox setpoint:
+
+```json
+Event Redox
+{"NPRead":{"Address":1288,"Data":750}}
+```
+
+Set redox setpoint to 780
+
+```json
+Event Redox=780
+{"NPRead":{"Address":1288,"Data":780}}
+```
+
+##### Read/write hydrolysis setpoint
+
+Note: Hydrolysis setpoint percentage is stored as setpoint*10
+
+Get current hydrolysis setpoint:
+
+```json
+Event Hydrolysis
+{"NPRead":{"Address":1282,"Data":1000}}
+```
+
+Set hydrolysis setpoint to 80%
+
+```json
+Event Hydrolysis=800
+{"NPRead":{"Address":1282,"Data":800}}
+```
