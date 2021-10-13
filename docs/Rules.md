@@ -91,7 +91,7 @@ Button2#State<a id="ButtonState"></a>|when a button changes state:<br>`0` = OFF<
 Clock#Timer=3<a id="ClockTimer"></a>|when global `Timer3` is activated
 Dimmer#Boot<a id="DimmerBoot"></a>|occurs after Tasmota starts<a id="ADC0"></a> 
 Dimmer#State<a id="DimmerState"></a>|when the value for Dimmer is changed
-Event#eventName<a id="EventeventName"></a>|when command `Event eventName` is executed. You can define your own event values and trigger them with the [`Event`](Commands.md#event) command.
+Event#eventName<a id="EventeventName"></a>|when command `Event eventName` is executed. You can define your own event values and trigger them with the [`Event`](Commands.md#event) command. An event with a `=` will provide a `%value%` to use in the execution part of the rule. Example: Command `Event speed=2` in rule trigger `on event#speed` will have the `%value%` of `2`.
 FanSpeed#Data=3|when the fan speed is set to `3`
 Mem&lt;x\>#State<a id="MemState"></a>|when the value for Mem&lt;x\> is changed
 Http#Initialized<a id="HttpInitialized"></a>|
