@@ -72,3 +72,9 @@ With this it will stay ON for 30 seconds then send OFF message and the timer res
 
 ![MH-SR602](_media/peripherals/MH-SR602-pinout.png)
 ![MH-SR602](_media/peripherals/MH-SR602-table.png)
+
+## Panasonic EKMC1603111
+
+Set the data pin to `Switch n` for it to work.
+
+[Datasheet](https://eu.mouser.com/datasheet/2/315/PANA_S_A0004395539_1-2560640.pdf)
