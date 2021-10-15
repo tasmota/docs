@@ -2,7 +2,7 @@
 
 !!! info "ESP32 only and NOT included in ESP32 pre-compiled builds". See below How to Compile"
 
-**Supported version**: **LVGL v8.0.2**, **LodePNG v20201017**, **Freetype 2.10.4**
+Supported version: **LVGL v8.0.2**, **LodePNG v20201017**, **Freetype 2.10.4**
 
 **LVGL** (_Light and Versatile Graphics Library_) is Tasmota's next generation display. It is powerful, lightweight and simple to use. It combines:
 
