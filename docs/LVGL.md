@@ -195,6 +195,8 @@ Start LVGL
 lv.start()
 ```
 
+Note: when you create an LVGL object, you need to use the `lv` module. For example, creating a label object is done with `lv.lv_lable`. As a convenienve, classes can also be named with a shorter name `lv.label` which is equivalent to `lv.lv_label`. The internal class name is still `lv_label`.
+
 Use `lv.montserrat_font(<size>)` to load a pre-defined montserrat font. Embedded sizes are: 10, 14, 20, 28. You can also load a font from the file-system but you need to convert them first. See: https://docs.lvgl.io/latest/en/html/overview/font.html
 
 ```python
