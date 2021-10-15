@@ -81,19 +81,19 @@ scr = lv.scr_act()            # default screean object
 f20 = lv.montserrat_font(20)  # load embedded Montserrat 20
 
 #- Background with a gradient from black #000000 (bottom) to dark blue #0000A0 (top) -#
-scr.set_style_bg_color(lv_color(0x0000A0), lv.PART_MAIN | lv.STATE_DEFAULT)
-scr.set_style_bg_grad_color(lv_color(0x000000), lv.PART_MAIN | lv.STATE_DEFAULT)
+scr.set_style_bg_color(lv.color(0x0000A0), lv.PART_MAIN | lv.STATE_DEFAULT)
+scr.set_style_bg_grad_color(lv.color(0x000000), lv.PART_MAIN | lv.STATE_DEFAULT)
 scr.set_style_bg_grad_dir(lv.GRAD_DIR_VER, lv.PART_MAIN | lv.STATE_DEFAULT)
 
 #- Upper state line -#
-stat_line = lv_label(scr)
+stat_line = lv.label(scr)
 if f20 != nil stat_line.set_style_text_font(f20, lv.PART_MAIN | lv.STATE_DEFAULT) end
-stat_line.set_long_mode(lv.LABEL_LONG_SCROLL)                                                  # auto scrolling if text does not fit
+stat_line.set_long_mode(lv.LABEL_LONG_SCROLL)                                        # auto scrolling if text does not fit
 stat_line.set_width(hres)
-stat_line.set_align(lv.TEXT_ALIGN_LEFT)                                                      # align text left
-stat_line.set_style_bg_color(lv_color(0xD00000), lv.PART_MAIN | lv.STATE_DEFAULT)    # background #000088
+stat_line.set_align(lv.TEXT_ALIGN_LEFT)                                              # align text left
+stat_line.set_style_bg_color(lv.color(0xD00000), lv.PART_MAIN | lv.STATE_DEFAULT)    # background #000088
 stat_line.set_style_bg_opa(lv.OPA_COVER, lv.PART_MAIN | lv.STATE_DEFAULT)            # 100% background opacity
-stat_line.set_style_text_color(lv_color(0xFFFFFF), lv.PART_MAIN | lv.STATE_DEFAULT)  # text color #FFFFFF
+stat_line.set_style_text_color(lv.color(0xFFFFFF), lv.PART_MAIN | lv.STATE_DEFAULT)  # text color #FFFFFF
 stat_line.set_text("Tasmota")
 stat_line.refr_size()                                                                # new in LVGL8
 stat_line.refr_pos()                                                                 # new in LVGL8
@@ -103,36 +103,36 @@ wifi_icon = lv_wifi_arcs_icon(stat_line)    # the widget takes care of positioni
 clock_icon = lv_clock_icon(stat_line)
 
 #- create a style for the buttons -#
-btn_style = lv_style()
+btn_style = lv.style()
 btn_style.set_radius(10)                        # radius of rounded corners
 btn_style.set_bg_opa(lv.OPA_COVER)              # 100% backgrond opacity
 if f20 != nil btn_style.set_text_font(f20) end  # set font to Montserrat 20
-btn_style.set_bg_color(lv_color(0x1fa3ec))      # background color #1FA3EC (Tasmota Blue)
-btn_style.set_border_color(lv_color(0x0000FF))  # border color #0000FF
-btn_style.set_text_color(lv_color(0xFFFFFF))    # text color white #FFFFFF
+btn_style.set_bg_color(lv.color(0x1fa3ec))      # background color #1FA3EC (Tasmota Blue)
+btn_style.set_border_color(lv.color(0x0000FF))  # border color #0000FF
+btn_style.set_text_color(lv.color(0xFFFFFF))    # text color white #FFFFFF
 
 #- create buttons -#
-prev_btn = lv_btn(scr)                            # create button with main screen as parent
+prev_btn = lv.btn(scr)                            # create button with main screen as parent
 prev_btn.set_pos(20,vres-40)                      # position of button
 prev_btn.set_size(80, 30)                         # size of button
 prev_btn.add_style(btn_style, lv.PART_MAIN | lv.STATE_DEFAULT)   # style of button
-prev_label = lv_label(prev_btn)                   # create a label as sub-object
+prev_label = lv.label(prev_btn)                   # create a label as sub-object
 prev_label.set_text("<")                          # set label text
 prev_label.center()
 
-next_btn = lv_btn(scr)                            # right button
+next_btn = lv.btn(scr)                            # right button
 next_btn.set_pos(220,vres-40)
 next_btn.set_size(80, 30)
 next_btn.add_style(btn_style, lv.PART_MAIN | lv.STATE_DEFAULT)
-next_label = lv_label(next_btn)
+next_label = lv.label(next_btn)
 next_label.set_text(">")
 next_label.center()
 
-home_btn = lv_btn(scr)                            # center button
+home_btn = lv.btn(scr)                            # center button
 home_btn.set_pos(120,vres-40)
 home_btn.set_size(80, 30)
 home_btn.add_style(btn_style, lv.PART_MAIN | lv.STATE_DEFAULT)
-home_label = lv_label(home_btn)
+home_label = lv.label(home_btn)
 home_label.set_text(lv.SYMBOL_OK)                 # set text as Home icon
 home_label.center()
 
@@ -164,7 +164,7 @@ Setting an input device is also simple, we are now configuring the three buttons
 To control focus, you need to create a group, put the focusable items in the group, and assign the input device to the group:
 
 ```python
-g = lv_group()
+g = lv.group()
 g.add_obj(prev_btn)
 g.add_obj(home_btn)
 g.add_obj(next_btn)
@@ -180,7 +180,7 @@ Touch screen are supported natively via Universal Display driver.
 Example:
 
 ```python
-colp = lv_colorwheel(scr)
+colp = lv.colorwheel(scr)
 colp.set_size(130, 130)
 colp.set_pos(10,30)
 ```
@@ -209,8 +209,8 @@ f20 = lv.montserrat_font(20)  # load embedded Montserrat 20
 
 ```python
 #- Background with a gradient from black #000000 (bottom) to dark blue #0000A0 (top) -#
-scr.set_style_bg_color(lv_color(0x0000A0), lv.PART_MAIN | lv.STATE_DEFAULT)
-scr.set_style_bg_grad_color(lv_color(0x000000), lv.PART_MAIN | lv.STATE_DEFAULT)
+scr.set_style_bg_color(lv.color(0x0000A0), lv.PART_MAIN | lv.STATE_DEFAULT)
+scr.set_style_bg_grad_color(lv.color(0x000000), lv.PART_MAIN | lv.STATE_DEFAULT)
 scr.set_style_bg_grad_dir(lv.GRAD_DIR_VER, lv.PART_MAIN | lv.STATE_DEFAULT)
 ```
 
@@ -220,10 +220,10 @@ In this example we do a vertical color cradient from dark blue (up) to black (do
 
 ### Colors
 
-Color are created via `lv_color(<int>)` with 0xRRGGBB as 24 bits color. Internally the color is converted to the display color depth so rounding errors may happen:
+Color are created via `lv.color(<int>)` with 0xRRGGBB as 24 bits color. Internally the color is converted to the display color depth so rounding errors may happen:
 
 ```
-> lv_color(0x808080)
+> lv.color(0x808080)
 lv_color(0x838183 - native:0x1084)
 ```
 
@@ -233,14 +233,14 @@ The line above shows the internal color converted back to 24 bits RGB (rounding 
 
 ```python
 #- Upper state line -#
-stat_line = lv_label(scr)
+stat_line = lv.label(scr)
 if f20 != nil stat_line.set_style_text_font(f20, lv.PART_MAIN | lv.STATE_DEFAULT) end
 stat_line.set_long_mode(lv.LABEL_LONG_SCROLL)                                        # auto scrolling if text does not fit
 stat_line.set_width(hres)
 stat_line.set_align(lv.TEXT_ALIGN_LEFT)                                              # align text left
-stat_line.set_style_bg_color(lv_color(0xD00000), lv.PART_MAIN | lv.STATE_DEFAULT)    # background #000088
+stat_line.set_style_bg_color(lv.color(0xD00000), lv.PART_MAIN | lv.STATE_DEFAULT)    # background #000088
 stat_line.set_style_bg_opa(lv.OPA_COVER, lv.PART_MAIN | lv.STATE_DEFAULT)            # 100% background opacity
-stat_line.set_style_text_color(lv_color(0xFFFFFF), lv.PART_MAIN | lv.STATE_DEFAULT)  # text color #FFFFFF
+stat_line.set_style_text_color(lv.color(0xFFFFFF), lv.PART_MAIN | lv.STATE_DEFAULT)  # text color #FFFFFF
 stat_line.set_text("Tasmota")
 stat_line.refr_size()                                                                # new in LVGL8
 stat_line.refr_pos()                                                                 # new in LVGL8
@@ -249,7 +249,7 @@ stat_line.refr_pos()                                                            
 Let's decompose:
 
 ```python
-stat_line = lv_label(scr)
+stat_line = lv.label(scr)
 ```
 
 Creates an object of type `lv_label` with parent `scr` (screen).
@@ -274,9 +274,9 @@ stat_line.set_align(lv.TEXT_ALIGN_LEFT)                                         
 Set the width to full screen resolution, and align text to the left.
 
 ```python
-stat_line.set_style_bg_color(lv_color(0xD00000), lv.PART_MAIN | lv.STATE_DEFAULT)    # background #000088
+stat_line.set_style_bg_color(lv.color(0xD00000), lv.PART_MAIN | lv.STATE_DEFAULT)    # background #000088
 stat_line.set_style_bg_opa(lv.OPA_COVER, lv.PART_MAIN | lv.STATE_DEFAULT)            # 100% background opacity
-stat_line.set_style_text_color(lv_color(0xFFFFFF), lv.PART_MAIN | lv.STATE_DEFAULT)  # text color #FFFFFF
+stat_line.set_style_text_color(lv.color(0xFFFFFF), lv.PART_MAIN | lv.STATE_DEFAULT)  # text color #FFFFFF
 ```
 
 Set background color to red, text color to white, opacity to 100%.
@@ -299,13 +299,13 @@ Please note that the actual display is asynchronous. We describe the objects, in
 
 ```python
 #- create a style for the buttons -#
-btn_style = lv_style()
+btn_style = lv.style()
 btn_style.set_radius(10)                        # radius of rounded corners
 btn_style.set_bg_opa(lv.OPA_COVER)              # 100% backgrond opacity
 if f20 != nil btn_style.set_text_font(f20) end  # set font to Montserrat 20
-btn_style.set_bg_color(lv_color(0x1fa3ec))      # background color #1FA3EC (Tasmota Blue)
-btn_style.set_border_color(lv_color(0x0000FF))  # border color #0000FF
-btn_style.set_text_color(lv_color(0xFFFFFF))    # text color white #FFFFFF
+btn_style.set_bg_color(lv.color(0x1fa3ec))      # background color #1FA3EC (Tasmota Blue)
+btn_style.set_border_color(lv.color(0x0000FF))  # border color #0000FF
+btn_style.set_text_color(lv.color(0xFFFFFF))    # text color white #FFFFFF
 ```
 
 We create a `lv_style` object and associate some attributes. This works similarly to CSS styles. This style sets background color to Tasmota button blue, text to white, opacity to 100%, font to Montserrat 20 and corner rounding to 1 pixel (10 decipixels).
@@ -313,11 +313,11 @@ We create a `lv_style` object and associate some attributes. This works similarl
 ### Create the buttons
 
 ```python
-home_btn = lv_btn(scr)                            # center button
+home_btn = lv.btn(scr)                            # center button
 home_btn.set_pos(120,vres-40)
 home_btn.set_size(80, 30)
 home_btn.add_style(btn_style, lv.PART_MAIN | lv.STATE_DEFAULT)
-home_label = lv_label(home_btn)
+home_label = lv.label(home_btn)
 home_label.set_text(lv.SYMBOL_OK)                 # set text as Home icon
 home_label.center()
 ```
