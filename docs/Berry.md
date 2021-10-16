@@ -777,5 +777,6 @@ Option|Description
 `#define USE_BERRY_WEBCLIENT_USERAGENT  "TasmotaClient"`|Specifies the default `User-Agent` field sent by `webclient`. Can be changed on a per request basis.
 `#define USE_BERRY_WEBCLIENT_TIMEOUT  5000`|Specifies the default timeout in millisecond for `webclient`. Can be changed on a per request basis.
 
+## Berry Cookbook
 
-
+See full examples in the [Berry Cookbook](Berry-Cookbook.md)
