@@ -494,3 +494,139 @@ end
 mpu6886 = MPU6886()
 tasmota.add_driver(mpu6886)
 ```
+
+## LVGL Touchscreen with 3 Relays
+
+```python
+#- start LVGL and init environment -#
+lv.start()
+
+hres = lv.get_hor_res()     # should be 240
+vres = lv.get_ver_res()     # should be 320
+
+scr = lv.scr_act()          # default screean object
+f20 = lv.montserrat_font(20)  # load embedded Montserrat 20
+f28 = lv.montserrat_font(28)  # load embedded Montserrat 28
+
+#- Backgroun -#
+scr.set_style_local_bg_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(0x000066))  # backgroun in dark blue #000066
+
+#- Upper state line -#
+stat_line = lv_label(scr)
+if f20 != nil stat_line.set_style_local_text_font(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, f20) end
+stat_line.set_long_mode(lv.LABEL_LONG_SROLL)                                                  # auto scrolling if text does not fit
+stat_line.set_width(hres)
+stat_line.set_align(lv.LABEL_ALIGN_LEFT)                                                      # align text left
+stat_line.set_style_local_bg_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(0x000088))    # background #000088
+stat_line.set_style_local_bg_opa(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv.OPA_COVER)            # 100% background opacity
+stat_line.set_style_local_text_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(0xFFFFFF))  # text color #FFFFFF
+stat_line.set_text("Tasmota")
+stat_line_height = stat_line.get_height()
+
+#- display wifi strength indicator icon (for professionals ;) -#
+stat_line.set_style_local_pad_right(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, stat_line_height + 1)
+wifi_bars = lv_wifi_bars(stat_line)
+wifi_bars.set_style_local_bg_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(lv.BLACK))
+wifi_bars.set_height(stat_line_height)
+wifi_bars.set_width(stat_line_height)
+wifi_bars.set_x(stat_line.get_width() - stat_line_height)
+
+#- create a style for the buttons -#
+btn_style = lv_style()
+btn_style.set_radius(lv.STATE_DEFAULT, 10)                                                    # radius of rounded corners
+btn_style.set_bg_opa(lv.STATE_DEFAULT, lv.OPA_COVER)                                          # 100% backgrond opacity
+if f28 != nil btn_style.set_text_font(lv.STATE_DEFAULT, f28) end
+btn_style.set_bg_color(lv.STATE_DEFAULT, lv_color(0x33BBFF))                                  # background color #1FA3EC (Tasmota Blue)
+btn_style.set_border_color(lv.STATE_DEFAULT, lv_color(0x0000FF))                              # border color #0000FF
+#btn_style.set_bg_color(lv.STATE_FOCUSED, lv_color(0x0000FF))                                  # background color when pressed #0000FF
+#btn_style.set_border_color(lv.STATE_FOCUSED, lv_color(0xFFFFFF))                              # border color when pressed #FFFFFF
+btn_style.set_text_color(lv.STATE_DEFAULT, lv_color(0x000000))                                # text color #FFFFFF
+#- enabled -#
+btn_style.set_bg_color(lv.STATE_CHECKED, lv_color(0x0000FF))                                  # background color #1FA3EC (Tasmota Blue)
+btn_style.set_text_color(lv.STATE_CHECKED, lv_color(0xFFFFFF))                                # text color #FFFFFF
+btn_style.set_outline_width(lv.STATE_FOCUSED, 0)                                              # rmove focus outline, not needed with touchscreen
+
+#- register buttons -#
+var btns = []         # relay buttons are added to this list to match with Tasmota relays
+
+#- simple function to find the index of an element in a list -#
+def findinlist(l, x)
+  for i:0..size(l)-1
+    if l[i] == x
+      return i
+    end
+  end
+end
+
+#- callback function when a button is pressed -#
+#- checks if the button is in the list, and react to EVENT_VALUE_CHANGED event -#
+def btn_event_cb(o, event)
+  var btn_idx = findinlist(btns, o)
+  if btn_idx != nil && event == lv.EVENT_VALUE_CHANGED
+    var val = o.get_state() < lv.BTN_STATE_CHECKED_RELEASED   # true if checked, false if unchecked
+    tasmota.set_power(btn_idx, !val)                          # toggle the value
+  end
+end
+
+#- create a button object, set style, register callback and add to global list -#
+#- you still need to re-position the button -#
+def create_btn_relay(label)
+  var btn, btn_label
+  btn = lv_btn(scr)
+  btn.set_pos(30, 30)
+  btn.set_size(hres - 60, 60)
+  btn.add_style(lv.OBJ_PART_MAIN, btn_style)
+  btn.set_checkable(true)                                                                      # enable toggle mode
+  btn_label = lv_label(btn)
+  btn_label.set_text(label)
+  btn.set_event_cb(btn_event_cb)                            # set callback to update Tasmota relays
+  btns.push(btn)                                            # append button to the list
+  return btn
+end
+
+#- create 3 buttons -#
+var btn1 = create_btn_relay("Relay 1")
+btn1.set_y(30)
+var btn2 = create_btn_relay("Relay 2")
+btn2.set_y(100)
+var btn3 = create_btn_relay("Relay 3")
+btn3.set_y(170)
+
+#- update the buttons values according to internal relays status -#
+def btns_update()
+  var power_list = tasmota.get_power()                                            # get a list of booleans with status of each relay
+  for b:btns
+    var state = b.get_state()
+    var power_state = (size(power_list) > 0) ? power_list.pop(0) : false          # avoid exception if less relays than buttons
+    if state != lv.BTN_STATE_PRESSED && state != lv.BTN_STATE_CHECKED_PRESSED     # update only if the button is not currently being pressed
+      b.set_state(power_state ? lv.BTN_STATE_CHECKED_RELEASED : lv.BTN_STATE_RELEASED)
+    end
+  end
+end
+
+#- update every 500ms -#
+def btns_update_loop()
+  btns_update()
+  tasmota.set_timer(500, btns_update_loop)
+end
+btns_update_loop()  # start
+
+# If you change the style after creating the button, you need to update objects:
+def btns_refresh_style()
+  for b:btns b.refresh_style(lv.OBJ_PART_MAIN, lv.STYLE_PROP_ALL) end
+end
+
+# Button states, read and set with:
+#   btn1.get_state()  or  btn1.set_state(lv.BTN_STATE_CHECKED_RELEASED)
+# Ex:
+#    btn1.set_state(lv.BTN_STATE_RELEASED)
+#    btn1.set_state(lv.BTN_STATE_CHECKED_RELEASED)
+
+#- Here are the states for buttons -#
+# BTN_STATE_RELEASED
+# BTN_STATE_PRESSED
+# BTN_STATE_DISABLED
+# BTN_STATE_CHECKED_RELEASED
+# BTN_STATE_CHECKED_PRESSED
+# BTN_STATE_CHECKED_DISABLED
+```
