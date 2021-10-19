@@ -23,7 +23,7 @@ Incredibly expandable and flexible.
 
 The big number 10 is here and with such a big number comes stable ESP32 support and a [web installer](https://tasmota.github.io/install/) as the easiest way to install Tasmota.
 
-- :warning ==BREAKING CHANGE== :warning: Default disable CORS for enhanced security and provide user compile option `#define USE_CORS`
+- :warning ==BREAKING CHANGE== :warning: **Default disable CORS for enhanced security and provide user compile option `#define USE_CORS`**
 - Energy monitoring of individual phases
 - Support for second DNS server
 - Support for [InfluxDB](Commands.md#influxdb)
