@@ -11,15 +11,15 @@ All ESP32 systems on a chip (SoC) are 32-bit MCUs with 2.4 GHz Wi-Fi & Bluetooth
 
 Tasmota32 is initially developed and tested with dual core version of ESP32.
 
-??? note "ESP32 chips"
+??? note "ESP32 modules"
 
-    | Module   | Core    | Core clock | Flash (MB)     | PSRAM (MB) | Touch Sensor | Hall sensor |   
-    |---|---|---|---|---|---|---|
+    | Module | Core | Core clock | Flash| PSRAM| Touch S. | Hall S.|   
+    |---------------|---|---|---|---|:-:|:-:|
     | [ESP32-WROOM-32E](_media/datasheets/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf)<br>[ESP32-WROOM-32UE](_media/datasheets/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf) | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16  |   | :material-checkbox-marked-circle:  | :material-checkbox-marked-circle: | 
-    | [ESP32-WROVER-E](_media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)<br>[ESP32-WROVER-IE](_media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)   | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16  | 8   | :material-checkbox-marked-circle:  | :material-checkbox-marked-circle: | 
-    | ESP32-MINI-1    | ESP32-U4WDH Single Core | 160 MHz  | 4       |   | :material-checkbox-marked-circle:  | :material-checkbox-marked-circle: | 
-    | [ESP32-SOLO-1](_media/datasheets/esp32-solo-1_datasheet_en.pdf)    | ESP32-S0WD Single Core  | 160 MHz  | 4       |   | :material-checkbox-marked-circle:  | :material-checkbox-marked-circle: | 
-    | [ESP32-WROOM-32SE](_media/datasheets/esp32-wroom-32se_datasheet_en.pdf)  | ESP32-D0WD Dual Core    | 240 MHz  | 4,8,16  |   | :material-checkbox-marked-circle:  | :material-checkbox-marked-circle: | 
+    | [ESP32-WROVER-E](_media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)<br>[ESP32-WROVER-IE](_media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)   | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16  | 8MB| :material-checkbox-marked-circle:  | :material-checkbox-marked-circle: | 
+    | ESP32-MINI-1    | ESP32-U4WDH Single Core | 160 MHz  | 4MB |   | :material-checkbox-marked-circle: | :material-checkbox-marked-circle: | 
+    | [ESP32-SOLO-1](_media/datasheets/esp32-solo-1_datasheet_en.pdf)    | ESP32-S0WD Single Core  | 160 MHz  | 4MB | | :material-checkbox-marked-circle:  | :material-checkbox-marked-circle: | 
+    | [ESP32-WROOM-32SE](_media/datasheets/esp32-wroom-32se_datasheet_en.pdf)  | ESP32-D0WD Dual Core  | 240 MHz  | 4,8,16 | | :material-checkbox-marked-circle: | :material-checkbox-marked-circle: | 
 
 !!! warning "Single core SoCs do not work with standard binaries, for those use only `tasmota32solo1.bin` or compile your own binary using the tasmota32solo1 environment."
 
