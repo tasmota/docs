@@ -35,7 +35,8 @@ The big number 10 is here and with such a big number comes stable ESP32 support 
 - Default disable CORS for enhanced security and provide user compile option `#define USE_CORS`
 - ESP32
     - Support for ESP32 chips is now stable, ESP32-C3 support is promoted beta and ESP32-S2 is now in alpha with support for GPIOS
-    - support for (Yeelight) Mi Desk Pro using binary tasmota32solo1.bin
+    - official `tasmota32c3.bin` for ESP32-C3 with at least 4MB flash
+    - support for (Yeelight) Mi Desk Pro using binary `tasmota32solo1.bin`
     - LVGL updated to v8.0.2
     - add GPIO 6/7/8/11 to template construction and remove GPIO 28-31 (remapping so backwards compatible)
     - **Berry:** partition manager, new class webclient for HTTP/HTTPS requests, support for serial, I2S audio mp3 playback, vararg, Curve 25519 EC crypto, ESP32/ESP32S2 DAC gpio
