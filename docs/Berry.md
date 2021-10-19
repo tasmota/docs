@@ -397,18 +397,18 @@ tasmota.get\_switches<a class="cmnd" id="tasmota_get_switches"></a>|`() -> list(
 
 If there are holes in the switch definition, the values will be skipped. I.e. if you define SWITCH1 and SWITCH3, the array will return the two consecutive values for switches 1/3.
 
-#### Low-level access to Tasmota globals.
+#### Low-level access to Tasmota globals and settings.
 
 ***Use with care and only if you know what you are doing.***
 
-The construct is to use `tasmota.global` to read or write attributes. 
+The construct is to use `tasmota.global` or `tasmota.settings` to read or write attributes. 
 
 !!! warning "You can do bad things with these features"
 
-Tasmota global|Details
+Value|Details
 :---|:---
-tasmota.global.energy_driver<a class="cmnd" id="tasmota_global_energy_driver"></a>|Used for Energy drivers
-tasmota.global.uptime<a class="cmnd" id="tasmota_global_energy_driver"></a>|Uptime in seconds
+tasmota.global.sleep<a class="cmnd" id="tasmota_global_sleep"></a>|Current sleep value
+tasmota.settings.sleep<a class="cmnd" id="tasmota_settings_sleep"></a>|Sleep value stored in flash
 
 ### `light` object
 
