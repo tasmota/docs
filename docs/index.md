@@ -41,7 +41,7 @@ The big number 10 is here and with such a big number comes stable ESP32 support 
     - **Berry:** partition manager, new class webclient for HTTP/HTTPS requests, support for serial, I2S audio mp3 playback, vararg, Curve 25519 EC crypto, ESP32/ESP32S2 DAC gpio
 - Fixes: Sonoff L1(lite) controls, negative power values for ADE7953 based devices like Shelly EM
 
-See [releasenotes](https://github.com/arendst/Tasmota/blob/development/RELEASENOTES.md) for a complete list of new features, changes and bug fixes.
+See [release notes](https://github.com/arendst/Tasmota/releases/tag/v10.0.0) for a complete list of new features, changes and bug fixes.
 
 ### Join our communities and chat
 See [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), [Reddit](https://www.reddit.com/r/tasmota/) or [Google Groups](https://groups.google.com/d/forum/sonoffusers) for general chat, feedback, questions and live troubleshooting.
