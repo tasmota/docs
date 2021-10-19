@@ -2,8 +2,6 @@
 
 Tasmota supports several I2C devices but to use them they mostly need to be enabled at compile time to solve possible address conflicts.
 
-### Look at [Pre-Compiled Builds](https://github.com/arendst/Tasmota/blob/development/BUILDS.md) to see, which Driver is compiled in the release binarys.
-
 Using command ``I2cDriver`` individual drivers can be enabled or disabled at runtime allowing duplicate I2C addresses at compile time. Use the Index from the table below to control I2C drivers like ``I2cDriver10 0`` for disabling BMP support.
 
 ## Supported I2C devices
@@ -66,7 +64,7 @@ Index | Define              | Driver  | Device   | Address(es) | Description
   41  | USE_DHT12           | xsns_58 | DHT12    | 0x5C        | Temperature and humidity sensor
   42  | USE_DS1624          | xsns_59 | DS1621   | 0x48 - 0x4F | Temperature sensor
   42  | USE_DS1624          | xsns_59 | DS1624   | 0x48 - 0x4F | Temperature sensor
-  43  | USE_AHT1x           | xsns_63 | AHT10/15 | 0x38 or 0x39 | Temperature and humidity sensor
+  43  | USE_AHT1x           | xsns_63 | AHT10/15 | 0x38 - 0x39 | Temperature and humidity sensor
   43  | USE_AHT2x           | xsns_63 | AHT20    | 0x38        | Temperature and humidity sensor
   44  | USE_WEMOS_MOTOR_V1  | xdrv_34 |          | 0x2D - 0x30 | WEMOS motor shield v1.0.0 (6612FNG)
   45  | USE_HDC1080         | xsns_65 | HDC1080  | 0x40        | Temperature and Humidity sensor
@@ -77,7 +75,25 @@ Index | Define              | Driver  | Device   | Address(es) | Description
   50  | USE_VEML7700        | xsns_71 | VEML7700 | 0x10        | Ambient light intensity sensor
   51  | USE_MCP9808         | xsns_72 | MCP9808  | 0x18 - 0x1F | Temperature sensor
   52  | USE_HP303B          | xsns_73 | HP303B   | 0x76 - 0x77 | Pressure and temperature sensor
-  53  | USE_MLX90640        | xdrv_43 | MLX90640 | 0x33        | 32x24 IR/Thermal image sensor
+  53  | USE_MLX90640        | xdrv_43 | MLX90640 | 0x33        | IR array temperature sensor
   54  | USE_VL53L1X         | xsns_77 | VL53L1X  | 0x29        | Time-of-flight (ToF) distance sensor
-  55  | USE_EZO             | xsns_78 | EZO_*    | 0x61 - 0x70 | EZO family of sensors (DO, ORP, PH...)
-  56  | USE_SEESAW_SOIL     | xsns_81 | ADA4026  | 0x36 - 0x39 | Adafruit capacitve soil sensor (https://www.adafruit.com/product/4026)
+  55  | USE_EZOPH           | xsns_78 | EZOPH    | 0x61 - 0x70 | pH sensor
+  55  | USE_EZOORP          | xsns_78 | EZOORP   | 0x61 - 0x70 | ORP sensor
+  55  | USE_EZORTD          | xsns_78 | EZORTD   | 0x61 - 0x70 | Temperature sensor
+  55  | USE_EZOHUM          | xsns_78 | EZOHUM   | 0x61 - 0x70 | Humidity sensor
+  55  | USE_EZOEC           | xsns_78 | EZOEC    | 0x61 - 0x70 | Electric conductivity sensor
+  55  | USE_EZOCO2          | xsns_78 | EZOCO2   | 0x61 - 0x70 | CO2 sensor
+  55  | USE_EZOO2           | xsns_78 | EZOO2    | 0x61 - 0x70 | O2 sensor
+  55  | USE_EZOPRS          | xsns_78 | EZOPRS   | 0x61 - 0x70 | Pressure sensor
+  55  | USE_EZOFLO          | xsns_78 | EZOFLO   | 0x61 - 0x70 | Flow meter sensor
+  55  | USE_EZODO           | xsns_78 | EZODO    | 0x61 - 0x70 | Disolved Oxygen sensor
+  55  | USE_EZORGB          | xsns_78 | EZORGB   | 0x61 - 0x70 | Color sensor
+  55  | USE_EZOPMP          | xsns_78 | EZOPMP   | 0x61 - 0x70 | Peristaltic Pump
+  56  | USE_SEESAW_SOIL     | xsns_81 | SEESOIL  | 0x36 - 0x39 | Adafruit seesaw soil moisture sensor
+  57  | USE_TOF10120        | xsns_84 | TOF10120 | 0x52        | Time-of-flight (ToF) distance sensor
+  58  | USE_MPU_ACCEL       | xsns_85 | MPU_ACCEL| 0x68        | MPU6886/MPU9250 6-axis MotionTracking sensor from M5Stack
+  59  | USE_BM8563          | xdrv_56 | BM8563   | 0x51        | BM8563 RTC from M5Stack
+  60  | USE_AM2320          | xsns_88 | AM2320   | 0x5C        | Temperature and Humidity sensor
+  61  | USE_T67XX           | xsns_89 | T67XX    | 0x15        | CO2 sensor
+  62  | USE_SCD40           | xsns_92 | SCD40    | 0x62        | CO2 sensor Sensirion SCD40/SCD41
+  63  | USE_HM330X          | xsns_93 | HM330X   | 0x40        | Particule sensor
