@@ -9,19 +9,21 @@ All ESP32 systems on a chip (SoC) are 32-bit MCUs with 2.4 GHz Wi-Fi & Bluetooth
 
 ### ESP32
 
-Tasmota32 is initially developed and tested with dual core version of ESP32
+Tasmota32 is initially developed and tested with dual core version of ESP32.
 
-| Module          | Core    | Core clock | Flash (MB)     | PSRAM (MB) | Touch Sensor | Hall sensor |   |
-|---------------------------------|-------------------------|--------------------------|----------------|------------|--------------|-------------|-------------------|
-| [ESP32-WROOM-32E](_media/datasheets/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf)<br>[ESP32-WROOM-32UE](_media/datasheets/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf) | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16         | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
-| [ESP32-WROVER-E](_media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)<br>[ESP32-WROVER-IE](_media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)   | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16         | 8          | Yes          | Yes         | Bluetooth 4.2 LE  |
-| ESP32-MINI-1    | ESP32-U4WDH Single Core | 160 MHz  | 4              | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
-| [ESP32-SOLO-1](_media/datasheets/esp32-solo-1_datasheet_en.pdf)    | ESP32-S0WD Single Core  | 160 MHz  | 4              | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
-| [ESP32-WROOM-32SE](_media/datasheets/esp32-wroom-32se_datasheet_en.pdf)                | ESP32-D0WD Dual Core    | 240 MHz  | 4,8,16         | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
+??? note "ESP32 chips"
 
-Single core SoCs do not work with standard binaries, for those use only `tasmota32solo1.bin` or compile your own binary using the tasmota32solo1 environment.
+    | Module          | Core    | Core clock | Flash (MB)     | PSRAM (MB) | Touch Sensor | Hall sensor |   |
+    |---|---|---|---|---|---|---|---|
+    | [ESP32-WROOM-32E](_media/datasheets/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf)<br>[ESP32-WROOM-32UE](_media/datasheets/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf) | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16         | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
+    | [ESP32-WROVER-E](_media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)<br>[ESP32-WROVER-IE](_media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)   | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16         | 8          | Yes          | Yes         | Bluetooth 4.2 LE  |
+    | ESP32-MINI-1    | ESP32-U4WDH Single Core | 160 MHz  | 4              | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
+    | [ESP32-SOLO-1](_media/datasheets/esp32-solo-1_datasheet_en.pdf)    | ESP32-S0WD Single Core  | 160 MHz  | 4              | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
+    | [ESP32-WROOM-32SE](_media/datasheets/esp32-wroom-32se_datasheet_en.pdf)                | ESP32-D0WD Dual Core    | 240 MHz  | 4,8,16         | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
 
-ESP32 line is later expanded with [ESP32-PICO-V3](_media/datasheets/esp32-pico-v3_datasheet_en.pdf), [ESP32-PICO-V3-02](_media/datasheets/esp32-pico-v3-02_datasheet_en.pdf) and [ESP32-PICO-D4](http://espressif.com/sites/default/files/documentation/esp32-pico-d4_datasheet_en.pdf)
+!!! warning "Single core SoCs do not work with standard binaries, for those use only `tasmota32solo1.bin` or compile your own binary using the tasmota32solo1 environment."
+
+Initial ESP32 line is expanded with [ESP32-PICO-V3](_media/datasheets/esp32-pico-v3_datasheet_en.pdf), [ESP32-PICO-V3-02](_media/datasheets/esp32-pico-v3-02_datasheet_en.pdf) and [ESP32-PICO-D4](http://espressif.com/sites/default/files/documentation/esp32-pico-d4_datasheet_en.pdf).
 
 ### ESP32-S2
 A more cost-efficient version of ESP32, cut down to a single core and several dedicated hardware security features (eFuse, flash encryption, secure boot, signature verification, integrated AES, SHA and RSA algorithms). It has 43 available GPIOs. [Product page for ESP32-S2](https://www.espressif.com/en/products/socs/esp32-s2)
