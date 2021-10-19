@@ -28,17 +28,17 @@ Initial ESP32 line is expanded with [ESP32-PICO-V3](_media/datasheets/esp32-pico
 ### ESP32-S2
 A more cost-efficient version of ESP32, cut down to a single core and several dedicated hardware security features (eFuse, flash encryption, secure boot, signature verification, integrated AES, SHA and RSA algorithms). It has 43 available GPIOs. [Product page for ESP32-S2](https://www.espressif.com/en/products/socs/esp32-s2)
 
-!!! warning "Experimental support in Tasmota"
+!!! warning "Alpha support in Tasmota"
 
 ### ESP32-S3
 Keeping the security improvements the S3 line now again features the dual core SoC with Bluetooth upgraded to V5 . [Product page for ESP32-S3](https://www.espressif.com/en/products/socs/esp32-s3). 
 
-!!! warning "Untested with Tasmota"
+!!! bug "Untested with Tasmota"
 
 ### ESP32-C3
 Unlike previous versions, C3 is a single-core Wi-Fi and Bluetooth 5 (LE) microcontroller SoC based on the open-source RISC-V architecture. It will be available as [ESP32-C3-MINI-1](_media/datasheets/esp32-c3-mini-1_datasheet_en.pdf) and [ESP32-C3-WROOM-02](_media/datasheets/esp32-c3-wroom-02_datasheet_en.pdf) modules. [Product page for ESP32-C3](https://www.espressif.com/en/products/socs/esp32-c3)
 
-!!! note "Stable with Tasmota but requires a specially compiled C3 only binary"
+!!! note "Beta Support in Tasmota"
 
 ## Exclusive Features
 
