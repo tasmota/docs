@@ -95,7 +95,7 @@ Parameter|Description
 :---|:---
 `value`|The value of the trigger. Similar to `%value%` in native rules.
 `trigger`|`string` of the trigger with all levels. Can be used if the same function is used with multiple triggers.
-`msg`|`string` of the message that triggered the rule. If it is a JSON, it has to be explicitly converted to a map object with `json.load(msg)`.
+`msg`|`map` Berry structured object of the message, decoded from JSON. If JSON was invalid, it contains the original string
 
 !!! example "Dimmer rule"
 
