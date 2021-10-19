@@ -67,6 +67,6 @@ Once the device reboots, set the device to save power state changes ([`SetOption
 Your device is configured for use with Tasmota.  
 
 ### Submit new template
-Since you have now configured a device not previously known to the Tasmota user base, you can [export the template](Templates#exporting-your-template) and submit it to the [Tasmota Device Templates Repository](https://templates.blakadder.com/new.html).  
+Since you have now configured a device not previously known to the Tasmota user base, you can [export the template](Templates#exporting-your-template) and submit it to the [Tasmota Supported Devices Repository](https://templates.blakadder.com/new.html).  
 
 View this [Digiblur DIY video](https://youtu.be/5Oa27pCHtYo?t=518) for a tutorial on this procedure.  

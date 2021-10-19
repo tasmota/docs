@@ -19,30 +19,29 @@ OTA update servers: [http://ota.tasmota.com/tasmota/release](http://ota.tasmota.
 
 <small><span style="float:right">\*all documentation is for current release only</small></span>
 ### Current release 
-<a href="http://ota.tasmota.com/tasmota/release-9.5.0/"><span style="font-size:40px;">Tasmota 9.5.0 Michael</span></a><br>
+<a href="http://ota.tasmota.com/tasmota/release-9.5.0/"><span style="font-size:40px;">Tasmota 10.0.0 Michael</span></a><br>
 
-- :warning: BREAKING :warning: Lights using MQTT discovery will not work correcty in Home Assistant 2015.5 due to new [color modes](https://www.home-assistant.io/blog/2021/05/05/release-20215/#color-modes). Upgrade to [v9.5](http://ota.tasmota.com/release/tasmota/) of Tasmota and use [Tasmota integration](https://www.home-assistant.io/integrations/tasmota)
+The big number 10 is here and with such a big number comes stable ESP32 support and a [web installer](https://tasmota.github.io/install/) as the easiest way to install Tasmota.
 
-- new optional Template configuration field [`"CMND"`](Templates.md#cmnd) to embed crucial configuration commands in the template string [#11788](https://github.com/arendst/Tasmota/discussions/11788)
-- Support for MQTT using [Azure IoT Hub](Azure-IoT-Hub.md)
-- new device IP is displayed in the UI after Wi-Fi initial config [#12091](https://github.com/arendst/Tasmota/discussions/12091)
-- Allow discovery of MCP2300xx output as relay [#12037](https://github.com/arendst/Tasmota/discussions/12037)
-- Defines `USER_RULE1`, `USER_RULE2` and `USER_RULE3` to store rules at compile time
-- Define `USER_BACKLOG` to store commands at compile time to be executed at firmware load or when executing command reset
-- New commands: [`TuyaSend5`](Commands.md#tuyasend), [`Status0`](Commands.md#status), [`MqttWifiTimeout`](Commands.md#mqttwifitimeout)
-- Acer projector support [#12190](https://github.com/arendst/Tasmota/discussions/12190)
+- Energy monitoring of individual phases
+- Support for second DNS server
+- Support for [InfluxDB](Commands.md#influxdb)
+- Changed message `Upload buffer miscompare` into `Not enough space` while upgrading.
+- New peripherals: IKEA VINDRIKTNING particle concentration sensor, AM2320 temperature and humidity sensor, [Hydreon RG-15 rain sensor](HRG15.md), Sensirion SCD40/SCD41 CO~2~ sensor, SeedStudio Grove HM3301 particle sensor, BL0939 and BL0942 energy monitor, Technoline WS2300-15 Anemometer, Telaire T6700 Series CO2 sensor, CAN bus and Freedom Won Battery Management System,  IEM3155 Wattmeter
+- New commands: [`SetOption2`](Commands.md#setoption2), [`SetOption127`](Commands.md#setoption127), [`SetOption128`](Commands.md#setoption128), [`SetOption129`](Commands.md#setoption129), [`SetOption130`](Commands.md#setoption130), [`EnergyExport`](Commands.md#energyexport), [`EnergyUsage`](Commands.md#energyusage), [`EnergyTotal`](Commands.md#energytotal), [`EnergyToday`](Commands.md#energytoday), [`EnergyYesterday`](Commands.md#energyyesterday)
+- Removed command `EnergyReset` and replaced by new energy commands
+- Initial support for Tasmota Mesh (TasMesh) providing node/broker communication using ESP-NOW
+- Initial support for Wi-Fi extender
+- Default disable CORS for enhanced security and provide user compile option `#define USE_CORS`
 - ESP32
-    - Preliminary **alpha** support for ESP32-C3 (RiscV based)
-    - pull-down buttons `Button_d` and `Button_id` and switches `Switch_d` [#10814](https://github.com/arendst/Tasmota/discussions/10814)
-    - LVGL support for 3 buttons as rotary encoder [#12035](https://github.com/arendst/Tasmota/discussions/12035)
-    - LVGL support for touchscreen [#12039](https://github.com/arendst/Tasmota/discussions/12039)
-    - LVGL support for TrueType fonts via FreeType library [#12087](https://github.com/arendst/Tasmota/discussions/12087)
-    - LVGL support for PSRAM [#12062](https://github.com/arendst/Tasmota/discussions/12062)
-    - LVGL support for PNG images [#12148](https://github.com/arendst/Tasmota/discussions/12148)
-    - Support for BM8563 RTC chip (I2C) found in M5Stack Core2 and M5StickC [#12199](https://github.com/arendst/Tasmota/discussions/12199)
-    - I2S and Interrupt GPIO types [#12192](https://github.com/arendst/Tasmota/discussions/12192)
+    - Support for ESP32 chips is now stable, ESP32-C3 support is promoted beta and ESP32-S2 is now in alpha with support for GPIOS
+    - support for (Yeelight) Mi Desk Pro using binary tasmota32solo1.bin
+    - LVGL updated to v8.0.2
+    - add GPIO 6/7/8/11 to template construction and remove GPIO 28-31 (remapping so backwards compatible)
+    - **Berry:** partition manager, new class webclient for HTTP/HTTPS requests, support for serial, I2S audio mp3 playback, vararg, Curve 25519 EC crypto, ESP32/ESP32S2 DAC gpio
+- Fixes: Sonoff L1(lite) controls, negative power values for ADE7953 based devices like Shelly EM
 
-See [changelog](https://github.com/arendst/Tasmota/blob/development/CHANGELOG.md) for a complete list of new features, changes and bug fixes.
+See [releasenotes](https://github.com/arendst/Tasmota/blob/development/RELEASENOTES.md) for a complete list of new features, changes and bug fixes.
 
 ### Join our communities and chat
 See [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), [Reddit](https://www.reddit.com/r/tasmota/) or [Google Groups](https://groups.google.com/d/forum/sonoffusers) for general chat, feedback, questions and live troubleshooting.

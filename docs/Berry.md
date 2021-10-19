@@ -1,4 +1,4 @@
-# Berry Scripting Language
+# Berry Scripting Language :material-cpu-32-bit:
 !!! info "This feature is experimental, ESP32 only and included in all ESP32 pre-compiled builds"
 
 If you compile your own version, make sure the following is defined:

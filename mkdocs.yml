@@ -147,11 +147,12 @@ nav:
     - Zigbee.md
     - Projects and Tutorials: Tutorials.md
     - For Developers: For-Developers.md
-  - ESP32 (beta):
+  - ESP32:
     - Features: ESP32.md
     - Berry.md
     - Bluetooth Low Energy: Bluetooth_ESP32.md
     - Touch GPIOs: TouchPin.md
+    - Supported Devices: "https://templates.blakadder.com/esp32"
   - Smart Home Integrations:
     - Introduction: Integrations.md
     - Alexa.md
@@ -193,6 +194,7 @@ nav:
     - HM-10.md
     - HM-17.md
     - HC-SR04.md
+    - HRG15.md
     - Honeywell-HIH.md
     - IAQ.md
     - IR-Remote.md
