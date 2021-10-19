@@ -1,5 +1,4 @@
 # Berry Scripting Language :material-cpu-32-bit:
-!!! info "This feature is experimental, ESP32 only and included in all ESP32 pre-compiled builds"
 
 !!! info "Berry Scripting is included in all Tasmota32 builds. It is not supported on ESP82xx"
 
@@ -9,20 +8,20 @@ See full examples in the [Berry Cookbook](Berry-Cookbook.md)
 
 ## Introduction to Berry
 
-Berry is the next generation scripting for Tasmota. It is based on the open-source Berry project, delivering an ultra-lightweight dynamically typed embedded scripting language. It is designed for lower-performance embedded devices. 
+Berry is the next generation scripting for Tasmota. It is based on the open-source Berry project, delivering an ultra-lightweight dynamically typed scripting language designed for lower-performance embedded devices. 
 
 [**Berry Github**](https://github.com/Skiars/berry)
 
-Berry Scripting allows simple and advanced extension of Tasmota, for example:
+Berry Scripting allows simple and also advanced extensions of Tasmota, for example:
 
-- simple scripting and advanced Rules
+- simple scripting 
 - advanced rules, beyond what is possible with native rules
-- advanced automation
+- advanced automations
 
 Berry Scripting takes it one step further and allows to build dynamic extensions to Tasmota, that would previously require native code:
 
 - build light animations
-- build I2C drivers
+- build I^2^C drivers
 - build complete Tasmota drivers
 - integrate native libraries like `lvgl` see [LVGL](LVGL.md)
 
@@ -35,7 +34,7 @@ Berry has the following advantages:
 - Fast: optimized one-pass bytecode compiler and register-based virtual machine.
 - Powerful: supports imperative programming, object-oriented programming, functional programming.
 - Flexible: Berry is a dynamic type script, and it's intended for embedding in applications. It can provide good dynamic scalability for the host system.
-- Simple: simple and natural syntax, support garbage collection, and easy to use FFI (foreign function interface).
+- Simple: simple and natural MicroPython-eque syntax, supports garbage collection and easy to use FFI (foreign function interface).
 - RAM saving: With compile-time object construction, most of the constant objects are stored in read-only code data segments, so the RAM usage of the interpreter is very low when it starts.
 
 ### Tasmota port
@@ -44,22 +43,15 @@ Berry Scripting in only supported on Tasmota32 for ESP32. The RAM usage starts a
 
 ## Quick Tutorial
 
-Make sure you compile Tasmota32 with `#define USE_BERRY`.
-
-You should see similar lines in the Tasmota logs:
-
-```
-00:00:00.098 BRY: Berry initialized, RAM used=10002
-00:00:00.264 BRY: No 'autoexec.be' file
-```
-
 Click on *Configuration* then *Berry Scripting Console* and enjoy the colorful Berry console, also called REPL (Read-Eval-Print-Loop).
 
 ![Berry console](https://user-images.githubusercontent.com/49731213/111880607-c193c800-89ac-11eb-81c9-a3558e26a1de.png)
 
+!!! tip "Drag the bottom corner of each screen to change its size"
+
 ### Getting familiar with the REPL
 
-Try typing simple commands in the REPL. Since the input can be multi-lines, press 'Enter' twice to run the code. Use Up/Down arrows to navigate through history of previous commands.
+Try typing simple commands in the REPL. Since the input can be multi-lines, press ++enter++ twice or click "Run" button to run the code. Use ++arrow-up++ and ++arrow-down++ to navigate through history of previous commands.
 
 ```python
 > 1+1
@@ -76,8 +68,7 @@ Try typing simple commands in the REPL. Since the input can be multi-lines, pres
 Hello Tasmota!
 ```
 
-Note: Berry's native `print()` command displays text in the Berry Console and in the Tasmota logs. To log with finer control, you can also use the `log()` function, but it will not display in the Berry Console.
-
+Note: Berry's native `print()` command displays text in the Berry Console and in the Tasmota logs. To log with finer control, you can also use the `log()` function which will not display in the Berry Console.
 
 ```python
 > print('Hello Tasmota!')
@@ -91,6 +82,8 @@ Meanwhile the Tasmota log shows:
 {"POWER":"ON","Dimmer":60,"Color":"996245","HSBColor":"21,55,60","Channel":[60,38,27]}
 The light is bright
 ```
+
+## Rules
 The rule function have the general form below where parameters are optional:
 
 ```python
@@ -104,27 +97,28 @@ Parameter|Description
 `trigger`|`string` of the trigger with all levels. Can be used if the same function is used with multiple triggers.
 `msg`|`string` of the message that triggered the rule. If it is a JSON, it has to be explicitly converted to a map object with `json.load(msg)`.
 
-Example:
+!!! example "Dimmer rule"
 
-```python
-> def dimmer_over_50()
-    print("The light is bright")
-  end
-  tasmota.add_rule("Dimmer>50", dimmer_over_50)
-```
+    Define the function and add a rule to Tasmota where the function runs if Dimmer value is more than 50
+    ```python
+    > def dimmer_over_50()
+        print("The light is bright")
+      end
+      tasmota.add_rule("Dimmer>50", dimmer_over_50)
+    ```
 
-```python
-> tasmota.cmd("Dimmer 30")
-{"POWER":"ON","Dimmer":30,"Color":"4D3223","HSBColor":"21,55,30","Channel":[30,20,14]}
+    ```python
+    > tasmota.cmd("Dimmer 30")
+    {"POWER":"ON","Dimmer":30,"Color":"4D3223","HSBColor":"21,55,30","Channel":[30,20,14]}
 
-> tasmota.cmd("Dimmer 60")
-{"POWER":"ON","Dimmer":60,"Color":"996245","HSBColor":"21,55,60","Channel":[60,38,27]}
-The light is bright
-```
+    > tasmota.cmd("Dimmer 60")
+    {"POWER":"ON","Dimmer":60,"Color":"996245","HSBColor":"21,55,60","Channel":[60,38,27]}
+    The light is bright
+    ```
 
 The same function can be used with multiple triggers.
 
-Example if the function to process an ADC input should be triggered both by the `tele/SENSOR`
+If the function to process an ADC input should be triggered both by the `tele/SENSOR`
 message and the result of a `Status 10` command:
 
 ```python
@@ -156,12 +150,6 @@ tasmota.add_rule("ANALOG#A1",def (value) rule_adc(1,value) end )
 tasmota.add_rule("ANALOG#A2",def (value) rule_adc(2,value) end )
 ```
 
-#### A word on functions and closure
-
-Berry is a functional language, and includes the very powerful concept of a *closure*. In a nutshell, it means that when you create a function, it can capture the values of variables when the function was created. This roughly means that it does what intuitively you would expect it to do.
-
-When using Rules or Timers, you always pass a Berry functions.
-
 ## Timers
 
 Berry code, when it is running, blocks the rest of Tasmota. This means that you should not block for too long, or you may encounter problems. As a rule of thumb, try to never block more than 50ms. If you need to wait longer before the next action, use timers. As you will see, timers are very easy to create thanks to Berry's functional nature.
@@ -173,17 +161,16 @@ All times are in milliseconds. You can know the current running time in millisec
 9977038
 ```
 
-Sending a timer is as easy as `tasmota.set_timer(<delay in ms>,<function>)`
 
-Example:
+!!! example "Sending a timer is as easy as `tasmota.set_timer(<delay in ms>,<function>)`"
 
-```python
-> def t() print("Booh!") end
+    ```python
+    > def t() print("Booh!") end
 
-> tasmota.set_timer(5000, t)
-[5 seconds later]
-Booh!
-```
+    > tasmota.set_timer(5000, t)
+    [5 seconds later]
+    Booh!
+    ```
 
 ## Lights and Relays
 
@@ -195,18 +182,18 @@ You can control individual Relays or lights with `tasmota.get_power()` and `tasm
 
 `tasmota.set_power(relay, onoff)` changes the state of a single relay/light.
 
-Example (2 relays and 1 light):
+!!! example "2 relays and 1 light"
 
-```python
-> tasmota.get_power()
-[false, true, false]
+    ```python
+    > tasmota.get_power()
+    [false, true, false]
 
-> tasmota.set_power(0, true)
-true
+    > tasmota.set_power(0, true)
+    true
 
-> tasmota.get_power()
-[true, true, false]
-```
+    > tasmota.get_power()
+    [true, true, false]
+    ```
 
 For light control, `light.get()` and `light.set` accept a structured object containing the following arguments:
 
@@ -221,7 +208,6 @@ rgb|`string 6 hex digits`<br>Set the color as hex `RRGGBB`, changing color and b
 channels|`array of int, ranges 0..255`<br>Set the value for each channel, as an array of numbers
 
 When setting attributes, they are evaluated in the following order, the latter overriding the previous: `power`, `ct`, `hue`, `sat`, `rgb`, `channles`, `bri`.
-
 
 ```python
   # set to yellow, 25% brightness
@@ -245,20 +231,26 @@ When setting attributes, they are evaluated in the following order, the latter o
 {'bri': 32, 'hue': 300, 'power': true, 'sat': 255, 'rgb': '200020', 'channels': [32, 0, 32]}
 ``` 
 
+#### A word on functions and closure
+
+Berry is a functional language, and includes the very powerful concept of a *closure*. In a nutshell, it means that when you create a function, it can capture the values of variables when the function was created. This roughly means that it does what intuitively you would expect it to do.
+
+When using Rules or Timers, you always pass Berry functions.
+
 
 ## Loading code from filesystem
 
-You can upload Berry code in the filesystem and load them at runtime. Just be careful to use the `*.be` extensions.
+You can upload Berry code in the filesystem using the ***Consoles - File Upload*** menu and load them at runtime. Make careful to use `*.be` extension for those files.
 
-To load a Berry file, use the `load(filename)` function. It takes a filename and must end by `.be` or `.bec`; if the file has no extension '.be' is automatically appended.
+To load a Berry file, use the `load(filename)` function where `filename` is the name of the file with `.be` or `.bec` extension; if the file has no extension '.be' is automatically appended.
 
-Note: you don't need to prefix with `/`. A leading `/` will be added automatically if it is not present.
+!!! note "You don't need to prefix with `/`. A leading `/` will be added automatically if it is not present."
 
 When loading a Berry script, the compiled bytecode is automatically saved to the filesystem, with the extension `.bec` (this is similar to Python's `.py`/`.pyc` mechanism). The `save(filename,closure)` function is used internally to save the bytecode.
 
 If a precompiled bytecode (extension `.bec`) is present of more recent than the Berry source file, the bytecode is directly loaded which is faster than compiling code. You can eventually remove the `*.be` file and keep only `*.bec` file (even with `load("file.be")`.
 
-## Creating a Tasmota driver
+## Creating a Tasmota Driver
 
 You can easily create a complete Tasmota driver with Berry.
 
@@ -273,7 +265,6 @@ As a convenience, a skeleton class `Driver` is provided. A Driver responds to me
 - `web_add_handler()`: called when Tasmota web server started, and the right time to call `webserver.on()` to add handlers
 - `button_pressed()`: called when a button is pressed
 - `web_sensor()`: send sensor information as JSON or HTML
-- `json_append()`:
 - `save_before_restart()`: called just before a restart
 - `display()`: called by display driver with the following subtypes: `init_driver`, `model`, `dim`, `power`.
 
@@ -310,24 +301,22 @@ end
 
 tasmota.add_driver(d2)
 ```
+## Using Berry
 
+See [Berry manual](https://github.com/berry-lang/berry/wiki/Reference)
 
-## Reference
-
-Below are the Tasmota specific functions and modules implemented on top of Berry.
-
-### Extensions to native Berry
+## Tasmota Extensions 
 
 #### `log(msg:string [, level:int = 3]) -> string`
 
 Logs a message to the Tasmota console. Optional second argument is log_level (0..4), default is `2` `LOG_LEVEL_INFO`.
 
-Example:
+!!! example
 
-```
-> log("A")
-A
-```
+    ```
+    > log("A")
+    A
+    ```
 
 #### `load(filename:string) -> bool`
 
@@ -335,14 +324,13 @@ Loads a Berry script from the filesystem, and returns true if loaded successfull
 
 When loading a source file, the precompiled bytecode is saved to filesystem using the `.bec` extension.
 
-
 #### `save(filename:string, f:closure) -> nil`
 
 Internally used function to save bytecode. It's a wrapper to the Berry's internal API `be_savecode()`. There is no check made on the filename.
 
-Note: there is generally no need to use this function, it is used internally by `load()`.
+There is generally no need to use this function, it is used internally by `load()`.
 
-### **`tasmota` object**
+### `tasmota` object
 
 A root level object called `tasmota` is created and contains numerous functions to interact with Tasmota.
 
@@ -366,16 +354,15 @@ tasmota.add\_driver<a class="cmnd" id="tasmota_add_driver"></a>|`(instance) ->ni
 tasmota.remove\_driver<a class="cmnd" id="tasmota_remove_driver"></a>|`(instance) ->nil`<br>Removes a driver
 tasmota.gc<a class="cmnd" id="tasmota_gc"></a>|`() -> int`<br>Triggers garbage collection of Berry objects and returns the bytes currently allocated. This is for debug only and shouldn't be normally used. `gc` is otherwise automatically triggered when necessary.
 
-Functions used to retrieve Tasmota configuration
+#### Functions used to retrieve Tasmota configuration
 
 Tasmota Function|Parameters and details
 :---|:---
 tasmota.get\_option<a class="cmnd" id="tasmota_get_option"></a>|`(index:int) -> int`<br>Returns the value of `SetOption <index>`
-tasmota.wire\_scan<a class="cmnd" id="tasmota_wire_scan"></a>|`(addr:int [, index:int]) -> wire instance or nil`<br>Scan both I2C buses for a device of address addr, optionally taking into account disabled devices via `I2CDevice`. Returns a `wire` object corresponding to the bus where the device is, or `nil` if device is not connected or disabled.
-tasmota.i2c\_enabled<a class="cmnd" id="tasmota_i2c_enabled"></a>|`(index:int) -> bool`<br>Returns true if the I2C module is enabled, see I2C page.
+tasmota.wire\_scan<a class="cmnd" id="tasmota_wire_scan"></a>|`(addr:int [, index:int]) -> wire instance or nil`<br>Scan both I^2^C buses for a device of address addr, optionally taking into account disabled devices via `I2CDevice`. Returns a `wire` object corresponding to the bus where the device is, or `nil` if device is not connected or disabled.
+tasmota.i2c\_enabled<a class="cmnd" id="tasmota_i2c_enabled"></a>|`(index:int) -> bool`<br>Returns true if the I^2^C module is enabled, see I^2^C page.
 
-
-Functions to create custom Tasmota command.
+#### Functions to create custom Tasmota command
 
 Tasmota Function|Parameters and details
 :---|:---
@@ -387,7 +374,7 @@ tasmota.resp\_cmnd\_str\_fail<a class="cmnd" id="tasmota_resp_cmnd_fail"></a>|`(
 tasmota.resp\_cmnd<a class="cmnd" id="tasmota_resp_cmnd"></a>|`(message:string) -> nil`<br>Overrides the entire command response. Should be a valid JSON string.
 tasmota.remove\_cmd<a class="cmnd" id="tasmota_remove_cmd"></a>|`(name:string) -> nil`<br>Remove a command to Tasmota commands. Removing an non-existing command is skipped silently.
 
-Functions to add custom responses to JSON and Web UI.
+#### Functions to add custom responses to JSON and Web UI
 
 Tasmota Function|Parameters and details
 :---|:---
@@ -397,7 +384,7 @@ tasmota.web\_send\_decimal<a class="cmnd" id="tasmota_web_send_decimal"></a>|`(m
 
 See examples in the [Berry-Cookbook](Berry-Cookbook#adding-commands-to-tasmota)
 
-Functions to manage Relay/Lights
+#### Functions to manage Relays and Lights
 
 Tasmota Function|Parameters and details
 :---|:---
@@ -407,21 +394,24 @@ tasmota.get\_light<a class="cmnd" id="tasmota_get_light"></a>|_deprecated_ use `
 tasmota.set\_light<a class="cmnd" id="tasmota_set_light"></a>|_deprecated_ use `light.set`
 tasmota.get\_switches<a class="cmnd" id="tasmota_get_switches"></a>|`() -> list(bool)`<br>Returns as many values as switches are present. `true` means `PRESSED` and `false` means `NOT_PRESSED`. (Warning: this is the opposite of the internal representation where PRESSED=0)<br>Note: if there are holes in the switch definition, the values will be skipped. I.e. if you define SWITCH1 and SWITCH3, the array will return the two consecutive values for switches 1/3.
 
-Note: if there are holes in the switch definition, the values will be skipped. I.e. if you define SWITCH1 and SWITCH3, the array will return the two consecutive values for switches 1/3.
+If there are holes in the switch definition, the values will be skipped. I.e. if you define SWITCH1 and SWITCH3, the array will return the two consecutive values for switches 1/3.
 
-Low-level access to Tasmota globals. ***Use with care and only if you know what you are doing.***
+#### Low-level access to Tasmota globals.
 
-The construct is to use `tasmota.global` to read or write attributes. **Warning:** you can do bad things with these features.
+***Use with care and only if you know what you are doing.***
+
+The construct is to use `tasmota.global` to read or write attributes. 
+
+!!! warning "You can do bad things with these features"
 
 Tasmota global|Details
 :---|:---
 tasmota.global.energy_driver<a class="cmnd" id="tasmota_global_energy_driver"></a>|Used for Energy drivers
 tasmota.global.uptime<a class="cmnd" id="tasmota_global_energy_driver"></a>|Uptime in seconds
 
-### **`light` object**
+### `light` object
 
 Module `light` is automatically imported via a hidden `import light` command.
-
 
 Tasmota Function|Parameters and details
 :---|:---
@@ -431,11 +421,11 @@ light.gamma10<a class="cmnd" id="light_gamma10"></a>|`(channel) -> int`<br>Compu
 light.reverse\_gamma10<a class="cmnd" id="light_reverse_gamma10"></a>|`(gamma) -> int`<br>Computes the reverse gamma with 10 bits resolution for input and output.<br>Input and output are in range 0..1023.
 light.gamma8<a class="cmnd" id="light_gamma8"></a>|`(channel) -> int`<br>Computes the gamma corrected value with 8 bits resolution for input and output.<br>Input and output are in range 0..255.
 
-### **`gpio` module**
+### `gpio` module
 
 This module allows to retrieve the GPIO configuration set in the templates. You need to distinguish between **logical gpio** (like PWM, or I2C) and **physical gpio** which represent the GPIO number of the physical pin. `gpio.pin()` transforms a logical GPIO to a physical GPIO, or `-1` if the logical GPIO is not set.
 
-Currently there is limited support for GPIO: you can only read/write in digital mode and set the PGIO mode.
+Currently there is limited support for GPIO: you can only read/write in digital mode and set the GPIO mode.
 
 Tasmota Function|Parameters and details
 :---|:---
@@ -464,13 +454,11 @@ How to use:
 
 Any internal error or using unsupported GPIO yields an Berry exception.
 
-#### GPIO types
+??? note "Possible values for Tasmota GPIOs:"
 
-Here are the possible values for Tasmota GPIOS:
+    `gpio.NONE`, `gpio.KEY1`, `gpio.KEY1_NP`, `gpio.KEY1_INV`, `gpio.KEY1_INV_NP`, `gpio.SWT1`, `gpio.SWT1_NP`, `gpio.REL1`, `gpio.REL1_INV`, `gpio.LED1`, `gpio.LED1_INV`, `gpio.CNTR1`, `gpio.CNTR1_NP`, `gpio.PWM1`, `gpio.PWM1_INV`, `gpio.BUZZER`, `gpio.BUZZER_INV`, `gpio.LEDLNK`, `gpio.LEDLNK_INV`, `gpio.I2C_SCL`, `gpio.I2C_SDA`, `gpio.SPI_MISO`, `gpio.SPI_MOSI`, `gpio.SPI_CLK`, `gpio.SPI_CS`, `gpio.SPI_DC`, `gpio.SSPI_MISO`, `gpio.SSPI_MOSI`, `gpio.SSPI_SCLK`, `gpio.SSPI_CS`, `gpio.SSPI_DC`, `gpio.BACKLIGHT`, `gpio.OLED_RESET`, `gpio.IRSEND`, `gpio.IRRECV`, `gpio.RFSEND`, `gpio.RFRECV`, `gpio.DHT11`, `gpio.DHT22`, `gpio.SI7021`, `gpio.DHT11_OUT`, `gpio.DSB`, `gpio.DSB_OUT`, `gpio.WS2812`, `gpio.MHZ_TXD`, `gpio.MHZ_RXD`, `gpio.PZEM0XX_TX`, `gpio.PZEM004_RX`, `gpio.PZEM016_RX`, `gpio.PZEM017_RX`, `gpio.SAIR_TX`, `gpio.SAIR_RX`, `gpio.PMS5003_TX`, `gpio.PMS5003_RX`, `gpio.SDS0X1_TX`, `gpio.SDS0X1_RX`, `gpio.SBR_TX`, `gpio.SBR_RX`, `gpio.SR04_TRIG`, `gpio.SR04_ECHO`, `gpio.SDM120_TX`, `gpio.SDM120_RX`, `gpio.SDM630_TX`, `gpio.SDM630_RX`, `gpio.TM1638CLK`, `gpio.TM1638DIO`, `gpio.TM1638STB`, `gpio.MP3_DFR562`, `gpio.HX711_SCK`, `gpio.HX711_DAT`, `gpio.TX2X_TXD_BLACK`, `gpio.TUYA_TX`, `gpio.TUYA_RX`, `gpio.MGC3130_XFER`, `gpio.MGC3130_RESET`, `gpio.RF_SENSOR`, `gpio.AZ_TXD`, `gpio.AZ_RXD`, `gpio.MAX31855CS`, `gpio.MAX31855CLK`, `gpio.MAX31855DO`, `gpio.NRG_SEL`, `gpio.NRG_SEL_INV`, `gpio.NRG_CF1`, `gpio.HLW_CF`, `gpio.HJL_CF`, `gpio.MCP39F5_TX`, `gpio.MCP39F5_RX`, `gpio.MCP39F5_RST`, `gpio.PN532_TXD`, `gpio.PN532_RXD`, `gpio.SM16716_CLK`, `gpio.SM16716_DAT`, `gpio.SM16716_SEL`, `gpio.DI`, `gpio.DCKI`, `gpio.CSE7766_TX`, `gpio.CSE7766_RX`, `gpio.ARIRFRCV`, `gpio.ARIRFSEL`, `gpio.TXD`, `gpio.RXD`, `gpio.ROT1A`, `gpio.ROT1B`, `gpio.ADC_JOY`, `gpio.SSPI_MAX31865_CS1`, `gpio.HRE_CLOCK`, `gpio.HRE_DATA`, `gpio.ADE7953_IRQ`, `gpio.SOLAXX1_TX`, `gpio.SOLAXX1_RX`, `gpio.ZIGBEE_TX`, `gpio.ZIGBEE_RX`, `gpio.RDM6300_RX`, `gpio.IBEACON_TX`, `gpio.IBEACON_RX`, `gpio.A4988_DIR`, `gpio.A4988_STP`, `gpio.A4988_ENA`, `gpio.A4988_MS1`, `gpio.OUTPUT_HI`, `gpio.OUTPUT_LO`, `gpio.DDS2382_TX`, `gpio.DDS2382_RX`, `gpio.DDSU666_TX`, `gpio.DDSU666_RX`, `gpio.SM2135_CLK`, `gpio.SM2135_DAT`, `gpio.DEEPSLEEP`, `gpio.EXS_ENABLE`, `gpio.TASMOTACLIENT_TXD`, `gpio.TASMOTACLIENT_RXD`, `gpio.TASMOTACLIENT_RST`, `gpio.TASMOTACLIENT_RST_INV`, `gpio.HPMA_RX`, `gpio.HPMA_TX`, `gpio.GPS_RX`, `gpio.GPS_TX`, `gpio.HM10_RX`, `gpio.HM10_TX`, `gpio.LE01MR_RX`, `gpio.LE01MR_TX`, `gpio.CC1101_GDO0`, `gpio.CC1101_GDO2`, `gpio.HRXL_RX`, `gpio.ELECTRIQ_MOODL_TX`, `gpio.AS3935`, `gpio.ADC_INPUT`, `gpio.ADC_TEMP`, `gpio.ADC_LIGHT`, `gpio.ADC_BUTTON`, `gpio.ADC_BUTTON_INV`, `gpio.ADC_RANGE`, `gpio.ADC_CT_POWER`, `gpio.WEBCAM_PWDN`, `gpio.WEBCAM_RESET`, `gpio.WEBCAM_XCLK`, `gpio.WEBCAM_SIOD`, `gpio.WEBCAM_SIOC`, `gpio.WEBCAM_DATA`, `gpio.WEBCAM_VSYNC`, `gpio.WEBCAM_HREF`, `gpio.WEBCAM_PCLK`, `gpio.WEBCAM_PSCLK`, `gpio.WEBCAM_HSD`, `gpio.WEBCAM_PSRCS`, `gpio.BOILER_OT_RX`, `gpio.BOILER_OT_TX`, `gpio.WINDMETER_SPEED`, `gpio.KEY1_TC`, `gpio.BL0940_RX`, `gpio.TCP_TX`, `gpio.TCP_RX`, `gpio.ETH_PHY_POWER`, `gpio.ETH_PHY_MDC`, `gpio.ETH_PHY_MDIO`, `gpio.TELEINFO_RX`, `gpio.TELEINFO_ENABLE`, `gpio.LMT01`, `gpio.IEM3000_TX`, `gpio.IEM3000_RX`, `gpio.ZIGBEE_RST`, `gpio.DYP_RX`, `gpio.MIEL_HVAC_TX`, `gpio.MIEL_HVAC_RX`, `gpio.WE517_TX`, `gpio.WE517_RX`, `gpio.AS608_TX`, `gpio.AS608_RX`, `gpio.SHELLY_DIMMER_BOOT0`, `gpio.SHELLY_DIMMER_RST_INV`, `gpio.RC522_RST`, `gpio.P9813_CLK`, `gpio.P9813_DAT`, `gpio.OPTION_A`, `gpio.FTC532`, `gpio.RC522_CS`, `gpio.NRF24_CS`, `gpio.NRF24_DC`, `gpio.ILI9341_CS`, `gpio.ILI9341_DC`, `gpio.ILI9488_CS`, `gpio.EPAPER29_CS`, `gpio.EPAPER42_CS`, `gpio.SSD1351_CS`, `gpio.RA8876_CS`, `gpio.ST7789_CS`, `gpio.ST7789_DC`, `gpio.SSD1331_CS`, `gpio.SSD1331_DC`, `gpio.SDCARD_CS`, `gpio.ROT1A_NP`, `gpio.ROT1B_NP`, `gpio.ADC_PH`, `gpio.BS814_CLK`, `gpio.BS814_DAT`, `gpio.WIEGAND_D0`, `gpio.WIEGAND_D1`, `gpio.NEOPOOL_TX`, `gpio.NEOPOOL_RX`, `gpio.SDM72_TX`, `gpio.SDM72_RX`, `gpio.TM1637CLK`, `gpio.TM1637DIO`, `gpio.PROJECTOR_CTRL_TX`, `gpio.PROJECTOR_CTRL_RX`, `gpio.SSD1351_DC`, `gpio.XPT2046_CS`, `gpio.CSE7761_TX`, `gpio.CSE7761_RX`, `gpio.VL53L0X_XSHUT1`, `gpio.MAX7219CLK`, `gpio.MAX7219DIN`, `gpio.MAX7219CS`, `gpio.TFMINIPLUS_TX`, `gpio.TFMINIPLUS_RX`, `gpio.ZEROCROSS`, `gpio.HALLEFFECT`, `gpio.EPD_DATA`, `gpio.INPUT`, `gpio.SENSOR_END`
 
-`gpio.NONE`, `gpio.KEY1`, `gpio.KEY1_NP`, `gpio.KEY1_INV`, `gpio.KEY1_INV_NP`, `gpio.SWT1`, `gpio.SWT1_NP`, `gpio.REL1`, `gpio.REL1_INV`, `gpio.LED1`, `gpio.LED1_INV`, `gpio.CNTR1`, `gpio.CNTR1_NP`, `gpio.PWM1`, `gpio.PWM1_INV`, `gpio.BUZZER`, `gpio.BUZZER_INV`, `gpio.LEDLNK`, `gpio.LEDLNK_INV`, `gpio.I2C_SCL`, `gpio.I2C_SDA`, `gpio.SPI_MISO`, `gpio.SPI_MOSI`, `gpio.SPI_CLK`, `gpio.SPI_CS`, `gpio.SPI_DC`, `gpio.SSPI_MISO`, `gpio.SSPI_MOSI`, `gpio.SSPI_SCLK`, `gpio.SSPI_CS`, `gpio.SSPI_DC`, `gpio.BACKLIGHT`, `gpio.OLED_RESET`, `gpio.IRSEND`, `gpio.IRRECV`, `gpio.RFSEND`, `gpio.RFRECV`, `gpio.DHT11`, `gpio.DHT22`, `gpio.SI7021`, `gpio.DHT11_OUT`, `gpio.DSB`, `gpio.DSB_OUT`, `gpio.WS2812`, `gpio.MHZ_TXD`, `gpio.MHZ_RXD`, `gpio.PZEM0XX_TX`, `gpio.PZEM004_RX`, `gpio.PZEM016_RX`, `gpio.PZEM017_RX`, `gpio.SAIR_TX`, `gpio.SAIR_RX`, `gpio.PMS5003_TX`, `gpio.PMS5003_RX`, `gpio.SDS0X1_TX`, `gpio.SDS0X1_RX`, `gpio.SBR_TX`, `gpio.SBR_RX`, `gpio.SR04_TRIG`, `gpio.SR04_ECHO`, `gpio.SDM120_TX`, `gpio.SDM120_RX`, `gpio.SDM630_TX`, `gpio.SDM630_RX`, `gpio.TM1638CLK`, `gpio.TM1638DIO`, `gpio.TM1638STB`, `gpio.MP3_DFR562`, `gpio.HX711_SCK`, `gpio.HX711_DAT`, `gpio.TX2X_TXD_BLACK`, `gpio.TUYA_TX`, `gpio.TUYA_RX`, `gpio.MGC3130_XFER`, `gpio.MGC3130_RESET`, `gpio.RF_SENSOR`, `gpio.AZ_TXD`, `gpio.AZ_RXD`, `gpio.MAX31855CS`, `gpio.MAX31855CLK`, `gpio.MAX31855DO`, `gpio.NRG_SEL`, `gpio.NRG_SEL_INV`, `gpio.NRG_CF1`, `gpio.HLW_CF`, `gpio.HJL_CF`, `gpio.MCP39F5_TX`, `gpio.MCP39F5_RX`, `gpio.MCP39F5_RST`, `gpio.PN532_TXD`, `gpio.PN532_RXD`, `gpio.SM16716_CLK`, `gpio.SM16716_DAT`, `gpio.SM16716_SEL`, `gpio.DI`, `gpio.DCKI`, `gpio.CSE7766_TX`, `gpio.CSE7766_RX`, `gpio.ARIRFRCV`, `gpio.ARIRFSEL`, `gpio.TXD`, `gpio.RXD`, `gpio.ROT1A`, `gpio.ROT1B`, `gpio.ADC_JOY`, `gpio.SSPI_MAX31865_CS1`, `gpio.HRE_CLOCK`, `gpio.HRE_DATA`, `gpio.ADE7953_IRQ`, `gpio.SOLAXX1_TX`, `gpio.SOLAXX1_RX`, `gpio.ZIGBEE_TX`, `gpio.ZIGBEE_RX`, `gpio.RDM6300_RX`, `gpio.IBEACON_TX`, `gpio.IBEACON_RX`, `gpio.A4988_DIR`, `gpio.A4988_STP`, `gpio.A4988_ENA`, `gpio.A4988_MS1`, `gpio.OUTPUT_HI`, `gpio.OUTPUT_LO`, `gpio.DDS2382_TX`, `gpio.DDS2382_RX`, `gpio.DDSU666_TX`, `gpio.DDSU666_RX`, `gpio.SM2135_CLK`, `gpio.SM2135_DAT`, `gpio.DEEPSLEEP`, `gpio.EXS_ENABLE`, `gpio.TASMOTACLIENT_TXD`, `gpio.TASMOTACLIENT_RXD`, `gpio.TASMOTACLIENT_RST`, `gpio.TASMOTACLIENT_RST_INV`, `gpio.HPMA_RX`, `gpio.HPMA_TX`, `gpio.GPS_RX`, `gpio.GPS_TX`, `gpio.HM10_RX`, `gpio.HM10_TX`, `gpio.LE01MR_RX`, `gpio.LE01MR_TX`, `gpio.CC1101_GDO0`, `gpio.CC1101_GDO2`, `gpio.HRXL_RX`, `gpio.ELECTRIQ_MOODL_TX`, `gpio.AS3935`, `gpio.ADC_INPUT`, `gpio.ADC_TEMP`, `gpio.ADC_LIGHT`, `gpio.ADC_BUTTON`, `gpio.ADC_BUTTON_INV`, `gpio.ADC_RANGE`, `gpio.ADC_CT_POWER`, `gpio.WEBCAM_PWDN`, `gpio.WEBCAM_RESET`, `gpio.WEBCAM_XCLK`, `gpio.WEBCAM_SIOD`, `gpio.WEBCAM_SIOC`, `gpio.WEBCAM_DATA`, `gpio.WEBCAM_VSYNC`, `gpio.WEBCAM_HREF`, `gpio.WEBCAM_PCLK`, `gpio.WEBCAM_PSCLK`, `gpio.WEBCAM_HSD`, `gpio.WEBCAM_PSRCS`, `gpio.BOILER_OT_RX`, `gpio.BOILER_OT_TX`, `gpio.WINDMETER_SPEED`, `gpio.KEY1_TC`, `gpio.BL0940_RX`, `gpio.TCP_TX`, `gpio.TCP_RX`, `gpio.ETH_PHY_POWER`, `gpio.ETH_PHY_MDC`, `gpio.ETH_PHY_MDIO`, `gpio.TELEINFO_RX`, `gpio.TELEINFO_ENABLE`, `gpio.LMT01`, `gpio.IEM3000_TX`, `gpio.IEM3000_RX`, `gpio.ZIGBEE_RST`, `gpio.DYP_RX`, `gpio.MIEL_HVAC_TX`, `gpio.MIEL_HVAC_RX`, `gpio.WE517_TX`, `gpio.WE517_RX`, `gpio.AS608_TX`, `gpio.AS608_RX`, `gpio.SHELLY_DIMMER_BOOT0`, `gpio.SHELLY_DIMMER_RST_INV`, `gpio.RC522_RST`, `gpio.P9813_CLK`, `gpio.P9813_DAT`, `gpio.OPTION_A`, `gpio.FTC532`, `gpio.RC522_CS`, `gpio.NRF24_CS`, `gpio.NRF24_DC`, `gpio.ILI9341_CS`, `gpio.ILI9341_DC`, `gpio.ILI9488_CS`, `gpio.EPAPER29_CS`, `gpio.EPAPER42_CS`, `gpio.SSD1351_CS`, `gpio.RA8876_CS`, `gpio.ST7789_CS`, `gpio.ST7789_DC`, `gpio.SSD1331_CS`, `gpio.SSD1331_DC`, `gpio.SDCARD_CS`, `gpio.ROT1A_NP`, `gpio.ROT1B_NP`, `gpio.ADC_PH`, `gpio.BS814_CLK`, `gpio.BS814_DAT`, `gpio.WIEGAND_D0`, `gpio.WIEGAND_D1`, `gpio.NEOPOOL_TX`, `gpio.NEOPOOL_RX`, `gpio.SDM72_TX`, `gpio.SDM72_RX`, `gpio.TM1637CLK`, `gpio.TM1637DIO`, `gpio.PROJECTOR_CTRL_TX`, `gpio.PROJECTOR_CTRL_RX`, `gpio.SSD1351_DC`, `gpio.XPT2046_CS`, `gpio.CSE7761_TX`, `gpio.CSE7761_RX`, `gpio.VL53L0X_XSHUT1`, `gpio.MAX7219CLK`, `gpio.MAX7219DIN`, `gpio.MAX7219CS`, `gpio.TFMINIPLUS_TX`, `gpio.TFMINIPLUS_RX`, `gpio.ZEROCROSS`, `gpio.HALLEFFECT`, `gpio.EPD_DATA`, `gpio.INPUT`, `gpio.SENSOR_END`
-
-### **`energy` module**
+### `energy` module
 
 The `energy` module provides ways to read current energy counters and values (if you're creating your own automation) or updating the energy counters (if you're writing a driver).
 
@@ -488,7 +476,7 @@ For example, if you want to read or update an energy value:
 # internally it updates the C value `Energy.active_power[0]` (float)
 ```
 
-Note: you don't need to do `import energy` since Tasmota does it for you at boot.
+You don't need to do `import energy` since Tasmota does it for you at boot.
 
 The special `energy.read()` function dumps all current values to a single `map`. Be aware that the object is very long. Prefer accessing individual attributes instead.
 
@@ -496,7 +484,7 @@ Tasmota Function|Parameters and details
 :---|:---
 energy.read()<a class="cmnd" id="energy_read"></a>|`() -> map`<br>Returns all current values for the energy module. Some values may be unused by the current driver.
 
-Below is the list of `energy` attributes that you can read or write:
+List of `energy` attributes that you can read or write:
 
 Attribute|Type|Description
 :---|:---|:---
@@ -541,9 +529,9 @@ mplw\_counter|uint16|
 mplr\_counter|uint8|
 max\_energy\_state|uint8|
 
-### **`wire` object**
+### `wire` object for I^2^C
 
-Berry Scripting provides 2 objects `wire1` and `wire2` to communicate with both I2C buses.
+Berry Scripting provides 2 objects: `wire1` and `wire2` to communicate with both I^2^C buses.
 
 Use `wire1.scan()` and `wire2.scan()` to scan both buses:
 
@@ -555,16 +543,15 @@ Use `wire1.scan()` and `wire2.scan()` to scan both buses:
 [140]
 ```
 
-You generally use `tasmota.wire_scan()` to find a device and the corresponding I2C bus.
+You generally use `tasmota.wire_scan()` to find a device and the corresponding I^2^C bus.
 
-Example with MPU6886 on bus 2:
+!!! example "MPU6886 on bus 2"
 
-```
-> mpuwire = tasmota.wire_scan(0x68, 58)
-> mpuwire
-<instance: Wire()>
-```
-
+    ```
+    > mpuwire = tasmota.wire_scan(0x68, 58)
+    > mpuwire
+    <instance: Wire()>
+    ```
 
 Wire Function|Parameters and details
 :---|:---
@@ -576,9 +563,7 @@ write<a class="cmnd" id="wire_write">|`(addr:int, reg:int, val:int, size:int) ->
 read\_bytes<a class="cmnd" id="wire_read_bytes">|`(addr:int, reg:int ,size:int) -> instance of bytes()`<br>Reads a sequence of `size` bytes from address `addr` register `reg`. Result is a `bytes()` instance or `bytes()` if not successful.`
 write\_bytes<a class="cmnd" id="wire_write_bytes">|`(addr:int, reg:int, val:bytes) -> nil`<br>Writes the `val` bytes sequence as `bytes()` to address `addr` register `reg`.
 
-The following are low-level commands if you need finer control:
-
-
+Low-level commands if you need finer control:
 
 Wire Function|Parameters and details
 :---|:---
@@ -589,19 +574,18 @@ Wire Function|Parameters and details
 \_read<a class="cmnd" id="wire_read">|`read() -> int`<br>Reads a single byte.
 \_write<a class="cmnd" id="wire_write">|`(value:int or s:string) -> nil`<br>Sends either single byte or an arbitrary string.
 
-### **`path` module**
+### `path` module
 
-This module is a simplified version of `os.path` module of standard Berry, but disabled on Tasmota because we don't have a full OS.
+A simplified version of `os.path` module of standard Berry which is disabled in Tasmota because we don't have a full OS.
 
 Tasmota Function|Parameters and details
 :---|:---
 path.exists<a class="cmnd" id="path_exists"></a>|`(file_name:string) -> bool`<br>Returns `true` if the file exists. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
 path.last_modified<a class="cmnd" id="path_last_modified"></a>|`(file_name:string) -> int`<br>Returns the timestamp when the file was last modified, or `nil` if the file does not exist. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
 
-### **`introspect` module**
+### `introspect` module
 
-This modules allows to do introspection on instances and modules, to programmatically list attributes, set and get them.
-
+Allows to do introspection on instances and modules, to programmatically list attributes, set and get them.
 
 ```python
 > class A var a,b def f() return 1 end end
@@ -629,9 +613,9 @@ introspect.get<a class="cmnd" id="introspect_get"></a>|`(instance | module, name
 introspect.set<a class="cmnd" id="introspect_set"></a>|`(instance | module, name:string, value:any) -> any`<br>Sets the member of name `name` to `value` or ignores the call if the member does not exist. Note: virtual dynamic members are not yet supported.
 introspect.vcall<a class="cmnd" id="introspect_vcall"></a>|`(function, [args,]* [list]?) -> any`<br>Calls a function with a dynamically built list of arguments. If the last argument is a list, it is expanded into individual arguments.
 
-### **`webclient` class**
+### `webclient` class
   
-The class `webclient` provides an implementation of an HTTP/HTTPS web client and make requests on the LAN or over the Internet.
+Class `webclient` provides an implementation of an HTTP/HTTPS web client and make requests on the LAN or over the Internet.
 
 Features:
 
@@ -655,23 +639,23 @@ Current limitations (if you need extra features please open a feature request on
  - No support for compressed response
 
  
-#### Example
+!!! example
  
-``` python
-> cl = webclient()
-> cl.begin("http://ota.tasmota.com/tasmota32/release/")
-<instance: webclient()>
+    ``` python
+    > cl = webclient()
+    > cl.begin("http://ota.tasmota.com/tasmota32/release/")
+    <instance: webclient()>
 
-> r = cl.GET()
-> print(r)
-200
+    > r = cl.GET()
+    > print(r)
+    200
 
-> s = cl.get_string()
-> print(s)
-<pre>
- <b></b>Alternative firmware for ESP32 based devices with web UI,
-[.../...]
-```
+    > s = cl.get_string()
+    > print(s)
+    <pre>
+    <b></b>Alternative firmware for ESP32 based devices with web UI,
+    [.../...]
+    ```
 
 Main functions:
 
@@ -694,11 +678,9 @@ set\_timeouts<a class="cmnd" id="wc_set_timeouts">|`(req_timeout:int [, tcp_time
 set\_useragent<a class="cmnd" id="wc_set_useragent">|`(useragent:string) -> self`<br>Sets the User-Agent header used in request.
 set\_auth<a class="cmnd" id="wc_set_auth">|`(auth:string) or (user:string, password:string) -> self`<br>Sets the authentication header, either using pre-encoded string, or standard user/password encoding.
 
-### **`webserver` module**
+### `webserver` module
   
-The module `webserver` provides functions to enrich Tasmota's Web UI. It is tightly linked to Tasmota page layout.
-
-See the [Berry Cookbook](Berry-Cookbook.md) for full examples.
+Module `webserver` provides functions to enrich Tasmota's Web UI. It is tightly linked to Tasmota page layout.
 
 Functions used to add UI elements like buttons to Tasmota pages, and analyze the current request. See above `Driver` to add buttons to Tasmota UI.
 
@@ -712,7 +694,7 @@ check_privileged_access<a class="cmnd" id="ws_check_privileged_access">|`() -> b
 content_send<a class="cmnd" id="ws_content_send">|`(string) -> nil`<br>Sends the HTML content to the client. Tasmota uses Chunked encoding, which means than the content is regularly sent to the client and not buffered in Tasmota's memory
 content_button<a class="cmnd" id="ws_content_button">|`([button:int]) -> nil`<br>Displays a standard button by code, using Tasmota localization. Possible values are `webserver.BUTTON_CONFIGURATION`, `webserver.BUTTON_INFORMATION`, `webserver.BUTTON_MAIN`, `webserver.BUTTON_MANAGEMENT`, `webserver.BUTTON_MODULE`. Default is `webserver.BUTTON_MAIN`.
 
-The following are low-level functions if you want to display custom pages and content.
+Low-level functions if you want to display custom pages and content:
 
 General Function|Parameters and details
 :---|:---
@@ -729,22 +711,24 @@ Module `webserver` also defines the following constants:
 - Tasmota's pages: `webserver.BUTTON_CONFIGURATION`, `webserver.BUTTON_INFORMATION`, `webserver.BUTTON_MAIN`, `webserver.BUTTON_MANAGEMENT`, `webserver.BUTTON_MODULE`
 - Methods received by handler: `webserver.HTTP_ANY`, `webserver.HTTP_GET`, `webserver.HTTP_OPTIONS`, `webserver.HTTP_POST`
 
-### **`serial` class**
+See the [Berry Cookbook](Berry-Cookbook.md) for examples.
+
+### `serial` class
 
 The `serial` class provides a low-level interface to hardware UART. The serial GPIOs don't need to be configured in the template.
 
-Example:
+!!! example
 
-```
-# gpio_rx:4 gpio_tx:5
-ser = serial(4, 5, 9600, serial.SERIAL_7E1)
+    ```
+    # gpio_rx:4 gpio_tx:5
+    ser = serial(4, 5, 9600, serial.SERIAL_7E1)
 
-ser.write(bytes(203132))   # send binary 203132
-ser.write(bytes().fromstring("Hello))   # send string "Hello"
+    ser.write(bytes(203132))   # send binary 203132
+    ser.write(bytes().fromstring("Hello))   # send string "Hello"
 
-msg = ser.read()   # read bytes from serial as bytes
-print(msg.asstring())   # print the message as string
-```
+    msg = ser.read()   # read bytes from serial as bytes
+    print(msg.asstring())   # print the message as string
+    ```
 
 Tasmota Function|Parameters and details
 :---|:---
@@ -756,15 +740,15 @@ available<a class="cmnd" id="serial_available"></a>|`available(void) -> int`<br>
 
 Supported serial message formats: `SERIAL_5N1`, `SERIAL_6N1`, `SERIAL_7N1`, `SERIAL_8N1`, `SERIAL_5N2`, `SERIAL_6N2`, `SERIAL_7N2`, `SERIAL_8N2`, `SERIAL_5E1`, `SERIAL_6E1`, `SERIAL_7E1`, `SERIAL_8E1`, `SERIAL_5E2`, `SERIAL_6E2`, `SERIAL_7E2`, `SERIAL_8E2`, `SERIAL_5O1`, `SERIAL_6O1`, `SERIAL_7O1`, `SERIAL_8O1`, `SERIAL_5O2`, `SERIAL_6O2`, `SERIAL_7O2`, `SERIAL_8O2`
 
-## Customizing Berry compiles
+## Compiling Berry
 
-Berry is included if the following is defined:
+Berry is included if the following is defined in `user_config_override.h`:
 
 ```arduino
 #define USE_BERRY
 ```
 
-Other options that can be changed in `my_user_config.h` or `user_config_override.h`:
+Other options that can be changed:
 
 Option|Description
 :---|:---
@@ -775,6 +759,6 @@ Option|Description
 `#define USE_BERRY_WEBCLIENT_USERAGENT  "TasmotaClient"`|Specifies the default `User-Agent` field sent by `webclient`. Can be changed on a per request basis.
 `#define USE_BERRY_WEBCLIENT_TIMEOUT  5000`|Specifies the default timeout in millisecond for `webclient`. Can be changed on a per request basis.
 
-## Berry Cookbook
+## [Berry Cookbook](Berry-Cookbook.md)
 
-See full examples in the [Berry Cookbook](Berry-Cookbook.md)
+Find complete examples and use scenarios of Berry in the [Berry Cookbook](Berry-Cookbook.md)

@@ -79,7 +79,6 @@ markdown_extensions:
   - toc:
      permalink: "~"
      toc_depth: 3
-  - pymdownx.mark
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.emoji:
@@ -87,11 +86,13 @@ markdown_extensions:
       emoji_generator: !!python/name:materialx.emoji.to_svg
   - pymdownx.betterem
   - pymdownx.caret
-  - pymdownx.tilde
   - pymdownx.details
   - pymdownx.highlight
+  - pymdownx.keys
+  - pymdownx.mark
   - pymdownx.superfences
   - pymdownx.snippets
+  - pymdownx.tilde
   - meta
   - def_list
 
