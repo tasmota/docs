@@ -11,7 +11,7 @@ Supported version: LVGL v8.0.2, LodePNG v20201017, Freetype 2.10.4
 - Berry's powerful language similar to MicroPython
 
 
-[LVGL](https://lvgl.io/) LVGL is an open-source graphics library providing everything you need to create embedded GUI with easy-to-use graphical elements, beautiful visual effects and low memory footprint.
+[LVGL](https://lvgl.io/) is an open-source graphics library providing everything you need to create embedded GUI with easy-to-use graphical elements, beautiful visual effects and low memory footprint.
 
 [Berry](Berry.md) is a ultra-lightweight dynamically typed embedded scripting language. It is designed for lower-performance embedded devices
 
