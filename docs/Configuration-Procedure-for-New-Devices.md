@@ -68,7 +68,6 @@ Once you have found which GPIO are connected to each input, change the GPIO sett
 ### Step 1
 Once you have determined which GPIO your device uses, set any remaining GPIOs to `None (0)`.
 
-<<<<<<< HEAD
 Save the configuration.
 
 Once the device reboots, set the options change back to defaults with:
@@ -82,9 +81,5 @@ Since you have now configured a device not previously known to the Tasmota user 
 
 ## Devices with TuyaMCU 
 In case your device is a Tuya device with an MCU which controls everything see [TuyaMCU](TuyaMCU) for instructions on how to configure it.
-=======
-### Submit new template
-Since you have now configured a device not previously known to the Tasmota user base, you can [export the template](Templates#exporting-your-template) and submit it to the [Tasmota Supported Devices Repository](https://templates.blakadder.com/new.html).  
->>>>>>> development
 
 [Video](https://youtu.be/5Oa27pCHtYo?t=518) for a tutorial on this procedure.  

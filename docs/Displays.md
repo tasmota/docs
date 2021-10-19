@@ -569,10 +569,6 @@ the appropriate coordinate convervsions are defined via pseudo opcodes
 5 = flip y
 bit 7 = swap x,y
 
-<<<<<<< HEAD
-
-=======
->>>>>>> development
 `:A`  
 3 OPCODES to set adress window (color display only)  
 

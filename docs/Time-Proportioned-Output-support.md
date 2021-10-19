@@ -4,10 +4,6 @@ The relay output on a Sonoff device provides (obviously) just on/off control.  O
 
 The s/w includes a safety mechanism where the maximum time expected between MQTT power updates is specified. If this time is exceeded with no value being received then the power will revert to a specified fallback value.
 
-<<<<<<< HEAD
 Instructions for setting it up and using it are in `xdrv_48_timeprop.ino`. The feature adds about 1.2k to the compiled code.
-=======
-Instructions for setting it up and using it are in `xdrv_91_timeprop.ino`. The feature adds about 1.2k to the compiled code.
->>>>>>> development
 
 Currently all configuration parameters must be setup at build time. If anyone wanted to add these to the MQTT and/or web interfaces a PR would be gratefully received.

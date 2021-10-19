@@ -19,37 +19,7 @@ Incredibly expandable and flexible.
 <b>Install Tasmota using a Chrome based browser at [https://tasmota.github.io/install/](https://tasmota.github.io/install/).</b>    
 
 ### Current release 
-<<<<<<< HEAD
-<a href="http://ota.tasmota.com/tasmota/release-9.5.0/"><span style="font-size:40px;">Tasmota 9.5.0 Michael</span></a><br>
-
-
-- :warning: ==BREAKING== :warning: Lights using MQTT discovery will not work correcty as of Home Assistant 2021.5 due to new [color modes](https://www.home-assistant.io/blog/2021/05/05/release-20215/#color-modes). Upgrade to [v9.5](http://ota.tasmota.com/release/tasmota/) of Tasmota and use [Tasmota integration](https://www.home-assistant.io/integrations/tasmota)
-
-- new optional Template configuration field [`"CMND"`](Templates.md#cmnd) to embed crucial configuration commands in the template string [#11788](https://github.com/arendst/Tasmota/discussions/11788)
-- Support for MQTT using [Azure IoT Hub](Azure-IoT-Hub.md)
-- new binary `tasmota-zigbee.bin` for CC25xx Zigbee Bridge version for 4M+ flash.
-- new device IP is displayed in the UI after Wi-Fi initial config [#12091](https://github.com/arendst/Tasmota/discussions/12091)
-- Allow discovery of MCP2300xx output as relay [#12037](https://github.com/arendst/Tasmota/discussions/12037)
-- Defines `USER_RULE1`, `USER_RULE2` and `USER_RULE3` to store rules at compile time
-- Define `USER_BACKLOG` to store commands at compile time to be executed at firmware load or when executing command reset
-- New commands: [`TuyaSend5`](Commands.md#tuyasend), [`Status0`](Commands.md#status), [`MqttWifiTimeout`](Commands.md#mqttwifitimeout)
-- Acer projector support [#12190](https://github.com/arendst/Tasmota/discussions/12190)
-
-#### ESP32
-
-- Preliminary **alpha** support for ESP32-C3 (RiscV based)
-- pull-down buttons `Button_d` and `Button_id` and switches `Switch_d` [#10814](https://github.com/arendst/Tasmota/discussions/10814)
-- LVGL support for 3 buttons as rotary encoder [#12035](https://github.com/arendst/Tasmota/discussions/12035)
-- LVGL support for touchscreen [#12039](https://github.com/arendst/Tasmota/discussions/12039)
-- LVGL support for TrueType fonts via FreeType library [#12087](https://github.com/arendst/Tasmota/discussions/12087)
-- LVGL support for PSRAM [#12062](https://github.com/arendst/Tasmota/discussions/12062)
-- LVGL support for PNG images [#12148](https://github.com/arendst/Tasmota/discussions/12148)
-- Support for BM8563 RTC chip (I2C) found in M5Stack Core2 and M5StickC [#12199](https://github.com/arendst/Tasmota/discussions/12199)
-- I2S and Interrupt GPIO types [#12192](https://github.com/arendst/Tasmota/discussions/12192)
-
-See [changelog](https://github.com/arendst/Tasmota/blob/development/CHANGELOG.md) for a complete list of new features, changes and bug fixes.
-=======
-<a href="http://ota.tasmota.com/tasmota/release-9.5.0/"><span style="font-size:40px;">Tasmota 10.0.0 Michael</span></a><br>
+<a href="http://ota.tasmota.com/tasmota/release-10.0.0/"><span style="font-size:40px;">Tasmota 10.0.0 Norman</span></a><br>
 
 The big number 10 is here and with such a big number comes stable ESP32 support and a [web installer](https://tasmota.github.io/install/) as the easiest way to install Tasmota.
 
@@ -72,7 +42,6 @@ The big number 10 is here and with such a big number comes stable ESP32 support 
 - Fixes: Sonoff L1(lite) controls, negative power values for ADE7953 based devices like Shelly EM
 
 See [releasenotes](https://github.com/arendst/Tasmota/blob/development/RELEASENOTES.md) for a complete list of new features, changes and bug fixes.
->>>>>>> development
 
 ### Join our communities and chat
 See [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), [Reddit](https://www.reddit.com/r/tasmota/) or [Google Groups](https://groups.google.com/d/forum/sonoffusers) for general chat, feedback, questions and live troubleshooting.

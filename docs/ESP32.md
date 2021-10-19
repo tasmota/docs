@@ -4,39 +4,6 @@ desription: Everything about Tasmota on ESP32
 !!! danger "ESP32-C3 and ESP32-S2 support is in beta and not all functions or supported peripherals will work reliably."
      Due to the scope and activity of development there might be breaking changes and incompatibilities between major and minor versions of Tasmota32. In case of problems first erase flash and serial flash the latest development binary.
 
-<<<<<<< HEAD
-## Flashing
-
-Use [ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) (Windows, MacOS, Linux) or [Tasmota Web Installer](https://tasmota.github.io/install/) (Chrome or Edge) to flash. 
-
-### with esptool.py
-Requires esptool.py 3.1 to identify new ESP chips.
-
-With esptool.py use the following command syntax (**replace COM port number!**):
-```
-esptool.py --chip esp32 --port COM5 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dout --flash_freq 40m --flash_size detect 0x1000 bootloader_dout_40m.bin 0x8000 partitions.bin 0xe000 boot_app0.bin 0x10000 tasmota32.bin
-```
-### ESP32-C3
-
-To flash ESP32-C3 chip with esptool.py use the following command syntax (**replace COM port number!**):
-```
-esptool.py --chip esp32c3 --port COM5 --baud 460800 --before default_reset --after hard_reset write_flash -z --flash_mode dout --flash_freq 40m --flash_size detect 0x0000 bootloader_dout_40m.bin 0x8000 partitions.bin 0xe000 boot_app0.bin 0x10000 tasmota32c3.bin
-```
-
-You can download precompiled binaries:
-
-  - development branch from [http://ota.tasmota.com/tasmota32/](http://ota.tasmota.com/tasmota32/) 
-  - stable releases from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/) 
-  - the required chip/board specific [flash files](https://github.com/tasmota/install/tree/main/static) _(not needed when using ESP_Flasher)_
-  - unofficial development builds (ESP32C3, Ethernet, ...) from [https://www.github.com/tasmota/install/](https://github.com/tasmota/install/tree/main/firmware/unofficial)
-
-OTA upgrade from much older versions of tasmota32 might fail due to significant changes in partition tables.
-
-!!! warning "Use a proper power supply!"
-    ESP32 is power hungry and there's a high chance it will not be able to boot properly off the serial-to-USB power. Power it from a separate power supply that can provide at least 1A.
-
-=======
->>>>>>> development
 ## ESP32 Differences
 All ESP32 systems on a chip (SoC) are 32-bit MCUs with 2.4 GHz Wi-Fi & Bluetooth/Bluetooth LE built in. There are distinct product lines which are different from each other in varying degrees. 
 
@@ -98,144 +65,7 @@ ESP32 introduces [Berry](Berry.md) language as a more approachable scripting lan
 ### LVGL
 Use [LVGL](https://lvgl.io/) in conjunction with Berry on devices with displays and touch displays to design your own UI.
 
-<<<<<<< HEAD
-## Compiling ESP32 Binaries
-
-Uncomment the tasmota32 build you want to compile in `platformio_override.ini`. For example, uncommenting tasmota32 will build `tasmota32.bin` on the next Build task in Platformio. 
-
-![platformio_override.ini](_media/esp32-pio.jpg)
-
-All binaries will use flags in `user_config_override.h` if it exists.
-
-## Working Devices
-
-[Tasmota Supported Devices Repository](https://templates.blakadder.com/esp32.html) has an extensive list of [ESP32 based](https://templates.blakadder.com/esp32.html) devices.
-
-#### LilyGO TTGO T-Camera OV2640_V05
-
-In `platformio_override.ini` uncomment the line with `tasmota32` and set the correct COM port. 
-
-In `user_config_override.h` add:
-
-```c
-#define USE_BMP
-#define USE_I2C
-#define USE_SPI
-#define USE_DISPLAY
-#define USE_DISPLAY_SSD1306
-#define SHOW_SPLASH
-#define USE_WEBCAM
-```
-
-Upload via USB, then apply the following Template:
-
-```json
-{"NAME":"TTGO_V05","GPIO":[1,1,1,1,5090,5088,1,1,5056,5024,5089,5091,1,1,5092,5184,0,640,608,5093,0,5152,4928,5120,0,0,0,0,4992,160,32,1,5094,0,0,5095],"FLAG":0,"BASE":2}
-```
-
-The PIR will turn ON/OFF the display and send over MQTT the POWER status. The display shows the sensor data.
-To make the device work nicely, change the following settings in the Console:
-
-Camera settings to correct orientation (USB on the bottom):
-```
-WCFlip ON
-WCMirror ON
-WCResolution 6
-WCSaturation 0
-WCBrightness -1
-WCContrast 1
-```
-
-Display Settings (USB on the bottom):
-```
-DisplayRotate 2
-DisplayCols 21
-DisplayRows 7
-DisplayMode 2
-```
-
-BME280 Settings (it is not very trustable):
-```
-HumOffset 10
-TempOffset -15
-```
-
-PIR/Button Settings:
-```
-SwitchMode1 1
-SetOption73 1
-```
-
-#### ODROID-GO
-
-is supported via module. Upload firmware via USB and select module `Odroid Go`
-
-
-To make the device work nicely, change the following settings in the Console:
-```
-adcparam3 6,0,4095,0,6160
-```
-
-Display Settings:
-```
-DisplayRotate 3
-DisplayCols 53
-DisplayRows 30
-DisplayMode 5
-```
-
-Rule for Joystick to dim the display:
-```
-on analog#joy2=1 do dimmer - endon on analog#joy2=2 do dimmer + endon
-```
-
-#### AITHINKER CAM
-
-```json
-{"NAME":"AITHINKER CAM","GPIO":[4992,1,672,1,416,5088,1,1,1,6720,736,704,1,1,5089,5090,0,5091,5184,5152,0,5120,5024,5056,0,0,0,0,4928,576,5094,5095,5092,0,0,5093],"FLAG":0,"BASE":2}
-```
-
-#### wESP32
-
-```json
-{"NAME":"wESP32","GPIO":[0,0,1,0,1,1,0,0,1,1,1,1,5568,5600,1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1],"FLAG":0,"BASE":1}
-
-```
-
-#### WT32-ETH01
-
-```json
-{"NAME":"WT32-ETH01","GPIO":[1,1,1,1,1,1,0,0,1,0,1,1,3840,576,5600,0,0,0,0,5568,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,1],"FLAG":0,"BASE":1}
-```
-
-#### Denky (Teleinfo)
-
-```json
-{"NAME":"Denky (Teleinfo)","GPIO":[1,1,1,1,5664,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1376,1,1,0,0,0,0,1,5632,1,1,1,0,0,1],"FLAG":0,"BASE":1}
-```
-
-#### Olimex ESP32-PoE
-
-```json
-{"NAME":"Olimex ESP32-PoE","GPIO":[1,1,1,1,1,1,0,0,5536,1,1,1,1,0,5600,0,0,0,0,5568,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1],"FLAG":0,"BASE":1}
-```
-
-#### M5Stack Atom
-
-```json
-{"NAME":"M5Stack Atom","GPIO":[1,1,1,1,1,1,1,1,1056,1,1,1,1,1,1,1,0,609,1,1,0,641,640,1376,0,0,0,0,608,1,1,1,1,0,0,32],"FLAG":0,"BASE":1}
-```
-
-#### M5Stack Atom lite
-
-```json
-{"NAME":"M5Stack Atom Lite","GPIO":[1,1,1,1,1,1,1,1,1056,1,1,1,1,1,1,1,0,1,1,1,0,1,640,1376,0,0,0,0,608,1,1,1,1,0,0,32],"FLAG":0,"BASE":1}
-```
-
-#### LilyGO ttgo-t-eth-poe
-=======
 ## Flashing
->>>>>>> development
 
 Use [ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) for flashing an ESP32 or ESP82xx (Windows and MacOs executables are tested and verified as working).
 
@@ -244,73 +74,22 @@ With esptool.py use the following command syntax (**replace COM port number!**):
 esptool.py --chip esp32 --port COM5 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dout --flash_freq 40m --flash_size detect 0x1000 bootloader_dout_40m.bin 0x8000 partitions.bin 0xe000 boot_app0.bin 0x10000 tasmota32.bin
 ```
 
-<<<<<<< HEAD
-these 3 devices are also fully supported, more detailed info will be added later  
-
-#### LilyGo T-OI-PLUS (esp32c3)
-
-This device is borked, the vReg can't stand normal Wifi or BLE operations. However it is barely usable with the following:
-
-- Flash with Esp32c3. WifiManager will start but you will not see the Tasmota AP (wifi broken at this point)
-- Reduce the Wifi power to 2dBm (that's very low) with `WifiPower 2`
-- Connect via the USB-Serial, enter manually the wifi credentials: `backlog ssid1 <ssid>; password1 <password>`
-- It will reboot and hopefully connect to wifi
-
-
-```json
-{"NAME":"LilyGo T-OI-PLUS","GPIO":[1,1,1,544,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1],"FLAG":0,"BASE":1}
-```
-
-#### TTGO ESP32 watch  
-fully supported with all sensors  
-
-#### TTGO T4 
-fully supported
-
-#### m5stack CORE2
-
-is fully supported with all sensors and SD card. Upload firmware via USB and select module `core2`
-  
-all pin definitions hardcoded except GPIO 33,34 for extern SCL,SDA on grove bus  
-console cmd:  
-
-`core2shutdown seconds` - shut down hardware and wake up after N seconds (>=30)  
-`core2shutdown HH:MM` - shut down hardware and wake up on HH:MM time  
-
-
-#### Heltec WiFi Kit 32
-OLED display needs the following template
-
-```json
-{"NAME":"WiFi Kit 32","GPIO":[1,1,1,1,640,1,1,1,1,1,1,608,3840,1,1,1,0,1,1,1,0,224,1,1,0,0,0,0,1,1,1,1,1,0,0,1],"FLAG":0,"BASE":1}
-```
-=======
 !!! warning "Use a proper power supply!"
     ESP32 is power hungry and there's a high chance it will not be able to boot properly off the serial-to-USB power. Power it from a separate power supply that can provide at least 500mA.
 
 You can download precompiled binaries:
->>>>>>> development
 
   - development branch from [http://ota.tasmota.com/tasmota32/](http://ota.tasmota.com/tasmota32/) 
   - stable releases from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/) 
   - the required [flash files](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32/ESP32_needed_files) _(not needed when using ESP_Flasher)_
 
-<<<<<<< HEAD
-#### WEMOS / LOLIN D32
-verified support for board plus I2C sensors
-=======
 OTA upgrade from older versions of tasmota32 might fail due to significant changes in partition tables.
->>>>>>> development
 
 Every OTA upgrade currently fails on tasmotasolo1.bin builds. Upgrade by File upload should work instead.
 
 ## Compiling
 
-<<<<<<< HEAD
-#### Displays, sensors and other options 
-=======
 Uncomment the tasmota32xxx build you want to compile in `platformio_override.ini`. For example, uncommenting tasmota32 will build `tasmota32.bin` on the next Build task in Platformio. 
->>>>>>> development
 
 ![platformio_override.ini](_media/esp32-pio.jpg)
 
