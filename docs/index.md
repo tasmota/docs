@@ -23,6 +23,7 @@ Incredibly expandable and flexible.
 
 The big number 10 is here and with such a big number comes stable ESP32 support and a [web installer](https://tasmota.github.io/install/) as the easiest way to install Tasmota.
 
+- :warning ==BREAKING CHANGE== :warning: Default disable CORS for enhanced security and provide user compile option `#define USE_CORS`
 - Energy monitoring of individual phases
 - Support for second DNS server
 - Support for [InfluxDB](Commands.md#influxdb)
@@ -32,7 +33,6 @@ The big number 10 is here and with such a big number comes stable ESP32 support 
 - Removed command `EnergyReset` and replaced by new energy commands
 - Initial support for Tasmota Mesh (TasMesh) providing node/broker communication using ESP-NOW
 - Initial support for Wi-Fi extender
-- Default disable CORS for enhanced security and provide user compile option `#define USE_CORS`
 - ESP32
     - Support for ESP32 chips is now stable, ESP32-C3 support is promoted beta and ESP32-S2 is now in alpha with support for GPIOS
     - official `tasmota32c3.bin` for ESP32-C3 with at least 4MB flash
