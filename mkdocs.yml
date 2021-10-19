@@ -91,7 +91,7 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.mark
   - pymdownx.superfences
-  - pymdownx.snippets
+  - pymdownx.snipp  ets
   - pymdownx.tilde
   - meta
   - def_list
@@ -116,6 +116,7 @@ nav:
     - Modules: Modules.md
     - Peripherals: Peripherals.md
     - WebUI.md
+    - Firmware-Builds.md
     - Compiling: Compile-your-build.md
     - Contributing: Contributing.md
     - Download.md
@@ -247,5 +248,4 @@ nav:
     - Troubleshooting.md
     - Device-Recovery.md
     - Discord Support: https://discord.gg/Ks2Kzd4 "target=_blank"
-  - Firmware-Builds.md
-
+  - Web Installer: "http://tasmota.github.io/install"
