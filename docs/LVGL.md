@@ -1,27 +1,27 @@
-# LVGL + Berry + Tasmota
+# Light and Versatile Embedded Graphics Library :material-cpu-32-bit:
 
-!!! info "ESP32 only and NOT included in ESP32 pre-compiled builds". See below How to Compile"
+!!! info "This feature is included in tasmota32-lvgl.bin" 
 
-Supported version: **LVGL v8.0.2**, **LodePNG v20201017**, **Freetype 2.10.4**
+Supported version: LVGL v8.0.2, LodePNG v20201017, Freetype 2.10.4
 
 **LVGL** (_Light and Versatile Graphics Library_) is Tasmota's next generation display. It is powerful, lightweight and simple to use. It combines:
 
-- **LVGL**'s powerful graphics and GUI library for embedded
-- **Tasmota**'s stability, richness of features and frugality on resources
-- **Berry**'s powerful language similar to MicroPython
+- LVGL's powerful graphics and GUI library for embedded
+- Tasmota's stability, richness of features and frugality on resources
+- Berry's powerful language similar to MicroPython
 
 
 [LVGL](https://lvgl.io/) LVGL is an open-source graphics library providing everything you need to create embedded GUI with easy-to-use graphical elements, beautiful visual effects and low memory footprint.
 
-[Berry](https://tasmota.github.io/docs/Berry/) is a ultra-lightweight dynamically typed embedded scripting language. It is designed for lower-performance embedded devices
+[Berry](Berry.md) is a ultra-lightweight dynamically typed embedded scripting language. It is designed for lower-performance embedded devices
 
-## Example
+After compiling Tasmota with LVGL support and configuring uDisplay (see below), you can start using LVGL through Berry's web console.
 
-After compiling a Tasmota LVGL firmware and configuring uDisplay (see below), you can start using LVGL through Berry's web console.
+## Using LVGL
 
-## Example - M5Stack Fire or Core
+This example uses [M5Stack Fire](https://docs.m5stack.com/en/core/fire) device.
 
-Use the following template to define the relevant SPI GPIOs. Also set one of the unsued GPIOs to `Option A: 3`.
+Use the following template to define the relevant SPI GPIOs. Also set one of the unsued GPIOs to `Option A3`.
 
 The complete configuration for M5Stack Fire is:
 
@@ -68,7 +68,7 @@ E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
 #
 ```
 
-Then open the Berry console, and copy/paste the following: (alternatively you      can create a `autoexec.be` file with this content):
+Then open the Berry console, and copy/paste the following: (alternatively create an `autoexec.be` file with this content):
 
 ``` ruby
 #- start LVGL and init environment -#
@@ -172,7 +172,7 @@ rotary = lv.register_button_encoder(true)	#- buttons are inverted -#
 rotary.set_group(g)
 ```
 
-#### Touch Screen support
+### Touch Screen Support
 ![colorwheel](https://user-images.githubusercontent.com/49731213/135708597-ae589748-417b-46c2-a452-5398cd90ee09.png)
 
 Touch screen are supported natively via Universal Display driver.
@@ -328,26 +328,7 @@ Finally create a `lv_btn` object with parent `scr`, set its size and position, a
 
 LVGL provides some pre-defined symbols like `lv.SYMBOL_OK`.
 
-## How to compile
-
-In `my_user_config.h` or in your config override, add:
-
-```
-#define USE_LVGL
-#define USE_DISPLAY
-#define USE_DISPLAY_LVGL_ONLY
-#define USE_XPT2046
-#define USE_UNIVERSAL_DISPLAY
-  #undef USE_DISPLAY_MODES1TO5
-  #undef USE_DISPLAY_LCD
-  #undef USE_DISPLAY_SSD1306
-  #undef USE_DISPLAY_MATRIX
-  #undef USE_DISPLAY_SEVENSEG
-```
-
-Be aware that it adds 440Kb to you firmware, so make sure you have a partition with enough program Flash space. Preferably use `esp32_partition_app1856k_spiffs320k.csv` partition file.
-
-## What's implemented and not implemented
+## What's implemented and what's not?
 
 What's implemented currently:
 
@@ -386,9 +367,28 @@ Berry provides an object model to `lv_object` and sub-classes for widhets like `
 
 `lv_color` takes an 24 bits 0xRRGGB as parameter, or a pre-defined color like `lv.BLUE`
 
+## Compiling for LVLG
+
+In `my_user_config.h` or in your config override, add:
+
+```
+#define USE_LVGL
+#define USE_DISPLAY
+#define USE_DISPLAY_LVGL_ONLY
+#define USE_XPT2046
+#define USE_UNIVERSAL_DISPLAY
+  #undef USE_DISPLAY_MODES1TO5
+  #undef USE_DISPLAY_LCD
+  #undef USE_DISPLAY_SSD1306
+  #undef USE_DISPLAY_MATRIX
+  #undef USE_DISPLAY_SEVENSEG
+```
+
+Be aware that it adds 440Kb to you firmware, so make sure you have a partition with enough program Flash space. Preferably use `esp32_partition_app1856k_spiffs320k.csv` partition file.
+
 ## Goodies
 
-You get a free Tasmota logo like this:
+Get a Tasmota logo:
 
 ```python
 # start the display
@@ -406,7 +406,7 @@ logo.center()
 
 ![screenshot-1618843384](https://user-images.githubusercontent.com/49731213/115389330-3ee56f00-a1dd-11eb-9925-bc91a1d3cf89.png)
 
-The logo is is black, with anti-aliasing and transparency. You can now manipulate the logo: change zoom, rotate or recolor.
+The logo is black, with anti-aliasing and transparency. You can now manipulate the logo: change zoom, rotate or recolor.
 
 ```python
 # recolor logo to white
@@ -437,7 +437,7 @@ end
 animate_logo()
 ```
 
-## Tech details
+## Technical Details
 
 The code size impact is quite significant, so you probably need partitions with code at least set to 1856KB. Doing so leaves 320KB for file system on 4MB flash.
 
