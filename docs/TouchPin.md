@@ -1,3 +1,5 @@
+# Capacitive Touch GPIO :material-cpu-32-bit:
+
 The ESP32 has 10 capacitive touch GPIOs. It is possible to use a maximum number of 4 as a touch button.  
 
 !!! note
