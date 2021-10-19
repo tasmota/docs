@@ -78,8 +78,8 @@ See below how the numbers are being converted. The first number is 8-bit GPIO, t
 | 57       | 321      | Led2i           | Inverted LED - default state ON                                                            |
 | 58       | 322      | Led3i           | Inverted LED - default state ON                                                            |
 | 59       | 323      | Led4i           | Inverted LED - default state ON                                                            |
-| 60       | 1408     | MHZ Rx          | MHZ 19 CO2 Sensor                                                                          |
-| 61       | 1440     | MHZ Tx          | MHZ 19 CO2 Sensor                                                                          |
+| 60       | 1408     | MHZ Rx          | MHZ 19 CO~2~ Sensor                                                                          |
+| 61       | 1440     | MHZ Tx          | MHZ 19 CO~2~ Sensor                                                                          |
 | 62       | 1472     | PZEM0XX Tx      | Peacefair Pzem-0XX Power Meter Tx pin                                                      |
 | 63       | 1504     | PZEM004 Rx      | Peacefair Pzem-004 Power Meter Rx pin                                                      |
 | 64       | 1600     | SAir Rx         | Sensor Senseair                                                                            |
@@ -135,8 +135,8 @@ See below how the numbers are being converted. The first number is 8-bit GPIO, t
 | 114      | 928      | SSPI CS         | Software SPI CS (Display)                                                                  |
 | 115      | 960      | SSPI DC         | Software SPI DC (Display)                                                                  |
 | 116      | 2400     | RF Sensor       | Theo Arendst RF433 Sensor                                                                  |
-| 117      | 2432     | AZ Rx           | AZ 7798 CO2 datalogger                                                                     |
-| 118      | 2464     | AZ Tx           | AZ 7798 CO2 datalogger                                                                     |
+| 117      | 2432     | AZ Rx           | AZ 7798 CO~2~ datalogger                                                                     |
+| 118      | 2464     | AZ Tx           | AZ 7798 CO~2~ datalogger                                                                     |
 | 119      | 2496     | MX31855 CS      | MAX31855 Thermocouple Sensor Chip Select pin                                               |
 | 120      | 2528     | MX31855 CLK     | MAX31855 Thermocouple Sensor Serial Clock pin                                              |
 | 121      | 2560     | MX31855 DO      | MAX31855 Thermocouple Sensor Digital Output pin                                            |

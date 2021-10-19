@@ -28,7 +28,7 @@ The big number 10 is here and with such a big number comes stable ESP32 support 
 - Support for second DNS server
 - Support for [InfluxDB](Commands.md#influxdb)
 - Changed message `Upload buffer miscompare` into `Not enough space` while upgrading.
-- New peripherals: IKEA VINDRIKTNING particle concentration sensor, AM2320 temperature and humidity sensor, [Hydreon RG-15 rain sensor](HRG15.md), Sensirion SCD40/SCD41 CO~2~ sensor, SeedStudio Grove HM3301 particle sensor, BL0939 and BL0942 energy monitor, Technoline WS2300-15 Anemometer, Telaire T6700 Series CO2 sensor, CAN bus and Freedom Won Battery Management System,  IEM3155 Wattmeter
+- New peripherals: IKEA VINDRIKTNING particle concentration sensor, AM2320 temperature and humidity sensor, [Hydreon RG-15 rain sensor](HRG15.md), Sensirion SCD40/SCD41 CO~2~ sensor, SeedStudio Grove HM3301 particle sensor, BL0939 and BL0942 energy monitor, Technoline WS2300-15 Anemometer, Telaire T6700 Series CO~2~ sensor, CAN bus and Freedom Won Battery Management System, IEM3155 Wattmeter
 - New commands: [`SetOption2`](Commands.md#setoption2), [`SetOption127`](Commands.md#setoption127), [`SetOption128`](Commands.md#setoption128), [`SetOption129`](Commands.md#setoption129), [`SetOption130`](Commands.md#setoption130), [`EnergyExport`](Commands.md#energyexport), [`EnergyUsage`](Commands.md#energyusage), [`EnergyTotal`](Commands.md#energytotal), [`EnergyToday`](Commands.md#energytoday), [`EnergyYesterday`](Commands.md#energyyesterday)
 - Removed command `EnergyReset` and replaced by new energy commands
 - Initial support for Tasmota Mesh (TasMesh) providing node/broker communication using ESP-NOW

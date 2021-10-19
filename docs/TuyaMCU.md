@@ -315,8 +315,8 @@ These are the currently available sensors:
 - `73` as Humidity Sensor
 - `75` as Illuminance Sensor
 - `76` as TVOC Sensor
-- `77` as CO2 Sensor
-- `78` as ECO2 Sensor
+- `77` as CO~2~ Sensor
+- `78` as ECO~2~ Sensor
 - `79` as %LEL gas Sensor
 
 If your device has a dpId for setting a specific Temperature and/or Humidity:

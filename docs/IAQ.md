@@ -9,7 +9,7 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 #endif
 ```
 ----
-The iAQ-core indoor air quality module is a low-cost, ultra compact solution for detecting poor air quality. This module uses micro-machined metal oxide semiconductor (MOS) technology to detect a broad range of VOCs while correlating directly with CO2 and TVOC levels in the room.
+The iAQ-core indoor air quality module is a low-cost, ultra compact solution for detecting poor air quality. This module uses micro-machined metal oxide semiconductor (MOS) technology to detect a broad range of VOCs while correlating directly with CO~2~ and TVOC levels in the room.
 
 !!! warning
     All testing and driver programming has been done using iAQ-Core C sensor model. We don't know whether **iAQ-Core P** will work with this driver.
@@ -51,7 +51,7 @@ and in MQTT topic (according to TelePeriod):
 ```
 
 ## Usage
-Typical sensor reading should be around 450 ppm eCO2 and 125 ppb TVOC. Resistance is sensor's gas resistance in Ohm and is the baseline reading from which eCO2 and TVOC are calculated from
+Typical sensor reading should be around 450 ppm eCO~2~ and 125 ppb TVOC. Resistance is sensor's gas resistance in Ohm and is the baseline reading from which eCO~2~ and TVOC are calculated from
 
 If you see error messages in console, take appropriate action:
 
