@@ -134,6 +134,11 @@ SwitchMode, as the name implies, applies _**ONLY**_ to GPIO configured in Tasmot
     If the button is pressed again before the timeout, Tasmota will send an `INV` command. The `INV` command is for the controlling software (Home Assistant) to switch between incrementing and decrementing the dimmer (use `Switch<x>#state=5` in rules).
 
     If button is pressed twice (within time set in `SetOption32`), Tasmota will send a `DOUBLE` command. Note that this **doesn't** change behaviour of other switch states. So along with the `DOUBLE` command, `TOGGLE` command will also be fired twice upon a double press (use `Switch<x>#state=8` in rules).
+<<<<<<< HEAD
+=======
+    
+    If the button is pressed only once and shorter than the time set in `SetOption32`, Tasmota will also send the `POWER_DELAYED` command (use `Switch<x>#state=10` in rules) when no second press occurs within time set in `SetOption32`. You can use this for triggering single press events instead of using `TOGGLE` if you want to use single and double press individually (since `TOGGLE` is triggered for both single and double press). Keep in mind, that this event is delayed in comparison to `TOGGLE`.
+>>>>>>> development
 
     !!! tip
         Possible use case: [using rules](Rules.md#control-a-dimmer-with-one-switch) to create additional features or to control another Tasmota device. 
@@ -161,9 +166,12 @@ SwitchMode, as the name implies, applies _**ONLY**_ to GPIO configured in Tasmot
     ```console
     tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:00","Switch1":"OFF"}
     tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:00","Switch1":"ON"}
+<<<<<<< HEAD
 
     !!! tip "Also see `SetOption114` below."
 
+=======
+>>>>>>> development
 
 ## Button
 <img style="float:right;width:6em" src="https://user-images.githubusercontent.com/5904370/57244172-2273ba80-7038-11e9-89ce-49ef46cb36d6.png"> </img>
@@ -245,10 +253,17 @@ Multipress functions for 2 and more presses cannot be changed using SetOptions o
 :    Sets MQTT button topic to device %topic%.
 
     When changing the state of the button an MQTT message is sent to the device topic with the payload according to `SwitchMode` set.
+<<<<<<< HEAD
 
     !!! example
         Device topic _tasmota_ with `SwitchMode 3` yields the following message: `MQT: cmnd/tasmota/POWER = ON`
 
+=======
+
+    !!! example
+        Device topic _tasmota_ with `SwitchMode 3` yields the following message: `MQT: cmnd/tasmota/POWER = ON`
+
+>>>>>>> development
         Notice the _cmnd_ instead of the _stat_ at the beginning.
 
     This is the same as sending an MQTT command to this device, the device power state will be set to the defined state.
@@ -257,12 +272,22 @@ Multipress functions for 2 and more presses cannot be changed using SetOptions o
 :    Set button topic to a custom topic (32 characters max).
 
     This will send an MQTT message to a custom defined topic similarly to option 1.
+<<<<<<< HEAD
 
+=======
+>>>>>>> development
 
     !!! example
         For example, we set the topic to _tasmota02_ with `ButtonTopic tasmota02`.
         With `SwitchMode 1` the device yields the following message: `MQT: cmnd/tasmota02/POWER = TOGGLE`
 
+<<<<<<< HEAD
+=======
+    !!! example
+        For example, we set the topic to _tasmota02_ with `ButtonTopic tasmota02`.
+        With `SwitchMode 1` the device yields the following message: `MQT: cmnd/tasmota02/POWER = TOGGLE`
+
+>>>>>>> development
         If you have another device with the topic _tasmota02_ this action will toggle its power state while not affecting anything on the _tasmota_ device.
 
 #### ButtonTopic Summary

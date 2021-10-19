@@ -274,6 +274,10 @@ The format of the command is following:
 
 If the device has been correctly paired and its endpoints recorded by Z2T, you shouldn't need to specify a target endpoint. You can use an option `"endpoint":<endpoint>` parameter if Z2T can't find the correct endpoint or if you want to change from the default endpoint. 
 
+!!! example "MQTT command example"
+	Topic = `cmnd/ZigbeeGateway/ZbSend`<BR>
+	Payload = `{"Device":"0x1234","Send":{"Power":0}}` or `{"Device":"0x1234","Write":{"Power":0}}`
+	
 ### Low-level Commands
 
 There is a special syntax if you want to send arbitrary commands:
@@ -556,6 +560,7 @@ ZbBind {"Device":"Name","ToGroup":100,"Endpoint":1,"Cluster":8}
 ZbBind {"Device":"Name","ToGroup":100,"Endpoint":2,"Cluster":8}
 ```
 
+<<<<<<< HEAD
 ### Sandy Beach/Tuya Thermostatic Radiator Valve (TS0601)
 	
 To pair the TRV to the Bridge you need to press and hold the Auto/Manual (8 o'clock position) and the Comfort/Energy Saving (4 o'clock position) buttons at the same time until the signal indicator flashes.
@@ -583,6 +588,8 @@ and
 will set the TRV setpoint to 20C.
 Other commands will be available and will be added when	clarified
 
+=======
+>>>>>>> development
 ## Zigbee2Tasmota Status Codes
 You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  
 

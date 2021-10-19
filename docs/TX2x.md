@@ -1,4 +1,4 @@
-# TX20/TX23 anemometer
+# TX20/TX23/WS2300-15 anemometer
 
 !!! failure "This feature is not included in precompiled binaries"     
 
@@ -17,6 +17,13 @@ For TX23 sensor
 ```C
 #ifndef USE_TX23_WIND_SENSOR
 #define USE_TX23_WIND_SENSOR  // Add support for La Crosse TX20 anemometer (+2k6/0k8 code)
+#endif
+```
+For WS2300-15 sensor
+
+```C
+#ifndef USE_WS2300_WIND_SENSOR
+#define USE_WS2300_WIND_SENSOR  // Add support for Technoline WS2300-15 anemometer
 #endif
 ```
 
@@ -52,7 +59,7 @@ The TX23 sensor is still available under various brand names such as "La Crosse"
 
 ### Wiring
 
-##### TX20
+##### TX20 / WS2300-15
 
 | Pin | Color       | Description | ESP8266 |
 |-----|-------------|-------------|---------|
@@ -79,7 +86,7 @@ The TX2 pin needs a pull-up resistor. The internal pull-up is activated for this
 
 To be on the save side you can add an additonal external 10k pull-up to TX2x GPIOx.
 
-After a reboot the driver will detect TX20/TX23 automatically and display the wind data:
+After a reboot the driver will detect TX20/TX23/WS2300 automatically and display the wind data:
 
 ![image](https://github.com/curzon01/media/blob/master/pics/tx23_sensor.png?raw=true)
 

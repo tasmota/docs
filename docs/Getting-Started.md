@@ -11,19 +11,31 @@ Every [Espressif](https://www.espressif.com/en/products/socs) ESP8266, ESP8285, 
 #### Serial-to-USB Adapter
 The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?title=Power) is **one of the most important elements** for both flashing the device and for stable operation. You must ensure that the device receives sufficient power (current AND appropriate voltage level) to properly flash the firmware on the device.
 
+<<<<<<< HEAD
 * ==RECOMMENDED== [CH340G](https://cdn.sparkfun.com/datasheets/Dev/Arduino/Other/CH340DS1.PDF) is the most reliable and the cheapest one to boot ([1](https://www.aliexpress.com/item/32761423124.html), [2](https://www.sparkfun.com/products/14050)).
+=======
+* **RECOMMENDED** [CH340G](https://cdn.sparkfun.com/datasheets/Dev/Arduino/Other/CH340DS1.PDF) is the most reliable and the cheapest one to boot ([1](https://www.aliexpress.com/item/32761423124.html), [2](https://www.sparkfun.com/products/14050)).
+>>>>>>> development
 <img src="../_media/ch340g.png" style="margin:5px;float:right;width:200px"></img>
 * [FTDI FT232](https://www.ftdichip.com/Products/ICs/FT232R.htm) - these adapters have a lot of fakes in the market so buy only from reliable sources ([example](https://www.sparkfun.com/products/13746)). Buy only the variant with a separate 3.3V regulator on PCB! 
 * [CP2102](https://www.silabs.com/documents/public/data-sheets/cp2102-9.pdf) or [PL2303](http://www.prolific.com.tw/UserFiles/files/ds_pl2303HXD_v1_4_4.pdf) - works with certain devices, but using an external 3.3V supply might be necessary. Not recommended for beginners!
 * [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) You can also use a NodeMCU (or similar) as a reliable serial-to-USB adapter if you disable the onboard ESP by bridging the RST and GND pins, and connect TX and RX straight to another ESP82xx instead of crossed.
 * [RaspberryPi](Flash-Sonoff-using-Raspberry-Pi) - only for advanced users. External 3.3V supply necessary.
+<<<<<<< HEAD
+=======
+* [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) You can also use a NodeMCU (or similar) as a reliable serial-to-USB adapter if you disable the onboard ESP8266 by bridging the RST and GND pins, and connect TX and RX straight to another ESP82xx instead of crossed.
+>>>>>>> development
 
 !!! note "Don't forget to install drivers for your serial-to-USB adapter."
 
 !!! danger
     Some adapters can be switched between 3.3V and 5V for the data pins, but still provide 5V on the power pin which will irreparably destroy your device.  You **MUST** make sure the data (RX and TX) and VCC pins are set for 3.3V. 
 
+<<<<<<< HEAD
 Some devices, such as [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU), [D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html) or [M5Stack products](https://m5stack.com/), have an USB upload port and the serial-to-USB adapter built in.
+=======
+[NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) and [D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html) (Pro/Lite) boards have a micro USB upload port and don't require an adapter.
+>>>>>>> development
 
 #### Soldering Tools
 To solder you'll of course need a soldering iron, soldering tin and some flux. If you're new to soldering check out some soldering tutorial videos while you're at it.
@@ -54,6 +66,16 @@ Official release binaries can be downloaded from [firmware server](http://ota.ta
 Latest _**development**_ branch binaries are available only from our [OTA server](http://ota.tasmota.com/tasmota). The latest merged development code is compiled hourly. 
 
 #### Flashing Tool
+<<<<<<< HEAD
+=======
+- [**Tasmotizer**](https://github.com/tasmota/tasmotizer) - ESP8266 flashing and firmware download tool just for Tasmota. (Windows, Linux or Mac)
+- [**ESP-Flasher**](https://github.com/Jason2866/ESP_Flasher) - GUI flasher for Tasmota based on esptool.py for ESP82xx *and* ESP32. (Windows or Mac)
+- [**NodeMCU PyFlasher**](https://github.com/marcelstoer/nodemcu-pyflasher) - easy to use GUI flasher based on esptool.py. (Windows or Mac)
+- [**Esptool.py**](https://github.com/espressif/esptool) - the official flashing tool from Espressif. (Requires Python)
+
+#### Serial Terminal
+A program that connects to your Tasmota device directly over the serial connection you used to flash it.
+>>>>>>> development
 
 - [**Tasmota Web Installer**](https://tasmota.github.io/install/) - flash Tasmota using a Chrome based browser for ESP82XX and ESP32
 - [**Tasmotizer**](https://github.com/tasmota/tasmotizer) - flashing and firmware download tool _for ESP82XX only_. (Windows, Linux or Mac) 
@@ -149,7 +171,11 @@ Choose an installation method:
 
     Tasmota Web Installer will install an appropriate build for your device. 
 
+<<<<<<< HEAD
      ![Web install in progress](_media/web_installer_3.jpg)![Web install done](_media/web_installer_4.jpg)
+=======
+<!-- !!! tip "[Video tutorial](https://youtu.be/hIwIhu5OWiA) by SuperHouseTV" -->
+>>>>>>> development
 
 
 === "Tasmotizer! :material-linux: :material-apple: :material-microsoft-windows:"
@@ -157,7 +183,18 @@ Choose an installation method:
 
     Download the [latest release](https://github.com/tasmota/tasmotizer/releases) for your platform. In Windows just double click the downloaded file and it'll start, no installation required. For python follow the installation [instructions](https://github.com/tasmota/tasmotizer#installation-and-how-to-run). 
 
+<<<<<<< HEAD
     <!-- !!! tip "[Video tutorial](https://youtu.be/hIwIhu5OWiA) by SuperHouseTV" -->
+=======
+1. Connect your device to the serial-to-USB adapter or plug in NodeMCU/D1 mini.
+1. Check whether the correct **serial port** (COM or tty port) is selected. Tasmotizer! will try its best to select the right one for you.
+1. Choose Tasmota firmware binary:
+    * **BIN file** - browse to the Tasmota firmware binary you downloaded or compiled.
+    * **Release** - select from a list of available release binaries
+    * **Development** - select from a list of latest development binaries
+4. _optional_ Backup the original device firmware
+5. Erase flash
+>>>>>>> development
 
     !!! note 
         If you get an anti-virus infection warning don't fret, it is a [known false positive](https://stackoverflow.com/questions/43777106/program-made-with-pyinstaller-now-seen-as-a-trojan-horse-by-avg). If you're still apprehensive you can always run the Python version. 
@@ -180,6 +217,7 @@ Choose an installation method:
 
     6. Click **Tasmotize** and wait until done.
 
+<<<<<<< HEAD
     ![Tasmotizer progress](_media/tasmotizer2.png)
 
     If the flash was successful it will display: 
@@ -205,6 +243,9 @@ Choose an installation method:
     The following use `COM5` as an example. Change `COM5` with your serial port designation.
 
     Ensure the device is in programming mode before each step.
+=======
+### esptool.py
+>>>>>>> development
 
     #### Backup Firmware <small>(optional step)</small>
     Backup the current firmware with the following command:
@@ -244,6 +285,7 @@ Choose an installation method:
 
 You've successfully flashed your device with Tasmota but now you need to connect the freshly tasmotised device to your Wi-Fi network. 
 
+<<<<<<< HEAD
 ## Initial Configuration
 
 === "Using Web UI"
@@ -252,6 +294,14 @@ You've successfully flashed your device with Tasmota but now you need to connect
     Tasmota provides a wireless access point for easy Wi-Fi configuration. 
 
     <img alt="Tasmota AP" src="../_media/wificonfig1.jpg" style="margin:10px;float:left;width:250px"></img>Connect your device to a power source and grab your smartphone (or tablet or laptop or any other web and Wi-Fi capable device). Search for a Wi-Fi AP named _**tasmota_XXXXXX-####**_ (where _XXXXXX_ is a string derived from the device's MAC address and _####_ is a number) and connect to it. _In this example the Wi-Fi AP is named **tasmota_3D5E26-7718**._ 
+=======
+Unplug your serial programming adapter or your device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](#initial-configuration). 
+
+!!! tip "For proper device initialization after the firmware upload completes, power down and power up the device."
+
+#### OTA Conversion
+**Tasmota is NOT a developer of these tools. For help and troubleshooting you will need to _get support from those projects_.**
+>>>>>>> development
 
     When it connects to the network, you may get a warning that there is no Internet connection and be prompted to connect to a different network. _Do not allow the mobile device to select a different network_.
 
@@ -277,6 +327,7 @@ You've successfully flashed your device with Tasmota but now you need to connect
 
     <img alt="Tasmota AP" src="../_media/wificonfig4.jpg" style="margin:5px;width:300px"></img> 
 
+<<<<<<< HEAD
     If it was successful, you will see this message:
 
     <img alt="Tasmota AP" src="../_media/wificonfig5.jpg" style="margin:5px;width:300px"></img> 
@@ -289,6 +340,32 @@ You've successfully flashed your device with Tasmota but now you need to connect
             <img alt="Tasmota AP" src="../_media/wificonfig6.jpg" style="margin:5px;width:200px;float:right"></img>In case the network name or password were entered incorrectly, or it didn't manage to connect for some other reason, Tasmota will return to the "Wi-Fi parameters" screen with an error message.
 
     If you don't know the IP of the newly flashed device look in your router settings or find it with an IP scanner:
+=======
+<img alt="Tasmota AP" src="../_media/wificonfig3.jpg" style="margin:5px;float:right;width:300px"></img> 
+At the top of the page you can select one of the discovered Wi-Fi networks or have Tasmota scan again. Enter your WiFi credentials:
+
+**WiFi Network** - your Wi-Fi network name (SSID
+Selecting the desired network name from the list will enter it automatically in this field. _SSID's are case sensitive_
+
+**WiFi Password** - password for your Wi-Fi network   
+Wi-Fi password has to be under 64 characters and without special characters (e.g. asterisks) or white spaces
+
+Click the checkbox if you want to see the password you enter to ensure that it is correct. Click on **Save** to apply the settings. The device will try to connect to the network entered. 
+
+<img alt="Tasmota AP" src="../_media/wificonfig4.jpg" style="margin:5px;width:300px"></img> 
+
+If it was successful, you will see this message:
+
+<img alt="Tasmota AP" src="../_media/wificonfig5.jpg" style="margin:5px;width:300px"></img> 
+
+!!! warning "Redirecting to the new IP might not work on all phones!"
+
+The _tasmota_XXXXXX-####_ network will no longer be present. Therefore your smartphone will automatically be disconnected and should connect back to its data network.
+
+!!! failure 
+        <img alt="Tasmota AP" src="../_media/wificonfig6.jpg" style="margin:5px;width:200px;float:right"></img>In case the network name or password were entered incorrectly, or it didn't manage to connect for some other reason, Tasmota will return to the "Wi-Fi parameters" screen with an error message.
+
+>>>>>>> development
 
     * [Fing](https://www.fing.com/products/) - for Android or iOS
     * [Angry IP Scanner](https://angryip.org/) - open source for Linux, Windows and Mac. Requires Java.
@@ -310,7 +387,11 @@ You've successfully flashed your device with Tasmota but now you need to connect
 
 === "Using Serial Terminal"
 
+<<<<<<< HEAD
      If you flashed the device using serial-to-USB adapter (or it is a NodeMCU/D1 mini) you can take advantage of the existing connection and configure your device over the serial connection using [Commands](Commands).
+=======
+!!! quote "Check out all the supported devices in [Tasmota Supported Devices Repository](https://templates.blakadder.com/)"
+>>>>>>> development
 
     First you will need a serial terminal program that connects to Tasmota console over the serial connection you used to flash it.
 
@@ -322,9 +403,14 @@ You've successfully flashed your device with Tasmota but now you need to connect
      !!! tip 
          Enable _local echo_ so that you can see what is typed and transmitted to the device. Enable **Append CR+LF** since every request needs to end with `<CR><LF>`. 
 
+<<<<<<< HEAD
     *In this example [Termite](https://www.compuphase.com/software_termite.htm) on Windows is used.*
 
     Download Termite and extract the .exe file, no installation necessary. Connect your serial-to-USB adapter or NodeMCU/D1 mini to the computer.
+=======
+### Using Serial Terminal
+If you flashed the device using serial-to-USB adapter (or it is a NodeMCU/D1 mini) you can take advantage of the existing connection and configure your device over the serial connection using [Commands](Commands).
+>>>>>>> development
 
     ![Termite setup](https://user-images.githubusercontent.com/5904370/55745914-abe39d00-5a38-11e9-91d8-1b8e16ed34d3.png)
 
@@ -347,6 +433,7 @@ You've successfully flashed your device with Tasmota but now you need to connect
 
     Device will restart and connect to your network. It will display your devices newly assigned IP. Direct your web browser to that IP address to access the Web UI for further configuration and control.
 
+<<<<<<< HEAD
     Configure MQTT broker address, MQTT credentials, unique device topic and OTA url to the latest official release
     ```console
     Backlog mqtthost <yourhost>; mqttuser <user>; mqttpassword <password>; topic <unique_topic>; otaurl http://ota.tasmota.com/tasmota/release/tasmota.bin
@@ -361,6 +448,29 @@ You've successfully flashed your device with Tasmota but now you need to connect
 
 Your device running Tasmota is now ready to be [controlled](Commands).
 
+=======
+Configure your Wi-Fi network and a secondary Wi-Fi network
+
+```console
+Backlog ssid1 <yourssid>; password1 <your_password>; ssid2 <your_ssid2>; password2 <your_password>
+```
+![After restart](https://user-images.githubusercontent.com/5904370/55748616-69718e80-5a3f-11e9-8b58-4d15c1816e71.png)
+
+Device will restart and connect to your network. It will display your devices newly assigned IP. Direct your web browser to that IP address to access the Web UI for further configuration and control.
+
+Configure MQTT broker address, MQTT credentials, unique device topic and OTA url to the latest official release
+```console
+Backlog mqtthost <yourhost>; mqttuser <user>; mqttpassword <password>; topic <unique_topic>; otaurl http://ota.tasmota.com/tasmota/release/tasmota.bin
+```
+
+[Commands](Commands) and Backlog are powerful and in time you can learn to configure almost everything (NTP servers, longitude and latitude, custom device options, etc) with a few copy and paste moves.
+
+!!! tip 
+    Keep your personal configuration in a text file and simply copy and paste the backlog commands to a newly flashed device.
+
+## After Configuration
+
+>>>>>>> development
 Check out all the Tasmota [features](Features) and ways to [integrate it](Integrations) with other platforms.
 
 !!! warning

@@ -1394,6 +1394,7 @@ The electrical Meter is an German End-User Meter installed by EnBW. To read valu
 1,77070100020800ff@1000,Erzeugung,kWh,ELZ_PV_2.8.0,1
 #
 ```
+<<<<<<< HEAD
     
     
 ### eBZ DD3 (OBIS)
@@ -1474,3 +1475,5 @@ Apply following patch to src/TasmotaSerial.cpp:
 
 -----
         
+=======
+>>>>>>> development

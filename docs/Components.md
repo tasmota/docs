@@ -281,6 +281,22 @@ Read more about [peripherals](Supported-Peripherals.md).
 |          |          | Zerocross      | Zerocross detection                                                             |
 |          |          | Rotary A_n      | Rotary Encoder                                                                             |
 |          |          | Rotary B_n      | Rotary Encoder                                                                             |
+|          |          | Button_d 1      | Button, active low with internal pull-down resistor                                        |
+|          |          | Button_d 2      | Button, active low with internal pull-down resistor                                        |
+|          |          | Button_d 3      | Button, active low with internal pull-down resistor                                        |
+|          |          | Button_d 4      | Button, active low with internal pull-down resistor                                        |
+|          |          | Button_id 1     | Button inverted, active high with internal pull-down resistor                              |
+|          |          | Button_id 2     | Button inverted, active high with internal pull-down resistor                              |
+|          |          | Button_id 3     | Button inverted, active high with internal pull-down resistor                              |
+|          |          | Button_id 4     | Button inverted, active high with internal pull-down resistor                              |
+|          |          | Switch_d 1      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 2      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 3      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 4      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 5      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 6      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 7      | Switch, with pull-down resistor                                                            |
+|          |          | Switch_d 8      | Switch, with pull-down resistor                                                            |
 
 ## ESP32 Only
 | New GPIO | Name            | Description                                                                                |

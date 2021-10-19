@@ -32,6 +32,10 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmot
     Setting the [template](Templates) name will change the Module name as well which will be reflected in Home Assistant. This helps in identifying when dealing with a large number of devices. Its nicer than having 10 Sonoff S31's or a bunch of TuyaMCU's"
     ![Template name as Module name in Home Assistant](_media/templatemodule.png)
 
+!!! bug 
+    If you are using Home Assistant OS [MQTT add-on](https://github.com/home-assistant/addons/tree/master/mosquitto) add the following to the ACL file (user section or general section): `topic write tasmota/discovery/#` to give Tasmota devices write access to the discovery topic.
+    
+    
 ### Supported Entities
 
 - Lights as `light` entities.  

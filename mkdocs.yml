@@ -140,6 +140,7 @@ nav:
     - Scripting: Scripting-Language.md
     - Serial-to-TCP-Bridge.md
     - Blinds-and-Shutters.md
+    - Range-Extender.md
     - Smart-Meter-Interface.md
     - Subscribe-&-Unsubscribe.md
     - TasmotaClient.md
@@ -151,11 +152,12 @@ nav:
     - Zigbee.md
     - Projects and Tutorials: Tutorials.md
     - For Developers: For-Developers.md
-  - ESP32 (beta):
+  - ESP32:
     - Features: ESP32.md
     - Berry.md
     - Bluetooth Low Energy: Bluetooth_ESP32.md
     - Touch GPIOs: TouchPin.md
+    - Supported Devices: "https://templates.blakadder.com/esp32"
   - Smart Home Integrations:
     - Introduction: Integrations.md
     - Alexa.md
@@ -174,6 +176,7 @@ nav:
     - IOBroker: "https://github.com/arendst/Tasmota/issues/3769"
     - Mozilla WebThings Adapter: "https://github.com/tim-hellhake/tasmota-adapter"
     - SmartThings: "https://github.com/hongtat/tasmota-connect"
+    - Tasmohab: "https://github.com/Gifford47/tasmohab/blob/master/README.md"
   - Peripherals:
     - Supported-Peripherals.md
     - Buzzer.md
@@ -196,6 +199,7 @@ nav:
     - HM-10.md
     - HM-17.md
     - HC-SR04.md
+    - HRG15.md
     - Honeywell-HIH.md
     - IAQ.md
     - IR-Remote.md
@@ -240,5 +244,5 @@ nav:
     - Troubleshooting.md
     - Device-Recovery.md
     - Discord Support: https://discord.gg/Ks2Kzd4 "target=_blank"
-  - Builds.md
+  - Firmware-Builds.md
 

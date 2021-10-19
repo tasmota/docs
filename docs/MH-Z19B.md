@@ -1,11 +1,11 @@
-# MH-Z19B CO<sub>2</sub> Sensor
+# MH-Z19B CO~2~ Sensor
 
 !!! info "This feature is included only in tasmota-sensors.bin" 
 
 <img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/mhz19b-co2-sensor-front.jpg?raw=true" align=right width=225>
 <img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/mhz19b-co2-sensor-back.jpg?raw=true" align=right width=225>
 
-The MH-Z19 sensor is manufactured by [Winsen](http://www.winsensor.com/) Lt., China and the measurement method used is based on the non-dispersive infrared ([NDIR](https://en.wikipedia.org/wiki/Nondispersive_infrared_sensor)) principle to detect the existence of CO<sub>2</sub> in the air.
+The MH-Z19 sensor is manufactured by [Winsen](http://www.winsensor.com/) Lt., China and the measurement method used is based on the non-dispersive infrared ([NDIR](https://en.wikipedia.org/wiki/Nondispersive_infrared_sensor)) principle to detect the existence of CO~2~ in the air.
 
 Key features according to the manufacturer are:
 * good sensitivity

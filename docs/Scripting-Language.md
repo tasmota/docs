@@ -27,7 +27,7 @@ USE_SENDMAIL | enable `>m` section and support for sending e-mail<br>(on ESP32 y
 USE_SCRIPT_WEB_DISPLAY | enable `>W` section (modify web UI)
 SCRIPT_FULL_WEBPAGE | enable `>w` section (seperate full web page and webserver)
 USE_TOUCH_BUTTONS | enable virtual touch button support with touch displays
-USE_WEBSEND_RESPONSE | enable receiving the response of a [`WebSend`](Commands#websend) command (received in section >E)
+USE_WEBSEND_RESPONSE | enable receiving the response of [`WebSend`](Commands#websend) and [`WebQuery`](Commands#webquery) commands (received in section >E)
 SCRIPT_STRIP_COMMENTS | enables stripping comments when attempting to paste a script that is too large to fit
 USE_ANGLE_FUNC | add sin(x),acos(x) and sqrt(x) e.g. to allow calculation of horizontal cylinder volume
 USE_SCRIPT_FATFS_EXT | enables additional FS commands   

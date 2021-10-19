@@ -16,6 +16,9 @@
 ### LM1 
 ![LM1 Pinout](_media/pinouts/LM1_pinout.jpg)
 
+### LM2
+![LM2 Pinout](_media/pinouts/LM2_pinout.jpg)
+
 ### TYWE1S 
 ![TYWE1S Pinout](_media/pinouts/TYWE1S_pinout.jpg)
 
@@ -47,8 +50,16 @@
 ### ESP8266-S3
 ![ESP8266-S3 Pinout](_media/pinouts/ESP-8266-S3_pinout.jpg)
 
+<<<<<<< HEAD
 ## ESP32 
 
+=======
+### 449A-ECOPLUGS
+![EcoPlugs 449A Pinout](_media/pinouts/449A-ECOPLUGS_pinout.jpg)    
+[Datasheet](https://fccid.io/PAGECO-PLUGS/User-Manual/user-manual-2659058.iframe)
+
+## ESP32 Based
+>>>>>>> development
 ### ESP32-CAM
 
 ![ESP32-CAM Pinout](_media/pinouts/ESP32-CAM_pinout.jpg)

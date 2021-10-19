@@ -1,9 +1,10 @@
 ---
 desription: Everything about Tasmota on ESP32
 ---
-!!! danger "ESP32 support is in beta and not all functions or supported peripherals will work reliably."
+!!! danger "ESP32-C3 and ESP32-S2 support is in beta and not all functions or supported peripherals will work reliably."
      Due to the scope and activity of development there might be breaking changes and incompatibilities between major and minor versions of Tasmota32. In case of problems first erase flash and serial flash the latest development binary.
 
+<<<<<<< HEAD
 ## Flashing
 
 Use [ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) (Windows, MacOS, Linux) or [Tasmota Web Installer](https://tasmota.github.io/install/) (Chrome or Edge) to flash. 
@@ -34,6 +35,8 @@ OTA upgrade from much older versions of tasmota32 might fail due to significant 
 !!! warning "Use a proper power supply!"
     ESP32 is power hungry and there's a high chance it will not be able to boot properly off the serial-to-USB power. Power it from a separate power supply that can provide at least 1A.
 
+=======
+>>>>>>> development
 ## ESP32 Differences
 All ESP32 systems on a chip (SoC) are 32-bit MCUs with 2.4 GHz Wi-Fi & Bluetooth/Bluetooth LE built in. There are distinct product lines which are different from each other in varying degrees. 
 
@@ -95,6 +98,7 @@ ESP32 introduces [Berry](Berry.md) language as a more approachable scripting lan
 ### LVGL
 Use [LVGL](https://lvgl.io/) in conjunction with Berry on devices with displays and touch displays to design your own UI.
 
+<<<<<<< HEAD
 ## Compiling ESP32 Binaries
 
 Uncomment the tasmota32 build you want to compile in `platformio_override.ini`. For example, uncommenting tasmota32 will build `tasmota32.bin` on the next Build task in Platformio. 
@@ -229,16 +233,18 @@ on analog#joy2=1 do dimmer - endon on analog#joy2=2 do dimmer + endon
 ```
 
 #### LilyGO ttgo-t-eth-poe
+=======
+## Flashing
+>>>>>>> development
 
-```json
-{"NAME":"LilyGO ttgo-t-eth-poe","GPIO":[0,1,1,1,1,1,1,1,1,1,1,1,1,1,5600,1,0,1,1,5568,0,1,1,1,0,0,0,0,1,1,1,1,1,0,0,1],"FLAG":0,"BASE":1}
+Use [ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) for flashing an ESP32 or ESP82xx (Windows and MacOs executables are tested and verified as working).
+
+With esptool.py use the following command syntax (**replace COM port number!**):
+```
+esptool.py --chip esp32 --port COM5 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dout --flash_freq 40m --flash_size detect 0x1000 bootloader_dout_40m.bin 0x8000 partitions.bin 0xe000 boot_app0.bin 0x10000 tasmota32.bin
 ```
 
-For working Ethernet, change the following setting in the Console:
-```
-EthClockMode 1
-```
-
+<<<<<<< HEAD
 these 3 devices are also fully supported, more detailed info will be added later  
 
 #### LilyGo T-OI-PLUS (esp32c3)
@@ -278,47 +284,40 @@ OLED display needs the following template
 ```json
 {"NAME":"WiFi Kit 32","GPIO":[1,1,1,1,640,1,1,1,1,1,1,608,3840,1,1,1,0,1,1,1,0,224,1,1,0,0,0,0,1,1,1,1,1,0,0,1],"FLAG":0,"BASE":1}
 ```
+=======
+!!! warning "Use a proper power supply!"
+    ESP32 is power hungry and there's a high chance it will not be able to boot properly off the serial-to-USB power. Power it from a separate power supply that can provide at least 500mA.
 
+You can download precompiled binaries:
+>>>>>>> development
 
+  - development branch from [http://ota.tasmota.com/tasmota32/](http://ota.tasmota.com/tasmota32/) 
+  - stable releases from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/) 
+  - the required [flash files](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32/ESP32_needed_files) _(not needed when using ESP_Flasher)_
+
+<<<<<<< HEAD
 #### WEMOS / LOLIN D32
 verified support for board plus I2C sensors
+=======
+OTA upgrade from older versions of tasmota32 might fail due to significant changes in partition tables.
+>>>>>>> development
 
-to use I2C, set IO21 to SDA and IO22 to SCL
+Every OTA upgrade currently fails on tasmotasolo1.bin builds. Upgrade by File upload should work instead.
 
+## Compiling
 
+<<<<<<< HEAD
 #### Displays, sensors and other options 
+=======
+Uncomment the tasmota32xxx build you want to compile in `platformio_override.ini`. For example, uncommenting tasmota32 will build `tasmota32.bin` on the next Build task in Platformio. 
+>>>>>>> development
 
-displays: (most probably all I2C displays will work)    
+![platformio_override.ini](_media/esp32-pio.jpg)
 
-```c
-USE_DISPLAY_SH1106  
-USE_DISPLAY_EPAPER_29  
-USE_DISPLAY_EPAPER_42  
-USE_DISPLAY_ILI9341  
-USE_DISPLAY_ILI9488  
-USE_DISPLAY_SSD1351  
-USE_DISPLAY_RA8876  
-USE_DISPLAY_ST7789  
-USE_DISPLAY_ILI9341_2  
-USE_DISPLAY_ILI9342  
-```
+All binaries use `user_config_override.h` if it exists.
 
-sensors:  (most probably all I2C sensors will work)    
+## Working Devices
 
-```c
-USE_SHT3X  
-USE_BMP  
-USE_VL53L0X  
-USE_MLX90614  
-USE_IBEACON  
-USE_SML_M  
-```
+[Tasmota Supported Devices Repository](https://templates.blakadder.com/esp32.html) has a more extenstive list of [ESP32 based](https://templates.blakadder.com/esp32.html) devices.
 
-misc:  
-```c
-USE_MP3_PLAYER  
-USE_SCRIPT (scripting and all its options)  
-USE_24C256  
-USE_SENDMAIL
-USE_ESP32MAIL
-```
+[ESP32 Devices][ESP32-Devices.md]

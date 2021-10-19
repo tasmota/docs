@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # LVGL + Berry + Tasmota
 
 !!! info "ESP32 only and NOT included in ESP32 pre-compiled builds". See below How to Compile"
@@ -501,3 +502,14 @@ The file generated are:
 - `tasmota/lvgl_berry/be_lv_c_mapping.h` which contains the signatures used by Tasmota to map LVGL to Berry (large file). The mapping contains the LVGL object structure, and for each function the C API address, expected types of parameters and return type.
 - `lib/libesp32/Berry/default/be_lvgl_widgets_lib.c` Berry C definition of classes
 - `lib/libesp32/Berry/default/be_lv_lvgl_module.c` Berry C definition of `module lvgl` with core functions and constants
+=======
+# LVGL -  Light and Versatile Graphics Library
+!!! info "This feature is experimental, ESP32 only and NOT included in ESP32 pre-compiled builds"
+
+When you compile your own version, make sure the following is defined:
+
+```arduino
+#define USE_LVGL
+```
+
+>>>>>>> development
