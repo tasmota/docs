@@ -28,7 +28,7 @@ Initial ESP32 line is expanded with [ESP32-PICO-V3](_media/datasheets/esp32-pico
 ### ESP32-S2
 A more cost-efficient version of ESP32, cut down to a single core and several dedicated hardware security features (eFuse, flash encryption, secure boot, signature verification, integrated AES, SHA and RSA algorithms). It has 43 available GPIOs. [Product page for ESP32-S2](https://www.espressif.com/en/products/socs/esp32-s2)
 
-!!! warning "Alpha support in Tasmota"
+!!! warning "Beta support in Tasmota"
 
 ### ESP32-S3
 Keeping the security improvements the S3 line now again features the dual core SoC with Bluetooth upgraded to V5 . [Product page for ESP32-S3](https://www.espressif.com/en/products/socs/esp32-s3). 
