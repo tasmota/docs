@@ -61,6 +61,10 @@ To enable set in module configuration or template:
 
 ESP32 has 10 capacitive touch GPIOs. More on configuring and [using them...](https://tasmota.github.io/docs/TouchPin/).
 
+### DAC
+
+[DAC](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/dac.html) GPIOs are supported through [Berry `gpio` module](Berry.md#dac-gpios).
+
 ### Berry Scripting
 ESP32 introduces [Berry](Berry.md) language as a more approachable scripting language. Berry is very powerful and you can even code an I2C driver using it.
 
