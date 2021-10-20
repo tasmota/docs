@@ -244,7 +244,7 @@ When using Rules or Timers, you always pass Berry functions.
 
 ## Loading code from filesystem
 
-You can upload Berry code in the filesystem using the ***Consoles - File Upload*** menu and load them at runtime. Make careful to use `*.be` extension for those files.
+You can upload Berry code in the filesystem using the ***Consoles - Manage File system*** menu and load them at runtime. Make careful to use `*.be` extension for those files.
 
 To load a Berry file, use the `load(filename)` function where `filename` is the name of the file with `.be` or `.bec` extension; if the file has no extension '.be' is automatically appended.
 
