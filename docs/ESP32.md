@@ -83,8 +83,6 @@ You can download precompiled binaries:
 
 OTA upgrade from older versions of tasmota32 might fail due to significant changes in partition tables.
 
-Every OTA upgrade currently fails on tasmotasolo1.bin builds. Upgrade by File upload should work instead.
-
 ## Compiling
 
 Uncomment the tasmota32xxx build you want to compile in `platformio_override.ini`. For example, uncommenting tasmota32 will build `tasmota32.bin` on the next Build task in Platformio. 
