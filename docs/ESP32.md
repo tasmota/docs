@@ -5,25 +5,12 @@ desription: Everything about Tasmota on ESP32
      Due to the scope and activity of development there might be breaking changes and incompatibilities between major and minor versions of Tasmota32. In case of problems first erase flash and serial flash the latest development binary.
 
 ## ESP32 Differences
-All ESP32 systems on a chip (SoC) are 32-bit MCUs with 2.4 GHz Wi-Fi & Bluetooth/Bluetooth LE built in. There are distinct product lines which are different from each other in varying degrees. 
+All ESP32 systems on a chip (SoC) are 32-bit MCUs with 2.4 GHz Wi-Fi & Bluetooth/Bluetooth LE built in. There are distinct product lines which differ from each other in varying degrees. See [ESP32 modules list](https://www.espressif.com/en/products/modules) for the full list.
 
 ### ESP32
-
-Tasmota32 is initially developed and tested with dual core version of ESP32.
-
-??? note "ESP32 modules"
-
-    | Module | Core | Core clock | Flash| PSRAM| Touch S. | Hall S.|   
-    |---------------|---|---|---|---|:-:|:-:|
-    | [ESP32-WROOM-32E](_media/datasheets/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf)<br>[ESP32-WROOM-32UE](_media/datasheets/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf) | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16  |   | :material-checkbox-marked-circle:  | :material-checkbox-marked-circle: | 
-    | [ESP32-WROVER-E](_media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)<br>[ESP32-WROVER-IE](_media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)   | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16  | 8MB| :material-checkbox-marked-circle:  | :material-checkbox-marked-circle: | 
-    | ESP32-MINI-1    | ESP32-U4WDH Single Core | 160 MHz  | 4MB |   | :material-checkbox-marked-circle: | :material-checkbox-marked-circle: | 
-    | [ESP32-SOLO-1](_media/datasheets/esp32-solo-1_datasheet_en.pdf)    | ESP32-S0WD Single Core  | 160 MHz  | 4MB | | :material-checkbox-marked-circle:  | :material-checkbox-marked-circle: | 
-    | [ESP32-WROOM-32SE](_media/datasheets/esp32-wroom-32se_datasheet_en.pdf)  | ESP32-D0WD Dual Core  | 240 MHz  | 4,8,16 | | :material-checkbox-marked-circle: | :material-checkbox-marked-circle: | 
+An ESP32 has two or one Xtensa® 32-bit LX6 microprocessor(s) with clock frequency ranging from 80 MHz to 240 MHz. Tasmota32 is initially developed and tested with the dual core ESP32-D0WD-V3 and later expanded to include single core or PSRAM versions. 
 
 !!! warning "Single core SoCs do not work with standard binaries, for those use only `tasmota32solo1.bin` or compile your own binary using the tasmota32solo1 environment."
-
-Initial ESP32 line is expanded with [ESP32-PICO-V3](_media/datasheets/esp32-pico-v3_datasheet_en.pdf), [ESP32-PICO-V3-02](_media/datasheets/esp32-pico-v3-02_datasheet_en.pdf) and [ESP32-PICO-D4](http://espressif.com/sites/default/files/documentation/esp32-pico-d4_datasheet_en.pdf).
 
 ### ESP32-S2
 A more cost-efficient version of ESP32, cut down to a single core and several dedicated hardware security features (eFuse, flash encryption, secure boot, signature verification, integrated AES, SHA and RSA algorithms). It has 43 available GPIOs. [Product page for ESP32-S2](https://www.espressif.com/en/products/socs/esp32-s2)
@@ -36,9 +23,11 @@ Keeping the security improvements the S3 line now again features the dual core S
 !!! bug "Untested with Tasmota"
 
 ### ESP32-C3
-Unlike previous versions, C3 is a single-core Wi-Fi and Bluetooth 5 (LE) microcontroller SoC based on the open-source RISC-V architecture. It will be available as [ESP32-C3-MINI-1](_media/datasheets/esp32-c3-mini-1_datasheet_en.pdf) and [ESP32-C3-WROOM-02](_media/datasheets/esp32-c3-wroom-02_datasheet_en.pdf) modules. [Product page for ESP32-C3](https://www.espressif.com/en/products/socs/esp32-c3)
+Unlike previous versions, C3 is a single-core Wi-Fi and Bluetooth 5 (LE) microcontroller SoC based on the open-source RISC-V architecture. It is available as [ESP32-C3-MINI-1](_media/datasheets/esp32-c3-mini-1_datasheet_en.pdf) and [ESP32-C3-WROOM-02](_media/datasheets/esp32-c3-wroom-02_datasheet_en.pdf) modules. [Product page for ESP32-C3](https://www.espressif.com/en/products/socs/esp32-c3)
 
 !!! note "Beta Support in Tasmota"
+
+Use `tasmota32c3-` binaries for this line of chips.
 
 ## Exclusive Features
 
