@@ -621,6 +621,15 @@ Wire Function|Parameters and details
 
 ### `path` module
 
+A simplified version of `os.path` module of standard Berry which is disabled in Tasmota because we don't have a full OS.
+  
+Tasmota Function|Parameters and details
+:---|:---
+path.exists<a class="cmnd" id="path_exists"></a>|`(file_name:string) -> bool`<br>Returns `true` if the file exists. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
+path.last_modified<a class="cmnd" id="path_last_modified"></a>|`(file_name:string) -> int`<br>Returns the timestamp when the file was last modified, or `nil` if the file does not exist. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
+
+### `persist` module
+
 Easy way to persist simple values in Berry and read/write any attribute. Values are written in JSON format in `_persist.json` file.
 
 !!! example 
@@ -630,19 +639,13 @@ Easy way to persist simple values in Berry and read/write any attribute. Values 
     > print(persist)
     <instance: Persist({'a': 1, 'b': 'foobar'})>
     > persist.save()   # save to _persist.json
-  
-Tasmota Function|Parameters and details
-:---|:---
-path.exists<a class="cmnd" id="path_exists"></a>|`(file_name:string) -> bool`<br>Returns `true` if the file exists. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
-path.last_modified<a class="cmnd" id="path_last_modified"></a>|`(file_name:string) -> int`<br>Returns the timestamp when the file was last modified, or `nil` if the file does not exist. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
-
-### `persist` module
-
-A simplified version of `os.path` module of standard Berry which is disabled in Tasmota because we don't have a full OS.
 
 Tasmota Function|Parameters and details
 :---|:---
 persist.save<a class="cmnd" id="persist_save"></a>|`()`<br>triggers saving to file system. It is called automatically before a restart but you might want to call it yourself to prevent losing data in case of power loss or crash. You can call `persist.save()` often, it will actually save to flash only if there were changes since last load/save.
+persist.has<a class="cmnd" id="persist_has"></a>|`(param:string) -> bool`<br>returns true or false if the key exists
+persist.remove<a class="cmnd" id="persist_remove"></a>|`(param:string) -> bool`<br>removes a key or ignores if key doesn't exist
+persist.find<a class="cmnd" id="persist_find"></a>|`my_param:string [, "default value"] -> string | bool`<br>returns the value for a key, or nil or the default value. Similar to `map.find`
 
 ### `introspect` module
 
