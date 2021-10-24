@@ -1,15 +1,11 @@
 # SPS30 Particulate sensor
 
-!!! info "This feature is included only in tasmota-sensors.bin" 
+!!! info "This feature is **not** included in any prebuilt Tasmota variant (check [BUILDS.md](https://github.com/arendst/Tasmota/blob/development/BUILDS.md)) 
 
-Otherwise you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+You must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 ```cpp
 #define USE_I2C                                  // I2C using library wire (+10k code, 0k2 mem, 124 iram)
-#define I2CDRIVERS_30        0xFFFFFFFF          // Enable I2CDriver30
-
-#ifdef USE_I2C
-  #define USE_SPS30 // [I2cDriver30] Enable Sensiron SPS30 particle sensor (I2C address 0x69) (+1.7 code)
-#endif  // USE_I2C
+#define USE_SPS30 // [I2cDriver30] Enable Sensiron SPS30 particle sensor (I2C address 0x69) (+1.7 code)
 ```
 
 ## Device information
