@@ -1,5 +1,7 @@
 The Sonoff RF Bridge has two separate chips to handle the Wi-Fi (ESP8285) and RF (EFM8BB1) communications respectively. It is used to send and receive codes with 433.9MHz frequency RF devices. Codes received from RF devices such as remote controls is passed to the onboard ESP8285 via the serial interface. The code data is relayed via MQTT. Similarly, the Bridge receives commands over Wi-Fi and sends the encoded data to the RF chip to control an RF device. Thus, the Sonoff RF Bridge "bridges" communications between RF and Wi-Fi.
 
+**IMPORTANT:** As of October 2021, a new version of the Sonof RF Bridge (R2 V2.2) is around. While the Tasmota firmware can still be flashed, _there is no confirmed way to flash version `R2 V2.2` with the popular Portisch RF firmware upgrade._ See discussion #13283
+
 ## Flash Tasmota
 Please [Hardware Preparation](../Getting-Started.md#hardware-preparation) article for general flashing instructions.
 
@@ -30,13 +32,20 @@ Tasmota supports the original Sonoff RF firmware and the [Portisch firmware](htt
 ### RF Firmware Upgrade
 The RF upgrade requires wiring the bridge and then flashing the firmware via the Tasmota web UI.
 
-**Attention ⚠️️⚠️️⚠️️ There are 2 versions of the `Sonoff RF Bridge 433`: the `R1` and the `R2 V1.0`.  
+**Attention ⚠️️⚠️️⚠️️ There are 3 versions of the `Sonoff RF Bridge 433`: the `R1`, `R2 V1.0` and `R2 V2.2`.  
 
 **R1**  
 <img src="https://user-images.githubusercontent.com/34340210/64807789-f62af600-d563-11e9-81e0-a73c99577838.jpg" width="300">
 
 **R2 V1.0** RF firmware flashing:  
 <img src="https://github.com/arendst/arendst.github.io/raw/master/media/sonoff_bridge_rffw_upgrade.png" width="300">
+
+**R2 V2.2**
+<img src="https://user-images.githubusercontent.com/28188533/136151668-d4d0ee83-9e93-4b0e-aec2-10f5b0648f20.jpg" width="300">
+<img src="https://user-images.githubusercontent.com/28188533/136151680-ddceb7fa-7479-4350-bc95-c3ce5e600b75.jpg" width="300">
+
+As of October 2021, a new version of the Sonof RF Bridge (R2 V2.2) is around. While the Tasmota firmware can still be flashed, _there is no confirmed way to flash version `R2 V2.2` with the popular Portisch RF firmware upgrade._ See discussion #13283
+The Tasmota firmware can be flashed using the `J2` pins while pressing the pairing button.
 
 #### Flashing RF Firmware
 1. Make sure you have previously flashed a Tasmota binary built with `RF_FLASH`. Refer to the [builds table](https://github.com/arendst/Tasmota/blob/development/BUILDS.md) for pre-compiled binaries which include this feature. Otherwise the "Magic byte is not 0xE9" error will occur.
@@ -68,7 +77,7 @@ _This section applies only to the R2 revision of the Sonoff RF Bridge_
 
 Apply this modification **_only_** if you intend to use USB for powering the device during flash process or if you want to use GPIO4 or GPIO5 for other purposes with the RF Bridge.
 
-The R2 revision boards connect the GPIO4 and GPIO5 pins to the USB data lines of the power connector. Compliant USB chargers/power supplies are expected to short the two pins together, which is a problem. These lines are not used by the original firmware, nor by Tasmota. The traces toward the USB power connector need to be cut to avoid interference by the USB wiring. Removing these connections does not interfere with the normal Bridge functionality.
+The R2 V1.0 revision boards connect the GPIO4 and GPIO5 pins to the USB data lines of the power connector. Compliant USB chargers/power supplies are expected to short the two pins together, which is a problem. These lines are not used by the original firmware, nor by Tasmota. The traces toward the USB power connector need to be cut to avoid interference by the USB wiring. Removing these connections does not interfere with the normal Bridge functionality.
 
 # Operation
 The Sonoff RF Bridge is able to learn up to 16 different fixed code remote control commands as provided by PT2260, PT2262, PT2264 and EV1527 transmitters. It was not able to recognize the latest Klik Aan Klik Uit (KaKu) remote control signals but some people managed to use the fixed code KaKu devices like PAR-1000 receiver and PAT-103 transmitter.
