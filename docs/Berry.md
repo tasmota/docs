@@ -25,7 +25,6 @@ Berry Scripting takes it one step further and allows to build dynamic extensions
 - build complete Tasmota drivers
 - integrate native libraries like `lvgl` see [LVGL](LVGL.md)
 
-
 ### About the Berry language
 
 Berry has the following advantages:
@@ -48,6 +47,8 @@ Click on *Configuration* then *Berry Scripting Console* and enjoy the colorful B
 ![Berry console](https://user-images.githubusercontent.com/49731213/111880607-c193c800-89ac-11eb-81c9-a3558e26a1de.png)
 
 !!! tip "Drag the bottom corner of each screen to change its size"
+
+The console is not designed for big coding tasks but it's recommended to use a code editor when dealing with many, many lines of code. An extension for Visual Studio Code exists to make writing Berry scripts even easier with colored syntax. Download the entire [folder](https://github.com/berry-lang/berry/tree/master/tools/plugins/vscode/) and copy to VSCode extensions folder.
 
 ### Getting familiar with the REPL
 
