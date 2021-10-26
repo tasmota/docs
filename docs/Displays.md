@@ -1,46 +1,31 @@
-!!! info "This feature is included only in tasmota-displays.bin"
+!!! info "This feature is included only in `-displays.bin`"
 
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+## Supported Displays
 
-when you want to add a display to Tasmoata it is best to buy one from the table below where the drivers are already there. keep in mind that there are also many variants of each display available and not all variants may be supported.  
-
-#define directive | Description
- ---|---
-USE_DISPLAY | Enable display support. Also requires at least one of the following compilation directives 
-USE_DISPLAY_LCD | Enable LCD display. Also requires `USE_I2C`
-USE_DISPLAY_SSD1306 | Enable OLED SSD1306 display. Also requires `USE_I2C`
-USE_DISPLAY_MATRIX | Enable MATRIX display
-USE_DISPLAY_ILI9341 | Enable TFT ILI9341 display. Also requires `USE_SPI`<br>if seconds SPI bus on ESP32 shall be used SSPI must be defined instead of SPI<br>ILI9342 also supported, select with cmd displayilimode 3, default is: displayilimode 1 (ILI9341)
-USE_DISPLAY_EPAPER_29 | Enable Waveshare EPAPER_29 display.(black/white, partial update)<br>Also requires `USE_SPI`
-USE_DISPLAY_EPAPER_42 | Enable Waveshare EPAPER_42 display.(black/white, full update)<br>Also requires `USE_SPI`
-USE_DISPLAY_SH1106 | Enable OLED SH1106 display. Also requires `USE_I2C`
-USE_DISPLAY_ILI9488 | Enable TFT ILI9488 display. Also requires `USE_SPI`
-USE_DISPLAY_SSD1351 | Enable color OLED SSD1351 display. Also requires `USE_SPI`
-USE_DISPLAY_RA8876  | Enable TFT RA8876 display. Also requires `USE_SPI` 
-USE_DISPLAY_SEVENSEG  | Enable 7 segment display. Also requires `USE_I2C` 
-USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI`  
-USE_DISPLAY_ILI9342  | Enable TFT ILI9342 display. Also requires `USE_SPI` 
-USE_DISPLAY_SD1331  | Enable TFT SD1331 display. Also requires `USE_SPI` 
-USE_DISPLAY_TM1637  | Enable 7-segment [TM1637, TM1638 and MAX7219](TM163x.md) display. 
-USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`  
-USE_DISPLAY_TM1637 | Enable TM1637 display
-USE_LILYGO47  | Enable LILGO 4.7 Epaper display ESP32 combo
-USE_UNIVERSAL_DISPLAY  | Enable universal display driver
-USE_LVGL  | Enable LVGL, currently only supported by berry scripting  
-USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
-SHOW_SPLASH | Enable initialization splash message on the display  
-USE_RAMFONT | Enable loadable Fonts  
-USE_MULTI_DISPLAY | Enable mutiple display support (up to 3)  
-USE_AWATCH | Enables analog watch support  
-USE_GRAPH | Enable line charts. Also requires `NUM_GRAPHS`  
-  
-----
+DisplayModel | Name | Interface
+1 | LCD display |  I^2^C
+2 | SSD1306 OLED display | I^2^C
+3 | 8x8 MATRIX display | GPIO
+4 | ILI934x TFT display<BR>`DisplayIliMode 1` for ILI9341 or `DisplayIliMode 3` for ILI9342<BR>When second SPI bus on ESP32 is used, SSPI must be defined instead of SPI| SPI
+5 | Waveshare E-Paper 2.9" display (black/white, partial update) | SPI
+6 | Waveshare E-Paper 4.2" display (black/white, full update) | SPI
+7 | SH1106 OLED display | I^2^C
+8 | ILI9488 TFT display | SPI
+9 | SSD1351 OLED color display | SPI
+10 | RA8876 TFT display | SPI 
+11 | 7 segment common anode display | I^2^C
+12 | ST7789 TFT display | SPI
+14 | SD1331 TFT display | SPI
+15 | [TM1637, TM1638 and MAX7219](TM163x) 7-segment displays | GPIO
+16 | Enable LilyGO T5 4.7" E-Paper display ESP32 device | :material-cpu-32-bit:
+17 | [Universal Display Driver](#universal-display-driver) | SPI or I^2^C
+18 | Interface to virtual display driver with [Berry](Berry) | :material-cpu-32-bit:
 
 ## Display Commands
 
 See commands page for full list of available [Display Commands](Commands.md#displays)  
 
-## DisplayMode Parameters
+## DisplayMode
 
 The display driver is able to display predefined setups of text or user defined text. To display text using `DisplayText` set `DisplayMode` to `0`, or set `DisplayMode` to `1` for the HT16K33 dot-matrix display.  
 
@@ -56,7 +41,7 @@ Parameter	|	LCD Display	|	OLED Display	|	TFT Display  | 7-segment Display (TM163
 5	|	MQTT and Time/Date	|	MQTT, local sensors and Time/Date	|	MQTT, local sensors and Time/Date | NA
 
 
-## DisplayText Use
+## DisplayText
 
 The `DisplayText` command is used to display text as well as graphics and graphs on LCD, OLED and e-Paper
 displays (EPD). The command argument is a string that is printed on the display at the current position.
@@ -66,7 +51,7 @@ In order to use the `DisplayText` command the `DisplayMode` must be set to `0` (
 
 The `DisplayText` command is customised for the TM1637, TM1638 and MAX7219 seven-segment display modules. This is documented [here](TM163x#commands-and-usage).  
 
-### DisplayText parameters
+### DisplayText Parameters
 
 In the list below `p` stands for parameter and may be a number from 1 to n digits.
 On monochrome graphic displays things are drawn into a local frame buffer and sent to the display either
@@ -82,7 +67,7 @@ via the `d` command or automatically at the end of the command.
 Text is printed at the last provided position, either l or y for the vertical position,
 and either x or x for the horizontal position. Neither x nor y are advanced/updated after printing text.
 
-### Line primitives
+### Line Primitives
 
 `hp` = draws a horizontal line with length `p` (x is advanced)  
 `vp` = draws a vertical line with length `p` (y is advanced)  
@@ -126,7 +111,8 @@ align right
 `dcI:V` = define index color entry Index 19-31, V 16 bit color value (index 0-18 is fixed)  
 
 ### Touch Buttons and Sliders
-(`#define USE_TOUCH_BUTTONS`)
+
+Requires `#define USE_TOUCH_BUTTONS`
 
 ![touch elements](https://user-images.githubusercontent.com/11647075/107513682-dbb9d980-6ba8-11eb-9716-18f788f8b08d.jpg)
 
@@ -151,22 +137,21 @@ _Parameters are separated by colons._
 
 !!! example "`b0:260:260:100:50:2:11:4:2:Rel 1:`"
 
-to create picture touch buttons (jpeg on ESP32 only):  
-(`#define JPEG_PICTS` and `#define USE_UFILESYS`)  
-and provide pictures on UFILESYSTEM with ending ".jpg"  
-then give the path to the picture as button text omitting the ending .jpg  
-the example below would create a picture button with a picture file named wifi.jpg  
-the size of the picture is NOT scaled and the dimensions of the button must fit the picture size.  
-selected buttons invert the colors of the picture  
+### Picture Buttons
+To create picture touch buttons (jpg on ESP32 only) requires `#define JPEG_PICTS` and `#define USE_UFILESYS`. 
+ 
+Upload pictures to the file system with a ".jpg" extension, then give the path to the picture as button text omitting the .jpg extension.
 
-!!! example "`b0:260:260:100:50:2:11:4:2:/wifi:`"
+!!! example "Create a picture button with a picture file named `wifi.jpg`"
+    `b0:260:260:100:50:2:11:4:2:/wifi:`
 
-you may also specify a picture for selected and unselected button state  
-if the picture name ends with '1' this picture is used for unselected state and a picture with ending '2' is used for selected state  
+    The size of the picture is **not** scaled and the dimensions of the button must fit the picture size. Clicked buttons will invert the colors of the picture.  
 
-Sliders:
+You may specify a picture for selected and unselected button state. Picture filename ending with '1' is used for unselected state and ending '2' is for selected state.  
 
-* `bs#` where # = define a slider number 0-15  
+### Sliders
+
+* `bs#` where # = is slider number `0..15`  
 * `xp` = x position  
 * `yp` = y position  
 * `xa` = x size  
@@ -176,18 +161,18 @@ Sliders:
 * `fc` = frame color  
 * `bc` = bar color  
 
-you may set the state of a button or slider with:  
+Set the state of a button or slider with:  
 
-* `b#s` where # = number 0-15  
-* `val` for buttons 0 or 1, for sliders 0-100  
-
+* `bs#` where # = is slider number `0..15`
+* `val` = `0` or `1` for buttons, `0..100` for sliders   
 
 ### Display JSON variables
 
-enabled by #define USE_DT_VARS  
+Requires `#define USE_DT_VARS`
 
-you may display variables that are exposed in JSON MQTT strings e.g. in Teleperiod messages.  
-the values are updated every second  
+Display variables that are exposed in JSON MQTT strings e.g. in TelePeriod messages.  
+
+The values are updated every second.
 
 `dv#:xp:yp:gc:fc:fo:ts:tl:dp:ut:JSON:ut:`   
 _Parameters are separated by colons._   
@@ -262,29 +247,27 @@ _Parameters are separated by colons._
 
 ### Batch files
 
-When USE_UFILESYSTEM is defined and a file system is present you may define displaytext batch files.
-the file may contain any number of diplaytext cmds, one at a line.
-you may have comment lines beginning with a ;
-if a file named "display.bat" is present in the file system this batch file is executed.
+When a file system is present you may define displaytext batch files. If a file named "display.bat" is present in the file system this batch file is executed.
+The file may contain any number of diplaytext cmds, one at a line. You may have comment lines beginning with a `;`
 
-example file:
+!!! example
 
-```haskell
-; clr screen
-[z]
-; draw full screen picture
-[x0y0P/corona.rgb:]
-; define index color
-[dc19:31000]
-; draw transparent text with new index color over picture
-[x60y30f2Ci19D2]Tasmota
-```
-a displaytext batch file may be executed from console by displaybatch /file  
+    ```haskell
+    ; clr screen
+    [z]
+    ; draw full screen picture
+    [x0y0P/corona.rgb:]
+    ; define index color
+    [dc19:31000]
+    ; draw transparent text with new index color over picture
+    [x60y30f2Ci19D2]Tasmota
+    ```
+    A displaytext batch file may be executed from console by displaybatch /file  
 
 
 ### Color Codes
 
-While computers and web design are generally using a 24-bit RGB888 color code built from a byte-triplet such as (255, 136, 56) or #FF8038, small color panels often use a more compact code 16-bit RGB565 color code.  This means that the R, G and B coefficient are coded on less number of bits:
+While computers and web design are generally using a 24-bit RGB888 color code built from a byte-triplet such as (255, 136, 56) or #FF8038, small color panels often use a more compact code 16-bit RGB565 color code. This means that the R, G and B coefficient are coded on less number of bits:
 
 * Red on 5 bits = `0..31`
 * Green on 6 bits = `0..63`
@@ -325,7 +308,7 @@ Selected with `Ci` and `Bi` in the ILI9488, SSD1351, RA8876 and ST7789 color pan
 You may expand the index color table up from index 19 to 31.
 the cmd [dcI:V] defines the index color with index I (19-31) to the 16 bit color value V
 
-#### Notes on e-Paper Displays
+#### Note on e-Paper Displays
 
 E-Paper displays have 2 operating modes: full update and partial update. While full update delivers a clean and sharp picture, it has the disadvantage of taking several seconds for the screen update and shows severe flickering during update. Partial update is quite fast (300 ms) with no flickering but there is the possibility that erased content is still slightly visible. It is therefore useful to perform a full update in regular intervals (e.g., each hour) to fully refresh the display.
  
@@ -367,7 +350,9 @@ The RA8876 is connected via standard hardware 4-wire SPI `(SPI_MOSI=GPIO13, SPI_
 
 The ST7789 is connected via 4 Wire software SPI ((ST7789_CS), SSPI_SCLK, SSPI_MOSI, ST7789_DC, OLEDRESET, Backlight )  
 
-## Rule Examples, for scripting examples see scripting docs
+## Rule Examples
+
+!!! tip "For scripting examples see [Scripting Cookbook](Scripting-Language.md#scripting-cookbook)"
 
 Print Text at size 1 on line 1, column 1:  
 `DisplayText [s1l1c1]Hello how are you?`
@@ -409,15 +394,16 @@ rule1 on tele-BME280#Temperature do DisplayText [s1p21x0y0]Temp: %value% C endon
       on tele-SGP30#eCO2 do DisplayText [s1p21x0y40]eCO2: %value% ppm [s1p0x0y50]Time: [x35y50t] endon
 ```
 
-## Display Drivers
+## WaveShare Display Drivers
 
 Waveshare has two kinds of display controllers: with partial update and without partial update. The 2.9 inch driver is for partial update and should also support other Waveshare partial update models with modified WIDTH and HEIGHT parameters. The 4.2 inch driver is a hack which makes the full update display behave like a partial update and should probably work with other full update displays.  
 
 The drivers are subclasses of the Adafruit GFX library. The class hierarchy is `LOWLEVEL :: Paint :: Renderer :: GFX`, where:  
-`GFX`: unmodified Adafruit library  
-`Renderer`: the interface for Tasmota  
-`Paint`: the modified pixel driver for e-paper  
-- there are several virtual functions that can be subclassed down to `LOWLEVEL`.
+
+- `GFX`: unmodified Adafruit library  
+- `Renderer`: the interface for Tasmota  
+- `Paint`: the modified pixel driver for e-paper  
+- there are several virtual functions that can be subclassed down to `LOWLEVEL`
 
 The display dispatcher only does the class initialization call. All other calls go to the `Renderer` class.
 
@@ -431,26 +417,30 @@ The EPD fonts use about 9k space, which can be selected at compile time using \#
 - Display and Render class - ~12k
 
 
-## universal Display Driver
+## Universal Display Driver
 
-Driver 17 is a universal display driver for most pixel driven displays.
-it supports I2C and hardware and software SPI (3 or 4 wire)
-The driver is enabled by compiling with #define USE_UNIVERSAL_DISPLAY
-and selecting GPIO Option A3 on any pin.
-the display is defined by a descriptor file which may be provided with 3 methods:
+Universal Display Driver or uDisplay is a way to define your display settings using a simple text file and easily add it to Tasmota.
+uDisplay is `DisplayModel 17`. It supports I2C and hardware or software SPI (3 or 4 wire). 
 
-1. a file which must be present in the flash file system ("display.ini"), prefered option
-2. a special section in scripter >d
-3. rule buffer 3
-4. a flash section in driver 17 (const char)
+The driver is enabled by compiling with `#define USE_UNIVERSAL_DISPLAY` and setting an unused GPIO to `Option A3`.
 
-options 2-4 work also on 1M devices
+### Descriptor File
+The display itself is defined by a descriptor file. Many display descriptor files are included in Tasmota GitHub in [`tasmota/displaydesc`](https://github.com/arendst/Tasmota/tree/development/tasmota/displaydesc) folder
+
+which may be provided by any of the following methods:
+
+1. A `display.ini` file present in the flash file system. ***preferred option***
+2. A special `>d` section in scripting. Copy the file to the `>d` script section and place a `->displayreinit` cmd into `>B` section
+3. Copy the descriptor to `Rule 3` but **do not** enable it (descriptor may not contain ANY spaces in this mode)
+4. Compile the descriptor into the binary in a section in `user_config_override.h` under driver 17 (const char)
+
+Options 2 and 4 work well for 1M flash devices.
 
 Descriptor text file has the following elements:  
 
 `:H`  
 
-header line describes the main features of the display (comma seperated, no spaces allowed)
+Header line describes the main features of the display (comma seperated, no spaces allowed)
 
 1. name
 2. x size in pixels
@@ -478,7 +468,7 @@ header line describes the main features of the display (comma seperated, no spac
 9. SPI Speed in MHz
 
 All signals must be given. Unused pins may be set to -1. If you specify a `*` char the pin number is derived from the Tasmota GPIO GUI.  
-The CS and DC pins must be the standard pins e.g. SPI_CS or SPI_DC.  
+The CS and DC pins must be the standard pins e.g. `SPI_CS` or `SPI_DC`.  
 
 !!! example "Example"
 
@@ -491,7 +481,7 @@ The CS and DC pins must be the standard pins e.g. SPI_CS or SPI_DC.
 ```
 
 `:S`  
-splash setup, also defines initial colors. (optional, if omitted screen is not cleared initially)
+(_optional_) Splash setup, also defines initial colors. If omitted screen is not cleared initially.
 
 1. Font number
 2. Font size
@@ -502,59 +492,60 @@ splash setup, also defines initial colors. (optional, if omitted screen is not c
 
 !!! example
 
-```haskell
-:S,2,1,1,0,40,20
-```
+    ```haskell
+    :S,2,1,1,0,40,20
+    ```
+    
 `:I`  
 Initial register setup for the display controler. (`IC` marks that the controller is using command mode even with command parameters)  
 All values are in hex. On SPI the first value is the command, then the number of arguments and the the arguments itself.
-`Bi7 7` on the number of arguments set indicate a wait of 150 ms. On I2C all hex values are sent to i2c
+`Bi7 7` on the number of arguments set indicate a wait of 150 ms. On I^2^C all hex values are sent to I^2^C.
 
 !!! example
 
-```haskell
-:I
-EF,3,03,80,02
-CF,3,00,C1,30
-ED,4,64,03,12,81
-E8,3,85,00,78
-CB,5,39,2C,00,34,02
-F7,1,20
-EA,2,00,00
-C0,1,23
-C1,1,10
-C5,2,3e,28
-C7,1,86
-36,1,48
-37,1,00
-3A,1,55
-B1,2,00,18
-B6,3,08,82,27
-F2,1,00
-26,1,01
-E0,0F,0F,31,2B,0C,0E,08,4E,F1,37,07,10,03,0E,09,00
-E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
-11,80
-29,80
-```
+    ```haskell
+    :I
+    EF,3,03,80,02
+    CF,3,00,C1,30
+    ED,4,64,03,12,81
+    E8,3,85,00,78
+    CB,5,39,2C,00,34,02
+    F7,1,20
+    EA,2,00,00
+    C0,1,23
+    C1,1,10
+    C5,2,3e,28
+    C7,1,86
+    36,1,48
+    37,1,00
+    3A,1,55
+    B1,2,00,18
+    B6,3,08,82,27
+    F2,1,00
+    26,1,01
+    E0,0F,0F,31,2B,0C,0E,08,4E,F1,37,07,10,03,0E,09,00
+    E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
+    11,80
+    29,80
+    ```
 
- `:o`,OP  
-Off , Controller OPCODE to switch display off  
+`:o`,OP      
+`OP` = controller OPCODE to switch display off  
 
-`:O`,OP  
-On Controller OPCODE to switch display on  
+`:O`,OP       
+`OP` = controller OPCODE to switch display on  
 
-`:R`,OP,SL  
+`:R`,OP,SL       
 
-1. OP = rotation opcode
-2. SL = startline opcode (optional)  
+1. `OP` = rotation opcode
+2. `SL` = startline opcode (optional)  
 
 `:0`  
 `:1`  
 `:2`  
 `:3`  
 
-register values for all 4 rotations (color display only)
+Register values for all 4 rotations (color display only)
 
 1. rotation code
 2. x offset
@@ -570,7 +561,7 @@ the appropriate coordinate convervsions are defined via pseudo opcodes
 bit 7 = swap x,y
 
 `:A`  
-3 OPCODES to set adress window (color display only)  
+3 OPCODES to set adress window _(color display only)_
 
 1. set column opcode  
 2. set row opcode  
@@ -578,7 +569,7 @@ bit 7 = swap x,y
 4. pixel size (optional)  
 
 `:P`  
-pixel transfer size (optional) default = 16 bit RGB  
+Pixel transfer size (default = 16 bit RGB) _(optional)_
 
 `:i`  
 invert display opcodes  
@@ -586,10 +577,10 @@ invert display opcodes
 2. inversion on  
 
 `:D`  
-dimmer opcode (optional)  
+dimmer opcode _(optional)_
 
 `:B`  
-LVGL (optional)  
+LVGL _(optional)_
 1. number of display lines flushed at once (min 10) the lower the lesser memory needed  
 2. 0 for no DMA, 1 use DMA (not supported on all displays) bit 1 selects color swap, 2 = swap 16 bit color  
 
@@ -600,28 +591,28 @@ Wait times used for E-paper display
 3. wait after update in ms  
 
 `:L`  
-Lookuptable for full refresh (Waveshare 29)
+Lookup table for full refresh (Waveshare 29)
 
 `:l`  
 Lookuptable for partial refresh (Waveshare 29)
 
-`:LX`,OP  
+`:Lx`,OP  
 Lookuptable for full refresh (Waveshare 42) 
-X = 1..5  
-OP = opcode for sending refresh table  
+`x` = 1..5  
+`OP` = opcode for sending refresh table  
 
 `:TIx,AA,SCL,SDA`  
-defines a touch panel an I2C bus nr x (1 or 2)  
+Defines a touch panel an I2C bus nr `x` (1 or 2)  
 AA is device address  
 SCL, SDA are the pins used (or * for tasmota definition)  
 
 `:TS,CS_PIN`   
-defines a touch panel an SPI bus with chip select CS_PIN (or *)  
+Defines a touch panel an SPI bus with chip select `CS_PIN` (or *)  
 
 `:r,X`
-defines optional display rotation X = 0..3
+Defines optional display rotation `X` = `0..3`
 
-!!! example "Full examples for SH1106 and ILI9341: (comment lines starting with ; are allowed)"  
+!!! example "Full configuration for SH1106 (comment lines starting with ; are allowed)"  
 
 ```haskell
 :H,SH1106,128,64,1,I2C,3c,*,*,*
@@ -648,6 +639,8 @@ AF
 :A,00,10,40
 #
 ```
+
+!!! example "Full configuration for ILI9341: (comment lines starting with ; are allowed)"  
 
 ```haskell
 :H,ILI9341,240,320,16,SPI,1,*,*,*,*,*,*,*,40
@@ -685,10 +678,7 @@ E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
 :3,E8,00,00,02
 #
 ```
-
-Most convenient editing when developing or modifying is done via scripter. On every scripter save the display is reinitialized and you immediately see results of your changes.  
-
-However the normal use would be to store the descriptor in file system.
+Scripter is the nost convenient way to edit and develop a uDisplay driver. On every scripter save the display is reinitialized and you immediately see results of your changes.  
 
 !!! example "Scripter driven display descriptor"  
 
@@ -723,3 +713,37 @@ AF
 #
 ```
 
+## Compiling
+There are also many variants of each display available and not all variants may be supported.  
+
+#define directive | Description
+ ---|---
+USE_DISPLAY | Enable display support. Also requires at least one of the following compilation directives 
+USE_DISPLAY_LCD | Enable LCD display. Also requires `USE_I2C`
+USE_DISPLAY_SSD1306 | Enable OLED SSD1306 display. Also requires `USE_I2C`
+USE_DISPLAY_MATRIX | Enable MATRIX display
+USE_DISPLAY_ILI9341 | Enable TFT ILI9341 display. Also requires `USE_SPI`<br>if seconds SPI bus on ESP32 shall be used SSPI must be defined instead of SPI<br>ILI9342 also supported, select with cmd displayilimode 3, default is: displayilimode 1 (ILI9341)
+USE_DISPLAY_EPAPER_29 | Enable Waveshare EPAPER_29 display.(black/white, partial update)<br>Also requires `USE_SPI`
+USE_DISPLAY_EPAPER_42 | Enable Waveshare EPAPER_42 display.(black/white, full update)<br>Also requires `USE_SPI`
+USE_DISPLAY_SH1106 | Enable OLED SH1106 display. Also requires `USE_I2C`
+USE_DISPLAY_ILI9488 | Enable TFT ILI9488 display. Also requires `USE_SPI`
+USE_DISPLAY_SSD1351 | Enable color OLED SSD1351 display. Also requires `USE_SPI`
+USE_DISPLAY_RA8876  | Enable TFT RA8876 display. Also requires `USE_SPI` 
+USE_DISPLAY_SEVENSEG  | Enable 7 segment display. Also requires `USE_I2C` 
+USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI`  
+USE_DISPLAY_ILI9342  | Enable TFT ILI9342 display. Also requires `USE_SPI` 
+USE_DISPLAY_SD1331  | Enable TFT SD1331 display. Also requires `USE_SPI` 
+USE_DISPLAY_TM1637  | Enable 7-segment [TM1637, TM1638 and MAX7219](TM163x.md) display. 
+USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`  
+USE_DISPLAY_TM1637 | Enable TM1637 display
+USE_LILYGO47  | Enable LILGO 4.7 Epaper display ESP32 combo
+USE_UNIVERSAL_DISPLAY  | Enable universal display driver
+USE_LVGL  | Enable LVGL, currently only supported by berry scripting  
+USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
+SHOW_SPLASH | Enable initialization splash message on the display  
+USE_RAMFONT | Enable loadable Fonts  
+USE_MULTI_DISPLAY | Enable mutiple display support (up to 3)  
+USE_AWATCH | Enables analog watch support  
+USE_GRAPH | Enable line charts. Also requires `NUM_GRAPHS`  
+  
+----
