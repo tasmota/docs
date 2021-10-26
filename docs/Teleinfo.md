@@ -68,8 +68,8 @@ As you can see GPIO33 is used for RX and GPIO4 for Enable (need set to 1 to be a
 
 Setup in this case is 
 
-* RX pin on GPIO33 ![RX on GPIO33](_media/teleinfo/teleinfo_esp32_rx_gpio33.png)
 * Enable pin on GPIO4 ![EN on GPIO4](_media/teleinfo/teleinfo_esp32_en_gpio4.png)
+* RX pin on GPIO33 ![RX on GPIO33](_media/teleinfo/teleinfo_esp32_rx_gpio33.png)
 
 Another example on ESP8266 could be D5/GPIO14:
 
@@ -104,11 +104,11 @@ First thing is to see how teleinfo is configured, for this you need to use `Ener
 17:24:56.766 TIC: Settings Mode:historique, Raw:noraw, Skip:0, Limit:0
 17:24:56.783 MQT: emoncms/ch2i/factory/denky_D6C0C0/stat/RESULT = {"EnergyConfig":"Done"}
 ```
-In this case we can see we are in historique mode, no data will be send on frame reception keeping default config of telemetry.
+In this case we can see we are in historique mode, no data will be send (noraw) on frame reception keeping default config of telemetry.
 
 ## Energy from Teleinfo
 
-If correct mode and GPIO configuration are correct, you'll be able to see on main tasmota screen something like that 
+If correct mode and GPIO configuration are set, you'll be able to see on main tasmota screen something like that 
 
 ![](_media/teleinfo/teleinfo_energy_display.png)
 
@@ -120,9 +120,9 @@ Since we know (because it's on teleinfo frame) the current contract we can displ
 
 ### Default data
 
-If configuration is left by default (and if you have configured MQTT of course) you will receive a frame each time telemtry happens (menu configuration / configure logging / telemetry period ) which is by default every 5 minutes.
+If configuration is left by default (and if you have configured MQTT of course) you will receive a frame each time telemtry happens (menu **configuration -> configure logging -> telemetry period**) which is by default every 5 minutes.
 
-You can check on console, the frame received is sent every 5 minutes under `SENSOR` topic as a JSON string. This frame as all default tasmota fields and also a object ENERGY related to tamota Energy module.
+You can check on console, the frame received is sent every 5 minutes under `SENSOR` topic as a JSON string. This frame as all default tasmota fields and also a object ENERGY related to tasmota Energy module.
 
 ```
 17:28:45.907 MQT: emoncms/ch2i/factory/denky_D6C0C0/tele/SENSOR = {"Time":"2021-10-26T17:28:45","ENERGY":{"TotalStartTime":"2021-10-25T15:22:04","Total":9098.245,"Yesterday":6822.685,"Today":2275.560,"Period": 9,"Power":170,"Current":1.000,"Load":6},"TIC":{"ADCO":"021528603314","OPTARIF":"HC..","ISOUSC":15,"HCHC":920750,"HCHP":2275560,"PTEC":"HP..","IINST":1,"IMAX":2,"PAPP":170,"HHPHC":"A","MOTDETAT":0},"ESP32":{"Temperature":36.1},"TempUnit":"C"}
@@ -187,7 +187,7 @@ To limit teleinfo frame to one each 10 frames, you need to use `EnergyConfig Ski
 
 As you can see we now send one full frame every approx 17s, choose your limit depending on frame lenght (of course) and serial speed. In historique mode a frame takes about 1.2s to be received.
 
-!!! warning This works only if Raw mode has been selected with `EnergyConfig Full`.
+!!! warning "This works only if Raw mode has been selected with `EnergyConfig Full`."
 
 ### Relevant data
 
@@ -205,10 +205,10 @@ So we indroduced the `Changed` mode where only data changed from one frame to an
 
 As you can see we now only data changed is sent.
 
-!!! warning This works only if Raw mode has been selected with `EnergyConfig Full` and `Skip` mode should be disabled `EnergyConfig Skip 0` for this to works properly .
+!!! warning "This works only if Raw mode has been selected with `EnergyConfig Full` and `Skip` mode should be disabled `EnergyConfig Skip 0` for this to works properly."
 
 
-!!! tip Don't worry about other fields, they will be send on each telemetry data as usual.
+!!! tip "Don't worry about other fields, they will be send on each telemetry data as usual."
 
 ## Tasmota Rules examples
 
