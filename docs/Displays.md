@@ -146,7 +146,7 @@ Upload pictures to the file system with a ".jpg" extension, then give the path t
 !!! example "Create a picture button with a picture file named `wifi.jpg`"
     `b0:260:260:100:50:2:11:4:2:/wifi:`
 
-    The size of the picture is **not** scaled and the dimensions of the button must fit the picture size. Clicked buttons will invert the colors of the picture.  
+The size of the picture is **not** scaled and the dimensions of the button must fit the picture size. Clicked buttons will invert the colors of the picture.  
 
 You may specify a picture for selected and unselected button state. Picture filename ending with '1' is used for unselected state and ending '2' is for selected state.  
 
