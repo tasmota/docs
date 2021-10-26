@@ -104,7 +104,7 @@ First thing is to see how teleinfo is configured, for this you need to use `Ener
 17:24:56.766 TIC: Settings Mode:historique, Raw:noraw, Skip:0, Limit:0
 17:24:56.783 MQT: emoncms/ch2i/factory/denky_D6C0C0/stat/RESULT = {"EnergyConfig":"Done"}
 ```
-In, this case we can see we are in historique mode, no data will be send on 
+In this case we can see we are in historique mode, no data will be send on frame reception keeping default config of telemetry.
 
 ## Energy from Teleinfo
 
