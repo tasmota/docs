@@ -28,8 +28,8 @@ To enable Teleinfo, add the following line in your `user_config_override.h` and 
 But as I'm testing lot of boards, my preference goes to add my custom boards section into the file `platformio_tasmota_cenv.ini`
 
 
-For example a ESP8266 board with teleinfo and I2C display to display Energy data
-```
+For example on ESP8266 board with teleinfo and I2C display to display Energy data
+```ini
 [env:tasmota-tic-display]
 extends                     = env:tasmota
 platform_packages           = ${common.platform_packages}
@@ -130,7 +130,7 @@ You can check on console, the frame received is sent every 5 minutes under `SENS
 17:38:45.905 MQT: emoncms/ch2i/factory/denky_D6C0C0/tele/SENSOR = {"Time":"2021-10-26T17:38:45","ENERGY":{"TotalStartTime":"2021-10-25T15:22:04","Total":9098.265,"Yesterday":6822.685,"Today":2275.579,"Period": 9,"Power":170,"Current":1.000,"Load":6},"TIC":{"ADCO":"021528603314","OPTARIF":"HC..","ISOUSC":15,"HCHC":920750,"HCHP":2275579,"PTEC":"HP..","IINST":1,"IMAX":2,"PAPP":170,"HHPHC":"A","MOTDETAT":0},"ESP32":{"Temperature":36.7},"TempUnit":"C"}
 ```
 
-But in our case we have also a TIC object which contains all the frame recevied on teleinfo frame (last reveived value), for example in the frame above the TIC object is the following.
+But in our case we have also a TIC object which contains all the frame received on teleinfo frame (last reveived value), for example in the frame above the TIC object is the following.
 
 ```json
 {
@@ -224,6 +224,9 @@ TBD, example to manage Led from Green (no charge) to Red (full charge)
 
 TBD, any idea is welcome
 
+## Display info on display
+
+TBD, any idea is welcome
 
 ## Raw frames examples
 
