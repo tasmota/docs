@@ -18,7 +18,7 @@
 12 | ST7789 TFT display | SPI
 14 | SD1331 TFT display | SPI
 15 | [TM1637, TM1638 and MAX7219](TM163x) 7-segment displays | GPIO
-16 | Enable LilyGO T5 4.7" E-Paper display ESP32 device | :material-cpu-32-bit:
+16 | LilyGO T5 4.7" E-Paper display ESP32 device | :material-cpu-32-bit:
 17 | [Universal Display Driver](#universal-display-driver) | SPI or I^2^C
 18 | Interface to virtual display driver with [Berry](Berry) | :material-cpu-32-bit:
 
