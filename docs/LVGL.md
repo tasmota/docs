@@ -396,7 +396,7 @@ lv.start()
 
 # set background color to blue
 scr = lv.scr_act()
-scr.set_style_bg_color(lv_color(lv.COLOR_BLUE), lv.PART_MAIN | lv.STATE_DEFAULT)
+scr.set_style_bg_color(lv.color(lv.COLOR_BLUE), lv.PART_MAIN | lv.STATE_DEFAULT)
 
 # create a lv_img object and set it to Tasmota logo
 logo = lv_img(scr)
@@ -411,7 +411,7 @@ The logo is black, with anti-aliasing and transparency. You can now manipulate t
 ```python
 # recolor logo to white
 logo.set_style_img_recolor_opa(255, lv.PART_MAIN | lv.STATE_DEFAULT)
-logo.set_style_img_recolor(lv_color(lv.COLOR_WHITE), lv.PART_MAIN | lv.STATE_DEFAULT)
+logo.set_style_img_recolor(lv.color(lv.COLOR_WHITE), lv.PART_MAIN | lv.STATE_DEFAULT)
 
 # zoom by 125% - 100% is 256, so 125% is 320
 logo.set_zoom(300)

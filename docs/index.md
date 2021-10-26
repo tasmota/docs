@@ -34,7 +34,7 @@ The big number 10 is here and with such a big number comes stable ESP32 support 
 - Initial support for Tasmota Mesh (TasMesh) providing node/broker communication using ESP-NOW
 - Initial support for Wi-Fi extender
 - ESP32
-    - Support for ESP32 chips is now stable, ESP32-C3 support is promoted beta and ESP32-S2 is now in alpha with support for GPIOS
+    - Support for ESP32 chips is now stable, ESP32-C3 and ESP32-S2 support is promoted to beta and ESP32-S3 is still untested
     - official `tasmota32c3.bin` for ESP32-C3 with at least 4MB flash
     - support for (Yeelight) Mi Desk Pro using binary `tasmota32solo1.bin`
     - LVGL updated to v8.0.2

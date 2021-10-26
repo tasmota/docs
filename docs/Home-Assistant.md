@@ -13,7 +13,7 @@ Home Assistant has different options of adding Tasmota devices:
 
 1. Official Tasmota integration (**preferred**)
 2. Manual configuration by editing configuration.yaml
-3. MQTT discovery (_deprecated due to breaking changes for light in Home Assistant 2021.5_)
+3. MQTT discovery (_deprecated due to many breaking changes in Home Assistant_)
 
 ## Tasmota Integration
 

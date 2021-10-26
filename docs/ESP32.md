@@ -5,38 +5,29 @@ desription: Everything about Tasmota on ESP32
      Due to the scope and activity of development there might be breaking changes and incompatibilities between major and minor versions of Tasmota32. In case of problems first erase flash and serial flash the latest development binary.
 
 ## ESP32 Differences
-All ESP32 systems on a chip (SoC) are 32-bit MCUs with 2.4 GHz Wi-Fi & Bluetooth/Bluetooth LE built in. There are distinct product lines which are different from each other in varying degrees. 
+All ESP32 systems on a chip (SoC) are 32-bit MCUs with 2.4 GHz Wi-Fi & Bluetooth/Bluetooth LE built in. There are distinct product lines which differ from each other in varying degrees. See [ESP32 modules list](https://www.espressif.com/en/products/modules) for the full list.
 
 ### ESP32
+An ESP32 has two or one Xtensa® 32-bit LX6 microprocessor(s) with clock frequency ranging from 80 MHz to 240 MHz. Tasmota32 is initially developed and tested with the dual core ESP32-D0WD-V3 and later expanded to include single core or PSRAM versions. 
 
-Tasmota32 is initially developed and tested with dual core version of ESP32
-
-| Module          | Core    | Core clock | Flash (MB)     | PSRAM (MB) | Touch Sensor | Hall sensor |   |
-|---------------------------------|-------------------------|--------------------------|----------------|------------|--------------|-------------|-------------------|
-| [ESP32-WROOM-32E](_media/datasheets/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf)<br>[ESP32-WROOM-32UE](_media/datasheets/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf) | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16         | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
-| [ESP32-WROVER-E](_media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)<br>[ESP32-WROVER-IE](_media/datasheets/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf)   | ESP32-D0WD-V3 Dual Core | 240 MHz  | 4,8,16         | 8          | Yes          | Yes         | Bluetooth 4.2 LE  |
-| ESP32-MINI-1    | ESP32-U4WDH Single Core | 160 MHz  | 4              | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
-| [ESP32-SOLO-1](_media/datasheets/esp32-solo-1_datasheet_en.pdf)    | ESP32-S0WD Single Core  | 160 MHz  | 4              | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
-| [ESP32-WROOM-32SE](_media/datasheets/esp32-wroom-32se_datasheet_en.pdf)                | ESP32-D0WD Dual Core    | 240 MHz  | 4,8,16         | N/A        | Yes          | Yes         | Bluetooth 4.2 LE  |
-
-Single core SoCs do not work with standard binaries, for those use only `tasmota32solo1.bin` or compile your own binary using the tasmota32solo1 environment.
-
-ESP32 line is later expanded with [ESP32-PICO-V3](_media/datasheets/esp32-pico-v3_datasheet_en.pdf), [ESP32-PICO-V3-02](_media/datasheets/esp32-pico-v3-02_datasheet_en.pdf) and [ESP32-PICO-D4](http://espressif.com/sites/default/files/documentation/esp32-pico-d4_datasheet_en.pdf)
+!!! warning "Single core SoCs do not work with standard binaries, for those use only `tasmota32solo1.bin` or compile your own binary using the tasmota32solo1 environment."
 
 ### ESP32-S2
 A more cost-efficient version of ESP32, cut down to a single core and several dedicated hardware security features (eFuse, flash encryption, secure boot, signature verification, integrated AES, SHA and RSA algorithms). It has 43 available GPIOs. [Product page for ESP32-S2](https://www.espressif.com/en/products/socs/esp32-s2)
 
-!!! warning "Experimental support in Tasmota"
+!!! warning "Beta support in Tasmota"
 
 ### ESP32-S3
 Keeping the security improvements the S3 line now again features the dual core SoC with Bluetooth upgraded to V5 . [Product page for ESP32-S3](https://www.espressif.com/en/products/socs/esp32-s3). 
 
-!!! warning "Untested with Tasmota"
+!!! bug "Untested with Tasmota"
 
 ### ESP32-C3
-Unlike previous versions, C3 is a single-core Wi-Fi and Bluetooth 5 (LE) microcontroller SoC based on the open-source RISC-V architecture. It will be available as [ESP32-C3-MINI-1](_media/datasheets/esp32-c3-mini-1_datasheet_en.pdf) and [ESP32-C3-WROOM-02](_media/datasheets/esp32-c3-wroom-02_datasheet_en.pdf) modules. [Product page for ESP32-C3](https://www.espressif.com/en/products/socs/esp32-c3)
+Unlike previous versions, C3 is a single-core Wi-Fi and Bluetooth 5 (LE) microcontroller SoC based on the open-source RISC-V architecture. It is available as [ESP32-C3-MINI-1](_media/datasheets/esp32-c3-mini-1_datasheet_en.pdf) and [ESP32-C3-WROOM-02](_media/datasheets/esp32-c3-wroom-02_datasheet_en.pdf) modules. [Product page for ESP32-C3](https://www.espressif.com/en/products/socs/esp32-c3)
 
-!!! note "Stable with Tasmota but requires a specially compiled C3 only binary"
+!!! note "Beta Support in Tasmota"
+
+Use `tasmota32c3-` binaries for this line of chips.
 
 ## Exclusive Features
 
@@ -46,6 +37,9 @@ Tasmota will create an internal temperature sensor and display the values in the
 ```json
 {"Time":"2021-01-01T00:00:00","ESP32":{"Temperature":41.7},"TempUnit":"C"}
 ```
+### DAC
+
+[DAC](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/dac.html) GPIOs are supported through [Berry `gpio` module](Berry.md#dac-gpios).
 
 ### Hall Sensor
 ESP32 has a built in hall effect sensor that detects changes in the magnetic field in its surroundings. It is located behind the metal lid of the module and connected to GPIO36 and GPIO39. 
@@ -54,6 +48,10 @@ To enable set in module configuration or template:
 
  - GPIO36 as `HallEffect 1`
  - GPIO39 as `HallEffect 2`
+
+### I2S
+
+[Inter-IC Sound](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/i2s.html) or I2S is possible through [Berry `gpio` module](Berry.md#i2s)
 
 ### Touch Pins
 
@@ -84,8 +82,6 @@ You can download precompiled binaries:
   - the required [flash files](https://github.com/arendst/Tasmota/tree/firmware/firmware/tasmota32/ESP32_needed_files) _(not needed when using ESP_Flasher)_
 
 OTA upgrade from older versions of tasmota32 might fail due to significant changes in partition tables.
-
-Every OTA upgrade currently fails on tasmotasolo1.bin builds. Upgrade by File upload should work instead.
 
 ## Compiling
 

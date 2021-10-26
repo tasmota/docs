@@ -248,7 +248,6 @@ You've successfully flashed your device with Tasmota but now you need to connect
 
 === "Using Web UI"
 
-     #### Set up Wi-Fi 
     Tasmota provides a wireless access point for easy Wi-Fi configuration. 
 
     <img alt="Tasmota AP" src="../_media/wificonfig1.jpg" style="margin:10px;float:left;width:250px"></img>Connect your device to a power source and grab your smartphone (or tablet or laptop or any other web and Wi-Fi capable device). Search for a Wi-Fi AP named _**tasmota_XXXXXX-####**_ (where _XXXXXX_ is a string derived from the device's MAC address and _####_ is a number) and connect to it. _In this example the Wi-Fi AP is named **tasmota_3D5E26-7718**._ 
@@ -298,11 +297,9 @@ You've successfully flashed your device with Tasmota but now you need to connect
 
     Now is the time to set up [MQTT](MQTT) and the last remaining, but equally important, step:
 
-    #### Set up Device
-
     Set up your device's feature using a [Template](Templates) in **Configuration - Configure Template** or [Module](Modules) in **Configuration - Configure Module**.
 
-    #### Configure Other (optional)
+    **Configure Other (optional)**
 
     Configure your device name which is displayed in webUI and used for [Home Assistant discovery](Home-Assistant.md). 
 

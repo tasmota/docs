@@ -91,7 +91,7 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.mark
   - pymdownx.superfences
-  - pymdownx.snipp  ets
+  - pymdownx.snippets
   - pymdownx.tilde
   - meta
   - def_list
