@@ -2,7 +2,8 @@
 
 ## Supported Displays
 
-DisplayModel | Name | Interface
+| DisplayModel | Name | Interface
+:---: | --- | ---
 1 | LCD display |  I^2^C
 2 | SSD1306 OLED display | I^2^C
 3 | 8x8 MATRIX display | GPIO
