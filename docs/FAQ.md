@@ -208,7 +208,7 @@ In case you're using a template you created yourself or found in our Templates R
 
 ### Sensors do not show values
 Make sure your sensor is properly wired and the GPIOs assigned. 
-Your vanilla `tasmota.bin` doesn't have complete sensor support. Make sure you've installed tasmota-sensors.bin that support the largest number of sensors. Some sensors require enabling in the code and compiling your own binary. See [Builds](Builds) for a comprehensive list of supported components.
+Your vanilla `tasmota.bin` doesn't have complete sensor support. Make sure you've installed tasmota-sensors.bin that support the largest number of sensors. Some sensors require enabling in the code and compiling your own binary. See [Firmware-Builds](Firmware-Builds) for a comprehensive list of supported components.
 
 ### Timers trigger at the wrong time
 Tasmota devices must have a their time of day set properly in order for **any** timers to work properly. Check the log in the web UI Console to see if the device's time is set correctly. There are two elements to setting the time: 1. obtaining the UTC time, and, 2. local Daylight Saving Time policies.  

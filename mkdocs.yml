@@ -130,7 +130,7 @@ nav:
     - Device-Groups.md
     - Displays.md
     - Dynamic-Sleep.md
-    - I2C Devices: I2CDevices.md
+    - I2C Devices: I2CDEVICES.md
     - IR Communication: Tasmota-IR.md
     - LCD/DLP Projector Control: Projector.md
     - Lights.md
