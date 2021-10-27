@@ -74,6 +74,10 @@ extra:
       link: 'https://t.me/tasmota'
     - icon: fontawesome/brands/github-alt
       link: 'https://github.com/tasmota'
+  analytics:
+    provider: google
+    property: UA-140681905-2
+
 markdown_extensions:
   - admonition
   - toc:
@@ -96,9 +100,6 @@ markdown_extensions:
   - meta
   - def_list
 
-google_analytics:
-  - 'UA-140681905-2'
-  - 'auto'
 
 extra_css:
   - 'assets/css/anchor-fix.css'
