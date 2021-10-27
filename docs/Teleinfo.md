@@ -263,6 +263,6 @@ Documentation and reference of this shield are available on [tindie](https://www
 
 ## References
 
-You can find lot of information such as schematics and wiring diagrams on Charles's [blog](http://hallard.me/)
+You can find a lot of information, such as schematics and wiring diagrams, on Charles' [blog](http://hallard.me/)
 
 
