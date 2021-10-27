@@ -101,10 +101,11 @@ First thing is to see how teleinfo is configured, for this you need to use `Ener
 
 ```
 17:24:56.758 CMD: EnergyConfig
-17:24:56.766 TIC: Settings Mode:historique, Raw:noraw, Skip:0, Limit:0
+17:24:56.766 TIC: Settings Mode:historique, RX:GPIO23, EN:None, Raw:noraw, Skip:0, Limit:0
 17:24:56.783 MQT: emoncms/ch2i/factory/denky_D6C0C0/stat/RESULT = {"EnergyConfig":"Done"}
 ```
-In this case we can see we are in historique mode, no data will be send (noraw) on frame reception keeping default config of telemetry.
+In this case we can see we are in historique mode, RX data is coming on GPIO32 (it's an ESP32) and Enable Pin is not used.
+No MQTT raw frame will be sent (noraw) on teleinfo frame reception, so keeping default config of telemetry.
 
 ## Energy from Teleinfo
 
@@ -234,10 +235,33 @@ You can find various raw frames for standard and historique mode and different c
 
 ## Hardware information
 
+### Basic Schematics
+
 Classic connectivity of teleinfo can be done with following schematic, works with historique and standard mode.
 
-![Teleinfo Schematic](_media/teleinfo/teleinfo_sch.png)
+![Basic teleinfo Schematics](_media/teleinfo/teleinfo_sch.png)
 
-You can find information such as schematics and wiring diagrams on Charles Hallard [blog](http://hallard.me/)
+### DIY or ready made Shields 
+
+#### WeMos
+
+Wemos Mini D1 (ESP8266) and MH-ET Live ESP32 Mini Kit 
+
+![Wemos Teleinfo shield](_media/teleinfo/teleinfo_tic_shield.png)
+
+You can get more information about this shield on github [repository](https://github.com/hallard/WeMos-TIC)
+
+#### Raspberry Pi (Bare PCB)
+
+You can also use or buy tiny Raspberry Pi shield to connect Teleinfo output signal to Tasmota device RX Pin
+
+![PI Teleinfo shield](_media/teleinfo/teleinfo_pi_shield.png)
+
+Documentation and reference of this shield are available on [tindie](https://www.tindie.com/products/hallard/pitinfo/)
+
+
+## References
+
+You can find lot of information such as schematics and wiring diagrams on Charles's [blog](http://hallard.me/)
 
 
