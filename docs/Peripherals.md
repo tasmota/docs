@@ -117,7 +117,7 @@ The ESP8266 and ESP8285 have 17 GPIO pins (0-16) but several are [reserved or ha
 GPIO 1 and 3 are used as TX and RX of the hardware Serial port (UART), so in most cases, you can’t use them as normal I/O while sending/receiving serial data.
 GPIO 1, 2 and 3 will cause boot failure if LOW on boot - use with care.
 
-![best ESP8266 pins](https://github.com/thehookup/Wireless_MQTT_Doorbell/blob/master/GPIO_Limitations_ESP8266_NodeMCU.jpg)
+![best ESP8266 pins](https://raw.githubusercontent.com/thehookup/Wireless_MQTT_Doorbell/master/GPIO_Limitations_ESP8266_NodeMCU.jpg)
 
 #### Boot Mode Pins
 Some I/O pins have a special function during boot: They select 1 of 3 boot modes:
