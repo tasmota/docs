@@ -104,6 +104,7 @@ First thing is to see how teleinfo is configured, for this you need to use `Ener
 17:24:56.766 TIC: Settings Mode:historique, RX:GPIO23, EN:None, Raw:noraw, Skip:0, Limit:0
 17:24:56.783 MQT: emoncms/ch2i/factory/denky_D6C0C0/stat/RESULT = {"EnergyConfig":"Done"}
 ```
+
 In this case we can see we are in historique mode, RX data is coming on GPIO32 (it's an ESP32) and Enable Pin is not used.
 No MQTT raw frame will be sent (noraw) on teleinfo frame reception, so keeping default config of telemetry.
 

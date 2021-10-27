@@ -20,7 +20,7 @@ For a basic setup you only need to set **Host**, **User** and **Password** but i
 
 - **Host** = your MQTT broker address or IP (**mDNS is not available in the official Tasmota builds**, means no `.local` domain!) 
 - **Port** = your MQTT broker port (default port is set to 1883)
-- **Client** = device's unique identifier. In 99% of cases it's okay to leave it as is, however some Cloud-based MQTT brokers require a ClientID connected to your account.
+- **Client** = device's unique identifier. In 99% of cases it's okay to leave it as is, however some Cloud-based MQTT brokers require a ClientID connected to your account.  **Can not be identical to Topic!**
 - **User** = username for authenticating on your MQTT broker
 - **Password** = password for authenticating on your MQTT broker
 - **Topic** = unique identifying topic for your device (e.g. `hallswitch`, `kitchen-light`). `%topic%` in wiki references to this. **It is recommended to use a single word for the topic.**

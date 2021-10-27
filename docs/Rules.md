@@ -5,7 +5,7 @@ Tasmota provides a Rule feature heavily inspired by the _ESPEasy_ implementation
 Rules perform actions based on triggers (e.g., switch state change, temperature threshold, events like system boot, a defined timer elapsing, custom defined events, etc.) They are stored in flash and therefore will survive a reboot.
 
 !!! note
-    Most pre-compiled [builds](Builds) have the Rules feature enabled. *If you are >compiling your own firmware, in order to use rules, include `#define USE_RULES` in `user_config_override.h`.*
+    Most pre-compiled [builds](Firmware-Builds) have the Rules feature enabled. *If you are >compiling your own firmware, in order to use rules, include `#define USE_RULES` in `user_config_override.h`.*
 
 **List of [Rules Commands](Commands.md#rules)**  
 
