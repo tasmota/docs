@@ -76,7 +76,7 @@ extra:
       link: 'https://github.com/tasmota'
   analytics:
     provider: google
-    property: UA-140681905-2
+    property: G-8J08F8X90S
 
 markdown_extensions:
   - admonition
