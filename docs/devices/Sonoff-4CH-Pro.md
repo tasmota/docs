@@ -28,6 +28,9 @@ If you have 4CH R2 v1.0 hardware, the GPIO0 is available as L1 switch - you don'
 R3 module has no any pad, so use the pin of R21 on the board to connect to the ground during powering for 3 seconds and release in order to put a chip in flashing mode
 ![image](https://user-images.githubusercontent.com/563412/109331013-fce71f00-7864-11eb-91cd-6f775cbc33a4.png)
 
+If you like to use RF433 module is possible to direct connect SYN470R output to SDA (GPIO2), and then configure [RF Receiver](https://tasmota.github.io/docs/RF-Protocol/#receiving-rf-codes)
+![image](https://user-images.githubusercontent.com/3578202/139196247-4f67058f-3f2f-4d8e-81e7-f08dfc9595bb.jpg)
+
 ## Solving Sonoff 4CH Pro programing issues
 
 If you have problems to program the 4CH Pro, you might find below tips useful:
