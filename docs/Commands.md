@@ -604,7 +604,7 @@ DisplayModel<a class="cmnd" id="displaymodel"></a>|Set display model:<BR>`1` = [
 DisplayRefresh<a class="cmnd" id="displayrefresh"></a>|`1..7` Set time in seconds to update predefined content when using `DisplayMode` &ne; `0`
 DisplaySize<a class="cmnd" id="displaysize"></a>|`1..4` Set display scale-up size *(SSD1306  and ILI9341 only)*
 DisplayRotate<a class="cmnd" id="displayrotate"></a>|Set rotation angle<BR> `0` = 0°<BR> `1` = 90°<BR> `2` = 180°<BR> `3` = 270°
-DisplayText<a class="cmnd" id="displaytext"></a>|`<value>` = See [DisplayText use](Displays#displaytext-use)<br>For TM1637, TM1638 and MAX7219, see below
+DisplayText<a class="cmnd" id="displaytext"></a>|`<value>` = See [DisplayText use](Displays.md#displaytext)<br>For TM1637, TM1638 and MAX7219, see below
 DisplayText<br>*(TM1637, TM1638 and MAX7219)* | `text`[, `position`[, `length`]] <br>Clears and then displays basic text on the 7-segment display. <br><br> `length` can be `1` to `NUM_DIGITS` , <br> `position` can be `0` (left-most) to `NUM_DIGITS-1` (right-most) <br><br>  A caret(`^`) symbol in the text input is dispayed as the degrees(`°`) symbol. This is useful for displaying Temperature (or angle)! <br>See [TM163x](TM163x#commands-and-usage) for details.
 DisplayTextNC<br>*(TM1637, TM1638 and MAX7219)*  | `text`[, `position`[, `length`]] <br>Clears first, then displays text. Usage is same as above. <br>See [TM163x](TM163x#commands-and-usage) for details.
 DisplayType<a class="cmnd" id="displaytype"></a>|Select display sub-modules. [More info...](Displays.md)<br>For usage of this command with TM163x, see [TM163x](TM163x#displaytype) for details.
