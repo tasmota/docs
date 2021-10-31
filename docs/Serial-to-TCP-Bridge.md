@@ -1,6 +1,6 @@
 # Serial to TCP Bridge
 
-!!! info "Connect to a serial device over the network"
+!!! info "Connect to a serial device over the network, also known as ser2net"
 
 Needs `#define USE_TCP_BRIDGE`. This is available in the `zbbridge` build so you can use that or [compile your own build](Compile-your-build).
 
