@@ -630,9 +630,11 @@ end
 # BTN_STATE_CHECKED_PRESSED
 # BTN_STATE_CHECKED_DISABLED
 ```
+
 ## Multi-Zone Heating Controller
 
 This project is a multi-zone heating controller written entirely in berry. It demonstrates the use of the persist module for saving/loading data; the webserver module for creating a custom "Manage Heating" user interface; dynamic loading of HTML from the file system; subscribing to a variety of rule triggers (using tasmota.add_rule); the implementation of custom commands (using tasmota.add_cmnd). It also makes good use of time functionaity (via tasmota.rtc, tasmota.time_dump, tasmota.set_timer and tasmota.strftime). The project also includes an LCD I2C driver for running a basic 20x4 display. The entire driver is implemented using just the tasmota.wire_scan method.
 
-<https://github.com/Beormund/Tasmota32-Multi-Zone-Heating-Controller/>
+[https://github.com/Beormund/Tasmota32-Multi-Zone-Heating-Controller](https://github.com/Beormund/Tasmota32-Multi-Zone-Heating-Controller)
+
 
