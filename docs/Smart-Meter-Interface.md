@@ -303,6 +303,7 @@ Look down below for script examples based on the following metering devices:
 
 - [JANZ C3801](#janz-c3801-modbus) (SML - MODBus)
 - [EMH ED300L](#emh-ed300l-sml) (SML)
+- [Digimeto GS303](#digimeto-gs303-sml) (SML)
 - [Hager EHZ363, Apator Norax 3D](#hager-ehz363-apator-norax-3d-sml) (SML)
 - [Hager EHZ161](#hager-ehz161-obis) (OBIS)
 - [Landis + Gyr ZMR120AR](#landis-gyr-zmr120ares2r2sfcs-obis) (OBIS, changing the baud rate during operation)
@@ -375,6 +376,22 @@ The Tasmota SML script:
 2,770701000F0700FF@1,Aktuell,W,Power_curr,0  
 2,77070100010800FF@1000,Zählerstand Verb.,kWh,Tariflos,2  
 2,77070100020800FF@1000,Zählerstand Einsp.,kWh,Tariflos,2  
+#    
+```
+------------------------------------------------------------------------------
+
+### Digimeto GS303 (SML)  
+
+```
+>D
+>B
+=>sensor53 r
+>M 1
++1,3,s,0,9600,GS303
+1,77070100010800ff@1000,Total Consumed,KWh,Total_in,3
+1,77070100100700ff@1,Current Consumption,W,Power_cur,0
+1,77070100020800ff@1000,Total Delivered,KWh,Total_out,3
+1,7707010060320101@#,Service ID,,Meter_id,0|  
 #    
 ```
 
