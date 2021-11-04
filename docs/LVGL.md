@@ -437,6 +437,17 @@ end
 animate_logo()
 ```
 
+## Cookbook
+
+### Measuring user inactivity
+
+LVGL has a notion of screen inactivity, i.e. how long did the user not interact with the screen. This can be use to dim the display or turn it off after a moment of inactivity (like a screen saver). The time is in milliseconds. Full doc here: https://docs.lvgl.io/8/overview/display.html#inactivity
+
+``` python
+# time of inactivity in ms
+lv.disp().get_inactive_time()
+```
+
 ## Technical Details
 
 The code size impact is quite significant, so you probably need partitions with code at least set to 1856KB. Doing so leaves 320KB for file system on 4MB flash.
