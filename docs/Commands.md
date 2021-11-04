@@ -519,8 +519,8 @@ SetOption124<a class="cmnd" id="setoption124"></a>|Wiegand key pad stroke format
 SetOption125<a class="cmnd" id="setoption125"></a>|_ZbBridge only_ Hide bridge topic from zigbee topic (use with [`SetOption89`](#setoption89))<br>`1` = enable
 SetOption126<a class="cmnd" id="setoption126"></a>|Enable arithmetic mean over teleperiod for JSON temperature for DS18x20 sensors<BR>`1` = enable
 SetOption127<a class="cmnd" id="setoption127"></a>|Force Wi-Fi in no-sleep mode even if Sleep 0 is not enabled<BR>`1` = enable
-SetOption128<a class="cmnd" id="setoption128"></a>|Enable split total energy results [#13030](https://github.com/arendst/Tasmota/issues/13030)<BR>`1` = enable
-SetOption129<a class="cmnd" id="setoption129"></a>|Web referer check for HTTP API commands<BR>`0` = disabled<BR>`1` = enabled *(default)*
+SetOption128<a class="cmnd" id="setoption128"></a>|Web referer check for HTTP API commands<BR>`0` = disabled<BR>`1` = enabled *(default)*
+SetOption129<a class="cmnd" id="setoption129"></a>|Enable split total energy results [#13030](https://github.com/arendst/Tasmota/issues/13030)<BR>`1` = enable
 SetOption130<a class="cmnd" id="setoption130"></a>|Add heap size (and ESP32 fragmentation) to logging timestamp for debugging<BR>`1` = enable
 
 ### TuyaMCU
