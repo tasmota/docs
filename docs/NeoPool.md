@@ -27,7 +27,7 @@ The sensor shows the most of parameters such as the built-in display:
 ![](_media/xsns_83_neopool_s.png)
 
 Basic commands to control filtration and light are implemented.
-However, the sensor provides commands to read and write the NeoPool controller Modbus register, means that everyone has the option of implementing their own commands via their home automation system or using the Tasmota build-in possibilities with [Rules](Commands/#rules) and [Backlog](Commands/#the-power-of-backlog).
+However, the sensor provides commands to read and write the NeoPool controller Modbus register, means that everyone has the option of implementing their own commands via their home automation system or using the Tasmota build-in possibilities with [Rules](Commands#rules) and [Backlog](Commands#the-power-of-backlog).
 
 ## Configuration
 
