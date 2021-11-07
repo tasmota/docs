@@ -10,8 +10,12 @@ See full examples in the [Berry Cookbook](Berry-Cookbook.md)
 
 Berry is the next generation scripting for Tasmota. It is based on the open-source Berry project, delivering an ultra-lightweight dynamically typed scripting language designed for lower-performance embedded devices. 
 
-[**Berry Github**](https://github.com/Skiars/berry)
+[**Github**](https://github.com/Skiars/berry)
+[**Manual**](https://github.com/berry-lang/berry/wiki/Reference)
 
+!!! tip "Reference sheet"
+    Download [Berry Short Manual](https://github.com/Skiars/berry_doc/releases/download/latest/berry_short_manual.pdf) to get a list of basic functions and capabilities of Berry language
+    
 Berry Scripting allows simple and also advanced extensions of Tasmota, for example:
 
 - simple scripting 
@@ -36,11 +40,11 @@ Berry has the following advantages:
 - Simple: simple and natural MicroPython-eque syntax, supports garbage collection and easy to use FFI (foreign function interface).
 - RAM saving: With compile-time object construction, most of the constant objects are stored in read-only code data segments, so the RAM usage of the interpreter is very low when it starts.
 
-### Tasmota port
+## Tasmota Port
 
 Berry Scripting in only supported on Tasmota32 for ESP32. The RAM usage starts at ~10kb and will be later optimized. Berry uses PSRAM on ESP32 if available (PSRAM is external RAM attached to Esp32 via SPI, it is slower but larger than internal RAM.
 
-## Quick Tutorial
+### Quick Start
 
 Click on *Configuration* then *Berry Scripting Console* and enjoy the colorful Berry console, also called REPL (Read-Eval-Print-Loop).
 
@@ -50,7 +54,7 @@ Click on *Configuration* then *Berry Scripting Console* and enjoy the colorful B
 
 The console is not designed for big coding tasks but it's recommended to use a code editor when dealing with many, many lines of code. An extension for Visual Studio Code exists to make writing Berry scripts even easier with colored syntax. Download the entire [folder](https://github.com/berry-lang/berry/tree/master/tools/plugins/vscode/) and copy to VSCode extensions folder.
 
-### Getting familiar with the REPL
+### REPL Console
 
 Try typing simple commands in the REPL. Since the input can be multi-lines, press ++enter++ twice or click "Run" button to run the code. Use ++arrow-up++ and ++arrow-down++ to navigate through history of previous commands.
 
@@ -84,6 +88,64 @@ Meanwhile the Tasmota log shows:
 The light is bright
 ```
 
+## Lights and Relays
+
+Berry provides complete support for Relays and Lights.
+
+You can control individual Relays or lights with `tasmota.get_power()` and `tasmota.set_power()`.
+
+`tasmota.get_power()` returns an array of booleans representing the state of each relays and light (light comes last).
+
+`tasmota.set_power(relay, onoff)` changes the state of a single relay/light.
+
+!!! example "2 relays and 1 light"
+
+    ```python
+    > tasmota.get_power()
+    [false, true, false]
+
+    > tasmota.set_power(0, true)
+    true
+
+    > tasmota.get_power()
+    [true, true, false]
+    ```
+
+For light control, `light.get()` and `light.set` accept a structured object containing the following arguments:
+
+Attributes|Details
+:---|:---
+power|`boolean`<br>Turns the light off or on. Equivalent to `tasmota.set_power()`. When brightness is set to `0`, power is automatically set to off. On the contrary, you need to specify `power:true` to turn the light on.
+bri|`int range 0..255`<br>Set the overall brightness. Be aware that the range is `0..255` and not `0..100` as Dimmer.
+hue|`int 0..360`<br>Set the color Hue in degree, range 0..360 (0=red).
+sat|`int 0..255`<br>Set the color Saturation (0 is grey).
+ct|`int 153..500`<br>Set the white color temperature in mired, ranging from 153 (cold white) to 500 (warm white)
+rgb|`string 6 hex digits`<br>Set the color as hex `RRGGBB`, changing color and brightness.
+channels|`array of int, ranges 0..255`<br>Set the value for each channel, as an array of numbers
+
+When setting attributes, they are evaluated in the following order, the latter overriding the previous: `power`, `ct`, `hue`, `sat`, `rgb`, `channles`, `bri`.
+
+```python
+  # set to yellow, 25% brightness
+> light.set({"power": true, "hue":60, "bri":64, "sat":255})
+{'bri': 64, 'hue': 60, 'power': true, 'sat': 255, 'rgb': '404000', 'channels': [64, 64, 0]}
+
+  # set to RGB 000080 (blue 50%)
+> light.set({"rgb": "000080"})
+{'bri': 128, 'hue': 240, 'power': true, 'sat': 255, 'rgb': '000080', 'channels': [0, 0, 128]}
+
+  # set bri to zero, also powers off
+> light.set({"bri": 0})
+{'bri': 0, 'hue': 240, 'power': false, 'sat': 255, 'rgb': '000000', 'channels': [0, 0, 0]}
+
+  # chaning bri doesn't automatically power
+> light.set({"bri": 32, "power":true})
+{'bri': 32, 'hue': 240, 'power': true, 'sat': 255, 'rgb': '000020', 'channels': [0, 0, 32]}
+
+  # set channels as numbers (purple 12%)
+> light.set({"channels": [32,0,32]})
+{'bri': 32, 'hue': 300, 'power': true, 'sat': 255, 'rgb': '200020', 'channels': [32, 0, 32]}
+``` 
 ## Rules
 The rule function have the general form below where parameters are optional:
 
@@ -177,65 +239,6 @@ All times are in milliseconds. You can know the current running time in millisec
     Booh!
     ```
 
-## Lights and Relays
-
-Berry provides complete support for Relays and Lights.
-
-You can control individual Relays or lights with `tasmota.get_power()` and `tasmota.set_power()`.
-
-`tasmota.get_power()` returns an array of booleans representing the state of each relays and light (light comes last).
-
-`tasmota.set_power(relay, onoff)` changes the state of a single relay/light.
-
-!!! example "2 relays and 1 light"
-
-    ```python
-    > tasmota.get_power()
-    [false, true, false]
-
-    > tasmota.set_power(0, true)
-    true
-
-    > tasmota.get_power()
-    [true, true, false]
-    ```
-
-For light control, `light.get()` and `light.set` accept a structured object containing the following arguments:
-
-Attributes|Details
-:---|:---
-power|`boolean`<br>Turns the light off or on. Equivalent to `tasmota.set_power()`. When brightness is set to `0`, power is automatically set to off. On the contrary, you need to specify `power:true` to turn the light on.
-bri|`int range 0..255`<br>Set the overall brightness. Be aware that the range is `0..255` and not `0..100` as Dimmer.
-hue|`int 0..360`<br>Set the color Hue in degree, range 0..360 (0=red).
-sat|`int 0..255`<br>Set the color Saturation (0 is grey).
-ct|`int 153..500`<br>Set the white color temperature in mired, ranging from 153 (cold white) to 500 (warm white)
-rgb|`string 6 hex digits`<br>Set the color as hex `RRGGBB`, changing color and brightness.
-channels|`array of int, ranges 0..255`<br>Set the value for each channel, as an array of numbers
-
-When setting attributes, they are evaluated in the following order, the latter overriding the previous: `power`, `ct`, `hue`, `sat`, `rgb`, `channles`, `bri`.
-
-```python
-  # set to yellow, 25% brightness
-> light.set({"power": true, "hue":60, "bri":64, "sat":255})
-{'bri': 64, 'hue': 60, 'power': true, 'sat': 255, 'rgb': '404000', 'channels': [64, 64, 0]}
-
-  # set to RGB 000080 (blue 50%)
-> light.set({"rgb": "000080"})
-{'bri': 128, 'hue': 240, 'power': true, 'sat': 255, 'rgb': '000080', 'channels': [0, 0, 128]}
-
-  # set bri to zero, also powers off
-> light.set({"bri": 0})
-{'bri': 0, 'hue': 240, 'power': false, 'sat': 255, 'rgb': '000000', 'channels': [0, 0, 0]}
-
-  # chaning bri doesn't automatically power
-> light.set({"bri": 32, "power":true})
-{'bri': 32, 'hue': 240, 'power': true, 'sat': 255, 'rgb': '000020', 'channels': [0, 0, 32]}
-
-  # set channels as numbers (purple 12%)
-> light.set({"channels": [32,0,32]})
-{'bri': 32, 'hue': 300, 'power': true, 'sat': 255, 'rgb': '200020', 'channels': [32, 0, 32]}
-``` 
-
 #### A word on functions and closure
 
 Berry is a functional language, and includes the very powerful concept of a *closure*. In a nutshell, it means that when you create a function, it can capture the values of variables when the function was created. This roughly means that it does what intuitively you would expect it to do.
@@ -243,7 +246,7 @@ Berry is a functional language, and includes the very powerful concept of a *clo
 When using Rules or Timers, you always pass Berry functions.
 
 
-## Loading code from filesystem
+## Loading Filesystem
 
 You can upload Berry code in the filesystem using the ***Consoles - Manage File system*** menu and load them at runtime. Make careful to use `*.be` extension for those files.
 
@@ -307,11 +310,7 @@ end
 
 tasmota.add_driver(d2)
 ```
-## Using Berry
-
-See [Berry manual](https://github.com/berry-lang/berry/wiki/Reference)
-
-## Tasmota Extensions 
+## Tasmota Only Extensions 
 
 #### `log(msg:string [, level:int = 3]) -> string`
 
