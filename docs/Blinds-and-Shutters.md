@@ -462,21 +462,16 @@ Jarolift shutters operates by the 3 commands up/stop/down. Compile with the KeeL
   `Rule1 On Power1#state=0 DO KeeloqSendButton 4 endon On Power2#state=0 DO KeeloqSendButton 4 endon on Power1#state=1 DO KeeloqSendButton 8 endon on Power2#State=1 DO KeeloqSendButton 2 endon`
 
 ### Venetian Blind Support
-A 2nd shutter can be configured to support the adjustment of the horizontal tilt.  
-After movement the tilt will be restored if blind is not fully opened or closed via an additional rule.  
+All time based shutters (not stepper, pwm) can be enhanced with Venetian Blind functionality. The configuration need following parameters: angle of blinds during OPEN, angle of blinds during CLOSE. This are the max and the min values of the venetian blinds (e.g. -90° to 90°). Additionally the runtime is required from min to max and reverse. This is typically 1-2sec. The resolution of the time is 0.05sec. Duration in [sec] must be multiplied by 20. e.g. 1.2sec => 1.2 x 20 = 24. Two open and close the tilt you can define the angle for OPEN and the angle for CLOSE of the tilt.
+   `shuttertiltconfig1 -90 90 24 0 -90`
+ 
+Tilt configuration can be set for every shutter independently. The tilt can be set with one of the following commands:
+   `shuttertilt1 open` set tilt to defined open angle
+   `shuttertilt1 close` set tilt to defined close angle
+   `shuttertilt1 20` set tilt to 20° angle
+   
+If the shutter is moved from one position to another position the tilt will be restored AFTER the movement. If the shutter is fully opened or fully closed the tilt will be resetted. This means there is no tilt restore at the endpoints.
 
-Custom build with following options is needed:  
-  `#define USE_EXPRESSION`  
-  `#define SUPPORT_IF_STATEMENT`  
-
-Configuration of 2nd shutter:  
-  `ShutterRelay2 1`            // setup 2nd shutter at same relay as shutter 1  
-  `ShutterOpenDuration2 1.4`   // adjust to real duration  
-  `ShutterCloseDuration2 1.4`  // adjust to real duration  
-
-Add rule (requires rules with [Conditional Rules](Rules.md#conditional-rules) enabled :  
-```
-Rule1 on Shutter2#Position DO mem1 %value% ENDON on Shutter1#Position DO var2 %value% ENDON on Shutter1#Direction!=0 DO var1 %value% ENDON on Shutter1#Direction=0 DO IF (var1==1) var1 0; IF (var2!=100) ShutterSetOpen2; shutterposition2 %mem1% ENDIF ENDIF ENDON on Shutter1#Direction=0 DO IF (var1==-1) var1 0; IF (var2!=0) ShutterSetClose2; shutterposition2 %mem1% ENDIF ENDIF ENDON
 ```
 
 
