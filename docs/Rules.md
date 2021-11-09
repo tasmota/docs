@@ -621,7 +621,7 @@ The default Timer1..16 functionality allows for controlling one output to either
 Configure timer5 for rule execution when activated:  
 
 ```haskell
-Timer5 {"Arm":1,"Mode":0,"Time":"16:00","Days":"1111111","Repeat":1,"Action":3}
+Timer5 {"Enable":1,"Mode":0,"Time":"16:00","Days":"1111111","Repeat":1,"Action":3}
 ```
 
 #### Rule  
@@ -998,19 +998,19 @@ Used a combination of Clock Timers and Rule to do this.
 **Timer 1:** Power ON switch at Sunset  
 Powers on the switch at sunset with an offset of 20 minutes. Repeats every day.  
 ```haskell
-Timer1 {"Arm":1,"Mode":2,"Time":"-00:20","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":1}
+Timer1 {"Enable":1,"Mode":2,"Time":"-00:20","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":1}
 ```
 
 **Timer 2:** Power OFF switch at Night.  
 Turns power OFF at 23.00hrs. Repeats every day.  
 ```haskell
-Timer2 {"Arm":1,"Mode":0,"Time":"23:00","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":0}
+Timer2 {"Enable":1,"Mode":0,"Time":"23:00","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":0}
 ```
 
 **Timer 3:** Trigger Luminance Rule at Sunrise  
 Start watching the Lux sensor 15 minutes after sunrise.  
 ```haskell
-Timer3 {"Arm":1,"Mode":1,"Time":"00:15","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":3}
+Timer3 {"Enable":1,"Mode":1,"Time":"00:15","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":3}
 ```
 
 **Rule 1:** Main Rule to check Luminance  
