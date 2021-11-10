@@ -725,6 +725,23 @@ Current limitations (if you need extra features please open a feature request on
     [.../...]
     ```
 
+
+!!! example of downloading a file from Github
+ 
+    ``` python
+    > cl = webclient()
+    > cl.begin("https://raw.githubusercontent.com/tasmota/autoconf/main/esp32/M5Stack_Fire_autoconf.zip")
+    <instance: webclient()>
+
+    > r = cl.GET()
+    > print(r)
+    200
+
+    > cl.write_file("M5Stack_Fire_autoconf.zip")
+    950
+    ```
+
+
 Main functions:
 
 WebClient Function|Parameters and details
@@ -736,6 +753,7 @@ read<a class="cmnd" id="wire_read">|`(addr:int, reg:int, size:int) -> int or nil
 get\_size<a class="cmnd" id="wc_get_string">|`() -> int`<br>Once a connection succeeded (GET or POST), reads the size of the response as returned by the server in headers (before actually reading the content). A value `-1` means that the response size is unknown until you read it.
 get\_string<a class="cmnd" id="wc_get_string">|`() -> string`<br>Once a connection succeeded (GET or POST), reads the content of the response in a string. The response max size is 32KB, any response larger is dropped. Connection is closed and resources are freed after this call completes.
 close<a class="cmnd" id="wc_close">|`() -> nil`<br>Closes the connection and frees buffers. `close` can be called after `GET` or `POST` and is implicitly called by `get_string`. You don't usually need to use `close` unless you are only retrieving the result_code for a request and not interested in the content.
+write_file<a class="cmnd" id="wc_write_file">|`(file_name:string) -> int`<br>Downloads the binary content of the resource and stores it on the file system. Returns the number of bytes downloaded or -1 if an error occured
 
 Request customization:
 
