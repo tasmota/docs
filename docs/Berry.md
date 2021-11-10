@@ -366,6 +366,7 @@ Tasmota Function|Parameters and details
 tasmota.get\_option<a class="cmnd" id="tasmota_get_option"></a>|`(index:int) -> int`<br>Returns the value of `SetOption <index>`
 tasmota.wire\_scan<a class="cmnd" id="tasmota_wire_scan"></a>|`(addr:int [, index:int]) -> wire instance or nil`<br>Scan both I^2^C buses for a device of address addr, optionally taking into account disabled devices via `I2CDevice`. Returns a `wire` object corresponding to the bus where the device is, or `nil` if device is not connected or disabled.
 tasmota.i2c\_enabled<a class="cmnd" id="tasmota_i2c_enabled"></a>|`(index:int) -> bool`<br>Returns true if the I^2^C module is enabled, see I^2^C page.
+tasmota.arch<a class="cmnd" id="tasmota_arch"></a>|`() -> string`<br>Returns the name of the architecture. Currently can be `esp32`, `esp32s2`, `esp32s3`, `esp32c3`
 
 #### Functions to create custom Tasmota command
 
@@ -753,7 +754,7 @@ read<a class="cmnd" id="wire_read">|`(addr:int, reg:int, size:int) -> int or nil
 get\_size<a class="cmnd" id="wc_get_string">|`() -> int`<br>Once a connection succeeded (GET or POST), reads the size of the response as returned by the server in headers (before actually reading the content). A value `-1` means that the response size is unknown until you read it.
 get\_string<a class="cmnd" id="wc_get_string">|`() -> string`<br>Once a connection succeeded (GET or POST), reads the content of the response in a string. The response max size is 32KB, any response larger is dropped. Connection is closed and resources are freed after this call completes.
 close<a class="cmnd" id="wc_close">|`() -> nil`<br>Closes the connection and frees buffers. `close` can be called after `GET` or `POST` and is implicitly called by `get_string`. You don't usually need to use `close` unless you are only retrieving the result_code for a request and not interested in the content.
-write_file<a class="cmnd" id="wc_write_file">|`(file_name:string) -> int`<br>Downloads the binary content of the resource and stores it on the file system. Returns the number of bytes downloaded or -1 if an error occured
+write\_file<a class="cmnd" id="wc_write_file">|`(file_name:string) -> int`<br>Downloads the binary content of the resource and stores it on the file system. Returns the number of bytes downloaded or -1 if an error occured
 
 Request customization:
 
