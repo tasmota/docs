@@ -141,14 +141,14 @@ Save file, compile the custom binary and flash it
 ### USER_BACKLOG
 `USER_BACKLOG` allows a set of commands to be automatically executed when the binary is ran for the first time on blank device (no settings in flash) or after a settings reset using `reset 1`/`reset 2`. It should be defined as a list of commands separated by a `;`. No `Backlog` command is required. It can be used for example for settings which do not have a changeable default. An interesting usage is to automatically reconfigure a device from a saved configuration file right after a `reset 1`/`reset 2`. 
 
-Exemple:
+Example:
 ```c++
 #define USER_BACKLOG "WebGetConfig http://myserver/tasmota/conf/%id%.dmp"
 ```
 Will automatically load a configuration backup (*.dmp) file based on the MAC address of the device.
 
 ### USER_RULE
-If you need some rules to be automatically populated in you rbinary, you can define `USER_RULE<x>`.
+If you need some rules to be automatically populated in your binary, you can define `USER_RULE<x>`.
 ```c++
 #define USER_RULE1 "On Switch1#state DO publish cmnd/otherdevice/POWER %value% ENDON"
 ```
