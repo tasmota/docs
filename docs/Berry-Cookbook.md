@@ -637,4 +637,24 @@ This project is a multi-zone heating controller written entirely in berry. It de
 
 [https://github.com/Beormund/Tasmota32-Multi-Zone-Heating-Controller](https://github.com/Beormund/Tasmota32-Multi-Zone-Heating-Controller)
 
+## Ethernet Network Flipper
+Used on board with Ethernet. If both Wi-Fi and Ethernet are active, turn off Wi-Fi. Place code in `autoexec.be` to execute on boot. You can call the function from Berry console any time with `netflip()`.
+
+```
+def netflip()
+  var eth = tasmota.eth().find('ip') != nil   #1
+  if tasmota.wifi().find('ip') != nil == eth  #2
+    tasmota.cmd('Wifi ' .. (eth ? 0 : 1))     #3
+  end
+end
+tasmota.set_timer(30000,netflip)              #4
+```
+1. store variable "eth" with Ethernet status - "true" if Ethernet IP exists and "false" if not
+2. check if wifi status is true and compare to eth status
+3. send command `Wifi` with parameter depending on eth variable. `..` is to concatenate a string. See Berry [manualg(https://github.com/berry-lang/berry/wiki/Chapter-3#-operator-1)
+4. set a timer to execute the netflip function 30000ms (30 seconds) after loading `autoexec.be`
+
+
+
+
 
