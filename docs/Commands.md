@@ -342,11 +342,11 @@ CurrentHigh<a class="cmnd" id="currenthigh"></a>|`0` = disable current high thre
 CurrentLow<a class="cmnd" id="currentlow"></a>|`0` = disable current low threshold *(default)*<BR>`<value>` = set current low threshold value in milliamps
 CurrentSet<a class="cmnd" id="currentset"></a>|`<value>` = [calibrate](Power-Monitoring-Calibration) current to target value in mA
 EnergyExport<x\><a class="cmnd" id="energyexport"></a>|Export energy values<BR>
-EnergyToday<x\><a class="cmnd" id="energytoday"></a>|Reset Energy Today values<BR>`1` = reset<BR>`<value>` = set value
-EnergyTotal<x\><a class="cmnd" id="energytotal"></a>|Reset Energy Total values<BR>`1` = reset<BR>`<value>` = set value
+EnergyToday<x\><a class="cmnd" id="energytoday"></a>|Reset Energy Today values<BR>`0` = reset<BR>`<value>` = set value
+EnergyTotal<x\><a class="cmnd" id="energytotal"></a>|Reset Energy Total values<BR>`0` = reset<BR>`<value>` = set value
 EnergyReset&#60;x><a class="cmnd" id="energyreset"></a>|x = `1..5`<BR>`1` `<value>{,<time>}` = ((p)re)set values<BR>`2` `<value>{,<time>}` = ((p)re)set values for Yesterday<BR>`3` `<value>{,<time>}` = ((p)re)set values for Total<BR>`<value>` = `0..42949672` in watt-hours (Wh)<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value<BR><BR>`4` `<standard>`{,`<off-peak>`} = ((p)re)set tariff period values for Totals<BR>`5` `<standard>`{,`<off-peak>`} = ((p)re)set tariff period values for Exported
 EnergyRes<a class="cmnd" id="energyres"></a>|Energy sensor resolution<BR>`0..5` = maximum number of decimal places
-EnergyYesterday<x\><a class="cmnd" id="energyyesterday"></a>|Reset Energy Yesterday values<BR>`1` = reset<BR>`<value>` = set value
+EnergyYesterday<x\><a class="cmnd" id="energyyesterday"></a>|Reset Energy Yesterday values<BR>`0` = reset<BR>`<value>` = set value
 EnergyUsage<a class="cmnd" id="energyusage"></a>|Reset energy usage values<BR>`0` = reset<BR>`<value>` = set energy usage value
 FreqRes<a class="cmnd" id="freqres"></a>|Frequency sensor resolution<BR>`0..3` = maximum number of decimal places
 FrequencySet<a class="cmnd" id="frequencyset"></a>|`<value>` = [calibrate](Power-Monitoring-Calibration) frequency to a target value in Hz
