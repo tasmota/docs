@@ -100,7 +100,7 @@ Mqtt#Disconnected<a id="MqttDisconnected"></a>|when MQTT is disconnected
 Power1#Boot<a id="PowerBoot"></a>|`Relay1` state before Wi-Fi and MQTT are connected and before Time sync but after `PowerOnState` is executed. Power#Boot triggers before System#Boot.<BR>This trigger's value will be the last state of `Relay1` if [`PowerOnState`](Commands.md#poweronstate) is set to its default value (`3`).
 Power1#State<a id="PowerState"></a>|when a power output is changed<br>use `Power1#state=0` and `Power1#state=1` for comparison, not =off or =on<br>Power2 for Relay2, etc.
 Rotary1#Pos1<a id="Rotary"></a>|when rotary encoder change. See [Use a rotary encoder](#use-a-rotary-encoder).
-Rules#Timer=1<a id="RulesTimer"></a>|when countdown `RuleTimer1` expires.
+Rules#Timer=&lt;x\>|when countdown `RuleTimer<x>` expires (x = `1..8`).
 Switch1#Boot<a id="SwitchBoot"></a>|occurs after Tasmota starts before it is initializated.
 Switch1#State<a id="SwitchState"></a>|when a switch changes to state. Will not trigger if SwitchTopic is set.<br>use `Switch1#state=0` and `Switch1#state=1` for comparison, not =off or =on<br>`0` = OFF<BR>`1` = ON<BR>`2` = TOGGLE<BR>`3` = HOLD (`SwitchTopic 0` must be set for this to trigger)<BR>`4` = INC_DEC (increment or decrement dimmer)<BR>`5` = INV (change from increment to decrement dimmer and vice versa)<BR>`6` = CLEAR (button released for the time set with `SetOption32`)
 System#Boot<a id="SystemBoot"></a>|occurs once after Tasmota is fully intialized (after the INFO1, INFO2 and INFO3 console messages). `System#Boot` triggers after Wi-Fi and MQTT (if enabled) are connected. If you need a trigger prior to every service being initialized, use `Power1#Boot`
