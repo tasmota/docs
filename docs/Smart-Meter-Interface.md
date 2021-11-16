@@ -1134,7 +1134,25 @@ Example reading of the two-direction model using GPIO 3 - P_in power reading wil
 1,0-0:96.1.255*255(@#),Seriennummer,,serial,0
 #
 ```
+Alternative script running on a Wemos D1 mini on hardware serial pin 3 for the Q3DB1024 two direction.
+```
+>D
+>B
+=>sensor53 r
+>M 1
++1,3,o,0,9600,Haupt,1
+1,1-0:1.7.0*255(@1,P_in,W,P_in,18
+1,1-0:1.8.0*255(@1,E_in,kWh,E_in,19
+1,1-0:2.8.0*255(@1,E_out,kWh,E_out,19
+1,1-0:21.7.0*255(@1,L1,W,L1,18
+1,1-0:41.7.0*255(@1,L2,W,L2,18
+1,1-0:61.7.0*255(@1,L3,W,L3,18
+1,1-0:0.0.0*255(@1,Netzbetreiber-ID,,NetID,0
+1,0-0:96.1.255*255(@#),Seriennummer,,serial,0
+#    
+```    
 
+    
 Apply following patch to src/TasmotaSerial.cpp:
 ```
 --- a/lib/default/TasmotaSerial-3.2.0/src/TasmotaSerial.cpp
