@@ -8,7 +8,7 @@ Name|Description|Connection
 [**AHT10<BR>AHT15**](AHT1x.md) | Asair AHT10 / AHT15 Temperature and Humidity Sensor | I^2^C
 [**AM2301 / DHT21 <BR>AM2302 / DHT22<BR>AM2321**](AM2301) | Temperature and Humidity Sensor | gpio
 **AM2320** | Temperature and Humidity Sensor | gpio
-**AS608** | AS608 Optical and R503 Capacitive Fingerprint Sensor| I^2^C
+**AS608** | AS608 Optical and R503 Capacitive Fingerprint Sensor| serial
 [**AS3935**](AS3935) | Franklin Lightning Sensor| serial
 [**APDS-9960**](APDS-9960) |  Ambient Light, RGB Color and Proximity Sensor with Gesture Detection | I^2^C 
 [**AZ 7798**](AZ-7798) | CO~2~ Meter Datalogger
