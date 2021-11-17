@@ -316,8 +316,8 @@ You've successfully flashed your device with Tasmota but now you need to connect
      * **[Putty](https://www.putty.org/)** - popular client available on every platform
      * **[Minicom](https://www.acmesystems.it/minicom)** - one of many Linux terminals
 
-     !!! tip 
-         Enable _local echo_ so that you can see what is typed and transmitted to the device. Enable **Append CR+LF** since every request needs to end with `<CR><LF>`. 
+      !!! tip 
+          Enable _local echo_ so that you can see what is typed and transmitted to the device. Enable **Append CR+LF** since every request needs to end with `<CR><LF>`. 
 
     *In this example [Termite](https://www.compuphase.com/software_termite.htm) on Windows is used.*
 
@@ -351,8 +351,8 @@ You've successfully flashed your device with Tasmota but now you need to connect
 
     [Commands](Commands) and Backlog are powerful and in time you can learn to configure almost everything (NTP servers, longitude and latitude, custom device options, etc) with a few copy and paste moves.
 
-    !!! tip 
-        Keep your personal configuration in a text file and simply copy and paste the backlog commands to a newly flashed device.
+      !!! tip 
+          Keep your personal configuration in a text file and simply copy and paste the backlog commands to a newly flashed device.
 
 ## After Configuration
 
