@@ -123,6 +123,7 @@ if the script init fails an error code is reported:
 -3 = too many variables in total  
 -4 = not enough memory  
 -5 = variable name length too long in total  
+-6 = too many arrays defined  
 -7 = not enough memory  
 
 you may increase the number of allowed variables with defines in user_config_override  
@@ -332,6 +333,12 @@ A web user interface may be generated containing any of the following elements:
  `vn` = name of variable to hold button state  
  `txt1` = text of ON state of button  
  `txt2` = text of OFF state of button  
+**Pulldown:**   
+ `pd(vn label txt1 txt2 ... txtn)`  
+ `vn` = name of variable to hold selected state  
+ `label` = label text  
+ `txt1` = text of 1. entry  
+ `txt2` = text of 2. entry and so on  
 **Checkbox:**   
  `ck(vn txt)`  
  `vn` = name of variable to hold checkbox state  
