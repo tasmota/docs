@@ -34,13 +34,13 @@ USE_SCRIPT_FATFS_EXT | enables additional FS commands
 USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
 USE_FACE_DETECT | enables face detecting in ESP32 Webcam
 USE_SCRIPT_TASK | enables multitasking Task in ESP32
-USE_SCRIPT_I2C | enables I2C support
 USE_LVGL | enables support for LVGL
 USE_SCRIPT_GLOBVARS | enables global variables and >G section
 USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
 SML_REPLACE_VARS | enables posibility to replace the lines from the (SML) descriptor with Vars
 USE_SML_SCRIPT_CMD | enables SML script cmds
-USE_SCRIPT_I2C | enables support for I2C cmds
+USE_SCRIPT_I2C | enables I2C support
+USE_SCRIPT_SERIAL | enables support for serial io cmds
 USE_LVGL | enables support for LVGL
 USE_SCRIPT_TIMER | enables up to 4 Arduino timers (so called tickers)  
 SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
@@ -481,9 +481,29 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sf(F)` = sets the CPU Frequency (ESP32) to 80,160,240 Mhz, returns current Freq.  
 `s(x)` = explicit conversion from number x to string  
 I2C support #define USE_SCRIPT_I2C  
-`ia[AA]`, `ia2[AA]` test and set I2C device with adress AA (on BUS 1 or 2), returns 1 if device is present  
-`iw[aa val]` write val to register aa (1 Byte)  
-`ir[aa]`, `ir1[aa]`, `ir2[aa]`, `ir3[aa]` read 1..4 bytes from register aa   
+`ia(AA)`, `ia2(AA)` test and set I2C device with adress AA (on BUS 1 or 2), returns 1 if device is present  
+`iw(aa val)` write val to register aa (1 Byte)  
+`ir(aa)`, `ir1(aa)`, `ir2(aa)`, `ir3(aa)`, `ir4(aa)` read 1..4 bytes from register aa  
+Serial IO support #define USE_SCRIPT_SERIAL  
+`so(RXPIN TXPIN BR)` open serial port with RXPIN, TXPIN and baudrate BR with 8N1 serial mode (-1 for pin means dont use)  
+`so(RXPIN TXPIN BR MMM)` open serial port with RXPIN, TXPIN and baudrate BR and serial mode e.g 7E2 (all 3 modechars must be specified)  
+`sc()` close serial port  
+`sw(STR)` write the string STR to serial port  
+`swb(NUM)` write the number char code NUM to serial port  
+`sa()` returns number of bytes available on port  
+`sr()` read a string from serial port  
+`srb()` read a number char code from serial port  
+`sp()` read a number char code from serial port, dont remove it from serial input (peek)  
+`ttget(TNUM SEL)` get tasmota timer setting from timer TNUM (1 .. 16)  
+SEL:  
+  0 = time  
+  1 = time window  
+  2 = repeat  
+  3 = days  
+  4 = device  
+  5 = power  
+  6 = mode  
+  7 = arm  
 `mqtts` = MQTT connection status: `0` = disconnected, `>0` = connected  
 `wbut` = button status of watch side button (if defined USE_TTGO_WATCH)  
 `wdclk` = double tapped on display (if defined USE_TTGO_WATCH)  
