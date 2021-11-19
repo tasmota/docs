@@ -800,6 +800,12 @@ Module `webserver` also defines the following constants:
 
 See the [Berry Cookbook](Berry-Cookbook.md) for examples.
 
+### Adressable leds (WS2812, SK6812)
+
+There is native support for adressable leds via NeoPixelBus, with support for animations. Currently supported: WS2812, SK6812.
+
+Details are in [Berry leds](Berry_leds.md)
+
 ### `serial` class
 
 The `serial` class provides a low-level interface to hardware UART. The serial GPIOs don't need to be configured in the template.
