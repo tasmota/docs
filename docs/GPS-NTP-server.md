@@ -6,7 +6,8 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 ```
 #ifndef USE_GPS
 #define USE_GPS                                  // Add support for GPS and NTP Server for becoming Stratus 1 Time Source (+3k1 code, +132 bytes RAM)
-  #define USE_FLOG                               // Add support for GPS logging in OTA's Flash (Experimental) (+2k9 code, +8 bytes RAM)#endif
+  #define USE_FLOG                               // Add support for GPS logging in OTA's Flash (Experimental) (+2k9 code, +8 bytes RAM)
+#endif
 ```
 ----
 
