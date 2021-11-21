@@ -3,7 +3,7 @@
 !!! info "Berry Scripting is included in all Tasmota32 builds. It is not supported on ESP82xx"
 
 
-!!! info If you plan to code in Berry, you should enable `#define USE_BERRY_DEBUG` which will give you much more details when coding
+!!! info "If you plan to code in Berry, you should enable `#define USE_BERRY_DEBUG` which will give you much more details when coding"
 
 <img style="float:right;height:40px" alt="Berry logo" src="../_media/berry/berry.svg">
 
