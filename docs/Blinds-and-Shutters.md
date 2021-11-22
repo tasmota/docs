@@ -197,6 +197,9 @@ Use any other Tasmota device with buttons or switches to control remotely a shut
 
 ## Specific Configuration
 
+!!! note 
+    The PWM remains on even after the end position has been reached. The motor then permanently tries to hold the position and could thereby trigger noises or a slight "twitching". If this is not desired, you can switch off the PWM after reaching the end position with ```#define SHUTTER_CLEAR_PWM_ONSTOP```. 
+   
 ### Pulse Motors
 There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands.md#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
 
