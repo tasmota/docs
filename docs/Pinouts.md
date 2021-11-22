@@ -1,3 +1,4 @@
+
 # Wi-Fi Module Pinouts
 
 ## ESP82xx Based
@@ -15,6 +16,7 @@
 
 ### LM1 
 ![LM1 Pinout](_media/pinouts/LM1_pinout.jpg)
+![142852728-105aca43-656d-4d36-873e-b6509ed30bbf](https://user-images.githubusercontent.com/37398451/142852868-b2441028-2aa2-42fa-88bf-15fa9e4a649a.png)
 
 ### LM2
 ![LM2 Pinout](_media/pinouts/LM2_pinout.jpg)
@@ -45,7 +47,7 @@
 ![TYWE5P](_media/pinouts/TYWE5P.jpg)![TYWE5P Pinout](_media/pinouts/TYWE5P_pinout.jpg)
 
 ### PSF-B85/PSF-B01/PSF-B04
-![PSF-B85 Pinout](_media/pinouts/PSF-B85_pinout.jpg)
+![PSF-B85 pinout](https://user-images.githubusercontent.com/37398451/142852728-105aca43-656d-4d36-873e-b6509ed30bbf.png)
 
 ### ESP8266-S3
 ![ESP8266-S3 Pinout](_media/pinouts/ESP-8266-S3_pinout.jpg)
