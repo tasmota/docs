@@ -209,6 +209,12 @@ Stepper motors can also be used to operate shutters and blinds. Additionally you
 ### Servo Motors
 Servos are small devices with typical 180° or 360" rotation movement. The position will be drived by the PWM duty cycle time. This will all automatically calculated
 
+!!! note
+If you miss low angles (i.e 2°) you should be able to get this by changing the minimum `ShutterPWMRange`. If this does not help you can customize `PwmFrequency`. Normally for PWM servos, there is no calibration required, but you have the option to do a calibration. Check the documentation for shuttercallibration. Maybe `ShutterSetHalfway` is already enough. Otherwise you can do a fine granular calibration.
+
+!!! note
+If you change the shutteropenduration/closeduration the servo will operate slower, but now the minimum angle is lower.
+   
 [More info](https://github.com/arendst/Tasmota/discussions/10443#discussion-1627790)
 
 ### DC Motors
