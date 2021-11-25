@@ -471,6 +471,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `hx(x)` = converts x (0..65535) to a hex string  
 `hd("hstr")` = converts hex number string to a decimal number  
 `st(svar c n)` = string token - retrieve the n^th^ element of svar delimited by c  
+`ins(s1 s2)` = check if string s2 is contained in string s1, return -1 if not contained or position of conatined string  
 `sl(svar)` = gets the length of a string  
 `asc(svar)` = gets the binary value of 1. char of a string  
 `sb(svar p n)` = gets a substring from svar at position p (if p<0 counts from end) and length n  
@@ -494,11 +495,13 @@ I2C support #define USE_SCRIPT_I2C
 Serial IO support #define USE_SCRIPT_SERIAL  
 `so(RXPIN TXPIN BR)` open serial port with RXPIN, TXPIN and baudrate BR with 8N1 serial mode (-1 for pin means dont use)  
 `so(RXPIN TXPIN BR MMM)` open serial port with RXPIN, TXPIN and baudrate BR and serial mode e.g 7E2 (all 3 modechars must be specified)  
+`so(RXPIN TXPIN BR MMM BSIZ)` open serial port with RXPIN, TXPIN and baudrate BR and serial mode e.g 7E2 (all 3 modechars must be specified) ans serial IRW buffer size  
 `sc()` close serial port  
 `sw(STR)` write the string STR to serial port  
 `swb(NUM)` write the number char code NUM to serial port  
 `sa()` returns number of bytes available on port  
-`sr()` read a string from serial port  
+`sr()` read a string from serial port, all available chars up to string size  
+`sr(X)` read a string from serial port until charcode X, all available chars up to string size or until charcode X  
 `srb()` read a number char code from serial port  
 `sp()` read a number char code from serial port, dont remove it from serial input (peek)  
 `ttget(TNUM SEL)` get tasmota timer setting from timer TNUM (1 .. 16)  
