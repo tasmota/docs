@@ -481,6 +481,8 @@ Tilt configuration can be set for every shutter independently. The tilt can be s
    
 If the shutter is moved from one position to another position the tilt will be restored AFTER the movement. If the shutter is fully opened or fully closed the tilt will be resetted. This means there is no tilt restore at the endpoints.
 
-```
+Similar to shutterchange to make relative movements there is also a `shuttertiltchange` with the same behavior. 
+   
+If the shutter is operated with wall buttons or the web interface and stopped during a tilte change before the shutter starts moving the NEW tilt position is stored. Now any additional position movements will restore this new tilt position. This makes is possible with small ON/OFF to change the tilt and with long ON/OFF to change the position and retain the tilt after movement.
 
 
