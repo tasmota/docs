@@ -660,6 +660,7 @@ ShutterToggle&#60;x><a class="cmnd" id="shuttertoggle"></a>|Toggle the shutter -
 ShutterToggleDir&#60;x><a class="cmnd" id="shuttertoggledir"></a>|Toggle the shutter - close the shutter when it previously moved to open, open it otherwise
 ShutterTiltConfig&#60;x><a class="cmnd" id="shuttertiltconfig"></a>|`<min> <max> <Tiltduration> <openposition> <closeposition>` *(default = `0 0 0 0 0`)*<BR>Configure the tilt for venetian blinds. Min/man values must be in the range of -90° to 90°. Open and Close position must be part of the defined range between min and max. Tiltduration defines the time the shutter needs to change the tilt from min to max value. This time has to been multiplied by 20. E.g. 1.2sec = 1.2 x 20 = 24. Example defines tilt on shutter 2: `shuttertiltconfig2 -90 90 24 0 90`
 ShutterTilt&#60;x><a class="cmnd" id="shuttertilt"></a>|Set the tilt position `<value>` (between min and max), `OPEN`, `CLOSE`. Definition please see `shuttertiltconfig`
+ShutterTiltChange&#60;x><a class="cmnd" id="shuttertiltchange"></a>|`-100..100` Moves the shuttertilt from the current position relativly in %. If the resulting tilt is below min or above max it will be capped. Command can also be executed during movement and will change the tilt at target position.
 See also| [`SetOption80`](#setoption80) - Enable shutter support
 
 ### Zigbee
