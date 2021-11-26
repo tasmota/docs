@@ -25,8 +25,8 @@ The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?
 
 Some devices, such as [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU), [D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html) or [M5Stack products](https://m5stack.com/), have an USB upload port and the serial-to-USB adapter built in.
 
-Many CH340 devices will not work, the "golden CH340G" has a voltage regulator on it to supply enough power to the ESP device - many do not. The ESP requires at least 150mA, many 3.3V serial programmers do not supply this much current as many serial programming tasks do not require a large amount of power.
-<img src="../_media/golden-ch340g.png" style="margin:5px;float:right;width:200px"></img>
+Many CH340G <img src="../_media/golden-ch340g.png" style="margin:5px;float:right;width:200px"></img>
+devices will not work, the "golden CH340G" has a voltage regulator on it to supply enough power to the ESP device - many do not. The ESP requires at least 150mA, many 3.3V serial programmers do not supply this much current as many serial programming tasks do not require a large amount of power.
 
 When using an external 3.3V supply, simply ensure the ground (GND) of both are connected, this ensures a common ground. A PC power supply can be a source for 3.3V DC power.
 
