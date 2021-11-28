@@ -823,7 +823,7 @@ IfxPassword<a class="cmnd" id="ifxpassword"></a>|`<value>` =  set Influxdb V1 an
 IfxBucket<a class="cmnd" id="ifxbucket"></a>|`<value>` =  set Influxdb V2 and bucket name
 IfxOrg<a class="cmnd" id="ifxorg"></a>|`<value>` =  set Influxdb V2 and organization
 IfxToken<a class="cmnd" id="ifxtoken"></a>|`<value>` =  set Influxdb V2 and token
- |TelePeriod sets InfluxDB update interval
+IfxPeriod<a class="cmnd" id="ifxperiod"></a>|`<value>`<BR>= `0` (default) : use Teleperiod value as publication interval<BR>= `10`..`3600` : set a different publication interval<br>Note: Even when `IfxPeriod 0` is used, publication is not necesseraly performed at the time as the telemetry message.
 
 
 
