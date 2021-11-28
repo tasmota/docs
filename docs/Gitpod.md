@@ -39,8 +39,7 @@ To modify the stock configuration:
 
 1. Select the `/tasmota` folder in the Explorer (1) pane
 2. Create a new file called `user_config_override.h`
-3. In the Editor (2) pane, add, change, or remove anything you need in your configuration file to define your own settings. Refer to the `user_config_override_sample.h` file as well as `my_user_config.h` for `#define` options ([sample](https://pastebin.com/M5KPPWAJ)). You can find a list of Tasmota features and settings listed [here]
-(Firmware-Builds). Define the features you require in your configuration file.
+3. In the Editor (2) pane, add, change, or remove anything you need in your configuration file to define your own settings. Refer to the `user_config_override_sample.h` file as well as `my_user_config.h` for `#define` options ([sample](https://pastebin.com/M5KPPWAJ)). You can find a list of Tasmota features and settings listed in the [builds table](Firmware-Builds). Define the features you require in your configuration file.
 4. Click 'File' on the menu bar and 'Save' your edits.
 
 ### Prepare the IDE for Compilation
