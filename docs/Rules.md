@@ -1420,6 +1420,37 @@ MQT: stat/mqttTopic/POWER = OFF
 
 ------------------------------------------------------------------------------
 
+### Processing JSON received from (Software)SerialBridge
+
+When using SerialBridge _(or SoftwareSerialBrigde)_, the received string will be published to Rules as SerialReceived _(or SSerialReceived)_. If the string starts with a `{` then Tasmota will parse the string as a JSON and make the different keys available for Rules. For example with the following string `{"DeviceID":"TM182","Temp":25.3,"Hum":50}`,
+it is possible to use any of the keys in the trigger.
+```
+rule1
+  ON SSerialReceived#DeviceID DO var1 %value% ENDON
+  ON SSerialReceived#Temp DO var2 %value% ENDON
+  ON SSerialReceived#Hum DO publish /some/topic/%var1% {"Temperature":%var2%,"Humidity":%value%} ENDON
+```
+
+The 1st and 2nd rules store the values for `Device` and `Temp` into variables. The last key triggers the 3rd rule, here re-publication on a different topic.
+
+Execution:
+```
+12:51:48.050 MQT: tele/nodemcu/SSERIALRECEIVED = {"SSerialReceived":{"DeviceID":"TM182","Temp":25.3,"Hum":50}}
+12:51:48.064 RUL: SSERIALRECEIVED#DEVICEID performs "var1 TM182"
+12:51:48.071 MQT: stat/nodemcu/VAR = {"Var1":"TM182"}
+12:51:48.083 RUL: SSERIALRECEIVED#TEMP performs "var2 25.3"
+12:51:48.091 MQT: stat/nodemcu/VAR = {"Var2":"25.3"}
+12:51:48.104 RUL: SSERIALRECEIVED#HUM performs "publish /some/topic/TM182 {"Temperature":25.3,"Humidity":50}"
+12:51:48.110 MQT: /some/topic/TM182 = {"Temperature":25.3,"Humidity":50}
+```
+
+!!! note 
+  It is important that the receive string strictly starts with the opening `{`. If other characters, such as
+  spaces or new line are inserted before, Tasmota will not par as a JSON. Characters after the 
+  closing `}` are not a problem.
+
+------------------------------------------------------------------------------
+
 ### Using BREAK to simulate IF..ELSEIF..ELSE..ENDIF
 
 ``BREAK`` is an alternative to ``ENDON``. ``BREAK`` will stop the execution for the triggers that follow. If a trigger that ends with ``BREAK`` fires, then the following triggers of that rule will not be executed. This allows to simulate ``IF..ELSEIF..ELSE..ENDIF``
