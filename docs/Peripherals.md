@@ -24,7 +24,7 @@ Assign a [component](Components) to a GPIO.
    
 - `GPIO14 2` configures sensor AM2301 to GPIO14_    
 - `Backlog GPIO14 5; GPIO4 6` sets I<sup>2</sup>C SCL to GPIO14 and I<sup>2</sup>C SDA to GPIO4
-   Tasmota will auto-detect all connected and supported I<sup>2</sup>C devices. If you have conflicting I<sup>2</sup>C addresses see [I2CDevices](I2CDevices)
+   Tasmota will auto-detect all connected and supported I<sup>2</sup>C devices. If you have conflicting I<sup>2</sup>C addresses see [I2CDevices](I2CDEVICES)
 
 _[`GPIOs All`](Commands.md#gpios) shows list of all available components by name and index_
 
