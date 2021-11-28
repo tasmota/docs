@@ -24,7 +24,7 @@ If your switch is powering up but is showing a solid-blink-reset pattern see [th
 This is the board layout for the third design iteration of the Sonoff Basic.
 ![](https://user-images.githubusercontent.com/34340210/60516116-13615f80-9cab-11e9-914b-d9509d6bbe20.jpg)
 
-The Sonoff Basic R3 uses the ESP8255 chip. With this version, the mains power reverts to solder rails directly on the PCB. It also moves the Wi-Fi module to a separate PCB mounted on the main PCB. It makes access to the underside of the serial interface contacts quite difficult.
+The Sonoff Basic R3 uses the ESP8285 chip. With this version, the mains power reverts to solder rails directly on the PCB. It also moves the Wi-Fi module to a separate PCB mounted on the main PCB. It makes access to the underside of the serial interface contacts quite difficult.
 
 This version of the device supports the new [Itead DIY architecture](https://www.youtube.com/watch?v=fRS-ukCgD_I) which [allows OTA firmware upload](../Sonoff-DIY.md). The device was reviewed by DigiblurDIY in [this video](https://www.youtube.com/watch?v=A-WcIz47Lco).
 
