@@ -1,6 +1,6 @@
 # SPS30 Particulate sensor
 
-!!! info "This feature is **not** included in any prebuilt Tasmota variant (check [BUILDS.md](https://github.com/arendst/Tasmota/blob/development/BUILDS.md))"
+!!! info "This feature is **not** included in any prebuilt Tasmota variant (check [builds](Firmware-Builds))"
 
 You must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 ```cpp

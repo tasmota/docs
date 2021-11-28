@@ -47,7 +47,7 @@ Tasmota installed from a precompiled binary needs to be configured to work with 
 
 ### Needed Software
 #### Tasmota Firmware Binary
-Download a Tasmota firmware binary file (.bin). If you're not sure which binary is the right one for you just start with `tasmota.bin` or consult the [builds table](Builds) to see which features you need. 
+Download a Tasmota firmware binary file (.bin). If you're not sure which binary is the right one for you just start with `tasmota.bin` or consult the [builds table](Firmware-Builds) to see which features you need. 
 
 Official release binaries can be downloaded from [firmware server](http://ota.tasmota.com/tasmota/release/). 
 

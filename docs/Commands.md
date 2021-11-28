@@ -104,7 +104,7 @@ A `Backlog` command without an argument clears an possible existing `Backlog` qu
 
 !!! warning
     If you're using Tasmota versions earlier current release some of the commands might not work.
-    Availability of some features and their associated commands depend on the firmware build. Please consult the [builds](Builds) table for a reference of which features are available for each firmware variant.
+    Availability of some features and their associated commands depend on the firmware build. Please consult the [builds](Firmware-Builds) table for a reference of which features are available for each firmware variant.
 
 !!! note
     Almost all settings using string parameters (except `Rule` and `MqttFingerprint`) share a common area with max 698 chars, i.e. the total length of all these parameters is limited to this size (you will be noted if this limit is exceeded).
@@ -157,7 +157,7 @@ Gpios<a class="cmnd" id="gpios"></a>|Show list of available [components](Compone
 Gpio<a class="cmnd" id="gpio"></a>|Show current [component](Components#gpio-conversion) assignments of the Module's configurable GPIO<BR>`255` / `All` Show [component](Components#gpio-conversion) assignments for all the devices available GPIO<BR>
 Gpio<x\><a class="cmnd" id="gpiox"></a>|`<component>` = assign a [component](Components) to `Gpio<x>`
 I2Cscan<a class="cmnd" id="i2cscan"></a>|Scan I<sup>2</sup>C bus and show addresses for found devices
-I2CDriver<a class="cmnd" id="i2cdriver"></a>|Enable / Disable I<sup>2</sup>C sensor drivers. [Read more...](I2CDevices)<BR>
+I2CDriver<a class="cmnd" id="i2cdriver"></a>|Enable / Disable I<sup>2</sup>C sensor drivers. [Read more...](I2CDEVICES)<BR>
 LogHost<a class="cmnd" id="loghost"></a>|`1` = reset [syslog](https://www.sigmdel.ca/michel/ha/rpi/syslog_en.html) host to firmware default (`SYS_LOG_HOST`)<BR>`<value>` = set syslog host
 LogPort<a class="cmnd" id="logport"></a>|`1` = reset [syslog](https://www.sigmdel.ca/michel/ha/rpi/syslog_en.html) port to firmware default (`SYS_LOG_PORT`)<BR>`2..32766` = set syslog port
 Modules<a class="cmnd" id="modules"></a>|Show available modules by name and index
