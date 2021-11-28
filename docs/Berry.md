@@ -2,6 +2,9 @@
 
 !!! info "Berry Scripting is included in all Tasmota32 builds. It is not supported on ESP82xx"
 
+
+!!! info "If you plan to code in Berry, you should enable `#define USE_BERRY_DEBUG` which will give you much more details when coding"
+
 <img style="float:right;height:40px" alt="Berry logo" src="../_media/berry/berry.svg">
 
 See full examples in the [Berry Cookbook](Berry-Cookbook.md)
@@ -368,6 +371,7 @@ tasmota.get\_option<a class="cmnd" id="tasmota_get_option"></a>|`(index:int) -> 
 tasmota.wire\_scan<a class="cmnd" id="tasmota_wire_scan"></a>|`(addr:int [, index:int]) -> wire instance or nil`<br>Scan both I^2^C buses for a device of address addr, optionally taking into account disabled devices via `I2CDevice`. Returns a `wire` object corresponding to the bus where the device is, or `nil` if device is not connected or disabled.
 tasmota.i2c\_enabled<a class="cmnd" id="tasmota_i2c_enabled"></a>|`(index:int) -> bool`<br>Returns true if the I^2^C module is enabled, see I^2^C page.
 tasmota.arch<a class="cmnd" id="tasmota_arch"></a>|`() -> string`<br>Returns the name of the architecture. Currently can be `esp32`, `esp32s2`, `esp32s3`, `esp32c3`
+tasmota.read\_sensors<a class="cmnd" id="tasmota_read_sensors"></a>|`([show_sensor:bool]) -> string`<br>Returns the value of sensors as a JSON string similar to the teleperiod. The response is a string, not a JSON object. The reason is that some sensors might produce invalid JSON. It's your code's responsibility to try parsing as JSON.<br>An optional boolean parameter (false by default) can be set to trigger a display of the new values (i.e. sends a FUNC_SHOW_SENSOR` event to drivers).
 
 #### Functions to create custom Tasmota command
 

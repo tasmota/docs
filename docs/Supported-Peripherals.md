@@ -5,7 +5,7 @@ Name|Description|Connection
 [**A4988**](A4988-Stepper-Motor-Controller)| Stepper Motor Controller 
 [**ADC**](ADC) | Analog input over A0 pin | analog
 **ADS111x** | A/D Converter | I^2^C
-[**AHT10<BR>AHT15**](AHT1x.md) | Asair AHT10 / AHT15 Temperature and Humidity Sensor | I^2^C
+[**AHT1x**](AHT1x.md)<BR>**AHT2x** | Asair AHT10/AHT15/AHT20/AHT21/AHT25 Temperature and Humidity Sensor | I^2^C
 [**AM2301 / DHT21 <BR>AM2302 / DHT22<BR>AM2321**](AM2301) | Temperature and Humidity Sensor | gpio
 **AM2320** | Temperature and Humidity Sensor | gpio
 **AS608** | AS608 Optical and R503 Capacitive Fingerprint Sensor| serial

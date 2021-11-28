@@ -197,6 +197,9 @@ Use any other Tasmota device with buttons or switches to control remotely a shut
 
 ## Specific Configuration
 
+!!! note 
+    The PWM remains on even after the end position has been reached. The motor then permanently tries to hold the position and could thereby trigger noises or a slight "twitching". If this is not desired, you can switch off the PWM after reaching the end position with ```#define SHUTTER_CLEAR_PWM_ONSTOP```. 
+   
 ### Pulse Motors
 There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands.md#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
 
@@ -206,6 +209,12 @@ Stepper motors can also be used to operate shutters and blinds. Additionally you
 ### Servo Motors
 Servos are small devices with typical 180° or 360" rotation movement. The position will be drived by the PWM duty cycle time. This will all automatically calculated
 
+!!! note
+If you miss low angles (i.e 2°) you should be able to get this by changing the minimum `ShutterPWMRange`. If this does not help you can customize `PwmFrequency`. Normally for PWM servos, there is no calibration required, but you have the option to do a calibration. Check the documentation for shuttercallibration. Maybe `ShutterSetHalfway` is already enough. Otherwise you can do a fine granular calibration.
+
+!!! note
+If you change the shutteropenduration/closeduration the servo will operate slower, but now the servo also achieves small angle changes.
+   
 [More info](https://github.com/arendst/Tasmota/discussions/10443#discussion-1627790)
 
 ### DC Motors
@@ -472,6 +481,8 @@ Tilt configuration can be set for every shutter independently. The tilt can be s
    
 If the shutter is moved from one position to another position the tilt will be restored AFTER the movement. If the shutter is fully opened or fully closed the tilt will be resetted. This means there is no tilt restore at the endpoints.
 
-```
+Similar to shutterchange to make relative movements there is also a `shuttertiltchange` with the same behavior. 
+   
+If the shutter is operated with wall buttons or the web interface and stopped during a tilte change before the shutter starts moving the NEW tilt position is stored. Now any additional position movements will restore this new tilt position. This makes is possible with small ON/OFF to change the tilt and with long ON/OFF to change the position and retain the tilt after movement.
 
-
+Similar to shutterposition there is a minimum runtime of the motor required that TASMOTA can control. This is 0.2sec. Because the tiltmovement from one position into the other takes often about 1sec it is very common that you cannot make small tilt changes of 10° or sometimes even 20". 
