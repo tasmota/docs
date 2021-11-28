@@ -9,7 +9,7 @@ In other words, ensure that there is a good reason to mess with a working instal
 !!! tip "Backup before upgrading"
     Any time you upgrade it is highly recommended to [back up your device settings](#backing-up-settings). That is easily done from the webUI using **Configuration - Backup Config**.
 
-If you wish to switch to a different [build](Builds) or use development branch you need to download a binary file (gzipped or regular) or change the ***OTA Url*** link.
+If you wish to switch to a different [build](Firmware-Builds) or use development branch you need to download a binary file (gzipped or regular) or change the ***OTA Url*** link.
 
 Download binaries from:
 

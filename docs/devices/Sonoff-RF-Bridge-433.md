@@ -39,7 +39,7 @@ The RF upgrade requires wiring the bridge and then flashing the firmware via the
 <img src="https://github.com/arendst/arendst.github.io/raw/master/media/sonoff_bridge_rffw_upgrade.png" width="300">
 
 #### Flashing RF Firmware
-1. Make sure you have previously flashed a Tasmota binary built with `RF_FLASH`. Refer to the [builds table](https://github.com/arendst/Tasmota/blob/development/BUILDS.md) for pre-compiled binaries which include this feature. Otherwise the "Magic byte is not 0xE9" error will occur.
+1. Make sure you have previously flashed a Tasmota binary built with `RF_FLASH`. Refer to the [builds table](../Firmware-Builds) for pre-compiled binaries which include this feature. Otherwise the "Magic byte is not 0xE9" error will occur.
 2. Set the module type to `Sonoff Bridge (25)`
 3. Connect two wires (this will be different depending on the `Sonoff RF Bridge 433` hardware version):
     - For `R1`: Connect `GPIO4 to C2Ck` and `GPIO5 to C2D`.

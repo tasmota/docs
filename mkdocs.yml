@@ -74,6 +74,10 @@ extra:
       link: 'https://t.me/tasmota'
     - icon: fontawesome/brands/github-alt
       link: 'https://github.com/tasmota'
+  analytics:
+    provider: google
+    property: G-8J08F8X90S
+
 markdown_extensions:
   - admonition
   - toc:
@@ -91,14 +95,11 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.mark
   - pymdownx.superfences
-  - pymdownx.snipp  ets
+  - pymdownx.snippets
   - pymdownx.tilde
   - meta
   - def_list
 
-google_analytics:
-  - 'UA-140681905-2'
-  - 'auto'
 
 extra_css:
   - 'assets/css/anchor-fix.css'
@@ -130,7 +131,7 @@ nav:
     - Device-Groups.md
     - Displays.md
     - Dynamic-Sleep.md
-    - I2C Devices: I2CDevices.md
+    - I2C Devices: I2CDEVICES.md
     - IR Communication: Tasmota-IR.md
     - LCD/DLP Projector Control: Projector.md
     - Lights.md

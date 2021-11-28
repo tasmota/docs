@@ -14,7 +14,7 @@ Either download the latest Tasmota Source code from https://github.com/arendst/T
 `git clone https://github.com/arendst/Tasmota.git`
 
 ## Select the environment
-The default environment configuration can be used to easily generate Tasmota firmware variants (tasmota, sensors, display, etc.). If you're not sure which binary is the right one for you, consult the [builds table](Builds) or just start with `tasmota.bin`. To build and/or flash exactly one of these, use the `-e` command line argument (e.g., `-e tasmota-sensors`). 
+The default environment configuration can be used to easily generate Tasmota firmware variants (tasmota, sensors, display, etc.). If you're not sure which binary is the right one for you, consult the [builds table](Firmware-Builds) or just start with `tasmota.bin`. To build and/or flash exactly one of these, use the `-e` command line argument (e.g., `-e tasmota-sensors`). 
 
 # Compile and upload
 Once all the prerequisites are in place, compiling and uploading is one simple command. Execute this from within the `Tasmota` source code directory:  
