@@ -485,4 +485,4 @@ Similar to shutterchange to make relative movements there is also a `shuttertilt
    
 If the shutter is operated with wall buttons or the web interface and stopped during a tilte change before the shutter starts moving the NEW tilt position is stored. Now any additional position movements will restore this new tilt position. This makes is possible with small ON/OFF to change the tilt and with long ON/OFF to change the position and retain the tilt after movement.
 
-
+Similar to shutterposition there is a minimum runtime of the motor required that TASMOTA can control. This is 0.2sec. Because the tiltmovement from one position into the other takes often about 1sec it is very common that you cannot make small tilt changes of 10° or sometimes even 20". 
