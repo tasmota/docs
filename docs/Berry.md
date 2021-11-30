@@ -265,7 +265,9 @@ If a precompiled bytecode (extension `.bec`) is present of more recent than the 
 
 You can easily create a complete Tasmota driver with Berry.
 
-As a convenience, a skeleton class `Driver` is provided. A Driver responds to messages from Tasmota. For each message type, the method with the same name is called.
+As a convenience, a skeleton class `Driver` is provided. A Driver responds to messages from Tasmota. For each message type, the method with the same name is called. Actually you can register any class as a driver, it does not need to inherit from `Driver`; the call mechanism is based on names of methods that must match the name of the event to be called.
+
+Driver methods are called with the following parameters: `f(cmd, idx, payload, raw)`. `cmd` is a string, `idx` an integer, `payload` a Berry object representation of the JSON in `payload` (if any) or `nil`, `raw` is a string. These parameters are meaninful to a small subset of events:
 
 - `every_second()`: called every second
 - `every_100ms()`: called every 100ms (i.e. 10 times per second)
@@ -278,6 +280,7 @@ As a convenience, a skeleton class `Driver` is provided. A Driver responds to me
 - `button_pressed()`: called when a button is pressed
 - `web_sensor()`: send sensor information as JSON or HTML
 - `save_before_restart()`: called just before a restart
+- `set_power_handler(cmd, idx)`: called whenever a Power command is made. `idx` contains the index of the relay or light. `cmd` can be ignored.
 - `display()`: called by display driver with the following subtypes: `init_driver`, `model`, `dim`, `power`.
 
 Then register the driver with `tasmota.add_driver(<driver>)`.
