@@ -522,6 +522,8 @@ SetOption127<a class="cmnd" id="setoption127"></a>|Force Wi-Fi in no-sleep mode 
 SetOption128<a class="cmnd" id="setoption128"></a>|Web referer check for HTTP API commands<BR>`0` = disabled<BR>`1` = enabled *(default)*
 SetOption129<a class="cmnd" id="setoption129"></a>|Enable split total energy results [#13030](https://github.com/arendst/Tasmota/issues/13030)<BR>`1` = enable
 SetOption130<a class="cmnd" id="setoption130"></a>|Add heap size (and ESP32 fragmentation) to logging timestamp for debugging<BR>`1` = enable
+SetOption131<a class="cmnd" id="setoption131"></a>|(Tuya) Allow save dimmer = 0 received by MCU<BR>`1` = enable
+SetOption132<a class="cmnd" id="setoption132"></a>|When MQTT Tls is enabled, forces fingerprint validation of server identity instead of checking the identitfy against a certificate authority (CA)<BR>`1` = Fingerprint, `0` = CA
 
 ### TuyaMCU
 
