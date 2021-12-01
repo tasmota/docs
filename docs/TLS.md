@@ -87,7 +87,7 @@ Main limitations are:
 
 - Your SSL/TLS server must support TLS 1.2 and the `ECDHE_RSA_WITH_AES_128_GCM_SHA2566` cipher - which is the case with the default Mosquitto configuration
 - The server certificate must have an RSA private key (max 2048 bits) and the certificate must be signed with RSA and SHA256 hash. This is the case with default LetsEncrypt certificates. ESP32 supports by default RSA private keys up to 4096 bits, ESP8266 must be compiled with option `-DUSE_4K_RSA` to support 4096 private keys.
-- Your SSL/TLS should support TLS 1.2 MFLN to limit buffer to 1024 bytes. If MFLN is not supported, it will still work well, as long as the server does not send any message above 1024 bytes
+- Your SSL/TLS should support TLS 1.2 MFLN to limit buffer to 1024 bytes. If MFLN is not supported, it will still work well, as long as the server does not send any message above 1024 bytes. On ESP32 buffers are raised to 2048 bytes.
 
 -----------
 
