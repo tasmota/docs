@@ -1,7 +1,5 @@
 # LVGL in less than 10 minutes with Tasmota
 
-Tasmota is a widely used open-source firmware for ESP8266 and EPS32 based devices. It supports a wide variety of devices, sensors and integrations to Home Automation and Cloud services. Tasmota firmware is downloaded more than 200,000 times each month, and has an active and growing community.
-
 In 2021, Tasmota added full support of LVGL for ESP32 based devices. It also introduced the [Berry scripting language](https://github.com/berry-lang/berry/wiki/Reference), a small-footprint language similar to Python and fully integrated in Tasmota. A comprehensive mapping of LVGL in Berry language is available, similar to the mapping of Micropython.
 
 The tutorial below illustrates how to install Tasmota on M5Stack devices (based on ESP32) and run your first LVGL application in Berry - all in less than 10 minutes.
