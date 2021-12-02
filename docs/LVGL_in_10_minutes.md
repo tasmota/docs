@@ -55,7 +55,7 @@ The next step can be done with a phone or a computer.
 
 - Connect to temporary the wifi access point with a name starting with `tasmota-...`
 
-![](_media/lvgl/Tasmota_wifi_ap.jpg)
+![](_media/lvgl/Tasmota_wifi_ap.png)
 
 - You should be automatically brought to the Wifi configuration page. If not, try connecting to `192.168.4.1`
 
@@ -63,11 +63,11 @@ The next step can be done with a phone or a computer.
 
 - Select your wifi network (yes, my wifi is named `Tasmota`...), enter the password and hit `Save`. If all goes well, you should see the IP address of Tasmota and be redirected to it.
 
-![](_media/lvgl/Tasmota_ip.jpg)
+![](_media/lvgl/Tasmota_ip.png)
 
 - You should now see the Tasmota main screen.
 
-![](_media/lvgl/Tasmota_main.jpg)
+![](_media/lvgl/Tasmota_main.png)
 
 ## Configure Tasmota for M5Stack
 
@@ -75,15 +75,15 @@ Tasmota is based on general purpose firmwares, you now need to configure specifi
 
 - Go to Tasmota main screen and click on `Configuration`
 
-![](_media/lvgl/Tasmota_config.jpg)
+![](_media/lvgl/Tasmota_config.png)
 
 - Then click on `Auto-configuration`. You are now on the Auto-configuration page. Select `M5Stack Fire` or `M5Stack Core2`. Then click on `Apply configuration`.
 
-![](_media/lvgl/Tasmota_autoconf.jpg)
+![](_media/lvgl/Tasmota_autoconf.png)
 
 The device restarts and you should be back to Tasmota main page. The screen should have been configured (you should see a short flash on the screen).
 
-![](_media/lvgl/Tasmota_main2.jpg)
+![](_media/lvgl/Tasmota_main2.png)
 
 ## Try a LVGL demo app
 
