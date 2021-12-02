@@ -8,7 +8,7 @@ The tutorial below illustrates how to install Tasmota on M5Stack devices (based 
 
 We will use nice [M5Stack](https://m5stack.com/) devices that integrate ESP32 and a 320x240 display, with touchscreen or physical buttons depending on the device.
 
-![](_media/lvgl/M5Stack.png)
+![](_media/lvgl/M5Stack.png){ width="50" }
 
 ## Flash Tasmota-lvgl on the device
 
