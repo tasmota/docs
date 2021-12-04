@@ -16,6 +16,6 @@ Detailed instructions for setup are in these two xdrv files: [`tasmota/xdrv_48_t
 
 The ESP8266 will run the PID algorithm at 1 cycle per second, which is much faster than is needed for the sort of processes Sonoff devices are usually associated with.  It rather clobbers the Tasmota terminal output in the web browser at that rate so it is getting near to the limit.  The maximum anyone is likely to need it running at is maybe once every 5 seconds, and the majority of home IoT applications probably nearer once per minute would be sufficient, so the device is well up to the task.
 
-Help with using the PID algorithm and with loop tuning can be found at  http://blog.clanlaw.org.uk/2018/01/09/PID-tuning-with-node-red-contrib-pid.html  This is directed towards using the algorithm in the node-red node node-red-contrib-pid but the algorithm here is based on the same code so the tuning technique described there should work just the same.
+Help with using the PID algorithm and with loop tuning can be found at  http://blog.clanlaw.org.uk/pid-loop-tuning.html  This is directed towards using the algorithm in the node-red node node-red-contrib-pid but the algorithm here is based on the same code so the tuning technique described there should work just the same.
 
 Due to limited hardware availability this has so far only been tested in a Sonoff Basic with a TH10, and a Sonoff Mini with a DS18B20 connected. If there are any issues running this on other hardware let us know.
