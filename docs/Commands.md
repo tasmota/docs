@@ -191,7 +191,7 @@ UfsRename<a class="cmnd" id="ufsrename"></a>|Rename SD card or Flash FS file if 
 UfsRename2<a class="cmnd" id="ufsrename2"></a>|Rename only Flash FS file if available
 UfsRun<a class="cmnd" id="ufsrun"></a>|Run file
 UfsSize<a class="cmnd" id="ufssize"></a>|Filesystem size in kb
-UfsType<a class="cmnd" id="ufstype"></a>|Get filesystem type<BR>`0` = none<BR>`1` = SD card<BR>`2` = Flash file
+UfsType<a class="cmnd" id="ufstype"></a>|Get filesystem type<BR>`0` = none<BR>`1` = SD card<BR>`2` = Flash file<BR>`3` = LittleFS
 Upgrade<a class="cmnd" id="upgrade"></a>|`1` = download firmware from `OtaUrl` and restart<BR>`<value>` = download firmware from `OtaUrl` if <value\> is higher than device version
 Upload<a class="cmnd" id="upload"></a>|`1` = download firmware from `OtaUrl` and restart<BR>`<value>` = download firmware from `OtaUrl` if <value\> is higher than device version
 WebGetConfig<a class="cmnd" id="webgetconfig"></a>|`<url>` = pull a configuration `.dmp`  file from a HTPP URL<BR>[More information...](https://github.com/arendst/Tasmota/pull/13034)
