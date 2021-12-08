@@ -47,6 +47,7 @@ SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall
 LARGE_ARRAYS | enables arrays of up to 1000 entries instead of max 127  
 SCRIPT_LARGE_VNBUFF | enables to use 4096 in stead of 256 bytes buffer for variable names  
 USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
+USE_FEXTRACT | enables array extraction from database  fxt(...)  
 USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
 ----
 
@@ -470,6 +471,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `hn(x)` = converts x (0..255) to a hex nibble string  
 `hx(x)` = converts x (0..65535) to a hex string  
 `hd("hstr")` = converts hex number string to a decimal number  
+`hf("hstr")` = converts hex float number string to a decimal number  
+`hf("hstr" r)` = converts hex float number string (reverse byte order) to a decimal number  
 `st(svar c n)` = string token - retrieve the n^th^ element of svar delimited by c  
 `ins(s1 s2)` = check if string s2 is contained in string s1, return -1 if not contained or position of conatined string  
 `sl(svar)` = gets the length of a string  
@@ -530,10 +533,8 @@ SEL:
 `wcs` = send this line to webpage (WebContentSend)  
 `rapp` = append this line to MQTT (ResponseAppend)  
 `wm` = contains source of web request code e.g. 0 = Sensor display (FUNC_WEB_SENSOR)  
-
-`ia(addr)` = test and set i2c address ia2(addr) for bus 2 on ESP32    
-`ir(reg)` = read i2c register default = uint8, ir2(), ir3() read number of bytes  
-`iw(reg val)` = write i2c register default = uint8, iw2(), iw3() write number of bytes   
+  
+`acp(dst src)` = copy array   
 
 `sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
 `sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
@@ -814,7 +815,15 @@ The script itself is also stored on the file system with a default size of 8192 
 `res=fsi(sel)` gets file system information, sel=0 returns total media size, sel=1 returns free space both in kB   
 `fra(array fr)` reads array from open file with fr (assumes tab delimeted entries)  
 `fwa(array fr)` writes array to open file with fr (writes tab delimited entries)  
-
+`fz(fr)` returns file size  
+`fa(fr)` returns number of available bytes in open file stream  
+`fs(fr pos)` seek to file position pos  
+`fwb(byte fr)` write byte to file  
+`frb(fr)` read byte from file  
+`frw(fr url)` read file from web url  
+`fxt(fr ts_from ts_to col_offs accum array1 array2 ... arrayn)` read arrays from csv file from timestamp to timestamp with column offset and accumulate values into arrays1 .. N, assumes csv file with timestamp in 1. column and data values in colums 2 to n.(#define USE_FEXTRACT)  
+  
+  
 **Extended commands**   (+0,9k flash)  
 `#define USE_SCRIPT_FATFS_EXT`  
 `fmd("fname")` make directory fname  
