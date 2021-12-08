@@ -1,11 +1,18 @@
 This driver alows the control of Eqiva TRV's (i.e. Thermostat Radiator Valve). Compatible models are:
 
-[not in Tasmota source yet see here](https://github.com/btsimonh/Tasmota/tree/EQ3_2020-02-04)
-
 * Eqiva eQ-3 Bluetooth Smart (141771E0/141771E0A)
 * Eqiva eQ-3 Bluetooth Smart(UK Version) (142461D0)
 
 Other Eqiva EQ3 models should work as well, but make sure you select a Bluetooth model as there are also non-Bluetooth models.
+
+### Compiling from source
+In order to have EQ3 valves working when compiling from source you need to add these define in `user_config_override.h`:
+```
+#ifdef USE_EQ3_ESP32
+   #undef USE_EQ3_ESP32
+#endif
+#define USE_EQ3_ESP32
+```
 
 ### Setup
 Before you can use the TRV you will need to enable Bluetooth on the TRV:
