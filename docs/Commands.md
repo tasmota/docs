@@ -194,7 +194,7 @@ UfsSize<a class="cmnd" id="ufssize"></a>|Filesystem size in kb
 UfsType<a class="cmnd" id="ufstype"></a>|Get filesystem type<BR>`0` = none<BR>`1` = SD card<BR>`2` = Flash file<BR>`3` = LittleFS
 Upgrade<a class="cmnd" id="upgrade"></a>|`1` = download firmware from `OtaUrl` and restart<BR>`<value>` = download firmware from `OtaUrl` if <value\> is higher than device version
 Upload<a class="cmnd" id="upload"></a>|`1` = download firmware from `OtaUrl` and restart<BR>`<value>` = download firmware from `OtaUrl` if <value\> is higher than device version
-WebGetConfig<a class="cmnd" id="webgetconfig"></a>|`<url>` = pull a configuration `.dmp`  file from a HTPP URL<BR>[More information...](https://github.com/arendst/Tasmota/pull/13034)
+WebGetConfig<a class="cmnd" id="webgetconfig"></a>|`<url>` = pull a configuration `.dmp`  file from a HTTP URL<BR>[More information...](https://github.com/arendst/Tasmota/pull/13034)
 WebLog<a class="cmnd" id="weblog"></a>|`0` = disable web logging<BR> `1` = show only error messages<BR> `2` = show error and info messages *(default)*<BR>`3` = show error, info and debug messages<BR>`4` = show error, info and more debug messages
 See also|[`SetOption68`](#setoption68) - PWM Channel control<BR>[`SetOption76`](#setoption76) - DeepSleep disable bootcount incrementing
 
