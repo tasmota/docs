@@ -910,7 +910,8 @@ Command|Parameters
 Wc<a class="cmnd" id="wc"></a>|Query all camera settings
 WcBrightness<a class="cmnd" id="wcbrightness"></a>|`-2..+2` = set picture brightness
 WcContrast<a class="cmnd" id="wccontrast"></a>|`-2..+2` = set picture contrast
-WcMirror<a class="cmnd" id="wcmirror"></a>|Mirror camera. <BR>`0` = disable *(default)*<BR>`1` = enable
+WcFlip<a class="cmnd" id="wcflip"></a>|Flip camera image. <BR>`0` = disable *(default)*<BR>`1` = enable
+WcMirror<a class="cmnd" id="wcmirror"></a>|Mirror camera image. <BR>`0` = disable *(default)*<BR>`1` = enable
 WcResolution<a class="cmnd" id="wcresolution"></a>|Set camera resolution.<BR>`0` = 96x96 (96x96)<BR>`1` = QQVGA2 (128x160)<BR>`2` = QCIF (176x144)<BR>`3` = HQVGA (240x176)<BR>`4` = QVGA (320x240)<BR>`5` = CIF (400x296)<BR>`6` = VGA (640x480)<BR>`7` = SVGA (800x600)<BR>`8` = XGA (1024x768)<BR>`9` = SXGA (1280x1024)<BR>`10` = UXGA (1600x1200)
 WcSaturation<a class="cmnd" id="wcsaturation"></a>|`-2..+2` = set picture saturation
 WcStream<a class="cmnd" id="wcstream"></a>|Control streaming<BR>`0` = stop<BR>`1` = start
