@@ -46,7 +46,7 @@ such as: changing Wifi setting, MQTT settings, Templates & GPIO, etc. Commands t
 will create a boot loop which will force Tasmota to automatically disable `autoexec.bat` and other settings.
 See [SetOption36](Commands#setoption36) for more details.
 
-Commands must be kept one command per line and they will be executed sequentially.
+Commands must be kept one command per line and they will be executed sequentially. Lines starting with semicolon are ignored as comments.
 
 ### display.bat
 

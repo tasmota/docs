@@ -181,7 +181,7 @@ Status0<a class="cmnd" id="status0"></a>|`0` = show all status information in a 
 SysLog<a class="cmnd" id="syslog"></a>|`0` = disable syslog logging *(default)*<BR> `1` = show only error messages<BR> `2` = show error and info messages<BR>`3` = show error, info and debug messages<BR>`4` = show error, info and more debug messages
 Template<a class="cmnd" id="template"></a>|Show current [Template](Templates)<BR>`0` = create template from active module<BR>`x` = create template from a [supported module](Modules)<BR>`255` = merge current module and template settings into new template<BR>`{ ... }` = store template in a [JSON payload](Templates#anatomy-of-a-template)<BR>Does not activate the template. To activate use `Module 0`.
 Time<a class="cmnd" id="time"></a>|`0` = enable NTP *(default)*<BR>`1` = format JSON message timestamp in ISO format<BR>`2` = format JSON message timestamp in both ISO and Epoch format<BR>`3` = format JSON message timestamp in Epoch format<BR>`4` = format JSON message timestamp in milliseconds<BR>`<value>` = disable NTP and set UTC time as epoch value if greater than `1451602800` (January 1, 2016)
-TimeStd<BR>TimeDst<a class="cmnd" id="timestd"></a><a class="cmnd" id="timedst"></a>|Set policies for the beginning of daylight saving time (Dst) and return back to standard time (Std)&emsp; <BR>`0` = reset parameters to firmware defaults<BR>`H`,`W`,`M`,`D`,`h`,`T`<BR>   `H` = hemisphere (`0` = northern hemisphere / `1` = southern hemisphere)<BR>   `W` = week (`0` = last week of month, `1..4` = first .. fourth)<BR>   `M` = month (`1..12`)<BR>   `D` = day of week (`1..7` `1` = sunday `7` = saturday)<BR>   `h` = hour (`0..23`)<BR>   `T` = timezone (`-780..780`) (offset from UTC in **MINUTES** - 780min / 60min=13hrs)<BR>_Example:_ `TIMEDST 1,1,10,1,2,660`<BR>_If timezone is **NOT** 99, DST is not used (even if displayed) [see](https://github.com/arendst/Tasmota/issues/8528#issuecomment-633247984)
+TimeStd<BR>TimeDst<a class="cmnd" id="timestd"></a><a class="cmnd" id="timedst"></a>|Set policies for the beginning of daylight saving time (Dst) and return back to standard time (Std)&emsp; <BR>`0` = reset parameters to firmware defaults<BR>`H`,`W`,`M`,`D`,`h`,`T`<BR>   `H` = hemisphere (`0` = northern hemisphere / `1` = southern hemisphere)<BR>   `W` = week (`0` = last week of month, `1..4` = first .. fourth)<BR>   `M` = month (`1..12`)<BR>   `D` = day of week (`1..7` `1` = sunday `7` = saturday)<BR>   `h` = hour (`0..23`) in **local** time<BR>   `T` = timezone (`-780..780`) (offset from UTC in **MINUTES** - 780min / 60min=13hrs)<BR>_Example:_ `TIMEDST 1,1,10,1,2,660`<BR>_If timezone is **NOT** 99, DST is not used (even if displayed) [see](https://github.com/arendst/Tasmota/issues/8528#issuecomment-633247984)
 Timezone<a class="cmnd" id="timezone"></a>|`-13..+13` = set timezone offset from UTC in hours<BR>`-13:00..+13:00` = set timezone offset from UTC in hours and minutes<BR>`99` = use timezone configured with `TimeDst` and `TimeStd`
 Ufs<a class="cmnd" id="ufs"></a>|Universal File System commands [read more...](UFS.md)
 UfsDelete<a class="cmnd" id="ufsdelete"></a>|Delete SD card or Flash FS file if only of them available
@@ -191,10 +191,10 @@ UfsRename<a class="cmnd" id="ufsrename"></a>|Rename SD card or Flash FS file if 
 UfsRename2<a class="cmnd" id="ufsrename2"></a>|Rename only Flash FS file if available
 UfsRun<a class="cmnd" id="ufsrun"></a>|Run file
 UfsSize<a class="cmnd" id="ufssize"></a>|Filesystem size in kb
-UfsType<a class="cmnd" id="ufstype"></a>|Get filesystem type<BR>`0` = none<BR>`1` = SD card<BR>`2` = Flash file
+UfsType<a class="cmnd" id="ufstype"></a>|Get filesystem type<BR>`0` = none<BR>`1` = SD card<BR>`2` = Flash file<BR>`3` = LittleFS
 Upgrade<a class="cmnd" id="upgrade"></a>|`1` = download firmware from `OtaUrl` and restart<BR>`<value>` = download firmware from `OtaUrl` if <value\> is higher than device version
 Upload<a class="cmnd" id="upload"></a>|`1` = download firmware from `OtaUrl` and restart<BR>`<value>` = download firmware from `OtaUrl` if <value\> is higher than device version
-WebGetConfig<a class="cmnd" id="webgetconfig"></a>|`<url>` = pull a configuration `.dmp`  file from a HTPP URL<BR>[More information...](https://github.com/arendst/Tasmota/pull/13034)
+WebGetConfig<a class="cmnd" id="webgetconfig"></a>|`<url>` = pull a configuration `.dmp`  file from a HTTP URL<BR>[More information...](https://github.com/arendst/Tasmota/pull/13034)
 WebLog<a class="cmnd" id="weblog"></a>|`0` = disable web logging<BR> `1` = show only error messages<BR> `2` = show error and info messages *(default)*<BR>`3` = show error, info and debug messages<BR>`4` = show error, info and more debug messages
 See also|[`SetOption68`](#setoption68) - PWM Channel control<BR>[`SetOption76`](#setoption76) - DeepSleep disable bootcount incrementing
 
@@ -210,6 +210,7 @@ Password<x\><a class="cmnd" id="password"></a>|`<x>` = `1..2`<BR>`<value>` = set
 Ping<x\> <addr\><a class="cmnd" id="ping"></a>|`<x>` = `0..8` = the number of ICMP packets to send, `0` uses the default (4)<BR>`<addr>` = address to send Ping, either in numerical format `192.168.1.200` or domain name `tasmota.com`<BR><BR>(requires `#define USE_PING`)<BR>Example `Ping4 192.168.1.203`: ```RSL: tele/tasmota_xxx/RESULT = {"Ping":{"192.168.1.203":{"Reachable":true,"Success":4,"Timeout":0,"MinTime":59,"MaxTime":167,"AvgTime":116}}}```
 Ssid<x\><a class="cmnd" id="ssid"></a>|`<x>` = `1..2`<BR>`<value>` = set AP<x\> Wi-Fi SSID and restart<BR>`1` = reset AP<x\> Wi-Fi SSID to firmware default (`STA_SSID1` or `STA_SSID2`) and restart<BR>SSID are limited to 32 characters. **Do not use special characters or white spaces in the SSID**
 TCPBaudRate<a class="cmnd" id="tcpbaudrate"></a>|Requires GPIOs `TCP Tx` and `TCP Rx` and can work with hardware or software serial.<BR>`1200..115200` = set the baudrate for serial (only 8N1 mode)
+TCPConfig<a class="cmnd" id="tcpconfig"></a>|<BR>`<value>` = standard 3 characters mode such as 8N1, 7E1 etc ...
 TCPStart<a class="cmnd" id="tcpstart"></a>|Requires GPIOs `TCP Tx` and `TCP Rx` and can work with hardware or software serial.<BR>`<port>, [<ipaddress>]` = Start listening to port. If `<ipaddress>` is defined only allows connections from the provided IPv4 address <BR>`0` = Shut down TCP server and disconnect any existing connection<BR> Supports 2 parallel TCP connections, which can be useful if you need a terminal + a specific protocol (like XMODEM). The 3rd connection will disconnect a previous connection. The number of parallel connections is a compile-time option.
 WebColor<x\><a class="cmnd" id="webcolor"></a>|Configure Web GUI colors (x = `1..19`)<BR>`#RRGGBB` = Set color for `WebColor<x>`<BR>`1` = Global text (Black)<BR>`2` = Global background (White)<BR>`3` = Form background (Greyish)<BR>`4` = Input text (Black)<BR>`5` = Input background (White)<BR>`6` = Console text (Black)<BR>`7` = Console background (White)<BR>`8` = Warning text (Red)<BR>`9` = Success text (Green)<BR>`10` = Button text (White)<BR>`11` = Button (Blueish)<BR>`12` = Button hovered over (Darker blueish)<BR>`13` = Restart/Reset/Delete button (Redish)<BR>`14` = Restart/Reset/Delete button hover (Darker reddish)<BR>`15` = Save button (Greenish)<BR>`16` = Save button hover (Darker greenish)<BR>`17` = Config timer tab text (White)<BR>`18` = Config timer tab background (Light grey)<br>`19` = Module title and FriendlyName text (Whiteish)<br>[User themes](WebUI#themes)
 WebPassword<a class="cmnd" id="webpassword"></a>|Show current web server password<BR>`0` = disable use of password for web UI<BR>`1` = reset password to firmware default (`WEB_PASSWORD`)<BR>`<value>` = set web UI password (32 char limit) for user `WEB_USERNAME` *(Default WEB_USERNAME = `admin`)*
@@ -343,7 +344,7 @@ CurrentLow<a class="cmnd" id="currentlow"></a>|`0` = disable current low thresho
 CurrentSet<a class="cmnd" id="currentset"></a>|`<value>` = [calibrate](Power-Monitoring-Calibration) current to target value in mA
 EnergyExport<x\><a class="cmnd" id="energyexport"></a>|Export energy values<BR>
 EnergyToday<x\><a class="cmnd" id="energytoday"></a>|Reset Energy Today values<BR>`0` = reset<BR>`<value>` = set value<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value (optional 2nd parameter)
-EnergyTotal<x\><a class="cmnd" id="energytotal"></a>|Reset Energy Total values<BR>`0` = reset<BR>`<value>` = set value<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value (optional 2nd parameter)
+EnergyTotal<x\><a class="cmnd" id="energytotal"></a>|Reset Energy Total values<BR>`0` = reset<BR>`<value>` = set value<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value (optional 2nd parameter)<BR>The new value represents start of day, and output for total includes the today value.
 EnergyReset&#60;x><a class="cmnd" id="energyreset"></a>|x = `1..5`<BR>`1` `<value>{,<time>}` = ((p)re)set values<BR>`2` `<value>{,<time>}` = ((p)re)set values for Yesterday<BR>`3` `<value>{,<time>}` = ((p)re)set values for Total<BR>`<value>` = `0..42949672` in watt-hours (Wh)<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value<BR>`4` `<standard>`{,`<off-peak>`} = ((p)re)set tariff period values for Totals<BR>`5` `<standard>`{,`<off-peak>`} = ((p)re)set tariff period values for Exported<BR>With version 10, this command has been replaced, see above.
 EnergyRes<a class="cmnd" id="energyres"></a>|Energy sensor resolution<BR>`0..5` = maximum number of decimal places
 EnergyYesterday<x\><a class="cmnd" id="energyyesterday"></a>|Reset Energy Yesterday values<BR>`0` = reset<BR>`<value>` = set value<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value (optional 2nd parameter)
@@ -403,9 +404,10 @@ PWMCT<a class="cmnd" id="pwmct"></a><BR>SetOption92<a class="cmnd" id="setoption
 RGBWWTable<a class="cmnd" id="rgbwwtable"></a>|Control lightintensity of unbalanced PWM channels<br>`PWM1,PWM2,PWM3,PWM4,PWM5` = channel range with values `0..255` *(default =`255,255,255,255,255`)*<BR>Range adjustment is computed **after** Gamma correction.
 Rotation<a class="cmnd" id="rotation"></a>|`<value>` = set amount of pixels to rotate (up to `Pixels` value) *(applies only to addressable LEDs)*
 Scheme<a class="cmnd" id="scheme"></a>|Light effects<BR>`+` = next scheme<BR>`-` = previous scheme<BR>`0` = single color for LED light *(default)*<BR>`1` = start wake up sequence (same as [`Wakeup`](#wakeup))<BR>`2` = cycle up through colors using Speed option<BR>`3` = cycle down through colors using Speed option<BR>`4` = random cycle through colors using Speed and Fade<BR>Use `<value>, <startcolor>` if you want to set the starting color of selected scheme
-|**Following schemes are usable only with addressable LEDs, e.g. WS281X, Neopixel**<BR>`5` = clock mode ([example](https://hackaday.io/project/28194-esp-and-ws2812-based-clock))<BR>`6` = candlelight pattern<BR>`7` = RGB pattern<BR>`8` = Christmas pattern<BR>`9` = Hanukkah pattern<BR>`10` = Kwanzaa pattern<BR>`11` = rainbow pattern<BR>`12` = fire pattern
+|**Following schemes are usable only with addressable LEDs, e.g. WS281X, Neopixel**<BR>`5` = clock mode ([example](https://hackaday.io/project/28194-esp-and-ws2812-based-clock))<BR>`6` = candlelight pattern<BR>`7` = RGB pattern<BR>`8` = Christmas pattern<BR>`9` = Hanukkah pattern<BR>`10` = Kwanzaa pattern<BR>`11` = rainbow pattern<BR>`12` = fire pattern<BR>`13` = stairs pattern
 Speed<a class="cmnd" id="speed"></a>|`1..40` = set fade speed from fast `1` to very slow `40`<BR>`+` = increase speed<BR>`-` = decrease speed<BR>The `Speed` value represents the time in 0.5s to fade from 0 to 100% (or the reverse). Example: `Speed 4` takes 2.0s to fade from full brightness to black, or 0.5s to move from 75% to 100%.
 Speed2<a class="cmnd" id="speed2"></a>|Same as `Speed` but settings aren't stored.
+StepPixels<a class="cmnd" id="steppixels"></a>|*([Scheme](#scheme) `5` only)*<BR>`<value>` = define the number of LEDs in each step
 VirtualCT<a class="cmnd" id="virtualct"></a>|Precisely specify color rendering of the bulb for Color Temperature. Needs `SetOption106 1` and works for 3, 4 or 5 channel lights<BR>`{"<minct>":"<color1>","midct":"<color2>","maxct":"<color3"}`<BR>Example: `VirtualCT {"200":"FFFFFF0000","400":"000000FF00"}`<BR>The first and last CT values indicate the min and max CT and are equivalent to `CTRange`. [Read more...](https://github.com/arendst/Tasmota/pull/10311)<BR>**This settings is not persisted in flash**
 Wakeup<a class="cmnd" id="wakeup"></a>|Start wake up sequence from OFF to stored `Dimmer` value<BR>`0..100` = Start wake up sequence from OFF to provided `Dimmer` value
 WakeupDuration<a class="cmnd" id="wakeupduration"></a>|`1..3000` = set wake up duration in seconds
@@ -522,6 +524,8 @@ SetOption127<a class="cmnd" id="setoption127"></a>|Force Wi-Fi in no-sleep mode 
 SetOption128<a class="cmnd" id="setoption128"></a>|Web referer check for HTTP API commands<BR>`0` = disabled<BR>`1` = enabled *(default)*
 SetOption129<a class="cmnd" id="setoption129"></a>|Enable split total energy results [#13030](https://github.com/arendst/Tasmota/issues/13030)<BR>`1` = enable
 SetOption130<a class="cmnd" id="setoption130"></a>|Add heap size (and ESP32 fragmentation) to logging timestamp for debugging<BR>`1` = enable
+SetOption131<a class="cmnd" id="setoption131"></a>|(Tuya) Allow save dimmer = 0 received by MCU<BR>`1` = enable
+SetOption132<a class="cmnd" id="setoption132"></a>|When MQTT Tls is enabled, forces fingerprint validation of server identity instead of checking the identitfy against a certificate authority (CA)<BR>`1` = Fingerprint, `0` = CA
 
 ### TuyaMCU
 
@@ -826,7 +830,7 @@ IfxPassword<a class="cmnd" id="ifxpassword"></a>|`<value>` =  set Influxdb V1 an
 IfxBucket<a class="cmnd" id="ifxbucket"></a>|`<value>` =  set Influxdb V2 and bucket name
 IfxOrg<a class="cmnd" id="ifxorg"></a>|`<value>` =  set Influxdb V2 and organization
 IfxToken<a class="cmnd" id="ifxtoken"></a>|`<value>` =  set Influxdb V2 and token
- |TelePeriod sets InfluxDB update interval
+IfxPeriod<a class="cmnd" id="ifxperiod"></a>|`<value>`<BR>= `0` = use `Teleperiod` value as publication interval _(default)_<BR>`10`..`3600` = set a different publication interval<br>_Even when `IfxPeriod 0` is used, publication is not necessarily performed at the same time as the telemetry message._
 
 
 
@@ -908,7 +912,8 @@ Command|Parameters
 Wc<a class="cmnd" id="wc"></a>|Query all camera settings
 WcBrightness<a class="cmnd" id="wcbrightness"></a>|`-2..+2` = set picture brightness
 WcContrast<a class="cmnd" id="wccontrast"></a>|`-2..+2` = set picture contrast
-WcMirror<a class="cmnd" id="wcmirror"></a>|Mirror camera. <BR>`0` = disable *(default)*<BR>`1` = enable
+WcFlip<a class="cmnd" id="wcflip"></a>|Flip camera image. <BR>`0` = disable *(default)*<BR>`1` = enable
+WcMirror<a class="cmnd" id="wcmirror"></a>|Mirror camera image. <BR>`0` = disable *(default)*<BR>`1` = enable
 WcResolution<a class="cmnd" id="wcresolution"></a>|Set camera resolution.<BR>`0` = 96x96 (96x96)<BR>`1` = QQVGA2 (128x160)<BR>`2` = QCIF (176x144)<BR>`3` = HQVGA (240x176)<BR>`4` = QVGA (320x240)<BR>`5` = CIF (400x296)<BR>`6` = VGA (640x480)<BR>`7` = SVGA (800x600)<BR>`8` = XGA (1024x768)<BR>`9` = SXGA (1280x1024)<BR>`10` = UXGA (1600x1200)
 WcSaturation<a class="cmnd" id="wcsaturation"></a>|`-2..+2` = set picture saturation
 WcStream<a class="cmnd" id="wcstream"></a>|Control streaming<BR>`0` = stop<BR>`1` = start

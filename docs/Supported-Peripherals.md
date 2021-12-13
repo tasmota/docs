@@ -2,6 +2,7 @@
 
 Name|Description|Connection
 ---|---|---
+**74x595**| 74x595 Shift Registers | gpio
 [**A4988**](A4988-Stepper-Motor-Controller)| Stepper Motor Controller 
 [**ADC**](ADC) | Analog input over A0 pin | analog
 **ADS111x** | A/D Converter | I^2^C
@@ -31,6 +32,7 @@ Name|Description|Connection
 **F&F LE-01MR** | F&F LE-01MR Single Phase Modbus Energy meter
 [**GPS-NTP-server**](GPS-NTP-server) | GPS-NTP-server | serial
 **HDC1080** | Texas Instruments HDC1080 Humidity and Temperature Sensor | I^2^C
+**HDC2010** | Texas Instruments HDC2010 Humidity and Temperature Sensor | I^2^C
 **[HM-10](HM-10)** |  BLE Bluetooth gateway | serial
 **[HM-17<BR>HM-16](HM-17)** |  Bluetooth iBeacon reader | serial
 **HP303B** | Barometric Pressure Shield| I^2^C
