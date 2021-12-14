@@ -42,4 +42,16 @@ shiki.getHighlighter({theme: 'nord'}).then(highlighter => {console.log(highlight
     print()
 
 # Now call the function we just defined:
-fib(2000)`, { lang: 'py' }))})```
+fib(2000)`, { lang: 'py' }))})
+```
+
+<pre class="shiki" style="background-color: #2e3440ff"><code><span class="line"><span style="color: #81A1C1">def</span><span style="color: #D8DEE9FF"> </span><span style="color: #88C0D0">fib</span><span style="color: #ECEFF4">(</span><span style="color: #D8DEE9">n</span><span style="color: #ECEFF4">):</span><span style="color: #D8DEE9FF">    </span><span style="color: #616E88"># write Fibonacci series up to n</span></span>
+<span class="line"><span style="color: #D8DEE9FF">    </span><span style="color: #ECEFF4">&quot;&quot;&quot;</span><span style="color: #A3BE8C">Print a Fibonacci series up to n.</span><span style="color: #ECEFF4">&quot;&quot;&quot;</span></span>
+<span class="line"><span style="color: #D8DEE9FF">    a</span><span style="color: #ECEFF4">,</span><span style="color: #D8DEE9FF"> b </span><span style="color: #81A1C1">=</span><span style="color: #D8DEE9FF"> </span><span style="color: #B48EAD">0</span><span style="color: #ECEFF4">,</span><span style="color: #D8DEE9FF"> </span><span style="color: #B48EAD">1</span></span>
+<span class="line"><span style="color: #D8DEE9FF">    </span><span style="color: #81A1C1">while</span><span style="color: #D8DEE9FF"> a </span><span style="color: #81A1C1">&lt;</span><span style="color: #D8DEE9FF"> n</span><span style="color: #ECEFF4">:</span></span>
+<span class="line"><span style="color: #D8DEE9FF">        </span><span style="color: #88C0D0">print</span><span style="color: #ECEFF4">(</span><span style="color: #D8DEE9FF">a</span><span style="color: #ECEFF4">,</span><span style="color: #D8DEE9FF"> </span><span style="color: #D8DEE9">end</span><span style="color: #81A1C1">=</span><span style="color: #ECEFF4">&#39;</span><span style="color: #A3BE8C"> </span><span style="color: #ECEFF4">&#39;</span><span style="color: #ECEFF4">)</span></span>
+<span class="line"><span style="color: #D8DEE9FF">        a</span><span style="color: #ECEFF4">,</span><span style="color: #D8DEE9FF"> b </span><span style="color: #81A1C1">=</span><span style="color: #D8DEE9FF"> b</span><span style="color: #ECEFF4">,</span><span style="color: #D8DEE9FF"> a</span><span style="color: #81A1C1">+</span><span style="color: #D8DEE9FF">b</span></span>
+<span class="line"><span style="color: #D8DEE9FF">    </span><span style="color: #88C0D0">print</span><span style="color: #ECEFF4">()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #616E88"># Now call the function we just defined:</span></span>
+<span class="line"><span style="color: #88C0D0">fib</span><span style="color: #ECEFF4">(</span><span style="color: #B48EAD">2000</span><span style="color: #ECEFF4">)</span></span></code></pre>
