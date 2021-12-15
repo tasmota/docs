@@ -822,8 +822,10 @@ The script itself is also stored on the file system with a default size of 8192 
 `frb(fr)` read byte from file  
 `frw(fr url)` read file from web url  
 `fxt(fr ts_from ts_to col_offs accum array1 array2 ... arrayn)` read arrays from csv file from timestamp to timestamp with column offset and accumulate values into arrays1 .. N, assumes csv file with timestamp in 1. column and data values in colums 2 to n.(#define USE_FEXTRACT)  
-  
-  
+`cts(tstamp flg)` convert timestamp to german locale format back and forth flg=0 to webformat, 1 to german format  
+`tso(tstamp day flag)` add time offset in days to timestamp optional flg = char 0 zo zero time HH:MM:SS  
+
+
 **Extended commands**   (+0,9k flash)  
 `#define USE_SCRIPT_FATFS_EXT`  
 `fmd("fname")` make directory fname  
