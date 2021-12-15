@@ -26,6 +26,7 @@ Additional features can be enabled by adding the following `#define` compiler di
 |MAX_METERS n| (default 5) Maximum number of meters. Decrease this to 1 for example if you havea meter with many lines and lots of characters per descriptorline.|
 |TMSBSIZ n| (default 256) Maximum number of characters in serial IRQ buffer (should always be larger than SML_BSIZ and even larger on high baud rates).|
 |SML_DUMP_SIZE n | (default 128) Maximum number of characters per line in dump mode. Only use if you have long strings comin in and they truncate. |
+|USE_ESP32_SW_SERIAL| enables additional software serial channels for ESP32, (receive only), define pin with '-' sign to assign to software serial |
 |USE_SML_SCRIPT_CMD | If present, this  enables some special SML script cmds and allows access to sml vars in other parts of the script. Is needed by some of the examples below.
 |SML_REPLACE_VARS | If present, this allows replacement of any text in descriptor by script text variables. Useful if several occurrences of a text occupies a lot of space and you get short of script buffer. Readability may get worse so only makes sense on large descriptors. Note: to use `%` symbol un measurement units, you need to escape it like `%%`.
 
