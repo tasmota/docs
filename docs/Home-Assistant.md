@@ -53,7 +53,7 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmot
 Types of devices not listed above still require [manual configuration](#editing-configurationyaml)
 
 
-!!! warning "Zigbee devices paired in Tasmota will **NOT** be discovered in Home Assistant"
+!!! warning "Zigbee and Bluetooth devices paired in Tasmota will **NOT** be discovered in Home Assistant"
 
 ### Transition from MQTT Discovery
 
