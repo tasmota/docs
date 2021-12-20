@@ -694,12 +694,12 @@ Rules consist of one of the comparison operators < > = followed by a numeric val
 ```
 
 <|>|=v1[:v2] 
-Example 1: "<8:0" - this rule reads: If x is less than 8, return 0.
-Example 2: ">100" - this rule reads: If x is greater than 100, return 100.
+Example 1: <8:0 - this rule reads: If x is less than 8, return 0.
+Example 2: >100 - this rule reads: If x is greater than 100, return 100.
 
 Example 3:
 
-y=mp(x "<8:0" ">100")
+y=mp(x <8:0 >100)
 Assigns 0 to y if x is less than 8.
 Assigns 100 to y if x is greater than 100.
 Assigns x to y for all values of x that do not meet the above criteria (8 to 100).
