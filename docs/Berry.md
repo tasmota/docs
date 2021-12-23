@@ -809,6 +809,62 @@ Module `webserver` also defines the following constants:
 
 See the [Berry Cookbook](Berry-Cookbook.md) for examples.
 
+### `udp` class
+  
+Class `udp` provides ability to send and received UDP packets, including multicast addresses.
+
+You need to create an object of class `udp`. Such object can send packets and listen to local ports. If you don't specify a local port, the client will take a random source port. Otherwise the local port is used as source port.
+
+When creating a local port, you need to use `udp->begin(<ip>, <port)>`. If `<ip>` is empty string `""` then the port is open on all interfaces (wifi and ethernet).
+
+General Function|Parameters and details
+:---|:---
+udp()<a class="cmnd" id="udp_ctor">|`udp() -> <instance udp>`<br>Creates an instance of `udp` class.
+begin<a class="cmnd" id="udp_begin">|`begin(ip:string, port:int) -> bool`<BR>Create a UDP listener and sender on interface `ip` and `port`. If `ip` is an empty string, the listener connects to all interfaces (aka 0.0.0.0)<BR>Returns `true` if successful.
+begin_multicast<a class="cmnd" id="udp_begin_mcast">|`begin(ip:string, port:int) -> bool`<BR>Create a UDP listener and sender on interface `ip` and `port`. `ip` must be a multicast address.<BR>Returns `true` if successful.
+send<a class="cmnd" id="udp_send">|`send(addr:string, port:int, payload:bytes) -> bool`<BR>Sends a packet to address `addr`, port `port` and message as `bytes()` buffer.<BR>Returns `true` if successful.
+send_multicast<a class="cmnd" id="udp_send_mcast">|`send(payload:bytes) -> bool`<BR>Sends a payload as `bytes()` buffer to the multicast address. `begin_multicast()` must have been previously called.<BR>Returns `true` if successful.
+read<a class="cmnd" id="udp_read">|`read() -> bytes() or nil`<BR>Reads any received udp packet as bytes() buffer, or `nil` if no packet was received.
+
+#### Sending udp packets
+
+``` ruby
+> u = udp()
+> u.begin("", 2000)    # listen on all interfaces, port 2000
+true
+> u.send("192.168.1.10", 2000, bytes("414243"))   # send 'ABC' to 192.168.1.10:2000, source port is 2000
+true
+```
+
+#### Receive udp packets
+
+You need to do polling on `udp->read()`. If no packet was received, the call immediately returns `nil`.
+
+``` ruby
+> u = udp()
+> u.begin("", 2000)    # listen on all interfaces, port 2000
+true
+> u.read()     # if no packet received, returns `nil`
+>
+
+> u.read()     # if no packet received, returns `nil`
+bytes("414243")    # received packet as `bytes()`
+```
+
+#### Send and receive multicast
+
+``` ruby
+> u = udp()
+> u.begin_multicast("224.3.0.1", 3000)    # connect to multicast 224.3.0.1:3000 on all interfaces
+true
+
+> client.send_multicast(bytes("33303030"))
+
+> u.read()     # if no packet received, returns `nil`
+> u.read()
+bytes("414243")    # received packet as `bytes()`
+```
+
 ### Adressable leds (WS2812, SK6812)
 
 There is native support for adressable leds via NeoPixelBus, with support for animations. Currently supported: WS2812, SK6812.
