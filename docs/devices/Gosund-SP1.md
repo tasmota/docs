@@ -15,7 +15,7 @@ If you have another (better) volt and power meter, this procedure should increas
 # Details
 
 ![Board - copy from issues/4303](https://user-images.githubusercontent.com/644662/48126808-71f04e00-e282-11e8-89d4-603c9ffb8e26.png)
-
+Rx and Tx are inverted on this picture!
 ![Pins - copy from issues/4303](https://user-images.githubusercontent.com/644662/48127131-4326a780-e283-11e8-93ef-acc7b94650d2.png)
 
 ![GPIO 0 - copy from issues/4303](https://user-images.githubusercontent.com/644662/48127125-3c983000-e283-11e8-8008-aa1c18974413.png)
