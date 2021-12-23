@@ -647,12 +647,12 @@ path.remove<a class="cmnd" id="path_remove"></a>|`(file_name:string) -> bool`<br
 Easy way to persist simple values in Berry and read/write any attribute. Values are written in JSON format in `_persist.json` file.
 
 !!! example 
-    > import persist
-    > persist.a = 1
-    > persist.b = "foobar"
-    > print(persist)
-    <instance: Persist({'a': 1, 'b': 'foobar'})>
-    > persist.save()   # save to _persist.json
+     > import persist    
+     > persist.a = 1    
+     > persist.b = "foobar"    
+     > print(persist)    
+     <instance: Persist({'a': 1, 'b': 'foobar'})>    
+     > persist.save()   # save to _persist.json    
 
 Tasmota Function|Parameters and details
 :---|:---
