@@ -809,6 +809,44 @@ Module `webserver` also defines the following constants:
 
 See the [Berry Cookbook](Berry-Cookbook.md) for examples.
 
+### `tcpclient` class
+
+Simple tcp client supporting string and binary transfers:
+
+- create an instance of the client with `var tcp = tcpclient()`
+- connect to the server `tcp.connect(address:string, port:int [, timeout_ms:int]) -> bool` Address can be numerical IPv4 or domain name. Returns `true` if the connection succeeded. Optional `timeout` in milliseconds. The default timeout is `USE_BERRY_WEBCLIENT_TIMEOUT` (2 seconds).
+- check if the socket is connected with `tcp.connected()`
+- send content with `tcp.write(content:string or bytes) -> int`. Accepts either a string or a bytes buffer, returns the number of bytes sent. It's you responsibility to resend the missing bytes
+- check if bytes are available for reading `tcp.available() -> int`. Returns `0` if nothing was received. This is the call you should make in loops for polling.
+- read incoming content as string `tcp.read() -> string` or as bytes `tcp.readbytes() -> bytes`. It is best to call `tcp.available()` first to avoid creating empty response objects when not needed
+- close the socket with `tcp.close()`
+
+
+tcpclient Function|Parameters and details
+:---|:---
+connect<a class="cmnd" id="tcpclient_connect">|`connect(address:string, port:int [, timeout_ms:int]) -> bool`<BR>Connect to `addr:port` with optional timeout in milliseconds (default 2s).<BR>Returns `true` if connection was successful, the call is blocking until the connection succeeded to the timeout expired.
+connected<a class="cmnd" id="tcpclient_connected">|`connected() -> bool`<BR>Returns `true` if the connection was successful and is still valid (not dropped by server or closed by client)
+close<a class="cmnd" id="tcpclient_close">|`close() -> nil`<BR>Drops the current connection.
+write<a class="cmnd" id="tcpclient_write">|`content:string or bytes) -> int`<BR>Accepts either a string or a bytes buffer, returns the number of bytes sent. It's you responsibility to resend the missing bytes.<BR>Returns `0` if something went wrong.
+available<a class="cmnd" id="tcpclient_close">|`available() -> int`<BR>Returns the number of bytes received in buffer and ready to be read.
+read<a class="cmnd" id="tcpclient_read">|`read() -> string`<BR>Returns all the bytes received in Rx buffer as `string`.
+readbytes<a class="cmnd" id="tcpclient_read">|`read() -> bytes()`<BR>Returns all the bytes received in Rx buffer as `bytes()`.
+Full example:
+
+```
+tcp = tcpclient()
+tcp.connect("192.168.2.204", 80)
+print("connected:", tcp.connected())
+s= "GET / HTTP/1.0\r\n\r\n"
+tcp.write(s)
+print("available1:", tcp.available())
+tasmota.delay(100)
+print("available1:", tcp.available())
+r = tcp.read()
+tcp.close()
+print(r)
+```
+
 ### `udp` class
   
 Class `udp` provides ability to send and received UDP packets, including multicast addresses.
