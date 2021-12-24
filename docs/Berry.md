@@ -863,6 +863,8 @@ begin_multicast<a class="cmnd" id="udp_begin_mcast">|`begin(ip:string, port:int)
 send<a class="cmnd" id="udp_send">|`send(addr:string, port:int, payload:bytes) -> bool`<BR>Sends a packet to address `addr`, port `port` and message as `bytes()` buffer.<BR>Returns `true` if successful.
 send_multicast<a class="cmnd" id="udp_send_mcast">|`send(payload:bytes) -> bool`<BR>Sends a payload as `bytes()` buffer to the multicast address. `begin_multicast()` must have been previously called.<BR>Returns `true` if successful.
 read<a class="cmnd" id="udp_read">|`read() -> bytes() or nil`<BR>Reads any received udp packet as bytes() buffer, or `nil` if no packet was received.
+remote_ip<a class="cmnd" id="udp_remote_ip">|`remote_ip (string or nil)`<BR>Instance variable containing the remote ip (as string) from the last successful `read()` command.
+remote_port<a class="cmnd" id="udp_remote_port">|`remote_port (int or nil)`<BR>Instance variable containing the remote port (as int) from the last successful `read()` command.
 
 #### Sending udp packets
 
