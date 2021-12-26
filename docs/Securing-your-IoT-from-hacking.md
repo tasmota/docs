@@ -26,7 +26,7 @@ It might happen, that e.g. your Samsung SmartTV is not as secure as it should be
 #### Scenario 5
 If someone uses your device to spam mail or do a DOS attack the impact at your home is minimal. You might have more outbound traffic, but maybe you don't recognize this either. But thousands of hacked IoT devices can generate tremendous trouble even at the largest internet providers.
 
-I hope these four typical scenarios ( the list is not complete) give you some idea, why you should take care, even if you're not a terrorist and normally nobody is interested into hacking you personally.
+I hope these five typical scenarios ( the list is not complete) give you some idea, why you should take care, even if you're not a terrorist and normally nobody is interested into hacking you personally.
 
 ## Securing your WLAN 
 That you should have a WLAN key and use WPA2 for encryption is a "no brainer". This is a minimum requirement. Now think about someone can extract the password from the device. E.g. because the device is in the garden and someone with a Laptop and some USB stuff can connect and extract information.  
