@@ -3,24 +3,27 @@
 Whenever you add devices to your network you generate additional points of potential intrusion. This is not only valid for your mobile phones and computers, but also for you Smart TV, you Alexa, or all of your SONOFF devices (ESP8266).
 
 There are following potential risks you have to mitigate:
+* Someone is able to communicate with your device ([Scenario 1](#scenario-1))
+* Someone hacks your device and is able to log in into your WLAN. (why is this a problem? [Scanario 2](#scenario-2))
+* Someone hacks your device and is able to read and change any value on your MQTT server (why is this a problem? [Scanario 3](#scenario-3))
+* Someone hacks your network and can interact with your devices (why is this a problem? [Scanario 4](#scenario-4))
+* Someone hacks your device and use it for different things like mail bot or DOS (Denial of Service) device or WLAN jammer (why is this a problem? [Scanario 5](#scenario-5))
 
-* Someone hacks your device and is able to log in into your WLAN. (why is this a problem? [1](#scenario-1))
-* Someone hacks your device and is able to read and change any value on your MQTT server (why is this a problem? [2](#scenario-2))
-* Someone hacks your network and can interact with your devices (why is this a problem? [3](#scenario-3))
-* Someone hacks your device and use it for different things like mail bot or DOS (Denial of Service) device or WLAN jammer (why is this a problem? [4](#scenario-4))
+#### Scenario 1
+It is possible to [set a password to the webadmin interface]( https://github.com/arendst/Tasmota/pull/12900), however ESP8266 devices *SHALL* not be exposed to internet or accessible to other network clients. (e.g. users in the same network) [[1]](https://github.com/arendst/Tasmota/discussions/14166#discussioncomment-1872750) [[2]](https://github.com/arendst/Tasmota/discussions/14166#discussioncomment-1871619). 
 
-#### Scenario 1  
+#### Scenario 2  
 If someone is able to get your WLAN key, he can login into your network, if he is nearby and scan for any traffic and for any devices. Many communication is not encrypted in your WLAN by default. Therefore be part of your WLAN gives the attacker a great opportunity to screw-up the rest of your infrastructure. Also be part of your WLAN does mean, that the attacker can use your IP-Address and your traffic to do nasty things.
 
-#### Scenario 2
+#### Scenario 3
 If you can hack an ESP82xx device, you might get access to the keys stored in the device. For example, the MQTT password allows you to read ALL of your devices and change any device at any time. With the information of the MQTT-Server user/password, it might be not required anymore to physically be in your WLAN. Maybe your MQTT Server is publicly accessible. Then the attacker can control your home from any place.
 
 Update: Beginning with version 6.0.0, passwords are not directly exposed through the serial connection or web interface in configuration mode. Therefore it is now less simple, **however still possible** to obtain the MQTT or WLAN password from a device. Such can be accomplished by downloading a configuration backup via the web UI of the device and decoding it using the `decode-config.py` script found in the Tasmota `tools` folder.
 
-#### Scenario 3
+#### Scenario 4
 It might happen, that e.g. your Samsung SmartTV is not as secure as it should be and an attacker gets access to your network. Now he can listen to any traffic and maybe can make changes on all of your IoT devices.
 
-#### Scenario 4
+#### Scenario 5
 If someone uses your device to spam mail or do a DOS attack the impact at your home is minimal. You might have more outbound traffic, but maybe you don't recognize this either. But thousands of hacked IoT devices can generate tremendous trouble even at the largest internet providers.
 
 I hope these four typical scenarios ( the list is not complete) give you some idea, why you should take care, even if you're not a terrorist and normally nobody is interested into hacking you personally.
