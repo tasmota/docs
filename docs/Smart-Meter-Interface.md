@@ -1054,10 +1054,10 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
 ->sensor53 r
 >M 1
 +1,3,m,0,19200,Trovis,1,2,rF7030009000E,rF703001C0004,F703006A
-1,F7031CUUuu@i0:10,Außentemp.,°C,Temp_Outside,1
-1,F7031CxxxxxxxxxxxxUUuu@i0:10,Vorlauftemp.,°C,Temp_Flow,1
-1,F7031CxxxxxxxxxxxxxxxxxxxxxxxxxxxxUUuu@i0:10,Rücklauftemp.,°C,Temp_Return,1
-1,F7031CxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxUUuu@i0:10,Speichertemp.,°C,Temp_Vessel,1
+1,F7031CSSss@i0:10,Außentemp.,°C,Temp_Outside,1
+1,F7031CxxxxxxxxxxxxSSss@i0:10,Vorlauftemp.,°C,Temp_Flow,1
+1,F7031CxxxxxxxxxxxxxxxxxxxxxxxxxxxxSSss@i0:10,Rücklauftemp.,°C,Temp_Return,1
+1,F7031CxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxSSss@i0:10,Speichertemp.,°C,Temp_Vessel,1
 1,F70308UUuu@i1:1,MesswertImp-h,imp/h,Metric_ImpH,0
 1,F70308xxxxUUuu@i1:100,Messwertm3-h,m³/h,Metric_M3H,2
 1,F70308xxxxxxxxUUuu@i1:10,AA10-10V,V,Metric_AA10,1
