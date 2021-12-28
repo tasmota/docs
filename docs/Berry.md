@@ -366,6 +366,7 @@ tasmota.remove\_rule<a class="cmnd" id="tasmota_remove_rule"></a>|`(pattern:stri
 tasmota.add\_driver<a class="cmnd" id="tasmota_add_driver"></a>|`(instance) ->nil`<br>Registers an instance as a driver
 tasmota.remove\_driver<a class="cmnd" id="tasmota_remove_driver"></a>|`(instance) ->nil`<br>Removes a driver
 tasmota.gc<a class="cmnd" id="tasmota_gc"></a>|`() -> int`<br>Triggers garbage collection of Berry objects and returns the bytes currently allocated. This is for debug only and shouldn't be normally used. `gc` is otherwise automatically triggered when necessary.
+tasmota.random\_byte<a class="cmnd" id="tasmota_random_byte"></a>|`() -> int`<br>Generates a random byte (0..255) using ESP32 internal high quality hardware seeded random generator. This source is supposed to be suitable for the generation of encryption keys.
 
 #### Functions used to retrieve Tasmota configuration
 
