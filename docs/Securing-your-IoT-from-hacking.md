@@ -3,6 +3,7 @@
 Whenever you add devices to your network you generate additional points of potential intrusion. This is not only valid for your mobile phones and computers, but also for you Smart TV, you Alexa, or all of your SONOFF devices (ESP8266).
 
 There are following potential risks you have to mitigate:
+
 * Someone is able to communicate with your device ([Scenario 1](#scenario-1))
 * Someone hacks your device and is able to log in into your WLAN. (why is this a problem? [Scanario 2](#scenario-2))
 * Someone hacks your device and is able to read and change any value on your MQTT server (why is this a problem? [Scanario 3](#scenario-3))
@@ -135,8 +136,9 @@ How to generate the certificates in mosquitto please look at:
 
 ## Disable unsecured fallback WiFi (WifiManager)
 
-In case your Wifi SSID is not available (i.e. access point dies), the WiFiManager will jump into action and make your tasmota devices available using an unsecured access point.
-Type WifiConfig into the tasmota console. If this parameter is set to 2, you might want to change it after completing the setup of your device. Some less risky options would be: 0/4/5. (For details, see [Wi-Fi commands](Commands#wi-fi)).
+Type WifiConfig into the tasmota console. If this parameter is set to 2, you might want to change it after completing the setup of your device since in case your Wifi SSID is not available (i.e. access point dies or WLAN jammer is used as in [Scanario 5](#scenario-5)), the WiFiManager will jump into action and make your tasmota devices available using an unsecured access point.
+   
+   Some less risky options would be: 0/4/5. Currently the [default WiFiConfig value](https://github.com/arendst/Tasmota/issues/4400) is [(WIFI_RETRY)](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h#L79) which means that device retries other AP without rebooting.  (For details, see [Wi-Fi commands](Commands#wi-fi)).
 
 ## Home Assistant OS MQTT Add-On
 If you are using Home Assistant OS [MQTT add-on](https://github.com/home-assistant/addons/tree/master/mosquitto) with [Tasmota integrationg(https://www.home-assistant.io/integrations/tasmota/) the devices will need write access to the `tasmota/discovery/#` topic.
