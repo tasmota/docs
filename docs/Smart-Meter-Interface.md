@@ -1349,10 +1349,10 @@ r="1,AA100021421000010774"
 >M 1
 +1,3,v,0,9600,Solar
 %r%vo12ut@#,time,,zeit,1
-%r%vo0uw@10,S1 COL,°C,sens1,1
-%r%vo2uw@10,S2 TST1,°C,sens2,1
-%r%vo4uw@10,S3 TST2,°C,sens3,1
-%r%vo6uw@10,S4 TR,°C,sens4,1
+%r%vo0sw@10,S1 COL,°C,sens1,1
+%r%vo2sw@10,S2 TST1,°C,sens2,1
+%r%vo4sw@10,S3 TST2,°C,sens3,1
+%r%vo6sw@10,S4 TR,°C,sens4,1
 %r%vo10ub@b0:1,R1 PUMP,,relay1,0
 %r%vo10ub@b1:1,R2 VALVE,,relay2,0
 %r%vo8ub@1,Pump1 speed,%%,pump1,0
