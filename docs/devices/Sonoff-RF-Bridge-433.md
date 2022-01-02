@@ -1,7 +1,7 @@
 The Sonoff RF Bridge has two separate chips to handle the Wi-Fi (ESP8285) and RF (EFM8BB1) communications respectively. It is used to send and receive codes with 433.9MHz frequency RF devices. Codes received from RF devices such as remote controls is passed to the onboard ESP8285 via the serial interface. The code data is relayed via MQTT. Similarly, the Bridge receives commands over Wi-Fi and sends the encoded data to the RF chip to control an RF device. Thus, the Sonoff RF Bridge "bridges" communications between RF and Wi-Fi.
 
 ## Flash Tasmota
-Please [Hardware Preparation](../Getting-Started.md#hardware-preparation) article for general flashing instructions.
+Please read the [Hardware Preparation](../Getting-Started.md#hardware-preparation) article for general flashing instructions.
 
 Access the serial interface available on the 5-pin header next to the switch as can be seen in the image.
 
@@ -56,6 +56,7 @@ The RF upgrade requires wiring the bridge and then flashing the firmware via the
     ```
     wget https://github.com/arendst/Tasmota/raw/master/tools/fw_SonoffRfBridge_efm8bb1/RF-Bridge-EFM8BB1-XXXXXXXX.hex -OutFile .\RF-Bridge-EFM8BB1-XXXXXXXX.hex
     ```
+
 7. Go to the Web UI **Firmware Upgrade** > **Upgrade by File Upload** (introduced in v6.0.0a)
 8. In the file selection dialog, navigate to the folder on your computer where you saved the hex file from step 6.
 9. Click **Start Upgrade**. The flashing should complete within 60 seconds. Device will restart after upgrade completes.
@@ -99,7 +100,7 @@ Refer to [issue #3973](https://github.com/arendst/Tasmota/issues/3973) for furth
 After learning how bitbucket works from  the [Portisch wiki](https://github.com/Portisch/RF-Bridge-EFM8BB1/issues/23), use one of these tools to help convert received `B1` sniffing messages to the right 'B0' format to send in the ['RfRaw'](../Commands.md#rfraw) command.
 
 - [**Online**](https://bbconv.hrbl.pl/)  
-  Process:  
+  Process:
   1. Enter `rfraw 177` in the Sonoff Bridge web UI Console
   2. Press a function (each Button 2-3 times) on your remote control
   3. Copy the JSON payload output from the Console and paste it in the online converter and click `Convert`
@@ -115,7 +116,7 @@ After learning how bitbucket works from  the [Portisch wiki](https://github.com/
   Result: `RfRaw AAB01C041407EB015700FD3EBC01010101010110100101010110101010010355`
 
 - [**Batch**](https://github.com/henfri/bitbuckedconverter/blob/master/BitBucketConverter)  
-  Process:  
+  Process:
   1. Enter `rfraw 177` in the Sonoff Bridge web UI Console
   2. Press each function (each Button 2-3 times) on your remote control
   3. Save everything from the console that happened after `rfraw 177` to a text file
