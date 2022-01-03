@@ -489,6 +489,7 @@ SetOption74<a class="cmnd" id="setoption74"></a>|Enable internal pullup for sing
 SetOption75<a class="cmnd" id="setoption75"></a>|Set grouptopic behaviour ([#6779](https://github.com/arendst/Tasmota/issues/6779))<BR>`0` = GroupTopic using FullTopic replacing %topic% _(default)_<BR>`1` =  GroupTopic is `cmnd/%grouptopic%/`
 SetOption76<a class="cmnd" id="setoption76"></a>|Bootcount incrementing when [DeepSleep](DeepSleep) is enabled ([#6930](https://github.com/arendst/Tasmota/issues/6930))<BR>`0` = disable bootcount incrementing _(default)_<BR>`1` = enable bootcount incrementing
 SetOption77<a class="cmnd" id="setoption77"></a>|Do not power off if a slider is moved to far left<BR>`0` = disable _(default)_<BR>`1` = enable
+SetOption78<a class="cmnd" id="setoption78"></a>|OTA compatibility check<BR>`0` = enabled _(default)_<BR>`1` = disabled
 SetOption79<a class="cmnd" id="setoption79"></a>|Reset counters at TelePeriod time<BR>`0` = disable _(default)_<BR>`1` = enable
 SetOption80<a class="cmnd" id="setoption80"></a>|[Blinds and shutters](Blinds-and-Shutters) support<BR>`0` = disable blinds and shutters support *(default)*<BR>`1` = enable blinds and shutters support
 SetOption81<a class="cmnd" id="setoption81"></a>|Set [PCF8574](PCF8574) component behavior for all ports<BR>`0` = set as regular state *(default)*<BR>`1` = set as inverted state
