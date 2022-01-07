@@ -141,7 +141,7 @@ Type WifiConfig into the tasmota console. If this parameter is set to 2, you mig
    Some less risky options would be: 0/4/5. Currently the [default WiFiConfig value](https://github.com/arendst/Tasmota/issues/4400) is [(WIFI_RETRY)](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h#L79) which means that device retries other AP without rebooting.  (For details, see [Wi-Fi commands](Commands#wi-fi)).
 
 ## Home Assistant OS MQTT Add-On
-If you are using Home Assistant OS [MQTT add-on](https://github.com/home-assistant/addons/tree/master/mosquitto) with [Tasmota integrationg(https://www.home-assistant.io/integrations/tasmota/) the devices will need write access to the `tasmota/discovery/#` topic.
+If you are using Home Assistant OS [MQTT add-on](https://github.com/home-assistant/addons/tree/master/mosquitto) with [Tasmota integration](https://www.home-assistant.io/integrations/tasmota/) the devices will need write access to the `tasmota/discovery/#` topic.
 
 Add the following to the ACL file (user section or general section): `topic write tasmota/discovery/#`.
 
