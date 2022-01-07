@@ -43,12 +43,12 @@ Flip the board on its side to expose the TX and RX pins. Follow steps 1-4 below,
 ![](https://i.imgur.com/6FClKoW.jpg)
 
 ## S26 Release 2
-If you happen to have an S26R2 (sold since the end of 2022?), which is recognizable by the S26R2 label on the back of the case, you may choose to solder or not:
+If you happen to have an S26R2 (sold since the end of 2021?), which is recognizable by the S26R2 label on the back of the case, you may choose to solder or not:
 
 <img src="https://user-images.githubusercontent.com/47012122/148542001-460195d0-3bda-475a-984d-060c7449e302.jpeg" width=30%>
 
 Board release v2.6 has a slightly different layout, and connecting to it may be even easier.
-In the above picture, serial flasher GND is connected to the capacitor, but may use the GND pad on the board.
+In the above picture, serial flasher GND is connected to the capacitor, but you may use the GND pad on the board.
 
 
 ## Bringing the Module into Flash Mode
