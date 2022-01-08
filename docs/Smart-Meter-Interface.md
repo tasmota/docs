@@ -1419,7 +1419,7 @@ Beware that A and B MODBus connectors are switched!
 
 ### Itron (SML V1.04)
     
-The electrical Meter is an German End-User Meter installed by EnBW. To read values is used an IR Sensor. The following script showes the meter number an the consuption and the egneration of an Photovoltaik generator. 
+The Itron electrical meter is a German end-user meter installed by EnBW. You can read values using an IR Sensor. The following script shows the meter number and the consuption and the generation of a Photovoltaik generator. 
 
 ```
 >D
@@ -1432,6 +1432,23 @@ The electrical Meter is an German End-User Meter installed by EnBW. To read valu
 1,77070100020800ff@1000,Erzeugung,kWh,ELZ_PV_2.8.0,1
 #
 ``` 
+
+This script additionally reads the power in watts. It has en enhanced precision of 4 decimal places for the total consumption. Be sure to turn on the full precision at the meter using a flashlight (if you see `inF=Off`, hold for 5 seconds until you see `inF=On`)
+
+```
+>D
+>B
+=>sensor53 r
+;Set teleperiod to 20sec  
+tper=10  
+>M 1
++1,3,s,0,9600,Power
+1,77070100600100ff@#,Zählernummer,,Meter_Number,0
+1,77070100010800ff@1000,Verbrauch,kWh,Total_in,4
+1,77070100100700ff@1,Leistung,W,Power_curr,0
+1,77070100020800ff@1000,Erzeugung,kWh,Total_out,4
+#
+```    
     
 ### eBZ DD3 (OBIS)
 
