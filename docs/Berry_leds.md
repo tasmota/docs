@@ -83,6 +83,7 @@ animate<a class="cmnd" id="leds_animator_animate"></a>|`animate() -> nil`<br>Pla
 Example:
 
 ``` python
+import animate
 class Rainbow_stripes : Leds_animator
   var cur_offset     # current offset in the palette
   static palette = [ 0xFF0000, #- red -#
