@@ -107,7 +107,6 @@ System#Boot<a id="SystemBoot"></a>|occurs once after Tasmota is fully intialized
 System#Init<a id="SystemInit"></a>|occurs once after restart before Wi-Fi and MQTT are initialized
 System#Save<a id="SystemSave"></a>|executed just before a planned restart
 Time#Initialized<a id="TimeInitialized"></a>|once when NTP is initialized and time is in sync
-Time#Initialized>120|once, 120 seconds after NTP is initialized and time is in sync
 Time#Minute<a id="TimeMinute"></a>|every minute
 Time#Minute\|5|every five minutes
 Time#Minute=241|every day once at 04:01 (241 minutes after midnight)
