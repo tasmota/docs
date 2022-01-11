@@ -31,6 +31,7 @@ Name|Description|Connection
 **[EZO](EZO)** | EZO series of chemical Sensors | I^2^C
 **F&F LE-01MR** | F&F LE-01MR Single Phase Modbus Energy meter
 [**GPS-NTP-server**](GPS-NTP-server) | GPS-NTP-server | serial
+[**GGreg20_V3**](https://github.com/iotdevicesdev/ggreg20-v3-tasmota-esp32-driver) | Ionizing Radiation Detector | gpio _(ESP32 only)_
 **HDC1080** | Texas Instruments HDC1080 Humidity and Temperature Sensor | I^2^C
 **HDC2010** | Texas Instruments HDC2010 Humidity and Temperature Sensor | I^2^C
 **[HM-10](HM-10)** |  BLE Bluetooth gateway | serial
