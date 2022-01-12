@@ -336,7 +336,9 @@ Support for PNG decoding depends on `#define USE_LVGL_PNG_DECODER` - which is en
 
 You need to first store images on the file system, and simply load them through LVGL standard way. PNG identification depends on the `.png` extension.
 
-Example: store the following image as ![Sunrise320.png](https://user-images.githubusercontent.com/49731213/149226013-257926a9-28f3-4316-b165-981c3ad4e1f8.png)
+Example: store the following image as `Sunrise320.png`
+
+![Sunrise320.png](https://user-images.githubusercontent.com/49731213/149226013-257926a9-28f3-4316-b165-981c3ad4e1f8.png)
 
 ``` ruby
 sunrise = lv.img(scr)                   # create an empty image object in the current screen
