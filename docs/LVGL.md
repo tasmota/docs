@@ -328,11 +328,27 @@ Finally create a `lv_btn` object with parent `scr`, set its size and position, a
 
 LVGL provides some pre-defined symbols like `lv.SYMBOL_OK`.
 
+## Advanced features and extensions
+
+### PNG Image support
+
+Support for PNG decoding depends on `#define USE_LVGL_PNG_DECODER` - which is enabled by default in Tasmota32-lvgl.
+
+You need to first store images on the file system, and simply load them through LVGL standard way. PNG identification depends on the `.png` extension.
+
+Example: store the following image as ![Sunrise320.png](https://user-images.githubusercontent.com/49731213/149226013-257926a9-28f3-4316-b165-981c3ad4e1f8.png)
+
+``` ruby
+sunrise = lv.img(scr)                   # create an empty image object in the current screen
+sunrise.set_src("A:/Sunrise320.png")    # load "Sunrise320.png", the default drive letter is 'A:'
+sunrise.move_background()               # move the image to the background
+```
+
 ## What's implemented and what's not?
 
 What's implemented currently:
 
-* LVGL 8.0.2
+* LVGL 8.1
 * All standard LVGL widgets are available, most of extras
 * Styles
 * File-system
