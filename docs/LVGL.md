@@ -180,7 +180,7 @@ Touch screen are supported natively via Universal Display driver.
 Example:
 
 ```python
-colp = lv.colorwheel(scr)
+colp = lv.colorwheel(scr, false)
 colp.set_size(130, 130)
 colp.set_pos(10,30)
 ```
