@@ -1441,7 +1441,7 @@ There are two communication interfaces:
   * The INFO interface on the front, with a metal backplate. Pushes a reduces OBIS ASCI datagram every second.
   * The MSB interface on the top, no metal backplate. Pushes a full OBIS ASCI datagram every second.    
     
-There are two types available using differen communication settings: 
+There are two types available using different communication settings: 
   * OD-type: 7 data bits, even parity, one stop bit, 9600 baud (9600 7E1)
   * SM-type: 8 data bits, no parity, one stop bit, 9600 baud (9600 8N1) 
 
@@ -1508,6 +1508,46 @@ Apply following patch to src/TasmotaSerial.cpp:
      if (m_hardswap) {
        Serial.swap();
 ```
+For the SM-type meter DD3 2R06 DTA SMZ1 the following script worked with Tasmota 9.5.0, without having to apply the above patch, because it uses 8N1 for communication.
+```
+>D
+>B
+;TelePeriod 30
+=>sensor53 r
+>M 1
+; Device: eBZ DD3 2R06 DTA SMZ1
+; protocol is D0 SML HEX
+; 9600@7E1 for OP-type devices, 9600@8N1 for SM-type devices
++1,3,s,0,9600,SML,1
+; Zählerstand zu +A, tariflos, 
+; Zählerstände Auflösung 10 µW*h (6 Vorkomma- und 8 Nachkommastellen)
+1,77070100010800FF@100000000,Energie Bezug,kWh,1_8_0,8
+; Zählerstand zu +A, Tarif 1
+1,77070100010801FF@100000000,Energie Bezug T1,kWh,1_8_1,8
+; Zählerstand zu +A, Tarif 2
+1,77070100010802FF@100000000,Energie Bezug T2,kWh,1_8_2,8
+; Zählerstand zu -A, tariflos
+1,77070100020800FF@100000000,Energie Export,kWh,2_8_0,8
+; Summe der Momentan-Leistungen in allen Phasen, Auflösung 0,01W (5 Vorkomma- und 2 Nachkommastellen)
+1,77070100100700FF@1,Leistung,W,16_7_0,16
+; Momentane Leistung in Phase Lx, Auflösung 0,01W (5 Vorkomma- und 2 Nachkommastellen)
+1,77070100240700FF@1,Leistung L1,W,36_7_0,16
+1,77070100380700FF@1,Leistung L2,W,56_7_0,16
+1,770701004C0700FF@1,Leistung L3,W,76_7_0,16
+; Spannung in Phase Lx, Auflösung 0,1V (nur über MSB)
+;1,77070100200700FF@1,Spannung L1,V,32_70,1
+;1,77070100340700FF@1,Spannung L2,V,52_7_0,1
+;1,77070100480700FF@1,Spannung L3,V,72_7_0,1
+; Statuswort, 4 Byte Information über den Betriebszustand, HEX string
+; tasmota can decode one string per device only!
+;1,1-0:96.5.0*255@#),Status1,,96_5_0,0
+;1,1-0:96.8.0*255@#),Status2,,96_8_0,0
+; Geräte-Identifikation, Nach DIN 43863-5 
+1,77070100000009FF@#),Identifikation,,96_1_0,0
+;1,77070100000000FF@#),Identifikation,,0_0_0,0
+#
+```
 
+    
 -----
         
