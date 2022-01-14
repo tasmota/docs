@@ -889,4 +889,19 @@ No usable protocol found yet, but raw mode does it.
 * ColorYellowWhite_COL=`{"Protocol":"NEC","Bits":32,"Data":"0x807FF00F","DataLSB":"0x01FE0FF0"}`
 * ColorWhite_COL=`{"Protocol":"NEC","Bits":32,"Data":"0x807F9867","DataLSB":"0x01FE19E6"}`
 
-
+## Fishtec Bougie / Generic Multicolored Led Candle / Generische mehrfarbige LED Kerzen
+* ON=`{"Protocol":"NEC","Bits":32,"Data":"0x1FE48B7"}`
+* OFF=`{"Protocol":"NEC","Bits":32,"Data":"0x1FE58A7"}`
+* ColorBlue=`{"Protocol":"NEC","Bits":32,"Data":"0x1FE609F"}`
+* ColorRed=`{"Protocol":"NEC","Bits":32,"Data":"0x1FE20DF"}`
+* ColorGreen=`{"Protocol":"NEC","Bits":32,"Data":"0x1FEA05F"}`
+* ColorWhite=`{"Protocol":"NEC","Bits":32,"Data":"0x1FE30CF"}`
+* ColorTurkis=`{"Protocol":"NEC","Bits":32,"Data":"0x1FE10EF"}`
+* ColorOrange=`{"Protocol":"NEC","Bits":32,"Data":"0x1FE50AF"}`
+* ColorPink=`{"Protocol":"NEC","Bits":32,"Data":"0x1FE708F"}`
+* ColorPurple=`{"Protocol":"NEC","Bits":32,"Data":"0x1FEF807"}`
+* ColorLightPurple=`{"Protocol":"NEC","Bits":32,"Data":"0x1FE906F"}`
+* ColorLightBlue=`{"Protocol":"NEC","Bits":32,"Data":"0x1FED827"}`
+* ColorOceanBlue=`{"Protocol":"NEC","Bits":32,"Data":"0x1FEB04F"}`
+* ModeMultiColor=`{"Protocol":"NEC","Bits":32,"Data":"0x1FEC03F"}`
+* ModeSwitch=`{"Protocol":"NEC","Bits":32,"Data":"0x1FE7887"}`
