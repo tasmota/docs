@@ -265,13 +265,15 @@ If a precompiled bytecode (extension `.bec`) is present of more recent than the 
 
 You can easily create a complete Tasmota driver with Berry.
 
-As a convenience, a skeleton class `Driver` is provided. A Driver responds to messages from Tasmota. For each message type, the method with the same name is called. Actually you can register any class as a driver, it does not need to inherit from `Driver`; the call mechanism is based on names of methods that must match the name of the event to be called.
+A Driver responds to messages from Tasmota. For each message type, the method with the same name is called. Actually you can register any class as a driver, it does not need to inherit from `Driver`; the call mechanism is based on names of methods that must match the name of the event to be called.
 
 Driver methods are called with the following parameters: `f(cmd, idx, payload, raw)`. `cmd` is a string, `idx` an integer, `payload` a Berry object representation of the JSON in `payload` (if any) or `nil`, `raw` is a string. These parameters are meaninful to a small subset of events:
 
 - `every_second()`: called every second
-- `every_100ms()`: called every 100ms (i.e. 10 times per second)
 - `every_50ms()`: called every 50ms (i.e. 20 times per second)
+- `every_100ms()`: called every 100ms (i.e. 10 times per second)
+- `every_200ms()`: called every 50ms (i.e. 5 times per second)
+- `every_250ms()`: called every 50ms (i.e. 4 times per second)
 - `web_sensor()`: display sensor information on the Web UI
 - `json_append()`: display sensor information in JSON format for TelePeriod reporting
 - `web_add_button()`: (deprecated) synonym of `web_add_console_button()`
@@ -287,12 +289,12 @@ Then register the driver with `tasmota.add_driver(<driver>)`.
 
 There are basically two ways to respond to an event:
 
-**Method 1: create a sub-class**
+**Example**
 
-Define a sub-class of the `Driver` class and override methods.
+Define a class and implement methods with the same name as the events you want to respond to.
 
 ```python
-class MyDriver : Driver
+class MyDriver
   def every_second()
     # do something
   end
@@ -303,20 +305,43 @@ d1 = MyDriver()
 tasmota.add_driver(d1)
 ```
 
-**Method 2: redefine the attribute with a function**
+## Fast Loop
 
-Just use the `Driver` class and set the attribute to a new function:
+Beyond the events above, a specific mechanism is available for near-real-time events or fast loops (above 50 times per second).
 
-```python
-d2 = Driver()
+Special attention is made so that there is no or very little impact on performance. Until a first callback is registered, performance is not impacted and Berry is not called. This protects any current use from any performance impact.
 
-d2.every_second = def ()
-  # do something
+Once a callback is registered, it is called separately from Berry drivers to ensure minimal overhead.
+
+`tasmota.add_fast_loop(cl:function) -> nil` registers a callback to be called in fast loop mode.
+
+The callback is called without any parameter and does not need to return anything. The callback is called at each iteration of Tasmota event loop. The frequency is tightly linked to the `Speed <x>` command. By default, the sleep period is 50ms, hence fast_loop is called every 50ms. You can reduce the time with `Sleep 10` (10ms) hence calling 100 times per second. If you set `Sleep 0`, the callback is called as frequently as possible (discouraged unless you have a good reason).
+
+Warning, if you need to register a method from an instance, you need a closure:
+
+```
+class my_driver
+  def every_100ms()
+    # called every 100ms via normal way
+  end
+
+  def fast_loop()
+    # called at each iteration, and needs to be registered separately and explicitly
+  end
+
+  def init()
+    # register fast_loop method
+    tasmota.add_fast_loop(/-> self.fast_loop())
+    # variant:
+    # tasmota.add_fast_loop(def () self.fast_loop() end)
+  end
 end
 
-tasmota.add_driver(d2)
+tasmota.add_driver(my_driver())                     # register driver
+tasmota.add_fast_loop(/-> my_driver.fast_loop())    # register a closure to capture the instance of the class as well as the method
 ```
-## Tasmota Only Extensions 
+
+## Tasmota Only Extensions
 
 #### `log(msg:string [, level:int = 3]) -> string`
 
