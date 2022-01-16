@@ -52,11 +52,41 @@ This phase is specific to Berry pre-compiled modules and classes.
 
 # `lv` module
 
-Tasmota automatically and implicitly imports `lvgl` module if compiled with LVGL.
+Tasmota automatically and implicitly imports `lv` module if compiled with LVGL.
 
 ```
-import lvgl as lv
+import lv
 ```
+
+The `lv` module is solidified in Flash, so to make it extensible, there is a trick applied to it.
+
+When you do `import lv` the first time, a hidden `lv_new` module is created in memory (writable) and a `member` function is added so that all members requested that are not part of `lv_new` are diverted to `lv`.
+
+Concretely, this means that the new `lv` module is a facade to the read-only solidified `lv` module, but you can still add methods.
+
+This is how it is done internally:
+
+``` ruby
+lv = module("lv")
+
+# rename `lv` to `lv_ntv` and replace `lv` with `lv_tasmota`
+def lv_module_init(lv_solidified)
+  var lv_new = module("lv")   # create a dynamic module
+  lv_new.member = lv_solidified.member
+  # lv_new.lv_solidified = lv_solidified
+  return lv_new
+end
+
+lv.init = lv_module_init
+
+def lv0_member_ntv() end
+
+lv.member = lv0_member_ntv
+
+return lv
+```
+
+Tasmota then does `import lv_tasmota` to add all Tasmota specific extensions to module `lv`.
 
 ## Constants
 
