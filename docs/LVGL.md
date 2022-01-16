@@ -346,6 +346,30 @@ sunrise.set_src("A:/Sunrise320.png")    # load "Sunrise320.png", the default dri
 sunrise.move_background()               # move the image to the background
 ```
 
+### Freetype fonts support
+
+Support for Freetype fonts depends on `#define USE_LVGL_FREETYPE` - which is **NOT** enabled by default in Tasmota32-lvgl.
+
+Bitmat fonts typically consume significant flash size because you need to embed the font at different size. Using FreeType vector fonts can bring more flexibility and options. You need to first upload the desired fonts on the Tasmota file system.
+
+To create the `lv_font` object, use `lv.load_freetype_font(name:string, size:int, type:int) -> nil or lv_font`. If the font is not found, the call returns `nil`. `type` can be `0` or `lv.FT_FONT_STYLE_NORMAL`, or a combination of `lv.FT_FONT_STYLE_ITALIC` and `lv.FT_FONT_STYLE_BOLD`.
+
+Example (after loading `lvgl_demo.be`) using `sketchbook.ttf` font:
+
+``` ruby
+sb120 = lv.load_freetype_font("sketchbook.ttf", 120, 0)
+tt = lv.label(scr)
+tt.set_style_bg_opa(lv.OPA_0, lv.PART_MAIN | lv.STATE_DEFAULT)
+tt.set_style_text_color(lv.color(0xFFFFFF), lv.PART_MAIN | lv.STATE_DEFAULT)
+tt.set_text("MQTT")
+tt.set_pos(10,40)
+tt.set_size(300,150)
+if sb120 != nil tt.set_style_text_font(sb120, lv.PART_MAIN | lv.STATE_DEFAULT) end
+```
+
+![lv_freetype_sketch](https://user-images.githubusercontent.com/49731213/149389674-6e325fc7-72ab-4cd0-9137-56c333cfbb7c.png)
+
+
 ## What's implemented and what's not?
 
 What's implemented currently:
