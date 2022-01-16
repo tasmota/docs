@@ -46,7 +46,8 @@ Name|Description|Connection
 **[HRG15](HRG15)** | Solid State Rain Sensor| serial
 [**iAQ-Core**](IAQ) | Indoor Air Quality Sensor| I^2^C
 **iEM3000** | Schenider Electric modbus energy meter| serial
-**INA219** | High-Side DC Current and Voltage Sensor| I^2^C
+**INA219**<BR>**ISL28022** | High-Side DC Current and Voltage Sensor| I^2^C
+**INA226** | High-Side or Low-side DC Current and Voltage Sensor| I^2^C
 [**IR Remote**](IR-Remote) | IR transmitter and receiver
 **K30, K70, S8** | CO~2~ Sensor| I^2^C | 
 [**LM75AD**](LM75AD) |  Temperature Sensor| I^2^C
