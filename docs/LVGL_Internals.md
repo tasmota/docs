@@ -4,54 +4,51 @@ Below are notes about the LVGL-Berry mapping in Tasmota. You will find informati
 
 ## Build system
 
-Berry mapping to LVGL is partially manual, partially automated.
+Berry mapping to LVGL is entirely automated.
 
-Most of the components are generated C code from the LVGL's C source code, similar to MicroPython approach. However part of the source files have been manually processed to simplify the overall code parsing.
+Most of the components are generated C code from the LVGL's C source code, similar to MicroPython approach.
+
 
 **Phase 1: Parse LVGL source**
 
+This first phase parses most C headers from the LVGL source tree and generates two files:
+- `lv_enum.h` containing all the `enum` values from LVGL (constants)
+- `lv_funcs.h` containing all the functions of the LVGL API normalized to 1 function per line, and with cleaned argument signature.
+
 ```
-> cd tools/lv_berry
+(in folder Tasmota/lib/libesp32_lvgl/lv_berry/tools)
+
+❯ python3 preprocessor.py
+
+(no output)
+```
+
+**Phase 2: Generate automatic Berry mapping**
+
+From the two files created in the previous step, all the requires C files are created for the Berry mapping.
+
+```
+(in folder Tasmota/lib/libesp32_lvgl/lv_berry/tools)
+
 > python3 convert.py
-  // Skipping unsupported return type: lv_group_user_data_t *
-  // Skipping unsupported return type: lv_indev_t *
-  // Skipping unsupported return type: lv_disp_t *
-  // Skipping unsupported return type: lv_style_list_t *
-  // Skipping unsupported return type: lv_obj_user_data_t *
-  // Skipping unsupported return type: const lv_font_t *
-  // Skipping unsupported return type: lv_text_decor_t
-  // Skipping unsupported return type: const lv_font_t *
-  // Skipping unsupported return type: const lv_anim_path_t *
-  // Skipping unsupported return type: const char **
-  // Skipping unsupported return type: lv_calendar_date_t *
-  // Skipping unsupported return type: lv_calendar_date_t *
-  // Skipping unsupported return type: lv_calendar_date_t *
-  // Skipping unsupported return type: lv_calendar_date_t *
-  // Skipping unsupported return type: const char **
-  // Skipping unsupported return type: const char **
-  // Skipping unsupported return type: lv_img_dsc_t *
-  // Skipping unsupported return type: lv_chart_series_t *
-  // Skipping unsupported return type: lv_chart_cursor_t *
-  // Skipping unsupported return type: const char **
-  // Skipping unsupported return type: lv_style_list_t *
-  // Skipping unsupported return type: lv_img_src_t
-  // Skipping unsupported return type: lv_draw_mask_res_t
-  // Skipping unsupported return type: lv_img_dsc_t *
-| callback types['lv_group_focus_cb', 'lv_event_cb', 'lv_signal_cb', 'lv_design_cb', 'lv_gauge_format_cb']
+| callback types['lv_group_focus_cb', 'lv_event_cb', 'lv_constructor_cb', 'lv_layout_update_cb', 'lv_obj_tree_walk_cb', 'lv_theme_apply_cb', 'lv_color_filter_cb']
 ```
 
-The output should look as above, and indicates the C function that have been ignored if their return type is listed above. It also lists the callback types supported.
+The output should look as above, and indicates the C function that have been ignored (if any) if their return type is listed above. It also lists the callback types supported.
 
-**Phase 2: pre-compile Berry modules and classes**
+**Phase 3: Generate the Berry pre-compiled stubs**
+
+This phase is specific to Berry pre-compiled modules and classes.
 
 ```
-> cd lib/libesp32/Berry
-> make prebuild
-[Prebuild] generate resources
-done
+(in folder Tasmota/lib/libesp32/berry)
+
+> ./gen.sh
+
+(no output)
 ```
 
-Phase 3: compile Tasmota using platform.io as usual
+**Phase 4: compile Tasmota using platform.io as usual**
 
 # `lv` module
 
