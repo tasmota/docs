@@ -25,11 +25,19 @@ In commands with `x..y` value parameters use a number from `x` to `y` range.
 
 When a command mentions resetting to *"firmware default"* it means the setting will revert to the one in the flashed binary file. If you used `user_config_override.h` at compile time it will revert to those.
 
-!!! note
+!!! note:
+    All commands are standard in the form: `COMMAND`<`INDEX`> `DATA` It has only one `SPACE` between `INDEX` and `DATA`. (There is no command in Tasmota that allows the `=` sign)
+    
+!!! example:
+    Set networking IP (XXX.XXX.XXX.XXX) addresses using the command `IPAddress<x>`: `IPAddress1 192.168.1.123`
+    
+The `=` sign (It can be understood as the sign `:`) is used only for meaning explanation reference: `IPAddress1 = set device IP address`
+
+!!! note:
     Beside results initiated by a command (synchronous) you can get asynchronous results initiated by rule trigger, telemetry event, commands from other source or changed device values.
     Simply put, other messages may precede messages published as a result of your commands.
 
-!!! example
+!!! example:
     A `tele/%topic%/STATUS` message (sent every 300 seconds by default) may appear exactly after you issue `Power off` command and before you receive `stat/%topic%/RESULT = {"POWER":"OFF"}` message.
 
 
