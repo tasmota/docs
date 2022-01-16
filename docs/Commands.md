@@ -922,3 +922,4 @@ EthIpAddress<a class="cmnd" id="ethipaddress"></a>|Set device Ethernet IP addres
 EthGateway<a class="cmnd" id="ethgateway"></a>|Set gateway IP address
 EthSubnetmask<a class="cmnd" id="ethsubnetmask"></a>|Set subnet mask
 EthDnsServer1<a class="cmnd" id="ethdnsserver"></a><BR>EthDnsServer2|Set DNS servers IP address
+See Also|[`wifi`](#wifi) - Enable/Disable Wi-Fi<BR>
