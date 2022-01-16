@@ -330,6 +330,26 @@ LVGL provides some pre-defined symbols like `lv.SYMBOL_OK`.
 
 ## Advanced features and extensions
 
+## Screenshot
+
+Tasmota includes an easy way to take screenshots.
+
+Just use `lv.screenshot()` and a `BMP` file will be stored in the file system.
+
+Example:
+
+``` ruby
+> lv.screenshot()
+/screenshot-1642356919.bmp
+```
+
+Then download the file to your local computer. The file format is uncompressed BMP with 16 bits per pixel. It is highly recommended to then compress the image to PNG or JPG with the software of your choice.
+
+Warning: due to internal implementation limitations, the image is stored upside down. Don't forget to vertically revert the image.
+
+![screenshot-1642356919](https://user-images.githubusercontent.com/49731213/149672598-3ed79c40-7a7e-42e0-9bd9-9ec1a997ae69.png)
+
+
 ### PNG Image support
 
 Support for PNG decoding depends on `#define USE_LVGL_PNG_DECODER` - which is enabled by default in Tasmota32-lvgl.
@@ -533,62 +553,3 @@ lv.disp().get_inactive_time()
 The code size impact is quite significant, so you probably need partitions with code at least set to 1856KB. Doing so leaves 320KB for file system on 4MB flash.
 
 Most of Berry code is solidified in Flash, so the initial RAM footpring is very low (a few KB).
-
-### Generating Berry-LVGL mapping
-
-There is an internal code generator to convert LVGL data structures, constants and functions to Tasmota/Berry code. Each time a change is made in LVGL or its mapping, you need to run the following (the messages are normal and show it is sucessful):
-
-```bash
-> cd tools/lv_berry
-> python3 convert.py
-  // Skipping unsupported return type: lv_group_user_data_t *
-  // Skipping unsupported return type: lv_indev_t *
-  // Skipping unsupported return type: lv_disp_t *
-  // Skipping unsupported return type: lv_style_list_t *
-  // Skipping unsupported return type: lv_obj_user_data_t *
-  // Skipping unsupported return type: const lv_font_t *
-  // Skipping unsupported return type: lv_text_decor_t
-  // Skipping unsupported return type: const lv_font_t *
-  // Skipping unsupported return type: const lv_anim_path_t *
-  // Skipping unsupported return type: const char **
-  // Skipping unsupported return type: lv_calendar_date_t *
-  // Skipping unsupported return type: lv_calendar_date_t *
-  // Skipping unsupported return type: lv_calendar_date_t *
-  // Skipping unsupported return type: lv_calendar_date_t *
-  // Skipping unsupported return type: const char **
-  // Skipping unsupported return type: const char **
-  // Skipping unsupported return type: lv_img_dsc_t *
-  // Skipping unsupported return type: lv_chart_series_t *
-  // Skipping unsupported return type: lv_chart_cursor_t *
-  // Skipping unsupported return type: const char **
-  // Skipping unsupported return type: lv_style_list_t *
-  // Skipping unsupported return type: lv_img_src_t
-  // Skipping unsupported return type: lv_draw_mask_res_t
-  // Skipping unsupported return type: lv_img_dsc_t *
-| callback types['lv_group_focus_cb', 'lv_event_cb', 'lv_signal_cb', 'lv_design_cb', 'lv_gauge_format_cb']
-```
-
-Then Berry mapping to C needs to be updated:
-
-```bash
-> cd lib/libesp32/Berry
-> make prebuild
-[Prebuild] generate resources
-done
-```
-
-Finally compile Tasmota.
-
-### LVGL mapping definition
-
-The reference model for LVGL is contained in the following files. They were manually built for this first version, but we will work in automating it (similarly to MicroPython):
-
-- `tools/lv_berry/lv_module.h` contains all LVGL constants (enum) and are added to `module lvgl`
-- `tools/lv_berry/lv_symbols.h` contains the font symbols strings (manually built), they are added to `module lvgl`
-- `tools/lv_berry/lv_widgets.h` contains the function signatures of all LVGL APIs in a single file (large file)
-
-The file generated are:
-
-- `tasmota/lvgl_berry/be_lv_c_mapping.h` which contains the signatures used by Tasmota to map LVGL to Berry (large file). The mapping contains the LVGL object structure, and for each function the C API address, expected types of parameters and return type.
-- `lib/libesp32/Berry/default/be_lvgl_widgets_lib.c` Berry C definition of classes
-- `lib/libesp32/Berry/default/be_lv_lvgl_module.c` Berry C definition of `module lvgl` with core functions and constants
