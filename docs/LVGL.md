@@ -406,6 +406,9 @@ Be aware that it adds 440Kb to you firmware, so make sure you have a partition w
 
 ## Goodies
 
+
+### Tasmota Logo
+
 Get a Tasmota logo:
 
 ```python
@@ -454,6 +457,41 @@ def animate_logo()
 end
 animate_logo()
 ```
+
+### Calibrate a resitive Touch Screen
+
+Some touchscreens like [Lolin TFT 2.4 Touch Shields](https://www.wemos.cc/en/latest/d1_mini_shield/tft_2_4.html) use a resistive touchscreen controlled by `XPT2046`. Contrary to capacitive touchscreens, resistive touchscreens needs a per-device calibration.
+
+You can downlaod **[DisplayCalibrate.tapp](https://raw.githubusercontent.com/arendst/Tasmota/development/tasmota/berry/modules/DisplayCalibrate.tapp)**
+Tasmota Application which allows for easy calibration. In only a few steps, it will generate the universal display line `:M` with calibration information.
+
+1. First download **[DisplayCalibrate.tapp](https://raw.githubusercontent.com/arendst/Tasmota/development/tasmota/berry/modules/DisplayCalibrate.tapp)** application and upload it in the file system, and restart.
+
+2. Make sure you are in orientation `DisplayRotate 0`
+
+3. In the console, type the command `DisplayCalibrate`
+
+You will see the following screens. Click on all 4 crosses near corners.
+
+![ts_0](https://user-images.githubusercontent.com/49731213/149639165-a03a3864-1403-4f0c-8a7b-760db1ff926d.png)
+
+![ts_1_0](https://user-images.githubusercontent.com/49731213/149639166-360572ac-3e8c-4e9d-a3e4-62ff8d67896c.png)
+
+![ts_1_1](https://user-images.githubusercontent.com/49731213/149639168-cf7eb258-742c-4e53-a0ed-709f3b347deb.png)
+
+![ts_1_2](https://user-images.githubusercontent.com/49731213/149639169-2b7c9f22-7834-473f-83c7-39c32e94c461.png)
+
+![ts_1_3](https://user-images.githubusercontent.com/49731213/149639170-63681b67-cf37-4e73-9776-af762bc7d617.png)
+
+Note: measures are taken every 50 ms and are averaged, and requires at least 3 measures (150ms).
+
+If everything went well, you will see the following screen. After reboot, your touchscreen is ready and calibrate.
+
+![ts_ok](https://user-images.githubusercontent.com/49731213/149639215-cadf5d58-9d31-4278-8f21-927487ed7058.png)
+
+If the geometry is wrong, you will see the following screen and no change is done to `display.ini`
+
+![ts_nok](https://user-images.githubusercontent.com/49731213/149639222-32a9ead6-e4fe-4a63-a4fe-6c8fb7ad11c3.png)
 
 ## Cookbook
 
