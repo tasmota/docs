@@ -330,7 +330,7 @@ LVGL provides some pre-defined symbols like `lv.SYMBOL_OK`.
 
 ## Advanced features and extensions
 
-## Screenshot
+### Screenshot
 
 Tasmota includes an easy way to take screenshots.
 
