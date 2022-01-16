@@ -366,6 +366,8 @@ sunrise.set_src("A:/Sunrise320.png")    # load "Sunrise320.png", the default dri
 sunrise.move_background()               # move the image to the background
 ```
 
+![screenshot-1642357636](https://user-images.githubusercontent.com/49731213/149672938-e01264c4-1a8a-4e00-b217-01b35981d1bc.png)
+
 ### Freetype fonts support
 
 Support for Freetype fonts depends on `#define USE_LVGL_FREETYPE` - which is **NOT** enabled by default in Tasmota32-lvgl.
