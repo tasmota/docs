@@ -25,7 +25,7 @@ SCRIPT_POWER_SECTION | enable `>P` section (execute on power changes)
 SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe
 USE_SENDMAIL | enable `>m` section and support for sending e-mail<br>(on ESP32 you must add USE_ESP32MAIL)  
 USE_SCRIPT_WEB_DISPLAY | enable `>W` section (modify web UI)
-SCRIPT_FULL_WEBPAGE | enable `>w` section (seperate full web page and webserver)
+SCRIPT_FULL_WEBPAGE | enable ``>w`` section (seperate full web page and webserver)
 USE_TOUCH_BUTTONS | enable virtual touch button support with touch displays
 USE_WEBSEND_RESPONSE | enable receiving the response of [`WebSend`](Commands#websend) and [`WebQuery`](Commands#webquery) commands (received in section >E)
 SCRIPT_STRIP_COMMENTS | enables stripping comments when attempting to paste a script that is too large to fit
@@ -422,10 +422,11 @@ A web user interface may be generated containing any of the following elements:
 generates a button with the name "ButtonLabel" in Tasmota main menu.  
 Clicking  this button displays a web page with the HTML data of this section.
 all cmds like in >W apply here. these lines are refreshed frequently to show e.g. sensor values.
-lines preceeded by $ are static and not refreshed and display below lines without $.  
+lines preceeded by $ are static and not refreshed and displayed below lines without $.  
 this option also enables a full webserver interface when USE_UFILESYS is activ.  
 you may display files from the flash or SD filesystem by specifying the url:  IP/ufs/path  .
 (supported files: *.jpg, *.html, *.txt)  
+`>w1` `>w2` `>w3` some as above `>w`
 ==Requires compiling with `#define SCRIPT_FULL_WEBPAGE`.== 
 
   
