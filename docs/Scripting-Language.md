@@ -539,7 +539,8 @@ SEL:
 `sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
 `sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
 `sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)(if defined USE_SML_SCRIPT_CMD)  
-`sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
+`sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)
+`smlx[m]` = get value of SML meter string info of meter m (if defined USE_SML_SCRIPT_CMD)
 `smlv[n]` = get SML decode valid status of line n (1..N), returns 1 if line decoded. n=0 resets all status codes to zero (if defined USE_SML_SCRIPT_CMD) 
 `enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
 `gjp("host" "path")` = trigger HTTPS JSON page read as used by Tesla Powerwall (if defined SCRIPT_GET_HTTPS_JP)  
@@ -648,6 +649,14 @@ It is possible to "replace" internal Tasmota commands. For example, if a `#POWER
 String parameter should be passed within double quotas: `CUSTOMCMD "Some string here"`
   
 `=(svar)` executes a routine whose name is passed as a string in a variable (dynamic or self modifying code). The string has to start with `>` or `=#` for the routine to be executed.
+  
+a subroutine may return a value (number or string):  
+`return var`
+
+a subroutine is called with:
+var=#sub(x) when returning a value  
+or  
+=#sub(x) when not returning a value
 
 ```
 D
@@ -822,9 +831,10 @@ The script itself is also stored on the file system with a default size of 8192 
 `frb(fr)` read byte from file  
 `frw(fr url)` read file from web url  
 `fxt(fr ts_from ts_to col_offs accum array1 array2 ... arrayn)` read arrays from csv file from timestamp to timestamp with column offset and accumulate values into arrays1 .. N, assumes csv file with timestamp in 1. column and data values in colums 2 to n.(#define USE_FEXTRACT)  
+`fxto(...` same as above with time optimized access  
 `cts(tstamp flg)` convert timestamp to german locale format back and forth flg=0 to webformat, 1 to german format  
 `tso(tstamp day flag)` add time offset in days to timestamp optional flg = char 0 zo zero time HH:MM:SS  
-
+`tsn(tstamp)` convert timestamp to seconds  
 
 **Extended commands**   (+0,9k flash)  
 `#define USE_SCRIPT_FATFS_EXT`  
