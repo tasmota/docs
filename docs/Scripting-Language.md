@@ -112,12 +112,13 @@ with all linker files
 
 #### script init error codes
 after initizialisation the script reports some info in the console e.g:  
-20:21:28.259 Script: nv=51, tv=13, vns=279, ram=4656  
+20:21:28.259 Script: nv=51, tv=13, vns=279, vmem=3305, smem=4096  
 nv = number of used variables in total (numeric and strings)  
 tv = number of used string variables  
 vns = total size of name strings in bytes (may not exeed 255) or #define SCRIPT_LARGE_VNBUFF extents the size to 4095  
-ram = used heap ram by the script (excluding script buffer itself)  
-
+vmem = used heap ram by the script (psram if available)  
+smem = used script (text) memory (psram if available)  
+  
 if the script init fails an error code is reported:  
 -1 = too many numerical variables defined  
 -2 = too many string variables defined  
