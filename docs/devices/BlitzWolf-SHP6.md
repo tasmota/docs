@@ -89,6 +89,8 @@ _NOTE: If Tasmotizer or esptool timeouts, can't find your socket and nothing see
 
 _NOTE2: GPIO0 can stay connected to GND always._
 
+_NOTE3: In case that device is not booting in flash mode - then your pinout is different - assume that GPIO0 is Reset pin, and put it to ground before powering on device.
+
 ## Other photos
 
 ![Left side](https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-06.jpg ":size=100")
