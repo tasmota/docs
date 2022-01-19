@@ -658,5 +658,13 @@ tasmota.set_timer(30000,netflip)              #4
 
 [TomsTek@GitHub](https://github.com/TomsTek/tasmota-berry-TMP117-driver)
 
+## Call function at intervals
 
+This small helper function allows you to call a function at stable intervals, automatically correcting in case of latency or other deviations. Not suitable for very short intervals; while the delay interval is in milliseconds for consistency with the standard `tasmota.set_timer`, it would normally be seconds multiplied by 1000, like 60000 for every minute.
 
+```
+def set_timer_modulo(delay,f)
+  var now=tasmota.millis()
+  tasmota.set_timer((now+delay/4+delay)/delay*delay-now, def() set_timer_modulo(delay,f) f() end)
+end
+```
