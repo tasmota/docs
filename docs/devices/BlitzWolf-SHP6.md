@@ -89,7 +89,10 @@ _NOTE: If Tasmotizer or esptool timeouts, can't find your socket and nothing see
 
 _NOTE2: GPIO0 can stay connected to GND always._
 
-_NOTE3: In case that device is not booting in flash mode - then your pinout is different - assume that GPIO0 is Reset pin, and put it to ground before powering on device.
+### For version 2 (alternative layout)
+In case that device is not booting in flash mode - then your pinout is different - assume that GPIO0 is Reset pin, and put it to ground before powering on device.
+
+![v2_contacts_alternative](https://user-images.githubusercontent.com/26896695/150102470-1259e3dd-3bdd-4879-a15c-4791f7dc1021.jpeg)
 
 ## Other photos
 
