@@ -1,4 +1,4 @@
-!!! info "**Component** is anything wired to the ESP8266/ESP8255 chip to be controlled by or send data to it."
+!!! info "**Component** is anything wired to the ESP8266/ESP8285 chip to be controlled by or send data to it."
 
 <a href="../_media/components.png" target="_blank"><img src="../_media/components.png" style="float:right;height:10em;margin:10px"></img></a>
 
