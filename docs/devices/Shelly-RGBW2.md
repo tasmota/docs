@@ -107,6 +107,11 @@ In case the values do not fit at all, you have to perform a recalibration.
 
 5. Set the ADC0 input back to CT-Power and start at 4. of the previous list.
 
+  
+## Using the attached AC switch adapter
+
+As described in [AC Frequency Detection Switch](../Buttons-and-Switches#ac-frequency-detection-switch) section, the adapter sends pulses (by shorting red wire to GND), when AC voltage is present between the two black wires.
+Shelly RGBW2 has an on-board pull-up resistor to 3.3V, therefore to make it work set GPIO5 to `Switch_n` mode, then use command like `SwitchDebounce 69` to enable pulse detection.
 
 
 ## Use rules to control both switches
@@ -129,3 +134,9 @@ Some issues were reported for this topic - [search query](https://github.com/are
 ## Light setup
 
 Please read: [Lights](../Lights#control-lights).
+
+## PCB images
+  
+![shelly-rgbw2-front](https://user-images.githubusercontent.com/1452106/150571332-524315ce-dfe9-478d-8a47-cddf80980ab4.png)
+ ![shelly-rgbw2-bottom](https://user-images.githubusercontent.com/1452106/150574749-f83f88d8-8b33-4f3b-a8ab-94d4a8bbfbdb.png)
+
