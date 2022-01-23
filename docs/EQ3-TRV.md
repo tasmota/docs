@@ -118,8 +118,8 @@ the valve:
   "state": "unlocked",
   "battery": "GOOD",
   "holidayend": "00-00-00 00:00",
-  "windowdur": 15,
   "windowtemp": 12.0,
+  "windowdur": 15,
   "day": 21.0,
   "night": 17.0,
   "offset": 0.0
@@ -174,8 +174,8 @@ added:
 | state         | child lock enabled (disables the buttons on the TRV): locked / unlocked                                                                           |
 | battery       | battery status of the TRV: GOOD / LOW                                                                                                             |
 | holidayend    | end of holiday mode                                                                                                                               |
-| windowdur     | window open duration                                                                                                                              |
 | windowtemp    | window open temperature                                                                                                                           |
+| windowdur     | window open duration                                                                                                                              |
 | day           | comfort temperature                                                                                                                               |
 | night         | reduction temperature                                                                                                                             |
 | offset        | offset temperature                                                                                                                                |
