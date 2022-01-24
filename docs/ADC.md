@@ -12,6 +12,13 @@ After wiring a peripheral to GPIO17 (A0) pin you have to configure it in **Confi
 
 ![ADC configuration](_media/A0.png)
 
+ESP32 has more ADC pin available, of this something specified for analog input (gpio34, gpio35, gpio36, gpio39). It may be used to read voltage at ADC pin or to read module supply voltage (VCC). 
+All analog input pins support 3.3V of max supply. 
+
+After wiring a peripheral to specified Analog Input GPIO pin you have to configure it in **Configure Module**:
+
+![ADC configuration](_media/ADCesp32.png)
+
 #|Option|WebUI display|MQTT mesage
 -|-|-|-
 0|None| none | none
