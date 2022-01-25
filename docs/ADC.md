@@ -28,7 +28,9 @@ After wiring a peripheral to specified Analog Input GPIO pin you have to configu
 4|Button | none | none
 5|Buttoni | none | none
 6|Range| Range _%value%_ | `{"Range":%value%}`
-7|CT Power| Voltage 230 V<br>Current _%value_ A<br>Power _%value_ W<br>Energy Total _%value_ kWh| `{"Energy":_%value_,"Power":_%value_,"Voltage":230,"Current":_%value_}`
+7|CT Power| Voltage 230 V<br>Current _%value_ A<br>Power _%value_ W<br>Energy Total _%value_ kWh| `{"Energy":%value,"Power":%value,"Voltage":230,"Current":%value}`
+9|pH| ph _%value_| `{"pH":%value}`
+10|MQ-X| MQ-X _%value_ ppm| `{"MQX":%value}`
 
 The reading will show in web UI's sensor section as "_%option% %value%_" depending on the selected option. Tasmota calculates the values for temperature and light, analog values can be `1` to `1024`.
 
