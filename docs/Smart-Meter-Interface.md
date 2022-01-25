@@ -394,7 +394,7 @@ The Tasmota SML script:
 1,77070100010800ff@1000,Total Consumed,KWh,Total_in,3
 1,77070100100700ff@1,Current Consumption,W,Power_cur,0
 1,77070100020800ff@1000,Total Delivered,KWh,Total_out,3
-1,7707010060320101@#,Service ID,,Meter_id,0|  
+1,7707010060320101@#,Service ID,,Meter_id,0
 #    
 ```
 
