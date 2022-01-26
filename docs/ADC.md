@@ -12,6 +12,13 @@ After wiring a peripheral to GPIO17 (A0) pin you have to configure it in **Confi
 
 ![ADC configuration](_media/A0.png)
 
+ESP32 has more ADC pin available, of this something specified for analog input (gpio34, gpio35, gpio36, gpio39). It may be used to read voltage at ADC pin or to read module supply voltage (VCC). 
+All analog input pins support 3.3V of max supply. 
+
+After wiring a peripheral to specified Analog Input GPIO pin you have to configure it in **Configure Module**:
+
+![ADC configuration](_media/ADCesp32.png)
+
 #|Option|WebUI display|MQTT mesage
 -|-|-|-
 0|None| none | none
@@ -21,7 +28,9 @@ After wiring a peripheral to GPIO17 (A0) pin you have to configure it in **Confi
 4|Button | none | none
 5|Buttoni | none | none
 6|Range| Range _%value%_ | `{"Range":%value%}`
-7|CT Power| Voltage 230 V<br>Current _%value_ A<br>Power _%value_ W<br>Energy Total _%value_ kWh| `{"Energy":_%value_,"Power":_%value_,"Voltage":230,"Current":_%value_}`
+7|CT Power| Voltage 230 V<br>Current _%value_ A<br>Power _%value_ W<br>Energy Total _%value_ kWh| `{"Energy":%value,"Power":%value,"Voltage":230,"Current":%value}`
+9|pH| ph _%value_| `{"pH":%value}`
+10|MQ-X| MQ-X _%value_ ppm| `{"MQX":%value}`
 
 The reading will show in web UI's sensor section as "_%option% %value%_" depending on the selected option. Tasmota calculates the values for temperature and light, analog values can be `1` to `1024`.
 
