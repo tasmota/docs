@@ -2,7 +2,8 @@
 
 !!! Warning "Do not use this device as safety fuse!"
 
-!!! Info For future ARM firmware upgrades it's advised to make a full backup of the SPM-Main ESP 4M flash firmware before flashing Tasmota.
+!!! Info 
+    For future ARM firmware upgrades it's advised to make a full backup of the SPM-Main ESP 4M flash firmware before flashing Tasmota.
 
 The Sonoff Smart Stackable Power Meter uses a SPM-Main unit with ESP32 providing wifi and ethernet connections. A serial interface connects to an ARM MCU which in turn provides a RS-485 bus to up to 32 SPM-4Relay modules. The SPM-4Relay module contains an ARM MCU too providing independent power management for four bi-stable relays rated for 20A at 240V for a total of 4800W.
 
@@ -34,6 +35,7 @@ Tasmota, installed on the ESP32, can connect to the SPM-Main ARM MCU using the s
 The following notes currently apply:
 
 - Tasmota is unable to upgrade the ARM firmware
+- Setting ARM overload and overtemp detection is not supported
 
 ## Commands List
 
@@ -43,7 +45,7 @@ Command|Parameters
 :---|:---
 SspmDisplay<a class="cmnd" id="SspmDisplay"></a>|Toggle GUI display between rotating display of all scanned relays or of all scanned relays that are powered on<BR>`0` = Display all relays<BR>`1` = Display powered on relays
 SspmEnergyTotal<x\><a class="cmnd" id="SspmEnergyTotal"></a>|(P)reset total energy in kWh without today's energy for relay <x\><BR>`0` = preset with total of history<BR>`0.01..262143.99` = set value in kWh
-SspmHistory<x\><a class="cmnd" id="SspmHistory"></a>|Show daily energy of up to 180 days for relay <x\>
+SspmHistory<x\><a class="cmnd" id="SspmHistory"></a>|Show daily energy for relay <x\> of up to 180 days
 SspmIAmHere<x\><a class="cmnd" id="SspmIAmHere"></a>|Blink SPM-4Relay module error light containing relay <x\>
 SspmLog<x\><a class="cmnd" id="SspmLog"></a>|Show relay <x\> power state change and cause
 SspmMap<a class="cmnd" id="SspmMap"></a>|Map scanned SPM-4Relay modules to physical location. Use unique numbers for all fields<BR>`3,4,1,2` = map scanned module 1 to physical module 3 containing relays 9 to 12, module 2 to 4 with relays 13 to 16, module 3 to 1 with relays 1 to 4 and module 4 to 2 with relays 5 to 8
