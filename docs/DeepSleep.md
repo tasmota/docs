@@ -5,7 +5,7 @@ The ESP8266 has a limitation of a maximum of ~71 minutes DeepSleep. To overcome 
 `DeepSleepTime` sets the time the device remains in DeepSleep before it returns to full operating mode. Once the command is issued, the DeepSleep cycle commences. During DeepSleep, the device is effectively **off** and, as such, it is not possible to modify DeepSleepTime without exiting DeepSleep. 
 
 !!! example
-    With `DeepSleepTime 3600`, the device will wake up exactly every hour (e.g., 8:00am, 9:00am, ...). If you define `DeepSleepTime 86400` (i.e., 60\*60\*24), it will wake-up exactly at 0:00 UTC time - not your local time. If you define `DeepSleepTime 600`, it will wake-up every 10 minutes (e.g., 8:00, 8:10, 8:20, ...).
+    With `DeepSleepTime 3600`, the device will wake up exactly every hour (e.g., 8:00am, 9:00am, ...). If you define `DeepSleepTime 86400` (i.e., 60\*60\*24), it will wake-up exactly at 0:00 local time. There is no option to shift the wakeup time; except changing the timezone. If you define `DeepSleepTime 600`, it will wake-up every 10 minutes (e.g., 8:00, 8:10, 8:20, ...).
 
 !!! warning
   Please be aware that the minimum DeepSleep time is 10 seconds.
@@ -76,7 +76,7 @@ The following triggers can be used to execute commands upon wake-up or right bef
 - `System#Boot` : is occuring later in the Tasmota boot process but is always available.
 - `SYstem#Save` : is occuring right before a restart or before entering DeepSleep.
 
-For exemple the ruleset below turn on power right after Tasmota started, and turn it off just before entering DeepSleep 
+For example the ruleset below turn on power right after Tasmota started, and turn it off just before entering DeepSleep 
 ``` haskel
 Rule1 ON Power1#Boot DO Power on ENDON ON System#Save DO Power off ENDON
 ```
