@@ -90,7 +90,7 @@ with below options script buffer size may be expanded. PVARS is size for permana
 | compression (default)| 2560 | 2560 | 50 |actual compression rate may vary |
 | #define USE_UFILESYS<br>#define UFSYS_SIZE S | S<=8192 | S<=16384 | 1536 | ESP8266 must use 4M Flash use linker option `-Wl,-Teagle.flash.4m2m.ld` or SDCARD  <BR>ESP32 can use any linker file, size of Filesystem depends on linker file 
 | #define EEP_SCRIPT_SIZE S<br>#define USE_EEPROM<br>#define USE_24C256 | S<=8192 | S<=16384 | 1536 |for hardware eeprom only|
-| #define EEP_SCRIPT_SIZE 6200<br>#define USE_EEPROM | S=6200 | not supported | 1536 | script is lost on OTA and serial flash, not on restart |
+| #define EEP_SCRIPT_SIZE 6200<br>#define USE_EEPROM | S=6200 | not supported | 1536 | script may be lost on OTA and serial flash, not on restart |
 
 most useful definition for larger scripts would be  
 
@@ -98,7 +98,7 @@ most useful definition for larger scripts would be
 
 with 1M flash only default compressed mode should be used (or an SDCARD)  
 a special compressed mode can enable up to 6200 chars by defining #define USE_EEPROM, #define EEP_SCRIPT_SIZE 6200  
-however this has some side effects. the script is deleted on OTA or serial update and has to be installed fresh after update.  
+however this has some side effects. the script may be deleted on OTA or serial update and may have to be reinstalled  after update.  
 
 with 4M Flash best mode would be     
 `#define USE_UFILESYS`     
@@ -270,12 +270,15 @@ the special variables
     
 `>U`  
 JSON messages from cmd status arrive here
+  
+`>C`  
+HTML messages arrive here (on web user io event, (if defined USE_HTML_CALLBACK))  
 
 `>G`  
 global variable updated section
 
 `>P`  
-any power change triggers here
+any power change triggers here (if defined SCRIPT_POWER_SECTION)
 
 `>jp`  
 https webpage json parse arrives here  
@@ -335,16 +338,21 @@ A web user interface may be generated containing any of the following elements:
  `vn` = name of variable to hold button state  
  `txt1` = text of ON state of button  
  `txt2` = text of OFF state of button  
+
 **Pulldown:**   
- `pd(vn label txt1 txt2 ... txtn)`  
+ `pd(vn label (xs) txt1 txt2 ... txtn)`  
  `vn` = name of variable to hold selected state  
  `label` = label text  
+ `xs` = optional xs (default 200) 
  `txt1` = text of 1. entry  
  `txt2` = text of 2. entry and so on  
+  
 **Checkbox:**   
- `ck(vn txt)`  
+ `ck(vn txt (xs))`  
  `vn` = name of variable to hold checkbox state  
  `txt` = label text   
+ `xs` = optional xs (default 200) 
+
 **Slider:**    
 `sl(min max vn ltxt mtxt rtxt)`  
  `min` = slider minimum value  
@@ -353,19 +361,30 @@ A web user interface may be generated containing any of the following elements:
  `ltxt` = label left of slider  
  `mtxt` = label middle of slider  
  `rtxt` = label right of slider  
+  
 **Text Input:**    
- `tx(vn lbl)`  
+ `tx(vn lbl (xs) (type min max))`  
  `vn` = name of string variable to hold text state  
  `lbl` = label text  
- 
-**Number Input:**    
- `nm(min max step vn txt)`  
+ `xs` = optional xs (default 200)  
+ `type min max` = optional strings type = e.g "datetime-local" for date+time selector, min, max = date-time min max range  
+  
+**Time Input:**    
+ `tm(vn lbl (xs))`  
+ `vn` = name of number variable to hold time HHMM as number e.g. 1900 means 19:00  
+ `lbl` = label text  
+ `xs` = optional xs (default 70)  
+  
+**Number Input:**  
+ `nm(min max step vn txt (xs) (prec))`  
  `min` = number minimum value  
  `max` = number maximum value  
  `step` = number step value for up/down arrows  
  `vn` = name of number variable to hold number  
- `txt` = label text 
- 
+ `txt` = label text  
+ `xs` = optional xs (default 200)  
+ `prec` = optional number precision (default 1)  
+  
  **Google Charts:**  
   draws a google chart with up to 4 data sets per chart  
   `gc( T array1 ... array4 "name" "label1" ... "label4" "entrylabels" "header" {"maxy1"} {"maxy2"})`   
@@ -426,8 +445,8 @@ lines preceeded by $ are static and not refreshed and displayed below lines with
 this option also enables a full webserver interface when USE_UFILESYS is activ.  
 you may display files from the flash or SD filesystem by specifying the url:  IP/ufs/path  .
 (supported files: *.jpg, *.html, *.txt)  
-`>w1` `>w2` `>w3` some as above `>w`
-==Requires compiling with `#define SCRIPT_FULL_WEBPAGE`.== 
+`>w1` `>w2` `>w3` some as above `>w`  
+==Requires compiling with `#define SCRIPT_FULL_WEBPAGE`.==  
 
   
 `>M`  
@@ -462,7 +481,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `pin[x]` = GPIO pin level (x = 0..16)  
 `pn[x]` = GPIO for sensor code x. 99 if none  
 `pd[x]` = defined sensor for GPIO x. 999 if none  
-`adc(fac (pin))` = get adc value (on ESP32 can select pin) fac is number of averaged samples (power of 2: 0..7) 
+`adc(fac (pin))` = get adc value (on ESP32 can select pin) fac is number of averaged samples (power of 2: 0..7)  
 `sht[x]` = shutter position (x = 1..N) (if defined USE_SHUTTER)  
 `gtmp` = global temperature  
 `ghum` = global humidity  
@@ -492,7 +511,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `mpt(x)` = measure pulse time, x>=0 defines pin to use, -1 returns low pulse time,-2 return high pulse time (if defined USE_ANGLE_FUNC)  
 `rnd(x)` = return a random number between 0 and x, (seed may be set by rnd(-x))  
 `sf(F)` = sets the CPU Frequency (ESP32) to 80,160,240 Mhz, returns current Freq.  
-`s(x)` = explicit conversion from number x to string  
+`s(x)` = explicit conversion from number x to string  may be preceeded by precsion digits e.g. s(2.2x) = use 2 digits before and after decimal point  
 I2C support #define USE_SCRIPT_I2C  
 `ia(AA)`, `ia2(AA)` test and set I2C device with adress AA (on BUS 1 or 2), returns 1 if device is present  
 `iw(aa val)` , `iw1(aa val)`, `iw2(aa val)`, `iw3(aa val) `write val to register aa (1..3 bytes)  
@@ -541,9 +560,9 @@ SEL:
 `sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
 `sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
 `sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)(if defined USE_SML_SCRIPT_CMD)  
-`sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)
-`smlx[m]` = get value of SML meter string info of meter m (if defined USE_SML_SCRIPT_CMD)
-`smlv[n]` = get SML decode valid status of line n (1..N), returns 1 if line decoded. n=0 resets all status codes to zero (if defined USE_SML_SCRIPT_CMD) 
+`sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
+`smlx[m]` = get value of SML meter string info of meter m (if defined USE_SML_SCRIPT_CMD)  
+`smlv[n]` = get SML decode valid status of line n (1..N), returns 1 if line decoded. n=0 resets all status codes to zero (if defined USE_SML_SCRIPT_CMD)  
 `enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
 `gjp("host" "path")` = trigger HTTPS JSON page read as used by Tesla Powerwall (if defined SCRIPT_GET_HTTPS_JP)  
 `gwr("del" index)` = gets non JSON element from webresponse del = delimiter char or string, index = n´th element (if defined USE_WEBSEND_RESPONSE)  
@@ -624,6 +643,7 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
 `break` exits a section or terminates a `for next` loop  
 `dpx` sets decimal precision to x (0-9)  
 `dpx.y` sets preceeding digits to x and decimal precision to y (0-9)  
+`dp(x y)` sets preceeding digits to x and decimal precision to y  
 `svars` save permanent vars  
 `delay(x)` pauses x milliseconds (should be as short as possible)  
 `beep(f l)` (ESP32) beeps with a passive piezo beeper. beep(-f 0) attaches PIN f to the beeper, beep(f l) starts a sound with frequency f (Hz) and len l (ms). f=0 stops the sound.  
@@ -789,7 +809,7 @@ To use any of these values, pass an `*` as its corresponding argument placeholde
 !!! example
     `sendmail [*:*:*:*:*:<rec@gmail.com>:theSubject] theMessage`
 
-Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `m` _(note lower case)_ section. The specified text in this script section must end with an `#` character. `sendmail` will use the `m` section if `*` is passed as the `msg` parameter. in this >m section you may also specify email attachments.
+Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `m` _(note lower case)_ section. The specified text in this script section must end with an `#` character. `sendmail` will use the `m` section if `*` is passed as the `msg` parameter. in this >m section you may also specify email attachments.  
 @/filename specifies a file to be attached (if file system is present)  
 &arrayname specifies an array attachment (as tab delimeted text, no file system needed)  
 
