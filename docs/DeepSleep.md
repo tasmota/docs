@@ -67,7 +67,7 @@ Once device maintenance is completed, place it back into DeepSleep mode using or
 
 !!! tip "If you're having issues after wakeup from sleep"
     Make sure bootloop detection is off [`SetOption36 0`](Commands#setoption36). See issue [#6890](https://github.com/arendst/Tasmota/issues/6890#issuecomment-552181980)
-
+   
 ## Rules
 
 The following triggers can be used to execute commands upon wake-up or right before entering DeepSleep:
@@ -122,7 +122,8 @@ Exemple from `xsns_09_bmp.ino`:
 In general you can also execute any command or special script ==BEFORE== device goes into DeepSleep using handler FUNC_SAVE_BEFORE_RESTART as a predefined hook to implement your own procedure. This requires you to code your own function and self-compile custom firmware.
 
 ## Overcome network issues
-If all requirements (Wifi, NTP time synchronization, MQTT broker connection and TelePeriod) are not met, the device will stay awake while trying to attain the remaining requirements. On battery powered devices this behavior is undesirable because it will quickly deplete the battery. To avoid this when these requirements cannot be met, put the device back into DeepSleep for an hour. Do this through a rule that will be triggered 30 seconds after reboot and sends the device into deepsleep for an hour.
+If the device is not able to make a WIFI connection and get an IP during the first 15 seconds after boot it will go again without any further actions into deepsleep for another cycle. If you compile your own firmware you can change the timeout by setting [`#define DEEPSLEEP_NETWORK_TIMEOUT 30`] in user_config.override or disable completly (device stay online until network connected) with [`#undef DEEPSLEEP_NETWORK_TIMEOUT`].
+If MQTT or NTP does not work the TELEPERIOD will execute anyhow and send the device to deepsleep afterwards. A wrong NTP will result in wrong timestamp send to MQTT. A missing MQTT connection will avoid any send.
 
 ```console
 Rule1
