@@ -854,8 +854,8 @@ connected<a class="cmnd" id="tcpclient_connected">|`connected() -> bool`<BR>Retu
 close<a class="cmnd" id="tcpclient_close">|`close() -> nil`<BR>Drops the current connection.
 write<a class="cmnd" id="tcpclient_write">|`content:string or bytes) -> int`<BR>Accepts either a string or a bytes buffer, returns the number of bytes sent. It's you responsibility to resend the missing bytes.<BR>Returns `0` if something went wrong.
 available<a class="cmnd" id="tcpclient_close">|`available() -> int`<BR>Returns the number of bytes received in buffer and ready to be read.
-read<a class="cmnd" id="tcpclient_read">|`read() -> string`<BR>Returns all the bytes received in Rx buffer as `string`.
-readbytes<a class="cmnd" id="tcpclient_read">|`read() -> bytes()`<BR>Returns all the bytes received in Rx buffer as `bytes()`.
+read<a class="cmnd" id="tcpclient_read">|`read([max_len:int]) -> string`<BR>Returns all the bytes received in Rx buffer as `string`.<br>Optional `max_len` parameter limits the number of characters returned, or read as much as possible by default.
+readbytes<a class="cmnd" id="tcpclient_read">|`read([max_bytes:int]) -> bytes()`<BR>Returns all the bytes received in Rx buffer as `bytes()`.<br>Optional `max_bytes` parameter limits the number of bytes returned, or read as much as possible by default.
 Full example:
 
 ```
