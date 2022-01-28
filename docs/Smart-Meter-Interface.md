@@ -304,6 +304,7 @@ Look down below for script examples based on the following metering devices:
 
 - [JANZ C3801](#janz-c3801-modbus) (SML - MODBus)
 - [EMH ED300L](#emh-ed300l-sml) (SML)
+- [EMH ED300S](#emh-ed300s-sml) (SML)
 - [Digimeto GS303](#digimeto-gs303-sml) (SML)
 - [Hager EHZ363, Apator Norax 3D](#hager-ehz363-apator-norax-3d-sml) (SML)
 - [Hager EHZ161](#hager-ehz161-obis) (OBIS)
@@ -379,6 +380,21 @@ The Tasmota SML script:
 2,77070100010800FF@1000,Zählerstand Verb.,kWh,Tariflos,2  
 2,77070100020800FF@1000,Zählerstand Einsp.,kWh,Tariflos,2  
 #    
+```
+
+------------------------------------------------------------------------------
+
+### EMH ED300S (SML)
+
+```
+>D
+>B
+->sensor53 r
+>M 1
++1,3,s,0,9600,Main
+1,77070100100700ff@1,Power,W,power,0
+1,77070100010800FF@1000,Counter,kWh,counter,3
+#
 ```
 
 ------------------------------------------------------------------------------
