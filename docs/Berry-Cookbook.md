@@ -668,3 +668,52 @@ def set_timer_modulo(delay,f)
   tasmota.set_timer((now+delay/4+delay)/delay*delay-now, def() set_timer_modulo(delay,f) f() end)
 end
 ```
+
+## H-bridge control
+
+An H-bridge is an electronic circuit that switches the polarity of a voltage applied to a load. These circuits are often used in robotics and other applications to allow DC motors to run forwards or backwards.
+
+You can typically use 2 PWM channels to pilot a H-bridge, under the condition that both channels are never active at the same time; otherwise you may detroy your device. This means that phasing must be calculated so that one pulse started once the other pulse is inactive, and the sum of both dutys must not exceed 100%.
+
+The following Berry function ensures appropriate management of H-bridge:
+
+``` ruby
+#
+# H_bridge class in Berry to pilot a H-bridge device
+#
+
+class H_bridge
+  var gpio1, gpio2
+  var max
+
+  # init(phy_gpio1, phy_gpio2) - intialize H-bridge with the 2 GPIOs used to control it
+  def init(gpio1, gpio2)
+    self.gpio1 = gpio1
+    self.gpio2 = gpio2
+    self.max = 1023     # max value of duty
+  end
+
+  # set the value of both PWM values
+  def set(v1, v2)
+    if v1 < 0   v1 = 0 end
+    if v2 < 0   v2 = 0 end
+    if v1 + v2 > self.max
+      raise "value_error", "the sum of duties must not exceed 100%"
+    end
+
+    import gpio
+    gpio.set_pwm(self.gpio1, v1, 0)
+    gpio.set_pwm(self.gpio2, v2, v1)    # dephase by value v1
+  end
+end
+```
+
+Example of use:
+
+``` ruby
+var hbridge = H_bridge(12, 13)    # use GPIO12 and GPIO13
+hbridge.set(100,200)              # set values to 102/1023 and 204/1023, i.e. 10% and 20%
+
+hbridge.set(100,950)              # set values to 102/1023 and 950/1023, i.e. 10% and 93%
+BRY: Exception> 'value_error' - the sum of duties must not exceed 100%
+```
