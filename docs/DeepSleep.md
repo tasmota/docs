@@ -122,9 +122,10 @@ Exemple from `xsns_09_bmp.ino`:
 In general you can also execute any command or special script ==BEFORE== device goes into DeepSleep using handler FUNC_SAVE_BEFORE_RESTART as a predefined hook to implement your own procedure. This requires you to code your own function and self-compile custom firmware.
 
 ## Overcome network issues
-If the device is not able to make a WIFI connection and get an IP during the first 15 seconds after boot it will go again without any further actions into deepsleep for another cycle. If you compile your own firmware you can change the timeout by setting [`#define DEEPSLEEP_NETWORK_TIMEOUT 30`] in user_config.override or disable completly (device stay online until network connected) with [`#undef DEEPSLEEP_NETWORK_TIMEOUT`].
+If the device is not able to make a WIFI connection and get an IP during the first 15 seconds after boot it will go again without any further actions into deepsleep for another cycle. If you compile your own firmware you can change the timeout (e.g. 30 seconds) by setting `#define DEEPSLEEP_NETWORK_TIMEOUT 30` in `user_config.override` or disable completly (device stay online until network connected) with `#define DEEPSLEEP_NETWORK_TIMEOUT 0`.
 If MQTT or NTP does not work the TELEPERIOD will execute anyhow and send the device to deepsleep afterwards. A wrong NTP will result in wrong timestamp send to MQTT. A missing MQTT connection will avoid any send.
 
+Another method to send the device into deepsleep after start is creating a rule like the one below. In this case the timeout can be configured online and changed.
 ```console
 Rule1
   ON Dimmer#Boot DO RuleTimer1 30 ENDON
