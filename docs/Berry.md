@@ -488,13 +488,7 @@ Any internal error or using unsupported GPIO yields an Berry exception.
 
 An H-bridge is an electronic circuit that switches the polarity of a voltage applied to a load. These circuits are often used in robotics and other applications to allow DC motors to run forwards or backwards.
 
-You can typically use 2 PWM channels to pilot a H-bridge, under the condition that both channels are **never** active at the same time; otherwise you may detroy your device. This means that phasing must be calculated so that one pulse started once the other pulse is inactive, and the sum of both dutys must not exceed 100%.
-
-The following Berry function ensures appropriate management of H-bridge:
-
-``` ruby
-TBD
-```
+See the Berry cookbook for [H-bridge control](Berry-Cookbook.md#h-bridge-control)
 
 ### DAC GPIOs
 
