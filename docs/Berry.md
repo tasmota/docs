@@ -980,6 +980,19 @@ Tasmota Function|Parameters and details
 start<a class="cmnd" id="display_start"></a>|`display.start(displayini:string) -> nil`<br>Initializes the Universal Display Driver with the string provided as argument, similar to content in `display.ini`. It is typically read from a file in the file-system.
 
 
+### `uuid` module
+
+The `uuid` module allows to generate uuid4 random ids.
+
+``` ruby
+> import uuid
+> uuid.uuid4()
+1a8b7f78-59d8-4868-96a7-b7ff3477d43f
+```
+
+Tasmota Function|Parameters and details
+:---|:---
+uuid4<a class="cmnd" id="uuid_uuid4"></a>|`uuid.uuid4() -> string`<br>Generates a uuid4 random id as string.
 
 ## Compiling Berry
 
