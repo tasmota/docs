@@ -22,7 +22,7 @@ If your inverter has two PV-inputs, you can activate the 2nd one:
 ```
 ## General
 This module reads runtime values from a [Solax X1](https://www.solaxpower.com) device via RS485 Modbus interface and publishes them to MQTT.  
-<img src="/docs/_media/solax-x1/X1Mini.png" width=200> <img src="/docs/_media/solax-x1/X1Air.png" width=200> <img src="/docs/_media/solax-x1/X1Smart.png" width=200>
+[![X1 Mini](_media/solax-x1/X1Mini_200.png)](_media/solax-x1/X1Mini.png) [![X1 Air](_media/solax-x1/X1Air_200.png)](_media/solax-x1/X1Air.png) [![X1 Smart](_media/solax-x1/X1Smart_200.png)](_media/solax-x1/X1Smart.png)
 
 ## Wiring
 To connect the inverter to the Tasmota-device, you have to use a breakout board to adapt the RS485 interface of the inverter to serial interface of the ESP.
@@ -33,10 +33,10 @@ Here are two examples of tested breakout boards. Recommended is a board with a S
 
 #### SP3485
 The SP3485 breakout board is specially made to work with only 3 volts. It has a seperate RTS-pin and works with a voltage from 3 to 5 volts.  
-<img src="/docs/_media/solax-x1/SP3485_Breakout1.jpg" width=240> <img src="/docs/_media/solax-x1/SP3485_Breakout2.jpg" width=240>
+[![SP3485_Breakout1](_media/solax-x1/SP3485_Breakout1_240.jpg)](_media/solax-x1/SP3485_Breakout1.jpg) [![SP3485_Breakout2](_media/solax-x1/SP3485_Breakout2_240.jpg)](_media/solax-x1/SP3485_Breakout1.jpg)
 #### HW-0519
 The HW-0519 breakout board does not need a seperate RTS-pin, because it automatically switches between sending and receiving. The recommended voltage is 5 volts, but it should also work with 3 volts.  
-<img src="/docs/_media/solax-x1/HW-0519_Breakout.jpg" width=480>
+[![HW-0519_Breakout](_media/solax-x1/HW-0519_Breakout_480.jpg)](_media/solax-x1/HW-0519_Breakout.jpg)
 ### ESP ⬌ breakout board
 The RX-, TX- and RTS- (if needed) lines have to be connected to the ESP matching the [module configuration](#configuration).
 
@@ -54,7 +54,7 @@ The inverter has a RJ45-jack, where the interface is accessible. Please consult 
 
 !!! tip	"Tip: You can use an ethernet cable and cut off one connector. The RS485 interface uses the blue wire pair."
 
-<img src="/docs/_media/solax-x1/RJ45.png" align=right width=200>
+<img src="../_media/solax-x1/RJ45.png" align=right width=200>
 
 | Breakout board | RJ45 inverter | Wire color (T568B) |
 |---|---|---|
@@ -63,12 +63,12 @@ The inverter has a RJ45-jack, where the interface is accessible. Please consult 
 
 ## Configuration
 You have to configure the module or the template. Select `SolaxX1 Tx` and `SolaxX1 Rx` for the RS485 communication. If you have a breakout board which needs the RTS line, you must also select `SolaxX1 RTS`.  
-<img src="/docs/_media/solax-x1/x1-config-mark.png" width=260>
+![x1-config](_media/solax-x1/x1-config-mark_260.png)
 
-## Operating
+## Operation
 ### Result
 When every thing works you will see the current data on the main page. They are also provided via MQTT.  
-<img src="/docs/_media/solax-x1/x1-example.png" width=260>
+![x1-example](_media/solax-x1/x1-example_300.png)
 ### Inverter status
 The inverter status field represents the value reported by the inverter, when the inverter is sending data.
 In the case when no data is received, it will be display `off`. As the converter is only working, when _the sun is shining_, you will see `off` normally at night or too low light.  
