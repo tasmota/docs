@@ -385,6 +385,12 @@ A web user interface may be generated containing any of the following elements:
  `xs` = optional xs (default 200)  
  `prec` = optional number precision (default 1)  
   
+**special html options:**  
+  `so(flags)`  
+  `WSO_NOCENTER` = 1 force elements not centered  
+  `WSO_NODIV` = 2 force elements not in extra \<div\>  
+  `WSO_FORCEPLAIN` = 4 send line in plain (no table elements)
+  
  **Google Charts:**  
   draws a google chart with up to 4 data sets per chart  
   `gc( T array1 ... array4 "name" "label1" ... "label4" "entrylabels" "header" {"maxy1"} {"maxy2"})`   
@@ -474,6 +480,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `frnm` = friendly name  
 `dvnm` = device name  
 `pwr[x]` = power state  (x = 1..N)  
+`npwr` = number of tasmota power devices    
 `pc[x]` = pulse counter value  (x = 1..4)  
 `tbut[x]` = touch screen button state  (x = 1..N)  
 `sw[x]` = switch state  (x = 0..N) (Switch1 = `sw[0]`)  
