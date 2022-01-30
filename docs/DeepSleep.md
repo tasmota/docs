@@ -1,7 +1,5 @@
 DeepSleep support for up to 10 years (i.e., 86,400 seconds = 1 day) (e.g., if used with KNX) ([`DeepSleepTime`](Commands#deepsleeptime)). 
 
-The ESP8266 has a limitation of a maximum of ~71 minutes DeepSleep. To overcome the limitation, a short wake-up is performed - the device will wake up every hour for <0.3 seconds until the DeepSleep time is reached. The remaining DeepSleep time is decremented, and the device is then put back in DeepSleep again. The remaining time is stored in RTC memory. As long as the device is powered (e.g., via the battery), this should work fine. Flash memory is not used because of how often this has to occur (every hour) and the time it takes for the flash to be ready takes much longer than the total time to write to the RTC.
-
 `DeepSleepTime` sets the time the device remains in DeepSleep before it returns to full operating mode. Once the command is issued, the DeepSleep cycle commences. During DeepSleep, the device is effectively **off** and, as such, it is not possible to modify DeepSleepTime without exiting DeepSleep. 
 
 !!! example
@@ -53,7 +51,7 @@ Command to send a retained message:<br>
 Remove retained message<BR>
 `mosquitto_pub -t "cmnd/myDeviceTopic/DeepsleepTime" -r -n`<BR>
   
-You can alsosend retained message or clear them with other MQTT tools: MQTT Explorer, ....
+You can also send retained message or clear them with other MQTT tools: MQTT Explorer, ....
 
 Once you have made your configuration change, you will need to re-enable DeepSleep mode using `DeepSleepTime` command.
 
@@ -64,9 +62,6 @@ Configure a settable flag in your home automation hub (e.g., Node-Red, openHAB, 
 The moment a message is received on this topic, the automation can publish a message to topic `cmnd/%topic%/DeepSleepTime` with payload `0`. This will cause the device to disable DeepSleep and allow maintenance such as firmware updates to be performed without having an unexpected DeepSleep event. Send the `DeepSleepTime 0` command ==only once==.
 
 Once device maintenance is completed, place it back into DeepSleep mode using original configuration.
-
-!!! tip "If you're having issues after wakeup from sleep"
-    Make sure bootloop detection is off [`SetOption36 0`](Commands#setoption36). See issue [#6890](https://github.com/arendst/Tasmota/issues/6890#issuecomment-552181980)
    
 ## Rules
 
@@ -137,7 +132,7 @@ Rule1 ON
 ## DeepSleep Algorithm General Timing
 Let's assume you have set `DeepSleepTime 3600` (one hour) and `TelePeriod 300` (five minutes). The device will first wake at 8:00 am. The device will boot and connect Wi-Fi. Next, the correct time must be sync'ed from one of the NTP servers. Now the device has all prerequisites for going into DeepSleep.
 
-DeepSleep is then triggered at the TelePeriod event. In this example, it will occur after five minutes. Telemetry will be collected and sent (e.g., via MQTT). Now, DeepSleep can happen. First, `Offline` is published to the LWT topic on MQTT. It then calculates the new sleeping time to wake-up at 9:00 am (3600 seconds after the last wake-up). At 9:00 am this same sequence of events happens again.
+DeepSleep is then triggered after the TelePeriod event. In this example, it will occur after five minutes. Telemetry will be collected and sent (e.g., via MQTT). Now, DeepSleep can happen. First, `Offline` is published to the LWT topic on MQTT. It then calculates the new sleeping time to wake-up at 9:00 am (3600 seconds after the last wake-up). At 9:00 am this same sequence of events happens again.
 
 If you want to minimize the time that the device is in operation, decrease TelePeriod down to 10 seconds. This period of time is counted ==after== MQTT is connected. Also, in this case, the device will wake up at 9:00 am even if the uptime was much smaller. If the device missed a wake-up it will try a start at the next event - in this case 10:00 am.
 
