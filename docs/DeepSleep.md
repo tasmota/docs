@@ -7,8 +7,9 @@ DeepSleep support for up to 10 years (i.e., 86,400 seconds = 1 day) (e.g., if us
 
 !!! warning
   Please be aware that the minimum DeepSleep time is 10 seconds.
+  
+![](_media/deepsleep_minimal.png)
 
-<img style="float:right" src="../_media/deepsleep_minimal.png">
 In order for the device to wake itself to perform its function during the DeepSleep cycle, the RST pin must be connected to the D0/GPIO16 pin. This is the only pin which can perform this function as the wake-up signal is sent from the RTC through D0/GPIO16 to RST. When connected to RST for DeepSleep purpose, GPIO16 may not be used for other functions. As such, it is recommended to leave it configured as `None (0)`. *On the diagram, black denotes existing parts and connections on a standard ESP board (mini-D1, NodeMCU, ...). Red denotes what is added to the DeepSleep feature.*
 
 ![](_media/deepsleep_gpio16_none.png)
@@ -17,7 +18,8 @@ In order for the device to wake itself to perform its function during the DeepSl
 
 ### Using a switch
 
-<img style="float:right" src="../_media/deepsleep_switch.png">
+![](_media/deepsleep_switch.png)
+
 Select another GPIO (let's call it "GPIOn") and connect it GND. This can be performed through a switch per the schematic below. Flipping the switch to "ON" will prevent Tasmota to enter DeepSleep again after next wake-up until the switch is flipped back OFF. *On the diagram, blue denotes additional parts and connections to be able to disableDeepSleep.* GPIOn should be defined as `DeepSleep (182)` in the configuration as shown below:
 
 ![](_media/deepsleep_deepsleep182.png)
