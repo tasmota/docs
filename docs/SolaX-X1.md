@@ -49,7 +49,7 @@ The RX-, TX- and RTS- (if needed) lines have to be connected to the ESP matching
 |RTS|RTS|-|
 
 ### Breakout board ⬌ inverter
-The RS485 interface is a 2-wire-connection. The wires are called `A+` and `B-`. The big advantage of the interface is, beside of needing only two wires, that it can reach a length uo to 1200 meters.
+The RS485 interface is a 2-wire-connection. The wires are called `A+` and `B-`. The big advantage of the interface is, beside of needing only two wires, that it can reach a length up to 1200 meters.
 The inverter has a RJ45-jack, where the interface is accessible. Please consult the manual of your inverter where it is located.
 
 !!! tip	"Tip: You can use an ethernet cable and cut off one connector. The RS485 interface uses the blue wire pair."
