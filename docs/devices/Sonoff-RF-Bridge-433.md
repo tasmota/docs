@@ -30,7 +30,7 @@ Tasmota supports the original Sonoff RF firmware and the [Portisch firmware](htt
 ### RF Firmware Upgrade
 The RF upgrade requires wiring the bridge and then flashing the firmware via the Tasmota web UI.
 
-**Attention ⚠️️⚠️️⚠️️ There are 2 versions of the `Sonoff RF Bridge 433`: the `R1` and the `R2 V1.0`.  
+**Attention ⚠️️⚠️️⚠️️** There are 2 versions of the `Sonoff RF Bridge 433`: the `R1` and the `R2 V1.0`.  
 
 **R1**  
 <img src="https://user-images.githubusercontent.com/34340210/64807789-f62af600-d563-11e9-81e0-a73c99577838.jpg" width="300">
@@ -45,7 +45,7 @@ The RF upgrade requires wiring the bridge and then flashing the firmware via the
     - For `R1`: Connect `GPIO4 to C2Ck` and `GPIO5 to C2D`.
     - For `R2`: Connect `GPIO4 to C2D` and `GPIO5 to C2Ck`.
    (:warning: The text on the R2 PCB silkscreen is switched. Therefore this is the same wiring as on the R1)
-4. Switch the ON/OFF switch on the board to 'ON'.
+4. Switch the ON/OFF switch on the board to 'OFF' (to disconnect RF from ESP).
 5. Power up the bridge via the 3.3V & GND pins. (See below if you need to power the device through the USB power port)
 6. Obtain the Portisch firmware file:
     (Clicking on the file link on the GitHub web site does **not** work since this will download the GitHub preview/content of the file rather than the raw file contents)
