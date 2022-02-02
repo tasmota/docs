@@ -288,7 +288,7 @@ class MegaGreeter
   var names
   
   def init(name)
-    self.names = []          # emty list
+    self.names = []          # empty list
     if name != nil
       self.names.push(name)
     end
@@ -318,7 +318,7 @@ class MegaGreeter
   var names
   
   def init(name)
-    self.names = []          # emty list
+    self.names = []          # empty list
     if name != nil
       self.names.push(name)
     end
@@ -370,7 +370,7 @@ Bye Stephan, come back soon.
 Sometimes, it is nice just to add comments that explain interesting things related to your code. In the example in the last section, there were a few single line comments:
 
 ``` ruby
-  self.names = []          # emty list
+  self.names = []          # empty list
 ```
 
 Such comments start with `#` and tell the system to ignore the rest of the line.
