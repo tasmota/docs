@@ -1,7 +1,8 @@
 # Berry Scripting Language :material-cpu-32-bit:
 
-!!! info "Berry Scripting is included in all Tasmota32 builds. It is not supported on ESP82xx"
+!!! info "If you're new to Berry, have a look at [Berry Introduction](Berry-Introduction.md)"
 
+!!! info "Berry Scripting is included in all Tasmota32 builds. It is not supported on ESP82xx"
 
 !!! info "If you plan to code in Berry, you should enable `#define USE_BERRY_DEBUG` which will give you much more details when coding"
 
