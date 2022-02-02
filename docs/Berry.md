@@ -1,6 +1,6 @@
 # Berry Scripting Language :material-cpu-32-bit:
 
-!!! info "If you're new to Berry, have a look at [Berry Introduction](Berry-Introduction.md)"
+!!! info "If you're new to Berry, have a look at [Berry Introduction (in 20 minutes of less)](Berry-Introduction.md)"
 
 !!! info "Berry Scripting is included in all Tasmota32 builds. It is not supported on ESP82xx"
 
@@ -10,7 +10,7 @@
 
 Useful resources:
 
-- First time user of Berry: [Berry Introduction](Berry-Introduction.md)
+- First time user of Berry: [Berry Introduction (in 20 minutes of less)](Berry-Introduction.md)
 - Full language documentation [The Berry Script Language Reference Manual](https://github.com/berry-lang/berry/wiki/Reference)
 - Tasmota extension of Berry, see below
 - Full examples in the [Berry Cookbook](Berry-Cookbook.md)
