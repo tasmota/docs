@@ -9,6 +9,7 @@
 <img style="float:right;height:40px" alt="Berry logo" src="../_media/berry/berry.svg">
 
 Useful resources:
+
 - First time user of Berry: [Berry Introduction](Berry-Introduction.md)
 - Full language documentation [The Berry Script Language Reference Manual](https://github.com/berry-lang/berry/wiki/Reference)
 - Tasmota extension of Berry, see below
