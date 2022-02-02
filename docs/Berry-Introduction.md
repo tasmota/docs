@@ -1,4 +1,4 @@
-# Berry Introduction
+# Berry Introduction (in 20 minutes or less)
 
 This quick start will drive you in the basics of the Berry language. It should take no more than 20 minutes and is inspired by [Ruby in Twenty Minutes](https://www.ruby-lang.org/en/documentation/quickstart/)
 
