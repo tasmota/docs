@@ -176,7 +176,7 @@ Hello, Bob!
 Bye, Bob, come back soon
 ```
 
-You can combine with string functions like `loupper()` to conver to uppercase
+You can combine with string functions like `loupper()` to convert to uppercase
 
 ``` ruby
 > import string
