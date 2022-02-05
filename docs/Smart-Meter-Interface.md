@@ -954,7 +954,7 @@ The script:
 #
 ```
 
-The following script is for another version (`ISKRA eHZ-MT681-D4A51-K0p` from 2012) of this device with slightly other OBIS codes fpr the power values.
+The following script is for another version (`ISKRA eHZ-MT681-D4A51-K0p` from 2012) of the Iskra MT 681 with slightly other OBIS codes for the power values.
 
 The script:
 ```
