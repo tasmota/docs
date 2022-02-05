@@ -177,7 +177,7 @@ Each meter typically provides multiple metrics (enegry, voltage, power, current 
 !!! tip
 	You can monitor the serial activity at a GPIO with a connected LED. This function is usefull for debugging purposes and also to see data is coming in during normal operation.<BR>
     Usage: Enter the command `sensor53 lx` to activate this function (Lowercase `L` for `LED`). `x` is the number of the GPIO where the LED is connected. For example you can use `sensor53 l2` for the onboard LED on a Wemos D1-mini or `sensor53 l13` on a Sonoff Basic. `sensor53 l255` turns the function off. This is the default value.<BR>
-	With `sensor53 mx` you can choose wich serial meter (`x`) will be monitored. Set `sensor53 m0` will monitor all serial meters. This is the default value.<BR>
+	With `sensor53 mx` you can choose which serial meter (`x`) will be monitored. Set `sensor53 m0` will monitor all serial meters. This is the default value.<BR>
     To start the monitoring at boot-time, simply add the necessary entries in the boot-section (`>B`) of the script:<BR>
 	!!! example
 		```
