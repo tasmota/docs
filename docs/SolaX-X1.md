@@ -40,13 +40,13 @@ The HW-0519 breakout board does not need a seperate RTS-pin, because it automati
 ### ESP ⬌ breakout board
 The RX-, TX- and RTS- (if needed) lines have to be connected to the ESP matching the [module configuration](#configuration).
 
-| ESP | SP3485 | HW-0519 |
-|---|---|---|
-|3.3V|3-5V|VCC|
-|GND|GND|GND|
-|RX|TX-O|TXD|
-|TX|RX-I|RXD|
-|RTS|RTS|-|
+| ESP  | SP3485 | HW-0519 |
+|------|--------|---------|
+| 3.3V | 3-5V   | VCC     |
+| GND  | GND    | GND     |
+| RX   | TX-O   | TXD     |
+| TX   | RX-I   | RXD     |
+| RTS  | RTS    | -       |
 
 ### Breakout board ⬌ inverter
 The RS485 interface is a 2-wire-connection. The wires are called `A+` and `B-`. The big advantage of the interface is, beside of needing only two wires, that it can reach a length up to 1200 meters.
@@ -57,9 +57,15 @@ The inverter has a RJ45-jack, where the interface is accessible. Please consult 
 <img src="../_media/solax-x1/RJ45.png" align=right width=200>
 
 | Breakout board | RJ45 inverter | Wire color (T568B) |
-|---|---|---|
-|A(+)|Pin 4|blue|
-|B(-)|Pin 5|blue-white|
+|----------------|---------------|--------------------|
+| A (+)          | Pin 4         | blue               |
+| B (-)          | Pin 5         | blue-white         |
+| G / Ground     | Pin 7         | brown-white        |
+
+!!! info
+	In many cases two wires are enough to keep it working without errors.
+	When your environment has electrical interferences or your cable is quiet long, you should use a third wire to establish a common signal reference.
+	This wire has to be connected to the `Ground` pins.
 
 ## Configuration
 You have to configure the module or the template. Select `SolaxX1 Tx` and `SolaxX1 Rx` for the RS485 communication. If you have a breakout board which needs the RTS line, you must also select `SolaxX1 RTS`.  
