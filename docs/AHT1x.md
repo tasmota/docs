@@ -1,21 +1,30 @@
-# AHT1x temperature and humidity sensor
+# AHT1x/AHT2x and compatible temperature and humidity sensor
 !!! failure "This feature is not included in precompiled binaries"  
 
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h` to add support for AHT10 or AHT15:
 ```
 #ifndef USE_AHT1x
-#define USE_AHT1x       // [I2cDriver43] Enable AHT10/15 humidity and temperature sensor (I2C address 0x38) (+0k8 code)
+#define USE_AHT1x       // [I2cDriver43] Enable AHT10/15 humidity and temperature sensor (I2C address 0x38 or 0x39)
 #endif
 ```
+or those lines for AHT20 or AM2301B:
+```
+#ifndef USE_AHT2x
+#define USE_AHT2x       Enable AHT20 instead of AHT1x humidity and temperature sensor (I2C address 0x38)
+#endif
+```
+
 ----
 
 AHT10 or AH15 are an I<sup>2</sup>C temperature and humidity sensor.
+AHT20 or AM2301B are upgraded versions.
 
 ## Configuration
 
 !!! failure "This sensor is incompatible with other I^2^C devices on I^2^C bus"
     Sensor datasheet implicitly says:
     **Only a single** AHT10 can be connected to the I^2^C bus and no other I^2^C devices can be connected.
+    The AHT20/AM2301B do not suffer from this problem.
 
 ### Wiring
 | AHT1x   | ESP8266 |
