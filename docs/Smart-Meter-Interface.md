@@ -316,6 +316,7 @@ Look down below for script examples based on the following metering devices:
 - [Janitza B23](#janitza-b23-modbus) (MODBus)
 - [Hager EHZ363](#hager-ehz363-sml-with-daily-values) (SML, with daily values)
 - [Iskra MT 174](#iskra-mt-174-obis) (OBIS)
+- [Iskra MT 175](#iskra-mt-175-sml) (SML)
 - [Iskra MT 681](#iskra-mt-681-sml) (SML)
 - [SBC ALE3](#sbc-ale3-modbus) (MODBus)
 - [SBC ALE3](#2-sbc-ale3-modbus) (MODBus, alternate)
@@ -903,6 +904,30 @@ The script:
 1,1-0:1.8.1*255(@1,Total Consumed,KWh,Total_in,3
 1,1-0:2.8.1*255(@1,Total Delivered,KWh,Total_out,3
 1,1-0:0.0.0*255(@#),Meter Number,,Meter_number,0
+#
+```
+
+------------------------------------------------------------------------------
+    
+### Iskra MT 175 (SML)
+
+This meter needs a PIN to unlock the current power usage.
+You need to ask your provider.  
+
+The script:
+```
+>D
+>B
+->sensor53 r
+>M 1
++1,3,s,16,9600,MT175
+1,77070100010800ff@1000,E_in,kWh,E_in,1
+1,77070100020800ff@1000,E_out,kWh,E_out,1
+1,77070100100700ff@1,P,W,P,18
+1,77070100240700ff@1,L1,W,L1,18
+1,77070100380700ff@1,L2,W,L2,18
+1,770701004C0700ff@1,L3,W,L3,18
+1,77070100000009ff@#,Server_ID,,Server_ID,0
 #
 ```
 
