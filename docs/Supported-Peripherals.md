@@ -59,7 +59,7 @@ Name|Description|Connection
 **MAX31865** | RTD Temperature Sensor Amplifier| SPI
 **MAX44009** | Ambient Light Sensor| I^2^C
 [**MCP23008<BR>MCP23017**](MCP230xx) |  I/O Expander| I^2^C
-[**MCP2515**](MCP230xx) | CAN bus controller | SPI
+**MCP2515** | CAN bus controller | SPI
 [**MCP9808**](MCP9808) |  Temperature Sensor| I^2^C
 [**MFRC522**](MFRC522) | NFC Tag Reader| SPI
 [**MGC3130**](MGC3130) | 3D Tracking and Gesture Controller
