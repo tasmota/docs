@@ -185,22 +185,25 @@ end
 
 Knowing your devices firmware version(s) is good.
 Being able to compare it with the current release directly, is even better.
-You can archive this by combining the maintenance actions with the openHAB http binding, the JsonPath transformation and the GitHub API.
+You can achieve this by combining the maintenance actions with the openHAB http binding, the JsonPath transformation and the GitHub API.
 
-Just extend the maintenance setup with the following Item and config:
+Just extend the maintenance setup with the following Item and config (make sure you have the binding addon `http` and transformation addon `jsonpath` installed):
 
-**http.cfg:**
+**tasmota.things:**
 
 ```js
-# Tasmota Release Version (cached twice a day)
-tasmotaRelease.url=https://api.github.com/repos/arendst/Tasmota/tags
-tasmotaRelease.updateInterval=43200000
+Thing http:url:TasmotaVersion [
+	baseURL="https://api.github.com/repos/arendst/Tasmota/tags",
+	refresh=86400] { // refresh once a day
+		Channels:
+			Type string : Version "Version" [ stateTransformation="JSONPATH:$[0].name" ]
+}
 ```
 
 **tasmota.items:**
 
 ```js
-String Tasmota_Current_FW_Available "Current Release [%s]" {http="<[tasmotaRelease:10000:JSONPATH($[0].name)]"}
+String Tasmota_Current_FW_Available "Current Release [%s]" {channel="http:url:TasmotaVersion:Version"}
 ```
 
 With this item in your sitemap, you will now see the latest release/tag from Tasmota repository.
