@@ -7,7 +7,8 @@
 
 The Sonoff Smart Stackable Power Meter uses a SPM-Main unit with ESP32 providing wifi and ethernet connections. A serial interface and a SPI interface connects to an ARM MCU which in turn provides a RS-485 bus to up to 32 SPM-4Relay modules. The SPM-4Relay module contains an ARM MCU too providing independent power management for four bi-stable relays rated for 20A at 240V for a total of 4400W.
 
-As of this writing the ARM firmware is version 1.0.0 and provides limited functionality.
+!!! Note 
+    As of this writing the ARM firmware is version 1.0.0 and provides limited functionality.
 
 The firmware monitors the attached SPM-4Relay modules and stores energy usage history for up to 180 days on an optional SD-Card accessable by the ARM MCU only. The ARM firmware provides numerous un-documented functions allowing the ESP32 to send and receive information.
 
@@ -26,6 +27,7 @@ Tasmota, installed on the ESP32, can connect to the SPM-Main ARM MCU using the s
 - Support for up to 7 SPM-4Relays limited by current register usage
 - Power control of all 28 relays using standard features
 - Energy usage using standard features
+- Overload detection using ARM firmware
 - Gui display of rotating relays
 - Fix firmware max 180 days energy usage by storing daily Energy Total in Tasmota's filesystem
 - Mapping physical relays to scanned relays
@@ -35,6 +37,29 @@ Tasmota, installed on the ESP32, can connect to the SPM-Main ARM MCU using the s
 The following notes currently apply:
 
 - Tasmota is unable to upgrade the ARM firmware
+
+## Configuration
+
+In addition to installing the ``tasmota32.bin`` image some configuration might be needed.
+
+### Relay mapping
+
+After a restart the ARM firmware starts to scan for available 4Relay modules. Every module has a unique id which is send to Tasmota in random order. For a user to pinpoint a physical set of four relays it is therefor needed to "map" the scanned modules once. Tasmota stores the id's in a mapping table build using the command ``SspmMap <scanned module number>,<scanned module number>,..`` where the first entry will map to physical relays 1 to 4, the second entry will map to physical relays 5 to 8 etc. The scanned module information needed is displayed on the console during restart or on request by executing command ``SspmScan`` with a ``weblog 2`` setting.
+
+!!! Note
+    Scanning takes over 20 seconds so be patient
+    
+Look for the below information during a restart for a two 4Relay module system:
+
+```
+00:00:00.123 Project tasmota - Sspm2 Version 10.1.0.8(theo)-2_0_2_1(2022-02-06T12:09:05)
+00:00:05.191 CFG: SPM loaded from file
+00:00:08.305 SPM: Main version 1.0.0 found
+13:54:05.392 SPM: 4Relay 1 (mapped to 2) type 130 version 1.0.0 found with id 8B343237393734134B353637
+13:54:05.401 SPM: 4Relay 2 (mapped to 1) type 130 version 1.0.0 found with id 6B7E3237393734134B353637
+```
+
+In this case the two modules are mapped using command ``SspmMap 2,1``. As Tasmota does store the ids of the 4Relay modules a future hussle of the received modules will keep the physical mapping correct.
 
 ## Commands List
 
