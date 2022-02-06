@@ -953,6 +953,26 @@ The script:
 1,77070100000009ff@#,Service ID,,Meter_id,0|
 #
 ```
+
+The following script is for another version (`ISKRA eHZ-MT681-D4A51-K0p` from 2012) of the Iskra MT 681 with slightly other OBIS codes for the power values.
+
+The script:
+```
+>D
+>B
+=>sensor53 r
+>M 1
++1,3,s,0,9600,MT681
+1,77070100010800ff@1000,Gesamtverbrauch,KWh,Total_in,3
+1,770701000f0700ff@1,Leistung,W,Power_cur,0
+1,77070100150700ff@1,Leistung P1,W,Power_p1,0
+1,77070100290700ff@1,Leistung P2,W,Power_p2,0
+1,770701003d0700ff@1,Leistung P3,W,Power_p3,0
+1,77070100020800ff@1000,Gesamteinspeisung,KWh,Total_out,3
+1,77070100000009ff@#,Service ID,,Meter_id,0|
+#
+```
+
 ------------------------------------------------------------------------------
 
 ### SBC ALE3 (MODBus)
