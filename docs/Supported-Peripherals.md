@@ -52,7 +52,7 @@ Name|Description|Connection
 **iEM3000** | Schenider Electric modbus energy meter| serial
 **INA219** | High-Side DC Current and Voltage Sensor| I^2^C
 [**IR Remote**](IR-Remote) | IR transmitter and receiver
-**K30, K70, S8** | CO~2~ Sensor| I^2^C | 
+**K30, K70, S8** | SenseAir CO~2~ Sensors| serial | 
 [**LM75AD**](LM75AD) |  Temperature Sensor| I^2^C
 [**LMT01**](LMT01) | Temperature Sensor| gpio
 **MAX31855**<br>**MAX6675** | Thermocouple Sensor| SPI
