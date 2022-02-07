@@ -176,7 +176,7 @@ Hello, Bob!
 Bye, Bob, come back soon
 ```
 
-You can combine with string functions like `loupper()` to convert to uppercase
+You can combine with string functions like `toupper()` to convert to uppercase
 
 ``` ruby
 > import string
@@ -607,8 +607,9 @@ Closure allows to create a new synthetic function that encapsulates transparentl
 > cb
 <function: 0x3ffd9df4>
 
-# let's check than a closure on bye_pat is different
+# let's check that a closure on bye_pat is different
 > cb_pat = def () bye_pat.say_bye() end
+> cb_pat
 <function: 0x3ffdaaa0>
 ```
 
@@ -655,7 +656,7 @@ Here is a short comparison of Berry and Python syntax, courtesy of @Beormund
 | Declare a member variable in a class   | `self.x = nil`          | `self.x = None`         |
 | Declare a local variable in a method   | `var x = 2, y = nil`    | `x = 2`<br>`y = None`   |
 | Define a constant in a class           | `static x = 2`          |                         |
-| Definte a top level function           | `def foo(x,y) end`      | `def foo(x,y):`         |
+| Define a top level function            | `def foo(x,y) end`      | `def foo(x,y):`         |
 | Define an instance method in a class   | `def foo(x,y) end`      | `def foo(self, x, y):`  |
 | Define a static method in a class      | `static def foo(x,y) end`|                         |
 | If statement                           | `if condition end`      | `if condition:`         |
