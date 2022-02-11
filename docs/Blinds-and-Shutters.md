@@ -16,31 +16,31 @@ The examples below are for a `ShutterRelay1 1` configuration (using Relay1 and R
 
 **Shutter mode 1** - Normal Operation   
 
-First relay: OFF/DOWN, Second relay: OFF/UP  
+Relay1: UP/OFF, Relay2: DOWN/OFF  
    
 - `Interlock 1,2` (Interlocked relay pair)
 - `Interlock ON`
 
 **Shutter mode 2** - Circuit Safe 
 
-First relay: ON/OFF, Second relay: UP/DOWN
+Relay1: ON/OFF, Relay2: UP/DOWN
 
 - `Interlock OFF`
 
 **Shutter mode 3** - Garage Motors   
 
-First relay: OFF/DOWN PULSE, Second relay: OFF/UP PULSE
+Relay1: OFF/DOWN PULSE, Relay2: OFF/UP PULSE
    
 **Shutter mode 4** - Stepper Motors   
 
-First relay: ON/OFF, Second relay: UP/DOWN
+Relay1: ON/OFF, Relay2: UP/DOWN
 
 - PWM: Stepper signal, COUNTER: Stepper position signal
 - PWM and COUNTER defined
    
 **Shutter mode 5** - Servo Motors (PWM position based servo)  
 
-First relay: ON/OFF, Second relay: UP/DOWN (optional not used)
+Relay1: ON/OFF, Relay2: UP/DOWN (optional not used)
 
 - PWM: Stepper signal
 - `PWMfrequency 200`   ( This is mandatory for most relay to get correct PWM duty cylces)
@@ -77,7 +77,7 @@ Disabling a shutter in the middle of the defined set of shutters will disable al
 
 With four shutters, eight `Relay<x>` components are needed. If manual operation switches (`Switch<x>` or `Button<x>` pairs) are also used, additional input GPIO are required. The ESP82xx device may not have enough free GPIO to support all the shutter connections required. A GPIO expander such as a [PCF8574](PCF8574) or [MCP230xx](MCP230xx) can be used with additional effort.
 
-Using manual operation `Switch<x>` pairs may require setting `SwitchMode<x> 4` (inverse follow) for proper switch behavior.
+When using a switch for manual operation `Switch<x>` pairs should usually be set to `SwitchMode<x> 2` (inverse follow) for proper switch behavior.
 
 Any shutter positioning can be locked `ShutterLock<x> 1`. Once executed an ongoing movement is finished while further positioning commands like `ShutterOpen<x>`, `ShutterClose<x>`, `ShutterStop<x>`,  `ShutterPosition<x>`, ... as well as web UI buttons, web UI sliders, and shutter buttons are disabled. This can be used to lock an outdoor blind in case of high wind or rain. You may also disable shutter positioning games by your children. Shutter positioning can be unlocked using `ShutterLock<x> 0`. Please be aware that the shutter can still be moved by direct relay control (i.e., `Power<x>`), or physical switches and buttons. Use the `ShutterButton<x>` command prior to `ShutterLock` to be able to lock buttons.
     
@@ -147,7 +147,7 @@ Following defaults are pre-compiled into the code and can only be changed by com
 - In Failsafe-Mode the driver waits for 0.1sec to let the direction relay execute and be stable before switching on the power relay starting the movement. The time in [ms] can be changed by adding following line with a different value: `#define SHUTTER_RELAY_OPERATION_TIME 100 // wait for direction relay 0.1sec before power up main relay`
 
 ### Button Control
-When shutter is running in default `ShutterMode 0`, you already have basic control over the shutter movement using switches or buttons in the module configuration to directly drive the shutter relays.  For short circuit safe operation `ShutterMode 1` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch or button and 2nd switch on the power by the other switch or button. 
+When shutter is running in `ShutterMode 1` (normal two relay up/off down/off), you already have basic control over the shutter movement using switches or buttons in the module configuration to directly drive the shutter relays. For short circuit safe operation `ShutterMode 2` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch/button and 2nd switch on the power by the other switch/button.
 
 To have shutter mode independent button control over the shutter and not over its relays one can use the `ShutterButton<x>` command. It also introduces some more features, see below:
 
