@@ -567,6 +567,7 @@ SEL:
 `sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
 `sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
 `sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)(if defined USE_SML_SCRIPT_CMD)  
+`sml(m 3 hstr)` = inserts SML Hexstring variable hstr as binary to Meter m in Output stream e.g. for special MODBUS cmds, hstr must be a string variable NO string constant (if defined USE_SML_SCRIPT_CMD)  
 `sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
 `smlx[m]` = get value of SML meter string info of meter m (if defined USE_SML_SCRIPT_CMD)  
 `smlv[n]` = get SML decode valid status of line n (1..N), returns 1 if line decoded. n=0 resets all status codes to zero (if defined USE_SML_SCRIPT_CMD)  
