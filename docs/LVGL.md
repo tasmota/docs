@@ -2,7 +2,7 @@
 
 !!! info "This feature is included in tasmota32-lvgl.bin" 
 
-Supported version: LVGL v8.1, LodePNG v20201017, Freetype 2.10.4
+Supported version: LVGL v8.2, LodePNG v20201017, Freetype 2.10.4
 
 **LVGL** (_Light and Versatile Graphics Library_) is Tasmota's next generation display. It is powerful, lightweight and simple to use. It combines:
 
