@@ -903,7 +903,7 @@ cover:
     payload_available: "Online"
     payload_not_available: "Offline"
     position_topic: "stat/%topic%/RESULT"
-    value_template: >
+    position_template: >
       {% if ('Shutter1' in value_json) and ('Position' in value_json.Shutter1) %}
         {{ value_json.Shutter1.Position }}
       {% else %}
