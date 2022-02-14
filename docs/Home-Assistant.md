@@ -1118,6 +1118,16 @@ automation:
 !!! tip
     If you want all your devices to switch to autodiscovery method go through Developer tools - MQTT by publishing to grouptopic `cmnd/tasmotas/SetOption19` with payload `1`
 
+!!! example "Get most recent Tasmota firmware version number from github"
+
+```yaml
+sensor:
+  - platform: command_line
+    name: "Tasmota (latest version)"
+    command: 'curl -s https://api.github.com/repos/arendst/Tasmota/tags | grep "name" | sort --version-sort -r | head -n 1 | sed -E "s/\s*\"name\": \"(.*)\",*/\1/g"'
+    scan_interval: 86400 # check once every day
+```
+
 ![](https://cdn.pbrd.co/images/HY47i1b.jpg)
 
 ## MQTT Discovery
