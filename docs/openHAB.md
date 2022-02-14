@@ -45,7 +45,7 @@ Bridge mqtt:broker:myMQTTBroker "My only one and best MQTT server"
     clientID="myopenHABMQTTClient"
 ]
 
-Thing mqtt:topic:tasmota:tasmota_TH "Light_TH" (mqtt:broker:myMQTTBroker) {
+Thing mqtt:topic:tasmota:tasmota_TH "Light_TH" (mqtt:broker:myMQTTBroker) [ availabilityTopic="tele/tasmota_TH/LWT", payloadAvailable="Online", payloadNotAvailable="Offline" ] {
     Channels:
         // Sonoff Basic / Sonoff S20 Smart Socket (Read and switch on-state)
         Type switch : PowerSwitch  [stateTopic="stat/tasmota_TH/POWER",   commandTopic="cmnd/tasmota_TH/POWER", on="ON", off="OFF"]
@@ -72,7 +72,6 @@ Thing mqtt:topic:tasmota:tasmota_TH "Light_TH" (mqtt:broker:myMQTTBroker) {
         Type number : Uptime        [stateTopic="tele/tasmota_TH/STATE", transformationPattern="JSONPATH:$.UptimeSec"]
         Type string : Result        [stateTopic="stat/tasmota_TH/RESULT"]
 }
-
 ```
 
 **.items File:**
