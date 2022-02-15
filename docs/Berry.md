@@ -379,7 +379,7 @@ A root level object called `tasmota` is created and contains numerous functions 
 Tasmota Function|Parameters and details
 :---|:---
 tasmota.get\_free\_heap<a class="cmnd" id="tasmota_get_free_heap"></a>|`() -> int`<br>Returns the number of free bytes on the Tasmota heap.
-tasmota.publish<a class="cmnd" id="tasmota_publish"></a>|`(topic:string, payload:string[, retain:bool, start:int, len:int]) -> nil`<br>Equivalent of `publish` command, publishes a MQTT message on `topic` with `payload`. Optional `retain` parameter.<br>`start` and `len` allow to specificy a sub-part of the string or bytes buffer, useful when sending only a portion of a larger buffer.
+tasmota.publish<a class="cmnd" id="tasmota_publish"></a>|`(topic:string, payload:string[, retain:bool, start:int, len:int]) -> nil`<br>_Deprecated_ see `mqtt.publish`
 tasmota.publish_result<a class="cmnd" id="tasmota_publish_result"></a>|`(payload:string, subtopic:string) -> nil`<br>Publishes a JSON result and triggers any associated rule. `payload` is expected to be a JSON string, and `subtopic` the subtopic used to publish the payload.
 tasmota.cmd<a class="cmnd" id="tasmota_cmd"></a>|`(command:string) -> string`<br>Sends any command to Tasmota, like it was type in the console. It returns the result of the command if any.
 tasmota.memory<a class="cmnd" id="tasmota_memory"></a>|`() -> map`<br>Returns memory stats similar to the Information page.<br>Example: `{'iram_free': 41, 'frag': 51, 'program_free': 1856, 'flash': 4096, 'heap_free': 226, 'program': 1679}`<br>or when PSRAM `{'psram_free': 3703, 'flash': 16384, 'program_free': 3008, 'program': 1854, 'psram': 4086, 'frag': 27, 'heap_free': 150}`
@@ -454,6 +454,16 @@ Value|Details
 :---|:---
 tasmota.global.sleep<a class="cmnd" id="tasmota_global_sleep"></a>|Current sleep value
 tasmota.settings.sleep<a class="cmnd" id="tasmota_settings_sleep"></a>|Sleep value stored in flash
+
+### `mqtt` module
+
+Use with `import mqtt`.
+
+Tasmota Function|Parameters and details
+:---|:---
+mqtt.publish<a class="cmnd" id="mqtt_publish"></a>|`(topic:string, payload:string[, retain:bool, start:int, len:int]) -> nil`<br>Equivalent of `publish` command, publishes a MQTT message on `topic` with `payload`. Optional `retain` parameter.<br>`payload` can be a string or a bytes() binary array<br>`start` and `len` allow to specificy a sub-part of the string or bytes buffer, useful when sending only a portion of a larger buffer.
+mqtt.subscribe<a class="cmnd" id="mqtt_subscribe"></a>|`(topic:string) -> nil`<br>Subscribe to a `topic` (exact match). Contrary to Tasmota's `Subscribe` command, the topic is sent as-is and not appended with `/#`. You need to add wildcards yourself.
+mqtt.unsubscribe<a class="cmnd" id="mqtt_unsubscribe"></a>|`(topic:string) -> nil`<br>Unubscribe to a `topic` (exact match).
 
 ### `light` object
 
