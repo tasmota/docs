@@ -440,7 +440,7 @@ DevGroupStatus<x\><a class="cmnd" id="devgroupstatus"></a>|Show the status of de
 
 Command|Parameters
 :---:|:---
-SetOption0<a class="cmnd" id="setoption0"></a>|Save power state and use after restart (=SaveState)<BR> `0` = disable (see note below)<BR> `1` = enable *(default)*<BR>Note: Power state means on/off state of eg. relays, lights, but other parameters like color, color temperature, brightness, dimmer, etc. are still saved when changed. To disable saving other parameters see [`SaveData`](#savedata).
+SetOption0<a class="cmnd" id="setoption0"></a>|Save power state and use after restart (=SaveState)<BR> `0` = disable (see note below)<BR> `1` = enable *(default)*<BR>Note: Power state means on/off state of eg. relays or lights. Other parameters like color, color temperature, brightness, dimmer, etc. are still saved when changed. To disable saving other parameters see [`SaveData`](#savedata).
 SetOption1<a class="cmnd" id="setoption1"></a>|Set [button multipress](Buttons-and-Switches#multi-press-functions) mode to<BR> `0` = allow all button actions *(default)*<BR> `1` = restrict to single to penta press and hold actions (i.e., disable inadvertent reset due to long press)
 SetOption2<a class="cmnd" id="setoption2"></a>|Set display of global temperature/humidity/pressure info to JSON sensor message<BR> `0` = disable *(default)*<BR> `1` = enable 
 SetOption3<a class="cmnd" id="setoption3"></a>|[MQTT](MQTT) <BR>`0` = disable MQTT<BR> `1` = enable MQTT *(default)*
