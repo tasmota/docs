@@ -91,7 +91,7 @@ Name|Description|Connection
 [**SDS011<BR>SDS021**](SDS011) | Laser Dust Sensor
 **SGP30** | Gas and Air Quality Sensor| I^2^C
 **SHT1x** | Temperature and Humidity Sensor| I^2^C
-[**SHT30**](SHT30) | Humidity & Temperature Sensor
+[**SHT30**](SHT30) | Humidity & Temperature Sensor| I^2^C
 **SI114x** | UV Index, IR and Visible Light Sensor | I^2^C
 **Si7021** | Humidity and Temperature Sensor| I^2^C
 [**SK6812**](SK6812.md) | Addressable LEDs
