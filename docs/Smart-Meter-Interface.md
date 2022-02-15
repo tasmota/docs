@@ -297,6 +297,12 @@ With `=` character at the beginning of a line you can do some special decoding. 
 !!! tip
     You can dump to your PC the raw data coming in if you use the module's hardware serial ports (1 and 3) as GPIOs of the script, [using Serial to TCP Bridge](https://tasmota.github.io/docs/Serial-to-TCP-Bridge/). Compile your firmware with `USE_TCP_BRIDGE`, disable the script and configure in module parameters `TCP Tx` and `TCP Rx`. After module reboot, start the server with command `TCPStart 8888`. Connect to this port from your PC to see or dump the data, in Linux it's as easy as `cat < /dev/tcp/IP.OF.YOUR.TASMOTA/8888 > rawdump.txt`. To revert to SML you need to set back both GPIO ports to `None`, enable the script and restart.
 
+## driver Commands  
+ - sensor53 r = resets the sml driver, must be applied in script >B section  
+ - sensor53 cx num = sets counter x (1 or 2) to number (persistant change)  
+ - sensor53 dm = sets dump mode for meter m (1...N), must be set to 0 for normal operation  
+ - sensor53 l x = set an optional LED gpio pin to indicate serial activity of a meter, set to 255 for disable  
+ - sensor53 m x = sets the meter from which to show activity via the l cmd  
 -----
 
 ## Smart Meter Descriptor examples
