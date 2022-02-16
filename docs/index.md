@@ -19,19 +19,18 @@ Incredibly expandable and flexible.
 <b>Install Tasmota using a Chrome based browser at [https://tasmota.github.io/install/](https://tasmota.github.io/install/).</b>    
 
 ### Current release 
-<a href="http://ota.tasmota.com/tasmota/release-10.1.0/"><span style="font-size:40px;">Tasmota 10.1.0 Noelle</span></a><br>
+<a href="http://ota.tasmota.com/tasmota/release-11.0.0/"><span style="font-size:40px;">Tasmota 11.0.0 Olivia</span></a><br>
 
-- Step lighting effect for addressable LEDs
-- Support for venetian blinds with tilt
-- Gratuitous ARP enabled by default and set to 60 seconds
-- New peripherals: HDC2010 temperature and humidity sensor, 74x595 shift registers, 
-- New commands: [`Scheme 13`](Commands.md#scheme), [`StepPixels`](Commands.md#steppixels), [`IfxPeriod`](Commands.md#ifxperiod)
+- Tasmota favicon to webbrowser tab 
+- Support for Linkind dimmer as GPIO `Option A6`
+- New rule variables `%color%` and `%timer1%` to `%timer16%`
+- New peripherals: Eastron SDM230 modBus energy meter, MQ analog sensor for air quality
+- New commands: [`SetOption44`](Commands.md#setoption44), [`SetOption134`](Commands.md#setoption134), [`SSerialConfig`](Commands.md#sserialconfig), [`WebTime`](Commands.md#webtime)
 - ESP32
-    - Autoconfiguration file support
-    - Preliminary support for Tasmota Apps (.tapp extenion)
-    - OTA possible over HTTPS
-    - HTTPS support to `WebQuery`
-    - Berry support for addressable LEDs (WS2812, SK6812)
+    - Single binary firmware
+    - Support for TuyaMCU
+    - Increase PWM channels to 16
+    - Initial support for ESP32S3 with support for 38 configurable GPIOs
 
 See [release notes](https://github.com/arendst/Tasmota/releases/tag/v10.1.0) for a complete list of new features, changes and bug fixes.
 
