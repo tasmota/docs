@@ -77,7 +77,7 @@ For example the ruleset below turn on power right after Tasmota started, and tur
 ``` haskel
 Rule1 ON Power1#Boot DO Power on ENDON ON System#Save DO Power off ENDON
 ```
-Any rule apply AFTER the Init() procedures of all sensors/drivers. This does mean that a POWER OFF on the GPIO may prevent sensors from being initialized correctly during start-up (e.g. DS18B20) and do not show up in teleperiod message. To ensure the GPIO is HIGH during restart you should define `Output Hi` on the GPIO and avoid using any rules. To ensure the GPIO goes LOW after deepsleep you need to solder a 4.7K resistor between GND and the GPIO. As an alternative you can define ´poweronstate 4´ setting ALL relays to HIGH on boot. In this case after boot you can switch OFF the relay until the next reboot.
+Any rule apply AFTER the Init() procedures of all sensors/drivers. This does mean that a POWER OFF on the GPIO may prevent sensors from being initialized correctly during start-up (e.g. DS18B20) and do not show up in teleperiod message. To ensure the GPIO is HIGH during restart you should define in the ´Configure` --> `Configure module` --> `Output Hi` on the GPIO instead of `RELAY 1` and avoid using any rules. To ensure the GPIO goes LOW after deepsleep you need to solder a 4.7K resistor between GND and the GPIO.
     
 Sequence is then as follow (only key lines are shown):
 ```
