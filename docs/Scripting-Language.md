@@ -48,6 +48,7 @@ LARGE_ARRAYS | enables arrays of up to 1000 entries instead of max 127
 SCRIPT_LARGE_VNBUFF | enables to use 4096 in stead of 256 bytes buffer for variable names  
 USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
 USE_FEXTRACT | enables array extraction from database  fxt(...)  
+USE_SCRIPT_SPI | enables support for SPI interface  
 USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
 ----
 
@@ -519,10 +520,12 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `rnd(x)` = return a random number between 0 and x, (seed may be set by rnd(-x))  
 `sf(F)` = sets the CPU Frequency (ESP32) to 80,160,240 Mhz, returns current Freq.  
 `s(x)` = explicit conversion from number x to string  may be preceeded by precsion digits e.g. s(2.2x) = use 2 digits before and after decimal point  
+  
 I2C support #define USE_SCRIPT_I2C  
 `ia(AA)`, `ia2(AA)` test and set I2C device with adress AA (on BUS 1 or 2), returns 1 if device is present  
 `iw(aa val)` , `iw1(aa val)`, `iw2(aa val)`, `iw3(aa val) `write val to register aa (1..3 bytes)  
 `ir(aa)`, `ir1(aa)`, `ir2(aa)`, `ir3(aa)` read 1..3 bytes from register aa  
+  
 Serial IO support #define USE_SCRIPT_SERIAL  
 `so(RXPIN TXPIN BR)` open serial port with RXPIN, TXPIN and baudrate BR with 8N1 serial mode (-1 for pin means dont use)  
 `so(RXPIN TXPIN BR MMM)` open serial port with RXPIN, TXPIN and baudrate BR and serial mode e.g 7E2 (all 3 modechars must be specified)  
@@ -535,6 +538,14 @@ Serial IO support #define USE_SCRIPT_SERIAL
 `sr(X)` read a string from serial port until charcode X, all available chars up to string size or until charcode X  
 `srb()` read a number char code from serial port  
 `sp()` read a number char code from serial port, dont remove it from serial input (peek)  
+  
+SPI IO support #define `USE_SCRIPT_SPI`  
+`spi(0 SCLK MOSI MISO)` defines a software SPI port with pin numbers used for SCLK, MOSI, MISO.  
+`spi(0 -1)` defines a hardware SPI port with pin numbers defined by Tasmota GPIO definition.  
+`spi(0 -2)` defines a hardware SPI port 2 on ESP32 with pin numbers defined by Tasmota GPIO definition.  
+`spi(1 N GPIO)` sets the CS pin with index N (1..4) to pin Nr GPIO.  
+`spi(2 N VAL S)` sends and receives a VAL with S (1..3) bytes (8,16,24 bits)  
+  
 `ttget(TNUM SEL)` get tasmota timer setting from timer TNUM (1 .. 16)  
 SEL:  
   0 = time  
