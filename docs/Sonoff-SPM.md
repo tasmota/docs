@@ -24,8 +24,8 @@ More information about the SPM can be opbtained here:
 
 Tasmota, installed on the ESP32, can connect to the SPM-Main ARM MCU using the serial interface and provides the following functionality:
 
-- Support for up to 7 SPM-4Relays limited by current register usage
-- Power control of all 28 relays using standard features
+- Support for up to 8 SPM-4Relays limited by current register usage
+- Power control of all 32 relays using standard features
 - Energy usage using standard features
 - Overload detection using ARM firmware
 - Gui display of rotating relays
@@ -52,7 +52,7 @@ After a restart the ARM firmware starts to scan for available 4Relay modules. Ev
 Look for the below information during a restart for a two 4Relay module system:
 
 ```
-00:00:00.123 Project tasmota - Sspm2 Version 10.1.0.8(theo)-2_0_2_1(2022-02-06T12:09:05)
+00:00:00.123 Project tasmota - Sspm2 Version 11.0.0.1(tasmota)-2_0_2_2(2022-02-18T12:09:05)
 00:00:05.191 CFG: SPM loaded from file
 00:00:08.305 SPM: Main version 1.0.0 found
 13:54:05.392 SPM: 4Relay 1 (mapped to 2) type 130 version 1.0.0 found with id 8B343237393734134B353637
