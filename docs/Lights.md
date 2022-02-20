@@ -59,7 +59,7 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 For example:
 <img style="float:right;height:120px" alt="CCT" src="https://ae01.alicdn.com/kf/HTB1TrhBQpXXXXbsaFXXq6xXFXXX8/AC-Licht-lampe-dimmen-LED-lampe-und-motor-Dimmer-Modul-1-Kanal-3-3-V-5.jpg">
 
-Define a COUNTER with the same number as the PWM (e.g. COUNTER1, PWM1). Set 'SETOPTION99 1' to enable detection of the raising edge of the zero-crossing. Connect zero-Crossing to COUNTER and PWM to PWM. Set `PWMFREQUENCY 100` or 120 depending on the frequency of the main in your country. Additionally it is recommended to set `LEDTABLE 0` for normal lamps or motors. Due to the fact that the counter is used for detection you have to set sleepmode manually: `Setoption 60 0` and `Sleep 250`
+Define a COUNTER with the same number as the PWM (e.g. COUNTER1, PWM1). Set 'SETOPTION99 1' to enable detection of the raising edge of the zero-crossing. Connect zero-Crossing to COUNTER and PWM to PWM. Set `PWMFREQUENCY 100` or 120 depending on the frequency of the main in your country. Additionally it is recommended to set `LEDTABLE 0` for normal lamps or motors. Due to the fact that the counter is used for detection you have to set sleepmode manually: `Setoption 60 0` and `Sleep 250`. Additionally you MUST include a rule that reset the counter from time to time. e.g.: `rule1 ON counter#c1>100000 DO counter 0 ENDON` `Rule1 on`. The next change is also required because the interrupt on the counter and the write to the flash will create a freeze of the device. `SAVEDATA 0` overcome this bug, but you have to be aware that any powerchange and other information will now NOT saved every second to the flash. 
 
 |Configuration|(see below)|
 |---|---|
