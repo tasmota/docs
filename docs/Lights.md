@@ -65,7 +65,7 @@ Connect zero-Crossing to GPIO of COUNTER4
 |---|---|
 |Dimmer1| PWM1, COUNTER1|
 |Dimmer2| PWM2, COUNTER2 (optional)|
-|Dimmer3| PWM2, COUNTER3 (optional)|
+|Dimmer3| PWM3, COUNTER3 (optional)|
 |Zero-Cross PIN| COUNTER4 (mandatory|
     
 example schematic:
