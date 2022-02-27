@@ -60,13 +60,17 @@ Robotdyn AC Dimmer example:
 <img style="float:right;height:120px" alt="CCT" src="https://ae01.alicdn.com/kf/HTB1TrhBQpXXXXbsaFXXq6xXFXXX8/AC-Licht-lampe-dimmen-LED-lampe-und-motor-Dimmer-Modul-1-Kanal-3-3-V-5.jpg">
 
 Define a COUNTER with the same number as the PWM (e.g. COUNTER1 & PWM1). You will need to connect the output of PWM1 to an input as COUNTER1. 
-Define zero-Crossing to COUNTER4
-
+Connect zero-Crossing to GPIO of COUNTER4
+|Configuration|(see below)|
+|---|---|
+|Dimmer1| PWM1, COUNTER1|
+|Dimmer2| PWM2, COUNTER2 (optional)|
+|Dimmer3| PWM2, COUNTER3 (optional)|
+|Zero-Cross PIN| COUNTER4 (mandatory|
+    
 example schematic:
     
 <img height="240" alt="ACDimmer" src="https://user-images.githubusercontent.com/24524506/155886267-56433a26-614a-43d7-8b30-3e38ef9931d7.png">
-
-**Note**: Take good care for selecting the right GPIO's for Zero-Cross and PWM Input due to boot state of some pins.
 
 example Config:
     
@@ -78,11 +82,7 @@ Preferably before connecting the ZC & PWM perform the following commands:
 `SETOPTION99 1` -> to enable detection of the raising edge of the zero-crossing.<br/>
 `PWMFREQUENCY 100` -> (50hz) or 120 (60hz) depending on the frequency of the main in your country.<br/>
 `LEDTABLE 0` -> for normal lamps or motors.<br/>
-`Setoption 60 0`<br/>
-`Sleep 250` -> Due to the fact that the counter is used for detection. You have to set sleepmode manually<br/>
-`SAVEDATA 0` -> is  required because the interrupt on the counter and the write to the flash will create a freeze of the device.<br/>
-(you have to be aware that any powerchange and other information will now NOT saved every second to the flash).<br/>
-    
+
 
 |Configuration|(see below)|
 |---|---|
