@@ -54,13 +54,14 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 
 **Alexa**: you can use Philips Hue emulation, the light will appear as White light with Dimmer.
 
-**Leading edge dimmer** You can also configure a leading edge dimmer on 230V with the 1 Channel configuration. In this case you need a TRIAC and a zero-Cross detection that give a pulse with every crossing of the 0V of the sinus curve. 
+**Leading edge dimmer** You can also configure a leading edge dimmer on 230V with the 1 Channel configuration. In this case you need a TRIAC and a zero-Cross detection that give a pulse with every crossing of the 0V of the sinus curve. This is currently ONLY supported on ESP8266. A working ESP32 is "work in progress".
 
 Robotdyn AC Dimmer example:
 <img style="float:right;height:120px" alt="CCT" src="https://ae01.alicdn.com/kf/HTB1TrhBQpXXXXbsaFXXq6xXFXXX8/AC-Licht-lampe-dimmen-LED-lampe-und-motor-Dimmer-Modul-1-Kanal-3-3-V-5.jpg">
 
 Define a COUNTER with the same number as the PWM (e.g. COUNTER1 & PWM1). You will need to connect the output of PWM1 to an input as COUNTER1. 
 Connect zero-Crossing to GPIO of COUNTER4
+
 |Configuration|(see below)|
 |---|---|
 |Dimmer1| PWM1, COUNTER1|
@@ -86,7 +87,7 @@ Preferably before connecting the ZC & PWM perform the following commands:
 
 |Configuration|(see below)|
 |---|---|
-|Commands|`Power`, `Dimmer`|
+|Commands|`Power`, `Dimmer`, `Channel`, `Fade`, `Speed`|
 |Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction)|
 
 <br clear="right"/>
