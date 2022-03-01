@@ -7,5 +7,5 @@ mkdocs-redirects==1.0.0
 mkdocs-minify-plugin>=0.2.3
 mkdocs-htmlproofer-plugin>=0.0.3
 mkdocs-gen-files>=0.3.4
-tzinfo>=2021.5
+tzdata>=2021.5
 git+https://github.com/cmitu/mkdocs-altlink-plugin.git

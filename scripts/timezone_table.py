@@ -156,9 +156,7 @@ with mkdocs_gen_files.open("Commands/timezone_table.md", "w") as doc_fh:
             )
 
             try:
-                content = "`%s`" % posix_tz_string_to_tasmota_command(
-                    posix_tz_string
-                )
+                content = "`%s`" % posix_tz_string_to_tasmota_command(posix_tz_string)
             except OffsetOutOfRangeError:
                 content = (
                     "This timezone has a UTC offset outside the range Tasmota supports."
