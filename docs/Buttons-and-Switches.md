@@ -69,22 +69,22 @@ SwitchMode, as the name implies, applies _**ONLY**_ to GPIO configured in Tasmot
         When connecting a momentary switch (i.e., a push-button) you will want to use `SwitchMode 3..7`.
 
 **`SwitchMode 3`**
-:    Set inverted push-button mode (`1 = TOGGLE`)
+:    Set inverted push-button mode (`0→1 = TOGGLE`)
 
     Tasmota will send a `TOGGLE` command when the button is pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Default state is OFF and when pressed it's ON. (This trigger is known as [rising-edge](https://en.wikipedia.org/wiki/Signal_edge))
 
 **`SwitchMode 4`**
-:    Set push-button mode (`0 = TOGGLE`)
+:    Set push-button mode (`1→0 = TOGGLE`)
 
     Tasmota will send a `TOGGLE` command when the button is released (opening the circuit). When pressing the button (closing the circuit) nothing will happen. Default state is ON and when pressed it's OFF. (This trigger is known as [falling-edge](https://en.wikipedia.org/wiki/Signal_edge))
 
 **`SwitchMode 5`**
-:    Set push-button with long press mode (`0 = TOGGLE`, `long press = HOLD`)
+:    Set push-button with long press mode (`1→0 = TOGGLE`, `long press = HOLD`)
 
     Tasmota will send a `TOGGLE` command when the button is released (opening the circuit). When pressing the button (closing the circuit) nothing will happen. Default state is ON and when pressed it's OFF. When held for the time set in `SetOption32` (_default = 4s_), Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
 **`SwitchMode 6`**
-:    Set inverted push-button with long press mode (`1 = TOGGLE`, `long press = HOLD`)
+:    Set inverted push-button with long press mode (`0→1 = TOGGLE`, `long press = HOLD`)
 
     Tasmota will send a `TOGGLE` command when the button pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Default state is OFF and when pressed it's ON. When held for the time set in `SetOption32` (_default = 4s_), Tasmota sends `HOLD` (use `Switch<x>#state=3` in rules).
 
