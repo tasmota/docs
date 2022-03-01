@@ -5,7 +5,11 @@ import typing
 
 import mkdocs_gen_files
 import tzdata
-import zoneinfo
+
+try:
+    import zoneinfo
+except ImportError:
+    from backports import zoneinfo
 
 
 def iana_key_to_resource(key: str) -> typing.Tuple[str, str]:

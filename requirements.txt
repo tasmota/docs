@@ -7,5 +7,6 @@ mkdocs-redirects==1.0.0
 mkdocs-minify-plugin>=0.2.3
 mkdocs-htmlproofer-plugin>=0.0.3
 mkdocs-gen-files>=0.3.4
+backports.zoneinfo>=0.2.1;python_version<"3.9"
 tzdata>=2021.5
 git+https://github.com/cmitu/mkdocs-altlink-plugin.git
