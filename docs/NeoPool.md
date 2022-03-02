@@ -14,9 +14,11 @@ Optional set Modbus address matching the address of your device (default is 1) b
 
 ```C
 #ifndef NEOPOOL_MODBUS_ADDRESS
-#define NEOPOOL_MODBUS_ADDRESS       1    // Any modbus address
+#define NEOPOOL_MODBUS_ADDRESS       1    // Modbus address, "WIFI" uses 1, "EXTERN" defaults also 1
 #endif
 ```
+
+Keep the modbus address set to 1 unless you have set a different address on your Sugar Valley system.
 
 ----
 
@@ -52,6 +54,13 @@ The pin assignment (from top to bottom):
 |  4  | Modbus B-   |
 |  5  | Modbus GND  |
 
+!!! failure The +12V connection is the 12V from the internal power supply, do not feed in any external voltage.     
+
+You can use the "WIFI" or "EXTERN" connector, both are independent Modbus channels. The "DISPLAY" connection cannot be used as long as the built-in display is also connected to the connection behind the display.
+
+All three channels (DISPLAY/WIFI/EXTERN) use the Modbus address 1 by default. The setting of the address of the "EXTERN" connection can be changed in most systems. In this case, you also have to adjust the value for NEOPOOL_MODBUS_ADDRESS - but there is no need to do that.
+
+
 ### Tasmota settings
 
 If you followed the recommendations above, the two GPIOs will be assigned as follows under Tasmota **_Configuration -> Configure Module_**:
@@ -66,7 +75,7 @@ so it looks like this
 
 ![](_media/xsns_83_neopool_config.png)
 
-After Tasmota restarts the main screen should display the controller data as shown above.
+After Tasmota restarts the main screen should display the controller data as shown above. If not, try swapping the A+/B port connectors and/or the Rx/Tx connectors.
 
 ### SENSOR data
 
@@ -79,9 +88,14 @@ Sensor data are send by `tele/%topic%/SENSOR` JSON reponse:
     "Time": "2021-06-01T11:00:00",
     "Type": "Oxilife (green)",
     "Temperature": 23.5,
+    "Voltage": {
+      "12": 13.78,
+      "24": 32.95
+    },
     "pH": {
       "Data": 7.2,
-      "Max": 7.1,
+      "Min": 7.0,
+      "Max": 7.2,
       "State": 0,
       "Pump": 2,
       "FL1": 0,
@@ -91,8 +105,8 @@ Sensor data are send by `tele/%topic%/SENSOR` JSON reponse:
     "Hydrolysis": {
       "Data": 100,
       "Unit": "%",
-      "Runtime":"17T21:48:25",
-      "State": "Pol2",
+      "Runtime":"28T22:13:19",
+      "State": "Pol1",
       "Cover": 0,
       "Boost": 0,
       "Low": 0
@@ -107,7 +121,6 @@ Sensor data are send by `tele/%topic%/SENSOR` JSON reponse:
       "State": [
         0,
         1,
-        0,
         0,
         0,
         0,
@@ -136,6 +149,14 @@ NPFiltration<a id="NPFiltration"></a>|`{<state> {speed}}`<BR>get/set manual filt
 NPFiltrationMode<a id="NPFiltrationMode"></a>|`{<mode>}`<BR>get/set filtration mode (mode = `0..4|13`). Get if mode is omitted, otherwise set accordingly `<mode>`:<ul><li>`0` - *MANUAL* allows to turn the filtration (and all other systems that depend on it) on and off</li><li>`1` - *AUTO* allows filtering to be turned on and off according to the settings of the *MBF_PAR_TIMER_BLOCK_FILT_INT* timers.</li><li>`2` - *HEATING* similar to the AUTO mode, but includes setting the temperature for the heating function. This mode is activated only if the BF_PAR_HEATING_MODE register is at 1 and there is a heating relay assigned.</li><li>`3` - *SMART* adjusts the pump operating times depending on the temperature. This mode is activated only if the MBF_PAR_TEMPERATURE_ACTIVE register is at 1.</li><li>`4` - *INTELLIGENT* performs an intelligent filtration process in combination with the heating function. This mode is activated only if the MBF_PAR_HEATING_MODE register is at 1 and there is a heating relay assigned.</li><li>`13` - *BACKWASH* started when the backwash operation is activated.</ul>
 NPTime<a id="NPTime"></a>|`{<time>}`<BR>get/set device time. Get if time is omitted, otherwise set device time accordingly `<time>`:<ul><li>`0` - sync with Tasmota local time</li><li>`1` - sync with Tasmota utc time</li><li>`2..4294967295` - set time as epoch</li></ul>
 NPLight<a id="NPLight"></a>|`{<state> {delay}}`<BR>get/set light (state = `0..4`, delay = `5..100` in 1/10 sec). Get if state is omitted, otherwise set accordingly `<state>`:<ul><li>`0` - manual turn light off</li><li>`1` - manual turn light on</li><li>`2` - manual toogle light</li><li>`3` - switch light into auto mode according MBF_PAR_TIMER_BLOCK_LIGHT_INT settings</li><li>`4` - select light RGB LED to next program. This is normally done by power the light on (if currently off), then power off the light for a given time (delay) and power on again. The default delay is 15 (=1.5 sec).</ul>
+NPpHMin<a id="NPpHMin"></a>|`{<ph>}`<BR>(only available if pH module is installed)<BR>get/set pH lower limit (ph = `0..14`)<BR>get current limit if <ph> is omitted, otherwise set.
+NPpHMax<a id="NPpHMax"></a>|`{<ph>}`<BR>(only available if pH module is installed)<BR>get/set pH upper limit (ph = `0..14`)<BR>get current limit if <ph> is omitted, otherwise set.
+NPpH<a id="NPpH"></a>|`{<ph>}`<BR>(only available if pH module is installed)<BR>get/set pH upper limit (ph = `0..14`)<BR>same as NPpHMax
+NPRedox<a id="NPRedox"></a>|`{<setpoint>}`<BR>(only available if redox module is installed)<BR>get/set redox set point in mV (setpoint = `0..100`, the upper limit of the range may vary depending on the MBF_PAR_HIDRO_NOM register)<BR>get current set point if <setpoint> is omitted, otherwise set
+NPHydrolysis<a id="NPHydrolysis"></a>|`{<level>}`<BR>(only available if hydrolysis/electrolysis control is present)<BR>get/set hydrolysis/electrolysis level in % (level = `0..100`)<BR>get current level if <level> is omitted, otherwise set
+NPIonization<a id="NPIonization"></a>|`{<level>}`<BR>(only available if ionization control is present)<BR>get/set ionization target production level (level = `0..x`, the upper limit `x` of the range may vary depending on the MBF_PAR_ION_NOM register)<BR>get current level if <level> is omitted, otherwise set
+NPChlorine<a id="NPChlorine"></a>|`{<setpoint>}`<BR>(only available if free chlorine probe detector is installed)<BR>get/set chlorine set point in ppm (setpoint = `0..10`)<BR>get current set point if <setpoint> is omitted, otherwise set
+NPControl<a id="NPControl"></a>|<BR>Show information about system controls
 NPOnError<a id="NPOnError"></a>|`{<repeat>}`<BR>get/set auto-repeat Modbus read/write commands on error (repeat = `0..10`). Get if repeat is omitted, otherwise set accordingly `<repeat>`:<ul><li>`0` - disable auto-repeat on read/write error</li><li>`1..10` - repeat commands n times until ok</li></ul>
 NPResult<a id="NPResult"></a>|`{<format>}`<BR>get/set addr/data result format for read/write commands (format = `0|1`). Get if format is omitted, otherwise set accordingly `<format>`:<ul><li>`0` - output decimal numbers</li><li>`1` - output hexadecimal strings, this is the default</li></ul>
 NPPHRes<a id="NPPHRes"></a>|`{<digits>}`<BR>get/set number of digits in results for PH value (digits = `0..3`).
@@ -355,92 +376,3 @@ Backlog Rule2 4;Rule2 1
 Configure Tasmota Timer 10 for your needs (for example using same rule to sync time to Tasmota local time every day at 4:01 h).
 
 ![](_media/xsns_83_neopool_timer.png)
-
-#### Add rule event macros for easier control
-
-For easier reading/writing of the register with simple named event commands, we can define rules to handle it.
-
-Note: To use the following rules you must [compile your build](Compile-your-build) adding the following to `user_config_override.h`:
-
-```C
-#ifndef USE_NEOPOOL
-#define USE_RULES                                // Add support for rules
-#endif
-
-#ifndef USE_EXPRESSION
-#define USE_EXPRESSION                          // Add support for expression evaluation in rules
-#endif
-
-#ifndef SUPPORT_IF_STATEMENT
-#define SUPPORT_IF_STATEMENT                    // Add support for IF statement in rules
-#endif
-```
-
-Then we can define [rule events](Rules) to control pH, redox and hydrolysis level:
-
-```haskell
-Rule2
-  ON Event#PH DO IF (%value%>=690 AND %value%<=780) NPWrite 0x504,%value%;NPExec ELSE NPRead 0x504 ENDIF ENDON
-  ON Event#Redox DO IF (%value%>=400 AND %value%<=900) NPWrite 0x508,%value%;NPExec ELSE NPRead 0x508 ENDIF ENDON
-  ON Event#Hydrolysis DO IF (%value%>=0 AND %value%<=1000) NPWrite 0x502,%value%;NPExec ENDIF ENDON
-```
-
-At least we activate the rule:
-
-```haskell
-Backlog Rule2 4;Rule2 1
-```
-
-Now we can use the Tasmota command Event to control Sugar Valley values (use `NPResult 0` before for decimal value results)):
-
-##### Read/write pH setpoint
-
-Note: pH setpoint is stored as setpoint*100
-
-Get current pH setpoint:
-
-```json
-Event PH
-RESULT = {"NPRead":{"Address":1284,"Data":710}}
-```
-
-Set new pH setpoint to 7.0
-
-```json
-Event PH=700
-RESULT = {"NPRead":{"Address":1284,"Data":710}}
-```
-
-##### Read/write redox setpoint
-
-Get current redox setpoint:
-
-```json
-Event Redox
-{"NPRead":{"Address":1288,"Data":750}}
-```
-
-Set redox setpoint to 780
-
-```json
-Event Redox=780
-{"NPRead":{"Address":1288,"Data":780}}
-```
-
-##### Read/write hydrolysis setpoint
-
-Note: Hydrolysis setpoint percentage is stored as setpoint*10
-
-Get current hydrolysis setpoint:
-
-```json
-Event Hydrolysis
-{"NPRead":{"Address":1282,"Data":1000}}
-```
-
-Set hydrolysis setpoint to 80%
-
-```json
-Event Hydrolysis=800
-{"NPRead":{"Address":1282,"Data":800}}
-```
