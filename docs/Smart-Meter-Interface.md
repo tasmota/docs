@@ -335,6 +335,7 @@ Look down below for script examples based on the following metering devices:
 - [Resol Deltasol BS Plus](#resol-deltasol-bs-plus-vbus) (VBus)
 - [Logarex LK13BE](#logarex-lk13be-obis) (OBIS)
 - [Peacefair PZEM004T V30](#peacefair-pzem004tv30-modbus ) (SML - MODBus)
+- [Landis + Gyr E220](#landis--gyr-e220-sml) (SML)
     
 --------------------------------------------------------
 
@@ -1663,6 +1664,24 @@ PZEM004T V30 multiple meters on Modbus
 1,050404UUuuxxxxxxxx@i16:10,Frequency,Hz,Sensor-05-hz,2
 1,050404UUuuxxxxxxxx@i17:100,Power Factor,PF,Sensor-05-PF,2
 
+#
+```
+### Landis + Gyr E220 (SML)
+
+For read-out of "current power" the advanced data set has to be enabled in user menue
+
+code:
+```
+>D
+>B
+=>sensor53 r
+;Set teleperiod to 20sec  
+tper=10  
+>M 1
++1,3,s,0,9600,Power
+1,77070100600100ff@#,Server-ID,,Meter_Number,0
+1,77070100010800ff@1000,Verbrauch,kWh,Total_in,4
+1,77070100100700ff@1,Leistung-akt.,W,Power_curr,0
 #
 ```
 -----
