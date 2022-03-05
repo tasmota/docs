@@ -994,7 +994,10 @@ The `display` module provides a simple API to initialize the Universal Display D
 Tasmota Function|Parameters and details
 :---|:---
 start<a class="cmnd" id="display_start"></a>|`display.start(displayini:string) -> nil`<br>Initializes the Universal Display Driver with the string provided as argument, similar to content in `display.ini`. It is typically read from a file in the file-system.
-
+started<a class="cmnd" id="display_started"></a>|`display.started() -> bool`<br>Returns `true` if display is already initialized, `false` if not started.
+dimmer<a class="cmnd" id="display_dimmer"></a>|`display.started([dim:int]) -> int`<BR>Sets the dimmer of display, value 0..100. If `0` then turn off display. If no arg, read the current value.
+driver\_name<a class="cmnd" id="display_driver_name"></a>|`display.driver_name() -> string`<br>Returns the Display driver name as specified in `display.ini`
+touch\_update<a class="cmnd" id="display_touch_update"></a>|`display.touch_update(touches:int, raw_x:int, raw_y:int, gesture:int) -> nil`<br>Sets the last Touch Screen update values to be passed to LVGL. This allows an external touchscreen driver to periodically update the touch information.<BR>`touches`: number of touches (`0` = no touch, `1` = screen touched). Multiple touch is not supported<BR>`raw_x` and `raw_y` = coordinates before conversion (resistive touch screens need conversion)<BR>`gesture`: type of gesture. `0` = no gesture, `16` = move up, `17` = move down, `18` = move left, `19` = move right, `32` = zoom in, `33` = zoom out.
 
 ### `uuid` module
 
