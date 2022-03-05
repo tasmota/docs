@@ -537,6 +537,8 @@ SetOption129<a class="cmnd" id="setoption129"></a>|Enable split total energy res
 SetOption130<a class="cmnd" id="setoption130"></a>|Add heap size (and ESP32 fragmentation) to logging timestamp for debugging<BR>`1` = enable
 SetOption131<a class="cmnd" id="setoption131"></a>|(Tuya) Allow save dimmer = 0 received by MCU<BR>`1` = enable
 SetOption132<a class="cmnd" id="setoption132"></a>|When MQTT Tls is enabled, forces fingerprint validation of server identity instead of checking the identitfy against a certificate authority (CA)<BR>`1` = Fingerprint, `0` = CA
+SetOption134<a class="cmnd" id="setoption134"></a>|PWM force phases to be synced (ESP32 only).<BR>On ESP32, PWM phases are by default distributed one after the other to minimize effect on power supply. This is also mandatory for H-Bridge devices.<BR>`0` = phases are automatically aligned one after the other, `1` = phases all start at the same time (default behavior for ESP8266).
+SetOption135<a class="cmnd" id="setoption135"></a>|Disables Display Splash screen (for all drivers, universal & LVGL)<BR>`1` = Splash screen disabled, `0` = Splash screen displayed
 
 ### TuyaMCU
 
