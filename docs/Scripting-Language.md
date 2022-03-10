@@ -393,6 +393,8 @@ A web user interface may be generated containing any of the following elements:
   `WSO_FORCEPLAIN` = 4 send line in plain (no table elements)
   
  **Google Charts:**  
+  google chart support requires arrays and to make sense also permanent arrays. Therefore on 4M Flash Systems the use of `USE_UFILESYS` is recommended while on 1 M Flash Systems the special EEPROM mode should be used (see above). other options may also be needed like `LARGE_ARRAYS`  
+  
   draws a google chart with up to 4 data sets per chart  
   `gc( T array1 ... array4 "name" "label1" ... "label4" "entrylabels" "header" {"maxy1"} {"maxy2"})`   
   `T` = type  
