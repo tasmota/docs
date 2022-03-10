@@ -268,7 +268,7 @@ SwitchTopic<a class="cmnd" id="switchtopic"></a>|`<value>` = set MQTT switch top
 TelePeriod<a class="cmnd" id="teleperiod"></a>|See current value and force publish STATE and SENSOR message<BR>`0` = disable telemetry messages<BR>`1` = reset telemetry period to firmware default (`TELE_PERIOD`)<BR>`10..3600` = set telemetry period in seconds _(default = `300`)_
 Topic<a class="cmnd" id="topic"></a>|`1` = reset MQTT topic to firmware default (`MQTT_TOPIC`) and restart<BR>`<value>` = set MQTT topic **and** `ButtonTopic` and restart.<BR>When using MQTT to issue this command, if it is used with the device `GroupTopic`, the command will not be executed. **Topic can not be identical to [`MqttClient`](#mqttclient)**
 Unsubscribe<a class="cmnd" id="unsubscribe"></a>|Unsubscribe from topics subscribed to with [`Subscribe`](#subscribe) <BR>`  ` = unsubscribe all topics<BR>`<eventName>` = unsubscribe from a specific MQTT topic
-See also|[`SetOption3`](#setoption3) - Disable//Enable MQTT<BR>[`SetOption4`](#setoption4) - Return MQTT response as `RESULT` or `%COMMAND%` topic<BR>[`SetOption10`](#setoption10) - Main topic change behavior
+See also|[`SetOption3`](#setoption3) - Disable//Enable MQTT<BR>[`SetOption4`](#setoption4) - Return MQTT response as `RESULT` or `%COMMAND%` topic<BR>[`SetOption10`](#setoption10) - Main topic change behavior<BR>[`SetOption104`](#setoption104) - Disable MQTT retained messages (some brokers don't support them)
 
 ### Rules
 
