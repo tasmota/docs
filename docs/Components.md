@@ -7,7 +7,7 @@ Components can be: buttons, switches, relays, LEDs, sensors, displays, MCU units
 Every Tasmota device has some components configured by default. Most often there is a relay, a button and a LED configured as is the case for a Sonoff Basic in the following image.
 
 !!! bug
-    Tasmota 9.1 completely redesigned GPIO mapping to allow for future expansion. Read more about the [GPIO Conversion](GPIO-Conversion.md) 
+    Tasmota 9.1 completely redesigned GPIO mapping to allow for future expansion. Read more about the [GPIO Conversion](GPIO-Conversion.md)
 
 ## Assigning Components
 <img src="../_media/components2.png" style="float:right;height:10em;margin:10px"></img>
@@ -16,7 +16,7 @@ If you wish to expand a device with a peripheral component, after properly wirin
 Read more about [peripherals](Supported-Peripherals.md).
 
 !!! tip
-     GPIOs configured as User (1) are the GPIOs that can be assigned to components in the **Configure Module** page. 
+     GPIOs configured as User (1) are the GPIOs that can be assigned to components in the **Configure Module** page.
 
 ## GPIOs
 
@@ -272,7 +272,7 @@ Read more about [peripherals](Supported-Peripherals.md).
 |          |          | XPT2046 Cs      | XPT2046 SPI Chip Select                                                         |
 |        |       | CSE7761 Tx      | CSE7761 Single Phase Energy Monitor Chip Tx pin                                            |
 |        |       | CSE7761 Rx      | CSE7761 Single Phase Energy Monitor Chip Rx pin                                            |
-|          |          | VL53L0X XSHUT1     | VL53L0X_XSHUT (the max number of sensors is VL53L0X_MAX_SENSORS) Used when connecting multiple VL53L0X|
+|          |          | VL53LXX XSHUT1     | VL53LXX_XSHUT (the max number of sensors is VL53LXX_MAX_SENSORS)<br>Used when connecting multiple VL53LXX|
 |          |          | MAX7219 Clk     | MAX7219 interface                                                         |
 |          |          | MAX7219 Din      | MAX7219 interface                                                         |
 |          |          | MAX7219 Cs      | MAX7219 interface                                                         |
