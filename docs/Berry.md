@@ -688,6 +688,8 @@ path.exists<a class="cmnd" id="path_exists"></a>|`(file_name:string) -> bool`<br
 path.last_modified<a class="cmnd" id="path_last_modified"></a>|`(file_name:string) -> int`<br>Returns the timestamp when the file was last modified, or `nil` if the file does not exist. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
 path.listdir<a class="cmnd" id="path_listdir"></a>|`(dir_name:string) -> list(string)`<br>List a directory, typically root dir `"/"` and returns a list of filenames in the directory. Returns an empty list if the directory is invalid
 path.remove<a class="cmnd" id="path_remove"></a>|`(file_name:string) -> bool`<br>Deletes a file by name, return `true` if successful
+path.format<a class="cmnd" id="path_format"></a>|`(true:bool) -> bool`<br>Re-formats the LittleFS file system (internal ESP32 flash) and erases all content. The parameter needs to be true as to avoid unwanted calls. Returns true if reformatting was successful.<br>This is sometimes useful when the file-system becomes unstable or corrupt after multiple re-partitionings.
+
 
 ### `persist` module
 
