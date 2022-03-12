@@ -254,6 +254,44 @@ Berry is a functional language, and includes the very powerful concept of a *clo
 
 When using Rules or Timers, you always pass Berry functions.
 
+## `cron` recurrent calls
+
+You can choose to run some function/closure at regular intervals specified as `cron` type format. (Crontab Guru)[https://crontab.guru/] is an easy way to create and test your cron format.
+
+Simply register a function to a cron format, and optionally assign an id to remove it later. Example:
+
+``` ruby
+> def f() print("Hi") end
+> tasmota.add_cron(""*/15 * * * * *", f, "every_15_s")
+Hi
+Hi      # added every 15 seconds
+> tasmota.remove_cron("every_15_s")     # cron stops
+```
+
+Like timers, you need to create a closure if you want to register a method of an instance. Example:
+
+``` ruby
+class A
+    var name
+    def init(name)
+        self.name = name
+    end
+    def p()
+        print("Hi,", self.name)
+    end
+end
+```
+
+``` ruby
+> bob = A("bob")
+> bob.p()
+Hi, bob
+> tasmota.add_cron("*/15 * * * * *", /-> bob.p(), "hi_bob")
+Hi, bob
+Hi, bob
+Hi, bob
+> tasmota.remove_cron("hi_bob")     # cron stops
+```
 
 ## Loading Filesystem
 
