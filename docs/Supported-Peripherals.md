@@ -2,7 +2,7 @@
 
 Name|Description|Connection
 ---|---|---
-[**A4988**](A4988-Stepper-Motor-Controller)| Stepper Motor Controller 
+[**A4988**](A4988-Stepper-Motor-Controller)| Stepper Motor Controller
 [**ADC**](ADC) | Analog input over A0 pin | analog
 **ADS111x** | A/D Converter | I^2^C
 [**AHT10<BR>AHT15**](AHT1x.md) | Asair AHT10 / AHT15 Temperature and Humidity Sensor | I^2^C
@@ -10,7 +10,7 @@ Name|Description|Connection
 **AM2320** | Temperature and Humidity Sensor | gpio
 **AS608** | AS608 Optical and R503 Capacitive Fingerprint Sensor| I^2^C
 [**AS3935**](AS3935) | Franklin Lightning Sensor| serial
-[**APDS-9960**](APDS-9960) |  Ambient Light, RGB Color and Proximity Sensor with Gesture Detection | I^2^C 
+[**APDS-9960**](APDS-9960) |  Ambient Light, RGB Color and Proximity Sensor with Gesture Detection | I^2^C
 [**AZ 7798**](AZ-7798) | CO~2~ Meter Datalogger
 [**BH1750**](BH1750) | Luminosity Sensor
 [**BMP280<BR>BMP085<BR>BMP180)**](BME280) | Pressure Sensor
@@ -49,7 +49,7 @@ Name|Description|Connection
 **INA219**<BR>**ISL28022** | High-Side DC Current and Voltage Sensor| I^2^C
 **INA226** | High-Side or Low-side DC Current and Voltage Sensor| I^2^C
 [**IR Remote**](IR-Remote) | IR transmitter and receiver
-**K30, K70, S8** | CO~2~ Sensor| I^2^C | 
+**K30, K70, S8** | CO~2~ Sensor| I^2^C |
 [**LM75AD**](LM75AD) |  Temperature Sensor| I^2^C
 [**LMT01**](LMT01) | Temperature Sensor| gpio
 **MAX31855**<br>**MAX6675** | Thermocouple Sensor| SPI
@@ -60,9 +60,9 @@ Name|Description|Connection
 [**MCP9808**](MCP9808) |  Temperature Sensor| I^2^C
 [**MFRC522**](MFRC522) | NFC Tag Reader| SPI
 [**MGC3130**](MGC3130) | 3D Tracking and Gesture Controller
-[**MH-Z19B**](MH-Z19B) | CO~2~ Sensor 
-[**MLX90614**](MLX90614) | MLX9061X Infrared Thermometer| I^2^C 
-[**MLX90640**](MLX90640) | MLX90640 Far Infrared Thermal Sensor Array| I^2^C 
+[**MH-Z19B**](MH-Z19B) | CO~2~ Sensor
+[**MLX90614**](MLX90614) | MLX9061X Infrared Thermometer| I^2^C
+[**MLX90640**](MLX90640) | MLX90640 Far Infrared Thermal Sensor Array| I^2^C
 [**MPR121**](MPR121) | Proximity Capacitive Touch Sensor Controller (I^2^C)
 [**MPU6050**](MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer Sensor (I^2^C)[**NeoPool**](NeoPool) | Sugar Valley NeoPool Controller| serial
 [**NRF24L01**](NRF24L01) | NRF24L01 as BLE-bridge for Mijia BT Sensors| SPI
@@ -71,10 +71,10 @@ Name|Description|Connection
 [**PAJ7620**](PAJ7620) | Gesture & Proximity Detection Sensor
 [**PIR**](PIR-Motion-Sensors#am312) | Passive Infrared Sensor| gpio
 [**PCA9685**](PCA9685) | 16-channel, 12-bit PWM LED controller| I^2^C
-[**PCF8574(A)**](PCF8574) 8-port IO Expander| I^2^C 
+[**PCF8574(A)**](PCF8574) 8-port IO Expander| I^2^C
 **PMS3003<BR>[PMS5003](https://www.superhouse.tv/38-diy-air-quality-Sensor-part-1-basic-model/)<BR>PMS7003** | Particle Concentration Sensor| serial
 [**PN532**](PN532) | NFC/RFID controller
-[**PZEM-004<BR>PZEM-016**](PZEM-0XX) | Energy Monitor| serial 
+[**PZEM-004<BR>PZEM-016**](PZEM-0XX) | Energy Monitor| serial
 [**RCWL-0516**](RCWL-0516) |  Microwave Radar Presence detection
 [**RDM6300**](RDM6300) | 125Khz RFID Module
 [**RF Transceiver**](RF-Transceiver) | IR receiver and/or transmitter
@@ -105,11 +105,11 @@ Name|Description|Connection
 [**VEML6070**](VEML6070) |  UV Sensor| I^2^C
 [**VEML6075**](VEML6075) |  UVA/UVB/UVINDEX Sensor| I^2^C
 [**VEML7700**](VEML7700) |  Ambient light intensity Sensor| I^2^C
-[**VL53L0x**](VL53L0x) | Time of flight Sensor| I^2^C
-**VL53L1x** | Time of flight Sensor| I^2^C
+[**VL53L0x**](VL53Lxx) | Time of flight Sensor| I^2^C
+[**VL53L1x**](VL53Lxx) | Time of flight Sensor| I^2^C
 **[VINDRIKTNING](https://blakadder.com/vindriktning-tasmota/) | IKEA VINDRIKTNING Particle Concentration Sensor | serial
 **WindMeter** | Analog cup anemometer
-[**WS2812B**](WS2812B-RGB-Shield) | Wemos Shield with Addressable LED 
+[**WS2812B**](WS2812B-RGB-Shield) | Wemos Shield with Addressable LED
 [**WS2812B<BR>WS2813B**](WS2812B-and-WS2813) | Addressable LEDs
 **Xadow| Grove) Mutichannel Gas Sensor** | gas Sensor (I^2^C
 

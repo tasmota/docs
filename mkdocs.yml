@@ -237,7 +237,7 @@ nav:
     - VEML6070.md
     - VEML6075.md
     - VEML7700.md
-    - VL53L0x.md
+    - VL53Lxx.md
     - WS2812B-RGB-Shield.md
     - WS2812B-and-WS2813.md
   - Supported Devices:
