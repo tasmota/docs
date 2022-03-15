@@ -23,29 +23,20 @@ However, the sensor provides commands to read and write the NeoPool controller M
 
 ## Connection
 
-Connect NeoPool controller using a TTL UART to RS485 converter to two GPIOs of your ESP. It is recommended to use GPIO 1 and GPIO 3 for this because the ESP then uses the serial hardware interface:
+The NeoPool controller has an RS485 interface, the ESP has an RS232 interface. Therefore connect your NeoPool controller using a TTL-UART to RS485 converter. It is recommended to use GPIO1 and GPIO3 on ESP8266 side, since the ESP then uses the hardware serial interface.
 
-### Using WIFI Port
-
-![](_media/xsns_83_neopool_connector_wifi.jpg)
-
-### Using EXTERN Port
-
-![](_media/xsns_83_neopool_connector.jpg)
-
-
-Note that your TTL UART to RS485 converter will also work with an operating voltage of 3.3V. Some converters are not designed for operating with 3.3V and only works with 5V TTL level - these converters are useless. __Do not operate your TTL UART to RS485 converter with 5V__, your converter __must be operated with the 3.3V__ from ESP, otherwise the ESP GPIO ports will be damaged.
+![](_media/xsns_83_neopool_schematic.png)
 
 The following TTL UART to RS485 converters have been tested with both an ESP8266 and ESP32 with VCC = 3.3V:
 
 ![](_media/xsns_83_neopool_rs485_1_s.png) ![](_media/xsns_83_neopool_rs485_2_s.png)
 
+!!! note
+    Your TTL UART to RS485 converter must be able to work with an operating voltage of 3.3V. Some converters are not designed for operating with 3.3V and only works with 5V TTL level - these converters are useless. __Do not operate your TTL UART to RS485 converter with 5V__, your converter __must be operated with the 3.3V__ from ESP, otherwise the ESP GPIO ports will be damaged.
+
 The Sugar Valley NeoPool RS485 connector pins are located under the connection cover, for the Sugar-Valley products on the right-hand side next to the relay connections:
 
-![](_media/xsns_83_neopool_connector.jpg)
-
 The pin assignment (from top to bottom):
-
 
 | Pin | Description |
 |-----|-------------|
@@ -60,7 +51,15 @@ The pin assignment (from top to bottom):
 You can use the "WIFI" or "EXTERN" connector, both are independent Modbus channels and uses the Modbus address 1 by default.
 
 !!! note
-    The "DISPLAY" port can only be used if neither the built-in nor an external display is connected. Since there is probably at least one display on one of the two "DISPLAY" ports, the "DISPLAY" port is basically useless for Tasmota.
+    The "DISPLAY" port can only be used if neither the built-in nor an external display is connected. Since there is probably at least one display on one of the two "DISPLAY" ports, the "DISPLAY" port is useless.
+
+### Using WIFI Port
+
+![](_media/xsns_83_neopool_connector_wifi.jpg)
+
+### Using EXTERN Port
+
+![](_media/xsns_83_neopool_connector.jpg)
 
 !!! note
     Leave `NEOPOOL_MODBUS_ADDRESS` set to 1 whether you are using the "WIFI" or "EXTERNAL" port (unless you have changed the parameters for it within your Sugar Valley device).
