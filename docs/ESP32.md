@@ -1,5 +1,5 @@
 ---
-desription: Everything about Tasmota on ESP32
+description: Running Tasmota on ESP32
 ---
 
 # ESP32
