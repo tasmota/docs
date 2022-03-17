@@ -15,7 +15,7 @@ The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?
 <img src="../_media/ch340g.png" style="margin:5px;float:right;width:200px"></img>
 * [FTDI FT232](https://www.ftdichip.com/Products/ICs/FT232R.htm) - these adapters have a lot of fakes in the market so buy only from reliable sources ([example](https://www.sparkfun.com/products/13746)). Buy only the variant with a separate 3.3V regulator on PCB! 
 * [CP2102](https://www.silabs.com/documents/public/data-sheets/cp2102-9.pdf) or [PL2303](http://www.prolific.com.tw/UserFiles/files/ds_pl2303HXD_v1_4_4.pdf) - works with certain devices, but using an external 3.3V supply might be necessary. Not recommended for beginners!
-* [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) You can also use a NodeMCU (or similar) as a reliable serial-to-USB adapter if you disable the onboard ESP by bridging the RST and GND pins, and connect TX and RX straight to another ESP82xx instead of crossed.
+* [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) You can also use a NodeMCU (or similar) as a reliable serial-to-USB adapter if you disable the onboard ESP by bridging the EN and GND pins, and connect TX and RX straight to another ESP82xx instead of crossed.
 * [RaspberryPi](Flash-Sonoff-using-Raspberry-Pi) - only for advanced users. External 3.3V supply necessary.
 
 !!! note "Don't forget to install drivers for your serial-to-USB adapter."
