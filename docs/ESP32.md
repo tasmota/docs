@@ -37,6 +37,9 @@ Tasmota will create an internal temperature sensor and display the values in the
 ```json
 {"Time":"2021-01-01T00:00:00","ESP32":{"Temperature":41.7},"TempUnit":"C"}
 ```
+
+You can deactivate it using command [`SetSensor127 0`](Commands.md#setsensor127)
+
 ### DAC
 
 [DAC](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/dac.html) GPIOs are supported through [Berry `gpio` module](Berry.md#dac-gpios).
