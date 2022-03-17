@@ -158,7 +158,7 @@ nav:
     - Projects and Tutorials: Tutorials.md
     - For Developers: For-Developers.md
   - ESP32:
-    - Features: ESP32.md
+    - Tasmota32 Features: ESP32.md
     - Berry: Berry.md
     - Bluetooth Low Energy: Bluetooth_ESP32.md
     - LVGL: LVGL.md
