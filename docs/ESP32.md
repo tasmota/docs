@@ -1,6 +1,9 @@
 ---
 desription: Everything about Tasmota on ESP32
 ---
+
+# ESP32
+
 !!! danger "ESP32-C3 and ESP32-S2 support is in beta and not all functions or supported peripherals will work reliably."
      Due to the scope and activity of development there might be breaking changes and incompatibilities between major and minor versions of Tasmota32. In case of problems first erase flash and serial flash the latest development binary.
 
