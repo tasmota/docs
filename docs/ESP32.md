@@ -71,9 +71,13 @@ Use [LVGL](https://lvgl.io/) in conjunction with Berry on devices with displays 
 
 ## Flashing
 
-Use [ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) for flashing an ESP32 or ESP82xx (Windows and MacOs executables are tested and verified as working).
+Use [Tasmota Web Installer](http://tasmota.github.io/install) to easily flash ESP32 devices.
 
-With esptool.py use the following command syntax (**replace COM port number!**):
+Other options include: 
+
+[ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) for flashing an ESP32 or ESP82xx (Windows and MacOs executables are tested and verified as working).
+
+esptool.py - use the following command syntax (**replace COM port number!**):
 ```
 esptool.py --chip esp32 --port COM5 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dout --flash_size detect 0x0 tasmota32.factory.bin
 ```
