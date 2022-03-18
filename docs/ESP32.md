@@ -101,4 +101,4 @@ All binaries use `user_config_override.h` if it exists.
 
 [Tasmota Supported Devices Repository](https://templates.blakadder.com/esp32.html) has a more extenstive list of [ESP32 based](https://templates.blakadder.com/esp32.html) devices.
 
-[ESP32 Devices][ESP32-Devices.md]
+[ESP32 Devices](ESP32-Devices.md)
