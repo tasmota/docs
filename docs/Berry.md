@@ -463,9 +463,9 @@ Tasmota Function|Parameters and details
 :---|:---
 tasmota.add\_cmd<a class="cmnd" id="tasmota_add_cmd"></a>|`(name:string, f:function) -> nil`<br>Adds a command to Tasmota commands. Command names are case-insensitive. Command names are analyzed after native commands and after most commands, so you can't override a native command.
 tasmota.resp\_cmnd_str<a class="cmnd" id="tasmota_resp_cmnd_str"></a>|`(message:string) -> nil`<br>Sets the output for the command to `message`.
-tasmota.resp\_cmnd\_str\_done<a class="cmnd" id="tasmota_resp_cmnd_done"></a>|`(message:string) -> nil`<br>Sets the output for the command to "Done" (localized message).
-tasmota.resp\_cmnd\_str\_error<a class="cmnd" id="tasmota_resp_cmnd_error"></a>|`(message:string) -> nil`<br>Sets the output for the command to "Error" (localized message).
-tasmota.resp\_cmnd\_str\_fail<a class="cmnd" id="tasmota_resp_cmnd_fail"></a>|`(message:string) -> nil`<br>Sets the output for the command to "Fail" (localized message).
+tasmota.resp\_cmnd\_done<a class="cmnd" id="tasmota_resp_cmnd_done"></a>|`() -> nil`<br>Sets the output for the command to "Done" (localized message).
+tasmota.resp\_cmnd\_error<a class="cmnd" id="tasmota_resp_cmnd_error"></a>|`() -> nil`<br>Sets the output for the command to "Error" (localized message).
+tasmota.resp\_cmnd\_failed<a class="cmnd" id="tasmota_resp_cmnd_failed"></a>|`() -> nil`<br>Sets the output for the command to "Fail" (localized message).
 tasmota.resp\_cmnd<a class="cmnd" id="tasmota_resp_cmnd"></a>|`(message:string) -> nil`<br>Overrides the entire command response. Should be a valid JSON string.
 tasmota.remove\_cmd<a class="cmnd" id="tasmota_remove_cmd"></a>|`(name:string) -> nil`<br>Remove a command to Tasmota commands. Removing an non-existing command is skipped silently.
 
