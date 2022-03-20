@@ -438,6 +438,8 @@ tasmota.wire\_scan<a class="cmnd" id="tasmota_wire_scan"></a>|`(addr:int [, inde
 tasmota.i2c\_enabled<a class="cmnd" id="tasmota_i2c_enabled"></a>|`(index:int) -> bool`<br>Returns true if the I^2^C module is enabled, see I^2^C page.
 tasmota.arch<a class="cmnd" id="tasmota_arch"></a>|`() -> string`<br>Returns the name of the architecture. Currently can be `esp32`, `esp32s2`, `esp32s3`, `esp32c3`
 tasmota.read\_sensors<a class="cmnd" id="tasmota_read_sensors"></a>|`([show_sensor:bool]) -> string`<br>Returns the value of sensors as a JSON string similar to the teleperiod. The response is a string, not a JSON object. The reason is that some sensors might produce invalid JSON. It's your code's responsibility to try parsing as JSON.<br>An optional boolean parameter (false by default) can be set to trigger a display of the new values (i.e. sends a FUNC_SHOW_SENSOR` event to drivers).
+tasmota.wifi<a class="cmnd" id="tasmota_wifi"></a>|`() -> map`<br>Retrieves Wi-Fi connection info or empty map.<br>Example: `{'mac': 'aa:bb:cc:22:11:03', 'quality': 100, 'rssi': -47, 'ip': '192.168.1.102'}`
+tasmota.eth<a class="cmnd" id="tasmota_eth"></a>|`() -> map`<br>Retrieves Ethernet connection info or empty map.<br>Example: `{'mac': 'aa:bb:cc:22:11:00', 'ip': '192.168.1.101'}`
 
 #### Functions for time, timers or cron
 
@@ -448,6 +450,8 @@ tasmota.time\_reached<a class="cmnd" id="tasmota_time_reached"></a>|`(timer:int)
 tasmota.rtc<a class="cmnd" id="tasmota_rtc"></a>|`() -> map`<br>Returns clockwall time with variants.<br>Example: `{'local': 1619560407, 'utc': 1619556807, 'timezone': 60, 'restart': 1619556779}`
 tasmota.time\_dump<a class="cmnd" id="tasmota_time_dump"></a>|`(timestamp:int) -> map`<br>Decompose a timestamp value (in seconds) to its components<br>Example: `tasmota.time_dump(1619560407)` -> `{'weekday': 2, 'sec': 27, 'month': 4, 'year': 2021, 'day': 27, 'min': 53, 'hour': 21}`
 tasmota.time\_str<a class="cmnd" id="tasmota_time_str"></a>|`(timestamp:int) -> string`<br>Converts a timestamp value (in seconds) to an ISO 8601 string<br>Example: `tasmota.time_str(1619560407)` -> `2021-04-27T21:53:27`
+tasmota.set\_timer<a class="cmnd" id="tasmota_set_timer"></a>|`(delay:int, f:function [, id:any]) -> nil`<br>Runs the closure or function `f` after `delay` milliseconds, optional `id` can be used to remove the timer`
+tasmota.remove\_timer<a class="cmnd" id="tasmota_remove_timer"></a>|`(id:string) -> nil`<br>Removes the timer with the `id` used on `tasmota.set_timer`.
 tasmota.strftime<a class="cmnd" id="tasmota_strftime"></a>|`(format:string, timestamp:int) -> string`<br>Converts a timestamp value (in seconds) to a string using the format conversion specifiers<br>Example: `tasmota.strftime("%d %B %Y %H:%M:%S", 1619560407)` -> `27 April 2021 21:53:27`
 tasmota.strptime<a class="cmnd" id="tasmota_strptime"></a>|`(time:string, format:string) -> map or nil`<br>Converts a string to a date, according to a time format following the C `strptime` format. Returns a `map` similar to `tasmota.time_dump()` or `nil` if parsing failed. An additional `unparsed` attribute reports the unparsed string, or empty string if everything was parsed.<br>Example: `tasmota.strptime("2001-11-12 18:31:01", "%Y-%m-%d %H:%M:%S")` -> `{'month': 11, 'weekday': 1, 'sec': 1, 'unparsed': '', 'year': 2001, 'day': 12, 'min': 31, 'hour': 18}`
 tasmota.yield<a class="cmnd" id="tasmota_yield"></a>|`() -> nil`<br>Calls Arduino framework `yield()` function to give back some time to low-level functions, like Wifi. Prevents WDT watchdog from happening.
