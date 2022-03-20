@@ -51,7 +51,7 @@ Berry has the following advantages:
 
 ## Tasmota Port
 
-Berry Scripting in only supported on Tasmota32 for ESP32. The RAM usage starts at ~10kb and will be later optimized. Berry uses PSRAM on ESP32 if available (PSRAM is external RAM attached to Esp32 via SPI, it is slower but larger than internal RAM.
+Berry Scripting in only supported on Tasmota32 for ESP32. The RAM usage starts at ~10kb and will be later optimized. Berry uses PSRAM on ESP32 if available (PSRAM is external RAM attached to ESP32 via SPI, it is slower but larger than internal RAM.
 
 ### Quick Start
 
@@ -132,7 +132,7 @@ ct|`int 153..500`<br>Set the white color temperature in mired, ranging from 153 
 rgb|`string 6 hex digits`<br>Set the color as hex `RRGGBB`, changing color and brightness.
 channels|`array of int, ranges 0..255`<br>Set the value for each channel, as an array of numbers
 
-When setting attributes, they are evaluated in the following order, the latter overriding the previous: `power`, `ct`, `hue`, `sat`, `rgb`, `channles`, `bri`.
+When setting attributes, they are evaluated in the following order, the latter overriding the previous: `power`, `ct`, `hue`, `sat`, `rgb`, `channels`, `bri`.
 
 ```python
   # set to yellow, 25% brightness
@@ -147,7 +147,7 @@ When setting attributes, they are evaluated in the following order, the latter o
 > light.set({"bri": 0})
 {'bri': 0, 'hue': 240, 'power': false, 'sat': 255, 'rgb': '000000', 'channels': [0, 0, 0]}
 
-  # chaning bri doesn't automatically power
+  # changing bri doesn't automatically power
 > light.set({"bri": 32, "power":true})
 {'bri': 32, 'hue': 240, 'power': true, 'sat': 255, 'rgb': '000020', 'channels': [0, 0, 32]}
 
@@ -313,7 +313,7 @@ You can easily create a complete Tasmota driver with Berry.
 
 A Driver responds to messages from Tasmota. For each message type, the method with the same name is called. Actually you can register any class as a driver, it does not need to inherit from `Driver`; the call mechanism is based on names of methods that must match the name of the event to be called.
 
-Driver methods are called with the following parameters: `f(cmd, idx, payload, raw)`. `cmd` is a string, `idx` an integer, `payload` a Berry object representation of the JSON in `payload` (if any) or `nil`, `raw` is a string. These parameters are meaninful to a small subset of events:
+Driver methods are called with the following parameters: `f(cmd, idx, payload, raw)`. `cmd` is a string, `idx` an integer, `payload` a Berry object representation of the JSON in `payload` (if any) or `nil`, `raw` is a string. These parameters are meaningful to a small subset of events:
 
 - `every_second()`: called every second
 - `every_50ms()`: called every 50ms (i.e. 20 times per second)
@@ -450,7 +450,7 @@ tasmota.time\_reached<a class="cmnd" id="tasmota_time_reached"></a>|`(timer:int)
 tasmota.rtc<a class="cmnd" id="tasmota_rtc"></a>|`() -> map`<br>Returns clockwall time with variants.<br>Example: `{'local': 1619560407, 'utc': 1619556807, 'timezone': 60, 'restart': 1619556779}`
 tasmota.time\_dump<a class="cmnd" id="tasmota_time_dump"></a>|`(timestamp:int) -> map`<br>Decompose a timestamp value (in seconds) to its components<br>Example: `tasmota.time_dump(1619560407)` -> `{'weekday': 2, 'sec': 27, 'month': 4, 'year': 2021, 'day': 27, 'min': 53, 'hour': 21}`
 tasmota.time\_str<a class="cmnd" id="tasmota_time_str"></a>|`(timestamp:int) -> string`<br>Converts a timestamp value (in seconds) to an ISO 8601 string<br>Example: `tasmota.time_str(1619560407)` -> `2021-04-27T21:53:27`
-tasmota.set\_timer<a class="cmnd" id="tasmota_set_timer"></a>|`(delay:int, f:function [, id:any]) -> nil`<br>Runs the closure or function `f` after `delay` milliseconds, optional `id` can be used to remove the timer`
+tasmota.set\_timer<a class="cmnd" id="tasmota_set_timer"></a>|`(delay:int, f:function [, id:any]) -> nil`<br>Runs the closure or function `f` after `delay` milliseconds, optional `id` can be used to remove the timer.
 tasmota.remove\_timer<a class="cmnd" id="tasmota_remove_timer"></a>|`(id:string) -> nil`<br>Removes the timer with the `id` used on `tasmota.set_timer`.
 tasmota.strftime<a class="cmnd" id="tasmota_strftime"></a>|`(format:string, timestamp:int) -> string`<br>Converts a timestamp value (in seconds) to a string using the format conversion specifiers<br>Example: `tasmota.strftime("%d %B %Y %H:%M:%S", 1619560407)` -> `27 April 2021 21:53:27`
 tasmota.strptime<a class="cmnd" id="tasmota_strptime"></a>|`(time:string, format:string) -> map or nil`<br>Converts a string to a date, according to a time format following the C `strptime` format. Returns a `map` similar to `tasmota.time_dump()` or `nil` if parsing failed. An additional `unparsed` attribute reports the unparsed string, or empty string if everything was parsed.<br>Example: `tasmota.strptime("2001-11-12 18:31:01", "%Y-%m-%d %H:%M:%S")` -> `{'month': 11, 'weekday': 1, 'sec': 1, 'unparsed': '', 'year': 2001, 'day': 12, 'min': 31, 'hour': 18}`
@@ -800,7 +800,7 @@ Class `webclient` provides an implementation of an HTTP/HTTPS web client and mak
 Features:
 
  - Support HTTP and HTTPS requests to IPv4 addresses and domain names, to arbitrary ports, via a full URL.
- - Support for HTTPS and TLS via BearSSL (which is much lighter than default mbetTLS)
+ - Support for HTTPS and TLS via BearSSL (which is much lighter than default mbedTLS)
  - HTTPS (TLS) only supports cipher ECDHE_RSA_WITH_AES_128_GCM_SHA256 which is both secure and widely supported
  - Support for URL redirections (tbc)
  - Ability to set custom User-Agent
@@ -865,7 +865,7 @@ read<a class="cmnd" id="wire_read">|`(addr:int, reg:int, size:int) -> int or nil
 get\_size<a class="cmnd" id="wc_get_string">|`() -> int`<br>Once a connection succeeded (GET or POST), reads the size of the response as returned by the server in headers (before actually reading the content). A value `-1` means that the response size is unknown until you read it.
 get\_string<a class="cmnd" id="wc_get_string">|`() -> string`<br>Once a connection succeeded (GET or POST), reads the content of the response in a string. The response max size is 32KB, any response larger is dropped. Connection is closed and resources are freed after this call completes.
 close<a class="cmnd" id="wc_close">|`() -> nil`<br>Closes the connection and frees buffers. `close` can be called after `GET` or `POST` and is implicitly called by `get_string`. You don't usually need to use `close` unless you are only retrieving the result_code for a request and not interested in the content.
-write\_file<a class="cmnd" id="wc_write_file">|`(file_name:string) -> int`<br>Downloads the binary content of the resource and stores it on the file system. Returns the number of bytes downloaded or -1 if an error occured
+write\_file<a class="cmnd" id="wc_write_file">|`(file_name:string) -> int`<br>Downloads the binary content of the resource and stores it on the file system. Returns the number of bytes downloaded or -1 if an error occurred
 
 Request customization:
 
@@ -1007,9 +1007,9 @@ true
 bytes("414243")    # received packet as `bytes()`
 ```
 
-### Adressable leds (WS2812, SK6812)
+### Addressable leds (WS2812, SK6812)
 
-There is native support for adressable leds via NeoPixelBus, with support for animations. Currently supported: WS2812, SK6812.
+There is native support for addressable leds via NeoPixelBus, with support for animations. Currently supported: WS2812, SK6812.
 
 Details are in [Berry leds](Berry_leds.md)
 
