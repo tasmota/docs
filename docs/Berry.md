@@ -326,8 +326,8 @@ Driver methods are called with the following parameters: `f(cmd, idx, payload, r
 - `web_add_main_button()`, `web_add_management_button()`, `web_add_console_button()`, `web_add_config_button()`: add a button to Tasmotas Web UI on a specific page
 - `web_add_handler()`: called when Tasmota web server started, and the right time to call `webserver.on()` to add handlers
 - `button_pressed()`: called when a button is pressed
-- `web_sensor()`: send sensor information as JSON or HTML
 - `save_before_restart()`: called just before a restart
+- `mqtt_data(topic, idx, data, databytes): called for MQTT payloads matching `mqtt.subscribe`. `idx` is zero, and `data` is normally unparsed JSON.
 - `set_power_handler(cmd, idx)`: called whenever a Power command is made. `idx` contains the index of the relay or light. `cmd` can be ignored.
 - `display()`: called by display driver with the following subtypes: `init_driver`, `model`, `dim`, `power`.
 
@@ -513,7 +513,7 @@ Use with `import mqtt`.
 Tasmota Function|Parameters and details
 :---|:---
 mqtt.publish<a class="cmnd" id="mqtt_publish"></a>|`(topic:string, payload:string[, retain:bool, start:int, len:int]) -> nil`<br>Equivalent of `publish` command, publishes a MQTT message on `topic` with `payload`. Optional `retain` parameter.<br>`payload` can be a string or a bytes() binary array<br>`start` and `len` allow to specificy a sub-part of the string or bytes buffer, useful when sending only a portion of a larger buffer.
-mqtt.subscribe<a class="cmnd" id="mqtt_subscribe"></a>|`(topic:string) -> nil`<br>Subscribe to a `topic` (exact match). Contrary to Tasmota's `Subscribe` command, the topic is sent as-is and not appended with `/#`. You need to add wildcards yourself.
+mqtt.subscribe<a class="cmnd" id="mqtt_subscribe"></a>|`(topic:string) -> nil`<br>Subscribe to a `topic` (exact match). Contrary to Tasmota's `Subscribe` command, the topic is sent as-is and not appended with `/#`. You need to add wildcards yourself. Driver method `mqtt_data` is called for each matching payload.
 mqtt.unsubscribe<a class="cmnd" id="mqtt_unsubscribe"></a>|`(topic:string) -> nil`<br>Unubscribe to a `topic` (exact match).
 
 ### `light` object
