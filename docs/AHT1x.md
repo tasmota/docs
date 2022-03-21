@@ -55,5 +55,8 @@ and in MQTT topic (according to TelePeriod):
 
 ![AHT10](_media/peripherals/AHT10.jpg)![AHT15](_media/peripherals/AHT15.jpg)
 
+**Note**: The pins on the smaller breakout board with the AHT15 are in a different order: VDD - SDA - GND - SCL
+See also the datasheet.
+
 [AHT10 Datasheet](https://server4.eca.ir/eshop/AHT10/Aosong_AHT10_en_draft_0c.pdf)    
 [AHT15 Datasheet](https://wiki.liutyi.info/download/attachments/35291280/Aosong_AHT15_en_draft_0.pdf?version=1&modificationDate=1563622682730&api=v2)
