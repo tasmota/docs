@@ -17,11 +17,12 @@ OpenTherm protocol requires a simple low voltage two-wire connection to the boil
 ## Compatible Open Therm Adapters
 - [Ihor Melnyk OpenTherm Adapter](http://ihormelnyk.com/opentherm_adapter)
 - [OpenTherm Gateway Arduino shield](https://www.tindie.com/products/jiripraus/opentherm-gateway-arduino-shield/)
+- [OpenTherm master shield for Wemos/Lolin](https://www.tindie.com/products/thehognl/opentherm-master-shield-for-wemoslolin/)
 
-Both adapters have a fully isolated circuit from the boiler. However, please be aware that you can damage your boiler. You may also void your boiler warranty by installing this hardware. Please consult with your boiler manufacturer.
+All adapters have a fully isolated circuit from the boiler. However, please be aware that you can damage your boiler. You may also void your boiler warranty by installing this hardware. Please consult with your boiler manufacturer.
 
 !!! note
-    For my home automation project, I used [OpenTherm Gateway Arduino shield](https://www.tindie.com/products/jiripraus/opentherm-gateway-arduino-shield/); however, this project uses [OpenTherm](https://github.com/ihormelnyk/opentherm_library) library from [Ihor Melnyk](http://ihormelnyk.com/). I assume both adapters will work.
+    For my home automation project, I used [OpenTherm Gateway Arduino shield](https://www.tindie.com/products/jiripraus/opentherm-gateway-arduino-shield/); however, this project uses [OpenTherm](https://github.com/ihormelnyk/opentherm_library) library from [Ihor Melnyk](http://ihormelnyk.com/). I assume all adapters will work.
 
 Please note, this integration does not work with the [OTGW](http://otgw.tclcode.com/index.html#intro). You might want to take a look at the [HA OpenTherm GW](https://www.home-assistant.io/integrations/opentherm_gw/)
 
