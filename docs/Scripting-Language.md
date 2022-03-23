@@ -418,7 +418,10 @@ A web user interface may be generated containing any of the following elements:
   `name` = name of chart  
   `label` = label for up to the 4 datasets in chart  
   `entrylabel` = labels of each x axis entry separated by '|' char  
-  ("cntN" starts numbering entries with the number N an optional /X generates numbers devided by X)  
+  ("cntN" starts numbering entries with the number N an optional /X generates numbers devided by X.
+  Produce labels that cycle through the array indexes, starting with the number N.
+  For instance, "cnt6" with an array of length 8 will produce the labels 6|7|0|1|2|3|4|5|
+  Using "cntN/X" will then divide the numeric value of the label, so "cnt6/2" with an array of length 8 will produce the labels 3|3|0|0|1|1|2|2|)
   ("wdh: before a week defintion generates a week with full hours)  
   `header` = visible header name of chart  
   
