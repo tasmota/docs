@@ -132,8 +132,18 @@ Sends an HEX string (Type 3) data to dpId (Max data length? Not known at this ti
 
 Differences between `TuyaSend3` and `TuyaSend5`:
 
-* `TuyaSend3 108, ABCD` sends `55aa000600086c030004414243448a` where the payload is `441424344` which is the ASCII bytes representing the string `ABCD`
+* `TuyaSend3 108, ABCD` sends `55aa000600086c030004414243448a` where the payload is `41424344` which is the ASCII bytes representing the string `ABCD`
 * `TuyaSend5 108, ABCD` sends `55aa000600066c030002abcdf4` where the payload is a `abcd` which is a string of 2 bytes 0xAB and 0xCD 
+
+#### `TuyaSend6` 
+Sends payload with raw data **(type 0)** to dpId (Max data length? Not known at this time). Does NOT require `0x` prefix.
+
+!!! example
+    `TuyaSend6 37, 060000DC08000096` sends raw data defined by hex codes to dpId=37
+
+Differences between `TuyaSend3`, `TuyaSend5` and `TuyaSend6`:
+* `TuyaSend3 and TuyaSend5` sends payload with the **data type 0x03 = string**
+* `TuyaSend6` sends payload with the **data type 0x00 = raw** 
 
 #### `TuyaSend8`
 Used without payload to get device information and dpId states.  Replaces `SerialSend5 55aa000100000`
@@ -608,6 +618,7 @@ Functional protocols are used for delivering and reporting data of functions. Th
 #### Data Type
 |Hex|Tasmota Command|Decription|Max length|
 |---|---|---|---|
+|0x00|TuyaSend6|raw data|unknown|
 |0x01|TuyaSend1|boolean data `0/1`|1 byte|
 |0x02|TuyaSend2|value data. If a value contains less than 4 bytes, 0 is supplemented before|4 bytes|
 |0x00|TuyaSend3|string data|unknown|
