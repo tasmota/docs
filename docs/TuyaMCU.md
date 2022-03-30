@@ -150,6 +150,8 @@ Every status message from the MCU gets a JSON response named `TuyaReceived` whic
 
 To publish them to an MQTT Topic of `tele/%topic%/RESULT` you need to enable `SetOption66 1`.
 
+To avoid the mqtt-publish of the Tuya MCU received Heartbeat (which is communicated every 10 seconds between the Tuya MCU and the ESP) to the Topic `tele/%topic%/RESULT` you need to enable `SetOption137 1`. If `SetOption137` set to `0` the received Heartbeat will be published like every other received Tuya MCU message. `SetOption137` is very useful to reduce the MQTT-traffic.
+
 #### Example
 After issuing serial command `55aa0006000501010001010e` (Device power (dpId=1) is mapped to Relay1 (fnId=11)) we get the following console output (with `weblog 4`):
 
