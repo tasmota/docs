@@ -597,6 +597,7 @@ SEL:
 `month` = month   
 `year` = year  
 `epoch` = epoch time (from 2019-1-1 00:00)  
+`epoffs` = set epoch offset, (must be no longer then 2 years to fit into single float with second precision)  
 `eres` = result of >E section set this var to 1 in section >E to tell Tasmota event is handled (prevents MQTT)  
 
 The following variables are cleared after reading true:  
