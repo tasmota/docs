@@ -148,9 +148,17 @@ Use without any payload to toggle a new `STAT` topic reporting changes to a dpId
 ## TuyaReceived
 Every status message from the MCU gets a JSON response named `TuyaReceived` which contains the MCU protocol status message inside key/value pairs which are hidden from the user by default.
 
-To publish them to an MQTT Topic of `tele/%topic%/RESULT` you need to enable `SetOption66 1`.
+To publish them to a MQTT Topic of `tele/%topic%/RESULT` you need to enable `SetOption66 1`.
 
-To avoid the mqtt-publish of the Tuya MCU received Heartbeat (which is communicated every 10 seconds between the Tuya MCU and the ESP) to the Topic `tele/%topic%/RESULT` you need to enable `SetOption137 1`. If `SetOption137` set to `0` the received Heartbeat will be published like every other received Tuya MCU message. `SetOption137` is very useful to reduce the MQTT-traffic.
+To avoid some cyclic MCU <-> ESP messages published via MQTT to the topic `tele/%topic%/RESULT` you need to enable `SetOption137 1`.
+
+If `SetOption137` set to `1` the following cmds will not forwarded:
+- the heartbeat between the MCU <-> ESP (every 10 seconds, `TUYA_CMD_HEARTBEAT`)
+- the Wifi-State between the MCU <-> ESP (during start-up and wifi events, `TUYA_CMD_WIFI_STATE`)
+- the local time info query of the MCU (every minute, `TUYA_CMD_SET_TIME`)
+- the received update package info from MCU (during firmware update of Tuya MCU, `TUYA_CMD_UPGRADE_PACKAGE`)
+
+If `SetOption137` set to `0` all received Tuya MCU messages will be published. `SetOption137` is very useful to reduce the MQTT-traffic.
 
 #### Example
 After issuing serial command `55aa0006000501010001010e` (Device power (dpId=1) is mapped to Relay1 (fnId=11)) we get the following console output (with `weblog 4`):
