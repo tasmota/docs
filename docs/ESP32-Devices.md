@@ -55,20 +55,12 @@ SetOption73 1
 
 #### ODROID-GO
 
-is supported via module. Upload firmware via USB and select module `Odroid Go`
+is supported via build Tasmota32-lvgl. Upload firmware and configure via Menu `Auto-configuration`
 
 
 To make the device work nicely, change the following settings in the Console:
 ```
 adcparam3 6,0,4095,0,6160
-```
-
-Display Settings:
-```
-DisplayRotate 3
-DisplayCols 53
-DisplayRows 30
-DisplayMode 5
 ```
 
 
@@ -140,15 +132,7 @@ fully supported with all sensors
 fully supported
 
 #### m5stack CORE2
-
-is fully supported with all sensors and SD card. Upload firmware via USB and select module `core2`
-  
-all pin definitions hardcoded except GPIO 33,34 for extern SCL,SDA on grove bus  
-console cmd:  
-
-`core2shutdown seconds` - shut down hardware and wake up after N seconds (>=30)  
-`core2shutdown HH:MM` - shut down hardware and wake up on HH:MM time  
-
+is fully supported with all sensors and SD card. Upload firmware Tasmota32-lvgl and configure via Menu `Auto-configuration`
 
 #### Heltec WiFi Kit 32
 OLED display needs the following template
