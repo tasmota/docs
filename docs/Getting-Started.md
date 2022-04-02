@@ -61,7 +61,7 @@ Latest _**development**_ branch binaries are available only from our [OTA server
 
 - [**Tasmota Web Installer**](https://tasmota.github.io/install/) - flash Tasmota using a Chrome based browser for ESP82XX and ESP32
 - [**Tasmotizer**](https://github.com/tasmota/tasmotizer) - flashing and firmware download tool _for ESP82XX only_. (Windows, Linux or Mac) 
-- [**ESP-Flasher**](https://github.com/Jason2866/ESP_Flasher) - GUI flasher for Tasmota based on esptool.py for ESP82XX *and* ESP32. (Windows or Mac)
+- [**ESP-Flasher**](https://github.com/Jason2866/ESP_Flasher) - GUI flasher for Tasmota based on esptool.py for ESP82XX *and* ESP32. (Windows, Linux or Mac)
 - [**Esptool.py**](https://github.com/espressif/esptool) - the official flashing tool from Espressif for ESP82XX *and* ESP32. (Requires Python)
 
 ??? info "Compiling Tools (optional)"
