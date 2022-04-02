@@ -316,6 +316,7 @@ Look down below for script examples based on the following metering devices:
 - [Hager EHZ363, Apator Norax 3D](#hager-ehz363-apator-norax-3d-sml) (SML)
 - [Hager EHZ161](#hager-ehz161-obis) (OBIS)
 - [Landis + Gyr ZMR120AR](#landis-gyr-zmr120ares2r2sfcs-obis) (OBIS, changing the baud rate during operation)
+- [Elster AS1440 / Honeywell AS1440](#elster--honeywell-as1440-obis) (OBIS, changing the baud rate during operation)
 - [COMBO Meter](#combo-meter-watergassml) (Water,Gas,SML)
 - [WOLF CSZ 11/300 Heater](#wolf-csz-11300-heater-ebus) (EBUs)
 - [SDM530](#sdm530-modbus) (MODBus)
@@ -702,6 +703,52 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 #
 ```
 
+    
+    
+    
+------------------------------------------------------------------------------
+    
+### Elster / Honeywell AS1440 (OBIS)
+    
+Based on Landis script with changed timings in the >F section, as AS1440 seems to be slower in responding.
+    
+```
+>D
+scnt=0
+res=0
+
+>B
+=>sensor53 r
+
+>F
+; count 100ms
+scnt+=1
+switch scnt
+case 3
+;set sml driver to 300 baud and send /?! as HEX to trigger the Meter
+res=sml(1 0 300)
+res=sml(1 1 "2F3F210D0A")
+
+;1700ms later \> Ack and ask for switching to 9600 baud
+case 20
+res=sml(1 1 "063035300D0A")
+
+;300ms later \> Switching sml driver to 9600 baud
+case 23
+res=sml(1 0 9600)
+
+;Restart sequence after 55x100ms
+case 55
+; 5500ms later \> restart sequence
+scnt=0
+ends
+
+>M 1
++1,3,o,0,9600,AS1440,1
+1,1-1:1.8.1(@1,Total_In,KWh,Total_In,3
+1,1-1:2.8.1(@1,Total_Out,KWh,Total_Out,3
+# 
+```
 ------------------------------------------------------------------------------
 
 ### COMBO Meter (Water,Gas,SML)
