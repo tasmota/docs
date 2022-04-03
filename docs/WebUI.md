@@ -3,13 +3,13 @@ Tasmota's web user interface is a practical way to control and manage your tasmo
 !!! warning
     WebUI **does not** and **can not** have all the features and commands implemented. For precise and complete control use Console or MQTT commands!
 
-To access the webUI use your device's IP address in your favorite web browser.
+To access the WebUI use your device's IP address in your favorite web browser.
 
-By default, webUI starts in unprotected admin mode which allows complete access to your device to anyone with access to that IP. 
+By default, WebUI starts in unprotected admin mode which allows complete access to your device to anyone with access to that IP.
 
-If you want to restrict other users to only control through the webUI, use [`WebServer 1`](Commands#webserver).
+If you want to restrict other users to only control through the WebUI, use [`WebServer 1`](Commands#webserver).
 
-Command [`WebPassword`](Commands#webpassword) will set up a password that needs to be entered when trying to access webUI. This is a very thin layer of protection since everything is transmitted over unencrypted http protocol.
+Command [`WebPassword`](Commands#webpassword) will set up a password that needs to be entered when trying to access WebUI. This is a very thin layer of protection since everything is transmitted over unencrypted http protocol.
  
 ## Menus
 #### Configuration
