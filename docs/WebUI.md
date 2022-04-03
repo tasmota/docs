@@ -74,6 +74,16 @@ WebColor {"WebColor":["#e0e0c0","#000033","#4f4f4f","#000000","#dddddd","#a7f432
 ```haskell
 WebColor {"WebColor":["#eaeaea","#252525","#282531","#eaeaea","#282531","#d7ccff","#1d1b26","#ff5661","#008000","#faffff","#694fa8","#4d3e7f","#b73d5d","#822c43","#1f917c","#156353","#faffff","#716b7f","#eaeaea"]}
 ```
+
+<br>
+
+#### Solarized Dark
+<img src="_media/themes/solarized_dark.png" style="width:100px;float:right;z-index:1">
+
+```haskell
+WebColor {"WebColor":["#839496","#002b36","#073642","#839496","#002b36","#839496","#073642","#b58900","#859900","#eee8d5","#268bd2","#185886","#dc322f","#90211f","#859900","#647300","#839496","#073642","#839496"]}
+```
+
 <br style="clear: both;">
 
 !!! tip
