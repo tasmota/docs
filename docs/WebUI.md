@@ -9,17 +9,17 @@ By default, WebUI starts in unprotected admin mode which allows complete access 
 
 If you want to restrict other users to only control through the WebUI, use [`WebServer 1`](Commands#webserver).
 
-Command [`WebPassword`](Commands#webpassword) will set up a password that needs to be entered when trying to access WebUI. This is a very thin layer of protection since everything is transmitted over unencrypted http protocol.
+Command [`WebPassword`](Commands#webpassword) will set up a password that needs to be entered when trying to access WebUI. This is a very thin layer of protection since everything is transmitted over unencrypted HTTP protocol.
  
 ## Menus
 #### Configuration
 Configuration menu allows you to configure everything from components to Wi-Fi and gives you the option to backup and restore the configuration in a secure location.
 
 #### Information
-Displays a single page loaded with information about the device including: current Tasmota version, Wi-Fi AP data, MQTT host data and more
+Displays a single page loaded with information about the device including: current Tasmota version, Wi-Fi AP data, MQTT host data, and more
 
 #### Firmware Upgrade
-An easy to use menu to initiate a firmware [upgrade](Upgrading.md) from an uploaded .bin or an OTA server.
+An easy to use menu to initiate a firmware [upgrade](Upgrading.md) from an uploaded `.bin` file or an OTA server.
 
 #### Console
 Terminal access to Tasmota. Issue [commands](Commands.md) here or follow the information stream. Useful for debugging when using [˙Weblog 4`](Commands.md#weblog).
@@ -33,7 +33,7 @@ Change names of the toggle buttons using [`WebButton`](Commands#webbutton).
 ### Themes
 WebUI is themable using [`WebColor`](Commands.md#webcolor) commands. 
 
-To apply the theme copy the entire code block and send it in console or via MQTT. 
+To apply a theme from below copy the entire code block and send it using the console or via MQTT.
 
 #### Dark (default theme)
 <img src="../_media/themes/dark.png" style="margin-left:2em;width:100px;float:right">
