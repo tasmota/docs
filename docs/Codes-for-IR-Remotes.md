@@ -5,9 +5,9 @@ Please try out...
 
 Feel free to contribute this list
 
-# TV's
+## TV's
 
-## IR Codes TV Panasonic TX65FXW784
+### IR Codes TV Panasonic TX65FXW784
 
 **Example received Code:**
 **tele/sonoffIRBridge_1/RESULT = {"IrReceived":{"Protocol":"PANASONIC","Bits":48,"Data":"0x100BCBD"}}**
@@ -66,7 +66,7 @@ Feel free to contribute this list
 * 0x400401003534="Help"
 
 
-## IR Remote Codes Sony KDL-EX540
+### IR Remote Codes Sony KDL-EX540
 
 Common buttons should work across multiple models
 
@@ -190,7 +190,7 @@ PC	{"Protocol":"SONY","Bits":12,"Data":"0xC30"}
 
 Digital TV	{"Protocol":"SONY","Bits":15,"Data":"0x25EE"}
 
-## IR Codes TV LG 55UH8509
+### IR Codes TV LG 55UH8509
 
 **Example received Code:**
 **tele/sonoffIRBridge_1/RESULT = {"IrReceived":{"Protocol":"NEC","Bits":32,"Data":"0x20DF10EF"}}**
@@ -297,7 +297,7 @@ Digital TV	{"Protocol":"SONY","Bits":15,"Data":"0x25EE"}
 * 0x20DF5FA0="Enter Password"
 * 0x20DF3FC0="Warning: Reset to factory"
 
-## Generic VEON TV (eg model SRO322016)
+### Generic VEON TV (eg model SRO322016)
 ****
 button | code
 --- | ---
@@ -336,9 +336,9 @@ OK | {"Protocol":"NEC","Bits":32,"Data":"0x00FE08F7"}
 Exit | {"Protocol":"NEC","Bits":32,"Data":"0x00FEC837"}
 
 
-# Set-top Boxes
+## Set-top Boxes
 
-## IR Codes for VU+ Duo2
+### IR Codes for VU+ Duo2
 
 **Example received Code:**
 **tele/sonoffIRBridge_1/RESULT = {"IrReceived":{"Protocol":"RC6","Bits":36,"Data":"0x8052900C"}**
@@ -388,7 +388,7 @@ Exit | {"Protocol":"NEC","Bits":32,"Data":"0x00FEC837"}
 * 0xC80529081="Help"
 
 
-## IR Remote Codes AppleTV Gen4
+### IR Remote Codes AppleTV Gen4
 Up	{"Protocol":"NEC","Bits":32,"Data":"0x77E15080"}
 
 Down	{"Protocol":"NEC","Bits":32,"Data":"0x77E13080"}
@@ -406,7 +406,7 @@ Play/Pause	{"Protocol":"NEC","Bits":32,"Data":"0x77E1FA80"}
 Home	{"Protocol":"NEC","Bits":0,"Data":"0xFFFFFFFFFFFFFFFF"}
 
 
-## IR Remote Codes Humax HMS-1000T DVB-T2 DVR PAL 4-Tune
+### IR Remote Codes Humax HMS-1000T DVB-T2 DVR PAL 4-Tune
 Power	{"Protocol":"NEC","Bits":32,"Data":"0x000800FF"}
 
 TV Apps	{"Protocol":"NEC","Bits":32,"Data":"0x0008D22D"}
@@ -490,7 +490,7 @@ Blue	{"Protocol":"NEC","Bits":32,"Data":"0x00087887"}
 TV/Radio	{"Protocol":"NEC","Bits":32,"Data":"0x0008B04F"}
 
 
-## IR Remote Codes FetchTV Mini(Hybroad H626T)
+### IR Remote Codes FetchTV Mini(Hybroad H626T)
 Power Toggle	{"Protocol":"NEC","Bits":32,"Data":"0x2662BA45"}
 
 Keyboard Select	{"Protocol":"NEC","Bits":32,"Data":"0x26624CB3"}
@@ -562,7 +562,7 @@ Record	{"Protocol":"NEC","Bits":32,"Data":"0x26624BB4"}
 0	{"Protocol":"NEC","Bits":32,"Data":"0x2662D02F"}
 
 
-## Smart Receiver VX/CX
+### Smart Receiver VX/CX
 ****
 button | code
 --- | ---
@@ -616,8 +616,8 @@ USB | {"Protocol":"NEC","Bits":32,"Data":"0x00FFFB04","DataLSB":"0x00FFDF20","Re
 HELP | {"Protocol":"NEC","Bits":32,"Data":"0x00FF54AB","DataLSB":"0x00FF2AD5","Repeat":0}
 DVD | {"Protocol":"NEC","Bits":32,"Data":"0x00FFDB24","DataLSB":"0x00FFDB24","Repeat":0}
 
-# BD/DVD players
-## IR Remote Codes Sony BD-S1500
+## BD/DVD players
+##ä IR Remote Codes Sony BD-S1500
 Common buttons should work across multiple models
 
 Eject	{"Protocol":"SONY","Bits":20,"Data":"0x68B47"}
@@ -681,8 +681,8 @@ Vol -	{"Protocol":"SONY","Bits":12,"Data":"0xC90"}
 Mute	{"Protocol":"SONY","Bits":12,"Data":"0x290"}
 
 
-# Projectors
-## IR Remote Codes Acer K132
+## Projectors
+### IR Remote Codes Acer K132
 IR Remote Codes for Acer K132 projector (and possibly other models using a remote with Model No. M1820)
 
 <pre><code>ON/OFF	{"Protocol":"NEC","Bits":32,"Data":"0x10C8E11E"}
@@ -708,8 +708,8 @@ IR Remote Codes for Acer K132 projector (and possibly other models using a remot
 * Mute	{"Protocol":"NEC","Bits":32,"Data":"0x10C88679"}
 </code></pre>
 
-# Soundbars
-## IR Codes Soundbar Panasonic SCALL70T
+## Soundbars
+### IR Codes Soundbar Panasonic SCALL70T
 
 **Example received Code:**
 **tele/sonoffIRBridge_1/RESULT = {"IrReceived":{"Protocol":"PANASONIC","Bits":48,"Data":"0x40040500BCB9"}}**
@@ -729,7 +729,7 @@ IR Remote Codes for Acer K132 projector (and possibly other models using a remot
 * 0x400405380538="Bluetooth"
 * 0x400405006164="Input"
 
-## IR Codes Soundcore Infini Pro
+### IR Codes Soundcore Infini Pro
 
 **Example received Code:**
 **tele/sonoffIRBridge_1/RESULT = {"IrReceived":{"Protocol":"NEC","Bits":32,"Data":"0xFD256897"}}**
@@ -754,8 +754,8 @@ IR Remote Codes for Acer K132 projector (and possibly other models using a remot
 * 0xFD258877="Bass+"
 * 0xFD2538C7="Surround"
 
-# Vacuum Cleaners
-## IR Codes Vacuum Cleaner Ecovacs Deebot Slim2
+## Vacuum Cleaners
+### IR Codes Vacuum Cleaner Ecovacs Deebot Slim2
 
 **Example received Code:**
 **tele/sonoffIRBridge_1/RESULT = {"IrReceived":{"Protocol":"NEC","Bits":32,"Data":"0x00FFD02F"}}**
@@ -772,8 +772,8 @@ IR Remote Codes for Acer K132 projector (and possibly other models using a remot
 * 0x00FFF00F="Right"
 * 0x00FFC03F="Back/Turn around"
 
-# Ventilation
-# IR Codes Prana 150 energy recovery ventilation
+## Ventilation
+### IR Codes Prana 150 energy recovery ventilation
 See device https://prana.org.ua/models/prana_150 (Ukrainian)
 
 
@@ -798,8 +798,8 @@ See device https://prana.org.ua/models/prana_150 (Ukrainian)
 
 ![image](https://user-images.githubusercontent.com/563412/61618791-4aa5a980-ac76-11e9-850a-3bf920a3b32b.png)
 
-# Christmas candle - Weihnachtsbeleuchtung
-## Krinner Lumix IR Remote
+## Christmas candle - Weihnachtsbeleuchtung
+### Krinner Lumix IR Remote
 
 Remote control has two buttons and three channels.
 Button 1 is to switch on
@@ -835,7 +835,7 @@ No usable protocol found yet, but raw mode does it.
 `irsend 0,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400, 400,1100,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400, 400,1100,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400, 400,1100,1000, 400, 400,2000,5600`
 
 
-## Vinkor Flameless Flickering Candles (and clones probably)
+### Vinkor Flameless Flickering Candles (and clones probably)
 
 *  on     `{"Protocol":"NEC","Bits":32,"Data":"0x10ED00FF","Repeat":0}`
 *  off    `{"Protocol":"NEC","Bits":32,"Data":"0x10ED40BF","Repeat":0}`
@@ -851,8 +851,8 @@ No usable protocol found yet, but raw mode does it.
 *  8H     `{"Protocol":"NEC","Bits":32,"Data":"0x10ED50AF","Repeat":0}`
 
 
-# LED Candles / LED Kerzen
-## Duni Warm White LED Candle / Duni Warmweiß LED Kerzen
+## LED Candles / LED Kerzen
+### Duni Warm White LED Candle / Duni Warmweiß LED Kerzen
 
 * ON=`{"Protocol":"NEC","Bits":32,"Data":"0x00FF00FF"}`
 * OFF=`{"Protocol":"NEC","Bits":32,"Data":"0x00FF807F"}`
@@ -865,7 +865,7 @@ No usable protocol found yet, but raw mode does it.
 * ModeMoon=`{"Protocol":"NEC","Bits":32,"Data":"0x00FF10EF"}`
 * ModeNightLight=`{"Protocol":"NEC","Bits":32,"Data":"0x00FF609F"}`
 
-## Duni Multicoloured LED Candle / Duni Mehrfarbige LED Kerzen
+### Duni Multicoloured LED Candle / Duni Mehrfarbige LED Kerzen
 
 * ON_COL=`{"Protocol":"NEC","Bits":32,"Data":"0x807F48B7","DataLSB":"0x01FE12ED"}`
 * OFF_COL=`{"Protocol":"NEC","Bits":32,"Data":"0x807F807F","DataLSB":"0x01FE01FE"}`
@@ -889,7 +889,7 @@ No usable protocol found yet, but raw mode does it.
 * ColorYellowWhite_COL=`{"Protocol":"NEC","Bits":32,"Data":"0x807FF00F","DataLSB":"0x01FE0FF0"}`
 * ColorWhite_COL=`{"Protocol":"NEC","Bits":32,"Data":"0x807F9867","DataLSB":"0x01FE19E6"}`
 
-## Fishtec Bougie / Generic Multicolored Led Candle / Generische mehrfarbige LED Kerzen
+### Fishtec Bougie / Generic Multicolored Led Candle / Generische mehrfarbige LED Kerzen
 * ON=`{"Protocol":"NEC","Bits":32,"Data":"0x1FE48B7"}`
 * OFF=`{"Protocol":"NEC","Bits":32,"Data":"0x1FE58A7"}`
 * ColorBlue=`{"Protocol":"NEC","Bits":32,"Data":"0x1FE609F"}`
