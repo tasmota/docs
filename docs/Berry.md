@@ -260,9 +260,9 @@ You can choose to run some function/closure at regular intervals specified as `c
 
 Simply register a function to a cron format, and optionally assign an id to remove it later. Example:
 
-``` ruby
+``` berry
 > def f() print("Hi") end
-> tasmota.add_cron(""*/15 * * * * *", f, "every_15_s")
+> tasmota.add_cron("*/15 * * * * *", f, "every_15_s")
 Hi
 Hi      # added every 15 seconds
 > tasmota.remove_cron("every_15_s")     # cron stops
