@@ -142,18 +142,17 @@ If everything went well, you are now in Programming Mode and ready to continue w
 
 If you have followed [Hardware preparation](#hardware-preparation), your device should be in _Programming Mode_ and ready for a Tasmota firmware binary to be installed.
 
-!!! tip "You may want to back up the device manufacturer's firmware on the one in a million chance you don't like Tasmota."
+!!! tip "You may want to back up the device manufacturer's firmware on the one in a million chance you don't like Tasmota."  
+  
+<script src="../extra_javascript/web_flasher.js"></script>
+<!-- Hard coded hack to get the postion in tabbed set after that. Must be placed before the tabbed set. Tabbed set MUST not be altered in its structure!! -->
+<span id='web_installer'> 
+
 
 Choose an installation method:
 
 === "Web Installer :material-google-chrome:"
-    With a Chrome based browser open [https://tasmota.github.io/install](https://tasmota.github.io/install) and follow the instructions.
-    
-     ![Web Installer](_media/web_installer.jpg)
-
-    Tasmota Web Installer will install an appropriate build for your device. 
-
-     ![Web install in progress](_media/web_installer_3.jpg)![Web install done](_media/web_installer_4.jpg)
+    Embedded Web app:
 
 
 === "Tasmotizer! :material-linux: :material-apple: :material-microsoft-windows:"
@@ -246,7 +245,7 @@ Choose an installation method:
     - [**Sonoff DIY**](Sonoff-DIY) - OTA flash for select Sonoff devices **Does not work anymore**
     - [**esp2ino**](https://github.com/elahd/esp2ino) - OTA flash for select Wyze devices. **Does not work anymore**
 
-You've successfully flashed your device with Tasmota but now you need to connect the freshly tasmotised device to your Wi-Fi network. 
+
 
 ## Initial Configuration
 
