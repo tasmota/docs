@@ -67,7 +67,8 @@ Name|Description|Connection
 [**MLX90614**](MLX90614) | MLX9061X Infrared Thermometer| I^2^C 
 [**MLX90640**](MLX90640) | MLX90640 Far Infrared Thermal Sensor Array| I^2^C 
 [**MPR121**](MPR121) | Proximity Capacitive Touch Sensor Controller (I^2^C)
-[**MPU6050**](MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer Sensor (I^2^C)[**NeoPool**](NeoPool) | Sugar Valley NeoPool Controller| serial
+[**MPU6050**](MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer Sensor (I^2^C)
+[**NeoPool**](NeoPool) | Sugar Valley NeoPool Controller| serial
 [**NRF24L01**](NRF24L01) | NRF24L01 as BLE-bridge for Mijia BT Sensors| SPI
 [**OpenTherm**](OpenTherm) | OpenTherm adapter| serial
 [**P1 Smart Meter**](P1-Smart-Meter) | Energy Meter| serial
