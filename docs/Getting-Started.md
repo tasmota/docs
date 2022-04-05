@@ -151,9 +151,9 @@ If you have followed [Hardware preparation](#hardware-preparation), your device 
 
 Choose an installation method:
 
-=== "Web Installer :material-google-chrome:"
-    Embedded Web app:
-
+=== "Tasmota Web Installer :material-google-chrome:"
+    
+Flash Tasmota directly from your web browser.
 
 === "Tasmotizer! :material-linux: :material-apple: :material-microsoft-windows:"
     Tasmotizer! is specifically designed for use with Tasmota with an easy to use GUI and [esptool.py](https://github.com/espressif/esptool) under the hood.
