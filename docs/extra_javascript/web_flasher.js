@@ -7,7 +7,7 @@ ewt_b=document.createElement("esp-web-install-button");ewt_b.manifest="https://t
 fw_sel=document.createElement('select');
 fw_sel.id ='pick-variant';
 
-fetch('https://tasmota.github.io/install/manifests_new.json')
+fetch('https://tasmota.github.io/install/manifests.json')
   .then(response => response.json())
   .then(data => make_select(data));
 
@@ -19,10 +19,14 @@ function make_select(data){
         og.label = opt_group;
         fw_sel.appendChild(og);
         console.log(opt_group,data[opt_group]);
-        for (fw in data[opt_group]){
+        for (fw of data[opt_group]){
             var opt=document.createElement('option');
-            opt.label = data[opt_group][fw]["name"];
-            opt.value = data[opt_group][fw]["path"];
+            opt.label = fw['name'];
+            opt.value = fw['path'];
+            opt.title = "Supported chip families:\n"
+            for (chipFamily of fw['chipFamilies']){
+                opt.title += chipFamily + "\n";
+            }
             console.log( opt.value);
             og.appendChild(opt);
         }
@@ -96,8 +100,6 @@ function appendSelectorInTable(attempt) {
         if(attempt==1){
             secondTryTimer = setInterval(secondTry, 250);
         }
-        const anchor_point =document.getElementById("web_installer").parentElement.nextElementSibling.nextElementSibling.children[5].firstElementChild.firstElementChild;
-        anchor_point.insertAdjacentHTML('afterbegin','<p>Unsupported platform/browser. Use another flashing method.</p>');
         console.log(e);
     }
 }
