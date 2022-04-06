@@ -37,6 +37,8 @@ Ideally we will work on three systems:
 
 The description below is written mainly from the perspective of someone using a Linux OS. Information is also provided for those working on a Windows OS, and it may be easier to accomplish these tasks using Cygwin on Windows. That will make it possible to use most of the command line inputs shown below without modification.
 
+There are several figures below containing Linux command sequences that need to be executed. The intention is that the text in these figure windows on this web page will be selected and copied, then pasted into a Linux/Cygwin terminal window. These commands will not work if pasted into a Windows command prompt.
+
 ### 1. Prepare your CA (on **Server Machine**)
 We will use Easy-RSA for easy management of the CA and certificates. Some modification are required to match our configuration.
 
@@ -170,8 +172,8 @@ make
 ```
 - Convert the root certificate into a format suitable for inclusion in the Tasmota build:
 ```
-./build/brssl ta /path/to/your/ca.crt | sed -e 's/TA0/PROGMEM TA0' -e '/br_x509/,+999 d' tmp_ca.h > local_ca_data.h
-./build/brssl ta /path/to/your/ca.crt | sed -e '1,/br_x509/ d' -e '/};/,+999 d' tmp_ca.h >local_ca_descriptor.h
+./build/brssl ta /path/to/your/ca.crt | sed -e 's/TA0/PROGMEM TA0/' -e '/br_x509/,+999 d' > local_ca_data.h
+./build/brssl ta /path/to/your/ca.crt | sed -e '1,/br_x509/ d' -e '/};/,+999 d' >local_ca_descriptor.h
 ```
 
 ### 2. Configure your Tasmotabuild (on **Compiling Machine**)
@@ -242,7 +244,7 @@ sudo apt-get install Mosquitto
 
 #### Windows
 
-Download the Windows installer from mosquitto.org and run it. Mosquitto may be installed either as a program or service. The only difference is in how mosquitto is started. As a program, it must be started by a user every time, but as a service it can be automatically run by the OS during boot.
+Download the Windows installer from mosquitto.org and run it. Mosquitto may be installed either as a program or service. The only difference is in how mosquitto is started. As a program, it must be started by a user every time, but as a service it can be automatically started by the OS during boot.
 
 #### 5.1 Configuration
 
@@ -282,9 +284,16 @@ require_certificate true
 use_identity_as_username true
 ```
 
-Start Mosquitto:
+To start Mosquitto on Linux:
+
 ```
 sudo service mosquitto Start
+```
+
+To start Mosquitto on Windows, either use the services snap-in (services.msc), or from an Administrator command prompt:
+
+```
+net start mosquitto
 ```
 
 ### 6. - Generate and configure certificates for your devices
@@ -309,14 +318,16 @@ Credentials are composed of two distinct parts:
 - Private Key - this is the secret that will allow your device to prove it is what it claims to be, and consists of 32 bytes (256 bits). Consider this as sensitive as a password.
 - Public Key - this allows others to encrypt messages which can only be decrypted with the Private Key, and contains 256 bytes (2048 bits).
 
-Both of these must be loaded into flash in the Tasmota device. 
-This is done by entering `TLSKey` commands in the device's web console. The following commands will generate two files containing commands to set the private and public keys. Run them, and follow the instruction in the console output.
+Both of these must be loaded into flash in the Tasmota device. This is done by entering `TLSKey` commands in the device's web console. 
+
+This step must be performed on the machine where the device certificates were created, from within the `easyrsa3` directory. The following commands will generate two files containing commands to set the private and public keys. Run them (paste and copy into Linux/Cygwin terminal window), and follow the instruction in the console output. Set the `TAS` variable to the name of the device in question, then execute these commands.
+
 ```
 # Decrypt private key (will ask the respective password), then extract TLSKey1 and TLSKey2 values
 openssl ec -in ./pki/private/$TAS.key -outform PEM | \
 openssl ec -inform PEM -outform DER | openssl asn1parse -inform DER | \
 head -3 | tail -1 | awk -F':' '{ print $4 }' | xxd -r -p | base64 | \
-echo -e "----\n\nCopy the following commands\n\n---\n\nTLSKey1 $(</dev/stdin)" && \
+echo -e "----\n\nCopy the following commands and paste them into the device's web console\n\n---\n\nTLSKey1 $(</dev/stdin)" && \
 openssl x509 -in ./pki/issued/$TAS.crt -inform PEM -outform DER | \
 openssl base64 -e -in - -A|echo -e "\n\nTlskey2 $(</dev/stdin)"
 ```
@@ -404,7 +415,7 @@ EOF
 
 cat >patch-bearssl <<'EOF'
 sed -f edit-Unix-mk.sed conf/Unix.mk >conf/Cygwin.mk
-sed -e '/^OBJBRSSL = / a \$(OBJDIR)$Pinet_ntop$O \\' mk/Rules.mk >Rules.tmp
+sed -e '/^OBJBRSSL = / a \ $(OBJDIR)$Pinet_ntop$O \\' mk/Rules.mk >Rules.tmp
 cat Rules.tmp extraTargets >mk/Rules.mk
 rm -f Rules.tmp
 cp -f tools/brssl.h brssl.tmp
