@@ -324,10 +324,20 @@ You may put any html code here.
 - Variables may be substituted using %var%  
 - HTML statements are displayed in the sensor section of the main page  
 - HTML statements preceded with a `@` are displayed at the top of the page  
+- HTML statements preceded with a `$` are displayed in the main section  
 - USER IO elements are displayed at the top of the page  
+  
+optionally these sections may be used  
+`>WS`  
+- HTML statements are displayed in the sensor section of the main page
+`>WM` 
+- HTML statements are displayed in the main section of the main page
+  
 for next loops are supported to repeat HTML code (precede with % char)
 %for var from to inc
 %next
+
+but this method is prefered:
 script subroutines may be called sub=name of subroutine, like normal subroutines
 %=#sub
 in this subroutine a web line may be sent by wcs (see below) thus allowing dynamic HTML pages
@@ -516,6 +526,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `is[index]` = gets string `index` from string array, if read-write also write string of index  
 `is1(..)`, `is2(...)` string array see above  
 `is1[x]`, `is2[x]` string array see above  
+`s2hms(S)`, converts seconds to HH:MM:SS string  
 `sin(x)` = calculates the sinus(x) (if defined USE_ANGLE_FUNC)   
 `cos(x)` = calculates the cosinus(x) (if defined USE_ANGLE_FUNC)  
 `acos(x)` = calculates the acos(x) (if defined USE_ANGLE_FUNC)  
@@ -543,6 +554,8 @@ Serial IO support #define USE_SCRIPT_SERIAL
 `sr(X)` read a string from serial port until charcode X, all available chars up to string size or until charcode X  
 `srb()` read a number char code from serial port  
 `sp()` read a number char code from serial port, dont remove it from serial input (peek)  
+`sra(ARRAY)` fill an array from serial port, if USE_SML_M is enabled and Array size is 8 it is assumed to be a MODBUS request and the checksum is evaluated, if OK `8` is returned, else -2  
+`smw(ADDR MODE NUMBER)` send a value with checksum to MODBUS Adress, MODE 0 = uint16, 1 = uint32, 3 = float  
   
 SPI IO support #define `USE_SCRIPT_SPI`  
 `spi(0 SCLK MOSI MISO)` defines a software SPI port with pin numbers used for SCLK, MOSI, MISO.  
