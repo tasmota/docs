@@ -2,7 +2,6 @@
 !!! failure "This feature is not included in precompiled binaries"
     To use it you must [compile your build](Compile-your-build).
 
-
 The following guide will walk you through the setup of Tasmota with your own instance of Mosquitto Server with Certificate-based TLS encryption and a Self-signed CA (Certificate Authority).
 
 ## Benefits
@@ -18,7 +17,8 @@ This setup is designed with 'security first' in mind.
 
 Communication is done over TLS 1.2 tunnels, using client certificates to authenticate each device.
 
-Strong encryption is particularly interesting considering that ESP8266-based Tasmota devices can only connect using WPA2 with preshared keys. Beside being much more secure than other solution, WPA2 Personal is still exposed to security weaknesses. Thus, MQTT strong TLS configuration is encouraged in this scenario.
+Strong encryption is particularly valuable considering that ESP8266-based Tasmota devices can only connect using WPA2 with 
+preshared keys. Because WPA2 Personal has known security weaknesses, the MQTT strong TLS configuration is encouraged in this scenario.
 
 ## Caveats
 Certificate-based MQTT-TLS requires each Tasmota device to have its own distinct Private Key and Certificate (~800 bytes). Although you could imagine to use the same Private Key in all your devices, this is considered as a very bad practice. You are warned!
@@ -31,9 +31,11 @@ Ideally we will work on three systems:
 2. **Server Machine**: the machine running your MQTT server. We will assume it is running some Debian-based distribution (i.e. Ubuntu Server), though the steps could be adapted to different OSes;
 3. **Compiling Machine**: the machine used to compile your customized Tasmota firmware. This machine might be the same **Server Machine**, though I would not recommend it.
 
-!!! failure "Security notice" Your CA keys should reside on a secure, possibly air-gapped system. Securing your CA exceeds the scope of this guide, but we assume you follow best security practices.
+!!! failure "Security notice" Private keys, and in particular the CA private key should reside on a secure, possibly air-gapped system. Securing your CA and procedures for managing private keys exceeds the scope of this guide, but we assume you follow best security practices.
 
+### Linux and Windows
 
+The description below is written mainly from the perspective of someone using a Linux OS. Information is also provided for those working on a Windows OS, and it may be easier to accomplish these tasks using Cygwin on Windows. That will make it possible to use most of the command line inputs shown below without modification.
 
 ### 1. Prepare your CA (on **Server Machine**)
 We will use Easy-RSA for easy management of the CA and certificates. Some modification are required to match our configuration.
@@ -54,6 +56,13 @@ authorityKeyIdentifier = keyid:always
 keyUsage = critical,digitalSignature
 EOF
 ```
+Windows users may have trouble running EasyRSA in natively. If that happens, it's also possible to install Cygwin, and run it from a Cygwin terminal window. 
+One note of caution: The `easyrsa` shell script may wind up with the wrong line endings if git is not configured to checkout line endings "as is". When this happens, the shell script will not run in Cygwin, and this problem may be fixed by using the `tr` program to delete carriage returns in the script file:
+```
+mv easyrsa tmprsa
+tr -d '\r' <tmprsa >easyrsa
+```
+
 #### 1.2.  Define your certificate information :
 
 ```
@@ -119,7 +128,15 @@ EOF
 ```
 
 #### 1.3. Initialize and generate the CA and the server certificate:
+When generating the server (aka broker) certificate, it is crucial that the Common Name (CN) be set correctly. Failing to do this will result in Tasmota devices refusing to make TLS connections to the server.
 
+Each Tasmota device needs to be configured with the host name of the server. This is done via the `MQTT_HOST` macro in `user_config_override.h`, and/or in the device's MQTT Configuration web page. The host name string must meet two requirements:
+- The Tasmota device must be able to resolve the name, which might require access to a DNS server.
+- This string must match the Common Name (CN) in the broker's certificate -- exactly.
+
+Consider a situation where the device is running on an isolated WiFi network with no access to a DNS server. In this case, it may be necessary to specify the MQTT Host as a numeric IP address (e.g. `192.168.2.3`). In this example, the CN in the host's certificate would need to be the string `192.168.2.3`, or the device won't trust the server and won't connect.
+
+To generate the root CA and server certificates:
 ```
 # Reset PKI
 ./easyrsa init-pki
@@ -143,19 +160,19 @@ sed -i '/^set_var\ EASYRSA_ALGO/ s/rsa/ec/' vars
 ./pki/private/mqtt.myorg.com.key --> Server private Key file
 ```
 
-#### 1.6. (Optional step for Full Cert Validation)
+#### 1.6. (Optional step for full certificate validation)
 - Copy `./pki/ca.crt`to your **Compiling Machine**
-- Install BearSSL:
+- Install and build BearSSL (see below for help with building BearSSL on Windows machines).
 ```
 git clone https://www.bearssl.org/git/BearSSL
 cd BearSSL
 make
 ```
-- Obtain CA in BearSSL format:
+- Convert the root certificate into a format suitable for inclusion in the Tasmota build:
 ```
-./build/brssl ta /path/to/your/ca.crt > myca.ino
+./build/brssl ta /path/to/your/ca.crt | sed -e 's/TA0/PROGMEM TA0' -e '/br_x509/,+999 d' tmp_ca.h > local_ca_data.h
+./build/brssl ta /path/to/your/ca.crt | sed -e '1,/br_x509/ d' -e '/};/,+999 d' tmp_ca.h >local_ca_descriptor.h
 ```
-
 
 ### 2. Configure your Tasmotabuild (on **Compiling Machine**)
 Refer to your preferred way to custom compile Tasmota.
@@ -168,8 +185,8 @@ Add the following to `user_config_override.h`:
 ```
 #ifndef USE_MQTT_TLS
 #define USE_MQTT_TLS
-//  #define USE_MQTT_TLS_CA_CERT                   // Force full CA validation instead of fingerprints, slower, but simpler to use.  (+2.2k code, +1.9k mem during connection handshake)
-#define USE_MQTT_AWS_IOT    // This includes the LetsEncrypt CA in tasmota_ca.ino for verifying server certificates
+//  #define USE_MQTT_TLS_CA_CERT               // Force full CA validation instead of fingerprints, slower, but simpler to use.  (+2.2k code, +1.9k mem during connection handshake)
+#define USE_MQTT_AWS_IOT                       // This includes the LetsEncrypt CA in tasmota_ca.ino for verifying server certificates
 #define USE_MQTT_TLS_FORCE_EC_CIPHER           // Force Elliptic Curve cipher (higher security) required by some servers (automatically enabled with USE_MQTT_AWS_IOT) (+11.4k code, +0.4k mem)
 #define MQTT_FINGERPRINT1      "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"  // [MqttFingerprint1] (auto-learn)
 #define MQTT_FINGERPRINT2      "DA 39 A3 EE 5E 6B 4B 0D 32 55 BF EF 95 60 18 90 AF D8 07 09"  // [MqttFingerprint2] (invalid)
@@ -182,118 +199,74 @@ Add the following to `user_config_override.h`:
 #ifndef USE_MQTT_TLS
 #define USE_MQTT_TLS
 #define USE_MQTT_TLS_CA_CERT                   // Force full CA validation instead of fingerprints, slower, but simpler to use.  (+2.2k code, +1.9k mem during connection handshake)
-#define USE_MQTT_AWS_IOT    // This will include LetsEncrypt CA, as well as our CA, in tasmota_ca.ino for verifying server certificates
+#define USE_MQTT_AWS_IOT                       // This will include LetsEncrypt CA, as well as our CA, in tasmota_ca.ino for verifying server certificates
 #define USE_MQTT_TLS_FORCE_EC_CIPHER           // Force Elliptic Curve cipher (higher security) required by some servers (automatically enabled with USE_MQTT_AWS_IOT) (+11.4k code, +0.4k mem)
+#define INCLUDE_LOCAL_CA_CERT
 #endif
 ```
-Merge your `myca.ino` to `$TASMOTAROOT/tasmota/tasmota_ca.ino`. Result should look like:
+Copy or move the files created in step 1.6 above (`local_ca_data.h` and `local_ca_descriptor.h`) to the `$TASMOTAROOT/tasmota` directory. If desired, the two built-in certificates for Let's Encrypt and Amazon AWS may be omitted from the build by defining these macros in `user_config_overrirde.h`:
+
 ```
-[...]
-const br_x509_trust_anchor PROGMEM AmazonRootCA1_TA = {
-	{ (unsigned char *)AmazonRootCA1_DN, sizeof AmazonRootCA1_DN },
-	BR_X509_TA_CA,
-	{
-		BR_KEYTYPE_RSA,
-		{ .rsa = {
-			(unsigned char *)AmazonRootCA1_RSA_N, sizeof AmazonRootCA1_RSA_N,
-			(unsigned char *)AmazonRootCA1_RSA_E, sizeof AmazonRootCA1_RSA_E,
-		} }
-	}
-};
-
-const unsigned char TA0_DN[] PROGMEM = {
-	// MANY RANDOM  HEX VALUES FROM YOUR TA0_DN HERE
-};
-
-const unsigned char TA0_RSA_N[] PROGMEM = {
-	// MANY RANDOM  HEX VALUES FROM YOUR TA0_RSA_N HERE
-};
-
-const unsigned char TA0_RSA_E[] PROGMEM = {
-	0x01, 0x00, 0x01 // values from your TA0_RSA_N
-};
-
-const br_x509_trust_anchor TA0 PROGMEM = {
-	{ (unsigned char *)TA0_DN, sizeof TA0_DN },
-	BR_X509_TA_CA,
-	{
-		BR_KEYTYPE_RSA,
-		{ .rsa = {
-			(unsigned char *)TA0_RSA_N, sizeof TA0_RSA_N,
-			(unsigned char *)TA0_RSA_E, sizeof TA0_RSA_E,
-		} }
-	}
-};
-
-// cumulative CA
-const br_x509_trust_anchor PROGMEM Tasmota_TA[] = {
-	{
-		{ (unsigned char *)LetsEncrypt_DN, sizeof LetsEncrypt_DN },
-		BR_X509_TA_CA,
-		{
-			BR_KEYTYPE_RSA,
-			{ .rsa = {
-				(unsigned char *)LetsEncrypt_RSA_N, sizeof LetsEncrypt_RSA_N,
-				(unsigned char *)LetsEncrypt_RSA_E, sizeof LetsEncrypt_RSA_E,
-			} }
-		}
-	}
-	,
-	{
-		{ (unsigned char *)AmazonRootCA1_DN, sizeof AmazonRootCA1_DN },
-		BR_X509_TA_CA,
-		{
-			BR_KEYTYPE_RSA,
-			{ .rsa = {
-				(unsigned char *)AmazonRootCA1_RSA_N, sizeof AmazonRootCA1_RSA_N,
-				(unsigned char *)AmazonRootCA1_RSA_E, sizeof AmazonRootCA1_RSA_E,
-			} }
-		}
-	}
-	,
-        {
-                { (unsigned char *)TA0_DN, sizeof TA0_DN },
-                BR_X509_TA_CA,
-                {
-                        BR_KEYTYPE_RSA,
-                        { .rsa = {
-                                (unsigned char *)TA0_RSA_N, sizeof TA0_RSA_N,
-                                (unsigned char *)TA0_RSA_E, sizeof TA0_RSA_E,
-                        } }
-                }
-        }
-};
-
-const size_t Tasmota_TA_size = ARRAY_SIZE(Tasmota_TA);
-
-// we add a separate CA for telegram
-[...]
+#define OMIT_LETS_ENCRYPT_CERT
+#define OMIT_AWS_CERT
 ```
 
+### 3. Build your Tasmota Binaries, flash and configure your devices
 
+Initially at least, build the binaries with the web server enabled. Pull up the web page on each device and check the configuration. 
+In particular check the following settings.
 
-### 2. Build your Tasmota Binaries, flash and configure your devices
+- WiFi Host Name
+- MQTT Host -- must be resolvable, and match the Common Name on the server's certificate
+- MQTT Port -- this often does not come up as defined in the configuration file, and must be changed to 8883
+- MQTT Topic
 
+### 4. Configure your network
 
-### 3. Configure your network
-- Configure your router to point `mqtt.myorg.com` to your **Server Machine**.
-- Configure your **Server Machine** hostname to `mqtt.myorg.com`.
-- Check other Tasmota guidelines about [Securing your IoT](Securing-your-IoT-from-hacking).
+The Common Name (CN) in the server's certificate will either be a resolvable name (like `mqtt.myorg.com`), or the IP address string for the server (e.g. `192.168.2.3`). The host name assigned to the server must match this CN, unless an IP address string is used, in which case the host name can be anything. 
+This set of instructions applies only to the case where the CN is not an IP address string.
 
-### 4. Install and configure Mosquitto on your server
+- Configure your router to resolve the Tasmota device's MQTT Host Name (e.g. `mqtt.myorg.com`) to your **Server Machine**.
+- Configure your **Server Machine** hostname to the same name (e.g. `mqtt.myorg.com`).
+
+In all cases, check these Tasmota guidelines about [Securing your IoT](Securing-your-IoT-from-hacking).
+
+### 5. Install and configure Mosquitto on your server
 Install Mosquitto
+
+#### Linux
+
 ```
 sudo apt-get install Mosquitto
 ```
-Copy the files from **CA Machine** to the following dirs:
+
+#### Windows
+
+Download the Windows installer from mosquitto.org and run it. Mosquitto may be installed either as a program or service. The only difference is in how mosquitto is started. As a program, it must be started by a user every time, but as a service it can be automatically run by the OS during boot.
+
+#### 5.1 Configuration
+
+Copy the files from **CA Machine** to the following locations on the server:
 ```
 /etc/mosquitto/ca_certificates/ca.crt
 /etc/mosquitto/certs/mqtt.myorg.com.crt
 /etc/mosquitto/certs/mqtt.myorg.com.key
 ```
+There are two options for configuring the server's private key. It can be converted to plain text form (.pem) as shown below, or left encrypted (.key file). If left encrypted, the password will need to be entered by hand every time the server is started. This will not be feasible if mosquitto is to be run as a service. Security risks can be minimzed by setting tight permissions on the files, as shown below.
+
+Convert the private key to plain text format like this:
 
 ```openssl rsa -in mqtt.myorg.com.key -out mqtt.myorg.com.pem```
+
+#### File Permissions: Linux
+
 Ensure the files have owner `mosquitto:mosquitto` and permissions `-r--------`. Also ensure `ca_certificates` and `certs` directories have owner `mosquitto:mosquitto` and permissions `dr-x------`.
+
+#### File Permissions: Windows
+
+It should be possible to configure permissions so that only the `SYSTEM` user can read the private key file, and when mosquitto is run as a service, it runs under the `SYSTEM` account. Doing this is currently beyond the scope of this guide.
+
+#### 5.3 Configure and start the server
 
 Edit `/etc/mosquitto/conf.d/default.conf` as following:
 ```
@@ -314,10 +287,12 @@ Start Mosquitto:
 sudo service mosquitto Start
 ```
 
-### 5 - Generate and configure certificates for your devices
+### 6. - Generate and configure certificates for your devices
 
-!!! failure "Repeated step" Repet the following 5.x steps once for every device, changing tasmota_name for each device. Also choose a password for each device when prompted.
-#### 5.1 Generate the client certificates
+!!! failure "Repeated step" Repet the following 6.x steps once for every device, changing tasmota_name for each device. You will be prompted for a private key password for each device. 
+After entering the new password (twice for verification), you will also be prompted for the private key password of the root CA certificate.
+
+#### 6.1 Generate the client certificates
 
 ```
 export TAS=tasmota_name
@@ -326,19 +301,125 @@ export TAS=tasmota_name
 # Sign certificate for Tasmota
 ./easyrsa sign-req tasmota $TAS
 ```
-#### 5.2 Show the keys as Tasmota compatible format
+#### 6.2 Convert certificate keys to Tasmota compatible format
 
-You will now need to convert your certificates to Tasmota commands. Credentials are composed of two distinct parts, first a Private Key - this is the secret that will allow your device to prove it is who it pretends to be. Consider this as sensitive as a password. The Private Key is exactly 32 bytes (256 bits).
+The new certificate must be converted to Tasmota commands which can be entered into the device's web console. 
+Credentials are composed of two distinct parts:
 
-Run the following commands and follow the instruction in the console output.
+- Private Key - this is the secret that will allow your device to prove it is what it claims to be, and consists of 32 bytes (256 bits). Consider this as sensitive as a password.
+- Public Key - this allows others to encrypt messages which can only be decrypted with the Private Key, and contains 256 bytes (2048 bits).
+
+Both of these must be loaded into flash in the Tasmota device. 
+This is done by entering `TLSKey` commands in the device's web console. The following commands will generate two files containing commands to set the private and public keys. Run them, and follow the instruction in the console output.
 ```
-# Decrypt private key (will ask the respective password)
-openssl ec -in ./pki/private/$TAS.key -out ./pki/private/$TAS.pem
-# Extract TlsKey1 and TlsKey2 Value
-openssl ec -in ./pki/private/$TAS.pem -inform PEM -outform DER | openssl asn1parse -inform DER | head -3 | tail -1 | awk -F':' '{ print $4 }' | xxd -r -p | base64 | echo -e "----\n\nCopy the following commands\n\n---\n\nTLSKey1 $(</dev/stdin)" && openssl x509 -in ./pki/issued/$TAS.crt -inform PEM -outform DER|openssl base64 -e -in - -A|echo -e "\n\nTlskey2 $(</dev/stdin)"
+# Decrypt private key (will ask the respective password), then extract TLSKey1 and TLSKey2 values
+openssl ec -in ./pki/private/$TAS.key -outform PEM | \
+openssl ec -inform PEM -outform DER | openssl asn1parse -inform DER | \
+head -3 | tail -1 | awk -F':' '{ print $4 }' | xxd -r -p | base64 | \
+echo -e "----\n\nCopy the following commands\n\n---\n\nTLSKey1 $(</dev/stdin)" && \
+openssl x509 -in ./pki/issued/$TAS.crt -inform PEM -outform DER | \
+openssl base64 -e -in - -A|echo -e "\n\nTlskey2 $(</dev/stdin)"
 ```
-#### 5.3 Access your device's web interface and configure the keys.
+The resulting `TLSKey1` file contains an unencrypted copy of the device's private key. Treat this with care. After loading it into flash in the Tasmota device, consider shredding the `TLSKey1` file -- it can always be recreated later if needed again.
 
-Run the `TLSKey1` and `TLSKey2` commands as obtained in the previous output.
+#### 6.3 Access your device's web console and configure the keys.
 
-#### 5.4 Verify the device is connecting as expected.
+Run the `TLSKey1` and `TLSKey2` commands as obtained in the previous output. Open each of the files, copy the text and paste it into the web console.
+
+#### 6.4 Verify the device is connecting as expected.
+
+## Building BearSSL on Windows machines
+
+This can be a challenging task, and a method to accomplish this through Cygwin is described here. Cygwin also provides an alternative if problems are encountered in trying to run EasyRSA in a native Windows environment.
+
+Here are the issues that need to be fixed before BearSSL will build under Cygwin. Many of them are related to the differences between Windows and Linux when it comes to programming socket I/O.
+- Commands for compiling and linking are `gcc`, not `cc`
+- Additional compiler flags are required to compile and link socket I/O code
+- A Windows socket library (`libws2_32`) must be included in the link edit step when building the brssl executable
+- A local implementation of a missing function (`inet_ntop`) must be added to the build
+
+The current git master branch of BearSSL is required -- the 0.6 version available as a gzipped tar archive will not work. An up-to-date version of gcc in Cygwin is also required -- old versions may experience an internal compiler error when building BearSSL.
+
+Start by installing Cygwin, selecting the `gcc` and `make` packages in the `Devel` category, and the `openssl` package in the `Net` category.
+
+Open a Cygwin terminal window and change to the directory where BearSSL source was unpacked. To access a Windows letter drive such as `F:\somepath` in Cygwin, use the path `/cygdrive/f/somepath`. 
+
+All of the necessary patches are easily made by copying and pasting this set of commands into the Cygwin terminal window. This will create files needed to patch the BearSSL build. First, change to the top level BearSSL directory in the Cytwin window. After selecting the text in the window below, click in the Cygwin window and hit Control-Insert to paste, or right-click in the window and select Paste from the drop-down menu. You may need to hit Enter after doing this.
+
+```
+cat >edit-Unix-mk.sed <<'EOF'
+1 a \# Modified for building on Cygwin systems
+/^CC.*=.*cc/ c \CC = gcc
+/^LDDLL.*=.*cc/ c \LDDLL = gcc
+/^LD.*=.*cc/ c \LD = gcc
+/^CFLAGS.*=/ s/-fPIC/-DWINVER=0x0501 -DEWOULDBLOCK=EAGAIN/
+/^LDOUT.*=/ a \BRSSL_EXT_LIBS = -lws2_32
+EOF
+
+cat >extraTargets <<'EOF'
+
+$(OBJDIR)$Pinet_ntop$O: tools$Pinet_ntop.c $(HEADERSTOOLS)
+	$(CC) $(CFLAGS) $(INCFLAGS) $(CCOUT)$(OBJDIR)$Pinet_ntop$O tools$Pinet_ntop.c
+
+$(BRSSL): $(BEARSSLLIB) $(OBJBRSSL)
+	$(LD) $(LDFLAGS) $(LDOUT)$(BRSSL) $(OBJBRSSL) $(BEARSSLLIB) $(BRSSL_EXT_LIBS)
+EOF
+
+cat >tools/inet_ntop.c <<'EOF'
+#ifdef _WIN32
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
+#include <errno.h>
+#include <signal.h>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+const char *inet_ntop(int af, const void *src, char *dst, int cnt)
+{
+        if (af == AF_INET)
+        {
+                struct sockaddr_in in;
+                memset(&in, 0, sizeof(in));
+                in.sin_family = AF_INET;
+                memcpy(&in.sin_addr, src, sizeof(struct in_addr));
+                getnameinfo((struct sockaddr *)&in, sizeof(struct
+sockaddr_in), dst, cnt, NULL, 0, NI_NUMERICHOST);
+                return dst;
+        }
+        else if (af == AF_INET6)
+        {
+                struct sockaddr_in6 in;
+                memset(&in, 0, sizeof(in));
+                in.sin6_family = AF_INET6;
+                memcpy(&in.sin6_addr, src, sizeof(struct in_addr6));
+                getnameinfo((struct sockaddr *)&in, sizeof(struct
+sockaddr_in6), dst, cnt, NULL, 0, NI_NUMERICHOST);
+                return dst;
+        }
+        return NULL;
+}
+#endif
+EOF
+
+cat >patch-bearssl <<'EOF'
+sed -f edit-Unix-mk.sed conf/Unix.mk >conf/Cygwin.mk
+sed -e '/^OBJBRSSL = / a \$(OBJDIR)$Pinet_ntop$O \\' mk/Rules.mk >Rules.tmp
+cat Rules.tmp extraTargets >mk/Rules.mk
+rm -f Rules.tmp
+cp -f tools/brssl.h brssl.tmp
+sed -e '/^#include.*bearssl\.h/ a \const char *inet_ntop(int,const void*,char*,int);' brssl.tmp >tools/brssl.h
+rm -f brssl.tmp
+EOF
+chmod 755 patch-bearssl
+```
+
+Check to make sure that the file `extraTargets` contains a leading tab character, not spaces on the `$(CC)` and `$(LD)` lines.
+Executing the following commands should get the job done:
+
+```
+./patch-bearssl
+make tools CONF=Cygwin
+```
+
+The resulting `brssl.exe` file will be found in the `build` directory.
