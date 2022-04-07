@@ -37,7 +37,7 @@ Ideally we will work on three systems:
 
 The description below is written mainly from the perspective of someone using a Linux OS. Information is also provided for those working on a Windows OS, and it may be easier to accomplish these tasks using Cygwin on Windows. That will make it possible to use most of the command line inputs shown below without modification.
 
-There are several figures below containing Linux command sequences that need to be executed. The intention is that the text in these figure windows on this web page will be selected and copied, then pasted into a Linux/Cygwin terminal window. These commands will not work if pasted into a Windows command prompt.
+There are several figures below containing Linux command sequences that need to be executed. The intention is that the text in the figure windows on this web page will be selected and copied, then pasted into a Linux/Cygwin terminal window. These commands will not work if pasted into a Windows command prompt.
 
 ### 1. Prepare your CA (on **Server Machine**)
 We will use Easy-RSA for easy management of the CA and certificates. Some modification are required to match our configuration.
@@ -225,8 +225,8 @@ In particular check the following settings.
 
 ### 4. Configure your network
 
-The Common Name (CN) in the server's certificate will either be a resolvable name (like `mqtt.myorg.com`), or the IP address string for the server (e.g. `192.168.2.3`). The host name assigned to the server must match this CN, unless an IP address string is used, in which case the host name can be anything. 
-This set of instructions applies only to the case where the CN is not an IP address string.
+The Common Name (CN) in the server's certificate will either be a resolvable name (like `mqtt.myorg.com`), or the IP address 
+string for the server (e.g. `192.168.2.3`). The host name assigned to the server must match this CN, unless an IP address string is used in the server certificate CN, in which case the host name can be anything. These next two items are only necessary where the CN is not an IP address string.
 
 - Configure your router to resolve the Tasmota device's MQTT Host Name (e.g. `mqtt.myorg.com`) to your **Server Machine**.
 - Configure your **Server Machine** hostname to the same name (e.g. `mqtt.myorg.com`).
@@ -290,7 +290,7 @@ To start Mosquitto on Linux:
 sudo service mosquitto Start
 ```
 
-To start Mosquitto on Windows, either use the services snap-in (services.msc), or from an Administrator command prompt:
+To start Mosquitto on Windows, either use the services snap-in (`services.msc`), or from an Administrator command prompt:
 
 ```
 net start mosquitto
@@ -320,18 +320,45 @@ Credentials are composed of two distinct parts:
 
 Both of these must be loaded into flash in the Tasmota device. This is done by entering `TLSKey` commands in the device's web console. 
 
-This step must be performed on the machine where the device certificates were created, from within the `easyrsa3` directory. The following commands will generate two files containing commands to set the private and public keys. Run them (paste and copy into Linux/Cygwin terminal window), and follow the instruction in the console output. Set the `TAS` variable to the name of the device in question, then execute these commands.
+This step must be performed on the machine where the device certificates were created, from within the `easyrsa3` directory. 
+The following commands will generate a shell script, `gen-tlskeys`, which will perform the necessary work. 
+That's easier than copying and pasting the entire command set for each device.
 
 ```
-# Decrypt private key (will ask the respective password), then extract TLSKey1 and TLSKey2 values
-openssl ec -in ./pki/private/$TAS.key -outform PEM | \
+cat >gen-tlskeys <<'EOF'
+# Decrypt private key (will ask for a password), then extract TLSKey1 (private) and TLSKey2 (public) values
+if [ "$#" -ne 1 ] ; then
+    echo "Usage: gen-tasmota-cert <device-certificate-name>"
+    exit 1
+fi
+if [ ! -f pki/private/$1.key ] ; then
+    echo "Could not find private key file pki/private/$1.key"
+    exit 1
+fi
+if [ ! -f pki/issued/$1.crt ] ; then
+    echo "Could not find public key file pki/issued/$1.crt"
+    exit 1
+fi
+openssl ec -in ./pki/private/$1.key -outform PEM | \
 openssl ec -inform PEM -outform DER | openssl asn1parse -inform DER | \
 head -3 | tail -1 | awk -F':' '{ print $4 }' | xxd -r -p | base64 | \
 echo -e "----\n\nCopy the following commands and paste them into the device's web console\n\n---\n\nTLSKey1 $(</dev/stdin)" && \
-openssl x509 -in ./pki/issued/$TAS.crt -inform PEM -outform DER | \
+openssl x509 -in ./pki/issued/$1.crt -inform PEM -outform DER | \
 openssl base64 -e -in - -A|echo -e "\n\nTlskey2 $(</dev/stdin)"
+EOF
+chmod 755 gen-tlskeys
 ```
-The resulting `TLSKey1` file contains an unencrypted copy of the device's private key. Treat this with care. After loading it into flash in the Tasmota device, consider shredding the `TLSKey1` file -- it can always be recreated later if needed again.
+
+Now, for each device, simply enter this command. The argument (`$TAS`) is the name of the device's certificate. Output will consist of two Tasmota device commands which must be copied and pasted into the device's web console.
+
+```
+./gen-tlskeys $TAS
+```
+
+Running the shell script will output two commands to set device private and public keys. Run the script once for each device, and follow instructions in the console output. Set the `TAS` variable to the name of the device in question, then execute these commands.
+
+The `TLSKey1` command contains the device's private key in plain text (unencrypted) format. 
+Treat this with care. After loading it into flash in the Tasmota device, it would be a good idea to clear the terminal window.
 
 #### 6.3 Access your device's web console and configure the keys.
 
