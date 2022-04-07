@@ -162,6 +162,7 @@ nav:
     - Berry: Berry.md
     - Bluetooth Low Energy: Bluetooth_ESP32.md
     - LVGL: LVGL.md
+    - OpenHASP: OpenHASP.md
     - Touch GPIOs: TouchPin.md
     - Supported Devices: "https://templates.blakadder.com/esp32"
   - Smart Home Integrations:
