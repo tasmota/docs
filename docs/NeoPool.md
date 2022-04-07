@@ -432,13 +432,149 @@ You can now control filtration and light using the WebGUI and get the current st
 
 Additional advantage is that you can also use Tasmota Timer switching Power1 (=filtration) and Power2 (light) for your needs.
 
-#### Daily sync device time to Tasmota time
+### ESP32 Enhancements
+
+The following enhancements are made using the [Berry Scripting Language](Berry) which is available using an ESP32.
+
+#### Adding new NeoPool commands to Tasmota
+
+The following class `NeoPoolCommands` adds two new commands to Tasmota.
+
+Command|Parameters
+:---|:---
+NPBoost<a id="NPBoost"></a>|`{<state>}`<BR>get/set boost mode (state = `0..2`). Get if state is omitted, otherwise set accordingly  `<state>`:<ul><li>`0` - disable boost mode</li><li>`1` - enable boost mode (without redox control)</li><li>`2` - enable boost mode (with redox control)</li></ul>
+NPAux<x\><a id="NPAux"></a>|`{<state>}`<BR>get/set auxiliary relay <x\> (state = `0..2`). Get if state is omitted, otherwise set accordingly  `<state>`:<ul><li>`0` - switch off auxiliary relay</li><li>`1` - switch on auxiliary relay</li></ul>
+
+The class members `NPBoost` and `NPAux` can also be used as templates for further commands.
+
+Store the following code as `neopool.be` (use the WebGUI "Console" / "Manage File system"):
+
+```berry
+class NeoPoolCommands
+  var TEXT_OFF
+  var TEXT_ON
+
+  # string helper
+  def ltrim(s)
+    import string
+    var i = 0 while(s[i]==' ') i += 1 end
+    return string.split(s, i)[1]
+  end
+  def rtrim(s)
+    import string
+    return string.split(s, " ")[0]
+  end
+  def trim(s)
+    return self.rtrim(self.ltrim(s));
+  end
+
+  #- NPBoost OFF|0|ON|1|REDOX|2
+      0|OFF:   Switch boost off
+      1|ON:    Switch boost on without redox control
+      2|REDOX: Switch boost on with redox control
+  -#
+  def NPBoost(cmd, idx, payload)
+    import string
+    var ctrl, parm
+    try
+      parm = string.toupper(self.trim(payload))
+    except ..
+      parm = ""
+    end
+    if parm != ""
+      if string.find(parm, 'OFF')>=0 || string.find(parm, self.TEXT_OFF)>=0 || string.find(parm, '0')>=0
+        ctrl = 0
+      elif string.find(parm, 'ON')>=0 || string.find(parm, self.TEXT_ON)>=0 || string.find(parm, '1')>=0
+        ctrl = 0x85A0
+      elif string.find(parm, 'REDOX')>=0 || string.find(parm, '2')>=0
+        ctrl = 0x05A0
+      else
+        tasmota.resp_cmnd_error()
+        return
+      end
+      tasmota.cmd(string.format("Backlog NPWrite 0x020C,0x%04X;NPSave;NPExec;NPWrite 0x0110,0x7F", ctrl))
+    else
+      try
+        ctrl = compile("return "+str(tasmota.cmd("NPRead 0x020C")['NPRead']['Data']))()
+      except ..
+        tasmota.resp_cmnd_error()
+        return
+      end
+    end
+    tasmota.resp_cmnd(string.format('{"NPBoost":"%s"}', ctrl == 0 ? self.TEXT_OFF : (ctrl & 0x8500) == 0x8500 ? self.TEXT_ON : "REDOX"))
+  end
+
+  #- NPAux<x> OFF|0|ON|1 (<x> = 1..4)
+      0|OFF:   Switch aux x off
+      1|ON:    Switch aux x on
+  -#
+  def NPAux(cmd, idx, payload)
+    import string
+    var ctrl, parm
+
+    if idx < 1 || idx > 4
+      tasmota.resp_cmnd_error()
+      return
+    end
+
+    try
+      parm = string.toupper(self.trim(payload))
+    except ..
+      parm = ""
+    end
+    if parm != ""
+      if string.find(parm, 'OFF')>=0 || string.find(parm, self.TEXT_OFF)>=0 || string.find(parm, '0')>=0
+        ctrl = 4
+      elif string.find(parm, 'ON')>=0 || string.find(parm, self.TEXT_ON)>=0 || string.find(parm, '1')>=0
+        ctrl = 3
+      else
+        tasmota.resp_cmnd_error()
+        return
+      end
+      tasmota.cmd(string.format("Backlog NPWrite 0x%04X,%d;NPExec", [0x04AC, 0x04BB, 0x04CA, 0x04D9][idx-1], ctrl))
+    else
+      try
+        ctrl = (compile("return "+str(tasmota.cmd("NPRead 0x010E")['NPRead']['Data']))() >> (idx+2)) & 1
+      except ..
+        tasmota.resp_cmnd_error()
+        return
+      end
+    end
+    tasmota.resp_cmnd(string.format('{"NPAux%d":"%s"}', idx, ctrl == (parm != "" ? 4 : 0) ? self.TEXT_OFF : self.TEXT_ON))
+  end
+
+  def init()
+    self.TEXT_OFF = tasmota.cmd("StateText1")['StateText1']
+    self.TEXT_ON = tasmota.cmd("StateText2")['StateText2']
+    # Add commands
+    tasmota.add_cmd('NPBoost', / cmd, idx, payload -> self.NPBoost(cmd, idx, payload))
+    tasmota.add_cmd('NPAux', / cmd, idx, payload -> self.NPAux(cmd, idx, payload))
+  end
+
+  def deinit()
+    tasmota.remove_cmd('NPBoost')
+    tasmota.remove_cmd('NPAux')
+  end
+end
+
+neopool_commands = NeoPoolCommands()
+```
+
+To activate the new commands, go to WebGUI "Consoles" / "Berry Scripting console" and execute
+
+```python
+load("neopool.be")
+```
+
+If you want get the new commands available after a restart of your ESP32, store the `load("neopool.be")` within a file named `autoexec.be`.
+
+### Daily sync device time to Tasmota time
 
 Since the NeoPool devices, without a WiFi module, have no way of synchronizing their internal clock with an external clock and, in addition, the accuracy of the internal clock leaves something to be desired, it makes sense to synchronize the clock with Tasmota once a day. Advantageously, we do this at night after a possible daylight saving time or normal time change.
 
 Sync time is easy and we have two options for implementing it:
 
-##### Option 1: Use only a rule
+#### Option 1: Use only a rule
 
 ```haskell
 Rule2
@@ -453,7 +589,7 @@ Backlog Rule2 4;Rule2 1
 
 This syncronize the device time using Tasmota local time each night at 4:01 h.
 
-##### Option 2: Sync device by Tasmota timer
+#### Option 2: Sync device by Tasmota timer
 
 With this option it is easier to setup the synchronization times using WebGUI and the Tasmota build-in timer.
 
@@ -473,3 +609,14 @@ Backlog Rule2 4;Rule2 1
 Configure Tasmota Timer 10 for your needs (for example using same rule to sync time to Tasmota local time every day at 4:01 h).
 
 ![](_media/xsns_83_neopool_timer.png)
+
+#### Option 3: ESP32 Sync device by Tasmota timer
+
+Use the following Berry code to achieve the same as under option 2:
+
+```berry
+# Sync time based on Tasmota timer 10
+tasmota.add_rule("Clock#Timer=10", / -> tasmota.cmd("NPTime 0"))
+```
+
+Finally set the desired time using WebGUI Tasmota timer under "Configuration" / "Timer" like with option 2 before.
