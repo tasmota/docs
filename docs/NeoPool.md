@@ -12,22 +12,23 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 
 ----
 
-Sugar Valley NeoPool are water treatment systems also known under the names Hidrolife, Aquascenic, Oxilife, Bionet, Hidroniser, UVScenic, Station, Brilix, Bayrol and Hay. It uses a RS485 interface for enhancment equipments like Wifi-Interface or a second attached control panel. All functions and parameters can be queried and controlled via the RS485 interface.
+[Sugar Valley](https://sugar-valley.net/en/productos/) NeoPool are water treatment systems also known under the names Hidrolife, Aquascenic, Oxilife, Bionet, Hidroniser, UVScenic, Station, Brilix, Bayrol and Hay.
+It uses a [RS485](https://en.wikipedia.org/wiki/RS-485) interface with the [Modbus](https://en.wikipedia.org/wiki/Modbus) data protocol for enhancment equipments like Wifi-Interface or a second attached control panel. All functions and parameters can be queried and controlled via this bus interface.
 
-The sensor shows the most of parameters such as the built-in display:
+The Tasmota Sugar Valley NeoPool Controller sensor module shows the most of parameters such as the built-in display:
 
 ![](_media/xsns_83_neopool_s.png)
 
-Tasmota commands for controlling the filtering, light and system parameters such as pH setpoint, hydrolysis level, redox setpoint etc. are implemented.
-However, the sensor provides commands to read and write the NeoPool controller Modbus register, means that everyone has the option of implementing their own commands via their home automation system or using the Tasmota build-in possibilities with [Rules](Commands#rules) and [Backlog](Commands#the-power-of-backlog).
+There are [Tasmota commands](#commands) implemented to control the high level functions for filtration, light and system parameters such as pH set point, hydrolysis level, redox set point etc.
+However, the sensor also provides low-level commands to directly [read]#NPRead) and [write](#NPWrite) NeoPool register, means that you have the option to implement your own commands via home automation systems or by using the Tasmota build-in possibilities [Rules](Commands#rules) with [Backlog](Commands#the-power-of-backlog) or the powerful Berry language on ESP32.
 
 ## Connection
 
-The NeoPool controller has an RS485 interface, the ESP has an RS232 interface. Therefore connect your NeoPool controller using a TTL-UART to RS485 converter. It is recommended to use GPIO1 and GPIO3 on ESP8266 side, since the ESP then uses the hardware serial interface.
+The NeoPool controller uses a RS485 interface, the ESP has RS232 interfaces. Both are serial interfaces but with different physical specifications. Therefore to connect your NeoPool controller to an ESP82xx/32 you need a TTL-UART to RS485 converter. It is recommended to use GPIO1 and GPIO3 on ESP8266 side, since the ESP then uses the hardware serial interface.
 
 ![](_media/xsns_83_neopool_schematic.png)
 
-The following TTL UART to RS485 converters have been tested with both an ESP8266 and ESP32 with VCC = 3.3V:
+The following TTL UART to RS485 converter have been tested with both an ESP8266 and ESP32 using a Vcc of 3.3V:
 
 ![](_media/xsns_83_neopool_rs485_1_s.png) ![](_media/xsns_83_neopool_rs485_2_s.png)
 
@@ -51,7 +52,7 @@ The pin assignment (from top to bottom):
 You can use the "WIFI" or "EXTERN" connector, both are independent Modbus channels and uses the Modbus address 1 by default.
 
 !!! note
-    The "DISPLAY" port can only be used if neither the built-in nor an external display is connected. Since there is probably at least one display on one of the two "DISPLAY" ports, the "DISPLAY" port is useless.
+    The "DISPLAY" port can only be used if neither the built-in nor an external display is connected but since there is probably at least one display connected to one of the two "DISPLAY" ports, the "DISPLAY" port is useless.
 
 ### Using WIFI Port
 
@@ -62,7 +63,7 @@ You can use the "WIFI" or "EXTERN" connector, both are independent Modbus channe
 ![](_media/xsns_83_neopool_connector.jpg)
 
 !!! note
-    Leave `NEOPOOL_MODBUS_ADDRESS` set to 1 whether you are using the "WIFI" or "EXTERNAL" port (unless you have changed the parameters for it within your Sugar Valley device).
+    Leave the define for `NEOPOOL_MODBUS_ADDRESS` set to 1 whether you are using the "WIFI" or "EXTERNAL" port (unless you have changed the parameters for it within your Sugar Valley device).
 
 ## Configuration
 
@@ -84,7 +85,7 @@ Don't be surprised that Rx seems to be connected to Tx here (and vice versa). Th
 
 After Tasmota restarts, the main screen should display the controller data as shown above. If not, check that the A+/B pins aren't swapped and that the Rx/Tx pins are on the correct GPIOs - swap once if in doubt.
 
-### SENSOR data
+## SENSOR data
 
 Sensor data is sent via the Tasmota topic `tele/%topic%/SENSOR` in JSON format every TelePeriod interval. To get the data immediately, use the Tasmota `TelePeriod` command without parameter:
 
@@ -135,7 +136,7 @@ Sensor data is sent via the Tasmota topic `tele/%topic%/SENSOR` in JSON format e
       "Max": 0
     },
     "Hydrolysis": {
-      "Level": 100,
+      "Data": 100,
       "Unit": "%",
       "Runtime": {
         "Total": "28T22:13:19",
@@ -156,7 +157,8 @@ Sensor data is sent via the Tasmota topic `tele/%topic%/SENSOR` in JSON format e
     },
     "Light": 0,
     "Relay": {
-      "State": [0, 1, 0, 0, 0, 0, 0],
+      "State": [0, 1, 0, 0, 0, 1, 0],
+      "Aux": [0, 0, 1, 0],
       "Acid": 0
     }
   },
@@ -164,13 +166,38 @@ Sensor data is sent via the Tasmota topic `tele/%topic%/SENSOR` in JSON format e
 }
 ```
 
-The JSON values "pH", "Redox", "Hydrolysis", "Chlorine", "Conductivity" and "Ionization" are only available if the corresponding module is installed in the device (the corresponding "Module" subkey must be 1 )..
+The JSON values "pH", "Redox", "Hydrolysis", "Chlorine", "Conductivity" and "Ionization" are only available if the corresponding module is installed in the device (the corresponding "Module" subkey must be 1 ).
 
-### Commands
+To check which modules are installed use the "Module" value from SENSOR topic or query it manually by using the [NPControl command](#NPControl):
 
-This sensor supports some basic [Tasmota commands](Commands).
+```json
+{
+  "Modules": {
+    "pH": 1,
+    "Redox": 1,
+    "Hydrolysis": 1,
+    "Chlorine": 0,
+    "Conductivity": 0,
+    "Ionization": 0
+  },
+  "Relay": {
+    "Acid": 1,
+    "Base": 0,
+    "Redox": 0,
+    "Chlorine": 0,
+    "Conductivity": 0,
+    "Heating": 0,
+    "UV": 0,
+    "Valve": 0
+  }
+}
+```
 
-Regardless, all other device registers can be read and write, so you can [enhance](#esp8266-enhancements) your Sugar Valley control by using basic `NPRead`/`NPWrite` commands.
+## Commands
+
+This sensor supports some high-level [Tasmota commands](#commands) for end user.
+
+Regardless, all other Modbus registers can be read and write, so you can [enhance](#Enhancements) your Sugar Valley control by using low-level [NPRead]#NPRead)/[NPWrite]#NPWrite) commands.
 
 Modbus register addresses and their meaning are described within source file [xsns_83_neopool.ino](https://github.com/arendst/Tasmota/blob/development/tasmota/xsns_83_neopool.ino) at the beginning and (partly) within document [171-Modbus-registers](https://downloads.vodnici.net/uploads/wpforo/attachments/69/171-Modbus-registers.pdf).<BR>
 Please note that Sugar Valley Modbus registers are not byte addresses but modbus registers containing 16-bit values - don't think in byte memory layout.
@@ -204,7 +231,7 @@ NPEscape<a id="NPEscape"></a>|clears possible errors (like pump exceeded time et
 NPExec<a id="NPExec"></a>|take over changes without writing to EEPROM. This command is necessary e.g. on changes in *Installer page* (addr 0x0400..0x04EE).
 NPSave<a id="NPSave"></a>|write data permanently into EEPROM.<BR>During the EEPROM write procedure the NeoPool device may be unresponsive to MODBUS requests, this process always takes less than 1 second.<BR>Since this process is limited by the number of EEPROM write cycles, it is recommend to write all necessary changes to the registers and only then execute EEPROM write process using this command.<BR>__Note: The number of EEPROM writes for Sugar Valley NeoPool devices is guaranteed 100,000 cycles. As soon as this number is exceeded, further storage of information can no longer be guaranteed__.
 
-#### Examples
+### Examples
 
 !!! example
     Get filtration mode
@@ -380,9 +407,31 @@ NPOnError 3
 RESULT = {"NPOnError":3}
 ```
 
-### ESP8266 Enhancements
+## Enhancements
 
-#### Add buttons for filtration and light control
+### Daily sync device to Tasmota time
+
+Since the NeoPool devices, without a WiFi module, have no way of synchronizing their internal clock with an external clock and, in addition, the accuracy of the internal clock leaves something to be desired, it makes sense to synchronize the clock with Tasmota once a day. Advantageously, we do this at night after a possible daylight saving time or normal time change.
+
+We use a rule that synchronizes the time and which is triggered by the Tasmota built-in timer (here we use timer 10):
+
+```haskell
+Rule2
+  ON Clock#Timer=10 DO NPTime 0 ENDON
+```
+
+Activate it:
+
+```haskell
+Backlog Rule2 4;Rule2 1
+```
+
+Configure Tasmota "Timer 10" for your needs:
+
+![](_media/xsns_83_neopool_timer.png)
+
+
+### ESP82xx: Add buttons for filtration and light control
 
 Add two dummy buttons to control the filtration pump and the light.
 
@@ -424,7 +473,7 @@ At least we activate the rule:
 Backlog Rule1 5;Rule1 1
 ```
 
-Here it is important to enable the Rule ONCE (`Rule1 5`) function, which prevents the trigger is triggering themself in a loop.
+It is important to enable the Rule ONCE (`Rule1 5`) function, which prevents the trigger is triggering themself in a loop.
 
 You can now control filtration and light using the WebGUI and get the current status of the device elements when they are switched by auto-mode or manually on the device directly.
 
@@ -432,13 +481,11 @@ You can now control filtration and light using the WebGUI and get the current st
 
 Additional advantage is that you can also use Tasmota Timer switching Power1 (=filtration) and Power2 (light) for your needs.
 
-### ESP32 Enhancements
+### ESP32: Adding user defined NeoPool commands to Tasmota
 
-The following enhancements are made using the [Berry Scripting Language](Berry) which is available using an ESP32.
+The following enhancements are made using the [Berry Scripting Language](Berry) which is available on ESP32 only.
 
-#### Adding new NeoPool commands to Tasmota
-
-The following class `NeoPoolCommands` adds two new commands to Tasmota.
+The class `NeoPoolCommands` below adds two new commands to Tasmota:
 
 Command|Parameters
 :---|:---
@@ -447,8 +494,9 @@ NPAux<x\><a id="NPAux"></a>|`{<state>}`<BR>get/set auxiliary relay <x\> (state =
 
 The class members `NPBoost` and `NPAux` can also be used as templates for further commands.
 
-Store the following code as `neopool.be` (use the WebGUI "Console" / "Manage File system"):
+Store the following code using the WebGUI "Console" / "Manage File system".
 
+ESP32 file `neopool.be`:    
 ```berry
 class NeoPoolCommands
   var TEXT_OFF
@@ -560,63 +608,16 @@ end
 neopool_commands = NeoPoolCommands()
 ```
 
-To activate the new commands, go to WebGUI "Consoles" / "Berry Scripting console" and execute
+To activate the new commands go to WebGUI "Consoles" / "Berry Scripting console" and execute
 
 ```python
 load("neopool.be")
 ```
 
-If you want get the new commands available after a restart of your ESP32, store the `load("neopool.be")` within a file named `autoexec.be`.
+If you want get the new commands available after a restart of your ESP32, store the load command into the special file
+ `autoexec.be`:
 
-### Daily sync device time to Tasmota time
-
-Since the NeoPool devices, without a WiFi module, have no way of synchronizing their internal clock with an external clock and, in addition, the accuracy of the internal clock leaves something to be desired, it makes sense to synchronize the clock with Tasmota once a day. Advantageously, we do this at night after a possible daylight saving time or normal time change.
-
-Sync time is easy and we have two options for implementing it:
-
-#### Option 1: Use only a rule
-
-```haskell
-Rule2
-  ON Time#Minute=241 DO NPTime 0 ENDON
-```
-
-Activate it:
-
-```haskell
-Backlog Rule2 4;Rule2 1
-```
-
-This syncronize the device time using Tasmota local time each night at 4:01 h.
-
-#### Option 2: Sync device by Tasmota timer
-
-With this option it is easier to setup the synchronization times using WebGUI and the Tasmota build-in timer.
-
-Write a rule that synchronizes the time and which is triggered by the Tasmota built-in timer (here we are using timer 10):
-
-```haskell
-Rule2
-  ON Clock#Timer=10 DO NPTime 0 ENDON
-```
-
-Activate it:
-
-```haskell
-Backlog Rule2 4;Rule2 1
-```
-
-Configure Tasmota Timer 10 for your needs (for example using same rule to sync time to Tasmota local time every day at 4:01 h).
-
-![](_media/xsns_83_neopool_timer.png)
-
-#### Option 3: ESP32 Sync device by Tasmota timer
-
-Use the following Berry code to achieve the same as under option 2:
-
+ESP32 file `autoexec.be`:    
 ```berry
-# Sync time based on Tasmota timer 10
-tasmota.add_rule("Clock#Timer=10", / -> tasmota.cmd("NPTime 0"))
+load("neopool.be")
 ```
-
-Finally set the desired time using WebGUI Tasmota timer under "Configuration" / "Timer" like with option 2 before.
