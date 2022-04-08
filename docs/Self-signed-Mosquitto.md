@@ -33,11 +33,13 @@ Ideally we will work on three systems:
 
 !!! failure "Security notice" Private keys, and in particular the CA private key should reside on a secure, possibly air-gapped system. Securing your CA and procedures for managing private keys exceeds the scope of this guide, but we assume you follow best security practices.
 
+There are several figures below containing command sequences that need to be executed in a POSIX shell. The intention is that text in the figure windows will be selected and copied, then pasted into a terminal window. These commands will not work if pasted into a Windows command prompt.
+
 ### Linux and Windows
 
-The description below is written mainly from the perspective of someone using a Linux OS. Information is also provided for those working on a Windows OS, and it may be easier to accomplish these tasks using Cygwin on Windows. That will make it possible to use most of the command line inputs shown below without modification.
+The description below is written mainly from the perspective of someone using a Linux OS. Information is also provided for those working on a Windows OS, but a Linux command shell (e.g. `sh` or `bash`) is assumed for much of the work. Cygwin is a good choice for this purpose. It's not impossible to do perform these tasks in native Windows without a POSIX shell, although that is beyond the scope of this document.
 
-There are several figures below containing Linux command sequences that need to be executed. The intention is that the text in the figure windows on this web page will be selected and copied, then pasted into a Linux/Cygwin terminal window. These commands will not work if pasted into a Windows command prompt.
+A Cygwin installation should include the git package (Devel category) and openssl package (Net category). Additional packages will required as discussed later if BearSSL is to be installed.
 
 ### 1. Prepare your CA (on **Server Machine**)
 We will use Easy-RSA for easy management of the CA and certificates. Some modification are required to match our configuration.
@@ -138,7 +140,8 @@ Each Tasmota device needs to be configured with the host name of the server. Thi
 
 Consider a situation where the device is running on an isolated WiFi network with no access to a DNS server. In this case, it may be necessary to specify the MQTT Host as a numeric IP address (e.g. `192.168.2.3`). In this example, the CN in the host's certificate would need to be the string `192.168.2.3`, or the device won't trust the server and won't connect.
 
-To generate the root CA and server certificates:
+To generate the root CA and server certificates, issue these commands. This example assumes the server's hostname and server certificate CN is `mqtt.myorg.com`.
+
 ```
 # Reset PKI
 ./easyrsa init-pki
@@ -168,12 +171,13 @@ sed -i '/^set_var\ EASYRSA_ALGO/ s/rsa/ec/' vars
 ```
 git clone https://www.bearssl.org/git/BearSSL
 cd BearSSL
-make
+make tools
 ```
-- Convert the root certificate into a format suitable for inclusion in the Tasmota build:
+- Convert the root certificate into a format suitable for inclusion in the Tasmota build. This be will easier if the `brssl` (`brssl.exe` in Cygwin) executable is copied into the the `easyrsa3` directory first. Then, these two commands may be executed from the `easyrsa3` directory verbatim to generate the required header files.
+ 
 ```
-./build/brssl ta /path/to/your/ca.crt | sed -e 's/TA0/PROGMEM TA0/' -e '/br_x509/,+999 d' > local_ca_data.h
-./build/brssl ta /path/to/your/ca.crt | sed -e '1,/br_x509/ d' -e '/};/,+999 d' >local_ca_descriptor.h
+./brssl ta pki/ca.crt | sed -e 's/TA0/PROGMEM TA0/' -e '/br_x509/,+999 d' > local_ca_data.h
+./brssl ta pki/ca.crt | sed -e '1,/br_x509/ d' -e '/};/,+999 d' >local_ca_descriptor.h
 ```
 
 ### 2. Configure your Tasmotabuild (on **Compiling Machine**)
@@ -244,17 +248,28 @@ sudo apt-get install Mosquitto
 
 #### Windows
 
-Download the Windows installer from mosquitto.org and run it. Mosquitto may be installed either as a program or service. The only difference is in how mosquitto is started. As a program, it must be started by a user every time, but as a service it can be automatically started by the OS during boot.
+Download the Windows installer from `https://www.mosquitto.org/` and run it. Mosquitto may be installed either as a program or service. The main difference is in how mosquitto is started. As a program, it must be started by a user every time, but as a service it can be automatically started by the OS during boot.
 
 #### 5.1 Configuration
 
-Copy the files from **CA Machine** to the following locations on the server:
+Copy the files from **CA Machine** to the following locations on a Linux server machine:
+
 ```
 /etc/mosquitto/ca_certificates/ca.crt
 /etc/mosquitto/certs/mqtt.myorg.com.crt
 /etc/mosquitto/certs/mqtt.myorg.com.key
 ```
-There are two options for configuring the server's private key. It can be converted to plain text form (.pem) as shown below, or left encrypted (.key file). If left encrypted, the password will need to be entered by hand every time the server is started. This will not be feasible if mosquitto is to be run as a service. Security risks can be minimzed by setting tight permissions on the files, as shown below.
+
+and to here on a Windows server machine (requires Administrative priveledges):
+
+```
+C:\Program Files\mosquitto\ca.crt
+C:\Program Files\mosquitto\mqtt.myorg.com.crt
+C:\Program Files\mosquitto\mqtt.myorg.com.key
+```
+On Windows, if preferred, subdirectories within the mosquitto directory can be created to hold the certificates. That might make it easier to restrict access to a private key in plain text form.
+
+There are two options for configuring the server's private key. It can be converted to plain text form (`.pem`) as shown below, or left encrypted (`.key`). If left encrypted, the password will need to be entered by hand every time the server is started. This will not be feasible if mosquitto is to be run as a service. Security risks can be minimzed by setting tight permissions on the files, as shown below.
 
 Convert the private key to plain text format like this:
 
@@ -266,7 +281,7 @@ Ensure the files have owner `mosquitto:mosquitto` and permissions `-r--------`. 
 
 #### File Permissions: Windows
 
-It should be possible to configure permissions so that only the `SYSTEM` user can read the private key file, and when mosquitto is run as a service, it runs under the `SYSTEM` account. Doing this is currently beyond the scope of this guide.
+It should be possible to configure permissions so that only the `SYSTEM` user can read the private key file, and when mosquitto is run as a service, it runs under the `SYSTEM` account. How to do this is currently beyond the scope of this guide.
 
 #### 5.3 Configure and start the server
 
@@ -283,6 +298,8 @@ keyfile /etc/mosquitto/certs/mqtt.myorg.com.pem
 require_certificate true
 use_identity_as_username true
 ```
+
+On a Windows machine, the configuration file is `C:\Program Files\mosquitto\mosquitto.conf`, and the paths to the certificate and key files should be set accordingly.
 
 To start Mosquitto on Linux:
 
@@ -315,14 +332,12 @@ export TAS=tasmota_name
 The new certificate must be converted to Tasmota commands which can be entered into the device's web console. 
 Credentials are composed of two distinct parts:
 
-- Private Key - this is the secret that will allow your device to prove it is what it claims to be, and consists of 32 bytes (256 bits). Consider this as sensitive as a password.
+- Private Key - this is the secret that will allow your device to prove its identity, and consists of 32 bytes (256 bits). Consider this as sensitive as a password.
 - Public Key - this allows others to encrypt messages which can only be decrypted with the Private Key, and contains 256 bytes (2048 bits).
 
 Both of these must be loaded into flash in the Tasmota device. This is done by entering `TLSKey` commands in the device's web console. 
 
-This step must be performed on the machine where the device certificates were created, from within the `easyrsa3` directory. 
-The following commands will generate a shell script, `gen-tlskeys`, which will perform the necessary work. 
-That's easier than copying and pasting the entire command set for each device.
+This step must be performed on the machine where the device certificates were created, from within the `easyrsa3` directory. The following commands will generate a shell script, `gen-tlskeys`, which will perform the necessary work (that's easier than copying and pasting the entire command set for each device.)
 
 ```
 cat >gen-tlskeys <<'EOF'
@@ -355,10 +370,7 @@ Now, for each device, simply enter this command. The argument (`$TAS`) is the na
 ./gen-tlskeys $TAS
 ```
 
-Running the shell script will output two commands to set device private and public keys. Run the script once for each device, and follow instructions in the console output. Set the `TAS` variable to the name of the device in question, then execute these commands.
-
-The `TLSKey1` command contains the device's private key in plain text (unencrypted) format. 
-Treat this with care. After loading it into flash in the Tasmota device, it would be a good idea to clear the terminal window.
+The `TLSKey1` command contains the device's private key in plain text (unencrypted) format, so don't keep it around any longer than necessary.
 
 #### 6.3 Access your device's web console and configure the keys.
 
