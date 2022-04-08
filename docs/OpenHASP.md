@@ -126,9 +126,148 @@ OpenHASP parses all lines from the file `pages.jsonl`. You can dynamically add n
 
 ### Pages
 
+Pages object are identified by object if `0`. Example:
+
+``` json
+{"page":1,"id":0,"bg_color":"#0000A0","bg_grad_color":"#000000","bg_grad_dir":1,"text_color":"#FFFFFF"}
+```
+
+Internally OpenHASP pages are implemented with LVGL screens, i.e. a parent object.
+
+Page `0` is a special page that is displays over every screens. It is the perfect place to put navigation menus. It is implement as `lv.layer_top()`.
+
+Page `1` is always present and the default page.
+
+Attributes specifis to page|Details
+:---|:---
+`prev`|(int) target page number when pressing PREV button
+`next`|(int) target page number when pressing NEXT button
+`home`|(int) target page number when pressing HOME button
+  |And generally all object attributes
+
 ### Classes of widgets
 
+Attribute `"obj"` can take the following values:
+
+OpenHASP Class|Embedded LVGL class
+:---|:---
+`obj`|`lv.obj`
+`btn`|`lv.btn`
+`switch`|`lv.switch`
+`checkbox`|`lv.checkbox`
+`label`|`lv.label`
+`spinner`|`lv.spinner`
+`line`|`lv.line`
+`img`|`lv.img`
+`dropdown`|`lv.dropdown`
+`roller`|`lv.roller`
+`btnmatrix`|`lv.btnmatrix`
+`bar`|`lv.bar`
+`slider`|`lv.slider`
+`arc`|`lv.arc`
+`textarea`|`lv.textarea`
+
+You can also import custom widget as long as they inherit from `lv.obj` and the class name matches the module name.
+
+Example: `"obj":"lv_wifi_graph"` will trigger the followin:
+- `import lv_wifi_graph`
+- instanciation of `lv_wifi_graph(parent)` object
+- if successful, it can be used like a typical OpenHASP object
+
 ### Attributes
+
+Below are the standard attributes:
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`comment`||Ignored
+`page`|0 to 15<br>Parent screen object|Page id for the current object.<br>If not present, takes the value of the current page
+`id`|0..255|Id number of the object. Id `0` means the entire page.<br>A global berry object is created with name `p<page>b<id>` (ex: `p1b10`)
+`obj`|widget class|Class of the widget (see above).<br>If not present, the entire JSON line is ignored
+`action`|`"next"`, `"prev"`, `"back"` or `"p<x>"`|Switch to page when the object is touched
+`x`|`x`|X coordinate of top left corner
+`y`|`y`|Y coordinate of top left corner (Y is pointing down)
+`h`|`height`|Height in pixels
+`w`|`width`|Width in pixels
+`hidden`|flag `lv.OBJ_FLAG_HIDDEN`|Object is hidden (bool)
+`enabled`|flag `lv.OBJ_FLAG_CLICKABLE`|Object is touch/clickable (bool)
+`click`|flag `lv.OBJ_FLAG_CLICKABLE`|Synonym of `enabled`. Object is touch/clickable (bool)
+`toggle`|flag `lv.STATE_CHECKED`|When enabled, creates a toggle-on/toggle-off button. If false, creates a normal button.<br>TODO check if bool or string
+`radius`|`style_radius`|Radius of rounded corners
+`bg_opa`|`style_bg_opa`|Opacity: `0` is transparent, `255` is opaque
+`bg_color`|`style_bg_color`|Color of background, format is `#RRGGBB`
+`bg_grad_color`|`style_bg_grad_color`|Color of background gradient
+`bg_grad_dir`|`style_bg_grad_dir`|Gradient direction<br>`0`: none<br>`1`: Vertical (top to bottom) gradient<br>`2`: Horizontal (left to right) gradient
+`border_side`|`style_border_side`|
+`border_width`|`style_border_width`|
+`line_color`|`style_line_color`|Color of line
+`line_width`|`style_line_width`|
+`line_width1`|`style_arc_width`|Sets the line width of an `arc` indicator part
+`pad_left`|`style_pad_left`|Left padding in pixels
+`pad_right`|`style_pad_right`|Right padding in pixels
+`pad_top`|`style_pad_top`|Top padding in pixels
+`pad_bottom`|`style_pad_bottom`|Bottom padding in pixels
+`pad_all`|`style_pad_all`|Sets all 4 padding values at once (Write-only)
+
+Attributes related to text content
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`text`|`text`|Sets the inner text of the object.<br>If the native LVGL object does not support text (like `lv.btn`), a `lv.label` sub-object is automatically created.
+`value_str`|`text`|Synonym of `text`
+`align`|`style_text_align`|Set alignment for text<br>`0` or `"left"`: `lv.TEXT_ALIGN_LEFT`<br>`1` or `"center"`: `lv.TEXT_ALIGN_CENTER`<br>`2` or `"right"`: `lv.TEXT_ALIGN_RIGHT`
+`text_font`|`style_text_font`|Sets the font name and size for the text.<br>If `int`, the default font is `robotocondensed_latin1` and the parameter sets the size<br>If `string`, the font is in the form `<font_name>-<font_size>`, example: `montserrat-20`
+`value_font`|`style_text_font`|Synonym of `text_font`
+`text_color`|`style_text_color`|Sets the color of text
+`value_color`|`style_text_color`|Synonym of `text_color`
+`value_ofs_x`|`x` of sub-label|Sets the X offet in pixels within the object
+`value_ofs_y`|`y` of sub-label|Sets the Y offet in pixels within the object
+`text_rule`||Link the text to a Tasmota rule, see below
+`text_rule_formula`||Link the text to a Tasmota rule, see below
+`text_rule_format`||Link the text to a Tasmota rule, see below
+
+Attributes related to values
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`min`|`range`|Set the minimum value of range (int)
+`max`|`range`|Set the maximum value of range (int)
+`val`|`value`|Set the value (int)
+`val_rule`||Link a value to a Tasmota rule, see below
+`val_rule_formula`||Link a value to a Tasmota rule, see below
+
+Attributes specific to `arc`
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`start_angle`|`bg_start_angle`|Start angle of the arc background.<br>Angles are in degrees in [0;360] range.<br>Zero degrees is at the middle right (3 o'clock) of the object and the degrees are increasing in clockwise direction.
+`end_angle`|`bg_end_angle`|End angle of the arc background.
+`start_angle1`|`start_angle`|Start angle of the arc indicator.
+`end_angle1`|`end_angle`|End angle of the arc indicator.
+`rotation`|`rotation`|Offset to the 0 degree position
+`type`|`mode`|Sets the arc mode<br>`0`: `lv.ARC_MODE_NORMAL`<br>`1`: `lv.ARC_MODE_REVERSE`<br>`2`: `lv.ARC_MODE_SYMMETRICAL`
+`pad_top2`|`style_pad_top`|Top padding for `lv.PART_KNOB` part
+`pad_bottom2`|`style_pad_bottom`|Bottom padding for `lv.PART_KNOB` part
+`pad_left2`|`style_pad_left`|Left padding for `lv.PART_KNOB` part
+`pad_right2`|`style_pad_right`|Right padding for `lv.PART_KNOB` part
+`pad_all2`|`style_pad_all`|Set all 4 padding for `lv.PART_KNOB` part (write-only)
+`radius2`|`style_radius`|Radius for `lv.PART_KNOB` part
+
+
+Attributes specific to `img`
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`src`|`src`|Path to the image in the file-system
+`image_recolor`|`style_image_recolor`|Color used to recolor the image
+`image_recolor_opa`|`style_image_recolor_opa`|Opacity of image recoloring
+
+Attributes specific to `spinner`
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`angle`||The length of the spinning segment in degrees - cannot be changed after initial value
+`speed`||The time for 1 turn in ms - cannot be changed after initial value
 
 ## Tasmota extensions
 
