@@ -497,7 +497,7 @@ The class members `NPBoost` and `NPAux` can also be used as templates for furthe
 Store the following code using the WebGUI "Console" / "Manage File system".
 
 ESP32 file `neopool.be`:    
-```berry
+```python
 class NeoPoolCommands
   var TEXT_OFF
   var TEXT_ON
@@ -516,11 +516,10 @@ class NeoPoolCommands
     return self.rtrim(self.ltrim(s));
   end
 
-  #- NPBoost OFF|0|ON|1|REDOX|2
-      0|OFF:   Switch boost off
-      1|ON:    Switch boost on without redox control
-      2|REDOX: Switch boost on with redox control
-  -#
+  # NPBoost OFF|0|ON|1|REDOX|2
+  #    0|OFF:   Switch boost off
+  #    1|ON:    Switch boost on without redox control
+  #    2|REDOX: Switch boost on with redox control
   def NPBoost(cmd, idx, payload)
     import string
     var ctrl, parm
@@ -552,10 +551,9 @@ class NeoPoolCommands
     tasmota.resp_cmnd(string.format('{"NPBoost":"%s"}', ctrl == 0 ? self.TEXT_OFF : (ctrl & 0x8500) == 0x8500 ? self.TEXT_ON : "REDOX"))
   end
 
-  #- NPAux<x> OFF|0|ON|1 (<x> = 1..4)
-      0|OFF:   Switch aux x off
-      1|ON:    Switch aux x on
-  -#
+  # NPAux<x> OFF|0|ON|1 (<x> = 1..4)
+  #    0|OFF:   Switch aux x off
+  #    1|ON:    Switch aux x on
   def NPAux(cmd, idx, payload)
     import string
     var ctrl, parm
@@ -618,6 +616,6 @@ If you want get the new commands available after a restart of your ESP32, store 
  `autoexec.be`:
 
 ESP32 file `autoexec.be`:    
-```berry
+```python
 load("neopool.be")
 ```
