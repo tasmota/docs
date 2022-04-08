@@ -67,7 +67,9 @@ mv easyrsa tmprsa
 tr -d '\r' <tmprsa >easyrsa
 ```
 
-#### 1.2.  Define your certificate information :
+#### 1.2.  Define your certificate information
+
+The commands below may be copied and pasted into a terminal window, then the resulting file, `vars` edited as appropriate.
 
 ```
 # Define your info
@@ -131,7 +133,19 @@ set_var EASYRSA_CERT_EXPIRE 1800
 EOF
 ```
 
-#### 1.3. Initialize and generate the CA and the server certificate:
+This creates a configuration file named `vars` -- the default file which the `easyrsa` shell script looks for.
+
+If the configuration is to be changed there are two options. First, `vars` can simply be edited to reflect the new configuration. 
+However, if multiple configurations are often used, it may be easier to use a different file for each configuation, and the configuration specified on the command line.
+For example, to use a configuration file named `vars3`, the command would look like this (the config file spec must come before other arguments):
+
+```
+./easyrsa --vars=./vars3 <remaining arguments>
+```
+
+Note that the file is specified as `./<filename>`, not `<filename>`. This required because the specified file will be sourced in the EasyRSA shell script, and it's assumed that the current directory is not part of the search path (that would be a security concern).
+
+#### 1.3. Initialize and generate the CA and the server certificates:
 When generating the server (aka broker) certificate, it is crucial that the Common Name (CN) be set correctly. Failing to do this will result in Tasmota devices refusing to make TLS connections to the server.
 
 Each Tasmota device needs to be configured with the host name of the server. This is done via the `MQTT_HOST` macro in `user_config_override.h`, and/or in the device's MQTT Configuration web page. The host name string must meet two requirements:
@@ -154,6 +168,9 @@ To generate the root CA and server certificates, issue these commands. This exam
 ```
 
 #### 1.4. Change key types (EC is required for tasmota devices)
+
+This example shows editing of the `vars` file, although a second configuration file could be created for EC keys as explained previously.
+
 ```
 sed -i '/^set_var\ EASYRSA_ALGO/ s/rsa/ec/' vars
 ```
