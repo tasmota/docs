@@ -219,6 +219,14 @@ The value of a `Var<x>` and `Mem<x>` can be:
 - %sunset%
 - %utctime%
 - %topic%
+- %color%
+- %timer1% to %timer16%
+- %MacAddr%
+- %DeviceID%
+- %ZbDevice%
+- %ZbGroup%
+- %ZbCluster%
+- %ZbEndPoint%
 
 To set the value for `Var<x>` and `Mem<x>` use the command  
 
@@ -322,6 +330,7 @@ When the `<if-statement>` is preceded by other Tasmota commands you should use `
   LOCALTIME|local time, UNIX timestamp
   SUNRISE|current sunrise time (minutes past midnight)
   SUNSET|current sunset time (minutes past midnight)
+  COLOR|current color
 
 `<statement-list>`  
 - A Tasmota command (e.g.,`LedPower on`)  
@@ -393,6 +402,7 @@ UTCTIME|UTC time, UNIX timestamp, seconds since 01/01/1970
 LOCALTIME|local time, UNIX timestamp
 SUNRISE|current sunrise time (minutes past midnight)
 SUNSET|current sunset time (minutes past midnight)
+COLOR|current color
 
 !!! example
      `Mem1=((0.5*Var1)+10)*0.7`
