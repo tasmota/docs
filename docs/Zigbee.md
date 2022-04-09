@@ -3,13 +3,15 @@
 Zigbee2Tasmota (Z2T) is a lightweight Zigbee gateway/bridge solution running on ESP8266/ESP8285 or ESP32 Wi-Fi chips. Hence it is easier to deploy wherever you want in your home. It was largely inspired by [Zigbee2MQTT](https://www.zigbee2mqtt.io/) but it was written from scratch to make it fit into the resource constraints of a ESP82xx chip with just 80kB of RAM and only 1MB of flash memory.
 
 ## Hardware
-This integration works with any Texas Instruments [CC2530](CC2530.md) chip based device as well as with Silicon Labs EFR32 (EFR32MG12/EFRMG21) chip based devices, like example [Sonoff ZBBridge](https://zigbee.blakadder.com/Sonoff_ZBBridge.html), [Tube's Zigbee Gateways (varient based on Silabs EFR32)](https://github.com/tube0013/tube_gateways), and DIY Zigbee gateway/bridge devices. A complete list of compatible Zigbee coordinators and Zigbee devices compatible with Z2T is in the [Zigbee Device Compatibility Repository](https://zigbee.blakadder.com/zigbee2tasmota.html). 
+This integration works with any Texas Instruments [CC253x](CC2530.md) and Silicon Labs EFR32 (EFR32MG12/EFRMG21) Zigbee MCU radio modules/chips based devices, like example [Sonoff ZBBridge](https://zigbee.blakadder.com/Sonoff_ZBBridge.html), [ZB-GW03 eWeLink Ethernet Zigbee Gateway](https://templates.blakadder.com/ewelink_ZB-GW03), [Tube's Zigbee Gateways (varient based on Silabs EFR32)](https://github.com/tube0013/tube_gateways), as well as DIY-built Zigbee gateway/bridge devices. There is also preliminary support for Z-Stack 3.x in newer Tasota which which now include all CC26x2 and CC13x2 series devices from Texas Intruments. A complete list of compatible Zigbee coordinators and Zigbee devices compatible with Z2T is in the [Zigbee Device Compatibility Repository](https://zigbee.blakadder.com/zigbee2tasmota.html). 
 
-While Z2T was initially designed for Texas Instruments Z-Stack firmware and protocol for CC253x based device, since then support for Silicon Labs EZSP (EmberZNet Serial Protocol) firmware has also been added. Once the Zigbee coordinator is started and communicates with Tasmota, the end result is the same and there is no difference in their operation.
+Z2T was initially designed to work with the older Texas Instruments Z-Stack 1.2 firmware and ZNP protocol for CC253x based devices, however since then support has been added for Silabs EZSP (EmberZNet Serial Protocol) firmware, and Texas Instruments support has been extended to include the newer Z-Stack 3.x firmware and protocol. Once the Zigbee coordinator is started and communicates with Tasmota, the result is the same and there is no feature or functionality difference in their operation as far as the end user is concerned.
 
 Flashing and installation instructions for:
 
 - [Sonoff ZBBridge by ITead](https://zigbee.blakadder.com/Sonoff_ZBBridge.html)
+- [ZB-GW03 eWeLink Ethernet Zigbee Gateway (also sold as EACHEN Zigbee Smart Hub and SmartWise Zigbee Bridge Pro)](https://templates.blakadder.com/ewelink_ZB-GW03)
+- [Tube's Ethernet Zigbee Gateway (EFR32 varient)](https://templates.blakadder.com/tube_TUBE013_EFR32.html)
 - [CC2530 based devices](CC2530.md)
 - [DIY Zigbee gateway/bridge device example based on Ebyte E180-ZG120B or E180-ZG120B-TB](https://github.com/zigpy/zigpy/discussions/584)
 - [DIY Zigbee gateway/bridge device example based on IKEA TRÅDFRI ICC-A-1 Module](https://github.com/MattWestb/IKEA-TRADFRI-ICC-A-1-Module/tree/master/Tasmota)
