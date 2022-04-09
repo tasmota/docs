@@ -1,5 +1,7 @@
 # Light and Versatile Embedded Graphics Library :material-cpu-32-bit:
 
+!!! info "Tasmota now supports [OpenHASP](https://github.com/HASwitchPlate/openHASP) templates which makes it much easier to start with LVGL. Check the [Tasmota OpenHASP](OpenHASP.md) documentation." 
+
 !!! info "This feature is included in tasmota32-lvgl.bin" 
 
 Supported version: LVGL v8.2, LodePNG v20201017, Freetype 2.10.4
