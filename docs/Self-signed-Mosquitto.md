@@ -39,7 +39,7 @@ There are several figures below containing command sequences that need to be exe
 
 The description below is written mainly from the perspective of someone using a Linux OS. Information is also provided for those working on a Windows OS, but a Linux command shell (e.g. `sh` or `bash`) is assumed for much of the work. Cygwin is a good choice for this purpose. It's not impossible to do perform these tasks in native Windows without a POSIX shell, although that is beyond the scope of this document.
 
-A Cygwin installation should include the git package (Devel category) and openssl package (Net category). Additional packages will required as discussed later if BearSSL is to be installed.
+A Cygwin installation should include the git package (Devel category) and openssl package (Net category). Additional packages will be required as discussed later if BearSSL is to be installed.
 
 ### 1. Prepare your CA (on **Server Machine**)
 We will use Easy-RSA for easy management of the CA and certificates. Some modification are required to match our configuration.
@@ -60,7 +60,7 @@ authorityKeyIdentifier = keyid:always
 keyUsage = critical,digitalSignature
 EOF
 ```
-Windows users may have trouble running EasyRSA in natively. If that happens, it's also possible to install Cygwin, and run it from a Cygwin terminal window. 
+Windows users may have trouble running EasyRSA natively. If that happens, it's also possible to install Cygwin, and work from a Cygwin terminal window. 
 One note of caution: The `easyrsa` shell script may wind up with the wrong line endings if git is not configured to checkout line endings "as is". When this happens, the shell script will not run in Cygwin, and this problem may be fixed by using the `tr` program to delete carriage returns in the script file:
 ```
 mv easyrsa tmprsa
@@ -152,7 +152,7 @@ Each Tasmota device needs to be configured with the host name of the server. Thi
 - The Tasmota device must be able to resolve the name, which might require access to a DNS server.
 - This string must match the Common Name (CN) in the broker's certificate -- exactly.
 
-Consider a situation where the device is running on an isolated WiFi network with no access to a DNS server. In this case, it may be necessary to specify the MQTT Host as a numeric IP address (e.g. `192.168.2.3`). In this example, the CN in the host's certificate would need to be the string `192.168.2.3`, or the device won't trust the server and won't connect.
+Consider a situation where the device is running on an isolated WiFi network with no access to a DNS server. In this case, it may be necessary to specify the MQTT Host as a numeric IP address (e.g. `192.168.2.3`). For this example, the CN in the host's certificate must be the string `192.168.2.3`.
 
 To generate the root CA and server certificates, issue these commands. This example assumes the server's hostname and server certificate CN is `mqtt.myorg.com`.
 
@@ -265,7 +265,7 @@ sudo apt-get install Mosquitto
 
 #### Windows
 
-Download the Windows installer from `https://www.mosquitto.org/` and run it. Mosquitto may be installed either as a program or service. The main difference is in how mosquitto is started. As a program, it must be started by a user every time, but as a service it can be automatically started by the OS during boot.
+Download and run the Windows installer from `https://www.mosquitto.org/`. Mosquitto may be installed either as a program or service. The main difference is in how mosquitto is started. As a program, it must be started by a user every time, but as a service it can be automatically started by the OS during boot.
 
 #### 5.1 Configuration
 
@@ -284,7 +284,7 @@ C:\Program Files\mosquitto\ca.crt
 C:\Program Files\mosquitto\mqtt.myorg.com.crt
 C:\Program Files\mosquitto\mqtt.myorg.com.key
 ```
-On Windows, if preferred, subdirectories within the mosquitto directory can be created to hold the certificates. That might make it easier to restrict access to a private key in plain text form.
+On Windows, if preferred, one or two subdirectories within the mosquitto installation directory can be created to hold the certificates. That might make it easier to restrict access to a private key in plain text form.
 
 There are two options for configuring the server's private key. It can be converted to plain text form (`.pem`) as shown below, or left encrypted (`.key`). If left encrypted, the password will need to be entered by hand every time the server is started. This will not be feasible if mosquitto is to be run as a service. Security risks can be minimzed by setting tight permissions on the files, as shown below.
 
@@ -316,7 +316,7 @@ require_certificate true
 use_identity_as_username true
 ```
 
-On a Windows machine, the configuration file is `C:\Program Files\mosquitto\mosquitto.conf`, and the paths to the certificate and key files should be set accordingly.
+On a Windows machine, the configuration file is `C:\Program Files\mosquitto\mosquitto.conf`, and the paths to the certificate and key files should be set accordingly using standard Windows path syntax.
 
 To start Mosquitto on Linux:
 
@@ -332,7 +332,7 @@ net start mosquitto
 
 ### 6. - Generate and configure certificates for your devices
 
-!!! failure "Repeated step" Repet the following 6.x steps once for every device, changing tasmota_name for each device. You will be prompted for a private key password for each device. 
+!!! failure "Repeated step" Repeat the following 6.x steps once for every device, changing tasmota_name for each device. You will be prompted for a private key password for each device. 
 After entering the new password (twice for verification), you will also be prompted for the private key password of the root CA certificate.
 
 #### 6.1 Generate the client certificates
@@ -354,7 +354,8 @@ Credentials are composed of two distinct parts:
 
 Both of these must be loaded into flash in the Tasmota device. This is done by entering `TLSKey` commands in the device's web console. 
 
-This step must be performed on the machine where the device certificates were created, from within the `easyrsa3` directory. The following commands will generate a shell script, `gen-tlskeys`, which will perform the necessary work (that's easier than copying and pasting the entire command set for each device.)
+This step must be performed on the machine where the device certificates were created, from within the `easyrsa3` directory. 
+The following commands will generate a shell script, `gen-tlskeys`, which will perform the necessary work.
 
 ```
 cat >gen-tlskeys <<'EOF'
@@ -381,7 +382,8 @@ EOF
 chmod 755 gen-tlskeys
 ```
 
-Now, for each device, simply enter this command. The argument (`$TAS`) is the name of the device's certificate. Output will consist of two Tasmota device commands which must be copied and pasted into the device's web console.
+Now, for each device, simply enter this command. As above, the variable (`$TAS`) is set to the name of the device's certificate. 
+Output will consist of two Tasmota device commands printed to the terminal window; these must be copied and pasted into the device's web console.
 
 ```
 ./gen-tlskeys $TAS
@@ -397,7 +399,7 @@ Run the `TLSKey1` and `TLSKey2` commands as obtained in the previous output. Ope
 
 ## Building BearSSL on Windows machines
 
-This can be a challenging task, and a method to accomplish this through Cygwin is described here. Cygwin also provides an alternative if problems are encountered in trying to run EasyRSA in a native Windows environment.
+This can be a challenging task, and a method to accomplish this through Cygwin is described here. 
 
 Here are the issues that need to be fixed before BearSSL will build under Cygwin. Many of them are related to the differences between Windows and Linux when it comes to programming socket I/O.
 - Commands for compiling and linking are `gcc`, not `cc`
@@ -409,7 +411,7 @@ The current git master branch of BearSSL is required -- the 0.6 version availabl
 
 Start by installing Cygwin, selecting the `gcc` and `make` packages in the `Devel` category, and the `openssl` package in the `Net` category.
 
-Open a Cygwin terminal window and change to the directory where BearSSL source was unpacked. To access a Windows letter drive such as `F:\somepath` in Cygwin, use the path `/cygdrive/f/somepath`. 
+Open a Cygwin terminal window and change to the directory where BearSSL source was cloned. To access a Windows letter drive such as `F:\somepath` in Cygwin, use the path `/cygdrive/f/somepath`. 
 
 All of the necessary patches are easily made by copying and pasting this set of commands into the Cygwin terminal window. This will create files needed to patch the BearSSL build. First, change to the top level BearSSL directory in the Cytwin window. After selecting the text in the window below, click in the Cygwin window and hit Control-Insert to paste, or right-click in the window and select Paste from the drop-down menu. You may need to hit Enter after doing this.
 
@@ -489,4 +491,4 @@ Executing the following commands should get the job done:
 make tools CONF=Cygwin
 ```
 
-The resulting `brssl.exe` file will be found in the `build` directory.
+The resulting `brssl.exe` file will be found in the `build` directory, and should be copied to the top level EasyRSA directory.
