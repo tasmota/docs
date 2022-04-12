@@ -96,8 +96,8 @@ Name|Description|Connection
 **SI114x** | UV Index, IR and Visible Light Sensor | I^2^C
 **Si7021** | Humidity and Temperature Sensor| I^2^C
 [**SK6812**](SK6812.md) | Addressable LEDs
-[**Smart Meter Interface**](Smart-Meter-Interface) | serial
-**SolaX X1** | SolaX X1 inverter| serial
+[**Smart Meter Interface**](Smart-Meter-Interface) | Smart Meter Interface | serial, gpio
+[**SolaX X1**](SolaX-X1) | SolaX Power X1 inverter | serial
 [**SPS30**](SPS30) | Particulate Matter| PM) | Sensor | I^2^C
 **T6703**<BR>**T6713** | Telaire T6700 Series CO~2~ sensor | I^2^C
 [**Téléinfo**](Teleinfo) | French energy measuring system | serial
