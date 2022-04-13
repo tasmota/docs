@@ -253,13 +253,19 @@ Choose an installation method:
     ![Scanning for networks](_media/web_installer_config1.jpg){ align=left }
     Once the installation is successful, click on **NEXT**. The installer will scan for Wi-Fi networks and select the strongest one. Use the dropdown to select between networks.
 
+    <p>
+
     ![Enter password](_media/web_installer_config3.jpg){ align=left }
     Enter the Wi-Fi password.
+
+    <p>
 
     ![Wait for Wi-Fi configuration](_media/web_installer_config4.jpg){ align=left }
     Wait until configuration completes and click **CONTINUE**
 
-    ![Complete](_media/web_installer_config4.jpg){ align=left }
+    <p>
+
+    ![Complete](_media/web_installer_config5.jpg){ align=left }
     From here click on **VISIT DEVICE** to enter the [WebUI](WebUI.md) for further configuration.
 
 
