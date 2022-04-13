@@ -440,18 +440,25 @@ The Tasmota SML script:
 ### Hager EHZ363, Apator Norax 3D (SML)
 
 ```
->D  
-
->B  
+>D
+>B
 ->sensor53 r
-
->M 1  
-+1,3,s,0,9600,SML  
-1,77070100010800ff@1000,Total consumption,KWh,Total_in,4  
-1,77070100020800ff@1000,Total Feed,KWh,Total_out,4  
-1,77070100100700ff@1,Current consumption,W,Power_curr,0  
-1,77070100000009ff@#,Meter Nr,,Meter_number,0  
-#  
+>M 1
++1,3,s,0,9600,SML
+1,77070100010800ff@1000,Total consumption,KWh,Total_in,4
+1,77070100020800ff@1000,Total Feed,KWh,Total_out,4
+1,77070100100700ff@1,Current consumption,W,Power_curr,0
+1,77070100200700ff@1,Voltage L1,V,Volt_p1,1
+1,77070100340700ff@1,Voltage L2,V,Volt_p2,1
+1,77070100480700ff@1,Voltage L3,V,Volt_p3,1
+1,770701001f0700ff@1,Amperage L1,A,Amperage_p1,1
+1,77070100330700ff@1,Amperage L2,A,Amperage_p2,1
+1,77070100470700ff@1,Amperage L3,A,Amperage_p3,1
+1,77070100510704ff@1,Phaseangle I-L1/U-L1,deg,phase_angle_p1,1 
+1,7707010051070fff@1,Phaseangle I-L27I-L2,deg,phase_angle_p2,1  
+1,7707010051071aff@1,Phaseangle I-L3/I-L3,deg,phase_angle_p3,1 
+1,770701000e0700ff@1,Frequency,Hz,frequency,0
+#
 ```
 
 ------------------------------------------------------------------------------
