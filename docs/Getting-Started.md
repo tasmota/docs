@@ -250,16 +250,16 @@ Choose an installation method:
 
 === "Using Tasmota Web Installer"
 
-    ![Scanning for networks](media/web_installer_config1.jpg){ align=left }
+    ![Scanning for networks](/media/web_installer_config1.jpg){ align=left }
     Once the installation is successful, click on **NEXT**. The installer will scan for Wi-Fi networks and select the strongest one. Use the dropdown to select between networks.
 
-    ![Enter password](media/web_installer_config3.jpg){ align=left }
+    ![Enter password](/media/web_installer_config3.jpg){ align=left }
     Enter the Wi-Fi password.
 
-    ![Wait for Wi-Fi configuration](media/web_installer_config4.jpg){ align=left }
+    ![Wait for Wi-Fi configuration](/media/web_installer_config4.jpg){ align=left }
     Wait until configuration completes and click **CONTINUE**
 
-    ![Complete](media/web_installer_config4.jpg){ align=left }
+    ![Complete](/media/web_installer_config4.jpg){ align=left }
     From here click on **VISIT DEVICE** to enter the [WebUI](WebUI.md) for further configuration.
 
 
