@@ -50,6 +50,17 @@ and in MQTT topic (according to TelePeriod):
 {"Time":"2020-01-01T00:00:00","AHT1X-0x38":{"Temperature":24.7,"Humidity":61.9,"DewPoint":16.8},"TempUnit":"C"}
 ```
 
+### Troubleshooting
+On some I2C sensors, like the AHT25, Tasmota might mistake the sensor for another one using the same address.
+This can be resolved by disabling the unneeded drivers.
+
+For our example AHT25, the address might get confused with the VEML6070 UV sensor. You can tell Tasmota to use the other driver by issuing the following commands in the console:
+
+- `I2CDriver12 0` to disable the VEML driver
+- `I2CDriver43 1` to enable the AHT driver
+
+An overview of all [I2C drivers](https://tasmota.github.io/docs/I2CDEVICES/#supported-i2c-devices) is available in the docs.
+
 
 ### Breakout Boards
 
