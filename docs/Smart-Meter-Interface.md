@@ -1562,6 +1562,33 @@ Beware that A and B MODBus connectors are switched!
 #
 ```
 
+### ABB B23 (M-Bus)
+Using the IR Port on left side of the devise. IR doesn't support MODBUS only M-Bus and EQ-Bus protocoll. 
+Configure the IR output at the device menu. This example is using 9600 baud and Adress 10h (16 decimal).  
+The meter is using equal parity 1 stop bit 9600E1
+The upper diode is TX the lower RX. My device is sending always 2 telegrams. I tried to add addional values by sending SND_UD telegram.
+I only receive the e5 response showing that the request was accepted. No change in response. The last telegram will end on a "0F xx 16" instead of a "1F xx 16", which will show that additional telegrams are available. If you can receive more telegrams, add alternating  107b108b16 - 105b106b16. One for each telegram.
+ This example will only work with address 10! the second last byte is a check sum. For this REQ_UD2 it is the sum of the 2 bytes before ( Adress and VIF). 
+    
+```
+>M 1
++1,3,rE1,0,9600,ABB,1,10,1040105016,107b108b16,105b106b16[,107b108b16[,105b106b16]] 
+1,081072bcd8@1,Meter ID,,ID,0 ; meter ID (BCD-8)
+1,0E8400bcd8@100,E Imp total,kWh,Imp,2 ; Total imported energy 0.01 kWh
+1,04A900ssSSssSSs@100,P total,W,P_tot,2 ; Total Power 0.01 W
+1,04A9FF8100ssSSssSSs@100,P L1,W,P_L1,2 ; L1 Power 0.01 W
+1,04A9FF8200ssSSssSSs@100,P L2,W,P_L2,2 ; L2 Power 0.01 W
+1,04A9FF8300ssSSssSSs@100,P L3,W,P_L3,2 ; L3 Power 0.01 W
+1,04FDC8FF8100uuUUuuUUs@10,U L1,V,U_L1,1 ; Voltage L1 0.1 V
+1,04FDC8FF8200uuUUuuUUs@10,U L2,V,U_L2,1 ; Voltage L2 0.1 V
+1,04FDC8FF8300uuUUuuUUs@10,U L3,V,U_L3,1 ; Voltage L3 0.1 V
+1,0AFFD900bcd4@100,*,Hz,F,2 ; Frequency
+1,0E84FF8100bcd8@100,E Imp L1,kWh,Imp-L1,2 ; L1 imported energy 0.01 kWh
+1,0E84FF8200bcd8@100,E Imp L2,kWh,Imp-L2,2 ; L2 imported energy 0.01 kWh 
+1,0E84FF8300bcd8@100,E Imp L3,kWh,Imp-L3,2 ; L3 imported energy 0.01 kWh
+#
+``` 
+    
 ### Itron (SML V1.04)
     
 The Itron electrical meter is a German end-user meter installed by EnBW. You can read values using an IR Sensor. The following script shows the meter number and the consuption and the generation of a Photovoltaik generator. 
