@@ -259,10 +259,10 @@ Choose an installation method:
     ![Wait for Wi-Fi configuration](_media/web_installer_config4.jpg){ align=left }
     Wait until configuration completes and click **CONTINUE**
 
-
-    From here click on **VISIT DEVICE** to enter the [WebUI](WebUI.md) for further configuration.
     ![Complete](_media/web_installer_config5.jpg){ align=left }
 
+    From here click on **VISIT DEVICE** to enter the [WebUI](WebUI.md) for further configuration.
+    
 
 === "Using Web UI"
 
