@@ -100,7 +100,7 @@ markdown_extensions:
   - meta
   - def_list
   - attr_list
-
+  - md_in_html
 
 extra_css:
   - 'assets/css/anchor-fix.css'

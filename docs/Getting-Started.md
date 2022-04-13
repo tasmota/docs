@@ -248,6 +248,21 @@ Choose an installation method:
 
 ## Initial Configuration
 
+=== "Using Tasmota Web Installer"
+
+    !(media/web_installer_config1.jpg){ align=left }
+    Once the installation is successful, click on **NEXT**. The installer will scan for WiFi networks and select the strongest one. Use the dropdown to select between networks.
+
+    !(media/web_installer_config3.jpg){ align=left }
+    Enter the WiFi password.
+
+    !(media/web_installer_config4.jpg){ align=left }
+    Wait until configuration completes and click **CONTINUE**
+
+    !(media/web_installer_config4.jpg){ align=left }
+    From here click on **VISIT DEVICE** to enter the [WebUI](WebUI.md) for further configuration.
+
+
 === "Using Web UI"
 
     Tasmota provides a wireless access point for easy Wi-Fi configuration. 
