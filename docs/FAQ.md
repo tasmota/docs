@@ -9,6 +9,8 @@ With some Wi-Fi routers (i.e. Linksys with DD-WRT), you may have conflicts with 
 
 DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can resolve connectivity issues.
 
+Some Tasmota devices also have issues with OFDMA (WiFi 6) enabled on the 2.4GHz band.  Disabling OFDMA can solve problems with WiFi failing to connect. 
+
 ### I entered wrong Wi-Fi information
 If you have a device with a button and the button is configured as a component in the Tasmota settings (e.g., GPIO0 - Button1), you can try pressing the button to force the device into [Wi-Fi configuration mode](Buttons-and-Switches#multi-press-functions) with 4&nbsp;short presses of the button. **Note:** Since version 8.3.0 this requires 6&nbsp;short presses instead.
 
@@ -206,16 +208,14 @@ In case you're using a template you created yourself or found in our Templates R
 
 ### Sensors do not show values
 Make sure your sensor is properly wired and the GPIOs assigned. 
-Your vanilla `tasmota.bin` doesn't have complete sensor support. Make sure you've installed tasmota-sensors.bin that support the largest number of sensors. Some sensors require enabling in the code and compiling your own binary. See [Builds](Firmware-Builds) for a comprehensive list of supported components.
+Your vanilla `tasmota.bin` doesn't have complete sensor support. Make sure you've installed tasmota-sensors.bin that support the largest number of sensors. Some sensors require enabling in the code and compiling your own binary. See [Firmware-Builds](Firmware-Builds) for a comprehensive list of supported components.
 
 ### Timers trigger at the wrong time
 Tasmota devices must have a their time of day set properly in order for **any** timers to work properly. Check the log in the web UI Console to see if the device's time is set correctly. There are two elements to setting the time: 1. obtaining the UTC time, and, 2. local Daylight Saving Time policies.  
 
 There are three methods available to set the device time: 1. [NTP](http://www.ntp.org/), 2. An [RTC peripheral](DS3231), or 3. the [`Time`](Commands.md#time) command. The typical method Tasmota uses to set its time is to obtain the time from an Internet NTP server. It can also query an NTP server on its local network (e.g., a network router with an NTP service, a Raspberry Pi running the NTP daemon, the [Chrony add-on](https://github.com/hassio-addons/addon-chrony) in Home Assistant, etc.).  
 
-Check the information about your router's features. If the router provides an NTP server, be sure to configure it properly. If the Tasmota device receives its IP address via DHCP from the router, Tasmota will request its time sync from the router's time server. This is managed by the Arduino core, not Tasmota ([\#5283](https://github.com/arendst/Tasmota/issues/5283#issuecomment-466888846)). Therefore, if the NTP server on the router is not configured, or configured improperly, the time on the Tasmota device could be wrong. If the router does not have a time server, this is not the problem.  
-
-If you cannot configure your router's time server to the correct time (e.g., a router provided by your ISP with no access to administration functions), you will need to set a static IP address on the Tasmota device. If the device does not request its address from a DHCP server (i.e., uses a static IP address), the time sync request is forced to `NTPSERVER1`. If can't connect, it tries `NTPSERVER2`. And finally `NTPSERVER3`. Ensure that these parameters are set appropriately and that the device can reach at least one of these time servers. You may want to consider setting up an NTP server locally. As long as the computer is able to set its time at some point from an Internet time server, this computer can serve as an NTP server for your Tasmota device(s). This can be the same computer that hosts your MQTT broker or home automation hub.  
+The time sync request is forced to `NTPSERVER1`. If can't connect, it tries `NTPSERVER2`. And finally `NTPSERVER3`. Ensure that these parameters are set appropriately and that the device can reach at least one of these time servers. You may want to consider setting up an NTP server locally. As long as the computer is able to set its time at some point from an Internet time server, this computer can serve as an NTP server for your Tasmota device(s). This can be the same computer that hosts your MQTT broker or home automation hub.  
 
 You must also set the [`TimeZone`](Commands.md#timezone) and Daylight Saving Time policies ([`TimeDST`](Commands.md#timestd)/[`TimeSTD`](Commands.md#timedst)).  
 

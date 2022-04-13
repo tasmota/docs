@@ -54,16 +54,40 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 
 **Alexa**: you can use Philips Hue emulation, the light will appear as White light with Dimmer.
 
-**Leading edge dimmer** You can also configure a leading edge dimmer on 230V with the 1 Channel configuration. In this case you need a TRIAC and a zero-Cross detection that give a pulse with every crossing of the 0V of the sinus curve. 
+**Leading edge dimmer** You can also configure a leading edge dimmer on 230V with the 1 Channel configuration. In this case you need a TRIAC and a zero-Cross detection that give a pulse with every crossing of the 0V of the sinus curve. This is currently ONLY supported on ESP8266. A working ESP32 is "work in progress".
 
-For example:
+Robotdyn AC Dimmer example:
 <img style="float:right;height:120px" alt="CCT" src="https://ae01.alicdn.com/kf/HTB1TrhBQpXXXXbsaFXXq6xXFXXX8/AC-Licht-lampe-dimmen-LED-lampe-und-motor-Dimmer-Modul-1-Kanal-3-3-V-5.jpg">
 
-Define a COUNTER with the same number as the PWM (e.g. COUNTER1, PWM1). Set 'SETOPTION99 1' to enable detection of the raising edge of the zero-crossing. Connect zero-Crossing to COUNTER and PWM to PWM. Set `PWMFREQUENCY 100` or 120 depending on the frequency of the main in your country. Additionally it is recommended to set `LEDTABLE 0` for normal lamps or motors. Due to the fact that the counter is used for detection you have to set sleepmode manually: `Setoption 60 0` and `Sleep 250`
+Define a COUNTER with the same number as the PWM (e.g. COUNTER1 & PWM1). You will need to connect the output of PWM1 to an input as COUNTER1. 
+Connect zero-Crossing to GPIO of COUNTER4
 
 |Configuration|(see below)|
 |---|---|
-|Commands|`Power`, `Dimmer`|
+|Dimmer1| PWM1, COUNTER1|
+|Dimmer2| PWM2, COUNTER2 (optional)|
+|Dimmer3| PWM3, COUNTER3 (optional)|
+|Zero-Cross PIN| COUNTER4 (mandatory|
+    
+example schematic:
+    
+<img height="240" alt="ACDimmer" src="https://user-images.githubusercontent.com/24524506/155886267-56433a26-614a-43d7-8b30-3e38ef9931d7.png">
+
+example Config:
+    
+<img width="190" alt="Screenshot 2022-02-27 at 15 34 19" src="https://user-images.githubusercontent.com/24524506/155886737-8139f80b-510f-4b61-937a-b6929aa27531.png">
+
+    
+Preferably before connecting the ZC & PWM perform the following commands:
+    
+`SETOPTION99 1` -> to enable detection of the raising edge of the zero-crossing.<br/>
+`PWMFREQUENCY 100` -> (50hz) or 120 (60hz) depending on the frequency of the main in your country.<br/>
+`LEDTABLE 0` -> for normal lamps or motors.<br/>
+
+
+|Configuration|(see below)|
+|---|---|
+|Commands|`Power`, `Dimmer`, `Channel`, `Fade`, `Speed`|
 |Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction)|
 
 <br clear="right"/>

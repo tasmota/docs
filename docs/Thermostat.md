@@ -9,7 +9,7 @@ To use it, you must [compile your build](Compile-your-build). Add the following 
 #define USE_THERMOSTAT
 #endif
 ```
-----
+
 
 !!! info "Control over heating and cooling as a true HVAC unit"
 

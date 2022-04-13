@@ -1,5 +1,49 @@
 # TLS Secured MQTT
-!!! failure "This feature is not included in precompiled binaries"     
+!!! failure "This feature is included in ESP32 but not included in ESP8266 precompiled binaries (except ZBBridge)"
+
+Starting with version 10.0.0.4, TLS now support dual mode, depending of the value of `SetOption132`:
+
+- `SetOption132 0` (default): the server's identity is checked against pre-defined Certificate Authorities. There is no further configuration needed. Tasmota includes the following CAs:
+  - [LetsEncrypt R3 certificate](https://letsencrypt.org/certificates/), RSA 2048 bits SHA 256, valid until 20250915
+  - [Amazon Root CA](https://www.amazontrust.com/repository/), RSA 2048 bits SHA 256, valid until 20380117, used by AWS IoT
+- `SetOption132 1`: Fingerprint validation. This method works for any server certificate, including self-signed certificates. The server's public key is hashed into a fingerprint and compared to a pre-recorded value. This method is more universal but requires an additional configuration (see below)
+
+There is no performance difference between both modes.
+
+## Fingerprint Validation
+
+The fingerprint is now calculated on the server's Public Key and no longer on its Certificate. The good news is that Public Keys tend to change far less often than certificates, i.e. LetsEncrypt triggers a certificate renewal every 3 months, the Public Key fingerprint will not change after a certificate renewal. The bad news is that there is no `openssl` command to retrieve the server's Public Key fingerprint.
+
+The original Fingerprint V1 algorithm had a security potential vulnerability, it has been replaced by a new more robust method v2. To avoid breaking compatibility, Tasmota will automatically detect when a fingerprint v1 is present and will convert it automatically to V2.
+
+**Important**: the following tool [to calculate it](https://github.com/issacg/tasmota-fingerprint) from your certificate is now deprecated. The fingerprint will work once and will be replaced with the new fingerprint.
+
+So to simplify your task, we have added two more options: 1/ auto-learning of the fingerprint, 2/ disabling of the fingerprint validation altogether.
+
+#### Option 1: Fingerprint auto-learn
+If set, Tasmota will automatically learn the fingerprint during the first connection and will set the Fingerprint settings to the target fingerprint. To do so, use one of the following commands:
+
+```
+#define MQTT_FINGERPRINT1     "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+```
+or
+```
+#define MQTT_FINGERPRINT2     "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+```
+
+#### Option 2: Disable Fingerprint
+You can completely disable server fingerprint validation, which means that Tasmota will not check the server's identity. This also means that your traffic can possibly be intercepted and read/changed, so this option should only be used on trusted networks, i.e. with an MQTT on your local network. **YOU HAVE BEEN WARNED!**
+
+To do so, set one of the Fingerprints to all 0xFF:
+
+```
+#define MQTT_FINGERPRINT1     "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF"
+```
+Tasmota also provide an option to authenticate clients using an x509 certificate and a public key for authentication, instead of username/password.
+
+For details on how to set up your local instance of Mosquitto, check the article [Self-signed-Mosquitto](Self-signed-Mosquitto).
+
+## Compiling TLS for ESP8266
 
 To use it you must [compile your build](Compile-your-build) do the follow changes:
 1 - Add the following to `user_config_override.h`:
@@ -33,44 +77,17 @@ At the Tasmota configuration, you need to enable to use the TLS Version. This is
 
 If you are using LetsEncrypt to generate your server certificates, you should activate `#define USE_MQTT_TLS_CA_CERT`. Tasmota will transparently check the server's certificate with LetsEncrypt CA. If you are generating self-signed certificates or prefer fingerprints, read below.
 
-## Fingerprint Validation
-
-The fingerprint is now calculated on the server's Public Key and no longer on its Certificate. The good news is that Public Keys tend to change far less often than certificates, i.e. LetsEncrypt triggers a certificate renewal every 3 months, the Public Key fingerprint will not change after a certificate renewal. The bad news is that there is no `openssl` command to retrieve the server's Public Key fingerprint, although [a tool exists to calculate it](https://github.com/issacg/tasmota-fingerprint) from your certificate.
-
-So to simplify your task, we have added two more options: 1/ auto-learning of the fingerprint, 2/ disabling of the fingerprint validation altogether.
-
-#### Option 1: Fingerprint auto-learn
-If set, Tasmota will automatically learn the fingerprint during the first connection and will set the Fingerprint settings to the target fingerprint. To do so, use one of the following commands:
-
-```
-#define MQTT_FINGERPRINT1     "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
-```
-or
-```
-#define MQTT_FINGERPRINT2     "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
-```
-
-#### Option 2: Disable Fingerprint
-You can completely disable server fingerprint validation, which means that Tasmota will not check the server's identity. This also means that your traffic can possibly be intercepted and read/changed, so this option should only be used on trusted networks, i.e. with an MQTT on your local network. **YOU HAVE BEEN WARNED!**
-
-To do so, set one of the Fingerprints to all 0xFF:
-
-```
-#define MQTT_FINGERPRINT1     "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF"
-```
-Tasmota also provide an option to authenticate clients using an x509 certificate and a public key for authentication, instead of username/password.
-
-For details on how to set up your local instance of Mosquitto, check the article [Self-signed-Mosquitto](Self-signed-Mosquitto).
-
 ## Limitations
 
-Starting with 6.5.0.15, AxTLS has been replaced with [BearSSL](https://bearssl.org/). This uses less memory, typically 6.0k constantly, and an additional 6.8k during TLS connection. This makes TLS compatible with Web and Hue/Wemo emulation.
+On ESP8266, starting with 6.5.0.15, AxTLS has been replaced with [BearSSL](https://bearssl.org/). This uses less memory, typically 6.0k constantly, and an additional 6.8k during TLS connection.
+
+On ESP32, BearSSL provides a much lighter footprint than MbedTLS (~45kB instead of ~150kB) and continues to be used by Tasmota.
 
 Main limitations are:
 
-- Your SSL/TLS server must support TLS 1.2 and the `RSA_WITH_AES_128_GCM_SHA256` cipher - which is the case with the default Mosquitto configuration
-- The server certificate must have an RSA private key (max 2048 bits) and the certificate must be signed with RSA and SHA256 hash. This is the case with default LetsEncrypt certificates.
-- Your SSL/TLS should support TLS 1.2 MFLN to limit buffer to 1024 bytes. If MFLN is not supported, it will still work well, as long as the server does not send any message above 1024 bytes (which should be ok, since Tasmota cannot parse MQTT messages above 1024 bytes)
+- Your SSL/TLS server must support TLS 1.2 and the `ECDHE_RSA_WITH_AES_128_GCM_SHA2566` cipher - which is the case with the default Mosquitto configuration
+- The server certificate must have an RSA private key (max 2048 bits) and the certificate must be signed with RSA and SHA256 hash. This is the case with default LetsEncrypt certificates. ESP32 supports by default RSA private keys up to 4096 bits, ESP8266 must be compiled with option `-DUSE_4K_RSA` to support 4096 private keys.
+- Your SSL/TLS should support TLS 1.2 MFLN to limit buffer to 1024 bytes. If MFLN is not supported, it will still work well, as long as the server does not send any message above 1024 bytes. On ESP32 buffers are raised to 2048 bytes.
 
 -----------
 
@@ -78,6 +95,8 @@ Main limitations are:
 ## Implementation Notes
 
 Arduino Core switched from AxTLS to BearSSL in 2.4.2, allowing further optimization of the TLS library footprint. BearSSL is designed for compactness, both in code size and memory requirements. Furthermore it is modular and allows for inclusion of only the code necessary for the subset of crypto-algorithms you want to support.
+
+**All numbers below are for ESP8266**
 
 Thanks to BearSSL's compactness and aggressive optimization, the minimal TLS configuration requires just **34.5k of Flash** and **6.7k of Memory**. The full-blown AWS IoT version with full certificate validation requires 48.3k of Flash and 9.4k of Memory.
 

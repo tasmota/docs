@@ -1,4 +1,4 @@
-!!! info "**Component** is anything wired to the ESP8266/ESP8255 chip to be controlled by or send data to it."
+!!! info "**Component** is anything wired to the ESP8266/ESP8285 chip to be controlled by or send data to it."
 
 <a href="../_media/components.png" target="_blank"><img src="../_media/components.png" style="float:right;height:10em;margin:10px"></img></a>
 
@@ -32,18 +32,18 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 6        | 640      | I2C SDA         | I2C serial data pin, used with any I2C component (sensors, displays, ...)                  |
 | 7        | 1376     | WS2812          | Addressable LEDs such as WS281X or Neopixel                                                |
 | 8        | 1056     | IRsend          | IR Transmitter LED                                                                         |
-| 9        | 160      | Switch 1        | Switch                                                                                     |
-| 10       | 161      | Switch 2        | Switch                                                                                     |
-| 11       | 162      | Switch 3        | Switch                                                                                     |
-| 12       | 163      | Switch 4        | Switch                                                                                     |
-| 13       | 164      | Switch 5        | Switch                                                                                     |
-| 14       | 165      | Switch 6        | Switch                                                                                     |
-| 15       | 166      | Switch 7        | Switch                                                                                     |
-| 16       | 167      | Switch 8        | Switch                                                                                     |
-| 17       | 32       | Button 1        | Button active low, internal pull-up resistor                                                |
-| 18       | 33       | Button 2        | Button active low, internal pull-up resistor                                                |
-| 19       | 34       | Button 3        | Button active low, internal pull-up resistor                                                |
-| 20       | 35       | Button 4        | Button active low, internal pull-up resistor                                                |
+| 9        | 160      | Switch 1        | Switch, internal pull-up resistor                                                          |
+| 10       | 161      | Switch 2        | Switch, internal pull-up resistor                                                          |
+| 11       | 162      | Switch 3        | Switch, internal pull-up resistor                                                          |
+| 12       | 163      | Switch 4        | Switch, internal pull-up resistor                                                          |
+| 13       | 164      | Switch 5        | Switch, internal pull-up resistor                                                          |
+| 14       | 165      | Switch 6        | Switch, internal pull-up resistor                                                          |
+| 15       | 166      | Switch 7        | Switch, internal pull-up resistor                                                          |
+| 16       | 167      | Switch 8        | Switch, internal pull-up resistor                                                          |
+| 17       | 32       | Button 1        | Button active low, internal pull-up resistor                                               |
+| 18       | 33       | Button 2        | Button active low, internal pull-up resistor                                               |
+| 19       | 34       | Button 3        | Button active low, internal pull-up resistor                                               |
+| 20       | 35       | Button 4        | Button active low, internal pull-up resistor                                               |
 | 21       | 224      | Relay 1         | Relay                                                                                      |
 | 22       | 225      | Relay 2         | Relay                                                                                      |
 | 23       | 226      | Relay 3         | Relay                                                                                      |

@@ -99,6 +99,7 @@ markdown_extensions:
   - pymdownx.tilde
   - meta
   - def_list
+  - attr_list
 
 
 extra_css:
@@ -157,10 +158,11 @@ nav:
     - Projects and Tutorials: Tutorials.md
     - For Developers: For-Developers.md
   - ESP32:
-    - Features: ESP32.md
+    - Tasmota32 Features: ESP32.md
     - Berry: Berry.md
     - Bluetooth Low Energy: Bluetooth_ESP32.md
     - LVGL: LVGL.md
+    - OpenHASP: OpenHASP.md
     - Touch GPIOs: TouchPin.md
     - Supported Devices: "https://templates.blakadder.com/esp32"
   - Smart Home Integrations:
@@ -230,6 +232,7 @@ nav:
     - SDS011.md
     - SHT30.md
     - SK6812.md
+    - Smart-Meter-Interface.md
     - SolaX-X1.md
     - SPS30.md
     - TX2x.md

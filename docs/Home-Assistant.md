@@ -13,7 +13,7 @@ Home Assistant has different options of adding Tasmota devices:
 
 1. Official Tasmota integration (**preferred**)
 2. Manual configuration by editing configuration.yaml
-3. MQTT discovery (_deprecated due to breaking changes for light in Home Assistant 2021.5_)
+3. MQTT discovery (_deprecated due to many breaking changes in Home Assistant_)
 
 ## Tasmota Integration
 
@@ -53,7 +53,7 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmot
 Types of devices not listed above still require [manual configuration](#editing-configurationyaml)
 
 
-!!! warning "Zigbee devices paired in Tasmota will **NOT** be discovered in Home Assistant"
+!!! warning "Zigbee and Bluetooth devices paired in Tasmota will **NOT** be discovered in Home Assistant"
 
 ### Transition from MQTT Discovery
 
@@ -903,7 +903,7 @@ cover:
     payload_available: "Online"
     payload_not_available: "Offline"
     position_topic: "stat/%topic%/RESULT"
-    value_template: >
+    position_template: >
       {% if ('Shutter1' in value_json) and ('Position' in value_json.Shutter1) %}
         {{ value_json.Shutter1.Position }}
       {% else %}
@@ -1117,6 +1117,16 @@ automation:
 
 !!! tip
     If you want all your devices to switch to autodiscovery method go through Developer tools - MQTT by publishing to grouptopic `cmnd/tasmotas/SetOption19` with payload `1`
+
+!!! example "Get most recent Tasmota firmware version number from github"
+
+```yaml
+sensor:
+  - platform: command_line
+    name: "Tasmota (latest version)"
+    command: 'curl -s https://api.github.com/repos/arendst/Tasmota/tags | grep "name" | sort --version-sort -r | head -n 1 | sed -E "s/\s*\"name\": \"(.*)\",*/\1/g"'
+    scan_interval: 86400 # check once every day
+```
 
 ![](https://cdn.pbrd.co/images/HY47i1b.jpg)
 

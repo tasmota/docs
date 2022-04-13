@@ -24,7 +24,7 @@ Assign a [component](Components) to a GPIO.
    
 - `GPIO14 2` configures sensor AM2301 to GPIO14_    
 - `Backlog GPIO14 5; GPIO4 6` sets I<sup>2</sup>C SCL to GPIO14 and I<sup>2</sup>C SDA to GPIO4
-   Tasmota will auto-detect all connected and supported I<sup>2</sup>C devices. If you have conflicting I<sup>2</sup>C addresses see [I2CDevices](I2CDEVICES)
+   Tasmota will auto-detect all connected and supported I<sup>2</sup>C devices. If you have conflicting I<sup>2</sup>C addresses see [I2CDEVICES](I2CDEVICES)
 
 _[`GPIOs All`](Commands.md#gpios) shows list of all available components by name and index_
 
@@ -117,7 +117,7 @@ The ESP8266 and ESP8285 have 17 GPIO pins (0-16) but several are [reserved or ha
 GPIO 1 and 3 are used as TX and RX of the hardware Serial port (UART), so in most cases, you can’t use them as normal I/O while sending/receiving serial data.
 GPIO 1, 2 and 3 will cause boot failure if LOW on boot - use with care.
 
-![best ESP8266 pins](https://github.com/thehookup/Wireless_MQTT_Doorbell/blob/master/GPIO_Limitations_ESP8266_NodeMCU.jpg)
+![best ESP8266 pins](https://raw.githubusercontent.com/thehookup/Wireless_MQTT_Doorbell/master/GPIO_Limitations_ESP8266_NodeMCU.jpg)
 
 #### Boot Mode Pins
 Some I/O pins have a special function during boot: They select 1 of 3 boot modes:
@@ -139,7 +139,58 @@ Internal pull-up/-down resistors
 GPIO 0-15 all have a built-in pull-up resistor, just like in an Arduino. GPIO16 has a built-in pull-down resistor.
 
 ### PWM
-Unlike most Atmel chips (Arduino), the ESP8266 doesn’t support hardware PWM, however, software PWM is supported on all digital pins. The default PWM range is 10-bits @ 1kHz, but this can be changed (up to >14-bit@1kHz). Check [Restrictions](#restrictions).
+
+**ESP8266** Unlike most Atmel chips (Arduino), the ESP8266 doesn’t support hardware PWM, however, software PWM is supported on all digital pins. The default PWM range is 10-bits @ 1kHz, but this can be changed (up to >14-bit@1kHz). Check [Restrictions](#restrictions).
+
+ESP8266 has only software and supports 5 PWM channels. `PWM` and `PWMi` GPIOs are used in two modes depending on `SetOption15`: either as lights or as pure PWM.
+
+**ESP32** has hardware PWM support, named `ledc`, up to 16 channels depending on CPU type. You can mix lights and pure PWM channels. The first 5 PWM are reserved for lights, unless `SetOption15 0`. For pure PWM GPIOs, you can assign any PWM number, they don't need to be continuous. For example you can use `PWM 1/2/3` for a 3-channel RGB light, and `PWM 6` & `PWM 10` for pure PWM at the same time.
+
+CPU type|PWM channels
+:---|:---
+ESP32|16 channels
+ESP32S2|8 channels
+ESP32C3|6 channels
+
+Channels are assigned to GPIOs in a first-in-first-serve way, and PWM GPIOs are assigned first. If `ledc` channel are exhausted, an error will appear in logs.
+
+The following GPIOs use `ledc` PWM channels:
+
+GPIO type|Description
+:---|:---
+`PWM` or `PWMi`|`PWM 1..5` are used for lights, `PWM O6..11` are general purpose PWM.
+`LedPwmMode`|Assigns a `Led` GPIO to a PWM channel
+`Buzzer`|If `BuzzerPwm` is used
+`Backlight`|PWM backlighting for displays
+`XCLK`|Used as a clock generator for webcam
+
+Example of `PWM` console output with 16 PWM assigned. By default PWM range is 0..1023.
+
+```
+RSL: RESULT = {"PWM":{"PWM1":410,"PWM2":286,"PWM3":286,"PWM4":0,"PWM5":0,"PWM6":0,"PWM7":0,"PWM8":0,"PWM9":0,"PWM10":0,"PWM11":0,"PWM12":0,"PWM13":0,"PWM14":0,"PWM15":0,"PWM16":0}}
+```
+
+#### Auto-phasing of PWM
+
+(ESP32 only) By default, phases of consecutive PWM are disaligned so that a PWM pulses starts when the pulse of the previous PWM channels ends. This helps in distributing over time all pulses and have a smoother effect on power supply.
+
+With auto-phasing:
+![PWM_autophase](https://user-images.githubusercontent.com/49731213/151606010-cf24d1bc-348f-493d-b5aa-9aa867c41b77.jpg)
+
+
+You can revert this with `SetOption134 1`; all phases are synces and all pulses start at the same moment.
+![PWM_sync](https://user-images.githubusercontent.com/49731213/151606020-e1e95f27-40ae-4e1b-8e13-64309e74e1c4.jpg)
+
+
+#### H-bridge
+
+H-bridge is an electronic circuit that switches the polarity of a voltage applied to a load. It uses 2 PWM outputs to control the current sent to each polarity.
+
+When auto-phasing is enabled, you can use 2 consecutive PWM to drive a H-bridge siunce PWM phases don't overlap - under the condition that the sum of both PWM don't exceed `1023`.
+
+**Important**: you must always ensure that the sum of both PWM channels is less or equal than `1023`. Values over this threshold can damage the circuit.
+
+
 
 ### Analog Input
 The ESP8266 has a single analog input, with an input range of 0 - 1.0V. If you supply 3.3V, for example, you will damage the chip. Some boards like the NodeMCU have an on-board resistive voltage divider, to get an easier 0 - 3.3V range. You could also just use a trimpot as a voltage divider.

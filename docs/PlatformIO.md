@@ -1,7 +1,7 @@
 How to setup and configure PlatformIO for Tasmota compilation and upload.
 
 ## Download PlatformIO
-Download PlatformIO from http://platformio.org/
+Download PlatformIO from https://platformio.org/
 
 ## Install PlatformIO
 Install PlatformIO to a known folder.

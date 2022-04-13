@@ -7,6 +7,7 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 ```
 #ifndef USE_SOLAX_X1
 #define USE_SOLAX_X1
+#endif
 ```
 
 There are additional `#define` compiler directive parameters which can be used, if they are necessary for your setup.  
@@ -19,6 +20,7 @@ If your inverter has two PV-inputs, you can activate the 2nd one:
 ```
 #ifndef SOLAXX1_PV2
 #define SOLAXX1_PV2
+#endif
 ```
 ## General
 This module reads runtime values from a [Solax X1](https://www.solaxpower.com) device via RS485 Modbus interface and publishes them to MQTT.  
@@ -75,6 +77,12 @@ You have to configure the module or the template. Select `SolaxX1 Tx` and `Solax
 ### Result
 When every thing works you will see the current data on the main page. They are also provided via MQTT.  
 ![x1-example](_media/solax-x1/x1-example_300.png)
+
+!!! tip
+	To send a MQTT telemetry message immediately on every change of power, you can set a [`PowerDelta`](Commands#powerdelta) value.  
+	E.g. `PowerDelta 101` for every change of at least 1 W.
+
+
 ### Inverter status
 The inverter status field represents the value reported by the inverter, when the inverter is sending data.
 In the case when no data is received, it will be display `off`. As the converter is only working, when _the sun is shining_, you will see `off` normally at night or too low light.  

@@ -15,7 +15,7 @@ The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?
 <img src="../_media/ch340g.png" style="margin:5px;float:right;width:200px"></img>
 * [FTDI FT232](https://www.ftdichip.com/Products/ICs/FT232R.htm) - these adapters have a lot of fakes in the market so buy only from reliable sources ([example](https://www.sparkfun.com/products/13746)). Buy only the variant with a separate 3.3V regulator on PCB! 
 * [CP2102](https://www.silabs.com/documents/public/data-sheets/cp2102-9.pdf) or [PL2303](http://www.prolific.com.tw/UserFiles/files/ds_pl2303HXD_v1_4_4.pdf) - works with certain devices, but using an external 3.3V supply might be necessary. Not recommended for beginners!
-* [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) You can also use a NodeMCU (or similar) as a reliable serial-to-USB adapter if you disable the onboard ESP by bridging the RST and GND pins, and connect TX and RX straight to another ESP82xx instead of crossed.
+* [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) You can also use a NodeMCU (or similar) as a reliable serial-to-USB adapter if you disable the onboard ESP by bridging GND to the RST or EN pin, and connect TX and RX straight to another ESP82xx instead of crossed.
 * [RaspberryPi](Flash-Sonoff-using-Raspberry-Pi) - only for advanced users. External 3.3V supply necessary.
 
 !!! note "Don't forget to install drivers for your serial-to-USB adapter."
@@ -24,6 +24,10 @@ The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?
     Some adapters can be switched between 3.3V and 5V for the data pins, but still provide 5V on the power pin which will irreparably destroy your device.  You **MUST** make sure the data (RX and TX) and VCC pins are set for 3.3V. 
 
 Some devices, such as [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU), [D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html) or [M5Stack products](https://m5stack.com/), have an USB upload port and the serial-to-USB adapter built in.
+
+Many CH340G devices will not work, the "golden CH340G" has a voltage regulator on it to supply enough power to the ESP device - many do not.  <img src="../_media/golden-ch340g.png" style="margin:5px;float:right;width:200px"></img> The ESP requires at least 150mA, many 3.3V serial programmers do not supply this much current as many serial programming tasks do not require a large amount of power.
+
+When using an external 3.3V supply, simply ensure the ground (GND) of both are connected, this ensures a common ground. A PC power supply can be a source for 3.3V DC power.
 
 #### Soldering Tools
 To solder you'll of course need a soldering iron, soldering tin and some flux. If you're new to soldering check out some soldering tutorial videos while you're at it.
@@ -57,7 +61,7 @@ Latest _**development**_ branch binaries are available only from our [OTA server
 
 - [**Tasmota Web Installer**](https://tasmota.github.io/install/) - flash Tasmota using a Chrome based browser for ESP82XX and ESP32
 - [**Tasmotizer**](https://github.com/tasmota/tasmotizer) - flashing and firmware download tool _for ESP82XX only_. (Windows, Linux or Mac) 
-- [**ESP-Flasher**](https://github.com/Jason2866/ESP_Flasher) - GUI flasher for Tasmota based on esptool.py for ESP82XX *and* ESP32. (Windows or Mac)
+- [**ESP-Flasher**](https://github.com/Jason2866/ESP_Flasher) - GUI flasher for Tasmota based on esptool.py for ESP82XX *and* ESP32. (Windows, Linux or Mac)
 - [**Esptool.py**](https://github.com/espressif/esptool) - the official flashing tool from Espressif for ESP82XX *and* ESP32. (Requires Python)
 
 ??? info "Compiling Tools (optional)"
@@ -138,19 +142,17 @@ If everything went well, you are now in Programming Mode and ready to continue w
 
 If you have followed [Hardware preparation](#hardware-preparation), your device should be in _Programming Mode_ and ready for a Tasmota firmware binary to be installed.
 
-!!! tip "You may want to back up the device manufacturer's firmware on the one in a million chance you don't like Tasmota."
+!!! tip "You may want to back up the device manufacturer's firmware on the one in a million chance you don't like Tasmota."  
+  
+<script src="../extra_javascript/web_flasher.js"></script>
+<!-- Hard coded hack to get the postion in tabbed set after that. Must be placed before the tabbed set. Tabbed set MUST not be altered in its structure!! -->
+<span id='web_installer'> 
+
 
 Choose an installation method:
 
 === "Web Installer :material-google-chrome:"
-    With a Chrome based browser open [https://tasmota.github.io/install](https://tasmota.github.io/install) and follow the instructions.
-    
-     ![Web Installer](_media/web_installer.jpg)
-
-    Tasmota Web Installer will install an appropriate build for your device. 
-
-     ![Web install in progress](_media/web_installer_3.jpg)![Web install done](_media/web_installer_4.jpg)
-
+    Flash Tasmota directly from your web browser.
 
 === "Tasmotizer! :material-linux: :material-apple: :material-microsoft-windows:"
     Tasmotizer! is specifically designed for use with Tasmota with an easy to use GUI and [esptool.py](https://github.com/espressif/esptool) under the hood.
@@ -242,13 +244,12 @@ Choose an installation method:
     - [**Sonoff DIY**](Sonoff-DIY) - OTA flash for select Sonoff devices **Does not work anymore**
     - [**esp2ino**](https://github.com/elahd/esp2ino) - OTA flash for select Wyze devices. **Does not work anymore**
 
-You've successfully flashed your device with Tasmota but now you need to connect the freshly tasmotised device to your Wi-Fi network. 
+
 
 ## Initial Configuration
 
 === "Using Web UI"
 
-     #### Set up Wi-Fi 
     Tasmota provides a wireless access point for easy Wi-Fi configuration. 
 
     <img alt="Tasmota AP" src="../_media/wificonfig1.jpg" style="margin:10px;float:left;width:250px"></img>Connect your device to a power source and grab your smartphone (or tablet or laptop or any other web and Wi-Fi capable device). Search for a Wi-Fi AP named _**tasmota_XXXXXX-####**_ (where _XXXXXX_ is a string derived from the device's MAC address and _####_ is a number) and connect to it. _In this example the Wi-Fi AP is named **tasmota_3D5E26-7718**._ 
@@ -298,11 +299,9 @@ You've successfully flashed your device with Tasmota but now you need to connect
 
     Now is the time to set up [MQTT](MQTT) and the last remaining, but equally important, step:
 
-    #### Set up Device
-
     Set up your device's feature using a [Template](Templates) in **Configuration - Configure Template** or [Module](Modules) in **Configuration - Configure Module**.
 
-    #### Configure Other (optional)
+    **Configure Other (optional)**
 
     Configure your device name which is displayed in webUI and used for [Home Assistant discovery](Home-Assistant.md). 
 
@@ -319,8 +318,8 @@ You've successfully flashed your device with Tasmota but now you need to connect
      * **[Putty](https://www.putty.org/)** - popular client available on every platform
      * **[Minicom](https://www.acmesystems.it/minicom)** - one of many Linux terminals
 
-     !!! tip 
-         Enable _local echo_ so that you can see what is typed and transmitted to the device. Enable **Append CR+LF** since every request needs to end with `<CR><LF>`. 
+      !!! tip 
+          Enable _local echo_ so that you can see what is typed and transmitted to the device. Enable **Append CR+LF** since every request needs to end with `<CR><LF>`. 
 
     *In this example [Termite](https://www.compuphase.com/software_termite.htm) on Windows is used.*
 
@@ -354,8 +353,8 @@ You've successfully flashed your device with Tasmota but now you need to connect
 
     [Commands](Commands) and Backlog are powerful and in time you can learn to configure almost everything (NTP servers, longitude and latitude, custom device options, etc) with a few copy and paste moves.
 
-    !!! tip 
-        Keep your personal configuration in a text file and simply copy and paste the backlog commands to a newly flashed device.
+      !!! tip 
+          Keep your personal configuration in a text file and simply copy and paste the backlog commands to a newly flashed device.
 
 ## After Configuration
 

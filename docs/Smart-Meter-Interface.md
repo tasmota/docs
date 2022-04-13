@@ -26,6 +26,7 @@ Additional features can be enabled by adding the following `#define` compiler di
 |MAX_METERS n| (default 5) Maximum number of meters. Decrease this to 1 for example if you havea meter with many lines and lots of characters per descriptorline.|
 |TMSBSIZ n| (default 256) Maximum number of characters in serial IRQ buffer (should always be larger than SML_BSIZ and even larger on high baud rates).|
 |SML_DUMP_SIZE n | (default 128) Maximum number of characters per line in dump mode. Only use if you have long strings comin in and they truncate. |
+|USE_ESP32_SW_SERIAL| enables additional software serial channels for ESP32, (receive only), define pin with '-' sign to assign to software serial |
 |USE_SML_SCRIPT_CMD | If present, this  enables some special SML script cmds and allows access to sml vars in other parts of the script. Is needed by some of the examples below.
 |SML_REPLACE_VARS | If present, this allows replacement of any text in descriptor by script text variables. Useful if several occurrences of a text occupies a lot of space and you get short of script buffer. Readability may get worse so only makes sense on large descriptors. Note: to use `%` symbol un measurement units, you need to escape it like `%%`.
 
@@ -133,13 +134,14 @@ e.g for modbus:  mN1,mN2,mE1,mE2,mO1,mO2
 
 Each meter typically provides multiple metrics (enegry, voltage, power, current etc.) which it measures. An entry for each metric to be collected must be specified. Up to 20 entries may be defined (unless stated differently by `SML_MAX_VARS` as a larger number in `user_config_override.h`). An entry defines how to decode the data and put it into variables.
 
-> `<M>,<decoder>@<scale>,<label>,<UoM>,<var>,<precision>`  
+> `<M>,<decoder>@<scale><offs>,<label>,<UoM>,<var>,<precision>`  
 
 | Parameter | Description |
 | :--- | :--- |
 | `<M>` | The meter number to which this decoder belongs |
-| `<decoder>` | **Decoding specification**: OBIS as ASCII; SML, EBus, VBus, MODBus, RAW as HEX ASCII etc. _No space characters allowed in this section!_ <BR> **OBIS**: ASCII OBIS code terminated with `(` character which indicates the start of the meter value<BR>**SML**: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value<BR>**EBus, MODBus, RAW** - hex values of data blocks to compare:<BR> - `xx` = ignore value  (1 byte) or `xN` = ignore N bytes<BR> - `ss` = extract a signed byte<BR> - `uu` = extract an unsigned byte<BR>  - `UUuu` = extract an unsigned word (high order byte first)<BR> - `uuUU` = extract an unsigned word (low order byte first)<BR> - `UUuuUUuu` = extract an unsigned long word (high order byte first)<BR> - `SSss` = extract a signed word (high order byte first)<BR> - `ssSS` = extract a signed word (low order byte first)<BR> - `SSssSSss` = extract an signed long word (high order byte first)<BR> - `ffffffff` = extract a float value - IEEE754 decode<BR> - `FFffFFff` = extract a reverse float value - IEEE754 decode<BR>**VBus** - hex values of data blocks to compare:<BR> - `AAffffaddrff0001ffff` = VBus-specific hex header: `AA`-sync byte, `addr`-the reversed address of the device. To find his out first look up the known [hex address of the device](http://danielwippermann.github.io/resol-vbus/vbus-packets.html). E.g. Resol DeltaSol BS Plus is `0x4221`. Reverse it (without `0x`) and you will get `21 42` hex characters. Now turn on raw dump mode using command `sensor53 d1` and look for rows starting with `aa`, containing your reversed address at position 4 and 5 and `00 01` hex characters at position 7 and 8. If found, the entire header will be 10 hex characters long including `aa` (20 ascii chars without space, e.g. for Resol DeltaSol BS Plus this will be `AA100021421000010774`). At position 9 you see the number of frames containing readable data. To turn off raw dump use `sensor53 d0`.<BR> - `v` = VBus protocol indicator<BR> - `oN` = extract data from offset `N` (see offsets of your device in [VBus protocol documentation](http://danielwippermann.github.io/resol-vbus/vbus-packets.html))<BR> - `u` or `s` = extract unsigned or signed data<BR> - `w` or `b` = extract word or byte<BR>**End of decoding**: `@` indicates termination of the decoding procedure.<BR>- `(` following the `@` character in case of obis decoder indicates to fetch the 2. value in brackets, not the 1. value.  (e.g. to get the second value from an obis like `0-1:24.2.3(210117125004W)(01524.450*m3)`)<BR>- decoding multiple values coming in brackets after each other is possible with `(@(0:1`, `(@(1:1`, `(@(2:1` and so on  (e.g. to get values from an obis like `0-0:98.1.0(210201000000W)(000000.000*kWh)(000000.000*kWh)`)<BR>- decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte. (e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`)<BR>- in case of MODBus, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition
+| `<decoder>` | **Decoding specification**: OBIS as ASCII; SML, EBus, VBus, MODBus, RAW as HEX ASCII etc. _No space characters allowed in this section!_ <BR> **OBIS**: ASCII OBIS code terminated with `(` character which indicates the start of the meter value<BR>**SML**: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value<BR>**EBus, MODBus, RAW** - hex values of data blocks to compare:<BR> - `xx` = ignore value  (1 byte) or `xN` = ignore N bytes<BR> - `ss` = extract a signed byte<BR> - `uu` = extract an unsigned byte<BR>  - `UUuu` = extract an unsigned word (high order byte first)<BR> - `uuUU` = extract an unsigned word (low order byte first)<BR> - `UUuuUUuu` = extract an unsigned long word (high order byte first)<BR> - `uuUUuuUU` = extract an unsigned long word (low order byte first)<BR> - `SSss` = extract a signed word (high order byte first)<BR> - `ssSS` = extract a signed word (low order byte first)<BR> - `SSssSSss` = extract a signed long word (high order byte first)<BR> - `ssSSssSS` = extract a signed long word (low order byte first)<BR> - on long word values if a trailing s is added word order is reversed<BR> - `ffffffff` = extract a float value - IEEE754 decode<BR> - `FFffFFff` = extract a reverse float value - IEEE754 decode<BR>if using **VBus** - hex values of data blocks to compare:<BR> - `AAffffaddrff0001ffff` = VBus-specific hex header: `AA`-sync byte, `addr`-the reversed address of the device. To find his out first look up the known [hex address of the device](http://danielwippermann.github.io/resol-vbus/vbus-packets.html). E.g. Resol DeltaSol BS Plus is `0x4221`. Reverse it (without `0x`) and you will get `21 42` hex characters. Now turn on raw dump mode using command `sensor53 d1` and look for rows starting with `aa`, containing your reversed address at position 4 and 5 and `00 01` hex characters at position 7 and 8. If found, the entire header will be 10 hex characters long including `aa` (20 ascii chars without space, e.g. for Resol DeltaSol BS Plus this will be `AA100021421000010774`). At position 9 you see the number of frames containing readable data. To turn off raw dump use `sensor53 d0`.<BR> - `v` = VBus protocol indicator<BR> - `oN` = extract data from offset `N` (see offsets of your device in [VBus protocol documentation](http://danielwippermann.github.io/resol-vbus/vbus-packets.html))<BR> - `u` or `s` = extract unsigned or signed data<BR> - `w` or `b` = extract word or byte<BR>**End of decoding**: `@` indicates termination of the decoding procedure.<BR>- `(` following the `@` character in case of obis decoder indicates to fetch the 2. value in brackets, not the 1. value.  (e.g. to get the second value from an obis like `0-1:24.2.3(210117125004W)(01524.450*m3)`)<BR>- decoding multiple values coming in brackets after each other is possible with `(@(0:1`, `(@(1:1`, `(@(2:1` and so on  (e.g. to get values from an obis like `0-0:98.1.0(210201000000W)(000000.000*kWh)(000000.000*kWh)`)<BR>- decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte. (e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`)<BR>- in case of MODBus, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition
 | `<scale>` | scaling factor (divisor) or string definition<BR>This can be a fraction (e.g., `0.1` = result * 10), or a negative value. When decoding a string result (e.g. meter serial number), use `#` character for this parameter _(Note: only one string can be decoded per meter!)_. For OBIS, you need a `)` termination character after the `#` character. |
+| `<offs>` | optional offset must precede with + or - sign, note: offset is applied before scale!|
 | `<label>` | web UI label (max. 23 characters) |
 | `<UoM>` | unit of measurement (max. 7 characters) |
 | `<var>` | MQTT label (max. 23 characters) | 
@@ -307,6 +309,12 @@ With `=` character at the beginning of a line you can do some special decoding. 
 !!! tip
     You can dump to your PC the raw data coming in if you use the module's hardware serial ports (1 and 3) as GPIOs of the script, [using Serial to TCP Bridge](https://tasmota.github.io/docs/Serial-to-TCP-Bridge/). Compile your firmware with `USE_TCP_BRIDGE`, disable the script and configure in module parameters `TCP Tx` and `TCP Rx`. After module reboot, start the server with command `TCPStart 8888`. Connect to this port from your PC to see or dump the data, in Linux it's as easy as `cat < /dev/tcp/IP.OF.YOUR.TASMOTA/8888 > rawdump.txt`. To revert to SML you need to set back both GPIO ports to `None`, enable the script and restart.
 
+## driver Commands  
+ - sensor53 r = resets the sml driver, must be applied in script >B section  
+ - sensor53 cx num = sets counter x (1 or 2) to number (persistant change)  
+ - sensor53 dm = sets dump mode for meter m (1...N), must be set to 0 for normal operation  
+ - sensor53 l x = set an optional LED gpio pin to indicate serial activity of a meter, set to 255 for disable  
+ - sensor53 m x = sets the meter from which to show activity via the l cmd  
 -----
 
 ## Smart Meter Descriptor examples
@@ -314,9 +322,12 @@ Look down below for script examples based on the following metering devices:
 
 - [JANZ C3801](#janz-c3801-modbus) (SML - MODBus)
 - [EMH ED300L](#emh-ed300l-sml) (SML)
+- [EMH ED300S](#emh-ed300s-sml) (SML)
+- [Digimeto GS303](#digimeto-gs303-sml) (SML)
 - [Hager EHZ363, Apator Norax 3D](#hager-ehz363-apator-norax-3d-sml) (SML)
 - [Hager EHZ161](#hager-ehz161-obis) (OBIS)
 - [Landis + Gyr ZMR120AR](#landis-gyr-zmr120ares2r2sfcs-obis) (OBIS, changing the baud rate during operation)
+- [Elster AS1440 / Honeywell AS1440](#elster--honeywell-as1440-obis) (OBIS, changing the baud rate during operation)
 - [COMBO Meter](#combo-meter-watergassml) (Water,Gas,SML)
 - [WOLF CSZ 11/300 Heater](#wolf-csz-11300-heater-ebus) (EBUs)
 - [SDM530](#sdm530-modbus) (MODBus)
@@ -324,6 +335,7 @@ Look down below for script examples based on the following metering devices:
 - [Janitza B23](#janitza-b23-modbus) (MODBus)
 - [Hager EHZ363](#hager-ehz363-sml-with-daily-values) (SML, with daily values)
 - [Iskra MT 174](#iskra-mt-174-obis) (OBIS)
+- [Iskra MT 175](#iskra-mt-175-sml) (SML)
 - [Iskra MT 681](#iskra-mt-681-sml) (SML)
 - [SBC ALE3](#sbc-ale3-modbus) (MODBus)
 - [SBC ALE3](#2-sbc-ale3-modbus) (MODBus, alternate)
@@ -335,7 +347,8 @@ Look down below for script examples based on the following metering devices:
 - [Sanxing SX6x1 (SxxU1x)](#sanxing-sx6x1-sxxu1x-ascii-obis) (OBIS - Ascii)
 - [Resol Deltasol BS Plus](#resol-deltasol-bs-plus-vbus) (VBus)
 - [Logarex LK13BE](#logarex-lk13be-obis) (OBIS)
-
+- [Peacefair PZEM004T V30](#peacefair-pzem004tv30-modbus ) (SML - MODBus)
+    
 --------------------------------------------------------
 
 ### JANZ C3801 (MODBus)
@@ -368,6 +381,7 @@ The Tasmota SML script:
 1,010406uuxxxxxxxx@i8:1,DCP,,DCP_P1,16
 #
 ```
+
 ------------------------------------------------------------------------------
 
 ### EMH ED300L (SML)  
@@ -386,6 +400,38 @@ The Tasmota SML script:
 2,770701000F0700FF@1,Aktuell,W,Power_curr,0  
 2,77070100010800FF@1000,Zählerstand Verb.,kWh,Tariflos,2  
 2,77070100020800FF@1000,Zählerstand Einsp.,kWh,Tariflos,2  
+#    
+```
+
+------------------------------------------------------------------------------
+
+### EMH ED300S (SML)
+
+```
+>D
+>B
+->sensor53 r
+>M 1
++1,3,s,0,9600,Main
+1,77070100100700ff@1,Power,W,power,0
+1,77070100010800FF@1000,Counter,kWh,counter,3
+#
+```
+
+------------------------------------------------------------------------------
+
+### Digimeto GS303 (SML)  
+
+```
+>D
+>B
+=>sensor53 r
+>M 1
++1,3,s,0,9600,GS303
+1,77070100010800ff@1000,Total Consumed,KWh,Total_in,3
+1,77070100100700ff@1,Current Consumption,W,Power_cur,0
+1,77070100020800ff@1000,Total Delivered,KWh,Total_out,3
+1,7707010060320101@#,Service ID,,Meter_id,0
 #    
 ```
 
@@ -668,6 +714,52 @@ NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh
 #
 ```
 
+    
+    
+    
+------------------------------------------------------------------------------
+    
+### Elster / Honeywell AS1440 (OBIS)
+    
+Based on Landis script with changed timings in the >F section, as AS1440 seems to be slower in responding.
+    
+```
+>D
+scnt=0
+res=0
+
+>B
+=>sensor53 r
+
+>F
+; count 100ms
+scnt+=1
+switch scnt
+case 3
+;set sml driver to 300 baud and send /?! as HEX to trigger the Meter
+res=sml(1 0 300)
+res=sml(1 1 "2F3F210D0A")
+
+;1700ms later \> Ack and ask for switching to 9600 baud
+case 20
+res=sml(1 1 "063035300D0A")
+
+;300ms later \> Switching sml driver to 9600 baud
+case 23
+res=sml(1 0 9600)
+
+;Restart sequence after 55x100ms
+case 55
+; 5500ms later \> restart sequence
+scnt=0
+ends
+
+>M 1
++1,3,o,0,9600,AS1440,1
+1,1-1:1.8.1(@1,Total_In,KWh,Total_In,3
+1,1-1:2.8.1(@1,Total_Out,KWh,Total_Out,3
+# 
+```
 ------------------------------------------------------------------------------
 
 ### COMBO Meter (Water,Gas,SML)
@@ -882,6 +974,30 @@ The script:
 ```
 
 ------------------------------------------------------------------------------
+    
+### Iskra MT 175 (SML)
+
+This meter needs a PIN to unlock the current power usage.
+You need to ask your provider.  
+
+The script:
+```
+>D
+>B
+->sensor53 r
+>M 1
++1,3,s,16,9600,MT175
+1,77070100010800ff@1000,E_in,kWh,E_in,1
+1,77070100020800ff@1000,E_out,kWh,E_out,1
+1,77070100100700ff@1,P,W,P,18
+1,77070100240700ff@1,L1,W,L1,18
+1,77070100380700ff@1,L2,W,L2,18
+1,770701004C0700ff@1,L3,W,L3,18
+1,77070100000009ff@#,Server_ID,,Server_ID,0
+#
+```
+
+------------------------------------------------------------------------------
 
 ### Iskra MT 681 (SML)
 
@@ -903,6 +1019,26 @@ The script:
 1,77070100000009ff@#,Service ID,,Meter_id,0|
 #
 ```
+
+The following script is for another version (`ISKRA eHZ-MT681-D4A51-K0p` from 2012) of the Iskra MT 681 with slightly other OBIS codes for the power values.
+
+The script:
+```
+>D
+>B
+=>sensor53 r
+>M 1
++1,3,s,0,9600,MT681
+1,77070100010800ff@1000,Gesamtverbrauch,KWh,Total_in,3
+1,770701000f0700ff@1,Leistung,W,Power_cur,0
+1,77070100150700ff@1,Leistung P1,W,Power_p1,0
+1,77070100290700ff@1,Leistung P2,W,Power_p2,0
+1,770701003d0700ff@1,Leistung P3,W,Power_p3,0
+1,77070100020800ff@1000,Gesamteinspeisung,KWh,Total_out,3
+1,77070100000009ff@#,Service ID,,Meter_id,0|
+#
+```
+
 ------------------------------------------------------------------------------
 
 ### SBC ALE3 (MODBus)
@@ -1047,10 +1183,10 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
 ->sensor53 r
 >M 1
 +1,3,m,0,19200,Trovis,1,2,rF7030009000E,rF703001C0004,F703006A
-1,F7031CUUuu@i0:10,Außentemp.,°C,Temp_Outside,1
-1,F7031CxxxxxxxxxxxxUUuu@i0:10,Vorlauftemp.,°C,Temp_Flow,1
-1,F7031CxxxxxxxxxxxxxxxxxxxxxxxxxxxxUUuu@i0:10,Rücklauftemp.,°C,Temp_Return,1
-1,F7031CxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxUUuu@i0:10,Speichertemp.,°C,Temp_Vessel,1
+1,F7031CSSss@i0:10,Außentemp.,°C,Temp_Outside,1
+1,F7031CxxxxxxxxxxxxSSss@i0:10,Vorlauftemp.,°C,Temp_Flow,1
+1,F7031CxxxxxxxxxxxxxxxxxxxxxxxxxxxxSSss@i0:10,Rücklauftemp.,°C,Temp_Return,1
+1,F7031CxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxSSss@i0:10,Speichertemp.,°C,Temp_Vessel,1
 1,F70308UUuu@i1:1,MesswertImp-h,imp/h,Metric_ImpH,0
 1,F70308xxxxUUuu@i1:100,Messwertm3-h,m³/h,Metric_M3H,2
 1,F70308xxxxxxxxUUuu@i1:10,AA10-10V,V,Metric_AA10,1
@@ -1138,7 +1274,25 @@ Example reading of the two-direction model using GPIO 3 - P_in power reading wil
 1,0-0:96.1.255*255(@#),Seriennummer,,serial,0
 #
 ```
+Alternative script running on a Wemos D1 mini on hardware serial pin 3 for the Q3DB1024 two direction.
+```
+>D
+>B
+=>sensor53 r
+>M 1
++1,3,o,0,9600,Haupt,1
+1,1-0:1.7.0*255(@1,P_in,W,P_in,18
+1,1-0:1.8.0*255(@1,E_in,kWh,E_in,19
+1,1-0:2.8.0*255(@1,E_out,kWh,E_out,19
+1,1-0:21.7.0*255(@1,L1,W,L1,18
+1,1-0:41.7.0*255(@1,L2,W,L2,18
+1,1-0:61.7.0*255(@1,L3,W,L3,18
+1,1-0:0.0.0*255(@1,Netzbetreiber-ID,,NetID,0
+1,0-0:96.1.255*255(@#),Seriennummer,,serial,0
+#    
+```    
 
+    
 Apply following patch to src/TasmotaSerial.cpp:
 ```
 --- a/lib/default/TasmotaSerial-3.2.0/src/TasmotaSerial.cpp
@@ -1332,10 +1486,10 @@ r="1,AA100021421000010774"
 >M 1
 +1,3,v,0,9600,Solar
 %r%vo12ut@#,time,,zeit,1
-%r%vo0uw@10,S1 COL,°C,sens1,1
-%r%vo2uw@10,S2 TST1,°C,sens2,1
-%r%vo4uw@10,S3 TST2,°C,sens3,1
-%r%vo6uw@10,S4 TR,°C,sens4,1
+%r%vo0sw@10,S1 COL,°C,sens1,1
+%r%vo2sw@10,S2 TST1,°C,sens2,1
+%r%vo4sw@10,S3 TST2,°C,sens3,1
+%r%vo6sw@10,S4 TR,°C,sens4,1
 %r%vo10ub@b0:1,R1 PUMP,,relay1,0
 %r%vo10ub@b1:1,R2 VALVE,,relay2,0
 %r%vo8ub@1,Pump1 speed,%%,pump1,0
@@ -1402,7 +1556,7 @@ Beware that A and B MODBus connectors are switched!
 
 ### Itron (SML V1.04)
     
-The electrical Meter is an German End-User Meter installed by EnBW. To read values is used an IR Sensor. The following script showes the meter number an the consuption and the egneration of an Photovoltaik generator. 
+The Itron electrical meter is a German end-user meter installed by EnBW. You can read values using an IR Sensor. The following script shows the meter number and the consuption and the generation of a Photovoltaik generator. 
 
 ```
 >D
@@ -1415,6 +1569,23 @@ The electrical Meter is an German End-User Meter installed by EnBW. To read valu
 1,77070100020800ff@1000,Erzeugung,kWh,ELZ_PV_2.8.0,1
 #
 ``` 
+
+This script additionally reads the power in watts. It has en enhanced precision of 4 decimal places for the total consumption. Be sure to turn on the full precision at the meter using a flashlight (if you see `inF=Off`, hold for 5 seconds until you see `inF=On`)
+
+```
+>D
+>B
+=>sensor53 r
+;Set teleperiod to 20sec  
+tper=10  
+>M 1
++1,3,s,0,9600,Power
+1,77070100600100ff@#,Zählernummer,,Meter_Number,0
+1,77070100010800ff@1000,Verbrauch,kWh,Total_in,4
+1,77070100100700ff@1,Leistung,W,Power_curr,0
+1,77070100020800ff@1000,Erzeugung,kWh,Total_out,4
+#
+```    
     
 ### eBZ DD3 (OBIS)
 
@@ -1424,7 +1595,7 @@ There are two communication interfaces:
   * The INFO interface on the front, with a metal backplate. Pushes a reduces OBIS ASCI datagram every second.
   * The MSB interface on the top, no metal backplate. Pushes a full OBIS ASCI datagram every second.    
     
-There are two types available using differen communication settings: 
+There are two types available using different communication settings: 
   * OD-type: 7 data bits, even parity, one stop bit, 9600 baud (9600 7E1)
   * SM-type: 8 data bits, no parity, one stop bit, 9600 baud (9600 8N1) 
 
@@ -1491,6 +1662,76 @@ Apply following patch to src/TasmotaSerial.cpp:
      if (m_hardswap) {
        Serial.swap();
 ```
+For the SM-type meter DD3 2R06 DTA SMZ1 the following script worked with Tasmota 9.5.0, without having to apply the above patch, because it uses 8N1 for communication.
+```
+>D
+>B
+;TelePeriod 30
+=>sensor53 r
+>M 1
+; Device: eBZ DD3 2R06 DTA SMZ1
+; protocol is D0 SML HEX
+; 9600@7E1 for OP-type devices, 9600@8N1 for SM-type devices
++1,3,s,0,9600,SML,1
+; Zählerstand zu +A, tariflos, 
+; Zählerstände Auflösung 10 µW*h (6 Vorkomma- und 8 Nachkommastellen)
+1,77070100010800FF@100000000,Energie Bezug,kWh,1_8_0,8
+; Zählerstand zu +A, Tarif 1
+1,77070100010801FF@100000000,Energie Bezug T1,kWh,1_8_1,8
+; Zählerstand zu +A, Tarif 2
+1,77070100010802FF@100000000,Energie Bezug T2,kWh,1_8_2,8
+; Zählerstand zu -A, tariflos
+1,77070100020800FF@100000000,Energie Export,kWh,2_8_0,8
+; Summe der Momentan-Leistungen in allen Phasen, Auflösung 0,01W (5 Vorkomma- und 2 Nachkommastellen)
+1,77070100100700FF@1,Leistung,W,16_7_0,16
+; Momentane Leistung in Phase Lx, Auflösung 0,01W (5 Vorkomma- und 2 Nachkommastellen)
+1,77070100240700FF@1,Leistung L1,W,36_7_0,16
+1,77070100380700FF@1,Leistung L2,W,56_7_0,16
+1,770701004C0700FF@1,Leistung L3,W,76_7_0,16
+; Spannung in Phase Lx, Auflösung 0,1V (nur über MSB)
+;1,77070100200700FF@1,Spannung L1,V,32_70,1
+;1,77070100340700FF@1,Spannung L2,V,52_7_0,1
+;1,77070100480700FF@1,Spannung L3,V,72_7_0,1
+; Statuswort, 4 Byte Information über den Betriebszustand, HEX string
+; tasmota can decode one string per device only!
+;1,1-0:96.5.0*255@#),Status1,,96_5_0,0
+;1,1-0:96.8.0*255@#),Status2,,96_8_0,0
+; Geräte-Identifikation, Nach DIN 43863-5 
+1,77070100000009FF@#),Identifikation,,96_1_0,0
+;1,77070100000000FF@#),Identifikation,,0_0_0,0
+#
+```
+### Peacefair PZEM004TV30 (MODBUS)
+PZEM004T V30 multiple meters on Modbus
+       
+```
+>D
+>B
+->sensor53 r
+>M 1
++1,3,m,0,9600,ENERGY,1,1,02040000,02040001,02040003,02040005,02040007,02040008,03040000,03040001,03040003,03040005,03040007,03040008,05040000,05040001,05040003,05040005,05040007,05040008
+1,=h<hr/>Sensor-1
+1,020404UUuuxxxxxxxx@i0:10,Voltage,V,Sensor-1-V,2
+1,020404UUuuUUuusxxxx@i1:1000,Current,A,Sensor-1-A,2
+1,020404UUuuUUuusxxxx@i2:10,Power,W,Sensor-1-W,2
+1,020404UUuuUUuusxxxx@i3:1000,Energy,kWh,Sensor-1-kWh,4
+1,020404UUuuxxxxxxxx@i4:10,Frequency,Hz,Sensor-1-hz,2
+1,020404UUuuxxxxxxxx@i5:100,Power Factor,PF,Sensor-1-PF,2
+1,=h<hr/>Sensor-2
+1,030404UUuuxxxxxxxx@i6:10,Voltage,V,Sensor-2-V,2
+1,030404UUuuUUuusxxxx@i7:1000,Current,A,Sensor-2-A,2
+1,030404UUuuUUuusxxxx@i8:10,Power,W,Sensor-2-W,2
+1,030404UUuuUUuusxxxx@i9:1000,Energy,kWh,Sensor-2-kWh,4
+1,030404UUuuxxxxxxxx@i10:10,Frequency,Hz,Sensor-2-hz,2
+1,030404UUuuxxxxxxxx@i11:100,Power Factor,PF,Sensor-2-PF,2
+1,=h<hr/>Sensor-5
+1,050404UUuuxxxxxxxx@i12:10,Voltage,V,Sensor-05-V,2
+1,050404UUuuUUuusxxxx@i13:1000,Current,A,Sensor-05-A,2
+1,050404UUuuUUuusxxxx@i14:10,Power,W,Sensor-05-W,2
+1,050404UUuuUUuusxxxx@i15:1000,Energy,kWh,Sensor-05-kWh,4
+1,050404UUuuxxxxxxxx@i16:10,Frequency,Hz,Sensor-05-hz,2
+1,050404UUuuxxxxxxxx@i17:100,Power Factor,PF,Sensor-05-PF,2
 
+#
+```
 -----
-        

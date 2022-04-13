@@ -1,8 +1,10 @@
 # Light and Versatile Embedded Graphics Library :material-cpu-32-bit:
 
+!!! info "Tasmota now supports OpenHASP templates which makes it much easier to start with LVGL. Check the [Tasmota OpenHASP](OpenHASP.md) documentation." 
+
 !!! info "This feature is included in tasmota32-lvgl.bin" 
 
-Supported version: LVGL v8.0.2, LodePNG v20201017, Freetype 2.10.4
+Supported version: LVGL v8.2, LodePNG v20201017, Freetype 2.10.4
 
 **LVGL** (_Light and Versatile Graphics Library_) is Tasmota's next generation display. It is powerful, lightweight and simple to use. It combines:
 
@@ -180,7 +182,7 @@ Touch screen are supported natively via Universal Display driver.
 Example:
 
 ```python
-colp = lv.colorwheel(scr)
+colp = lv.colorwheel(scr, false)
 colp.set_size(130, 130)
 colp.set_pos(10,30)
 ```
@@ -328,11 +330,75 @@ Finally create a `lv_btn` object with parent `scr`, set its size and position, a
 
 LVGL provides some pre-defined symbols like `lv.SYMBOL_OK`.
 
+## Advanced features and extensions
+
+### Screenshot
+
+Tasmota includes an easy way to take screenshots.
+
+Just use `lv.screenshot()` and a `BMP` file will be stored in the file system.
+
+Example:
+
+``` ruby
+> lv.screenshot()
+/screenshot-1642356919.bmp
+```
+
+Then download the file to your local computer. The file format is uncompressed BMP with 16 bits per pixel. It is highly recommended to then compress the image to PNG or JPG with the software of your choice.
+
+Warning: due to internal implementation limitations, the image is stored upside down. Don't forget to vertically revert the image.
+
+![screenshot-1642356919](https://user-images.githubusercontent.com/49731213/149672598-3ed79c40-7a7e-42e0-9bd9-9ec1a997ae69.png)
+
+
+### PNG Image support
+
+Support for PNG decoding depends on `#define USE_LVGL_PNG_DECODER` - which is enabled by default in Tasmota32-lvgl.
+
+You need to first store images on the file system, and simply load them through LVGL standard way. PNG identification depends on the `.png` extension.
+
+Example: store the following image as `Sunrise320.png`
+
+![Sunrise320.png](https://user-images.githubusercontent.com/49731213/149226013-257926a9-28f3-4316-b165-981c3ad4e1f8.png)
+
+``` ruby
+sunrise = lv.img(scr)                   # create an empty image object in the current screen
+sunrise.set_src("A:/Sunrise320.png")    # load "Sunrise320.png", the default drive letter is 'A:'
+sunrise.move_background()               # move the image to the background
+```
+
+![screenshot-1642357636](https://user-images.githubusercontent.com/49731213/149672938-e01264c4-1a8a-4e00-b217-01b35981d1bc.png)
+
+### Freetype fonts support
+
+Support for Freetype fonts depends on `#define USE_LVGL_FREETYPE` - which is **NOT** enabled by default in Tasmota32-lvgl.
+
+Bitmat fonts typically consume significant flash size because you need to embed the font at different size. Using FreeType vector fonts can bring more flexibility and options. You need to first upload the desired fonts on the Tasmota file system.
+
+To create the `lv_font` object, use `lv.load_freetype_font(name:string, size:int, type:int) -> nil or lv_font`. If the font is not found, the call returns `nil`. `type` can be `0` or `lv.FT_FONT_STYLE_NORMAL`, or a combination of `lv.FT_FONT_STYLE_ITALIC` and `lv.FT_FONT_STYLE_BOLD`.
+
+Example (after loading `lvgl_demo.be`) using `sketchbook.ttf` font:
+
+``` ruby
+sb120 = lv.load_freetype_font("sketchbook.ttf", 120, 0)
+tt = lv.label(scr)
+tt.set_style_bg_opa(lv.OPA_0, lv.PART_MAIN | lv.STATE_DEFAULT)
+tt.set_style_text_color(lv.color(0xFFFFFF), lv.PART_MAIN | lv.STATE_DEFAULT)
+tt.set_text("MQTT")
+tt.set_pos(10,40)
+tt.set_size(300,150)
+if sb120 != nil tt.set_style_text_font(sb120, lv.PART_MAIN | lv.STATE_DEFAULT) end
+```
+
+![lv_freetype_sketch](https://user-images.githubusercontent.com/49731213/149389674-6e325fc7-72ab-4cd0-9137-56c333cfbb7c.png)
+
+
 ## What's implemented and what's not?
 
 What's implemented currently:
 
-* LVGL 8.0.2
+* LVGL 8.1
 * All standard LVGL widgets are available, most of extras
 * Styles
 * File-system
@@ -388,6 +454,9 @@ Be aware that it adds 440Kb to you firmware, so make sure you have a partition w
 
 ## Goodies
 
+
+### Tasmota Logo
+
 Get a Tasmota logo:
 
 ```python
@@ -396,7 +465,7 @@ lv.start()
 
 # set background color to blue
 scr = lv.scr_act()
-scr.set_style_bg_color(lv_color(lv.COLOR_BLUE), lv.PART_MAIN | lv.STATE_DEFAULT)
+scr.set_style_bg_color(lv.color(lv.COLOR_BLUE), lv.PART_MAIN | lv.STATE_DEFAULT)
 
 # create a lv_img object and set it to Tasmota logo
 logo = lv_img(scr)
@@ -411,7 +480,7 @@ The logo is black, with anti-aliasing and transparency. You can now manipulate t
 ```python
 # recolor logo to white
 logo.set_style_img_recolor_opa(255, lv.PART_MAIN | lv.STATE_DEFAULT)
-logo.set_style_img_recolor(lv_color(lv.COLOR_WHITE), lv.PART_MAIN | lv.STATE_DEFAULT)
+logo.set_style_img_recolor(lv.color(lv.COLOR_WHITE), lv.PART_MAIN | lv.STATE_DEFAULT)
 
 # zoom by 125% - 100% is 256, so 125% is 320
 logo.set_zoom(300)
@@ -437,67 +506,54 @@ end
 animate_logo()
 ```
 
+### Calibrate a resitive Touch Screen
+
+Some touchscreens like [Lolin TFT 2.4 Touch Shields](https://www.wemos.cc/en/latest/d1_mini_shield/tft_2_4.html) use a resistive touchscreen controlled by `XPT2046`. Contrary to capacitive touchscreens, resistive touchscreens needs a per-device calibration.
+
+You can downlaod **[DisplayCalibrate.tapp](https://raw.githubusercontent.com/arendst/Tasmota/development/tasmota/berry/modules/DisplayCalibrate.tapp)**
+Tasmota Application which allows for easy calibration. In only a few steps, it will generate the universal display line `:M` with calibration information.
+
+1. First download **[DisplayCalibrate.tapp](https://raw.githubusercontent.com/arendst/Tasmota/development/tasmota/berry/modules/DisplayCalibrate.tapp)** application and upload it in the file system, and restart.
+
+2. Make sure you are in orientation `DisplayRotate 0`
+
+3. In the console, type the command `DisplayCalibrate`
+
+You will see the following screens. Click on all 4 crosses near corners.
+
+![ts_0](https://user-images.githubusercontent.com/49731213/149639165-a03a3864-1403-4f0c-8a7b-760db1ff926d.png)
+
+![ts_1_0](https://user-images.githubusercontent.com/49731213/149639166-360572ac-3e8c-4e9d-a3e4-62ff8d67896c.png)
+
+![ts_1_1](https://user-images.githubusercontent.com/49731213/149639168-cf7eb258-742c-4e53-a0ed-709f3b347deb.png)
+
+![ts_1_2](https://user-images.githubusercontent.com/49731213/149639169-2b7c9f22-7834-473f-83c7-39c32e94c461.png)
+
+![ts_1_3](https://user-images.githubusercontent.com/49731213/149639170-63681b67-cf37-4e73-9776-af762bc7d617.png)
+
+Note: measures are taken every 50 ms and are averaged, and requires at least 3 measures (150ms).
+
+If everything went well, you will see the following screen. After reboot, your touchscreen is ready and calibrate.
+
+![ts_ok](https://user-images.githubusercontent.com/49731213/149639215-cadf5d58-9d31-4278-8f21-927487ed7058.png)
+
+If the geometry is wrong, you will see the following screen and no change is done to `display.ini`
+
+![ts_nok](https://user-images.githubusercontent.com/49731213/149639222-32a9ead6-e4fe-4a63-a4fe-6c8fb7ad11c3.png)
+
+## Cookbook
+
+### Measuring user inactivity
+
+LVGL has a notion of screen inactivity, i.e. how long did the user not interact with the screen. This can be use to dim the display or turn it off after a moment of inactivity (like a screen saver). The time is in milliseconds. Full doc here: https://docs.lvgl.io/8/overview/display.html#inactivity
+
+``` python
+# time of inactivity in ms
+lv.disp().get_inactive_time()
+```
+
 ## Technical Details
 
 The code size impact is quite significant, so you probably need partitions with code at least set to 1856KB. Doing so leaves 320KB for file system on 4MB flash.
 
 Most of Berry code is solidified in Flash, so the initial RAM footpring is very low (a few KB).
-
-### Generating Berry-LVGL mapping
-
-There is an internal code generator to convert LVGL data structures, constants and functions to Tasmota/Berry code. Each time a change is made in LVGL or its mapping, you need to run the following (the messages are normal and show it is sucessful):
-
-```bash
-> cd tools/lv_berry
-> python3 convert.py
-  // Skipping unsupported return type: lv_group_user_data_t *
-  // Skipping unsupported return type: lv_indev_t *
-  // Skipping unsupported return type: lv_disp_t *
-  // Skipping unsupported return type: lv_style_list_t *
-  // Skipping unsupported return type: lv_obj_user_data_t *
-  // Skipping unsupported return type: const lv_font_t *
-  // Skipping unsupported return type: lv_text_decor_t
-  // Skipping unsupported return type: const lv_font_t *
-  // Skipping unsupported return type: const lv_anim_path_t *
-  // Skipping unsupported return type: const char **
-  // Skipping unsupported return type: lv_calendar_date_t *
-  // Skipping unsupported return type: lv_calendar_date_t *
-  // Skipping unsupported return type: lv_calendar_date_t *
-  // Skipping unsupported return type: lv_calendar_date_t *
-  // Skipping unsupported return type: const char **
-  // Skipping unsupported return type: const char **
-  // Skipping unsupported return type: lv_img_dsc_t *
-  // Skipping unsupported return type: lv_chart_series_t *
-  // Skipping unsupported return type: lv_chart_cursor_t *
-  // Skipping unsupported return type: const char **
-  // Skipping unsupported return type: lv_style_list_t *
-  // Skipping unsupported return type: lv_img_src_t
-  // Skipping unsupported return type: lv_draw_mask_res_t
-  // Skipping unsupported return type: lv_img_dsc_t *
-| callback types['lv_group_focus_cb', 'lv_event_cb', 'lv_signal_cb', 'lv_design_cb', 'lv_gauge_format_cb']
-```
-
-Then Berry mapping to C needs to be updated:
-
-```bash
-> cd lib/libesp32/Berry
-> make prebuild
-[Prebuild] generate resources
-done
-```
-
-Finally compile Tasmota.
-
-### LVGL mapping definition
-
-The reference model for LVGL is contained in the following files. They were manually built for this first version, but we will work in automating it (similarly to MicroPython):
-
-- `tools/lv_berry/lv_module.h` contains all LVGL constants (enum) and are added to `module lvgl`
-- `tools/lv_berry/lv_symbols.h` contains the font symbols strings (manually built), they are added to `module lvgl`
-- `tools/lv_berry/lv_widgets.h` contains the function signatures of all LVGL APIs in a single file (large file)
-
-The file generated are:
-
-- `tasmota/lvgl_berry/be_lv_c_mapping.h` which contains the signatures used by Tasmota to map LVGL to Berry (large file). The mapping contains the LVGL object structure, and for each function the C API address, expected types of parameters and return type.
-- `lib/libesp32/Berry/default/be_lvgl_widgets_lib.c` Berry C definition of classes
-- `lib/libesp32/Berry/default/be_lv_lvgl_module.c` Berry C definition of `module lvgl` with core functions and constants

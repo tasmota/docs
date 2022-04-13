@@ -45,7 +45,7 @@
 ![TYWE5P](_media/pinouts/TYWE5P.jpg)![TYWE5P Pinout](_media/pinouts/TYWE5P_pinout.jpg)
 
 ### PSF-B85/PSF-B01/PSF-B04
-![PSF-B85 Pinout](_media/pinouts/PSF-B85_pinout.jpg)
+![PSF-B Pinout](https://templates.blakadder.com/assets/pinouts/PSF-B.png)
 
 ### ESP8266-S3
 ![ESP8266-S3 Pinout](_media/pinouts/ESP-8266-S3_pinout.jpg)

@@ -630,3 +630,90 @@ end
 # BTN_STATE_CHECKED_PRESSED
 # BTN_STATE_CHECKED_DISABLED
 ```
+
+## Multi-Zone Heating Controller
+
+This project is a multi-zone heating controller written entirely in berry. It demonstrates the use of the persist module for saving/loading data; the webserver module for creating a custom "Manage Heating" user interface; dynamic loading of HTML from the file system; subscribing to a variety of rule triggers (using tasmota.add_rule); the implementation of custom commands (using tasmota.add_cmnd). It also makes good use of time functionaity (via tasmota.rtc, tasmota.time_dump, tasmota.set_timer and tasmota.strftime). The project also includes an LCD I2C driver for running a basic 20x4 display. The entire driver is implemented using just the tasmota.wire_scan method.
+
+[https://github.com/Beormund/Tasmota32-Multi-Zone-Heating-Controller](https://github.com/Beormund/Tasmota32-Multi-Zone-Heating-Controller)
+
+## Ethernet Network Flipper
+Used on board with Ethernet. If both Wi-Fi and Ethernet are active, turn off Wi-Fi. Place code in `autoexec.be` to execute on boot. You can call the function from Berry console any time with `netflip()`.
+
+```
+def netflip()
+  var eth = tasmota.eth().find('ip') != nil   #1
+  if tasmota.wifi().find('ip') != nil == eth  #2
+    tasmota.cmd('Wifi ' .. (eth ? 0 : 1))     #3
+  end
+end
+tasmota.set_timer(30000,netflip)              #4
+```
+1. store variable "eth" with Ethernet status - "true" if Ethernet IP exists and "false" if not
+2. check if wifi status is true and compare to eth status
+3. send command `Wifi` with parameter depending on eth variable. `..` is to concatenate a string. See Berry [manualg(https://github.com/berry-lang/berry/wiki/Chapter-3#-operator-1)
+4. set a timer to execute the netflip function 30000ms (30 seconds) after loading `autoexec.be`
+
+## TMP117 Driver
+
+[TomsTek@GitHub](https://github.com/TomsTek/tasmota-berry-TMP117-driver)
+
+## Call function at intervals
+
+This small helper function allows you to call a function at stable intervals, automatically correcting in case of latency or other deviations. Not suitable for very short intervals; while the delay interval is in milliseconds for consistency with the standard `tasmota.set_timer`, it would normally be seconds multiplied by 1000, like 60000 for every minute.
+
+```
+def set_timer_modulo(delay,f)
+  var now=tasmota.millis()
+  tasmota.set_timer((now+delay/4+delay)/delay*delay-now, def() set_timer_modulo(delay,f) f() end)
+end
+```
+
+## H-bridge control
+
+An H-bridge is an electronic circuit that switches the polarity of a voltage applied to a load. These circuits are often used in robotics and other applications to allow DC motors to run forwards or backwards.
+
+You can typically use 2 PWM channels to pilot a H-bridge, under the condition that both channels are never active at the same time; otherwise you may detroy your device. This means that phasing must be calculated so that one pulse started once the other pulse is inactive, and the sum of both dutys must not exceed 100%.
+
+The following Berry function ensures appropriate management of H-bridge:
+
+``` ruby
+#
+# H_bridge class in Berry to pilot a H-bridge device
+#
+
+class H_bridge
+  var gpio1, gpio2
+  var max
+
+  # init(phy_gpio1, phy_gpio2) - intialize H-bridge with the 2 GPIOs used to control it
+  def init(gpio1, gpio2)
+    self.gpio1 = gpio1
+    self.gpio2 = gpio2
+    self.max = 1023     # max value of duty
+  end
+
+  # set the value of both PWM values
+  def set(v1, v2)
+    if v1 < 0   v1 = 0 end
+    if v2 < 0   v2 = 0 end
+    if v1 + v2 > self.max
+      raise "value_error", "the sum of duties must not exceed 100%"
+    end
+
+    import gpio
+    gpio.set_pwm(self.gpio1, v1, 0)
+    gpio.set_pwm(self.gpio2, v2, v1)    # dephase by value v1
+  end
+end
+```
+
+Example of use:
+
+``` ruby
+var hbridge = H_bridge(12, 13)    # use GPIO12 and GPIO13
+hbridge.set(100,200)              # set values to 102/1023 and 204/1023, i.e. 10% and 20%
+
+hbridge.set(100,950)              # set values to 102/1023 and 950/1023, i.e. 10% and 93%
+BRY: Exception> 'value_error' - the sum of duties must not exceed 100%
+```

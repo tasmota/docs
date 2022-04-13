@@ -100,14 +100,13 @@ Mqtt#Disconnected<a id="MqttDisconnected"></a>|when MQTT is disconnected
 Power1#Boot<a id="PowerBoot"></a>|`Relay1` state before Wi-Fi and MQTT are connected and before Time sync but after `PowerOnState` is executed. Power#Boot triggers before System#Boot.<BR>This trigger's value will be the last state of `Relay1` if [`PowerOnState`](Commands.md#poweronstate) is set to its default value (`3`).
 Power1#State<a id="PowerState"></a>|when a power output is changed<br>use `Power1#state=0` and `Power1#state=1` for comparison, not =off or =on<br>Power2 for Relay2, etc.
 Rotary1#Pos1<a id="Rotary"></a>|when rotary encoder change. See [Use a rotary encoder](#use-a-rotary-encoder).
-Rules#Timer=1<a id="RulesTimer"></a>|when countdown `RuleTimer1` expires.
+Rules#Timer=&lt;x\>|when countdown `RuleTimer<x>` expires (x = `1..8`).
 Switch1#Boot<a id="SwitchBoot"></a>|occurs after Tasmota starts before it is initializated.
 Switch1#State<a id="SwitchState"></a>|when a switch changes to state. Will not trigger if SwitchTopic is set.<br>use `Switch1#state=0` and `Switch1#state=1` for comparison, not =off or =on<br>`0` = OFF<BR>`1` = ON<BR>`2` = TOGGLE<BR>`3` = HOLD (`SwitchTopic 0` must be set for this to trigger)<BR>`4` = INC_DEC (increment or decrement dimmer)<BR>`5` = INV (change from increment to decrement dimmer and vice versa)<BR>`6` = CLEAR (button released for the time set with `SetOption32`)
 System#Boot<a id="SystemBoot"></a>|occurs once after Tasmota is fully intialized (after the INFO1, INFO2 and INFO3 console messages). `System#Boot` triggers after Wi-Fi and MQTT (if enabled) are connected. If you need a trigger prior to every service being initialized, use `Power1#Boot`
 System#Init<a id="SystemInit"></a>|occurs once after restart before Wi-Fi and MQTT are initialized
 System#Save<a id="SystemSave"></a>|executed just before a planned restart
 Time#Initialized<a id="TimeInitialized"></a>|once when NTP is initialized and time is in sync
-Time#Initialized>120|once, 120 seconds after NTP is initialized and time is in sync
 Time#Minute<a id="TimeMinute"></a>|every minute
 Time#Minute\|5|every five minutes
 Time#Minute=241|every day once at 04:01 (241 minutes after midnight)
@@ -220,6 +219,14 @@ The value of a `Var<x>` and `Mem<x>` can be:
 - %sunset%
 - %utctime%
 - %topic%
+- %color%
+- %timer1% to %timer16%
+- %MacAddr%
+- %DeviceID%
+- %ZbDevice%
+- %ZbGroup%
+- %ZbCluster%
+- %ZbEndPoint%
 
 To set the value for `Var<x>` and `Mem<x>` use the command  
 
@@ -323,6 +330,7 @@ When the `<if-statement>` is preceded by other Tasmota commands you should use `
   LOCALTIME|local time, UNIX timestamp
   SUNRISE|current sunrise time (minutes past midnight)
   SUNSET|current sunset time (minutes past midnight)
+  COLOR|current color
 
 `<statement-list>`  
 - A Tasmota command (e.g.,`LedPower on`)  
@@ -394,6 +402,7 @@ UTCTIME|UTC time, UNIX timestamp, seconds since 01/01/1970
 LOCALTIME|local time, UNIX timestamp
 SUNRISE|current sunrise time (minutes past midnight)
 SUNSET|current sunset time (minutes past midnight)
+COLOR|current color
 
 !!! example
      `Mem1=((0.5*Var1)+10)*0.7`
@@ -621,7 +630,7 @@ The default Timer1..16 functionality allows for controlling one output to either
 Configure timer5 for rule execution when activated:  
 
 ```haskell
-Timer5 {"Arm":1,"Mode":0,"Time":"16:00","Days":"1111111","Repeat":1,"Action":3}
+Timer5 {"Enable":1,"Mode":0,"Time":"16:00","Days":"1111111","Repeat":1,"Action":3}
 ```
 
 #### Rule  
@@ -998,19 +1007,19 @@ Used a combination of Clock Timers and Rule to do this.
 **Timer 1:** Power ON switch at Sunset  
 Powers on the switch at sunset with an offset of 20 minutes. Repeats every day.  
 ```haskell
-Timer1 {"Arm":1,"Mode":2,"Time":"-00:20","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":1}
+Timer1 {"Enable":1,"Mode":2,"Time":"-00:20","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":1}
 ```
 
 **Timer 2:** Power OFF switch at Night.  
 Turns power OFF at 23.00hrs. Repeats every day.  
 ```haskell
-Timer2 {"Arm":1,"Mode":0,"Time":"23:00","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":0}
+Timer2 {"Enable":1,"Mode":0,"Time":"23:00","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":0}
 ```
 
 **Timer 3:** Trigger Luminance Rule at Sunrise  
 Start watching the Lux sensor 15 minutes after sunrise.  
 ```haskell
-Timer3 {"Arm":1,"Mode":1,"Time":"00:15","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":3}
+Timer3 {"Enable":1,"Mode":1,"Time":"00:15","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":3}
 ```
 
 **Rule 1:** Main Rule to check Luminance  
@@ -1417,6 +1426,37 @@ RUL: SSERIALRECEIVED#DATA=OFF performs "Power1 0"
 MQT: stat/mqttTopic/RESULT = {"POWER":"OFF"}
 MQT: stat/mqttTopic/POWER = OFF
 ```
+
+------------------------------------------------------------------------------
+
+### Processing JSON received from (Software)SerialBridge
+
+When using SerialBridge _(or SoftwareSerialBrigde)_, the received string will be published to Rules as SerialReceived _(or SSerialReceived)_. If the string starts with a `{` then Tasmota will parse the string as a JSON and make the different keys available for Rules. For example with the following string `{"DeviceID":"TM182","Temp":25.3,"Hum":50}`,
+it is possible to use any of the keys in the trigger.
+```
+rule1
+  ON SSerialReceived#DeviceID DO var1 %value% ENDON
+  ON SSerialReceived#Temp DO var2 %value% ENDON
+  ON SSerialReceived#Hum DO publish /some/topic/%var1% {"Temperature":%var2%,"Humidity":%value%} ENDON
+```
+
+The 1st and 2nd rules store the values for `Device` and `Temp` into variables. The last key triggers the 3rd rule, here re-publication on a different topic.
+
+Execution:
+```
+12:51:48.050 MQT: tele/nodemcu/SSERIALRECEIVED = {"SSerialReceived":{"DeviceID":"TM182","Temp":25.3,"Hum":50}}
+12:51:48.064 RUL: SSERIALRECEIVED#DEVICEID performs "var1 TM182"
+12:51:48.071 MQT: stat/nodemcu/VAR = {"Var1":"TM182"}
+12:51:48.083 RUL: SSERIALRECEIVED#TEMP performs "var2 25.3"
+12:51:48.091 MQT: stat/nodemcu/VAR = {"Var2":"25.3"}
+12:51:48.104 RUL: SSERIALRECEIVED#HUM performs "publish /some/topic/TM182 {"Temperature":25.3,"Humidity":50}"
+12:51:48.110 MQT: /some/topic/TM182 = {"Temperature":25.3,"Humidity":50}
+```
+
+!!! note 
+  It is important that the receive string strictly starts with the opening `{`. If other characters, such as
+  spaces or new line are inserted before, Tasmota will not par as a JSON. Characters after the 
+  closing `}` are not a problem.
 
 ------------------------------------------------------------------------------
 

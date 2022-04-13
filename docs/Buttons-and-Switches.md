@@ -27,7 +27,7 @@ In Tasmota a `Switch` is any switch or push-button additionally connected to a f
 
 By default a switch toggles the corresponding power state (f.e. `Switch1` controls `Power1`). Every time the switch gets flipped the power state of the relay toggles.
 
-If you want to detach switches from relays read [here](#detach-switches-based-on).
+If you want to detach switches from relays read [here](#detach-switches-with).
 
 !!! warning
     If you define a switch with a number higher than available power outputs it will default to controlling `Power1`. Example: Switch4 on a device with Power1 and Power2 will control `Power1`.
@@ -163,6 +163,7 @@ SwitchMode, as the name implies, applies _**ONLY**_ to GPIO configured in Tasmot
     ```console
     tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:00","Switch1":"OFF"}
     tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:00","Switch1":"ON"}
+    ```
 
     !!! tip "Also see `SetOption114` below."
 

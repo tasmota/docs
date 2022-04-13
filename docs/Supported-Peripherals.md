@@ -2,13 +2,15 @@
 
 Name|Description|Connection
 ---|---|---
-[**A4988**](A4988-Stepper-Motor-Controller)| Stepper Motor Controller
+**74x595**| 74x595 Shift Registers | gpio
+[**A4988**](A4988-Stepper-Motor-Controller)| Stepper Motor Controller 
 [**ADC**](ADC) | Analog input over A0 pin | analog
 **ADS111x** | A/D Converter | I^2^C
-[**AHT10<BR>AHT15**](AHT1x.md) | Asair AHT10 / AHT15 Temperature and Humidity Sensor | I^2^C
+[**AHT1x**](AHT1x.md)<BR>**AHT2x** | Asair AHT10/AHT15/AHT20/AHT21/AHT25/AM2301B Temperature and Humidity Sensor | I^2^C
 [**AM2301 / DHT21 <BR>AM2302 / DHT22<BR>AM2321**](AM2301) | Temperature and Humidity Sensor | gpio
+[**AM2301B**](AHT1x) | Temperature and Humidity Sensor<br><i>Use same driver as AHT2X</i>| I^2^C
 **AM2320** | Temperature and Humidity Sensor | gpio
-**AS608** | AS608 Optical and R503 Capacitive Fingerprint Sensor| I^2^C
+**AS608** | AS608 Optical and R503 Capacitive Fingerprint Sensor| serial
 [**AS3935**](AS3935) | Franklin Lightning Sensor| serial
 [**APDS-9960**](APDS-9960) |  Ambient Light, RGB Color and Proximity Sensor with Gesture Detection | I^2^C
 [**AZ 7798**](AZ-7798) | CO~2~ Meter Datalogger
@@ -30,7 +32,9 @@ Name|Description|Connection
 **[EZO](EZO)** | EZO series of chemical Sensors | I^2^C
 **F&F LE-01MR** | F&F LE-01MR Single Phase Modbus Energy meter
 [**GPS-NTP-server**](GPS-NTP-server) | GPS-NTP-server | serial
+[**GGreg20_V3**](https://github.com/iotdevicesdev/ggreg20-v3-tasmota-esp32-driver) | Ionizing Radiation Detector | gpio _(ESP32 only)_
 **HDC1080** | Texas Instruments HDC1080 Humidity and Temperature Sensor | I^2^C
+**HDC2010** | Texas Instruments HDC2010 Humidity and Temperature Sensor | I^2^C
 **[HM-10](HM-10)** |  BLE Bluetooth gateway | serial
 **[HM-17<BR>HM-16](HM-17)** |  Bluetooth iBeacon reader | serial
 **HP303B** | Barometric Pressure Shield| I^2^C
@@ -49,14 +53,14 @@ Name|Description|Connection
 **INA219**<BR>**ISL28022** | High-Side DC Current and Voltage Sensor| I^2^C
 **INA226** | High-Side or Low-side DC Current and Voltage Sensor| I^2^C
 [**IR Remote**](IR-Remote) | IR transmitter and receiver
-**K30, K70, S8** | CO~2~ Sensor| I^2^C |
+**K30, K70, S8** | SenseAir CO~2~ Sensors| serial | 
 [**LM75AD**](LM75AD) |  Temperature Sensor| I^2^C
 [**LMT01**](LMT01) | Temperature Sensor| gpio
 **MAX31855**<br>**MAX6675** | Thermocouple Sensor| SPI
 **MAX31865** | RTD Temperature Sensor Amplifier| SPI
 **MAX44009** | Ambient Light Sensor| I^2^C
 [**MCP23008<BR>MCP23017**](MCP230xx) |  I/O Expander| I^2^C
-[**MCP2515**](MCP230xx) | CAN bus controller | SPI
+**MCP2515** | CAN bus controller | SPI
 [**MCP9808**](MCP9808) |  Temperature Sensor| I^2^C
 [**MFRC522**](MFRC522) | NFC Tag Reader| SPI
 [**MGC3130**](MGC3130) | 3D Tracking and Gesture Controller
@@ -64,7 +68,8 @@ Name|Description|Connection
 [**MLX90614**](MLX90614) | MLX9061X Infrared Thermometer| I^2^C
 [**MLX90640**](MLX90640) | MLX90640 Far Infrared Thermal Sensor Array| I^2^C
 [**MPR121**](MPR121) | Proximity Capacitive Touch Sensor Controller (I^2^C)
-[**MPU6050**](MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer Sensor (I^2^C)[**NeoPool**](NeoPool) | Sugar Valley NeoPool Controller| serial
+[**MPU6050**](MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer Sensor (I^2^C)
+[**NeoPool**](NeoPool) | Sugar Valley NeoPool Controller| serial
 [**NRF24L01**](NRF24L01) | NRF24L01 as BLE-bridge for Mijia BT Sensors| SPI
 [**OpenTherm**](OpenTherm) | OpenTherm adapter| serial
 [**P1 Smart Meter**](P1-Smart-Meter) | Energy Meter| serial
@@ -88,7 +93,7 @@ Name|Description|Connection
 [**SDS011<BR>SDS021**](SDS011) | Laser Dust Sensor
 **SGP30** | Gas and Air Quality Sensor| I^2^C
 **SHT1x** | Temperature and Humidity Sensor| I^2^C
-[**SHT30**](SHT30) | Humidity & Temperature Sensor
+[**SHT30**](SHT30) | Humidity & Temperature Sensor| I^2^C
 **SI114x** | UV Index, IR and Visible Light Sensor | I^2^C
 **Si7021** | Humidity and Temperature Sensor| I^2^C
 [**SK6812**](SK6812.md) | Addressable LEDs

@@ -1,17 +1,30 @@
 # Berry Scripting Language :material-cpu-32-bit:
 
+!!! info "If you're new to Berry, have a look at [Berry Introduction (in 20 minutes of less)](Berry-Introduction.md)"
+
 !!! info "Berry Scripting is included in all Tasmota32 builds. It is not supported on ESP82xx"
+
+!!! info "If you plan to code in Berry, you should enable `#define USE_BERRY_DEBUG` which will give you much more details when coding"
 
 <img style="float:right;height:40px" alt="Berry logo" src="../_media/berry/berry.svg">
 
-See full examples in the [Berry Cookbook](Berry-Cookbook.md)
+Useful resources:
+
+- First time user of Berry: [Berry Introduction (in 20 minutes of less)](Berry-Introduction.md)
+- Full language documentation [The Berry Script Language Reference Manual](https://github.com/berry-lang/berry/wiki/Reference)
+- Tasmota extension of Berry, see below
+- Full examples in the [Berry Cookbook](Berry-Cookbook.md)
 
 ## Introduction to Berry
 
 Berry is the next generation scripting for Tasmota. It is based on the open-source Berry project, delivering an ultra-lightweight dynamically typed scripting language designed for lower-performance embedded devices.
 
-[**Berry Github**](https://github.com/Skiars/berry)
+[**Github**](https://github.com/Skiars/berry)
+[**Manual**](https://github.com/berry-lang/berry/wiki/Reference)
 
+!!! tip "Reference sheet"
+    Download [Berry Short Manual](https://github.com/Skiars/berry_doc/releases/download/latest/berry_short_manual.pdf) to get a list of basic functions and capabilities of Berry language
+    
 Berry Scripting allows simple and also advanced extensions of Tasmota, for example:
 
 - simple scripting
@@ -25,7 +38,6 @@ Berry Scripting takes it one step further and allows to build dynamic extensions
 - build complete Tasmota drivers
 - integrate native libraries like `lvgl` see [LVGL](LVGL.md)
 
-
 ### About the Berry language
 
 Berry has the following advantages:
@@ -37,11 +49,11 @@ Berry has the following advantages:
 - Simple: simple and natural MicroPython-eque syntax, supports garbage collection and easy to use FFI (foreign function interface).
 - RAM saving: With compile-time object construction, most of the constant objects are stored in read-only code data segments, so the RAM usage of the interpreter is very low when it starts.
 
-### Tasmota port
+## Tasmota Port
 
-Berry Scripting in only supported on Tasmota32 for ESP32. The RAM usage starts at ~10kb and will be later optimized. Berry uses PSRAM on ESP32 if available (PSRAM is external RAM attached to Esp32 via SPI, it is slower but larger than internal RAM.
+Berry Scripting in only supported on Tasmota32 for ESP32. The RAM usage starts at ~10kb and will be later optimized. Berry uses PSRAM on ESP32 if available (PSRAM is external RAM attached to ESP32 via SPI, it is slower but larger than internal RAM.
 
-## Quick Tutorial
+### Quick Start
 
 Click on *Configuration* then *Berry Scripting Console* and enjoy the colorful Berry console, also called REPL (Read-Eval-Print-Loop).
 
@@ -49,7 +61,9 @@ Click on *Configuration* then *Berry Scripting Console* and enjoy the colorful B
 
 !!! tip "Drag the bottom corner of each screen to change its size"
 
-### Getting familiar with the REPL
+The console is not designed for big coding tasks but it's recommended to use a code editor when dealing with many, many lines of code. An extension for Visual Studio Code exists to make writing Berry scripts even easier with colored syntax. Download the entire [folder](https://github.com/berry-lang/berry/tree/master/tools/plugins/vscode/) and copy to VSCode extensions folder.
+
+### REPL Console
 
 Try typing simple commands in the REPL. Since the input can be multi-lines, press ++enter++ twice or click "Run" button to run the code. Use ++arrow-up++ and ++arrow-down++ to navigate through history of previous commands.
 
@@ -83,6 +97,64 @@ Meanwhile the Tasmota log shows:
 The light is bright
 ```
 
+## Lights and Relays
+
+Berry provides complete support for Relays and Lights.
+
+You can control individual Relays or lights with `tasmota.get_power()` and `tasmota.set_power()`.
+
+`tasmota.get_power()` returns an array of booleans representing the state of each relays and light (light comes last).
+
+`tasmota.set_power(relay, onoff)` changes the state of a single relay/light.
+
+!!! example "2 relays and 1 light"
+
+    ```python
+    > tasmota.get_power()
+    [false, true, false]
+
+    > tasmota.set_power(0, true)
+    true
+
+    > tasmota.get_power()
+    [true, true, false]
+    ```
+
+For light control, `light.get()` and `light.set` accept a structured object containing the following arguments:
+
+Attributes|Details
+:---|:---
+power|`boolean`<br>Turns the light off or on. Equivalent to `tasmota.set_power()`. When brightness is set to `0`, power is automatically set to off. On the contrary, you need to specify `power:true` to turn the light on.
+bri|`int range 0..255`<br>Set the overall brightness. Be aware that the range is `0..255` and not `0..100` as Dimmer.
+hue|`int 0..360`<br>Set the color Hue in degree, range 0..360 (0=red).
+sat|`int 0..255`<br>Set the color Saturation (0 is grey).
+ct|`int 153..500`<br>Set the white color temperature in mired, ranging from 153 (cold white) to 500 (warm white)
+rgb|`string 6 hex digits`<br>Set the color as hex `RRGGBB`, changing color and brightness.
+channels|`array of int, ranges 0..255`<br>Set the value for each channel, as an array of numbers
+
+When setting attributes, they are evaluated in the following order, the latter overriding the previous: `power`, `ct`, `hue`, `sat`, `rgb`, `channels`, `bri`.
+
+```python
+  # set to yellow, 25% brightness
+> light.set({"power": true, "hue":60, "bri":64, "sat":255})
+{'bri': 64, 'hue': 60, 'power': true, 'sat': 255, 'rgb': '404000', 'channels': [64, 64, 0]}
+
+  # set to RGB 000080 (blue 50%)
+> light.set({"rgb": "000080"})
+{'bri': 128, 'hue': 240, 'power': true, 'sat': 255, 'rgb': '000080', 'channels': [0, 0, 128]}
+
+  # set bri to zero, also powers off
+> light.set({"bri": 0})
+{'bri': 0, 'hue': 240, 'power': false, 'sat': 255, 'rgb': '000000', 'channels': [0, 0, 0]}
+
+  # changing bri doesn't automatically power
+> light.set({"bri": 32, "power":true})
+{'bri': 32, 'hue': 240, 'power': true, 'sat': 255, 'rgb': '000020', 'channels': [0, 0, 32]}
+
+  # set channels as numbers (purple 12%)
+> light.set({"channels": [32,0,32]})
+{'bri': 32, 'hue': 300, 'power': true, 'sat': 255, 'rgb': '200020', 'channels': [32, 0, 32]}
+``` 
 ## Rules
 The rule function have the general form below where parameters are optional:
 
@@ -95,7 +167,7 @@ Parameter|Description
 :---|:---
 `value`|The value of the trigger. Similar to `%value%` in native rules.
 `trigger`|`string` of the trigger with all levels. Can be used if the same function is used with multiple triggers.
-`msg`|`string` of the message that triggered the rule. If it is a JSON, it has to be explicitly converted to a map object with `json.load(msg)`.
+`msg`|`map` Berry structured object of the message, decoded from JSON. If JSON was invalid, it contains the original string
 
 !!! example "Dimmer rule"
 
@@ -150,6 +222,10 @@ tasmota.add_rule("ANALOG#A1",def (value) rule_adc(1,value) end )
 tasmota.add_rule("ANALOG#A2",def (value) rule_adc(2,value) end )
 ```
 
+**Teleperiod rules**
+
+Teleperiod rules are supported with a different syntax from Tasmota rules. Instead of using `Tele-` prefix, you must use `Tele#`. For example `Tele#ANALOG#Temperature1` instead of `Tele-ANALOG#Temperature1`
+
 ## Timers
 
 Berry code, when it is running, blocks the rest of Tasmota. This means that you should not block for too long, or you may encounter problems. As a rule of thumb, try to never block more than 50ms. If you need to wait longer before the next action, use timers. As you will see, timers are very easy to create thanks to Berry's functional nature.
@@ -172,75 +248,59 @@ All times are in milliseconds. You can know the current running time in millisec
     Booh!
     ```
 
-## Lights and Relays
-
-Berry provides complete support for Relays and Lights.
-
-You can control individual Relays or lights with `tasmota.get_power()` and `tasmota.set_power()`.
-
-`tasmota.get_power()` returns an array of booleans representing the state of each relays and light (light comes last).
-
-`tasmota.set_power(relay, onoff)` changes the state of a single relay/light.
-
-!!! example "2 relays and 1 light"
-
-    ```python
-    > tasmota.get_power()
-    [false, true, false]
-
-    > tasmota.set_power(0, true)
-    true
-
-    > tasmota.get_power()
-    [true, true, false]
-    ```
-
-For light control, `light.get()` and `light.set` accept a structured object containing the following arguments:
-
-Attributes|Details
-:---|:---
-power|`boolean`<br>Turns the light off or on. Equivalent to `tasmota.set_power()`. When brightness is set to `0`, power is automatically set to off. On the contrary, you need to specify `power:true` to turn the light on.
-bri|`int range 0..255`<br>Set the overall brightness. Be aware that the range is `0..255` and not `0..100` as Dimmer.
-hue|`int 0..360`<br>Set the color Hue in degree, range 0..360 (0=red).
-sat|`int 0..255`<br>Set the color Saturation (0 is grey).
-ct|`int 153..500`<br>Set the white color temperature in mired, ranging from 153 (cold white) to 500 (warm white)
-rgb|`string 6 hex digits`<br>Set the color as hex `RRGGBB`, changing color and brightness.
-channels|`array of int, ranges 0..255`<br>Set the value for each channel, as an array of numbers
-
-When setting attributes, they are evaluated in the following order, the latter overriding the previous: `power`, `ct`, `hue`, `sat`, `rgb`, `channles`, `bri`.
-
-```python
-  # set to yellow, 25% brightness
-> light.set({"power": true, "hue":60, "bri":64, "sat":255})
-{'bri': 64, 'hue': 60, 'power': true, 'sat': 255, 'rgb': '404000', 'channels': [64, 64, 0]}
-
-  # set to RGB 000080 (blue 50%)
-> light.set({"rgb": "000080"})
-{'bri': 128, 'hue': 240, 'power': true, 'sat': 255, 'rgb': '000080', 'channels': [0, 0, 128]}
-
-  # set bri to zero, also powers off
-> light.set({"bri": 0})
-{'bri': 0, 'hue': 240, 'power': false, 'sat': 255, 'rgb': '000000', 'channels': [0, 0, 0]}
-
-  # chaning bri doesn't automatically power
-> light.set({"bri": 32, "power":true})
-{'bri': 32, 'hue': 240, 'power': true, 'sat': 255, 'rgb': '000020', 'channels': [0, 0, 32]}
-
-  # set channels as numbers (purple 12%)
-> light.set({"channels": [32,0,32]})
-{'bri': 32, 'hue': 300, 'power': true, 'sat': 255, 'rgb': '200020', 'channels': [32, 0, 32]}
-```
-
 #### A word on functions and closure
 
 Berry is a functional language, and includes the very powerful concept of a *closure*. In a nutshell, it means that when you create a function, it can capture the values of variables when the function was created. This roughly means that it does what intuitively you would expect it to do.
 
 When using Rules or Timers, you always pass Berry functions.
 
+## `cron` recurrent calls
 
-## Loading code from filesystem
+You can choose to run some function/closure at regular intervals specified as `cron` type format. (Crontab Guru)[https://crontab.guru/] is an easy way to create and test your cron format.
 
-You can upload Berry code in the filesystem using the ***Consoles - File Upload*** menu and load them at runtime. Make careful to use `*.be` extension for those files.
+  # set channels as numbers (purple 12%)
+> light.set({"channels": [32,0,32]})
+{'bri': 32, 'hue': 300, 'power': true, 'sat': 255, 'rgb': '200020', 'channels': [32, 0, 32]}
+```
+
+``` berry
+> def f() print("Hi") end
+> tasmota.add_cron("*/15 * * * * *", f, "every_15_s")
+Hi
+Hi      # added every 15 seconds
+> tasmota.remove_cron("every_15_s")     # cron stops
+```
+
+Like timers, you need to create a closure if you want to register a method of an instance. Example:
+
+``` ruby
+class A
+    var name
+    def init(name)
+        self.name = name
+    end
+    def p()
+        print("Hi,", self.name)
+    end
+end
+```
+
+``` ruby
+> bob = A("bob")
+> bob.p()
+Hi, bob
+> tasmota.add_cron("*/15 * * * * *", /-> bob.p(), "hi_bob")
+Hi, bob
+Hi, bob
+Hi, bob
+> tasmota.remove_cron("hi_bob")     # cron stops
+```
+
+You can get the timestamp for the next event by using `tasmota.next_cron(id)` which returns an epoch in seconds.
+
+## Loading Filesystem
+
+You can upload Berry code in the filesystem using the ***Consoles - Manage File system*** menu and load them at runtime. Make careful to use `*.be` extension for those files.
 
 To load a Berry file, use the `load(filename)` function where `filename` is the name of the file with `.be` or `.bec` extension; if the file has no extension '.be' is automatically appended.
 
@@ -254,30 +314,36 @@ If a precompiled bytecode (extension `.bec`) is present of more recent than the 
 
 You can easily create a complete Tasmota driver with Berry.
 
-As a convenience, a skeleton class `Driver` is provided. A Driver responds to messages from Tasmota. For each message type, the method with the same name is called.
+A Driver responds to messages from Tasmota. For each message type, the method with the same name is called. Actually you can register any class as a driver, it does not need to inherit from `Driver`; the call mechanism is based on names of methods that must match the name of the event to be called.
+
+Driver methods are called with the following parameters: `f(cmd, idx, payload, raw)`. `cmd` is a string, `idx` an integer, `payload` a Berry object representation of the JSON in `payload` (if any) or `nil`, `raw` is a string. These parameters are meaningful to a small subset of events:
 
 - `every_second()`: called every second
+- `every_50ms()`: called every 50ms (i.e. 20 times per second)
 - `every_100ms()`: called every 100ms (i.e. 10 times per second)
+- `every_200ms()`: called every 50ms (i.e. 5 times per second)
+- `every_250ms()`: called every 50ms (i.e. 4 times per second)
 - `web_sensor()`: display sensor information on the Web UI
 - `json_append()`: display sensor information in JSON format for TelePeriod reporting
 - `web_add_button()`: (deprecated) synonym of `web_add_console_button()`
 - `web_add_main_button()`, `web_add_management_button()`, `web_add_console_button()`, `web_add_config_button()`: add a button to Tasmotas Web UI on a specific page
 - `web_add_handler()`: called when Tasmota web server started, and the right time to call `webserver.on()` to add handlers
 - `button_pressed()`: called when a button is pressed
-- `web_sensor()`: send sensor information as JSON or HTML
 - `save_before_restart()`: called just before a restart
+- `mqtt_data(topic, idx, data, databytes)`: called for MQTT payloads matching `mqtt.subscribe`. `idx` is zero, and `data` is normally unparsed JSON.
+- `set_power_handler(cmd, idx)`: called whenever a Power command is made. `idx` contains the index of the relay or light. `cmd` can be ignored.
 - `display()`: called by display driver with the following subtypes: `init_driver`, `model`, `dim`, `power`.
 
 Then register the driver with `tasmota.add_driver(<driver>)`.
 
 There are basically two ways to respond to an event:
 
-**Method 1: create a sub-class**
+**Example**
 
-Define a sub-class of the `Driver` class and override methods.
+Define a class and implement methods with the same name as the events you want to respond to.
 
 ```python
-class MyDriver : Driver
+class MyDriver
   def every_second()
     # do something
   end
@@ -288,24 +354,43 @@ d1 = MyDriver()
 tasmota.add_driver(d1)
 ```
 
-**Method 2: redefine the attribute with a function**
+## Fast Loop
 
-Just use the `Driver` class and set the attribute to a new function:
+Beyond the events above, a specific mechanism is available for near-real-time events or fast loops (above 50 times per second).
 
-```python
-d2 = Driver()
+Special attention is made so that there is no or very little impact on performance. Until a first callback is registered, performance is not impacted and Berry is not called. This protects any current use from any performance impact.
 
-d2.every_second = def ()
-  # do something
+Once a callback is registered, it is called separately from Berry drivers to ensure minimal overhead.
+
+`tasmota.add_fast_loop(cl:function) -> nil` registers a callback to be called in fast loop mode.
+
+The callback is called without any parameter and does not need to return anything. The callback is called at each iteration of Tasmota event loop. The frequency is tightly linked to the `Speed <x>` command. By default, the sleep period is 50ms, hence fast_loop is called every 50ms. You can reduce the time with `Sleep 10` (10ms) hence calling 100 times per second. If you set `Sleep 0`, the callback is called as frequently as possible (discouraged unless you have a good reason).
+
+Warning, if you need to register a method from an instance, you need a closure:
+
+```
+class my_driver
+  def every_100ms()
+    # called every 100ms via normal way
+  end
+
+  def fast_loop()
+    # called at each iteration, and needs to be registered separately and explicitly
+  end
+
+  def init()
+    # register fast_loop method
+    tasmota.add_fast_loop(/-> self.fast_loop())
+    # variant:
+    # tasmota.add_fast_loop(def () self.fast_loop() end)
+  end
 end
 
-tasmota.add_driver(d2)
+tasmota.add_driver(my_driver())                     # register driver
+tasmota.add_fast_loop(/-> my_driver.fast_loop())    # register a closure to capture the instance of the class as well as the method
 ```
-## Using Berry
 
-See [Berry manual](https://github.com/berry-lang/berry/wiki/Reference)
-
-## Tasmota Extensions
+## Tasmota Only Extensions
 
 #### `log(msg:string [, level:int = 3]) -> string`
 
@@ -337,19 +422,13 @@ A root level object called `tasmota` is created and contains numerous functions 
 Tasmota Function|Parameters and details
 :---|:---
 tasmota.get\_free\_heap<a class="cmnd" id="tasmota_get_free_heap"></a>|`() -> int`<br>Returns the number of free bytes on the Tasmota heap.
-tasmota.publish<a class="cmnd" id="tasmota_publish"></a>|`(topic:string, payload:string[, retain:bool]) -> nil`<br>Equivalent of `publish` command, publishes a MQTT message on `topic` with `payload`. Optional `retain` parameter.
-tasmota.publish_result<a class="cmnd" id="tasmota_publish_result"></a>|`(payload:string, subtopic:string) -> nil`<br>Publishes a JSON result and triggers any associated rule. `payload` is expected to be a JSON string, and `subtopic` the subtopic used to publish the payload.
+tasmota.publish<a class="cmnd" id="tasmota_publish"></a>|`(topic:string, payload:string[, retain:bool, start:int, len:int]) -> nil`<br>_Deprecated_ see `mqtt.publish`
+tasmota.publish\_result<a class="cmnd" id="tasmota_publish_result"></a>|`(payload:string, subtopic:string) -> nil`<br>Publishes a JSON result and triggers any associated rule. `payload` is expected to be a JSON string, and `subtopic` the subtopic used to publish the payload.
+tasmota.publish\_rule<a class="cmnd" id="tasmota_publish_rule"></a>|`(payload:string) -> handled:bool`<br>sends a JSON stringified message to the rule engine, without actually publishing a message to MQTT. Returns `true` if the message was handled by a rule.
 tasmota.cmd<a class="cmnd" id="tasmota_cmd"></a>|`(command:string) -> string`<br>Sends any command to Tasmota, like it was type in the console. It returns the result of the command if any.
-tasmota.memory<a class="cmnd" id="tasmota_memory"></a>|`() -> map`<br>Returns memory stats similar to the Information page.<br>Example: `{'frag': 51, 'program_free': 1856, 'flash': 4096, 'heap_free': 226, 'program': 1679}`<br>or when PSRAM `{'psram_free': 3703, 'flash': 16384, 'program_free': 3008, 'program': 1854, 'psram': 4086, 'frag': 27, 'heap_free': 150}`
-tasmota.millis<a class="cmnd" id="tasmota_millis"></a>|`([delay:int]) -> int`<br>Returns the number of milliseconds since last reboot. The optional parameter lets you specify the number of milliseconds in the future; useful for timers.
-tasmota.time\_reached<a class="cmnd" id="tasmota_time_reached"></a>|`(timer:int) -> bool`<br>Checks whether the timer (in milliseconds) has been reached or not. Always use this function and don't do compares between `millis()` and timers, because of potential sign and overflow issues.
-tasmota.rtc<a class="cmnd" id="tasmota_rtc"></a>|`() -> map`<br>Returns clockwall time with variants.<br>Example: `{'local': 1619560407, 'utc': 1619556807, 'timezone': 60, 'restart': 1619556779}`
-tasmota.time\_dump<a class="cmnd" id="tasmota_time_dump"></a>|`(map) -> map`<br>Decompose a time value (in seconds) to its components<br>Example: `tasmota.time_dump(1619560407)` -> `{'weekday': 2, 'sec': 27, 'month': 4, 'year': 2021, 'day': 27, 'min': 53, 'hour': 21}`
-tasmota.time\_str<a class="cmnd" id="tasmota_time_str"></a>|`(map) -> string`<br>Converts a time value (in seconds) to an ISO 8601 string<br>Example: `tasmota.time_str(1619560407)` -> `2021-04-27T21:53:27`
-tasmota.yield<a class="cmnd" id="tasmota_yield"></a>|`() -> nil`<br>Calls Arduino framework `yield()` function to give back some time to low-level functions, like Wifi. Prevents WDT watchdog from happening.
-tasmota.delay<a class="cmnd" id="tasmota_delay"></a>|`([delay:int]) -> int`<br>Waits and blocks execution for `delay` milliseconds. Should ideally never wait more than 10ms and absolute max 50ms. Otherwise use `set_timer`.
-tasmota.add\_rule<a class="cmnd" id="tasmota_add_rule"></a>|`(pattern:string, f:function) ->nil`<br>Adds a rule to the rule engine. See above for rule patterns.
-tasmota.remove\_rule<a class="cmnd" id="tasmota_remove_rule"></a>|`(pattern:string) ->nil`<br>Removes a rule to the rule engine. Silently ignores the pattern if no rule matches.
+tasmota.memory<a class="cmnd" id="tasmota_memory"></a>|`() -> map`<br>Returns memory stats similar to the Information page.<br>Example: `{'iram_free': 41, 'frag': 51, 'program_free': 1856, 'flash': 4096, 'heap_free': 226, 'program': 1679}`<br>or when PSRAM `{'psram_free': 3703, 'flash': 16384, 'program_free': 3008, 'program': 1854, 'psram': 4086, 'frag': 27, 'heap_free': 150}`
+tasmota.add\_rule<a class="cmnd" id="tasmota_add_rule"></a>|`(pattern:string, f:function [, id:any]) ->nil`<br>Adds a rule to the rule engine. See above for rule patterns.<br>Optional `id` to remove selectively rules.
+tasmota.remove\_rule<a class="cmnd" id="tasmota_remove_rule"></a>|`(pattern:string [, id:any]) ->nil`<br>Removes a rule to the rule engine. Silently ignores the pattern if no rule matches. Optional `id` to remove selectively some rules.
 tasmota.add\_driver<a class="cmnd" id="tasmota_add_driver"></a>|`(instance) ->nil`<br>Registers an instance as a driver
 tasmota.remove\_driver<a class="cmnd" id="tasmota_remove_driver"></a>|`(instance) ->nil`<br>Removes a driver
 tasmota.gc<a class="cmnd" id="tasmota_gc"></a>|`() -> int`<br>Triggers garbage collection of Berry objects and returns the bytes currently allocated. This is for debug only and shouldn't be normally used. `gc` is otherwise automatically triggered when necessary.
@@ -361,6 +440,30 @@ Tasmota Function|Parameters and details
 tasmota.get\_option<a class="cmnd" id="tasmota_get_option"></a>|`(index:int) -> int`<br>Returns the value of `SetOption <index>`
 tasmota.wire\_scan<a class="cmnd" id="tasmota_wire_scan"></a>|`(addr:int [, index:int]) -> wire instance or nil`<br>Scan both I^2^C buses for a device of address addr, optionally taking into account disabled devices via `I2CDevice`. Returns a `wire` object corresponding to the bus where the device is, or `nil` if device is not connected or disabled.
 tasmota.i2c\_enabled<a class="cmnd" id="tasmota_i2c_enabled"></a>|`(index:int) -> bool`<br>Returns true if the I^2^C module is enabled, see I^2^C page.
+tasmota.arch<a class="cmnd" id="tasmota_arch"></a>|`() -> string`<br>Returns the name of the architecture. Currently can be `esp32`, `esp32s2`, `esp32s3`, `esp32c3`
+tasmota.read\_sensors<a class="cmnd" id="tasmota_read_sensors"></a>|`([show_sensor:bool]) -> string`<br>Returns the value of sensors as a JSON string similar to the teleperiod. The response is a string, not a JSON object. The reason is that some sensors might produce invalid JSON. It's your code's responsibility to try parsing as JSON.<br>An optional boolean parameter (false by default) can be set to trigger a display of the new values (i.e. sends a FUNC_SHOW_SENSOR` event to drivers).
+tasmota.wifi<a class="cmnd" id="tasmota_wifi"></a>|`() -> map`<br>Retrieves Wi-Fi connection info or empty map.<br>Example: `{'mac': 'aa:bb:cc:22:11:03', 'quality': 100, 'rssi': -47, 'ip': '192.168.1.102'}`
+tasmota.eth<a class="cmnd" id="tasmota_eth"></a>|`() -> map`<br>Retrieves Ethernet connection info or empty map.<br>Example: `{'mac': 'aa:bb:cc:22:11:00', 'ip': '192.168.1.101'}`
+
+#### Functions for time, timers or cron
+
+Tasmota Function|Parameters and details
+:---|:---
+tasmota.millis<a class="cmnd" id="tasmota_millis"></a>|`([delay:int]) -> int`<br>Returns the number of milliseconds since last reboot. The optional parameter lets you specify the number of milliseconds in the future; useful for timers.
+tasmota.time\_reached<a class="cmnd" id="tasmota_time_reached"></a>|`(timer:int) -> bool`<br>Checks whether the timer (in milliseconds) has been reached or not. Always use this function and don't do compares between `millis()` and timers, because of potential sign and overflow issues.
+tasmota.rtc<a class="cmnd" id="tasmota_rtc"></a>|`() -> map`<br>Returns clockwall time with variants.<br>Example: `{'local': 1619560407, 'utc': 1619556807, 'timezone': 60, 'restart': 1619556779}`
+tasmota.time\_dump<a class="cmnd" id="tasmota_time_dump"></a>|`(timestamp:int) -> map`<br>Decompose a timestamp value (in seconds) to its components<br>Example: `tasmota.time_dump(1619560407)` -> `{'weekday': 2, 'sec': 27, 'month': 4, 'year': 2021, 'day': 27, 'min': 53, 'hour': 21}`
+tasmota.time\_str<a class="cmnd" id="tasmota_time_str"></a>|`(timestamp:int) -> string`<br>Converts a timestamp value (in seconds) to an ISO 8601 string<br>Example: `tasmota.time_str(1619560407)` -> `2021-04-27T21:53:27`
+tasmota.set\_timer<a class="cmnd" id="tasmota_set_timer"></a>|`(delay:int, f:function [, id:any]) -> nil`<br>Runs the closure or function `f` after `delay` milliseconds, optional `id` can be used to remove the timer.
+tasmota.remove\_timer<a class="cmnd" id="tasmota_remove_timer"></a>|`(id:string) -> nil`<br>Removes the timer with the `id` used on `tasmota.set_timer`.
+tasmota.strftime<a class="cmnd" id="tasmota_strftime"></a>|`(format:string, timestamp:int) -> string`<br>Converts a timestamp value (in seconds) to a string using the format conversion specifiers<br>Example: `tasmota.strftime("%d %B %Y %H:%M:%S", 1619560407)` -> `27 April 2021 21:53:27`
+tasmota.strptime<a class="cmnd" id="tasmota_strptime"></a>|`(time:string, format:string) -> map or nil`<br>Converts a string to a date, according to a time format following the C `strptime` format. Returns a `map` similar to `tasmota.time_dump()` or `nil` if parsing failed. An additional `unparsed` attribute reports the unparsed string, or empty string if everything was parsed.<br>Example: `tasmota.strptime("2001-11-12 18:31:01", "%Y-%m-%d %H:%M:%S")` -> `{'month': 11, 'weekday': 1, 'sec': 1, 'unparsed': '', 'year': 2001, 'day': 12, 'min': 31, 'hour': 18}`
+tasmota.yield<a class="cmnd" id="tasmota_yield"></a>|`() -> nil`<br>Calls Arduino framework `yield()` function to give back some time to low-level functions, like Wifi. Prevents WDT watchdog from happening.
+tasmota.delay<a class="cmnd" id="tasmota_delay"></a>|`([delay:int]) -> int`<br>Waits and blocks execution for `delay` milliseconds. Should ideally never wait more than 10ms and absolute max 50ms. Otherwise use `set_timer`.
+tasmota.add\_cron<a class="cmnd" id="tasmota_add_cron"></a>|`(pattern:string, f:function [, id:any]) -> nil`<br>Adds a cron-type timer, with a cron pattern and a function/closure to call. An optional id can be added to retrieve or delete the cron timer
+tasmota.remove\_cron<a class="cmnd" id="tasmota_remove_cron"></a>|`(id:any) -> nil`<br>Remove a cron timer.
+tasmota.next\_cron<a class="cmnd" id="tasmota_next_cron"></a>|`(id:any) -> int`<br>returns the next timestamp for the cron timer. The timestamp is second epoch in local time. You can use `tasmota.tasmota.time_str()` to convert to a time string.
+
 
 #### Functions to create custom Tasmota command
 
@@ -368,19 +471,19 @@ Tasmota Function|Parameters and details
 :---|:---
 tasmota.add\_cmd<a class="cmnd" id="tasmota_add_cmd"></a>|`(name:string, f:function) -> nil`<br>Adds a command to Tasmota commands. Command names are case-insensitive. Command names are analyzed after native commands and after most commands, so you can't override a native command.
 tasmota.resp\_cmnd_str<a class="cmnd" id="tasmota_resp_cmnd_str"></a>|`(message:string) -> nil`<br>Sets the output for the command to `message`.
-tasmota.resp\_cmnd\_str\_done<a class="cmnd" id="tasmota_resp_cmnd_done"></a>|`(message:string) -> nil`<br>Sets the output for the command to "Done" (localized message).
-tasmota.resp\_cmnd\_str\_error<a class="cmnd" id="tasmota_resp_cmnd_error"></a>|`(message:string) -> nil`<br>Sets the output for the command to "Error" (localized message).
-tasmota.resp\_cmnd\_str\_fail<a class="cmnd" id="tasmota_resp_cmnd_fail"></a>|`(message:string) -> nil`<br>Sets the output for the command to "Fail" (localized message).
+tasmota.resp\_cmnd\_done<a class="cmnd" id="tasmota_resp_cmnd_done"></a>|`() -> nil`<br>Sets the output for the command to "Done" (localized message).
+tasmota.resp\_cmnd\_error<a class="cmnd" id="tasmota_resp_cmnd_error"></a>|`() -> nil`<br>Sets the output for the command to "Error" (localized message).
+tasmota.resp\_cmnd\_failed<a class="cmnd" id="tasmota_resp_cmnd_failed"></a>|`() -> nil`<br>Sets the output for the command to "Fail" (localized message).
 tasmota.resp\_cmnd<a class="cmnd" id="tasmota_resp_cmnd"></a>|`(message:string) -> nil`<br>Overrides the entire command response. Should be a valid JSON string.
 tasmota.remove\_cmd<a class="cmnd" id="tasmota_remove_cmd"></a>|`(name:string) -> nil`<br>Remove a command to Tasmota commands. Removing an non-existing command is skipped silently.
 
-#### Functions to add custom responses to JSON and Web UI
+#### Functions to add custom responses to JSON and Web UI to sensors
 
 Tasmota Function|Parameters and details
 :---|:---
-tasmota.response\_append<a class="cmnd" id="tasmota_response_append"></a>|`(name:string) -> nil`<br>Adds JSON fragment to the current response. Used for example for sensors to add JSON to teleperiod.
-tasmota.web\_send<a class="cmnd" id="tasmota_web_send"></a>|`(message:string) -> nil`<br>Adds an HTML fragment to the Web output.
-tasmota.web\_send\_decimal<a class="cmnd" id="tasmota_web_send_decimal"></a>|`(message:string) -> nil`<br>Adds an HTML fragment to the Web output, similar to `web_send` but converts decimal dot `.` to the locale decimal separator.
+tasmota.response\_append<a class="cmnd" id="tasmota_response_append"></a>|`(name:string) -> nil`<br>Adds JSON fragment to the current response. Used for example for sensors to add JSON to teleperiod.<br>Can be called only in `json_append()` method of a registered driver (see cookbook). It is called at least at each teleperiod, or when reading sensor data in JSON.
+tasmota.web\_send<a class="cmnd" id="tasmota_web_send"></a>|`(message:string) -> nil`<br>Adds an HTML fragment to the Web output.<br>Can be called only in `web_sensor()` method of a registered driver (see cookbook). It is called at each main page refresh.
+tasmota.web\_send\_decimal<a class="cmnd" id="tasmota_web_send_decimal"></a>|`(message:string) -> nil`<br>Adds an HTML fragment to the Web output, similar to `web_send` but converts decimal dot `.` to the locale decimal separator.<br>Can be called only in `web_sensor()` method of a registered driver (see cookbook). It is called at each main page refresh.
 
 See examples in the [Berry-Cookbook](Berry-Cookbook#adding-commands-to-tasmota)
 
@@ -394,20 +497,28 @@ tasmota.get\_light<a class="cmnd" id="tasmota_get_light"></a>|_deprecated_ use `
 tasmota.set\_light<a class="cmnd" id="tasmota_set_light"></a>|_deprecated_ use `light.set`
 tasmota.get\_switches<a class="cmnd" id="tasmota_get_switches"></a>|`() -> list(bool)`<br>Returns as many values as switches are present. `true` means `PRESSED` and `false` means `NOT_PRESSED`. (Warning: this is the opposite of the internal representation where PRESSED=0)<br>Note: if there are holes in the switch definition, the values will be skipped. I.e. if you define SWITCH1 and SWITCH3, the array will return the two consecutive values for switches 1/3.
 
-If there are holes in the switch definition, the values will be skipped. I.e. if you define SWITCH1 and SWITCH3, the array will return the two consecutive values for switches 1/3.
-
-#### Low-level access to Tasmota globals.
+#### Low-level access to Tasmota globals and settings.
 
 ***Use with care and only if you know what you are doing.***
 
-The construct is to use `tasmota.global` to read or write attributes.
+The construct is to use `tasmota.global` or `tasmota.settings` to read or write attributes. 
 
 !!! warning "You can do bad things with these features"
 
-Tasmota global|Details
+Value|Details
 :---|:---
-tasmota.global.energy_driver<a class="cmnd" id="tasmota_global_energy_driver"></a>|Used for Energy drivers
-tasmota.global.uptime<a class="cmnd" id="tasmota_global_energy_driver"></a>|Uptime in seconds
+tasmota.global.sleep<a class="cmnd" id="tasmota_global_sleep"></a>|Current sleep value
+tasmota.settings.sleep<a class="cmnd" id="tasmota_settings_sleep"></a>|Sleep value stored in flash
+
+### `mqtt` module
+
+Use with `import mqtt`.
+
+Tasmota Function|Parameters and details
+:---|:---
+mqtt.publish<a class="cmnd" id="mqtt_publish"></a>|`(topic:string, payload:string[, retain:bool, start:int, len:int]) -> nil`<br>Equivalent of `publish` command, publishes a MQTT message on `topic` with `payload`. Optional `retain` parameter.<br>`payload` can be a string or a bytes() binary array<br>`start` and `len` allow to specificy a sub-part of the string or bytes buffer, useful when sending only a portion of a larger buffer.
+mqtt.subscribe<a class="cmnd" id="mqtt_subscribe"></a>|`(topic:string) -> nil`<br>Subscribe to a `topic` (exact match). Contrary to Tasmota's `Subscribe` command, the topic is sent as-is and not appended with `/#`. You need to add wildcards yourself. Driver method `mqtt_data` is called for each matching payload.
+mqtt.unsubscribe<a class="cmnd" id="mqtt_unsubscribe"></a>|`(topic:string) -> nil`<br>Unubscribe to a `topic` (exact match).
 
 ### `light` object
 
@@ -433,8 +544,9 @@ gpio.pin_used<a class="cmnd" id="gpio_pin_used"></a>|`(gpio [,index]) -> bool`<b
 gpio.pin<a class="cmnd" id="gpio_pin"></a>|`(gpio [,index]) -> int`<br>returns the physical GPIO number assigned to the Tasmota GPIO, or -1 if the GPIO is not assigned
 gpio.digital\_write<a class="cmnd" id="gpio_digital_write"></a>|`(phy_gpio, val) -> nil` needs the physical GPIO number<br>sets the GPIO to LOW/HIGH. `val` can be `0`, `1`, `gpio.LOW` or `gpio.HIGH`. Example: `gpio.digital_write(gpio.pin(gpio.REL1), gpio.HIGH)` sets Relay1 to High.
 gpio.digital\_read<a class="cmnd" id="gpio_digital_read"></a>|`(phy_gpio) -> int` needs the physical GPIO number<br>reads the value of a GPIO. Returns 0 or 1.
-gpio.pin\_mode<a class="cmnd" id="gpio_pin_mode"></a>|`(phy_gpio, mode) -> nil` needs the physical GPIO number<br>Changes the GPIO mode. It should be called very cautiously. Normally Tasmota handles automatically GPIO modes.<BR>`mode` can have the following values: `gpio.INPUT`, `gpio.OUTPUT`, `gpio.PULLUP`, `gpio.INPUT_PULLUP`, `gpio.PULLDOWN`, `gpio.OPEN_DRAIN`, `gpio.OUTPUT_OPEN_DRAIN`, `gpio.gpio.DAC`
+gpio.pin\_mode<a class="cmnd" id="gpio_pin_mode"></a>|`(phy_gpio, mode) -> nil` needs the physical GPIO number<br>Changes the GPIO mode. It should be called very cautiously. Normally Tasmota handles automatically GPIO modes.<BR>`mode` can have the following values: `gpio.INPUT`, `gpio.OUTPUT`, `gpio.PULLUP`, `gpio.INPUT_PULLUP`, `gpio.PULLDOWN`, `gpio.OPEN_DRAIN`, `gpio.OUTPUT_OPEN_DRAIN`, `gpio.DAC`
 gpio.dac\_voltage<a class="cmnd" id="gpio_dac_voltage"></a>|`(phy_gpio:int, voltage_mv:int) -> int`<br>Sets the DAC voltage in mV. The resolution is 8 bits over a range of 0..3.3V, i.e. an increment of ~13mV, this function returns the actual voltage output rounded to the closest value. See below for constraints of DAC GPIOs.
+gpio.set\_pwm<a class="cmnd" id="gpio_set_pwm"></a>|`(phy_gpio:int, duty:int [, phase:int]) -> nil`<br>Sets the value of a PWM output<br>`phy_gpio`: physical GPIO number<br>`duty`: analog value for the pwm, range is 0..1023 unless you change the PWM range<br>`phase`: (opt) set the starting point in time for this pulse from start of cycle. Range is 0..1023 unless you change PWM range. This allows to dephase pulses, for example for H-bridge.<br>**Low-level** this is a low-level function that bypasses all the Tasmota logic around PWM. Use with caution as a `PWM` command might overwrite your settings.
 
 Any internal error or using unsupported GPIO yields an Berry exception.
 
@@ -442,15 +554,17 @@ Any internal error or using unsupported GPIO yields an Berry exception.
 
     `gpio.NONE`, `gpio.KEY1`, `gpio.KEY1_NP`, `gpio.KEY1_INV`, `gpio.KEY1_INV_NP`, `gpio.SWT1`, `gpio.SWT1_NP`, `gpio.REL1`, `gpio.REL1_INV`, `gpio.LED1`, `gpio.LED1_INV`, `gpio.CNTR1`, `gpio.CNTR1_NP`, `gpio.PWM1`, `gpio.PWM1_INV`, `gpio.BUZZER`, `gpio.BUZZER_INV`, `gpio.LEDLNK`, `gpio.LEDLNK_INV`, `gpio.I2C_SCL`, `gpio.I2C_SDA`, `gpio.SPI_MISO`, `gpio.SPI_MOSI`, `gpio.SPI_CLK`, `gpio.SPI_CS`, `gpio.SPI_DC`, `gpio.SSPI_MISO`, `gpio.SSPI_MOSI`, `gpio.SSPI_SCLK`, `gpio.SSPI_CS`, `gpio.SSPI_DC`, `gpio.BACKLIGHT`, `gpio.OLED_RESET`, `gpio.IRSEND`, `gpio.IRRECV`, `gpio.RFSEND`, `gpio.RFRECV`, `gpio.DHT11`, `gpio.DHT22`, `gpio.SI7021`, `gpio.DHT11_OUT`, `gpio.DSB`, `gpio.DSB_OUT`, `gpio.WS2812`, `gpio.MHZ_TXD`, `gpio.MHZ_RXD`, `gpio.PZEM0XX_TX`, `gpio.PZEM004_RX`, `gpio.PZEM016_RX`, `gpio.PZEM017_RX`, `gpio.SAIR_TX`, `gpio.SAIR_RX`, `gpio.PMS5003_TX`, `gpio.PMS5003_RX`, `gpio.SDS0X1_TX`, `gpio.SDS0X1_RX`, `gpio.SBR_TX`, `gpio.SBR_RX`, `gpio.SR04_TRIG`, `gpio.SR04_ECHO`, `gpio.SDM120_TX`, `gpio.SDM120_RX`, `gpio.SDM630_TX`, `gpio.SDM630_RX`, `gpio.TM1638CLK`, `gpio.TM1638DIO`, `gpio.TM1638STB`, `gpio.MP3_DFR562`, `gpio.HX711_SCK`, `gpio.HX711_DAT`, `gpio.TX2X_TXD_BLACK`, `gpio.TUYA_TX`, `gpio.TUYA_RX`, `gpio.MGC3130_XFER`, `gpio.MGC3130_RESET`, `gpio.RF_SENSOR`, `gpio.AZ_TXD`, `gpio.AZ_RXD`, `gpio.MAX31855CS`, `gpio.MAX31855CLK`, `gpio.MAX31855DO`, `gpio.NRG_SEL`, `gpio.NRG_SEL_INV`, `gpio.NRG_CF1`, `gpio.HLW_CF`, `gpio.HJL_CF`, `gpio.MCP39F5_TX`, `gpio.MCP39F5_RX`, `gpio.MCP39F5_RST`, `gpio.PN532_TXD`, `gpio.PN532_RXD`, `gpio.SM16716_CLK`, `gpio.SM16716_DAT`, `gpio.SM16716_SEL`, `gpio.DI`, `gpio.DCKI`, `gpio.CSE7766_TX`, `gpio.CSE7766_RX`, `gpio.ARIRFRCV`, `gpio.ARIRFSEL`, `gpio.TXD`, `gpio.RXD`, `gpio.ROT1A`, `gpio.ROT1B`, `gpio.ADC_JOY`, `gpio.SSPI_MAX31865_CS1`, `gpio.HRE_CLOCK`, `gpio.HRE_DATA`, `gpio.ADE7953_IRQ`, `gpio.SOLAXX1_TX`, `gpio.SOLAXX1_RX`, `gpio.ZIGBEE_TX`, `gpio.ZIGBEE_RX`, `gpio.RDM6300_RX`, `gpio.IBEACON_TX`, `gpio.IBEACON_RX`, `gpio.A4988_DIR`, `gpio.A4988_STP`, `gpio.A4988_ENA`, `gpio.A4988_MS1`, `gpio.OUTPUT_HI`, `gpio.OUTPUT_LO`, `gpio.DDS2382_TX`, `gpio.DDS2382_RX`, `gpio.DDSU666_TX`, `gpio.DDSU666_RX`, `gpio.SM2135_CLK`, `gpio.SM2135_DAT`, `gpio.DEEPSLEEP`, `gpio.EXS_ENABLE`, `gpio.TASMOTACLIENT_TXD`, `gpio.TASMOTACLIENT_RXD`, `gpio.TASMOTACLIENT_RST`, `gpio.TASMOTACLIENT_RST_INV`, `gpio.HPMA_RX`, `gpio.HPMA_TX`, `gpio.GPS_RX`, `gpio.GPS_TX`, `gpio.HM10_RX`, `gpio.HM10_TX`, `gpio.LE01MR_RX`, `gpio.LE01MR_TX`, `gpio.CC1101_GDO0`, `gpio.CC1101_GDO2`, `gpio.HRXL_RX`, `gpio.ELECTRIQ_MOODL_TX`, `gpio.AS3935`, `gpio.ADC_INPUT`, `gpio.ADC_TEMP`, `gpio.ADC_LIGHT`, `gpio.ADC_BUTTON`, `gpio.ADC_BUTTON_INV`, `gpio.ADC_RANGE`, `gpio.ADC_CT_POWER`, `gpio.WEBCAM_PWDN`, `gpio.WEBCAM_RESET`, `gpio.WEBCAM_XCLK`, `gpio.WEBCAM_SIOD`, `gpio.WEBCAM_SIOC`, `gpio.WEBCAM_DATA`, `gpio.WEBCAM_VSYNC`, `gpio.WEBCAM_HREF`, `gpio.WEBCAM_PCLK`, `gpio.WEBCAM_PSCLK`, `gpio.WEBCAM_HSD`, `gpio.WEBCAM_PSRCS`, `gpio.BOILER_OT_RX`, `gpio.BOILER_OT_TX`, `gpio.WINDMETER_SPEED`, `gpio.KEY1_TC`, `gpio.BL0940_RX`, `gpio.TCP_TX`, `gpio.TCP_RX`, `gpio.ETH_PHY_POWER`, `gpio.ETH_PHY_MDC`, `gpio.ETH_PHY_MDIO`, `gpio.TELEINFO_RX`, `gpio.TELEINFO_ENABLE`, `gpio.LMT01`, `gpio.IEM3000_TX`, `gpio.IEM3000_RX`, `gpio.ZIGBEE_RST`, `gpio.DYP_RX`, `gpio.MIEL_HVAC_TX`, `gpio.MIEL_HVAC_RX`, `gpio.WE517_TX`, `gpio.WE517_RX`, `gpio.AS608_TX`, `gpio.AS608_RX`, `gpio.SHELLY_DIMMER_BOOT0`, `gpio.SHELLY_DIMMER_RST_INV`, `gpio.RC522_RST`, `gpio.P9813_CLK`, `gpio.P9813_DAT`, `gpio.OPTION_A`, `gpio.FTC532`, `gpio.RC522_CS`, `gpio.NRF24_CS`, `gpio.NRF24_DC`, `gpio.ILI9341_CS`, `gpio.ILI9341_DC`, `gpio.ILI9488_CS`, `gpio.EPAPER29_CS`, `gpio.EPAPER42_CS`, `gpio.SSD1351_CS`, `gpio.RA8876_CS`, `gpio.ST7789_CS`, `gpio.ST7789_DC`, `gpio.SSD1331_CS`, `gpio.SSD1331_DC`, `gpio.SDCARD_CS`, `gpio.ROT1A_NP`, `gpio.ROT1B_NP`, `gpio.ADC_PH`, `gpio.BS814_CLK`, `gpio.BS814_DAT`, `gpio.WIEGAND_D0`, `gpio.WIEGAND_D1`, `gpio.NEOPOOL_TX`, `gpio.NEOPOOL_RX`, `gpio.SDM72_TX`, `gpio.SDM72_RX`, `gpio.TM1637CLK`, `gpio.TM1637DIO`, `gpio.PROJECTOR_CTRL_TX`, `gpio.PROJECTOR_CTRL_RX`, `gpio.SSD1351_DC`, `gpio.XPT2046_CS`, `gpio.CSE7761_TX`, `gpio.CSE7761_RX`, `gpio.VL53LXX_XSHUT1`, `gpio.MAX7219CLK`, `gpio.MAX7219DIN`, `gpio.MAX7219CS`, `gpio.TFMINIPLUS_TX`, `gpio.TFMINIPLUS_RX`, `gpio.ZEROCROSS`, `gpio.HALLEFFECT`, `gpio.EPD_DATA`, `gpio.INPUT`, `gpio.SENSOR_END`
 
-#### DAC GPIOs
+An H-bridge is an electronic circuit that switches the polarity of a voltage applied to a load. These circuits are often used in robotics and other applications to allow DC motors to run forwards or backwards.
+
+See the Berry cookbook for [H-bridge control](Berry-Cookbook.md#h-bridge-control)
+
+### DAC GPIOs
 
 DAC is limited to specific GPIOs:
 
 - ESP32: only GPIO 25-26
 - ESP32-S2: only GPIO 17-18
 - ESP32-C3: not supported
-
-DAC can also be used via `Esp8266Audio` through the ESP32 I2S -> DAC bridge.
 
 !!! example
     ```
@@ -459,6 +573,46 @@ DAC can also be used via `Esp8266Audio` through the ESP32 I2S -> DAC bridge.
     1255
     ```
     Function returns closes voltage found. In this case its 1255 for setting to 1250.
+
+### I2S
+
+DAC can also be used via `Esp8266Audio` through the ESP32 I2S -> DAC bridge.
+
+??? example
+    ```python
+    class MP3_Player : Driver
+      var audio_output, audio_mp3
+      def init()
+        self.audio_output = AudioOutputI2S(
+          gpio.pin(gpio.I2S_OUT_CLK),
+          gpio.pin(gpio.I2S_OUT_SLCT),
+          gpio.pin(gpio.I2S_OUT_DATA),
+          0,    #- I2S port -#
+          64)    #- number of DMA buffers of 64 bytes each, this is the value required since we update every 50ms -#
+        self.audio_mp3 = AudioGeneratorMP3()
+      end
+
+      def play(mp3_fname)
+        if self.audio_mp3.isrunning()
+          self.audio_mp3.stop()
+        end
+        var audio_file = AudioFileSourceFS(mp3_fname)
+        self.audio_mp3.begin(audio_file, self.audio_output)
+        self.audio_mp3.loop()    #- start playing now -#
+      end
+
+      def every_50ms()
+        if self.audio_mp3.isrunning()
+          self.audio_mp3.loop()
+        end
+      end
+    end
+
+    mp3_player = MP3_Player()
+    tasmota.add_driver(mp3_player)
+
+    mp3_player.play("/pno-cs.mp3")
+    ```
 
 ### `energy` module
 
@@ -558,6 +712,8 @@ You generally use `tasmota.wire_scan()` to find a device and the corresponding I
 Wire Function|Parameters and details
 :---|:---
 bus<a class="cmnd" id="wire_bus">|`read only attribute, 1 or 2`<br>Bus number for this wire instance.
+enabled<a class="cmnd" id="wire_enabled">|`() -> bool`<br>Returns `true` is the I2C bus is initialized (i.e. GPIOs are defined)
+scan<a class="cmnd" id="wire_scan">|`() -> array of int`<br>Scan the bus and return all responding addresses. Note: addresses are displayed as decimal ints, not hex.
 scan<a class="cmnd" id="wire_scan">|`() -> array of int`<br>Scan the bus and return all responding addresses. Note: addresses are displayed as decimal ints, not hex.
 detect<a class="cmnd" id="wire_detect">|`(addr:int) -> bool`<br>Returns `true` if the device of address `addr` is connected to this bus.
 read<a class="cmnd" id="wire_read">|`(addr:int, reg:int, size:int) -> int or nil`<br>Read a value of 1..4 bytes from address `addr` and register `reg`. Returns `nil` if no response.
@@ -579,11 +735,34 @@ Wire Function|Parameters and details
 ### `path` module
 
 A simplified version of `os.path` module of standard Berry which is disabled in Tasmota because we don't have a full OS.
-
+  
 Tasmota Function|Parameters and details
 :---|:---
 path.exists<a class="cmnd" id="path_exists"></a>|`(file_name:string) -> bool`<br>Returns `true` if the file exists. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
 path.last_modified<a class="cmnd" id="path_last_modified"></a>|`(file_name:string) -> int`<br>Returns the timestamp when the file was last modified, or `nil` if the file does not exist. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
+path.listdir<a class="cmnd" id="path_listdir"></a>|`(dir_name:string) -> list(string)`<br>List a directory, typically root dir `"/"` and returns a list of filenames in the directory. Returns an empty list if the directory is invalid
+path.remove<a class="cmnd" id="path_remove"></a>|`(file_name:string) -> bool`<br>Deletes a file by name, return `true` if successful
+path.format<a class="cmnd" id="path_format"></a>|`(true:bool) -> bool`<br>Re-formats the LittleFS file system (internal ESP32 flash) and erases all content. The parameter needs to be true as to avoid unwanted calls. Returns true if reformatting was successful.<br>This is sometimes useful when the file-system becomes unstable or corrupt after multiple re-partitionings.
+
+
+### `persist` module
+
+Easy way to persist simple values in Berry and read/write any attribute. Values are written in JSON format in `_persist.json` file.
+
+!!! example 
+     > import persist    
+     > persist.a = 1    
+     > persist.b = "foobar"    
+     > print(persist)    
+     <instance: Persist({'a': 1, 'b': 'foobar'})>    
+     > persist.save()   # save to _persist.json    
+
+Tasmota Function|Parameters and details
+:---|:---
+persist.save<a class="cmnd" id="persist_save"></a>|`()`<br>triggers saving to file system. It is called automatically before a restart but you might want to call it yourself to prevent losing data in case of power loss or crash. `persist.save()` writes to flash, so be careful of not calling it too often, or it will cause wearing of flash and reduce its lifetime.
+persist.has<a class="cmnd" id="persist_has"></a>|`(param:string) -> bool`<br>returns true or false if the key exists
+persist.remove<a class="cmnd" id="persist_remove"></a>|`(param:string) -> bool`<br>removes a key or ignores if key doesn't exist
+persist.find<a class="cmnd" id="persist_find"></a>|`my_param:string [, "default value"] -> string | bool`<br>returns the value for a key, or nil or the default value. Similar to `map.find`
 
 ### `introspect` module
 
@@ -613,7 +792,10 @@ Tasmota Function|Parameters and details
 introspect.members<a class="cmnd" id="introspect_members"></a>|`(nil | instance | module | class) -> list`<br>Returns the list of members of the object. If `nil` is passed, it returns the list of globals (similar to `global` module). Note: virtual dynamic members are not listed.
 introspect.get<a class="cmnd" id="introspect_get"></a>|`(instance | module, name:string) -> any`<br>Returns the member of name `name` or `nil` if it does not exist. Note: virtual dynamic members are not yet supported. Note2: classes are not yet supported.
 introspect.set<a class="cmnd" id="introspect_set"></a>|`(instance | module, name:string, value:any) -> any`<br>Sets the member of name `name` to `value` or ignores the call if the member does not exist. Note: virtual dynamic members are not yet supported.
-introspect.vcall<a class="cmnd" id="introspect_vcall"></a>|`(function, [args,]* [list]?) -> any`<br>Calls a function with a dynamically built list of arguments. If the last argument is a list, it is expanded into individual arguments.
+introspect.module<a class="cmnd" id="introspect_module"></a>|`(name:string) -> module or nil`<br>Loads a module by name or return nil if not found. The import command works only for static predefined names, this addition makes it dynamic. Contrary to import command, this function does not create an entry in the current scope (i.e. does not either create a global variable with the module's name).
+introspect.toptr<a class="cmnd" id="introspect_toptr"></a>|`(any) -> comptr`<br>Converts an `int` to a `comptr` pointer. This is sage in Tasmota since pointers and ints are both 32 bits in size.<br>If argument is a general object, this returns a pointer to the object, and can be converted back to the original object with `introspect.fromptr`.
+introspect.fromptr<a class="cmnd" id="introspect_fromptr"></a>|`(comptr) -> any`<br>Converts a `comptr` pointer to its original object.<br>**Warning:** this operation is considered dagerous and should be used with extreme care. If the pointer is invalid or the object was garbage collected, Tasmota will crash.
+introspect.ismethod<a class="cmnd" id="introspect_fromptr"></a>|`(function or closure) -> bool`<br>Returns `true` if the function passed as argument is a method of a class, or `false` if the argument is a simple function or a static method.<br>This is typically used to check callbacks and make sure that you don't pass a method as argument; methods typically need to be wrapped in a closure to capture the target object.
 
 ### `webclient` class
 
@@ -622,7 +804,7 @@ Class `webclient` provides an implementation of an HTTP/HTTPS web client and mak
 Features:
 
  - Support HTTP and HTTPS requests to IPv4 addresses and domain names, to arbitrary ports, via a full URL.
- - Support for HTTPS and TLS via BearSSL (which is much lighter than default mbetTLS)
+ - Support for HTTPS and TLS via BearSSL (which is much lighter than default mbedTLS)
  - HTTPS (TLS) only supports cipher ECDHE_RSA_WITH_AES_128_GCM_SHA256 which is both secure and widely supported
  - Support for URL redirections (tbc)
  - Ability to set custom User-Agent
@@ -659,6 +841,23 @@ Current limitations (if you need extra features please open a feature request on
     [.../...]
     ```
 
+
+!!! example of downloading a file from Github
+ 
+    ``` python
+    > cl = webclient()
+    > cl.begin("https://raw.githubusercontent.com/tasmota/autoconf/main/esp32/M5Stack_Fire_autoconf.zip")
+    <instance: webclient()>
+
+    > r = cl.GET()
+    > print(r)
+    200
+
+    > cl.write_file("M5Stack_Fire_autoconf.zip")
+    950
+    ```
+
+
 Main functions:
 
 WebClient Function|Parameters and details
@@ -670,6 +869,7 @@ read<a class="cmnd" id="wire_read">|`(addr:int, reg:int, size:int) -> int or nil
 get\_size<a class="cmnd" id="wc_get_string">|`() -> int`<br>Once a connection succeeded (GET or POST), reads the size of the response as returned by the server in headers (before actually reading the content). A value `-1` means that the response size is unknown until you read it.
 get\_string<a class="cmnd" id="wc_get_string">|`() -> string`<br>Once a connection succeeded (GET or POST), reads the content of the response in a string. The response max size is 32KB, any response larger is dropped. Connection is closed and resources are freed after this call completes.
 close<a class="cmnd" id="wc_close">|`() -> nil`<br>Closes the connection and frees buffers. `close` can be called after `GET` or `POST` and is implicitly called by `get_string`. You don't usually need to use `close` unless you are only retrieving the result_code for a request and not interested in the content.
+write\_file<a class="cmnd" id="wc_write_file">|`(file_name:string) -> int`<br>Downloads the binary content of the resource and stores it on the file system. Returns the number of bytes downloaded or -1 if an error occurred
 
 Request customization:
 
@@ -715,6 +915,108 @@ Module `webserver` also defines the following constants:
 
 See the [Berry Cookbook](Berry-Cookbook.md) for examples.
 
+### `tcpclient` class
+
+Simple tcp client supporting string and binary transfers:
+
+- create an instance of the client with `var tcp = tcpclient()`
+- connect to the server `tcp.connect(address:string, port:int [, timeout_ms:int]) -> bool` Address can be numerical IPv4 or domain name. Returns `true` if the connection succeeded. Optional `timeout` in milliseconds. The default timeout is `USE_BERRY_WEBCLIENT_TIMEOUT` (2 seconds).
+- check if the socket is connected with `tcp.connected()`
+- send content with `tcp.write(content:string or bytes) -> int`. Accepts either a string or a bytes buffer, returns the number of bytes sent. It's you responsibility to resend the missing bytes
+- check if bytes are available for reading `tcp.available() -> int`. Returns `0` if nothing was received. This is the call you should make in loops for polling.
+- read incoming content as string `tcp.read() -> string` or as bytes `tcp.readbytes() -> bytes`. It is best to call `tcp.available()` first to avoid creating empty response objects when not needed
+- close the socket with `tcp.close()`
+
+
+tcpclient Function|Parameters and details
+:---|:---
+connect<a class="cmnd" id="tcpclient_connect">|`connect(address:string, port:int [, timeout_ms:int]) -> bool`<BR>Connect to `addr:port` with optional timeout in milliseconds (default 2s).<BR>Returns `true` if connection was successful, the call is blocking until the connection succeeded to the timeout expired.
+connected<a class="cmnd" id="tcpclient_connected">|`connected() -> bool`<BR>Returns `true` if the connection was successful and is still valid (not dropped by server or closed by client)
+close<a class="cmnd" id="tcpclient_close">|`close() -> nil`<BR>Drops the current connection.
+write<a class="cmnd" id="tcpclient_write">|`content:string or bytes) -> int`<BR>Accepts either a string or a bytes buffer, returns the number of bytes sent. It's you responsibility to resend the missing bytes.<BR>Returns `0` if something went wrong.
+available<a class="cmnd" id="tcpclient_close">|`available() -> int`<BR>Returns the number of bytes received in buffer and ready to be read.
+read<a class="cmnd" id="tcpclient_read">|`read([max_len:int]) -> string`<BR>Returns all the bytes received in Rx buffer as `string`.<br>Optional `max_len` parameter limits the number of characters returned, or read as much as possible by default.
+readbytes<a class="cmnd" id="tcpclient_read">|`read([max_bytes:int]) -> bytes()`<BR>Returns all the bytes received in Rx buffer as `bytes()`.<br>Optional `max_bytes` parameter limits the number of bytes returned, or read as much as possible by default.
+Full example:
+
+```
+tcp = tcpclient()
+tcp.connect("192.168.2.204", 80)
+print("connected:", tcp.connected())
+s= "GET / HTTP/1.0\r\n\r\n"
+tcp.write(s)
+print("available1:", tcp.available())
+tasmota.delay(100)
+print("available1:", tcp.available())
+r = tcp.read()
+tcp.close()
+print(r)
+```
+
+### `udp` class
+  
+Class `udp` provides ability to send and received UDP packets, including multicast addresses.
+
+You need to create an object of class `udp`. Such object can send packets and listen to local ports. If you don't specify a local port, the client will take a random source port. Otherwise the local port is used as source port.
+
+When creating a local port, you need to use `udp->begin(<ip>, <port)>`. If `<ip>` is empty string `""` then the port is open on all interfaces (wifi and ethernet).
+
+General Function|Parameters and details
+:---|:---
+udp()<a class="cmnd" id="udp_ctor">|`udp() -> <instance udp>`<br>Creates an instance of `udp` class.
+begin<a class="cmnd" id="udp_begin">|`begin(ip:string, port:int) -> bool`<BR>Create a UDP listener and sender on interface `ip` and `port`. If `ip` is an empty string, the listener connects to all interfaces (aka 0.0.0.0)<BR>Returns `true` if successful.
+begin_multicast<a class="cmnd" id="udp_begin_mcast">|`begin(ip:string, port:int) -> bool`<BR>Create a UDP listener and sender on interface `ip` and `port`. `ip` must be a multicast address.<BR>Returns `true` if successful.
+send<a class="cmnd" id="udp_send">|`send(addr:string, port:int, payload:bytes) -> bool`<BR>Sends a packet to address `addr`, port `port` and message as `bytes()` buffer.<BR>Returns `true` if successful.
+send_multicast<a class="cmnd" id="udp_send_mcast">|`send(payload:bytes) -> bool`<BR>Sends a payload as `bytes()` buffer to the multicast address. `begin_multicast()` must have been previously called.<BR>Returns `true` if successful.
+read<a class="cmnd" id="udp_read">|`read() -> bytes() or nil`<BR>Reads any received udp packet as bytes() buffer, or `nil` if no packet was received.
+remote_ip<a class="cmnd" id="udp_remote_ip">|`remote_ip (string or nil)`<BR>Instance variable containing the remote ip (as string) from the last successful `read()` command.
+remote_port<a class="cmnd" id="udp_remote_port">|`remote_port (int or nil)`<BR>Instance variable containing the remote port (as int) from the last successful `read()` command.
+
+#### Sending udp packets
+
+``` ruby
+> u = udp()
+> u.begin("", 2000)    # listen on all interfaces, port 2000
+true
+> u.send("192.168.1.10", 2000, bytes("414243"))   # send 'ABC' to 192.168.1.10:2000, source port is 2000
+true
+```
+
+#### Receive udp packets
+
+You need to do polling on `udp->read()`. If no packet was received, the call immediately returns `nil`.
+
+``` ruby
+> u = udp()
+> u.begin("", 2000)    # listen on all interfaces, port 2000
+true
+> u.read()     # if no packet received, returns `nil`
+>
+
+> u.read()     # if no packet received, returns `nil`
+bytes("414243")    # received packet as `bytes()`
+```
+
+#### Send and receive multicast
+
+``` ruby
+> u = udp()
+> u.begin_multicast("224.3.0.1", 3000)    # connect to multicast 224.3.0.1:3000 on all interfaces
+true
+
+> client.send_multicast(bytes("33303030"))
+
+> u.read()     # if no packet received, returns `nil`
+> u.read()
+bytes("414243")    # received packet as `bytes()`
+```
+
+### Addressable leds (WS2812, SK6812)
+
+There is native support for addressable leds via NeoPixelBus, with support for animations. Currently supported: WS2812, SK6812.
+
+Details are in [Berry leds](Berry_leds.md)
+
 ### `serial` class
 
 The `serial` class provides a low-level interface to hardware UART. The serial GPIOs don't need to be configured in the template.
@@ -741,6 +1043,32 @@ flush<a class="cmnd" id="serial_flush"></a>|`flush(void) -> void`<br>Flushes all
 available<a class="cmnd" id="serial_available"></a>|`available(void) -> int`<br>Returns the number of incoming bytes in the incoming buffer, `0` in none.
 
 Supported serial message formats: `SERIAL_5N1`, `SERIAL_6N1`, `SERIAL_7N1`, `SERIAL_8N1`, `SERIAL_5N2`, `SERIAL_6N2`, `SERIAL_7N2`, `SERIAL_8N2`, `SERIAL_5E1`, `SERIAL_6E1`, `SERIAL_7E1`, `SERIAL_8E1`, `SERIAL_5E2`, `SERIAL_6E2`, `SERIAL_7E2`, `SERIAL_8E2`, `SERIAL_5O1`, `SERIAL_6O1`, `SERIAL_7O1`, `SERIAL_8O1`, `SERIAL_5O2`, `SERIAL_6O2`, `SERIAL_7O2`, `SERIAL_8O2`
+
+### `display` module
+
+The `display` module provides a simple API to initialize the Universal Display Driver with data provided as a string. It is used by `autoconf` mechanism.
+
+Tasmota Function|Parameters and details
+:---|:---
+start<a class="cmnd" id="display_start"></a>|`display.start(displayini:string) -> nil`<br>Initializes the Universal Display Driver with the string provided as argument, similar to content in `display.ini`. It is typically read from a file in the file-system.
+started<a class="cmnd" id="display_started"></a>|`display.started() -> bool`<br>Returns `true` if display is already initialized, `false` if not started.
+dimmer<a class="cmnd" id="display_dimmer"></a>|`display.started([dim:int]) -> int`<BR>Sets the dimmer of display, value 0..100. If `0` then turn off display. If no arg, read the current value.
+driver\_name<a class="cmnd" id="display_driver_name"></a>|`display.driver_name() -> string`<br>Returns the Display driver name as specified in `display.ini`
+touch\_update<a class="cmnd" id="display_touch_update"></a>|`display.touch_update(touches:int, raw_x:int, raw_y:int, gesture:int) -> nil`<br>Sets the last Touch Screen update values to be passed to LVGL. This allows an external touchscreen driver to periodically update the touch information.<BR>`touches`: number of touches (`0` = no touch, `1` = screen touched). Multiple touch is not supported<BR>`raw_x` and `raw_y` = coordinates before conversion (resistive touch screens need conversion)<BR>`gesture`: type of gesture. `0` = no gesture, `16` = move up, `17` = move down, `18` = move left, `19` = move right, `32` = zoom in, `33` = zoom out.
+
+### `uuid` module
+
+The `uuid` module allows to generate uuid4 random ids.
+
+``` ruby
+> import uuid
+> uuid.uuid4()
+1a8b7f78-59d8-4868-96a7-b7ff3477d43f
+```
+
+Tasmota Function|Parameters and details
+:---|:---
+uuid4<a class="cmnd" id="uuid_uuid4"></a>|`uuid.uuid4() -> string`<br>Generates a uuid4 random id as string.
 
 ## Compiling Berry
 

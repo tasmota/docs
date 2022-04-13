@@ -16,31 +16,31 @@ The examples below are for a `ShutterRelay1 1` configuration (using Relay1 and R
 
 **Shutter mode 1** - Normal Operation   
 
-First relay: OFF/DOWN, Second relay: OFF/UP  
+Relay1: UP/OFF, Relay2: DOWN/OFF  
    
 - `Interlock 1,2` (Interlocked relay pair)
 - `Interlock ON`
 
 **Shutter mode 2** - Circuit Safe 
 
-First relay: ON/OFF, Second relay: UP/DOWN
+Relay1: ON/OFF, Relay2: UP/DOWN
 
 - `Interlock OFF`
 
 **Shutter mode 3** - Garage Motors   
 
-First relay: OFF/DOWN PULSE, Second relay: OFF/UP PULSE
+Relay1: OFF/DOWN PULSE, Relay2: OFF/UP PULSE
    
 **Shutter mode 4** - Stepper Motors   
 
-First relay: ON/OFF, Second relay: UP/DOWN
+Relay1: ON/OFF, Relay2: UP/DOWN
 
 - PWM: Stepper signal, COUNTER: Stepper position signal
 - PWM and COUNTER defined
    
 **Shutter mode 5** - Servo Motors (PWM position based servo)  
 
-First relay: ON/OFF, Second relay: UP/DOWN (optional not used)
+Relay1: ON/OFF, Relay2: UP/DOWN (optional not used)
 
 - PWM: Stepper signal
 - `PWMfrequency 200`   ( This is mandatory for most relay to get correct PWM duty cylces)
@@ -77,7 +77,7 @@ Disabling a shutter in the middle of the defined set of shutters will disable al
 
 With four shutters, eight `Relay<x>` components are needed. If manual operation switches (`Switch<x>` or `Button<x>` pairs) are also used, additional input GPIO are required. The ESP82xx device may not have enough free GPIO to support all the shutter connections required. A GPIO expander such as a [PCF8574](PCF8574) or [MCP230xx](MCP230xx) can be used with additional effort.
 
-Using manual operation `Switch<x>` pairs may require setting `SwitchMode<x> 4` (inverse follow) for proper switch behavior.
+When using a switch for manual operation `Switch<x>` pairs should usually be set to `SwitchMode<x> 2` (inverse follow) for proper switch behavior.
 
 Any shutter positioning can be locked `ShutterLock<x> 1`. Once executed an ongoing movement is finished while further positioning commands like `ShutterOpen<x>`, `ShutterClose<x>`, `ShutterStop<x>`,  `ShutterPosition<x>`, ... as well as web UI buttons, web UI sliders, and shutter buttons are disabled. This can be used to lock an outdoor blind in case of high wind or rain. You may also disable shutter positioning games by your children. Shutter positioning can be unlocked using `ShutterLock<x> 0`. Please be aware that the shutter can still be moved by direct relay control (i.e., `Power<x>`), or physical switches and buttons. Use the `ShutterButton<x>` command prior to `ShutterLock` to be able to lock buttons.
     
@@ -142,8 +142,12 @@ Some motors need up to one second after power is turned on before they start mov
 
 Close the shutter and repeat this procedure until the motor delay is set properly.  
 
+Following defaults are pre-compiled into the code and can only be changed by compiling you own binary and use the `user_config.override`
+- The default waiting time after the motor is stopped and before e.g. moving into the other direction is 0.5 sec. This avoids unexpected massive loads when changing direction. The time in [ms] can be changed by adding following line with a different value: `#define MOTOR_STOP_TIME 500 // wait 0.5 second after stop to do any other action. e.g. move in the opposite direction`
+- In Failsafe-Mode the driver waits for 0.1sec to let the direction relay execute and be stable before switching on the power relay starting the movement. The time in [ms] can be changed by adding following line with a different value: `#define SHUTTER_RELAY_OPERATION_TIME 100 // wait for direction relay 0.1sec before power up main relay`
+
 ### Button Control
-When shutter is running in default `ShutterMode 0`, you already have basic control over the shutter movement using switches or buttons in the module configuration to directly drive the shutter relays.  For short circuit safe operation `ShutterMode 1` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch or button and 2nd switch on the power by the other switch or button. 
+When shutter is running in `ShutterMode 1` (normal two relay up/off down/off), you already have basic control over the shutter movement using switches or buttons in the module configuration to directly drive the shutter relays. For short circuit safe operation `ShutterMode 2` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch/button and 2nd switch on the power by the other switch/button.
 
 To have shutter mode independent button control over the shutter and not over its relays one can use the `ShutterButton<x>` command. It also introduces some more features, see below:
 
@@ -197,6 +201,9 @@ Use any other Tasmota device with buttons or switches to control remotely a shut
 
 ## Specific Configuration
 
+!!! note 
+    The PWM remains on even after the end position has been reached. The motor then permanently tries to hold the position and could thereby trigger noises or a slight "twitching". If this is not desired, you can switch off the PWM after reaching the end position with ```#define SHUTTER_CLEAR_PWM_ONSTOP```. 
+   
 ### Pulse Motors
 There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands.md#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
 
@@ -206,6 +213,12 @@ Stepper motors can also be used to operate shutters and blinds. Additionally you
 ### Servo Motors
 Servos are small devices with typical 180° or 360" rotation movement. The position will be drived by the PWM duty cycle time. This will all automatically calculated
 
+!!! note
+If you miss low angles (i.e 2°) you should be able to get this by changing the minimum `ShutterPWMRange`. If this does not help you can customize `PwmFrequency`. Normally for PWM servos, there is no calibration required, but you have the option to do a calibration. Check the documentation for shuttercallibration. Maybe `ShutterSetHalfway` is already enough. Otherwise you can do a fine granular calibration.
+
+!!! note
+If you change the shutteropenduration/closeduration the servo will operate slower, but now the servo also achieves small angle changes.
+   
 [More info](https://github.com/arendst/Tasmota/discussions/10443#discussion-1627790)
 
 ### DC Motors
@@ -462,21 +475,18 @@ Jarolift shutters operates by the 3 commands up/stop/down. Compile with the KeeL
   `Rule1 On Power1#state=0 DO KeeloqSendButton 4 endon On Power2#state=0 DO KeeloqSendButton 4 endon on Power1#state=1 DO KeeloqSendButton 8 endon on Power2#State=1 DO KeeloqSendButton 2 endon`
 
 ### Venetian Blind Support
-A 2nd shutter can be configured to support the adjustment of the horizontal tilt.  
-After movement the tilt will be restored if blind is not fully opened or closed via an additional rule.  
+All time based shutters (not stepper, pwm) can be enhanced with Venetian Blind functionality. The configuration need following parameters: angle of blinds during OPEN, angle of blinds during CLOSE. This are the max and the min values of the venetian blinds (e.g. -90° to 90°). Additionally the runtime is required from min to max and reverse. This is typically 1-2sec. The resolution of the time is 0.05sec. Duration in [sec] must be multiplied by 20. e.g. 1.2sec => 1.2 x 20 = 24. Two open and close the tilt you can define the angle for OPEN and the angle for CLOSE of the tilt.
+   `shuttertiltconfig1 -90 90 24 0 -90`
+ 
+Tilt configuration can be set for every shutter independently. The tilt can be set with one of the following commands:
+   `shuttertilt1 open` set tilt to defined open angle
+   `shuttertilt1 close` set tilt to defined close angle
+   `shuttertilt1 20` set tilt to 20° angle
+   
+If the shutter is moved from one position to another position the tilt will be restored AFTER the movement. If the shutter is fully opened or fully closed the tilt will be resetted. This means there is no tilt restore at the endpoints.
 
-Custom build with following options is needed:  
-  `#define USE_EXPRESSION`  
-  `#define SUPPORT_IF_STATEMENT`  
+Similar to shutterchange to make relative movements there is also a `shuttertiltchange` with the same behavior. 
+   
+If the shutter is operated with wall buttons or the web interface and stopped during a tilte change before the shutter starts moving the NEW tilt position is stored. Now any additional position movements will restore this new tilt position. This makes is possible with small ON/OFF to change the tilt and with long ON/OFF to change the position and retain the tilt after movement.
 
-Configuration of 2nd shutter:  
-  `ShutterRelay2 1`            // setup 2nd shutter at same relay as shutter 1  
-  `ShutterOpenDuration2 1.4`   // adjust to real duration  
-  `ShutterCloseDuration2 1.4`  // adjust to real duration  
-
-Add rule (requires rules with [Conditional Rules](Rules.md#conditional-rules) enabled :  
-```
-Rule1 on Shutter2#Position DO mem1 %value% ENDON on Shutter1#Position DO var2 %value% ENDON on Shutter1#Direction!=0 DO var1 %value% ENDON on Shutter1#Direction=0 DO IF (var1==1) var1 0; IF (var2!=100) ShutterSetOpen2; shutterposition2 %mem1% ENDIF ENDIF ENDON on Shutter1#Direction=0 DO IF (var1==-1) var1 0; IF (var2!=0) ShutterSetClose2; shutterposition2 %mem1% ENDIF ENDIF ENDON
-```
-
-
+Similar to shutterposition there is a minimum runtime of the motor required that TASMOTA can control. This is 0.2sec. Because the tiltmovement from one position into the other takes often about 1sec it is very common that you cannot make small tilt changes of 10° or sometimes even 20". 
