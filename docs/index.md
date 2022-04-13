@@ -21,7 +21,7 @@ Incredibly expandable and flexible.
 ### Current release 
 <a href="http://ota.tasmota.com/tasmota/release-11.1.0/"><span style="font-size:40px;">Tasmota 11.1.0 Ostara</span></a><br>
 
-- Tasmota Web Installer improved and integrated in the [Flashing](Getting-started.md#flashing)
+- Tasmota Web Installer improved and integrated in the [Flashing](Getting-Started.md#flashing) tutorial
 - Support for improv when using Tasmota Web Installer
 - New peripherals: up to four DS3502 digital potentiometers, ADE7880 3 phase energy monitor as used in Shelly 3EM, PCF85363 RTC as used in Shelly 3EM, __experimental__ Sonoff MS01 moisture sensor
 - New commands: [`SetOption135`](Commands.md#setoption135), [`SetOption136`](Commands.md#setoption136), [`SetOption137`](Commands.md#setoption137), [`SetOption138`](Commands.md#setoption138), [`SspmMap`](Sonoff-SPM.md#sspmmap), [`TcpConnect`](Commands.md#tcpconnect), [`RfTimeout`](Commands.md#rftimeout), [`IfxSensor`](Commands.md#ifxsensor), [`Sensor12`](Commands.md#sensor12), [`Sensor34`](Commands.md#sensor34), [`Wiper`](Commands.md#wiper) and lots of [NeoPool](NeoPool.md) commands

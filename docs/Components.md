@@ -253,11 +253,9 @@ Read more about [peripherals](Supported-Peripherals.md).
 |          |          | Rc522 RST       | RC522 reset                                                              |
 |          |          | P9813 Clk       | P9813 Clock                                                            |
 |          |          | P9813 Dat       | P9813 Data                                                             |
-|          | 5728     | Option a 1      | Enable PWM2 high impedance if powered off as used by Wyze bulbs                            |
-|          | 5729     | Option a 2      | Enable dummy energy monitor                                                                |
-|          | 5730     | Option a 3      | Enable UDisplay universal display driver                                                   |
-|          | 5731     | Option a 4      | Enable CCLoader using Zigbee Rx/Tx/Rst Gpios                                |
-|          |          | Option E 1      | USE_PWM_DIMMER as GPIO                                |
+|          | 5728     | Option A1       | Enable PWM2 high impedance if powered off as used by Wyze bulbs                            |
+|          | 5729     | Option A2       | Enable dummy energy monitor                                                                |
+|          | 5730     | Option A3       | Enable UDisplay universal display driver                                                   |
 |          |          | Ftc532          | FTC532 touch controller serial input                                                            |
 |          | 6336     | ADC pH          | Analog PH sensor                                                            |
 |          |          | Bs814 Clk       | Bs814 Clock                                                            |
@@ -310,11 +308,11 @@ Read more about [peripherals](Supported-Peripherals.md).
 |          | Button_id 2     | Button inverted, active high with internal pull-down resistor                              |
 |          | Button_id 3     | Button inverted, active high with internal pull-down resistor                              |
 |          | Button_id 4     | Button inverted, active high with internal pull-down resistor                              |
-|          | EPD Data         |  Base connection EPD driver                                                                  |
-|          | Halleffect         | Built in hall sensor                                                                  |
+|          | EPD Data        |  Base connection EPD driver                                                                  |
+|          | Halleffect      | Built in hall sensor                                                                  |
 |          | Key1 TC         | ESP32 Touch pin as button                                                                  |
 |          | Key1 PD         | ESP32 Touch pin as button                                                                  |
-|          | Key1 Inv PD         | ESP32 Touch pin as button                                                                  |
+|          | Key1 Inv PD     | ESP32 Touch pin as button                                                                  |
 |          | Switch_d 1      | Switch, with pull-down resistor                                                            |
 |          | Switch_d 2      | Switch, with pull-down resistor                                                            |
 |          | Switch_d 3      | Switch, with pull-down resistor                                                            |
@@ -324,6 +322,8 @@ Read more about [peripherals](Supported-Peripherals.md).
 |          | Switch_d 7      | Switch, with pull-down resistor                                                            |
 |          | Switch_d 8      | Switch, with pull-down resistor                                                            |
 |          | Swt1 PD         | ESP32 Touch pin as button                                                                  |
+|          | Option A6       | USE_PWM_DIMMER as GPIO                                |
+|          | Option E1       | USE_PWM_DIMMER as GPIO                                |
 
 ## ADC Conversion
 
