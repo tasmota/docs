@@ -152,8 +152,11 @@ with mkdocs_gen_files.open("Commands/timezone_table.md", "w") as doc_fh:
 
     doc_fh.write("|Timezone|Commands|\n")
     doc_fh.write("|-|-|\n")
-    for key in sorted(zoneinfo.available_timezones()):
-        with resources.open_binary(*iana_key_to_resource(key)) as tzif_fh:
+    for tz_key in sorted(zoneinfo.available_timezones()):
+        if tz_key == "localtime":
+            # This is not a real timezone
+            continue
+        with resources.open_binary(*iana_key_to_resource(tz_key)) as tzif_fh:
             # The last non-empty line of the file is the POSIX TZ string
             posix_tz_string = (
                 tzif_fh.read().rstrip(b"\n").rpartition(b"\n")[-1].decode("ascii")
@@ -170,7 +173,7 @@ with mkdocs_gen_files.open("Commands/timezone_table.md", "w") as doc_fh:
             except DstStartEndTimeNotWholeHourError:
                 content = "This timezone starts or ends DST part way through the hour, which Tasmota does not support."
 
-            doc_fh.write(f"|{key}|{content}|\n")
+            doc_fh.write(f"|{tz_key}|{content}|\n")
 
     doc_fh.write(
         f"\nThis table was generated from the [IANA Time Zone Database](https://www.iana.org/time-zones), version `{tzdata.IANA_VERSION}`."
