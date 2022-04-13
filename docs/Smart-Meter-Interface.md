@@ -348,6 +348,7 @@ Look down below for script examples based on the following metering devices:
 - [Resol Deltasol BS Plus](#resol-deltasol-bs-plus-vbus) (VBus)
 - [Logarex LK13BE](#logarex-lk13be-obis) (OBIS)
 - [Peacefair PZEM004T V30](#peacefair-pzem004tv30-modbus ) (SML - MODBus)
+- [Landis + Gyr E220](#landis--gyr-e220-sml) (SML)
     
 --------------------------------------------------------
 
@@ -440,18 +441,25 @@ The Tasmota SML script:
 ### Hager EHZ363, Apator Norax 3D (SML)
 
 ```
->D  
-
->B  
+>D
+>B
 ->sensor53 r
-
->M 1  
-+1,3,s,0,9600,SML  
-1,77070100010800ff@1000,Total consumption,KWh,Total_in,4  
-1,77070100020800ff@1000,Total Feed,KWh,Total_out,4  
-1,77070100100700ff@1,Current consumption,W,Power_curr,0  
-1,77070100000009ff@#,Meter Nr,,Meter_number,0  
-#  
+>M 1
++1,3,s,0,9600,SML
+1,77070100010800ff@1000,Total consumption,KWh,Total_in,4
+1,77070100020800ff@1000,Total Feed,KWh,Total_out,4
+1,77070100100700ff@1,Current consumption,W,Power_curr,0
+1,77070100200700ff@1,Voltage L1,V,Volt_p1,1
+1,77070100340700ff@1,Voltage L2,V,Volt_p2,1
+1,77070100480700ff@1,Voltage L3,V,Volt_p3,1
+1,770701001f0700ff@1,Amperage L1,A,Amperage_p1,1
+1,77070100330700ff@1,Amperage L2,A,Amperage_p2,1
+1,77070100470700ff@1,Amperage L3,A,Amperage_p3,1
+1,77070100510704ff@1,Phaseangle I-L1/U-L1,deg,phase_angle_p1,1 
+1,7707010051070fff@1,Phaseangle I-L27I-L2,deg,phase_angle_p2,1  
+1,7707010051071aff@1,Phaseangle I-L3/I-L3,deg,phase_angle_p3,1 
+1,770701000e0700ff@1,Frequency,Hz,frequency,0
+#
 ```
 
 ------------------------------------------------------------------------------
@@ -1554,6 +1562,33 @@ Beware that A and B MODBus connectors are switched!
 #
 ```
 
+### ABB B23 (M-Bus)
+Using the IR Port on left side of the devise. IR doesn't support MODBUS only M-Bus and EQ-Bus protocoll. 
+Configure the IR output at the device menu. This example is using 9600 baud and Adress 10h (16 decimal).  
+The meter is using equal parity 1 stop bit 9600E1
+The upper diode is TX the lower RX. My device is sending always 2 telegrams. I tried to add addional values by sending SND_UD telegram.
+I only receive the e5 response showing that the request was accepted. No change in response. The last telegram will end on a "0F xx 16" instead of a "1F xx 16", which will show that additional telegrams are available. If you can receive more telegrams, add alternating  107b108b16 - 105b106b16. One for each telegram.
+ This example will only work with address 10! the second last byte is a check sum. For this REQ_UD2 it is the sum of the 2 bytes before ( Adress and VIF). 
+    
+```
+>M 1
++1,3,rE1,0,9600,ABB,1,10,1040105016,107b108b16,105b106b16[,107b108b16[,105b106b16]] 
+1,081072bcd8@1,Meter ID,,ID,0 ; meter ID (BCD-8)
+1,0E8400bcd8@100,E Imp total,kWh,Imp,2 ; Total imported energy 0.01 kWh
+1,04A900ssSSssSSs@100,P total,W,P_tot,2 ; Total Power 0.01 W
+1,04A9FF8100ssSSssSSs@100,P L1,W,P_L1,2 ; L1 Power 0.01 W
+1,04A9FF8200ssSSssSSs@100,P L2,W,P_L2,2 ; L2 Power 0.01 W
+1,04A9FF8300ssSSssSSs@100,P L3,W,P_L3,2 ; L3 Power 0.01 W
+1,04FDC8FF8100uuUUuuUUs@10,U L1,V,U_L1,1 ; Voltage L1 0.1 V
+1,04FDC8FF8200uuUUuuUUs@10,U L2,V,U_L2,1 ; Voltage L2 0.1 V
+1,04FDC8FF8300uuUUuuUUs@10,U L3,V,U_L3,1 ; Voltage L3 0.1 V
+1,0AFFD900bcd4@100,*,Hz,F,2 ; Frequency
+1,0E84FF8100bcd8@100,E Imp L1,kWh,Imp-L1,2 ; L1 imported energy 0.01 kWh
+1,0E84FF8200bcd8@100,E Imp L2,kWh,Imp-L2,2 ; L2 imported energy 0.01 kWh 
+1,0E84FF8300bcd8@100,E Imp L3,kWh,Imp-L3,2 ; L3 imported energy 0.01 kWh
+#
+``` 
+    
 ### Itron (SML V1.04)
     
 The Itron electrical meter is a German end-user meter installed by EnBW. You can read values using an IR Sensor. The following script shows the meter number and the consuption and the generation of a Photovoltaik generator. 
@@ -1732,6 +1767,24 @@ PZEM004T V30 multiple meters on Modbus
 1,050404UUuuxxxxxxxx@i16:10,Frequency,Hz,Sensor-05-hz,2
 1,050404UUuuxxxxxxxx@i17:100,Power Factor,PF,Sensor-05-PF,2
 
+#
+```
+### Landis + Gyr E220 (SML)
+
+For read-out of "current power" the advanced data set has to be enabled in user menue
+
+code:
+```
+>D
+>B
+=>sensor53 r
+;Set teleperiod to 20sec  
+tper=10  
+>M 1
++1,3,s,0,9600,Power
+1,77070100600100ff@#,Server-ID,,Meter_Number,0
+1,77070100010800ff@1000,Verbrauch,kWh,Total_in,4
+1,77070100100700ff@1,Leistung-akt.,W,Power_curr,0
 #
 ```
 -----

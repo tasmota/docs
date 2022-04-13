@@ -21,7 +21,7 @@ Find out more on the [manufacturer's website](https://rainsensors.com/products/r
 | HRG15 | ESP8266
 |   ---|    ---
 |GND (1)  | GND
-|VCC (8)   | 3.3V 
+|V+ 3.3V (8)   | 3.3V 
 |RS232 Out (4) | GPIOx
 |RS232 In (5)  | GPIOy
 
