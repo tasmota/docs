@@ -257,6 +257,7 @@ Read more about [peripherals](Supported-Peripherals.md).
 |          | 5729     | Option a 2      | Enable dummy energy monitor                                                                |
 |          | 5730     | Option a 3      | Enable UDisplay universal display driver                                                   |
 |          | 5731     | Option a 4      | Enable CCLoader using Zigbee Rx/Tx/Rst Gpios                                |
+|          |          | Option E 1      | USE_PWM_DIMMER as GPIO                                |
 |          |          | Ftc532          | FTC532 touch controller serial input                                                            |
 |          | 6336     | ADC pH          | Analog PH sensor                                                            |
 |          |          | Bs814 Clk       | Bs814 Clock                                                            |

@@ -17,7 +17,7 @@ Name|Description|Connection
 [**BH1750**](BH1750) | Luminosity Sensor
 [**BMP280<BR>BMP085<BR>BMP180)**](BME280) | Pressure Sensor
 [**BME280**](BME280) | Temperature, Humidity and Pressure Sensor | I^2^C
-[**BME680**](BME680) | Temperature, Humidity, Pressure and Gas Sensor | I^2^C
+[**BME680**](BME680)<BR>BME688 | Temperature, Humidity, Pressure and Gas Sensor | I^2^C
 [**Buzzer**](Buzzer) | Audio Signalling Device | gpio
 [**CC2530**](CC2530) | TI CC2530 Zigbee Adapter| serial
 **CCS811** | Gas and Air Quality Sensor| I^2^C
@@ -29,6 +29,7 @@ Name|Description|Connection
 **[DS18x20](DS18x20)** | Temperature Sensor| 1-Wire
 **DS1624<BR>DS1621** | Temperature Sensor| 1-Wire
 [**DS3231**](DS3231) | Real-Time-Clock| I^2^C
+[**DS3502**](DS3502) | Digital potentiometer| I^2^C
 **[EZO](EZO)** | EZO series of chemical Sensors | I^2^C
 **F&F LE-01MR** | F&F LE-01MR Single Phase Modbus Energy meter
 [**GPS-NTP-server**](GPS-NTP-server) | GPS-NTP-server | serial
@@ -69,6 +70,7 @@ Name|Description|Connection
 [**MLX90640**](MLX90640) | MLX90640 Far Infrared Thermal Sensor Array| I^2^C
 [**MPR121**](MPR121) | Proximity Capacitive Touch Sensor Controller (I^2^C)
 [**MPU6050**](MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer Sensor (I^2^C)
+**MQ** | MQ Sensors (MQ-02, MQ-03, MQ-04, MQ-05, MQ-06, MQ-07, MQ-08, MQ-09, MQ-131, MQ-135) | analog
 [**NeoPool**](NeoPool) | Sugar Valley NeoPool Controller| serial
 [**NRF24L01**](NRF24L01) | NRF24L01 as BLE-bridge for Mijia BT Sensors| SPI
 [**OpenTherm**](OpenTherm) | OpenTherm adapter| serial
@@ -89,6 +91,7 @@ Name|Description|Connection
 **Eastron SDM72** | Modbus Energy Meter| serial
 **Eastron SDM120** | Modbus Energy Meter| serial
 **Eastron SDM220** | Modbus Energy Meter| serial
+**Eastron SDM230** | Modbus Energy Meter| serial
 **Eastron SDM630** | Modbus Energy Meter| serial
 [**SDS011<BR>SDS021**](SDS011) | Laser Dust Sensor
 **SGP30** | Gas and Air Quality Sensor| I^2^C

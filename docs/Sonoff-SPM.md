@@ -76,5 +76,3 @@ SspmLog<x\><a class="cmnd" id="SspmLog"></a>|Show relay <x\> power state change 
 SspmMap<a class="cmnd" id="SspmMap"></a>|Map scanned SPM-4Relay modules to physical location. Use unique numbers for all fields<BR>`0` = rescan modbus for SPM-4Relay modules and reset mapping to default. This takes at least 20 seconds<BR>`3,4,1,2` = map scanned module 1 to physical module 3 containing relays 9 to 12, module 2 to 4 with relays 13 to 16, module 3 to 1 with relays 1 to 4 and module 4 to 2 with relays 5 to 8
 SspmOverload<x\><a class="cmnd" id="SspmOverload"></a>|Set overload detection criteria for relay <x\> <BR>`0` = reset and disable overload detection to scanned module criteria<BR>`<delay>,<min_power>,<max_power>,<min_voltage>,<max_voltage>,<max_current>` = set any or all overload detection criteria<BR>`0,0.10,4400.00,0.10,240.00,20.00` = enable overload detection with default values<BR>`9,0,22.1` = enable max_power over 22.1W detection after 9 seconds<BR>`0,0,0,0,235.2` = enable immediate max_voltage over 235.2V detection
 SspmScan<a class="cmnd" id="SspmScan"></a>|Rescan modbus for SPM-4Relay modules. This takes at least 20 seconds
-  
-  

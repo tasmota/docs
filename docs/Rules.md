@@ -212,21 +212,21 @@ The value of a `Var<x>` and `Mem<x>` can be:
 - any text
 - %var1% to %var16%
 - %mem1% to %mem16% 
-- %time%
-- %timestamp%
-- %uptime%
+- %color%
+- %deviceid%
+- %macaddr%
 - %sunrise%
 - %sunset%
-- %utctime%
-- %topic%
-- %color%
+- %time%
 - %timer1% to %timer16%
-- %MacAddr%
-- %DeviceID%
-- %ZbDevice%
-- %ZbGroup%
-- %ZbCluster%
-- %ZbEndPoint%
+- %timestamp%
+- %topic%
+- %uptime%
+- %utctime%
+- %zbdevice%
+- %zbgroup%
+- %zbcluster%
+- %zbendpoint%
 
 To set the value for `Var<x>` and `Mem<x>` use the command  
 
