@@ -19,20 +19,20 @@ Incredibly expandable and flexible.
 <b>Install Tasmota using a Chrome based browser at [https://tasmota.github.io/install/](https://tasmota.github.io/install/).</b>    
 
 ### Current release 
-<a href="http://ota.tasmota.com/tasmota/release-11.0.0/"><span style="font-size:40px;">Tasmota 11.0.0 Olivia</span></a><br>
+<a href="http://ota.tasmota.com/tasmota/release-11.1.0/"><span style="font-size:40px;">Tasmota 11.1.0 Ostara</span></a><br>
 
-- Tasmota favicon to webbrowser tab 
-- Support for Linkind dimmer as GPIO `Option A6`
-- New rule variables `%color%` and `%timer1%` to `%timer16%`
-- New peripherals: Eastron SDM230 modBus energy meter, MQ analog sensor for air quality
-- New commands: [`SetOption44`](Commands.md#setoption44), [`SetOption134`](Commands.md#setoption134), [`SSerialConfig`](Commands.md#sserialconfig), [`WebTime`](Commands.md#webtime)
+- Tasmota Web Installer improved and integrated in the [Flashing](Getting-started.md#flashing)
+- Support for improv when using Tasmota Web Installer
+- New peripherals: up to four DS3502 digital potentiometers, ADE7880 3 phase energy monitor as used in Shelly 3EM, PCF85363 RTC as used in Shelly 3EM
+- New commands: [`SetOption135`](Commands.md#setoption135), [`SetOption136`](Commands.md#setoption136), [`SetOption137`](Commands.md#setoption137), [`SetOption138`](Commands.md#setoption138), [`SspmMap`](Commands.md#sserialconfig), [`TcpConnect`](Commands.md#tcpconnect), [`RfTimeout`](Commands.md#rftimeout), [`IfxSensor`](Commands.md#ifxsensor), [`Sensor12`](Commands.md#sensor12), [`Sensor34`](Commands.md#sensor34), [`Wiper`](Commands.md#wiper)
 - ESP32
-    - Single binary firmware
-    - Support for TuyaMCU
-    - Increase PWM channels to 16
-    - Initial support for ESP32S3 with support for 38 configurable GPIOs
+    - Support for [OpenHASP](OpenHASP.md)
+    - support for BLE Mi Scale V1
+    - Integrate Homekit in Bluetooth binary
+    - Berry virtual Alexa hue device
+    - Berry bootloop protection
 
-See [release notes](https://github.com/arendst/Tasmota/releases/tag/v10.1.0) for a complete list of new features, changes and bug fixes.
+See [release notes](https://github.com/arendst/Tasmota/releases/tag/v11.1.0) for a complete list of new features, changes and bug fixes.
 
 ### Join our communities and chat
 See [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), [Reddit](https://www.reddit.com/r/tasmota/) or [Google Groups](https://groups.google.com/d/forum/sonoffusers) for general chat, feedback, questions and live troubleshooting.
