@@ -26,9 +26,6 @@ plugins:
         'Tuya-Protocols.md': 'TuyaMCU.md'
         'Upgrade.md': 'Upgrading.md'
         'Berry-Scripting.md': 'Berry.md'
-  - gen-files:
-      scripts:
-        - scripts/timezone_table.py
 # - htmlproofer
 
 # strict: true
