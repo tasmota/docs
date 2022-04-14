@@ -1,5 +1,5 @@
 ewt_s=document.createElement('script');ewt_s.type='module';
-ewt_s.src="https://unpkg.com/esp-web-tools@8.0.0/dist/web/install-button.js?module";
+ewt_s.src="https://unpkg.com/esp-web-tools@8.0.1/dist/web/install-button.js?module";
 document.body.append(ewt_s);
 
 ewt_b=document.createElement("esp-web-install-button");ewt_b.manifest="https://tasmota.github.io/install/manifest/release.tasmota.manifest.json";
