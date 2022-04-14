@@ -17,7 +17,7 @@ The Tasmota Sugar Valley NeoPool Controller sensor module shows the most of para
 ![](_media/xsns_83_neopool_s.png)
 
 There are [Tasmota commands](#commands) implemented to control the high level functions for filtration, light and system parameters such as pH set point, hydrolysis level, redox set point etc.
-However, the sensor also provides low-level commands to directly [read]#NPRead) and [write](#NPWrite) NeoPool register, means that you have the option to implement your own commands via home automation systems or by using the Tasmota build-in possibilities [Rules](Commands#rules) with [Backlog](Commands#the-power-of-backlog) or the powerful Berry language on ESP32.
+However, the sensor also provides low-level commands to directly [read](#NPRead) and [write](#NPWrite) NeoPool register, means that you have the option to implement your own commands via home automation systems or by using the Tasmota build-in possibilities [Rules](Commands#rules) with [Backlog](Commands#the-power-of-backlog) or the powerful Berry language on ESP32.
 
 ## Connection
 
@@ -84,7 +84,7 @@ After Tasmota restarts, the main screen should display the controller data as sh
 
 ## SENSOR data
 
-Sensor data is sent via the Tasmota topic `tele/%topic%/SENSOR` in JSON format every TelePeriod interval. To get the data immediately, use the Tasmota `TelePeriod` command without parameter:
+Sensor data is sent via the Tasmota topic `tele/%topic%/SENSOR` in JSON format every [TelePeriod](Commands#teleperiod) interval. To get the data immediately, use the Tasmota [TelePeriod](Commands#teleperiod) command without parameter:
 
 ```json
 {
@@ -192,9 +192,9 @@ To check which modules are installed use the "Module" value from SENSOR topic or
 
 ## Commands
 
-This sensor supports some high-level [Tasmota commands](#commands) for end user.
+This sensor supports some high-level [commands](#commands) for end user.
 
-Regardless, all other Modbus registers can be read and write, so you can [enhance](#Enhancements) your Sugar Valley control by using low-level [NPRead]#NPRead)/[NPWrite]#NPWrite) commands.
+Regardless, all other Modbus registers can be read and write, so you can [enhance](#Enhancements) your Sugar Valley control by using low-level [NPRead](#NPRead)/[NPWrite](#NPWrite) commands.
 
 Modbus register addresses and their meaning are described within source file [xsns_83_neopool.ino](https://github.com/arendst/Tasmota/blob/development/tasmota/xsns_83_neopool.ino) at the beginning and (partly) within document [171-Modbus-registers](https://downloads.vodnici.net/uploads/wpforo/attachments/69/171-Modbus-registers.pdf).<BR>
 Please note that Sugar Valley Modbus registers are not byte addresses but modbus registers containing 16-bit values - don't think in byte memory layout.
