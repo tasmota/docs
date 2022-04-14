@@ -198,8 +198,9 @@ Attribute name|LVGL equivalent|Details
 `bg_color`|`style_bg_color`|Color of background, format is `#RRGGBB`
 `bg_grad_color`|`style_bg_grad_color`|Color of background gradient
 `bg_grad_dir`|`style_bg_grad_dir`|Gradient direction<br>`0`: none<br>`1`: Vertical (top to bottom) gradient<br>`2`: Horizontal (left to right) gradient
-`border_side`|`style_border_side`|
-`border_width`|`style_border_width`|
+`border_side`|`style_border_side`|Borders to be displayed (add all values)<br>`0`: none<br>`1`: bottom<br>`2`: top<br>`4`: left<br>`8`: bottom<br>`15`: full (all 4)
+`border_width`|`style_border_width`|Width of border in pixels
+`border_color`|`style_border_color`|
 `line_color`|`style_line_color`|Color of line
 `line_width`|`style_line_width`|
 `line_width1`|`style_arc_width`|Sets the line width of an `arc` indicator part
@@ -216,7 +217,7 @@ Attribute name|LVGL equivalent|Details
 `text`|`text`|Sets the inner text of the object.<br>If the native LVGL object does not support text (like `lv.btn`), a `lv.label` sub-object is automatically created.
 `value_str`|`text`|Synonym of `text`
 `align`|`style_text_align`|Set alignment for text<br>`0` or `"left"`: `lv.TEXT_ALIGN_LEFT`<br>`1` or `"center"`: `lv.TEXT_ALIGN_CENTER`<br>`2` or `"right"`: `lv.TEXT_ALIGN_RIGHT`
-`text_font`|`style_text_font`|Sets the font name and size for the text.<br>If `int`, the default font is `robotocondensed_latin1` and the parameter sets the size<br>If `string`, the font is in the form `<font_name>-<font_size>`, example: `montserrat-20`
+`text_font`|`style_text_font`|Sets the font name and size for the text.<br>If `int`, the default font is `robotocondensed_latin1` and the parameter sets the size<br>If `string`, the font is in the form `<font_name>-<font_size>`, example: `montserrat-20` or in the form `A:<font_file>` to load a binary font from the file-system.
 `value_font`|`style_text_font`|Synonym of `text_font`
 `text_color`|`style_text_color`|Sets the color of text
 `value_color`|`style_text_color`|Synonym of `text_color`
