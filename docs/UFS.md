@@ -33,7 +33,7 @@ Changes can be discarded by clicking on the button "Manage File System" to retur
 ## Commands
 Complete list of [UFS commands](Commands#ufs)
 
-Also look into [Berry scripting language](Berry.md#loading-code-from-filesystem) for ESP32 which works with UFS.
+Also look into [Berry scripting language](Berry.md#loading-filesystem) for ESP32 which works with UFS.
 
 ## Special files
 
