@@ -28,9 +28,9 @@ def offset_to_minutes(offset: str) -> int:
     if len(offset_parts[0]):
         minutes += int(offset_parts[0]) * 60
     if len(offset_parts) > 1:
-        minutes += int(offset_parts[1])
+        minutes += math.copysign(int(offset_parts[1]), minutes)
     if len(offset_parts) > 2:
-        minutes += round(int(offset_parts[2]) / 60)
+        minutes += math.copysign(round(int(offset_parts[2]) / 60), minutes)
     return minutes
 
 
@@ -66,9 +66,9 @@ def posix_tz_string_to_tasmota_command(posix_tz_string: str) -> str:
         return "Timezone %s" % (
             "%s%d:%02d"
             % (
-                "+" if fixed_offset_minutes >= 0 else "",
-                math.floor(fixed_offset_minutes / 60),
-                fixed_offset_minutes % 60,
+                "+" if fixed_offset_minutes >= 0 else "-",
+                math.floor(abs(fixed_offset_minutes) / 60),
+                (fixed_offset_minutes) % 60,
             )
         )
     else:
@@ -88,7 +88,7 @@ def posix_tz_string_to_tasmota_command(posix_tz_string: str) -> str:
             dst_offset_minutes = -offset_to_minutes(parsed.group("dstoffset"))
         else:
             # Per POSIX, default DST offset is 1 hour ahead
-            dst_offset_minutes = std_offset_minutes - 60
+            dst_offset_minutes = std_offset_minutes + 60
 
         if std_offset_minutes not in range(-13 * 60, 13 * 60 + 1):
             raise OffsetOutOfRangeError()
@@ -143,6 +143,60 @@ def posix_tz_string_to_tasmota_command(posix_tz_string: str) -> str:
         # Combine into a single backlog line for copy-pastability
         return "Backlog0 %s" % "; ".join(commands)
 
+
+# Some basic tests:
+# Asia/Kabul
+assert posix_tz_string_to_tasmota_command("<+0430>-4:30") == "Timezone +4:30"
+
+# Pacific/Marquesas
+assert posix_tz_string_to_tasmota_command("<-0930>9:30") == "Timezone -9:30"
+
+# America/Toronto
+assert (
+    posix_tz_string_to_tasmota_command("EST5EDT,M3.2.0,M11.1.0")
+    == "Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-300; TimeDst 0,2,3,1,2,-240"
+)
+
+# Europe/Brussels
+assert (
+    posix_tz_string_to_tasmota_command("CET-1CEST,M3.5.0,M10.5.0/3")
+    == "Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120"
+)
+
+# Pacific/Kiritmati
+try:
+    posix_tz_string_to_tasmota_command("<+14>-14")
+    assert False
+except OffsetOutOfRangeError:
+    pass
+
+# Pacific/Chatham
+try:
+    posix_tz_string_to_tasmota_command("<+1245>-12:45<+1345>,M9.5.0/2:45,M4.1.0/3:45")
+    assert False
+except OffsetOutOfRangeError:
+    pass
+
+# Asia/Tehran
+try:
+    posix_tz_string_to_tasmota_command("<+0330>-3:30<+0430>,J79/24,J263/24")
+    assert False
+except DstRuleNotSupportedError:
+    pass
+
+# Pacific/Fiji
+try:
+    posix_tz_string_to_tasmota_command("<+12>-12<+13>,M11.2.0,M1.2.3/99")
+    assert False
+except DstRuleNotSupportedError:
+    pass
+
+# No timezone curently triggers this error (Pacific/Chatham comes close, but fails earlier to to its >13 hour UTC offset)
+try:
+    posix_tz_string_to_tasmota_command("TEST0TEST,M9.5.0/2:45,M4.1.0/3:45")
+    assert False
+except DstStartEndTimeNotWholeHourError:
+    pass
 
 with mkdocs_gen_files.open("Commands/timezone_table.md", "w") as doc_fh:
     doc_fh.write("# Tasmota Timezone Table\n\n")
