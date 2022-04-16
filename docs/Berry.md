@@ -735,7 +735,17 @@ Wire Function|Parameters and details
 ### `path` module
 
 A simplified version of `os.path` module of standard Berry which is disabled in Tasmota because we don't have a full OS.
-  
+
+The default file-system is the ESP32 internal flash. If you have a SD card mounted, it is mapped to the `/sd/` subdirectory.
+
+Example:
+
+``` berry
+import path
+print(path.listdir("/sd/")
+# outputs a list of filenames at the root dir of the SD card
+```
+
 Tasmota Function|Parameters and details
 :---|:---
 path.exists<a class="cmnd" id="path_exists"></a>|`(file_name:string) -> bool`<br>Returns `true` if the file exists. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
