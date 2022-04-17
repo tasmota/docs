@@ -582,8 +582,9 @@ dimmer opcode _(optional)_
 
 `:B`  
 LVGL _(optional)_
+  
 1. number of display lines flushed at once (min 10) the lower the lesser memory needed  
-2. 0 for no DMA, 1 use DMA (not supported on all displays) bit 1 selects color swap, 2 = swap 16 bit color  
+2. bit 0: DMA enables (`0` for no DMA, 1 use DMA) - not supported on all displays<br>bit 1: selects color swap, 2 = swap 16 bit color<br>bit 2: enable async DMA, `0` wait for DMA to complete before returning, `4` run DMA async in the background. This later mode is only valid if the SPI bus is not shared between the display and any other SPI device like SD Card Reader.
 
 `:T`  
 Wait times used for E-paper display  
