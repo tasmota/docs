@@ -3,7 +3,7 @@ How to setup and configure Esptool for Tasmota upload.
 The information below is for the Python version of esptool - If you want to use the Windows/Linux/OSX(MAC) executable version of esptool (as would be included in Arduino ESP8266 cores) then please go to the [esptool executable (Windows & Linux)](Esptool#esptool-executable-windows-linux) section at the bottom.
 
 ## Download Esptool
-If you do not have an installed copy of Python 2.x or 3.x download and install it from https://www.python.org/.
+If you do not have an installed copy of Python download and install it from https://www.python.org/.
 
 Download Esptool Source code from https://github.com/espressif/esptool/releases to a known folder.
 
@@ -64,15 +64,15 @@ NOTE1: When the command completes the device is out of firmware upload mode!
 
 NOTE2: For a proper device initialization after first firmware upload power down and power up the device.
 
-### ESPTOOL Executable (Windows & Linux)
+### ESPTOOL Executable (Windows, MacOs and Linux)
 
-The executable version of esptool is maintained by Ivan Grokhotkov and releases are kept at [https://github.com/igrr/esptool-ck/releases](https://github.com/igrr/esptool-ck/releases)
+The executable version of esptool can be dpwnloaded from [https://github.com/espressif/esptool/releases](https://github.com/espressif/esptool/releases)
 
 ### Download and Install
 
 For the purpose of simplicity only the Windows version will be explained here, but the command and parameters are the same for Windows, Linux and MAC/OSX.
 
-Download the latest release from [https://github.com/igrr/esptool-ck/releases](https://github.com/igrr/esptool-ck/releases) and extract the compressed file to a known location.
+Download the latest release from [https://github.com/espressif/esptool/releases](https://github.com/espressif/esptool/releases) and extract the compressed file to a known location.
 
 ### Download Tasmota
 
@@ -86,10 +86,11 @@ Once the device is in firmware upload mode the following commands are recommende
 
 Erase the flash completely with the following command (substituting the COM port for the one which was used on your computer)
 
-`esptool -cp COM3 -cb 115200 -ce -v`
+`esptool.exe --port COM5 erase_flash`
 
 Once the erase is complete, reset your device back into programming mode and then upload the firmware using the following command
 
-`esptool -cp COM3 -cb 115200 -bm dout -cf tasmota.bin -v`
+`
+esptool.exe --port COM5 write_flash -fs 1MB -fm dout 0x0 tasmota.bin`
 
 
