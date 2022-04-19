@@ -495,9 +495,29 @@ Store the following code using the WebGUI "Console" / "Manage File system".
 
 ESP32 file `neopool.be`:    
 ```python
-class NeoPoolCommands
+# Neopool definitions
+var MBF_RELAY_STATE = 0x010E
+var MBF_NOTIFICATION = 0x0110
+var MBF_CELL_BOOST = 0x020C
+
+var MBF_PAR_TIMER_BLOCK_AUX1_INT1 = 0x04AC
+var MBF_PAR_TIMER_BLOCK_AUX2_INT1 = 0x04BB
+var MBF_PAR_TIMER_BLOCK_AUX3_INT1 = 0x04CA
+var MBF_PAR_TIMER_BLOCK_AUX4_INT1 = 0x04D9
+var PAR_TIMER_BLOCK_AUX = [
+  MBF_PAR_TIMER_BLOCK_AUX1_INT1,
+  MBF_PAR_TIMER_BLOCK_AUX2_INT1,
+  MBF_PAR_TIMER_BLOCK_AUX3_INT1,
+  MBF_PAR_TIMER_BLOCK_AUX4_INT1
+]
+var MBV_PAR_CTIMER_ALWAYS_ON      = 3
+var MBV_PAR_CTIMER_ALWAYS_OFF     = 4
+
+# NeoPool command class
+class Commands
   var TEXT_OFF
   var TEXT_ON
+  var TEXT_TOGGLE
 
   # string helper
   def ltrim(s)
@@ -514,12 +534,13 @@ class NeoPoolCommands
   end
 
   # NPBoost OFF|0|ON|1|REDOX|2
-  #    0|OFF:   Switch boost off
-  #    1|ON:    Switch boost on without redox control
-  #    2|REDOX: Switch boost on with redox control
+  #   0|OFF:   Switch boost off
+  #   1|ON:    Switch boost on without redox control
+  #   2|REDOX: Switch boost on with redox control
   def NPBoost(cmd, idx, payload)
     import string
     var ctrl, parm
+
     try
       parm = string.toupper(self.trim(payload))
     except ..
@@ -536,21 +557,25 @@ class NeoPoolCommands
         tasmota.resp_cmnd_error()
         return
       end
-      tasmota.cmd(string.format("Backlog NPWrite 0x020C,0x%04X;NPSave;NPExec;NPWrite 0x0110,0x7F", ctrl))
+      tasmota.cmd(string.format("NPWrite 0x%04X,0x%04X", MBF_CELL_BOOST, ctrl))
+      tasmota.cmd("NPSave")
+      tasmota.cmd("NPExec")
+      tasmota.cmd(string.format("NPWrite 0x%04X,0x7F", MBF_NOTIFICATION))
     else
       try
-        ctrl = compile("return "+str(tasmota.cmd("NPRead 0x020C")['NPRead']['Data']))()
+        ctrl = compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_CELL_BOOST))['NPRead']['Data'])()
       except ..
         tasmota.resp_cmnd_error()
         return
       end
     end
-    tasmota.resp_cmnd(string.format('{"NPBoost":"%s"}', ctrl == 0 ? self.TEXT_OFF : (ctrl & 0x8500) == 0x8500 ? self.TEXT_ON : "REDOX"))
+    tasmota.resp_cmnd(string.format('{"%s":"%s"}', cmd, ctrl == 0 ? self.TEXT_OFF : (ctrl & 0x8500) == 0x8500 ? self.TEXT_ON : "REDOX"))
   end
 
-  # NPAux<x> OFF|0|ON|1 (<x> = 1..4)
-  #    0|OFF:   Switch aux x off
-  #    1|ON:    Switch aux x on
+  # NPAux<x> OFF|0|ON|1 t (<x> = 1..4)
+  #   0|OFF:    Switch Aux x to off
+  #   1|ON:     Switch Aux x to on
+  #   2|TOGGLE: Toggle Aux x
   def NPAux(cmd, idx, payload)
     import string
     var ctrl, parm
@@ -567,40 +592,49 @@ class NeoPoolCommands
     end
     if parm != ""
       if string.find(parm, 'OFF')>=0 || string.find(parm, self.TEXT_OFF)>=0 || string.find(parm, '0')>=0
-        ctrl = 4
+        ctrl = MBV_PAR_CTIMER_ALWAYS_OFF
       elif string.find(parm, 'ON')>=0 || string.find(parm, self.TEXT_ON)>=0 || string.find(parm, '1')>=0
-        ctrl = 3
+        ctrl = MBV_PAR_CTIMER_ALWAYS_ON
+      elif string.find(parm, 'TOGGLE')>=0 || string.find(parm, self.TEXT_TOGGLE)>=0 || string.find(parm, '2')>=0
+        try
+          ctrl = (compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_RELAY_STATE))['NPRead']['Data'])() >> (idx+2)) & 1 ? MBV_PAR_CTIMER_ALWAYS_OFF : MBV_PAR_CTIMER_ALWAYS_ON
+        except ..
+          tasmota.resp_cmnd_error()
+          return
+        end
       else
         tasmota.resp_cmnd_error()
         return
       end
-      tasmota.cmd(string.format("Backlog NPWrite 0x%04X,%d;NPExec", [0x04AC, 0x04BB, 0x04CA, 0x04D9][idx-1], ctrl))
+      tasmota.cmd(string.format("NPWrite 0x%04X,%d", PAR_TIMER_BLOCK_AUX[idx-1], ctrl))
+      tasmota.cmd("NPExec")
     else
       try
-        ctrl = (compile("return "+str(tasmota.cmd("NPRead 0x010E")['NPRead']['Data']))() >> (idx+2)) & 1
+        ctrl = (compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_RELAY_STATE))['NPRead']['Data'])() >> (idx+2)) & 1
       except ..
         tasmota.resp_cmnd_error()
         return
       end
     end
-    tasmota.resp_cmnd(string.format('{"NPAux%d":"%s"}', idx, ctrl == (parm != "" ? 4 : 0) ? self.TEXT_OFF : self.TEXT_ON))
   end
 
   def init()
+    # get tasmota settings
     self.TEXT_OFF = tasmota.cmd("StateText1")['StateText1']
     self.TEXT_ON = tasmota.cmd("StateText2")['StateText2']
-    # Add commands
+    self.TEXT_TOGGLE = tasmota.cmd("StateText3")['StateText3']
+    # add commands
     tasmota.add_cmd('NPBoost', / cmd, idx, payload -> self.NPBoost(cmd, idx, payload))
     tasmota.add_cmd('NPAux', / cmd, idx, payload -> self.NPAux(cmd, idx, payload))
   end
 
   def deinit()
+    # remove commands
     tasmota.remove_cmd('NPBoost')
     tasmota.remove_cmd('NPAux')
   end
 end
-
-neopool_commands = NeoPoolCommands()
+commands = Commands()
 ```
 
 To activate the new commands go to WebGUI "Consoles" / "Berry Scripting console" and execute
