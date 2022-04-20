@@ -319,7 +319,7 @@ GlobalHum<a class="cmnd" id="globalhum"></a>|`0.0..100.0` = Set global Humidity 
 GlobalTemp<a class="cmnd" id="globaltemp"></a>|`-50.0..100.0` = Set global Temperature for some Sensors that uses global temperature.
 HumOffset<a class="cmnd" id="humoffset"></a>|`-10.0..10.0` = Set calibraton offset value for reported humidity telemetry<BR>This setting affects **all** humidity sensors on the device.
 HumRes<a class="cmnd" id="humres"></a>|Humidity sensor resolution<BR>`0..3` = maximum number of decimal places
-HumRes<a class="cmnd" id="humres"></a>|Humidity sensor resolution<BR>`0..3` = maximum number of decimal places
+PressRes<a class="cmnd" id="pressres"></a>|Pressure sensor resolution<BR>`0..3` = maximum number of decimal places
 NPCLRes<a class="cmnd" id="npclres"></a>|*Neopool only*<BR>`<value>` = number of digits in results for CL values
 NPIonRes<a class="cmnd" id="npcionres"></a>|*Neopool only*<BR>`<value>` = number of digits in results for ION values
 NPPHRes<a class="cmnd" id="npphres"></a>|*Neopool only*<BR>`<value>` = number of digits in results for PH values
