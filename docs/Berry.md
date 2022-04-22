@@ -321,8 +321,8 @@ Driver methods are called with the following parameters: `f(cmd, idx, payload, r
 - `every_second()`: called every second
 - `every_50ms()`: called every 50ms (i.e. 20 times per second)
 - `every_100ms()`: called every 100ms (i.e. 10 times per second)
-- `every_200ms()`: called every 50ms (i.e. 5 times per second)
-- `every_250ms()`: called every 50ms (i.e. 4 times per second)
+- `every_200ms()`: called every 200ms (i.e. 5 times per second)
+- `every_250ms()`: called every 250ms (i.e. 4 times per second)
 - `web_sensor()`: display sensor information on the Web UI
 - `json_append()`: display sensor information in JSON format for TelePeriod reporting
 - `web_add_button()`: (deprecated) synonym of `web_add_console_button()`
