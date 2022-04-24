@@ -263,6 +263,7 @@ Attribute name|LVGL equivalent|Details
 `src`|`src`|Path to the image in the file-system
 `image_recolor`|`style_image_recolor`|Color used to recolor the image
 `image_recolor_opa`|`style_image_recolor_opa`|Opacity of image recoloring
+`angle`|`angle`|Angle of the image, in 1/10th of degrees. Range 0..3600.
 
 Attributes specific to `spinner`
 
