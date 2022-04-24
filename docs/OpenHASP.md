@@ -166,6 +166,7 @@ OpenHASP Class|Embedded LVGL class
 `slider`|`lv.slider`
 `arc`|`lv.arc`
 `textarea`|`lv.textarea`
+`qrcode`|`lv.qrcode`
 
 You can also import custom widget as long as they inherit from `lv.obj` and the class name matches the module name.
 
@@ -269,6 +270,15 @@ Attribute name|LVGL equivalent|Details
 :---|:---|:---
 `angle`||The length of the spinning segment in degrees - cannot be changed after initial value
 `speed`||The time for 1 turn in ms - cannot be changed after initial value
+
+Attributes specific to `qrcode`
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`qr_size`||Size in pixels of the QRCode, always square (height = width). This cannot be changed once the object is created.
+`qr_dark_color`||Color used for the dark pixels. This cannot be changed once the object is created.
+`qr_light_color`||Color used for the light pixels. This cannot be changed once the object is created.
+`qr_text`||(mandatory) String to encode as a QRCode, can be changed at any moment.
 
 ## Tasmota extensions
 
