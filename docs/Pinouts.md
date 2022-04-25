@@ -54,6 +54,11 @@
 ![EcoPlugs 449A Pinout](_media/pinouts/449A-ECOPLUGS_pinout.jpg)    
 [Datasheet](https://fccid.io/PAGECO-PLUGS/User-Manual/user-manual-2659058.iframe)
 
+### CUCO-Z0-V1.1 (Used by Gosund)
+| Overview | Front         | Back        |
+|----------|---------------|-------------|
+| <img src="https://user-images.githubusercontent.com/3363362/164947322-bbfcb7e4-db72-4b0e-8625-96af15943e9d.png"> | <img src="https://user-images.githubusercontent.com/3363362/164946764-c39169bb-0931-4f74-8343-d7dd09aa04a8.png" width=50% height=50%> | <img src="https://user-images.githubusercontent.com/3363362/164947065-53adb2fc-ebc4-4208-af56-1744abb1f9f5.png" width=50% height=50%> |
+
 ## ESP32 Based
 ### ESP32-CAM
 
