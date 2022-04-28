@@ -64,6 +64,8 @@ For example schematic on custom Denky board (ESP32) is as follow
 
 ![](_media/teleinfo/teleinfo_en_sch.png)
 
+!!! warning "Resistors values R3 and R4 need to be changed to work with `standard` and `historique`. New official values for R3 is 220ohm and R4 is 3.3Kohm."
+
 As you can see GPIO33 is used for RX and GPIO4 for Enable (need set to 1 to be able to receive data) 
 
 Setup in this case is 
