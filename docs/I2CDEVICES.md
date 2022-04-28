@@ -1,4 +1,3 @@
-
 # I2C devices
 Tasmota supports several I2C devices. To use them I2C and the device need to be enabled at compile time. I2C and some devices are supported also in the official releases. Devices can be de/-actived on runtime to solve possible address conflicts. (e.g. address 0x27 is used by multiple devices)
 
