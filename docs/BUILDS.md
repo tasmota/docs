@@ -15,7 +15,6 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_DOMOTICZ          | - | x / x | x | x | x | - |
 | USE_HOME_ASSISTANT    | - | x / x | x | x | x | - |
 | USE_MQTT_TLS          | - | - / - | - | - | - | - |
-| USE_MQTT_TLS_CA_CERT  | - | - / - | - | - | - | - |
 | USE_MQTT_AWS_IOT      | - | - / - | - | - | - | - |
 | USE_4K_RSA            | - | - / - | - | - | - | - |
 | USE_TELEGRAM          | - | - / - | - | - | - | - |
@@ -217,6 +216,7 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_HRE               | - | - / x | - | x | - | - |
 | USE_A4988_STEPPER     | - | - / - | - | - | - | - |
 | USE_NEOPOOL           | - | - / - | - | - | - | - |
+| USE_FLOWRATEMETER     | - | - / - | - | - | - | - |
 |                       |   |       |   |   |   |   |
 | Feature or Sensor     | l | t     | k | s | i | d | Remarks
 | USE_DISPLAY           | - | - / - | - | - | - | x |
