@@ -1075,6 +1075,28 @@ Tasmota Function|Parameters and details
 :---|:---
 uuid4<a class="cmnd" id="uuid_uuid4"></a>|`uuid.uuid4() -> string`<br>Generates a uuid4 random id as string.
 
+
+### `crc` module
+
+The `crc` module allows to compute crc32/16/8 from bytes() arrays.
+
+``` ruby
+> import crc
+> crc.crc32(0xFFFFFFFF, bytes("AABBCC"))
+-1091314015
+> crc.crc16(0xFFFF, bytes("AABBCC"))
+20980
+> crc.crc8(0xFF, bytes("AABBCC"))
+139
+```
+
+Tasmota Function|Parameters and details
+:---|:---
+crc32<a class="cmnd" id="crc_crc32"></a>|`crc.crc32(crc:int, payload:bytes) -> int`<br>Compute crc32 from an initial value and a bytes() buffer
+crc16<a class="cmnd" id="crc_crc16"></a>|`crc.crc32(crc:int, payload:bytes) -> int`<br>Compute crc32 from an initial value and a bytes() buffer
+crc8<a class="cmnd" id="crc_crc8"></a>|`crc.crc32(crc:int, payload:bytes) -> int`<br>Compute crc32 from an initial value and a bytes() buffer
+
+
 ## Compiling Berry
 
 Berry is included if the following is defined in `user_config_override.h`:
