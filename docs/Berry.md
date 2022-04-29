@@ -258,11 +258,6 @@ When using Rules or Timers, you always pass Berry functions.
 
 You can choose to run some function/closure at regular intervals specified as `cron` type format. (Crontab Guru)[https://crontab.guru/] is an easy way to create and test your cron format.
 
-  # set channels as numbers (purple 12%)
-> light.set({"channels": [32,0,32]})
-{'bri': 32, 'hue': 300, 'power': true, 'sat': 255, 'rgb': '200020', 'channels': [32, 0, 32]}
-```
-
 ``` berry
 > def f() print("Hi") end
 > tasmota.add_cron("*/15 * * * * *", f, "every_15_s")
