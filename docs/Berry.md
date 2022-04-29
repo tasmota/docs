@@ -1093,8 +1093,8 @@ The `crc` module allows to compute crc32/16/8 from bytes() arrays.
 Tasmota Function|Parameters and details
 :---|:---
 crc32<a class="cmnd" id="crc_crc32"></a>|`crc.crc32(crc:int, payload:bytes) -> int`<br>Compute crc32 from an initial value and a bytes() buffer
-crc16<a class="cmnd" id="crc_crc16"></a>|`crc.crc32(crc:int, payload:bytes) -> int`<br>Compute crc32 from an initial value and a bytes() buffer
-crc8<a class="cmnd" id="crc_crc8"></a>|`crc.crc32(crc:int, payload:bytes) -> int`<br>Compute crc32 from an initial value and a bytes() buffer
+crc16<a class="cmnd" id="crc_crc16"></a>|`crc.crc16(crc:int, payload:bytes) -> int`<br>Compute crc16 from an initial value and a bytes() buffer
+crc8<a class="cmnd" id="crc_crc8"></a>|`crc.crc8(crc:int, payload:bytes) -> int`<br>Compute crc8 from an initial value and a bytes() buffer
 
 
 ## Compiling Berry
