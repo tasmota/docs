@@ -509,10 +509,21 @@ tasmota.settings.sleep<a class="cmnd" id="tasmota_settings_sleep"></a>|Sleep val
 
 Use with `import mqtt`.
 
+Since v11.1.0.1, there is an easier way than registering a driver, and listening to `mqtt_data` event. You can now just attach a function or closure to a MQTT topic, and it does the magic for you.
+
+The function you attach to a topic pattern received **only** the matching MQTT messages, not all messages unlike `mqtt_data()` would.
+
+The function takes the same parameters as `mqtt_data()`:
+- `topic`: full topic received from the broker
+- `idx`: not used
+- `payload_s`: payload as string, usually converted to JSON with `import json json.load(payloas_s)`
+- `payload_b`: payload as a binary payload, bytes() array
+- the function should return `true` if the event was parsed or if the event should not trigger a Tasmota command. If you return `nil` or nothing, it is considered as `true` which is the usual behavior you want (i.e. not trigger a Tasmota command from random MQTT messages).
+
 Tasmota Function|Parameters and details
 :---|:---
 mqtt.publish<a class="cmnd" id="mqtt_publish"></a>|`(topic:string, payload:string[, retain:bool, start:int, len:int]) -> nil`<br>Equivalent of `publish` command, publishes a MQTT message on `topic` with `payload`. Optional `retain` parameter.<br>`payload` can be a string or a bytes() binary array<br>`start` and `len` allow to specificy a sub-part of the string or bytes buffer, useful when sending only a portion of a larger buffer.
-mqtt.subscribe<a class="cmnd" id="mqtt_subscribe"></a>|`(topic:string) -> nil`<br>Subscribe to a `topic` (exact match). Contrary to Tasmota's `Subscribe` command, the topic is sent as-is and not appended with `/#`. You need to add wildcards yourself. Driver method `mqtt_data` is called for each matching payload.
+mqtt.subscribe<a class="cmnd" id="mqtt_subscribe"></a>|`mqtt.subscribe(topic:string [, function:closure]) -> nil`<br>Subscribes to a `topic` (exact match or pattern). Contrary to Tasmota's `Subscribe` command, the topic is sent as-is and not appended with `/#`. You need to add wildcards yourself. Driver method `mqtt_data` is called for each matching payload.<br>If a function/closure is added, the function is called whenever and only if an incoming messages matches the pattern for this function. The function should return `true` if message was processed, `false` if not which will let the message flow to Tasmota eventually as a command.
 mqtt.unsubscribe<a class="cmnd" id="mqtt_unsubscribe"></a>|`(topic:string) -> nil`<br>Unubscribe to a `topic` (exact match).
 
 ### `light` object
