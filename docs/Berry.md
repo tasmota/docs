@@ -1107,6 +1107,39 @@ crc32<a class="cmnd" id="crc_crc32"></a>|`crc.crc32(crc:int, payload:bytes) -> i
 crc16<a class="cmnd" id="crc_crc16"></a>|`crc.crc16(crc:int, payload:bytes) -> int`<br>Compute crc16 from an initial value and a bytes() buffer
 crc8<a class="cmnd" id="crc_crc8"></a>|`crc.crc8(crc:int, payload:bytes) -> int`<br>Compute crc8 from an initial value and a bytes() buffer
 
+### `re` regex module
+
+Use with `import re`.
+
+There are two ways to use regex, first is to call directly the module which triggers a compilation of the regex at each call. The second one is to pre-compile the regex once into an object which is much more efficient if you need to use the regex multiple times. Any error in the compilation of the regex pattern yields an exception.
+
+``` berry
+> import re
+> re.search("a.*?b(z+)", "zaaaabbbccbbzzzee")
+['aaaabbbccbbzzz', 'zzz']
+> re.match("a.*?b(z+)", "aaaabbbccbbzzzee")
+['aaaabbbccbbzzz', 'zzz']
+
+> rr = re.compile("/")
+> rr
+<instance: re_pattern()>
+
+> rr.split("foo/bar//baz")
+['foo','bar','','baz']
+> rr.split("/b")
+['','b']
+```
+
+Tasmota Function|Parameters and details
+:---|:---
+search<a class="cmnd" id="re_search"></a>|`re.search(pattern:string, payload:string) -> list of strings`<br>Returns the list of matches, or empty list of no match
+match<a class="cmnd" id="re_match"></a>|`re.match(pattern:string, payload:string) -> list of strings`<br>Returns the list of matches, or empty list of no match. The difference with `search` is that match must match the entire string (from beginning to end).
+split<a class="cmnd" id="re_split"></a>|`re.search(pattern:string, payload:string) -> list of strings`<br>Returns the list of strings from split, or a list with a single element containing the entire string if no match
+compile<a class="cmnd" id="re_compile"></a>|`re.compile(pattern:string) -> instance of <re_pattern>`<br>Compiles the regex into a reusable faster bytecode. You can then call the following methods:<br>`search()`, `match()`, `split()` similarly to the module's functions.
+
+Note: for `match` and `search`, the first element in the list contains the global match of the pattern. Additional elements correspond to the sub-groups (in parenthesis).
+
+The regex engine is based on [re1.5](https://github.com/pfalcon/re1.5) also used in Micropython.
 
 ## Compiling Berry
 
