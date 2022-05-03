@@ -860,6 +860,7 @@ IfxOrg<a class="cmnd" id="ifxorg"></a>|`<value>` =  set Influxdb V2 and organiza
 IfxSensor<a class="cmnd" id="ifxsensor"></a>|Set Influxdb sensor logging <BR>`0` =  off<BR>`1` =  on
 IfxToken<a class="cmnd" id="ifxtoken"></a>|`<value>` =  set Influxdb V2 and token
 IfxPeriod<a class="cmnd" id="ifxperiod"></a>|`<value>`<BR>= `0` = use `Teleperiod` value as publication interval _(default)_<BR>`10`..`3600` = set a different publication interval<br>_Even when `IfxPeriod 0` is used, publication is not necessarily performed at the same time as the telemetry message._
+IfxRP<a class="cmnd" id="ifxrp"></a>|`<value>` = set Influxdb retention policy _(optional)_ <BR>If blank, default is used as defined by the InfluxDB service. _Retention policy must exist in InfluxDB, otherwise http post will fail._
 
 
 
