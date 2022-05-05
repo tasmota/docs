@@ -701,10 +701,17 @@ Rule1
   ON event#message DO publish stat/mqttTopic/log %value% ENDON
 ```
 
-!!! note "The following won't work:"
+### !!! note "IMPORTANT - Order of execution"
+    
+The values of variables are stored and used at the point the trigger is executed. If you call a variable and the change it within a rule the changed value will not be available within the rule. The example below illustrates the principle.
+    
     `Rule1 ON event#setvar1 DO Backlog var1 %value%; Power1 %var1% ENDON`
 
-    At least not as you probably would expect. The `var1` value used by the `Power1` command will be the value present before the `Backlog` command is executed. This is so, because the rule will replace `%var1%` BEFORE the `Backlog` commands are put in the `Backlog` command stream.
+In this case, the `var1` value used by the `Power1` command will be the value stored at the trigger point NOT the changed value from the first command. If `var1` is `0` and the `event#setvar1` is `1` at the trigger point then `var1` will be changed to `1` but the `Power1` command will use the stored value of `var1` so the result will be `Power1 0`.
+    
+For this to work correctly you would need to split the Rule.
+    
+    `Rule1 ON event#setvar1 DO var1 %value% ENDON ON var1#state DO Power1 %var1% ENDON`
 
 ------------------------------------------------------------------------------
 
