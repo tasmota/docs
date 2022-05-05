@@ -121,6 +121,11 @@ You have more than one device connected with the same %topic% defined. Its impor
 
 If that is not the issue, erase all flash using esptool.py or esptool.exe and flash again by wire (as explained [here](Esptool#upload-tasmota)) using [the latest precompiled bins with core v2.7.1](http://ota.tasmota.com/tasmota/).
 
+### Device is often unavailable, ussually 30 seconds every minute
+Due to a bug in the Arduino core that we are working on to solve, Tasmota devices require time to be correctly setup to work properly (see https://github.com/tasmota/docs/blob/master/docs/FAQ.md#timers-trigger-at-the-wrong-time for details and alternatives). If a Tasmota device cannot reach one of the NTP server after restarting, the device will be unavailable during 30 seconds every minute while trying to update the time.
+
+To confirm this issue, the command weblog can be set to 4 (typing "weblog 4" in the console), and log should indicate "NTP: Sync time..." followed by "NTP: Unable to resolve IP address" 30 seconds later, in the 30 seconds period the device is unavailable.
+
 ## Configuration
 
 ### Device reset to defaults on its own
