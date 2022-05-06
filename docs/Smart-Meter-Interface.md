@@ -343,6 +343,7 @@ Look down below for script examples based on the following metering devices:
 - [Hiking DDS238-2 ZN/S](#4-hiking-dds238-2-zns3-modbus) (MODBus, 4 meters in parallel)
 - [EasyMeter Q3A / Apator APOX+](#easymeter-q3a-apator-apox-sml) (SML)
 - [EasyMeter Q3B](#easymeter-q3b-sml) (SML, 2 meters with 1 Tasmota)
+- [EasyMeter Q1D](#easymeter-q1d-ascii-obis)
 - [Apator APOX+](#apator-apox-sml) (SML, with pin code for extra data)
 - [Sanxing SX6x1 (SxxU1x)](#sanxing-sx6x1-sxxu1x-ascii-obis) (OBIS - Ascii)
 - [Resol Deltasol BS Plus](#resol-deltasol-bs-plus-vbus) (VBus)
@@ -1318,6 +1319,30 @@ Apply following patch to src/TasmotaSerial.cpp:
 
 -----
 
+### EasyMeter Q1D (ASCII OBIS)
+
+This script is for the EasyMeter Q1DB1004 variant of the Q1D series. This variant is a one-phase one-way electricity counter with a backstop mechanism. 
+	
+Therefore the script reads only two values: the energy counter value and the power value. The power value is positive when you are drawing power from the public grid, and negative when you are feeding power to the public grid. Due to the backstop mechanism, the energy counter value will not decrease when you feed power to the public grid.
+	
+The meter's manufacturer's datasheet neatly explains the serial message format used, so you can easily adapt the code below to your EasyMeter Q1D, e.g. if you have a two-way counter variant like the EasyMeter Q1DA1026.
+	
+```
+>D
+>B
+=>sensor53 r
+>M 1
++1,3,o,0,9600,SML
+1,1-0:1.8.0*255(@1,EC_CounterVal,kWh,EC_CounterVal,4
+1,1-0:61.7.255*255(@1,EC_PowerVal,W,EC_PowerVal,0
+#
+```
+	
+According to the manufacturer's datasheet, the serial parameters are 9600 baud and 7E1. 
+	
+For Tasmota versions that are built with a TasmotaSerial.cpp of version 3.5.0 (and probably all higher versions, too), no modification of the TasmotaSerial.cpp source code (as suggested in other entries of this documentation) is necessary to set the serial parameters to 7E1: By configuring the [meter type](#meter-definition) as OBIS ("o") in line 5 of the above code, you implicitly tell Tasmota to set the serial parameters to 7E1 (probably the same applies to all other meters in this documentation where a modification of TasmotaSerial.cpp has previously been recommended).
+	
+-----
 
 ### Apator APOX+ (SML)
 
