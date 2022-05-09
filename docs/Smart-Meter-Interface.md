@@ -1787,4 +1787,41 @@ tper=10
 1,77070100100700ff@1,Leistung-akt.,W,Power_curr,0
 #
 ```
+	
+	
+#
+### Carlo Gavazzi EM340 (MODBUS RTU)
+
+code:
+```
+>D
+>B
+->sensor53 r
+;->sensor53 d1
+>M 1
++1,13,m,0,115200,MODBUS,12,2,01030000,01030002,01030004,0103000C,0103000E,01030010,01030012,01030014,01030016,01030018,0103001A,0103001C,0103001E,01030020,01030022,01030034,01030038,0103002e,0103002f,01030030,0103004e
+1,010304SSssSSsss@i0:10,Voltage L1,V,Voltage_L1,1
+1,010304SSssSSsss@i1:10,Voltage L2,V,Voltage_L2,1
+1,010304SSssSSsss@i2:10,Voltage L3,V,Voltage_L3,1
+1,010304SSssSSsss@i3:1000,Current L1,A,Current_L1,3
+1,010304SSssSSsss@i4:1000,Current L2,A,Current_L2,3
+1,010304SSssSSsss@i5:1000,Current L3,A,Current_L3,3
+1,010304SSssSSsss@i6:10,Power L1,W,Power_L1,1
+1,010304SSssSSsss@i7:10,Power L2,W,Power_L2,1
+1,010304SSssSSsss@i8:10,Power L3,W,Power_L3,1
+1,010304SSssSSsss@i9:10,Power VA L1,VA,Power_va_L1,1
+1,010304SSssSSsss@i10:10,Power VA L2,VA,Power_va_L2,1
+1,010304SSssSSsss@i11:10,Power VA L3,VA,Power_va_L3,1
+1,010304SSssSSsss@i12:10,Power var L1,var,Power_var_L1,1
+1,010304SSssSSsss@i13:10,Power var L2,var,Power_var_L2,1
+1,010304SSssSSsss@i14:10,Power var L3,var,Power_var_L3,1
+1,010304SSssSSsss@i15:10,Energy Tot,kWh,Energy_Tot,1
+1,010304SSssSSsss@i16:10,Energy Demand,W,Energy_Demand,1
+1,010304SSss@i17:1000,PF L1,PF,PF_L1,1
+1,010304SSss@i18:1000,PF L2,PF,PF_L2,1
+1,010304SSss@i19:1000,PF L3,PF,PF_L3,1
+1,010304SSssSSsss@i20:10,Energy Tot Export,kWh,Energy_Tot_Export,1
+#
+```
+	
 -----
