@@ -307,7 +307,7 @@ Every time the user touches an active element on the screen, OpenHASP publishes 
 Example:
 
 ``` berry
-tasmota.add_rule(hasp#p1b10==up, / -> print("Button p1b10 pressed"))
+tasmota.add_rule("hasp#p1b10==up", / -> print("Button p1b10 pressed"))
 ```
 
 ### Run arbitrary Berry code
