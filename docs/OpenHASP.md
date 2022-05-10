@@ -23,7 +23,7 @@ Upload in your ESP32 file system the following files, from: https://github.com/a
   - `openhasp_widgets.tapp` (contains widgets for wifi, logging and general info)
   - `robotocondensed_latin1.tapp` (contains additional fonts)
   - `openhasp.tapp` (contains the core OpenHASP engine)
-  - `files.jsonl` (contains a sample definition)
+  - `pages.jsonl` (contains a sample definition)
 
 Restart and enjoy. You should see the following screen, and click on buttons to switch to the second screen:
 
