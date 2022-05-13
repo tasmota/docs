@@ -265,6 +265,12 @@ Attribute name|LVGL equivalent|Details
 `image_recolor_opa`|`style_image_recolor_opa`|Opacity of image recoloring
 `angle`|`angle`|Angle of the image, in 1/10th of degrees. Range 0..3600.
 
+Attributes specific to `roller`
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`text`|`selected_text`|(read-only) Get the text of the currently selected item. The string is truncated to the first 256 bytes.
+
 Attributes specific to `spinner`
 
 Attribute name|LVGL equivalent|Details
@@ -302,12 +308,20 @@ text\_rule\_format|String format of the result string. The format uses Berry's `
 
 ### React to user actions
 
-Every time the user touches an active element on the screen, OpenHASP publishes internal events you can listen and react to. For example if you press a button `p1b10`, OpenHASP publishes an event `{"hasp":{"p1b10":"up"}}` when the button is released. You can easily create a rule to react to this event.
+Every time the user touches an active element on the screen, OpenHASP publishes internal events you can listen and react to. For example if you press a button `p1b10`, OpenHASP publishes an event `{"hasp":{"p1b10":{"event":"up"}}` when the button is released. You can easily create a rule to react to this event.
 
 Example:
 
 ``` berry
-tasmota.add_rule("hasp#p1b10==up", / -> print("Button p1b10 pressed"))
+tasmota.add_rule("hasp#p1b10#event==up", / -> print("Button p1b10 pressed"))
+```
+
+Events with value `changed` indicate that the value of the widgets has changed. Events are only fired if the change in value comes from a screen interaction. No event is fired when the value was changed programatically. The new value is sent as `val` attribute, and for specific widgets (roller) a `text` attribute is sent for the label of the value. `{"hasp":{"p1b1":{"val":3,"text":"A3","event":"changed"}}}`
+
+Example:
+
+``` berry
+tasmota.add_rule("hasp#p1b1#text", / text-> print("p1b1 text value=", text))
 ```
 
 ### Run arbitrary Berry code
