@@ -166,6 +166,21 @@ By default the Fallback Topic is `DVES_XXXXXX_fb` where xxxxxx is derived from t
 12:36:17 MQT: stat/tasmota/STATUS6 = {"StatusMQT":{"MqttHost":"1.1.1.1","MqttPort":1883,"MqttClientMask":"DVES_%06X","MqttClient":"DVES_3D5E26","MqttUser":"tasmota","MqttCount":1,"MAX_PACKET_SIZE":1000,"KEEPALIVE":30}}
 ```
 
+### LWT Topic (Last Will and Testament)
+On connection to the MQTT broker tasmota uses the Last Will and Testament (LWT) feature that instructs the broker to generate a notification about an ungracefully disconnect or timeout.
+    
+The topic to listen to for the state of this specific client is ```tele/<TOPIC>/LWT``` that with the mosquitto MQTT broker produces an output like:
+```
+$ mosquitto_sub -t "tele/tasmota_XXXXXX/LWT"
+Offline
+Online
+```
+
+The full LWT topic can be found in the tasmota console at boot:
+```
+15:51:51.281 MQT: tele/tasmota_XXXXXX/LWT = Online (retained)
+```
+    
 ## Retained MQTT Messages
 
 If MQTT is defined and [`PowerRetain`](Commands.md#powerretain) is used the last state will be stored permanently in MQTT database.
