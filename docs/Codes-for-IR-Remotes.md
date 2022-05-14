@@ -754,6 +754,36 @@ IR Remote Codes for Acer K132 projector (and possibly other models using a remot
 * 0xFD258877="Bass+"
 * 0xFD2538C7="Surround"
 
+
+### IR Codes Goodmans GDSBT1000P
+
+**Example received Code:**
+**RESULT = {"IrReceived":{"Protocol":"NEC","Bits":32,"Data":"0x4FBD02F","DataLSB":"0x20DF0BF4","Repeat":0}}**
+
+**Example IRsend Command:**
+**{"Protocol":"NEC","Bits":32,"Data":"0x4FB30CF"}**
+
+* 0x4FB30CF="ON/OFF"
+* 0x20DF08F7="Mute"
+* 0x20DF0FF0="Mode Bluetooth"
+* 0x20DF0AF5="Mode Optical"
+* 0x20DF16E9="Mode Coaxial"
+* 0x20DF07F8="Mode Line in"
+* 0x20DF09F6="Mode AUX"
+* 0x20DF06F9="Bluetooth Pairing"
+* 0x20DF10EF="Music"
+* 0x20DF0BF4="Movie"
+* 0x20DF14EB="Voice"
+* 0x20DF00FF="Treble +"
+* 0x20DF03FC="Treble -"
+* 0x20DF01FE="Bass +"
+* 0x20DF04FB="Bass -"
+* 0x20DF02FD="Volume +"
+* 0x20DF05FA="Volume -"
+* 0x20DF11EE="Previous"
+* 0x20DF12ED="Play/Pause"
+* 0x20DF13EC="Next"
+
 ## Vacuum Cleaners
 ### IR Codes Vacuum Cleaner Ecovacs Deebot Slim2
 
