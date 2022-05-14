@@ -8,7 +8,7 @@
 The Sonoff Smart Stackable Power Meter uses a SPM-Main unit with ESP32 providing wifi and ethernet connections. A serial interface and a SPI interface connects to an ARM MCU which in turn provides a RS-485 bus to up to 32 SPM-4Relay modules. The SPM-4Relay module contains an ARM MCU too providing independent power management for four bi-stable relays rated for 20A at 240V for a total of 4400W.
 
 !!! Note 
-    As of this writing the ARM firmware is version 1.0.0 and provides limited functionality.
+    As of this writing Tasmota v11.1.0.3 supports ARM firmware versions 1.0.0 and 1.2.0.
 
 The firmware monitors the attached SPM-4Relay modules and stores energy usage history for up to 180 days on an optional SD-Card accessable by the ARM MCU only. The ARM firmware provides numerous un-documented functions allowing the ESP32 to send and receive information.
 
@@ -36,7 +36,7 @@ Tasmota, installed on the ESP32, can connect to the SPM-Main ARM MCU using the s
 
 The following notes currently apply:
 
-- Tasmota is unable to upgrade the ARM firmware
+- Tasmota is unable to upgrade the ARM firmware. In case an upgrade is wanted install the backed-up sonoff firmware and perform the upgrade using the eWeLink app.
 
 ## Configuration
 
