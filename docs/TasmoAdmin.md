@@ -1,5 +1,5 @@
 TasmoAdmin is an administrative Website for Devices flashed with [Tasmota](https://github.com/arendst/Tasmota).   
-You can find it here: [TasmoAdmin GitHub](https://github.com/reloxx13/TasmoAdmin).
+You can find it here: [TasmoAdmin GitHub](https://github.com/TasmoAdmin/TasmoAdmin).
 It supports running on Windows, Linux and as Docker container.
 
 ## Features
@@ -18,8 +18,16 @@ It supports running on Windows, Linux and as Docker container.
 
 ## Installation
 
+### Docker
+
+TasmoAdmin is available as a Docker image on [GitHub packages](https://github.com/orgs/TasmoAdmin/packages/container/package/tasmoadmin).
+
+This is a Linux Alpine  based image with Nginx and PHP7 installed. It supports multiple architectures, **amd64** (i.e. Synology DSM), **arm** (i.e. Raspberry PI3) and  **arm64** (i.e. Pine64). Check out the [Guide for TasmoAdmin on Docker](https://github.com/TasmoAdmin/TasmoAdmin/wiki/Guide-for-TasmoAdmin-on-Docker) for setup instructions.
+
+This is the recommended way to get up and running.
+
 ### Windows
-A ready to use TasmoAdmin-XAMP-Portable-\*.zip is available on the [release page](https://github.com/reloxx13/TasmoAdmin/releases) and is based on XAMPP.
+A ready to use TasmoAdmin-XAMP-Portable-\*.zip is available on the [release page](https://github.com/TasmoAdmin/TasmoAdmin/releases) and is based on XAMPP.
 
 1. Download the XAMPP Zip package from the releases page
 2. Extract the Zip (recommend to put the xamp folder on C:\
@@ -37,10 +45,7 @@ Running TasmoAdmin on a Linux/Unix hosts requires the following:
   * php7 recommended (works with php5 too)
   * php-curl php-zip Modules installed
 
-You need to install a web server with php-zip and php-curl modules installed. Also mod_rewrite must be enabled. I suggest to look in the [Guide for Ubuntu Server 16.04](https://github.com/reloxx13/TasmoAdmin/wiki/Guide-for-Ubuntu-Server-16.04) and try to adjust it to your server OS.
-
-### Docker
-TasmoAdmin is available as a Docker image at [Docker Hub](https://hub.docker.com/r/raymondmm/tasmoadmin/). This is a Linux Alpine (3.7) based image with Apache2 and Php7 installed. It supports multiple architectures, **amd64** (i.e. Synology DSM), **arm** (i.e. Raspberry PI3) and  **arm64** (i.e. Pine64). 
+You need to install a web server with php-zip and php-curl modules installed. Also mod_rewrite must be enabled. I suggest to look in the [Guide for Ubuntu Server 16.04](https://github.com/TasmoAdmin/TasmoAdmin/wiki/Guide-for-Ubuntu-Server-16.04) and try to adjust it to your server OS.
 
 ## Example Images
 #### Login Page
