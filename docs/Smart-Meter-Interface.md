@@ -350,6 +350,7 @@ Look down below for script examples based on the following metering devices:
 - [Logarex LK13BE](#logarex-lk13be-obis) (OBIS)
 - [Peacefair PZEM004T V30](#peacefair-pzem004tv30-modbus ) (SML - MODBus)
 - [Landis + Gyr E220](#landis--gyr-e220-sml) (SML)
+- [Holley DTZ541](#holley-dtz541-sml) (SML)
     
 --------------------------------------------------------
 
@@ -1541,6 +1542,8 @@ r="1,AA100021421000010774"
 Result (with unneeded values commented out):
 
 ![](_media/Resol_VBus_TasmotaShot.png)
+	
+------------------------------------------------------------------------------
 
 ### Logarex LK13BE (OBIS)
 
@@ -1561,6 +1564,8 @@ The script:
 1,1-0:16.7.0*255(@1,Verbrauch aktuell,W,current,20
 #
 ```
+
+------------------------------------------------------------------------------
 
 ### ABB B23 (MODBus)
 
@@ -1586,6 +1591,8 @@ Beware that A and B MODBus connectors are switched!
 1,010308xxxxxxxxUUuuUUuu@i9:100,Real energy delivered,kWh,Real_energy_delivered,2
 #
 ```
+
+------------------------------------------------------------------------------
 
 ### ABB B23 (M-Bus)
 Using the IR Port on left side of the devise. IR doesn't support MODBUS only M-Bus and EQ-Bus protocoll. 
@@ -1613,7 +1620,9 @@ I only receive the e5 response showing that the request was accepted. No change 
 1,0E84FF8300bcd8@100,E Imp L3,kWh,Imp-L3,2 ; L3 imported energy 0.01 kWh
 #
 ``` 
-    
+
+------------------------------------------------------------------------------
+
 ### Itron (SML V1.04)
     
 The Itron electrical meter is a German end-user meter installed by EnBW. You can read values using an IR Sensor. The following script shows the meter number and the consuption and the generation of a Photovoltaik generator. 
@@ -1646,7 +1655,8 @@ tper=10
 1,77070100020800ff@1000,Erzeugung,kWh,Total_out,4
 #
 ```    
-    
+------------------------------------------------------------------------------
+
 ### eBZ DD3 (OBIS)
 
 The eBZ DD3 by eBZ GmbH is a three-phase model energy meter, which is sold in a number of different configurations. The D0 port is read-only with a fixed time interval of one second. 
@@ -1761,6 +1771,9 @@ For the SM-type meter DD3 2R06 DTA SMZ1 the following script worked with Tasmota
 ;1,77070100000000FF@#),Identifikation,,0_0_0,0
 #
 ```
+	
+------------------------------------------------------------------------------
+
 ### Peacefair PZEM004TV30 (MODBUS)
 PZEM004T V30 multiple meters on Modbus
        
@@ -1794,6 +1807,9 @@ PZEM004T V30 multiple meters on Modbus
 
 #
 ```
+	
+------------------------------------------------------------------------------
+
 ### Landis + Gyr E220 (SML)
 
 For read-out of "current power" the advanced data set has to be enabled in user menue
@@ -1813,7 +1829,7 @@ tper=10
 #
 ```
 	
-	
+------------------------------------------------------------------------------
 
 ### Carlo Gavazzi EM340 (MODBUS RTU)
 
@@ -1849,4 +1865,35 @@ code:
 #
 ```
 	
------
+------------------------------------------------------------------------------
+
+### Holley DTZ541 (SML)  
+
+This script reads pretty much all given informations.
+Make sure to enable `info` in the settings, otherwise you only get total / current consuption and total export.
+
+This script was used and tested on a WeMos D1 mini with an IR Head connected to the RX pin (3).
+```
+>D
+>B
+->sensor53 r
+>M 1
++1,3,s,16,9600,SML
+1,77070100600100ff@#,Server ID,,server_id,0
+1,77070100020800ff@1000,Export (Total),kWh,export_total_kwh,4
+1,77070100010800ff@1000,Consumption (Total),kWh,total_kwh,4
+1,77070100100700ff@1,Consumption (Current),W,curr_w,0
+1,77070100200700ff@1,Voltage L1,V,volt_p1,1
+1,77070100340700ff@1,Voltage L2,V,volt_p2,1
+1,77070100480700ff@1,Voltage L3,V,volt_p3,1
+1,770701001f0700ff@1,Amperage L1,A,amp_p1,1
+1,77070100330700ff@1,Amperage L2,A,amp_p2,1
+1,77070100470700ff@1,Amperage L3,A,amp_p3,1
+1,77070100510701ff@1,Phase angle U-L2/U-L1,deg,phase_angle_l2_l1,1
+1,77070100510702ff@1,Phase angle U-L3/U-L1,deg,phase_angle_l3_l1,1
+1,77070100510704ff@1,Phase angle I-L1/U-L1,deg,phase_angle_p1,1
+1,7707010051070fff@1,Phase angle I-L2/U-L2,deg,phase_angle_p2,1
+1,7707010051071aff@1,Phase angle I-L3/U-L3,deg,phase_angle_p3,1
+1,770701000e0700ff@1,Frequency,Hz,freq,0
+#
+```
