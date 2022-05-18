@@ -2,9 +2,9 @@
 
 !!! info "This feature is experimental"
 
-Tasmota is happy to support OpenHASP format, which allows to describe rich graphics interfaces using simple JSON templates. OpenHASP support leverages the power of [LVGL](https://tasmota.github.io/docs/LVGL/) and the [Berry language](https://tasmota.github.io/docs/Berry/), but doesn't need to code nor learn the LVGL API.
+Tasmota is happy to support openHASP format, which allows to describe rich graphics interfaces using simple JSON templates. OpenHASP support leverages the power of [LVGL](https://tasmota.github.io/docs/LVGL/) and the [Berry language](https://tasmota.github.io/docs/Berry/), but doesn't need to code nor learn the LVGL API.
 
-This feature is heavily inspired from @franvoie's [OpenHASP project](https://github.com/HASwitchPlate/openHASP).
+This feature is heavily inspired from @fvanroie's [openHASP project](https://github.com/HASwitchPlate/openHASP).
 
 ## Minimal requirements
 
