@@ -138,10 +138,10 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 1088 | IRrecv         | IR interface                                                                                            |
 | 1120 | RFSend         | RF interface                                                                                            |
 | 1152 | RFrecv         | RF interface                                                                                            |
-| 1184 | DHT11          | DHT11 DHT21 DHT22 AM2301 AM2302 AM2321                                                                  |
-| 1216 | AM2301         | DHT11 DHT21 DHT22 AM2301 AM2302 AM2321                                                                  |
-| 1248 | SI7021         | DHT11 DHT21 DHT22 AM2301 AM2302 AM2321                                                                  |
-| 1280 | DHT11_o        | DHT11 DHT21 DHT22 AM2301 AM2302 AM2321                                                                  |
+| 1184 | DHT11          | DHT11                                                                  |
+| 1216 | AM2301         | DHT21 DHT22 AM2301 AM2302 AM2321                                                                  |
+| 1248 | SI7021         | SI7021                                                                  |
+| 1280 | DHT11_o        | DHT11                                                                   |
 | 1312 | DS18x20        | DS18B20 or DS18S20                                                                                      |
 | 1344 | DS18x20_o      | DS18B20 or DS18S20                                                                                      |
 | 1376 | WS2812         | WS2812 Led string                                                                                       |
@@ -1078,17 +1078,3 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 8896 | SDIO D1        | SD Card SDIO interface including 1-bit and 4-bit modes                                                  |
 | 8928 | SDIO D2        | SD Card SDIO interface including 1-bit and 4-bit modes                                                  |
 | 8960 | SDIO D3        | SD Card SDIO interface including 1-bit and 4-bit modes                                                  |
-
-## ADC Conversion
-
-| Old ADC | New ADC | Option      | WebUI display                                                         | MQTT mesage                                                           |
-|---|---|---|---|---|
-| 0       | 0       | None        | none                                                                  | none                                                                  |
-| 1       | 4704    | Analog      | Analog0 %value%                                                       | {"A0":%value%}                                                        |
-| 2       | 4736    | Temperature | Temperature %value% °C (°F)                                           | {"Temperature":%value%},"TempUnit":"C"}                               |
-| 3       | 4768    | Light       | Illuminance %value% lux                                               | {"Illuminance":%value%}                                               |
-| 4       | 4800    | Button      | none                                                                  | none                                                                  |
-| 5       | 4832    | Buttoni     | none                                                                  | none                                                                  |
-| 6       | 4864    | Range       | Range %value%                                                         | {"Range":%value%}                                                     |
-| 7       | 4896    | CT Power    | Voltage 230 V Current %value A Power %value W Energy Total %value kWh | {"Energy":_%value_,"Power":_%value_,"Voltage":230,"Current":_%value_} |
-| 8       | 3328    | Joystick    | none                                                                  | {"ANALOG":{"Joy1":%value%}                                            |
