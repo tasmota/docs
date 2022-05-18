@@ -107,8 +107,8 @@ extra_css:
 
 extra_javascript:
   - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
-  - javascripts/tablesort.js
-  
+  - extra_javascript/tablesort.js
+
 nav:
   - Home:
     - News: index.md

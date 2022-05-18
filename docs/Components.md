@@ -18,7 +18,9 @@ Read more about [peripherals](Supported-Peripherals.md).
 !!! tip
      GPIOs configured as User (1) are the GPIOs that can be assigned to components in the **Configure Module** page.
 
-## GPIOs
+## GPIO Overview
+
+### Tasmota
 
 | #    | UI Label       | Comment                                                                                                 |
 |------|----------------|---------------------------------------------------------------------------------------------------------|
@@ -407,8 +409,8 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 8288 | SDIO D2        | SD Card SDIO interface including 1-bit and 4-bit modes                                                  |
 | 8320 | SDIO D3        | SD Card SDIO interface including 1-bit and 4-bit modes                                                  |
 
+### Tasmota32
 
-## ESP32 Only
 | #    | UI Label       | Comment                                                                                                 |
 |------|----------------|---------------------------------------------------------------------------------------------------------|
 | 0    | None           | Not used                                                                                                |
