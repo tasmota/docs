@@ -1,22 +1,22 @@
-# OpenHASP :material-cpu-32-bit:
+# HASPmota :material-cpu-32-bit:
 
 !!! info "This feature is experimental"
 
-Tasmota is happy to support OpenHASP format, which allows to describe rich graphics interfaces using simple JSON templates. OpenHASP support leverages the power of [LVGL](https://tasmota.github.io/docs/LVGL/) and the [Berry language](https://tasmota.github.io/docs/Berry/), but doesn't need to code nor learn the LVGL API.
+Tasmota is happy to support OpenHASP compatible format (named HASPmota), which allows to describe rich graphics interfaces using simple JSON templates. HASPmota support leverages the power of [LVGL](https://tasmota.github.io/docs/LVGL/) and the [Berry language](https://tasmota.github.io/docs/Berry/), but doesn't need to code nor learn the LVGL API.
 
 This feature is heavily inspired from @franvoie's [OpenHASP project](https://github.com/HASwitchPlate/openHASP).
 
 ## Minimal requirements
 
-**Hardware**: OpenHASP is supported on all ESP32 variants, and requires a display configured with universal display (using `display.ini` or `autoconf`). You should see a splash screen at startup.
+**Hardware**: HASPmota is supported on all ESP32 variants, and requires a display configured with universal display (using `display.ini` or `autoconf`). You should see a splash screen at startup.
 
-Currently **PSRAM** is required to run OpenHASP. The core engine is compiled and loaded in memory, which makes it unsuitable for ESP32 without PSRAM. Future versions 
+Currently **PSRAM** is required to run HASPmota. The core engine is compiled and loaded in memory, which makes it unsuitable for ESP32 without PSRAM. Future versions 
 
 **Firmware**: you need a tasmota firmware with LVGL support, like `tasmota32-lvgl` or a self-compiled version.
 
 ## Quick tour
 
-You can see OpenHASP in action in a couple of minutes.
+You can see HASPmota in action in a couple of minutes.
 
 Upload in your ESP32 file system the following files, from: https://github.com/arendst/Tasmota/tree/development/tasmota/berry/openhasp
 
@@ -33,7 +33,7 @@ Restart and enjoy. You should see the following screen, and click on buttons to 
 
 ### Understanding the template
 
-OpenHASP automatically loads the template from a file named `pages.jsonl`. This file contains JSON Lines, i.e. a single JSON document per line. Each line describes an element on the screen. Elements are groupes into pages.
+HASPmota automatically loads the template from a file named `pages.jsonl`. This file contains JSON Lines, i.e. a single JSON document per line. Each line describes an element on the screen. Elements are groupes into pages.
 
 Page `0` contains objects that are displayed on all screens. They are typically used for headers and menus.
 
@@ -97,13 +97,13 @@ The code trigger a read of sensors every 2 seconds and publish the JSON result t
 tasmota.add_cron('*/2 * * * * *', def () tasmota.publish_rule(tasmota.read_sensors()) end, 'oh_every_5_s')
 ```
 
-## OpenHASP reference
+## HASPmota reference
 
 ### Integration to Berry
 
 #### objects as `p<x>b<y>`
 
-Each OpenHASP widget is mapped to a global variable of name `p<x>b<y>`. Example:  `p1b10`. Such objects can be directly used via their attributes.
+Each HASPmota widget is mapped to a global variable of name `p<x>b<y>`. Example:  `p1b10`. Such objects can be directly used via their attributes.
 
 Example:
 
@@ -121,7 +121,7 @@ Changing pages can be done with `p2.show()`
 
 #### additional parsing
 
-OpenHASP parses all lines from the file `pages.jsonl`. You can dynamically add new objects as JSON with `openhasp.parse(<json>)`. This functions takes a single json line. It is highly recommended to specify the page id in the json, otherwise the object is added to the current page.
+HASPmota parses all lines from the file `pages.jsonl`. You can dynamically add new objects as JSON with `openhasp.parse(<json>)`. This functions takes a single json line. It is highly recommended to specify the page id in the json, otherwise the object is added to the current page.
 
 
 ### Pages
@@ -132,13 +132,13 @@ Pages object are identified by object if `0`. Example:
 {"page":1,"id":0,"bg_color":"#0000A0","bg_grad_color":"#000000","bg_grad_dir":1,"text_color":"#FFFFFF"}
 ```
 
-Internally OpenHASP pages are implemented with LVGL screens, i.e. a parent object.
+Internally HASPmota pages are implemented with LVGL screens, i.e. a parent object.
 
 Page `0` is a special page that is displays over every screens. It is the perfect place to put navigation menus. It is implement as `lv.layer_top()`.
 
 Page `1` is always present and the default page.
 
-Attributes specifis to page|Details
+Attributes specific to page|Details
 :---|:---
 `prev`|(int) target page number when pressing PREV button
 `next`|(int) target page number when pressing NEXT button
@@ -149,7 +149,7 @@ Attributes specifis to page|Details
 
 Attribute `"obj"` can take the following values:
 
-OpenHASP Class|Embedded LVGL class
+HASPmota Class|Embedded LVGL class
 :---|:---
 `obj`|`lv.obj`
 `btn`|`lv.btn`
@@ -173,7 +173,7 @@ You can also import custom widget as long as they inherit from `lv.obj` and the 
 Example: `"obj":"lv_wifi_graph"` will trigger the followin:
 - `import lv_wifi_graph`
 - instanciation of `lv_wifi_graph(parent)` object
-- if successful, it can be used like a typical OpenHASP object
+- if successful, it can be used like a typical HASPmota object
 
 ### Attributes
 
@@ -308,7 +308,7 @@ text\_rule\_format|String format of the result string. The format uses Berry's `
 
 ### React to user actions
 
-Every time the user touches an active element on the screen, OpenHASP publishes internal events you can listen and react to. For example if you press a button `p1b10`, OpenHASP publishes an event `{"hasp":{"p1b10":{"event":"up"}}` when the button is released. You can easily create a rule to react to this event.
+Every time the user touches an active element on the screen, HASPmota publishes internal events you can listen and react to. For example if you press a button `p1b10`, HASPmota publishes an event `{"hasp":{"p1b10":{"event":"up"}}` when the button is released. You can easily create a rule to react to this event.
 
 Example:
 
