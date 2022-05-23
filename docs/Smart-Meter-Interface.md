@@ -328,6 +328,7 @@ Look down below for script examples based on the following metering devices:
 - [Hager EHZ161](#hager-ehz161-obis) (OBIS)
 - [Landis + Gyr ZMR120AR](#landis-gyr-zmr120ares2r2sfcs-obis) (OBIS, changing the baud rate during operation)
 - [Elster AS1440 / Honeywell AS1440](#elster--honeywell-as1440-obis) (OBIS, changing the baud rate during operation)
+- [Elster AS2020 / Honeywell AS2020](#elster--honeywell-as2020-sml) (SML)
 - [COMBO Meter](#combo-meter-watergassml) (Water,Gas,SML)
 - [WOLF CSZ 11/300 Heater](#wolf-csz-11300-heater-ebus) (EBUs)
 - [SDM530](#sdm530-modbus) (MODBus)
