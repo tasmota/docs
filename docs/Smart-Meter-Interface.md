@@ -328,6 +328,7 @@ Look down below for script examples based on the following metering devices:
 - [Hager EHZ161](#hager-ehz161-obis) (OBIS)
 - [Landis + Gyr ZMR120AR](#landis-gyr-zmr120ares2r2sfcs-obis) (OBIS, changing the baud rate during operation)
 - [Elster AS1440 / Honeywell AS1440](#elster--honeywell-as1440-obis) (OBIS, changing the baud rate during operation)
+- [Elster AS2020 / Honeywell AS2020](#elster--honeywell-as2020-sml) (SML)
 - [COMBO Meter](#combo-meter-watergassml) (Water,Gas,SML)
 - [WOLF CSZ 11/300 Heater](#wolf-csz-11300-heater-ebus) (EBUs)
 - [SDM530](#sdm530-modbus) (MODBus)
@@ -770,6 +771,24 @@ ends
 1,1-1:2.8.1(@1,Total_Out,KWh,Total_Out,3
 # 
 ```
+	
+------------------------------------------------------------------------------
+
+### Elster / Honeywell AS2020 (SML)
+
+```
+>D
+>B
+->sensor53 r
+>M 1
++1,3,s,0,9600,,1
+1,77070100600100ff@#,Server-ID,,Wert,0
+1,77070100010800ff@1000,Total Consumed,kWh,total_consumed_kwh,1
+1,77070100020800ff@1000,Total Delivered,kWh,total_delivered_kwh,1
+1,77070100100700ff@0.1,Current Consumption,W,current_consumption,0
+#
+```
+
 ------------------------------------------------------------------------------
 
 ### COMBO Meter (Water,Gas,SML)
@@ -808,9 +827,9 @@ ends
 3,=h--------------------------------  
 #  
 ```
-
+	
 ------------------------------------------------------------------------------
-
+	
 ### WOLF CSZ 11/300 Heater (EBus)
 
 ```
