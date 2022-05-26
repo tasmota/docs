@@ -342,7 +342,12 @@ script subroutines may be called sub=name of subroutine, like normal subroutines
 %=#sub
 in this subroutine a web line may be sent by wcs (see below) thus allowing dynamic HTML pages
 
-
+=#sub(x) in any position of webline calls subroutine. this allows inserting content
+ 
+insa(array) in any position insert all elements from an array comma seperated 
+  
+%/file calls a file from the file system and send its content to browser. in this file any cmds may apply.
+ 
 A web user interface may be generated containing any of the following elements:  
 **Button:**   
  `bu(vn txt1 txt2)` (up to 4 buttons may be defined in one row)  
@@ -401,15 +406,17 @@ A web user interface may be generated containing any of the following elements:
   `WSO_NOCENTER` = 1 force elements not centered  
   `WSO_NODIV` = 2 force elements not in extra \<div\>  
   `WSO_FORCEPLAIN` = 4 send line in plain (no table elements)
+  `WSO_FORCEMAIN` = 8 send lines in main mode ($ mode)  
   
  **Google Charts:**  
   google chart support requires arrays and to make sense also permanent arrays. Therefore on 4M Flash Systems the use of `USE_UFILESYS` is recommended while on 1 M Flash Systems the special EEPROM mode should be used (see above). other options may also be needed like `LARGE_ARRAYS`  
   
   draws a google chart with up to 4 data sets per chart  
-  `gc( T array1 ... array4 "name" "label1" ... "label4" "entrylabels" "header" {"maxy1"} {"maxy2"})`   
+  `gc(T (size) array1 ... array4 "name" "label1" ... "label4" "entrylabels" "header" {"maxy1"} {"maxy2"})`   
   `T` = type  
   - b=barchart  
   - c=columnchart  
+  - cs=columnchart stacked 
   - C=combochart  
   - p=piechart  
   - l=linechart up to 4 lines with same scaling  
@@ -423,6 +430,8 @@ A web user interface may be generated containing any of the following elements:
   b,l,h type may have the '2' option to specify exactly 2 arrays with 2 y scales given at the end of paramter list.  
   
   a very individual chart may be specified by splitting the chart definition and inserting the chart options directly see example below  
+  
+  `size` = optional size, allows to use only part of an array, must be lower then array size  
   
   `array` = up to 4 arrays of data  
   `name` = name of chart  
@@ -467,7 +476,7 @@ lines preceeded by $ are static and not refreshed and displayed below lines with
 this option also enables a full webserver interface when USE_UFILESYS is activ.  
 you may display files from the flash or SD filesystem by specifying the url:  IP/ufs/path  .
 (supported files: *.jpg, *.html, *.txt)  
-`>w1` `>w2` `>w3` some as above `>w`  
+`>w1` `>w2` `>w3`  `>w4`  `>w5`  `>w6` some as above `>w`  
 ==Requires compiling with `#define SCRIPT_FULL_WEBPAGE`.==  
 
   
@@ -514,7 +523,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `int(x)` = gets the integer part of x (like floor)  
 `hn(x)` = converts x (0..255) to a hex nibble string  
 `hx(x)` = converts x (0..65535) to a hex string  
-`hd("hstr")` = converts hex number string to a decimal number  
+`hd("hstr")` = converts hex number string to a decimal number
+`af(array)` = converts first 4 bytes of an array to float number   
 `hf("hstr")` = converts hex float number string to a decimal number  
 `hf("hstr" r)` = converts hex float number string (reverse byte order) to a decimal number  
 `st(svar c n)` = string token - retrieve the n^th^ element of svar delimited by c  
@@ -555,6 +565,7 @@ Serial IO support #define USE_SCRIPT_SERIAL
 `srb()` read a number char code from serial port  
 `sp()` read a number char code from serial port, dont remove it from serial input (peek)  
 `sra(ARRAY)` fill an array from serial port, if USE_SML_M is enabled and Array size is 8 it is assumed to be a MODBUS request and the checksum is evaluated, if OK `8` is returned, else -2  
+`swa(ARRAY len (flags))` send len bytes of an array to serial port, if flags is set modbus cmd is assumed and cksum is calculated, 0 = standard modbus, 1 = Rec BMA mode  
 `smw(ADDR MODE NUMBER)` send a value with checksum to MODBUS Adress, MODE 0 = uint16, 1 = uint32, 3 = float  
   
 SPI IO support #define `USE_SCRIPT_SPI`  
@@ -592,6 +603,8 @@ SEL:
 `wm` = contains source of web request code e.g. 0 = Sensor display (FUNC_WEB_SENSOR)  
   
 `acp(dst src)` = copy array   
+  
+`knx(code value)` = sends a number value to knx   
 
 `sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
 `sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
