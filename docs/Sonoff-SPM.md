@@ -3,7 +3,7 @@
 !!! Warning "Do not use this device as safety fuse!"
 
 !!! Info 
-    For future ARM firmware upgrades it's advised to make a full backup of the SPM-Main ESP 4M flash firmware before flashing Tasmota.
+    For ARM firmware upgrades it's advised to make a full backup of the SPM-Main ESP 4M flash firmware before flashing Tasmota.
 
 The Sonoff Smart Stackable Power Meter uses a SPM-Main unit with ESP32 providing wifi and ethernet connections. A serial interface and a SPI interface connects to an ARM MCU which in turn provides a RS-485 bus to up to 32 SPM-4Relay modules. The SPM-4Relay module contains an ARM MCU too providing independent power management for four bi-stable relays rated for 20A at 240V for a total of 4400W.
 
@@ -14,7 +14,7 @@ The firmware monitors the attached SPM-4Relay modules and stores energy usage hi
 
 ### Background information
 
-More information about the SPM can be opbtained here:
+More information about the SPM can be obtained here:
 
 - [Sonoff tech product documentation](https://sonoff.tech/product-document/diy-smart-switch-doc/spm-main-spm-4relay-doc/)
 - [SPM HTTP API](https://sonoff.tech/product-review/product-insight/get-started-quicklynow-you-can-control-spm-units-via-http-api/)
@@ -28,7 +28,7 @@ Tasmota, installed on the ESP32, can connect to the SPM-Main ARM MCU using the s
 - Power control of all 32 relays using standard features
 - Energy usage using standard features
 - Overload detection using ARM firmware
-- Gui display of rotating relays
+- Gui display of rotating relays or a user selected 4Relay module
 - Fix firmware max 180 days energy usage by storing daily Energy Total in Tasmota's filesystem
 - Mapping physical relays to scanned relays
 
@@ -36,7 +36,7 @@ Tasmota, installed on the ESP32, can connect to the SPM-Main ARM MCU using the s
 
 The following notes currently apply:
 
-- Tasmota is unable to upgrade the ARM firmware. In case an upgrade is wanted install the backed-up sonoff firmware and perform the upgrade using the eWeLink app.
+- Tasmota is unable to upgrade the ARM firmware. In case an upgrade is wanted install the backed-up sonoff firmware and perform the upgrade using the eWeLink app. Once upgraded make another backup before restoring Tasmota for future ARM firmware upgrades.
 
 ## Configuration
 
@@ -67,7 +67,7 @@ The following SPM specific commands are supported.
 
 Command|Parameters
 :---|:---
-SspmDisplay<a class="cmnd" id="SspmDisplay"></a>|Toggle GUI display between rotating display of all scanned relays or of all scanned relays that are powered on<BR>`0` = Display all relays<BR>`1` = Display powered on relays
+SspmDisplay<a class="cmnd" id="SspmDisplay"></a>|Change GUI display between rotating display of all scanned relays, of all scanned relays that are powered on or select a group of four relays using a tab<BR>`0` = Display all relays<BR>`1` = Display powered on relays<BR>`2` = Provide user selectable tabs to display four relays within a 4Relay module
 SspmEnergyTotal<x\><a class="cmnd" id="SspmEnergyTotal"></a>|(P)reset total energy in kWh without today's energy for relay <x\><BR>`0` = preset with total of history<BR>`0.01..262143.99` = set value in kWh
 SspmEnergyYesterday<x\><a class="cmnd" id="SspmEnergyYesterday"></a>|(P)reset energy yesterday in kWh for relay <x\><BR>`0.01..262143.99` = set value in kWh
 SspmHistory<x\><a class="cmnd" id="SspmHistory"></a>|Show daily energy for relay <x\> of up to 180 days
