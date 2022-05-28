@@ -359,12 +359,12 @@ CurrentHigh<a class="cmnd" id="currenthigh"></a>|`0` = disable current high thre
 CurrentLow<a class="cmnd" id="currentlow"></a>|`0` = disable current low threshold *(default)*<BR>`<value>` = set current low threshold value in milliamps
 CurrentSet<a class="cmnd" id="currentset"></a>|`<value>` = [calibrate](Power-Monitoring-Calibration) current to target value in mA
 EnergyExport<x\><a class="cmnd" id="energyexport"></a>|Export energy values<BR>
-EnergyToday<x\><a class="cmnd" id="energytoday"></a>|Reset Energy Today values<BR>`0` = reset<BR>`<value>` = set value<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value (optional 2nd parameter)
-EnergyTotal<x\><a class="cmnd" id="energytotal"></a>|Reset Energy Total values<BR>`0` = reset<BR>`<value>` = set value<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value (optional 2nd parameter)<BR>The new value represents start of day, and output for total includes the today value.
+EnergyToday<x\><a class="cmnd" id="energytoday"></a>|Reset Energy Today values<BR>`<value>` = set value<BR>`0` = reset<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value (optional 2nd parameter)
+EnergyTotal<x\><a class="cmnd" id="energytotal"></a>|Reset Energy Total values<BR>`<value>` = set value<BR>`0` = reset<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value (optional 2nd parameter)<BR>The new value represents start of day, and output for total includes the today value.
 EnergyReset&#60;x><a class="cmnd" id="energyreset"></a>|x = `1..5`<BR>`1` `<value>{,<time>}` = ((p)re)set values<BR>`2` `<value>{,<time>}` = ((p)re)set values for Yesterday<BR>`3` `<value>{,<time>}` = ((p)re)set values for Total<BR>`<value>` = `0..42949672` in watt-hours (Wh)<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value<BR>`4` `<standard>`{,`<off-peak>`} = ((p)re)set tariff period values for Totals<BR>`5` `<standard>`{,`<off-peak>`} = ((p)re)set tariff period values for Exported<BR>With version 10, this command has been replaced, see above.
 EnergyRes<a class="cmnd" id="energyres"></a>|Energy sensor resolution<BR>`0..5` = maximum number of decimal places
-EnergyYesterday<x\><a class="cmnd" id="energyyesterday"></a>|Reset Energy Yesterday values<BR>`0` = reset<BR>`<value>` = set value<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value (optional 2nd parameter)
-EnergyUsage<a class="cmnd" id="energyusage"></a>|Reset energy usage values<BR>`0` = reset<BR>`<value>` = set energy usage value
+EnergyYesterday<x\><a class="cmnd" id="energyyesterday"></a>|Reset Energy Yesterday values<BR>`<value>` = set value<BR>`0` = reset<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value (optional 2nd parameter)
+EnergyUsage<a class="cmnd" id="energyusage"></a>|Reset energy usage values<BR>`<value>` = set energy usage value<BR>`0` = reset
 FreqRes<a class="cmnd" id="freqres"></a>|Frequency sensor resolution<BR>`0..3` = maximum number of decimal places
 FrequencySet<a class="cmnd" id="frequencyset"></a>|`<value>` = [calibrate](Power-Monitoring-Calibration) frequency to a target value in Hz
 MaxPower<a class="cmnd" id="maxpower"></a>|`0` = disable use maximum power monitoring<BR>`<value>` = set maximum allowed power in watts
