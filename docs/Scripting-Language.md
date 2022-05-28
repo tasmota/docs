@@ -572,10 +572,10 @@ Serial IO support #define USE_SCRIPT_SERIAL
   
 SPI IO support #define `USE_SCRIPT_SPI`  
 `spi(0 SCLK MOSI MISO)` defines a software SPI port with pin numbers used for SCLK, MOSI, MISO.  
-`spi(0 -1)` defines a hardware SPI port with pin numbers defined by Tasmota GPIO definition.  
-`spi(0 -2)` defines a hardware SPI port 2 on ESP32 with pin numbers defined by Tasmota GPIO definition.  
+`spi(0 -1 freq)` defines a hardware SPI port with pin numbers defined by Tasmota GPIO definition with bus frequency freq in Mhz.  
+`spi(0 -2 freq)` defines a hardware SPI port 2 on ESP32 with pin numbers defined by Tasmota GPIO definition.  
 `spi(1 N GPIO)` sets the CS pin with index N (1..4) to pin Nr GPIO.  
-`spi(2 N VAL S)` sends and receives a VAL with S (1..3) bytes (8,16,24 bits) if N==-1 cs is ignored  
+`spi(2 N ARRAY LEN S)` sends and receives an ARRAY with len values with S (1..3) (8,16,24 bits) if N==-1 cs is ignored  
   
 `ttget(TNUM SEL)` get tasmota timer setting from timer TNUM (1 .. 16)  
 SEL:  
