@@ -523,8 +523,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `int(x)` = gets the integer part of x (like floor)  
 `hn(x)` = converts x (0..255) to a hex nibble string  
 `hx(x)` = converts x (0..65535) to a hex string  
-`hd("hstr")` = converts hex number string to a decimal number
-`af(array)` = converts first 4 bytes of an array to float number   
+`hd("hstr")` = converts hex number string to a decimal number  
+`af(array index)` = converts 4 bytes of an array at index `index` to float number   
 `hf("hstr")` = converts hex float number string to a decimal number  
 `hf("hstr" r)` = converts hex float number string (reverse byte order) to a decimal number  
 `st(svar c n)` = string token - retrieve the n^th^ element of svar delimited by c  
@@ -564,7 +564,9 @@ Serial IO support #define USE_SCRIPT_SERIAL
 `sr(X)` read a string from serial port until charcode X, all available chars up to string size or until charcode X  
 `srb()` read a number char code from serial port  
 `sp()` read a number char code from serial port, dont remove it from serial input (peek)  
-`sra(ARRAY)` fill an array from serial port, if USE_SML_M is enabled and Array size is 8 it is assumed to be a MODBUS request and the checksum is evaluated, if OK `8` is returned, else -2  
+`sra(ARRAY (flags))` fill an array from serial port, if USE_SML_M is enabled and Array size is 8 it is assumed to be a MODBUS request and the checksum is evaluated, if OK `8` is returned, else -2, or if flags is set modbus response is assumed and cksum is calculated, 0 = standard modbus, 1 = Rec BMA mode, return -2 on checksum error  a
+  
+`sra(ARRAY (flags))` fill an array from serial port, if USE_SML_M is enabled and Array size is 8 it is assumed to be a MODBUS request and the checksum is evaluated, if OK `8` is returned, else -2, or if flags is set modbus response is assumed and cksum is calculated, 0 = standard modbus, 1 = Rec BMA mode   
 `swa(ARRAY len (flags))` send len bytes of an array to serial port, if flags is set modbus cmd is assumed and cksum is calculated, 0 = standard modbus, 1 = Rec BMA mode  
 `smw(ADDR MODE NUMBER)` send a value with checksum to MODBUS Adress, MODE 0 = uint16, 1 = uint32, 3 = float  
   
@@ -573,7 +575,7 @@ SPI IO support #define `USE_SCRIPT_SPI`
 `spi(0 -1)` defines a hardware SPI port with pin numbers defined by Tasmota GPIO definition.  
 `spi(0 -2)` defines a hardware SPI port 2 on ESP32 with pin numbers defined by Tasmota GPIO definition.  
 `spi(1 N GPIO)` sets the CS pin with index N (1..4) to pin Nr GPIO.  
-`spi(2 N VAL S)` sends and receives a VAL with S (1..3) bytes (8,16,24 bits)  
+`spi(2 N VAL S)` sends and receives a VAL with S (1..3) bytes (8,16,24 bits) if N==-1 cs is ignored  
   
 `ttget(TNUM SEL)` get tasmota timer setting from timer TNUM (1 .. 16)  
 SEL:  
