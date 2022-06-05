@@ -518,7 +518,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `gtmp` = global temperature  
 `ghum` = global humidity  
 `gprs` = global pressure  
-`pow(x y)` = calculates exponential powers x^y  
+`pow(x y)` = calculates exponential powers x^y (imprecise version only)  
 `med(n x)` = calculates a 5 value median filter of x (2 filters possible n=0,1)  
 `int(x)` = gets the integer part of x (like floor)  
 `hn(x)` = converts x (0..255) to a hex nibble string  
