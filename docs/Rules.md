@@ -307,10 +307,12 @@ When the `<if-statement>` directly follows the trigger the standard 'Do' syntax 
   `Rule1 ON Power1#State DO IF (%value%==1) Backlog Power2 1;Power3 1 ENDIF ENDON` is **permitted**
   `Rule1 ON Power1#State DO IF (%value%==1) Power2 1;Power3 1 ENDIF ENDON` is also **permitted**
 
-When the `<if-statement>` is preceded by other Tasmota commands you should use `Backlog` rather than `Do` , e.g.  
-  `Rule1 ON ENERGY#Current>10 Backlog Power1 0; IF (%var1%==1) Power1 1 ENDIF;Power 2 0;Power3 1 ENDON`
+When the `<if-statement>` is preceded by other Tasmota commands you should use `Backlog` along with `Do` , e.g.  
+  `Rule1 ON ENERGY#Current>10 DO Backlog Power1 0; IF (%var1%==1) Power1 1 ENDIF;Power 2 0;Power3 1 ENDON`
   **and not**
   `Rule1 ON ENERGY#Current>10 DO Power1 0; IF (%var1%==1) Power1 1 ENDIF ENDON`
+  **or**
+  `Rule1 ON ENERGY#Current>10 Backlog Power1 0; IF (%var1%==1) Power1 1 ENDIF ENDON`
 
 `(<logical-expression>)` example: `(VAR1>=10)`  
 - Multiple comparison expressions with logical operator `AND` or `OR` between them. `AND` has higher priority than `OR`. For example:  
