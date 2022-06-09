@@ -36,7 +36,7 @@ Attributes|Details
 :---|:---
 Leds<a class="cmnd" id="leds_ctor"></a>|`Leds(pixels:int, gpio:int [,model:int ,rmt:int]) -> instance<Leds>`<br>Creates a `Leds` instance for a linear leds strip<br>`pixels`: number of leds<br>`gpio`: gpio number<br>`model`: (opt) LED model, default:Leds.WS2812_GRB`<br>`rmt`: (opt) `RMT`channel to use, or auto-select (see below)
 Leds.matrix<a class="cmnd" id="leds_matrix_ctor"></a>|`Leds_matrix(width:int, height:int, gpio:int [,model:int ,rmt:int]) -> instance<Leds_matrix>`<br>Creates a `Leds` instance for a matrix of leds<br>`width`: number of leds horizontally<br>`height`: number of leds vertically<br>`gpio`: gpio number<br>`model`: (opt) LED model, default:Leds.WS2812_GRB`<br>`rmt`: (opt) `RMT`channel to use, or auto-select (see below)
-<strip>.segment<a class="cmnd" id="leds_segment"></a>|`<strip>.segment(offset:int, pixels:int) -> instance<Leds_semgent>`<br>Creates a virtual segment from a physical Leds strip, from Led number `offset` with `pixels` leds.
+<strip>.create_segment<a class="cmnd" id="leds_segment"></a>|`<strip>.create_segment(offset:int, pixels:int) -> instance<Leds_semgent>`<br>Creates a virtual segment from a physical Leds strip, from Led number `offset` with `pixels` leds.
 
 LED model|Details
 :---|:---
