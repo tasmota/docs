@@ -2,7 +2,7 @@
 
 Requires `#define USE_WS2812`.
 
-Support for adressable leds strips or matrix, including animation. 
+Support for addressable leds strips or matrix, including animation. 
 
 Internally relies on NeoPixelBus library and currently supports WS2812 and SK6812.
 
@@ -63,7 +63,7 @@ pixels\_buffer<a class="cmnd" id="leds_pixels_buffer"></a>|`pixels_buffer() -> b
 
 ## Animation framework
 
-The class `Leds_animator` sets the necessary methods to facilitate animations. You just need create a sub-class or `Leds_animator`, provide a `Leds` or `Leds_matrix` instance and implement the `animate` mehod. You can also register `animators` (see below).
+The class `Leds_animator` sets the necessary methods to facilitate animations. You just need create a sub-class or `Leds_animator`, provide a `Leds` or `Leds_matrix` instance and implement the `animate` method. You can also register `animators` (see below).
 
 The instance is automatically registered as driver. Call `start()` to start the animation, and `stop()` to stop it.
 
