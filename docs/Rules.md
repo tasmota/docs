@@ -1761,14 +1761,18 @@ Notice we use `Rule` which edits `Rule1` rule set. They can be used interchangea
 
 ### Watchdog for Wi-Fi router or modem
 
-A Tasmota WebQuery can fetch a URL from a remote host (router itself, something else connected to the router, or a site on the Internet)
-and power cycle the socket to reboot the router. In this example, an interval of 3 minutes is used.
+!!! note "The ping method requires `#define USE_PING` and Tasmota version 8.2.0.3 or newer"
+!!! note "The WebQuery method requires Tasmota version 10.0.0 or newer"
+      
+A Tasmota plug can check a remote host (router itself, something else connected to the router, or a site on the Internet)
+via an ICMP Ping or loading a URL and can power cycle the router or modem if the remote host isn't responding. 
+In this example, an interval of 3 minutes is used.
 The simplest watchdog rule does not use variables:
 
 ```haskell
 Rule1
-  ON Time#Minute|3 DO backlog WebQuery http://192.168.1.10 GET ENDON
-  ON WebQuery#Data$!Done DO backlog Power1 0; Delay 10; Power1 1 ENDON
+  ON Time#Minute|3 DO backlog Ping4 192.168.1.10 ENDON
+  ON Ping#192.168.1.10#Success==0 DO Backlog Power1 0; Delay 10; Power1 1; ENDON
 Rule1 1
 ```
 
@@ -1776,6 +1780,18 @@ However, if the endpoint becomes unreachable for a long time, the watchdog will 
 This could reduce the watchdog's relay lifetime to months, at most years. A safer option would be to use an 
 **exponential backoff** algorithm. `Var1` contains the current interval in minutes, which is tripled
 after each failed query, but limited to 1439 minutes (1 day).
+
+```haskell
+Rule1
+  ON system#boot do Var1 3 ENDON
+  ON Var1#State>1439 DO Var1 1439 ENDON
+  
+  ON Time#Minute|%var1% DO backlog Ping4 192.168.1.10 ENDON
+  ON Ping#192.168.1.10#Success==0 DO backlog Mult1 3; Power1 0; Delay 10; Power1 1 ENDON
+  ON Ping#192.168.1.10#Success>0 DO Var1 3 ENDON
+```
+
+If your Tasmota doesn't have ping compiled in and your remote host has an HTTP server you can access, you can use WebQuery as below:
 
 ```haskell
 Rule1
