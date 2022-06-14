@@ -1284,7 +1284,7 @@ The Q3D is a three-phase model energy meter, which was sold in a number of diffe
 
 Because the 7E1 serial mode is not supported by Tasmota software serial, the hardware serial port must be used, i.e. GPIO 3. This will /not/ work using GPIO 0 or 2.
 
-Also, the source code has to be patched from 8N1 to 7E1 mode for the hardware serial in file src/TasmotaSerial.cpp, please see the patch further down below.
+Also, the source code has to be patched from 8N1 to 7E1 mode for the hardware serial in file src/TasmotaSerial.cpp, please see the patch further down below. Since Tasmota 9.5.0 the serial mode can be changed in the console by typing `SerialConfig 7E1` without having to patch TasmotaSerial.
 
 Example reading of the two-direction model using GPIO 3 - P_in power reading will be negative in case of inverse power flow:
 ```
@@ -1690,7 +1690,9 @@ There are two types available using different communication settings:
 
 Tested with a eBZ DD3 2R06 ODZ1 (two-direction model for e. g. solar power metering) and confirmed to work with the TasmotaSerial3.2 source which is in [Tasmota banch 9.3.1](https://github.com/arendst/Tasmota/releases/tag/v9.3.1).
     
-Because the 7E1 serial mode is not supported by Tasmota software serial, the hardware serial port must be used, i.e. GPIO 3. This will /not/ work using GPIO 0 or 2. Also, the source code has to be patched from 8N1 to 7E1 mode for the hardware serial in file src/TasmotaSerial.cpp, please see the patch further down below.
+Because the 7E1 serial mode is not supported by Tasmota software serial, the hardware serial port must be used, i.e. GPIO 3. This will /not/ work using GPIO 0 or 2.
+
+Also, the source code has to be patched from 8N1 to 7E1 mode for the hardware serial in file src/TasmotaSerial.cpp, please see the patch further down below. Since Tasmota 9.5.0 the serial mode can be changed in the console by typing `SerialConfig 7E1` without having to patch TasmotaSerial.
 
 Example reading of the two-direction model using GPIO 3:
     
