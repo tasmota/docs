@@ -216,6 +216,7 @@ Below table provides more information about it. The original values are related 
 
 |Code |Constant name |Description |
 |-|-|-|
+|-5|MQTT_DNS_DISCONNECTED|the DNS server cannot be reached or name cannot be resolved|   
 |-4|MQTT_CONNECTION_TIMEOUT|the server didn't respond within the keepalive time|
 |-3|MQTT_CONNECTION_LOST|the network connection was broken|
 |-2|MQTT_CONNECT_FAILED|the network connection failed|
