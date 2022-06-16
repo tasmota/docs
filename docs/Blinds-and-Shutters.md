@@ -228,11 +228,9 @@ If you change the shutteropenduration/closeduration the servo will operate slowe
 ### Smooth RAMP-UP and RAMP-DOWN Support
 Servos and Steppers also have a velocity control. With `ShutterMotorDelay<x> 1.5` you can define a 1.5second soft start/stop before the device reaches it final moving speed. Usefull for moving heavy items like doors.
 
-### using Pulse Motors
-#### Normal wire configuration with a PCF as digital I/O
-![Normal wire](https://user-images.githubusercontent.com/34340210/65997880-35b07800-e468-11e9-82d3-8dcaab14b3bf.png)
+### using normal Motors
 
-#### Short Circuit safe wire configuration with a PCF as digital I/O
+#### Short Circuit safe wire configuration with a PCF as digital I/O. Avoid electrical shortage also on wrong configuration.
 ![ShortCicuitSafe](https://user-images.githubusercontent.com/34340210/65997877-3517e180-e468-11e9-9b8c-2f0787f977f6.png)
 
 <!-- outdated log output
