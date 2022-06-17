@@ -359,6 +359,7 @@ CurrentHigh<a class="cmnd" id="currenthigh"></a>|`0` = disable current high thre
 CurrentLow<a class="cmnd" id="currentlow"></a>|`0` = disable current low threshold *(default)*<BR>`<value>` = set current low threshold value in milliamps
 CurrentSet<a class="cmnd" id="currentset"></a>|`<value>` = [calibrate](Power-Monitoring-Calibration) current to target value in mA
 EnergyExport<x\><a class="cmnd" id="energyexport"></a>|Export energy values<BR>`<x>` = meter number (default is `1`)<BR>
+EnergyExportActive<x\><a class="cmnd" id="energyexportactive"></a>|**ADE7880 only!** Set/reset energy active values<BR>`<x>` = meter number (default is `1`)<BR>
 EnergyToday<x\><a class="cmnd" id="energytoday"></a>|Set Energy Today values, parameters:<BR>`<x>` = meter number (default is `1`)<BR>`<value>` = set new value in Wh, `0` for reset<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value (optional 2nd parameter)
 EnergyTotal<x\><a class="cmnd" id="energytotal"></a>|Set or set Energy Total values, parameters:<BR>`<x>` = meter number (default is `1`)<BR>`<value>` = set new value in Wh, `0` for reset<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value (optional 2nd parameter)<BR>The new value represents start of day, and output for total includes the today value.
 EnergyReset&#60;x><a class="cmnd" id="energyreset"></a>|x = `1..5`<BR>`1` `<value>{,<time>}` = ((p)re)set values<BR>`2` `<value>{,<time>}` = ((p)re)set values for Yesterday<BR>`3` `<value>{,<time>}` = ((p)re)set values for Total<BR>`<value>` = `0..42949672` in watt-hours (Wh)<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value<BR>`4` `<standard>`{,`<off-peak>`} = ((p)re)set tariff period values for Totals<BR>`5` `<standard>`{,`<off-peak>`} = ((p)re)set tariff period values for Exported<BR>With version 10, this command has been replaced, see above.
@@ -546,8 +547,14 @@ SetOption131<a class="cmnd" id="setoption131"></a>|(Tuya) Allow save dimmer = 0 
 SetOption132<a class="cmnd" id="setoption132"></a>|When MQTT Tls is enabled, forces fingerprint validation of server identity instead of checking the identitfy against a certificate authority (CA)<BR>`1` = Fingerprint, `0` = CA
 SetOption134<a class="cmnd" id="setoption134"></a>|PWM force phases to be synced (ESP32 only).<BR>On ESP32, PWM phases are by default distributed one after the other to minimize effect on power supply. This is also mandatory for H-Bridge devices.<BR>`0` = phases are automatically aligned one after the other, `1` = phases all start at the same time (default behavior for ESP8266).
 SetOption135<a class="cmnd" id="setoption135"></a>|Disables Display Splash screen (for all drivers, universal & LVGL)<BR>`1` = Splash screen disabled, `0` = Splash screen displayed
-SetOption136<a class="cmnd" id="setoption136"></a>|`1` = Disable single sensor reports from Tuya devices while keeping teleperiod reports, `0` =  Publish an immediate `tele/%topic%/SENSOR` TuyaSNS message at each reception of individual value _(default)_
+SetOption136<a class="cmnd" id="setoption136"></a>|`1` = Disable single sensor reports from Tuya devices while keeping teleperiod reports<BR>`0` = Publish an immediate `tele/%topic%/SENSOR` TuyaSNS message at each reception of individual value _(default)_
 SetOption137<a class="cmnd" id="setoption137"></a>|`1` = following Tuya responses will not be forwarded to MQTT when [SetOption66](#setoption66) is enabled<BR>&nbsp;&nbsp;- heartbeat every 10 seconds, `TUYA_CMD_HEARTBEAT`<BR>&nbsp;&nbsp;- the WiFi state during start-up and wifi events, `TUYA_CMD_WIFI_STATE`<BR>&nbsp;&nbsp;- the local time info query of the MCU every minute, `TUYA_CMD_SET_TIME`<BR>&nbsp;&nbsp;- the received update package info from MCU during firmware update of Tuya MCU, `TUYA_CMD_UPGRADE_PACKAGE`
+SetOption138<a class="cmnd" id="setoption138"></a>|Align GUI energy multicolumn layour in webUI<BR>`0` = left/center _(default)_<BR>`1` = right
+SetOption139<a class="cmnd" id="setoption139"></a>|When `SetOption24 1` switch pressure unit to:<BR>`0` = mmHg _(default)_<BR>`1` = inHg
+SetOption140<a class="cmnd" id="setoption140"></a>|`0` = open clean MQTT session _(default)_<BR>`1` = open persistent MQTT session
+SetOption141<a class="cmnd" id="setoption141"></a>|`1` = disable display of model name in webUI header
+SetOption142<a class="cmnd" id="setoption142"></a>|`1` = wait 1 second for WiFi connection solving some FRITZ!Box modem issues
+
 
 ### TuyaMCU
 
@@ -579,7 +586,7 @@ SerialConfig<a class="cmnd" id="serialconfig"></a>|`value` = set serial protocol
 SerialDelimiter<a class="cmnd" id="serialdelimiter"></a>|`<value>` = set serial delimiter to [escape character code](https://en.wikipedia.org/wiki/Escape_character#ASCII_escape_character) or ASCII character<BR>`1..127` = set serial delimiter to [decimal ASCII](http://www.asciichart.com/)<BR>`128` = only allow ASCII characters 32 to 127 in response text<BR>`254` = disable serial delimiter & post HEX string<BR>`129..253` or `255` = disable serial delimiter (default = 255)
 SerialSend&#60;x><a class="cmnd" id="serialsend"></a>|`<string>`<BR>Disable serial logging and send using hardware serial<BR>x = `1..5`<BR>`1` = send appending `\n` (newline) ()<BR>`2` = send<BR>`3` = replace escape characters and send <BR>`4` = send as binary. Data in serial response messages is encoded as binary strings <BR>`5` = send as hex. Data in serial response messages is encoded as hex strings<BR>`6` = send as comma-delimited string of decimal numbers
 SSerialConfig<a class="cmnd" id="sserialconfig"></a>|`value` = set serial protocol using [data/parity/stop](https://en.wikipedia.org/wiki/Serial_port#Settings) conventional notation (example: `8N1` or `702`)<BR>`0..23` = set serial protocol (`3` equals `8N1`)
-SSerialSend&#60;x><a class="cmnd" id="sserialsend"></a>|`<string>`<BR>Send using software serial protocol<BR>x = `1..5`<BR>`1` = send appending `\n` (newline) ()<BR>`2` = send<BR>`3` = replace escape characters and send <BR>`4` = send as binary data. Data in serial response messages is encoded as binary strings<BR>`5` = send as hex. Data in serial response messages is encoded as hex strings<BR>`6` = send as comma-delimited string of decimal numbers
+SSerialSend&#60;x><a class="cmnd" id="sserialsend"></a>|`<string>`<BR>Send using software serial protocol<BR>x = `1..5`<BR>`1` = send appending `\n` (newline) ()<BR>`2` = send<BR>`3` = replace escape characters and send <BR>`4` = send as binary data. Data in serial response messages is encoded as binary strings<BR>`5` = send as hex. Data in serial response messages is encoded as hex strings<BR>`6` = send as comma-delimited string of decimal numbers<BR>`9` = enable Serial Bridge console Tee for debugging purposes (payload `1` to enable)
 
 
 ### RF Bridge
@@ -860,7 +867,7 @@ IfxOrg<a class="cmnd" id="ifxorg"></a>|`<value>` =  set Influxdb V2 and organiza
 IfxSensor<a class="cmnd" id="ifxsensor"></a>|Set Influxdb sensor logging <BR>`0` =  off<BR>`1` =  on
 IfxToken<a class="cmnd" id="ifxtoken"></a>|`<value>` =  set Influxdb V2 and token
 IfxPeriod<a class="cmnd" id="ifxperiod"></a>|`<value>`<BR>= `0` = use `Teleperiod` value as publication interval _(default)_<BR>`10`..`3600` = set a different publication interval<br>_Even when `IfxPeriod 0` is used, publication is not necessarily performed at the same time as the telemetry message._
-IfxRP<a class="cmnd" id="ifxrp"></a>|`<value>` = set Influxdb retention policy _(optional)_ <BR>If blank, default is used as defined by the InfluxDB service. _Retention policy must exist in InfluxDB, otherwise http post will fail._
+IfxRp<a class="cmnd" id="ifxrp"></a>|`<value>` = set Influxdb retention policy _(optional)_ <BR>If blank, default is used as defined by the InfluxDB service. _Retention policy must exist in InfluxDB, otherwise http post will fail._
 
 
 

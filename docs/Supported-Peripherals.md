@@ -39,6 +39,7 @@ Name|Description|Connection
 **[HM-10](HM-10)** |  BLE Bluetooth gateway | serial
 **[HM-17<BR>HM-16](HM-17)** |  Bluetooth iBeacon reader | serial
 **HP303B** | Barometric Pressure Shield| I^2^C
+**HYTxx** | Temperature and Humidity Sensor| I^2^C
 **HR-E** | Water Meter Encoder interface| serial
 **HRG-15** | Hydreon RG-15 Rain Gauge Sensor | serial
 **HRXL** | MaxBotix HRXL line of Sonar Ranging Sensors| gpio
@@ -71,6 +72,7 @@ Name|Description|Connection
 [**MPR121**](MPR121) | Proximity Capacitive Touch Sensor Controller (I^2^C)
 [**MPU6050**](MPU-6050)| 3-Axis Gyroscope and 3-Axis Accelerometer Sensor (I^2^C)
 **MQ** | MQ Sensors (MQ-02, MQ-03, MQ-04, MQ-05, MQ-06, MQ-07, MQ-08, MQ-09, MQ-131, MQ-135) | analog
+**MS01** | Moisture sensor from Sonoff | 1wire
 [**NeoPool**](NeoPool) | Sugar Valley NeoPool Controller| serial
 [**NRF24L01**](NRF24L01) | NRF24L01 as BLE-bridge for Mijia BT Sensors| SPI
 [**OpenTherm**](OpenTherm) | OpenTherm adapter| serial
@@ -93,10 +95,12 @@ Name|Description|Connection
 **Eastron SDM220** | Modbus Energy Meter| serial
 **Eastron SDM230** | Modbus Energy Meter| serial
 **Eastron SDM630** | Modbus Energy Meter| serial
+**YF-DN50** | Flow rate meter | gpio
 [**SDS011<BR>SDS021**](SDS011) | Laser Dust Sensor
 **SGP30** | Gas and Air Quality Sensor| I^2^C
 **SHT1x** | Temperature and Humidity Sensor| I^2^C
 [**SHT30**](SHT30) | Humidity & Temperature Sensor| I^2^C
+**SHT4x** | Temperature and Humidity Sensor| I^2^C
 **SI114x** | UV Index, IR and Visible Light Sensor | I^2^C
 **Si7021** | Humidity and Temperature Sensor| I^2^C
 [**SK6812**](SK6812.md) | Addressable LEDs
