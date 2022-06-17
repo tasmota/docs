@@ -33,7 +33,7 @@ Example of new partition layout since v12:
 - 1x partition of 2880KB to receive Tasmota code
 - a filesystem of 320KB
 
-![Flash_layout_safeboot](https://user-images.githubusercontent.com/49731213/174392522-fa94c936-2d5b-4c12-aa0e-6bdb3c196210.png)
+![Flash_layout_safeboot](https://user-images.githubusercontent.com/49731213/174392522-fa94c936-2d5b-4c12-aa0e-6bdb3c196210.png){ width="270" }
 
 
 An alternate partition scheme is used in Sonoff Zigbee Bridge Pro:
