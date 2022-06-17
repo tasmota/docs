@@ -29,6 +29,7 @@ Incredibly expandable and flexible.
 - ESP32 increase Serial Bridge input buffer from 130 to 520 characters
 - Removed Arduino IDE support
 
+#### New features
 - Support for: Sonoff MS01 soil moisture sensor, Sonoff SPM v1.2.0, Sonoff Zigbee Bridge Pro, Sonoff NSPanel, 5-channel light dimmer driver BP5758D, HYTxxx temperature and humidity sensor, flowrate meters like YF-DN50
 - New commands: [`SetOption139`](Commands.md#setoption139), [`SetOption140`](Commands.md#setoption140), [`SetOption141`](Commands.md#setoption141), [`SetOption142`](Commands.md#setoption142), [`EnergyExportActive<phase>`](Sonoff-SPM.md#energyexportactive), [`IfxRp`](Commands.md#ifxrp), [`SspmDisplay`](Commands.md#sspmdisplay), [`SSerialSend9`](Commands.md#sserialsend)
 
