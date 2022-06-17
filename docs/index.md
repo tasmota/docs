@@ -19,7 +19,7 @@ Incredibly expandable and flexible.
 <b>Install Tasmota using a Chrome based browser at [https://tasmota.github.io/install/](https://tasmota.github.io/install/).</b>    
 
 ### Current release 
-<a href="http://ota.tasmota.com/tasmota/release-12.0.0/"><span style="font-size:40px;">Tasmota 12.0.0 Paul</span></a><br>
+<a href="http://ota.tasmota.com/tasmota/release-12.0.1/"><span style="font-size:40px;">Tasmota 12.0.1 Paul</span></a><br>
 
 #### Breaking Changes :warning: 
 - ***This version removes support for direct migration from versions before v8.1.0 (Doris)*** 
