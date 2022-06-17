@@ -19,23 +19,20 @@ Incredibly expandable and flexible.
 <b>Install Tasmota using a Chrome based browser at [https://tasmota.github.io/install/](https://tasmota.github.io/install/).</b>    
 
 ### Current release 
-<a href="http://ota.tasmota.com/tasmota/release-11.1.0/"><span style="font-size:40px;">Tasmota 11.1.0 Ostara</span></a><br>
+<a href="http://ota.tasmota.com/tasmota/release-12.0.0/"><span style="font-size:40px;">Tasmota 12.0.0 Paul</span></a><br>
 
-- Tasmota Web Installer improved and integrated in the [Flashing](Getting-Started.md#flashing) tutorial
-- Support for improv when using Tasmota Web Installer
-- New peripherals: up to four DS3502 digital potentiometers, ADE7880 3 phase energy monitor as used in Shelly 3EM, PCF85363 RTC as used in Shelly 3EM, __experimental__ Sonoff MS01 moisture sensor
-- New commands: [`SetOption135`](Commands.md#setoption135), [`SetOption136`](Commands.md#setoption136), [`SetOption137`](Commands.md#setoption137), [`SetOption138`](Commands.md#setoption138), [`SspmMap`](Sonoff-SPM.md#sspmmap), [`TcpConnect`](Commands.md#tcpconnect), [`RfTimeout`](Commands.md#rftimeout), [`IfxSensor`](Commands.md#ifxsensor), [`Sensor12`](Commands.md#sensor12), [`Sensor34`](Commands.md#sensor34), [`Wiper`](Commands.md#wiper) and lots of [NeoPool](NeoPool.md) commands
-- Shrunk `tasmota-minimal.bin` by removing all commands except Upgrade, Upload, OtaUrl, Seriallog, Weblog and Restart
-- Sonoff SPM increase maximum number of relays supported to 32 (8 SPM-4Relay modules)
-- Extend number of pulsetimers from 8 to 32
-- ESP32
-    - Support for [OpenHASP](OpenHASP.md)
-    - support for BLE Mi Scale V1
-    - Integrate Homekit in Bluetooth binary
-    - Berry virtual Alexa hue device
-    - Berry bootloop protection
+#### Breaking Changes :warning: 
+- ***This version removes support for direct migration from versions before v8.1.0 (Doris)*** 
+- Restructured tasmota source directories taking benefit from PlatformIO Core v6.0.2
+- Prepare to remove dedicated Home Assistant discovery in favour of Tasmota Discovery and hatasmota
+- ESP32 Tasmota SafeBoot with changed partition scheme allowing larger binaries
+- ESP32 increase Serial Bridge input buffer from 130 to 520 characters
+- Removed Arduino IDE support
 
-See [release notes](https://github.com/arendst/Tasmota/releases/tag/v11.1.0) for a complete list of new features, changes and bug fixes.
+- Support for: Sonoff MS01 soil moisture sensor, Sonoff SPM v1.2.0, Sonoff Zigbee Bridge Pro, Sonoff NSPanel, 5-channel light dimmer driver BP5758D, HYTxxx temperature and humidity sensor, flowrate meters like YF-DN50
+- New commands: [`SetOption139`](Commands.md#setoption139), [`SetOption140`](Commands.md#setoption140), [`SetOption141`](Commands.md#setoption141), [`SetOption142`](Commands.md#setoption142), [`EnergyExportActive<phase>`](Sonoff-SPM.md#energyexportactive), [`IfxRp`](Commands.md#ifxrp), [`SspmDisplay`](Commands.md#sspmdisplay), [`SSerialSend9`](Commands.md#sserialsend)
+
+See [release notes](https://github.com/arendst/Tasmota/releases/tag/v12.0.0) for a complete list of new features, changes and bug fixes.
 
 ### Join our communities and chat
 See [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), [Reddit](https://www.reddit.com/r/tasmota/) or [Google Groups](https://groups.google.com/d/forum/sonoffusers) for general chat, feedback, questions and live troubleshooting.
