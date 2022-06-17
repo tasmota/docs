@@ -147,6 +147,7 @@ nav:
     - RF Communication: RF-Protocol.md
     - Rules.md
     - Scripting: Scripting-Language.md
+    - Safeboot.md
     - Serial-to-TCP-Bridge.md
     - Blinds-and-Shutters.md
     - Range-Extender.md
