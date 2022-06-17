@@ -18,7 +18,7 @@ Example, standard Tasmota layout for 4MB flash:
 - 2x partitions of 1856KB each to receive Tasmota code
 - a filesystem of 320KB
 
-![Flash_layout_original](https://user-images.githubusercontent.com/49731213/174392411-d4c866b2-4631-4f50-8024-017aac013f73.png)
+![Flash_layout_original](https://user-images.githubusercontent.com/49731213/174392411-d4c866b2-4631-4f50-8024-017aac013f73.png){ width="270" }
 
 
 ## Introducing Safeboot
@@ -43,6 +43,6 @@ An alternate partition scheme is used in Sonoff Zigbee Bridge Pro:
 - 1x partition of 1856KB to receive Tasmota code
 - a filesystem of 1344KB
 
-![Flash_layout_safeboot_alt](https://user-images.githubusercontent.com/49731213/174392539-15fc6d39-27a8-4175-9d30-b70987cea970.png)
+![Flash_layout_safeboot_alt](https://user-images.githubusercontent.com/49731213/174392539-15fc6d39-27a8-4175-9d30-b70987cea970.png){ width="270" }
 
 Note: the Safeboot firmware is a reduced version of Tasmota containing only what's required for OTA updates (Web UI, MQTT, TLS...). However it does not save settings nor support initial wifi configuration.
