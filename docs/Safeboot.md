@@ -6,7 +6,7 @@
 
 Safeboot partition layout is a new feature in Tasmota v12 that optimizes the use of Flash memory and allows for bigger filesystems and bigger firmware sizes.
 
-![Flash_layout_original](https://user-images.githubusercontent.com/49731213/174430857-1b4d075d-d677-4a43-8f86-75af07a0ba88.svg){ width="200" } ![Flash_layout_safeboot](https://user-images.githubusercontent.com/49731213/174392522-fa94c936-2d5b-4c12-aa0e-6bdb3c196210.png){ width="200" } ![Flash_layout_safeboot_alt](https://user-images.githubusercontent.com/49731213/174392539-15fc6d39-27a8-4175-9d30-b70987cea970.png){ width="200" }
+![Flash_layout_original](https://user-images.githubusercontent.com/49731213/174431015-a38d5365-54bc-473c-b632-1e84c9ea708c.svg){ width="200" } ![Flash_layout_safeboot](https://user-images.githubusercontent.com/49731213/174392522-fa94c936-2d5b-4c12-aa0e-6bdb3c196210.png){ width="200" } ![Flash_layout_safeboot_alt](https://user-images.githubusercontent.com/49731213/174392539-15fc6d39-27a8-4175-9d30-b70987cea970.png){ width="200" }
 
 
 
