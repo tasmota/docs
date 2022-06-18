@@ -6,7 +6,7 @@
 
 Safeboot partition layout is a new feature in Tasmota v12 that optimizes the use of Flash memory and allows for bigger filesystems and bigger firmware sizes.
 
-![Flash_layout_original](https://user-images.githubusercontent.com/49731213/174431015-a38d5365-54bc-473c-b632-1e84c9ea708c.svg){ width="200" } ![Flash_layout_safeboot](https://user-images.githubusercontent.com/49731213/174392522-fa94c936-2d5b-4c12-aa0e-6bdb3c196210.png){ width="200" } ![Flash_layout_safeboot_alt](https://user-images.githubusercontent.com/49731213/174392539-15fc6d39-27a8-4175-9d30-b70987cea970.png){ width="200" }
+![Flash_layout_original](https://user-images.githubusercontent.com/49731213/174431015-a38d5365-54bc-473c-b632-1e84c9ea708c.svg){ width="200" } ![Flash_layout_safeboot](https://user-images.githubusercontent.com/49731213/174431178-d26062a7-9c33-4d4b-a415-eea974cefb8e.svg){ width="200" } ![Flash_layout_safeboot_alt](https://user-images.githubusercontent.com/49731213/174431192-351b4226-7b84-420a-9f9f-0e27855a53e4.svg){ width="200" }
 
 
 
@@ -23,7 +23,7 @@ Example, standard Tasmota layout for 4MB flash:
 - 2x partitions of 1856KB each to receive Tasmota code
 - a filesystem of 320KB
 
-![Flash_layout_original](https://user-images.githubusercontent.com/49731213/174392411-d4c866b2-4631-4f50-8024-017aac013f73.png){ width="270" }
+![Flash_layout_original](https://user-images.githubusercontent.com/49731213/174431015-a38d5365-54bc-473c-b632-1e84c9ea708c.svg){ width="270" }
 
 
 ## Introducing Safeboot
@@ -38,8 +38,7 @@ Example of new partition layout since v12:
 - 1x partition of 2880KB to receive Tasmota code
 - a filesystem of 320KB
 
-![Flash_layout_safeboot](https://user-images.githubusercontent.com/49731213/174392522-fa94c936-2d5b-4c12-aa0e-6bdb3c196210.png){ width="270" }
-
+![Flash_layout_safeboot](https://user-images.githubusercontent.com/49731213/174431178-d26062a7-9c33-4d4b-a415-eea974cefb8e.svg){ width="270" }
 
 An alternate partition scheme is used in Sonoff Zigbee Bridge Pro:
 
@@ -48,6 +47,6 @@ An alternate partition scheme is used in Sonoff Zigbee Bridge Pro:
 - 1x partition of 1856KB to receive Tasmota code
 - a filesystem of 1344KB
 
-![Flash_layout_safeboot_alt](https://user-images.githubusercontent.com/49731213/174392539-15fc6d39-27a8-4175-9d30-b70987cea970.png){ width="270" }
+![Flash_layout_safeboot_alt](https://user-images.githubusercontent.com/49731213/174431192-351b4226-7b84-420a-9f9f-0e27855a53e4.svg){ width="270" }
 
 Note: the Safeboot firmware is a reduced version of Tasmota containing only what's required for OTA updates (Web UI, MQTT, TLS...). However it does not save settings nor support initial wifi configuration.
