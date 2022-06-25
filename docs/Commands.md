@@ -431,7 +431,7 @@ WakeupDuration<a class="cmnd" id="wakeupduration"></a>|`1..3000` = set wake up d
 White<a class="cmnd" id="white"></a>|`1..100` = set white channel brightness in single white channel lights (single W or RGBW lights)
 WhiteBlend<a class="cmnd" id="whiteblend"></a><BR>SetOption105<a class="cmnd" id="setoption105"></a>|[White Blend Mode](Lights#white-blend-mode)<BR>`0` = disable _(default)_ <BR>`1` = enable
 Width&#60;x><a class="cmnd" id="width"></a>|x = `1..4`<BR>`1` = `0..4` = LED group width *([Scheme](#scheme) `6..12` only)*<BR>`2` = `0..32` = seconds hand width *([Scheme](#scheme) `5` only)*<BR>`3` = `0..32` = minutes hand width *([Scheme](#scheme) `5` only)*<BR>`4` = `0..32` = hour hand width *([Scheme](#scheme) `5` only)*
-See also|[`SetOption15`](#setoption15), [`SetOption16`](#setoption16), [`SetOption17`](#setoption17), [`SetOption20`](#setoption20), [`SetOption37`](#setoption37) and [`SetOption68`](#setoption68)
+See also|[`SetOption15`](#setoption15), [`SetOption16`](#setoption16), [`SetOption17`](#setoption17), [`SetOption20`](#setoption20), [`SetOption37`](#setoption37), [`SetOption68`](#setoption68) and [`SetOption107`](#setoption107)
 
 ### Device Groups
 
