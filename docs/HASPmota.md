@@ -2,9 +2,9 @@
 
 !!! info "This feature is experimental"
 
-Tasmota is happy to support OpenHASP compatible format (named HASPmota), which allows to describe rich graphics interfaces using simple JSON templates. HASPmota support leverages the power of [LVGL](https://tasmota.github.io/docs/LVGL/) and the [Berry language](https://tasmota.github.io/docs/Berry/), but doesn't need to code nor learn the LVGL API.
+Tasmota is happy to support openHASP compatible format (named HASPmota), which allows to describe rich graphics interfaces using simple JSON templates. HASPmota support leverages the power of [LVGL](https://tasmota.github.io/docs/LVGL/) and the [Berry language](https://tasmota.github.io/docs/Berry/), but doesn't need to code nor learn the LVGL API.
 
-This feature is heavily inspired from @franvoie's [OpenHASP project](https://github.com/HASwitchPlate/openHASP).
+This feature is heavily inspired from @fvanroie's [openHASP project](https://github.com/HASwitchPlate/openHASP).
 
 ## Minimal requirements
 
@@ -18,18 +18,18 @@ Currently **PSRAM** is required to run HASPmota. The core engine is compiled and
 
 You can see HASPmota in action in a couple of minutes.
 
-Upload in your ESP32 file system the following files, from: https://github.com/arendst/Tasmota/tree/development/tasmota/berry/openhasp
+Upload in your ESP32 file system the following files, from: https://github.com/arendst/Tasmota/tree/development/tasmota/berry/haspmota
 
-  - `openhasp_widgets.tapp` (contains widgets for wifi, logging and general info)
+  - `haspmota_widgets.tapp` (contains widgets for wifi, logging and general info)
   - `robotocondensed_latin1.tapp` (contains additional fonts)
-  - `openhasp.tapp` (contains the core OpenHASP engine)
+  - `haspmota.tapp` (contains the core HASPmota engine)
   - `pages.jsonl` (contains a sample definition)
 
 Restart and enjoy. You should see the following screen, and click on buttons to switch to the second screen:
 
-![openhasp1](https://user-images.githubusercontent.com/49731213/162054703-376955c1-233b-4a60-aaae-8a316829325e.png)
+![haspmota1](https://user-images.githubusercontent.com/49731213/162054703-376955c1-233b-4a60-aaae-8a316829325e.png)
 
-![openhasp2](https://user-images.githubusercontent.com/49731213/162054725-57ec6a25-f250-4404-b013-7d54b37d497f.png)
+![haspmota2](https://user-images.githubusercontent.com/49731213/162054725-57ec6a25-f250-4404-b013-7d54b37d497f.png)
 
 ### Understanding the template
 
@@ -73,7 +73,7 @@ Page `1` is the default page, and contains different widgets types: labels and a
 {"id":13,"obj":"label","x":172,"y":95,"w":140,"text":"z=","align":0,"text_rule":"MPU9250#AZ","text_rule_format":"z=%6.3f","text_rule_formula":"val / 1000"}
 ```
 
-Page `2` contains custom widgets as Berry code. These widgets are imported within `openhasp_widgets.tapp`
+Page `2` contains custom widgets as Berry code. These widgets are imported within `haspmota_widgets.tapp`
 
 ``` json
 {"page":2,"comment":"---------- Page 2 ----------"}
@@ -121,7 +121,7 @@ Changing pages can be done with `p2.show()`
 
 #### additional parsing
 
-HASPmota parses all lines from the file `pages.jsonl`. You can dynamically add new objects as JSON with `openhasp.parse(<json>)`. This functions takes a single json line. It is highly recommended to specify the page id in the json, otherwise the object is added to the current page.
+HASPmota parses all lines from the file `pages.jsonl`. You can dynamically add new objects as JSON with `haspmota.parse(<json>)`. This functions takes a single json line. It is highly recommended to specify the page id in the json, otherwise the object is added to the current page.
 
 
 ### Pages
