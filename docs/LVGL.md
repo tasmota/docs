@@ -1,6 +1,6 @@
 # Light and Versatile Embedded Graphics Library :material-cpu-32-bit:
 
-!!! info "Tasmota now supports OpenHASP-compatible templates - named HASPmota - which makes it much easier to start with LVGL. Check the [HASPmota](HASPmota.md) documentation." 
+!!! info "Tasmota now supports openHASP-compatible templates - named HASPmota - which makes it much easier to start with LVGL. Check the [HASPmota](HASPmota.md) documentation." 
 
 !!! info "This feature is included in tasmota32-lvgl.bin" 
 
@@ -220,7 +220,7 @@ scr.set_style_bg_grad_dir(lv.GRAD_DIR_VER, lv.PART_MAIN | lv.STATE_DEFAULT)
 
 The display is composed of a virtual screen object `scr`. To change the background you need to change the style of this object. You can either create a full style object or change the style inside the object. This is what we do here. Hence methods: `set_style_<xxx>`
 
-In this example we do a vertical color cradient from dark blue (up) to black (down).
+In this example we do a vertical color gradient from dark blue (up) to black (down).
 
 ### Colors
 
@@ -429,7 +429,7 @@ Example: `LV_SYMBOL_OK` becomes `lv.SYMBOL_OK`
 
 Berry provides an object model to `lv_object` and sub-classes for widhets like `lv_btn`, `lv_label`... To create an object, just instantiate the class: `lv_btn(parent)`
 
-`lv_style` is created independantly.
+`lv_style` is created independently.
 
 `lv_color` takes an 24 bits 0xRRGGB as parameter, or a pre-defined color like `lv.BLUE`
 
@@ -510,7 +510,7 @@ animate_logo()
 
 Some touchscreens like [Lolin TFT 2.4 Touch Shields](https://www.wemos.cc/en/latest/d1_mini_shield/tft_2_4.html) use a resistive touchscreen controlled by `XPT2046`. Contrary to capacitive touchscreens, resistive touchscreens needs a per-device calibration.
 
-You can downlaod **[DisplayCalibrate.tapp](https://raw.githubusercontent.com/arendst/Tasmota/development/tasmota/berry/modules/DisplayCalibrate.tapp)**
+You can download **[DisplayCalibrate.tapp](https://raw.githubusercontent.com/arendst/Tasmota/development/tasmota/berry/modules/DisplayCalibrate.tapp)**
 Tasmota Application which allows for easy calibration. In only a few steps, it will generate the universal display line `:M` with calibration information.
 
 1. First download **[DisplayCalibrate.tapp](https://raw.githubusercontent.com/arendst/Tasmota/development/tasmota/berry/modules/DisplayCalibrate.tapp)** application and upload it in the file system, and restart.
@@ -554,6 +554,6 @@ lv.disp().get_inactive_time()
 
 ## Technical Details
 
-The code size impact is quite significant, so you probably need partitions with code at least set to 1856KB. Doing so leaves 320KB for file system on 4MB flash.
+The code size impact is quite significant, so you probably need partitions with code at least set to 1856KB. Doing so leaves 320KB for file system on 4MB flash. With the [Safeboot partition layout](Safeboot.md), default code partition size for 4MB of flash is 2880KB.
 
-Most of Berry code is solidified in Flash, so the initial RAM footpring is very low (a few KB).
+Most of Berry code is solidified in Flash, so the initial RAM footprint is very low (a few KB).
