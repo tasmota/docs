@@ -776,6 +776,15 @@ ends
 
 ### Elster / Honeywell AS2020 (SML)
 
+To fix the missing sign on current power, add the following to your `user_config_override.h`:
+```
+#ifndef AS2020
+#define AS2020
+#endif
+```
+
+	
+The Tasmota SML script:
 ```
 >D
 >B
@@ -788,7 +797,7 @@ ends
 1,77070100100700ff@0.1,Current Consumption,W,current_consumption,0
 #
 ```
-
+	
 ------------------------------------------------------------------------------
 
 ### COMBO Meter (Water,Gas,SML)
