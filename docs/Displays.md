@@ -105,7 +105,7 @@ align right
 `Cip` = set foreground index color (0..31) for color displays (see index color table below)  
 `Bip` = set background index color (0..31) for color displays (see index color table below)  
 `wp` = draws an analog watch with radius p  (#define USE_AWATCH)   
-`Pfilename:` = display an rgb 16-bit color image when file system is present  
+`Pfilename:` = display an rgb 16-bit color (or jpg on ESP32) image when file system is present, Scripteditor contains a converter to convert jpg to special RGB16 pictures  
 `Ffilename:` = load RAM font file when file system is present. the font is selected with font Nr. 5, these fonts are special binary versions of GFX fonts of any type. they end with .fnt. an initial collection is found in Folder BinFonts  
 `SXfilename:` = load display descriptor for multiple display support (X = 1..3) for up to 3 displays. 
 `SX:` = switch to display number (X = 1..3).  
@@ -164,8 +164,8 @@ You may specify a picture for selected and unselected button state. Picture file
 
 Set the state of a button or slider with:  
 
-* `bs#` where # = is slider number `0..15`
-* `val` = `0` or `1` for buttons, `0..100` for sliders   
+* `b#sX` where # = is slider number `0..15`
+* `X` = `0` or `1` for buttons, `0..100` for sliders   
 
 ### Display JSON variables
 
@@ -611,9 +611,17 @@ SCL, SDA are the pins used (or * for tasmota definition)
 `:TS,CS_PIN`   
 Defines a touch panel an SPI bus with chip select `CS_PIN` (or *)  
 
+`:M,X1,X2,Y1,Y2`
+Defines an optional mapping for touch controllers (always needed on resistive touch) 
+`X1` = display left margin  
+`X2` = display right margin  
+`Y1` = display upper margin  
+`Y1` = display lower margin  
+  
 `:r,X`
 Defines optional display rotation `X` = `0..3`
 
+  
 !!! example "Full configuration for SH1106 (comment lines starting with ; are allowed)"  
 
 ```haskell
