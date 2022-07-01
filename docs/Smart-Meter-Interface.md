@@ -1241,14 +1241,14 @@ Apator APOX+ behaves same as the EasyMeter while pin locked, just precision 0 wi
 1,77070100010800ff@1000,Verbrauch_Summe,kWh,Verbrauch_Summe,7
 1,77070100020800ff@1000,Einspeisung_Summe,kWh,Einspeisung_Summe,7
 1,=h-- 
-1,77070100240700ff@1,Leistung_L1,W,Watt_L1,18
-1,77070100380700ff@1,Leistung_L2,W,Watt_L2,18
-1,770701004c0700ff@1,Leistung_L3,W,Watt_L3,18
-1,77070100100700ff@1,Leistung_Summe,W,Watt_Summe,18
+1,77070100240700ff@1,Leistung_L1,W,Watt_L1,2
+1,77070100380700ff@1,Leistung_L2,W,Watt_L2,2
+1,770701004c0700ff@1,Leistung_L3,W,Watt_L3,2
+1,77070100100700ff@1,Leistung_Summe,W,Watt_Summe,2
 1,=h-- 
-1,77070100200700ff@1,Spannung_L1,V,Volt_L1,17
-1,77070100340700ff@1,Spannung_L2,V,Volt_L2,17
-1,77070100480700ff@1,Spannung_L3,V,Volt_L3,17
+1,77070100200700ff@1,Spannung_L1,V,Volt_L1,1
+1,77070100340700ff@1,Spannung_L2,V,Volt_L2,1
+1,77070100480700ff@1,Spannung_L3,V,Volt_L3,1
 #
 ```
 
