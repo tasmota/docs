@@ -83,13 +83,13 @@ Let's take a look at [](https://github.com/micropython/micropython-esp32-ulp/blo
 1.  Use a copy of `ulp_template.py`  and name it to your liking.
 2.  Replace the `source` string of the template with the version of the example.
     The `.text`section starts with:
-    ````
+    ```
     .text
     magic: .long 0
     state: .long 0
     ```
     this must become:
-    ````
+    ```
     .text
     jump entry
     magic: .long 0
@@ -118,7 +118,7 @@ Now let's modify the code slightly for different intervals for "on" and "off".
     ```
   
 The console output should look something like that:  
-````
+```
 #You can paste the following snippet into Tasmotas Berry console:
 import ULP
 ULP.wake_period(0,500000) # on time
