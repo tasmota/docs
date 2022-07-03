@@ -326,6 +326,7 @@ Look down below for script examples based on the following metering devices:
 - [Digimeto GS303](#digimeto-gs303-sml) (SML)
 - [Hager EHZ363, Apator Norax 3D](#hager-ehz363-apator-norax-3d-sml) (SML)
 - [Hager EHZ161](#hager-ehz161-obis) (OBIS)
+- [Landis + Gyr ZMB120 T213CS](#landis-gyr-zmr120t213cs-obis) (OBIS, )
 - [Landis + Gyr ZMR120AR](#landis-gyr-zmr120ares2r2sfcs-obis) (OBIS, changing the baud rate during operation)
 - [Elster AS1440 / Honeywell AS1440](#elster--honeywell-as1440-obis) (OBIS, changing the baud rate during operation)
 - [Elster AS2020 / Honeywell AS2020](#elster--honeywell-as2020-sml) (SML)
@@ -480,6 +481,30 @@ The Tasmota SML script:
 1,=d 2 10 @1,Current consumption,W,Power_curr,0  
 1,1-0:0.0.0\*255(@#),Meter Nr,, Meter_number,0  
 #  
+```
+
+------------------------------------------------------------------------------
+
+### Landis + Gyr ZMB120 T213CS (OBIS)
+
+This meter may need a PIN to unlock the current power usage - ask your provider. 
+```
+>D
+>B
+=>sensor53 r
+>M 1
++1,3,o,0,300,STROM,1,10,2F3F210D0A,063030300D0A
+1,0(@1,Zählernummer,,Meter_number,0  
+1,=h===================  
+1,8.0(@1,Total T1 & T2,KWh,Total,2  
+1,8.1(@1,T1 aktuell,KWh,Total_T1,2  
+1,8.2(@1,T2 aktuell,KWh,Total_T2,2  
+1,=h===================  
+1,8.1.1(@1,T1 letzte Saison,KWh,Total_T1-1,2   
+1,8.2.1(@1,T2 letzte Saison,KWh,Total_T2-1,2   
+1,8.1.2(@1,T1 vorletzte Saison,KWh,Total_T1-2,2
+1,8.2.2(@1,T2 vorletzte Saison,KWh,Total_T2-2,2     
+#
 ```
 
 ------------------------------------------------------------------------------
