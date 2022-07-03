@@ -1108,6 +1108,35 @@ crc32<a class="cmnd" id="crc_crc32"></a>|`crc.crc32(crc:int, payload:bytes) -> i
 crc16<a class="cmnd" id="crc_crc16"></a>|`crc.crc16(crc:int, payload:bytes) -> int`<br>Compute crc16 from an initial value and a bytes() buffer
 crc8<a class="cmnd" id="crc_crc8"></a>|`crc.crc8(crc:int, payload:bytes) -> int`<br>Compute crc8 from an initial value and a bytes() buffer
 
+### `ULP` module
+
+The `ULP` module exposes the third computing unit of the ESP32, which is a simple finite state machine (FSM) that is designed to perform measurements using the ADC, temperature sensor and even external I2C sensors.
+This small ultra low power coprocessor can run in parallel to the main cores and in deep sleep mode, where it is capable to wake up the system, i.e. in reaction to sensor measurements.
+The binding to Berry consists of some lightweight wrapper functions and the communication with the main cores works by accessing the RTC_SLOW_MEM from both sides, which is the same way as in any other ESP32 ULP project.
+
+``` ruby
+# simple LED blink example
+import ULP
+ULP.wake_period(0,500000) # off time
+ULP.wake_period(1,200000) # on time 
+c = bytes("756c70000c006c00000000001000008000000000000000000000000010008072010000d0e5af2c72340040802705cc190005681d10008072e1af8c720100006821008072040000d0120080720800207004000068010005825c0000800405681d00000092680000800505681d0100009268000080000000b0")
+ULP.load(c)
+ULP.run()
+```
+
+Tasmota Function|Parameters and details
+:---|:---
+run<a class="cmnd" id="ULP_run"></a>|`ULP.run() -> nil`<br>Execute ULP prgramm
+load<a class="cmnd" id="ULP_load"></a>|`ULP.load(code:bytes) -> nil`<br>Load ULP code from a bytes() buffer into memory
+set_mem<a class="cmnd" id="ULP_set_mem"></a>|`ULP.set_mem(addr:int, value:int) -> nil`<br>Set memory position in RTC_SLOW_MEM to value. Address and Value are 32-bit!!
+get_mem<a class="cmnd" id="ULP_get_mem"></a>|`ULP.set_mem(addr:int) -> int16_t`<br>Get value from memory position in RTC_SLOW_MEM. By hardware design only the lower 16-bit are usable, so this function already masks out the upper 16-bit
+gpio_init <a class="cmnd" id="ULP_gpio_init"></a>|`ULP.gpio_init(pin:int, mode:int) -> pin:int`<br>Makes a valid GPIO pin accessible to the ULP and sets the mode according to the enum 'rtc_gpio_mode_t', returns the same pin, but translated to the RTC system, which is the numbering scheme in the assembly code
+adc_config <a class="cmnd" id="ULP_adc_config"></a>|`ULP.adc_config(channel:int, attenuation:int, width:int) -> nil`<br>Configures ADC pin usage for the ULP according to the enums ' adc1_channel_t', 'adc_atten_t' and 'adc_bits_width_t'
+wake_period <a class="cmnd" id="ULP_wake_period"></a>|`ULP.wake_period(register:int, time:int) -> nil`<br>Configures one of 4 (0..4) wake timer registers with the time value in microseconds
+sleep <a class="cmnd" id="ULP_sleep"></a>|`ULP.wake_period([time:int]) -> nil`<br>Starts deep sleep mode and allow wake up by the ULP, with an optional time value in seconds an additional wake up timer gets started
+  
+More infos (including suggestions for a toolchain) will follow on the ULP page.
+  
 ### `re` regex module
 
 Use with `import re`.
