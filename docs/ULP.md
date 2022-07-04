@@ -2,8 +2,9 @@
 
 ## Ultra Low Power coprocessor
   
-The purpose of this document is not to repeat every information of these documents: []https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/ulp.html
-[]https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/ulp_instruction_set.html
+The purpose of this document is not to repeat every information of these documents:  
+https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/ulp.html  
+[]https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/ulp_instruction_set.html  
   
 It will also not make it easy to write assembler code for the ULP and embed it in Berry projects. But it shall guide you through the process of adapting one of many open source examples, do some little changes and setting up a toolchain for personal use cases.  
 It can even make it easier and substantially faster to rapidly develop assembler projects, because there is no flashing involved in the code deployment, which happens in Berry at runtime.  
@@ -60,7 +61,7 @@ upip.install('micropython-esp32-ulp')
   
 After that your are ready to assemble.  
 The ULP code is embedded as a multiline string in Micropython scripts. For use in Tasmota it makes sense to make some changes, that are described in an `ulp_template.py` and to use this template by replacing the surce code string with the new code.  
-The Micropython module can not really include external headers, but it offers a very conveniant database function as described here: []https://github.com/micropython/micropython-esp32-ulp/blob/master/docs/preprocess.rst  
+The Micropython module can not really include external headers, but it offers a very conveniant database function as described here:   https://github.com/micropython/micropython-esp32-ulp/blob/master/docs/preprocess.rst  
 
 After you created or did download your `ulp_app.py` you can export the data with 'micropython ulp_app.py' to the console, from where it can be copy pasted to the Berry console or to your Berry project.  
 It is recommended to embed the setup steps for GPIO pins or ADC to the bottom part of this `ulp_app.py` for easier testing in the Berry console.
@@ -83,7 +84,7 @@ Let's take a look at [](https://github.com/micropython/micropython-esp32-ulp/blo
 1.  Use a copy of `ulp_template.py`  and name it to your liking.
 2.  Replace the `source` string of the template with the version of the example.
     The `.text`section starts with:
-    ```
+    ````
     .text
     magic: .long 0
     state: .long 0
@@ -133,5 +134,69 @@ You can change the wake intervals on-the-fly with i.e. `ULP.wake_period(1, 80000
 
 Now on to something more complex with wake from deep sleep.
   
+### Hall sensor
+  
+We have a working example here: https://github.com/duff2013/ulptool/blob/master/src/ulp_examples/ulp_hall_sensor/hall_sensor.s
+  
+Converting is possible in the same manner as before. Start with  `ulp_template.py`, replace the string with the content of the .S file and make sure you have the include database properly poulated or you add the missing defines from the header files manually.  
+Additionally we need to setup the ADC pins with the help of `ULP.adc_config()`. In this particular example the reslting code is (in the form of print outputs placed in the .py file):
+```
+print("ULP.adc_config(0,2,3)") # adc1_config_channel_atten(ADC1_CHANNEL_0, ADC_ATTEN_DB_6);
+print("ULP.adc_config(3,2,3)") # adc1_config_channel_atten(ADC1_CHANNEL_3, ADC_ATTEN_DB_6); + adc1_config_width(ADC_WIDTH_BIT_12);
+```
+  
+The entry point is already at address zero, so there are no changes needed to assemble, load and start he ULP programm in Tasmota. In the console output we can find the positions of the variables which hold the voltage measurements and can read out it values. 
+  
+In order to use this whole construction to wake the ESP32 with the help of a magnet, we now have to do some measurements to find feasible threshold values. 
+This can be done by calculating the difference between  `Sens_Vpx` and `Sens_Vnx` in Berry. Then place the magnet of your choice near the ESP32 and note how these values change. If the magnet is strong enough, chance are great, that you find a stable threshold. 
+Now let's add some assembly code!  
+  
+We can add some constants in the header part of the code (that worked with a tested weak magnet):
+```
+    .set threshold_pos   , 7
+    .set threshold_neg   , 2
+```
+  
+Now append some variables to the end of the .bss section:  
+```
+  .global Sens_Vn1
+Sens_Vn1:
+  .long 0
+  
+  .global Sens_Diff_p1
+Sens_Diff_p1:
+  .long 0
+```
+  
+The we need some code, which replaces line 135 and 136 of the original example:  
+```
+/* calculate differences */
+    move r3, Sens_Vn1
+    ld r3, r3, 0
+    move r2, Sens_Vn0
+    ld r2, r2, 0
+    sub r3, r3, r2         # eventually change to sub r3, r2, r3 for your setup
+    move r2, Sens_Diff_n1
+    st r3,r2,0
+    move r3, Sens_Vp1
+    ld r3, r3, 0
+    move r2, Sens_Vp0
+    ld r2, r2, 0
+    sub r3, r3, r2          # eventually change to sub r3, r2, r3 for your setup
+    move r2, Sens_Diff_p1
+    st r3,r2,0
+    
+    
+    
+/* wake up */
+    ld r0,r2,0 # Sens_Diff_p1
+    JUMPR wake_up, threshold_pos, GE
+```
+  
+After loading and starting you can send the ESP to deepsleep. For testing it is recommended to add the optional wake timer as a fallback:  
+`ULP.sleep(30)` 
+  
+Try to wake up the system with the magnet. 
+
 
 ... to be continued
