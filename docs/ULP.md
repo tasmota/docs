@@ -7,7 +7,7 @@ The purpose of this document is not to repeat every information of these documen
 [https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/ulp_instruction_set.html](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/ulp_instruction_set.html)  
   
 It will also not make it easy to write assembler code for the ULP and embed it in Berry projects. But it shall guide you through the process of adapting one of many open source examples, do some little changes and setting up a toolchain for personal use cases.  
-!!! tip It can even make it easier and substantially faster to rapidly develop assembler projects, because there is no flashing involved in the code deployment, which happens in Berry at runtime.  
+!!! tip It can even make it easier and substantially faster to rapidly develop assembler projects, because there is no flashing involved in the code deployment, which happens in Berry at runtime.
   
 ### Limits of the ULP
   
@@ -59,7 +59,7 @@ upip.install('micropython-esp32-ulp')
 ```
   
 After that your are ready to assemble.  
-The ULP code is embedded as a multiline string in Micropython scripts. For use in Tasmota it makes sense to make some changes, that are described in an [ulp_template.py]((https://github.com/Staars/berry-examples/blob/main/ulp_helper/ulp_template.py)) and to use this template by replacing the surce code string with the new code.  
+The ULP code is embedded as a multiline string in Micropython scripts. For use in Tasmota it makes sense to make some changes, that are described in an [ulp_template.py](https://github.com/Staars/berry-examples/blob/main/ulp_helper/ulp_template.py) and to use this template by replacing the surce code string with the new code.  
 The Micropython module can not really include external headers, but it offers a very conveniant database function as described here:   [link:preprocess](https://github.com/micropython/micropython-esp32-ulp/blob/master/docs/preprocess.rst)  
 
 After you created or did download your `ulp_app.py` you can export the data with 'micropython ulp_app.py' to the console, from where it can be copy pasted to the Berry console or to your Berry project.  
@@ -81,7 +81,7 @@ This is all about porting and adapting existing code. Thank you to everyone who 
   
 Let's take a look at [https://github.com/micropython/micropython-esp32-ulp/blob/master/examples/blink.py](https://github.com/micropython/micropython-esp32-ulp/blob/master/examples/blink.py).  
   
-1.  Use a copy of `ulp_template.py`  and name it to your liking.
+1.  Use a copy of [ulp_template.py](https://github.com/Staars/berry-examples/blob/main/ulp_helper/ulp_template.py)  and name it to your liking.
 2.  Replace the `source` string of the template with the version of the example.
     The `.text`section starts with:
     ``` asm
