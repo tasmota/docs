@@ -7,7 +7,9 @@ The purpose of this document is not to repeat every information of these documen
 [https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/ulp_instruction_set.html](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/ulp_instruction_set.html)  
   
 It will also not make it easy to write assembler code for the ULP and embed it in Berry projects. But it shall guide you through the process of adapting one of many open source examples, do some little changes and setting up a toolchain for personal use cases.  
-!!! tip It can even make it easier and substantially faster to rapidly develop assembler projects, because there is no flashing involved in the code deployment, which happens in Berry at runtime.
+!!! tip 
+    It can even make it easier and substantially faster to rapidly develop assembler projects, because there is no flashing involved in the code deployment, which happens in Berry at runtime.
+  
   
 ### Limits of the ULP
   
@@ -34,9 +36,9 @@ The assembly code can be divided in different sections of which the so called `.
 But for Tasmota the rule is, that the global entry point or a jump to it is located at position 0 in RTC_SLO_MEM. That way ULP.run() can always point to this addresss 0.  
 It is a design decision to keep the ULP module as small as possible and the addition of more internal functions shall be avoided, i.e. for doing setup of GPIO/RTC pins. If possible, this should be done in assembly code.  
   
-!!! example "rtc_gpio_isolate(12)"
-translates to:  
+!!! example 
 ``` asm
+// rtc_gpio_isolate(12) translates to:
 WRITE_RTC_REG(RTC_IO_TOUCH_PAD5_REG, 27, 1, 0) //disable pullup
 WRITE_RTC_REG(RTC_IO_TOUCH_PAD5_REG, 28, 1, 0) //disable pulldown
 WRITE_RTC_REG(RTC_IO_TOUCH_PAD5_REG, 13, 1, 0) //disable input
@@ -60,10 +62,13 @@ upip.install('micropython-esp32-ulp')
   
 After that your are ready to assemble.  
 The ULP code is embedded as a multiline string in Micropython scripts. For use in Tasmota it makes sense to make some changes, that are described in an [ulp_template.py](https://github.com/Staars/berry-examples/blob/main/ulp_helper/ulp_template.py) and to use this template by replacing the surce code string with the new code.  
-The Micropython module can not really include external headers, but it offers a very conveniant database function as described here:   [link:preprocess](https://github.com/micropython/micropython-esp32-ulp/blob/master/docs/preprocess.rst)  
+!!! tip
+    The Micropython module can not really include external headers, but it offers a very conveniant database function as described here:   [link:preprocess](https://github.com/micropython/micropython-esp32-ulp/blob/master/docs/preprocess.rst)  
+    Otherwise the missing defines must be added amnually.
 
 After you created or did download your `ulp_app.py` you can export the data with 'micropython ulp_app.py' to the console, from where it can be copy pasted to the Berry console or to your Berry project.  
-!!! tip It is recommended to embed the setup steps for GPIO pins or ADC to the bottom part of this `ulp_app.py` by printing Berry coomands for easier testing in the Berry console.
+!!! tip
+    It is recommended to embed the setup steps for GPIO pins or ADC to the bottom part of this `ulp_app.py` by printing Berry commands for easier testing in the Berry console.
   
 
 ###  Export from ESP-IDF project with helper Python script
@@ -161,12 +166,12 @@ We can add some constants in the header part of the code (that worked with a tes
   
 Now append some variables to the end of the .bss section:  
 ``` asm
-  .global Sens_Vn1
-Sens_Vn1:
-  .long 0
-  
   .global Sens_Diff_p1
 Sens_Diff_p1:
+  .long 0
+  
+  .global Sens_Diff_n1
+Sens_Diff_n1:
   .long 0
 ```
   
@@ -177,7 +182,7 @@ The we need some code, which replaces line 135 and 136 of the original example:
     ld r3, r3, 0
     move r2, Sens_Vn0
     ld r2, r2, 0
-    sub r3, r3, r2         # eventually change to sub r3, r2, r3 for your setup
+    sub r3, r2, r3         # eventually change to sub r3, r2, r3 for your setup
     move r2, Sens_Diff_n1
     st r3,r2,0
     move r3, Sens_Vp1
@@ -198,13 +203,57 @@ After loading and starting you can send the ESP to deepsleep. For testing it is 
   
 Try to wake up the system with the magnet.  
 
+But is there a way to circumvent the limitation of this example, that forces us to set the threshold value as a constant? Well ... yes, we can do some hacky stuff.  
+  
+We must dig a little deeper, to understand how the 32-bit instructions are constructed. Let's look at the `jumpr` command, which is defined in ulp.h like that:  
+  
+``` c
+    struct {
+        uint32_t imm : 16;          /*!< Immediate value to compare against */
+        uint32_t cmp : 1;           /*!< Comparison to perform: B_CMP_L or B_CMP_GE */
+        uint32_t offset : 7;        /*!< Absolute value of target PC offset w.r.t. current PC, expressed in words */
+        uint32_t sign : 1;          /*!< Sign of target PC offset: 0: positive, 1: negative */
+        uint32_t sub_opcode : 3;    /*!< Sub opcode (SUB_OPCODE_B) */
+        uint32_t opcode : 4;        /*!< Opcode (OPCODE_BRANCH) */
+    } b;                            /*!< Format of BRANCH instruction (relative address, conditional on R0) */
+```
+  
+The constant (= immediate) value is stored in the upper 16 bits and we can access in the byte buffer. To find the address of the command we can simply add a label in the code:  
+  
+``` asm
+  .global jmp_threshold
+jmp_threshold:
+    JUMPR wake_up, threshold_pos, GE
+```
+  
+This will get printed to the console while assembling. Then in Berry we can do a:  
+  
+``` berry
+    var c = bytes("...")
+    # jmp_threshold is the 32-bit-address in RTC_SLOW_MEM
+    var jmp_threshold = 51
+    var cmd = c.get((3+jmp_threshold)*4, 2) # 3 is header length in long words
+    var threshold = 9 # or whatever
+    c.set(3+jmp_threshold)*4, threshold, 2)
+    ULP.load(c)
+```  
+  
+Now we can change these constant values on the fly.  
+
+ 
+
 ### I2C access
   
 Although there are special assembler commands to access I2C devices the most common method in the examples on GitHub is bitbanging. This is reported to be more reliable and circumvents some limitations (only 2 pin combinations and bytewise access with special I2C commands).  
 Nearly every example is based on some very clever macros and control flow tricks, that replicate a simple stack and subroutines (similiar to a library), which is a good example for the "Art of coding".  
-To make it assemble in Micropython we need some functions in the Micropython-script, that can expand the macros. These functions are in an very early stage of development and might eventually later find their way into the micropython-esp32-ulp project after more refinement.  If your examples do not assemble in Micropython, please try out the ESP-IDF variant.  
+To make it assemble in Micropython we need some functions in the Micropython-script, that can expand the macros. These functions are in a very early stage of development and might eventually later find their way into the micropython-esp32-ulp project after more refinement.  
+!!! tip
+    If your examples do not assemble in Micropython, please try out the ESP-IDF variant.
   
-Example: [BH-1750](https://github.com/Staars/berry-examples/blob/main/ulp_examples/ulp_I2C_BH1750.py)
+An example for the BH-1750 light sensor can be found here:
+[https://github.com/duff2013/ulptool/tree/master/src/ulp_examples/ulp_i2c_bitbang](https://github.com/duff2013/ulptool/tree/master/src/ulp_examples/ulp_i2c_bitbang)
+  
+With our techniques from above the concatenation of the .s files results in:   [BH-1750](https://github.com/Staars/berry-examples/blob/main/ulp_examples/ulp_I2C_BH1750.py)
 
 
 ... to be continued
