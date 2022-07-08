@@ -1132,10 +1132,10 @@ set_mem<a class="cmnd" id="ULP_set_mem"></a>|`ULP.set_mem(addr:int, value:int) -
 get_mem<a class="cmnd" id="ULP_get_mem"></a>|`ULP.set_mem(addr:int) -> int16_t`<br>Get value from memory position in RTC_SLOW_MEM. By hardware design only the lower 16-bit are usable, so this function already masks out the upper 16-bit
 gpio_init <a class="cmnd" id="ULP_gpio_init"></a>|`ULP.gpio_init(pin:int, mode:int) -> pin:int`<br>Makes a valid GPIO pin accessible to the ULP and sets the mode according to the enum 'rtc_gpio_mode_t', returns the same pin, but translated to the RTC system, which is the numbering scheme in the assembly code
 adc_config <a class="cmnd" id="ULP_adc_config"></a>|`ULP.adc_config(channel:int, attenuation:int, width:int) -> nil`<br>Configures ADC pin usage for the ULP according to the enums ' adc1_channel_t', 'adc_atten_t' and 'adc_bits_width_t'
-wake_period <a class="cmnd" id="ULP_wake_period"></a>|`ULP.wake_period(register:int, time:int) -> nil`<br>Configures one of 4 (0..4) wake timer registers with the time value in microseconds
+wake_period <a class="cmnd" id="ULP_wake_period"></a>|`ULP.wake_period(register:int, time:int) -> nil`<br>Configures one of 5 (0..4) wake timer registers with the time value in microseconds
 sleep <a class="cmnd" id="ULP_sleep"></a>|`ULP.wake_period([time:int]) -> nil`<br>Starts deep sleep mode and allow wake up by the ULP, with an optional time value in seconds an additional wake up timer gets started
   
-More infos (including suggestions for a toolchain) will follow on the ULP page.
+More infos (including suggestions for a toolchain) on the [ULP page](ULP.md).
   
 ### `re` regex module
 
