@@ -203,9 +203,9 @@ Or if the same function is used to process similar triggers:
 import string
 
 def rule_adc(value, trigger)
-  i=string.find(trigger,"#A")
-  tr=string.split(trigger,i+2)
-  adc=number(tr[1])
+  var i=string.find(trigger,"#A")
+  var tr=string.split(trigger,i+2)
+  var adc=number(tr[1])
   print("value of adc",adc," is ",value)
 end
 
