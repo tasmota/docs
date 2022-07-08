@@ -1,5 +1,20 @@
 # ULP for ESP32 :material-cpu-32-bit:
+  
+!!! failure "This feature is not part of any official build"
+    
+You must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
+```c++
+#define USE_BERRY_ULP      // (ESP32 only) Add support for the ULP via Berry (+5k flash)
+```
+  
+or add as a build flag to any build environment, i.e. in platformio_tasmota_cenv.ini:  
+```
+build_flags             = ${env:tasmota32_base.build_flags}
+                          -DUSE_BERRY_ULP
+```  
+  
+  
 ## Ultra Low Power coprocessor
   
 The purpose of this document is not to repeat every information of these documents:  
@@ -19,7 +34,7 @@ This was the reason, why for projects like Tasmota it never made sense to includ
   
 ### Advantages of the ULP
 Besides the possibility to run code in deep sleep and wake up the system, it can also make sense to run the ULP in parallel to the main system.  
-To simplyfy again:  
+To simplify again:  
 Everything that is critical to precise timing and is somehow portable to ULP, should run better than on the main cores! This includes the internal temperatur sensor and the hall sensor. Additionally it can free the main cores of some tasks.  
   
 ### Data exchange between main system and ULP
@@ -33,7 +48,7 @@ A typical ULP program is started from the main core at the position of the so ca
 ### Tasmota conventions
   
 The assembly code can be divided in different sections of which the so called `.text`sections contains the programm, but can hold variables or arbitrary data too. In general for the assembler it is not so important, where the functions or the *global entry point* is located.  
-But for Tasmota the rule is, that the global entry point or a jump to it is located at position 0 in RTC_SLO_MEM. That way ULP.run() can always point to this addresss 0.  
+But for Tasmota the rule is, that the global entry point or a jump to it is located at position 0 in RTC_SLOW_MEM. That way `ULP.run()` can always point to this addresss 0.  
 It is a design decision to keep the ULP module as small as possible and the addition of more internal functions shall be avoided, i.e. for doing setup of GPIO/RTC pins. If possible, this should be done in assembly code.  
   
 !!! example 
@@ -73,7 +88,7 @@ After you created or did download your `ulp_app.py` you can export the data with
 
 ###  Export from ESP-IDF project with helper Python script
   
-Many projects are using the ESP-IDF with CMAKE and will be compiled with `idf.py build`. We can extract the ULP code without flashing this project, by starting a helper Python ([binS2Berry.py](https://github.com/Staars/berry-examples/blob/main/ulp_helper/binS2Berry.py) script in the root level of the project, which prints the same information to console as the Micropython way.  
+Many projects are using the ESP-IDF with CMAKE and will be compiled with `idf.py build`. We can extract the ULP code without flashing this project, by starting a helper Python [binS2Berry.py](https://github.com/Staars/berry-examples/blob/main/ulp_helper/binS2Berry.py) script in the root level of the project, which prints the same information to console as the Micropython way.  
 Thus the ULP projects that may fail to assemble in Micropython can be used too. But usually the route via Micropython makes it easier to pack everything nicely together.
   
   
@@ -130,7 +145,7 @@ The console output should look something like that:
     import ULP
     ULP.wake_period(0,500000) # on time
     ULP.wake_period(1,200000) # off time 
-    c = bytes("756c70000c006c...") # cut version for Tasmota docs
+    var c = bytes().fromb64("dWxwAAwAaAAAAAAADAAAgAAAAAAAAAAAEACAcgEAANDlryxyMABAgCcFzBkABWgdEACAcuGvjHIBAABoIQCAcgQAANASAIByCAAgcAQAAGgBAAWCWAAAgAQFaB0AAACSZAAAgAUFaB0BAACSZAAAgAAAALA=")
     ULP.load(c)
     ULP.run()
 ```
@@ -152,7 +167,21 @@ print("ULP.adc_config(0,2,3)") # adc1_config_channel_atten(ADC1_CHANNEL_0, ADC_A
 print("ULP.adc_config(3,2,3)") # adc1_config_channel_atten(ADC1_CHANNEL_3, ADC_ATTEN_DB_6); + adc1_config_width(ADC_WIDTH_BIT_12);
 ```
   
-The entry point is already at address zero, so there are no changes needed to assemble, load and start he ULP programm in Tasmota. In the console output we can find the positions of the variables which hold the voltage measurements and can read out it values. 
+The entry point is already at address zero, so there are no changes needed to assemble, load and start he ULP programm in Tasmota. In the console output we can find the positions of the variables which hold the voltage measurements and can read out it values:
+
+```
+0000 entry
+0051 jmp_threshold
+0052 exit
+0053 wake_up
+0059 Sens_Vp0
+0060 Sens_Vn0
+0061 Sens_Vp1
+0062 Sens_Vn1
+0063 Sens_Diff_p1
+0064 Sens_Diff_n1
+```
+ 
   
 In order to use this whole construction to wake the ESP32 with the help of a magnet, we now have to do some measurements to find feasible threshold values. 
 This can be done by calculating the difference between  `Sens_Vpx` and `Sens_Vnx` in Berry. Then place the magnet of your choice near the ESP32 and note how these values change. If the magnet is strong enough, chances are great, that you find a stable threshold.  
@@ -182,7 +211,7 @@ The we need some code, which replaces line 135 and 136 of the original example:
     ld r3, r3, 0
     move r2, Sens_Vn0
     ld r2, r2, 0
-    sub r3, r2, r3         # eventually change to sub r3, r2, r3 for your setup
+    sub r3, r2, r3         # eventually change to sub r3, r3, r2 for your setup
     move r2, Sens_Diff_n1
     st r3,r2,0
     move r3, Sens_Vp1
@@ -232,15 +261,22 @@ This will get printed to the console while assembling. Then in Berry we can do a
     var c = bytes("...")
     # jmp_threshold is the 32-bit-address in RTC_SLOW_MEM
     var jmp_threshold = 51
-    var cmd = c.get((3+jmp_threshold)*4, 2) # 3 is header length in long words
-    var threshold = 9 # or whatever
-    c.set(3+jmp_threshold)*4, threshold, 2)
-    ULP.load(c)
+    var pos = (3+jmp_threshold)*4
+    var cmd = c[pos..pos+4]       # we do not have uint32 in Berry
+    cmd.set(0,threshold,2)        # upper 16 bit
+    ULP.set_mem(51,cmd.get(0, 4)) # modify running ULP program
 ```  
   
 Now we can change these constant values on the fly.  
-
- 
+  
+#### Example driver in Berry allowing deep sleep with wake up via magnet:
+     
+Add commands:  
+`hall_thres x` - shows current threshold for the p difference value or sets it to x.  
+`usleep x` - start deep sleep for x seconds or infinitely 
+  
+[ulp_hall.be](https://github.com/Staars/berry-examples/blob/main/ulp_hall.be)
+  
 
 ### I2C access
   
@@ -253,7 +289,9 @@ To make it assemble in Micropython we need some functions in the Micropython-scr
 An example for the BH-1750 light sensor can be found here:
 [https://github.com/duff2013/ulptool/tree/master/src/ulp_examples/ulp_i2c_bitbang](https://github.com/duff2013/ulptool/tree/master/src/ulp_examples/ulp_i2c_bitbang)
   
-With our techniques from above the concatenation of the .s files results in:   [BH-1750](https://github.com/Staars/berry-examples/blob/main/ulp_examples/ulp_I2C_BH1750.py)
+With our techniques from above the concatenation of the .s files results in:   [BH-1750](https://github.com/Staars/berry-examples/blob/main/ulp_examples/ulp_I2C_BH1750.py)  
+  
+#### Example Berry driver:  
+  
+[ulp_bh1750.be](https://github.com/Staars/berry-examples/blob/main/ulp_bh1750.be)
 
-
-... to be continued
