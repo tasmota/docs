@@ -361,6 +361,8 @@ Once a callback is registered, it is called separately from Berry drivers to ens
 
 The callback is called without any parameter and does not need to return anything. The callback is called at each iteration of Tasmota event loop. The frequency is tightly linked to the `Speed <x>` command. By default, the sleep period is 50ms, hence fast_loop is called every 50ms. You can reduce the time with `Sleep 10` (10ms) hence calling 100 times per second. If you set `Sleep 0`, the callback is called as frequently as possible (discouraged unless you have a good reason).
 
+`tasmota.remove_fast_loop(cl:function) -> nil` removes a previously registered function or closure. You need to pass the exact same closure reference.
+
 Warning, if you need to register a method from an instance, you need a closure:
 
 ```
