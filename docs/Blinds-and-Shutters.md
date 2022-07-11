@@ -482,7 +482,7 @@ Example:
 - Desired angle of the slats when set to CLOSE : 90°
 - Desired angle of the slats when set to OPEN : 0°
    
- `ShutterTiltConfig1  0  90  20  90  0`
+ `ShutterTiltConfig1  0  90  40  90  0`
 
 Tilt configuration can be set for every shutter independently. The tilt can be set with one of the following commands:
    `shuttertilt1 open` set tilt to defined open angle
