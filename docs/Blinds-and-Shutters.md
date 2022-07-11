@@ -473,9 +473,17 @@ Jarolift shutters operates by the 3 commands up/stop/down. Compile with the KeeL
   `Rule1 On Power1#state=0 DO KeeloqSendButton 4 endon On Power2#state=0 DO KeeloqSendButton 4 endon on Power1#state=1 DO KeeloqSendButton 8 endon on Power2#State=1 DO KeeloqSendButton 2 endon`
 
 ### Venetian Blind Support
-All time based shutters (not stepper, pwm) can be enhanced with Venetian Blind functionality. The configuration need following parameters: angle of blinds during OPEN, angle of blinds during CLOSE. This are the max and the min values of the venetian blinds (e.g. -90° to 90°). Additionally the runtime is required from min to max and reverse. This is typically 1-2sec. The resolution of the time is 0.05sec. Duration in [sec] must be multiplied by 20. e.g. 1.2sec => 1.2 x 20 = 24. Two open and close the tilt you can define the angle for OPEN and the angle for CLOSE of the tilt.
-   `shuttertiltconfig1 -90 90 24 0 -90`
- 
+All time based shutters (not stepper, pwm) can be enhanced with Venetian Blind functionality. The configuration need following parameters: angle of blinds during opening phase, angle of blinds during closing phase. This are the max and the min values of the venetian blinds (e.g. opening at 0° - closing at 90°). Additionally the runtime is required from min to max. This is typically 1-2sec. The resolution of the time is 0.05sec. Duration in [sec] must be multiplied by 20. e.g. 1.2sec => 1.2 x 20 = 24. To open and close the tilt you must define the angle for CLOSE and the angle for OPEN of the tilt (be careful about the correct order, refer to the following example)
+
+Example:
+- Angle of the slats when the blind is opening: 0°
+- Angle of the slats when the blind is closing: 90°
+- Time needed to flip in 1/20 seconds (1 second = 20): 40
+- Desired angle of the slats when set to CLOSE : 90°
+- Desired angle of the slats when set to OPEN : 0°
+   
+ `ShutterTiltConfig1  0  90  20  90  0`
+
 Tilt configuration can be set for every shutter independently. The tilt can be set with one of the following commands:
    `shuttertilt1 open` set tilt to defined open angle
    `shuttertilt1 close` set tilt to defined close angle
