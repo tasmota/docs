@@ -5,35 +5,31 @@
 Zigbee2Tasmota (Z2T) is a lightweight Zigbee gateway/bridge solution running on ESP8266/ESP8285 or ESP32 Wi-Fi chips. Hence it is easier to deploy wherever you want in your home. It was inspired by Zigbee2MQTT but it was written from scratch to make it fit into the resource constraints of a ESP82xx chip with just 80kB of RAM and only 1MB of flash memory.
 
 ## Hardware
-This integration works with any Texas Instruments [CC253x](CC2530.md) and Silicon Labs EFR32 (EFR32MG12/EFRMG21) Zigbee MCU radio modules/chips based devices, like example [Sonoff ZBBridge](https://zigbee.blakadder.com/Sonoff_ZBBridge.html), [ZB-GW03 eWeLink Ethernet Zigbee Gateway](https://templates.blakadder.com/ewelink_ZB-GW03), [Tube's Zigbee Gateways (varient based on Silabs EFR32)](https://github.com/tube0013/tube_gateways), as well as DIY-built Zigbee gateway/bridge devices. There is also preliminary support for Z-Stack 3.x in newer Tasota which which now include all CC26x2 and CC13x2 series devices from Texas Intruments. A complete list of compatible Zigbee coordinators and Zigbee devices compatible with Z2T is in the [Zigbee Device Compatibility Repository](https://zigbee.blakadder.com/zigbee2tasmota.html). 
 
-Z2T was initially designed to work with the older Texas Instruments Z-Stack 1.2 firmware and ZNP protocol for CC253x based devices, however since then support has been added for Silabs EZSP (EmberZNet Serial Protocol) firmware, and Texas Instruments support has been extended to include the newer Z-Stack 3.x firmware and protocol. Once the Zigbee coordinator is started and communicates with Tasmota, the result is the same and there is no feature or functionality difference in their operation as far as the end user is concerned.
+Zigbee2Tasmota (Z2T) supports a wide variety of Zigbee MCUs from Texas Instruments (CC253X, CC26x2, CC13x2) and from Silicon Labs (EFR32MG12/EFRMG21), and runs on ESP8266 or any variant of ESP32. Since ESP8266 has very limited resources, we strongly advise to prefer ESP32 based Zigbee gateways.
 
-Flashing and installation instructions for:
+Flashing and installation instructions for ESP32 based:
 
-- [Sonoff ZBBridge by ITead](https://zigbee.blakadder.com/Sonoff_ZBBridge.html)
+- [Sonoff Zigbee Bridge Pro](https://zigbee.blakadder.com/Sonoff_ZBBridge-P.html)
 - [ZB-GW03 eWeLink Ethernet Zigbee Gateway (also sold as EACHEN Zigbee Smart Hub and SmartWise Zigbee Bridge Pro)](https://templates.blakadder.com/ewelink_ZB-GW03)
 - [Tube's Ethernet Zigbee Gateway (EFR32 varient)](https://templates.blakadder.com/tube_TUBE013_EFR32.html)
-- [CC2530 based devices](CC2530.md)
 - [DIY Zigbee gateway/bridge device example based on Ebyte E180-ZG120B or E180-ZG120B-TB](https://github.com/zigpy/zigpy/discussions/584)
+
+Flashing and installation instructions for ESP8266 based:
+
+- [Sonoff ZBBridge by ITead](https://zigbee.blakadder.com/Sonoff_ZBBridge.html)
+- [CC2530 based devices](CC2530.md)
 - [DIY Zigbee gateway/bridge device example based on IKEA TRÅDFRI ICC-A-1 Module](https://github.com/MattWestb/IKEA-TRADFRI-ICC-A-1-Module/tree/master/Tasmota)
 
-## Introduction
-Before using Zigbee with Tasmota, you need to understand a few concepts. Here is a simplified comparison to the Wi-Fi equivalent (sort of).
+A complete list of compatible Zigbee coordinators and Zigbee devices compatible with Z2T is in the [Zigbee Device Compatibility Repository](https://zigbee.blakadder.com/zigbee2tasmota.html). 
 
-|Zigbee concept|Wi-Fi equivalent|
-|---|---|
-|**Zigbee coordinator**<BR>The coordinator is responsible for selecting the channel, PanID, security policy, and stack profile for a network. Zigbee2Tasmota will act as a coordinator.<BR>You can have multiple coordinators as long as they have different PanIDs.|Wi-Fi Access Point|
-|**PanID**<BR>(Personal Area Network IDentifier)<BR>This parameter is unique in a Zigbee network (16-bit integer, 0x0000–0x3FFF).<BR>*Default: 0x1A63*|SSID (the Wi-Fi network name)|
-|**ShortAddr**<BR>Address of the device on the Zigbee network. This address is randomly assigned when the device first connects to the coordinator (16 bits integer, 0x0000–0xFFF7). The coordinator has address 0x0000.<BR>You need to track which device has which address or assign a "Friendly Name" to each new discovered device.|IP address|
-|**GroupAddr**<BR>Group address of a collection of devices, it allows a single message to address multiple devices at once (16 bits integer, 0x0000–0xFFFF). For example a remote can turn on/off a group of lights. GroupAddr 0x0000 is not assigned.|Multicast|
-|**Endpoint**<BR>The endpoint on the coordinator or on the Zigbee device the message is sent from/to. You can see endpoints as logical device providing distinct features (8 bits integer, 1–240).|IP Port|
-|**IEEEAddr**<BR>Device hardware address (64 bits). This is unique per device and factory assigned.|MAC address|
-|**Channel** 11-26<BR>*Default: 11* (See [Zigbee-Wifi coexistence](https://www.metageek.com/training/resources/zigbee-wifi-coexistence.html))|Wi-Fi Channel|
-|**Encryption Key**<BR>128-bit encryption key.<BR>*default: 0x0D0C0A08060402000F0D0B0907050301*|Wi-Fi password|
-|**Pairing**<BR>By default the coordinator does not accept new devices unless put in pairing mode. When in pairing mode, it will accept pairing requests from any device within range.<BR>*Default: pairing disabled*|WPS|
-|**Cluster**<BR>Clusters are a group of commands and attributes that define what a device can do. Think of clusters as a group of actions by function. A device can support multiple clusters to do a whole variety of tasks. The majority of clusters are defined by the ZigBee Alliance and listed in the [ZigBee Cluster Library](https://zigbeealliance.org/wp-content/uploads/2019/12/07-5123-06-zigbee-cluster-library-specification.pdf)| |
+### Advanced: ZNP or EZSP
 
+Z2T supports MCU running either the ZNP or EZSP zigbee stack. They require different compilation options but from a user point of view the features are very similar.
+
+Z-Stack or ZNP (Zigbee Network Processor) is an open-source Zigbee stack from Texas Instruments and run TI MCUs. Ready to use firmwares are found on [Koenkk's Github](https://github.com/Koenkk/Z-Stack-firmware). Older CC2530 require special wiring or external devices for flashing, while more recent like Sonoff Zigbee Bridge Pro (CC2652P) can be flashed directly from Tasmota. Z2T supports ZNP **version 2.6** (Z-Stack 1.3) and **version 2.7** (Z-Stack 3.x).
+
+EZSP (EmberZNet Serial Protocol) is a commercial Zigbee stack from [Silicon Labs](https://www.silabs.com/). Sonoff/Eachen require encrypted signed firmwares, they can be found in [here](https://github.com/arendst/Tasmota/tree/development/tools). Z2T supports EZSP versions 6.7.6 or above (EZSP protocol v8), recommended is v6.7.9.
 
 ## Usage
 
