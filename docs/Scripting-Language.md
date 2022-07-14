@@ -616,6 +616,8 @@ SEL:
 `sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
 `smls[m]` = get value of SML meter string info of meter m (if defined USE_SML_SCRIPT_CMD)  
 `smlv[n]` = get SML decode valid status of line n (1..N), returns 1 if line decoded. n=0 resets all status codes to zero (if defined USE_SML_SCRIPT_CMD)  
+`smld(m)` = call decoder of meter m  
+`smlj` = read or write variable, when 0 disables MQTT output of SML.  
 `enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
 `gjp("host" "path")` = trigger HTTPS JSON page read as used by Tesla Powerwall (if defined SCRIPT_GET_HTTPS_JP)  
 `gwr("del" index)` = gets non JSON element from webresponse del = delimiter char or string, index = n´th element (if defined USE_WEBSEND_RESPONSE)  
