@@ -601,6 +601,7 @@ SEL:
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
 
 `wcs` = send this line to webpage (WebContentSend)  
+`wcf` = flushes the webbuffer (WSContentFlush)  
 `wfs` = send this file to webpage  
 `rapp` = append this line to MQTT (ResponseAppend)  
 `wm` = contains source of web request code e.g. 0 = Sensor display (FUNC_WEB_SENSOR)  
