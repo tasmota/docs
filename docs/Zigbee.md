@@ -89,6 +89,12 @@ Below are the details for GPIO configuration needed by Zigbee:
 |`LedLink` or `LedLink_i`|(optional) when defined, this led keeps its normal Wifi/MQTT status indicator (blinking) and adds a glowing light when Permit Join is active (i.e. new devices are allowed to pair).|
 |`Led 1` or `Led_i 1`|(optional) when defined, is used as an indicator of traffic between Tasmota and MCU, which generally means Zigbee traffic is sent or received|
 
+### Advanced topic: Hardware or Software serial
+
+On **ESP32** serial is always handled by hardware so you don't need to bother.
+
+On **ESP8266** using the hardware serial is preferred. To do so, you need to use GPIOs 13/15 for Zigbee Rx/Tx and set `SerialLog 0`. Doing such, Z2T 'steals' the hardware UART from the serial console and uses it for communicating with the MCU. Otherwise Z2T uses Software Serial which requires compiling at 160MHz and might be unreliable on very rare occasions.
+
 ## Usage
 
 For a list of available commands see [Zigbee Commands](Commands.md#zigbee).  
