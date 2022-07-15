@@ -25,7 +25,7 @@ Flashing and installation instructions for **ESP8266** based:
 
 A complete list of compatible Zigbee coordinators and Zigbee devices compatible with Z2T is in the [Zigbee Device Compatibility Repository](https://zigbee.blakadder.com/zigbee2tasmota.html). 
 
-### Advanced: ZNP or EZSP
+### Advanced topic: ZNP or EZSP
 
 Z2T supports MCU running either the ZNP or EZSP zigbee stack. They require different compilation options but from a user point of view the features are very similar.
 
