@@ -51,6 +51,12 @@ Before using Zigbee with Tasmota, you need to understand a few concepts. Here is
 
 ## Configuration
 
+### Initial start
+
+*TODO: logs and WebUI for initial start*
+
+### Customize Zigbee configuration
+
 At initial start, Tasmota generates pseudo-random Zigbee parameters. They should  work out of the box but you also may want to choose different values:
 
 You the command `ZbConfig` to dump the current configuration. For example it might return `{"ZbConfig":{"Channel":11,"PanID":"0x1A63","ExtPanID":"0xCCCCCCCCCCCCCCCC","KeyL":"0x0F0D0B0907050301","KeyH":"0x0D0C0A0806040200"}}`
@@ -69,6 +75,19 @@ To apply a new configuration, populate the fields you want to change in a single
 |KeyL KeyH|This is the 128 bit network encryption key split into High and Low 64 bit parts. Do not reveal this key or anyone can decrypt your Zigbee traffic|
 |TxRadio|On some devices you can set the radio power in dBm. You generally don't need to change it|
 
+### Advanced topic: GPIOs
+
+You will usually find a ready to use template in the [Zigbee Device Compatibility Repository](https://zigbee.blakadder.com/zigbee2tasmota.html)
+
+Below are the details for GPIO configuration needed by Zigbee:
+
+|GPIO|Description|
+|---|---|
+|`Zigbee Tx` and `Zigbee Rx`|GPIOs used for serial communication between Tasmota and the MCU (needed for both ZNP and EZSP). Communication is always 115200 bps 8N1.|
+|`Zigbee Rst 1`|(optional) defines the hardware Reset for the Zigbee MCU. If not defined, Z2T will fallback to sending a soft-reset the MCU using a special serial sequence (which may fail on rare occasions).|
+|`Zigbee Rst 2`|(optional) defines a special pin used to put the MCU in bootloader and flashing mode when the hardware reset is pulled down. This is used both by EFR32 and CC2652P based devices. It allows to flash the MCU directly from Tasmota.|
+|`LedLink` or `LedLink_i`|(optional) when defined, this led keeps its normal Wifi/MQTT status indicator (blinking) and adds a glowing light when Permit Join is active (i.e. new devices are allowed to pair).|
+|`Led 1` or `Led_i 1`|(optional) when defined, is used as an indicator of traffic between Tasmota and MCU, which generally means Zigbee traffic is sent or received|
 
 ## Usage
 
