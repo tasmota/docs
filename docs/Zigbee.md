@@ -47,6 +47,27 @@ Before using Zigbee with Tasmota, you need to understand a few concepts. Here is
 |**Pairing**<BR>By default the coordinator does not accept new devices unless put in pairing mode. When in pairing mode, it will accept pairing requests from any device within range.<BR>*Default: pairing disabled*|WPS|
 |**Cluster**<BR>Clusters are a group of commands and attributes that define what a device can do. Think of clusters as a group of actions by function. A device can support multiple clusters to do a whole variety of tasks. The majority of clusters are defined by the ZigBee Alliance and listed in the [ZigBee Cluster Library](https://zigbeealliance.org/wp-content/uploads/2019/12/07-5123-06-zigbee-cluster-library-specification.pdf)| |
 
+## Configuration
+
+At initial start, Tasmota generates pseudo-random Zigbee parameters. They should  work out of the box but you also may want to choose different values:
+
+You the command `ZbConfig` to dump the current configuration. For example it might return `{"ZbConfig":{"Channel":11,"PanID":"0x1A63","ExtPanID":"0xCCCCCCCCCCCCCCCC","KeyL":"0x0F0D0B0907050301","KeyH":"0x0D0C0A0806040200"}}`
+
+To apply a new configuration, populate the fields you want to change in a single-level JSON:
+
+`ZbConfig {"Channel":11,"PanID":"0x1A63","ExtPanID":"0xCCCCCCCCCCCCCCCC","KeyL":"0x0F0D0B0907050301","KeyH":"0x0D0C0A0806040200"}`
+
+!!! info "Changing any parameter with `ZbConfig` requires to re-pair all devices.
+
+|Parameter|Description|
+|---|---|
+|Channel|`11-26` Zigbee radio channel, see above|
+|PanID|`0x0001-0x3FFF` unique Zigbee network identifier. You should not have too coordinator using the same PanID, or bad things happen.<BR>If your coordinator fails to start, try changing the PanID as it may conflict with one already in use.|
+|ExtPanID|This is a 64 bit unique identifier for the network. It is not much used in Z2T but needs to be unique.|
+|KeyL KeyH|This is the 128 bit network encryption key split into High and Low 64 bit parts. Do not reveal this key or anyone can decrypt your Zigbee traffic|
+|TxRadio|On some devices you can set the radio power in dBm. You generally don't need to change it|
+
+
 ## Usage
 
 For a list of available commands see [Zigbee Commands](Commands.md#zigbee).  
