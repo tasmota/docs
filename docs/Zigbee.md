@@ -100,9 +100,10 @@ On **ESP8266** using the hardware serial is preferred. To do so, you need to use
 For a list of available commands see [Zigbee Commands](Commands.md#zigbee).  
 
 ## Pairing Devices
-When you create a new Zigbee network, it contains no devices except the coordinator. The first step is to add devices to the network, which is called **pairing**.
 
-By default, and for security reasons, the Zigbee coordinator does not automatically accept new devices. To pair new devices, use [`ZbPermitJoin 1`](Commands.md#zbpermitjoin). Once Zigbee2Tasmota is in pairing mode, put the Zigbee device into pairing mode. This is usually accomplished by pressing the button on the device for 5 seconds or more. To stop pairing, use [`ZbPermitJoin 0`](Commands.md#zbpermitjoin).
+When you create a new Zigbee network, it contains no devices except the coordinator (your Zigbee gateway). The first step is to add devices to the network, which is called **pairing**.
+
+By default, and for security reasons, the Zigbee coordinator does not automatically accept new devices. To pair new devices, use [`ZbPermitJoin 1`](Commands.md#zbpermitjoin) or press **Permit Join** in the WebUI and allows accepting new devices for the next 60 seconds. Then put your Zigbee device pairing mode. This is usually accomplished by pressing the button on the device for 5 seconds or more.
 
 `ZbPermitJoin 1`
 ```json
@@ -117,17 +118,9 @@ MQT: tele/%topic%/RESULT = {"ZbState":{"Status":21,"Message":"Enable Pairing mod
 MQT: tele/%topic%/RESULT = {"ZbState":{"Status":20,"Message":"Disable Pairing mode"}}
 ```
 
-`ZbPermitJoin 0`
-
-```json
-MQT: tele/%topic%/RESULT = {"ZbState":{"Status":20,"Message":"Disable Pairing mode"}}
-```
-
-!!! info
-     Although this is highly discouraged, you can permanently enable Zigbee pairing, until the next reboot, with `ZbPermitJoin 99`.
-
 After the device has successfully paired it will be shown in the webui with its short address and its link quality number (LQI). When it is a battery powered device, the battery percentage will be displayed as soon as it is received from the device.
 
+*TODO: update screenshot*
 ![Zigbee in webUI](_media/zigbeeinwebui.jpg)
 
 Devices will show friendly name once you set it.
