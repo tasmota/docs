@@ -2530,26 +2530,21 @@ start dim level = initial dimmer level after power-up or restart; max 100
     next
     endif
     
+    #rsub
+    rap ,"CD4067":{
+    for cnt 1 16 1
+    rap "%is1[cnt]%":%mux[cnt]%
+    if cnt<16
+    then
+    rap ,
+    endif
+    next
+    rap }
+
     >J
     ; send to mqtt
-    ,"CD4067":{
-    "%is1[1]%":%mux[1]%,
-    "%is1[2]%":%mux[2]%,
-    "%is1[3]%":%mux[3]%,
-    "%is1[4]%":%mux[4]%,
-    "%is1[5]%":%mux[5]%,
-    "%is1[6]%":%mux[6]%,
-    "%is1[7]%":%mux[7]%,
-    "%is1[8]%":%mux[8]%,
-    "%is1[9]%":%mux[9]%,
-    "%is1[10]%":%mux[10]%,
-    "%is1[11]%":%mux[11]%,
-    "%is1[12]%":%mux[12]%,
-    "%is1[13]%":%mux[13]%,
-    "%is1[14]%":%mux[14]%,
-    "%is1[15]%":%mux[15]%,
-    "%is1[16]%":%mux[16]%
-    }
+    ; call json subroutine
+    %=#rsub
     
     >W
     ; call web subroutine
