@@ -2554,6 +2554,8 @@ start dim level = initial dimmer level after power-up or restart; max 100
     >W
     ; call web subroutine
     %=#wsub
+      
+### Image gallery of various Tasmota scripts  
 
 ### Internet radio  
 
@@ -2562,4 +2564,37 @@ start dim level = initial dimmer level after power-up or restart; max 100
 ### Webcam with multiple options  
       
 <img width="441" alt="Bildschirmfoto 2022-07-16 um 08 22 11" src="https://user-images.githubusercontent.com/11647075/179342907-7276d06b-a75e-40cd-8f29-dc45a705ee8d.png">
+      
+### Energy collector  
+      
+<img width="327" alt="energy" src="https://user-images.githubusercontent.com/11647075/179344137-8c2ea36d-d5a7-48a5-a978-8b648f7feadd.png">
+     
+### Energy display main menu  
+      
+<img width="249" alt="core2" src="https://user-images.githubusercontent.com/11647075/179344159-e13c8471-fce3-4c5d-9c16-d33c5123c1d4.png">
+      
+### Energy display one day of database  
+      
+<img width="514" alt="oneday" src="https://user-images.githubusercontent.com/11647075/179344195-17d7e1eb-b92e-454d-86f8-bfba83a91625.png">
+      
+### Energy display last week of database  
+      
+<img width="700" alt="week" src="https://user-images.githubusercontent.com/11647075/179344202-5a2611ee-cf94-41bd-8180-f9942d55f063.png">
+      
+### Energy display last weeks of database  
+      
+<img width="684" alt="lastweeks" src="https://user-images.githubusercontent.com/11647075/179344214-c6f0f2af-c230-4571-9955-94370659501a.png">  
+      
+### environment sensor
+      
+<img width="640" alt="sensors" src="https://user-images.githubusercontent.com/11647075/179344242-2b2f43b0-a266-4583-9930-7086b971fad8.png">  
+      
+### timer main menu  
+      
+<img width="398" alt="timer1" src="https://user-images.githubusercontent.com/11647075/179344268-165ef57f-721d-48c6-a8aa-9c33ee030da9.png">
+      
+### timer setup  
+      
+<img width="472" alt="timer2" src="https://user-images.githubusercontent.com/11647075/179344270-88050666-0d07-4cb3-a905-6c4ae8409541.png">
+      
       
