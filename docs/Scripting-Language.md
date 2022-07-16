@@ -869,7 +869,8 @@ To use any of these values, pass an `*` as its corresponding argument placeholde
 Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `m` _(note lower case)_ section. The specified text in this script section must end with an `#` character. `sendmail` will use the `m` section if `*` is passed as the `msg` parameter. in this >m section you may also specify email attachments.  
 @/filename specifies a file to be attached (if file system is present)  
 &arrayname specifies an array attachment (as tab delimeted text, no file system needed)  
-
+$N attach a webcam picture from rambuffer number N (usually 1)  
+  
 See [Scripting Cookbook Example].(#send-e-mail)  
  
 **Subscribe, Unsubscribe**  
@@ -2554,3 +2555,11 @@ start dim level = initial dimmer level after power-up or restart; max 100
     ; call web subroutine
     %=#wsub
 
+### Internet radio  
+
+<img width="458" alt="webradio_screenshot" src="https://user-images.githubusercontent.com/11647075/179342912-90b03843-f081-46ef-87ee-899139834c42.png">
+
+### Webcam with multiple options  
+      
+<img width="441" alt="Bildschirmfoto 2022-07-16 um 08 22 11" src="https://user-images.githubusercontent.com/11647075/179342907-7276d06b-a75e-40cd-8f29-dc45a705ee8d.png">
+      
