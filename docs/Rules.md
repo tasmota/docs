@@ -129,6 +129,8 @@ Every [command](Commands.md) with a JSON payload response has an associated rule
 |&lt;command\>#Data|A one level JSON payload such as `{"Command":"value"}`. For example, for {"Fanspeed":3}, the trigger is`Fanspeed#Data`.|
 |&lt;command\>#level1#level2#levelN|A multi-level JSON payload such as `{"TriggerLevel1":{"TriggerLevel2":{"ValueName":"value"}}}` does **NOT** have the `#Data` trigger. Instead, the trigger for these responses is `TriggerLevel1#TriggerLevel2#ValueName`. 
 
+!!! note "When the JSON payload response is produced by a command executed by a rule i.e. `on time=120 do status 8 endon`, the `StatusSNS#Data` trigger will not fire unless the command is wrapped in `backlog` i.e. `on time=120 do backlog status 8 endon`"    
+    
 !!! example
     For `{"PulseTime2":{"Set":0,"Remaining":0}}`, the triggers are `PulseTime2#Set` and `PulseTime2#Remaining`.|
 
@@ -1802,7 +1804,8 @@ Rule1
   ON WebQuery#Data$!Done DO backlog Mult1 3; Power1 0; Delay 10; Power1 1 ENDON
   ON WebQuery#Data=Done DO Var1 3 ENDON
 ```
-
+!!! note "Triggering off the JSON response to webquery (and other commands) may require wrapping the command in backlog, as per example above"
+    
 -------------------------------------------------------------------------------
 ### Simple Thermostat Example
 
