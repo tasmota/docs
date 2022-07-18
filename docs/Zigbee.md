@@ -231,14 +231,134 @@ If retained values are prefered use publish2 instead of publish.
 ## Quick start
 
 In this section, we'll give a quick overview of 2 devices:
-	
-- [Sonoff SNZB-02 Temperature And Humidity Sensor](https://zigbee.blakadder.com/Sonoff_SNZB-02.html)
 
-![SNZB-02](https://zigbee.blakadder.com/assets/images/devices/Sonoff_SNZB-02.jpg){ width="150" }
+- [Sonoff SNZB-02 Temperature And Humidity Sensor](https://zigbee.blakadder.com/Sonoff_SNZB-02.html)
 
 - [BlitzWolf SHP15 Power Monitoring Plug](https://zigbee.blakadder.com/BlitzWolf_BW-SHP15.html)
 
+
+### Sonoff SNZB-02 Sensor
+
+![SNZB-02](https://zigbee.blakadder.com/assets/images/devices/Sonoff_SNZB-02.jpg){ width="150" }
+
+Put Z2T in **pairing mode** (command `zbpermitjoin 1` or via WebUI) and keep the button of the sensor for 5 seconds. Wait a for 20 seconds, you should see something similar in the logs:
+
+``` json
+17:07:53.015 RSL: RESULT = {"ZbState":{"Status":34,"IEEEAddr":"0x00124B001F841E41","ShortAddr":"0x2916","ParentNetwork":"0x0000"}}
+17:07:53.465 RSL: RESULT = {"ZbState":{"Status":30,"IEEEAddr":"0x00124B001F841E41","ShortAddr":"0x2916","PowerSource":false,"ReceiveWhenIdle":false,"Security":false}}
+17:07:54.565 RSL: RESULT = {"ZbState":{"Status":32,"ActiveEndpoints":["0x01"]}}
+17:07:55.037 ZIG: Zigbee Devices Data saved in File System (18 bytes)
+17:07:55.168 RSL: SENSOR = {"ZbReceived":{"0x2916":{"Device":"0x2916","ModelId":"TH01","Manufacturer":"eWeLink","Endpoint":1,"LinkQuality":120}}}
+17:07:56.667 RSL: RESULT = {"ZbState":{"Status":33,"Device":"0x2916","Endpoint":"0x01","ProfileId":"0x0104","DeviceId":"0x0302","DeviceVersion":0,"InClusters":["0x0000","0x0003","0x0402","0x0405","0x0001"],"OutClusters":["0x0003"]}}
+17:07:57.241 ZIG: Zigbee Devices Data saved in File System (29 bytes)
+17:07:58.667 ZIG: auto-bind `ZbBind {"Device":"0x2916","Endpoint":1,"Cluster":"0x0001"}`
+17:07:59.217 RSL: RESULT = {"ZbBind":{"Device":"0x2916","Status":0,"StatusMessage":"SUCCESS"}}
+17:08:00.717 ZIG: auto-bind `ZbBind {"Device":"0x2916","Endpoint":1,"Cluster":"0x0402"}`
+17:08:01.018 RSL: RESULT = {"ZbBind":{"Device":"0x2916","Status":0,"StatusMessage":"SUCCESS"}}
+17:08:02.669 ZIG: auto-bind `ZbBind {"Device":"0x2916","Endpoint":1,"Cluster":"0x0405"}`
+17:08:03.618 RSL: RESULT = {"ZbBind":{"Device":"0x2916","Status":0,"StatusMessage":"SUCCESS"}}
+17:08:04.670 ZIG: auto-bind `ZbSend {"Device":"0x2916","Config":{"BatteryVoltage":{"MinInterval":3600,"MaxInterval":14400,"ReportableChange":0.2},"BatteryPercentage":{"MinInterval":3600,"MaxInterval":14400,"ReportableChange":5}}}`
+17:08:05.271 RSL: SENSOR = {"ZbReceived":{"0x2916":{"Device":"0x2916","ConfigResponse":{},"Endpoint":1,"LinkQuality":123}}}
+17:08:06.670 ZIG: auto-bind `ZbSend {"Device":"0x2916","Config":{"Temperature":{"MinInterval":30,"MaxInterval":3600,"ReportableChange":0.5}}}`
+17:08:06.871 RSL: SENSOR = {"ZbReceived":{"0x2916":{"Device":"0x2916","ConfigResponse":{},"Endpoint":1,"LinkQuality":120}}}
+17:08:08.670 ZIG: auto-bind `ZbSend {"Device":"0x2916","Config":{"Humidity":{"MinInterval":30,"MaxInterval":3600,"ReportableChange":1}}}`
+17:08:09.421 RSL: SENSOR = {"ZbReceived":{"0x2916":{"Device":"0x2916","ConfigResponse":{},"Endpoint":1,"LinkQuality":120}}}
+17:08:14.221 RSL: SENSOR = {"ZbReceived":{"0x2916":{"Device":"0x2916","Temperature":25.72,"Humidity":47.73,"Endpoint":1,"LinkQuality":116}}}
+```
+
+These logs are quite rich and we'll dive into the details later. Basically it says that the device paired succesfully and is configured.
+
+Next step is **setting a friendly name** with `zbname 0x2916,SNZB-02`
+
+``` json
+17:09:27.294 CMD: zbname 0x2916,SNZB-02
+17:09:27.297 RSL: RESULT = {"0x2916":{"Name":"SNZB-02"}}
+17:09:29.375 ZIG: Zigbee Devices Data saved in File System (37 bytes)
+```
+
+The device will regularly report readings like this:
+
+``` json
+17:09:44.351 RSL: SENSOR = {"ZbReceived":{"0x2916":{"Device":"0x2916","Name":"SNZB-02","Temperature":26.27,"Endpoint":1,"LinkQuality":105}}}
+```
+
+Information is also displayed in the WebUI.
+
+When you hover the arrow on the name, you get additional information like short-address and manufacturer.
+
+
+When you hover over the battery icon, you get a more precise reading.
+
+### BlitzWolf SHP15 Plug
+
 ![SNZB-02](https://zigbee.blakadder.com/assets/images/devices/BlitzWolf_BW-SHP15.jpg){ width="150" }
+
+Put Z2T in **pairing mode** (command `zbpermitjoin 1` or via WebUI) and keep the button of the sensor for 5 seconds. Wait a for 20 seconds, you should see something similar in the logs:
+
+``` json
+16:17:40.804 RSL: RESULT = {"ZbState":{"Status":34,"IEEEAddr":"0x842E14FFFE13A51E","ShortAddr":"0x7120","ParentNetwork":"0x0000"}}
+16:17:40.854 RSL: RESULT = {"ZbState":{"Status":30,"IEEEAddr":"0x842E14FFFE13A51E","ShortAddr":"0x7120","PowerSource":true,"ReceiveWhenIdle":true,"Security":false}}
+16:17:41.003 RSL: RESULT = {"ZbState":{"Status":32,"ActiveEndpoints":["0x01"]}}
+16:17:41.408 RSL: SENSOR = {"ZbReceived":{"0x7120":{"Device":"0x7120","ModelId":"TS0121","Manufacturer":"_TZ3000_g5xawfcq","Endpoint":1,"LinkQuality":229}}}
+16:17:42.655 RSL: RESULT = {"ZbState":{"Status":33,"Device":"0x7120","Endpoint":"0x01","ProfileId":"0x0104","DeviceId":"0x0051","DeviceVersion":1,"InClusters":["0x0000","0x0004","0x0005","0x0006","0x0702","0x0B04"],"OutClusters":["0x0019","0x000A"]}}
+16:17:43.442 ZIG: Zigbee Devices Data saved in File System (40 bytes)
+16:17:44.516 RSL: SENSOR = {"ZbReceived":{"0x7120":{"Device":"0x7120","Power":1,"0006/4001":0,"0006/4002":0,"0006/8001":1,"0006/8002":2,"Endpoint":1,"LinkQuality":229}}}
+16:17:44.664 ZIG: auto-bind `ZbBind {"Device":"0x7120","Endpoint":1,"Cluster":"0x0006"}`
+16:17:44.863 RSL: RESULT = {"ZbBind":{"Device":"0x7120","Status":0,"StatusMessage":"SUCCESS"}}
+16:17:46.466 RSL: SENSOR = {"ZbReceived":{"0x7120":{"Device":"0x7120","EnergyTotal":"0x000000000000","Endpoint":1,"LinkQuality":229}}}
+16:17:46.664 ZIG: auto-bind `ZbSend {"Device":"0x7120","Config":{"Power":{"MinInterval":1,"MaxInterval":3600}}}`
+16:17:46.916 RSL: SENSOR = {"ZbReceived":{"0x7120":{"Device":"0x7120","ConfigResponse":{},"Endpoint":1,"LinkQuality":229}}}
+16:17:47.815 ZIG: Auto-responder: ZbSend {"Device":"0x7120","Cluster":"0x000A","Endpoint":1,"Response":"000A/0007":711476267}
+16:17:47.819 RSL: SENSOR = {"ZbReceived":{"0x7120":{"Device":"0x7120","Cluster":10,"Read":[7],"ReadNames":{"LocalTime":true},"Endpoint":1,"LinkQuality":229}}}
+```
+
+Again lots of lines we'll not explore for now.
+
+You can **turn on** the plug:
+
+`zbsend {"device":"SHP15","send":{"power":true}}`
+
+``` json
+16:24:24.208 RSL: RESULT = {"ZbSend":"Done"}
+16:24:25.005 RSL: SENSOR = {"ZbReceived":{"0x7120":{"Device":"0x7120","Name":"SHP15","Power":1,"Endpoint":1,"LinkQuality":229}}}
+```
+
+You can **turn off** the plug:
+
+`zbsend {"device":"SHP15","send":{"power":0}}`
+
+``` json
+16:24:01.456 RSL: RESULT = {"ZbSend":"Done"}
+16:24:02.252 RSL: SENSOR = {"ZbReceived":{"0x7120":{"Device":"0x7120","Name":"SHP15","Power":0,"Endpoint":1,"LinkQuality":229}}}
+```
+
+You can **read the current state**:
+
+`zbsend {"device":"SHP15","read":{"power":true}}`
+
+``` json
+16:24:45.265 RSL: RESULT = {"ZbSend":"Done"}
+16:24:45.815 RSL: SENSOR = {"ZbReceived":{"0x7120":{"Device":"0x7120","Name":"SHP15","Power":1,"Endpoint":1,"LinkQuality":229}}}
+```
+
+You can **read the current power**: (here 0W)
+
+`zbsend {"device":"SHP15","read":{"activepower":true}}`
+
+``` json
+16:29:17.309 RSL: RESULT = {"ZbSend":"Done"}
+16:29:17.860 RSL: SENSOR = {"ZbReceived":{"0x7120":{"Device":"0x7120","Name":"SHP15","ActivePower":0,"Endpoint":1,"LinkQuality":229}}}
+```
+
+When you directly turn on or off the plug with its button, it also spontaneously report the changes:
+
+``` json
+16:29:45.660 RSL: SENSOR = {"ZbReceived":{"0x7120":{"Device":"0x7120","Name":"SHP15","Power":0,"Endpoint":1,"LinkQuality":218}}}
+16:29:52.460 RSL: SENSOR = {"ZbReceived":{"0x7120":{"Device":"0x7120","Name":"SHP15","Power":1,"Endpoint":1,"LinkQuality":218}}}
+```
+
+The WebUI is also reporting the last known values:
+
 
 ### Advanced topic: logs when pairing
 
