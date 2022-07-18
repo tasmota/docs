@@ -196,7 +196,18 @@ If you set [`SetOption83 1`](Commands.md#setoption83) sensor readings will use t
 ```json
 MQT: tele/%topic%/RESULT = {"ZbReceived":{"Vibration_sensor":{"Device":"0x128F","AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":171,"AqaraAccelerometer":[-691,8,136],"AqaraAngles":[-78,1,11],"LinkQuality":153}}}
 ```
-### Sending sensor values to separated MQTT topics
+
+
+### Removing Devices
+
+A zigbee will continue to connect to a coordinator unless you ask it to "leave" or if you change the network configuration (change of PanID or network key - which means losing ALL devices).
+
+To ask a device to leave the network, use command `ZbLeave <device>` or `ZbLeave <friendlyname>`. This sends a message to the device, which needs to be awake to process it. For battery powered devices, you need to wake them up when sending this command. Unfortunately there is no confirmation message sent back. Note: even if the device left the network, it is still registered in Z2T and continues to appear on the UI. To remove it from the list, use `ZbForget` below.
+
+To remove a device from Zigbee2Tasmota list of devices and from the UI, use command `ZbForget <device>` or `ZbForget <friendlyname>`. If the device is still connected to the network, it will pop up again later. I.e. ZbForget does not remove a device from the network; else use `ZbLeave` above.
+
+
+### Advanced topic: Sending sensor values to separated MQTT topics
 
 It is possible to publish the sensor values to their own MQTT topic. For this functionality the following rule can be applied in the console:
 ```
@@ -216,10 +227,6 @@ Rule1 1
 ```
 
 If retained values are prefered use publish2 instead of publish.
-
-
-### Removing Devices
-To remove a device from Zigbee2Tasmota use command `ZbForget <device>` or `ZbForget <friendlyname>`.
 
 ### Pairing Example 
 
