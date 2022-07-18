@@ -53,7 +53,48 @@ Before using Zigbee with Tasmota, you need to understand a few concepts. Here is
 
 ### Initial start
 
-*TODO: logs and WebUI for initial start*
+When you first start Z2T, pseudo-random parameters are derived from your device unique identifiers (MAC address...) for PanID and network encryption keys.
+
+**Sonoff Zigbee Bridge Pro** (ESP32 + CC2652P with ZNP)
+
+``` json
+19:02:20.659 ZIG: rebooting ZNP device
+19:02:22.960 ZbInput discarding byte 00
+19:02:22.962 RSL: RESULT = {"ZbState":{"Status":1,"Message":"CCxxxx ZNP booted","RestartReason":"Power-up","MajorRel":2,"MinorRel":7}}
+19:02:23.160 RSL: RESULT = {"ZbState":{"Status":50,"MajorRel":2,"MinorRel":7,"MaintRel":1,"Revision":20220219}}
+19:02:23.311 RSL: RESULT = {"ZbState":{"Status":2,"Message":"Resetting configuration"}}
+19:02:25.359 ZbInput discarding byte 00
+19:02:25.911 RSL: RESULT = {"ZbState":{"Status":3,"Message":"Configured, starting coordinator"}}
+19:02:30.062 RSL: RESULT = {"ZbState":{"Status":40,"NewState":9,"Message":"Started as coordinator"}}
+19:02:30.162 RSL: RESULT = {"ZbState":{"Status":51,"IEEEAddr":"0x00124B0026B684E4","ShortAddr":"0x0000","DeviceType":7,"DeviceState":9,"NumAssocDevices":0}}
+19:02:30.713 RSL: RESULT = {"ZbState":{"Status":0,"Message":"Started"}}
+19:02:30.715 ZIG: Zigbee started
+19:02:30.720 ZIG: No Zigbee device information
+19:02:30.732 ZIG: Zigbee device data in File System (31 bytes)
+```
+
+**Sonoff Zigbee Bridge** (ESP8266 + EFR32 with EZSP)
+
+``` json
+19:08:26.057 ZIG: Resetting EZSP device
+19:08:27.261 RSL: RESULT = {"ZbState":{"Status":1,"Message":"EFR32 EZSP booted","RestartReason":"Power-on","Code":2}}
+19:08:27.315 RSL: RESULT = {"ZbState":{"Status":55,"Version":"6.7.8.0","Protocol":8,"Stack":2}}
+19:08:27.316 RSL: RESULT = {"ZbState":{"Status":3,"Message":"Configured, starting coordinator"}}
+19:08:28.758 RSL: RESULT = {"ZbState":{"Status":56,"IEEEAddr":"0x680AE2FFFE6E103B","ShortAddr":"0x0000","DeviceType":1}}
+19:08:28.759 RSL: RESULT = {"ZbState":{"Status":2,"Message":"Resetting configuration"}}
+19:08:44.260 ZIG: Resetting EZSP device
+19:08:45.463 RSL: RESULT = {"ZbState":{"Status":1,"Message":"EFR32 EZSP booted","RestartReason":"Power-on","Code":2}}
+19:08:45.518 RSL: RESULT = {"ZbState":{"Status":55,"Version":"6.7.8.0","Protocol":8,"Stack":2}}
+19:08:45.520 RSL: RESULT = {"ZbState":{"Status":3,"Message":"Configured, starting coordinator"}}
+19:08:46.822 ZIG: Factory reset EZSP device
+19:08:47.053 ZIG: Subscribe to group 0 'ZbListen0 0'
+19:08:47.108 RSL: RESULT = {"ZbState":{"Status":0,"Message":"Started"}}
+19:08:47.108 ZIG: Zigbee started
+19:08:47.138 ZIG: No Zigbee device information
+19:08:47.145 ZIG: No Zigbee device data
+```
+
+When you further restart, logs are slightly shorter (less lines) since the MCU is already configured.
 
 ### Customize Zigbee configuration
 
