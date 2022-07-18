@@ -231,13 +231,14 @@ If retained values are prefered use publish2 instead of publish.
 ## Quick start
 
 In this section, we'll give a quick overview of 2 devices:
-
+	
 - [Sonoff SNZB-02 Temperature And Humidity Sensor](https://zigbee.blakadder.com/Sonoff_SNZB-02.html)
-![SNZB-02](https://zigbee.blakadder.com/assets/images/devices/Sonoff_SNZB-02.jpg){ width="120" }
 
+![SNZB-02](https://zigbee.blakadder.com/assets/images/devices/Sonoff_SNZB-02.jpg){ width="150" }
 
 - [BlitzWolf SHP15 Power Monitoring Plug](https://zigbee.blakadder.com/BlitzWolf_BW-SHP15.html)
-![SNZB-02](https://zigbee.blakadder.com/assets/images/devices/BlitzWolf_BW-SHP15.jpg){ width="120" }
+
+![SNZB-02](https://zigbee.blakadder.com/assets/images/devices/BlitzWolf_BW-SHP15.jpg){ width="150" }
 
 ### Advanced topic: logs when pairing
 
