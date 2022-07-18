@@ -232,6 +232,13 @@ If retained values are prefered use publish2 instead of publish.
 
 In this section, we'll give a quick overview of 2 devices:
 
+- [Sonoff SNZB-02 Temperature And Humidity Sensor](https://zigbee.blakadder.com/Sonoff_SNZB-02.html)
+![SNZB-02](https://zigbee.blakadder.com/assets/images/devices/Sonoff_SNZB-02.jpg){ width="120" }
+
+
+- [BlitzWolf SHP15 Power Monitoring Plug](https://zigbee.blakadder.com/BlitzWolf_BW-SHP15.html)
+![SNZB-02](https://zigbee.blakadder.com/assets/images/devices/BlitzWolf_BW-SHP15.jpg){ width="120" }
+
 ### Advanced topic: logs when pairing
 
 This is an example of a pairing process for the [Aqara Temperature & Humidity Sensor](https://zigbee.blakadder.com/Xiaomi_WSDCGQ11LM.html). To pair this sensor, issue `ZbPermitJoin 1` and then press and hold the reset button for 5 seconds. The sensor LED will flash several times and you will see log entries in the console, especially this one:
