@@ -284,10 +284,15 @@ The device will regularly report readings like this:
 
 Information is also displayed in the WebUI.
 
+![SNZB-02](https://user-images.githubusercontent.com/49731213/179617622-a3b6b234-a2cf-4fec-880f-b5f9609d71d8.png){ width="352" }
+
 When you hover the arrow on the name, you get additional information like short-address and manufacturer.
 
+![SNZB-02-info](https://user-images.githubusercontent.com/49731213/179617710-953a3186-d7ea-4a8f-80d9-2d9deefae761.png){ width="352" }
 
 When you hover over the battery icon, you get a more precise reading.
+
+![SNZB-02-batt](https://user-images.githubusercontent.com/49731213/179617737-941507b9-beda-4310-ac22-e216727a5c34.png){ width="352" }
 
 ### BlitzWolf SHP15 Plug
 
@@ -323,7 +328,7 @@ You can **turn on** the plug:
 16:24:25.005 RSL: SENSOR = {"ZbReceived":{"0x7120":{"Device":"0x7120","Name":"SHP15","Power":1,"Endpoint":1,"LinkQuality":229}}}
 ```
 
-You can **turn off** the plug:
+You can **turn off** the plug: (you can use `"powe"":0` or `"power":false`)
 
 `zbsend {"device":"SHP15","send":{"power":0}}`
 
@@ -332,7 +337,7 @@ You can **turn off** the plug:
 16:24:02.252 RSL: SENSOR = {"ZbReceived":{"0x7120":{"Device":"0x7120","Name":"SHP15","Power":0,"Endpoint":1,"LinkQuality":229}}}
 ```
 
-You can **read the current state**:
+You can **read the current state**: (you can use `"power":1` or `"power":true`)
 
 `zbsend {"device":"SHP15","read":{"power":true}}`
 
@@ -359,6 +364,7 @@ When you directly turn on or off the plug with its button, it also spontaneously
 
 The WebUI is also reporting the last known values:
 
+![SHP15](https://user-images.githubusercontent.com/49731213/179617772-ba6a8982-f2b1-4a72-9de2-af9cbf741fcd.png){ width="352" }
 
 ### Advanced topic: logs when pairing
 
