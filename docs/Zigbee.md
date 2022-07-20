@@ -434,7 +434,7 @@ Z2T will automatically take the first endpoint in the list which works most of t
 ## Reading Sensors
 Most sensors will publish their readings regularly or once a significant change has happened: temperature, pressure, humidity, presence, illuminance...
 
-Sensor messages are published via MQTT when they are received from the Zigbee device. Similar to Zigbee2MQTT, Z2T tries to group and debounce sensor values when they are received within a 300ms window.
+Sensor messages are published via MQTT when they are received from the Zigbee device. Similar to Zigbee2MQTT, Z2T tries to group and debounce sensor values when they are received within a 350ms window (can be change with `USE_ZIGBEE_COALESCE_ATTR_TIMER` compile option).
 
 !!! example "Aqara Temperature & Humidity Sensor"
 <img src="../_media/aqara.png" style="float:right;width:10em">
