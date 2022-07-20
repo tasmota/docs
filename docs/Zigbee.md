@@ -423,6 +423,13 @@ Devices connected to mains (smart plugs, smart bulbs...) are always reachable an
 
 Devices that are powered by batteries, are not always reachable. Most of the time they are in sleep mode and not reachable. They regularly connect back to the coordinator to send new values and get messages (ex: once per hour). When you need to send messages to battery-powered devices, you must first wake them up, for ex pressing on a button. They device may stay awake for a couple of seconds so you must send the message just before or just after pressing the button on the device.
 
+### Understanding Endpoints and Clusters
+
+An endpoint supports different functions separated in clusters and a device can have multiple endpoints to do different things. To simplify, think of your Zigbee device as a normal Tasmota device with a Zigbee radio instead of Wi-Fi. Each endpoint is akin to a GPIO that has connected [Components](Components) or Clusters, in Zigbee terms.
+
+Cluster definitions in relation to their endpoint are determined by [Zigbee Alliance](https://zigbeealliance.org/wp-content/uploads/2019/12/07-5123-06-zigbee-cluster-library-specification.pdf). Not all manufacturers followed the proposed allocations but in general it is a cornerstone document.
+
+Z2T will automatically take the first endpoint in the list which works most of the time. You normally don't need to specify the endpoint number. In rare cases, you can force a specific endpoint.
 
 ## Reading Sensors
 Most sensors will publish their readings regularly or once a significant change has happened: temperature, pressure, humidity, presence, illuminance...
@@ -512,14 +519,6 @@ _(formatted for readability)_
 ```
 
 `ZbStatus3` - Display detailed information for each device, including long address, model and manufacturer ID and a list of endpoints and clusters
-
-## Understanding Endpoints and Clusters
-
-An endpoint supports different functions separated in clusters and a device can have multiple endpoints to do different things. To simplify, think of your Zigbee device as a normal Tasmota device with a Zigbee radio instead of Wi-Fi. Each endpoint is akin to a GPIO that has connected [Components](Components) or Clusters, in Zigbee terms.
-
-Cluster definitions in relation to their endpoint are determined by [Zigbee Alliance](https://zigbeealliance.org/wp-content/uploads/2019/12/07-5123-06-zigbee-cluster-library-specification.pdf). Not all manufacturers followed the proposed allocations but in general it is a cornerstone document.
-
-Z2T will automatically take the first endpoint in the list which works most of the time. You normally don't need to specify the endpoint number. In rare cases, you can force a specific endpoint.
 
 ## Sending Device Commands
 
