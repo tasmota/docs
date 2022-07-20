@@ -386,6 +386,44 @@ Rule1 1
 
 If retained values are prefered use publish2 instead of publish.
 
+## Understanding Zigbee messages
+
+There are 2 main types of Zigbee messages, **commands** and **reaading/writing attributes**.
+
+For example, you can send a command `"Power":1` to turn a bulb on or `"Power":0` to turn it off.
+
+Simultaneously you can read the `"Power"` attribute to know the state of the bulb.
+
+Some attribuutes are writable, but this corresponds to a change of configuration of the device. You generally can't change the status of a device writing to attributes, you need to use commands instead.
+
+Internally, Zigbee uses low-level identifiers and Z2T provides human readable versions for the main attributes and commands. In the example above, although the command and the attribute have the same name `"Power"`, they have different low-lever identifiers.
+
+### Operations on attributes and commands
+
+Below are the possible Zigbee messages (we consider here messages between the coordinator and the Zigbee device):
+
+- **Read attribute(s)**: send a 'read-attribute' message to the Zigbee device, the device then responds with the value of the attributes it supports. Ex: read the current brightness of a bulb or a sensor.
+`ZbSend {"Device":"<device>", "Read":{...}}`
+
+- **Write attribute(s)**: send a 'write-attribute' message to the Zigbee device with a value, the device confirms or sends an error. Ex: change the sensitivity of an illuminance sensor.
+`ZbSend {"Device":"<device>", "Write":{...}}`
+
+- **Report attribute(s)**: Zigbee device may spontaneously report attributes without polling. This happens typically with sensors. New attribute values are sent after a certain time or when the value changes above a threshold.
+
+- **Send a command**: send a command to a Zigbee device, ex: turn on a bulb, change its color...
+`ZbSend {"Device":"<device>", "Send":{...}}`
+
+- **Receive a command**: Zigbee device may send commands to the coordinator. (less frequent). Ex: an alarm sensor sends an 'Intruder Alert' command to the coordinator.
+
+When a command is sent or an attribute is written to a device, the device may or may not acknowledge. However it will always report an error if the message is malformed or if some attributes/commands are not supported.
+
+### Sleeping devices
+
+Devices connected to mains (smart plugs, smart bulbs...) are always reachable and can accept Zigbee messages at any time.
+
+Devices that are powered by batteries, are not always reachable. Most of the time they are in sleep mode and not reachable. They regularly connect back to the coordinator to send new values and get messages (ex: once per hour). When you need to send messages to battery-powered devices, you must first wake them up, for ex pressing on a button. They device may stay awake for a couple of seconds so you must send the message just before or just after pressing the button on the device.
+
+
 ## Reading Sensors
 Most sensors will publish their readings regularly or once a significant change has happened: temperature, pressure, humidity, presence, illuminance...
 
