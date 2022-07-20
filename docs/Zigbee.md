@@ -365,6 +365,101 @@ To ask a device to leave the network, use command `ZbLeave <device>` or `ZbLeave
 
 To remove a device from Zigbee2Tasmota list of devices and from the UI, use command `ZbForget <device>` or `ZbForget <friendlyname>`. If the device is still connected to the network, it will pop up again later. I.e. ZbForget does not remove a device from the network; else use `ZbLeave` above.
 
+### Advanced topic: Device Information
+
+You can get a quick list of Zigbee devices with the command [`ZbStatus`](Commands.md#zigbeestatus).
+
+Example:
+
+```json
+18:30:58.972 CMD: ZbStatus
+18:30:58.980 MQT: stat/xxx/RESULT = {"ZbStatus1":[{"Device":"0xECD0","Name":"IKEA_Bulb"},{"Device":"0x8959","Name":"Plug"}]}
+```
+
+You can use the command [`ZbInfo`](Commands.md#zbinfo). to display all information, endpoints and last knwon values for main attributes. There are variants in the commands arguments:
+- `ZbInfo` (no arg): lists all known device one after the other
+- `ZbInfo 0xECD0`: show information of a device by short address
+- `Zbinfo IKEA_Bulb`: show information of a device by friendly name
+- `Zbinfo 0x90FD9FFFFE03B051`: show information of a device by long address (IEEE address)
+- `ZbInfo 1`, `ZbInfo 2`... iterate through devices in sequence
+
+!!! note "`ZbInfo` does not query the device, it only shows the last known state of the device from Tasmota memory"
+
+Example:
+
+```json
+18:38:51.523 CMD: zbinfo
+18:38:51.532 MQT: tele/xxx/SENSOR = {"ZbInfo":{"0xECD0":{"Device":"0xECD0","Name":"IKEA_Bulb","IEEEAddr":"0x90FD9FFFFE03B051","ModelId":"TRADFRI bulb E27 WS opal 980lm","Manufacturer":"IKEA of Sweden","Endpoints":[1],"Config":["O01","L01.2"],"Power":1,"Dimmer":160,"X":30138,"Y":26909,"CT":350,"ColorMode":2,"RGB":"FFC773","RGBb":"A17E49","Reachable":true,"LastSeen":353,"LastSeenEpoch":1658349178,"LinkQuality":79}}}
+18:38:51.570 MQT: tele/xxxx/SENSOR = {"ZbInfo":{"0x8959":{"Device":"0x8959","Name":"Plug","IEEEAddr":"0x7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM","Endpoints":[3],"Config":["L03.0","O03"],"Dimmer":254,"Power":0,"Reachable":false,"LastSeen":16607299,"LastSeenEpoch":1641742232,"LinkQuality":147}}}
+```
+
+_(formatted for readability)_
+
+```json
+18:38:51.532 MQT: tele/xxx/SENSOR = 
+{
+	"ZbInfo": {
+		"0xECD0": {
+			"Device": "0xECD0",
+			"Name": "IKEA_Bulb",
+			"IEEEAddr": "0x90FD9FFFFE03B051",
+			"ModelId": "TRADFRI bulb E27 WS opal 980lm",
+			"Manufacturer": "IKEA of Sweden",
+			"Endpoints": [1],
+			"Config": ["O01", "L01.2"],
+			"Power": 1,
+			"Dimmer": 160,
+			"X": 30138,
+			"Y": 26909,
+			"CT": 350,
+			"ColorMode": 2,
+			"RGB": "FFC773",
+			"RGBb": "A17E49",
+			"Reachable": true,
+			"LastSeen": 353,
+			"LastSeenEpoch": 1658349178,
+			"LinkQuality": 79
+		}
+	}
+}
+18:38:51.570 MQT: tele/xxxx/SENSOR = 
+{
+	"ZbInfo": {
+		"0x8959": {
+			"Device": "0x8959",
+			"Name": "Plug",
+			"IEEEAddr": "0x7CB03EAA0A0292DD",
+			"ModelId": "Plug 01",
+			"Manufacturer": "OSRAM",
+			"Endpoints": [3],
+			"Config": ["L03.0", "O03"],
+			"Dimmer": 254,
+			"Power": 0,
+			"Reachable": false,
+			"LastSeen": 145,
+			"LastSeenEpoch": 1641742232,
+			"LinkQuality": 147
+		}
+	}
+}
+```
+
+Most common attributes:
+
+|Attribute|Description|
+|---|---|
+|Device|Zigbee device short address|
+|Name|Friendly name|
+|IEEEAddr|Zigbee device long address (does not change after new pairing)|
+|ModelID|Zigbee Model name as configured by manufacturer (cannot be changed)|
+|Manufacturer|Manufacturer name|
+|Endpoints|List of endpoints|
+|Config|(used internaly)|
+|(attributes)|attributes tracked by Z2T|
+|LastSeen|Number of seconds since the last message was received|
+|LastSeenEpoch|Timestamp when the last message was received|
+[LinkQuality|Radio power of the last message received|
+
 
 ### Advanced topic: Sending sensor values to separated MQTT topics
 
@@ -482,45 +577,6 @@ If a value is not decoded, it will appear as `"<cluster>_<attr>":<value>` where 
 
 !!! example
     `"0402_0000":2240` is attribute 0x0000 from cluster 0x0402, which is the temperature in hundredth of °C. It is automatically converted to `"Temperature":22.40`.
-
-## Device Information
-You can dump the internal information gathered about connected Zigbee devices with the command [`ZbStatus`](Commands.md#zigbeestatus).
-
-You can use `ZbStatus2` to display all information and endpoints. If probing was successful (at pairing time or using `ZbProbe`), Tasmota will automatically find the right endpoint.
-
-Depending on the number of devices you have, `ZbStatus2` output can exceed the maximum MQTT message size. You can request the status of each individual device using `ZbStatus2 1`, `ZbStatus2 2`, `ZbStatus2 3` or `ZbStatus2 <friendly_name>`
-
-`ZbStatus1` - List all connected devices  
-```json
-{"ZbStatus1":[{"Device":"0x6B58"},{"Device":"0xE9C3"},{"Device":"0x3D82"}]}
-```
-
-`ZbStatus2` - Display detailed information for each device, including long address, model and manufacturer ID:  
-```json
-{"ZbStatus2":[{"Device":"0x4773","IEEEAddr":"0x7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM","Endpoints":["0x03"]},{"Device":"0x135D","Name":"Temp_sensor","IEEEAddr":"0x00158D00036B50AE","ModelId":"lumi.weather","Manufacturer":"LUMI","Endpoints":["0x01"]}]}
-```
-
-_(formatted for readability)_  
-```json
-{
-	"ZbStatus2": [{
-		"Device": "0x4773",
-		"IEEEAddr": "0x7CB03EAA0A0292DD",
-		"ModelId": "Plug 01",
-		"Manufacturer": "OSRAM",
-		"Endpoints": ["0x03"]
-	}, {
-		"Device": "0x135D",
-		"Name": "Temp_sensor",
-		"IEEEAddr": "0x00158D00036B50AE",
-		"ModelId": "lumi.weather",
-		"Manufacturer": "LUMI",
-		"Endpoints": ["0x01"]
-	}]
-}
-```
-
-`ZbStatus3` - Display detailed information for each device, including long address, model and manufacturer ID and a list of endpoints and clusters
 
 ## Sending Device Commands
 
