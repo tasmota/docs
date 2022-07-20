@@ -426,7 +426,24 @@ The Tasmota SML script:
 ```
 
 ------------------------------------------------------------------------------
-	
+
+### EMH eHZ Generation K (SML)
+
+```
+>D
+>B
+ 
+=>sensor53 r
+>M 1
++1,3,s,0,9600,
+1,77070100010800ff@1000,Gesamtverbrauch,KWh,Total_in,2
+1,77070100020800ff@1000,Gesamteinspeisung,KWh,Total_out,2
+1,77070100100700ff@1,Verbrauch,W,Power_curr,0
+#
+```
+
+------------------------------------------------------------------------------
+		
 ### EMH mMe4.0 (SML)
 
 ```
