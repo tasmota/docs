@@ -140,94 +140,6 @@ On **ESP8266** using the hardware serial is preferred. To do so, you need to use
 
 For a list of available commands see [Zigbee Commands](Commands.md#zigbee).  
 
-## Pairing Devices
-
-When you create a new Zigbee network, it contains no devices except the coordinator (your Zigbee gateway). The first step is to add devices to the network, which is called **pairing**.
-
-By default, and for security reasons, the Zigbee coordinator does not automatically accept new devices. To pair new devices, use [`ZbPermitJoin 1`](Commands.md#zbpermitjoin) or press **Permit Join** in the WebUI and allows accepting new devices for the next 60 seconds. Then put your Zigbee device pairing mode. This is usually accomplished by pressing the button on the device for 5 seconds or more.
-
-`ZbPermitJoin 1`
-```json
-CMD: ZbPermitJoin 1
-MQT: stat/%topic%/RESULT = {"ZbPermitJoin":"Done"}
-MQT: tele/%topic%/RESULT = {"ZbState":{"Status":21,"Message":"Enable Pairing mode for 60 seconds"}}
-```
-
-60 seconds later:
-
-```json
-MQT: tele/%topic%/RESULT = {"ZbState":{"Status":20,"Message":"Disable Pairing mode"}}
-```
-
-After the device has successfully paired it will be shown in the webui with its short address and its link quality number (LQI). When it is a battery powered device, the battery percentage will be displayed as soon as it is received from the device.
-
-*TODO: update screenshot*
-![Zigbee in webUI](_media/zigbeeinwebui.jpg)
-
-Devices will show friendly name once you set it.
-
-### Setting Friendly Name
-
-Instead of a short address like `0x8F20` you can assign a, memorable, friendly name such as `"Bedroom_Sensor"`.
-
-See [`ZbName`](Commands.md#zbname) command for all options.
-
-!!! example "Xiaomi Aqara Cube with address `0x128F`"
-```json
-MQT: tele/%topic%/RESULT = {"ZbReceived":{"0x128F":{"AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":162,"AqaraAccelerometer":[-690,2,138],"AqaraAngles":[-78,0,11],"LinkQuality":158}}}
-```
-
-Setting its friendly name to `Vibration_sensor`:
-```json
-ZbName 0x128F,Vibration_sensor
-CMD: ZbName 0x128F,Vibration_sensor
-MQT: stat/%topic%/RESULT = {"0x128F":{"Name":"Vibration_sensor"}}
-
-(10 seconds later)
-ZIG: Zigbee Devices Data store in Flash (0x402FF800 - 270 bytes)
-```
-
-Now the sensor readings includes the friendly name:
-```json
-MQT: tele/%topic%/RESULT = {"ZbReceived":{"0x128F":{"Name":"Vibration_sensor","AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":171,"AqaraAccelerometer":[-691,12,130],"AqaraAngles":[-78,1,11],"LinkQuality":153}}}
-```
-
-If you set [`SetOption83 1`](Commands.md#setoption83) sensor readings will use the friendly name as JSON key, short address is added as `Device`:
-```json
-MQT: tele/%topic%/RESULT = {"ZbReceived":{"Vibration_sensor":{"Device":"0x128F","AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":171,"AqaraAccelerometer":[-691,8,136],"AqaraAngles":[-78,1,11],"LinkQuality":153}}}
-```
-
-
-### Removing Devices
-
-A zigbee will continue to connect to a coordinator unless you ask it to "leave" or if you change the network configuration (change of PanID or network key - which means losing ALL devices).
-
-To ask a device to leave the network, use command `ZbLeave <device>` or `ZbLeave <friendlyname>`. This sends a message to the device, which needs to be awake to process it. For battery powered devices, you need to wake them up when sending this command. Unfortunately there is no confirmation message sent back. Note: even if the device left the network, it is still registered in Z2T and continues to appear on the UI. To remove it from the list, use `ZbForget` below.
-
-To remove a device from Zigbee2Tasmota list of devices and from the UI, use command `ZbForget <device>` or `ZbForget <friendlyname>`. If the device is still connected to the network, it will pop up again later. I.e. ZbForget does not remove a device from the network; else use `ZbLeave` above.
-
-
-### Advanced topic: Sending sensor values to separated MQTT topics
-
-It is possible to publish the sensor values to their own MQTT topic. For this functionality the following rule can be applied in the console:
-```
-Rule<x>
-  on zbreceived#<zigbee_id>#<zigbee_sensorname> do publish home/zigbee/<zigbee_name>/<sensorname> %value% endon
-	
-Rule<x> 1
-```
-
-For example:
-```
-Rule1
-  on zbreceived#0xAA7C#humidity do publish home/zigbee/office/humidity %value% endon
-  on zbreceived#0xAA7C#temperature do publish home/zigbee/office/temperature %value% endon
-
-Rule1 1
-```
-
-If retained values are prefered use publish2 instead of publish.
-
 ## Quick start
 
 In this section, we'll give a quick overview of 2 devices:
@@ -385,6 +297,93 @@ Message with `"Status":30` shows some characteristics of the device:
 |`ReceiveWhenIdle`|`true` = the device can receive commands when idle<BR>`false` = the device is not listening. Commands should be sent when the device reconnects and is idle|
 |`Security`|Security capability (meaning unknown, to be determined)|
 
+## Pairing Devices
+
+When you create a new Zigbee network, it contains no devices except the coordinator (your Zigbee gateway). The first step is to add devices to the network, which is called **pairing**.
+
+By default, and for security reasons, the Zigbee coordinator does not automatically accept new devices. To pair new devices, use [`ZbPermitJoin 1`](Commands.md#zbpermitjoin) or press **Permit Join** in the WebUI and allows accepting new devices for the next 60 seconds. Then put your Zigbee device pairing mode. This is usually accomplished by pressing the button on the device for 5 seconds or more.
+
+`ZbPermitJoin 1`
+```json
+CMD: ZbPermitJoin 1
+MQT: stat/%topic%/RESULT = {"ZbPermitJoin":"Done"}
+MQT: tele/%topic%/RESULT = {"ZbState":{"Status":21,"Message":"Enable Pairing mode for 60 seconds"}}
+```
+
+60 seconds later:
+
+```json
+MQT: tele/%topic%/RESULT = {"ZbState":{"Status":20,"Message":"Disable Pairing mode"}}
+```
+
+After the device has successfully paired it will be shown in the webui with its short address and its link quality number (LQI). When it is a battery powered device, the battery percentage will be displayed as soon as it is received from the device.
+
+*TODO: update screenshot*
+![Zigbee in webUI](_media/zigbeeinwebui.jpg)
+
+Devices will show friendly name once you set it.
+
+### Setting Friendly Name
+
+Instead of a short address like `0x8F20` you can assign a, memorable, friendly name such as `"Bedroom_Sensor"`.
+
+See [`ZbName`](Commands.md#zbname) command for all options.
+
+!!! example "Xiaomi Aqara Cube with address `0x128F`"
+```json
+MQT: tele/%topic%/RESULT = {"ZbReceived":{"0x128F":{"AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":162,"AqaraAccelerometer":[-690,2,138],"AqaraAngles":[-78,0,11],"LinkQuality":158}}}
+```
+
+Setting its friendly name to `Vibration_sensor`:
+```json
+ZbName 0x128F,Vibration_sensor
+CMD: ZbName 0x128F,Vibration_sensor
+MQT: stat/%topic%/RESULT = {"0x128F":{"Name":"Vibration_sensor"}}
+
+(10 seconds later)
+ZIG: Zigbee Devices Data store in Flash (0x402FF800 - 270 bytes)
+```
+
+Now the sensor readings includes the friendly name:
+```json
+MQT: tele/%topic%/RESULT = {"ZbReceived":{"0x128F":{"Name":"Vibration_sensor","AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":171,"AqaraAccelerometer":[-691,12,130],"AqaraAngles":[-78,1,11],"LinkQuality":153}}}
+```
+
+If you set [`SetOption83 1`](Commands.md#setoption83) sensor readings will use the friendly name as JSON key, short address is added as `Device`:
+```json
+MQT: tele/%topic%/RESULT = {"ZbReceived":{"Vibration_sensor":{"Device":"0x128F","AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":171,"AqaraAccelerometer":[-691,8,136],"AqaraAngles":[-78,1,11],"LinkQuality":153}}}
+```
+
+
+### Removing Devices
+
+A zigbee will continue to connect to a coordinator unless you ask it to "leave" or if you change the network configuration (change of PanID or network key - which means losing ALL devices).
+
+To ask a device to leave the network, use command `ZbLeave <device>` or `ZbLeave <friendlyname>`. This sends a message to the device, which needs to be awake to process it. For battery powered devices, you need to wake them up when sending this command. Unfortunately there is no confirmation message sent back. Note: even if the device left the network, it is still registered in Z2T and continues to appear on the UI. To remove it from the list, use `ZbForget` below.
+
+To remove a device from Zigbee2Tasmota list of devices and from the UI, use command `ZbForget <device>` or `ZbForget <friendlyname>`. If the device is still connected to the network, it will pop up again later. I.e. ZbForget does not remove a device from the network; else use `ZbLeave` above.
+
+
+### Advanced topic: Sending sensor values to separated MQTT topics
+
+It is possible to publish the sensor values to their own MQTT topic. For this functionality the following rule can be applied in the console:
+```
+Rule<x>
+  on zbreceived#<zigbee_id>#<zigbee_sensorname> do publish home/zigbee/<zigbee_name>/<sensorname> %value% endon
+	
+Rule<x> 1
+```
+
+For example:
+```
+Rule1
+  on zbreceived#0xAA7C#humidity do publish home/zigbee/office/humidity %value% endon
+  on zbreceived#0xAA7C#temperature do publish home/zigbee/office/temperature %value% endon
+
+Rule1 1
+```
+
+If retained values are prefered use publish2 instead of publish.
 
 ## Reading Sensors
 Most sensors will publish their readings regularly or once a significant change has happened: temperature, pressure, humidity, presence, illuminance...
