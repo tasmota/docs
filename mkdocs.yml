@@ -155,6 +155,7 @@ nav:
     - TuyaMCU.md
     - Universal File System: UFS.md
     - Zigbee.md
+    - Modbus Bridge:ModbusBridge.md
     - Projects and Tutorials: Tutorials.md
     - For Developers: For-Developers.md
   - ESP32:
