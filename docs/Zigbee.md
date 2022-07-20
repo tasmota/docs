@@ -297,6 +297,7 @@ Message with `"Status":30` shows some characteristics of the device:
 |`ReceiveWhenIdle`|`true` = the device can receive commands when idle<BR>`false` = the device is not listening. Commands should be sent when the device reconnects and is idle|
 |`Security`|Security capability (meaning unknown, to be determined)|
 
+
 ## Pairing Devices
 
 When you create a new Zigbee network, it contains no devices except the coordinator (your Zigbee gateway). The first step is to add devices to the network, which is called **pairing**.
@@ -304,6 +305,7 @@ When you create a new Zigbee network, it contains no devices except the coordina
 By default, and for security reasons, the Zigbee coordinator does not automatically accept new devices. To pair new devices, use [`ZbPermitJoin 1`](Commands.md#zbpermitjoin) or press **Permit Join** in the WebUI and allows accepting new devices for the next 60 seconds. Then put your Zigbee device pairing mode. This is usually accomplished by pressing the button on the device for 5 seconds or more.
 
 `ZbPermitJoin 1`
+
 ```json
 CMD: ZbPermitJoin 1
 MQT: stat/%topic%/RESULT = {"ZbPermitJoin":"Done"}
@@ -318,8 +320,7 @@ MQT: tele/%topic%/RESULT = {"ZbState":{"Status":20,"Message":"Disable Pairing mo
 
 After the device has successfully paired it will be shown in the webui with its short address and its link quality number (LQI). When it is a battery powered device, the battery percentage will be displayed as soon as it is received from the device.
 
-*TODO: update screenshot*
-![Zigbee in webUI](_media/zigbeeinwebui.jpg)
+![SNZB-02](https://user-images.githubusercontent.com/49731213/179617622-a3b6b234-a2cf-4fec-880f-b5f9609d71d8.png){ width="352" }
 
 Devices will show friendly name once you set it.
 
@@ -354,7 +355,6 @@ If you set [`SetOption83 1`](Commands.md#setoption83) sensor readings will use t
 MQT: tele/%topic%/RESULT = {"ZbReceived":{"Vibration_sensor":{"Device":"0x128F","AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":171,"AqaraAccelerometer":[-691,8,136],"AqaraAngles":[-78,1,11],"LinkQuality":153}}}
 ```
 
-
 ### Removing Devices
 
 A zigbee will continue to connect to a coordinator unless you ask it to "leave" or if you change the network configuration (change of PanID or network key - which means losing ALL devices).
@@ -367,6 +367,7 @@ To remove a device from Zigbee2Tasmota list of devices and from the UI, use comm
 ### Advanced topic: Sending sensor values to separated MQTT topics
 
 It is possible to publish the sensor values to their own MQTT topic. For this functionality the following rule can be applied in the console:
+
 ```
 Rule<x>
   on zbreceived#<zigbee_id>#<zigbee_sensorname> do publish home/zigbee/<zigbee_name>/<sensorname> %value% endon
