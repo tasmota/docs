@@ -27,6 +27,7 @@ Additional features can be enabled by adding the following `#define` compiler di
 |TMSBSIZ n| (default 256) Maximum number of characters in serial IRQ buffer (should always be larger than SML_BSIZ and even larger on high baud rates).|
 |SML_DUMP_SIZE n | (default 128) Maximum number of characters per line in dump mode. Only use if you have long strings comin in and they truncate. |
 |USE_ESP32_SW_SERIAL| enables additional software serial channels for ESP32, (receive only), define pin with '-' sign to assign to software serial |
+|USE_SML_SPECOPT| enables special decoder entry to specify direction bit for some SML meters |
 |USE_SML_SCRIPT_CMD | If present, this  enables some special SML script cmds and allows access to sml vars in other parts of the script. Is needed by some of the examples below.
 |SML_REPLACE_VARS | If present, this allows replacement of any text in descriptor by script text variables. Useful if several occurrences of a text occupies a lot of space and you get short of script buffer. Readability may get worse so only makes sense on large descriptors. Note: to use `%` symbol un measurement units, you need to escape it like `%%`.
 
@@ -198,7 +199,8 @@ With `=` character at the beginning of a line you can do some special decoding. 
 | `M,=d` | Calculate difference between metric values decoded at time intervals (up to 10 =d lines possible) <BR>e.g. `1,=d 3 10` calculate 10 second interval difference of decoder entry 3  |
 | `M,=h` | Insert text on the web interface (html text up to 30 chars). These lines do not count as decoder entry.<BR> e.g. `1,=h<hr/>` to insert a separator line on the web UI |
 | `*` character | To hide fields from result output or disable output completely. Compiling with `USE_SML_SCRIPT_CMD` required. <BR> - as single character in `<label>` of the metrics line will hide that value from the web UI <BR> - as single character in `<label>` of the meter definition line will suppress the entire json output on MQTT |
-
+| `M,=so1 `| special SML option for meters that use a bit in the status resgister to sign import or export like ED300L, AS2020 or DTZ541 <BR>e.g. 1,=so1,00010800,65,11,65,11,00100700 for DTZ541<BR> 1. obis code that holds the direction bit, 2. Flag identifier, 3. direction bit, 4. second Flag identifier (some meters use 2 different flags), 5. second bit, 6 obis code of value to be inverted on direction bit.<BR>needs #define USE_SML_SPECOPT|
+	
 remark: channel math only works on frequently (fast) updated channels and is not recommended with counters  
 	
 !!! example
