@@ -13,8 +13,8 @@ In most cases you'll need an RS485 converter like this:<BR>
 Command|Parameters
 :---|:---
 ModbusSend|Sending a message to the modbus network as JSON payload.<BR><BR>```{"deviceAddress":<value>, "functionCode":<value>, "startAddress":<value>, "type":"<value>","count":<value>}```<BR><BR>`"deviceAddress":1..255` = device address from the modbus slave.<BR><BR>`"functioncode":1..4` = function code to send to the modbus slave (see table below).<BR><BR>`"startaddress":1..65535` address of the first register to read.<BR><BR>`"type":"<value>"` Gives the type of the returned data (see table below). <BR><BR>`"count":1..n` the number of values to be requested.
-|ModbusSetBaudrate|Sets the baudrate for serial (only 8N1 mode), min 1200, max 115200 by 1200 increments.
-|ModbusSetSerialConfig|Set serial protocol using data/parity/stop conventional notation (example: 8N1 or 702)
+|ModbusBaudrate|Sets the baudrate for serial (only 8N1 mode), min 1200, max 115200 by 1200 increments.
+|ModbusSerialConfig|Set serial protocol using data/parity/stop conventional notation (example: 8N1 or 702)
 0..23 = set serial protocol (3 equals 8N1)
 
 ### FunctionCode
