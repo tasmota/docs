@@ -136,6 +136,7 @@ nav:
     - IR Communication: Tasmota-IR.md
     - LCD/DLP Projector Control: Projector.md
     - Lights.md
+    - Modbus Bridge: Modbus-Bridge.md
     - OpenTherm: OpenTherm.md
     - PIR-Motion-Sensors.md
     - Power-Monitoring-Calibration.md
@@ -155,7 +156,6 @@ nav:
     - TuyaMCU.md
     - Universal File System: UFS.md
     - Zigbee.md
-    - Modbus Bridge:ModbusBridge.md
     - Projects and Tutorials: Tutorials.md
     - For Developers: For-Developers.md
   - ESP32:
