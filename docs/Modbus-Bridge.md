@@ -1,12 +1,18 @@
 # Modbus Bridge
 
-Needs `#define USE_MODBUS_BRIDGE`. This is not available in any builds but you can [compile your own build](Compile-your-build).
+Needs `#define USE_MODBUS_BRIDGE` or `#define USE_MODBUS_TCP_BRIDGE`. 
+This is not available in any builds but you can [compile your own build](Compile-your-build).
 
 This feature can be used to add a "modbus bridge" functionality to a device that is otherwise serial modbus RTU only. You connect the device to a ESP8266/ESP32 and Tasmota will create a bridge to the modbus network.
 
 In most cases you'll need an RS485 converter like this:<BR>
 ![rs485 converter](https://user-images.githubusercontent.com/2833940/179932126-df473fcb-8de3-488d-b200-f57dc76db198.png)
 
+## Introduction
+The Modbus Bridge modules features 2 kind of bridges. 
+  
+USE_MODBUS_BRIDGE : The bridge can be used by commands in the console and via MQTT messages.
+USE_MODBUS_TCP_BRIDGE : The bridge can be used by commands in the console and via MQTT messages but also as Modbus TCP/IP bridge
 
 ## Commands
 
@@ -14,9 +20,8 @@ Command|Parameters
 :---|:---
 ModbusSend|Sending a message to the modbus network as JSON payload.<BR><BR>```{"deviceAddress":<value>, "functionCode":<value>, "startAddress":<value>, "type":"<value>","count":<value>}```<BR><BR>`"deviceAddress":1..255` = device address from the modbus slave.<BR><BR>`"functioncode":1..4` = function code to send to the modbus slave (see table below).<BR><BR>`"startaddress":1..65535` address of the first register to read.<BR><BR>`"type":"<value>"` Gives the type of the returned data (see table below). <BR><BR>`"count":1..n` the number of values to be requested.
 |ModbusBaudrate|Sets the baudrate for serial (only 8N1 mode), min 1200, max 115200 by 1200 increments.
-|ModbusSerialConfig|Set serial protocol using data/parity/stop conventional notation (example: 8N1 or 702)
-0..23 = set serial protocol (3 equals 8N1)
-
+|ModbusSerialConfig|Set serial protocol using data/parity/stop conventional notation (example: 8N1 or 702)<BR>0..23 = set serial protocol (3 equals 8N1)
+  
 ### FunctionCode
 Function Code|Description
 :---|:---
@@ -28,17 +33,57 @@ Function Code|Description
 ### Type
 Type|Description
 :---|:---
-raw|Return the slave data as a raw value
+raw|Return the slave data as a raw values
+bit|Return the slave data as a bit values
 |float|Return the slave data as floats
-|uint8|Return the slave data as an 8 bits unsigned int
 |uint16|Return the slave data as an 16 bits unsigned int
 |uint32|Return the slave data as an 32 bits unsigned int
-|int8|Return the slave data as an 8 bits signed int
 |int16|Return the slave data as an 16 bits signed int
 |int32|Return the slave data as an 32 bits signed int
   
+### Additional commands for USE_MODBUS_TCP_BRIDGE
+Command|Parameters
+:---|:---
+ModbusTcpStart| Start the modbus tcp bridge on the specified ```tcp port```
+|ModbusTcpConnect| Connect to a remote modbus tcp server on ```ip address``` and ```remote tcp port```
+  
 ## Returned Data
 {"ModbusReceived":{"DeviceAddress":<value>,"FunctionCode":<value>,"StartAddress":<value>,"Length":<value>,"Count":<value>,"Values":[value1,value2,value3,valueN]}}
+
+In raw mode, only the data is returned, no other fields.
+  
+## Error Codes
+There are 2 types of errors, errors from the tasmotamodbus driver and errors from this modbusbridge module.
+
+### Module Errors
+Errors from this modbus bridge module can be recognized by "MBS: MBR Send error" or "MBS: MBR Recv error" at the start of the errormessage.
+  
+Errorcode|Description
+:---|:---
+1|nodataexpected
+|2|wrongdeviceaddress
+|3|wrongfunctioncode
+|4|wrongstartaddress
+|5|wrongtype
+|6|wrongregistercount
+|7|wrongcount
+  
+### Driver Errors  
+Errors from the tasmotamodbus driver can be recognized by "MBS: MBR Driver error"
+
+Errorcode|Description
+:---|:---
+1|Illegal Function
+|2|Illegal Data Address
+|3|Illegal Data Value
+|4|Slave Error
+|5|Acknowledge but not finished (no error)
+|6|Slave Busy
+|7|Not enough minimal data received
+|8|Memory Parity error
+|9|Crc error
+|10|Gateway Path Unavailable
+|11|Gateway Target device failed to respond
 
 ## Configuration
 
