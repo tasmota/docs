@@ -63,7 +63,7 @@ User maintained [codes database for IR](Codes-for-IR-Remotes)
 [Linux Infrared Remote Control (LIRC)](http://www.lirc.org/) for more information. 
 
 ## Related Projects
-- [IR Blaster with Tasmota](http://www.asknoone.com/ir-blaster-with-tasmota/)
+- [Automate Things IR Bridge](https://templates.blakadder.com/automate_things_AT-IRBR_v14.html)
 - [Sonoff Basic IR "hat"](https://github.com/altelch/SonoffIR)
 
 Example circuit with transmitter and receiver:
