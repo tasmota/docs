@@ -16,7 +16,7 @@ Incredibly expandable and flexible.
 [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4)
 [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<b>Install Tasmota using a Chrome based browser at [https://tasmota.github.io/install/](https://tasmota.github.io/install/).</b>    
+<b>Install Tasmota using a Chromium-based browser at [https://tasmota.github.io/install/](https://tasmota.github.io/install/).</b>    
 
 ### Current release 
 <a href="http://ota.tasmota.com/tasmota/release-12.0.2/"><span style="font-size:40px;">Tasmota 12.0.2 Paul</span></a><br>
