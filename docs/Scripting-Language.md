@@ -2270,6 +2270,34 @@ Uses Tasmota's Hue Emulation capabilities for Alexa interface
     your power consumption today was %et% KWh
     #
 
+### Send power reading with formated time stamp via websend
+
+Some web APIs require certain formats (e.g. date & time) to be provided. This example illustrates how to reformat the timestamp and embed it in the get payload.
+On ESP8266 based devices this is limited to unsecured http (no "s") connections! Don't use this for sensitive data!
+
+    >D 42
+    ;long string required for key
+    y=0
+    m=0
+    d=0
+    key="yourkey"
+    id="yourSystemID"
+    ws="WebSend [pvoutput.org]"
+    et=0
+    p=0
+
+    >T
+    et=ENERGY#Total
+    p=ENERGY#Power
+    ; every 5 minutes
+    if upsecs%300==0
+    then
+    y=sb(tstamp 0 4)
+    m=sb(tstamp 5 2)
+    d=sb(tstamp 8 2)
+    =>%ws%/service/r2/addstatus.jsp?key=%key%&sid=%id%&d=%1.0(y)%%2.0(m)%%2.0(d)%&t=%1(sb(tstamp 11 5))%&v2=%s(2.0p)%
+    endif
+      
 ### Switching and Dimming By Recognizing Mains Power Frequency
 
 Switching in Tasmota is usually done by High/Low (+3.3V/GND) changes on a GPIO. However, for devices like the [Moes QS-WiFi-D01 Dimmer](https://templates.blakadder.com/qs-wifi_D01_dimmer.html), this is achieved by a pulse frequency when connected to the GPIO, and these pulses are captured by `Counter1` in Tasmota.
