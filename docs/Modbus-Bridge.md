@@ -1,6 +1,9 @@
 # Modbus Bridge
 
-Needs `#define USE_MODBUS_BRIDGE` or `#define USE_MODBUS_TCP_BRIDGE`. 
+Needs `#define USE_MODBUS_BRIDGE` or `#define USE_MODBUS_BRIDGE_TCP`. 
+
+Important: If you're building the modbus tcp bridge you have to define both defines.
+
 This is not available in any builds but you can [compile your own build](Compile-your-build).
 
 This feature can be used to add a "modbus bridge" functionality to a device that is otherwise serial modbus RTU only. You connect the device to a ESP8266/ESP32 and Tasmota will create a bridge to the modbus network.
@@ -11,8 +14,8 @@ In most cases you'll need an RS485 converter like this:<BR>
 ## Introduction
 The Modbus Bridge modules features 2 kind of bridges. 
   
-USE_MODBUS_BRIDGE : The bridge can be used by commands in the console and via MQTT messages.
-USE_MODBUS_TCP_BRIDGE : The bridge can be used by commands in the console and via MQTT messages but also as Modbus TCP/IP bridge
+USE_MODBUS_BRIDGE : The bridge can be used by commands in the console and via MQTT messages.<BR>
+USE_MODBUS_BRIDGE_TCP : The bridge can be used by commands in the console and via MQTT messages but also as Modbus TCP/IP bridge
 
 ## Commands
 
