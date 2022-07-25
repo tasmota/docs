@@ -899,6 +899,7 @@ The script itself is also stored on the file system with a default size of 8192 
 `fc(fr)` close file  
 `ff(fr)` flush file, writes cached data and updates directory  
 `fd("fname")` delete file fname  
+`frn("spath" "dpath")` rename a file  
 `flx(fname)` create download link for file (x=1 or 2) fname = file name of file to download  
 `fsm` return 1 if filesystem is mounted, (valid SD card found)  
 `res=fsi(sel)` gets file system information, sel=0 returns total media size, sel=1 returns free space both in kB   
@@ -926,8 +927,8 @@ The script itself is also stored on the file system with a default size of 8192 
 **ESP32 real Multitasking support**  
 `#define USE_SCRIPT_TASK` 
 enables support for multitasking scripts  
-res=ct(num timer core)  
-creates a task num (1 or 2)  
+res=ct(num timer core (prio) (stack))  
+creates a task num (1 or 2) with optional priority and stack size  
 which is executed every timer (ms) time  
 on core 0 or 1  
   
