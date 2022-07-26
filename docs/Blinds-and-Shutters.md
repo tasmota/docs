@@ -208,7 +208,7 @@ Use any other Tasmota device with buttons or switches to control remotely a shut
 There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands.md#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
 
 ### Stepper Motors
-Stepper motors can also be used to operate shutters and blinds. Additionally you can operate sliding doors with this configuration.
+Stepper motors can also be used to operate shutters and blinds. Additionally you can operate sliding doors with this configuration. Currently ESP32 only support one shutter with stepper motor. ESP8266 supports up to 4 shutters. 
 
 ### Servo Motors
 Servos are small devices with typical 180° or 360" rotation movement. The position will be drived by the PWM duty cycle time. This will all automatically calculated
@@ -281,7 +281,7 @@ Typical log output (log level `3`) when starting from `ShutterOpen1`. The first 
 ```
 -->
 ### using Stepper Motors
-Stepper motors can be used to operate shutters and blinds. The configuration is very similar to the  Circuit Safe (Shuttermode 1) configuration. To operate a stepper motor requires driver module such as the A4988 and uses EN (enable), DIR (direction), STP (Stepper) for controls. If everything is defined correctly Shuttermode 4 will be reported at boot time.
+Stepper motors can be used to operate shutters and blinds. The configuration is very similar to the  Circuit Safe (Shuttermode 1) configuration. To operate a stepper motor requires driver module such as the A4988 and uses EN (enable), DIR (direction), STP (Stepper) for controls. If everything is defined correctly Shuttermode 4 will be reported at boot time. ESP32 only supports one shutter with steppermotors. ESP8266 up to 4.
 
 Tasmota supports a maximum of four shutters with one stepper motor per shutter simultaneously. In very rare conditions where two or more shutters simultaneously move the last mm it can happen than one shutter moves to far.   
 
