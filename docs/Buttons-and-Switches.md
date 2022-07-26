@@ -69,12 +69,12 @@ SwitchMode, as the name implies, applies _**ONLY**_ to GPIO configured in Tasmot
         When connecting a momentary switch (i.e., a push-button) you will want to use `SwitchMode 3..7`.
 
 **`SwitchMode 3`**
-:    Set inverted push-button mode (`0 = OFF` (_default_), `1 = TOGGLE`)
+:    Set push-button mode (`0 = TOGGLE`, `1 = ON` (_default_))
 
     Tasmota will send a `TOGGLE` command when the button is pressed (closing the circuit). When the button is released (opening the circuit) nothing will happen. Default state is OFF and when pressed it's ON. (This trigger is known as [rising-edge](https://en.wikipedia.org/wiki/Signal_edge))
 
 **`SwitchMode 4`**
-:    Set push-button mode (`0 = TOGGLE`, `1 = ON` (_default_))
+:    Set inverted push-button mode (`0 = OFF` (_default_), `1 = TOGGLE`)
 
     Tasmota will send a `TOGGLE` command when the button is released (opening the circuit). When pressing the button (closing the circuit) nothing will happen. Default state is ON and when pressed it's OFF. (This trigger is known as [falling-edge](https://en.wikipedia.org/wiki/Signal_edge))
 
