@@ -256,7 +256,7 @@ When using Rules or Timers, you always pass Berry functions.
 
 ## `cron` recurrent calls
 
-You can choose to run some function/closure at regular intervals specified as `cron` type format. (Crontab Guru)[https://crontab.guru/] is an easy way to create and test your cron format.
+You can choose to run some function/closure at regular intervals specified as `cron` type format. [Crontab Guru](https://crontab.guru/) is an easy way to create and test your cron format.
 
 ``` berry
 > def f() print("Hi") end
