@@ -161,7 +161,7 @@ class MyButtonMethods : Driver
   end
 
   #- create a method for adding a button to the configuration menu-#
-  def web_add_button()
+  def web_add_config_button()
     #- the onclick function "la" takes the function name and the respective value you want to send as an argument -#
     webserver.content_send("<p></p><button onclick='la(\"&m_toggle_conf=1\");'>Toggle Conf</button>")
   end
