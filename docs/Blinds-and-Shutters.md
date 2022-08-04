@@ -208,7 +208,7 @@ Use any other Tasmota device with buttons or switches to control remotely a shut
 There are shutters that have two relays but only need a pulse to start or stop. Depending on the current situation a pulse will stop the shutter or send it into a specific direction. To use these kinds of shutters a [`PulseTime`](Commands.md#pulsetime) must be defined on each relay. The minimum setting that seems to make it work consistently is `2`. A setting of `1` does not work. If the shutter moves too fast and does not react to a stop command, increase the setting to `3` or `4`. 
 
 ### Stepper Motors
-Stepper motors can also be used to operate shutters and blinds. Additionally you can operate sliding doors with this configuration. Currently ESP32 only support one shutter with stepper motor. ESP8266 supports up to 4 shutters. 
+Stepper motors can also be used to operate shutters and blinds. Additionally you can operate sliding doors with this configuration. Currently ESP32 12.0.2  does not support shutter with stepper motors. ESP8266 and ESP32 12.0.3+ supports up to 4 shutters. 
 
 ### Servo Motors
 Servos are small devices with typical 180° or 360" rotation movement. The position will be drived by the PWM duty cycle time. This will all automatically calculated
