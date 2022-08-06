@@ -181,6 +181,8 @@ a valid script must start with >D in the first line
   Using this filter, vars can be used as arrays, #define LARGE_ARRAYS allows for arrays up to 1000 entries  
   array may also be permanent by specifying an extra :p  
   m:p:vname defines a permanent array. Keep in mind however that in 1M Flash standard configurations you only have 50 bytes permanent storage which stands for a maximum of 12 numbers. (see list above for permanent storage in other configurations)  
+  arrays may also be preset in auto increment mode array=X sets the value at index array[0] and increments the index by 1.  
+  array = {x y z} sets 3 values in an array from index array[0]  
 
 !!! tip
     Keep variable names as short as possible. The length of all variable names taken together may not exceed 256 characters.  
@@ -496,6 +498,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sunrise` = sunrise minutes since midnight  
 `sunset` = sunset minutes since midnight  
 `tper` = [TelePeriod](Commands#teleperiod) (_**may be set also**_)  
+`cbs` = current text buffer size for tasmota cmds (default 256) (_**may be set also**_)  
 `tstamp` = timestamp (local date and time)  
 `topic` = mqtt topic  
 `gtopic` = mqtt group topic  
@@ -661,6 +664,7 @@ The following variables are cleared after reading true:
 Remarks:  
 If you define a variable with the same name as a special variable that special variable is discarded  
 
+  
 ## Commands
 
 `=> <command>` Execute <command> cmd with MQTT output enabled  
