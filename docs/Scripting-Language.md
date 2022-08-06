@@ -331,10 +331,11 @@ You may put any html code here.
   
 optionally these sections may be used  
 `>WS`  
-- HTML statements are displayed in the sensor section of the main page
-`>WM` 
-- HTML statements are displayed in the main section of the main page
+- HTML statements are displayed in the sensor section of the main page  
   
+`>WM`  
+- HTML statements are displayed in the main section of the main page  
+
 for next loops are supported to repeat HTML code (precede with % char)
 %for var from to inc
 %next
@@ -498,7 +499,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sunrise` = sunrise minutes since midnight  
 `sunset` = sunset minutes since midnight  
 `tper` = [TelePeriod](Commands#teleperiod) (_**may be set also**_)  
-`cbs` = current text buffer size for tasmota cmds (default 256) (_**may be set also**_)  
+`cbs` = command text buffer size for tasmota cmds (default 256) (_**may be set also**_)  
 `tstamp` = timestamp (local date and time)  
 `topic` = mqtt topic  
 `gtopic` = mqtt group topic  
@@ -539,6 +540,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `is[index]` = gets string `index` from string array, if read-write also write string of index  
 `is1(..)`, `is2(...)` string array see above  
 `is1[x]`, `is2[x]` string array see above  
+`rr()` = returns the reset reason of last restart (as string)  
 `s2hms(S)`, converts seconds to HH:MM:SS string  
 `sin(x)` = calculates the sinus(x) (if defined USE_ANGLE_FUNC)   
 `cos(x)` = calculates the cosinus(x) (if defined USE_ANGLE_FUNC)  
