@@ -347,7 +347,7 @@ Look down below for script examples based on the following metering devices:
 - [SBC ALE3](#2-sbc-ale3-modbus) (MODBus, alternate)
 - [Trovis 557x](#trovis-557x-modbus) (MODBus)
 - [Hiking DDS238-2 ZN/S](#4-hiking-dds238-2-zns3-modbus) (MODBus, 4 meters in parallel)
-- [EasyMeter Q3A / Apator APOX+](#easymeter-q3a-apator-apox-sml) (SML)
+- [EasyMeter Q3A / Apator APOX+](#easymeter-q3a-/-apator-apox+-sml) (SML)
 - [EasyMeter Q3B](#easymeter-q3b-sml) (SML, 2 meters with 1 Tasmota)
 - [EasyMeter Q1D](#easymeter-q1d-ascii-obis)
 - [Apator APOX+](#apator-apox-sml) (SML, with pin code for extra data)
@@ -357,7 +357,10 @@ Look down below for script examples based on the following metering devices:
 - [Peacefair PZEM004T V30](#peacefair-pzem004tv30-modbus ) (SML - MODBus)
 - [Landis + Gyr E220](#landis--gyr-e220-sml) (SML)
 - [Holley DTZ541](#holley-dtz541-sml) (SML)
-    
+- [Norax 3D+](#norax-3d-sml) (SML)
+- [Growatt MAX4200](#growatt-max4200-modbus) (MODbus)
+
+	
 --------------------------------------------------------
 
 ### JANZ C3801 (MODBus)
@@ -2007,4 +2010,44 @@ This script gives also the wattage per phase. Make sure to get the PIN from your
 1,770701000e0700ff@1,Frequency,Hz,frequency,0
 #
 ```
+------------------------------------------------------------------------------
 
+### Growatt MAX4200 (MODBus)  
+
+growatt solar inverter. this example also shows how to send cmds to modbus  
+
+```
+>D 22
+
+cstr=""
+gl=0
+tmp=0
+
+>B
+=>sensor53 r
+
+
+>S
+if chg[gl]>0 {
+	; change limit
+	tmp=int(gl/42)
+	cstr="r0106000300"+hn(tmp)
+	sml(1 3 cstr)
+}
+
+>M 1
++1,18,m,0,9600,GRW,19,5,01040026,01040028,01040005,01040009,01030003
+1,010404UUuu@i0:10,Netzspannung,V,mainsv,1
+1,010404xxxxUUuu@i0:10,Einspeisestrom,A,mainsc,1
+1,010404UUuuUUuu@i1:10,Einspeiseleistung,W,mainsw,1
+1,010404UUuuUUuu@i2:10,string 1 unten,W,s1w,1
+1,010404UUuuUUuu@i3:10,string 2 oben,W,s2w,1
+1,010304UUuu@i4:1,limit,%,limit,0
+#
+
+>W
+<hr>
+nm(1000 3600 10 gl "Growatt limit (W) " 80 0) 
+```
+
+	
