@@ -7,11 +7,12 @@ We had numerous requests from users to expand the buffer sizes because many IR c
 
 `{"IrReceived":{"Protocol":"PIONEER","Bits":64,"Data":"0xA55A50AFA55A50AF","DataLSB":"0xA55A0AF5A55A0AF5","Repeat":0,"RawData":[8574,4224,574,1558,572,502,570,1562,570,502,572,502,570,1562,570,502,570,1562,572,500,572,1560,572,500,572,1560,572,1560,570,504,568,1560,570,502,572,502,570,1562,570,502,570,1560,570,502,572,500,570,502,572,502,570,1560,570,504,572,1558,572,502,570,1564,568,1562,570,1560,572,1560,572,25258,8574,4222,572,1560,570,502,572,1558,572,502,570,502,572,1558,572,500,570,1560,570,502,570,1560,570,502,570,1560,570,1560,570,504,570,1560,572,502,570,502,570,1560,572,502,570,1560,570,502,570,502,570,502,570,502,570,1560,570,502,570,1560,572,502,570 ...`
 
-**After** (no overflow):
+**Now** (no overflow):
 
 `{"IrReceived":{"Protocol":"PIONEER","Bits":64,"Data":"0xA55A50AFA55A50AF","DataLSB":"0xA55A0AF5A55A0AF5","Repeat":0,"RawData":[+8570-4240+550-1580C-510+565-1565F-505Fh+570gFhIdChIgFeFgFgIhFgIhF-525C-1560IhIkI-520ChFhFhFgFhIkIhIgIgIkIkI-25270A-4225IkIhIgIhIhIkFhIkFjCgIhIkIkI-500IkIhIhIkFhIgIl+545hIhIoIgIhIkFhFgIkIgFgI],"RawDataInfo":[135,135,0]}}`
 
 The new format still encodes timings for High/low pulses.
+
 - First the timings are rounded to the closest 5 microsec value.
 - Instead of using commas, values are prefixed with `+` if it's a HIGH signal, or `-` if it's a LOW signal.
 - Each new timing value is assigned a letter starting with 'A'
