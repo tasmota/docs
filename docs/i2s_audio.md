@@ -23,7 +23,7 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 
 ## Hardware needed
 ### audio output
-<img src="file:///Users/gerhardmutz1/Desktop/s-l1600-1.jpg" align=right width=240>  
+<img src="https://user-images.githubusercontent.com/11647075/185345605-be22d8a9-c597-4eb0-8426-12978b126ea0.jpg" align=right width=240>  
 
 for audio output an I2S DAC Audio breakout must be provided    
 there are several brands available   
@@ -36,7 +36,7 @@ there are several brands available
 &nbsp;
 
 ### audio input
-<img src="file:///Users/gerhardmutz1/Desktop/s-l1600-1.jpg" align=right width=240>  
+<img src="https://user-images.githubusercontent.com/11647075/185345648-37979fa9-2114-4aa0-be99-ee8c855219b2.jpg" align=right width=240>  
 
 for microphone input an I2S microphone must be provided    
 there are also several brands available  
