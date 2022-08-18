@@ -50,6 +50,7 @@ Name|Description|Connection
 **HTU21** | Temperature and Humidity Sensor| I^2^C
 **HX711** | Load Cell Sensor| gpio
 **[HRG15](HRG15)** | Solid State Rain Sensor| serial
+[**I2S Audio**](i2s_audio.md) | I2S Audio DAC and microphone | i2s
 [**iAQ-Core**](IAQ) | Indoor Air Quality Sensor| I^2^C
 **iEM3000** | Schenider Electric modbus energy meter| serial
 **INA219**<BR>**ISL28022** | High-Side DC Current and Voltage Sensor| I^2^C
@@ -76,7 +77,7 @@ Name|Description|Connection
 [**NeoPool**](NeoPool) | Sugar Valley NeoPool Controller| serial
 [**NRF24L01**](NRF24L01) | NRF24L01 as BLE-bridge for Mijia BT Sensors| SPI
 [**OpenTherm**](OpenTherm) | OpenTherm adapter| serial
-[**P1 Smart Meter**](P1-Smart-Meter) | Energy Meter| serial
+[**`P1 Smart Meter`**](P1-Smart-Meter) | Energy Meter| serial
 [**PAJ7620**](PAJ7620) | Gesture & Proximity Detection Sensor
 [**PIR**](PIR-Motion-Sensors#am312) | Passive Infrared Sensor| gpio
 [**PCA9685**](PCA9685) | 16-channel, 12-bit PWM LED controller| I^2^C
