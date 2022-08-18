@@ -39,7 +39,7 @@ Incredibly expandable and flexible.
     - ESP32 Support for Ultra Low Power (ULP) coprocessor via Berry
 - New commands: [`SetOption45`](Commands.md#setoption45), [`SetOption144`](Commands.md#setoption144), [`GlobalTemp2`](Commands.md#globaltemp2), [`GlobalHum2`](Commands.md#globalhum2), [`GlobalPress2`](Commands.md#globalpress2), [`Sleep2`](Commands.md#sleep2), [`WiFiScan`](Commands.md#wifiscan), [`WiFiTest`](Commands.md#wifitest)
 
-See [release notes](https://github.com/arendst/Tasmota/releases/tag/v12.0.0) for a complete list of new features, changes and bug fixes.
+See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
 
 ### Join our communities and chat
 See [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), [Reddit](https://www.reddit.com/r/tasmota/) or [Google Groups](https://groups.google.com/d/forum/sonoffusers) for general chat, feedback, questions and live troubleshooting.
