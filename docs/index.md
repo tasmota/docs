@@ -19,7 +19,7 @@ Incredibly expandable and flexible.
 <b>Install Tasmota using a Chromium-based browser at [https://tasmota.github.io/install/](https://tasmota.github.io/install/).</b>    
 
 ### Current release 
-<a href="http://ota.tasmota.com/tasmota/release-12.0.2/"><span style="font-size:40px;">Tasmota 12.0.2 Paul</span></a><br>
+<a href="http://ota.tasmota.com/tasmota/release-12.1.0/"><span style="font-size:40px;">Tasmota 12.1.0 Patricia</span></a><br>
 
 #### Breaking Changes :warning: 
 - ***This version removes support for direct migration from versions before v8.1.0 (Doris)*** 
@@ -30,8 +30,14 @@ Incredibly expandable and flexible.
 - Removed Arduino IDE support
 
 #### New features
-- Support for: Sonoff MS01 soil moisture sensor, Sonoff SPM v1.2.0, Sonoff Zigbee Bridge Pro, Sonoff NSPanel, 5-channel light dimmer driver BP5758D, HYTxxx temperature and humidity sensor, flowrate meters like YF-DN50
-- New commands: [`SetOption139`](Commands.md#setoption139), [`SetOption140`](Commands.md#setoption140), [`SetOption141`](Commands.md#setoption141), [`SetOption142`](Commands.md#setoption142), [`EnergyExportActive<phase>`](Sonoff-SPM.md#energyexportactive), [`IfxRp`](Commands.md#ifxrp), [`SspmDisplay`](Commands.md#sspmdisplay), [`SSerialSend9`](Commands.md#sserialsend)
+- Added support for: 
+    - 5-channel light dimmer driver SM2335 used in SwitchBot color bulbs
+    - Sonoff POWR3xxD and THR3xxD with their bistable (latching) relays mixed with monostable relays
+    - Modbus bridge
+    - multiple IRSend GPIOs
+    - Catalan language
+    - ESP32 Support for Ultra Low Power (ULP) coprocessor via Berry
+- New commands: [`SetOption45`](Commands.md#setoption45), [`SetOption144`](Commands.md#setoption144), [`GlobalTemp2`](Commands.md#globaltemp2), [`GlobalHum2`](Commands.md#globalhum2), [`GlobalPress2`](Commands.md#globalpress2), [`Sleep2`](Commands.md#sleep2), [`WiFiScan`](Commands.md#wifiscan), [`WiFiTest`](Commands.md#wifitest)
 
 See [release notes](https://github.com/arendst/Tasmota/releases/tag/v12.0.0) for a complete list of new features, changes and bug fixes.
 
