@@ -6,19 +6,21 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 
 ```
 #ifndef USE_I2S_AUDIO
-#define USE_I2S_AUDIO          // Add support for I2S audio output
+#define USE_I2S_AUDIO   // Add support for I2S audio output
 #endif
 
 #ifndef USE_I2S_MIC
-#define USE_I2S_MIC		// in case you want to use a mircophone
+#define USE_I2S_MIC		  // in case you want to use a microphone
 #endif
 
-// in case you want to use a mircophone with mp3 encoding, this also requires PSRAM
+// in case you want to use a microphone with mp3 encoding, this also requires PSRAM
 #ifndef USE_SHINE
 #define USE_SHINE		// use mp3 encoding		
 #endif
 
 ```
+
+remark:  USE_M5STACK_CORE2, USE_TTGO_WATCH and ESP32S3_BOX automatically include i2s audio
 
 ----
 
@@ -93,6 +95,25 @@ there are also several brands available
 |i2smgain F|sets the gain factor of the microphone  F = 1-50|
 ----
 
+### webradio support
+
+(PSRAM needed)  
+
+```
+#ifndef USE_I2S_WEBRADIO
+#define USE_I2S_WEBRADIO          // Add support mp3 webradio streaming
+#endif
+
+```
+
+|  CMD WR | action|
+|---|---|
+|i2swr URL|starts playing an mp3 audio radio stream, no blocking|
+|i2swr|stops playing|
+
+----
+
+
 ### mp3 streaming support
 
 this starts an mp3 streaming server on port 81 which can stream microphone audio to a browser (PSRAM needed)  
@@ -130,7 +151,7 @@ i2sbridge IP|sets the ip of the slave device|
 |i2sbridge pN|sets the GPIO pin numer of a push to talk button|
 |i2sbridge M|starts the bridge in write or read mode, 1=read,2=write,0=stop|  
 
-if a push to talk button is defined the brdge goes to write mode if the button is pushed and to read mode if the button is released  
+if a push to talk button is defined the bridge goes to write mode if the button is pushed and to read mode if the button is released  
  
 
 
