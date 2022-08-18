@@ -260,3 +260,5 @@ Example: The header for an Optoma projector is 8920 4450<br>
 ... which would be encoded as `0x00 0x1 0x24 0x92` in broalink format.
 
 You have all the needed information to convert from Broadlink to Tasmota...
+
+See [broadlink-ir-converter](https://github.com/haimkastner/broadlink-ir-converter/blob/master/src/index.ts) for a complete implementation example (in JavaScript) which is also available as a [package on the NPM registry](https://www.npmjs.com/package/broadlink-ir-converter).
