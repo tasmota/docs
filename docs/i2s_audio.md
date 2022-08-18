@@ -3,6 +3,7 @@
 !!! failure "This feature is not included in precompiled binaries"     
 This option is only supported on ESP32 variants (except C3)   
 To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+
 ```
 #ifndef USE_I2S_AUDIO
 #define USE_I2S_AUDIO          // Add support for I2S audio output
@@ -18,6 +19,7 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 #endif
 
 ```
+
 ----
 
 
@@ -104,6 +106,7 @@ this starts an mp3 streaming server on port 81 which can stream microphone audio
 #define MP3_STREAM_PORT 81	// if defined overwrites the default 81
 
 ```
+
 ----
 
 ### i2s audio bridge support
@@ -118,6 +121,7 @@ needs audio output and microphone on 2 devices (no PSRAM needed)
 #define I2S_BRIDGE_PORT 6970 // if defined overwrites the default 6970
 
 ```
+
 |  CMD bridge | action|
 |---|---|
 i2sbridge IP|sets the ip of the slave device|
