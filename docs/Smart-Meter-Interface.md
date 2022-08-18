@@ -359,8 +359,8 @@ Look down below for script examples based on the following metering devices:
 - [Holley DTZ541](#holley-dtz541-sml) (SML)
 - [Norax 3D+](#norax-3d-sml) (SML)
 - [Growatt MAX4200](#growatt-max4200-modbus) (MODbus)
+- [DDM18SD](#DDM18SD-modbus) (MODbus)
 
-	
 --------------------------------------------------------
 
 ### JANZ C3801 (MODBus)
@@ -2050,4 +2050,26 @@ if chg[gl]>0 {
 nm(1000 3600 10 gl "Growatt limit (W) " 80 0) 
 ```
 
+### DDM18SD (MODBus) 
+	
+This script, based on tasmota scripting language, is to read data on a unsupported DDM18SD 
+power meter. It has a 8E1 parity and the slave ID address is n 5.
+On a Nodemcu or Wemos D1 board, put wires between GPIO3 and GPIO1 to the RX and 
+TX pinout of a RS485 to TTL board, but leave empty (none) the GPIO Tasmota software settings. 
+A & B connected to the meter pinout. 
+
+```
+>B  
+->sensor53 r
+>M 1  
++1,3,M,0,9600,DDM,1,2,05040000,05040008,05040012,0504001A,05040036,0504002A,05040100,05040400
+1,050404ffffffff@i0:1,Tensione,V,DDM_Voltage,2  
+1,050404ffffffff@i1:1,Corrente,A,DDM_Current,2  
+1,050404ffffffff@i2:1,Consumo Ist.,W,DDM_Power,2
+1,050404ffffffff@i3:1,Reactive power,Var,DDM_React_Power,2
+1,050404ffffffff@i4:1,Frequenza,Hz,DDM_Frequency,2 
+1,050404ffffffff@i5:1,Power factor,,DDM_PF,2
+1,050404ffffffff@i6:1,Consumi tot.,Kwh,DDM_Tot_Power,2
+1,050404ffffffff@i7:1,Tot. react. power,Kvarh,DDM_Reac_Power,2
+#```
 	
