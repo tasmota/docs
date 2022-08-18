@@ -216,6 +216,7 @@ nav:
     - HC-SR04.md
     - HRG15.md
     - Honeywell-HIH.md
+    - I2S_audio.md
     - IAQ.md
     - IR-Remote.md
     - LM75AD.md
