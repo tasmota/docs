@@ -323,6 +323,10 @@ MQT: tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:01","Switch1":"ON"}
 ```
 You can globally change the status text with [`StateText`](Commands.md#statetext) command.
 
+You can change the default "Switch1" text using [`SwitchText<x>`](Commands.md#switchtext) command.  For exemple: `SwitchText1 Garage_Door_State`
+
+When `Setoption114 1` is used together with `SwitchMode<x> 15`, Tasmota Integration in Home Assistant will create a binary sensor in HA using the Default text "String1" or the text mentionned in the `SwitchText` command.
+
 ### Rules
 
 Use rules to send messages to different MQTT topics or send commands to other Tasmota devices when switch state (defined by [SwitchMode](#switchmode)) changes.
