@@ -58,11 +58,11 @@ If you have been using `SetOption19 1` for device discovery, setting it to `SetO
  -->
 ### Removing devices
 
-You cannot as long as Home Assistant support is enabled in your Tasmota binary. Disable the device in Home Assistant instead. There is no setoption to disable all autodiscovery.
+You cannot as long as Home Assistant support is enabled in your Tasmota binary. Disable the device in Home Assistant instead. 
 
 ![Disable device](_media/hatasmota_delete.png)
 
-Deleting them from Home Assistant while Tasmota device is still active will simply rediscover all the entities. 
+Deleting them from Home Assistant while Tasmota device is still active will eventually rediscover all the entities. 
 
 <!-- If you opt to switch to MQTT Discovery, issuing `SetOption19 1` command will remove all Tasmota entities and add new entities under the MQTT integration. -->
 
@@ -1104,7 +1104,7 @@ mqtt:
 Home Assistant has a feature called [MQTT discovery](https://www.home-assistant.io/docs/mqtt/discovery/).
 With MQTT discovery no user interaction or configuration file editing is needed to add new devices in Home Assistant. Most of the changes will be updated in HA automatically.
 
-### Enable Autodiscovery
+#### Enable Autodiscovery
 Enable autodiscovery on a device with the command:
 
 ```console
@@ -1119,7 +1119,7 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to identify the device in Ho
 
 !!! note "Special settings for each device type:"
 
-### Finalising Setup
+#### Finalising Setup
 
 All automatically discovered entities will show up under **Configuration -> Integrations -> MQTT** card.
 
@@ -1147,7 +1147,7 @@ You can further customise your device in Home Assistant by clicking on the entit
 
 **`SetOption59` to `1`**: Send `tele/%topic%/STATE` in addition to `stat/%topic%/RESULT` for commands `State`, `Power` and any command causing a light to be turned on.
 
-### Supported Entities
+#### Supported Entities
 
 === "Buttons"
     Announced to Home Assistant as [Automation Trigger](https://www.home-assistant.io/docs/automation/trigger/).
@@ -1221,8 +1221,10 @@ Types of devices not listed above (covers, etc) require [manual configuration](#
 
 Test if Tasmota and Home Assistant can communicate properly. 
 
-In Home Assistant web UI go to **Configuration - Integrations**, locate MQTT broker card and click on **CONFIGURE**. Subscribe to `tele/%topic%/STATE` and click **START LISTENING**. You should see a JSON response from your device inside 5 minutes.
+[![Open your Home Assistant instance and show your MQTT configuration panel.](https://my.home-assistant.io/badges/config_mqtt.svg)](https://my.home-assistant.io/redirect/config_mqtt/)
 
-To test control of a relay or light, as **Publish a packet topic** enter `cmnd/%topic%/POWER` with payload `toggle`. When you click **PUBLISH** your device should switch state and a JSON resc
+Click on the above button or in your Home Assistant web UI go to **Configuration - Integrations**, locate MQTT card and click on **CONFIGURE**. Subscribe to `tele/%topic%/STATE` and click **START LISTENING**. You should see a JSON response from your device inside 5 minutes.
+
+To test control of a relay or light, as **Publish a packet topic** enter `cmnd/%topic%/POWER` with payload `toggle` or `2`. When you click **PUBLISH** your device should switch state and a JSON resc
 ![](_media/hass1.png)
 ![](_media/hass2.png)
