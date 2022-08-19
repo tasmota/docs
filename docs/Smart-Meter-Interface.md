@@ -2071,5 +2071,24 @@ A & B connected to the meter pinout.
 1,050404ffffffff@i5:1,Power factor,,DDM_PF,2
 1,050404ffffffff@i6:1,Consumi tot.,Kwh,DDM_Tot_Power,2
 1,050404ffffffff@i7:1,Tot. react. power,Kvarh,DDM_Reac_Power,2
-#```
+#
+```
+
+### eZB MD3 (SML)
 	
+```
+
+
+>D
+>B
+=>sensor53 r
+>M 1
++1,3,s,0,9600,Smartmeter
+1,77070100010800ff@100000000,Total consumption,KWh,Total_in,3
+1,77070100020800ff@100000000,Total generation,KWh,Total_out,3
+1,77070100100700ff@1,Power L1+L2+L3,W,P_L1_L2_L3,18
+1,77070100240700ff@1,Power L1,W,P_L1,18
+1,77070100380700ff@1,Power L2,W,P_L2,18
+1,770701004C0700ff@1,Power L3,W,P_L3,18
+#
+```
