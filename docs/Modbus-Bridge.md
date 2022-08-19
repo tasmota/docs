@@ -1,5 +1,7 @@
 # Modbus Bridge
 
+!!! info "Add a "Modbus bridge" functionality to a device that is otherwise serial Modbus RTU only"
+
 ??? tip "This feature is only included in `tasmota32` binary"  
     When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
     ```c++
@@ -9,14 +11,14 @@
     #endif
     ```
 
-This feature can be used to add a "Modbus bridge" functionality to a device that is otherwise serial Modbus RTU only. You connect the device to a ESP8266/ESP32 and Tasmota will create a bridge to the Modbus network.
-
 In most cases you'll need an RS485 converter like this:
 
 ![rs485 converter](https://user-images.githubusercontent.com/2833940/179932126-df473fcb-8de3-488d-b200-f57dc76db198.png)
 
 ## Introduction
-The Modbus Bridge modules features 2 kind of bridges. 
+Connect the Modbus device to an ESP and Tasmota will create a bridge to the Modbus network.
+
+The Modbus Bridge driver features 2 kind of bridges. 
   
 `USE_MODBUS_BRIDGE`: The bridge can be used by commands in the console and via MQTT messages.    
 `USE_MODBUS_BRIDGE_TCP`: The bridge can be used by commands in the console and via MQTT messages but also as Modbus TCP/IP bridge
@@ -66,8 +68,8 @@ hex|Return or send the slave data as a hex values
 ### Additional commands for USE_MODBUS_TCP_BRIDGE
 Command|Parameters
 :---|:---
-ModbusTcpStart| Start the Modbus tcp bridge on the specified `tcp port`
-|ModbusTcpConnect| Connect to a remote Modbus tcp server on `ip address` and `remote tcp port`
+ModbusTcpStart| Start the Modbus TCP bridge on the specified `tcp port`
+|ModbusTcpConnect| Connect to a remote Modbus TCP server on `ip address` and `remote tcp port`
   
 ## Returned Data
 ```json
