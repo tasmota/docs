@@ -1,8 +1,7 @@
 # Modbus Bridge
 
-!!! info "This feature is only included in `tasmota32` binary"  
-
-!!! tip "To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:"
+??? tip "This feature is only included in `tasmota32` binary"  
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
     ```c++
     #ifndef USE_MODBUS_BRIDGE
     #define USE_MODBUS_BRIDGE       // Add support for software Modbus Bridge (+3k code)
