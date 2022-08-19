@@ -2092,3 +2092,17 @@ A & B connected to the meter pinout.
 1,770701004C0700ff@1,Power L3,W,P_L3,18
 #
 ```
+
+### KAIFA MB310H4BDE
+	
+```
+D
+B
+=>sensor53 r
+M 1
++1,3,s,0,9600,Haus
+1,77070100010800ff@1000,Zaehlerstand In,KWh,Total_in,2
+1,77070100020800ff@1000,Zaehlerstand Out,KWh,Total_out,2
+1,77070100100700ff@1,Leistung-akt.,W,Power_curr,0
+1,77070100600100ff@#,Server-ID,,Meter_Number,0
+```
