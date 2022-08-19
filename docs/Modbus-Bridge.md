@@ -2,14 +2,13 @@
 
 !!! info "This feature is only included in `tasmota32` binary"  
 
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-```c++
-#ifndef USE_MODBUS_BRIDGE
-#define USE_MODBUS_BRIDGE       // Add support for software Modbus Bridge (+3k code)
-#define USE_MODBUS_BRIDGE_TCP   // Add support for software Modbus TCP Bridge (Must also enable USE_MODBUS_BRIDGE)
-#endif
-```
-----
+!!! tip "To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:"
+    ```c++
+    #ifndef USE_MODBUS_BRIDGE
+    #define USE_MODBUS_BRIDGE       // Add support for software Modbus Bridge (+3k code)
+    #define USE_MODBUS_BRIDGE_TCP   // Add support for software Modbus TCP Bridge (Must also enable USE_MODBUS_BRIDGE)
+    #endif
+    ```
 
 This feature can be used to add a "Modbus bridge" functionality to a device that is otherwise serial Modbus RTU only. You connect the device to a ESP8266/ESP32 and Tasmota will create a bridge to the Modbus network.
 
