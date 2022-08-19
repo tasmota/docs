@@ -58,28 +58,28 @@ there are also several brands available
 ### Connecting the I2S hardware to an ESP32
 
 
-|  I2SDAC | ESP32-GPIO |
+|I2SDAC|ESP32-GPIO|
 |---|---|
-|BCLK  |I2S_BCLK|
-|LRC   |I2S_WS|
-|DIN   |I2S_DOUT|
-|SD   |nc|
-|GAIN   |nc|
-|VIN   |3.3-5V|
-|GND   |Ground|
+|BCLK|I2S_BCLK|
+|LRC|I2S_WS|
+|DIN|I2S_DOUT|
+|SD|nc|
+|GAIN|nc|
+|VIN|3.3-5V|
+|GND|Ground|
 
-|  I2S micro | ESP32-GPIO |
+|I2S micro|ESP32-GPIO|
 |---|---|
-|SCK  | I2S_BCLK |
-|WS   |I2S_WS|
-|SD   |I2S_DIN|
-|L/R   |Ground|
-|VDD   |3.3V|
-|GND   | Ground |
+|SCK|I2S_BCLK|
+|WS|I2S_WS|
+|SD|I2S_DIN|
+|L/R|Ground|
+|VDD|3.3V|
+|GND|Ground|
 
 
 ### Tasmota console cmds
-|  CMD ADC | action|
+|CMD ADC|action|
 |---|---|
 |i2splay /file.mp3|plays an mp3 audio file from the file system, the systems blocks until sound is played|
 |i2splay +/file.mp3|plays an mp3 audio file from the file system, sound is played in a seperate task not blocking the system|
@@ -87,12 +87,13 @@ there are also several brands available
 |i2ssay hello|speaks the text you type (only english language supported)|
 |i2stime|tells current time, if #define USE_I2S_SAY_TIME is defined|
 
-|  CMD micro | action|
+|CMD micro|action|
 |---|---|
 |i2srec /file.mp3|starts recording an mp3 audio file to the file system, no blocking|
 |i2srec|stops recording|
 |i2srec -?|tells how many seconds already recorded|
 |i2smgain F|sets the gain factor of the microphone  F = 1-50|
+
 ----
 
 ### webradio support
@@ -106,7 +107,7 @@ there are also several brands available
 
 ```
 
-|  CMD WR | action|
+|CMD WR|action|
 |---|---|
 |i2swr URL|starts playing an mp3 audio radio stream, no blocking|
 |i2swr|stops playing|
@@ -143,7 +144,7 @@ needs audio output and microphone on 2 devices (no PSRAM needed)
 
 ```
 
-|  CMD bridge | action|
+|CMD bridge|action|
 |---|---|
 i2sbridge IP|sets the ip of the slave device|
 |i2sbridge S|sets microphone swap, 6=swapped, 7=not swapped|
@@ -153,7 +154,6 @@ i2sbridge IP|sets the ip of the slave device|
 
 if a push to talk button is defined the bridge goes to write mode if the button is pushed and to read mode if the button is released  
  
-
 
 ----
 
