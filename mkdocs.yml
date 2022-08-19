@@ -143,7 +143,7 @@ nav:
     - IR Communication: Tasmota-IR.md
     - LCD/DLP Projector Control: Projector.md
     - Lights.md
-    - ModBus-Bridge.md
+    - Modbus Bridge: Modbus-Bridge.md
     - OpenTherm: OpenTherm.md
     - PIR-Motion-Sensors.md
     - Power-Monitoring-Calibration.md
