@@ -85,11 +85,11 @@ To save code space almost no error messages are provided. However it is taken ca
 the script language normally shares script buffer with rules buffer which is 1536 chars.
 with below options script buffer size may be expanded. PVARS is size for permanant vars.
 
-| Feature | ESP8266 | ESP32 | PVARS | remarks |
+| Feature | ESP | ESP32 | PVARS | remarks |
 | :---    | :---:   | :---: | :---: | :--- |
 | fallback | 1536 | 1536 | 50 | no longer supported |
 | compression (default)| 2560 | 2560 | 50 |actual compression rate may vary |
-| #define USE_UFILESYS<br>#define UFSYS_SIZE S | S<=8192 | S<=16384 | 1536 | ESP8266 must use 4M Flash use linker option `-Wl,-Teagle.flash.4m2m.ld` or SDCARD  <BR>ESP32 can use any linker file, size of Filesystem depends on linker file 
+| #define USE_UFILESYS<br>#define UFSYS_SIZE S | S<=8192 | S<=16384 | 1536 | ESP must use 4M Flash use linker option `-Wl,-Teagle.flash.4m2m.ld` or SDCARD  <BR>ESP32 can use any linker file, size of Filesystem depends on linker file 
 | #define EEP_SCRIPT_SIZE S<br>#define USE_EEPROM<br>#define USE_24C256 | S<=8192 | S<=16384 | 1536 |for hardware eeprom only|
 | #define EEP_SCRIPT_SIZE 6200<br>#define USE_EEPROM | S=6200 | not supported | 1536 | script may be lost on OTA and serial flash, not on restart |
 

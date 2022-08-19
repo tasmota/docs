@@ -1,10 +1,8 @@
 # Berry Scripting Language :material-cpu-32-bit:
 
-!!! info "If you're new to Berry, have a look at [Berry Introduction (in 20 minutes of less)](Berry-Introduction.md)"
+!!! info "Berry Scripting is included in all `tasmota32` builds. It is **NOT** supported on ESP82xx"
 
-!!! info "Berry Scripting is included in all Tasmota32 builds. It is not supported on ESP82xx"
-
-!!! info "If you plan to code in Berry, you should enable `#define USE_BERRY_DEBUG` which will give you much more details when coding"
+!!! tip "If you plan to code in Berry, you should enable `#define USE_BERRY_DEBUG` which will give you much more details when coding"
 
 <img style="float:right;height:40px" alt="Berry logo" src="../_media/berry/berry.svg">
 
@@ -14,6 +12,8 @@ Useful resources:
 - Full language documentation [The Berry Script Language Reference Manual](https://github.com/berry-lang/berry/wiki/Reference)
 - Tasmota extension of Berry, see below
 - Full examples in the [Berry Cookbook](Berry-Cookbook.md)
+
+!!! tip "If you're new to Berry, have a look at [Berry Introduction (in 20 minutes of less)](Berry-Introduction.md)"
 
 ## Introduction to Berry
 
@@ -1077,7 +1077,7 @@ bytes("414243")    # received packet as `bytes()`
 
 There is native support for addressable leds via NeoPixelBus, with support for animations. Currently supported: WS2812, SK6812.
 
-Details are in [Berry leds](Berry_leds.md)
+Details are in [Berry leds](Berry_Addressable-LED.md)
 
 ### `serial` class
 

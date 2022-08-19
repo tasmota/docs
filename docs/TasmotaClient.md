@@ -39,7 +39,7 @@ As mentioned above it is possible to connect any microcontroller of your choice 
 
 With Tasmota GPIO configuration provided above you may now proceed to make the necessary electrical connections between the ESP8266/ESP8285 and your client device, for example:
 
-| ESP8266  | Arduino Pro Mini (3.3V) |
+| ESP  | Arduino Pro Mini (3.3V) |
 |------------|-------------------------|
 | VCC        | VCC                     |
 | GND        | GND                     |

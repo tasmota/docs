@@ -1,33 +1,32 @@
 # AHT1x/AHT2x and compatible temperature and humidity sensor
-!!! failure "This feature is not included in precompiled binaries"  
 
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h` to add support for AHT10 or AHT15:
-```
-#ifndef USE_AHT1x
-#define USE_AHT1x       // [I2cDriver43] Enable AHT10/15 humidity and temperature sensor (I2C address 0x38 or 0x39)
-#endif
-```
-or those lines for AHT20 or AM2301B:
-```
-#ifndef USE_AHT2x
-#define USE_AHT2x       Enable AHT20 instead of AHT1x humidity and temperature sensor (I2C address 0x38)
-#endif
-```
+??? failure "This feature is not included in precompiled binaries"  
 
-----
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```c++
+    #ifndef USE_AHT1x
+    #define USE_AHT1x       // [I2cDriver43] Enable AHT10/15 humidity and temperature sensor (I2C address 0x38, 0x39) (+0k8 code)
+    #endif
+    ```
+    or those lines for AHT2x or AM2301B:
+    ```
+    #ifndef USE_AHT2x
+    #define USE_AHT2x       // [I2cDriver43] Enable AHT20/AM2301B instead of AHT1x humidity and temperature sensor (I2C address 0x38) (+0k8 code)
+    #endif
+    ```
 
-AHT10 or AH15 are an I<sup>2</sup>C temperature and humidity sensor.
-AHT20 or AM2301B are upgraded versions.
+AHT1x are an I<sup>2</sup>C temperature and humidity sensor.
+AHT2x or AM2301B are upgraded versions.
 
 ## Configuration
 
 !!! failure "This sensor is incompatible with other I^2^C devices on I^2^C bus"
     Sensor datasheet implicitly says:
     **Only a single** AHT10 can be connected to the I^2^C bus and no other I^2^C devices can be connected.
-    The AHT20/AM2301B do not suffer from this problem.
+    The AHT2x/AM2301B does not suffer from this problem.
 
 ### Wiring
-| AHT1x   | ESP8266 |
+| AHT   | ESP |
 |---|---|
 |VCC   |3.3V
 |GND   |GND   
@@ -38,8 +37,8 @@ AHT20 or AM2301B are upgraded versions.
 ### Tasmota Settings 
 In the **_Configuration -> Configure Module_** page assign:
 
-1. GPIOx to `I2C SDA (6)`
-2. GPIOy to `I2C SCL (5)`
+1. GPIOx to `I2C SDA`
+2. GPIOy to `I2C SCL`
 
 After a reboot the driver will detect AHT1x automatically and display sensor readings.
 

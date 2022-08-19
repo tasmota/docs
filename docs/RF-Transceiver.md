@@ -16,7 +16,7 @@ Some of officially supported modules by rc-switch are:
 This guide was created using STX882 RF transmitter which also works without issues.
 
 ### Wiring
-| RF   | ESP8266 |
+| RF   | ESP |
 |---|---|
 |data   |GPIOx   |
 |+   | 3.3v/5v  |
@@ -39,7 +39,7 @@ RF receiver is used to capture RF codes. Those codes can be sent using [`RFSend`
 This guide is using SRX882 RF receiver module with a helical antenna. 
 
 ### Wiring
-| SRX882   | ESP8266 |
+| SRX882   | ESP |
 |---|---|
 |Data   |GPIOx   |
 |VCC   | 5v  |

@@ -61,7 +61,7 @@ The TX23 sensor is still available under various brand names such as "La Crosse"
 
 ##### TX20 / WS2300-15
 
-| Pin | Color       | Description | ESP8266 |
+| Pin | Color       | Description | ESP |
 |-----|-------------|-------------|---------|
 |  1  | Brown/Black | TxD         | GPIOx   |
 |  2  | Red         | 3.3V        | 3.3V    |
@@ -70,7 +70,7 @@ The TX23 sensor is still available under various brand names such as "La Crosse"
 
 ##### TX23
 
-| Pin | Color       | Description | ESP8266 |
+| Pin | Color       | Description | ESP |
 |-----|-------------|-------------|---------|
 |  1  | Brown/Black | TxD         | GPIOx   |
 |  2  | Red         | 3.3V        | 3.3V    |

@@ -20,7 +20,7 @@ Follow datasheet for required pull-ups when connecting the bare sensor module di
 
 <img src="../_media/peripherals/iaq-pinout.jpg" style="float:right"></img>
 
-| Breakout | ESP8266   |
+| Breakout | ESP   |
 |----------|-----------|
 | VCC/VIN  | +3.3VDC   |
 | GND      | GND       |
@@ -30,8 +30,8 @@ Follow datasheet for required pull-ups when connecting the bare sensor module di
 #### Tasmota Settings
 In the **_Configuration -> Configure Module_** page assign:
 
-1. GPIOx to `I2C SDA (6)`
-2. GPIOy to `I2C SCL (5)`
+1. GPIOx to `I2C SDA`
+2. GPIOy to `I2C SCL`
 
 After configuring the GPIO's the driver will detect iAQ-Core automatically.
 

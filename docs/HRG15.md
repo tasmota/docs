@@ -18,7 +18,7 @@ Find out more on the [manufacturer's website](https://rainsensors.com/products/r
 ## Configuration
 
 ### Wiring
-| HRG15 | ESP8266
+| HRG15 | ESP
 |   ---|    ---
 |GND (1)  | GND
 |V+ 3.3V (8)   | 3.3V 

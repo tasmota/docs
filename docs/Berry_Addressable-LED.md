@@ -1,4 +1,4 @@
-# Berry leds
+# Addressable LEDs in Berry
 
 Requires `#define USE_WS2812`.
 

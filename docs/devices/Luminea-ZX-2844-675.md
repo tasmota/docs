@@ -24,7 +24,7 @@ You can configure it as a "generic module"
 
 And set the GPIO as follow:
 
-| Function | ESP8266 Pin | Channel |
+| Function | ESP Pin | Channel |
 | -------- | ----------- | ------- |
 | R | GPIO 14 | PWM1 |
 | G | GPIO 12 | PWM2 |
@@ -34,7 +34,7 @@ And set the GPIO as follow:
 
 There is an second version with a green PCB and different pinout:
 
-| Function | ESP8266 Pin | Channel |
+| Function | ESP Pin | Channel |
 | -------- | ----------- | ------- |
 | R | GPIO 4 | PWM1 |
 | G | GPIO 12 | PWM2 |

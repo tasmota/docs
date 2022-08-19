@@ -8,7 +8,7 @@ Most builds support only most common IR protocols, but [tasmota-ir.bin](Tasmota-
 
 
 ### Wiring
-| IR w/ 2N222   | ESP266 |
+| IR w/ 2N222   | ESP |
 |---|---|
 |data   |GPIOx   |
 |+   | 3.3v/5v  |
@@ -29,7 +29,7 @@ IR Receiver is used to capture IR codes. Those codes can be sent using [`IRSend`
 Example uses the widely available [KY-022](https://arduinomodules.info/ky-022-infrared-receiver-module/) breakout board.
 
 ### Wiring
-| KY-022   | ESP266 |
+| KY-022   | ESP |
 |---|---|
 |S   |GPIOx   |
 |+   | 5v  |

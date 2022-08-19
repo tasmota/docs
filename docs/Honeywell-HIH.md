@@ -45,8 +45,8 @@ Soldering a 1-2" piece of wire between the ESP and the HIH7121 fixes this issue:
 
 ### Tasmota Settings
 In the **_Configuration -> Configure Module_** page assign:
-1. GPIO RX to `I2C SDA (6)`
-2. GPIO TX to `I2C SCL (5)`
+1. GPIO RX to `I2C SDA`
+2. GPIO TX to `I2C SCL`
 
 After a reboot the driver will detect the HIHxxxx automatically and display sensor data.
 

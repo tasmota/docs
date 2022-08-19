@@ -1,17 +1,12 @@
-!!! info "This feature is included only in builds: tasmota and tasmota-sensors"
+??? tip "This feature is included only in `tasmota`, `tasmota32`, `tasmota-lite` and `tasmota-sensors` binaries" 
 
-To use in other builds you must [compile your own build](Compile-your-build). Add the following to `user_config_override.h`:
-```
-#ifndef EMULATION
-#define EMULATION       EMUL_NONE       // [Emulation] Select Belkin WeMo (single relay/light) or Hue Bridge emulation (multi relay/light) (EMUL_NONE, EMUL_WEMO or EMUL_HUE)
-#endif
-```
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```c++
+     #define USE_EMULATION              // Enable Wemo or Hue emulation
+     #define USE_EMULATION_HUE          // Enable Hue Bridge emulation for Alexa (+14k code, +2k mem common)
+     #define USE_EMULATION_WEMO         // Enable Belkin WeMo emulation for Alexa (+6k code, +2k mem common)
+     ```
 
-`EMUL_NONE` = disables emulation   
-`EMUL_WEMO` = enables Belking WeMo emulation   
-`EMUL_HUE` = enables Hue Bridge emulation   
-
-----
 ## Connecting to Alexa
 
 You can interact with Tasmota using Amazon Alexa through its Echo devices . 

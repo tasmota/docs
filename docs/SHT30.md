@@ -21,8 +21,8 @@ _Note: On the v2.1.0 board these pads are on the rear._
 ### Tasmota Settings
 In the **_Configuration -> Configure Module_** page assign:
 
-* D2 GPIO4 to `I2C SDA (6)`
-* D1 GPIO5 to `I2C SCL (5)`
+* D2 GPIO4 to `I2C SDA`
+* D1 GPIO5 to `I2C SCL`
 
 ![wemos_sht30_config_marked](_media/wemos_sht30_config_marked.jpg)
 

@@ -40,7 +40,7 @@ Finding appropriate connectors/cables for this module are somewhat cumbersome, [
 
 ![SPS30 pinout](_media/sps30-interface.png)
 
-| Pin | SPS30 | ESP8266 |  Comment                   |
+| Pin | SPS30 | ESP |  Comment                   |
 |-----|-------|---------|---------------------------|
 | 1   | VDD   | +       | 5V ± 10%                  |
 | 2   | SDA   | GPIOx   | 5V and 3.3V compatible    |

@@ -33,7 +33,7 @@ Sample boards for VL53L0X. Similar boards exist for VL53L1X.
 ## Configuration for single sensor
 
 ### Wiring for single sensor
-| VL53LXX   | ESP8266 |
+| VL53LXX   | ESP |
 |---|---|
 |GND   |GND
 |VCC   |3.3V
@@ -88,7 +88,7 @@ Tasmota supports by default up to 8 of these sensors in parallel. Note that they
 When using multiple VL53LXX, it is required to wire the XSHUT pin of each sensors to a dedicated free GPIO and assign as `VL53LXX XSHUT` 1 to 8. This is to let Tasmota change by software the I2C address of those and give them an unique address for operation. The sensor don't save its address and this procedure is performed automatically at every restart. The Addresses used for this are by default 0x78 (120) to 0x7F (127). As for a single sensor, you must not use any other I2C device on those addresses. As the date of writing, there is currently no I2C device supported by Tasmota with those addresses. However such devices exists and may be supported by later versions of Tasmota. You can change the relocation address by a compile option, see the [compile options](#compile-options) section.
 
 ### Wiring for Multiple Sensors
-| VL53LXX-1   | VL53LXX-2   | VL53LXX-3   | ... | ESP8266 |
+| VL53LXX-1   | VL53LXX-2   | VL53LXX-3   | ... | ESP |
 |---|---|---|---|---|
 |GND   |GND   |GND   |GND   |GND
 |VCC   |VCC   |VCC   |VCC   |3.3V

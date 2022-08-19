@@ -14,7 +14,7 @@ The [US-100](https://www.adafruit.com/product/4019) can also be use as a HC-SR04
 
 ### Wiring<img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/wemos/wemos_hc-sr04_schematic.jpg" align=right></img>
 
-| HC-SR04   | ESP8266 |
+| HC-SR04   | ESP |
 |---|---|
 |Vcc   |5V |
 |GND   |GND |

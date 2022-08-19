@@ -2,13 +2,12 @@
 
 ## MI32 Sensors 
 
-!!! failure "This feature is included only in tasmota32-bluetooth.bin"
+??? failure "This feature is included only in tasmota32-bluetooth.bin"
     
-Otherwise you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-
-```c++
-#define USE_MI_ESP32       // (ESP32 only) Add support for ESP32 as a BLE-bridge (+9k2 mem, +292k flash)
-```
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```c++
+    #define USE_MI_ESP32       // (ESP32 only) Add support for ESP32 as a BLE-bridge (+9k2 mem, +292k flash)
+    ```
 
 Different vendors offer Bluetooth solutions, mostly as part of the Xiaomi brand, often under the Mijia label. The sensors supported by Tasmota use BLE (Bluetooth Low Energy) to transmit the sensor data, but they differ in their accessibilities quite substantially.  
   
@@ -166,13 +165,12 @@ This will update every day at 00:30 AM.
 ## BLE ESP32 
 This allows for the receiving of BLE advertisements from BLE devices, including "iBeacons" and BLE sensors, but also for the control of simple BLE devices, providing for reading, writing and receiving notifications. 
 
-!!! failure "This feature is included only in tasmota32-bluetooth.bin"
+??? failure "This feature is included only in tasmota32-bluetooth.bin"
     
-Otherwise you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-
-```c++
-#define USE_BLE_ESP32                // Add support for ESP32 as a BLE-bridge (+9k2? mem, +292k? flash)
-```
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```c++
+    #define USE_BLE_ESP32                // Add support for ESP32 as a BLE-bridge (+9k2? mem, +292k? flash)
+    ```
 
 Be aware, enabling of the native BLE on ESP32 has an impact on Wi-Fi performance.  Although later SDK helped a bit, expect more lag on the web interface and on MQTT.
 If only controlling BLE devices, then scanning can be disabled, which will minimize Wi-Fi impact.
@@ -186,11 +184,12 @@ Note that the only configuration stored is the [`SetOption115`](Commands.md#seto
 
 Hear adverts from BLE devices, and produce MQTT messages containing RSSI and other information about them.  Break out iBeacon specific data if present. 
 
-!!! failure "This feature is not included in precompiled binaries"     
+??? failure "This feature is not included in precompiled binaries"  
 
-```
-#define USE_IBEACON_ESP32                // Add support for Bluetooth LE passive scan of iBeacon devices
-```
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```c++
+    #define USE_IBEACON_ESP32                // Add support for Bluetooth LE passive scan of iBeacon devices
+    ```
 
 This driver reports all beacons found during a scan with its ID (derived from beacon's MAC address) prefixed with `IBEACON_` and RSSI value.
 

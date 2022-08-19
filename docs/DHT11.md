@@ -1,11 +1,19 @@
 # DHT11 temperature and humidity sensor
 
-DHT11 is a basic, ultra low-cost digital temperature and humidity sensor. It is very inaccurate and surpassed by others (AM2301, BME280, ...) thus not recommended by us.
+??? tip "This feature is included in `tasmota`, `tasmota32`, `tasmota-knx` and `tasmota-display` binaries" 
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```c++
+    #ifndef USE_DHT
+    #define USE_DHT     // Add support for DHT11, AM2301 (DHT21, DHT22, AM2302, AM2321) and SI7021 Temperature and Humidity sensor (1k6 code)
+    #endif
+    ```
+
+DHT11 is a basic, ultra low-cost digital temperature and humidity sensor. It is very inaccurate and surpassed by others (AM2301, BME280, ...) thus not recommended by the Tasmota team.
 
 ## Configuration
 
 ### Wiring
-| DHT11   | ESP266 |
+| DHT11   | ESP |
 |---|---|
 |-   |GND   |
 |OUT   |GPIOx   |
@@ -14,7 +22,7 @@ DHT11 is a basic, ultra low-cost digital temperature and humidity sensor. It is 
 ### Tasmota Settings
 In the **_Configuration -> Configure Module_** page assign:
 
-- GPIOx to `DHT11 (1)`   
+- GPIOx to `DHT11`   
 
 After reboot of the device the temperature and humidity are displayed.
 

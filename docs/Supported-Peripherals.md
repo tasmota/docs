@@ -25,6 +25,7 @@ Name|Description|Connection
 [**DFR0299**](DFR0299) | DFRobot DFPlayer Mini MP3 Player| serial
 [**DHT11**](DHT11) | Temperature and Humidity Sensor | gpio
 **DHT12** | Temperature and Humidity Sensor | gpio
+[**DY-SV17F**](DY-SV17F) | DY-SV17F MP3 Player| serial
 **DYP-ME007** | Ultrasonic distance Sensor| serial
 **[DS18x20](DS18x20)** | Temperature Sensor| 1-Wire
 **DS1624<BR>DS1621** | Temperature Sensor| 1-Wire

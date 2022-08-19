@@ -1,12 +1,12 @@
-!!! failure "This feature is not included in precompiled binaries"
+??? failure "This feature is not included in precompiled binaries"  
 
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-```
-#ifndef USE_A4988_STEPPER
-#define USE_A4988_STEPPER    // A4988/DRV8825 stepper motor (+10k5 code)
-#endif
-```
-----
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```c++
+    #ifndef USE_A4988_STEPPER
+    #define USE_A4988_STEPPER    // A4988/DRV8825 stepper motor (+10k5 code)
+    #endif
+    ```
+
 This driver is used to control stepper-motors such as [NEMA 17](https://reprap.org/wiki/NEMA_17_Stepper_motor).   
 
 ## Configuration
