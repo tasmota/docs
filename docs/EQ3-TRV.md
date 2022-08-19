@@ -7,7 +7,7 @@ Other Eqiva EQ3 models should work as well, but make sure you select a Bluetooth
 
 ### Compiling from source
 In order to have EQ3 valves working when compiling from source you need to add these define in `user_config_override.h`:
-```c
+```c++
 #ifdef USE_EQ3_ESP32
    #undef USE_EQ3_ESP32
 #endif

@@ -468,7 +468,7 @@ SetOption15<a class="cmnd" id="setoption15"></a>|Set PWM control for LED lights<
 SetOption16<a class="cmnd" id="setoption16"></a>|Set addressable LED Clock scheme parameter<BR> `0` = clock-wise mode *(default)*<BR> `1` = counter-clock-wise mode
 SetOption17<a class="cmnd" id="setoption17"></a>|Show [`Color`](#color) string as<BR> `0` = hex string *(default)*<BR> `1` = comma-separated decimal string
 SetOption18<a class="cmnd" id="setoption18"></a>|Set status of signal light paired with [CO~2~ sensor](#sensor14)<BR> `0` = disable light *(default)*<BR>`1` = enable light<BR>The light will be green below `CO2_LOW` and red above `CO2_HIGH` (transition yellow/orange between).  The default levels are: 800ppm for low and 1200ppm for high but these can be set in `user_config_override.h`.
-SetOption19<a class="cmnd" id="setoption19"></a>|Set [Home Assistant](Home-Assistant.md) discovery protocol.<BR> `0` = use Tasmota integration *(default)*<BR> `1` = use MQTT discovery
+SetOption19<a class="cmnd" id="setoption19"></a>|[Tasmota discovery protocol](Home-Assistant.md) used in Home Assistant [Tasmota integration](https://www.home-assistant.io/integrations/tasmota/)<BR> `0` = enable Tasmota discovery *(default)*<BR> `1` = use deprecated MQTT discovery (only with `#define USE_HOME_ASSISTANT`, does not exist in release binaries)
 SetOption20<a class="cmnd" id="setoption20"></a>|Update of Dimmer/Color/CT without turning power on<BR>`0` = disable *(default)*<BR>`1` = enable
 SetOption21<a class="cmnd" id="setoption21"></a>|Energy monitoring when power is off<BR>`0` = disable *(default)*<BR>`1` = enable
 SetOption24<a class="cmnd" id="setoption24"></a>|Set pressure units <BR> `0` = hPa *(default)*<BR> `1` = mmHg

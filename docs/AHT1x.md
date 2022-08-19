@@ -8,12 +8,6 @@
     #define USE_AHT1x       // [I2cDriver43] Enable AHT10/15 humidity and temperature sensor (I2C address 0x38, 0x39) (+0k8 code)
     #endif
     ```
-    or those lines for AHT2x or AM2301B:
-    ```
-    #ifndef USE_AHT2x
-    #define USE_AHT2x       // [I2cDriver43] Enable AHT20/AM2301B instead of AHT1x humidity and temperature sensor (I2C address 0x38) (+0k8 code)
-    #endif
-    ```
 
 AHT1x are an I<sup>2</sup>C temperature and humidity sensor.
 AHT2x or AM2301B are upgraded versions.

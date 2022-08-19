@@ -1,6 +1,6 @@
 # HASPmota :material-cpu-32-bit:
 
-!!! info "This feature is experimental"
+!!! danger "This feature is experimental"
 
 Tasmota is happy to support openHASP compatible format (named HASPmota), which allows to describe rich graphics interfaces using simple JSON templates. HASPmota support leverages the power of [LVGL](https://tasmota.github.io/docs/LVGL/) and the [Berry language](https://tasmota.github.io/docs/Berry/), but doesn't need to code nor learn the LVGL API.
 

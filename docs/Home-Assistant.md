@@ -2,22 +2,20 @@ description: Everything about using Tasmota in Home Assistant
 
 # Home Assistant
 
-!!! failure "Home Assistant support is not built in to tasmota-lite.bin. Use the standard tasmota.bin or other binaries that include Home Assistant support." 
-    Check the "Program Version" in the webUI **Information** page to make sure which version of Tasmota you're running.
-
 [Home Assistant](https://home-assistant.io/) is an open source home automation solution that puts local control and privacy first.
 
 Tasmota communicates with Home Assistant using MQTT. Before going any further, make sure MQTT is properly set up in [Home Assistant](https://www.home-assistant.io/integrations/mqtt/) and [Tasmota](MQTT). 
 
-Home Assistant has different options of adding Tasmota devices:
+Home Assistant can add Tasmota devices using:
 
-1. Official Tasmota integration (**preferred**)
-2. Manual configuration by editing configuration.yaml
-3. MQTT discovery (_DEPRECATED! NOT INCLUDED IN PRECOMPILED BINARIES!_)
+1. Official Tasmota integration - **preferred** and automatic instant discovery of entities
+2. Manual configuration by editing configuration.yaml - recommended for marginal use cases, f.e. TuyaMCU fan devices
 
 ## Tasmota Integration
 
-Once you configure the [Home Assistant](https://www.home-assistant.io/integrations/tasmota/) integration every new Tasmota device with `SetOption19 0` set, will be discovered automatically. 
+[![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=Tasmota)
+
+Once you configure the [Home Assistant](https://www.home-assistant.io/integrations/tasmota/) integration every new Tasmota device with `SetOption19 0` set will be discovered automatically. 
 
 All Tasmota devices will be listed in their own Tasmota card in **Configuration - Integrations** menu in Home Assistant.
 
@@ -47,18 +45,17 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmot
 - Buttons as automation triggers when [`SetOption73`](Commands.md#setoption73) is enabled
 - Shutters as cover entities. 
   Currently only shutter modes 1 to 4 are supported. Shutter mode 5 and Tuya shutters are not supported.
-- Devices configured as iFan02 or iFan03 as fan entities. Tuya fans are not supported.
+- Devices configured as iFan02 or iFan03 as fan entities. TuyaMCU fans are not supported.
 - Each discovered device will by default add 8 disabled sensors. Enable the ones you need. You cannot delete them, they will simply be re-added on a restart.
 
 Types of devices not listed above still require [manual configuration](#editing-configurationyaml)
 
-
 !!! warning "Zigbee and Bluetooth devices paired in Tasmota will **NOT** be discovered in Home Assistant"
 
-### Transition from MQTT Discovery
+<!-- ### Transition from MQTT Discovery
 
-If you have been using `SetOption19 1` for device discovery, setting it to `SetOption19 0` will remove your Tasmota device from the MQTT device list and add it to the Tasmota integrations in HA. They will be treated as new entities in Home Assistant but if you previously used default values they will use the same entity_id as the MQTT discovery devices.
-
+If you have been using `SetOption19 1` for device discovery, setting it to `SetOption19 0` will remove your Tasmota device from the MQTT device list and add it to the Tasmota integration in HA. They will be treated as new entities in Home Assistant but if you previously used default values they will use the same entity_id as the MQTT discovery devices.
+ -->
 ### Removing devices
 
 You cannot as long as Home Assistant support is enabled in your Tasmota binary. Disable the device in Home Assistant instead. There is no setoption to disable all autodiscovery.
@@ -67,11 +64,11 @@ You cannot as long as Home Assistant support is enabled in your Tasmota binary. 
 
 Deleting them from Home Assistant while Tasmota device is still active will simply rediscover all the entities. 
 
-If you opt to switch to MQTT Discovery, issuing `SetOption19 1` command will remove all Tasmota entities and add new entities under the MQTT integration.
+<!-- If you opt to switch to MQTT Discovery, issuing `SetOption19 1` command will remove all Tasmota entities and add new entities under the MQTT integration. -->
 
 ### Supplemental Custom Discovery Message
 
-You can use [MQTT Discovery](https://www.home-assistant.io/docs/mqtt/discovery/) in HA to add sensors and other entities that are not covered with Tasmota integration and associate them with an already discovered device.
+You can use [MQTT Discovery](https://www.home-assistant.io/docs/mqtt/discovery/) in HA to add sensors and other entities that are not discovered through Tasmota integration and associate them with an already discovered device.
 
 When creating the MQTT discovery JSON add this device identifier `,"device":{"connections":[["mac","%macaddr%"]]}` where %macaddr% is the mac address of the device without `:`. When used in a rule variable `%macaddr%` will be replaced automatically.
 
@@ -83,12 +80,14 @@ Examples of creating custom discovery messages:
 
 - [RFID Tag](https://blakadder.com/tasmota-tags/)
 - [PIR sensor](https://blakadder.com/pir-in-tasmota-integration/)
+- [TuyaMCU Air Fryer](https://blakadder.com/bw-af1-in-home-assistant/)
+- [TuyaMCU Heater](https://blakadder.com/tuya-climate/)
 
 ## Editing configuration.yaml
 
 Adding devices manually is done by editing the `configuration.yaml` file and adding appropriate blocks of yaml code to the corresponding section.
 
-!!! note "After every change to the configuration.yaml file you'll need to restart Home Assistant to make it aware of the changes."
+!!! note "After every change to the configuration.yaml file you'll need to restart the MANUALL CONFIGURED MQTT ENTITES in [Server Controls](https://my.home-assistant.io/redirect/server_controls/) to apply the changes."
 
 The advantage of manually configuring a device is that you maintain control of all aspects of the configuration.
 
@@ -106,38 +105,42 @@ If you are using a localized (non-english) version be sure to check the correct 
 !!! tip
     If you want the power states to be persistent in Tasmota and Home Assistant set `PowerRetain 1` instead of using `retain: true` in Home Assistant
 
+!!! Warning "When using `unique_id:` make sure its unique to each entity"
+    When `unique_id` is set, Home Assistant will allow some entity customization from the UI such as changing the name or icon.
+
 ### Switches
 
 Add in Home Assistant using the [MQTT Switch](https://www.home-assistant.io/components/switch.mqtt/) integration.
 
 **Required Commands**   
-`SetOption59 1` - enables sending of tele/%topic%/STATE on POWER and light related commands
+`SetOption59 1` - enables sending of tele/%topic%/STATE on POWER and light related commands for faster updates
 
 !!! example "Single Switch"
+    If [SetOption26](Commands.md#setoption26) is enabled, use `POWER1` instead of `POWER`
 
 ```yaml
-switch:
-  - platform: mqtt
-    name: "Tasmota Switch"
-    state_topic: "stat/tasmota/RESULT"  
-    value_template: "{{ value_json.POWER }}"
-    command_topic: "cmnd/tasmota/POWER"
-    payload_on: "ON"
-    payload_off: "OFF"
-    availability_topic: "tele/tasmota/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    qos: 1
-    retain: false
+mqtt:
+  switch:
+    - unique_id: tasmota_switch
+      name: "Tasmota Switch"
+      state_topic: "stat/tasmota/RESULT"  
+      value_template: "{{ value_json.POWER }}"
+      command_topic: "cmnd/tasmota/POWER"
+      payload_on: "ON"
+      payload_off: "OFF"
+      availability_topic: "tele/tasmota/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
 ```
 
 
 !!! example "Multiple Switches"
-When a device has more than one relay you need to create a new switch for each relay. For each relay use corresponding POWER<x\> (POWER1, POWER2, etc)  or if [SetOption26](Commands.md#setoption26) is enabled)
+    When a device has more than one POWER output (multiple relays or a mix of relays and lights) use corresponding `POWER<x>` (`POWER1`, `POWER2`, etc)
 
 ```yaml
-switch:
-  - platform: mqtt
+mqtt:
+  switch:
+  - unique_id: tas_switch_1
     name: "Tasmota Switch 1"
     state_topic: "stat/tasmota/RESULT"  
     value_template: "{{ value_json.POWER1 }}"
@@ -147,9 +150,7 @@ switch:
     availability_topic: "tele/tasmota/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
-    qos: 1
-    retain: false
-  - platform: mqtt
+  - unique_id: tas_switch_2
     name: "Tasmota Switch 2"
     state_topic: "stat/tasmota/RESULT"  
     value_template: "{{ value_json.POWER2 }}"
@@ -159,9 +160,7 @@ switch:
     availability_topic: "tele/tasmota/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
-    qos: 1
-    retain: false
-  - platform: mqtt
+  - unique_id: tas_switch_3
     name: "Tasmota Switch 3"
     state_topic: "stat/tasmota/RESULT"  
     value_template: "{{ value_json.POWER3 }}"
@@ -171,36 +170,10 @@ switch:
     availability_topic: "tele/tasmota/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
-    qos: 1
-    retain: false
-```
-
-!!! example "Dimmer"
-Used for dimmers and dimmable lights (single channel lights).
-
-```yaml
-light:
-  - platform: mqtt
-    name: "Dimmer"
-    command_topic: "cmnd/tasmota/POWER"
-    state_topic: "tele/tasmota/STATE"
-    state_value_template: "{{value_json.POWER}}"
-    availability_topic: "tele/tasmota/LWT"
-    brightness_command_topic: "cmnd/tasmota/Dimmer"
-    brightness_state_topic: "tele/tasmota/STATE"
-    brightness_scale: 100
-    on_command_type: "brightness"
-    brightness_value_template: "{{value_json.Dimmer}}"
-    payload_on: "ON"
-    payload_off: "OFF"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    qos: 1
-    retain: false
 ```
 
 !!! tip
-    If you are using your device to control a light, you may want to use [`MQTT Light`](https://www.home-assistant.io/components/light.mqtt/) integration instead.   
+    If you are using a switch device to control a light you may want to use [`MQTT Light`](https://www.home-assistant.io/components/light.mqtt/) integration instead.   
 Simply replace `switch:` with `light:` in the configuration keeping everything else the same.
 
 ### Lights
@@ -212,28 +185,26 @@ All configurations require `SetOption59 1` - enables sending of tele/%topic%/STA
 `Fade on` - makes transitions smoother   
 `Speed 5` - set transition speed
 
-!!! example "Dimmable"
-    Used with dimmers and dimmable only lights (single channel lights).
+!!! example "Dimmer"
+Used for dimmers and dimmable lights (single channel lights).
 
 ```yaml
-light:
-  - platform: mqtt
-    name: "Dimmer"
-    command_topic: "cmnd/tasmota/POWER"
-    state_topic: "tele/tasmota/STATE"
-    state_value_template: "{{ value_json.POWER }}"
-    availability_topic: "tele/tasmota/LWT"
-    brightness_command_topic: "cmnd/tasmota/Dimmer"
-    brightness_state_topic: "tele/tasmota/STATE"
-    brightness_scale: 100
-    on_command_type: "brightness"
-    brightness_value_template: "{{ value_json.Dimmer }}"
-    payload_on: "ON"
-    payload_off: "OFF"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    qos: 1
-    retain: false
+mqtt:
+  light:
+    - name: "Dimmer"
+      command_topic: "cmnd/tasmota/POWER"
+      state_topic: "tele/tasmota/STATE"
+      state_value_template: "{{value_json.POWER}}"
+      availability_topic: "tele/tasmota/LWT"
+      brightness_command_topic: "cmnd/tasmota/Dimmer"
+      brightness_state_topic: "tele/tasmota/STATE"
+      brightness_scale: 100
+      on_command_type: "brightness"
+      brightness_value_template: "{{value_json.Dimmer}}"
+      payload_on: "ON"
+      payload_off: "OFF"
+      payload_available: "Online"
+      payload_not_available: "Offline"
 ```
 
 !!! example "RGB Light"
@@ -242,36 +213,34 @@ light:
 `SetOption17 1` - enables color status in decimals
 
 ```yaml
-light:
-  - platform: mqtt
-    name: "RGB Light"
-    command_topic: "cmnd/tasmota/POWER"
-    state_topic: "tele/tasmota/STATE"
-    state_value_template: "{{ value_json.POWER }}"
-    availability_topic: "tele/tasmota/LWT"
-    brightness_command_topic: "cmnd/tasmota/Dimmer"
-    brightness_state_topic: "tele/tasmota/STATE"
-    brightness_scale: 100
-    on_command_type: "brightness"
-    brightness_value_template: "{{ value_json.Dimmer }}"
-    rgb_command_topic: "cmnd/tasmota/Color2"
-    rgb_state_topic: "tele/tasmota/STATE"
-    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
-    effect_command_topic: "cmnd/tasmota/Scheme"
-    effect_state_topic: "tele/tasmota/STATE"
-    effect_value_template: "{{ value_json.Scheme }}"
-    effect_list:
-      - 0
-      - 1
-      - 2
-      - 3
-      - 4
-    payload_on: "ON"
-    payload_off: "OFF"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    qos: 1
-    retain: false
+mqtt:
+  light:
+    - name: "RGB Light"
+      command_topic: "cmnd/tasmota/POWER"
+      state_topic: "tele/tasmota/STATE"
+      state_value_template: "{{ value_json.POWER }}"
+      availability_topic: "tele/tasmota/LWT"
+      brightness_command_topic: "cmnd/tasmota/Dimmer"
+      brightness_state_topic: "tele/tasmota/STATE"
+      brightness_scale: 100
+      on_command_type: "brightness"
+      brightness_value_template: "{{ value_json.Dimmer }}"
+      rgb_command_topic: "cmnd/tasmota/Color2"
+      rgb_state_topic: "tele/tasmota/STATE"
+      rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
+      effect_command_topic: "cmnd/tasmota/Scheme"
+      effect_state_topic: "tele/tasmota/STATE"
+      effect_value_template: "{{ value_json.Scheme }}"
+      effect_list:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+      payload_on: "ON"
+      payload_off: "OFF"
+      payload_available: "Online"
+      payload_not_available: "Offline"
 ```
 
 !!! example "RGB+W Light"
@@ -280,40 +249,38 @@ light:
 `SetOption17 1` - enables color status in decimals
 
 ```yaml
-light:
-  - platform: mqtt
-    name: "RGB+W Light"
-    command_topic: "cmnd/tasmota/POWER"
-    state_topic: "tele/tasmota/STATE"
-    state_value_template: "{{ value_json.POWER }}"
-    availability_topic: "tele/tasmota/LWT"
-    brightness_command_topic: "cmnd/tasmota/Dimmer"
-    brightness_state_topic: "tele/tasmota/STATE"
-    brightness_scale: 100
-    on_command_type: "brightness"
-    brightness_value_template: "{{ value_json.Dimmer }}"
-    white_value_state_topic: "tele/tasmota/STATE"
-    white_value_command_topic: "cmnd/tasmota/White"
-    white_value_scale: 100
-    white_value_template: "{{ value_json.White }}"
-    rgb_command_topic: "cmnd/tasmota/Color2"
-    rgb_state_topic: "tele/tasmota/STATE"
-    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
-    effect_command_topic: "cmnd/tasmota/Scheme"
-    effect_state_topic: "tele/tasmota/STATE"
-    effect_value_template: "{{value_json.Scheme}}"
-    effect_list:
-      - 0
-      - 1
-      - 2
-      - 3
-      - 4
-    payload_on: "ON"
-    payload_off: "OFF"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    qos: 1
-    retain: false
+mqtt:
+  light:
+    - name: "RGB+W Light"
+      command_topic: "cmnd/tasmota/POWER"
+      state_topic: "tele/tasmota/STATE"
+      state_value_template: "{{ value_json.POWER }}"
+      availability_topic: "tele/tasmota/LWT"
+      brightness_command_topic: "cmnd/tasmota/Dimmer"
+      brightness_state_topic: "tele/tasmota/STATE"
+      brightness_scale: 100
+      on_command_type: "brightness"
+      brightness_value_template: "{{ value_json.Dimmer }}"
+      white_value_state_topic: "tele/tasmota/STATE"
+      white_value_command_topic: "cmnd/tasmota/White"
+      white_value_scale: 100
+      white_value_template: "{{ value_json.White }}"
+      rgb_command_topic: "cmnd/tasmota/Color2"
+      rgb_state_topic: "tele/tasmota/STATE"
+      rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
+      effect_command_topic: "cmnd/tasmota/Scheme"
+      effect_state_topic: "tele/tasmota/STATE"
+      effect_value_template: "{{value_json.Scheme}}"
+      effect_list:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+      payload_on: "ON"
+      payload_off: "OFF"
+      payload_available: "Online"
+      payload_not_available: "Offline"
 ```
 
 !!! example "RGB+CCT Light"
@@ -322,83 +289,81 @@ light:
 `SetOption17 1` - enables color status in decimals
 
 ```yaml
-light:
-  - platform: mqtt
-    name: "RGBCCT Light"
-    command_topic: "cmnd/tasmota/POWER"
-    state_topic: "tele/tasmota/STATE"
-    state_value_template: "{{ value_json.POWER }}"
-    availability_topic: "tele/tasmota/LWT"
-    brightness_command_topic: "cmnd/tasmota/Dimmer"
-    brightness_state_topic: "tele/tasmota/STATE"
-    brightness_scale: 100
-    on_command_type: "brightness"
-    brightness_value_template: "{{ value_json.Dimmer }}"
-    color_temp_command_topic: "cmnd/tasmota/CT"
-    color_temp_state_topic: "tele/tasmota/STATE"
-    color_temp_value_template: "{{ value_json.CT }}"
-    rgb_command_topic: "cmnd/tasmota/Color2"
-    rgb_state_topic: "tele/tasmota/STATE"
-    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
-    effect_command_topic: "cmnd/tasmota/Scheme"
-    effect_state_topic: "tele/tasmota/STATE"
-    effect_value_template: "{{ value_json.Scheme }}"
-    effect_list:
-      - 0
-      - 1
-      - 2
-      - 3
-      - 4
-    payload_on: "ON"
-    payload_off: "OFF"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    qos: 1
-    retain: false
+mqtt:
+  light:
+    - name: "RGBCCT Light"
+      command_topic: "cmnd/tasmota/POWER"
+      state_topic: "tele/tasmota/STATE"
+      state_value_template: "{{ value_json.POWER }}"
+      availability_topic: "tele/tasmota/LWT"
+      brightness_command_topic: "cmnd/tasmota/Dimmer"
+      brightness_state_topic: "tele/tasmota/STATE"
+      brightness_scale: 100
+      on_command_type: "brightness"
+      brightness_value_template: "{{ value_json.Dimmer }}"
+      color_temp_command_topic: "cmnd/tasmota/CT"
+      color_temp_state_topic: "tele/tasmota/STATE"
+      color_temp_value_template: "{{ value_json.CT }}"
+      rgb_command_topic: "cmnd/tasmota/Color2"
+      rgb_state_topic: "tele/tasmota/STATE"
+      rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
+      effect_command_topic: "cmnd/tasmota/Scheme"
+      effect_state_topic: "tele/tasmota/STATE"
+      effect_value_template: "{{ value_json.Scheme }}"
+      effect_list:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+      payload_on: "ON"
+      payload_off: "OFF"
+      payload_available: "Online"
+      payload_not_available: "Offline"
 ```
 
 !!! example "Addressable LED"
     Applies only to [WS281x](WS2812B-and-WS2813) lights. 
 
 ```yaml
-light:
-  - platform: mqtt
-    name: "Addressable LED"
-    command_topic: "cmnd/tasmota/POWER"
-    state_topic: "stat/tasmota/STATE"
-    state_value_template: "{{ value_json.POWER }}"
-    availability_topic: "tele/tasmota/LWT"
-    brightness_command_topic: "cmnd/tasmota/Dimmer"
-    brightness_state_topic: "stat/tasmota/STATE"
-    brightness_scale: 100
-    on_command_type: "brightness"
-    brightness_value_template: "{{ value_json.Dimmer }}"
-    rgb_command_topic: "cmnd/tasmota/Color2"
-    rgb_state_topic: "tele/tasmota/STATE"
-    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
-    effect_command_topic: "cmnd/tasmota/Scheme"
-    effect_state_topic: "stat/tasmota/STATE"
-    effect_value_template: "{{ value_json.Scheme }}"
-    effect_list:
-      - 0
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-      - 7
-      - 8
-      - 9
-      - 10
-      - 11
-      - 12
-    payload_on: "ON"
-    payload_off: "OFF"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    qos: 1
-    retain: false
+mqtt:
+  light:
+    - name: "Addressable LED"
+      command_topic: "cmnd/tasmota/POWER"
+      state_topic: "stat/tasmota/STATE"
+      state_value_template: "{{ value_json.POWER }}"
+      availability_topic: "tele/tasmota/LWT"
+      brightness_command_topic: "cmnd/tasmota/Dimmer"
+      brightness_state_topic: "stat/tasmota/STATE"
+      brightness_scale: 100
+      on_command_type: "brightness"
+      brightness_value_template: "{{ value_json.Dimmer }}"
+      rgb_command_topic: "cmnd/tasmota/Color2"
+      rgb_state_topic: "tele/tasmota/STATE"
+      rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
+      effect_command_topic: "cmnd/tasmota/Scheme"
+      effect_state_topic: "stat/tasmota/STATE"
+      effect_value_template: "{{ value_json.Scheme }}"
+      effect_list:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+        - 11
+        - 12
+      payload_on: "ON"
+      payload_off: "OFF"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      qos: 1
+      retain: false
 ```
 
 !!! example "RGB with hex values"
@@ -432,7 +397,7 @@ The key is the `=` after color string in hex. It will retain current white value
 
 !!! example "Using schema: template light"
 
-    Thorough explanation of template: schema lights and its features on [https://blakadder.com/template_schema_lights/](https://blakadder.com/template_schema_lights/)
+    Thorough explanation of template: schema lights and its features on [blakadder.com](https://blakadder.com/template_schema_lights/)
 <!-- tabs:end -->
 
 ### Sensors
@@ -441,57 +406,56 @@ Add in Home Assistant using the [MQTT Sensor](https://www.home-assistant.io/comp
 
 A sensor will send its data in set intervals defined by [`TelePeriod`](Commands.md#teleperiod) (default every 5 minutes).
 
-!!! example "Temperature"
+!!! example "Temperature sensor"
 
-Check your sensor name in Tasmota and change accordingly. This example uses the DHT22 sensor.
+Check your sensor name in Tasmota console and change accordingly. This example uses the [DHT22](AM2301.md) sensor.
 
 ```yaml
-sensor:
-  - platform: mqtt
-    name: "Tasmota Temperature"
-    state_topic: "tele/tasmota/SENSOR"
-    value_template: "{{ value_json['DHT22'].Temperature }}"
-    unit_of_measurement: "°C"  # "F" if using Fahrenheit
-    availability_topic: "tele/tasmota/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    device_class: temperature
+mqtt:
+  sensor:
+    - name: "Tasmota Temperature"
+      state_topic: "tele/tasmota/SENSOR"
+      value_template: "{{ value_json['DHT22'].Temperature }}"
+      unit_of_measurement: "°C"  # "F" if using Fahrenheit
+      availability_topic: "tele/tasmota/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      device_class: temperature
 ```
 
-!!! example "Humidity"
+!!! example "Humidity sensor"
 
-Check your sensor name in Tasmota and change accordingly. This example uses the DHT22 sensor.
+Check your sensor name in Tasmota and change accordingly. This example uses the [DHT22](AM2301.md) sensor.
 
 ```yaml
-sensor:
-  - platform: mqtt
-    name: "Tasmota Humidity"
-    state_topic: "tele/tasmota/SENSOR"
-    value_template: "{{ value_json['DHT22'].Humidity }}"
-    unit_of_measurement: "%"
-    availability_topic: "tele/tasmota/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    device_class: humidity
+mqtt:
+  sensor:
+    - ame: "Tasmota Humidity"
+      state_topic: "tele/tasmota/SENSOR"
+      value_template: "{{ value_json['DHT22'].Humidity }}"
+      unit_of_measurement: "%"
+      availability_topic: "tele/tasmota/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      device_class: humidity
 ```
 
-!!! example "Pressure"
-Check your sensor name in Tasmota and change accordingly. This example uses the BMP280 sensor.
+!!! example "Pressure sensor"
+Check your sensor name in Tasmota and change accordingly. This example uses the [BMP280](BMP280.md) sensor.
 
 ```yaml
-sensor:
-  - platform: mqtt
-    name: "Tasmota Pressure"
-    state_topic: "tele/tasmota/SENSOR"
-    value_template: "{{ value_json.BMP280.Pressure }}"
-    unit_of_measurement: "hPa"
-    device_class: pressure
+mqtt:
+  sensor:
+    - name: "Tasmota Pressure"
+      state_topic: "tele/tasmota/SENSOR"
+      value_template: "{{ value_json.BMP280.Pressure }}"
+      unit_of_measurement: "hPa"
+      device_class: pressure
 ```
 Change unit_of_measurement to `"mmHg"` if [`SetOption24 1`](Commands.md#setoption24)
 
 !!! example "Wi-Fi Signal Quality"
-
-Monitor the relative Wi-Fi signal quality of a device.
+Monitor the relative Wi-Fi signal quality of a device. 
 
 ```yaml
 sensor:
@@ -504,11 +468,12 @@ sensor:
     payload_available: "Online"
     payload_not_available: "Offline"
     device_class: signal_strength
+    entity_category: diagnostic # moves the entity to the Diagnostic section on the Device Card
 ```
 
 ### Power Monitoring
 
-<img alt="Example of Lovelace UI" src="../_media/hax_pow1.png" style="margin:5px;float:right;width:10em"></img>
+<img alt="Example of Home Assistant UI" src="../_media/hax_pow1.png" style="margin:5px;float:right;width:10em"></img>
 
 Add in Home Assistant using the [MQTT Sensor](https://www.home-assistant.io/components/sensor.mqtt/) integration.
 
@@ -519,27 +484,32 @@ To get all the data in Home Assistant requires multiple sensors which you can la
 !!! example "Power Monitoring"
 
 ```yaml
-sensor:
-  - platform: mqtt
-    name: "Energy Today"
-    state_topic: "tele/tasmota/SENSOR"
-    value_template: '{{ value_json["ENERGY"]["Today"] }}'
-    unit_of_measurement: "kWh"
-  - platform: mqtt
-    name: "Power"
-    state_topic: "tele/tasmota/SENSOR"
-    value_template: '{{ value_json["ENERGY"]["Power"] }}'
-    unit_of_measurement: "W"
-  - platform: mqtt
-    name: "Voltage"
-    state_topic: "tele/tasmota/SENSOR"
-    value_template: '{{ value_json["ENERGY"]["Voltage"] }}'
-    unit_of_measurement: "V"
-  - platform: mqtt
-    name: "Current"
-    state_topic: "tele/tasmota/SENSOR"
-    value_template: '{{ value_json["ENERGY"]["Current"] }}'
-    unit_of_measurement: "A"
+mqtt:
+  sensor:
+    - name: "Energy Today"
+      state_topic: "tele/tasmota/SENSOR"
+      value_template: '{{ value_json["ENERGY"]["Today"] }}'
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: measurement 
+    - name: "Power"
+      state_topic: "tele/tasmota/SENSOR"
+      value_template: '{{ value_json["ENERGY"]["Power"] }}'
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement 
+    - name: "Voltage"
+      state_topic: "tele/tasmota/SENSOR"
+      value_template: '{{ value_json["ENERGY"]["Voltage"] }}'
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement 
+    - name: "Current"
+      state_topic: "tele/tasmota/SENSOR"
+      value_template: '{{ value_json["ENERGY"]["Current"] }}'
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement 
 ```
 !!! tip
     For additional sensors use "Total";"Yesterday";"Period","ApparentPower","ReactivePower";"Factor" in `value_template` string
@@ -559,17 +529,16 @@ Rule1 on Switch1#State=1 do Publish stat/%topic%/MOTION ON endon on Switch1#Stat
 Rule1 1
 ```
 ```yaml
-binary_sensor:
-  - platform: mqtt
-    name: "Tasmota Motion Sensor"
-    state_topic: "stat/tasmota/MOTION"
-    availability_topic: "tele/tasmota/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    device_class: motion
-    qos: 1
+mqtt:
+  binary_sensor:
+    - unique_id: motion_sensor
+      name: "Tasmota Motion Sensor"
+      state_topic: "stat/tasmota/MOTION"
+      availability_topic: "tele/tasmota/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      device_class: motion
 ```
-
 
 !!! example "Door Sensor"
 
@@ -581,29 +550,30 @@ Rule1 on Switch1#State=1 do Publish stat/%topic%/DOOR ON endon on Switch1#State=
 Rule1 1
 ```
 ```yaml
-binary_sensor:
-  - platform: mqtt
-    name: "Door Sensor"
-    state_topic: "stat/tasmota/GARAGE"
-    availability_topic: "tele/tasmota/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    device_class: door   # also: window, garage_door or opening
-    qos: 1
+mqtt:
+  binary_sensor:
+    - unique_id: door_sensor
+      name: "Tasmota Door Sensor"
+      state_topic: "stat/tasmota/GARAGE"
+      availability_topic: "tele/tasmota/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      device_class: door   # also possible: window, garage_door or opening
 ```
 
 !!! example "RF Bridge"
 
 An RF door sensor configured with an RF receiver in Tasmota.
 ```yaml
-binary_sensor:
-  - platform: mqtt
-    name: "RF bridge rfkey"
-    payload_on: "1"
-    payload_off: "0"
-    device_class: opening
-    state_topic: "tele/tasmota/RESULT"
-    value_template: '{{ value_json.RfReceived.RfKey }}'
+mqtt:
+  binary_sensor:
+    - platform: mqtt
+      name: "RF bridge rfkey"
+      payload_on: "1"
+      payload_off: "0"
+      device_class: opening
+      state_topic: "tele/tasmota/RESULT"
+      value_template: '{{ value_json.RfReceived.RfKey }}'
 ```
 <!-- tabs:end -->
 
@@ -619,34 +589,34 @@ Derived from [#2839](https://github.com/arendst/Tasmota/issues/2839) by @kbickar
 
 
 ```yaml
-# Example configuration.yaml entry
-fan:
-- platform: mqtt  
-  name: "Tasmota Fan"
-  command_topic: "cmnd/tasmota/FanSpeed"
-  speed_command_topic: "cmnd/tasmota/FanSpeed"    
-  state_topic: "stat/tasmota/RESULT"
-  speed_state_topic: "stat/tasmota/RESULT"
-  state_value_template: >
-    {% if value_json.FanSpeed is defined %}
-      {% if value_json.FanSpeed == 0 -%}0{%- elif value_json.FanSpeed > 0 -%}4{%- endif %}
-    {% else %}
-      {% if states.fan.tasmota.state == 'off' -%}0{%- elif states.fan.tasmota.state == 'on' -%}4{%- endif %}
-    {% endif %}
-  speed_value_template: "{{ value_json.FanSpeed }}"
-  availability_topic: tele/tasmota/LWT
-  payload_off: "0"
-  payload_on: "4"
-  payload_low_speed: "1"
-  payload_medium_speed: "2"
-  payload_high_speed: "3"
-  payload_available: "Online"
-  payload_not_available: "Offline"
-  speeds:
-    - "off"
-    - "low"
-    - "medium"
-    - "high"
+mqtt:
+  fan:
+  - unique_id: tasmota_fan
+    name: "Tasmota Fan"
+    command_topic: "cmnd/tasmota/FanSpeed"
+    speed_command_topic: "cmnd/tasmota/FanSpeed"    
+    state_topic: "stat/tasmota/RESULT"
+    speed_state_topic: "stat/tasmota/RESULT"
+    state_value_template: >
+      {% if value_json.FanSpeed is defined %}
+        {% if value_json.FanSpeed == 0 -%}0{%- elif value_json.FanSpeed > 0 -%}4{%- endif %}
+      {% else %}
+        {% if states.fan.tasmota.state == 'off' -%}0{%- elif states.fan.tasmota.state == 'on' -%}4{%- endif %}
+      {% endif %}
+    speed_value_template: "{{ value_json.FanSpeed }}"
+    availability_topic: tele/tasmota/LWT
+    payload_off: "0"
+    payload_on: "4"
+    payload_low_speed: "1"
+    payload_medium_speed: "2"
+    payload_high_speed: "3"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    speeds:
+      - "off"
+      - "low"
+      - "medium"
+      - "high"
 ```
 <!-- tabs:end -->
 
@@ -662,27 +632,28 @@ Requires `SetOption66 1`. In this example dpId1 is for open/close/stop of the mo
 
 ```yaml
 # Example configuration.yaml entry
-cover:
-  - platform: mqtt
-    name: "Tuya Curtain"
-    command_topic: "cmnd/tasmota/TuyaSend4"
-    payload_open: "1,0"
-    payload_close: "1,2"
-    payload_stop: "1,1"
-    position_open: 0
-    position_closed: 100
-    position_topic: "tele/tasmota/RESULT"
-    position_template: >-
-          {% if value_json.TuyaReceived.DpType2Id3 is defined %}
-          {{ value_json.TuyaReceived.DpType2Id3 }}
-          {% else %}  
-          {{ state_attr('cover.tuya_curtain','current_position') | int }}
-          {% endif %}  
-    set_position_topic: "cmnd/tasmota/TuyaSend2"
-    set_position_template: '2,{{ position }}'
-    availability_topic: "tele/tasmota/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
+mqtt:
+  cover:
+    - unique_id: tuya_curtain
+      name: "Tuya Curtain"
+      command_topic: "cmnd/tasmota/TuyaSend4"
+      payload_open: "1,0"
+      payload_close: "1,2"
+      payload_stop: "1,1"
+      position_open: 0
+      position_closed: 100
+      position_topic: "tele/tasmota/RESULT"
+      position_template: >-
+            {% if value_json.TuyaReceived.DpType2Id3 is defined %}
+            {{ value_json.TuyaReceived.DpType2Id3 }}
+            {% else %}  
+            {{ state_attr('cover.tuya_curtain','current_position') | int }}
+            {% endif %}  
+      set_position_topic: "cmnd/tasmota/TuyaSend2"
+      set_position_template: '2,{{ position }}'
+      availability_topic: "tele/tasmota/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
 ```
 
 If you change `name:` make sure to reflect that change in the value_template cover name!
@@ -747,91 +718,93 @@ light:
     payload_available: "Online"
     payload_not_available: "Offline"
     retain: false
-```-->
+```
 
 !!! example "Sonoff S31"
 Configure the device as Sonoff S31, and run: [`SetOption4 1`](Commands.md#setoption4), [`SetOption59 1`](Commands.md#setoption59).
 
 ```yaml
-switch:
-  - platform: mqtt
-    name: "s31 power"
-    state_topic: "tele/s31/STATE"
-    value_template: "{{ value_json.POWER }}"
-    command_topic: "cmnd/s31/POWER"
-    availability_topic: "tele/s31/LWT"
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    retain: false
+mqtt:
+  switch:
+    - name: "s31 power"
+      state_topic: "tele/s31/STATE"
+      value_template: "{{ value_json.POWER }}"
+      command_topic: "cmnd/s31/POWER"
+      availability_topic: "tele/s31/LWT"
+      qos: 1
+      payload_on: "ON"
+      payload_off: "OFF"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      retain: false
 
-sensor:
-  - platform: mqtt
-    name: "s31 Voltage"
-    state_topic: "tele/s31/SENSOR"
-    value_template: "{{ value_json['ENERGY'].Voltage }}"
-    unit_of_measurement: "V"
-    availability_topic: "tele/s31/LWT"
-    qos: 1
-    payload_available: "Online"
-    payload_not_available: "Offline"
-  - platform: mqtt
-    name: "s31 Current"
-    state_topic: "tele/s31/SENSOR"
-    value_template: "{{ value_json['ENERGY'].Current | round(2) }}"
-    unit_of_measurement: "A"
-    availability_topic: "tele/s31/LWT"
-    qos: 1
-    payload_available: "Online"
-    payload_not_available: "Offline"
-  - platform: mqtt
-    name: "s31 Power"
-    state_topic: "tele/s31/SENSOR"
-    value_template: "{{ value_json['ENERGY'].Power }}"
-    unit_of_measurement: "W"
-    availability_topic: "tele/s31/LWT"
-    qos: 1
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    device_class: power
-  - platform: mqtt
-    name: "s31 Power Factor"
-    state_topic: "tele/s31/SENSOR"
-    value_template: "{{ value_json['ENERGY'].Factor }}"
-    availability_topic: "tele/s31/LWT"
-    qos: 1
-    payload_available: "Online"
-    payload_not_available: "Offline"
-  - platform: mqtt
-    name: "s31 Energy Today"
-    state_topic: "tele/s31/SENSOR"
-    value_template: "{{ value_json['ENERGY'].Today }}"
-    unit_of_measurement: "kWh"
-    availability_topic: "tele/s31/LWT"
-    qos: 1
-    payload_available: "Online"
-    payload_not_available: "Offline"
-  - platform: mqtt
-    name: "s31 Energy Yesterday"
-    state_topic: "tele/s31/SENSOR"
-    value_template: "{{ value_json['ENERGY'].Yesterday }}"
-    unit_of_measurement: "kWh"
-    availability_topic: "tele/s31/LWT"
-    qos: 1
-    payload_available: "Online"
-    payload_not_available: "Offline"
-  - platform: mqtt
-    name: "s31 Energy Total"
-    state_topic: "tele/s31/SENSOR"
-    value_template: "{{ value_json['ENERGY'].Total }}"
-    unit_of_measurement: "kWh"
-    availability_topic: "tele/s31/LWT"
-    qos: 1
-    payload_available: "Online"
-    payload_not_available: "Offline"
+mqtt:
+  sensor:
+    - platform: mqtt
+      name: "s31 Voltage"
+      state_topic: "tele/s31/SENSOR"
+      value_template: "{{ value_json['ENERGY'].Voltage }}"
+      unit_of_measurement: "V"
+      availability_topic: "tele/s31/LWT"
+      qos: 1
+      payload_available: "Online"
+      payload_not_available: "Offline"
+    - platform: mqtt
+      name: "s31 Current"
+      state_topic: "tele/s31/SENSOR"
+      value_template: "{{ value_json['ENERGY'].Current | round(2) }}"
+      unit_of_measurement: "A"
+      availability_topic: "tele/s31/LWT"
+      qos: 1
+      payload_available: "Online"
+      payload_not_available: "Offline"
+    - platform: mqtt
+      name: "s31 Power"
+      state_topic: "tele/s31/SENSOR"
+      value_template: "{{ value_json['ENERGY'].Power }}"
+      unit_of_measurement: "W"
+      availability_topic: "tele/s31/LWT"
+      qos: 1
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      device_class: power
+    - platform: mqtt
+      name: "s31 Power Factor"
+      state_topic: "tele/s31/SENSOR"
+      value_template: "{{ value_json['ENERGY'].Factor }}"
+      availability_topic: "tele/s31/LWT"
+      qos: 1
+      payload_available: "Online"
+      payload_not_available: "Offline"
+    - platform: mqtt
+      name: "s31 Energy Today"
+      state_topic: "tele/s31/SENSOR"
+      value_template: "{{ value_json['ENERGY'].Today }}"
+      unit_of_measurement: "kWh"
+      availability_topic: "tele/s31/LWT"
+      qos: 1
+      payload_available: "Online"
+      payload_not_available: "Offline"
+    - platform: mqtt
+      name: "s31 Energy Yesterday"
+      state_topic: "tele/s31/SENSOR"
+      value_template: "{{ value_json['ENERGY'].Yesterday }}"
+      unit_of_measurement: "kWh"
+      availability_topic: "tele/s31/LWT"
+      qos: 1
+      payload_available: "Online"
+      payload_not_available: "Offline"
+    - platform: mqtt
+      name: "s31 Energy Total"
+      state_topic: "tele/s31/SENSOR"
+      value_template: "{{ value_json['ENERGY'].Total }}"
+      unit_of_measurement: "kWh"
+      availability_topic: "tele/s31/LWT"
+      qos: 1
+      payload_available: "Online"
+      payload_not_available: "Offline"
 ```
+-->
 
 <!-- tabs:end -->
 
@@ -845,84 +818,81 @@ These sample configurations should allow the shutter work in Home Assistant. Thi
 This example uses a new configuration for roller shutters with options for positioning. It assumes that `%prefix%/%topic%/` is configured in the Tasmota Full Topic MQTT parameter.  
 
 ```yaml
-cover:
-  - platform: mqtt
-    name: "Balcony Blinds"
-    availability_topic: "tele/%topic%/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    position_topic: stat/%topic%/Shutter1
-    position_open: 100
-    position_closed: 0
-    set_position_topic: "cmnd/%topic%/ShutterPosition1"
-    command_topic: "cmnd/%topic%/Backlog"
-    payload_open: "ShutterOpen1"
-    payload_close: "ShutterClose1"
-    payload_stop: "ShutterStop1"
-    retain: false
-    optimistic: false
-    qos: 1
+mqtt:
+  cover:
+    - name: "Balcony Blinds"
+      availability_topic: "tele/%topic%/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      position_topic: stat/%topic%/Shutter1
+      position_open: 100
+      position_closed: 0
+      set_position_topic: "cmnd/%topic%/ShutterPosition1"
+      command_topic: "cmnd/%topic%/Backlog"
+      payload_open: "ShutterOpen1"
+      payload_close: "ShutterClose1"
+      payload_stop: "ShutterStop1"
+      retain: false
+      optimistic: false
+      qos: 1
 ```
 Check [Issue 130](https://github.com/stefanbode/Sonoff-Tasmota/issues/130) for more information about this configuration.
 
 Another integration example:  
 ```yaml
-cover:
-  - platform: mqtt
-    name: "Test"
-    availability_topic: "tele/%topic%/LWT"
-    state_topic: "stat/%topic%/RESULT"
-    command_topic: "cmnd/%topic%/Backlog"
-    value_template: '{{ value | int }}'
-    qos: 1
-    retain: false
-    payload_open: "ShutterOpen1"
-    payload_close: "ShutterClose1"
-    payload_stop: "ShutterStop1"
-    state_open: "ON"
-    state_closed: "OFF"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    optimistic: false
-    tilt_command_topic: 'cmnd/%topic%/ShutterPosition1'
-    tilt_status_topic: 'cmnd/%topic%/ShutterPosition1'
-    set_position_topic: 'cmnd/%topic%/ShutterPosition1'
-    position_topic: "stat/%topic%/SHUTTER1"
-    tilt_min: 0
-    tilt_max: 100
-    tilt_closed_value: 0
-    tilt_opened_value: 100
+mqtt:
+  cover:
+    - name: "Test"
+      availability_topic: "tele/%topic%/LWT"
+      state_topic: "stat/%topic%/RESULT"
+      command_topic: "cmnd/%topic%/Backlog"
+      value_template: '{{ value | int }}'
+      qos: 1
+      retain: false
+      payload_open: "ShutterOpen1"
+      payload_close: "ShutterClose1"
+      payload_stop: "ShutterStop1"
+      state_open: "ON"
+      state_closed: "OFF"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      optimistic: false
+      tilt_command_topic: 'cmnd/%topic%/ShutterPosition1'
+      tilt_status_topic: 'cmnd/%topic%/ShutterPosition1'
+      set_position_topic: 'cmnd/%topic%/ShutterPosition1'
+      position_topic: "stat/%topic%/SHUTTER1"
+      tilt_min: 0
+      tilt_max: 100
+      tilt_closed_value: 0
+      tilt_opened_value: 100
 ```
 Integration example with position updated during movement (Tasmota versions >= v8.1.0.5):  
 
 ```yaml
-cover:
-  - platform: mqtt
-    name: "Balcony Blinds"
-    availability_topic: "tele/%topic%/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    position_topic: "stat/%topic%/RESULT"
-    position_template: >
-      {% if ('Shutter1' in value_json) and ('Position' in value_json.Shutter1) %}
-        {{ value_json.Shutter1.Position }}
-      {% else %}
-        {% if is_state('cover.balcony_blinds', 'unknown') %}
-          50
+mqtt:
+  cover:
+    - name: "Balcony Blinds"
+      availability_topic: "tele/%topic%/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      position_topic: "stat/%topic%/RESULT"
+      position_template: >
+        {% if ('Shutter1' in value_json) and ('Position' in value_json.Shutter1) %}
+          {{ value_json.Shutter1.Position }}
         {% else %}
-          {{ state_attr('cover.balcony_blinds','current_position') }}
-        {% endif %}
-      {% endif %}    
-    position_open: 100
-    position_closed: 0
-    set_position_topic: "cmnd/%topic%/ShutterPosition1"
-    command_topic: "cmnd/%topic%/Backlog"
-    payload_open: "ShutterOpen1"
-    payload_close: "ShutterClose1"
-    payload_stop: "ShutterStop1"
-    retain: false
-    optimistic: false
-    qos: 1
+          {% if is_state('cover.balcony_blinds', 'unknown') %}
+            50
+          {% else %}
+            {{ state_attr('cover.balcony_blinds','current_position') }}
+          {% endif %}
+        {% endif %}    
+      position_open: 100
+      position_closed: 0
+      set_position_topic: "cmnd/%topic%/ShutterPosition1"
+      command_topic: "cmnd/%topic%/Backlog"
+      payload_open: "ShutterOpen1"
+      payload_close: "ShutterClose1"
+      payload_stop: "ShutterStop1"
 ```
 
 In addition, add to your home assistant start up automation a query for the current shutter position:
@@ -949,35 +919,35 @@ This configuration is for a dimmable light reporting on `0xE1F9` using endpoint 
 
 ```yaml
 # Example configuration.yaml entry
-light:
-  - platform: mqtt
-    schema: template
-    name: "Fire Light"
-    command_topic: "cmnd/zigbee-gateway/Backlog"
-    state_topic: "tele/zigbee-gateway/SENSOR"
-    command_on_template: >
-        {%- if brightness is defined -%}
-        ZbSend { "device":"0xE1F9", "send":{"Dimmer":{{ brightness }} } }; ZbSend { "device":"0xE1F9", "send":{"Power":true} }; delay 20; ZbRead { "device":"0xE1F9", "endpoint":1, "cluster":8, "read":0 }
-        {%- else -%}
-        ZbSend { "device":"0xE1F9", "send":{"Power":true} }; delay 20; ZbRead { "device":"0xE1F9", "endpoint":1, "cluster":8, "read":0 }
-        {%- endif -%}
-    command_off_template: 'ZbSend { "device":"0xE1F9", "send":{"Power":false} }; delay 20; ZbRead { "device":"0xE1F9", "endpoint":1, "cluster":8, "read":0 }'
-    state_template: >
-        {% if value_json.ZbReceived is defined and value_json.ZbReceived['0xE1F9'] is defined and value_json.ZbReceived['0xE1F9'].Power is defined %}
-        {% if value_json.ZbReceived['0xE1F9'].Power == true %}
-        on
-        {% else %}
-        off
-        {% endif %}
-        {% else %}
-        {{ states('light.fire_light') }}
-        {% endif %}
-    brightness_template: >
-        {%- if value_json.ZbReceived is defined and value_json.ZbReceived['0xE1F9'] is defined and value_json.ZbReceived['0xE1F9'].Dimmer is defined -%}
-        {{ value_json['ZbReceived']['0xE1F9'].Dimmer | int }}
-        {%- else -%}
-        {{ state_attr('light.fire_light', 'brightness') | int }}
-        {%- endif -%}
+mqtt:
+  light:
+    - schema: template
+      name: "Fire Light"
+      command_topic: "cmnd/zigbee-gateway/Backlog"
+      state_topic: "tele/zigbee-gateway/SENSOR"
+      command_on_template: >
+          {%- if brightness is defined -%}
+          ZbSend { "device":"0xE1F9", "send":{"Dimmer":{{ brightness }} } }; ZbSend { "device":"0xE1F9", "send":{"Power":true} }; delay 20; ZbRead { "device":"0xE1F9", "endpoint":1, "cluster":8, "read":0 }
+          {%- else -%}
+          ZbSend { "device":"0xE1F9", "send":{"Power":true} }; delay 20; ZbRead { "device":"0xE1F9", "endpoint":1, "cluster":8, "read":0 }
+          {%- endif -%}
+      command_off_template: 'ZbSend { "device":"0xE1F9", "send":{"Power":false} }; delay 20; ZbRead { "device":"0xE1F9", "endpoint":1, "cluster":8, "read":0 }'
+      state_template: >
+          {% if value_json.ZbReceived is defined and value_json.ZbReceived['0xE1F9'] is defined and value_json.ZbReceived['0xE1F9'].Power is defined %}
+          {% if value_json.ZbReceived['0xE1F9'].Power == true %}
+          on
+          {% else %}
+          off
+          {% endif %}
+          {% else %}
+          {{ states('light.fire_light') }}
+          {% endif %}
+      brightness_template: >
+          {%- if value_json.ZbReceived is defined and value_json.ZbReceived['0xE1F9'] is defined and value_json.ZbReceived['0xE1F9'].Dimmer is defined -%}
+          {{ value_json['ZbReceived']['0xE1F9'].Dimmer | int }}
+          {%- else -%}
+          {{ state_attr('light.fire_light', 'brightness') | int }}
+          {%- endif -%}
 ```
 
 !!! example "Water Leak Sensor"
@@ -985,43 +955,40 @@ This specific configuration is for Xiaomi Aqara Water Leak sensor reporting on `
 
 ```yaml
 # Example configuration.yaml entry
-binary_sensor:
-  - platform: mqtt
-    name: "Water Leak"
-    state_topic: "tele/zigbee-gateway/SENSOR"
-    value_template: >
-      {%- if value_json.ZbReceived is defined and value_json.ZbReceived['0x099F'] is defined -%}
-      {%- if value_json.ZbReceived['0x099F']['0500!00'] == '010000FF0000' -%}
-      ON
-      {% else %}
-      OFF
-      {% endif %}
-      {% else %}
-      {{ states('binary_sensor.water_leak') }}
-      {% endif %}
-    availability_topic: "tele/zigbee-gateway/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    qos: 1
-    device_class: moisture
+mqtt:
+  binary_sensor:
+    - name: "Water Leak"
+      state_topic: "tele/zigbee-gateway/SENSOR"
+      value_template: >
+        {%- if value_json.ZbReceived is defined and value_json.ZbReceived['0x099F'] is defined -%}
+        {%- if value_json.ZbReceived['0x099F']['0500!00'] == '010000FF0000' -%}
+        ON
+        {% else %}
+        OFF
+        {% endif %}
+        {% else %}
+        {{ states('binary_sensor.water_leak') }}
+        {% endif %}
+      availability_topic: "tele/zigbee-gateway/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      device_class: moisture
 ```
 
-!!! example "Enable join switch"
+!!! example "Enable join button"
 
 ```yaml
-- platform: mqtt
-  name: Zigbee2Tasmota enable join
-  state_topic: "tele/zigbee/RESULT"
-  command_topic: "cmnd/zigbee/ZbPermitJoin" 
-  payload_on: "1"
-  payload_off: "0"
-  state_on: "Enable Pairing mode for 60 seconds"
-  state_off: "off"
-  optimistic: false
-  qos: 1
-  retain: false
-  value_template: '{{value_json.ZbState.Message }}'
-  icon: mdi:zigbee
+mqtt:
+  button:
+    - unique_id: z2t_enable_join
+      name: "Zigbee2Tasmota enable join"
+      command_topic: "cmnd/zigbee-gateway/ZbPermitJoin" 
+      payload_press: "1"
+      availability_topic: "tele/zigbee-gateway/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      entity_category: "default"
+      device_class: "restart"
 ```
    
 <!-- tabs:end -->
@@ -1087,16 +1054,15 @@ Sync Zigbee device states. Add this block with your %topic% and your Zigbee devi
 Add a sensor like below for each Tasmota device whose firmware version you want to track.
 
 ```yaml
-# Example configuration.yaml entry
-sensor:
-  - platform: mqtt
-    name: "Tasmota"
-    state_topic: "stat/tasmota/STATUS2"
-    value_template: "{{value_json['StatusFWR'].Version }}"
-    availability_topic: "tele/tasmota/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    qos: 0
+mqtt:
+  sensor:
+    - platform: mqtt
+      name: "Tasmota"
+      state_topic: "stat/tasmota/STATUS2"
+      value_template: "{{value_json['StatusFWR'].Version }}"
+      availability_topic: "tele/tasmota/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
 ```
 
 Automation to have each device report firmware version on Home Assistant reboot. 
@@ -1121,18 +1087,19 @@ automation:
 !!! example "Get most recent Tasmota firmware version number from github"
 
 ```yaml
-sensor:
-  - platform: command_line
-    name: "Tasmota (latest version)"
-    command: 'curl -s https://api.github.com/repos/arendst/Tasmota/tags | grep "name" | sort --version-sort -r | head -n 1 | sed -E "s/\s*\"name\": \"(.*)\",*/\1/g"'
-    scan_interval: 86400 # check once every day
+mqtt:
+  sensor:
+    - platform: command_line
+      name: "Tasmota (latest version)"
+      command: 'curl -s https://api.github.com/repos/arendst/Tasmota/tags | grep "name" | sort --version-sort -r | head -n 1 | sed -E "s/\s*\"name\": \"(.*)\",*/\1/g"'
+      scan_interval: 86400 # check once every day
 ```
 
 ![](https://cdn.pbrd.co/images/HY47i1b.jpg)
 
-## MQTT Discovery
+## MQTT Discovery **REMOVED**
 
-!!! warning "Development of this component is halted in favor of Tasmota (beta) integration"
+!!! failure "Home Assistant MQTT Discovery is removed from all builds of Tasmota and development of this feature is halted!"
 
 Home Assistant has a feature called [MQTT discovery](https://www.home-assistant.io/docs/mqtt/discovery/).
 With MQTT discovery no user interaction or configuration file editing is needed to add new devices in Home Assistant. Most of the changes will be updated in HA automatically.
@@ -1249,11 +1216,6 @@ You can further customise your device in Home Assistant by clicking on the entit
 
 
 Types of devices not listed above (covers, etc) require [manual configuration](#editing-configurationyaml)
-
-### Disabling
-
-To disable MQTT discovery and remove the retained message, execute `SetOption19 0`.  
-The "homeassistant/" topic is removed from Home Assistant and MQTT broker.  Changed setoptions will not revert to defaults!
 
 ## Troubleshooting
 
