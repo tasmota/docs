@@ -1,4 +1,4 @@
-# AHT1x/AHT2x and compatible temperature and humidity sensor
+# AHT10/AHT15 temperature and humidity sensor
 
 ??? failure "This feature is not included in precompiled binaries"  
 

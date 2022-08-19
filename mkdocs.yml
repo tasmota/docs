@@ -198,6 +198,7 @@ nav:
     - Buzzer.md
     - A4988 stepper motor controller: A4988-Stepper-Motor-Controller.md
     - AHT1x.md
+    - AHT2x.md
     - AM2301 temperature and humidity sensor: AM2301.md
     - APDS-9960.md
     - AS3935.md
