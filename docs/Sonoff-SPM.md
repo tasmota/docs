@@ -1,16 +1,18 @@
 # Sonoff SPM
 
+??? tip "This feature is included only in `tasmota32` binaries" 
+
 !!! Warning "Do not use this device as safety fuse!"
 
 !!! Info 
     For ARM firmware upgrades it's advised to make a full backup of the SPM-Main ESP 4M flash firmware before flashing Tasmota.
 
-The Sonoff Smart Stackable Power Meter uses a SPM-Main unit with ESP32 providing wifi and ethernet connections. A serial interface and a SPI interface connects to an ARM MCU which in turn provides a RS-485 bus to up to 32 SPM-4Relay modules. The SPM-4Relay module contains an ARM MCU too providing independent power management for four bi-stable relays rated for 20A at 240V for a total of 4400W.
+The Sonoff Smart Stackable Power Meter uses a SPM-Main unit with ESP32 providing Wi-Fi and ethernet connections. A serial interface and a SPI interface connects to an ARM MCU which in turn provides a RS-485 bus to up to 32 SPM-4Relay modules. The SPM-4Relay module contains an ARM MCU too providing independent power management for four bi-stable relays rated for 20A at 240V for a total of 4400W.
 
 !!! Note 
     As of this writing Tasmota v11.1.0.3 supports ARM firmware versions 1.0.0 and 1.2.0.
 
-The firmware monitors the attached SPM-4Relay modules and stores energy usage history for up to 180 days on an optional SD-Card accessable by the ARM MCU only. The ARM firmware provides numerous un-documented functions allowing the ESP32 to send and receive information.
+The firmware monitors the attached SPM-4Relay modules and stores energy usage history for up to 180 days on an optional SD-Card accessible by the ARM MCU only. The ARM firmware provides numerous un-documented functions allowing the ESP32 to send and receive information.
 
 ### Background information
 
@@ -28,7 +30,7 @@ Tasmota, installed on the ESP32, can connect to the SPM-Main ARM MCU using the s
 - Power control of all 32 relays using standard features
 - Energy usage using standard features
 - Overload detection using ARM firmware
-- Gui display of rotating relays or a user selected 4Relay module
+- GUI display of rotating relays or a user selected 4Relay module
 - Fix firmware max 180 days energy usage by storing daily Energy Total in Tasmota's filesystem
 - Mapping physical relays to scanned relays
 

@@ -1,12 +1,12 @@
-!!! note "This feature is included in ESP32 builds, but for ESP8266 it is included only in tasmota-knx build"     
+??? note "This feature is included in ESP32 builds, but for ESP8266 it is included only in `tasmota-knx` build"     
 
-To use in other builds you must [compile your own build](Compile-your-build). Add the following to `user_config_override.h`:
-```
-#ifndef USE_KNX
-#define USE_KNX         // Enable KNX IP Protocol Support (+9.4k code, +3k7 mem)
-#endif
-```
-----
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```arduino
+    #ifndef USE_KNX
+    #define USE_KNX         // Enable KNX IP Protocol Support (+9.4k code, +3k7 mem)
+    #endif
+    ```
+
 ## What is KNX?
 
 [<img src="https://www.knx.org/wGlobal/wGlobal/layout/images/knx-logo.png" />](https://www.knx.org/knx-en/for-professionals/index.php)

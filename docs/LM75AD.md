@@ -3,7 +3,7 @@
 ??? tip "This feature is included only in `tasmota-sensors` and `tasmota32` binaries" 
 
     When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
-    ```c++
+    ```arduino
     #ifndef USE_LM75AD 
     #define USE_LM75AD      // [I2cDriver20] Enable LM75AD sensor (I2C addresses 0x48 - 0x4F) (+0k5 code)
     #endif

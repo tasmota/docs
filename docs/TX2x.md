@@ -1,31 +1,26 @@
 # TX20/TX23/WS2300-15 anemometer
 
-!!! failure "This feature is not included in precompiled binaries"     
+??? failure "This feature is not included in precompiled binaries"  
 
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-
-For TX20 sensor
-
-```C
-#ifndef USE_TX20_WIND_SENSOR
-#define USE_TX20_WIND_SENSOR  // Add support for La Crosse TX20 anemometer (+2k6/0k8 code)
-#endif
-```
-
-For TX23 sensor
-
-```C
-#ifndef USE_TX23_WIND_SENSOR
-#define USE_TX23_WIND_SENSOR  // Add support for La Crosse TX20 anemometer (+2k6/0k8 code)
-#endif
-```
-For WS2300-15 sensor
-
-```C
-#ifndef USE_WS2300_WIND_SENSOR
-#define USE_WS2300_WIND_SENSOR  // Add support for Technoline WS2300-15 anemometer
-#endif
-```
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:    
+    For TX20 sensor
+    ```arduino
+    #ifndef USE_TX20_WIND_SENSOR
+    #define USE_TX20_WIND_SENSOR      // Add support for La Crosse TX20 anemometer (+2k6/0k8 code)
+    #endif
+    ```
+    For TX23 sensor
+    ```arduino
+    #ifndef USE_TX23_WIND_SENSOR
+    #define USE_TX23_WIND_SENSOR      // Add support for La Crosse TX20 anemometer (+2k6/0k8 code)
+    #endif
+    ```
+    For WS2300-15 sensor
+    ```arduino
+    #ifndef USE_WS2300_WIND_SENSOR
+    #define USE_WS2300_WIND_SENSOR    // Add support for Technoline WS2300-15 anemometer
+    #endif
+    ```
 
 This setting  compiles Tasmota with sensor statistical values (needs the higher value size of code), which are useful for the wind sensor, since the measured values naturally change very quickly. The values generated in addition to the wind speed and wind direction are:
 
@@ -39,7 +34,7 @@ The range (&ang;) and min/max values are held for the time [TelePeriod](Commands
 
 If you do not want the statistical calculation having speed and direction value only, use
 
-```C
+```arduino
 #ifndef USE_TX2X_WIND_SENSOR_NOSTATISTICS
 #define USE_TX2X_WIND_SENSOR_NOSTATISTICS
 #endif
@@ -84,13 +79,13 @@ GPIOx to `TX2x (104)`
 
 The TX2 pin needs a pull-up resistor. The internal pull-up is activated for this so you can use any useful GPIO except GPIO15 and GPIO16 (GPIO15 is always pulled low, GPIO16 has a built-in pull-down resistor).  
 
-To be on the save side you can add an additonal external 10k pull-up to TX2x GPIOx.
+To be on the save side you can add an additional external 10k pull-up to TX2x GPIOx.
 
 After a reboot the driver will detect TX20/TX23/WS2300 automatically and display the wind data:
 
 ![image](https://github.com/curzon01/media/blob/master/pics/tx23_sensor.png?raw=true)
 
-Sensor sends a  `tele/%topic%/SENSOR` JSON reponse:
+Sensor sends a  `tele/%topic%/SENSOR` JSON response:
 
 ```json
 {

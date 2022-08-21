@@ -1,5 +1,6 @@
 # TLS Secured MQTT
-!!! failure "This feature is included in ESP32 but not included in ESP8266 precompiled binaries (except ZBBridge)"
+
+??? tip "This feature is included only in `tasmota32` binaries" 
 
 Starting with version 10.0.0.4, TLS now support dual mode, depending of the value of `SetOption132`:
 
@@ -45,8 +46,7 @@ For details on how to set up your local instance of Mosquitto, check the article
 
 ## Compiling TLS for ESP8266
 
-To use it you must [compile your build](Compile-your-build) do the follow changes:
-1 - Add the following to `user_config_override.h`:
+To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
 ```C
 #ifndef USE_MQTT_TLS 
@@ -58,12 +58,12 @@ To use it you must [compile your build](Compile-your-build) do the follow change
 #endif
 ```
 
-2 - Change port to 8883
+#### Change port to 8883
 ```
 #define MQTT_PORT              8883              // [MqttPort] MQTT port (10123 on CloudMQTT)
 ```
 
-3 - Ensure that for the environment you have selected, `lib/lib_ssl` is included on `platformio_tasmota_env.ini` :
+#### Ensure that for the environment you have selected, `lib/lib_ssl` is included on `platformio_tasmota_env.ini` :
 ```
 lib_extra_dirs          = lib/lib_ssl
 ```

@@ -25,7 +25,7 @@ This guide was created using STX882 RF transmitter which also works without issu
 ### Tasmota
 In the **_Configuration -> Configure Module_** page assign:
 
-- GPIOx to `RFSend (105)`   
+- GPIOx to `RFSend`   
 
 See [RF commands](Commands.md#rf-transceiver) for use. 
 

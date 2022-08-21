@@ -1,4 +1,5 @@
 !!! failure "This feature is not included in precompiled binaries."
+
 See below how to build you own Tasmota with Teleinfo enabled.
 
 ## Overview

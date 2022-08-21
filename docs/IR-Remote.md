@@ -1,6 +1,6 @@
 IR Remote driver enables sending IR codes through an IR transmitter and receiving them through an IR receiver via [IRremoteESP8266 library](https://github.com/crankyoldgit/IRremoteESP8266).
 
-Most builds support only most common IR protocols, but [tasmota-ir.bin](Tasmota-IR) supports almost all protocols available in the IRremoteESP8266 library.
+Most builds support only the common IR protocols, but [tasmota-ir.bin](Tasmota-IR) supports almost all protocols available in the IRremoteESP8266 library.
 
 ## IR Transmitter
 <img src="https://user-images.githubusercontent.com/5904370/68168682-e3cca780-ff69-11e9-928d-e1571a24a3ab.png" align=right></img>Common transmitter modules in the market have a weak IR LED, thus effective transmit distance is really short. If you need range it is best to [build your own](https://github.com/crankyoldgit/IRremoteESP8266/wiki#ir-sending). For the LED we recommend [TSAL6400](https://t.ly/8DX7N) for best performance.

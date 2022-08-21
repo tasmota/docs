@@ -60,11 +60,12 @@ theme:
         name: Switch to light mode
 
   features:
+    - navigation.instant
     - navigation.tabs
     - navigation.tabs.sticky
-    - navigation.instant
     - navigation.top
     - navigation.tracking
+
   font:
     text: Barlow
     code: Roboto Mono
@@ -111,7 +112,7 @@ extra_css:
 extra_javascript:
   - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
   - extra_javascript/tablesort.js
-
+  
 nav:
   - Home:
     - News: index.md
@@ -130,49 +131,50 @@ nav:
     - Contributing: Contributing.md
     - Download.md
     - Project Showcase: "https://github.com/arendst/Tasmota/discussions/categories/show-and-tell"
+    - For Developers: For-Developers.md
   - Features:
     - Introduction: Features.md
-    - Analog pin: ADC.md
-    - Bluetooth.md
+    - Analog Pin: ADC.md
     - Buttons-and-Switches.md
     - DeepSleep.md
     - Device-Groups.md
     - Displays.md
     - Dynamic-Sleep.md
     - I2C Devices: I2CDEVICES.md
-    - IR Communication: Tasmota-IR.md
-    - LCD/DLP Projector Control: Projector.md
     - Lights.md
-    - Modbus-Bridge.md
-    - OpenTherm: OpenTherm.md
     - PIR-Motion-Sensors.md
     - Power-Monitoring-Calibration.md
     - PWM-dimmer-switch.md
-    - RF Communication: RF-Protocol.md
     - Rules.md
-    - Scripting: Scripting-Language.md
-    - Safeboot.md
-    - Serial-to-TCP-Bridge.md
+    - Scripting Language: Scripting-Language.md
     - Blinds-and-Shutters.md
-    - Range-Extender.md
+    - Protocol Bridging:
+      - Arduino MCU: TasmotaClient.md
+      - BLE Gateway: Bluetooth.md
+      - IR Communication: Tasmota-IR.md
+      - LCD/DLP Projector Control: Projector.md
+      - Modbus-Bridge.md
+      - OpenTherm: OpenTherm.md
+      - RF Communication: RF-Protocol.md
+      - Serial-to-TCP-Bridge.md
+      - Zigbee.md
     - Smart-Meter-Interface.md
-    - Subscribe-&-Unsubscribe.md
-    - TasmotaClient.md
     - Thermostat.md
     - Timers.md
     - TLS.md
     - TuyaMCU.md
     - Universal File System: UFS.md
-    - Zigbee.md
+    - Wi-Fi Range Extender: Range-Extender.md
     - Projects and Tutorials: Tutorials.md
-    - For Developers: For-Developers.md
   - ESP32:
     - Tasmota32 Features: ESP32.md
     - Berry: Berry.md
     - Bluetooth Low Energy: Bluetooth_ESP32.md
+    - I2S Audio: I2S-Audio.md
     - LVGL: LVGL.md
     - HASPmota: HASPmota.md
     - Touch GPIOs: TouchPin.md
+    - Safeboot Partition Layout: Safeboot.md
     - Supported Devices: "https://templates.blakadder.com/esp32"
   - Smart Home Integrations:
     - Introduction: Integrations.md
@@ -193,68 +195,7 @@ nav:
     - Mozilla WebThings Adapter: "https://github.com/tim-hellhake/tasmota-adapter"
     - SmartThings: "https://github.com/hongtat/tasmota-connect"
     - Tasmohab: "https://github.com/Gifford47/tasmohab/blob/master/README.md"
-  - Peripherals:
-    - Supported-Peripherals.md
-    - Buzzer.md
-    - A4988 stepper motor controller: A4988-Stepper-Motor-Controller.md
-    - AHT1x.md
-    - AHT2x.md
-    - AM2301 temperature and humidity sensor: AM2301.md
-    - APDS-9960.md
-    - AS3935.md
-    - AZ-7798.md
-    - BH1750.md
-    - BME280.md
-    - BME680.md
-    - CC2530.md
-    - Chirp! moisture sensor: Moisture-Sensor-and-Chirp!-Sensor.md
-    - DFR0299.md
-    - DHT11.md
-    - DY-SV17F.md
-    - DS18x20.md
-    - DS3231.md
-    - EZO.md
-    - HM-10.md
-    - HM-17.md
-    - HC-SR04.md
-    - HRG15.md
-    - Honeywell-HIH.md
-    - I2S_audio.md
-    - IAQ.md
-    - IR-Remote.md
-    - LM75AD.md
-    - MCP230xx.md
-    - MFRC522.md
-    - MGC3130.md
-    - MH-Z19B.md
-    - MLX90614.md
-    - MLX90640.md
-    - MPR121.md
-    - MPU-6050.md
-    - NRF24L01.md
-    - OpenTherm.md
-    - P1-Smart-Meter.md
-    - PAJ7620.md
-    - PCA9685.md
-    - PN532.md
-    - PZEM-0XX.md
-    - RCWL-0516.md
-    - RDM6300.md
-    - RF-Transceiver.md
-    - SDS011.md
-    - SHT30.md
-    - SK6812.md
-    - Smart-Meter-Interface.md
-    - SolaX-X1.md
-    - SPS30.md
-    - TX2x.md
-    - TSL2561.md
-    - VEML6070.md
-    - VEML6075.md
-    - VEML7700.md
-    - VL53Lxx.md
-    - WS2812B-RGB-Shield.md
-    - WS2812B-and-WS2813.md
+  - Peripherals: Supported-Peripherals.md
   - Supported Devices:
     - Configure Unknown Device: Configuration-Procedure-for-New-Devices.md
     - All Supported Devices: https://templates.blakadder.com/ "target=_blank"

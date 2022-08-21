@@ -1,18 +1,15 @@
 # ULP for ESP32 :material-cpu-32-bit:
   
-!!! failure "This feature is not part of any official build"
-    
-You must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-
-```c++
-#define USE_BERRY_ULP      // (ESP32 only) Add support for the ULP via Berry (+5k flash)
-```
-  
-or add as a build flag to any build environment, i.e. in platformio_tasmota_cenv.ini:  
-```
-build_flags             = ${env:tasmota32_base.build_flags}
-                          -DUSE_BERRY_ULP
-```  
+??? failure "This feature is not included in precompiled binaries"  
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```arduino
+    #define USE_BERRY_ULP      // (ESP32 only) Add support for the ULP via Berry (+5k flash)
+    ``` 
+    or add as a build flag to any build environment, i.e. in platformio_tasmota_cenv.ini:  
+    ```
+    build_flags             = ${env:tasmota32_base.build_flags}
+                            -DUSE_BERRY_ULP
+    ```  
   
   
 ## Ultra Low Power coprocessor
@@ -35,7 +32,7 @@ This was the reason, why for projects like Tasmota it never made sense to includ
 ### Advantages of the ULP
 Besides the possibility to run code in deep sleep and wake up the system, it can also make sense to run the ULP in parallel to the main system.  
 To simplify again:  
-Everything that is critical to precise timing and is somehow portable to ULP, should run better than on the main cores! This includes the internal temperatur sensor and the hall sensor. Additionally it can free the main cores of some tasks.  
+Everything that is critical to precise timing and is somehow portable to ULP, should run better than on the main cores! This includes the internal temperature sensor and the hall sensor. Additionally it can free the main cores of some tasks.  
   
 ### Data exchange between main system and ULP
   
@@ -43,12 +40,12 @@ There is a memory region which is located at fixed  address 0x5000000, which is 
   
 ### General program flow
   
-A typical ULP program is started from the main core at the position of the so called *global entry point*. Then it executes its chain of commands and ends with a `halt` command. It is technically possible to create a run loop inside the code and to not end with `halt`. But typically such a loop is realized with a wakeup timer, that restarts the programm with a certain interval, which can be set with `ULP.wake_period(register,time in microseconds)`. The register is numbered from 0 to 4 and can be changed in the assembly code with `sleep register`.  
+A typical ULP program is started from the main core at the position of the so called *global entry point*. Then it executes its chain of commands and ends with a `halt` command. It is technically possible to create a run loop inside the code and to not end with `halt`. But typically such a loop is realized with a wakeup timer, that restarts the  with a certain interval, which can be set with `ULP.wake_period(register,time in microseconds)`. The register is numbered from 0 to 4 and can be changed in the assembly code with `sleep register`.  
   
 ### Tasmota conventions
   
-The assembly code can be divided in different sections of which the so called `.text`sections contains the programm, but can hold variables or arbitrary data too. In general for the assembler it is not so important, where the functions or the *global entry point* is located.  
-But for Tasmota the rule is, that the global entry point or a jump to it is located at position 0 in RTC_SLOW_MEM. That way `ULP.run()` can always point to this addresss 0.  
+The assembly code can be divided in different sections of which the so called `.text`sections contains the program, but can hold variables or arbitrary data too. In general for the assembler it is not so important, where the functions or the *global entry point* is located.  
+But for Tasmota the rule is, that the global entry point or a jump to it is located at position 0 in RTC_SLOW_MEM. That way `ULP.run()` can always point to this address 0.  
 It is a design decision to keep the ULP module as small as possible and the addition of more internal functions shall be avoided, i.e. for doing setup of GPIO/RTC pins. If possible, this should be done in assembly code.  
   
 !!! example 
@@ -76,10 +73,10 @@ upip.install('micropython-esp32-ulp')
 ```
   
 After that your are ready to assemble.  
-The ULP code is embedded as a multiline string in Micropython scripts. For use in Tasmota it makes sense to make some changes, that are described in an [ulp_template.py](https://github.com/Staars/berry-examples/blob/main/ulp_helper/ulp_template.py) and to use this template by replacing the surce code string with the new code.  
+The ULP code is embedded as a multiline string in Micropython scripts. For use in Tasmota it makes sense to make some changes, that are described in an [ulp_template.py](https://github.com/Staars/berry-examples/blob/main/ulp_helper/ulp_template.py) and to use this template by replacing the source code string with the new code.  
 !!! tip
-    The Micropython module can not really include external headers, but it offers a very conveniant database function as described here:   [link:preprocess](https://github.com/micropython/micropython-esp32-ulp/blob/master/docs/preprocess.rst)  
-    Otherwise the missing defines must be added amnually.
+    The Micropython module can not really include external headers, but it offers a very convenient database function as described here:   [link:preprocess](https://github.com/micropython/micropython-esp32-ulp/blob/master/docs/preprocess.rst)  
+    Otherwise the missing defines must be added annually.
 
 After you created or did download your `ulp_app.py` you can export the data with 'micropython ulp_app.py' to the console, from where it can be copy pasted to the Berry console or to your Berry project.  
 !!! tip
@@ -123,7 +120,7 @@ Done!
 Now let's modify the code slightly for different intervals for "on" and "off".
 
 1. Add a second wake period with `print("ULP.wake_period(1, 200000)")`.
-2. Add `sleep` commmands to the source code like so:
+2. Add `sleep` commands to the source code like so:
     ``` asm
     on:
     # turn on led (set GPIO)
@@ -150,7 +147,7 @@ The console output should look something like that:
     ULP.run()
 ```
   
-After executing it the builtin LED should blink (if wired to the usual GPIO 2).
+After executing it the built in LED should blink (if wired to the usual GPIO 2).
 You can change the wake intervals on-the-fly with i.e. `ULP.wake_period(1, 800000)` in the Berry console.
 
 Now on to something more complex with wake from deep sleep.
@@ -167,7 +164,7 @@ print("ULP.adc_config(0,2,3)") # adc1_config_channel_atten(ADC1_CHANNEL_0, ADC_A
 print("ULP.adc_config(3,2,3)") # adc1_config_channel_atten(ADC1_CHANNEL_3, ADC_ATTEN_DB_6); + adc1_config_width(ADC_WIDTH_BIT_12);
 ```
   
-The entry point is already at address zero, so there are no changes needed to assemble, load and start he ULP programm in Tasmota. In the console output we can find the positions of the variables which hold the voltage measurements and can read out it values:
+The entry point is already at address zero, so there are no changes needed to assemble, load and start he ULP program in Tasmota. In the console output we can find the positions of the variables which hold the voltage measurements and can read out it values:
 
 ```
 0000 entry
@@ -227,7 +224,7 @@ The we need some code, which replaces line 135 and 136 of the original example:
     JUMPR wake_up, threshold_pos, GE
 ```
   
-After loading and starting you can send the ESP to deepsleep. For testing it is recommended to add the optional wake timer as a fallback:  
+After loading and starting you can send the ESP to deep sleep. For testing it is recommended to add the optional wake timer as a fallback:  
 `ULP.sleep(30)` 
   
 Try to wake up the system with the magnet.  
@@ -280,8 +277,8 @@ Add commands:
 
 ### I2C access
   
-Although there are special assembler commands to access I2C devices the most common method in the examples on GitHub is bitbanging. This is reported to be more reliable and circumvents some limitations (only 2 pin combinations and bytewise access with special I2C commands).  
-Nearly every example is based on some very clever macros and control flow tricks, that replicate a simple stack and subroutines (similiar to a library), which is a good example for the "Art of coding".  
+Although there are special assembler commands to access I2C devices the most common method in the examples on GitHub is bit banging. This is reported to be more reliable and circumvents some limitations (only 2 pin combinations and bytewise access with special I2C commands).  
+Nearly every example is based on some very clever macros and control flow tricks, that replicate a simple stack and subroutines (similar to a library), which is a good example for the "Art of coding".  
 To make it assemble in Micropython we need some functions in the Micropython-script, that can expand the macros. These functions are in a very early stage of development and might eventually later find their way into the micropython-esp32-ulp project after more refinement.  
 !!! tip
     If your examples do not assemble in Micropython, please try out the ESP-IDF variant.

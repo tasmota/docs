@@ -1,12 +1,11 @@
-!!! info "This feature is included only in tasmota-sensors.bin" 
+??? tip "This feature is included only in `tasmota-sensors` and `tasmota32` binaries" 
 
-Otherwise you must [compile your build](Compile-your-build.md). Add the following to `user_config_override.h`:
-```
-#ifndef USE_RC_SWITCH
-#define USE_RC_SWITCH         // Add support for RF transceiver using library RcSwitch (+2k7 code, 460 iram)
-#endif
-```
-----
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```c++
+	#ifndef USE_RC_SWITCH
+	#define USE_RC_SWITCH         // Add support for RF transceiver using library RcSwitch (+2k7 code, 460 iram)
+	#endif
+	```
 
 !!! warning "This guide does not apply to [Sonoff RF Bridge](devices/Sonoff-RF-Bridge-433.md) specific commands"
 

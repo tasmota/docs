@@ -1,14 +1,14 @@
 # Hydreon RG-15 Solid State Rain Sensor
 
-!!! failure "This feature is not included in precompiled binaries"
+??? failure "This feature is not included in precompiled binaries"  
 
-You must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-```
-#ifndef USE_HRG15
-#define USE_HRG15    // Add support for Hydreon RG-15 Solid State Rain sensor (+1k5 code)
-#endif
-```
-----
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```arduino
+    #ifndef USE_HRG15
+    #define USE_HRG15    // Add support for Hydreon RG-15 Solid State Rain sensor (+1k5 code)
+    #endif
+    ```
+
 The Hydreon RG-15 Solid State Tipping Bucket is a rainfall measuring device intended to replace conventional tipping buckets.
 
 The RG-15 uses beams of infrared light within a plastic lens about the size of a tennis ball. The round surface of the lens discourages collection of debris, and the RG-15 has no moving parts to stick, and no water-pathways to clog. The device features an open-collector output that emulates a conventional tipping bucket, as well as serial communications that provide more detailed data and allow for configuration of the device.

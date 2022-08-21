@@ -1,39 +1,37 @@
 <a id="top">
 # SolaX Power - Single phase string inverter X1
-## Compiling
-!!! failure "This feature is not included in precompiled binaries"
 
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-```
-#ifndef USE_SOLAX_X1
-#define USE_SOLAX_X1
-#endif
+??? failure "This feature is not included in precompiled binaries"  
+
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```arduino
+	#ifndef USE_SOLAX_X1
+	#define USE_SOLAX_X1
+	// Change serial speed from the default value of 9600:
+	  #define SOLAXX1_SPEED        9600              // Solax X1 Modbus RS485 serial speed (default: 9600 baud)
+	// If your inverter has two PV-inputs, you can activate the 2nd one:
+
+	  #define SOLAXX1_PV2                            // Solax X1 using second PV
+	#endif
 ```
 
-There are additional `#define` compiler directive parameters which can be used, if they are necessary for your setup.  
-Set an other serial speed than the default value of 9600:
-```
-#undef  SOLAXX1_SPEED
-#define SOLAXX1_SPEED  9600
-```
-If your inverter has two PV-inputs, you can activate the 2nd one:
-```
-#ifndef SOLAXX1_PV2
-#define SOLAXX1_PV2
-#endif
-```
 ## General
+
 This module reads runtime values from a [Solax X1](https://www.solaxpower.com) device via RS485 Modbus interface and publishes them to MQTT.  
 [![X1 Mini](_media/solax-x1/X1Mini_200.png)](_media/solax-x1/X1Mini.png) [![X1 Air](_media/solax-x1/X1Air_200.png)](_media/solax-x1/X1Air.png) [![X1 Smart](_media/solax-x1/X1Smart_200.png)](_media/solax-x1/X1Smart.png)
 
 ## Wiring
+
 To connect the inverter to the Tasmota-device, you have to use a breakout board to adapt the RS485 interface of the inverter to serial interface of the ESP.
+
 ### Breakout boards
+
 There are many RS485-to-TTL modules, aka breakout boards, available. They may work or not. You should have attention on the operation voltage. The ESP-devices work with 3 volts.
 Because of that be carefull experimenting with 5 volts. In the best case nothing works. In the worst case it will destroy your ESP or breakout board.
 Here are two examples of tested breakout boards. Recommended is a board with a SP3485 chip, because it is designed for operating at 3 volts.
 
 #### SP3485
+
 The SP3485 breakout board is specially made to work with only 3 volts. It has a seperate RTS-pin and works with a voltage from 3 to 5 volts.  
 [![SP3485_Breakout1](_media/solax-x1/SP3485_Breakout1_240.jpg)](_media/solax-x1/SP3485_Breakout1.jpg) [![SP3485_Breakout2](_media/solax-x1/SP3485_Breakout2_240.jpg)](_media/solax-x1/SP3485_Breakout1.jpg)
 #### HW-0519

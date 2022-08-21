@@ -1,58 +1,57 @@
 # Scripting
-!!! failure "This feature is not included in precompiled binaries"
+??? failure "This feature is not included in precompiled binaries"  
 
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-```arduino
-#ifndef USE_SCRIPT
-#define USE_SCRIPT  // adds about 17k flash size, variable ram size
-#endif
-#ifdef USE_RULES
-#undef USE_RULES
-#endif  
-```
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```arduino
+    #ifndef USE_SCRIPT
+    #define USE_SCRIPT  // adds about 17k flash size, variable ram size
+    #endif
+    #ifdef USE_RULES
+    #undef USE_RULES
+    #endif  
+    ```
 
-Additional features are enabled by adding the following `#define` compiler directive parameters and then compiling the firmware. These parameters are explained further below in the article.
+    Additional features are enabled by adding the following `#define` compiler directive parameters and then compiling the firmware. These parameters are explained further below in the article.
 
-| Feature | Description |
-| -- | -- |
-USE_BUTTON_EVENT | enable `>b` section (detect button state changes)
-USE_SCRIPT_JSON_EXPORT | enable `>J` section (publish JSON payload on [TelePeriod](Commands#teleperiod))
-USE_SCRIPT_SUB_COMMAND | enables invoking named script subroutines via the Console or MQTT
-USE_SCRIPT_HUE | enable `>H` section (Alexa Hue emulation)
-USE_HOMEKIT | enable `>h` section (Siri Homekit support (ESP32 only),<br>define must be given in platform_override see below)
-USE_SCRIPT_STATUS | enable `>U` section (receive JSON payloads from cmd status)
-SCRIPT_POWER_SECTION | enable `>P` section (execute on power changes)
-SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe
-USE_SENDMAIL | enable `>m` section and support for sending e-mail<br>(on ESP32 you must add USE_ESP32MAIL)  
-USE_SCRIPT_WEB_DISPLAY | enable `>W` section (modify web UI)
-SCRIPT_FULL_WEBPAGE | enable ``>w`` section (seperate full web page and webserver)
-USE_TOUCH_BUTTONS | enable virtual touch button support with touch displays
-USE_WEBSEND_RESPONSE | enable receiving the response of [`WebSend`](Commands#websend) and [`WebQuery`](Commands#webquery) commands (received in section >E)
-SCRIPT_STRIP_COMMENTS | enables stripping comments when attempting to paste a script that is too large to fit
-USE_ANGLE_FUNC | add sin(x),acos(x) and sqrt(x) e.g. to allow calculation of horizontal cylinder volume
-USE_SCRIPT_FATFS_EXT | enables additional FS commands   
-USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
-USE_FACE_DETECT | enables face detecting in ESP32 Webcam
-USE_SCRIPT_TASK | enables multitasking Task in ESP32
-USE_LVGL | enables support for LVGL
-USE_SCRIPT_GLOBVARS | enables global variables and >G section
-USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
-SML_REPLACE_VARS | enables posibility to replace the lines from the (SML) descriptor with Vars
-USE_SML_SCRIPT_CMD | enables SML script cmds
-USE_SCRIPT_I2C | enables I2C support
-USE_SCRIPT_SERIAL | enables support for serial io cmds
-USE_LVGL | enables support for LVGL
-USE_SCRIPT_TIMER | enables up to 4 Arduino timers (so called tickers)  
-SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
-LARGE_ARRAYS | enables arrays of up to 1000 entries instead of max 127  
-SCRIPT_LARGE_VNBUFF | enables to use 4096 in stead of 256 bytes buffer for variable names  
-USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
-USE_FEXTRACT | enables array extraction from database  fxt(...)  
-USE_SCRIPT_SPI | enables support for SPI interface  
-USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
-----
+    | Feature | Description |
+    | -- | -- |
+    USE_BUTTON_EVENT | enable `>b` section (detect button state changes)
+    USE_SCRIPT_JSON_EXPORT | enable `>J` section (publish JSON payload on [TelePeriod](Commands#teleperiod))
+    USE_SCRIPT_SUB_COMMAND | enables invoking named script subroutines via the Console or MQTT
+    USE_SCRIPT_HUE | enable `>H` section (Alexa Hue emulation)
+    USE_HOMEKIT | enable `>h` section (Siri Homekit support (ESP32 only),<br>define must be given in platform_override see below)
+    USE_SCRIPT_STATUS | enable `>U` section (receive JSON payloads from cmd status)
+    SCRIPT_POWER_SECTION | enable `>P` section (execute on power changes)
+    SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe
+    USE_SENDMAIL | enable `>m` section and support for sending e-mail<br>(on ESP32 you must add USE_ESP32MAIL)  
+    USE_SCRIPT_WEB_DISPLAY | enable `>W` section (modify web UI)
+    SCRIPT_FULL_WEBPAGE | enable ``>w`` section (seperate full web page and webserver)
+    USE_TOUCH_BUTTONS | enable virtual touch button support with touch displays
+    USE_WEBSEND_RESPONSE | enable receiving the response of [`WebSend`](Commands#websend) and [`WebQuery`](Commands#webquery) commands (received in section >E)
+    SCRIPT_STRIP_COMMENTS | enables stripping comments when attempting to paste a script that is too large to fit
+    USE_ANGLE_FUNC | add sin(x),acos(x) and sqrt(x) e.g. to allow calculation of horizontal cylinder volume
+    USE_SCRIPT_FATFS_EXT | enables additional FS commands   
+    USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
+    USE_FACE_DETECT | enables face detecting in ESP32 Webcam
+    USE_SCRIPT_TASK | enables multitasking Task in ESP32
+    USE_LVGL | enables support for LVGL
+    USE_SCRIPT_GLOBVARS | enables global variables and >G section
+    USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
+    SML_REPLACE_VARS | enables posibility to replace the lines from the (SML) descriptor with Vars
+    USE_SML_SCRIPT_CMD | enables SML script cmds
+    USE_SCRIPT_I2C | enables I2C support
+    USE_SCRIPT_SERIAL | enables support for serial io cmds
+    USE_LVGL | enables support for LVGL
+    USE_SCRIPT_TIMER | enables up to 4 Arduino timers (so called tickers)  
+    SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
+    LARGE_ARRAYS | enables arrays of up to 1000 entries instead of max 127  
+    SCRIPT_LARGE_VNBUFF | enables to use 4096 in stead of 256 bytes buffer for variable names  
+    USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
+    USE_FEXTRACT | enables array extraction from database  fxt(...)  
+    USE_SCRIPT_SPI | enables support for SPI interface  
+    USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
 
-!!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules)"
+!!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules). For ESP32 builds it is recommended to use [Berry](Berry)"
 
 To enter a script, go to **Consoles -> Edit Script** in the Tasmota web UI menu (for version before 9.4, go to **Configuration -> Edit script**)
 
@@ -83,7 +82,7 @@ To save code space almost no error messages are provided. However it is taken ca
 
 #### Script buffer size
 the script language normally shares script buffer with rules buffer which is 1536 chars.
-with below options script buffer size may be expanded. PVARS is size for permanant vars.
+with below options script buffer size may be expanded. PVARS is size for permanent vars.
 
 | Feature | ESP | ESP32 | PVARS | remarks |
 | :---    | :---:   | :---: | :---: | :--- |
@@ -112,7 +111,7 @@ with all linker files
 
 
 #### script init error codes
-after initizialisation the script reports some info in the console e.g:  
+after initialization the script reports some info in the console e.g:  
 20:21:28.259 Script: nv=51, tv=13, vns=279, vmem=3305, smem=4096  
 nv = number of used variables in total (numeric and strings)  
 tv = number of used string variables  
@@ -131,8 +130,8 @@ if the script init fails an error code is reported:
 
 you may increase the number of allowed variables with defines in user_config_override  
 defaults and override defines:  
-Numer of total variables = 50  (#define MAXVARS)  
-Numer of string variables = 5  (#define MAXSVARS)  
+Number of total variables = 50  (#define MAXVARS)  
+Number of string variables = 5  (#define MAXSVARS)  
 Number of filters (arrays) = 5 (#define MAXFILT)  
 Max string size            = 20 (override with >D size up to 48)  
 
@@ -142,8 +141,8 @@ Max string size            = 20 (override with >D size up to 48)
 
 you may use a special external editor with syntax highlighting to edit the scripts. (mac and pc)
 you may use any number of comments and indents to make it better readable.
-then with cmd r the script is transfered to the ESP and immediately started.
-(all comments and indents are removed before transfering)
+then with cmd r the script is transferred to the ESP and immediately started.
+(all comments and indents are removed before transferring)
 see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/AACcVmpZ4AfpdrWE_MPFGmbma?dl=0)  
 
 #### Console Commands
@@ -170,14 +169,14 @@ a valid script must start with >D in the first line
   `i:vname`   
   specifies auto increment counters if =0 (in seconds)  
   `g:vname`   
-  specifies global variable which is linked to all global variables with the same defintion on all devices in the homenet.
+  specifies global variable which is linked to all global variables with the same definition on all devices in the homenet.
   when a variable is updated in one device it is instantly updated in all other devices. if a section >G exists it is executed when a variable is updated from another device (this is done via UDP-multicast, so not always reliable)  
   `m:vname`   
    specifies a median filter variable with 5 entries (for elimination of outliers)  
   `M:vname`   
   specifies a moving average filter variable with 8 entries (for smoothing data)  
   (max 5 filters in total m+M) optional another filter length (1..127) can be given after the definition.  
-  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer, x = `-1` returns arry lenght, x = `-2` returns array average)  
+  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer, x = `-1` returns arry length, x = `-2` returns array average)  
   Using this filter, vars can be used as arrays, #define LARGE_ARRAYS allows for arrays up to 1000 entries  
   array may also be permanent by specifying an extra :p  
   m:p:vname defines a permanent array. Keep in mind however that in 1M Flash standard configurations you only have 50 bytes permanent storage which stands for a maximum of 12 numbers. (see list above for permanent storage in other configurations)  
@@ -209,7 +208,7 @@ Executed on restart. p vars are saved automatically after this call
 
 `>T`  
 Executed at least at [`TelePeriod`](Commands#teleperiod) time (`SENSOR` and `STATE`) but mostly faster up to every 100 ms, only put `tele-` vars in this section  
-Remark: json variable names (like all others) may not contain math operators like - , you should set [`SetOption64 1`](Commands#setoption64) to replace `-` (_dash_) with `_` (_underscore_). Zigbee sensors will not report to this section, use E instead.
+Remark: JSON variable names (like all others) may not contain math operators like - , you should set [`SetOption64 1`](Commands#setoption64) to replace `-` (_dash_) with `_` (_underscore_). Zigbee sensors will not report to this section, use E instead.
 
 `>H`  
 Alexa Hue interface (up to 32 virtual hue devices) *([example](#hue-emulation))*  
@@ -230,23 +229,23 @@ passcode = 111-11-111  keep this format, numbers 0-9
 
 `name` device name  (max 23 characters)  
 `type` device type (HAP_CID)  
-- `7` = outled, on/off  
+- `7` = outlet, on/off  
 - `5` = light, on/off,hue,sat,bri  
 - `10` = sensor  
 
 
 `opt` sensor type  
 - `0` = Temperature,val  
-- `1` = Humidty,val  
-- `2` = Lightlevel,val  
-- `3` = Battery status,level,lowbat,charging  
+- `1` = Humidity,val  
+- `2` = Light level,val  
+- `3` = Battery status,level,low battery,charging  
 - `4` = Ambient light level with extended range -10000,+10000  
 - `5` = Contact Sensor (switch)
 
 `var1 ...` variable name (max 11 characters)
 the variables denote scripting variables that need to be set by script  
 the special variables  
-@px x (1..9) directly set, read power states e.g. relais  
+@px x (1..9) directly set, read power states e.g. relays  
 @sx x (1..9) directly read switch state  
 @bx x (1..9) directly read button state  
 
@@ -340,14 +339,14 @@ for next loops are supported to repeat HTML code (precede with % char)
 %for var from to inc
 %next
 
-but this method is prefered:
+but this method is preferred:
 script subroutines may be called sub=name of subroutine, like normal subroutines
 %=#sub
 in this subroutine a web line may be sent by wcs (see below) thus allowing dynamic HTML pages
 
 =#sub(x) in any position of webline calls subroutine. this allows inserting content
  
-insa(array) in any position insert all elements from an array comma seperated 
+insa(array) in any position insert all elements from an array comma separated 
   
 %/file calls a file from the file system and send its content to browser. in this file any cmds may apply.
  
@@ -430,7 +429,7 @@ A web user interface may be generated containing any of the following elements:
   - g=simple gauges (must give extra 3 vars after header, yellow start, red start, maxval)  
   - T=Timeline (special type arrays contains start,stop pairs in minutes timeofday)  
   
-  b,l,h type may have the '2' option to specify exactly 2 arrays with 2 y scales given at the end of paramter list.  
+  b,l,h type may have the '2' option to specify exactly 2 arrays with 2 y scales given at the end of parameter list.  
   
   a very individual chart may be specified by splitting the chart definition and inserting the chart options directly see example below  
   
@@ -440,11 +439,11 @@ A web user interface may be generated containing any of the following elements:
   `name` = name of chart  
   `label` = label for up to the 4 datasets in chart  
   `entrylabel` = labels of each x axis entry separated by '|' char  
-  ("cntN" starts numbering entries with the number N an optional /X generates numbers devided by X.
+  ("cntN" starts numbering entries with the number N an optional /X generates numbers divided by X.
   Produce labels that cycle through the array indexes, starting with the number N.
   For instance, "cnt6" with an array of length 8 will produce the labels 6|7|0|1|2|3|4|5|
   Using "cntN/X" will then divide the numeric value of the label, so "cnt6/2" with an array of length 8 will produce the labels 3|3|0|0|1|1|2|2|)
-  ("wdh: before a week defintion generates a week with full hours)  
+  ("wdh: before a week definition generates a week with full hours)  
   `header` = visible header name of chart  
   
   additionally you have to define the html frame to put the chart in (both lines must be preceded by a $ char)
@@ -475,8 +474,8 @@ A web user interface may be generated containing any of the following elements:
 generates a button with the name "ButtonLabel" in Tasmota main menu.  
 Clicking  this button displays a web page with the HTML data of this section.
 all cmds like in >W apply here. these lines are refreshed frequently to show e.g. sensor values.
-lines preceeded by $ are static and not refreshed and displayed below lines without $.  
-this option also enables a full webserver interface when USE_UFILESYS is activ.  
+lines preceded by $ are static and not refreshed and displayed below lines without $.  
+this option also enables a full webserver interface when USE_UFILESYS is active.  
 you may display files from the flash or SD filesystem by specifying the url:  IP/ufs/path  .
 (supported files: *.jpg, *.html, *.txt)  
 `>w1` `>w2` `>w3`  `>w4`  `>w5`  `>w6` some as above `>w`  
@@ -532,7 +531,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `hf("hstr")` = converts hex float number string to a decimal number  
 `hf("hstr" r)` = converts hex float number string (reverse byte order) to a decimal number  
 `st(svar c n)` = string token - retrieve the n^th^ element of svar delimited by c  
-`ins(s1 s2)` = check if string s2 is contained in string s1, return -1 if not contained or position of conatined string  
+`ins(s1 s2)` = check if string s2 is contained in string s1, return -1 if not contained or position of contained string  
 `sl(svar)` = gets the length of a string  
 `asc(svar)` = gets the binary value of 1. char of a string  
 `sb(svar p n)` = gets a substring from svar at position p (if p<0 counts from end) and length n  
@@ -550,7 +549,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `mpt(x)` = measure pulse time, x>=0 defines pin to use, -1 returns low pulse time,-2 return high pulse time (if defined USE_ANGLE_FUNC)  
 `rnd(x)` = return a random number between 0 and x, (seed may be set by rnd(-x))  
 `sf(F)` = sets the CPU Frequency (ESP32) to 80,160,240 Mhz, returns current Freq.  
-`s(x)` = explicit conversion from number x to string  may be preceeded by precsion digits e.g. s(2.2x) = use 2 digits before and after decimal point  
+`s(x)` = explicit conversion from number x to string  may be preceded by precision digits e.g. s(2.2x) = use 2 digits before and after decimal point  
   
 I2C support #define USE_SCRIPT_I2C  
 `ia(AA)`, `ia2(AA)` test and set I2C device with adress AA (on BUS 1 or 2), returns 1 if device is present  
@@ -558,9 +557,9 @@ I2C support #define USE_SCRIPT_I2C
 `ir(aa)`, `ir1(aa)`, `ir2(aa)`, `ir3(aa)` read 1..3 bytes from register aa  
   
 Serial IO support #define USE_SCRIPT_SERIAL  
-`so(RXPIN TXPIN BR)` open serial port with RXPIN, TXPIN and baudrate BR with 8N1 serial mode (-1 for pin means dont use)  
-`so(RXPIN TXPIN BR MMM)` open serial port with RXPIN, TXPIN and baudrate BR and serial mode e.g 7E2 (all 3 modechars must be specified)  
-`so(RXPIN TXPIN BR MMM BSIZ)` open serial port with RXPIN, TXPIN and baudrate BR and serial mode e.g 7E2 (all 3 modechars must be specified) ans serial IRW buffer size  
+`so(RXPIN TXPIN BR)` open serial port with RXPIN, TXPIN and baud rate BR with 8N1 serial mode (-1 for pin means don't use)  
+`so(RXPIN TXPIN BR MMM)` open serial port with RXPIN, TXPIN and baud rate BR and serial mode e.g 7E2 (all 3 modechars must be specified)  
+`so(RXPIN TXPIN BR MMM BSIZ)` open serial port with RXPIN, TXPIN and baud rate BR and serial mode e.g 7E2 (all 3 modechars must be specified) and serial IRW buffer size  
 `sc()` close serial port  
 `sw(STR)` write the string STR to serial port  
 `swb(NUM)` write the number char code NUM to serial port  
@@ -568,16 +567,16 @@ Serial IO support #define USE_SCRIPT_SERIAL
 `sr()` read a string from serial port, all available chars up to string size  
 `sr(X)` read a string from serial port until charcode X, all available chars up to string size or until charcode X  
 `srb()` read a number char code from serial port  
-`sp()` read a number char code from serial port, dont remove it from serial input (peek)  
-`sra(ARRAY (flags))` fill an array from serial port, if USE_SML_M is enabled and Array size is 8 it is assumed to be a MODBUS request and the checksum is evaluated, if OK `8` is returned, else -2, or if flags is set modbus response is assumed and cksum is calculated, 0 = standard modbus, 1 = Rec BMA mode, return -2 on checksum error  a
+`sp()` read a number char code from serial port, don't remove it from serial input (peek)  
+`sra(ARRAY (flags))` fill an array from serial port, if USE_SML_M is enabled and Array size is 8 it is assumed to be a MODBUS request and the checksum is evaluated, if OK `8` is returned, else -2, or if flags is set Modbus response is assumed and checksum is calculated, 0 = standard Modbus, 1 = Rec BMA mode, return -2 on checksum error  a
   
-`sra(ARRAY (flags))` fill an array from serial port, if USE_SML_M is enabled and Array size is 8 it is assumed to be a MODBUS request and the checksum is evaluated, if OK `8` is returned, else -2, or if flags is set modbus response is assumed and cksum is calculated, 0 = standard modbus, 1 = Rec BMA mode   
-`swa(ARRAY len (flags))` send len bytes of an array to serial port, if flags is set modbus cmd is assumed and cksum is calculated, 0 = standard modbus, 1 = Rec BMA mode  
-`smw(ADDR MODE NUMBER)` send a value with checksum to MODBUS Adress, MODE 0 = uint16, 1 = uint32, 3 = float  
+`sra(ARRAY (flags))` fill an array from serial port, if USE_SML_M is enabled and Array size is 8 it is assumed to be a MODBUS request and the checksum is evaluated, if OK `8` is returned, else -2, or if flags is set Modbus response is assumed and ckum is calculated, 0 = standard Modbus, 1 = Rec BMA mode   
+`swa(ARRAY len (flags))` send len bytes of an array to serial port, if flags is set Modbus cmd is assumed and cksum is calculated, 0 = standard Modbus, 1 = Rec BMA mode  
+`smw(ADDR MODE NUMBER)` send a value with checksum to MODBUS Address, MODE 0 = uint16, 1 = uint32, 3 = float  
   
 SPI IO support #define `USE_SCRIPT_SPI`  
 `spi(0 SCLK MOSI MISO)` defines a software SPI port with pin numbers used for SCLK, MOSI, MISO.  
-`spi(0 -1 freq)` defines a hardware SPI port with pin numbers defined by Tasmota GPIO definition with bus frequency freq in Mhz.  
+`spi(0 -1 freq)` defines a hardware SPI port with pin numbers defined by Tasmota GPIO definition with bus frequency in Mhz.  
 `spi(0 -2 freq)` defines a hardware SPI port 2 on ESP32 with pin numbers defined by Tasmota GPIO definition.  
 `spi(1 N GPIO)` sets the CS pin with index N (1..4) to pin Nr GPIO.  
 `spi(2 N ARRAY LEN S)` sends and receives an ARRAY with len values with S (1..3) (8,16,24 bits) if N==-1 cs is ignored  
@@ -601,22 +600,22 @@ SEL:
 `say("text")` = plays specified text to speech (if defined USE_I2S_AUDIO or USE_TTGO_WATCH or USE_M5STACK_CORE2)   
 `c2ps(sel val)` = gets, sets values on ESP32 CORE2 sel=0 green led, sel=1 vibration motor, sel=2,3,4 get touch button state 1,2,3 (if defined USE_M5STACK_CORE2)  
 `rec(path seconds)` = rec n seconds wav audio file from i2s microphone to filesystem path (if defined USE_I2S_AUDIO or USE_M5STACK_CORE2)  
-`pwmN(-pin freq)` = defines a pwm channel N (1..N) with pin Nr and frequency (pin 0 beeing -64, N=5 with esp8266 and N=8 with esp32)  
+`pwmN(-pin freq)` = defines a pwm channel N (1..N) with pin Nr and frequency (pin 0 being -64, N=5 with esp8266 and N=8 with esp32)  
 `pwmN(val)` = outputs a pwm signal on channel N (1..N) with val (0-1023)  
 `wifis` = Wi-Fi connection status: `0` = disconnected, `>0` = connected  
 
 `wcs` = send this line to webpage (WebContentSend)  
-`wcf` = flushes the webbuffer (WSContentFlush)  
+`wcf` = flushes the web buffer (WSContentFlush)  
 `wfs` = send this file to webpage  
 `rapp` = append this line to MQTT (ResponseAppend)  
 `wm` = contains source of web request code e.g. 0 = Sensor display (FUNC_WEB_SENSOR)  
   
 `acp(dst src)` = copy array   
   
-`knx(code value)` = sends a number value to knx   
+`knx(code value)` = sends a number value to KNX   
 
-`sml(m 0 bd)` = set SML baudrate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
-`sml(m 1 htxt)` = send SML Hexstring htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
+`sml(m 0 bd)` = set SML baud rate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
+`sml(m 1 htxt)` = send SML Hex string htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
 `sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)(if defined USE_SML_SCRIPT_CMD)  
 `sml(m 3 hstr)` = inserts SML Hexstring variable hstr as binary to Meter m in Output stream e.g. for special MODBUS cmds, hstr must be a string variable NO string constant (if defined USE_SML_SCRIPT_CMD)  
 `sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
@@ -648,8 +647,8 @@ The following variables are cleared after reading true:
 `tset` = true on time set  
 `mqttc` = true on mqtt connect  
 `mqttd` = true on mqtt disconnect  
-`wific` = true on wifi connect  
-`wifid` = true on wifi disconnect  
+`wific` = true on Wi-Fi connect  
+`wifid` = true on Wi-Fi disconnect  
 
 **System variables** (for debugging)  
 `stack` = stack size  
@@ -705,14 +704,14 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
 
 `break` exits a section or terminates a `for next` loop  
 `dpx` sets decimal precision to x (0-9)  
-`dpx.y` sets preceeding digits to x and decimal precision to y (0-9)  
-`dp(x y)` sets preceeding digits to x and decimal precision to y  
+`dpx.y` sets preceding digits to x and decimal precision to y (0-9)  
+`dp(x y)` sets preceding digits to x and decimal precision to y  
 `svars` save permanent vars  
 `delay(x)` pauses x milliseconds (should be as short as possible)  
 `beep(f l)` (ESP32) beeps with a passive piezo beeper. beep(-f 0) attaches PIN f to the beeper, beep(f l) starts a sound with frequency f (Hz) and len l (ms). f=0 stops the sound.  
 `spin(x b)` set GPIO `x` (0..16) to value `b` (0,1). Only bit 0 of `b` is used - even values set the GPIO to `0` and uneven values set the GPIO to `1`  
 `spinm(x m)` set GPIO `x` (0..16) to mode `m` (input=0, output=1, input with pullup=2,alternatively b may be: O=out, I=in, P=in with pullup)  
-`ws2812(array dstoffset)` copies an array (defined with `m:vname`) to the WS2812 LED chain. The array length should be defined as long as the number of pixels. Color is coded as 24 bit RGB. optionally the destinationoffset in the LED chain may be given  
+`ws2812(array dstoffset)` copies an array (defined with `m:vname`) to the WS2812 LED chain. The array length should be defined as long as the number of pixels. Color is coded as 24 bit RGB. optionally the destination offset in the LED chain may be given  
   if dstoffset is flagged by 0x1000, 2 values 16 bits each in an array are used for 32 bit RGBW pixels
 `hsvrgb(h s v)` converts hue (0..360), saturation (0..100) and value (0..100) to RGB color  
 `dt` display text command (if #define USE_DISPLAY)  
@@ -874,7 +873,7 @@ To use any of these values, pass an `*` as its corresponding argument placeholde
 
 Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `m` _(note lower case)_ section. The specified text in this script section must end with an `#` character. `sendmail` will use the `m` section if `*` is passed as the `msg` parameter. in this >m section you may also specify email attachments.  
 @/filename specifies a file to be attached (if file system is present)  
-&arrayname specifies an array attachment (as tab delimeted text, no file system needed)  
+&arrayname specifies an array attachment (as tab delimited text, no file system needed)  
 $N attach a webcam picture from rambuffer number N (usually 1)  
   
 See [Scripting Cookbook Example].(#send-e-mail)  
@@ -909,7 +908,7 @@ The script itself is also stored on the file system with a default size of 8192 
 `flx(fname)` create download link for file (x=1 or 2) fname = file name of file to download  
 `fsm` return 1 if filesystem is mounted, (valid SD card found)  
 `res=fsi(sel)` gets file system information, sel=0 returns total media size, sel=1 returns free space both in kB   
-`fra(array fr)` reads array from open file with fr (assumes tab delimeted entries)  
+`fra(array fr)` reads array from open file with fr (assumes tab delimited entries)  
 `fwa(array fr)` writes array to open file with fr (writes tab delimited entries)  
 `fz(fr)` returns file size  
 `fa(fr)` returns number of available bytes in open file stream  
@@ -919,7 +918,7 @@ The script itself is also stored on the file system with a default size of 8192 
 `frw(fr url)` read file from web url  
 `fxt(fr ts_from ts_to col_offs accum array1 array2 ... arrayn)` read arrays from csv file from timestamp to timestamp with column offset and accumulate values into arrays1 .. N, assumes csv file with timestamp in 1. column and data values in colums 2 to n.(#define USE_FEXTRACT)  
 `fxto(...` same as above with time optimized access  
-`cts(tstamp flg)` convert timestamp to german locale format back and forth flg=0 to webformat, 1 to german format  
+`cts(tstamp flg)` convert timestamp to German locale format back and forth flg=0 to webformat, 1 to German format  
 `tso(tstamp day flag)` add time offset in days to timestamp optional flg = char 0 zo zero time HH:MM:SS  
 `tsn(tstamp)` convert timestamp to seconds  
 
@@ -963,7 +962,7 @@ print task2 on core %core%
 to test LVGL a few functions are implemented:  
 `lvgl(sel ...)` general lvgl call  
 each object gets a concurrent number 1 ... N with which you can reference the object
-sel = 0 => initialyze LVGL with current display
+sel = 0 => initialize LVGL with current display
 sel = 1 => clear screen  
 sel = 2 xp yp xs ys text => create a button. the button press is reported in section >lvb  
 sel = 3 xp yp xs ys => create a slider. the slider move is reported in section >lvs  
@@ -984,7 +983,7 @@ sel = 52 => get slider value from caller in callback >lvs
 to test LVGL a few functions are implemented:  
 `lvgl(sel ...)` general lvgl call  
 each object gets a concurrent number 1 ... N with which you can reference the object
-sel = 0 => initialyze LVGL with current display
+sel = 0 => initialize LVGL with current display
 sel = 1 => clear screen  
 sel = 2 xp yp xs ys text => create a button. the button press is reported in section >lvb  
 sel = 3 xp yp xs ys => create a slider. the slider move is reported in section >lvs  
@@ -1005,16 +1004,16 @@ Template for AI THINKER CAM :
 
 
 remarks:  
-- GPIO0 zero must be disconnected from any wire after programming because this pin drives the cam clock and does not tolerate any capictive load  
+- GPIO0 zero must be disconnected from any wire after programming because this pin drives the cam clock and does not tolerate any capacitive load  
 - Only boards with PSRAM should be used. To enable PSRAM board should be se set to esp32cam in common32 of platform_override.ini  
 board                   = esp32cam  
-- To speed up cam processing cpu frequency should be better set to 240Mhz in common32 of platform_override.ini  
+- To speed up cam processing CPU frequency should be better set to 240Mhz in common32 of platform_override.ini  
 board_build.f_cpu       = 240000000L  
  
 file system extension:  
-`fwp(pnum fr)` write picture from RAM buffer number pnum to sdcard file with file reference fr  
+`fwp(pnum fr)` write picture from RAM buffer number pnum to SD card file with file reference fr  
 specific webcam commands:  
-`res=wc(sel p1 p2)` controll webcam, sel = function selector  p1 ... optional parameters  
+`res=wc(sel p1 p2)` control webcam, sel = function selector  p1 ... optional parameters  
 `res=wc(0 pres)` init webcam with picture resolution pres, returns 0 when error, 2 when PSRAM found, else 1  
  pres  
 * `0 = FRAMESIZE_QQVGA,    // 160x120`  
@@ -1058,7 +1057,7 @@ to read a value without setting pass -1
 `#define SEND_EMAIL` and `#define USE_ESP32MAIL`  
 enables specific ESP32 mail server  
 this server can handle more mail servers by supporting START_TLS  
-remark:  mail adresses must not be enclosed with <> because the server inserts them automatically  
+remark:  mail addresses must not be enclosed with <> because the server inserts them automatically  
 this server also supports email attachments  
 in the >m section you may write  
 &amp;/file.txt  to attach a file from SD card  
@@ -1069,7 +1068,7 @@ you may display a webcam picture by giving the name /wc.jpg?p=N (1..4) for RAM p
 "&lt;img src="/wc.jpg?p=1" alt="webcam image" >"  
 you may also provide the picture size  (h and v have to be preset before)  
 "&lt;img src="/wc.jpg?p=1" alt="webcam image" style="width:%w%px;height:%h%px;">"  
-if you precede the line by & char the image is diplayed in the main section, else in the sensor tab section  
+if you precede the line by & char the image is displayed in the main section, else in the sensor tab section  
 
 the webcam stream can be specified by the following line  
 lip is a system variable containing the local device ip   
@@ -1573,7 +1572,7 @@ This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors
 - The first graph is the battery level of a solar battery (Tesla PowerWall 2)  
 - The second graph shows the solar yield of the roof panels in Watts  
 - Another special feature is that this script displays daily and weekly averages (via moving average) of all power IO of the house.  
-- it sends an email every sunday night with the weekly data  
+- it sends an email every Sunday night with the weekly data  
 - it displays a google bar chart on the webui with values for each weekday of the last week  
 - ESP32 CPU with SD card 
 - Since the display is a full update panel it is updated only once a minute  
@@ -2277,7 +2276,7 @@ Uses Tasmota's Hue Emulation capabilities for Alexa interface
     your power consumption today was %et% KWh
     #
 
-### Send power reading with formated time stamp via websend
+### Send power reading with formatted time stamp via websend
 
 Some web APIs require certain formats (e.g. date & time) to be provided. This example illustrates how to reformat the timestamp and embed it in the get payload.
 On ESP8266 based devices this is limited to unsecured http (no "s") connections! Don't use this for sensitive data!
