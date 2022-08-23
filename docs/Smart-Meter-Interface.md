@@ -2026,3 +2026,34 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
     #  
     ```
 
+
+### EFR SGM-C4-4A920L (OBIS)
+
+By default, the wattmeter only sends the actual power. To be able to read all the other values, you need to enter the PIN.
+The PIN must be requested to the electricity provider. After entering the PIN, all the values will be available and you also have the option to disable the need of the PIN.
+	
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,s,16,9600,SML
+    1,77070100010800ff@1000,Comsumption,kWh,HT,4
+    1,77070100020800ff@1000,Supply,kWh,SP,4
+    1,77070100100700ff@1,Actual Power,W,AP,0
+    1,77070100200700ff@1,Voltage P1,V,V_P1,1
+    1,77070100340700ff@1,Voltage P2,V,V_P2,1
+    1,77070100480700ff@1,Voltage P3,V,V_P3,1
+    1,770701001f0700ff@1,Current P1,A,A_P1,2
+    1,77070100330700ff@1,Current P2,A,A_P2,2
+    1,77070100470700ff@1,Current P3,A,A_P3,2
+    1,77070100510704ff@1,Phaseangle I-L1/U-L1,deg,phase_angle_p1,1 
+    1,7707010051070fff@1,Phaseangle I-L27I-L2,deg,phase_angle_p2,1  
+    1,7707010051071aff@1,Phaseangle I-L3/I-L3,deg,phase_angle_p3,1 
+    1,770701000e0700ff@1,Frequency,Hz,HZ,1
+    #
+    ```
+Overview of the codes
+![image](https://user-images.githubusercontent.com/5443580/186160623-3db77d01-429f-49db-86ff-d804578aad99.png)
+	
