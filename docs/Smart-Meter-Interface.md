@@ -1634,6 +1634,36 @@ Example: Changing the baud rate during operation.
     #
     ```
 
+### Logarex LK13BE (SML) (e.g. LK13BE6067x9)
+
+??? summary "View script"
+    ```
+   >D
+   >B
+   ->sensor53 r
+   >M 1
+   +1,3,s,0,9600,LK13BE,1,10,2F3F210D0A,063035310D0A
+   1,77070100010800ff@1000,Gesamt kWh bezogen,kWh,Power_total_in,1
+   1,77070100020800ff@1000,Gesamt kWh geliefert,kWh,Power_total_out,1
+   1,77070100100700ff@1,Verbrauch aktuell,W,Power_curr,0
+   1,77070100240700ff@1,Power L1,W,Power_L1_curr,0
+   1,77070100380700ff@1,Power L2,W,Power_L2_curr,0
+   1,770701004C0700ff@1,Power L3,W,Power_L3_curr,0
+   1,77070100200700ff@1,Voltage L1,V,Volt_L1_curr,1
+   1,77070100340700ff@1,Voltage L2,V,Volt_L2_curr,1
+   1,77070100480700ff@1,Voltage L3,V,Volt_L3_curr,1
+   1,770701001f0700ff@1,Amperage L1,A,Amperage_L1_curr,2
+   1,77070100330700ff@1,Amperage L2,A,Amperage_L2_curr,2
+   1,77070100470700ff@1,Amperage L3,A,Amperage_L3_curr,2
+   1,770701000e0700ff@1,Frequency,Hz,HZ,2
+   1,77070100510704ff@1,Phaseangle I-L1/U-L1,deg,phase_angle_p1,1 
+   1,7707010051070fff@1,Phaseangle I-L2/I-L2,deg,phase_angle_p2,1  
+   1,7707010051071aff@1,Phaseangle I-L3/I-L3,deg,phase_angle_p3,1 
+   1,77070100510701ff@1,Phase angle U-L2/U-L1,deg,phase_angle_l2_l1,1
+   1,77070100510702ff@1,Phase angle U-L3/U-L1,deg,phase_angle_l3_l1,1
+    #
+    ```
+
 ### Norax 3D+ (SML)  
 
 This script gives also the wattage per phase. Make sure to get the PIN from your grid operator! Tested on a WeMos D1 mini with an IR Head from https://agalakhov.github.io/ir-interface connected to the RX pin (3). The meter also outputs the phase angles, but i left them out since i do not need them. You can easily find additional values by activating the debug mode ("sensor53 d1" for the first meter, switch off after a few seconds with "sensor53 d0").
