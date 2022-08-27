@@ -1175,7 +1175,7 @@ end
 Tasmota Function|Parameters and details
 :---|:---
 log_reader()<a class="cmnd" id="log_reader_init"></a>|`log_reader(void) -> instance(log_reader)`<br>Instantiate a new `log_reader`. Multiple readers can coexist and they each keep track of already read log lines
-get_log<a class="cmnd" id="log_reader_get_log"></a>|`get_log(log_level:int) -> string`<br>Returns new log lines as a big string object. Lines are separated by `\n`. Returns empty string if no new logs are available.<br>`log_level` can be `0..4` and specifies the highest log level that we be reported (it is usually wise to start with `2`). Higher log level will be reported only if they are recorded, i.e. there is at least one logger that asks for it. This class does not cause log-level 4 to be recorded if none other loggers are recording them (`weblog`, `mqttlog` or `seriallog`).
+get_log<a class="cmnd" id="log_reader_get_log"></a>|`get_log(log_level:int) -> string or nil`<br>Returns new log lines as a big string object. Lines are separated by `\n`. Returns `nil` if no new logs are available.<br>`log_level` can be `0..4` and specifies the highest log level that we be reported (it is usually wise to start with `2`). Higher log level will be reported only if they are recorded, i.e. there is at least one logger that asks for it. This class does not cause log-level 4 to be recorded if none other loggers are recording them (`weblog`, `mqttlog` or `seriallog`).
 
 ### `ULP` module
 
