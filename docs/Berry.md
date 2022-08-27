@@ -1159,6 +1159,19 @@ The `log_reader` class allows you to read and potentially parse the Tasmota logs
 
 Note: calling `log_reader` can be expensive in string allocations, and adds pressure on the garbage collector. Use wisely.
 
+Example:
+
+``` berry
+var lr = log_reader()
+
+# do this regularly
+var ret = lr.get_log(2)    # read at log level 2
+if ret != nil
+  var lines = r.split('\n')  # extract as a list of lines
+  # do whatever you need
+end
+```
+
 Tasmota Function|Parameters and details
 :---|:---
 log_readed()<a class="cmnd" id="log_reader_init"></a>|`log_reader(void) -> instance(log_reader)`<br>Instantiate a new `log_reader`. Multiple readers can coexist and the each keep track of already read log lines
