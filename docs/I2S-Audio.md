@@ -128,6 +128,6 @@ i2sbridge | `ip` = sets the IP of the slave device|
 |i2sbridge | Sets microphone swap<br>`6` = swapped<BR>`7` = not swapped|
 |i2sbridge | Sets master mode <br> `4` = master<br>`5` = slave|
 |i2sbridge pN|`p<x>` = sets the push to talk button to GPIO pin number <x\>|
-|i2sbridge | Starts the bridge in write or read mode<BR>`1` = read<BR>`2` = write<BR>`0` = stop|  
+|i2sbridge | Starts the bridge in write or read mode<BR>`1` = read<BR>`2` = write<BR>`3` = loopback<BR>`0` = stop|  
 
 If a push to talk button is defined: the bridge goes to write mode if the button is pushed and to read mode if the button is released  
