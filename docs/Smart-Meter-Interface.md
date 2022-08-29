@@ -1348,6 +1348,24 @@ For read-out of "current power" the advanced data set has to be enabled in user 
     1,77070100100700ff@1,Leistung-akt.,W,Power_curr,0
     #
     ```
+	
+### Landis + Gyr E320 (SML)
+
+For read-out of "Current power" the advanced data set has to be enabled in user menue
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,20,9600,E320
+    1,77070100020800ff@1000,Total Delivered,KWh,Total_out,3
+    1,77070100010800ff@1000,Total Consumed,KWh,Total_in,3
+    1,77070100100700ff@1,Current power,W,Power_in,3
+    1,77070100600100ff@#,Server-ID,,Meter_Number,0    
+    #
+    ```
 
 ### Landis + Gyr ZMB120 T213CS (OBIS)
 
