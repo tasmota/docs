@@ -1,19 +1,24 @@
-name: deploy
+name: Deploy
 on:
   push:
     branches:
-      - master 
-      - main
+      - master
 jobs:
-  deploy:
+  build:
+    name: Deploy docs to GitHub Pages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - name: Checkout 
+        uses: actions/checkout@v2
+      - name: Build
+        uses: Tiryoh/actions-mkdocs@v0
         with:
-          python-version: 3.7
-        env: 
-          TZ: Europe/Madrid        
-      - run: pip install wheel tzdata
-      - run: pip install -r requirements.txt
-      - run: mkdocs gh-deploy --force --strict
+          mkdocs_version: 'latest' # option
+          #mkdocs_version: '1.1' # option
+          requirements: 'requirements.txt' # option
+          configfile: 'mkdocs.yml' # option
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
