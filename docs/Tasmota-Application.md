@@ -10,6 +10,7 @@ Any file with `.tapp` (Tasmota Application) extension will be considered as an u
 Berry allow imports from files inside a Tasmota App (.tapp file). Also enabled `sys` module.
 
 Here is the code you should add in your `autoexec.be` inside tapp file:
+
 ```python
 import sys
 var wd = tasmota.wd
