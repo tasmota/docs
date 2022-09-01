@@ -238,5 +238,5 @@ Once the firmware upload completes and the device restarts, the usual `tasmota-x
 - [DrZzs](https://www.youtube.com/watch?v=9fkYBWvwn4A)
 - [Paul Hibbert](https://www.youtube.com/watch?v=BUfWytrzrJ4&t=93s)
 
-### More info:
+### More info: 
  - [Michel Deslierres](https://www.sigmdel.ca/michel/ha/sonoff/sonoff_mini_en.html)
