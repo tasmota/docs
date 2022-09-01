@@ -1,4 +1,3 @@
-[![CircleCI](https://circleci.com/gh/tasmota/docs.svg?style=shield)](https://circleci.com/gh/tasmota/docs/tree/master)
 
 # Tasmota Documentation
 This is the repo for documentation of the Tasmota open source alternative firmware for ESP8266 available from https://github.com/arendst/Tasmota 
