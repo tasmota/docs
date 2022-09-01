@@ -24,6 +24,7 @@
 This driver simulates an additional relay in your Tasmota device. If you have N physical relays and you configure GPIO pin functions `DLP Tx` and `DLP Rx` you'll see relay (N+1) after reboot. The two GPIO pins will be used for serial communication with your LCD or DLP projector. The communication protocol is unique for each manufacturer (compile-time option). The driver polls the projector's state periodically and updates the fake relay state. When you toggle the fake relay, serial commands are sent to the projector to power it up or down. While the projector is running, the driver prevents to switch off the real relay that feeds the projector. This protects the lamp of the projector (needs to be cooled down before power is cut from the device).
 
 ## Supported Projectors
+
 * NEC projectors - tested with NEC V300W
 * OPTOMA projectors - not tested yet / report your results!
 * Acer projectors - tested with Acer P1500 & H5360BD
@@ -33,11 +34,12 @@ Fixes and definitions for further manufacturers should go to `tasmota\xdrv_53_pr
 ## Physical Connection
 Connect your Tasmota GPIO pins (3.3V TTL level) to a MAX3232 interface (cheap items on internet sales). Such interface changes TTL signals to proper RS232 levels. There are 4 wires on TTL side (Vcc, GND, Rx and Tx) and 3 wires on RS232 side (GND, Tx and Rx). A wire jumper between pins 7(RTS) and 8(CTS) may be needed in DSUB9 connector going to projector.
 
-![](_media/projectorCtrl_TH16_unboxed.jpg)
-![](_media/projectorCtrl_TH16_mounted.jpg)
-![](_media/projectorCtrl_V300W.jpg)
+![Unboxed](_media/projectorCtrl_TH16_unboxed.jpg)
+![Mounted](_media/projectorCtrl_TH16_mounted.jpg)
+![V300W](_media/projectorCtrl_V300W.jpg)
 
 ### Tasmota Settings 
+
 In the **_Configuration -> Configure Module_** page assign:
 
 1. GPIO1 to `DLP Tx`
