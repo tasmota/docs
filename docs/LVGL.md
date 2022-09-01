@@ -17,18 +17,18 @@ Supported version: LVGL v8.3.0, LodePNG v20201017, Freetype 2.10.4
 
 [Berry](Berry.md) is a ultra-lightweight dynamically typed embedded scripting language. It is designed for lower-performance embedded devices
 
-After compiling Tasmota with LVGL support and configuring uDisplay (see below), you can start using LVGL through Berry's web console.
+After compiling Tasmota with LVGL support and configuring [uDisplay](Displays.md#universal-display-driver) (see below), you can start using LVGL through the Berry console.
 
 ## Using LVGL
 
-This example uses [M5Stack Fire](https://docs.m5stack.com/en/core/fire) device.
+This example uses the [M5Stack Fire](https://docs.m5stack.com/en/core/fire) device.
 
 Use the following template to define the relevant SPI GPIOs. Also set one of the unsued GPIOs to `Option A3`.
 
 The complete configuration for M5Stack Fire is:
 
 ```json
-Backlog Module 0; Template {"NAME":"M5stack Fire","GPIO":[6210,1,1,1,1,1,1,1,1,1,768,1,1,1,736,672,0,640,608,704,0,3872,3872,800,0,0,0,0,992,1024,1,0,0,34,33,32],"FLAG":0,"BASE":1}
+Template {"NAME":"M5stack Fire","GPIO":[6210,1,1,1,1,1,1,1,1,1,768,1,1,1,736,672,0,640,608,704,0,3872,3872,800,0,0,0,0,992,1024,1,0,0,34,33,32],"FLAG":0,"BASE":1,"CMND":"Module 0"}
 ```
 
 Save the following file as `display.ini` in the file system:
@@ -70,7 +70,7 @@ E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
 #
 ```
 
-Then open the Berry console, and copy/paste the following: (alternatively create an `autoexec.be` file with this content):
+Then open the Berry console and copy/paste the following: (alternatively create an `autoexec.be` file with this content):
 
 ``` ruby
 #- start LVGL and init environment -#
@@ -79,7 +79,7 @@ lv.start()
 hres = lv.get_hor_res()       # should be 320
 vres = lv.get_ver_res()       # should be 240
 
-scr = lv.scr_act()            # default screean object
+scr = lv.scr_act()            # default screan object
 f20 = lv.montserrat_font(20)  # load embedded Montserrat 20
 
 #- Background with a gradient from black #000000 (bottom) to dark blue #0000A0 (top) -#
@@ -161,7 +161,7 @@ You should see this:
 
 ![IMG_1137](https://user-images.githubusercontent.com/49731213/115155634-2d875000-a081-11eb-9089-b2e67ee86b1d.jpg)
 
-Setting an input device is also simple, we are now configuring the three buttons as the equivalent of a rotary encoder: left/ok/right.
+Setting an input device is simple, we are now configuring the three buttons as the equivalent of a rotary encoder: left/ok/right.
 
 To control focus, you need to create a group, put the focusable items in the group, and assign the input device to the group:
 
@@ -197,7 +197,7 @@ Start LVGL
 lv.start()
 ```
 
-Note: when you create an LVGL object, you need to use the `lv` module. For example, creating a label object is done with `lv.lv_lable`. As a convenienve, classes can also be named with a shorter name `lv.label` which is equivalent to `lv.lv_label`. The internal class name is still `lv_label`.
+Note: when you create an LVGL object, you need to use the `lv` module. For example, creating a label object is done with `lv.lv_label`. As a convenience, classes can also be named with a shorter name `lv.label` which is equivalent to `lv.lv_label`. The internal class name is still `lv_label`.
 
 Use `lv.montserrat_font(<size>)` to load a pre-defined montserrat font. Embedded sizes are: 10, 14, 20, 28. You can also load a font from the file-system but you need to convert them first. See: https://docs.lvgl.io/latest/en/html/overview/font.html
 
@@ -205,7 +205,7 @@ Use `lv.montserrat_font(<size>)` to load a pre-defined montserrat font. Embedded
 hres = lv.get_hor_res()       # should be 320
 vres = lv.get_ver_res()       # should be 240
 
-scr = lv.scr_act()            # default screean object
+scr = lv.scr_act()            # default screan object
 f20 = lv.montserrat_font(20)  # load embedded Montserrat 20
 ```
 
@@ -272,7 +272,7 @@ Set the label to auto roll from right to left and vice versa if the text does no
 
 ```python
 stat_line.set_width(hres)
-stat_line.set_align(lv.TEXT_ALIGN_LEFT)                                                      # align text left
+stat_line.set_align(lv.TEXT_ALIGN_LEFT)                                              # align text left
 ```
 
 Set the width to full screen resolution, and align text to the left.
@@ -296,7 +296,7 @@ stat_line.refr_size()                                                           
 stat_line.refr_pos()                                                                 # new in LVGL8
 ```
 
-The latter is new in LVGL8, and tells the widget to update its size and position, that we will use right after to position other widgets.
+The latter is new in LVGL8 and tells the widget to update its size and position, that we will use right after to position other widgets.
 Please note that the actual display is asynchronous. We describe the objects, in whatever order, they will be all displayed at once.
 
 ### Create a style
@@ -398,9 +398,8 @@ if sb120 != nil tt.set_style_text_font(sb120, lv.PART_MAIN | lv.STATE_DEFAULT) e
 
 What's implemented currently:
 
-* LVGL 8.1
-* All standard LVGL widgets are available, most of extras
-* Styles
+* All standard [LVGL widgets](https://docs.lvgl.io/latest/en/html/widgets/index.html) are available, most of extras
+* [Styles](https://docs.lvgl.io/master/overview/style.html)
 * File-system
 * Fonts, currently Montserrat fonts are embedded at sizes 10, 14 (default), 20 and 28 (compressed - smaller and slower)
 * External Fonts in file-system, either in LVGL's binary format of TrueType fonts via the FreeType library (requires `#defined USE_LVGL_FREETYPE`)
@@ -453,7 +452,6 @@ In `my_user_config.h` or in your config override, add:
 Be aware that it adds 440Kb to you firmware, so make sure you have a partition with enough program Flash space. Preferably use `esp32_partition_app1856k_spiffs320k.csv` partition file.
 
 ## Goodies
-
 
 ### Tasmota Logo
 
