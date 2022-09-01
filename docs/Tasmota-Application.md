@@ -1,6 +1,6 @@
-# Tasmota Application Files :material-cpu-32-bit:
+# Tasmota Application Files 
 
-!!! info "Easily import any configuration or script using the `.tapp` file extension"
+!!! info "Easily import any configuration or script using the `.tapp` file extension :material-cpu-32-bit:"
 
 Any file with `.tapp` (Tasmota Application) extension will be considered as an uncompressed ZIP, and if it contains a sub-file `autoexec.be` it will be executed. In parallel `tasmota.wd` (working dir) contains the archive tapp prefix to easily load other assets from the same archive.
 
