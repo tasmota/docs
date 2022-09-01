@@ -11,10 +11,9 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          python-version: 3.x
+          python-version: 3.7
         env: 
           TZ: Europe/Madrid        
       - run: pip install wheel tzdata
-      - run: TZ="Europe/Madrid"
       - run: pip install -r requirements.txt
       - run: mkdocs gh-deploy --force --strict
