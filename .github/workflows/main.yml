@@ -12,6 +12,8 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
+        env: 
+          TZ: Europe/Madrid        
       - run: pip install wheel tzdata
       - run: TZ="Europe/Madrid"
       - run: pip install -r requirements.txt
