@@ -13,6 +13,6 @@ jobs:
         with:
           python-version: 3.x
       - run: pip install wheel tzdata
-      - run: RUN apt-get update && DEBIAN_FRONTEND="noninteractive" TZ="Europe/Madrid" apt-get install -y tzdata
+      - run: apt-get update && DEBIAN_FRONTEND="noninteractive" TZ="Europe/Madrid" apt-get install -y tzdata
       - run: pip install -r requirements.txt
       - run: mkdocs gh-deploy --force --strict
