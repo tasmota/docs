@@ -14,4 +14,8 @@ jobs:
           python-version: 3.7
       - run: pip install mkdocs
       - run: pip install --upgrade -r requirements.txt
+      - run: |
+          sudo ln -fs /usr/share/zoneinfo/Europe/Oslo /etc/localtime
+          DEBIAN_FRONTEND=noninteractive sudo apt-get install -y --no-install-recommends tzdata
+          sudo dpkg-reconfigure --frontend noninteractive tzdata
       - run: mkdocs gh-deploy --force --clean --verbose
