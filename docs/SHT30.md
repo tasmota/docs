@@ -1,11 +1,17 @@
 # SHT30 temperature sensor
-!!! info "This feature is included only in tasmota-sensors.bin" 
+
+??? tip "This feature is included only in `tasmota-sensors` and `tasmota32` binaries" 
+
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```c++
+    #ifndef USE_SHT3X 
+    #define USE_SHT3X           // [I2cDriver15] Enable SHT3x (I2C address 0x44 or 0x45) or SHTC3 (I2C address 0x70) sensor (+0k7 code)
+    #endif
+    ```
 
 **Wemos SHT30 Shield High Precision Humidity & Temperature (I<sup>2</sup>C) sensor**
 
-
 From the [Wemos SHT30 shield specs](https://www.wemos.cc/en/latest/d1_mini_shield/sht30.html) the SDA pin on the SHT30 shield is connected to D2 and the SCL pin to D1. 
-
 
 ## Configuration
 

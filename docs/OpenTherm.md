@@ -1,12 +1,12 @@
-!!! failure "This feature is not included in precompiled binaries."
-To use it, you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+??? failure "This feature is not included in precompiled binaries"  
 
-```
-#ifndef USE_OPENTHERM
-#define USE_OPENTHERM
-#endif
-```
-----
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+
+    ```arduino
+    #ifndef USE_OPENTHERM
+    #define USE_OPENTHERM
+    #endif
+    ```
 
 !!! info "Implementation of OpenTherm protocol"
 
@@ -14,7 +14,7 @@ OpenTherm integration is based on OpenTherm protocol specification v2.2 and work
 
 OpenTherm protocol requires a simple low voltage two-wire connection to the boiler, but voltage levels (7..15V) still much higher than ESP8266 levels, which requires OpenTherm Adapter.
 
-## Compatible Open Therm Adapters
+## Compatible OpenTherm Adapters
 - [Ihor Melnyk OpenTherm Adapter](http://ihormelnyk.com/opentherm_adapter)
 - [OpenTherm Gateway Arduino shield](https://www.tindie.com/products/jiripraus/opentherm-gateway-arduino-shield/)
 - [OpenTherm master shield for Wemos/Lolin](https://www.tindie.com/products/thehognl/opentherm-master-shield-for-wemoslolin/)

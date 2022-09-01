@@ -1,15 +1,43 @@
 description: Control over heating and cooling as a true HVAC unit
+---
 
+??? failure "This feature is not included in precompiled binaries"  
 
-!!! failure "This feature is not included in precompiled binaries."
-To use it, you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-
-```
-#ifndef USE_THERMOSTAT
-#define USE_THERMOSTAT
-#endif
-```
-
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```arduino
+    #define USE_THERMOSTAT                           // Add support for Thermostat
+        #define THERMOSTAT_CONTROLLER_OUTPUTS         1         // Number of outputs to be controlled independently
+        #define THERMOSTAT_SENSOR_NAME                "DS18B20" // Name of the local sensor to be used
+        #define THERMOSTAT_SENSOR_NUMBER              1         // Number of local sensors to be used
+        #define THERMOSTAT_RELAY_NUMBER               1         // Default output relay number for the first controller (+i for following ones)
+        #define THERMOSTAT_SWITCH_NUMBER              1         // Default input switch number for the first controller (+i for following ones)
+        #define THERMOSTAT_TIME_ALLOW_RAMPUP          300       // Default time after last target update to allow ramp-up controller phase in minutes
+        #define THERMOSTAT_TIME_RAMPUP_MAX            960       // Default time maximum ramp-up controller duration in minutes
+        #define THERMOSTAT_TIME_RAMPUP_CYCLE          30        // Default time ramp-up cycle in minutes
+        #define THERMOSTAT_TIME_SENS_LOST             30        // Maximum time w/o sensor update to set it as lost in minutes
+        #define THERMOSTAT_TEMP_SENS_NUMBER           1         // Default temperature sensor number
+        #define THERMOSTAT_TIME_MANUAL_TO_AUTO        60        // Default time without input switch active to change from manual to automatic in minutes
+        #define THERMOSTAT_TIME_RESET                 12000     // Default reset time of the PI controller in seconds
+        #define THERMOSTAT_TIME_PI_CYCLE              30        // Default cycle time for the thermostat controller in minutes
+        #define THERMOSTAT_TIME_MAX_ACTION            20        // Default maximum thermostat time per cycle in minutes
+        #define THERMOSTAT_TIME_MIN_ACTION            4         // Default minimum thermostat time per cycle in minutes
+        #define THERMOSTAT_TIME_MIN_TURNOFF_ACTION    3         // Default minimum turnoff time in minutes, below it the thermostat will be held on
+        #define THERMOSTAT_PROP_BAND                  4         // Default proportional band of the PI controller in degrees celsius
+        #define THERMOSTAT_TEMP_RESET_ANTI_WINDUP     8         // Default range where reset antiwindup is disabled, in tenths of degrees celsius
+        #define THERMOSTAT_TEMP_HYSTERESIS            1         // Default range hysteresis for temperature PI controller, in tenths of degrees celsius
+        #define THERMOSTAT_TEMP_FROST_PROTECT         40        // Default minimum temperature for frost protection, in tenths of degrees celsius
+        #define THERMOSTAT_TEMP_RAMPUP_DELTA_IN       4         // Default minimum delta temperature to target to get into rampup mode, in tenths of degrees celsius
+        #define THERMOSTAT_TEMP_RAMPUP_DELTA_OUT      2         // Default minimum delta temperature to target to get out of the rampup mode, in tenths of degrees celsius
+        #define THERMOSTAT_TEMP_PI_RAMPUP_ACC_E       200       // Default accumulated error when switching from ramp-up controller to PI in hundreths of degrees celsius
+        #define THERMOSTAT_TIME_OUTPUT_DELAY          180       // Default output delay between state change and real actuation event (f.i. valve open/closed)
+        #define THERMOSTAT_TEMP_INIT                  180       // Default init target temperature for the thermostat controller
+        #define THERMOSTAT_TIME_MAX_OUTPUT_INCONSIST  3         // Default maximum time where the input and the outpus shall differ (for diagnostic) in minutes
+        #define THERMOSTAT_TIME_MAX_AUTOTUNE          21600     // Maximum time for the PI autotune function to complete in seconds
+        #define THERMOSTAT_DUTYCYCLE_AUTOTUNE         35        // Default duty cycle (in % over PI cycle time) for the step response of the autotune PI function
+        #define THERMOSTAT_PEAKNUMBER_AUTOTUNE        8         // Default number of peak temperatures (max or min) to be used for the autotune PI function
+        #define THERMOSTAT_TEMP_BAND_NO_PEAK_DET      1         // Default temperature band in thenths of degrees celsius within no peak will be detected
+        #define THERMOSTAT_TIME_STD_DEV_PEAK_DET_OK   10        // Default standard deviation in minutes of the oscillation periods within the peak detection is successful    
+    ```
 
 !!! info "Control over heating and cooling as a true HVAC unit"
 
@@ -19,7 +47,7 @@ Thermostat driver allows a Tasmota device, provided it receives the temperature 
 
 ## Typical setup: Heating floor system
 
-A typical setup for heating room systems can be found in the picture below. A conventional room thermostat is connected to a heating floor valve actuator, both running at AC voltage (f.i. 220V). The thermostat is connected to neutral as well as to the phase, the actuator to the same neutral connection of the thermostat and to its actuation signal. The actuation signal will switch between the neutral voltage (actuation Off) and the phase voltage (actuation On).
+A typical setup for heating room systems can be found in the picture below. A conventional room thermostat is connected to a heating floor valve actuator, both running at AC voltage (f.e. 220V). The thermostat is connected to neutral as well as to the phase, the actuator to the same neutral connection of the thermostat and to its actuation signal. The actuation signal will switch between the neutral voltage (actuation Off) and the phase voltage (actuation On).
 
 The conventional room thermostats offer nowadays either 2 point control with hysteresis or a more advanced PI (Proportional-Integral) control. The result of the PI control is typically transformed into a PWM signal with a pre-defined period and a variable duty cycle.
 
@@ -138,7 +166,7 @@ cmnd/Tasmota_Name/PROPBANDSET 1
 ```
 
 !!! note  
-    With the command above, the PI controller will output a proportional time equivalent to 100% of the duty cycle for delta temperatures between setpoint and room temp. above 1°C (f.i. for big rooms with weak dimensioned heating circuit).
+    With the command above, the PI controller will output a proportional time equivalent to 100% of the duty cycle for delta temperatures between setpoint and room temp. above 1°C (f.e. for big rooms with weak dimensioned heating circuit).
 
 #### Reset Time
 The reset time is the time the PI controller takes to overcome steady-state errors. The default value for the reset time is 1800 seconds. This value can be for instance increased in case a stronger integral reaction of the controller is desired. Below the command to adapt the proportional band can be found:
@@ -148,14 +176,14 @@ cmnd/Tasmota_Name/TIMERESETSET 1800
 ```
 
 #### Temperature for the anti-windup reset
-To avoid the accummulated error and therefore integral component of the PI controller to grow too much and produce a high overshoot, a temperature delta can be defined within the integrator will work. Outside this range the accummulated error and integral part will be set to 0. The default value for the integrator to work is 0.8°C. Below the command to adapt the anti-windup temperature can be found:
+To avoid the accumulated error and therefore integral component of the PI controller to grow too much and produce a high overshoot, a temperature delta can be defined within the integrator will work. Outside this range the accumulated error and integral part will be set to 0. The default value for the integrator to work is 0.8°C. Below the command to adapt the anti-windup temperature can be found:
 
 ```
 cmnd/Tasmota_Name/TEMPANTIWINDUPRESETSET 0.8
 ```
 
 #### Temperature hysteresis
-A temperature hysteresis can be set to avoid any PI controller actions within a certain value arround the setpoint. The default value for the hysteresis is 0.1°C. In well configured controller this value should be as low as possible to avoid unwanted temperature oscillations which reduce efficiency and therefore increase costs. Below the command to adapt the anti-windup temperature can be found:
+A temperature hysteresis can be set to avoid any PI controller actions within a certain value around the setpoint. The default value for the hysteresis is 0.1°C. In well configured controller this value should be as low as possible to avoid unwanted temperature oscillations which reduce efficiency and therefore increase costs. Below the command to adapt the anti-windup temperature can be found:
 
 ```
 cmnd/Tasmota_Name/TEMPHYSTSET 0.1
@@ -177,12 +205,12 @@ cmnd/Tasmota_Name/TIMEMINACTIONSET 4
 
 !!! note  "It is very important to adapt this value to your heating system to obtain accurate temperature control" 
 
-If the value is very low, in case of floor heating systems for instance, the heating actuators might not have enough time to open the valves and the temperature will drop (depending on the actuator open/close time could take from 1 to 3 minutes) if it is too high, there will be unwanted oscillations arround the setpoint. One way to configure this value in heating mode is to manually tune it in worst case conditions (highest typically desired room temperature and lower winter temperature outside) checking that the proportional action generated by the controller is sufficient to raise slightly the temperature. If the temperature still goes down after the pulse plus delay time of the system and rises just once the accumulated error triggers integral actions then the value set is too low.
+If the value is very low, in case of floor heating systems for instance, the heating actuators might not have enough time to open the valves and the temperature will drop (depending on the actuator open/close time could take from 1 to 3 minutes) if it is too high, there will be unwanted oscillations around the setpoint. One way to configure this value in heating mode is to manually tune it in worst case conditions (highest typically desired room temperature and lower winter temperature outside) checking that the proportional action generated by the controller is sufficient to raise slightly the temperature. If the temperature still goes down after the pulse plus delay time of the system and rises just once the accumulated error triggers integral actions then the value set is too low.
 
 ### Ramp-Up controller main parameters
 
 #### Temperature delta to get into "Ramp-Up" mode
-When the controller is configured in Hybrid mode (default), the control strategy will be a mix-up between "Ramp-Up" (for big deltas between room temperature and setpoint) and PI (arround the setpoint). The following parameter can be set to define at above which delta temperature between measured and setpoint the "Ramp-Up" controller shall be active:
+When the controller is configured in Hybrid mode (default), the control strategy will be a mix-up between "Ramp-Up" (for big deltas between room temperature and setpoint) and PI (around the setpoint). The following parameter can be set to define at above which delta temperature between measured and setpoint the "Ramp-Up" controller shall be active:
 
 ```
 cmnd/Tasmota_Name/TEMPRUPDELTINSET 30
@@ -191,7 +219,7 @@ cmnd/Tasmota_Name/TEMPRUPDELTINSET 30
 The default value is 0.4°C.
 
 #### Time passed after latest setpoint change to get into "Ramp-Up" mode
-When the controller is configured in Hybrid mode (default), the activation of the "Ramp-Up" mode will not just depend on the defined temperature delta between measured and setpoint, but as well on the time in minutes passed since the last setpoint change occurred. This strategy matches the purpose of the "Ramp-Up" controller, which was developed to reach the desired temperature as fast as possible in very specific scenarios, f.i. after a night keeping the room temperature low. In hybrid mode, the controller active most part of the time should be the PI one. The following parameter can be used to define the time to allow switching to "Ramp-Up" in minutes.
+When the controller is configured in Hybrid mode (default), the activation of the "Ramp-Up" mode will not just depend on the defined temperature delta between measured and setpoint, but as well on the time in minutes passed since the last setpoint change occurred. This strategy matches the purpose of the "Ramp-Up" controller, which was developed to reach the desired temperature as fast as possible in very specific scenarios, f.e. after a night keeping the room temperature low. In hybrid mode, the controller active most part of the time should be the PI one. The following parameter can be used to define the time to allow switching to "Ramp-Up" in minutes.
 
 ```
 cmnd/Tasmota_Name/TIMEALLOWRAMPUPSET 300
@@ -227,7 +255,7 @@ ON mem1#state DO Backlog temptargetset %value%;Publish2 stat/TestTopic/targetTem
 
 ### Multi-controller
 
-The tasmota driver can be compiled to be used in devices with more than one output, allowing independant controllers for each one of the outputs. This feature has been successfully tested with a Sonoff 4CH PRO R2.
+The tasmota driver can be compiled to be used in devices with more than one output, allowing independent controllers for each one of the outputs. This feature has been successfully tested with a Sonoff 4CH PRO R2.
 
 ![Pinout](_media/thermostat/multi_thermostat.png)
 
@@ -255,7 +283,7 @@ cmnd/Tasmota_Name/ENABLEOUTPUTSET 0
 
 ### Cooling
 
-The controller offers the possibility to switch from heating to cooling. Due to lack of cooling setup at the time of the development of the driver, this feature has however not been propertly tested. Testers for cooling are therefore welcomed.
+The controller offers the possibility to switch from heating to cooling. Due to lack of cooling setup at the time of the development of the driver, this feature has however not been properly tested. Testers for cooling are therefore welcomed.
 
 The following MQTT command can be used to switch from heating (default) to cooling:
 

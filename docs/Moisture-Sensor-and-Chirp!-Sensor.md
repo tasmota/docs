@@ -1,11 +1,11 @@
-!!! failure "This feature is not included in precompiled binaries"     
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-```
-#ifndef USE_CHIRP
-#define USE_CHIRP
-#endif
-```
-----
+??? failure "This feature is not included in precompiled binaries"  
+
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```arduino
+    #ifndef USE_CHIRP
+    #define USE_CHIRP        // [I2cDriver33] Enable CHIRP soil moisture sensor (variable I2C address, default 0x20)
+    #endif
+    ```
 
 [Chirp! I<sup>2</sup>C moisture sensor](https://github.com/Miceuz/i2c-moisture-sensor) is the sensor-only version of the original Chirp! sensor.  
 

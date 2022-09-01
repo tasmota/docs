@@ -3,7 +3,7 @@
 ??? failure "This feature is not included in precompiled binaries"  
 
     When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
-    ```
+    ```arduino
     #ifndef USE_AHT2x
     #define USE_AHT2x       // [I2cDriver43] Enable AHT20/AM2301B instead of AHT1x humidity and temperature sensor (I2C address 0x38) (+0k8 code)
     #endif

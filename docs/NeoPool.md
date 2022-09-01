@@ -1,16 +1,13 @@
 # Sugar Valley NeoPool Controller
 
-!!! failure "This feature is not included in precompiled binaries"     
+??? failure "This feature is not included in precompiled binaries"  
 
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-
-```C
-#ifndef USE_NEOPOOL
-#define USE_NEOPOOL                       // Add support for Sugar Valley NeoPool Controller (+6k flash, +60 mem)
-#endif
-```
-
-----
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```arduino
+    #define USE_NEOPOOL                       // Add support for Sugar Valley NeoPool Controller - also known under brands Hidrolife, Aquascenic, Oxilife, Bionet, Hidroniser, UVScenic, Station, Brilix, Bayrol and Hay (+6k flash, +60 mem)
+    #define NEOPOOL_MODBUS_ADDRESS       1    // Any modbus address
+  #endif
+  ```
 
 [Sugar Valley](https://sugar-valley.net/en/productos/) NeoPool are water treatment systems also known under the names Hidrolife, Aquascenic, Oxilife, Bionet, Hidroniser, UVScenic, Station, Brilix, Bayrol and Hay.
 It uses a [RS485](https://en.wikipedia.org/wiki/RS-485) interface with the [Modbus](https://en.wikipedia.org/wiki/Modbus) data protocol for enhancment equipments like Wifi-Interface or a second attached control panel. All functions and parameters can be queried and controlled via this bus interface.

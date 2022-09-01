@@ -1,14 +1,14 @@
 # Honeywell HIH temperature and humidity sensor
 
-!!! info "This feature is included only in tasmota-sensors.bin"
+??? tip "This feature is included only in `tasmota-sensors` and `tasmota32` binaries" 
 
-Otherwise you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-```
-#ifndef USE_HIH6
-#define USE_HIH6    // Enable Honeywell HIH (I2C address 0x27) (+0k6)
-#endif
-```
-----
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```c++
+    #ifndef USE_HIH6
+    #define USE_HIH6    // Enable Honeywell HIH (I2C address 0x27) (+0k6)
+    #endif
+    ```
+
 Honeywell HumidIcon™ Digital Humidity and Temperature Sensors HIH Series
 
 ## Configuration

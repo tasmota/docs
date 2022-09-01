@@ -1153,6 +1153,30 @@ crc32<a class="cmnd" id="crc_crc32"></a>|`crc.crc32(crc:int, payload:bytes) -> i
 crc16<a class="cmnd" id="crc_crc16"></a>|`crc.crc16(crc:int, payload:bytes) -> int`<br>Compute crc16 from an initial value and a bytes() buffer
 crc8<a class="cmnd" id="crc_crc8"></a>|`crc.crc8(crc:int, payload:bytes) -> int`<br>Compute crc8 from an initial value and a bytes() buffer
 
+### `log_reader` class
+
+The `log_reader` class allows you to read and potentially parse the Tasmota logs. It keeps track of what logs were already read in the past and feeds you with new log lines if some are available. It is for example used by the LVGL `tasmota_log` widget to display logs on a display.
+
+Note: calling `log_reader` can be expensive in string allocations, and adds pressure on the garbage collector. Use wisely.
+
+Example:
+
+``` berry
+var lr = log_reader()
+
+# do this regularly
+var ret = lr.get_log(2)    # read at log level 2
+if ret != nil
+  var lines = r.split('\n')  # extract as a list of lines
+  # do whatever you need
+end
+```
+
+Tasmota Function|Parameters and details
+:---|:---
+log_reader()<a class="cmnd" id="log_reader_init"></a>|`log_reader(void) -> instance(log_reader)`<br>Instantiate a new `log_reader`. Multiple readers can coexist and they each keep track of already read log lines
+get_log<a class="cmnd" id="log_reader_get_log"></a>|`get_log(log_level:int) -> string or nil`<br>Returns new log lines as a big string object. Lines are separated by `\n`. Returns `nil` if no new logs are available.<br>`log_level` can be `0..4` and specifies the highest log level that we be reported (it is usually wise to start with `2`). Higher log level will be reported only if they are recorded, i.e. there is at least one logger that asks for it. This class does not cause log-level 4 to be recorded if none other loggers are recording them (`weblog`, `mqttlog` or `seriallog`).
+
 ### `ULP` module
 
 The `ULP` module exposes the third computing unit of the ESP32, which is a simple finite state machine (FSM) that is designed to perform measurements using the ADC, temperature sensor and even external I2C sensors.

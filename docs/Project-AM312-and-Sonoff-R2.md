@@ -1,6 +1,5 @@
 This use case represents a method to use AM312 as a "wave hand toggle" (for under-cabinet kitchen LED). Please note that this solution isn't working in 100% (this sensor has a detection range of a few meters, to decrease the range you can remove the lens from the sensor but still it will pick up movement from 50 cm. You can create the Tasmota rule that will disable AM312 toggle action when the light is on and turn off the power after a few minutes. The gesture sensor [APDS-9960](APDS-9960) should work better for "hand-wave" toggle.
 
-
 ### Wiring for Sonoff Basic R2
 
 As the R2 version doesn't have GPIO14 exposed you can use [GPIO3 (RX)](https://www.youtube.com/watch?v=yavDqDzRdUk&t=139) as the AM312 data pin. GPIO2 goes high during the boot (it would toggle the switch then).

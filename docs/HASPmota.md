@@ -5,7 +5,7 @@
 Tasmota is happy to support openHASP compatible format (named HASPmota), which allows to describe rich graphics interfaces using simple JSON templates. HASPmota support leverages the power of [LVGL](https://tasmota.github.io/docs/LVGL/) and the [Berry language](https://tasmota.github.io/docs/Berry/), but doesn't need to code nor learn the LVGL API.
 
 This feature is heavily inspired from @fvanroie's [openHASP project](https://github.com/HASwitchPlate/openHASP).
-
+ 
 ## Minimal requirements
 
 **Hardware**: HASPmota is supported on all ESP32 variants, and requires a display configured with universal display (using `display.ini` or `autoconf`). You should see a splash screen at startup.
@@ -275,8 +275,8 @@ Attributes specific to `spinner`
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
-`angle`||The length of the spinning segment in degrees - cannot be changed after initial value
-`speed`||The time for 1 turn in ms - cannot be changed after initial value
+`angle`||The length of the spinning segment in degrees - can be changed after initial value since v12.1.1.1
+`speed`||The time for 1 turn in ms - can be changed after initial value since v12.1.1.1
 
 Attributes specific to `qrcode`
 

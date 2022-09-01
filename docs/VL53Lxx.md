@@ -1,10 +1,27 @@
 # VL53L0X and VL53L1X laser ranging modules
 
+??? tip "Support for VL53L0X is included only in `tasmota-sensors` and `tasmota32` binaries" 
+
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```arduino
+    #ifndef USE_VL53L0X 
+    #define USE_VL53L0X                            // [I2cDriver31] Enable VL53L0x time of flight sensor (I2C address 0x29) (+4k code)
+      #define VL53L0X_XSHUT_ADDRESS 0x78           //   VL53L0X base address when used with XSHUT control
+    #endif
+    ```
+
+??? failure "Support for VL53L1X is not included in precompiled binaries" 
+
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```arduino
+    #ifndef USE_VL53L1X 
+    #define #define USE_VL53L1X                    // [I2cDriver54] Enable VL53L1X time of flight sensor (I2C address 0x29) using Pololu VL53L1X library (+2k9 code)
+      #define VL53L1X_XSHUT_ADDRESS 0x78           //   VL53L1X base address when used with XSHUT control
+      #define VL53L1X_DISTANCE_MODE Long           //   VL53L1X distance mode : Long | Medium | Short
+    #endif
+    ```
+
 The VL53L0X and VL53L1X are Time-of-Flight (ToF) laser-ranging devices from ST MicroElectronics commonly available on small modules.
-
-The support for VL53L0X sensor is included by default in Tasmota-sensors.bin (ESP8266) and in Tasmota32.bin (ESP32).
-
-The support for VL53L1X is not included in any prebuilt Tasmota or Tasmota32 variant and requires [self-compile](Compile-your-build).
 
 In the documentation below, VL53LXX is used whenever the information applies to either VL53L0X or VL53L1X. The exact name is used for any information that is specific to the specific model.
 
@@ -56,11 +73,11 @@ On ESP8266 almost any GPIO can be used for I2C except for GPIO15. However the st
 On ESP32 any pin can be assigned to I2C.
 
 #### Step 2 - Enable the proper driver
-I2C devices are identified on the I2C bus by their address. Because the number of possible addresses are limited (127) a lot of devices are sharing the same address. This as means that it is not possible to use simulatenously on the same I2C bus 2 devices that are using the same address. Beside, in most cases, a driver cannot correctly identify the chip it is talking to. This is why in most of the case it is important to disable Tasmota drivers for devices that you are not using and leave enabled only driver for a device you are going to use.
+I2C devices are identified on the I2C bus by their address. Because the number of possible addresses are limited (127) a lot of devices are sharing the same address. This as means that it is not possible to use simultaneously on the same I2C bus 2 devices that are using the same address. Beside, in most cases, a driver cannot correctly identify the chip it is talking to. This is why in most of the case it is important to disable Tasmota drivers for devices that you are not using and leave enabled only driver for a device you are going to use.
 
 In the list of [I2CDEVICES](I2CDEVICES) supported by Tasmota it is listed that the address 0x29 can be used by either TSL2561 (driver 16), VL53L0X (driver 31), TSL2591 (driver 40) and VL53L1X (driver VL53L1X). It means that you can't use a TSL2561 or a TSL2591 at the same time as a VL53L0X/VL53L1X. ANd you can't use a VL53L0X at the same time as a VL53L1X.
 
-If you have build a tasmota bynary that include the driver for TSL2561 and/or TSL2591 you must disable those drivers. You must also disable the driver for the other VL53LXX device. As a summary, here are the command to type in the console:
+If you have build a tasmota binary that include the driver for TSL2561 and/or TSL2591 you must disable those drivers. You must also disable the driver for the other VL53LXX device. As a summary, here are the command to type in the console:
 
 * To use a VL53L0X : `backlog i2cdriver16 0;i2cdriver40 0;i2cdriver31 1;i2cdriver54 0`
 * To use a VL53L1X : `backlog i2cdriver16 0;i2cdriver40 0;i2cdriver31 0;i2cdriver54 1`
@@ -115,7 +132,7 @@ In the **_Configuration -> Configure Module_** page assign:
 
 After a reboot Tasmota will detect each VL53LXX in sequence and after auto-configuring them, it will display distance in mm.
 
-Exemple: for VL53L0X it sends `tele/%topic%/SENSOR` JSON such as:
+Example: for VL53L0X it sends `tele/%topic%/SENSOR` JSON such as:
 
 ```json
 {"Time":"2019-12-20T11:29:22","VL53L0X_1":{"Distance":263},"VL53L0X_2":{"Distance":344},"VL53L0X_3":{"Distance":729}}
@@ -123,7 +140,7 @@ Exemple: for VL53L0X it sends `tele/%topic%/SENSOR` JSON such as:
 
 With VL053L1X, the name of the sensor is adapted.
 
-The index seperator is either a `-` if `SetOption4` is `0` or a `_` if it is `1`. See [`SetOption4`](Commands#setoption4).
+The index separator is either a `-` if `SetOption4` is `0` or a `_` if it is `1`. See [`SetOption4`](Commands#setoption4).
 
 ![image](https://user-images.githubusercontent.com/35405447/111362860-144c4780-866e-11eb-84f1-461d2857ede7.png)
 
@@ -155,7 +172,7 @@ For VL53L1X use:
 ```
 This increases the sensitivity of the sensor and extends its potential range, but increases the likelihood of getting an inaccurate reading because of reflections from objects other than the intended target. It works best in dark conditions.
 
-* **VL53L0X_HIGH_SPEED** vs **VL53L0X_HIGH_ACCURACY** Either or the other can be added in `user_config_override.h` file to change the default compromise to either proceed at higher speed (but at the cost of accurancy) or at higher accuracy.
+* **VL53L0X_HIGH_SPEED** vs **VL53L0X_HIGH_ACCURACY** Either or the other can be added in `user_config_override.h` file to change the default compromise to either proceed at higher speed (but at the cost of accuracy) or at higher accuracy.
 ```cpp
 #define VL53L0X_HIGH_SPEED
 ```

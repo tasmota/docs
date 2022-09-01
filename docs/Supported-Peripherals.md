@@ -31,7 +31,7 @@ Name|Description|Connection
 **[DS18x20](DS18x20)** | Temperature Sensor| 1-Wire
 **DS1624<BR>DS1621** | Temperature Sensor| 1-Wire
 [**DS3231**](DS3231) | Real-Time-Clock| I^2^C
-[**DS3502**](DS3502) | Digital potentiometer| I^2^C
+DS3502 | Digital potentiometer| I^2^C
 **[EZO](EZO)** | EZO series of chemical Sensors | I^2^C
 **F&F LE-01MR** | F&F LE-01MR Single Phase Modbus Energy meter
 [**GPS-NTP-server**](GPS-NTP-server) | GPS-NTP-server | serial
@@ -52,7 +52,7 @@ Name|Description|Connection
 **HTU21** | Temperature and Humidity Sensor| I^2^C
 **HX711** | Load Cell Sensor| gpio
 **[HRG15](HRG15)** | Solid State Rain Sensor| serial
-[**I2S Audio**](i2s_audio.md) | I2S Audio DAC and microphone | i2s
+[**I2S Audio**](I2S-Audio.md) | :material-cpu-32-bit: I2S Audio DAC and microphone | I2s
 [**iAQ-Core**](IAQ) | Indoor Air Quality Sensor| I^2^C
 **iEM3000** | Schenider Electric modbus energy meter| serial
 **INA219**<BR>**ISL28022** | High-Side DC Current and Voltage Sensor| I^2^C

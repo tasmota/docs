@@ -1,10 +1,10 @@
 # Range Extender
 
-!!! failure "This feature is not included in precompiled binaries"
+!!! info "This feature allows Tasmota to publish an AP with a dedicated SSID that is then routed to the core WiFi network."
 
-Enabling this feature allows Tasmota to publish an AP with a dedicated SSID that is then routed to the core WiFi network.
+??? failure "This feature is not included in precompiled binaries"  
 
-To use it you must [compile your build](Compile-your-build). Introduced in version 9.5.0.5.
+To use it you must [compile your build](Compile-your-build)
 
 Create a section in `platformio_tasmota_cenv.ini` such as the following for an ESP8266:
 
@@ -21,7 +21,7 @@ build_flags                 = ${esp82xx_defaults.build_flags}
                               -D PIO_FRAMEWORK_ARDUINO_LWIP2_HIGHER_BANDWIDTH	; required option to use this feature
 ```
 
-For the ESP32 (note this extends the `tasmota32idf4` section included in the `platformio_tasmota_cenv_sample.ini`):
+For ESP32 (note this extends the `tasmota32idf4` section included in the `platformio_tasmota_cenv_sample.ini`):
 
 ```ini
 [env:tasmota32-rangeextender]

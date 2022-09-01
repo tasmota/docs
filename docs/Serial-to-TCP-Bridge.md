@@ -1,8 +1,15 @@
 # Serial to TCP Bridge
 
-!!! info "Connect to a serial device over the network, also known as ser2net"
+??? tip "This feature is included only in `tasmota-zbbridge` and `tasmota-zbbrdgpro` binaries" 
 
-Needs `#define USE_TCP_BRIDGE`. This is available in the `zbbridge` build so you can use that or [compile your own build](Compile-your-build).
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```c++
+    #ifndef USE_TCP_BRIDGE 
+    #define USE_TCP_BRIDGE          //  Add support for Serial to TCP bridge (+1.3k code)
+    #endif
+    ```
+    
+!!! info "Connect to a serial device over the network, also known as ser2net"
 
 This feature can be used to add a "serial to network" functionality to a device that is otherwise serial only. You connect the device to a ESP8266/ESP32 and Tasmota will bridge between serial and network.
 
@@ -10,7 +17,7 @@ This is commonly used with a CCxxxx Zigbee based module to connect it to a remot
 
 ## Commands
 
-* `TCPBaudRate <x>`: sets the baudrate for serial (only 8N1 mode), min `1200`, max `115200` by 1200 increments.
+* `TCPBaudRate <x>`: sets the baud rate for serial (only 8N1 mode), min `1200`, max `115200` by 1200 increments.
 * `TCPStart <port>`: listens to port `<port>`. This features supports 2 parallel TCP connections, which can be useful if you need a terminal + a specific protocol (like XMODEM). The 3rd connection will disconnect an previous connection. The number of parallel connections is a compile-time option. Note that this can be accessed by *any* host on the network and may have security implications.
 * `TCPStart <port>,<ip address>`: listens to port `<port>`, but only allows connections from the provided IPv4 address. Any connections from a different host will be immediately closed.
 * `TCPStart 0` or `TCPStart`: shuts down the TCP server and disconnects any existing connection(s).

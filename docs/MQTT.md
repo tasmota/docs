@@ -11,7 +11,7 @@ Go to **Configuration -> Configure Other** and make sure **"MQTT Enable"** box i
 Once MQTT is enabled you need to set it up using **Configuration -> Configure MQTT**. 
 
 !!! tip
-    While here, you might as well change the Friendly Name into something more descriptive than generic "Tasmota".<br>*This is a must for Home Assistant autodiscovery feature.*
+    While here, you might as well change the Friendly Name into something more descriptive than generic "Tasmota".<br>*This is highly recommended for Home Assistant autodiscovery feature.*
 
 ![Enable MQTT](https://i.postimg.cc/6QDQnH2X/mqtt-config1.png)
 ![Configure MQTT ](https://i.postimg.cc/y8LggXy1/mqtt-config2.png)
@@ -161,7 +161,7 @@ Initially Tasmota had one MQTT configurable topic planned called Topic. It soon 
 
 Tasmota then introduced a unique, non-configurable "FallBack Topic" that allows MQTT communication regardless of the configurable topic. This fallback topic is just what it is meant to be: **a fallback topic** in case of emergency!
 
-By default the Fallback Topic is `DVES_XXXXXX_fb` where xxxxxx is derived from the last 6 charactes of the device's MAC address (excluding `:`). It might look something like this: `DVES_3D5E26_fb`. You can find out the DVES code by looking at **Information** page in the webUI or issuing `Status 6`:
+By default the Fallback Topic is `DVES_XXXXXX_fb` where xxxxxx is derived from the last 6 characters of the device's MAC address (excluding `:`). It might look something like this: `DVES_3D5E26_fb`. You can find out the DVES code by looking at **Information** page in the webUI or issuing `Status 6`:
 ```json
 12:36:17 MQT: stat/tasmota/STATUS6 = {"StatusMQT":{"MqttHost":"1.1.1.1","MqttPort":1883,"MqttClientMask":"DVES_%06X","MqttClient":"DVES_3D5E26","MqttUser":"tasmota","MqttCount":1,"MAX_PACKET_SIZE":1000,"KEEPALIVE":30}}
 ```
@@ -205,6 +205,62 @@ or use the following tutorials/forum threads:
 * [Clearing retained messages with mosquitto](https://community.openhab.org/t/clearing-mqtt-retained-messages/58221)
 * [Remove retained messages in Home Assistant](https://community.home-assistant.io/t/mqtt-how-to-remove-retained-messages/79029)
 * [Remove retained messages in hass.io MQTT addon](https://community.home-assistant.io/t/clear-hass-io-mosquitto-broker-add-on-retain-messages/57250/3)
+
+## Subscribe/Unsubscribe
+
+!!! failure "This feature is not included in precompiled binaries"     
+To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+```
+#ifndef SUPPORT_MQTT_EVENT
+#define SUPPORT_MQTT_EVENT
+#endif
+```
+
+### Subscribe
+Subscribes to an MQTT topic and assigns an [`Event`](Commands#event) name to it. 
+
+`Subscribe <eventName>, <mqttTopic> [, <key>]`
+
+The `<key>` parameter is specified when you need to parse a key/value pair from a JSON payload in the MQTT message. In order to parse a value from a multi-level JSON pair, you can use one dot (`.`) syntax to split the key into sections.
+
+You subscribe to an MQTT topic and assign an event name. Once the subscribed MQTT message is received the configured event will be triggered. 
+
+Command without any parameters will list all currently subscribed topics.
+
+You can set up a rule with `ON EVENT#<event_name> DO ... ENDON` to do what you want based on this MQTT message. The payload is passed as a parameter once the event has been triggered. If the payload is in JSON format, you are able to get the value of specified key as a parameter.  
+
+For example, if you have a Tasmota based thermostat and multiple temperature sensors in different locations, usually you have to set up a home automation system like Domoticz to control the thermostat. Right now, with this new feature, you can write a rule to do this.  
+
+#### Examples
+```console
+Rule1
+  ON mqtt#connected DO Subscribe BkLight, stat/other-device-topic/POWER ENDON
+  ON Event#BkLight=ON DO <command> ENDON
+```
+```console
+Rule1
+  ON mqtt#connected DO Subscribe DnTemp, stat/other-device-topic/SENSOR, DS18B20.Temperature ENDON
+  ON Event#DnTemp>=21 DO <command> ENDON
+```
+where the MQTT message payload is `{"Time":"2017-02-16T10:13:52", "DS18B20":{"Temperature":20.6}}`
+```console
+Rule1
+  ON mqtt#connected DO Subscribe DnTemp, stat/other-device-topic/SENSOR, DS18B20.Temperature ENDON
+  ON Event#DnTemp DO TempMeasuredSet %value% ENDON
+```
+will allow a thermostat to subscribe to a temperature sensor on another Tasmota device
+```console
+  ON Event#DnTemp DO TempMeasuredSet %value% ENDON
+```
+Will allow a thermostat to subscribe to a temperature sensor on another Tasmota device
+
+### Unsubscribe
+Unsubscribe from topics which were subscribed to using the [`Subscribe`](#subscribe) command.  
+
+Unsubscribe from a specific MQTT topic  
+`Unsubscribe <eventName>`  
+
+> The command without a parameter will unsubscribe from all currently subscribed topics.  
 
 ## Return codes (rc)
 

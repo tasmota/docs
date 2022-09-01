@@ -1,6 +1,13 @@
 # MH-Z19 CO~2~ Sensor
 
-!!! info "This feature is included only in tasmota-sensors.bin" 
+??? tip "This feature is included only in `tasmota-sensors` and `tasmota32` binaries" 
+
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```c++
+    #ifndef USE_MHZ19 
+    #define USE_MHZ19       // Add support for MH-Z19 CO2 sensor (+2k code)
+    #endif
+    ```
 
 <img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/mhz19b-co2-sensor-front.jpg?raw=true" align=right width=225>
 <img src="https://github.com/arendst/arendst.github.io/blob/master/media/wemos/mhz19b-co2-sensor-back.jpg?raw=true" align=right width=225>

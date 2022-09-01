@@ -1,15 +1,14 @@
 # MFRC522 RFID reader
-!!! failure "This feature is not included in precompiled binaries"
 
-Otherwise you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-```arduino
-#define USE_SPI                                  // Hardware SPI using GPIO12(MISO), GPIO13(MOSI) and GPIO14(CLK) in addition to two user selectable GPIOs(CS and DC)
- #define USE_RC522                              // Add support for MFRC522 13.56Mhz Rfid reader (+6k code)
-   #define USE_RC522_DATA_FUNCTION              // Add support for reading data block content (+0k4 code)
-   #define USE_RC522_TYPE_INFORMATION           // Add support for showing card type (+0k4 code)
-```
+??? failure "This feature is not included in precompiled binaries"  
 
-----
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```arduino
+    #define USE_SPI                         // Hardware SPI using GPIO12(MISO), GPIO13(MOSI) and GPIO14(CLK) in addition to two user selectable GPIOs(CS and DC)
+    #define USE_RC522                       // Add support for MFRC522 13.56Mhz Rfid reader (+6k code)
+    #define USE_RC522_DATA_FUNCTION         // Add support for reading data block content (+0k4 code)
+    #define USE_RC522_TYPE_INFORMATION      // Add support for showing card type (+0k4 code)
+    ```
 
 The MFRC522 is a highly integrated reader/writer IC for contactless communication at 13.56 MHz. The MFRC522 reader supports ISO/IEC 14443 A/MIFARE and NTAG. [Datasheet](https://www.nxp.com/docs/en/data-sheet/MFRC522.pdf).
 

@@ -1,23 +1,23 @@
+??? failure "This feature is not included in precompiled binaries"  
+
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```arduino
+    #ifndef USE_TASMOTA_CLIENT
+    #define USE_TASMOTA_CLIENT    // Enable the driver
+    #endif
+
+    #ifndef USE_TASMOTA_CLIENT_FLASH_SPEED
+    #define USE_TASMOTA_CLIENT_FLASH_SPEED 57600    // Configure the baud rate of the bootloader
+    #endif
+
+    #ifndef USE_TASMOTA_CLIENT_SERIAL_SPEED 57600  
+    #define USE_TASMOTA_CLIENT_SERIAL_SPEED 57600    // Configure the baud rate at which the client microcontroller will be interfacing to Tasmota
+    #endif
+    ```
+
 It is possible to amend your existing Arduino [Uno](https://store.arduino.cc/usa/arduino-uno-rev3)/[Mini](https://store.arduino.cc/usa/arduino-mini-05)/[Nano](https://store.arduino.cc/usa/arduino-nano) project to interface with a Tasmota powered ESP8266/ESP8285 generic development boards such as the Wemos D1 or NodeMCU branded hardware boards.
 
 The creation of a client driver interface implemented since Tasmota 7.0.0.2 enables this possibility.
-
-!!! failure "This feature is not included in precompiled binaries"     
-
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-```
-#ifndef USE_TASMOTA_CLIENT
-#define USE_TASMOTA_CLIENT    // Enable the driver
-#endif
-
-#ifndef USE_TASMOTA_CLIENT_FLASH_SPEED
-#define USE_TASMOTA_CLIENT_FLASH_SPEED 57600    // Configure the baud rate of the bootloader
-#endif
-
-#ifndef USE_TASMOTA_CLIENT_SERIAL_SPEED 57600  
-#define USE_TASMOTA_CLIENT_SERIAL_SPEED 57600    // Configure the baud rate at which the client microcontroller will be interfacing to Tasmota
-#endif
-```
 
 Please note that the `USE_TASMOTA_CLIENT_FLASH_SPEED` will depend on the variant of Arduino Uno/Mini/Nano board you are using - The general observation is that the 3.3V devices usually run at 57600 whereas the 5V devices usually run on 115200 but this is provided for guidance only as it has been found that some boards will not necessarily adhere to this. The main driving factor behind the baud rate is the crystal oscillator on the board which is usually 8Mhz for 3.3V variants and 16Mhz for 5V variants - hence 57600 being 1/2 of 115200.
 

@@ -1,14 +1,14 @@
 # iAQ-Core indoor air quality sensor
 
-!!! failure "This feature is not included in precompiled binaries"  
+??? failure "This feature is not included in precompiled binaries"  
 
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-```
-#ifndef USE_IAQ
-#define USE_IAQ         // [I2cDriver46] Enable iAQ-core air quality sensor (I2C address 0x5a) (+0k6 code)
-#endif
-```
-----
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```arduino
+    #ifndef USE_IAQ
+    #define USE_IAQ         // [I2cDriver46] Enable iAQ-core air quality sensor (I2C address 0x5a) (+0k6 code)
+    #endif
+    ```
+
 The iAQ-core indoor air quality module is a low-cost, ultra compact solution for detecting poor air quality. This module uses micro-machined metal oxide semiconductor (MOS) technology to detect a broad range of VOCs while correlating directly with CO~2~ and TVOC levels in the room.
 
 !!! warning

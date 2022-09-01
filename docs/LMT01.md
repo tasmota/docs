@@ -1,8 +1,13 @@
 # LMT01 temperature sensor
 
-!!! info "This feature is included only in tasmota-sensors.bin" 
+??? tip "This feature is included only in `tasmota-sensors` and `tasmota32` binaries" 
 
-Otherwise you must [compile your build](Compile-your-build) and define `USE_LMT01`.
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```c++
+    #ifndef USE_LMT01 
+    #define USE_LMT01      // Add support for TI LMT01 temperature sensor, count pulses on single GPIO (+0k5 code)
+    #endif
+    ```
 
 The Texas Instruments LMT01 is 2-pin digital output temperature sensor
 that converts temperature directly to a sequence of digital pulses,
