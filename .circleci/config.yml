@@ -36,6 +36,8 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install --upgrade pip && pip install --upgrade -r requirements.txt
+            pip install pytz --upgrade
+            pip install tzdata --upgrade
 
       - save_cache:
           paths:
