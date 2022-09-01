@@ -466,7 +466,7 @@ scr = lv.scr_act()
 scr.set_style_bg_color(lv.color(lv.COLOR_BLUE), lv.PART_MAIN | lv.STATE_DEFAULT)
 
 # create a lv_img object and set it to Tasmota logo
-logo = lv_img(scr)
+logo = lv.img(scr)
 logo.set_tasmota_logo()
 logo.center()
 ```
