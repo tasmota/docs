@@ -21,6 +21,7 @@
     ```
 
 ## Description
+
 This driver simulates an additional relay in your Tasmota device. If you have N physical relays and you configure GPIO pin functions `DLP Tx` and `DLP Rx` you'll see relay (N+1) after reboot. The two GPIO pins will be used for serial communication with your LCD or DLP projector. The communication protocol is unique for each manufacturer (compile-time option). The driver polls the projector's state periodically and updates the fake relay state. When you toggle the fake relay, serial commands are sent to the projector to power it up or down. While the projector is running, the driver prevents to switch off the real relay that feeds the projector. This protects the lamp of the projector (needs to be cooled down before power is cut from the device).
 
 ## Supported Projectors
@@ -35,11 +36,11 @@ Fixes and definitions for further manufacturers should go to `tasmota\xdrv_53_pr
 
 Connect your Tasmota GPIO pins (3.3V TTL level) to a MAX3232 interface (cheap items on internet sales). Such interface changes TTL signals to proper RS232 levels. There are 4 wires on TTL side (Vcc, GND, Rx and Tx) and 3 wires on RS232 side (GND, Tx and Rx). A wire jumper between pins 7(RTS) and 8(CTS) may be needed in DSUB9 connector going to projector.
 
-![Unboxed](_media/projectorCtrl_TH16_unboxed.jpg)
+![Unboxed](_media/projector/ProjectorCtrl_TH16_unboxed.jpg)
 
-![Mounted](_media/projectorCtrl_TH16_mounted.jpg)
+![Mounted](_media/projector/ProjectorCtrl_TH16_mounted.jpg)
 
-![V300W](_media/projectorCtrl_V300W.jpg)
+![V300W](_media/projector/ProjectorCtrl_V300W.jpg)
 
 ### Tasmota Settings 
 
@@ -56,5 +57,3 @@ Check your projector settings concerning Serial port. It must match Tasmota sett
 
 Since Acer H5360BD does not offer a simple RS2332 port setup is as follows:
 ![ESP01-RS232-AcerH5360](https://user-images.githubusercontent.com/4789510/174459412-f61db899-cdb3-4888-9484-9ca07e3befb0.png)
-
-
