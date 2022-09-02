@@ -17,7 +17,8 @@ Incredibly expandable and flexible.
 
 <span style="font-size: 1.5rem">Current Release<BR><a href="http://ota.tasmota.com/tasmota/release-12.1.1/">Tasmota 12.1.1 Patricia</a></span>
 
-## Breaking Changes :warning: :warning: :warning: 
+## Breaking Changes :warning: :warning: :warning:
+
 - ***This version removes support for direct migration from versions before v8.1.0 (Doris)*** 
 - Restructured tasmota source directories taking benefit from PlatformIO Core v6.0.2
 - Removed dedicated MQTT Home Assistant discovery in favour of Tasmota Discovery and hatasmota
@@ -26,6 +27,7 @@ Incredibly expandable and flexible.
 - Removed Arduino IDE support
 
 ## New Features
+
 - Added support for: 
     - 5-channel light dimmer driver SM2335 used in SwitchBot color bulbs
     - Sonoff POWR3xxD and THR3xxD with their bistable (latching) relays mixed with monostable relays
@@ -36,6 +38,7 @@ Incredibly expandable and flexible.
 - New commands: [`SetOption45`](Commands.md#setoption45), [`SetOption144`](Commands.md#setoption144), [`GlobalTemp2`](Commands.md#globaltemp2), [`GlobalHum2`](Commands.md#globalhum2), [`GlobalPress2`](Commands.md#globalpress2), [`Sleep2`](Commands.md#sleep2), [`WiFiScan`](Commands.md#wifiscan), [`WiFiTest`](Commands.md#wifitest)
 
 ### 12.1.1 Hotfixes
+
 - Button response delay regression from v12.0.2.4 
 - Lost module name in GUI regression from v12.0.2.4
 - RTC not detected when lights are present #16242
@@ -54,6 +57,7 @@ For feedback, questions, live troubleshooting or just general chat
 - [Google Groups](https://groups.google.com/d/forum/sonoffusers)
 
 ## Report bugs and suggest features
+
 Open a new topic on [Tasmota discussions](https://github.com/arendst/Tasmota/discussions).
 
 Report a bug in [Tasmota issues](https://github.com/arendst/Tasmota/issues).
