@@ -4,6 +4,8 @@ on:
     branches:
       - master 
       - main
+    paths-ignore:
+    - '.github/**' # Ignore changes towards the .github directory
 jobs:
   test:
     runs-on: ubuntu-latest
