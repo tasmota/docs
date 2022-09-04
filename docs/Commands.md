@@ -390,7 +390,7 @@ VoltageLow<a class="cmnd" id="voltagelow"></a>|`0` = disable voltage low thresho
 VoltageSet<a class="cmnd" id="voltageset"></a>|`<value>` = [calibrate](Power-Monitoring-Calibration) voltage to a target value in V&emsp;
 VoltRes<a class="cmnd" id="voltres"></a>|Voltage sensor resolution<BR>`0..3` = maximum number of decimal places
 WattRes<a class="cmnd" id="wattres"></a>|Power sensor resolution<BR>`0..3` = maximum number of decimal places
-See Also|[`SetOption21`](#setoption21) - Energy monitoring when power is off<BR>[`SetOption33`](#setoption33) - Configure power monitoring Max_Power_Retry count number<BR>[`SetOption39`](#setoption39) - Control handling of invalid power measurements<BR>[`SetOption72`](#setoption72) - Set reference used for total energy<BR>[`SetOption129`](#setoption129) - Enable separate energy meters<BR>
+See Also|[`SetOption21`](#setoption21) - Energy monitoring when power is off<BR>[`SetOption33`](#setoption33) - Configure power monitoring Max_Power_Retry count number<BR>[`SetOption39`](#setoption39) - Control handling of invalid power measurements<BR>[`SetOption72`](#setoption72) - Set reference used for total energy<BR>[`SetOption129`](#setoption129) - Enable separate energy meters
 
 ### Light
 
