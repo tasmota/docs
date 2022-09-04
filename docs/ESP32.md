@@ -43,13 +43,15 @@ Use `tasmota32c3-` binaries for this line of chips.
 
 ## Exclusive Features
 
-## Autoconf
+### Autoconf
 
 As devices get more complex, it was useful to find a simpler way for users to configure a device in one click, including Template information, Ethernet configuration, SetOptions and Berry drivers.
 
-To use it you need to have `#define USE_AUTOCONF`.
+After flashing Tasmota, open the web UI of the device and navigate to ***Configuration -> Auto-configuration***. Select your device from the drop-down and click ***Apply Configuration***.
 
 Configuration files are stored here: <https://github.com/tasmota/autoconf>
+
+To use it you need to have `#define USE_AUTOCONF`.
 
 ### CPU Temperature Sensor
 
