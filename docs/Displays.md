@@ -562,7 +562,7 @@ the appropriate coordinate convervsions are defined via pseudo opcodes
 bit 7 = swap x,y
 
 `:A`  
-3 OPCODES to set adress window _(color display only)_
+3 OPCODES to set adress window _(all but epaper displays)_
 
 1. set column opcode  
 2. set row opcode  
