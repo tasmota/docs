@@ -83,9 +83,24 @@ After you created or did download your `ulp_app.py` you can export the data with
     It is recommended to embed the setup steps for GPIO pins or ADC to the bottom part of this `ulp_app.py` by printing Berry commands for easier testing in the Berry console.
   
 
-###  Export from ESP-IDF project with helper Python script
+###  Export from ESP-IDF project
   
-Many projects are using the ESP-IDF with CMAKE and will be compiled with `idf.py build`. We can extract the ULP code without flashing this project, by starting a helper Python [binS2Berry.py](https://github.com/Staars/berry-examples/blob/main/ulp_helper/binS2Berry.py) script in the root level of the project, which prints the same information to console as the Micropython way.  
+Many projects are using the ESP-IDF with CMAKE and will be compiled with `idf.py build`. We can extract the ULP code without flashing this project, with two simple methods: 
+
+#### Python script 'binS2Berry.py'
+Start a helper Python [binS2Berry.py](https://github.com/Staars/berry-examples/blob/main/ulp_helper/binS2Berry.py) script in the root level of the project, which prints the same information to console as the Micropython way.  
+  
+#### Web-App:  
+Use the embedded JS application right here.  
+<script src="../extra_javascript/ulp2berry.js"></script>
+<p>ESP-IDF build folder: <input type="file" id="ulp_files" onchange="processULPFiles()" webkitdirectory mozdirectory multiple/></p>
+(You can drag and drop the folder on the button too.)
+
+<div id="ulp_output"></div>
+``` py
+# Generate ULP code in your browser !! Parsing completely in JS, no file upload to a server.
+```
+  
 Thus the ULP projects that may fail to assemble in Micropython can be used too. But usually the route via Micropython makes it easier to pack everything nicely together.
   
   
