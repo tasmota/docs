@@ -41,13 +41,13 @@ ModbusSend|Sending a message to the Modbus network as JSON payload.<BR>```{"devi
 Function Code|Description
 :---|:---
 1|Read Coils
-|2|Read Discrete Inputs
-|3|Read Multiple Holding Registers
-|4|Read Input Registers
-|5|Write Single Coil
-|6|Write Single Register
-|15|Write Multiple Coils
-|16|Write Multiple Registers
+2|Read Discrete Inputs
+3|Read Multiple Holding Registers
+4|Read Input Registers
+5|Write Single Coil
+6|Write Single Register
+15|Write Multiple Coils
+16|Write Multiple Registers
 
   
 ### Type
@@ -56,14 +56,14 @@ Type|Description
 raw|Return or send the slave data as a raw values
 bit|Return or send the slave data as a bit values
 hex|Return or send the slave data as a hex values
-|float|Return or send the slave data as floats
-|uint8|Return or send the slave data as an 8 bits unsigned int
-|uint32|Return or send the slave data as an 32 bits unsigned int
-|uint16|Return or send the slave data as an 16 bits unsigned int
-|uint32|Return or send the slave data as an 32 bits unsigned int
-|int8|Return or send the slave data as an 8 bits signed int
-|int16|Return or send the slave data as an 16 bits signed int
-|int32|Return or send the slave data as an 32 bits signed int
+float|Return or send the slave data as floats
+uint8|Return or send the slave data as an 8 bits unsigned int
+uint32|Return or send the slave data as an 32 bits unsigned int
+uint16|Return or send the slave data as an 16 bits unsigned int
+uint32|Return or send the slave data as an 32 bits unsigned int
+int8|Return or send the slave data as an 8 bits signed int
+int16|Return or send the slave data as an 16 bits signed int
+int32|Return or send the slave data as an 32 bits signed int
   
 ### Additional commands for USE_MODBUS_TCP_BRIDGE
 Command|Parameters
@@ -87,13 +87,13 @@ Errors from this Modbus bridge module can be recognized by `MBS: MBR Send error`
 Errorcode|Description
 :---|:---
 1|nodataexpected
-|2|wrongdeviceaddress
-|3|wrongfunctioncode
-|4|wrongstartaddress
-|5|wrongtype
-|6|wrongregistercount
-|7|wrongcount
-|8|tomanydata
+2|wrongdeviceaddress
+3|wrongfunctioncode
+4|wrongstartaddress
+5|wrongtype
+6|wrongregistercount
+7|wrongcount
+8|tomanydata
   
 ### Driver Errors  
 Errors from the tasmotamodbus driver can be recognized by `MBS: MBR Driver error`
@@ -101,18 +101,18 @@ Errors from the tasmotamodbus driver can be recognized by `MBS: MBR Driver error
 Errorcode|Description
 :---|:---
 1|Illegal Function
-|2|Illegal Data Address
-|3|Illegal Data Value
-|4|Slave Error
-|5|Acknowledge but not finished (no error)
-|6|Slave Busy
-|7|Not enough minimal data received
-|8|Memory Parity error
-|9|Crc error
-|10|Gateway Path Unavailable
-|11|Gateway Target device failed to respond
-|12|Wrong register count
-|13|Register data not specified
+2|Illegal Data Address
+3|Illegal Data Value
+4|Slave Error
+5|Acknowledge but not finished (no error)
+6|Slave Busy
+7|Not enough minimal data received
+8|Memory Parity error
+9|Crc error
+10|Gateway Path Unavailable
+11|Gateway Target device failed to respond
+12|Wrong register count
+13|Register data not specified
 
 ## Example of use
 Requesting 4 holding registers starting from register 1 from slave address 
