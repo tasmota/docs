@@ -935,3 +935,17 @@ No usable protocol found yet, but raw mode does it.
 * ColorOceanBlue=`{"Protocol":"NEC","Bits":32,"Data":"0x1FEB04F"}`
 * ModeMultiColor=`{"Protocol":"NEC","Bits":32,"Data":"0x1FEC03F"}`
 * ModeSwitch=`{"Protocol":"NEC","Bits":32,"Data":"0x1FE7887"}`
+
+### Edifier R1850DB IR remote 
+*MUTE:   `{"Protocol":"NEC","Bits":32,"Data":"0x8E7827D","DataLSB":"0x10E741BE","Repeat":0}`
+*+:      `{"Protocol":"NEC","Bits":32,"Data":"0x8E7609F","DataLSB":"0x10E706F9","Repeat":0}`
+*-:      `{"Protocol":"NEC","Bits":32,"Data":"0x8E7E21D","DataLSB":"0x10E747B8","Repeat":0}`
+*ON/OFF: `{"Protocol":"NEC","Bits":32,"Data":"0x8E7629D","DataLSB":"0x10E746B9","Repeat":0}`
+*PC:     `{"Protocol":"NEC","Bits":32,"Data":"0x8E7E01F","DataLSB":"0x10E707F8","Repeat":0}`
+*AUX:    `{"Protocol":"NEC","Bits":32,"Data":"0x8E7906F","DataLSB":"0x10E709F6","Repeat":0}`
+*OPT:    `{"Protocol":"NEC","Bits":32,"Data":"0x8E7A25D","DataLSB":"0x10E745BA","Repeat":0}`
+*COX:    `{"Protocol":"NEC","Bits":32,"Data":"0x8E7C03F","DataLSB":"0x10E703FC","Repeat":0}`
+*BT:     `{"Protocol":"NEC","Bits":32,"Data":"0x8E73AC5","DataLSB":"0x10E75CA3","Repeat":0}`
+*<<:     `{"Protocol":"NEC","Bits":32,"Data":"0x8E77887","DataLSB":"0x10E71EE1","Repeat":0}`
+*>||:    `{"Protocol":"NEC","Bits":32,"Data":"0x8E77A85","DataLSB":"0x10E75EA1","Repeat":0}`
+*>>:     `{"Protocol":"NEC","Bits":32,"Data":"0x8E740BF","DataLSB":"0x10E702FD","Repeat":0}`
