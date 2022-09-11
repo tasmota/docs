@@ -166,7 +166,7 @@ Blue	{"Protocol":"SONY","Bits":15,"Data":"0x12E9"}
 
 Text	{"Protocol":"SONY","Bits":12,"Data":"0xFD0"}
 
-0	{"Protocol":"SONY","Bits":12,"Data":"0x110"}
+0	{"Protocol":"SONY","Bits":12,"Data":"0x910"}
 
 Subtitles	{"Protocol":"SONY","Bits":15,"Data":"0x0AE9"}
 
