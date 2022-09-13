@@ -1,4 +1,4 @@
-!> You need to calibrate your power monitoring device as correct measurements are influenced by hardware and timing differences.
+!!! tip "You need to calibrate your power monitoring device as correct measurements are influenced by hardware and timing differences."
 
 - Your power monitoring capable device flashed with Tasmota and configured with the correct module/template that supports power monitoring
 - An AC capable **calibrated** multi-meter
