@@ -27,15 +27,15 @@ The Modbus Bridge driver features 2 kind of bridges.
 
 First assign two GPIOs to `ModBR Tx` and `ModBR Rx` in the "Configure Module" page. The Rx/Tx are relative to the ESP device. For example with ESP-12's hardware serial, set GPIO1 as ModBR Tx and GPIO3 as ModBR Rx.
 
-Then set baud rate with `ModbusSetBaudRate` (default is 9600).
+Then set baud rate with `ModbusBaudRate` (default is 9600).
 
 ## Commands
 
 Command|Parameters
 :---|:---
 ModbusSend|Sending a message to the Modbus network as JSON payload.<BR>```{"deviceAddress":<value>, "functionCode":<value>, "startAddress":<value>, "type":"<value>","count":<value>}```<BR>&emsp;&emsp;`"deviceAddress":1..255` = device address from the Modbus slave.<BR>&emsp;&emsp;`"functioncode":1..6 or 15..16` = function code to send to the Modbus slave (see table below).<BR>&emsp;&emsp;`"startaddress":1..65535` address of the first register to read.<BR>&emsp;&emsp;`"type":"<value>"` Gives the type of the returned data (see table below). <BR>&emsp;&emsp;`"count":1..n` the number of values to be requested.
-|ModbusBaudrate| `1200...115200` = set baudrate for serial (only 8N1 mode) in 1200 increments _(default = `9600`)_
-|ModbusSerialConfig|Set serial protocol using data/parity/stop conventional notation (example: 8N1 or 702)<BR>`0..23` = set serial protocol (`3` equals 8N1)
+ModbusBaudrate| `1200...115200` = set baudrate for serial (only 8N1 mode) in 1200 increments _(default = `9600`)_
+ModbusSerialConfig|Set serial protocol using data/parity/stop conventional notation (example: 8N1 or 702)<BR>`0..23` = set serial protocol (`3` equals 8N1)
   
 ### FunctionCode
 Function Code|Description
@@ -69,7 +69,7 @@ int32|Return or send the slave data as an 32 bits signed int
 Command|Parameters
 :---|:---
 ModbusTcpStart| Start the Modbus TCP bridge on the specified `tcp port`
-|ModbusTcpConnect| Connect to a remote Modbus TCP server on `ip address` and `remote tcp port`
+ModbusTcpConnect| Connect to a remote Modbus TCP server on `ip address` and `remote tcp port`
   
 ## Returned Data
 ```json
