@@ -663,9 +663,9 @@ tasmota.set_timer(30000,netflip)              #4
 This small helper function allows you to call a function at stable intervals, automatically correcting in case of latency or other deviations. Not suitable for very short intervals; while the delay interval is in milliseconds for consistency with the standard `tasmota.set_timer`, it would normally be seconds multiplied by 1000, like 60000 for every minute.
 
 ```
-def set_timer_modulo(delay,f)
+def set_timer_modulo(delay,f,id)
   var now=tasmota.millis()
-  tasmota.set_timer((now+delay/4+delay)/delay*delay-now, def() set_timer_modulo(delay,f) f() end)
+  tasmota.set_timer((now+delay/4+delay)/delay*delay-now, def() set_timer_modulo(delay,f,id) f() end)
 end
 ```
 
