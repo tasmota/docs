@@ -2541,9 +2541,9 @@ start dim level = initial dimmer level after power-up or restart; max 100
     >F
     ; get adc value into array, average 4 values
     ; this is for ESP32 here on pin 32
-    mux[mcnt+1]=adc(4 32)
+    mux[mcnt+1]=adc(2 32)
     ; this is for ESP8266 it has only 1 ADC input
-    ; mux[mcnt+1]=adc(4)
+    ; mux[mcnt+1]=adc(2)
     mcnt+=1
     if mcnt>=16
     then
