@@ -505,6 +505,7 @@ The construct is to use `tasmota.global` or `tasmota.settings` to read or write 
 Value|Details
 :---|:---
 tasmota.global.sleep<a class="cmnd" id="tasmota_global_sleep"></a>|Current sleep value
+tasmota.global.devices_present<a class="cmnd" id="tasmota_devices_present"></a>|Number of Power channels, e.g. having virtual relays
 tasmota.settings.sleep<a class="cmnd" id="tasmota_settings_sleep"></a>|Sleep value stored in flash
 
 ### `mqtt` module
