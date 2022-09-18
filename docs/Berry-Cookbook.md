@@ -665,7 +665,7 @@ This small helper function allows you to call a function at stable intervals, au
 ```
 def set_timer_modulo(delay,f,id)
   var now=tasmota.millis()
-  tasmota.set_timer((now+delay/4+delay)/delay*delay-now, def() set_timer_modulo(delay,f,id) f() end)
+  tasmota.set_timer((now+delay/4+delay)/delay*delay-now, def() set_timer_modulo(delay,f,id) f() end, id)
 end
 ```
 
