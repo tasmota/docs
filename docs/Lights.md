@@ -356,6 +356,8 @@ When you use [`LedPower`](Commands#ledpower) you take over control of that parti
     
 ## ESP32 Only Features
 
+### PWM6+
+
 ESP32 has hardware PWM support, named `ledc`, for up to 16 channels depending on CPU type. You can mix lights and pure PWM channels. The first 5 PWM are reserved for lights, unless `SetOption15 0`. For pure PWM GPIOs, you can assign any PWM number, they don't need to be continuous. For example you can use `PWM 1/2/3` for a 3-channel RGB light, and `PWM 6` & `PWM 10` for pure PWM at the same time.
 
 CPU type|PWM channels
