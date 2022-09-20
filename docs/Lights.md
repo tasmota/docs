@@ -353,3 +353,45 @@ When you use [`LedPower`](Commands#ledpower) you take over control of that parti
 
 #### Using LedLink
 `LedLink` / `LedLinki` is used to assign the link status LED. If your device does not have an LED for link status (or you want to use that LED for a different purpose), you can assign `LedLink` to an available free GPIO. When `LedLink(i)` is assigned, other LEDs are automatically linked to their corresponding relay and serve as that relay's power status LED - i.e., `Led<x>(i)` links to `Relay<x>(i)`
+    
+## ESP32 Only Features
+
+ESP32 has hardware PWM support, named `ledc`, for up to 16 channels depending on CPU type. You can mix lights and pure PWM channels. The first 5 PWM are reserved for lights, unless `SetOption15 0`. For pure PWM GPIOs, you can assign any PWM number, they don't need to be continuous. For example you can use `PWM 1/2/3` for a 3-channel RGB light, and `PWM 6` & `PWM 10` for pure PWM at the same time.
+
+CPU type|PWM channels
+:---|:---
+ESP32|16 channels
+ESP32-S2|8 channels
+ESP32-C3|6 channels
+
+Channels are assigned to GPIOs in a first-in-first-serve way and PWM GPIOs are assigned first. If `ledc` channels are exhausted an error will appear in logs.
+
+The following GPIOs use `ledc` PWM channels:
+
+GPIO type|Description
+:---|:---
+`PWM` or `PWMi`|`PWM 1..5` are used for lights, `PWM O6..11` are general purpose PWM.
+`LedPwmMode`|Assigns a `Led` GPIO to a PWM channel
+`Buzzer`|If `BuzzerPwm` is used
+`Backlight`|PWM backlighting for displays
+`XCLK`|Used as a clock generator for webcam
+
+Example of `PWM` console output with 16 PWM assigned. By default PWM range is 0..1023.
+
+```
+RESULT = {"PWM":{"PWM1":410,"PWM2":286,"PWM3":286,"PWM4":0,"PWM5":0,"PWM6":0,"PWM7":0,"PWM8":0,"PWM9":0,"PWM10":0,"PWM11":0,"PWM12":0,"PWM13":0,"PWM14":0,"PWM15":0,"PWM16":0}}
+```
+
+### Auto-phasing of PWM
+
+By default, phases of consecutive PWM are disaligned so that a PWM pulses starts when the pulse of the previous PWM channels ends. This helps in distributing over time all pulses and have a smoother effect on power supply.
+
+You can revert this with `SetOption134 1`; all phases are synces and all pulses start at the same moment.
+
+### H-bridge
+
+H-bridge is an electronic circuit that switches the polarity of a voltage applied to a load. It uses 2 PWM outputs to control the current sent to each polarity.
+
+When auto-phasing is enabled, you can use 2 consecutive PWM to drive a H-bridge siunce PWM phases don't overlap - under the condition that the sum of both PWM don't exceed `1023`.
+
+!!! warning "You must always ensure that the sum of both PWM channels is less or equal than `1023`. Values over this threshold can damage the circuit!!!"
