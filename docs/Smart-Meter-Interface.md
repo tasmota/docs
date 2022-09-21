@@ -984,20 +984,28 @@ Growatt solar inverter. this example also shows how to send cmds to modbus
     nm(1000 3600 10 gl "Growatt limit (W) " 80 0) 
     ```
 
-### Hager EHZ161 (OBIS)
+### Hager EHZ161 / EHZ361 (OBIS)
 
 ??? summary "View script"
     ```
-    >D  
-    >B  
+    >D
+    >B
     ->sensor53 r
-    >M 1  
-    +1,3,o,0,9600,OBIS  
-    1,1-0:1.8.1\*255(@1,Total consumption,KWh,Total_in,4  
-    1,1-0:2.8.1\*255(@1,Total Feed,KWh,Total_out,4  
-    1,=d 2 10 @1,Current consumption,W,Power_curr,0  
-    1,1-0:0.0.0\*255(@#),Meter Nr,, Meter_number,0  
-    #  
+    >M 1
+    +1,3,o,0,9600,OBIS
+    1,1-0:0.0.0*255(@#),Meter Number,,meter_number,0
+    1,1-0:1.8.0*255(@1,Power Consumption A+,kWh,zaehler_a+,4
+    1,1-0:2.8.0*255(@1,Power Feed A-,kWh,zaehler_a-,4
+    1,1-0:32.7.0*255(@1,Volt_L1,V,volt_l1,2
+    1,1-0:52.7.0*255(@1,Volt_L2,V,volt_l2,2
+    1,1-0:72.7.0*255(@1,Volt_L3,V,volt_l3,2
+    1,1-0:31.7.0*255(@1,Ampere_L1,A,volt_l1,2
+    1,1-0:51.7.0*255(@1,Ampere_L2,A,volt_l2,2
+    1,1-0:71.7.0*255(@1,Ampere_L3,A,volt_l3,2
+    1,1-0:21.7.0*255(@1,Watt_L1,W,watt_l1,0
+    1,1-0:41.7.0*255(@1,Watt_L2,W,watt_l2,0
+    1,1-0:61.7.0*255(@1,Watt_L3,W,watt_l3,0
+    #
     ```
 
 ### Hager EHZ363, Apator Norax 3D (SML)
