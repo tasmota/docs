@@ -214,25 +214,38 @@ All the previous commands add attributes to a local `attr_list` object. These at
 Note: it is important to keep attributes as Cluster/Attribute types so that we can later apply transformations on them.
 
 Note2: `LinkQuality`, `Device`, `Name`, `Group` and `Endpoint` are _special_ values that do are not registered as actual attributes.
+	
+Note3: `BatteryPercentage` is systematically added with the last known value to each attribute reporting.
 
 #### 6. Apply transoformations to the attributes.
 
 There are many transformations that are required because some device use proprietary values, or we need to compute new values out of the existing attributes.
+	
+1. Reject Loopback
+If the message is sent from the coordinator to the coordinator itself, which can happen with broadcast message, it is discarded with DEBUG level log `loopback message, ignoring`.
 
-1. Generate synthetic attributes `generateSyntheticAttributes()`.
+2. Generate synthetic attributes `generateSyntheticAttributes()`.
 This is mainly used for Xiaomi Aqara devices. Aqara uses cluster 0xFF01 and 0xFF02 to send structured messages. The good side is that it allows to send attributes from different clusters in a single message, whereas the ZCL standard would have required several messages. The bad side is that Aqara reuses the same attribute numbers for different value, and you need to know the device type to decode; which makes the whole process work only if the pairing process sucessfully got the ModelId.
+This is also used by Aqara Cube and Aqara vibration sensor to decode values.
 
-2. Compute synthetic attributes `computeSyntheticAttributes()`.
+3. Remove invalid attributes `removeInvalidAttributes()`
+Any value out of normal range is removed, for example `lumi.weather` reporting a temperature below -100.0°C is removed.
+
+4. Apply synonyms `applySynonymAttributes()`
+Apply any synonym from the Zigbee plugin definitions on a per device basis. If matched, the synonym maps the attribute to a new cluster/attrid and applies a multiplier or divisor if required.
+
+5. Compute synthetic attributes `computeSyntheticAttributes()`.
 This is used to add computed attributes or fix some bugs in devices.
 Currently it computes the `BatteryPercentage` from the `BatteryVoltage` if the `BatteryPercentage` is not already present.
 It computes `SeaPressure` using the Tasmota `Altitude` setting.
 It fixes an Eurotronic bug in the encoding of `Pi Heating Demand` which is sent in the 0..255 range instead of 0..100 range.
 It fixes the IKEA Remote battery value which is half what it needs to be.
+It captures mutlipliers and Divisord for AC Voltage/Current/Power (cluster 0x0B04) and stores them in the Z_Data.
 	
-3. Generate callbacks and timers `generateCallBacks()`.
+6. Generate callbacks and timers `generateCallBacks()`.
 This is used to register deferres callbacks. It is only used for `Occypancy` for now. Many PIR sensors report `"Occupancy":1` but don't report the lack of occupancy. This function sets a timer to artificially generate `"Occupancy":0` after a definite amount of time (defaults to 90 seconds).
 
-4. Post-process attributes `Z_postProcessAttributes()`.
+7. Post-process attributes `Z_postProcessAttributes()`.
 This function does the final transformation of attributes to their human readable format.
 
 First the endpoint is added as suffix if `SetOption101 1` is set, if the source endpoint is not `1`, and if the device is known to have more than one endpoint (check with `ZbStatus2`).
