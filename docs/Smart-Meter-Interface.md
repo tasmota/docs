@@ -772,33 +772,53 @@ According to the manufacturer's datasheet, the serial parameters are 9600 baud a
 	
 For Tasmota versions that are built with a TasmotaSerial.cpp of version 3.5.0 (and probably all higher versions, too), no modification of the TasmotaSerial.cpp source code (as suggested in other entries of this documentation) is necessary to set the serial parameters to 7E1: By configuring the [meter type](#meter-definition) as OBIS ("o") in line 5 of the above code, you implicitly tell Tasmota to set the serial parameters to 7E1 (probably the same applies to all other meters in this documentation where a modification of TasmotaSerial.cpp has previously been recommended).
 
-### EFR SGM-C4-4A920L (OBIS)
+### EFR SGM-C2/C4 (SML)
 
-By default, the wattmeter only sends the actual power. To be able to read all the other values, you need to enter the PIN.
-The PIN must be requested to the electricity provider. After entering the PIN, all the values will be available and you also have the option to disable the need of the PIN.
-	
+By default, the energy meter only sends the total energy values. To be able to read all the other values, you need to enter the PIN and set `InF on`.
+The PIN must be requested from the metering provider, which is usually your local grid provider and not your energy provider (but they know whom to ask). After entering the PIN and setting `InF on`, all the values will be available. The jsonPrefix `ENERGY` and variable names (between second to last and last `,`) Total, Power, Voltage and Current are chosen to match the regular MQTT message format, used by tasmota powerplugs.
+For SGM-C4, double-tariff variants or meters measuring supply remove the appropriate leading `;` to uncomment and enable the values you are interested in.
+
 ??? summary "View script"
     ```
+    
     >D
     >B
     ->sensor53 r
     >M 1
-    +1,3,s,16,9600,SML
-    1,77070100010800ff@1000,Comsumption,kWh,HT,4
-    1,77070100020800ff@1000,Supply,kWh,SP,4
-    1,77070100100700ff@1,Actual Power,W,AP,0
-    1,77070100200700ff@1,Voltage P1,V,V_P1,1
-    1,77070100340700ff@1,Voltage P2,V,V_P2,1
-    1,77070100480700ff@1,Voltage P3,V,V_P3,1
-    1,770701001f0700ff@1,Current P1,A,A_P1,2
-    1,77070100330700ff@1,Current P2,A,A_P2,2
-    1,77070100470700ff@1,Current P3,A,A_P3,2
-    1,77070100510704ff@1,Phaseangle I-L1/U-L1,deg,phase_angle_p1,1 
-    1,7707010051070fff@1,Phaseangle I-L27I-L2,deg,phase_angle_p2,1  
-    1,7707010051071aff@1,Phaseangle I-L3/I-L3,deg,phase_angle_p3,1 
-    1,770701000e0700ff@1,Frequency,Hz,HZ,1
+    +1,3,s,16,9600,ENERGY
+    1,77070100010800ff@1000,Comsumption,kWh,Total,4
+    ;for meters measuring feed-in SGM-Cx-xxx2xx
+    ;1,77070100020800ff@1000,Supply,kWh,Supply,4
+    ;next 4 lines for double-tariff meters SGM-Cx-xxxxTx
+    ;1,77070100010801ff@1000,Comsumption_t1,kWh,Total_t1,4
+    ;1,77070100010802ff@1000,Comsumption_t2,kWh,Total_t2,4
+    ;1,77070100020801ff@1000,Supply_t1,kWh,Supply_t1,4
+    ;1,77070100020802ff@1000,Supply_t2,kWh,Supply_t2,4
+    ;all commented lines from here on for 3-phase meter SGM-C4
+    1,77070100100700ff@1,Actual Power,W,Power,0
+    1,77070100200700ff@1,Voltage L1,V,Voltage,1
+    ;1,77070100340700ff@1,Voltage L2,V,Voltage_L2,1
+    ;1,77070100480700ff@1,Voltage L3,V,Voltage_L3,1
+    1,770701001f0700ff@1,Current L1,A,Current,2
+    ;1,77070100330700ff@1,Current L2,A,Current_L2,2
+    ;1,77070100470700ff@1,Current L3,A,Current_L3,2
+    ;1,77070100510701ff@1,Phaseangle L2-L1,deg,phase_angle_L2_L1,0
+    ;1,77070100510702ff@1,Phaseangle L3-L1,deg,phase_angle_L3_L1,0
+    1,77070100510704ff@1,Phaseangle I/U L1,deg,phase_angle_L1,1 
+    ;1,7707010051070fff@1,Phaseangle I/U L2,deg,phase_angle_L2,1  
+    ;1,7707010051071aff@1,Phaseangle I/U L3,deg,phase_angle_L3,1 
+    1,770701000e0700ff@1,Frequency,Hz,Freq,1
+    ;all commented lines from here on just for completeness
+    ;1,7707010000020000@1,Firmware Version,,FwVer,0
+    ;1,77070100605a0201@1,Firmware Checksum,,FwCheck,0
+    ;1,7707010061610000@1,Error Register,,ErrorReg,0
+    ;1,7707010060320101@1,Hardware Version,,HwVer,0
+    ;1,7707010060320104@1,Parameter Version,,ParamVer,0
+    1,77070100600100ff@#,Server-ID,,ID,0
+    ;You can find your server-id printed on your meter. If you want you can also convert it to your Identifikationsnummer with some ASCII, DEC and HEX encoding. 0A-01-45-46-52-ST-UV-WX-YZ = 1EFR + string(S) + string(T) + hexToDec(UVWXYZ)
     #
     ```
+
 Overview of the codes
 ![image](https://user-images.githubusercontent.com/5443580/186160623-3db77d01-429f-49db-86ff-d804578aad99.png)
 	
