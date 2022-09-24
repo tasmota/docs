@@ -564,8 +564,8 @@ SetOption141<a class="cmnd" id="setoption141"></a>|`1` = disable display of mode
 SetOption142<a class="cmnd" id="setoption142"></a>|`1` = wait 1 second for WiFi connection solving some FRITZ!Box modem issues
 SetOption143<a class="cmnd" id="setoption143"></a>|`1` = disables ZigBee auto-probing and configure back attribute reporting
 SetOption144<a class="cmnd" id="setoption144"></a>|`1` = include a timestamp in `ZbReceived` messages
-SetOption145<a class="cmnd" id="setoption145"></a>
-SetOption146<a class="cmnd" id="setoption146"></a>
+SetOption145<a class="cmnd" id="setoption145"></a>|`1` = publish STATUS messages as retained
+SetOption146<a class="cmnd" id="setoption146"></a>|`1` = Show ESP32 internal temperature sensor (ESP32 only)
 SetOption147<a class="cmnd" id="setoption147"></a>|`1` = disable publish `SSerialReceived` MQTT messages. If disabled, you must use event trigger rules instead. (`SSerialReceived#Data=<string>`)
 
 ### TuyaMCU
