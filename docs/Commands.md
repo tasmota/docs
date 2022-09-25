@@ -260,6 +260,7 @@ Publish<a class="cmnd" id="publish"></a>|`<topic> <payload>` = MQTT publish any 
 Publish2<a class="cmnd" id="Publish2"></a>|`<topic> <payload>` = MQTT publish any topic and optional payload with retain flag
 SensorRetain<a class="cmnd" id="sensorretain"></a>|`0` = disable use of sensor MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on message `tele/%topic%/SENSOR`
 StateRetain<a class="cmnd" id="stateretain"></a>|`0` = disable use of state MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on message `tele/%topic%/STATE`
+StatusRetain<a class="cmnd" id="statusretain"></a>|`0` = disable use of status MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on message `tele/%topic%/STATUS`
 StateText<x\><a class="cmnd" id="StateText"></a>|`<value>` = set state text  (`<x>` = `1..4`)<BR>1 = `OFF` state text<BR>2 = `ON` state text<BR>3 = `TOGGLE` state text<BR>4 = `HOLD` state text<BR>
 SwitchRetain<a class="cmnd" id="switchretain"></a>|`0` = disable use of MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on switch press
 Subscribe<a class="cmnd" id="subscribe"></a>|Subscribes to an MQTT topic without appended `/#` and assigns an Event name to it.<BR>`<eventName>, <mqttTopic> [, <key>]` = [Read more...](Subscribe-&-Unsubscribe)<br>`  ` = list all topics currently subscribed
@@ -539,6 +540,17 @@ SetOption131<a class="cmnd" id="setoption131"></a>|(Tuya) Allow save dimmer = 0 
 SetOption132<a class="cmnd" id="setoption132"></a>|When MQTT Tls is enabled, forces fingerprint validation of server identity instead of checking the identitfy against a certificate authority (CA)<BR>`1` = Fingerprint, `0` = CA
 SetOption134<a class="cmnd" id="setoption134"></a>|PWM force phases to be synced (ESP32 only).<BR>On ESP32, PWM phases are by default distributed one after the other to minimize effect on power supply. This is also mandatory for H-Bridge devices.<BR>`0` = phases are automatically aligned one after the other, `1` = phases all start at the same time (default behavior for ESP8266).
 SetOption135<a class="cmnd" id="setoption135"></a>|Disables Display Splash screen (for all drivers, universal & LVGL)<BR>`1` = Splash screen disabled, `0` = Splash screen displayed
+SetOption136<a class="cmnd" id="setoption136"></a>|`1` = Disable single sensor reports from Tuya devices while keeping teleperiod reports<BR>`0` = Publish an immediate `tele/%topic%/SENSOR` TuyaSNS message at each reception of individual value _(default)_
+SetOption137<a class="cmnd" id="setoption137"></a>|`1` = following Tuya responses will not be forwarded to MQTT when [SetOption66](#setoption66) is enabled<BR>&nbsp;&nbsp;- heartbeat every 10 seconds, `TUYA_CMD_HEARTBEAT`<BR>&nbsp;&nbsp;- the WiFi state during start-up and Wi-Fi events, `TUYA_CMD_WIFI_STATE`<BR>&nbsp;&nbsp;- the local time info query of the MCU every minute, `TUYA_CMD_SET_TIME`<BR>&nbsp;&nbsp;- the received update package info from MCU during firmware update of Tuya MCU, `TUYA_CMD_UPGRADE_PACKAGE`
+SetOption138<a class="cmnd" id="setoption138"></a>|Align GUI energy multicolumn layout in webUI<BR>`0` = left/center _(default)_<BR>`1` = right
+SetOption139<a class="cmnd" id="setoption139"></a>|When `SetOption24 1` switch pressure unit to:<BR>`0` = mmHg _(default)_<BR>`1` = inHg
+SetOption140<a class="cmnd" id="setoption140"></a>|`0` = open clean MQTT session _(default)_<BR>`1` = open persistent MQTT session
+SetOption141<a class="cmnd" id="setoption141"></a>|`1` = disable display of model name in webUI header
+SetOption142<a class="cmnd" id="setoption142"></a>|`1` = wait 1 second for WiFi connection solving some FRITZ!Box modem issues
+SetOption143<a class="cmnd" id="setoption143"></a>|`1` = disables ZigBee auto-probing and configure back attribute reporting
+SetOption144<a class="cmnd" id="setoption144"></a>|`1` = include a timestamp in `ZbReceived` messages
+SetOption145<a class="cmnd" id="setoption144"></a>|`1` = Enable MQTT retain on STATUS messages. Synonym for [StatusRetain](#statusretain)</a>
+SetOption146<a class="cmnd" id="setoption144"></a>|`1` = Enable ESP32's internal temperature sensor (ESP32 only)</a>
 SetOption147<a class="cmnd" id="setoption147"></a>|`1` = disable publish `SSerialReceived` MQTT messages. If disabled, you must use event trigger rules instead. (`SSerialReceived#Data=<string>`)
 
 ### TuyaMCU
