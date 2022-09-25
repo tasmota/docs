@@ -530,7 +530,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `af(array index)` = converts 4 bytes of an array at index `index` to float number   
 `hf("hstr")` = converts hex float number string to a decimal number  
 `hf("hstr" r)` = converts hex float number string (reverse byte order) to a decimal number  
-`st(svar c n)` = string token - retrieve the n^th^ element of svar delimited by c  
+`st(svar c n)` or = `st(svar 'c' n)`string token - retrieve the n^th^ element of svar delimited by c,  
 `ins(s1 s2)` = check if string s2 is contained in string s1, return -1 if not contained or position of contained string  
 `sl(svar)` = gets the length of a string  
 `asc(svar)` = gets the binary value of 1. char of a string  
