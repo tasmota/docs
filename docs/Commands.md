@@ -539,6 +539,7 @@ SetOption131<a class="cmnd" id="setoption131"></a>|(Tuya) Allow save dimmer = 0 
 SetOption132<a class="cmnd" id="setoption132"></a>|When MQTT Tls is enabled, forces fingerprint validation of server identity instead of checking the identitfy against a certificate authority (CA)<BR>`1` = Fingerprint, `0` = CA
 SetOption134<a class="cmnd" id="setoption134"></a>|PWM force phases to be synced (ESP32 only).<BR>On ESP32, PWM phases are by default distributed one after the other to minimize effect on power supply. This is also mandatory for H-Bridge devices.<BR>`0` = phases are automatically aligned one after the other, `1` = phases all start at the same time (default behavior for ESP8266).
 SetOption135<a class="cmnd" id="setoption135"></a>|Disables Display Splash screen (for all drivers, universal & LVGL)<BR>`1` = Splash screen disabled, `0` = Splash screen displayed
+SetOption147<a class="cmnd" id="setoption147"></a>|`1` = disable publish `SSerialReceived` MQTT messages. If disabled, you must use event trigger rules instead. (`SSerialReceived#Data=<string>`)
 
 ### TuyaMCU
 
@@ -559,6 +560,8 @@ Software Serial Bridge can use any other GPIO to be configured as components `Se
 
 Information received by Tasmota over the serial bridge is captured automatically. Before data will be received, a properly formatted [`SerialSend<x>` or `SSerialSend<x>`](#serialsend) command must be executed. This must be done any time the device restarts (e.g., via a `System#Boot` triggered rule). This command is required in order to set how the expected serial data will be formatted and interpreted (i.e., which &#60;x> option). A `{"SSerialReceived":{"Data":"<string>"}}` message will be posted. You can use [a rule](Rules#control-relays-via-serial) to process the string which will be contained in `SSerialReceived#Data`.
 
+You could activate `SetOption147` to disable publishing `SSerialReceived` MQTT messages. If disabled, you must use event trigger rules instead (`SSerialReceived#Data=<string>`) to control what, when and how is being published to your MQTT broker or whatever you want.
+    
 Expect possible communication errors when additional sensors are configured.
 
 Command|Parameters
