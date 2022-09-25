@@ -550,6 +550,7 @@ SetOption142<a class="cmnd" id="setoption142"></a>|`1` = wait 1 second for WiFi 
 SetOption143<a class="cmnd" id="setoption143"></a>|`1` = disables ZigBee auto-probing and configure back attribute reporting
 SetOption144<a class="cmnd" id="setoption144"></a>|`1` = include a timestamp in `ZbReceived` messages
 SetOption145<a class="cmnd" id="setoption144"></a>|`1` = Enable MQTT retain on STATUS messages. Synonym for [StatusRetain](#statusretain)</a>
+SetOption146<a class="cmnd" id="setoption144"></a>|`1` = Enable ESP32's internal temperature sensor (ESP32 only)</a>
 SetOption147<a class="cmnd" id="setoption147"></a>|`1` = disable publish `SSerialReceived` MQTT messages. If disabled, you must use event trigger rules instead. (`SSerialReceived#Data=<string>`)
 
 ### TuyaMCU
