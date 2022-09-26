@@ -187,9 +187,12 @@ If MQTT is defined and [`PowerRetain`](Commands.md#powerretain) is used the last
 
 |Command | Description |
 |-|-|
-[`PowerRetain`](Commands.md#powerretain)	| Show current MQTT power retain state.<BR> `0` / `off` = disable MQTT power retain on status update *(default)* <BR> `1` / `on` = enable MQTT power retain on status update
+[`PowerRetain`](Commands.md#powerretain)	| Show current MQTT power retain state. <BR> `0` / `off` = disable MQTT power retain on status update *(default)* <BR> `1` / `on` = enable MQTT power retain on status update
+[`StateRetain`](Commands.md#stateretain)	| Show current MQTT state retain state.<BR> `0` / `off` = disable MQTT state retain on *(default)* <BR> `1` / `on` = enable MQTT info retain
+[`InfoRetain`](Commands.md#inforetain)	| Show current MQTT info retain state.<BR> `0` / `off` = disable MQTT info retain on *(default)* <BR> `1` / `on` = enable MQTT info retain
+[`StatusRetain`](Commands.md#statusretain)	| Show current MQTT status retain state.<BR> `0` / `off` = disable MQTT status retain on *(default)* <BR> `1` / `on` = enable MQTT info retain
 
-**BUT**, a message in your MQTT broker flagged as 'retained' will **_always_ override the `PowerOnState`**. 
+**BUT**, a power message in your MQTT broker flagged as 'retained' will **_always_ override the `PowerOnState`**. 
 
 This is usually the main cause for "ghost switching". Learn more in [MQTT retained messages explained](http://www.steves-internet-guide.com/mqtt-retained-messages-example/). Check out [this tutorial](https://www.youtube.com/watch?v=31IyfM1gygo) for troubleshooting switch ghosting.
 
