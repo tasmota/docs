@@ -183,14 +183,16 @@ The full LWT topic can be found in the tasmota console at boot:
     
 ## Retained MQTT Messages
 
-If MQTT is defined and [`PowerRetain`](Commands.md#powerretain) is used the last state will be stored permanently in MQTT database.
+If MQTT is defined and retain option is used the last state will be stored permanently in MQTT database.
 
 |Command | Description |
 |-|-|
+[`InfoRetain`](Commands.md#inforetain)	| Show current MQTT info retain state.<BR> `0` / `off` = disable MQTT info retain *(default)* <BR> `1` / `on` = enable MQTT info retain
 [`PowerRetain`](Commands.md#powerretain)	| Show current MQTT power retain state. <BR> `0` / `off` = disable MQTT power retain on status update *(default)* <BR> `1` / `on` = enable MQTT power retain on status update
-[`StateRetain`](Commands.md#stateretain)	| Show current MQTT state retain state.<BR> `0` / `off` = disable MQTT state retain on *(default)* <BR> `1` / `on` = enable MQTT info retain
-[`InfoRetain`](Commands.md#inforetain)	| Show current MQTT info retain state.<BR> `0` / `off` = disable MQTT info retain on *(default)* <BR> `1` / `on` = enable MQTT info retain
-[`StatusRetain`](Commands.md#statusretain)	| Show current MQTT status retain state.<BR> `0` / `off` = disable MQTT status retain on *(default)* <BR> `1` / `on` = enable MQTT info retain
+[`SensorRetain`](Commands.md#sensorretain)	| Show current MQTT sensor retain state.<BR> `0` / `off` = disable MQTT sensor retain on sensor update *(default)* <BR> `1` / `on` = enable MQTT sensor retain on sensor update
+[`StateRetain`](Commands.md#stateretain)	| Show current MQTT state retain state.<BR> `0` / `off` = disable MQTT state retain *(default)* <BR> `1` / `on` = enable MQTT state retain
+[`StatusRetain`](Commands.md#statusretain)	| Show current MQTT status retain state.<BR> `0` / `off` = disable MQTT status retain *(default)* <BR> `1` / `on` = enable MQTT status retain
+[`SwitchRetain`](Commands.md#switchretain)	| Show current MQTT switch retain state.<BR> `0` / `off` = disable MQTT switch retain on switch update *(default)* <BR> `1` / `on` = enable MQTT switch retain on switch update
 
 **BUT**, a power message in your MQTT broker flagged as 'retained' will **_always_ override the `PowerOnState`**. 
 
