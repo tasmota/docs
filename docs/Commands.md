@@ -262,6 +262,7 @@ SensorRetain<a class="cmnd" id="sensorretain"></a>|`0` = disable use of sensor M
 StateRetain<a class="cmnd" id="stateretain"></a>|`0` = disable use of state MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on message `tele/%topic%/STATE`
 StatusRetain<a class="cmnd" id="statusretain"></a>|`0` = disable use of status MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on message `tele/%topic%/STATUS`
 StateText<x\><a class="cmnd" id="StateText"></a>|`<value>` = set state text  (`<x>` = `1..4`)<BR>1 = `OFF` state text<BR>2 = `ON` state text<BR>3 = `TOGGLE` state text<BR>4 = `HOLD` state text<BR>
+StatusRetain<a class="cmnd" id="statusretain"></a>|`0` = disable use of status MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on status messages `tele/%topic%/STATUS[n]`
 SwitchRetain<a class="cmnd" id="switchretain"></a>|`0` = disable use of MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on switch press
 Subscribe<a class="cmnd" id="subscribe"></a>|Subscribes to an MQTT topic without appended `/#` and assigns an Event name to it.<BR>`<eventName>, <mqttTopic> [, <key>]` = [Read more...](Subscribe-&-Unsubscribe)<br>`  ` = list all topics currently subscribed
 Subscribe2<a class="cmnd" id="subscribe2"></a>|Subscribes to an MQTT topic and assigns an Event name to it.<BR>`<eventName>, <mqttTopic> [, <key>]` = [Read more...](Subscribe-&-Unsubscribe)<br>`  ` = list all topics currently subscribed
