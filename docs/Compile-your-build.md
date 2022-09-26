@@ -49,7 +49,7 @@ Most default settings are defined in [`my_user_config.h`](https://github.com/are
                                                  // The configuration can be changed after first setup using WifiConfig 0, 2, 4, 5, 6 and 7.
 #define WIFI_SCAN_AT_RESTART   false             // [SetOption56] Scan Wi-Fi network at restart for configured AP's
 ```
-The first line shows that `WIFI_CONFIG_TOOL` is the macro matching the command `WifiConfig`. The default value, as stated in [`WifiConfig`](Commands#wificonfig)'s documentation is `WIFI_RETRY` (value `4`).
+The first line shows that `WIFI_CONFIG_TOOL` is the macro matching the command `WifiConfig`. The default value, as stated in [`WifiConfig`](Commands.md#wificonfig)'s documentation is `WIFI_RETRY` (value `4`).
 
 The other line shows the default value for `SetOption56` which is by default `false` (`OFF`or `0`).
 
