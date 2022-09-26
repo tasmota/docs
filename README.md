@@ -3,6 +3,8 @@
 # Tasmota Documentation
 This is the repo for documentation of the Tasmota open source alternative firmware for ESP8266 available from https://github.com/arendst/Tasmota 
 
+The build documentation can be found here: https://tasmota.github.io/docs/
+
 Built on [MkDocs](https://www.mkdocs.org/) using [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) theme.
 
 ## Editing Articles
