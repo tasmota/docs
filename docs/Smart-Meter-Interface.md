@@ -881,6 +881,63 @@ Based on Landis script with changed timings in the >F section, as AS1440 seems t
     #
     ```
 
+### Elster T510 (OBIS)
+
+It seems you can not read the total power like `1,1.7.0(@0.001,Leistung,W,Power_curr,0`, as the value just alternates between the values of the three phases.
+So in this script the three phases get added and published as `Power_total`.
+
+??? summary "View script"
+
+    ```
+    >D
+    ;Var for baudrate changing
+    res=0
+    ;Var for counter see >F=ms  
+    scnt=0  
+
+    >B
+    ->sensor53 r
+    ;Set teleperiod to 20sec  
+    ;tper=10
+
+    >F
+    ; count 100ms   
+    scnt+=1  
+    switch scnt  
+    case 6  
+    ;set sml driver to 300 baud and send /?! as HEX to trigger the Meter   
+    res=sml(1 0 300)  
+    res=sml(1 1 "2F3F210D0A")  
+
+    ;1800ms later \> Ack and ask for switching to 9600 baud  
+    case 18  
+    res=sml(1 1 "063035300D0A")  
+
+    ;2000ms later \> Switching sml driver to 9600 baud    
+    case 20  
+    res=sml(1 0 9600)  
+
+    ;Restart sequence after 50x100ms    
+    case 50  
+    ; 5000ms later \> restart sequence    
+    scnt=0  
+    ends  
+
+    >M 1
+
+    +1,3,o,0,9600,,1
+    1,0.0.0(@1,Zählernummer,,Meter_number,0
+    1,0.9.1(@#),Zeitstempel,Uhr,timestamp,0
+    1,1.8.0(@1,Zählerstand,kWh,Total_in,3
+    1,21.7.0(@0.001,Leistung Phase 1,W,Power_L1,0
+    1,41.7.0(@0.001,Leistung Phase 2,W,Power_L2,0
+    1,61.7.0(@0.001,Leistung Phase 3,W,Power_L3,0
+    1,=m 4+5+6 @1,Leistung,W,Power_total,0
+    1,31.7.0(@1,Strom Phase 1,A,Current_L1,2
+    1,51.7.0(@1,Strom Phase 2,A,Current_L2,2
+    1,71.7.0(@1,Strom Phase 3,A,Current_L3,2
+    #
+    ```
 	
 ### EMH ED300L (SML)  
 
