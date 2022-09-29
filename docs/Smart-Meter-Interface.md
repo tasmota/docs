@@ -2031,6 +2031,58 @@ This meter sends bursts of data at 115200 baud every 10 seconds. Some data lines
     #
     ```
 
+### SDM72D (MODBus)
+Script to extract readings from Eastron [SDM72D Series](https://www.eastroneurope.com/products/view/sdm72modbus) devices (tested on SDM72D-M). Manual with comprehensive documentation about all Modbus registers available [here](https://stromzähler.eu/media/pdf/93/17/d7/SDM72DM-V2.pdf).
+
+**Please note:** By default, Tasmota only allows for a maximum of 20 decoders per script. If you want to access all readings, you'll have to compile Tasmota with:
+```c
+#define SML_MAX_VARS 40
+```
+
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,25,mN1,0,9600,SDM72D,26,1,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010,01040012,01040014,01040016,01040018,0104001a,0104001c,0104001e,01040020,01040022,0104002a,0104002e,01040030,01040034,01040038,0104003c,0104003e,01040046,01040048,0104004A,01040156,01040158,0104018c,01040500,01040502
+    1,010404ffffffff@i0:1,Voltage P1,V,voltage_phase1,2
+    1,010404ffffffff@i1:1,Voltage P2,V,voltage_phase2,2
+    1,010404ffffffff@i2:1,Voltage P3,V,voltage_phase3,2
+    1,010404ffffffff@i3:1,Current P1,A,current_phase1,2
+    1,010404ffffffff@i4:1,Current P2,A,current_phase2,2
+    1,010404ffffffff@i5:1,Current P3,A,current_phase3,2
+    1,010404ffffffff@i6:1,Power P1,W,power_phase1,2
+    1,010404ffffffff@i7:1,Power P2,W,power_phase2,2
+    1,010404ffffffff@i8:1,Power P3,W,power_phase3,2
+    1,010404ffffffff@i9:1,Power Apparent P1,VA,power_apparent_phase1,2
+    1,010404ffffffff@i10:1,Power Apparent P2,VA,power_apparent_phase2,2
+    1,010404ffffffff@i11:1,Power Apparent P3,VA,power_apparent_phase3,2
+    1,010404ffffffff@i12:1,Power Reactive P1,VAr,power_reactive_phase1,2
+    1,010404ffffffff@i13:1,Power Reactive P2,VAr,power_reactive_phase2,2
+    1,010404ffffffff@i14:1,Power Reactive P3,VAr,power_reactive_phase3,2
+    1,010404ffffffff@i15:1,Power Factor P1,,power_factor_phase1,2
+    1,010404ffffffff@i16:1,Power Factor P2,,power_factor_phase2,2
+    1,010404ffffffff@i17:1,Power Factor P3,,power_factor_phase3,2
+    1,010404ffffffff@i18:1,Average Voltage,V,voltage_avg,2
+    1,010404ffffffff@i19:1,Average Current,A,current_avg,2
+    1,010404ffffffff@i20:1,Current Total,A,current_total,2
+    1,010404ffffffff@i21:1,Power Total,W,power_total,2
+    1,010404ffffffff@i22:1,Power Apparent Total,VA,power_apparent_total,2
+    1,010404ffffffff@i23:1,Power Reactive Total,VAr,power_reactive_total,2
+    1,010404ffffffff@i24:1,Power Factor Total,,power_factor_total,2
+    1,010404ffffffff@i25:1,Frequency,Hz,frequency,2
+    1,010404ffffffff@i26:1,Energy Imported,kWh,energy_imported,3
+    1,010404ffffffff@i27:1,Energy Exported,kWh,energy_exported,3
+    1,010404ffffffff@i28:1,Energy Total,kWh,energy_total,3
+    1,010404ffffffff@i29:1,Energy Reactive Total,kVArh,energy_reactive_total,3
+    1,010404ffffffff@i30:1,Net Energy,kWh,energy_net,3
+    1,010404ffffffff@i31:1,Import Power,W,power_import,2
+    1,010404ffffffff@i32:1,Export Power,W,power_export,2
+    #
+    ```
+
 ### SDM230 (MODBus)
 
 ??? summary "View script"
