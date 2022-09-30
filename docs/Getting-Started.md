@@ -228,7 +228,12 @@ Choose an installation method:
     Load the chosen Tasmota firmware file with the following command (e.g., `tasmota.bin` in this example):
 
     ```
-    esptool.py --port COM5 write_flash -fs 1MB -fm dout 0x0 tasmota.bin
+    esptool.py write_flash -fm dout 0x0 tasmota.bin
+    ```
+    or for ESP32
+    
+    ```
+    esptool.py write_flash 0x0 tasmota32.factory.bin
     ```
 
     Unplug your serial programming adapter or your device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](#initial-configuration). 
