@@ -353,8 +353,10 @@ Beware that A and B MODBus connectors are switched!
     #
     ```
 
-Using the IR Port on left side of the device. IR doesn't support MODBUS only M-Bus and EQ-Bus protocol. 
-Configure the IR output at the device menu. This example is using 9600 baud and address 10h (16 decimal).  
+### ABB B-Series (like B21, B23) (M-Bus over Infrared port)
+	
+Using the IR Port on left side of the device. The IR interface does NOT support MODBUS, only M-Bus (Meter Bus) and EQ-Bus protocol. 
+Configure the IR output at the device menu. This example is using 9600 baud and address 10h (16 decimal) for the meter.  
 The meter is using equal parity 1 stop bit 9600E1
 The upper diode is TX the lower RX. My device is sending always 2 telegrams. I tried to add additional values by sending SND_UD telegram.
 I only receive the e5 response showing that the request was accepted. No change in response. The last telegram will end on a "0F xx 16" instead of a "1F xx 16", which will show that additional telegrams are available. If you can receive more telegrams, add alternating  107b108b16 - 105b106b16. One for each telegram.
