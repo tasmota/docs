@@ -4,10 +4,10 @@
 
     When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
     ```arduino
+    #ifndef USE_NEOPOOL
     #define USE_NEOPOOL                       // Add support for Sugar Valley NeoPool Controller - also known under brands Hidrolife, Aquascenic, Oxilife, Bionet, Hidroniser, UVScenic, Station, Brilix, Bayrol and Hay (+6k flash, +60 mem)
-    #define NEOPOOL_MODBUS_ADDRESS       1    // Any modbus address
-  #endif
-  ```
+    #endif
+    ```
 
 [Sugar Valley](https://sugar-valley.net/en/productos/) NeoPool are water treatment systems also known under the names Hidrolife, Aquascenic, Oxilife, Bionet, Hidroniser, UVScenic, Station, Brilix, Bayrol and Hay.
 It uses a [RS485](https://en.wikipedia.org/wiki/RS-485) interface with the [Modbus](https://en.wikipedia.org/wiki/Modbus) data protocol for enhancment equipments like Wifi-Interface or a second attached control panel. All functions and parameters can be queried and controlled via this bus interface.
@@ -17,7 +17,7 @@ The Tasmota Sugar Valley NeoPool Controller sensor module shows the most of para
 ![](_media/xsns_83_neopool_s.png)
 
 There are [Tasmota commands](#commands) implemented to control the high level functions for filtration, light and system parameters such as pH set point, hydrolysis level, redox set point etc.
-However, the sensor also provides low-level commands to directly [read]#NPRead) and [write](#NPWrite) NeoPool register, means that you have the option to implement your own commands via home automation systems or by using the Tasmota build-in possibilities [Rules](Commands#rules) with [Backlog](Commands#the-power-of-backlog) or the powerful Berry language on ESP32.
+However, the sensor also provides low-level commands to directly [read](#NPRead) and [write](#NPWrite) NeoPool register, means that you have the option to implement your own commands via home automation systems or by using the Tasmota build-in possibilities [Rules](Commands#rules) with [Backlog](Commands#the-power-of-backlog) or the powerful Berry language on ESP32.
 
 ## Connection
 
@@ -84,7 +84,7 @@ After Tasmota restarts, the main screen should display the controller data as sh
 
 ## SENSOR data
 
-Sensor data is sent via the Tasmota topic `tele/%topic%/SENSOR` in JSON format every TelePeriod interval. To get the data immediately, use the Tasmota `TelePeriod` command without parameter:
+Sensor data is sent via the Tasmota topic `tele/%topic%/SENSOR` in JSON format every [TelePeriod](Commands#teleperiod) interval. To get the data immediately, use the Tasmota [TelePeriod](Commands#teleperiod) command without parameter:
 
 ```json
 {
@@ -192,9 +192,9 @@ To check which modules are installed use the "Module" value from SENSOR topic or
 
 ## Commands
 
-This sensor supports some high-level [Tasmota commands](#commands) for end user.
+This sensor supports some high-level [commands](#commands) for end user.
 
-Regardless, all other Modbus registers can be read and write, so you can [enhance](#Enhancements) your Sugar Valley control by using low-level [NPRead]#NPRead)/[NPWrite]#NPWrite) commands.
+Regardless, all other Modbus registers can be read and write, so you can [enhance](#Enhancements) your Sugar Valley control by using low-level [NPRead](#NPRead)/[NPWrite](#NPWrite) commands.
 
 Modbus register addresses and their meaning are described within source file [xsns_83_neopool.ino](https://github.com/arendst/Tasmota/blob/development/tasmota/xsns_83_neopool.ino) at the beginning and (partly) within document [171-Modbus-registers](https://downloads.vodnici.net/uploads/wpforo/attachments/69/171-Modbus-registers.pdf).<BR>
 Please note that Sugar Valley Modbus registers are not byte addresses but modbus registers containing 16-bit values - don't think in byte memory layout.
@@ -491,13 +491,38 @@ NPAux<x\><a id="NPAux"></a>|`{<state>}`<BR>get/set auxiliary relay <x\> (state =
 
 The class members `NPBoost` and `NPAux` can also be used as templates for further commands.
 
-Store the following code using the WebGUI "Console" / "Manage File system".
+Store the following code into a Tasmota file by using the WebGUI "Console" / "Manage File system".
 
-ESP32 file `neopool.be`:    
+#### neopoolcmd.be
+
 ```python
+# File: neopoolcmd.be
+#
+# Add new commands NPBoost and NPAux
+
+# Neopool definitions
+var MBF_RELAY_STATE = 0x010E
+var MBF_NOTIFICATION = 0x0110
+var MBF_CELL_BOOST = 0x020C
+
+var MBF_PAR_TIMER_BLOCK_AUX1_INT1 = 0x04AC
+var MBF_PAR_TIMER_BLOCK_AUX2_INT1 = 0x04BB
+var MBF_PAR_TIMER_BLOCK_AUX3_INT1 = 0x04CA
+var MBF_PAR_TIMER_BLOCK_AUX4_INT1 = 0x04D9
+var PAR_TIMER_BLOCK_AUX = [
+  MBF_PAR_TIMER_BLOCK_AUX1_INT1,
+  MBF_PAR_TIMER_BLOCK_AUX2_INT1,
+  MBF_PAR_TIMER_BLOCK_AUX3_INT1,
+  MBF_PAR_TIMER_BLOCK_AUX4_INT1
+]
+var MBV_PAR_CTIMER_ALWAYS_ON      = 3
+var MBV_PAR_CTIMER_ALWAYS_OFF     = 4
+
+# NeoPool command class
 class NeoPoolCommands
   var TEXT_OFF
   var TEXT_ON
+  var TEXT_TOGGLE
 
   # string helper
   def ltrim(s)
@@ -514,12 +539,13 @@ class NeoPoolCommands
   end
 
   # NPBoost OFF|0|ON|1|REDOX|2
-  #    0|OFF:   Switch boost off
-  #    1|ON:    Switch boost on without redox control
-  #    2|REDOX: Switch boost on with redox control
+  #   0|OFF:   Switch boost off
+  #   1|ON:    Switch boost on without redox control
+  #   2|REDOX: Switch boost on with redox control
   def NPBoost(cmd, idx, payload)
     import string
     var ctrl, parm
+
     try
       parm = string.toupper(self.trim(payload))
     except ..
@@ -536,21 +562,25 @@ class NeoPoolCommands
         tasmota.resp_cmnd_error()
         return
       end
-      tasmota.cmd(string.format("Backlog NPWrite 0x020C,0x%04X;NPSave;NPExec;NPWrite 0x0110,0x7F", ctrl))
+      tasmota.cmd(string.format("NPWrite 0x%04X,0x%04X", MBF_CELL_BOOST, ctrl))
+      tasmota.cmd("NPSave")
+      tasmota.cmd("NPExec")
+      tasmota.cmd(string.format("NPWrite 0x%04X,0x7F", MBF_NOTIFICATION))
     else
       try
-        ctrl = compile("return "+str(tasmota.cmd("NPRead 0x020C")['NPRead']['Data']))()
+        ctrl = compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_CELL_BOOST))['NPRead']['Data'])()
       except ..
         tasmota.resp_cmnd_error()
         return
       end
     end
-    tasmota.resp_cmnd(string.format('{"NPBoost":"%s"}', ctrl == 0 ? self.TEXT_OFF : (ctrl & 0x8500) == 0x8500 ? self.TEXT_ON : "REDOX"))
+    tasmota.resp_cmnd(string.format('{"%s":"%s"}', cmd, ctrl == 0 ? self.TEXT_OFF : (ctrl & 0x8500) == 0x8500 ? self.TEXT_ON : "REDOX"))
   end
 
-  # NPAux<x> OFF|0|ON|1 (<x> = 1..4)
-  #    0|OFF:   Switch aux x off
-  #    1|ON:    Switch aux x on
+  # NPAux<x> OFF|0|ON|1 t (<x> = 1..4)
+  #   0|OFF:    Switch Aux x to off
+  #   1|ON:     Switch Aux x to on
+  #   2|TOGGLE: Toggle Aux x
   def NPAux(cmd, idx, payload)
     import string
     var ctrl, parm
@@ -567,52 +597,210 @@ class NeoPoolCommands
     end
     if parm != ""
       if string.find(parm, 'OFF')>=0 || string.find(parm, self.TEXT_OFF)>=0 || string.find(parm, '0')>=0
-        ctrl = 4
+        ctrl = MBV_PAR_CTIMER_ALWAYS_OFF
       elif string.find(parm, 'ON')>=0 || string.find(parm, self.TEXT_ON)>=0 || string.find(parm, '1')>=0
-        ctrl = 3
+        ctrl = MBV_PAR_CTIMER_ALWAYS_ON
+      elif string.find(parm, 'TOGGLE')>=0 || string.find(parm, self.TEXT_TOGGLE)>=0 || string.find(parm, '2')>=0
+        try
+          ctrl = (compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_RELAY_STATE))['NPRead']['Data'])() >> (idx+2)) & 1 ? MBV_PAR_CTIMER_ALWAYS_OFF : MBV_PAR_CTIMER_ALWAYS_ON
+        except ..
+          tasmota.resp_cmnd_error()
+          return
+        end
       else
         tasmota.resp_cmnd_error()
         return
       end
-      tasmota.cmd(string.format("Backlog NPWrite 0x%04X,%d;NPExec", [0x04AC, 0x04BB, 0x04CA, 0x04D9][idx-1], ctrl))
+      tasmota.cmd(string.format("NPWrite 0x%04X,%d", PAR_TIMER_BLOCK_AUX[idx-1], ctrl))
+      tasmota.cmd("NPExec")
     else
       try
-        ctrl = (compile("return "+str(tasmota.cmd("NPRead 0x010E")['NPRead']['Data']))() >> (idx+2)) & 1
+        ctrl = (compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_RELAY_STATE))['NPRead']['Data'])() >> (idx+2)) & 1
       except ..
         tasmota.resp_cmnd_error()
         return
       end
     end
-    tasmota.resp_cmnd(string.format('{"NPAux%d":"%s"}', idx, ctrl == (parm != "" ? 4 : 0) ? self.TEXT_OFF : self.TEXT_ON))
   end
 
   def init()
+    # get tasmota settings
     self.TEXT_OFF = tasmota.cmd("StateText1")['StateText1']
     self.TEXT_ON = tasmota.cmd("StateText2")['StateText2']
-    # Add commands
+    self.TEXT_TOGGLE = tasmota.cmd("StateText3")['StateText3']
+    # add commands
     tasmota.add_cmd('NPBoost', / cmd, idx, payload -> self.NPBoost(cmd, idx, payload))
     tasmota.add_cmd('NPAux', / cmd, idx, payload -> self.NPAux(cmd, idx, payload))
   end
 
   def deinit()
+    # remove commands
     tasmota.remove_cmd('NPBoost')
     tasmota.remove_cmd('NPAux')
   end
 end
-
-neopool_commands = NeoPoolCommands()
+neopoolcommands = NeoPoolCommands()
 ```
 
-To activate the new commands go to WebGUI "Consoles" / "Berry Scripting console" and execute
+To activate the new commands, go to WebGUI "Consoles" / "Berry Scripting console" and execute
 
 ```python
-load("neopool.be")
+load("neopoolcmd.be")
 ```
 
-If you want get the new commands available after a restart of your ESP32, store the load command into the special file
+### ESP32: Add GUI controls for filtration, light and aux relais
+
+The following enhancements are made using the [Berry Scripting Language](Berry) which is available on ESP32 only.
+
+The class `NeoPoolButtonMethods` below adds new GUI elements to control filtration, light and aux relais:
+
+![](_media/xsns_83_neopool_gui.png)
+
+Store the following code into a Tasmota file by using the WebGUI "Console" / "Manage File system".
+
+####  neopoolgui.be
+
+```python
+# File: neopoolgui.be
+#
+# Add GUI elements for filtration control, light and aux relais
+
+import webserver
+import string
+
+class NeoPoolButtonMethods : Driver
+
+  #- method for adding elements to the main menu -#
+  def web_add_main_button()
+
+    def selected(value, comp)
+      return comp == value ? 'selected=""' : ''
+    end
+
+    var speed = tasmota.cmd('NPFiltration')['Speed']
+    var mode = tasmota.cmd('NPFiltrationmode')['NPFiltrationmode']
+
+    var html = '<p></p>'
+
+    # Filtration mode/speed
+    html+= '<table style="width:100%"><tbody><tr>'
+    html+= '  <td style="width:50%;padding: 0 4px 0 4px;">'
+    html+= '    <label for="mode"><small>Mode:</small></label>'
+    html+= '    <select id="mode" name="mode">'
+    html+= string.format('<option value="m_sv_manual"%s>Manual</option>', selected(mode, 'Manual'))
+    html+= string.format('<option value="m_sv_auto"%s>Auto</option>', selected(mode, 'Auto'))
+    html+= string.format('<option value="m_sv_heating"%s>Heating</option>', selected(mode, 'Heating'))
+    html+= string.format('<option value="m_sv_smart"%s>Smart</option>', selected(mode, 'Smart'))
+    html+= string.format('<option value="m_sv_intelligent"%s>Intelligent</option>', selected(mode, 'Intelligent'))
+    html+= '    </select>'
+    html+= '  </td>'
+    html+= '  <td style="width:50%;padding: 0 4px 0 4px;">'
+    html+= '    <label for="speed"><small>Speed:</label>'
+    html+= '    <select id="speed" name="speed">'
+    html+= string.format('<option value="m_sv_slow"%s>Slow</option>', selected(speed, '1'))
+    html+= string.format('<option value="m_sv_medium"%s>Medium</option>', selected(speed, '2'))
+    html+= string.format('<option value="m_sv_fast"%s>Fast</option>', selected(speed, '3'))
+    html+= '    </select>'
+    html+= '  </td>'
+    html+= '</tr><tr></tr></tbody></table>'
+    html+= '<script>'
+    html+= 'document.getElementById("speed").addEventListener ("change",function(){la("&"+this.value+"=1");});'
+    html+= 'document.getElementById("mode").addEventListener ("change",function(){la("&"+this.value+"=1");});'
+    html+= '</script>'
+
+    # Filtration button
+    html+= '<table style="width:100%"><tbody><tr>'
+    html+= '  <td style="width:100%">'
+    html+= '    <button id="bn_filtration" name="bn_filtration" onclick="la(\'&m_sv_filtration=1\');">Filtration</button>'
+    html+= '  </td>'
+    html+= '</tr><tr></tr></tbody></table>'
+
+    # Light button
+    html+= '<table style="width:100%"><tbody><tr>'
+    html+= '  <td style="width:100%">'
+    html+= '    <button onclick="la(\'&m_sv_light=1\');">Light</button>'
+    html+= '  </td>'
+    html+= '</tr><tr></tr></tbody></table>'
+
+    # Aux buttons
+    html+= '<table style="width:100%"><tbody><tr>'
+    html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=1\');">Aux1</button></td>'
+    html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=2\');">Aux2</button></td>'
+    html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=3\');">Aux3</button></td>'
+    html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=4\');">Aux4</button></td>'
+    html+= '</tr><tr></tr></tbody></table>'
+
+    webserver.content_send(html)
+    html = nil
+    tasmota.gc()
+  end
+
+  #- As we can add only one sensor method we will have to combine them besides all other sensor readings in one method -#
+  def web_sensor()
+    if webserver.has_arg("m_sv_filtration")
+      tasmota.cmd("NPFiltration 2")
+    end
+
+    if webserver.has_arg("m_sv_slow")
+      tasmota.cmd("NPFiltration 1,1")
+    end
+    if webserver.has_arg("m_sv_medium")
+      tasmota.cmd("NPFiltration 1,2")
+    end
+    if webserver.has_arg("m_sv_fast")
+      tasmota.cmd("NPFiltration 1,3")
+    end
+
+    if webserver.has_arg("m_sv_manual")
+      tasmota.cmd("NPFiltrationMode 0")
+    end
+    if webserver.has_arg("m_sv_auto")
+      tasmota.cmd("NPFiltrationMode 1")
+    end
+    if webserver.has_arg("m_sv_heating")
+      tasmota.cmd("NPFiltrationMode 2")
+    end
+    if webserver.has_arg("m_sv_smart")
+      tasmota.cmd("NPFiltrationMode 3")
+    end
+    if webserver.has_arg("m_sv_intelligent")
+      tasmota.cmd("NPFiltrationMode 4")
+    end
+
+    if webserver.has_arg("m_sv_light")
+      tasmota.cmd("NPLight 2")
+    end
+
+    if webserver.has_arg("m_sv_aux")
+      tasmota.cmd("NPAux"+webserver.arg("m_sv_aux")+" TOGGLE")
+    end
+  end
+
+  def init()
+  end
+
+  def deinit()
+  end
+end
+
+neopool_driver = NeoPoolButtonMethods()
+tasmota.add_driver(neopool_driver)
+```
+
+To activate the new gui elements, go to WebGUI "Consoles" / "Berry Scripting console" and execute
+
+```python
+load("neopoolgui.be")
+```
+
+### ESP32: Make the scripts persistent
+
+If you want the extensions to be activated automatically every time you restart your ESP32, save the `load()` commands into the special file
  `autoexec.be`:
 
-ESP32 file `autoexec.be`:    
+#### autoexec.be
+
 ```python
-load("neopool.be")
+load("neopoolcmd.be")
+load("neopoolgui.be")
 ```
