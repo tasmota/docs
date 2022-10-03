@@ -491,10 +491,15 @@ NPAux<x\><a id="NPAux"></a>|`{<state>}`<BR>get/set auxiliary relay <x\> (state =
 
 The class members `NPBoost` and `NPAux` can also be used as templates for further commands.
 
-Store the following code using the WebGUI "Console" / "Manage File system".
+Store the following code into a Tasmota file by using the WebGUI "Console" / "Manage File system".
 
-ESP32 file `neopool.be`:    
+#### neopoolcmd.be
+
 ```python
+# File: neopoolcmd.be
+#
+# Add new commands NPBoost and NPAux
+
 # Neopool definitions
 var MBF_RELAY_STATE = 0x010E
 var MBF_NOTIFICATION = 0x0110
@@ -514,7 +519,7 @@ var MBV_PAR_CTIMER_ALWAYS_ON      = 3
 var MBV_PAR_CTIMER_ALWAYS_OFF     = 4
 
 # NeoPool command class
-class Commands
+class NeoPoolCommands
   var TEXT_OFF
   var TEXT_ON
   var TEXT_TOGGLE
@@ -634,19 +639,168 @@ class Commands
     tasmota.remove_cmd('NPAux')
   end
 end
-commands = Commands()
+neopoolcommands = NeoPoolCommands()
 ```
 
-To activate the new commands go to WebGUI "Consoles" / "Berry Scripting console" and execute
+To activate the new commands, go to WebGUI "Consoles" / "Berry Scripting console" and execute
 
 ```python
-load("neopool.be")
+load("neopoolcmd.be")
 ```
 
-If you want get the new commands available after a restart of your ESP32, store the load command into the special file
+### ESP32: Add GUI controls for filtration, light and aux relais
+
+The following enhancements are made using the [Berry Scripting Language](Berry) which is available on ESP32 only.
+
+The class `NeoPoolButtonMethods` below adds new GUI elements to control filtration, light and aux relais:
+
+![](_media/xsns_83_neopool_gui.png)
+
+Store the following code into a Tasmota file by using the WebGUI "Console" / "Manage File system".
+
+####  neopoolgui.be
+
+```python
+# File: neopoolgui.be
+#
+# Add GUI elements for filtration control, light and aux relais
+
+import webserver
+import string
+
+class NeoPoolButtonMethods : Driver
+
+  #- method for adding elements to the main menu -#
+  def web_add_main_button()
+
+    def selected(value, comp)
+      return comp == value ? 'selected=""' : ''
+    end
+
+    var speed = tasmota.cmd('NPFiltration')['Speed']
+    var mode = tasmota.cmd('NPFiltrationmode')['NPFiltrationmode']
+
+    var html = '<p></p>'
+
+    # Filtration mode/speed
+    html+= '<table style="width:100%"><tbody><tr>'
+    html+= '  <td style="width:50%;padding: 0 4px 0 4px;">'
+    html+= '    <label for="mode"><small>Mode:</small></label>'
+    html+= '    <select id="mode" name="mode">'
+    html+= string.format('<option value="m_sv_manual"%s>Manual</option>', selected(mode, 'Manual'))
+    html+= string.format('<option value="m_sv_auto"%s>Auto</option>', selected(mode, 'Auto'))
+    html+= string.format('<option value="m_sv_heating"%s>Heating</option>', selected(mode, 'Heating'))
+    html+= string.format('<option value="m_sv_smart"%s>Smart</option>', selected(mode, 'Smart'))
+    html+= string.format('<option value="m_sv_intelligent"%s>Intelligent</option>', selected(mode, 'Intelligent'))
+    html+= '    </select>'
+    html+= '  </td>'
+    html+= '  <td style="width:50%;padding: 0 4px 0 4px;">'
+    html+= '    <label for="speed"><small>Speed:</label>'
+    html+= '    <select id="speed" name="speed">'
+    html+= string.format('<option value="m_sv_slow"%s>Slow</option>', selected(speed, '1'))
+    html+= string.format('<option value="m_sv_medium"%s>Medium</option>', selected(speed, '2'))
+    html+= string.format('<option value="m_sv_fast"%s>Fast</option>', selected(speed, '3'))
+    html+= '    </select>'
+    html+= '  </td>'
+    html+= '</tr><tr></tr></tbody></table>'
+    html+= '<script>'
+    html+= 'document.getElementById("speed").addEventListener ("change",function(){la("&"+this.value+"=1");});'
+    html+= 'document.getElementById("mode").addEventListener ("change",function(){la("&"+this.value+"=1");});'
+    html+= '</script>'
+
+    # Filtration button
+    html+= '<table style="width:100%"><tbody><tr>'
+    html+= '  <td style="width:100%">'
+    html+= '    <button id="bn_filtration" name="bn_filtration" onclick="la(\'&m_sv_filtration=1\');">Filtration</button>'
+    html+= '  </td>'
+    html+= '</tr><tr></tr></tbody></table>'
+
+    # Light button
+    html+= '<table style="width:100%"><tbody><tr>'
+    html+= '  <td style="width:100%">'
+    html+= '    <button onclick="la(\'&m_sv_light=1\');">Light</button>'
+    html+= '  </td>'
+    html+= '</tr><tr></tr></tbody></table>'
+
+    # Aux buttons
+    html+= '<table style="width:100%"><tbody><tr>'
+    html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=1\');">Aux1</button></td>'
+    html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=2\');">Aux2</button></td>'
+    html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=3\');">Aux3</button></td>'
+    html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=4\');">Aux4</button></td>'
+    html+= '</tr><tr></tr></tbody></table>'
+
+    webserver.content_send(html)
+    html = nil
+    tasmota.gc()
+  end
+
+  #- As we can add only one sensor method we will have to combine them besides all other sensor readings in one method -#
+  def web_sensor()
+    if webserver.has_arg("m_sv_filtration")
+      tasmota.cmd("NPFiltration 2")
+    end
+
+    if webserver.has_arg("m_sv_slow")
+      tasmota.cmd("NPFiltration 1,1")
+    end
+    if webserver.has_arg("m_sv_medium")
+      tasmota.cmd("NPFiltration 1,2")
+    end
+    if webserver.has_arg("m_sv_fast")
+      tasmota.cmd("NPFiltration 1,3")
+    end
+
+    if webserver.has_arg("m_sv_manual")
+      tasmota.cmd("NPFiltrationMode 0")
+    end
+    if webserver.has_arg("m_sv_auto")
+      tasmota.cmd("NPFiltrationMode 1")
+    end
+    if webserver.has_arg("m_sv_heating")
+      tasmota.cmd("NPFiltrationMode 2")
+    end
+    if webserver.has_arg("m_sv_smart")
+      tasmota.cmd("NPFiltrationMode 3")
+    end
+    if webserver.has_arg("m_sv_intelligent")
+      tasmota.cmd("NPFiltrationMode 4")
+    end
+
+    if webserver.has_arg("m_sv_light")
+      tasmota.cmd("NPLight 2")
+    end
+
+    if webserver.has_arg("m_sv_aux")
+      tasmota.cmd("NPAux"+webserver.arg("m_sv_aux")+" TOGGLE")
+    end
+  end
+
+  def init()
+  end
+
+  def deinit()
+  end
+end
+
+neopool_driver = NeoPoolButtonMethods()
+tasmota.add_driver(neopool_driver)
+```
+
+To activate the new gui elements, go to WebGUI "Consoles" / "Berry Scripting console" and execute
+
+```python
+load("neopoolgui.be")
+```
+
+### ESP32: Make the scripts persistent
+
+If you want the extensions to be activated automatically every time you restart your ESP32, save the `load()` commands into the special file
  `autoexec.be`:
 
-ESP32 file `autoexec.be`:    
+#### autoexec.be
+
 ```python
-load("neopool.be")
+load("neopoolcmd.be")
+load("neopoolgui.be")
 ```
