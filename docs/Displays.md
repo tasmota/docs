@@ -450,6 +450,8 @@ Header line describes the main features of the display (comma seperated, no spac
 5. hardware interface used either I2C or SPI
 
 `I2C`  
+  
+I2C interface:
 
 1. I2C address in HEX
 2. SCL pin
@@ -458,6 +460,8 @@ Header line describes the main features of the display (comma seperated, no spac
 
 `SPI`  
 
+SPI interface:
+  
 1. Number (1 = hardware SPI 1, 2 = Hardware SPI 2 (ESP32), 3 = software SPI
 2. CS pin
 3. CLK pin
@@ -467,6 +471,21 @@ Header line describes the main features of the display (comma seperated, no spac
 7. RESET pin
 8. MISO pin
 9. SPI Speed in MHz
+  
+`PAR`  
+
+Parallel interface: (ESP32-S3 only)
+  
+1. Bus size 8 or 16
+2. RESET pin
+3. CS pin
+4. DC pin
+5. WR pin
+6. RD pin
+7. Backlight pin
+8. d0-d7 pins
+9. d8-d15 pins if bus size = 16
+10. Parallel Speed in MHz (usually 20)
 
 All signals must be given. Unused pins may be set to -1. If you specify a `*` char the pin number is derived from the Tasmota GPIO GUI.  
 The CS and DC pins must be the standard pins e.g. `SPI_CS` or `SPI_DC`.  
