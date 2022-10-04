@@ -53,6 +53,7 @@ The Smart Meter Interface provides a means to connect many kinds of meters to Ta
 | OBIS ASCII | telegrams emitted from many smart meters, including [P1 Smart Meters](https://tasmota.github.io/docs/P1-Smart-Meter/) |
 | OBIS Binary SML| telegrams emitted from many smart meters |
 | MODBus Binary | telegrams used by many power meters and industrial devices |
+| Kamstrup Binary | telegrams used by many power meters from Kamstrup |
 | EBus Binary | telegrams emitted by many heaters and heat pumps  (e.g. Vaillant, Wolf) |
 | VBus Binary | telegrams emitted by many solar thermal systems boilers (e.g. Resol, Viessmann) |
 | RAW Binary | decodes all kinds of binary data eg EMS heater bus |
@@ -92,9 +93,9 @@ Declare `>M` section with the number of connected meters (n = `1..5`):
 | :--- | :--- |
 | `+<M>` | Meter number. The number must be increased with each additional Meter (default 1 to 5).|
 | `<rxGPIO>` | The GPIO pin number where meter data is received. |
-| `<type>` | The type of meter: <BR>- `o` - OBIS ASCII type of coding<BR>- `s` - SML binary smart message coding<BR>- `e` - EBus binary coding<BR>- `v` - VBus binary coding<BR>- `m` - MODBus binary coding with serial mode 8N1<BR>- `M` - MODBus binary coding with serial mode 8E1<BR>- `c` - Counter type<BR>- `r` - Raw binary coding (any binary telegram) |
+| `<type>` | The type of meter: <BR>- `o` - OBIS ASCII type of coding<BR>- `s` - SML binary smart message coding<BR>- `e` - EBus binary coding<BR>- `v` - VBus binary coding<BR>- `m` - MODBus binary coding with serial mode 8N1<BR>- `M` - MODBus binary coding with serial mode 8E1<BR>- `k` - Kamstrup binary coding with serial mode 8N1<BR>- `c` - Counter type<BR>- `r` - Raw binary coding (any binary telegram) |
 | `<flag>` | Options flag:<BR>- `0` - counter without pullup<BR>- `1` - counter with pullup<BR>- `16` - enable median filter for that meter. Can help with sporadic dropouts, reading errors (not available for counters). this option is enabled by default #define USE_SML_MEDIAN_FILTER, if you are low an memory and dont use this feature you may outcomment this define in the driver |
-| `<parameter>` | Parameters according to meter type:<BR>- for `o,s,e,v,m,M,r` types: serial baud rate e.g. `9600`.<BR>- for `c` type: a positive value = counter poll interval or a negative value = debounce time (milliseconds) for irq driven counters. |
+| `<parameter>` | Parameters according to meter type:<BR>- for `o,s,e,v,m,M,k,r` types: serial baud rate e.g. `9600`.<BR>- for `c` type: a positive value = counter poll interval or a negative value = debounce time (milliseconds) for irq driven counters. |
 | `<jsonPrefix>` | Prefix for Web UI and MQTT JSON payload. Up to 7 characters.|
 | `<txGPIO>` | The GPIO pin number where meter command is transmitted (optional).|
 | `<txPeriod>` | Period to repeat the transmission of commands to the meter (optional). Number of 100ms increments (n * 100ms).|
@@ -141,7 +142,7 @@ Each meter typically provides multiple metrics (energy, voltage, power, current 
 | Parameter | Description |
 | :--- | :--- |
 | `<M>` | The meter number to which this decoder belongs |
-| `<decoder>` | **Decoding specification**: OBIS as ASCII; SML, EBus, VBus, MODBus, RAW as HEX ASCII etc. _No space characters allowed in this section!_ <BR> **OBIS**: ASCII OBIS code terminated with `(` character which indicates the start of the meter value<BR>**Counter**: ASCII code 1-0:1.8.0\*255 for counter value, code 1-0:1.7.0\*255 for pulse rate (e.g. for actual power value)<BR> **SML**: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value<BR>**EBus, MODBus, RAW** - hex values of data blocks to compare:<BR> - `xx` = ignore value  (1 byte) or `xN` = ignore N bytes<BR> - `ss` = extract a signed byte<BR> - `uu` = extract an unsigned byte<BR>  - `UUuu` = extract an unsigned word (high order byte first)<BR> - `uuUU` = extract an unsigned word (low order byte first)<BR> - `UUuuUUuu` = extract an unsigned long word (high order byte first)<BR> - `uuUUuuUU` = extract an unsigned long word (low order byte first)<BR> - `SSss` = extract a signed word (high order byte first)<BR> - `ssSS` = extract a signed word (low order byte first)<BR> - `SSssSSss` = extract a signed long word (high order byte first)<BR> - `ssSSssSS` = extract a signed long word (low order byte first)<BR> - **on long word values**, if a trailing s is added at the end of the mask, word order is reversed<BR> - `ffffffff` = extract a float value - IEEE754 decode<BR> - `FFffFFff` = extract a reverse float value - IEEE754 decode<BR>if using **VBus** - hex values of data blocks to compare:<BR> - `AAffffaddrff0001ffff` = VBus-specific hex header: `AA`-sync byte, `addr`-the reversed address of the device. To find his out first look up the known [hex address of the device](http://danielwippermann.github.io/resol-vbus/vbus-packets.html). E.g. Resol DeltaSol BS Plus is `0x4221`. Reverse it (without `0x`) and you will get `21 42` hex characters. Now turn on raw dump mode using command `sensor53 d1` and look for rows starting with `aa`, containing your reversed address at position 4 and 5 and `00 01` hex characters at position 7 and 8. If found, the entire header will be 10 hex characters long including `aa` (20 ascii chars without space, e.g. for Resol DeltaSol BS Plus this will be `AA100021421000010774`). At position 9 you see the number of frames containing readable data. To turn off raw dump use `sensor53 d0`.<BR> - `v` = VBus protocol indicator<BR> - `oN` = extract data from offset `N` (see offsets of your device in [VBus protocol documentation](http://danielwippermann.github.io/resol-vbus/vbus-packets.html))<BR> - `u` or `s` = extract unsigned or signed data<BR> - `w` or `b` = extract word or byte<BR>**End of decoding**: `@` indicates termination of the decoding procedure.<BR>- `(` following the `@` character in case of obis decoder indicates to fetch the 2. value in brackets, not the 1. value.  (e.g. to get the second value from an obis like `0-1:24.2.3(210117125004W)(01524.450*m3)`)<BR>- decoding multiple values coming in brackets after each other is possible with `(@(0:1`, `(@(1:1`, `(@(2:1` and so on  (e.g. to get values from an obis like `0-0:98.1.0(210201000000W)(000000.000*kWh)(000000.000*kWh)`)<BR>- decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte. (e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`)<BR>- in case of MODBus, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition
+| `<decoder>` | **Decoding specification**: OBIS as ASCII; SML, EBus, VBus, MODBus, RAW as HEX ASCII etc. _No space characters allowed in this section!_ <BR> **OBIS**: ASCII OBIS code terminated with `(` character which indicates the start of the meter value<BR>**Counter**: ASCII code 1-0:1.8.0\*255 for counter value, code 1-0:1.7.0\*255 for pulse rate (e.g. for actual power value)<BR> **SML**: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value<BR>**EBus, MODBus, RAW** - hex values of data blocks to compare:<BR> - `xx` = ignore value  (1 byte) or `xN` = ignore N bytes<BR> - `ss` = extract a signed byte<BR> - `uu` = extract an unsigned byte<BR>  - `UUuu` = extract an unsigned word (high order byte first)<BR> - `uuUU` = extract an unsigned word (low order byte first)<BR> - `UUuuUUuu` = extract an unsigned long word (high order byte first)<BR> - `uuUUuuUU` = extract an unsigned long word (low order byte first)<BR> - `SSss` = extract a signed word (high order byte first)<BR> - `ssSS` = extract a signed word (low order byte first)<BR> - `SSssSSss` = extract a signed long word (high order byte first)<BR> - `ssSSssSS` = extract a signed long word (low order byte first)<BR> - **on long word values**, if a trailing s is added at the end of the mask, word order is reversed<BR> - `ffffffff` = extract a float value - IEEE754 decode<BR> - `FFffFFff` = extract a reverse float value - IEEE754 decode<BR>if using **VBus** - hex values of data blocks to compare:<BR> - `AAffffaddrff0001ffff` = VBus-specific hex header: `AA`-sync byte, `addr`-the reversed address of the device. To find his out first look up the known [hex address of the device](http://danielwippermann.github.io/resol-vbus/vbus-packets.html). E.g. Resol DeltaSol BS Plus is `0x4221`. Reverse it (without `0x`) and you will get `21 42` hex characters. Now turn on raw dump mode using command `sensor53 d1` and look for rows starting with `aa`, containing your reversed address at position 4 and 5 and `00 01` hex characters at position 7 and 8. If found, the entire header will be 10 hex characters long including `aa` (20 ascii chars without space, e.g. for Resol DeltaSol BS Plus this will be `AA100021421000010774`). At position 9 you see the number of frames containing readable data. To turn off raw dump use `sensor53 d0`.<BR> - `v` = VBus protocol indicator<BR> - `oN` = extract data from offset `N` (see offsets of your device in [VBus protocol documentation](http://danielwippermann.github.io/resol-vbus/vbus-packets.html))<BR> - `u` or `s` = extract unsigned or signed data<BR> - `w` or `b` = extract word or byte<BR>**End of decoding**: `@` indicates termination of the decoding procedure.<BR>- `(` following the `@` character in case of obis decoder indicates to fetch the 2. value in brackets, not the 1. value.  (e.g. to get the second value from an obis like `0-1:24.2.3(210117125004W)(01524.450*m3)`)<BR>- decoding multiple values coming in brackets after each other is possible with `(@(0:1`, `(@(1:1`, `(@(2:1` and so on  (e.g. to get values from an obis like `0-0:98.1.0(210201000000W)(000000.000*kWh)(000000.000*kWh)`)<BR>- decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte. (e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`)<BR>- in case of MODBus/Kamstrup, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition
 | `<scale>` | scaling factor (divisor) or string definition<BR>This can be a fraction (e.g., `0.1` = result * 10), or a negative value. When decoding a string result (e.g. meter serial number), use `#` character for this parameter _(Note: only one string can be decoded per meter!)_. For OBIS, you need a `)` termination character after the `#` character. |
 | `<offs>` | optional offset must precede with + or - sign, note: offset is applied before scale!|
 | `<label>` | web UI label (max. 23 characters) |
@@ -1452,6 +1453,46 @@ You should additionally configure in your `user_config_override.h` `#define SML_
     1,77070100020800ff@1000,Zaehlerstand Out,KWh,Total_out,2
     1,77070100100700ff@1,Leistung-akt.,W,Power_curr,0
     1,77070100600100ff@#,Server-ID,,Meter_Number,0
+    ```
+
+### Kamstrup Multical 4xx / 6xx / 8xx
+	
+Those meters provide [several registers](https://github.com/tvwerkhoven/PyMultical/blob/master/pymultical.py) via [optical interface](https://wiki.hal9k.dk/projects/kamstrup) called [D0 interface](https://www.msxfaq.de/sonst/bastelbude/smartmeter_d0_sml.htm). Baudrate is only 1200 thus reading multiple registers simultaneously takes some time (e.g. one: ~300ms, six ~750ms). Size of response varies depending on register type and needs to be considered when reading more than one with a single telegram. Analyze length with `sensor53 d1`. Responses have format of `3F10<rg><response><rg><response>`. So asking for 0x003C and 0x0056 with telegram `3F10 02 003C 0056` could be responded with `3F10 003C xxXXxxXXxxXXxx 0056 xxXXxxXXxx`.
+
+Default buffer size suffices for **four values** at once. The following example reads seven values at once so please `#define SML_BSIZ 90`. SML allows only one date value per meter at the moment.
+
+??? summary "View script (seven at once, needs #define SML_BSIZ 90)"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,kN2,0,1200,KSMC403,1,10,3F1007003C005600570059004A0044007B
+    1,3F10003Ckstr@i0:1000,Wärmemenge,MWh,HeatEnergyE1,3
+    1,3F10x08xx0056kstr@i0:100,Vorlauftemp.,°C,PreTemp,2
+    1,3F10x15xx0057kstr@i0:100,Rücklauftemp.,°C,AftTemp,2
+    1,3F10x22xx0059kstr@i0:100,Temp.diff.,°C,DifTemp,2
+    1,3F10x29xx004Akstr@i0:1,Fließgeschw.,l/h,Flow,0
+    1,3F10x36xx0044kstr@i0:100,Volumenstrom,m³,Volume,2
+    1,3F10x45xx007Bkstr@#,max. Fluss am,,MaxFlowDate,0
+    #
+    ```
+
+??? summary "View script (smae as above with two telegrams and default SML_BSIZ)"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,kN2,0,1200,KSMC403,1,5,3F1004003C005600570059,3F1003004A0044007B
+    1,3F10003Ckstr@i0:1000,Wärmemenge,MWh,HeatEnergyE1,3
+    1,3F10x08xx0056kstr@i0:100,Vorlauftemp.,°C,PreTemp,2
+    1,3F10x15xx0057kstr@i0:100,Rücklauftemp.,°C,AftTemp,2
+    1,3F10x22xx0059kstr@i0:100,Temp.diff.,°C,DifTemp,2
+    1,3F10004Akstr@i1:1,Fließgeschw.,l/h,Flow,0
+    1,3F10x06xx0044kstr@i1:100,Volumenstrom,m³,Volume,2
+    1,3F10x15xx007Bkstr@#,max. Fluss am,,MaxFlowDate,0
+    #
     ```
 
 ### Landis + Gyr E220 (SML)
