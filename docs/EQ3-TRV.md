@@ -175,9 +175,9 @@ profileday*n*|profile for the day it just has been requested for. (n=0…6). Onl
 #### Base commands
 Command|Description and parameters
 :---|:---
-TRVperiod<a class="cmnd" id="TRVperiod"></a>|Display/Set the EQ3 poll interval in seconds. In this intervall to every TRV matching the following critera a *poll* (=[state](#state)) command will be sent automatically.
-TRVonlyaliased<a class="cmnd" id="TRVonlyaliased"></a>|Display/Set the EQ3 OnlyAliased parameter<BR>set to 1 for any aliased BLE devices<BR>set to 2 for only aliases starting with `EQ3`
-TrvMatchPrefix<a class="cmnd" id="TRVmatchprefix"></a>|Display/Set the EQ3 MatchPrefix parameter<BR>set to 1 to not require active scan to identify EQ3 - identify from MAC (default)<BR>Set to 0 to disable this matching
+trvperiod<a class="cmnd" id="trvperiod"></a>|Display/Set the EQ3 poll interval in seconds. In this intervall to every TRV matching the following critera a *poll* (=[state](#state)) command will be sent automatically.
+trvonlyaliased<a class="cmnd" id="trvonlyaliased"></a>|Display/Set the EQ3 OnlyAliased parameter<BR>set to 1 for any aliased BLE devices<BR>set to 2 for only aliases starting with `EQ3`
+trvMatchPrefix<a class="cmnd" id="trvmatchprefix"></a>|Display/Set the EQ3 MatchPrefix parameter<BR>set to 1 to not require active scan to identify EQ3 - identify from MAC (default)<BR>Set to 0 to disable this matching
 
 #### TRV subcommands
 
