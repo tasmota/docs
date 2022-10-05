@@ -202,7 +202,7 @@ Please note that Sugar Valley Modbus registers are not byte addresses but modbus
 Command|Parameters
 :---|:---
 NPFiltration<a id="NPFiltration"></a>|`{<state> {speed}}`<BR>get/set manual filtration (state = `0` or `1`, speed = `1..3`). Get if state is omitted, otherwise set accordingly  `<state>`:<ul><li>`0` - manual turn filtration pump off</li><li>`1` - manual turn filtration pump on</li></ul>optional speed control is possible for non-standard filtration types:<ul><li>`1` - slow</li><li>`2` - medium</li><li>`3` - fast</li></ul>
-NPFiltrationMode<a id="NPFiltrationMode"></a>|`{<mode>}`<BR>get/set filtration mode (mode = `0..4` or `13`). Get if mode is omitted, otherwise set accordingly `<mode>`:<ul><li>`0` - *MANUAL*<BR>allows to turn the filtration (and all other systems that depend on it) on and off</li><li>`1` - *AUTO*<BR>allows filtering to be turned on and off according to the settings of the *MBF_PAR_TIMER_BLOCK_FILT_INT* timers.</li><li>`2` - *HEATING*<BR>similar to the AUTO mode, but includes setting the temperature for the heating function. This mode is activated only if the BF_PAR_HEATING_MODE register is at 1 and there is a heating relay assigned.</li><li>`3` - *SMART*<BR>adjusts the pump operating times depending on the temperature. This mode is activated only if the MBF_PAR_TEMPERATURE_ACTIVE register is at 1.</li><li>`4` - *INTELLIGENT*<BR>performs an intelligent filtration process in combination with the heating function. This mode is activated only if the MBF_PAR_HEATING_MODE register is at 1 and there is a heating relay assigned.</li><li>`13` - *BACKWASH*<BR>started when the backwash operation is activated.</ul>
+NPFiltrationmode<a id="NPFiltrationmode"></a>|`{<mode>}`<BR>get/set filtration mode (mode = `0..4` or `13`). Get if mode is omitted, otherwise set accordingly `<mode>`:<ul><li>`0` - *MANUAL*<BR>allows to turn the filtration (and all other systems that depend on it) on and off</li><li>`1` - *AUTO*<BR>allows filtering to be turned on and off according to the settings of the *MBF_PAR_TIMER_BLOCK_FILT_INT* timers.</li><li>`2` - *HEATING*<BR>similar to the AUTO mode, but includes setting the temperature for the heating function. This mode is activated only if the BF_PAR_HEATING_MODE register is at 1 and there is a heating relay assigned.</li><li>`3` - *SMART*<BR>adjusts the pump operating times depending on the temperature. This mode is activated only if the MBF_PAR_TEMPERATURE_ACTIVE register is at 1.</li><li>`4` - *INTELLIGENT*<BR>performs an intelligent filtration process in combination with the heating function. This mode is activated only if the MBF_PAR_HEATING_MODE register is at 1 and there is a heating relay assigned.</li><li>`13` - *BACKWASH*<BR>started when the backwash operation is activated.</ul>
 NPTime<a id="NPTime"></a>|`{<time>}`<BR>get/set device time. Get if time is omitted, otherwise set device time accordingly `<time>`:<ul><li>`0` - sync with Tasmota local time</li><li>`1` - sync with Tasmota utc time</li><li>`2..4294967295` - set time as epoch</li></ul>
 NPLight<a id="NPLight"></a>|`{<state> {delay}}`<BR>get/set light (state = `0..4`, delay = `5..100` in 1/10 sec). Get if state is omitted, otherwise set accordingly `<state>`:<ul><li>`0` - manual turn light off</li><li>`1` - manual turn light on</li><li>`2` - manual toogle light</li><li>`3` - switch light into auto mode according MBF_PAR_TIMER_BLOCK_LIGHT_INT settings</li><li>`4` - select light RGB LED to next program. This is normally done by power the light on (if currently off), then power off the light for a given time (delay) and power on again. The default delay is 15 (=1.5 sec).</ul>
 NPpHMin<a id="NPpHMin"></a>|`{<ph>}`<BR>(only available if pH module is installed)<BR>get/set pH lower limit (ph = `0..14`)<BR>get current limit if <ph> is omitted, otherwise set.
@@ -216,8 +216,8 @@ NPControl<a id="NPControl"></a>|<BR>Show information about system controls
 NPOnError<a id="NPOnError"></a>|`{<repeat>}`<BR>get/set auto-repeat Modbus read/write commands on error (repeat = `0..10`). Get if repeat is omitted, otherwise set accordingly `<repeat>`:<ul><li>`0` - disable auto-repeat on read/write error</li><li>`1..10` - repeat commands n times until ok</li></ul>
 NPResult<a id="NPResult"></a>|`{<format>}`<BR>get/set addr/data result format for read/write commands (format = `0|1`). Get if format is omitted, otherwise set accordingly `<format>`:<ul><li>`0` - output decimal numbers</li><li>`1` - output hexadecimal strings, this is the default</li></ul>
 NPPHRes<a id="NPPHRes"></a>|`{<digits>}`<BR>get/set number of digits in results for PH value (digits = `0..3`).
-NPCLRes<a id="NPPHRes"></a>|`{<digits>}`<BR>get/set number of digits in results for CL value (digits = `0..3`).
-NPIonRes<a id="NPPHRes"></a>|`{<digits>}`<BR>get/set number of digits in results for ION value (digits = `0..3`).
+NPCLRes<a id="NPCLRes"></a>|`{<digits>}`<BR>get/set number of digits in results for CL value (digits = `0..3`).
+NPIONRes<a id="NPIONRes"></a>|`{<digits>}`<BR>get/set number of digits in results for ION value (digits = `0..3`).
 NPRead<a id="NPRead"></a>|`<addr> {<cnt>}`<BR>read 16-bit register (addr = `0..0x060F`, cnt = `1..30`). cnt = `1` if omitted
 NPReadL<a id="NPReadL"></a>|`<addr> {<cnt>}`<BR>read 32-bit register (addr = `0..0x060F`, cnt = `1..15`). cnt = `1` if omitted
 NPWrite<a id="NPWrite"></a>|`<addr> <data> {<data>...}`<BR>write 16-bit register (addr = `0..0x060F`, data = `0..0xFFFF`). Use of data max 10 times
@@ -234,7 +234,7 @@ NPSave<a id="NPSave"></a>|write data permanently into EEPROM.<BR>During the EEPR
     Get filtration mode
 
 ```json
-NPFiltrationMode
+NPFiltrationmode
 RESULT = {"NPFiltrationmode":"Manual"}
 ```
 
@@ -242,7 +242,7 @@ RESULT = {"NPFiltrationmode":"Manual"}
     Set filtration mode
 
 ```json
-NPFiltrationMode 1
+NPFiltrationmode 1
 {"NPFiltrationmode":"Auto"}
 ```
 
@@ -752,19 +752,19 @@ class NeoPoolButtonMethods : Driver
     end
 
     if webserver.has_arg("m_sv_manual")
-      tasmota.cmd("NPFiltrationMode 0")
+      tasmota.cmd("NPFiltrationmode 0")
     end
     if webserver.has_arg("m_sv_auto")
-      tasmota.cmd("NPFiltrationMode 1")
+      tasmota.cmd("NPFiltrationmode 1")
     end
     if webserver.has_arg("m_sv_heating")
-      tasmota.cmd("NPFiltrationMode 2")
+      tasmota.cmd("NPFiltrationmode 2")
     end
     if webserver.has_arg("m_sv_smart")
-      tasmota.cmd("NPFiltrationMode 3")
+      tasmota.cmd("NPFiltrationmode 3")
     end
     if webserver.has_arg("m_sv_intelligent")
-      tasmota.cmd("NPFiltrationMode 4")
+      tasmota.cmd("NPFiltrationmode 4")
     end
 
     if webserver.has_arg("m_sv_light")
