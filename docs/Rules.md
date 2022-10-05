@@ -2055,7 +2055,7 @@ In some applications, an RF-Repeater may come in handy to increase the range of 
 
 ```haskell
 Rule1
-  on RfReceived#data do Rfsend {"Data":%value%,"Bits":24,"Protocol":1,"Pulse":454} endon
+  on RfReceived#data do RfSend {"Data":%value%,"Bits":24,"Protocol":1,"Pulse":454} endon
 ```
 Enable it with `Rule1 1`
 
