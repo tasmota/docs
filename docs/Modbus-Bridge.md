@@ -68,8 +68,8 @@ int32|Return or send the slave data as an 32 bits signed int
 ### Additional commands for USE_MODBUS_TCP_BRIDGE
 Command|Parameters
 :---|:---
-ModbusTcpStart| Start the Modbus TCP bridge on the specified `tcp port`
-ModbusTcpConnect| Connect to a remote Modbus TCP server on `ip address` and `remote tcp port`
+ModbusTCPStart| Start the Modbus TCP bridge on the specified `tcp port`
+ModbusTCPConnect| Connect to a remote Modbus TCP server on `ip address` and `remote tcp port`
   
 ## Returned Data
 ```json
