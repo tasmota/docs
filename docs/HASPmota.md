@@ -1,6 +1,6 @@
 # HASPmota :material-cpu-32-bit:
 
-!!! danger "This feature is experimental"
+!!! tip "This feature is experimental"
 
 Tasmota is happy to support openHASP compatible format (named HASPmota), which allows to describe rich graphics interfaces using simple JSON templates. HASPmota support leverages the power of [LVGL](https://tasmota.github.io/docs/LVGL/) and the [Berry language](https://tasmota.github.io/docs/Berry/), but doesn't need to code nor learn the LVGL API.
 
@@ -8,24 +8,23 @@ This feature is heavily inspired from @fvanroie's [openHASP project](https://git
  
 ## Minimal requirements
 
-**Hardware**: HASPmota is supported on all ESP32 variants, and requires a display configured with universal display (using `display.ini` or `autoconf`). You should see a splash screen at startup.
+**Hardware**: HASPmota is supported on all ESP32 variants, and requires a display configured with universal display (using `display.ini` or `autoconf`). When they are correctly configured, you should see a splash screen at startup.
 
-Currently **PSRAM** is required to run HASPmota. The core engine is compiled and loaded in memory, which makes it unsuitable for ESP32 without PSRAM. Future versions 
+Currently **PSRAM** is strongly recommended to run HASPmota. 
 
-**Firmware**: you need a tasmota firmware with LVGL support, like `tasmota32-lvgl` or a self-compiled version.
+**Firmware**: HASPmota is included in `tasmota32-lvgl` firmwares.
 
 ## Quick tour
 
 You can see HASPmota in action in a couple of minutes.
 
-Upload in your ESP32 file system the following files, from: https://github.com/arendst/Tasmota/tree/development/tasmota/berry/haspmota
+Upload `tamota_demo.tapp` to your file system. The easy way is to use the following command in Tasmota console:
 
-  - `haspmota_widgets.tapp` (contains widgets for wifi, logging and general info)
-  - `robotocondensed_latin1.tapp` (contains additional fonts)
-  - `haspmota.tapp` (contains the core HASPmota engine)
-  - `pages.jsonl` (contains a sample definition)
+- `UrlFetch https://raw.githubusercontent.com/arendst/Tasmota/development/tasmota/berry/haspmota/haspmota_demo.tapp`
+- `Restart 1` to restart
+- Enjoy
 
-Restart and enjoy. You should see the following screen, and click on buttons to switch to the second screen:
+You should see the following screen, and click on buttons to switch to the second screen:
 
 ![haspmota1](https://user-images.githubusercontent.com/49731213/162054703-376955c1-233b-4a60-aaae-8a316829325e.png)
 
@@ -96,6 +95,22 @@ The code trigger a read of sensors every 2 seconds and publish the JSON result t
 ``` berry
 tasmota.add_cron('*/2 * * * * *', def () tasmota.publish_rule(tasmota.read_sensors()) end, 'oh_every_5_s')
 ```
+
+## Running HASPmota
+
+`HASPmota` code is included in `tasmota32-lvgl` firmwares.
+
+Running `HASPmota` with your own template is as simple as:
+
+- create a template in `pages.jsonl` and store it in the Tasmota file system
+- creata an `autoexec.be` file containing the following:
+
+``` berry
+# simple `autoexec.be` to run HASPmota using the default `pages.jsonl`
+import haspmota
+haspmota.start()
+```
+
 
 ## HASPmota reference
 
@@ -332,4 +347,100 @@ One common use is to trigger sensors read every 2 seconds:
 
 ``` json
 {"comment":"--- Trigger sensors every 2 seconds ---","berry_run":"tasmota.add_cron('*/2 * * * * *', def () tasmota.publish_rule(tasmota.read_sensors()) end, 'oh_every_5_s')"}
+```
+
+## HASPmota fonts
+
+HASPmota can use 3 types of LVGL fonts:
+
+- embedded fonts, i.e. fonts included in Tasmota firmware
+- binary bitmat fonts (extension `.lvfont`), stored in the Tasmota file-system using `lv_font_conv` tool. Tasmota includes various fonts pre-converted
+- TrueType fonts (extension `.ttf`), stored in the Tasmota file-system. TrueType vector fonts can be scaled at any size and render well at high font-sizes, but require significant PSRAM memory
+
+### Embedded fonts
+
+Use attribute `"text_font":"unscii-8"`. The general form is `"text_font":"<font_name>-<font_size>"`
+
+
+Embedded font|Details
+:---|:---
+`montserrat-10`<br>`montserrat-14`<br>`montserrat-20`<br>`montserrat-28`|Default LVGL normal font, including icons
+`unscii-8`<br>`unscii-16`|Default LVGL, 8 px and 16 px pixel perfect font with only ASCII characters
+`seg7-8`<br>`seg7-10`<br>`seg7-12`<br>`seg7-14`<br>`seg7-16`<br>`seg7-18`<br>`seg7-20`<br>`seg7-24`<br>`seg7-28`<br>`seg7-36`<br>`seg7-48`|7 segments display, containes digits, space, ':' and '!' for a space of the size of ':'
+`robotocondensed-12`<br>`robotocondensed-16`<br>`robotocondensed-24`|Default OpenHASP
+
+### Binary bitmap fonts
+
+Files of extension `.lvfont`, they are similar to embedded fonts but can be loaded dynamically from the file-system.
+
+Generally speaking, binary bitmap fonts are mostly used for low resolution font, or they take too much memory. For larger font, prefer TrueType fonts (see below).
+
+#### Pixel-perfect fonts
+
+Pixel-perfect fonts don't use dithering and are specially designed for low resolution monochrome displays.
+
+example:
+![pixel_perfect_1](https://user-images.githubusercontent.com/49731213/194707892-64d7cae8-4168-4a52-ba55-6eee71b264a9.png)
+
+Same image zoomed x2
+![pixel_perfect_1x2](https://user-images.githubusercontent.com/49731213/194707925-00e1f2be-9ea6-4e29-b981-3f10e94a2326.png)
+
+
+`unscii-8` (bottom font) is embedded by default.
+
+To use the other fonts, add the corresponding file to the Tasmota file system.
+
+Fonts below are from [KreativeKorp](http://www.kreativekorp.com/software/fonts/apple2/)
+
+- `Berkelium64.lvfont` Berkelium (BSW) GEOS System Font
+- `PrintChar21.lvfont` The Ultimate Apple II Font
+- `Shaston320.lvfont` Shaston GS/OS System Font
+
+Fonts below are from Daniel Linssen 
+
+- `m5x7.lvfont` https://managore.itch.io/m5x7
+- `m3x6.lvfont` https://managore.itch.io/m3x6
+
+
+Here is the HASPmota template for the screen above:
+
+``` jsonl
+{"page":0,"comment":"---------- Upper stat line ----------"}
+{"id":0,"text_color":"#FFFFFF"}
+{"id":11,"obj":"label","x":0,"y":0,"w":320,"pad_right":90,"h":22,"bg_color":"#D00000","bg_opa":255,"radius":0,"border_side":0,"text":"Tasmota","text_font":"montserrat-20"}
+
+{"id":15,"obj":"lv_wifi_arcs","x":291,"y":0,"w":29,"h":22,"radius":0,"border_side":0,"bg_color":"#000000","line_color":"#FFFFFF"}
+{"id":16,"obj":"lv_clock","x":232,"y":3,"w":55,"h":16,"radius":0,"border_side":0}
+
+{"page":1,"comment":"---------- Page 1 ----------"}
+{"id":5,"obj":"label","x":2,"y":30,"w":316,"text":"Berkelium 74192.168.x.x ABCDEF\nThe quick brown fox jumps over the lazy dog","text_font":"A:Berkelium64.lvfont"}
+{"id":6,"obj":"label","x":2,"y":55,"w":316,"text":"PrintChar21 192.168.x.x ABCDEF\nThe quick brown fox jumps over the lazy dog","text_font":"A:PrintChar21.lvfont"}
+{"id":7,"obj":"label","x":2,"y":80,"w":316,"text":"Shaston320 192.168.x.x ABCDEF\nThe quick brown fox jumps over the lazy dog","text_font":"A:Shaston320.lvfont"}
+{"id":8,"obj":"label","x":2,"y":105,"w":316,"text":"m5x7 192.168.x.x ABCDEF\nThe quick brown fox jumps over the lazy dog","text_font":"A:m5x7.lvfont"}
+{"id":9,"obj":"label","x":2,"y":130,"w":316,"text":"m3x6 192.168.x.x ABCDEF\nThe quick brown fox jumps over the lazy dog","text_font":"A:m3x6.lvfont"}
+
+{"id":99,"obj":"label","x":2,"y":170,"w":316,"text":"unscii-8 192.168.x.x ABCDEF\nThe quick brown fox jumps over the lazy dog","text_font":"unscii-8"}
+```
+
+### TrueType fonts
+
+
+Add support for TTF fonts in HASPmota. The attributes needs to specify the font name and the size `"text_font":"sketchbook.ttf-32"`
+
+Example:
+
+![sketchbook-32](https://user-images.githubusercontent.com/49731213/194709856-bfcf1228-c349-457d-95a4-f0387cad9297.png)
+
+Related `pages.jsonl` file:
+
+``` jsonl
+{"page":0,"comment":"---------- Upper stat line ----------"}
+{"id":0,"text_color":"#FFFFFF"}
+{"id":11,"obj":"label","x":0,"y":0,"w":320,"pad_right":90,"h":22,"bg_color":"#D00000","bg_opa":255,"radius":0,"border_side":0,"text":"Tasmota","text_font":"montserrat-20"}
+
+{"id":15,"obj":"lv_wifi_arcs","x":291,"y":0,"w":29,"h":22,"radius":0,"border_side":0,"bg_color":"#000000","line_color":"#FFFFFF"}
+{"id":16,"obj":"lv_clock","x":232,"y":3,"w":55,"h":16,"radius":0,"border_side":0}
+
+{"page":1,"comment":"---------- Page 1 ----------"}
+{"id":1,"obj":"label","x":2,"y":40,"w":316,"text":"sketchbook-32\n192.168.x.x ABCDEF\nThe quick brown fox jumps over the lazy dog","text_font":"sketchbook.ttf-32"}
 ```
