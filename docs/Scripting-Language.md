@@ -176,7 +176,7 @@ a valid script must start with >D in the first line
   `M:vname`   
   specifies a moving average filter variable with 8 entries (for smoothing data)  
   (max 5 filters in total m+M) optional another filter length (1..127) can be given after the definition.  
-  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer, x = `-1` returns arry length, x = `-2` returns array average)  
+  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer (may be set also), x = `-1` returns arry length, x = `-2` returns array average)  
   Using this filter, vars can be used as arrays, #define LARGE_ARRAYS allows for arrays up to 1000 entries  
   array may also be permanent by specifying an extra :p  
   m:p:vname defines a permanent array. Keep in mind however that in 1M Flash standard configurations you only have 50 bytes permanent storage which stands for a maximum of 12 numbers. (see list above for permanent storage in other configurations)  
@@ -445,6 +445,8 @@ A web user interface may be generated containing any of the following elements:
   Using "cntN/X" will then divide the numeric value of the label, so "cnt6/2" with an array of length 8 will produce the labels 3|3|0|0|1|1|2|2|)
   ("wdh: before a week definition generates a week with full hours)  
   `header` = visible header name of chart  
+  the curve displayed in google chart starts at array index (array[0]) so array index must be set also.
+  thus the displayed curve may be shifted to the desired position by adjusting the array index.
   
   additionally you have to define the html frame to put the chart in (both lines must be preceded by a $ char)
   e.g.  
