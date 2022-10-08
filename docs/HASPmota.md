@@ -366,7 +366,7 @@ Embedded font|Details
 :---|:---
 `montserrat-10`<br>`montserrat-14`<br>`montserrat-20`<br>`montserrat-28`|Default LVGL normal font, including icons
 `unscii-8`<br>`unscii-16`|Default LVGL, 8 px and 16 px pixel perfect font with only ASCII characters
-`seg7-8`<br>`seg7-10`<br>`seg7-12`<br>`seg7-14`<br>`seg7-16`<br>`seg7-18`<br>`seg7-20`<br>`seg7-24`<br>`seg7-28`<br>`seg7-36`<br>`seg7-48`|7 segments display, containes digits, space, ':' and '!' for a space of the size of ':'
+`seg7-8`<br>`seg7-10`<br>`seg7-12`<br>`seg7-14`<br>`seg7-16`<br>`seg7-18`<br>`seg7-20`<br>`seg7-24`<br>`seg7-28`<br>`seg7-36`<br>`seg7-48`|7 segments display, containes digits, space, ':' and '!' for a space of the size of ':'<br>Sizes 8, 10, 12, 14, 16, 18 are pixel-perfect bold<br>Sizes 20, 24, 28, 36, 48 are dithered (2 bits per pixel) bold-italic
 `robotocondensed-12`<br>`robotocondensed-16`<br>`robotocondensed-24`|Default OpenHASP
 
 ### Binary bitmap fonts
