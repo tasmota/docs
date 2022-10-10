@@ -85,7 +85,7 @@ After selecting the GPIOs, click on "SAVE" and Tasmota will reboot.
 You can customize Teleinfo with the command `EnergyConfig <command> <parameter>`. The list of
 supported commands and parameters are:
 
-Command|Parameters
+Subcommand|Parameters
 :---:|:---
  |Without any command and parameter, displays the current active configuration.
 Historique|Set Teleinfo in legacy (_historique_) mode at 1200 baud.
