@@ -71,7 +71,7 @@ If using routing, you must setup a return route on your "core" router for each _
 An example setup using commands to match the above image to route traffic, with an AP name `rangeextender` and password `securepassword` would be:
 
 ```
-RgxSSID rangeextender
+RgxSSId rangeextender
 RgxPassword securepassword
 RgxAddress 10.99.1.1
 RgxSubnet 255.255.255.0
@@ -108,7 +108,7 @@ If using NAPT, deployment is a lot easier as there is no need for a static IP ad
 An example setup using commands to match the above image with NAPT, with an AP name `rangeextender` and password `securepassword` would be:
 
 ```
-RgxSSID rangeextender
+RgxSSId rangeextender
 RgxPassword securepassword
 RgxAddress 10.99.1.1
 RgxSubnet 255.255.255.0
@@ -131,7 +131,7 @@ Alternatively, it could also be set in your `user_config_override.h` with:
 
 | Command     | Parameters                                                                                                                                                                 |
 | :---------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| RgxSSID     | The SSID of the AP that Tasmota will present for devices to connect to                                                                                                     |
+| RgxSSId     | The SSID of the AP that Tasmota will present for devices to connect to                                                                                                     |
 | RgxPassword | The password for the above SSID                                                                                                                                            |
 | RgxAddress  | The IP address on the AP side, the connection to the "core" network IP addressing remains the same (eg: DHCP)                                                              |
 | RgxSubnet   | The subnet mask for the AP side, it's recommended to use `255.255.255.0`. The AP will automatically use addresses from this subnet to serve via DHCP to connecting devices |
