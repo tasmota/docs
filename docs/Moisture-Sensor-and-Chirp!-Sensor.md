@@ -33,12 +33,12 @@ Write access to the sensor is potentially dangerous!! Only change the I<sup>2</s
 ### Commands
 | Command | Description |
 | -- | -- |
-| CHIRPSCAN | Re-scan the I<sup>2</sup>C bus and re-enumerate the sensors.
-| CHIRPSELECT | Select the active sensor, which can receive commands. To select the first sensor use `CHIRPSELECT 0`.  
-| CHIRPSET | Set the new I<sup>2</sup>C address for the selected sensor. Use decimal address.<BR>To change active sensor to `0x1f` (=31) use `CHIRPSET 31`.  
-| CHIRPSLEEP | Put the selected sensor into sleep mode.
-| CHIRPWAKE | Wake the selected (sleeping) sensor.  
-| CHIRPRESET | Reset the selected sensor.
+| CHIRPScan | Re-scan the I<sup>2</sup>C bus and re-enumerate the sensors.
+| CHIRPSelect | Select the active sensor, which can receive commands. To select the first sensor use `CHIRPSELECT 0`.  
+| CHIRPSet | Set the new I<sup>2</sup>C address for the selected sensor. Use decimal address.<BR>To change active sensor to `0x1f` (=31) use `CHIRPSET 31`.  
+| CHIRPSleep | Put the selected sensor into sleep mode.
+| CHIRPWake | Wake the selected (sleeping) sensor.  
+| CHIRPReset | Reset the selected sensor.
 
 ### Sensor readings
 The original explanation from the manufacturer can be found on this [tindie page ](https://www.tindie.com/products/miceuz/i2c-soil-moisture-sensor/).  
