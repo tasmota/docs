@@ -181,7 +181,7 @@ trvMatchPrefix<a class="cmnd" id="trvmatchprefix"></a>|Display/Set the EQ3 Match
 
 #### TRV subcommands
 
-Command|Description and parameters
+Subcommand|Description and parameters
 :---|:---
 devlist<a class="cmnd" id="devlist"></a>|Display all TRV's which have been found in BLE scan mode.<BR>No parameters.
 scan<a class="cmnd" id="blescan"></a>|Alias of devlist.<BR>No parameters.
