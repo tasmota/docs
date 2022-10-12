@@ -6,7 +6,7 @@
 
 Zigbee2Tasmota (Z2T) is a lightweight Zigbee gateway/bridge solution running on ESP8266/ESP8285 or ESP32 Wi-Fi chips. Hence it is easier to deploy wherever you want in your home. It was inspired by Zigbee2MQTT but it was written from scratch to make it fit into the resource constraints of a ESP82xx chip with just 80kB of RAM and only 1MB of flash memory.
 
-For quick reference about Zigbee commands see [Zigbee Commands](Commands.md#zigbee). 
+For quick reference about Zigbee commands see [Zigbee Commands](Commands.md#zigbee).
 
 ## Hardware
 
@@ -25,17 +25,18 @@ Flashing and installation instructions for **ESP8266** based:
 - [CC2530 based devices](CC2530.md)
 - [DIY Zigbee gateway/bridge device example based on IKEA TRÅDFRI ICC-A-1 Module](https://github.com/MattWestb/IKEA-TRADFRI-ICC-A-1-Module/tree/master/Tasmota)
 
-A complete list of compatible Zigbee coordinators and Zigbee devices compatible with Z2T is in the [Zigbee Device Compatibility Repository](https://zigbee.blakadder.com/zigbee2tasmota.html). 
+A complete list of Zigbee coordinators and Zigbee devices compatible with Z2T is in the [Zigbee Device Compatibility Repository](https://zigbee.blakadder.com/zigbee2tasmota.html).
 
 ### Advanced topic: ZNP or EZSP
 
-Z2T supports MCU running either the ZNP or EZSP zigbee stack. They require different compilation options but from a user point of view the features are very similar.
+Z2T supports MCUs running either the ZNP or EZSP zigbee stack. They require different compilation options but from a user point of view the features are very similar.
 
-Z-Stack or ZNP (Zigbee Network Processor) is an open-source Zigbee stack from Texas Instruments and run TI MCUs. Ready to use firmwares are found on [Koenkk's Github](https://github.com/Koenkk/Z-Stack-firmware). Older CC2530 require special wiring or external devices for flashing, while more recent like Sonoff Zigbee Bridge Pro (CC2652P) can be flashed directly from Tasmota. Z2T supports ZNP **version 2.6** (Z-Stack 1.3) and **version 2.7** (Z-Stack 3.x).
+Z-Stack or ZNP (Zigbee Network Processor) is an open-source Zigbee stack from Texas Instruments and runs on TI MCUs. Ready to use firmwares are found on [Koenkk's Github](https://github.com/Koenkk/Z-Stack-firmware). Older CC2530 require special wiring or external devices for flashing, while more recent like Sonoff Zigbee Bridge Pro (CC2652P) can be flashed directly from Tasmota. Z2T supports ZNP **version 2.6** (Z-Stack 1.3) and **version 2.7** (Z-Stack 3.x).
 
-EZSP (EmberZNet Serial Protocol) is a commercial Zigbee stack from [Silicon Labs](https://www.silabs.com/). Sonoff/Eachen require encrypted signed firmwares, they can be found in [here](https://github.com/arendst/Tasmota/tree/development/tools). Z2T supports EZSP versions 6.7.6 or above (EZSP protocol v8), recommended is **v6.7.9**.
+EZSP (EmberZNet Serial Protocol) is a commercial Zigbee stack from [Silicon Labs](https://www.silabs.com/). Sonoff/Eachen require encrypted signed firmwares, they can be found [here](https://github.com/arendst/Tasmota/tree/development/tools). Z2T supports EZSP versions 6.7.6 or above (EZSP protocol v8), recommended is **v6.7.9**.
 
 ## Introduction
+
 Before using Zigbee with Tasmota, you need to understand a few concepts. Here is a simplified comparison to the Wi-Fi equivalent (sort of).
 
 |Zigbee concept|Wi-Fi equivalent|
@@ -44,10 +45,10 @@ Before using Zigbee with Tasmota, you need to understand a few concepts. Here is
 |**PanID**<BR>(Personal Area Network IDentifier)<BR>This parameter is unique in a Zigbee network (16-bit integer, 0x0000–0x3FFF).<BR>At initial start a pseudo-random PanID is derived from the ESP MAC address.|SSID (the Wi-Fi network name)|
 |**ShortAddr**<BR>Address of the device on the Zigbee network. This address is randomly assigned when the device first connects to the coordinator (16 bits integer, 0x0000–0xFFF7). The coordinator has address 0x0000.<BR>You need to track which device has which address or assign a "Friendly Name" to each new discovered device.|IP address|
 |**GroupAddr**<BR>Group address of a collection of devices, it allows a single message to address multiple devices at once (16 bits integer, 0x0000–0xFFFF). For example a remote can turn on/off a group of lights. GroupAddr 0x0000 is not assigned.|Multicast|
-|**Endpoint**<BR>The endpoint on the coordinator or on the Zigbee device the message is sent from/to. You can see endpoints as logical device providing distinct features (8 bits integer, 1–240).|IP Port|
+|**Endpoint**<BR>The endpoint on the coordinator or on the Zigbee device the message is sent from/to. You can see endpoints as logical devices providing distinct features (8 bits integer, 1–240).|IP Port|
 |**IEEEAddr**<BR>Device hardware address (64 bits). This is unique per device and factory assigned.|MAC address|
 |**Channel** 11-26<BR>*Default: 11* (See [Zigbee-Wifi coexistence](https://www.metageek.com/training/resources/zigbee-wifi-coexistence.html))|Wi-Fi Channel|
-|**Encryption Key**<BR>128-bit encryption key.<BR>At initial start a pesudo-random Encryption key is derived from the ESP MAC address.|Wi-Fi password|
+|**Encryption Key**<BR>128-bit encryption key.<BR>At initial start a pseudo-random Encryption key is derived from the ESP MAC address.|Wi-Fi password|
 |**Pairing**<BR>By default the coordinator does not accept new devices unless put in pairing mode. When in pairing mode, it will accept pairing requests from any device within range.<BR>*Default: pairing disabled*|WPS|
 |**Cluster**<BR>Clusters are a group of commands and attributes that define what a device can do. Think of clusters as a group of actions by function. A device can support multiple clusters to do a whole variety of tasks. The majority of clusters are defined by the ZigBee Alliance and listed in the [ZigBee Cluster Library](https://zigbeealliance.org/wp-content/uploads/2019/12/07-5123-06-zigbee-cluster-library-specification.pdf)| |
 
@@ -102,45 +103,45 @@ When you further restart, logs are slightly shorter (less lines) since the MCU i
 
 At initial start, Tasmota generates pseudo-random Zigbee parameters. They should  work out of the box but you also may want to choose different values:
 
-You the command `ZbConfig` to dump the current configuration. For example it might return `{"ZbConfig":{"Channel":11,"PanID":"0x1A63","ExtPanID":"0xCCCCCCCCCCCCCCCC","KeyL":"0x0F0D0B0907050301","KeyH":"0x0D0C0A0806040200"}}`
+Use the command `ZbConfig` to dump the current configuration. For example it might return `{"ZbConfig":{"Channel":11,"PanID":"0x1A63","ExtPanID":"0xCCCCCCCCCCCCCCCC","KeyL":"0x0F0D0B0907050301","KeyH":"0x0D0C0A0806040200"}}`
 
 To apply a new configuration, populate the fields you want to change in a single-level JSON:
 
 `ZbConfig {"Channel":11,"PanID":"0x1A63","ExtPanID":"0xCCCCCCCCCCCCCCCC","KeyL":"0x0F0D0B0907050301","KeyH":"0x0D0C0A0806040200"}`
 
-!!! info "Changing any parameter with `ZbConfig` requires to re-pair all devices.
+!!! info "Changing any parameter with `ZbConfig` requires to re-pair all devices."
 
 |Parameter|Description|
 |---|---|
 |Channel|`11-26` Zigbee radio channel, see above|
-|PanID|`0x0001-0x3FFF` unique Zigbee network identifier. You should not have too coordinator using the same PanID, or bad things happen.<BR>If your coordinator fails to start, try changing the PanID as it may conflict with one already in use.|
-|ExtPanID|This is a 64 bit unique identifier for the network. It is not much used in Z2T but needs to be unique.|
-|KeyL KeyH|This is the 128 bit network encryption key split into High and Low 64 bit parts. Do not reveal this key or anyone can decrypt your Zigbee traffic|
-|TxRadio|On some devices you can set the radio power in dBm. You generally don't need to change it|
+|PanID|`0x0001-0x3FFF` unique Zigbee network identifier. You should not have two coordinators using the same PanID, or bad things happen.<BR>If your coordinator fails to start, try changing the PanID as it may conflict with one already in use.|
+|ExtPanID|This is a 64 bit unique identifier for the network. It is not used much in Z2T but needs to be unique.|
+|KeyL KeyH|This is the 128 bit network encryption key split into High and Low 64 bit parts. Do not reveal this key or anyone can decrypt your Zigbee traffic.|
+|TxRadio|On some devices you can set the radio power in dBm. You generally don't need to change it.|
 
 ### Advanced topic: GPIOs
 
 You will usually find a ready to use template in the [Zigbee Device Compatibility Repository](https://zigbee.blakadder.com/zigbee2tasmota.html)
 
-Below are the details for GPIO configuration needed by Zigbee:
+Below are the details of the GPIO configuration needed by Zigbee:
 
 |GPIO|Description|
 |---|---|
 |`Zigbee Tx` and `Zigbee Rx`|GPIOs used for serial communication between Tasmota and the MCU (needed for both ZNP and EZSP). Communication is always 115200 bps 8N1.|
-|`Zigbee Rst 1`|(optional) defines the hardware Reset for the Zigbee MCU. If not defined, Z2T will fallback to sending a soft-reset the MCU using a special serial sequence (which may fail on rare occasions).|
+|`Zigbee Rst 1`|(optional) defines the hardware Reset for the Zigbee MCU. If not defined, Z2T will fallback to sending a soft-reset to the MCU using a special serial sequence (which may fail on rare occasions).|
 |`Zigbee Rst 2`|(optional) defines a special pin used to put the MCU in bootloader and flashing mode when the hardware reset is pulled down. This is used both by EFR32 and CC2652P based devices. It allows to flash the MCU directly from Tasmota.|
 |`LedLink` or `LedLink_i`|(optional) when defined, this led keeps its normal Wifi/MQTT status indicator (blinking) and adds a glowing light when Permit Join is active (i.e. new devices are allowed to pair).|
-|`Led 1` or `Led_i 1`|(optional) when defined, is used as an indicator of traffic between Tasmota and MCU, which generally means Zigbee traffic is sent or received|
+|`Led 1` or `Led_i 1`|(optional) when defined, used as an indicator of traffic between Tasmota and the MCU, which generally means Zigbee traffic is sent or received.|
 
 ### Advanced topic: Hardware or Software serial
 
 On **ESP32** serial is always handled by hardware so you don't need to bother.
 
-On **ESP8266** using the hardware serial is preferred. To do so, you need to use GPIOs 13/15 for Zigbee Rx/Tx and set `SerialLog 0`. Doing such, Z2T 'steals' the hardware UART from the serial console and uses it for communicating with the MCU. Otherwise Z2T uses Software Serial which requires compiling at 160MHz and might be unreliable on very rare occasions.
+On **ESP8266** using the hardware serial is preferred. To do so, you need to use GPIOs 13/15 for Zigbee Rx/Tx and set `SerialLog 0`. By doing so, Z2T *steals* the hardware UART from the serial console and uses it for communicating with the MCU. Otherwise Z2T uses Software Serial which requires compiling at 160MHz and might be unreliable on very rare occasions.
 
 ## Usage
 
-For a list of available commands see [Zigbee Commands](Commands.md#zigbee).  
+For a list of available commands see [Zigbee Commands](Commands.md#zigbee).
 
 ## Quick start
 
@@ -155,7 +156,7 @@ In this section, we'll give a quick overview of 2 devices:
 
 ![SNZB-02](https://zigbee.blakadder.com/assets/images/devices/Sonoff_SNZB-02.jpg){ width="150" }
 
-Put Z2T in **pairing mode** (command `zbpermitjoin 1` or via WebUI) and keep the button of the sensor for 5 seconds. Wait a for 20 seconds, you should see something similar in the logs:
+Put Z2T in **pairing mode** (command `ZbPermitJoin 1` or via WebUI) and keep the button of the sensor pressed for 5 seconds. Wait 20 seconds, you should see something similar to this in the logs:
 
 ``` json
 17:07:53.015 RSL: RESULT = {"ZbState":{"Status":34,"IEEEAddr":"0x00124B001F841E41","ShortAddr":"0x2916","ParentNetwork":"0x0000"}}
@@ -212,7 +213,7 @@ When you hover over the battery icon, you get a more precise reading.
 
 ![SNZB-02](https://zigbee.blakadder.com/assets/images/devices/BlitzWolf_BW-SHP15.jpg){ width="150" }
 
-Put Z2T in **pairing mode** (command `zbpermitjoin 1` or via WebUI) and keep the button of the sensor for 5 seconds. Wait a for 20 seconds, you should see something similar in the logs:
+Put Z2T in **pairing mode** (command `ZbPermitJoin 1` or via WebUI) and keep the button of the sensor pressed for 5 seconds. Wait 20 seconds, you should see something similar to this in the logs:
 
 ``` json
 16:17:40.804 RSL: RESULT = {"ZbState":{"Status":34,"IEEEAddr":"0x842E14FFFE13A51E","ShortAddr":"0x7120","ParentNetwork":"0x0000"}}
@@ -242,7 +243,7 @@ You can **turn on** the plug:
 16:24:25.005 RSL: SENSOR = {"ZbReceived":{"0x7120":{"Device":"0x7120","Name":"SHP15","Power":1,"Endpoint":1,"LinkQuality":229}}}
 ```
 
-You can **turn off** the plug: (you can use `"powe"":0` or `"power":false`)
+You can **turn off** the plug: (you can use `"power":0` or `"power":false`)
 
 `zbsend {"device":"SHP15","send":{"power":0}}`
 
@@ -269,7 +270,7 @@ You can **read the current power**: (here 0W)
 16:29:17.860 RSL: SENSOR = {"ZbReceived":{"0x7120":{"Device":"0x7120","Name":"SHP15","ActivePower":0,"Endpoint":1,"LinkQuality":229}}}
 ```
 
-When you directly turn on or off the plug with its button, it also spontaneously report the changes:
+When you directly turn on or off the plug with its button, it also spontaneously reports the changes:
 
 ``` json
 16:29:45.660 RSL: SENSOR = {"ZbReceived":{"0x7120":{"Device":"0x7120","Name":"SHP15","Power":0,"Endpoint":1,"LinkQuality":218}}}
@@ -304,7 +305,7 @@ Message with `"Status":30` shows some characteristics of the device:
 
 When you create a new Zigbee network, it contains no devices except the coordinator (your Zigbee gateway). The first step is to add devices to the network, which is called **pairing**.
 
-By default, and for security reasons, the Zigbee coordinator does not automatically accept new devices. To pair new devices, use [`ZbPermitJoin 1`](Commands.md#zbpermitjoin) or press **Permit Join** in the WebUI and allows accepting new devices for the next 60 seconds. Then put your Zigbee device pairing mode. This is usually accomplished by pressing the button on the device for 5 seconds or more.
+By default, and for security reasons, the Zigbee coordinator does not automatically accept new devices. To pair new devices, use [`ZbPermitJoin 1`](Commands.md#zbpermitjoin) or click **Zigbee Permit Join** in the WebUI to allow accepting new devices for the next 60 seconds. Then put your Zigbee device pairing mode. This is usually accomplished by pressing the button on the device for 5 seconds or more.
 
 `ZbPermitJoin 1`
 
@@ -320,15 +321,15 @@ MQT: tele/%topic%/RESULT = {"ZbState":{"Status":21,"Message":"Enable Pairing mod
 MQT: tele/%topic%/RESULT = {"ZbState":{"Status":20,"Message":"Disable Pairing mode"}}
 ```
 
-After the device has successfully paired it will be shown in the webui with its short address and its link quality number (LQI). When it is a battery powered device, the battery percentage will be displayed as soon as it is received from the device.
+After the device has successfully paired it will be shown in the WebUI with its short address and its link quality number (LQI). When it is a battery powered device, the battery percentage will be displayed as soon as it is received from the device.
 
 ![SNZB-02](https://user-images.githubusercontent.com/49731213/179617622-a3b6b234-a2cf-4fec-880f-b5f9609d71d8.png){ width="352" }
 
-Devices will show friendly name once you set it.
+Devices will show their friendly name once you set it.
 
 ### Setting Friendly Name
 
-Instead of a short address like `0x8F20` you can assign a, memorable, friendly name such as `"Bedroom_Sensor"`.
+Instead of a short address like `0x8F20` you can assign an easy to remember friendly name such as `Bedroom_Sensor`.
 
 See [`ZbName`](Commands.md#zbname) command for all options.
 
@@ -359,11 +360,11 @@ MQT: tele/%topic%/RESULT = {"ZbReceived":{"Vibration_sensor":{"Device":"0x128F",
 
 ### Removing Devices
 
-A zigbee will continue to connect to a coordinator unless you ask it to "leave" or if you change the network configuration (change of PanID or network key - which means losing ALL devices).
+A Zigbee device will continue to connect to a coordinator unless you ask it to "leave" or if you change the network configuration (change of PanID or network key - which means losing ALL devices).
 
 To ask a device to leave the network, use command `ZbLeave <device>` or `ZbLeave <friendlyname>`. This sends a message to the device, which needs to be awake to process it. For battery powered devices, you need to wake them up when sending this command. Unfortunately there is no confirmation message sent back. Note: even if the device left the network, it is still registered in Z2T and continues to appear on the UI. To remove it from the list, use `ZbForget` below.
 
-To remove a device from Zigbee2Tasmota list of devices and from the UI, use command `ZbForget <device>` or `ZbForget <friendlyname>`. If the device is still connected to the network, it will pop up again later. I.e. ZbForget does not remove a device from the network; else use `ZbLeave` above.
+To remove a device from the Zigbee2Tasmota list of devices and from the WebUI, use the command `ZbForget <device>` or `ZbForget <friendlyname>`. If the device is still connected to the network, it will pop up again later. I.e. ZbForget does not remove a device from the network; else use `ZbLeave` above.
 
 ### Advanced topic: Device Information
 
@@ -376,8 +377,9 @@ Example:
 18:30:58.980 MQT: stat/xxx/RESULT = {"ZbStatus1":[{"Device":"0xECD0","Name":"IKEA_Bulb"},{"Device":"0x8959","Name":"Plug"}]}
 ```
 
-You can use the command [`ZbInfo`](Commands.md#zbinfo). to display all information, endpoints and last knwon values for main attributes. There are variants in the commands arguments:
-- `ZbInfo` (no arg): lists all known device one after the other
+You can use the command [`ZbInfo`](Commands.md#zbinfo) to display all information, endpoints and last known values for the main attributes. There are variants in the commands arguments:
+
+- `ZbInfo` (no arg): list all known device one after the other
 - `ZbInfo 0xECD0`: show information of a device by short address
 - `Zbinfo IKEA_Bulb`: show information of a device by friendly name
 - `Zbinfo 0x90FD9FFFFE03B051`: show information of a device by long address (IEEE address)
@@ -388,7 +390,7 @@ You can use the command [`ZbInfo`](Commands.md#zbinfo). to display all informati
 Example:
 
 ```json
-18:38:51.523 CMD: zbinfo
+18:38:51.523 CMD: ZbInfo
 18:38:51.532 MQT: tele/xxx/SENSOR = {"ZbInfo":{"0xECD0":{"Device":"0xECD0","Name":"IKEA_Bulb","IEEEAddr":"0x90FD9FFFFE03B051","ModelId":"TRADFRI bulb E27 WS opal 980lm","Manufacturer":"IKEA of Sweden","Endpoints":[1],"Config":["O01","L01.2"],"Power":1,"Dimmer":160,"X":30138,"Y":26909,"CT":350,"ColorMode":2,"RGB":"FFC773","RGBb":"A17E49","Reachable":true,"LastSeen":353,"LastSeenEpoch":1658349178,"LinkQuality":79}}}
 18:38:51.570 MQT: tele/xxxx/SENSOR = {"ZbInfo":{"0x8959":{"Device":"0x8959","Name":"Plug","IEEEAddr":"0x7CB03EAA0A0292DD","ModelId":"Plug 01","Manufacturer":"OSRAM","Endpoints":[3],"Config":["L03.0","O03"],"Dimmer":254,"Power":0,"Reachable":false,"LastSeen":16607299,"LastSeenEpoch":1641742232,"LinkQuality":147}}}
 ```
@@ -458,7 +460,7 @@ Most common attributes:
 |(attributes)|attributes tracked by Z2T|
 |LastSeen|Number of seconds since the last message was received|
 |LastSeenEpoch|Timestamp when the last message was received|
-[LinkQuality|Radio power of the last message received|
+|LinkQuality|Radio power of the last message received|
 
 
 ### Advanced topic: Sending sensor values to separated MQTT topics
@@ -481,17 +483,17 @@ Rule1
 Rule1 1
 ```
 
-If retained values are prefered use publish2 instead of publish.
+If retained values are preferred use publish2 instead of publish.
 
 ## Understanding Zigbee messages
 
-There are 2 main types of Zigbee messages, **commands** and **reaading/writing attributes**.
+There are 2 main types of Zigbee messages, **commands** and **reading/writing attributes**.
 
 For example, you can send a command `"Power":1` to turn a bulb on or `"Power":0` to turn it off.
 
 Simultaneously you can read the `"Power"` attribute to know the state of the bulb.
 
-Some attribuutes are writable, but this corresponds to a change of configuration of the device. You generally can't change the status of a device writing to attributes, you need to use commands instead.
+Some attributes are writable, but this corresponds to a change of configuration of the device. You generally can't change the status of a device writing to attributes, you need to use commands instead.
 
 Internally, Zigbee uses low-level identifiers and Z2T provides human readable versions for the main attributes and commands. In the example above, although the command and the attribute have the same name `"Power"`, they have different low-lever identifiers.
 
@@ -510,7 +512,7 @@ Below are the possible Zigbee messages (we consider here messages between the co
 - **Send a command**: send a command to a Zigbee device, ex: turn on a bulb, change its color...
 `ZbSend {"Device":"<device>", "Send":{...}}`
 
-- **Receive a command**: Zigbee device may send commands to the coordinator. (less frequent). Ex: an alarm sensor sends an 'Intruder Alert' command to the coordinator.
+- **Receive a command**: Zigbee device may send commands to the coordinator (less frequent). Ex: an alarm sensor sends an 'Intruder Alert' command to the coordinator.
 
 When a command is sent or an attribute is written to a device, the device may or may not acknowledge. However it will always report an error if the message is malformed or if some attributes/commands are not supported.
 
@@ -518,11 +520,11 @@ When a command is sent or an attribute is written to a device, the device may or
 
 Devices connected to mains (smart plugs, smart bulbs...) are always reachable and can accept Zigbee messages at any time.
 
-Devices that are powered by batteries, are not always reachable. Most of the time they are in sleep mode and not reachable. They regularly connect back to the coordinator to send new values and get messages (ex: once per hour). When you need to send messages to battery-powered devices, you must first wake them up, for ex pressing on a button. They device may stay awake for a couple of seconds so you must send the message just before or just after pressing the button on the device.
+Devices that are powered by batteries are not always reachable. Most of the time they are in sleep mode and not reachable. They regularly connect back to the coordinator to send new values and get messages (ex: once per hour). When you need to send messages to battery-powered devices, you must first wake them up, for example pressing on a button. The device may stay awake for only a couple of seconds, so you must send the message just before or just after pressing the button on the device.
 
 ### Advanced topic: Endpoints and Clusters
 
-An endpoint supports different functions separated in clusters and a device can have multiple endpoints to do different things. To simplify, think of your Zigbee device as a normal Tasmota device with a Zigbee radio instead of Wi-Fi. Each endpoint is akin to a GPIO that has connected [Components](Components) or Clusters, in Zigbee terms.
+An endpoint supports different functions separated in clusters, and a device can have multiple endpoints to do different things. To simplify, think of your Zigbee device as a normal Tasmota device with a Zigbee radio instead of Wi-Fi. Each endpoint is akin to a GPIO that has connected [Components](Components) or Clusters, in Zigbee terms.
 
 Cluster definitions in relation to their endpoint are determined by [Zigbee Alliance](https://zigbeealliance.org/wp-content/uploads/2019/12/07-5123-06-zigbee-cluster-library-specification.pdf). Not all manufacturers followed the proposed allocations but in general it is a cornerstone document.
 
@@ -538,7 +540,7 @@ Sensor messages are published via MQTT when they are received from the Zigbee de
 
 This sensor monitors humidity, temperature, and air pressure.  Its Zigbee model ID is `lumi.weather`.
 
-This device publishes sensor values roughly every hour or when a change occurs. You can also force an update pressing the device's button. It sends two kinds of messages, either 3x standard Zigbee messages, or a single proprietary message containing all sensor values.  
+This device publishes sensor values roughly every hour or when a change occurs. You can also force an update pressing the device's button. It sends two kinds of messages, either 3x standard Zigbee messages, or a single proprietary message containing all sensor values.
 
 `0x8F20` is the ShortAddress of the sensor, and its name is `Kitchen` if you used `ZbName 0x8F20,Kithchen`.
 
@@ -558,8 +560,7 @@ Topic is device specific, to allow more effective retained messages, if you set 
 MQT: tele/%topic%/8F20/SENSOR ={"ZbReceived": {"Kitchen": {"Device": "0x8F20", "Voltage": 2.995, "Battery": 98, "Temperature": 21.01, "Humidity": 53.68, "Pressure": 1004.04, "PressureUnit": "hPa", "Endpoint": 1, "LinkQuality": 88}}
 ```
 
-
-Supported values:  
+Supported values:
 
 |Field name|Value|
 |---|---|
@@ -610,7 +611,7 @@ The format of the command is following:
 `ZbSend {"Device":"<device>","Send":{"<sendcmd>":<sendparam>}}` where<BR>`<device>`identifies the target and can be a shortaddr `0x1234`, a longaddr `0x1234567812345678` or a friendly name `Kitchen`.<BR>
  `"<sendcmd>":<sendparam>` is the command and its parameters from the table.
 
-If the device has been correctly paired and its endpoints recorded by Z2T, you shouldn't need to specify a target endpoint. You can use an option `"endpoint":<endpoint>` parameter if Z2T can't find the correct endpoint or if you want to change from the default endpoint. 
+If the device has been correctly paired and its endpoints recorded by Z2T, you shouldn't need to specify a target endpoint. You can use an option `"endpoint":<endpoint>` parameter if Z2T can't find the correct endpoint or if you want to change from the default endpoint.
 
 !!! example "MQTT command example"
 	Topic = `cmnd/ZigbeeGateway/ZbSend`<BR>
@@ -621,7 +622,7 @@ If the device has been correctly paired and its endpoints recorded by Z2T, you s
 There is a special syntax if you want to send arbitrary commands:
 `"Send":"<send_bytes>"` where `<send_bytes>` has the following syntax:
 
-`"<cluster>_<cmd>/<bytes>"`: send a non-cluster specific command for cluster id `<cluster>`, command id `<cmd>` and payload `<bytes>`. 
+`"<cluster>_<cmd>/<bytes>"`: send a non-cluster specific command for cluster id `<cluster>`, command id `<cmd>` and payload `<bytes>`.
 
 !!! example
     `ZbSend {"Device":"0x1234","Send":"0000_00/0500"}`
@@ -680,7 +681,7 @@ Low level format is the following: `"<cluster>!<cmd>":"<payload"`
 !!! example "IKEA On/Off Switch"
     `{"ZbReceived":{"0x3476":{"Device":"0x3476","Name":"ikea_switch","0006!01":"","Power":1,"Endpoint":1,"LinkQuality":134}}}`
     
-    The command received `"0006!01":""` is Power On (0x01) from On/Off cluster (0x0006) with no payload. It is also translated as `"Power":1`. `"Endpoint":1` tells you from which endpoint the command was sent. 
+    The command received `"0006!01":""` is Power On (0x01) from On/Off cluster (0x0006) with no payload. It is also translated as `"Power":1`. `"Endpoint":1` tells you from which endpoint the command was sent.
 
 #### Light State Tracking
 Once Z2T receives a command related to a light (Power, Dimmer, Color, ColorTemp), it sends right after a Read command to get the actual state of the light. This is used for Hue Emulation and Alexa support. The final attributes are read betwenn 200ms and 1000ms later, to allow for the light to achieve its target state.
@@ -694,7 +695,7 @@ Once Z2T receives a command related to a light (Power, Dimmer, Color, ColorTemp)
 16:02:08 MQT: tele/%topic%/SENSOR = {"ZbReceived":{"IKEA_Light":{"Device":"0x5ADF","Dimmer":102,"Endpoint":1,"LinkQuality":80}}}
 ```
 
-#### Example 
+#### Example
 [Ikea Tradfri Remote](https://zigbee.blakadder.com/Ikea_E1810.html) received commands:
 
 - Short press center button - `"0006!02":""` and `"Power":2`
@@ -710,15 +711,15 @@ Once Z2T receives a command related to a light (Power, Dimmer, Color, ColorTemp)
 ## Zigbee Binding
 Binding allows a device to send command to another device in the same Zigbee network, without any additional logic. For example, you can set a remote to control directly a group of lights, without any rules on the coordinator. The coordinator will still receive all commands.
 
-Example of direct binding    
+Example of direct binding
 `ZbBind {"Device":"0xC2EF","ToDevice":"0x5ADF","Endpoint":1,"ToEndpoint":1,"Cluster":6}`
 
-This command links the device `0xC2EF` that will send all commands for cluster `6` (On/off cluster) frome endpoint `1` to the target device `0x5ADF` on endpoint `1`.
+This command links the device `0xC2EF` that will send all commands for cluster `6` (On/off cluster) from endpoint `1` to the target device `0x5ADF` on endpoint `1`.
 
-Example of group binding    
+Example of group binding
 `ZbBind {"Device":"0xC2EF","ToGroup":100,"Endpoint":1,"Cluster":6}`
 
-This command links the device `0xC2EF` that will send all commands for cluster `6` (On/off clustre) and from endpoint `1` to the group `100`.
+This command links the device `0xC2EF` that will send all commands for cluster `6` (On/off cluster) and from endpoint `1` to the group `100`.
 
 Reponse in case of success
 ```json
@@ -736,13 +737,13 @@ IKEA remotes only support 1 group and can be linked to a light only via group nu
 `ZbBind {"Device":"IKEA_Remote","ToGroup":100,"Endpoint":1,"Cluster":6}`
 
 ## Zigbee Groups
-Zigbee has a unique feature call Groups. It allows you to send a single command to a group of devices. For example: a remote can control a group of multiple lights when grouped.
+Zigbee has a unique feature called Groups. It allows you to send a single command to a group of devices. For example: a remote can control a group of multiple lights when grouped.
 
 Zigbee groups are 16 bits arbitrary numbers that you can freely assign. When you send to a group, you don't specify a target address anymore, nor an endpoint.
 
 Groups works in two steps: first you add devices to groups, second you send commands to groups. See **[Zigbee Binding](#zigbee-binding)** on how to configure a remote to send commands to a specific group.
 
-Configuring groups for devices requires to send commands. Make sure the device is powered and awake (wake-up battery powered devices).
+Configuring groups for devices requires sending commands. Make sure the device is powered and awake (wake-up battery powered devices).
 
 #### List all groups for a device
 
@@ -838,8 +839,8 @@ MQT: stat/%topic%/RESULT = {"ZbLight":{"Kitchen_Light":{"Device":"0x5ADF","Light
 
 ## Specific Device Configuration
 
-If your device pairs successfully with Zigbee2Tasmota but doesn't report on standardised endpoints you will see messages similar to:   
-`{"ZbReceived":{"0x099F":{"0500!00":"010000FF0000","LinkQuality":70}}}`   
+If your device pairs successfully with Zigbee2Tasmota but doesn't report on standardised endpoints you will see messages similar to:
+`{"ZbReceived":{"0x099F":{"0500!00":"010000FF0000","LinkQuality":70}}}`
 `{"ZbReceived":{"0x7596":{"0006!01":"","LinkQuality":65}}}`
 
 In this case you will have to use rules or an external home automation solution to parse those messages. The following section will focus only on rules to utilize the device inside Tasmota ecosystem.
@@ -852,8 +853,8 @@ In this example sensor reports on `0x099F` and sends an mqtt message to topic `s
 
 ```haskell
 Rule
-  on ZbReceived#0x099F#0500!00=010000FF0000 do publish stat/leak_sensor/LEAK ON endon 
-  on ZbReceived#0x099F#0500!00=000000FF0000 do publish stat/leak_sensor/LEAK OFF endon 
+  on ZbReceived#0x099F#0500!00=010000FF0000 do publish stat/leak_sensor/LEAK ON endon
+  on ZbReceived#0x099F#0500!00=000000FF0000 do publish stat/leak_sensor/LEAK OFF endon
 ```
 
 ### Aqara Vibration Sensor
@@ -863,9 +864,9 @@ Rule
 To modify sensor sensitivity use command. Replace `"device"` with your own device name:
 ```haskell
 # for high sensitivity
-ZbSend {"device":"vibration","Endpoint":1,"Cluster":0,"Manuf":"0x115F","Write":{"0000/FF0D%20":"0x01"}} 
+ZbSend {"device":"vibration","Endpoint":1,"Cluster":0,"Manuf":"0x115F","Write":{"0000/FF0D%20":"0x01"}}
 # for medium sensitivity
-ZbSend {"device":"vibration","Endpoint":1,"Cluster":0,"Manuf":"0x115F","Write":{"0000/FF0D%20":"0x0B"}} 
+ZbSend {"device":"vibration","Endpoint":1,"Cluster":0,"Manuf":"0x115F","Write":{"0000/FF0D%20":"0x0B"}}
 # for low sensitivity
 ZbSend {"device":"vibration","Endpoint":1,"Cluster":0,"Manuf":"0x115F","Write":{"0000/FF0D%20":"0x15"}}
 ```
@@ -884,9 +885,9 @@ Received response will be :
 
 `"ModelId":"Lightify Switch Mini"`
 
-To pair the Smart+ Switch Mini with the Bridge you need to hold `Arrow Up` and `Middel Button` for 3 Seconds.
+To pair the Smart+ Switch Mini with the Bridge you need to hold `Arrow Up` and `Middle Button` for 3 seconds.
 Each Button is linked to another Endpoint. `Arrow Up`is Endpoint 1, `Arrow Down` is Endpoint 2 and `Middle Button`is Endpoint 3.
-To link the Smart+ Switch Mini with IKEA Tradfri dimmable lights i used the followin commands
+To link the Smart+ Switch Mini with IKEA Tradfri dimmable lights, I used the following commands
 
 The IKEA light needs to be `Group 100`for this example.
 ```haskell
@@ -911,22 +912,23 @@ The Bridge will then automatically find the following useful parameters
 
 To set the Temperature Set Point use
 ```haskell
-	ZbSend {"Device": "0xXXXX", "Write":{"TuyaTempTarget":XX}}
+ZbSend {"Device": "0xXXXX", "Write":{"TuyaTempTarget":XX}}
 ```
 The 'Device' can be the DeviceID 0x0000 or the ZbName so if a device has been named
 ```haskell
-	ZbName 0x1234,Utility
-	ZbSend {"Device": "0x1234", "Write":{"TuyaTempTarget":20}}
+ZbName 0x1234,Utility
+ZbSend {"Device": "0x1234", "Write":{"TuyaTempTarget":20}}
 ```
 and
 ```haskell
-	ZbSend {"Device": "Utility", "Write":{"TuyaTempTarget":20}}
+ZbSend {"Device": "Utility", "Write":{"TuyaTempTarget":20}}
 ```
 will set the TRV setpoint to 20C.
-Other commands will be available and will be added when	clarified
+Other commands will be available and will be added when	clarified.
 
 ## Zigbee2Tasmota Status Codes
-You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.  
+
+You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.
 
 ```json
 {"ZbState":{"Status":1,"Message":"CC2530 booted","RestartReason":"Watchdog","MajorRel":2,"MinorRel":6}}
