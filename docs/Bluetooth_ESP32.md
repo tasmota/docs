@@ -1,25 +1,25 @@
 # Bluetooth for ESP32 :material-cpu-32-bit:
 
-## MI32 Sensors 
+## MI32 Sensors
 
 ??? failure "This feature is included only in tasmota32-bluetooth.bin"
-    
+
     When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
     ```c++
     #define USE_MI_ESP32       // (ESP32 only) Add support for ESP32 as a BLE-bridge (+9k2 mem, +292k flash)
     ```
 
-Different vendors offer Bluetooth solutions, mostly as part of the Xiaomi brand, often under the Mijia label. The sensors supported by Tasmota use BLE (Bluetooth Low Energy) to transmit the sensor data, but they differ in their accessibilities quite substantially.  
-  
-Basically all of them use the so-called "MiBeacons" which are BLE advertisement packets with a certain data structure, which are broadcasted by the devices automatically while the device is not in an active Bluetooth connection.       
-The frequency of these messages is set by the vendor and ranges from one per 3 seconds to one per hour (f.e. for the battery status of the LYWSD03MMC). Motion sensors and BLE remote controls start to send when an event is triggered.     
-These packets already contain the sensor data and can be passively received by other devices and will be published regardless if a user decides to read out the sensors via connections or not. Thus the battery life of a BLE sensor is not influenced by reading these advertisements and the big advantage is the power efficiency as no active bi-directional connection has to be established. The other advantage is, that scanning for BLE advertisements can happen nearly parallel (very quickly one after the other), while a direct connection must be established for at least a few seconds and will then block both involved devices for that time.  
+Different vendors offer Bluetooth solutions, mostly as part of the Xiaomi brand, often under the Mijia label. The sensors supported by Tasmota use BLE (Bluetooth Low Energy) to transmit the sensor data, but they differ in their accessibilities quite substantially.
+
+Basically all of them use the so-called "MiBeacons" which are BLE advertisement packets with a certain data structure, which are broadcasted by the devices automatically while the device is not in an active Bluetooth connection.
+The frequency of these messages is set by the vendor and ranges from one per 3 seconds to one per hour (f.e. for the battery status of the LYWSD03MMC). Motion sensors and BLE remote controls start to send when an event is triggered.
+These packets already contain the sensor data and can be passively received by other devices and will be published regardless if a user decides to read out the sensors via connections or not. Thus the battery life of a BLE sensor is not influenced by reading these advertisements and the big advantage is the power efficiency as no active bi-directional connection has to be established. The other advantage is, that scanning for BLE advertisements can happen nearly parallel (very quickly one after the other), while a direct connection must be established for at least a few seconds and will then block both involved devices for that time.
 
 This is therefore the preferred option, if supported by the sensor.
-  
+
 ### Supported Devices
 
-!!! note "It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely!"  
+!!! note "It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely!"
 
 The naming conventions in the product range of Bluetooth sensors in Xiaomi universe can be a bit confusing. The exact same sensor can be advertised under slightly different names depending on the seller (Mijia, Xiaomi, Cleargrass, ...).
 
@@ -48,8 +48,8 @@ The naming conventions in the product range of Bluetooth sensors in Xiaomi unive
     <td class="tg-lboi">passive for all entities, reliable battery value</td>
     <td class="tg-lboi">battery only active, thus not on the NRF24L01, no reliable battery value, no clock functions</td>
   </tr>
-</table>  
-  
+</table>
+
  <table>
   <tr>
     <th class="th-lboi">MiFlora</th>
@@ -75,8 +75,8 @@ The naming conventions in the product range of Bluetooth sensors in Xiaomi unive
     <td class="tg-lboi">NRF24L01, ESP32</td>
     <td class="tg-lboi">passive only with decryption, thus only NRF24L01, ESP32</td>
   </tr>
-</table>  
-  
+</table>
+
  <table>
   <tr>
     <th class="th-lboi">YEE RC</th>
@@ -102,23 +102,23 @@ The naming conventions in the product range of Bluetooth sensors in Xiaomi unive
     <td class="tg-lboi">passive for all entities,  set clock and unit, no alarm functions, very frequent data sending</td>
     <td class="tg-lboi">passive, difficult to get key (must be close, press button)</td>
   </tr>
-</table> 
+</table>
 
 *passive* means data is received via BLE advertisements while *active* means data is received via a bidirectional connection to the sensor.
 
-**LYWSD03MMC** sends encrypted sensor data every 10 minutes. As there are no confirmed reports about correct battery presentation of the sensor (always shows 99%), this function is currently not supported.  
+**LYWSD03MMC** sends encrypted sensor data every 10 minutes. As there are no confirmed reports about correct battery presentation of the sensor (always shows 99%), this function is currently not supported.
 
-**MJYD2S** sends motion detection events and 2 discrete illuminance levels (1 lux or 100 lux for a dark or bright environment). Additionally battery level and contiguous time without motion in discrete growing steps (no motion time = NMT).    
+**MJYD2S** sends motion detection events and 2 discrete illuminance levels (1 lux or 100 lux for a dark or bright environment). Additionally battery level and contiguous time without motion in discrete growing steps (no motion time = NMT).
 
-### Encryption and bind_key 
+### Encryption and bind_key
 
 Most of the older sensors use unencrypted messages, which can be read by all kinds of BLE devices or even a NRF24L01. With the arrival of newer sensors, such as LYWSD03MMC, MHO-C401 or MJYD2S, came the problem of encrypted data in MiBeacons, which can be decrypted in Tasmota.
 
-Some sensor still allow an unencrypted connection the reading of the sensor data using normal subscription methods to GATT-services. This is more power hungry than the passive reading of BLE advertisements. 
+Some sensor still allow an unencrypted connection the reading of the sensor data using normal subscription methods to GATT-services. This is more power hungry than the passive reading of BLE advertisements.
 
-Some other sensors like the MJYD2S are not usable without the "bind_key". 
+Some other sensors like the MJYD2S are not usable without the "bind_key".
 
-It is recommended to obtain the bind_key in any case to reduce the battery drain.  
+It is recommended to obtain the bind_key in any case to reduce the battery drain.
 
 #### Obtain bind_key
 
@@ -132,13 +132,13 @@ Telink Flashers allow the generation of a bind_key by faking a pairing with the 
 
 #### Use bind_key
 
-Use the bind_key and MAC address of the sensor to use with commands `Mi32Keys` or `Mi32Key`. Tasmota will receive the sensor data roughly every 10 minutes (in two chunks for humidity and temperature with about a minute in between) and decode the data. This is the most energy efficient way. 
+Use the bind_key and MAC address of the sensor to use with commands `Mi32Keys` or `Mi32Key`. Tasmota will receive the sensor data roughly every 10 minutes (in two chunks for humidity and temperature with about a minute in between) and decode the data. This is the most energy efficient way.
 
-The current way of storing these keys on the ESP32 is to use [`Mi32Key`](Commands.md#mi32key) command:  
+The current way of storing these keys on the ESP32 is to use [`Mi32Key`](Commands.md#mi32key) command:
 
 `MI32Keys <mac or blealias>=<bind_key> <mac or blealias>=<key>`
 
-The Key is the 32 character (16 byte) key retrieved by above methods.  
+The Key is the 32 character (16 byte) key retrieved by above methods.
 
 Older way of using `MI32Key` is retained for backward compatibility. Mi32Key needs a 44 character combination of bind_key and MAC:
 
@@ -147,26 +147,26 @@ Older way of using `MI32Key` is retained for backward compatibility. Mi32Key nee
 To retain the data use a rule on startup:
 ```haskell
 rule1 on System#Boot do backlog MI32key 00112233445566778899AABBCCDDEEFF112233445566; MI32key 00112233445566778899AABBCCDDEEFFAABBCCDDEEFF endon
-```  
+```
 
 ### Commands
 
 Full list of available [Mi Sensors commands](Commands.md#ble-mi-sensors).
 
-!!! tip 
+!!! tip
 If you really want to read battery for LYWSD02, Flora and CGD1, consider doing it once a day with a rule:
 
 ```haskell
 Backlog Rule1 on Time#Minute=30 do MI32Battery endon; Rule1 1
 ```
 
-This will update every day at 00:30 AM.  
+This will update every day at 00:30 AM.
 
-## BLE ESP32 
-This allows for the receiving of BLE advertisements from BLE devices, including "iBeacons" and BLE sensors, but also for the control of simple BLE devices, providing for reading, writing and receiving notifications. 
+## BLE ESP32
+This allows for the receiving of BLE advertisements from BLE devices, including "iBeacons" and BLE sensors, but also for the control of simple BLE devices, providing for reading, writing and receiving notifications.
 
 ??? failure "This feature is included only in tasmota32-bluetooth.bin"
-    
+
     When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
     ```c++
     #define USE_BLE_ESP32                // Add support for ESP32 as a BLE-bridge (+9k2? mem, +292k? flash)
@@ -174,17 +174,17 @@ This allows for the receiving of BLE advertisements from BLE devices, including 
 
 Be aware, enabling of the native BLE on ESP32 has an impact on Wi-Fi performance.  Although later SDK helped a bit, expect more lag on the web interface and on MQTT.
 If only controlling BLE devices, then scanning can be disabled, which will minimize Wi-Fi impact.
-BLE can be enabled from the web UI menus. 
+BLE can be enabled from the web UI menus.
 
 This is compiled by default in the Bluetooth firmware, but you need to enable it using the webUI **Configure BLE** button or [`SetOption115 1`](Commands.md#setoption115) command.
 
 Note that the only configuration stored is the [`SetOption115`](Commands.md#setoption115) to turn BLE on and off.  All other configurations can be set at boot if necessary using Rules.
 
-## iBeacon  
+## iBeacon
 
-Hear adverts from BLE devices, and produce MQTT messages containing RSSI and other information about them.  Break out iBeacon specific data if present. 
+Hear adverts from BLE devices, and produce MQTT messages containing RSSI and other information about them.  Break out iBeacon specific data if present.
 
-??? failure "This feature is not included in precompiled binaries"  
+??? failure "This feature is not included in precompiled binaries"
 
     When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
     ```c++
@@ -237,7 +237,7 @@ Rule1 1
 ### Supported Devices
 <img src="../_media/bluetooth/nRF51822.png" width=155 align="right">
 
-All Apple compatible iBeacon devices should be discoverable. 
+All Apple compatible iBeacon devices should be discoverable.
 
 Various nRF51822 beacons should be fully Apple compatible, programmable and their battery lasts about a year.
 
@@ -253,7 +253,7 @@ Cheap "iTag" beacons with a beeper. The battery on these lasts only about a mont
 <img src="../_media/bluetooth/itag.png" width=225><img src="../_media/bluetooth/itag2.png" width=225><img src="../_media/bluetooth/itag3.png" width=225>
 
 !!! tip
-    You can activate a beacon with a beeper using command `IBEACON_%BEACONID%_RSSI 99` (ID is visible in webUI and SENSOR reports). This command can freeze the Bluetooth module and beacon scanning will stop. After a reboot of Tasmota the beacon will start beeping and scanning will resume. (untested on ESP32 native BLE)  
+    You can activate a beacon with a beeper using command `IBEACON_%BEACONID%_RSSI 99` (ID is visible in webUI and SENSOR reports). This command can freeze the Bluetooth module and beacon scanning will stop. After a reboot of Tasmota the beacon will start beeping and scanning will resume. (untested on ESP32 native BLE)
 
 ### MI32 MQTT Messages
 
@@ -263,19 +263,19 @@ If you enable MQTT discovery ([`SetOption19 1`](Commands.md#setoption19)), addit
 
 Primarily, at teleperiod or MI32period, discovery messages are sent.  These inform Home Assistant about the devices.  Device names can be dependent upon BLEAlias, so set `BLEAlias` at boot.
 
-Additional actual data messages are sent on topics including the device name: `tele/tasmota_ble/<name>`
+With [Mi32Option6](Commands.md#mi32option), additional actual data messages are sent on a dedicated topic (set by [Mi32Topic](Commands.md#mi32topic)) topics including the device name: `tele/<mi32topic>/<name>`
 
 Each message for **one** sensor.
 
 These messages can be used without Home Assistant if it is a preferred format.
 
-!!! note 
-    The topic would be the **same** from all Tasmotas if they have the same BLEAlias or no BLEAlias.  So if you wish to 'hear' the same device separately from different Tasmotas, use different BLEAlias names. 
+!!! note
+    The topic would be the **same** from all Tasmotas if they have the same BLEAlias or no BLEAlias.  So if you wish to 'hear' the same device separately from different Tasmotas, use different BLEAlias names or different Mi32Topic.
 
 
 ### EQ3 TRV
 
-A preliminary EQ3 driver is in production. [Documentation](EQ3-TRV.md). 
+A preliminary EQ3 driver is in production. [Documentation](EQ3-TRV.md).
 
 ### Commands
 
@@ -293,8 +293,8 @@ Backlog Rule1 ON System#Boot DO BLEAlias A4C1386A1E24=fred A4C1387FC1E1=james en
 
 If you have a device which does not appear, it may be advertising on a 'static random' address.  Using this command may make it appear, but will also make other devices appear that you may not wish to see... For example phones advertising Covid messages.  To know more, google 'BLE static random'. Be aware you can set 2 or 3....
 
-!!! note 
-    The topic would be the **same** from all Tasmotas if they have the same BLEAlias or no BLEAlias.  So if you wish to 'hear' the same device separately from different Tasmotas, use different BLEAlias names. 
+!!! note
+    The topic would be the **same** from all Tasmotas if they have the same BLEAlias or no BLEAlias.  So if you wish to 'hear' the same device separately from different Tasmotas, use different BLEAlias names.
 
 #### Setup a rule to set some aliases at boot time
 
