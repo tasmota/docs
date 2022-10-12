@@ -224,10 +224,10 @@ Add the following to `user_config_override.h`:
 #define USE_MQTT_TLS_CA_CERT                   // Force full CA validation instead of fingerprints, slower, but simpler to use.  (+2.2k code, +1.9k mem during connection handshake)
 #define USE_MQTT_AWS_IOT                       // This will include LetsEncrypt CA, as well as our CA, in tasmota_ca.ino for verifying server certificates
 #define USE_MQTT_TLS_FORCE_EC_CIPHER           // Force Elliptic Curve cipher (higher security) required by some servers (automatically enabled with USE_MQTT_AWS_IOT) (+11.4k code, +0.4k mem)
-#define INCLUDE_LOCAL_CA_CERT
+#define INCLUDE_LOCAL_CERT
 #endif
 ```
-Copy or move the files created in step 1.6 above (`local_ca_data.h` and `local_ca_descriptor.h`) to the `$TASMOTAROOT/tasmota` directory. If desired, the two built-in certificates for Let's Encrypt and Amazon AWS may be omitted from the build by defining these macros in `user_config_overrirde.h`:
+Copy or move the files created in step 1.6 above (`local_ca_data.h` and `local_ca_descriptor.h`) to the `$TASMOTAROOT/tasmota/include` directory. If desired, the two built-in certificates for Let's Encrypt and Amazon AWS may be omitted from the build by defining these macros in `user_config_override.h`:
 
 ```
 #define OMIT_LETS_ENCRYPT_CERT
