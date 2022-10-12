@@ -685,7 +685,7 @@ Tested with a eBZ DD3 2R06 ODZ1 (two-direction model for e. g. solar power meter
     
 Because the 7E1 serial mode is not supported by Tasmota software serial, the hardware serial port must be used, i.e. GPIO 3. This will /not/ work using GPIO 0 or 2.
 
-Also, the source code has to be patched from 8N1 to 7E1 mode for the hardware serial in file src/TasmotaSerial.cpp, please see the patch further down below. Since Tasmota 9.5.0 the serial mode can be changed in the console by typing `SerialConfig 7E1` without having to patch TasmotaSerial.
+Change the serial mode in the console by typing `SerialConfig 7E1`.
 
 Example reading of the two-direction model using GPIO 3:
     
@@ -733,20 +733,6 @@ Example reading of the two-direction model using GPIO 3:
     #
     ```
 
-??? info "Apply following patch to src/TasmotaSerial.cpp"
-    ```
-    --- a/lib/default/TasmotaSerial-3.2.0/src/TasmotaSerial.cpp
-    +++ b/lib/default/TasmotaSerial-3.2.0/src/TasmotaSerial.cpp
-    @@ -117,7 +117,7 @@ bool TasmotaSerial::begin(long speed, int stop_bits) {
-        if (2 == m_stop_bits) {
-        Serial.begin(speed, SERIAL_8N2);
-        } else {
-    -      Serial.begin(speed, SERIAL_8N1);
-    +      Serial.begin(speed, SERIAL_7E1);
-        }
-        if (m_hardswap) {
-        Serial.swap();
-    ```
 
 ??? summary "For the SM-type meter DD3 2R06 DTA SMZ1 the following script worked without having to apply the above patch, because it uses 8N1 for communication"
     ```
