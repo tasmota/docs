@@ -20,7 +20,7 @@ Gitpod has a browser extension (Chrome and Firefox) which is handy to directly l
 [More information on the Gitpod browser extension](https://www.gitpod.io/docs/20_Browser_Extension/).
 
 ## Using Gitpod
-After Gitpod loads the project, you will be greeted by the main window. Gitpod will then automatically compile `tasmota.bin`. Wait for the compilation to complete.
+After Gitpod loads the project, you will be greeted by the main window. Gitpod will then automatically compile `tasmota.bin` and `tasmota.bin.gz`. Wait for the compilation to complete.
 
 The display consists of three panels:  
 
@@ -72,12 +72,14 @@ Watch a [livestream video by digiblurDIY](https://www.youtube.com/watch?v=vod3Wo
 
 ### Flash Your Device
 #### OTA Flash
-If you already have Tasmota flashed on your device, you can use the `File Upload` OTA method to load the new firmware binary file.
+If you already have Tasmota flashed on your device, you can use the `File Upload` OTA method to load the new firmware binary file
 
-1. Download [`tasmota-minimal.bin`](http://ota.tasmota.com/tasmota/tasmota-minimal.bin)
+1. Download [`tasmota-minimal.bin.gz`](http://ota.tasmota.com/tasmota/tasmota-minimal.bin.gz)
 2. Make a backup of the device configuration using the web UI `Configuration` menu option.
-3. Upload `tasmota-minimal.bin` to your device using the web UI `Firmware Upgrade` selection. Choose `Upgrade by file upload`.
-3. After `tasmota-minimal.bin` is successfully loaded, select `Firmware Upgrade` once again and upload the firmware file compiled using Gitpod.
+3. Upload `tasmota-minimal.bin.gz` to your device using the web UI `Firmware Upgrade` selection. Choose `Upgrade by file upload`.
+4. After `tasmota-minimal.bin.gz` is successfully loaded, select `Firmware Upgrade` once again and upload the firmware file compiled using Gitpod.
+
+Step 1-3 only applies to ESP8266, where you should use the `.bin.gz` file for upgrades.
 
 #### Serial Flash
 Follow the same [procedure for flashing](installation/Flashing) as you would any new device.
