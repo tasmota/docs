@@ -300,6 +300,7 @@ Command|Parameters
 :---|:---
 Latitude<a class="cmnd" id="latitude"></a>|`<value>` = set latitude in decimal degrees format, e.g. -33.893681
 Longitude<a class="cmnd" id="longitude"></a>|`<value>` = set longitude in decimal degrees format, e.g. 18.619954
+Sunrise<a class="cmnd" id="sunrise"></a>|Sunrise/Sunset type<br>`0` = Normal (default)<br>`1` = Civil<br>`2` = Nautical<br>`3` = Astronomical<br>*introduced in version 12.1.1.5*
 Timers<a class="cmnd" id="timers"></a>|Timers control<br>`0` = disable all timers<BR>`1` = enable all timers<BR>`2` = toggle all timers<BR>
 Timer<x\><a class="cmnd" id="timer"></a>|Parameters for Timer<x\> where x = `1..16`<BR>`0` = clear parameters for Timer<x\><BR>`1..16` = copy Timer<y\> parameters to Timer<x\><BR>`{ "name":value ; .. }` = set all or individual parameters using JSON payload with names and values of data pairs from the [table](Timers#json-payload-anatomy)
 
