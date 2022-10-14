@@ -851,6 +851,9 @@ Overview of the codes
 ### Elster / Honeywell AS1440 (OBIS)
     
 Based on Landis script with changed timings in the >F section, as AS1440 seems to be slower in responding.
+
+This defines metrics for totals and current power usage for both incoming and outgoing power. Just delete the lines you don't need from the last sections.  
+Current power values get published to mqtt immediately when received from the meter.
     
 ??? summary "View script"
     ```
@@ -865,30 +868,33 @@ Based on Landis script with changed timings in the >F section, as AS1440 seems t
     ; count 100ms
     scnt+=1
     switch scnt
+
+    ;300ms after start: set sml driver to 300 baud and send /?! as HEX to trigger the Meter
     case 3
-    ;set sml driver to 300 baud and send /?! as HEX to trigger the Meter
     res=sml(1 0 300)
     res=sml(1 1 "2F3F210D0A")
 
-    ;1700ms later \> Ack and ask for switching to 9600 baud
+    ;1700ms later: Ack and ask for switching to 9600 baud
     case 20
     res=sml(1 1 "063035300D0A")
 
-    ;300ms later \> Switching sml driver to 9600 baud
+    ;300ms later: switch sml driver to 9600 baud
     case 23
     res=sml(1 0 9600)
 
-    ;Restart sequence after 55x100ms
-    case 55
-    ; 5500ms later \> restart sequence
+    ;6000ms after start: Restart sequence
+    case 60
     scnt=0
+
     ends
 
     >M 1
     +1,3,o,0,9600,AS1440,1
-    1,1-1:1.8.1(@1,Total_In,KWh,Total_In,3
-    1,1-1:2.8.1(@1,Total_Out,KWh,Total_Out,3
-    # 
+    1,1.7.0(@0.001,Power In,W,power_in,16
+    1,1.8.1(@1,Total In,KWh,Total_in,1
+    1,2.7.0(@0.001,Power Out,W,power_out,16
+    1,2.8.1(@1,Total Out,KWh,Total_out,1
+    #
     ```
 	
 ### Elster / Honeywell AS2020 (SML)
