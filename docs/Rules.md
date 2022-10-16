@@ -511,7 +511,7 @@ NOTE: You might want to execute command `SaveData 2` to reduce flash writes ;-)
 ### Use a rotary encoder
 You can capture in rules the value of a rotary encoder connected to 2 GPIOs configured as `Rotary_a|<n>` and `Rotary_b|<n>`. Optionally the button of the rotary encoder can be connected to another GPIO configured as `Button|<n>`. `<n>` must be the same to allow the encoder to manage 2 absolute counters from the same rotary encoder.
 
-To get triggers from the rotary encoder into rules, you must enable [`SetOption98 1`](Commands#setoption98). The rotary encoder `<n>` provides a JSON in the form of `{'Rotary<n>': {'Pos1': value, 'Pos2': value}}`. You can use the following rules triggers:
+To get triggers from the rotary encoder into rules, you must enable [`SetOption98 1`](Commands.md#setoption98). The rotary encoder `<n>` provides a JSON in the form of `{'Rotary<n>': {'Pos1': value, 'Pos2': value}}`. You can use the following rules triggers:
 
 ```haskell
 SetOption98 1
@@ -827,7 +827,7 @@ Rule3 is active on daylight and pipe the PIR signal in a Power1 off signal. The 
 
 Assuming that your switch is on `GPIO00` and configured as `Switch1`:
 
-[`Switchmode1 1`](Commands#switchmode) will make Switch1#state be 1 when ON and 0 when OFF
+[`Switchmode1 1`](Commands.md#switchmode) will make Switch1#state be 1 when ON and 0 when OFF
 
 If you don't set `Switchmode1` or it is equal 0, it will only have `Switch1#state=2` (toggle) and the rule will not work.
 
@@ -1543,7 +1543,7 @@ RSL: RESULT = {"Var1":"more81"}
 ------------------------------------------------------------------------------
 
 ### Adjust PowerDelta according to current Power values
-Power sensor reporting thresholds are set by a percentage change in the Power value by setting [PowerDelta](Commands#powerdelta). Power changes from 10W to 11W (10%) may not be very interesting. But power changes from 1000W to 1100W (also 10%) could be very important. To avoid getting reports for small changes but ensuring that larger power swings are reported, a rule set can be used to create a gradient threshold based on the absolute power values.
+Power sensor reporting thresholds are set by a percentage change in the Power value by setting [PowerDelta](Commands.md#powerdelta). Power changes from 10W to 11W (10%) may not be very interesting. But power changes from 1000W to 1100W (also 10%) could be very important. To avoid getting reports for small changes but ensuring that larger power swings are reported, a rule set can be used to create a gradient threshold based on the absolute power values.
 
 This rule also uses the [one-shot feature of rules](#usage-of-one-shot-once) to avoid reporting of every small change within a threshold window. The rule (a ON/DO/ENDON rule in this the set) will trigger only once when a threshold is crossed.
 
