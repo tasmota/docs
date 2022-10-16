@@ -526,7 +526,7 @@ The function takes the same parameters as `mqtt_data()`:
 
 Tasmota Function|Parameters and details
 :---|:---
-mqtt.publish<a class="cmnd" id="mqtt_publish"></a>|`(topic:string, payload:string[, retain:bool, start:int, len:int]) -> nil`<br>Equivalent of `publish` command, publishes a MQTT message on `topic` with `payload`. Optional `retain` parameter.<br>`payload` can be a string or a bytes() binary array<br>`start` and `len` allow to specificy a sub-part of the string or bytes buffer, useful when sending only a portion of a larger buffer.
+mqtt.publish<a class="cmnd" id="mqtt_publish"></a>|`(topic:string, payload:string[, retain:bool, start:int, len:int]) -> nil`<br>Equivalent of `publish` command, publishes a MQTT message on `topic` with `payload`. Optional `retain` parameter.<br>`payload` can be a string or a bytes() binary array<br>`start` and `len` allow to specify a sub-part of the string or bytes buffer, useful when sending only a portion of a larger buffer.
 mqtt.subscribe<a class="cmnd" id="mqtt_subscribe"></a>|`mqtt.subscribe(topic:string [, function:closure]) -> nil`<br>Subscribes to a `topic` (exact match or pattern). Contrary to Tasmota's `Subscribe` command, the topic is sent as-is and not appended with `/#`. You need to add wildcards yourself. Driver method `mqtt_data` is called for each matching payload.<br>If a function/closure is added, the function is called whenever and only if an incoming messages matches the pattern for this function. The function should return `true` if message was processed, `false` if not which will let the message flow to Tasmota eventually as a command.
 mqtt.unsubscribe<a class="cmnd" id="mqtt_unsubscribe"></a>|`(topic:string) -> nil`<br>Unubscribe to a `topic` (exact match).
 
@@ -558,7 +558,7 @@ gpio.pin\_mode<a class="cmnd" id="gpio_pin_mode"></a>|`(phy_gpio, mode) -> nil` 
 gpio.dac\_voltage<a class="cmnd" id="gpio_dac_voltage"></a>|`(phy_gpio:int, voltage_mv:int) -> int`<br>Sets the DAC voltage in mV. The resolution is 8 bits over a range of 0..3.3V, i.e. an increment of ~13mV, this function returns the actual voltage output rounded to the closest value. See below for constraints of DAC GPIOs.
 gpio.set\_pwm<a class="cmnd" id="gpio_set_pwm"></a>|`(phy_gpio:int, duty:int [, phase:int]) -> nil`<br>Sets the value of a PWM output<br>`phy_gpio`: physical GPIO number<br>`duty`: analog value for the pwm, range is 0..1023 unless you change the PWM range<br>`phase`: (opt) set the starting point in time for this pulse from start of cycle. Range is 0..1023 unless you change PWM range. This allows to dephase pulses, for example for H-bridge.<br>**Low-level** this is a low-level function that bypasses all the Tasmota logic around PWM. Use with caution as a `PWM` command might overwrite your settings.
 
-Any internal error or using unsupported GPIO yields an Berry exception.
+Any internal error or using unsupported GPIO yields a Berry exception.
 
 ??? note "Possible values for Tasmota GPIOs:"
 

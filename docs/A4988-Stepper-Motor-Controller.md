@@ -59,7 +59,7 @@ The cheap auto-feeder for my cats broke. It was a fancy plastic-thingy with voic
 
 Thus the wish to install a high-torque stepper-motor (with shifting gear) was born. I could power it with mains instead of relying on a battery, control it over WiFi from my home automation hub. Tasmota now offers a way to do this!  
 
-The **"TasmotaSmartCatFeeder"** circuit consists of a WeMos D1 mini, a A4988 controller, and two power supplies (5V&12V). This all fits into the housing of the feeder and costs less than 50€!  
+The **"TasmotaSmartCatFeeder"** circuit consists of a WeMos D1 mini, an A4988 controller, and two power supplies (5V&12V). This all fits into the housing of the feeder and costs less than 50€!
 
 Virtually everything which has to be moved or rotated can be done now using these cheap components. It can be a window, door, shutter, cat or dog flap, a solar panel which follows the sun, a moving spotlight, PTZ-camera, or whatever.  
 

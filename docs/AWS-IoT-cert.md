@@ -374,7 +374,7 @@ This is your MQTT endpoint, the port is 8883 - MQTT over TLS.
 
 Now on the left pane, click on "**Manage**" > "**Things**". Click on "**Register a thing**", then "**Create a single thing**".
 
-Give your device a name like "**Tasmota-01**". Scroll down and click "**Next**" at the botton right. Then click on "**Create thing without a certificate**".
+Give your device a name like "**Tasmota-01**". Scroll down and click "**Next**" at the bottom right. Then click on "**Create thing without a certificate**".
 
 Now we need to associate the certificate created earlier to your device. In the left panel, click back on "**Secure**" > "**Certificates**". Select the certificate created earlier. In the next pane, click on "**Actions**" in the upper right part. First select "**Attach policy**", check "**TasmotaMqttPolicy**" and "**Attach**". Click again on "**Actions**" and select "**Attach thing**", check "**Tasmota-01**" and "**Attach**".
 

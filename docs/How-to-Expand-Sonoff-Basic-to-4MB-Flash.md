@@ -65,7 +65,7 @@ The next step is to tell Atom (i did not do it with Arduino IDE, sry) to use the
 Note: You can only use 3MB, because 1MB is needed for SPIFFS.
 
 To do this, you need to edit the platformio.ini file.
-Search for your prefered language Block and copy the whole Block.
+Search for your preferred language Block and copy the whole Block.
 Rename it to e.g. Sonoff-DE-4M
 Now change the following line
 

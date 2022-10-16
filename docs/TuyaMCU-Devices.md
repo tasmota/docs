@@ -180,7 +180,7 @@ As per main TuyaMCU page using
    01 | Tuya Rx (108)
    03 | Tuya Tx (107)
 
-Note that the push button is wired to the MCU (PA3 Pin 10) so it cannot be used by Tasmota. Similarlly the devices has a bi-color LED where one color (green) is wired to the TYWE3S (GPIO14) and the other one (red) to the MCU (PC5 Pin15).
+Note that the push button is wired to the MCU (PA3 Pin 10) so it cannot be used by Tasmota. Similarly the devices has a bi-color LED where one color (green) is wired to the TYWE3S (GPIO14) and the other one (red) to the MCU (PC5 Pin15).
 
 ### More information:
 Bought from [ebay](https://www.ebay.co.uk/itm/Smart-Wifi-Dimmer-Switch-Support-Tuya-Smart-Life-LED-Light-Timing-Remote-Control/233233166207)

@@ -53,7 +53,7 @@ In the **_Configuration -> Configure Module_** page assign:
 
 - GPIOx to `RFrecv (106)`   
 
-On a captured code RF receiver sends a `tele/%topic%/RESULT` JSON reponse visible in console:
+On a captured code RF receiver sends a `tele/%topic%/RESULT` JSON response visible in console:
 
 ```json
 {

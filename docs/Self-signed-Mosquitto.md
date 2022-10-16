@@ -136,7 +136,7 @@ EOF
 This creates a configuration file named `vars` -- the default file which the `easyrsa` shell script looks for.
 
 If the configuration is to be changed there are two options. First, `vars` can simply be edited to reflect the new configuration. 
-However, if multiple configurations are often used, it may be easier to use a different file for each configuation, and the configuration specified on the command line.
+However, if multiple configurations are often used, it may be easier to use a different file for each configuration, and the configuration specified on the command line.
 For example, to use a configuration file named `vars3`, the command would look like this (the config file spec must come before other arguments):
 
 ```
@@ -277,7 +277,7 @@ Copy the files from **CA Machine** to the following locations on a Linux server 
 /etc/mosquitto/certs/mqtt.myorg.com.key
 ```
 
-and to here on a Windows server machine (requires Administrative priveledges):
+and to here on a Windows server machine (requires Administrative privileges):
 
 ```
 C:\Program Files\mosquitto\ca.crt

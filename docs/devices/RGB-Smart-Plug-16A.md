@@ -26,7 +26,7 @@ Edit `/etc/NetworkManager/NetworkManager.conf` and add
 [keyfile]
 unmanaged-devices=interface-name:wlp2s0
 ```
-_Replace wlp2s0 with your WiFi interface name if neccessary._
+_Replace wlp2s0 with your WiFi interface name if necessary._
 
 Then run 
 ```
@@ -111,7 +111,7 @@ I figured out the pinout for flashing the device:
 * Before assembling it back remove as much solder as possible from input and output pole pads. The device fits together very tight, so everything should be perfectly in place. Don't forget to glue the case back.
 
 ## Alternative to disasselmy: Drilling two holes.
-_With all this information at hand it is also possible to drill two simple holes into the case to get to the necesarry contact pads.
+_With all this information at hand it is also possible to drill two simple holes into the case to get to the necessary contact pads.
 I recommend a 6mm drill, carfully drill trough the case at he center of the ledge from the high power side opposite the power button. 
 See pictures.
 Now you can solder on a few temporary flash cables. Don't forget to pull IO0 to GND to get into flash mode.

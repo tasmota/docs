@@ -14,7 +14,7 @@ In order for the device to wake itself to perform its function during the DeepSl
 
 ![](_media/deepsleep_gpio16_none.png)
 
-## Methods to (temporarly) disable DeepSleep mode
+## Methods to (temporarily) disable DeepSleep mode
 
 ### Using a switch
 
@@ -31,7 +31,7 @@ The following GPIOs **CANNOT** be used for the purpose of temporarily disabling 
 
 All others GPIO should be acceptable.
 
-An interresting use-case is to disable DeepSleep when external power (USB, PSU, solar panel...) is applied to the device using a transistor.
+An interesting use-case is to disable DeepSleep when external power (USB, PSU, solar panel...) is applied to the device using a transistor.
 
 ![DeepSleep and transistor](_media/deepsleep_transistor.png)
 
@@ -39,7 +39,7 @@ If the device is not (easily) accessible, methods can be used to disable the Dee
 
 ### Using MQTT
 
-Send a retained `DeepSleepTime 0` command to your device. As the message is retained in the MQTT broker, the device will receive it as soon as it connectes to the MQTT broker. 
+Send a retained `DeepSleepTime 0` command to your device. As the message is retained in the MQTT broker, the device will receive it as soon as it connects to the MQTT broker.
 
 !!! example "Example: Sending from another Tasmota"
 In another Tasmota console you can type the following command:<BR>
@@ -70,8 +70,8 @@ Once device maintenance is completed, place it back into DeepSleep mode using or
 The following triggers can be used to execute commands upon wake-up or right before entering DeepSleep:
 - `Power1#Boot` : is the earliest trigger. But valid only if you have a `Relay` output defined.
 - `Switch1#Boot` : is the next trigger, also occur very early in the boot process. But valid only if you have `Switch` input defined.
-- `System#Boot` : is occuring later in the Tasmota boot process but is always available.
-- `System#Save` : is occuring right before a restart or before entering DeepSleep.
+- `System#Boot` : is occurring later in the Tasmota boot process but is always available.
+- `System#Save` : is occurring right before a restart or before entering DeepSleep.
 
 For example the ruleset below turn on power right after Tasmota started, and turn it off just before entering DeepSleep 
 ``` haskel
@@ -108,7 +108,7 @@ Sequence is then as follow (only key lines are shown):
 
 When writing a driver for a sensor, if the sensor supports a low power mode, it is a good practice to set the sensor in such low power mode in the FUNC_SAVE_BEFORE_RESTART handler. When Tasmota will restart at next wake-up, sensor will be automatically re-initialized. 
 
-Exemple from `xsns_09_bmp.ino`:
+Example from `xsns_09_bmp.ino`:
 ``` C++
 #ifdef USE_DEEPSLEEP
       case FUNC_SAVE_BEFORE_RESTART:
@@ -120,7 +120,7 @@ Exemple from `xsns_09_bmp.ino`:
 In general you can also execute any command or special script ==BEFORE== device goes into DeepSleep using handler FUNC_SAVE_BEFORE_RESTART as a predefined hook to implement your own procedure. This requires you to code your own function and self-compile custom firmware.
 
 ## Overcome network issues
-If the device is not able to make a WIFI connection and get an IP during the first 15 seconds after boot it will go again without any further actions into deepsleep for another cycle. If you compile your own firmware you can change the timeout (e.g. 30 seconds) by setting `#define DEEPSLEEP_NETWORK_TIMEOUT 30` in `user_config.override` or disable completly (device stay online until network connected) with `#define DEEPSLEEP_NETWORK_TIMEOUT 0`.
+If the device is not able to make a WIFI connection and get an IP during the first 15 seconds after boot it will go again without any further actions into deepsleep for another cycle. If you compile your own firmware you can change the timeout (e.g. 30 seconds) by setting `#define DEEPSLEEP_NETWORK_TIMEOUT 30` in `user_config.override` or disable completely (device stay online until network connected) with `#define DEEPSLEEP_NETWORK_TIMEOUT 0`.
 If MQTT or NTP does not work the TELEPERIOD will execute anyhow and send the device to deepsleep afterwards. A wrong NTP will result in wrong timestamp send to MQTT. A missing MQTT connection will avoid any send.
 
 Another method to send the device into deepsleep after start is creating a rule like the one below. In this case the timeout can be configured online and changed.
@@ -200,7 +200,7 @@ The effectiveness of the compensation can be seen here. Instead of typically 160
 
 ## Rules to adapt DeepSleep period to battery level.
 
-In some applications, it is interresting to adjust the DeepSleep period to the level of the battery.
+In some applications, it is interesting to adjust the DeepSleep period to the level of the battery.
 For this, we consider that:
 
 * the battery level is measured by the ESP ADC with the appropriate voltage divider,
@@ -233,7 +233,7 @@ ON Wifi#Connected DO Backlog DeepSleepTime ENDON
 ON DeepSleepTime#Data DO var1 %value% ENDON
 ```
 
-The best moment to compare the batery level and decide if it is necessary to change the DeepSleepTime
+The best moment to compare the battery level and decide if it is necessary to change the DeepSleepTime
 is right after the TelePeriod SENSOR message has been sent, which is just before Tasmota calculate
 the next wake-up time. So we can use `tele-ANALOG#Range` as a
 trigger for our rules. Using BREAK allows to compare the trigger only to the upper value of the

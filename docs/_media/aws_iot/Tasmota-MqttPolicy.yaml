@@ -6,7 +6,7 @@ Parameters:
     Type: String
     AllowedValues: [ "Delete", "Retain" ]
     Default: "Retain"
-    Description: When you delete the CloudFormation template, "Delete" will also delet this policy, "Retain" will keep it
+    Description: When you delete the CloudFormation template, "Delete" will also delete this policy, "Retain" will keep it
   MQTTPolicyName:
     Type: String
     Default: "TasmotaMqttPolicy"

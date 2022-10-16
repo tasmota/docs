@@ -19,7 +19,7 @@ After wiring a peripheral to specified Analog Input GPIO pin you have to configu
 
 ![ADC configuration](_media/ADCesp32.png)
 
-#|Option|WebUI display|MQTT mesage
+#|Option|WebUI display|MQTT message
 -|-|-|-
 0|None| none | none
 1|Analog | Analog0 _%value%_ | `{"A0":%value%}`

@@ -175,7 +175,7 @@ profileday*n*|profile for the day it just has been requested for. (n=0…6). Onl
 #### Base commands
 Command|Description and parameters
 :---|:---
-trvperiod<a class="cmnd" id="trvperiod"></a>|Display/Set the EQ3 poll interval in seconds. In this intervall to every TRV matching the following critera a *poll* (=[state](#state)) command will be sent automatically.
+trvperiod<a class="cmnd" id="trvperiod"></a>|Display/Set the EQ3 poll interval in seconds. In this interval to every TRV matching the following criteria a *poll* (=[state](#state)) command will be sent automatically.
 trvonlyaliased<a class="cmnd" id="trvonlyaliased"></a>|Display/Set the EQ3 OnlyAliased parameter<BR>set to 1 for any aliased BLE devices<BR>set to 2 for only aliases starting with `EQ3`
 trvMatchPrefix<a class="cmnd" id="trvmatchprefix"></a>|Display/Set the EQ3 MatchPrefix parameter<BR>set to 1 to not require active scan to identify EQ3 - identify from MAC (default)<BR>Set to 0 to disable this matching
 
@@ -185,7 +185,7 @@ Subcommand|Description and parameters
 :---|:---
 devlist<a class="cmnd" id="devlist"></a>|Display all TRV's which have been found in BLE scan mode.<BR>No parameters.
 scan<a class="cmnd" id="blescan"></a>|Alias of devlist.<BR>No parameters.
-state<a class="cmnd" id="state"></a>|Current valve state without changing anything. (except the time on the valve)<BR>No parameters.<BR>Note: If your ESP32 tasmota is not sychronized with a valid date and time, this command will set the wrong time and date to the TRV. See [set](#settime)[time](#settime).
+state<a class="cmnd" id="state"></a>|Current valve state without changing anything. (except the time on the valve)<BR>No parameters.<BR>Note: If your ESP32 tasmota is not synchronized with a valid date and time, this command will set the wrong time and date to the TRV. See [set](#settime)[time](#settime).
 settemp<a class="cmnd" id="settemp"></a>|Set the desired target temperature.<BR>**temperature**.
 valve<a class="cmnd" id="valve"></a>|Control the valve state.<BR>**off** Enable frost protection<BR>**on** Open the valve completely<BR>Note: If the current mode is *auto* or *holiday:* at the next programmed timeslot the valve will switch back to the given temperature. To set the valve permanently please use direct commands *on* or *off*.
 on<a class="cmnd" id="on"></a>|Set mode to *manual* and enable frost protection.<BR>Note:Temperature will be reported as 30.0 C.
@@ -200,7 +200,7 @@ boost<a class="cmnd" id="boost"></a>|Activate boost mode (valve 80% open for 5 m
 unboost<a class="cmnd" id="unboost"></a>|Deactivate boost mode
 lock<a class="cmnd" id="lock"></a>|Disable TRV buttons
 unlock<a class="cmnd" id="unlock"></a>|Enable TRV buttons
-settime<a class="cmnd" id="settime"></a>|Synchronize current tasmota time to the TRV:<BR>No parameters.<BR>Send an alternate time to the TRV:<BR>**yyMMddhhmmss**<BR>(byte by byte conversion from decimal to hexadecimal).<BR>Note: If your ESP32 tasmota is not sychronized with a valid date and time, this command (with no parameters) will set the wrong time and date to the TRV.
+settime<a class="cmnd" id="settime"></a>|Synchronize current tasmota time to the TRV:<BR>No parameters.<BR>Send an alternate time to the TRV:<BR>**yyMMddhhmmss**<BR>(byte by byte conversion from decimal to hexadecimal).<BR>Note: If your ESP32 tasmota is not synchronized with a valid date and time, this command (with no parameters) will set the wrong time and date to the TRV.
 setprofile<a class="cmnd" id="setprofile"></a>|Set the temperature schedule for the given day. (0=Saturday, 1=Sunday, … 6=Friday)<BR>Up to seven pairs of temperature-timeslot (e.g. 20.5-07:30) can be given.<BR>**day temperature-timeslot, temperature-timeslot**<BR>It is also possible to set a couple of days with one command: use 7=weekend, 8=workday, 9=everyday for this purpose.<BR>Note: The last timeslot shall always be -24:00, otherwise a default temperature is used for this timeslot.
 reqprofile<a class="cmnd" id="reqprofile"></a>|Read the temperature schedule for the **given day. **(0=Saturday, 1=Sunday, … 6=Friday)<BR>**day**
 setholiday<a class="cmnd" id="setholiday"></a>|Define *holiday* as the current operating mode.<BR>**end-date,end-time temperature**.<BR>*holiday* mode will automatically terminate and resume the former mode and temperature when the end date and time are reached.<BR>Note: During this period it makes no sense to apply any commands for setting different temperatures. For manually ending *holiday* mode call *auto* or *manual*. Only then other commands will be accepted again.

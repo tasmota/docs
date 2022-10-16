@@ -232,7 +232,7 @@ sensor29 intdef,pin,x       // Will set new deffer value to x (0-15)
 Examples:
 ```
 sensor29 intdef,pin,5       // Will only report interrupt when it occurs 5 times
-sensor29 intdef,pin,10      // Will only report interrupt when it has occured 10 times
+sensor29 intdef,pin,10      // Will only report interrupt when it has occurred 10 times
 ```
 
 Interrupts occurring a number of times prior to the setting will be counted but ignored for reporting purposes.

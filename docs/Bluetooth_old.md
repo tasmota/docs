@@ -167,7 +167,7 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <td class="tg-lboi">passive for all entities,  set clock and unit, no alarm functions, very frequent data sending</td>
   </tr>
 </table> 
-passive: data is received via BLE advertisments  
+passive: data is received via BLE advertisements
 active: data is received via bidrectional connection to the sensor  
   
 #### Devices with payload encryption  
@@ -274,7 +274,7 @@ A TELE message could like look this:
 As the NRF24L01 can only read BLE-advertisements, only the data in these advertisements is accessible.  
 All sensors have an additional GATT-interface with more data in it, but it can not be read with a NRF24l01. 
   
-As we can not use a checksum to test data integrity of the packet, only data of sensors whose adresses showed up more than once (default = 3 times) will be published. 
+As we can not use a checksum to test data integrity of the packet, only data of sensors whose addresses showed up more than once (default = 3 times) will be published.
 Internally from time to time "fake" sensors will be created, when there was data corruption in the address bytes.  These will be removed automatically.  
   
   
@@ -311,7 +311,7 @@ Without encryption support the driver will read data from found LYWSD03MMC via c
 
 The driver will start to scan for known sensors automatically using a hybrid approach, when encryption support is deactivated. In the first place MiBeacons are passively received and only found LYWSD03MMC- and MHO-C401-sensors will be connected at the given period to read data in order to be as energy efficient as possible.
 Battery data is in general of questionable value for the LYWSD0x, CGD1, MHO-C401 and (maybe) Flora (some are even hard coded on the device to 99%). That's why only MJ_HT_V1, CGG1 (untested) and LYWSD03 (calculated battery level) will automatically update battery data. The other battery levels can be read by command. 
-The internally very similiar LYWS03MMC and MHO-C401 behave very confusing in delivering battery status. Both report (fixed) 99% or 100% via encrypted payload or connected reading of the battery characteristic. But they can deliver a correct battery voltage in their payload of the temperature and humidity data, which will be mapped to a percentage level by the driver.  
+The internally very similar LYWS03MMC and MHO-C401 behave very confusing in delivering battery status. Both report (fixed) 99% or 100% via encrypted payload or connected reading of the battery characteristic. But they can deliver a correct battery voltage in their payload of the temperature and humidity data, which will be mapped to a percentage level by the driver.
   
 #### Commands
 
@@ -319,7 +319,7 @@ Command|Parameters
 :---|:---
 MI32Period<a id="mi32period"></a>|Show interval in seconds between sensor read cycles for the LYWSD03. Set to TelePeriod value at boot.<BR>|`<value>` = set interval in seconds
 MI32Time <a id="mi32time"></a>|`<n>` = set time time of a **LYWSD02 only** sensor to Tasmota UTC time and timezone. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).
-MI32Unit <a id="mi32unit"></a>|`<n>` = toggle the displayed temperature units of a **LYWSD02 only** sensor. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).  Reporting of the temperature is always in Celcius, this only changes the value shown on the device.
+MI32Unit <a id="mi32unit"></a>|`<n>` = toggle the displayed temperature units of a **LYWSD02 only** sensor. `<n>` is the sensor number in order of discovery starting with 0 (topmost sensor in the webUI list).  Reporting of the temperature is always in Celsius, this only changes the value shown on the device.
 MI32Page<a id="mi32page"></a>|Show the maximum number of sensors shown per page in the webUI list.<BR>`<value>` = set number of sensors _(default = 4)_
 MI32Battery<a id="mi32battery"></a>|Reads missing battery data for LYWSD02, Flora and CGD1.
 MI32Key<a id="mi32key"></a>| Set a "bind_key" for a MAC-address to decrypt sensor data (LYWSD03MMC, MJYD2S). The argument is a 44 uppercase characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string

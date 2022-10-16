@@ -13,7 +13,7 @@ For flashing you need to connect GPIO0 to GND
 * SRU 5VDC SDA - Relais
 
 ## GPIO0
-You need to solder a wire to the test-point on the TYWE2S  Module to be able to enter the flashmode. The Resest Pin has no function for that purpose.
+You need to solder a wire to the test-point on the TYWE2S  Module to be able to enter the flashmode. The Reset Pin has no function for that purpose.
 
 ### Device Images
 ![SmartPlug](https://user-images.githubusercontent.com/24415462/46573064-ec7e3300-c98f-11e8-827e-15c7e803ece5.png)

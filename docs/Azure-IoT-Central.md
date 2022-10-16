@@ -37,7 +37,7 @@ Select Administration --> Device Connection to note the ID Scope as shown below:
 
 ![image](https://user-images.githubusercontent.com/15837044/117377350-ae738380-ae98-11eb-8d40-0a72f946a3be.png)
 
-### 2. Create a Enrollment Group
+### 2. Create an Enrollment Group
 
 Click `Create enrollment group`, name the group, and select the Attestation type as `Shared access signature (SAS)`.  Click Save to and copy the Primary Key, as shown below:
 
@@ -48,7 +48,7 @@ Click `Create enrollment group`, name the group, and select the Attestation type
 Following the directions here: https://tasmota.github.io/docs/Compile-your-build/ compile your binary adding the following settings to your [my_user_config.h](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h) adding your Scope Id and your Primary Key.
 
 !!! tip 
-  Don't foget your WiFi for complete automation.
+  Don't forget your WiFi for complete automation.
 
 ```
 #ifndef USE_MQTT_TLS
@@ -72,7 +72,7 @@ In the Console of Tasmota, you will see it was registered with Device Provisioni
 
 ![image](https://user-images.githubusercontent.com/15837044/117375783-59823e00-ae95-11eb-8045-6e7ff369192e.png)
 
-If you look at the properties, you will see it automatically definded the Host name, port, TLS and MQTT Client (device Id) -- which defaulted to the MAC address:
+If you look at the properties, you will see it automatically defined the Host name, port, TLS and MQTT Client (device Id) -- which defaulted to the MAC address:
 
 ![image](https://user-images.githubusercontent.com/15837044/117377776-a831d700-ae99-11eb-8ef7-e30dd725f4b3.png)
 

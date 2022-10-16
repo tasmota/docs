@@ -238,7 +238,7 @@ See below how the numbers are being converted. The first number is 8-bit GPIO, t
 
 ## ADC Conversion
 
-| Old ADC | New ADC | Option      | WebUI display                                                         | MQTT mesage                                                           |
+| Old ADC | New ADC | Option      | WebUI display                                                         | MQTT message                                                          |
 |---|---|---|---|---|
 | 0       | 0       | None        | none                                                                  | none                                                                  |
 | 1       | 4704    | Analog      | Analog0 %value%                                                       | {"A0":%value%}                                                        |

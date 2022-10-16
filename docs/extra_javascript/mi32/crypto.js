@@ -2982,7 +2982,7 @@
        abBar = ab.add(right).normalize().trim();
        abBar.limbs = abBar.limbs.slice(R.limbs.length - 1);
  
-       // Division.  Equivelent to calling *.halveM() s times.
+       // Division.  Equivalent to calling *.halveM() s times.
        for (k=0; k < abBar.limbs.length; k++) {
          if (k > 0) {
            abBar.limbs[k - 1] |= (abBar.limbs[k] & mask) << (radix - s - 1);

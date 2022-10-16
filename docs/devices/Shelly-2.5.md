@@ -53,7 +53,7 @@ Tasmota 6.5.0.8 and higher supports Shelly 2.5
 
 `{"NAME":"Shelly 2.5","GPIO":[56,0,17,0,21,83,0,0,6,82,5,22,156],"FLAG":2,"BASE":18}`  
 
-Energy metering is done by a ADE7953 chip connected via I2C and IRQ on GPIO16.  
+Energy metering is done by an ADE7953 chip connected via I2C and IRQ on GPIO16.
 
 If you connect momentary switches, use the following template:  
 `{"NAME":"Shelly 2.5 (buttons)","GPIO":[56,0,19,0,21,127,0,0,6,126,5,22,156],"FLAG":2,"BASE":18}`

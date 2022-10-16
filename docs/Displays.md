@@ -184,7 +184,7 @@ _Parameters are separated by colons._
 * `gc` = text background color (index color)  
 * `fc` = text foreground color (index color)  
 * `fo` = text font  
-* `ts` = text size (negativ value denotes transparent text)  
+* `ts` = text size (negative value denotes transparent text)
 * `tl` = text field length (if negative align right)  
 * `dp` = decimal precision (if < 0 denotes a string) 
 * `ut` = update time in seconds  (1...N)  
@@ -335,7 +335,7 @@ EPDFont:
 ## Hardware Connections
 I<sup>2</sup>C displays are connected in the usual manner and defined via the GPIO component selection.  
 
-The I<sup>2</sup>C address must be specified using `DisplayAddress XX`, e.g., `60`. The model must be spedified with `DisplayModel`, e.g., `2` for SSD1306. To permanently turn the display on set `DisplayDimmer 100`. Display rotation can be permanently set using `DisplayRotate X` (x = `0..3`).  
+The I<sup>2</sup>C address must be specified using `DisplayAddress XX`, e.g., `60`. The model must be specified with `DisplayModel`, e.g., `2` for SSD1306. To permanently turn the display on set `DisplayDimmer 100`. Display rotation can be permanently set using `DisplayRotate X` (x = `0..3`).
 
 On SPI the CS and DC pins when needed must use the pin definition with Display_ID + CS e.g. ST7789_CS
 
@@ -441,7 +441,7 @@ Descriptor text file has the following elements:
 
 `:H`  
 
-Header line describes the main features of the display (comma seperated, no spaces allowed)
+Header line describes the main features of the display (comma separated, no spaces allowed)
 
 1. name
 2. x size in pixels
@@ -517,7 +517,7 @@ The CS and DC pins must be the standard pins e.g. `SPI_CS` or `SPI_DC`.
     ```
     
 `:I`  
-Initial register setup for the display controler. (`IC` marks that the controller is using command mode even with command parameters)  
+Initial register setup for the display controller. (`IC` marks that the controller is using command mode even with command parameters)
 All values are in hex. On SPI the first value is the command, then the number of arguments and the the arguments itself.
 `Bi7 7` on the number of arguments set indicate a wait of 150 ms. On I^2^C all hex values are sent to I^2^C.
 
@@ -581,7 +581,7 @@ the appropriate coordinate convervsions are defined via pseudo opcodes
 bit 7 = swap x,y
 
 `:A`  
-3 OPCODES to set adress window _(all but epaper displays)_
+3 OPCODES to set address window _(all but epaper displays)_
 
 1. set column opcode  
 2. set row opcode  
@@ -774,7 +774,7 @@ USE_LVGL  | Enable LVGL, currently only supported by berry scripting
 USE_TOUCH_BUTTONS | Enable virtual touch button support with touch displays 
 SHOW_SPLASH | Enable initialization splash message on the display  
 USE_RAMFONT | Enable loadable Fonts  
-USE_MULTI_DISPLAY | Enable mutiple display support (up to 3)  
+USE_MULTI_DISPLAY | Enable multiple display support (up to 3)
 USE_AWATCH | Enables analog watch support  
 USE_GRAPH | Enable line charts. Also requires `NUM_GRAPHS`  
   

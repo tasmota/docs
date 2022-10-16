@@ -15,7 +15,7 @@ When powered solely with 3.3v from the serial-to-USB adapter long press will be 
 
  When powered solely with 3.3v from the serial-to-USB adapter RF functions do not work.
 
- If you can't flash succesfully lower the baud rate, most likely to **74880**.
+ If you can't flash successfully lower the baud rate, most likely to **74880**.
 
 # Serial Flashing
 ## Sonoff T1 UK

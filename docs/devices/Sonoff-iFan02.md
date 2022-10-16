@@ -20,7 +20,7 @@ Press and hold the button while connecting to power.
 
 > If you have an Arduino you may be able to flash without providing an additional power source. I have successfully flashed using an Arduino Duemilanove with the atmel chip pulled out (basically using it for FTDI and 3.3v power regulation). Rx on Arduino goes to Rx on iFan02, Tx to Tx (no crossover like with FTDI). I did not have to press the button, only to ground TP16 while initiating the flash in Arduino IDE. The Arduino provides enough power to flash, however it will not boot into Tasmota unless you plug in to external power (it boot loops after flashing is complete).
 
-## Additonal information
+## Additional information
 * See issue [#2839](https://github.com/arendst/Tasmota/issues/2839) for user information
 * See issue [#3412](https://github.com/arendst/Tasmota/issues/3412) light on after restore power
 

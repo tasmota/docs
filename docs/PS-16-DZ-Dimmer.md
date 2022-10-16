@@ -2,7 +2,7 @@
 The [PS-16-DZ](http://www.ihome-s.com/productinfo/448320.html) dimmer uses eWeLink app same as Sonoff devices. It's available from [Amazon](https://www.amazon.com/Switch-Dimmer-Electrical-Control-Twharf/dp/B07DZX5685) and [Aliexpress](https://www.aliexpress.com/item/SM-Smart-WIFI-Wall-Dimmer-Light-Switch-US-Ewelink-APP-Remote-Control-Wi-Fi-Wirele-Work/32871151902.html). It may under different name, but the model number is PS-16-DZ.
 
 ## Pics
-Opened it up, found a ESP8285 and a Nuvoton N76E003.
+Opened it up, found an ESP8285 and a Nuvoton N76E003.
 ![](https://user-images.githubusercontent.com/34905120/45901464-ff4e1080-bdb0-11e8-8a35-0bbea810b0b9.jpg)
 ![](https://user-images.githubusercontent.com/34905120/45901474-0543f180-bdb1-11e8-9d1e-e9ab815d4e20.jpg)
 ![](https://user-images.githubusercontent.com/34905120/48847747-44ba9a00-ed70-11e8-9e92-957a3ed1bf41.jpg)

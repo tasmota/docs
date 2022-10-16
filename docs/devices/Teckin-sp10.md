@@ -4,14 +4,14 @@ so I got a couple of these guys given to me
 [teckin sp10 on amazon.ca](https://www.amazon.ca/dp/B07FQMVW45/?coliid=IFFUFMWD4KEHL&colid=RXUNLV481TPQ&psc=0&ref_=lv_ov_lig_dp_it)
 
 follow some great info here 
-I found the esp8266 as expected in here I was able to identify the module at a esp8266-s3 
+I found the esp8266 as expected in here I was able to identify the module as an esp8266-s3
 [spec sheet](https://fccid.io/2AKBPESP8266-S3/User-Manual/User-Manual-3594791.html)
 
 @znanev did most of the work already 
 [the uk version of this plug as noted by Znanev](/devices/Hyleton-313-Smart-Plug)
 
 it took a great deal of time to confirm that I did indeed have the same pin outs as this UK plug
-I stumbled apon what I think is the original manufacturer of these but we will probably never know 
+I stumbled upon what I think is the original manufacturer of these but we will probably never know
 [plug maker](http://en.hysiry.com/)
 
 ![](http://www.bobcat.ca/stuff/PICS/sp10/20181124_172106.jpg)

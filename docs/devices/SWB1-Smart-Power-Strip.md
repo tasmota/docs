@@ -1,7 +1,7 @@
 ### Product
 SWB1 Wi-Fi smart power strip with 4 main ports. Each port can be controlled manually
 FCCID: 2AJK8-SWB1
-This is a new device not using the Tuya PCB but is a esp8266ex based and works great with Tasmota
+This is a new device not using the Tuya PCB but is an esp8266ex based and works great with Tasmota
 
 The product can be purchased on amazon.ca (could be found on other amazon sites)
 ![SWB1-power_strip](https://raw.githubusercontent.com/rigorm/Tasmota-contrib/master/SWB1-power_strip.jpg)

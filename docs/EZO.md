@@ -24,7 +24,7 @@ At this point in time, the following EZO sensors are supported:
 
 | build `#define` | Sensor ID | Sensor Name |
 |---|---|---|
-| USE_EZODO | EZO-D.O. | Disolved Oxygen |
+| USE_EZODO | EZO-D.O. | Dissolved Oxygen |
 | USE_EZOORP | EZO-ORP | Oxygen Reduction Potential |
 | USE_EZOPH | EZO-pH | pH |
 | USE_EZOEC | EZO-EC | Electric Conductivity |
@@ -48,15 +48,15 @@ Specific details about the list of commands available for your EZO device can be
 
 ## Calibration
 
-Many EZO devices require calibration in order to accurately report values.  Calibration can be easily achieved by issuing the appropriate commands and following the instructions in the EZO datasheets.  One easy way to achieve this is to put the sensor in the baseline environement and use the web interface to see when the value stabilizes.  Once it does, visit the console and issue the device-specific calibration command.
+Many EZO devices require calibration in order to accurately report values.  Calibration can be easily achieved by issuing the appropriate commands and following the instructions in the EZO datasheets.  One easy way to achieve this is to put the sensor in the baseline environment and use the web interface to see when the value stabilizes.  Once it does, visit the console and issue the device-specific calibration command.
 
 ## Readings
 
 Currently, Tasmota samples the sensor information at the rate of 1Hz (1 sample/second) irrespective of the EZO device.
 
-Some EZO devices support reporting different units.  For example EZO-RTD supports reading the temperature in °C, °K, or °F.  In order to save memory, Tasmota will only be able reading the default format (ie: °C).  If you wish to see the value in another format, you can use Tasmota's ability to display Farenheit to do the conversion for you.  For conversions that are not supported by Tasmota, you may use OpenHab, Home Assistant or any other system in conjunction with MQTT to do the cnoversion.  In every case, there exists a simple formula that will allow you to convert from one format to another and the EZO device are merely utilizing that formula to return the value.  It's important to make sure that the default units are used.  If that's not the case, Tasmota will simply assume that the default units are used and the number will seem drastically wrong.
+Some EZO devices support reporting different units.  For example EZO-RTD supports reading the temperature in °C, °K, or °F.  In order to save memory, Tasmota will only be able reading the default format (ie: °C).  If you wish to see the value in another format, you can use Tasmota's ability to display Fahrenheit to do the conversion for you.  For conversions that are not supported by Tasmota, you may use OpenHab, Home Assistant or any other system in conjunction with MQTT to do the cnoversion.  In every case, there exists a simple formula that will allow you to convert from one format to another and the EZO device are merely utilizing that formula to return the value.  It's important to make sure that the default units are used.  If that's not the case, Tasmota will simply assume that the default units are used and the number will seem drastically wrong.
 
-Some device supports the output of multiple diffrent sensors in one single EZO devices.  One example of this is the EZO-HUM which supports outputing the humidity as well as the temperature.  By default, only the humidity is enabled, but a command can be sent to enable the temperature as well.  In that case, Tasmota does support reading the additional sensor provided that the command enables its output.
+Some device supports the output of multiple different sensors in one single EZO devices.  One example of this is the EZO-HUM which supports outputting the humidity as well as the temperature.  By default, only the humidity is enabled, but a command can be sent to enable the temperature as well.  In that case, Tasmota does support reading the additional sensor provided that the command enables its output.
 
 Some readings can be made more precise by specifying additional parameters.  The most common one is temperature.  For example, the EZO-pH sensor can return more accurate values if it compensates for the temperature.  At this point in time, Tasmota does not support reading sensor data which compensates with any other sensor's data.  That said, these are typically well-established equations that will allow you to convert the existing reading and adjust it based on the reading from the other sensor.  A simple Google search can be done to understand how to compensate in each case.
 

@@ -25,7 +25,7 @@
     SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe
     USE_SENDMAIL | enable `>m` section and support for sending e-mail<br>(on ESP32 you must add USE_ESP32MAIL)  
     USE_SCRIPT_WEB_DISPLAY | enable `>W` section (modify web UI)
-    SCRIPT_FULL_WEBPAGE | enable ``>w`` section (seperate full web page and webserver)
+    SCRIPT_FULL_WEBPAGE | enable ``>w`` section (separate full web page and webserver)
     USE_TOUCH_BUTTONS | enable virtual touch button support with touch displays
     USE_WEBSEND_RESPONSE | enable receiving the response of [`WebSend`](Commands#websend) and [`WebQuery`](Commands#webquery) commands (received in section >E)
     SCRIPT_STRIP_COMMENTS | enables stripping comments when attempting to paste a script that is too large to fit
@@ -37,7 +37,7 @@
     USE_LVGL | enables support for LVGL
     USE_SCRIPT_GLOBVARS | enables global variables and >G section
     USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
-    SML_REPLACE_VARS | enables posibility to replace the lines from the (SML) descriptor with Vars
+    SML_REPLACE_VARS | enables possibility to replace the lines from the (SML) descriptor with Vars
     USE_SML_SCRIPT_CMD | enables SML script cmds
     USE_SCRIPT_I2C | enables I2C support
     USE_SCRIPT_SERIAL | enables support for serial io cmds
@@ -46,7 +46,7 @@
     SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
     LARGE_ARRAYS | enables arrays of up to 1000 entries instead of max 127  
     SCRIPT_LARGE_VNBUFF | enables to use 4096 in stead of 256 bytes buffer for variable names  
-    USE_GOOGLE_CHARTS | enables defintion of google charts within web section 
+    USE_GOOGLE_CHARTS | enables definition of google charts within web section
     USE_FEXTRACT | enables array extraction from database  fxt(...)  
     USE_SCRIPT_SPI | enables support for SPI interface  
     USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
@@ -115,7 +115,7 @@ after initialization the script reports some info in the console e.g:
 20:21:28.259 Script: nv=51, tv=13, vns=279, vmem=3305, smem=4096  
 nv = number of used variables in total (numeric and strings)  
 tv = number of used string variables  
-vns = total size of name strings in bytes (may not exeed 255) or #define SCRIPT_LARGE_VNBUFF extents the size to 4095  
+vns = total size of name strings in bytes (may not exceed 255) or #define SCRIPT_LARGE_VNBUFF extents the size to 4095
 vmem = used heap ram by the script (psram if available)  
 smem = used script (text) memory (psram if available)  
   
@@ -176,7 +176,7 @@ a valid script must start with >D in the first line
   `M:vname`   
   specifies a moving average filter variable with 8 entries (for smoothing data)  
   (max 5 filters in total m+M) optional another filter length (1..127) can be given after the definition.  
-  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer (may be set also), x = `-1` returns arry length, x = `-2` returns array average)  
+  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer (may be set also), x = `-1` returns array length, x = `-2` returns array average)
   Using this filter, vars can be used as arrays, #define LARGE_ARRAYS allows for arrays up to 1000 entries  
   array may also be permanent by specifying an extra :p  
   m:p:vname defines a permanent array. Keep in mind however that in 1M Flash standard configurations you only have 50 bytes permanent storage which stands for a maximum of 12 numbers. (see list above for permanent storage in other configurations)  
@@ -554,7 +554,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `s(x)` = explicit conversion from number x to string  may be preceded by precision digits e.g. s(2.2x) = use 2 digits before and after decimal point  
   
 I2C support #define USE_SCRIPT_I2C  
-`ia(AA)`, `ia2(AA)` test and set I2C device with adress AA (on BUS 1 or 2), returns 1 if device is present  
+`ia(AA)`, `ia2(AA)` test and set I2C device with address AA (on BUS 1 or 2), returns 1 if device is present
 `iw(aa val)` , `iw1(aa val)`, `iw2(aa val)`, `iw3(aa val) `write val to register aa (1..3 bytes)  
 `ir(aa)`, `ir1(aa)`, `ir2(aa)`, `ir3(aa)` read 1..3 bytes from register aa  
   
@@ -628,7 +628,7 @@ SEL:
 `enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
 `gjp("host" "path")` = trigger HTTPS JSON page read as used by Tesla Powerwall (if defined SCRIPT_GET_HTTPS_JP)  
 `gwr("del" index)` = gets non JSON element from webresponse del = delimiter char or string, index = n´th element (if defined USE_WEBSEND_RESPONSE)  
-`http("url" "payload")` = does a GET or POST request on an URL (http:// is internally added)  
+`http("url" "payload")` = does a GET or POST request on a URL (http:// is internally added)
 `tsN(ms)` = set up to 4 timers (N=1..4) to millisecond time on expiration triggers section >tiN  (if defined USE_SCRIPT_TIMER)  
 `hours` = hours  
 `mins` = mins  
@@ -725,7 +725,7 @@ Each parameter variable must be declared in the '>D' section.
 A subroutine with multiple parameters is declared as '#name(p1 p2 p3)', i.e. spaces between parameters.  
 A subroutine is invoked with `=#name(param)` or '=#name(p1 p2)  
 Invoking a subroutine sets the parameter variable to the corresponding expression of the invocation. This means that parameter variables have script wide scope, i.e. they are not local variables to the subroutine.  
-Subroutines end with the next `#` or `>` line or break. Subroutine invocations may be nested (each level uses about 600 bytes stack space, so nesting level should not exeed 4).  
+Subroutines end with the next `#` or `>` line or break. Subroutine invocations may be nested (each level uses about 600 bytes stack space, so nesting level should not exceed 4).
 Parameters can be numbers or strings and on type mismatch are converted.  
 
 If `#define USE_SCRIPT_SUB_COMMAND` is included in your `user_config_override.h`, a subroutine may be invoked via the Console or MQTT using the subroutine's name. For example, a declared subroutine `#SETLED(num)` may be invoked by typing `SETLED 1` in the Console. The parameter `1` is passed into the `num` argument. This also works with string parameters. since Tasmota capitalizes all commands you must use upper case labels.  
@@ -873,7 +873,7 @@ To use any of these values, pass an `*` as its corresponding argument placeholde
 !!! example
     `sendmail [*:*:*:*:*:<rec@gmail.com>:theSubject] theMessage`
 
-Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `m` _(note lower case)_ section. The specified text in this script section must end with an `#` character. `sendmail` will use the `m` section if `*` is passed as the `msg` parameter. in this >m section you may also specify email attachments.  
+Instead of passing the `msg` as a string constant, the body of the e-mail message may also be composed using the script `m` _(note lower case)_ section. The specified text in this script section must end with a `#` character. `sendmail` will use the `m` section if `*` is passed as the `msg` parameter. in this >m section you may also specify email attachments.
 @/filename specifies a file to be attached (if file system is present)  
 &arrayname specifies an array attachment (as tab delimited text, no file system needed)  
 $N attach a webcam picture from rambuffer number N (usually 1)  
@@ -918,7 +918,7 @@ The script itself is also stored on the file system with a default size of 8192 
 `fwb(byte fr)` write byte to file  
 `frb(fr)` read byte from file  
 `frw(fr url)` read file from web url  
-`fxt(fr ts_from ts_to col_offs accum array1 array2 ... arrayn)` read arrays from csv file from timestamp to timestamp with column offset and accumulate values into arrays1 .. N, assumes csv file with timestamp in 1. column and data values in colums 2 to n.(#define USE_FEXTRACT)  
+`fxt(fr ts_from ts_to col_offs accum array1 array2 ... arrayn)` read arrays from csv file from timestamp to timestamp with column offset and accumulate values into arrays1 .. N, assumes csv file with timestamp in 1. column and data values in columns 2 to n.(#define USE_FEXTRACT)
 `fxto(...` same as above with time optimized access  
 `cts(tstamp flg)` convert timestamp to German locale format back and forth flg=0 to webformat, 1 to German format  
 `tso(tstamp day flag)` add time offset in days to timestamp optional flg = char 0 zo zero time HH:MM:SS  
@@ -1388,7 +1388,7 @@ remark: the Flash illumination LED is connected to GPIO4
     then =>power1 %sw%
     endif
 
-    hello="event occured"
+    hello="event occurred"
 
     ; check for Color change (Color is a string)
     col=Color
@@ -1569,7 +1569,7 @@ Some variables are set from ioBroker
 
 ### e-Paper 42 Display with SHT31 and BME280
 
-This script shows 2 graphs on an 4.2 inch e-Paper display: 1. some local sensors, and 2. power statistics  
+This script shows 2 graphs on a 4.2 inch e-Paper display: 1. some local sensors, and 2. power statistics
 
 - The first graph is the battery level of a solar battery (Tesla PowerWall 2)  
 - The second graph shows the solar yield of the roof panels in Watts  
@@ -2506,7 +2506,7 @@ start dim level = initial dimmer level after power-up or restart; max 100
 ### Multiplexing a single adc with CD4067 breakout
 
     >D
-    ; this script works with an CD4067 breakout to multiplex a single ADC channel
+    ; this script works with a CD4067 breakout to multiplex a single ADC channel
     ; of an ESP
     IP=192.168.178.177
     SB=8192

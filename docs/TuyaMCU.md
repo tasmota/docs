@@ -102,7 +102,7 @@ Used without payload to query states of dpID's.
 Sends boolean (Type 1) data (`0/1`) to dpId (Max data length 1 byte)
 
 !!! example
-    `TuyaSend1 1,0` sends vaue `0` to dpId=1 switching the device off
+    `TuyaSend1 1,0` sends value `0` to dpId=1 switching the device off
 #### `TuyaSend2` 
 Sends integer or 4 byte (Type 2) data to dpId (Max data length 4 bytes)
 
@@ -348,7 +348,7 @@ Use `TuyaSend2` to manage them.
 
 Temperature and Temperature Set default to `°C`. If you need `°F` change `SetOption8` to `1`.
 
-The TuyaMCU driver sends the temperature as a byte integer. As of 9.3.x, the integer is converted by Tasmota to a float based on the "TempRes" setting which indicates the number of places after the decimal. The TempRes setting is by default "1" which means a device which sends 101 will be intepreted as 10.1. If your device normaly returns an integer temperature, you may need to set TempRes to "0". 
+The TuyaMCU driver sends the temperature as a byte integer. As of 9.3.x, the integer is converted by Tasmota to a float based on the "TempRes" setting which indicates the number of places after the decimal. The TempRes setting is by default "1" which means a device which sends 101 will be interpreted as 10.1. If your device normally returns an integer temperature, you may need to set TempRes to "0".
 
 If your device requires the temperature to be divided (eg. increases in .5° increments), you may need to use the [rules](Rules.md#adjust-a-value-and-send-it-over-mqtt) functionality to convert the temperature value.
 
@@ -366,7 +366,7 @@ Timers can be managed with `TuyaSend2` and are visible in the WebUI.
 
 ### Covers
 Single shutter or double shutters devices can be managed with a dimmer setup
-For devices that are reporting position to a another dpId assign fnId's:
+For devices that are reporting position to another dpId assign fnId's:
 
 - `27` to report the state of Dimmer1
 - `28` to report the state of Dimmer2
@@ -374,7 +374,7 @@ For devices that are reporting position to a another dpId assign fnId's:
 If your cover device has a motor direction change option assign fnId `97` for motor direction.
 
 ### Switches	
-There is currenty no way to detect the number of relays present in an MCU based switch. We need to tell the number of relays to Tasmota using FunctionIDs 12 to 18 for Relay2 to Relay4. 	
+There is currently no way to detect the number of relays present in an MCU based switch. We need to tell the number of relays to Tasmota using FunctionIDs 12 to 18 for Relay2 to Relay4.
 
 !!! example
     For a 4 gang switch set `TuyaMCU 12,2`, `TuyaMCU 13,3` and `TuyaMCU 14,4` if the dpIds for Relays 2-4 are `2`,`3`,`4`.	
@@ -626,7 +626,7 @@ Functional protocols are used for delivering and reporting data of functions. Th
 
 <a id="data-type-table"></a>
 #### Data Type
-|Hex|Tasmota Command|Decription|Max length|
+|Hex|Tasmota Command|Description|Max length|
 |---|---|---|---|
 |0x00|TuyaSend6|raw data|unknown|
 |0x01|TuyaSend1|boolean data `0/1`|1 byte|
@@ -881,7 +881,7 @@ Temperature controller with individual plug in sockets for heating/cooling
 | 118   | Cooling differential value | Cd         | Issue and report | Integer       | Unit is 0.1C                                                |
 
 The unit will constantly be sending the temperature sensor value in
-celcius and fahrenheit: 104 and 116.  To trigger the unit to send all
+celsius and fahrenheit: 104 and 116.  To trigger the unit to send all
 settings, send any value to a non-used register, e.g. TuyaSend1 2,1
 
 Example:
@@ -894,7 +894,7 @@ Example:
 
 ### Inkbird IHC-200-Wifi
 Humidity controller with two relay sockets very similar to the ITC-308-WIFI
-This unit ships with a RTL based WR3 module which cannot be flashed with Tasmota, however the WR3 module is pin compatible with a ESP12-F module and is on a daughter board similar to the one in the ITC-308-WIFI
+This unit ships with a RTL based WR3 module which cannot be flashed with Tasmota, however the WR3 module is pin compatible with an ESP12-F module and is on a daughter board similar to the one in the ITC-308-WIFI
 
 | DP ID | Function points            | Identifier | Data type        | Function type | Properties                                                  |
 |-------|----------------------------|------------|------------------|---------------|-------------------------------------------------------------|

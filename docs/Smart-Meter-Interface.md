@@ -94,7 +94,7 @@ Declare `>M` section with the number of connected meters (n = `1..5`):
 | `+<M>` | Meter number. The number must be increased with each additional Meter (default 1 to 5).|
 | `<rxGPIO>` | The GPIO pin number where meter data is received. |
 | `<type>` | The type of meter: <BR>- `o` - OBIS ASCII type of coding<BR>- `s` - SML binary smart message coding<BR>- `e` - EBus binary coding<BR>- `v` - VBus binary coding<BR>- `m` - MODBus binary coding with serial mode 8N1<BR>- `M` - MODBus binary coding with serial mode 8E1<BR>- `k` - Kamstrup binary coding with serial mode 8N1<BR>- `c` - Counter type<BR>- `r` - Raw binary coding (any binary telegram) |
-| `<flag>` | Options flag:<BR>- `0` - counter without pullup<BR>- `1` - counter with pullup<BR>- `16` - enable median filter for that meter. Can help with sporadic dropouts, reading errors (not available for counters). this option is enabled by default #define USE_SML_MEDIAN_FILTER, if you are low an memory and dont use this feature you may outcomment this define in the driver |
+| `<flag>` | Options flag:<BR>- `0` - counter without pullup<BR>- `1` - counter with pullup<BR>- `16` - enable median filter for that meter. Can help with sporadic dropouts, reading errors (not available for counters). this option is enabled by default #define USE_SML_MEDIAN_FILTER, if you are low on memory and dont use this feature you may outcomment this define in the driver |
 | `<parameter>` | Parameters according to meter type:<BR>- for `o,s,e,v,m,M,k,r` types: serial baud rate e.g. `9600`.<BR>- for `c` type: a positive value = counter poll interval or a negative value = debounce time (milliseconds) for irq driven counters. |
 | `<jsonPrefix>` | Prefix for Web UI and MQTT JSON payload. Up to 7 characters.|
 | `<txGPIO>` | The GPIO pin number where meter command is transmitted (optional).|
@@ -125,7 +125,7 @@ e.g for Modbus:  mN1,mN2,mE1,mE2,mO1,mO2
     Components of the character string:  
     `...01040000,01040002,...`    
     `01` = Modbus slave device ID<BR>
-    `04` = Instruction to read an Input Register (alternatively, `03` = Instruction to read an Holding Register)<BR>
+    `04` = Instruction to read an Input Register (alternatively, `03` = Instruction to read a Holding Register)<BR>
     `0000`/`0002` = Register # (as Hexadecimal codification, without the prefix `0x`. Example: `0x0079` -> `0079`)  
     the number of requested registers is fixed to 2, however with the char 'r' before the hex string the complete request string may be specified  
     `...r010400000001,r010400020003,...`    
@@ -484,7 +484,7 @@ Energy provider supplied a PIN code to enable output of additional data.
 ### DDM18SD (MODBus) 
 	
 This script, based on tasmota scripting language, is to read data on a unsupported DDM18SD 
-power meter. It has a 8E1 parity and the slave ID address is n 5.
+power meter. It has 8E1 parity and the slave ID address is n 5.
 On a Nodemcu or Wemos D1 board, put wires between GPIO3 and GPIO1 to the RX and 
 TX pinout of a RS485 to TTL board, but leave empty (none) the GPIO Tasmota software settings. 
 A & B connected to the meter pinout. 
@@ -681,7 +681,7 @@ There are two types available using different communication settings:
   * OD-type: 7 data bits, even parity, one stop bit, 9600 baud (9600 7E1)
   * SM-type: 8 data bits, no parity, one stop bit, 9600 baud (9600 8N1) 
 
-Tested with a eBZ DD3 2R06 ODZ1 (two-direction model for e. g. solar power metering).
+Tested with an eBZ DD3 2R06 ODZ1 (two-direction model for e. g. solar power metering).
     
 Because the 7E1 serial mode is not supported by Tasmota software serial, the hardware serial port must be used, i.e. GPIO 3. This will /not/ work using GPIO 0 or 2.
 
@@ -1200,7 +1200,7 @@ This is an example for 4 MODBus devices on the same bus (at different addresses)
     ->sensor53 r
     >M 1
     +1,3,m,1,9600,Hiking,1,10,0103000c,0103000e,0303000c,0303000e,0403000c,0403000e,0503000c,0503000e
-    ;---> two groups of registrers for each device --> default 2 registers returned ---> 4 values per device
+    ;---> two groups of registers for each device --> default 2 registers returned ---> 4 values per device
     1,=h Contatore 1
     1,010304UUuu@i0:10,C1_Voltage,V,C1Voltage,1
     ;---> decoder for the first registry returned for the first group
@@ -1228,7 +1228,7 @@ This is an example for 4 MODBus devices on the same bus (at different addresses)
 
 ### Holley DTZ541 (SML)  
 
-This script reads pretty much all given informations.
+This script reads pretty much all given information.
 Make sure to enable `info` in the settings, otherwise you only get total / current consuption and total export.
 
 This script was used and tested on a WeMos D1 mini with an IR Head connected to the RX pin (3).
@@ -1464,7 +1464,7 @@ Default buffer size suffices for **four values** at once. The following example 
     #
     ```
 
-??? summary "View script (smae as above with two telegrams and default SML_BSIZ)"
+??? summary "View script (same as above with two telegrams and default SML_BSIZ)"
     ```
     >D
     >B
@@ -1483,7 +1483,7 @@ Default buffer size suffices for **four values** at once. The following example 
 
 ### Landis + Gyr E220 (SML)
 
-For read-out of "current power" the advanced data set has to be enabled in user menue
+For read-out of "current power" the advanced data set has to be enabled in user menu
 
 ??? summary "View script"
     ```
@@ -1502,7 +1502,7 @@ For read-out of "current power" the advanced data set has to be enabled in user 
 	
 ### Landis + Gyr E320 (SML)
 
-For read-out of "Current power" the advanced data set has to be enabled in user menue
+For read-out of "Current power" the advanced data set has to be enabled in user menu
 
 ??? summary "View script"
     ```
@@ -1574,7 +1574,7 @@ Example: Changing the baud rate during operation.
     yr=0  
     ;Var for counter see >F=ms  
     scnt=0  
-    ;Var for baudrate changeing 
+    ;Var for baudrate changing
     res=0  
     
     ;Permanent Var Meter1 0:00   

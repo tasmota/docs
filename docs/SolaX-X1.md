@@ -27,15 +27,15 @@ To connect the inverter to the Tasmota-device, you have to use a breakout board 
 ### Breakout boards
 
 There are many RS485-to-TTL modules, aka breakout boards, available. They may work or not. You should have attention on the operation voltage. The ESP-devices work with 3 volts.
-Because of that be carefull experimenting with 5 volts. In the best case nothing works. In the worst case it will destroy your ESP or breakout board.
+Because of that be careful experimenting with 5 volts. In the best case nothing works. In the worst case it will destroy your ESP or breakout board.
 Here are two examples of tested breakout boards. Recommended is a board with a SP3485 chip, because it is designed for operating at 3 volts.
 
 #### SP3485
 
-The SP3485 breakout board is specially made to work with only 3 volts. It has a seperate RTS-pin and works with a voltage from 3 to 5 volts.  
+The SP3485 breakout board is specially made to work with only 3 volts. It has a separate RTS-pin and works with a voltage from 3 to 5 volts.
 [![SP3485_Breakout1](_media/solax-x1/SP3485_Breakout1_240.jpg)](_media/solax-x1/SP3485_Breakout1.jpg) [![SP3485_Breakout2](_media/solax-x1/SP3485_Breakout2_240.jpg)](_media/solax-x1/SP3485_Breakout1.jpg)
 #### HW-0519
-The HW-0519 breakout board does not need a seperate RTS-pin, because it automatically switches between sending and receiving. The recommended voltage is 5 volts, but it should also work with 3 volts.  
+The HW-0519 breakout board does not need a separate RTS-pin, because it automatically switches between sending and receiving. The recommended voltage is 5 volts, but it should also work with 3 volts.
 [![HW-0519_Breakout](_media/solax-x1/HW-0519_Breakout_480.jpg)](_media/solax-x1/HW-0519_Breakout.jpg)
 ### ESP ⬌ breakout board
 The RX-, TX- and RTS- (if needed) lines have to be connected to the ESP matching the [module configuration](#configuration).
@@ -88,5 +88,5 @@ In the case when no data is received, it will be display `off`. As the converter
 !!! tip
 	When the inverter is working and `off` is displayed, so you have to check your hard- and software setup.
 
-### Communcation protocol
+### Communication protocol
 The communication of this module is based on the description of the [communication protocol version 1.7](_media/solax-x1/SolaxPower_Single_Phase_External_Communication_Protocol_X1_V1.7.pdf).

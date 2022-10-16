@@ -32,7 +32,7 @@ You should see the following screen, and click on buttons to switch to the secon
 
 ### Understanding the template
 
-HASPmota automatically loads the template from a file named `pages.jsonl`. This file contains JSON Lines, i.e. a single JSON document per line. Each line describes an element on the screen. Elements are groupes into pages.
+HASPmota automatically loads the template from a file named `pages.jsonl`. This file contains JSON Lines, i.e. a single JSON document per line. Each line describes an element on the screen. Elements are grouped into pages.
 
 Page `0` contains objects that are displayed on all screens. They are typically used for headers and menus.
 
@@ -185,9 +185,9 @@ HASPmota Class|Embedded LVGL class
 
 You can also import custom widget as long as they inherit from `lv.obj` and the class name matches the module name.
 
-Example: `"obj":"lv_wifi_graph"` will trigger the followin:
+Example: `"obj":"lv_wifi_graph"` will trigger the following:
 - `import lv_wifi_graph`
-- instanciation of `lv_wifi_graph(parent)` object
+- instantiation of `lv_wifi_graph(parent)` object
 - if successful, it can be used like a typical HASPmota object
 
 ### Attributes
@@ -237,8 +237,8 @@ Attribute name|LVGL equivalent|Details
 `value_font`|`style_text_font`|Synonym of `text_font`
 `text_color`|`style_text_color`|Sets the color of text
 `value_color`|`style_text_color`|Synonym of `text_color`
-`value_ofs_x`|`x` of sub-label|Sets the X offet in pixels within the object
-`value_ofs_y`|`y` of sub-label|Sets the Y offet in pixels within the object
+`value_ofs_x`|`x` of sub-label|Sets the X offset in pixels within the object
+`value_ofs_y`|`y` of sub-label|Sets the Y offset in pixels within the object
 `text_rule`||Link the text to a Tasmota rule, see below
 `text_rule_formula`||Link the text to a Tasmota rule, see below
 `text_rule_format`||Link the text to a Tasmota rule, see below
@@ -331,7 +331,7 @@ Example:
 tasmota.add_rule("hasp#p1b10#event==up", / -> print("Button p1b10 pressed"))
 ```
 
-Events with value `changed` indicate that the value of the widgets has changed. Events are only fired if the change in value comes from a screen interaction. No event is fired when the value was changed programatically. The new value is sent as `val` attribute, and for specific widgets (roller) a `text` attribute is sent for the label of the value. `{"hasp":{"p1b1":{"val":3,"text":"A3","event":"changed"}}}`
+Events with value `changed` indicate that the value of the widgets has changed. Events are only fired if the change in value comes from a screen interaction. No event is fired when the value was changed programmatically. The new value is sent as `val` attribute, and for specific widgets (roller) a `text` attribute is sent for the label of the value. `{"hasp":{"p1b1":{"val":3,"text":"A3","event":"changed"}}}`
 
 Example:
 
@@ -366,7 +366,7 @@ Embedded font|Details
 :---|:---
 `montserrat-10`<br>`montserrat-14`<br>`montserrat-20`<br>`montserrat-28`|Default LVGL normal font, including icons
 `unscii-8`<br>`unscii-16`|Default LVGL, 8 px and 16 px pixel perfect font with only ASCII characters
-`seg7-8`<br>`seg7-10`<br>`seg7-12`<br>`seg7-14`<br>`seg7-16`<br>`seg7-18`<br>`seg7-20`<br>`seg7-24`<br>`seg7-28`<br>`seg7-36`<br>`seg7-48`|7 segments display, containes digits, space, ':' and '!' for a space of the size of ':'<br>Sizes 8, 10, 12, 14, 16, 18 are pixel-perfect bold<br>Sizes 20, 24, 28, 36, 48 are dithered (2 bits per pixel) bold-italic
+`seg7-8`<br>`seg7-10`<br>`seg7-12`<br>`seg7-14`<br>`seg7-16`<br>`seg7-18`<br>`seg7-20`<br>`seg7-24`<br>`seg7-28`<br>`seg7-36`<br>`seg7-48`|7 segments display, contains digits, space, ':' and '!' for a space of the size of ':'<br>Sizes 8, 10, 12, 14, 16, 18 are pixel-perfect bold<br>Sizes 20, 24, 28, 36, 48 are dithered (2 bits per pixel) bold-italic
 `robotocondensed-12`<br>`robotocondensed-16`<br>`robotocondensed-24`|Default OpenHASP
 
 ### Binary bitmap fonts

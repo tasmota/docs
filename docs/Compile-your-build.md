@@ -33,7 +33,7 @@ There are mainly 2 type of possible customization:
 !!! Failure "Do not try to add or remove features to a variant, only to tasmota or tasmota32"
 
 ### General customization principle
-Create a new file in `/tasmota` folder called `user_config_override.h`. You can copy the sample file `user_config_override_sample.h` that is already there and which include some sample definition for coding your own Wifi SSID and pasword inside the Tasmota firmware.
+Create a new file in `/tasmota` folder called `user_config_override.h`. You can copy the sample file `user_config_override_sample.h` that is already there and which include some sample definition for coding your own Wifi SSID and password inside the Tasmota firmware.
 
 Open the file in chosen development environment for editing.
 
@@ -200,7 +200,7 @@ build_flags = ${env.build_flags} -DFIRMWARE_FOO
 build_flags = ${env.build_flags} -DFIRMWARE_BAR
 
 ; *********************************************************************
-; Similar exemple for ESP32
+; Similar example for ESP32
 ; Note that you must explicitly state that they derive from `tasmota32`
 [env:tasmota32-foo]
 extends = env:tasmota32_base
@@ -232,7 +232,7 @@ build_flags             = ${env:tasmota32_base.build_flags} -DFIRMWARE_GRIZZLY
 // You can also define your IP settings or your MQTT settings
 
 // ***********************************************
-// ** Firmare specific settings ******************
+// ** Firmware specific settings *****************
 
 // -- Options for firmware tasmota-foo and tasmota32-foo ------
 #ifdef FIRMWARE_FOO

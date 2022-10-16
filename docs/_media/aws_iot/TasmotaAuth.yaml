@@ -6,7 +6,7 @@ Parameters:
     Type: String
     AllowedValues: [ "Delete", "Retain" ]
     Default: "Retain"
-    Description: When you delete the CloudFormation template, "Delete" will all objetcs, "Retain" will keep it what is necessary for Tasmota to authenticate (you can later delete manually the Lambda function and the IOA Custom Authorizer)
+    Description: When you delete the CloudFormation template, "Delete" will all objects, "Retain" will keep it what is necessary for Tasmota to authenticate (you can later delete manually the Lambda function and the IOA Custom Authorizer)
   MQTTAuthorizerName:
     Type: String
     Default: "TasmotaAuth"
@@ -40,7 +40,7 @@ Resources:
     Properties:
       ServiceToken: !GetAtt LambdaGeneratePassword.Arn
 
-  # Lambda funtion invoking the content Lambda function and stores in S3
+  # Lambda function invoking the content Lambda function and stores in S3
   LambdaGeneratePassword:
     Type: "AWS::Lambda::Function"
     Properties:
@@ -106,7 +106,7 @@ Resources:
   # Accepts two passwords as ENV variables
   #
   ######################################################################
-  # Lambda funtion invoking the content Lambda function and stores in S3
+  # Lambda function invoking the content Lambda function and stores in S3
   LambdaIOTAuthorizer:
     Type: "AWS::Lambda::Function"
     Condition: NotRetained

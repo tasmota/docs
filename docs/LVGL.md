@@ -15,7 +15,7 @@ Supported version: LVGL v8.3.2, LodePNG v20201017, Freetype 2.10.4
 
 [LVGL](https://lvgl.io/) is an open-source graphics library providing everything you need to create embedded GUI with easy-to-use graphical elements, beautiful visual effects and low memory footprint.
 
-[Berry](Berry.md) is a ultra-lightweight dynamically typed embedded scripting language. It is designed for lower-performance embedded devices
+[Berry](Berry.md) is an ultra-lightweight dynamically typed embedded scripting language. It is designed for lower-performance embedded devices
 
 After compiling Tasmota with LVGL support and configuring [uDisplay](Displays.md#universal-display-driver) (see below), you can start using LVGL through the Berry console.
 
@@ -23,7 +23,7 @@ After compiling Tasmota with LVGL support and configuring [uDisplay](Displays.md
 
 This example uses the [M5Stack Fire](https://docs.m5stack.com/en/core/fire) device.
 
-Use the following template to define the relevant SPI GPIOs. Also set one of the unsued GPIOs to `Option A3`.
+Use the following template to define the relevant SPI GPIOs. Also set one of the unused GPIOs to `Option A3`.
 
 The complete configuration for M5Stack Fire is:
 
@@ -107,7 +107,7 @@ clock_icon = lv_clock_icon(stat_line)
 #- create a style for the buttons -#
 btn_style = lv.style()
 btn_style.set_radius(10)                        # radius of rounded corners
-btn_style.set_bg_opa(lv.OPA_COVER)              # 100% backgrond opacity
+btn_style.set_bg_opa(lv.OPA_COVER)              # 100% background opacity
 if f20 != nil btn_style.set_text_font(f20) end  # set font to Montserrat 20
 btn_style.set_bg_color(lv.color(0x1fa3ec))      # background color #1FA3EC (Tasmota Blue)
 btn_style.set_border_color(lv.color(0x0000FF))  # border color #0000FF
@@ -305,7 +305,7 @@ Please note that the actual display is asynchronous. We describe the objects, in
 #- create a style for the buttons -#
 btn_style = lv.style()
 btn_style.set_radius(10)                        # radius of rounded corners
-btn_style.set_bg_opa(lv.OPA_COVER)              # 100% backgrond opacity
+btn_style.set_bg_opa(lv.OPA_COVER)              # 100% background opacity
 if f20 != nil btn_style.set_text_font(f20) end  # set font to Montserrat 20
 btn_style.set_bg_color(lv.color(0x1fa3ec))      # background color #1FA3EC (Tasmota Blue)
 btn_style.set_border_color(lv.color(0x0000FF))  # border color #0000FF
@@ -430,7 +430,7 @@ Berry provides an object model to `lv_object` and sub-classes for widhets like `
 
 `lv_style` is created independently.
 
-`lv_color` takes an 24 bits 0xRRGGB as parameter, or a pre-defined color like `lv.BLUE`
+`lv_color` takes a 24 bits 0xRRGGB as parameter, or a pre-defined color like `lv.BLUE`
 
 ## Compiling for LVLG
 

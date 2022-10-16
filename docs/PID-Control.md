@@ -2,7 +2,7 @@ This extension adds a PID (Proportional Integral Derivative) feature into the Ta
 
 The PID algorithm is designed to be used to control real-world processes.  This includes room heating/cooling, temperature control when brewing, and a multitude of other processes.  The PID tuning parameters are designed to be meaningful in the real world (rather than the abstract Ki Kd Kp that are often used which are completely meaningless to most). The algorithm is based on that in the node-red node [node-red-contrib-pid](https://www.npmjs.com/package/node-red-contrib-pid) which has been well received.
 
-In use it can either regularly be given the current process value via MQTT or if the device has a sensor attached then that sensor can be used to read the process value.  So using any Tasmota-capable device with a e.g. a temperature sensor (e.g. a TH10 with a DS18B20) the complete PID loop control can be built into the device so that the process will continue to be controlled even if the wifi is down.  This is a very cost effective way of achieving PID control.
+In use it can either regularly be given the current process value via MQTT or if the device has a sensor attached then that sensor can be used to read the process value.  So using any Tasmota-capable device with e.g. a temperature sensor (e.g. a TH10 with a DS18B20) the complete PID loop control can be built into the device so that the process will continue to be controlled even if the wifi is down.  This is a very cost effective way of achieving PID control.
 
 The algorithm allows the relay to be used in a time proportioned way using the [Time Proportioned output](Time-Proportioned-Output-support) extension.
 

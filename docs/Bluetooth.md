@@ -195,7 +195,7 @@ A Tele message could like look this:
   
 As the NRF24L01 can only read BLE-advertisements, only the data in these advertisements is accessible. All sensors have an additional GATT-interface with more data in it, but it can not be read with a NRF24L01. 
   
-As we can not use a checksum to test data integrity of the packet, only data of sensors whose adresses showed up more than once (default = 3 times) will be published. 
+As we can not use a checksum to test data integrity of the packet, only data of sensors whose addresses showed up more than once (default = 3 times) will be published.
 Internally from time to time "fake" sensors will be created, when there was data corruption in the address bytes.  These will be removed automatically.  
 
 ## Commands

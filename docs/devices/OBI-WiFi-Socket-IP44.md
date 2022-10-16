@@ -1,6 +1,6 @@
 ### Overview
 This WiFi socket is a cheap outdoor alternative to the popular low-cost indoor WiFi socket ["Wifi Stecker Schuko Weiß"](https://www.obi.de/hausfunksteuerung/wifi-stecker-schuko-weiss/p/4077806) from the German Diy-warehouse OBI.
-It is equipped with a ESP-WROOM-02 module. Sadly, there is no programming pin header and it can be kind of tricky to get the module into programming state (see below). You'll need some soldering skills to attach the programming wires.
+It is equipped with an ESP-WROOM-02 module. Sadly, there is no programming pin header and it can be kind of tricky to get the module into programming state (see below). You'll need some soldering skills to attach the programming wires.
 ![137535_2](https://user-images.githubusercontent.com/33325587/50388246-94dea080-0710-11e9-945a-8dbb2e78d74e.jpg)
 
 ### Where to buy
@@ -15,7 +15,7 @@ First, you can remove the sealing grease out of the screw holes by using a match
 
 After this, you can use the matching screw driver. The eventually remaining sealing grease will move aside.
 > Tipp: Afterwards use normal cross screws to close the casing.
-After this its getting tricky: use a stable knife or a flat screw driver to carefully crack up the two halfs of the case. In any case, try to NOT cut up your hands!
+After this its getting tricky: use a stable knife or a flat screw driver to carefully crack up the two halves of the case. In any case, try to NOT cut up your hands!
 
 ### Connection
 For convenient access to the programming pins, you can solder jump wires to the corresponding pads of the WROOM module.
