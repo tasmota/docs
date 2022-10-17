@@ -162,7 +162,7 @@ Command|Parameters
 Delay<a class="cmnd" id="delay"></a>|`2..3600` = set a delay between two backlog commands with 0.1 second increment. *Not recommended for precision timing!*
 DeepSleepTime<a class="cmnd" id="deepsleeptime"></a>|Time to enter [deep sleep mode](DeepSleep)<BR>`0` = disable deep sleep mode *(default)*<BR>`11..86400` = set deep sleep mode time period in seconds
 DeviceName<a class="cmnd" id="devicename"></a>|Device name displayed in the webUI and used for HA autodiscovery.<br>`<value>` = set device name _(default = `FriendlyName1` value)_
-DspLine\<1\|2><a class="cmnd" id="dspline"></a>|For POWR3 Elite and THR3 Elite<br>`2..127` = control message rotation speed on display
+DspLine<1\|2><a class="cmnd" id="dspline"></a>|For POWR3 Elite and THR3 Elite<br>`2..127` = control message rotation speed on display
 DspSpeed<a class="cmnd" id="dspspeed"></a>|For POWR3 Elite and THR3 Elite<br>`<index>,<unit>,<index>,<unit>,...` = select message(s) on display
 Emulation<a class="cmnd" id="emulation"></a>|`0` = disable emulation *(default)*<BR>`1` = enable Belkin WeMo emulation for [Alexa](Alexa)<BR>`2` = enable Hue Bridge emulation for [Alexa](Alexa)
 FriendlyName<x\><a class="cmnd" id="friendlyname"></a>|`1` = Reset friendly name to firmware default<BR>`<value>` = set friendly name (32 char limit)
