@@ -251,6 +251,20 @@ ON mqtt#connected DO Publish2 stat/TestTopic/targetTempValue {"Temp":%mem1%} END
 ON mem1#state DO Backlog temptargetset %value%;Publish2 stat/TestTopic/targetTempValue {"Temp":%mem1%} ENDON
 ```
 
+## Detecting an opened window by temperature drop
+
+When opening windows, temperature will drop significantly faster than is normal. During that period, heating is usually not desired.
+Following rules will detect a .3C drop in 1min and send the thermostat into a 15min timeout.
+Replace `HTU21` with your sensor's name, if your `Teleperiod` is < 1min, consider using `Tele-HTU21#Temperature`.
+
+```
+ON Event#windowstop DO Backlog EnableOutputSet 0; Power 0; RuleTimer1 900 ENDON
+ON Rules#Timer=1 DO EnableOutputSet 1 ENDON
+ON HTU21#Temperature DO Var1 %value% ENDON
+ON Time#Minute DO Backlog Var3 %Var2%; Sub3 .3; Var2 %Var1% ENDON
+ON Var2#State<=%Var3% DO Event windowstop ENDON
+```
+
 ## Advanced features
 
 ### Multi-controller
