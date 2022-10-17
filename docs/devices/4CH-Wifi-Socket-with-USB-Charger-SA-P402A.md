@@ -9,7 +9,7 @@
 ![vierfachdose](https://user-images.githubusercontent.com/3671232/51432807-25d86700-1c3e-11e9-871e-bffdbd35eefc.jpg)
 
 ### Opening
-To open take a very small screwdrive to pull out the six feets. Don't remove the rubber plates, it won't help.
+To open take a very small screwdriver to pull out the six feet. Don't remove the rubber plates, it won't help.
 
 ![fuesschen](https://user-images.githubusercontent.com/3671232/51432805-25d86700-1c3e-11e9-9d48-bad4c086510d.jpg)
 

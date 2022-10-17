@@ -3,7 +3,7 @@ Compared to the 4CH the main differences/improvements of the 4CH Pro are:
   - Relays are isolated from mains and can each switch their own circuit (mains or low voltage).
   - With stock firmware special modes are supported (stand-alone schedules, inching, interlocking).
   - RF receiver (optional key fob or Sonoff RF Bridge 433 required).
-  - Dual microcontroller, both a ESP8285 and a STM32.
+  - Dual microcontroller, both an ESP8285 and an STM32.
 
 ## Serial Flashing
 
@@ -75,5 +75,5 @@ WARNING
 The Sonoff CH4 PRO is subject to radio frequency disturbances with random activation of the buttons. 
 To eliminate interference due to the U7 (SYN470RU7 RF-433  module) you can cut the wire between U7 and U8 (MCU STM32f030c6). This line starts from pin 10 of U7, the part towards MCU can be soldered to ground (surrounding area). It is also possible to set the RF module (U7) in shutdown-mode by unsoldering or cutting pin 11.
 
-<img title="Disable RF433 interferece" src="https://github.com/forty76/ch4_pro/blob/main/Disabilitare%20RF%20ch4_pro.jpg" align="middle" />
+<img title="Disable RF433 interference" src="https://github.com/forty76/ch4_pro/blob/main/Disabilitare%20RF%20ch4_pro.jpg" align="middle" />
 

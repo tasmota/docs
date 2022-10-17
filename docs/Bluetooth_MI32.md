@@ -162,7 +162,7 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
     <td class="tg-lboi">passive only with decryption (legacy decryption)<br>both versions reported as YLKG08</td>
   </tr>
 </table> 
-passive: data is received via BLE advertisments  
+passive: data is received via BLE advertisements
 active: data is received via bidrectional connection to the sensor  
   
 #### Devices with payload encryption  
@@ -215,7 +215,7 @@ It is recommended to paste the data of 'mi32cfg' into the next textfield, if you
 
   
 After that you can add more sensors with the following Bind Key Generator, which will also add sensors, that do not need a key. This will only work, if your browser supports this and **should work with Opera, Chrome and Edge**. Safari and Firefox are not able to do this.  
-After succesful pairing a sensor in the next step or simply connecting to a non-encrypting sensor, the JSON in the textfield above will be updated with the added new sensor at the bottom. 
+After successful pairing a sensor in the next step or simply connecting to a non-encrypting sensor, the JSON in the textfield above will be updated with the added new sensor at the bottom.
 You can copy-paste the new JSON via the Web-GUI to the mi32cfg file on the ESP32 or save it elsewhere. For adding more sensors, repeat the whole procedure after refreshing the site (after saving your data!!).  
 
 ### Bind Key Generator - Web App  
@@ -286,11 +286,11 @@ MI32Option4|`0` = use passive scanning (default)<br>`1` = use active scanning, n
   
 ## Mi Dashboard
   
-The driver provides an extended web GUI to show the observed Xiaomi sensors in a widget style, that features a responsive design to use the screen area as effective as possible. The other advantage is, that only the widget with new data gets redrawn (indicated by a fading circle) and no unnessecary refresh operations will happen. A simple graph shows if valid data for every hour was received in the last 24h, where only one gap for the coming hour is not a sign of an error. Configured sensors with no received packet since boot or key/decryption errors are dimmed.  
+The driver provides an extended web GUI to show the observed Xiaomi sensors in a widget style, that features a responsive design to use the screen area as effective as possible. The other advantage is, that only the widget with new data gets redrawn (indicated by a fading circle) and no unnecessary refresh operations will happen. A simple graph shows if valid data for every hour was received in the last 24h, where only one gap for the coming hour is not a sign of an error. Configured sensors with no received packet since boot or key/decryption errors are dimmed.
   
 ## HomeKit Bridge
   
-If activated at compile time the driver will start the HAP core (= the main task of the HomeKit framework) after succesfully reading a valid **mi32cfg** file after the start. It will create a 'bridge accessory' presenting all configured BLE devices to HomeKit. You can add the ESP32 as such a **Mi-Home-Bridge** to HomeKit in the native way, like you would add a commercial product to you local HomeKit network. The setup key is derived from the Wifi MAC of your ESP32 to easily allow many ESP32 to be used as a HomeKit bridge in your local network.  
+If activated at compile time the driver will start the HAP core (= the main task of the HomeKit framework) after successfully reading a valid **mi32cfg** file after the start. It will create a 'bridge accessory' presenting all configured BLE devices to HomeKit. You can add the ESP32 as such a **Mi-Home-Bridge** to HomeKit in the native way, like you would add a commercial product to you local HomeKit network. The setup key is derived from the Wifi MAC of your ESP32 to easily allow many ESP32 to be used as a HomeKit bridge in your local network.
 Besides the driver will also manage up to four relays and sync them with HomeKit.  
 There is nothing more to configure, the driver will automatically translate the data packets back and forth.  
 It just works ... except, when it does not.
@@ -355,7 +355,7 @@ To listen to advertisements inside a class (that could be a driver) we could ini
         print("service data:")
         var _len = self.buf[svc-2]-1
         # the index points to the data part of an AD element, two position before that is length of "type + data", 
-        # so we substract one byte from that length to get the "pure" data length
+        # so we subtract one byte from that length to get the "pure" data length
         print(self.buf[svc.._len+svc])
     end
     if manu != 0 # if manufacturer data present
@@ -379,8 +379,8 @@ n bytes - payload data
 ```
   
 The advertisement callback function provides 2 arguments, which are indices of the whole buffer that point to optional parts of the payload. A value of 0 means, this type of of element is not in the payload.  
-1. svc (= service data index) - index of service data in the advertisment buffer  
-2. manu (= manufacturer data index) - index of manufacturer data in the advertisment buffer  
+1. svc (= service data index) - index of service data in the advertisement buffer
+2. manu (= manufacturer data index) - index of manufacturer data in the advertisement buffer
   
 The payload is always provided completely, so every possibles AD type can be parsed in Berry if needed, but for convenience the two most important types for IOT applications are given in the callback.  
   
@@ -432,7 +432,7 @@ Op codes:
 UUID:  
 Returns the 16 bit UUID of the characteristic as a number, that returns a value.
   
-Internally this creates a context, that can be modified with the follwing methods:
+Internally this creates a context, that can be modified with the following methods:
   
 Set the MAC of the device we want to connect to:  
 `BLE.set_MAC(MAC,type)`: where MAC is a 6-byte-buffer, type is optional 0-3, default is 0
@@ -461,7 +461,7 @@ n bytes - data
   
 ### Berry examples
 
-Here is an implementaion of the "old" MI32 commands:  
+Here is an implementation of the "old" MI32 commands:
 !!! example "removed MI32 commands in Berry"
 
     ```python

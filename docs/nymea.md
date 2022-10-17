@@ -3,7 +3,7 @@ nymea is an open source IoT platform. It can be used in various IoT applications
 
 nymea consists of three main parts: nymea:core, nymea:app and nymea:cloud.
 
-**nymea:core** is the core piece of nymea and is meant to be installed on a persistent node in your network or the internet. It connects to devices and services and manages them using automation rules. Typically, nymea:core is installed on a IoT "box", such as a raspberry Pi or the nymea:box, however, it can be installed on Desktop PCs (Linux based), cloud servers, VM's or any other machine running Linux. nymea hosts pre-built packages for Ubuntu and Debian GNU/Linux as well as Snap packages which can be installed on any major Linux Distribution.
+**nymea:core** is the core piece of nymea and is meant to be installed on a persistent node in your network or the internet. It connects to devices and services and manages them using automation rules. Typically, nymea:core is installed on an IoT "box", such as a raspberry Pi or the nymea:box, however, it can be installed on Desktop PCs (Linux based), cloud servers, VM's or any other machine running Linux. nymea hosts pre-built packages for Ubuntu and Debian GNU/Linux as well as Snap packages which can be installed on any major Linux Distribution.
 
 **nymea:app** is the frontend for nymea:core. It is used to configure the system as well as interact with it. It allows to control configured IoT devices, monitor states and logs and set up automation rules.
 

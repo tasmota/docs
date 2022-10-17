@@ -150,7 +150,7 @@ or like this:
      0, 0, 0
   },
 ```
-After choosing the correct module type in your Tasmota configuration, press a key on the remote after boot for the device to learn your code. No need for the below rules for the RF varient
+After choosing the correct module type in your Tasmota configuration, press a key on the remote after boot for the device to learn your code. No need for the below rules for the RF variant
 
 ### Full Set of rules for IR remote
 Each rule can only be 511 characters long, some of the colors below use the built in predefined shortcut color numbers. 

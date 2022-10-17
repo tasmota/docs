@@ -51,7 +51,7 @@ To start the upgrade, open a web browser to your device's web UI and select **Fi
 You are presented with two choices:
 
 - **_Upgrade by webserver_** - use an OTA server 
-- **_Ugprade by file upload_** - uploading a downloaded or self-compiled binary file from your computer
+- **_Upgrade by file upload_** - uploading a downloaded or self-compiled binary file from your computer
 
 ![Upgrading_2](_media/upgrading_2.png)
 

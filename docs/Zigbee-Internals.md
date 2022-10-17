@@ -53,7 +53,7 @@ Instructions encoded with 4 bytes:
 * `LABEL(x)`: no-operation, and defines a Label (8 bits) that can be called by code.
 * `GOTO(x)`: moves the PC to the instruction with LABEL(x)
 * `ZI_ON_ERROR_GOTO(x)`: if an error occurs, move to label <x>
-* `ZI_ON_TIMEOUT_GOTO(x)`: if a timeout occurs, move to lavel <x>
+* `ZI_ON_TIMEOUT_GOTO(x)`: if a timeout occurs, move to label <x>
 * `WAIT(y)`: wait for <y> milliseconds (unsigned 16 bits). Note the granularity is 50ms and the wait is non-blocking
 * `WAIT_FOREVER`: pause the state machine and wait for an external goto
 * `STOP`: stop completely the state machine, only used after an unrecoverable error
@@ -109,7 +109,7 @@ Configure (only if needed):
 
 Start:
 
-* Wait for CC2530 message saying the coordinator sucessfully started
+* Wait for CC2530 message saying the coordinator successfully started
 * Query DeviceInfo
 * Query Node Descriptor
 * Query Active Endpoints
@@ -199,7 +199,7 @@ Details of `Z_IncomingMessage()`:
 	
 2. If `ZCL_REPORT_ATTRIBUTES`, call `parseReportAttributes()`. This is the general case for sensor values (temperature...)
 	
-3. If `ZCL_READ_ATTRIBUTES_RESPONSE`, call `parseReadAttributesResponse()`. This happens as a response to reading attributes, and the handling is similar to the attribute reporting (although the syntax of the message is slightly differen).
+3. If `ZCL_READ_ATTRIBUTES_RESPONSE`, call `parseReadAttributesResponse()`. This happens as a response to reading attributes, and the handling is similar to the attribute reporting (although the syntax of the message is slightly different).
 	
 4. If `ZCL_READ_ATTRIBUTES`, call `parseReadAttributes()`. This happens rarely, typically when a device asks the coordinator for attributes like the `local_time`.
 	
@@ -225,7 +225,7 @@ There are many transformations that are required because some device use proprie
 If the message is sent from the coordinator to the coordinator itself, which can happen with broadcast message, it is discarded with DEBUG level log `loopback message, ignoring`.
 
 2. Generate synthetic attributes `generateSyntheticAttributes()`.
-This is mainly used for Xiaomi Aqara devices. Aqara uses cluster 0xFF01 and 0xFF02 to send structured messages. The good side is that it allows to send attributes from different clusters in a single message, whereas the ZCL standard would have required several messages. The bad side is that Aqara reuses the same attribute numbers for different value, and you need to know the device type to decode; which makes the whole process work only if the pairing process sucessfully got the ModelId.
+This is mainly used for Xiaomi Aqara devices. Aqara uses cluster 0xFF01 and 0xFF02 to send structured messages. The good side is that it allows to send attributes from different clusters in a single message, whereas the ZCL standard would have required several messages. The bad side is that Aqara reuses the same attribute numbers for different value, and you need to know the device type to decode; which makes the whole process work only if the pairing process successfully got the ModelId.
 This is also used by Aqara Cube and Aqara vibration sensor to decode values.
 
 3. Remove invalid attributes `removeInvalidAttributes()`
@@ -240,7 +240,7 @@ Currently it computes the `BatteryPercentage` from the `BatteryVoltage` if the `
 It computes `SeaPressure` using the Tasmota `Altitude` setting.
 It fixes an Eurotronic bug in the encoding of `Pi Heating Demand` which is sent in the 0..255 range instead of 0..100 range.
 It fixes the IKEA Remote battery value which is half what it needs to be.
-It captures mutlipliers and Divisord for AC Voltage/Current/Power (cluster 0x0B04) and stores them in the Z_Data.
+It captures multipliers and divisors for AC Voltage/Current/Power (cluster 0x0B04) and stores them in the Z_Data.
 	
 6. Generate callbacks and timers `generateCallBacks()`.
 This is used to register deferres callbacks. It is only used for `Occypancy` for now. Many PIR sensors report `"Occupancy":1` but don't report the lack of occupancy. This function sets a timer to artificially generate `"Occupancy":0` after a definite amount of time (defaults to 90 seconds).
@@ -262,7 +262,7 @@ Finally the attribute name is replaced by its string value (ex: `0402/0000` is r
 
 #### 7. Publish the final message to MQTT or defer the message.
 
-In the general case, attributes are not published immediately but kept in memory for a short period of time. This allows for debouncing of identical messages, and coalescing of values (Temperature, Pressure, Humidity) in a single MQTT message, even if there were received in 3 seperate messages.
+In the general case, attributes are not published immediately but kept in memory for a short period of time. This allows for debouncing of identical messages, and coalescing of values (Temperature, Pressure, Humidity) in a single MQTT message, even if there were received in 3 separate messages.
 
 The default timer is a compile time `#define USE_ZIGBEE_COALESCE_ATTR_TIMER` with a default value of 350 ms.
 

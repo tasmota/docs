@@ -58,12 +58,12 @@ bit|Return or send the slave data as a bit values
 hex|Return or send the slave data as a hex values
 float|Return or send the slave data as floats
 uint8|Return or send the slave data as an 8 bits unsigned int
-uint32|Return or send the slave data as an 32 bits unsigned int
-uint16|Return or send the slave data as an 16 bits unsigned int
-uint32|Return or send the slave data as an 32 bits unsigned int
+uint32|Return or send the slave data as a 32 bits unsigned int
+uint16|Return or send the slave data as a 16 bits unsigned int
+uint32|Return or send the slave data as a 32 bits unsigned int
 int8|Return or send the slave data as an 8 bits signed int
-int16|Return or send the slave data as an 16 bits signed int
-int32|Return or send the slave data as an 32 bits signed int
+int16|Return or send the slave data as a 16 bits signed int
+int32|Return or send the slave data as a 32 bits signed int
   
 ### Additional commands for USE_MODBUS_TCP_BRIDGE
 Command|Parameters

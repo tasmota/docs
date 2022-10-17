@@ -216,9 +216,9 @@ In case of an argument mismatch, a warning is printed but the call is still proc
 
 **Warning**: you can easily crash Tasmota if you send wrong types arguments.
 
-## Widgets instanciation
+## Widgets instantiation
 
-Instanciation of a widget is marked as a specific signature. The return type is prefixed with `+`:
+Instantiation of a widget is marked as a specific signature. The return type is prefixed with `+`:
 
 ```
 lv_obj_t * lv_canvas_create(lv_obj_t * par, const lv_obj_t * copy);

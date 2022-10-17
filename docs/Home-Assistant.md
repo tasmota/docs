@@ -87,7 +87,7 @@ Examples of creating custom discovery messages:
 
 Adding devices manually is done by editing the `configuration.yaml` file and adding appropriate blocks of yaml code to the corresponding section.
 
-!!! note "After every change to the configuration.yaml file you'll need to restart the MANUALL CONFIGURED MQTT ENTITES in [Server Controls](https://my.home-assistant.io/redirect/server_controls/) to apply the changes."
+!!! note "After every change to the configuration.yaml file you'll need to restart the MANUALLY CONFIGURED MQTT ENTITIES in [Server Controls](https://my.home-assistant.io/redirect/server_controls/) to apply the changes."
 
 The advantage of manually configuring a device is that you maintain control of all aspects of the configuration.
 

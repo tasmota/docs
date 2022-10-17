@@ -42,17 +42,17 @@ GPIO16 Relay2 ( High = On)
 
 ![](https://user-images.githubusercontent.com/43306023/46314990-7ca52c80-c5cc-11e8-8e2c-6d355b71aebc.jpg)
 
-The only way to flashing the moduls you must soldering 4 wires to the RX/TX/3V3/GND pins from the ESP. The PCB have no serial pinout connector. For connecting the ground (GND) on a V5.0 Modul you can use one of the 2 GND pinout connectors from the PCB. For flashing the moduls enable the flashmode of the ESP, connect PIN4 (GPIO00) to GND.  
+The only way to flashing the moduls you must soldering 4 wires to the RX/TX/3V3/GND pins from the ESP. The PCB have no serial pinout connector. For connecting the ground (GND) on a V5.0 Module you can use one of the 2 GND pinout connectors from the PCB. For flashing the moduls enable the flashmode of the ESP, connect PIN4 (GPIO00) to GND.
 
 ***
 
-**_!!! Don't flashing the modul when it connected to the main power. You brick the device and your computer or USB Port. Use only a 3.3V USB Adapter for flashing!!!_**
+**_!!! Don't flashing the module when it connected to the main power. You brick the device and your computer or USB Port. Use only a 3.3V USB Adapter for flashing!!!_**
 
 ***
 
 ### Notes   
 
-For use the V5.0 Modul with the "EXS Relay(s)" profile you must change the "Module parameters" (see picture below)
+For use the V5.0 Module with the "EXS Relay(s)" profile you must change the "Module parameters" (see picture below)
 
 ![](https://pi-gate.net/images/Blackline.png)  
 

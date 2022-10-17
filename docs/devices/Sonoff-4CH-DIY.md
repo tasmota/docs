@@ -37,7 +37,7 @@ Restart the module.
 
 <img alt="Sonoff 4CH DIY SetOption51" src="https://raw.githubusercontent.com/Gtis69/arendst.github.io/master/media/Sonoff_DIY_4CH_Option51.jpg" width="50%" />
 
-To use GPIO9 and GPIO10 of the ESP8285, open the consol and enter => "SetOption51 on".
+To use GPIO9 and GPIO10 of the ESP8285, open the console and enter => "SetOption51 on".
 
 Restart the module.
 

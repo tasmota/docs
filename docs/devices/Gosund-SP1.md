@@ -6,7 +6,7 @@ There are several clones of this device -- use the Teckin device:
      * To configure select Gosund SP1 v23 (55) or console command `Module 55`
 *    BlitzWolf SHP2 (Version 2.3 and 2.4)
 
-## **Watch out: SP1 devices sold nowadays do not always contain a ESP8266. Variants are around with a W701 cpu, which is incompatible with Tasmota!!**
+## **Watch out: SP1 devices sold nowadays do not always contain an ESP8266. Variants are around with a W701 cpu, which is incompatible with Tasmota!!**
 
 # Calibration 
 

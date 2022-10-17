@@ -69,14 +69,14 @@ Enable the rule (type `rule1 1` in the Tasmota console)
 If your relay is still not switching, check the LED on the board.
 If LED D5 is on (blue on my board, the middle LED) then the controller is in Mode 2.
 By pressing S2 while power up you can change back to Mode 1.
-After that the LED D7 is on ( red in my case) an the device works like a charm.
-Be carefull when you press S1 you change the mode again!
+After that the LED D7 is on (red in my case) and the device works like a charm.
+Be careful when you press S1 you change the mode again!
 
 ## LC Technology WiFi Relay X2 with Nuvoton N76E003AT20
 
 Note: This version of the board has the Nuvoton N76E003AT20 as its host microcontroller instead of  STC15F104W. This device requires a special configuration for it to start listening to serial commands.
 
-Use the following device template, configureable in `Configure Other`:
+Use the following device template, configurable in `Configure Other`:
 
 ```
 {"NAME":"LC-ESP01-2R-5V","GPIO":[0,148,0,149,0,0,0,0,21,22,0,0,0],"FLAG":0,"BASE":18}
@@ -124,7 +124,7 @@ After these messages are sent back by Nuvoton to the ESP, the green LED beside t
 Note: This version of the board has the Nuvoton N76E003AT20 as its host microcontroller instead of  STC15F104W. Becareful, not working with Nuvoton MS51FB9AE.  (Not sure why this 'be careful' comment is here, the following did work on LC x4 board with Nuvoton MS51FB9AE rec'd Jan 2021, and Tasmota 9.2.0  If the board LEDs are not solid red + 1 sec green blink, press button S2 when powering up board.  If buttons are pressed and solid blue is shown, it will not work.)
 Same special configuration than with X2 relay version with Nuvoton N76E003AT20.
 
-Use the following device template, configureable in `Configure Other`:
+Use the following device template, configurable in `Configure Other`:
 
 ```
 {"NAME":"LC-ESP01-4R-12V","GPIO":[0,148,0,149,0,0,0,0,21,22,23,24,0],"FLAG":0,"BASE":18}

@@ -105,7 +105,7 @@ Rotary1#Pos1<a id="Rotary"></a>|when rotary encoder change. See [Use a rotary en
 Rules#Timer=&lt;x\>|when countdown `RuleTimer<x>` expires (x = `1..8`).
 Switch1#Boot<a id="SwitchBoot"></a>|occurs after Tasmota starts before it is initializated.
 Switch1#State<a id="SwitchState"></a>|when a switch changes to state. Will not trigger if SwitchTopic is set.<br>use `Switch1#state=0` and `Switch1#state=1` for comparison, not =off or =on<br>`0` = OFF<BR>`1` = ON<BR>`2` = TOGGLE<BR>`3` = HOLD (`SwitchTopic 0` must be set for this to trigger)<BR>`4` = INC_DEC (increment or decrement dimmer)<BR>`5` = INV (change from increment to decrement dimmer and vice versa)<BR>`6` = CLEAR (button released for the time set with `SetOption32`)
-System#Boot<a id="SystemBoot"></a>|occurs once after Tasmota is fully intialized (after the INFO1, INFO2 and INFO3 console messages). `System#Boot` triggers after Wi-Fi and MQTT (if enabled) are connected. If you need a trigger prior to every service being initialized, use `Power1#Boot`
+System#Boot<a id="SystemBoot"></a>|occurs once after Tasmota is fully initialized (after the INFO1, INFO2 and INFO3 console messages). `System#Boot` triggers after Wi-Fi and MQTT (if enabled) are connected. If you need a trigger prior to every service being initialized, use `Power1#Boot`
 System#Init<a id="SystemInit"></a>|occurs once after restart before Wi-Fi and MQTT are initialized
 System#Save<a id="SystemSave"></a>|executed just before a planned restart
 Time#Initialized<a id="TimeInitialized"></a>|once when NTP is initialized and time is in sync
@@ -1656,7 +1656,7 @@ For example, a remote control with one button to change speed. This rules simula
 
 Specify the rule set  
 
-- The `<trigger>` can be a a condition or an event sent from another device or home automation hub.  
+- The `<trigger>` can be a condition or an event sent from another device or home automation hub.
 - `<topic>` corresponds to the device transmitting the code (e.g., [YTF IR Bridge](devices/YTF-IR-Bridge)). This could also be modified to send an RF code from a [Sonoff RF Bridge](devices/Sonoff-RF-Bridge-433).  
 - The `Delay` may not be necessary in your environment or may need to be adjusted according to your device characteristics. 
 
@@ -1746,7 +1746,7 @@ Rule1 1
 
 Activate dimmer mode with `Switchmode 11` and shorten long press time to 1 second (`Setoption32 10`).
 
-A short press of the switch sends a `TOGGLE` message to toggle the dimmer. A long press sends repeated `INC_DEC` messages to increment the dimmer. If a second press of the switch follows the first press a `INV` message is sent to invert the function from increment to decrement and repeated `INC_DEC` messages are sent to decrement the dimmer. After releasing the switch a timeout message `CLEAR` resets the automation
+A short press of the switch sends a `TOGGLE` message to toggle the dimmer. A long press sends repeated `INC_DEC` messages to increment the dimmer. If a second press of the switch follows the first press an `INV` message is sent to invert the function from increment to decrement and repeated `INC_DEC` messages are sent to decrement the dimmer. After releasing the switch a timeout message `CLEAR` resets the automation
 
 ```haskell
 Backlog SwitchMode 11; SetOption32 10; Rule1 1;

@@ -4,7 +4,7 @@
 
 !!! example "Some sections are marked as 'Advanced topic', you can skip them at first and read them only when you need to go deeper."
 
-Zigbee2Tasmota (Z2T) is a lightweight Zigbee gateway/bridge solution running on ESP8266/ESP8285 or ESP32 Wi-Fi chips. Hence it is easier to deploy wherever you want in your home. It was inspired by Zigbee2MQTT but it was written from scratch to make it fit into the resource constraints of a ESP82xx chip with just 80kB of RAM and only 1MB of flash memory.
+Zigbee2Tasmota (Z2T) is a lightweight Zigbee gateway/bridge solution running on ESP8266/ESP8285 or ESP32 Wi-Fi chips. Hence it is easier to deploy wherever you want in your home. It was inspired by Zigbee2MQTT but it was written from scratch to make it fit into the resource constraints of an ESP82xx chip with just 80kB of RAM and only 1MB of flash memory.
 
 For quick reference about Zigbee commands see [Zigbee Commands](Commands.md#zigbee).
 
@@ -16,7 +16,7 @@ Flashing and installation instructions for **ESP32** based:
 
 - [Sonoff Zigbee Bridge Pro](https://zigbee.blakadder.com/Sonoff_ZBBridge-P.html)
 - [ZB-GW03 eWeLink Ethernet Zigbee Gateway (also sold as EACHEN Zigbee Smart Hub and SmartWise Zigbee Bridge Pro)](https://templates.blakadder.com/ewelink_ZB-GW03)
-- [Tube's Ethernet Zigbee Gateway (EFR32 varient)](https://templates.blakadder.com/tube_TUBE013_EFR32.html)
+- [Tube's Ethernet Zigbee Gateway (EFR32 variant)](https://templates.blakadder.com/tube_TUBE013_EFR32.html)
 - [DIY Zigbee gateway/bridge device example based on Ebyte E180-ZG120B or E180-ZG120B-TB](https://github.com/zigpy/zigpy/discussions/584)
 
 Flashing and installation instructions for **ESP8266** based:
@@ -181,7 +181,7 @@ Put Z2T in **pairing mode** (command `ZbPermitJoin 1` or via WebUI) and keep the
 17:08:14.221 RSL: SENSOR = {"ZbReceived":{"0x2916":{"Device":"0x2916","Temperature":25.72,"Humidity":47.73,"Endpoint":1,"LinkQuality":116}}}
 ```
 
-These logs are quite rich and we'll dive into the details later. Basically it says that the device paired succesfully and is configured.
+These logs are quite rich and we'll dive into the details later. Basically it says that the device paired successfully and is configured.
 
 Next step is **setting a friendly name** with `zbname 0x2916,SNZB-02`
 
@@ -456,7 +456,7 @@ Most common attributes:
 |ModelID|Zigbee Model name as configured by manufacturer (cannot be changed)|
 |Manufacturer|Manufacturer name|
 |Endpoints|List of endpoints|
-|Config|(used internaly)|
+|Config|(used internally)|
 |(attributes)|attributes tracked by Z2T|
 |LastSeen|Number of seconds since the last message was received|
 |LastSeenEpoch|Timestamp when the last message was received|
@@ -564,7 +564,7 @@ Supported values:
 
 |Field name|Value|
 |---|---|
-|`LinkQuality`|Stength of the Zigbee signal, between 1 and 254 (integer). See this [ZigBee and WiFi Coexistence](https://www.metageek.com/training/resources/zigbee-wifi-coexistence.html)|
+|`LinkQuality`|Strength of the Zigbee signal, between 1 and 254 (integer). See this [ZigBee and WiFi Coexistence](https://www.metageek.com/training/resources/zigbee-wifi-coexistence.html)|
 |`Humidity`|Humidity in percentage (float)|
 |`Pressure` and `PressureUnit`|Atmospheric pressure (float) and unit (string)<BR>Currently only `hPa` (A.K.A. mbar) is supported|
 |`Temperature`|Temperature in Celsius (float)|
@@ -721,7 +721,7 @@ Example of group binding
 
 This command links the device `0xC2EF` that will send all commands for cluster `6` (On/off cluster) and from endpoint `1` to the group `100`.
 
-Reponse in case of success
+Response in case of success
 ```json
 MQT: tele/%topic%/RESULT = {"ZbBind":{"Device":"0xF72F","Name":"IKEA_Remote","Status":0,"StatusMessage":"SUCCESS"}}
 ```

@@ -12,7 +12,7 @@ Use the string below from the console of the device to configure everything (rep
 
 `Backlog SSID1 YOUR_SSID_NAME; Password1 YOUR_WIFI_PASSWORD; MqttHost MQTT_INTERNAL_IP_ADDRESS; MqttUser MQTT_USER_NAME; MqttPassword MQTT_PASSWORD; GPIO2 56; GPIO12 21; GPIO13 17;topic genio1; FriendlyName Genio1` 
 
-[my prefered flashing method](https://www.youtube.com/watch?v=UDnNI5wkNNY)
+[my preferred flashing method](https://www.youtube.com/watch?v=UDnNI5wkNNY)
 Once flashed, the config should look like: 
 
 ![config settings](https://i.ibb.co/khNDTvV/settings.png)

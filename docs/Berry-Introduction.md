@@ -2,7 +2,7 @@
 
 This quick start will drive you in the basics of the Berry language. It should take no more than 20 minutes and is inspired by [Ruby in Twenty Minutes](https://www.ruby-lang.org/en/documentation/quickstart/)
 
-Berry is a ultra-lightweight dynamically typed scripting language. It is designed for lower-performance embedded devices. It also runs on a regular computer, and it can run directly in your browser for quick testing.
+Berry is an ultra-lightweight dynamically typed scripting language. It is designed for lower-performance embedded devices. It also runs on a regular computer, and it can run directly in your browser for quick testing.
 
 
 Berry is the next generation scripting for Tasmota, embedded by default in all ESP32 based firmwares. It is used for advanced scripting and superseded Rules. Its advanced features are used to extend Tasmota: adding commands, adding drivers (I2C, serial...), extending the web UI, adding full applications (TAPP files), driving advanced graphics with [LVGL](https://lvgl.io/).
@@ -395,7 +395,7 @@ Indentation has no impact on Berry compiler, it's only by convention to make sou
 
 ## Maps
 
-Maps are a very common and powerful feature to store key/value pairs. They are declared usin `{}`.
+Maps are a very common and powerful feature to store key/value pairs. They are declared using `{}`.
 
 ``` ruby
 > m1 = {}           # empty map

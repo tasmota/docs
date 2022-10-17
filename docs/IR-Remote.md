@@ -40,7 +40,7 @@ In the **_Configuration -> Configure Module_** page assign:
 
 - GPIOx to `IRrecv (51)`   
 
-On a captured code IR receiver sends a `tele/%topic%/RESULT` JSON reponse:
+On a captured code IR receiver sends a `tele/%topic%/RESULT` JSON response:
 
 ```json
 {

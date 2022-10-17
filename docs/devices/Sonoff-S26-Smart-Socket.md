@@ -31,7 +31,7 @@ Alternative solder points available for 3V3, GND and RX on the underside of the 
 ![](https://user-images.githubusercontent.com/1029851/45257726-a2ab2880-b3a2-11e8-9cb8-5cc1d49225b2.png)
 
 ## No Solder Connection
-With the help of some adhesive tape it is possible to acheive a flash without soldering.
+With the help of some adhesive tape it is possible to achieve a flash without soldering.
 
 Hook your connecting wires / pins into the locations shown on the T1117A regulator - there is enough space under the SOT-223 package pins for a connection to be made. 
 Use some adhesive tape to hold these pins in place; it only needs to remain there for a few minutes. (Vout = 3v3, Pin 1 = GND)

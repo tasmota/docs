@@ -34,7 +34,7 @@ Sonoff Pow R2 might need calibration as correct measurements are influenced by h
 ## Telemetry
 The Sonoff Pow R2 can provide Energy, Power, Voltage and Current information in different ways.
 
-The preffered way is using the periodic telemetry data. Default setting ```TelePeriod 300``` will send telemetry data every 5 minutes.<br />
+The preferred way is using the periodic telemetry data. Default setting ```TelePeriod 300``` will send telemetry data every 5 minutes.<br />
 > If the setting `PowerDelta` (new since version 5.12.0e) is not 0 (default 80%), telemetry will be sent on power change too.
 
 ```

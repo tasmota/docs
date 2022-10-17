@@ -92,7 +92,7 @@ Debug config:
 
 If your CC2530 is DEBUG_LOCKED, then the flash size will be incorrectly _reported_ as 16kB. Dont worry flashing the Z-Stack firmware will work and reset the DEBUG_LOCKED bit. 
 
-In some situation flashing fails with a error message `flash have not enough space`. If this happens do the following:   
+In some situation flashing fails with the error message `flash have not enough space`. If this happens do the following:
 
 ```
 python Python/cc_read_flash.py -p <serial_port> -o x.hex

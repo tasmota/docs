@@ -38,7 +38,7 @@ GND   to   GND
 3.3V  to   3.3V
 RX    to   RX  (due to the fact the silkscreen is wrong, otherwise, RX connects to TX and vice versa)
 TX    to   TX  
-SW    to   GND  -- only durning power up, to put the ESP in programming mode.
+SW    to   GND  -- only during power up, to put the ESP in programming mode.
 
 From here the upload is the same as for all other Tasmota devices. See the [upload page](../Getting-Started.md#flashing) for detailed info.
 
@@ -56,7 +56,7 @@ Keep in mind, the dimmer itself needs a Neutral wire as well. If you replace an 
 
 ## First connection
 
-When you first power up the dimmer switch, it comes up in AccesPoint mode.
+When you first power up the dimmer switch, it comes up in AccessPoint mode.
 Follow the instructions [here](../Getting-Started.md#initial-configuration) 
 
 ## Set correct module type

@@ -264,7 +264,7 @@ Read more about [peripherals](Supported-Peripherals.md).
 
 ## ADC Conversion
 
-| Old ADC | New ADC | Option      | WebUI display                                                         | MQTT mesage                                                           |
+| Old ADC | New ADC | Option      | WebUI display                                                         | MQTT message                                                          |
 |---|---|---|---|---|
 | 0       | 0       | None        | none                                                                  | none                                                                  |
 | 1       | 4704    | Analog      | Analog0 %value%                                                       | {"A0":%value%}                                                        |

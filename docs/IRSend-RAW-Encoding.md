@@ -157,7 +157,7 @@ You need to take timing by pairs, again the first value is Mark (IR on), the sec
 
 So the first bits of the bitstream are: `101001...`
 
-## Pioneer IR enconding
+## Pioneer IR encoding
 
 Pioneer IR encoding is very similar to NEC encoding for the bitstream. When capturing IR codes, they will easily be recognized as NEC codes. But they have subtle differences.
 

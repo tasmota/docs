@@ -27,7 +27,7 @@ While the calibration process is running, the raw data values will be printed in
      
 g - number of the graph (= number of the button)
 v - raw value of the corresponding touch pin
-h - number of continous hits below current threshold, useful to see the number and length of "spikes", should be 0 without touching  
+h - number of continuous hits below current threshold, useful to see the number and length of "spikes", should be 0 without touching
   
 The new values for a personal configuration can be stored in RULE:  
   

@@ -180,7 +180,7 @@ To ignore default button behaviour of controlling power outputs you can:
 
 1. use [`SetOption73 1`](Commands.md#setoption73)
 2. use [`ButtonTopic`](#buttontopic)
-3. define a rule which triggers on `Button<x>#State`. Take note: If the rule trigger only certain states, default behaviour is supressed only for those states.
+3. define a rule which triggers on `Button<x>#State`. Take note: If the rule trigger only certain states, default behaviour is suppressed only for those states.
 
 
 !!! example "Make Button1 publish its value to `stat/custom-topic/BUTTON` and not control Power1"
@@ -298,7 +298,7 @@ All of the above is easier accomplished using [Rules](Rules#button-single-press-
 ## AC Frequency Detection Switch
 Some devices, such as [BlitzWolf BW-SS5](https://templates.blakadder.com/blitzwolf_BW-SS5.html) or [Moes MS-104B](https://templates.blakadder.com/moes-MS-104B.html), use mains frequency detection on their switch inputs. Whenever the connected switch or button is pressed there are 50/60 Hz pulses on the switch input. Inside the switch there's a frequency detection circuit which is connected to a GPIO of the ESP8266 chip which counts those pulses. Prior to Tasmota 8.4 this kind of switching was handled using Counter sensors and scripting which is now simplified.
 
-You can imagine this algorithm as a leaking bucket. Every pulse adds water to the bucket (little more than leaking out in a cycle), but the water is dripping countinously. If the bucket is full, we will treat the switch on. If there's no pulses, the bucket will be empty, and the we will turn off the switch. The size of the bucket is the debouncing time which controls the sensitivity of the algorithm. If the mains frequency is 50 Hz, a whole AC wave is 20 msec long (for 60 Hz it's about 17 msec; 1000 / frequeny if we want the result in milliseconds). The exact frequency is not really important, because we add more water for every pulse.
+You can imagine this algorithm as a leaking bucket. Every pulse adds water to the bucket (little more than leaking out in a cycle), but the water is dripping countinously. If the bucket is full, we will treat the switch on. If there's no pulses, the bucket will be empty, and the we will turn off the switch. The size of the bucket is the debouncing time which controls the sensitivity of the algorithm. If the mains frequency is 50 Hz, a whole AC wave is 20 msec long (for 60 Hz it's about 17 msec; 1000 / frequency if we want the result in milliseconds). The exact frequency is not really important, because we add more water for every pulse.
 
 After you have assigned a Switch<x\> to the GPIO connected to the AC frequency detection circuit use the ['SwitchDebounce'](Commands.md#switchdebounce) command to set the number of pulses required for the switch to be recognized as on or off. For example: `SwitchDebounce 69` will turn the switch on after three pulses and turn it off after three missing ones (3 * 20 msec is 60 and the last digit must be 9 to activate the AC detection). You will probably have to experiment with the values depending on your AC frequency and the devices frequency detection implementation.
 
@@ -323,9 +323,9 @@ MQT: tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:01","Switch1":"ON"}
 ```
 You can globally change the status text with [`StateText`](Commands.md#statetext) command.
 
-You can change the default "Switch1" text using [`SwitchText<x>`](Commands.md#switchtext) command.  For exemple: `SwitchText1 Garage_Door_State`
+You can change the default "Switch1" text using [`SwitchText<x>`](Commands.md#switchtext) command.  For example: `SwitchText1 Garage_Door_State`
 
-When `Setoption114 1` is used together with `SwitchMode<x> 15`, Tasmota Integration in Home Assistant will create a binary sensor in HA using the Default text "String1" or the text mentionned in the `SwitchText` command.
+When `Setoption114 1` is used together with `SwitchMode<x> 15`, Tasmota Integration in Home Assistant will create a binary sensor in HA using the Default text "String1" or the text mentioned in the `SwitchText` command.
 
 ### Rules
 

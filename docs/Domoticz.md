@@ -21,7 +21,7 @@ If not already done configure Domoticz MQTT and Virtual Sensor hardware.
     1. Give it a name
 
 ## Virtual Switch
-Make a new virtual switch and remeber its Idx number.
+Make a new virtual switch and remember its Idx number.
 
 1. Make a new virtual switch to be used with Sonoff by clicking `Create Virtual Sensors`
     1. Give it a name
@@ -54,7 +54,7 @@ That's it! You can now control your device from the Domoticz user interface.
 - On the Switches page scroll down and find your Switch as configured in step 1
     - Toggle the light bulb; Tasmota should respond
 
-## Automatic Disovery
+## Automatic Discovery
 
 Tasmota supports automatic discovery by [Domoticz](http://www.domoticz.com/) through the [Domoticz MQTT Discovery plugin](https://github.com/emontnemery/domoticz_mqtt_discovery).
 
@@ -72,7 +72,7 @@ Configure Domoticz MQTT Discovery plugin.
     1. Give it a name, e.g. `Tasmota`
     2. Configure the interface with access to your MQTT server (`MQTT Server Address`, `Port`, `Username` and `Password`)
     3. Set the `Discovery topic` to `homeassistant` unless it has been changed in a custom Tasmota build
-    4. Set the `Ignored device topic` to `/tasmota/` to avoid unconfigured Tasmota devices from being discoved
+    4. Set the `Ignored device topic` to `/tasmota/` to avoid unconfigured Tasmota devices from being discovered
 
 ### Tasmota Configuration
 #### Precompiled Binary

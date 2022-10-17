@@ -120,7 +120,7 @@ lightgold {"Dimmer":20}
 
 Tasmota expects that you send a response to commands. You can use the following methods:
 
-- `tasmota.resp_cmnd_done()`: report command as `Done` (including trasnlated versions)
+- `tasmota.resp_cmnd_done()`: report command as `Done` (including translated versions)
 - `tasmota.resp_cmnd_error()`: report command as `Error`
 - `tasmota.resp_cmnd_failed()`: report command as `Failed`
 - `tasmota.resp_cmnd_str(<msg>)`: report an arbitrary string
@@ -188,7 +188,7 @@ tasmota.add_driver(d1)
 
 ## Creating an I2C driver
 
-Berry Scripting provides all necessary primitves for a complete I2C driver.
+Berry Scripting provides all necessary primitives for a complete I2C driver.
 
 ### Step by step approach
 
@@ -259,7 +259,7 @@ We write a series of values in registers to configure the device as expected (se
 [...]
 ```
 
-We also pre-compute multipler to convert raw values to actual values:
+We also pre-compute multiplier to convert raw values to actual values:
 
 ```python
 [...]
@@ -534,7 +534,7 @@ wifi_bars.set_x(stat_line.get_width() - stat_line_height)
 #- create a style for the buttons -#
 btn_style = lv_style()
 btn_style.set_radius(lv.STATE_DEFAULT, 10)                                                    # radius of rounded corners
-btn_style.set_bg_opa(lv.STATE_DEFAULT, lv.OPA_COVER)                                          # 100% backgrond opacity
+btn_style.set_bg_opa(lv.STATE_DEFAULT, lv.OPA_COVER)                                          # 100% background opacity
 if f28 != nil btn_style.set_text_font(lv.STATE_DEFAULT, f28) end
 btn_style.set_bg_color(lv.STATE_DEFAULT, lv_color(0x33BBFF))                                  # background color #1FA3EC (Tasmota Blue)
 btn_style.set_border_color(lv.STATE_DEFAULT, lv_color(0x0000FF))                              # border color #0000FF
@@ -544,7 +544,7 @@ btn_style.set_text_color(lv.STATE_DEFAULT, lv_color(0x000000))                  
 #- enabled -#
 btn_style.set_bg_color(lv.STATE_CHECKED, lv_color(0x0000FF))                                  # background color #1FA3EC (Tasmota Blue)
 btn_style.set_text_color(lv.STATE_CHECKED, lv_color(0xFFFFFF))                                # text color #FFFFFF
-btn_style.set_outline_width(lv.STATE_FOCUSED, 0)                                              # rmove focus outline, not needed with touchscreen
+btn_style.set_outline_width(lv.STATE_FOCUSED, 0)                                              # remove focus outline, not needed with touchscreen
 
 #- register buttons -#
 var btns = []         # relay buttons are added to this list to match with Tasmota relays
@@ -673,7 +673,7 @@ end
 
 An H-bridge is an electronic circuit that switches the polarity of a voltage applied to a load. These circuits are often used in robotics and other applications to allow DC motors to run forwards or backwards.
 
-You can typically use 2 PWM channels to pilot a H-bridge, under the condition that both channels are never active at the same time; otherwise you may detroy your device. This means that phasing must be calculated so that one pulse started once the other pulse is inactive, and the sum of both dutys must not exceed 100%.
+You can typically use 2 PWM channels to pilot a H-bridge, under the condition that both channels are never active at the same time; otherwise you may destroy your device. This means that phasing must be calculated so that one pulse started once the other pulse is inactive, and the sum of both dutys must not exceed 100%.
 
 The following Berry function ensures appropriate management of H-bridge:
 
@@ -686,7 +686,7 @@ class H_bridge
   var gpio1, gpio2
   var max
 
-  # init(phy_gpio1, phy_gpio2) - intialize H-bridge with the 2 GPIOs used to control it
+  # init(phy_gpio1, phy_gpio2) - initialize H-bridge with the 2 GPIOs used to control it
   def init(gpio1, gpio2)
     self.gpio1 = gpio1
     self.gpio2 = gpio2

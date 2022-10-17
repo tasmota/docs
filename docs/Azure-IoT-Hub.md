@@ -25,7 +25,7 @@ Azure IoT Hub provides a [free tier](https://azure.microsoft.com/en-us/pricing/d
 
 ### IoT Central
 
-In additon to Azure IoT Hub which is a Platform as a Service (PaaS), Tasmota also works with [IoT Central](http://aka.ms/iotcentral) which is a more complete Software as a Service (SaaS).
+In addition to Azure IoT Hub which is a Platform as a Service (PaaS), Tasmota also works with [IoT Central](http://aka.ms/iotcentral) which is a more complete Software as a Service (SaaS).
 
 ## How to configure (without Device Provisioning Service)
 
@@ -110,7 +110,7 @@ Following: [https://docs.microsoft.com/en-us/azure/iot-dps/tutorial-set-up-cloud
 
 ![image](https://user-images.githubusercontent.com/15837044/117375578-e5479a80-ae94-11eb-87b5-71ff977b95e4.png)
 
-### 2. Create a Group Enrollment with a Symetrical Key
+### 2. Create a Group Enrollment with a Symmetrical Key
 
 In your Device Provisiniong Service, click `Manage enrollments` and then click `Add enrollment group`.
 
@@ -126,7 +126,7 @@ Once created you can select the enrollment group to retrieve the <b>Primary Key<
 
 Following the directions here: [https://tasmota.github.io/docs/Compile-your-build/](https://tasmota.github.io/docs/Compile-your-build/) compile your binary adding the following settings to your [my_user_config.h](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h) adding your Scope Id and your Primary Key.
 
-!!! tip Don't foget your WiFi settings for complete automation.
+!!! tip Don't forget your WiFi settings for complete automation.
 
 ```
 #ifndef USE_MQTT_TLS
@@ -149,7 +149,7 @@ In the Console of Tasmota, you will see it was registered with Device Provisioni
 
 ![image](https://user-images.githubusercontent.com/15837044/117375783-59823e00-ae95-11eb-8045-6e7ff369192e.png)
 
-If you look at the Information, you will see it automatically definded: <b>Host</b>, <b>Port</b>, <b>TLS</b> and <b>MQTT Client</b> (device Id) -- which defaulted to the MAC address which is unique:
+If you look at the Information, you will see it automatically defined: <b>Host</b>, <b>Port</b>, <b>TLS</b> and <b>MQTT Client</b> (device Id) -- which defaulted to the MAC address which is unique:
 
 ![image](https://user-images.githubusercontent.com/15837044/117376026-e88f5600-ae95-11eb-8b2f-197d0f4d1511.png)
 

@@ -574,7 +574,7 @@ _Z8Examplefff:
 	mov.n	a2, a12	#, D.171139       <- load a2 with a12: sin(a)
 	call0	__mulsf3	#         <- multiply 'sin(a)*(b+0.4f)'
 	l32r	a3, .LC1013	#,        <- load a3 with 3.5f
-	call0	__subsf3	#         <- substract 
+	call0	__subsf3	#         <- subtract
 	l32i.n	a0, sp, 12	#,        <- restore a0 (return address)
 	l32i.n	a12, sp, 8	#,        <- restore a12
 	l32i.n	a13, sp, 4	#,        <- restore a13
@@ -671,7 +671,7 @@ _Z9Examplef2ff:
 	call0	__muldf3	#        <- multiply double
 	l32r	a4, .LC1015	#,
 	l32r	a5, .LC1015+4	#,
-	call0	__subdf3	#        <- substract double
+	call0	__subdf3	#        <- subtract double
 	call0	__truncdfsf2	#        <- truncate double to float
 	l32i.n	a0, sp, 12	#,
 	l32i.n	a12, sp, 8	#,

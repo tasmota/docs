@@ -23,7 +23,7 @@ The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?
 !!! danger
     Some adapters can be switched between 3.3V and 5V for the data pins, but still provide 5V on the power pin which will irreparably destroy your device.  You **MUST** make sure the data (RX and TX) and VCC pins are set for 3.3V. 
 
-Some devices, such as [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU), [D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html) or [M5Stack products](https://m5stack.com/), have an USB upload port and the serial-to-USB adapter built in.
+Some devices, such as [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU), [D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html) or [M5Stack products](https://m5stack.com/), have a USB upload port and the serial-to-USB adapter built in.
 
 Many CH340G devices will not work, the "golden CH340G" has a voltage regulator on it to supply enough power to the ESP device - many do not.  <img src="../_media/golden-ch340g.png" style="margin:5px;float:right;width:200px"></img> The ESP requires at least 150mA, many 3.3V serial programmers do not supply this much current as many serial programming tasks do not require a large amount of power.
 
@@ -145,7 +145,7 @@ If you have followed [Hardware preparation](#hardware-preparation), your device 
 !!! tip "You may want to back up the device manufacturer's firmware on the one in a million chance you don't like Tasmota."  
   
 <script src="../extra_javascript/web_flasher.js"></script>
-<!-- Hard coded hack to get the postion in tabbed set after that. Must be placed before the tabbed set. Tabbed set MUST not be altered in its structure!! -->
+<!-- Hard coded hack to get the position in tabbed set after that. Must be placed before the tabbed set. Tabbed set MUST not be altered in its structure!! -->
 <span id='web_installer'> 
 
 

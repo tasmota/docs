@@ -3,7 +3,7 @@ Recently I bought a very nice and compact *Smart Plug* (UK variant) from Aliexpr
 
 ![hyleton-313](https://znanev.github.io/images/hyleton-313/hyleton-313.jpg "Hyleton 313 Smart Plug")
 
-Another good thing is that it is built around a ESP8266 module, which gives us the possibility to change its firmware and install Tasmota.
+Another good thing is that it is built around an ESP8266 module, which gives us the possibility to change its firmware and install Tasmota.
 
 ## Open the case
 There are no visible screws, however it is not that difficult to open the case using some sharp plastic or metal pry tool and a heat gun (or hair dryer on max setting also works - hold on each side for about 20-30 seconds). Heat the edge of the plug a bit, then work your way slowly and pry from the middle of side with the button, slowly moving the tool towards the corners.

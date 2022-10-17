@@ -4,7 +4,7 @@ See below how to build you own Tasmota with Teleinfo enabled.
 
 ## Overview
 
-Teleinfo is an Tasmota ENERGY driver for energy meters installed by French national electricity 
+Teleinfo is a Tasmota ENERGY driver for energy meters installed by French national electricity
 grid manager Enedis in all households. Teleinfo driver works with either legacy meters or the new
 Linky meters. It is based on Charles Hallard's LibTeleinfo.
 
@@ -94,7 +94,7 @@ NoRaw|Disable sending of raw frame (see below).
 Full|Enable sending of all frames in raw mode.
 Changed|Enable sending raw frames only when data has changed.
 Skip _n_|Skips _n_ frames before sending raw frame.
-Limit|Limit raw frames to values subject fo fast change (Power, Current, ...)
+Limit|Limit raw frames to values subject to fast change (Power, Current, ...)
 
 Changing mode from historique to standard and vice-versa will restart tamota.
 
@@ -158,7 +158,7 @@ But in our case we have also a TIC object which contains all the frame received 
 
 ## Sending data to other 
 
-Teleinfo is a very powerfull tool to monitor house energy consumption that many of you may need to send theese date to backend for other treatment. For example receiving power value every 5 minutes may be an issue to real time monitoring house consuption, this is why we introduced option to send data in real time. 
+Teleinfo is a very powerful tool to monitor house energy consumption that many of you may need to send these date to backend for other treatment. For example receiving power value every 5 minutes may be an issue to real time monitoring house consuption, this is why we introduced option to send data in real time.
 
 Best would be sending full received frame to MQTT for example, let's do that.
 
@@ -175,11 +175,11 @@ To enable real time raw teleinfo frame to be sent to MQTT you need to use `Energ
 17:57:09.684 MQT: emoncms/ch2i/factory/denky_D6C0C0/tele/SENSOR = {"TIC":{"ADCO":"021528603314","OPTARIF":"HC..","ISOUSC":15,"HCHC":920750,"HCHP":2275614,"PTEC":"HP..","IINST":1,"IMAX":2,"PAPP":200,"HHPHC":"A","MOTDETAT":0}}
 ```
 
-Then each frame received is sent immediatly thru MQTT
+Then each frame received is sent immediately thru MQTT
 
 ### Skip frames
 
-Depending on what you want to do on backend side it may be too much data and flood your database so we intrduced `Skip` flag. For example we may need only one frame up to 10 to be send on backend (so free up some network traffic).
+Depending on what you want to do on backend side it may be too much data and flood your database so we introduced `Skip` flag. For example we may need only one frame up to 10 to be send on backend (so free up some network traffic).
 To limit teleinfo frame to one each 10 frames, you need to use `EnergyConfig Skip 10` command from console
 
 ```
@@ -190,7 +190,7 @@ To limit teleinfo frame to one each 10 frames, you need to use `EnergyConfig Ski
 18:05:17.438 MQT: emoncms/ch2i/factory/denky_D6C0C0/tele/SENSOR = {"TIC":{"ADCO":"021528603314","OPTARIF":"HC..","ISOUSC":15,"HCHC":920750,"HCHP":2275629,"PTEC":"HP..","IINST":1,"IMAX":2,"PAPP":170,"HHPHC":"A","MOTDETAT":0}}
 ```
 
-As you can see we now send one full frame every approx 17s, choose your limit depending on frame lenght (of course) and serial speed. In historique mode a frame takes about 1.2s to be received.
+As you can see we now send one full frame every approx 17s, choose your limit depending on frame length (of course) and serial speed. In historique mode a frame takes about 1.2s to be received.
 
 !!! warning "This works only if Raw mode has been selected with `EnergyConfig Full`."
 
@@ -221,7 +221,7 @@ As you can see we now only data changed is sent.
 
 TBD, example to post HTTP data every 5 minutes
 
-### Driving RGB Led depening on power
+### Driving RGB Led depending on power
 
 TBD, example to manage Led from Green (no charge) to Red (full charge)
 

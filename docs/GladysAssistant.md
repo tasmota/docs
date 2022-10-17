@@ -10,7 +10,7 @@ The following servers should be made available:
 - You have installed Gladys Assistant (embedded MQTT broker available)
 - You have installed/access to a MQTT broker server and made contact with your Tasmota device
 
-## Automatic Disovery
+## Automatic Discovery
 
 [Gladys Assistant](https://gladysassistant.com/) automatically discovers Tasmota devices (once all are connected on same MQTT broker).
 

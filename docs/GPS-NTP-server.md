@@ -14,7 +14,7 @@ The foremost reason for the inclusion of this driver was to have a network unrel
 
 !!! info "Only u-blox-devices are supported"  
 
-The UBX binary protocol was chosen, because it is very memory efficient and all the needed data can be read without further parsing.  The genereric NMEA-standard is NOT supported!  
+The UBX binary protocol was chosen, because it is very memory efficient and all the needed data can be read without further parsing.  The generic NMEA-standard is NOT supported!
 
 The driver is tested on a NEO-6m and a Beitian-220. Series 7 should work too. These modules are quite cheap, starting at about 3.50€ for the NEO-6m.  
 
@@ -24,7 +24,7 @@ The driver is tested on a NEO-6m and a Beitian-220. Series 7 should work too. Th
 - simplified NTP-Server
 - sets system time automatically and Settings.latitude and Settings.longitude via command
 - get position and time data
-- can log postion data with timestamp to flash with a small memory footprint of only 12 Bytes per record (!!EXPERIMENTAL!!)
+- can log position data with timestamp to flash with a small memory footprint of only 12 Bytes per record (!!EXPERIMENTAL!!)
 - constructs a GPX-file for download of this data
 - Web-UI and console command interface
 
@@ -68,7 +68,7 @@ After the first recording, a download-link will appear in the web interface. By 
 | Sensor60 4 |   start recording, new data will be appended |
 | Sensor60 5 |   start new recording, old data will lost |
 | Sensor60 6 |   stop recording, download link will be visible in Web-UI |
-| Sensor60 7 |   send mqtt on new postion TELE -> consider to set TELE to a very high value |
+| Sensor60 7 |   send mqtt on new position TELE -> consider to set TELE to a very high value |
 | Sensor60 8 |   only TELE message |
 | Sensor60 9 |   start NTP-Server |
 | Sensor60 10 |   deactivate NTP-Server |

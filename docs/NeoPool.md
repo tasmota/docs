@@ -10,7 +10,7 @@
     ```
 
 [Sugar Valley](https://sugar-valley.net/en/productos/) NeoPool are water treatment systems also known under the names Hidrolife, Aquascenic, Oxilife, Bionet, Hidroniser, UVScenic, Station, Brilix, Bayrol and Hay.
-It uses a [RS485](https://en.wikipedia.org/wiki/RS-485) interface with the [Modbus](https://en.wikipedia.org/wiki/Modbus) data protocol for enhancment equipments like Wifi-Interface or a second attached control panel. All functions and parameters can be queried and controlled via this bus interface.
+It uses a [RS485](https://en.wikipedia.org/wiki/RS-485) interface with the [Modbus](https://en.wikipedia.org/wiki/Modbus) data protocol for enhancement equipment like Wifi-Interface or a second attached control panel. All functions and parameters can be queried and controlled via this bus interface.
 
 The Tasmota Sugar Valley NeoPool Controller sensor module shows the most of parameters such as the built-in display:
 
@@ -292,7 +292,7 @@ RESULT = {"NPRead":{"Address":1046,"Data":28}}
 ```
 
 !!! example
-    Enable additonal factory menu
+    Enable additional factory menu
 
 For that enable bit `MBMSK_SHOW_FACTORY_MENU` (15) in register `MBF_PAR_UICFG_VISUAL_OPTIONS` (`0x0605`)
 

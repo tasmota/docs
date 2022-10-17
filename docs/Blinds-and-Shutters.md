@@ -160,7 +160,7 @@ One can remove all button control for shutter `<x>` by `ShutterButton<x> 0`.
 The assigned button can have one of the following functionalities:<BR>
 
 - Setup for an "up" button: `ShutterButton<x> <button> up <mqtt>`    
-   Single press will move shutter to 100%, double press to 50% and tripple press to 74%. Holding the button for more than the hold time ([`SetOption32`](Commands.md#setoption32)) moves all shutters with same `<grouptopic>` to 100% when `<mqtt>` is equal to `1`. When `<mqtt>` is equal to `0` hold action of this button is same as single press. 
+   Single press will move shutter to 100%, double press to 50% and triple press to 74%. Holding the button for more than the hold time ([`SetOption32`](Commands.md#setoption32)) moves all shutters with same `<grouptopic>` to 100% when `<mqtt>` is equal to `1`. When `<mqtt>` is equal to `0` hold action of this button is same as single press.
 
 - Setup for a "down" button: `ShutterButton<x> <button> down <mqtt>`    
    Single press will move shutter to 0%, double press to 50% and triple press to 24%. Holding the button for more than the hold time (SetOption32) moves all shutters with same `<grouptopic>` to 0% when `<mqtt>` is equal to `1`. When `<mqtt>` is equal to `0` hold action of this button is same as single press. 
@@ -168,18 +168,18 @@ The assigned button can have one of the following functionalities:<BR>
 - Setup for an "updown" button: `ShutterButton<x> <button> updown <mqtt>`    
    Single press will move shutter to 100%, double press down to 0% and triple press to 50%. No hold action and no other shutter control by MQTT, `<mqtt>` is don't care here.
 
-- Setup for an "toggle" button: `ShutterButton<x> <button> toggle <mqtt>`    
+- Setup for a "toggle" button: `ShutterButton<x> <button> toggle <mqtt>`
    Single press will toggle shutter, double press will move it to 50%. Be aware that the toggle select direction based on the current position. If the position is between 0..50% the shutter move to 100%. If the position is 51%..100% it moves to 0%. No hold action and no other shutter control by MQTT, `<mqtt>` is don't care here.
 
 More advanced control of the button press actions is given by the following `ShutterButton<x>` command syntax:
 
 `ShutterButton<x> <button> <p1> <p2> <p3> <ph> <m1> <m2> <m3> <mh> <mi>` 
 
-`<button>` `1..4`: Button number, `0/-`: disable buttons for this shutter<BR>`<p1>` `0..100`: single press position, `t`: toggle, `-`: disable<BR>`<p2>` `0..100`: double press position, `t`: toggle, `-`: disable<BR>`<p3>` `0..100`: tripple press position, `t`: toggle, `-`: disable<BR>`<ph>` `0..100`: hold press position, shutter stop after releasing the hold button, `t`: toggle, `-`: disable<BR>`<m1>` `1`: enable single press position MQTT broadcast, `0/-`: disable<BR>`<m2>` `1`: enable double press position MQTT broadcast, `0/-`: disable<BR>`<m3>` `1`: enable tripple press position MQTT broadcast, `0/-`: disable<BR>`<mh>` `1`: enable hold press position MQTT broadcast, `0/-`: disable<BR>`<mi>` `1`: enable MQTT broadcast to all shutter indices, `0/-`: disable
+`<button>` `1..4`: Button number, `0/-`: disable buttons for this shutter<BR>`<p1>` `0..100`: single press position, `t`: toggle, `-`: disable<BR>`<p2>` `0..100`: double press position, `t`: toggle, `-`: disable<BR>`<p3>` `0..100`: triple press position, `t`: toggle, `-`: disable<BR>`<ph>` `0..100`: hold press position, shutter stop after releasing the hold button, `t`: toggle, `-`: disable<BR>`<m1>` `1`: enable single press position MQTT broadcast, `0/-`: disable<BR>`<m2>` `1`: enable double press position MQTT broadcast, `0/-`: disable<BR>`<m3>` `1`: enable triple press position MQTT broadcast, `0/-`: disable<BR>`<mh>` `1`: enable hold press position MQTT broadcast, `0/-`: disable<BR>`<mi>` `1`: enable MQTT broadcast to all shutter indices, `0/-`: disable
 
 Parameters are optional. When missing, all subsequent parameters are set to `disable`.
 
-By a button single press the shutter is set to position `<p1>`.  Double press will drive the shutter to position `<p2>` and  triple press to position `<p3>`. Holding the button for more than the `SetOption32` time sets the shutter position to `<ph>` max if button is hold until positon. If the hold button is released during the shutter moves the shutter will stop. Any button action `<p1>` to `<ph>` can be disabled by setting the parameter to `-`. Independent from configuration `<p1>` to `<ph>` any press of the button while the shutter is moving will immediately stop the shutter.
+By a button single press the shutter is set to position `<p1>`.  Double press will drive the shutter to position `<p2>` and  triple press to position `<p3>`. Holding the button for more than the `SetOption32` time sets the shutter position to `<ph>` max if button is hold until position. If the hold button is released during the shutter moves the shutter will stop. Any button action `<p1>` to `<ph>` can be disabled by setting the parameter to `-`. Independent from configuration `<p1>` to `<ph>` any press of the button while the shutter is moving will immediately stop the shutter.
 
 Global steering of all your shutters at home is supported by additional MQTT broadcast. By any button action a corresponding MQTT command can be initiated to the `<grouptopic>` of the device. For single press this can be enabled by `<m1>` equal to `1`, disabling is indicated by `-`. Double to hold MQTT configurations are given by `<m2>` to `<mh>`, correspondingly. When `<mi>` is equal to `-` only `cmnd/<grouptopic>/Shutterposition<x> <p1..h>` is fired. When `<mi>` is equal to `1`, `<x>`=`1..4` is used to control any shutter number of a Tasmota device having same `<grouptopic>`.
 
@@ -489,7 +489,7 @@ Tilt configuration can be set for every shutter independently. The tilt can be s
    `shuttertilt1 close` set tilt to defined close angle
    `shuttertilt1 20` set tilt to 20° angle
    
-If the shutter is moved from one position to another position the tilt will be restored AFTER the movement. If the shutter is fully opened or fully closed the tilt will be resetted. This means there is no tilt restore at the endpoints.
+If the shutter is moved from one position to another position the tilt will be restored AFTER the movement. If the shutter is fully opened or fully closed the tilt will be reset. This means there is no tilt restore at the endpoints.
 
 Similar to shutterchange to make relative movements there is also a `shuttertiltchange` with the same behavior. 
    

@@ -41,7 +41,7 @@ After reboot of the device the temperature, humidity and dew point are displayed
 
 Three versions are known to exist, they all share the same pinout. Lolin is the new name for Wemos going forward.
 
-* v.1.0.0 - orignal design (retired)
+* v.1.0.0 - original design (retired)
 * v.2.0.0 - detachable design
 * v.2.1.0 - detachable design with TFT I2C connector
 

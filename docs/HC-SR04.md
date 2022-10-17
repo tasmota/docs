@@ -46,7 +46,7 @@ After a reboot webUI displays the HC-SR04 distance.
 
 ![image](https://user-images.githubusercontent.com/5904370/68340187-39c65a00-00e6-11ea-8c27-22527368e3d5.png)
 
-Sensor sends a  `tele/%topic%/SENSOR` JSON reponse:
+Sensor sends a  `tele/%topic%/SENSOR` JSON response:
 ```json
 {"Time":"2019-01-01T22:42:35","SR04":{"Distance":16.754}}
 ```

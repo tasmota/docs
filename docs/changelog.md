@@ -46,7 +46,7 @@ replace with: [#$1](https://github.com/arendst/Tasmota/discussions/$1)
 - Add command ``SetOption109 1`` to force gen1 Alexa mode, for Echo Dot 2nd gen devices only
 - Add command ``Restart 2`` to halt system. Needs hardware reset or power cycle to restart [#9046](https://github.com/arendst/Tasmota/issues/9046)
 - Add command ``PowerDelta1`` to ``PowerDelta3`` to trigger on up to three phases [#9134](https://github.com/arendst/Tasmota/issues/9134)
-- Add Zigbee options to ``ZbSend`` ``Config`` and ``ReadCondig``
+- Add Zigbee options to ``ZbSend`` ``Config`` and ``ReadConfig``
 - Add Zigbee better support for IKEA Motion Sensor
 - Add Zigbee web gui widget for Battery and Temp/Humidity/Pressure sensors
 - Add Zigbee web ui for power metering plugs
@@ -83,7 +83,7 @@ replace with: [#$1](https://github.com/arendst/Tasmota/discussions/$1)
 - Add command ``SetOption101 0/1`` to add the Zigbee source endpoint as suffix to attributes, ex `Power3` instead of `Power` if sent from endpoint 3
 - Add command ``DzSend<type> <index>,<value1(;value2)|state>`` to send values or state to Domoticz
 - Add command ``Module2`` to configure fallback module on fast reboot [#8464](https://github.com/arendst/Tasmota/issues/8464)
-- Add command (``S``)``SerialSend6`` \<comma seperated values\> [#8937](https://github.com/arendst/Tasmota/issues/8937)
+- Add command (``S``)``SerialSend6`` \<comma separated values\> [#8937](https://github.com/arendst/Tasmota/issues/8937)
 - Add commands ``LedPwmOn 0..255``, ``LedPwmOff 0..255`` and ``LedPwmMode1 0/1`` to control led brightness by George [#8491](https://github.com/arendst/Tasmota/issues/8491)
 - Add ESP32 ethernet commands ``EthType 0/1``, ``EthAddress 0..31`` and ``EthClockMode 0..3``
 - Add more functionality to command ``Switchmode`` 11 and 12 [#8450](https://github.com/arendst/Tasmota/issues/8450)
@@ -104,7 +104,7 @@ replace with: [#$1](https://github.com/arendst/Tasmota/discussions/$1)
 - Add support for BL0940 energy monitor as used in Blitzwolf BW-SHP10 [#8175](https://github.com/arendst/Tasmota/issues/8175)
 - Add support for Telegram bot [#8619](https://github.com/arendst/Tasmota/issues/8619)
 - Add support for HP303B Temperature and Pressure sensor by Robert Jaakke [#8638](https://github.com/arendst/Tasmota/issues/8638)
-- Add support for Energy sensor (Denky) for French Smart Metering meter provided by global Energy Providers, need a adaptater. See dedicated full [blog](http://hallard.me/category/tinfo/) about French teleinformation stuff
+- Add support for Energy sensor (Denky) for French Smart Metering meter provided by global Energy Providers, need a adapter. See dedicated full [blog](http://hallard.me/category/tinfo/) about French teleinformation stuff
 - Add support for ESP32 ethernet adding commands ``Wifi 0/1`` and ``Ethernet 0/1`` both default ON
 - Add support for single wire LMT01 temperature Sensor by justifiably [#8713](https://github.com/arendst/Tasmota/issues/8713)
 - Add support for rotary encoder as light dimmer and optional color temperature if button1 still pressed [#8670](https://github.com/arendst/Tasmota/issues/8670)
