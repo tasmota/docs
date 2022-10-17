@@ -74,15 +74,15 @@ Copy `platformio_override_sample.ini` as `platformio_override.ini`
 
 For ESP8266 boards, activate by removing the `;` in front of one of the below lines:
 
-* `board = esp8266_4M2M` for 2Mb universal file system    
+* `board = esp8266_4M2M` for 2Mb universal file system
 * `board = esp8266_2M1M` for 1Mb universal file system
 
 
 !!! warning "About ESP32"
-    **ESP32** boards with default 4MB flash only support a file system **limited to 320KB**. You need a board with more 
+    **ESP32** boards with default 4MB flash only support a file system **limited to 320KB**. You need a board with more
     than 4MB to enable a larger file system.
 
-Extending file system size on ESP32 is performed through the `board_build.partitions` setting. 
+Extending file system size on ESP32 is performed through the `board_build.partitions` setting.
 There are preconfigured settings for 4M, 8M and 16MB ESP32 devices. The are enabled in `platformio_override.ini`
 like for the ESP8266. Comment the standard setting and uncomment the variant you want.
 
