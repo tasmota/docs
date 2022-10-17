@@ -87,12 +87,13 @@ DS3502 | Digital potentiometer| I^2^C
 **PMS3003<BR>[PMS5003](https://www.superhouse.tv/38-diy-air-quality-Sensor-part-1-basic-model/)<BR>PMS7003** | Particle Concentration Sensor| serial
 [**PN532**](PN532) | NFC/RFID controller
 [**PZEM-004<BR>PZEM-016**](PZEM-0XX) | Energy Monitor| serial
+**QMC5883L** | Magnetic Field sensor | I^2^C
 [**RCWL-0516**](RCWL-0516) |  Microwave Radar Presence detection
 [**RDM6300**](RDM6300) | 125Khz RFID Module
 [**RF Transceiver**](RF-Transceiver) | IR receiver and/or transmitter
-**RX-4M50RR30SF<BR>RX-AM8SF** | RF Sensor receiver| gpio
+**RX-4M50RR30SF<BR>RX-AM8SF** | RF Sensor receiver | gpio
 **SCD30** | CO~2~ Sensor| I^2^C
-**SCD40**<BR>**SCD41** | CO~2~</sub> Sensor| I^2^C
+**SCD40**<BR>**SCD41** | CO~2~ Sensor| I^2^C
 **Eastron SDM72** | Modbus Energy Meter| serial
 **Eastron SDM120** | Modbus Energy Meter| serial
 **Eastron SDM220** | Modbus Energy Meter| serial
@@ -100,7 +101,9 @@ DS3502 | Digital potentiometer| I^2^C
 **Eastron SDM630** | Modbus Energy Meter| serial
 **YF-DN50** | Flow rate meter | gpio
 [**SDS011<BR>SDS021**](SDS011) | Laser Dust Sensor
+**SEN0390** |  Ambient Light Sensor| I^2^C
 **SGP30** | Gas and Air Quality Sensor| I^2^C
+**SGP40** | Gas and Air Quality Sensor| I^2^C
 **SHT1x** | Temperature and Humidity Sensor| I^2^C
 [**SHT30**](SHT30) | Humidity & Temperature Sensor| I^2^C
 **SHT4x** | Temperature and Humidity Sensor| I^2^C

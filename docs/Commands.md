@@ -161,6 +161,8 @@ Command|Parameters
 Delay<a class="cmnd" id="delay"></a>|`2..3600` = set a delay between two backlog commands with 0.1 second increment. *Not recommended for precision timing!*
 DeepSleepTime<a class="cmnd" id="deepsleeptime"></a>|Time to enter [deep sleep mode](DeepSleep)<BR>`0` = disable deep sleep mode *(default)*<BR>`11..86400` = set deep sleep mode time period in seconds
 DeviceName<a class="cmnd" id="devicename"></a>|Device name displayed in the webUI and used for HA autodiscovery.<br>`<value>` = set device name _(default = `FriendlyName1` value)_
+DspLine\<1\|2><a class="cmnd" id="dspline"></a>|For POWR3 Elite and THR3 Elite<br>`2..127` = control message rotation speed on display
+DspSpeed<a class="cmnd" id="dspspeed"></a>|For POWR3 Elite and THR3 Elite<br>`<index>,<unit>,<index>,<unit>,...` = select message(s) on display
 Emulation<a class="cmnd" id="emulation"></a>|`0` = disable emulation *(default)*<BR>`1` = enable Belkin WeMo emulation for [Alexa](Alexa)<BR>`2` = enable Hue Bridge emulation for [Alexa](Alexa)
 FriendlyName<x\><a class="cmnd" id="friendlyname"></a>|`1` = Reset friendly name to firmware default<BR>`<value>` = set friendly name (32 char limit)
 Gpios<a class="cmnd" id="gpios"></a>|Show list of available [components](Components#gpio-conversion) by name and index<BR>`255` / `All` Show list of all [components](Components#gpio-conversion) by name and index<BR>
@@ -190,6 +192,7 @@ State<a class="cmnd" id="state"></a>|Display current device state and publish to
 Status<a class="cmnd" id="status"></a>|` ` = show abbreviated [status information](JSON-Status-Responses#basic-response)<BR>`0` = show all status information (1 - 11)<BR>`1` = show device parameters information<BR>`2` = show firmware information<BR>`3` = show logging and telemetry information<BR>`4` = show memory information<BR>`5` = show network information<BR>`6` = show MQTT information<BR>`7` = show time information<BR>`8` = show connected sensor information *(retained for backwards compatibility)*<BR>`9` = show power thresholds *(only on modules with power monitoring)*<BR>`10` = show connected sensor information *(replaces 'Status 8')*<BR>`11` = show information equal to [`TelePeriod`](#teleperiod) state message<BR>`12` = in case of crash to dump the call stack saved in RT memory
 Status0<a class="cmnd" id="status0"></a>|`0` = show all status information in a single line
 SysLog<a class="cmnd" id="syslog"></a>|`0` = disable syslog logging *(default)*<BR> `1` = show only error messages<BR> `2` = show error and info messages<BR>`3` = show error, info and debug messages<BR>`4` = show error, info and more debug messages
+Sunrise<a class="cmnd" id="sunrise"></a>|`0` = normal, the moment the sun becomes visible/disappears at the horizon *(default)*<BR> `1` = civil, when it begins to be and stops being possible to work outside without artificial light<BR> `2` = nautic, when it begins to be and stops being possible to navigate a ship at sea<BR>`3` = astronomic, when it stops being / starts being possible to see all of the stars
 Template<a class="cmnd" id="template"></a>|Show current [Template](Templates)<BR>`0` = create template from active module<BR>`x` = create template from a [supported module](Modules)<BR>`255` = merge current module and template settings into new template<BR>`{ ... }` = store template in a [JSON payload](Templates#anatomy-of-a-template)<BR>Does not activate the template. To activate use `Module 0`.
 Time<a class="cmnd" id="time"></a>|`0` = enable NTP *(default)*<BR>`1` = format JSON message timestamp in ISO format<BR>`2` = format JSON message timestamp in both ISO and Epoch format<BR>`3` = format JSON message timestamp in Epoch format<BR>`4` = format JSON message timestamp in milliseconds<BR>`<value>` = disable NTP and set UTC time as epoch value if greater than `1451602800` (January 1, 2016)
 TimeStd<BR>TimeDst<a class="cmnd" id="timestd"></a><a class="cmnd" id="timedst"></a>|Set policies for the beginning of daylight saving time (DST) and return back to standard time (STD)&emsp; <BR>`0` = reset parameters to firmware defaults<BR>`H`,`W`,`M`,`D`,`h`,`T`<BR>   `H` = hemisphere (`0` = northern hemisphere / `1` = southern hemisphere)<BR>   `W` = week (`0` = last week of month, `1..4` = first .. fourth)<BR>   `M` = month (`1..12`)<BR>   `D` = day of week (`1..7` `1` = Sunday `7` = Saturday)<BR>   `h` = hour (`0..23`) in **local** time<BR>   `T` = time zone (`-780..780`) (offset from UTC in **MINUTES** - 780min / 60min=13hrs)<BR>_Example:_ `TIMEDST 1,1,10,1,2,660`<BR>_If time zone is **NOT** 99, DST is not used (even if displayed) [see](https://github.com/arendst/Tasmota/issues/8528#issuecomment-633247984)
@@ -205,6 +208,7 @@ UfsSize<a class="cmnd" id="ufssize"></a>|Filesystem size in kb
 UfsType<a class="cmnd" id="ufstype"></a>|Get filesystem type<BR>`0` = none<BR>`1` = SD card<BR>`2` = Flash file<BR>`3` = LittleFS
 Upgrade<a class="cmnd" id="upgrade"></a>|`1` = download firmware from `OtaUrl` and restart<BR>`<value>` = download firmware from `OtaUrl` if <value\> is higher than device version
 Upload<a class="cmnd" id="upload"></a>|`1` = download firmware from `OtaUrl` and restart<BR>`<value>` = download firmware from `OtaUrl` if <value\> is higher than device version
+UrlFetch<a class="cmnd" id="urlfetch"></a>|`<address>` = download file to filesystem 
 WebGetConfig<a class="cmnd" id="webgetconfig"></a>|`<url>` = pull a configuration `.dmp`  file from a HTTP URL<BR>[More information...](https://github.com/arendst/Tasmota/pull/13034)
 WebLog<a class="cmnd" id="weblog"></a>|`0` = disable web logging<BR> `1` = show only error messages<BR> `2` = show error and info messages *(default)*<BR>`3` = show error, info and debug messages<BR>`4` = show error, info and more debug messages
 WebTime<a class="cmnd" id="webtime"></a>|`<start_pos>,<end_pos>` = show part of date and/or time in WebUI based on "2017-03-07T11:08:02-07:00"
@@ -492,6 +496,7 @@ SetOption42<a class="cmnd" id="setoption42"></a>|`0..255` = set over-temperature
 SetOption43<a class="cmnd" id="setoption43"></a>|`0..255` = to control Rotary step. Details [#10407](https://github.com/arendst/Tasmota/issues/10407)
 SetOption44<a class="cmnd" id="setoption44"></a>|`1..100` = set base tolerance percentage for matching incoming IR messages *(default = `25`)*
 SetOption45<a class="cmnd" id="setoption45"></a>|`1..250` = change bi-stable latching relay pulse length in milliseconds *(default = `40`)*
+SetOption46<a class="cmnd" id="setoption46"></a>|`0..255` = power on delay before initializing in value * 10 milliseconds *SCD30 only*
 SetOption51<a class="cmnd" id="setoption51"></a>|Enable GPIO9 and GPIO10 component selections in Module Configuration<BR>:rotating_light: **WARNING** Do not use on ESP8266 devices! :rotating_light:<BR>`0` = disable *(default)*<BR>`1` = enable
 SetOption52<a class="cmnd" id="setoption52"></a>|Control display of optional time offset from UTC in JSON payloads<BR>`0` = disable *(default)*<BR> `1` = enable
 SetOption53<a class="cmnd" id="setoption53"></a>|Display hostname and IP address in GUI<BR>`0` = disable *(default)*<BR> `1` = enable
@@ -565,6 +570,7 @@ SetOption141<a class="cmnd" id="setoption141"></a>|`1` = disable display of mode
 SetOption142<a class="cmnd" id="setoption142"></a>|`1` = wait 1 second for WiFi connection solving some FRITZ!Box modem issues
 SetOption143<a class="cmnd" id="setoption143"></a>|`1` = disables ZigBee auto-probing and configure back attribute reporting
 SetOption144<a class="cmnd" id="setoption144"></a>|`1` = include a timestamp in `ZbReceived` messages
+SetOption146<a class="cmnd" id="setoption146"></a>|`1` = enable display of ESP32 internal temperature
 
 ### TuyaMCU
 
@@ -733,6 +739,8 @@ ZbForget<a class="cmnd" id="zbforget"></a>|Used for devices that are unused but 
 ZbLight<a class="cmnd" id="zblight"></a>|Sets or reads the light type to be emulated in Zigbee Hue Emulation with Alexa.<BR>`<device>,<light_type>` sets the light type using an integer `0..5` corresponding to the number of channels (from one channel (on/off) to 5 channel (RGBCCT) lights)<BR>`<device>,-1` removes the device from Philips Hue emulation<BR>`<device>` displays the current status of the Light (Zigbee2Tasmota tracks all changes to the light)
 ZbListen&#60;x> &#60;group>|(EZSP ZBBridge only)Listens to a multicast group address. By default EZSP will not report group messages unless you subscribe to the group.<BR>`<x>`: slot in the array of group addresses, 1..15<BR>`<group>`: group address to listen to, 0..0xFFFF<BR>At start-up, Z2T automatically listens to group 0 in slot 0.<BR>CC2530 does not need this command and always report all group messages.
 ZbLeave<a class="cmnd" id="zbleave"></a>|`<device>` = request a device to leave the network.<br>If the device is offline or sleeping, this will have no effect. It is not 100% guaranteed that the device will never connect again
+ZbLoad<a class="cmnd" id="zbload"></a>|`<file>.zb` = load Zigbee definition file
+ZbLoadDump<a class="cmnd" id="zbloaddump"></a>|`<file>.zb` = dump Zigbee definition file contents to console
 ZbInfo<a class="cmnd" id="zbinfo"></a>|`<device>` = display all information known about a device, equivalent to `ZbStatus3` with a simpler JSON output
 ZbMap&#60;n><a class="cmnd" id="zbmap"></a>|Asks the device for its view of the Zigbee topology<BR>`<device>` the device to query<BR>`<n>` the start index for the request, `1` is the default. This is used to scan through all values since devices usually return only 3 values per request.
 ZbName<a class="cmnd" id="zbname"></a>|Sets or reads the Zigbee device friendly name (up to 32 characters).<BR>`<device>,<name>` sets the new friendly name<BR>`<device>,` (empty name) clears the friendly name<BR>`<device>` displays the current friendly name<BR>Also see [`SetOption83 1`](#setoption83) to enable friendly names as JSON keys instead of ShortAddr.
@@ -749,6 +757,7 @@ ZbSend<a class="cmnd" id="zbsend"></a>|Command structure: `{"Device":"<shortaddr
 ZbScan<a class="cmnd" id="zbscan"></a>|Do an energy scan on each radio channel
 ZbStatus&#60;x><a class="cmnd" id="zbstatus"></a>|Display Zigbee devices seen on the network since boot<BR>`<device>` (optional)<BR>` ` = all devices<BR>This command provides three levels of increasing detail according to `<x>`<BR>`ZbStatus1` Display Short Address, and Friendly Name<BR>`ZbStatus2` Also include Manufacturer ID and Model ID<BR>`ZbStatus3` Also include a list of endpoints and the clusterIds supported by each endpoint<BR>Example: `ZbStatus3 1` requests all details for device number 1<BR>:notebook: Requested information may exceed maximum result size allowed by Tasmota. In this case, the output will be truncated. To get all of the desired information, request results for a specific device individually.
 ZbUnbind<a class="cmnd" id="zbunbind"></a>|Unbinds one Zigbee device from another or from a group. <BR>`{"Device":"<device>", "Endpoint":<endpoint>, "Cluster":<cluster>, "ToDevice":"<to_device>", "ToEndpoint":<to_endpoint>, "ToGroup":<to_group> }`<BR>`<device>` = the device sending the messages **(mandatory)**<BR>`<endpoint>` = the source endpoint **(mandatory)**<BR>`<cluster>` = the source cluster id **(mandatory)**<BR>`<to_device>` = the target device (optional)<BR>`<to_endpoint>` = the target endpoint (optional if it can be inferred from `ZbStatus3`)<BR>`<to_group>` = the target group id (optional)<BR>:notebook: You must specify either `"ToDevice"` or `"ToGroup"` but not both<BR>:notebook: Zigbee2Tasmota must know the IEEE address of the target device, use `ZbStatus2` to verify and `ZbProbe` to query the address.
+ZbUnload<a class="cmnd" id="zbunload"></a>|`<file>.zb` = unload Zigbee definition file
 See also| [`SetOption83`](#setoption83), [`SetOption89`](#setoption89), [`SetOption100`](#setoption100), [`SetOption101`](#setoption101)
 
 
@@ -962,6 +971,7 @@ Command|Parameters
 :---|:---
 Wc<a class="cmnd" id="wc"></a>|Query all camera settings
 WcBrightness<a class="cmnd" id="wcbrightness"></a>|`-2..+2` = set picture brightness
+WcClock<a class="cmnd" id="wcclock"></a>|`10..200` = set clock speed in MHz *(default = 20)*
 WcContrast<a class="cmnd" id="wccontrast"></a>|`-2..+2` = set picture contrast
 WcFlip<a class="cmnd" id="wcflip"></a>|Flip camera image. <BR>`0` = disable *(default)*<BR>`1` = enable
 WcMirror<a class="cmnd" id="wcmirror"></a>|Mirror camera image. <BR>`0` = disable *(default)*<BR>`1` = enable
