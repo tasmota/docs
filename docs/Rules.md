@@ -113,7 +113,7 @@ Time#Minute<a id="TimeMinute"></a>|every minute
 Time#Minute\|5|every five minutes
 Time#Minute=241|every day once at 04:01 (241 minutes after midnight)
 Time#Set<a id="TimeSet"></a>|every hour when NTP makes time in sync
-Var&lt;x\>\#State<a id="VarState"></a>|when the value for Var&lt;x\> is changed (triggers whenever a value is written to `Var<x>` even if its the same value)
+Var&lt;x\>\#State<a id="VarState"></a>|when the value for Var&lt;x\> is changed (triggers whenever a value is written to `Var<x>` even if it's the same value)
 Wifi#Connected<a id="WifiConnected"></a>|when Wi-Fi is connected
 Wifi#Disconnected<a id="WifiDisconnected"></a>|when Wi-Fi is disconnected
 Tele-Wifi#AP<a id="tele-Wifi-AP"></a>|when a teleperiod message is sent with the number of the used AP 
@@ -523,7 +523,7 @@ Rule1
 #### Result
 `Pos1` is changed when the rotary encoder is turned while button is not pressed. `Pos2` is changed while button is pressed. Both `Pos1` and `Pos2` are published whatever is the button position, so both trig at the same time.
 
-The button will still have it's default action (such as toggling power). If you want to avoid that, you need to capture the button into a dummy rule such as `ON Button1#state DO Delay 0 ENDON`.
+The button will still have its default action (such as toggling power). If you want to avoid that, you need to capture the button into a dummy rule such as `ON Button1#state DO Delay 0 ENDON`.
 
 The range of the rotary encoder is hardcoded in `#define ROTARY_MAX_STEPS 10`. If you want to change the range, you must change the value in your `user_config_override.h` and [recompile](Compile-your-build).
 
@@ -1437,7 +1437,7 @@ MQT: stat/mqttTopic/POWER = OFF
 
 ### Processing JSON received from (Software)SerialBridge
 
-When using SerialBridge _(or SoftwareSerialBrigde)_, the received string will be published to Rules as SerialReceived _(or SSerialReceived)_. If the string starts with a `{` then Tasmota will parse the string as a JSON and make the different keys available for Rules. For example with the following string `{"DeviceID":"TM182","Temp":25.3,"Hum":50}`,
+When using SerialBridge _(or SoftwareSerialBridge)_, the received string will be published to Rules as SerialReceived _(or SSerialReceived)_. If the string starts with a `{` then Tasmota will parse the string as a JSON and make the different keys available for Rules. For example with the following string `{"DeviceID":"TM182","Temp":25.3,"Hum":50}`,
 it is possible to use any of the keys in the trigger.
 ```
 rule1
@@ -1605,7 +1605,7 @@ Backlog SwitchMode1 1; SwitchMode2 1; SwitchMode3 1
 Backlog Rule1 0; Rule1 4; Rule2 0; Rule2 4; Rule2 0; Rule2 4
 ```
 
-//Set Counter to measure the period between on and off, check if its blinking because of an obstruction  
+//Set Counter to measure the period between on and off, check if it's blinking because of an obstruction
 ```haskell
 Backlog CounterType 1; CounterDebounce 100
 ```
@@ -2051,7 +2051,7 @@ Rule 1 1
 
 ### RF Repeater / IR Repeater
 
-In some applications, an RF-Repeater may come in handy to increase the range of RF based devices. We need to use RF reciever and RF transmitter modules with tasmota powered controllers. The following rule looks for data received by the RF receiver and re transmits the same over the transmitter. 
+In some applications, an RF-Repeater may come in handy to increase the range of RF based devices. We need to use RF receiver and RF transmitter modules with tasmota powered controllers. The following rule looks for data received by the RF receiver and re transmits the same over the transmitter.
 
 ```haskell
 Rule1

@@ -214,7 +214,7 @@ end
 
 **Step 2: verify the device**
 
-To make sure the device is actually an MPU6886, we check it's signature by reading register 0x75. It should respond 0x19 (see datasheet for MPU6886).
+To make sure the device is actually an MPU6886, we check its signature by reading register 0x75. It should respond 0x19 (see datasheet for MPU6886).
 
 ```python
 [...]

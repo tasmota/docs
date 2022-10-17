@@ -28,7 +28,7 @@ While powered off hold the other end of jumper to R19 and then power up (plug in
 
 Hold it for 3-5 seconds after it powers up before removing it. 
 
-You should not see the network status led flash anymore, then you know you're in flash mode. If its flashing power off and try again.
+You should not see the network status led flash anymore, then you know you're in flash mode. If it's flashing power off and try again.
 
 Using the TX T1 1-3 device template will work. A new T0 template is forthcoming. 
 

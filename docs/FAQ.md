@@ -117,7 +117,7 @@ or your mosquitto broker log shows messages like this -
 1496455350: Client SONOFF already connected, closing old connection.
 1496455350: Client SONOFF disconnected.
 ```
-You have more than one device connected with the same %topic% defined. Its important that each device has a unique %topic% instead of the default `sonoff`.
+You have more than one device connected with the same %topic% defined. It's important that each device has a unique %topic% instead of the default `sonoff`.
 
 If that is not the issue, erase all flash using esptool.py or esptool.exe and flash again by wire (as explained [here](Esptool#upload-tasmota)) using [the latest precompiled bins with core v2.7.1](http://ota.tasmota.com/tasmota/).
 
@@ -145,7 +145,7 @@ Your device may be in a boot loop - a restart caused by any exception or watchdo
 - 5<sup>th</sup> restart: reset module to Sonoff Basic (1)
 
 ### Relay clicks and LED flashes at 1 second intervals
-This indicates that your device did not get flashed properly. In this case it will toggle all it's pins at 1 sec intervals. A flash erase and a new flash is required.
+This indicates that your device did not get flashed properly. In this case it will toggle all its pins at 1 sec intervals. A flash erase and a new flash is required.
 
 ### Status LED blinking
 Your device status LED blinks repeatedly when Wi-Fi and/or MQTT is not connected. If you're not using MQTT and did not configure it the status LED will still keep blinking.
@@ -229,7 +229,7 @@ If you have timers that use the sunset or sunrise times, you must set your [lati
 ### Auto-discovery in Home Assistant does not work
 The `tasmota-lite.bin` firmware binary (which comes packaged with Tuya-Convert) does not support auto-discovery. Please upgrade to `tasmota.bin` or a similar firmware variant that supports this feature.
 
-Make sure its enabled in Tasmota it with `SetOption19 1` and you configured the  Home Assistant MQTT integration with Discovery enabled.
+Make sure it's enabled in Tasmota it with `SetOption19 1` and you configured the  Home Assistant MQTT integration with Discovery enabled.
 
 ### Why is my changed configuration not loaded?
 If you have flashed a precompiled binary, be aware that all the configuration made after the flash (Wi-Fi, MQTT, topics, names, rules, etc) will be lost in a factory firmware reset.

@@ -4,7 +4,7 @@
 ### Logs
 For debugging purposes you can use Level 4 or Level 5 logging to the `MqttLog`, `WebLog`, `SerialLog`, or remote `SysLog`.  
 
-The logging level is set separately for each log destination. Log levels range from `0` to `5`. The higher the log level, the more information is logged. When troubleshooting your device its recommended to set the logging level to `4`.  
+The logging level is set separately for each log destination. Log levels range from `0` to `5`. The higher the log level, the more information is logged. When troubleshooting your device it's recommended to set the logging level to `4`.
 
 #### Web Logging
 These show up in the Web UI Console (http://deviceip/cs). The default logging level for WebLog logging is 2.

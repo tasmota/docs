@@ -119,7 +119,7 @@ This callback ID is called every second.
 
 It can be useful for anything that you need to do on a per second basis and is commonly used as an entry point to detect a driver or initialize an externally driven device such as a sensor, relay board or other forms of input/output required by your driver.
 
-You would normally want to make sure you've detected and initialised before it is used by `JSON_APPEND`, etc. so that its ready to serve data.
+You would normally want to make sure you've detected and initialised before it is used by `JSON_APPEND`, etc. so that it's ready to serve data.
 
 The generally accepted way to use this would be to detect your sensor and once this is done set a sensor value accordingly so that the function does not use unnecessary resources during future calls, for example:
 ```c++

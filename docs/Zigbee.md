@@ -187,7 +187,7 @@ At Zigbee start, all files with `*.zb` suffix are loaded into memory. Be careful
 - `<cluster 4 hex>/<attribute 4 hex>=<new_cluster 4 hex>/<new_attribute 4 hex>,<multiplier>`
 - Ex: `EF00/026C=0001/0021,2` converts any EFOO/026C attribute received to `0001/0021` (BatteryPercentage) and multiplies by `2` to convert to ZCL standard.
 
-Multiplier is 8 bit int (-128..127). If `0` or `1`, the value is unchanged. Otherwize the value is converted to `float` and is multiplied by `multiplier` if positive, or divided by `-multiplier` if negative.
+Multiplier is 8 bit int (-128..127). If `0` or `1`, the value is unchanged. Otherwise the value is converted to `float` and is multiplied by `multiplier` if positive, or divided by `-multiplier` if negative.
 
 I.e. `multiplier=10` means multiply by 10, `multiplier=-5` means divide by 5
 
