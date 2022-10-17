@@ -7,11 +7,11 @@ hide:
 # Open source firmware for ESP devices
 
 <img style="margin: 10px 10px; float:right; width:50%" src="_media/frontlogo.svg" alt="Tasmota Logo"></img>
-Total local control with quick setup and updates.    
-Control using MQTT, Web UI, HTTP or serial.    
-Automate using timers, rules or scripts.    
-Integration with home automation solutions.    
-Incredibly expandable and flexible.     
+Total local control with quick setup and updates.
+Control using MQTT, Web UI, HTTP or serial.
+Automate using timers, rules or scripts.
+Integration with home automation solutions.
+Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
