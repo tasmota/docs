@@ -2271,7 +2271,7 @@ Script to extract readings from Eastron [SDM72D Series](https://www.eastroneurop
 
 ### Trovis 557x (MODBus)
 
-These heating regulators have a [lot of registers](https://raw.githubusercontent.com/Tom-Bom-badil/samson_trovis_557x/master/_register.py).
+These heating regulators have a [lot of registers](https://raw.githubusercontent.com/Tom-Bom-badil/samson_trovis_557x/master/_register.py). If your station number is different from standard (247 ==> 0xF7) you have got to change every first byte accordingly.
 
 ??? summary "View script"
     ```
