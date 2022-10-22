@@ -26,6 +26,8 @@ In the **_Configuration -> Configure Module_** page assign:
 1. GPIOx to `I2C SDA`
 2. GPIOy to `I2C SCL`
 
+!!! tip "AHT25 breakout boards require external pull-up resistors on the I2C bus (for example: 4.7kΩ)"
+
 After a reboot the driver should detect the sensor and display sensor readings.
 
 ### Troubleshooting
