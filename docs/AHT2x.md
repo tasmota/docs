@@ -19,6 +19,8 @@
 |SDA   | GPIOx
 |SCL   | GPIOy
 
+!!! tip "AHT25 breakout boards require external pull-up resistors on the I2C bus (for example: 4.7kΩ)"
+
 
 ### Tasmota Settings 
 In the **_Configuration -> Configure Module_** page assign:
