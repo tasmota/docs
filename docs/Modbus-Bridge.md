@@ -120,7 +120,7 @@ Requesting 4 holding registers starting from register 1 from slave address
 #### Register 1
 On command:
 ```
-ModBusSend {"deviceaddress": 1, "functioncode": 3, "startaddress": 1, "type":"uint16", "count":4}`
+ModBusSend {"deviceaddress": 1, "functioncode": 3, "startaddress": 1, "type":"uint16", "count":4}
 ```
 
 Response:
