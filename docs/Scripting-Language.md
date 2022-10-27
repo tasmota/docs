@@ -180,8 +180,8 @@ a valid script must start with >D in the first line
   Using this filter, vars can be used as arrays, #define LARGE_ARRAYS allows for arrays up to 1000 entries  
   array may also be permanent by specifying an extra :p  
   m:p:vname defines a permanent array. Keep in mind however that in 1M Flash standard configurations you only have 50 bytes permanent storage which stands for a maximum of 12 numbers. (see list above for permanent storage in other configurations)  
-  arrays may also be preset in auto increment mode array=X sets the value at index array[0] and increments the index by 1.  
-  array = {x y z} sets 3 values in an array from index array[0]  
+  arrays may also be preset in auto increment mode array=X sets the value at index array[1] and increments the index by 1.  
+  array = {x y z} sets 3 values in an array from index array[1]  
 
 !!! tip
     Keep variable names as short as possible. The length of all variable names taken together may not exceed 256 characters.  
