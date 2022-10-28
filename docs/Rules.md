@@ -823,6 +823,28 @@ Rule3 is active on daylight and pipe the PIR signal in a Power1 off signal. The 
 
 ------------------------------------------------------------------------------
 
+### Auto-off if or when current is idle
+
+The example is used on a Sonoff POWR316D.
+
+It assumes an idle current of less than 0.1 amps and a grace period of 10 minutes to get consumption above the idle level.
+
+If the consumer uses less than 0.1 amps for more than 10 minutes, then it will be turned off.
+
+This works with either manually turning on power, using a timer or whatever.
+
+#### Rule
+```haskell
+Rule1
+  ON system#boot DO var1 0 ENDON
+  ON ENERGY#Current==0.0 DO if (var1!=0) RuleTimer1 0; var1 0 endif BREAK
+  ON ENERGY#Current>=0.1 DO if (var1!=0) RuleTimer1 0; var1 0 endif BREAK
+  ON ENERGY#Current<0.1 DO if (var1!=1) RuleTimer1 600; var1 1 endif ENDON
+  ON Rules#Timer=1 DO Power1 off ENDON
+```
+
+------------------------------------------------------------------------------
+
 ### Control Timers from a Switch
 
 Assuming that your switch is on `GPIO00` and configured as `Switch1`:
