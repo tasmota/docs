@@ -932,7 +932,8 @@ IF %time%>%sunset DO Power1 1 / IF %time%<%sunrise DO Power1 1
 
 ### Turn On Light Before Dawn and At Dusk
 Turn on light at dusk until your nighttime and again in the morning before dawn.  
-
+*(memory variable method)*
+      
 What if the sun sets after your nighttime, as in during the summer? Then the timer will turn off the light at "night", but then the Sunset timer will turn it on again, so it stays on all night.  
 
 #### Rule
@@ -1001,6 +1002,60 @@ Backlog mem1 360; mem2 1350; Rule1 1; Rule2 1
   - Turn on the rule sets  
   `Backlog Rule1 1; Rule2 1`
 
+------------------------------------------------------------------------------
+
+### Turn On Light Before Dawn and At Dusk
+Turn on light at dusk until your nighttime and again in the morning before dawn.  
+*(Web UI timer method)*
+
+What if the sun sets after your nighttime, as in during the summer? Then the timer will turn off the light at "night", but then the Sunset timer will turn it on again, so it stays on all night. 
+This version uses the timers to set the actual time, using the %timerN% variables made availible in Tasmota V11. As a result, while the rule still needs to be applied by a skilled user, a less savvy family member can next choose or modify the desired times.
+
+#### Rule
+```haskell
+Rule1
+ON Time#Initialized DO event checktime=%time% ENDON
+ON Clock#Timer DO event checktime=%time% ENDON
+ON event#checktime DO %var10% 0 ENDON
+ON event#checktime>=%timer1% DO var10 1 ENDON
+ON event#checktime>=%timer2% DO var10 0 ENDON
+ON event#checktime>=%timer3% DO var10 1 ENDON
+ON event#checktime>=%timer4% DO var10 0 ENDON
+ON event#checktime DO Power1 %var10% ENDON
+```
+
+You do need to make sure the timers are set to run rules instead of hard ON-OFF. Timer 1,3 are interpreted as ON, Timer 2,4 as OFF. Here are some example timers, on at 06h00, off at 23h00, but you can also set these in the Web UI      
+```haskell
+Timer1 {"Enable":1,"Mode":0,"Time":"06:00","Window":0,"Days":"1111111","Repeat":1,"Output":2,"Action":3}
+Timer2 {"Enable":1,"Mode":1,"Time":"00:00","Window":0,"Days":"1111111","Repeat":1,"Output":2,"Action":3}
+Timer3 {"Enable":1,"Mode":2,"Time":"00:00","Window":0,"Days":"1111111","Repeat":1,"Output":2,"Action":3}
+Timer4 {"Enable":1,"Mode":0,"Time":"23:00","Window":0,"Days":"1111111","Repeat":1,"Output":2,"Action":3}
+```
+
+The basic rule above works for all situations where the sun (with or without offset) or scheduled time does not pass midnight.
+The more advanced version below works (from [#16914](https://github.com/arendst/Tasmota/pull/16914) onward) also if the sunset or scheduled time is after midnight, or even if there is no sunset at all (permanent daylight or night in north scandinavia)
+```haskell
+Rule1
+ON Time#Initialized DO event checktime=%time% ENDON
+ON Clock#Timer DO event checktime=%time% ENDON
+ON event#checktime DO Backlog var1 %timer1%; var2 %timer2%; var3 %timer3%; var4 %timer4%; var5 %value%; var6 %value%; var10 0; event checknoon=%value%; ENDON
+ON var1#state>1140 DO sub1 1440 ENDON
+ON var2#state>1140 DO sub2 1440 ENDON
+ON var5#state>1140 DO sub5 1440 ENDON
+ON var3#state<=420 DO add3 1440 ENDON
+ON var4#state<=420 DO add4 1440 ENDON
+ON var6#state<=420 DO add6 1440 ENDON
+ON event#checknoon DO Backlog event checkafternoon=%var6% ENDON
+ON event#checknoon<=780 DO Backlog event checkmorning=%var5%; event settime ENDON
+ON event#checknoon>780 DO Backlog event checkafternoon=%var6%; event settime ENDON
+ON event#checkmorning>=%var1% DO var10 1 ENDON
+ON event#checkmorning>=%var2% DO var10 0 ENDON
+ON event#checkafternoon>=%var3% DO var10 1 ENDON
+ON event#checkafternoon>=%var4% DO var10 0 ENDON
+ON event#settime DO Power1 %var10% ENDON
+```
+*For an attempted explanation of above advanced rule, please refer to the design and test XLS in [#16914](https://github.com/arendst/Tasmota/pull/16914)*
+      
 ------------------------------------------------------------------------------
 
 ### Enable a PIR Switch only at night
