@@ -3,7 +3,7 @@
 ??? failure "This feature is not included in precompiled binaries"  
     When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
     ```arduino
-    #define USE_BERRY_ULP      // (ESP32 only) Add support for the ULP via Berry (+5k flash)
+    #define USE_BERRY_ULP      // (ESP32, ESP32S2 and ESP32S3 only) Add support for the ULP via Berry (+5k flash)
     ``` 
     or add as a build flag to any build environment, i.e. in platformio_tasmota_cenv.ini:  
     ```
@@ -23,10 +23,25 @@ It will also not make it easy to write assembler code for the ULP and embed it i
     It can even make it easier and substantially faster to rapidly develop assembler projects, because there is no flashing involved in the code deployment, which happens in Berry at runtime.
   
   
+### FSM and RISCV ... what?
+  
+Currently there are 3 SOC's of the ESP32-family with an included ULP, which are the ESP32, the ESP32S2 and the ESP32S3.  
+The oldest one - the ESP32 - features the simplest type, which Espressif names **Finite State Machine** or in short **FSM**. This ULP can only be programmed in assembly.  
+The newer ESP32S2/S3 allow to run the ULP in FSM mode too with some minor additions in the instruction set. They are able ( = should be able in most cases) to use the same assembly source code, but the resulting binaries are not compatible.  
+But additionally both of the new models (ESPS2/S3) are able to run the ULP in RISCV mode, which has a different toolchain and allows to use C as programming language. This makes it a lot easier to work with it. Only one ULP mode possible at a time, so you can run only in FSM or RISCV mode.  
+For Tasmota it was decided to keep things as simple and modern as possible, thus for ESP32S2 and ESP32S3 the old FSM mode is not supported and we enjoy the simplicity of the high level language C. 
+   
+Bottom line for Tasmota:  
+**ESP32** - uses ULP in **FSM** mode  
+**ESP32S2 and ESP32S3** - use ULP in **RISCV** mode  
+  
+!!! tip
+    Although the main core of the ESP32C3 uses the RISCV architecure, there is no built in ULP at all. For the upcoming ESP32C6 an integrated ULP was anounced, but no further info is available at the moment. 
+  
 ### Limits of the ULP
   
 To simplify some things:  
-Everything in the ULP is limited. There are only 4 registers, very few operations and limited memory access. For some operations it is not possible to use mutable values, but the code must be fixed (for pin/register access) at compile time. That's why you will see lots of defines and constants in basically every example project.  
+Everything in the ULP is limited. On the old FSM type ULP there are only 4 registers, very few operations and limited memory access. For some operations it is not possible to use mutable values, but the code must be fixed (for pin/register access) at compile time. That's why you will see lots of defines and constants in basically every example project.  
 This was the reason, why for projects like Tasmota it never made sense to include ULP code.  
   
 ### Advantages of the ULP
@@ -45,7 +60,7 @@ A typical ULP program is started from the main core at the position of the so ca
 ### Tasmota conventions
   
 The assembly code can be divided in different sections of which the so called `.text`sections contains the program, but can hold variables or arbitrary data too. In general for the assembler it is not so important, where the functions or the *global entry point* is located.  
-But for Tasmota the rule is, that the global entry point or a jump to it is located at position 0 in RTC_SLOW_MEM. That way `ULP.run()` can always point to this address 0.  
+But for the FSM in Tasmota the rule is, that the global entry point or a jump to it is located at position 0 in RTC_SLOW_MEM. That way `ULP.run()` can always point to this address 0. On RISCV ULP's the entry point is always 0.  
 It is a design decision to keep the ULP module as small as possible and the addition of more internal functions shall be avoided, i.e. for doing setup of GPIO/RTC pins. If possible, this should be done in assembly code.  
   
 !!! example 
@@ -63,12 +78,17 @@ WRITE_RTC_REG(RTC_IO_TOUCH_PAD5_REG, 31, 1, 1) //hold
   
 There are 2 ways to assemble code for later use in Tasmota. In theory every external ULP project, which fits in the reserved memory space that is defined in the framework package used to compile the Tasmota firmware, should be convertible. This limit is subject to change.  
   
-### Micropython and micropython-esp32-ulp
+### Micropython and micropython-esp32-ulp (FSM only)
+  
+Only available for the ESP32 using the FSM type ULP.
   
 A great project to run ULP code in Micropython on the ESP32 can be used to assemble and export the same projects to Tasmota.  
 There are ports of Micropython for Linux, Windows and Mac, which must be installed to the system of your choice. Run it and in the Micropython console install like that:  
 ``` py
+# MacOS
 import upip
+# Linux
+import mip
 upip.install('micropython-esp32-ulp')
 ```
   
@@ -84,6 +104,8 @@ After you created or did download your `ulp_app.py` you can export the data with
   
 
 ###  Export from ESP-IDF project
+  
+This is the only way, that works for every ULP version in Tasmota.
   
 Many projects are using the ESP-IDF with CMAKE and will be compiled with `idf.py build`. We can extract the ULP code without flashing this project, with two simple methods: 
 
@@ -101,7 +123,7 @@ Use the embedded JS application right here.
 # Generate ULP code in your browser !! Parsing completely in JS, no file upload to a server.
 ```
   
-Thus the ULP projects that may fail to assemble in Micropython can be used too. But usually the route via Micropython makes it easier to pack everything nicely together.
+Thus the ULP projects that may fail to assemble in Micropython can be used too. Additionally it can be helpful, to test the ULP code in a minimal working example outside of Tasmota.
   
   
 
@@ -109,7 +131,7 @@ Thus the ULP projects that may fail to assemble in Micropython can be used too. 
   
 This is all about porting and adapting existing code. Thank you to everyone who is sharing their ULP code!!  
   
-### Blink an LED
+### Blink an LED - FSM
   
 Let's take a look at [https://github.com/micropython/micropython-esp32-ulp/blob/master/examples/blink.py](https://github.com/micropython/micropython-esp32-ulp/blob/master/examples/blink.py).  
   
@@ -167,7 +189,7 @@ You can change the wake intervals on-the-fly with i.e. `ULP.wake_period(1, 80000
 
 Now on to something more complex with wake from deep sleep.
   
-### Hall sensor
+### Hall sensor - FSM
   
 We have a working example here: [https://github.com/duff2013/ulptool/blob/master/src/ulp_examples/ulp_hall_sensor/hall_sensor.s](https://github.com/duff2013/ulptool/blob/master/src/ulp_examples/ulp_hall_sensor/hall_sensor.s)
   
@@ -290,7 +312,7 @@ Add commands:
 [ulp_hall.be](https://github.com/Staars/berry-examples/blob/main/ulp_hall.be)
   
 
-### I2C access
+### I2C access  - FSM
   
 Although there are special assembler commands to access I2C devices the most common method in the examples on GitHub is bit banging. This is reported to be more reliable and circumvents some limitations (only 2 pin combinations and bytewise access with special I2C commands).  
 Nearly every example is based on some very clever macros and control flow tricks, that replicate a simple stack and subroutines (similar to a library), which is a good example for the "Art of coding".  
