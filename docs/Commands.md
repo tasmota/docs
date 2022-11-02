@@ -203,7 +203,7 @@ UfsDelete<a class="cmnd" id="ufsdelete"></a>|Delete SD card or Flash FS file if 
 UfsDelete2<a class="cmnd" id="ufsdelete2"></a>|Delete only Flash FS file if available
 UfsFree<a class="cmnd" id="ufsfree"></a>|Filesystem free size in kb
 UfsRename<a class="cmnd" id="ufsrename"></a>|Rename SD card or Flash FS file if only of them available
-UfsRename2<a class="cmnd" id="ufsrename2"></a>|Rename only Flash FS file if available
+UfsRename2<a class="cmnd" id="ufsrename2"></a>|Rename only Flash FS file if available<BR>Example: `UfsRename2 old,new`
 UfsRun<a class="cmnd" id="ufsrun"></a>|Run file
 UfsSize<a class="cmnd" id="ufssize"></a>|Filesystem size in kb
 UfsType<a class="cmnd" id="ufstype"></a>|Get filesystem type<BR>`0` = none<BR>`1` = SD card<BR>`2` = Flash file<BR>`3` = LittleFS
