@@ -39,8 +39,8 @@ curl -XPOST --header "Content-Type: application/json" --data-raw '{"deviceid": "
 ```
 
 !!! note
-`$SONOFF_IP` must be defined with the IP or FQDN of the intended Sonoff device before running the `curl` command. Example:
-```sh
+    `$SONOFF_IP` must be defined with the IP or FQDN of the intended Sonoff device before running the `curl` command. Example:
+    ```sh
 SONOFF_IP="10.0.0.2"
 ```
 
@@ -105,7 +105,7 @@ curl -XPOST --data "{\"deviceid\":\"\",\"data\":{\"downloadUrl\": \"http://sonof
 
 !!! note
 `$HASH` must be defined with the `sha256sum` of the intended firmware file (the `.bin` file) before running the `curl` command. Example:
-```sh
+    ```sh
 HASH="f2ca1bb6c7e907d06dafe4687e579fce76b37e4e93b7605022da52e6ccc26fd2"
 ```
 
