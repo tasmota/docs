@@ -82,7 +82,7 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |America/Atikokan|`Timezone -5:00`|
 |America/Atka|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,0; TimeDst 0,2,3,1,2,60`|
 |America/Bahia|`Timezone -3:00`|
-|America/Bahia_Banderas|`Backlog0 Timezone 99; TimeStd 0,0,10,1,2,-360; TimeDst 0,1,4,1,2,-300`|
+|America/Bahia_Banderas|`Timezone -6:00`|
 |America/Barbados|`Timezone -4:00`|
 |America/Belem|`Timezone -3:00`|
 |America/Belize|`Timezone -6:00`|
@@ -99,7 +99,7 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |America/Cayenne|`Timezone -3:00`|
 |America/Cayman|`Timezone -5:00`|
 |America/Chicago|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-360; TimeDst 0,2,3,1,2,-300`|
-|America/Chihuahua|`Backlog0 Timezone 99; TimeStd 0,0,10,1,2,-420; TimeDst 0,1,4,1,2,-360`|
+|America/Chihuahua|`Timezone -6:00`|
 |America/Coral_Harbour|`Timezone -5:00`|
 |America/Cordoba|`Timezone -3:00`|
 |America/Costa_Rica|`Timezone -6:00`|
@@ -160,15 +160,15 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |America/Marigot|`Timezone -4:00`|
 |America/Martinique|`Timezone -4:00`|
 |America/Matamoros|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-360; TimeDst 0,2,3,1,2,-300`|
-|America/Mazatlan|`Backlog0 Timezone 99; TimeStd 0,0,10,1,2,-420; TimeDst 0,1,4,1,2,-360`|
+|America/Mazatlan|`Timezone -7:00`|
 |America/Mendoza|`Timezone -3:00`|
 |America/Menominee|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-360; TimeDst 0,2,3,1,2,-300`|
-|America/Merida|`Backlog0 Timezone 99; TimeStd 0,0,10,1,2,-360; TimeDst 0,1,4,1,2,-300`|
+|America/Merida|`Timezone -6:00`|
 |America/Metlakatla|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-540; TimeDst 0,2,3,1,2,-480`|
-|America/Mexico_City|`Backlog0 Timezone 99; TimeStd 0,0,10,1,2,-360; TimeDst 0,1,4,1,2,-300`|
+|America/Mexico_City|`Timezone -6:00`|
 |America/Miquelon|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-180; TimeDst 0,2,3,1,2,-120`|
 |America/Moncton|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-240; TimeDst 0,2,3,1,2,-180`|
-|America/Monterrey|`Backlog0 Timezone 99; TimeStd 0,0,10,1,2,-360; TimeDst 0,1,4,1,2,-300`|
+|America/Monterrey|`Timezone -6:00`|
 |America/Montevideo|`Timezone -3:00`|
 |America/Montreal|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-300; TimeDst 0,2,3,1,2,-240`|
 |America/Montserrat|`Timezone -4:00`|
@@ -181,7 +181,7 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |America/North_Dakota/Center|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-360; TimeDst 0,2,3,1,2,-300`|
 |America/North_Dakota/New_Salem|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-360; TimeDst 0,2,3,1,2,-300`|
 |America/Nuuk|This timezone uses a DST start/end rule that Tasmota does not support.|
-|America/Ojinaga|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-420; TimeDst 0,2,3,1,2,-360`|
+|America/Ojinaga|`Timezone -6:00`|
 |America/Panama|`Timezone -5:00`|
 |America/Pangnirtung|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-300; TimeDst 0,2,3,1,2,-240`|
 |America/Paramaribo|`Timezone -3:00`|
@@ -241,7 +241,7 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |Arctic/Longyearbyen|`Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120`|
 |Asia/Aden|`Timezone +3:00`|
 |Asia/Almaty|`Timezone +6:00`|
-|Asia/Amman|This timezone uses a DST start/end rule that Tasmota does not support.|
+|Asia/Amman|`Timezone +3:00`|
 |Asia/Anadyr|`Timezone +12:00`|
 |Asia/Aqtau|`Timezone +5:00`|
 |Asia/Aqtobe|`Timezone +5:00`|
@@ -263,7 +263,7 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |Asia/Chungking|`Timezone +8:00`|
 |Asia/Colombo|`Timezone +5:30`|
 |Asia/Dacca|`Timezone +6:00`|
-|Asia/Damascus|`Backlog0 Timezone 99; TimeStd 0,0,10,6,0,120; TimeDst 0,0,3,6,0,180`|
+|Asia/Damascus|`Timezone +3:00`|
 |Asia/Dhaka|`Timezone +6:00`|
 |Asia/Dili|`Timezone +9:00`|
 |Asia/Dubai|`Timezone +4:00`|
@@ -526,8 +526,8 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |MST|`Timezone -7:00`|
 |MST7MDT|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-420; TimeDst 0,2,3,1,2,-360`|
 |Mexico/BajaNorte|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-480; TimeDst 0,2,3,1,2,-420`|
-|Mexico/BajaSur|`Backlog0 Timezone 99; TimeStd 0,0,10,1,2,-420; TimeDst 0,1,4,1,2,-360`|
-|Mexico/General|`Backlog0 Timezone 99; TimeStd 0,0,10,1,2,-360; TimeDst 0,1,4,1,2,-300`|
+|Mexico/BajaSur|`Timezone -7:00`|
+|Mexico/General|`Timezone -6:00`|
 |NZ|`Backlog0 Timezone 99; TimeStd 1,1,4,1,3,720; TimeDst 1,0,9,1,2,780`|
 |NZ-CHAT|This timezone has a UTC offset outside the range Tasmota supports.|
 |Navajo|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-420; TimeDst 0,2,3,1,2,-360`|
@@ -542,7 +542,7 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |Pacific/Efate|`Timezone +11:00`|
 |Pacific/Enderbury|`Timezone +13:00`|
 |Pacific/Fakaofo|`Timezone +13:00`|
-|Pacific/Fiji|This timezone uses a DST start/end rule that Tasmota does not support.|
+|Pacific/Fiji|`Timezone +12:00`|
 |Pacific/Funafuti|`Timezone +12:00`|
 |Pacific/Galapagos|`Timezone -6:00`|
 |Pacific/Gambier|`Timezone -9:00`|
@@ -602,4 +602,4 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |WET|`Backlog0 Timezone 99; TimeStd 0,0,10,1,2,0; TimeDst 0,0,3,1,1,60`|
 |Zulu|`Timezone +0:00`|
 
-This table was generated from the [IANA Time Zone Database](https://www.iana.org/time-zones), version `2022b`.
+This table was generated from the [IANA Time Zone Database](https://www.iana.org/time-zones), version `2022f`.
