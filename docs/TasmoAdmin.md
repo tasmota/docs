@@ -26,18 +26,6 @@ This is a Linux Alpine  based image with Nginx and PHP7 installed. It supports m
 
 This is the recommended way to get up and running.
 
-### Windows
-A ready to use TasmoAdmin-XAMP-Portable-\*.zip is available on the [release page](https://github.com/TasmoAdmin/TasmoAdmin/releases) and is based on XAMPP.
-
-1. Download the XAMPP Zip package from the releases page
-2. Extract the Zip (recommend to put the xamp folder on C:\
-3. Run once the xamp\setup_xampp.bat
-4. Start xampp-control.exe
-5. Start Apache in the opened ControlCenter
-6. Get your local IP Address
-
-Now you can type in your browser http://YOURLOCALIP and TasmoAdmin shows up.
-
 ### Linux
 Running TasmoAdmin on a Linux/Unix hosts requires the following:
 * A Webserver
