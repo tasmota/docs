@@ -1,4 +1,11 @@
 
+??? tip "This feature not included in precompiled binaries" 
+
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```c++
+    #define USE_LIGHT_ARTNET                         // Add support for DMX/ArtNet via UDP on port 6454 (+3.5k code) 
+    ```
+
 ArtNet is a royalty-free UDP based protocol to transport DMX lighting control.It allows to control either a Light, or a WS2812 Matrix/Strip with a remote software with real-time animations.
 
 This feature is experimental and tested only with LED Lab (Mac and iOS)
