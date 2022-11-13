@@ -448,6 +448,15 @@ WhiteBlend<a class="cmnd" id="whiteblend"></a><BR>SetOption105<a class="cmnd" id
 Width&#60;x><a class="cmnd" id="width"></a>|x = `1..4`<BR>`1` = `0..4` = LED group width *([Scheme](#scheme) `6..12` only)*<BR>`2` = `0..32` = seconds hand width *([Scheme](#scheme) `5` only)*<BR>`3` = `0..32` = minutes hand width *([Scheme](#scheme) `5` only)*<BR>`4` = `0..32` = hour hand width *([Scheme](#scheme) `5` only)*
 See also|[`SetOption15`](#setoption15), [`SetOption16`](#setoption16), [`SetOption17`](#setoption17), [`SetOption20`](#setoption20), [`SetOption37`](#setoption37), [`SetOption68`](#setoption68) and [`SetOption107`](#setoption107)
 
+[ArtNet](ArtNet) specific commands:
+
+Command|Description
+:---|:---
+ArtNetConfig &lt;json&gt;<a class="cmnd" id="artnetconfig"></a>|Example `ArtNetConfig {"Rows":5, "Cols":5, "Offset":0, "Alternate":false, "Universe":0}`<BR>There are two modes for ArtNet configuration: simple light or adressable leds.<BR>In simple Light mode, `"cols"` is zero. Only `"Universe"` needs to be specified.<BR>Example: `ArtNetConfig {"Cols":0, "Universe":0}`<BR>In Adressable Light mode, all parameters can be specified.<BR><BR>`Rows`: number of rows of display, `1` for light mode or single strip<BR>`Cols`: number of columns of the display, or length of the strip, or `0` for single light<BR>`"Offset"`: number of adressable leds to skip<BR>`Alternate`: (true/false) indicates that every other line is reversed (common in large matrix)<BR>`Universe`: starting DMX Universe number for the first line (0 based so you may need to substract 1 from software)
+ArtNetStart<a class="cmnd" id="artnetstart"></a>|Start ArtNet mode, listen to UDP port 6454 and force `SetOption148 1` for autorun at restart
+ArtNetStop<a class="cmnd" id="artnetstop"></a>|Stop ArtNet mode, close UDP port and force `SetOption148 0` to disable ArtNet mode at restart
+See also|[`SetOption148`](#setoption148)
+    
 ### Device Groups
 
 Command|Parameters
@@ -574,6 +583,9 @@ SetOption142<a class="cmnd" id="setoption142"></a>|`1` = wait 1 second for WiFi 
 SetOption143<a class="cmnd" id="setoption143"></a>|`1` = disables ZigBee auto-probing and configure back attribute reporting
 SetOption144<a class="cmnd" id="setoption144"></a>|`1` = include a timestamp in `ZbReceived` messages
 SetOption146<a class="cmnd" id="setoption146"></a>|`1` = enable display of ESP32 internal temperature
+SetOption147<a class="cmnd" id="setoption147"></a>|`1` = disable publish SSerialReceived MQTT messages, you must use event trigger rules instead
+SetOption148<a class="cmnd" id="setoption148"></a>|`1` = enable autorun of ArtNet mode at start. If for any reason listening to UDP port fails, this mode is disabled
+
 
 ### TuyaMCU
 
