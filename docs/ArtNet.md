@@ -12,9 +12,49 @@ This feature is experimental and tested only with LED Lab (Mac and iOS)
 
 When enabling ArtNet mode, Tasmota listens to UDP port 6454 on local address and on multicast address `239.255.25.59`. Incoming DMX/ArtNet packets drive the display and light.
 
+![ezgif-3-5d1d4b87d0](https://user-images.githubusercontent.com/49731213/201535653-3bb395b8-f84c-4083-93d7-a54782933ebf.gif)
+
 Important: DMX/ArtNet payload must be sent in `GBR` format, i.e. 3 bytes in Green/Red/Blue order.
 
 While in ArtNet mode, you can control the brightness with `Dimmer` and turn off light/display with `Power`; or with the Web UI. Changing the color has no effect until you stop ArtNet mode.
+
+## Quickstart Tutorial
+
+Step 1. Compile your own firmware with `#define USE_LIGHT_ARTNET` and flash to ESP8266 or ESP32 device
+
+Step 2. Configure and launche ArtNet.
+
+For [M5Stack Atom Matrix](https://shop.m5stack.com/products/atom-matrix-esp32-development-kit) or [ESP32C3 01Space RGB](https://github.com/01Space/ESP32-C3FH4-RGB), the matrix is 5x5 no alternate:
+
+`ArtNetConfig {"Rows":5, "Cols":5, "Offset":0, "Alternate":false, "Universe":0}`
+`ArtNetStart`
+
+For BTF Lighting 8x8 or 16x16 matrix, with alternate lines:
+
+`ArtNetConfig {"Rows":8, "Cols":8, "Offset":0, "Alternate":true, "Universe":0}`
+`ArtNetStart`
+
+Step 3. Download [LED Lab](http://appstore.com/ledlab) from [Christopher Schardt](http://schardt.org) for MacOS or iOS
+
+Step 4. Launch `LED Lab`, click on the `Settings` icon (wheel), select `LED Setup...`
+<img src="../_media/artnet/LED_Lab_Menu1.png">
+
+
+In the LED Setup:
+- Enter the number of rows in `Outputs`
+- Enter the number of columns in `LEDS/Output`
+- Enter the IP Address of the Tasmota device
+- Make sure that `UDP Broadcast` is selected (green background)
+- Make sure `First Universe` is 1 and `Channel Range` starts with `1`
+- Set `Channel Values for Each Pixel` to `GRB`
+- Click `OK` in upper right corner
+
+<img src="../_media/artnet/LED_Lab_Setup.png">
+
+Step 5. Back to the Settings, click on `LED Display` to start streaming. Your device should start to show LED animations.
+
+<img src="../_media/artnet/LED_Lab_Menu2.png">
+
 
 ## Operating modes
 
@@ -29,9 +69,6 @@ ArtNetStart
 ```
 
 The following are done with [Athom LED strip controller](https://templates.blakadder.com/athom_LS2812B-TAS.html) (ESP8266), using an external level shifter, and 8x8 Adafruit matrix.
-
-Smooth animation:
-![ezgif-3-5d1d4b87d0](https://user-images.githubusercontent.com/49731213/201535653-3bb395b8-f84c-4083-93d7-a54782933ebf.gif)
 
 Fast animation:
 ![ezgif-3-98953661ef](https://user-images.githubusercontent.com/49731213/201535659-8020174c-9dde-4d95-a930-9423e4a54a1e.gif)
