@@ -1030,6 +1030,7 @@ General Function|Parameters and details
 udp()<a class="cmnd" id="udp_ctor">|`udp() -> <instance udp>`<br>Creates an instance of `udp` class.
 begin<a class="cmnd" id="udp_begin">|`begin(ip:string, port:int) -> bool`<BR>Create a UDP listener and sender on interface `ip` and `port`. If `ip` is an empty string, the listener connects to all interfaces (aka 0.0.0.0)<BR>Returns `true` if successful.
 begin_multicast<a class="cmnd" id="udp_begin_mcast">|`begin(ip:string, port:int) -> bool`<BR>Create a UDP listener and sender on interface `ip` and `port`. `ip` must be a multicast address.<BR>Returns `true` if successful.
+stop<a class="cmnd" id="udp_stop">|`stop() -> bil`<BR>Closes UDP lisetenr and sender, and frees resources. You can't send or receive anymore with this instance.
 send<a class="cmnd" id="udp_send">|`send(addr:string, port:int, payload:bytes) -> bool`<BR>Sends a packet to address `addr`, port `port` and message as `bytes()` buffer.<BR>Returns `true` if successful.
 send_multicast<a class="cmnd" id="udp_send_mcast">|`send(payload:bytes) -> bool`<BR>Sends a payload as `bytes()` buffer to the multicast address. `begin_multicast()` must have been previously called.<BR>Returns `true` if successful.
 read<a class="cmnd" id="udp_read">|`read() -> bytes() or nil`<BR>Reads any received udp packet as bytes() buffer, or `nil` if no packet was received.
