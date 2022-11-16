@@ -137,4 +137,4 @@ Alternatively, it could also be set in your `user_config_override.h` with:
 | RgxSubnet   | The subnet mask for the AP side, it's recommended to use `255.255.255.0`. The AP will automatically use addresses from this subnet to serve via DHCP to connecting devices |
 | RgxState    | Enable or disable the AP. Note that turning the AP off will cause a reboot                                                                                                 |
 | RgxNAPT     | Only available if `USE_WIFI_RANGE_EXTENDER_NAPT` is enabled. Enable or disable NAPT. Note that turning off NAPT will cause the device to reboot                            |
-| RgxClients  | Only available on ESP32. Show JSON list of currently connected clients with their MAC, IP and last RSSI |
+| RgxClients  | Show JSON list of currently connected clients with their MAC and IP. On ESP32 last RSSI is also shown |
