@@ -6,7 +6,7 @@
 
 To use it you must [compile your build](Compile-your-build)
 
-Create a section in `platformio_tasmota_cenv.ini` such as the following for an ESP8266:
+Copy `platformio_tasmota_cenv_sample.ini` to `platformio_tasmota_cenv.ini` which already contains the following sections for ESP8266 and ESP32. Or create a section in your `platformio_tasmota_cenv.ini` such as the following for an ESP8266:
 
 ```ini
 [env:tasmota-rangeextender]
@@ -137,3 +137,4 @@ Alternatively, it could also be set in your `user_config_override.h` with:
 | RgxSubnet   | The subnet mask for the AP side, it's recommended to use `255.255.255.0`. The AP will automatically use addresses from this subnet to serve via DHCP to connecting devices |
 | RgxState    | Enable or disable the AP. Note that turning the AP off will cause a reboot                                                                                                 |
 | RgxNAPT     | Only available if `USE_WIFI_RANGE_EXTENDER_NAPT` is enabled. Enable or disable NAPT. Note that turning off NAPT will cause the device to reboot                            |
+| RgxClients  | Only available on ESP32. Show JSON list of currently connected clients with their MAC, IP and last RSSI |
