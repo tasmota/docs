@@ -103,7 +103,7 @@ If using NAPT, deployment is a lot easier as there is no need for a static IP ad
 **Cons**
 
 - More overhead on the _extender_ device
-- No access to the web interface of the _remote_ devices
+- Access to the web interface of the _remote_ devices needs port forwarding -> see RgxPort command
 
 An example setup using commands to match the above image with NAPT, with an AP name `rangeextender` and password `securepassword` would be:
 
@@ -127,6 +127,14 @@ Alternatively, it could also be set in your `user_config_override.h` with:
 #define WIFI_RGX_NAPT 1
 ```
 
+To access the web page (which uses tcp port 80) of a client with mac 11:22:33:44:55:66 you execute the following command after the client is connected:
+```
+RgxPort tcp,8080,112233445566,80
+```
+If the result is OK the range extender port 8080 is forwarded to port 80 of the client and the web page can be accessed with URL http://range-extender-name:8080
+
+The setting is not permanent and needs to be repeated each time the client (re)connects.
+
 ## Commands
 
 | Command     | Parameters                                                                                                                                                                 |
@@ -138,3 +146,4 @@ Alternatively, it could also be set in your `user_config_override.h` with:
 | RgxState    | Enable or disable the AP. Note that turning the AP off will cause a reboot                                                                                                 |
 | RgxNAPT     | Only available if `USE_WIFI_RANGE_EXTENDER_NAPT` is enabled. Enable or disable NAPT. Note that turning off NAPT will cause the device to reboot                            |
 | RgxClients  | Show JSON list of currently connected clients with their MAC and IP. On ESP32 last RSSI is also shown |
+| RgxPort     | protocol,range_extender_port,client_mac,client_port: Forward a tcp or udp STA port to a port of an AP client |
