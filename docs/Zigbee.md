@@ -967,7 +967,7 @@ Other commands will be available and will be added when	clarified.
 
 ## Advanced topic: Zigbee Reference
 
-??? tip "Tasmota includes plain text aliases for most of the common ZCL attributes" 
+??? tip "Tasmota includes plain text aliases for most of the common ZCL attributes (click to expand)" 
 
 	Alias|Cluster|Attribute|Type
 	:---|:---|:---|:---
