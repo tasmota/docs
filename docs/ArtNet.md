@@ -27,12 +27,12 @@ Step 2. Configure and launche ArtNet.
 For [M5Stack Atom Matrix](https://shop.m5stack.com/products/atom-matrix-esp32-development-kit) or [ESP32C3 01Space RGB](https://github.com/01Space/ESP32-C3FH4-RGB), the matrix is 5x5 no alternate:
 
 `ArtNetConfig {"Rows":5, "Cols":5, "Offset":0, "Alternate":false, "Universe":0}`
-`ArtNetStart`
+`ArtNet Start`
 
 For BTF Lighting 8x8 or 16x16 matrix, with alternate lines:
 
 `ArtNetConfig {"Rows":8, "Cols":8, "Offset":0, "Alternate":true, "Universe":0}`
-`ArtNetStart`
+`ArtNet Start`
 
 Step 3. Download [LED Lab](http://appstore.com/ledlab) from [Christopher Schardt](http://schardt.org) for MacOS or iOS
 
@@ -65,7 +65,7 @@ When setting `"Rows":<x>` with `<x>` greater than `1`, the display is considered
 Example for M5Stack Atom Matrix or ESP32C3 RGB:
 ```
 ArtNetConfig {"Rows":5, "Cols":5, "Offset":0, "Alternate":false, "Universe":0}
-ArtNetStart
+ArtNet Start
 ```
 
 The following are done with [Athom LED strip controller](https://templates.blakadder.com/athom_LS2812B-TAS.html) (ESP8266), using an external level shifter, and 8x8 Adafruit matrix.
@@ -80,7 +80,7 @@ When setting `"Rows":1` ArtNet uses the WS2812 as a linear strip, and converts t
 Example for M5Stack Atom Matrix or ESP32C3 RGB:
 ```
 ArtNetConfig {"Rows":1, "Cols":30, "Offset":0, "Universe":0}
-ArtNetStart
+ArtNet Start
 ```
 
 ### Single Light
@@ -90,7 +90,7 @@ When setting `"Cols":0` (zero columns) ArtNet uses the first GBR payload to cont
 Example:
 ```
 ArtNetConfig {"Cols":0, "Universe":0}
-ArtNetStart
+ArtNet Start
 ```
 
 ## Commands
@@ -98,8 +98,7 @@ ArtNetStart
 Command|Description
 :---|:---
 ArtNetConfig &lt;json&gt;<a class="cmnd" id="artnetconfig"></a>|Example `ArtNetConfig {"Rows":5, "Cols":5, "Offset":0, "Alternate":false, "Universe":0}`<BR>There are two modes for ArtNet configuration: simple light or adressable leds.<BR>In simple Light mode, `"cols"` is zero. Only `"Universe"` needs to be specified.<BR>Example: `ArtNetConfig {"Cols":0, "Universe":0}`<BR>In Adressable Light mode, all parameters can be specified.<BR><BR>`Rows`: number of rows of display, `1` for light mode or single strip<BR>`Cols`: number of columns of the display, or length of the strip, or `0` for single light<BR>`"Offset"`: number of adressable leds to skip<BR>`Alternate`: (true/false) indicates that every other line is reversed (common in large matrix)<BR>`Universe`: starting DMX Universe number for the first line (0 based so you may need to substract 1 from software)
-ArtNetStart<a class="cmnd" id="artnetstart"></a>|Start ArtNet mode, listen to UDP port 6454 and force `SetOption148 1` for autorun at restart
-ArtNetStop<a class="cmnd" id="artnetstop"></a>|Stop ArtNet mode, close UDP port and force `SetOption148 0` to disable ArtNet mode at restart
+ArtNet<a class="cmnd" id="artnet"></a>|`Start`, `On`>`, or `1`: Start ArtNet mode, listen to UDP port 6454 and force `SetOption148 1` for autorun at restart<BR>`Stop`, `Off` or `0`: Stop ArtNet mode, close UDP port and force `SetOption148 0` to disable ArtNet mode at restart
 SetOption148|Enables or disables autorun of ArtNet mode at start. If for any reason listening to UDP port fails, this mode is disabled
 
 ## Troubleshooting
