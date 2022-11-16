@@ -1,5 +1,5 @@
 
-??? tip "This feature not included in precompiled binaries" 
+??? tip "This feature included in Tasmota32 precompiled binary but not in ESP8266 builds" 
 
     When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
     ```c++
@@ -20,7 +20,7 @@ While in ArtNet mode, you can control the brightness with `Dimmer` and turn off 
 
 ## Quickstart Tutorial
 
-Step 1. Compile your own firmware with `#define USE_LIGHT_ARTNET` and flash to ESP8266 or ESP32 device
+Step 1. Flash Tasmota32 to ESP32 based device, or compile your own firmware with `#define USE_LIGHT_ARTNET` for ESP8266 based devices
 
 Step 2. Configure and launche ArtNet.
 
