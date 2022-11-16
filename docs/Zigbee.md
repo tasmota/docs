@@ -1623,21 +1623,30 @@ You can inspect the log output to determine whether Zigbee2Tasmota started corre
 ```
 
 * `Status` contains a numeric code about the status message
-    - `0`: initialization complete, _Zigbee2Tasmota is running normally_
-    - `1`: booting
-    - `2`: resetting CC2530 configuration
-    - `3`: starting Zigbee coordinator
-    - `20`: disabling Permit Join
-    - `21`: allowing Permit Join for 60 seconds
-    - `22`: allowing Permit Join until next boot
-    - `30`: Zigbee device connects or reconnects
-    - `31`: Received Node Descriptor information for a Zigbee device
-    - `32`: Received the list of active endpoints for a Zigbee device
-    - `33`: Received the simple Descriptor with active ZCL clusters for a Zigbee device
-    - `50`: reporting CC2530 firmware version
-    - `51`: reporting CC2530 device information and associated devices
-    - `98`: error, unsupported CC2530 firmware
-    - `99`: general error, ==Zigbee2Tasmota was unable to start==
+
+    Status code|Description
+	:---|:---
+    `0`|initialization complete, _Zigbee2Tasmota is running normally_
+    `1`|booting
+    `2`|resetting CC2530 configuration
+    `3`|starting Zigbee coordinator
+    `20`|disabling Permit Join
+    `21`|allowing Permit Join for 60 seconds
+    `22`|allowing Permit Join for some period
+	`23`|Permit Join error
+    `30`|Zigbee device connects or reconnects
+    `31`|Received Node Descriptor information for a Zigbee device
+    `32`|Received the list of active endpoints for a Zigbee device
+    `33`|Received the simple Descriptor with active ZCL clusters for a Zigbee device
+	`34`|Device announced its IEEE address
+	`40`|Response from a device scan
+    `50`|reporting ZNP firmware version
+    `51`|reporting ZNP device information and associated devices
+	`55`|reporting EZSP firmware version
+	`56`|reporting EZSP information
+    `98`|error, unsupported CC2530 firmware
+    `99`|general error, _Zigbee2Tasmota was unable to start_
+
 * `Message` (optional) a human-readable message
 * other fields depending on the message (e.g., Status=`50` or Status=`51`)
 
