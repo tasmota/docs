@@ -133,7 +133,15 @@ RgxPort tcp,8080,112233445566,80
 ```
 If the result is OK the range extender port 8080 is forwarded to port 80 of the client and the web page can be accessed with URL http://range-extender-name:8080
 
-The setting is not permanent and needs to be repeated each time the client (re)connects.
+The setting is not permanent and needs to be repeated each time the client (re)connects since its IP could have changed.
+
+So, if access to a device behind the NAT is required it is easiest to configure this device with a static IP in the range extender subnet.
+Then the RgxPort command can be used with that IP instead of the MAC. Since the IP is known, it is not required that the IP is already active at the time of the port forward. That way the RgxPort command could be used in a simple startup rule.
+Given the range extender subnet is the default 192.168.4.0/24, and the device has a static IP of 192.168.4.44 then this command would work:
+```
+RgxPort tcp,8084,192.168.4.44,80
+```
+If the result is OK the range extender port 8084 is forwarded to port 80 of the client and the web page can be accessed with URL http://range-extender-name:8084 while the client is active.
 
 ## Commands
 
@@ -146,4 +154,4 @@ The setting is not permanent and needs to be repeated each time the client (re)c
 | RgxState    | Enable or disable the AP. Note that turning the AP off will cause a reboot                                                                                                 |
 | RgxNAPT     | Only available if `USE_WIFI_RANGE_EXTENDER_NAPT` is enabled. Enable or disable NAPT. Note that turning off NAPT will cause the device to reboot                            |
 | RgxClients  | Show JSON list of currently connected clients with their MAC and IP. On ESP32 last RSSI is also shown |
-| RgxPort     | protocol,range_extender_port,client_mac,client_port: Forward a tcp or udp STA port to a port of an AP client |
+| RgxPort     | protocol,range_extender_port,[client_mac\|client_ip],client_port: Forward a tcp or udp STA port to a port of an AP client |
