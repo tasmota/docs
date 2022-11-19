@@ -311,6 +311,26 @@ This will generate a QR-Code based on the MAC address of the ESP32 which runs Ta
 <input size="40" type="text" id="Wifi-MAC" value="" placeholder="Input WiFi MAC of the ESP32" style="font-size:1.5em;"><br>
 
 <object data="../extra_javascript/mi32/hk_qrcode.svg" id="hk_qrcode" type="image/svg+xml" height="0"></object>
+  
+##  Homeassistant and Tasmota - BLE sensors
+  
+After creating a valid configuration with a `mi32cfg` file in the local file system, it is possible to announce all sensors to Homeassistant via MQTT discovery by using a Berry script. This will parse the `mi32cfg` file and create all needed entities for Homassistant by publishing specific messages to Homeassistant.  
+It will not generate duplicated sensors, but instead allows to use multiple ESP's as data sources for the same BLE sensor.
+The best way is to not fiddle around with the default Tasmota configuration, especially not to change the default topic name, because this will lose the ability to automatically configure everything.
+  
+One way to use it, is to save the following script [disco.be](https://raw.githubusercontent.com/Staars/berry-examples/main/disco.be) to the filesystem of the ESP and the launch it at the startup.  
+Create `autoexec.bat` if not already present and add the following line:  
+`br load("disco")`  
+This will create and/or init entities for every sensor and group them as a single device for every BLE device in Homeassistants MQTT integration. 
+
+In the diagnostic panel of every sensor you will see the signal strength of the BLE sensor in relation to the observing ESP, so the value will very likely differ between multiple of these BLE-ESP32-combinations.
+A virtual Tasmota BLE Hub device is created, that shows all contributing ESP32 nodes for a better overview.  
+  
+For sensors like humidity or temperature it should not matter, how many ESP's do contribute data. For buttons of a remote control or binary sensors like motion, this could have side effects, as multiple events will be generated (in a very short time frame). The dimmer of the YLKG08 is special case, as the data of the BLE sensor are relative steps, that are combined to a so called `number`entity with a range of  0 - 100. That way multiple messages from many ESP's will add up and "accelerate" the dimmer knob.
+!!! tip
+
+    Use the embedded [MI32CFG Importer](#mi32cfg-importer-web-app) on this site to delete unwanted sensors and then save the result to the ESP32 of your choice.
+
 
 ## Berry support  
 
