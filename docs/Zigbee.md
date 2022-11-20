@@ -667,7 +667,7 @@ There is a special syntax if you want to send arbitrary commands:
     `ZbSend {"Device":"0x1234","Send":"0000_00/0500"}`
      Send a Read command (0x00) to the general cluster (0x0000) for attribute ManufId (0x0005). Note: all values are little-endian.
 
-Or use '!' instead of '_' to specify cluster-specific commands:
+Or use `'!'` instead of `'_'` to specify cluster-specific commands:
 
 `"<cluster>!<cmd>/<bytes>"`: send a cluster specific command for cluster id `<cluster>`, command id `<cmd>` and payload `<bytes>`.
 
@@ -964,6 +964,185 @@ ZbSend {"Device": "Utility", "Write":{"TuyaTempTarget":20}}
 ```
 will set the TRV setpoint to 20C.
 Other commands will be available and will be added when	clarified.
+
+
+## Advanced Topic: Zigbee Device Plugin
+
+Zigbee2Tasmota supports most common and standard attributes from ZCL, see [here](#advanced-topic-zigbee-reference).
+
+But creativity of manufacturers is limitless. Some manufacturers make mistakes compared to the Zigbee ZCL standard (maybe because their developers didn't read the specifications thoroughly), and others invent their own standards - ex: TuyA devices sometimes use a encapsulation of TuYa Serial protocol in Zigbee.
+
+The Zigbee plug-in mechanisms is composed of simple text files to describe device-specific non-standard attributes or non-standard mapping of values.
+
+You simply need to copy the required file(s) in the coordinator's filesystem and restart. You should see logs similar to the following after Zigbee has started.
+
+```
+ZIG: Zigbee started
+ZIG: Zigbee device information found in File System (1 devices - 48 bytes)
+ZIG: Zigbee device data in File System (20 bytes)
+ZIG: ZbLoad '<internal_plugin>' loaded successfully
+ZIG: ZbLoad 'TS0001_switch.zb' loaded successfully
+```
+
+### Writing Zigbee plugins
+
+A Zigbee plugin file needs to have `.zb` extension and start with the first line:
+
+```
+#Z2Tv1
+```
+
+The plugin file has 3 types of declarations:
+
+- a device match pattern, specifies which `model` and/or `manufacturer` identifiers to match
+- an attribute definition, defines a new attribute name
+- an attribute synonym, remaps the incoming attribute to a new attribute (or the same) and applies multiplier/divisor
+
+Note: Zigbee plugins currently only handles Zigbee attributes (read, write, report) but not Zigbee commands which can't be remapped. There hasn't been any need for command remapping but who knows...
+
+#### Matching a device or a family of devices
+
+A plugin section needs to start with one or more matching patterns. All the following statements share the same matching pattern until a new pattern appears.
+
+A pattern is of form: `:<modelid>,<manufecturerid>`. Possible values are:
+
+- "match all", if empty the pattern matches all devices
+- "exact match", if a value is provided, the model or manufacturer value must exactly match
+- "starts with", if a value ends with `*`, any value starting with this value macthes
+
+Example:
+
+Pattern|Description
+:---|:---
+`/,`|Matches all devices
+`:TRADFRI*,`<br>`:SYMFONISK*,`|Matches any device with ModelID starting with `TRADFRI` or `SYMFONISK`
+`:TS0201,_TZ3000_ywagc4rj`|Match only if DeviceID is `TS0201` and ManufacturerID is `_TZ3000_ywagc4rj`
+
+!!!Warning: "Only the first succesful match is applied, all subsequent statements are ignored. You may need to adjust the order of files if priority is needed between plugins"
+
+#### Defining a new attribute
+
+You can define or overwrite an attribute name for a specific cluser/attributeid, and apply optional multiplier/divider.
+
+The format is:
+
+```<cluster>/<attributeid>[,%<type>],<name>[,mul:<mul>][,div:<div>][,add:<add>][,manuf:<manuf>]```
+
+Parameter|Description
+:---|:---
+`<cluster>`|Cluster number in 4 digits hex<br>Example: `0006` for cluster 6
+`<attributeid>`|Attribute identifier in 4 digits hex<br>Example: `0001` for attribute id 1
+`%<type>`|(optional) Type of the attribute either in 2 digits hex format or using the Zigbee type name<BR>Example: `%21` or `%uint16`
+`mul:<mul>`|(optional) `1..65535`: Apply a multiplier to the value received
+`div:<div>`|(optional) `1..65535`: Apply a divider to the value received (after the multiplier is applied)
+`add:<add>`|(optional) `-36278..32767`: Add/substract a value (after multiplier and divider are applied)
+`manuf:<manuf>`|(optional) Add a manufacturer specific code in 4 digits hex
+
+When a value is received, the following formula is applied (computed using integers):
+
+`new_val = add + (val * mul) / div`
+
+The inverse formula is applied when writing back an attribute. Beware of rounding errors.
+
+**Special case of Tuya attributes (cluster `0xEF00`)**
+
+For attributes from the Tuya cluster `0xEF00` the attribute has the form `AABB` where `AA` is the type and `BB` is the `dpid`. If you only care about receiving attributes, you can use `FF` as a type so Tasmota accepts any value. To be able to write the attribute, the type must be specified.
+
+Example: `EF00/FF02` accepts any value for `dpip` `2`, while `EF00/0202` specifies the type `02` for this `dpid`. The regular Zigbee type `%<type>` is unused with Tuya attributes.
+
+Tuya type|Description
+:---|:---
+`00`|raw bytes decoded as hex (n bytes)
+`01`|bool (1 byte)
+`02`|int32 (4 bytes)
+`03`|string (n bytes)
+`04`|enum (1 byte)
+`05`|bitmap (1/2/4 bytes)
+
+
+#### Defining an attribute synonym
+
+An attribute synonym can remap an incoming attribute value to another attribute and apply the regular transformation. It can also be used to fix a value and keep the same attribute.
+
+The format is:
+
+```<cluster>/<attributeid>=<new_cluster>/<new_attributedid>[,mul:<mul>][,div:<div>][,add:<add>]```
+
+Parameter|Description
+:---|:---
+`<cluster>`|Cluster number in 4 digits hex
+`<attributeid>`|Attribute identifier in 4 digits hex
+`<new_cluster>`|Cluster number in 4 digits hex
+`<new_attributeid>`|Attribute identifier in 4 digits hex
+`mul:<mul>`|(optional) `1..65535`: Apply a multiplier to the value received
+`div:<div>`|(optional) `1..65535`: Apply a divider to the value received (after the multiplier is applied)
+`add:<add>`|(optional) `-36278..32767`: Add/substract a value (after multiplier and divider are applied)
+
+
+Currently the inverse attribute mapping is not done when writing an attribute.
+
+### Troubleshooting
+
+While all `*.zb` files are automatically loaded at startup, you can manually unload a file with `ZbUnload <file.zb>` and load a modified version with `ZbLoad <file.zb>`.
+
+You can dump all the plugins loaded in memory with `ZbLoadDump`.
+
+When a synonym is applied, you can see it in logs with loglevel 3 or more:
+
+`ZIG: apply synonym 000C/0055 with 0B04/050B (mul:1 div:1)`
+
+### Complete examples
+
+#### Default plugin
+
+Below is the default plug-in stored in Flash `<internal_plugin>` and automatically loaded. It handles the following:
+
+- solve a bug in IKEA device where the BatteryPercentage is not multiplied by 2
+- map the `Power` attribute of Aqara magnet window sensor to a synthetic attribute 0500/FFF2 for specific handling
+
+```
+#Z2Tv1
+:TRADFRI*,
+:SYMFONISK*,
+0001/0021=0001/0021,mul:2
+:lumi.sensor_magnet*,
+0006/0000=0500/FFF2
+```
+
+#### Tuya Moes thermostat humidity bug
+
+`Tuya_KCTW1Z.zb` fixes a bug where humidity should be multiplied by 10.
+
+```
+#Z2Tv1
+# Tuya fix humidity by 10 
+# https://zigbee.blakadder.com/Tuya_KCTW1Z.html
+:TS0201,_TZ3000_ywagc4rj
+0405/0000=0405/0000,mul:10
+
+```
+
+#### GiEX garden watering
+
+The following plugin defines device specific Tuya attributes, and matches the `BatteryPercentage` to the regular ZCL attribute (multiplied by 2).
+
+```
+#Z2Tv1
+# GiEX garden watering https://www.aliexpress.com/item/1005004222098040.html
+:TS0601,_TZE200_sh1btabb
+EF00/0101,WaterMode                 # duration=0 / capacity=1
+EF00/0102,WaterState                # off=0 / on=1
+EF00/0365,IrrigationStartTime       # (string) ex: "08:12:26"
+EF00/0366,IrrigationStopTime        # (string) ex: "08:13:36"
+EF00/0267,CycleIrrigationNumTimes   # number of cycle irrigation times, set to 0 for single cycle
+EF00/0268,IrrigationTarget          # duration in minutes or capacity in Liters (depending on mode)
+EF00/0269,CycleIrrigationInterval   # cycle irrigation interval (minutes, max 1440)
+EF00/026A,CurrentTemperature        # (value ignored because isn't a valid tempurature reading.  Misdocumented and usage unclear)
+EF00/026C=0001/0021,mul:2           # match to BatteryPercentage
+EF00/026F,WaterConsumed             # water consumed (Litres)
+EF00/0372,LastIrrigationDuration    # (string) Ex: "00:01:10,0"
+```
+
 
 ## Advanced topic: Zigbee Reference
 
