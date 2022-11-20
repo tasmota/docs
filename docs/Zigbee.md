@@ -1014,11 +1014,11 @@ Example:
 
 Pattern|Description
 :---|:---
-`/,`|Matches all devices
+`:,`|Matches all devices
 `:TRADFRI*,`<br>`:SYMFONISK*,`|Matches any device with ModelID starting with `TRADFRI` or `SYMFONISK`
 `:TS0201,_TZ3000_ywagc4rj`|Match only if DeviceID is `TS0201` and ManufacturerID is `_TZ3000_ywagc4rj`
 
-!!!Warning: "Only the first succesful match is applied, all subsequent statements are ignored. You may need to adjust the order of files if priority is needed between plugins"
+!!! warning  "Only the first succesful match is applied, all subsequent statements are ignored. You may need to adjust the order of files if priority is needed between plugins"
 
 #### Defining a new attribute
 
