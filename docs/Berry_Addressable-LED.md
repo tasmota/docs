@@ -1,42 +1,35 @@
 # Addressable LEDs in Berry
 
-Requires `#define USE_WS2812`.
+!!! note "Requires `#define USE_WS2812`, included in Tasmota32"
 
-Support for addressable leds strips or matrix, including animation. 
-
+Support for addressable leds strips or matrix, including animation.
 Internally relies on NeoPixelBus library and currently supports WS2812 and SK6812.
-
-## Example
-
-Pulsating round on M5Stack Atom Matrix if GPIO 27 is configured as `WS1812 - 2`
-
-``` python
-var strip = Leds_matrix(5,5, gpio.pin(gpio.WS2812, 1))
-var r = Round(strip, 2, 30)
-r.start()
-```
-
-**VIDEO**
 
 ##  How to use
 
 ### Compatibility with Templates
 
-Leds strip must be either controlled by Tasmota's lights features or by Berry, but they can't be controlled by both at the same time.
+You can control multiple LED strips. `WS2812 - 1` is also controlled by Tasmota's light controls.
+It is still possible to control this light strip with Berry, but whenever you use Tasmota light controls
+they will temporarily overrid Berry animations.
 
-For Berry control, it is highly recommended to use `WS2812 - 2` and higher (for multiple strips)
+### Led strips, matrix and sub-strips
 
-### `Leds`and `Leds_matrix` classes
+You first need to define the low-level `Leds` object that describes the hardware strip of connected leds.
 
+You can then define higher level objects like sub-strips
+(if there are actually several strips chained together like rings) or LED matrix.
 
-All leds features rely on the low-level `Leds` or `Leds_matrix` classes.
-
-
-Attributes|Details
+Class|Details
 :---|:---
-Leds<a class="cmnd" id="leds_ctor"></a>|`Leds(pixels:int, gpio:int [,model:int ,rmt:int]) -> instance<Leds>`<br>Creates a `Leds` instance for a linear leds strip<br>`pixels`: number of leds<br>`gpio`: gpio number<br>`model`: (opt) LED model, default:Leds.WS2812_GRB`<br>`rmt`: (opt) `RMT`channel to use, or auto-select (see below)
-Leds.matrix<a class="cmnd" id="leds_matrix_ctor"></a>|`Leds_matrix(width:int, height:int, gpio:int [,model:int ,rmt:int]) -> instance<Leds_matrix>`<br>Creates a `Leds` instance for a matrix of leds<br>`width`: number of leds horizontally<br>`height`: number of leds vertically<br>`gpio`: gpio number<br>`model`: (opt) LED model, default:Leds.WS2812_GRB`<br>`rmt`: (opt) `RMT`channel to use, or auto-select (see below)
-<strip>.create_segment<a class="cmnd" id="leds_segment"></a>|`<strip>.create_segment(offset:int, pixels:int) -> instance<Leds_segment>`<br>Creates a virtual segment from a physical Leds strip, from Led number `offset` with `pixels` leds.
+Leds<a class="cmnd" id="leds_ctor"></a>|`Leds(pixels:int, gpio:int [,model:int ,rmt:int]) -> instance<Leds>`<br>Creates a `Leds` instance for a linear leds strip<br>`pixels`: number of leds<br>`gpio`: physical gpio number<br>`model`: (opt) LED model, default:Leds.WS2812_GRB`<br>`rmt`: (opt) `RMT`channel to use, or auto-select (see below)
+
+Once a `Leds` object, you can use sub-objects:
+
+Method|Details
+:---|:---
+create_matrix<a class="cmnd" id="leds_matrix_ctor"></a>|`<strip>.create_matrix(width:int, height:int [, offset:int]) -> instance<Leds_matrix>`<br>Creates a `Leds_matrix` instance from a `Leds` instance<br>`width`: number of leds horizontally<br>`height`: number of leds vertically<br>`offset`: number of leds to skip until start of matrix
+create_segment<a class="cmnd" id="leds_segment"></a>|`<strip>.create_segment(offset:int, pixels:int) -> instance<Leds_segment>`<br>Creates a virtual segment from a physical Leds strip, from Led number `offset` with `pixels` leds.
 
 LED model|Details
 :---|:---
@@ -136,3 +129,15 @@ ESP32S2|4
 ESP32C3|2
 
 Currently `RMT` channel 0 is used by default if no GPIO `WS2812-1` is configured, `RMT` channel 1 otherwise.
+<!-- 
+## Example
+
+Pulsating round on M5Stack Atom Matrix if GPIO 27 is configured as `WS1812 - 2`
+
+``` python
+var strip = Leds_matrix(5,5, gpio.pin(gpio.WS2812, 1))
+var r = Round(strip, 2, 30)
+r.start()
+```
+
+**VIDEO** -->
