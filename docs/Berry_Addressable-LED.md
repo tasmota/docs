@@ -53,6 +53,7 @@ set\_matrix\_pixel\_color<a class="cmnd" id="leds_set_matrix_pixel_color"></a>|`
 get\_pixel\_color<a class="cmnd" id="leds_get_pixel_color"></a>|`get_pixel_color(idx:int) -> color:int`<br>Returns the color (including brightness and gamma correction) of led number `idx`
 gamma<a class="cmnd" id="leds_gamma"></a>|`gamma:bool`<br>Applies gamma correction if `true` (default)
 pixels\_buffer<a class="cmnd" id="leds_pixels_buffer"></a>|`pixels_buffer() -> bytes()`<br>Returns the internal buffer used by NeoPixelBus. The `byte()` object points to the original buffer, no new buffer is allocated; which means that raw data can be changed directly. Don't forget to call `dirty()` and `show()` afterwards
+set\_bytes<a class="cmnd" id="leds_set_bytes"></a>|`set_bytes(row:int, buffer:bytes, offset:int, len:int) -> nil` (matrix only)<br>Copy a bytes() `buffer` directly in the internal matrix buffer, for row `row`, skipping `offset` pixels and copying `len` bytes.
 
 ## Animation framework
 
