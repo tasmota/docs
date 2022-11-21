@@ -155,41 +155,15 @@ In this section, we'll give a quick overview of 2 devices:
 
 From the start, Z2T design was to stick to a low-level view and provide higher level (named) attributes only for a limited set of mostly seen attributes. This raised difficulties and frustration for users with specific devices that use rare attributes, or devices that use non-standard attributes (like Tuya zigbee devices).
 
-We are now providing a **Zigbee Device plugin** mechanisms, using simple text files. These files specify mapping on a per-device type basis. The goal is to fill most of the gap with Zigbee2MQTT (provided that you write the device plugin files). The lightweight nature of plugins permits to load only the plugins required by the devices used, and does not require a sowftare update for new devices.
+We are now providing a (**Zigbee Device plugin**)[#advanced-topic-zigbee-device-plugin] mechanisms, using simple text files. These files specify mapping on a per-device type basis. The goal is to fill most of the gap with Zigbee2MQTT (provided that you write the device plugin files). The lightweight nature of plugins permits to load only the plugins required by the devices used, and does not require a sowftare update for new devices.
 
 ### How does it work?
 
-You simply copy device plugin files (externsion `*.zb`) in the file system and they are automatically loaded at start.
+You simply copy device plugin files (externsion `*.zb`) in the file system and they are **automatically loaded at start**.
 
-You can dynamically load new files with `ZbLoad <file>.zb` or unload definitions with `ZbUnload <file>.zb`. When you reload a file with the same name, it is first unloaded.
+During troubleshooting, you can dynamically load new files with `ZbLoad <file>.zb` or unload definitions with `ZbUnload <file>.zb`. When you reload a file with the same name, it is first unloaded.
 
 At Zigbee start, all files with `*.zb` suffix are loaded into memory. Be careful of not saturating memory, especially on ESP8266.
-
-### Zigbee device plugin format
-
-**Zigbee device plugin** have the following format:
-
-- starts with `#Z2Tv1` on the first line
-  - `#` is a marker for comments, and everything from `#` to end of line is ignored
-  - rest of the file is of form **device matcher** followed by **attribute definitions** or **attribute synonyms**
-
-#### **device matchers**
--  composed of one or more lines defining the `modelId` and `manufacturerId`. If a field is empty, it matches all values
-- `:<modelId>,<manufacturerId>`
-- example: `:TS0601,_TZE200_sh1btabb` for GiEX water valve
-
-#### **attribute matcher** specifies a cluster/attribute/type tuple and matches an attribute name
-- `<cluster 4 hex>/<attribute 4 hex>` or `<cluster 4 hex>/attribute 4 hex>%<type 2 hex>`
-- Ex: `EF00/0365,IrrigationStartTime` (Tuya cluster EF00 does not need an explicit type)
-- Ex: `0006/4001%bool,OnTime`
-
-#### **attribute synonyms** specifies that a received attribute is a synonym for another attribute
-- `<cluster 4 hex>/<attribute 4 hex>=<new_cluster 4 hex>/<new_attribute 4 hex>,<multiplier>`
-- Ex: `EF00/026C=0001/0021,2` converts any EFOO/026C attribute received to `0001/0021` (BatteryPercentage) and multiplies by `2` to convert to ZCL standard.
-
-Multiplier is 8 bit int (-128..127). If `0` or `1`, the value is unchanged. Otherwize the value is converted to `float` and is multiplied by `multiplier` if positive, or divided by `-multiplier` if negative.
-
-I.e. `multiplier=10` means multiply by 10, `multiplier=-5` means divide by 5
 
 ### Sonoff SNZB-02 Sensor
 
@@ -997,6 +971,7 @@ The plugin file has 3 types of declarations:
 - a device match pattern, specifies which `model` and/or `manufacturer` identifiers to match
 - an attribute definition, defines a new attribute name
 - an attribute synonym, remaps the incoming attribute to a new attribute (or the same) and applies multiplier/divisor
+- `#` is a marker for comments, and everything from `#` to end of line is ignored
 
 Note: Zigbee plugins currently only handles Zigbee attributes (read, write, report) but not Zigbee commands which can't be remapped. There hasn't been any need for command remapping but who knows...
 
