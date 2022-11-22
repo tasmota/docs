@@ -486,12 +486,14 @@ Here is an implementation of the "old" MI32 commands:
 
     ```python
     import BLE
+    import MI32
+
     j = 0
     sl = 0
 
     cbuf = bytes(-64)
     def cb()
-        import MI32
+        
         if j == 0
             print(cbuf)
         end
@@ -513,12 +515,11 @@ Here is an implementation of the "old" MI32 commands:
     BLE.conn_cb(cbp,cbuf)
 
     def SetMACfromSlot(slot)
-        if slot+1>m.devices()
+        if slot+1>MI32.devices()
             return "out of bounds"
         end
         sl = slot
-        var _m = m.get_MAC(slot)
-        BLE.set_MAC(_m)
+        BLE.set_MAC(MI32.get_MAC(slot))
     end
 
     def MI32Time(slot)
@@ -532,7 +533,7 @@ Here is an implementation of the "old" MI32 commands:
         cbuf.set(1,utc,4)
         cbuf.set(5,tz,1)
         j = 0
-        BLE.run(12,1)
+        BLE.run(12,true)
     end
 
     def MI32Unit(slot,unit)
@@ -542,12 +543,12 @@ Here is an implementation of the "old" MI32 commands:
         cbuf[0] = 1
         cbuf[1] = unit
         j = 0
-        BLE.run(12,1)
+        BLE.run(12,true)
     end
 
     def MI32Bat(slot)
         SetMACfromSlot(slot)
-        var name = m.get_name(slot)
+        var name = MI32.get_name(slot)
         if name == "LYWSD03"
             BLE.set_svc("ebe0ccb0-7A0A-4B0C-8A1A-6FF2997DA3A6")
             BLE.set_chr("ebe0ccc1-7A0A-4B0C-8A1A-6FF2997DA3A6")
@@ -558,25 +559,25 @@ Here is an implementation of the "old" MI32 commands:
             BLE.set_svc("ebe0ccb0-7A0A-4B0C-8A1A-6FF2997DA3A6")
             BLE.set_chr("ebe0ccc1-7A0A-4B0C-8A1A-6FF2997DA3A6")
             j = 1
-            BLE.run(13,1)
+            BLE.run(13,true)
         end
         if name == "LYWSD02"
             BLE.set_svc("ebe0ccb0-7A0A-4B0C-8A1A-6FF2997DA3A6")
             BLE.set_chr("ebe0ccc1-7A0A-4B0C-8A1A-6FF2997DA3A6")
             j = 2
-            BLE.run(11,1)
+            BLE.run(11,true)
         end
         if name == "FLORA"
             BLE.set_svc("00001204-0000-1000-8000-00805f9b34fb")
             BLE.set_chr("00001a02-0000-1000-8000-00805f9b34fb")
             j = 3
-            BLE.run(11,1)
+            BLE.run(11,true)
         end
         if name == "CGD1"
             BLE.set_svc("180F")
             BLE.set_chr("2A19")
             j = 4
-            BLE.run(11,1)
+            BLE.run(11,true)
         end
     end
     ```
