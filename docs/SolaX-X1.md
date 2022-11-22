@@ -27,6 +27,12 @@
 	```arduino
 	#define SOLAXX1_READCONFIG
 	```
+	This module works as energy sensor. So be sure to define this, if not already done:
+	```arduino
+	#ifndef USE_ENERGY_SENSOR
+	#define USE_ENERGY_SENSOR
+	#endif
+	```
 	
 ## General
 
@@ -58,8 +64,8 @@ The RX-, TX- and RTS- (if needed) lines have to be connected to the ESP matching
 |------|--------|---------|
 | 3.3V | 3-5V   | VCC     |
 | GND  | GND    | GND     |
-| RX   | TX-O   | TXD     |
-| TX   | RX-I   | RXD     |
+| RX   | TX-O   | RXD     |
+| TX   | RX-I   | TXD     |
 | RTS  | RTS    | -       |
 
 ### Breakout board ⬌ inverter
