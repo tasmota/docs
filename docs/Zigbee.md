@@ -139,7 +139,7 @@ On **ESP32** serial is always handled by hardware so you don't need to bother.
 
 On **ESP8266** using the hardware serial is preferred. To do so, you need to use GPIOs 13/15 for Zigbee Rx/Tx and set `SerialLog 0`. By doing so, Z2T *steals* the hardware UART from the serial console and uses it for communicating with the MCU. Otherwise Z2T uses Software Serial which requires compiling at 160MHz and might be unreliable on very rare occasions.
 
-## Usage
+## Commands
 
 For a list of available commands see [Zigbee Commands](Commands.md#zigbee).
 
@@ -150,20 +150,6 @@ In this section, we'll give a quick overview of 2 devices:
 - [Sonoff SNZB-02 Temperature And Humidity Sensor](https://zigbee.blakadder.com/Sonoff_SNZB-02.html)
 
 - [BlitzWolf SHP15 Power Monitoring Plug](https://zigbee.blakadder.com/BlitzWolf_BW-SHP15.html)
-
-## Definition File
-
-From the start, Z2T design was to stick to a low-level view and provide higher level (named) attributes only for a limited set of mostly seen attributes. This raised difficulties and frustration for users with specific devices that use rare attributes, or devices that use non-standard attributes (like Tuya zigbee devices).
-
-We are now providing a (**Zigbee Device plugin**)[#advanced-topic-zigbee-device-plugin] mechanisms, using simple text files. These files specify mapping on a per-device type basis. The goal is to fill most of the gap with Zigbee2MQTT (provided that you write the device plugin files). The lightweight nature of plugins permits to load only the plugins required by the devices used, and does not require a sowftare update for new devices.
-
-### How does it work?
-
-You simply copy device plugin files (externsion `*.zb`) in the file system and they are **automatically loaded at start**.
-
-During troubleshooting, you can dynamically load new files with `ZbLoad <file>.zb` or unload definitions with `ZbUnload <file>.zb`. When you reload a file with the same name, it is first unloaded.
-
-At Zigbee start, all files with `*.zb` suffix are loaded into memory. Be careful of not saturating memory, especially on ESP8266.
 
 ### Sonoff SNZB-02 Sensor
 
@@ -312,6 +298,20 @@ Message with `"Status":30` shows some characteristics of the device:
 |`PowerSource`|`true` = the device is connected to a power source<BR>`false` = the device runs on battery|
 |`ReceiveWhenIdle`|`true` = the device can receive commands when idle<BR>`false` = the device is not listening. Commands should be sent when the device reconnects and is idle|
 |`Security`|Security capability (meaning unknown, to be determined)|
+
+## Advanced topic: Zigbee plugin Definition File
+
+From the start, Z2T design was to stick to a low-level view and provide higher level (named) attributes only for a limited set of mostly seen attributes. This raised difficulties and frustration for users with specific devices that use rare attributes, or devices that use non-standard attributes (like Tuya zigbee devices).
+
+We are now providing a (**Zigbee Device plugin**)[#advanced-topic-zigbee-device-plugin] mechanisms, using simple text files. These files specify mapping on a per-device type basis. The goal is to fill most of the gap with Zigbee2MQTT (provided that you write the device plugin files). The lightweight nature of plugins permits to load only the plugins required by the devices used, and does not require a sowftare update for new devices.
+
+### How does it work?
+
+You simply copy device plugin files (externsion `*.zb`) in the file system and they are **automatically loaded at start**.
+
+During troubleshooting, you can dynamically load new files with `ZbLoad <file>.zb` or unload definitions with `ZbUnload <file>.zb`. When you reload a file with the same name, it is first unloaded.
+
+At Zigbee start, all files with `*.zb` suffix are loaded into memory. Be careful of not saturating memory, especially on ESP8266.
 
 
 ## Pairing Devices
