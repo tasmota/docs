@@ -65,7 +65,7 @@ int8|Return or send the slave data as an 8 bits signed int
 int16|Return or send the slave data as a 16 bits signed int
 int32|Return or send the slave data as a 32 bits signed int
   
-### Additional commands for USE_MODBUS_TCP_BRIDGE
+### Additional commands for USE_MODBUS_BRIDGE_TCP
 Command|Parameters
 :---|:---
 ModbusTCPStart| Start the Modbus TCP bridge on the specified `tcp port`
