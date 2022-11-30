@@ -223,7 +223,7 @@ remark: channel math only works on frequently (fast) updated channels and is not
     ```
 
 !!! example
-    To disable and enable publishing of MQTT data on TelePeriod, use `smlj=0` and `smlj=1`, respectively. For example to skip first MQTT publishing after boot (may contain erroneous data at after restart if meter is slow, see [Sanxing SX6x1](#sanxing-sx6x1-sxxu1x-ascii-obis)):
+    To disable and enable publishing of MQTT data on TelePeriod, use `smlj=0` and `smlj|=1`, respectively. For example to skip first MQTT publishing after boot (may contain erroneous data at after restart if meter is slow, see [Sanxing SX6x1](#sanxing-sx6x1-sxxu1x-ascii-obis)):
     ```
     >B
     ;disable publishing at MQTT teleperiod, on boot
@@ -232,9 +232,10 @@ remark: channel math only works on frequently (fast) updated channels and is not
     ;re-enable publishing at MQTT teleperiod, after 10 seconds of uptime
     if upsecs>10
     then
-    smlj=1
+    smlj|=1
     endif
     ```
+	the variable smlj also switches to obis_line_mode if bit 1 = 1, default is 0 
 
 !!! example
     If you have large meter descriptors and want to extract multiple values from the same descriptor, you can save flash space using `SML_REPLACE_VARS` at compile time (see [Resol Deltasol BS Plus](#resol-deltasol-bs-plus-vbus)):
@@ -1969,7 +1970,7 @@ This meter sends bursts of data at 115200 baud every 10 seconds. Some data lines
     >S
     if upsecs>22
     then
-    smlj=1
+    smlj|=1
     endif
     ;only send teleperiod MQTT if 22 seconds passed since boot (during this time meter most probably sent data)
     >M 1
