@@ -98,6 +98,7 @@ Declare `>M` section with the number of connected meters (n = `1..5`):
 | `<parameter>` | Parameters according to meter type:<BR>- for `o,s,e,v,m,M,k,r` types: serial baud rate e.g. `9600`.<BR>- for `c` type: a positive value = counter poll interval or a negative value = debounce time (milliseconds) for irq driven counters. |
 | `<jsonPrefix>` | Prefix for Web UI and MQTT JSON payload. Up to 7 characters.|
 | `<txGPIO>` | The GPIO pin number where meter command is transmitted (optional).|
+| `<tx enable>` | The GPIO pin number to enable transmitter (RS485) may follow the TX pin in bracket (pin) without a colon an 'i' in front of the pin number means 'inverted' (optional).|
 | `<txPeriod>` | Period to repeat the transmission of commands to the meter (optional). Number of 100ms increments (n * 100ms).|
 | `<cmdTelegram>` | Comma separated hex coded byte blocks to send to meter device. For MODBus each comma separated block is a command to retrieve a certain register from the meter (optional: only required for measuring devices that have to be triggered with a certain character string).|
     
@@ -113,6 +114,7 @@ e.g for Modbus:  mN1,mN2,mE1,mE2,mO1,mO2
 !!! example
     ```
     +1,3,o,0,9600,OBIS1,1,2,2F3F210D0A
+    +1,3,o,0,9600,OBIS1,1(i4),2,2F3F210D0A  with pin 4 as inverted TX enable
     +1,3,o,16,115200,NormalTariff,1
     +1,3,s,16,9600,SML1
     +1,12,c,1,-10,H20_Cnt
