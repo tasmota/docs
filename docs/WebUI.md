@@ -7,9 +7,9 @@ To access the WebUI use your device's IP address in your favorite web browser.
 
 By default, WebUI starts in unprotected admin mode which allows complete access to your device to anyone with access to that IP.
 
-If you want to restrict other users to only control through the WebUI, use [`WebServer 1`](Commands#webserver).
+If you want to restrict other users to only control through the WebUI, use [`WebServer 1`](Commands.md#webserver).
 
-Command [`WebPassword`](Commands#webpassword) will set up a password that needs to be entered when trying to access WebUI. This is a very thin layer of protection since everything is transmitted over unencrypted HTTP protocol.
+Command [`WebPassword`](Commands.md#webpassword) will set up a password that needs to be entered when trying to access WebUI. This is a very thin layer of protection since everything is transmitted over unencrypted HTTP protocol.
  
 ## Menus
 #### Configuration
@@ -28,7 +28,7 @@ Terminal access to Tasmota. Issue [commands](Commands.md) here or follow the inf
 
 ### WebButton
 
-Change names of the toggle buttons using [`WebButton`](Commands#webbutton). 
+Change names of the toggle buttons using [`WebButton`](Commands.md#webbutton). 
 
 ### Themes
 WebUI is themable using [`WebColor`](Commands.md#webcolor) commands. 
