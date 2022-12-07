@@ -61,7 +61,7 @@ Tasmota will create an internal temperature sensor and display the values in the
 {"Time":"2021-01-01T00:00:00","ESP32":{"Temperature":41.7},"TempUnit":"C"}
 ```
 
-You can deactivate it using command [`SetSensor127 0`](Commands.md#setsensor127)
+You can activate it using command [`SetOption146 1`](Commands.md#setoption146)
 
 ### DAC
 
