@@ -57,11 +57,15 @@ To use it you need to have `#define USE_AUTOCONF`.
 
 Tasmota will create an internal temperature sensor and display the values in the webUI and MQTT.
 
+Enable display of ESP32 internal temperature by command [`SetOption146 1`](Commands.md#setoption146) 
+
 ```json
 {"Time":"2021-01-01T00:00:00","ESP32":{"Temperature":41.7},"TempUnit":"C"}
 ```
+You can deactivate sensor by using command [`SetSensor127 0`](Commands.md#setsensor127)
 
-You can activate it using command [`SetOption146 1`](Commands.md#setoption146)
+!!! warning
+     It's much recommend to not use this feature because it's misleading and often it's a value without a clear relationship to reality..
 
 ### DAC
 
