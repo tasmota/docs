@@ -9,7 +9,7 @@
 Useful resources:
 
 - First time user of Berry: [Berry Introduction (in 20 minutes of less)](Berry-Introduction.md)
-- Full language documentation [The Berry Script Language Reference Manual](https://github.com/berry-lang/berry/wiki/Reference)
+- Full language documentation [The Berry Script Language Reference Manual](https://github.com/berry-lang/berry/wiki/Refer/ence)
 - Tasmota extension of Berry, see below
 - Full examples in the [Berry Cookbook](Berry-Cookbook.md)
 
@@ -1039,7 +1039,7 @@ remote_port<a class="cmnd" id="udp_remote_port">|`remote_port (int or nil)`<BR>I
 
 #### Sending udp packets
 
-``` ruby
+``` berry
 > u = udp()
 > u.begin("", 2000)    # listen on all interfaces, port 2000
 true
@@ -1051,7 +1051,7 @@ true
 
 You need to do polling on `udp->read()`. If no packet was received, the call immediately returns `nil`.
 
-``` ruby
+``` berry
 > u = udp()
 > u.begin("", 2000)    # listen on all interfaces, port 2000
 true
@@ -1062,9 +1062,32 @@ true
 bytes("414243")    # received packet as `bytes()`
 ```
 
+#### Simple UDP server printing received packets
+
+``` berry
+class udp_listener
+  var u
+  def init(port)
+    self.u = udp()
+    self.u.begin("", port)
+    tasmota.add_driver(self)
+  end
+  def every_50ms()
+    var packet = self.u.read()
+    while packet != nil
+      tasmota.log(">>> Received packet: "+packet.tohex(), 2)
+      packet = self.u.read()
+    end
+  end
+end
+
+# listen on port 2000
+udp_listener(2000)
+```
+
 #### Send and receive multicast
 
-``` ruby
+``` berry
 > u = udp()
 > u.begin_multicast("224.3.0.1", 3000)    # connect to multicast 224.3.0.1:3000 on all interfaces
 true
