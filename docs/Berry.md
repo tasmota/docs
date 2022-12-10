@@ -1287,11 +1287,59 @@ Note: for `match` and `search`, the first element in the list contains the globa
 
 The regex engine is based on [re1.5](https://github.com/pfalcon/re1.5) also used in Micropython.
 
+### `crypto` module
+
+Module `import crypto` support for common cryptographic algorithms.
+
+Currently supported algorithms:
+- AES GCM 256 bits - enabled by default
+- Elliptic curve EC CC25519 - requires `#define USE_BERRY_CRYPTO_EC_C25519`
+
+#### `crypto.AES_GCM` class
+
+Encrypt, decrypt and verify, using AES GCM (Gallois Counter Mode) with 256 bits keys.
+
+General Function|Parameters and details
+:---|:---
+init<a class="cmnd" id="aes_gcm_init">|`AES_GCM.init(secret_key:bytes(32), iv:bytes(12)) -> instance`<br>Initialise AES GCM instance with `secret_key` (256 bits) and `iv` (initialization vector or nonce, 96 bits)
+encrypt<a class="cmnd" id="aes_gcm_encrypt">|`encrypt(ciphertext:bytes) -> bytes`<br>Encrypt the ciphertext. Can be called multiple times, the tag is updated accordingly
+decrypt<a class="cmnd" id="aes_gcm_decrypt">|`decrypt(ciphertext:bytes) -> bytes`<br>Decrypt the ciphertext. Can be called multiple times, the tag is updated accordingly
+tag<a class="cmnd" id="aes_gcm_tag">|`tag() -> bytes`<br>Compute the verification tag for the object encrypted or decrypted (128 bits).
+
+Example taken from https://wizardforcel.gitbooks.io/practical-cryptography-for-developers-book/content/symmetric-key-ciphers/aes-encrypt-decrypt-examples.html
+
+``` berry
+import crypto
+
+key = bytes('233f8ce4ac6aa125927ccd98af5750d08c9c61d98a3f5d43cbf096b4caaebe80')
+ciphertext = bytes('1334cd5d487f7f47924187c94424a2079656838e063e5521e7779e441aa513de268550a89917fbfb0492fc')
+iv = bytes('2f3849399c60cb04b923bd33265b81c7')
+authTag = bytes('af453a410d142bc6f926c0f3bc776390')
+
+# decrypt ciphertext with key and iv
+aes = crypto.AES_GCM(key, iv)
+plaintext = aes.decrypt(ciphertext)
+print(plaintext.asstring())
+# 'Message for AES-256-GCM + Scrypt encryption'
+
+tag = aes.tag()
+print(tag == authTag)
+# true
+```
+#### `crypto.EC_C25519` class
+
+Provieds Elliptic Curve C25519 Diffie-Hellman key derivation. Requires `#define USE_BERRY_CRYPTO_EC_C25519`
+
+General Function|Parameters and details
+:---|:---
+public_key<a class="cmnd" id="ec_c25519_public_key">|`crypto.EC_C25519().public_key(secret_key:bytes(32)) -> bytes(32)`<br>Computes the public key given a random private key.
+shared_key<a class="cmnd" id="ec_c25519_shared_key">|`crypto.EC_C25519().shared_key(our_private_key:bytes(32), their_public_key:bytes(32)) -> bytes(32)`<br>Compute a shared key (Diffie-Hellman) using our private key and the other party's public key. The other party will compute the same shared key using their private key and our pubic key.
+
 ## Compiling Berry
 
 Berry is included if the following is defined in `user_config_override.h`:
 
-```arduino
+``` C
 #define USE_BERRY
 ```
 
