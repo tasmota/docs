@@ -1335,6 +1335,29 @@ General Function|Parameters and details
 public_key<a class="cmnd" id="ec_c25519_public_key">|`crypto.EC_C25519().public_key(secret_key:bytes(32)) -> bytes(32)`<br>Computes the public key given a random private key.
 shared_key<a class="cmnd" id="ec_c25519_shared_key">|`crypto.EC_C25519().shared_key(our_private_key:bytes(32), their_public_key:bytes(32)) -> bytes(32)`<br>Compute a shared key (Diffie-Hellman) using our private key and the other party's public key. The other party will compute the same shared key using their private key and our pubic key.
 
+Example from test vectors https://www.rfc-editor.org/rfc/rfc7748:
+
+``` berry
+import crypto
+
+# alice side
+alice_priv_key = bytes("77076d0a7318a57d3c16c17251b26645df4c2f87ebc0992ab177fba51db92c2a")
+alice_pub_key = bytes("8520f0098930a754748b7ddcb43ef75a0dbf3a0d26381af4eba4a98eaa9b4e6a")
+assert(crypto.EC_C25519().public_key(alice_priv_key) == alice_pub_key)
+
+# bob side
+bob_priv_key = bytes("5dab087e624a8a4b79e17f8b83800ee66f3bb1292618b6fd1c2f8b27ff88e0eb")
+bob_pub_key = bytes("de9edb7d7b7dc1b4d35b61c2ece435373f8343c85b78674dadfc7e146f882b4f")
+assert(crypto.EC_C25519().public_key(bob_priv_key) == bob_pub_key)
+
+# shared key computed by alice
+ref_shared_key = bytes("4a5d9d5ba4ce2de1728e3bf480350f25e07e21c947d19e3376f09b3c1e161742")
+alice_shared_key = crypto.EC_C25519().shared_key(alice_priv_key, bob_pub_key)
+bob_shared_key = crypto.EC_C25519().shared_key(bob_priv_key, alice_pub_key)
+assert(alice_shared_key == ref_shared_key)
+assert(bob_shared_key == ref_shared_key)
+```
+
 ## Compiling Berry
 
 Berry is included if the following is defined in `user_config_override.h`:
