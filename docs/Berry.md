@@ -1099,6 +1099,27 @@ true
 bytes("414243")    # received packet as `bytes()`
 ```
 
+### `mdns` module
+  
+Module `import mdns` support for mdns (Multicast DNS, aka Bonjour protocol) announces. This is needed for Matter Wifi support.
+
+This feature requires `#define USE_DISCOVERY` compile option (not included in standard builds).
+
+Example (announce of a Matter Wifi device):
+
+``` berry
+import mdns
+mdns.start()
+mdns.add_service("_matterc","_udp", 5540, {"VP":"65521+32768", "SII":5000, "SAI":300, "T":1, "D":3840, "CM":1, "PH":33, "PI":""})
+```
+
+General Function|Parameters and details
+:---|:---
+start<a class="cmnd" id="mdns_start">|`mdns.start([hostname: string]) -> nil`<br>Start or restart mdns, specify a new hostname if needed or implicitly use `tasmota.hostname()` if none provided (default)
+stop<a class="cmnd" id="mdns_stop">|`mdns.stop() -> nil`<br>Free all mdns resources
+set_hostname<a class="cmnd" id="mdns_set_hostname">|`mdsn.set_hostname(hostname:string) -> nil`<br>Change the hostname
+add_service<a class="cmnd" id="mdns_add_service">|`mdns.add_service(service:string, proto:string, port:int, txt:map) -> nil`<br>Add a service declaration using the current hostname as instance name, and specify TXT fields as a `map`
+
 ### Addressable leds (WS2812, SK6812)
 
 There is native support for addressable leds via NeoPixelBus, with support for animations. Currently supported: WS2812, SK6812.
