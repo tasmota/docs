@@ -129,6 +129,8 @@ You can set up OTA url and initiate OTA upgrade from TDM using GUI.
 
 [**OTA over SCP**](OTA-over-SCP) - setup and configure "OTA over SCP" upload for PlatformIO
 
+[**Deploy via HTTP**](Visual-Studio-Code#deploy-via-http-upload) - deploy _.bin_ and _.bin.gz_ files to your own web server via PlatformIO upload
+
 ### Private OTA Server
 It is possible to create your own simple http OTA server (https is not supported) using Python and perform upgrades from there. 
 Install Python3 and from the folder where the binary resides (make sure `tasmota-minimal.bin` is located there too) run:
