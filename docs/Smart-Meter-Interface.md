@@ -2330,3 +2330,20 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
     1,77070100020800ff@1000,Einspeisung,kWh,Total_out,0
     #
     ```
+	
+
+### ZPA GH305 (SML)
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,0,9600,Strom
+    1,77070100010800ff@1000,Verbrauch,kWh,Total_out,4
+    1,77070100020800ff@1000,Einspeisung,kWh,Total_in,4
+    1,77070100010800ff@1000,Verbrauch,kWh,Total_out,1
+    1,77070100020800ff@1000,Einspeisung,kWh,Total_in,1
+    #
+    ```
