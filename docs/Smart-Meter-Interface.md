@@ -525,6 +525,44 @@ A & B connected to the meter pinout.
     #    
     ```
 
+### DZG DWS7410.2V.G2 (SML)
+
+A bidirectional metering device from DZG Metering GmbH.
+
+Once unlocked with a PIN and set to `Inf on`, the meter returns not only an integer of the total consumption, but an extended dataset which also includes decimals as well as the current power.
+
+??? summary "View script for the extended dataset"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,16,9600,DWS7410
+    1,77070100010800ff@1000,Energie,kWh,energy,4
+    1,77070100020800ff@1000,Lieferung,kWh,en_out,4
+    1,77070100100700ff@1,Leistung,W,power,2
+    1,7707010060320101@#,SID,,meter_id,0
+    #
+    ```
+
+The script was derived from the DZG DWS76 (SML) device below and extended by the delivered energy. The lines for `meter_id`, `unknown` and `meter_number` were reduced to one line for `meter_id` because all values were identical.
+
+For `Inf off`, a simplified dataset is returned only.
+    
+??? summary "Alternative script for the simplified dataset"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,16,9600,DWS7410
+    1,77070100010800ff@1000,Energie,kWh,energy,0
+    1,7707010060320101@#,Service ID,,meter_id,0
+    1,77010b0a01445a47@#,Unbekannt,,unknown,0
+    1,77070100600100ff@#,Zählernummer,,meter_number,0
+    #
+    ```
+
 ### DZG DWS76 (SML)
 
 Should also be applicable to many other DZG Metering GmbH meters, like DVS76, DVS74, DWS74 or in general DxS7x - not tested though.
