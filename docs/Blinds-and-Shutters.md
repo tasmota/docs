@@ -45,7 +45,15 @@ Relay1: ON/OFF, Relay2: UP/DOWN (optional not used)
 - PWM: Stepper signal
 - `PWMfrequency 200`   ( This is mandatory for most relay to get correct PWM duty cylces)
 - `SetOption15 0` (required to store value and make it reboot save)
-   
+ 
+ **Shutter mode 6** - Servo Motors 360° (PWM speed based servo)
+ 
+ Relay1: ON/OFF, Relay2: UP/DOWN (optional not used)
+ 
+ - PWM: Stepper signal
+- `PWMfrequency 200`   ( This is mandatory for most relay to get correct PWM duty cylces)
+- `SetOption15 0` (required to store value and make it reboot save)
+ 
 [Wiring diagrams](#motor-wiring-diagrams) for Normal, Stepper motor, and Short Circuit-Safe configurations are available at the end of this page. Even if the shutter does not have two motors, three wires have to be connected.
 
 !!! note 
@@ -145,8 +153,10 @@ Some motors need up to one second after power is turned on before they start mov
 Close the shutter and repeat this procedure until the motor delay is set properly.  
 
 Following defaults are pre-compiled into the code and can only be changed by compiling you own binary and use the `user_config.override`
-- The default waiting time after the motor is stopped and before e.g. moving into the other direction is 0.5 sec. This avoids unexpected massive loads when changing direction. The time in [ms] can be changed by adding following line with a different value: `#define MOTOR_STOP_TIME 500 // wait 0.5 second after stop to do any other action. e.g. move in the opposite direction`
 - In Failsafe-Mode the driver waits for 0.1sec to let the direction relay execute and be stable before switching on the power relay starting the movement. The time in [ms] can be changed by adding following line with a different value: `#define SHUTTER_RELAY_OPERATION_TIME 100 // wait for direction relay 0.1sec before power up main relay`
+- 
+### Motor Stop time
+When shutters change direction immediatly it can happen that there is a short circuit or at least high moments on the motors. Therfore the default time between a STOP and the next START of the shutter is 0.5s = 500ms. This allows in most cases the shutter to fully stop and then start from a static position. With Version 12.3 you can change the duration through `shuttermotorstop 500` or any other value in ms. The value is for all defined shutters the same.
 
 ### Button Control
 When shutter is running in `ShutterMode 1` (normal two relay up/off down/off), you already have basic control over the shutter movement using switches or buttons in the module configuration to directly drive the shutter relays. For short circuit safe operation `ShutterMode 2` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch/button and 2nd switch on the power by the other switch/button. Because the button controll use multi-press events ensure that the "immediate action" is disabled: `SetOption13 0` (default)
