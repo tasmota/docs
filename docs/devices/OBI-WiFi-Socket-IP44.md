@@ -4,7 +4,7 @@ It is equipped with an ESP-WROOM-02 module. Sadly, there is no programming pin h
 ![137535_2](https://user-images.githubusercontent.com/33325587/50388246-94dea080-0710-11e9-945a-8dbb2e78d74e.jpg)
 
 ### Where to buy
-The Outdoor Wifi Socket is only available in the OBI Diy-Warehouse. It's "official name" is "Wifi Stecker Schuko Schwarz". It can also be bought in the [OBI online-store](https://www.obi.de/hausfunksteuerung/wifi-stecker-schuko-schwarz/p/4077681) 
+The Outdoor Wifi Socket is only available in the OBI Diy-Warehouse. Its "official name" is "Wifi Stecker Schuko Schwarz". It can also be bought in the [OBI online-store](https://www.obi.de/hausfunksteuerung/wifi-stecker-schuko-schwarz/p/4077681)
 
 ### Open the socket
 Opening the socket is kind of difficult. The case is held together by two Tri-Wing screws, two tiny cross-head/PH screws, some sealing grease in the screw holes and some glue.

@@ -582,7 +582,7 @@ DAC is limited to specific GPIOs:
     > gpio.dac_voltage(25, 1250)    # set voltage to 1250mV
     1255
     ```
-    Function returns closes voltage found. In this case its 1255 for setting to 1250.
+    Function returns closes voltage found. In this case it's 1255 for setting to 1250.
 
 ### I2S
 
@@ -943,7 +943,7 @@ Simple tcp client supporting string and binary transfers:
 - create an instance of the client with `var tcp = tcpclient()`
 - connect to the server `tcp.connect(address:string, port:int [, timeout_ms:int]) -> bool` Address can be numerical IPv4 or domain name. Returns `true` if the connection succeeded. Optional `timeout` in milliseconds. The default timeout is `USE_BERRY_WEBCLIENT_TIMEOUT` (2 seconds).
 - check if the socket is connected with `tcp.connected()`
-- send content with `tcp.write(content:string or bytes) -> int`. Accepts either a string or a bytes buffer, returns the number of bytes sent. It's you responsibility to resend the missing bytes
+- send content with `tcp.write(content:string or bytes) -> int`. Accepts either a string or a bytes buffer, returns the number of bytes sent. It's your responsibility to resend the missing bytes
 - check if bytes are available for reading `tcp.available() -> int`. Returns `0` if nothing was received. This is the call you should make in loops for polling.
 - read incoming content as string `tcp.read() -> string` or as bytes `tcp.readbytes() -> bytes`. It is best to call `tcp.available()` first to avoid creating empty response objects when not needed
 - close the socket with `tcp.close()`
@@ -988,7 +988,7 @@ Simple tcp server (socket) listening for incoming connection on any port.
 tcpserver Function|Parameters and details
 :---|:---
 constructor<a class="cmnd" id="tcpserver_constructor">|`tcpserver(port:int) -> nit`<BR>Opens a socket on `port` and starts lisenting to new incoming connections. If the server can't open the socket (ex: it is already in use) an exception is raised
-hasclient<a class="cmnd" id="tcpserver_hasclient">|`hasclient() -> bool`<BR>Returns `true` if a new client connected to the socket, in such case you shoult call `accept()`. You need to call this method regularly (ex: in event loop or fast\_loop)
+hasclient<a class="cmnd" id="tcpserver_hasclient">|`hasclient() -> bool`<BR>Returns `true` if a new client connected to the socket, in such case you should call `accept()`. You need to call this method regularly (ex: in event loop or fast\_loop)
 accept<a class="cmnd" id="tcpserver_accept">|`accept() -> instance:tcpclient or nil`<BR>Returns an instance of `tcpclient` for the new incoming connection, or raise an exception if no connection is available. You should call `hasclient()` returning `true` before calling `accept()`.
 
 Full example:

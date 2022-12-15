@@ -84,7 +84,7 @@ After successfully flashing Tasmota and selecting the template for the Shelly RG
 
 1. Disconnect the GPIOs and connect the Shelly RGBW to its future power supply.  Set ADC0 to Analog in the [template settings](../Templates#how-to-use). Save this setting.
 2. After restarting, you will find the actual ADC Value of the analog input in the main menu. There should be no light on at this time.
-Make a note of this value. Its the baseValue.
+Make a note of this value. It's the baseValue.
 
 3. In the template settings, set ADC0 to CT-POWER and save the settings.
 

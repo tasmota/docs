@@ -37,7 +37,7 @@ If you want to test the flash block, build yourself a test module, something lik
    
 
 ### The Operation
-You will notice that the LED is in the way. Get a pen and mark on of its Pin with the board, so you can solder it in back later in the correct Position. Its a Red-Green LED, if you solder it in the wrong way, it will light up in red.
+You will notice that the LED is in the way. Get a pen and mark on of its Pin with the board, so you can solder it in back later in the correct Position. It's a Red-Green LED, if you solder it in the wrong way, it will light up in red.
 
 After the LED is out of the way, you give some tin on the pins from the flash block and connect all 4 pins in a row together with tin. This way it will be easier to desolder it, because you need to melt all pins at the same time.
 

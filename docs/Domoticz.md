@@ -26,8 +26,8 @@ Make a new virtual switch and remember its Idx number.
 1. Make a new virtual switch to be used with Sonoff by clicking `Create Virtual Sensors`
     1. Give it a name
     2. Select `Sensor Type Switch`
-2. On the Devices page find the new switch by it's name
-    1. Remember it's Idx number
+2. On the Devices page find the new switch by its name
+    1. Remember its Idx number
 
 ## Tasmota Configuration
 <img alt="Domoticz" src="../_media/logo/domoticz3.jpg" style="margin:10px;float:right;width:15em"> </img>
@@ -76,7 +76,7 @@ Configure Domoticz MQTT Discovery plugin.
 
 ### Tasmota Configuration
 #### Precompiled Binary
-- Each Tasmota device must have it's own topic, the easiest way is to set topic to `tasmota_%06X` (%06X will be replaced by MAC address). See [here](Getting-Started.md) for how to set the topic.
+- Each Tasmota device must have its own topic, the easiest way is to set topic to `tasmota_%06X` (%06X will be replaced by MAC address). See [here](Getting-Started.md) for how to set the topic.
 - Use MQTT or Serial or Web console and execute commands (replace `%topic%` with the device's unique topic)
     1. `cmnd/%topic%/SetOption19` with payload `1` to enable MQTT discovery
 

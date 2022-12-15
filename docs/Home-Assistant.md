@@ -27,7 +27,7 @@ All Tasmota devices will be listed in their own Tasmota card in **Configuration 
 Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmota integration and [`FriendlyName<x>`](Commands.md#friendlyname) to name power outputs (switch or light entities in HA). 
 
 ??? tip "Use templates to change the Module name"
-    Setting the [template](Templates) name will change the Module name as well which will be reflected in Home Assistant. This helps in identifying when dealing with a large number of devices. Its nicer than having 10 Sonoff S31's or a bunch of TuyaMCU's"
+    Setting the [template](Templates) name will change the Module name as well which will be reflected in Home Assistant. This helps in identifying when dealing with a large number of devices. It's nicer than having 10 Sonoff S31's or a bunch of TuyaMCU's"
     ![Template name as Module name in Home Assistant](_media/templatemodule.png)
 
 !!! bug 
@@ -105,7 +105,7 @@ If you are using a localized (non-english) version be sure to check the correct 
 !!! tip
     If you want the power states to be persistent in Tasmota and Home Assistant set `PowerRetain 1` instead of using `retain: true` in Home Assistant
 
-!!! Warning "When using `unique_id:` make sure its unique to each entity"
+!!! Warning "When using `unique_id:` make sure it's unique to each entity"
     When `unique_id` is set, Home Assistant will allow some entity customization from the UI such as changing the name or icon.
 
 ### Switches

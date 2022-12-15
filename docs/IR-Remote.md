@@ -4,7 +4,7 @@ Most builds support only the common IR protocols, but [tasmota-ir.bin](Tasmota-I
 
 ## IR Transmitter
 <img src="https://user-images.githubusercontent.com/5904370/68168682-e3cca780-ff69-11e9-928d-e1571a24a3ab.png" align=right></img>Common transmitter modules in the market have a weak IR LED, thus effective transmit distance is really short. If you need range it is best to [build your own](https://github.com/crankyoldgit/IRremoteESP8266/wiki#ir-sending). For the LED we recommend [TSAL6400](https://t.ly/8DX7N) for best performance.
-> YT-IRTM transmitter/receiver board is serial only and does not work with this driver (its also limited to only NEC IR protocol).
+> YT-IRTM transmitter/receiver board is serial only and does not work with this driver (it's also limited to only NEC IR protocol).
 
 
 ### Wiring
