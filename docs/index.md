@@ -15,32 +15,27 @@ Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v12.2.0">Tasmota 12.2.0 Patrick</a></span>
+<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v12.3.0">Tasmota 12.3.0 Percy</a></span>
 
 ## Breaking Changes :warning: :warning: :warning:
 
-- Button debounce code has changes. Some setups might need adjustments of values.
-- Shelly EM swap internal channels A and B to match P1 and P2
+- Redesign distance sensors VL53LXX, TOF10120, HRXL and DYP to use cm instead of mm
 
 ## New Features
 
 - Added support for: 
-  - Shelly Plus 2PM
-  - SGP40 gas and air quality sensor
-  - Modbus writing using ModbusBridge and Modbus Energy Monitoring devices using a rule file
-  - DFRobot SEN0390 V30B ambient light sensor 
-  - QMC5883L magnetic induction sensor
-  - flowrate meter flow amount/duration
-  - Zigbee device plugin mechanism with commands `ZbLoad`, `ZbUnload` and `ZbLoadDump`
-  - Zigbee basic support for Green Power
-  - Ethernet in ESP32 safeboot firmware
-  - ESP32-S3 support for internal temperature sensor
-  - ESP32-S2 and ESP32-S3 touch button support
-  - ESP32 Automatically resize FS to max flash size at initial boot
-  - LVGL/HASPmota add tiny "pixel perfect" fonts for small screens
-  - HASPmota support for TTF fonts
-  - 
-- New commands: [`SetOption46`](Commands.md#setoption46), [`SetOption146`](Commands.md#setoption146), [`DspSpeed`](Commands.md#dspspeed), [`DspLine`](Commands.md#dspline), [`SspmPowerOnState`](Commands.md#sspmpoweronstate), [`StatusRetain`](Commands.md#statusretain), [`Sunrise`](Commands.md#sunrise), [`UrlFetch`](Commands.md#urlfetch), [`WcClock`](Commands.md#wcclock)
+  - HLK-LD2410 24GHz smart wave motion sensor
+  - Shelly Pro 1/1PM and 2/2PM
+  - up to four DS18x20 GPIOs
+  - Digital Addressable Lighting Interface (DALI)
+  - NTAG2xx tags read and write on PN532 NFC reader
+  - Plantower PMSx003T AQI models with temperature and humidity
+  - BP1658CJ RGBCW LED bulbs
+  - Dingtian x595 shift register based relay boards
+  - ME007-ULS narrow FoV ultrasonic distance sensor
+  - WS2812 and Light ArtNet DMX control over UDP port 6454
+  - Zigbee router firmware for Sonoff ZBBridgePro
+- New commands: [`SetOption35`](Commands.md#setoption35), [`SetOption47`](Commands.md#setoption47), [`RgxClients`](Commands.md#rgxclients), [`RgxPort`](Commands.md#rgxport), [`Switchmode 16`](Commands.md#switchmode)
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
 
