@@ -1353,7 +1353,9 @@ Rule2
 ------------------------------------------------------------------------------
 
 ### Arithmetic commands used with VAR
-Note: arithmetic is done using single point precision floating point.  This means calculations involving values larger than approx. 16 million (ex: `%utctime%`) will not be precise.
+
+!!! note 
+    The arithmetic is done using single point precision floating point. This means calculations involving values larger than approximately 16 million (ex: `%utctime%`) will not be precise.
 
 #### ADD  
   `ADD1` to `ADD5`: Add a value to `VARx`  
