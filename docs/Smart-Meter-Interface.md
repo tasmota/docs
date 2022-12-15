@@ -1846,7 +1846,7 @@ Example: Changing the baud rate during operation.
     1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,KWh,total_7d,4
     1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,KWh,total_30d,4
     1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,KWh,total_365d,4
-    1,1-0:16.7.0*255(@1,Verbrauch aktuell,W,current,20
+    1,1-0:16.7.0*255(@1,Verbrauch aktuell,W,power,20
     #
     ```
 
