@@ -55,13 +55,14 @@ To use it you need to have `#define USE_AUTOCONF`.
 
 ### CPU Temperature Sensor
 
-Tasmota will create an internal temperature sensor and display the values in the webUI and MQTT.
+Tasmota will create an internal temperature sensor and display the values in the webUI and MQTT. The accuracy of this sensor varies a lot depending on the ESP32 chip involved and should not be taken as a reliable metric.
+
+Enable display of ESP32 internal temperature with [`SetOption146 1`](Commands.md#setoption146) 
 
 ```json
 {"Time":"2021-01-01T00:00:00","ESP32":{"Temperature":41.7},"TempUnit":"C"}
 ```
-
-You can deactivate it using command [`SetSensor127 0`](Commands.md#setsensor127)
+You can deactivate sensor by using command [`SetSensor127 0`](Commands.md#setsensor127)
 
 ### DAC
 
