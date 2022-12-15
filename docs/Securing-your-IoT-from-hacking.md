@@ -138,7 +138,7 @@ How to generate the certificates in mosquitto please look at:
 
 Type WifiConfig into the tasmota console. If this parameter is set to 2, you might want to change it after completing the setup of your device since in case your Wifi SSID is not available (i.e. access point dies or WLAN jammer is used as in [Scanario 5](#scenario-5)), the WiFiManager will jump into action and make your tasmota devices available using an unsecured access point.
    
-   Some less risky options would be: 0/4/5. Currently the [default WiFiConfig value](https://github.com/arendst/Tasmota/issues/4400) is [(WIFI_RETRY)](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h#L79) which means that device retries other AP without rebooting.  (For details, see [Wi-Fi commands](Commands#wi-fi)).
+   Some less risky options would be: 0/4/5. Currently the [default WiFiConfig value](https://github.com/arendst/Tasmota/issues/4400) is [(WIFI_RETRY)](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h#L79) which means that device retries other AP without rebooting.  (For details, see [Wi-Fi commands](Commands.md#wi-fi)).
 
 ## Home Assistant OS MQTT Add-On
 If you are using Home Assistant OS [MQTT add-on](https://github.com/home-assistant/addons/tree/master/mosquitto) with [Tasmota integration](https://www.home-assistant.io/integrations/tasmota/) the devices will need write access to the `tasmota/discovery/#` topic.

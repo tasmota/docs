@@ -139,7 +139,7 @@ On **ESP32** serial is always handled by hardware so you don't need to bother.
 
 On **ESP8266** using the hardware serial is preferred. To do so, you need to use GPIOs 13/15 for Zigbee Rx/Tx and set `SerialLog 0`. By doing so, Z2T *steals* the hardware UART from the serial console and uses it for communicating with the MCU. Otherwise Z2T uses Software Serial which requires compiling at 160MHz and might be unreliable on very rare occasions.
 
-## Usage
+## Commands
 
 For a list of available commands see [Zigbee Commands](Commands.md#zigbee).
 
@@ -150,46 +150,6 @@ In this section, we'll give a quick overview of 2 devices:
 - [Sonoff SNZB-02 Temperature And Humidity Sensor](https://zigbee.blakadder.com/Sonoff_SNZB-02.html)
 
 - [BlitzWolf SHP15 Power Monitoring Plug](https://zigbee.blakadder.com/BlitzWolf_BW-SHP15.html)
-
-## Definition File
-
-From the start, Z2T design was to stick to a low-level view and provide higher level (named) attributes only for a limited set of mostly seen attributes. This raised difficulties and frustration for users with specific devices that use rare attributes, or devices that use non-standard attributes (like Tuya zigbee devices).
-
-We are now providing a **Zigbee Device plugin** mechanisms, using simple text files. These files specify mapping on a per-device type basis. The goal is to fill most of the gap with Zigbee2MQTT (provided that you write the device plugin files). The lightweight nature of plugins permits to load only the plugins required by the devices used, and does not require a sowftare update for new devices.
-
-### How does it work?
-
-You simply copy device plugin files (externsion `*.zb`) in the file system and they are automatically loaded at start.
-
-You can dynamically load new files with `ZbLoad <file>.zb` or unload definitions with `ZbUnload <file>.zb`. When you reload a file with the same name, it is first unloaded.
-
-At Zigbee start, all files with `*.zb` suffix are loaded into memory. Be careful of not saturating memory, especially on ESP8266.
-
-### Zigbee device plugin format
-
-**Zigbee device plugin** have the following format:
-
-- starts with `#Z2Tv1` on the first line
-  - `#` is a marker for comments, and everything from `#` to end of line is ignored
-  - rest of the file is of form **device matcher** followed by **attribute definitions** or **attribute synonyms**
-
-#### **device matchers**
--  composed of one or more lines defining the `modelId` and `manufacturerId`. If a field is empty, it matches all values
-- `:<modelId>,<manufacturerId>`
-- example: `:TS0601,_TZE200_sh1btabb` for GiEX water valve
-
-#### **attribute matcher** specifies a cluster/attribute/type tuple and matches an attribute name
-- `<cluster 4 hex>/<attribute 4 hex>` or `<cluster 4 hex>/attribute 4 hex>%<type 2 hex>`
-- Ex: `EF00/0365,IrrigationStartTime` (Tuya cluster EF00 does not need an explicit type)
-- Ex: `0006/4001%bool,OnTime`
-
-#### **attribute synonyms** specifies that a received attribute is a synonym for another attribute
-- `<cluster 4 hex>/<attribute 4 hex>=<new_cluster 4 hex>/<new_attribute 4 hex>,<multiplier>`
-- Ex: `EF00/026C=0001/0021,2` converts any EFOO/026C attribute received to `0001/0021` (BatteryPercentage) and multiplies by `2` to convert to ZCL standard.
-
-Multiplier is 8 bit int (-128..127). If `0` or `1`, the value is unchanged. Otherwise the value is converted to `float` and is multiplied by `multiplier` if positive, or divided by `-multiplier` if negative.
-
-I.e. `multiplier=10` means multiply by 10, `multiplier=-5` means divide by 5
 
 ### Sonoff SNZB-02 Sensor
 
@@ -338,6 +298,20 @@ Message with `"Status":30` shows some characteristics of the device:
 |`PowerSource`|`true` = the device is connected to a power source<BR>`false` = the device runs on battery|
 |`ReceiveWhenIdle`|`true` = the device can receive commands when idle<BR>`false` = the device is not listening. Commands should be sent when the device reconnects and is idle|
 |`Security`|Security capability (meaning unknown, to be determined)|
+
+## Advanced topic: Zigbee plugin Definition File
+
+From the start, Z2T design was to stick to a low-level view and provide higher level (named) attributes only for a limited set of mostly seen attributes. This raised difficulties and frustration for users with specific devices that use rare attributes, or devices that use non-standard attributes (like Tuya zigbee devices).
+
+We are now providing a (**Zigbee Device plugin**)[#advanced-topic-zigbee-device-plugin] mechanisms, using simple text files. These files specify mapping on a per-device type basis. The goal is to fill most of the gap with Zigbee2MQTT (provided that you write the device plugin files). The lightweight nature of plugins permits to load only the plugins required by the devices used, and does not require a sowftare update for new devices.
+
+### How does it work?
+
+You simply copy device plugin files (externsion `*.zb`) in the file system and they are **automatically loaded at start**.
+
+During troubleshooting, you can dynamically load new files with `ZbLoad <file>.zb` or unload definitions with `ZbUnload <file>.zb`. When you reload a file with the same name, it is first unloaded.
+
+At Zigbee start, all files with `*.zb` suffix are loaded into memory. Be careful of not saturating memory, especially on ESP8266.
 
 
 ## Pairing Devices
@@ -667,7 +641,7 @@ There is a special syntax if you want to send arbitrary commands:
     `ZbSend {"Device":"0x1234","Send":"0000_00/0500"}`
      Send a Read command (0x00) to the general cluster (0x0000) for attribute ManufId (0x0005). Note: all values are little-endian.
 
-Or use '!' instead of '_' to specify cluster-specific commands:
+Or use `'!'` instead of `'_'` to specify cluster-specific commands:
 
 `"<cluster>!<cmd>/<bytes>"`: send a cluster specific command for cluster id `<cluster>`, command id `<cmd>` and payload `<bytes>`.
 
@@ -965,6 +939,959 @@ ZbSend {"Device": "Utility", "Write":{"TuyaTempTarget":20}}
 will set the TRV setpoint to 20C.
 Other commands will be available and will be added when	clarified.
 
+
+## Advanced Topic: Zigbee Device Plugin
+
+Zigbee2Tasmota supports most common and standard attributes from ZCL, see [here](#advanced-topic-zigbee-reference).
+
+But creativity of manufacturers is limitless. Some manufacturers make mistakes compared to the Zigbee ZCL standard (maybe because their developers didn't read the specifications thoroughly), and others invent their own standards - ex: TuyA devices sometimes use a encapsulation of TuYa Serial protocol in Zigbee.
+
+The Zigbee plug-in mechanisms is composed of simple text files to describe device-specific non-standard attributes or non-standard mapping of values.
+
+You simply need to copy the required file(s) in the coordinator's filesystem and restart. You should see logs similar to the following after Zigbee has started.
+
+```
+ZIG: Zigbee started
+ZIG: Zigbee device information found in File System (1 devices - 48 bytes)
+ZIG: Zigbee device data in File System (20 bytes)
+ZIG: ZbLoad '<internal_plugin>' loaded successfully
+ZIG: ZbLoad 'TS0001_switch.zb' loaded successfully
+```
+
+### Writing Zigbee plugins
+
+A Zigbee plugin file needs to have `.zb` extension and start with the first line:
+
+```
+#Z2Tv1
+```
+
+The plugin file has 3 types of declarations:
+
+- a device match pattern, specifies which `model` and/or `manufacturer` identifiers to match
+- an attribute definition, defines a new attribute name
+- an attribute synonym, remaps the incoming attribute to a new attribute (or the same) and applies multiplier/divisor
+- `#` is a marker for comments, and everything from `#` to end of line is ignored
+
+Note: Zigbee plugins currently only handles Zigbee attributes (read, write, report) but not Zigbee commands which can't be remapped. There hasn't been any need for command remapping but who knows...
+
+#### Matching a device or a family of devices
+
+A plugin section needs to start with one or more matching patterns. All the following statements share the same matching pattern until a new pattern appears.
+
+A pattern is of form: `:<modelid>,<manufecturerid>`. Possible values are:
+
+- "match all", if empty the pattern matches all devices
+- "exact match", if a value is provided, the model or manufacturer value must exactly match
+- "starts with", if a value ends with `*`, any value starting with this value macthes
+
+Example:
+
+Pattern|Description
+:---|:---
+`:,`|Matches all devices
+`:TRADFRI*,`<br>`:SYMFONISK*,`|Matches any device with ModelID starting with `TRADFRI` or `SYMFONISK`
+`:TS0201,_TZ3000_ywagc4rj`|Match only if DeviceID is `TS0201` and ManufacturerID is `_TZ3000_ywagc4rj`
+
+!!! warning  "Only the first succesful match is applied, all subsequent statements are ignored. You may need to adjust the order of files if priority is needed between plugins"
+
+#### Defining a new attribute
+
+You can define or overwrite an attribute name for a specific cluser/attributeid, and apply optional multiplier/divider.
+
+The format is:
+
+```<cluster>/<attributeid>[,%<type>],<name>[,mul:<mul>][,div:<div>][,add:<add>][,manuf:<manuf>]```
+
+Parameter|Description
+:---|:---
+`<cluster>`|Cluster number in 4 digits hex<br>Example: `0006` for cluster 6
+`<attributeid>`|Attribute identifier in 4 digits hex<br>Example: `0001` for attribute id 1
+`%<type>`|(optional) Type of the attribute either in 2 digits hex format or using the Zigbee type name<BR>Example: `%21` or `%uint16`
+`mul:<mul>`|(optional) `1..65535`: Apply a multiplier to the value received
+`div:<div>`|(optional) `1..65535`: Apply a divider to the value received (after the multiplier is applied)
+`add:<add>`|(optional) `-36278..32767`: Add/substract a value (after multiplier and divider are applied)
+`manuf:<manuf>`|(optional) Add a manufacturer specific code in 4 digits hex
+
+When a value is received, the following formula is applied (computed using integers):
+
+`new_val = add + (val * mul) / div`
+
+The inverse formula is applied when writing back an attribute. Beware of rounding errors.
+
+**Special case of Tuya attributes (cluster `0xEF00`)**
+
+For attributes from the Tuya cluster `0xEF00` the attribute has the form `AABB` where `AA` is the type and `BB` is the `dpid`. If you only care about receiving attributes, you can use `FF` as a type so Tasmota accepts any value. To be able to write the attribute, the type must be specified.
+
+Example: `EF00/FF02` accepts any value for `dpip` `2`, while `EF00/0202` specifies the type `02` for this `dpid`. The regular Zigbee type `%<type>` is unused with Tuya attributes.
+
+Tuya type|Description
+:---|:---
+`00`|raw bytes decoded as hex (n bytes)
+`01`|bool (1 byte)
+`02`|int32 (4 bytes)
+`03`|string (n bytes)
+`04`|enum (1 byte)
+`05`|bitmap (1/2/4 bytes)
+
+
+#### Defining an attribute synonym
+
+An attribute synonym can remap an incoming attribute value to another attribute and apply the regular transformation. It can also be used to fix a value and keep the same attribute.
+
+The format is:
+
+```<cluster>/<attributeid>=<new_cluster>/<new_attributedid>[,mul:<mul>][,div:<div>][,add:<add>]```
+
+Parameter|Description
+:---|:---
+`<cluster>`|Cluster number in 4 digits hex
+`<attributeid>`|Attribute identifier in 4 digits hex
+`<new_cluster>`|Cluster number in 4 digits hex
+`<new_attributeid>`|Attribute identifier in 4 digits hex
+`mul:<mul>`|(optional) `1..65535`: Apply a multiplier to the value received
+`div:<div>`|(optional) `1..65535`: Apply a divider to the value received (after the multiplier is applied)
+`add:<add>`|(optional) `-36278..32767`: Add/substract a value (after multiplier and divider are applied)
+
+
+Currently the inverse attribute mapping is not done when writing an attribute.
+
+### Troubleshooting
+
+While all `*.zb` files are automatically loaded at startup, you can manually unload a file with `ZbUnload <file.zb>` and load a modified version with `ZbLoad <file.zb>`.
+
+You can dump all the plugins loaded in memory with `ZbLoadDump`.
+
+When a synonym is applied, you can see it in logs with loglevel 3 or more:
+
+`ZIG: apply synonym 000C/0055 with 0B04/050B (mul:1 div:1)`
+
+### Complete examples
+
+#### Default plugin
+
+Below is the default plug-in stored in Flash `<internal_plugin>` and automatically loaded. It handles the following:
+
+- solve a bug in IKEA device where the BatteryPercentage is not multiplied by 2
+- map the `Power` attribute of Aqara magnet window sensor to a synthetic attribute 0500/FFF2 for specific handling
+
+```
+#Z2Tv1
+:TRADFRI*,
+:SYMFONISK*,
+0001/0021=0001/0021,mul:2
+:lumi.sensor_magnet*,
+0006/0000=0500/FFF2
+```
+
+#### Tuya Moes thermostat humidity bug
+
+`Tuya_KCTW1Z.zb` fixes a bug where humidity should be multiplied by 10.
+
+```
+#Z2Tv1
+# Tuya fix humidity by 10 
+# https://zigbee.blakadder.com/Tuya_KCTW1Z.html
+:TS0201,_TZ3000_ywagc4rj
+0405/0000=0405/0000,mul:10
+
+```
+
+#### GiEX garden watering
+
+The following plugin defines device specific Tuya attributes, and matches the `BatteryPercentage` to the regular ZCL attribute (multiplied by 2).
+
+```
+#Z2Tv1
+# GiEX garden watering https://www.aliexpress.com/item/1005004222098040.html
+:TS0601,_TZE200_sh1btabb
+EF00/0101,WaterMode                 # duration=0 / capacity=1
+EF00/0102,WaterState                # off=0 / on=1
+EF00/0365,IrrigationStartTime       # (string) ex: "08:12:26"
+EF00/0366,IrrigationStopTime        # (string) ex: "08:13:36"
+EF00/0267,CycleIrrigationNumTimes   # number of cycle irrigation times, set to 0 for single cycle
+EF00/0268,IrrigationTarget          # duration in minutes or capacity in Liters (depending on mode)
+EF00/0269,CycleIrrigationInterval   # cycle irrigation interval (minutes, max 1440)
+EF00/026A,CurrentTemperature        # (value ignored because isn't a valid tempurature reading.  Misdocumented and usage unclear)
+EF00/026C=0001/0021,mul:2           # match to BatteryPercentage
+EF00/026F,WaterConsumed             # water consumed (Litres)
+EF00/0372,LastIrrigationDuration    # (string) Ex: "00:01:10,0"
+```
+
+
+## Advanced topic: Zigbee Reference
+
+??? tip "Tasmota includes plain text aliases for most of the common ZCL attributes (click to expand)" 
+
+	Alias|Cluster|Attribute|Type
+	:---|:---|:---|:---
+	`ZCLVersion`|0x0000|0x0000|%20 - uint8
+	`AppVersion`|0x0000|0x0001|%20 - uint8
+	`StackVersion`|0x0000|0x0002|%20 - uint8
+	`HWVersion`|0x0000|0x0003|%20 - uint8
+	`Manufacturer`|0x0000|0x0004|%42 - string
+	`ModelId`|0x0000|0x0005|%42 - string
+	`DateCode`|0x0000|0x0006|%42 - string
+	`PowerSource`|0x0000|0x0007|%30 - enum8
+	`GenericDeviceClass`|0x0000|0x0008|%30 - enum8
+	`GenericDeviceType`|0x0000|0x0009|%30 - enum8
+	`ProductCode`|0x0000|0x000A|%41 - octstr
+	`ProductURL`|0x0000|0x000B|%42 - string
+	`LocationDescription`|0x0000|0x0010|%42 - string
+	`PhysicalEnvironment`|0x0000|0x0011|%30 - enum8
+	`DeviceEnabled`|0x0000|0x0012|%10 - bool
+	`AlarmMask`|0x0000|0x0013|%18 - map8
+	`DisableLocalConfig`|0x0000|0x0014|%18 - map8
+	`SWBuildID`|0x0000|0x4000|%42 - string
+	`MullerLightMode`|0x0000|0x4005|%20 - uint8
+	`MainsVoltage`|0x0001|0x0000|%21 - uint16
+	`MainsFrequency`|0x0001|0x0001|%20 - uint8
+	`MainsAlarmMask`|0x0001|0x0010|%18 - map8
+	`MainsVoltageMinThreshold`|0x0001|0x0011|%21 - uint16
+	`MainsVoltageMaxThreshold`|0x0001|0x0012|%21 - uint16
+	`MainsVoltageDwellTripPoint`|0x0001|0x0013|%21 - uint16
+	`BatteryVoltage`|0x0001|0x0020|%20 - uint8
+	`BatteryPercentage`|0x0001|0x0021|%20 - uint8
+	`BatteryManufacturer`|0x0001|0x0030|%42 - string
+	`BatterySize`|0x0001|0x0031|%30 - enum8
+	`BatteryAHrRating`|0x0001|0x0032|%21 - uint16
+	`BatteryQuantity`|0x0001|0x0033|%20 - uint8
+	`BatteryRatedVoltage`|0x0001|0x0034|%20 - uint8
+	`BatteryAlarmMask`|0x0001|0x0035|%18 - map8
+	`BatteryVoltageMinThreshold`|0x0001|0x0036|%20 - uint8
+	`BatteryVoltageThreshold1`|0x0001|0x0037|%20 - uint8
+	`BatteryVoltageThreshold2`|0x0001|0x0038|%20 - uint8
+	`BatteryVoltageThreshold3`|0x0001|0x0039|%20 - uint8
+	`BatteryPercentageMinThreshold`|0x0001|0x003A|%20 - uint8
+	`BatteryPercentageThreshold1`|0x0001|0x003B|%20 - uint8
+	`BatteryPercentageThreshold2`|0x0001|0x003C|%20 - uint8
+	`BatteryPercentageThreshold3`|0x0001|0x003D|%20 - uint8
+	`BatteryAlarmState`|0x0001|0x003E|%1B - map32
+	`CurrentTemperature`|0x0002|0x0000|%29 - int16
+	`MinTempExperienced`|0x0002|0x0001|%29 - int16
+	`MaxTempExperienced`|0x0002|0x0002|%29 - int16
+	`OverTempTotalDwell`|0x0002|0x0003|%21 - uint16
+	`DeviceTempAlarmMask`|0x0002|0x0010|%18 - map8
+	`LowTempThreshold`|0x0002|0x0011|%29 - int16
+	`HighTempThreshold`|0x0002|0x0012|%29 - int16
+	`LowTempDwellTripPoint`|0x0002|0x0013|%22 - uint24
+	`HighTempDwellTripPoint`|0x0002|0x0014|%22 - uint24
+	`IdentifyTime`|0x0003|0x0000|%21 - uint16
+	`GroupNameSupport`|0x0004|0x0000|%18 - map8
+	`SceneCount`|0x0005|0x0000|%20 - uint8
+	`CurrentScene`|0x0005|0x0001|%20 - uint8
+	`CurrentGroup`|0x0005|0x0002|%21 - uint16
+	`SceneValid`|0x0005|0x0003|%10 - bool
+	`SceneNameSupport`|0x0005|0x0004|%18 - map8
+	`LastConfiguredBy`|0x0005|0x0005|%F0 - EUI64
+	`Power`|0x0006|0x0000|%10 - bool
+	`StartUpOnOff`|0x0006|0x4003|%30 - enum8
+	`Power`|0x0006|0x8000|%10 - bool
+	`OnOff`|0x0006|0x4000|%10 - bool
+	`OnTime`|0x0006|0x4001|%21 - uint16
+	`OffWaitTime`|0x0006|0x4002|%21 - uint16
+	`SwitchType`|0x0007|0x0000|%30 - enum8
+	`SwitchActions`|0x0007|0x0010|%30 - enum8
+	`Dimmer`|0x0008|0x0000|%20 - uint8
+	`DimmerRemainingTime`|0x0008|0x0001|%21 - uint16
+	`DimmerMinLevel`|0x0008|0x0002|%20 - uint8
+	`DimmerMaxLevel`|0x0008|0x0003|%20 - uint8
+	`DimmerCurrentFrequency`|0x0008|0x0004|%21 - uint16
+	`DimmerMinFrequency`|0x0008|0x0005|%21 - uint16
+	`DimmerMaxFrequency`|0x0008|0x0006|%21 - uint16
+	`OnOffTransitionTime`|0x0008|0x0010|%21 - uint16
+	`OnLevel`|0x0008|0x0011|%20 - uint8
+	`OnTransitionTime`|0x0008|0x0012|%21 - uint16
+	`OffTransitionTime`|0x0008|0x0013|%21 - uint16
+	`DefaultMoveRate`|0x0008|0x0014|%21 - uint16
+	`DimmerOptions`|0x0008|0x000F|%18 - map8
+	`DimmerStartUpLevel`|0x0008|0x4000|%20 - uint8
+	`AlarmCount`|0x0009|0x0000|%21 - uint16
+	`Time`|0x000A|0x0000|%E2 - UTC
+	`TimeStatus`|0x000A|0x0001|%18 - map8
+	`TimeZone`|0x000A|0x0002|%2B - int32
+	`DstStart`|0x000A|0x0003|%23 - uint32
+	`DstEnd`|0x000A|0x0004|%23 - uint32
+	`DstShift`|0x000A|0x0005|%2B - int32
+	`StandardTime`|0x000A|0x0006|%23 - uint32
+	`LocalTime`|0x000A|0x0007|%23 - uint32
+	`LastSetTime`|0x000A|0x0008|%E2 - UTC
+	`ValidUntilTime`|0x000A|0x0009|%E2 - UTC
+	`TimeEpoch`|0x000A|0xFF00|%E2 - UTC
+	`LocationType`|0x000B|0x0000|%08 - data8
+	`LocationMethod`|0x000B|0x0001|%30 - enum8
+	`LocationAge`|0x000B|0x0002|%21 - uint16
+	`QualityMeasure`|0x000B|0x0003|%20 - uint8
+	`NumberOfDevices`|0x000B|0x0004|%20 - uint8
+	`Coordinate1`|0x000B|0x0010|%29 - int16
+	`Coordinate2`|0x000B|0x0011|%29 - int16
+	`Coordinate3`|0x000B|0x0012|%29 - int16
+	`LocationPower`|0x000B|0x0013|%29 - int16
+	`PathLossExponent`|0x000B|0x0014|%21 - uint16
+	`ReportingPeriod`|0x000B|0x0015|%21 - uint16
+	`CalculationPeriod`|0x000B|0x0016|%21 - uint16
+	`NumberRSSIMeasurements`|0x000B|0x0016|%20 - uint8
+	`AnalogInDescription`|0x000C|0x001C|%42 - string
+	`AnalogInMaxValue`|0x000C|0x0041|%39 - single
+	`AnalogInMinValue`|0x000C|0x0045|%39 - single
+	`AnalogInOutOfService`|0x000C|0x0051|%10 - bool
+	`AnalogValue`|0x000C|0x0055|%39 - single
+	`AnalogInReliability`|0x000C|0x0067|%30 - enum8
+	`AnalogInResolution`|0x000C|0x006A|%39 - single
+	`AnalogInStatusFlags`|0x000C|0x006F|%18 - map8
+	`AnalogInEngineeringUnits`|0x000C|0x0075|%31 - enum16
+	`AnalogInApplicationType`|0x000C|0x0100|%23 - uint32
+	`AqaraRotate`|0x000C|0xFF55|%21 - uint16
+	`Aqara_FF05`|0x000C|0xFF05|%21 - uint16
+	`AnalogOutDescription`|0x000D|0x001C|%42 - string
+	`AnalogOutMaxValue`|0x000D|0x0041|%39 - single
+	`AnalogOutMinValue`|0x000D|0x0045|%39 - single
+	`AnalogOutOutOfService`|0x000D|0x0051|%10 - bool
+	`AnalogOutValue`|0x000D|0x0055|%39 - single
+	`AnalogOutReliability`|0x000D|0x0067|%30 - enum8
+	`AnalogOutRelinquishDefault`|0x000D|0x0068|%39 - single
+	`AnalogOutResolution`|0x000D|0x006A|%39 - single
+	`AnalogOutStatusFlags`|0x000D|0x006F|%18 - map8
+	`AnalogOutEngineeringUnits`|0x000D|0x0075|%31 - enum16
+	`AnalogOutApplicationType`|0x000D|0x0100|%23 - uint32
+	`AnalogDescription`|0x000E|0x001C|%42 - string
+	`AnalogOutOfService`|0x000E|0x0051|%10 - bool
+	`AnalogValue`|0x000E|0x0055|%39 - single
+	`AnalogPriorityArray`|0x000E|0x0057|%FF - unk
+	`AnalogReliability`|0x000E|0x0067|%30 - enum8
+	`AnalogRelinquishDefault`|0x000E|0x0068|%39 - single
+	`AnalogStatusFlags`|0x000E|0x006F|%18 - map8
+	`AnalogEngineeringUnits`|0x000E|0x0075|%31 - enum16
+	`AnalogApplicationType`|0x000E|0x0100|%23 - uint32
+	`BinaryInActiveText`|0x000F|0x0004|%42 - string
+	`BinaryInDescription`|0x000F|0x001C|%42 - string
+	`BinaryInInactiveText`|0x000F|0x002E|%42 - string
+	`BinaryInOutOfService`|0x000F|0x0051|%10 - bool
+	`BinaryInPolarity`|0x000F|0x0054|%30 - enum8
+	`BinaryInValue`|0x000F|0x0055|%42 - string
+	`BinaryInReliability`|0x000F|0x0067|%30 - enum8
+	`BinaryInStatusFlags`|0x000F|0x006F|%18 - map8
+	`BinaryInApplicationType`|0x000F|0x0100|%23 - uint32
+	`BinaryOutActiveText`|0x0010|0x0004|%42 - string
+	`BinaryOutDescription`|0x0010|0x001C|%42 - string
+	`BinaryOutInactiveText`|0x0010|0x002E|%42 - string
+	`BinaryOutMinimumOffTime`|0x0010|0x0042|%23 - uint32
+	`BinaryOutMinimumOnTime`|0x0010|0x0043|%23 - uint32
+	`BinaryOutOutOfService`|0x0010|0x0051|%10 - bool
+	`BinaryOutPolarity`|0x0010|0x0054|%30 - enum8
+	`BinaryOutValue`|0x0010|0x0055|%10 - bool
+	`BinaryOutReliability`|0x0010|0x0067|%30 - enum8
+	`BinaryOutRelinquishDefault`|0x0010|0x0068|%10 - bool
+	`BinaryOutStatusFlags`|0x0010|0x006F|%18 - map8
+	`BinaryOutApplicationType`|0x0010|0x0100|%23 - uint32
+	`BinaryActiveText`|0x0011|0x0004|%42 - string
+	`BinaryDescription`|0x0011|0x001C|%42 - string
+	`BinaryInactiveText`|0x0011|0x002E|%42 - string
+	`BinaryMinimumOffTime`|0x0011|0x0042|%23 - uint32
+	`BinaryMinimumOnTime`|0x0011|0x0043|%23 - uint32
+	`BinaryOutOfService`|0x0011|0x0051|%10 - bool
+	`BinaryValue`|0x0011|0x0055|%10 - bool
+	`BinaryReliability`|0x0011|0x0067|%30 - enum8
+	`BinaryRelinquishDefault`|0x0011|0x0068|%10 - bool
+	`BinaryStatusFlags`|0x0011|0x006F|%18 - map8
+	`BinaryApplicationType`|0x0011|0x0100|%23 - uint32
+	`MultiInDescription`|0x0012|0x001C|%42 - string
+	`MultiInNumberOfStates`|0x0012|0x004A|%21 - uint16
+	`MultiInOutOfService`|0x0012|0x0051|%10 - bool
+	`MultiInValue`|0x0012|0x0055|%21 - uint16
+	`MultiInReliability`|0x0012|0x0067|%30 - enum8
+	`MultiInStatusFlags`|0x0012|0x006F|%18 - map8
+	`MultiInApplicationType`|0x0012|0x0100|%23 - uint32
+	`MultiOutDescription`|0x0013|0x001C|%42 - string
+	`MultiOutNumberOfStates`|0x0013|0x004A|%21 - uint16
+	`MultiOutOutOfService`|0x0013|0x0051|%10 - bool
+	`MultiOutValue`|0x0013|0x0055|%21 - uint16
+	`MultiOutReliability`|0x0013|0x0067|%30 - enum8
+	`MultiOutRelinquishDefault`|0x0013|0x0068|%21 - uint16
+	`MultiOutStatusFlags`|0x0013|0x006F|%18 - map8
+	`MultiOutApplicationType`|0x0013|0x0100|%23 - uint32
+	`MultiDescription`|0x0014|0x001C|%42 - string
+	`MultiNumberOfStates`|0x0014|0x004A|%21 - uint16
+	`MultiOutOfService`|0x0014|0x0051|%10 - bool
+	`MultiValue`|0x0014|0x0055|%21 - uint16
+	`MultiReliability`|0x0014|0x0067|%30 - enum8
+	`MultiRelinquishDefault`|0x0014|0x0068|%21 - uint16
+	`MultiStatusFlags`|0x0014|0x006F|%18 - map8
+	`MultiApplicationType`|0x0014|0x0100|%23 - uint32
+	`TotalProfileNum`|0x001A|0x0000|%20 - uint8
+	`MultipleScheduling`|0x001A|0x0001|%10 - bool
+	`EnergyFormatting`|0x001A|0x0002|%18 - map8
+	`EnergyRemote`|0x001A|0x0003|%10 - bool
+	`ScheduleMode`|0x001A|0x0004|%18 - map8
+	`CheckinInterval`|0x0020|0x0000|%23 - uint32
+	`LongPollInterval`|0x0020|0x0001|%23 - uint32
+	`ShortPollInterval`|0x0020|0x0002|%21 - uint16
+	`FastPollTimeout`|0x0020|0x0003|%21 - uint16
+	`CheckinIntervalMin`|0x0020|0x0004|%23 - uint32
+	`LongPollIntervalMin`|0x0020|0x0005|%23 - uint32
+	`FastPollTimeoutMax`|0x0020|0x0006|%21 - uint16
+	`MaxSinkTableEntries`|0x0021|0x0000|%20 - uint8
+	`SinkTable`|0x0021|0x0001|%43 - octstr16
+	`CommunicationMode`|0x0021|0x0002|%18 - map8
+	`CcommissioningExitMode`|0x0021|0x0003|%18 - map8
+	`CommissioningWindow`|0x0021|0x0004|%21 - uint16
+	`SecurityLevel`|0x0021|0x0005|%18 - map8
+	`ServerFunctionality`|0x0021|0x0006|%1A - map24
+	`ServerActiveFunctionality`|0x0021|0x0007|%1A - map24
+	`MaxProxyTableEntries`|0x0021|0x0010|%20 - uint8
+	`ProxyTable`|0x0021|0x0011|%43 - octstr16
+	`NotificationRetryNumber`|0x0021|0x0012|%20 - uint8
+	`NotificationRetryTimer`|0x0021|0x0013|%20 - uint8
+	`MaxSearchCounter`|0x0021|0x0014|%20 - uint8
+	`BlockedGPDID`|0x0021|0x0015|%43 - octstr16
+	`ClientFunctionality`|0x0021|0x0016|%1A - map24
+	`ClientActiveFunctionality`|0x0021|0x0017|%1A - map24
+	`SharedSecurityKeyType`|0x0021|0x0020|%18 - map8
+	`SharedSecurityKey`|0x0021|0x0021|%F1 - key128
+	`LinkKey`|0x0021|0x0022|%F1 - key128
+	`PhysicalClosedLimit`|0x0100|0x0000|%21 - uint16
+	`MotorStepSize`|0x0100|0x0001|%20 - uint8
+	`Status`|0x0100|0x0002|%18 - map8
+	`ClosedLimit`|0x0100|0x0010|%21 - uint16
+	`Mode`|0x0100|0x0011|%30 - enum8
+	`LockState`|0x0101|0x0000|%30 - enum8
+	`LockType`|0x0101|0x0001|%30 - enum8
+	`ActuatorEnabled`|0x0101|0x0002|%10 - bool
+	`DoorState`|0x0101|0x0003|%30 - enum8
+	`DoorOpenEvents`|0x0101|0x0004|%23 - uint32
+	`DoorClosedEvents`|0x0101|0x0005|%23 - uint32
+	`OpenPeriod`|0x0101|0x0006|%21 - uint16
+	`NumberOfLogRecordsSupported`|0x0101|0x0010|%21 - uint16
+	`NumberOfTotalUsersSupported`|0x0101|0x0011|%21 - uint16
+	`NumberOfPINUsersSupported`|0x0101|0x0012|%21 - uint16
+	`NumberOfRFIDUsersSupported`|0x0101|0x0013|%21 - uint16
+	`NumberOfWeekDaySchedulesSupportedPerUser`|0x0101|0x0014|%20 - uint8
+	`NumberOfYearDaySchedulesSupportedPerUser`|0x0101|0x0015|%20 - uint8
+	`NumberOfHolidaySchedulesSupported`|0x0101|0x0016|%20 - uint8
+	`MaxPINCodeLength`|0x0101|0x0017|%20 - uint8
+	`MinPINCodeLength`|0x0101|0x0018|%20 - uint8
+	`MaxRFIDCodeLength`|0x0101|0x0019|%20 - uint8
+	`MinRFIDCodeLength`|0x0101|0x0011|%20 - uint8
+	`LockEnableLogging`|0x0101|0x0020|%10 - bool
+	`LockLanguage`|0x0101|0x0021|%42 - string
+	`LockLEDSettings`|0x0101|0x0022|%20 - uint8
+	`AutoRelockTime`|0x0101|0x0023|%23 - uint32
+	`LockSoundVolume`|0x0101|0x0024|%20 - uint8
+	`LockOperatingMode`|0x0101|0x0025|%30 - enum8
+	`LockSupportedOperatingModes`|0x0101|0x0026|%19 - map16
+	`LockDefaultConfigurationRegister`|0x0101|0x0027|%19 - map16
+	`LockEnableLocalProgramming`|0x0101|0x0028|%10 - bool
+	`LockEnableOneTouchLocking`|0x0101|0x0029|%10 - bool
+	`LockEnableInsideStatusLED`|0x0101|0x002A|%10 - bool
+	`LockEnablePrivacyModeButton`|0x0101|0x002B|%10 - bool
+	`LockAlarmMask`|0x0101|0x0040|%19 - map16
+	`LockKeypadOperationEventMask`|0x0101|0x0041|%19 - map16
+	`LockRFOperationEventMask`|0x0101|0x0042|%19 - map16
+	`LockManualOperationEventMask`|0x0101|0x0043|%19 - map16
+	`LockRFIDOperationEventMask`|0x0101|0x0044|%19 - map16
+	`LockKeypadProgrammingEventMask`|0x0101|0x0045|%19 - map16
+	`LockRFProgrammingEventMask`|0x0101|0x0046|%19 - map16
+	`LockRFIDProgrammingEventMask`|0x0101|0x0047|%19 - map16
+	`AqaraVibrationMode`|0x0101|0x0055|%21 - uint16
+	`AqaraVibrationsOrAngle`|0x0101|0x0503|%21 - uint16
+	`AqaraVibration505`|0x0101|0x0505|%23 - uint32
+	`AqaraAccelerometer`|0x0101|0x0508|%25 - uint48
+	`WindowCoveringType`|0x0102|0x0000|%30 - enum8
+	`PhysicalClosedLimitLift`|0x0102|0x0001|%21 - uint16
+	`PhysicalClosedLimitTilt`|0x0102|0x0002|%21 - uint16
+	`CurrentPositionLift`|0x0102|0x0003|%21 - uint16
+	`CurrentPositionTilt`|0x0102|0x0004|%21 - uint16
+	`NumberofActuationsLift`|0x0102|0x0005|%21 - uint16
+	`NumberofActuationsTilt`|0x0102|0x0006|%21 - uint16
+	`ConfigStatus`|0x0102|0x0007|%18 - map8
+	`CurrentPositionLiftPercentage`|0x0102|0x0008|%20 - uint8
+	`CurrentPositionTiltPercentage`|0x0102|0x0009|%20 - uint8
+	`InstalledOpenLimitLift`|0x0102|0x0010|%21 - uint16
+	`InstalledClosedLimitLift`|0x0102|0x0011|%21 - uint16
+	`InstalledOpenLimitTilt`|0x0102|0x0012|%21 - uint16
+	`InstalledClosedLimitTilt`|0x0102|0x0013|%21 - uint16
+	`VelocityLift`|0x0102|0x0014|%21 - uint16
+	`AccelerationTimeLift`|0x0102|0x0015|%21 - uint16
+	`DecelerationTimeLift`|0x0102|0x0016|%21 - uint16
+	`Mode`|0x0102|0x0017|%18 - map8
+	`IntermediateSetpointsLift`|0x0102|0x0018|%41 - octstr
+	`IntermediateSetpointsTilt`|0x0102|0x0019|%41 - octstr
+	`TuyaMovingState`|0x0102|0xF000|%30 - enum8
+	`TuyaCalibration`|0x0102|0xF001|%30 - enum8
+	`TuyaMotorReversal`|0x0102|0xF002|%30 - enum8
+	`TuyaCalibrationTime`|0x0102|0xF003|%21 - uint16
+	`LocalTemperature`|0x0201|0x0000|%29 - int16
+	`OutdoorTemperature`|0x0201|0x0001|%29 - int16
+	`ThermostatOccupancy`|0x0201|0x0002|%18 - map8
+	`AbsMinHeatSetpointLimit`|0x0201|0x0003|%29 - int16
+	`AbsMaxHeatSetpointLimit`|0x0201|0x0004|%29 - int16
+	`AbsMinCoolSetpointLimit`|0x0201|0x0005|%29 - int16
+	`AbsMaxCoolSetpointLimit`|0x0201|0x0006|%29 - int16
+	`PICoolingDemand`|0x0201|0x0007|%20 - uint8
+	`PIHeatingDemand`|0x0201|0x0008|%20 - uint8
+	`HVACSystemTypeConfiguration`|0x0201|0x0009|%18 - map8
+	`LocalTemperatureCalibration`|0x0201|0x0010|%28 - int8
+	`OccupiedCoolingSetpoint`|0x0201|0x0011|%29 - int16
+	`OccupiedHeatingSetpoint`|0x0201|0x0012|%29 - int16
+	`UnoccupiedCoolingSetpoint`|0x0201|0x0013|%29 - int16
+	`UnoccupiedHeatingSetpoint`|0x0201|0x0014|%29 - int16
+	`MinHeatSetpointLimit`|0x0201|0x0015|%29 - int16
+	`MaxHeatSetpointLimit`|0x0201|0x0016|%29 - int16
+	`MinCoolSetpointLimit`|0x0201|0x0017|%29 - int16
+	`MaxCoolSetpointLimit`|0x0201|0x0018|%29 - int16
+	`MinSetpointDeadBand`|0x0201|0x0019|%28 - int8
+	`ThermostatAlarmMask`|0x0201|0x001D|%18 - map8
+	`ThermostatRunningMode`|0x0201|0x001E|%30 - enum8
+	`RemoteSensing`|0x0201|0x001A|%18 - map8
+	`ControlSequenceOfOperation`|0x0201|0x001B|%30 - enum8
+	`SystemMode`|0x0201|0x001C|%30 - enum8
+	`TRVMode`|0x0201|0x4000|%30 - enum8
+	`ValvePosition`|0x0201|0x4001|%20 - uint8
+	`EurotronicErrors`|0x0201|0x4002|%20 - uint8
+	`CurrentTemperatureSetPoint`|0x0201|0x4003|%29 - int16
+	`EurotronicHostFlags`|0x0201|0x4008|%22 - uint24
+	`TRVMirrorDisplay`|0x0201|0xF002|%10 - bool
+	`TRVBoost`|0x0201|0xF004|%10 - bool
+	`TRVWindowOpen`|0x0201|0xF010|%10 - bool
+	`TRVChildProtection`|0x0201|0xF080|%10 - bool
+	`ThSetpoint`|0x0201|0xFFF0|%20 - uint8
+	`TempTarget`|0x0201|0xFFF1|%29 - int16
+	`FanMode`|0x0202|0x0000|%30 - enum8
+	`FanModeSequence`|0x0202|0x0001|%30 - enum8
+	`RelativeHumidity`|0x0203|0x0000|%20 - uint8
+	`DehumidificationCooling`|0x0203|0x0001|%20 - uint8
+	`RHDehumidificationSetpoint`|0x0203|0x0010|%20 - uint8
+	`RelativeHumidityMode`|0x0203|0x0011|%30 - enum8
+	`DehumidificationLockout`|0x0203|0x0012|%30 - enum8
+	`DehumidificationHysteresis`|0x0203|0x0013|%20 - uint8
+	`DehumidificationMaxCool`|0x0203|0x0014|%20 - uint8
+	`RelativeHumidityDisplay`|0x0203|0x0015|%30 - enum8
+	`TemperatureDisplayMode`|0x0204|0x0000|%30 - enum8
+	`ThermostatKeypadLockout`|0x0204|0x0001|%30 - enum8
+	`ThermostatScheduleProgrammingVisibility`|0x0204|0x0002|%30 - enum8
+	`Hue`|0x0300|0x0000|%20 - uint8
+	`Sat`|0x0300|0x0001|%20 - uint8
+	`RemainingTime`|0x0300|0x0002|%21 - uint16
+	`X`|0x0300|0x0003|%21 - uint16
+	`Y`|0x0300|0x0004|%21 - uint16
+	`DriftCompensation`|0x0300|0x0005|%30 - enum8
+	`CompensationText`|0x0300|0x0006|%42 - string
+	`CT`|0x0300|0x0007|%21 - uint16
+	`ColorMode`|0x0300|0x0008|%30 - enum8
+	`NumberOfPrimaries`|0x0300|0x0010|%20 - uint8
+	`Primary1X`|0x0300|0x0011|%21 - uint16
+	`Primary1Y`|0x0300|0x0012|%21 - uint16
+	`Primary1Intensity`|0x0300|0x0013|%20 - uint8
+	`Primary2X`|0x0300|0x0015|%21 - uint16
+	`Primary2Y`|0x0300|0x0016|%21 - uint16
+	`Primary2Intensity`|0x0300|0x0017|%20 - uint8
+	`Primary3X`|0x0300|0x0019|%21 - uint16
+	`Primary3Y`|0x0300|0x001A|%21 - uint16
+	`Primary3Intensity`|0x0300|0x001B|%20 - uint8
+	`Primary4X`|0x0300|0x0020|%21 - uint16
+	`Primary4Y`|0x0300|0x0021|%21 - uint16
+	`Primary4Intensity`|0x0300|0x0022|%20 - uint8
+	`Primary5X`|0x0300|0x0024|%21 - uint16
+	`Primary5Y`|0x0300|0x0025|%21 - uint16
+	`Primary5Intensity`|0x0300|0x0026|%20 - uint8
+	`Primary6X`|0x0300|0x0028|%21 - uint16
+	`Primary6Y`|0x0300|0x0029|%21 - uint16
+	`Primary6Intensity`|0x0300|0x002A|%20 - uint8
+	`WhitePointX`|0x0300|0x0030|%21 - uint16
+	`WhitePointY`|0x0300|0x0031|%21 - uint16
+	`ColorPointRX`|0x0300|0x0032|%21 - uint16
+	`ColorPointRY`|0x0300|0x0033|%21 - uint16
+	`ColorPointRIntensity`|0x0300|0x0034|%20 - uint8
+	`ColorPointGX`|0x0300|0x0036|%21 - uint16
+	`ColorPointGY`|0x0300|0x0037|%21 - uint16
+	`ColorPointGIntensity`|0x0300|0x0038|%20 - uint8
+	`ColorPointBX`|0x0300|0x003A|%21 - uint16
+	`ColorPointBY`|0x0300|0x003B|%21 - uint16
+	`ColorPointBIntensity`|0x0300|0x003C|%20 - uint8
+	`EnhancedCurrentHue`|0x0300|0x4000|%21 - uint16
+	`EnhancedColorMode`|0x0300|0x4001|%30 - enum8
+	`ColorLoopActive`|0x0300|0x4002|%20 - uint8
+	`ColorLoopDirection`|0x0300|0x4003|%20 - uint8
+	`ColorLoopTime`|0x0300|0x4004|%21 - uint16
+	`ColorLoopStartEnhancedHue`|0x0300|0x4005|%21 - uint16
+	`ColorLoopStoredEnhancedHue`|0x0300|0x4006|%21 - uint16
+	`ColorCapabilities`|0x0300|0x400A|%19 - map16
+	`ColorTempPhysicalMinMireds`|0x0300|0x400B|%21 - uint16
+	`ColorTempPhysicalMaxMireds`|0x0300|0x400C|%21 - uint16
+	`ColorStartUpColorTempireds`|0x0300|0x4010|%21 - uint16
+	`BallastPhysicalMinLevel`|0x0301|0x0000|%20 - uint8
+	`BallastPhysicalMaxLevel`|0x0301|0x0001|%20 - uint8
+	`BallastStatus`|0x0301|0x0002|%18 - map8
+	`BallastMinLevel`|0x0301|0x0010|%20 - uint8
+	`BallastMaxLevel`|0x0301|0x0011|%20 - uint8
+	`BallastPowerOnLevel`|0x0301|0x0012|%20 - uint8
+	`BallastPowerOnFadeTime`|0x0301|0x0013|%21 - uint16
+	`IntrinsicBallastFactor`|0x0301|0x0014|%20 - uint8
+	`BallastFactorAdjustment`|0x0301|0x0015|%20 - uint8
+	`BallastLampQuantity`|0x0301|0x0020|%20 - uint8
+	`LampType`|0x0301|0x0030|%42 - string
+	`LampManufacturer`|0x0301|0x0031|%42 - string
+	`LampRatedHours`|0x0301|0x0032|%22 - uint24
+	`LampBurnHours`|0x0301|0x0033|%22 - uint24
+	`LampAlarmMode`|0x0301|0x0034|%18 - map8
+	`LampBurnHoursTripPoint`|0x0301|0x0035|%22 - uint24
+	`Illuminance`|0x0400|0x0000|%21 - uint16
+	`IlluminanceMinMeasuredValue`|0x0400|0x0001|%21 - uint16
+	`IlluminanceMaxMeasuredValue`|0x0400|0x0002|%21 - uint16
+	`IlluminanceTolerance`|0x0400|0x0003|%21 - uint16
+	`IlluminanceLightSensorType`|0x0400|0x0004|%30 - enum8
+	`IlluminanceLevelStatus`|0x0401|0x0000|%30 - enum8
+	`IlluminanceLightSensorType`|0x0401|0x0001|%30 - enum8
+	`IlluminanceTargetLevel`|0x0401|0x0010|%21 - uint16
+	`Temperature`|0x0402|0x0000|%29 - int16
+	`TemperatureMinMeasuredValue`|0x0402|0x0001|%29 - int16
+	`TemperatureMaxMeasuredValue`|0x0402|0x0002|%29 - int16
+	`TemperatureTolerance`|0x0402|0x0003|%21 - uint16
+	`Pressure`|0x0403|0x0000|%29 - int16
+	`PressureMinMeasuredValue`|0x0403|0x0001|%29 - int16
+	`PressureMaxMeasuredValue`|0x0403|0x0002|%29 - int16
+	`PressureTolerance`|0x0403|0x0003|%21 - uint16
+	`PressureScaledValue`|0x0403|0x0010|%29 - int16
+	`PressureMinScaledValue`|0x0403|0x0011|%29 - int16
+	`PressureMaxScaledValue`|0x0403|0x0012|%29 - int16
+	`PressureScaledTolerance`|0x0403|0x0013|%21 - uint16
+	`PressureScale`|0x0403|0x0014|%28 - int8
+	`SeaPressure`|0x0403|0xFFF0|%29 - int16
+	`FlowRate`|0x0404|0x0000|%21 - uint16
+	`FlowMinMeasuredValue`|0x0404|0x0001|%21 - uint16
+	`FlowMaxMeasuredValue`|0x0404|0x0002|%21 - uint16
+	`FlowTolerance`|0x0404|0x0003|%21 - uint16
+	`Humidity`|0x0405|0x0000|%21 - uint16
+	`HumidityMinMeasuredValue`|0x0405|0x0001|%21 - uint16
+	`HumidityMaxMeasuredValue`|0x0405|0x0002|%21 - uint16
+	`HumidityTolerance`|0x0405|0x0003|%21 - uint16
+	`Occupancy`|0x0406|0x0000|%18 - map8
+	`OccupancySensorType`|0x0406|0x0001|%30 - enum8
+	`PIROccupiedToUnoccupiedDelay`|0x0406|0x0010|%21 - uint16
+	`PIRUnoccupiedToOccupiedDelay`|0x0406|0x0011|%21 - uint16
+	`PIRUnoccupiedToOccupiedThreshold`|0x0406|0x0012|%20 - uint8
+	`ZoneState`|0x0500|0x0000|%30 - enum8
+	`ZoneType`|0x0500|0x0001|%31 - enum16
+	`ZoneStatus`|0x0500|0x0002|%19 - map16
+	`IASCIEAddress`|0x0500|0x0010|%F0 - EUI64
+	`ZoneID`|0x0500|0x0011|%20 - uint8
+	`NumberOfZoneSensitivityLevelsSupported`|0x0500|0x0012|%20 - uint8
+	`CurrentZoneSensitivityLevel`|0x0500|0x0013|%20 - uint8
+	`CIE`|0x0500|0xFFF0|%20 - uint8
+	`Occupancy`|0x0500|0xFFF1|%20 - uint8
+	`Contact`|0x0500|0xFFF2|%20 - uint8
+	`Fire`|0x0500|0xFFF3|%20 - uint8
+	`Water`|0x0500|0xFFF4|%20 - uint8
+	`CO`|0x0500|0xFFF5|%20 - uint8
+	`PersonalAlarm`|0x0500|0xFFF6|%20 - uint8
+	`Movement`|0x0500|0xFFF7|%20 - uint8
+	`Panic`|0x0500|0xFFF8|%20 - uint8
+	`GlassBreak`|0x0500|0xFFF9|%20 - uint8
+	`CurrentSummationDelivered`|0x0702|0x0000|%25 - uint48
+	`CurrentSummationReceived`|0x0702|0x0001|%25 - uint48
+	`CurrentMaxDemandDelivered`|0x0702|0x0002|%25 - uint48
+	`CurrentMaxDemandReceived`|0x0702|0x0003|%25 - uint48
+	`DFTSummation`|0x0702|0x0004|%25 - uint48
+	`DailyFreezeTime`|0x0702|0x0005|%21 - uint16
+	`PowerFactor`|0x0702|0x0006|%28 - int8
+	`ReadingSnapShotTime`|0x0702|0x0007|%E2 - UTC
+	`CurrentMaxDemandDeliveredTime`|0x0702|0x0008|%E2 - UTC
+	`CurrentMaxDemandReceivedTime`|0x0702|0x0009|%E2 - UTC
+	`DefaultUpdatePeriod`|0x0702|0x000A|%20 - uint8
+	`FastPollUpdatePeriod`|0x0702|0x000B|%20 - uint8
+	`CurrentBlockPeriodConsumptionDelivered`|0x0702|0x000C|%25 - uint48
+	`DailyConsumptionTarget`|0x0702|0x000D|%22 - uint24
+	`CurrentBlock`|0x0702|0x000E|%30 - enum8
+	`ProfileIntervalPeriod`|0x0702|0x000F|%30 - enum8
+	`IntervalReadReportingPeriod`|0x0702|0x0010|%21 - uint16
+	`PresetReadingTime`|0x0702|0x0011|%21 - uint16
+	`VolumePerReport`|0x0702|0x0012|%21 - uint16
+	`FlowRestriction`|0x0702|0x0013|%20 - uint8
+	`SupplyStatus`|0x0702|0x0014|%30 - enum8
+	`CurrentInletEnergyCarrierSummation`|0x0702|0x0015|%25 - uint48
+	`CurrentOutletEnergyCarrierSummation`|0x0702|0x0016|%25 - uint48
+	`InletTemperature`|0x0702|0x0017|%2A - int24
+	`OutletTemperature`|0x0702|0x0018|%2A - int24
+	`ControlTemperature`|0x0702|0x0019|%2A - int24
+	`CurrentInletEnergyCarrierDemand`|0x0702|0x001A|%2A - int24
+	`CurrentOutletEnergyCarrierDemand`|0x0702|0x001B|%2A - int24
+	`PreviousBlockPeriodConsumptionDelivered`|0x0702|0x001C|%25 - uint48
+	`CompanyName`|0x0B01|0x0000|%42 - string
+	`MeterTypeID`|0x0B01|0x0001|%21 - uint16
+	`DataQualityID`|0x0B01|0x0004|%21 - uint16
+	`CustomerName`|0x0B01|0x0005|%42 - string
+	`Model`|0x0B01|0x0006|%41 - octstr
+	`PartNumber`|0x0B01|0x0007|%41 - octstr
+	`ProductRevision`|0x0B01|0x0008|%41 - octstr
+	`SoftwareRevision`|0x0B01|0x000A|%41 - octstr
+	`UtilityName`|0x0B01|0x000B|%42 - string
+	`POD`|0x0B01|0x000C|%42 - string
+	`AvailablePower`|0x0B01|0x000D|%2A - int24
+	`PowerThreshold`|0x0B01|0x000E|%2A - int24
+	`ElectricalMeasurementType`|0x0B04|0x0000|%1B - map32
+	`DCVoltage`|0x0B04|0x0100|%29 - int16
+	`DCVoltageMin`|0x0B04|0x0101|%29 - int16
+	`DCVoltageMax`|0x0B04|0x0102|%29 - int16
+	`DCCurrent`|0x0B04|0x0103|%29 - int16
+	`DCCurrentMin`|0x0B04|0x0104|%29 - int16
+	`DCCurrentMax`|0x0B04|0x0105|%29 - int16
+	`DCPower`|0x0B04|0x0106|%29 - int16
+	`DCPowerMin`|0x0B04|0x0107|%29 - int16
+	`DCPowerMax`|0x0B04|0x0108|%29 - int16
+	`DCVoltageMultiplier`|0x0B04|0x0200|%21 - uint16
+	`DCVoltageDivisor`|0x0B04|0x0201|%21 - uint16
+	`DCCurrentMultiplier`|0x0B04|0x0202|%21 - uint16
+	`DCCurrentDivisor`|0x0B04|0x0203|%21 - uint16
+	`DCPowerMultiplier`|0x0B04|0x0204|%21 - uint16
+	`DCPowerDivisor`|0x0B04|0x0205|%21 - uint16
+	`ACFrequency`|0x0B04|0x0300|%21 - uint16
+	`ACFrequencyMin`|0x0B04|0x0301|%21 - uint16
+	`ACFrequencyMax`|0x0B04|0x0302|%21 - uint16
+	`NeutralCurrent`|0x0B04|0x0303|%21 - uint16
+	`TotalActivePower`|0x0B04|0x0304|%2B - int32
+	`TotalReactivePower`|0x0B04|0x0305|%2B - int32
+	`TotalApparentPower`|0x0B04|0x0306|%23 - uint32
+	`Measured1stHarmonicCurrent`|0x0B04|0x0307|%29 - int16
+	`Measured3rdHarmonicCurrent`|0x0B04|0x0308|%29 - int16
+	`Measured5thHarmonicCurrent`|0x0B04|0x0309|%29 - int16
+	`Measured7thHarmonicCurrent`|0x0B04|0x030A|%29 - int16
+	`Measured9thHarmonicCurrent`|0x0B04|0x030B|%29 - int16
+	`Measured11thHarmonicCurrent`|0x0B04|0x030C|%29 - int16
+	`MeasuredPhase1stHarmonicCurrent`|0x0B04|0x030D|%29 - int16
+	`MeasuredPhase3rdHarmonicCurrent`|0x0B04|0x030E|%29 - int16
+	`MeasuredPhase5thHarmonicCurrent`|0x0B04|0x030F|%29 - int16
+	`MeasuredPhase7thHarmonicCurrent`|0x0B04|0x0310|%29 - int16
+	`MeasuredPhase9thHarmonicCurrent`|0x0B04|0x0311|%29 - int16
+	`MeasuredPhase11thHarmonicCurrent`|0x0B04|0x0312|%29 - int16
+	`ACFrequencyMultiplier`|0x0B04|0x0400|%21 - uint16
+	`ACFrequencyDivisor`|0x0B04|0x0401|%21 - uint16
+	`PowerMultiplier`|0x0B04|0x0402|%23 - uint32
+	`PowerDivisor`|0x0B04|0x0403|%23 - uint32
+	`HarmonicCurrentMultiplier`|0x0B04|0x0404|%28 - int8
+	`PhaseHarmonicCurrentMultiplier`|0x0B04|0x0405|%28 - int8
+	`LineCurrent`|0x0B04|0x0501|%21 - uint16
+	`ActiveCurrent`|0x0B04|0x0502|%29 - int16
+	`ReactiveCurrent`|0x0B04|0x0503|%29 - int16
+	`RMSVoltage`|0x0B04|0x0505|%21 - uint16
+	`RMSVoltageMin`|0x0B04|0x0506|%21 - uint16
+	`RMSVoltageMax`|0x0B04|0x0507|%21 - uint16
+	`RMSCurrent`|0x0B04|0x0508|%21 - uint16
+	`RMSCurrentMin`|0x0B04|0x0509|%21 - uint16
+	`RMSCurrentMax`|0x0B04|0x050A|%21 - uint16
+	`ActivePower`|0x0B04|0x050B|%29 - int16
+	`ActivePowerMin`|0x0B04|0x050C|%21 - uint16
+	`ActivePowerMax`|0x0B04|0x050D|%21 - uint16
+	`ReactivePower`|0x0B04|0x050E|%29 - int16
+	`ApparentPower`|0x0B04|0x050F|%29 - int16
+	`PowerFactor`|0x0B04|0x0510|%28 - int8
+	`AverageRMSVoltageMeasurementPeriod`|0x0B04|0x0511|%21 - uint16
+	`AverageRMSOverVoltageCounter`|0x0B04|0x0512|%21 - uint16
+	`AverageRMSUnderVoltageCounter`|0x0B04|0x0513|%21 - uint16
+	`RMSExtremeOverVoltagePeriod`|0x0B04|0x0514|%21 - uint16
+	`RMSExtremeUnderVoltagePeriod`|0x0B04|0x0515|%21 - uint16
+	`RMSVoltageSagPeriod`|0x0B04|0x0516|%21 - uint16
+	`RMSVoltageSwellPeriod`|0x0B04|0x0517|%21 - uint16
+	`ACVoltageMultiplier`|0x0B04|0x0600|%21 - uint16
+	`ACVoltageDivisor`|0x0B04|0x0601|%21 - uint16
+	`ACCurrentMultiplier`|0x0B04|0x0602|%21 - uint16
+	`ACCurrentDivisor`|0x0B04|0x0603|%21 - uint16
+	`ACPowerMultiplier`|0x0B04|0x0604|%21 - uint16
+	`ACPowerDivisor`|0x0B04|0x0605|%21 - uint16
+	`DCOverloadAlarmsMask`|0x0B04|0x0700|%18 - map8
+	`DCVoltageOverload`|0x0B04|0x0701|%29 - int16
+	`DCCurrentOverload`|0x0B04|0x0702|%29 - int16
+	`ACAlarmsMask`|0x0B04|0x0800|%19 - map16
+	`ACVoltageOverload`|0x0B04|0x0801|%29 - int16
+	`ACCurrentOverload`|0x0B04|0x0802|%29 - int16
+	`ACActivePowerOverload`|0x0B04|0x0803|%29 - int16
+	`ACReactivePowerOverload`|0x0B04|0x0804|%29 - int16
+	`AverageRMSOverVoltage`|0x0B04|0x0805|%29 - int16
+	`AverageRMSUnderVoltage`|0x0B04|0x0806|%29 - int16
+	`RMSExtremeOverVoltage`|0x0B04|0x0807|%29 - int16
+	`RMSExtremeUnderVoltage`|0x0B04|0x0808|%29 - int16
+	`RMSVoltageSag`|0x0B04|0x0809|%29 - int16
+	`RMSVoltageSwell`|0x0B04|0x080A|%29 - int16
+	`LineCurrentPhB`|0x0B04|0x0901|%21 - uint16
+	`ActiveCurrentPhB`|0x0B04|0x0902|%29 - int16
+	`ReactiveCurrentPhB`|0x0B04|0x0903|%29 - int16
+	`RMSVoltagePhB`|0x0B04|0x0905|%21 - uint16
+	`RMSVoltageMinPhB`|0x0B04|0x0906|%21 - uint16
+	`RMSVoltageMaxPhB`|0x0B04|0x0907|%21 - uint16
+	`RMSCurrentPhB`|0x0B04|0x0908|%21 - uint16
+	`RMSCurrentMinPhB`|0x0B04|0x0909|%21 - uint16
+	`RMSCurrentMaxPhB`|0x0B04|0x090A|%21 - uint16
+	`ActivePowerPhB`|0x0B04|0x090B|%29 - int16
+	`ActivePowerMinPhB`|0x0B04|0x090C|%29 - int16
+	`ActivePowerMaxPhB`|0x0B04|0x090D|%29 - int16
+	`ReactivePowerPhB`|0x0B04|0x090E|%29 - int16
+	`ApparentPowerPhB`|0x0B04|0x090F|%21 - uint16
+	`PowerFactorPhB`|0x0B04|0x0910|%28 - int8
+	`AverageRMSVoltageMeasurementPeriodPhB`|0x0B04|0x0911|%21 - uint16
+	`AverageRMSOverVoltageCounterPhB`|0x0B04|0x0912|%21 - uint16
+	`AverageRMSUnderVoltageCounterPhB`|0x0B04|0x0913|%21 - uint16
+	`RMSExtremeOverVoltagePeriodPhB`|0x0B04|0x0914|%21 - uint16
+	`RMSExtremeUnderVoltagePeriodPhB`|0x0B04|0x0915|%21 - uint16
+	`RMSVoltageSagPeriodPhB`|0x0B04|0x0916|%21 - uint16
+	`RMSVoltageSwellPeriodPhB`|0x0B04|0x0917|%21 - uint16
+	`LineCurrentPhC`|0x0B04|0x0A01|%21 - uint16
+	`ActiveCurrentPhC`|0x0B04|0x0A02|%29 - int16
+	`ReactiveCurrentPhC`|0x0B04|0x0A03|%29 - int16
+	`RMSVoltagePhC`|0x0B04|0x0A05|%21 - uint16
+	`RMSVoltageMinPhC`|0x0B04|0x0A06|%21 - uint16
+	`RMSVoltageMaxPhC`|0x0B04|0x0A07|%21 - uint16
+	`RMSCurrentPhC`|0x0B04|0x0A08|%21 - uint16
+	`RMSCurrentMinPhC`|0x0B04|0x0A09|%21 - uint16
+	`RMSCurrentMaxPhC`|0x0B04|0x0A0A|%21 - uint16
+	`ActivePowerPhC`|0x0B04|0x0A0B|%29 - int16
+	`ActivePowerMinPhC`|0x0B04|0x0A0C|%29 - int16
+	`ActivePowerMaxPhC`|0x0B04|0x0A0D|%29 - int16
+	`ReactivePowerPhC`|0x0B04|0x0A0E|%29 - int16
+	`ApparentPowerPhC`|0x0B04|0x0A0F|%21 - uint16
+	`PowerFactorPhC`|0x0B04|0x0A10|%28 - int8
+	`AverageRMSVoltageMeasurementPeriodPhC`|0x0B04|0x0A11|%21 - uint16
+	`AverageRMSOverVoltageCounterPhC`|0x0B04|0x0A12|%21 - uint16
+	`AverageRMSUnderVoltageCounterPhC`|0x0B04|0x0A13|%21 - uint16
+	`RMSExtremeOverVoltagePeriodPhC`|0x0B04|0x0A14|%21 - uint16
+	`RMSExtremeUnderVoltagePeriodPhC`|0x0B04|0x0A15|%21 - uint16
+	`RMSVoltageSagPeriodPhC`|0x0B04|0x0A16|%21 - uint16
+	`RMSVoltageSwellPeriodPhC`|0x0B04|0x0A17|%21 - uint16
+	`NumberOfResets`|0x0B05|0x0000|%21 - uint16
+	`PersistentMemoryWrites`|0x0B05|0x0001|%21 - uint16
+	`LastMessageLQI`|0x0B05|0x011C|%20 - uint8
+	`LastMessageRSSI`|0x0B05|0x011D|%20 - uint8
+	`LegrandOpt1`|0xFC01|0x0000|%09 - data16
+	`LegrandOpt2`|0xFC01|0x0001|%10 - bool
+	`LegrandOpt3`|0xFC01|0x0002|%10 - bool
+	`LegrandHeatingMode`|0xFC40|0x0000|%30 - enum8
+	`OppleMode`|0xFCC0|0x0009|%20 - uint8
+	`TerncyDuration`|0xFCCC|0x001A|%21 - uint16
+	`TerncyRotate`|0xFCCC|0x001B|%29 - int16
+
+??? tip "Tasmota includes plain text aliases for most of the common ZCL commands (click to expand)" 
+
+	Alias|Cluster|Command
+	:---|:---|:---
+	`Identify`|0x0003|0x00
+	`IdentifyQuery`|0x0003|0x01
+	`AddGroup`|0x0004|0x00
+	`ViewGroup`|0x0004|0x01
+	`GetGroup`|0x0004|0x02
+	`GetAllGroups`|0x0004|0x02
+	`RemoveGroup`|0x0004|0x03
+	`RemoveAllGroups`|0x0004|0x04
+	`ViewScene`|0x0005|0x01
+	`RemoveScene`|0x0005|0x02
+	`RemoveAllScenes`|0x0005|0x03
+	`RecallScene`|0x0005|0x05
+	`GetSceneMembership`|0x0005|0x06
+	`PowerOffEffect`|0x0006|0x40
+	`PowerOnRecall`|0x0006|0x41
+	`PowerOnTimer`|0x0006|0x42
+	`LidlPower`|0x0006|0xFD
+	`Power`|0x0006|0xFF
+	`Dimmer`|0x0008|0x04
+	`DimmerUp`|0x0008|0x06
+	`DimmerDown`|0x0008|0x06
+	`DimmerStop`|0x0008|0x03
+	`ResetAlarm`|0x0009|0x00
+	`ResetAllAlarms`|0x0009|0x01
+	`Hue`|0x0300|0x00
+	`Sat`|0x0300|0x03
+	`HueSat`|0x0300|0x06
+	`Color`|0x0300|0x07
+	`CT`|0x0300|0x0A
+	`RGB`|0x0300|0xF0
+	`ShutterOpen`|0x0102|0x00
+	`ShutterClose`|0x0102|0x01
+	`ShutterStop`|0x0102|0x02
+	`ShutterLift`|0x0102|0x05
+	`ShutterTilt`|0x0102|0x08
+	`Shutter`|0x0102|0xFF
+	`LegrandMode`|0xFC40|0x00
+	`TuyaQuery`|0xEF00|0x03
+	`TuyaMCUVersion`|0xEF00|0x10
+	`Dimmer`|0x0008|0x00
+	`DimmerMove`|0x0008|0x01
+	`DimmerStepUp`|0x0008|0x02
+	`DimmerStepDown`|0x0008|0x02
+	`DimmerStep`|0x0008|0x02
+	`DimmerMove`|0x0008|0x05
+	`DimmerUp`|0x0008|0x06
+	`DimmerDown`|0x0008|0x06
+	`DimmerStop`|0x0008|0x07
+	`HueMove`|0x0300|0x01
+	`HueStepUp`|0x0300|0x02
+	`HueStepDown`|0x0300|0x02
+	`HueStep`|0x0300|0x02
+	`SatMove`|0x0300|0x04
+	`SatStep`|0x0300|0x05
+	`ColorMove`|0x0300|0x08
+	`ColorStep`|0x0300|0x09
+	`ColorTempMoveUp`|0x0300|0x4B
+	`ColorTempMoveDown`|0x0300|0x4B
+	`ColorTempMoveStop`|0x0300|0x4B
+	`ColorTempMove`|0x0300|0x4B
+	`ColorTempStepUp`|0x0300|0x4C
+	`ColorTempStepDown`|0x0300|0x4C
+	`ColorTempStep`|0x0300|0x4C
+	`ArrowClick`|0x0005|0x07
+	`ArrowHold`|0x0005|0x08
+	`ArrowRelease`|0x0005|0x09
+	``|0xEF00|0xFF
+	`GPIdentify`|0xF021|0x00
+	`GPScene0`|0xF021|0x10
+	`GPScene1`|0xF021|0x11
+	`GPScene2`|0xF021|0x12
+	`GPScene3`|0xF021|0x13
+	`GPScene4`|0xF021|0x14
+	`GPScene5`|0xF021|0x15
+	`GPScene6`|0xF021|0x16
+	`GPScene7`|0xF021|0x17
+	`GPScene8`|0xF021|0x18
+	`GPScene9`|0xF021|0x19
+	`GPScene10`|0xF021|0x1A
+	`GPScene11`|0xF021|0x1B
+	`GPScene12`|0xF021|0x1C
+	`GPScene13`|0xF021|0x1D
+	`GPScene14`|0xF021|0x1E
+	`GPScene15`|0xF021|0x1F
+	`GPOff`|0xF021|0x20
+	`GPOn`|0xF021|0x21
+	`GPToggle`|0xF021|0x22
+	`GPRelease`|0xF021|0x23
+	`GPMoveUp`|0xF021|0x30
+	`GPMoveDown`|0xF021|0x31
+	`GPStepUp`|0xF021|0x32
+	`GPStepDown`|0xF021|0x33
+	`GPLevelStop`|0xF021|0x34
+	`GPMoveUpOnOff`|0xF021|0x35
+	`GPMoveDownOnOff`|0xF021|0x36
+	`GPStepUpOnOff`|0xF021|0x37
+	`GPStepDownOnOff`|0xF021|0x38
+	`GPHueStop`|0xF021|0x40
+	`GPMoveHueUp`|0xF021|0x41
+	`GPMoveHueDown`|0xF021|0x42
+	`GPStepHueUp`|0xF021|0x43
+	`GPStepHueDown`|0xF021|0x44
+	`GPSatStop`|0xF021|0x45
+	`GPMoveSatUp`|0xF021|0x46
+	`GPMoveSatDown`|0xF021|0x47
+	`GPStepSatUp`|0xF021|0x48
+	`GPStepSatDown`|0xF021|0x49
+	`GPMoveColor`|0xF021|0x4A
+	`GPStepColor`|0xF021|0x4B
+	`GPLockDoor`|0xF021|0x50
+	`GPUnlockDoor`|0xF021|0x51
+	`GPPress1of1`|0xF021|0x60
+	`GPRelease1of1`|0xF021|0x61
+	`GPPress1of2`|0xF021|0x62
+	`GPRelease1of2`|0xF021|0x63
+	`GPPress2of2`|0xF021|0x64
+	`GPRelease2of2`|0xF021|0x65
+	`GPShortPress1of1`|0xF021|0x66
+	`GPShortPress1of2`|0xF021|0x67
+	`GPShortPress2of2`|0xF021|0x68
+
 ## Zigbee2Tasmota Status Codes
 
 You can inspect the log output to determine whether Zigbee2Tasmota started correctly. Zigbee2Tasmota sends several status messages to inform the MQTT host about initialization.
@@ -974,21 +1901,30 @@ You can inspect the log output to determine whether Zigbee2Tasmota started corre
 ```
 
 * `Status` contains a numeric code about the status message
-    - `0`: initialization complete, _Zigbee2Tasmota is running normally_
-    - `1`: booting
-    - `2`: resetting CC2530 configuration
-    - `3`: starting Zigbee coordinator
-    - `20`: disabling Permit Join
-    - `21`: allowing Permit Join for 60 seconds
-    - `22`: allowing Permit Join until next boot
-    - `30`: Zigbee device connects or reconnects
-    - `31`: Received Node Descriptor information for a Zigbee device
-    - `32`: Received the list of active endpoints for a Zigbee device
-    - `33`: Received the simple Descriptor with active ZCL clusters for a Zigbee device
-    - `50`: reporting CC2530 firmware version
-    - `51`: reporting CC2530 device information and associated devices
-    - `98`: error, unsupported CC2530 firmware
-    - `99`: general error, ==Zigbee2Tasmota was unable to start==
+
+    Status code|Description
+	:---|:---
+    `0`|initialization complete, _Zigbee2Tasmota is running normally_
+    `1`|booting
+    `2`|resetting CC2530 configuration
+    `3`|starting Zigbee coordinator
+    `20`|disabling Permit Join
+    `21`|allowing Permit Join for 60 seconds
+    `22`|allowing Permit Join for some period
+	`23`|Permit Join error
+    `30`|Zigbee device connects or reconnects
+    `31`|Received Node Descriptor information for a Zigbee device
+    `32`|Received the list of active endpoints for a Zigbee device
+    `33`|Received the simple Descriptor with active ZCL clusters for a Zigbee device
+	`34`|Device announced its IEEE address
+	`40`|Response from a device scan
+    `50`|reporting ZNP firmware version
+    `51`|reporting ZNP device information and associated devices
+	`55`|reporting EZSP firmware version
+	`56`|reporting EZSP information
+    `98`|error, unsupported CC2530 firmware
+    `99`|general error, _Zigbee2Tasmota was unable to start_
+
 * `Message` (optional) a human-readable message
 * other fields depending on the message (e.g., Status=`50` or Status=`51`)
 

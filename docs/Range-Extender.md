@@ -6,7 +6,7 @@
 
 To use it you must [compile your build](Compile-your-build)
 
-Create a section in `platformio_tasmota_cenv.ini` such as the following for an ESP8266:
+Copy `platformio_tasmota_cenv_sample.ini` to `platformio_tasmota_cenv.ini` which already contains the following sections for ESP8266 and ESP32. Or create a section in your `platformio_tasmota_cenv.ini` such as the following for an ESP8266:
 
 ```ini
 [env:tasmota-rangeextender]
@@ -103,7 +103,7 @@ If using NAPT, deployment is a lot easier as there is no need for a static IP ad
 **Cons**
 
 - More overhead on the _extender_ device
-- No access to the web interface of the _remote_ devices
+- Access to the web interface of the _remote_ devices needs port forwarding -> see RgxPort command
 
 An example setup using commands to match the above image with NAPT, with an AP name `rangeextender` and password `securepassword` would be:
 
@@ -127,6 +127,22 @@ Alternatively, it could also be set in your `user_config_override.h` with:
 #define WIFI_RGX_NAPT 1
 ```
 
+To access the web page (which uses tcp port 80) of a client with mac 11:22:33:44:55:66 you execute the following command after the client is connected:
+```
+RgxPort tcp,8080,112233445566,80
+```
+If the result is OK the range extender port 8080 is forwarded to port 80 of the client and the web page can be accessed with URL http://range-extender-name:8080
+
+The setting is not permanent and needs to be repeated each time the client (re)connects since its IP could have changed.
+
+So, if access to a device behind the NAT is required it is easiest to configure this device with a static IP in the range extender subnet.
+Then the RgxPort command can be used with that IP instead of the MAC. Since the IP is known, it is not required that the IP is already active at the time of the port forward. That way the RgxPort command could be used in a simple startup rule.
+Given the range extender subnet is the default 192.168.4.0/24, and the device has a static IP of 192.168.4.44 then this command would work:
+```
+RgxPort tcp,8084,192.168.4.44,80
+```
+If the result is OK the range extender port 8084 is forwarded to port 80 of the client and the web page can be accessed with URL http://range-extender-name:8084 while the client is active.
+
 ## Commands
 
 | Command     | Parameters                                                                                                                                                                 |
@@ -137,3 +153,5 @@ Alternatively, it could also be set in your `user_config_override.h` with:
 | RgxSubnet   | The subnet mask for the AP side, it's recommended to use `255.255.255.0`. The AP will automatically use addresses from this subnet to serve via DHCP to connecting devices |
 | RgxState    | Enable or disable the AP. Note that turning the AP off will cause a reboot                                                                                                 |
 | RgxNAPT     | Only available if `USE_WIFI_RANGE_EXTENDER_NAPT` is enabled. Enable or disable NAPT. Note that turning off NAPT will cause the device to reboot                            |
+| RgxClients  | Show JSON list of currently connected clients with their MAC and IP. On ESP32 last RSSI is also shown |
+| RgxPort     | protocol,range_extender_port,[client_mac\|client_ip],client_port: Forward a tcp or udp STA port to a port of an AP client |

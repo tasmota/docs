@@ -311,6 +311,26 @@ This will generate a QR-Code based on the MAC address of the ESP32 which runs Ta
 <input size="40" type="text" id="Wifi-MAC" value="" placeholder="Input WiFi MAC of the ESP32" style="font-size:1.5em;"><br>
 
 <object data="../extra_javascript/mi32/hk_qrcode.svg" id="hk_qrcode" type="image/svg+xml" height="0"></object>
+  
+##  Homeassistant and Tasmota - BLE sensors
+  
+After creating a valid configuration with a `mi32cfg` file in the local file system, it is possible to announce all sensors to Homeassistant via MQTT discovery by using a Berry script. This will parse the `mi32cfg` file and create all needed entities for Homassistant by publishing specific messages to Homeassistant.  
+It will not generate duplicated sensors, but instead allows to use multiple ESP's as data sources for the same BLE sensor.
+The best way is to not fiddle around with the default Tasmota configuration, especially not to change the default topic name, because this will lose the ability to automatically configure everything.
+  
+One way to use it, is to save the following script [disco.be](https://raw.githubusercontent.com/Staars/berry-examples/main/disco.be) to the filesystem of the ESP and the launch it at the startup.  
+Create `autoexec.bat` if not already present and add the following line:  
+`br load("disco")`  
+This will create and/or init entities for every sensor and group them as a single device for every BLE device in Homeassistants MQTT integration. 
+
+In the diagnostic panel of every sensor you will see the signal strength of the BLE sensor in relation to the observing ESP, so the value will very likely differ between multiple of these BLE-ESP32-combinations.
+A virtual Tasmota BLE Hub device is created, that shows all contributing ESP32 nodes for a better overview.  
+  
+For sensors like humidity or temperature it should not matter, how many ESP's do contribute data. For buttons of a remote control or binary sensors like motion, this could have side effects, as multiple events will be generated (in a very short time frame). The dimmer of the YLKG08 is special case, as the data of the BLE sensor are relative steps, that are combined to a so called `number`entity with a range of  0 - 100. That way multiple messages from many ESP's will add up and "accelerate" the dimmer knob.
+!!! tip
+
+    Use the embedded [MI32CFG Importer](#mi32cfg-importer-web-app) on this site to delete unwanted sensors and then save the result to the ESP32 of your choice.
+
 
 ## Berry support  
 
@@ -466,12 +486,14 @@ Here is an implementation of the "old" MI32 commands:
 
     ```python
     import BLE
+    import MI32
+
     j = 0
     sl = 0
 
     cbuf = bytes(-64)
     def cb()
-        import MI32
+        
         if j == 0
             print(cbuf)
         end
@@ -493,12 +515,11 @@ Here is an implementation of the "old" MI32 commands:
     BLE.conn_cb(cbp,cbuf)
 
     def SetMACfromSlot(slot)
-        if slot+1>m.devices()
+        if slot+1>MI32.devices()
             return "out of bounds"
         end
         sl = slot
-        var _m = m.get_MAC(slot)
-        BLE.set_MAC(_m)
+        BLE.set_MAC(MI32.get_MAC(slot))
     end
 
     def MI32Time(slot)
@@ -512,7 +533,7 @@ Here is an implementation of the "old" MI32 commands:
         cbuf.set(1,utc,4)
         cbuf.set(5,tz,1)
         j = 0
-        BLE.run(12,1)
+        BLE.run(12,true)
     end
 
     def MI32Unit(slot,unit)
@@ -522,12 +543,12 @@ Here is an implementation of the "old" MI32 commands:
         cbuf[0] = 1
         cbuf[1] = unit
         j = 0
-        BLE.run(12,1)
+        BLE.run(12,true)
     end
 
     def MI32Bat(slot)
         SetMACfromSlot(slot)
-        var name = m.get_name(slot)
+        var name = MI32.get_name(slot)
         if name == "LYWSD03"
             BLE.set_svc("ebe0ccb0-7A0A-4B0C-8A1A-6FF2997DA3A6")
             BLE.set_chr("ebe0ccc1-7A0A-4B0C-8A1A-6FF2997DA3A6")
@@ -538,25 +559,25 @@ Here is an implementation of the "old" MI32 commands:
             BLE.set_svc("ebe0ccb0-7A0A-4B0C-8A1A-6FF2997DA3A6")
             BLE.set_chr("ebe0ccc1-7A0A-4B0C-8A1A-6FF2997DA3A6")
             j = 1
-            BLE.run(13,1)
+            BLE.run(13,true)
         end
         if name == "LYWSD02"
             BLE.set_svc("ebe0ccb0-7A0A-4B0C-8A1A-6FF2997DA3A6")
             BLE.set_chr("ebe0ccc1-7A0A-4B0C-8A1A-6FF2997DA3A6")
             j = 2
-            BLE.run(11,1)
+            BLE.run(11,true)
         end
         if name == "FLORA"
             BLE.set_svc("00001204-0000-1000-8000-00805f9b34fb")
             BLE.set_chr("00001a02-0000-1000-8000-00805f9b34fb")
             j = 3
-            BLE.run(11,1)
+            BLE.run(11,true)
         end
         if name == "CGD1"
             BLE.set_svc("180F")
             BLE.set_chr("2A19")
             j = 4
-            BLE.run(11,1)
+            BLE.run(11,true)
         end
     end
     ```

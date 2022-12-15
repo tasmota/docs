@@ -10,7 +10,7 @@ Before starting you have to enable shutter support with `SetOption80 1`
 Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#shutters).
 
 ## Shutter Modes
-There are five shutter modes which define how the relays operate. Additionally you can define [PulseTime](Commands.md#pulsetime) on any relay to change the relay into a pulse relay where the pulse changes start/stop. We recommend at least for Shutter mode 1 to define an [Interlock](Commands.md#interlock) setting. 
+There are five shutter modes which define how the relays operate. Additionally you can define [PulseTime](Commands.md#pulsetime) on any relay to change the relay into a pulse relay where the pulse changes start/stop. At least for Shutter mode 1 an interlock is mandatory [Interlock](Commands.md#interlock). 
 
 The examples below are for a `ShutterRelay1 1` configuration (using Relay1 and Relay2).
 
@@ -21,17 +21,17 @@ Relay1: UP/OFF, Relay2: DOWN/OFF
 - `Interlock 1,2` (Interlocked relay pair)
 - `Interlock ON`
 
-**Shutter mode 2** - Circuit Safe 
+**Shutter mode 2** - Circuit Safe (must be set manually)
 
 Relay1: ON/OFF, Relay2: UP/DOWN
 
 - `Interlock OFF`
 
-**Shutter mode 3** - Garage Motors   
+**Shutter mode 3** - Garage Motors (must be set manually) 
 
 Relay1: OFF/DOWN PULSE, Relay2: OFF/UP PULSE
    
-**Shutter mode 4** - Stepper Motors   
+**Shutter mode 4** - Stepper Motors (autodetect with PWM and COUNTER)  
 
 Relay1: ON/OFF, Relay2: UP/DOWN
 
@@ -45,14 +45,24 @@ Relay1: ON/OFF, Relay2: UP/DOWN (optional not used)
 - PWM: Stepper signal
 - `PWMfrequency 200`   ( This is mandatory for most relay to get correct PWM duty cylces)
 - `SetOption15 0` (required to store value and make it reboot save)
-   
+ 
+ **Shutter mode 6** - Servo Motors 360° (PWM speed based servo)
+ 
+ Relay1: ON/OFF, Relay2: UP/DOWN (optional not used)
+ 
+ - PWM: Stepper signal
+- `PWMfrequency 200`   ( This is mandatory for most relay to get correct PWM duty cylces)
+- `SetOption15 0` (required to store value and make it reboot save)
+ 
 [Wiring diagrams](#motor-wiring-diagrams) for Normal, Stepper motor, and Short Circuit-Safe configurations are available at the end of this page. Even if the shutter does not have two motors, three wires have to be connected.
 
 !!! note 
-    **After setting the options for shutter mode, the device must be rebooted.** Otherwise, the sliders won't be available in the web UI, and the `ShutterOpenDuration<x>`and  `ShutterCloseDuration<x>` commands will report "Shutter unknown". 
+    **After setting the options for shutter mode, the device should be rebooted.** Otherwise, the sliders won't be available in the web UI, and the `ShutterOpenDuration<x>`and  `ShutterCloseDuration<x>` commands will report "Shutter unknown". 
 
-Issue `ShutterRelay<x> 1` command and check in console which **ShutterMode** is displayed:
+Issue `Shuttermode` command and check in console which **ShutterMode** is displayed:
 Issue `Status 13` command and check in console how the shutter is defined
+
+If you define `Shuttermode 1` and there is NO interlock defined on the relay the driver go into ERROR state. To solve define INTERLOCK on the relay pair and set it to ON. Then define `ShutterRelay1` again.
 
 ```
 Shutter accuracy digits: 1
@@ -62,9 +72,9 @@ Shutter 0 (Relay:1): Init. Pos: 20000 [100 %], Open Vel.: 100 Close Vel.: 100 , 
 ## Operation
 Turning a device relay on or off directly (i.e., using `Power`) will function to affect a shutter's movement. In momentary mode (i.e., stepper motor), the relays start or stop the motor. The driver takes care of the direction and proper update of the shutter position.
 
-The shutter reports its position and can also be sent to a dedicated position. `ShutterPosition 0` means the shutter is closed and `ShutterPosition 100` means the shutter is open. If you need the position values reversed (`0` = open, `100` = closed), define and [calibrate your shutter as documented below](#calibration). Then tell Tasmota to reverse the shutter position meaning via the `ShutterInvert<x> 1` command. All internal calculations are the same (the log output is the same). Only the interaction with the user and other systems changes. Now `ShutterPosition<x> 0` will open the shutter and `ShutterPosition<x> 100` will close the shutter.
+The shutter reports its position and can also be sent to a dedicated position. `ShutterPosition 0` means the shutter is closed and `ShutterPosition 100` means the shutter is open. If you need the position values reversed (`0` = open, `100` = closed), define and [calibrate your shutter as documented below](#calibration). Then tell Tasmota to reverse the shutter position meaning via the `ShutterInvert<x> 1` command. All internal calculations are the same (the log output is the same). Only the interaction with the user and other systems changes. Now `ShutterPosition<x> 0` will open the shutter and `ShutterPosition<x> 100` will close the shutter. To set a value to all shutter you can use the index 0. For example `ShutterPosition0 30` will move all shutters to 30%. The index 0 also works with all configuration items.
 
-By default, only `Shutter1` is enabled when `SetOption80 1` is invoked.  
+When `SetOption80 1` is invoked you have to define `Shutterrelay1 <value>` to get started
 If possible to avoid any injury on unexpected movement all RELAYS should start in OFF mode when the device reboots: `PowerOnState 0`
 ![](https://user-images.githubusercontent.com/34340210/65997878-3517e180-e468-11e9-950e-bfe299771233.png)
 
@@ -143,11 +153,13 @@ Some motors need up to one second after power is turned on before they start mov
 Close the shutter and repeat this procedure until the motor delay is set properly.  
 
 Following defaults are pre-compiled into the code and can only be changed by compiling you own binary and use the `user_config.override`
-- The default waiting time after the motor is stopped and before e.g. moving into the other direction is 0.5 sec. This avoids unexpected massive loads when changing direction. The time in [ms] can be changed by adding following line with a different value: `#define MOTOR_STOP_TIME 500 // wait 0.5 second after stop to do any other action. e.g. move in the opposite direction`
 - In Failsafe-Mode the driver waits for 0.1sec to let the direction relay execute and be stable before switching on the power relay starting the movement. The time in [ms] can be changed by adding following line with a different value: `#define SHUTTER_RELAY_OPERATION_TIME 100 // wait for direction relay 0.1sec before power up main relay`
+- 
+### Motor Stop time
+When shutters change direction immediatly it can happen that there is a short circuit or at least high moments on the motors. Therfore the default time between a STOP and the next START of the shutter is 0.5s = 500ms. This allows in most cases the shutter to fully stop and then start from a static position. With Version 12.3 you can change the duration through `shuttermotorstop 500` or any other value in ms. The value is for all defined shutters the same.
 
 ### Button Control
-When shutter is running in `ShutterMode 1` (normal two relay up/off down/off), you already have basic control over the shutter movement using switches or buttons in the module configuration to directly drive the shutter relays. For short circuit safe operation `ShutterMode 2` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch/button and 2nd switch on the power by the other switch/button.
+When shutter is running in `ShutterMode 1` (normal two relay up/off down/off), you already have basic control over the shutter movement using switches or buttons in the module configuration to directly drive the shutter relays. For short circuit safe operation `ShutterMode 2` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch/button and 2nd switch on the power by the other switch/button. Because the button controll use multi-press events ensure that the "immediate action" is disabled: `SetOption13 0` (default)
 
 To have shutter mode independent button control over the shutter and not over its relays one can use the `ShutterButton<x>` command. It also introduces some more features, see below:
 
@@ -489,7 +501,7 @@ Tilt configuration can be set for every shutter independently. The tilt can be s
    `shuttertilt1 close` set tilt to defined close angle
    `shuttertilt1 20` set tilt to 20° angle
    
-If the shutter is moved from one position to another position the tilt will be restored AFTER the movement. If the shutter is fully opened or fully closed the tilt will be reset. This means there is no tilt restore at the endpoints.
+If the shutter is moved from one position to another position the tilt will be restored AFTER the movement. If the shutter is fully opened or fully closed the tilt will be reset. This means there is no tilt restore at the endpoints. If you want to restore the tilt at the endpoint you have to use a backlog command e.g. `backlog shutterclose1; shuttertilt1 open`
 
 Similar to shutterchange to make relative movements there is also a `shuttertiltchange` with the same behavior. 
    

@@ -98,6 +98,7 @@ Declare `>M` section with the number of connected meters (n = `1..5`):
 | `<parameter>` | Parameters according to meter type:<BR>- for `o,s,e,v,m,M,k,r` types: serial baud rate e.g. `9600`.<BR>- for `c` type: a positive value = counter poll interval or a negative value = debounce time (milliseconds) for irq driven counters. |
 | `<jsonPrefix>` | Prefix for Web UI and MQTT JSON payload. Up to 7 characters.|
 | `<txGPIO>` | The GPIO pin number where meter command is transmitted (optional).|
+| `<tx enable>` | The GPIO pin number to enable transmitter (RS485) may follow the TX pin in bracket (pin) without a colon an 'i' in front of the pin number means 'inverted' (optional).|
 | `<txPeriod>` | Period to repeat the transmission of commands to the meter (optional). Number of 100ms increments (n * 100ms).|
 | `<cmdTelegram>` | Comma separated hex coded byte blocks to send to meter device. For MODBus each comma separated block is a command to retrieve a certain register from the meter (optional: only required for measuring devices that have to be triggered with a certain character string).|
     
@@ -113,6 +114,7 @@ e.g for Modbus:  mN1,mN2,mE1,mE2,mO1,mO2
 !!! example
     ```
     +1,3,o,0,9600,OBIS1,1,2,2F3F210D0A
+    +1,3,o,0,9600,OBIS1,1(i4),2,2F3F210D0A  with pin 4 as inverted TX enable
     +1,3,o,16,115200,NormalTariff,1
     +1,3,s,16,9600,SML1
     +1,12,c,1,-10,H20_Cnt
@@ -223,7 +225,7 @@ remark: channel math only works on frequently (fast) updated channels and is not
     ```
 
 !!! example
-    To disable and enable publishing of MQTT data on TelePeriod, use `smlj=0` and `smlj=1`, respectively. For example to skip first MQTT publishing after boot (may contain erroneous data at after restart if meter is slow, see [Sanxing SX6x1](#sanxing-sx6x1-sxxu1x-ascii-obis)):
+    To disable and enable publishing of MQTT data on TelePeriod, use `smlj=0` and `smlj|=1`, respectively. For example to skip first MQTT publishing after boot (may contain erroneous data at after restart if meter is slow, see [Sanxing SX6x1](#sanxing-sx6x1-sxxu1x-ascii-obis)):
     ```
     >B
     ;disable publishing at MQTT teleperiod, on boot
@@ -232,9 +234,10 @@ remark: channel math only works on frequently (fast) updated channels and is not
     ;re-enable publishing at MQTT teleperiod, after 10 seconds of uptime
     if upsecs>10
     then
-    smlj=1
+    smlj|=1
     endif
     ```
+	the variable smlj also switches to obis_line_mode if bit 1 = 1, default is 0 
 
 !!! example
     If you have large meter descriptors and want to extract multiple values from the same descriptor, you can save flash space using `SML_REPLACE_VARS` at compile time (see [Resol Deltasol BS Plus](#resol-deltasol-bs-plus-vbus)):
@@ -520,6 +523,44 @@ A & B connected to the meter pinout.
     1,77070100020800ff@1000,Total Delivered,KWh,Total_out,3
     1,7707010060320101@#,Service ID,,Meter_id,0
     #    
+    ```
+
+### DZG DWS7410.2V.G2 (SML)
+
+A bidirectional metering device from DZG Metering GmbH.
+
+Once unlocked with a PIN and set to `Inf on`, the meter returns not only an integer of the total consumption, but an extended dataset which also includes decimals as well as the current power.
+
+??? summary "View script for the extended dataset"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,16,9600,DWS7410
+    1,77070100010800ff@1000,Energie,kWh,energy,4
+    1,77070100020800ff@1000,Lieferung,kWh,en_out,4
+    1,77070100100700ff@1,Leistung,W,power,2
+    1,7707010060320101@#,SID,,meter_id,0
+    #
+    ```
+
+The script was derived from the DZG DWS76 (SML) device below and extended by the delivered energy. The lines for `meter_id`, `unknown` and `meter_number` were reduced to one line for `meter_id` because all values were identical.
+
+For `Inf off`, a simplified dataset is returned only.
+    
+??? summary "Alternative script for the simplified dataset"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,16,9600,DWS7410
+    1,77070100010800ff@1000,Energie,kWh,energy,0
+    1,7707010060320101@#,Service ID,,meter_id,0
+    1,77010b0a01445a47@#,Unbekannt,,unknown,0
+    1,77070100600100ff@#,Zählernummer,,meter_number,0
+    #
     ```
 
 ### DZG DWS76 (SML)
@@ -1805,7 +1846,7 @@ Example: Changing the baud rate during operation.
     1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,KWh,total_7d,4
     1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,KWh,total_30d,4
     1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,KWh,total_365d,4
-    1,1-0:16.7.0*255(@1,Verbrauch aktuell,W,current,20
+    1,1-0:16.7.0*255(@1,Verbrauch aktuell,W,power,20
     #
     ```
 
@@ -1969,7 +2010,7 @@ This meter sends bursts of data at 115200 baud every 10 seconds. Some data lines
     >S
     if upsecs>22
     then
-    smlj=1
+    smlj|=1
     endif
     ;only send teleperiod MQTT if 22 seconds passed since boot (during this time meter most probably sent data)
     >M 1
@@ -2271,7 +2312,7 @@ Script to extract readings from Eastron [SDM72D Series](https://www.eastroneurop
 
 ### Trovis 557x (MODBus)
 
-These heating regulators have a [lot of registers](https://raw.githubusercontent.com/Tom-Bom-badil/samson_trovis_557x/master/_register.py).
+These heating regulators have a [lot of registers](https://raw.githubusercontent.com/Tom-Bom-badil/samson_trovis_557x/master/_register.py). If your station number is different from standard (247 ==> 0xF7) you have got to change every first byte accordingly.
 
 ??? summary "View script"
     ```
@@ -2325,5 +2366,22 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
     +1,3,s,0,9600,Strom
     1,77070100010800ff@1000,Bezug,kWh,Total_in,0
     1,77070100020800ff@1000,Einspeisung,kWh,Total_out,0
+    #
+    ```
+	
+
+### ZPA GH305 (SML)
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,0,9600,Strom
+    1,77070100010800ff@1000,Verbrauch,kWh,Total_out,4
+    1,77070100020800ff@1000,Einspeisung,kWh,Total_in,4
+    1,77070100010800ff@1000,Verbrauch,kWh,Total_out,1
+    1,77070100020800ff@1000,Einspeisung,kWh,Total_in,1
     #
     ```
