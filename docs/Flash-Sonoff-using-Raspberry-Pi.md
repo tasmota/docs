@@ -14,7 +14,7 @@ Summarizing the process and needed connections based on the above blog, please r
    | Device        |  Serial Connection      |
    | ------------- |---------------|
    | RaspberryPi 1/2/3 (BT disabled or miniuart) |   /dev/ttyAMA0      |
-   | RaspberryPi 3          |   /dev/ttyS0      |
+   | RaspberryPi 3/4          |   /dev/ttyS0      |
 
    `sudo systemctl stop serial-getty@ttyS0.service`
 
@@ -70,9 +70,9 @@ This is how it looks in real-life 😆
    You should see output like this:
 
    ```bash
-   ➜  ~ esptool.py --port /dev/ttyAMA0 erase_flash
+   ➜  ~ esptool.py --port /dev/ttyS0 erase_flash
    esptool.py v2.5.1
-   Serial port /dev/ttyAMA0
+   Serial port /dev/ttyS0
    Connecting....
    Detecting chip type... ESP8266
    Chip is ESP8285
@@ -95,16 +95,16 @@ This is how it looks in real-life 😆
    # if using Raspberry Pi 1/2 use
    # esptool.py --port /dev/ttyAMA0 write_flash -fm dout 0x0 /path/to/downloaded/tasmota.bin
 
-   # if using Raspberry Pi 3 use
+   # if using Raspberry Pi 3/4 use
    esptool.py --port /dev/ttyS0 write_flash -fm dout 0x0 /path/to/downloaded/tasmota.bin
    ```
 
    You should see output like this:
 
    ```bash
-   ➜  ~ esptool.py --port /dev/ttyAMA0 write_flash -fm dout 0x0 tasmota.bin
+   ➜  ~ esptool.py --port /dev/ttyS0 write_flash -fm dout 0x0 tasmota.bin
    esptool.py v2.5.1
-   Serial port /dev/ttyAMA0
+   Serial port /dev/ttyS0
    Connecting.....
    Detecting chip type... ESP8266
    Chip is ESP8285
@@ -133,7 +133,7 @@ This is how it looks in real-life 😆
      # if using Raspberry Pi 1/2 use
      # miniterm.py /dev/ttyAMA0 115200 -e
 
-     # if using Raspberry Pi 3 use
+     # if using Raspberry Pi 3/4 use
      miniterm.py /dev/ttyS0 115200 -e
      ```
 

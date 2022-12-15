@@ -344,7 +344,7 @@ It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (i
 If you have more than one LED wired independently and you want it to show the power state of the relay, you **must** assign an `LedLink` GPIO.
 
 #### PWM LED Mode
-Using [`LedPwmMode`](Commands#ledpwmmode) you can change the LED display mode from simple on/off to a PWM controlled LED which will enable you to f.e. display a brighter LED when the relay is on and a dimmer LED when its OFF so you can locate the switch in the dark but not have it obnoxiously bright.
+Using [`LedPwmMode`](Commands#ledpwmmode) you can change the LED display mode from simple on/off to a PWM controlled LED which will enable you to f.e. display a brighter LED when the relay is on and a dimmer LED when it's OFF so you can locate the switch in the dark but not have it obnoxiously bright.
 
 `LedPwmOff` and `LedPwmOn` control the preset LED brightness in their respective states.
 

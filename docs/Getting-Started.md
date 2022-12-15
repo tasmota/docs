@@ -383,4 +383,4 @@ Your device running Tasmota is now ready to be [controlled](Commands).
 Check out all the Tasmota [features](Features) and ways to [integrate it](Integrations) with other platforms.
 
 !!! warning
-     If you experience power fluctuations in your power grid its best to immediately disable [Power Cycle Recovery](Device-Recovery#fast-power-cycle-device-recovery) feature with command [`SetOption65 1`](Commands.md#setoption65) immediately or you might end up with firmware defaults on your device.
+     If you experience power fluctuations in your power grid it's best to immediately disable [Power Cycle Recovery](Device-Recovery#fast-power-cycle-device-recovery) feature with command [`SetOption65 1`](Commands.md#setoption65) immediately or you might end up with firmware defaults on your device.

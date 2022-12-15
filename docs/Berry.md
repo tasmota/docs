@@ -9,7 +9,7 @@
 Useful resources:
 
 - First time user of Berry: [Berry Introduction (in 20 minutes of less)](Berry-Introduction.md)
-- Full language documentation [The Berry Script Language Reference Manual](https://github.com/berry-lang/berry/wiki/Reference)
+- Full language documentation [The Berry Script Language Reference Manual](https://github.com/berry-lang/berry/wiki/Refer/ence)
 - Tasmota extension of Berry, see below
 - Full examples in the [Berry Cookbook](Berry-Cookbook.md)
 
@@ -582,7 +582,7 @@ DAC is limited to specific GPIOs:
     > gpio.dac_voltage(25, 1250)    # set voltage to 1250mV
     1255
     ```
-    Function returns closes voltage found. In this case its 1255 for setting to 1250.
+    Function returns closes voltage found. In this case it's 1255 for setting to 1250.
 
 ### I2S
 
@@ -943,7 +943,7 @@ Simple tcp client supporting string and binary transfers:
 - create an instance of the client with `var tcp = tcpclient()`
 - connect to the server `tcp.connect(address:string, port:int [, timeout_ms:int]) -> bool` Address can be numerical IPv4 or domain name. Returns `true` if the connection succeeded. Optional `timeout` in milliseconds. The default timeout is `USE_BERRY_WEBCLIENT_TIMEOUT` (2 seconds).
 - check if the socket is connected with `tcp.connected()`
-- send content with `tcp.write(content:string or bytes) -> int`. Accepts either a string or a bytes buffer, returns the number of bytes sent. It's you responsibility to resend the missing bytes
+- send content with `tcp.write(content:string or bytes) -> int`. Accepts either a string or a bytes buffer, returns the number of bytes sent. It's your responsibility to resend the missing bytes
 - check if bytes are available for reading `tcp.available() -> int`. Returns `0` if nothing was received. This is the call you should make in loops for polling.
 - read incoming content as string `tcp.read() -> string` or as bytes `tcp.readbytes() -> bytes`. It is best to call `tcp.available()` first to avoid creating empty response objects when not needed
 - close the socket with `tcp.close()`
@@ -988,7 +988,7 @@ Simple tcp server (socket) listening for incoming connection on any port.
 tcpserver Function|Parameters and details
 :---|:---
 constructor<a class="cmnd" id="tcpserver_constructor">|`tcpserver(port:int) -> nit`<BR>Opens a socket on `port` and starts lisenting to new incoming connections. If the server can't open the socket (ex: it is already in use) an exception is raised
-hasclient<a class="cmnd" id="tcpserver_hasclient">|`hasclient() -> bool`<BR>Returns `true` if a new client connected to the socket, in such case you shoult call `accept()`. You need to call this method regularly (ex: in event loop or fast\_loop)
+hasclient<a class="cmnd" id="tcpserver_hasclient">|`hasclient() -> bool`<BR>Returns `true` if a new client connected to the socket, in such case you should call `accept()`. You need to call this method regularly (ex: in event loop or fast\_loop)
 accept<a class="cmnd" id="tcpserver_accept">|`accept() -> instance:tcpclient or nil`<BR>Returns an instance of `tcpclient` for the new incoming connection, or raise an exception if no connection is available. You should call `hasclient()` returning `true` before calling `accept()`.
 
 Full example:
@@ -1028,8 +1028,9 @@ When creating a local port, you need to use `udp->begin(<ip>, <port)>`. If `<ip>
 General Function|Parameters and details
 :---|:---
 udp()<a class="cmnd" id="udp_ctor">|`udp() -> <instance udp>`<br>Creates an instance of `udp` class.
-begin<a class="cmnd" id="udp_begin">|`begin(ip:string, port:int) -> bool`<BR>Create a UDP listener and sender on interface `ip` and `port`. If `ip` is an empty string, the listener connects to all interfaces (aka 0.0.0.0)<BR>Returns `true` if successful.
+begin<a class="cmnd" id="udp_begin">|`begin(port:int) -> bool`<BR>Create a UDP listener and sender on all interfaces for `port`.<BR>Returns `true` if successful.<BR>The previous syntax `begin(ip:string, port:int) -> bool` is deprecated and the first argument will be ignored if it's a string.
 begin_multicast<a class="cmnd" id="udp_begin_mcast">|`begin(ip:string, port:int) -> bool`<BR>Create a UDP listener and sender on interface `ip` and `port`. `ip` must be a multicast address.<BR>Returns `true` if successful.
+stop<a class="cmnd" id="udp_stop">|`stop() -> bil`<BR>Closes UDP lisetenr and sender, and frees resources. You can't send or receive anymore with this instance.
 send<a class="cmnd" id="udp_send">|`send(addr:string, port:int, payload:bytes) -> bool`<BR>Sends a packet to address `addr`, port `port` and message as `bytes()` buffer.<BR>Returns `true` if successful.
 send_multicast<a class="cmnd" id="udp_send_mcast">|`send(payload:bytes) -> bool`<BR>Sends a payload as `bytes()` buffer to the multicast address. `begin_multicast()` must have been previously called.<BR>Returns `true` if successful.
 read<a class="cmnd" id="udp_read">|`read() -> bytes() or nil`<BR>Reads any received udp packet as bytes() buffer, or `nil` if no packet was received.
@@ -1038,7 +1039,7 @@ remote_port<a class="cmnd" id="udp_remote_port">|`remote_port (int or nil)`<BR>I
 
 #### Sending udp packets
 
-``` ruby
+``` berry
 > u = udp()
 > u.begin("", 2000)    # listen on all interfaces, port 2000
 true
@@ -1050,7 +1051,7 @@ true
 
 You need to do polling on `udp->read()`. If no packet was received, the call immediately returns `nil`.
 
-``` ruby
+``` berry
 > u = udp()
 > u.begin("", 2000)    # listen on all interfaces, port 2000
 true
@@ -1061,9 +1062,32 @@ true
 bytes("414243")    # received packet as `bytes()`
 ```
 
+#### Simple UDP server printing received packets
+
+``` berry
+class udp_listener
+  var u
+  def init(port)
+    self.u = udp()
+    self.u.begin("", port)
+    tasmota.add_driver(self)
+  end
+  def every_50ms()
+    var packet = self.u.read()
+    while packet != nil
+      tasmota.log(">>> Received packet: "+packet.tohex(), 2)
+      packet = self.u.read()
+    end
+  end
+end
+
+# listen on port 2000
+udp_listener(2000)
+```
+
 #### Send and receive multicast
 
-``` ruby
+``` berry
 > u = udp()
 > u.begin_multicast("224.3.0.1", 3000)    # connect to multicast 224.3.0.1:3000 on all interfaces
 true
@@ -1074,6 +1098,27 @@ true
 > u.read()
 bytes("414243")    # received packet as `bytes()`
 ```
+
+### `mdns` module
+  
+Module `import mdns` support for mdns (Multicast DNS, aka Bonjour protocol) announces. This is needed for Matter Wifi support.
+
+This feature requires `#define USE_DISCOVERY` compile option (not included in standard builds).
+
+Example (announce of a Matter Wifi device):
+
+``` berry
+import mdns
+mdns.start()
+mdns.add_service("_matterc","_udp", 5540, {"VP":"65521+32768", "SII":5000, "SAI":300, "T":1, "D":3840, "CM":1, "PH":33, "PI":""})
+```
+
+General Function|Parameters and details
+:---|:---
+start<a class="cmnd" id="mdns_start">|`mdns.start([hostname: string]) -> nil`<br>Start or restart mdns, specify a new hostname if needed or implicitly use `tasmota.hostname()` if none provided (default)
+stop<a class="cmnd" id="mdns_stop">|`mdns.stop() -> nil`<br>Free all mdns resources
+set_hostname<a class="cmnd" id="mdns_set_hostname">|`mdsn.set_hostname(hostname:string) -> nil`<br>Change the hostname
+add_service<a class="cmnd" id="mdns_add_service">|`mdns.add_service(service:string, proto:string, port:int, txt:map) -> nil`<br>Add a service declaration using the current hostname as instance name, and specify TXT fields as a `map`
 
 ### Addressable leds (WS2812, SK6812)
 
@@ -1242,11 +1287,82 @@ Note: for `match` and `search`, the first element in the list contains the globa
 
 The regex engine is based on [re1.5](https://github.com/pfalcon/re1.5) also used in Micropython.
 
+### `crypto` module
+
+Module `import crypto` support for common cryptographic algorithms.
+
+Currently supported algorithms:
+- AES GCM 256 bits - enabled by default
+- Elliptic curve EC CC25519 - requires `#define USE_BERRY_CRYPTO_EC_C25519`
+
+#### `crypto.AES_GCM` class
+
+Encrypt, decrypt and verify, using AES GCM (Gallois Counter Mode) with 256 bits keys.
+
+General Function|Parameters and details
+:---|:---
+init<a class="cmnd" id="aes_gcm_init">|`AES_GCM.init(secret_key:bytes(32), iv:bytes(12)) -> instance`<br>Initialise AES GCM instance with `secret_key` (256 bits) and `iv` (initialization vector or nonce, 96 bits)
+encrypt<a class="cmnd" id="aes_gcm_encrypt">|`encrypt(ciphertext:bytes) -> bytes`<br>Encrypt the ciphertext. Can be called multiple times, the tag is updated accordingly
+decrypt<a class="cmnd" id="aes_gcm_decrypt">|`decrypt(ciphertext:bytes) -> bytes`<br>Decrypt the ciphertext. Can be called multiple times, the tag is updated accordingly
+tag<a class="cmnd" id="aes_gcm_tag">|`tag() -> bytes`<br>Compute the verification tag for the object encrypted or decrypted (128 bits).
+
+Example taken from https://wizardforcel.gitbooks.io/practical-cryptography-for-developers-book/content/symmetric-key-ciphers/aes-encrypt-decrypt-examples.html
+
+``` berry
+import crypto
+
+key = bytes('233f8ce4ac6aa125927ccd98af5750d08c9c61d98a3f5d43cbf096b4caaebe80')
+ciphertext = bytes('1334cd5d487f7f47924187c94424a2079656838e063e5521e7779e441aa513de268550a89917fbfb0492fc')
+iv = bytes('2f3849399c60cb04b923bd33265b81c7')
+authTag = bytes('af453a410d142bc6f926c0f3bc776390')
+
+# decrypt ciphertext with key and iv
+aes = crypto.AES_GCM(key, iv)
+plaintext = aes.decrypt(ciphertext)
+print(plaintext.asstring())
+# 'Message for AES-256-GCM + Scrypt encryption'
+
+tag = aes.tag()
+print(tag == authTag)
+# true
+```
+#### `crypto.EC_C25519` class
+
+Provieds Elliptic Curve C25519 Diffie-Hellman key derivation. Requires `#define USE_BERRY_CRYPTO_EC_C25519`
+
+General Function|Parameters and details
+:---|:---
+public_key<a class="cmnd" id="ec_c25519_public_key">|`crypto.EC_C25519().public_key(secret_key:bytes(32)) -> bytes(32)`<br>Computes the public key given a random private key.
+shared_key<a class="cmnd" id="ec_c25519_shared_key">|`crypto.EC_C25519().shared_key(our_private_key:bytes(32), their_public_key:bytes(32)) -> bytes(32)`<br>Compute a shared key (Diffie-Hellman) using our private key and the other party's public key. The other party will compute the same shared key using their private key and our pubic key.
+
+Example from test vectors https://www.rfc-editor.org/rfc/rfc7748:
+
+``` berry
+import crypto
+
+# alice side
+alice_priv_key = bytes("77076d0a7318a57d3c16c17251b26645df4c2f87ebc0992ab177fba51db92c2a")
+alice_pub_key = bytes("8520f0098930a754748b7ddcb43ef75a0dbf3a0d26381af4eba4a98eaa9b4e6a")
+assert(crypto.EC_C25519().public_key(alice_priv_key) == alice_pub_key)
+
+# bob side
+bob_priv_key = bytes("5dab087e624a8a4b79e17f8b83800ee66f3bb1292618b6fd1c2f8b27ff88e0eb")
+bob_pub_key = bytes("de9edb7d7b7dc1b4d35b61c2ece435373f8343c85b78674dadfc7e146f882b4f")
+assert(crypto.EC_C25519().public_key(bob_priv_key) == bob_pub_key)
+
+# shared key computed by alice
+ref_shared_key = bytes("4a5d9d5ba4ce2de1728e3bf480350f25e07e21c947d19e3376f09b3c1e161742")
+alice_shared_key = crypto.EC_C25519().shared_key(alice_priv_key, bob_pub_key)
+bob_shared_key = crypto.EC_C25519().shared_key(bob_priv_key, alice_pub_key)
+assert(alice_shared_key == ref_shared_key)
+assert(bob_shared_key == ref_shared_key)
+```
+
 ## Compiling Berry
 
 Berry is included if the following is defined in `user_config_override.h`:
 
-```arduino
+``` C
 #define USE_BERRY
 ```
 

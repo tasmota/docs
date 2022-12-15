@@ -113,7 +113,7 @@ Time#Minute<a id="TimeMinute"></a>|every minute
 Time#Minute\|5|every five minutes
 Time#Minute=241|every day once at 04:01 (241 minutes after midnight)
 Time#Set<a id="TimeSet"></a>|every hour when NTP makes time in sync
-Var&lt;x\>\#State<a id="VarState"></a>|when the value for Var&lt;x\> is changed (triggers whenever a value is written to `Var<x>` even if its the same value)
+Var&lt;x\>\#State<a id="VarState"></a>|when the value for Var&lt;x\> is changed (triggers whenever a value is written to `Var<x>` even if it's the same value)
 Wifi#Connected<a id="WifiConnected"></a>|when Wi-Fi is connected
 Wifi#Disconnected<a id="WifiDisconnected"></a>|when Wi-Fi is disconnected
 Tele-Wifi#AP<a id="tele-Wifi-AP"></a>|when a teleperiod message is sent with the number of the used AP 
@@ -523,7 +523,7 @@ Rule1
 #### Result
 `Pos1` is changed when the rotary encoder is turned while button is not pressed. `Pos2` is changed while button is pressed. Both `Pos1` and `Pos2` are published whatever is the button position, so both trig at the same time.
 
-The button will still have it's default action (such as toggling power). If you want to avoid that, you need to capture the button into a dummy rule such as `ON Button1#state DO Delay 0 ENDON`.
+The button will still have its default action (such as toggling power). If you want to avoid that, you need to capture the button into a dummy rule such as `ON Button1#state DO Delay 0 ENDON`.
 
 The range of the rotary encoder is hardcoded in `#define ROTARY_MAX_STEPS 10`. If you want to change the range, you must change the value in your `user_config_override.h` and [recompile](Compile-your-build).
 
@@ -932,7 +932,8 @@ IF %time%>%sunset DO Power1 1 / IF %time%<%sunrise DO Power1 1
 
 ### Turn On Light Before Dawn and At Dusk
 Turn on light at dusk until your nighttime and again in the morning before dawn.  
-
+*(memory variable method)*
+      
 What if the sun sets after your nighttime, as in during the summer? Then the timer will turn off the light at "night", but then the Sunset timer will turn it on again, so it stays on all night.  
 
 #### Rule
@@ -1001,6 +1002,60 @@ Backlog mem1 360; mem2 1350; Rule1 1; Rule2 1
   - Turn on the rule sets  
   `Backlog Rule1 1; Rule2 1`
 
+------------------------------------------------------------------------------
+
+### Turn On Light Before Dawn and At Dusk
+Turn on light at dusk until your nighttime and again in the morning before dawn.  
+*(Web UI timer method)*
+
+What if the sun sets after your nighttime, as in during the summer? Then the timer will turn off the light at "night", but then the Sunset timer will turn it on again, so it stays on all night. 
+This version uses the timers to set the actual time, using the %timerN% variables made availible in Tasmota V11. As a result, while the rule still needs to be applied by a skilled user, a less savvy family member can next choose or modify the desired times.
+
+#### Rule
+```haskell
+Rule1
+ON Time#Initialized DO event checktime=%time% ENDON
+ON Clock#Timer DO event checktime=%time% ENDON
+ON event#checktime DO %var10% 0 ENDON
+ON event#checktime>=%timer1% DO var10 1 ENDON
+ON event#checktime>=%timer2% DO var10 0 ENDON
+ON event#checktime>=%timer3% DO var10 1 ENDON
+ON event#checktime>=%timer4% DO var10 0 ENDON
+ON event#checktime DO Power1 %var10% ENDON
+```
+
+You do need to make sure the timers are set to run rules instead of hard ON-OFF. Timer 1,3 are interpreted as ON, Timer 2,4 as OFF. Here are some example timers, on at 06h00, off at 23h00, but you can also set these in the Web UI      
+```haskell
+Timer1 {"Enable":1,"Mode":0,"Time":"06:00","Window":0,"Days":"1111111","Repeat":1,"Output":2,"Action":3}
+Timer2 {"Enable":1,"Mode":1,"Time":"00:00","Window":0,"Days":"1111111","Repeat":1,"Output":2,"Action":3}
+Timer3 {"Enable":1,"Mode":2,"Time":"00:00","Window":0,"Days":"1111111","Repeat":1,"Output":2,"Action":3}
+Timer4 {"Enable":1,"Mode":0,"Time":"23:00","Window":0,"Days":"1111111","Repeat":1,"Output":2,"Action":3}
+```
+
+The basic rule above works for all situations where the sun (with or without offset) or scheduled time does not pass midnight.
+The more advanced version below works (from [#16914](https://github.com/arendst/Tasmota/pull/16914) onward) also if the sunset or scheduled time is after midnight, or even if there is no sunset at all (permanent daylight or night in north scandinavia)
+```haskell
+Rule1
+ON Time#Initialized DO event checktime=%time% ENDON
+ON Clock#Timer DO event checktime=%time% ENDON
+ON event#checktime DO Backlog var1 %timer1%; var2 %timer2%; var3 %timer3%; var4 %timer4%; var5 %value%; var6 %value%; var10 0; event checknoon=%value%; ENDON
+ON var1#state>1140 DO sub1 1440 ENDON
+ON var2#state>1140 DO sub2 1440 ENDON
+ON var5#state>1140 DO sub5 1440 ENDON
+ON var3#state<=420 DO add3 1440 ENDON
+ON var4#state<=420 DO add4 1440 ENDON
+ON var6#state<=420 DO add6 1440 ENDON
+ON event#checknoon DO Backlog event checkafternoon=%var6% ENDON
+ON event#checknoon<=780 DO Backlog event checkmorning=%var5%; event settime ENDON
+ON event#checknoon>780 DO Backlog event checkafternoon=%var6%; event settime ENDON
+ON event#checkmorning>=%var1% DO var10 1 ENDON
+ON event#checkmorning>=%var2% DO var10 0 ENDON
+ON event#checkafternoon>=%var3% DO var10 1 ENDON
+ON event#checkafternoon>=%var4% DO var10 0 ENDON
+ON event#settime DO Power1 %var10% ENDON
+```
+*For an attempted explanation of above advanced rule, please refer to the design and test XLS in [#16914](https://github.com/arendst/Tasmota/pull/16914)*
+      
 ------------------------------------------------------------------------------
 
 ### Enable a PIR Switch only at night
@@ -1354,6 +1409,9 @@ Rule2
 
 ### Arithmetic commands used with VAR
 
+!!! note 
+    The arithmetic is done using single point precision floating point. This means calculations involving values larger than approximately 16 million (ex: `%utctime%`) will not be precise.
+
 #### ADD  
   `ADD1` to `ADD5`: Add a value to `VARx`  
   Syntax: `ADDx value`  
@@ -1459,7 +1517,7 @@ MQT: stat/mqttTopic/POWER = OFF
 
 ### Processing JSON received from (Software)SerialBridge
 
-When using SerialBridge _(or SoftwareSerialBrigde)_, the received string will be published to Rules as SerialReceived _(or SSerialReceived)_. If the string starts with a `{` then Tasmota will parse the string as a JSON and make the different keys available for Rules. For example with the following string `{"DeviceID":"TM182","Temp":25.3,"Hum":50}`,
+When using SerialBridge _(or SoftwareSerialBridge)_, the received string will be published to Rules as SerialReceived _(or SSerialReceived)_. If the string starts with a `{` then Tasmota will parse the string as a JSON and make the different keys available for Rules. For example with the following string `{"DeviceID":"TM182","Temp":25.3,"Hum":50}`,
 it is possible to use any of the keys in the trigger.
 ```
 rule1
@@ -1627,7 +1685,7 @@ Backlog SwitchMode1 1; SwitchMode2 1; SwitchMode3 1
 Backlog Rule1 0; Rule1 4; Rule2 0; Rule2 4; Rule2 0; Rule2 4
 ```
 
-//Set Counter to measure the period between on and off, check if its blinking because of an obstruction  
+//Set Counter to measure the period between on and off, check if it's blinking because of an obstruction
 ```haskell
 Backlog CounterType 1; CounterDebounce 100
 ```
@@ -2073,7 +2131,7 @@ Rule 1 1
 
 ### RF Repeater / IR Repeater
 
-In some applications, an RF-Repeater may come in handy to increase the range of RF based devices. We need to use RF reciever and RF transmitter modules with tasmota powered controllers. The following rule looks for data received by the RF receiver and re transmits the same over the transmitter. 
+In some applications, an RF-Repeater may come in handy to increase the range of RF based devices. We need to use RF receiver and RF transmitter modules with tasmota powered controllers. The following rule looks for data received by the RF receiver and re transmits the same over the transmitter.
 
 ```haskell
 Rule1

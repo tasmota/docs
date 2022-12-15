@@ -5,7 +5,7 @@ Configuration problems can cause boot loops, erratic behavior, devices which wil
 
 By default, the firmware tries to preserve the existing configuration (to support automated updates via OTA upgrades). However, various things can happen that cause the existing configuration to become problematic, e.g., when upgrading from old releases without following the [migration path](Upgrading#migration-path).
 
-When code updates change the values or the way settings are used, those code changes don't directly write the settings on the running device when you load the new firmware. What happens is that when it boots up, the firmware looks to see if it has a valid configuration (if its an upgrade from an older Tasmota version) and if the CFG_HOLDER value is in the right place it assumes that the existing configuration is valid. 
+When code updates change the values or the way settings are used, those code changes don't directly write the settings on the running device when you load the new firmware. What happens is that when it boots up, the firmware looks to see if it has a valid configuration (if it's an upgrade from an older Tasmota version) and if the CFG_HOLDER value is in the right place it assumes that the existing configuration is valid.
 
 If it doesn't find the right value it assumes that this is not a "simple" upgrade and takes the compiled-in configuration settings and writes them out to the configuration area.
 
@@ -23,7 +23,7 @@ Implemented for situations where a device cannot be reset to firmware defaults b
 [`SetOption65`](Commands.md#setoption65) must be set to `0` *(default)* in order for this feature to be enabled.
 
 !!! warning
-     If you have a weak power grid or frequent power brownouts its best to disable this feature with [`SetOption65 1`](Commands.md#setoption65) immediately or you'll end up with firmware default devices after a brownout event.
+     If you have a weak power grid or frequent power brownouts it's best to disable this feature with [`SetOption65 1`](Commands.md#setoption65) immediately or you'll end up with firmware default devices after a brownout event.
 
 #### Procedure
 

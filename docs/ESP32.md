@@ -13,7 +13,7 @@ All ESP32 systems on a chip (SoC) are 32-bit MCUs with 2.4 GHz Wi-Fi & Bluetooth
 
 ### ESP32
 
-An ESP32 has two or one Xtensa® 32-bit LX6 microprocessor(s) with clock frequency ranging from 80 MHz to 240 MHz. Tasmota32 is initially developed and tested with the dual core ESP32-D0WD-V3 and later expanded to include single core or PSRAM versions.
+An ESP32 has two or one Xtensa® 32-bit LX6 microprocessor(s) with clock frequency ranging from 80 MHz to 240 MHz. Tasmota32 is initially developed and tested with the dual core ESP32-D0WD-V3 and later expanded to include single core or PSRAM versions. Only first 4MB of PSRAM are useable (and reported) even if a bigger chip is connected (see [here](https://github.com/arendst/Tasmota/discussions/16423#discussioncomment-3570038) for more information).
 
 !!! warning "Single core SoCs do not work with standard binaries, for those use only `tasmota32solo1.bin` or compile your own binary using the tasmota32solo1 environment."
 
@@ -55,13 +55,14 @@ To use it you need to have `#define USE_AUTOCONF`.
 
 ### CPU Temperature Sensor
 
-Tasmota will create an internal temperature sensor and display the values in the webUI and MQTT.
+Tasmota will create an internal temperature sensor and display the values in the webUI and MQTT. The accuracy of this sensor varies a lot depending on the ESP32 chip involved and should not be taken as a reliable metric.
+
+Enable display of ESP32 internal temperature with [`SetOption146 1`](Commands.md#setoption146) 
 
 ```json
 {"Time":"2021-01-01T00:00:00","ESP32":{"Temperature":41.7},"TempUnit":"C"}
 ```
-
-You can deactivate it using command [`SetSensor127 0`](Commands.md#setsensor127)
+You can deactivate sensor by using command [`SetSensor127 0`](Commands.md#setsensor127)
 
 ### DAC
 

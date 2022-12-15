@@ -132,6 +132,7 @@ nav:
   - Features:
     - Introduction: Features.md
     - Analog Pin: ADC.md
+    - ArtNet DMX: ArtNet.md
     - Buttons-and-Switches.md
     - DeepSleep.md
     - Device-Groups.md
