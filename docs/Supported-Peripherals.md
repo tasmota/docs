@@ -40,13 +40,15 @@ DS3502 | Digital potentiometer| I^2^C
 **HDC2010** | Texas Instruments HDC2010 Humidity and Temperature Sensor | I^2^C
 **[HM-10](HM-10)** |  BLE Bluetooth gateway | serial
 **[HM-17<BR>HM-16](HM-17)** |  Bluetooth iBeacon reader | serial
-**HP303B** | Barometric Pressure Shield| I^2^C
-**HYTxx** | Temperature and Humidity Sensor| I^2^C
+**HMC5883L** | 3-channels Magnetic Field Sensor | I^2^C
+**HP303B** | Barometric Pressure Shield | I^2^C
+**HYTxx** | Temperature and Humidity Sensor | I^2^C
 **HR-E** | Water Meter Encoder interface| serial
 **HRG-15** | Hydreon RG-15 Rain Gauge Sensor | serial
 **HRXL** | MaxBotix HRXL line of Sonar Ranging Sensors| gpio
 **[HC-SR04<BR>HC-SR04P<BR>JSN-SR04T)](HC-SR04)** | Ultrasonic Sensor | gpio
 **HM330x** | SeedStudio Grove HM3301 Particulate Matter Sensor | I^2^C
+HLK-LD2410 | 24GHz mmWave Presence Sensor| serial
 **[Honeywell HIH](Honeywell-HIH)** | Temperature and Humidity Sensor| I^2^C
 **Honeywell HPMA115xx** | Particulate Matter Sensor| serial
 **HTU21** | Temperature and Humidity Sensor| I^2^C
@@ -58,15 +60,16 @@ DS3502 | Digital potentiometer| I^2^C
 **INA219**<BR>**ISL28022** | High-Side DC Current and Voltage Sensor| I^2^C
 **INA226** | High-Side or Low-side DC Current and Voltage Sensor| I^2^C
 [**IR Remote**](IR-Remote) | IR transmitter and receiver
-**K30, K70, S8** | SenseAir CO~2~ Sensors| serial | 
-[**LM75AD**](LM75AD) |  Temperature Sensor| I^2^C
-[**LMT01**](LMT01) | Temperature Sensor| gpio
-**MAX31855**<br>**MAX6675** | Thermocouple Sensor| SPI
-**MAX31865** | RTD Temperature Sensor Amplifier| SPI
-**MAX44009** | Ambient Light Sensor| I^2^C
-[**MCP23008<BR>MCP23017**](MCP230xx) |  I/O Expander| I^2^C
+**K30, K70, S8** | SenseAir CO~2~ Sensors | serial | 
+[**LM75AD**](LM75AD) |  Temperature Sensor | I^2^C
+[**LMT01**](LMT01) | Temperature Sensor | gpio
+**MAX31855**<br>**MAX6675** | Thermocouple Sensor | SPI
+**MAX31865** | RTD Temperature Sensor Amplifier | SPI
+**MAX44009** | Ambient Light Sensor | I^2^C
+[**MCP23008<BR>MCP23017**](MCP230xx) | I/O Expander | I^2^C
 **MCP2515** | CAN bus controller | SPI
-[**MCP9808**](MCP9808) |  Temperature Sensor| I^2^C
+[**MCP9808**](MCP9808) |  Temperature Sensor | I^2^C
+[**ME007**](https://github.com/mathias-buder/water-level-measure) | Ultrasonic Distance Sensor | gpio
 [**MFRC522**](MFRC522) | NFC Tag Reader| SPI
 [**MGC3130**](MGC3130) | 3D Tracking and Gesture Controller
 [**MH-Z19B**](MH-Z19B) | CO~2~ Sensor
@@ -84,7 +87,8 @@ DS3502 | Digital potentiometer| I^2^C
 [**PIR**](PIR-Motion-Sensors#am312) | Passive Infrared Sensor| gpio
 [**PCA9685**](PCA9685) | 16-channel, 12-bit PWM LED controller| I^2^C
 [**PCF8574(A)**](PCF8574) 8-port IO Expander| I^2^C
-**PMS3003<BR>[PMS5003](https://www.superhouse.tv/38-diy-air-quality-Sensor-part-1-basic-model/)<BR>PMS7003** | Particle Concentration Sensor| serial
+**PMS3003<BR>[PMS5003](https://www.superhouse.tv/38-diy-air-quality-Sensor-part-1-basic-model/)<BR>PMS7003** | Particle Concentration Sensor | serial
+**PMSx003T** | Particle Concentration, Temperature and Humidity Sensor | serial
 [**PN532**](PN532) | NFC/RFID controller
 [**PZEM-004<BR>PZEM-016**](PZEM-0XX) | Energy Monitor| serial
 **QMC5883L** | Magnetic Field sensor | I^2^C
