@@ -32,16 +32,12 @@ Note: I needed to manually change IP address to 10.10.7.2, 255.0.0.0 with gatewa
 2. Use Fing or any similar local network scanning app on your smartphone or PC to find IP address of your Sonoff Mini device. MAC Vendor most likely is **Espressif** and the device has **8081** port open.
 3. Check that diy mode is working properly.
 
-With curl:
-
+`$SONOFF_IP` must be defined with the IP or FQDN of the intended Sonoff device before running the `curl` command. With curl:
 ```sh
+SONOFF_IP="10.0.0.2"
 curl -XPOST --header "Content-Type: application/json" --data-raw '{"deviceid": "", "data": {}}' http://$SONOFF_IP:8081/zeroconf/info
 ```
 
-!!! note "`$SONOFF_IP` must be defined with the IP or FQDN of the intended Sonoff device before running the `curl` command"
-    ```sh
-    SONOFF_IP="10.0.0.2"
-    ```
 
 <details>
 <summary> Or with the Rester browser extension:</summary>
@@ -96,16 +92,14 @@ curl -XPOST --header "Content-Type: application/json" --data-raw '{"deviceid": "
 Optionally for curiosity you could retry *info* query to check if *otaUnlock* value now is *true*
 5. Download the appropriate binary from http://ota.tasmota.com/tasmota/release and flash it. *NOTE: The maximum firmware size is 508kb, which precludes the standard release binary.* Absolutely do not use tasmota-minimal at this stage, this would brick your device.
 
-There are a number of [reported](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/10) [issues](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/95) with the stock firmware's OTA behavior, so it may be easier to use [an existing server](http://sonoff-ota.aelius.com/) that works around these issues. For example:
-
+There are a number of [reported](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/10) [issues](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/95) with the stock firmware's OTA behavior, so it may be easier to use [an existing server](http://sonoff-ota.aelius.com/) that works around these issues.  
+`$HASH` must be defined with the `sha256sum` of the intended firmware file (the `.bin` file) before running the `curl` command.  
+For example:
 ```sh
+HASH="f2ca1bb6c7e907d06dafe4687e579fce76b37e4e93b7605022da52e6ccc26fd2"
 curl -XPOST --data "{\"deviceid\":\"\",\"data\":{\"downloadUrl\": \"http://sonoff-ota.aelius.com/tasmota-latest-lite.bin\", \"sha256sum\": \"$HASH\"} }" http://$SONOFF_IP:8081/zeroconf/ota_flash
 ```
 
-!!! note "`$HASH` must be defined with the `sha256sum` of the intended firmware file (the `.bin` file) before running the `curl` command"
-    ```sh
-    HASH="f2ca1bb6c7e907d06dafe4687e579fce76b37e4e93b7605022da52e6ccc26fd2"
-    ```
 
 You're now ready to [configure tasmota](https://tasmota.github.io/docs/Getting-Started/#using-web-ui).
 
