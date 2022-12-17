@@ -1028,7 +1028,7 @@ When creating a local port, you need to use `udp->begin(<ip>, <port)>`. If `<ip>
 General Function|Parameters and details
 :---|:---
 udp()<a class="cmnd" id="udp_ctor">|`udp() -> <instance udp>`<br>Creates an instance of `udp` class.
-begin<a class="cmnd" id="udp_begin">|`begin(port:int) -> bool`<BR>Create a UDP listener and sender on all interfaces for `port`.<BR>Returns `true` if successful.<BR>The previous syntax `begin(ip:string, port:int) -> bool` is deprecated and the first argument will be ignored if it's a string.
+begin<a class="cmnd" id="udp_begin">|`begin(interface:string, port:int) -> bool`<BR>Create a UDP listener and sender on a specific interface (IP address) or on all interfaces if `interface` is an empty string, for port `port`.<BR>Returns `true` if successful.
 begin_multicast<a class="cmnd" id="udp_begin_mcast">|`begin(ip:string, port:int) -> bool`<BR>Create a UDP listener and sender on interface `ip` and `port`. `ip` must be a multicast address.<BR>Returns `true` if successful.
 close<a class="cmnd" id="udp_close">|`close() -> bil`<BR>Closes UDP listener and sender, and frees resources. You can't send or receive anymore with this instance.
 send<a class="cmnd" id="udp_send">|`send(addr:string, port:int, payload:bytes) -> bool`<BR>Sends a packet to address `addr`, port `port` and message as `bytes()` buffer.<BR>Returns `true` if successful.
