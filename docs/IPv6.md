@@ -44,6 +44,9 @@ Features known to work (ESP8266 and ESP32):
 - [x] MQTT to a IPv6 broker
 - [x] DNS resolution for IPv4 (A) and IPv6 (AAAA) records
 - [x] Ping to IPv6 address (ICMP6)
+- [x] Berry webclient and tcpclient to IPv6 addresses
+- [x] Berry udpclient to IPv6 addresses
+- [ ] Berry udpclient to IPv6 multicast addresses (untested but likely to not work)
 
 ## dual-stack DNS
 
