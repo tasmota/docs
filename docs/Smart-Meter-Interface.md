@@ -562,6 +562,38 @@ For `Inf off`, a simplified dataset is returned only.
     1,77070100600100ff@#,Zählernummer,,meter_number,0
     #
     ```
+### DZG DWS7412.1.G2 (SML)
+
+A uni-directional metering device from DZG Metering GmbH.
+
+Once unlocked with a PIN and set to `Inf on`, the meter returns not only an integer of the total consumption, but an extended dataset which also includes decimals as well as the current power.
+
+??? summary "View script for the extended dataset"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,16,9600,DWS7412
+    1,77070100010800ff@1000,Energy,kWh,energy,4
+    1,77070100240700ff@1,Power,W,power,2
+    1,7707010060320101@#,Service ID,,meter_id,0
+    #
+    ```
+
+For `Inf off`, a simplified dataset is returned only.
+    
+??? summary "Alternative script for the simplified dataset"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,16,9600,DWS7412
+    1,77070100010800ff@1000,Energy,kWh,energy,4
+    1,7707010060320101@#,Service ID,,meter_id,0
+    #
+    ```
 
 ### DZG DWS76 (SML)
 
