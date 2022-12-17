@@ -139,6 +139,7 @@ nav:
     - Displays.md
     - Dynamic-Sleep.md
     - I2C Devices: I2CDEVICES.md
+    - IPv6.md
     - Lights.md
     - PIR-Motion-Sensors.md
     - Power-Monitoring-Calibration.md
