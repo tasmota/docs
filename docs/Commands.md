@@ -584,6 +584,7 @@ SetOption144<a class="cmnd" id="setoption144"></a>|`1` = include a timestamp in 
 SetOption146<a class="cmnd" id="setoption146"></a>|`1` = enable display of ESP32 internal temperature
 SetOption147<a class="cmnd" id="setoption147"></a>|`1` = disable publish SSerialReceived MQTT messages, you must use event trigger rules instead
 SetOption148<a class="cmnd" id="setoption148"></a>|`1` = enable autorun of ArtNet mode at start. If for any reason listening to UDP port fails, this mode is disabled
+SetOption149<a class="cmnd" id="setoption149"></a>|`1` = DNS try to resolved the address as IPv6 first and IPv4 if none is found. Default behavior is to look for IPv4 address first. See [IPv6](IPv6.md)
 
 
 ### TuyaMCU
