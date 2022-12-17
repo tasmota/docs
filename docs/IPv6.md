@@ -19,7 +19,7 @@ For **ESP8266** you need to compile with `-DPIO_FRAMEWORK_ARDUINO_LWIP2_IPV6_HIG
 
 In all cases, Tasmota will enable a **Link-Local** address on all interfaces (Wifi and Ethernet if present). Link-Local addresses start with `fe80::` followed by 64 bits derived from the MAC address of the device. Link-Local addresses are not routable across VLANs nor via the Internet and is used only to communicate with the router and with devices on the same LAN (useful in the Matter protocol).
 
-IPv6 networks generally support [SLAAC](Stateless Address Autoconfiguration, SLAAC). SLAAC allows Tasmota to compute an IPv6 Global Address that is routable across VLANs and possibly accross the internet depending on your router configuration.
+IPv6 networks generally support SLAAC (Stateless Address Autoconfiguration, SLAAC). SLAAC allows Tasmota to compute an IPv6 Global Address that is routable across VLANs and possibly accross the internet depending on your router configuration.
 
 For SLAAC to work, the network size must be at least `/64` or larger (i.e. `/xx` with `xx` lower or equal to `64`). The first 64 bits are set by the network, the last 64 bits are derived from the MAC address in the same way than Link-Local.
 
