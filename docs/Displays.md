@@ -487,6 +487,20 @@ Parallel interface: (ESP32-S3 only)
 9. d8-d15 pins if bus size = 16
 10. Parallel Speed in MHz (usually 20)
 
+`RGB`  
+
+RGB 16 bit interface: (ESP32-S3 only)
+  
+1. DE pin
+2. VSYNC pin
+3. HSYNC pin
+4. PCLK pin
+5. Backlight pin 
+6. b0-b5 pins (blue color)
+7. g0-g5 pins (green color)
+8. r0-r4 pins (red color) 
+9. Pixel clock Speed in MHz (usually 14)
+  
 All signals must be given. Unused pins may be set to -1. If you specify a `*` char the pin number is derived from the Tasmota GPIO GUI.  
 The CS and DC pins must be the standard pins e.g. `SPI_CS` or `SPI_DC`.  
 
@@ -549,6 +563,18 @@ All values are in hex. On SPI the first value is the command, then the number of
     29,80
     ```
 
+`:V` video signal parameters for RGB panels  
+  hsync_polarity,  
+  hsync_front_porch,  
+  hsync_pulse_width,  
+  hsync_back_porch,  
+  vsync_polarity,  
+  vsync_front_porch,  
+  vsync_pulse_width,  
+  vsync_back_porch,  
+  pclk_active_neg,  
+  
+  
 `:o`,OP      
 `OP` = controller OPCODE to switch display off  
 
@@ -570,7 +596,7 @@ Register values for all 4 rotations (color display only)
 1. rotation code
 2. x offset
 3. y offset
-4. rotation pseudo opcode for touch panel
+4. rotation pseudo opcode for touch panel, in case of RGB panel use only these entries 
 the appropriate coordinate convervsions are defined via pseudo opcodes
 0 = no conversion
 1 = swap and flip x
