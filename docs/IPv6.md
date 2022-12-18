@@ -11,9 +11,10 @@ Tasmota supports IPv4 only networks (Legacy) and dual-stack IPv4+IPv6 networks.
 ## Building IPv6 version of Tasmota
 
 IPv6 is enabled by default on ESP32 since v12.3.1.1.
-For all Tasmota versions, you need `#define USE_IPV6` in `my_user_config.h` or in `user_config_override.h`. See [Compiling](Compile-your-build.md).
 
-For **ESP8266** you need to compile with `-DPIO_FRAMEWORK_ARDUINO_LWIP2_IPV6_HIGHER_BANDWIDTH` option in `platform.ini` instead of `-DPIO_FRAMEWORK_ARDUINO_LWIP2_HIGHER_BANDWIDTH_LOW_FLASH`. The code impact is +34.5kB; and you need `#define USE_IPV6` in `my_user_config.h` or in `user_config_override.h`. See [Compiling](Compile-your-build.md).
+
+For **ESP8266** you need to compile with `-DPIO_FRAMEWORK_ARDUINO_LWIP2_IPV6_HIGHER_BANDWIDTH` option in `platform.ini` instead of `-DPIO_FRAMEWORK_ARDUINO_LWIP2_HIGHER_BANDWIDTH_LOW_FLASH`, and set `-DUSE_IPV6`. The code impact is +34.5kB; and you need `#define USE_IPV6` in `my_user_config.h` or in `user_config_override.h`. See [Compiling](Compile-your-build.md).
+
 
 ## Network pre-requisites
 
