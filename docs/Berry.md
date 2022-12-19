@@ -1292,7 +1292,12 @@ The regex engine is based on [re1.5](https://github.com/pfalcon/re1.5) also used
 Module `import crypto` support for common cryptographic algorithms.
 
 Currently supported algorithms:
-- AES GCM 256 bits - enabled by default
+
+- AES CTR 256 bits
+- AES GCM 256 bits
+- SHA256
+- HMAC SHA256
+- MD5
 - Elliptic curve EC CC25519 - requires `#define USE_BERRY_CRYPTO_EC_C25519`
 
 #### `crypto.AES_CTR` class
