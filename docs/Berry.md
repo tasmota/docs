@@ -1295,6 +1295,32 @@ Currently supported algorithms:
 - AES GCM 256 bits - enabled by default
 - Elliptic curve EC CC25519 - requires `#define USE_BERRY_CRYPTO_EC_C25519`
 
+#### `crypto.AES_CTR` class
+
+Encrypt and decrypt, using AES CTR (Counter mode) with 256 bits keys.
+
+General Function|Parameters and details
+:---|:---
+init<a class="cmnd" id="aes_ctr_init">|`AES_CTR.init(secret_key:bytes(32)) -> instance`<br>Initialise AES CTR instance with `secret_key` (256 bits) and `iv` (initialization vector or nonce, 96 bits)
+encrypt<a class="cmnd" id="aes_gcm_encrypt">|`encrypt(ciphertext:bytes, iv:bytes(12), cc:int) -> bytes`<br>Encrypt the ciphertext. The `iv` (Initialization Vector) must be 12 bytes, it can be the concatenation of 4 bytes Nonce and 8 bytes iv. `cc` is the counter (4 bytes) incremented for each block of 16 bytes.<BR>Note: the last counter value is not returned, so it is advised to encrypt all data at once.
+decrypt<a class="cmnd" id="aes_ctr_decrypt">|`decrypt(ciphertext:bytes, iv:bytes(12), cc:int) -> bytes`<br>Identical to `encrypt` above.
+
+Test vectors from https://datatracker.ietf.org/doc/html/rfc4231
+
+``` berry
+# Test case from https://www.ietf.org/rfc/rfc3686.txt
+import crypto
+key = bytes("F6D66D6BD52D59BB0796365879EFF886C66DD51A5B6A99744B50590C87A23884")
+iv = bytes("00FAAC24C1585EF15A43D875")
+cc = 0x000001
+aes = crypto.AES_CTR(key)
+plain = bytes("000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F")
+cipher = aes.encrypt(plain, iv, cc)
+assert(cipher == bytes("F05E231B3894612C49EE000B804EB2A9B8306B508F839D6A5530831D9344AF1C"))
+plain2 = aes.decrypt(cipher, iv, cc)
+assert(plain == plain2)
+```
+
 #### `crypto.AES_GCM` class
 
 Encrypt, decrypt and verify, using AES GCM (Gallois Counter Mode) with 256 bits keys.
@@ -1326,6 +1352,75 @@ tag = aes.tag()
 print(tag == authTag)
 # true
 ```
+
+#### `crypto.SHA256` class
+
+Provides SHA256 hashing function
+
+General Function|Parameters and details
+:---|:---
+init<a class="cmnd" id="aes_sha256_init">|`HMAC_SHA256.init() -> instance`<br>Initialise SHA256 hashing function
+update<a class="cmnd" id="aes_sha256_update">|`update(data:bytes) -> nil`<br>Add content to the hash
+out<a class="cmnd" id="aes_sha256_finish">|`finish() -> bytes(32)`<br>Output the value of the hash
+
+Example test vectors from https://www.dlitz.net/crypto/shad256-test-vectors/
+
+``` berry
+import crypto
+h = crypto.SHA256()
+
+# SHA256 of empty message
+assert(h.out() == bytes("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"))
+
+# (first 16 bytes of RC4 keystream where the key = 0)
+h.update(bytes("de188941a3375d3a8a061e67576e926d"))
+assert(h.out() == bytes("067c531269735ca7f541fdaca8f0dc76305d3cada140f89372a410fe5eff6e4d"))
+```
+
+#### `crypto.HMAC_SHA256` class
+
+Provides HMAC SHA256 hashing function
+
+General Function|Parameters and details
+:---|:---
+init<a class="cmnd" id="aes_hmac_sha256_init">|`HMAC_SHA256.init(key:bytes) -> instance`<br>Initialise HMAC_SHA256 hashing function with a provided key
+update<a class="cmnd" id="aes_hmac_sha256_update">|`update(data:bytes) -> nil`<br>Add content to the hash
+out<a class="cmnd" id="aes_hmac_sha256_finish">|`finish() -> bytes(32)`<br>Output the value of the hash
+
+Test case from https://datatracker.ietf.org/doc/html/rfc4231:
+
+``` berry
+import crypto
+key = bytes("4a656665")
+msg = bytes("7768617420646f2079612077616e7420666f72206e6f7468696e673f")
+h = crypto.HMAC_SHA256(key)
+h.update(msg)
+hmac = h.out()
+assert(hmac == bytes("5bdcc146bf60754e6a042426089575c75a003f089d2739839dec58b964ec3843"))
+```
+
+
+#### `crypto.MD5` class
+
+Provides MD5 hashing function.
+
+General Function|Parameters and details
+:---|:---
+init<a class="cmnd" id="aes_md5_init">|`MD5.init() -> instance`<br>Initialise MD5 hashing function
+update<a class="cmnd" id="aes_md5_update">|`update(data:bytes) -> nil`<br>Add content to the hash
+finish<a class="cmnd" id="aes_md5_finish">|`finish() -> bytes(16)`<br>Finish the MD5 calculation and output the result (16 bytes)
+
+Test vector:
+
+``` berry
+import crypto
+h = crypto.MD5()
+t = bytes().fromstring("The quick brown fox jumps over the lazy dog")
+h.update(t)
+m = h.finish()
+assert(m == bytes("9e107d9d372bb6826bd81d3542a419d6"))
+```
+
 #### `crypto.EC_C25519` class
 
 Provieds Elliptic Curve C25519 Diffie-Hellman key derivation. Requires `#define USE_BERRY_CRYPTO_EC_C25519`
