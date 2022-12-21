@@ -1,6 +1,6 @@
 The Shelly 1 is supported in Tasmota from version 6.2.1.7<br>
 
-<img src="https://shelly.cloud/wp-content/uploads/2020/06/shelly1.jpg" width="250" align="right" />
+<img src="https://kb.shelly.cloud/__attachments/57049089/Shelly-1-front.jpg" width="250" align="right" />
 
 * [Allterco Shelly 1 Product Page](https://shelly.cloud/shelly1-open-source/)
 * [Allterco Shelly 1 Shop](https://shelly.cloud/product/shelly-1-open-source/)
@@ -30,15 +30,15 @@ If the jumper is set to 12V you will destroy your Shelly!
 An ESP8266 with 2MB flash single relay device 42mm "round" in size.
 
 ## Serial Connection
-Shelly1 comes with a partially exposed programming/debug header which can be used to flash Tasmota on the device. A serial-to-USB adapter is needed as well as a reliable 3.3V source with at least 350 mA drive capability. The following diagram shows the device pinout and power source voltage selection jumper.
+Shelly1 comes with a partially exposed programming/debug header which can be used to flash Tasmota on the device. A serial-to-USB adapter is needed as well as a reliable 3.3V source with at least 350 mA drive capability. The following diagram shows the device pinout.
 
-<img src="https://shelly.cloud/wp-content/uploads/2020/06/shelly1_pinout.jpg" height="250" />
+<img src="https://kb.shelly.cloud/__attachments/57049089/Gen1-addon-interface.png" height="250" />
 
 ## Flash mode
 To be able to flash the Tasmota firmware you need to get into flash mode. Therefore connect a wire from GPIO0 to ground. For further information have a look at [Hardware Preparation](../Getting-Started#programming-mode).
 
 ## **⚠️️WARNING⚠️️**
-Please note what version of the Shelly 1 you have (V1, V2 or V3). The V2 user guide is [incorrect](https://gallery.mailchimp.com/0d9bf8d9ddf1b29f33cb71ba5/images/cb16c7b5-5887-4ef2-b6c1-6e90ccaf648a.png?mc_cid=0a274764f3&mc_eid=05c10a130f). The mains connections are as shown in the image above for all versions of the switch. The labels on the V2 switches are **WRONG!**
+Please note what version of the Shelly 1 you have (V1, V2 or V3). The V2 user guide is [incorrect](https://gallery.mailchimp.com/0d9bf8d9ddf1b29f33cb71ba5/images/cb16c7b5-5887-4ef2-b6c1-6e90ccaf648a.png?mc_cid=0a274764f3&mc_eid=05c10a130f). The labels on the V2 switches are **WRONG!** The following image shows how to connect the device to mains power.
 
 ![wrong](https://gallery.mailchimp.com/0d9bf8d9ddf1b29f33cb71ba5/images/cb16c7b5-5887-4ef2-b6c1-6e90ccaf648a.png?mc_cid=0a274764f3&mc_eid=05c10a130f)
 ## Video tutorial by digiblurDIY
