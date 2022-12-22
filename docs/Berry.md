@@ -1293,12 +1293,15 @@ Module `import crypto` support for common cryptographic algorithms.
 
 Currently supported algorithms:
 
-- AES CTR 256 bits
+- AES CTR 256 bits - requires `#define USE_BERRY_CRYPTO_AES_CTR`
 - AES GCM 256 bits
-- SHA256
+- Elliptic Curve C25519 - requires `#define USE_BERRY_CRYPTO_EC_C25519`
+- Elliptic Curve P256 (secp256r1) - requires `#define USE_BERRY_CRYPTO_EC_P256`
+- HKDF key derivation with HMAC SHA256 - requires `#define USE_BERRY_CRYPTO_HKDF_HMAC_SHA256`
 - HMAC SHA256
 - MD5
-- Elliptic curve EC CC25519 - requires `#define USE_BERRY_CRYPTO_EC_C25519`
+- PKKDF2 with HMAC SHA256 key derivation - requires `#define USE_BERRY_CRYPTO_PBKDF2_HMAC_SHA256`
+- SHA256
 
 #### `crypto.AES_CTR` class
 
@@ -1356,6 +1359,146 @@ print(plaintext.asstring())
 tag = aes.tag()
 print(tag == authTag)
 # true
+```
+
+#### `crypto.EC_C25519` class
+
+Provides Elliptic Curve C25519 Diffie-Hellman key agreement. Requires `#define USE_BERRY_CRYPTO_EC_C25519`
+
+General Function|Parameters and details
+:---|:---
+public_key<a class="cmnd" id="ec_c25519_public_key">|`crypto.EC_C25519().public_key(secret_key:bytes(32)) -> bytes(32)`<br>Computes the public key given a random private key.
+shared_key<a class="cmnd" id="ec_c25519_shared_key">|`crypto.EC_C25519().shared_key(our_private_key:bytes(32), their_public_key:bytes(32)) -> bytes(32)`<br>Compute a shared key (Diffie-Hellman) using our private key and the other party's public key. The other party will compute the same shared key using their private key and our pubic key.
+
+Example from test vectors https://www.rfc-editor.org/rfc/rfc7748:
+
+``` berry
+import crypto
+
+# alice side
+alice_priv_key = bytes("77076d0a7318a57d3c16c17251b26645df4c2f87ebc0992ab177fba51db92c2a")
+alice_pub_key = bytes("8520f0098930a754748b7ddcb43ef75a0dbf3a0d26381af4eba4a98eaa9b4e6a")
+assert(crypto.EC_C25519().public_key(alice_priv_key) == alice_pub_key)
+
+# bob side
+bob_priv_key = bytes("5dab087e624a8a4b79e17f8b83800ee66f3bb1292618b6fd1c2f8b27ff88e0eb")
+bob_pub_key = bytes("de9edb7d7b7dc1b4d35b61c2ece435373f8343c85b78674dadfc7e146f882b4f")
+assert(crypto.EC_C25519().public_key(bob_priv_key) == bob_pub_key)
+
+# shared key computed by alice
+ref_shared_key = bytes("4a5d9d5ba4ce2de1728e3bf480350f25e07e21c947d19e3376f09b3c1e161742")
+alice_shared_key = crypto.EC_C25519().shared_key(alice_priv_key, bob_pub_key)
+bob_shared_key = crypto.EC_C25519().shared_key(bob_priv_key, alice_pub_key)
+assert(alice_shared_key == ref_shared_key)
+assert(bob_shared_key == ref_shared_key)
+```
+
+#### `crypto.EC_P256` class
+
+Provides Elliptic Curve Prime256 (secp256r1) Diffie-Hellman key agreement and various functions on P256 curve. Requires `#define USE_BERRY_CRYPTO_EC_P256`
+
+General Function|Parameters and details
+:---|:---
+public_key<a class="cmnd" id="ec_p256_public_key">|`crypto.EC_P256().public_key(secret_key:bytes(32)) -> bytes(65)`<br>Computes the public key given a random private key. The result is uncompressed point coordinates starting with 0x04 (65 bytes in total)
+shared_key<a class="cmnd" id="ec_p256_shared_key">|`crypto.EC_P256().shared_key(our_private_key:bytes(32), their_public_key:bytes(65)) -> bytes(32)`<br>Compute a shared key (Diffie-Hellman) using our private key and the other party's public key. The other party will compute the same shared key using their private key and our pubic key.<BR>The result is actually the X coordinate of the multiplication of the points coordinates of the public key, and a large number (private key)
+
+Specific Functions|Parameters and details
+:---|:---
+mod<a class="cmnd" id="ec_p256_mod">|`crypto.EC_P256().mod(data:bytes()) -> bytes(32)`<br>Computes the modulus of an arbitrary large number. The modulus is done towards the order of the curve.
+neg<a class="cmnd" id="ec_p256_neg">|`crypto.EC_P256().neg(data:bytes(32)) -> bytes(32)`<br>`-x mod p` or `p - x` if `x` is lower than `p`<br>Computes the opposite (negate) of a number modulus the order of the curve (it's actuall modulus - data).
+mul<a class="cmnd" id="ec_p256_mul">|`crypto.EC_P256().mul(x:bytes(), A:bytes(65)) -> bytes(65)`<br>`x * A`<br>Computes multiplication of a number and a point on the curve.<br>`x` needs to be smaller than `p`, use `mod()` if not sure<br>The function checks that the point `A` is on the curve, or raises an error
+muladd<a class="cmnd" id="ec_p256_muladd">|`crypto.EC_P256().muladd(x:bytes(), A:bytes(65), y:bytes(), B:bytes(65)) -> bytes(65)`<br>`x * A + y * B`<br>`x` and `y` need to be smaller than `p`, use `mod()` if not sure<br>The function checks that the points `A` and `B` are on the curve, or raises an error<br>If `B` is empty `bytes()`, the Generator `P` of the curve is used instead.
+
+Example:
+
+``` berry
+import crypto
+priv = bytes("f502fb911d746b77f4438c674e1c43650b68285dfcc0583c49cd6ed88f0fbb58")
+p = crypto.EC_P256()
+pub = p.public_key(priv)
+assert(pub == bytes("04F94C20D682DA29B7E99985D8DBA6ABEA9051D16508742899835098B1113D3D749466644C47B559DB184556C1733C33E5788AE250B8FB45F29D4CF48FF752C1ED"))
+
+import crypto
+priv = bytes("4E832960415F2B5FA2B1FDA75C1A8F3C84BAEB189EDC47211EF6D27A21FC0ED8")
+p = crypto.EC_P256()
+pub = p.public_key(priv)
+assert(pub == bytes("042166AE4F89981472B7589B8D79B8F1244E2EEE6E0A737FFBFED2981DA3E193D6643317E054D2A924F2F56F1BF4BECA13192B27D8566AF379FBBF8615A223D899"))
+print("x=",pub[1..32])
+print("y=",pub[33..65])
+
+import crypto
+p = crypto.EC_P256()
+priv_A = bytes("f502fb911d746b77f4438c674e1c43650b68285dfcc0583c49cd6ed88f0fbb58")
+pub_A = bytes("04F94C20D682DA29B7E99985D8DBA6ABEA9051D16508742899835098B1113D3D749466644C47B559DB184556C1733C33E5788AE250B8FB45F29D4CF48FF752C1ED")
+priv_B = bytes("4E832960415F2B5FA2B1FDA75C1A8F3C84BAEB189EDC47211EF6D27A21FC0ED8")
+pub_B = bytes("042166AE4F89981472B7589B8D79B8F1244E2EEE6E0A737FFBFED2981DA3E193D6643317E054D2A924F2F56F1BF4BECA13192B27D8566AF379FBBF8615A223D899")
+
+shared_1 = p.shared_key(priv_A, pub_B)
+shared_2 = p.shared_key(priv_B, pub_A)
+assert(shared_1 == shared_2)
+```
+
+#### `crypto.HKDF_HMAC_SHA256` class
+
+Provides HKDF using HMAC SHA256 key derivation. Turns 'ikm' (input keying material) of low entropy and creates a pseudo random key. Requires `#define USE_BERRY_CRYPTO_HKDF_HMAC_SHA256`
+
+General Function|Parameters and details
+:---|:---
+derive<a class="cmnd" id="aes_hkdf_hmac_sha256_derive">|`crypto.HKDF_HMAC_SHA256().derive(ikm:bytes(), salt:bytes(), info:bytes(), out_bytes:int) -> bytes(out_bytes)`<br>Computes a key derivation function<br>`ikm` is the input keying material, typically a password<br>`salt` can be empty<br>`info` can be empty and is used to create multiple derived keys<br>`out_bytes` indicates the number of bytes to generate (between 1 and 256)
+
+Test vectors from https://www.rfc-editor.org/rfc/rfc5869
+
+``` berry
+import crypto
+
+# Test Case 1
+hk = crypto.HKDF_HMAC_SHA256()
+ikm = bytes("0B0B0B0B0B0B0B0B0B0B0B0B0B0B0B0B0B0B0B0B0B0B")
+salt = bytes("000102030405060708090A0B0C")
+info = bytes("F0F1F2F3F4F5F6F7F8F9")
+k = hk.derive(ikm, salt, info, 42)
+assert(k == bytes("3CB25F25FAACD57A90434F64D0362F2A2D2D0A90CF1A5A4C5DB02D56ECC4C5BF34007208D5B887185865"))
+
+# Test Case 2
+hk = crypto.HKDF_HMAC_SHA256()
+ikm  = bytes("000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f")
+salt = bytes("606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeaf")
+info = bytes("b0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff")
+k = hk.derive(ikm, salt, info, 82)
+assert(k == bytes("b11e398dc80327a1c8e7f78c596a49344f012eda2d4efad8a050cc4c19afa97c59045a99cac7827271cb41c65e590e09da3275600c2f09b8367793a9aca3db71cc30c58179ec3e87c14c01d5c1f3434f1d87"))
+
+# Test Case 3
+hk = crypto.HKDF_HMAC_SHA256()
+ikm  = bytes("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b")
+salt = bytes()
+info = bytes()
+k = hk.derive(ikm, salt, info, 42)
+assert(k == bytes("8da4e775a563c18f715f802a063c5a31b8a11f5c5ee1879ec3454e5f3c738d2d9d201395faa4b61a96c8"))
+```
+
+#### `crypto.PBKDF2_HMAC_SHA256` class
+
+Provides PBKDF2 using HMAC SHA256 key derivation. Turns a password into a hash.
+
+General Function|Parameters and details
+:---|:---
+derive<a class="cmnd" id="aes_pbkdf2_hmac_sha256_derive">|`crypto.PBKDF2_HMAC_SHA256().derive(password:bytes(), salt:bytes(), iterations:int, out_bytes:int) -> bytes(out_bytes)`<br>Computes a key derivation function<br>`password` is the input keying material<br>`salt` can be empty `bytes()`<br>`iterations` counts the number of iterations of HMAC, limited to 10000 to make computation short enough for ESP32<br>`out_bytes` indicates the number of bytes to generate (between 1 and 256)
+
+Test vectors from https://github.com/brycx/Test-Vector-Generation/blob/master/PBKDF2/pbkdf2-hmac-sha2-test-vectors.md
+
+``` berry
+import crypto
+pb = crypto.PBKDF2_HMAC_SHA256()
+
+assert(pb.derive("password", "salt", 1, 20) == bytes('120fb6cffcf8b32c43e7225256c4f837a86548c9'))
+
+assert(pb.derive("password", "salt", 2, 20) == bytes('ae4d0c95af6b46d32d0adff928f06dd02a303f8e'))
+
+assert(pb.derive("password", "salt", 3, 20) == bytes('ad35240ac683febfaf3cd49d845473fbbbaa2437'))
+
+assert(pb.derive("password", "salt", 4096, 20) == bytes('c5e478d59288c841aa530db6845c4c8d962893a0'))
+
+assert(pb.derive("passwd", "salt", 1, 128) == bytes('55AC046E56E3089FEC1691C22544B605F94185216DDE0465E68B9D57C20DACBC49CA9CCCF179B645991664B39D77EF317C71B845B1E30BD509112041D3A19783C294E850150390E1160C34D62E9665D659AE49D314510FC98274CC79681968104B8F89237E69B2D549111868658BE62F59BD715CAC44A1147ED5317C9BAE6B2A'))
 ```
 
 #### `crypto.SHA256` class
@@ -1424,38 +1567,6 @@ t = bytes().fromstring("The quick brown fox jumps over the lazy dog")
 h.update(t)
 m = h.finish()
 assert(m == bytes("9e107d9d372bb6826bd81d3542a419d6"))
-```
-
-#### `crypto.EC_C25519` class
-
-Provieds Elliptic Curve C25519 Diffie-Hellman key derivation. Requires `#define USE_BERRY_CRYPTO_EC_C25519`
-
-General Function|Parameters and details
-:---|:---
-public_key<a class="cmnd" id="ec_c25519_public_key">|`crypto.EC_C25519().public_key(secret_key:bytes(32)) -> bytes(32)`<br>Computes the public key given a random private key.
-shared_key<a class="cmnd" id="ec_c25519_shared_key">|`crypto.EC_C25519().shared_key(our_private_key:bytes(32), their_public_key:bytes(32)) -> bytes(32)`<br>Compute a shared key (Diffie-Hellman) using our private key and the other party's public key. The other party will compute the same shared key using their private key and our pubic key.
-
-Example from test vectors https://www.rfc-editor.org/rfc/rfc7748:
-
-``` berry
-import crypto
-
-# alice side
-alice_priv_key = bytes("77076d0a7318a57d3c16c17251b26645df4c2f87ebc0992ab177fba51db92c2a")
-alice_pub_key = bytes("8520f0098930a754748b7ddcb43ef75a0dbf3a0d26381af4eba4a98eaa9b4e6a")
-assert(crypto.EC_C25519().public_key(alice_priv_key) == alice_pub_key)
-
-# bob side
-bob_priv_key = bytes("5dab087e624a8a4b79e17f8b83800ee66f3bb1292618b6fd1c2f8b27ff88e0eb")
-bob_pub_key = bytes("de9edb7d7b7dc1b4d35b61c2ece435373f8343c85b78674dadfc7e146f882b4f")
-assert(crypto.EC_C25519().public_key(bob_priv_key) == bob_pub_key)
-
-# shared key computed by alice
-ref_shared_key = bytes("4a5d9d5ba4ce2de1728e3bf480350f25e07e21c947d19e3376f09b3c1e161742")
-alice_shared_key = crypto.EC_C25519().shared_key(alice_priv_key, bob_pub_key)
-bob_shared_key = crypto.EC_C25519().shared_key(bob_priv_key, alice_pub_key)
-assert(alice_shared_key == ref_shared_key)
-assert(bob_shared_key == ref_shared_key)
 ```
 
 ## Compiling Berry
