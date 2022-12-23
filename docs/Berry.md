@@ -1297,7 +1297,7 @@ Currently supported algorithms:
 - AES GCM 256 bits
 - Elliptic Curve C25519 - requires `#define USE_BERRY_CRYPTO_EC_C25519`
 - Elliptic Curve P256 (secp256r1) - requires `#define USE_BERRY_CRYPTO_EC_P256`
-- HKDF key derivation with HMAC SHA256 - requires `#define USE_BERRY_CRYPTO_HKDF_HMAC_SHA256`
+- HKDF key derivation with HMAC SHA256 - requires `#define USE_BERRY_CRYPTO_HKDF_SHA256`
 - HMAC SHA256
 - MD5
 - PKKDF2 with HMAC SHA256 key derivation - requires `#define USE_BERRY_CRYPTO_PBKDF2_HMAC_SHA256`
@@ -1438,13 +1438,13 @@ shared_2 = p.shared_key(priv_B, pub_A)
 assert(shared_1 == shared_2)
 ```
 
-#### `crypto.HKDF_HMAC_SHA256` class
+#### `crypto.HKDF_SHA256` class
 
-Provides HKDF using HMAC SHA256 key derivation. Turns 'ikm' (input keying material) of low entropy and creates a pseudo random key. Requires `#define USE_BERRY_CRYPTO_HKDF_HMAC_SHA256`
+Provides HKDF using HMAC SHA256 key derivation. Turns 'ikm' (input keying material) of low entropy and creates a pseudo random key. Requires `#define USE_BERRY_CRYPTO_HKDF_SHA256`
 
 General Function|Parameters and details
 :---|:---
-derive<a class="cmnd" id="aes_hkdf_hmac_sha256_derive">|`crypto.HKDF_HMAC_SHA256().derive(ikm:bytes(), salt:bytes(), info:bytes(), out_bytes:int) -> bytes(out_bytes)`<br>Computes a key derivation function<br>`ikm` is the input keying material, typically a password<br>`salt` can be empty<br>`info` can be empty and is used to create multiple derived keys<br>`out_bytes` indicates the number of bytes to generate (between 1 and 256)
+derive<a class="cmnd" id="aes_hkdf_hmac_sha256_derive">|`crypto.HKDF_SHA256().derive(ikm:bytes(), salt:bytes(), info:bytes(), out_bytes:int) -> bytes(out_bytes)`<br>Computes a key derivation function<br>`ikm` is the input keying material, typically a password<br>`salt` can be empty<br>`info` can be empty and is used to create multiple derived keys<br>`out_bytes` indicates the number of bytes to generate (between 1 and 256)
 
 Test vectors from https://www.rfc-editor.org/rfc/rfc5869
 
@@ -1452,7 +1452,7 @@ Test vectors from https://www.rfc-editor.org/rfc/rfc5869
 import crypto
 
 # Test Case 1
-hk = crypto.HKDF_HMAC_SHA256()
+hk = crypto.HKDF_SHA256()
 ikm = bytes("0B0B0B0B0B0B0B0B0B0B0B0B0B0B0B0B0B0B0B0B0B0B")
 salt = bytes("000102030405060708090A0B0C")
 info = bytes("F0F1F2F3F4F5F6F7F8F9")
@@ -1460,7 +1460,7 @@ k = hk.derive(ikm, salt, info, 42)
 assert(k == bytes("3CB25F25FAACD57A90434F64D0362F2A2D2D0A90CF1A5A4C5DB02D56ECC4C5BF34007208D5B887185865"))
 
 # Test Case 2
-hk = crypto.HKDF_HMAC_SHA256()
+hk = crypto.HKDF_SHA256()
 ikm  = bytes("000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f")
 salt = bytes("606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeaf")
 info = bytes("b0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff")
@@ -1468,7 +1468,7 @@ k = hk.derive(ikm, salt, info, 82)
 assert(k == bytes("b11e398dc80327a1c8e7f78c596a49344f012eda2d4efad8a050cc4c19afa97c59045a99cac7827271cb41c65e590e09da3275600c2f09b8367793a9aca3db71cc30c58179ec3e87c14c01d5c1f3434f1d87"))
 
 # Test Case 3
-hk = crypto.HKDF_HMAC_SHA256()
+hk = crypto.HKDF_SHA256()
 ikm  = bytes("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b")
 salt = bytes()
 info = bytes()
@@ -1508,7 +1508,7 @@ Provides SHA256 hashing function
 General Function|Parameters and details
 :---|:---
 init<a class="cmnd" id="aes_sha256_init">|`HMAC_SHA256.init() -> instance`<br>Initialise SHA256 hashing function
-update<a class="cmnd" id="aes_sha256_update">|`update(data:bytes) -> nil`<br>Add content to the hash
+update<a class="cmnd" id="aes_sha256_update">|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained.
 out<a class="cmnd" id="aes_sha256_finish">|`finish() -> bytes(32)`<br>Output the value of the hash
 
 Example test vectors from https://www.dlitz.net/crypto/shad256-test-vectors/
@@ -1532,7 +1532,7 @@ Provides HMAC SHA256 hashing function
 General Function|Parameters and details
 :---|:---
 init<a class="cmnd" id="aes_hmac_sha256_init">|`HMAC_SHA256.init(key:bytes) -> instance`<br>Initialise HMAC_SHA256 hashing function with a provided key
-update<a class="cmnd" id="aes_hmac_sha256_update">|`update(data:bytes) -> nil`<br>Add content to the hash
+update<a class="cmnd" id="aes_hmac_sha256_update">|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained
 out<a class="cmnd" id="aes_hmac_sha256_finish">|`finish() -> bytes(32)`<br>Output the value of the hash
 
 Test case from https://datatracker.ietf.org/doc/html/rfc4231:
@@ -1555,7 +1555,7 @@ Provides MD5 hashing function.
 General Function|Parameters and details
 :---|:---
 init<a class="cmnd" id="aes_md5_init">|`MD5.init() -> instance`<br>Initialise MD5 hashing function
-update<a class="cmnd" id="aes_md5_update">|`update(data:bytes) -> nil`<br>Add content to the hash
+update<a class="cmnd" id="aes_md5_update">|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained.
 finish<a class="cmnd" id="aes_md5_finish">|`finish() -> bytes(16)`<br>Finish the MD5 calculation and output the result (16 bytes)
 
 Test vector:
