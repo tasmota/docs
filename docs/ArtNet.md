@@ -8,7 +8,7 @@
 
 ArtNet is a royalty-free UDP based protocol to transport DMX lighting control.It allows to control either a Light, or a WS2812 Matrix/Strip with a remote software with real-time animations.
 
-This feature is experimental and tested only with LED Lab (Mac and iOS)
+This feature is experimental, it has been tested with LED Lab (Mac and iOS) and QLC (linux)
 
 When enabling ArtNet mode, Tasmota listens to UDP port 6454 on local address and on multicast address `239.255.25.59`. Incoming DMX/ArtNet packets drive the display and light.
 
@@ -85,12 +85,18 @@ ArtNet Start
 
 ### Single Light
 
-When setting `"Cols":0` (zero columns) ArtNet uses the first GBR payload to control the global light (ex PWM) or the entire WS2812 strip.
+When setting `"Cols":0` (zero columns) ArtNet uses the first GBRWW payload to control the global light (ex PWM) or the entire WS2812 strip. Multiple single lights (eg. bulbs) can be used on the same universe by setting the offset value.
 
 Example:
 ```
-ArtNetConfig {"Cols":0, "Universe":0}
+ArtNetConfig {"Cols":0, "Universe":0, "Offset":0}
 ArtNet Start
+```
+
+The calibration values set by the RGBWWTable command will be applied to any DMX inputs.
+For example to disable the white channels:
+```
+RGBWWTable 255,255,255,0,0
 ```
 
 ## Commands
