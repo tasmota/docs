@@ -1028,11 +1028,11 @@ When creating a local port, you need to use `udp->begin(<ip>, <port)>`. If `<ip>
 General Function|Parameters and details
 :---|:---
 udp()<a class="cmnd" id="udp_ctor">|`udp() -> <instance udp>`<br>Creates an instance of `udp` class.
-begin<a class="cmnd" id="udp_begin">|`begin(interface:string, port:int) -> bool`<BR>Create a UDP listener and sender on a specific interface (IP address) or on all interfaces if `interface` is an empty string, for port `port`.<BR>Returns `true` if successful.
+begin<a class="cmnd" id="udp_begin">|`begin(interface:string, port:int) -> bool`<BR>Create a UDP listener and sender on a specific interface (IP address) or on all interfaces if `interface` is an empty string<BR>Listen on a specific `port` number, or set `0` to choose a random free port for sending only<BR>Returns `true` if successful.
 begin_multicast<a class="cmnd" id="udp_begin_mcast">|`begin(ip:string, port:int) -> bool`<BR>Create a UDP listener and sender on interface `ip` and `port`. `ip` must be a multicast address.<BR>Returns `true` if successful.
 close<a class="cmnd" id="udp_close">|`close() -> bil`<BR>Closes UDP listener and sender, and frees resources. You can't send or receive anymore with this instance.
 send<a class="cmnd" id="udp_send">|`send(addr:string, port:int, payload:bytes) -> bool`<BR>Sends a packet to address `addr`, port `port` and message as `bytes()` buffer.<BR>Returns `true` if successful.
-send_multicast<a class="cmnd" id="udp_send_mcast">|`send(payload:bytes) -> bool`<BR>Sends a payload as `bytes()` buffer to the multicast address. `begin_multicast()` must have been previously called.<BR>Returns `true` if successful.
+send_multicast<a class="cmnd" id="udp_send_mcast">|`send(payload:bytes) -> bool`<BR>Sends a payload as `bytes()` buffer to the multicast address. `begin_multicast()` must have been previously called.<BR>Returns `true` if successful.<BT>You can also send a multicast packet with `send` if you specify the multicast address and port.
 read<a class="cmnd" id="udp_read">|`read() -> bytes() or nil`<BR>Reads any received udp packet as bytes() buffer, or `nil` if no packet was received.
 remote_ip<a class="cmnd" id="udp_remote_ip">|`remote_ip (string or nil)`<BR>Instance variable containing the remote ip (as string) from the last successful `read()` command.
 remote_port<a class="cmnd" id="udp_remote_port">|`remote_port (int or nil)`<BR>Instance variable containing the remote port (as int) from the last successful `read()` command.
@@ -1067,37 +1067,53 @@ bytes("414243")    # received packet as `bytes()`
 ``` berry
 class udp_listener
   var u
-  def init(port)
+  def init(ip, port)
     self.u = udp()
-    self.u.begin("", port)
+    print(self.u.begin_multicast(ip, port))
     tasmota.add_driver(self)
   end
   def every_50ms()
+    import string
     var packet = self.u.read()
     while packet != nil
-      tasmota.log(">>> Received packet: "+packet.tohex(), 2)
+      tasmota.log(string.format(">>> Received packet ([%s]:%i): %s", self.u.remote_ip, self.u.remote_port, packet.tohex()), 2)
       packet = self.u.read()
     end
   end
 end
 
-# listen on port 2000
-udp_listener(2000)
+# listen on port 2000 for all interfaces
+# udp_listener("", 2000)
 ```
 
 #### Send and receive multicast
 
+IPv4 example, using the `udp_listener` listener above.
+
+On receiver side:
 ``` berry
-> u = udp()
-> u.begin_multicast("224.3.0.1", 3000)    # connect to multicast 224.3.0.1:3000 on all interfaces
-true
-
-> client.send_multicast(bytes("33303030"))
-
-> u.read()     # if no packet received, returns `nil`
-> u.read()
-bytes("414243")    # received packet as `bytes()`
+udp_listener("224.3.0.1", 2000)
 ```
+
+On sender side:
+``` berry
+u = udp()
+u.begin_multicast("224.3.0.1", 2000)
+u.send_multicast(bytes().fromstring("hello"))
+
+# alternatively
+u = udp()
+u.begin("", 0)      # send on all interfaces, choose random port number
+u.send("224.3.0.1", 2000, bytes().fromstring("world"))
+```
+
+The receiver will show:
+```
+>>> Received packet ([192.168.x.x]:2000): 68656C6C6F
+>>> Received packet ([192.168.x.x]:64882): 776F726C64
+```
+
+This works the same with IPv6 using an address like "FF35:0040:FD00::AABB"
 
 ### `mdns` module
   
