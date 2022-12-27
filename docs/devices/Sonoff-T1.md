@@ -42,6 +42,9 @@ Notes:
 2. GPIO0 is connected to the helper chip on this version, so the only way to get Ver1.1 of the board into flash mode is to solder a lead onto the resistor R19 from pin 15 on the ESP chip (GPIO0) and connect this lead to GND on power up; the device will set all the touch pads to dim and the WiFi LED D3 will NOT be on at all.
 3. The connection marked 'LOG' on the J3 header is GPIO2.
 
+### Touch Board Ver:2.0
+The 3v3, GND, TX, RX are pretty well labeled, but for BOOT mode you need to connect "TP1 KEY0" to the ground. See [more details](https://github.com/arendst/Tasmota/discussions/15057)
+
 **WARNING!!** Do not attempt to power the device from your serial-to-USB adapter when connected to the relay board. This draws too much power and will cause the ESP to reboot frequently and reset all the configured settings.
 
 ## Sonoff T1 EU
