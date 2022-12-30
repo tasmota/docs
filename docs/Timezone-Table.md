@@ -444,7 +444,7 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |Europe/Busingen|`Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120`|
 |Europe/Chisinau|`Backlog0 Timezone 99; TimeStd 0,0,10,1,3,120; TimeDst 0,0,3,1,2,180`|
 |Europe/Copenhagen|`Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120`|
-|Europe/Dublin|`Backlog0 Timezone 99; TimeStd 1,0,3,1,1,60; TimeDst 1,0,10,1,2,120`|
+|Europe/Dublin|`Backlog0 Timezone 99; TimeStd 0,0,10,1,2,0; TimeDst 0,0,3,1,1,60`|
 |Europe/Gibraltar|`Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120`|
 |Europe/Guernsey|`Backlog0 Timezone 99; TimeStd 0,0,10,1,2,0; TimeDst 0,0,3,1,1,60`|
 |Europe/Helsinki|`Backlog0 Timezone 99; TimeStd 0,0,10,1,4,120; TimeDst 0,0,3,1,3,180`|
