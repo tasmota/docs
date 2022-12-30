@@ -100,6 +100,7 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |America/Cayman|`Timezone -5:00`|
 |America/Chicago|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-360; TimeDst 0,2,3,1,2,-300`|
 |America/Chihuahua|`Timezone -6:00`|
+|America/Ciudad_Juarez|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-420; TimeDst 0,2,3,1,2,-360`|
 |America/Coral_Harbour|`Timezone -5:00`|
 |America/Cordoba|`Timezone -3:00`|
 |America/Costa_Rica|`Timezone -6:00`|
@@ -120,7 +121,7 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |America/Fort_Wayne|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-300; TimeDst 0,2,3,1,2,-240`|
 |America/Fortaleza|`Timezone -3:00`|
 |America/Glace_Bay|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-240; TimeDst 0,2,3,1,2,-180`|
-|America/Godthab|This timezone uses a DST start/end rule that Tasmota does not support.|
+|America/Godthab|`Timezone -2:00`|
 |America/Goose_Bay|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-240; TimeDst 0,2,3,1,2,-180`|
 |America/Grand_Turk|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-300; TimeDst 0,2,3,1,2,-240`|
 |America/Grenada|`Timezone -4:00`|
@@ -180,8 +181,8 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |America/North_Dakota/Beulah|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-360; TimeDst 0,2,3,1,2,-300`|
 |America/North_Dakota/Center|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-360; TimeDst 0,2,3,1,2,-300`|
 |America/North_Dakota/New_Salem|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-360; TimeDst 0,2,3,1,2,-300`|
-|America/Nuuk|This timezone uses a DST start/end rule that Tasmota does not support.|
-|America/Ojinaga|`Timezone -6:00`|
+|America/Nuuk|`Timezone -2:00`|
+|America/Ojinaga|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-360; TimeDst 0,2,3,1,2,-300`|
 |America/Panama|`Timezone -5:00`|
 |America/Pangnirtung|`Backlog0 Timezone 99; TimeStd 0,1,11,1,2,-300; TimeDst 0,2,3,1,2,-240`|
 |America/Paramaribo|`Timezone -3:00`|
@@ -602,4 +603,4 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |WET|`Backlog0 Timezone 99; TimeStd 0,0,10,1,2,0; TimeDst 0,0,3,1,1,60`|
 |Zulu|`Timezone +0:00`|
 
-This table was generated from the [IANA Time Zone Database](https://www.iana.org/time-zones), version `2022f`.
+This table was generated from the [IANA Time Zone Database](https://www.iana.org/time-zones), version `2022g`.
