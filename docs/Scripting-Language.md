@@ -38,7 +38,7 @@
     USE_SCRIPT_GLOBVARS | enables global variables and >G section
     USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
     SML_REPLACE_VARS | enables possibility to replace the lines from the (SML) descriptor with Vars
-    USE_SML_SCRIPT_CMD | enables SML script cmds
+    NO_USE_SML_SCRIPT_CMD | disables SML script cmds
     USE_SCRIPT_I2C | enables I2C support
     USE_SCRIPT_SERIAL | enables support for serial io cmds
     USE_LVGL | enables support for LVGL
@@ -616,13 +616,14 @@ SEL:
   
 `knx(code value)` = sends a number value to KNX   
 
-`sml(m 0 bd)` = set SML baud rate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
-`sml(m 1 htxt)` = send SML Hex string htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
-`sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)(if defined USE_SML_SCRIPT_CMD)  
-`sml(m 3 hstr)` = inserts SML Hexstring variable hstr as binary to Meter m in Output stream e.g. for special MODBUS cmds, hstr must be a string variable NO string constant (if defined USE_SML_SCRIPT_CMD)  
-`sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
-`smls[m]` = get value of SML meter string info of meter m (if defined USE_SML_SCRIPT_CMD)  
-`smlv[n]` = get SML decode valid status of line n (1..N), returns 1 if line decoded. n=0 resets all status codes to zero (if defined USE_SML_SCRIPT_CMD)  
+`sml(m 0 bd)` = set SML baud rate of Meter m to bd (baud)  
+`sml(m 1 htxt)` = send SML Hex string htxt as binary to Meter m  
+`sml(-m 1 initstr)` = reinits serial port of Meter m, initstr: "baud:mode" e.g. "9600:8E1", currently only baud and N,E,O are evaluated.    
+`sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)
+`sml(m 3 hstr)` = inserts SML Hexstring variable hstr as binary to Meter m in Output stream e.g. for special MODBUS cmds, hstr must be a string variable NO string constant   
+`sml[n]` = get value of SML energy register n   
+`smls[m]` = get value of SML meter string info of meter m, if m < 0 gets string representation of numeric value of decode line m, this enables double number resolution.  
+`smlv[n]` = get SML decode valid status of line n (1..N), returns 1 if line decoded. n=0 resets all status codes to zero 
 `smld(m)` = call decoder of meter m  
 `smlj` = read or write variable, when 0 disables MQTT output of SML.  
 `enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
