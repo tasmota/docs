@@ -526,7 +526,7 @@ A & B connected to the meter pinout.
     #    
     ```
 
-### DZG DWS7410.2V.G2 (SML)
+### DZG DWS7410.2V.G2 (SML) and DZG DVS7420.2 (SML)
 
 A bidirectional metering device from DZG Metering GmbH.
 
