@@ -1883,6 +1883,29 @@ Example: Changing the baud rate during operation.
     #
     ```
 
+### Logarex LK13BE (SML) (LK13BE904639)
+This meter does not provide detailed information regarding phase etc.
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    ; Monitor Sensor at GPIO25
+    =>sensor53 l25
+    >M 1
+    +1,3,s,0,9600,LK13BE,1,10,2F3F210D0A,063035310D0A
+
+    1,77070100010800ff@1000,Energie gesamt,kWh,energy_sum,3 
+    1,77070100010801ff@1000,Energie Tarif 1,kWh,energy_tarif1,3 
+    1,77070100010802ff@1000,Energie Tarif 2,kWh,energy_tarif2,3
+    1,77070100020800ff@1000,Einspeisung,kWh,energy_supply,3
+    1,=h --------------
+    1,77070100100700ff@1,Leistung,W,power,16
+    1,=h --------------
+    1,77070100600100ff@#,Server ID,,meter_number,0
+    #
+    ```	
+	
 ### Logarex LK13BE (SML) (e.g. LK13BE6067x9)
 
 ??? summary "View script"
