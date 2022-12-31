@@ -50,7 +50,7 @@ def posix_tz_string_to_tasmota_command(posix_tz_string: str) -> str:
     # https://pubs.opengroup.org/onlinepubs/9699919799/
     # https://datatracker.ietf.org/doc/html/rfc8536#section-3.3.1
     parsed = re.match(
-        r"(?P<std><[^>]{3,}>|[a-zA-Z0-9]{3,})(?P<stdoffset>[\d:+-]+)(?:(?P<dst><[^>]{3,}>|[a-zA-Z0-9]{3,})(?P<dstoffset>[\d:+-]+)?)?(?:,(?P<dst_start_date>[JM\d.]+)(?:/(?P<dst_start_time>[-\d:]+))?,(?P<dst_end_date>[JM\d.]+)(?:/(?P<dst_end_time>[-\d:]+))?)?",
+        r"(?P<std><[^>]{3,}>|[a-zA-Z]{3,})(?P<stdoffset>[\d:+-]+)(?:(?P<dst><[^>]{3,}>|[a-zA-Z]{3,})(?P<dstoffset>[\d:+-]+)?)?(?:,(?P<dst_start_date>[JM\d.]+)(?:/(?P<dst_start_time>[-\d:]+))?,(?P<dst_end_date>[JM\d.]+)(?:/(?P<dst_end_time>[-\d:]+))?)?",
         posix_tz_string,
     )
     assert parsed is not None
@@ -161,6 +161,12 @@ assert (
 assert (
     posix_tz_string_to_tasmota_command("CET-1CEST,M3.5.0,M10.5.0/3")
     == "Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120"
+)
+
+# US/Hawaii
+assert (
+    posix_tz_string_to_tasmota_command("HST10")
+    == "Timezone -10:00"
 )
 
 # Pacific/Kiritmati
