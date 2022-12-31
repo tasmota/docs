@@ -21,6 +21,7 @@
 16 | LilyGO T5 4.7" E-Paper display ESP32 device | :material-cpu-32-bit:
 17 | [Universal Display Driver](#universal-display-driver) | SPI or I^2^C
 18 | Interface to virtual display driver with [Berry](Berry) | :material-cpu-32-bit:
+19 | [MAX7219 Dot Matrix](MAX7219.md) | Interface GPIO 
 
 ## Display Commands
 
