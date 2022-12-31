@@ -103,7 +103,7 @@ tasmota.add_cron('*/2 * * * * *', def () tasmota.publish_rule(tasmota.read_senso
 Running `HASPmota` with your own template is as simple as:
 
 - create a template in `pages.jsonl` and store it in the Tasmota file system
-- creata an `autoexec.be` file containing the following:
+- create an `autoexec.be` file containing the following:
 
 ``` berry
 # simple `autoexec.be` to run HASPmota using the default `pages.jsonl`
