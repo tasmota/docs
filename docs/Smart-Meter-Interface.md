@@ -19,7 +19,8 @@ Based on Tasmota's [scripting language](Scripting-Language). To use it you must 
 #endif
 ```
 
-Additional features can be enabled by adding the following `#define` compiler directive parameters and then compiling the firmware. These parameters are explained further below in the article. Most features are now enabled by default, others may be set in the descriptor per meter.
+Additional features can be enabled by adding the following `#define` compiler directive parameters and then compiling the firmware. These parameters are explained further below in the article. Most features are now enabled by default, others may be set in the descriptor per meter.  
+	
 | Feature | Description |
 | -- | -- |
 |SML_BSIZ n| (default 48) Maximum number of characters per line in serial input buffer. Complete chunk of serial data must fit into this size, so include any CR/LF if that applies. can now be defined per meter in descriptor, see special options|
@@ -57,7 +58,7 @@ The Smart Meter Interface provides a means to connect many kinds of meters to Ta
 | RAW Binary | decodes all kinds of binary data eg EMS heater bus |
 | Counter interface | uses Tasmota counter storage (for e.g. REED contacts either in polling or IRQ mode) |
 
-There are many different meters that use the same protocol. There are multitudes of variants and use cases. This interface provides a means of specifying these definitions through [meter descriptors](#meter-metrics). This method uses the [scripting language](Scripting-Language) editor to define the descriptors. In this way, only one firmware binary version is required and a modification can be made easily _on the fly_. A meter can also be defined by using compilation time `#define` pragmas (deprecated). This requires recompiling the firmware to make modifications.
+There are many different meters that use the same protocol. There are multitudes of variants and use cases. This interface provides a means of specifying these definitions through [meter descriptors](#meter-metrics). This method uses the [scripting language](Scripting-Language) editor to define the descriptors. In this way, only one firmware binary version is required and a modification can be made easily _on the fly_.  
 
 !!! note
     Additional hardware may be required to read certain measuring devices. For example: RS485toTTL adapter for Modbus, IR transistor for electricity meters. Sometimes an additional IR diode and resistors.  
@@ -1479,8 +1480,6 @@ The Itron electrical meter is a German end-user meter installed by EnBW. You can
 
 This is an example for one of the many quite similar smart meters implemented in Portugal, by EDP Distribuição S.A. May be valid for many more models, as stated.
 
-You should additionally configure in your `user_config_override.h` `#define SML_MAX_VARS 10`.
-
 ??? summary "View script"
     ```
     >D
@@ -2044,7 +2043,6 @@ Tested on SX631 (S34U18). Needs an RJ12 cable and a small adaptor circuit:
 
 This meter sends bursts of data at 115200 baud every 10 seconds. Some data lines exceed 1038 characters. To adapt to these conditions, compile firmware with:
 ```arduino
-#define SML_MAX_VARS 60
 #define SML_BSIZ 1060
 #define MAX_METERS 1
 #define TMSBSIZ 2048
@@ -2319,7 +2317,7 @@ Script to extract readings from Eastron [SDM72D Series](https://www.eastroneurop
 
 **Please note:** By default, Tasmota only allows for a maximum of 20 decoders per script. If you want to access all readings, you'll have to compile Tasmota with:
 ```c
-#define SML_MAX_VARS 40
+
 ```
 
 
