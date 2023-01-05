@@ -5,7 +5,7 @@
 
 Tasmota is an open source firmware for [Espressif](https://www.espressif.com/en/products/socs) ESP8266, ESP32, ESP32-S or ESP32-C3 chipset based devices created and maintained by [Theo Arends](https://github.com/arendst). 
 
-Everything began as [Sonoff-MQTT-OTA](https://github.com/arendst/Sonoff-MQTT-OTA) with a [commit](https://github.com/arendst/Sonoff-MQTT-OTA/commit/9d4c0c60dc7ca8c24cf562a932f263d76f664473) on 25th January 2016. by Theo Arendst. Its goal was to provide ESP8266 based [ITEAD Sonoff](https://www.itead.cc/sonoff-wifi-wireless-switch.html) devices with MQTT and 'Over the Air' or OTA firmware. 
+Everything began as [Sonoff-MQTT-OTA](https://github.com/arendst/Sonoff-MQTT-OTA) with a [commit](https://github.com/arendst/Sonoff-MQTT-OTA/commit/9d4c0c60dc7ca8c24cf562a932f263d76f664473) on 25th January 2016, by Theo Arends. Its goal was to provide ESP8266 based [ITEAD Sonoff](https://www.itead.cc/sonoff-wifi-wireless-switch.html) devices with MQTT and 'Over the Air' or OTA firmware. 
 
 What started as a simple way to hack a cloud bound Sonoff Basic (one of the first cheap and accessible smart home devices in the market) into a locally controlled device has grown into a fully fledged ecosystem for virtually any ESP8266 based device.
 
