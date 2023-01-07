@@ -648,6 +648,8 @@ RfSend<a id="rfsend"></a>|`<value>` = code decimal or JSON. Data value is requir
 
 The standard Tasmota builds have reduced support for IR protocols: `RC5`, `RC6` and `NEC`. Use Tasmota-IR to have access to full protocols.
 
+See [Codes for IR Remotes](Codes-for-IR-Remotes).
+
 Command|Parameters
 :---|:---
 IRSend`<x>`<a class="cmnd" id="irsend"></a>|Send an IR remote control code as a decimal or hexadecimal string in a JSON payload. In order to send IR data, _**you must configure at least one of the free device GPIOs as `IRSend (8)`. GPIO01 nor GPIO03 can be used.**_<BR>`<x>` [_optional_] = number of times the IR message is sent. If not specified or `0..1`, the message is sent only once (i.e., not repeated) _(default)_<BR>`>1` = emulate a long-press on the remote control, sending the message `<x>` times, or sending a repeat message for specific protocols (like NEC)<BR><BR>`{"Protocol":"<value>","Bits":<value>,"Data":<value>, "Channel":<value>}`<BR><BR>`"Protocol"` (select one of the following):<ul><li>`"NEC"`</li><li>`"RC5"`</li><li>`"RC6"`</li></ul>`"Bits":1..32` = required number of data bits<BR>&nbsp;&nbsp;&nbsp;&nbsp;for PANASONIC protocol this parameter is the the address, not the number of bits<BR><BR>`"Data":1..(2^32)-1` = data frame as 32 bit decimal.<BR>&nbsp;&nbsp;&nbsp;&nbsp;e.g., `IRSend {"Protocol":"NEC","Bits":32,"Data":2170978686}`<BR>**or**<BR>`"Data":0x1..0xFFFFFFFF` = data frame as 32 bit hexadecimal.<BR>&nbsp;&nbsp;&nbsp;&nbsp;e.g., `IRSend {"Protocol":"NEC","Bits":32,"Data":0x8166817E}`<BR>`"Channel":1..16` = IRSend GPIO to be used to send the message.<BR><BR>Alternatively, you can send IR remote control codes using [RAW command encoding](IRSend-RAW-Encoding).<BR><BR>[Read more...](Tasmota-IR#receiving-ir-commands)
