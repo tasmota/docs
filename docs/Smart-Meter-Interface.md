@@ -94,7 +94,7 @@ Declare `>M` section with the number of connected meters (n = `1..5`):
 | `<rxGPIO>` | The GPIO pin number where meter data is received. |
 | `<type>` | The type of meter: <BR>- `o` - OBIS ASCII type of coding<BR>- `s` - SML binary smart message coding<BR>- `e` - EBus binary coding<BR>- `v` - VBus binary coding<BR>- `m` - MODBus binary coding with serial mode 8N1<BR>- `M` - MODBus binary coding with serial mode 8E1<BR>- `k` - Kamstrup binary coding with serial mode 8N1<BR>- `c` - Counter type<BR>- `r` - Raw binary coding (any binary telegram) |
 | `<flag>` | Options flag:<BR>- `0` - counter without pullup<BR>- `1` - counter with pullup<BR>- `16` - enable median filter for that meter. Can help with sporadic dropouts, reading errors (not available for counters). this option is enabled by default #define USE_SML_MEDIAN_FILTER, if you are low on memory and dont use this feature you may outcomment this define in the driver |
-| `<parameter>` | Parameters according to meter type:<BR>- for `o,s,e,v,m,M,k,r` types: serial baud rate e.g. `9600`.<BR>- for `c` type: a positive value = counter poll interval or a negative value = debounce time (milliseconds) for irq driven counters. |
+| `<parameter>` | Parameters according to meter type:<BR>- for `o,s,e,v,m,M,k,r` types: serial baud rate e.g. `9600`.<BR>- for `c` type: a positive value = counter poll interval (not really recommended) or a negative value = debounce time (milliseconds) for irq driven counters. |
 | `<jsonPrefix>` | Prefix for Web UI and MQTT JSON payload. Up to 7 characters.|
 | `<txGPIO>` | The GPIO pin number where meter command is transmitted (optional).|
 | `<tx enable>` | The GPIO pin number to enable transmitter (RS485) may follow the TX pin in bracket (pin) without a colon an 'i' in front of the pin number means 'inverted' (optional).|
@@ -210,8 +210,7 @@ With `=` character at the beginning of a line you can do some special decoding. 
 | `M,=so2 `| if 1 fixes the bug introduced by meter DWS74, if 2 enabled OBIS line compare mode instead of shift compare mode.<BR>e.g. 1,=so2,2 enable obis line compare.<BR>|
 | `M,=so3 `| sets serial buffer size and optionally also serial IRQ buffer size.<BR>e.g. 1,=so3,128 set serial buffer size to 128.<BR>|
 | `M,=so4 `| sets AES decrytion key for encryted meters.must define exactly 16 hexadecimal chars<BR>e.g. 1,=so4,deabcd0020a0cfdedeabcd0020a0cfde sets decryption key and enables decrypt mode for that meter.<BR>|
-	
-remark: channel math only works on frequently (fast) updated channels and is not recommended with counters  
+
 	
 !!! example
     To get the value of one of the descriptor lines, use `sml[X]`. `X` = Line number. Starts with `1`. (compiling with `USE_SML_SCRIPT_CMD` required)
