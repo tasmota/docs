@@ -1,4 +1,4 @@
-The default Tasmota firmware variants include support for IR send/receive for a limited set of protocols (see [IR Remote](Commands#ir-remote)). 
+The default Tasmota firmware variants include support for IR send/receive for a limited set of protocols (see [IR Remote commands](Commands#ir-remote)).
 
 Tasmota uses the [IRremoteESP8266 library](https://github.com/crankyoldgit/IRremoteESP8266) that supports numerous protocols. Each protocol consumes some memory, especially air conditioner protocols (up to 81k of flash size). Also, every protocol included increases the time to decode the IR signal. 
 
@@ -17,6 +17,8 @@ The output should be a list of the supported protocols/vendors. For example:
 ```
 RESULT = {"IRHVAC":"Wrong Vendor (COOLIX|DAIKIN|KELVINATOR|MITSUBISHI_AC|GREE|ARGO|TROTEC|TOSHIBA_AC|FUJITSU_AC|MIDEA|HAIER_AC|HITACHI_AC|HAIER_AC_YRW02|WHIRLPOOL_AC|SAMSUNG_AC|ELECTRA_AC|PANASONIC_AC|DAIKIN2|VESTEL_AC|TECO|TCL112AC|MITSUBISHI_HEAVY_88|MITSUBISHI_HEAVY_152|DAIKIN216|SHARP_AC|GOODWEATHER|DAIKIN160|NEOCLIMA|DAIKIN176|DAIKIN128|AMCOR)"}
 ```
+
+See [Codes for IR Remotes](Codes-for-IR-Remotes).
 
 ## Sending IR Commands
 Send an IR remote control code as a decimal or hexadecimal string in a JSON payload. In order to send IR data, _**you must configure one of the free device GPIO as `IRSend (8)`. Neither GPIO01 nor GPIO03 can be used.**_  
