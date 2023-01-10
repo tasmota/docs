@@ -868,9 +868,9 @@ The meter's manufacturer's datasheet neatly explains the serial message format u
     #
     ```
 	
-According to the manufacturer's datasheet, the serial parameters are 9600 baud and 7E1. 
+    According to the manufacturer's datasheet, the serial parameters are 9600 baud and 7E1. 
 	
-For Tasmota versions that are built with a TasmotaSerial.cpp of version 3.5.0 (and probably all higher versions, too), no modification of the TasmotaSerial.cpp source code (as suggested in other entries of this documentation) is necessary to set the serial parameters to 7E1: By configuring the [meter type](#meter-definition) as OBIS ("o") in line 5 of the above code, you implicitly tell Tasmota to set the serial parameters to 7E1 (probably the same applies to all other meters in this documentation where a modification of TasmotaSerial.cpp has previously been recommended).
+    For Tasmota versions that are built with a TasmotaSerial.cpp of version 3.5.0 (and probably all higher versions, too), no modification of the TasmotaSerial.cpp source code (as suggested in other entries of this documentation) is necessary to set the serial parameters to 7E1: By configuring the [meter type](#meter-definition) as OBIS ("o") in line 5 of the above code, you implicitly tell Tasmota to set the serial parameters to 7E1 (probably the same applies to all other meters in this documentation where a modification of TasmotaSerial.cpp has previously been recommended).
 
 ### EFR SGM-C2/C4 (SML)
 
@@ -919,8 +919,8 @@ For SGM-C4, double-tariff variants or meters measuring supply remove the appropr
     #
     ```
 
-Overview of the codes
-![image](https://user-images.githubusercontent.com/5443580/186160623-3db77d01-429f-49db-86ff-d804578aad99.png)
+    Overview of the codes
+    ![image](https://user-images.githubusercontent.com/5443580/186160623-3db77d01-429f-49db-86ff-d804578aad99.png)
 	
 ### Elster / Honeywell AS1440 (OBIS)
     
@@ -2410,12 +2410,6 @@ This meter sends bursts of data at 115200 baud every 10 seconds. Some data lines
 
 ### SDM72D (MODBus)
 Script to extract readings from Eastron [SDM72D Series](https://www.eastroneurope.com/products/view/sdm72modbus) devices (tested on SDM72D-M). Manual with comprehensive documentation about all Modbus registers available [here](https://stromzähler.eu/media/pdf/93/17/d7/SDM72DM-V2.pdf).
-
-**Please note:** By default, Tasmota only allows for a maximum of 20 decoders per script. If you want to access all readings, you'll have to compile Tasmota with:
-```c
-
-```
-
 
 ??? summary "View script"
     ```
