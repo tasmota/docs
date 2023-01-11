@@ -62,8 +62,9 @@ theme:
     - navigation.tabs.sticky
     - navigation.top
     - navigation.tracking
+    - content.action.edit
 
-  font:
+font:
     text: Barlow
     code: Roboto Mono
 
