@@ -62,6 +62,7 @@ theme:
     - navigation.tabs.sticky
     - navigation.top
     - navigation.tracking
+    - content.action.edit
 
   font:
     text: Barlow

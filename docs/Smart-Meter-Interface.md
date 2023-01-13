@@ -868,9 +868,9 @@ The meter's manufacturer's datasheet neatly explains the serial message format u
     #
     ```
 	
-According to the manufacturer's datasheet, the serial parameters are 9600 baud and 7E1. 
+    According to the manufacturer's datasheet, the serial parameters are 9600 baud and 7E1. 
 	
-For Tasmota versions that are built with a TasmotaSerial.cpp of version 3.5.0 (and probably all higher versions, too), no modification of the TasmotaSerial.cpp source code (as suggested in other entries of this documentation) is necessary to set the serial parameters to 7E1: By configuring the [meter type](#meter-definition) as OBIS ("o") in line 5 of the above code, you implicitly tell Tasmota to set the serial parameters to 7E1 (probably the same applies to all other meters in this documentation where a modification of TasmotaSerial.cpp has previously been recommended).
+    For Tasmota versions that are built with a TasmotaSerial.cpp of version 3.5.0 (and probably all higher versions, too), no modification of the TasmotaSerial.cpp source code (as suggested in other entries of this documentation) is necessary to set the serial parameters to 7E1: By configuring the [meter type](#meter-definition) as OBIS ("o") in line 5 of the above code, you implicitly tell Tasmota to set the serial parameters to 7E1 (probably the same applies to all other meters in this documentation where a modification of TasmotaSerial.cpp has previously been recommended).
 
 ### EFR SGM-C2/C4 (SML)
 
@@ -919,8 +919,8 @@ For SGM-C4, double-tariff variants or meters measuring supply remove the appropr
     #
     ```
 
-Overview of the codes
-![image](https://user-images.githubusercontent.com/5443580/186160623-3db77d01-429f-49db-86ff-d804578aad99.png)
+    Overview of the codes
+    ![image](https://user-images.githubusercontent.com/5443580/186160623-3db77d01-429f-49db-86ff-d804578aad99.png)
 	
 ### Elster / Honeywell AS1440 (OBIS)
     
@@ -970,7 +970,104 @@ Current power values get published to mqtt immediately when received from the me
     1,2.8.1(@1,Total Out,KWh,Total_out,1
     #
     ```
-	
+
+### Elster F96 Plus (Sharky 775) M-Bus
+
+This heat meter needs a wakeup sequence with 2400 Baud 8N1, wheras communication is done by 2400 Baud 8E1. The script will therefore only rund starting with Tasmota 12.2 where switching parity is implemented. For compiling, add the following to your `user_config_override.h` to increase serial communication buffer size and enable MQTT and Web publishing:
+
+??? summary "View user_config_override.h"
+    ```
+    #ifndef USE_SCRIPT
+    #define USE_SCRIPT
+    #endif
+    #ifndef USE_SML_M
+    #define USE_SML_M
+    #endif
+    #ifdef USE_RULES
+    #undef USE_RULES
+    #endif
+    #ifndef SML_BSIZ
+    #define SML_BSIZ 200
+    #endif
+    #ifndef USE_SML_SCRIPT_CMD
+    #define USE_SML_SCRIPT_CMD
+    #endif
+    #ifndef USE_SCRIPT_JSON_EXPORT
+    #define USE_SCRIPT_JSON_EXPORT
+    #endif
+    #ifndef USE_SCRIPT_WEB_DISPLAY
+    #define USE_SCRIPT_WEB_DISPLAY
+    #endif
+    ```
+
+Delta calculation for previous day is included as the meter shall not be read often when operated with a battery.
+
+??? summary "View script"
+    ```
+    >D
+    ;start, define variables
+    cnt=1
+    timer=1
+    w_new=0
+    w_delta=0
+    p:w_last=0
+
+    >B
+    ;setup sensor
+    ->sensor53 r
+
+    >T
+    w_new=WAERME#w_total
+
+    >S
+    timer=int(time)
+    if chg[timer]>0 
+    then
+    switch timer
+    case 0
+    print It is midnight
+    print wakeup start
+    sml(-1 1 "2400:8N1")
+    for cnt 1 72 1
+    sml(1 1 "55555555555555555555")
+    next
+    print wakeup end
+    print wait for the meter
+    delay(350)
+    sml(-1 1 "2400:8E1")
+    print request data
+    sml(1 1 "105BFE5916")
+    case 1
+    print It is a minute after midnight
+    print calculating daily value
+    print w_last %0w_last%
+    w_delta=w_new-w_last
+    w_last=w_new
+    svars
+    print w_new %0w_new%
+    print w_delta %0w_delta%
+    ends
+    endif
+
+    >J  
+    ,"w_delta":%w_delta% 
+
+    >W
+    ===============
+    Vortagsverbrauch:    {m} %3w_delta% KWh 
+
+    >M 1
+    +1,3,rE1,0,2400,WAERME,1
+    1,0C06bcd8@1,Total Energy,kWh,w_total,0
+    1,0C13bcd8@1000,Total volume,m³,v_total,2
+    1,0C2Bbcd8@1,Current power,W,p_act,0
+    1,0B3Bbcd6@1000,Current flow,m³/h,F_akt,3
+    1,0A5Abcd4@10,Flow temp,°C,t_flow,1
+    1,0A5Ebcd4@10,Return temp,°C,t_return,1
+    1,0A62bcd4@10,Temp diff,°C,t_diff,2
+    #
+    ```
+
 ### Elster / Honeywell AS2020 (SML)
 
 ??? summary "View script"
@@ -2313,12 +2410,6 @@ This meter sends bursts of data at 115200 baud every 10 seconds. Some data lines
 
 ### SDM72D (MODBus)
 Script to extract readings from Eastron [SDM72D Series](https://www.eastroneurope.com/products/view/sdm72modbus) devices (tested on SDM72D-M). Manual with comprehensive documentation about all Modbus registers available [here](https://stromzähler.eu/media/pdf/93/17/d7/SDM72DM-V2.pdf).
-
-**Please note:** By default, Tasmota only allows for a maximum of 20 decoders per script. If you want to access all readings, you'll have to compile Tasmota with:
-```c
-
-```
-
 
 ??? summary "View script"
     ```

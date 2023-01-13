@@ -17,7 +17,7 @@ Incredibly expandable and flexible.
 
 <span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v12.3.1">Tasmota 12.3.1 Percy</a></span>
 
-## Breaking Changes :warning: :warning: :warning:
+## Breaking Changes
 
 - Redesign distance sensors VL53LXX, TOF10120, HRXL and DYP to use cm instead of mm
 

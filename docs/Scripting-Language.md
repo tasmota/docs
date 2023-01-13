@@ -554,8 +554,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `s(x)` = explicit conversion from number x to string  may be preceded by precision digits e.g. s(2.2x) = use 2 digits before and after decimal point  
   
 I2C support #define USE_SCRIPT_I2C  
-`ia(AA)`, `ia2(AA)` test and set I2C device with address AA (on BUS 1 or 2), returns 1 if device is present
-`iw(aa val)` , `iw1(aa val)`, `iw2(aa val)`, `iw3(aa val) `write val to register aa (1..3 bytes)  
+`ia(AA)`, `ia2(AA)` test and set I2C device with address AA (on BUS 1 or 2), returns 1 if device is present  
+`iw(aa val)` , `iw1(aa val)`, `iw2(aa val)`, `iw3(aa val) `write val to register aa (1..3 bytes), if in aa bit 15 is set no destination register is transfered (needed for some devices), if bit 14 is set byte order is reversed  
 `ir(aa)`, `ir1(aa)`, `ir2(aa)`, `ir3(aa)` read 1..3 bytes from register aa  
   
 Serial IO support #define USE_SCRIPT_SERIAL  
@@ -626,7 +626,7 @@ SEL:
 `smlv[n]` = get SML decode valid status of line n (1..N), returns 1 if line decoded. n=0 resets all status codes to zero 
 `smld(m)` = call decoder of meter m  
 `smlj` = read or write variable, when 0 disables MQTT output of SML.  
-`enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
+`enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3, 10=start energy, 11=daily energy, 12=energy yesterday (if defined USE_ENERGY_SENSOR)  
 `gjp("host" "path")` = trigger HTTPS JSON page read as used by Tesla Powerwall (if defined SCRIPT_GET_HTTPS_JP)  
 `gwr("del" index)` = gets non JSON element from webresponse del = delimiter char or string, index = n´th element (if defined USE_WEBSEND_RESPONSE)  
 `http("url" "payload")` = does a GET or POST request on a URL (http:// is internally added)
@@ -2588,6 +2588,10 @@ start dim level = initial dimmer level after power-up or restart; max 100
     %=#wsub
       
 ### Image gallery of various Tasmota scripts  
+        
+    these are some examples of more complex scripts to show what is possible.
+    complex scripts should be edited with the external source editor as they contain lots of comments and indents.
+    i will provide the sources later.
 
 ### Internet radio  
 
