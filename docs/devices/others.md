@@ -1,6 +1,6 @@
 ### Motor Clockwise/Anticlockwise
 
-(Now retired, see https://www.itead.cc/motor-reversing-wifi-wireless-switch.html)
+(Now retired, see <https://www.itead.cc/motor-reversing-wifi-wireless-switch.html>)
 
 <img alt="MotorCAC" src="https://github.com/arendst/arendst.github.io/blob/master/media/motorcac1.jpg?raw=true" width="230" align="right" /> 
 This USB powered or external powered board provides one GPIO controlling two alternating relays with Normally Open (NO) and Normally Closed (NC) contacts. It can be used for changing directions of a connected motor.

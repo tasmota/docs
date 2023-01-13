@@ -15,4 +15,4 @@ esptool.py --port /dev/tty.usbserial-A60226NF write_flash -fs 1MB -fm dout 0x0 ~
 
 The barcode on the box for the device that I received is 6920075757361, it's also labeled with MPN:IM190528001.  
 
-I purchased the device from Amazon, it was titled `SONOFF Slampher R2 433MHz RF&WiFi Smart Lamp Bulb Holder for Smart Home, Compatible with Alexa and Google Assistant` and was at this URL: https://www.amazon.com/gp/product/B07TRSYJGB
+I purchased the device from Amazon, it was titled `SONOFF Slampher R2 433MHz RF&WiFi Smart Lamp Bulb Holder for Smart Home, Compatible with Alexa and Google Assistant` and was at this URL: <https://www.amazon.com/gp/product/B07TRSYJGB>

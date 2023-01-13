@@ -26,7 +26,7 @@ Summarizing the process and needed connections based on the above blog, please r
    -> delete "console=serial0,115200" option
 
 3. I don’t know if this is necessary, but I did it as it was mentioned here:  
-   https://spellfoundry.com/2016/05/29/configuring-gpio-serial-port-raspbian-jessie-including-pi-3/
+   <https://spellfoundry.com/2016/05/29/configuring-gpio-serial-port-raspbian-jessie-including-pi-3/>
 
    `sudo nano /boot/config.txt`
 

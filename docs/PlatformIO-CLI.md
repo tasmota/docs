@@ -9,7 +9,7 @@ How to flash the Tasmota firmware onto a device using the `platformio` command l
 
 ## Download the Tasmota source code
 
-Either download the latest Tasmota Source code from https://github.com/arendst/Tasmota/ and extract it or clone the Git repository:  
+Either download the latest Tasmota Source code from <https://github.com/arendst/Tasmota/> and extract it or clone the Git repository:  
 
 `git clone https://github.com/arendst/Tasmota.git`
 

@@ -54,4 +54,4 @@ Don't forget to add links to other article pages in the appropriate place that r
 
 ## Adding device templates to the documentation
 
-If you want to add a new device templates go to https://templates.blakadder.com/new.html (or its [GitHub repository](https://github.com/blakadder/templates)).
+If you want to add a new device templates go to <https://templates.blakadder.com/new.html> (or its [GitHub repository](https://github.com/blakadder/templates)).

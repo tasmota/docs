@@ -30,6 +30,6 @@ Colors tested with firmware 5.9.1 20171107:
 
 ## Official Sources
 
-* Itead Product Page: http://sonoff.itead.cc/en/products/residential/sonoff-b1
-* Itead Shop: https://www.itead.cc/sonoff-b1.html
+* Itead Product Page: <http://sonoff.itead.cc/en/products/residential/sonoff-b1>
+* Itead Shop: <https://www.itead.cc/sonoff-b1.html>
 * Itead Wiki: (not available)

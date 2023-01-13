@@ -1329,7 +1329,7 @@ init<a class="cmnd" id="aes_ctr_init">|`AES_CTR.init(secret_key:bytes(32)) -> in
 encrypt<a class="cmnd" id="aes_gcm_encrypt">|`encrypt(ciphertext:bytes, iv:bytes(12), cc:int) -> bytes`<br>Encrypt the ciphertext. The `iv` (Initialization Vector) must be 12 bytes, it can be the concatenation of 4 bytes Nonce and 8 bytes iv. `cc` is the counter (4 bytes) incremented for each block of 16 bytes.<BR>Note: the last counter value is not returned, so it is advised to encrypt all data at once.
 decrypt<a class="cmnd" id="aes_ctr_decrypt">|`decrypt(ciphertext:bytes, iv:bytes(12), cc:int) -> bytes`<br>Identical to `encrypt` above.
 
-Test vectors from https://datatracker.ietf.org/doc/html/rfc4231
+Test vectors from <https://datatracker.ietf.org/doc/html/rfc4231>
 
 ``` berry
 # Test case from https://www.ietf.org/rfc/rfc3686.txt
@@ -1356,7 +1356,7 @@ encrypt<a class="cmnd" id="aes_gcm_encrypt">|`encrypt(ciphertext:bytes) -> bytes
 decrypt<a class="cmnd" id="aes_gcm_decrypt">|`decrypt(ciphertext:bytes) -> bytes`<br>Decrypt the ciphertext. Can be called multiple times, the tag is updated accordingly
 tag<a class="cmnd" id="aes_gcm_tag">|`tag() -> bytes`<br>Compute the verification tag for the object encrypted or decrypted (128 bits).
 
-Example taken from https://wizardforcel.gitbooks.io/practical-cryptography-for-developers-book/content/symmetric-key-ciphers/aes-encrypt-decrypt-examples.html
+Example taken from <https://wizardforcel.gitbooks.io/practical-cryptography-for-developers-book/content/symmetric-key-ciphers/aes-encrypt-decrypt-examples.html>
 
 ``` berry
 import crypto
@@ -1386,7 +1386,7 @@ General Function|Parameters and details
 public_key<a class="cmnd" id="ec_c25519_public_key">|`crypto.EC_C25519().public_key(secret_key:bytes(32)) -> bytes(32)`<br>Computes the public key given a random private key.
 shared_key<a class="cmnd" id="ec_c25519_shared_key">|`crypto.EC_C25519().shared_key(our_private_key:bytes(32), their_public_key:bytes(32)) -> bytes(32)`<br>Compute a shared key (Diffie-Hellman) using our private key and the other party's public key. The other party will compute the same shared key using their private key and our pubic key.
 
-Example from test vectors https://www.rfc-editor.org/rfc/rfc7748:
+Example from test vectors <https://www.rfc-editor.org/rfc/rfc7748>:
 
 ``` berry
 import crypto
@@ -1462,7 +1462,7 @@ General Function|Parameters and details
 :---|:---
 derive<a class="cmnd" id="aes_hkdf_hmac_sha256_derive">|`crypto.HKDF_SHA256().derive(ikm:bytes(), salt:bytes(), info:bytes(), out_bytes:int) -> bytes(out_bytes)`<br>Computes a key derivation function<br>`ikm` is the input keying material, typically a password<br>`salt` can be empty<br>`info` can be empty and is used to create multiple derived keys<br>`out_bytes` indicates the number of bytes to generate (between 1 and 256)
 
-Test vectors from https://www.rfc-editor.org/rfc/rfc5869
+Test vectors from <https://www.rfc-editor.org/rfc/rfc5869>
 
 ``` berry
 import crypto
@@ -1500,7 +1500,7 @@ General Function|Parameters and details
 :---|:---
 derive<a class="cmnd" id="aes_pbkdf2_hmac_sha256_derive">|`crypto.PBKDF2_HMAC_SHA256().derive(password:bytes(), salt:bytes(), iterations:int, out_bytes:int) -> bytes(out_bytes)`<br>Computes a key derivation function<br>`password` is the input keying material<br>`salt` can be empty `bytes()`<br>`iterations` counts the number of iterations of HMAC, limited to 10000 to make computation short enough for ESP32<br>`out_bytes` indicates the number of bytes to generate (between 1 and 256)
 
-Test vectors from https://github.com/brycx/Test-Vector-Generation/blob/master/PBKDF2/pbkdf2-hmac-sha2-test-vectors.md
+Test vectors from <https://github.com/brycx/Test-Vector-Generation/blob/master/PBKDF2/pbkdf2-hmac-sha2-test-vectors.md>
 
 ``` berry
 import crypto
@@ -1527,7 +1527,7 @@ init<a class="cmnd" id="aes_sha256_init">|`HMAC_SHA256.init() -> instance`<br>In
 update<a class="cmnd" id="aes_sha256_update">|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained.
 out<a class="cmnd" id="aes_sha256_finish">|`finish() -> bytes(32)`<br>Output the value of the hash
 
-Example test vectors from https://www.dlitz.net/crypto/shad256-test-vectors/
+Example test vectors from <https://www.dlitz.net/crypto/shad256-test-vectors/>
 
 ``` berry
 import crypto
@@ -1551,7 +1551,7 @@ init<a class="cmnd" id="aes_hmac_sha256_init">|`HMAC_SHA256.init(key:bytes) -> i
 update<a class="cmnd" id="aes_hmac_sha256_update">|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained
 out<a class="cmnd" id="aes_hmac_sha256_finish">|`finish() -> bytes(32)`<br>Output the value of the hash
 
-Test case from https://datatracker.ietf.org/doc/html/rfc4231:
+Test case from <https://datatracker.ietf.org/doc/html/rfc4231>:
 
 ``` berry
 import crypto

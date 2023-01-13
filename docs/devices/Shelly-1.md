@@ -11,7 +11,7 @@ There are two options to get tasmota onto your shelly:
 2) The common way using a serial adapter. DO NOT DO THIS WHEN CONNECTED TO AC MAINS!
 
 ## OTA Update
-Follow the guide from this repository: https://github.com/yaourdt/mgos-to-tasmota
+Follow the guide from this repository: <https://github.com/yaourdt/mgos-to-tasmota>
 
 ## ⚠️️Special Shelly Attention⚠️️
 
@@ -19,7 +19,7 @@ Follow the guide from this repository: https://github.com/yaourdt/mgos-to-tasmot
 The GPIOs on the Shelly are connected to AC power!** Only use a Shelly as designed. 
 
 **There is possibility to attach DS18B20 or other sensors BUT only using Digital Voltage Isolator**
-For example the company sells [Temperature Sensor AddOn for Shelly 1/1PM](https://shop.shelly.cloud/temperature-sensor-addon-for-shelly-1-1pm-wifi-smart-home-automation#312) with DS18B20. This should not fool you, **never ever attach any sensor directly to the GPIOs** - this expansion board uses TexasInstruments ISO7221 for voltage isolation. More information and Tasmota support for the extension board at https://github.com/arendst/Tasmota/issues/7469.
+For example the company sells [Temperature Sensor AddOn for Shelly 1/1PM](https://shop.shelly.cloud/temperature-sensor-addon-for-shelly-1-1pm-wifi-smart-home-automation#312) with DS18B20. This should not fool you, **never ever attach any sensor directly to the GPIOs** - this expansion board uses TexasInstruments ISO7221 for voltage isolation. More information and Tasmota support for the extension board at <https://github.com/arendst/Tasmota/issues/7469>.
 
 **Do not connect AC power and the serial connection at the same time**
 The GND connection of the Shelly is connected to the live AC wire. Connecting serial with your PC will fry your PC.
