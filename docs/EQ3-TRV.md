@@ -47,6 +47,18 @@ This will give you the mac address of each valve.
     * You might need to wait a minute or so or repeat the "TRV devlist" command a few times before the devices have been properly identified
     * Keep in mind that the TRV does NOT report the current temperature, only the requested, target, temperature. The Xiaomi Thermometer LYWSD03MMC makes a perfect combo for measuring the room temperature (~USD 4)
 
+After configuring, tasmota will poll the discovered valves and publish their state under `stat/EQ3/<MAC Adress>` (or `stat/EQ3/<BLEAlias>` if you have configured an alias for the MAC address of the valve using `BLEAlias`).
+The interval between polls can be configured using `TRVPeriod`.
+
+!!! note "about TRVPeriod and RTC"
+
+    In order of TRVPeriod to work and get the valves polled at regular intervales, you need to have the time and date of the tasmota device correctly configured, let it be using an RTC (real time clock) device connected to your tasmota or using NTP (Network Time Protocol).
+    To configues by default some known NTP servers, so usually the device would have its time automaticlly configured.
+    But if your device is connected to a local network isolated from internet, it won't get access to the configured NTP servers.
+    So you need to configure an NTP server in a device that is always running and connected to the same network as the TASMOTA device.
+    Good candidates for that are your router (if it has the option to activate an NTP server) or the device your are using for home automation (if you are using one).
+    Even if you have configured your TASMOTA device as a DHCP client in order to get the IP at boot, and your DHCP server is configured to set the NTP server to clients, TASMOTA devices do not admit that option, so you have to set the locall NTP server using `NTPserver` 
+
 ### Operating your TRV
 
 There are 2 ways to control your TRV:
