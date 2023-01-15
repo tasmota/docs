@@ -1,7 +1,7 @@
 ## Serial Flashing
 Please see the [Hardware Preparation](../Getting-Started#hardware-preparation) page for general instructions.
 
-Sonoff 4CH and Sonoff 4CH R2 use the same configuration but have slightly different boards. Check which version you own before proceeding.
+Sonoff 4CH, Sonoff 4CH R2 and Sonoff 4CH R3 use the same configuration but have slightly different boards. Check which version you own before proceeding.
 ### Sonoff 4CH
 
 **Attention:** The printed labels on the PCB for RX and TX may be incorrectly swapped as can be seen on the image. Regardless of the labels, the pin next to VCC33 is RX.
