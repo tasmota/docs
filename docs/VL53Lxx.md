@@ -15,7 +15,7 @@
     When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
     ```arduino
     #ifndef USE_VL53L1X 
-    #define #define USE_VL53L1X                    // [I2cDriver54] Enable VL53L1X time of flight sensor (I2C address 0x29) using Pololu VL53L1X library (+2k9 code)
+    #define USE_VL53L1X                            // [I2cDriver54] Enable VL53L1X time of flight sensor (I2C address 0x29) using Pololu VL53L1X library (+2k9 code)
       #define VL53L1X_XSHUT_ADDRESS 0x78           //   VL53L1X base address when used with XSHUT control
       #define VL53L1X_DISTANCE_MODE Long           //   VL53L1X distance mode : Long | Medium | Short
     #endif

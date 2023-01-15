@@ -22,7 +22,6 @@ Water tank monitor|![Water tank monitor](https://user-images.githubusercontent.c
 
 ## Installation Tutorials
 * [Installing Tasmota using Tasmotizer](https://www.superhouse.tv/37-installing-tasmota-using-tasmotizer/)
-* [Flash your device using a RaspberryPi instead of USB-to-TTL serial connector](Flash-Sonoff-using-Raspberry-Pi)
 
 ## Video tutorials
 * [Tasmota and Tasmotizer Easy Flashing Guide for ESP8266 devices](https://youtu.be/hIwIhu5OWiA)
