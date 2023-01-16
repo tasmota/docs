@@ -55,7 +55,7 @@ This is the board layout for the first board version of the Sonoff Basic.
 
 ![gpios](https://cdn.instructables.com/F8Q/0U89/J1WEQK7J/F8Q0U89J1WEQK7J.MEDIUM.jpg)
 
-_(Image re-used from https://www.instructables.com/id/Use-Homie-Firmware-to-Drive-Sonoff-Switch-Module-E/ Thanks @amayii0)_
+_(Image re-used from <https://www.instructables.com/id/Use-Homie-Firmware-to-Drive-Sonoff-Switch-Module-E/> Thanks @amayii0)_
 
 **Usable GPIO:**
 - GPIO14 is broken out on the PCB adjacent to the GND pin.

@@ -40,7 +40,7 @@ Connect the serial interface of the Sonoff Basic with the serial interface of th
 
 ![](https://github.com/arendst/arendst.github.io/blob/master/media/pzem/pzem-basic.png)
 
-_(Image re-used from https://www.instructables.com/id/Use-Homie-Firmware-to-Drive-Sonoff-Switch-Module-E/ Thanks @amayii0)_
+_(Image re-used from <https://www.instructables.com/id/Use-Homie-Firmware-to-Drive-Sonoff-Switch-Module-E/> Thanks @amayii0)_
 
 If you need 5V you can use directly from Sonoff (for something else) but do not connect to PZEM logic because this will result in a big flash (kaboom!, the sonoff LIVE line may reach the PZEM NEUTRAL or viceversa). Using 5V from Sonoff for PZEM TTL port is safe but the resistor mod explained above must be undone and another mod is needed for dropping the PZEM TX line from 5V to 3.3V. So, the simplest way is to use 3.3V from Sonoff to 5V TTL terminal of the PZEM and the resistor mod explained in the above images.
 <img src="https://camo.githubusercontent.com/f014130fdde36f97f37a5af20fc223621b192e1b/687474703a2f2f74696e6b65726d616e2e6361742f77702d636f6e74656e742f75706c6f6164732f323031362f30362f70696e6f75745f6261636b2e6a7067" height="400" />

@@ -24,7 +24,7 @@ _Guide originally from [@Brunas](https://github.com/Brunas/HomeAutomation/blob/m
 
 	1. Long press the button for 5 seconds to enter pairing mode, then press another 5 seconds to ender Compatible Pairing Mode (AP). The LED indicator should blink continuously.
 	2. From mobile phone or PC WiFi setting, an Access Point of the device named **ITEAD-XXXXXXXX** will be found, connect it with default password **12345678**
-	3. Open the browser and access http://10.10.7.1/
+	3. Open the browser and access <http://10.10.7.1/>
 	4. Next, Fill in WiFi SSID and password. Once successfully connected, the device is in DIY mode.
 
 Note: I needed to manually change IP address to 10.10.7.2, 255.0.0.0 with gateway 10.10.7.1 in adapter TCP/IPv4 settings to access that IP address.
@@ -90,7 +90,7 @@ curl -XPOST --header "Content-Type: application/json" --data-raw '{"deviceid": "
 </details>
 
 Optionally for curiosity you could retry *info* query to check if *otaUnlock* value now is *true*
-5. Download the appropriate binary from http://ota.tasmota.com/tasmota/release and flash it. *NOTE: The maximum firmware size is 508kb, which precludes the standard release binary.* Absolutely do not use tasmota-minimal at this stage, this would brick your device.
+5. Download the appropriate binary from <http://ota.tasmota.com/tasmota/release> and flash it. *NOTE: The maximum firmware size is 508kb, which precludes the standard release binary.* Absolutely do not use tasmota-minimal at this stage, this would brick your device.
 
 There are a number of [reported](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/10) [issues](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/95) with the stock firmware's OTA behavior, so it may be easier to use [an existing server](http://sonoff-ota.aelius.com/) that works around these issues.  
 `$HASH` must be defined with the `sha256sum` of the intended firmware file (the `.bin` file) before running the `curl` command.  

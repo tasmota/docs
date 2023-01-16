@@ -1,5 +1,5 @@
-* Itead Product Page: http://sonoff.itead.cc/en/products/residential/sonoff-s26-smart-plug
-* Itead Shop: https://www.itead.cc/sonoff-s26-wifi-smart-plug.html
+* Itead Product Page: <http://sonoff.itead.cc/en/products/residential/sonoff-s26-smart-plug>
+* Itead Shop: <https://www.itead.cc/sonoff-s26-wifi-smart-plug.html>
 
 ## Serial Connection
 

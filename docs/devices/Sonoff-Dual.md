@@ -41,6 +41,6 @@ To assist easy installation serial logging is enabled by default in Tasmota. For
 Another reason for intermittent switching errors can be Power Saving. Make sure it is disabled by executing the command ```sleep 0```.
 
 ## Official Sources
-* Itead Product Page: http://sonoff.itead.cc/en/products/sonoff/sonoff-dual
-* Itead Shop: https://www.itead.cc/sonoff-dual.html
-* Itead Wiki: https://www.itead.cc/wiki/Sonoff_Dual
+* Itead Product Page: <http://sonoff.itead.cc/en/products/sonoff/sonoff-dual>
+* Itead Shop: <https://www.itead.cc/sonoff-dual.html>
+* Itead Wiki: <https://www.itead.cc/wiki/Sonoff_Dual>

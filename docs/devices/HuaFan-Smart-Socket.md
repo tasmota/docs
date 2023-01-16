@@ -83,7 +83,7 @@ Firstly, make sure that you have installed release 5.5.0 of Tasmota or later and
 
 Next, you should ensure that you have installed version 2.4.0-rc1 or later of ESP8266/Arduino core that includes support for the 40MHz crystal used by the HuaFan. Installation instructions can be found [here](https://github.com/esp8266/Arduino/releases) but are essentially as follows:
 - Start Arduino and open Preferences window.
-- Swap the existing link for the stable ESP8266/Arduino core release with https://github.com/esp8266/Arduino/releases/download/2.4.0-rc1/package_esp8266com_index.json in Additional Board Manager URLs field..
+- Swap the existing link for the stable ESP8266/Arduino core release with <https://github.com/esp8266/Arduino/releases/download/2.4.0-rc1/package_esp8266com_index.json> in Additional Board Manager URLs field..
 - Open Boards Manager from Tools > Board menu and update esp8266 platform (check that it is using the RC version).
 
 Lastly, you need to edit the boards.txt file to allow selection of the 40MHz Crystal via the Arduino IDE Tools menu. Add the following lines into the section for the "Generic ESP8266 Module" and immediately after the "generic.menu.CpuFrequency" items:

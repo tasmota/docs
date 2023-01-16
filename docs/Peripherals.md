@@ -107,7 +107,7 @@ Shielding or using twisted pair wiring are other ways to reduce the effect of ra
 (issue[#2708](https://github.com/arendst/Tasmota/issues/2708#issuecomment-388574891))
 
 ## ESP8266 In Depth
-Complete document available from https://tttapa.github.io/ESP8266/Chap04%20-%20Microcontroller.html
+Complete document available from <https://tttapa.github.io/ESP8266/Chap04%20-%20Microcontroller.html>
 ## Digital I/O
 Just like a normal Arduino, the ESP8266 has digital input/output pins (I/O or GPIO, General Purpose Input/Output pins). As the name implies, they can be used as digital inputs to read a digital voltage, or as digital outputs to output either 0V (sink current) or 3.3V (source current).
 

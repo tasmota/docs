@@ -1,7 +1,7 @@
 **Geekcreit "Sonoff" 2 Channel Relay**
 
-* Bare PCB version: https://www.aliexpress.com/item/Sonoff-2CH-AC85-250V-Wireless-Switch-Timer-Smart-Wifi-Switch-Universal-Automation-Module-Remote-Control-for/32948157608.html
-* Version with enclosure: https://www.banggood.com/Geekcreit-2-Channel-AC-85V-250V-APP-Remote-Control-WIFI-Wireless-Switch-Socket-For-Smart-Home-p-1114958.html?rmmds=search&cur_warehouse=CN
+* Bare PCB version: <https://www.aliexpress.com/item/Sonoff-2CH-AC85-250V-Wireless-Switch-Timer-Smart-Wifi-Switch-Universal-Automation-Module-Remote-Control-for/32948157608.html>
+* Version with enclosure: <https://www.banggood.com/Geekcreit-2-Channel-AC-85V-250V-APP-Remote-Control-WIFI-Wireless-Switch-Socket-For-Smart-Home-p-1114958.html?rmmds=search&cur_warehouse=CN>
 
 The Geekcreit/"Sonoff" 2CH is based on the ESP8285 via the Itead PSF-B04.
 It is very similar to 4CH DIY, so this wiki page is based on [the page](/devices/Sonoff-4CH-DIY) for that device.

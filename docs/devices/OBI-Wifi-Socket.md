@@ -33,7 +33,7 @@ Using this method allows you to flash a precompiled binary
 ![3](https://raw.githubusercontent.com/reloxx13/reloxx13.github.io/master/media/tasmota/obi-socket/3.jpg)  
 ![4](https://raw.githubusercontent.com/reloxx13/reloxx13.github.io/master/media/tasmota/obi-socket/4.jpg)  
 ![5](https://raw.githubusercontent.com/reloxx13/reloxx13.github.io/master/media/tasmota/obi-socket/5.jpg)     
-(images from https://github.com/martin-ger/ESP8266-WiFi-Socket)  
+(images from <https://github.com/martin-ger/ESP8266-WiFi-Socket>)  
 
 ### GPIO Config
 

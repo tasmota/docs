@@ -50,6 +50,6 @@ Setup Tasmota (wifi settings).
  
 Go to  _Configuration -> Configure Other_ and enter this template:
 {"NAME":"SHP7 v2","GPIO":[18,158,56,131,134,132,0,0,17,57,21,0,22],"FLAG":0,"BASE":45} 
-(I had to use v2 from https://templates.blakadder.com/blitzwolf_SHP7.html)
+(I had to use v2 from <https://templates.blakadder.com/blitzwolf_SHP7.html>)
 
 Done !

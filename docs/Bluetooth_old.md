@@ -81,7 +81,7 @@ These packets already contain the sensor data and can be passively received by o
 This is therefore the preferred option, if technically possible (= for the supported sensors).
   
 Most of the „older“ BLE-sensor-devices use unencrypted messages, which can be read by all kinds of BLE-devices or even a NRF24L01. With the arrival of "newer" sensors came the problem of encrypted data in MiBeacons, which can be decrypted in Tasmota (not yet with the HM-1x).  
-Meanwhile it is possible to get the needed "bind_key" with the help of an open-source project: https://atc1441.github.io/TelinkFlasher.html  
+Meanwhile it is possible to get the needed "bind_key" with the help of an open-source project: <https://atc1441.github.io/TelinkFlasher.html>.
 At least the LYWSD03 allows the use of a simple BLE connection without any encrypted authentication and the reading of the sensor data using normal subscription methods to GATT-services (currently used on the HM-1x). This is more power hungry than the passive reading of BLE advertisements.  
 Other sensors like the MJYD2S are not usable without the "bind_key".  
   
@@ -173,7 +173,7 @@ active: data is received via bidrectional connection to the sensor
 #### Devices with payload encryption  
   
 The LYWSD03MMC, MHO-C401 and the MJYD2S will start to send advertisements with encrypted sensor data after pairing it with the official Xiaomi app. Out-of-the-box the sensors do only publish a static advertisement.  
-It is possible to do a pairing and get the necessary decryption key ("bind_key") here: https://atc1441.github.io/TelinkFlasher.html  
+It is possible to do a pairing and get the necessary decryption key ("bind_key") here: <https://atc1441.github.io/TelinkFlasher.html>.
 This project also provides a custom firmware for the LYWSD03MMC, which then becomes an ATC and is supported by Tasmota too. Default ATC-setting will drain the battery more than stock firmware, because of very frequent data sending.  
 This key and the corresponding MAC of the sensor can be injected with the NRFKEY-command (or NRFMJYD2S). It is probably a good idea to save the whole config as RULE like that:  
   
@@ -196,7 +196,7 @@ The ESP32 and the HM-1x-modules are real BLE devices whereas the NRF24L01 (+) is
 ##### Options to read out the LYWSD03MMC  
   
 1. Generate a bind_key  
-The web-tool https://atc1441.github.io/TelinkFlasher.html allows the generation of a so-called bind_key by faking a pairing with the Xiaomi cloud. You can copy-paste this key and add the MAC to use this resultig key-MAC-string with key-command (NRFkey or MI32key). Then the driver will receive the sensors data roughly every 10 minutes (in two chunks for humidity and temperature with about a minute in between) and decode the data. This is the most energy efficient way. 
+The web-tool <https://atc1441.github.io/TelinkFlasher.html> allows the generation of a so-called bind_key by faking a pairing with the Xiaomi cloud. You can copy-paste this key and add the MAC to use this resultig key-MAC-string with key-command (NRFkey or MI32key). Then the driver will receive the sensors data roughly every 10 minutes (in two chunks for humidity and temperature with about a minute in between) and decode the data. This is the most energy efficient way. 
 The current way of storing these keys on the ESP32 is to use RULES like that (for the NRF24L01 you would use NRFkey):  
 ```haskell
 rule1 on System#Boot do backlog MI32key 00112233445566778899AABBCCDDEEFF112233445566; MI32key 00112233445566778899AABBCCDDEEFFAABBCCDDEEFF endon
@@ -204,7 +204,7 @@ rule1 on System#Boot do backlog MI32key 00112233445566778899AABBCCDDEEFF11223344
 This option is currently not available for the HM-10 because of memory considerations as part of the standard sensor-firmware package.  
   
 2. Flash custom ATC-firmware  
-Use the same https://atc1441.github.io/TelinkFlasher.html to flash a custom ATC-firmware on the LYWSD03MMC. This will work out of the box with all three Tasmota-drivers. There is a slight chance of bricking the sensor, which would require some soldering and compiling skills to un-brick. This firmware does send data more frequently and is a little bit more power hungry than the stock firmware.  
+Use the same <https://atc1441.github.io/TelinkFlasher.html> to flash a custom ATC-firmware on the LYWSD03MMC. This will work out of the box with all three Tasmota-drivers. There is a slight chance of bricking the sensor, which would require some soldering and compiling skills to un-brick. This firmware does send data more frequently and is a little bit more power hungry than the stock firmware.  
   
 3. Use active connections  
 By default on the HM-10 (for legacy reasons) and at compile-time selectable on the ESP32 is the method to connect to the sensor from time to time. This circumvents the data encryption. This is very power hungry and drains the battery fast. Thus it is only recommended as fallback mechanism.
@@ -347,7 +347,7 @@ RULE-example:
 `on system#boot do MI32Beacon2 AABBCCDDEEFF endon` - save configuration for beacon 2 
   
   
-(following AD type, read here: https://www.bluetooth.com/specifications/assigned-numbers/generic-access-profile/)  
+(following AD type, read here: <https://www.bluetooth.com/specifications/assigned-numbers/generic-access-profile/>)  
 CID - company identifier  
 SVC - service data  
 UUID - service or class UUID  

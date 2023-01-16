@@ -38,5 +38,5 @@ Than You can use the jumpers labeled 5~12 V as your DC voltage for the ESP and r
 ## Official Sources
 
 * Itead Product Page: 
-* Itead Shop: https://www.itead.cc/sonoff-sv.html
-* Itead Wiki: https://www.itead.cc/wiki/Sonoff_SV
+* Itead Shop: <https://www.itead.cc/sonoff-sv.html>
+* Itead Wiki: <https://www.itead.cc/wiki/Sonoff_SV>

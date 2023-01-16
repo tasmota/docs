@@ -2,7 +2,7 @@ This power strip has Tuya TYWE2S module (ESP8285 chip). Successfully flashed Tas
 
 4 power outlets are individually controlled. USB ports have just one relay to switch all ports on/off.
 
-Model purchased: https://www.aliexpress.com/item/Wifi-Smart-Power-Strip-4-EU-Outlets-Plug-Socket-with-USB-4-Charging-Port-App-Voice/32864686078.html
+Model purchased: <https://www.aliexpress.com/item/Wifi-Smart-Power-Strip-4-EU-Outlets-Plug-Socket-with-USB-4-Charging-Port-App-Voice/32864686078.html>
 
 ![](https://github.com/TSparkas/zoota-powestrip-tasmota-flash/blob/master/IMG_20181230_161009.jpg)
 
