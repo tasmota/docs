@@ -885,8 +885,8 @@ WebClient Function|Parameters and details
 begin<a class="cmnd" id="wc_begin">|`(url:string) -> self`<br>Set the complete URL, including protocol (`http` or `https`), IPv4 or domain name, port... This should be the first call. The connection is not established at this point.
 GET<a class="cmnd" id="wc_get">|`() -> result_code:int`<br>Establish a connection to server, send GET request and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
 POST<a class="cmnd" id="wc_post">|`(payload:string or bytes) -> result_code:string`<br>Establish a connection to server, send POST request with payload and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
-read<a class="cmnd" id="wire_read">|`(addr:int, reg:int, size:int) -> int or nil`<br>Read a value of 1..4 bytes from address `addr` and register `reg`. Returns `nil` if no response.
-get\_size<a class="cmnd" id="wc_get_string">|`() -> int`<br>Once a connection succeeded (GET or POST), reads the size of the response as returned by the server in headers (before actually reading the content). A value `-1` means that the response size is unknown until you read it.
+read<a class="cmnd" id="wc_read">|`(addr:int, reg:int, size:int) -> int or nil`<br>Read a value of 1..4 bytes from address `addr` and register `reg`. Returns `nil` if no response.
+get\_size<a class="cmnd" id="wc_get_size">|`() -> int`<br>Once a connection succeeded (GET or POST), reads the size of the response as returned by the server in headers (before actually reading the content). A value `-1` means that the response size is unknown until you read it.
 get\_string<a class="cmnd" id="wc_get_string">|`() -> string`<br>Once a connection succeeded (GET or POST), reads the content of the response in a string. The response max size is 32KB, any response larger is dropped. Connection is closed and resources are freed after this call completes.
 close<a class="cmnd" id="wc_close">|`() -> nil`<br>Closes the connection and frees buffers. `close` can be called after `GET` or `POST` and is implicitly called by `get_string`. You don't usually need to use `close` unless you are only retrieving the result_code for a request and not interested in the content.
 write\_file<a class="cmnd" id="wc_write_file">|`(file_name:string) -> int`<br>Downloads the binary content of the resource and stores it on the file system. Returns the number of bytes downloaded or -1 if an error occurred
@@ -921,7 +921,7 @@ Low-level functions if you want to display custom pages and content:
 General Function|Parameters and details
 :---|:---
 on<a class="cmnd" id="ws_on">|`(prefix:string, callback:closure [, method:int]) -> nil`<br>Attaches a handler (any closure or function) to a prefix. An optional `method` argument (defaults to `webserver.HTTP_ANY` specifies the HTTP methods to be received (ANY, GET, POST, OPTIONS, POST)<BR>WARNING - this should be called only when receiving `web_add_handler` event. If called before the WebServer is set up and Wi-Fi on, it will crash. For debug purpose, it can be called later when you are sure that Wi-Fi or Ethernet is up.
-state<a class="cmnd" id="wc_set_useragent">|`() -> int`<br>Returns the internal state of Tasmota web server. Possible values are `webserver.HTTP_OFF`, `webserver.HTTP_USER`, `webserver.HTTP_ADMIN`, `webserver.HTTP_MANAGER`, `webserver.HTTP_MANAGER_RESET_ONLY`.
+state<a class="cmnd" id="ws_state">|`() -> int`<br>Returns the internal state of Tasmota web server. Possible values are `webserver.HTTP_OFF`, `webserver.HTTP_USER`, `webserver.HTTP_ADMIN`, `webserver.HTTP_MANAGER`, `webserver.HTTP_MANAGER_RESET_ONLY`.
 content_start<a class="cmnd" id="ws_content_start">|`() -> nil`<br>Start response page
 content_response<a class="cmnd" id="ws_content_response">|`(string) -> nil`<br>Sends a response to a XMLHttpRequest
 content_send_style<a class="cmnd" id="ws_content_send_style">|`() -> nil`<br>Sends the standard Tasmota style
@@ -955,9 +955,9 @@ connect<a class="cmnd" id="tcpclient_connect">|`connect(address:string, port:int
 connected<a class="cmnd" id="tcpclient_connected">|`connected() -> bool`<BR>Returns `true` if the connection was successful and is still valid (not dropped by server or closed by client)
 close<a class="cmnd" id="tcpclient_close">|`close() -> nil`<BR>Drops the current connection.
 write<a class="cmnd" id="tcpclient_write">|`content:string or bytes) -> int`<BR>Accepts either a string or a bytes buffer, returns the number of bytes sent. It's you responsibility to resend the missing bytes.<BR>Returns `0` if something went wrong.
-available<a class="cmnd" id="tcpclient_close">|`available() -> int`<BR>Returns the number of bytes received in buffer and ready to be read.
+available<a class="cmnd" id="tcpclient_available">|`available() -> int`<BR>Returns the number of bytes received in buffer and ready to be read.
 read<a class="cmnd" id="tcpclient_read">|`read([max_len:int]) -> string`<BR>Returns all the bytes received in Rx buffer as `string`.<br>Optional `max_len` parameter limits the number of characters returned, or read as much as possible by default.
-readbytes<a class="cmnd" id="tcpclient_read">|`read([max_bytes:int]) -> bytes()`<BR>Returns all the bytes received in Rx buffer as `bytes()`.<br>Optional `max_bytes` parameter limits the number of bytes returned, or read as much as possible by default.
+readbytes<a class="cmnd" id="tcpclient_readbytes">|`read([max_bytes:int]) -> bytes()`<BR>Returns all the bytes received in Rx buffer as `bytes()`.<br>Optional `max_bytes` parameter limits the number of bytes returned, or read as much as possible by default.
 
 Full example:
 
@@ -1029,10 +1029,10 @@ General Function|Parameters and details
 :---|:---
 udp()<a class="cmnd" id="udp_ctor">|`udp() -> <instance udp>`<br>Creates an instance of `udp` class.
 begin<a class="cmnd" id="udp_begin">|`begin(interface:string, port:int) -> bool`<BR>Create a UDP listener and sender on a specific interface (IP address) or on all interfaces if `interface` is an empty string<BR>Listen on a specific `port` number, or set `0` to choose a random free port for sending only<BR>Returns `true` if successful.
-begin_multicast<a class="cmnd" id="udp_begin_mcast">|`begin(ip:string, port:int) -> bool`<BR>Create a UDP listener and sender on interface `ip` and `port`. `ip` must be a multicast address.<BR>Returns `true` if successful.
+begin_multicast<a class="cmnd" id="udp_begin_multicast">|`begin(ip:string, port:int) -> bool`<BR>Create a UDP listener and sender on interface `ip` and `port`. `ip` must be a multicast address.<BR>Returns `true` if successful.
 close<a class="cmnd" id="udp_close">|`close() -> bil`<BR>Closes UDP listener and sender, and frees resources. You can't send or receive anymore with this instance.
 send<a class="cmnd" id="udp_send">|`send(addr:string, port:int, payload:bytes) -> bool`<BR>Sends a packet to address `addr`, port `port` and message as `bytes()` buffer.<BR>Returns `true` if successful.
-send_multicast<a class="cmnd" id="udp_send_mcast">|`send(payload:bytes) -> bool`<BR>Sends a payload as `bytes()` buffer to the multicast address. `begin_multicast()` must have been previously called.<BR>Returns `true` if successful.<BT>You can also send a multicast packet with `send` if you specify the multicast address and port.
+send_multicast<a class="cmnd" id="udp_send_multicast">|`send(payload:bytes) -> bool`<BR>Sends a payload as `bytes()` buffer to the multicast address. `begin_multicast()` must have been previously called.<BR>Returns `true` if successful.<BT>You can also send a multicast packet with `send` if you specify the multicast address and port.
 read<a class="cmnd" id="udp_read">|`read() -> bytes() or nil`<BR>Reads any received udp packet as bytes() buffer, or `nil` if no packet was received.
 remote_ip<a class="cmnd" id="udp_remote_ip">|`remote_ip (string or nil)`<BR>Instance variable containing the remote ip (as string) from the last successful `read()` command.
 remote_port<a class="cmnd" id="udp_remote_port">|`remote_port (int or nil)`<BR>Instance variable containing the remote port (as int) from the last successful `read()` command.
@@ -1326,7 +1326,7 @@ Encrypt and decrypt, using AES CTR (Counter mode) with 256 bits keys.
 General Function|Parameters and details
 :---|:---
 init<a class="cmnd" id="aes_ctr_init">|`AES_CTR.init(secret_key:bytes(32)) -> instance`<br>Initialise AES CTR instance with `secret_key` (256 bits) and `iv` (initialization vector or nonce, 96 bits)
-encrypt<a class="cmnd" id="aes_gcm_encrypt">|`encrypt(ciphertext:bytes, iv:bytes(12), cc:int) -> bytes`<br>Encrypt the ciphertext. The `iv` (Initialization Vector) must be 12 bytes, it can be the concatenation of 4 bytes Nonce and 8 bytes iv. `cc` is the counter (4 bytes) incremented for each block of 16 bytes.<BR>Note: the last counter value is not returned, so it is advised to encrypt all data at once.
+encrypt<a class="cmnd" id="aes_ctr_encrypt">|`encrypt(ciphertext:bytes, iv:bytes(12), cc:int) -> bytes`<br>Encrypt the ciphertext. The `iv` (Initialization Vector) must be 12 bytes, it can be the concatenation of 4 bytes Nonce and 8 bytes iv. `cc` is the counter (4 bytes) incremented for each block of 16 bytes.<BR>Note: the last counter value is not returned, so it is advised to encrypt all data at once.
 decrypt<a class="cmnd" id="aes_ctr_decrypt">|`decrypt(ciphertext:bytes, iv:bytes(12), cc:int) -> bytes`<br>Identical to `encrypt` above.
 
 Test vectors from <https://datatracker.ietf.org/doc/html/rfc4231>
@@ -1460,7 +1460,7 @@ Provides HKDF using HMAC SHA256 key derivation. Turns 'ikm' (input keying materi
 
 General Function|Parameters and details
 :---|:---
-derive<a class="cmnd" id="aes_hkdf_hmac_sha256_derive">|`crypto.HKDF_SHA256().derive(ikm:bytes(), salt:bytes(), info:bytes(), out_bytes:int) -> bytes(out_bytes)`<br>Computes a key derivation function<br>`ikm` is the input keying material, typically a password<br>`salt` can be empty<br>`info` can be empty and is used to create multiple derived keys<br>`out_bytes` indicates the number of bytes to generate (between 1 and 256)
+derive<a class="cmnd" id="aes_hkdf_sha256_derive">|`crypto.HKDF_SHA256().derive(ikm:bytes(), salt:bytes(), info:bytes(), out_bytes:int) -> bytes(out_bytes)`<br>Computes a key derivation function<br>`ikm` is the input keying material, typically a password<br>`salt` can be empty<br>`info` can be empty and is used to create multiple derived keys<br>`out_bytes` indicates the number of bytes to generate (between 1 and 256)
 
 Test vectors from <https://www.rfc-editor.org/rfc/rfc5869>
 
@@ -1525,7 +1525,7 @@ General Function|Parameters and details
 :---|:---
 init<a class="cmnd" id="aes_sha256_init">|`HMAC_SHA256.init() -> instance`<br>Initialise SHA256 hashing function
 update<a class="cmnd" id="aes_sha256_update">|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained.
-out<a class="cmnd" id="aes_sha256_finish">|`finish() -> bytes(32)`<br>Output the value of the hash
+out<a class="cmnd" id="aes_sha256_out">|`out() -> bytes(32)`<br>Output the value of the hash
 
 Example test vectors from <https://www.dlitz.net/crypto/shad256-test-vectors/>
 
@@ -1549,7 +1549,7 @@ General Function|Parameters and details
 :---|:---
 init<a class="cmnd" id="aes_hmac_sha256_init">|`HMAC_SHA256.init(key:bytes) -> instance`<br>Initialise HMAC_SHA256 hashing function with a provided key
 update<a class="cmnd" id="aes_hmac_sha256_update">|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained
-out<a class="cmnd" id="aes_hmac_sha256_finish">|`finish() -> bytes(32)`<br>Output the value of the hash
+out<a class="cmnd" id="aes_hmac_sha256_out">|`out() -> bytes(32)`<br>Output the value of the hash
 
 Test case from <https://datatracker.ietf.org/doc/html/rfc4231>:
 
