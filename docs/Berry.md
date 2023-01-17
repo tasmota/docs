@@ -506,7 +506,7 @@ The construct is to use `tasmota.global` or `tasmota.settings` to read or write 
 Value|Details
 :---|:---
 tasmota.global.sleep<a class="cmnd" id="tasmota_global_sleep"></a>|Current sleep value
-tasmota.global.devices_present<a class="cmnd" id="tasmota_devices_present"></a>|Number of Power channels, e.g. having virtual relays
+tasmota.global.devices_present<a class="cmnd" id="tasmota_global_devices_present"></a>|Number of Power channels, e.g. having virtual relays
 tasmota.settings.sleep<a class="cmnd" id="tasmota_settings_sleep"></a>|Sleep value stored in flash
 
 ### `mqtt` module
@@ -815,7 +815,7 @@ introspect.set<a class="cmnd" id="introspect_set"></a>|`(instance | module, name
 introspect.module<a class="cmnd" id="introspect_module"></a>|`(name:string) -> module or nil`<br>Loads a module by name or return nil if not found. The import command works only for static predefined names, this addition makes it dynamic. Contrary to import command, this function does not create an entry in the current scope (i.e. does not either create a global variable with the module's name).
 introspect.toptr<a class="cmnd" id="introspect_toptr"></a>|`(any) -> comptr`<br>Converts an `int` to a `comptr` pointer. This is sage in Tasmota since pointers and ints are both 32 bits in size.<br>If argument is a general object, this returns a pointer to the object, and can be converted back to the original object with `introspect.fromptr`.
 introspect.fromptr<a class="cmnd" id="introspect_fromptr"></a>|`(comptr) -> any`<br>Converts a `comptr` pointer to its original object.<br>**Warning:** this operation is considered dagerous and should be used with extreme care. If the pointer is invalid or the object was garbage collected, Tasmota will crash.
-introspect.ismethod<a class="cmnd" id="introspect_fromptr"></a>|`(function or closure) -> bool`<br>Returns `true` if the function passed as argument is a method of a class, or `false` if the argument is a simple function or a static method.<br>This is typically used to check callbacks and make sure that you don't pass a method as argument; methods typically need to be wrapped in a closure to capture the target object.
+introspect.ismethod<a class="cmnd" id="introspect_ismethod"></a>|`(function or closure) -> bool`<br>Returns `true` if the function passed as argument is a method of a class, or `false` if the argument is a simple function or a static method.<br>This is typically used to check callbacks and make sure that you don't pass a method as argument; methods typically need to be wrapped in a closure to capture the target object.
 
 ### `webclient` class
 
