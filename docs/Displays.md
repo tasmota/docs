@@ -630,7 +630,7 @@ dimmer opcode _(optional)_
 LVGL _(optional)_
   
 1. number of display lines flushed at once (min 10) the lower the lesser memory needed  
-2. bit 0: DMA enables (`0` for no DMA, 1 use DMA) - not supported on all displays<br>bit 1: selects color swap, 2 = swap 16 bit color<br>bit 2: enable async DMA, `0` wait for DMA to complete before returning, `4` run DMA async in the background. This later mode is only valid if the SPI bus is not shared between the display and any other SPI device like SD Card Reader.
+2. bit 0: DMA enables (`0` for no DMA, 1 use DMA) - not supported on all displays<br>bit 1: selects color swap, 2 = swap 16 bit color<br>bit 2: enable async DMA, `0` wait for DMA to complete before returning, `4` run DMA async in the background. This later mode is only valid if the SPI bus is not shared between the display and any other SPI device like SD Card Reader., `8` inverted busy line on epaper displays.
 
 `:T`  
 Wait times used for E-paper display  
@@ -638,15 +638,33 @@ Wait times used for E-paper display
 2. partial refresh wait in ms  
 3. wait after update in ms  
 
-`:L`  
+`:f`  
+codes for epaper full refresh update  
+
+`:p`  
+codes for epaper partial refresh update  
+  
+beside the epaper chip codes, some pseudo opcodes are supported  
+EP_RESET 60,1,T = toggle reset pin T milliseconds  
+EP_LUT_FULL 61,0 = switch to full update mode  
+EP_LUT_PARTIAL 62,0 = switch to partial update mode  
+EP_WAITIDLE 63,1,T = wait for busy pin or T milliseconds  
+EP_SET_MEM_AREA 64,0 = set memory area to full screen  
+EP_SET_MEM_PTR 65,0 = set memory pointer to start of screen  
+EP_SEND_DATA 66,0 = send framebuffer  
+EP_CLR_FRAME 67,0 = send clr data  
+EP_SEND_FRAME 68,0 = complete sendframedata sequence  
+  
+`:L`,size,OP  
 Lookup table for full refresh (Waveshare 29)
 
-`:l`  
+`:l`,size,OP  
 Lookuptable for partial refresh (Waveshare 29)
 
-`:Lx`,OP  
+`:Lx`,size,OP  
 Lookuptable for full refresh (Waveshare 42) 
 `x` = 1..5  
+`size` = number of bytes in table  
 `OP` = opcode for sending refresh table  
 
 `:TIx,AA,SCL,SDA`  
