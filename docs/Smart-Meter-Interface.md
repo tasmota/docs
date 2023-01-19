@@ -632,7 +632,26 @@ For `Inf off`, a simplified dataset is returned only.
     1,77070100600100ff@#,Zählernummer,,meter_number,0
     #
     ```
-    
+### DZG DWSB12.2 (SML)
+
+For `Inf off`, a simplified dataset is returned.
+The energy meter does have 2 meters, one for incoming and outgoing power. If you have a solar panel installed and you are delivering power to the network the second value will increase appropriately.
+   
+??? summary "Alternative script for the simplified dataset"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,16,9600,DWSB122
+    1,77070100010800ff@1000,Energie bezogen,kWh,energy,0
+    1,77070100020800ff@1000,Energie geliefert,kWh,energy,0
+    1,7707010060320101@#,Service ID,,meter_id,0
+    1,77010b0a01445a47@#,Unbekannt,,unknown,0
+    1,77070100600100ff@#,Zählernummer,,meter_number,0
+    #
+    ```
+	
 ### EasyMeter Q3A / Apator APOX+ (SML)
 
 A 2-Tariff Meter which for Example SWM (Stadtwerke München) oder DGY (Discovergy) uses. Unfortunately this Version sends only whole kWh (precision 0) without PIN. With PIN behaviour changes and high resolution is available as seen below (e.g. precision 7 for consumption/kWh, precision 2 for power/W, precision 1 for voltage/V).
