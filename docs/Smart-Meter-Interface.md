@@ -990,7 +990,7 @@ Current power values get published to mqtt immediately when received from the me
     #
     ```
 
-### Elster F96 Plus (Sharky 775) M-Bus
+### Elster F96 Plus (Sharky 775) (Ditech Integral-V UltraLite PRO) M-Bus
 
 This heat meter needs a wakeup sequence with 2400 Baud 8N1, wheras communication is done by 2400 Baud 8E1. The script will therefore only rund starting with Tasmota 12.2 where switching parity is implemented. For compiling, add the following to your `user_config_override.h` to increase serial communication buffer size and enable MQTT and Web publishing:
 
