@@ -37,7 +37,7 @@ Current integration acts as a master to the boiler.
 
 You may disable this behavior by removing [OpenTherm Slave Status](https://github.com/arendst/Tasmota/blob/development/tasmota/xsns_69_opentherm_protocol.ino#L58-L67) command. However, the integration will not be able to read flame/heating/failure flags.
 
-[OpenTherm Gateway Arduino shield](https://www.tindie.com/products/jiripraus/opentherm-gateway-arduino-shield/) support a gateway mode. As of now, this mode does *not supported* by the integration.
+[OpenTherm Gateway Arduino shield](https://www.tindie.com/products/jiripraus/opentherm-gateway-arduino-shield/) support a gateway mode. As of now, this mode is *not supported* by the integration.
 
 <img src="../_media/opentherm/opentherm_gw.png" width=375>
 
