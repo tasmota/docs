@@ -752,7 +752,7 @@ Example:
 
 ``` berry
 import path
-print(path.listdir("/sd/")
+print(path.listdir("/sd/"))
 # outputs a list of filenames at the root dir of the SD card
 ```
 
