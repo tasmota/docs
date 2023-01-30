@@ -1982,6 +1982,64 @@ Example: Changing the baud rate during operation.
     #
     ```  
 
+### 2 * Landis+Gyr E450 (encrypted)
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    smlj=0
+    =>sensor53 r
+    >R
+    smlj=0
+    >S
+    if upsecs>22
+    then
+    smlj|=1
+    endif
+    >M 2
+    +1,17,r,0,2400,Heizung
+    1,=so3,512
+    1,=so4,GUEK
+    1,pm(1.8.0)@1000,kWh_IN,kWh,kWh_IN,3;Wirkenergie Lieferung (+A)
+    1,pm(1.8.1)@1000,kWh_IN_T1,kWh,kWh_IN_T1,3;Wirkenergie Lieferung (+A) Tarif 1
+    1,pm(1.8.2)@1000,kWh_IN_T2,kWh,kWh_IN_T2,3;Wirkenergie Lieferung (+A) Tarif 2
+    1,pm(1.7.0)@1000,kW_IN,kW,kW_IN,3;Momentane Wirkleistung Lieferung (+A)
+    ;1,pm(2.8.0)@1000,kWh_OUT,kWh,kWh_OUT,3;Wirkenergie Bezug (-A)
+    ;1,pm(2.8.1)@1000,kWh_OUT_T1,kWh,kWh_OUT_T1,3;Wirkenergie Bezug (-A) Tarif 1
+    ;1,pm(2.8.2)@1000,kWh_OUT_T2,kWh,kWh_OUT_T2,3;Wirkenergie Bezug (-A) Tarif 2
+    ;1,pm(.2.7.0)@1000,kW_OUT,kW,kW_OUT,3;Momentane Wirkleistung Bezug (-A)
+    1,pm(3.8.0)@1000,kvarh_IN,kvarh,kvarh_IN,3;Blindenergie Lieferung (+R)
+    1,pm(.3.8.1)@1000,kvarh_IN_T1,kvarh,kvarh_IN_T1,3;Blindenergie Lieferung (+R) Tarif 1
+    1,pm(.3.8.2)@1000,kvarh_IN_T2,kvarh,kvarh_IN_T2,3;Blindenergie Lieferung (+R) Tarif 2
+    1,pm(.3.7.0)@1000,kvar_IN,kvar,kvar_IN,3;Momentane Blindleistung Lieferung (+R)
+    1,pm(4.8.0)@1000,kvarh_OUT,kvarh,kvarh_OUT,3;Blindenergie Bezug (-R)
+    1,pm(.4.8.1)@1000,kvarh_OUT_T1,kvarh,kvarh_OUT_T1,3;Blindenergie Bezug (-R) Tarif 1
+    1,pm(.4.8.2)@1000,kvarh_OUT_T2,kvarh,kvarh_OUT_T2,3;Blindenergie Bezug (-R) Tarif 2
+    1,pm(.4.7.0)@1000,kvar_OUT,kvar,kvar_OUT,3;Momentane Blindleistung Bezug (-R)
+    
+    +2,16,r,0,2400,Haus
+    2,=so3,512
+    2,=so4,GUEK
+    2,pm(1.8.0)@1000,kWh_IN,kWh,kWh_IN,3;Wirkenergie Lieferung (+A)
+    2,pm(1.8.1)@1000,kWh_IN_T1,kWh,kWh_IN_T1,3;Wirkenergie Lieferung (+A) Tarif 1
+    2,pm(1.8.2)@1000,kWh_IN_T2,kWh,kWh_IN_T2,3;Wirkenergie Lieferung (+A) Tarif 2
+    2,pm(1.7.0)@1000,kW_IN,kW,kW_IN,3;Momentane Wirkleistung Lieferung (+A)
+    ;2,pm(2.8.0)@1000,kWh_OUT,kWh,kWh_OUT,3;Wirkenergie Bezug (-A)
+    ;2,pm(2.8.1)@1000,kWh_OUT_T1,kWh,kWh_OUT_T1,3;Wirkenergie Bezug (-A) Tarif 1
+    ;2,pm(2.8.2)@1000,kWh_OUT_T2,kWh,kWh_OUT_T2,3;Wirkenergie Bezug (-A) Tarif 2
+    ;2,pm(2.7.0)@1000,kW_OUT,kW,kW_OUT,3;Momentane Wirkleistung Bezug (-A)
+    2,pm(.3.8.0)@1000,kvarh_IN,kvarh,kvarh_IN,3;Blindenergie Lieferung (+R)
+    2,pm(3.8.1)@1000,kvarh_IN_T1,kvarh,kvarh_IN_T1,3;Blindenergie Lieferung (+R) Tarif 1
+    2,pm(3.8.2)@1000,kvarh_IN_T2,kvarh,kvarh_IN_T2,3;Blindenergie Lieferung (+R) Tarif 2
+    2,pm(3.7.0)@1000,kvar_IN,kvar,kvar_IN,3;Momentane Blindleistung Lieferung (+R)
+    2,pm(4.8.0)@1000,kvarh_OUT,kvarh,kvarh_OUT,3;Blindenergie Bezug (-R)
+    2,pm(4.8.1)@1000,kvarh_OUT_T1,kvarh,kvarh_OUT_T1,3;Blindenergie Bezug (-R) Tarif 1
+    2,pm(4.8.2)@1000,kvarh_OUT_T2,kvarh,kvarh_OUT_T2,3;Blindenergie Bezug (-R) Tarif 2
+    2,pm(4.7.0)@1000,kvar_OUT,kvar,kvar_OUT,3;Momentane Blindleistung Bezug (-R)
+    #
+    ```
+       
 ### Logarex LK13BE (OBIS)
 
 ??? summary "View script"
