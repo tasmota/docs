@@ -30,4 +30,4 @@ To disable pullups either use command SetOption62 1 or select the option from th
 
 <img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/shelly/shelly2pullup.png" width="250"></img>
 
-Refer to the following issue: https://github.com/arendst/Tasmota/issues/4841
+Refer to the following issue: <https://github.com/arendst/Tasmota/issues/4841>

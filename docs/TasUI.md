@@ -18,7 +18,7 @@ docker run -p [PORT]:80 iotreboot/tasui:latest
 ```
 
 ## Home Assistant
-The add-on can be installed on `amd64`, `arm32v7`, `arm64v8` and `i386` builds. Simply add the TasUI repository on your addons list: https://github.com/iotreboot/TasUI
+The add-on can be installed on `amd64`, `arm32v7`, `arm64v8` and `i386` builds. Simply add the TasUI repository on your addons list: <https://github.com/iotreboot/TasUI>
 
 No configuration is required.
 

@@ -44,7 +44,7 @@ All EZO devices must operate under the I^2^C mode to be compatible with Tasmota.
 
 Tasmota will automatically detect any new device that has an I^2^C bus address between 0x61-0x70 (which covers the default address range of all EZO devices).  Tasmota supports any multiple of EZO devices (up to 16 of any kind).  When more than one device is detected, the devices will be indexed starting at index 1 (ex: EZO-1) and ordered by their I^2^C address.  If only one EZO device is connected, there will be no indexing of them.  You may change the address of your device by sending an I^2^C command to the device.  For example, to change the address of a single EZOpH sensor, the following command can be issued in the console: `Sensor78 I^2^C,100`
 
-Specific details about the list of commands available for your EZO device can be found in the device-specific datasheet on the [Atlas Scientific's](https://atlas-scientific.com/) website.  In order to individually address a single EZO sensor when more than one is detected, the index must be specified on the command by appending "-#" to the command: `Sensor78-2 I2C,101`
+Specific details about the list of commands available for your EZO device can be found in the device-specific datasheet on the [Atlas Scientific's](https://atlas-scientific.com/) website.  In order to individually address a single EZO sensor when more than one is detected, the index must be specified on the command by having "-#" before the other arguments: `Sensor78 -2 I2C,101`
 
 ## Calibration
 

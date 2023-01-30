@@ -494,7 +494,7 @@ SetOption29<a class="cmnd" id="setoption29"></a>|IR received data format<BR> `0`
 SetOption30<a class="cmnd" id="setoption30"></a>|Enforce Home Assistant auto-discovery as light<BR> `0` = relays are announced as a switch and PWM as a light *(default)*<BR> `1` = both relays and PWM are announced as light
 SetOption31<a class="cmnd" id="setoption31"></a>|Set status LED  blinking during Wi-Fi and MQTT connection problems.<br> _[`LedPower`](#ledpower) must be set to `0` for this feature to work_<BR>`0` = Enabled *(default)*<BR> `1` = Disabled
 SetOption32<a class="cmnd" id="setoption32"></a>|Number of 0.1 seconds to hold button before sending `HOLD` action message.<BR> `1..100` to set button hold time *(default = `40`)*. This option also affects the time required to perform a firmware defaults reset (10x `HOLD` action time). There is no firmware reset on using the HOLD action with shutterbuttons.
-SetOption33<a class="cmnd" id="setoption33"></a>|Number of seconds for which the maximum power limit can be exceeded before the power is turned off<BR> `1..250` = set number of seconds *(default = `5`)*
+SetOption33<a class="cmnd" id="setoption33"></a>|Number of times to retry applying power after the power has been switched off because of exceeding the maximum power limit<BR> `1..250` = set number of retries *(default = `5`)*
 SetOption34<a class="cmnd" id="setoption34"></a>|`0..255` = set [Backlog](#backlog) inter-command delay in milliseconds *(default = `200`)*
 SetOption35<a class="cmnd" id="setoption35"></a>|`0..255` = skip number of received messages in [Serial Bridge](#serial-bridge) *(default = `0`)*
 SetOption36<a class="cmnd" id="setoption36"></a>|Boot loop defaults restoration control.<BR>`0` = disable boot loop control<BR> `1..200` = set number of boot loops (a restart caused by any exception or watchdog timer within less than `BOOT_LOOP_TIME` (default 10 seconds) before beginning to restore settings  *(default = `1`)*. Once this number is reached, subsequent restarts will:<ul><li>1<sup>st</sup> restart: disable ESP8285 generic GPIOs interfering with flash SPI</li><li>2<sup>nd</sup> restart: disable rules causing boot loop</li><li>3<sup>rd</sup> restart: disable all rules (and [`autoexec.bat`](UFS#autoexecbat))</li><li>4<sup>th</sup> restart: reset user defined GPIOs to disable any attached peripherals</li><li>5<sup>th</sup> restart: reset module to Sonoff Basic (1)</li></ul>
@@ -584,6 +584,7 @@ SetOption144<a class="cmnd" id="setoption144"></a>|`1` = include a timestamp in 
 SetOption146<a class="cmnd" id="setoption146"></a>|`1` = enable display of ESP32 internal temperature
 SetOption147<a class="cmnd" id="setoption147"></a>|`1` = disable publish SSerialReceived MQTT messages, you must use event trigger rules instead
 SetOption148<a class="cmnd" id="setoption148"></a>|`1` = enable autorun of ArtNet mode at start. If for any reason listening to UDP port fails, this mode is disabled
+SetOption149<a class="cmnd" id="setoption149"></a>|`1` = DNS try to resolved the address as IPv6 first and IPv4 if none is found. Default behavior is to look for IPv4 address first. See [IPv6](IPv6.md)
 
 
 ### TuyaMCU
@@ -646,6 +647,8 @@ RfSend<a id="rfsend"></a>|`<value>` = code decimal or JSON. Data value is requir
 ### IR Remote
 
 The standard Tasmota builds have reduced support for IR protocols: `RC5`, `RC6` and `NEC`. Use Tasmota-IR to have access to full protocols.
+
+See [Codes for IR Remotes](Codes-for-IR-Remotes).
 
 Command|Parameters
 :---|:---

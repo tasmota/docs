@@ -1,4 +1,4 @@
-Opening my Sonoff 4CH (https://www.itead.cc/sonoff-4ch.html) I realized that on PCB there is a predisposition for 2.5 mm jack (also confirmed by schematic on Itead wiki: https://www.itead.cc/wiki/File:Sonoff_4CH.SCHMATIC.pdf).
+Opening my Sonoff 4CH (https://www.itead.cc/sonoff-4ch.html) I realized that on PCB there is a predisposition for 2.5 mm jack (also confirmed by schematic on Itead wiki: <https://www.itead.cc/wiki/File:Sonoff_4CH.SCHMATIC.pdf>).
 
 I ordered on Aliexpress some 2.5 mm jacks and when I received it after some work...
 

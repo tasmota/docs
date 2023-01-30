@@ -47,6 +47,10 @@ This will give you the mac address of each valve.
     * You might need to wait a minute or so or repeat the "TRV devlist" command a few times before the devices have been properly identified
     * Keep in mind that the TRV does NOT report the current temperature, only the requested, target, temperature. The Xiaomi Thermometer LYWSD03MMC makes a perfect combo for measuring the room temperature (~USD 4)
 
+After configuring, tasmota will poll the discovered valves and publish their state under `stat/EQ3/<MAC Adress>` (or `stat/EQ3/<BLEAlias>` if you have configured an alias for the MAC address of the valve using `BLEAlias`).
+
+The interval between polls can be configured using `TRVPeriod`. Tasmots needs to have an NTP or RTC time configured for this to work.
+
 ### Operating your TRV
 
 There are 2 ways to control your TRV:

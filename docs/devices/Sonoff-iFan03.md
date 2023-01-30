@@ -40,3 +40,7 @@ The capacitors in the iFan03 do not set the speed of US fans correctly. To corre
 To pair the remote control after the device has been flashed with the new firmware, the device needs to be powered from _**mains**_ voltage (not from the USB serial flashing device). **Be careful dealing with mains voltages. Ensure that all connections are correctly made and that the iFan03 covers are properly re-assembled.**
 
 To pair the remote control, hold down any button on the remote control and apply power to the iFan03. Once the device boots up you should hear a series of clicks as the internal relays operate. Once completed you can test the remote and it should all be operational.
+
+To unpair the remote control, hold down the unpair button (located on bottom left of RF remote control, the icon looks like a chain link) for 20 seconds until you hear 3 beeps from the controller.
+
+**Note:** It is possible to have multiple ifan03 controllers paired to a single RF remote. If you have multiple ifan03 controllers on the same electircal circuit breaker, you are likely to pair them to the same RF remote if you use breaker to power on the controller while pairing the RF remote.     

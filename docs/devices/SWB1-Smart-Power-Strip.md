@@ -17,5 +17,8 @@ The chip used WT8266-S1. The specs can be found on [wireless-tags.com](http://ww
 ![WT8266-S1_annoted](https://raw.githubusercontent.com/rigorm/Tasmota-contrib/master/WT8266-S1_annoted.jpg)
 Pins used. You can choose one of 3 GND to your liking. the RESET(RST) pin is also marked for those that use that pin to reset the chip while flashing
 
+Alternatively, you can solder a header on to the COM2 through holes, and use those for flashing the WT8266
+![SWB1 COM2 annotated](https://raw.githubusercontent.com/jrstarke/tasmota-docs/SWB1-COM2/docs/_media/SWB1-COM2.jpg)
+
 ### TASMOTA CONFIGURATION
 ![SWB1-Power_strip_tasmota_configs](https://raw.githubusercontent.com/rigorm/Tasmota-contrib/master/SWB1-Power_strip_tasmota_configs.png)

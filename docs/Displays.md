@@ -21,6 +21,7 @@
 16 | LilyGO T5 4.7" E-Paper display ESP32 device | :material-cpu-32-bit:
 17 | [Universal Display Driver](#universal-display-driver) | SPI or I^2^C
 18 | Interface to virtual display driver with [Berry](Berry) | :material-cpu-32-bit:
+19 | [MAX7219 Dot Matrix](MAX7219.md) | Interface GPIO 
 
 ## Display Commands
 
@@ -397,7 +398,10 @@ rule1 on tele-BME280#Temperature do DisplayText [s1p21x0y0]Temp: %value% C endon
 
 ## WaveShare Display Drivers
 
-Waveshare has two kinds of display controllers: with partial update and without partial update. The 2.9 inch driver is for partial update and should also support other Waveshare partial update models with modified WIDTH and HEIGHT parameters. The 4.2 inch driver is a hack which makes the full update display behave like a partial update and should probably work with other full update displays.  
+Waveshare has two kinds of display controllers: with partial update and without partial update. The 2.9 inch driver is for partial update and should also support other Waveshare partial update models with modified WIDTH and HEIGHT parameters. The 4.2 inch driver is a full update display.
+
+epaper displays should be connected via software SPI. most of them require a reset and a busy line. connect the busy line to SSPI_MISO.
+  
 
 The drivers are subclasses of the Adafruit GFX library. The class hierarchy is `LOWLEVEL :: Paint :: Renderer :: GFX`, where:  
 
@@ -421,7 +425,7 @@ The EPD fonts use about 9k space, which can be selected at compile time using \#
 ## Universal Display Driver
 
 Universal Display Driver or uDisplay is a way to define your display settings using a simple text file and easily add it to Tasmota.
-uDisplay is `DisplayModel 17`. It supports I2C and hardware or software SPI (3 or 4 wire). 
+uDisplay is `DisplayModel 17`. It supports I2C and hardware or software SPI (3 or 4 wire), 8,16 Bit parallel and RGB interface. The driver must be enabled by OPTION A3 on any GPIO pin. 
 
 The driver is enabled by compiling with `#define USE_UNIVERSAL_DISPLAY` and setting an unused GPIO to `Option A3`.
 
@@ -487,6 +491,20 @@ Parallel interface: (ESP32-S3 only)
 9. d8-d15 pins if bus size = 16
 10. Parallel Speed in MHz (usually 20)
 
+`RGB`  
+
+RGB 16 bit interface: (ESP32-S3 only)
+  
+1. DE pin
+2. VSYNC pin
+3. HSYNC pin
+4. PCLK pin
+5. Backlight pin 
+6. b0-b5 pins (blue color)
+7. g0-g5 pins (green color)
+8. r0-r4 pins (red color) 
+9. Pixel clock Speed in MHz (usually 14)
+  
 All signals must be given. Unused pins may be set to -1. If you specify a `*` char the pin number is derived from the Tasmota GPIO GUI.  
 The CS and DC pins must be the standard pins e.g. `SPI_CS` or `SPI_DC`.  
 
@@ -503,7 +521,7 @@ The CS and DC pins must be the standard pins e.g. `SPI_CS` or `SPI_DC`.
 `:S`  
 (_optional_) Splash setup, also defines initial colors. If omitted screen is not cleared initially.
 
-1. Font number
+1. Font number, if -1 splash screen is suppressed
 2. Font size
 3. FG color (as index color)
 4. BG color (as index color)
@@ -549,6 +567,18 @@ All values are in hex. On SPI the first value is the command, then the number of
     29,80
     ```
 
+`:V` video signal parameters for RGB panels  
+  hsync_polarity,  
+  hsync_front_porch,  
+  hsync_pulse_width,  
+  hsync_back_porch,  
+  vsync_polarity,  
+  vsync_front_porch,  
+  vsync_pulse_width,  
+  vsync_back_porch,  
+  pclk_active_neg,  
+  
+  
 `:o`,OP      
 `OP` = controller OPCODE to switch display off  
 
@@ -570,7 +600,7 @@ Register values for all 4 rotations (color display only)
 1. rotation code
 2. x offset
 3. y offset
-4. rotation pseudo opcode for touch panel
+4. rotation pseudo opcode for touch panel, in case of RGB panel use only these entries 
 the appropriate coordinate convervsions are defined via pseudo opcodes
 0 = no conversion
 1 = swap and flip x
@@ -603,7 +633,7 @@ dimmer opcode _(optional)_
 LVGL _(optional)_
   
 1. number of display lines flushed at once (min 10) the lower the lesser memory needed  
-2. bit 0: DMA enables (`0` for no DMA, 1 use DMA) - not supported on all displays<br>bit 1: selects color swap, 2 = swap 16 bit color<br>bit 2: enable async DMA, `0` wait for DMA to complete before returning, `4` run DMA async in the background. This later mode is only valid if the SPI bus is not shared between the display and any other SPI device like SD Card Reader.
+2. bit 0: DMA enables (`0` for no DMA, 1 use DMA) - not supported on all displays<br>bit 1: selects color swap, 2 = swap 16 bit color<br>bit 2: enable async DMA, `0` wait for DMA to complete before returning, `4` run DMA async in the background. This later mode is only valid if the SPI bus is not shared between the display and any other SPI device like SD Card Reader,<br>bit 3: `8` inverted busy line on epaper displays.
 
 `:T`  
 Wait times used for E-paper display  
@@ -611,15 +641,35 @@ Wait times used for E-paper display
 2. partial refresh wait in ms  
 3. wait after update in ms  
 
-`:L`  
+`:f`  
+codes for epaper full refresh update  
+
+`:p`  
+codes for epaper partial refresh update  
+  
+beside the epaper chip codes, some pseudo opcodes are supported  
+EP_RESET 60,1,T = toggle reset pin T milliseconds  
+EP_LUT_FULL 61,0 = switch to full update mode  
+EP_LUT_PARTIAL 62,0 = switch to partial update mode  
+EP_WAITIDLE 63,1,T = wait for busy pin or T milliseconds  
+EP_SET_MEM_AREA 64,0 = set memory area to full screen  
+EP_SET_MEM_PTR 65,0 = set memory pointer to start of screen  
+EP_SEND_DATA 66,0 = send framebuffer  
+EP_CLR_FRAME 67,0 = send clr data  
+EP_SEND_FRAME 68,0 = complete sendframedata sequence  
+EP_BREAK_RR_EQU 69,X = break when reset reason == X  
+EP_BREAK_RR_NEQ 6a,X = break when reset reason != X
+  
+`:L`,size,OP  
 Lookup table for full refresh (Waveshare 29)
 
-`:l`  
+`:l`,size,OP  
 Lookuptable for partial refresh (Waveshare 29)
 
-`:Lx`,OP  
+`:Lx`,size,OP  
 Lookuptable for full refresh (Waveshare 42) 
 `x` = 1..5  
+`size` = number of bytes in table  
 `OP` = opcode for sending refresh table  
 
 `:TIx,AA,SCL,SDA`  
@@ -630,6 +680,9 @@ SCL, SDA are the pins used (or * for tasmota definition)
 `:TS,CS_PIN`   
 Defines a touch panel an SPI bus with chip select `CS_PIN` (or *)  
 
+`:TR` 
+enable simple resistive touch via data lines (e.g. cheap il9341 displays)  
+  
 `:M,X1,X2,Y1,Y2`
 Defines an optional mapping for touch controllers (always needed on resistive touch) 
 `X1` = display left margin  

@@ -39,7 +39,7 @@ Using the TX T1 1-3 device template will work. A new T0 template is forthcoming.
 ### Flashing
 
 1. Connect the device's serial interface pins to the [Serial-to-USB adapter](../Getting-Started.md). **Be sure that your adapter is set to supply 3.3v**. Place a jumper wire from GND to the side of R19 nearest the screw hole cutout - this is connected to GPIO0.
-2. Download `tasmota.bin` from http://ota.tasmota.com/tasmota
+2. Download `tasmota.bin` from <http://ota.tasmota.com/tasmota>
 3. Have [`Flashing tool`](../Getting-Started.md) running with the correct settings. Be sure to select `DOUT` and `Erase flash - yes`. Select the right COM port for your serial-to-USB adapter and select `tasmota.bin` from the folder where you downloaded the file. 
 4. Plug the serial adapter into the USB port and click the `Flash` button on `Tasmota PyFlasher`.
 5. When you get the flash complete, remove the GND jumper wire from GPIO0.
@@ -48,7 +48,7 @@ Using the TX T1 1-3 device template will work. A new T0 template is forthcoming.
 ### IP Configuration
 
 1. Using a mobile device, scan for Wi-Fi networks and connect to the **`sonoff-xxxx`** access point. When it connects to the network, you may get a warning that there is no Internet connection and be prompted to connect to a different network. _Do not allow the mobile device to select a different network_.
-2. Open the browser on your mobile device and navigate to http://192.168.4.1.
+2. Open the browser on your mobile device and navigate to <http://192.168.4.1>.
 3. In the Tasmota web UI, scan wifi networks and select the network for your home. Then enter the network's password (_**click the checkbox to see the password you enter to ensure that it is correct and that your mobile device has not inadvertently capitalized the first letter if it is supposed to be lower case nor autocorrected what you entered**_). When you save the settings, the device will restart and connect to your home network. The `sonoff-xxxx` network will not longer be present. Therefore your mobile device will automatically be disconnected and should connect back to its data network.
 4. Check in your router or use an IP scanner to ensure that the device is connected to your home network. Make not of the IP address assigned to your device.
 ### MQTT Configuration

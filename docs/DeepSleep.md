@@ -5,8 +5,11 @@ DeepSleep support for up to 10 years (i.e., 86,400 seconds = 1 day) (e.g., if us
 !!! example
     With `DeepSleepTime 3600`, the device will wake up exactly every hour (e.g., 8:00am, 9:00am, ...). If you define `DeepSleepTime 86400` (i.e., 60\*60\*24), it will wake-up exactly at 0:00 local time. There is no option to shift the wakeup time; except changing the timezone. If you define `DeepSleepTime 600`, it will wake-up every 10 minutes (e.g., 8:00, 8:10, 8:20, ...).
 
+!!! note
+    The next wake time will always be an even number of `DeepSleepTime` cycles since the epoch (Midnight 1970-01-01).  This may matter if the sleep time isn't an even number of minutes/hours (ex: 3660), such as when trying to wake at a specific time of day.
+
 !!! warning
-  Please be aware that the minimum DeepSleep time is 10 seconds.
+    Please be aware that the minimum DeepSleep time is 10 seconds.
   
 ![](_media/deepsleep_minimal.png)
 

@@ -1,7 +1,7 @@
 **Sonoff 4CH DIY**
 
-* Itead Shop: https://www.itead.cc/psf-b85.html
-* Itead Wiki: https://www.itead.cc/wiki/PSF-B85
+* Itead Shop: <https://www.itead.cc/psf-b85.html>
+* Itead Wiki: <https://www.itead.cc/wiki/PSF-B85>
 
 The Sonoff 4CH DIY is based on the ESP8285.
 

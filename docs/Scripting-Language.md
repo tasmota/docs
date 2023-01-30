@@ -38,7 +38,7 @@
     USE_SCRIPT_GLOBVARS | enables global variables and >G section
     USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
     SML_REPLACE_VARS | enables possibility to replace the lines from the (SML) descriptor with Vars
-    USE_SML_SCRIPT_CMD | enables SML script cmds
+    NO_USE_SML_SCRIPT_CMD | disables SML script cmds
     USE_SCRIPT_I2C | enables I2C support
     USE_SCRIPT_SERIAL | enables support for serial io cmds
     USE_LVGL | enables support for LVGL
@@ -554,8 +554,8 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `s(x)` = explicit conversion from number x to string  may be preceded by precision digits e.g. s(2.2x) = use 2 digits before and after decimal point  
   
 I2C support #define USE_SCRIPT_I2C  
-`ia(AA)`, `ia2(AA)` test and set I2C device with address AA (on BUS 1 or 2), returns 1 if device is present
-`iw(aa val)` , `iw1(aa val)`, `iw2(aa val)`, `iw3(aa val) `write val to register aa (1..3 bytes)  
+`ia(AA)`, `ia2(AA)` test and set I2C device with address AA (on BUS 1 or 2), returns 1 if device is present  
+`iw(aa val)` , `iw1(aa val)`, `iw2(aa val)`, `iw3(aa val) `write val to register aa (1..3 bytes), if in aa bit 15 is set no destination register is transfered (needed for some devices), if bit 14 is set byte order is reversed  
 `ir(aa)`, `ir1(aa)`, `ir2(aa)`, `ir3(aa)` read 1..3 bytes from register aa  
   
 Serial IO support #define USE_SCRIPT_SERIAL  
@@ -616,16 +616,17 @@ SEL:
   
 `knx(code value)` = sends a number value to KNX   
 
-`sml(m 0 bd)` = set SML baud rate of Meter m to bd (baud) (if defined USE_SML_SCRIPT_CMD)  
-`sml(m 1 htxt)` = send SML Hex string htxt as binary to Meter m (if defined USE_SML_SCRIPT_CMD)  
-`sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)(if defined USE_SML_SCRIPT_CMD)  
-`sml(m 3 hstr)` = inserts SML Hexstring variable hstr as binary to Meter m in Output stream e.g. for special MODBUS cmds, hstr must be a string variable NO string constant (if defined USE_SML_SCRIPT_CMD)  
-`sml[n]` = get value of SML energy register n (if defined USE_SML_SCRIPT_CMD)  
-`smls[m]` = get value of SML meter string info of meter m (if defined USE_SML_SCRIPT_CMD)  
-`smlv[n]` = get SML decode valid status of line n (1..N), returns 1 if line decoded. n=0 resets all status codes to zero (if defined USE_SML_SCRIPT_CMD)  
+`sml(m 0 bd)` = set SML baud rate of Meter m to bd (baud)  
+`sml(m 1 htxt)` = send SML Hex string htxt as binary to Meter m  
+`sml(-m 1 initstr)` = reinits serial port of Meter m, initstr: "baud:mode" e.g. "9600:8E1", currently only baud and N,E,O are evaluated.    
+`sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)
+`sml(m 3 hstr)` = inserts SML Hexstring variable hstr as binary to Meter m in Output stream e.g. for special MODBUS cmds, hstr must be a string variable NO string constant   
+`sml[n]` = get value of SML energy register n   
+`smls[m]` = get value of SML meter string info of meter m, if m < 0 gets string representation of numeric value of decode line m, this enables double number resolution.  
+`smlv[n]` = get SML decode valid status of line n (1..N), returns 1 if line decoded. n=0 resets all status codes to zero 
 `smld(m)` = call decoder of meter m  
 `smlj` = read or write variable, when 0 disables MQTT output of SML.  
-`enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3 (if defined USE_ENERGY_SENSOR)  
+`enrg[n]` = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3, 10=start energy, 11=daily energy, 12=energy yesterday (if defined USE_ENERGY_SENSOR)  
 `gjp("host" "path")` = trigger HTTPS JSON page read as used by Tesla Powerwall (if defined SCRIPT_GET_HTTPS_JP)  
 `gwr("del" index)` = gets non JSON element from webresponse del = delimiter char or string, index = n´th element (if defined USE_WEBSEND_RESPONSE)  
 `http("url" "payload")` = does a GET or POST request on a URL (http:// is internally added)
@@ -642,7 +643,8 @@ SEL:
 `eres` = result of >E section set this var to 1 in section >E to tell Tasmota event is handled (prevents MQTT)  
 
 The following variables are cleared after reading true:  
-`chg[var]` = true if a variables value was changed (numeric vars only)  
+`chg[var]` = true if a variables value was changed (numeric vars only)
+`diff[var]` = difference since last variable update
 `upd[var]` = true if a variable was updated  
 `boot` = true on BOOT  
 `tinit` = true on time init  
@@ -1120,12 +1122,51 @@ remark: the Flash illumination LED is connected to GPIO4
 ```
     
 ## Scripting Cookbook
-
-### Scripting Language Example
-
     a valid script must start with >D in the first line!  
     some samples still contain comment lines before >D. This is no longer valid!  
+        
+### simple example to start with
+    >D
+    ; in this section you may define and or preset variables, there are numbers or strings.
+    ; in contrast to rules you may choose any variable name
+    ; numeric variable
+    val1=1.234
+    ; numeric variable that is preserved after reboot or power down
+    p:val2=0
+    ; text variable
+    txt="hello world"
+        
+    >B
+    ; this section is executed durig boot or on script restart
+    print we are booting
     
+    >S
+    ; this section is executed every second
+    print one second tick
+    ; variables may be printed enclosed with % char, thus showing "hello world 1.234"
+    ; very handy for debugging
+    print %txt% %val1%
+    
+    ; check if upcounting seconds give zero result when dividing by 10
+    ; upsecs is a system defined variable that counts seconds from start
+        
+    ; you may use if then, else, endif
+    if upsecs%10==0
+    then
+        print every 10 seconds
+    endif
+        
+    ; or if {} else {}
+    if upsecs%10==0 {
+        print every 10 seconds
+    }
+
+    >R
+    ; this section is executed on restart
+    print we are restarting
+        
+       
+### Scripting Language Example
     **Actually this code is too large**. This is only meant to show some of the possibilities
 
     >D
@@ -2587,6 +2628,10 @@ start dim level = initial dimmer level after power-up or restart; max 100
     %=#wsub
       
 ### Image gallery of various Tasmota scripts  
+        
+    these are some examples of more complex scripts to show what is possible.
+    complex scripts should be edited with the external source editor as they contain lots of comments and indents.
+    i will provide the sources later.
 
 ### Internet radio  
 

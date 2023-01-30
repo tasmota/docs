@@ -22,7 +22,7 @@ It is possible to flash over OTA. But, it seems flashing via OTA may leave remai
 Unfortunately I bricked one of my plugs (probably by typing wrong Wifi name), so I needed to flash manually.
 
 Manual flash should be done exactly as shown here:
-* https://github.com/arendst/Tasmota/issues/3950#issuecomment-436074625
+* <https://github.com/arendst/Tasmota/issues/3950#issuecomment-436074625>
 * devices/Hyleton-313-Smart-Plug
 
 Access to the internals is easy. Casing is held by 3 torx screws (no glue anywhere).

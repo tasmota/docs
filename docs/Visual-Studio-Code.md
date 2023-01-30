@@ -8,7 +8,7 @@ Grab [Tasmota](https://github.com/arendst/Tasmota/archive/refs/heads/development
 ## Full Install (Windows, Linux and Mac)
 
 ## Download and Install Visual Studio Code
-Download Visual Studio Code (VSC) from https://code.visualstudio.com/
+Download Visual Studio Code (VSC) from <https://code.visualstudio.com/>
 
 ### Install PlatformIO Extension
 Install the _PlatformIO IDE_ extension in VSC.
@@ -18,7 +18,7 @@ Select ``View`` - ``Extensions`` and type PlatformIO in the search box.
 Make sure to select the official PlatformIO.org *PlatformIO IDE* extension and select *Install*. Accept to install dependencies.
 
 ## Download Tasmota
-Download the latest Tasmota version from https://github.com/arendst/Tasmota and unzip to a known folder.
+Download the latest Tasmota version from <https://github.com/arendst/Tasmota> and unzip to a known folder.
 
 ### Copy files
 Copy all files from the Tasmota Source code into your VSC working folder.

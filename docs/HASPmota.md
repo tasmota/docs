@@ -103,7 +103,7 @@ tasmota.add_cron('*/2 * * * * *', def () tasmota.publish_rule(tasmota.read_senso
 Running `HASPmota` with your own template is as simple as:
 
 - create a template in `pages.jsonl` and store it in the Tasmota file system
-- creata an `autoexec.be` file containing the following:
+- create an `autoexec.be` file containing the following:
 
 ``` berry
 # simple `autoexec.be` to run HASPmota using the default `pages.jsonl`
@@ -398,8 +398,8 @@ Fonts below are from [KreativeKorp](http://www.kreativekorp.com/software/fonts/a
 
 Fonts below are from Daniel Linssen 
 
-- `m5x7.lvfont` https://managore.itch.io/m5x7
-- `m3x6.lvfont` https://managore.itch.io/m3x6
+- `m5x7.lvfont` <https://managore.itch.io/m5x7>
+- `m3x6.lvfont` <https://managore.itch.io/m3x6>
 
 
 Here is the HASPmota template for the screen above:

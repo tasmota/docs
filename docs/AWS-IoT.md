@@ -4,7 +4,7 @@
 !!! tip "New simplified and automated configuration"
     We now provide easy to use AWS CloudFormation templates to generate the private key and sign the certificate. The manual method is now in Appendix
 
-!!! failure "This feature is not included in precompiled binaries, except tasmota-zbbridge"
+!!! failure "This feature is not included in precompiled ESP8266 binaries, except tasmota-zbbridge. It is included in all ESP32 builds."
     To use it you must [compile your build](Compile-your-build). 
 
 Add the following to `user_config_override.h`:
@@ -64,7 +64,7 @@ Here is a simple guide.
 
 ### 0. Open an AWS Account
 
-If you don't have already one, just follow the guide: https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/
+If you don't have already one, just follow the guide: <https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/>
 
 ### 1. Prerequisites
 

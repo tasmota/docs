@@ -16,7 +16,6 @@ The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?
 * [FTDI FT232](https://www.ftdichip.com/Products/ICs/FT232R.htm) - these adapters have a lot of fakes in the market so buy only from reliable sources ([example](https://www.sparkfun.com/products/13746)). Buy only the variant with a separate 3.3V regulator on PCB! 
 * [CP2102](https://www.silabs.com/documents/public/data-sheets/cp2102-9.pdf) or [PL2303](http://www.prolific.com.tw/UserFiles/files/ds_pl2303HXD_v1_4_4.pdf) - works with certain devices, but using an external 3.3V supply might be necessary. Not recommended for beginners!
 * [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) You can also use a NodeMCU (or similar) as a reliable serial-to-USB adapter if you disable the onboard ESP by bridging GND to the RST or EN pin, and connect TX and RX straight to another ESP82xx instead of crossed.
-* [RaspberryPi](Flash-Sonoff-using-Raspberry-Pi) - only for advanced users. External 3.3V supply necessary.
 
 !!! note "Don't forget to install drivers for your serial-to-USB adapter."
 
@@ -192,7 +191,7 @@ Choose an installation method:
 
 === "esptool.py :material-linux: :material-apple: :material-microsoft-windows:"
 
-    Esptool is the official Espressif tool for flashing ESP chips. It requires Python, if you do not have an installed copy of Python 2.x or 3.x download and install it from https://www.python.org.
+    Esptool is the official Espressif tool for flashing ESP chips. It requires Python, if you do not have an installed copy of Python 2.x or 3.x download and install it from <https://www.python.org>.
 
     Download the [esptool Source code](https://github.com/espressif/esptool/releases) to a folder of your choice.
     Go to the folder and install Esptool with command 
@@ -245,6 +244,7 @@ Choose an installation method:
     **Tasmota is NOT a developer of these tools. For help and troubleshooting you will need to _get support from those projects_.**
 
     - [**MgOS to Tasmota**](https://github.com/arendst/mgos-to-tasmota) - OTA flash for Shelly devices
+    - [**MgOS32 to Tasmota32**](https://github.com/tasmota/mgos32-to-tasmota32) - OTA flash for Shelly Plus and Pro (ESP32) devices
     - [**Tuya-Convert**](Tuya-Convert) - OTA flash for devices with Tuya chips. **Does not work in 99% of cases**
     - [**Sonoff DIY**](Sonoff-DIY) - OTA flash for select Sonoff devices **Does not work anymore**
     - [**esp2ino**](https://github.com/elahd/esp2ino) - OTA flash for select Wyze devices. **Does not work anymore**

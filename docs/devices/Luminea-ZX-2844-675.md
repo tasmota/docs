@@ -7,8 +7,8 @@ also known as:
 ![](https://i.ibb.co/8xkFHMp/IMG-1424.jpg)
 
 sold by PEARL and amazon (i know know if they are available outside D-A-CH)
-* https://www.pearl.de/a-ZX2844-3103.shtml
-* https://www.amazon.de/Luminea-Zubeh%C3%B6r-Smarthome-LED-Strips-WLAN-Controller-spritzwassergesch%C3%BCtzt/dp/B074T11793
+* <https://www.pearl.de/a-ZX2844-3103.shtml>
+* <https://www.amazon.de/Luminea-Zubeh%C3%B6r-Smarthome-LED-Strips-WLAN-Controller-spritzwassergesch%C3%BCtzt/dp/B074T11793>
 
 ## Hardware
 

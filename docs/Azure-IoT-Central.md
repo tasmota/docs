@@ -29,7 +29,7 @@ Azure IoT Central provides a [free tier](http://aka.ms/iotcentral) that allows f
 
 ### 0. Create an IoT Central Application
 
-Follow the steps here to create an IoT Central Application: https://docs.microsoft.com/en-us/azure/iot-central/core/quick-deploy-iot-central
+Follow the steps here to create an IoT Central Application: <https://docs.microsoft.com/en-us/azure/iot-central/core/quick-deploy-iot-central>
 
 ### 1. Get the ID Scope
 
@@ -45,7 +45,7 @@ Click `Create enrollment group`, name the group, and select the Attestation type
 
 ### 3. Compile your binary including support for Azure IoT Device Provisioning Service (and IoT Central)
 
-Following the directions here: https://tasmota.github.io/docs/Compile-your-build/ compile your binary adding the following settings to your [my_user_config.h](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h) adding your Scope Id and your Primary Key.
+Following the directions here: <https://tasmota.github.io/docs/Compile-your-build/>. Compile your binary adding the following settings to your [my_user_config.h](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h) adding your Scope Id and your Primary Key.
 
 !!! tip 
   Don't forget your WiFi for complete automation.
