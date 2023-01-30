@@ -50,6 +50,9 @@
 ### ESP8266-S3
 ![ESP8266-S3 Pinout](_media/pinouts/ESP-8266-S3_pinout.jpg)
 
+### WT8266-S1
+![WT8266-S1](https://templates.blakadder.com/assets/pinouts/WT8266-S1.png)
+
 ### 449A-ECOPLUGS
 ![EcoPlugs 449A Pinout](_media/pinouts/449A-ECOPLUGS_pinout.jpg)    
 [Datasheet](https://fccid.io/PAGECO-PLUGS/User-Manual/user-manual-2659058.iframe)
