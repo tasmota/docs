@@ -56,7 +56,7 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 
 **Leading edge dimmer**: You can also configure a leading edge dimmer on 230V with the 1 channel configuration. In this case you need a TRIAC and a zero-cross detection that give a pulse with every crossing of the 0V of the sinus curve. This is currently ONLY supported on ESP8266. A working ESP32 is "work in progress".
 
-??? summary "View scriptRobotdyn AC dimmer example"  
+??? summary "Robotdyn AC dimmer configuration"  
     Define a `Counter` with the same number as the PWM (e.g. Counter1 & PWM1). You will need to connect the output of PWM1 to an input as Counter1. 
     Connect zero-crossing to GPIO of Counter4
     
