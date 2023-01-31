@@ -96,9 +96,10 @@ You have to configure the module or the template. Select `SolaxX1 Tx` and `Solax
 When every thing works you will see the current data on the main page. They are also provided via MQTT.  
 ![x1-example](_media/solax-x1/x1-example_300.png)
 
-!!! tip
-	To send a MQTT telemetry message immediately on every change of power, you can set a [`PowerDelta`](Commands#powerdelta) value.  
+!!! tip "Tips"
+	- To send a MQTT telemetry message immediately on every change of power, you can set a [`PowerDelta`](Commands#powerdelta) value.  
 	E.g. `PowerDelta 101` for every change of at least 1 W.
+	- Set [`SetOption72`](Commands#setoption72) to `1` for displaying the value of total energy reported from the inverter.
 
 ### Console commands
 There are two special console commands for the X1 converter:  
