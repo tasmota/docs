@@ -48,20 +48,21 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 
 ### 1 Channel - Dimmable Light
 
-<img style="float:right; width:180px" alt="Tasmota_1" src="https://user-images.githubusercontent.com/49731213/71555196-9e889b80-2a29-11ea-9f96-fc47ad65ef43.png">
+![Example light 1 channel](https://user-images.githubusercontent.com/49731213/71555196-9e889b80-2a29-11ea-9f96-fc47ad65ef43.png){width="180" align=right}
 
-1 channel lights are often white lights with On/Off controls and Dimmer.
+1 channel lights are often white lights with On/Off controls and dimmer.
 
-**Alexa**: You can use Philips Hue emulation, the light will appear as white light with Dimmer.
+**Alexa**: You can use Philips Hue emulation, the light will appear as white light with dimmer.
+<br clear="right"/>
+![Robotdyn-Dimmermodul](_media/peripherals/Robotdyn-Dimmermodul-1Kanal.jpg){width="180" align=right}
 
 **Leading edge dimmer**: You can also configure a leading edge dimmer on 230V with the 1 channel configuration. In this case you need a TRIAC and a zero-cross detection that give a pulse with every crossing of the 0V of the sinus curve. This is currently ONLY supported on ESP8266. A working ESP32 is "work in progress".
+<br clear="right"/>
 
 ??? summary "Robotdyn AC dimmer configuration"  
     Define a `Counter` with the same number as the PWM (e.g. Counter1 & PWM1). You will need to connect the output of PWM1 to an input as Counter1. 
     Connect zero-crossing to GPIO of Counter4
     
-    ![Robotdyn-Dimmermodul](_media/peripherals/Robotdyn-Dimmermodul-1Kanal.jpg)
-
     |Configuration|(see below)|
     |---|---|
     |Dimmer1| PWM1, COUNTER1|
@@ -73,7 +74,7 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
     ![ACDimmer](https://user-images.githubusercontent.com/24524506/155886267-56433a26-614a-43d7-8b30-3e38ef9931d7.png)
 
     Example config:  
-    ![Screenshot 2022-02-27 at 15 34 19](https://user-images.githubusercontent.com/24524506/155886737-8139f80b-510f-4b61-937a-b6929aa27531.png)
+    ![Robotdyn example schematic](https://user-images.githubusercontent.com/24524506/155886737-8139f80b-510f-4b61-937a-b6929aa27531.png){width="300"}
 
     Preferably before connecting the ZC & PWM perform the following commands:
 
