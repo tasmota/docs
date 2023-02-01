@@ -1,6 +1,7 @@
-I got NEO and managed install tasmota on it.
+This device is dangerous and is not allowed to use in EU anymore
 
-https://www.amazon.de/dp/B07KJGHXCQ
+https://www.bundesnetzagentur.de/DE/Fachthemen/Telekommunikation/Technik/Marktueberwachung/MarkteinschraenkendeMassnahmen/EuVertriebsverbote.html?nn=268512
+
 
 **IMPORTANT: **I checked PCB and it is not solid for long use and high power. All contact are very cheap, also there is no POW.
 
