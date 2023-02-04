@@ -672,11 +672,12 @@ Lookuptable for full refresh (Waveshare 42)
 `size` = number of bytes in table  
 `OP` = opcode for sending refresh table  
 
-`:TIx,AA,SCL,SDA`  
+`:TIx,AA,SCL,SDA,<IRQ>,<RST>`  
 Defines a touch panel an I2C bus nr `x` (1 or 2)  
 AA is device address  
 SCL, SDA are the pins used (or * for tasmota definition)  
-
+IRQ,RST optional IRQ and RST pins
+  
 `:TS,CS_PIN`   
 Defines a touch panel an SPI bus with chip select `CS_PIN` (or *)  
 
