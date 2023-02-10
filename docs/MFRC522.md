@@ -27,6 +27,8 @@ This reader is ubiquitous in many Arduino starter and sensor kits. It uses SPI p
 |  RST    | GPIO0..5,15,16 |  RC522 Rst
 |  3V3    | 3V3            |
 
+If the ESP8266 doesn't boot, remove the RST connection.
+
 ### Tasmota Settings 
 In the **_Configuration -> Configure Module_** page assign:
 
