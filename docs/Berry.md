@@ -96,6 +96,10 @@ Meanwhile the Tasmota log shows:
 {'POWER': 'ON', 'Dimmer': 60, 'Color': '996245', 'HSBColor': '21,55,60', 'Channel': [60, 38, 27]}
 The light is bright
 ```
+## Save your Scripts
+Berry can autostart your scripts. See a short desciption in Section for the Filesystems.
+https://tasmota.github.io/docs/UFS/#autoexecbe
+Your can use the Filemanager to edit, edit or save files with berry scripts
 
 ## Lights and Relays
 
