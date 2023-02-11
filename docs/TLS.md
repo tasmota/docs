@@ -1,6 +1,6 @@
 # TLS Secured MQTT
 
-??? tip "This feature is included only in `tasmota32` binaries" 
+??? tip "This feature is included only in `tasmota32` and `tasmota-zbbridge` binaries" 
 
 Starting with version 10.0.0.4, TLS now support dual mode, depending of the value of `SetOption132`:
 
@@ -89,6 +89,8 @@ Main limitations are:
 - Your SSL/TLS server must support TLS 1.2 and the `ECDHE_RSA_WITH_AES_128_GCM_SHA256` cipher - which is the case with the default Mosquitto configuration
 - The server certificate must have an RSA private key (max 2048 bits) and the certificate must be signed with RSA and SHA256 hash. This is the case with default LetsEncrypt certificates. ESP32 supports by default RSA private keys up to 4096 bits, ESP8266 must be compiled with option `-DUSE_4K_RSA` to support 4096 private keys.
 - Your SSL/TLS should support TLS 1.2 MFLN to limit buffer to 1024 bytes. If MFLN is not supported, it will still work well, as long as the server does not send any message above 1024 bytes. On ESP32 buffers are raised to 2048 bytes.
+- If you are using **certbot** with Letsencrypt: starting with v2.0.0 certbot requests ECDSA certificates by default. Make sure you explicitly add `--key-type rsa` and `--rsa-key-size 2048` (or `--rsa-key-size 4096`).
+
 
 -----------
 
