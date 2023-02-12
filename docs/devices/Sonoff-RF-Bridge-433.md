@@ -43,6 +43,7 @@ The RF upgrade requires wiring the bridge and then flashing the firmware via the
 <img src="https://github.com/arendst/arendst.github.io/raw/master/media/sonoff_bridge_rffw_upgrade.png" width="300">
 
 **R2 V2.2**
+Read about it in Discussions : [New Sonoff RF Bridge Board Layout (R2 v2.2)](https://github.com/arendst/Tasmota/discussions/13283)<br>
 <img src="https://user-images.githubusercontent.com/28188533/136151668-d4d0ee83-9e93-4b0e-aec2-10f5b0648f20.jpg" width="300">
 
 #### Flashing RF Firmware
