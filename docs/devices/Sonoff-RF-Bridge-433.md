@@ -1,5 +1,9 @@
 The Sonoff RF Bridge has two separate chips to handle the Wi-Fi (ESP8285) and RF (EFM8BB1) communications respectively. It is used to send and receive codes with 433.9MHz frequency RF devices. Codes received from RF devices such as remote controls is passed to the onboard ESP8285 via the serial interface. The code data is relayed via MQTT. Similarly, the Bridge receives commands over Wi-Fi and sends the encoded data to the RF chip to control an RF device. Thus, the Sonoff RF Bridge "bridges" communications between RF and Wi-Fi.
 
+**Attention ⚠️️⚠️️⚠️️** There are now 3 versions of the `Sonoff RF Bridge 433`: the `R1` , `R2 V1.0` and `R2 V2.2`.
+
+Users reported limited success flashing Tasmota to `R2 V2.2` and **no known method** to flash RF firmware at the moment.
+
 ## Flash Tasmota
 Please read the [Hardware Preparation](../Getting-Started.md#hardware-preparation) article for general flashing instructions.
 
@@ -30,13 +34,17 @@ Tasmota supports the original Sonoff RF firmware and the [Portisch firmware](htt
 ### RF Firmware Upgrade
 The RF upgrade requires wiring the bridge and then flashing the firmware via the Tasmota web UI.
 
-**Attention ⚠️️⚠️️⚠️️** There are 2 versions of the `Sonoff RF Bridge 433`: the `R1` and the `R2 V1.0`.  
+**Attention ⚠️️⚠️️⚠️️** There are now 3 versions of the `Sonoff RF Bridge 433`: the `R1` , `R2 V1.0` and `R2 V2.2`.
 
 **R1**  
 <img src="https://user-images.githubusercontent.com/34340210/64807789-f62af600-d563-11e9-81e0-a73c99577838.jpg" width="300">
 
 **R2 V1.0** RF firmware flashing:  
 <img src="https://github.com/arendst/arendst.github.io/raw/master/media/sonoff_bridge_rffw_upgrade.png" width="300">
+
+**R2 V2.2**
+Read about it in Discussions : [New Sonoff RF Bridge Board Layout (R2 v2.2)](https://github.com/arendst/Tasmota/discussions/13283)<br>
+<img src="https://user-images.githubusercontent.com/28188533/136151668-d4d0ee83-9e93-4b0e-aec2-10f5b0648f20.jpg" width="300">
 
 #### Flashing RF Firmware
 1. Make sure you have previously flashed a Tasmota binary built with `RF_FLASH`. Refer to the [builds table](../Firmware-Builds) for pre-compiled binaries which include this feature. Otherwise the "Magic byte is not 0xE9" error will occur.
@@ -191,3 +199,4 @@ After learning how bitbucket works from  the [Portisch wiki](https://github.com/
 * [Itead Shop](https://www.itead.cc/sonoff-rf-bridge-433.html)
 * [Itead Wiki](https://www.itead.cc/wiki/Sonoff_RF_Bridge_433)
 * [RF Bridge 433 R2 Information](https://github.com/arendst/Tasmota/issues/1916)
+* [New Sonoff RF Bridge Board Layout (R2 v2.2)](https://github.com/arendst/Tasmota/discussions/13283)
