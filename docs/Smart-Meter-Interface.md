@@ -1165,6 +1165,21 @@ So in this script the three phases get added and published as `Power_total`.
     #
     ```
 	
+### EMH eBZD (SML)
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,s,0,9600,Main
+    1,77070100100700ff@1,Power,W,power,0
+    1,77070100010800ff@1000,Total Consumed,kWh,counter_pos,3
+    1,77070100020800ff@1000,Total Feed,kWh,counter_neg,3
+    #
+    ```        
+
 ### EMH ED300L (SML)  
 
 ??? summary "View script"
