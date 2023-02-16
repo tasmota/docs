@@ -38,7 +38,7 @@
 
 This module reads runtime values from a [Solax X1](https://www.solaxpower.com) device via RS485 Modbus interface and publishes them to MQTT.  
 [![X1 Mini](_media/solax-x1/X1Mini_200.png)](_media/solax-x1/X1Mini.png) [![X1 Air](_media/solax-x1/X1Air_200.png)](_media/solax-x1/X1Air.png) [![X1 Smart](_media/solax-x1/X1Smart_200.png)](_media/solax-x1/X1Smart.png)  
-The communication of this module is based on the description of the [communication protocol version 1.7](_media/solax-x1/SolaxPower_Single_Phase_External_Communication_Protocol_X1_V1.7.pdf).
+The communication of this module is based on the description of the [communication protocol version 1.8](_media/solax-x1/SolaxPower_Single_Phase_External_Communication_Protocol_X1_V1.8.pdf).
 
 ## Wiring
 
