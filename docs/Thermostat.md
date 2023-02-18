@@ -316,4 +316,10 @@ A PI autotune feature following the Zigler-Nichols closed loop algorithm has bee
 ```
 #define USE_PI_AUTOTUNING // (Ziegler-Nichols closed loop method)
 ```
+## Example
 
+The following chart shows the thermostat behavior in a forced air heated house:
+
+![Thermostat](https://user-images.githubusercontent.com/7401394/219059013-919891b1-d0d0-4244-9893-18c6d8ff3683.png)
+
+The red shaded areas are where the thermostat commanded heat and the green line is the temperature. The temperature setpoint is 18 C at night and is then increased to 22.5 in the morning.  This step demonstrates the ramp part of the hybrid control algorithm of the thermostat.  Once the temperature is near the set point the thermostat switches to he PI algorithm.  In the evenings the temperature is increased to 23.5 C.
