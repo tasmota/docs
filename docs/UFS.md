@@ -74,6 +74,7 @@ Copy `platformio_override_sample.ini` as `platformio_override.ini`
 
 For ESP8266 boards, activate by removing the `;` in front of one of the below lines:
 
+* `board = esp8266_4M3M` for 3Mb universal file system
 * `board = esp8266_4M2M` for 2Mb universal file system
 * `board = esp8266_2M1M` for 1Mb universal file system
 
