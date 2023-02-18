@@ -586,7 +586,7 @@ DAC is limited to specific GPIOs:
     > gpio.dac_voltage(25, 1250)    # set voltage to 1250mV
     1255
     ```
-    Function returns closes voltage found. In this case it's 1255 for setting to 1250.
+    The function returns the closest voltage found. In this case it's 1255 for setting to 1250.
 
 ### I2S
 
