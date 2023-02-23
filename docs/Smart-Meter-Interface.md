@@ -2054,6 +2054,35 @@ Example: Changing the baud rate during operation.
     2,pm(4.7.0)@1000,kvar_OUT,kvar,kvar_OUT,3;Momentane Blindleistung Bezug (-R)
     #
     ```
+
+### Logarex LK11BL (OBIS)
+
+    This script keeps optical communication on the initial 300 baud speed and reject to switch any other speed smart meter requests.
+    
+    In my case, smart meter wanted to switch to 9600 baud but I felt it is better to follow the 'keep it simple' principle at the script's level and use 300 baud through the whole communication.
+
+    If you know the meaning of the below unnamed OBIS codes please update the script.
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,o,0,300,zm,1,100,2F3F210D0A,060000D0A
+    
+    1,15.8.0(@1,total,kWh,total,3
+    1,0.0.0(@1,serial,,serial,0
+    1,F.F(@1,F.F,,F.F,0
+    1,C.8.0(@1,C.8.0,,C.8.0,0
+    1,0.2.0(@#),ver,,ver,3
+    1,0.3.0(@1,0.3.0,imp/kWh,0.3.0,0
+    1,.8.1(@1,.8.1,,.8.1,0
+    1,C.7.1(@1,C.7.1,,C.7.1,0
+    1,C.2.1(@1,C.2.1,,C.2.1,0
+    1,C.2.9(@1,C.2.9,,C.2.9,0
+    #
+    ```
        
 ### Logarex LK13BE (OBIS)
 
