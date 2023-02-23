@@ -2654,3 +2654,42 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
     1,77070100020800ff@1000,Einspeisung,kWh,Total_in,1
     #
     ```
+
+### inepro Metering PRO380-MB (M-Bus)
+
+This is a controller for standard solar thermal systems equipped with VBus data interface. Outputs data every second at 9600 baud 8N1.
+To connect to this and read data from the bus a level shifting is needed as the voltage is around 8V. Although this is a symmetric connection supporting long wires for our purposes it's enough to measure its polarity with a voltmeter and adapt the level appropriately to 3.3V using the below circuit (many others exist but this is simple and works). Do not connect the GND pin of Wemos with the ground of Resol unit as that may damage the output port of it. The Wemos module needs its own power supply (double insulated recommended). 
+
+
+??? summary "The script (compile firmware with `USE_SML_M`)"
+    ![](_media/meter3fpro380-mbx-5a.png)
+    ![](_media/taaralabs_MBusUART.png)
+
+    ```
+    >D
+    >B
+    ->sensor53 r 
+    ; ->sensor53 d1 ; Dump mode for console debug
+    >M 1
+    +1,16,rE1,0,2400,,17,100,680303685300b40716,105b005b16,680303685300B10416
+    1,4BFD47bcd6@100,L1 voltage,V,L1_V,2
+    1,8B01FD47bcd6@100,L2 voltage,V,L2_V,2
+    1,CB01FD47bcd6@100,L3 voltage,V,L3_V,2
+    1,4BFD59bcd6@100,L1 current,A,L1_I,2
+    1,8B01FD59bcd6@100,L2 current,A,L2_I,2
+    1,CB01FD59bcd6@100,L3 current,A,L3_I,2
+    1,4C2Abcd5@1000,L1 active power,kW,L1_P,3
+    1,8C012Abcd5@1000,L2 active power,kW,L2_P,3
+    1,CC012Abcd5@1000,L3 active power,kW,L3_P,3
+    1,0C2Abcd6@1000,Total active power,kW,T_P,3
+    1,4C04bcd8@100,L1 total energy,kWh,L1_TE,2
+    1,8C0104bcd8@100,L2 total energy,kWh,L2_TE,2
+    1,CC0104bcd8@100,L3 total energy,kWh,L3_TE,2
+    1,000C04bcd8@100,Total active energy,kWh,TE,2
+    1,6C04bcd8@100,L1 reverse energy,kWh,L1_TRE,2
+    1,AC0104bcd8@100,L2 reverse energy,kWh,L2_TRE,2
+    1,EC0104bcd8@100,L3 reverse energy,kWh,L3_TRE,2
+    1,2C04bcd8@100,Total reverse energy,kWh,TRE,2
+    #
+
+    ``` 
