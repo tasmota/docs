@@ -5,6 +5,7 @@
  
   - Kaifa MA105C
   - De Landis + Gyr, E350 (ZCF110)
+  - Landis + Gyr, E360
   - Sanxing SX631 (S34U18)
 
 ## Schematics
