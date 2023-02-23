@@ -2616,10 +2616,11 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
 This is a controller for standard solar thermal systems equipped with VBus data interface. Outputs data every second at 9600 baud 8N1.
 To connect to this and read data from the bus a level shifting is needed as the voltage is around 8V. Although this is a symmetric connection supporting long wires for our purposes it's enough to measure its polarity with a voltmeter and adapt the level appropriately to 3.3V using the below circuit (many others exist but this is simple and works). Do not connect the GND pin of Wemos with the ground of Resol unit as that may damage the output port of it. The Wemos module needs its own power supply (double insulated recommended). 
 
-![](_media/meter3fpro380-mbx-5a.png)
-![](_media/taaralabs_MBusUART.png)
 
 ??? summary "The script (compile firmware with `USE_SML_M`)"
+    ![](_media/meter3fpro380-mbx-5a.png)
+    ![](_media/taaralabs_MBusUART.png)
+
     ```
     >D
     >B
