@@ -244,6 +244,7 @@ Choose an installation method:
     **Tasmota is NOT a developer of these tools. For help and troubleshooting you will need to _get support from those projects_.**
 
     - [**MgOS to Tasmota**](https://github.com/arendst/mgos-to-tasmota) - OTA flash for Shelly devices
+    - [**MgOS32 to Tasmota32**](https://github.com/tasmota/mgos32-to-tasmota32) - OTA flash for Shelly Plus and Pro (ESP32) devices
     - [**Tuya-Convert**](Tuya-Convert) - OTA flash for devices with Tuya chips. **Does not work in 99% of cases**
     - [**Sonoff DIY**](Sonoff-DIY) - OTA flash for select Sonoff devices **Does not work anymore**
     - [**esp2ino**](https://github.com/elahd/esp2ino) - OTA flash for select Wyze devices. **Does not work anymore**

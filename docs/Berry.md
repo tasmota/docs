@@ -96,6 +96,10 @@ Meanwhile the Tasmota log shows:
 {'POWER': 'ON', 'Dimmer': 60, 'Color': '996245', 'HSBColor': '21,55,60', 'Channel': [60, 38, 27]}
 The light is bright
 ```
+## Save your Scripts
+Berry can autostart your scripts. See a short desciption in Section for the Filesystems.
+https://tasmota.github.io/docs/UFS/#autoexecbe
+Your can use the Filemanager to edit, edit or save files with berry scripts
 
 ## Lights and Relays
 
@@ -582,7 +586,7 @@ DAC is limited to specific GPIOs:
     > gpio.dac_voltage(25, 1250)    # set voltage to 1250mV
     1255
     ```
-    Function returns closes voltage found. In this case it's 1255 for setting to 1250.
+    The function returns the closest voltage found. In this case it's 1255 for setting to 1250.
 
 ### I2S
 
@@ -752,7 +756,7 @@ Example:
 
 ``` berry
 import path
-print(path.listdir("/sd/")
+print(path.listdir("/sd/"))
 # outputs a list of filenames at the root dir of the SD card
 ```
 

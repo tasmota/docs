@@ -5,8 +5,8 @@ DeepSleep support for up to 10 years (i.e., 86,400 seconds = 1 day) (e.g., if us
 !!! example
     With `DeepSleepTime 3600`, the device will wake up exactly every hour (e.g., 8:00am, 9:00am, ...). If you define `DeepSleepTime 86400` (i.e., 60\*60\*24), it will wake-up exactly at 0:00 local time. There is no option to shift the wakeup time; except changing the timezone. If you define `DeepSleepTime 600`, it will wake-up every 10 minutes (e.g., 8:00, 8:10, 8:20, ...).
 
-!!! warning
-  Please be aware that the minimum DeepSleep time is 10 seconds.
+!!! note
+    The next wake time will always be an even number of `DeepSleepTime` cycles since the epoch (Midnight 1970-01-01).  This may matter if the sleep time isn't an even number of minutes/hours (ex: 3660), such as when trying to wake at a specific time of day.
   
 ![](_media/deepsleep_minimal.png)
 
@@ -133,12 +133,12 @@ Rule1 ON
 ```
 
 ## DeepSleep Algorithm General Timing
-Let's assume you have set `DeepSleepTime 3600` (one hour) and `TelePeriod 300` (five minutes). The device will first wake at 8:00 am. The device will boot and connect Wi-Fi. Next, the correct time must be sync'ed from one of the NTP servers. Now the device has all prerequisites for going into DeepSleep.
+Let's assume you have set `DeepSleepTime 3600` (one hour) and `TelePeriod 60` (one minute). The device will first wake at 8:00 am. The device will boot and connect Wi-Fi. Next, the correct time must be synchronized from one of the NTP servers and initial telemetry is sent.
 
-DeepSleep is then triggered after the TelePeriod event. In this example, it will occur after five minutes. Telemetry will be collected and sent (e.g., via MQTT). Now, DeepSleep can happen. First, `Offline` is published to the LWT topic on MQTT. It then calculates the new sleeping time to wake-up at 9:00 am (3600 seconds after the last wake-up). At 9:00 am this same sequence of events happens again.
+DeepSleep is then triggered after the next TelePeriod event. In this example, it will occur after one minute. Telemetry will be collected and sent (e.g., via MQTT) and DeepSleep can happen. First, `Offline` is published to the LWT topic on MQTT. It then calculates the new sleeping time to wake-up at 9:00 am (3600 seconds after the last wake-up). At 9:00 am this same sequence of events happens again.
 
-If you want to minimize the time that the device is in operation, decrease TelePeriod down to 10 seconds. This period of time is counted ==after== MQTT is connected. Also, in this case, the device will wake up at 9:00 am even if the uptime was much smaller. If the device missed a wake-up it will try a start at the next event - in this case 10:00 am.
-
+If you want to minimize the time that the device is in operation, two special values for TelePeriod exist: 10 seconds and 300 seconds.  Using either of these two exact values will prevent waiting for the next telemetry.  DeepSleep will be triggered within a few second of the time being synchronized rather than waiting for the TelePeriod.
+    
 ## ESP8266 DeepSleep Side-effects
 Not all GPIO behave the same during DeepSleep. Some GPIO go HIGH, some LOW, some FOLLOW the relay but work only on FET transistors. As soon as current flows they go LOW. I use one GPIO to trigger a BC337 transistor to switch OFF all connected devices during DeepSleep.
 
@@ -255,3 +255,6 @@ Rule1 +on tele-Analog#Range<3800 do if (%var1%<900) deepsleeptime 900 elseif (%v
 ```
 
 Don't forget to enable using `Rule1 1`
+
+## DeepSleep Power Saving
+The amount of power saved during deep sleep depends significantly on the type of ESP module used.  For example, an ESP-M3 module drops to 20-25 uA at 2.5-3.3 V when in deep sleep.  Other devices, with onboard regulators, USB chips etc. like the WEMOS D1 Mini, may still require 18 mA at 5 V when in deep sleep (i.e.: greater than 1000 times more power).

@@ -527,7 +527,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `med(n x)` = calculates a 5 value median filter of x (2 filters possible n=0,1)  
 `int(x)` = gets the integer part of x (like floor)  
 `hn(x)` = converts x (0..255) to a hex nibble string  
-`hx(x)` = converts x (0..65535) to a hex string  
+`hx(x)` = converts x (0..4294967295, 32-bit) to a hex string  
 `hd("hstr")` = converts hex number string to a decimal number  
 `af(array index)` = converts 4 bytes of an array at index `index` to float number   
 `hf("hstr")` = converts hex float number string to a decimal number  
@@ -643,7 +643,8 @@ SEL:
 `eres` = result of >E section set this var to 1 in section >E to tell Tasmota event is handled (prevents MQTT)  
 
 The following variables are cleared after reading true:  
-`chg[var]` = true if a variables value was changed (numeric vars only)  
+`chg[var]` = true if a variables value was changed (numeric vars only)
+`diff[var]` = difference since last variable update
 `upd[var]` = true if a variable was updated  
 `boot` = true on BOOT  
 `tinit` = true on time init  
@@ -1121,12 +1122,51 @@ remark: the Flash illumination LED is connected to GPIO4
 ```
     
 ## Scripting Cookbook
-
-### Scripting Language Example
-
     a valid script must start with >D in the first line!  
     some samples still contain comment lines before >D. This is no longer valid!  
+        
+### simple example to start with
+    >D
+    ; in this section you may define and or preset variables, there are numbers or strings.
+    ; in contrast to rules you may choose any variable name
+    ; numeric variable
+    val1=1.234
+    ; numeric variable that is preserved after reboot or power down
+    p:val2=0
+    ; text variable
+    txt="hello world"
+        
+    >B
+    ; this section is executed durig boot or on script restart
+    print we are booting
     
+    >S
+    ; this section is executed every second
+    print one second tick
+    ; variables may be printed enclosed with % char, thus showing "hello world 1.234"
+    ; very handy for debugging
+    print %txt% %val1%
+    
+    ; check if upcounting seconds give zero result when dividing by 10
+    ; upsecs is a system defined variable that counts seconds from start
+        
+    ; you may use if then, else, endif
+    if upsecs%10==0
+    then
+        print every 10 seconds
+    endif
+        
+    ; or if {} else {}
+    if upsecs%10==0 {
+        print every 10 seconds
+    }
+
+    >R
+    ; this section is executed on restart
+    print we are restarting
+        
+       
+### Scripting Language Example
     **Actually this code is too large**. This is only meant to show some of the possibilities
 
     >D

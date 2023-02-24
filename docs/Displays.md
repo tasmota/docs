@@ -398,7 +398,10 @@ rule1 on tele-BME280#Temperature do DisplayText [s1p21x0y0]Temp: %value% C endon
 
 ## WaveShare Display Drivers
 
-Waveshare has two kinds of display controllers: with partial update and without partial update. The 2.9 inch driver is for partial update and should also support other Waveshare partial update models with modified WIDTH and HEIGHT parameters. The 4.2 inch driver is a hack which makes the full update display behave like a partial update and should probably work with other full update displays.  
+Waveshare has two kinds of display controllers: with partial update and without partial update. The 2.9 inch driver is for partial update and should also support other Waveshare partial update models with modified WIDTH and HEIGHT parameters. The 4.2 inch driver is a full update display.
+
+epaper displays should be connected via software SPI. most of them require a reset and a busy line. connect the busy line to SSPI_MISO.
+  
 
 The drivers are subclasses of the Adafruit GFX library. The class hierarchy is `LOWLEVEL :: Paint :: Renderer :: GFX`, where:  
 
@@ -422,7 +425,7 @@ The EPD fonts use about 9k space, which can be selected at compile time using \#
 ## Universal Display Driver
 
 Universal Display Driver or uDisplay is a way to define your display settings using a simple text file and easily add it to Tasmota.
-uDisplay is `DisplayModel 17`. It supports I2C and hardware or software SPI (3 or 4 wire). 
+uDisplay is `DisplayModel 17`. It supports I2C and hardware or software SPI (3 or 4 wire), 8,16 Bit parallel and RGB interface. The driver must be enabled by OPTION A3 on any GPIO pin. 
 
 The driver is enabled by compiling with `#define USE_UNIVERSAL_DISPLAY` and setting an unused GPIO to `Option A3`.
 
@@ -518,7 +521,7 @@ The CS and DC pins must be the standard pins e.g. `SPI_CS` or `SPI_DC`.
 `:S`  
 (_optional_) Splash setup, also defines initial colors. If omitted screen is not cleared initially.
 
-1. Font number
+1. Font number, if -1 splash screen is suppressed
 2. Font size
 3. FG color (as index color)
 4. BG color (as index color)
@@ -630,7 +633,7 @@ dimmer opcode _(optional)_
 LVGL _(optional)_
   
 1. number of display lines flushed at once (min 10) the lower the lesser memory needed  
-2. bit 0: DMA enables (`0` for no DMA, 1 use DMA) - not supported on all displays<br>bit 1: selects color swap, 2 = swap 16 bit color<br>bit 2: enable async DMA, `0` wait for DMA to complete before returning, `4` run DMA async in the background. This later mode is only valid if the SPI bus is not shared between the display and any other SPI device like SD Card Reader., `8` inverted busy line on epaper displays.
+2. bit 0: DMA enables (`0` for no DMA, 1 use DMA) - not supported on all displays<br>bit 1: selects color swap, 2 = swap 16 bit color<br>bit 2: enable async DMA, `0` wait for DMA to complete before returning, `4` run DMA async in the background. This later mode is only valid if the SPI bus is not shared between the display and any other SPI device like SD Card Reader,<br>bit 3: `8` inverted busy line on epaper displays.
 
 `:T`  
 Wait times used for E-paper display  
@@ -654,6 +657,8 @@ EP_SET_MEM_PTR 65,0 = set memory pointer to start of screen
 EP_SEND_DATA 66,0 = send framebuffer  
 EP_CLR_FRAME 67,0 = send clr data  
 EP_SEND_FRAME 68,0 = complete sendframedata sequence  
+EP_BREAK_RR_EQU 69,X = break when reset reason == X  
+EP_BREAK_RR_NEQ 6a,X = break when reset reason != X
   
 `:L`,size,OP  
 Lookup table for full refresh (Waveshare 29)
@@ -667,14 +672,18 @@ Lookuptable for full refresh (Waveshare 42)
 `size` = number of bytes in table  
 `OP` = opcode for sending refresh table  
 
-`:TIx,AA,SCL,SDA`  
+`:TIx,AA,SCL,SDA,<IRQ>,<RST>`  
 Defines a touch panel an I2C bus nr `x` (1 or 2)  
 AA is device address  
 SCL, SDA are the pins used (or * for tasmota definition)  
-
+IRQ,RST optional IRQ and RST pins
+  
 `:TS,CS_PIN`   
 Defines a touch panel an SPI bus with chip select `CS_PIN` (or *)  
 
+`:TR` 
+enable simple resistive touch via data lines (e.g. cheap il9341 displays)  
+  
 `:M,X1,X2,Y1,Y2`
 Defines an optional mapping for touch controllers (always needed on resistive touch) 
 `X1` = display left margin  

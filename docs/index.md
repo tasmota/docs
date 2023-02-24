@@ -15,27 +15,24 @@ Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v12.3.1">Tasmota 12.3.1 Percy</a></span>
+<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v12.4.0">Tasmota 12.4.0 Peter</a></span>
 
 ## Breaking Changes
 
-- Redesign distance sensors VL53LXX, TOF10120, HRXL and DYP to use cm instead of mm
+- TM1638 button and led support are handled as virtual switches and relays
 
 ## New Features
 
 - Added support for: 
-  - HLK-LD2410 24GHz smart wave motion sensor
-  - Shelly Pro 1/1PM and 2/2PM
-  - up to four DS18x20 GPIOs
-  - Digital Addressable Lighting Interface (DALI)
-  - NTAG2xx tags read and write on PN532 NFC reader
-  - Plantower PMSx003T AQI models with temperature and humidity
-  - BP1658CJ RGBCW LED bulbs
-  - Dingtian x595 shift register based relay boards
-  - ME007-ULS narrow FoV ultrasonic distance sensor
-  - WS2812 and Light ArtNet DMX control over UDP port 6454
-  - Zigbee router firmware for Sonoff ZBBridgePro
-- New commands: [`SetOption35`](Commands.md#setoption35), [`SetOption47`](Commands.md#setoption47), [`RgxClients`](Commands.md#rgxclients), [`RgxPort`](Commands.md#rgxport), [`Switchmode 16`](Commands.md#switchmode)
+  - up to 3 (ESP8266) or 8 (ESP32) phase modbus energy monitoring device using generic Energy Modbus driver
+  - RGB displays
+  - IPv6 DNS records (AAAA) and IPv6 Ping for ESP32 and ESP8266
+  - TM1650 display as used in some clocks
+  - CA9632 4-channel 8-bit PWM driver as light driver 
+  - SEN5X gas and air quality sensor
+  - Shelly Pro 4PM
+  - ESP32 preliminary support for Matter protocol, milestone 1 (commissioning)
+- New commands: [`DhtDelay`](Commands.md#dhtdelay)
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
 

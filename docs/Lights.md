@@ -35,9 +35,9 @@ Switched or On/Off lights are controlled through `Relay` GPIOs.
 
 If you define multiple relays, they are controlled with `Power<x>` starting at `x=1`.
 
-**Alexa**: you can use Wemo emulation, your device will appear as a switch. You can change it to a light in the Alexa app.
+**Alexa**: You can use Wemo emulation, your device will appear as a switch. You can change it to a light in the Alexa app.
 
-**Alexa**: if you have one or multiple relays, you can use Philips Hue emulation. All devices will appear as On/Off lights, and named accordingly to `FriendlyName`. Note: if you have only Echo Spot 2nd generation, your light will have a dummy dimmer.
+**Alexa**: If you have one or multiple relays, you can use Philips Hue emulation. All devices will appear as On/Off lights, and named accordingly to `FriendlyName`. Note: if you have only Echo Spot 2nd generation, your light will have a dummy dimmer.
 
 <br clear="right"/>
 
@@ -48,41 +48,39 @@ If you define multiple relays, they are controlled with `Power<x>` starting at `
 
 ### 1 Channel - Dimmable Light
 
-<img style="float:right; width:180px" alt="Tasmota_1" src="https://user-images.githubusercontent.com/49731213/71555196-9e889b80-2a29-11ea-9f96-fc47ad65ef43.png">
+![Example light 1 channel](https://user-images.githubusercontent.com/49731213/71555196-9e889b80-2a29-11ea-9f96-fc47ad65ef43.png){width="180" align=right}
 
-1 channel lights are often white lights with On/Off controls and Dimmer.
+1 channel lights are often white lights with On/Off controls and dimmer.
 
-**Alexa**: you can use Philips Hue emulation, the light will appear as White light with Dimmer.
+**Alexa**: You can use Philips Hue emulation, the light will appear as white light with dimmer.
+<br clear="right"/>
+![Robotdyn-Dimmermodul](_media/peripherals/Robotdyn-Dimmermodul-1Kanal.jpg){width="180" align=right}
 
-**Leading edge dimmer** You can also configure a leading edge dimmer on 230V with the 1 Channel configuration. In this case you need a TRIAC and a zero-Cross detection that give a pulse with every crossing of the 0V of the sinus curve. This is currently ONLY supported on ESP8266. A working ESP32 is "work in progress".
+**Leading edge dimmer**: You can also configure a leading edge dimmer on 230V with the 1 channel configuration. In this case you need a TRIAC and a zero-cross detection that give a pulse with every crossing of the 0V of the sinus curve. This is currently ONLY supported on ESP8266. A working ESP32 is "work in progress".
+<br clear="right"/>
 
-Robotdyn AC Dimmer example:
-<img style="float:right;height:120px" alt="CCT" src="https://ae01.alicdn.com/kf/HTB1TrhBQpXXXXbsaFXXq6xXFXXX8/AC-Licht-lampe-dimmen-LED-lampe-und-motor-Dimmer-Modul-1-Kanal-3-3-V-5.jpg">
-
-Define a COUNTER with the same number as the PWM (e.g. COUNTER1 & PWM1). You will need to connect the output of PWM1 to an input as COUNTER1. 
-Connect zero-Crossing to GPIO of COUNTER4
-
-|Configuration|(see below)|
-|---|---|
-|Dimmer1| PWM1, COUNTER1|
-|Dimmer2| PWM2, COUNTER2 (optional)|
-|Dimmer3| PWM3, COUNTER3 (optional)|
-|Zero-Cross PIN| COUNTER4 (mandatory|
+??? summary "Robotdyn AC dimmer configuration"  
+    Define a `Counter` with the same number as the PWM (e.g. Counter1 & PWM1). You will need to connect the output of PWM1 to an input as Counter1. 
+    Connect zero-crossing to GPIO of Counter4
     
-example schematic:
-    
-<img height="240" alt="ACDimmer" src="https://user-images.githubusercontent.com/24524506/155886267-56433a26-614a-43d7-8b30-3e38ef9931d7.png">
+    |Configuration|(see below)|
+    |---|---|
+    |Dimmer1| PWM1, COUNTER1|
+    |Dimmer2| PWM2, COUNTER2 (optional)|
+    |Dimmer3| PWM3, COUNTER3 (optional)|
+    |Zero-Cross PIN| COUNTER4 (mandatory|
 
-example Config:
-    
-<img width="190" alt="Screenshot 2022-02-27 at 15 34 19" src="https://user-images.githubusercontent.com/24524506/155886737-8139f80b-510f-4b61-937a-b6929aa27531.png">
+    Example schematic:  
+    ![ACDimmer](https://user-images.githubusercontent.com/24524506/155886267-56433a26-614a-43d7-8b30-3e38ef9931d7.png)
 
-    
-Preferably before connecting the ZC & PWM perform the following commands:
-    
-`SETOPTION99 1` -> to enable detection of the raising edge of the zero-crossing.<br/>
-`PWMFREQUENCY 100` -> (50hz) or 120 (60hz) depending on the frequency of the main in your country.<br/>
-`LEDTABLE 0` -> for normal lamps or motors.<br/>
+    Example config:  
+    ![Robotdyn example schematic](https://user-images.githubusercontent.com/24524506/155886737-8139f80b-510f-4b61-937a-b6929aa27531.png){width="300"}
+
+    Preferably before connecting the ZC & PWM perform the following commands:
+
+    - `SetOption99 1` -> to enable detection of the raising edge of the zero-crossing
+    - `PWMFrequency 100` -> (50Hz) or 120 (60Hz) depending on the frequency of the mains in your country
+    - `LedTable 0` -> for normal lamps or motors
 
 
 |Configuration|(see below)|
@@ -90,15 +88,13 @@ Preferably before connecting the ZC & PWM perform the following commands:
 |Commands|`Power`, `Dimmer`, `Channel`, `Fade`, `Speed`|
 |Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction)|
 
-<br clear="right"/>
-
 ### 2 Channels - CCT Light
 
 <img style="float:right;width:180px" alt="CCT" src="https://user-images.githubusercontent.com/49731213/71555483-3471f580-2a2d-11ea-8eff-8a76e3555ef5.png">
 
 2 channels lights are white lights with correlated color temperature (CCT) controls from Cold White (CT=153) to Warm White (CT=500).
 
-**Alexa**: you can use Philips Hue emulation, the light will appear as White light with Color Temperature. Control through the Alexa app is limited to the `CT` range `199..383`.
+**Alexa**: You can use Philips Hue emulation, the light will appear as white light with color temperature. Control through the Alexa app is limited to the `CT` range `199..383`.
 
 |Configuration|(see below)|
 |---|---|
@@ -113,7 +109,7 @@ Preferably before connecting the ZC & PWM perform the following commands:
 
 3 channel lights are RGB color lights. You can set color either via RGB or HSB (_not HSL_). Alexa support also allows XY color, but that is not supported through commands.
 
-**Alexa**: you can use Philips Hue emulation, the light will appear as Color light.
+**Alexa**: You can use Philips Hue emulation, the light will appear as Color light.
 
 |Configuration|(see below)|
 |---|---|
@@ -128,7 +124,7 @@ Preferably before connecting the ZC & PWM perform the following commands:
 
 4 channel lights are RGBW, i.e. RGB light and an additional White light. White can be either Warm White or Cold White depending on the manufacturer.
 
-**Alexa**: you can use Philips Hue emulation, the light will appear as Color light and White light with CT control. The CT control is only present to force pure white instead of RGB white. Changin CT will have no effect.
+**Alexa**: You can use Philips Hue emulation, the light will appear as Color light and White light with CT control. The CT control is only present to force pure white instead of RGB white. Changin CT will have no effect.
 
 <br clear="right"/>
 
@@ -151,7 +147,7 @@ Preferably before connecting the ZC & PWM perform the following commands:
 
 5 channel lights are RGBCCT - a 3 channel RGB light and an additional 2 channel CCT light.
 
-**Alexa**: you can use Philips Hue emulation, the light will appear as Color light and White light with CT control.
+**Alexa**: You can use Philips Hue emulation, the light will appear as Color light and White light with CT control.
 
 |Configuration|(see below)|
 |---|---|
