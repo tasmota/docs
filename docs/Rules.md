@@ -1884,7 +1884,7 @@ Rule1
   ON system#boot do Var1 3 ENDON
   ON Var1#State>1439 DO Var1 1439 ENDON
 
-  ON Time#Minute|%var1% DO backlog WebQuery http:/192.168.1.10/ GET ENDON
+  ON Time#Minute|%var1% DO backlog WebQuery http://192.168.1.10/ GET ENDON
   ON WebQuery#Data$!Done DO backlog Mult1 3; Power1 0; Delay 10; Power1 1 ENDON
   ON WebQuery#Data=Done DO Var1 3 ENDON
 ```
