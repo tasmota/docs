@@ -10,7 +10,7 @@ ArtNet is a royalty-free UDP based protocol to transport DMX lighting control.It
 
 This feature is experimental, it has been tested with LED Lab (Mac and iOS) and QLC (linux)
 
-When enabling ArtNet mode, Tasmota listens to UDP port 6454 on local address and on multicast address `239.255.25.59`. Incoming DMX/ArtNet packets drive the display and light.
+When enabling ArtNet mode, Tasmota listens to UDP port 6454 on local address and on multicast address `239.255.25.54`. Incoming DMX/ArtNet packets drive the display and light.
 
 ![ezgif-3-5d1d4b87d0](https://user-images.githubusercontent.com/49731213/201535653-3bb395b8-f84c-4083-93d7-a54782933ebf.gif)
 
