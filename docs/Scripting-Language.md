@@ -120,21 +120,17 @@ vns = total size of name strings in bytes (may not exceed 255) or #define SCRIPT
 vmem = used heap ram by the script (psram if available)  
 smem = used script (text) memory (psram if available)  
   
-if the script init fails an error code is reported:  
--1 = too many numerical variables defined  
--2 = too many string variables defined  
--3 = too many variables in total  
+if the script init fails an error code is reported:    
 -4 = not enough memory  
 -5 = variable name length too long in total  
 -6 = too many arrays defined  
 -7 = not enough memory  
 
-you may increase the number of allowed variables with defines in user_config_override  
+number of variables is only limited by RAM. you will probably get a memory error when you define to many variables.
+you may increase the number of allowed array and the maximum string size defines in user_config_override  
 defaults and override defines:  
-Number of total variables = 50  (#define MAXVARS)  
-Number of string variables = 5  (#define MAXSVARS)  
-Number of filters (arrays) = 5 (#define MAXFILT)  
-Max string size            = 20 (override with >D size up to 48)  
+Number of filters (arrays) = 5 (override #define MAXFILT)  
+Max string size            = 20 (increase with >D size up to default default 48) (override #define SCRIPT_MAXSSIZE)     
 
 
 
