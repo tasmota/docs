@@ -50,6 +50,7 @@
     USE_FEXTRACT | enables array extraction from database  fxt(...)  
     USE_SCRIPT_SPI | enables support for SPI interface  
     USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
+    TS_FLOAT | may be define as double to use double precision numbers (uses double RAM memory and is slower)  
 
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules). For ESP32 builds it is recommended to use [Berry](Berry)"
 
@@ -170,11 +171,13 @@ a valid script must start with >D in the first line
   specifies auto increment counters if =0 (in seconds)  
   `g:vname`   
   specifies global variable which is linked to all global variables with the same definition on all devices in the homenet.
-  when a variable is updated in one device it is instantly updated in all other devices. if a section >G exists it is executed when a variable is updated from another device (this is done via UDP-multicast, so not always reliable)  
+  when a variable is updated in one device it is instantly updated in all other devices. if a section >G exists it is executed when a variable is updated from another device (this is done via UDP-multicast, so not always reliable)
+  `I:vname`   
+  specifies an integer 32 bit variable instead of float. (limited support) integer constants must be preceeded by '#'
   `m:vname`   
    specifies a median filter variable with 5 entries (for elimination of outliers)  
   `M:vname`   
-  specifies a moving average filter variable with 8 entries (for smoothing data)  
+  specifies a moving average filter variable with 8 entries (for smoothing data, should be also used to define arrays)  
   (max 5 filters in total m+M) optional another filter length (1..127) can be given after the definition.  
   Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer (may be set also), x = `-1` returns array length, x = `-2` returns array average)
   Using this filter, vars can be used as arrays, #define LARGE_ARRAYS allows for arrays up to 1000 entries  
