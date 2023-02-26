@@ -48,7 +48,9 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmot
 - Devices configured as iFan02 or iFan03 as fan entities. TuyaMCU fans are not supported.
 - Each discovered device will by default add 8 disabled sensors. Enable the ones you need. You cannot delete them, they will simply be re-added on a restart.
 
-Types of devices not listed above still require [manual configuration](#editing-configurationyaml)
+Types of devices not listed above still require [manual configuration](#editing-configurationyaml). 
+
+If you're running Tasmota on ESP32 you can use [Home Assistant Controls](https://github.com/fmtr/hct) in Berry to discover more complex entities (pull-down lists, number sliders, etc)
 
 !!! warning "Zigbee and Bluetooth devices paired in Tasmota will **NOT** be discovered in Home Assistant"
 
