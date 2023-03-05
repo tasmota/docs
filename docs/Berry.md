@@ -97,9 +97,9 @@ Meanwhile the Tasmota log shows:
 The light is bright
 ```
 ## Save your Scripts
-Berry can autostart your scripts. See a short desciption in Section for the Filesystems.
+Berry can autostart your scripts. See a short desciption in the Section about the Filesystem:
 https://tasmota.github.io/docs/UFS/#autoexecbe
-Your can use the Filemanager to edit, edit or save files with berry scripts
+Your can use the Filemanager to edit or save files with your berry scripts.
 
 ## Lights and Relays
 
