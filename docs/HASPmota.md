@@ -226,7 +226,7 @@ Attribute name|LVGL equivalent|Details
 `pad_bottom`|`style_pad_bottom`|Bottom padding in pixels
 `pad_all`|`style_pad_all`|Sets all 4 padding values at once (Write-only)
 
-Attributes related to text content
+#### Attributes related to text content
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
@@ -243,7 +243,7 @@ Attribute name|LVGL equivalent|Details
 `text_rule_formula`||Link the text to a Tasmota rule, see below
 `text_rule_format`||Link the text to a Tasmota rule, see below
 
-Attributes related to values
+#### Attributes related to values
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
@@ -253,7 +253,15 @@ Attribute name|LVGL equivalent|Details
 `val_rule`||Link a value to a Tasmota rule, see below
 `val_rule_formula`||Link a value to a Tasmota rule, see below
 
-Attributes specific to `arc`
+#### Attributes specific to `switch`
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`bg_color10`|`bg_color`|Color of the indicator when the switch is selected. Otherwise it uses `bg_color`.
+`bg_color20`|`bg_color`|Color of the knob.
+`radius20`|`radius`|Radius of the knob.
+
+#### Attributes specific to `arc`
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
@@ -270,8 +278,7 @@ Attribute name|LVGL equivalent|Details
 `pad_all2`|`style_pad_all`|Set all 4 padding for `lv.PART_KNOB` part (write-only)
 `radius2`|`style_radius`|Radius for `lv.PART_KNOB` part
 
-
-Attributes specific to `img`
+#### Attributes specific to `img`
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
@@ -280,20 +287,20 @@ Attribute name|LVGL equivalent|Details
 `image_recolor_opa`|`style_image_recolor_opa`|Opacity of image recoloring
 `angle`|`angle`|Angle of the image, in 1/10th of degrees. Range 0..3600.
 
-Attributes specific to `roller`
+#### Attributes specific to `roller`
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
 `text`|`selected_text`|(read-only) Get the text of the currently selected item. The string is truncated to the first 256 bytes.
 
-Attributes specific to `spinner`
+#### Attributes specific to `spinner`
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
 `angle`||The length of the spinning segment in degrees - can be changed after initial value since v12.1.1.1
 `speed`||The time for 1 turn in ms - can be changed after initial value since v12.1.1.1
 
-Attributes specific to `qrcode`
+#### Attributes specific to `qrcode`
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
