@@ -2477,6 +2477,41 @@ This meter sends bursts of data at 115200 baud every 10 seconds. Some data lines
     #
     ```
 
+### Schneider iEM3155 (MODBus)
+Set device parity to NONE
+	
+??? summary "View script"
+    ```
+    >D  
+>B  
+->sensor53 r
+>M 1  
++1,3,m,0,19200,iEM3155,1,1,0103B02D,0103B02B,01030BF3,01030BED,01030BEF,01030BF1,01030BD3,01030BD5,01030BD7,01030BB7,01030BB9,01030BBB,01030C0B,01030C25
+; ***************************************
+; *   Schneider iEM3155 Energy Meter    *
+; ***************************************
+; Serial: 19200
+; Set device parity to NONE
+; Slave address: 0x01
+; https://download.schneider-electric.com/files?p_Doc_Ref=DOCA0005EN&p_enDocType=User+guide&p_File_Name=DOCA0005EN-13.pdf
+1,010304ffffffff@i0:1,Gesamteinspeisung,kWh,Gesamteinspeisung,0
+1,010304ffffffff@i1:1,Gesamtverbrauch,kWh,Gesamtverbrauch,0
+1,010304ffffffff@i2:0.001,Momentanverbrauch,W,Momentanverbrauch,0
+1,010304ffffffff@i3:1,L1 Wirkenergie,kW,L1Wirkenergie,3
+1,010304ffffffff@i4:1,L2 Wirkenergie,kW,L2Wirkenergie,3
+1,010304ffffffff@i5:1,L3 Wirkenergie,kW,L3Wirkenergie,3
+1,010304ffffffff@i6:1,L1 Spannung,V,L1Spannung,0
+1,010304ffffffff@i7:1,L2 Spannung,V,L2Spannung,0
+1,010304ffffffff@i8:1,L3 Spannung,V,L3Spannung,0
+1,010304ffffffff@i9:1,L1 Strom,A,L1Strom,2
+1,010304ffffffff@i10:1,L2 Strom,A,L2Strom,2
+1,010304ffffffff@i11:1,L3 Strom,A,L3Strom,2
+1,010304ffffffff@i12:1,Leistungsfaktor,,Leistungsfaktor,2
+1,010304ffffffff@i13:1,Frequenz,Hz,Frequenz,0
+#
+
+    ```
+
 ### SDM230 (MODBus)
 
 ??? summary "View script"
