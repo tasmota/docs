@@ -230,6 +230,27 @@ tasmota.add_rule("ANALOG#A2",def (value) rule_adc(2,value) end )
 
 Teleperiod rules are supported with a different syntax from Tasmota rules. Instead of using `Tele-` prefix, you must use `Tele#`. For example `Tele#ANALOG#Temperature1` instead of `Tele-ANALOG#Temperature1`
 
+### Rules operators
+
+|Operator|Function|
+|:-:|:--|
+||**String Operators**|
+|`=` | equal to (used for string comparison)|
+|`!==` | not equal to (used for string comparison)|
+|`$<`| string starts with|
+|`$>`| string ends with|
+|`$\|`| string contains|
+|`$!`| string is not equal to|
+|`$^`| string do not contains|
+||**Numerical Operators**|
+|`==`| equal to (used for numerical comparison)|
+|`>`| greater than|
+|`<`| lesser than|
+|`!=`| number not equal to|
+|`>=`| greater than or equal to|
+|`<=`| lesser than or equal to|
+|`\|`|Modulo division to this number is `0` (remainder=0)|
+
 ## Timers
 
 Berry code, when it is running, blocks the rest of Tasmota. This means that you should not block for too long, or you may encounter problems. As a rule of thumb, try to never block more than 50ms. If you need to wait longer before the next action, use timers. As you will see, timers are very easy to create thanks to Berry's functional nature.
