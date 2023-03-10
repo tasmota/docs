@@ -86,7 +86,8 @@ On ESP32, BearSSL provides a much lighter footprint than MbedTLS (~45kB instead 
 
 Main limitations are:
 
-- Your SSL/TLS server must support TLS 1.2 and the `ECDHE_RSA_WITH_AES_128_GCM_SHA256` cipher - which is the case with the default Mosquitto configuration
+- Your SSL/TLS server must support TLS 1.2 and the `ECDHE_
+` cipher - which is the case with the default Mosquitto configuration
 - The server certificate must have an RSA private key (max 2048 bits) and the certificate must be signed with RSA and SHA256 hash. This is the case with default LetsEncrypt certificates. ESP32 supports by default RSA private keys up to 4096 bits, ESP8266 must be compiled with option `-DUSE_4K_RSA` to support 4096 private keys.
 - Your SSL/TLS should support TLS 1.2 MFLN to limit buffer to 1024 bytes. If MFLN is not supported, it will still work well, as long as the server does not send any message above 1024 bytes. On ESP32 buffers are raised to 2048 bytes.
 - If you are using **certbot** with Letsencrypt: starting with v2.0.0 certbot requests ECDSA certificates by default. Make sure you explicitly add `--key-type rsa` and `--rsa-key-size 2048` (or `--rsa-key-size 4096`).
@@ -111,7 +112,7 @@ Here are the tips and tricks used to reduce Flash and Memory:
 !!! bug "Tasmota will crash if the server serves a 4096 bit RSA certificate. The crash will likely be in `br_rsa_i15_pkcs1_vrfy`. Enable `USE_4K_RSA` to avoid this behaviour."
     
 * **EC private key**: AWS IoT requires the client to authenticate with its own Private Key and Certificate. By default AWS IoT will generate an RSA 2048 bit private key. In Tasmota, we moved to an EC (Elliptic Curve) Private Key of 256 bits. EC keys are much smaller, and handshake is significantly faster. Note: the key being 256 bits does not mean it's less secure than RSA 2048, it's actually the opposite.
-* **Single Cipher**: to reduce code size, we only support a single TLS cipher and embed only the code strictly necessary. When using TLS (e.g. LetsEncrypt on Mosquitto) the supported cipher is `RSA_WITH_AES_128_GCM_SHA256` which is a very commonly supported cipher. For AWS IoT, the only supported cipher is `ECDHE_RSA_WITH_AES_128_GCM_SHA256` which is one of the recommended ciphers. Additionally, ECDHE offers Perfect Forward Secrecy which means extra security.
+* **Single Cipher**: to reduce code size, we only support a single TLS cipher and embed only the code strictly necessary. When using TLS (e.g. LetsEncrypt on Mosquitto) the supported cipher is `ECDHE_RSA_WITH_AES_128_GCM_SHA256`. Additionally, ECDHE offers Perfect Forward Secrecy which means extra security.
 * **Adaptive Thunk Stack**: BearSSL does not allocate memory on its own. It's either the caller's responsibility or memory is taken on the Stack. Stack usage can go above 5k, more than the ESP8266 stack. Arduino created a **Thunk Stack**, a secondary stack of 5.6k, allocated on Heap, and activated when a TLS connection is active. Actually the stack is mostly used during TLS handshake, and much less memory is required during TLS message processing. Tasmota only allocates the Thunk Stack during TLS handshake and switches back to the normal Stack afterwards. See below for details of actual memory usage.
 * **Keys and CA in PROGMEM**: BearSSL was adapted from original source code to push most on the tables and static data into PROGMEM:
 https://github.com/earlephilhower/bearssl-esp8266. Additional work now allows us to put the Client Private Key, Certificate and CA in PROGMEM too, saving at least 3k of Memory.
