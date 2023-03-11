@@ -1103,7 +1103,7 @@ mqtt:
 
 !!! failure "Home Assistant MQTT Discovery is removed from all builds of Tasmota and development of this feature is halted!"
 
-Home Assistant has a feature called [MQTT discovery](https://www.home-assistant.io/docs/mqtt/discovery/).
+Home Assistant has a feature called [MQTT discovery](https://www.home-assistant.io/integrations/mqtt/#mqtt-discovery).
 With MQTT discovery no user interaction or configuration file editing is needed to add new devices in Home Assistant. Most of the changes will be updated in HA automatically.
 
 #### Enable Autodiscovery
