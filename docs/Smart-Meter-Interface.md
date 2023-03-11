@@ -1640,13 +1640,13 @@ This is an example for one of the many quite similar smart meters implemented in
     ```
 
 ### KAIFA MB310H4BDE
-	
+By default, the KAIFA MB310H4BDE will only deliver the Total_in and Total_out values (without decimals). In order to get precise values, and especially in order to receive Power_curr, you have to login to configure it: Press the button besides the display. When asked for pin, enter it with a flashlight or by pressing the same button repeatedly. (If you don't have a PIN, get it from your grid operator.) If that was successful, you will see accurate values in the meters display already. To activate them on the SML interface, press the button repeatedly for 13 times, until "INF OFF" is displayed. Now press and hold the button, until it switches to INF ON. After that, you should receive all values.
 ??? summary "View script"
     ```
-    D
-    B
+    >D
+    >B
     =>sensor53 r
-    M 1
+    >M 1
     +1,3,s,0,9600,Haus
     1,77070100010800ff@1000,Zaehlerstand In,KWh,Total_in,2
     1,77070100020800ff@1000,Zaehlerstand Out,KWh,Total_out,2
