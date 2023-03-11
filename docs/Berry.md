@@ -870,7 +870,7 @@ Current limitations (if you need extra features please open a feature request on
 
 !!! example
 
-    ``` python
+    ``` berry
     > cl = webclient()
     > cl.begin("http://ota.tasmota.com/tasmota32/release/")
     <instance: webclient()>
@@ -889,7 +889,7 @@ Current limitations (if you need extra features please open a feature request on
 
 !!! example of downloading a file from Github
  
-    ``` python
+    ``` berry
     > cl = webclient()
     > cl.begin("https://raw.githubusercontent.com/tasmota/autoconf/main/esp32/M5Stack_Fire_autoconf.zip")
     <instance: webclient()>
@@ -902,6 +902,43 @@ Current limitations (if you need extra features please open a feature request on
     950
     ```
 
+#### Managing redirects
+
+HTTP redirects (301/302) are not followed by default. You can use `wc.set_set_follow_redirects(true)` to have redirects automatically followed for HEAD and GET. There is a default limit of 10 successive redirects, this prevents from infinite loops.
+
+For the examples, we use `http://ota.tasmota.com/tasmota32` which is redirected to `http://ota.tasmota.com/tasmota32/`
+
+!!! example of following redirects
+ 
+    ``` berry
+    cl = webclient()
+    cl.set_follow_redirects(true)
+    cl.begin("http://ota.tasmota.com/tasmota32")
+    r = cl.GET()
+    print(r)
+    s = cl.get_string()
+    print(s)
+    ```
+
+Alternatively, you can manage yourself redirects and retrieve the `Location` header
+
+!!! example of retrieving Location
+ 
+    ``` berry
+    cl = webclient()
+    cl.set_follow_redirects(false)
+    cl.collect_headers("Location")
+    cl.begin("http://ota.tasmota.com/tasmota32")
+    r = cl.GET()
+    print(r)
+    if r == 301 || r == 302
+      print("Location:", cl.get_header("Location"))
+    elif r == 200
+      s = cl.get_string()
+      print(s)
+    end
+    cl.close()
+    ```
 
 Main functions:
 
@@ -924,6 +961,9 @@ add\_header<a class="cmnd" id="wc_add_header">|`(name:string, value:string [, fi
 set\_timeouts<a class="cmnd" id="wc_set_timeouts">|`(req_timeout:int [, tcp_timeout:int]) -> self`<br>Sets the request timeout in ms and optionally the TCP connection timeout in ms.
 set\_useragent<a class="cmnd" id="wc_set_useragent">|`(useragent:string) -> self`<br>Sets the User-Agent header used in request.
 set\_auth<a class="cmnd" id="wc_set_auth">|`(auth:string) or (user:string, password:string) -> self`<br>Sets the authentication header, either using pre-encoded string, or standard user/password encoding.
+set\_follow\_redirects<a class="cmnd" id="wc_set_follow_redirects">|`(bool) -> self`<br>Enables or disables redirects following.<BR>If `false`: (`HTTPC_DISABLE_FOLLOW_REDIRECTS`) no redirection will be followed.<BR>If `true`: (`HTTPC_STRICT_FOLLOW_REDIRECTS`) strict RFC2616, only requests using GET or HEAD methods will be redirected (using the same method), since the RFC requires end-user confirmation in other cases.<BR>There is a default limit of 10 successive redirects, this prevents from infinite loops.
+collect\_headers<a class="cmnd" id="wc_collect_headers">|`( [header_name:string]* ) -> self`<br>Registers a list of header names that needs to be collected from the response. Pass multiple strings as separate arguments (not as a list).
+get\_header<a class="cmnd" id="wc_get_header">|`(header_name:string) -> string`<br>Returns the header value for a header name (case sensitive). Returns "" (empty string) if no header.
 
 ### `webserver` module
 
