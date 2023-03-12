@@ -18,6 +18,60 @@ You will need to pick an I2C address in either of the above scenario's using the
 
 ![MCP23008 / MCP23017 I2C Address Map](https://github.com/andrethomas/images/raw/master/mcp230xx/i2c_address_map.png)
 
+### Supporting modes
+
+Starting with Tasmota v12.4.0.2 there are two different modes to use MCP23xxx. The original approach (now called Mode 1) supports one MCP23008 or MCP23017 with many user configurable features using commands and rules. The latest approach called Mode 2, supports several and mixed MCP23008, MCP23017 and MCP23S17 adding switches, buttons and relays acted on as if they were directly connected to the ESP8266 or ESP32 configured using a JSON file containing a template describing the GPIO's as used on the basic Tasmota device.
+
+### Mode 2
+
+To enable Mode 2 you will only need to add in `user_config_override.h` 
+
+`#define USE_MCP23XXX_DRV`
+
+This enables the driver which in turn at restart will search for the JSON file in three possible locations:
+- if a filesystem is present it looks for file `mcp23x.dat`
+- if not found and rules are supported it looks for a specific rule entry like `on file#mcp23x.dat do <template> endon`
+- if not found and scripts are enabled it looks for a specific script like `-y <template>`
+
+If no JSON file is found the driver does not claim any MCP23xxx device and if mode 1 is enabled will allow this mode to take over.
+
+A typical JSON template would look like `{"NAME":"MCP23008 expander","GPIO":[224,225,226,227,32,33,34,35]}` which adds four relays and four buttons.
+
+The template consists of a `"NAME"` data pair with any description of the template and a `"GPIO"` data pair with numbers representing the functions of the GPIO's in order from lowest I2C address GP(A)0 to highest I2C address GP(B)7 and are based on the numbers known from the base tasmota template used on the ESP8266 or ESP32.
+
+The following list contains the current supported functions:
+
+Function||Code|Description
+-|-|-|-
+None||0|Not used
+Button1..32|B|32..63|Button to Gnd with internal pullup
+Button_n1..32|Bn|64..95|Button to Gnd without internal pullup
+Button_i1..32|Bi|96..127|Button inverted to Vcc with internal pullup
+Button_in1..32|Bin|128..159|Button inverted to Vcc without internal pullup
+Switch1..28|S|160..187|Switch to Gnd with internal pullup
+Switch_n1..28|Sn|192..219|Switch to Gnd without internal pullup
+Relay1..28|R|224..255|Relay
+Relay_i1..28|Ri|256..287|Relay inverted
+Output_Hi|Oh|3840|Fixed output high
+Output_lo|Ol|3872|Fixed output low
+
+Some example templates
+
+```
+                                          S3  S2  B2 B3 Oh   B1 S1    R1        R4  R2  R3  S4
+{"NAME":"MCP23S17 Shelly Pro 4PM","GPIO":[194,193,65,66,3840,64,192,0,224,0,0,0,227,225,226,195]}
+
+Inverted relays and buttons                Ri1 Ri2 Ri3 Ri4 Ri5 Ri6 Ri7 Ri8 B1 B2 B3 B4 B5 B6 B7 B8
+{"NAME":"MCP23017 A=Ri1-8, B=B1-8","GPIO":[256,257,258,259,260,261,262,263,32,33,34,35,36,37,38,39]}
+
+Buttons, relays, buttons and relays                         B1 B2 B3 B4 B5 B6 B7 B8 R1  R2  R3  R4  R5  R6  R7  R8  B9 B10B11B12B13B14B15B16R9  R10 R11 R12 R13 R14 R15 R16
+{"NAME":"MCP23017 A=B1-8, B=R1-8, C=B9-16, D=R9-16","GPIO":[32,33,34,35,36,37,38,39,224,225,226,227,228,229,230,231,40,41,42,43,44,45,46,47,232,233,234,235,236,237,238,239]}
+```
+
+
+
+### Mode 1
+
 You will need to define the address you are using in `user_config_override.h` for the driver to know on which address the MCP23008/MCP23017 is expected to be found.
 
 `#define USE_MCP230xx_ADDR 0x20`
