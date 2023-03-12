@@ -50,8 +50,8 @@ Button_i1..32|Bi|96..127|Button inverted to Vcc with internal pullup
 Button_in1..32|Bin|128..159|Button inverted to Vcc without internal pullup
 Switch1..28|S|160..187|Switch to Gnd with internal pullup
 Switch_n1..28|Sn|192..219|Switch to Gnd without internal pullup
-Relay1..28|R|224..255|Relay
-Relay_i1..28|Ri|256..287|Relay inverted
+Relay1..32|R|224..255|Relay
+Relay_i1..32|Ri|256..287|Relay inverted
 Output_Hi|Oh|3840|Fixed output high
 Output_lo|Ol|3872|Fixed output low
 
