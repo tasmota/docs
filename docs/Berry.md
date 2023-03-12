@@ -904,7 +904,7 @@ Current limitations (if you need extra features please open a feature request on
 
 #### Managing redirects
 
-HTTP redirects (301/302) are not followed by default. You can use `wc.set_set_follow_redirects(true)` to have redirects automatically followed for HEAD and GET. There is a default limit of 10 successive redirects, this prevents from infinite loops.
+HTTP redirects (301/302) are not followed by default. You can use `wc.set_follow_redirects(true)` to have redirects automatically followed for HEAD and GET. There is a default limit of 10 successive redirects, this prevents from infinite loops.
 
 For the examples, we use `http://ota.tasmota.com/tasmota32` which is redirected to `http://ota.tasmota.com/tasmota32/`
 
