@@ -2183,7 +2183,37 @@ This script gives also the wattage per phase. Make sure to get the PIN from your
     1,770701000e0700ff@1,Frequency,Hz,frequency,0
     #
     ```
+### PAFAL 20EC3gr
 
+Documentation for this Counter is very small. This informations were collected across the internet.
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,o,0,300,PAFAL,1,30,2F3F210D0A,063030300D0A
+    1,1.8.1*00(@1),Gesamtverbrauch_HT,kWh,Total_IN,2
+    1,1.8.2*00(@1),Gesamtverbrauch_NT,kWh,Total_IN,2
+    1,2.8.0*00(@1),Einspeisung,kWh,Total_OUT,2
+    #
+    ```
+
+??? summary "Dump of the script"
+    ```
+    15:48:40.855 : �H/PAF5EC3gr00006
+    15:48:45.643 : �0.0.0(serialnumber)
+    15:48:46.260 : 0.0.1(PAF)
+    15:48:46.768 : F.F(00)
+    15:48:47.405 : 0.2.0(1.27)
+    15:48:48.314 : 1.8.1*00(071354.27)
+    15:48:49.228 : 1.8.2*00(070726.91)
+    15:48:50.149 : 2.8.0*00(013640.33)
+    15:48:52.730 : C.2.1(000000000000)(                                                )
+    15:48:53.542 : 0.2.2(:::::G11)!
+    ```
+	
 ### Peacefair PZEM004TV30 (MODBUS)
 
 PZEM004T V30 multiple meters on Modbus
