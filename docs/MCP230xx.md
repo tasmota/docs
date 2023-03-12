@@ -20,7 +20,10 @@ You will need to pick an I2C address in either of the above scenario's using the
 
 ### Supporting modes
 
-Starting with Tasmota v12.4.0.2 there are two different modes to use MCP23xxx. The original approach (now called Mode 1) supports one MCP23008 or MCP23017 with many user configurable features using commands and rules. The latest approach called Mode 2, supports several and mixed MCP23008, MCP23017 and MCP23S17 adding switches, buttons and relays acted on as if they were directly connected to the ESP8266 or ESP32 configured using a JSON file containing a template describing the GPIO's as used on the basic Tasmota device.
+Starting with Tasmota v12.4.0.2 there are two different modes to use MCP23xxx.
+
+* The original approach (now called Mode 1) supports one MCP23008 or MCP23017 with many user configurable features using commands and rules. 
+* The latest approach called Mode 2, supports several and mixed MCP23008, MCP23017 and MCP23S17 adding switches, buttons and relays acted on as if they were directly connected to the ESP8266 or ESP32 configured using a JSON file containing a template describing the GPIO's as used on the basic Tasmota device.
 
 ### Mode 2
 
@@ -29,9 +32,10 @@ To enable Mode 2 you will only need to add in `user_config_override.h`
 `#define USE_MCP23XXX_DRV`
 
 This enables the driver which in turn at restart will search for the JSON file in three possible locations:
-- if a filesystem is present it looks for file `mcp23x.dat`
-- if not found and rules are supported it looks for a specific rule entry like `on file#mcp23x.dat do <template> endon`
-- if not found and scripts are enabled it looks for a specific script like `-y <template>`
+
+* if a filesystem is present it looks for file `mcp23x.dat`
+* if not found and rules are supported it looks for a specific rule entry like `on file#mcp23x.dat do <template> endon`
+* if not found and scripts are supported it looks for a specific script like `-y <template>`
 
 If no JSON file is found the driver does not claim any MCP23xxx device and if mode 1 is enabled will allow this mode to take over.
 
@@ -67,8 +71,6 @@ Inverted relays and buttons                Ri1 Ri2 Ri3 Ri4 Ri5 Ri6 Ri7 Ri8 B1 B2
 Buttons, relays, buttons and relays                         B1 B2 B3 B4 B5 B6 B7 B8 R1  R2  R3  R4  R5  R6  R7  R8  B9 B10B11B12B13B14B15B16R9  R10 R11 R12 R13 R14 R15 R16
 {"NAME":"MCP23017 A=B1-8, B=R1-8, C=B9-16, D=R9-16","GPIO":[32,33,34,35,36,37,38,39,224,225,226,227,228,229,230,231,40,41,42,43,44,45,46,47,232,233,234,235,236,237,238,239]}
 ```
-
-
 
 ### Mode 1
 
