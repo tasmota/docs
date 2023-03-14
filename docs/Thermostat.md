@@ -210,10 +210,10 @@ If the value is very low, in case of floor heating systems for instance, the hea
 ### Ramp-Up controller main parameters
 
 #### Temperature delta to get into "Ramp-Up" mode
-When the controller is configured in Hybrid mode (default), the control strategy will be a mix-up between "Ramp-Up" (for big deltas between room temperature and setpoint) and PI (around the setpoint). The following parameter can be set to define at above which delta temperature between measured and setpoint the "Ramp-Up" controller shall be active:
+When the controller is configured in Hybrid mode (default), the control strategy will be a mix  between "Ramp-Up" (for big deltas between room temperature and setpoint) and PI (around the setpoint). The following parameter can be set to define the delta temperature (between measured and setpoint) above which the "Ramp-Up" controller will be active:
 
 ```
-cmnd/Tasmota_Name/TEMPRUPDELTINSET 30
+cmnd/Tasmota_Name/TEMPRUPDELTINSET 0.3
 ```
 
 The default value is 0.4°C.
@@ -228,17 +228,17 @@ cmnd/Tasmota_Name/TIMEALLOWRAMPUPSET 300
 The default value is 300 minutes.
 
 #### Cycle time
-Depending on the heating system, the cycle time (PMW period) can be adapted. Very slow systems (high time constants) such as heating floor systems might need higher values (default value is 30 minutes), faster systems might need smaller cycle times. Below the command to adapt the cycle time can be found:
+Depending on the heating system, the cycle time (PMW period) can be adapted. Very slow systems (high time constants) such as heating floor systems might need higher values (default value is 30 minutes), faster systems might need smaller cycle times. The following parameter can be used to define the cycle time in minutes:
 
 ```
-cmnd/Tasmota_Name/TIMERAMPUPCYCLESET 30
+cmnd/Tasmota_Name/TIMERAMPUPCYCLESET 45
 ```
 
 #### Maximum Ramp-Up time
-The maximum time the ramp-up phase of the controller shall be active can be configured. The default value is 960 minutes. Below the command to adapt this time can be found:
+The maximum time the ramp-up phase of the controller shall be active can be configured (default value is 960 minutes). The following parameter can be used to define the ramp-up time in minutes:
 
 ```
-cmnd/Tasmota_Name/TIMERAMPUPMAXSET 960
+cmnd/Tasmota_Name/TIMERAMPUPMAXSET 180
 ```
 
 ## Thermostat persistent storage for configuration
