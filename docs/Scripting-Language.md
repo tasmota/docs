@@ -91,15 +91,15 @@ with below options script buffer size may be expanded. PVARS is size for permane
 | compression (default)| 2560 | 2560 | 50 |actual compression rate may vary |
 | #define USE_UFILESYS<br>#define UFSYS_SIZE S | S<=8192 | S<=16384 | 1536 | ESP must use 4M Flash use linker option `-Wl,-Teagle.flash.4m2m.ld` or SDCARD  <BR>ESP32 can use any linker file, size of Filesystem depends on linker file 
 | #define EEP_SCRIPT_SIZE S<br>#define USE_EEPROM<br>#define USE_24C256 | S<=8192 | S<=16384 | 1536 |for hardware eeprom only|
-| #define EEP_SCRIPT_SIZE 6200<br>#define USE_EEPROM | S=6200 | not supported | 1536 | script may be lost on OTA and serial flash, not on restart |
+| #define EEP_SCRIPT_SIZE 8192<br>#define USE_EEPROM | S=8192 | not supported | 1536 | script may be lost on OTA and serial flash, not on restart |
 
 most useful definition for larger scripts would be  
 
 ##### ESP8266
 
 with 1M flash only default compressed mode should be used (or an SDCARD)  
-a special compressed mode can enable up to 6200 chars by defining #define USE_EEPROM, #define EEP_SCRIPT_SIZE 6200  
-however this has some side effects. the script may be deleted on OTA or serial update and may have to be reinstalled  after update.  
+a special mode can be enabled for 8192 chars by defining #define USE_EEPROM, #define EEP_SCRIPT_SIZE 8192  
+however this has some side effects. the script may be deleted on firware OTA or serial update and may have to be reinstalled  after update.  
 
 with 4M Flash best mode would be     
 `#define USE_UFILESYS`     
