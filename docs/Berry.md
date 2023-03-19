@@ -9,7 +9,7 @@
 Useful resources:
 
 - First time user of Berry: [Berry Introduction (in 20 minutes of less)](Berry-Introduction.md)
-- Full language documentation [The Berry Script Language Reference Manual](https://github.com/berry-lang/berry/wiki/Refer/ence)
+- Full language documentation [The Berry Script Language Reference Manual](https://berry.readthedocs.io/en/latest/)
 - Tasmota extension of Berry, see below
 - Full examples in the [Berry Cookbook](Berry-Cookbook.md)
 
