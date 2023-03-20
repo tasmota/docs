@@ -25,11 +25,11 @@ So to simplify your task, we have added two more options: 1/ auto-learning of th
 If set, Tasmota will automatically learn the fingerprint during the first connection and will set the Fingerprint settings to the target fingerprint. To do so, use one of the following commands:
 
 ```
-#define MQTT_FINGERPRINT1     "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+#define MQTT_FINGERPRINT1      0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
 ```
 or
 ```
-#define MQTT_FINGERPRINT2     "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+#define MQTT_FINGERPRINT2      0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
 ```
 
 #### Option 2: Disable Fingerprint
@@ -38,7 +38,7 @@ You can completely disable server fingerprint validation, which means that Tasmo
 To do so, set one of the Fingerprints to all 0xFF:
 
 ```
-#define MQTT_FINGERPRINT1     "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF"
+#define MQTT_FINGERPRINT1      0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF
 ```
 Tasmota also provide an option to authenticate clients using an x509 certificate and a public key for authentication, instead of username/password.
 
