@@ -371,7 +371,7 @@ AmpRes<a class="cmnd" id="ampres"></a>|Current sensor resolution<BR>`0..3` = max
 CurrentCal<a class="cmnd" id="currentcal"></a>|<value> `1000..32000` *(default = `3500`)*<BR>Set calibration offset value for reported `Current` telemetry<BR>Allows finer calibration for energy monitoring devices
 CurrentHigh<a class="cmnd" id="currenthigh"></a>|`0` = disable current high threshold *(default)*<BR>`<value>` = set current high threshold value in milliamps
 CurrentLow<a class="cmnd" id="currentlow"></a>|`0` = disable current low threshold *(default)*<BR>`<value>` = set current low threshold value in milliamps
-CurrentSet&#60;x<a class="cmnd" id="currentset"></a>|`<value>` = [calibrate](Power-Monitoring-Calibration) current to target value in mA<BR>x = `1` or `2` indicating phase
+CurrentSet&#60;x><a class="cmnd" id="currentset"></a>|`<value>` = [calibrate](Power-Monitoring-Calibration) current to target value in mA<BR>x = `1` or `2` indicating phase
 EnergyExport<x\><a class="cmnd" id="energyexport"></a>|Export energy values<BR>`<x>` = meter number (default is `1`)<BR>
 EnergyExportActive<x\><a class="cmnd" id="energyexportactive"></a>|**ADE7880 only!** Set/reset energy active values<BR>`<x>` = meter number (default is `1`)<BR>
 EnergyReset&#60;x><a class="cmnd" id="energyreset"></a>|x = `1..5`<BR>`1` `<value>{,<time>}` = ((p)re)set values<BR>`2` `<value>{,<time>}` = ((p)re)set values for Yesterday<BR>`3` `<value>{,<time>}` = ((p)re)set values for Total<BR>`<value>` = `0..42949672` in watt-hours (Wh)<BR>`<time>` = `0..4294967295` set StartTotalTime time as epoch value<BR>`4` `<standard>`{,`<off-peak>`} = ((p)re)set tariff period values for Totals<BR>`5` `<standard>`{,`<off-peak>`} = ((p)re)set tariff period values for Exported<BR>Warning: With version 10, this command has been replaced, see above.
@@ -396,7 +396,7 @@ Tariff&#60;x><a class="cmnd" id="tariff"></a>|P1 Smart Meter tariff configuratio
 VoltageCal<a class="cmnd" id="voltagecal"></a>|Set calibration offset value for reported `Voltage` telemetry reading<BR><value> `1000..32000` *(default = `1950`)*<BR>Allows finer calibration for energy monitoring devices
 VoltageHigh<a class="cmnd" id="voltagehigh"></a>|`0` = disable voltage high threshold *(default)*<BR>`<value>` = set voltage high threshold value in V
 VoltageLow<a class="cmnd" id="voltagelow"></a>|`0` = disable voltage low threshold *(default)*<BR>`<value>` = set voltage low threshold value in V
-VoltageSet&#60;x<a class="cmnd" id="voltageset"></a>|`<value>` = [calibrate](Power-Monitoring-Calibration) voltage to a target value in V<BR>x = `1` or `2` indicating phase
+VoltageSet&#60;x><a class="cmnd" id="voltageset"></a>|`<value>` = [calibrate](Power-Monitoring-Calibration) voltage to a target value in V<BR>x = `1` or `2` indicating phase
 VoltRes<a class="cmnd" id="voltres"></a>|Voltage sensor resolution<BR>`0..3` = maximum number of decimal places
 WattRes<a class="cmnd" id="wattres"></a>|Power sensor resolution<BR>`0..3` = maximum number of decimal places
 See Also|[`SetOption21`](#setoption21) - Energy monitoring when power is off<BR>[`SetOption33`](#setoption33) - Configure power monitoring Max_Power_Retry count number<BR>[`SetOption39`](#setoption39) - Control handling of invalid power measurements<BR>[`SetOption72`](#setoption72) - Set reference used for total energy<BR>[`SetOption129`](#setoption129) - Enable separate energy meters
