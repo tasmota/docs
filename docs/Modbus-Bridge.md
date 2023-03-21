@@ -70,6 +70,7 @@ Command|Parameters
 :---|:---
 ModbusTCPStart| Start the Modbus TCP bridge on the specified `tcp port`
 ModbusTCPConnect| Connect to a remote Modbus TCP server on `ip address` and `remote tcp port`
+ModbusTCPMqtt| Send results queried by tcp modbus client also to mqtt when parameter is 1
   
 ## Returned Data
 ```json
