@@ -607,7 +607,7 @@ Software Serial Bridge can use any other GPIO to be configured as components `Se
 
 Information received by Tasmota over the serial bridge is captured automatically. Before data will be received, a properly formatted [`SerialSend<x>` or `SSerialSend<x>`](#serialsend) command must be executed. This must be done any time the device restarts (e.g., via a `System#Boot` triggered rule). This command is required in order to set how the expected serial data will be formatted and interpreted (i.e., which &#60;x> option). A `{"SSerialReceived":{"Data":"<string>"}}` message will be posted. You can use [a rule](Rules#control-relays-via-serial) to process the string which will be contained in `SSerialReceived#Data`.
 
-Hadrware Serial Buffer can be configured by `SerialBuffer`command, software serial buffer is fixed to 256 bytes long.
+Hardware Serial Buffer can be configured by `SerialBuffer`command, software serial buffer is fixed to 256 bytes long.
 
 You could activate `SetOption147` to disable publishing `SSerialReceived` MQTT messages. If disabled, you must use event trigger rules instead (`SSerialReceived#Data=<string>`) to control what, when and how is being published to your MQTT broker or whatever you want.
 
