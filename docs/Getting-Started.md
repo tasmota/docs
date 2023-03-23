@@ -8,26 +8,25 @@ description: Getting started with Tasmota. What you need, how to install and do 
 #### ESP Device
 Every [Espressif](https://www.espressif.com/en/products/socs) ESP8266, ESP8285, ESP32, ESP32-S or ESP32-C3 chipset based device can be flashed with Tasmota. The term ***ESP*** refers to any of them.
 
-#### Serial-to-USB Adapter
+#### Serial Programmer
 The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?title=Power) is **one of the most important elements** for both flashing the device and for stable operation. You must ensure that the device receives sufficient power (current AND appropriate voltage level) to properly flash the firmware on the device.
 
-* ==RECOMMENDED== [CH340G](https://cdn.sparkfun.com/datasheets/Dev/Arduino/Other/CH340DS1.PDF) is the most reliable and the cheapest one to boot ([AliExpress](https://www.aliexpress.com/item/32849030301.html), [Sparkfun](https://www.sparkfun.com/products/14050)).
-* ==RECOMMENDED== [CH340N](https://aitendo3.sakura.ne.jp/aitendo_data/product_img/ic/inteface/CH340N/ch340n.pdf) board has a 500mA voltage regulator ([AliExpress](https://www.aliexpress.com/item/1005004742270942.html))
+* ==RECOMMENDED== [CH340G](https://cdn.sparkfun.com/datasheets/Dev/Arduino/Other/CH340DS1.PDF) is the most reliable and the cheapest one to boot ([CH340G](https://www.aliexpress.com/item/32849030301.html), [Sparkfun](https://www.sparkfun.com/products/14050),[CH340N with AMS1117](https://www.aliexpress.com/item/1005004742270942.html)).
 <img src="../_media/ch340g.png" style="margin:5px;float:right;width:200px"></img>
 * ==RECOMMENDED== [VoltLink](https://github.com/voltlog/VoltLink) - USB to serial adapter board based on the popular CP2102N chip with built-in ESP auto-reset circuitry and a 500mA voltage regulator
 * [CP2102](https://www.silabs.com/documents/public/data-sheets/cp2102-9.pdf) or [PL2303](http://www.prolific.com.tw/UserFiles/files/ds_pl2303HXD_v1_4_4.pdf) - works with certain devices, but using an external 3.3V supply might be necessary. Not recommended for beginners!
-* [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) You can also use a NodeMCU (or similar) as a reliable serial-to-USB adapter if you disable the onboard ESP by bridging GND to the RST or EN pin, and connect TX and RX straight to another ESP82xx instead of crossed.
+* [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) You can also use a NodeMCU (or similar) as a reliable serial programmer if you disable the onboard ESP by bridging GND to the RST or EN pin, and connect TX and RX straight to another ESP82xx instead of crossed.
 
-!!! note "Don't forget to install drivers for your serial-to-USB adapter."
+!!! note "Don't forget to install drivers for your serial programmer."
 
 !!! danger
     Some adapters can be switched between 3.3V and 5V for the data pins, but still provide 5V on the power pin which will irreparably destroy your device.  You **MUST** make sure the data (RX and TX) and VCC pins are set for 3.3V. 
 
-Some devices, such as [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU), [D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html) or [M5Stack products](https://m5stack.com/), have a USB upload port and the serial-to-USB adapter built in.
+<img src="../_media/golden-ch340g.png" style="margin:5px;float:right;width:200px"></img>Many serial programmers do not have a voltage regulator on board like the pictured ones. The ESP requires at least 150mA, many 3.3V serial programmers cannot supply this much current as many serial programming tasks do not require a large amount of power.
 
-Many CH340G devices will not work, the "golden CH340G" has a voltage regulator on it to supply enough power to the ESP device - many do not.  <img src="../_media/golden-ch340g.png" style="margin:5px;float:right;width:200px"></img> The ESP requires at least 150mA, many 3.3V serial programmers do not supply this much current as many serial programming tasks do not require a large amount of power.
+When using an external 3.3V supply, ensure the ground (GND) of both are connected together, this ensures a common ground. A PC power supply can be a source for 3.3V DC power.
 
-When using an external 3.3V supply, simply ensure the ground (GND) of both are connected, this ensures a common ground. A PC power supply can be a source for 3.3V DC power.
+Devices with an USB upload port typically have a serial programmer built in, such as [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU), [D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html) or [M5Stack products](https://m5stack.com/).
 
 #### Soldering Tools
 
@@ -124,9 +123,9 @@ Device specific instructions are documented in [Tasmota Supported Devices Reposi
 
 To put the ESP into Programming Mode:
 
-1. Disconnect serial-to-USB adapter and power
+1. Disconnect serial programmer and power
 2. Bridge GPIO0 and GND (by pressing the on-board button or connection with a wire)
-3. Connect the serial-to-USB adapter to your computer
+3. Connect the serial programmer to your computer
 4. After a few seconds disconnect GPIO0 from GND (release button or remove the wire connection). On devices that do not provide the GPIO0 connected button, it may be easier to leave the wired bridge in place throughout the entire flashing process (erase & upload). Doing so will not create any problems. After the firmware is uploaded successfully, remove the bridge. This allows the device to boot normally.
 
 ??? tip "esptool.py programming mode test"
@@ -141,8 +140,8 @@ If everything went well, you are now in Programming Mode and ready to continue w
 
 * Wire connections and solder joints - Double check all connections and also check for solder overflow.
 * Use a USB ==**data cable**== - Some USB cables are for charging only and do not connect the data lines needed to load the firmware onto the device.
-* Insufficient power delivered over the serial-to-USB adapter. This leads to flashing failures or corrupted flash altogether. Supply more power with a separate 3.3V power supply or get an adapter with a better power supply. Be sure all DC voltages use the same GND line.
-* Recheck your serial-to-USB adapter so to ensure that it supplies 3.3V voltage and **NOT 5V**. ***5V will damage the ESP chip!***
+* Insufficient power delivered over the serial programmer. This leads to flashing failures or corrupted flash altogether. Supply more power with a separate 3.3V power supply or get an adapter with a better power supply. Be sure all DC voltages use the same GND line.
+* Recheck your serial programmer so to ensure that it supplies 3.3V voltage and **NOT 5V**. ***5V will damage the ESP chip!***
 * Releasing GPIO0 button/wire before booting is finished - It is safe to leave GPIO0 connected to GND during the entire programming process (erase & upload). Just be sure to remove the GPIO0 to GND bridge before booting the device for regular operation.
 * Make sure that the RX pin is connected to the TX pin between the serial adapter and your ESP device, and vice versa.
 * Erase the flash first and power cycle before uploading the Tasmota firmware binary. Not erasing can leave behind remnants of the previous flash contents which can interfere with the new firmware operation.
@@ -177,7 +176,7 @@ Choose an installation method:
 
     ![Tasmotizer UI](_media/tasmotizer1.png)
 
-    1. Connect your device to the serial-to-USB adapter or plug in NodeMCU/D1 mini.
+    1. Connect your device to the serial programmer or plug in NodeMCU/D1 mini.
     1. Check whether the correct **serial port** (COM or tty port) is selected. Tasmotizer! will try its best to select the right one for you.
     1. Choose Tasmota firmware binary:
         * **BIN file** - browse to the Tasmota firmware binary you downloaded or compiled.
@@ -339,7 +338,7 @@ Choose an installation method:
 
 === "Using Serial Terminal"
 
-     If you flashed the device using serial-to-USB adapter (or it is a NodeMCU/D1 mini) you can take advantage of the existing connection and configure your device over the serial connection using [Commands](Commands).
+     If you flashed the device using serial programmer (or it is a NodeMCU/D1 mini) you can take advantage of the existing connection and configure your device over the serial connection using [Commands](Commands).
 
     First you will need a serial terminal program that connects to Tasmota console over the serial connection you used to flash it.
 
@@ -353,7 +352,7 @@ Choose an installation method:
 
     *In this example [Termite](https://www.compuphase.com/software_termite.htm) on Windows is used.*
 
-    Download Termite and extract the .exe file, no installation necessary. Connect your serial-to-USB adapter or NodeMCU/D1 mini to the computer.
+    Download Termite and extract the .exe file, no installation necessary. Connect your serial programmer or NodeMCU/D1 mini to the computer.
 
     ![Termite setup](https://user-images.githubusercontent.com/5904370/55745914-abe39d00-5a38-11e9-91d8-1b8e16ed34d3.png)
 
@@ -362,7 +361,7 @@ Choose an installation method:
 
     ![First boot](https://user-images.githubusercontent.com/5904370/55746947-5e1c6400-5a3b-11e9-871f-11ac80e40205.png)
 
-    Connect your device to the serial-to-USB adapter. You should see the initial boot output in Termite.
+    Connect your device to the serial programmer. You should see the initial boot output in Termite.
     If your screen is empty type `status` in the bottom command bar and hit enter. If you get a return message from your device similar to the one displayed under purple `status` you're all set.
 
     To configure Tasmota you need to issue commands, some commands will reboot your device and to avoid that we will use the `Backlog` command feature.
