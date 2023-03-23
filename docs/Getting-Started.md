@@ -11,9 +11,10 @@ Every [Espressif](https://www.espressif.com/en/products/socs) ESP8266, ESP8285, 
 #### Serial-to-USB Adapter
 The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?title=Power) is **one of the most important elements** for both flashing the device and for stable operation. You must ensure that the device receives sufficient power (current AND appropriate voltage level) to properly flash the firmware on the device.
 
-* ==RECOMMENDED== [CH340G](https://cdn.sparkfun.com/datasheets/Dev/Arduino/Other/CH340DS1.PDF) is the most reliable and the cheapest one to boot ([1](https://www.aliexpress.com/item/32761423124.html), [2](https://www.sparkfun.com/products/14050)).
+* ==RECOMMENDED== [CH340G](https://cdn.sparkfun.com/datasheets/Dev/Arduino/Other/CH340DS1.PDF) is the most reliable and the cheapest one to boot ([AliExpress](https://www.aliexpress.com/item/32849030301.html), [Sparkfun](https://www.sparkfun.com/products/14050)).
+* ==RECOMMENDED== [CH340N](https://aitendo3.sakura.ne.jp/aitendo_data/product_img/ic/inteface/CH340N/ch340n.pdf) board has a 500mA voltage regulator ([AliExpress](https://www.aliexpress.com/item/1005004742270942.html))
 <img src="../_media/ch340g.png" style="margin:5px;float:right;width:200px"></img>
-* [FTDI FT232](https://www.ftdichip.com/Products/ICs/FT232R.htm) - these adapters have a lot of fakes in the market so buy only from reliable sources ([example](https://www.sparkfun.com/products/13746)). Buy only the variant with a separate 3.3V regulator on PCB! 
+* ==RECOMMENDED== [VoltLink](https://github.com/voltlog/VoltLink) - USB to serial adapter board based on the popular CP2102N chip with built-in ESP auto-reset circuitry and a 500mA voltage regulator
 * [CP2102](https://www.silabs.com/documents/public/data-sheets/cp2102-9.pdf) or [PL2303](http://www.prolific.com.tw/UserFiles/files/ds_pl2303HXD_v1_4_4.pdf) - works with certain devices, but using an external 3.3V supply might be necessary. Not recommended for beginners!
 * [NodeMCU](https://en.wikipedia.org/wiki/NodeMCU) You can also use a NodeMCU (or similar) as a reliable serial-to-USB adapter if you disable the onboard ESP by bridging GND to the RST or EN pin, and connect TX and RX straight to another ESP82xx instead of crossed.
 
@@ -29,6 +30,7 @@ Many CH340G devices will not work, the "golden CH340G" has a voltage regulator o
 When using an external 3.3V supply, simply ensure the ground (GND) of both are connected, this ensures a common ground. A PC power supply can be a source for 3.3V DC power.
 
 #### Soldering Tools
+
 To solder you'll of course need a soldering iron, soldering tin and some flux. If you're new to soldering check out some soldering tutorial videos while you're at it.
 
 If you're intimidated by soldering there are 3D printed jigs available for different modules and devices. At worst, you could get away with holding the headers tightly with jumper wires in pin holes during flashing but it is not a foolproof process and flashing might fail.
@@ -38,23 +40,28 @@ If you're intimidated by soldering there are 3D printed jigs available for diffe
 You could use any kind of wire but [jumper wires](http://blog.sparkfuneducation.com/what-is-jumper-wire) (also called DuPont wires) are more practical than soldering and desoldering.
 
 #### Pin Headers
+
 <img src="../_media/pinheaders.png" style="margin:5px;float:right;width:10em"></img>
 
 [Pin headers](https://learn.sparkfun.com/tutorials/connector-basics/pin-header-connectors) come in male or female version. Choose according to your jumper wire connectors.
 
 #### Computer with Linux, Windows or MacOS
+
 You need a computer with a USB port to upload the firmware to your device and configure it.
 
 #### Smartphone
+
 Tasmota installed from a precompiled binary needs to be configured to work with your Wi-Fi network before you can access the Tasmota web UI. This is usually done by connecting to a Tasmota Wi-Fi Access Point with your smartphone (or tablet or computer with Wi-Fi). 
 
 ### Needed Software
+
 #### Tasmota Firmware Binary
+
 Download a Tasmota firmware binary file (.bin). If you're not sure which binary is the right one for you just start with `tasmota.bin` or consult the [builds table](Firmware-Builds) to see which features you need. 
 
 Official release binaries can be downloaded from [firmware server](http://ota.tasmota.com/tasmota/release/). 
 
-Latest _**development**_ branch binaries are available only from our [OTA server](http://ota.tasmota.com/tasmota). The latest merged development code is compiled hourly. 
+Latest ***development*** branch binaries are available only from our [OTA server](http://ota.tasmota.com/tasmota). The latest merged development code is compiled hourly. 
 
 #### Flashing Tool
 
@@ -68,6 +75,7 @@ Latest _**development**_ branch binaries are available only from our [OTA server
     If you want to modify the code or default settings and [compile your own Tasmota firmware](Compile-your-build).
 
 ### MQTT Knowledge
+
 Tasmota is designed to be controlled and communicate via [MQTT](http://mqtt.org/). To use it to its fullest potential you need an [MQTT broker](https://www.hivemq.com/blog/mqtt-essentials-part-3-client-broker-connection-establishment/). 
 
 Read our [article on MQTT](MQTT) to learn why it is essential in Tasmota.
@@ -86,9 +94,10 @@ In most cases those pins are available on the PCB in the form of pin holes or so
 
 ==**YOU CAN BE ELECTROCUTED IF YOU DO NOT KNOW WHAT YOU ARE DOING!**==
 
-If you are not careful, your own health will be in danger. Shorting your serial interface with mains AC power will fry your device and serial adapter and will also harm or destroy your computer. It is important to _**always have all mains power cables disconnected from the device**_ while being connected via serial or even while the case of the device is opened.
+If you are not careful, your own health will be in danger. Shorting your serial interface with mains AC power will fry your device and serial adapter and will also harm or destroy your computer. It is important to ***always have all mains power cables disconnected from the device*** while being connected via serial or even while the case of the device is opened.
 
 ### Serial Connection
+
 Each device has its pins labelled differently. If the labelling isn't visible on the PCB please refer to the devices flashing guide or search the Internet for correct pin locations. Device specific instructions and restrictions are documented in the [Tasmota Supported Devices Repository](https://templates.blakadder.com/). Pinouts for commonly used Wi-Fi modules are [found here](Pinouts.md)
 
 When you have identified pins on your device, connect wires according to the table:
@@ -104,6 +113,7 @@ When you have identified pins on your device, connect wires according to the tab
 ![Image courtesy of https://www.domo-blog.fr/](https://user-images.githubusercontent.com/5904370/57880182-69bf2f80-781e-11e9-8953-88599cb89155.png)
 
 ### Programming Mode
+
 <img alt="Typical GPIO0 Location" src="https://raw.githubusercontent.com/tasmota/docs/master/docs/_media/gpio0.png" style="margin:5px;float:right;width:180px"></img>
 
 ESP needs to be put into **programming mode** or **flash mode** before the firmware can be uploaded. This is done by connecting GPIO0 pin to GND while the chip is booting. 
@@ -129,13 +139,13 @@ If everything went well, you are now in Programming Mode and ready to continue w
 
 ### Common Mistakes
 
-- Wire connections and solder joints - Double check all connections and also check for solder overflow.
-- Use a USB ==**data cable**== - Some USB cables are for charging only and do not connect the data lines needed to load the firmware onto the device.
-- Insufficient power delivered over the serial-to-USB adapter. This leads to flashing failures or corrupted flash altogether. Supply more power with a separate 3.3V power supply or get an adapter with a better power supply. Be sure all DC voltages use the same GND line.
-- Recheck your serial-to-USB adapter so to ensure that it supplies 3.3V voltage and **NOT 5V**. _**5V will damage the ESP chip!**_
-- Releasing GPIO0 button/wire before booting is finished - It is safe to leave GPIO0 connected to GND during the entire programming process (erase & upload). Just be sure to remove the GPIO0 to GND bridge before booting the device for regular operation.
-- Make sure that the RX pin is connected to the TX pin between the serial adapter and your ESP device, and vice versa.
-- Erase the flash first and power cycle before uploading the Tasmota firmware binary. Not erasing can leave behind remnants of the previous flash contents which can interfere with the new firmware operation.
+* Wire connections and solder joints - Double check all connections and also check for solder overflow.
+* Use a USB ==**data cable**== - Some USB cables are for charging only and do not connect the data lines needed to load the firmware onto the device.
+* Insufficient power delivered over the serial-to-USB adapter. This leads to flashing failures or corrupted flash altogether. Supply more power with a separate 3.3V power supply or get an adapter with a better power supply. Be sure all DC voltages use the same GND line.
+* Recheck your serial-to-USB adapter so to ensure that it supplies 3.3V voltage and **NOT 5V**. ***5V will damage the ESP chip!***
+* Releasing GPIO0 button/wire before booting is finished - It is safe to leave GPIO0 connected to GND during the entire programming process (erase & upload). Just be sure to remove the GPIO0 to GND bridge before booting the device for regular operation.
+* Make sure that the RX pin is connected to the TX pin between the serial adapter and your ESP device, and vice versa.
+* Erase the flash first and power cycle before uploading the Tasmota firmware binary. Not erasing can leave behind remnants of the previous flash contents which can interfere with the new firmware operation.
 
 ## Flashing
 
