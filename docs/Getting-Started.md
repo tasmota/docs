@@ -11,7 +11,7 @@ Every [Espressif](https://www.espressif.com/en/products/socs) ESP8266, ESP8285, 
 #### Serial Programmer
 The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?title=Power) is **one of the most important elements** for both flashing the device and for stable operation. You must ensure that the device receives sufficient power (current AND appropriate voltage level) to properly flash the firmware on the device.
 
-* ==RECOMMENDED== [CH340G](https://cdn.sparkfun.com/datasheets/Dev/Arduino/Other/CH340DS1.PDF) is the most reliable and the cheapest one to boot ([CH340G](https://www.aliexpress.com/item/32849030301.html), [Sparkfun](https://www.sparkfun.com/products/14050),[CH340N with AMS1117](https://www.aliexpress.com/item/1005004742270942.html)).
+* ==RECOMMENDED== [CH340G](https://cdn.sparkfun.com/datasheets/Dev/Arduino/Other/CH340DS1.PDF) is the most reliable and the cheapest one to boot ([CH340G](https://www.aliexpress.com/item/32849030301.html), [Sparkfun](https://www.sparkfun.com/products/14050), [Soldered Connect](https://soldered.com/product/connect-programmer/), [CH340N with AMS1117](https://www.aliexpress.com/item/1005004742270942.html)).
 <img src="../_media/ch340g.png" style="margin:5px;float:right;width:200px"></img>
 * ==RECOMMENDED== [VoltLink](https://github.com/voltlog/VoltLink) - USB to serial adapter board based on the popular CP2102N chip with built-in ESP auto-reset circuitry and a 500mA voltage regulator
 * [CP2102](https://www.silabs.com/documents/public/data-sheets/cp2102-9.pdf) or [PL2303](http://www.prolific.com.tw/UserFiles/files/ds_pl2303HXD_v1_4_4.pdf) - works with certain devices, but using an external 3.3V supply might be necessary. Not recommended for beginners!
