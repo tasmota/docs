@@ -68,8 +68,8 @@ Some example templates
 Inverted relays and buttons                Ri1 Ri2 Ri3 Ri4 Ri5 Ri6 Ri7 Ri8 B1 B2 B3 B4 B5 B6 B7 B8
 {"NAME":"MCP23017 A=Ri1-8, B=B1-8","GPIO":[256,257,258,259,260,261,262,263,32,33,34,35,36,37,38,39]}
 
-Inverted relays and buttons with offset 2            Ri1 Ri2 Ri3 Ri4 Ri5 Ri6 Ri7 Ri8 B3 B4 B5 B6 B7 B8 B9 B10
-{"NAME":"MCP23017 A=Ri1-8, B=B2-10","BASE":1,"GPIO":[256,257,258,259,260,261,262,263,34,35,36,37,38,39,40,41]}
+Unique inverted relays and buttons with offset 2      Ri3 Ri4 Ri5 Ri6 Ri7 Ri8 Ri9 Ri10B3 B4 B5 B6 B7 B8 B9 B10
+{"NAME":"MCP23017 A=Ri2-10, B=B2-10","BASE":1,"GPIO":[258,259,260,261,262,263,264,265,34,35,36,37,38,39,40,41]}
 
 Buttons, relays, buttons and relays                         B1 B2 B3 B4 B5 B6 B7 B8 R1  R2  R3  R4  R5  R6  R7  R8  B9 B10B11B12B13B14B15B16R9  R10 R11 R12 R13 R14 R15 R16
 {"NAME":"MCP23017 A=B1-8, B=R1-8, C=B9-16, D=R9-16","GPIO":[32,33,34,35,36,37,38,39,224,225,226,227,228,229,230,231,40,41,42,43,44,45,46,47,232,233,234,235,236,237,238,239]}
