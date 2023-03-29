@@ -110,13 +110,13 @@ EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch T
 3. At the **Configure stack options** screen, keep all default parameters and click **Next**.
    ![MqttAuth03](https://user-images.githubusercontent.com/49731213/96349818-51f27780-10b2-11eb-90c5-4327e822789e.png)
 
-4. At the **Review TasmotaMqttPolicy** screen, scroll down and click **Create Stack**.
+4. At the **Review TasmotaAuth** screen, scroll down, click the checkbox to acknowledge the creation of IAM resources, and click **Submit**.
    ![MqttAuth04](https://user-images.githubusercontent.com/49731213/96349826-62a2ed80-10b2-11eb-8702-591a363d231b.png)
 
 5. The stack usually takes less than 1 minute to complete. Wait for it to reach `CREATE_COMPLETE` state.
    <img width="50%" src="https://user-images.githubusercontent.com/49731213/96349843-7ea68f00-10b2-11eb-8fe0-5c1da253e384.png">
 
-6. Copy the commands under `BackLogCommand`, you will need it to configure Tasmota devices.
+6. Copy the commands under `BackLogCommand`, you will need it to configure Tasmota devices. The BackLogCommand will be found on the Cloudformation console, under the Outputs tab.
    <img width="90%" src="https://user-images.githubusercontent.com/49731213/96370798-5de84300-115f-11eb-87a7-b4c01ddbe421.png">
 
 7. If you have left the parameter `RetentionPolicy` to `Retain`, then you can delete this CloudFormation stack (it will not delete the Policy). Click on the **Delete** button.
@@ -127,7 +127,7 @@ EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch T
 
 ### 6. Configure Tasmota device
 
-This is the last step, you need to configure the MQTT parameters. The easiest way is through the web console. We will only cut and paste parameters from the **Outputs** tab of the CloudFormation console.
+This is the last step, you need to configure the MQTT parameters. The easiest way is through the web console. We will only paste the backlog command from the **Outputs** tab of the CloudFormation console as previously instructed.
 
 Example:
 ```
@@ -166,9 +166,9 @@ Here is an example of output you should see:
 
 ### 7. Check end-to-end communication
 
-In the AWS IoT console, click on "**Test**" in the left panel.
+In the AWS IoT console, click on "**MQTT test client**" in the left panel.
 
-In the "**Subscription topic**" field, type `+/sonoff/#` then click on "**Subscribe to topic**". This will display all MQTT messages received. Type a command in the Web Tasmota console, you should see MQTT message flow.
+In the "**Subscribe to a topic**" field, type `+/topic/#`, `topic` being your topic name, then click on "**Subscribe**". This will display all MQTT messages received. Type a command in the Web Tasmota console, you should see MQTT message flow.
 
 Enjoy!
 
