@@ -97,7 +97,7 @@ Or click on the link for the region you have chosen:
 
 Region| Code | Launch
 ------|------|-------
-US East (N. Virginia) | <span style="font-family:'Courier';">us-east-1</span> | [![Launch TasmotaAuth in us-east-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=TasmotaAuth&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/TasmotaAuth.yaml)
+US East (N. Virginia) | <span style="font-family:'Courier';">us-east-1</span> | [![Launch TasmotaAuth in us-east-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Tasmota&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/TasmotaAuth.yaml)
 EU (Frankfurt) | <span style="font-family:'Courier';">eu-central-1</span> | [![Launch TasmotaAuth in eu-west-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/new?stackName=TasmotaAuth&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/TasmotaAuth.yaml)
 EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch TasmotaAuth in eu-west-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-3#/stacks/new?stackName=TasmotaAuth&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/TasmotaAuth.yaml)
 
@@ -111,7 +111,6 @@ EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch T
    ![MqttAuth03](https://user-images.githubusercontent.com/49731213/96349818-51f27780-10b2-11eb-90c5-4327e822789e.png)
 
 4. At the **Review TasmotaAuth** screen, scroll down, click the checkbox to acknowledge the creation of IAM resources, and click **Submit**.
-   ![MqttAuth04](https://user-images.githubusercontent.com/49731213/96349826-62a2ed80-10b2-11eb-8702-591a363d231b.png)
 
 5. The stack usually takes less than 1 minute to complete. Wait for it to reach `CREATE_COMPLETE` state.
    <img width="50%" src="https://user-images.githubusercontent.com/49731213/96349843-7ea68f00-10b2-11eb-8fe0-5c1da253e384.png">
