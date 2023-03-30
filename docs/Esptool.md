@@ -66,7 +66,7 @@ NOTE2: For a proper device initialization after first firmware upload power down
 
 ### ESPTOOL Executable (Windows, MacOs and Linux)
 
-The executable version of esptool can be dpwnloaded from [https://github.com/espressif/esptool/releases](https://github.com/espressif/esptool/releases)
+The executable version of esptool can be downloaded from [https://github.com/espressif/esptool/releases](https://github.com/espressif/esptool/releases)
 
 ### Download and Install
 
