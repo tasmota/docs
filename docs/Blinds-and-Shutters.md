@@ -5,6 +5,8 @@
 
 Before starting you have to enable shutter support with `SetOption80 1`
 
+There is a new enhanced ESP32 version you can enable with the following compiler option #define `USE_SHUTTER_ESP32`. Will be default in future versions for ESP32 after some testing. New features most likely only in ESP32 due to memory limitations. Current feature set: up to 16 shutters, up to 32 shutterbuttons, tilt definition with buttons. Configuration safed to filesystem.
+
 ## Commands
 Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#shutters).
 
