@@ -11,7 +11,7 @@ Current feature set:
 - up to 16 shutters, 
 - up to 32 shutterbuttons, 
 - tilt definition with buttons. 
-- Configuration safed to filesystem.
+- Configuration saved to filesystem.
 
 ## Commands
 Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#shutters).
