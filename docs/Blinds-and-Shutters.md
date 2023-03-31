@@ -6,7 +6,6 @@
 Before starting you have to enable shutter support with `SetOption80 1`
 
 ## Commands
-
 Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#shutters).
 
 ## Shutter Modes
@@ -78,7 +77,8 @@ When `SetOption80 1` is invoked you have to define `Shutterrelay1 <value>` to ge
 If possible to avoid any injury on unexpected movement all RELAYS should start in OFF mode when the device reboots: `PowerOnState 0`
 ![](https://user-images.githubusercontent.com/34340210/65997878-3517e180-e468-11e9-950e-bfe299771233.png)
 
-A maximum of four shutters per device are supported.  
+A maximum of four shutters per device are supported on ESP8266. The newer ESP32 can support up to 16 Shutters with 32 Relays. Nevertheless it might be required to add a GPIO expension board to get enough connectors.
+
 ![](https://user-images.githubusercontent.com/34340210/65997879-3517e180-e468-11e9-9c44-9ad4a4a970cc.png) 
 
 To enable additional shutters, `ShutterRelay<x> <value>` must be executed for each additional shutter. Additional shutter declarations must be sequentially numbered, and without gaps (i.e., second shutter is 2, next shutter 3 and finally shutter 4).
@@ -191,7 +191,10 @@ More advanced control of the button press actions is given by the following `Shu
 
 Parameters are optional. When missing, all subsequent parameters are set to `disable`.
 
-By a button single press the shutter is set to position `<p1>`.  Double press will drive the shutter to position `<p2>` and  triple press to position `<p3>`. Holding the button for more than the `SetOption32` time sets the shutter position to `<ph>` max if button is hold until position. If the hold button is released during the shutter moves the shutter will stop. Any button action `<p1>` to `<ph>` can be disabled by setting the parameter to `-`. Independent from configuration `<p1>` to `<ph>` any press of the button while the shutter is moving will immediately stop the shutter.
+ESP32 only:
+`<p0..h>` can be optional extended with a dedicated position of the tilt if a venetian blind is configured and supported. The position of the tilt can be added after the normal position with a `/` as seperator. This is optional. Example: `shutterbutton1 1 100/-90 50/0 75/-90 100 - - 1 1`
+   
+By a button single press the shutter is set to position `<p1>`.  Double press will drive the shutter to position `<p2>` and  triple press to position `<p3>`. Holding the button for more than the `SetOption32` time sets the shutter position to `<ph>` max if button is hold until position. If the hold button is released during the shutter moves the shutter will stop. Any button action `<p1>` to `<ph>` can be disabled by setting the parameter to `-`. Independent from configuration `<p1>` to `<ph>` any press of the button while the shutter is moving will immediately stop the shutter. 
 
 Global steering of all your shutters at home is supported by additional MQTT broadcast. By any button action a corresponding MQTT command can be initiated to the `<grouptopic>` of the device. For single press this can be enabled by `<m1>` equal to `1`, disabling is indicated by `-`. Double to hold MQTT configurations are given by `<m2>` to `<mh>`, correspondingly. When `<mi>` is equal to `-` only `cmnd/<grouptopic>/Shutterposition<x> <p1..h>` is fired. When `<mi>` is equal to `1`, `<x>`=`1..4` is used to control any shutter number of a Tasmota device having same `<grouptopic>`.
 
@@ -583,7 +586,9 @@ Tilt configuration can be set for every shutter independently. The tilt can be s
    `shuttertilt1 close` set tilt to defined close angle
    `shuttertilt1 20` set tilt to 20° angle
    
-If the shutter is moved from one position to another position the tilt will be restored AFTER the movement. If the shutter is fully opened or fully closed the tilt will be reset. This means there is no tilt restore at the endpoints. If you want to restore the tilt at the endpoint you have to use a backlog command e.g. `backlog shutterclose1; shuttertilt1 open`
+If the shutter is moved from one position to another position the tilt will be restored AFTER the movement. If the shutter is fully opened or fully closed the tilt will be reset. This means there is no tilt restore at the endpoints. If you want to restore the tilt at the endpoint you have two options to do that:
+- use a backlog command e.g. `backlog shutterclose1; shuttertilt1 open`
+- use `shutterposition1 0,90` with an optional position of the tilt as a second parameter
 
 Similar to shutterchange to make relative movements there is also a `shuttertiltchange` with the same behavior. 
    
