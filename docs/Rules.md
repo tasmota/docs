@@ -118,6 +118,7 @@ Time#Set<a id="TimeSet"></a>|every hour when NTP makes time in sync
 Var&lt;x\>\#State<a id="VarState"></a>|when the value for Var&lt;x\> is changed (triggers whenever a value is written to `Var<x>` even if it's the same value)
 Wifi#Connected<a id="WifiConnected"></a>|when Wi-Fi is connected
 Wifi#Disconnected<a id="WifiDisconnected"></a>|when Wi-Fi is disconnected
+Tele-Heap<a id="tele-Heap"></a>|when a teleperiod message is sent with available heap memory (example of top-level JSON)
 Tele-Wifi#AP<a id="tele-Wifi-AP"></a>|when a teleperiod message is sent with the number of the used AP 
 Tele-Wifi#Ssid<a id="tele-Wifi-Ssid"></a>|when a teleperiod message is sent with the name of the used AP 
 Tele-Wifi#Bssid<a id="tele-Wifi-Bssid"></a>|when a teleperiod message is sent with the name of the bSSID
