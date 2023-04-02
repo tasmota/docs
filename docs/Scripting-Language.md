@@ -1320,7 +1320,7 @@ remark: the Flash illumination LED is connected to GPIO4
     print %upsecs% %uptime% %time% %sunrise% %sunset% %tstamp%
 
     if time>sunset
-    and time<sunrise
+    or time<sunrise
     then
     ; night time
     if pwr[1]==0
