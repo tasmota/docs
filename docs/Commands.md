@@ -207,8 +207,8 @@ UfsRename2<a class="cmnd" id="ufsrename2"></a>|Rename only Flash FS file if avai
 UfsRun<a class="cmnd" id="ufsrun"></a>|Run file
 UfsSize<a class="cmnd" id="ufssize"></a>|Filesystem size in kb
 UfsType<a class="cmnd" id="ufstype"></a>|Get filesystem type<BR>`0` = none<BR>`1` = SD card<BR>`2` = Flash file<BR>`3` = LittleFS
-Upgrade<a class="cmnd" id="upgrade"></a>|`1` = download firmware from `OtaUrl` and restart<BR>`<value>` = download firmware from `OtaUrl` if <value\> is higher than device version
-Upload<a class="cmnd" id="upload"></a>|`1` = download firmware from `OtaUrl` and restart<BR>`<value>` = download firmware from `OtaUrl` if <value\> is higher than device version
+Upgrade<a class="cmnd" id="upgrade"></a>|`1` = download firmware from `OtaUrl` and restart<BR>`2` = (ESP32 only) download safeboot firmware based on `OtaUrl` and restart into safeboot<BR>`<value>` = download firmware from `OtaUrl` if <value\> is higher than device version
+Upload<a class="cmnd" id="upload"></a>|`1` = download firmware from `OtaUrl` and restart<BR>`2` = (ESP32 only) download safeboot firmware based on `OtaUrl` and restart into safeboot<BR>`<value>` = download firmware from `OtaUrl` if <value\> is higher than device version
 UrlFetch<a class="cmnd" id="urlfetch"></a>|`<address>` = download file to filesystem
 WebGetConfig<a class="cmnd" id="webgetconfig"></a>|`<url>` = pull a configuration `.dmp`  file from a HTTP URL<BR>[More information...](https://github.com/arendst/Tasmota/pull/13034)
 WebLog<a class="cmnd" id="weblog"></a>|`0` = disable web logging<BR> `1` = show only error messages<BR> `2` = show error and info messages *(default)*<BR>`3` = show error, info and debug messages<BR>`4` = show error, info and more debug messages
