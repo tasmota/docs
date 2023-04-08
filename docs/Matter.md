@@ -22,6 +22,7 @@ Tasmota Matter is confirmed to work with:
 
 - **iOS - Home app**
 - **ESP Matter mobile app**
+- [Google Home Target Commissioner](https://developers.home.google.com/samples/matter-app#commission_devices) on your Android smartphone
 - ... more to come
 
 ### Getting started
