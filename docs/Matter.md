@@ -32,6 +32,7 @@ tbc
 
 As Matter support is still experimental, there are some limitations:
 
+- ESP32 with >= 4MB Flash
 - Matter requires IPv6 support, yet IPv4 is often tolerated. For debug purpose you can force Tasmota to manage Matter only on IPv4
 - Tasmota devices with dual active networks (Ethernet + Wifi) are not yet supported. You need to disable Wifi or Ethernet. For example use [Ethernet Network Flipper](https://tasmota.github.io/docs/Berry-Cookbook/#ethernet-network-flipper)
 - Tasmota cannot be Matter certified, it uses development vendor-ids, which typically raise user warnings when commissioning the device
