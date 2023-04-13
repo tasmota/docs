@@ -25,71 +25,71 @@ Read more about [peripherals](Supported-Peripherals.md).
 | #    | UI Label       | Comment                                                                                                 |
 |------|----------------|---------------------------------------------------------------------------------------------------------|
 | 0    | None           | Not used                                                                                                |
-| 32   | Button1        | Button active low, internal pull-up resistor                                                                                               |
-| 33   | Button2        | Button active low, internal pull-up resistor                                                                                               |
-| 34   | Button3        | Button active low, internal pull-up resistor                                                                                               |
-| 35   | Button4        | Button active low, internal pull-up resistor                                                                                               |
-| 36   | Button5        | Button active low, internal pull-up resistor                                                                                               |
-| 37   | Button6        | Button active low, internal pull-up resistor                                                                                               |
-| 38   | Button7        | Button active low, internal pull-up resistor                                                                                               |
-| 39   | Button8        | Button active low, internal pull-up resistor                                                                                               |
-| 64   | Button_n1      | Button active low, no internal pull-up resistor                                                                                               |
-| 65   | Button_n2      | Button active low, no internal pull-up resistor                                                                                               |
-| 66   | Button_n3      | Button active low, no internal pull-up resistor                                                                                               |
-| 67   | Button_n4      | Button active low, no internal pull-up resistor                                                                                               |
-| 68   | Button_n5      | Button active low, no internal pull-up resistor                                                                                               |
-| 69   | Button_n6      | Button active low, no internal pull-up resistor                                                                                               |
-| 70   | Button_n7      | Button active low, no internal pull-up resistor                                                                                               |
-| 71   | Button_n8      | Button active low, no internal pull-up resistor                                                                                               |
-| 96   | Button_i1      | Button inverted, active high with internal pull-up resistor                                                                                              |
-| 97   | Button_i2      | Button inverted, active high with internal pull-up resistor                                                                                              |
-| 98   | Button_i3      | Button inverted, active high with internal pull-up resistor                                                                                              |
-| 99   | Button_i4      | Button inverted, active high with internal pull-up resistor                                                                                              |
-| 100  | Button_i5      | Button inverted, active high with internal pull-up resistor                                                                                              |
-| 101  | Button_i6      | Button inverted, active high with internal pull-up resistor                                                                                              |
-| 102  | Button_i7      | Button inverted, active high with internal pull-up resistor                                                                                              |
-| 103  | Button_i8      | Button inverted, active high with internal pull-up resistor                                                                                              |
-| 128  | Button_in1     | Button inverted, active high no internal pull-up resistor                                                                                              |
-| 129  | Button_in2     | Button inverted, active high no internal pull-up resistor                                                                                              |
-| 130  | Button_in3     | Button inverted, active high no internal pull-up resistor                                                                                              |
-| 131  | Button_in4     | Button inverted, active high no internal pull-up resistor                                                                                              |
-| 132  | Button_in5     | Button inverted, active high no internal pull-up resistor                                                                                              |
-| 133  | Button_in6     | Button inverted, active high no internal pull-up resistor                                                                                              |
-| 134  | Button_in7     | Button inverted, active high no internal pull-up resistor                                                                                              |
-| 135  | Button_in8     | Button inverted, active high no internal pull-up resistor                                                                                              |
-| 160  | Switch1        | Switch, internal pull-up resistor                                                                    |
-| 161  | Switch2        | Switch, internal pull-up resistor                                                                    |
-| 162  | Switch3        | Switch, internal pull-up resistor                                                                    |
-| 163  | Switch4        | Switch, internal pull-up resistor                                                                    |
-| 164  | Switch5        | Switch, internal pull-up resistor                                                                    |
-| 165  | Switch6        | Switch, internal pull-up resistor                                                                    |
-| 166  | Switch7        | Switch, internal pull-up resistor                                                                    |
-| 167  | Switch8        | Switch, internal pull-up resistor                                                                    |
-| 192  | Switch_n1      | Switch, no pull-up resistor                                                                    |
-| 193  | Switch_n2      | Switch, no pull-up resistor                                                                    |
-| 194  | Switch_n3      | Switch, no pull-up resistor                                                                    |
-| 195  | Switch_n4      | Switch, no pull-up resistor                                                                    |
-| 196  | Switch_n5      | Switch, no pull-up resistor                                                                    |
-| 197  | Switch_n6      | Switch, no pull-up resistor                                                                    |
-| 198  | Switch_n7      | Switch, no pull-up resistor                                                                    |
-| 199  | Switch_n8      | Switch, no pull-up resistor                                                                    |
-| 224  | Relay1         | Relay                                                                                              |
-| 225  | Relay2         | Relay                                                                                              |
-| 226  | Relay3         | Relay                                                                                              |
-| 227  | Relay4         | Relay                                                                                              |
-| 228  | Relay5         | Relay                                                                                              |
-| 229  | Relay6         | Relay                                                                                              |
-| 230  | Relay7         | Relay                                                                                              |
-| 231  | Relay8         | Relay                                                                                              |
+| 32   | Button1        | Button active low, internal pull-up resistor                                                            |
+| 33   | Button2        | Button active low, internal pull-up resistor                                                            |
+| 34   | Button3        | Button active low, internal pull-up resistor                                                            |
+| 35   | Button4        | Button active low, internal pull-up resistor                                                            |
+| 36   | Button5        | Button active low, internal pull-up resistor                                                            |
+| 37   | Button6        | Button active low, internal pull-up resistor                                                            |
+| 38   | Button7        | Button active low, internal pull-up resistor                                                            |
+| 39   | Button8        | Button active low, internal pull-up resistor                                                            |
+| 64   | Button_n1      | Button active low, no internal pull-up resistor                                                         |
+| 65   | Button_n2      | Button active low, no internal pull-up resistor                                                         |
+| 66   | Button_n3      | Button active low, no internal pull-up resistor                                                         |
+| 67   | Button_n4      | Button active low, no internal pull-up resistor                                                         |
+| 68   | Button_n5      | Button active low, no internal pull-up resistor                                                         |
+| 69   | Button_n6      | Button active low, no internal pull-up resistor                                                         |
+| 70   | Button_n7      | Button active low, no internal pull-up resistor                                                         |
+| 71   | Button_n8      | Button active low, no internal pull-up resistor                                                         |
+| 96   | Button_i1      | Button inverted, active high with internal pull-up resistor                                             |
+| 97   | Button_i2      | Button inverted, active high with internal pull-up resistor                                             |
+| 98   | Button_i3      | Button inverted, active high with internal pull-up resistor                                             |
+| 99   | Button_i4      | Button inverted, active high with internal pull-up resistor                                             |
+| 100  | Button_i5      | Button inverted, active high with internal pull-up resistor                                             |
+| 101  | Button_i6      | Button inverted, active high with internal pull-up resistor                                             |
+| 102  | Button_i7      | Button inverted, active high with internal pull-up resistor                                             |
+| 103  | Button_i8      | Button inverted, active high with internal pull-up resistor                                             |
+| 128  | Button_in1     | Button inverted, active high no internal pull-up resistor                                               |
+| 129  | Button_in2     | Button inverted, active high no internal pull-up resistor                                               |
+| 130  | Button_in3     | Button inverted, active high no internal pull-up resistor                                               |
+| 131  | Button_in4     | Button inverted, active high no internal pull-up resistor                                               |
+| 132  | Button_in5     | Button inverted, active high no internal pull-up resistor                                               |
+| 133  | Button_in6     | Button inverted, active high no internal pull-up resistor                                               |
+| 134  | Button_in7     | Button inverted, active high no internal pull-up resistor                                               |
+| 135  | Button_in8     | Button inverted, active high no internal pull-up resistor                                               |
+| 160  | Switch1        | Switch, internal pull-up resistor                                                                       |
+| 161  | Switch2        | Switch, internal pull-up resistor                                                                       |
+| 162  | Switch3        | Switch, internal pull-up resistor                                                                       |
+| 163  | Switch4        | Switch, internal pull-up resistor                                                                       |
+| 164  | Switch5        | Switch, internal pull-up resistor                                                                       |
+| 165  | Switch6        | Switch, internal pull-up resistor                                                                       |
+| 166  | Switch7        | Switch, internal pull-up resistor                                                                       |
+| 167  | Switch8        | Switch, internal pull-up resistor                                                                       |
+| 192  | Switch_n1      | Switch, no pull-up resistor                                                                             |
+| 193  | Switch_n2      | Switch, no pull-up resistor                                                                             |
+| 194  | Switch_n3      | Switch, no pull-up resistor                                                                             |
+| 195  | Switch_n4      | Switch, no pull-up resistor                                                                             |
+| 196  | Switch_n5      | Switch, no pull-up resistor                                                                             |
+| 197  | Switch_n6      | Switch, no pull-up resistor                                                                             |
+| 198  | Switch_n7      | Switch, no pull-up resistor                                                                             |
+| 199  | Switch_n8      | Switch, no pull-up resistor                                                                             |
+| 224  | Relay1         | Relay                                                                                                   |
+| 225  | Relay2         | Relay                                                                                                   |
+| 226  | Relay3         | Relay                                                                                                   |
+| 227  | Relay4         | Relay                                                                                                   |
+| 228  | Relay5         | Relay                                                                                                   |
+| 229  | Relay6         | Relay                                                                                                   |
+| 230  | Relay7         | Relay                                                                                                   |
+| 231  | Relay8         | Relay                                                                                                   |
 | 255  | User           | User pin                                                                                                |
-| 256  | Relay_i1       | Relay inverted                                                                                              |
-| 257  | Relay_i2       | Relay inverted                                                                                              |
-| 258  | Relay_i3       | Relay inverted                                                                                              |
-| 259  | Relay_i4       | Relay inverted                                                                                              |
-| 260  | Relay_i5       | Relay inverted                                                                                              |
-| 261  | Relay_i6       | Relay inverted                                                                                              |
-| 262  | Relay_i7       | Relay inverted                                                                                              |
-| 263  | Relay_i8       | Relay inverted                                                                                              |
+| 256  | Relay_i1       | Relay inverted                                                                                          |
+| 257  | Relay_i2       | Relay inverted                                                                                          |
+| 258  | Relay_i3       | Relay inverted                                                                                          |
+| 259  | Relay_i4       | Relay inverted                                                                                          |
+| 260  | Relay_i5       | Relay inverted                                                                                          |
+| 261  | Relay_i6       | Relay inverted                                                                                          |
+| 262  | Relay_i7       | Relay inverted                                                                                          |
+| 263  | Relay_i8       | Relay inverted                                                                                          |
 | 288  | Led1           | 4 x Leds                                                                                                |
 | 289  | Led2           | 4 x Leds                                                                                                |
 | 290  | Led3           | 4 x Leds                                                                                                |
@@ -138,10 +138,10 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 1088 | IRrecv         | IR interface                                                                                            |
 | 1120 | RFSend         | RF interface                                                                                            |
 | 1152 | RFrecv         | RF interface                                                                                            |
-| 1184 | DHT11          | DHT11                                                                  |
-| 1216 | AM2301         | DHT21 DHT22 AM2301 AM2302 AM2321                                                                  |
-| 1248 | SI7021         | SI7021                                                                  |
-| 1280 | DHT11_o        | DHT11                                                                   |
+| 1184 | DHT11          | DHT11                                                                                                   |
+| 1216 | AM2301         | DHT21 DHT22 AM2301 AM2302 AM2321                                                                        |
+| 1248 | SI7021         | SI7021                                                                                                  |
+| 1280 | DHT11_o        | DHT11                                                                                                   |
 | 1312 | DS18x20        | DS18B20 or DS18S20                                                                                      |
 | 1344 | DS18x20_o      | DS18B20 or DS18S20                                                                                      |
 | 1376 | WS2812         | WS2812 Led string                                                                                       |
@@ -415,38 +415,38 @@ Read more about [peripherals](Supported-Peripherals.md).
 |------|----------------|---------------------------------------------------------------------------------------------------------|
 | 0    | None           | Not used                                                                                                |
 | 1    | User           | User pin                                                                                                |
-| 32   | Button1        | 4 x Button                                                                                              |
-| 33   | Button2        | 4 x Button                                                                                              |
-| 34   | Button3        | 4 x Button                                                                                              |
-| 35   | Button4        | 4 x Button                                                                                              |
-| 36   | Button5        | 4 x Button                                                                                              |
-| 37   | Button6        | 4 x Button                                                                                              |
-| 38   | Button7        | 4 x Button                                                                                              |
-| 39   | Button8        | 4 x Button                                                                                              |
-| 64   | Button_n1      | 4 x Button                                                                                              |
-| 65   | Button_n2      | 4 x Button                                                                                              |
-| 66   | Button_n3      | 4 x Button                                                                                              |
-| 67   | Button_n4      | 4 x Button                                                                                              |
-| 68   | Button_n5      | 4 x Button                                                                                              |
-| 69   | Button_n6      | 4 x Button                                                                                              |
-| 70   | Button_n7      | 4 x Button                                                                                              |
-| 71   | Button_n8      | 4 x Button                                                                                              |
-| 96   | Button_i1      | 4 x Button                                                                                              |
-| 97   | Button_i2      | 4 x Button                                                                                              |
-| 98   | Button_i3      | 4 x Button                                                                                              |
-| 99   | Button_i4      | 4 x Button                                                                                              |
-| 100  | Button_i5      | 4 x Button                                                                                              |
-| 101  | Button_i6      | 4 x Button                                                                                              |
-| 102  | Button_i7      | 4 x Button                                                                                              |
-| 103  | Button_i8      | 4 x Button                                                                                              |
-| 128  | Button_in1     | 4 x Button                                                                                              |
-| 129  | Button_in2     | 4 x Button                                                                                              |
-| 130  | Button_in3     | 4 x Button                                                                                              |
-| 131  | Button_in4     | 4 x Button                                                                                              |
-| 132  | Button_in5     | 4 x Button                                                                                              |
-| 133  | Button_in6     | 4 x Button                                                                                              |
-| 134  | Button_in7     | 4 x Button                                                                                              |
-| 135  | Button_in8     | 4 x Button                                                                                              |
+| 32   | Button1        | Button active low, internal pull-up resistor                                                            |
+| 33   | Button2        | Button active low, internal pull-up resistor                                                            |
+| 34   | Button3        | Button active low, internal pull-up resistor                                                            |
+| 35   | Button4        | Button active low, internal pull-up resistor                                                            |
+| 36   | Button5        | Button active low, internal pull-up resistor                                                            |
+| 37   | Button6        | Button active low, internal pull-up resistor                                                            |
+| 38   | Button7        | Button active low, internal pull-up resistor                                                            |
+| 39   | Button8        | Button active low, internal pull-up resistor                                                            |
+| 64   | Button_n1      | Button active low, no internal pull-up resistor                                                         |
+| 65   | Button_n2      | Button active low, no internal pull-up resistor                                                         |
+| 66   | Button_n3      | Button active low, no internal pull-up resistor                                                         |
+| 67   | Button_n4      | Button active low, no internal pull-up resistor                                                         |
+| 68   | Button_n5      | Button active low, no internal pull-up resistor                                                         |
+| 69   | Button_n6      | Button active low, no internal pull-up resistor                                                         |
+| 70   | Button_n7      | Button active low, no internal pull-up resistor                                                         |
+| 71   | Button_n8      | Button active low, no internal pull-up resistor                                                         |
+| 96   | Button_i1      | Button inverted, active high with internal pull-up resistor                                             |
+| 97   | Button_i2      | Button inverted, active high with internal pull-up resistor                                             |
+| 98   | Button_i3      | Button inverted, active high with internal pull-up resistor                                             |
+| 99   | Button_i4      | Button inverted, active high with internal pull-up resistor                                             |
+| 100  | Button_i5      | Button inverted, active high with internal pull-up resistor                                             |
+| 101  | Button_i6      | Button inverted, active high with internal pull-up resistor                                             |
+| 102  | Button_i7      | Button inverted, active high with internal pull-up resistor                                             |
+| 103  | Button_i8      | Button inverted, active high with internal pull-up resistor                                             |
+| 128  | Button_in1     | Button inverted, active high no internal pull-up resistor                                               |
+| 129  | Button_in2     | Button inverted, active high no internal pull-up resistor                                               |
+| 130  | Button_in3     | Button inverted, active high no internal pull-up resistor                                               |
+| 131  | Button_in4     | Button inverted, active high no internal pull-up resistor                                               |
+| 132  | Button_in5     | Button inverted, active high no internal pull-up resistor                                               |
+| 133  | Button_in6     | Button inverted, active high no internal pull-up resistor                                               |
+| 134  | Button_in7     | Button inverted, active high no internal pull-up resistor                                               |
+| 135  | Button_in8     | Button inverted, active high no internal pull-up resistor                                               |
 | 160  | Switch1        | 8 x User connected external switches                                                                    |
 | 161  | Switch2        | 8 x User connected external switches                                                                    |
 | 162  | Switch3        | 8 x User connected external switches                                                                    |
@@ -531,34 +531,34 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 249  | Relay26        | 8 x Relays                                                                                              |
 | 250  | Relay27        | 8 x Relays                                                                                              |
 | 251  | Relay28        | 8 x Relays                                                                                              |
-| 256  | Relay_i1       | 8 x Relays                                                                                              |
-| 257  | Relay_i2       | 8 x Relays                                                                                              |
-| 258  | Relay_i3       | 8 x Relays                                                                                              |
-| 259  | Relay_i4       | 8 x Relays                                                                                              |
-| 260  | Relay_i5       | 8 x Relays                                                                                              |
-| 261  | Relay_i6       | 8 x Relays                                                                                              |
-| 262  | Relay_i7       | 8 x Relays                                                                                              |
-| 263  | Relay_i8       | 8 x Relays                                                                                              |
-| 264  | Relay_i9       | 8 x Relays                                                                                              |
-| 265  | Relay_i10      | 8 x Relays                                                                                              |
-| 266  | Relay_i11      | 8 x Relays                                                                                              |
-| 267  | Relay_i12      | 8 x Relays                                                                                              |
-| 268  | Relay_i13      | 8 x Relays                                                                                              |
-| 269  | Relay_i14      | 8 x Relays                                                                                              |
-| 270  | Relay_i15      | 8 x Relays                                                                                              |
-| 271  | Relay_i16      | 8 x Relays                                                                                              |
-| 272  | Relay_i17      | 8 x Relays                                                                                              |
-| 273  | Relay_i18      | 8 x Relays                                                                                              |
-| 274  | Relay_i19      | 8 x Relays                                                                                              |
-| 275  | Relay_i20      | 8 x Relays                                                                                              |
-| 276  | Relay_i21      | 8 x Relays                                                                                              |
-| 277  | Relay_i22      | 8 x Relays                                                                                              |
-| 278  | Relay_i23      | 8 x Relays                                                                                              |
-| 279  | Relay_i24      | 8 x Relays                                                                                              |
-| 280  | Relay_i25      | 8 x Relays                                                                                              |
-| 281  | Relay_i26      | 8 x Relays                                                                                              |
-| 282  | Relay_i27      | 8 x Relays                                                                                              |
-| 283  | Relay_i28      | 8 x Relays                                                                                              |
+| 256  | Relay_i1       | Relay inverted                                                                                          |
+| 257  | Relay_i2       | Relay inverted                                                                                          |
+| 258  | Relay_i3       | Relay inverted                                                                                          |
+| 259  | Relay_i4       | Relay inverted                                                                                          |
+| 260  | Relay_i5       | Relay inverted                                                                                          |
+| 261  | Relay_i6       | Relay inverted                                                                                          |
+| 262  | Relay_i7       | Relay inverted                                                                                          |
+| 263  | Relay_i8       | Relay inverted                                                                                          |
+| 264  | Relay_i9       | Relay inverted                                                                                          |
+| 265  | Relay_i10      | Relay inverted                                                                                          |
+| 266  | Relay_i11      | Relay inverted                                                                                          |
+| 267  | Relay_i12      | Relay inverted                                                                                          |
+| 268  | Relay_i13      | Relay inverted                                                                                          |
+| 269  | Relay_i14      | Relay inverted                                                                                          |
+| 270  | Relay_i15      | Relay inverted                                                                                          |
+| 271  | Relay_i16      | Relay inverted                                                                                          |
+| 272  | Relay_i17      | Relay inverted                                                                                          |
+| 273  | Relay_i18      | Relay inverted                                                                                          |
+| 274  | Relay_i19      | Relay inverted                                                                                          |
+| 275  | Relay_i20      | Relay inverted                                                                                          |
+| 276  | Relay_i21      | Relay inverted                                                                                          |
+| 277  | Relay_i22      | Relay inverted                                                                                          |
+| 278  | Relay_i23      | Relay inverted                                                                                          |
+| 279  | Relay_i24      | Relay inverted                                                                                          |
+| 280  | Relay_i25      | Relay inverted                                                                                          |
+| 281  | Relay_i26      | Relay inverted                                                                                          |
+| 282  | Relay_i27      | Relay inverted                                                                                          |
+| 283  | Relay_i28      | Relay inverted                                                                                          |
 | 288  | Led1           | 4 x Leds                                                                                                |
 | 289  | Led2           | 4 x Leds                                                                                                |
 | 290  | Led3           | 4 x Leds                                                                                                |
@@ -955,50 +955,50 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 7673 | Input26        |                                                                                                         |
 | 7674 | Input27        |                                                                                                         |
 | 7675 | Input28        |                                                                                                         |
-| 7680 | Button_d1      |                                                                                                         |
-| 7681 | Button_d2      |                                                                                                         |
-| 7682 | Button_d3      |                                                                                                         |
-| 7683 | Button_d4      |                                                                                                         |
-| 7684 | Button_d5      |                                                                                                         |
-| 7685 | Button_d6      |                                                                                                         |
-| 7686 | Button_d7      |                                                                                                         |
-| 7687 | Button_d8      |                                                                                                         |
-| 7712 | Button_id1     |                                                                                                         |
-| 7713 | Button_id2     |                                                                                                         |
-| 7714 | Button_id3     |                                                                                                         |
-| 7715 | Button_id4     |                                                                                                         |
-| 7716 | Button_id5     |                                                                                                         |
-| 7717 | Button_id6     |                                                                                                         |
-| 7718 | Button_id7     |                                                                                                         |
-| 7719 | Button_id8     |                                                                                                         |
-| 7744 | Switch_d1      |                                                                                                         |
-| 7745 | Switch_d2      |                                                                                                         |
-| 7746 | Switch_d3      |                                                                                                         |
-| 7747 | Switch_d4      |                                                                                                         |
-| 7748 | Switch_d5      |                                                                                                         |
-| 7749 | Switch_d6      |                                                                                                         |
-| 7750 | Switch_d7      |                                                                                                         |
-| 7751 | Switch_d8      |                                                                                                         |
-| 7752 | Switch_d9      |                                                                                                         |
-| 7753 | Switch_d10     |                                                                                                         |
-| 7754 | Switch_d11     |                                                                                                         |
-| 7755 | Switch_d12     |                                                                                                         |
-| 7756 | Switch_d13     |                                                                                                         |
-| 7757 | Switch_d14     |                                                                                                         |
-| 7758 | Switch_d15     |                                                                                                         |
-| 7759 | Switch_d16     |                                                                                                         |
-| 7760 | Switch_d17     |                                                                                                         |
-| 7761 | Switch_d18     |                                                                                                         |
-| 7762 | Switch_d19     |                                                                                                         |
-| 7763 | Switch_d20     |                                                                                                         |
-| 7764 | Switch_d21     |                                                                                                         |
-| 7765 | Switch_d22     |                                                                                                         |
-| 7766 | Switch_d23     |                                                                                                         |
-| 7767 | Switch_d24     |                                                                                                         |
-| 7768 | Switch_d25     |                                                                                                         |
-| 7769 | Switch_d26     |                                                                                                         |
-| 7770 | Switch_d27     |                                                                                                         |
-| 7771 | Switch_d28     |                                                                                                         |
+| 7680 | Button_d1      | Button with internal pull-down resistor , (Active High)                                                 |
+| 7681 | Button_d2      | Button with internal pull-down resistor , (Active High)                                                 |
+| 7682 | Button_d3      | Button with internal pull-down resistor , (Active High)                                                 |
+| 7683 | Button_d4      | Button with internal pull-down resistor , (Active High)                                                 |
+| 7684 | Button_d5      | Button with internal pull-down resistor , (Active High)                                                 |
+| 7685 | Button_d6      | Button with internal pull-down resistor , (Active High)                                                 |
+| 7686 | Button_d7      | Button with internal pull-down resistor , (Active High)                                                 |
+| 7687 | Button_d8      | Button with internal pull-down resistor , (Active High)                                                 |
+| 7712 | Button_id1     | Button with internal pull-down resistor , Inverted (Active Low)                                         |
+| 7713 | Button_id2     | Button with internal pull-down resistor , Inverted (Active Low)                                         |
+| 7714 | Button_id3     | Button with internal pull-down resistor , Inverted (Active Low)                                         |
+| 7715 | Button_id4     | Button with internal pull-down resistor , Inverted (Active Low)                                         |
+| 7716 | Button_id5     | Button with internal pull-down resistor , Inverted (Active Low)                                         |
+| 7717 | Button_id6     | Button with internal pull-down resistor , Inverted (Active Low)                                         |
+| 7718 | Button_id7     | Button with internal pull-down resistor , Inverted (Active Low)                                         |
+| 7719 | Button_id8     | Button with internal pull-down resistor , Inverted (Active Low)                                         |
+| 7744 | Switch_d1      | Switch with internal pull-down resistor (Active High)                                                   |
+| 7745 | Switch_d2      | Switch with internal pull-down resistor (Active High)                                                   |
+| 7746 | Switch_d3      | Switch with internal pull-down resistor (Active High)                                                   |
+| 7747 | Switch_d4      | Switch with internal pull-down resistor (Active High)                                                   |
+| 7748 | Switch_d5      | Switch with internal pull-down resistor (Active High)                                                   |
+| 7749 | Switch_d6      | Switch with internal pull-down resistor (Active High)                                                   |
+| 7750 | Switch_d7      | Switch with internal pull-down resistor (Active High)                                                   |
+| 7751 | Switch_d8      | Switch with internal pull-down resistor (Active High)                                                   |
+| 7752 | Switch_d9      | Switch with internal pull-down resistor (Active High)                                                   |
+| 7753 | Switch_d10     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7754 | Switch_d11     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7755 | Switch_d12     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7756 | Switch_d13     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7757 | Switch_d14     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7758 | Switch_d15     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7759 | Switch_d16     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7760 | Switch_d17     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7761 | Switch_d18     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7762 | Switch_d19     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7763 | Switch_d20     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7764 | Switch_d21     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7765 | Switch_d22     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7766 | Switch_d23     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7767 | Switch_d24     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7768 | Switch_d25     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7769 | Switch_d26     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7770 | Switch_d27     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7771 | Switch_d28     | Switch with internal pull-down resistor (Active High)                                                   |
 | 7776 | I2S Out Data1  |                                                                                                         |
 | 7777 | I2S Out Data2  |                                                                                                         |
 | 7808 | I2S Out Clk1   |                                                                                                         |
