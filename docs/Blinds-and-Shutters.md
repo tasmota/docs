@@ -12,6 +12,7 @@ Current feature set:
 - up to 32 shutterbuttons, 
 - tilt definition with buttons. 
 - Configuration saved to filesystem.
+- shuttersetup for Shelly plus 2PM to automatically measure open and close duration
 
 ## Commands
 Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#shutters).
@@ -99,6 +100,17 @@ When using a switch for manual operation `Switch<x>` pairs should usually be set
 
 Any shutter positioning can be locked `ShutterLock<x> 1`. Once executed an ongoing movement is finished while further positioning commands like `ShutterOpen<x>`, `ShutterClose<x>`, `ShutterStop<x>`,  `ShutterPosition<x>`, ... as well as web UI buttons, web UI sliders, and shutter buttons are disabled. This can be used to lock an outdoor blind in case of high wind or rain. You may also disable shutter positioning games by your children. Shutter positioning can be unlocked using `ShutterLock<x> 0`. Please be aware that the shutter can still be moved by direct relay control (i.e., `Power<x>`), or physical switches and buttons. Use the `ShutterButton<x>` command prior to `ShutterLock` to be able to lock buttons.
     
+## AutoSetup (Only Shelly plus 2PM, ESP32 based)
+The shelly plus has enough memory and a power measuring unit to setup the shutter in convinent way. First you must callibrate your mechanical endstops of the shutter. Please do as descibed in the documentation of your shutter motors to ensure the shutter will stop at the endpoint correctly.
+
+Then close the shutter until endstop is reached (repeat: `backlog shuttersetopen;shutterclose` until closed)
+- `interlock 1,2`
+- `interlock on`
+- `shutterrelay1 1`
+- `shuttersetup` (shutter will start moving....)
+
+After setup is started the shutter will move to the upper endpoint and close again. If the shutter stops somewhere in the middle, try again. After setup you can use your shutter. Initial callibration for `ShutterSetHalfway` is 70. If you want to have it more accurate: `backlog shutterclose;ShutterSetHalfway 50` and follow instructions below.
+
 ### Calibration
 [Shutter calibration video tutorial](https://www.youtube.com/watch?v=Z-grrvnu2bU)  
 
