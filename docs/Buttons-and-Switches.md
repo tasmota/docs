@@ -18,7 +18,7 @@ the variants supported by ESP8266 are following :
 
 the ESP32 supports all forementionned variants plus : 
 * Button_d : Button with internal pull-down resistor
-* Button_id : Button inverted, active low with internal pull-down resistor
+* Button_id : Button inverted, active high with internal pull-down resistor
 * Switch_d : Switch with internal pull-down resistor
 
 # Button vs. Switch
