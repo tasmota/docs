@@ -955,50 +955,50 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 7673 | Input26        |                                                                                                         |
 | 7674 | Input27        |                                                                                                         |
 | 7675 | Input28        |                                                                                                         |
-| 7680 | Button_d1      | Button with internal pull-down resistor , (Active High)                                                 |
-| 7681 | Button_d2      | Button with internal pull-down resistor , (Active High)                                                 |
-| 7682 | Button_d3      | Button with internal pull-down resistor , (Active High)                                                 |
-| 7683 | Button_d4      | Button with internal pull-down resistor , (Active High)                                                 |
-| 7684 | Button_d5      | Button with internal pull-down resistor , (Active High)                                                 |
-| 7685 | Button_d6      | Button with internal pull-down resistor , (Active High)                                                 |
-| 7686 | Button_d7      | Button with internal pull-down resistor , (Active High)                                                 |
-| 7687 | Button_d8      | Button with internal pull-down resistor , (Active High)                                                 |
-| 7712 | Button_id1     | Button with internal pull-down resistor , Inverted (Active Low)                                         |
-| 7713 | Button_id2     | Button with internal pull-down resistor , Inverted (Active Low)                                         |
-| 7714 | Button_id3     | Button with internal pull-down resistor , Inverted (Active Low)                                         |
-| 7715 | Button_id4     | Button with internal pull-down resistor , Inverted (Active Low)                                         |
-| 7716 | Button_id5     | Button with internal pull-down resistor , Inverted (Active Low)                                         |
-| 7717 | Button_id6     | Button with internal pull-down resistor , Inverted (Active Low)                                         |
-| 7718 | Button_id7     | Button with internal pull-down resistor , Inverted (Active Low)                                         |
-| 7719 | Button_id8     | Button with internal pull-down resistor , Inverted (Active Low)                                         |
-| 7744 | Switch_d1      | Switch with internal pull-down resistor (Active High)                                                   |
-| 7745 | Switch_d2      | Switch with internal pull-down resistor (Active High)                                                   |
-| 7746 | Switch_d3      | Switch with internal pull-down resistor (Active High)                                                   |
-| 7747 | Switch_d4      | Switch with internal pull-down resistor (Active High)                                                   |
-| 7748 | Switch_d5      | Switch with internal pull-down resistor (Active High)                                                   |
-| 7749 | Switch_d6      | Switch with internal pull-down resistor (Active High)                                                   |
-| 7750 | Switch_d7      | Switch with internal pull-down resistor (Active High)                                                   |
-| 7751 | Switch_d8      | Switch with internal pull-down resistor (Active High)                                                   |
-| 7752 | Switch_d9      | Switch with internal pull-down resistor (Active High)                                                   |
-| 7753 | Switch_d10     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7754 | Switch_d11     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7755 | Switch_d12     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7756 | Switch_d13     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7757 | Switch_d14     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7758 | Switch_d15     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7759 | Switch_d16     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7760 | Switch_d17     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7761 | Switch_d18     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7762 | Switch_d19     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7763 | Switch_d20     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7764 | Switch_d21     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7765 | Switch_d22     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7766 | Switch_d23     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7767 | Switch_d24     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7768 | Switch_d25     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7769 | Switch_d26     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7770 | Switch_d27     | Switch with internal pull-down resistor (Active High)                                                   |
-| 7771 | Switch_d28     | Switch with internal pull-down resistor (Active High)                                                   |
+| 7680 | Button_d1      | Button with internal pull-down resistor , (Active Low)                                                  |
+| 7681 | Button_d2      | Button with internal pull-down resistor , (Active Low)                                                  |
+| 7682 | Button_d3      | Button with internal pull-down resistor , (Active Low)                                                  |
+| 7683 | Button_d4      | Button with internal pull-down resistor , (Active Low)                                                  |
+| 7684 | Button_d5      | Button with internal pull-down resistor , (Active Low)                                                  |
+| 7685 | Button_d6      | Button with internal pull-down resistor , (Active Low)                                                  |
+| 7686 | Button_d7      | Button with internal pull-down resistor , (Active Low)                                                  |
+| 7687 | Button_d8      | Button with internal pull-down resistor , (Active Low)                                                  |
+| 7712 | Button_id1     | Button with internal pull-down resistor , Inverted (Active High)                                        |
+| 7713 | Button_id2     | Button with internal pull-down resistor , Inverted (Active High)                                        |
+| 7714 | Button_id3     | Button with internal pull-down resistor , Inverted (Active High)                                        |
+| 7715 | Button_id4     | Button with internal pull-down resistor , Inverted (Active High)                                        |
+| 7716 | Button_id5     | Button with internal pull-down resistor , Inverted (Active High)                                        |
+| 7717 | Button_id6     | Button with internal pull-down resistor , Inverted (Active High)                                        |
+| 7718 | Button_id7     | Button with internal pull-down resistor , Inverted (Active High)                                        |
+| 7719 | Button_id8     | Button with internal pull-down resistor , Inverted (Active High)                                        |
+| 7744 | Switch_d1      | Switch with internal pull-down resistor                                                                 |
+| 7745 | Switch_d2      | Switch with internal pull-down resistor                                                                 |
+| 7746 | Switch_d3      | Switch with internal pull-down resistor                                                                 |
+| 7747 | Switch_d4      | Switch with internal pull-down resistor                                                                 |
+| 7748 | Switch_d5      | Switch with internal pull-down resistor                                                                 |
+| 7749 | Switch_d6      | Switch with internal pull-down resistor                                                                 |
+| 7750 | Switch_d7      | Switch with internal pull-down resistor                                                                 |
+| 7751 | Switch_d8      | Switch with internal pull-down resistor                                                                 |
+| 7752 | Switch_d9      | Switch with internal pull-down resistor                                                                 |
+| 7753 | Switch_d10     | Switch with internal pull-down resistor                                                                 |
+| 7754 | Switch_d11     | Switch with internal pull-down resistor                                                                 |
+| 7755 | Switch_d12     | Switch with internal pull-down resistor                                                                 |
+| 7756 | Switch_d13     | Switch with internal pull-down resistor                                                                 |
+| 7757 | Switch_d14     | Switch with internal pull-down resistor                                                                 |
+| 7758 | Switch_d15     | Switch with internal pull-down resistor                                                                 |
+| 7759 | Switch_d16     | Switch with internal pull-down resistor                                                                 |
+| 7760 | Switch_d17     | Switch with internal pull-down resistor                                                                 |
+| 7761 | Switch_d18     | Switch with internal pull-down resistor                                                                 |
+| 7762 | Switch_d19     | Switch with internal pull-down resistor                                                                 |
+| 7763 | Switch_d20     | Switch with internal pull-down resistor                                                                 |
+| 7764 | Switch_d21     | Switch with internal pull-down resistor                                                                 |
+| 7765 | Switch_d22     | Switch with internal pull-down resistor                                                                 |
+| 7766 | Switch_d23     | Switch with internal pull-down resistor                                                                 |
+| 7767 | Switch_d24     | Switch with internal pull-down resistor                                                                 |
+| 7768 | Switch_d25     | Switch with internal pull-down resistor                                                                 |
+| 7769 | Switch_d26     | Switch with internal pull-down resistor                                                                 |
+| 7770 | Switch_d27     | Switch with internal pull-down resistor                                                                 |
+| 7771 | Switch_d28     | Switch with internal pull-down resistor                                                                 |
 | 7776 | I2S Out Data1  |                                                                                                         |
 | 7777 | I2S Out Data2  |                                                                                                         |
 | 7808 | I2S Out Clk1   |                                                                                                         |
