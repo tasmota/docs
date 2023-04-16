@@ -1342,25 +1342,41 @@ There are two ways to use regex, first is to call directly the module which trig
 
 ``` berry
 > import re
+
+# first series are all-in-one, patterns are compiled on the fly
+
 > re.search("a.*?b(z+)", "zaaaabbbccbbzzzee")
 ['aaaabbbccbbzzz', 'zzz']
 > re.match("a.*?b(z+)", "aaaabbbccbbzzzee")
 ['aaaabbbccbbzzz', 'zzz']
+> re.split('/', "foo/bar//baz")
+['foo', 'bar', '', 'baz']
+> re.searchall('<([a-zA-Z]+)>', '<abc> yeah <xyz>')
+[['<abc>', 'abc'], ['<xyz>', 'xyz']]
+
+# below are pre-compiled patterns, which is much faster if you use the
+# pattern multiple times
+
+> rr = re.compile('<([a-zA-Z]+)>')
+> rr.searchall('<abc> yeah <xyz>')
+[['<abc>', 'abc'], ['<xyz>', 'xyz']]
 
 > rr = re.compile("/")
 > rr
 <instance: re_pattern()>
 
 > rr.split("foo/bar//baz")
-['foo','bar','','baz']
+['foo', 'bar', '', 'baz']
 > rr.split("/b")
-['','b']
+['', 'b']
 ```
 
 Tasmota Function|Parameters and details
 :---|:---
 search<a class="cmnd" id="re_search"></a>|`re.search(pattern:string, payload:string) -> list of strings`<br>Returns the list of matches, or empty list of no match
-match<a class="cmnd" id="re_match"></a>|`re.match(pattern:string, payload:string) -> list of strings`<br>Returns the list of matches, or empty list of no match. The difference with `search` is that match must match the entire string (from beginning to end).
+match<a class="cmnd" id="re_match"></a>|`re.match(pattern:string, payload:string) -> list of strings`<br>Returns the list of matches, or empty list of no match. The difference with `search` is that match must match from the beginning of the string.
+searchall<a class="cmnd" id="re_searchall"></a>|`re.searchall(pattern:string, payload:string [, limit:string]) -> list of list of strings`<br>Returns the list of list of matches, or empty list of no match. `limit` allows to limit the number of matches.
+matchall<a class="cmnd" id="re_matchall"></a>|`re.matchall(pattern:string, payload:string [, limit:string]) -> list of list of strings`<br>Returns the list of matches, or empty list of no match. The difference with `searchall` is that there should not be any gaps between matches.  `limit` allows to limit the number of matches.
 split<a class="cmnd" id="re_split"></a>|`re.search(pattern:string, payload:string) -> list of strings`<br>Returns the list of strings from split, or a list with a single element containing the entire string if no match
 compile<a class="cmnd" id="re_compile"></a>|`re.compile(pattern:string) -> instance of <re_pattern>`<br>Compiles the regex into a reusable faster bytecode. You can then call the following methods:<br>`search()`, `match()`, `split()` similarly to the module's functions.
 
