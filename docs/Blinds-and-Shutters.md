@@ -5,8 +5,16 @@
 
 Before starting you have to enable shutter support with `SetOption80 1`
 
-## Commands
+There is a new enhanced ESP32 version you can enable with the following compiler option `#define USE_SHUTTER_ESP32`. Will be default in future versions for ESP32 after some testing. New features most likely only in ESP32 due to memory limitations in ESP8266. 
+Current feature set: 
 
+- up to 16 shutters, 
+- up to 32 shutterbuttons, 
+- tilt definition with buttons. 
+- Configuration saved to filesystem.
+- shuttersetup for Shelly plus 2PM to automatically measure open and close duration
+
+## Commands
 Complete list of commands is available at [Blinds, Shutters and Roller Shades Commands](Commands.md#shutters).
 
 ## Shutter Modes
@@ -78,7 +86,8 @@ When `SetOption80 1` is invoked you have to define `Shutterrelay1 <value>` to ge
 If possible to avoid any injury on unexpected movement all RELAYS should start in OFF mode when the device reboots: `PowerOnState 0`
 ![](https://user-images.githubusercontent.com/34340210/65997878-3517e180-e468-11e9-950e-bfe299771233.png)
 
-A maximum of four shutters per device are supported.  
+A maximum of four shutters per device are supported on ESP8266. The newer ESP32 can support up to 16 Shutters with 32 Relays. Nevertheless it might be required to add a GPIO expension board to get enough connectors.
+
 ![](https://user-images.githubusercontent.com/34340210/65997879-3517e180-e468-11e9-9c44-9ad4a4a970cc.png) 
 
 To enable additional shutters, `ShutterRelay<x> <value>` must be executed for each additional shutter. Additional shutter declarations must be sequentially numbered, and without gaps (i.e., second shutter is 2, next shutter 3 and finally shutter 4).
@@ -91,6 +100,17 @@ When using a switch for manual operation `Switch<x>` pairs should usually be set
 
 Any shutter positioning can be locked `ShutterLock<x> 1`. Once executed an ongoing movement is finished while further positioning commands like `ShutterOpen<x>`, `ShutterClose<x>`, `ShutterStop<x>`,  `ShutterPosition<x>`, ... as well as web UI buttons, web UI sliders, and shutter buttons are disabled. This can be used to lock an outdoor blind in case of high wind or rain. You may also disable shutter positioning games by your children. Shutter positioning can be unlocked using `ShutterLock<x> 0`. Please be aware that the shutter can still be moved by direct relay control (i.e., `Power<x>`), or physical switches and buttons. Use the `ShutterButton<x>` command prior to `ShutterLock` to be able to lock buttons.
     
+## AutoSetup (Only Shelly plus 2PM, ESP32 based)
+The shelly plus has enough memory and a power measuring unit to setup the shutter in convinent way. First you must callibrate your mechanical endstops of the shutter. Please do as descibed in the documentation of your shutter motors to ensure the shutter will stop at the endpoint correctly.
+
+Then close the shutter until endstop is reached (repeat: `backlog shuttersetopen;shutterclose` until closed)
+- `interlock 1,2`
+- `interlock on`
+- `shutterrelay1 1`
+- `shuttersetup` (shutter will start moving....)
+
+After setup is started the shutter will move to the upper endpoint and close again. If the shutter stops somewhere in the middle, try again. After setup you can use your shutter. Initial callibration for `ShutterSetHalfway` is 70. If you want to have it more accurate: `backlog shutterclose;ShutterSetHalfway 50` and follow instructions below.
+
 ### Calibration
 [Shutter calibration video tutorial](https://www.youtube.com/watch?v=Z-grrvnu2bU)  
 
@@ -158,6 +178,8 @@ Following defaults are pre-compiled into the code and can only be changed by com
 ### Motor Stop time
 When shutters change direction immediatly it can happen that there is a short circuit or at least high moments on the motors. Therfore the default time between a STOP and the next START of the shutter is 0.5s = 500ms. This allows in most cases the shutter to fully stop and then start from a static position. With Version 12.3 you can change the duration through `shuttermotorstop 500` or any other value in ms. The value is for all defined shutters the same.
 
+WARNING: If you control the relay DIRECT through buttons os switches and do not use shutterbuttons or a rule to decouple it, then the MOTOSTOPTIME cannot kick in. The Relay in ON before the shutterdriver can intercept.
+
 ### Button Control
 When shutter is running in `ShutterMode 1` (normal two relay up/off down/off), you already have basic control over the shutter movement using switches or buttons in the module configuration to directly drive the shutter relays. For short circuit safe operation `ShutterMode 2` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch/button and 2nd switch on the power by the other switch/button. Because the button controll use multi-press events ensure that the "immediate action" is disabled: `SetOption13 0` (default)
 
@@ -187,11 +209,14 @@ More advanced control of the button press actions is given by the following `Shu
 
 `ShutterButton<x> <button> <p1> <p2> <p3> <ph> <m1> <m2> <m3> <mh> <mi>` 
 
-`<button>` `1..4`: Button number, `0/-`: disable buttons for this shutter<BR>`<p1>` `0..100`: single press position, `t`: toggle, `-`: disable<BR>`<p2>` `0..100`: double press position, `t`: toggle, `-`: disable<BR>`<p3>` `0..100`: triple press position, `t`: toggle, `-`: disable<BR>`<ph>` `0..100`: hold press position, shutter stop after releasing the hold button, `t`: toggle, `-`: disable<BR>`<m1>` `1`: enable single press position MQTT broadcast, `0/-`: disable<BR>`<m2>` `1`: enable double press position MQTT broadcast, `0/-`: disable<BR>`<m3>` `1`: enable triple press position MQTT broadcast, `0/-`: disable<BR>`<mh>` `1`: enable hold press position MQTT broadcast, `0/-`: disable<BR>`<mi>` `1`: enable MQTT broadcast to all shutter indices, `0/-`: disable
+`<button>` ESP8266:`1..4`,ESP32:`1..32` : Button number, `0/-`: disable buttons for this shutter<BR>`<p1>` `0..100`: single press position, `t`: toggle, `-`: disable<BR>`<p2>` `0..100`: double press position, `t`: toggle, `-`: disable<BR>`<p3>` `0..100`: triple press position, `t`: toggle, `-`: disable<BR>`<ph>` `0..100`: hold press position, shutter stop after releasing the hold button, `t`: toggle, `-`: disable<BR>`<m1>` `1`: enable single press position MQTT broadcast, `0/-`: disable<BR>`<m2>` `1`: enable double press position MQTT broadcast, `0/-`: disable<BR>`<m3>` `1`: enable triple press position MQTT broadcast, `0/-`: disable<BR>`<mh>` `1`: enable hold press position MQTT broadcast, `0/-`: disable<BR>`<mi>` `1`: enable MQTT broadcast to all shutter indices, `0/-`: disable
 
 Parameters are optional. When missing, all subsequent parameters are set to `disable`.
 
-By a button single press the shutter is set to position `<p1>`.  Double press will drive the shutter to position `<p2>` and  triple press to position `<p3>`. Holding the button for more than the `SetOption32` time sets the shutter position to `<ph>` max if button is hold until position. If the hold button is released during the shutter moves the shutter will stop. Any button action `<p1>` to `<ph>` can be disabled by setting the parameter to `-`. Independent from configuration `<p1>` to `<ph>` any press of the button while the shutter is moving will immediately stop the shutter.
+ESP32 only:
+`<p0..h>` can be optional extended with a dedicated position of the tilt if a venetian blind is configured and supported. The position of the tilt can be added after the normal position with a `/` as seperator. This is optional. Example: `shutterbutton1 1 100/-90 50/0 75/-90 100 - - 1 1`
+   
+By a button single press the shutter is set to position `<p1>`.  Double press will drive the shutter to position `<p2>` and  triple press to position `<p3>`. Holding the button for more than the `SetOption32` time sets the shutter position to `<ph>` max if button is hold until position. If the hold button is released during the shutter moves the shutter will stop. Any button action `<p1>` to `<ph>` can be disabled by setting the parameter to `-`. Independent from configuration `<p1>` to `<ph>` any press of the button while the shutter is moving will immediately stop the shutter. 
 
 Global steering of all your shutters at home is supported by additional MQTT broadcast. By any button action a corresponding MQTT command can be initiated to the `<grouptopic>` of the device. For single press this can be enabled by `<m1>` equal to `1`, disabling is indicated by `-`. Double to hold MQTT configurations are given by `<m2>` to `<mh>`, correspondingly. When `<mi>` is equal to `-` only `cmnd/<grouptopic>/Shutterposition<x> <p1..h>` is fired. When `<mi>` is equal to `1`, `<x>`=`1..4` is used to control any shutter number of a Tasmota device having same `<grouptopic>`.
 
@@ -583,7 +608,9 @@ Tilt configuration can be set for every shutter independently. The tilt can be s
    `shuttertilt1 close` set tilt to defined close angle
    `shuttertilt1 20` set tilt to 20° angle
    
-If the shutter is moved from one position to another position the tilt will be restored AFTER the movement. If the shutter is fully opened or fully closed the tilt will be reset. This means there is no tilt restore at the endpoints. If you want to restore the tilt at the endpoint you have to use a backlog command e.g. `backlog shutterclose1; shuttertilt1 open`
+If the shutter is moved from one position to another position the tilt will be restored AFTER the movement. If the shutter is fully opened or fully closed the tilt will be reset. This means there is no tilt restore at the endpoints. If you want to restore the tilt at the endpoint you have two options to do that:
+- use a backlog command e.g. `backlog shutterclose1; shuttertilt1 open`
+- use `shutterposition1 0,90` with an optional position of the tilt as a second parameter
 
 Similar to shutterchange to make relative movements there is also a `shuttertiltchange` with the same behavior. 
    

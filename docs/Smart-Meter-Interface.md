@@ -2054,7 +2054,52 @@ Example: Changing the baud rate during operation.
     2,pm(4.7.0)@1000,kvar_OUT,kvar,kvar_OUT,3;Momentane Blindleistung Bezug (-R)
     #
     ```
+### Landis+Gyr E650 (OBIS)
+The script switches to a higher baud rate as the data set is pretty big and takes minutes to complete at 300 baud. The usable speed for my setup/hardware was 4800 baud.
 
+The script requires tasmota version 12+ so it supports variables.
+	
+Switching to different baud rates requires changing the ack sequence 06303x300D0A, the baud rate in 2 places 4800->x and the case 200 (20x100ms) so the cycle can complete before restarting.
+	
+??? summary "View script"
+	```
+	>D
+	; Script needs v12+
+	res=0
+	scnt=0
+	>F
+	;F section is executed every 100ms
+	scnt+=1
+	switch scnt
+	case 6
+	;set sml driver to 300 baud and send /?! as HEX to trigger the Meter
+	res=sml(1 0 300)
+	res=sml(1 1 "2F3F210D0A")
+	;1800ms later \> Send ACK and ask for switching to 4800 baud
+	case 18
+	res=sml(1 1 "063034300D0A")
+	res=sml(1 0 4800)
+	case 200
+	; 20s later \> restart sequence
+	scnt=0
+	ends      
+	>M 1
+	+1,3,o,0,4800,data,1
+	
+	1,1-1:1.8.0(@1,energy_import,KWh,1-8-0,1
+	1,1-1:2.8.0(@1,energy_export,KWh,2-8-0,1
+	1,1-1:36.7.0(@1,power_L1,KWh,36-7-0,2
+	1,1-1:56.7.0(@1,power_L2,KWh,56-7-0,2
+	1,1-1:76.7.0(@1,power_L3,KWh,76-7-0,2
+	1,1-1:31.7.0(@1,current_L1,A,31-7-0,2
+	1,1-1:51.7.0(@1,current_L2,A,51-7-0,2
+	1,1-1:71.7.0(@1,current_L3,A,71-7-0,2
+	1,1-1:16.7.0(@1,power_total,W,16-7-0,2
+	#
+	```
+
+	
+	
 ### Logarex LK11BL (OBIS)
 
     This script keeps optical communication on the initial 300 baud speed and reject to switch any other speed smart meter requests.

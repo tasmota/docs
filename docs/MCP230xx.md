@@ -39,9 +39,9 @@ This enables the driver which in turn at restart will search for the JSON file i
 
 If no JSON file is found the driver does not claim any MCP23xxx device and if mode 1 is enabled will allow this mode to take over.
 
-A typical JSON template would look like `{"NAME":"MCP23008 expander","GPIO":[224,225,226,227,32,33,34,35]}` which adds four relays and four buttons.
+A typical JSON template would look like `{"NAME":"MCP23008 expander","BASE":0,"GPIO":[224,225,226,227,32,33,34,35]}` which adds four relays and four buttons.
 
-The template consists of a `"NAME"` data pair with any description of the template and a `"GPIO"` data pair with numbers representing the functions of the GPIO's in order from lowest I2C address GP(A)0 to highest I2C address GP(B)7 and are based on the numbers known from the base tasmota template used on the ESP8266 or ESP32.
+The template consists of a `"NAME"` data pair with any description of the template, an optional `"BASE"` data pair selecting if either relative (0 = default) or absolute (1) button and/or switch numbering is used and a `"GPIO"` data pair with numbers representing the functions of the GPIO's in order from lowest I2C address GP(A)0 to highest I2C address GP(B)7 and are based on the numbers known from the base tasmota template used on the ESP8266 or ESP32.
 
 The following list contains the current supported functions:
 
@@ -67,6 +67,9 @@ Some example templates
 
 Inverted relays and buttons                Ri1 Ri2 Ri3 Ri4 Ri5 Ri6 Ri7 Ri8 B1 B2 B3 B4 B5 B6 B7 B8
 {"NAME":"MCP23017 A=Ri1-8, B=B1-8","GPIO":[256,257,258,259,260,261,262,263,32,33,34,35,36,37,38,39]}
+
+Unique inverted relays and buttons with offset 2      Ri3 Ri4 Ri5 Ri6 Ri7 Ri8 Ri9 Ri10B3 B4 B5 B6 B7 B8 B9 B10
+{"NAME":"MCP23017 A=Ri2-10, B=B2-10","BASE":1,"GPIO":[258,259,260,261,262,263,264,265,34,35,36,37,38,39,40,41]}
 
 Buttons, relays, buttons and relays                         B1 B2 B3 B4 B5 B6 B7 B8 R1  R2  R3  R4  R5  R6  R7  R8  B9 B10B11B12B13B14B15B16R9  R10 R11 R12 R13 R14 R15 R16
 {"NAME":"MCP23017 A=B1-8, B=R1-8, C=B9-16, D=R9-16","GPIO":[32,33,34,35,36,37,38,39,224,225,226,227,228,229,230,231,40,41,42,43,44,45,46,47,232,233,234,235,236,237,238,239]}

@@ -157,7 +157,7 @@ see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/
 _Section descriptors (e.g., `>E`) are **case sensitive**_  
 a valid script must start with >D in the first line  
 `>D ssize`   
-  `ssize` = optional max string size (default=19)  
+  `ssize` = optional max string size (default=19, max=48 unless increased with `#define SCRIPT_MAXSSIZE`)  
   define and init variables here, must be the first section, no other code allowed  
   `p:vname`   
   specifies permanent variables. The number of permanent variables is limited by Tasmota rules space (50 bytes) - numeric variables are 4 bytes; string variables are one byte longer than the length of string  
@@ -580,7 +580,7 @@ SPI IO support #define `USE_SCRIPT_SPI`
 `spi(0 -1 freq)` defines a hardware SPI port with pin numbers defined by Tasmota GPIO definition with bus frequency in Mhz.  
 `spi(0 -2 freq)` defines a hardware SPI port 2 on ESP32 with pin numbers defined by Tasmota GPIO definition.  
 `spi(1 N GPIO)` sets the CS pin with index N (1..4) to pin Nr GPIO.  
-`spi(2 N ARRAY LEN S)` sends and receives an ARRAY with len values with S (1..3) (8,16,24 bits) if N==-1 cs is ignored  
+`spi(2 N ARRAY LEN S)` sends and receives an ARRAY with LEN values with S (1..3) (8,16,24 bits) if N==-1 CS is ignored. If S=4, CS is raised after each byte.
   
 `ttget(TNUM SEL)` get tasmota timer setting from timer TNUM (1 .. 16)  
 SEL:  
@@ -637,7 +637,7 @@ SEL:
 `wday` = day of week  (Sunday=1,Monday=2;Tuesday=3;Wednesday=4,Thursday=5,Friday=6,Saturday=7)  
 `month` = month   
 `year` = year  
-`epoch` = epoch time (from 2019-1-1 00:00)  
+`epoch` = epoch time (from 2019-1-1 00:00:00)  
 `epoffs` = set epoch offset, (must be no longer then 2 years to fit into single float with second precision)  
 `eres` = result of >E section set this var to 1 in section >E to tell Tasmota event is handled (prevents MQTT)  
 
@@ -682,7 +682,7 @@ If you define a variable with the same name as a special variable that special v
 - A single percent sign must be given as `%%`  
 - Variable replacement within commands is allowed using `%varname%`. Optionally, the decimal places precision for numeric values may be specified by placing a digit (`%Nvarname%`, N = `0..9`) in front of the substitution variable (e.g., `Humidity: %3hum%%%` will output `Humidity: 43.271%`)  
 - instead of variables arbitrary calculations my be inserted by bracketing %N(formula)%  
-- Linefeed and carriage return may be defined by \n and \r  
+- Linefeed, tab and carriage return may be defined by \n, \t and \r  
 
 **Special** commands:  
 `print` or `=>print` prints to the log for debugging  
@@ -900,8 +900,7 @@ A maximum of four files may be open at a time
 e.g., allows for logging sensors to a tab delimited file and then downloading the file ([see Sensor Logging example](#sensor-logging))   
 The script itself is also stored on the file system with a default size of 8192 characters  
 
-`fr=fo("fname" m)` open file fname, mode 0=read, 1=write, 2=append (returns file reference (0-3) or -1 for error) 
-(alternatively m may be: r=read, w=write, a=append)  
+`fr=fo("fname" m)` open file fname, mode 0=read, 1=write, 2=append (returns file reference (0-3) or -1 for error (alternatively m may be: r=read, w=write, a=append). For files on SD card, filename must be preceded with / e.g. fr=fo("/fname.txt" 0)
 `res=fw("text" fr)` writes text to (the end of) file fr, returns number of bytes written  
 `res=fr(svar fr)` reads a string into svar, returns bytes read. String is read until delimiter (\\t \\n \\r) or eof  
 `fc(fr)` close file  
@@ -1321,7 +1320,7 @@ remark: the Flash illumination LED is connected to GPIO4
     print %upsecs% %uptime% %time% %sunrise% %sunset% %tstamp%
 
     if time>sunset
-    and time<sunrise
+    or time<sunrise
     then
     ; night time
     if pwr[1]==0

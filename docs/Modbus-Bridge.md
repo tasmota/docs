@@ -70,6 +70,7 @@ Command|Parameters
 :---|:---
 ModbusTCPStart| Start the Modbus TCP bridge on the specified `tcp port`
 ModbusTCPConnect| Connect to a remote Modbus TCP server on `ip address` and `remote tcp port`
+ModbusTCPMqtt| Send results queried by tcp modbus client also to mqtt when parameter is 1
   
 ## Returned Data
 ```json
@@ -143,7 +144,7 @@ RSL: RESULT = {"ModbusReceived":{"DeviceAddress":1,"FunctionCode":5,"StartAddres
 #### Setting multiple coils starting from coil register 1 from slave address 1
 On command:
 ```
-ModBusSend '{"deviceaddress": 1, "functioncode": 15, "startaddress": 1, "type":"bit", "count":8, "values":[1,0,0,1,1,1,0,0]}
+ModBusSend {"deviceaddress": 1, "functioncode": 15, "startaddress": 1, "type":"bit", "count":8, "values":[1,0,0,1,1,1,0,0]}
 ```
 Response:
 ```json

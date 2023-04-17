@@ -21,7 +21,8 @@
 16 | LilyGO T5 4.7" E-Paper display ESP32 device | :material-cpu-32-bit:
 17 | [Universal Display Driver](#universal-display-driver) | SPI or I^2^C
 18 | Interface to virtual display driver with [Berry](Berry) | :material-cpu-32-bit:
-19 | [MAX7219 Dot Matrix](MAX7219.md) | Interface GPIO 
+19 | [MAX7219 Dot Matrix](MAX7219.md) | Interface GPIO
+20 | [TM1650](TM1650) 7-segment displays | I^2^C 
 
 ## Display Commands
 
@@ -31,11 +32,11 @@ See commands page for full list of available [Display Commands](Commands.md#disp
 
 The display driver is able to display predefined setups of text or user defined text. To display text using `DisplayText` set `DisplayMode` to `0`, or set `DisplayMode` to `1` for the HT16K33 dot-matrix display.  
 
-To use the seven-segment-specific [TM1637, TM1638 and MAX7219](TM163x#commands-and-usage) _Display-_ commands, set `DisplayMode` to `0`.
+To use the seven-segment-specific [TM1637, TM1638 and MAX7219](TM163x#commands-and-usage) or [TM1650](TM1650#commands-and-usage)  _Display-_ commands, set `DisplayMode` to `0`.
 
-Parameter	|	LCD Display	|	OLED Display	|	TFT Display  | 7-segment Display (TM163x and MAX7219)
+Parameter	|	LCD Display	|	OLED Display	|	TFT Display  | 7-segment Display (TM163x, MAX7219 and TM1650)
 ---	|	---	|	---	|	---     |    ----
-0	|	DisplayText	|	DisplayText	|	DisplayText  |    All [TM163x](TM163x#commands-and-usage) _Display-_ functions
+0	|	DisplayText	|	DisplayText	|	DisplayText  |    All [TM163x](TM163x#commands-and-usage) / [TM1650](TM1650#commands-and-usage)  _Display-_ functions
 1	|	Time/Date	|	Time/Date	|	Time/Date    |    Time
 2	|	Local sensors	|	Local sensors	|	Local sensors   |   Date
 3	|	MQTT and Time/Date	|	Local sensors and Time/Date	|	Local sensors and Time/Date  |   Time/Date
@@ -51,7 +52,7 @@ The string can be prefixed by embedded control commands enclosed in brackets `[]
 
 In order to use the `DisplayText` command the `DisplayMode` must be set to `0` (or optional `1` on LCD displays) or other modes must be disabled before compilation with `#undef USE_DISPLAY_MODES1TO5`.  
 
-The `DisplayText` command is customised for the TM1637, TM1638 and MAX7219 seven-segment display modules. This is documented [here](TM163x#commands-and-usage).  
+The `DisplayText` command is customised for the TM1637, TM1638 and MAX7219 or TM1650 seven-segment display modules. This is documented [here](TM163x#commands-and-usage) and [here](TM1650#commands-and-usage).  
 
 ### DisplayText Parameters
 
@@ -820,8 +821,8 @@ USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI`
 USE_DISPLAY_ILI9342  | Enable TFT ILI9342 display. Also requires `USE_SPI` 
 USE_DISPLAY_SD1331  | Enable TFT SD1331 display. Also requires `USE_SPI` 
 USE_DISPLAY_TM1637  | Enable 7-segment [TM1637, TM1638 and MAX7219](TM163x.md) display. 
+USE_DISPLAY_TM1650  | Enable 7-segment [TM1650](TM1650.md) display. Also requires `USE_I2C`
 USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`  
-USE_DISPLAY_TM1637 | Enable TM1637 display
 USE_LILYGO47  | Enable LILGO 4.7 Epaper display ESP32 combo
 USE_UNIVERSAL_DISPLAY  | Enable universal display driver
 USE_LVGL  | Enable LVGL, currently only supported by berry scripting  
