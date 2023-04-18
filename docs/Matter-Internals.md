@@ -16,9 +16,17 @@ We provide currently the following classes:
 
 | Plug-in class      | Description                         |
 | ------------------ | ----------------------------------- |
-| Plugin_OnOff       | Simple On/Off Light (type `0x010A`) |
-| Plugin_Temp_Sensor | Temperature sensor                  |
-| Plugin_Light3      | (experimental) Light with 3 channels (RGB)                                    |
+| Plugin_Device      | Generic device (abstract) |
+| Plugin_OnOff       | Simple On/Off Plug (type `0x010A`) |
+| Plugin_Light0      | Light with 0 channel (OnOff) (type 0x0100)|
+| Plugin_Light1      | Light with 1 channels (Dimmer) (type 0x0101)|
+| Plugin_Light2      | Light with 2 channels (CT) (type 0x010C)|
+| Plugin_Light3      | Light with 3 channels (RGB) (type 0x010D)|
+| Plugin_Sensor | Generic Sensor class (abstract) |
+| Plugin_Sensor_Temp | Temperature Sensor (type 0x0302) |
+| Plugin_Sensor_Pressure | Pressure Sensor (type 0x0305) |
+| Plugin_Sensor_Light | Light/Immuminance Sensor (type 0x0106) |
+| Plugin_Sensor_Humidity | Humidity Sensor (type 0x0307) |
 
 ## Plugin superclass
 
@@ -29,7 +37,6 @@ Note: for solidification to succeed, you need to declare `class Matter_Plugin en
 | Plugin method          | Description                                                                                       |
 | ---------------------- | ------------------------------------------------------------------------------------------------- |
 | init(device, endpoint) | (can be overridden) Instanciate the plugin on a specific `endpoint`. You need to pass the root `matter_device` objetc |
-|                        |                                                                                                   |
 
 # Core classes
 
@@ -261,4 +268,3 @@ Once all updates are sent, the subscription are scanned again to see if any hear
 If so:
 - `im.send_subscribe_update(sub)` is called
 - the subcription list of updates is cleared via `sub.clear_before_arm()` XXX TODO
-
