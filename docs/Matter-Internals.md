@@ -1,4 +1,9 @@
 # Matter Internals
+
+!!! danger "Matter protocol is highly experimental"
+
+!!! tip "Matter is only supported on ESP32x based devices and requires a specific build with `#define USE_MATTER_DEVICE`"
+
 Below are implementation notes to understand and extend Matter.
 
 # Plugin system
@@ -30,7 +35,7 @@ Note: for solidification to succeed, you need to declare `class Matter_Plugin en
 
 ## matter.Device root / `matter_device`
 
-<mark style="background: #BBFABBA6;">`matter_device` is a monad of `matter.Device` automatically created at boot. It checks if Matter si enabled (`SetOption151 1`) and instantiates all sub-systems.</mark>
+`matter_device` is a monad of `matter.Device` automatically created at boot. It checks if Matter si enabled (`SetOption151 1`) and instantiates all sub-systems.
 
 ### Device attributes
 
@@ -190,20 +195,10 @@ Example:
 `matter.TLV.create_TLV(matter.TLV.I2, -345)`
 `matter.TLV.create_TLV(matter.TLV.U8, bytes("DEADBEEFDEADBEEF"))`
 
-Structured values:
-```
-```
-
-
-| ticket | Description/Comments                                                                                                      |
-| ------ | ------------------------------------------------------------------------------------------------------------------------- |
-| 4868   | Create Postman test suite <br/>\* Some work may already have been done?<br/>\* Check this ouvsqdfsqdfsqdfqsdfqsdfqsdqsdft |
-| df     | sdfsdf                                                                                                                    |
-| dsdf   | sklwfgkj                                                                                                                  | 
-
 # Subscriptions
 
 When a subscription is issued by an initiator, we create an instance of `matter.IM_Subscription` which holds:
+
 - the `CASE session` on which the subscription was issued. If the session is closed, the subscription dies. Subscriptions are not persisted and stop if reboot
 - `subscription_id` (int) used to tell the initiator which subscription it was
 - `path_list` list of `matter.Path` instances recording all the attributes subscribed to. They can include wildcards
@@ -211,6 +206,7 @@ When a subscription is issued by an initiator, we create an instance of `matter.
 - `fabric_filtered`: not used for now
 
 Below are internal arguments:
+
 - `not_before`: the actual timestamp that we should wait before sending updates, as to respect `min_interval`
 - `expiration`: the maximum timestamp we can wait before sending a heartbeat. Both are updated after we sent a new value
 - `wait_status`: signals that we sent everything and we wait for the final `StatusReport` to resume sending further updates
@@ -248,18 +244,21 @@ Calls to `attribute_updated_ctx()` are first check whether the attribute matches
 The`Subscription_Shop`  monad checks every 250ms if there are updates ready to be sent via `every_250ms()`.
 
 It does a first scan across all active subscriptions if updates can be sent out:
+
 - subscription is not in `wait_status` (i.e. not waiting for a previous exchane to complete)
 - subscription has a non-empty list of updates
 - subscription has reached the `not_before` timestamp (so as to not sent too frequent updates)
 
 If so:
+
 - `im.send_subscribe_update(sub)` is called
 - the subcription list of updates is cleared via `sub.clear_before_arm()`
 
 Once all updates are sent, the subscription are scanned again to see if any heartbeat needs to be sent:
+
 - subscription is not in `wait_status`
 - subscription has reached `expiration` timestamp
 If so:
 - `im.send_subscribe_update(sub)` is called
-- the subcription list of updates is cleared via `sub.clear_before_arm()` XXX TODO WTF
+- the subcription list of updates is cleared via `sub.clear_before_arm()` XXX TODO
 
