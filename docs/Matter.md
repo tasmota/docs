@@ -42,3 +42,18 @@ What's not suported:
 - **ESP8266** because of limited memory resources and lack of Berry support
 - **Thread** as it requires a separate MCU. The number of Thread devices is still very limited. 
 - **Zigbee**
+
+## Matter Commands
+
+Command|Description
+:----|:---
+MtrJoin|`1` = open commissioning for 10 minutes<BR>`0` = close commissioning
+
+## Matter Events
+
+Events published as JSON MQTT that can be captured in rules:
+
+- `{"Matter":{"Initialized":1}}` when the device is configured (all endpoints created)
+- `{"Matter":{"Commissioning":1,"PairingCode":"00054912336","QRCode":"MT:Y.K90IRV01YZ.548G00"}}` when commissioning is open
+- `{"Matter":{"Commissioning":0}}` when commissioning is closed
+
