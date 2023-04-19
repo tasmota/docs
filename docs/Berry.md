@@ -1679,12 +1679,14 @@ Hue emulation requires both `#define USE_EMULATION` and
 The core class is `light_state` which represents a virtual light.
 
 `light_state` general methods:
+
 Methods|Parameters and details
 :---|:---
 init<a class="cmnd" id="aes_md5_init"></a>|`light_state.init(channels:int) -> instance`<br>Creates a `light_state` instance for a light with `channels` channels.<BR>Constants are:<BR>`light_state.RELAY` = `0`<BR>`light_state.DIMMER` = `1`<BR>`light_state.CT` = `2`<BR>`light_state.RGB` = `3`<BR>`light_state.RGBW` = `4`<BR>`light_state.RGBCT` = `5`
 signal_change|`signal_change() -> nil`<br>Called when a changed was triggered by Alexa.<BR>You can sub-class this class and override this method. Alternatively you can also poll for any change.
 
 `light_state` getters:
+
 Methods|Parameters and details
 :---|:---
 power|`power() -> bool` returns the on/off state
@@ -1701,6 +1703,7 @@ mode_ct<BR>mode_rgb|`mode_ct()/mode_rgb() -> bool` returns whether the light is 
 get|`get() -> map` returns the complete state of the light as a map<BR>Exemple:<BR>`{'rgb': '1E285A', 'hue': 230, 'type': 5, 'power': false, 'bri': 90, 'mode_rgb': true, 'sat': 170, 'mode_ct': false, 'channels': [30, 40, 90, 0, 0]}`
 
 `light_state` setters:
+
 Methods|Parameters and details
 :---|:---
 set\_power|`set_power(bool) -> nil` sets on/off state
@@ -1714,6 +1717,7 @@ set\_rgb|`set_rgb(r:int, g:int, b=int) -> nil` sets red/green/blue channels (0..
 set\_xy|`set_xy(x:float, y:float) -> nil` sets color as x/y (0.0 .. 1.0 x 2)
 
 `light_state` static helper functions:
+
 Methods|Parameters and details
 :---|:---
 gamma8|`gamma8(int) -> nil` applies gamma correction to 8 bits value (0..255)
@@ -1741,6 +1745,7 @@ hue_bridge.add_light(15, l5, "Synthetic RGBCT")
 When you start the Hue pairing, all virtual lights are advertized. You need to make sure that virtual lights are defined at each restart (in `autoexec.be` for example).
 
 `hue_bridge` functions:
+
 Methods|Parameters and details
 :---|:---
 add\_light|`add_light(id:int, light:instance of light_state, name:string [, model:string, manuf:strin]) -> light`<BR>Adds an virtual light to the Hue bridge.<BR>`id` = numerical identifier of the Hue light. Using low numbers avoids conflict with real lights from Tasmota<BR>`light` = instance of `light_state` handling the state and behavior of the light<BR>`name` = name of the light as displayed in the Alexa app (can be overriden in the app)<BR>`model` (opt) = name of the manufacturer model, defaults to "Unkwnon"<BR>`manuf` (opt) = name of the manufacturer, defaults to "Tasmota"
