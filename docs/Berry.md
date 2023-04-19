@@ -1752,6 +1752,73 @@ add\_light|`add_light(id:int, light:instance of light_state, name:string [, mode
 remove\_light|`remove_light(id:int) -> nil`<BR>Removes a light from the Hue bridge by hue id.
 light_to_id|`light_to_id(light:instance) -> int` converts a registered `light_instance` instance to its Hue id
 
+## Zigbee
+
+For Zigbee coordinators, there is a Berry mapping that allows explore Zigbee configurations and devices. It also allows to intercept incoming message (low and high level) and transform messages before they reach the Tasmota layer. This is useful for non-standard Zigbee devices for which Zigbee plug-ins are not sufficient.
+
+Note: the following are only available when compiling with `#define USE_ZIGBEE`
+
+Internally, the Tasmota Zigbee engine calls `callBerryZigbeeDispatcher()` at key points to allow your Berry code to take over and change messages on-the-fly.
+
+### `import zigbee`
+
+First step is to use `import zigbee` which returns an instance (monad) of `zb_coord()`.
+
+General methods|Parameters and details
+:---|:---
+info|`zigbee.info() -> map` returns a map with general configuration of the Zigbee coordinator.<BR>Format is identical to `ZbConfig`<BR>Example: <BR>`{'ext_pan_id': '0xCCCCCCCCA11A2233', 'tx_radio': 20, 'shortaddr': 0, 'longaddr': '0x00124B0026BAABBC', 'channel': 11, 'pan_id': 837, 'pan_id_hex': '0x0345', 'shortaddr_hex': '0x0000'}`
+size|`zigbee.size() -> int` returns the number of devices knwon by the coordinator
+iter|`zigbee.iter() -> iterator`<BR>Returns an iterator on all zigbee devices<BR>Use compact implicit form `for ze: zigbee  [...]  end`
+item<BR>\[\]|`zigbee.item(shortaddr:int) -> instance of zb_device`<BR>Returns the Zigbee device with short address `shortaddr`<BR>You can use the compact syntax `zigbee[0xFAB6]`
+abort|`zigbee.abort() -> nil` aborts the initialization of Zigbee MCU. To be used when initialization of Zigbee failed
+
+### `zb_device` class
+
+The class `zb_device` contains all known information about a paired Zigbee device (end-device or router). You can't create a `zb_device` from scratch, they most be retrieved from `zigbee` object.
+
+`zb_device` instances can only be read, you can't change directly any attribute.
+
+Getter methods|Parameters and details
+:---|:---
+shortaddr|`shortaddr -> int` returns the 16 bits short address
+longaddr|`longaddr -> bytes` returns the long 64 bits address as 8 bytes (or all zeroes if unknown)
+name|`name -> string` returns the friendlyname of the device or `0x....` hex name if no friendlyname was defined using `ZbName` command
+reachable|`reachable -> bool` is the device reachable, i.e. did it respond last time we tried to contact them
+hidden|`hidden -> bool` is the device declared as hidden, i.e. not announced in Hue emulation
+router|`router -> bool` is the device known to be a router
+model|`model -> string` model of the device
+manufacturer|`manufacturer -> string` manufacturer name of the device
+lastseen|`lastseen -> int` timestamp (epoch) when the device was last seen
+lqi|`lqi -> int` radion strength and quality when the device was last seen
+battery|`battery -> int` percentage of battery, or `-1` if unknwon of no battery
+battery\_lastseen|`battery_lastseen -> int` timestamp (epoch) when the battery was last reported, or `-1`
+
+Example:
+```berry
+import zigbee
+
+# show all devices
+for z: zigbee
+  print(z)
+end
+
+# output:
+<instance: zb_device(0xB955, 0x842E14FFFE139AF4, name:'Plug_Office', model:'TS0121', manufacturer:'_TZ3000_g5xawfcq')>
+[...]
+```
+
+### Changing Zigbee values on-the-fly
+
+Whenever a Zigbee message is received (typically values of attributes), the Tasmota Zigbee engines generates events at key points which allow custom Berry code to intercept and change messages on-the-fly.
+
+Messages are sent in the following order:
+
+- `frame_received`: (low-level) the raw zigbee message is passed as `bytes` and attributes are not yet decoded. The `bytes` buffer can be modified and passed back to the Tasmota Zigbee engine.
+- `attributes_raw`: (mid-level) Zigbee attributes are decoded but no transformation is applied yet. Attributes are only available in cluser/attribute format, names are not decoded and plug-ins are not yet applied.<BR>This is the perfect moment to change non-standard attributes and map them to standard ones.
+- `attributes_refined`: (high-level) Attributes are mapped to their names (when possible) and all transformations are applied. This is the last chance to change values.
+
+#### Changing zigbee frame, `zb_frame` class
+
 ## Compiling Berry
 
 Berry is included if the following is defined in `user_config_override.h`:
