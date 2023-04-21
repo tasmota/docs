@@ -1842,7 +1842,7 @@ on switch1#state=7 do event upordown=%var1% ENDON
 on event#upordown=+ do var1 - ENDON
 on event#upordown=- do var1 + ENDON
 ```
-Notice we use `Rule` which edits `Rule1` rule set. They can be used interchangeably.
+Restart Tasmota after creating the rule set. Notice we use `Rule` which edits `Rule1` rule set. They can be used interchangeably.
 
 ------------------------------------------------------------------------------
 
