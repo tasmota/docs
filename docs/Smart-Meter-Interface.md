@@ -1473,6 +1473,37 @@ This script was used and tested on a WeMos D1 mini with an IR Head connected to 
     1,770701000e0700ff@1,Frequency,Hz,freq,0
     #
     ```
+	
+### Holley DTZ541-ZDBA (SML)  
+
+This meter differatiates between day and night time consumption. The script is based on the DTZ541. Look above for more information. 
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,s,16,9600,SML
+    1,77070100600100ff@#,Server ID,,server_id,0
+    1,77070100020800ff@1000,Export (Total),kWh,export_total_kwh,4
+    1,77070100010802ff@1000,Night (Total),kWh,total_night_kwh,4
+    1,77070100010801ff@1000,Day (Total),kwH,total_day_kwh,4
+    1,77070100100700ff@1,Consumption (Current),W,curr_w,0
+    1,77070100200700ff@1,Voltage L1,V,volt_p1,1
+    1,77070100340700ff@1,Voltage L2,V,volt_p2,1
+    1,77070100480700ff@1,Voltage L3,V,volt_p3,1
+    1,770701001f0700ff@1,Amperage L1,A,amp_p1,1
+    1,77070100330700ff@1,Amperage L2,A,amp_p2,1
+    1,77070100470700ff@1,Amperage L3,A,amp_p3,1
+    1,77070100510701ff@1,Phase angle U-L2/U-L1,deg,phase_angle_l2_l1,1
+    1,77070100510702ff@1,Phase angle U-L3/U-L1,deg,phase_angle_l3_l1,1
+    1,77070100510704ff@1,Phase angle I-L1/U-L1,deg,phase_angle_p1,1
+    1,7707010051070fff@1,Phase angle I-L2/U-L2,deg,phase_angle_p2,1
+    1,7707010051071aff@1,Phase angle I-L3/U-L3,deg,phase_angle_p3,1
+    1,770701000e0700ff@1,Frequency,Hz,freq,0
+    #
+    ```
 
 ### Iskra MT 174 (OBIS)
 
