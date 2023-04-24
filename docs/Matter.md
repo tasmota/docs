@@ -1,6 +1,6 @@
 # Matter Protocol :material-cpu-32-bit:
 
-!!! danger "Matter protocol is highly experimental"
+!!! danger "Matter protocol is experimental"
 
 !!! tip "Matter is only supported on ESP32x based devices and requires a specific build with `#define USE_MATTER_DEVICE`"
 
