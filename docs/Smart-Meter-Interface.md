@@ -64,7 +64,8 @@ There are many different meters that use the same protocol. There are multitudes
 
 !!! note
     Additional hardware may be required to read certain measuring devices. For example: RS485toTTL adapter for Modbus, IR transistor for electricity meters. Sometimes an additional IR diode and resistors.  
-  
+
+By default, a SENSOR telegram is sent to MQTT every 300 seconds. This can be adjusted by changing the [TelePeriod](https://tasmota.github.io/docs/Commands/#teleperiod).
   
 ## Descriptor Syntax
 This section must be present, even if it's empty. If compiled with `SML_REPLACE_VARS`, here is the place where text variables can be defined for the script:
