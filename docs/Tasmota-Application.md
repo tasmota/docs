@@ -36,6 +36,9 @@ The LVGL screen will change from black to red to green to blue to white each sec
 
 [Partition Manager](https://raw.githubusercontent.com/arendst/Tasmota/development/tasmota/berry/modules/Partition_Manager.tapp)
 
+To run either of these apps, simply upload the .tapp file to the filesystem and reboot the board.  After doing so, the app will appear on the consoles page in the GUI.
+![Partition_Wizard](https://github.com/ryancasler/docs/blob/dfdbedfe7c301e5c17ce3214b14c395d288920c6/docs/_media/Partition_Wizard.png)
+
 ### Display Calibration
 
 Tasmota Application useful for Touch Screen calibration (resistive touchscreens only). This application guides you through simple steps and generates automatically the required settings in `display.ini` (the ':M' line).
