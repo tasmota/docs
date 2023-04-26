@@ -337,7 +337,7 @@ For sensors like humidity or temperature it should not matter, how many ESP's do
 The driver provides two Berry modules to allow extensions and interactions with the sensors. It is also possible to write generic BLE functions unrelated to Xiaomi sensors.  
   
 ### MI32 module
-This module allows access and modifification of the internal data backend of the MI32 driver for the observed Xiaomi sensors.  
+This module allows access and modification of the internal data backend of the MI32 driver for the observed Xiaomi sensors.  
 First we need to import the module:  
 `import MI32` 
   
@@ -355,7 +355,9 @@ We have the following methods, which are chosen to be able to replace the old co
 For generic BLE access we import the module:    
 `import BLE`
   
-To simplify BLE access this works in the form of state machine, where you have to set some properties and then finally launch an operation. Besides we have two callback mechanisms for listening to advertisements and active sensor connections. Both need a byte buffer in Berry for data exchange and a Berry function as the callback.  
+To simplify BLE access this works in the form of state machine, where you have to set some properties of a context and then finally launch an operation. Besides we have three callback mechanisms for listening to advertisements, active sensor connections with Tasmota as a client and providing a server including advertising. All need a byte buffer in Berry for data exchange and a Berry function as the callback.  
+The byte buffer is always organized in the format `length-data bytes`, where the first byte represents the length of the following data bytes, which results in a maximum of 255 data bytes.  
+  
 To listen to advertisements inside a class (that could be a driver) we could initialize like that:
 
 !!! example "Simple Advertisement Listener"
@@ -387,7 +389,7 @@ To listen to advertisements inside a class (that could be a driver) we could ini
   ```
 
 To stop listening call:  
-`BLE.adv_cb(0)`
+`BLE.adv_cb(nil)`
   
 We just have to provide a pointer to a (callback) function and a byte buffer.  The returned data in the byte buffer uses the following proprietary format:  
 ```haskell
@@ -478,6 +480,42 @@ The buffer format for reading and writing is in the format (length - data):
 1 byte  - length of data in bytes
 n bytes - data
 ```
+  
+The server is initiated similarly with `BLE.serv_cb(cbp,cbuf)`. After that you have to construct the server by first adding all *characteristics* and finally starting it, by setting the *advertisement* data for the first time. Setting *advertisement* data without adding *characteristics* will not start a BLE server but only a BLE advertiser, which is totally fine for some use cases (i.e. Beacons, BTHome).  
+The BLE server can be stopped with `BLE.serv_cb(nil)`, which will restart the "BLE Scan Task".  
+
+The callback functions returns error, operation, 16-bit-uuid and 16-bit-handle.  
+  
+```python
+# simple server setup example for the Berry console
+import BLE
+cbuf = bytes(-256)
+
+def cb(error,op,uuid,handle)
+end
+
+cbp = tasmota.gen_cb(cb)
+BLE.serv_cb(cbp,cbuf)
+# now add characteristics and advertisement ...
+```
+  
+Command operators:  
+- 201 - add and/or set advertisement data according to the BLE standard, typically chaining small packets in the in the format of `length-type-data`. When called for the first time, will return a bytes buffer, that represents an array of the 16-bit-handles of all characteristics in the order of addition.
+- 202 - add and/or set scan response data, according to the BLE standard which is equally  to the advertisement data. Should be used sparsely.
+- 211 - add and/or set characteristic with value of bytes buffer. For simplicity a `Client Characteristic Configuration Descriptor` (aka 0x2902) will be added on construction of every characteristic and read, write, notification and indication is enabled. You can select write with or without response withe the optional boolean of  `BLE.set_chr(string, bool)`, which defaults to "write with no response". The function call will always trigger a *notification*. As every *characteristic* belongs to a *service*, `BLE.set_svc(string)` must have been called before.  
+  
+Response operators (to client access to the server):
+- 221 - on read of a characteristic, returns no buffer data
+- 222 - on write of a characteristic, returns the written values as byte buffer data
+- 223 - on unsubscribe, returns no buffer data
+- 224 - on subscribe to notifications, returns no buffer data
+- 225 - on subscribe to indications, returns no buffer data
+- 226 - on subscribe to notifications and indications, returns no buffer data
+- 227 - on connect, returns MAC of client device as byte buffer
+- 228 - on disconnect, returns no buffer data
+- 229 - on status, returns error code as byte buffer
+ 
+
   
 ### Berry examples
 
@@ -784,4 +822,3 @@ Here is an implementation of the "old" MI32 commands:
     xbox = XBOX("AABBCCDDEEFF")  # xbox controller MAC
     tasmota.add_driver(xbox)
     ```
-
