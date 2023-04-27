@@ -72,10 +72,10 @@ If you define multiple relays, they are controlled with [`Power<x>`](Commands.md
     |Commands|[`ZCDimmerSet`](Commands.md#zcdimmerset) ESP32 only|
 
     Example schematic:  
-    ![ACDimmer](https://user-images.githubusercontent.com/24524506/155886267-56433a26-614a-43d7-8b30-3e38ef9931d7.png)
+    ![ZCDimmer example schematic](_media/peripherals/ZCDimmer_Schematic.png)
 
     Example config:  
-    ![Robotdyn example schematic](https://user-images.githubusercontent.com/24524506/155886737-8139f80b-510f-4b61-937a-b6929aa27531.png){width="300"}
+    ![ZCDimmer example config](_media/peripherals/ZCDimmer_Config.png){width="300"}
 
     Preferably before connecting the ZC & PWM perform the following commands:
 
