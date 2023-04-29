@@ -12,7 +12,7 @@ The feature is included in Tasmota v9.3.0 onward.
 
 The PID code adds about 11.1k and the Timeprop code another 1k
 
-Detailed instructions for setup are in these two xdrv files: [`tasmota/xdrv_48_timeprop.ino`](https://github.com/arendst/Tasmota/blob/development/tasmota/xdrv_48_timeprop.ino) and [`tasmota/xdrv_49_pid.ino`](https://github.com/arendst/Tasmota/blob/development/tasmota/xdrv_49_pid.ino).
+Detailed instructions for setup are in these two xdrv files: [`tasmota/xdrv_48_timeprop.ino`](https://github.com/arendst/Tasmota/blob/development/tasmota/tasmota_xdrv_driver/xdrv_48_timeprop.ino) and [`tasmota/xdrv_49_pid.ino`](https://github.com/arendst/Tasmota/blob/development/tasmota/tasmota_xdrv_driver/xdrv_49_pid.ino).
 
 The ESP8266 will run the PID algorithm at 1 cycle per second, which is much faster than is needed for the sort of processes Sonoff devices are usually associated with.  It rather clobbers the Tasmota terminal output in the web browser at that rate so it is getting near to the limit.  The maximum anyone is likely to need it running at is maybe once every 5 seconds, and the majority of home IoT applications probably nearer once per minute would be sufficient, so the device is well up to the task.
 
