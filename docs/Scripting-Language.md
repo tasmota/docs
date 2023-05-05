@@ -525,10 +525,19 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `pow(x y)` = calculates exponential powers x^y (imprecise version only)  
 `med(n x)` = calculates a 5 value median filter of x (2 filters possible n=0,1)  
 `int(x)` = gets the integer part of x (like floor)  
+`floor(x)` = gets the integer part of x  
+`ceil(x)` = gets the integer + 1 part of x  
+`round(x)` = round to nearest integer x  
+`i(x)` = convert float x to integer  
+`f(x)` = convert integer x to float  
 `hn(x)` = converts x (0..255) to a hex nibble string  
+`hni(x)` = converts integer x (0..255) to a hex nibble string  
 `hx(x)` = converts x (0..4294967295, 32-bit) to a hex string  
+`hxi(x)` = converts integer x (0..4294967295, 32-bit) to a hex string  
 `hd("hstr")` = converts hex number string to a decimal number  
 `af(array index)` = converts 4 bytes of an array at index `index` to float number   
+`as(array)` = sort array  
+`sas(index)` = sort string array (is, is1, is2, index = 1,2,3)  
 `hf("hstr")` = converts hex float number string to a decimal number  
 `hf("hstr" r)` = converts hex float number string (reverse byte order) to a decimal number  
 `st(svar c n)` or = `st(svar 'c' n)`string token - retrieve the n^th^ element of svar delimited by c,  
@@ -556,7 +565,23 @@ I2C support #define USE_SCRIPT_I2C
 `ia(AA)`, `ia2(AA)` test and set I2C device with address AA (on BUS 1 or 2), returns 1 if device is present  
 `iw(aa val)` , `iw1(aa val)`, `iw2(aa val)`, `iw3(aa val) `write val to register aa (1..3 bytes), if in aa bit 15 is set no destination register is transfered (needed for some devices), if bit 14 is set byte order is reversed  
 `ir(aa)`, `ir1(aa)`, `ir2(aa)`, `ir3(aa)` read 1..3 bytes from register aa  
-  
+ 
+Onewire support #define USE_SCRIPT_ONEWIRE  
+support for onewire either directly or via serial port with onewire bus driver DS2480B  
+`ow(SEL <opt PAR>)`
+    SEL 0 = init bus with pin number N (if bit 15 ist set, select serial DS2480B, lsb = rec pin, msb = trx pin)  
+    SEL 1 = reset cmd  
+    SEL 2 = skip cmd  
+    SEL 3 = write PAR  
+    SEL 4 = read  
+    SEL 5 = reset search cmd  
+    SEL 6 = search cmd addr index PAR  
+    SEL 7 = select cmd addr index PAR 
+    SEL 8 = select and set bits index PAR  
+    SEL 9 = select and read word index PAR bit 7 = 0 start, bit 7 = 1 read result  
+    SEL 10-18 = get byte (1-8) of adress from index PAR  
+    SEL 99 = delete bus driver  
+    
 Serial IO support #define USE_SCRIPT_SERIAL  
 `so(RXPIN TXPIN BR)` open serial port with RXPIN, TXPIN and baud rate BR with 8N1 serial mode (-1 for pin means don't use)  
 `so(RXPIN TXPIN BR MMM)` open serial port with RXPIN, TXPIN and baud rate BR and serial mode e.g 7E2 (all 3 modechars must be specified)  
@@ -925,7 +950,8 @@ The script itself is also stored on the file system with a default size of 8192 
 `frd("fname")` remove directory fname  
 `fx("fname")` check if file fname exists  
 `fe("fname")` execute script fname (max 2048 bytes, script must start with the '>' character on the first line)  
-
+`lfw("fname" payload limit)` logs a string (payload) to a file (fname) with size limit (limit)  paylyoad is added to end of file together with a LF character. if file size is exceeded first line of file is removed.   
+    
 **ESP32 real Multitasking support**  
 `#define USE_SCRIPT_TASK` 
 enables support for multitasking scripts  
