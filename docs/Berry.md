@@ -1020,7 +1020,7 @@ tcpclient Function|Parameters and details
 connect<a class="cmnd" id="tcpclient_connect"></a>|`connect(address:string, port:int [, timeout_ms:int]) -> bool`<BR>Connect to `addr:port` with optional timeout in milliseconds (default 2s).<BR>Returns `true` if connection was successful, the call is blocking until the connection succeeded to the timeout expired.
 connected<a class="cmnd" id="tcpclient_connected"></a>|`connected() -> bool`<BR>Returns `true` if the connection was successful and is still valid (not dropped by server or closed by client)
 close<a class="cmnd" id="tcpclient_close"></a>|`close() -> nil`<BR>Drops the current connection.
-write<a class="cmnd" id="tcpclient_write"></a>|`content:string or bytes) -> int`<BR>Accepts either a string or a bytes buffer, returns the number of bytes sent. It's you responsibility to resend the missing bytes.<BR>Returns `0` if something went wrong.
+write<a class="cmnd" id="tcpclient_write"></a>|`write(content:string or bytes) -> int`<BR>Accepts either a string or a bytes buffer, returns the number of bytes sent. It's you responsibility to resend the missing bytes.<BR>Returns `0` if something went wrong.
 available<a class="cmnd" id="tcpclient_available"></a>|`available() -> int`<BR>Returns the number of bytes received in buffer and ready to be read.
 read<a class="cmnd" id="tcpclient_read"></a>|`read([max_len:int]) -> string`<BR>Returns all the bytes received in Rx buffer as `string`.<br>Optional `max_len` parameter limits the number of characters returned, or read as much as possible by default.
 readbytes<a class="cmnd" id="tcpclient_readbytes"></a>|`read([max_bytes:int]) -> bytes()`<BR>Returns all the bytes received in Rx buffer as `bytes()`.<br>Optional `max_bytes` parameter limits the number of bytes returned, or read as much as possible by default.
@@ -1039,6 +1039,61 @@ print("available1:", tcp.available())
 r = tcp.read()
 tcp.close()
 print(r)
+```
+
+### `tcpclientasync` class
+
+Variant of `tcpclient` using only non-blocking calls in full asynchronous mode. This allows to have multiple concurrent connections with fine-grained control over timeouts and no blocking of Tasmota. This is especially useful for Matter Border Router for ESP8266 Tasmota based devices via HTTP.
+
+All calls return immediately, so you need to poll the API periodically to send/receive data, and manage timeouts yourself.
+
+Typical equence:
+
+- create an instance of the client with `var tcp = tcpclientasync()`
+- connect to the server `tcp.connect(address:string, port:int) -> bool`. Address should be numerical IPv4 or IPv6 if you want the call to return immediately (i.e. do DNS resolution ahead of time), otherwise a DNS resolution might take some time and fail. If DNS failed, this call returns `false`.
+- regularly call `connected()` waiting for `true` to detect when the connection is established. While `connected()` returns `nil` then connection is in-progress. If `connected()` changes to `false` then the connection was refused by the host.
+- if the connection is not established after a definite amount of time, you should declare 'timeout' and call `close()`
+- to send data: first call `listening()` to ensure that the socket is ready to send data. Note: the socket is always listening when the connection was just established. Then call `write()` to send you data (string or bytes), this call returns the actual amount of data sent; if it is lower than your content, you need to handle yourself re-sending the remaining data. Note: ensuring that you send less than the MTU should keep you from happening (~1430 bytes max).
+- to receive data: first call `available()` to check if some data is ready to be received. Then call `read()` or `readbytes()` to get the buffer as string or bytes. You can limit the amount of data received, but in such case, the extra data is discarded and lost.
+- regularly call `connected()` to check if the connection is still up
+- finally call `close()` to close the connection on your side and free resources. It is implicitly called if the connection was closed from the peer.
+
+
+tcpclient Function|Parameters and details
+:---|:---
+connect<a class="cmnd" id="tcpclientasync_connect"></a>|`connect(address:string, port:int) -> bool`<BR>Initiates a connection to `addr:port`.<BR>If `addr` is in numerical format, DNS is immediate, and this calls returns immediately.<BR>If `addr` is a domain name, the DNS resolution is made in blocking mode and call returns `true` if successful, or `false` if DNS failed.<BR>Hence if you want a pure non-blocking mode, you should do the DNS resolution ahead of time.
+connected<a class="cmnd" id="tcpclientasync_connected"></a>|`connected() -> bool or nil`<BR>Returns:<BR>`nil` if the connection in still on-going and was not yet established<BR>`true` if the connection is established.<BR>`false` if the connection is down, either because it was refused or closed (if it changed from `true` to `false`)
+listening<a class="cmnd" id="tcpclientasync_listening"></a>|`listening() -> bool`<BR>Returns `true` if the socket is ready to send data (hence established and out buffer empty), or `false` if the out buffer is not empty or the connection is down.<BR>You should always wait for `listening()` to be `true` before calling `write()`.
+available<a class="cmnd" id="tcpclientasync_available"></a>|`available() -> int`<BR>Returns the number of bytes received in buffer and ready to be read, or `0` if nothing to read.
+close<a class="cmnd" id="tcpclientasync_close"></a>|`close() -> nil`<BR>Close the current connection and free the file descriptor.
+write<a class="cmnd" id="tcpclientasync_write"></a>|`write(content:string or bytes) -> int`<BR>Accepts either a string or a bytes buffer, returns the number of bytes sent. It's you responsibility to resend the missing bytes.<BR>Returns `0` if something went wrong.
+read<a class="cmnd" id="tcpclientasync_read"></a>|`read([max_len:int]) -> string`<BR>Returns all the bytes received in Rx buffer as `string`.<br>Optional `max_len` parameter limits the number of characters returned, or read as much as possible by default. However in the non-blocking version, limiting receive buffer will truncate (and lose) any extra data.
+readbytes<a class="cmnd" id="tcpclientasync_readbytes"></a>|`read([max_bytes:int]) -> bytes()`<BR>Returns all the bytes received in Rx buffer as `bytes()`.<br>Optional `max_bytes` parameter limits the number of bytes returned, or read as much as possible by default.  However in the non-blocking version, limiting receive buffer will truncate (and lose) any extra data.
+info<a class="cmnd" id="tcpclientasync_info"></a>|`info() -> map`<BR>Returns a map with various information about the socket.<BR>Example: `{'listening': true, 'local_addr': '192.168.1.20', 'available': false, 'fd': 50, 'connected': true, 'local_port': 64808}`<BR>`fd`: the file descriptor number used internally<BR>`connected`, `listening`, `available`: values of corresponding methods<BR>`local_addr`, `local_port`: local address used and local port.
+
+
+Full example:
+
+``` berry
+def try_connect(addr, port)
+	import string
+	var tcp = tcpclientasync()
+	var now = tasmota.millis()
+	var r = tcp.connect(addr, port)
+	print(string.format("Time=%5i state=%s", tasmota.millis()-now, str(tcp.connected())))
+	print(tcp.info())
+	tasmota.delay(50)
+	print(string.format("Time=%5i state=%s", tasmota.millis()-now, str(tcp.connected())))
+	print(tcp.info())
+	tasmota.delay(150)
+	print(string.format("Time=%5i state=%s", tasmota.millis()-now, str(tcp.connected())))
+	print(tcp.info())
+	tasmota.delay(500)
+	print(string.format("Time=%5i state=%s", tasmota.millis()-now, str(tcp.connected())))
+	print(tcp.info())
+	return tcp
+end
+tcp = try_connect("192.168.1.19", 80)
 ```
 
 ### `tcpserver` class
