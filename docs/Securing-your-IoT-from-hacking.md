@@ -5,10 +5,10 @@ Whenever you add devices to your network you generate additional points of poten
 There are following potential risks you have to mitigate:
 
 * Someone is able to communicate with your device ([Scenario 1](#scenario-1))
-* Someone hacks your device and is able to log in into your WLAN. (why is this a problem? [Scanario 2](#scenario-2))
-* Someone hacks your device and is able to read and change any value on your MQTT server (why is this a problem? [Scanario 3](#scenario-3))
-* Someone hacks your network and can interact with your devices (why is this a problem? [Scanario 4](#scenario-4))
-* Someone hacks your device and use it for different things like mail bot or DOS (Denial of Service) device or WLAN jammer (why is this a problem? [Scanario 5](#scenario-5))
+* Someone hacks your device and is able to log in into your WLAN. (why is this a problem? [Scenario 2](#scenario-2))
+* Someone hacks your device and is able to read and change any value on your MQTT server (why is this a problem? [Scenario 3](#scenario-3))
+* Someone hacks your network and can interact with your devices (why is this a problem? [Scenario 4](#scenario-4))
+* Someone hacks your device and use it for different things like mail bot or DOS (Denial of Service) device or WLAN jammer (why is this a problem? [Scenario 5](#scenario-5))
 
 #### Scenario 1
 It is possible to [set a password to the webadmin interface]( https://github.com/arendst/Tasmota/pull/12900), however ESP8266 devices *SHALL* not be exposed to internet or accessible to other network clients. (e.g. users in the same network) [[1]](https://github.com/arendst/Tasmota/discussions/14166#discussioncomment-1872750) [[2]](https://github.com/arendst/Tasmota/discussions/14166#discussioncomment-1871619). 
