@@ -2786,45 +2786,44 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
 ??? summary "View script"
     ```
     >D
->B
-->sensor53 r
->M 1
-+1,3,s,0,9600,SML
-1,77070100010800ff@1000,Total Verbrauch,KWh,Total_in,3
-1,77070100020800ff@1000,Total Einspeisung,kWh,Total_in,3
-1,=h==================
-1,77070100100700ff@1,Actual load,W,Power_curr,0
-1,=h==================
-1,=m 9+10+11 @1,Currents L1+L2+L3,A,Curr_summ,3
-;1,=m 12+13+14/#3 @1,Voltage L1+L2+L3/3,V,Volt_avg,3
-1,=h==================
-1,77070100240700ff@1,Consumption P1,W,Power_p1,2
-1,77070100380700ff@1,Consumption P2,W,Power_p2,2
-1,770701004c0700ff@1,Consumption P3,W,Power_p3,2
-1,=h   ----
-1,770701001f0700ff@1,Current L1,A,Curr_p1,3
-1,77070100330700ff@1,Current L2,A,Curr_p2,3
-1,77070100470700ff@1,Current L3,A,Curr_p3,3
-1,=h   ----
-1,77070100200700ff@1,Voltage L1,V,Volt_p1,3
-1,77070100340700ff@1,Voltage L2,V,Volt_p2,3
-1,77070100480700ff@1,Voltage L3,V,Volt_p3,3
-1,=h==================
-1,77070100510701ff@1,Phaseangle L2-L1,deg,phase_angle_L2_L1,0
-1,77070100510702ff@1,Phaseangle L3-L1,deg,phase_angle_L3_L1,0
-1,77070100510704ff@1,Phaseangle I/U L1,deg,phase_angle_L1,1 
-1,7707010051070fff@1,Phaseangle I/U L2,deg,phase_angle_L2,1  
-1,7707010051071aff@1,Phaseangle I/U L3,deg,phase_angle_L3,1 
-1,770701000e0700ff@1,Frequency,Hz,Freq,1
-;1,=h=======UNBEKANNT===========
-;1,77070100000009FF@#,unbekannt1,,Power_Use_Sum,3
-;1,77070100000000FF@#,unbekannt2,,Power_Use_Sum,3
-;1,7707010060320101@#,unbekannt3,,Meter_id,0
-;1,77010b0a01445a47@#,unbekannt4,,Meter_id,0
-;1,77070100600100ff@#,unbekannt5,,Meter_id,0
-1,=h
-#
-
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,s,0,9600,SML
+    1,77070100010800ff@1000,Total Verbrauch,KWh,Total_in,3
+    1,77070100020800ff@1000,Total Einspeisung,kWh,Total_in,3
+    1,=h==================
+    1,77070100100700ff@1,Actual load,W,Power_curr,0
+    1,=h==================
+    1,=m 9+10+11 @1,Currents L1+L2+L3,A,Curr_summ,3
+    ;1,=m 12+13+14/#3 @1,Voltage L1+L2+L3/3,V,Volt_avg,3
+    1,=h==================
+    1,77070100240700ff@1,Consumption P1,W,Power_p1,2
+    1,77070100380700ff@1,Consumption P2,W,Power_p2,2
+    1,770701004c0700ff@1,Consumption P3,W,Power_p3,2
+    1,=h   ----
+    1,770701001f0700ff@1,Current L1,A,Curr_p1,3
+    1,77070100330700ff@1,Current L2,A,Curr_p2,3
+    1,77070100470700ff@1,Current L3,A,Curr_p3,3
+    1,=h   ----
+    1,77070100200700ff@1,Voltage L1,V,Volt_p1,3
+    1,77070100340700ff@1,Voltage L2,V,Volt_p2,3
+    1,77070100480700ff@1,Voltage L3,V,Volt_p3,3
+    1,=h==================
+    1,77070100510701ff@1,Phaseangle L2-L1,deg,phase_angle_L2_L1,0
+    1,77070100510702ff@1,Phaseangle L3-L1,deg,phase_angle_L3_L1,0
+    1,77070100510704ff@1,Phaseangle I/U L1,deg,phase_angle_L1,1 
+    1,7707010051070fff@1,Phaseangle I/U L2,deg,phase_angle_L2,1  
+    1,7707010051071aff@1,Phaseangle I/U L3,deg,phase_angle_L3,1 
+    1,770701000e0700ff@1,Frequency,Hz,Freq,1
+    ;1,=h=======UNBEKANNT===========
+    ;1,77070100000009FF@#,unbekannt1,,Power_Use_Sum,3
+    ;1,77070100000000FF@#,unbekannt2,,Power_Use_Sum,3
+    ;1,7707010060320101@#,unbekannt3,,Meter_id,0
+    ;1,77010b0a01445a47@#,unbekannt4,,Meter_id,0
+    ;1,77070100600100ff@#,unbekannt5,,Meter_id,0
+    1,=h
+    #
     ```
 
 ### inepro Metering PRO380-MB (M-Bus)
@@ -2865,3 +2864,21 @@ To connect to this and read data from the bus a level shifting is needed as the 
     #
 
     ``` 
+
+### AEConversion solar inverter INVXXX (RAW)
+Tested on an AEConversion INV500-90 with RS485 interface.
+	
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    ; Monitor Sensor at GPIO25
+    =>sensor53 l255
+    >M 1
+    +1,13,r,0,9600,aec,15,50,2101B203FD4D0D
+    
+    1,212717UUuux7@1,Leistung,W,power,0
+    1,212717x4UUuux4@1000,Energie,kWh,energy_sun,3
+    #
+    ```
