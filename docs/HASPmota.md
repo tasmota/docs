@@ -335,7 +335,7 @@ Every time the user touches an active element on the screen, HASPmota publishes 
 Example:
 
 ``` berry
-tasmota.add_rule("hasp#p1b10#event==up", / -> print("Button p1b10 pressed"))
+tasmota.add_rule("hasp#p1b10#event=up", / -> print("Button p1b10 pressed"))
 ```
 
 Events with value `changed` indicate that the value of the widgets has changed. Events are only fired if the change in value comes from a screen interaction. No event is fired when the value was changed programmatically. The new value is sent as `val` attribute, and for specific widgets (roller) a `text` attribute is sent for the label of the value. `{"hasp":{"p1b1":{"val":3,"text":"A3","event":"changed"}}}`
