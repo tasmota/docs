@@ -872,6 +872,26 @@ Example reading of the two-direction model using GPIO 3:
     #
     ```
 	
+### EasyMeter Q1A (SML)
+
+The Q1A series of EasyMeter is available as one- or two-way meter, with and without backstop respectively. It is also available as single or dual tariff meter. The script below works for the Q1Ax1054 variant. This variant is a single-tariff one-way meter with a backstop mechanism. The script only reads two values: the energy counter value and the current power value.
+
+The meter has no bidirectional IR-communication port, only an "INFO-DSS" send-only IR-LED. It also has no metal plate to attach a magnet so the IR reader has to be attached in another way.
+
+The current power and counter in high resolution are available after PIN entry with a flashlight, see manual.
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,16,9600,SML
+    1,77070100010800ff@1000,Zaehlerstand,kWh,Counter,6
+    1,77070100100700ff@1,Verbrauch,W,Power,1
+    #
+    ```
+	
 ### EasyMeter Q1D (ASCII OBIS)
 
 This script is for the EasyMeter Q1DB1004 variant of the Q1D series. This variant is a one-phase one-way electricity counter with a backstop mechanism. 
