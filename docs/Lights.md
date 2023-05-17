@@ -193,6 +193,8 @@ The curve used: orange=ideal, blue=tasmota.
 !!! quote ""
     Internally Tasmota uses 10 bits resolution PWM to get smoother levels at low brightness. 
 
+When using `Fade` mode, a different Gamma curve (called `gamma_fast`). This cruve cheats slightly and makes lights increase brighness faster then normal; otherwise the light starts glowing very slowly and gives the impression that the light is not responsive.
+
 ### White Blend Mode
 
 White Blend Mode mixes in the white channel with RGB colors while controlling the RGB light which results in a better and brighter color output. It is used only with 4 channel (RGBW) and 5 channel (RGBCCT) lights.
