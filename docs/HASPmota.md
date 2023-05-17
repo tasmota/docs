@@ -197,6 +197,7 @@ Below are the standard attributes:
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
 `comment`||Ignored
+`meta`|any|Any data, can be retrieved from Berry code with `p<x>b<y>.meta`
 `page`|0 to 15<br>Parent screen object|Page id for the current object.<br>If not present, takes the value of the current page
 `id`|0..255|Id number of the object. Id `0` means the entire page.<br>A global berry object is created with name `p<page>b<id>` (ex: `p1b10`)
 `obj`|widget class|Class of the widget (see above).<br>If not present, the entire JSON line is ignored
@@ -348,7 +349,7 @@ tasmota.add_rule("hasp#p1b1#text", / text-> print("p1b1 text value=", text))
 
 ### Run arbitrary Berry code
 
-Inserting an attribute `berry_run` to any object will compile and run the embedded Berry code during widget initialization.
+Inserting an attribute `berry_run` to any object will compile and run the embedded Berry code right after widget initialization. If you need the current widget object, it requires a special construct like: `"berry_run":"return def (x) print(x) end"`
 
 One common use is to trigger sensors read every 2 seconds:
 
