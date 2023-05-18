@@ -38,7 +38,7 @@ The LVGL screen will change from black to red to green to blue to white each sec
 
 To run either of these apps, simply upload the .tapp file to the filesystem and reboot the board.  After doing so, the app will appear on the consoles page in the GUI.
 
-![Partition_Wizard](https://github.com/ryancasler/docs/blob/dfdbedfe7c301e5c17ce3214b14c395d288920c6/docs/_media/Partition_Wizard.png)
+![Partition_Wizard](_media/Partition_Wizard.png)
 
 ### Display Calibration
 
