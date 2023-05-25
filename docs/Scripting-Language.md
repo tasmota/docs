@@ -364,6 +364,14 @@ A web user interface may be generated containing any of the following elements:
  `txt1` = text of 1. entry  
  `txt2` = text of 2. entry and so on  
   
+**Radio button:**   
+ `rb(vn label (xs) txt1 txt2 ... txtn)`  
+ `vn` = name of variable to hold selected state  
+ `label` = label text  
+ `xs` = optional xs (default 200) 
+ `txt1` = text of 1. entry  
+ `txt2` = text of 2. entry and so on  
+    
 **Checkbox:**   
  `ck(vn txt (xs))`  
  `vn` = name of variable to hold checkbox state  
