@@ -1076,22 +1076,22 @@ Full example:
 
 ``` berry
 def try_connect(addr, port)
-	import string
-	var tcp = tcpclientasync()
-	var now = tasmota.millis()
-	var r = tcp.connect(addr, port)
-	print(string.format("Time=%5i state=%s", tasmota.millis()-now, str(tcp.connected())))
-	print(tcp.info())
-	tasmota.delay(50)
-	print(string.format("Time=%5i state=%s", tasmota.millis()-now, str(tcp.connected())))
-	print(tcp.info())
-	tasmota.delay(150)
-	print(string.format("Time=%5i state=%s", tasmota.millis()-now, str(tcp.connected())))
-	print(tcp.info())
-	tasmota.delay(500)
-	print(string.format("Time=%5i state=%s", tasmota.millis()-now, str(tcp.connected())))
-	print(tcp.info())
-	return tcp
+  import string
+  var tcp = tcpclientasync()
+  var now = tasmota.millis()
+  var r = tcp.connect(addr, port)
+  print(string.format("Time=%5i state=%s", tasmota.millis()-now, str(tcp.connected())))
+  print(tcp.info())
+  tasmota.delay(50)
+  print(string.format("Time=%5i state=%s", tasmota.millis()-now, str(tcp.connected())))
+  print(tcp.info())
+  tasmota.delay(150)
+  print(string.format("Time=%5i state=%s", tasmota.millis()-now, str(tcp.connected())))
+  print(tcp.info())
+  tasmota.delay(500)
+  print(string.format("Time=%5i state=%s", tasmota.millis()-now, str(tcp.connected())))
+  print(tcp.info())
+  return tcp
 end
 tcp = try_connect("192.168.1.19", 80)
 ```
@@ -1873,7 +1873,58 @@ Messages are sent in the following order:
 - `attributes_raw`: (mid-level) Zigbee attributes are decoded but no transformation is applied yet. Attributes are only available in cluser/attribute format, names are not decoded and plug-ins are not yet applied.<BR>This is the perfect moment to change non-standard attributes and map them to standard ones.
 - `attributes_refined`: (high-level) Attributes are mapped to their names (when possible) and all transformations are applied. This is the last chance to change values.
 
-#### Changing zigbee frame, `zb_frame` class
+The format of methods are the following:
+`def <zigbee event>(event_type, frame, attr_list, idx)`
+
+Argument|Description
+---|---
+`event_type`|(string) can take values: `frame_received`, `attributes_raw` or `attributes_refined`
+`frame`|(instance of `zcl_frame`) low-level ZCL frame<BR>Always present
+`attr_list`|(instance of `XXX`) list of attributes.<BR>This attribute is `nil` for `frame_received`, contains raw attributes in `attributes_raw` and refined attributes in `attributes_refined`
+`idx`|(int 16 bits unsigned) contains the Zigbee short address
+
+Example, if you want to dump all the traffic passed:
+
+``` berry
+class my_zb_handler
+  def frame_received(event_type, frame, attr_list, idx)
+    print("frame_received",event_type, frame, attr_list, idx)
+  end
+  def attributes_raw(event_type, frame, attr_list, idx)
+    print("attributes_raw")
+  end
+  def attributes_refined(event_type, frame, attr_list, idx)
+    print("attributes_refined")
+  end
+
+end
+
+var my_handler = my_zb_handler()
+zigbee.add_handler(my_handler)
+```
+
+#### Changing zigbee frame, `zcl_frame` class
+
+The `zcl_frame` represents a low-level ZCL (Zigbee Cluster Library) structure before any decoding or specific processing. You generally prefer to modify a frame later on when attributes or commands are decoded.
+
+class `zcl_frame`:
+Attributes (read or write)|Details
+:---|:---
+`srcendpoint`|`uint8` source endpoint
+`dtsendpoint`|`uint8` destination endpoint
+`shortaddr`|`uint16` destination short address
+`groupadddr`|`uint16` destination multicast group address (if shortaddr is 0xFFFE)
+`cluster`|`uint16` cluster number
+`cmd`|`uint8` ZCL command number
+`cluster_specific`|`flag 0/1` is the command general or cluster specific
+`manuf`|`uint16` manufacturer specific number (or 0x0000)
+`needs_response`|`flag 0/1` does this frame needs a response
+`payload`|`bytes()` bytes of the actual data (use with caution, can be read and changed)
+ |The following are rarely used flags
+`direct`|`flag 0/1` is the frame to be sent directly only (not routed)
+`transactseq`|`uint8` transaction number (read only)
+`transactseq_set`|`uint8` transaction number (write only - if you need to change it)
+
 
 ## Compiling Berry
 
