@@ -8,6 +8,9 @@
     ```arduino
     #ifndef USE_I2S_AUDIO
     #define USE_I2S_AUDIO   // Add support for I2S audio output
+    //#define USE_I2S_NO_DAC                         // Add support for transistor-based output without DAC
+    //#define USE_I2S_WEBRADIO                       // Add support for web radio
+    //#define USE_I2S_SAY_TIME                       // Add support for english speaking clock
     #endif
 
     #ifndef USE_I2S_MIC
@@ -46,7 +49,7 @@ For microphone input an I2S microphone must be provided. There are also several 
 |I2SDAC|ESP32-GPIO|
 |---|---|
 |BCLK|I2S_BCLK|
-|LRC|I2S_WS|
+|LRCK/WS|I2S_WS|
 |DIN|I2S_DOUT|
 |SD|nc|
 |GAIN|nc|
@@ -67,17 +70,17 @@ For microphone input an I2S microphone must be provided. There are also several 
 
 |CMD ADC|action|
 |---|---|
-|i2splay | `/file.mp3` = plays an mp3 audio file from the file system, the systems blocks until sound is played|
-|i2splay | `+/file.mp3` = plays an mp3 audio file from the file system, sound is played in a separate task not blocking the system|
-|i2sgain | `0..100` = sets the loudness of the audio signal |
-|i2ssay  | `text` = speaks the text you typed (only English language supported)|
-|i2stime | tells current time, (only if `#define USE_I2S_SAY_TIME` is defined|
+|I2SPlay | `/file.mp3` = plays an mp3 audio file from the file system, the systems blocks until sound is played|
+|I2SPlay | `+/file.mp3` = plays an mp3 audio file from the file system, sound is played in a separate task not blocking the system|
+|I2SGain | `0..100` = sets the loudness of the audio signal |
+|I2Say   | `text` = speaks the text you typed (only English language supported)|
+|I2STime | tells current time, (only if `#define USE_I2S_SAY_TIME` is defined|
 
 |CMD micro|action|
 |---|---|
-|i2srec | `/file.mp3` = starts recording an mp3 audio file to the file system, no blocking|
-|i2srec | stops recording<BR>`-?` = shows how many seconds already recorded|
-|i2smgain | `1..50` = sets the gain factor of the microphone|
+|I2SRec | `/file.mp3` = starts recording an mp3 audio file to the file system, no blocking|
+|I2SRec | stops recording<BR>`-?` = shows how many seconds already recorded|
+|I2SMGain | `1..50` = sets the gain factor of the microphone|
 
 ----
 
@@ -93,8 +96,8 @@ For microphone input an I2S microphone must be provided. There are also several 
 
 |CMD WR|action|
 |---|---|
-|i2swr | `url` = starts playing an mp3 audio radio stream, no blocking|
-|i2swr |stops playing|
+|I2SWr | `url` = starts playing an mp3 audio radio stream, no blocking|
+|I2SWr |stops playing|
 
 ## MP3 Streaming Support
 
@@ -124,10 +127,10 @@ Starts an UDP audio service to connect 2 ESP32 devices as an audio intercom. Nee
 
 |CMD bridge|action|
 |---|---|
-i2sbridge | `ip` = sets the IP of the slave device|
-|i2sbridge | Sets microphone swap<br>`6` = swapped<BR>`7` = not swapped|
-|i2sbridge | Sets master mode <br> `4` = master<br>`5` = slave|
-|i2sbridge pN|`p<x>` = sets the push to talk button to GPIO pin number <x\>|
-|i2sbridge | Starts the bridge in write or read mode<BR>`1` = read<BR>`2` = write<BR>`3` = loopback<BR>`0` = stop|  
+|I2SBridge | `ip` = sets the IP of the slave device|
+|I2SBridge | Sets microphone swap<br>`6` = swapped<BR>`7` = not swapped|
+|I2SBridge | Sets master mode <br> `4` = master<br>`5` = slave|
+|I2SBbridge pN|`p<x>` = sets the push to talk button to GPIO pin number <x\>|
+|I2SBridge | Starts the bridge in write or read mode<BR>`1` = read<BR>`2` = write<BR>`3` = loopback<BR>`0` = stop|  
 
 If a push to talk button is defined: the bridge goes to write mode if the button is pushed and to read mode if the button is released  
