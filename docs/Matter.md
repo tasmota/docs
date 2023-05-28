@@ -10,13 +10,12 @@
 
 ## What is Matter?
 
-Matter is a new secure / reliable / local / standard protocol for smart devices launched at the end of 2022.
+Matter is a new secure, reliable, local standard/protocol for smart devices launched at the end of 2022. Learn more [about Matter](https://csa-iot.org/all-solutions/matter/).
 
-To know more [about Matter](https://csa-iot.org/all-solutions/matter/).
+Tasmota supports Matter over IP (Wi-Fi or Ethernet) as an end-device. This means that you can connect a Tasmota device to a Matter gateway, using standard and well defined protocols. The Matter communication is completely local.
 
-Tasmota supports Matter over IP (Wifi or Ethernet) as an end-device. This means that you can connect a Tasmota device or sensor to a Matter gateway, using standard and well define protocols. The Matter communication happens on the local network.
-
-Thread is not supported. Thread requires a specific radio and is not supported by ESP32x devices, it would require a separate MCU.
+!!! bug "Thread is not supported" 
+    Thread requires a specific radio and is not supported by ESP32 devices, it would require an additional, separate MCU.
 
 Matter cannot be supported on ESP8266 due to limited memory resources. We are exploring the possibility to use a single ESP32 as a Matter bridge to control ESP8266 devices through the bridge.
 
