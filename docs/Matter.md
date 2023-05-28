@@ -66,13 +66,13 @@ Changing these options requires a device restart.
 
 To add new features you need to add [Endpoints](https://blog.espressif.com/matter-clusters-attributes-commands-82b8ec1640a0).
 
-They're labelled as `Ep.` in the table. They don't need to have sequential numbers but 0 is always reserved for "Root node" type.
+They're labelled as **Ep.** in the table. They don't need to have sequential numbers but 0 is always reserved for "Root node" type.
 
 #### Type
 
 Select your endpoint type from the drop down. Types are limited by the [Matter specification](https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/protocols/matter/overview/data_model.html#device-type-overview).
 
-### Param
+#### Param
 
 To link a Tasmota power output (light/relay) to an endpoint
 
@@ -85,7 +85,7 @@ To link a Tasmota sensor to an endpoint add the [rule trigger](Rules.md#rule-tri
 
     Param for a Temperature endpoint will be `SCD#Temperature` and the _Param_ for a Humidity endpoint will be `SCD#Humidity` in this case.
 
-![Device commissioning](_media/matter/commissioning.jpg)
+![Endpoint configuration](_media/matter/endpoint_config.jpg)
 
 ### Fabrics
 
