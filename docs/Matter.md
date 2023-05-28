@@ -22,7 +22,8 @@ Tasmota Matter is confirmed to work with:
 
 - **iOS - Home app**
 - **ESP Matter mobile app**
-- ... more to come
+- Amazon Alexa
+... more to come
 
 ### Getting started
 
@@ -45,15 +46,20 @@ What's not suported:
 
 ## Matter Commands
 
-Command|Description
-:----|:---
-MtrJoin|`1` = open commissioning for 10 minutes<BR>`0` = close commissioning
+Command | Description
+:---- | :---
+MtrJoin |`1` = open commissioning for 10 minutes<BR>`0` = close commissioning
 
 ## Matter Events
 
 Events published as JSON MQTT that can be captured in rules:
 
-- `{"Matter":{"Initialized":1}}` when the device is configured (all endpoints created)
-- `{"Matter":{"Commissioning":1,"PairingCode":"00054912336","QRCode":"MT:Y.K90IRV01YZ.548G00"}}` when commissioning is open
-- `{"Matter":{"Commissioning":0}}` when commissioning is closed
+`{"Matter":{"Initialized":1}}`    
+when the device is configured (all endpoints created)
+
+`{"Matter":{"Commissioning":1,"PairingCode":"00054912336","QRCode":"MT:Y.K90IRV01YZ.548G00"}}`     
+  when commissioning is open
+
+`{"Matter":{"Commissioning":0}}`     
+  when commissioning is closed
 
