@@ -42,7 +42,7 @@ After a restart device commissioning will be open for 10 minutes.
 
 ![Device commissioning](_media/matter/commissioning.jpg)
 
-Add the device in your smart home solution by scanning the QR code or with the "Manual pairing code" if code scanning is not possible.
+Add the device in your smart home solution by scanning the QR code or with the "Manual pairing code" if code scanning is not possible. [More information](https://github.com/mfucci/node-matter#pairing-and-usage-information) on pairing with popular smart home systems. 
 
 ## Configuration
 
