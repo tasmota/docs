@@ -1,10 +1,8 @@
 # Matter 
 
-:material-cpu-32-bit:
-
 !!! danger "Matter protocol support is highly experimental and not feature complete"
 
-??? failure "This feature is not included in precompiled binaries"
+??? failure "This feature is not included in precompiled binaries :material-cpu-32-bit:"
   When [compiling your build](Compile-your-build) add the following flag your environment or `user_config_override.h`:
   ```arduino
   #define USE_MATTER_DEVICE
