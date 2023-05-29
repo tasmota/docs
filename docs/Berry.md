@@ -1743,19 +1743,19 @@ signal_change|`signal_change() -> nil`<br>Called when a changed was triggered by
 
 `light_state` getters:
 
-Methods|Parameters and details
+Attributes|Parameters and details
 :---|:---
-power|`power() -> bool` returns the on/off state
-reachable|`reachable() -> bool` returns whether the light is reachable
-type|`type() -> int` returns the number of channels of the light
-bri|`bri() -> int` returns the brightness of the light (0..255)
-ct|`ct() -> int` returns the white temperature of the light (153..500)
-sat|`sat() -> int` returns the saturation of the light (0..255)
-hue|`hue() -> int` returns the hue of the light (0..360)
-hue16|`hue16() -> int` returns the hue as 16 bits (0..65535)
-r<BR>g<BR>b|`r()/g()/b() -> int` returns value for Red Green Blue channels (0..255)
-x<BR>y|`x()/y() -> float` retuns the x/y color as floats (0.0 .. 1.0)
-mode_ct<BR>mode_rgb|`mode_ct()/mode_rgb() -> bool` returns whether the light is in RGB or CT mode
+power|`(bool)` on/off state
+reachable|`(bool)` light is reachable
+type|`(int)` number of channels of the light
+bri|`(int)` brightness of the light (0..255)
+ct|`(int)` white temperature of the light (153..500)
+sat|`(int)` saturation of the light (0..255)
+hue|`(int)` hue of the light (0..360)
+hue16|`(int)` hue as 16 bits (0..65535)
+r<BR>g<BR>b|`(int)` Red Green Blue channels (0..255)
+x<BR>y|`(float)` x/y color as floats (0.0 .. 1.0)
+mode_ct<BR>mode_rgb|`(bool)` light is in RGB or CT mode
 get|`get() -> map` returns the complete state of the light as a map<BR>Exemple:<BR>`{'rgb': '1E285A', 'hue': 230, 'type': 5, 'power': false, 'bri': 90, 'mode_rgb': true, 'sat': 170, 'mode_ct': false, 'channels': [30, 40, 90, 0, 0]}`
 
 `light_state` setters:
