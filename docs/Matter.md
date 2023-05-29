@@ -74,7 +74,9 @@ Select your endpoint type from the drop down. Types are limited by the [Matter s
 
 #### Param
 
-To link a Tasmota power output (light/relay) to an endpoint
+To link a Tasmota power output (light/relay) to an endpoint set its param equal to the power output number.
+
+!!! example "A relay on `POWER2` will have Param set to `2`"
 
 To link a Tasmota sensor to an endpoint add the [rule trigger](Rules.md#rule-trigger) of the sensor to the _Param_ value.
 
