@@ -1908,6 +1908,7 @@ zigbee.add_handler(my_handler)
 The `zcl_frame` represents a low-level ZCL (Zigbee Cluster Library) structure before any decoding or specific processing. You generally prefer to modify a frame later on when attributes or commands are decoded.
 
 class `zcl_frame`:
+
 Attributes (read or write)|Details
 :---|:---
 `srcendpoint`|`uint8` source endpoint
