@@ -1886,6 +1886,7 @@ Argument|Description
 Example, if you want to dump all the traffic passed:
 
 ``` berry
+import zigbee
 class my_zb_handler
   def frame_received(event_type, frame, attr_list, idx)
     print("frame_received",event_type, frame, attr_list, idx)
