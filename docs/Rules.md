@@ -528,7 +528,7 @@ Rule1
 
 The button will still have its default action (such as toggling power). If you want to avoid that, you need to capture the button into a dummy rule such as `ON Button1#state DO Delay 0 ENDON`.
 
-The range of the rotary encoder is hardcoded in `#define ROTARY_MAX_STEPS 10`. If you want to change the range, you must change the value in your `user_config_override.h` and [recompile](Compile-your-build).
+The step range of the rotary encoder can be selected using [`SetOption43`](Commands.md#setoption43), and the default is hardcoded in `#define ROTARY_MAX_STEPS 10`. To change the default range, set it in your `user_config_override.h` and [recompile](Compile-your-build).
 
 ------------------------------------------------------------------------------------
 
