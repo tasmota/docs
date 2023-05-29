@@ -2742,6 +2742,23 @@ Script to extract readings from Eastron [SDM72D Series](https://www.eastroneurop
     #
     ```
 
+### Siemens TD-3511
+
+This device is used in the grid of EGTF - Elektrizitäts-Genossenschaft Tacherting-Feichten eG. Read uses IEC 62056-21 data mode "C" without acknowledgement by the reading device.
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,o,0,300,STROM,1,600,2F3F210D0A
+    1,1.8.1(@1,Total Consumed,KWh,Total_in,3
+    1,2.8.1(@1,Total Delivered,KWh,Total_out,3
+    1,0.0.0(@#),Meter Number,,Meter_number,0
+    #
+    ```
+
 ### Trovis 557x (MODBus)
 
 These heating regulators have a [lot of registers](https://raw.githubusercontent.com/Tom-Bom-badil/samson_trovis_557x/master/_register.py). If your station number is different from standard (247 ==> 0xF7) you have got to change every first byte accordingly.
