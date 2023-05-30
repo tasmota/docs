@@ -14,7 +14,7 @@ Click on **Create a project** then **Create project**. Enter a name for your pro
 
 Click on "Add Matter Integration"
 
-![Step 2](_media/matter/google/step3.jpg)
+![Step 2](_media/matter/google/step2.jpg)
 
 Click **Next: Develop** then **Next:Setup**
 
