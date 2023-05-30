@@ -1,5 +1,7 @@
 # Beginners Guide to adding Tasmota Matter to Google Home
 
+Google Home will not accept devices using a test Vendor ID like Tasmota does. To pair Tasmota with Google Home you will need a [Matter compatible Google device](https://support.google.com/googlenest/answer/12391458?hl=en) and the following procedure to enable Tasmota for your Google Home account.
+
 ## Create a Project
 
 Open [Google Home Developer Console](https://console.home.google.com/projects) logged in under the same account used for Google Home.

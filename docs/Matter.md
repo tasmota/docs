@@ -23,13 +23,17 @@ Matter cannot be supported on ESP8266 due to limited memory resources. We are ex
 
 Tasmota Matter is confirmed to work with:
 
-- [Apple Home](https://www.apple.com/home-app/)
-- [Amazon Alexa](https://www.digitaltrends.com/home/how-to-connect-matter-devices-amazon-alexa/)
+
+- [Apple Home](https://support.apple.com/en-us/HT207057)
+- [Amazon Alexa]()
+
+- [Apple Home](https://www.apple.com/home-app/) - [requirements](https://support.apple.com/en-us/HT207057)
+- [Amazon Alexa](https://www.digitaltrends.com/home/how-to-connect-matter-devices-amazon-alexa/) - [requirements](https://developer.amazon.com/en-US/alexa/matter)
 - [Espressif-Matter](https://apps.apple.com/in/app/espressif-matter/id1604739172) iOS/Mac app
 - [Google Home](https://support.google.com/googlenest/answer/12391458?hl=en) - only work after following these [instructions](Matter-with-Google.md)
 - [Home Assistant](https://next.home-assistant.io/integrations/matter#configuration)
 
-... more to come
+[More information](https://github.com/mfucci/node-matter#pairing-and-usage-information) on pairing with above mentioned smart home systems.
 
 ## Getting Started
 
@@ -43,7 +47,7 @@ After a restart device commissioning will be open for 10 minutes.
 
 ![Device commissioning](_media/matter/commissioning.jpg)
 
-Add the device in your smart home solution by scanning the QR code or with the "Manual pairing code" if code scanning is not possible. [More information](https://github.com/mfucci/node-matter#pairing-and-usage-information) on pairing with popular smart home systems. 
+Add the device in your smart home solution by scanning the QR code or with the "Manual pairing code" if code scanning is not possible.  
 
 !!! Example "[Video](https://www.youtube.com/watch?v=7qoIvVTIhMg) of adding an RGB light to Amazon Alexa"
 
