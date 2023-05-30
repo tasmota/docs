@@ -26,6 +26,7 @@ Tasmota Matter is confirmed to work with:
 - [Apple Home](https://www.apple.com/home-app/)
 - [Amazon Alexa](https://www.digitaltrends.com/home/how-to-connect-matter-devices-amazon-alexa/)
 - [Espressif-Matter](https://apps.apple.com/in/app/espressif-matter/id1604739172) iOS/Mac app
+- [Google Home](https://support.google.com/googlenest/answer/12391458?hl=en) - only work after following these [instructions](Matter-with-Google.md)
 - [Home Assistant](https://next.home-assistant.io/integrations/matter#configuration)
 
 ... more to come
