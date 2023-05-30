@@ -35,6 +35,31 @@ Unlike previous versions, C3 is a single-core Wi-Fi and Bluetooth 5 (LE) microco
 
 Use `tasmota32c3-` binaries for this line of chips.
 
+## Flashing
+
+Use [Tasmota Web Installer](http://tasmota.github.io/install) to easily flash ESP32 devices.
+
+Other options include:
+
+[ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) for flashing an ESP32 or ESP82xx (Windows, MacOs or Linux (Ubuntu)).
+
+esptool.py - use the following command syntax:
+
+```bash
+esptool.py write_flash 0x0 tasmota32.factory.bin
+```
+
+!!! warning "Use a proper power supply!"
+    ESP32 is power hungry and there's a high chance it will not be able to boot properly off the serial-to-USB power. Power it from a separate power supply that can provide at least 500mA.
+
+You can download precompiled binaries:
+
+- development branch from [http://ota.tasmota.com/tasmota32/](http://ota.tasmota.com/tasmota32/)
+- stable releases from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/)
+- the required [flash files](https://github.com/arendst/Tasmota-firmware/tree/main/static) _(not needed when using ESP_Flasher)_
+
+OTA upgrade from older versions of tasmota32 might fail due to significant changes in partition tables.
+
 ## Exclusive Features
 
 ### Autoconf
@@ -86,31 +111,6 @@ ESP32 introduces [Berry](Berry.md) language as a more approachable scripting lan
 ### LVGL
 
 Use [LVGL](https://lvgl.io/) in conjunction with Berry on devices with displays and touch displays to design your own UI.
-
-## Flashing
-
-Use [Tasmota Web Installer](http://tasmota.github.io/install) to easily flash ESP32 devices.
-
-Other options include:
-
-[ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) for flashing an ESP32 or ESP82xx (Windows, MacOs or Linux (Ubuntu)).
-
-esptool.py - use the following command syntax:
-
-```bash
-esptool.py write_flash 0x0 tasmota32.factory.bin
-```
-
-!!! warning "Use a proper power supply!"
-    ESP32 is power hungry and there's a high chance it will not be able to boot properly off the serial-to-USB power. Power it from a separate power supply that can provide at least 500mA.
-
-You can download precompiled binaries:
-
-- development branch from [http://ota.tasmota.com/tasmota32/](http://ota.tasmota.com/tasmota32/)
-- stable releases from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/)
-- the required [flash files](https://github.com/arendst/Tasmota-firmware/tree/main/static) _(not needed when using ESP_Flasher)_
-
-OTA upgrade from older versions of tasmota32 might fail due to significant changes in partition tables.
 
 ## Compiling
 
