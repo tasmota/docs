@@ -24,13 +24,10 @@ Matter cannot be supported on ESP8266 due to limited memory resources. We are ex
 Tasmota Matter is confirmed to work with:
 
 
-- [Apple Home](https://support.apple.com/en-us/HT207057)
-- [Amazon Alexa]()
-
 - [Apple Home](https://www.apple.com/home-app/) - [requirements](https://support.apple.com/en-us/HT207057)
 - [Amazon Alexa](https://www.digitaltrends.com/home/how-to-connect-matter-devices-amazon-alexa/) - [requirements](https://developer.amazon.com/en-US/alexa/matter)
 - [Espressif-Matter](https://apps.apple.com/in/app/espressif-matter/id1604739172) iOS/Mac app
-- [Google Home](https://support.google.com/googlenest/answer/12391458?hl=en) - only work after following these [instructions](Matter-with-Google.md)
+- [Google Home](https://support.google.com/googlenest/answer/12391458?hl=en) - only works after following these [instructions](Matter-with-Google.md)
 - [Home Assistant](https://next.home-assistant.io/integrations/matter#configuration)
 
 [More information](https://github.com/mfucci/node-matter#pairing-and-usage-information) on pairing with above mentioned smart home systems.
