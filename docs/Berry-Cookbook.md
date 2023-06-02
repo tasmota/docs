@@ -717,3 +717,40 @@ hbridge.set(100,200)              # set values to 102/1023 and 204/1023, i.e. 10
 hbridge.set(100,950)              # set values to 102/1023 and 950/1023, i.e. 10% and 93%
 BRY: Exception> 'value_error' - the sum of duties must not exceed 100%
 ```
+
+## Flash to file
+
+This is an example of dumping the content of the internal flash of the ESP32 and write the content in the file system that you can download back to your PC.
+
+The example below dumps the contant of the safeboot partition.
+
+```berry
+def flash_to_file(filename, addr, len)
+  import flash
+  import string
+
+  var f = open(filename, "wb")
+  try
+    # Do 4KB chunks
+
+    while len > 0
+      var chunk = 512
+      if len < chunk    chunk = len end
+      var b = flash.read(addr, chunk)
+      print(string.format("0x%06X - %s (%i)", addr, str(b), chunk))
+      f.write(b)
+      b = nil
+
+      addr += chunk
+      len -= chunk
+    end
+
+    f.close()
+  except .. as e,m
+    f.close()
+  end
+
+end
+
+flash_to_file("safe_boot_flashed.bin", 0x10000, 768320)
+```
