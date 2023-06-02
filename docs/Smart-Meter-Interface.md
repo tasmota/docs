@@ -2219,6 +2219,7 @@ For the reduced dataset an the hichiIR WiFi module
     1,1-0:16.7.0*255(@1,Verbrauch aktuell,W,power,20
     #
     ```
+
 ### Logarex LK13BE (SML) (LK13BE904639)
 This meter does not provide detailed information regarding phase etc.
 ??? summary "View script"
