@@ -851,21 +851,22 @@ Features:
  - Support HTTP and HTTPS requests to IPv4 addresses and domain names, to arbitrary ports, via a full URL.
  - Support for HTTPS and TLS via BearSSL (which is much lighter than default mbedTLS)
  - HTTPS (TLS) only supports cipher ECDHE_RSA_WITH_AES_128_GCM_SHA256 which is both secure and widely supported
- - Support for URL redirections (tbc)
+ - Support for URL redirections
  - Ability to set custom User-Agent
  - Ability to set custom headers
  - Ability to set Authentication header
  - Support for Chunked encoding response (so works well with Tasmota devices)
+ - Support for `GET`, `POST`, `PUT`, `PATCH`, `DELETE` methods
 
 The current implementation is based on a fork of Arduino's HttpClient customized to use BearSSL
 
 Current limitations (if you need extra features please open a feature request on GitHub):
 
- - Only supports text responses (html, json...) but not binary content yet (no NULL char allowed)
+ - Payload sent to server (`POST`) can include either text or binary
+ - Only supports text responses (html, json...) but not binary content yet (no NULL char allowed). However you can download binary content to the file-system with `write_file`
  - Maximum response size is 32KB, requests are dropped if larger
  - HTTPS (TLS) is in 'insecure' mode and does not check the server's certificate; it is subject to Man-in-the-Middle attack
- - No access to response headers
- - No support for compressed response
+ - No support for compressed response - this should not be a problem since the client does not advertize support for compressed responses
 
 
 !!! example
@@ -942,12 +943,14 @@ Alternatively, you can manage yourself redirects and retrieve the `Location` hea
 
 Main functions:
 
-WebClient Function|Parameters and details
+webclient method|Parameters and details
 :---|:---
-begin<a class="cmnd" id="wc_begin"></a>|`(url:string) -> self`<br>Set the complete URL, including protocol (`http` or `https`), IPv4 or domain name, port... This should be the first call. The connection is not established at this point.
+begin<a class="cmnd" id="wc_begin"></a>|`(url:string) -> self`<br>Set the complete URL, including protocol (`http` or `https`), IPv4 or domain name, port... This should be the first call. The connection is not established at this point.<br>Use `url_encode()` prior to sending a URL if it requires URL encoding.
 GET<a class="cmnd" id="wc_get"></a>|`() -> result_code:int`<br>Establish a connection to server, send GET request and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
-POST<a class="cmnd" id="wc_post"></a>|`(payload:string or bytes) -> result_code:string`<br>Establish a connection to server, send POST request with payload and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
-read<a class="cmnd" id="wc_read"></a>|`(addr:int, reg:int, size:int) -> int or nil`<br>Read a value of 1..4 bytes from address `addr` and register `reg`. Returns `nil` if no response.
+POST<a class="cmnd" id="wc_post"></a>|`(payload:string or bytes) -> result_code:int`<br>Establish a connection to server, send POST request with payload and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
+PUT<a class="cmnd" id="wc_put"></a>|`(payload:string or bytes) -> result_code:int`<br>Establish a connection to server, send PUT request with payload and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
+PATCH<a class="cmnd" id="wc_patch"></a>|`(payload:string or bytes) -> result_code:int`<br>Establish a connection to server, send PATCH request with payload and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
+DELETE<a class="cmnd" id="wc_delete"></a>|`(payload:string or bytes) -> result_code:int`<br>Establish a connection to server, send DELETE request with payload and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
 get\_size<a class="cmnd" id="wc_get_size"></a>|`() -> int`<br>Once a connection succeeded (GET or POST), reads the size of the response as returned by the server in headers (before actually reading the content). A value `-1` means that the response size is unknown until you read it.
 get\_string<a class="cmnd" id="wc_get_string"></a>|`() -> string`<br>Once a connection succeeded (GET or POST), reads the content of the response in a string. The response max size is 32KB, any response larger is dropped. Connection is closed and resources are freed after this call completes.
 close<a class="cmnd" id="wc_close"></a>|`() -> nil`<br>Closes the connection and frees buffers. `close` can be called after `GET` or `POST` and is implicitly called by `get_string`. You don't usually need to use `close` unless you are only retrieving the result_code for a request and not interested in the content.
@@ -955,7 +958,7 @@ write\_file<a class="cmnd" id="wc_write_file"></a>|`(file_name:string) -> int`<b
 
 Request customization:
 
-webclient Function|Parameters and details
+webclient method|Parameters and details
 :---|:---
 add\_header<a class="cmnd" id="wc_add_header"></a>|`(name:string, value:string [, first:bool=false [, replace:bool=true]]) -> nil`<br>Sets an arbitrary header for `name`:`value`.<BR>`first` moves the header in the first place, `replace` replaces a header with the same name or adds one line if false.
 set\_timeouts<a class="cmnd" id="wc_set_timeouts"></a>|`(req_timeout:int [, tcp_timeout:int]) -> self`<br>Sets the request timeout in ms and optionally the TCP connection timeout in ms.
@@ -964,6 +967,13 @@ set\_auth<a class="cmnd" id="wc_set_auth"></a>|`(auth:string) or (user:string, p
 set\_follow\_redirects<a class="cmnd" id="wc_set_follow_redirects"></a>|`(bool) -> self`<br>Enables or disables redirects following.<BR>If `false`: (`HTTPC_DISABLE_FOLLOW_REDIRECTS`) no redirection will be followed.<BR>If `true`: (`HTTPC_STRICT_FOLLOW_REDIRECTS`) strict RFC2616, only requests using GET or HEAD methods will be redirected (using the same method), since the RFC requires end-user confirmation in other cases.<BR>There is a default limit of 10 successive redirects, this prevents from infinite loops.
 collect\_headers<a class="cmnd" id="wc_collect_headers"></a>|`( [header_name:string]* ) -> self`<br>Registers a list of header names that needs to be collected from the response. Pass multiple strings as separate arguments (not as a list).
 get\_header<a class="cmnd" id="wc_get_header"></a>|`(header_name:string) -> string`<br>Returns the header value for a header name (case sensitive). Returns "" (empty string) if no header.
+
+Static utility methods:
+
+webclient static method|Parameters and details
+:---|:---
+url\_encode<a class="cmnd" id="wc_url_encode"></a>|`(url:string) -> string`<br>Encodes a string according to URL escape rules. Use before you use `begin()`
+
 
 ### `webserver` module
 
