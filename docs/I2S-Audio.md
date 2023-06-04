@@ -37,7 +37,7 @@ ESP32 contains two I2S peripherals. These peripherals can be configured to input
 
 ### Audio Output
 
-![](https://user-images.githubusercontent.com/11647075/185345605-be22d8a9-c597-4eb0-8426-12978b126ea0.jpg){ align=right width="200" }
+![DAC Breakout Board](https://user-images.githubusercontent.com/11647075/185345605-be22d8a9-c597-4eb0-8426-12978b126ea0.jpg){ align=right width="200" }
 
 For audio output an I2S DAC is required. It is recommended to use an external DAC
 
@@ -59,7 +59,7 @@ Those channels can be driven via the I2S driver when using the “built-in DAC m
 
 ### Audio Input
 
-![](https://user-images.githubusercontent.com/11647075/185345648-37979fa9-2114-4aa0-be99-ee8c855219b2.jpg){ align=right width="200" }
+![I2S Microphone](https://user-images.githubusercontent.com/11647075/185345648-37979fa9-2114-4aa0-be99-ee8c855219b2.jpg){ align=right width="200" }
 
 For microphone input an I2S microphone must be provided. There are also several brands available.
 
@@ -83,7 +83,7 @@ For microphone input an I2S microphone must be provided. There are also several 
 |I2SRtttl| `string` = play [Ring Tones Text Transfer Language (RTTTL)](https://www.mobilefish.com/tutorials/rtttl/rtttl_quickguide_specification.html) ringtones (requires defined `USE_I2S_RTTTL`) |
 |I2Say   | `text` = speaks the text you typed (only English language supported)|
 |I2STime | tells current Tasmota time in English (requires defined `USE_I2S_SAY_TIME`)|
-|I2SWr | `url` = starts playing an mp3 audio radio stream, no blocking (requires defined `USE_I2S_WEBRADIO`)<BR>no parameter = stops playing the stream|
+|I2SWr | `url` = starts playing an [mp3 radio](http://fmstream.org/) stream, no blocking (requires defined `USE_I2S_WEBRADIO`)<BR>no parameter = stops playing the stream|
 
 ### Microphone Input
 
