@@ -31,13 +31,13 @@
 
 ## Hardware Required
 
-![](https://user-images.githubusercontent.com/11647075/185345605-be22d8a9-c597-4eb0-8426-12978b126ea0.jpg){ align=right width="200" }
+
 
 #### Audio Output
 
 For audio output an I2S DAC Audio breakout must be provided. There are several brands available   
 
-![](https://user-images.githubusercontent.com/11647075/185345648-37979fa9-2114-4aa0-be99-ee8c855219b2.jpg){ align=right width="200" }
+
 
 #### Audio Input
 
@@ -45,6 +45,7 @@ For microphone input an I2S microphone must be provided. There are also several 
 
 ## Connecting the I2S hardware to an ESP32
 
+![](https://user-images.githubusercontent.com/11647075/185345605-be22d8a9-c597-4eb0-8426-12978b126ea0.jpg){ align=right width="200" }
 
 |I2SDAC|ESP32-GPIO|
 |---|---|
@@ -55,6 +56,8 @@ For microphone input an I2S microphone must be provided. There are also several 
 |GAIN|nc|
 |VIN|3.3-5V|
 |GND|Ground|
+
+![](https://user-images.githubusercontent.com/11647075/185345648-37979fa9-2114-4aa0-be99-ee8c855219b2.jpg){ align=right width="200" }
 
 |I2S micro|ESP32-GPIO|
 |---|---|
