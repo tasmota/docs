@@ -14,19 +14,73 @@ Endpoint `root` (0) is managed by the `matter.Plugin_Root` class because of its 
 
 We provide currently the following classes:
 
-| Plug-in class      | Description                         |
-| ------------------ | ----------------------------------- |
-| Plugin_Device      | Generic device (abstract) |
-| Plugin_OnOff       | Simple On/Off Plug (type `0x010A`) |
-| Plugin_Light0      | Light with 0 channel (OnOff) (type 0x0100)|
-| Plugin_Light1      | Light with 1 channels (Dimmer) (type 0x0101)|
-| Plugin_Light2      | Light with 2 channels (CT) (type 0x010C)|
-| Plugin_Light3      | Light with 3 channels (RGB) (type 0x010D)|
-| Plugin_Sensor | Generic Sensor class (abstract) |
-| Plugin_Sensor_Temp | Temperature Sensor (type 0x0302) |
-| Plugin_Sensor_Pressure | Pressure Sensor (type 0x0305) |
-| Plugin_Sensor_Light | Light/Illuminance Sensor (type 0x0106) |
-| Plugin_Sensor_Humidity | Humidity Sensor (type 0x0307) |
+| Plug-in class           | Description                                       |
+| ----------------------- | ------------------------------------------------- |
+| Plugin_Device           | Generic device (abstract)                         |
+| Plugin_Root.            | Root node (type `0x0016`)                           |
+| Plugin_Aggregator       | Aggregator for Bridge mode (type `0x000E`)          |
+| Plugin_OnOff            | Simple On/Off Plug (type `0x010A`)                  |
+| Plugin_Light0           | Light with 0 channel (OnOff) (type 0x0100)        |
+| Plugin_Light1           | Light with 1 channels (Dimmer) (type 0x0101)      |
+| Plugin_Light2           | Light with 2 channels (CT) (type 0x010C)          |
+| Plugin_Light3           | Light with 3 channels (RGB) (type 0x010D)         |
+| Plugin_Sensor           | Generic Sensor class (abstract)                   |
+| Plugin_Sensor_Temp      | Temperature Sensor (type 0x0302)                  |
+| Plugin_Sensor_Pressure  | Pressure Sensor (type 0x0305)                     |
+| Plugin_Sensor_Light     | Light/Illuminance Sensor (type 0x0106)            |
+| Plugin_Sensor_Humidity  | Humidity Sensor (type 0x0307)                     |
+| Plugin_Sensor_Occupancy | Occupancy Sensor linked to a swithc (type 0x0107) |
+
+Tasmota is also able to act as a Bridge to other Tasmota devices (ESP8266 or ESP32) and drive them via the HTTP API. The following classes provide such features:
+
+| Plug-in class          | Description                                  |
+| ---------------------- | -------------------------------------------- |
+| Plugin_Bridge_HTTP          | Generic superclass for remote devices (abstract)                    |
+| Plugin_Bridge_OnOff           | Simple On/Off Plug (type `0x010A`)           |
+| Plugin_Bridge_Light0          | Light with 0 channel (OnOff) (type 0x0100)   |
+| Plugin_Bridge_Light1          | Light with 1 channels (Dimmer) (type 0x0101) |
+| Plugin_Bridge_Light2          | Light with 2 channels (CT) (type 0x010C)     |
+| Plugin_Bridge_Light3          | Light with 3 channels (RGB) (type 0x010D)    |
+| Plugin_Bridge_Sensor          | Generic Sensor class (abstract)              |
+| Plugin_Bridge_Sensor_Temp     | Temperature Sensor (type 0x0302)             |
+| Plugin_Bridge_Sensor_Pressure | Pressure Sensor (type 0x0305)                |
+| Plugin_Bridge_Sensor_Light    | Light/Illuminance Sensor (type 0x0106)       |
+| Plugin_Bridge_Sensor_Humidity | Humidity Sensor (type 0x0307)                |
+| Plugin_Bridge_Sensor_Occupancy | Occupancy Sensor linked to a swithc (type 0x0107) |
+
+Plugins Hierarchy:
+```
+Matter_Plugin
++--- Matter_Plugin_Root
++--- Matter_Plugin_Aggregator
++--+ Matter_Plugin_Device
+   +--+ Matter_Plugin_Light0
+   |  |--+ Matter_Plugin_Light1
+   |     |--- Matter_Plugin_Light2
+   |     |--- Matter_Plugin_Light3
+   +--- Matter_Plugin_OnOff
+   +--+ Matter_Plugin_Shutter
+   |  +--- Matter_Plugin_ShutterTilt
+   +--+ Matter_Plugin_Sensor
+   |  +--- Matter_Plugin_Sensor_Humidity
+   |  +--- Matter_Plugin_Sensor_Temperature
+   |  +--- Matter_Plugin_Sensor_Pressure
+   |  +--- Matter_Plugin_Sensor_Illuminance
+   |  +--- Matter_Plugin_Sensor_Occupancy
+   +--+ Matter_Plugin_Bridge_HTTP
+      +--+ Matter_Plugin_Bridge_Light0
+      |  +--+ Matter_Plugin_Bridge_Light1
+      |  |  +--- Matter_Plugin_Bridge_Light2
+      |  |  +--- Matter_Plugin_Bridge_Light3
+      |  +--- Matter_Plugin_Bridge_OnOff
+      +--+ Matter_Plugin_Bridge_Sensor
+      |  +--- Matter_Plugin_Bridge_Sensor_Humidity
+      |  +--- Matter_Plugin_Bridge_Sensor_Temperature
+      |  +--- Matter_Plugin_Bridge_Sensor_Pressure
+      |  +--- Matter_Plugin_Bridge_Sensor_Illuminance
+      +--- Matter_Plugin_Bridge_Sensor_Occupancy
+```
+
 
 ## Plugin superclass
 
@@ -40,7 +94,7 @@ Note: for solidification to succeed, you need to declare `class Matter_Plugin en
 
 ## Core classes
 
-### matter.Device root / `matter_device`
+### class `matter.Device` used as monad `matter_device`
 
 `matter_device` is a monad of `matter.Device` automatically created at boot. It checks if Matter si enabled (`SetOption151 1`) and instantiates all sub-systems.
 
@@ -49,10 +103,19 @@ Note: for solidification to succeed, you need to declare `class Matter_Plugin en
 Device variables|Description
 :----|:---
 plugins|List of `matter.Plugin()`.<BR>Each plugin manages a distinct endpoint and the associated sub-device behavior
-sudp_server|instance of `matter.UDPServer()` and is used to (re-)send and receive UDP packets
+udp_server|instance of `matter.UDPServer()` and is used to (re-)send and receive UDP packets
 message_handler|instance of `matter.MessageHandler()`, handles the dispatching of incoming packets to the relevant layers.
 sessions|instance of `matter.Session_Store()` which holds a list of `matter.Session()`<BR>All active persistent and non-persistent sessions are listed here, and serve to dispatch incoming packets<BR>Session are also linked to `Fabric` when persisted
 ui|instance of `matter.UI()`<BR>Handles the web UI for Matter.
+
+The following are saved as Matter device configuration
+
+Configuration variables|Description
+:----|:---
+root\_discriminator|as `int`
+root\_passcode|as `int`
+ipv4\_only|(`bool`) advertize only IPv4 addresses (no IPv6)
+nextep|(int) next endpoint to be allocated for bridge, start at 51
 
 When commissioning is open, here are the variables used:
 
@@ -71,8 +134,6 @@ For default commissioning, the following values are used (and can be changed via
 
 Root Commissioning variables|Description
 :----|:---
-root_discriminator|as `int`
-root_passcode|as `int`
 root_iterations|PBKDF number of iterations
 &nbsp;|PBKDF information used only during PASE (freed afterwards)
 root_salt|
