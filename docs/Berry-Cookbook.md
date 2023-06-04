@@ -10,7 +10,7 @@ Let's start with the most simple command.
 
 Let's define a command `BrGC` that triggers a garbage collection and returns the memory allocated by Berry. We first define the function:
 
-```python
+```berry
 def br_gc()
   var allocated = tasmota.gc()    #- trigger gc and return allocated memory -#
   import string
@@ -20,7 +20,7 @@ end
 
 And register the function:
 
-```python
+```berry
 tasmota.add_cmd('BrGc', br_gc)
 ```
 
@@ -37,7 +37,7 @@ brgc
 
 The custom command function have the general form below where parameters are optionals:
 
-```python
+```berry
 def function_name(cmd, idx, payload, payload_json)
   ...
 end
@@ -70,7 +70,7 @@ Example:
 
 In Berry, arguments are always optional, so you don't need to define them if you don't need them.
 
-```python
+```berry
 def light_gold(cmd, idx, payload, payload_json)
   var dimmer = 50      #- default brightness to 50% -#
   var bri
@@ -96,7 +96,7 @@ end
 
 Finally you need to register the command:
 
-```python
+```berry
 tasmota.add_cmd('LightGold', light_gold)
 ```
 
@@ -146,10 +146,10 @@ Additionally the webserver class provides a new function of sending information 
 
 Let's see an example implementation of button methods in a Driver class
 
-```python
+```berry
 import webserver # import webserver class
 
-class MyButtonMethods : Driver
+class MyButtonMethods
 
   def myOtherFunction(myValue)
     #- do something -#
@@ -200,8 +200,8 @@ I2C device are identified by address, only one device per address is allowed per
 
 To simplify device detection, we provide the convenience method `tasmota.scan_wire()`. The first argument is the device address (0x68 for MPU6886). The optional second argument is the I2C Tasmota index, allowing to selectively disable some device families. See `I2CDevice` command and page XXX. The index number for MPU6886 is 58.
 
-```python
-class MPU6886 : Driver
+```berry
+class MPU6886
   var wire     # contains the wire object if the device was detected
   
   def init()
@@ -216,7 +216,7 @@ end
 
 To make sure the device is actually an MPU6886, we check its signature by reading register 0x75. It should respond 0x19 (see datasheet for MPU6886).
 
-```python
+```berry
 [...]
     if self.wire
       var v = self.wire.read(0x68,0x75,1)
@@ -228,7 +228,7 @@ To make sure the device is actually an MPU6886, we check its signature by readin
 
 We write a series of values in registers to configure the device as expected (see datasheet).
 
-```python
+```berry
 [...]
       self.wire.write(0x68, 0x6B, 0, 1)
       tasmota.delay(10)
@@ -261,7 +261,7 @@ We write a series of values in registers to configure the device as expected (se
 
 We also pre-compute multiplier to convert raw values to actual values:
 
-```python
+```berry
 [...]
       self.gres = 2000.0/32768.0
       self.ares = 8.0/32678.0
@@ -275,25 +275,25 @@ We will detail here the acceleration senor; gyroscope works similarly and is not
 
 Reading the x/y/z sensor requires to read 6 bytes as a `bytes()` object
 
-```python
+```berry
     var b = self.wire.read_bytes(0x68,0x3B,6)
 ```
 
 Each value is 2 bytes. We use `bytes.get(offset,size)` to extract 2-bytes values at offsets 0/2/4. The size is `-2` to indicate that values are encoded in Big Endian instead of Little Endian.
 
-```python
+```berry
     var a1 = b.get(0,-2)
 ```
 
 Finally the read value is unsigned 16 bits, but the sensor value is signed 16 bits. We convert 16 bits unsigned to 16 bits signed.
 
-```python
+```berry
     if a1 >= 0x8000 a1 -= 0x10000 end
 ```
 
 We then repeat for y and z:
 
-```python
+```berry
   def read_accel()
     if !self.wire return nil end  #- exit if not initialized -#
     var b = self.wire.read_bytes(0x68,0x3B,6)
@@ -312,7 +312,7 @@ We then repeat for y and z:
 
 Simply override `every_second()`
 
-```python
+```berry
   def every_second()
     if !self.wire return nil end  #- exit if not initialized -#
     self.read_accel()
@@ -330,7 +330,7 @@ Tasmota uses specific markers:
 - `{m}`: separator between name and value
 - `{e}`: end of line
 
-```python
+```berry
   #- display sensor value in the web UI -#
   def web_sensor()
     if !self.wire return nil end  #- exit if not initialized -#
@@ -351,7 +351,7 @@ Tasmota uses specific markers:
 
 Similarly to Web UI, publish sensor value as JSON.
 
-```python
+```berry
   #- add sensor value to teleperiod -#
   def json_append()
     if !self.wire return nil end  #- exit if not initialized -#
@@ -375,7 +375,7 @@ Br load("mpu6886.be")
 
 See code example below for MPU6886:
 
-```python
+```berry
 #-
  - Example of I2C driver written in Berry
  -
@@ -383,7 +383,7 @@ See code example below for MPU6886:
  - Alternative to xsns_85_mpu6886.ino 
  -#
 
-class MPU6886 : Driver
+class MPU6886
   var wire          #- if wire == nil then the module is not initialized -#
   var gres, ares
   var accel, gyro
@@ -497,7 +497,7 @@ tasmota.add_driver(mpu6886)
 
 ## LVGL Touchscreen with 3 Relays
 
-```python
+```berry
 #- start LVGL and init environment -#
 lv.start()
 
@@ -640,7 +640,7 @@ This project is a multi-zone heating controller written entirely in berry. It de
 ## Ethernet Network Flipper
 Used on board with Ethernet. If both Wi-Fi and Ethernet are active, turn off Wi-Fi. Place code in `autoexec.be` to execute on boot. You can call the function from Berry console any time with `netflip()`.
 
-```
+```berry
 def netflip()
   var eth = tasmota.eth().find('ip') != nil   #1
   if tasmota.wifi().find('ip') != nil == eth  #2
@@ -662,7 +662,7 @@ tasmota.set_timer(30000,netflip)              #4
 
 This small helper function allows you to call a function at stable intervals, automatically correcting in case of latency or other deviations. Not suitable for very short intervals; while the delay interval is in milliseconds for consistency with the standard `tasmota.set_timer`, it would normally be seconds multiplied by 1000, like 60000 for every minute.
 
-```
+```berry
 def set_timer_modulo(delay,f,id)
   var now=tasmota.millis()
   tasmota.set_timer((now+delay/4+delay)/delay*delay-now, def() set_timer_modulo(delay,f,id) f() end, id)
@@ -677,7 +677,7 @@ You can typically use 2 PWM channels to pilot a H-bridge, under the condition th
 
 The following Berry function ensures appropriate management of H-bridge:
 
-``` ruby
+``` berry
 #
 # H_bridge class in Berry to pilot a H-bridge device
 #
@@ -710,10 +710,47 @@ end
 
 Example of use:
 
-``` ruby
+``` berry
 var hbridge = H_bridge(12, 13)    # use GPIO12 and GPIO13
 hbridge.set(100,200)              # set values to 102/1023 and 204/1023, i.e. 10% and 20%
 
 hbridge.set(100,950)              # set values to 102/1023 and 950/1023, i.e. 10% and 93%
 BRY: Exception> 'value_error' - the sum of duties must not exceed 100%
+```
+
+## Flash to file
+
+This is an example of dumping the content of the internal flash of the ESP32 and write the content in the file system that you can download back to your PC.
+
+The example below dumps the contant of the safeboot partition.
+
+```berry
+def flash_to_file(filename, addr, len)
+  import flash
+  import string
+
+  var f = open(filename, "wb")
+  try
+    # Do 4KB chunks
+
+    while len > 0
+      var chunk = 512
+      if len < chunk    chunk = len end
+      var b = flash.read(addr, chunk)
+      print(string.format("0x%06X - %s (%i)", addr, str(b), chunk))
+      f.write(b)
+      b = nil
+
+      addr += chunk
+      len -= chunk
+    end
+
+    f.close()
+  except .. as e,m
+    f.close()
+  end
+
+end
+
+flash_to_file("safe_boot_flashed.bin", 0x10000, 768320)
 ```
