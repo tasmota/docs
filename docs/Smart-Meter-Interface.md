@@ -2202,7 +2202,7 @@ Switching to different baud rates requires changing the ack sequence 06303x300D0
     ```
 
 ### Logarex LK13BE803319 (OBIS)
-For the reduced dataset an the hichiIR WiFi module
+For the reduced dataset an the hichiIR WiFi module (GPIO1: send, GPIO3: receive)
 ??? summary "View script"
     ```
     >D
@@ -2210,8 +2210,12 @@ For the reduced dataset an the hichiIR WiFi module
     =>sensor53 r
     >M 1
     +1,3,o,0,9600,LK13BE,1,30,2F3F210D0A,063035310D0A
-
+    ; available without PIN, remove the semicolon the enable some optional values
+    ; only one string (@#) can be decoded per meter
+    ;1,1-0:96.1.0*255(@#),Zählernummer,,id,0
+    ;1,1-0:0.2.0*255(@#),Firmware,,fw,0
     1,1-0:1.8.0*255(@1,Gesamtverbrauch,KWh,total,4
+    ; available with PIN
     1,1-0:1.8.0*96(@1,Verbrauch 1 Tag,KWh,total_1d,4
     1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,KWh,total_7d,4
     1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,KWh,total_30d,4
