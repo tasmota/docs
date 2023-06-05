@@ -142,6 +142,7 @@ nav:
     - I2C Devices: I2CDEVICES.md
     - IPv6.md
     - Lights.md
+    - Matter: Matter.md
     - PIR-Motion-Sensors.md
     - Power-Monitoring-Calibration.md
     - PWM-dimmer-switch.md
@@ -153,7 +154,6 @@ nav:
       - BLE Gateway: Bluetooth.md
       - IR Communication: Tasmota-IR.md
       - LCD/DLP Projector Control: Projector.md
-      - Matter.md
       - Modbus-Bridge.md
       - OpenTherm: OpenTherm.md
       - RF Communication: RF-Protocol.md
