@@ -1,4 +1,4 @@
-# I2S Audio :material-cpu-32-bit:
+# I2S Audio
 
 ??? failure "This feature is not included in precompiled binaries"  
 
@@ -7,74 +7,43 @@
 
     ```arduino
     #ifndef USE_I2S_AUDIO
-    #define USE_I2S_AUDIO   // Add support for I2S audio output
+    #define USE_I2S_AUDIO                             // Add support for I2S audio output
     // #define USE_I2S_NO_DAC                         // Add support for transistor-based output without DAC
-    // #define USE_I2S_WEBRADIO                       // Add support for MP3 web radio streaming
+    // #define USE_I2S_WEBRADIO                       // Add support for MP3 web radio streaming (only on ESP32 with PSRAM)
     // #define USE_I2S_SAY_TIME                       // Add support for english speaking clock
     // #define USE_I2S_RTTTL                          // Add support for Rtttl playback
-    // #define 
     #endif
 
-    #ifndef USE_I2S_MIC
-    #define USE_I2S_MIC                               // if you use a microphone
-    #endif
-
-    // if you use a microphone with MP3 encoding, this also requires PSRAM
-    #ifndef USE_SHINE
-    #define USE_SHINE                                 // use MP3 encoding
-    #endif
-
+    // USE_M5STACK_CORE2, USE_TTGO_WATCH and ESP32S3_BOX already include I2S_AUDIO
     ```
-    remark:  USE_M5STACK_CORE2, USE_TTGO_WATCH and ESP32S3_BOX automatically include I2S_AUDIO
+    Also requires `lib_extra_dirs = lib/lib_audio, lib/libesp32_audio` added to the build environment
 
-!!! warning "Only supported on ESP32 chips (except ESP32-C3)"
 
 I2S (Inter-IC Sound) is a serial, synchronous communication protocol that is usually used for transmitting audio data between two digital audio devices.
 
-ESP32 contains two I2S peripherals. These peripherals can be configured to input and output sample data via the I2S driver. [Read more...](https://docs.espressif.com/projects/esp-idf/en/v4.2/esp32/api-reference/peripherals/i2s.html)
-
-## Hardware Required
-
-### Audio Output
+## Audio Output
 
 ![DAC Breakout Board](https://user-images.githubusercontent.com/11647075/185345605-be22d8a9-c597-4eb0-8426-12978b126ea0.jpg){ align=right width="200" }
 
 For audio output an I2S DAC is required. It is recommended to use an external DAC
 
-|I2SDAC|ESP32-GPIO|
-|---|---|
-|BCLK|I2S_BCLK|
-|LRCK/WS|I2S_WS|
-|DIN|I2S_DOUT|
-|SD|nc|
-|GAIN|nc|
-|VIN|3.3-5V|
-|GND|Ground|
+|I2S DAC | ESP32 | ESP8266 (fixed pins) |
+| --- | --- | --- |
+|BCLK|I2S_BCLK| GPIO15
+|LRCK/WS|I2S_WS| GPIO02
+|DIN|I2S_DOUT| GPIO03
+| SD | NC | 
+| GAIN | NC |
+| VIN | 3V3 or 5V | 3V3 or 5V |
+| GND | GND | GND |
 
-#### Internal DAC 
+### Internal DAC
 
 ESP32 has two 8-bit DAC (digital to analog converter) channels, connected to GPIO25 (Channel 1) and GPIO26 (Channel 2).
 
 Those channels can be driven via the I2S driver when using the “built-in DAC mode” enabled with `USE_I2S_NO_DAC`
 
-### Audio Input
-
-![I2S Microphone](https://user-images.githubusercontent.com/11647075/185345648-37979fa9-2114-4aa0-be99-ee8c855219b2.jpg){ align=right width="200" }
-
-For microphone input an I2S microphone must be provided. There are also several brands available.
-
-|I2S micro|ESP32-GPIO|
-|---|---|
-|SCK|I2S_BCLK|
-|WS|I2S_WS|
-|SD|I2S_DIN|
-|L/R|Ground|
-|VDD|3.3V|
-|GND|Ground|
-
-## Commands
-
-### DAC Output
+### Commands
 
 |CMD DAC|action|
 |---|---|
@@ -85,25 +54,52 @@ For microphone input an I2S microphone must be provided. There are also several 
 |I2STime | tells current Tasmota time in English (requires defined `USE_I2S_SAY_TIME`)|
 |I2SWr | `url` = starts playing an [mp3 radio](http://fmstream.org/) stream, no blocking (requires defined `USE_I2S_WEBRADIO`)<BR>no parameter = stops playing the stream|
 
-### Microphone Input
+## Audio Input
 
-|CMD micro|action|
-|---|---|
-|I2SRec | `/file.mp3` = starts recording a .mp3 audio file to the file system, no blocking<BR> no parameter = stops recording<BR>`-?` = shows how many seconds already recorded|
-|I2SMGain | `1..50` = sets the gain factor of the microphone|
+??? failure "This feature is not included in precompiled binaries"  
 
-## MP3 Streaming
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
-Starts an .mp3 streaming server on port 81 which can stream microphone audio to a browser (PSRAM needed)  
-`http://<device_ip>:81/stream.mp3`
+    ```arduino
+    #ifndef USE_I2S_AUDIO
+    #define USE_I2S_AUDIO                    // Add support for I2S audio output (needed even if using only microphone)
+    #define USE_I2S_MIC                      // If you use an I2S microphone
+    //#define MIC_CHANNELS 1                 // 2 = stereo (I2S_CHANNEL_FMT_RIGHT_LEFT), 1 = mono (I2S_CHANNEL_FMT_ONLY_RIGHT)
+    //#define MICSRATE 32000                 // Set sample rate
+    #define USE_SHINE                        // Use MP3 encoding (only on ESP32 with PSRAM)
+    //#define MP3_MIC_STREAM                 // Add support for streaming microphone via http (only on ESP32 with PSRAM)
+      //#define MP3_STREAM_PORT 81           // Choose MP3 stream port (default = 81)
+    #endif
 
-```arduino
-#ifndef MP3_MIC_STREAM
-#define MP3_MIC_STREAM          // Add support for MP3 audio streaming
-#endif
+    // USE_M5STACK_CORE2, USE_TTGO_WATCH and ESP32S3_BOX already include I2S_AUDIO
+    ```
 
-#define MP3_STREAM_PORT 81     // if defined overwrites the default 81
-```
+![I2S Microphone](https://user-images.githubusercontent.com/11647075/185345648-37979fa9-2114-4aa0-be99-ee8c855219b2.jpg){ align=right width="200" }
+
+For microphone input an I2S microphone must be connected. 
+
+| I2S Microphone | ESP32 | ESP8266 (fixed pins) |
+| --- | --- | --- |
+| SCK | I2S_BCLK | GPIO13 |
+| WS | I2S_WS | GPIO14 |
+| SD | I2S_DIN | GPIO12 |
+| L/R | GND | GND |
+| VDD | 3.3V | 3.3V |
+| GND | GND | GND |
+| NC | I2S_DOUT | I2S_DOUT |
+
+Even if you're using only the microphone you need to set an unusued pin to `I2S_DOUT` or Tasmota will crash.
+
+### Commands
+
+!!! warning "ESP32 with PSRAM required!"
+
+| CMD | Action |
+| --- | --- |
+| I2SRec | `/file.mp3` = starts recording a .mp3 audio file to the file system, no blocking<BR> no parameter = stops recording<BR>`-?` = shows how many seconds already recorded |
+| I2SMGain | `1..50` = sets the gain factor of the microphone |
+| I2SStream |(requires defined `MP3_MIC_STREAM`)<BR>`1` = starts streaming .mp3 server at `http://<device_ip>:81/stream.mp3`<BR> `1` = stop the stream |
 
 ## I2S Audio Bridge
 
@@ -113,10 +109,12 @@ Needs audio output and microphone on 2 devices (no PSRAM needed)
 
 ```arduino
 #ifndef I2S_BRIDGE
-#define I2S_BRIDGE               // Add support for UDP PCM audio bridge
+#define I2S_BRIDGE                          // Add support for UDP PCM audio bridge
+  //#define I2S_BRIDGE_PORT    6970         // Set bridge port (default = 6970)
+#define USE_I2S_AUDIO                       // Add support for I2S audio output
+#define USE_I2S_MIC                         // Add support for I2S microphone
 #endif
 
-#define I2S_BRIDGE_PORT 6970     // if defined overwrites the default 6970
 ```
 
 |CMD bridge|action|

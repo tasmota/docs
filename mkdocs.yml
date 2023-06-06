@@ -140,6 +140,7 @@ nav:
     - Displays.md
     - Dynamic-Sleep.md
     - I2C Devices: I2CDEVICES.md
+    - I2S Audio: I2S-Audio.md
     - IPv6.md
     - Lights.md
     - Matter: Matter.md
@@ -171,7 +172,6 @@ nav:
     - Tasmota32 Features: ESP32.md
     - Berry: Berry.md
     - Bluetooth Low Energy: Bluetooth_ESP32.md
-    - I2S Audio: I2S-Audio.md
     - LVGL: LVGL.md
     - HASPmota: HASPmota.md
     - Matter.md
