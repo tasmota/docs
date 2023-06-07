@@ -75,9 +75,11 @@ Those channels can be driven via the I2S driver when using the “built-in DAC m
     // USE_M5STACK_CORE2, USE_TTGO_WATCH and ESP32S3_BOX already include I2S_AUDIO
     ```
 
+### I2S Microphone
+
 ![I2S Microphone](https://user-images.githubusercontent.com/11647075/185345648-37979fa9-2114-4aa0-be99-ee8c855219b2.jpg){ align=right width="200" }
 
-For microphone input an I2S microphone must be connected. 
+For microphone input an I2S microphone must be connected.
 
 | I2S Microphone | ESP32 | ESP8266 (fixed pins) |
 | --- | --- | --- |
@@ -90,6 +92,18 @@ For microphone input an I2S microphone must be connected.
 | NC | I2S_DOUT | I2S_DOUT |
 
 Even if you're using only the microphone you need to set an unusued pin to `I2S_DOUT` or Tasmota will crash.
+
+### PDM Microphone
+
+| Microphone | ESP32 |
+| --- | --- | 
+| CLK | I2S_WS | 
+| DATA | I2S_DIN | 
+| L/R | GND | 
+| VDD | 3.3V |
+| GND | GND | 
+| NC | I2S_DOUT |
+| NC | I2S_BCLK | 
 
 ### Commands
 

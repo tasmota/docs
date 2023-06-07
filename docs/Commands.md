@@ -1039,7 +1039,7 @@ WcClock<a class="cmnd" id="wcclock"></a>|`10..200` = set clock speed in MHz *(de
 WcColorbar<a class="cmnd" id="wcclock"></a>|`1` = show colorbar, `0` = hide colorbar *(default)*
 WcContrast<a class="cmnd" id="wccontrast"></a>|`-2..+2` = set picture contrast
 WcDCW<a class="cmnd" id="wcdcw"></a>|`1` = enable downscale, `0` = disable *(default)*
-WcFeature<a class="cmnd" id="wcfeature"></a>|extended features<BR>`0` = off, `1` = reduce FPS, `2` = nightmode
+WcFeature<a class="cmnd" id="wcfeature"></a>|[Extended features](https://hobbylad.files.wordpress.com/2020/02/ov2640-camera-module-software-application-notes.pdf). Only boards with PSRAM should be used.<BR>`0` = off, `1` = reduce FPS and increase exposure time for better low light performance, `2` = nightmode, increase exposure time and lower the Framerate depending on available light
 WcFlip<a class="cmnd" id="wcflip"></a>|`1` = enable flip camera image,`0` = disable *(default)*
 WcGainCeiling<a class="cmnd" id="wcgainceiling"></a>|`0 .. 6` = set gain ceiling (`0` = x2, `1` = x4, `2` = x8, `3` = x16, `4` = x32, `5` = x64, `6` = x128)
 WcGammaCorrect<a class="cmnd" id="wcgammacorrect"></a>|`1` = enable auto gamma correct, `0` = disable *(default)*
