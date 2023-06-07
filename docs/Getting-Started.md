@@ -258,8 +258,6 @@ Choose an installation method:
     - [**Sonoff DIY**](Sonoff-DIY) - OTA flash for select Sonoff devices **Does not work anymore**
     - [**esp2ino**](https://github.com/elahd/esp2ino) - OTA flash for select Wyze devices. **Does not work anymore**
 
-
-
 ## Initial Configuration
 
 === "Using Tasmota Web Installer"

@@ -91,9 +91,11 @@ For microphone input an I2S microphone must be connected.
 | GND | GND | GND |
 | NC | I2S_DOUT | I2S_DOUT |
 
-Even if you're using only the microphone you need to set an unusued pin to `I2S_DOUT` or Tasmota will crash.
+Even if you're using only the microphone you need to set an unused pin to `I2S_DOUT` or Tasmota will crash.
 
 ### PDM Microphone
+
+[Pulse density modulation](https://en.wikipedia.org/wiki/Pulse-density_modulation) (PDM) microphones are not an I2S or PWM microphone but still have a digital signal. They're used in [ESP32-S3-BOX](https://templates.blakadder.com/espressif_ESP32-S3-BOX.html), [Seeed Xiao Sense](https://templates.blakadder.com/seeedstudio_XIAO_ESP32S3_SENSE.html) and others.
 
 | Microphone | ESP32 |
 | --- | --- | 
@@ -104,6 +106,8 @@ Even if you're using only the microphone you need to set an unusued pin to `I2S_
 | GND | GND | 
 | NC | I2S_DOUT |
 | NC | I2S_BCLK | 
+
+Remember that the microphone CLK pin is configured as I2S_WS in Tasmota.
 
 ### Commands
 
