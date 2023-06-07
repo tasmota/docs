@@ -33,7 +33,7 @@ Then set baud rate with `ModbusBaudRate` (default is 9600).
 
 Command|Parameters
 :---|:---
-ModbusSend|Sending a message to the Modbus network as JSON payload.<BR>```{"deviceAddress":<value>, "functionCode":<value>, "startAddress":<value>, "type":"<value>","count":<value>}```<BR>&emsp;&emsp;`"deviceAddress":1..255` = device address from the Modbus slave.<BR>&emsp;&emsp;`"functioncode":1..6 or 15..16` = function code to send to the Modbus slave (see table below).<BR>&emsp;&emsp;`"startaddress":1..65535` address of the first register to read.<BR>&emsp;&emsp;`"type":"<value>"` Gives the type of the returned data (see table below). <BR>&emsp;&emsp;`"count":1..n` the number of values to be requested.
+ModbusSend|Sending a message to the Modbus network as JSON payload.<BR>```{"deviceAddress":<value>, "functionCode":<value>, "startAddress":<value>, "type":"<value>","count":<value> "endian":<value>}```<BR>&emsp;&emsp;`"deviceAddress":1..255` = device address from the Modbus slave.<BR>&emsp;&emsp;`"functioncode":1..6 or 15..16` = function code to send to the Modbus slave (see table below).<BR>&emsp;&emsp;`"startaddress":1..65535` address of the first register to read.<BR>&emsp;&emsp;`"type":"<value>"` Gives the type of the returned data (see table below). <BR>&emsp;&emsp;`"count":1..n` the number of values to be requested. <BR>&emsp;&emsp;`"endian":msb,lsb` Sets endian msb (big) or lsb (little) (optional).
 ModbusBaudrate| `1200...115200` = set baudrate for serial (only 8N1 mode) in 1200 increments _(default = `9600`)_
 ModbusSerialConfig|Set serial protocol using data/parity/stop conventional notation (example: 8N1 or 702)<BR>`0..23` = set serial protocol (`3` equals 8N1)
   

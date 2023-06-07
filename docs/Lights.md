@@ -56,31 +56,34 @@ If you define multiple relays, they are controlled with [`Power<x>`](Commands.md
 <br clear="right"/>
 ![Robotdyn-Dimmermodul](_media/peripherals/Robotdyn-Dimmermodul-1Kanal.jpg){width="180" align=right}
 
-**Leading edge dimmer**: You can also configure a leading edge dimmer on 230V with the 1 channel configuration. In this case you need a TRIAC and a zero-cross detection that give a pulse with every crossing of the 0V of the sinus curve. This is currently ONLY supported on ESP8266. A working ESP32 is "work in progress".
+**Leading edge dimmer**: You can also configure a leading edge dimmer on 230V with the 1 channel configuration. In this case you need a TRIAC and a zero-cross detection that give a pulse with every crossing of the 0V of the sinus curve. The dimmer is power callibrated. 10% --> 10% light or power consumption on a device like a heater. The Dimmer is e.g. suitable to dynamically pump remaining solar power into a heat sink.
 <br clear="right"/>
 
 ??? summary "Robotdyn AC dimmer configuration"  
-    Define a `Counter` with the same number as the PWM (e.g. Counter1 & PWM1). You will need to connect the output of PWM1 to an input as Counter1. 
-    Connect zero-crossing to GPIO of Counter4
+    Connect zero-crossing to GPIO of Counter4. Define a PWM and connect
     
     |Configuration|(see below)|
     |---|---|
-    |Dimmer1| PWM1, COUNTER1|
-    |Dimmer2| PWM2, COUNTER2 (optional)|
-    |Dimmer3| PWM3, COUNTER3 (optional)|
+    |Dimmer,Channel1| PWM1|
+    |Channel2| PWM2 (optional)|
+    |Channel3| PWM3 (optional)|
+    |Channelxx| PWMxx (optional)|
     |Zero-Cross PIN| COUNTER4 (mandatory)|
+    |Commands|[`ZCDimmerSet`](Commands.md#zcdimmerset) ESP32 only|
 
     Example schematic:  
-    ![ACDimmer](https://user-images.githubusercontent.com/24524506/155886267-56433a26-614a-43d7-8b30-3e38ef9931d7.png)
+    ![ZCDimmer example schematic](_media/peripherals/ZCDimmer_Schematic.png)
 
     Example config:  
-    ![Robotdyn example schematic](https://user-images.githubusercontent.com/24524506/155886737-8139f80b-510f-4b61-937a-b6929aa27531.png){width="300"}
+    ![ZCDimmer example config](_media/peripherals/ZCDimmer_Config.png){width="300"}
 
     Preferably before connecting the ZC & PWM perform the following commands:
 
     - [`SetOption99 1`](Commands.md#setoption99) -> to enable detection of the raising edge of the zero-crossing
-    - [`PWMFrequency 100`](Commands.md#pwmfrequency) -> (50Hz) or `120` (60Hz) depending on the frequency of the mains in your country
-    - [`LedTable 0`](Commands.md#ledtable) -> for normal lamps or motors
+    - [`SetOption68 1`](Commands.md#setoption68) -> with more than ONE PWM this will all operate as single lights. Control with [`channelx 1..100`]
+    - [`LedTable 0`](Commands.md#ledtable) -> for normal lamps or motors. Recommended
+    - [`savedata 0`](Commands.md#savedata) -> Saving the current status create small flickering. OFF prevent this. On ESP32 recommended. Do not change after reboot!
+
 
 
 |Configuration|(see below)|
@@ -189,6 +192,8 @@ The curve used: orange=ideal, blue=tasmota.
 
 !!! quote ""
     Internally Tasmota uses 10 bits resolution PWM to get smoother levels at low brightness. 
+
+When using `Fade` mode, a different Gamma curve (called `gamma_fast`). This cruve cheats slightly and makes lights increase brighness faster then normal; otherwise the light starts glowing very slowly and gives the impression that the light is not responsive.
 
 ### White Blend Mode
 

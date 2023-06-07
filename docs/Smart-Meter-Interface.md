@@ -27,6 +27,7 @@ Additional features can be enabled by adding the following `#define` compiler di
 |MAX_METERS n| (default 5) Maximum number of meters. Decrease this to 1 for example if you have a meter with many lines and lots of characters per descriptor line.|
 |TMSBSIZ n| (default 256) Maximum number of characters in serial IRQ buffer (should always be larger than SML_BSIZ and even larger on high baud rates).can now be defined per meter in descriptor, see special options|
 |SML_DUMP_SIZE n | (default 128) Maximum number of characters per line in dump mode. Only use if you have long strings comin in and they truncate. |
+|SML_PREFIX_SIZE n | (default 8) Maximum number of characters + 1 for SML jsonPrefix.  
 |USE_ESP32_SW_SERIAL| enables additional software serial channels for ESP32, (receive only), define pin with '-' sign to assign to software serial |
 |NO_USE_SML_SPECOPT| disables special decoder entry to specify direction bit for some SML meters |
 |NO_USE_SML_SCRIPT_CMD | disables some special SML script cmds and allows access to sml vars in other parts of the script. Is needed by some of the examples below.
@@ -64,7 +65,8 @@ There are many different meters that use the same protocol. There are multitudes
 
 !!! note
     Additional hardware may be required to read certain measuring devices. For example: RS485toTTL adapter for Modbus, IR transistor for electricity meters. Sometimes an additional IR diode and resistors.  
-  
+
+By default, a SENSOR telegram is sent to MQTT every 300 seconds. This can be adjusted by changing the [TelePeriod](https://tasmota.github.io/docs/Commands/#teleperiod).
   
 ## Descriptor Syntax
 This section must be present, even if it's empty. If compiled with `SML_REPLACE_VARS`, here is the place where text variables can be defined for the script:
@@ -209,7 +211,7 @@ With `=` character at the beginning of a line you can do some special decoding. 
 | `M,=h` | Insert text on the web interface (html text up to 30 chars). These lines do not count as decoder entry.<BR> e.g. `1,=h<hr/>` to insert a separator line on the web UI |
 | `*` character | To hide fields from result output or disable output completely. Compiling with `USE_SML_SCRIPT_CMD` required. <BR> - as single character in `<label>` of the metrics line will hide that value from the web UI <BR> - as single character in `<label>` of the meter definition line will suppress the entire JSON output on MQTT |
 | `M,=so1 `| special SML option for meters that use a bit in the status register to sign import or export like ED300L, AS2020 or DTZ541 <BR>e.g. 1,=so1,00010800,65,11,65,11,00100700 for DTZ541<BR> 1. obis code that holds the direction bit, 2. Flag identifier, 3. direction bit, 4. second Flag identifier (some meters use 2 different flags), 5. second bit, 6 obis code of value to be inverted on direction bit.<BR>|
-| `M,=so2 `| if 1 fixes the bug introduced by meter DWS74, if 2 enabled OBIS line compare mode instead of shift compare mode.<BR>e.g. 1,=so2,2 enable obis line compare.<BR>|
+| `M,=so2 `| if 1 fixes the bug introduced by meter DWS74, if 2 enabled OBIS line compare mode instead of shift compare mode, if 4 invert hardware serial line.<BR>e.g. 1,=so2,2 enable obis line compare.<BR>|
 | `M,=so3 `| sets serial buffer size, serial IRQ buffer size and serial dump buffer size.<BR>e.g. 1,=so3,512 set serial buffer size to 512.<BR>|
 | `M,=so4 `| sets AES decrytion key for encrypted meters.must define exactly 16 hexadecimal chars<BR>e.g. 1,=so4,deabcd0020a0cfdedeabcd0020a0cfde sets decryption key and enables decrypt mode for that meter.<BR>|
 | `M,=so5 `| sets AES authentication key for encrypted meters.must define exactly 16 hexadecimal chars<BR>e.g. not needed by most energy meters (needs USE_SML_AUTHKEY).<BR>|
@@ -871,6 +873,26 @@ Example reading of the two-direction model using GPIO 3:
     #
     ```
 	
+### EasyMeter Q1A (SML)
+
+The Q1A series of EasyMeter is available as one- or two-way meter, with and without backstop respectively. It is also available as single or dual tariff meter. The script below works for the Q1Ax1054 variant. This variant is a single-tariff one-way meter with a backstop mechanism. The script only reads two values: the energy counter value and the current power value.
+
+The meter has no bidirectional IR-communication port, only an "INFO-DSS" send-only IR-LED. It also has no metal plate to attach a magnet so the IR reader has to be attached in another way.
+
+The current power and counter in high resolution are available after PIN entry with a flashlight, see manual.
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,16,9600,SML
+    1,77070100010800ff@1000,Zaehlerstand,kWh,Counter,6
+    1,77070100100700ff@1,Verbrauch,W,Power,1
+    #
+    ```
+	
 ### EasyMeter Q1D (ASCII OBIS)
 
 This script is for the EasyMeter Q1DB1004 variant of the Q1D series. This variant is a one-phase one-way electricity counter with a backstop mechanism. 
@@ -1458,6 +1480,37 @@ This script was used and tested on a WeMos D1 mini with an IR Head connected to 
     1,77070100600100ff@#,Server ID,,server_id,0
     1,77070100020800ff@1000,Export (Total),kWh,export_total_kwh,4
     1,77070100010800ff@1000,Consumption (Total),kWh,total_kwh,4
+    1,77070100100700ff@1,Consumption (Current),W,curr_w,0
+    1,77070100200700ff@1,Voltage L1,V,volt_p1,1
+    1,77070100340700ff@1,Voltage L2,V,volt_p2,1
+    1,77070100480700ff@1,Voltage L3,V,volt_p3,1
+    1,770701001f0700ff@1,Amperage L1,A,amp_p1,1
+    1,77070100330700ff@1,Amperage L2,A,amp_p2,1
+    1,77070100470700ff@1,Amperage L3,A,amp_p3,1
+    1,77070100510701ff@1,Phase angle U-L2/U-L1,deg,phase_angle_l2_l1,1
+    1,77070100510702ff@1,Phase angle U-L3/U-L1,deg,phase_angle_l3_l1,1
+    1,77070100510704ff@1,Phase angle I-L1/U-L1,deg,phase_angle_p1,1
+    1,7707010051070fff@1,Phase angle I-L2/U-L2,deg,phase_angle_p2,1
+    1,7707010051071aff@1,Phase angle I-L3/U-L3,deg,phase_angle_p3,1
+    1,770701000e0700ff@1,Frequency,Hz,freq,0
+    #
+    ```
+	
+### Holley DTZ541-ZDBA (SML)  
+
+This meter differatiates between day and night time consumption. The script is based on the DTZ541. Look above for more information. 
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,s,16,9600,SML
+    1,77070100600100ff@#,Server ID,,server_id,0
+    1,77070100020800ff@1000,Export (Total),kWh,export_total_kwh,4
+    1,77070100010802ff@1000,Night (Total),kWh,total_night_kwh,4
+    1,77070100010801ff@1000,Day (Total),kwH,total_day_kwh,4
     1,77070100100700ff@1,Consumption (Current),W,curr_w,0
     1,77070100200700ff@1,Voltage L1,V,volt_p1,1
     1,77070100340700ff@1,Voltage L2,V,volt_p2,1
@@ -2689,6 +2742,23 @@ Script to extract readings from Eastron [SDM72D Series](https://www.eastroneurop
     #
     ```
 
+### Siemens TD-3511
+
+This device is used in the grid of EGTF - Elektrizitäts-Genossenschaft Tacherting-Feichten eG. Read uses IEC 62056-21 data mode "C" without acknowledgement by the reading device.
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,o,0,300,STROM,1,600,2F3F210D0A
+    1,1.8.1(@1,Total Consumed,KWh,Total_in,3
+    1,2.8.1(@1,Total Delivered,KWh,Total_out,3
+    1,0.0.0(@#),Meter Number,,Meter_number,0
+    #
+    ```
+
 ### Trovis 557x (MODBus)
 
 These heating regulators have a [lot of registers](https://raw.githubusercontent.com/Tom-Bom-badil/samson_trovis_557x/master/_register.py). If your station number is different from standard (247 ==> 0xF7) you have got to change every first byte accordingly.
@@ -2755,13 +2825,42 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
     ```
     >D
     >B
-    =>sensor53 r
+    ->sensor53 r
     >M 1
-    +1,3,s,0,9600,Strom
-    1,77070100010800ff@1000,Verbrauch,kWh,Total_out,4
-    1,77070100020800ff@1000,Einspeisung,kWh,Total_in,4
-    1,77070100010800ff@1000,Verbrauch,kWh,Total_out,1
-    1,77070100020800ff@1000,Einspeisung,kWh,Total_in,1
+    +1,3,s,0,9600,SML
+    1,77070100010800ff@1000,Total Verbrauch,KWh,Total_in,3
+    1,77070100020800ff@1000,Total Einspeisung,kWh,Total_in,3
+    1,=h==================
+    1,77070100100700ff@1,Actual load,W,Power_curr,0
+    1,=h==================
+    1,=m 9+10+11 @1,Currents L1+L2+L3,A,Curr_summ,3
+    ;1,=m 12+13+14/#3 @1,Voltage L1+L2+L3/3,V,Volt_avg,3
+    1,=h==================
+    1,77070100240700ff@1,Consumption P1,W,Power_p1,2
+    1,77070100380700ff@1,Consumption P2,W,Power_p2,2
+    1,770701004c0700ff@1,Consumption P3,W,Power_p3,2
+    1,=h   ----
+    1,770701001f0700ff@1,Current L1,A,Curr_p1,3
+    1,77070100330700ff@1,Current L2,A,Curr_p2,3
+    1,77070100470700ff@1,Current L3,A,Curr_p3,3
+    1,=h   ----
+    1,77070100200700ff@1,Voltage L1,V,Volt_p1,3
+    1,77070100340700ff@1,Voltage L2,V,Volt_p2,3
+    1,77070100480700ff@1,Voltage L3,V,Volt_p3,3
+    1,=h==================
+    1,77070100510701ff@1,Phaseangle L2-L1,deg,phase_angle_L2_L1,0
+    1,77070100510702ff@1,Phaseangle L3-L1,deg,phase_angle_L3_L1,0
+    1,77070100510704ff@1,Phaseangle I/U L1,deg,phase_angle_L1,1 
+    1,7707010051070fff@1,Phaseangle I/U L2,deg,phase_angle_L2,1  
+    1,7707010051071aff@1,Phaseangle I/U L3,deg,phase_angle_L3,1 
+    1,770701000e0700ff@1,Frequency,Hz,Freq,1
+    ;1,=h=======UNBEKANNT===========
+    ;1,77070100000009FF@#,unbekannt1,,Power_Use_Sum,3
+    ;1,77070100000000FF@#,unbekannt2,,Power_Use_Sum,3
+    ;1,7707010060320101@#,unbekannt3,,Meter_id,0
+    ;1,77010b0a01445a47@#,unbekannt4,,Meter_id,0
+    ;1,77070100600100ff@#,unbekannt5,,Meter_id,0
+    1,=h
     #
     ```
 
@@ -2803,3 +2902,21 @@ To connect to this and read data from the bus a level shifting is needed as the 
     #
 
     ``` 
+
+### AEConversion solar inverter INVXXX (RAW)
+Tested on an AEConversion INV500-90 with RS485 interface.
+	
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    ; Monitor Sensor at GPIO25
+    =>sensor53 l255
+    >M 1
+    +1,13,r,0,9600,aec,15,50,2101B203FD4D0D
+    
+    1,212717UUuux7@1,Leistung,W,power,0
+    1,212717x4UUuux4@1000,Energie,kWh,energy_sun,3
+    #
+    ```

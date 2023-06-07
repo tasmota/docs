@@ -35,6 +35,31 @@ Unlike previous versions, C3 is a single-core Wi-Fi and Bluetooth 5 (LE) microco
 
 Use `tasmota32c3-` binaries for this line of chips.
 
+## Flashing
+
+Use [Tasmota Web Installer](http://tasmota.github.io/install) to easily flash ESP32 devices.
+
+Other options include:
+
+[ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) for flashing an ESP32 or ESP82xx (Windows, MacOs or Linux (Ubuntu)).
+
+esptool.py - use the following command syntax:
+
+```bash
+esptool.py write_flash 0x0 tasmota32.factory.bin
+```
+
+!!! warning "Use a proper power supply!"
+    ESP32 is power hungry and there's a high chance it will not be able to boot properly off the serial-to-USB power. Power it from a separate power supply that can provide at least 500mA.
+
+You can download precompiled binaries:
+
+- development branch from [http://ota.tasmota.com/tasmota32/](http://ota.tasmota.com/tasmota32/)
+- stable releases from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/)
+- the required [flash files](https://github.com/arendst/Tasmota-firmware/tree/main/static) _(not needed when using ESP_Flasher)_
+
+OTA upgrade from older versions of tasmota32 might fail due to significant changes in partition tables.
+
 ## Exclusive Features
 
 ### Autoconf
@@ -46,6 +71,14 @@ After flashing Tasmota, open the web UI of the device and navigate to ***Configu
 Configuration files are stored here: <https://github.com/tasmota/autoconf>
 
 To use it you need to have `#define USE_AUTOCONF`.
+
+### Berry Scripting
+
+ESP32 introduces [Berry](Berry.md) language as a more approachable scripting language. Berry is very powerful and you can even code an I2C driver using it.
+
+### LVGL
+
+Use [LVGL](https://lvgl.io/) in conjunction with Berry on devices with displays and touch displays to design your own UI.
 
 ### CPU Temperature Sensor
 
@@ -73,44 +106,13 @@ To enable set in module configuration or template:
 
 ### I2S
 
-[Inter-IC Sound](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/i2s.html) or I2S is possible through [Berry `gpio` module](Berry.md#i2s)
+ESP32 contains two I2S peripherals. These peripherals can be configured to input and output sample data via the I2S driver. [Read more...](https://docs.espressif.com/projects/esp-idf/en/v4.2/esp32/api-reference/peripherals/i2s.html)
+
+I2S is possible through [I2S Audio](I2S-Audio) or [Berry `gpio` module](Berry.md#i2s).
 
 ### Touch Pins
 
 ESP32 has 10 capacitive touch GPIOs. More on configuring and [using them...](https://tasmota.github.io/docs/TouchPin/).
-
-### Berry Scripting
-
-ESP32 introduces [Berry](Berry.md) language as a more approachable scripting language. Berry is very powerful and you can even code an I2C driver using it.
-
-### LVGL
-
-Use [LVGL](https://lvgl.io/) in conjunction with Berry on devices with displays and touch displays to design your own UI.
-
-## Flashing
-
-Use [Tasmota Web Installer](http://tasmota.github.io/install) to easily flash ESP32 devices.
-
-Other options include:
-
-[ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) for flashing an ESP32 or ESP82xx (Windows, MacOs or Linux (Ubuntu)).
-
-esptool.py - use the following command syntax:
-
-```bash
-esptool.py write_flash 0x0 tasmota32.factory.bin
-```
-
-!!! warning "Use a proper power supply!"
-    ESP32 is power hungry and there's a high chance it will not be able to boot properly off the serial-to-USB power. Power it from a separate power supply that can provide at least 500mA.
-
-You can download precompiled binaries:
-
-- development branch from [http://ota.tasmota.com/tasmota32/](http://ota.tasmota.com/tasmota32/)
-- stable releases from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/)
-- the required [flash files](https://github.com/arendst/Tasmota-firmware/tree/main/static) _(not needed when using ESP_Flasher)_
-
-OTA upgrade from older versions of tasmota32 might fail due to significant changes in partition tables.
 
 ## Compiling
 
@@ -123,5 +125,3 @@ All binaries use `user_config_override.h` if it exists.
 ## Working Devices
 
 [Tasmota Supported Devices Repository](https://templates.blakadder.com/esp32.html) has a more extenstive list of [ESP32 based](https://templates.blakadder.com/esp32.html) devices.
-
-[ESP32 Devices](ESP32-Devices.md)

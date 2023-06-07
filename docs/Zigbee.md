@@ -1311,7 +1311,7 @@ EF00/0372,LastIrrigationDuration    # (string) Ex: "00:01:10,0"
 	`BinaryInInactiveText`|0x000F|0x002E|%42 - string
 	`BinaryInOutOfService`|0x000F|0x0051|%10 - bool
 	`BinaryInPolarity`|0x000F|0x0054|%30 - enum8
-	`BinaryInValue`|0x000F|0x0055|%42 - string
+	`BinaryInValue`|0x000F|0x0055|%10 - bool
 	`BinaryInReliability`|0x000F|0x0067|%30 - enum8
 	`BinaryInStatusFlags`|0x000F|0x006F|%18 - map8
 	`BinaryInApplicationType`|0x000F|0x0100|%23 - uint32

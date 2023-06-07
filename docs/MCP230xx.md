@@ -75,6 +75,8 @@ Buttons, relays, buttons and relays                         B1 B2 B3 B4 B5 B6 B7
 {"NAME":"MCP23017 A=B1-8, B=R1-8, C=B9-16, D=R9-16","GPIO":[32,33,34,35,36,37,38,39,224,225,226,227,228,229,230,231,40,41,42,43,44,45,46,47,232,233,234,235,236,237,238,239]}
 ```
 
+In Mode 2 you can choose to connect the interrupt pins from the MCP230xx to native GPIOs on the ESP. You will then need to configure the used GPIOs as "MCP23xxx Int" in the Web UI. This way, upon a change in an input, the corresponding interrupt pin will gererate a flag that will be scanned at every program cycle, making the detection as fast as possible. If not using the interrupt pins the detection will be triggered every 50ms.
+
 ### Mode 1
 
 You will need to define the address you are using in `user_config_override.h` for the driver to know on which address the MCP23008/MCP23017 is expected to be found.

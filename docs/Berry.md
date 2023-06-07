@@ -746,26 +746,26 @@ You generally use `tasmota.wire_scan()` to find a device and the corresponding I
 
 Wire Function|Parameters and details
 :---|:---
-bus<a class="cmnd" id="wire_bus">|`read only attribute, 1 or 2`<br>Bus number for this wire instance.
-enabled<a class="cmnd" id="wire_enabled">|`() -> bool`<br>Returns `true` is the I2C bus is initialized (i.e. GPIOs are defined)
-scan<a class="cmnd" id="wire_scan">|`() -> array of int`<br>Scan the bus and return all responding addresses. Note: addresses are displayed as decimal ints, not hex.
-scan<a class="cmnd" id="wire_scan">|`() -> array of int`<br>Scan the bus and return all responding addresses. Note: addresses are displayed as decimal ints, not hex.
-detect<a class="cmnd" id="wire_detect">|`(addr:int) -> bool`<br>Returns `true` if the device of address `addr` is connected to this bus.
-read<a class="cmnd" id="wire_read">|`(addr:int, reg:int, size:int) -> int or nil`<br>Read a value of 1..4 bytes from address `addr` and register `reg`. Returns `nil` if no response.
-write<a class="cmnd" id="wire_write">|`(addr:int, reg:int, val:int, size:int) -> bool`<br>Writes a value of 1..4 bytes to address `addr`, register `reg` with value `val`. Returns `true` if successful, `false` if not.
-read\_bytes<a class="cmnd" id="wire_read_bytes">|`(addr:int, reg:int ,size:int) -> instance of bytes()`<br>Reads a sequence of `size` bytes from address `addr` register `reg`. Result is a `bytes()` instance or `bytes()` if not successful.`
-write\_bytes<a class="cmnd" id="wire_write_bytes">|`(addr:int, reg:int, val:bytes) -> nil`<br>Writes the `val` bytes sequence as `bytes()` to address `addr` register `reg`.
+bus<a class="cmnd" id="wire_bus"></a>|`read only attribute, 1 or 2`<br>Bus number for this wire instance.
+enabled<a class="cmnd" id="wire_enabled"></a>|`() -> bool`<br>Returns `true` is the I2C bus is initialized (i.e. GPIOs are defined)
+scan<a class="cmnd" id="wire_scan"></a>|`() -> array of int`<br>Scan the bus and return all responding addresses. Note: addresses are displayed as decimal ints, not hex.
+scan<a class="cmnd" id="wire_scan"></a>|`() -> array of int`<br>Scan the bus and return all responding addresses. Note: addresses are displayed as decimal ints, not hex.
+detect<a class="cmnd" id="wire_detect"></a>|`(addr:int) -> bool`<br>Returns `true` if the device of address `addr` is connected to this bus.
+read<a class="cmnd" id="wire_read"></a>|`(addr:int, reg:int, size:int) -> int or nil`<br>Read a value of 1..4 bytes from address `addr` and register `reg`. Returns `nil` if no response.
+write<a class="cmnd" id="wire_write"></a>|`(addr:int, reg:int, val:int, size:int) -> bool`<br>Writes a value of 1..4 bytes to address `addr`, register `reg` with value `val`. Returns `true` if successful, `false` if not.
+read\_bytes<a class="cmnd" id="wire_read_bytes"></a>|`(addr:int, reg:int ,size:int) -> instance of bytes()`<br>Reads a sequence of `size` bytes from address `addr` register `reg`. Result is a `bytes()` instance or `bytes()` if not successful.`
+write\_bytes<a class="cmnd" id="wire_write_bytes"></a>|`(addr:int, reg:int, val:bytes) -> nil`<br>Writes the `val` bytes sequence as `bytes()` to address `addr` register `reg`.
 
 Low-level commands if you need finer control:
 
 Wire Function|Parameters and details
 :---|:---
-\_begin\_transmission<a class="cmnd" id="wire_begin_transmission">|`(address:int) -> nil`
-\_end\_transmission<a class="cmnd" id="wire_end_transmission">|`([stop:bool]) -> nil`<br>Send stop if `stop` is `true`.
-\_request\_from<a class="cmnd" id="wire_request_from">|`(addr:int, size:int [stop:bool = true]) -> nil`
-\_available<a class="cmnd" id="wire_available">|`() -> bool`
-\_read<a class="cmnd" id="wire_read">|`read() -> int`<br>Reads a single byte.
-\_write<a class="cmnd" id="wire_write">|`(value:int or s:string) -> nil`<br>Sends either single byte or an arbitrary string.
+\_begin\_transmission<a class="cmnd" id="wire_begin_transmission"></a>|`(address:int) -> nil`
+\_end\_transmission<a class="cmnd" id="wire_end_transmission"></a>|`([stop:bool]) -> nil`<br>Send stop if `stop` is `true`.
+\_request\_from<a class="cmnd" id="wire_request_from"></a>|`(addr:int, size:int [stop:bool = true]) -> nil`
+\_available<a class="cmnd" id="wire_available"></a>|`() -> bool`
+\_read<a class="cmnd" id="wire_read"></a>|`read() -> int`<br>Reads a single byte.
+\_write<a class="cmnd" id="wire_write"></a>|`(value:int or s:string) -> nil`<br>Sends either single byte or an arbitrary string.
 
 ### `path` module
 
@@ -851,21 +851,22 @@ Features:
  - Support HTTP and HTTPS requests to IPv4 addresses and domain names, to arbitrary ports, via a full URL.
  - Support for HTTPS and TLS via BearSSL (which is much lighter than default mbedTLS)
  - HTTPS (TLS) only supports cipher ECDHE_RSA_WITH_AES_128_GCM_SHA256 which is both secure and widely supported
- - Support for URL redirections (tbc)
+ - Support for URL redirections
  - Ability to set custom User-Agent
  - Ability to set custom headers
  - Ability to set Authentication header
  - Support for Chunked encoding response (so works well with Tasmota devices)
+ - Support for `GET`, `POST`, `PUT`, `PATCH`, `DELETE` methods
 
 The current implementation is based on a fork of Arduino's HttpClient customized to use BearSSL
 
 Current limitations (if you need extra features please open a feature request on GitHub):
 
- - Only supports text responses (html, json...) but not binary content yet (no NULL char allowed)
+ - Payload sent to server (`POST`) can include either text or binary
+ - Only supports text responses (html, json...) but not binary content yet (no NULL char allowed). However you can download binary content to the file-system with `write_file`
  - Maximum response size is 32KB, requests are dropped if larger
  - HTTPS (TLS) is in 'insecure' mode and does not check the server's certificate; it is subject to Man-in-the-Middle attack
- - No access to response headers
- - No support for compressed response
+ - No support for compressed response - this should not be a problem since the client does not advertize support for compressed responses
 
 
 !!! example
@@ -942,28 +943,37 @@ Alternatively, you can manage yourself redirects and retrieve the `Location` hea
 
 Main functions:
 
-WebClient Function|Parameters and details
+webclient method|Parameters and details
 :---|:---
-begin<a class="cmnd" id="wc_begin">|`(url:string) -> self`<br>Set the complete URL, including protocol (`http` or `https`), IPv4 or domain name, port... This should be the first call. The connection is not established at this point.
-GET<a class="cmnd" id="wc_get">|`() -> result_code:int`<br>Establish a connection to server, send GET request and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
-POST<a class="cmnd" id="wc_post">|`(payload:string or bytes) -> result_code:string`<br>Establish a connection to server, send POST request with payload and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
-read<a class="cmnd" id="wc_read">|`(addr:int, reg:int, size:int) -> int or nil`<br>Read a value of 1..4 bytes from address `addr` and register `reg`. Returns `nil` if no response.
-get\_size<a class="cmnd" id="wc_get_size">|`() -> int`<br>Once a connection succeeded (GET or POST), reads the size of the response as returned by the server in headers (before actually reading the content). A value `-1` means that the response size is unknown until you read it.
-get\_string<a class="cmnd" id="wc_get_string">|`() -> string`<br>Once a connection succeeded (GET or POST), reads the content of the response in a string. The response max size is 32KB, any response larger is dropped. Connection is closed and resources are freed after this call completes.
-close<a class="cmnd" id="wc_close">|`() -> nil`<br>Closes the connection and frees buffers. `close` can be called after `GET` or `POST` and is implicitly called by `get_string`. You don't usually need to use `close` unless you are only retrieving the result_code for a request and not interested in the content.
-write\_file<a class="cmnd" id="wc_write_file">|`(file_name:string) -> int`<br>Downloads the binary content of the resource and stores it on the file system. Returns the number of bytes downloaded or -1 if an error occurred
+begin<a class="cmnd" id="wc_begin"></a>|`(url:string) -> self`<br>Set the complete URL, including protocol (`http` or `https`), IPv4 or domain name, port... This should be the first call. The connection is not established at this point.<br>Use `url_encode()` prior to sending a URL if it requires URL encoding.
+GET<a class="cmnd" id="wc_get"></a>|`() -> result_code:int`<br>Establish a connection to server, send GET request and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
+POST<a class="cmnd" id="wc_post"></a>|`(payload:string or bytes) -> result_code:int`<br>Establish a connection to server, send POST request with payload and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
+PUT<a class="cmnd" id="wc_put"></a>|`(payload:string or bytes) -> result_code:int`<br>Establish a connection to server, send PUT request with payload and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
+PATCH<a class="cmnd" id="wc_patch"></a>|`(payload:string or bytes) -> result_code:int`<br>Establish a connection to server, send PATCH request with payload and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
+DELETE<a class="cmnd" id="wc_delete"></a>|`(payload:string or bytes) -> result_code:int`<br>Establish a connection to server, send DELETE request with payload and wait for response header.<BR>Returns the HTTP result code or an error code if negative, `200` means OK.
+get\_size<a class="cmnd" id="wc_get_size"></a>|`() -> int`<br>Once a connection succeeded (GET or POST), reads the size of the response as returned by the server in headers (before actually reading the content). A value `-1` means that the response size is unknown until you read it.
+get\_string<a class="cmnd" id="wc_get_string"></a>|`() -> string`<br>Once a connection succeeded (GET or POST), reads the content of the response in a string. The response max size is 32KB, any response larger is dropped. Connection is closed and resources are freed after this call completes.
+close<a class="cmnd" id="wc_close"></a>|`() -> nil`<br>Closes the connection and frees buffers. `close` can be called after `GET` or `POST` and is implicitly called by `get_string`. You don't usually need to use `close` unless you are only retrieving the result_code for a request and not interested in the content.
+write\_file<a class="cmnd" id="wc_write_file"></a>|`(file_name:string) -> int`<br>Downloads the binary content of the resource and stores it on the file system. Returns the number of bytes downloaded or -1 if an error occurred
 
 Request customization:
 
-webclient Function|Parameters and details
+webclient method|Parameters and details
 :---|:---
-add\_header<a class="cmnd" id="wc_add_header">|`(name:string, value:string [, first:bool=false [, replace:bool=true]]) -> nil`<br>Sets an arbitrary header for `name`:`value`.<BR>`first` moves the header in the first place, `replace` replaces a header with the same name or adds one line if false.
-set\_timeouts<a class="cmnd" id="wc_set_timeouts">|`(req_timeout:int [, tcp_timeout:int]) -> self`<br>Sets the request timeout in ms and optionally the TCP connection timeout in ms.
-set\_useragent<a class="cmnd" id="wc_set_useragent">|`(useragent:string) -> self`<br>Sets the User-Agent header used in request.
-set\_auth<a class="cmnd" id="wc_set_auth">|`(auth:string) or (user:string, password:string) -> self`<br>Sets the authentication header, either using pre-encoded string, or standard user/password encoding.
-set\_follow\_redirects<a class="cmnd" id="wc_set_follow_redirects">|`(bool) -> self`<br>Enables or disables redirects following.<BR>If `false`: (`HTTPC_DISABLE_FOLLOW_REDIRECTS`) no redirection will be followed.<BR>If `true`: (`HTTPC_STRICT_FOLLOW_REDIRECTS`) strict RFC2616, only requests using GET or HEAD methods will be redirected (using the same method), since the RFC requires end-user confirmation in other cases.<BR>There is a default limit of 10 successive redirects, this prevents from infinite loops.
-collect\_headers<a class="cmnd" id="wc_collect_headers">|`( [header_name:string]* ) -> self`<br>Registers a list of header names that needs to be collected from the response. Pass multiple strings as separate arguments (not as a list).
-get\_header<a class="cmnd" id="wc_get_header">|`(header_name:string) -> string`<br>Returns the header value for a header name (case sensitive). Returns "" (empty string) if no header.
+add\_header<a class="cmnd" id="wc_add_header"></a>|`(name:string, value:string [, first:bool=false [, replace:bool=true]]) -> nil`<br>Sets an arbitrary header for `name`:`value`.<BR>`first` moves the header in the first place, `replace` replaces a header with the same name or adds one line if false.
+set\_timeouts<a class="cmnd" id="wc_set_timeouts"></a>|`(req_timeout:int [, tcp_timeout:int]) -> self`<br>Sets the request timeout in ms and optionally the TCP connection timeout in ms.
+set\_useragent<a class="cmnd" id="wc_set_useragent"></a>|`(useragent:string) -> self`<br>Sets the User-Agent header used in request.
+set\_auth<a class="cmnd" id="wc_set_auth"></a>|`(auth:string) or (user:string, password:string) -> self`<br>Sets the authentication header, either using pre-encoded string, or standard user/password encoding.
+set\_follow\_redirects<a class="cmnd" id="wc_set_follow_redirects"></a>|`(bool) -> self`<br>Enables or disables redirects following.<BR>If `false`: (`HTTPC_DISABLE_FOLLOW_REDIRECTS`) no redirection will be followed.<BR>If `true`: (`HTTPC_STRICT_FOLLOW_REDIRECTS`) strict RFC2616, only requests using GET or HEAD methods will be redirected (using the same method), since the RFC requires end-user confirmation in other cases.<BR>There is a default limit of 10 successive redirects, this prevents from infinite loops.
+collect\_headers<a class="cmnd" id="wc_collect_headers"></a>|`( [header_name:string]* ) -> self`<br>Registers a list of header names that needs to be collected from the response. Pass multiple strings as separate arguments (not as a list).
+get\_header<a class="cmnd" id="wc_get_header"></a>|`(header_name:string) -> string`<br>Returns the header value for a header name (case sensitive). Returns "" (empty string) if no header.
+
+Static utility methods:
+
+webclient static method|Parameters and details
+:---|:---
+url\_encode<a class="cmnd" id="wc_url_encode"></a>|`(url:string) -> string`<br>Encodes a string according to URL escape rules. Use before you use `begin()`
+
 
 ### `webserver` module
 
@@ -973,25 +983,26 @@ Functions used to add UI elements like buttons to Tasmota pages, and analyze the
 
 General Function|Parameters and details
 :---|:---
-arg_size<a class="cmnd" id="ws_arg_size">|`() -> int`<br>Returns the number of arguments in the request
-arg<a class="cmnd" id="ws_arg">|`(arg_name:string or arg_index:int): -> string`<br>Returns the value of the argument either by name or by position number [0..arg_size()-1]. If an argument has multiple values, you need to iterate using ints to get all values
-arg_name<a class="cmnd" id="ws_arg_name">|`(arg_index:int) -> string`<br>Returns the name of argument by index [0..arg_size()-1]
-has_arg<a class="cmnd" id="ws_has_arg">|`(arg_name:string): -> bool`<br>Checks if an argument with this name exists
-check_privileged_access<a class="cmnd" id="ws_check_privileged_access">|`() -> bool`<br>Returns `true` if the page needs privileged access
-content_send<a class="cmnd" id="ws_content_send">|`(string) -> nil`<br>Sends the HTML content to the client. Tasmota uses Chunked encoding, which means than the content is regularly sent to the client and not buffered in Tasmota's memory
-content_button<a class="cmnd" id="ws_content_button">|`([button:int]) -> nil`<br>Displays a standard button by code, using Tasmota localization. Possible values are `webserver.BUTTON_CONFIGURATION`, `webserver.BUTTON_INFORMATION`, `webserver.BUTTON_MAIN`, `webserver.BUTTON_MANAGEMENT`, `webserver.BUTTON_MODULE`. Default is `webserver.BUTTON_MAIN`.
+arg\_size<a class="cmnd" id="ws_arg_size"></a>|`() -> int`<br>Returns the number of arguments in the request
+arg<a class="cmnd" id="ws_arg"></a>|`(arg_name:string or arg_index:int): -> string`<br>Returns the value of the argument either by name or by position number [0..arg_size()-1]. If an argument has multiple values, you need to iterate using ints to get all values
+arg\_name<a class="cmnd" id="ws_arg_name"></a>|`(arg_index:int) -> string`<br>Returns the name of argument by index [0..arg_size()-1]
+has\_arg<a class="cmnd" id="ws_has_arg"></a>|`(arg_name:string): -> bool`<br>Checks if an argument with this name exists
+check\_privileged\_access<a class="cmnd" id="ws_check_privileged_access"></a>|`() -> bool`<br>Returns `true` if the page needs privileged access
+content\_send<a class="cmnd" id="ws_content_send"></a>|`(string) -> nil`<br>Sends the HTML content to the client. Tasmota uses Chunked encoding, which means than the content is regularly sent to the client and not buffered in Tasmota's memory
+content\_button<a class="cmnd" id="ws_content_button"></a>|`([button:int]) -> nil`<br>Displays a standard button by code, using Tasmota localization. Possible values are `webserver.BUTTON_CONFIGURATION`, `webserver.BUTTON_INFORMATION`, `webserver.BUTTON_MAIN`, `webserver.BUTTON_MANAGEMENT`, `webserver.BUTTON_MODULE`. Default is `webserver.BUTTON_MAIN`.
+html\_escape<a class="cmnd" id="ws_html_escape"></a>|`(string) -> string`<br>Escapes characters to safe HTML.
 
 Low-level functions if you want to display custom pages and content:
 
 General Function|Parameters and details
 :---|:---
-on<a class="cmnd" id="ws_on">|`(prefix:string, callback:closure [, method:int]) -> nil`<br>Attaches a handler (any closure or function) to a prefix. An optional `method` argument (defaults to `webserver.HTTP_ANY` specifies the HTTP methods to be received (ANY, GET, POST, OPTIONS, POST)<BR>WARNING - this should be called only when receiving `web_add_handler` event. If called before the WebServer is set up and Wi-Fi on, it will crash. For debug purpose, it can be called later when you are sure that Wi-Fi or Ethernet is up.
-state<a class="cmnd" id="ws_state">|`() -> int`<br>Returns the internal state of Tasmota web server. Possible values are `webserver.HTTP_OFF`, `webserver.HTTP_USER`, `webserver.HTTP_ADMIN`, `webserver.HTTP_MANAGER`, `webserver.HTTP_MANAGER_RESET_ONLY`.
-content_start<a class="cmnd" id="ws_content_start">|`() -> nil`<br>Start response page
-content_response<a class="cmnd" id="ws_content_response">|`(string) -> nil`<br>Sends a response to a XMLHttpRequest
-content_send_style<a class="cmnd" id="ws_content_send_style">|`() -> nil`<br>Sends the standard Tasmota style
-content_flush<a class="cmnd" id="ws_content_flush">|`() -> nil`<br>Flush the buffer and send any buffered content to the client
-content_stop<a class="cmnd" id="ws_content_stop">|`() -> nil`<br>End of the response, closes the connection
+on<a class="cmnd" id="ws_on"></a>|`(prefix:string, callback:closure [, method:int]) -> nil`<br>Attaches a handler (any closure or function) to a prefix. An optional `method` argument (defaults to `webserver.HTTP_ANY` specifies the HTTP methods to be received (ANY, GET, POST, OPTIONS, POST)<BR>WARNING - this should be called only when receiving `web_add_handler` event. If called before the WebServer is set up and Wi-Fi on, it will crash. For debug purpose, it can be called later when you are sure that Wi-Fi or Ethernet is up.
+state<a class="cmnd" id="ws_state"></a>|`() -> int`<br>Returns the internal state of Tasmota web server. Possible values are `webserver.HTTP_OFF`, `webserver.HTTP_USER`, `webserver.HTTP_ADMIN`, `webserver.HTTP_MANAGER`, `webserver.HTTP_MANAGER_RESET_ONLY`.
+content_start<a class="cmnd" id="ws_content_start"></a>|`() -> nil`<br>Start response page
+content_response<a class="cmnd" id="ws_content_response"></a>|`(string) -> nil`<br>Sends a response to a XMLHttpRequest
+content_send_style<a class="cmnd" id="ws_content_send_style"></a>|`() -> nil`<br>Sends the standard Tasmota style
+content_flush<a class="cmnd" id="ws_content_flush"></a>|`() -> nil`<br>Flush the buffer and send any buffered content to the client
+content_stop<a class="cmnd" id="ws_content_stop"></a>|`() -> nil`<br>End of the response, closes the connection
 
 Module `webserver` also defines the following constants:
 
@@ -1016,13 +1027,13 @@ Simple tcp client supporting string and binary transfers:
 
 tcpclient Function|Parameters and details
 :---|:---
-connect<a class="cmnd" id="tcpclient_connect">|`connect(address:string, port:int [, timeout_ms:int]) -> bool`<BR>Connect to `addr:port` with optional timeout in milliseconds (default 2s).<BR>Returns `true` if connection was successful, the call is blocking until the connection succeeded to the timeout expired.
-connected<a class="cmnd" id="tcpclient_connected">|`connected() -> bool`<BR>Returns `true` if the connection was successful and is still valid (not dropped by server or closed by client)
-close<a class="cmnd" id="tcpclient_close">|`close() -> nil`<BR>Drops the current connection.
-write<a class="cmnd" id="tcpclient_write">|`content:string or bytes) -> int`<BR>Accepts either a string or a bytes buffer, returns the number of bytes sent. It's you responsibility to resend the missing bytes.<BR>Returns `0` if something went wrong.
-available<a class="cmnd" id="tcpclient_available">|`available() -> int`<BR>Returns the number of bytes received in buffer and ready to be read.
-read<a class="cmnd" id="tcpclient_read">|`read([max_len:int]) -> string`<BR>Returns all the bytes received in Rx buffer as `string`.<br>Optional `max_len` parameter limits the number of characters returned, or read as much as possible by default.
-readbytes<a class="cmnd" id="tcpclient_readbytes">|`read([max_bytes:int]) -> bytes()`<BR>Returns all the bytes received in Rx buffer as `bytes()`.<br>Optional `max_bytes` parameter limits the number of bytes returned, or read as much as possible by default.
+connect<a class="cmnd" id="tcpclient_connect"></a>|`connect(address:string, port:int [, timeout_ms:int]) -> bool`<BR>Connect to `addr:port` with optional timeout in milliseconds (default 2s).<BR>Returns `true` if connection was successful, the call is blocking until the connection succeeded to the timeout expired.
+connected<a class="cmnd" id="tcpclient_connected"></a>|`connected() -> bool`<BR>Returns `true` if the connection was successful and is still valid (not dropped by server or closed by client)
+close<a class="cmnd" id="tcpclient_close"></a>|`close() -> nil`<BR>Drops the current connection.
+write<a class="cmnd" id="tcpclient_write"></a>|`write(content:string or bytes) -> int`<BR>Accepts either a string or a bytes buffer, returns the number of bytes sent. It's you responsibility to resend the missing bytes.<BR>Returns `0` if something went wrong.
+available<a class="cmnd" id="tcpclient_available"></a>|`available() -> int`<BR>Returns the number of bytes received in buffer and ready to be read.
+read<a class="cmnd" id="tcpclient_read"></a>|`read([max_len:int]) -> string`<BR>Returns all the bytes received in Rx buffer as `string`.<br>Optional `max_len` parameter limits the number of characters returned, or read as much as possible by default.
+readbytes<a class="cmnd" id="tcpclient_readbytes"></a>|`read([max_bytes:int]) -> bytes()`<BR>Returns all the bytes received in Rx buffer as `bytes()`.<br>Optional `max_bytes` parameter limits the number of bytes returned, or read as much as possible by default.
 
 Full example:
 
@@ -1040,6 +1051,61 @@ tcp.close()
 print(r)
 ```
 
+### `tcpclientasync` class
+
+Variant of `tcpclient` using only non-blocking calls in full asynchronous mode. This allows to have multiple concurrent connections with fine-grained control over timeouts and no blocking of Tasmota. This is especially useful for Matter Border Router for ESP8266 Tasmota based devices via HTTP.
+
+All calls return immediately, so you need to poll the API periodically to send/receive data, and manage timeouts yourself.
+
+Typical equence:
+
+- create an instance of the client with `var tcp = tcpclientasync()`
+- connect to the server `tcp.connect(address:string, port:int) -> bool`. Address should be numerical IPv4 or IPv6 if you want the call to return immediately (i.e. do DNS resolution ahead of time), otherwise a DNS resolution might take some time and fail. If DNS failed, this call returns `false`.
+- regularly call `connected()` waiting for `true` to detect when the connection is established. While `connected()` returns `nil` then connection is in-progress. If `connected()` changes to `false` then the connection was refused by the host.
+- if the connection is not established after a definite amount of time, you should declare 'timeout' and call `close()`
+- to send data: first call `listening()` to ensure that the socket is ready to send data. Note: the socket is always listening when the connection was just established. Then call `write()` to send you data (string or bytes), this call returns the actual amount of data sent; if it is lower than your content, you need to handle yourself re-sending the remaining data. Note: ensuring that you send less than the MTU should keep you from happening (~1430 bytes max).
+- to receive data: first call `available()` to check if some data is ready to be received. Then call `read()` or `readbytes()` to get the buffer as string or bytes. You can limit the amount of data received, but in such case, the extra data is discarded and lost.
+- regularly call `connected()` to check if the connection is still up
+- finally call `close()` to close the connection on your side and free resources. It is implicitly called if the connection was closed from the peer.
+
+
+tcpclient Function|Parameters and details
+:---|:---
+connect<a class="cmnd" id="tcpclientasync_connect"></a>|`connect(address:string, port:int) -> bool`<BR>Initiates a connection to `addr:port`.<BR>If `addr` is in numerical format, DNS is immediate, and this calls returns immediately.<BR>If `addr` is a domain name, the DNS resolution is made in blocking mode and call returns `true` if successful, or `false` if DNS failed.<BR>Hence if you want a pure non-blocking mode, you should do the DNS resolution ahead of time.
+connected<a class="cmnd" id="tcpclientasync_connected"></a>|`connected() -> bool or nil`<BR>Returns:<BR>`nil` if the connection in still on-going and was not yet established<BR>`true` if the connection is established.<BR>`false` if the connection is down, either because it was refused or closed (if it changed from `true` to `false`)
+listening<a class="cmnd" id="tcpclientasync_listening"></a>|`listening() -> bool`<BR>Returns `true` if the socket is ready to send data (hence established and out buffer empty), or `false` if the out buffer is not empty or the connection is down.<BR>You should always wait for `listening()` to be `true` before calling `write()`.
+available<a class="cmnd" id="tcpclientasync_available"></a>|`available() -> int`<BR>Returns the number of bytes received in buffer and ready to be read, or `0` if nothing to read.
+close<a class="cmnd" id="tcpclientasync_close"></a>|`close() -> nil`<BR>Close the current connection and free the file descriptor.
+write<a class="cmnd" id="tcpclientasync_write"></a>|`write(content:string or bytes) -> int`<BR>Accepts either a string or a bytes buffer, returns the number of bytes sent. It's you responsibility to resend the missing bytes.<BR>Returns `0` if something went wrong.
+read<a class="cmnd" id="tcpclientasync_read"></a>|`read([max_len:int]) -> string`<BR>Returns all the bytes received in Rx buffer as `string`.<br>Optional `max_len` parameter limits the number of characters returned, or read as much as possible by default. However in the non-blocking version, limiting receive buffer will truncate (and lose) any extra data.
+readbytes<a class="cmnd" id="tcpclientasync_readbytes"></a>|`read([max_bytes:int]) -> bytes()`<BR>Returns all the bytes received in Rx buffer as `bytes()`.<br>Optional `max_bytes` parameter limits the number of bytes returned, or read as much as possible by default.  However in the non-blocking version, limiting receive buffer will truncate (and lose) any extra data.
+info<a class="cmnd" id="tcpclientasync_info"></a>|`info() -> map`<BR>Returns a map with various information about the socket.<BR>Example: `{'listening': true, 'local_addr': '192.168.1.20', 'available': false, 'fd': 50, 'connected': true, 'local_port': 64808}`<BR>`fd`: the file descriptor number used internally<BR>`connected`, `listening`, `available`: values of corresponding methods<BR>`local_addr`, `local_port`: local address used and local port.
+
+
+Full example:
+
+``` berry
+def try_connect(addr, port)
+  import string
+  var tcp = tcpclientasync()
+  var now = tasmota.millis()
+  var r = tcp.connect(addr, port)
+  print(string.format("Time=%5i state=%s", tasmota.millis()-now, str(tcp.connected())))
+  print(tcp.info())
+  tasmota.delay(50)
+  print(string.format("Time=%5i state=%s", tasmota.millis()-now, str(tcp.connected())))
+  print(tcp.info())
+  tasmota.delay(150)
+  print(string.format("Time=%5i state=%s", tasmota.millis()-now, str(tcp.connected())))
+  print(tcp.info())
+  tasmota.delay(500)
+  print(string.format("Time=%5i state=%s", tasmota.millis()-now, str(tcp.connected())))
+  print(tcp.info())
+  return tcp
+end
+tcp = try_connect("192.168.1.19", 80)
+```
+
 ### `tcpserver` class
 
 Simple tcp server (socket) listening for incoming connection on any port.
@@ -1052,9 +1118,9 @@ Simple tcp server (socket) listening for incoming connection on any port.
 
 tcpserver Function|Parameters and details
 :---|:---
-constructor<a class="cmnd" id="tcpserver_constructor">|`tcpserver(port:int) -> nit`<BR>Opens a socket on `port` and starts lisenting to new incoming connections. If the server can't open the socket (ex: it is already in use) an exception is raised
-hasclient<a class="cmnd" id="tcpserver_hasclient">|`hasclient() -> bool`<BR>Returns `true` if a new client connected to the socket, in such case you should call `accept()`. You need to call this method regularly (ex: in event loop or fast\_loop)
-accept<a class="cmnd" id="tcpserver_accept">|`accept() -> instance:tcpclient or nil`<BR>Returns an instance of `tcpclient` for the new incoming connection, or raise an exception if no connection is available. You should call `hasclient()` returning `true` before calling `accept()`.
+constructor<a class="cmnd" id="tcpserver_constructor"></a>|`tcpserver(port:int) -> nit`<BR>Opens a socket on `port` and starts lisenting to new incoming connections. If the server can't open the socket (ex: it is already in use) an exception is raised
+hasclient<a class="cmnd" id="tcpserver_hasclient"></a>|`hasclient() -> bool`<BR>Returns `true` if a new client connected to the socket, in such case you should call `accept()`. You need to call this method regularly (ex: in event loop or fast\_loop)
+accept<a class="cmnd" id="tcpserver_accept"></a>|`accept() -> instance:tcpclient or nil`<BR>Returns an instance of `tcpclient` for the new incoming connection, or raise an exception if no connection is available. You should call `hasclient()` returning `true` before calling `accept()`.
 
 Full example:
 ``` berry
@@ -1092,15 +1158,15 @@ When creating a local port, you need to use `udp->begin(<ip>, <port)>`. If `<ip>
 
 General Function|Parameters and details
 :---|:---
-udp()<a class="cmnd" id="udp_ctor">|`udp() -> <instance udp>`<br>Creates an instance of `udp` class.
-begin<a class="cmnd" id="udp_begin">|`begin(interface:string, port:int) -> bool`<BR>Create a UDP listener and sender on a specific interface (IP address) or on all interfaces if `interface` is an empty string<BR>Listen on a specific `port` number, or set `0` to choose a random free port for sending only<BR>Returns `true` if successful.
-begin_multicast<a class="cmnd" id="udp_begin_multicast">|`begin(ip:string, port:int) -> bool`<BR>Create a UDP listener and sender on interface `ip` and `port`. `ip` must be a multicast address.<BR>Returns `true` if successful.
-close<a class="cmnd" id="udp_close">|`close() -> bil`<BR>Closes UDP listener and sender, and frees resources. You can't send or receive anymore with this instance.
-send<a class="cmnd" id="udp_send">|`send(addr:string, port:int, payload:bytes) -> bool`<BR>Sends a packet to address `addr`, port `port` and message as `bytes()` buffer.<BR>Returns `true` if successful.
-send_multicast<a class="cmnd" id="udp_send_multicast">|`send(payload:bytes) -> bool`<BR>Sends a payload as `bytes()` buffer to the multicast address. `begin_multicast()` must have been previously called.<BR>Returns `true` if successful.<BT>You can also send a multicast packet with `send` if you specify the multicast address and port.
-read<a class="cmnd" id="udp_read">|`read() -> bytes() or nil`<BR>Reads any received udp packet as bytes() buffer, or `nil` if no packet was received.
-remote_ip<a class="cmnd" id="udp_remote_ip">|`remote_ip (string or nil)`<BR>Instance variable containing the remote ip (as string) from the last successful `read()` command.
-remote_port<a class="cmnd" id="udp_remote_port">|`remote_port (int or nil)`<BR>Instance variable containing the remote port (as int) from the last successful `read()` command.
+udp()<a class="cmnd" id="udp_ctor"></a>|`udp() -> <instance udp>`<br>Creates an instance of `udp` class.
+begin<a class="cmnd" id="udp_begin"></a>|`begin(interface:string, port:int) -> bool`<BR>Create a UDP listener and sender on a specific interface (IP address) or on all interfaces if `interface` is an empty string<BR>Listen on a specific `port` number, or set `0` to choose a random free port for sending only<BR>Returns `true` if successful.
+begin_multicast<a class="cmnd" id="udp_begin_multicast"></a>|`begin(ip:string, port:int) -> bool`<BR>Create a UDP listener and sender on interface `ip` and `port`. `ip` must be a multicast address.<BR>Returns `true` if successful.
+close<a class="cmnd" id="udp_close"></a>|`close() -> bil`<BR>Closes UDP listener and sender, and frees resources. You can't send or receive anymore with this instance.
+send<a class="cmnd" id="udp_send"></a>|`send(addr:string, port:int, payload:bytes) -> bool`<BR>Sends a packet to address `addr`, port `port` and message as `bytes()` buffer.<BR>Returns `true` if successful.
+send_multicast<a class="cmnd" id="udp_send_multicast"></a>|`send(payload:bytes) -> bool`<BR>Sends a payload as `bytes()` buffer to the multicast address. `begin_multicast()` must have been previously called.<BR>Returns `true` if successful.<BR>You can also send a multicast packet with `send` if you specify the multicast address and port.
+read<a class="cmnd" id="udp_read"></a>|`read() -> bytes() or `nil`<BR>Reads any received udp packet as bytes() buffer, or `nil` if no packet was received.
+remote_ip<a class="cmnd" id="udp_remote_ip"></a>|`remote_ip (string or nil)`<BR>Instance variable containing the remote ip (as string) from the last successful `read()` command.
+remote_port<a class="cmnd" id="udp_remote_port"></a>|`remote_port (int or nil)`<BR>Instance variable containing the remote port (as int) from the last successful `read()` command.
 
 #### Sending udp packets
 
@@ -1196,10 +1262,10 @@ mdns.add_service("_matterc","_udp", 5540, {"VP":"65521+32768", "SII":5000, "SAI"
 
 General Function|Parameters and details
 :---|:---
-start<a class="cmnd" id="mdns_start">|`mdns.start([hostname: string]) -> nil`<br>Start or restart mdns, specify a new hostname if needed or implicitly use `tasmota.hostname()` if none provided (default)
-stop<a class="cmnd" id="mdns_stop">|`mdns.stop() -> nil`<br>Free all mdns resources
-set_hostname<a class="cmnd" id="mdns_set_hostname">|`mdsn.set_hostname(hostname:string) -> nil`<br>Change the hostname
-add_service<a class="cmnd" id="mdns_add_service">|`mdns.add_service(service:string, proto:string, port:int, txt:map) -> nil`<br>Add a service declaration using the current hostname as instance name, and specify TXT fields as a `map`
+start<a class="cmnd" id="mdns_start"></a>|`mdns.start([hostname: string]) -> nil`<br>Start or restart mdns, specify a new hostname if needed or implicitly use `tasmota.hostname()` if none provided (default)
+stop<a class="cmnd" id="mdns_stop"></a>|`mdns.stop() -> nil`<br>Free all mdns resources
+set_hostname<a class="cmnd" id="mdns_set_hostname"></a>|`mdsn.set_hostname(hostname:string) -> nil`<br>Change the hostname
+add_service<a class="cmnd" id="mdns_add_service"></a>|`mdns.add_service(service:string, proto:string, port:int, txt:map) -> nil`<br>Add a service declaration using the current hostname as instance name, and specify TXT fields as a `map`
 
 ### Addressable leds (WS2812, SK6812)
 
@@ -1399,6 +1465,7 @@ Currently supported algorithms:
 - MD5
 - PKKDF2 with HMAC SHA256 key derivation - requires `#define USE_BERRY_CRYPTO_PBKDF2_HMAC_SHA256`
 - SHA256
+- JWT RS256 (RSASSA-PKCS1-v1_5 with SHA256) - requires `#define USE_BERRY_CRYPTO_RSA`
 
 #### `crypto.AES_CTR` class
 
@@ -1406,9 +1473,9 @@ Encrypt and decrypt, using AES CTR (Counter mode) with 256 bits keys.
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_ctr_init">|`AES_CTR.init(secret_key:bytes(32)) -> instance`<br>Initialise AES CTR instance with `secret_key` (256 bits) and `iv` (initialization vector or nonce, 96 bits)
-encrypt<a class="cmnd" id="aes_ctr_encrypt">|`encrypt(ciphertext:bytes, iv:bytes(12), cc:int) -> bytes`<br>Encrypt the ciphertext. The `iv` (Initialization Vector) must be 12 bytes, it can be the concatenation of 4 bytes Nonce and 8 bytes iv. `cc` is the counter (4 bytes) incremented for each block of 16 bytes.<BR>Note: the last counter value is not returned, so it is advised to encrypt all data at once.
-decrypt<a class="cmnd" id="aes_ctr_decrypt">|`decrypt(ciphertext:bytes, iv:bytes(12), cc:int) -> bytes`<br>Identical to `encrypt` above.
+init<a class="cmnd" id="aes_ctr_init"></a>|`AES_CTR.init(secret_key:bytes(32)) -> instance`<br>Initialise AES CTR instance with `secret_key` (256 bits) and `iv` (initialization vector or nonce, 96 bits)
+encrypt<a class="cmnd" id="aes_ctr_encrypt"></a>|`encrypt(ciphertext:bytes, iv:bytes(12), cc:int) -> bytes`<br>Encrypt the ciphertext. The `iv` (Initialization Vector) must be 12 bytes, it can be the concatenation of 4 bytes Nonce and 8 bytes iv. `cc` is the counter (4 bytes) incremented for each block of 16 bytes.<BR>Note: the last counter value is not returned, so it is advised to encrypt all data at once.
+decrypt<a class="cmnd" id="aes_ctr_decrypt"></a>|`decrypt(ciphertext:bytes, iv:bytes(12), cc:int) -> bytes`<br>Identical to `encrypt` above.
 
 Test vectors from <https://datatracker.ietf.org/doc/html/rfc4231>
 
@@ -1432,10 +1499,10 @@ Encrypt, decrypt and verify, using AES GCM (Gallois Counter Mode) with 256 bits 
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_gcm_init">|`AES_GCM.init(secret_key:bytes(32), iv:bytes(12)) -> instance`<br>Initialise AES GCM instance with `secret_key` (256 bits) and `iv` (initialization vector or nonce, 96 bits)
-encrypt<a class="cmnd" id="aes_gcm_encrypt">|`encrypt(ciphertext:bytes) -> bytes`<br>Encrypt the ciphertext. Can be called multiple times, the tag is updated accordingly
-decrypt<a class="cmnd" id="aes_gcm_decrypt">|`decrypt(ciphertext:bytes) -> bytes`<br>Decrypt the ciphertext. Can be called multiple times, the tag is updated accordingly
-tag<a class="cmnd" id="aes_gcm_tag">|`tag() -> bytes`<br>Compute the verification tag for the object encrypted or decrypted (128 bits).
+init<a class="cmnd" id="aes_gcm_init"></a>|`AES_GCM.init(secret_key:bytes(32), iv:bytes(12)) -> instance`<br>Initialise AES GCM instance with `secret_key` (256 bits) and `iv` (initialization vector or nonce, 96 bits)
+encrypt<a class="cmnd" id="aes_gcm_encrypt"></a>|`encrypt(ciphertext:bytes) -> bytes`<br>Encrypt the ciphertext. Can be called multiple times, the tag is updated accordingly
+decrypt<a class="cmnd" id="aes_gcm_decrypt"></a>|`decrypt(ciphertext:bytes) -> bytes`<br>Decrypt the ciphertext. Can be called multiple times, the tag is updated accordingly
+tag<a class="cmnd" id="aes_gcm_tag"></a>|`tag() -> bytes`<br>Compute the verification tag for the object encrypted or decrypted (128 bits).
 
 Example taken from <https://wizardforcel.gitbooks.io/practical-cryptography-for-developers-book/content/symmetric-key-ciphers/aes-encrypt-decrypt-examples.html>
 
@@ -1464,8 +1531,8 @@ Provides Elliptic Curve C25519 Diffie-Hellman key agreement. Requires `#define U
 
 General Function|Parameters and details
 :---|:---
-public_key<a class="cmnd" id="ec_c25519_public_key">|`crypto.EC_C25519().public_key(secret_key:bytes(32)) -> bytes(32)`<br>Computes the public key given a random private key.
-shared_key<a class="cmnd" id="ec_c25519_shared_key">|`crypto.EC_C25519().shared_key(our_private_key:bytes(32), their_public_key:bytes(32)) -> bytes(32)`<br>Compute a shared key (Diffie-Hellman) using our private key and the other party's public key. The other party will compute the same shared key using their private key and our pubic key.
+public_key<a class="cmnd" id="ec_c25519_public_key"></a>|`crypto.EC_C25519().public_key(secret_key:bytes(32)) -> bytes(32)`<br>Computes the public key given a random private key.
+shared_key<a class="cmnd" id="ec_c25519_shared_key"></a>|`crypto.EC_C25519().shared_key(our_private_key:bytes(32), their_public_key:bytes(32)) -> bytes(32)`<br>Compute a shared key (Diffie-Hellman) using our private key and the other party's public key. The other party will compute the same shared key using their private key and our pubic key.
 
 Example from test vectors <https://www.rfc-editor.org/rfc/rfc7748>:
 
@@ -1496,15 +1563,15 @@ Provides Elliptic Curve Prime256 (secp256r1) Diffie-Hellman key agreement and va
 
 General Function|Parameters and details
 :---|:---
-public_key<a class="cmnd" id="ec_p256_public_key">|`crypto.EC_P256().public_key(secret_key:bytes(32)) -> bytes(65)`<br>Computes the public key given a random private key. The result is uncompressed point coordinates starting with 0x04 (65 bytes in total)
-shared_key<a class="cmnd" id="ec_p256_shared_key">|`crypto.EC_P256().shared_key(our_private_key:bytes(32), their_public_key:bytes(65)) -> bytes(32)`<br>Compute a shared key (Diffie-Hellman) using our private key and the other party's public key. The other party will compute the same shared key using their private key and our pubic key.<BR>The result is actually the X coordinate of the multiplication of the points coordinates of the public key, and a large number (private key)
+public_key<a class="cmnd" id="ec_p256_public_key"></a>|`crypto.EC_P256().public_key(secret_key:bytes(32)) -> bytes(65)`<br>Computes the public key given a random private key. The result is uncompressed point coordinates starting with 0x04 (65 bytes in total)
+shared_key<a class="cmnd" id="ec_p256_shared_key"></a>|`crypto.EC_P256().shared_key(our_private_key:bytes(32), their_public_key:bytes(65)) -> bytes(32)`<br>Compute a shared key (Diffie-Hellman) using our private key and the other party's public key. The other party will compute the same shared key using their private key and our pubic key.<BR>The result is actually the X coordinate of the multiplication of the points coordinates of the public key, and a large number (private key)
 
 Specific Functions|Parameters and details
 :---|:---
-mod<a class="cmnd" id="ec_p256_mod">|`crypto.EC_P256().mod(data:bytes()) -> bytes(32)`<br>Computes the modulus of an arbitrary large number. The modulus is done towards the order of the curve.
-neg<a class="cmnd" id="ec_p256_neg">|`crypto.EC_P256().neg(data:bytes(32)) -> bytes(32)`<br>`-x mod p` or `p - x` if `x` is lower than `p`<br>Computes the opposite (negate) of a number modulus the order of the curve (it's actuall modulus - data).
-mul<a class="cmnd" id="ec_p256_mul">|`crypto.EC_P256().mul(x:bytes(), A:bytes(65)) -> bytes(65)`<br>`x * A`<br>Computes multiplication of a number and a point on the curve.<br>`x` needs to be smaller than `p`, use `mod()` if not sure<br>The function checks that the point `A` is on the curve, or raises an error
-muladd<a class="cmnd" id="ec_p256_muladd">|`crypto.EC_P256().muladd(x:bytes(), A:bytes(65), y:bytes(), B:bytes(65)) -> bytes(65)`<br>`x * A + y * B`<br>`x` and `y` need to be smaller than `p`, use `mod()` if not sure<br>The function checks that the points `A` and `B` are on the curve, or raises an error<br>If `B` is empty `bytes()`, the Generator `P` of the curve is used instead.
+mod<a class="cmnd" id="ec_p256_mod"></a>|`crypto.EC_P256().mod(data:bytes()) -> bytes(32)`<br>Computes the modulus of an arbitrary large number. The modulus is done towards the order of the curve.
+neg<a class="cmnd" id="ec_p256_neg"></a>|`crypto.EC_P256().neg(data:bytes(32)) -> bytes(32)`<br>`-x mod p` or `p - x` if `x` is lower than `p`<br>Computes the opposite (negate) of a number modulus the order of the curve (it's actuall modulus - data).
+mul<a class="cmnd" id="ec_p256_mul"></a>|`crypto.EC_P256().mul(x:bytes(), A:bytes(65)) -> bytes(65)`<br>`x * A`<br>Computes multiplication of a number and a point on the curve.<br>`x` needs to be smaller than `p`, use `mod()` if not sure<br>The function checks that the point `A` is on the curve, or raises an error
+muladd<a class="cmnd" id="ec_p256_muladd"></a>|`crypto.EC_P256().muladd(x:bytes(), A:bytes(65), y:bytes(), B:bytes(65)) -> bytes(65)`<br>`x * A + y * B`<br>`x` and `y` need to be smaller than `p`, use `mod()` if not sure<br>The function checks that the points `A` and `B` are on the curve, or raises an error<br>If `B` is empty `bytes()`, the Generator `P` of the curve is used instead.
 
 Example:
 
@@ -1541,7 +1608,7 @@ Provides HKDF using HMAC SHA256 key derivation. Turns 'ikm' (input keying materi
 
 General Function|Parameters and details
 :---|:---
-derive<a class="cmnd" id="aes_hkdf_sha256_derive">|`crypto.HKDF_SHA256().derive(ikm:bytes(), salt:bytes(), info:bytes(), out_bytes:int) -> bytes(out_bytes)`<br>Computes a key derivation function<br>`ikm` is the input keying material, typically a password<br>`salt` can be empty<br>`info` can be empty and is used to create multiple derived keys<br>`out_bytes` indicates the number of bytes to generate (between 1 and 256)
+derive<a class="cmnd" id="aes_hkdf_sha256_derive"></a>|`crypto.HKDF_SHA256().derive(ikm:bytes(), salt:bytes(), info:bytes(), out_bytes:int) -> bytes(out_bytes)`<br>Computes a key derivation function<br>`ikm` is the input keying material, typically a password<br>`salt` can be empty<br>`info` can be empty and is used to create multiple derived keys<br>`out_bytes` indicates the number of bytes to generate (between 1 and 256)
 
 Test vectors from <https://www.rfc-editor.org/rfc/rfc5869>
 
@@ -1579,7 +1646,7 @@ Provides PBKDF2 using HMAC SHA256 key derivation. Turns a password into a hash.
 
 General Function|Parameters and details
 :---|:---
-derive<a class="cmnd" id="aes_pbkdf2_hmac_sha256_derive">|`crypto.PBKDF2_HMAC_SHA256().derive(password:bytes(), salt:bytes(), iterations:int, out_bytes:int) -> bytes(out_bytes)`<br>Computes a key derivation function<br>`password` is the input keying material<br>`salt` can be empty `bytes()`<br>`iterations` counts the number of iterations of HMAC, limited to 10000 to make computation short enough for ESP32<br>`out_bytes` indicates the number of bytes to generate (between 1 and 256)
+derive<a class="cmnd" id="aes_pbkdf2_hmac_sha256_derive"></a>|`crypto.PBKDF2_HMAC_SHA256().derive(password:bytes(), salt:bytes(), iterations:int, out_bytes:int) -> bytes(out_bytes)`<br>Computes a key derivation function<br>`password` is the input keying material<br>`salt` can be empty `bytes()`<br>`iterations` counts the number of iterations of HMAC, limited to 10000 to make computation short enough for ESP32<br>`out_bytes` indicates the number of bytes to generate (between 1 and 256)
 
 Test vectors from <https://github.com/brycx/Test-Vector-Generation/blob/master/PBKDF2/pbkdf2-hmac-sha2-test-vectors.md>
 
@@ -1604,9 +1671,9 @@ Provides SHA256 hashing function
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_sha256_init">|`HMAC_SHA256.init() -> instance`<br>Initialise SHA256 hashing function
-update<a class="cmnd" id="aes_sha256_update">|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained.
-out<a class="cmnd" id="aes_sha256_out">|`out() -> bytes(32)`<br>Output the value of the hash
+init<a class="cmnd" id="aes_sha256_init"></a>|`HMAC_SHA256.init() -> instance`<br>Initialise SHA256 hashing function
+update<a class="cmnd" id="aes_sha256_update"></a>|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained.
+out<a class="cmnd" id="aes_sha256_out"></a>|`out() -> bytes(32)`<br>Output the value of the hash
 
 Example test vectors from <https://www.dlitz.net/crypto/shad256-test-vectors/>
 
@@ -1628,9 +1695,9 @@ Provides HMAC SHA256 hashing function
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_hmac_sha256_init">|`HMAC_SHA256.init(key:bytes) -> instance`<br>Initialise HMAC_SHA256 hashing function with a provided key
-update<a class="cmnd" id="aes_hmac_sha256_update">|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained
-out<a class="cmnd" id="aes_hmac_sha256_out">|`out() -> bytes(32)`<br>Output the value of the hash
+init<a class="cmnd" id="aes_hmac_sha256_init"></a>|`HMAC_SHA256.init(key:bytes) -> instance`<br>Initialise HMAC_SHA256 hashing function with a provided key
+update<a class="cmnd" id="aes_hmac_sha256_update"></a>|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained
+out<a class="cmnd" id="aes_hmac_sha256_out"></a>|`out() -> bytes(32)`<br>Output the value of the hash
 
 Test case from <https://datatracker.ietf.org/doc/html/rfc4231>:
 
@@ -1644,6 +1711,108 @@ hmac = h.out()
 assert(hmac == bytes("5bdcc146bf60754e6a042426089575c75a003f089d2739839dec58b964ec3843"))
 ```
 
+#### `crypto.RSA` class
+
+Provides RSA core features, currently only JWT RS256 signing (RSASSA-PKCS1-v1_5 with SHA256) - requires `#define USE_BERRY_CRYPTO_RSA`
+
+Function|Parameters and details
+:---|:---
+rs256<a class="cmnd" id="aes_rsa_rs256"></a>|`crypto.RSA.rs256HMAC_SHA256.init(private_key:bytes(), payload:bytes()) -> bytes()`<br>Sign a payload with an RSA private key in DER binary format.<br>`private_key`: (bytes) contains the binary DER (ASN.1) private key, see example below to convert from PEM.<br>`payload` (bytes) JWT payload to sign, it should be derived from JSON encoded as base64url<br>Outputs a `bytes()` array of the payload, hashed with SHA256 and signed with the RSA private key. The output is 256 bytes longs for a 2048 RSA key.
+
+
+!!! example "Signing a full JWT token with RS256"
+
+    ``` berry
+    import string
+    import crypto
+
+    # JWT requires base64url and not raw base64
+    # see https://base64.guru/standards/base64url
+    # input: string or bytes
+    def base64url(v)
+      import string
+      if type(v) == 'string'   v = bytes().fromstring(v) end
+      var b64 = v.tob64()
+      # remove trailing padding
+      b64 = string.tr(b64, '=', '')
+      b64 = string.tr(b64, '+', '-')
+      b64 = string.tr(b64, '/', '_')
+      return b64
+    end
+
+    # JWT header and claim
+    var header = '{"alg":"RS256","typ":"JWT"}'
+    var claim = '{"sub":"1234567890","name":"John Doe","admin":true,"iat":1516239022}'
+    var b64header = base64url(header)
+    var b64claim = base64url(claim)
+
+    assert(b64header == 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9')
+    assert(b64claim == 'eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0')
+
+    # `body` is the payload to sign with RS256
+    var body = b64header + '.' + b64claim
+    assert(body == 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0')
+
+    var private_key =
+    '-----BEGIN PRIVATE KEY-----\n'+
+    'MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC7VJTUt9Us8cKj\n'+
+    'MzEfYyjiWA4R4/M2bS1GB4t7NXp98C3SC6dVMvDuictGeurT8jNbvJZHtCSuYEvu\n'+
+    'NMoSfm76oqFvAp8Gy0iz5sxjZmSnXyCdPEovGhLa0VzMaQ8s+CLOyS56YyCFGeJZ\n'+
+    'qgtzJ6GR3eqoYSW9b9UMvkBpZODSctWSNGj3P7jRFDO5VoTwCQAWbFnOjDfH5Ulg\n'+
+    'p2PKSQnSJP3AJLQNFNe7br1XbrhV//eO+t51mIpGSDCUv3E0DDFcWDTH9cXDTTlR\n'+
+    'ZVEiR2BwpZOOkE/Z0/BVnhZYL71oZV34bKfWjQIt6V/isSMahdsAASACp4ZTGtwi\n'+
+    'VuNd9tybAgMBAAECggEBAKTmjaS6tkK8BlPXClTQ2vpz/N6uxDeS35mXpqasqskV\n'+
+    'laAidgg/sWqpjXDbXr93otIMLlWsM+X0CqMDgSXKejLS2jx4GDjI1ZTXg++0AMJ8\n'+
+    'sJ74pWzVDOfmCEQ/7wXs3+cbnXhKriO8Z036q92Qc1+N87SI38nkGa0ABH9CN83H\n'+
+    'mQqt4fB7UdHzuIRe/me2PGhIq5ZBzj6h3BpoPGzEP+x3l9YmK8t/1cN0pqI+dQwY\n'+
+    'dgfGjackLu/2qH80MCF7IyQaseZUOJyKrCLtSD/Iixv/hzDEUPfOCjFDgTpzf3cw\n'+
+    'ta8+oE4wHCo1iI1/4TlPkwmXx4qSXtmw4aQPz7IDQvECgYEA8KNThCO2gsC2I9PQ\n'+
+    'DM/8Cw0O983WCDY+oi+7JPiNAJwv5DYBqEZB1QYdj06YD16XlC/HAZMsMku1na2T\n'+
+    'N0driwenQQWzoev3g2S7gRDoS/FCJSI3jJ+kjgtaA7Qmzlgk1TxODN+G1H91HW7t\n'+
+    '0l7VnL27IWyYo2qRRK3jzxqUiPUCgYEAx0oQs2reBQGMVZnApD1jeq7n4MvNLcPv\n'+
+    't8b/eU9iUv6Y4Mj0Suo/AU8lYZXm8ubbqAlwz2VSVunD2tOplHyMUrtCtObAfVDU\n'+
+    'AhCndKaA9gApgfb3xw1IKbuQ1u4IF1FJl3VtumfQn//LiH1B3rXhcdyo3/vIttEk\n'+
+    '48RakUKClU8CgYEAzV7W3COOlDDcQd935DdtKBFRAPRPAlspQUnzMi5eSHMD/ISL\n'+
+    'DY5IiQHbIH83D4bvXq0X7qQoSBSNP7Dvv3HYuqMhf0DaegrlBuJllFVVq9qPVRnK\n'+
+    'xt1Il2HgxOBvbhOT+9in1BzA+YJ99UzC85O0Qz06A+CmtHEy4aZ2kj5hHjECgYEA\n'+
+    'mNS4+A8Fkss8Js1RieK2LniBxMgmYml3pfVLKGnzmng7H2+cwPLhPIzIuwytXywh\n'+
+    '2bzbsYEfYx3EoEVgMEpPhoarQnYPukrJO4gwE2o5Te6T5mJSZGlQJQj9q4ZB2Dfz\n'+
+    'et6INsK0oG8XVGXSpQvQh3RUYekCZQkBBFcpqWpbIEsCgYAnM3DQf3FJoSnXaMhr\n'+
+    'VBIovic5l0xFkEHskAjFTevO86Fsz1C2aSeRKSqGFoOQ0tmJzBEs1R6KqnHInicD\n'+
+    'TQrKhArgLXX4v3CddjfTRJkFWDbE/CkvKZNOrcf1nhaGCPspRJj2KUkj1Fhl9Cnc\n'+
+    'dn/RsYEONbwQSjIfMPkvxF+8HQ==\n'+
+    '-----END PRIVATE KEY-----\n'
+
+    # public_key for reference but not actually used here
+    var public_key =
+    '-----BEGIN PUBLIC KEY-----\n'+
+    'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu1SU1LfVLPHCozMxH2Mo\n'+
+    '4lgOEePzNm0tRgeLezV6ffAt0gunVTLw7onLRnrq0/IzW7yWR7QkrmBL7jTKEn5u\n'+
+    '+qKhbwKfBstIs+bMY2Zkp18gnTxKLxoS2tFczGkPLPgizskuemMghRniWaoLcyeh\n'+
+    'kd3qqGElvW/VDL5AaWTg0nLVkjRo9z+40RQzuVaE8AkAFmxZzow3x+VJYKdjykkJ\n'+
+    '0iT9wCS0DRTXu269V264Vf/3jvredZiKRkgwlL9xNAwxXFg0x/XFw005UWVRIkdg\n'+
+    'cKWTjpBP2dPwVZ4WWC+9aGVd+Gyn1o0CLelf4rEjGoXbAAEgAqeGUxrcIlbjXfbc\n'+
+    'mwIDAQAB\n'+
+    '-----END PUBLIC KEY-----\n'
+
+    # read private_key as DER binary
+    while (private_key[-1] == '\n') private_key = private_key[0..-2] end
+    var private_key_DER = bytes().fromb64(string.split(private_key, '\n')[1..-2].concat())
+
+    # comparison with what was expected
+    assert(private_key_DER.tob64() == 'MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC7VJTUt9Us8cKjMzEfYyjiWA4R4/M2bS1GB4t7NXp98C3SC6dVMvDuictGeurT8jNbvJZHtCSuYEvuNMoSfm76oqFvAp8Gy0iz5sxjZmSnXyCdPEovGhLa0VzMaQ8s+CLOyS56YyCFGeJZqgtzJ6GR3eqoYSW9b9UMvkBpZODSctWSNGj3P7jRFDO5VoTwCQAWbFnOjDfH5Ulgp2PKSQnSJP3AJLQNFNe7br1XbrhV//eO+t51mIpGSDCUv3E0DDFcWDTH9cXDTTlRZVEiR2BwpZOOkE/Z0/BVnhZYL71oZV34bKfWjQIt6V/isSMahdsAASACp4ZTGtwiVuNd9tybAgMBAAECggEBAKTmjaS6tkK8BlPXClTQ2vpz/N6uxDeS35mXpqasqskVlaAidgg/sWqpjXDbXr93otIMLlWsM+X0CqMDgSXKejLS2jx4GDjI1ZTXg++0AMJ8sJ74pWzVDOfmCEQ/7wXs3+cbnXhKriO8Z036q92Qc1+N87SI38nkGa0ABH9CN83HmQqt4fB7UdHzuIRe/me2PGhIq5ZBzj6h3BpoPGzEP+x3l9YmK8t/1cN0pqI+dQwYdgfGjackLu/2qH80MCF7IyQaseZUOJyKrCLtSD/Iixv/hzDEUPfOCjFDgTpzf3cwta8+oE4wHCo1iI1/4TlPkwmXx4qSXtmw4aQPz7IDQvECgYEA8KNThCO2gsC2I9PQDM/8Cw0O983WCDY+oi+7JPiNAJwv5DYBqEZB1QYdj06YD16XlC/HAZMsMku1na2TN0driwenQQWzoev3g2S7gRDoS/FCJSI3jJ+kjgtaA7Qmzlgk1TxODN+G1H91HW7t0l7VnL27IWyYo2qRRK3jzxqUiPUCgYEAx0oQs2reBQGMVZnApD1jeq7n4MvNLcPvt8b/eU9iUv6Y4Mj0Suo/AU8lYZXm8ubbqAlwz2VSVunD2tOplHyMUrtCtObAfVDUAhCndKaA9gApgfb3xw1IKbuQ1u4IF1FJl3VtumfQn//LiH1B3rXhcdyo3/vIttEk48RakUKClU8CgYEAzV7W3COOlDDcQd935DdtKBFRAPRPAlspQUnzMi5eSHMD/ISLDY5IiQHbIH83D4bvXq0X7qQoSBSNP7Dvv3HYuqMhf0DaegrlBuJllFVVq9qPVRnKxt1Il2HgxOBvbhOT+9in1BzA+YJ99UzC85O0Qz06A+CmtHEy4aZ2kj5hHjECgYEAmNS4+A8Fkss8Js1RieK2LniBxMgmYml3pfVLKGnzmng7H2+cwPLhPIzIuwytXywh2bzbsYEfYx3EoEVgMEpPhoarQnYPukrJO4gwE2o5Te6T5mJSZGlQJQj9q4ZB2Dfzet6INsK0oG8XVGXSpQvQh3RUYekCZQkBBFcpqWpbIEsCgYAnM3DQf3FJoSnXaMhrVBIovic5l0xFkEHskAjFTevO86Fsz1C2aSeRKSqGFoOQ0tmJzBEs1R6KqnHInicDTQrKhArgLXX4v3CddjfTRJkFWDbE/CkvKZNOrcf1nhaGCPspRJj2KUkj1Fhl9Cncdn/RsYEONbwQSjIfMPkvxF+8HQ==')
+
+    # sign body
+    var body_b64 = bytes().fromstring(body)
+    var sign = crypto.RSA.rs256(private_key_DER, body_b64)
+    var b64sign = base64url(sign)
+
+    # check output
+    assert(b64sign == 'NHVaYe26MbtOYhSKkoKYdFVomg4i8ZJd8_-RU8VNbftc4TSMb4bXP3l3YlNWACwyXPGffz5aXHc6lty1Y2t4SWRqGteragsVdZufDn5BlnJl9pdR_kdVFUsra2rWKEofkZeIC4yWytE58sMIihvo9H1ScmmVwBcQP6XETqYd0aSHp1gOa9RdUPDvoXQ5oqygTqVtxaDr6wUFKrKItgBMzWIdNZ6y7O9E0DhEPTbE9rfBo6KTFsHAZnMg4k68CDp2woYIaXbmYTWcvbzIuHO7_37GT79XdIwkm95QJ7hYC9RiwrV7mesbY4PAahERJawntho0my942XheVLmGwLMBkQ')
+
+    # Final token:
+    var jwt_token = payload + '.' + b64sign
+    ```
 
 #### `crypto.MD5` class
 
@@ -1651,9 +1820,9 @@ Provides MD5 hashing function.
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_md5_init">|`MD5.init() -> instance`<br>Initialise MD5 hashing function
-update<a class="cmnd" id="aes_md5_update">|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained.
-finish<a class="cmnd" id="aes_md5_finish">|`finish() -> bytes(16)`<br>Finish the MD5 calculation and output the result (16 bytes)
+init<a class="cmnd" id="aes_md5_init"></a>|`MD5.init() -> instance`<br>Initialise MD5 hashing function
+update<a class="cmnd" id="aes_md5_update"></a>|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained.
+finish<a class="cmnd" id="aes_md5_finish"></a>|`finish() -> bytes(16)`<br>Finish the MD5 calculation and output the result (16 bytes)
 
 Test vector:
 
@@ -1666,11 +1835,217 @@ m = h.finish()
 assert(m == bytes("9e107d9d372bb6826bd81d3542a419d6"))
 ```
 
+## Philips Hue emulation for Alexa
+Berry extends the native Hue/Alexa emulation and makes it possible to handle any number of virtual lights. You can easily define "virtual" lights in Berry, respond to commands from Alexa and send light status.
+
+It is up to you to define the final behavoir. For example you could control some fancy devices, light strips or whatever takes on/off, dimmer or RGB commands. Your imagination is the limit.
+
+Hue emulation requires both `#define USE_EMULATION` and 
+`#define USE_EMULATION_HUE`. Emulation must also be enabled with `Emulation 2` command.
+
+### `light_state` class
+
+The core class is `light_state` which represents a virtual light.
+
+`light_state` general methods:
+
+Methods|Parameters and details
+:---|:---
+init<a class="cmnd" id="aes_md5_init"></a>|`light_state.init(channels:int) -> instance`<br>Creates a `light_state` instance for a light with `channels` channels.<BR>Constants are:<BR>`light_state.RELAY` = `0`<BR>`light_state.DIMMER` = `1`<BR>`light_state.CT` = `2`<BR>`light_state.RGB` = `3`<BR>`light_state.RGBW` = `4`<BR>`light_state.RGBCT` = `5`
+signal_change|`signal_change() -> nil`<br>Called when a changed was triggered by Alexa.<BR>You can sub-class this class and override this method. Alternatively you can also poll for any change.
+
+`light_state` getters:
+
+Attributes|Parameters and details
+:---|:---
+power|`(bool)` on/off state
+reachable|`(bool)` light is reachable
+type|`(int)` number of channels of the light
+bri|`(int)` brightness of the light (0..255)
+ct|`(int)` white temperature of the light (153..500)
+sat|`(int)` saturation of the light (0..255)
+hue|`(int)` hue of the light (0..360)
+hue16|`(int)` hue as 16 bits (0..65535)
+r<BR>g<BR>b|`(int)` Red Green Blue channels (0..255)
+x<BR>y|`(float)` x/y color as floats (0.0 .. 1.0)
+mode_ct<BR>mode_rgb|`(bool)` light is in RGB or CT mode
+get|`get() -> map` returns the complete state of the light as a map<BR>Exemple:<BR>`{'rgb': '1E285A', 'hue': 230, 'type': 5, 'power': false, 'bri': 90, 'mode_rgb': true, 'sat': 170, 'mode_ct': false, 'channels': [30, 40, 90, 0, 0]}`
+
+`light_state` setters:
+
+Methods|Parameters and details
+:---|:---
+set\_power|`set_power(bool) -> nil` sets on/off state
+set\_reachable|`set_reachable(bool) -> nil` sets the reachable state
+set\_bri|`set_bri(int) -> nil` sets the brightness (0..255)
+set\_ct|`set_ct(int) -> nil` sets the white temperature (153..500)
+set\_sat|`set_sat(int) -> nil` sets the saturation (0..255)
+set\_huesat|`set_huesat(hue:int, sat:int) -> nil` sets hue and saturation (0..360, 0..255)
+set\_hue16sat|`set_hue16sat(hue16:int, sat:int) -> nil` sets hue16 and saturation (0..65535, 0..255)
+set\_rgb|`set_rgb(r:int, g:int, b=int) -> nil` sets red/green/blue channels (0..255 x 3)
+set\_xy|`set_xy(x:float, y:float) -> nil` sets color as x/y (0.0 .. 1.0 x 2)
+
+`light_state` static helper functions:
+
+Methods|Parameters and details
+:---|:---
+gamma8|`gamma8(int) -> nil` applies gamma correction to 8 bits value (0..255)
+gamma10|`gamma10(int) -> nil` applies gamma correction to 10 bits value (0..1023)
+reverse\_gamma10|`reverse_gamma10(int) -> nil` applies reverse gamma correction to 10 bits value (0..1023)
+
+### `hue_bridge` module
+
+Use `import hue_bridge` and declare all the virtual lights. Example:
+
+```berry
+# put this in `autoexec.be`
+import hue_bridge
+
+l1 = light_state(light_state.DIMMER)
+hue_bridge.add_light(11, l1, "Synthetic Dimmer", "V1", "Tasmota Factory")
+
+l2 = light_state(light_state.CT)
+hue_bridge.add_light(12, l2, "Synthetic CT", "V1", "Tasmota Factory")
+
+l5 = light_state(light_state.RGBCT)
+hue_bridge.add_light(15, l5, "Synthetic RGBCT")
+```
+
+When you start the Hue pairing, all virtual lights are advertized. You need to make sure that virtual lights are defined at each restart (in `autoexec.be` for example).
+
+`hue_bridge` functions:
+
+Methods|Parameters and details
+:---|:---
+add\_light|`add_light(id:int, light:instance of light_state, name:string [, model:string, manuf:strin]) -> light`<BR>Adds an virtual light to the Hue bridge.<BR>`id` = numerical identifier of the Hue light. Using low numbers avoids conflict with real lights from Tasmota<BR>`light` = instance of `light_state` handling the state and behavior of the light<BR>`name` = name of the light as displayed in the Alexa app (can be overriden in the app)<BR>`model` (opt) = name of the manufacturer model, defaults to "Unkwnon"<BR>`manuf` (opt) = name of the manufacturer, defaults to "Tasmota"
+remove\_light|`remove_light(id:int) -> nil`<BR>Removes a light from the Hue bridge by hue id.
+light_to_id|`light_to_id(light:instance) -> int` converts a registered `light_instance` instance to its Hue id
+
+## Zigbee
+
+For Zigbee coordinators, there is a Berry mapping that allows explore Zigbee configurations and devices. It also allows to intercept incoming message (low and high level) and transform messages before they reach the Tasmota layer. This is useful for non-standard Zigbee devices for which Zigbee plug-ins are not sufficient.
+
+Note: the following are only available when compiling with `#define USE_ZIGBEE`
+
+Internally, the Tasmota Zigbee engine calls `callBerryZigbeeDispatcher()` at key points to allow your Berry code to take over and change messages on-the-fly.
+
+### `import zigbee`
+
+First step is to use `import zigbee` which returns an instance (monad) of `zb_coord()`.
+
+General methods|Parameters and details
+:---|:---
+info|`zigbee.info() -> map` returns a map with general configuration of the Zigbee coordinator.<BR>Format is identical to `ZbConfig`<BR>Example: <BR>`{'ext_pan_id': '0xCCCCCCCCA11A2233', 'tx_radio': 20, 'shortaddr': 0, 'longaddr': '0x00124B0026BAABBC', 'channel': 11, 'pan_id': 837, 'pan_id_hex': '0x0345', 'shortaddr_hex': '0x0000'}`
+size|`zigbee.size() -> int` returns the number of devices knwon by the coordinator
+iter|`zigbee.iter() -> iterator`<BR>Returns an iterator on all zigbee devices<BR>Use compact implicit form `for ze: zigbee  [...]  end`
+item<BR>\[\]|`zigbee.item(shortaddr:int) -> instance of zb_device`<BR>Returns the Zigbee device with short address `shortaddr`<BR>You can use the compact syntax `zigbee[0xFAB6]`
+abort|`zigbee.abort() -> nil` aborts the initialization of Zigbee MCU. To be used when initialization of Zigbee failed
+
+### `zb_device` class
+
+The class `zb_device` contains all known information about a paired Zigbee device (end-device or router). You can't create a `zb_device` from scratch, they most be retrieved from `zigbee` object.
+
+`zb_device` instances can only be read, you can't change directly any attribute.
+
+Getter methods|Parameters and details
+:---|:---
+shortaddr|`shortaddr -> int` returns the 16 bits short address
+longaddr|`longaddr -> bytes` returns the long 64 bits address as 8 bytes (or all zeroes if unknown)
+name|`name -> string` returns the friendlyname of the device or `0x....` hex name if no friendlyname was defined using `ZbName` command
+reachable|`reachable -> bool` is the device reachable, i.e. did it respond last time we tried to contact them
+hidden|`hidden -> bool` is the device declared as hidden, i.e. not announced in Hue emulation
+router|`router -> bool` is the device known to be a router
+model|`model -> string` model of the device
+manufacturer|`manufacturer -> string` manufacturer name of the device
+lastseen|`lastseen -> int` timestamp (epoch) when the device was last seen
+lqi|`lqi -> int` radion strength and quality when the device was last seen
+battery|`battery -> int` percentage of battery, or `-1` if unknwon of no battery
+battery\_lastseen|`battery_lastseen -> int` timestamp (epoch) when the battery was last reported, or `-1`
+
+Example:
+```berry
+import zigbee
+
+# show all devices
+for z: zigbee
+  print(z)
+end
+
+# output:
+<instance: zb_device(0xB955, 0x842E14FFFE139AF4, name:'Plug_Office', model:'TS0121', manufacturer:'_TZ3000_g5xawfcq')>
+[...]
+```
+
+### Changing Zigbee values on-the-fly
+
+Whenever a Zigbee message is received (typically values of attributes), the Tasmota Zigbee engines generates events at key points which allow custom Berry code to intercept and change messages on-the-fly.
+
+Messages are sent in the following order:
+
+- `frame_received`: (low-level) the raw zigbee message is passed as `bytes` and attributes are not yet decoded. The `bytes` buffer can be modified and passed back to the Tasmota Zigbee engine.
+- `attributes_raw`: (mid-level) Zigbee attributes are decoded but no transformation is applied yet. Attributes are only available in cluser/attribute format, names are not decoded and plug-ins are not yet applied.<BR>This is the perfect moment to change non-standard attributes and map them to standard ones.
+- `attributes_refined`: (high-level) Attributes are mapped to their names (when possible) and all transformations are applied. This is the last chance to change values.
+
+The format of methods are the following:
+`def <zigbee event>(event_type, frame, attr_list, idx)`
+
+Argument|Description
+---|---
+`event_type`|(string) can take values: `frame_received`, `attributes_raw` or `attributes_refined`
+`frame`|(instance of `zcl_frame`) low-level ZCL frame<BR>Always present
+`attr_list`|(instance of `XXX`) list of attributes.<BR>This attribute is `nil` for `frame_received`, contains raw attributes in `attributes_raw` and refined attributes in `attributes_refined`
+`idx`|(int 16 bits unsigned) contains the Zigbee short address
+
+Example, if you want to dump all the traffic passed:
+
+``` berry
+import zigbee
+class my_zb_handler
+  def frame_received(event_type, frame, attr_list, idx)
+    print("frame_received",event_type, frame, attr_list, idx)
+  end
+  def attributes_raw(event_type, frame, attr_list, idx)
+    print("attributes_raw")
+  end
+  def attributes_refined(event_type, frame, attr_list, idx)
+    print("attributes_refined")
+  end
+
+end
+
+var my_handler = my_zb_handler()
+zigbee.add_handler(my_handler)
+```
+
+#### Changing zigbee frame, `zcl_frame` class
+
+The `zcl_frame` represents a low-level ZCL (Zigbee Cluster Library) structure before any decoding or specific processing. You generally prefer to modify a frame later on when attributes or commands are decoded.
+
+class `zcl_frame`:
+
+Attributes (read or write)|Details
+:---|:---
+`srcendpoint`|`uint8` source endpoint
+`dtsendpoint`|`uint8` destination endpoint
+`shortaddr`|`uint16` destination short address
+`groupadddr`|`uint16` destination multicast group address (if shortaddr is 0xFFFE)
+`cluster`|`uint16` cluster number
+`cmd`|`uint8` ZCL command number
+`cluster_specific`|`flag 0/1` is the command general or cluster specific
+`manuf`|`uint16` manufacturer specific number (or 0x0000)
+`needs_response`|`flag 0/1` does this frame needs a response
+`payload`|`bytes()` bytes of the actual data (use with caution, can be read and changed)
+ |The following are rarely used flags
+`direct`|`flag 0/1` is the frame to be sent directly only (not routed)
+`transactseq`|`uint8` transaction number (read only)
+`transactseq_set`|`uint8` transaction number (write only - if you need to change it)
+
+
 ## Compiling Berry
 
 Berry is included if the following is defined in `user_config_override.h`:
 
-``` C
+```C
 #define USE_BERRY
 ```
 

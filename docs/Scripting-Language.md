@@ -364,6 +364,14 @@ A web user interface may be generated containing any of the following elements:
  `txt1` = text of 1. entry  
  `txt2` = text of 2. entry and so on  
   
+**Radio button:**   
+ `rb(vn label (xs) txt1 txt2 ... txtn)`  
+ `vn` = name of variable to hold selected state  
+ `label` = label text  
+ `xs` = optional xs (default 200) 
+ `txt1` = text of 1. entry  
+ `txt2` = text of 2. entry and so on  
+    
 **Checkbox:**   
  `ck(vn txt (xs))`  
  `vn` = name of variable to hold checkbox state  
@@ -525,10 +533,19 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `pow(x y)` = calculates exponential powers x^y (imprecise version only)  
 `med(n x)` = calculates a 5 value median filter of x (2 filters possible n=0,1)  
 `int(x)` = gets the integer part of x (like floor)  
+`floor(x)` = gets the integer part of x  
+`ceil(x)` = gets the integer + 1 part of x  
+`round(x)` = round to nearest integer x  
+`i(x)` = convert float x to integer  
+`f(x)` = convert integer x to float  
 `hn(x)` = converts x (0..255) to a hex nibble string  
+`hni(x)` = converts integer x (0..255) to a hex nibble string  
 `hx(x)` = converts x (0..4294967295, 32-bit) to a hex string  
+`hxi(x)` = converts integer x (0..4294967295, 32-bit) to a hex string  
 `hd("hstr")` = converts hex number string to a decimal number  
 `af(array index)` = converts 4 bytes of an array at index `index` to float number   
+`as(array)` = sort array  
+`sas(index)` = sort string array (is, is1, is2, index = 1,2,3)  
 `hf("hstr")` = converts hex float number string to a decimal number  
 `hf("hstr" r)` = converts hex float number string (reverse byte order) to a decimal number  
 `st(svar c n)` or = `st(svar 'c' n)`string token - retrieve the n^th^ element of svar delimited by c,  
@@ -556,7 +573,23 @@ I2C support #define USE_SCRIPT_I2C
 `ia(AA)`, `ia2(AA)` test and set I2C device with address AA (on BUS 1 or 2), returns 1 if device is present  
 `iw(aa val)` , `iw1(aa val)`, `iw2(aa val)`, `iw3(aa val) `write val to register aa (1..3 bytes), if in aa bit 15 is set no destination register is transfered (needed for some devices), if bit 14 is set byte order is reversed  
 `ir(aa)`, `ir1(aa)`, `ir2(aa)`, `ir3(aa)` read 1..3 bytes from register aa  
-  
+ 
+Onewire support #define USE_SCRIPT_ONEWIRE  
+support for onewire either directly or via serial port with onewire bus driver DS2480B  
+`ow(SEL <opt PAR>)`
+    SEL 0 = init bus with pin number N (if bit 15 ist set, select serial DS2480B, lsb = rec pin, msb = trx pin)  
+    SEL 1 = reset cmd  
+    SEL 2 = skip cmd  
+    SEL 3 = write PAR  
+    SEL 4 = read  
+    SEL 5 = reset search cmd  
+    SEL 6 = search cmd addr index PAR  
+    SEL 7 = select cmd addr index PAR 
+    SEL 8 = select and set bits index PAR  
+    SEL 9 = select and read word index PAR bit 7 = 0 start, bit 7 = 1 read result  
+    SEL 10-18 = get byte (1-8) of adress from index PAR  
+    SEL 99 = delete bus driver  
+    
 Serial IO support #define USE_SCRIPT_SERIAL  
 `so(RXPIN TXPIN BR)` open serial port with RXPIN, TXPIN and baud rate BR with 8N1 serial mode (-1 for pin means don't use)  
 `so(RXPIN TXPIN BR MMM)` open serial port with RXPIN, TXPIN and baud rate BR and serial mode e.g 7E2 (all 3 modechars must be specified)  
@@ -810,29 +843,25 @@ Conditional expressions may be enclosed in parentheses. The statement must be on
 if ((a==b) and ((c==d) or (c==e)) and (s!="x"))
 ```
 
-***mapping function***  
-
-mp(x str1 str2 ... str<n>)  
-It addresses a standard task with less code and much flexibility: mapping an arbitrary incoming numeric value into the allowed range.  
-The numeric value x passed as the first parameter is compared to the rules in the order they are provided as subsequent sting parameters. If the value matches the criteria, the defined value is returned. Subsequent rules are skipped. If x matches none of the rules, x is returned unchanged.  
-
-Rules consist of one of the comparison operators < > = followed by a numeric value v1, optionally followed by a colon and another numeric value v2.  
+**Mapping Function**  
+```
+mp(x cond1 result1 cond2 result2 ... cond<n> result<n>)  
+```
+It addresses a standard task with less code and much flexibility: mapping an arbitrary incoming numeric value into the allowed range. The numeric value x (float only - no integer I:) passed as the first parameter is followed by parameter pairs which can be repeated. A parameter pair consists of condition<n> and result<n>. So input value x is compared to the conditions in the order they are provided as subsequent parameters. If the value matches the condition, the associated result is returned as function. Subsequent rules are skipped. If x matches none of the conditions, x is returned unchanged as result.  
+Conditions consist of one of the comparison operators "<", ">", "=" followed by a numeric value/variable. Be noted that 2-char-operators like ">=" are not allowed.
+Results consist of a numeric value/variable.
 
 ```
+Example 1: y=mp(x <8 0)
+           This mapping reads: If x is less than 8 return 0, otherwise return x
+                                                          .
+Example 2: y=mp(x >100 100)
+           This mapping reads: If x is greater than 100 return 100, otherwise x.
 
-<|>|=v1[:v2] 
-Example 1: <8:0 - this rule reads: If x is less than 8, return 0.
-Example 2: >100 - this rule reads: If x is greater than 100, return 100.
-
-Example 3:
-
-y=mp(x <8:0 >100)
-Assigns 0 to y if x is less than 8.
-Assigns 100 to y if x is greater than 100.
-Assigns x to y for all values of x that do not meet the above criteria (8 to 100).
-
-The above code of example 3 does the same as the following code - with just one line of code and 15 characters less:
-
+Example 3: y=mp(x <8 0 >100 100)
+           This mapping reads: Assigns 0 to y if x is less than 8. Assigns 100 to y if x is greater than 100. 
+                               Assigns x to y for all values of x that do not meet the above criteria (8 to 100).
+The above code of example 3 does the same as the following code - with just one line of code and 16 characters less:
 y=x
 if x<8 {
 y=0
@@ -840,7 +869,6 @@ y=0
 if x>100 {
 y=100
 }
-
 ```
 
 
@@ -930,7 +958,8 @@ The script itself is also stored on the file system with a default size of 8192 
 `frd("fname")` remove directory fname  
 `fx("fname")` check if file fname exists  
 `fe("fname")` execute script fname (max 2048 bytes, script must start with the '>' character on the first line)  
-
+`lfw("fname" payload limit)` logs a string (payload) to a file (fname) with size limit (limit)  paylyoad is added to end of file together with a LF character. if file size is exceeded first line of file is removed.   
+    
 **ESP32 real Multitasking support**  
 `#define USE_SCRIPT_TASK` 
 enables support for multitasking scripts  

@@ -11,7 +11,7 @@ There are two options to get tasmota onto your shelly:
 2) The common way using a serial adapter. DO NOT DO THIS WHEN CONNECTED TO AC MAINS!
 
 ## OTA Update
-Follow the guide from this repository: <https://github.com/yaourdt/mgos-to-tasmota>
+Follow the guide from this repository: <https://github.com/arendst/mgos-to-tasmota>
 
 ## ⚠️️Special Shelly Attention⚠️️
 
