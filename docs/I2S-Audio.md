@@ -64,7 +64,8 @@ Those channels can be driven via the I2S driver when using the “built-in DAC m
     ```arduino
     #ifndef USE_I2S_AUDIO
     #define USE_I2S_AUDIO                    // Add support for I2S audio output (needed even if using only microphone)
-    #define USE_I2S_MIC                      // If you use an I2S microphone
+    #define USE_I2S_MIC                      // Add support for I2S microphone
+    //#define MIC_PDM                        // Set microphone as PDM (only on ESP32)
     //#define MIC_CHANNELS 1                 // 2 = stereo (I2S_CHANNEL_FMT_RIGHT_LEFT), 1 = mono (I2S_CHANNEL_FMT_ONLY_RIGHT)
     //#define MICSRATE 32000                 // Set sample rate
     #define USE_SHINE                        // Use MP3 encoding (only on ESP32 with PSRAM)
@@ -96,6 +97,8 @@ Even if you're using only the microphone you need to set an unused pin to `I2S_D
 ### PDM Microphone
 
 [Pulse density modulation](https://en.wikipedia.org/wiki/Pulse-density_modulation) (PDM) microphones are not an I2S or PWM microphone but still have a digital signal. They're used in [ESP32-S3-BOX](https://templates.blakadder.com/espressif_ESP32-S3-BOX.html), [Seeed Xiao Sense](https://templates.blakadder.com/seeedstudio_XIAO_ESP32S3_SENSE.html) and others.
+
+Compile Tasmota with `MIC_PDM` defined.
 
 | Microphone | ESP32 |
 | --- | --- | 
@@ -130,7 +133,7 @@ Needs audio output and microphone on 2 devices (no PSRAM needed)
 #define I2S_BRIDGE                          // Add support for UDP PCM audio bridge
   //#define I2S_BRIDGE_PORT    6970         // Set bridge port (default = 6970)
 #define USE_I2S_AUDIO                       // Add support for I2S audio output
-#define USE_I2S_MIC                         // Add support for I2S microphone
+    #define USE_I2S_MIC                     // Add support for I2S microphone
 #endif
 
 ```
