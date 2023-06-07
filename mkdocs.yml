@@ -175,6 +175,7 @@ nav:
     - LVGL: LVGL.md
     - HASPmota: HASPmota.md
     - Tasmota-Application.md
+    - TensorFlow Lite: TFL.md
     - Touch GPIOs: TouchPin.md
     - Safeboot Partition Layout: Safeboot.md
     - Supported Devices: "https://templates.blakadder.com/esp32"

@@ -1,28 +1,28 @@
-# Tensorflow Lite for Microcontrollers for ESP32 :material-cpu-32-bit:
+# TensorFlow Lite :material-cpu-32-bit:
   
 ??? failure "This feature is not included in precompiled binaries"  
-    add as a build flag to any build environment, i.e. in platformio_tasmota_cenv.ini:  
+    add as a build flag to your build environment in `platformio_tasmota_cenv.ini`:  
     ```
     build_flags             = ${env:tasmota32_base.build_flags}
                             -DUSE_BERRY_TF_LITE
-                            -DESP_NN ;use optimized kernels for ESP32
-                            -DUSE_I2S ;add only for speech/microphone use
-                            ; the important part of the next line is lib/libesp32_ml
+                            -DESP_NN ; use optimized kernels for ESP32
+                            -DUSE_I2S ; add only for speech/microphone use
     lib_extra_dirs          = lib/libesp32, lib/libesp32_div, lib/lib_basic, lib/lib_i2c, lib/lib_div, lib/lib_ssl, lib/libesp32_ml
+    ; lib/libesp32_ml is important to include 
     ```  
   
-### The different levels of Tensorflow
+## Different Levels of TensorFlow
   
-[Tensorflow](https://www.tensorflow.org) is an open-source machine-learning platform that is widely adopted and thus is a whole ecosystem with tools, libraries and a huge community. It is not application specific and can be used for all kind of tasks.  
+[TensorFlow](https://www.tensorflow.org) is an open-source machine-learning platform that is widely adopted and thus is a whole ecosystem with tools, libraries and a huge community. It is not application specific and can be used for all kind of tasks.  
 Initially it was only usable on fully fledged computers but over time technical advances in software and hardware made it possible to step down the stairs and make it usable on weaker devices.  
-So the next smaller thing is called [Tensorflow Lite](https://www.tensorflow.org/lite) that was targeted for smaller devices like the famous ARM-based 'RaspberryPi'.  
+So the next smaller thing is called [TensorFlow Lite](https://www.tensorflow.org/lite) that was targeted for smaller devices like the famous ARM-based 'RaspberryPi'.  
   
-But - you guessed it - this was not the end of the line and the whole armada of microcontrollers reached out to be part of the machine learning world. The name of this stripped down platform is [Tensorflow Lite for Microcontrollers](https://www.tensorflow.org/lite/microcontrollers).  
+But - you guessed it - this was not the end of the line and the whole armada of microcontrollers reached out to be part of the machine learning world. The name of this stripped down platform is [TensorFlow Lite for Microcontrollers](https://www.tensorflow.org/lite/microcontrollers).  
 Tasmota uses a [fork](https://github.com/espressif/esp-nn) from Espressif with optimized functions for maximal performance.  
   
-### Machine Learning ... is what exactly again?
+## Machine Learning ... is what exactly again?
   
-Machine learning, deep learning, KI, AI, ... - these are very blurry defined words, that mean more or less the same and scale from pretty complex up to extremely complex software constructs. Let's try to have a very simplified look at it.   
+Machine learning, deep learning, KI, AI, ... - these are very blurry defined words, that mean more or less the same and scale from pretty complex up to extremely complex software constructs. Let's try to have a very simplified look at it.
   
 In ancient times (like 20 years ago) problems where solved on computers by finding an algorithm to compute input data and thus getting output data.  
 With machine learning the process is still to have input data, but to use known good output data to let a piece of software find the algorithm to get from the known input data to the known output data - and hope that this still works with unknown input data.  
@@ -34,11 +34,11 @@ After that the *outputs* will get populated with some values, that have to be in
   
 The processed data is historically typically in the floating point format, but for weak devices like MCU's it is a very common thing to shrink the 4 bytes of a *float32* to 1 byte of an *int8* by quantization. This happens on various places and will lead to a loss of precision, but is very often nearly on par in the final result.  
   
-### Design considerations for Tasmota
+## Design Considerations for Tasmota
   
 The understandable way to optimize machine learning applications for MCU's is to build and later flash one monolithic firmware, where everything has to be done at/before compile time. This makes sense and is fundamentally the only way to quench out every little bit of performance and memory optimization.  
   
-Nonetheless for Tasmota we do not really want to build one-trick-pony firmwares and the idea is to be able to run all kinds of Tensorflow applications with one firmware, that has enough generic capabilities to dynamically load models and extra code at runtime. On the other hand we can optimize the program flow for the ESP chips and Free-RTOS.  
+Nonetheless for Tasmota we do not really want to build one-trick-pony firmwares and the idea is to be able to run all kinds of TensorFlow applications with one firmware, that has enough generic capabilities to dynamically load models and extra code at runtime. On the other hand we can optimize the program flow for the ESP chips and Free-RTOS.  
 The API shall be quite slim with as few boilerplate code as possible, but can be extended as needed and use Berry to add additional logic in the first place.  
   
 !!! tip "Accelerate your development workflow for machine learning"  
@@ -55,26 +55,25 @@ Where it makes sense helper functions for capturing data are added too.
   
 This sums up to these steps:  
   
-1. Create a Tensorflow lite model (including collecting data, finding good parameters, final training).  Use Edgeimpulse to make this easy or create your own training pipeline.
+1. Create a TensorFlow lite model (including collecting data, finding good parameters, final training).  Use Edgeimpulse to make this easy or create your own training pipeline.
   
 2. Create a Berry application (loading the model, running inference, interpret the result, acting on the result).  Use building blocks from this page to get started.
   
 
-#### Speech recognition
+### Speech Recognition
 
 For the specific task of speech recognition a big hurdle lies in the way in the form of "How to create a model"?. Although there are numerous ways published on various places, that sound quite similar to each other, this is a very non-trivial task.  
 While the same principles apply to all examples that you may find, the implementation differences under the hood are quite substantial.  
 The hardest part here is to do the *feature extraction* of the audio data in a compatible(!!!) way for training and inference on the device. Usually the raw audio data is processed using mel frequency conversion, FFT and some kind of logarithm. You may find words like power spectrum, mel frequency energies and mel frequency cepstral coefficients, which sadly are very implementation specific and not interchangeable.  
 So it is utterly important to use the same (= compatible) implementations for the whole pipeline of `Training->Deployment->Usage`.  
   
-For convenience reasons and after extended testing it was decided to be compatible with [Speechpy](https://github.com/astorfi/speechpy) (with small differences). Thus it is possible to use
-[Edge Impulse](https://www.edgeimpulse.com) as the training platform for model creation, which uses *Speechpy* too and is a development platform for machine learning on small devices, that shares some similarities to GitHub with regards to costs. Everything that we need for Tasmota is free, the enterprise solution they offer for money is not needed.  
+For convenience reasons and after extended testing it was decided to be compatible with [Speechpy](https://github.com/astorfi/speechpy) (with small differences). Thus it is possible to use [Edge Impulse](https://www.edgeimpulse.com) as the training platform for model creation, which uses *Speechpy* too and is a development platform for machine learning on small devices, that shares some similarities to GitHub with regards to costs. Everything that we need for Tasmota is free, the enterprise solution they offer for money is not needed.  
 Technically it is definitely possible to build a complete offline training pipeline as basically everything on Edgeimpulse is open source and can be recreated by a motivated user for local usage.  
-  
+
 If you use [Edge Impulse](https://www.edgeimpulse.com) for online training, you do not have to create a new firmware image for your Tasmota device. Instead of choosing one of the deployment options from Edge Impulse, you only have to download the binary TensorFlow Lite model (usually the `int8 quantized` version) from the `Dashboard`, give it a suitable name and upload it to Tasmotas filesystem in order to use it with Berry afterwards.  
+
 <figcaption>Example -  speech recognition using MFCC:</figcaption>
 ![Feature parameters](_media/ml/download.png){ width="500" }
-
 
 ## Usage
   
@@ -94,15 +93,13 @@ log<a class="cmnd" id="tfl_log">|`() -> string`<br>Returns a log message, typica
     [https://netron.app](https://netron.app) shows the inner structure of a tensorflow model including format and size of the inputs and outputs.
     Online and offline versions of the application available for every major platform.
 
-
-### "hello world" ... sort of
+### "Hello World" Sort Of...
   
-Perhaps THE starter project is the in itself pretty useless "sinewave example", which is nicely explained here:
-[YOUTUBE-VIDEO](https://www.youtube.com/watch?v=BzzqYNYOcWc&t=2s) (a series of videos)  
+Perhaps THE starter project is the in itself pretty useless "sinewave example", which is nicely explained [in these videos](https://www.youtube.com/watch?v=BzzqYNYOcWc&t=2s).
   
 Of course we can run this model perfectly fine inside Tasmota, with a Berry code snippet:
   
-``` Berry
+```berry
 import TFL
 TFL.begin("BUF")  # generic TFL session 
 var i = bytes(-4) # holds one float, size must match the model
@@ -138,17 +135,16 @@ cb()
 
 # initiate loop 
 TFL.input(i)
-
 ```
   
-This will pollute your Tasmota console with a moving bar resembling a sine wave. 
+This will pollute your Tasmota console with a moving bar resembling a sine wave.
   
 In fact this shows a very generic application, where the format and size as well as the meaning of the in- and outputs must be known, but the model itself can remain a "black box". We do not need to know, which kernels or parameters are used.  
   
-!!! tip "Use 'TFL.stats()' to find memory size" 
+!!! tip "Use 'TFL.stats()' to find memory size"
     The metrics will show the used bytes of the model. So start with a large value and tune down, but leave a margin above the number in the output of the command.
 
-### Speech recognition / keyword spotting
+## Speech Recognition / Keyword Spotting
   
 Training can be done entirely with Edgeimpulse. See their documentation for [Responding to your voice](https://docs.edgeimpulse.com/docs/tutorials/responding-to-your-voice).  
   
@@ -168,16 +164,17 @@ Sample format|16 bit, mono
 Low frequency|300 Hz - default in Edgeimpulse
 High frequency|8000 Hz - Sample frequency/2 and default too. Higher values would not make sense because of the NYQUIST theorem.
   
-  
-#### Create training data  
+### Create Training Data  
   
 A working microphone setup for recording training data and later audio recognition is needed.  
-Therefor the *-DUSE_I2S* must be added to the *build_flags section* of the environment in *platformio_tasmota_cenv.ini*. This allows to set the GPIO pins for the I2S microphone according to [I2S-Audio](I2S-Audio.md#audio-input).  
-Although you can use the microphone of your computer or smartphone, it is highly recommended to use your ESP32-microphone-installation at least for a large amount of samples in order to train the model with the same pure sound quality, that it later has to run inference on. A working SD card config is for sure the best way to capture training data. 
+
+Therefor the `-DUSE_I2S` must be defined in the `build_flags:` section of the environment in `platformio_tasmota_cenv.ini`. This allows to set the GPIO pins for the I2S microphone according to [I2S-Audio](I2S-Audio.md).  
+
+Although you can use the microphone of your computer or smartphone, it is highly recommended to use your ESP32 microphone at least for a large amount of samples in order to train the model with the same pure sound quality, that it later has to run inference on. A working SD card config is the best way to capture training data.
 
 You can use a simple Berry driver to get this done:  
 
-```Berry
+```berry
 # record to 16-bit WAV file at 16 kHz, SD card highly recommended
 # repeat the intended keyword roughly every second in the same technical setup, that will later be used for keyword spotting
 # usage 'rec<seconds> filename', example: rec30 left -> record 30 seconds from I2S microphone to '/left.wav'
@@ -241,19 +238,22 @@ end
 
 tasmota.add_cmd('rec', rec) # rec30 left -> record 30 seconds from I2S microphone to "/left.wav"
 ``` 
-Note: Most of the descriptor values do not really matter here, but the whole descriptor must have valid values, meaning some values MUST not be 0!
-  
-Then you can talk into the microphone with around 1 word per second and later upload this file to your Edgeimpulse project via your computer. 
-  
-!!! tip "General strategies" 
-    1. Mix input samples from different microphones. Using the computer or phone for audio recording is way more user friendly, so add some samples the easy way.
-    But without enough samples from your ESP-microphone-setup the final performance will be mediocre at best.
-    2. Input samples from different speakers will very likely lead to a more robust model. So ask family and friends for help.
-    3. More is more. Almost always adding more samples will result in a better performing model. Don't give up, if testing performance degrades in the early stages of audio harvesting. Just make sure to only add valid audio data with correct labels and the final result will improve with more audio data. 
-  
-#### For training on Edgeimpulse.com some post processing is usually necessary.  
 
-If you have uploaded a sample containing many repetitions of one word, there is a convenient split function, that slices the long megasample into one-second samples. For very short words this works automatically pretty well, for longer words close to one second it is recommended to check and fix possible errors immediately.  
+!!! note "Most of the descriptor values do not really matter here, but the whole descriptor must have valid values, meaning some values MUST not be 0!"
+  
+Then you can talk into the microphone with around 1 word per second and later upload this file to your [Edge Impulse](https://www.edgeimpulse.com/) project via your computer.
+  
+### General strategies
+
+1. Mix input samples from different microphones. Using the computer or phone for audio recording is way more user friendly, so add some samples the easy way. But without enough samples from your ESP32 microphone the final performance will be mediocre at best.
+2. Input samples from different speakers will very likely lead to a more robust model. So ask family and friends for help.
+3. More is more. Almost always adding more samples will result in a better performing model. Don't give up, if testing performance degrades in the early stages of audio harvesting. Just make sure to only add valid audio data with correct labels and the final result will improve with more audio data.
+  
+### Edge Impulse
+
+For training on [Edge Impulse](https://www.edgeimpulse.com/) some post processing is usually necessary.  
+
+If you have uploaded a sample containing many repetitions of one word, there is a convenient split function, that slices the long mega-sample into one-second samples. For very short words this works automatically pretty well, for longer words close to one second it is recommended to check and fix possible errors immediately.  
 You can check the resulting simple sample including the correct label:  
   
 <figcaption>16-bit-sample with label "computer":</figcaption>
@@ -265,7 +265,6 @@ The feature extraction step needs some parameters and will happen in the same wa
 <figcaption>MFCC parameters:</figcaption>
 ![Feature parameters](_media/ml/feature_parameters.png){ width="500" }
 
-  
 This will create a feature array, which will stack the features of every slice on each other. This will be visualized as a heat map, where a slice is a column (oldest left) and the lines represent the frequency banks.  Thus this "picture" holds the data of one second of audio, that the ML model will later "see" to do inference.   
   
 <figcaption>MFCC features for 1 second of audio:</figcaption>
@@ -276,12 +275,11 @@ Configuring the neural network architecture can be done in a GUI. Following the 
 <figcaption>"Deep" model for 7 keywords (plus unknown and noise) with size of only 14 kB:</figcaption>
 ![Neural network architecture](_media/ml/nn_arch.png){ width="500" }
   
-After training and configuring the model on Edgeimpulse we can simply download the 
-Tensorflow Lite model from the dashboard (the int8 version) and upload it to the ESP32 files system.  
+After training and configuring the model on Edgeimpulse we can simply download the TensorFlow Lite model from the dashboard (the int8 version) and upload it to the ESP32 filesystem.  
   
-#### On the Tasmota side the feature settings have to be translated in Berry with a descriptor 
-  
-The descriptor settings may change in the future!  
+### Tasmota Side 
+
+On the Tasmota side the feature settings have to be translated in Berry with a descriptor. The descriptor settings may change in the future!  
   
 |number|property|value|
 |---|:---|:---|
@@ -296,10 +294,10 @@ The descriptor settings may change in the future!
 8|Noisefloor|In dB for MFE mode. Sound data with level below that threshold will be discarded.
 9|preemphassis|Factor will be divided by 100, so 98 -> 0.98. It is recommended to not use this, as Edgeimpulse and Speechpy compute this over the whole sample, while Tasmota does this per slice, which is way more efficient but creates a difference. There is a way to overcome this. More later ...  
   
-  
-The Berry driver for the speech recognition must be adapted for every *model* and use case. A plain old ESP32 without extra PS-RAM is enough to "hear" with about 10 inferences per per second.   
+The Berry driver for the speech recognition must be adapted for every *model* and use case. A plain old ESP32 without extra PS-RAM is enough to "hear" with about 10 inferences per per second.
+
 Demo example:  
-```Berry
+```berry
 # globals
 var key_words = ["down", "left", "noise", "right", "up"] # must match your trained model!! Edgeimpulse sorts them alphabetically
 var thresholds = [700,710,680,680,720] # same indices as key_words, increase against false positives, decrease against misses, 
