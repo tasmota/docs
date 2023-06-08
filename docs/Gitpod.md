@@ -20,6 +20,7 @@ Gitpod has a browser extension (Chrome and Firefox) which is handy to directly l
 [More information on the Gitpod browser extension](https://www.gitpod.io/docs/20_Browser_Extension/).
 
 ## Using Gitpod
+
 After Gitpod loads the project, you will be greeted by the main window. Gitpod will then automatically compile `tasmota.bin` and `tasmota.bin.gz`. Wait for the compilation to complete.
 
 The display consists of three panels:  
@@ -28,13 +29,13 @@ The display consists of three panels:
 2. Editor
 3. Terminal
 
-![Gitpod main screen](https://i.imgur.com/nfAYnwM.png)
+<!-- ![Gitpod main screen](https://i.imgur.com/nfAYnwM.png) -->
 
 ### Customize Firmware Features and Settings
 
 !!! warning
-    The proper method of customizing firmware compilation options is to use the `user_config_override.h` file. You should not change the `my_user_config.h` file. 
-    
+    The proper method of customizing firmware compilation options is to use the `user_config_override.h` file. You should not change the `my_user_config.h` file.
+
 To modify the stock configuration:  
 
 1. Select the `/tasmota` folder in the Explorer (1) pane
@@ -50,6 +51,7 @@ To modify the stock configuration:
    - Default Tasmota Arduino Core will be compiled. If you wish to use a different Core, find the `[core_active]` section in the file and enable the `platform` and `build_flags` lines for the desired Core. Then click 'File' on the menu bar and 'Save' your edits.
 
 ### Compile Your Firmware
+
 This action is done in the Terminal pane (3) with simple commands.  
 
 <!-- ![compile command](https://i.imgur.com/wXA4hvd.png) -->
@@ -71,7 +73,9 @@ Download `<variant-name>.bin` to your computer by right-clicking on the file and
 Watch a [livestream video by digiblurDIY](https://www.youtube.com/watch?v=vod3Woj_vrs) of compiling Tasmota using Gitpod.
 
 ### Flash Your Device
+
 #### OTA Flash
+
 If you already have Tasmota flashed on your device, you can use the `File Upload` OTA method to load the new firmware binary file
 
 1. Download [`tasmota-minimal.bin.gz`](http://ota.tasmota.com/tasmota/tasmota-minimal.bin.gz)
@@ -82,4 +86,15 @@ If you already have Tasmota flashed on your device, you can use the `File Upload
 Step 1-3 only applies to ESP8266, where you should use the `.bin.gz` file for upgrades.
 
 #### Serial Flash
+
 Follow the same [procedure for flashing](installation/Flashing) as you would any new device.
+
+##### Webserial ESPTool
+
+Install your custom firmware with a web browser using [Webserial ESPTool](https://jason2866.github.io/WebSerial_ESPTool/).
+
+Download the `tasmota-xxx.factory.bin` and flash it from offset 0x0.
+
+## Video Guide
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/hS4FD8RO__c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>

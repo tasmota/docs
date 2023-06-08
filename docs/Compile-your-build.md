@@ -13,8 +13,9 @@ If you want to modify the code or default settings you can use:
 - [**Visual Studio Code**](Visual-Studio-Code) -  setup and configure [Visual Studio Code](https://code.visualstudio.com) with PlatformIO for Tasmota
 - [**Docker Tasmota**](https://github.com/tasmota/docker-tasmota) - compile from a Docker container using PlatformIO
 
-#### Online Compilers
-_**Can only create a firmware binary.** Use one of the [tools](Getting-Started.md#flashing-tool) to flash it to your device._
+### Online Compilers
+
+_**Can only create a firmware binary.** Use one of the [tools](Getting-Started.md#flashing-tool) to flash it to your device or try the [Webserial ESPTool](https://jason2866.github.io/WebSerial_ESPTool/).
 
 - [**Gitpod**](Gitpod) - compile your own binary in the cloud using [Gitpod](https://www.gitpod.io/).  
 - [**TasmoCompiler**](https://github.com/benzino77/tasmocompiler) - simple web GUI to compile Tasmota with your own settings
@@ -23,7 +24,8 @@ _**Can only create a firmware binary.** Use one of the [tools](Getting-Started.m
 
 Once you have set up the development environment, unzip the source code into a folder.
 
-## Customize your build
+## Customize Your Build
+
 There are mainly 2 type of possible customization:
 
 1. Changing default settings that will be used by Tasmota when running for the first time on a blank device (no previous existing configutrion in flash or flash erased). This can be done on any variant as it doesn't change the code base, memory footprint or required libraries. Such customization include: default Wi-Fi settings, default MQTT settings, default values for a setting including `SetOption<x>`.
@@ -32,7 +34,8 @@ There are mainly 2 type of possible customization:
 
 !!! Failure "Do not try to add or remove features to a variant, only to tasmota or tasmota32"
 
-### General customization principle
+### General Customization Principle
+
 Create a new file in `/tasmota` folder called `user_config_override.h`. You can copy the sample file `user_config_override_sample.h` that is already there and which include some sample definition for coding your own Wifi SSID and password inside the Tasmota firmware.
 
 Open the file in chosen development environment for editing.
@@ -41,7 +44,8 @@ Open the file in chosen development environment for editing.
 It is strongly recommended to NOT customize your build by making changes in `my_user_config.h` because the changes you made there will be overwritten if you download/clone a newer version of Tasmota code-base. At least this would make any merge complicated. Add your custom configurations ONLY in `user_config_override.h`.
 The file [`my_user_config.h`](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h) is a great reference for available settings and features.
 
-### Changing default settings
+### Changing Default Settings
+
 Most default settings are defined in [`my_user_config.h`](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h) along with an explanation and the command used to change it dynamically. For example:
 ``` c++
 #define WIFI_CONFIG_TOOL       WIFI_RETRY        // [WifiConfig] Default tool if Wi-Fi fails to connect (default option: 4 - WIFI_RETRY)
@@ -68,24 +72,28 @@ Example:
 #define WIFI_CONFIG_TOOL  WIFI_WAIT   // Change WifiConfig to wait (5)
 ```
 
-### Enabling a feature in `tasmota`
-A feature can be enabled by #defining the matching `USE_featurename` macro. It can be disabled by #undefining the same macro. All features and their identifier can be found in [`my_user_config.h`](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h).   
+### Enabling a Feature in `tasmota`
 
-Best practice to enable a feature is to use
+A feature can be enabled by #defining the matching `USE_featurename` macro. It can be disabled by #undefining the same macro. All features and their identifier can be found in [`my_user_config.h`](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h).
+
+Best practice to enable a feature is to use:
+
 ```c++
 #ifndef %identifier%
 #define %identifier%
 #endif
 ```
 
-Best practice to disable a feature is to use
+Best practice to disable a feature is to use:
+
 ```c++
 #ifdef %identifier%
 #undef %identifier%
 #endif
 ```
 
-If the feature you want to customize have a value like for example: `#define WIFI_CONFIG_TOOL  WIFI_WAIT`, the best practice to modify it is to use
+If the feature you want to customize have a value like for example: `#define WIFI_CONFIG_TOOL  WIFI_WAIT`, the best practice to modify it is to use:
+
 ```c++
 #ifdef %identifier%
 #undef %identifier%
@@ -101,33 +109,31 @@ If the feature you want to customize have a value like for example: `#define WIF
 |`#ifndef %identifier%` | checks if the feature is not defined|
 |`#endif` | closes #if statement|
 
-Example: enable blinds and shutters support
+!!! example "Enable blinds and shutters support"
+    ```c++
+    #ifndef USE_SHUTTER
+    #define USE_SHUTTER             // Add Shutter support for up to 4 shutter with different motortypes (+6k code)
+    #endif
+    ```
 
-```c++
-#ifndef USE_SHUTTER
-#define USE_SHUTTER             // Add Shutter support for up to 4 shutter with different motortypes (+6k code)
-#endif
-```
-
-identifier = `USE_SHUTTER`
+    identifier = `USE_SHUTTER`
   
-1. check whether USE_SHUTTER is already defined and proceed if it is not
-2. this line copied from [`my_user_config.h`](https://github.com/arendst/Tasmota/blob/20370820b85acf282fbf7ebec38ef2a484921a16/tasmota/my_user_config.h#L332) then uncommented, tells the compiler to include (#define) shutter support
-3. close the IF statement from line 1
+    1. check whether USE_SHUTTER is already defined and proceed if it is not
+    2. this line copied from [`my_user_config.h`](https://github.com/arendst/Tasmota/blob/20370820b85acf282fbf7ebec38ef2a484921a16/tasmota/my_user_config.h#L332) then uncommented, tells the compiler to include (#define) shutter support
+    3. close the IF statement from line 1
 
-Example: disable Domoticz support
+!!! example "Disable Domoticz support"
+    ```c++
+    #ifdef USE_DOMOTICZ
+    #undef USE_DOMOTICZ                              
+    #endif 
+    ```
 
-```c++
-#ifdef USE_DOMOTICZ
-#undef USE_DOMOTICZ                              
-#endif 
-```
+    identifier = `USE_DOMOTICZ`
 
-identifier = `USE_DOMOTICZ`
-
-1. check whether `USE_DOMOTICZ` is already defined and proceed if it is
-2. tell the compiler to remove (#undef) Domoticz support
-3. close the IF statement from line 1
+    1. check whether `USE_DOMOTICZ` is already defined and proceed if it is
+    2. tell the compiler to remove (#undef) Domoticz support
+    3. close the IF statement from line 1
 
 !!! warning "It is not recommended to change `my_user_config.h`, use it only for reference"
 
@@ -136,29 +142,31 @@ Save file, compile the custom binary and flash it
 !!! note
     There are limits to how many features can be included! If you go overboard code might not compile due to features conflicting _or_ might not be able to be flashed if it exceeds [ESP8266 limits](Sensor-API#keeping-esp8266-code-compact).
 
-## Advanced customization
+## Advanced Customization
 
 ### USER_BACKLOG
+
 `USER_BACKLOG` allows a set of commands to be automatically executed when the binary is ran for the first time on blank device (no settings in flash) or after a settings reset using `reset 1`/`reset 2`. It should be defined as a list of commands separated by a `;`. No `Backlog` command is required. It can be used for example for settings which do not have a changeable default. An interesting usage is to automatically reconfigure a device from a saved configuration file right after a `reset 1`/`reset 2`. 
 
-Example:
-```c++
-#define USER_BACKLOG "WebGetConfig http://myserver/tasmota/conf/%id%.dmp"
-```
-Will automatically load a configuration backup (*.dmp) file based on the MAC address of the device.
+!!! example "Automatically load a configuration backup (*.dmp) file based on the MAC address of the device"
+
+    ```c++
+    #define USER_BACKLOG "WebGetConfig http://myserver/tasmota/conf/%id%.dmp"
+    ```
 
 ### USER_RULE
+
 If you need some rules to be automatically populated in your binary, you can define `USER_RULE<x>`.
+
 ```c++
 #define USER_RULE1 "On Switch1#state DO publish cmnd/otherdevice/POWER %value% ENDON"
 ```
 
-### Defining multiple custom firmwares
+### Defining Multiple Custom Firmwares
 
 You may want to generate multiple custom firmwares such as one for switches/relays, one for sensors, in a similar way as Tasmota provides different binaries. This can be achieved very simply.
 
-1. Rename the file `platformio_override_sample.ini` as `platformio_override.ini`. Do not change anything inside.
-1. Create a file `platformio_tasmota_cenv.ini` like the sample below. This will allow you to define your own binaries. `cenv` stands for Custom ENVironment where an environment is a specific binary to generate.
+1. Open the file `platformio_tasmota_cenv.ini`. You can define your own binaries here. `cenv` stands for Custom ENVironment where an environment is a specific binary to generate.
 1. In your `user_config_override.h` you can create sections with specific settings for each type of firmware. SSID and MQTT can be outside of the section so they apply to every binary.
 
 #### Sample `platformio_tasmota_cenv.ini`
