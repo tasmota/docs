@@ -23,9 +23,9 @@ I2S (Inter-IC Sound) is a serial, synchronous communication protocol that is usu
 
 ## Audio Output
 
-![DAC Breakout Board](https://user-images.githubusercontent.com/11647075/185345605-be22d8a9-c597-4eb0-8426-12978b126ea0.jpg){ align=right width="200" }
+![I2S DAC](_media/peripherals/i2s_dac.png){ align=right width="200" }
 
-For audio output an I2S DAC is required. It is recommended to use an external DAC
+For audio output an I2S digital audio decoder (DAC) board is required. It is recommended to use an external DAC
 
 |I2S DAC | ESP32 | ESP8266 (fixed pins) |
 | --- | --- | --- |
@@ -78,7 +78,7 @@ Those channels can be driven via the I2S driver when using the “built-in DAC m
 
 ### I2S Microphone
 
-![I2S Microphone](https://user-images.githubusercontent.com/11647075/185345648-37979fa9-2114-4aa0-be99-ee8c855219b2.jpg){ align=right width="200" }
+![I2S Microphone](_media/peripherals/i2s_microphone.png){ align=right width="200" }
 
 For microphone input an I2S microphone must be connected.
 
@@ -90,9 +90,8 @@ For microphone input an I2S microphone must be connected.
 | L/R | GND | GND |
 | VDD | 3.3V | 3.3V |
 | GND | GND | GND |
-| NC | I2S_DOUT | I2S_DOUT |
 
-Even if you're using only the microphone you need to set an unused pin to `I2S_DOUT` or Tasmota will crash.
+If you're using only the microphone without a DAC you still need to set pin `I2S_DOUT` to an unused GPIO.
 
 ### PDM Microphone
 
@@ -110,7 +109,7 @@ Compile Tasmota with `MIC_PDM` defined.
 | NC | I2S_DOUT |
 | NC | I2S_BCLK | 
 
-Remember that the microphone CLK pin is configured as I2S_WS in Tasmota.
+When using PDM microphones the microphone CLK pin is configured as `I2S_WS` in Tasmota.
 
 ### Commands
 
@@ -118,8 +117,8 @@ Remember that the microphone CLK pin is configured as I2S_WS in Tasmota.
 
 | CMD | Action |
 | --- | --- |
-| I2SRec | `/file.mp3` = starts recording a .mp3 audio file to the file system, no blocking<BR> no parameter = stops recording<BR>`-?` = shows how many seconds already recorded |
 | I2SMGain | `1..50` = sets the gain factor of the microphone |
+| I2SRec | (requires defined `USE_SHINE`)`/file.mp3` = starts recording a .mp3 audio file to the file system, no blocking<BR> no parameter = stops recording<BR>`-?` = shows how many seconds already recorded |
 | I2SStream |(requires defined `MP3_MIC_STREAM`)<BR>`1` = starts streaming .mp3 server at `http://<device_ip>:81/stream.mp3`<BR> `1` = stop the stream |
 
 ## I2S Audio Bridge
@@ -130,12 +129,11 @@ Needs audio output and microphone on 2 devices (no PSRAM needed)
 
 ```arduino
 #ifndef I2S_BRIDGE
+#define USE_I2S_AUDIO                       // Add support for I2S audio output
+#define USE_I2S_MIC                         // Add support for I2S microphone
 #define I2S_BRIDGE                          // Add support for UDP PCM audio bridge
   //#define I2S_BRIDGE_PORT    6970         // Set bridge port (default = 6970)
-#define USE_I2S_AUDIO                       // Add support for I2S audio output
-    #define USE_I2S_MIC                     // Add support for I2S microphone
 #endif
-
 ```
 
 |CMD bridge|action|
