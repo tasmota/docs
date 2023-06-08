@@ -9,6 +9,7 @@
     #ifndef USE_I2S_AUDIO
     #define USE_I2S_AUDIO                             // Add support for I2S audio output
     // #define USE_I2S_NO_DAC                         // Add support for transistor-based output without DAC
+    // #define USE_I2S_LSB                            // Add support for LSBJ chips, e.g. TM8211/PT8211
     // #define USE_I2S_WEBRADIO                       // Add support for MP3 web radio streaming (only on ESP32 with PSRAM)
     // #define USE_I2S_SAY_TIME                       // Add support for english speaking clock
     // #define USE_I2S_RTTTL                          // Add support for Rtttl playback
