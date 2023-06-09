@@ -1025,15 +1025,38 @@ MI32Unit<a class="cmnd" id="mi32unit"></a>|`<x>` = set the current Tasmota tempe
 Command|Parameters
 :---|:---
 Wc<a class="cmnd" id="wc"></a>|Query all camera settings
+WcAEC<a class="cmnd" id="wcaec"></a>|`1` = enable auto exposure control (sensor), `0` = disable *(default)*
+WcAECDSP<a class="cmnd" id="wcaecdsp"></a>|`1` = enable auto exposure control (DSP), `0` = disable *(default)*
+WcAECLevel<a class="cmnd" id="wcaeclevel"></a>|`-2..+2` = set auto exposure control level
+WcAECValue<a class="cmnd" id="wcaecvalue"></a>|`0..1024` = setauto exposure control value
+WcAGC<a class="cmnd" id="wcagc"></a>|`1` = enable auto gain control, `0` = disable *(default)*
+WcAGCGain<a class="cmnd" id="wcagcgain"></a>|`0..30` = set auto gain control gain value 
+WcAWB<a class="cmnd" id="wcawb"></a>|`1` = enable Auto White Balance, `0` = disable *(default)*
+WcAWBGain<a class="cmnd" id="wcawbgain"></a>|`1` = enable Auto White Balance Gain, `0` = disable *(default)*
+WcBPC<a class="cmnd" id="wcbpc"></a>|`1` = enable Black Pixel Correct, `0` = disable *(default)*
 WcBrightness<a class="cmnd" id="wcbrightness"></a>|`-2..+2` = set picture brightness
 WcClock<a class="cmnd" id="wcclock"></a>|`10..200` = set clock speed in MHz *(default = 20)*
+WcColorbar<a class="cmnd" id="wcclock"></a>|`1` = show colorbar, `0` = hide colorbar *(default)*
 WcContrast<a class="cmnd" id="wccontrast"></a>|`-2..+2` = set picture contrast
-WcFlip<a class="cmnd" id="wcflip"></a>|Flip camera image. <BR>`0` = disable *(default)*<BR>`1` = enable
-WcMirror<a class="cmnd" id="wcmirror"></a>|Mirror camera image. <BR>`0` = disable *(default)*<BR>`1` = enable
+WcDCW<a class="cmnd" id="wcdcw"></a>|`1` = enable downscale, `0` = disable *(default)*
+WcFeature<a class="cmnd" id="wcfeature"></a>|[Extended features](https://hobbylad.files.wordpress.com/2020/02/ov2640-camera-module-software-application-notes.pdf). Only boards with PSRAM should be used.<BR>`0` = off, `1` = reduce FPS and increase exposure time for better low light performance, `2` = nightmode, increase exposure time and lower the Framerate depending on available light
+WcFlip<a class="cmnd" id="wcflip"></a>|`1` = enable flip camera image,`0` = disable *(default)*
+WcGainCeiling<a class="cmnd" id="wcgainceiling"></a>|`0 .. 6` = set gain ceiling (`0` = x2, `1` = x4, `2` = x8, `3` = x16, `4` = x32, `5` = x64, `6` = x128)
+WcGammaCorrect<a class="cmnd" id="wcgammacorrect"></a>|`1` = enable auto gamma correct, `0` = disable *(default)*
+WcInit<a class="cmnd" id="wcinit"></a>|Initialize camera
+WcLensCorrect<a class="cmnd" id="wclenscorrect"></a>`1` = enable auto lens correct, `0` = disable *(default)*
+WcMirror<a class="cmnd" id="wcmirror"></a>|`1` = enable mirror camera image, `0` = disable *(default)*
 WcResolution<a class="cmnd" id="wcresolution"></a>|Set camera resolution.<BR>`0` = 96x96 (96x96)<BR>`1` = QQVGA2 (128x160)<BR>`2` = QCIF (176x144)<BR>`3` = HQVGA (240x176)<BR>`4` = QVGA (320x240)<BR>`5` = CIF (400x296)<BR>`6` = VGA (640x480)<BR>`7` = SVGA (800x600)<BR>`8` = XGA (1024x768)<BR>`9` = SXGA (1280x1024)<BR>`10` = UXGA (1600x1200)
+WcRtsp<a class="cmnd" id="wcrtsp"></a>|(Requires defined `ENABLE_RTSPSERVER`)<BR>`1` = start RTSP server (forces restart) , `0` = stop server 
 WcSaturation<a class="cmnd" id="wcsaturation"></a>|`-2..+2` = set picture saturation
-WcStream<a class="cmnd" id="wcstream"></a>|Control streaming<BR>`0` = stop<BR>`1` = start
+WcSpecialEffect<a class="cmnd" id="wcspecialeffect"></a>|Set picture effect: `0` = off, `1` = Negative, `2` = Grayscale, `3` = Red Tint, `4` = Green Tint, `5` = Blue Tint, `6` = Sepia
+WcStats<a class="cmnd" id="wcspecialeffect"></a>|show statistics
+WcStream<a class="cmnd" id="wcstream"></a>|`1` = start webcam stream at http://<device_ip\>:81/stream or http://<device_ip\>:81/cam.mjpeg<BR>`0` = stop stream<BR>
+WcWBMode<a class="cmnd" id="wcwbmode"></a>|White Balance Mode<BR>`0` = auto, `1` = Sunny, `2` = Cloudy, `3` = Office, `4` = Home
+WcWPC<a class="cmnd" id="wcwpc"></a>|`1` = enable White Pixel Correct, `0` = disable *(default)*
 
+
+ 
 ### Ethernet
 
 Command|Parameters

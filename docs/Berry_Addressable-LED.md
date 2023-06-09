@@ -22,7 +22,7 @@ You can then define higher level objects like sub-strips
 
 Class|Details
 :---|:---
-Leds<a class="cmnd" id="leds_ctor"></a>|`Leds(pixels:int, gpio:int [,model:int ,rmt:int]) -> instance<Leds>`<br>Creates a `Leds` instance for a linear leds strip<br>`pixels`: number of leds<br>`gpio`: physical gpio number<br>`model`: (opt) LED model, default:Leds.WS2812_GRB`<br>`rmt`: (opt) `RMT`channel to use, or auto-select (see below)
+Leds<a class="cmnd" id="leds_ctor"></a>|`Leds(pixels:int, gpio:int [,model:int ,rmt:int]) -> instance<Leds>`<br>Creates a `Leds` instance for a linear leds strip<br>`pixels`: number of leds<br>`gpio`: physical gpio number<br>`model`: (optional) LED model, default:Leds.WS2812_GRB<br>`rmt`: (optional) `RMT`channel to use, or auto-select (see below)
 
 Once a `Leds` object, you can use sub-objects:
 

@@ -72,6 +72,14 @@ Configuration files are stored here: <https://github.com/tasmota/autoconf>
 
 To use it you need to have `#define USE_AUTOCONF`.
 
+### Berry Scripting
+
+ESP32 introduces [Berry](Berry.md) language as a more approachable scripting language. Berry is very powerful and you can even code an I2C driver using it.
+
+### LVGL
+
+Use [LVGL](https://lvgl.io/) in conjunction with Berry on devices with displays and touch displays to design your own UI.
+
 ### CPU Temperature Sensor
 
 Tasmota will create an internal temperature sensor and display the values in the webUI and MQTT. The accuracy of this sensor varies a lot depending on the ESP32 chip involved and should not be taken as a reliable metric.
@@ -98,19 +106,13 @@ To enable set in module configuration or template:
 
 ### I2S
 
-[Inter-IC Sound](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/i2s.html) or I2S is possible through [Berry `gpio` module](Berry.md#i2s)
+ESP32 contains two I2S peripherals. These peripherals can be configured to input and output sample data via the I2S driver. [Read more...](https://docs.espressif.com/projects/esp-idf/en/v4.2/esp32/api-reference/peripherals/i2s.html)
+
+I2S is possible through [I2S Audio](I2S-Audio) or [Berry `gpio` module](Berry.md#i2s).
 
 ### Touch Pins
 
 ESP32 has 10 capacitive touch GPIOs. More on configuring and [using them...](https://tasmota.github.io/docs/TouchPin/).
-
-### Berry Scripting
-
-ESP32 introduces [Berry](Berry.md) language as a more approachable scripting language. Berry is very powerful and you can even code an I2C driver using it.
-
-### LVGL
-
-Use [LVGL](https://lvgl.io/) in conjunction with Berry on devices with displays and touch displays to design your own UI.
 
 ## Compiling
 
@@ -123,5 +125,3 @@ All binaries use `user_config_override.h` if it exists.
 ## Working Devices
 
 [Tasmota Supported Devices Repository](https://templates.blakadder.com/esp32.html) has a more extenstive list of [ESP32 based](https://templates.blakadder.com/esp32.html) devices.
-
-[ESP32 Devices](ESP32-Devices.md)
