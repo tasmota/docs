@@ -280,7 +280,7 @@ Multipress functions for 2 and more presses cannot be changed using SetOptions o
 `ButtonTopic 1` sends an MQTT message to the device topic. This sets the state of the devices power state accordingly.
 `ButtonTopic <value>` sends an MQTT message command to the custom topic. This does not change the state of the devices power state.
 
-!!! warning "**When a Button is set to a different topic than `0` is not possible to use `Button#State` as a trigger for rules.**"
+!!! warning "**When a Button is set to a different topic than `0` is not possible to use `Button<x>#State` as a trigger for rules.**"
 
 ### Changing Default Functionality
 
