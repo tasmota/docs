@@ -350,6 +350,8 @@ insa(array) in any position insert all elements from an array comma separated
 %/file calls a file from the file system and send its content to browser. in this file any cmds may apply.
  
 A web user interface may be generated containing any of the following elements:  
+    
+remark: state variable names used for IO in the web interface may not contain an underscore.  
 **Button:**   
  `bu(vn txt1 txt2)` (up to 4 buttons may be defined in one row)  
  `vn` = name of variable to hold button state  
