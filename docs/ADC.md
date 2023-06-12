@@ -1,4 +1,4 @@
-ESP8266 has a single ADC pin available. It may be used to read voltage at ADC pin or to read module supply voltage (VCC). 
+The ESP8266 has a single ADC pin available. It may be used to read voltage at the ADC pin or to read a module supply voltage (VCC). 
 
 !!! note
     When referring to the ADC pin these terms are used interchangeably: ADC (Analog-to-digital Converter), TOUT, Pin6, A0 or Analog0.  
@@ -12,10 +12,10 @@ After wiring a peripheral to GPIO17 (A0) pin you have to configure it in **Confi
 
 ![ADC configuration](_media/A0.png)
 
-ESP32 has more ADC pin available, of this something specified for analog input (gpio34, gpio35, gpio36, gpio39). It may be used to read voltage at ADC pin or to read module supply voltage (VCC). 
-All analog input pins support 3.3V of max supply. 
+The ESP32 board has four ADC GPIO pins available (gpio34, gpio35, gpio36, gpio39) which can be used for analog inputs. These can be used to read voltage at the ADC pin or to read the module supply voltage (VCC). 
+All analog input pins support 3.3V. 
 
-After wiring a peripheral to specified Analog Input GPIO pin you have to configure it in **Configure Module**:
+After wiring a peripheral to the specified Analog Input GPIO pin, it can be configured in **Configure Module**:
 
 ![ADC configuration](_media/ADCesp32.png)
 
@@ -32,10 +32,10 @@ After wiring a peripheral to specified Analog Input GPIO pin you have to configu
 9|pH| ph _%value_| `{"pH":%value}`
 10|MQ-X| MQ-X _%value_ ppm| `{"MQX":%value}`
 
-The reading will show in web UI's sensor section as "_%option% %value%_" depending on the selected option. Tasmota calculates the values for temperature and light, analog values can be `1` to `1024`.
+The reading will show in the web UI's sensor section as "_%option% %value%_" depending on the selected option. Tasmota calculates the values for temperature and light, analog values can be `1` to `1024`.
 
 !!! note
-     When using Temperature (2) or light (3) a calibration could be needed. In case of shifted values [`AdcParam`](Commands.md#adcparam) can be used to calibrate the output.
+     When using Temperature (2) or light (3) calibration may be required. [`AdcParam`](Commands.md#adcparam) can be used to calibrate the output to adjust for any shifted values.
 
 Example: ADC as `Analog (1)`    
 ![ADC in web UI](_media/Analog0.png)
@@ -48,7 +48,7 @@ Example: ADC as `Light (3)`
 ```
 
 !!! warning
-     Careful when setting ADC as Button, if there is constant voltage on the pin it might register as a [long press](Buttons-and-Switches#long-press) and reset the device to firmware defaults
+     Be careful when setting ADC as a 'Button', if there is a constant voltage to the pin it might register as a [long press](Buttons-and-Switches#long-press) and reset the device to firmware defaults.
 
 ### Commands
 
@@ -73,21 +73,21 @@ You should use a current transformer with voltage output such as a 20A/1V or 50/
 The below circuit shows how to connect the CT. The exact values for the capacitors or the resitors is not very critical 
 (values that are double or half will work the same but the 2 resitors should be the same value).
 
-In order to avoid noise, You should build the most compact as possible, use short wires.
+In order to avoid noise, build as compact as possible using short wires and insulating where possible.
 
 ![ADC_CT circuit](_media/ADC_CT_circuit.png)
 
 !!! note
-     The section on the right represent the voltage divider that is present on the NodeMCU or mini-D1 to 
-     provide a [0.0 - 3.3V] input range (native range of ESP8266 ADC pin is 0.0-1.0V). If you are using 
+     The section on the right represents the voltage divider that is present on the NodeMCU or mini-D1 to 
+     provide a [0.0 - 3.3V] input range (the native range of ESP8266 ADC pin is 0.0-1.0V). If you are using 
      a bare ESP8266 module without that divider, you need to add it.
 
 !!! note
-     ESP32 natively have a [0.0 - 3.3V] input range and doesn't need such divider on the right.
+     ESP32 natively has a [0.0 - 3.3V] input range and doesn't need the divider on the right.
 
 
 ## ADC_VCC
-Instead of an input, ADC pin can be used to measure supply voltage of the ESP module (*this reading in not 100% accurate*). To enable ADC_VCC feature you need to [compile your own build](Compile-your-build):
+Instead of an input, the ADC pin can be used to measure the supply voltage of the ESP module (*this reading is not 100% accurate*). To enable the ADC_VCC feature; [compile your own build](Compile-your-build):
 
 **If you enable ADC_VCC you cannot use the pin as analog input anymore.**
 
