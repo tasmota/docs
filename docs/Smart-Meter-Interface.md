@@ -2201,6 +2201,44 @@ Switching to different baud rates requires changing the ack sequence 06303x300D0
     #
     ```
 
+### Logarex LK13BE803319 (OBIS)
+setupline for the  HichiIR WiFi module (GPIO1: send, GPIO3: receive)
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    ; setupline
+    +1,3,o,0,9600,LK13BE,1,30,2F3F210D0A,063035310D0A
+    ; available without PIN, remove the semicolon the enable some optional values
+    ; only one string (@#) can be decoded per meter
+    1,1-0:96.1.0*255(@#),Zählernummer,,id,0
+    ;1,1-0:0.2.0*255(@#),Firmware,,fw,0
+    1,1-0:1.8.0*255(@1,Gesamtverbrauch,KWh,total,4
+    ; available with PIN
+    1,1-0:1.8.0*96(@1,Verbrauch 1 Tag,KWh,total_1d,4
+    1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,KWh,total_7d,4
+    1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,KWh,total_30d,4
+    1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,KWh,total_365d,4
+    1,1-0:1.8.0*100(@1,Verbrauch ab reset,KWh,total_reset,4
+    1,1-0:16.7.0*255(@1,Verbrauch aktuell,W,power,20
+    ; available with PIN and full dataset enabled
+    1,1-0:32.7.0*255(@1,Spannung L1,V,voltage_l1,1
+    1,1-0:52.7.0*255(@1,Spannung L2,V,voltage_l2,1
+    1,1-0:72.7.0*255(@1,Spannung L3,V,voltage_l3,1
+    1,1-0:31.7.0*255(@1,Strom L1,A, amperage_l1,1
+    1,1-0:51.7.0*255(@1,Strom L2,A, amperage_l2,1
+    1,1-0:71.7.0*255(@1,Strom L3,A, amperage_l3,1
+    1,1-0:81.7.1*255(@1,UL2 zu UL1,deg,angle_ul2_ul1,0
+    1,1-0:81.7.2*255(@1,UL3 zu UL1,deg,angle_ul3_ul1,0
+    1,1-0:81.7.4*255(@1,IL1 zu UL1,deg,angle_il1_ul1,0
+    1,1-0:81.7.15*255(@1,IL2 zu UL2,deg,angle_il2_ul2,0
+    1,1-0:81.7.26*255(@1,IL3 zu UL3,deg,angle_il2_ul3,0
+    1,1-0:14.7.0*255(@1,Frequenz,Hz,frequency,1
+    #
+    ```
+
 ### Logarex LK13BE (SML) (LK13BE904639)
 This meter does not provide detailed information regarding phase etc.
 ??? summary "View script"
