@@ -145,7 +145,7 @@ Connected sensors can be a trigger in the form as they are represented in the `T
 
 |Trigger           | When it occurs |
 |------------------|----------------|
-|DS18B20#Temperature| whenever the temperature of sensor DS18B20 changes|
+|DS18B20#Temperature| whenever the temperature of sensor DS18B20 updates (also unchanged)|
 |DS18B20#Temperature&lt;20| whenever the temperature of sensor DS18B20 is below 20 degrees|
 |BME280#Humidity==55.5| whenever the humidity of sensor BEM280 equals 55.5%|
 |INA219#Current\>0.100| whenever the current drawn is more than 0.1A|
