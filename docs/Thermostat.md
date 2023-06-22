@@ -41,21 +41,21 @@ description: Control over heating and cooling as a true HVAC unit
 
 !!! info "Control over heating and cooling as a true HVAC unit"
 
-Thermostat driver allows a Tasmota device, provided it receives the temperature input via MQTT or a locally connected sensor, to follow control heating/cooling strategies to reach the desired setpoint. The thermostat offers similar functions as feature rich commercial ones as the models found below:
+The Thermostat driver allows a Tasmota device to follow control heating/cooling strategies to reach the desired setpoint. In order to accomplish this it must be provided with the present temperature either via MQTT or a locally connected sensor. The thermostat offers similar functions as the feature rich commercial models found below:
 
 ![Pinout](_media/thermostat/Feature_rich_thermostat.png)
 
 ## Typical setup: Heating floor system
 
-A typical setup for heating room systems can be found in the picture below. A conventional room thermostat is connected to a heating floor valve actuator, both running at AC voltage (f.e. 220V). The thermostat is connected to neutral as well as to the phase, the actuator to the same neutral connection of the thermostat and to its actuation signal. The actuation signal will switch between the neutral voltage (actuation Off) and the phase voltage (actuation On).
+A typical setup for heating room systems can be found in the picture below. A conventional room thermostat is connected to a heating floor valve actuator, both running at AC voltage (f.e. 220V). The thermostat is connected to neutral as well as to the phase. The actuator is connected to the same neutral connection of the thermostat and to its actuation signal. The actuation signal will switch between the neutral voltage (actuation Off) and the phase voltage (actuation On).
 
-The conventional room thermostats offer nowadays either 2 point control with hysteresis or a more advanced PI (Proportional-Integral) control. The result of the PI control is typically transformed into a PWM signal with a pre-defined period and a variable duty cycle.
+Conventional room thermostats offer nowadays either 2 point control with hysteresis or a more advanced PI (Proportional-Integral) control. While the result of the PI control is an analog value, in order to control a digital devices such as a relay, it is typically transformed into a PWM signal with a pre-defined period and a variable duty cycle.
 
 ![Pinout](_media/thermostat/conventional_thermostat.png)
 
 ### Use of tasmota switch to bypass an existing wall thermostat
 
-A tasmota switch can be installed in a way that it bypasses the existing wall thermostat. The advantage of this setup is that the thermostat driver offers the possibility to follow the output of the existing wall thermostat or acting autonomously. This setup allows a seamless integration with existing wall thermostats and gives the user the freedom to still use them.
+A tasmota switch can be installed in conjunction with an existing wall thermostat. The advantage of this setup is that the thermostat driver offers the possibility of following the output of the existing wall thermostat or of acting autonomously. This setup allows a seamless integration with existing wall thermostats and gives the user the freedom to still use them.
 
 Below you can find an example of a Shelly switch bypassing a wall thermostat:
 
@@ -63,7 +63,7 @@ Below you can find an example of a Shelly switch bypassing a wall thermostat:
 
 ## Configuration for standalone application or bypass of existing wall thermostat
 
-The driver by default does not consider the input switch states even if available and it's therefore suitable for standalone use. If the application requires to follow the command of the input once active (see bypass setup explained in previous section). This bypass function is specially useful to allow the user to use the device bypassed, in case of a wall thermostat, to allow this thermostat to be used if desired. To enable this bypass function, the following command is to be sent to the tasmota device:
+The driver by default ignores the input switch states, making it completely standalone (independently of any existing wall thermostat). The bypass function is specially useful to allow the user to bypass the TASMOTA thermostat driver and allow the wall thermostat to take over instead. To enable this bypass function, the following command is to be sent to the tasmota device:
 
 ```
 cmnd/Tasmota_Name/INPUTSWITCHUSE 1
@@ -169,7 +169,7 @@ cmnd/Tasmota_Name/PROPBANDSET 1
     With the command above, the PI controller will output a proportional time equivalent to 100% of the duty cycle for delta temperatures between setpoint and room temp. above 1°C (f.e. for big rooms with weak dimensioned heating circuit).
 
 #### Reset Time
-The reset time is the time the PI controller takes to overcome steady-state errors. The default value for the reset time is 1800 seconds. This value can be for instance increased in case a stronger integral reaction of the controller is desired. Below the command to adapt the proportional band can be found:
+The reset time is the time the PI controller takes to overcome steady-state errors. The default value for the reset time is 12000 seconds. This value can be for instance increased in case a stronger integral reaction of the controller is desired. Below the command to adapt the proportional band can be found:
 
 ```
 cmnd/Tasmota_Name/TIMERESETSET 1800
