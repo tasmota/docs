@@ -187,6 +187,7 @@ nav:
     - Domoticz.md
     - Home-Assistant.md
     - Homebridge.md
+    - Homey: "https://homey.app/en-us/app/com.paveld.tasmota/Tasmota-MQTT/"
     - HomeSeer.md
     - IP-Symcon.md
     - KNX.md
