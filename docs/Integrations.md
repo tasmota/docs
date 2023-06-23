@@ -1,4 +1,7 @@
+---
 description: Integrate Tasmota into your smart home automation system
+title: Smart Home Integrations
+---
 
 # Introduction
 <div style="font-size:150%;">
