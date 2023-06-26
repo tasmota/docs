@@ -15,25 +15,24 @@ Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v12.5.0">Tasmota 12.5.0 Peyton</a></span>
+<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v13.0.0">Tasmota 13.0.0 Qasim</a></span>
 
 ## Breaking Changes
 
-- Shelly Pro 4PM using standard MCP23xxx driver and needs one time Auto-Configuration
+- Change command FileUpload index binary data detection from >199 to >299
+- Matter relay numbering starts at 1 instead of 0 to match Tasmota numbering
 
 ## New Features
 
-- Matter support for Light and Relays
-- Added support for: 
-  - PMSA003I Air Quality Sensor 
-  - multiple MCP23008/MCP23017/MCP23S17 as switch/button/relay
-  - multiple PCF8574 as switch/button/relay
-  - DingTian virtual switch/button/relay
-  - GDK101 gamma radiation sensor  
-  - SEN5X gas and air quality sensor
-  - Shelly Pro 4PM
-  - ESP32 Berry support for Tensorflow Lite (TFL)
-- New commands: [`SwitchMode0`](Commands.md#switchmode0)
+- Matter support for shutters with tilt, occupancy (via switch), contact, humidity, pressure and illuminance sensors
+- Matter bridge for ESP8266 remote endpoints (experimental)
+- Added support for:
+  - TC74 temperature sensor
+  - GM861 1D and 2D bar code reader
+  - PCA9557 8-bit I/O expander
+  - ST7735 128x160 display
+  - support for Zigbee air sensors
+- New commands: [`SetOption152`](Commands.md#setoption152), [`I2cScan0`](Commands.md#i2cscan0)
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
 
