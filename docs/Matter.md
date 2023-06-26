@@ -1,12 +1,8 @@
 # Matter 
 
-!!! danger "Matter protocol support is experimental and not yet feature complete"
+!!! danger "Matter protocol support is in beta"
 
-??? failure "This feature is not included in precompiled binaries :material-cpu-32-bit:"
-    When [compiling your build](Compile-your-build) add the following flag your environment or `user_config_override.h`:
-    ```arduino
-    #define USE_MATTER_DEVICE
-    ```
+??? failure "This feature is included in tasmota32xx.bin precompiled binaries :material-cpu-32-bit:"
 
 ## What is Matter?
 
