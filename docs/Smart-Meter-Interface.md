@@ -1527,7 +1527,38 @@ This meter differatiates between day and night time consumption. The script is b
     1,770701000e0700ff@1,Frequency,Hz,freq,0
     #
     ```
+    
+### Huawei SUN2000-10KTL (Modbus)
 
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,m,0,9600,modbus,1,10,r01037D100004,01037D00,01037D08,01037D40,r01037D450003,r01037D48000A,01037D55,01037D57,01037D59,01037D6A,01037D72
+    1,010308SSss@i0:10,PV1 Voltage,V,PV1_Voltage,1
+    1,010308x2SSss@i0:100,PV1 Current,A,PV1_Current,2
+    1,010308x4SSss@i0:10,PV2 Voltage,V,PV2_Voltage,1
+    1,010308x6SSss@i0:100,PV2 Current,A,PV2_Current,2
+    1,010304UUuu@i1:1,State Code,SC,State_Code,0
+    1,010304UUuuUUuu@i2:1,Error Code,EC,Error_Code,0
+    1,010304SSssSSss@i3:1,Input Power,W,Input_Power,0
+    1,010306UUuu@i4:10,Phase 1 Voltage,V,Phase_1_Voltage,1
+    1,010306x2UUuu@i4:10,Phase 2 Voltage,V,Phase_2_Voltage,1
+    1,010306x4UUuu@i4:10,Phase 3 Voltage,V,Phase_3_Voltage,1
+    1,010314SSssSSss@i5:1000,Phase 1 Current,A,Phase_1_Current,2
+    1,010314x4SSssSSss@i5:1000,Phase 2 Current,A,Phase_2_Current,2
+    1,010314x8SSssSSss@i5:1000,Phase 3 Current,A,Phase_3_Current,2
+    1,010314x16SSssSSss@i5:1,Active Power,W,Active_Power,0
+    1,010304UUuu@i6:100,Frequency,Hz,Frequency,2
+    1,010304SSss@i7:10,Internal Temperature,c,Internal_Temperature,1
+    1,010304UUuu@i8:1,Status Code,SC,Status_Code,0
+    1,010304UUuuUUuu@i9:100,Total Yield,TY,Total_Yield,2
+    1,010304UUuuUUuu@i10:100,Daily Yield,DY,Daily_Yield,2
+    #
+    ```
+    
 ### Iskra MT 174 (OBIS)
 
 ??? summary "View script"
