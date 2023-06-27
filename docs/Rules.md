@@ -127,7 +127,7 @@ Tele-Wifi#RSSI<a id="tele-Wifi-RSSI"></a>|when a teleperiod message is sent with
 Tele-Wifi#LinkCount<a id="tele-Wifi-LinkCount"></a>|when a teleperiod message is sent with the number of wifi disconnections
 Tele-Wifi#Downtime<a id="tele-Wifi-Downtime"></a>|when a teleperiod message is sent with the total seconds of wifi disconnections
 
-Every [command](Commands.md) with a JSON payload response has an associated rule trigger.
+Every [command](Commands.md) with a JSON payload response has an associated rule trigger, with the exception of Power<x>#Data and Switch<x>, which are superseded by by the Power<x>#State and Switch<x>#State trigger.
 
 |Trigger           | When it occurs |
 |------------------|----------------|
