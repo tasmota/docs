@@ -34,6 +34,7 @@ Additional features can be enabled by adding the following `#define` compiler di
 |NO_SML_REPLACE_VARS | disables replacement of any text in descriptor by script text variables. Useful if several occurrences of a text occupies a lot of space and you get short of script buffer. Readability may get worse so only makes sense on large descriptors. Note: to use `%` symbol un measurement units, you need to escape it like `%%`.|
 |NO_USE_SML_DECRYPT | disables decoding of encrypted ams meters. decrypting needs TLS, so must define USE_TLS also.|
 |USE_SML_AUTHKEY | enables authentication, this is not needed by most energy meters.|
+|USE_SML_TCP | enables TCP MODBUS support.|
 	
 ### General description
 
