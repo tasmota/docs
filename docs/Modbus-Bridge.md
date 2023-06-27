@@ -68,9 +68,9 @@ int32|Return or send the slave data as a 32 bits signed int
 ### Additional commands for USE_MODBUS_BRIDGE_TCP
 Command|Parameters
 :---|:---
-ModbusTCPStart <port>| Start the Modbus TCP bridge on the specified `tcp port`
-ModbusTCPConnect <port>,<ipaddress>| Connect to a remote Modbus TCP server on `ip address` and `remote tcp port`
-ModbusTCPMqtt <n>| Send results queried by tcp modbus client also to mqtt when parameter is 1
+ModbusTCPStart | `<port>` = start the Modbus TCP bridge on the specified port
+ModbusTCPConnect | `<port>,<ip_address>` = connect to a remote Modbus TCP server on remote tcp `port˙` and `ip_address`
+ModbusTCPMqtt| `<x>` = send results queried by tcp modbus client also to mqtt when parameter is 1
   
 ## Returned Data
 ```json
