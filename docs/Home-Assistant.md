@@ -1,4 +1,6 @@
+---
 description: Everything about using Tasmota in Home Assistant
+---
 
 # Home Assistant
 
