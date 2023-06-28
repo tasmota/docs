@@ -19,6 +19,7 @@ Incredibly expandable and flexible.
 
 ## Breaking Changes
 
+- ESP32 Safeboot partition is now enforced. If you're unable to upgrade due to "Program flash size is larger than real flash size" error run the [Partition Wizard](https://tasmota.github.io/docs/Tasmota-Application/#partition-management). See [GitHub discussion](https://github.com/arendst/Tasmota/discussions/18983) for more information.
 - Change command FileUpload index binary data detection from >199 to >299
 - Matter relay numbering starts at 1 instead of 0 to match Tasmota numbering
 
