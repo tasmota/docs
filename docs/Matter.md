@@ -34,7 +34,7 @@ Tasmota Matter is confirmed to work with:
 
 ## Getting Started
 
-Install Tasmota with Matter support. Unofficial binaries are available for ESP32 variants in our [web installer](https://tasmota.github.io/install/) at the bottom of the list under **unofficial** builds.
+Matter is supported by default. The binaries are available for all ESP32 variants in our [web installer](https://tasmota.github.io/install/)
 
 Go to ***Configuration --> Configure Matter*** and enable Matter with the checkmark then click ***Save***.
 
