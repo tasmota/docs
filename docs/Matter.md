@@ -18,7 +18,7 @@ Tasmota supports Matter over IP (Wi-Fi or Ethernet) as an end-device. This means
 !!! bug "Thread is not supported" 
     Thread requires a specific radio and is not supported by ESP32 devices, it would require an additional, separate MCU.
 
-Matter cannot be directlz supported on ESP8266 due to limited memory resources but you can use an ESP32 device as a Matter bridge to other Tasmota and [OpenBK](https://github.com/openshwprojects/OpenBK7231T_App) devices.
+Matter cannot be directly supported on ESP8266 due to limited memory resources but you can use an ESP32 device as a Matter bridge to other Tasmota and [OpenBK](https://github.com/openshwprojects/OpenBK7231T_App) devices.
 
 ### Supported platforms
 
