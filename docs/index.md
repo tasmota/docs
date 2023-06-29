@@ -20,6 +20,7 @@ Incredibly expandable and flexible.
 ## Breaking Changes
 
 - ESP32 Safeboot partition is now enforced. If you're unable to upgrade due to "Program flash size is larger than real flash size" error run the [Partition Wizard](https://tasmota.github.io/docs/Tasmota-Application/#partition-management). See [GitHub discussion](https://github.com/arendst/Tasmota/discussions/18983) for more information.
+- Support dropped for C3 < chip rev. 3. You can still build a [custom binary](https://github.com/arendst/Tasmota/pull/18998) if you wish to ugprade.
 - Change command FileUpload index binary data detection from >199 to >299
 - Matter relay numbering starts at 1 instead of 0 to match Tasmota numbering
 
