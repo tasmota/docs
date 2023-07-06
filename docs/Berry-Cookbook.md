@@ -754,3 +754,15 @@ end
 
 flash_to_file("safe_boot_flashed.bin", 0x10000, 768320)
 ```
+
+## Tank Sensor
+
+Tank Sensor for fuel-oil volume measurement using a VL53L1X or SR04 sensor
+
+[https://github.com/trlafleur/Tasmota-Tank-Sensor](https://github.com/trlafleur/Tasmota-Tank-Sensor)
+
+## Home Assistant Controls for Tasmota
+
+This is a Tasmota Berry Script library to greatly simplify the process of exposing Home Assistant controls (e.g. Pull-down Lists, Number Sliders, Sensors, etc.) from a Tasmota device - and handling the communication between both sides.
+
+[https://github.com/fmtr/hct](https://github.com/fmtr/hct)
