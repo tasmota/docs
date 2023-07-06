@@ -154,7 +154,7 @@ Each meter typically provides multiple metrics (energy, voltage, power, current 
 | `<label>` | web UI label (max. 23 characters) |
 | `<UoM>` | unit of measurement (max. 7 characters) |
 | `<var>` | MQTT label (max. 23 characters) | 
-| `<precision>` | number of decimal places. Add `16` to transmit the data immediately. Otherwise it is transmitted on [`TelePeriod`](Commands#teleperiod) only. |
+| `<precision>` | number of decimal places. Add 16 to also (additionally) transfer the data immediately. Otherwise it is transmitted on [`TelePeriod`](Commands#teleperiod) only. |
 
 > Use `;` character to comment lines in the script.
 
