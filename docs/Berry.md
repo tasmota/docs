@@ -101,6 +101,11 @@ Berry can autostart your scripts. See a short desciption in the Section about th
 https://tasmota.github.io/docs/UFS/#autoexecbe
 Your can use the Filemanager to edit or save files with your berry scripts.
 
+## Iterate without rebooting
+Since v13.0.0.1 you can restart the entire Berry VM with a click in the Berry console. This feature requires to compile with `#define USE_BERRY_DEBUG` which is anyways highly recommended when coding in Berry. Be aware that restarting the Berry VM loses all context, and may generate negative side effects that we haven't yet identified. When restarting the VM, `autoexec.be` is ran again.
+
+Instead of using the Web UI, you can also use the `BrRestart` command which does not require `#define USE_BERRY_DEBUG`.
+
 ## Lights and Relays
 
 Berry provides complete support for Relays and Lights.
