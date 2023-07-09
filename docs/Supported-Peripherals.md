@@ -130,7 +130,7 @@ HLK-LD2410 | 24GHz mmWave Presence Sensor| serial
 [**VEML7700**](VEML7700) |  Ambient light intensity Sensor| I^2^C
 [**VL53L0x**](VL53Lxx) | Time of flight Sensor| I^2^C
 [**VL53L1x**](VL53Lxx) | Time of flight Sensor| I^2^C
-**[VINDRIKTNING](https://blakadder.com/vindriktning-tasmota/) | IKEA VINDRIKTNING Particle Concentration Sensor | serial
+**[VINDRIKTNING](https://blakadder.com/vindriktning-tasmota/)** | IKEA VINDRIKTNING Particle Concentration Sensor | serial
 **WindMeter** | Analog cup anemometer
 [**WS2812B**](WS2812B-RGB-Shield) | Wemos Shield with Addressable LED
 [**WS2812B<BR>WS2813B**](WS2812B-and-WS2813) | Addressable LEDs
