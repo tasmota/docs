@@ -82,7 +82,7 @@ HLK-LD2410 | 24GHz mmWave Presence Sensor| serial
 [**NeoPool**](NeoPool) | Sugar Valley NeoPool Controller| serial
 [**NRF24L01**](NRF24L01) | NRF24L01 as BLE-bridge for Mijia BT Sensors| SPI
 [**OpenTherm**](OpenTherm) | OpenTherm adapter| serial
-[**`P1 Smart Meter`**](P1-Smart-Meter) | Energy Meter| serial
+[**P1 Smart Meter**](P1-Smart-Meter) | Energy Meter | serial
 [**PAJ7620**](PAJ7620) | Gesture & Proximity Detection Sensor
 [**PIR**](PIR-Motion-Sensors#am312) | Passive Infrared Sensor| gpio
 [**PCA9557**](PCA9557) | I/O Expander | I^2^C
