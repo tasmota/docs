@@ -1286,6 +1286,53 @@ So in this script the three phases get added and published as `Power_total`.
     #
     ```
 
+### Fronius Symo 10.0-3-M (MODBUS)
+	
+Fronius inverter, using Modbus TCP feature
+
+??? summary "View script"
+    ```
+    >D 48
+    >B
+    =>sensor53 r
+    >M 2
+    +1,[192.168.3.38],m,0,502,mod1,1,10,r01039C870015
+    1,=so3,128
+    1,01032aUUuu@i0:1,AC Current,A,AC_Current,0
+    1,01032ax2UUuu@i0:1,Phase 1 Current,A,Phase_1_Current,0
+    1,01032ax4UUuu@i0:1,Phase 2 Current,A,Phase_2_Current,0
+    1,01032ax6UUuu@i0:1,Phase 3 Current,A,Phase_3_Current,0
+    1,01032ax8SSss@i0:1,Curr Scale Fctr,SF,Curr_SF,0
+    1,01032ax16UUuu@i0:1,Phase 1 Voltage,A,Phase_1_Voltage,0
+    1,01032ax18UUuu@i0:1,Phase 2 Voltage,A,Phase_2_Voltage,0
+    1,01032ax20UUuu@i0:1,Phase 3 Voltage,A,Phase_3_Voltage,0
+    1,01032ax22SSss@i0:1,Vltg Scale Fctr,SF,Vltg_SF,0
+    1,01032ax24UUuu@i0:1,Output Power,W,Output_Power,0
+    1,01032ax26SSss@i0:1,Pwr Scale Fctr,SF,Pwr_SF,0
+    1,01032ax28UUuu@i0:1,Frequency,Hz,Frequency,0
+    1,01032ax30SSss@i0:1,Freq Scale Fctr,SF,Freq_SF,0
+    1,01032ax36UUuu@i0:1,Temperature,C,Temperature,0
+    1,01032ax38SSss@i0:1,Temp Scale Fctr,SF,Temp_SF,0
+    +2,[192.168.3.23],m,0,502,mod2,1,10,r01039C870015
+    2,=so3,128
+    2,01032aUUuu@i0:1,AC Current,A,AC_Current,0
+    2,01032ax2UUuu@i0:1,Phase 1 Current,A,Phase_1_Current,0
+    2,01032ax4UUuu@i0:1,Phase 2 Current,A,Phase_2_Current,0
+    2,01032ax6UUuu@i0:1,Phase 3 Current,A,Phase_3_Current,0
+    2,01032ax8SSss@i0:1,Curr Scale Fctr,SF,Curr_SF,0
+    2,01032ax16UUuu@i0:1,Phase 1 Voltage,A,Phase_1_Voltage,0
+    2,01032ax18UUuu@i0:1,Phase 2 Voltage,A,Phase_2_Voltage,0
+    2,01032ax20UUuu@i0:1,Phase 3 Voltage,A,Phase_3_Voltage,0
+    2,01032ax22SSss@i0:1,Vltg Scale Fctr,SF,Vltg_SF,0
+    2,01032ax24UUuu@i0:1,Output Power,W,Output_Power,0
+    2,01032ax26SSss@i0:1,Pwr Scale Fctr,SF,Pwr_SF,0
+    2,01032ax28UUuu@i0:1,Frequency,Hz,Frequency,0
+    2,01032ax30SSss@i0:1,Freq Scale Fctr,SF,Freq_SF,0
+    2,01032ax36UUuu@i0:1,Temperature,C,Temperature,0
+    2,01032ax38SSss@i0:1,Temp Scale Fctr,SF,Temp_SF,0
+    #
+    ```
+
 ### Growatt MAX4200 (MODBus)  
 
 Growatt solar inverter. this example also shows how to send cmds to modbus  
