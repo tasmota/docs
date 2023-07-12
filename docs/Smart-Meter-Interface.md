@@ -99,7 +99,7 @@ Declare `>M` section with the number of connected meters (n = `1..5`):
 | `<rxGPIO>` | The GPIO pin number where meter data is received. <BR> [xxx.xxx.xxx.xxx] IP number instead of pin number enables MODBUS TCP mode, the tcp port number is given at the baudrate position. (tx pin can be any number and is ignored)|
 | `<type>` | The type of meter: <BR>- `o` - OBIS ASCII type of coding<BR>- `s` - SML binary smart message coding<BR>- `e` - EBus binary coding<BR>- `v` - VBus binary coding<BR>- `m` - MODBus binary coding with serial mode 8N1<BR>- `M` - MODBus binary coding with serial mode 8E1<BR>- `k` - Kamstrup binary coding with serial mode 8N1<BR>- `c` - Counter type<BR>- `r` - Raw binary coding (any binary telegram) |
 | `<flag>` | Options flag:<BR>- `0` - counter without pullup<BR>- `1` - counter with pullup<BR>- `16` - enable median filter for that meter. Can help with sporadic dropouts, reading errors (not available for counters). this option is enabled by default #define USE_SML_MEDIAN_FILTER, if you are low on memory and dont use this feature you may outcomment this define in the driver |
-| `<parameter>` | Parameters according to meter type:<BR>- for `o,s,e,v,m,M,k,r` types: serial baud rate e.g. `9600`.<BR>- for `c` type: a positive value = counter poll interval (not really recommended) or a negative value = debounce time (milliseconds) for irq driven counters. |
+| `<parameter>` | Parameters according to meter type:<BR>- for `o,s,e,v,m,M,k,r` types: serial baud rate e.g. `9600` (or port# for Modbus TCP).<BR>- for `c` type: a positive value = counter poll interval (not really recommended) or a negative value = debounce time (milliseconds) for irq driven counters. |
 | `<jsonPrefix>` | Prefix for Web UI and MQTT JSON payload. Up to 7 characters.|
 | `<txGPIO>` | The GPIO pin number where meter command is transmitted (optional).|
 | `<tx enable>` | The GPIO pin number to enable transmitter (RS485) may follow the TX pin in bracket (pin) without a colon an 'i' in front of the pin number means 'inverted' (optional).|
@@ -213,7 +213,7 @@ With `=` character at the beginning of a line you can do some special decoding. 
 | `*` character | To hide fields from result output or disable output completely. Compiling with `USE_SML_SCRIPT_CMD` required. <BR> - as single character in `<label>` of the metrics line will hide that value from the web UI <BR> - as single character in `<label>` of the meter definition line will suppress the entire JSON output on MQTT |
 | `M,=so1 `| special SML option for meters that use a bit in the status register to sign import or export like ED300L, AS2020 or DTZ541 <BR>e.g. 1,=so1,00010800,65,11,65,11,00100700 for DTZ541<BR> 1. obis code that holds the direction bit, 2. Flag identifier, 3. direction bit, 4. second Flag identifier (some meters use 2 different flags), 5. second bit, 6 obis code of value to be inverted on direction bit.<BR>|
 | `M,=so2 `| if 1 fixes the bug introduced by meter DWS74, if 2 enabled OBIS line compare mode instead of shift compare mode, if 4 invert hardware serial line.<BR>e.g. 1,=so2,2 enable obis line compare.<BR>|
-| `M,=so3 `| sets serial buffer size, serial IRQ buffer size and serial dump buffer size.<BR>e.g. 1,=so3,512 set serial buffer size to 512.<BR>|
+| `M,=so3 `| sets serial buffer size, serial IRQ buffer size and serial dump buffer size.<BR>enter as a new descriptor line e.g. 1,=so3,512 sets serial buffer size to 512. (default buffer is 48 bytes input, 128 bytes dump)<BR>|
 | `M,=so4 `| sets AES decrytion key for encrypted meters.must define exactly 16 hexadecimal chars<BR>e.g. 1,=so4,deabcd0020a0cfdedeabcd0020a0cfde sets decryption key and enables decrypt mode for that meter.<BR>|
 | `M,=so5 `| sets AES authentication key for encrypted meters.must define exactly 16 hexadecimal chars<BR>e.g. not needed by most energy meters (needs USE_SML_AUTHKEY).<BR>|
 | `M,=so6 `| sync time in milliseconds for serial block detection with AMS meters (defaults to 1000).<BR>|
@@ -1283,6 +1283,53 @@ So in this script the three phases get added and published as `Power_total`.
     1,77070100240700ff@1,Power L1,W,P_L1,18
     1,77070100380700ff@1,Power L2,W,P_L2,18
     1,770701004C0700ff@1,Power L3,W,P_L3,18
+    #
+    ```
+
+### Fronius Symo 10.0-3-M (MODBUS)
+	
+Fronius inverter, using Modbus TCP feature
+
+??? summary "View script"
+    ```
+    >D 48
+    >B
+    =>sensor53 r
+    >M 2
+    +1,[192.168.3.38],m,0,502,mod1,1,10,r01039C870015
+    1,=so3,128
+    1,01032aUUuu@i0:1,AC Current,A,AC_Current,0
+    1,01032ax2UUuu@i0:1,Phase 1 Current,A,Phase_1_Current,0
+    1,01032ax4UUuu@i0:1,Phase 2 Current,A,Phase_2_Current,0
+    1,01032ax6UUuu@i0:1,Phase 3 Current,A,Phase_3_Current,0
+    1,01032ax8SSss@i0:1,Curr Scale Fctr,SF,Curr_SF,0
+    1,01032ax16UUuu@i0:1,Phase 1 Voltage,A,Phase_1_Voltage,0
+    1,01032ax18UUuu@i0:1,Phase 2 Voltage,A,Phase_2_Voltage,0
+    1,01032ax20UUuu@i0:1,Phase 3 Voltage,A,Phase_3_Voltage,0
+    1,01032ax22SSss@i0:1,Vltg Scale Fctr,SF,Vltg_SF,0
+    1,01032ax24UUuu@i0:1,Output Power,W,Output_Power,0
+    1,01032ax26SSss@i0:1,Pwr Scale Fctr,SF,Pwr_SF,0
+    1,01032ax28UUuu@i0:1,Frequency,Hz,Frequency,0
+    1,01032ax30SSss@i0:1,Freq Scale Fctr,SF,Freq_SF,0
+    1,01032ax36UUuu@i0:1,Temperature,C,Temperature,0
+    1,01032ax38SSss@i0:1,Temp Scale Fctr,SF,Temp_SF,0
+    +2,[192.168.3.23],m,0,502,mod2,1,10,r01039C870015
+    2,=so3,128
+    2,01032aUUuu@i0:1,AC Current,A,AC_Current,0
+    2,01032ax2UUuu@i0:1,Phase 1 Current,A,Phase_1_Current,0
+    2,01032ax4UUuu@i0:1,Phase 2 Current,A,Phase_2_Current,0
+    2,01032ax6UUuu@i0:1,Phase 3 Current,A,Phase_3_Current,0
+    2,01032ax8SSss@i0:1,Curr Scale Fctr,SF,Curr_SF,0
+    2,01032ax16UUuu@i0:1,Phase 1 Voltage,A,Phase_1_Voltage,0
+    2,01032ax18UUuu@i0:1,Phase 2 Voltage,A,Phase_2_Voltage,0
+    2,01032ax20UUuu@i0:1,Phase 3 Voltage,A,Phase_3_Voltage,0
+    2,01032ax22SSss@i0:1,Vltg Scale Fctr,SF,Vltg_SF,0
+    2,01032ax24UUuu@i0:1,Output Power,W,Output_Power,0
+    2,01032ax26SSss@i0:1,Pwr Scale Fctr,SF,Pwr_SF,0
+    2,01032ax28UUuu@i0:1,Frequency,Hz,Frequency,0
+    2,01032ax30SSss@i0:1,Freq Scale Fctr,SF,Freq_SF,0
+    2,01032ax36UUuu@i0:1,Temperature,C,Temperature,0
+    2,01032ax38SSss@i0:1,Temp Scale Fctr,SF,Temp_SF,0
     #
     ```
 
