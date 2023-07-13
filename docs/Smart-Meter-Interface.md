@@ -2462,14 +2462,14 @@ PZEM004T V30 multiple meters on Modbus
     ->sensor53 r
     >M 1
     +1,3,m,0,9600,ENERGY,1,1,02040000,02040001,02040003,02040005,02040007,02040008,03040000,03040001,03040003,03040005,03040007,03040008,05040000,05040001,05040003,05040005,05040007,05040008
-    1,=h<hr/>Sensor-1
+    1,=h<hr/>Sensor-2
     1,020404UUuuxxxxxxxx@i0:10,Voltage,V,Sensor-1-V,2
     1,020404UUuuUUuusxxxx@i1:1000,Current,A,Sensor-1-A,2
     1,020404UUuuUUuusxxxx@i2:10,Power,W,Sensor-1-W,2
     1,020404UUuuUUuusxxxx@i3:1000,Energy,kWh,Sensor-1-kWh,4
     1,020404UUuuxxxxxxxx@i4:10,Frequency,Hz,Sensor-1-hz,2
     1,020404UUuuxxxxxxxx@i5:100,Power Factor,PF,Sensor-1-PF,2
-    1,=h<hr/>Sensor-2
+    1,=h<hr/>Sensor-3
     1,030404UUuuxxxxxxxx@i6:10,Voltage,V,Sensor-2-V,2
     1,030404UUuuUUuusxxxx@i7:1000,Current,A,Sensor-2-A,2
     1,030404UUuuUUuusxxxx@i8:10,Power,W,Sensor-2-W,2
