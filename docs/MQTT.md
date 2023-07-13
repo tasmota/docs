@@ -220,6 +220,10 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 #define SUPPORT_MQTT_EVENT
 #endif
 ```
+To increase the maximum MQTT message size that Tasmota is willing to process, increase the following constant by setting it in `user_config_override.h`:
+```
+#define RULE_MAX_MQTT_EVENTSZ  256
+```
 
 ### Subscribe
 Subscribes to an MQTT topic and assigns an [`Event`](Commands#event) name to it. 
