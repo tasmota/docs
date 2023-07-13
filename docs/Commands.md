@@ -159,7 +159,7 @@ See also|[`SetOption1`](#setoption1) - Set button multipress mode<BR>[`SetOption
 
 Command|Parameters
 :---|:---
-Delay<a class="cmnd" id="delay"></a>|`2..3600` = set a delay between two backlog commands with 0.1 second increment. *Not recommended for precision timing!*
+Delay<a class="cmnd" id="delay"></a>|`-1,1,2..3600` = set a delay between two backlog commands with 0.1 second increment. `-1` increments to the next second tick, `1` increments with default intercommnd delay of 200ms (changeable with SetOption34) *Not recommended for precision timing!*
 DeepSleepTime<a class="cmnd" id="deepsleeptime"></a>|Time to enter [deep sleep mode](DeepSleep)<BR>`0` = disable deep sleep mode *(default)*<BR>`11..86400` = set deep sleep mode time period in seconds
 DeviceName<a class="cmnd" id="devicename"></a>|Device name displayed in the webUI and used for HA autodiscovery.<br>`<value>` = set device name _(default = `FriendlyName1` value)_
 DspLine<1\|2><a class="cmnd" id="dspline"></a>|For POWR3 Elite and THR3 Elite<br>`2..127` = control message rotation speed on display
