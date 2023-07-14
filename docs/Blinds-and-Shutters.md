@@ -286,8 +286,8 @@ Even within the same servo model, there may be manufacturing tolerances that res
 
 For example the pulse width range for different servos:
 
-* Servo MG90 (180°): pulse width range 544 - 2400ms, `ShutterPwmRange` 109, 480
-* Servo TD-8130MG (180°): pulse width range 500 - 2500ms, `ShutterPwmRange` 100, 500
+* Servo MG90 (180°): pulse width range 544 - 2400microseconds, `ShutterPwmRange` 109, 480
+* Servo TD-8130MG (180°): pulse width range 500 - 2500microseconds, `ShutterPwmRange` 100, 500
 
 #### Servo datasheet:
 * [Servo MG90](https://raw.githubusercontent.com/TrDA-hab/Projects/master/Servo%2BESP8266/MG90S-Datasheet.pdf)
