@@ -45,6 +45,7 @@ For feedback, questions, live troubleshooting or just general chat
 <a href="https://discord.gg/Ks2Kzd4"><img src="https://discordapp.com/api/guilds/479389167382691863/widget.png?style=banner3"></a>
 
 - [Telegram](https://t.me/tasmota)
+- [Matrix](https://matrix.to/#/%23tasmota:matrix.org)
 - [Reddit](https://www.reddit.com/r/tasmota/) 
 - [Google Groups](https://groups.google.com/d/forum/sonoffusers)
 
