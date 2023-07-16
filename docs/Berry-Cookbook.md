@@ -766,3 +766,15 @@ Tank Sensor for fuel-oil volume measurement using a VL53L1X or SR04 sensor
 This is a Tasmota Berry Script library to greatly simplify the process of exposing Home Assistant controls (e.g. Pull-down Lists, Number Sliders, Sensors, etc.) from a Tasmota device - and handling the communication between both sides.
 
 [https://github.com/fmtr/hct](https://github.com/fmtr/hct)
+
+## Build MQTT topic string based on FullTopic configuration
+
+This code bit illustrates how you can create a topic string in the form of the FullTopic specification. Details like whech %prefix% you want and what last level of the topic is obviously variable.
+
+```berry
+var topic = string.replace(string.replace(
+              tasmota.cmd('FullTopic',true)['FullTopic'],
+              '%topic%', tasmota.cmd('Topic',true)['Topic']),
+              '%prefix%', tasmota.cmd('Prefix',true)['Prefix3'])
+            + 'SENSOR'
+```
