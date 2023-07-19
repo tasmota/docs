@@ -1463,6 +1463,7 @@ Currently supported algorithms:
 
 - AES CTR 256 bits - requires `#define USE_BERRY_CRYPTO_AES_CTR`
 - AES GCM 256 bits
+- AES CCM 256 bits
 - Elliptic Curve C25519 - requires `#define USE_BERRY_CRYPTO_EC_C25519`
 - Elliptic Curve P256 (secp256r1) - requires `#define USE_BERRY_CRYPTO_EC_P256`
 - HKDF key derivation with HMAC SHA256 - requires `#define USE_BERRY_CRYPTO_HKDF_SHA256`
@@ -1528,6 +1529,57 @@ print(plaintext.asstring())
 tag = aes.tag()
 print(tag == authTag)
 # true
+```
+
+#### `crypto.AES_CCM` class
+
+Encrypt and decrypt, using AES CCM with 256 bits keys.
+
+General Function|Parameters and details
+:---|:---
+init<a class="cmnd" id="aes_ccm_init"></a>|`AES_CCM.init(secret_key:bytes(16 or 32), iv:bytes(7..13), aad:bytes(), data_len:int, tag_len:int) -> instance`<br>Initialise AES CCM instance with `secret_key` (128 or 256 bits), `iv` (initialization vector or nonce, 56 to 104 bits), `aad` is the associated data, `data_len` is the size of the payload that you need to announce in advance, `tag_len` is the lenght in bytes of the tag (normally 16).
+encrypt<a class="cmnd" id="aes_ccm_encrypt"></a>|`encrypt(ciphertext:bytes) -> bytes`<br>Encrypt the ciphertext.
+decrypt<a class="cmnd" id="aes_ccm_decrypt"></a>|`decrypt(ciphertext:bytes) -> bytes`<br>Identical to `encrypt` above.
+tag<a class="cmnd" id="aes_ccm_tag"></a>|`tag() -> bytes`<br>Returns the tag or MIC.
+decrypt1<a class="cmnd" id="aes_ccm_decrypt1"></a>|`AES_CCM.decrypt1(secret_key:bytes(16 or 32), iv:bytes(), iv_start:int, iv_len:int (7..13), aad:bytes(), aad_start:int, aad_len:int, data:bytes(), data_start:int, data_len:int, tag:bytes(), tag_start:int, tag_len:int (4..16)) -> bool (true if tag matches)`<br>Decrypt in a single call, avoiding any object allocation
+
+Example from Matter:
+
+```berry
+# raw_in is the received frame
+raw_in = bytes("00A0DE009A5E3D0F3E85246C0EB1AA630A99042B82EC903483E26A4148C8AC909B12EF8CDB6B144493ABD6278EDBA8859C9B2C")
+
+payload_idx = 8     # unencrypted header is 8 bytes
+tag_len = 16        # MIC is 16 bytes
+
+p = raw[payload_idx .. -tag_len - 1]   # payload
+mic = raw[-tag_len .. ]                # MIC
+a = raw[0 .. payload_idx - 1]          # AAD
+
+i2r = bytes("92027B9F0DBC82491D4C3B3AFA5F2DEB")   # key
+# p   = bytes("3E85246C0EB1AA630A99042B82EC903483E26A4148C8AC909B12EF")
+# a 	= bytes("00A0DE009A5E3D0F")
+n   = bytes("009A5E3D0F0000000000000000")         # nonce / IV
+# mic = bytes("8CDB6B144493ABD6278EDBA8859C9B2C")
+
+# expected cleartext
+clr = bytes("05024FF601001536001724020024031D2404031818290324FF0118")
+
+# method 1 - with distinct calls
+import crypto
+aes = crypto.AES_CCM(i2r, n, a, size(p), 16)
+cleartext = aes.decrypt(p)
+tag = aes.tag()
+
+assert(cleartext == clr)
+assert(tag == mic)
+
+# method 2 - single call
+raw = raw_in.copy()      # copy first if we want to keep the encrypted version
+var ret = crypto.AES_CCM.decrypt1(i2r, n, 0, size(n), raw, 0, payload_idx, raw, payload_idx, size(raw) - payload_idx - tag_len, raw, size(raw) - tag_len, tag_len)
+
+assert(ret)
+assert(raw[payload_idx .. -tag_len - 1] == clr)
 ```
 
 #### `crypto.EC_C25519` class
