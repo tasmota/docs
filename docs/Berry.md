@@ -1463,7 +1463,7 @@ Currently supported algorithms:
 
 - AES CTR 256 bits - requires `#define USE_BERRY_CRYPTO_AES_CTR`
 - AES GCM 256 bits
-- AES CCM 256 bits
+- AES CCM 128 or 256 bits
 - Elliptic Curve C25519 - requires `#define USE_BERRY_CRYPTO_EC_C25519`
 - Elliptic Curve P256 (secp256r1) - requires `#define USE_BERRY_CRYPTO_EC_P256`
 - HKDF key derivation with HMAC SHA256 - requires `#define USE_BERRY_CRYPTO_HKDF_SHA256`
@@ -1542,6 +1542,7 @@ encrypt<a class="cmnd" id="aes_ccm_encrypt"></a>|`encrypt(ciphertext:bytes) -> b
 decrypt<a class="cmnd" id="aes_ccm_decrypt"></a>|`decrypt(ciphertext:bytes) -> bytes`<br>Identical to `encrypt` above.
 tag<a class="cmnd" id="aes_ccm_tag"></a>|`tag() -> bytes`<br>Returns the tag or MIC.
 decrypt1<a class="cmnd" id="aes_ccm_decrypt1"></a>|`AES_CCM.decrypt1(secret_key:bytes(16 or 32), iv:bytes(), iv_start:int, iv_len:int (7..13), aad:bytes(), aad_start:int, aad_len:int, data:bytes(), data_start:int, data_len:int, tag:bytes(), tag_start:int, tag_len:int (4..16)) -> bool (true if tag matches)`<br>Decrypt in a single call, avoiding any object allocation
+encrypt1<a class="cmnd" id="aes_ccm_encrypt1"></a>|`AES_CCM.encrypt1(secret_key:bytes(16 or 32), iv:bytes(), iv_start:int, iv_len:int (7..13), aad:bytes(), aad_start:int, aad_len:int, data:bytes(), data_start:int, data_len:int, tag:bytes(), tag_start:int, tag_len:int (4..16)) -> bool (always true)`<br>Decrypt in a single call, avoiding any object allocation. Data is encrypted in-place and Tag is changed in the buffer.
 
 Example from Matter:
 
