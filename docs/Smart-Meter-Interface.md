@@ -1510,7 +1510,7 @@ This is an example for 4 MODBus devices on the same bus (at different addresses)
     1,050304xxxxUUuu@i7:1,C5_ReactivePower,Var,C5ReactivePower,0
     #
     ```
-
+    
 ### Holley DTZ541 (SML)  
 
 This script reads pretty much all given information.
@@ -1572,6 +1572,27 @@ This meter differatiates between day and night time consumption. The script is b
     1,7707010051070fff@1,Phase angle I-L2/U-L2,deg,phase_angle_p2,1
     1,7707010051071aff@1,Phase angle I-L3/U-L3,deg,phase_angle_p3,1
     1,770701000e0700ff@1,Frequency,Hz,freq,0
+    #
+    ```
+
+### Holley EHZ541-BE (SML)  
+
+This Meter is sending negative values similiar to the DTZ541 model, you have to use the special option 1 (so1) as described in the 'special commands' section.
+Make sure to acquire the PIN from your energyprovider. 
+
+After unlocking the meter, you can run the following script
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,s,16,9600,SML
+    1,77070100600100ff@#,Server ID,,server_id,0
+    1,77070100010800ff@1000,Consumption (Total),kWh,total_kwh,4
+    1,=so1,00010800,65,11,65,11,00100700
+    1,77070100100700ff@1,Consumption (Current),W,curr_w,0
     #
     ```
     
