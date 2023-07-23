@@ -30,7 +30,7 @@ Once a `Leds` object, you can use sub-objects:
 
 Method|Details
 :---|:---
-create_matrix<a class="cmnd" id="leds_matrix_ctor"></a>|`<strip>.create_matrix(width:int, height:int [, offset:int]) -> instance<Leds_matrix>`<br>Creates a `Leds_matrix` instance from a `Leds` instance<br>`width`: number of leds horizontally<br>`height`: number of leds vertically<br>`offset`: number of leds to skip until start of matrix
+create_matrix<a class="cmnd" id="leds_matrix_ctor"></a>|`<strip>.create_matrix(width:int, height:int [, offset:int]) -> instance<Leds_matrix>`<br>Creates a `Leds_matrix` instance from a `Leds` instance<br>`width`: number of leds horizontally<br>`height`: number of leds vertically<br>`offset`: number of leds to skip until start of matrix<BR>You can use `set_alternate(true)` to enabled alternate lines (i.e. zigzag mode).
 create_segment<a class="cmnd" id="leds_segment"></a>|`<strip>.create_segment(offset:int, pixels:int) -> instance<Leds_segment>`<br>Creates a virtual segment from a physical Leds strip, from Led number `offset` with `pixels` leds.
 
 LED model|Details
@@ -53,6 +53,8 @@ pixel\_count<a class="cmnd" id="leds_pixel_count"></a>|`pixel_count() -> int`<br
 clear\_to<a class="cmnd" id="leds_clear_to"></a>|`clear_to(col:color [, bri:int]) -> nil`<br>Clears all leds to the specified color. `bri` is optional and default to 100%
 set\_pixel\_color<a class="cmnd" id="leds_set_pixel_color"></a>|`set_pixel_color(idx:int, col:color [, bri:int]) -> nil`<br>Set led number `idx` to the specified color. `bri` (0..100) is optional and default to 100%
 set\_matrix\_pixel\_color<a class="cmnd" id="leds_set_matrix_pixel_color"></a>|`set_matrix_pixel_color(x:int, y:int, col:color [, bri:int]) -> nil`<br>(only `Leds_matrix`) Set led number of coordinates `x`/`y` to the specified color. `bri` is optional and default to 100%
+set\_alternate<a class="cmnd" id="leds_set_alternate"></a>|`set_alternate(bool) -> nil`<br>(only `Leds_matrix`) Sets the matrix as alternate cabling (i.e. zigzag mode) instead of regular mode.<BR>It is common for large led matrix to have every other line in reverse order.
+get\_alternate<a class="cmnd" id="leds_get_alternate"></a>|`get_alternate() -> bool`<br>(only `Leds_matrix`) Read the value set with `set_alternate(bool)`.
 get\_pixel\_color<a class="cmnd" id="leds_get_pixel_color"></a>|`get_pixel_color(idx:int) -> color:int`<br>Returns the color (including brightness and gamma correction) of led number `idx`
 gamma<a class="cmnd" id="leds_gamma"></a>|`gamma:bool`<br>Applies gamma correction if `true` (default)
 pixels\_buffer<a class="cmnd" id="leds_pixels_buffer"></a>|`pixels_buffer() -> bytes()`<br>Returns the internal buffer used by NeoPixelBus. The `byte()` object points to the original buffer, no new buffer is allocated; which means that raw data can be changed directly. Don't forget to call `dirty()` and `show()` afterwards
