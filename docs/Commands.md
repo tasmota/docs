@@ -588,6 +588,12 @@ SetOption146<a class="cmnd" id="setoption146"></a>|`1` = enable display of ESP32
 SetOption147<a class="cmnd" id="setoption147"></a>|`1` = disable publish SSerialReceived MQTT messages, you must use event trigger rules instead
 SetOption148<a class="cmnd" id="setoption148"></a>|`1` = enable autorun of ArtNet mode at start. If for any reason listening to UDP port fails, this mode is disabled
 SetOption149<a class="cmnd" id="setoption149"></a>|`1` = DNS try to resolved the address as IPv6 first and IPv4 if none is found. Default behavior is to look for IPv4 address first. See [IPv6](IPv6.md)
+SetOption150<a class="cmnd" id="setoption150"></a>|`1` = Force no voltage/frequency common in Energy driver (to be detailed)
+SetOption151<a class="cmnd" id="setoption151"></a>|`1` = Matter support enabled, `0` = Matter support disabled which frees so memory
+SetOption152<a class="cmnd" id="setoption152"></a>|`1` = Switch between two (0) or one (1) pin bistable relay control (Power, to be detailed)
+SetOption153<a class="cmnd" id="setoption153"></a>|`1` = Disable running (Berry) autoexec.be on restart
+SetOption154<a class="cmnd" id="setoption154"></a>|`1` = Handle Berry led using RMT0 as additional WS2812 scheme
+SetOption155<a class="cmnd" id="setoption154"></a>|`1` = (ZCDimmer) Enable rare falling Edge dimmer instead of leading edge
 
 
 ### TuyaMCU
