@@ -329,3 +329,9 @@ Once all updates are sent, the subscription are scanned again to see if any hear
 If so:
 - `im.send_subscribe_update(sub)` is called
 - the subcription list of updates is cleared via `sub.clear_before_arm()` XXX TODO
+
+## Extending Matter
+
+All Matter support code is located in `berry_matter` as a lib, which avoids polluting the main directory of drivers. Berry allows to develop **much faster** compared to C++, and performance is mostly not an issue with Matter.
+
+The Berry code is located in the `embedded` directory. Then the code is compiled into bytecode and the bytecode is stored in Flash. This avoids consuming RAM which is a very previous resource on ESP32. To solidify, you just need to run `./solidify_all.be` in `berry_matter`. But before you need to have a local version of Berry: in `berry` directory, just do `make`. For windows users, compiling Berry can be challenging so a pre-compiled `berry.exe` is provided.
