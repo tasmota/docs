@@ -186,6 +186,6 @@ when the device is configured (all endpoints created). Can be used in rules with
 `{"Matter":{"Commissioning":0}}`     
   when commissioning is closed
 
-## Internal Operation
+## For developers
 
-Read more about the [internal operation](Matter-Internals.md)
+Developers might be interested in understanding the [Tasmota Matter Internals](Matter-Internals.md)
