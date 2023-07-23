@@ -13,6 +13,8 @@ You can control multiple LED strips. `WS2812 - 1` is also controlled by Tasmota'
 It is still possible to control this light strip with Berry, but whenever you use Tasmota light controls
 they will temporarily overrid Berry animations.
 
+To avoid any conflict between native WS2812 and Berry control, you can use `Scheme 14` which disables native WS2812.
+
 ### Led strips, matrix and sub-strips
 
 You first need to define the low-level `Leds` object that describes the hardware strip of connected leds.
