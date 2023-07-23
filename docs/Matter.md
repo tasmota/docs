@@ -11,12 +11,14 @@
 
 ## What is Matter?
 
-Matter is a new secure, reliable, local standard/protocol for smart devices launched at the end of 2022. Learn more [about Matter](https://csa-iot.org/all-solutions/matter/).
+The Matter protocol is an open-source, royalty-free standard designed to enable smart home devices from different manufacturers to work seamlessly and securely together. The Matter standard was launched end of 2022, and is supported since July 2023 by Tasmota v13.0 and above. Learn more [about Matter](https://csa-iot.org/all-solutions/matter/).
 
 Tasmota supports Matter over IP (Wi-Fi or Ethernet) as an end-device. This means that you can connect a Tasmota device to a Matter gateway, using standard and well defined protocols. The Matter communication is completely local.
 
 !!! bug "Thread is not supported" 
     Thread requires a specific radio and is not supported by ESP32 devices, it would require an additional, separate MCU.
+    Espressif has launched a certified Thread Border Router based on ESP32S3 + ESP32H2 which should allow to
+    bridge Thread device to a Wifi/Ethernet local network. Stay tuned...
 
 Matter cannot be directly supported on ESP8266 due to limited memory resources but you can use an ESP32 device as a Matter bridge to other Tasmota and [OpenBK](https://github.com/openshwprojects/OpenBK7231T_App) devices.
 
