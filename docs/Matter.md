@@ -15,12 +15,14 @@ The Matter protocol is an open-source, royalty-free standard designed to enable 
 
 Tasmota supports Matter over IP (Wi-Fi or Ethernet) as an end-device. This means that you can connect a Tasmota device to a Matter gateway, using standard and well defined protocols. The Matter communication is completely local.
 
-!!! bug "Thread is not supported" 
+Matter cannot be directly supported on ESP8266 due to limited memory resources but you can use an ESP32 device as a Matter bridge to other Tasmota and [OpenBK](https://github.com/openshwprojects/OpenBK7231T_App) devices.
+
+<img width="900" alt="Tasmota-Matter" src="https://github.com/tasmota/docs/assets/49731213/9bed02fa-26ee-45b9-91a0-14c5a60a006a">
+
+!!! info "Thread is not supported" 
     Thread requires a specific radio and is not supported by ESP32 devices, it would require an additional, separate MCU.
     Espressif has launched a certified Thread Border Router based on ESP32S3 + ESP32H2 which should allow to
     bridge Thread device to a Wifi/Ethernet local network. Stay tuned...
-
-Matter cannot be directly supported on ESP8266 due to limited memory resources but you can use an ESP32 device as a Matter bridge to other Tasmota and [OpenBK](https://github.com/openshwprojects/OpenBK7231T_App) devices.
 
 ### Supported platforms
 
