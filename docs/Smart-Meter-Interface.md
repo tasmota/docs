@@ -1252,6 +1252,31 @@ So in this script the three phases get added and published as `Power_total`.
     1,77070100100700ff@1,Verbrauch,W,Power_curr,0
     #
     ```
+
+### EMH metering - eHZM (SML)
+[Website](https://emh-metering.com/produkte/haushaltszaehler-smart-meter/ehzm/)
+
+[Datasheet](https://emh-metering.com/wp-content/uploads/2021/02/eHZM-DAB-D-1-00.pdf) 
+
+[Manual (+OBIS Registers)](https://emh-metering.com/wp-content/uploads/2022/11/eHZM-BIA-D-1.11.pdf)
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,s,0,9600,
+    1,77070100600100FF@#,Zaehlernummer,,serialnr,16
+    1,77070100010800FF@1000,Pos Wirkenergie tariflos,kWh,pos_wirk_tariflos,1
+    1,77070100010801FF@1000,Pos Wirkenergie Tarif 1,kWh,pos_wirk_tarif_1,1
+    1,77070100010802FF@1000,Pos Wirkenergie Tarif 2,kWh,pos_wirk_tarif_2,1
+    1,77070100020800FF@1000,Neg Wirkenergie tariflos,kWh,neg_wirk_tariflos,1
+    1,77070100020801FF@1000,Neg Wirkenergie Tarif 1,kWh,neg_wirk_tarif_1,1
+    1,77070100020802FF@1000,Neg Wirkenergie Tarif 2,kWh,neg_wirk_tarif_2,1
+    1,77070100100700FF@1,Momentanwirkleistung,W,momentanwirkleistung,0
+    #
+    ```   
 		
 ### EMH mMe4.0 (SML)
 
