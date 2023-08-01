@@ -1598,6 +1598,8 @@ After unlocking the meter, you can run the following script
     
 ### Huawei SUN2000-10KTL (Modbus)
 
+For writing 32-bit registers like 40126, use ModBus Bridge driver and send two 16-bit numbers. i.e. `modbussend {"deviceaddress": 1, "functioncode": 16, "startaddress":40126, "type":"int16", "count":2, "values":["0","6666"]}` 
+
 ??? summary "View script"
     ```
     >D
