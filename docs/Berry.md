@@ -2153,10 +2153,12 @@ tomap|`tomap() -> map`<BR>Transforms main attributes as map (read-only): `cluste
 For events `attributes_raw` and `attributes_refined`, you receive an instance of `attr_list` which represents all the attributes received. This list can be modified according to specificities of devices, hence giving full liberty on decoding exotic protocols or manufacturers.
 
 The decoding is done in 2 steps:
+
 - `attributes_raw` contains individual attributes with their native raw values. Names are not yet matched, nor scale factors applied. This is where you want to decode non-standard protocols
   Example:
   `{"000C/0055":261.612,"Endpoint":21,"LinkQuality":21}`
   represents raw value from a plug; the value was decoded as float.
+
 - `attributes_refined` contains a similar list with additional decoding handled, any scale factor applied (like transforming integer temperature in 1/100 of Celsius to a `float`), and human readable names attached.
   Example:
   `{"ActivePower":261.612,"(ActivePower)":"0B04/050B","Endpoint":21,"LinkQuality":21}`
