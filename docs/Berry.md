@@ -1995,7 +1995,7 @@ General methods|Parameters and details
 :---|:---
 info|`zigbee.info() -> map` returns a map with general configuration of the Zigbee coordinator.<BR>Format is identical to `ZbConfig`<BR>Example: <BR>`{'ext_pan_id': '0xCCCCCCCCA11A2233', 'tx_radio': 20, 'shortaddr': 0, 'longaddr': '0x00124B0026BAABBC', 'channel': 11, 'pan_id': 837, 'pan_id_hex': '0x0345', 'shortaddr_hex': '0x0000'}`
 size|`zigbee.size() -> int` returns the number of devices knwon by the coordinator
-iter|`zigbee.iter() -> iterator`<BR>Returns an iterator on all zigbee devices<BR>Use compact implicit form `for ze: zigbee  [...]  end`
+iter|`zigbee.iter() -> iterator`<BR>Returns an iterator on all zigbee devices<BR>Use compact implicit form:<BR>`for ze: zigbee  print(ze)  end`
 item<BR>\[\]|`zigbee.item(shortaddr:int) -> instance of zb_device`<BR>Returns the Zigbee device with short address `shortaddr`<BR>You can use the compact syntax `zigbee[0xFAB6]`
 abort|`zigbee.abort() -> nil` aborts the initialization of Zigbee MCU. To be used when initialization of Zigbee failed
 
@@ -2005,7 +2005,7 @@ The class `zb_device` contains all known information about a paired Zigbee devic
 
 `zb_device` instances can only be read, you can't change directly any attribute.
 
-Getter methods|Parameters and details
+Instance Variables|Parameters and details
 :---|:---
 shortaddr|`shortaddr -> int` returns the 16 bits short address
 longaddr|`longaddr -> bytes` returns the long 64 bits address as 8 bytes (or all zeroes if unknown)
@@ -2025,13 +2025,35 @@ Example:
 import zigbee
 
 # show all devices
-for z: zigbee
-  print(z)
+for device: zigbee
+  print(device)
 end
+#
+# outputs:
+# <instance: zb_device(0x868E, 0x00124B001F841E41, name:'Bedroom', model:'TH01', manufacturer:'eWeLink')>
+# ... more devices
 
-# output:
-<instance: zb_device(0xB955, 0x842E14FFFE139AF4, name:'Plug_Office', model:'TS0121', manufacturer:'_TZ3000_g5xawfcq')>
-[...]
+# read one device by short address
+var device = zigbee[0x868E]
+
+print(device.longaddr)
+# bytes('411E841F004B1200')
+
+print(device.reachable)
+# false - because it's a sleep device
+
+print(device.router)
+# false - it's a sleepy device so not a router
+
+print(device.manufacturer, device.model)
+# eWeLink TH013000_g5xawfcq')>
+
+# example with a plug
+device = zigbee[0xC1BC]
+print(device.longaddr, device.reachable, device.router)
+# bytes('859F4E001044EF54') true false
+print(device.manufacturer, device.model)
+# LUMI lumi.plug.maeu01
 ```
 
 ### Changing Zigbee values on-the-fly
@@ -2060,20 +2082,86 @@ Example, if you want to dump all the traffic passed:
 import zigbee
 class my_zb_handler
   def frame_received(event_type, frame, attr_list, idx)
-    print("frame_received",event_type, frame, attr_list, idx)
+    print(f"shortaddr=Ox{idx:04X} {event_type=} {frame=}")
   end
   def attributes_raw(event_type, frame, attr_list, idx)
-    print("attributes_raw")
+    print(f"shortaddr=Ox{idx:04X} {event_type=} {attr_list=}")
   end
   def attributes_refined(event_type, frame, attr_list, idx)
-    print("attributes_refined")
+    print(f"shortaddr=Ox{idx:04X} {event_type=} {attr_list=}")
   end
 
 end
 
 var my_handler = my_zb_handler()
 zigbee.add_handler(my_handler)
+
+# example of reading for a plug
+#
+# shortaddr=OxC1BC event_type=frame_received frame={'srcendpoint': 21, 'transactseq_set': 0, 'shortaddr': 49596, 'dstendpoint': 1, 'payload': bytes('5500003956CE8243'), 'shortaddr_hex': '0xC1BC', 'manuf': 0, 'payload_ptr': <ptr: 0x3ffccb5c>, 'need_response': 0, 'transactseq': 25, 'cmd': 1, 'direct': 0, 'cluster': 12, 'cluster_specific': 0, 'groupaddr': 0}
+# shortaddr=OxC1BC event_type=attributes_raw attr_list={"000C/0055":261.612,"Endpoint":21,"LinkQuality":21}
+# shortaddr=OxC1BC event_type=attributes_refined attr_list={"ActivePower":261.612,"(ActivePower)":"0B04/050B","Endpoint":21,"LinkQuality":21}
+
+# to remove handler:
+# zigbee.remove_handler(my_handler)
 ```
+
+The `attr_list` is of class `zcl_attribute_list` and can be accessed with `zigbee.zcl_attribute_list`.
+
+Methods|Parameters and details
+:---|:---
+size|`size() -> int`<BR>Number of attributes in the list
+remove|`remove(index:int) -> nil`<BR>Remove the item at `index`
+item<BR>[x]|`item(index:int) -> instance` or `[index:int] -> instance`<BR>Retrieve attribute at `index`, or `nil` if none.<BR>Note: contrary to native `list` it does not throw an exception if the index if off bounds.
+new\_head|`new_head(attribute:instance of zigbee.zcl_attribute_list) -> self`<BR>Adds a new attribute at the beginning (head) of the list
+new\_tail|`new_tail(attribute:instance of zigbee.zcl_attribute_list) -> self`<BR>Adds a new attribute at the end (tail) of the list
+
+Variables of `zcl_attribute_list` for the entire list and common to all attributes:
+
+Attributes (read or write)|Details
+:---|:---
+`groupaddr`|`uint16` group address if the message was multicast, or `nil`
+`src_ep`|`uint8` source endpoint of the message
+`lqi`|`uint8` lqi for the message received (link quality)
+
+The `zcl_attribute_list` contains a list of `zcl_attribute` instance.
+
+Attributes (read or write)|Details
+:---|:---
+`cluster`|`uint16` ZCL cluster number
+`attr_id`|`uint16` ZCL attribute id
+`cmd`|`uint8` ZCL command number
+`direction`|`0 or 1` ZCL direction of the message (to or from the coordinator)
+`cmd_general`|`0 or 1` ZCL flag indicating a general command vs a cluster specific command
+`key`|`string or nil` attribute name (if any) or `nil`
+`val`|`any` ZCL value of the attribute, can be `int/float/string/bytes...`
+`key_suffix`|`uint8` key suffix in case a same attribute is repeated<BR>Like `Power1`, `Power2`...
+`manuf`|`uint16` ZCL manufacturer specific code or 0 if none<BR>This is typically indicating a proprietary attribute
+`attr_multiplier`|`int` multiplier to be applied or `1`
+`attr_divider`|`int` divider to be applied or `1`
+`attr_base`|`int` offset to be applied or `0`
+`attr_type`|`uint8` ZCL type byte for the received attribute
+
+`zcl_attribute_list` methods:
+
+Methods|Parameters and details
+:---|:---
+tomap|`tomap() -> map`<BR>Transforms main attributes as map (read-only): `cluster`, `attr_id`, `cmd`, `direction`, `key`, `val` 
+
+#### Changing attributes received
+
+For events `attributes_raw` and `attributes_refined`, you receive an instance of `attr_list` which represents all the attributes received. This list can be modified according to specificities of devices, hence giving full liberty on decoding exotic protocols or manufacturers.
+
+The decoding is done in 2 steps:
+- `attributes_raw` contains individual attributes with their native raw values. Names are not yet matched, nor scale factors applied. This is where you want to decode non-standard protocols
+  Example:
+  `{"000C/0055":261.612,"Endpoint":21,"LinkQuality":21}`
+  represents raw value from a plug; the value was decoded as float.
+- `attributes_refined` contains a similar list with additional decoding handled, any scale factor applied (like transforming integer temperature in 1/100 of Celsius to a `float`), and human readable names attached.
+  Example:
+  `{"ActivePower":261.612,"(ActivePower)":"0B04/050B","Endpoint":21,"LinkQuality":21}`
+  In this example, the attribute is `0B04/050B` is rename as `ActivePower`, but the original `0B04/050B` attribute cluster/id is still readable. We can see that the generic `000C/0055 (AnalogValue)` from `lumi.plug.maeu01` is replaced with `0B04/050B (ActivePower)`.
+
 
 #### Changing zigbee frame, `zcl_frame` class
 
@@ -2098,6 +2186,10 @@ Attributes (read or write)|Details
 `transactseq`|`uint8` transaction number (read only)
 `transactseq_set`|`uint8` transaction number (write only - if you need to change it)
 
+Example:
+```berry
+frame_received frame_received {'srcendpoint': 21, 'transactseq_set': 0, 'shortaddr': 49596, 'dstendpoint': 1, 'payload': bytes('550039D5787B43'), 'shortaddr_hex': '0xC1BC', 'manuf': 4447, 'payload_ptr': <ptr: 0x3ffd4d04>, 'need_response': 0, 'transactseq': 60, 'cmd': 10, 'direct': 0, 'cluster': 12, 'cluster_specific': 0, 'groupaddr': 0} nil 49596
+```
 
 ## Compiling Berry
 
