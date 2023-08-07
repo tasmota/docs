@@ -80,7 +80,24 @@ Shutter 0 (Relay:1): Init. Pos: 20000 [100 %], Open Vel.: 100 Close Vel.: 100 , 
 ## Operation
 Turning a device relay on or off directly (i.e., using `Power`) will function to affect a shutter's movement. In momentary mode (i.e., stepper motor), the relays start or stop the motor. The driver takes care of the direction and proper update of the shutter position.
 
-The shutter reports its position and can also be sent to a dedicated position. `ShutterPosition 0` means the shutter is closed and `ShutterPosition 100` means the shutter is open. If you need the position values reversed (`0` = open, `100` = closed), define and [calibrate your shutter as documented below](#calibration). Then tell Tasmota to reverse the shutter position meaning via the `ShutterInvert<x> 1` command. All internal calculations are the same (the log output is the same). Only the interaction with the user and other systems changes. Now `ShutterPosition<x> 0` will open the shutter and `ShutterPosition<x> 100` will close the shutter. To set a value to all shutter you can use the index 0. For example `ShutterPosition0 30` will move all shutters to 30%. The index 0 also works with all configuration items.
+The shutter reports its position and can also be sent to a dedicated position. `ShutterPosition 0` means the shutter is closed and `ShutterPosition 100` means the shutter is open. If you need the position values reversed (`0` = open, `100` = closed), define and [calibrate your shutter as documented below](#calibration). Then tell Tasmota to reverse the shutter position meaning via the `ShutterInvert<x> 1` command. All internal calculations are the same (the log output is the same). Only the interaction with the user and other systems changes. Now `ShutterPosition<x> 0` will open the shutter and `ShutterPosition<x> 100` will close the shutter. 
+
+Function | ShutterInvert 0 | ShutterInvert 1
+-- | -- | --
+Relay 1 | open shutter | open shutter
+Relay 2 | close shutter | close shutter
+Webbutton UP | open shutter | open shutter
+Webbutton DOWN | close shutter | close shutter
+Slider OPEN | open shutter | open shutter
+Slider CLOSE | close shutter | close shutter
+ShutterOpen | open shutter | open shutter
+ShutterClose | close shutter | close shutter
+ShutterPosition 100 | open shutter | close shutter
+ShutterPosition 0 | close shutter | open shutter
+Reported position when open | 100 | 0
+Reported position when close | 0 | 100
+
+To set a value to all shutter you can use the index 0. For example `ShutterPosition0 30` will move all shutters to 30%. The index 0 also works with all configuration items.
 
 When `SetOption80 1` is invoked you have to define `Shutterrelay1 <value>` to get started
 If possible to avoid any injury on unexpected movement all RELAYS should start in OFF mode when the device reboots: `PowerOnState 0`
@@ -209,7 +226,7 @@ More advanced control of the button press actions is given by the following `Shu
 
 `ShutterButton<x> <button> <p1> <p2> <p3> <ph> <m1> <m2> <m3> <mh> <mi>` 
 
-`<button>` ESP8266:`1..4`,ESP32:`1..32` : Button number, `0/-`: disable buttons for this shutter<BR>`<p1>` `0..100`: single press position, `t`: toggle, `-`: disable, `--0..100` or `++0..100` single press increment position<BR>`<p2>` `0..100`: double press position, `t`: toggle, `-`: disable, `--0..100` or `++0..100` double press increment position<BR>`<p3>` `0..100`: triple press position, `t`: toggle, `-`: disable, `--0..100` or `++0..100` tripple press increment position<BR>`<ph>` `0..100`: hold press position, shutter stop after releasing the hold button if no group send <mh> is defined. If <mh> is 1 the release of the botton will NOT stop any shutter, `t`: toggle, `-`: disable<BR>`<m1>` `1`: enable single press position MQTT broadcast, `0/-`: disable<BR>`<m2>` `1`: enable double press position MQTT broadcast, `0/-`: disable<BR>`<m3>` `1`: enable triple press position MQTT broadcast, `0/-`: disable<BR>`<mh>` `1`: enable hold press position MQTT broadcast, `0/-`: disable<BR>`<mi>` `1`: enable MQTT broadcast to all shutter indices, `0/-`: disable
+`<button>` ESP8266:`1..4`,ESP32:`1..32` : Button number, `0/-`: disable buttons for this shutter<BR>`<p1>` `0..100`: single press position, `t`: toggle, `-`: disable, `--0..100` or `++0..100` single press increment position<BR>`<p2>` `0..100`: double press position, `t`: toggle, `-`: disable, `--0..100` or `++0..100` double press increment position<BR>`<p3>` `0..100`: triple press position, `t`: toggle, `-`: disable, `--0..100` or `++0..100` tripple press increment position<BR>`<ph>` `0..100`: hold press position, shutter stop after releasing the hold button if no group send `<mh>` is defined. If`<mh>` is 1 the release of the botton will NOT stop any shutter, `t`: toggle, `-`: disable<BR>`<m1>` `1`: enable single press position MQTT broadcast, `0/-`: disable<BR>`<m2>` `1`: enable double press position MQTT broadcast, `0/-`: disable<BR>`<m3>` `1`: enable triple press position MQTT broadcast, `0/-`: disable<BR>`<mh>` `1`: enable hold press position MQTT broadcast, `0/-`: disable<BR>`<mi>` `1`: enable MQTT broadcast to all shutter indices, `0/-`: disable
 
 Parameters are optional. When missing, all subsequent parameters are set to `disable`.
 
