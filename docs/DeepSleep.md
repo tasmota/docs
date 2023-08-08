@@ -67,6 +67,18 @@ Once device maintenance is completed, place it back into DeepSleep mode using or
    
 ## Rules
 
+!!! example
+    An example of a ruleset which deepsleeps a device with a RTC module attached during a certain portion of the day (i.e. at night). Mem1 is set to wakeup time in the morning (i.e. 540) and Mem2 to sleep time (i.e. 1080). For network attached devices with no RTC module, `time#initialized` trigger is better than `system#init`. Might be smart to have a DeepSleep gpio assigned if you need to access the device outside of normal awake hours.
+    ```
+    rule1 
+    on system#init do backlog event timecheck=%time%; ruletimer1 1 endon
+    on time#minute do event timecheck=%time%; ruletimer1 1 endon
+    on event#timecheck<%mem1% do Var1 3600 endon
+    on event#timecheck>%mem1% do Var1 0 endon
+    on event#timecheck>%mem2% do Var1 3600 endon
+    on rules#timer=1 do deepsleeptime %var1% endon
+    ```
+    
 The following triggers can be used to execute commands upon wake-up or right before entering DeepSleep:
 - `Power1#Boot` : is the earliest trigger. But valid only if you have a `Relay` output defined.
 - `Switch1#Boot` : is the next trigger, also occur very early in the boot process. But valid only if you have `Switch` input defined.
