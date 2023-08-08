@@ -679,8 +679,9 @@ AA is device address
 SCL, SDA are the pins used (or * for tasmota definition)  
 IRQ,RST optional IRQ and RST pins
   
-`:TS,CS_PIN`   
+`:TS,CS_PIN,(IRQ_PIN),(BUS Nr)`   
 Defines a touch panel an SPI bus with chip select `CS_PIN` (or *)  
+optionally defines an IRQ_PIN (or -1) and the SPI BUS number  
 
 `:TR` 
 enable simple resistive touch via data lines (e.g. cheap il9341 displays)  
