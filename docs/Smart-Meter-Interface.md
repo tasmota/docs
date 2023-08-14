@@ -1830,6 +1830,7 @@ By default, the KAIFA MB310H4BDE will only deliver the Total_in and Total_out va
     1,77070100020800ff@1000,Zaehlerstand Out,KWh,Total_out,2
     1,77070100100700ff@1,Leistung-akt.,W,Power_curr,0
     1,77070100600100ff@#,Server-ID,,Meter_Number,0
+    #
     ```
 
 ### Kamstrup Multical 4xx / 6xx / 8xx
