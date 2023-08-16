@@ -15,7 +15,7 @@ Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v13.0.0">Tasmota 13.0.0 Qasim</a></span>
+<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v13.1.0">Tasmota 13.1.0 Quentin</a></span>
 
 ## Breaking Changes
 
@@ -23,18 +23,21 @@ Incredibly expandable and flexible.
 - Support dropped for C3 < chip rev. 3. You can still build a [custom binary](https://github.com/arendst/Tasmota/pull/18998) if you wish to ugprade.
 - Change command FileUpload index binary data detection from >199 to >299
 - Matter relay numbering starts at 1 instead of 0 to match Tasmota numbering
+- Berry `bool( [] )` and `bool( {} )` now evaluate as false
+- Berry import strict now detects useless expression without side effects
 
 ## New Features
 
-- Matter support for shutters with tilt, occupancy (via switch), contact, humidity, pressure and illuminance sensors
-- Matter bridge for ESP8266 remote endpoints (experimental)
+- Matter enhancements with option to disable bridge mode, mini-profiler and fabric_filtered request (for Google compatibility)
 - Added support for:
-  - TC74 temperature sensor
-  - GM861 1D and 2D bar code reader
-  - PCA9557 8-bit I/O expander
-  - ST7735 128x160 display
+  - MAX17043 fuel-gauge systems
+  - multiple PCA9685 with extended functionality
+  - SGP41 TVOC/NOx Sensor
+  - DeepSleep battery level percentage
   - support for Zigbee air sensors
-- New commands: [`SetOption152`](Commands.md#setoption152), [`I2cScan0`](Commands.md#i2cscan0)
+- Preparations for Arduino Core v3 and esp-idf v5
+- Removed support in release builds for ESP32-C3 with chip revision below 3 (old development boards)
+- New commands: [`BrRestart`](Commands.md#brrestart), [`I2cScan0`](Commands.md#i2cscan0)
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
 
