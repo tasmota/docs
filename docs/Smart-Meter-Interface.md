@@ -3015,12 +3015,12 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
     >M 1
     +1,3,s,0,9600,SML
     1,77070100010800ff@1000,Total Verbrauch,KWh,Total_in,3
-    1,77070100020800ff@1000,Total Einspeisung,kWh,Total_in,3
+    1,77070100020800ff@1000,Total Einspeisung,kWh,Total_out,3
     1,=h==================
     1,77070100100700ff@1,Actual load,W,Power_curr,0
     1,=h==================
     1,=m 9+10+11 @1,Currents L1+L2+L3,A,Curr_summ,3
-    ;1,=m 12+13+14/#3 @1,Voltage L1+L2+L3/3,V,Volt_avg,3
+    1,=m 12+13+14/#3 @1,Voltage L1+L2+L3/3,V,Volt_avg,3
     1,=h==================
     1,77070100240700ff@1,Consumption P1,W,Power_p1,2
     1,77070100380700ff@1,Consumption P2,W,Power_p2,2
