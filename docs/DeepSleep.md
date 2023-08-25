@@ -217,7 +217,8 @@ For this, we consider that:
 
 * the battery level is measured by the ESP ADC with the appropriate voltage divider,
 * the Tasmota ADC mode is set to Range mode,
-* `AdcParams 6` has been used so the range value represent the battery voltage in millivolts   
+* `AdcParams 6` has been used so the range value represent the battery voltage in millivolts
+* There is a `BatteryPercentage` feature that can be feeded by a rule and used here to drive DeepSleep behavior
 
 The below graph represent the adaptation paths we want to follow to adjust DeepSleepTime: one path
 while the level is dropping, another path while the level is rising.
