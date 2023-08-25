@@ -369,7 +369,8 @@ See also|[`SetOption8`](#setoption8)  - Show temperature in Celsius *(default)* 
 Command|Parameters
 :---|:---
 AmpRes<a class="cmnd" id="ampres"></a>|Current sensor resolution<BR>`0..3` = maximum number of decimal places
-CurrentCal<a class="cmnd" id="currentcal"></a>|<value> `1000..32000` *(default = `3500`)*<BR>Set calibration offset value for reported `Current` telemetry<BR>Allows finer calibration for energy monitoring devices
+BatteryPercentage<a class="cmnd" id="batterypercentage"></a>|<value> `0..101` *(default = `101`= disabled)*<BR>Set the current battery level as a percentage reported by STATE and STATUS11. This can be used to monitor e.g. in `Home Automation" the battery lifetime.<BR>The intended use-case is to generate a rule that calculates the percentage based on e.g. A0 value or something else.
+CurrentCal<a class="cmnd" id="currentcal"></a>|<value> `1000..32000` *(default = `3500`)*<BR>Set calibration offset ry<BR>Allows finer calibration for energy monitoring devices
 CurrentHigh<a class="cmnd" id="currenthigh"></a>|`0` = disable current high threshold *(default)*<BR>`<value>` = set current high threshold value in milliamps
 CurrentLow<a class="cmnd" id="currentlow"></a>|`0` = disable current low threshold *(default)*<BR>`<value>` = set current low threshold value in milliamps
 CurrentSet<x\><a class="cmnd" id="currentset"></a>|`<value>` = [calibrate](Power-Monitoring-Calibration) current to target value in mA<BR>x = `1` or `2` indicating phase
