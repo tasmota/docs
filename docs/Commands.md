@@ -1038,7 +1038,7 @@ Wc<a class="cmnd" id="wc"></a>|Query all camera settings
 WcAEC<a class="cmnd" id="wcaec"></a>|`1` = enable auto exposure control (sensor), `0` = disable *(default)*
 WcAECDSP<a class="cmnd" id="wcaecdsp"></a>|`1` = enable auto exposure control (DSP), `0` = disable *(default)*
 WcAECValue<a class="cmnd" id="wcaecvalue"></a>|`0..1024` = setauto exposure control value
-WcAELevel<a class="cmnd" id="wcaeclevel"></a>|`-2..+2` = set auto exposure control level
+WcAELevel<a class="cmnd" id="wcaelevel"></a>|`-2..+2` = set auto exposure control level
 WcAGC<a class="cmnd" id="wcagc"></a>|`1` = enable auto gain control, `0` = disable *(default)*
 WcAGCGain<a class="cmnd" id="wcagcgain"></a>|`0..30` = set auto gain control gain value 
 WcAWB<a class="cmnd" id="wcawb"></a>|`1` = enable Auto White Balance, `0` = disable *(default)*
