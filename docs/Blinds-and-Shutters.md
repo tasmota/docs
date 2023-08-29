@@ -195,7 +195,7 @@ Following defaults are pre-compiled into the code and can only be changed by com
 ### Motor Stop time
 When shutters change direction immediatly it can happen that there is a short circuit or at least high moments on the motors. Therfore the default time between a STOP and the next START of the shutter is 0.5s = 500ms. This allows in most cases the shutter to fully stop and then start from a static position. With Version 12.3 you can change the duration through `shuttermotorstop 500` or any other value in ms. The value is for all defined shutters the same.
 
-WARNING: If you control the relay DIRECT through buttons os switches and do not use shutterbuttons or a rule to decouple it, then the MOTOSTOPTIME cannot kick in. The Relay in ON before the shutterdriver can intercept.
+WARNING: If you control the relay DIRECT through buttons or switches and do not use shutterbuttons or a rule to decouple it, then the MOTOSTOPTIME cannot kick in. The Relay is ON before the shutterdriver can intercept.
 
 ### Button Control
 When shutter is running in `ShutterMode 1` (normal two relay up/off down/off), you already have basic control over the shutter movement using switches or buttons in the module configuration to directly drive the shutter relays. For short circuit safe operation `ShutterMode 2` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch/button and 2nd switch on the power by the other switch/button. Because the button controll use multi-press events ensure that the "immediate action" is disabled: `SetOption13 0` (default)
