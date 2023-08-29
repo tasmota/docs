@@ -1763,6 +1763,24 @@ This is script for a two-direction meter (consumption and delivery) for the Isra
     1,77070100000009ff@#,Service ID,,Meter_id,0|
     #
     ```
+    
+### Iskra eHZ-MT681-D4A52-K0p
+
+2023 Version Zweiwegezähler
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,0,9600,MT681
+    1,77070100010800ff@1000,Verbrauch,KWh,Total_in,4
+    1,77070100100700ff@1,Leistung,W,Power_cur,0
+    1,77070100020800ff@1000,Erzeugung,KWh,Total_out,4
+    1,77070100000009ff@#,Service ID,,Meter_id,0|
+    #
+    ```
 
 ### Itron (SML V1.04)
     
