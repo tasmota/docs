@@ -420,6 +420,39 @@ Energy provider supplied a PIN code to enable output of additional data.
     #
     ```
 
+### Apator 12EC3
+
+Energy provider supplied a PIN code to enable output of additional data.
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,o,0,300,Strom,1,30,2F3F210D0A,063030300D0A
+    1,1.8.0*00(@1,Gesamtverbrauch,KWh,Pges,2
+    1,1.8.1*00(@1,Tagesverbrauch,KWh,Total_day,2
+    1,1.8.2*00(@1,Nachtverbrauch,KWh,Total_night,2
+    1,2.8.0*00(@1,Einspeisung,KWh,Total_out,2
+    #
+    ```
+
+### Apator 12EC3G
+
+No PIN code needed for output data. It can only display total consumption.
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,o,0,300,Strom,1,30,2F3F210D0A,063030300D0A
+    1,1.8.0*00(@1,Gesamtverbrauch,KWh,Pges,2
+    #
+    ```
+
 ### Carlo Gavazzi EM340 (MODBUS RTU)
 
 ??? summary "View script"
