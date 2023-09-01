@@ -21,6 +21,7 @@ HDMI CEC needs only 3 GPIOs to be connected to an HDMI port. You can use a simpl
 
 The GPIOs from ESP devices are electrically compatible with HDMI specifications, so you can simply connect GPIOs with no additional harware components:
 
+<img width="345" alt="HDMI_CEC_template" src="https://github.com/tasmota/docs/assets/49731213/02ad00fc-3d91-4dba-ba00-deb8a05a38a7">
 
 Wemos D1 Mini|Configuration|HDMI
 :---|:---|:---
@@ -30,6 +31,7 @@ GPIO 5|I2C SCL|HDMI Pin 15
 Ground||HDMI Pin 17
 
 Below is the template:
+
 `Template {"NAME":"HDMI CEC","GPIO":[1,1,9824,1,640,608,1,1,1,1,1,1,1,1],"FLAG":0,"BASE":18}`
 
 ## Quick start and quick tour
