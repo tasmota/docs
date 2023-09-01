@@ -19,12 +19,15 @@ This features enables a simple Tasmota device plugged to any HDMI port of your h
 
 HDMI CEC needs only 3 GPIOs to be connected to an HDMI port. You can use a simple ESP8266 Wemos D1 Mini plugged with Dupont cables to an HDMI pass-through like [these devices from Alix](https://www.aliexpress.com/item/1005004343592426.html)
 
-The GPIOs from ESP devices are electrically compatible with HDMI specifications, so you can simply connect GPIOs with no additional components:
+The GPIOs from ESP devices are electrically compatible with HDMI specifications, so you can simply connect GPIOs with no additional harware components:
 
-- HDMI CEC: GPIO 2 to HDMI Pin 13; GPIO 2 on Wemos D1 Mini is connected to a blue Led which is a visual indicator of CEC traffic
-- HDMI I2C SDA: GPIO 4 to HDMI Pin 16
-- HDMI I2C SCL: GPIO 5 to HDMI Pin 15
-- Ground to HDMI Pin 17
+
+Wemos D1 Mini|Configuration|HDMI
+:---|:---|:---
+GPIO 2|HDMI CEC|HDMI Pin 13<BR>GPIO 2 on Wemos D1 Mini is connected to a blue Led which is a visual indicator of CEC traffic
+GPIO 4|I2C SDA|HDMI Pin 16
+GPIO 5|I2C SCL|HDMI Pin 15
+Ground||HDMI Pin 17
 
 Below is the template:
 `Template {"NAME":"HDMI CEC","GPIO":[1,1,9824,1,640,608,1,1,1,1,1,1,1,1],"FLAG":0,"BASE":18}`
