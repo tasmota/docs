@@ -115,3 +115,5 @@ Command|Parameters
 :---|:---
 HdmiSendRaw<a class="cmnd" id="hdmisendraw"></a>|`<hex>`: send a raw payload to the HDMI CEC bus<BR>This gives full control over messages and allows to impersonate another device<BR>`HdmiSendRaw 408F` pretend that device at logical address `4` asks TV for its power status.
 HdmiAddr<a class="cmnd" id="hdmiaddr"></a>|<addr>: set the default HDMI Physical Address in case it cannot be discovered.<BR>The default value is `0x1000` which is HDMI Port 1 on the TV<BR>This value is only used if the I2C port is not connected or if the discovery failes.<BR>If no argumant, this command returns the current physical adress.
+
+The [CEC-O-MATIC](https://www.cec-o-matic.com/) tool is handy to decode and encode payloads.
