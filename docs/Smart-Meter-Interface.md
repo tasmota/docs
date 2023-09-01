@@ -420,6 +420,39 @@ Energy provider supplied a PIN code to enable output of additional data.
     #
     ```
 
+### Apator 12EC3
+
+Energy provider supplied a PIN code to enable output of additional data.
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,o,0,300,Strom,1,30,2F3F210D0A,063030300D0A
+    1,1.8.0*00(@1,Gesamtverbrauch,KWh,Pges,2
+    1,1.8.1*00(@1,Tagesverbrauch,KWh,Total_day,2
+    1,1.8.2*00(@1,Nachtverbrauch,KWh,Total_night,2
+    1,2.8.0*00(@1,Einspeisung,KWh,Total_out,2
+    #
+    ```
+
+### Apator 12EC3G
+
+No PIN code needed for output data. It can only display total consumption.
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,o,0,300,Strom,1,30,2F3F210D0A,063030300D0A
+    1,1.8.0*00(@1,Gesamtverbrauch,KWh,Pges,2
+    #
+    ```
+
 ### Carlo Gavazzi EM340 (MODBUS RTU)
 
 ??? summary "View script"
@@ -1730,6 +1763,24 @@ This is script for a two-direction meter (consumption and delivery) for the Isra
     1,77070100000009ff@#,Service ID,,Meter_id,0|
     #
     ```
+    
+### Iskra eHZ-MT681-D4A52-K0p
+
+2023 Version Zweiwegezähler
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,0,9600,MT681
+    1,77070100010800ff@1000,Verbrauch,KWh,Total_in,4
+    1,77070100100700ff@1,Leistung,W,Power_cur,0
+    1,77070100020800ff@1000,Erzeugung,KWh,Total_out,4
+    1,77070100000009ff@#,Service ID,,Meter_id,0|
+    #
+    ```
 
 ### Itron (SML V1.04)
     
@@ -1830,6 +1881,7 @@ By default, the KAIFA MB310H4BDE will only deliver the Total_in and Total_out va
     1,77070100020800ff@1000,Zaehlerstand Out,KWh,Total_out,2
     1,77070100100700ff@1,Leistung-akt.,W,Power_curr,0
     1,77070100600100ff@#,Server-ID,,Meter_Number,0
+    #
     ```
 
 ### Kamstrup Multical 4xx / 6xx / 8xx
@@ -3014,12 +3066,12 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
     >M 1
     +1,3,s,0,9600,SML
     1,77070100010800ff@1000,Total Verbrauch,KWh,Total_in,3
-    1,77070100020800ff@1000,Total Einspeisung,kWh,Total_in,3
+    1,77070100020800ff@1000,Total Einspeisung,kWh,Total_out,3
     1,=h==================
     1,77070100100700ff@1,Actual load,W,Power_curr,0
     1,=h==================
     1,=m 9+10+11 @1,Currents L1+L2+L3,A,Curr_summ,3
-    ;1,=m 12+13+14/#3 @1,Voltage L1+L2+L3/3,V,Volt_avg,3
+    1,=m 12+13+14/#3 @1,Voltage L1+L2+L3/3,V,Volt_avg,3
     1,=h==================
     1,77070100240700ff@1,Consumption P1,W,Power_p1,2
     1,77070100380700ff@1,Consumption P2,W,Power_p2,2

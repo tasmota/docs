@@ -649,9 +649,10 @@ def netflip()
 end
 tasmota.set_timer(30000,netflip)              #4
 ```
+
 1. store variable "eth" with Ethernet status - "true" if Ethernet IP exists and "false" if not
 2. check if wifi status is true and compare to eth status
-3. send command `Wifi` with parameter depending on eth variable. `..` is to concatenate a string. See Berry [manualg(https://github.com/berry-lang/berry/wiki/Chapter-3#-operator-1)
+3. send command `Wifi` with parameter depending on eth variable. `..` is to concatenate a string. See Berry [manual](https://github.com/berry-lang/berry/wiki/Chapter-3#-operator-1)
 4. set a timer to execute the netflip function 30000ms (30 seconds) after loading `autoexec.be`
 
 ## TMP117 Driver

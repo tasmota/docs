@@ -34,8 +34,10 @@ Name|Description|Connection
 DS3502 | Digital potentiometer| I^2^C
 **[EZO](EZO)** | EZO series of chemical Sensors | I^2^C
 **F&F LE-01MR** | F&F LE-01MR Single Phase Modbus Energy meter
-[**GPS-NTP-server**](GPS-NTP-server) | GPS-NTP-server | serial
+[**GDK101**](https://github.com/arendst/Tasmota/blob/development/tasmota/tasmota_xsns_sensor/xsns_106_gdk101.ino) | Gamma radiation sensor | I^2^C
 [**GGreg20_V3**](https://github.com/iotdevicesdev/ggreg20-v3-tasmota-esp32-driver) | Ionizing Radiation Detector | gpio _(ESP32 only)_
+[**GM861**](https://github.com/arendst/Tasmota/discussions/18399#discussioncomment-5817001) | Barcode/QR reader | serial
+[**GPS-NTP-server**](GPS-NTP-server) | GPS-NTP-server | serial
 **HDC1080** | Texas Instruments HDC1080 Humidity and Temperature Sensor | I^2^C
 **HDC2010** | Texas Instruments HDC2010 Humidity and Temperature Sensor | I^2^C
 **[HM-10](HM-10)** |  BLE Bluetooth gateway | serial
@@ -48,7 +50,8 @@ DS3502 | Digital potentiometer| I^2^C
 **HRXL** | MaxBotix HRXL line of Sonar Ranging Sensors| gpio
 **[HC-SR04<BR>HC-SR04P<BR>JSN-SR04T)](HC-SR04)** | Ultrasonic Sensor | gpio
 **HM330x** | SeedStudio Grove HM3301 Particulate Matter Sensor | I^2^C
-HLK-LD2410 | 24GHz mmWave Presence Sensor| serial
+[**HMC5883L**](https://github.com/arendst/Tasmota/blob/development/tasmota/tasmota_xsns_sensor/xsns_101_hmc5883l.ino) | 3-Axis Digital Compass sensor | I^2^C
+**HLK-LD2410** | 24GHz mmWave Presence Sensor | serial
 **[Honeywell HIH](Honeywell-HIH)** | Temperature and Humidity Sensor| I^2^C
 **Honeywell HPMA115xx** | Particulate Matter Sensor| serial
 **HTU21** | Temperature and Humidity Sensor| I^2^C
@@ -63,10 +66,11 @@ HLK-LD2410 | 24GHz mmWave Presence Sensor| serial
 **K30, K70, S8** | SenseAir CO~2~ Sensors | serial | 
 [**LM75AD**](LM75AD) |  Temperature Sensor | I^2^C
 [**LMT01**](LMT01) | Temperature Sensor | gpio
+[**MAX17043**](https://github.com/arendst/Tasmota/blob/development/tasmota/tasmota_xsns_sensor/xsns_110_max17043.ino) | LiPo Fuel Gauge | I^2^C
 **MAX31855**<br>**MAX6675** | Thermocouple Sensor | SPI
 **MAX31865** | RTD Temperature Sensor Amplifier | SPI
 **MAX44009** | Ambient Light Sensor | I^2^C
-[**MCP23008<BR>MCP23017**](MCP230xx) | I/O Expander | I^2^C
+[**MCP23008<BR>MCP23017<BR>MCP23S17**](MCP230xx) | I/O Expander | I^2^C
 **MCP2515** | CAN bus controller | SPI
 [**MCP9808**](MCP9808) |  Temperature Sensor | I^2^C
 [**ME007**](https://github.com/mathias-buder/water-level-measure) | Ultrasonic Distance Sensor | gpio
@@ -87,9 +91,10 @@ HLK-LD2410 | 24GHz mmWave Presence Sensor| serial
 [**PIR**](PIR-Motion-Sensors#am312) | Passive Infrared Sensor| gpio
 [**PCA9557**](PCA9557) | I/O Expander | I^2^C
 [**PCA9685**](PCA9685) | 16-channel, 12-bit PWM LED controller| I^2^C
+[**PCA9632**](https://github.com/arendst/Tasmota/blob/development/tasmota/tasmota_xdrv_driver/xdrv_64_pca9632.ino) | 4-channel, 8-bit PWM LED controller| I^2^C
 [**PCF8574(A)**](PCF8574) 8-port I/O Expander | I^2^C
-**PMS3003<BR>[PMS5003](https://www.superhouse.tv/38-diy-air-quality-Sensor-part-1-basic-model/)<BR>PMS7003** | Particle Concentration Sensor | serial
-**PMSx003T** | Particle Concentration, Temperature and Humidity Sensor | serial
+**PMS3003<BR>[PMS5003](https://www.superhouse.tv/38-diy-air-quality-Sensor-part-1-basic-model/)<BR>PMS7003**<BR>**PMSx003T** | Particle Concentration Sensor | serial
+[**PMSA003I**](https://github.com/arendst/Tasmota/blob/development/tasmota/tasmota_xsns_sensor/xsns_104_pmsa003i.ino) | Air quality sensor | I^2^C
 [**PN532**](PN532) | NFC/RFID controller
 [**PZEM-004<BR>PZEM-016**](PZEM-0XX) | Energy Monitor| serial
 **QMC5883L** | Magnetic Field sensor | I^2^C
@@ -107,8 +112,10 @@ HLK-LD2410 | 24GHz mmWave Presence Sensor| serial
 **YF-DN50** | Flow rate meter | gpio
 [**SDS011<BR>SDS021**](SDS011) | Laser Dust Sensor
 **SEN0390** |  Ambient Light Sensor| I^2^C
+[**SEN5X**](https://blakadder.com/seeedstudio-grove-all-in-one-environmental-sensor-sen5x/) | All-in-one Environmental Sensor | I^2^C
 **SGP30** | Gas and Air Quality Sensor| I^2^C
 **SGP40** | Gas and Air Quality Sensor| I^2^C
+[**SGP41**](https://github.com/arendst/Tasmota/pull/18880#issue-1757083089) | VOC and NOx Sensor| I^2^C
 **SHT1x** | Temperature and Humidity Sensor| I^2^C
 [**SHT30**](SHT30) | Humidity & Temperature Sensor| I^2^C
 **SHT4x** | Temperature and Humidity Sensor| I^2^C
@@ -119,6 +126,7 @@ HLK-LD2410 | 24GHz mmWave Presence Sensor| serial
 [**SolaX X1**](SolaX-X1) | SolaX Power X1 inverter | serial
 [**SPS30**](SPS30) | Particulate Matter| PM) | Sensor | I^2^C
 **T6703**<BR>**T6713** | Telaire T6700 Series CO~2~ sensor | I^2^C
+[**TC74**](https://github.com/arendst/Tasmota/blob/development/tasmota/tasmota_xsns_sensor/xsns_108_tc74.ino) | Temperature Sensor| I^2^C
 [**Téléinfo**](Teleinfo) | French energy measuring system | serial
 **TFMini** | TFmini, TFmini Plus, TFmini Plus (Indoor Version), TFmini-S LiDAR module | serial
 **TM1638** | 8 Switch, LED and 7 Segment Unit Sensor| gpio

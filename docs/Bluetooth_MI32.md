@@ -431,7 +431,7 @@ cbp = tasmota.gen_cb(cb)
 BLE.conn_cb(cbp,cbuf)
 ```
   
-Error codes:
+####Error codes:
 
 - 0 - no error
 - 1 - connection error
@@ -444,7 +444,7 @@ Error codes:
 - 8 - did not write value
 - 9 - timeout: did not read on notify
   
-Op codes:
+####Op codes:
 
 - 1 - read  
 - 2 - write  
@@ -499,21 +499,23 @@ BLE.serv_cb(cbp,cbuf)
 # now add characteristics and advertisement ...
 ```
   
-Command operators:  
-- 201 - add and/or set advertisement data according to the BLE standard, typically chaining small packets in the in the format of `length-type-data`. When called for the first time, will return a bytes buffer, that represents an array of the 16-bit-handles of all characteristics in the order of addition.
-- 202 - add and/or set scan response data, according to the BLE standard which is equally  to the advertisement data. Should be used sparsely.
-- 211 - add and/or set characteristic with value of bytes buffer. For simplicity a `Client Characteristic Configuration Descriptor` (aka 0x2902) will be added on construction of every characteristic and read, write, notification and indication is enabled. You can select write with or without response withe the optional boolean of  `BLE.set_chr(string, bool)`, which defaults to "write with no response". The function call will always trigger a *notification*. As every *characteristic* belongs to a *service*, `BLE.set_svc(string)` must have been called before.  
+####Command op codes:  
   
-Response operators (to client access to the server):
-- 221 - on read of a characteristic, returns no buffer data
-- 222 - on write of a characteristic, returns the written values as byte buffer data
-- 223 - on unsubscribe, returns no buffer data
-- 224 - on subscribe to notifications, returns no buffer data
-- 225 - on subscribe to indications, returns no buffer data
-- 226 - on subscribe to notifications and indications, returns no buffer data
-- 227 - on connect, returns MAC of client device as byte buffer
-- 228 - on disconnect, returns no buffer data
-- 229 - on status, returns error code as byte buffer
+- 201 - add and/or set advertisement data according to the BLE standard, typically chaining small packets in the in the format of `length-type-data`. When called for the first time, will return a bytes buffer, that represents an array of the 16-bit-handles of all characteristics in the order of addition.  
+- 202 - add and/or set scan response data, according to the BLE standard which is equally  to the advertisement data. Should be used sparsely.  
+- 211 - add and/or set characteristic with value of bytes buffer. For simplicity a `Client Characteristic Configuration Descriptor` (aka 0x2902) will be added on construction of every characteristic and read, write, notification and indication is enabled. You can select write with or without response withe the optional boolean of  `BLE.set_chr(string, bool)`, which defaults to "write with no response". The function call will always trigger a *notification*. As every *characteristic* belongs to a *service*, `BLE.set_svc(string)` must have been called before.    
+  
+####Response op codes (triggered when a client interacts with the server):  
+   
+- 221 - on read of a characteristic, returns no buffer data  
+- 222 - on write of a characteristic, returns the written values as byte buffer data  
+- 223 - on unsubscribe, returns no buffer data  
+- 224 - on subscribe to notifications, returns no buffer data  
+- 225 - on subscribe to indications, returns no buffer data  
+- 226 - on subscribe to notifications and indications, returns no buffer data  
+- 227 - on connect, returns MAC of client device as byte buffer  
+- 228 - on disconnect, returns no buffer data  
+- 229 - on status, returns error code as byte buffer  
  
 
   
