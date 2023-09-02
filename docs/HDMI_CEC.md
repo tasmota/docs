@@ -29,6 +29,7 @@ GPIO 2|HDMI CEC|HDMI Pin 13<BR>GPIO 2 on Wemos D1 Mini is connected to a blue Le
 GPIO 4|I2C SDA|HDMI Pin 16
 GPIO 5|I2C SCL|HDMI Pin 15
 Ground||HDMI Pin 17
++5V||HDMI Pin 18<BR>If another device is present on the same HDMI port, it provides +5V with enough power for ESP8266. In such case you don't need an external power (tested with AppleTV).
 
 Below is the template:
 
