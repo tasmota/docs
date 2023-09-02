@@ -381,7 +381,7 @@ tasmota.add_driver(d1)
 
 ## Fast Loop
 
-Beyond the events above, a specific mechanism is available for near-real-time events or fast loops (above 50 times per second).
+Beyond the events above, a specific mechanism is available for near-real-time events or fast loops (200 times per second, or 5ms).
 
 Special attention is made so that there is no or very little impact on performance. Until a first callback is registered, performance is not impacted and Berry is not called. This protects any current use from any performance impact.
 
@@ -389,7 +389,9 @@ Once a callback is registered, it is called separately from Berry drivers to ens
 
 `tasmota.add_fast_loop(cl:function) -> nil` registers a callback to be called in fast loop mode.
 
-The callback is called without any parameter and does not need to return anything. The callback is called at each iteration of Tasmota event loop. The frequency is tightly linked to the `Speed <x>` command. By default, the sleep period is 50ms, hence fast_loop is called every 50ms. You can reduce the time with `Sleep 10` (10ms) hence calling 100 times per second. If you set `Sleep 0`, the callback is called as frequently as possible (discouraged unless you have a good reason).
+The callback is called without any parameter and does not need to return anything. The callback is called at each iteration of Tasmota event loop. The frequency is set to 200Hz or 5ms.
+
+Note: since v13.1.0.2, the frequency of `fast_loop` does not depend anymore on the value of the `Sleep <x>` command.
 
 `tasmota.remove_fast_loop(cl:function) -> nil` removes a previously registered function or closure. You need to pass the exact same closure reference.
 
