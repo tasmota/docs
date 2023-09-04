@@ -106,10 +106,10 @@ class Rainbow_stripes : Leds_animator
     var i = 0
     while i < self.pixel_count    # doing a loop rather than a `for` prevents from allocating a new object
       var col = self.palette[(self.cur_offset + i) % size(self.palette)]
-      strip.set_pixel_color(i, col, self.bri)   # simulate the method call without GETMET
+      self.strip.set_pixel_color(i, col, self.bri)   # simulate the method call without GETMET
       i += 1
     end
-    strip.show()
+    self.strip.show()
   end
 end
 ```
@@ -117,7 +117,7 @@ end
 How to use:
 
 ``` python
-var strip = Leds_matrix(5,5, gpio.pin(gpio.WS2812, 1))
+var strip = Leds(5,5, gpio.pin(gpio.WS2812, 1))
 var r = Rainbow_stripes(strip, 1.0)
 r.start()
 ```
