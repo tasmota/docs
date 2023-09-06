@@ -227,11 +227,25 @@ Another way to address the same using anonymous functions created dynamically
 def rule_adc(adc, value)
   print("value of adc",adc," is ",value)
 end
-tasmota.add_rule("ANALOG#A1",def (value) rule_adc(1,value) end )
-tasmota.add_rule("ANALOG#A2",def (value) rule_adc(2,value) end )
+tasmota.add_rule("ANALOG#A1", def (value) rule_adc(1,value) end )
+tasmota.add_rule("ANALOG#A2", def (value) rule_adc(2,value) end )
 ```
 
-**Teleperiod rules**
+###Multiple triggers AND logic###
+
+It is possible to combine multiple triggers in a AND logic as an array:
+```python
+tasmota.add_rule(["ANALOG#A1>300","ANALOG#A1<500"], def (value) rule_adc_in_range(1,value) end )
+```
+would trigger if `300 < ANALOG#A1 < 500`
+
+Triggers can be of different types too:
+```python
+tasmota.add_rule(["ANALOG#A1>300","BME280#Temperature>28.0"], def (value) rule_adc_and_temp(1,value) end )
+```
+would trigger for simultaneous `ANALOG#A1>300` AND `BME280#Temperature>28.0`
+
+###Teleperiod rules###
 
 Teleperiod rules are supported with a different syntax from Tasmota rules. Instead of using `Tele-` prefix, you must use `Tele#`. For example `Tele#ANALOG#Temperature1` instead of `Tele-ANALOG#Temperature1`
 
@@ -456,8 +470,8 @@ tasmota.publish\_result<a class="cmnd" id="tasmota_publish_result"></a>|`(payloa
 tasmota.publish\_rule<a class="cmnd" id="tasmota_publish_rule"></a>|`(payload:string) -> handled:bool`<br>sends a JSON stringified message to the rule engine, without actually publishing a message to MQTT. Returns `true` if the message was handled by a rule.
 tasmota.cmd<a class="cmnd" id="tasmota_cmd"></a>|`(command:string [, mute:bool]) -> map`<br>Sends any command to Tasmota, like it was type in the console. It returns the result of the command if any, as a map parsed from the command output JSON. Takes an optional `mute` attribute. If `mute` is `true`, logging (serial, web, mqtt) is reduced to level `1` (only severe errors) to avoid polluting the logs.
 tasmota.memory<a class="cmnd" id="tasmota_memory"></a>|`() -> map`<br>Returns memory stats similar to the Information page.<br>Example: `{'iram_free': 41, 'frag': 51, 'program_free': 1856, 'flash': 4096, 'heap_free': 226, 'program': 1679}`<br>or when PSRAM `{'psram_free': 3703, 'flash': 16384, 'program_free': 3008, 'program': 1854, 'psram': 4086, 'frag': 27, 'heap_free': 150}`
-tasmota.add\_rule<a class="cmnd" id="tasmota_add_rule"></a>|`(pattern:string, f:function [, id:any]) ->nil`<br>Adds a rule to the rule engine. See above for rule patterns.<br>Optional `id` to remove selectively rules.
-tasmota.remove\_rule<a class="cmnd" id="tasmota_remove_rule"></a>|`(pattern:string [, id:any]) ->nil`<br>Removes a rule to the rule engine. Silently ignores the pattern if no rule matches. Optional `id` to remove selectively some rules.
+tasmota.add\_rule<a class="cmnd" id="tasmota_add_rule"></a>|`(trigger:string, f:function [, id:any]) ->nil`<br>`(triggers:list_of_string, f:function [, id:any]) ->nil`<br>Adds a rule to the rule engine. See above for rule triggers.<br>Optional `id` allows to remove selectively rules with `tasmota.remove_rule()`.
+tasmota.remove\_rule<a class="cmnd" id="tasmota_remove_rule"></a>|`(trigger:string [, id:any]) ->nil`<br>`(triggers:list_of_string [, id:any]) ->nil`<br>Removes a rule from the rule engine. Silently ignores the trigger(s) if no rule matches. Optional `id` to remove selectively some rules.
 tasmota.add\_driver<a class="cmnd" id="tasmota_add_driver"></a>|`(instance) ->nil`<br>Registers an instance as a driver
 tasmota.remove\_driver<a class="cmnd" id="tasmota_remove_driver"></a>|`(instance) ->nil`<br>Removes a driver
 tasmota.gc<a class="cmnd" id="tasmota_gc"></a>|`() -> int`<br>Triggers garbage collection of Berry objects and returns the bytes currently allocated. This is for debug only and shouldn't be normally used. `gc` is otherwise automatically triggered when necessary.
