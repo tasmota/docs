@@ -220,9 +220,12 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 #define SUPPORT_MQTT_EVENT
 #endif
 ```
-To increase the maximum MQTT message size that Tasmota is willing to process, increase the following constant by setting it in `user_config_override.h`:
+To default maximum MQTT message size that Tasmota can process is 256 bytes. You can increase it by redefining the following constant in `user_config_override.h`:
 ```
-#define RULE_MAX_MQTT_EVENTSZ  256
+#ifdef RULE_MAX_MQTT_EVENTSZ
+#undef RULE_MAX_MQTT_EVENTSZ
+#endif
+#define RULE_MAX_MQTT_EVENTSZ  512
 ```
 
 ### Subscribe
