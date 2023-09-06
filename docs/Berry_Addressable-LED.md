@@ -106,10 +106,10 @@ class Rainbow_stripes : Leds_animator
     var i = 0
     while i < self.pixel_count    # doing a loop rather than a `for` prevents from allocating a new object
       var col = self.palette[(self.cur_offset + i) % size(self.palette)]
-      strip.set_pixel_color(i, col, self.bri)   # simulate the method call without GETMET
+      self.strip.set_pixel_color(i, col, self.bri)   # simulate the method call without GETMET
       i += 1
     end
-    strip.show()
+    self.strip.show()
   end
 end
 ```
@@ -117,8 +117,42 @@ end
 How to use:
 
 ``` python
-var strip = Leds_matrix(5,5, gpio.pin(gpio.WS2812, 1))
+var strip = Leds(5,5, gpio.pin(gpio.WS2812, 1))
 var r = Rainbow_stripes(strip, 1.0)
+r.start()
+```
+
+And here is another example that "breathes" the LED strip with a hardcoded colour:
+
+``` python
+class Breathe : Leds_animator
+  var brightness
+  var colour
+
+  # duration in seconds
+  def init(strip, duration)
+    super(self).init(strip)
+    self.brightness = 0
+    self.colour = 0xFFFFFF
+    self.add_anim(animate.back_forth(def(v) self.brightness = v end, 0, 100, int(duration * 1000)))
+  end
+
+  def animate()
+    var i = 0
+    while i < self.pixel_count    # doing a loop rather than a `for` prevents from allocating a new object
+      self.strip.set_pixel_color(i, self.colour, self.brightness)
+      i += 1
+    end
+    self.strip.show()
+  end
+end
+```
+
+And to use this one:
+
+``` python
+var strip = Leds(5,5, gpio.pin(gpio.WS2812, 1))
+var r = Breathe(strip, 2.0)
 r.start()
 ```
 
