@@ -231,21 +231,28 @@ tasmota.add_rule("ANALOG#A1", def (value) rule_adc(1,value) end )
 tasmota.add_rule("ANALOG#A2", def (value) rule_adc(2,value) end )
 ```
 
-###Multiple triggers AND logic###
+### Multiple triggers AND logic ###
 
 It is possible to combine multiple triggers in a AND logic as an array:
 ```python
-tasmota.add_rule(["ANALOG#A1>300","ANALOG#A1<500"], def (value) rule_adc_in_range(1,value) end )
+tasmota.add_rule(["ANALOG#A1>300","ANALOG#A1<500"], def (values) rule_adc_in_range(1,values) end )
 ```
 would trigger if `300 < ANALOG#A1 < 500`
 
 Triggers can be of different types too:
 ```python
-tasmota.add_rule(["ANALOG#A1>300","BME280#Temperature>28.0"], def (value) rule_adc_and_temp(1,value) end )
+tasmota.add_rule(["ANALOG#A1>300","BME280#Temperature>28.0"], def (values) rule_adc_and_temp(1,values) end )
 ```
 would trigger for simultaneous `ANALOG#A1>300` AND `BME280#Temperature>28.0`
 
-###Teleperiod rules###
+In that case, the value and trigger arguments passed to the rule function are also lists:
+```python
+def function_name(values:list_of_string, triggers:list_of_string, msg)
+end
+```
+The 3rd argument `msg` remains unchanged.
+
+### Teleperiod rules ###
 
 Teleperiod rules are supported with a different syntax from Tasmota rules. Instead of using `Tele-` prefix, you must use `Tele#`. For example `Tele#ANALOG#Temperature1` instead of `Tele-ANALOG#Temperature1`
 
