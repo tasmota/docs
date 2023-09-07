@@ -91,6 +91,11 @@ Includes ESP32-WROVER-B and ESP32-WROVER-BI
 
 ![ESP-12K Pinout](_media/pinouts/ESP-12K.png)
 
+### JW-02-8285
+![JW-02-8285 Pinout](_media/pinouts/JW-02-8285.png)
+
+### JW-03-8285
+![JW-02-8285 Pinout](_media/pinouts/JW-03-8285.png)
 
 ## ESP32-C3
 
@@ -109,6 +114,10 @@ Includes ESP32-WROVER-B and ESP32-WROVER-BI
 ### ESP-C3-01M
 
 ![ESP-C3-01M Pinout](_media/pinouts/ESP-C3-01M.png)
+
+### JW-2S-ESP32C3
+
+![JW-2S-ESP32C3 Pinout](_media/pinouts/JW-2S-ESP32C3.png)
 
 ## Devices
 ### Sonoff Mini
