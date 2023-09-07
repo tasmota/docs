@@ -62,12 +62,6 @@
 |----------|---------------|-------------|
 | <img src="https://user-images.githubusercontent.com/3363362/164947322-bbfcb7e4-db72-4b0e-8625-96af15943e9d.png"> | <img src="https://user-images.githubusercontent.com/3363362/164946764-c39169bb-0931-4f74-8343-d7dd09aa04a8.png" width=50% height=50%> | <img src="https://user-images.githubusercontent.com/3363362/164947065-53adb2fc-ebc4-4208-af56-1744abb1f9f5.png" width=50% height=50%> |
 
-### JW-02-8285
-![JW-02-8285 Pinout](_media/pinouts/JW-02-8285.png)
-
-### JW-03-8285
-![JW-02-8285 Pinout](_media/pinouts/JW-03-8285.png)
-
 ## ESP32 Based
 ### ESP32-CAM
 
@@ -97,12 +91,13 @@ Includes ESP32-WROVER-B and ESP32-WROVER-BI
 
 ![ESP-12K Pinout](_media/pinouts/ESP-12K.png)
 
+### JW-02-8285
+![JW-02-8285 Pinout](_media/pinouts/JW-02-8285.png)
+
+### JW-03-8285
+![JW-02-8285 Pinout](_media/pinouts/JW-03-8285.png)
 
 ## ESP32-C3
-
-### JW-2S-ESP32C3
-
-![JW-2S-ESP32C3 Pinout](_media/pinouts/JW-2S-ESP32C3.png)
 
 ### ESP-C3-12F
 
@@ -119,6 +114,10 @@ Includes ESP32-WROVER-B and ESP32-WROVER-BI
 ### ESP-C3-01M
 
 ![ESP-C3-01M Pinout](_media/pinouts/ESP-C3-01M.png)
+
+### JW-2S-ESP32C3
+
+![JW-2S-ESP32C3 Pinout](_media/pinouts/JW-2S-ESP32C3.png)
 
 ## Devices
 ### Sonoff Mini
