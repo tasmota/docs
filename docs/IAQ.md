@@ -1,5 +1,7 @@
 # iAQ-Core indoor air quality sensor
 
+??? failure "This component is no longer in production and not recommended for further uses. Manufacturer AppliedSensor changed ownership/name in 2015 to ams AG and in 2019 to Sciosense. New released product is ENS161."
+
 ??? failure "This feature is not included in precompiled binaries"  
 
     When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
