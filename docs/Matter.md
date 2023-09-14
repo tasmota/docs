@@ -227,11 +227,6 @@ To reset all options, use:
 Backlog SO83 0; SO89 0; SO100 0; SO112 0; SO118 0; SO119 0; SO125 0; SO144 0
 ```
 
-Actual exampe
-21:37:34.158 MQT: stat/tasmota_xxxxxx/COMMAND = {"Light0":{"Name":"Light0","Power":1}
-21:41:27.341 MQT: stat/tasmota_xxxxxx/COMMAND = {"ep9":{"Name":"Light0","Power":1}}
-
-
 ## Commands
 
 Command | Description
