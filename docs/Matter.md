@@ -227,6 +227,76 @@ To reset all options, use:
 Backlog SO83 0; SO89 0; SO100 0; SO112 0; SO118 0; SO119 0; SO125 0; SO144 0
 ```
 
+## Matter Virtual Devices
+
+Since v13.1.0.3, it is possible to define "virtual devices" (lights, sensors...) visible from the controller but that do not map to an actual device or sensors managed by Tasmota. You can completely customize the behavior of the virtual device with rules or Berry scripts:
+
+- whenever the controller sends a command, it generates a "Matter Command Event" JSON payload that you handle with rules
+- you send back updates of the status of the device when you want via `MtrUpdate` command. Updates are automatically sent back to the controller via hidden Matter subscription.
+
+### `MtrUpdate` command
+
+`MtrUpdate` is used to signal to the Matter controller that the internal state of an endpoint has changed, either because of a user action or because of a new sensor reading. When you update an internal state variable, and if the value actually change, an attribute report message is sent immediately to the controller to signal the change. This ensures that Matter applications are promptly notified. In case of multiple controllers, multiple report messages are automatically sent.
+
+There are 2 ways to identify an endpoint:
+
+- `"Ep":<ep_number>` via the endpoint number
+- `"Name":"<friendly_name>"` (preferred) via the friendly_name of the endpoint if one has been set.
+
+Example:
+
+```
+MtrUpdate {"ep":9, "Power":0}
+20:44:57.852 MQT: stat/tasmota_xxxxxx/RESULT = {"MtrUpdate":{"Ep":9,"Name":"Light0","Power":false}}
+
+MtrUpdate {"Name":"Light0", "Power":1}
+20:45:27.457 MQT: stat/tasmota_xxxxxx/RESULT = {"MtrUpdate":{"Ep":9,"Name":"Light0","Power":true}}
+```
+
+If the endpoint is valid, the returned payload contains the entire state of the endpoint, similar to `MtrInfo` command.
+
+List of attributes supported by endpoints:
+
+Attribute|Type of endpoint|Description
+:---|:---|:---
+Power|Relay, all Lights|`0`/`1` report Power change
+Bri|Lights|`0..254` report Brightness change
+CT|Light 2|`153..500` White Temperature in mireds
+Hue|Ligth 3|`0..254` Hue converted from 0..360 to 0..254
+Sat|Light 3|`0..254` Saturation
+Contact|Contact|`0`/`1` state of the Contact sensor
+Occupancy|Occupancy|`0`/`1` state of the Occupancy sensor
+Humidity|Humidity|`0..10000` Humidity in 1/100th of percentage
+Illuminance|Illuminance|`0..65534` Illuminance with formula `log10(val + 1) * 10000`
+Pressure|Pressure|Pressure in `hPa`
+Temperature|Temperature|`-32767..32767` Temperature in 1/100th of °C
+
+
+Keep in mind that many values are in the range `0..254` because `255` is an invalid value (this comes from Zigbee).
+
+### Full Example
+
+The example below if theroetical. We will use a Tasmota Relay via `Power1` and map it with rules to a virtual `Light0` type.
+
+Note: the example has the sole purpose of showing how virtual devices work. You should use the native mapping to relays.
+
+**Step 1.** Define one endpoint as `(v) Light 0 On` and give it the name `Light0`.
+
+<img width="361" alt="Matter_Virtual_Light" src="https://github.com/tasmota/docs/assets/49731213/7c45a330-d973-4466-ad3c-bdb5e942ee73">
+
+**Step 2.** Define rules for Matter Controller commands
+
+We use `SetOption83 1` to match endpoint name instead of number, which is highly recommended for easier maintenance.
+
+```
+SetOption83 1
+Rule1 on mtrreceived#Light0#power do power %value% endon on power1#state do mtrupdate {"name":"Light0","power":%value%} endon
+Rule1 1
+```
+
+**Step 3.** Pair Tasmota to the Matter Controller.
+
+
 ## Commands
 
 Command | Description
