@@ -169,13 +169,76 @@ What's not suported:
 - **ESP8266** directly because of limited memory resources and lack of Berry support but you can add them to Matter via the Remote option
 - **Zigbee**
 
+## Matter Command Events
+Whenever a command is received from the controller, an event is generated and published to MQTT. This event can be matched by a rule.
+
+Example:
+
+```
+20:08:36.201 MQT: stat/tasmota_xxxxxx/COMMAND = {"MtrReceived":{"9":{"Ep":9,"Name":"Light0","Power":1}}}
+```
+
+Note: only commands trigger an event (Controller to Tasmota). When a sensors updates the controller (Tasmota to Controller), it is not considered as a command but as an update of internal state.
+
+Endpoints are identified both by endpoint number `"Ep":<x>` and by name if a friendlyname is defined `"Name":"<friendlyname>"`. The formatting of MQTT topic and JSON payload use the same SetOption's as Zigbee.
+
+SetOption|Description
+:---|:---
+SO83|Use friendly_name as key instead of `ep<x>`
+SO100|Remove `MtrReceived` key prefix
+SO119|Remove the endpoint or friendly name as key, the device name is still published in "Name" key
+SO89|Publish on distinct topics per endpoint, by default `stat/tasmota_xxxxxx/<ep>/COMMAND`
+SO112|If `SO89 1`, use the friendly name in topic instead of endpoint number
+SO118|Move `MtrReceived` from JSON message and into the subtopic replacing "COMMAND" default
+SO125|Hide bridge from topic (use with SetOption89)
+
+Examples below consider an endpoint number `9` with friendlyname `Light0`:
+
+83|100|119|118|144|JSON Payload
+:---|:---|:---|:---|:---|:---|:---|:---
+0|0|0|0|0|`{"MtrReceived":{"ep9":{"Name":"Light0","Power":1}}}`
+1|0|0|0|0|`{"MtrReceived":{"Light0":{"Name":"Light0","Power":1}}}`
+0|1|0|0|x|`{"ep9":{"Name":"Light0","Power":1}}`
+1|1|0|0|x|`{"Light0":{"Name":"Light0","Power":1}}`
+x|0|1|0|0|`{"MtrReceived":{"Name":"Light0","Power":1}}`
+x|1|1|0|x|`{"Name":"Light0","Power":1}`
+0|0|0|1|x|`{"ep9":{"Name":"Light0","Power":1}}`
+0|0|0|0|1|`{"Time":"2023-09-20T09:21:26","MtrReceived":{"ep9":{"Name":"Light0","Power":1}}}`
+1|0|0|0|1|`{"Time":"2023-09-20T09:21:26","MtrReceived":{"Light0":{"Name":"Light0","Power":1}}}`
+1|0|1|0|1|`{"Time":"2023-09-20T09:21:26","MtrReceived":{"Name":"Light0","Power":1}}`
+
+
+89|112|118|125|MQTT Topic
+|:---|:---|:---|:---|:---|:---
+0|x|0|x|`stat/tasmota_xxxxxx/COMMAND`
+1|0|0|0|`stat/tasmota_xxxxxx/9/COMMAND`
+1|1|0|0|`stat/tasmota_xxxxxx/Light0/COMMAND`
+0|x|1|x|`stat/tasmota_xxxxxx/COMMAND`
+1|0|1|0|`stat/tasmota_xxxxxx/9/MtrReceived`
+1|1|1|0|`stat/tasmota_xxxxxx/Light0/MtrReceived`
+1|0|0|1|`stat/9/COMMAND`
+1|1|0|1|`stat/Light0/COMMAND`
+1|0|1|1|`stat/9/MtrReceived`
+1|1|1|1|`stat/Light0/MtrReceived`
+
+To reset all options, use:
+
+```
+Backlog SO83 0; SO89 0; SO100 0; SO112 0; SO118 0; SO119 0; SO125 0; SO144 0
+```
+
+Actual exampe
+21:37:34.158 MQT: stat/tasmota_xxxxxx/COMMAND = {"Light0":{"Name":"Light0","Power":1}
+21:41:27.341 MQT: stat/tasmota_xxxxxx/COMMAND = {"ep9":{"Name":"Light0","Power":1}}
+
+
 ## Commands
 
 Command | Description
 :---- | :---
 MtrJoin |`1` = open commissioning for 10 minutes<BR>`0` = close commissioning
 
-## Events
+## Misc Events
 
 Events published as JSON MQTT that can be captured in rules:
 
