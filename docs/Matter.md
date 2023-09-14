@@ -167,7 +167,7 @@ What's not suported:
 
 - **Thread** as it requires a separate MCU. The number of Thread devices is still very limited.
 - **ESP8266** directly because of limited memory resources and lack of Berry support but you can add them to Matter via the Remote option
-- **Zigbee**
+- **Zigbee** (it will come later)
 
 ## Matter Command Events
 Whenever a command is received from the controller, an event is generated and published to MQTT. This event can be matched by a rule.
