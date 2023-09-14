@@ -194,7 +194,7 @@ SO125|Hide bridge from topic (use with SetOption89)
 
 Examples below consider an endpoint number `9` with friendlyname `Light0`:
 
-83|100|119|118|144|JSON Payload
+`83`|`100`|`119`|`118`|`144`|JSON Payload
 :---|:---|:---|:---|:---|:---|:---|:---
 0|0|0|0|0|`{"MtrReceived":{"ep9":{"Name":"Light0","Power":1}}}`
 1|0|0|0|0|`{"MtrReceived":{"Light0":{"Name":"Light0","Power":1}}}`
