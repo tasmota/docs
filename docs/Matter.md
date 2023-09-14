@@ -194,8 +194,8 @@ SO125|Hide bridge from topic (use with SetOption89)
 
 Examples below consider an endpoint number `9` with friendlyname `Light0`:
 
-`83`|`100`|`119`|`118`|`144`|JSON Payload
-:---|:---|:---|:---|:---|:---|:---|:---
+83|100|119|118|144|JSON Payload
+:---|:---|:---|:---|:---|:---
 0|0|0|0|0|`{"MtrReceived":{"ep9":{"Name":"Light0","Power":1}}}`
 1|0|0|0|0|`{"MtrReceived":{"Light0":{"Name":"Light0","Power":1}}}`
 0|1|0|0|x|`{"ep9":{"Name":"Light0","Power":1}}`
@@ -209,7 +209,7 @@ x|1|1|0|x|`{"Name":"Light0","Power":1}`
 
 
 89|112|118|125|MQTT Topic
-|:---|:---|:---|:---|:---|:---
+:---|:---|:---|:---|:---
 0|x|0|x|`stat/tasmota_xxxxxx/COMMAND`
 1|0|0|0|`stat/tasmota_xxxxxx/9/COMMAND`
 1|1|0|0|`stat/tasmota_xxxxxx/Light0/COMMAND`
