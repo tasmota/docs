@@ -232,6 +232,8 @@ Backlog SO83 0; SO89 0; SO100 0; SO112 0; SO118 0; SO119 0; SO125 0; SO144 0
 Command | Description
 :---- | :---
 MtrJoin |`1` = open commissioning for 10 minutes<BR>`0` = close commissioning
+MtrUpdate|Send an state update to the controller, see Virtual Devices above
+MtrInfo|`ep_number` or `friendly_name`<BR>Display the internal state of an endpoint by number or by name<BR>Example: `MtrInfo 9` or `MtrInfo Light0`<BR>`20:25:04.362 MQT: tele/tasmota_673244/RESULT = {"MtrInfo":{"Ep":9,"Name":"Light0","Power":true}}`<BR>Use `MtrInfo` (no argument) to display all endpoints
 
 ## Misc Events
 
