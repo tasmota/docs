@@ -13,6 +13,7 @@ The easiest way to identify if your switch or dimmer uses MCU is by using a cont
 ## Flashing - Preparation
 
 To boot the TYWE3S in flashing mode, GPIO0 needs to be connected to GND while powering up. It can be left grounded for the entire process. Flashing a TYWE3S connected to a MCU is a bit trickier than one without MCU. This is due the same Rx Tx pins used by MCU and serial programmer for flashing. The TYWE3S cannot be booted to flash mode with MCU sending data over the same pins. To be able to do that, we need to disable MCU from sending data over Rx and Tx pins. There are few ways to do it:  
+
 1. Disconnect TYWE3S module from the rest of board. _(Naah, too much work)_
 2. Just break the Rx track from MCU to TYWE3S, flash and then reconnect. _(Messy work, we want cleaner approach)_
 3. Just keep MCU disabled while flashing TYWE3S without any soldering / cutting. _(We like that)_
@@ -20,6 +21,7 @@ To boot the TYWE3S in flashing mode, GPIO0 needs to be connected to GND while po
 The easiest is to keep MCU disabled is by identifying the NRST/RST (Reset) pin of the MCU from its datasheet and connect it to GND for the entire flashing process. This will keep MCU disabled while you flash TYWE3S. If there are some contacts or test points in switches that connect to the MCU, you might be lucky to find contacts for RST that you can easily solder onto.  
 
 ### TYWE3S Connection Options
+
 1. 3D print a [flashing Jig](https://www.thingiverse.com/thing:3231225) and use pogo pins to make nice and easy to use flashing jig
 2. Solder wires directly onto TYWE3S
 3. Use a jumper header like the one below and bend the pins to match VCC, Rx Tx GPIO0 and GND. You can just press the jumper header to the contacts during the flashing process
