@@ -222,8 +222,10 @@ The value of a `Var<x>` and `Mem<x>` can be:
 - %color%
 - %deviceid%
 - %macaddr%
+- %power1% to number of power channels
 - %sunrise%
 - %sunset%
+- %switch1% to number of switch gpios
 - %time%
 - %timer1% to %timer16%
 - %timestamp%
