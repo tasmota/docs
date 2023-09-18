@@ -195,3 +195,55 @@ Note that the push button is wired to the MCU (PA3 Pin 10) so it cannot be used 
 Bought from [ebay](https://www.ebay.co.uk/itm/Smart-Wifi-Dimmer-Switch-Support-Tuya-Smart-Life-LED-Light-Timing-Remote-Control/233233166207)
 
 [More information on TYWE3S](https://docs.tuya.com/docDetail?code=K8uhkbb1ihp8u)]
+
+## Ketotek KTEM06
+
+The KTEM06 is a single phase energy meter with a relay for switching for DIN rail mounting.
+
+![KTEM06 open](./_media/devices/Ketotek-KTEM06-01x.jpg)
+### Flashing
+
+Open the case to see the board with the display and the TYWE3S module on the backside. Remove the board and flip it around.
+
+![KTEM06 display](./_media/devices/Ketotek-KTEM06-02x.jpg)
+
+There is no need to unsolder the module from the MCU for flashing. You need to solder 6 wires to the module at the marked pins.
+
+![KTEM06 pins](./_media/devices/Ketotek-KTEM06-03x.jpg)
+
+   PIN   | Description
+   :-:   |-
+   G     | GND
+   V     | 3.3V
+   TXD   | to RXD of programmer
+   RXD   | to TXD of programmer
+   GPIO0 | connect to GND while flashing
+   RST   | connect to GND for booting, disconnect for flashing
+
+Flashing procedure
+
+1. As usual, connect GND (G), RXD and TXD with the serial programmer. Connect GPIO0 to GND and keep it connected while flashing.
+
+2. Connect RST to GND
+
+3. Prepare Tasmotizer or your preferred tool for flashing.
+
+4. Connect V to 3.3V
+
+5. After 2-3 seconds disconnect RST
+
+6. Start flashing
+
+### Configuration
+
+The ESP will not boot if you try to supply it with power from the serial programmer and having the display board unmounted. Unsolder the wires, mount the display board and close the case. Apply power to the connectors #1 and #3. Configure Wifi and complete the configuration with the information on [Ketotek Single Phase Energy Monitor DIN Relay (KTEM06)](https://templates.blakadder.com/ketotek_KTEM06.html)
+
+### Remarks
+
+Different than described elsewhere it was not helpful to connect EN to 3.3V. 
+
+RST needed to be disconnected from GND to start flashing.
+
+### Product Links
+
+[KETOTEK Smart 1 Phasen Stromzähler](https://www.amazon.de/KETOTEK-Stromz%C3%A4hler-Digitalenergiez%C3%A4hler-Fernbedienung-Energiez%C3%A4hler/dp/B09XXG4L2C)
