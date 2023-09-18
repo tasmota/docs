@@ -276,9 +276,9 @@ Keep in mind that many values are in the range `0..254` because `255` is an inva
 
 ### Full Example
 
-The example below if theroetical. We will use a Tasmota Relay via `Power1` and map it with rules to a virtual `Light0` type.
+The example below implements a simple bridge between Matter and IR (Infra Red). This allows to trigger On/Off commands from the Matter controller, that are translated to On/Off infra-red commands (we use the simple NEC protocol in the example, like used in Magic Home LED strips). You can also received On/Off infra-red commands that are reflected in the virtual light. In reality, you will probably use only Matter-to-IR or IR-to-Matter direction, but it doesn't harm to have both directions implemented.
 
-Note: the example has the sole purpose of showing how virtual devices work. You should use the native mapping to relays.
+We will use a Tasmota Relay via `Power1` and map it with rules to a virtual `Light0` type.
 
 **Step 1.** Define one endpoint as `(v) Light 0 On` and give it the name `Light0`.
 
@@ -290,8 +290,18 @@ We use `SetOption83 1` to match endpoint name instead of number, which is highly
 
 ```
 SetOption83 1
-Rule1 on mtrreceived#Light0#power do power %value% endon on power1#state do mtrupdate {"name":"Light0","power":%value%} endon
+Rule1 on mtrreceived#Light0#power==1 do irsend {"protocol":"nec","bits":32,"data":"0xffb04f"} endon on mtrreceived#Light0#power==0 do irsend {"protocol":"nec","bits":32,"data":"0xfff807"} endon on irreceived#data=0xFFB04F do mtrupdate {"name":"Light0","power":1} endon on irreceived#data=0xFFF807 do mtrupdate {"name":"Light0","power":0} endon
 Rule1 1
+```
+
+If we decompose the Rule, the first two rule matches convert a Matter initiated command to an IR message, the two last convert an IR message to a Matter state update:
+
+```
+Rule1
+    on mtrreceived#Light0#power==1 do irsend {"protocol":"nec","bits":32,"data":"0xffb04f"} endon
+    on mtrreceived#Light0#power==0 do irsend {"protocol":"nec","bits":32,"data":"0xfff807"} endon
+    on irreceived#data=0xFFB04F do mtrupdate {"name":"Light0","power":1} endon
+    on irreceived#data=0xFFF807 do mtrupdate {"name":"Light0","power":0} endon 
 ```
 
 **Step 3.** Pair Tasmota to the Matter Controller.
