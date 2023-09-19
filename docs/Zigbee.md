@@ -181,7 +181,7 @@ At Zigbee start, all files with `*.zb` suffix are loaded into memory. Be careful
 
 #### **attribute matcher** specifies a cluster/attribute/type tuple and matches an attribute name
 
-- `<cluster 4 hex>/<attribute 4 hex>` or `<cluster 4 hex>/attribute 4 hex>%<type 2 hex>`
+- `<cluster 4 hex>/<attribute 4 hex>` or `<cluster 4 hex>/<attribute 4 hex>%<type 2 hex>`
 - Ex: `EF00/0365,IrrigationStartTime` (Tuya cluster EF00 does not need an explicit type)
 - Ex: `0006/4001%bool,OnTime`
 
@@ -1044,7 +1044,7 @@ You can define or overwrite an attribute name for a specific cluser/attributeid,
 
 The format is:
 
-```<cluster>/<attributeid>[,%<type>],<name>[,mul:<mul>][,div:<div>][,add:<add>][,manuf:<manuf>]```
+```<cluster>/<attributeid>[%<type>],<name>[,mul:<mul>][,div:<div>][,add:<add>][,manuf:<manuf>]```
 
 Parameter|Description
 :---|:---
