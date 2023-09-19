@@ -13,13 +13,15 @@ The easiest way to identify if your switch or dimmer uses MCU is by using a cont
 ## Flashing - Preparation
 
 To boot the TYWE3S in flashing mode, GPIO0 needs to be connected to GND while powering up. It can be left grounded for the entire process. Flashing a TYWE3S connected to a MCU is a bit trickier than one without MCU. This is due the same Rx Tx pins used by MCU and serial programmer for flashing. The TYWE3S cannot be booted to flash mode with MCU sending data over the same pins. To be able to do that, we need to disable MCU from sending data over Rx and Tx pins. There are few ways to do it:  
+
 1. Disconnect TYWE3S module from the rest of board. _(Naah, too much work)_
 2. Just break the Rx track from MCU to TYWE3S, flash and then reconnect. _(Messy work, we want cleaner approach)_
 3. Just keep MCU disabled while flashing TYWE3S without any soldering / cutting. _(We like that)_
 
-The easiest is to keep MCU disabled is by identifying the NRST/RST (Reset) pin of the MCU from its datasheet and connect it to GND for the entire flashing process. This will keep MCU disabled while you flash TYWE3S. If there are some contacts or test points in switches that connect to the MCU, you might be lucky to find contacts for RST that you can easily solder onto.  
+The easiest is to keep MCU disabled is by identifying the NRST/RST (Reset) pin of the MCU from its datasheet and connect it to GND for the entire flashing process. This will keep MCU disabled while you flash TYWE3S. If there are some contacts or test points in switches that connect to the MCU, you might be lucky to find contacts for RST that you can easily solder onto. For some devices you need to disconnect RST after boot. An example for such a device is the Ketotek KTEM06.
 
 ### TYWE3S Connection Options
+
 1. 3D print a [flashing Jig](https://www.thingiverse.com/thing:3231225) and use pogo pins to make nice and easy to use flashing jig
 2. Solder wires directly onto TYWE3S
 3. Use a jumper header like the one below and bend the pins to match VCC, Rx Tx GPIO0 and GND. You can just press the jumper header to the contacts during the flashing process
@@ -68,7 +70,9 @@ TIP: If you are using jumper headers use `sleep 15 &&` before your commands, thi
 8. Follow the process [here](TuyaMCU) depending on switch or dimmer.
 
 # Product Specific guides
+
 ## Otim Dimmer
+
 This Device is based on a Tuya Wi-Fi Module. Refer to ["MCU Based Tuya Dimmers and Switches"](TuyaMCU-Devices) for details.  
 
 ![](https://github.com/digiblur/TuyaDimmer-Tasmota/raw/master/IMG_0788.JPG)
@@ -85,43 +89,43 @@ These devices use a Tuya TYWE3S Wi-Fi PCB module.  Once the switch is carefully 
 
 Attach the GPIO0 wire to ground during initial boot to flash. You may need to also connect MCU RST to GND during initial boot to get it into programming mode as described [here](https://forum.iobroker.net/topic/9886/tuya-jinvoo-unterputz-wandschalter/17). A 3-pin header bridged together works great with GPIO0, GND and the GND from the USB flasher attached. (TX pin to RX pin and RX pin to TX pin on USB flash adapter). Verify that you are using 3.3volts to flash, **NOT 5V!**
 
-Product Links:
+### Product Links
 
 - [Oittm](https://www.amazon.com/gp/product/B07D127YL5)
 - [Moes DS01](https://www.amazon.com/gp/product/B07DRG19S6) ([Template](https://templates.blakadder.com/moes_DS01.html))
 - [Konesky](https://www.amazon.fr/gp/product/B07L3LNVG1/)
 - [Heygo](https://www.amazon.com/gp/product/B07JG6T1G8/)
 
-### Costco Charging Essentials
+## Costco Charging Essentials
 
 This devices use a Tuya TYWE1S Wi-Fi PCB module. And it uses U1TX (GPIO15) and U1RX (GPIO13) to communicate between ESP8266 and MCU, no other GPIO is used in this device.
 
-#### Flashing
+### Flashing
 
 ![tywe1s](https://user-images.githubusercontent.com/34905120/47533504-f524a380-d881-11e8-9b23-61c20074b06f.png)
 ![CE Dimmer](https://user-images.githubusercontent.com/34905120/47618033-a30f9800-daa4-11e8-80b7-de041c57ab36.jpg)
 
 The CE dimmer uses standard Tuya GPIO
 
-### Touch (EU and US) - Multiple manufacturers
+## Touch (EU and US) - Multiple manufacturers
 
-#### Flashing
+### Flashing
 ![Tuya-Touch](https://user-images.githubusercontent.com/1183624/42902025-7b57aa9a-8acd-11e8-8fed-bda9bff28e70.png)
 
 The procedure is similar to above, additionally NRST must be connected to GND during flashing.
 
-#### Optional configuration (recommended)
+### Optional configuration (recommended)
 
 [`LedState 0`](Commands#ledstate) Only use the green LED for Wi-Fi/MQTT connectivity status.  
 
-### Product Links:
+### Product Links
 
 - [AIGLEN](https://www.aliexpress.com/item/WiFi-LED-Dimmer-Switch-220V-110V-Dimming-Panel-Switch-Connected-To-Alexa-Google-Home-Voice-Control/32859257784.html)
 - [ALLOMN](https://www.amazon.de/Lichtschalter-Fernbedienung-Timing-Funktion-%C3%9Cberlastschutz-Neutralleitung/dp/B07BKY1N9S)
 - [MakeGood](https://www.aliexpress.com/item/32663017309.html?spm=a2g0o.productlist.0.0.2cb63c95dOaB98&algo_pvid=0b6ae362-b37d-43dc-8aa2-2f26263b8d20&algo_expid=0b6ae362-b37d-43dc-8aa2-2f26263b8d20-21&btsid=bfb628ab-6c5b-4236-94f4-b57775d95fee&ws_ab_test=searchweb0_0,searchweb201602_6,searchweb201603_55)
 
-
 ## Zemismart Curtain Motor
+
 Curtain motors come in a confusing array. This one has a little Wi-Fi dongle, that looks like a USB stick. But it talks using `9600 8N1`, not USB. This means we can unplug the Tuya Dongle and flash it without worrying about the PCI micro. Excellent.
 
 ![Dongle and Motor](https://user-images.githubusercontent.com/43923557/64846609-25735d00-d661-11e9-8d51-a315c45fc462.jpg)
@@ -145,15 +149,18 @@ The curtain motor also presents DpId 0x66 as a single event "Full Open" `00`, "F
 
 The curtain motor also presents DpId 0x67 as a Boolean. I have only seen value 0x01 in all my prodding. `55 aa 00 07 00 05 67 01 00 01 01 75` = 07 Status, 0005 length, 67 DpId, 01 type, 0001 length, 01 value, 75 checksum
 
-### Product Links:
+### Product Links
+
 - [ZemiSmart](https://www.zemismart.com/zemismart-smart-curtain-alexa-google-home-electric-stage-curtain-motorized-tuya-wifi-curtain-motor-with-track-p0160-p0160.html)
 
-### DM_WF_MDV4 Leading edge dimmer
+## DM_WF_MDV4 Leading edge dimmer
+
 ![DM_WF_MDV4 Dimmer and Case](https://user-images.githubusercontent.com/34340210/66512192-6c107780-eaa6-11e9-9584-e8b3f77cba14.jpg)
 
 This is a 240V Leading Edge Dimmer with a TYWE3S controller and an STM8 MCU
 
-### Flashing:
+### Flashing
+
 The simplest approach is to use [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert) to flash the device
 
 In order to flash via serial, the NRST pin of the STM8 needs to be grounded upon boot to disable it, this is brought out to a header pin, along with ground and VCC from the TYWE3S. Confirm by checking continuity with a multimeter
@@ -172,7 +179,8 @@ Header J3 (STM8 debug interface) pins from left to right (Pin 1 is the square sh
 
 ![STM8S003F3P6](https://user-images.githubusercontent.com/29167124/66513040-2669a400-ead2-11e9-9a70-ef29f9c231d0.png)
 
-### Config:
+### Config
+
 As per main TuyaMCU page using
 
    GPIO | Component
@@ -182,14 +190,60 @@ As per main TuyaMCU page using
 
 Note that the push button is wired to the MCU (PA3 Pin 10) so it cannot be used by Tasmota. Similarly the devices has a bi-color LED where one color (green) is wired to the TYWE3S (GPIO14) and the other one (red) to the MCU (PC5 Pin15).
 
-### More information:
+### More information
+
 Bought from [ebay](https://www.ebay.co.uk/itm/Smart-Wifi-Dimmer-Switch-Support-Tuya-Smart-Life-LED-Light-Timing-Remote-Control/233233166207)
 
 [More information on TYWE3S](https://docs.tuya.com/docDetail?code=K8uhkbb1ihp8u)]
 
-## Product Links:
+## Ketotek KTEM06
 
-- [AIGLEN](https://www.aliexpress.com/item/WiFi-LED-Dimmer-Switch-220V-110V-Dimming-Panel-Switch-Connected-To-Alexa-Google-Home-Voice-Control/32859257784.html)
-- [ALLOMN](https://www.amazon.de/Lichtschalter-Fernbedienung-Timing-Funktion-%C3%9Cberlastschutz-Neutralleitung/dp/B07BKY1N9S)
-- [MakeGood](https://www.aliexpress.com/item/32663017309.html?spm=a2g0o.productlist.0.0.2cb63c95dOaB98&algo_pvid=0b6ae362-b37d-43dc-8aa2-2f26263b8d20&algo_expid=0b6ae362-b37d-43dc-8aa2-2f26263b8d20-21&btsid=bfb628ab-6c5b-4236-94f4-b57775d95fee&ws_ab_test=searchweb0_0,searchweb201602_6,searchweb201603_55)
-- [ZemiSmart](https://www.zemismart.com/zemismart-smart-curtain-alexa-google-home-electric-stage-curtain-motorized-tuya-wifi-curtain-motor-with-track-p0160-p0160.html)
+The KTEM06 is a single phase energy meter with a relay for switching for DIN rail mounting.
+
+![KTEM06 open](./_media/devices/Ketotek-KTEM06-01x.jpg)
+### Flashing
+
+Open the case to see the board with the display and the TYWE3S module on the backside. Remove the board and flip it around.
+
+![KTEM06 display](./_media/devices/Ketotek-KTEM06-02x.jpg)
+
+There is no need to unsolder the module from the MCU for flashing. You need to solder 6 wires to the module at the marked pins.
+
+![KTEM06 pins](./_media/devices/Ketotek-KTEM06-03x.jpg)
+
+   PIN   | Description
+   :-:   |-
+   G     | GND
+   V     | 3.3V
+   TXD   | to RXD of programmer
+   RXD   | to TXD of programmer
+   GPIO0 | connect to GND while flashing
+   RST   | connect to GND for booting, disconnect for flashing
+
+Flashing procedure
+
+1. As usual, connect GND (G), RXD and TXD with the serial programmer. Connect GPIO0 to GND and keep it connected while flashing.
+
+2. Connect RST to GND
+
+3. Prepare Tasmotizer or your preferred tool for flashing.
+
+4. Connect V to 3.3V
+
+5. After 2-3 seconds disconnect RST
+
+6. Start flashing
+
+### Configuration
+
+The ESP will not boot if you try to supply it with power from the serial programmer and having the display board unmounted. Unsolder the wires, mount the display board and close the case. Apply power to the connectors #1 and #3. Configure Wifi and complete the configuration with the information on [Ketotek Single Phase Energy Monitor DIN Relay (KTEM06)](https://templates.blakadder.com/ketotek_KTEM06.html)
+
+### Remarks
+
+Different than described elsewhere it was not helpful to connect EN to 3.3V. 
+
+RST needed to be disconnected from GND to start flashing.
+
+### Product Links
+
+[KETOTEK Smart 1 Phasen Stromzähler](https://www.amazon.de/KETOTEK-Stromz%C3%A4hler-Digitalenergiez%C3%A4hler-Fernbedienung-Energiez%C3%A4hler/dp/B09XXG4L2C)
