@@ -643,19 +643,16 @@ DAC is limited to specific GPIOs:
 DAC can also be used via `Esp8266Audio` through the ESP32 I2S -> DAC bridge.
 
 ??? example
-    ```python
+    ```berry
     class MP3_Player : Driver
-      var audio_output, audio_mp3
+      var audio_output, audio_mp3, fast_loop_closure
       def init()
-        self.audio_output = AudioOutputI2S(
-          gpio.pin(gpio.I2S_OUT_CLK),
-          gpio.pin(gpio.I2S_OUT_SLCT),
-          gpio.pin(gpio.I2S_OUT_DATA),
-          0,    #- I2S port -#
-          64)    #- number of DMA buffers of 64 bytes each, this is the value required since we update every 50ms -#
+        self.audio_output = AudioOutputI2S()
         self.audio_mp3 = AudioGeneratorMP3()
+        self.fast_loop_closure = def () self.fast_loop() end
+        tasmota.add_fast_loop(self.fast_loop_closure)
       end
-
+    
       def play(mp3_fname)
         if self.audio_mp3.isrunning()
           self.audio_mp3.stop()
@@ -664,17 +661,18 @@ DAC can also be used via `Esp8266Audio` through the ESP32 I2S -> DAC bridge.
         self.audio_mp3.begin(audio_file, self.audio_output)
         self.audio_mp3.loop()    #- start playing now -#
       end
-
-      def every_50ms()
+    
+      def fast_loop()
         if self.audio_mp3.isrunning()
           self.audio_mp3.loop()
+        else
+          tasmota.remove_fast_loop(self.fast_loop_closure)
+          print("end")
         end
       end
     end
-
+    
     mp3_player = MP3_Player()
-    tasmota.add_driver(mp3_player)
-
     mp3_player.play("/pno-cs.mp3")
     ```
 
