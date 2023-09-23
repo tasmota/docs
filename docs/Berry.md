@@ -664,10 +664,10 @@ DAC can also be used via `Esp8266Audio` through the ESP32 I2S -> DAC bridge.
     
       def fast_loop()
         if self.audio_mp3.isrunning()
-          self.audio_mp3.loop()
-        else
-          tasmota.remove_fast_loop(self.fast_loop_closure)
-          print("end")
+          if !self.audio_mp3.loop()
+            self.audio_mp3.stop()
+            tasmota.remove_fast_loop(self.fast_loop_closure)
+          end
         end
       end
     end
