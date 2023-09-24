@@ -916,8 +916,8 @@ DzUpdateTimer<a class="cmnd" id="dzupdatetimer"></a>|Show current update timer v
 Command|Parameters
 :---|:---
 Ifx<a class="cmnd" id="ifx"></a>|InfluxDB state<BR>`0` = off<br> `1` = on
-IfxHost<a class="cmnd" id="ifxhost"></a>|`<value>` =  set Influxdb host name or IP address
-IfxPort<a class="cmnd" id="ifxport"></a>|`<value>` =  set Influxdb port
+IfxHost<a class="cmnd" id="ifxhost"></a>|`hostname` or `ip.address` =  set Influxdb host name or IP address (default to http access)<BR>`https://hostname` or `https://ip.address` = set https access (requires to set `IfxPort 443`)
+IfxPort<a class="cmnd" id="ifxport"></a>|`<value>` =  set Influxdb port (default to 8086).<BR>For `https`, port must be set to 443.
 IfxDatabase<a class="cmnd" id="ifxdatabase"></a>|`<value>` =  set Influxdb V1 and database name
 IfxUser<a class="cmnd" id="ifxuser"></a>|`<value>` =  set Influxdb V1 and userid
 IfxPassword<a class="cmnd" id="ifxpassword"></a>|`<value>` =  set Influxdb V1 and password
