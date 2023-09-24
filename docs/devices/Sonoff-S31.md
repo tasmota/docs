@@ -25,4 +25,4 @@ Tinkerman's review of [Sonoff S31](http://tinkerman.cat/sonoff-s31-now-serious/)
 [![](http://img.youtube.com/vi/kKtLKjI4wA0/0.jpg)](http://www.youtube.com/watch?v=kKtLKjI4wA0 "")
 
 ### Video tutorial by Robert Cowan
-[![](https://youtu.be/IvfiLcHMekQ "")
+[![](http://img.youtube.com/vi/IvfiLcHMekQ/0.jpg)](https://youtu.be/IvfiLcHMekQ "")
