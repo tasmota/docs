@@ -245,6 +245,8 @@ Different than described elsewhere it was not helpful to connect EN to 3.3V.
 
 RST needed to be disconnected from GND to start flashing.
 
+Some users report that flashing does not work because the serial programmer does not supply enough power. Using serial programmers based on CH340 seem to work. A workaround is to use an additional power supply.
+
 ### Product Links
 
 [KETOTEK Smart 1 Phasen Stromzähler](https://www.amazon.de/KETOTEK-Stromz%C3%A4hler-Digitalenergiez%C3%A4hler-Fernbedienung-Energiez%C3%A4hler/dp/B09XXG4L2C)
