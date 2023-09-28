@@ -542,7 +542,7 @@ See examples in the [Berry-Cookbook](Berry-Cookbook#adding-commands-to-tasmota)
 
 Tasmota Function|Parameters and details
 :---|:---
-tasmota.get\_power<a class="cmnd" id="tasmota_get_power"></a>|`() -> list[bool]`<br>Returns the state On/Off of each Relay and Light as a list of bool.
+tasmota.get\_power<a class="cmnd" id="tasmota_get_power"></a>|`([index:int]) -> bool or list[bool]`<br>Returns Relay or Light On/Off state for one channel, or as a list of bool for all.
 tasmota.set\_power<a class="cmnd" id="tasmota_set_power"></a>|`(index:int, onoff:bool) -> bool`<br>Sets the on/off state of a Relay/Light. Returns the previous status of the Relay/Light of `nil` if index is invalid.<br>Example:<br>```> tasmota.get_power()```<br>```[true]```
 tasmota.get\_light<a class="cmnd" id="tasmota_get_light"></a>|_deprecated_ use `light.get`
 tasmota.set\_light<a class="cmnd" id="tasmota_set_light"></a>|_deprecated_ use `light.set`
