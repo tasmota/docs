@@ -377,7 +377,7 @@ Driver methods are called with the following parameters: `f(cmd, idx, payload, r
 - `button_pressed()`: called when a button is pressed
 - `save_before_restart()`: called just before a restart
 - `mqtt_data(topic, idx, data, databytes)`: called for MQTT payloads matching `mqtt.subscribe`. `idx` is zero, and `data` is normally unparsed JSON.
-- `set_power_handler(cmd, idx)`: called whenever a Power command is made. `idx` contains the index of the relay or light. `cmd` can be ignored.
+- `set_power_handler(cmd, idx)`: called whenever a Power command is made. `idx` is a combined index value, with one bit per relay or light currently on. `cmd` can be ignored.
 - `display()`: called by display driver with the following subtypes: `init_driver`, `model`, `dim`, `power`.
 
 Then register the driver with `tasmota.add_driver(<driver>)`.
