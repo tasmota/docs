@@ -34,6 +34,8 @@ To solder you'll of course need a soldering iron, soldering tin and some flux. I
 
 If you're intimidated by soldering there are 3D printed jigs available for different modules and devices. At worst, you could get away with holding the headers tightly with jumper wires in pin holes during flashing but it is not a foolproof process and flashing might fail.
 
+Soldering is no option for you? Then you could consider PCBite from [Sensepeek](https://sensepeek.com/). This is a toolset which allows flashing without soldering (you can find a post about successfully flashed LED lamp microcontrollers [here](https://github.com/syssi/esphome-yeelight-ceiling-light/discussions/72).
+
 #### Jumper Wires
 
 You could use any kind of wire but [jumper wires](http://blog.sparkfuneducation.com/what-is-jumper-wire) (also called DuPont wires) are more practical than soldering and desoldering.
