@@ -268,6 +268,7 @@ Command|Parameters
 :---|:---
 MI32Cfg<a id="mi32cfg"></a>|Saves current sensor list as **mi32cfg** file to the flash of the ESP32. After reboot only the saved drivers will be observed, no unknown drivers will be added. A valid config file is mandatory for HomeKit in this driver.
 MI32Key<a id="mi32key"></a>| Set a "bind_key" for a MAC-address to decrypt sensor data (LYWSD03MMC, MJYD2S). The argument is a 44 uppercase characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string
+MI32Name<a id="mi32name"></a>| Override the name of the sensor with `mi32name<slot> <name>`. Slot is the position of the sensor in the internal array (like in the payload from `status 8`), starting with 0. Will not append the OUI of the MAC to the name in the MQTT payload. Should be made persistent using command `mi32cfg`. `mi32name<slot>` will delete the override at runtime, but not change the config file.
 MI32Option0<a id="mi32option"></a>|`0` = sends only recently received sensor data<br>`1` = aggregates all recent sensors data types
 MI32Option1|`0` = shows full sensor data at Teleperiod<br>`1` = shows no sensor data at Teleperiod
 MI32Option2|`0` = sensor data only at Teleperiod (_default_)<br>`1` = direct bridging of BLE data to MQTT messages
@@ -281,7 +282,8 @@ MI32Option4|`0` = use passive scanning (default)<br>`1` = use active scanning, n
 
 !!! tip
 
-    If you want to add a new BLE sensor to your config on the device, use `MI32option3 1` to add the new sensor by catching a BLE packet. Then use `MI32Cfg` to save the new config on flash.
+    If you want to add a new BLE sensor to your config on the device, use `MI32option3 1` to add the new sensor by catching a BLE packet. Then use `MI32Cfg` to save the new config to the file system.  
+    To support unknown sensor types give them a suitable name with `mi32name<slot> <name>`, then save with `mi32cfg`. The system will learn about the sensors feature set by receiving data packets. The feature set can be saved too with `mi32cfg` in order to have knowledge about it at boot time.
   
   
 ## Mi Dashboard
