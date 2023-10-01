@@ -1,13 +1,13 @@
 The IR Codes can be used with any device with an IR sender.
 
-The codes will also fit other devices from same manufacturer or series. 
+The codes will also fit other devices from same manufacturer or series.
 Please try out...
 
 Feel free to contribute this list.
 
-# TV's
+## TV's
 
-## Panasonic TX65FXW784 TV
+### Panasonic TX65FXW784 TV
 
 **Example received Code:**
 
@@ -69,7 +69,7 @@ Feel free to contribute this list.
 | Picture       | 0x400401000A0B |
 | Help          | 0x400401003534 |
 
-## Sony KDL-EX540 TV
+### Sony KDL-EX540 TV
 
 Common buttons should work across multiple models
 
@@ -136,7 +136,7 @@ Common buttons should work across multiple models
 | PC                  | {"Protocol":"SONY","Bits":12,"Data":"0xC30"}  |
 | Digital TV          | {"Protocol":"SONY","Bits":15,"Data":"0x25EE"} |
 
-## LG 55UH8509 TV
+### LG 55UH8509 TV
 
 **Example received Code:**
 
@@ -245,9 +245,47 @@ Common buttons should work across multiple models
 | Enter Password                 | 0x20DF5FA0 |
 | Warning: Reset to factory      | 0x20DF3FC0 |
 
-# Set-top Boxes
+### Generic VEON TV (eg model SRO322016)
 
-## VU+ Duo2
+| button     | code                                             |
+| ---------- | ------------------------------------------------ |
+| On/Off     | {"Protocol":"NEC","Bits":32,"Data":"0x00FEA857"} |
+| Mute       | {"Protocol":"NEC","Bits":32,"Data":"0x00FE6897"} |
+| Sleep      | {"Protocol":"NEC","Bits":32,"Data":"0x00FE38C7"} |
+| Source     | {"Protocol":"NEC","Bits":32,"Data":"0x00FE48B7"} |
+| Info       | {"Protocol":"NEC","Bits":32,"Data":"0x00FE28D7"} |
+| EPG        | {"Protocol":"NEC","Bits":32,"Data":"0x00FEAA55"} |
+| Vol+       | {"Protocol":"NEC","Bits":32,"Data":"0x00FED827"} |
+| Vol-       | {"Protocol":"NEC","Bits":32,"Data":"0x00FE58A7"} |
+| Chan+      | {"Protocol":"NEC","Bits":32,"Data":"0x00FE9867"} |
+| Chan-      | {"Protocol":"NEC","Bits":32,"Data":"0x00FE18E7"} |
+| Play/Pause | {"Protocol":"NEC","Bits":32,"Data":"0x00FE52AD"} |
+| Stop       | {"Protocol":"NEC","Bits":32,"Data":"0x00FED22D"} |
+| Rwd        | {"Protocol":"NEC","Bits":32,"Data":"0x00FEE21D"} |
+| FFd        | {"Protocol":"NEC","Bits":32,"Data":"0x00FE629D"} |
+| Back       | {"Protocol":"NEC","Bits":32,"Data":"0x00FEA25D"} |
+| Skip       | {"Protocol":"NEC","Bits":32,"Data":"0x00FE22DD"} |
+| 1          | {"Protocol":"NEC","Bits":32,"Data":"0x00FE807F"} |
+| 2          | {"Protocol":"NEC","Bits":32,"Data":"0x00FE40BF"} |
+| 3          | {"Protocol":"NEC","Bits":32,"Data":"0x00FEC03F"} |
+| 4          | {"Protocol":"NEC","Bits":32,"Data":"0x00FE20DF"} |
+| 5          | {"Protocol":"NEC","Bits":32,"Data":"0x00FEA05F"} |
+| 6          | {"Protocol":"NEC","Bits":32,"Data":"0x00FE609F"} |
+| 7          | {"Protocol":"NEC","Bits":32,"Data":"0x00FEE01F"} |
+| 8          | {"Protocol":"NEC","Bits":32,"Data":"0x00FE10EF"} |
+| 9          | {"Protocol":"NEC","Bits":32,"Data":"0x00FE906F"} |
+| 0          | {"Protocol":"NEC","Bits":32,"Data":"0x00FE00FF"} |
+| Menu       | {"Protocol":"NEC","Bits":32,"Data":"0x00FE8877"} |
+| Up         | {"Protocol":"NEC","Bits":32,"Data":"0x00FE30CF"} |
+| Down       | {"Protocol":"NEC","Bits":32,"Data":"0x00FEB04F"} |
+| Left       | {"Protocol":"NEC","Bits":32,"Data":"0x00FEF00F"} |
+| Right      | {"Protocol":"NEC","Bits":32,"Data":"0x00FE708F"} |
+| OK         | {"Protocol":"NEC","Bits":32,"Data":"0x00FE08F7"} |
+| Exit       | {"Protocol":"NEC","Bits":32,"Data":"0x00FEC837"} |
+
+## Set-top Boxes
+
+### VU+ Duo2
 
 **Example received Code:**
 
@@ -300,7 +338,7 @@ Common buttons should work across multiple models
 | Context    | 0xC80521049 |
 | Help       | 0xC80529081 |
 
-## AppleTV Gen4
+### AppleTV Gen4
 
 | button     | code                                                    |
 | ---------- | ------------------------------------------------------- |
@@ -313,7 +351,7 @@ Common buttons should work across multiple models
 | Play/Pause | {"Protocol":"NEC","Bits":32,"Data":"0x77E1FA80"}        |
 | Home       | {"Protocol":"NEC","Bits":0,"Data":"0xFFFFFFFFFFFFFFFF"} |
 
-## Humax HMS-1000T DVB-T2 DVR PAL 4-Tune
+### Humax HMS-1000T DVB-T2 DVR PAL 4-Tune
 
 | button   | code                                             |
 | -------- | ------------------------------------------------ |
@@ -359,7 +397,7 @@ Common buttons should work across multiple models
 | 0        | {"Protocol":"NEC","Bits":32,"Data":"0x000830CF"} |
 | TV/Radio | {"Protocol":"NEC","Bits":32,"Data":"0x0008B04F"} |
 
-## FetchTV Mini (Hybroad H626T)
+### FetchTV Mini (Hybroad H626T)
 
 | button          | code                                             |
 | --------------- | ------------------------------------------------ |
@@ -399,7 +437,7 @@ Common buttons should work across multiple models
 | 9               | {"Protocol":"NEC","Bits":32,"Data":"0x266250AF"} |
 | 0               | {"Protocol":"NEC","Bits":32,"Data":"0x2662D02F"} |
 
-## Smart Reveiver VX/CX
+### Smart Reveiver VX/CX
 
 | button       | code                                                                               |
 | ------------ | ---------------------------------------------------------------------------------- |
@@ -453,9 +491,9 @@ Common buttons should work across multiple models
 | HELP         | {"Protocol":"NEC","Bits":32,"Data":"0x00FF54AB","DataLSB":"0x00FF2AD5","Repeat":0} |
 | DVD          | {"Protocol":"NEC","Bits":32,"Data":"0x00FFDB24","DataLSB":"0x00FFDB24","Repeat":0} |
 
-# BD/DVD players
+## BD/DVD players
 
-## Sony BD-S1500
+### Sony BD-S1500
 
 Common buttons should work across multiple models
 
@@ -492,9 +530,9 @@ Common buttons should work across multiple models
 | Vol -       | {"Protocol":"SONY","Bits":12,"Data":"0xC90"}   |
 | Mute        | {"Protocol":"SONY","Bits":12,"Data":"0x290"}   |
 
-# Projectors
+## Projectors
 
-## Acer K132
+### Acer K132
 
 IR Remote Codes for Acer K132 projector and possibly other models using a remote with model number M1820.
 
@@ -519,9 +557,9 @@ IR Remote Codes for Acer K132 projector and possibly other models using a remote
 | Sound  | {"Protocol":"NEC","Bits":32,"Data":"0x10C8AD52"} |
 | Mute   | {"Protocol":"NEC","Bits":32,"Data":"0x10C88679"} |
 
-# Soundbars
+## Soundbars
 
-## Panasonic SCALL70T Soundbar
+### Panasonic SCALL70T Soundbar
 
 **Example received Code:**
 
@@ -545,7 +583,7 @@ IR Remote Codes for Acer K132 projector and possibly other models using a remote
 | Bluetooth | 0x400405380538 |
 | Input     | 0x400405006164 |
 
-## Soundcore Infini Pro
+### Soundcore Infini Pro
 
 **Example received Code:**
 
@@ -574,9 +612,42 @@ IR Remote Codes for Acer K132 projector and possibly other models using a remote
 | Bass+      | 0xFD258877 |
 | Surround   | 0xFD2538C7 |
 
-# Vacuum Cleaners
+### IR Codes Goodmans GDSBT1000P
 
-## Ecovacs Deebot Slim2 Vacuum Cleaner
+**Example received Code:**
+
+`RESULT = {"IrReceived":{"Protocol":"NEC","Bits":32,"Data":"0x4FBD02F","DataLSB":"0x20DF0BF4","Repeat":0}}`
+
+**Example IRsend Command:**
+
+`{"Protocol":"NEC","Bits":32,"Data":"0x4FB30CF"}`
+
+| button            | code       |
+| ----------------- | ---------- |
+| ON/OFF            | 0x4FB30CF  |
+| Mute              | 0x20DF08F7 |
+| Mode Bluetooth    | 0x20DF0FF0 |
+| Mode Optical      | 0x20DF0AF5 |
+| Mode Coaxial      | 0x20DF16E9 |
+| Mode Line in      | 0x20DF07F8 |
+| Mode AUX          | 0x20DF09F6 |
+| Bluetooth Pairing | 0x20DF06F9 |
+| Music             | 0x20DF10EF |
+| Movie             | 0x20DF0BF4 |
+| Voice             | 0x20DF14EB |
+| Treble +          | 0x20DF00FF |
+| Treble -          | 0x20DF03FC |
+| Bass +            | 0x20DF01FE |
+| Bass -            | 0x20DF04FB |
+| Volume +          | 0x20DF02FD |
+| Volume -          | 0x20DF05FA |
+| Previous          | 0x20DF11EE |
+| Play/Pause        | 0x20DF12ED |
+| Next              | 0x20DF13EC |
+
+## Vacuum Cleaners
+
+### Ecovacs Deebot Slim2 Vacuum Cleaner
 
 **Example received Code:**
 
@@ -597,9 +668,9 @@ IR Remote Codes for Acer K132 projector and possibly other models using a remote
 | Right                 | 0x00FFF00F |
 | Back/Turn around      | 0x00FFC03F |
 
-# Ventilation
+## Ventilation
 
-# Prana 150 energy recovery ventilation
+### Prana 150 energy recovery ventilation
 
 See device <https://prana.org.ua/models/prana_150> (Ukrainian)
 
@@ -627,9 +698,9 @@ See device <https://prana.org.ua/models/prana_150> (Ukrainian)
 
 ![image](https://user-images.githubusercontent.com/563412/61618791-4aa5a980-ac76-11e9-850a-3bf920a3b32b.png)
 
-# Christmas candle - Weihnachtsbeleuchtung
+## Christmas candle - Weihnachtsbeleuchtung
 
-## Krinner Lumix IR Remote
+### Krinner Lumix IR Remote
 
 Remote control has two buttons and three channels.
 
@@ -666,7 +737,7 @@ No usable protocol found yet, but raw mode does it.
 -   flicker channel C
     `irsend 0,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400, 400,1100,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400, 400,1100,1000, 400, 400,2000,5600,2000,1000, 400,1000, 400, 400,1000,1000, 400, 400,1000,1000, 400, 400,1100,1000, 400, 400,2000,5600`
 
-## Vinkor Flameless Flickering Candles (and clones probably)
+### Vinkor Flameless Flickering Candles (and clones probably)
 
 | button | code                                                        |
 | ------ | ----------------------------------------------------------- |
@@ -681,9 +752,9 @@ No usable protocol found yet, but raw mode does it.
 | 6H     | {"Protocol":"NEC","Bits":32,"Data":"0x10ED10EF","Repeat":0} |
 | 8H     | {"Protocol":"NEC","Bits":32,"Data":"0x10ED50AF","Repeat":0} |
 
-# LED Candles / LED Kerzen
+## LED Candles / LED Kerzen
 
-## Duni Warm White LED Candle / Duni Warmweiß LED Kerzen
+### Duni Warm White LED Candle / Duni Warmweiß LED Kerzen
 
 | button         | code                                             |
 | -------------- | ------------------------------------------------ |
@@ -698,7 +769,7 @@ No usable protocol found yet, but raw mode does it.
 | ModeMoon       | {"Protocol":"NEC","Bits":32,"Data":"0x00FF10EF"} |
 | ModeNightLight | {"Protocol":"NEC","Bits":32,"Data":"0x00FF609F"} |
 
-## Duni Multicoloured LED Candle / Duni Mehrfarbige LED Kerzen
+### Duni Multicoloured LED Candle / Duni Mehrfarbige LED Kerzen
 
 | button               | code                                                                    |
 | -------------------- | ----------------------------------------------------------------------- |
@@ -723,3 +794,40 @@ No usable protocol found yet, but raw mode does it.
 | ColorPink_COL        | {"Protocol":"NEC","Bits":32,"Data":"0x807F00FF","DataLSB":"0x01FE00FF"} |
 | ColorYellowWhite_COL | {"Protocol":"NEC","Bits":32,"Data":"0x807FF00F","DataLSB":"0x01FE0FF0"} |
 | ColorWhite_COL       | {"Protocol":"NEC","Bits":32,"Data":"0x807F9867","DataLSB":"0x01FE19E6"} |
+
+### Fishtec Bougie / Generic Multicolored Led Candle / Generische mehrfarbige LED Kerzen
+
+| button           | code                                            |
+| ---------------- | ----------------------------------------------- |
+| ON               | {"Protocol":"NEC","Bits":32,"Data":"0x1FE48B7"} |
+| OFF              | {"Protocol":"NEC","Bits":32,"Data":"0x1FE58A7"} |
+| ColorBlue        | {"Protocol":"NEC","Bits":32,"Data":"0x1FE609F"} |
+| ColorRed         | {"Protocol":"NEC","Bits":32,"Data":"0x1FE20DF"} |
+| ColorGreen       | {"Protocol":"NEC","Bits":32,"Data":"0x1FEA05F"} |
+| ColorWhite       | {"Protocol":"NEC","Bits":32,"Data":"0x1FE30CF"} |
+| ColorTurkis      | {"Protocol":"NEC","Bits":32,"Data":"0x1FE10EF"} |
+| ColorOrange      | {"Protocol":"NEC","Bits":32,"Data":"0x1FE50AF"} |
+| ColorPink        | {"Protocol":"NEC","Bits":32,"Data":"0x1FE708F"} |
+| ColorPurple      | {"Protocol":"NEC","Bits":32,"Data":"0x1FEF807"} |
+| ColorLightPurple | {"Protocol":"NEC","Bits":32,"Data":"0x1FE906F"} |
+| ColorLightBlue   | {"Protocol":"NEC","Bits":32,"Data":"0x1FED827"} |
+| ColorOceanBlue   | {"Protocol":"NEC","Bits":32,"Data":"0x1FEB04F"} |
+| ModeMultiColor   | {"Protocol":"NEC","Bits":32,"Data":"0x1FEC03F"} |
+| ModeSwitch       | {"Protocol":"NEC","Bits":32,"Data":"0x1FE7887"} |
+
+### Edifier R1850DB IR remote
+
+| button   | code                                                                              |
+| -------- | --------------------------------------------------------------------------------- |
+| MUTE     | {"Protocol":"NEC","Bits":32,"Data":"0x8E7827D","DataLSB":"0x10E741BE","Repeat":0} |
+| +        | {"Protocol":"NEC","Bits":32,"Data":"0x8E7609F","DataLSB":"0x10E706F9","Repeat":0} |
+| -        | {"Protocol":"NEC","Bits":32,"Data":"0x8E7E21D","DataLSB":"0x10E747B8","Repeat":0} |
+| ON/OFF   | {"Protocol":"NEC","Bits":32,"Data":"0x8E7629D","DataLSB":"0x10E746B9","Repeat":0} |
+| PC       | {"Protocol":"NEC","Bits":32,"Data":"0x8E7E01F","DataLSB":"0x10E707F8","Repeat":0} |
+| AUX      | {"Protocol":"NEC","Bits":32,"Data":"0x8E7906F","DataLSB":"0x10E709F6","Repeat":0} |
+| OPT      | {"Protocol":"NEC","Bits":32,"Data":"0x8E7A25D","DataLSB":"0x10E745BA","Repeat":0} |
+| COX      | {"Protocol":"NEC","Bits":32,"Data":"0x8E7C03F","DataLSB":"0x10E703FC","Repeat":0} |
+| BT       | {"Protocol":"NEC","Bits":32,"Data":"0x8E73AC5","DataLSB":"0x10E75CA3","Repeat":0} |
+| \<\<     | {"Protocol":"NEC","Bits":32,"Data":"0x8E77887","DataLSB":"0x10E71EE1","Repeat":0} |
+| \>\|\|   | {"Protocol":"NEC","Bits":32,"Data":"0x8E77A85","DataLSB":"0x10E75EA1","Repeat":0} |
+| \>\>     | {"Protocol":"NEC","Bits":32,"Data":"0x8E740BF","DataLSB":"0x10E702FD","Repeat":0} |
