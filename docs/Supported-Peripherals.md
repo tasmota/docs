@@ -143,7 +143,7 @@ DS3502 | Digital potentiometer| I^2^C
 [**WS2812B**](WS2812B-RGB-Shield) | Wemos Shield with Addressable LED
 [**WS2812B<BR>WS2813B**](WS2812B-and-WS2813) | Addressable LEDs
 **Xadow| Grove) Mutichannel Gas Sensor** | gas Sensor (I^2^C
-[**InvenSense ICP-10125 Barometer**](https://https://gitlab.com/Parura57/icp10125-driver) | Barometer/pressure sensor | I^2^C
+[**InvenSense ICP-10125**](https://https://gitlab.com/Parura57/icp10125-driver) | Barometer/pressure sensor | I^2^C
 
 [Google Sheet list of supported peripherals](https://docs.google.com/spreadsheets/d/1VaZrCUjNosUQGYBX0pTVoY_rkSzEIcTP8K3052smOB4/edit?usp=sharing)
 
