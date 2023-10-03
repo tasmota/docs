@@ -150,7 +150,7 @@ Take note that only the ESP32 and the HM-1x modules are real BLE devices whereas
 ## using HM-1x
 
 !!! info "This feature is included only in tasmota-sensors.bin"
-Otherwise you must [compile your build]Compile-your-build). Add the following to `user_config_override.h`:
+Otherwise you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
 ```c++
 #ifndef USE_HM10
@@ -175,7 +175,7 @@ This will re-scan up to 3 times if less than 6 sensors are found.
 
 ### Configuration
   
-You must [compile your build]Compile-your-build). Change the following in `my_user_config.h`:
+You must [compile your build](Compile-your-build). Change the following in `my_user_config.h`:
 
 ```c++
 #define USE_SPI                                  // Hardware SPI using GPIO12(MISO), GPIO13(MOSI) and GPIO14(CLK) in addition to two user selectable GPIOs(CS and DC)
