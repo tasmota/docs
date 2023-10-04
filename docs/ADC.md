@@ -6,7 +6,7 @@ The ESP8266 has a single ADC pin available. It may be used to read voltage at th
 !!! warning
      Check your Wi-Fi module! The ESP8266 A0 pin supports a maximum voltage of 1.0V. Many newer Wi-Fi modules have an on-board voltage divider to support a higher A0 input voltage range (typically in the range between 0 and 3.3 volts). You may need to use an external voltage divider to ensure your input voltage is in the right range.
 
-By default Tasmota uses the ADC pin to read voltage. The signal comes from an analog [peripheral](), or sometimes from the device itself (see [Shelly 2.5](/devices/Shelly-2.5)). 
+By default Tasmota uses the ADC pin to read voltage. The signal comes from an analog peripheral, or sometimes from the device itself (see [Shelly 2.5](/devices/Shelly-2.5)). 
 
 After wiring a peripheral to GPIO17 (A0) pin you have to configure it in **Configure Module**:
 
