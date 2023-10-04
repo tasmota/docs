@@ -87,7 +87,7 @@ Step 1-3 only applies to ESP8266, where you should use the `.bin.gz` file for up
 
 #### Serial Flash
 
-Follow the same [procedure for flashing](installation/Flashing) as you would any new device.
+Follow the same [procedure for flashing](../Getting-Started#flashing) as you would any new device.
 
 ##### Webserial ESPTool
 
