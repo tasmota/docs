@@ -167,9 +167,23 @@ This allows for the receiving of BLE advertisements from BLE devices, including 
 
 ??? failure "This feature is included only in tasmota32-bluetooth.bin"
 
-    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    When [compiling your build](Compile-your-build), you need to
+
+    (1) Add the following to `user_config_override.h`:
     ```c++
     #define USE_BLE_ESP32                // Add support for ESP32 as a BLE-bridge (+9k2? mem, +292k? flash)
+    ```
+    (2) Copy `platformio_override_sample.ini` to `platformio_override.ini`
+
+    (3) In `platformio_override.ini`, search for the following lines and remove the `;` in front of the 2nd line if it is there
+    ```
+    ; *** uncomment the following line if you use Bluetooth or Apple Homekit in a Tasmota32 build. Reduces compile time
+    ;                          lib/libesp32_div
+    ```
+    becomes
+    ```
+    ; *** uncomment the following line if you use Bluetooth or Apple Homekit in a Tasmota32 build. Reduces compile time
+                              lib/libesp32_div
     ```
 
 Be aware, enabling of the native BLE on ESP32 has an impact on Wi-Fi performance.  Although later SDK helped a bit, expect more lag on the web interface and on MQTT.
