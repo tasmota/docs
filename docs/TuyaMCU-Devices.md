@@ -45,7 +45,7 @@ If an MCU is present, bridge RST to GND on the MCU
 
 Use a 6.6.0.10 Tasmota version or higher. There are lots of Tuya Serial fixes / features added in there and the tutorial below expects them.
 
-Now you need to follow the commands explained in the [flashing tutorial](../Getting-Started#flashing).
+Now you need to follow the commands explained in the [flashing tutorial](Getting-Started#flashing).
 
 TIP: If you are using jumper headers use `sleep 15 &&` before your commands, this would free your hand and give you some time to set the jumper pins and connect the USB to PC.
 
