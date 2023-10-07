@@ -5,6 +5,9 @@
 - A **known** wattage load with a **power factor as close to 1** as possible (e.g., a resistive load) for best results  
 
 !!! note
+    Does not apply to CT Power modules using ADC. For those, see [`adcparam`]([url](https://tasmota.github.io/docs/ADC/#commands:~:text=Parameters-,AdcParam%3Cx%3E,-ADC%20analog%20input))
+
+!!! note
     A resistive load device is any device which draws a constant amount of power. For example, an incandescent or halogen light bulb         (best choice since their power draw is declared on them). An electric kettle, heater, or blow dryer are also options but you will       also need a power meter since the power draw *could* vary.  
 
 !!! danger
