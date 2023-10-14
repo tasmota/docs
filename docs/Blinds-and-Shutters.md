@@ -431,7 +431,7 @@ Tasmota supports a maximum of four shutters with one stepper motor per shutter s
 #### Example configuration  
 `EN` and `DIR` are on `Relay1i` and `Relay2` respectively. Please be aware to use the **inverse** relay for the enable signal.  
 
-The `STP` signal is assigned as a `PWM<x>` component where `<x>` matches the number of the shutter (e.g., `PWM1` for `Shutter1`). The shutter feature adjusts the PWM frequency to operate the motor for proper shutter operation. The stepper motor frequency setting is a global setting all PWM components on the device. This means that all shutters on the device will operate at the same speed. Therefore no PWM devices other than shutters can be connected to the same Tasmota device.  
+The `STP` signal is assigned as a `PWM<x>` component where `<x>` matches the number of the shutter (e.g., `PWM1` for `Shutter1`). The shutter feature adjusts the PWM frequency to operate the motor for proper shutter operation. The stepper motor frequency setting is a global setting all PWM components on the device. This means that all shutters on the device will operate at the same speed. Therefore no PWM devices other than shutters can be connected to the same Tasmota device. To get in the UI the light sliders hidden you must set `setoption15 0`
 
 The frequency of the PWM can be changed from 1000Hz to any value up to 10,000Hz. The command `ShutterFrequency` globally changes this. Be aware that most 12V operated motors cannot work faster than 2,000Hz. 5,000Hz.10,000Hz is possible by increasing the supplied voltage to 24V and use `ShutterMotorDelay` to allow a slow speed up/speed down. The maximum voltage of the A4988 is 36V. The TMC2208 is much more silent than the others but also significant slower and does not like high frequencies. For example, the speed at 24V is half o A4988
 
@@ -455,6 +455,7 @@ D4|2|Counter1|STP
 **a) Set ShutterMode 4**  
    `Backlog PulseTime1 0; PulseTime2 0`   // for relay Relay1i and Relay2  
    `Interlock OFF`                        // this is a global variable for all Relays or at least the RELAYS NOT in the Interlock group
+   `setoption15 0`                        // remove any light sliders from the UI
    PWM1 and COUNTER1 defined
 
 **b) Enable Shutters**  
