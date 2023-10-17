@@ -22,7 +22,7 @@ Name|Description|Connection
 [**Buzzer**](Buzzer) | Audio signalling device | gpio
 [**CC2530**](CC2530) | TI CC2530 Zigbee adapter| serial
 **CCS811** | Gas and air quality sensor| I^2^C
-[**Chirp! Soil Moisture sensor**](Moisture-sensor-and-Chirp!-sensor) | Moisture sensor| I^2^C
+[**Chirp! Soil Moisture sensor**](Moisture-Sensor-and-Chirp!-Sensor.md) | Moisture sensor| I^2^C
 [**DFR0299**](DFR0299) | DFRobot DFPlayer mini MP3 player| serial
 [**DHT11**](DHT11) | Temperature and humidity sensor | gpio
 **DHT12** | Temperature and humidity sensor | gpio
@@ -89,7 +89,7 @@ DS3502 | Digital potentiometer| I^2^C
 [**OpenTherm**](OpenTherm) | OpenTherm adapter| serial
 [**P1 Smart Meter**](P1-Smart-Meter) | Energy meter | serial
 [**PAJ7620**](PAJ7620) | Gesture & proximity detection sensor
-[**PIR**](PIR-Motion-sensors#am312) | Passive infrared sensor| gpio
+[**PIR**](PIR-Motion-Sensors.md) | Passive infrared sensor| gpio
 [**PCA9557**](PCA9557) | I/O expander | I^2^C
 [**PCA9685**](PCA9685) | 16-channel, 12-bit PWM LED controller| I^2^C
 [**PCA9632**](https://github.com/arendst/Tasmota/blob/development/tasmota/tasmota_xdrv_driver/xdrv_64_pca9632.ino) | 4-channel, 8-bit PWM LED controller| I^2^C
@@ -148,7 +148,7 @@ DS3502 | Digital potentiometer| I^2^C
 
 [Google Sheet list of supported peripherals](https://docs.google.com/spreadsheets/d/1VaZrCUjNosUQGYBX0pTVoY_rkSzEIcTP8K3052smOB4/edit?usp=sharing)
 
-[sensor API Documentation](sensor-API)
+[sensor API Documentation](Sensor-API.md)
 
 ## Expanding Specific Devices
 
