@@ -6,7 +6,29 @@ Please try out...
 Feel free to contribute this list
 
 ## TV's
-
+### IR code for TCL 55P715
+**Example IRsend Command:**
+**IRsend {"Protocol":"NIKAI","Bits":48,"Data":0x0x0D5F2A}**
+* 0x0D5F2A="Power"
+* 0x0D0F2F="Vol+"
+* 0x0D1F2E="Vol-"
+* 0x0C0F3F="Mute"
+* 0x0C3F3C="info"
+* 0x0D2F2D="P+"=
+* 0x0D3F2C="P-"
+* 0x030FCF="Settings"
+* 0x0E5F1A="EPG"
+* 0x0F7F08="Home"
+* 0x0A6F59="UP"
+* 0x0A7F58="Down"
+* 0x0A9F56="LEFT"
+* 0x0A8F57="Right"
+* 0x00BFF4="Enter"
+* 0x013FEC="Menu"
+* 0x0D8F27="Back"
+* 0x010FEF="NetFlix"
+* 0x05CFA3="Source"
+* 
 ### IR Codes TV Panasonic TX65FXW784
 
 **Example received Code:**
