@@ -198,9 +198,10 @@ Bought from [ebay](https://www.ebay.co.uk/itm/Smart-Wifi-Dimmer-Switch-Support-T
 
 ## Ketotek KTEM06
 
-The KTEM06 is a single phase energy meter with a relay for switching for DIN rail mounting.
+The KTEM06 is a single phase energy meter with a relay for switching for DIN rail mounting. This device is identical in construction with the TYWE3S-based version of HIKING DDS238-2.
 
 ![KTEM06 open](./_media/devices/Ketotek-KTEM06-01x.jpg)
+
 ### Flashing
 
 Open the case to see the board with the display and the TYWE3S module on the backside. Remove the board and flip it around.
@@ -244,6 +245,9 @@ Different than described elsewhere it was not helpful to connect EN to 3.3V.
 
 RST needed to be disconnected from GND to start flashing.
 
+Some users report that flashing does not work because the serial programmer does not supply enough power. Using serial programmers based on CH340 seem to work. A workaround is to use an additional power supply.
+
 ### Product Links
 
 [KETOTEK Smart 1 Phasen Stromzähler](https://www.amazon.de/KETOTEK-Stromz%C3%A4hler-Digitalenergiez%C3%A4hler-Fernbedienung-Energiez%C3%A4hler/dp/B09XXG4L2C)
+[HIKING DDS238-2](https://de.aliexpress.com/item/4000571797301.html?gatewayAdapt=glo2deu)
