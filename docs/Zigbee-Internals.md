@@ -1,9 +1,11 @@
 # Zigbee internals
+
 [Back to Zigbee](Zigbee)
 
 This page is for developers who want to understand how Zigbee2Tasmota (Z2T) works and its implementation details.
 
 ## CC2530 Serial protocol
+
 The CC2530 is flashed with Texas Instrument ZNP Software version 1.2. The protocol is build on a serial communication between the main cpu and the CC2530.
 
 [Z-Stack 1.2 Monitor and Test API](/docs/_media/zigbee/Z-Stack_API_1_2.pdf)

@@ -5,7 +5,7 @@
 - A **known** wattage load with a **power factor as close to 1** as possible (e.g., a resistive load) for best results  
 
 !!! note
-    Does not apply to CT Power modules using ADC. For those, see [`adcparam`]([url](https://tasmota.github.io/docs/ADC/#commands:~:text=Parameters-,AdcParam%3Cx%3E,-ADC%20analog%20input))
+    Does not apply to CT Power modules using ADC. For those, see [`adcparam`]([url](https://tasmota.github.io/docs/ADC/#commands))
 
 !!! note
     A resistive load device is any device which draws a constant amount of power. For example, an incandescent or halogen light bulb         (best choice since their power draw is declared on them). An electric kettle, heater, or blow dryer are also options but you will       also need a power meter since the power draw *could* vary.  
@@ -16,6 +16,7 @@
 - *(optional)* A calibrated power meter (a.k.a Kill-a-Watt) or AC multi-meter
 
 ## Setup
+
 - Connect the load (e.g., a 60W incandescent light bulb) to your device  
   - *(optional)* Plug your load into the Kill-a-Watt
 - Open two Tasmota web UI browser windows for your power monitoring device:
@@ -25,6 +26,7 @@
 - Wait a few seconds for the readings to stabilize
 
 ## Calibration Procedure
+
 1. Verify the **Power** reading in the web UI (optionally with the power meter as well) for the expected wattage. Adjust the power offset if needed (in Watts):  
    [`PowerSet 60.0`](Commands#powerset)  
    _If you're using something other than a 60W bulb, enter your load's power rating_
@@ -47,6 +49,7 @@
 4. Confirm the validity of your calibration process checking `Power Factor` from the web UI which should be as close as possible to `1.00`. In theory resistive loads will always provide a power factor of 1.00. If that is not the case, we recommend you repeat the calibration process and make sure everything was done correctly. 
    
 ## Fine Tuning
+
 _This procedure requires the use of a calibrated power meter or AC multi-meter._   
 
 Commands [`CurrentCal`](Commands#currentcal), [`PowerCal`](Commands#powercal) and [`VoltageCal`](Commands#voltagecal)  allow fine tuning of the power calibration.  

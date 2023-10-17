@@ -157,5 +157,5 @@ DS3502 | Digital potentiometer| I^2^C
 * [Remote button for Sonoff](Control-a-Sonoff-using-a-remote-button)
 * [Expand Sonoff S20 with a jack plug](https://github.com/arendst/Tasmota/issues/670)
 * [Expand Sonoff 4CH with a jack plug](Expanding-4CH)
-* [Modify KaKu to WKaKu Power Socket](/devices/Modify-KaKu-to-WKaKu-Power-Socket)
+* [Modify KaKu to WKaKu Power Socket](devices/Modify-KaKu-to-WKaKu-Power-Socket.md)
 * [GPIO Locations for some devices](Pinouts)
