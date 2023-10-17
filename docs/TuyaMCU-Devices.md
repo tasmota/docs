@@ -116,7 +116,7 @@ The procedure is similar to above, additionally NRST must be connected to GND du
 
 ### Optional configuration (recommended)
 
-[`LedState 0`](Commands#ledstate) Only use the green LED for Wi-Fi/MQTT connectivity status.  
+[`LedState 0`](Commands.md#ledstate) Only use the green LED for Wi-Fi/MQTT connectivity status.  
 
 ### Product Links
 

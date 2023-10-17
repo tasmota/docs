@@ -8,7 +8,7 @@
 
 Tuya-Convert comes with [`tasmota-lite.bin`](http://ota.tasmota.com/tasmota/tasmota-lite.bin) build which includes basic Tasmota features required for normal operation with Tuya devices, while removing sensors, IR, RF and home automation integration support for reduced filesize. It is recommended to upgrade to a full build of the firmware (`tasmota.bin`) if needed.
 
-**To ensure Tasmota runs reliably execute the command [`reset 5`](Commands#reset) after Tuya-Convert is finished and Tasmota is up and running.** Doing this removes fragments of the original firmware left in flash which can create issues in the future. After all that is done you can proceed with the needed [configuration](Getting-Started#initial-configuration) of your device.
+**To ensure Tasmota runs reliably execute the command [`reset 5`](Commands.md#reset) after Tuya-Convert is finished and Tasmota is up and running.** Doing this removes fragments of the original firmware left in flash which can create issues in the future. After all that is done you can proceed with the needed [configuration](Getting-Started#initial-configuration) of your device.
 
 Help and troubleshooting for Tuya-Convert is done on [Tuya-Convert's Github](https://github.com/ct-Open-Source/tuya-convert/issues).
 

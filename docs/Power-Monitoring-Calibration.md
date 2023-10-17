@@ -1,11 +1,11 @@
 !!! tip "You need to calibrate your power monitoring device as correct measurements are influenced by hardware and timing differences."
 
+!!! warning
+    This procedure does not apply to CT Power modules using ADC. For those, see [`AdcParam`]([url](ADC.md#commands))
+
 - Your power monitoring capable device flashed with Tasmota and configured with the correct module/template that supports power monitoring
 - An AC capable **calibrated** multi-meter
 - A **known** wattage load with a **power factor as close to 1** as possible (e.g., a resistive load) for best results  
-
-!!! note
-    Does not apply to CT Power modules using ADC. For those, see [`adcparam`]([url](https://tasmota.github.io/docs/ADC/#commands))
 
 !!! note
     A resistive load device is any device which draws a constant amount of power. For example, an incandescent or halogen light bulb         (best choice since their power draw is declared on them). An electric kettle, heater, or blow dryer are also options but you will       also need a power meter since the power draw *could* vary.  
@@ -28,15 +28,15 @@
 ## Calibration Procedure
 
 1. Verify the **Power** reading in the web UI (optionally with the power meter as well) for the expected wattage. Adjust the power offset if needed (in Watts):  
-   [`PowerSet 60.0`](Commands#powerset)  
+   [`PowerSet 60.0`](Commands.md#powerset)  
    _If you're using something other than a 60W bulb, enter your load's power rating_
 
 2. Verify the **Voltage** reading. Adjust the voltage offset if needed (in Volts):  
-   [`VoltageSet <voltage>`](Commands#voltageset)  
+   [`VoltageSet <voltage>`](Commands.md#voltageset)  
    _Replace `<voltage>` with your standard voltage or with reading on your multi-meter if you have one. Your voltage will vary depending on the electrical standards and your electrical grid_  
 
 3. Verify the **Current** reading by calculating current value (amperage) using this formula: **P<sub>(W)</sub>/V<sub>(V)</sub>=I<sub>(A)</sub>**. Adjust the current offset if needed (in milliAmps (mA=A\*1000)):  
-   [`CurrentSet <current>`](Commands#currentset)  
+   [`CurrentSet <current>`](Commands.md#currentset)  
    _Replace `<current>` with your calculated value (in milliAmps)_  
 
    `CurrentSet` calculation:   
@@ -52,9 +52,9 @@
 
 _This procedure requires the use of a calibrated power meter or AC multi-meter._   
 
-Commands [`CurrentCal`](Commands#currentcal), [`PowerCal`](Commands#powercal) and [`VoltageCal`](Commands#voltagecal)  allow fine tuning of the power calibration.  
+Commands [`CurrentCal`](Commands.md#currentcal), [`PowerCal`](Commands.md#powercal) and [`VoltageCal`](Commands.md#voltagecal)  allow fine tuning of the power calibration.  
 
-Repeat the procedure below for each of the readings: Current, Power, and Voltage using the corresponding calibration command ([`CurrentCal`](Commands#currentcal), [`PowerCal`](Commands#powercal), and [`VoltageCal`](Commands#voltagecal) respectively). **Take note that the offset ranges vary for each command**.  
+Repeat the procedure below for each of the readings: Current, Power, and Voltage using the corresponding calibration command ([`CurrentCal`](Commands.md#currentcal), [`PowerCal`](Commands.md#powercal), and [`VoltageCal`](Commands.md#voltagecal) respectively). **Take note that the offset ranges vary for each command**.  
 
 1. Check the reading using a multi-meter
 2. Compare it with the reading on the Tasmota web UI
@@ -65,6 +65,6 @@ The `CurrentCal`, `PowerCal`, `VoltageCal` commands accept values up to 32000. I
 
 ## Known Issues
 
-Power monitoring chips such as HLW8032 (Blitzwolf SHP5) and CSE7766 (Sonoff S31, Sonoff POW R2) occasionally report invalid power measurements for load values below 5W. During this situation it sometimes reports a valid load. By setting [SetOption39](Commands#setoption39) to `128` (default) it must read at least 128 invalid power readings before reporting there is no load.
+Power monitoring chips such as HLW8032 (Blitzwolf SHP5) and CSE7766 (Sonoff S31, Sonoff POW R2) occasionally report invalid power measurements for load values below 5W. During this situation it sometimes reports a valid load. By setting [SetOption39](Commands.md#setoption39) to `128` (default) it must read at least 128 invalid power readings before reporting there is no load.
 
 To discard all loads below 6W simply set `SetOption39 1` (`0` will reset to default on next restart) so it will report no load below 6W.

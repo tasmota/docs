@@ -75,7 +75,7 @@ This section must be present, even if it's empty. If compiled with `SML_REPLACE_
 ------------------------------------------------------------------------------
 Declare `>B` (boot) section to inform the interface to read the meter descriptor(s):
 > `>B`  
-=>[sensor53 r](Commands#sensor53)
+=>[sensor53 r](Commands.md#sensor53)
 ------------------------------------------------------------------------------
 (Optional) declare `>S` section with additional scripting commands:
 > `>S <n>`
@@ -154,7 +154,7 @@ Each meter typically provides multiple metrics (energy, voltage, power, current 
 | `<label>` | web UI label (max. 23 characters) |
 | `<UoM>` | unit of measurement (max. 7 characters) |
 | `<var>` | MQTT label (max. 23 characters) | 
-| `<precision>` | number of decimal places. Add `16` to transmit the data immediately. Otherwise it is transmitted on [`TelePeriod`](Commands#teleperiod) only. |
+| `<precision>` | number of decimal places. Add `16` to transmit the data immediately. Otherwise it is transmitted on [`TelePeriod`](Commands.md#teleperiod) only. |
 
 > Use `;` character to comment lines in the script.
 
@@ -177,7 +177,7 @@ Each meter typically provides multiple metrics (energy, voltage, power, current 
     `1,1-0:1.7.0*255(@0.01667, power,W,Power_actual,0)` actual power from pulse rate (in pulses/min) of counter meter, scale for 1 pulse/Wh (1 pulse/min => 60W; 1/60(=0.01667) (pulses/min)/W)
 
     SML: `1,77078181c78203ff@#,Service ID,,Meter_id,0`<BR>
-    `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,4` precision of 4, transmitted only on [`TelePeriod`](Commands#teleperiod)<BR>
+    `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,4` precision of 4, transmitted only on [`TelePeriod`](Commands.md#teleperiod)<BR>
     `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,20` precision of 4, transmitted immediately (4 + 16 = 20)
     
     MODBus: `+1,3,M,1,9600,SBC,1,2,01030023,01030028...`<BR>

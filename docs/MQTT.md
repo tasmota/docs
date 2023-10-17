@@ -81,9 +81,9 @@ In the following examples `%topic%` is `tasmota`, FullTopic is `%prefix%/%topic%
 
 - The relay can be controlled with `cmnd/tasmota/POWER on`, `cmnd/tasmota/POWER off` or `cmnd/tasmota/POWER toggle`. Tasmota will send a MQTT status message like `stat/tasmota/POWER ON`.
 
-- Power state message can be sent with the retain flag set using [`PowerRetain 1`](Commands#powerretain).
+- Power state message can be sent with the retain flag set using [`PowerRetain 1`](Commands.md#powerretain).
 
-- Telemetry messages can also be sent with the retain flag using [`SensorRetain`](Commands#sensorretain).
+- Telemetry messages can also be sent with the retain flag using [`SensorRetain`](Commands.md#sensorretain).
 
 - For Sonoff Dual or Sonoff 4CH the relays need to be addressed with `cmnd/tasmota/POWER<x>`, where {x} is the relay number from 1 to 2 (Sonoff Dual) or from 1 to 4 (Sonoff 4CH). `cmnd/tasmota/POWER4 off` turns off the 4th relay on a Sonoff 4CH.
 
@@ -229,7 +229,7 @@ To default maximum MQTT message size that Tasmota can process is 256 bytes. You 
 ```
 
 ### Subscribe
-Subscribes to an MQTT topic and assigns an [`Event`](Commands#event) name to it. 
+Subscribes to an MQTT topic and assigns an [`Event`](Commands.md#event) name to it. 
 
 `Subscribe <eventName>, <mqttTopic> [, <key>]`
 
