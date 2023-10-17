@@ -1,43 +1,22 @@
 # MI32 legacy 
   
-The MI32-driver focuses on the passive observation of BLE sensors of the Xiaomi/Mijia universe, thus only needing a small memory footprint. This allows to additionally run a dedicated software bridge to Apples HomeKit with very few additional configuration steps. Berry can be used to create generic applications.  
-Currently supported are the original ESP32, the ESP32-C3 and the ESP32-S3.
+The MI32-driver focuses on the passive observation of BLE sensors of the Xiaomi/Mijia universe, thus only needing a small memory footprint. Berry can be used to create generic applications.  
+Currently supported are the original ESP32, the ESP32-C2/C3/C6 and the ESP32-S3.
 
 ## Usage
   
 This driver is not part of any standard build. To self compile it is recommended to add build environments to `platformio_tasmota_cenv.ini`. This file needs to be created first.  
-Add these sections:  
+Add this section (change accordingly for the other chipsets):  
 ```
-[env:tasmota32-mi32-homebridge]
+[env:tasmota32-mi32-legacy]
 extends                 = env:tasmota32_base
 build_flags             = ${env:tasmota32_base.build_flags}
                           -DUSE_MI_ESP32
                           -DUSE_MI_EXT_GUI
-                          -DUSE_MI_HOMEKIT=1    ; 1 to enable; 0 to disable
 lib_extra_dirs          = lib/libesp32, lib/libesp32_div, lib/lib_basic, lib/lib_i2c, lib/lib_div, lib/lib_ssl
-lib_ignore              = ESP8266Audio
-                          ESP8266SAM
-                          TTGO TWatch Library
-                          Micro-RTSP
-                          epdiy
-                          esp32-camera
-
-[env:tasmota32c3-mi32-homebridge]
-extends                 = env:tasmota32c3
-build_flags             = ${env:tasmota32_base.build_flags}
-                          -DUSE_MI_ESP32
-                          -DUSE_MI_EXT_GUI
-                          -DUSE_MI_HOMEKIT=1    ; 1 to enable; 0 to disable
-lib_extra_dirs          = lib/libesp32, lib/libesp32_div, lib/lib_basic, lib/lib_i2c, lib/lib_div, lib/lib_ssl
-lib_ignore              = ESP8266Audio
-                          ESP8266SAM
-                          TTGO TWatch Library
-                          Micro-RTSP
-                          epdiy
-                          esp32-camera
 ```
   
-It is probably necessary to restart your IDE (i.e. Visual Studio Code) to see the option to build these environments.
+It is probably necessary to restart your IDE (i.e. Visual Studio Code) to see the option to build this environment.
 
 ## Tasmota and BLE-sensors
 
@@ -290,29 +269,6 @@ MI32Option4|`0` = use passive scanning (default)<br>`1` = use active scanning, n
   
 The driver provides an extended web GUI to show the observed Xiaomi sensors in a widget style, that features a responsive design to use the screen area as effective as possible. The other advantage is, that only the widget with new data gets redrawn (indicated by a fading circle) and no unnecessary refresh operations will happen. A simple graph shows if valid data for every hour was received in the last 24h, where only one gap for the coming hour is not a sign of an error. Configured sensors with no received packet since boot or key/decryption errors are dimmed.
   
-## HomeKit Bridge
-  
-If activated at compile time the driver will start the HAP core (= the main task of the HomeKit framework) after successfully reading a valid **mi32cfg** file after the start. It will create a 'bridge accessory' presenting all configured BLE devices to HomeKit. You can add the ESP32 as such a **Mi-Home-Bridge** to HomeKit in the native way, like you would add a commercial product to you local HomeKit network. The setup key is derived from the Wifi MAC of your ESP32 to easily allow many ESP32 to be used as a HomeKit bridge in your local network.
-Besides the driver will also manage up to four relays and sync them with HomeKit.  
-There is nothing more to configure, the driver will automatically translate the data packets back and forth.  
-It just works ... except, when it does not.
-
-!!! danger "Known issues"
-
-    The underlying HAP framework will expose incompatible network configurations, which will likely be related to mDNS and IGMP settings. There is nothing, that the Tasmota side can fix here.
-
-!!! danger "If it is not broken, do not upgrade"
-
-    Although the driver does not write to the NVS section and the usage of a modified HAP framework (using a NVS wrapper) the behavior of Tasmota firmware upgrades is undefined with regards to a working HomeKit installation. Similar things can also happen using much bigger projects like "Homebridge". So it might be necessary to completely erase the Mi-Bridge from your "Home" in Homekit and doing a flash erase of the ESP32 after a firmware upgrade of the ESP32. It is recommend to first create a final mi32cfg file before you add the Mi-Home-Bridge to your "Home".
-  
-### HomeKit QR-Code-Generator  - Web App
-  
-This will generate a QR-Code based on the MAC address of the ESP32 which runs Tasmotas Homekit-Bridge. Use the camera of your iPhone or iPad to easily start the setup procedure.  
-
-<script src="../extra_javascript/mi32/qrcode.js"></script>
-<input size="40" type="text" id="Wifi-MAC" value="" placeholder="Input WiFi MAC of the ESP32" style="font-size:1.5em;"><br>
-
-<object data="../extra_javascript/mi32/hk_qrcode.svg" id="hk_qrcode" type="image/svg+xml" height="0"></object>
   
 ##  Homeassistant and Tasmota - BLE sensors
   
