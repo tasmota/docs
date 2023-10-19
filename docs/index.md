@@ -15,29 +15,23 @@ Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v13.1.0">Tasmota 13.1.0 Quentin</a></span>
+<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v13.2.0">Tasmota 13.2.0 Quincy</a></span>
 
 ## Breaking Changes
 
-- ESP32 Safeboot partition is now enforced. If you're unable to upgrade due to "Program flash size is larger than real flash size" error run the [Partition Wizard](https://tasmota.github.io/docs/Tasmota-Application/#partition-management). See [GitHub discussion](https://github.com/arendst/Tasmota/discussions/18983) for more information.
-- Support dropped for C3 < chip rev. 3. You can still build a [custom binary](https://github.com/arendst/Tasmota/pull/18998) if you wish to ugprade.
-- Change command FileUpload index binary data detection from >199 to >299
-- Matter relay numbering starts at 1 instead of 0 to match Tasmota numbering
-- Berry `bool( [] )` and `bool( {} )` now evaluate as false
-- Berry import strict now detects useless expression without side effects
+- `Sendmail` upgraded to ESP-Mail-Client v3.4.9 from v1.2.0, using BearSSL instead of MbedTLS
+- Removed support for Homekit in favour of Matter 
 
 ## New Features
 
-- Matter enhancements with option to disable bridge mode, mini-profiler and fabric_filtered request (for Google compatibility)
+- Experimental support for ESP32-C2 and ESP32-C6 using Arduino core v3
+- Added rule variables `%power<1..28>` and `%switch<1..28>%` 
 - Added support for:
-  - MAX17043 fuel-gauge systems
-  - multiple PCA9685 with extended functionality
-  - SGP41 TVOC/NOx Sensor
-  - DeepSleep battery level percentage
-  - support for Zigbee air sensors
-- Preparations for Arduino Core v3 and esp-idf v5
-- Removed support in release builds for ESP32-C3 with chip revision below 3 (old development boards)
-- New commands: [`BrRestart`](Commands.md#brrestart), [`I2cScan0`](Commands.md#i2cscan0)
+  - Shelly PlusPMMini, Plus1Mini and Plus1PMMini
+  - HDMI CEC protocol 
+  - ENS16x air quality and ENS210 temperture and humidity sensors
+  - HC8 CO2 sensor
+- Matter support for Virtual Devices controllable via Rules or Berry
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
 
