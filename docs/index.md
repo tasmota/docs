@@ -29,7 +29,7 @@ Incredibly expandable and flexible.
 - Added support for:
   - Shelly PlusPMMini, Plus1Mini and Plus1PMMini
   - HDMI CEC protocol 
-  - ENS16x air quality and ENS210 temperture and humidity sensors
+  - [ENS16x](ENS161.md) air quality and ENS210 temperture and humidity sensors
   - HC8 CO2 sensor
 - Matter support for Virtual Devices controllable via Rules or Berry
 
