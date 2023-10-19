@@ -144,7 +144,7 @@ see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/
 
 #### Console Commands
 
-`script <n>` <n>: `0` = switch script off; `1` = switch script on  
+`script <n>` <n>: `0` = switch script off; `1` = switch script on  `8` = switch stop on error off; `9` = switch stop on error on 
 `script ><cmdline>` execute <cmdline>  
 - Can be used to set variables, e.g., `script >mintmp=15`  
 - Multiple statements can be specified by separating each with a semicolon, e.g. `script >mintmp=15;maxtemp=40`  
