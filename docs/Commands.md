@@ -603,7 +603,9 @@ SetOption151<a class="cmnd" id="setoption151"></a>|`1` = Matter support enabled,
 SetOption152<a class="cmnd" id="setoption152"></a>|`1` = Switch between two (0) or one (1) pin bistable relay control (Power, to be detailed)
 SetOption153<a class="cmnd" id="setoption153"></a>|`1` = Disable running (Berry) autoexec.be on restart
 SetOption154<a class="cmnd" id="setoption154"></a>|`1` = Handle Berry led using RMT0 as additional WS2812 scheme
-SetOption155<a class="cmnd" id="setoption154"></a>|`1` = (ZCDimmer) Enable rare falling Edge dimmer instead of leading edge
+SetOption155<a class="cmnd" id="setoption155"></a>|`1` = (ZCDimmer) Enable rare falling Edge dimmer instead of leading edge
+SetOption156<a class="cmnd" id="setoption156"></a>|`1` = (Sen5x) Run in passive mode when there is another I2C master
+SetOption157<a class="cmnd" id="setoption157"></a>|`0` = hide NeoPool sensitive data _(default)_<BR>`1` = show NeoPool sensitive data
 
 
 ### TuyaMCU
