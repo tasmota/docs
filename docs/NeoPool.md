@@ -101,9 +101,9 @@ Sensor data is sent via the Tasmota topic `tele/%topic%/SENSOR` in JSON format e
       "Ionization": 1
     },
     "Temperature": 23.5,
-    "Power": {
+    "Powerunit": {
       "Version": "V3.45",
-      "NodeID": "2A55 6E6B 6E6F 776E 2049 442A",
+      "NodeID": "XXXX XXXX XXXX XXXX XXXX 442A",
       "5V": 5.017,
       "12V": 13.904,
       "24-30V": 33.721,
@@ -135,6 +135,8 @@ Sensor data is sent via the Tasmota topic `tele/%topic%/SENSOR` in JSON format e
     "Hydrolysis": {
       "Data": 100,
       "Unit": "%",
+      "Setpoint": 100,
+      "Max": 100,
       "Runtime": {
         "Total": "28T22:13:19",
         "Part": "28T22:13:02",
@@ -203,6 +205,7 @@ Command|Parameters
 :---|:---
 NPFiltration<a id="NPFiltration"></a>|`{<state> {speed}}`<BR>get/set manual filtration (state = `0` or `1`, speed = `1..3`). Get if state is omitted, otherwise set accordingly  `<state>`:<ul><li>`0` - manual turn filtration pump off</li><li>`1` - manual turn filtration pump on</li></ul>optional speed control is possible for non-standard filtration types:<ul><li>`1` - slow</li><li>`2` - medium</li><li>`3` - fast</li></ul>
 NPFiltrationmode<a id="NPFiltrationmode"></a>|`{<mode>}`<BR>get/set filtration mode (mode = `0..4` or `13`). Get if mode is omitted, otherwise set accordingly `<mode>`:<ul><li>`0` - *MANUAL*<BR>allows to turn the filtration (and all other systems that depend on it) on and off</li><li>`1` - *AUTO*<BR>allows filtering to be turned on and off according to the settings of the *MBF_PAR_TIMER_BLOCK_FILT_INT* timers.</li><li>`2` - *HEATING*<BR>similar to the AUTO mode, but includes setting the temperature for the heating function. This mode is activated only if the BF_PAR_HEATING_MODE register is at 1 and there is a heating relay assigned.</li><li>`3` - *SMART*<BR>adjusts the pump operating times depending on the temperature. This mode is activated only if the MBF_PAR_TEMPERATURE_ACTIVE register is at 1.</li><li>`4` - *INTELLIGENT*<BR>performs an intelligent filtration process in combination with the heating function. This mode is activated only if the MBF_PAR_HEATING_MODE register is at 1 and there is a heating relay assigned.</li><li>`13` - *BACKWASH*<BR>started when the backwash operation is activated.</ul>
+NPFiltrationspeed<a id="NPFiltrationspeed"></a>|`{<speed>}`<BR>(only available for non-standard filtration types)<BR>get/set manual filtration speed (speed = `1..3`)<BR>get filtration speed if `<speed>` is omitted, otherwise set new `<speed>`:<ul><li>`1` - Low</li><li>`2` - Mid</li><li>`3` - High</li></ul>
 NPTime<a id="NPTime"></a>|`{<time>}`<BR>get/set device time. Get if time is omitted, otherwise set device time accordingly `<time>`:<ul><li>`0` - sync with Tasmota local time</li><li>`1` - sync with Tasmota utc time</li><li>`2..4294967295` - set time as epoch</li></ul>
 NPLight<a id="NPLight"></a>|`{<state> {delay}}`<BR>get/set light (state = `0..4`, delay = `5..100` in 1/10 sec). Get if state is omitted, otherwise set accordingly `<state>`:<ul><li>`0` - manual turn light off</li><li>`1` - manual turn light on</li><li>`2` - manual toggle light</li><li>`3` - switch light into auto mode according MBF_PAR_TIMER_BLOCK_LIGHT_INT settings</li><li>`4` - select light RGB LED to next program. This is normally done by power the light on (if currently off), then power off the light for a given time (delay) and power on again. The default delay is 15 (=1.5 sec).</ul>
 NPpHMin<a id="NPpHMin"></a>|`{<ph>}`<BR>(only available if pH module is installed)<BR>get/set pH lower limit (ph = `0..14`)<BR>get current limit if <ph> is omitted, otherwise set.
