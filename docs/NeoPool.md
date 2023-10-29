@@ -488,8 +488,9 @@ Command|Parameters
 :---|:---
 NPBoost<a id="NPBoost"></a>|`{<state>}`<BR>get/set boost mode (state = `0..2`). Get if state is omitted, otherwise set accordingly  `<state>`:<ul><li>`0` - disable boost mode</li><li>`1` - enable boost mode (without redox control)</li><li>`2` - enable boost mode (with redox control)</li></ul>
 NPAux<x\><a id="NPAux"></a>|`{<state>}`<BR>get/set auxiliary relay <x\> (state = `0..2`). Get if state is omitted, otherwise set accordingly  `<state>`:<ul><li>`0` - switch off auxiliary relay</li><li>`1` - switch on auxiliary relay</li></ul>
+NPVersion<a id="NPVersion"></a>|Get the firmware info as array (normally firmware version and creation date)
 
-The class members `NPBoost` and `NPAux` can also be used as templates for further commands.
+The class can be used as a template for further commands.
 
 Store the following code into a Tasmota file by using the WebGUI "Console" / "Manage File system".
 
@@ -498,9 +499,11 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
 ```python
 # File: neopoolcmd.be
 #
-# Add new commands NPBoost and NPAux
+# Add commands NPBoost, NPAux and NPVersion
 
 # Neopool definitions
+MBF_POWER_MODULE_REGISTER = 0x000C
+MBF_POWER_MODULE_DATA = 0x000D
 var MBF_RELAY_STATE = 0x010E
 var MBF_NOTIFICATION = 0x0110
 var MBF_CELL_BOOST = 0x020C
@@ -518,6 +521,9 @@ var PAR_TIMER_BLOCK_AUX = [
 var MBV_PAR_CTIMER_ALWAYS_ON      = 3
 var MBV_PAR_CTIMER_ALWAYS_OFF     = 4
 
+import string
+import json
+
 # NeoPool command class
 class NeoPoolCommands
   var TEXT_OFF
@@ -526,26 +532,18 @@ class NeoPoolCommands
 
   # string helper
   def ltrim(s)
-    import string
     var i = 0 while(s[i]==' ') i += 1 end
     return string.split(s, i)[1]
   end
   def rtrim(s)
-    import string
     return string.split(s, " ")[0]
   end
   def trim(s)
     return self.rtrim(self.ltrim(s));
   end
 
-  # NPBoost OFF|0|ON|1|REDOX|2
-  #   0|OFF:   Switch boost off
-  #   1|ON:    Switch boost on without redox control
-  #   2|REDOX: Switch boost on with redox control
-  def NPBoost(cmd, idx, payload)
-    import string
-    var ctrl, parm
-
+  def Param(payload, p2)
+    var parm, res
     try
       parm = string.toupper(self.trim(payload))
     except ..
@@ -553,10 +551,36 @@ class NeoPoolCommands
     end
     if parm != ""
       if string.find(parm, 'OFF')>=0 || string.find(parm, self.TEXT_OFF)>=0 || string.find(parm, '0')>=0
-        ctrl = 0
+        res = 0
       elif string.find(parm, 'ON')>=0 || string.find(parm, self.TEXT_ON)>=0 || string.find(parm, '1')>=0
+        res = 1
+      elif string.find(parm, p2)>=0 || string.find(parm, '2')>=0
+        res = 2
+      else
+        res = -1
+      end
+    else
+      res = nil
+    end
+    parm = nil
+    tasmota.gc()
+    return res
+  end
+
+  #- NPBoost OFF|0|ON|1|REDOX|2
+      0|OFF:   Switch boost off
+      1|ON:    Switch boost on without redox control
+      2|REDOX: Switch boost on with redox control
+  -#
+  def NPBoost(cmd, idx, payload)
+    var ctrl, parm
+    parm = self.Param(payload, 'REDOX')
+    if parm != nil
+      if 0 == parm
+        ctrl = 0
+      elif 1 == parm
         ctrl = 0x85A0
-      elif string.find(parm, 'REDOX')>=0 || string.find(parm, '2')>=0
+      elif 2 == parm
         ctrl = 0x05A0
       else
         tasmota.resp_cmnd_error()
@@ -568,7 +592,7 @@ class NeoPoolCommands
       tasmota.cmd(string.format("NPWrite 0x%04X,0x7F", MBF_NOTIFICATION))
     else
       try
-        ctrl = compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_CELL_BOOST))['NPRead']['Data'])()
+        ctrl = compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_CELL_BOOST)).find('NPRead', json.load('{"Data": "0x0000"}')).find('Data', 0))()
       except ..
         tasmota.resp_cmnd_error()
         return
@@ -577,32 +601,27 @@ class NeoPoolCommands
     tasmota.resp_cmnd(string.format('{"%s":"%s"}', cmd, ctrl == 0 ? self.TEXT_OFF : (ctrl & 0x8500) == 0x8500 ? self.TEXT_ON : "REDOX"))
   end
 
-  # NPAux<x> OFF|0|ON|1 t (<x> = 1..4)
-  #   0|OFF:    Switch Aux x to off
-  #   1|ON:     Switch Aux x to on
-  #   2|TOGGLE: Toggle Aux x
-  def NPAux(cmd, idx, payload)
-    import string
+  #- NPAux<x> OFF|0|ON|1 t (<x> = 1..4)
+      0|OFF:   Switch aux x off
+      1|ON:    Switch aux x on
+      2|TOGGLE: Toggle Aux x
+  -#
+  def NPAux(cmd, idx, payload, payload_json, subcmd)
     var ctrl, parm
 
     if idx < 1 || idx > 4
       tasmota.resp_cmnd_error()
       return
     end
-
-    try
-      parm = string.toupper(self.trim(payload))
-    except ..
-      parm = ""
-    end
-    if parm != ""
-      if string.find(parm, 'OFF')>=0 || string.find(parm, self.TEXT_OFF)>=0 || string.find(parm, '0')>=0
+    parm = self.Param(payload, self.TEXT_TOGGLE)
+    if parm != nil
+      if 0 == parm
         ctrl = MBV_PAR_CTIMER_ALWAYS_OFF
-      elif string.find(parm, 'ON')>=0 || string.find(parm, self.TEXT_ON)>=0 || string.find(parm, '1')>=0
+      elif 1 == parm
         ctrl = MBV_PAR_CTIMER_ALWAYS_ON
-      elif string.find(parm, 'TOGGLE')>=0 || string.find(parm, self.TEXT_TOGGLE)>=0 || string.find(parm, '2')>=0
+      elif 2 == parm
         try
-          ctrl = (compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_RELAY_STATE))['NPRead']['Data'])() >> (idx+2)) & 1 ? MBV_PAR_CTIMER_ALWAYS_OFF : MBV_PAR_CTIMER_ALWAYS_ON
+          ctrl = (compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_RELAY_STATE)).find('NPRead', json.load('{"Data": "0x0000"}')).find('Data', 0))() >> (idx+2)) & 1 ? MBV_PAR_CTIMER_ALWAYS_OFF : MBV_PAR_CTIMER_ALWAYS_ON
         except ..
           tasmota.resp_cmnd_error()
           return
@@ -615,12 +634,36 @@ class NeoPoolCommands
       tasmota.cmd("NPExec")
     else
       try
-        ctrl = (compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_RELAY_STATE))['NPRead']['Data'])() >> (idx+2)) & 1
+        ctrl = (compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_RELAY_STATE)).find('NPRead', json.load('{"Data": "0x0000"}')).find('Data', 0))() >> (idx+2)) & 1
       except ..
         tasmota.resp_cmnd_error()
         return
       end
     end
+    if subcmd != nil
+      tasmota.resp_cmnd(string.format('{"%s":"%s"}', subcmd, ctrl == (parm != nil ? 4 : 0) ? self.TEXT_OFF : self.TEXT_ON))
+    else
+      tasmota.resp_cmnd(string.format('{"%s%d":"%s"}', cmd, idx, ctrl == (parm != nil ? 4 : 0) ? self.TEXT_OFF : self.TEXT_ON))
+    end
+  end
+
+  # NPVersion
+  def NPVersion(cmd)
+    var verstr = ""
+    for i: 0 .. 12
+      tasmota.cmd(string.format("NPWrite 0x%04X,%d", MBF_POWER_MODULE_REGISTER, i*2))
+      var data = compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_POWER_MODULE_DATA)).find('NPRead', json.load('{"Data": "0x0000"}')).find('Data', 0))()
+      verstr += string.char(data>>8 & 0xFF)
+      verstr += string.char(data    & 0xFF)
+    end
+    var arr = ""
+    for i: string.split(verstr,'\n')
+      if arr != ""
+        arr += ","
+      end
+      arr += '"'+i+'"'
+    end
+    tasmota.resp_cmnd(string.format('{"%s":[%s]}', cmd, arr))
   end
 
   def init()
@@ -631,12 +674,14 @@ class NeoPoolCommands
     # add commands
     tasmota.add_cmd('NPBoost', / cmd, idx, payload -> self.NPBoost(cmd, idx, payload))
     tasmota.add_cmd('NPAux', / cmd, idx, payload -> self.NPAux(cmd, idx, payload))
+    tasmota.add_cmd('NPVersion', / cmd -> self.NPVersion(cmd))
   end
 
   def deinit()
     # remove commands
     tasmota.remove_cmd('NPBoost')
     tasmota.remove_cmd('NPAux')
+    tasmota.remove_cmd('NPVersion')
   end
 end
 neopoolcommands = NeoPoolCommands()
@@ -677,61 +722,66 @@ class NeoPoolButtonMethods : Driver
       return comp == value ? 'selected=""' : ''
     end
 
-    var speed = tasmota.cmd('NPFiltration')['Speed']
-    var mode = tasmota.cmd('NPFiltrationmode')['NPFiltrationmode']
-
     var html = '<p></p>'
 
-    # Filtration mode/speed
-    html+= '<table style="width:100%"><tbody><tr>'
-    html+= '  <td style="width:50%;padding: 0 4px 0 4px;">'
-    html+= '    <label for="mode"><small>Mode:</small></label>'
-    html+= '    <select id="mode" name="mode">'
-    html+= string.format('<option value="m_sv_manual"%s>Manual</option>', selected(mode, 'Manual'))
-    html+= string.format('<option value="m_sv_auto"%s>Auto</option>', selected(mode, 'Auto'))
-    html+= string.format('<option value="m_sv_heating"%s>Heating</option>', selected(mode, 'Heating'))
-    html+= string.format('<option value="m_sv_smart"%s>Smart</option>', selected(mode, 'Smart'))
-    html+= string.format('<option value="m_sv_intelligent"%s>Intelligent</option>', selected(mode, 'Intelligent'))
-    html+= '    </select>'
-    html+= '  </td>'
-    html+= '  <td style="width:50%;padding: 0 4px 0 4px;">'
-    html+= '    <label for="speed"><small>Speed:</label>'
-    html+= '    <select id="speed" name="speed">'
-    html+= string.format('<option value="m_sv_slow"%s>Slow</option>', selected(speed, '1'))
-    html+= string.format('<option value="m_sv_medium"%s>Medium</option>', selected(speed, '2'))
-    html+= string.format('<option value="m_sv_fast"%s>Fast</option>', selected(speed, '3'))
-    html+= '    </select>'
-    html+= '  </td>'
-    html+= '</tr><tr></tr></tbody></table>'
-    html+= '<script>'
-    html+= 'document.getElementById("speed").addEventListener ("change",function(){la("&"+this.value+"=1");});'
-    html+= 'document.getElementById("mode").addEventListener ("change",function(){la("&"+this.value+"=1");});'
-    html+= '</script>'
+    var speed = tasmota.cmd('NPFiltration').find('Speed', 'invalid')
+    var mode = tasmota.cmd('NPFiltrationmode').find('NPFiltrationmode', 'invalid')
+    if 'invalid' == speed && 'invalid' == mode
+      html+= 'NeoPool device not available'
+    else
+      # Filtration mode/speed
+      html+= '<table style="width:100%"><tbody><tr>'
+      html+= '  <td style="width:50%;padding: 0 4px 0 4px;">'
+      html+= '    <label for="mode"><small>Mode:</small></label>'
+      html+= '    <select id="mode" name="mode">'
+      html+= string.format('<option value="m_sv_manual"%s>Manual</option>', selected(mode, 'Manual'))
+      html+= string.format('<option value="m_sv_auto"%s>Auto</option>', selected(mode, 'Auto'))
+      html+= string.format('<option value="m_sv_heating"%s>Heating</option>', selected(mode, 'Heating'))
+      html+= string.format('<option value="m_sv_smart"%s>Smart</option>', selected(mode, 'Smart'))
+      html+= string.format('<option value="m_sv_intelligent"%s>Intelligent</option>', selected(mode, 'Intelligent'))
+      html+= '    </select>'
+      html+= '  </td>'
+      html+= '  <td style="width:50%;padding: 0 4px 0 4px;">'
+      html+= '    <label for="speed"><small>Speed:</label>'
+      html+= '    <select id="speed" name="speed">'
+      html+= string.format('<option value="m_sv_slow"%s>Slow</option>', selected(speed, '1'))
+      html+= string.format('<option value="m_sv_medium"%s>Medium</option>', selected(speed, '2'))
+      html+= string.format('<option value="m_sv_fast"%s>Fast</option>', selected(speed, '3'))
+      html+= '    </select>'
+      html+= '  </td>'
+      html+= '</tr><tr></tr></tbody></table>'
+      html+= '<script>'
+      html+= 'document.getElementById("speed").addEventListener ("change",function(){la("&"+this.value+"=1");});'
+      html+= 'document.getElementById("mode").addEventListener ("change",function(){la("&"+this.value+"=1");});'
+      html+= '</script>'
 
-    # Filtration button
-    html+= '<table style="width:100%"><tbody><tr>'
-    html+= '  <td style="width:100%">'
-    html+= '    <button id="bn_filtration" name="bn_filtration" onclick="la(\'&m_sv_filtration=1\');">Filtration</button>'
-    html+= '  </td>'
-    html+= '</tr><tr></tr></tbody></table>'
+      # Filtration button
+      html+= '<table style="width:100%"><tbody><tr>'
+      html+= '  <td style="width:100%">'
+      html+= '    <button id="bn_filtration" name="bn_filtration" onclick="la(\'&m_sv_filtration=1\');">Filtration</button>'
+      html+= '  </td>'
+      html+= '</tr><tr></tr></tbody></table>'
 
-    # Light button
-    html+= '<table style="width:100%"><tbody><tr>'
-    html+= '  <td style="width:100%">'
-    html+= '    <button onclick="la(\'&m_sv_light=1\');">Light</button>'
-    html+= '  </td>'
-    html+= '</tr><tr></tr></tbody></table>'
+      # Light button
+      html+= '<table style="width:100%"><tbody><tr>'
+      html+= '  <td style="width:100%">'
+      html+= '    <button onclick="la(\'&m_sv_light=1\');">Light</button>'
+      html+= '  </td>'
+      html+= '</tr><tr></tr></tbody></table>'
 
-    # Aux buttons
-    html+= '<table style="width:100%"><tbody><tr>'
-    html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=1\');">Aux1</button></td>'
-    html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=2\');">Aux2</button></td>'
-    html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=3\');">Aux3</button></td>'
-    html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=4\');">Aux4</button></td>'
-    html+= '</tr><tr></tr></tbody></table>'
+      # Aux buttons
+      html+= '<table style="width:100%"><tbody><tr>'
+      html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=1\');">Aux1</button></td>'
+      html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=2\');">Aux2</button></td>'
+      html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=3\');">Aux3</button></td>'
+      html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=4\');">Aux4</button></td>'
+      html+= '</tr><tr></tr></tbody></table>'
+    end
 
     webserver.content_send(html)
     html = nil
+    speed = nil
+    mode = nil
     tasmota.gc()
   end
 
