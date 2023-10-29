@@ -1280,8 +1280,8 @@ So in this script the three phases get added and published as `Power_total`.
     =>sensor53 r
     >M 1
     +1,3,s,0,9600,
-    1,77070100010800ff@1000,Total consumption,kWh,total_in,2
-    1,77070100020800ff@1000,Total feed-in,kWh,total_out,2
+    1,77070100010800ff@1000,Total consumed,kWh,total_in,2
+    1,77070100020800ff@1000,Total generated,kWh,total_out,2
     1,77070100100700ff@1,Power,W,power_curr,0
     #
     ```
