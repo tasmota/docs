@@ -62,6 +62,16 @@ You can use the "WIFI" or "EXTERN" connector, both are independent Modbus channe
 !!! note
     Leave the define for `NEOPOOL_MODBUS_ADDRESS` set to 1 whether you are using the "WIFI" or "EXTERNAL" port (unless you have changed the parameters for it within your Sugar Valley device).
 
+### Using M5Stack Atom Lite with Tail485 addon
+
+This is the easiest, the most comfortable and cheapest way to run Tasmota with the Sugar Valley system. The combination of a [M5Stack Atom Lite](https://docs.m5stack.com/en/core/atom_lite) and the [Tail485](https://docs.m5stack.com/en/atom/tail485) addon is very small, does not need a separate power supply (it is powered from the Sugar Valley system) and can even be placed directly next to the system or in the junction box itself. What you need:
+
+- [M5Stack Atom Lite](https://docs.m5stack.com/en/core/atom_lite)<BR>![](_media/xsns_83_neopool_m5stack_atom_lite.png)
+- [Tail485](https://docs.m5stack.com/en/atom/tail485)<BR>![](_media/xsns_83_neopool_tail485.png)
+- 4 wire dupont cable or 4 wire cable with a 5 pin 2,54mm JST connector<BR>![](_media/xsns_83_neopool_m5stack_atom_lite_tail485_cable.png)
+
+Flash Tasmota + NeoPool to the Atom Lite and plug the cable into the WIFI or EXTERN port, that's all.
+
 ## Configuration
 
 ### Tasmota settings
@@ -79,6 +89,20 @@ so it looks like this
 ![](_media/xsns_83_neopool_config.png)
 
 Don't be surprised that Rx seems to be connected to Tx here (and vice versa). The Rx and Tx designations are to be considered from the point of view of the respective devices, which can be confusing.
+
+### M5Stack Atom Lite with Tail485 template
+
+For this combination use a template, got to Console and enter the command below:
+
+```
+Template {"NAME":"NeoPool","GPIO":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,6976,0,0,0,0,0,7008,1,0,0,0,0,0,0],"FLAG":0,"BASE":1}
+```
+
+This also allows the later use of the additonal GPIOs 19, 21 - 23 and 33 for other purposes (sensors or similar).
+
+After a restart active the template using command `Module 0`.
+
+### Final check
 
 After Tasmota restarts, the main screen should display the controller data as shown above. If not, check that the A+/B pins aren't swapped and that the Rx/Tx pins are on the correct GPIOs - swap once if in doubt.
 
