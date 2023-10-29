@@ -189,7 +189,67 @@ Sensor data is sent via the Tasmota topic `tele/%topic%/SENSOR` in JSON format e
 }
 ```
 
-The JSON values "pH", "Redox", "Hydrolysis", "Chlorine", "Conductivity" and "Ionization" are only available if the corresponding module is installed in the device (the corresponding "Module" subkey must be 1 ).
+### SENSOR data description
+
+Key|Details
+:---|:---
+Time|(String) Device time
+Type|(String) Model description (`Hidrolife`, `Aquascenic`, `Oxilife`, `Bionet`, `Hidroniser`, `UVScenic`, `Station`, `Brilix`, `Generic`, `Bayrol` or `Hay`)
+Module|(Bool) These subkeys indicate whether the corresponding module is installed and activated (`1`) or not (`0`)
+Temperature|(Float) Temperature value from temperature sensor (only available if temperature sensor is installed)
+Powerunit.Version|(String) The firmware version of the power unit module
+Powerunit.NodeID|(String) The NodeID of your device (default hidden, do not publish your NodeID). See [`SetOption157`](Commands.md#setoption157)
+Powerunit.5V|(Float) Voltage value of the 5 Volt output
+Powerunit.12V|(Float) Voltage value of the 12 Volt output
+Powerunit.24-30V|(Float) Voltage value of the 24-30 Volt output
+Powerunit.4-20mA|(Float) Current value of the 4-20mA output
+pH.Data|(Float) Current pH value (`0`..`14`)
+pH.Min|(Float) Minimum setting value for pH control (only useful if a base pump is connected).
+pH.Max|(Float) Maximum setting value for pH control (only useful if an acid pump is connected).
+pH.State|(Int) Status of the pH controller:<BR>`0` = no alarm<BR>`1` = pH too high: pH value is 0.8 points higher than the setpoint (PH1 on acid systems, PH2 on base systems, PH1 on acid+base systems)<BR>`2` = pH too low: pH value is 0.8 points lower than the set point value set in (PH1 on acid systems, PH2 on base systems, PH2 on acid+base systems)<BR>`3` = pH pump has exceeded the working time set by the MBF_PAR_RELAY_PH_MAX_TIME parameter and has stopped<BR>`4` = pH higher than the set point (PH1 + 0.1 on acid systems, PH2 + 0.1 on base systems, PH1 on acid+base systems)<BR>`5` = pH lower than the set point  (PH1 - 0.3 on acid systems, PH2 - 0.3 on base systems, PH2 on acid+base systems)<BR>`6` = Tank level alarm
+pH.Pump|(Int) pH control module and controlling pumps:<BR>`0` = pH control module and controlling pumps inactive<BR>`1` = Acid/base pH pump pump on<BR>`2` = Acid/base pH pump pump off
+pH.FL1|(Bool) Water flow status:<BR>`0` = No flow alarm<BR>`1` = Flow alarm
+pH.Tank|(Bool) Acid/Base tank signal input:<BR>`0` = Tank empty<BR>`1` = No Tank alarm
+Redox.Data|(Int) Current redox value (mV)
+Redox.Setpoint|(Int) Redox target (mV)
+Chlorine.Data|(Float) Current chlorine value [ppm]
+Chlorine.Setpoint|(Float) Chlorine target production level [ppm]
+Conductivity|(Int) Current conductivity level [%]
+Ionization.Data|(Int) Current ionization level
+Ionization.Setpoint|(Int) Ionization target production level
+Ionization.Max|(Int) Ionization maximum production level (system defined)
+Hydrolysis.Data|(Float/Int) Hydrolysis current production level
+Hydrolysis.Unit|(String)  Hydrolysis unit ("g/h" or "%")
+Hydrolysis.Setpoint|(Float/Int) Hydrolisis target production level
+Hydrolysis.Max|(Float/Int) Hydrolysis maximum production level [g/h|%]
+Hydrolysis.Runtime.Total|(String) Cell total runtime (format _dd_T_hh_:_mm_:_ss_)
+Hydrolysis.Runtime.Part|(String) Cell partly runtime
+Hydrolysis.Runtime.Pol1|(String) Cell runtime for polarization 1
+Hydrolysis.Runtime.Pol2|(String) Cell runtime for polarization 2
+Hydrolysis.Runtime.Changes|(Int) Number of polarization changes
+Hydrolysis.State|(String) Cell state:<BR>`OFF` = Cell inactive<BR>`FLOW` = Cell water flow alarm<BR>`POL1` = Cell polarization 1 active<BR>`POL2` = Cell polarization 2 active
+Hydrolysis.Cover|(Bool) Cover signal input:<BR>`0` = Cover input inactive<BR>`1` = Cover input active
+Hydrolysis.Boost|(Int) Boost mode state:<BR>`0` = Boost mode inactive<BR>`1` = Boost mode active with redox control<BR>`2` = Boost mode active without redox control
+Hydrolysis.Low|(Bool) Hydrolysis low alarm:<BR>`0` = No alarm<BR>`1` = Hydrolysis cannot reach the set point
+Filtration.State|(Int) Filtration pump state:<BR>`0` = Pump off<BR>`1` = Pump on
+Filtration.Speed|(Int) Filtration pump speed:<BR>`1` = Low<BR>`2` = Middle<BR>`3` = High
+Filtration.Mode|(Int) Filtration mode:<BR>`0` = Manual<BR>`1` = Auto<BR>`2` = Heating<BR>`3` = Smart<BR>`4` = Intelligent<BR>`13` = Backwash operation
+Light|(Bool) Light state:<BR>`0` = Light off<BR>`1` = Light on
+Relay|Relay state values (`0` = off, `1` = on):
+Relay.State|(Array) Boolean values for the 7 relays (functional independent)
+Relay.Aux|(Array) Boolean values for the 4 Aux relais, this is identical with relay 4-7 (functional independent)
+Relay.Acid|(Bool) Acid relay state
+Relay.Base|(Bool) Base relay state
+Relay.Redox|(Bool) redox relay state
+Relay.Chlorine|(Bool) Acid relay state
+Relay.Conductivity|(Bool) Acid relay state
+Relay.Heating|(Bool) Acid relay state
+Relay.UV|(Bool) Acid relay state
+Relay.Valve|(Bool) Acid relay state
+
+The JSON values `pH`, `Redox`, `Hydrolysis`, `Chlorine`, `Conductivity` and `Ionization` are only available if the corresponding module is installed in the device (the corresponding "Module" subkey must be `1`).
+
+The `Relay` subkeys `Acid`, `Base`, `Redox`, `Chlorine`, `Conductivity`, `Heating`, `UV` and `Valve` are only available if the related function is assigned to a relay.
 
 To check which modules are installed use the "Module" value from SENSOR topic or query it manually by using the [NPControl command](#NPControl):
 
@@ -215,6 +275,11 @@ To check which modules are installed use the "Module" value from SENSOR topic or
   }
 }
 ```
+
+Key|Details
+:---|:---
+Modules|(Bool) These subkeys indicate whether the corresponding module is installed and activated (`1`) or not (`0`)
+Relays|(Bool) These subkeys indicate whether the corresponding relay is active (`1`) or not (`0`) regardless of whether a relay is assigned or not.
 
 ## Commands
 
