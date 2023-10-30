@@ -210,8 +210,8 @@ pH.State|(Int) Status of the pH controller:<BR>`0` = no alarm<BR>`1` = pH too hi
 pH.Pump|(Int) pH control module and controlling pumps:<BR>`0` = pH control module and controlling pumps inactive<BR>`1` = Acid/base pH pump pump on<BR>`2` = Acid/base pH pump pump off
 pH.FL1|(Bool) Water flow status:<BR>`0` = No flow alarm<BR>`1` = Flow alarm
 pH.Tank|(Bool) Acid/Base tank signal input:<BR>`0` = Tank empty<BR>`1` = No Tank alarm
-Redox.Data|(Int) Current redox value (mV)
-Redox.Setpoint|(Int) Redox target (mV)
+Redox.Data|(Int) Current redox value [mV]
+Redox.Setpoint|(Int) Redox target [mV]
 Chlorine.Data|(Float) Current chlorine value [ppm]
 Chlorine.Setpoint|(Float) Chlorine target production level [ppm]
 Conductivity|(Int) Current conductivity level [%]
@@ -236,22 +236,22 @@ Filtration.Speed|(Int) Filtration pump speed:<BR>`1` = Low<BR>`2` = Middle<BR>`3
 Filtration.Mode|(Int) Filtration mode:<BR>`0` = Manual<BR>`1` = Auto<BR>`2` = Heating<BR>`3` = Smart<BR>`4` = Intelligent<BR>`13` = Backwash operation
 Light|(Bool) Light state:<BR>`0` = Light off<BR>`1` = Light on
 Relay|Relay state values (`0` = off, `1` = on):
-Relay.State|(Array) Boolean values for the 7 relays (functional independent)
-Relay.Aux|(Array) Boolean values for the 4 Aux relais, this is identical with relay 4-7 (functional independent)
+Relay.State|(Array) Relay states for all possible seven relays 1-7 (functional independent)
+Relay.Aux|(Array) Relay states for the 4 Aux relais (these are the same as `Relay.State`` 4-7 - functional independent)
 Relay.Acid|(Bool) Acid relay state
 Relay.Base|(Bool) Base relay state
-Relay.Redox|(Bool) redox relay state
-Relay.Chlorine|(Bool) Acid relay state
-Relay.Conductivity|(Bool) Acid relay state
-Relay.Heating|(Bool) Acid relay state
-Relay.UV|(Bool) Acid relay state
-Relay.Valve|(Bool) Acid relay state
+Relay.Redox|(Bool) Redox relay state
+Relay.Chlorine|(Bool) Chlorine relay state
+Relay.Conductivity|(Bool) Conductivity relay state
+Relay.Heating|(Bool) Heating relay state
+Relay.UV|(Bool) UV relay state
+Relay.Valve|(Bool) Valve relay state
 
 The JSON values `pH`, `Redox`, `Hydrolysis`, `Chlorine`, `Conductivity` and `Ionization` are only available if the corresponding module is installed in the device (the corresponding "Module" subkey must be `1`).
 
 The `Relay` subkeys `Acid`, `Base`, `Redox`, `Chlorine`, `Conductivity`, `Heating`, `UV` and `Valve` are only available if the related function is assigned to a relay.
 
-To check which modules are installed use the "Module" value from SENSOR topic or query it manually by using the [NPControl command](#NPControl):
+To check which modules are installed use the `Module` value from SENSOR topic or query it manually by using the [NPControl command](#NPControl):
 
 ```json
 {
@@ -574,7 +574,7 @@ Additional advantage is that you can also use Tasmota Timer switching Power1 (=f
 
 The following enhancements are made using the [Berry Scripting Language](Berry) which is available on ESP32 only.
 
-The class `NeoPoolCommands` below adds two new commands to Tasmota:
+The class `NeoPoolCommands` below adds three new commands to Tasmota:
 
 Command|Parameters
 :---|:---
