@@ -25,7 +25,7 @@ In Tasmota a `Switch` is any switch or push-button additionally connected to a f
 - [PIR sensor](https://en.wikipedia.org/wiki/Passive_infrared_sensor) - even though it's technically a  sensor it is [configured as a switch in Tasmota](PIR-Motion-Sensors)
 - [mechanical push-button](https://en.wikipedia.org/wiki/Push-button)
 
-By default a switch toggles the corresponding power state (f.e. `Switch1` controls `Power1`). Every time the switch gets flipped the power state of the relay toggles.
+By default a switch toggles the corresponding power state (e.g., `Switch1` controls `Power1`). Every time the switch gets flipped the power state of the relay toggles.
 
 If you want to detach switches from relays read [here](#detach-switches-with).
 
