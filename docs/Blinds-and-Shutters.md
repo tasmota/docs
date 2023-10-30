@@ -317,10 +317,10 @@ Wemos Pin|GPIO|Component|Servo Signal
 :-:|:-:|:-:|:-:
 D3|0|Relay1|EN
 D4|2|PWM1|PLS
-D5|14|Relay|DIR
+D5|14|Relay2|DIR
    
+**Important: Please do the first start after configure without any load on the servo. If the shutterposition and servo position are not in sync the servo will change to the start position without speed and acceleration control like later in normal operation.**
    
-* You must add support for Shutter in my_user_config.h file (оr flash your ESP8266 module with tasmota.bin file).
 * Run commands in the console to run the "Shutter" mode (you must first configure the GPIO!):  
   `SetOption80 1`     // enable Shutters support.  
   `shutterrelay1 1`   // Define that RELAY1 is for ON/OFF and PWM1 drive position  
