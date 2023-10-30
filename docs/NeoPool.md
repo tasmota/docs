@@ -255,7 +255,7 @@ Filtration.Mode|(Int) Filtration mode:<BR>`0` = Manual<BR>`1` = Auto<BR>`2` = He
 Light|(Bool) Light state:<BR>`0` = Light off<BR>`1` = Light on
 Relay|Relay state values (`0` = off, `1` = on):
 Relay.State|(Array) Relay states for all possible seven relays 1-7 (functional independent)
-Relay.Aux|(Array) Relay states for the 4 Aux relais (these are the same as `Relay.State`` 4-7 - functional independent)
+Relay.Aux|(Array) Relay states for the 4 Aux relais (these are the same as `Relay.State` 4-7 - functional independent)
 Relay.Acid|(Bool) Acid relay state
 Relay.Base|(Bool) Base relay state
 Relay.Redox|(Bool) Redox relay state
