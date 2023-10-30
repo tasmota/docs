@@ -21,9 +21,38 @@ However, the sensor also provides low-level commands to directly [read](#NPRead)
 
 ## Connection
 
-The NeoPool controller uses a RS485 interface, the ESP has RS232 interfaces. Both are serial interfaces but with different physical specifications. Therefore to connect your NeoPool controller to an ESP82xx/32 you need a TTL-UART to RS485 converter. It is recommended to use GPIO1 and GPIO3 on ESP8266 side, since the ESP then uses the hardware serial interface.
+The NeoPool controller uses a RS485 interface, the ESP has RS232 interfaces. Both are serial interfaces but with different physical specifications. Therefore to connect your NeoPool controller to an ESP82xx/32 you need a TTL-UART to RS485 converter. For an ESP8266 it is recommended to use GPIO1 and GPIO3, because the ESP then uses the serial interface of the hardware.
 
 ![](_media/xsns_83_neopool_schematic.png)
+
+### Using M5Stack Atom Lite with Tail485 addon
+
+This is the easiest and the most comfortable way to run Tasmota with the Sugar Valley system. The combination of a [M5Stack Atom Lite](https://docs.m5stack.com/en/core/atom_lite) and the [Tail485](https://docs.m5stack.com/en/atom/tail485) addon is very small, does not need a separate power supply (because it is powered from the Sugar Valley system) and can even be placed directly next to the system or in the junction box itself. 
+
+For this you will need:
+
+- a [M5Stack Atom Lite](https://docs.m5stack.com/en/core/atom_lite)<BR>![](_media/xsns_83_neopool_m5stack_atom_lite.png)
+- a [Tail485](https://docs.m5stack.com/en/atom/tail485)<BR>![](_media/xsns_83_neopool_tail485.png)
+- a 4 wire dupont cable or 4 wire cable using a 5 pin 2,54 mm JST connector<BR>![](_media/xsns_83_neopool_tail485_cable.png)<BR>(see also [Sugar Valley connection](#sugar-valley-connection))<BR>
+  - Sugar Valley pin 1 (+12V) goes to Tail485 pin 12V (9-24V)
+  - Sugar Valley pin 3 (Modbus A+) goes to Tail485 pin A
+  - Sugar Valley pin 4 (Modbus B-) goes to Tail485 pin B
+  - Sugar Valley pin 5 (Modbus GND) goes to Tail485 pin GND
+
+For final use, put the whole thing together:
+
+![](_media/xsns_83_neopool_m5stack_atom_lite_tail485_cable.png)
+
+To get this combination running:
+
+- compile your own Tasmota including the NeoPool driver as described under the red note `"This function is not included in precompiled binaries"` at the very top of this page and flash your this to your M5STack Atom Lite using USB
+- make the configuration steps [M5Stack Atom Lite with Tail485 template](#m5stack-atom-lite-with-tail485-template)
+- turn off the Sugar Valley device and plug the 4-wire dupont or 5 pin JST cable into the [WIFI](using-wifi-port) or (EXTERN)[#using-extern-port] port
+- turn on the Sugar Valley device
+
+That's all.
+
+### Using any other ESP
 
 The following TTL UART to RS485 converter have been tested with both an ESP8266 and ESP32 using a Vcc of 3.3V:
 
@@ -31,6 +60,8 @@ The following TTL UART to RS485 converter have been tested with both an ESP8266 
 
 !!! note
     Your TTL UART to RS485 converter must be able to work with an operating voltage of 3.3V. Some converters are not designed for operating with 3.3V and only works with 5V TTL level - these converters are useless. __Do not operate your TTL UART to RS485 converter with 5V__, your converter __must be operated with the 3.3V__ from ESP, otherwise the ESP GPIO ports will be damaged.
+
+### Sugar Valley connection
 
 The Sugar Valley NeoPool RS485 connector pins are located under the connection cover, for the Sugar-Valley products on the right-hand side next to the relay connections:
 
@@ -51,40 +82,27 @@ You can use the "WIFI" or "EXTERN" connector, both are independent Modbus channe
 !!! note
     The "DISPLAY" port can only be used if neither the built-in nor an external display is connected but since there is probably at least one display connected to one of the two "DISPLAY" ports, the "DISPLAY" port is useless.
 
-### Using WIFI Port
+#### Using WIFI Port
 
 ![](_media/xsns_83_neopool_connector_wifi.jpg)
 
-### Using EXTERN Port
+#### Using EXTERN Port
 
 ![](_media/xsns_83_neopool_connector.jpg)
 
 !!! note
     Leave the define for `NEOPOOL_MODBUS_ADDRESS` set to 1 whether you are using the "WIFI" or "EXTERNAL" port (unless you have changed the parameters for it within your Sugar Valley device).
 
-### Using M5Stack Atom Lite with Tail485 addon
-
-This is the easiest, the most comfortable and cheapest way to run Tasmota with the Sugar Valley system. The combination of a [M5Stack Atom Lite](https://docs.m5stack.com/en/core/atom_lite) and the [Tail485](https://docs.m5stack.com/en/atom/tail485) addon is very small, does not need a separate power supply (it is powered from the Sugar Valley system) and can even be placed directly next to the system or in the junction box itself. What you need:
-
-- [M5Stack Atom Lite](https://docs.m5stack.com/en/core/atom_lite)<BR>![](_media/xsns_83_neopool_m5stack_atom_lite.png)
-- [Tail485](https://docs.m5stack.com/en/atom/tail485)<BR>![](_media/xsns_83_neopool_tail485.png)
-- 4 wire dupont cable or 4 wire cable with a 5 pin 2,54mm JST connector<BR>![](_media/xsns_83_neopool_m5stack_atom_lite_tail485_cable.png)
-
-Flash Tasmota + NeoPool to the Atom Lite and plug the cable into the WIFI or EXTERN port, that's all.
-
 ## Configuration
 
 ### Tasmota settings
 
-If you followed the recommendations above, the two GPIOs will be assigned as follows under Tasmota **_Configuration -> Configure Module_**:
+The configuration is limited to the assignment of two GPIOs under Tasmota **_Configuration -> Configure Module_**:
 
-* first change Module type to `Generic (0)` - this will restart your Tasmota
-
-After restart set
-* GPIO1 to `NeoPool RX`
-* GPIO3 to `NeoPool TX`
-
-so it looks like this
+- change the Module type to `Generic (0)` - this will restart your Tasmota
+- After restart set<BR>
+  - GPIO1 to `NeoPool RX`<BR>
+  - GPIO3 to `NeoPool TX`
 
 ![](_media/xsns_83_neopool_config.png)
 
@@ -520,7 +538,7 @@ Configure Tasmota "Timer 10" for your needs:
 ![](_media/xsns_83_neopool_timer.png)
 
 
-### ESP82xx: Add buttons for filtration and light control
+### ESP82xx/ESP32: Add buttons for filtration and light control
 
 Add two dummy buttons to control the filtration pump and the light.
 
