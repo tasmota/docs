@@ -47,7 +47,7 @@ To get this combination running:
 
 - compile your own Tasmota including the NeoPool driver as described under the red note `"This function is not included in precompiled binaries"` at the very top of this page and flash your this to your M5STack Atom Lite using USB
 - make the configuration steps [M5Stack Atom Lite with Tail485 template](#m5stack-atom-lite-with-tail485-template)
-- turn off the Sugar Valley device and plug the 4-wire dupont or 5 pin JST cable into the [WIFI](using-wifi-port) or (EXTERN)[#using-extern-port] port
+- turn off the Sugar Valley device and plug the 4-wire dupont or 5 pin JST cable into the [WIFI](using-wifi-port) or [EXTERN](#using-extern-port) ports
 - turn on the Sugar Valley device
 
 That's all.
@@ -224,7 +224,7 @@ Powerunit.4-20mA|(Float) Current value of the 4-20mA output
 pH.Data|(Float) Current pH value (`0`..`14`)
 pH.Min|(Float) Minimum setting value for pH control (only useful if a base pump is connected).
 pH.Max|(Float) Maximum setting value for pH control (only useful if an acid pump is connected).
-pH.State|(Int) Status of the pH controller:<BR>`0` = no alarm<BR>`1` = pH too high: pH value is 0.8 points higher than the setpoint (PH1 on acid systems, PH2 on base systems, PH1 on acid+base systems)<BR>`2` = pH too low: pH value is 0.8 points lower than the set point value set in (PH1 on acid systems, PH2 on base systems, PH2 on acid+base systems)<BR>`3` = pH pump has exceeded the working time set by the MBF_PAR_RELAY_PH_MAX_TIME parameter and has stopped<BR>`4` = pH higher than the set point (PH1 + 0.1 on acid systems, PH2 + 0.1 on base systems, PH1 on acid+base systems)<BR>`5` = pH lower than the set point  (PH1 - 0.3 on acid systems, PH2 - 0.3 on base systems, PH2 on acid+base systems)<BR>`6` = Tank level alarm
+pH.State|(Int) Status of the pH controller:<BR>`0` = no alarm<BR>`1` = pH too high: pH value is 0.8 points higher than the setpoint (`NPpHMax` on acid systems, `NPpHMin` on base systems, `NPpHMax` on acid+base systems)<BR>`2` = pH too low: pH value is 0.8 points lower than the set point value set in (`NPpHMax` on acid systems, `NPpHMin` on base systems, `NPpHMin` on acid+base systems)<BR>`3` = pH pump has exceeded the working time set by the MBF_PAR_RELAY_PH_MAX_TIME parameter and has stopped<BR>`4` = pH higher than the set point (`NPpHMax` + 0.1 on acid systems, `NPpHMin` + 0.1 on base systems, `NPpHMax` on acid+base systems)<BR>`5` = pH lower than the set point  (`NPpHMax` - 0.3 on acid systems, `NPpHMin` - 0.3 on base systems, `NPpHMin` on acid+base systems)<BR>`6` = Tank level alarm
 pH.Pump|(Int) pH control module and controlling pumps:<BR>`0` = pH control module and controlling pumps inactive<BR>`1` = Acid/base pH pump pump on<BR>`2` = Acid/base pH pump pump off
 pH.FL1|(Bool) Water flow status:<BR>`0` = No flow alarm<BR>`1` = Flow alarm
 pH.Tank|(Bool) Acid/Base tank signal input:<BR>`0` = Tank empty<BR>`1` = No Tank alarm
@@ -287,7 +287,7 @@ To check which modules are installed use the `Module` value from SENSOR topic or
     "Redox": 0,
     "Chlorine": 0,
     "Conductivity": 0,
-    "Heating": 0,
+    "Heating": 4,
     "UV": 0,
     "Valve": 0
   }
@@ -297,7 +297,7 @@ To check which modules are installed use the `Module` value from SENSOR topic or
 Key|Details
 :---|:---
 Modules|(Bool) These subkeys indicate whether the corresponding module is installed and activated (`1`) or not (`0`)
-Relays|(Bool) These subkeys indicate whether the corresponding relay is active (`1`) or not (`0`) regardless of whether a relay is assigned or not.
+Relays|(Int) These subkeys list the relay number assignments to the internal function (`0`..`7`)<BR>`0` = functionality is unassigned<BR>`1`..`7`  functionality is assigned to the related relay number<BR><BR>Examples: `"Acid": 1` means relay 1 is assigned to the acid function<BR>`"Heating": 4` means relay 4 (is equal to Aux1) is assigned to the heating function
 
 ## Commands
 
