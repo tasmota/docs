@@ -332,7 +332,7 @@ To listen to advertisements inside a class (that could be a driver) we could ini
 
 !!! example "Simple Advertisement Listener"
 
-    ```python
+    ```berry
     var buf
     def init()
         import BLE
@@ -391,7 +391,7 @@ Two methods for filtering of advertisements are provided:
 #### Peripheral role (aka client)
   
 Communicating via connections is a bit more complex. We have to start with a callback function and a byte buffer again.  
-```python
+```berry
 # simple example for the Berry console
 import BLE
 cbuf = bytes(-64)
@@ -470,7 +470,7 @@ The BLE server can be stopped with `BLE.serv_cb(nil)`, which will restart the "B
 
 The callback functions returns error, operation, 16-bit-uuid and 16-bit-handle.  
   
-```python
+```berry
 # simple server setup example for the Berry console
 import BLE
 cbuf = bytes(-256)
@@ -508,7 +508,7 @@ BLE.serv_cb(cbp,cbuf)
 Here is an implementation of the "old" MI32 commands:
 !!! example "removed MI32 commands in Berry"
 
-    ```python
+    ```berry
     import BLE
     import MI32
 
@@ -611,7 +611,7 @@ Here is an implementation of the "old" MI32 commands:
 
 ??? example "Govee desk lamp - pre-alpha"
 
-    ```python
+    ```berry
     # control a BLE Govee desk lamp
     class GOVEE : Driver
         var buf
@@ -734,7 +734,7 @@ Here is an implementation of the "old" MI32 commands:
 
 ??? example " Air mouse controller"
 
-    ```python
+    ```berry
     # Simple Berry driver for the BPR2S Air mouse (a cheap BLE HID controller)
     # TODO: handle mouse mode
 
