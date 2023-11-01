@@ -81,7 +81,7 @@ animate<a class="cmnd" id="leds_animator_animate"></a>|`animate() -> nil`<br>Pla
 
 Example:
 
-``` python
+```berry
 import animate
 class Rainbow_stripes : Leds_animator
   var cur_offset     # current offset in the palette
@@ -116,7 +116,7 @@ end
 
 How to use:
 
-``` python
+```berry
 var strip = Leds(5,5, gpio.pin(gpio.WS2812, 1))
 var r = Rainbow_stripes(strip, 1.0)
 r.start()
@@ -124,7 +124,7 @@ r.start()
 
 And here is another example that "breathes" the LED strip with a hardcoded colour:
 
-``` python
+```berry
 class Breathe : Leds_animator
   var brightness
   var colour
@@ -150,7 +150,7 @@ end
 
 And to use this one:
 
-``` python
+```berry
 var strip = Leds(5,5, gpio.pin(gpio.WS2812, 1))
 var r = Breathe(strip, 2.0)
 r.start()
@@ -174,7 +174,7 @@ Currently `RMT` channel 0 is used by default if no GPIO `WS2812-1` is configured
 
 Pulsating round on M5Stack Atom Matrix if GPIO 27 is configured as `WS1812 - 2`
 
-``` python
+```berry
 var strip = Leds_matrix(5,5, gpio.pin(gpio.WS2812, 1))
 var r = Round(strip, 2, 30)
 r.start()
