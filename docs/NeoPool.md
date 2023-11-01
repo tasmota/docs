@@ -606,7 +606,7 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
 
 #### neopoolcmd.be
 
-```python
+```berry
 # File: neopoolcmd.be
 #
 # Add commands NPBoost, NPAux and NPVersion
@@ -799,7 +799,7 @@ neopoolcommands = NeoPoolCommands()
 
 To activate the new commands, go to WebGUI "Consoles" / "Berry Scripting console" and execute
 
-```python
+```berry
 load("neopoolcmd.be")
 ```
 
@@ -815,7 +815,7 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
 
 ####  neopoolgui.be
 
-```python
+```berry
 # File: neopoolgui.be
 #
 # Add GUI elements for filtration control, light and aux relais
@@ -949,7 +949,7 @@ tasmota.add_driver(neopool_driver)
 
 To activate the new gui elements, go to WebGUI "Consoles" / "Berry Scripting console" and execute
 
-```python
+```berry
 load("neopoolgui.be")
 ```
 
@@ -960,7 +960,7 @@ If you want the extensions to be activated automatically every time you restart 
 
 #### autoexec.be
 
-```python
+```berry
 load("neopoolcmd.be")
 load("neopoolgui.be")
 ```
