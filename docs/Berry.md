@@ -67,24 +67,24 @@ The console is not designed for big coding tasks but it's recommended to use a c
 
 Try typing simple commands in the REPL. Since the input can be multi-lines, press ++enter++ twice or click "Run" button to run the code. Use ++arrow-up++ and ++arrow-down++ to navigate through history of previous commands.
 
-```python
+```berry
 > 1+1
 2
 ```
 
-```python
+```berry
 > 2.0/3
 0.666667
 ```
 
-```python
+```berry
 > print('Hello Tasmota!')
 Hello Tasmota!
 ```
 
 Note: Berry's native `print()` command displays text in the Berry Console and in the Tasmota logs. To log with finer control, you can also use the `log()` function which will not display in the Berry Console.
 
-```python
+```berry
 > print('Hello Tasmota!')
   log('Hello again')
 Hello Tasmota!
@@ -118,7 +118,7 @@ You can control individual Relays or lights with `tasmota.get_power()` and `tasm
 
 !!! example "2 relays and 1 light"
 
-    ```python
+    ```berry
     > tasmota.get_power()
     [false, true, false]
 
@@ -143,7 +143,7 @@ channels|`array of int, ranges 0..255`<br>Set the value for each channel, as an 
 
 When setting attributes, they are evaluated in the following order, the latter overriding the previous: `power`, `ct`, `hue`, `sat`, `rgb`, `channels`, `bri`.
 
-```python
+```berry
   # set to yellow, 25% brightness
 > light.set({"power": true, "hue":60, "bri":64, "sat":255})
 {'bri': 64, 'hue': 60, 'power': true, 'sat': 255, 'rgb': '404000', 'channels': [64, 64, 0]}
@@ -167,7 +167,7 @@ When setting attributes, they are evaluated in the following order, the latter o
 ## Rules
 The rule function have the general form below where parameters are optional:
 
-```python
+```berry
 def function_name(value, trigger, msg)
 end
 ```
@@ -181,14 +181,14 @@ Parameter|Description
 !!! example "Dimmer rule"
 
     Define the function and add a rule to Tasmota where the function runs if Dimmer value is more than 50
-    ```python
+    ```berry
     > def dimmer_over_50()
         print("The light is bright")
       end
       tasmota.add_rule("Dimmer>50", dimmer_over_50)
     ```
 
-    ```python
+    ```berry
     > tasmota.cmd("Dimmer 30")
     {'POWER': 'ON', 'Dimmer': 30, 'Color': '4D3223', 'HSBColor': '21,55,30', 'Channel': [30, 20, 14]}
 
@@ -202,13 +202,13 @@ The same function can be used with multiple triggers.
 If the function to process an ADC input should be triggered both by the `tele/SENSOR`
 message and the result of a `Status 10` command:
 
-```python
+```berry
 tasmota.add_rule("ANALOG#A1", rule_adc_1)
 tasmota.add_rule("StatusSNS#ANALOG#A1", rule_adc_1)
 ```
 
 Or if the same function is used to process similar triggers:
-```python
+```berry
 import string
 
 def rule_adc(value, trigger)
@@ -223,7 +223,7 @@ tasmota.add_rule("ANALOG#A2",rule_adc)
 ```
 
 Another way to address the same using anonymous functions created dynamically
-```python
+```berry
 def rule_adc(adc, value)
   print("value of adc",adc," is ",value)
 end
@@ -234,19 +234,19 @@ tasmota.add_rule("ANALOG#A2", def (value) rule_adc(2,value) end )
 ### Multiple triggers AND logic ###
 
 It is possible to combine multiple triggers in a AND logic as an array:
-```python
+```berry
 tasmota.add_rule(["ANALOG#A1>300","ANALOG#A1<500"], def (values) rule_adc_in_range(1,values) end )
 ```
 would trigger if `300 < ANALOG#A1 < 500`
 
 Triggers can be of different types too:
-```python
+```berry
 tasmota.add_rule(["ANALOG#A1>300","BME280#Temperature>28.0"], def (values) rule_adc_and_temp(1,values) end )
 ```
 would trigger for simultaneous `ANALOG#A1>300` AND `BME280#Temperature>28.0`
 
 In that case, the value and trigger arguments passed to the rule function are also lists:
-```python
+```berry
 def function_name(values:list_of_string, triggers:list_of_string, msg)
 end
 ```
@@ -283,7 +283,7 @@ Berry code, when it is running, blocks the rest of Tasmota. This means that you 
 
 All times are in milliseconds. You can know the current running time in milliseconds since the last boot:
 
-```python
+```berry
 > tasmota.millis()
 9977038
 ```
@@ -291,7 +291,7 @@ All times are in milliseconds. You can know the current running time in millisec
 
 !!! example "Sending a timer is as easy as `tasmota.set_timer(<delay in ms>,<function>)`"
 
-    ```python
+    ```berry
     > def t() print("Booh!") end
 
     > tasmota.set_timer(5000, t)
@@ -388,7 +388,7 @@ There are basically two ways to respond to an event:
 
 Define a class and implement methods with the same name as the events you want to respond to.
 
-```python
+```berry
 class MyDriver
   def every_second()
     # do something
@@ -840,7 +840,7 @@ persist.find<a class="cmnd" id="persist_find"></a>|`my_param:string [, "default 
 
 Allows to do introspection on instances and modules, to programmatically list attributes, set and get them.
 
-```python
+```berry
 > class A var a,b def f() return 1 end end
 > ins=A()
 > ins.a = "foo"
