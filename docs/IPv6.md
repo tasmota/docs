@@ -22,6 +22,8 @@ In all cases, Tasmota will enable a **Link-Local** address on all interfaces (Wi
 
 IPv6 networks generally support SLAAC (Stateless Address Autoconfiguration, SLAAC). SLAAC allows Tasmota to compute an IPv6 Global Address that is routable across VLANs and possibly accross the internet depending on your router configuration.
 
+Note: Unifi UDM Pro has a bug for years that prevent SLAAC from working. Although the bug was never fixed by Unifi, there are multiple work-arounds to be found online.
+
 For SLAAC to work, the network size must be at least `/64` or larger (i.e. `/xx` with `xx` lower or equal to `64`). The first 64 bits are set by the network, the last 64 bits are derived from the MAC address in the same way than Link-Local.
 
 Address type|Example of value
