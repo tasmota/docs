@@ -1,6 +1,14 @@
 # Matter Internals
 
-!!! tip "Matter is included by default in most ESP32 builds, otherwise requires `#define USE_MATTER_DEVICE`"
+
+!!! tip "Matter protocol supported in all ESP32 variants (C3/S2/S3) since Tasmota v13.0.0. ESP8266 is not supported although ESP8266 devices can be handled via a single ESP32 in bridge mode (see below)"
+
+??? tip "This feature is included in standard `tasmota32xx` builds; not in special variants (display, sensors...)" 
+
+    When [compiling your build](Compile-your-build) add the following flag to the build environment or `user_config_override.h`:
+    ```arduino
+    #define USE_MATTER_DEVICE
+    ```
 
 Below are implementation notes to understand and extend Matter.
 
