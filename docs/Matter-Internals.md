@@ -1,6 +1,6 @@
 # Matter Internals
 
-!!! tip "Matter is only supported on ESP32x based devices and requires a specific build with `#define USE_MATTER_DEVICE`"
+!!! tip "Matter is included by default in most ESP32 builds, otherwise requires `#define USE_MATTER_DEVICE`"
 
 Below are implementation notes to understand and extend Matter.
 
