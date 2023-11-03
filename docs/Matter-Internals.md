@@ -52,11 +52,11 @@ Matter_Plugin
 +--- Matter_Plugin_Root
 +--- Matter_Plugin_Aggregator
 +--+ Matter_Plugin_Device
-   +--+ Matter_Plugin_Light0
-   |  |--+ Matter_Plugin_Light1
-   |     |--- Matter_Plugin_Light2
-   |     |--- Matter_Plugin_Light3
+   +--+ Matter_Plugin_Light1
+   |   |--- Matter_Plugin_Light2
+   |   |--- Matter_Plugin_Light3
    +--- Matter_Plugin_OnOff
+   |  |--+ Matter_Plugin_Light0
    +--+ Matter_Plugin_Shutter
    |  +--- Matter_Plugin_ShutterTilt
    +--+ Matter_Plugin_Sensor
@@ -64,7 +64,10 @@ Matter_Plugin
    |  +--- Matter_Plugin_Sensor_Temperature
    |  +--- Matter_Plugin_Sensor_Pressure
    |  +--- Matter_Plugin_Sensor_Illuminance
-   |  +--- Matter_Plugin_Sensor_Occupancy
+   |  +--- Matter_Plugin_Sensor_Flow
+   +--- Matter_Plugin_Sensor_Contact
+   +--- Matter_Plugin_Sensor_Occupancy
+   +--- Matter_Plugin_Sensor_OnOff
    +--+ Matter_Plugin_Bridge_HTTP
       +--+ Matter_Plugin_Bridge_Light0
       |  +--+ Matter_Plugin_Bridge_Light1
@@ -76,7 +79,9 @@ Matter_Plugin
       |  +--- Matter_Plugin_Bridge_Sensor_Temperature
       |  +--- Matter_Plugin_Bridge_Sensor_Pressure
       |  +--- Matter_Plugin_Bridge_Sensor_Illuminance
+      |  +--- Matter_Plugin_Bridge_Sensor_Flow
       +--- Matter_Plugin_Bridge_Sensor_Occupancy
+      +--- Matter_Plugin_Bridge_Sensor_Contact
 ```
 
 
