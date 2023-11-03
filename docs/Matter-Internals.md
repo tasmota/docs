@@ -15,9 +15,9 @@ We provide currently the following classes:
 | Plug-in class           | Description                                       |
 | ----------------------- | ------------------------------------------------- |
 | Plugin_Device           | Generic device (abstract)                         |
-| Plugin_Root.            | Root node (type `0x0016`)                           |
-| Plugin_Aggregator       | Aggregator for Bridge mode (type `0x000E`)          |
-| Plugin_OnOff            | Simple On/Off Plug (type `0x010A`)                  |
+| Plugin_Root             | Root node (type `0x0016`)                         |
+| Plugin_Aggregator       | Aggregator for Bridge mode (type `0x000E`)        |
+| Plugin_OnOff            | Simple On/Off Plug (type `0x010A`)                |
 | Plugin_Light0           | Light with 0 channel (OnOff) (type 0x0100)        |
 | Plugin_Light1           | Light with 1 channels (Dimmer) (type 0x0101)      |
 | Plugin_Light2           | Light with 2 channels (CT) (type 0x010C)          |
@@ -25,15 +25,20 @@ We provide currently the following classes:
 | Plugin_Sensor           | Generic Sensor class (abstract)                   |
 | Plugin_Sensor_Temp      | Temperature Sensor (type 0x0302)                  |
 | Plugin_Sensor_Pressure  | Pressure Sensor (type 0x0305)                     |
-| Plugin_Sensor_Light     | Light/Illuminance Sensor (type 0x0106)            |
+| Plugin_Sensor_Illuminance | Light/Illuminance Sensor (type 0x0106)          |
 | Plugin_Sensor_Humidity  | Humidity Sensor (type 0x0307)                     |
-| Plugin_Sensor_Occupancy | Occupancy Sensor linked to a swithc (type 0x0107) |
+| Plugin_Sensor_Flow      | Flow Sensor (type 0x0306)                         |
+| Plugin_Sensor_Occupancy | Occupancy Sensor linked to a swithch (type 0x0107)|
+| Plugin_Sensor_Contact   | Contact Sensor (type 0x0015)                      |
+| Plugin_Sensor_OnOff     | OnOff Sensor (type 0x0850)                        |
+| Plugin_Shutter          | Shutter (type 0x0202)                             |
+| Plugin_Shutter_Tilt     | Shutter with Tilt control (type 0x0202)           |
 
 Tasmota is also able to act as a Bridge to other Tasmota devices (ESP8266 or ESP32) and drive them via the HTTP API. The following classes provide such features:
 
-| Plug-in class          | Description                                  |
-| ---------------------- | -------------------------------------------- |
-| Plugin_Bridge_HTTP          | Generic superclass for remote devices (abstract)                    |
+| Plug-in class                 | Description                                  |
+| ----------------------------- | -------------------------------------------- |
+| Plugin_Bridge_HTTP            | Generic superclass for remote devices (abstract) |
 | Plugin_Bridge_OnOff           | Simple On/Off Plug (type `0x010A`)           |
 | Plugin_Bridge_Light0          | Light with 0 channel (OnOff) (type 0x0100)   |
 | Plugin_Bridge_Light1          | Light with 1 channels (Dimmer) (type 0x0101) |
@@ -42,9 +47,10 @@ Tasmota is also able to act as a Bridge to other Tasmota devices (ESP8266 or ESP
 | Plugin_Bridge_Sensor          | Generic Sensor class (abstract)              |
 | Plugin_Bridge_Sensor_Temp     | Temperature Sensor (type 0x0302)             |
 | Plugin_Bridge_Sensor_Pressure | Pressure Sensor (type 0x0305)                |
-| Plugin_Bridge_Sensor_Light    | Light/Illuminance Sensor (type 0x0106)       |
+| Plugin_Bridge_Sensor_Illuminance | Light/Illuminance Sensor (type 0x0106)    |
 | Plugin_Bridge_Sensor_Humidity | Humidity Sensor (type 0x0307)                |
-| Plugin_Bridge_Sensor_Occupancy | Occupancy Sensor linked to a swithc (type 0x0107) |
+| Plugin_Bridge_Sensor_Occupancy | Occupancy Sensor linked to a swithch (type 0x0107) |
+| Plugin_Bridge_Sensor_Flow     | Flow Sensor (type 0x0306)                    |
 
 Plugins Hierarchy:
 ```
