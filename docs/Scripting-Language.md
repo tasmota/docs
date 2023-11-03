@@ -2349,7 +2349,7 @@ Uses Tasmota's Hue Emulation capabilities for Alexa interface
 
     >m
     email report at %tstamp%
-    your power consumption today was %et% KWh
+    your power consumption today was %et% kWh
     #
 
 ### Send power reading with formatted time stamp via websend
