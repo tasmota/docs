@@ -49,6 +49,7 @@
     USE_GOOGLE_CHARTS | enables definition of google charts within web section
     USE_FEXTRACT | enables array extraction from database fxt(...), fxto() and tso(), tsn(), cts(), s2t() functions  
     USE_SCRIPT_SPI | enables support for SPI interface  
+    USE_SCRIPT_TCP_SERVER | enables support for TCP server  
     USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
     TS_FLOAT | may be define as double to use double precision numbers (uses double RAM memory and is slower)  
 
@@ -616,7 +617,16 @@ SPI IO support #define `USE_SCRIPT_SPI`
 `spi(0 -2 freq)` defines a hardware SPI port 2 on ESP32 with pin numbers defined by Tasmota GPIO definition.  
 `spi(1 N GPIO)` sets the CS pin with index N (1..4) to pin Nr GPIO.  
 `spi(2 N ARRAY LEN S)` sends and receives an ARRAY with LEN values with S (1..3) (8,16,24 bits) if N==-1 CS is ignored. If S=4, CS is raised after each byte.
-  
+
+TCP server support #define `USE_SCRIPT_TCP_SERVER`  
+`wso(port)` start a tcp stream server at port  
+`wsc()` close tcp stream server  
+`wsa()` return bytes available on tcp stream  
+`wsrs()` return a string read from tcp stream  
+`wsws(string)` writes a string to tcp stream  
+`wsra(array)` reads a tcp stream into array  
+`wswa(array num (type))` writes num bytes of array to tcp stream, type: 0 = uint8 (default), 1 = uint16, 2 = sint16, 3 = float    
+
 `ttget(TNUM SEL)` get tasmota timer setting from timer TNUM (1 .. 16)  
 SEL:  
   0 = time  
