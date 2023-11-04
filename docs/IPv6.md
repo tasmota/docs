@@ -62,6 +62,15 @@ If a DNS entry has both a v4 address (A record) and a v6 address (AAAA) record, 
 
 Note: IPv4 is generally assigned first and IPv6 Global Address takes a few more seconds. Even if `SetOption149 1` is selected, first queries are likely to return IPv4 addresses anyways.
 
+## Link-local interface names
+
+Starting with Tasmota v14 based on Arduino Core 3 (esp-idf 5.1), link-local addresses now needs an interface name to distinguish which physical interface to use between WIFI and Ethernet. The format is the IPv6 official format: `<ipv6_link_local>%<interface_name>`. Example: `fe80::86cc:a8ff:fe64:b768%st1`
+
+Typical interface names are:
+- `st1`: Wifi (aka STA mode) - this is the most common interface to use
+- `en2`: Ethernet interface if present
+- `lo0`: localhost loopback interface, generally not used
+
 ## Troubleshooting
 
 Enable `weblog 3` or `seriallog 3` to get more details about IPv6 and DNS resolution.
