@@ -815,6 +815,9 @@ path.last_modified<a class="cmnd" id="path_last_modified"></a>|`(file_name:strin
 path.listdir<a class="cmnd" id="path_listdir"></a>|`(dir_name:string) -> list(string)`<br>List a directory, typically root dir `"/"` and returns a list of filenames in the directory. Returns an empty list if the directory is invalid
 path.remove<a class="cmnd" id="path_remove"></a>|`(file_name:string) -> bool`<br>Deletes a file by name, return `true` if successful
 path.format<a class="cmnd" id="path_format"></a>|`(true:bool) -> bool`<br>Re-formats the LittleFS file system (internal ESP32 flash) and erases all content. The parameter needs to be true as to avoid unwanted calls. Returns true if reformatting was successful.<br>This is sometimes useful when the file-system becomes unstable or corrupt after multiple re-partitionings.
+path.mkdir<a class="cmnd" id="path_mkdir"></a>|`(dir_name:string) -> bool`<br>Creates a directory, return `true` if successful
+path.rmdir<a class="cmnd" id="path_rmdir"></a>|`(dir_name:string) -> bool`<br>Deletes a directory if empty, return `true` if successful
+path.isdir<a class="cmnd" id="path_isdir"></a>|`(name:string) -> bool`<br>Checks if path name is a directory
 
 
 ### `persist` module
