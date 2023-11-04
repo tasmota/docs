@@ -163,22 +163,22 @@ Each meter typically provides multiple metrics (energy, voltage, power, current 
 !!! example  
     (OBIS/SML/MODBus):  
     ```
-    1,1-0:1.8.1*255(@1,Total consumption,KWh,Total_in,4`  
+    1,1-0:1.8.1*255(@1,Total consumption,kWh,Total_in,4`  
     1,77070100010801ff@1000,W1,kWh,w1,4`  
     1,010304UUuuxxxxxxxx@i0:1,Spannung L1,V,Voltage_L1,0`  
-    1,0:98.1.0(@(0:1,Havi adat, KWh,havi1,3`
-    1,0:98.1.0(@(1:1,Havi adat, KWh,havi2,3`
-    1,0:98.1.0(@(2:1,Havi adat, KWh,havi3,3`
+    1,0:98.1.0(@(0:1,Havi adat, kWh,havi1,3`
+    1,0:98.1.0(@(1:1,Havi adat, kWh,havi2,3`
+    1,0:98.1.0(@(2:1,Havi adat, kWh,havi3,3`
     ```
 
     OBIS: `1,1-0:0.0.0*255(@#),Meter Nr,, Meter_number,0`
 
-    Counter: `1,1-0:1.8.0*255(@1000,consumption,KWh,Total_in,3)` precision of 3, scale for 1000 pulses/kWh<BR>
+    Counter: `1,1-0:1.8.0*255(@1000,consumption,kWh,Total_in,3)` precision of 3, scale for 1000 pulses/kWh<BR>
     `1,1-0:1.7.0*255(@0.01667, power,W,Power_actual,0)` actual power from pulse rate (in pulses/min) of counter meter, scale for 1 pulse/Wh (1 pulse/min => 60W; 1/60(=0.01667) (pulses/min)/W)
 
     SML: `1,77078181c78203ff@#,Service ID,,Meter_id,0`<BR>
-    `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,4` precision of 4, transmitted only on [`TelePeriod`](Commands.md#teleperiod)<BR>
-    `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,20` precision of 4, transmitted immediately (4 + 16 = 20)
+    `1,1-0:1.8.0*255(@1,consumption,kWh,Total_in,4` precision of 4, transmitted only on [`TelePeriod`](Commands.md#teleperiod)<BR>
+    `1,1-0:1.8.0*255(@1,consumption,kWh,Total_in,20` precision of 4, transmitted immediately (4 + 16 = 20)
     
     MODBus: `+1,3,M,1,9600,SBC,1,2,01030023,01030028...`<BR>
     `1,010304UUuuxxxxxxxx@i0:1,Voltage L1,V,Voltage_L1,0` the `i0:1` refers to: `01030023` with a scaling factor (`:1`) for 1<BR>
@@ -431,10 +431,10 @@ Energy provider supplied a PIN code to enable output of additional data.
     =>sensor53 r
     >M 1
     +1,3,o,0,300,Strom,1,30,2F3F210D0A,063030300D0A
-    1,1.8.0*00(@1,Gesamtverbrauch,KWh,Pges,2
-    1,1.8.1*00(@1,Tagesverbrauch,KWh,Total_day,2
-    1,1.8.2*00(@1,Nachtverbrauch,KWh,Total_night,2
-    1,2.8.0*00(@1,Einspeisung,KWh,Total_out,2
+    1,1.8.0*00(@1,Gesamtverbrauch,kWh,Pges,2
+    1,1.8.1*00(@1,Tagesverbrauch,kWh,Total_day,2
+    1,1.8.2*00(@1,Nachtverbrauch,kWh,Total_night,2
+    1,2.8.0*00(@1,Einspeisung,kWh,Total_out,2
     #
     ```
 
@@ -449,7 +449,7 @@ No PIN code needed for output data. It can only display total consumption.
     =>sensor53 r
     >M 1
     +1,3,o,0,300,Strom,1,30,2F3F210D0A,063030300D0A
-    1,1.8.0*00(@1,Gesamtverbrauch,KWh,Pges,2
+    1,1.8.0*00(@1,Gesamtverbrauch,kWh,Pges,2
     #
     ```
 
@@ -501,7 +501,7 @@ No PIN code needed for output data. It can only display total consumption.
     1,1-0:1.8.0*255(@10000,Water reading,cbm,Count,4  
     2,=h==================  
     2,1-0:1.8.0*255(@100,Gas reading,cbm,Count,3  
-    3,77070100010800ff@1000,Total consumption,KWh,Total_in,3  
+    3,77070100010800ff@1000,Total consumption,kWh,Total_in,3  
     3,=h==================  
     3,77070100100700ff@1,Current consumption,W,Power_curr,2  
     3,=h   ----  
@@ -559,9 +559,9 @@ A & B connected to the meter pinout.
     =>sensor53 r
     >M 1
     +1,3,s,0,9600,GS303
-    1,77070100010800ff@1000,Total Consumed,KWh,Total_in,3
+    1,77070100010800ff@1000,Total Consumed,kWh,Total_in,3
     1,77070100100700ff@1,Current Consumption,W,Power_cur,0
-    1,77070100020800ff@1000,Total Delivered,KWh,Total_out,3
+    1,77070100020800ff@1000,Total Delivered,kWh,Total_out,3
     1,7707010060320101@#,Service ID,,Meter_id,0
     #    
     ```
@@ -1044,9 +1044,9 @@ Current power values get published to mqtt immediately when received from the me
     >M 1
     +1,3,o,0,9600,AS1440,1
     1,1.7.0(@0.001,Power In,W,power_in,16
-    1,1.8.1(@1,Total In,KWh,Total_in,1
+    1,1.8.1(@1,Total In,kWh,Total_in,1
     1,2.7.0(@0.001,Power Out,W,power_out,16
-    1,2.8.1(@1,Total Out,KWh,Total_out,1
+    1,2.8.1(@1,Total Out,kWh,Total_out,1
     #
     ```
 
@@ -1133,7 +1133,7 @@ Delta calculation for previous day is included as the meter shall not be read of
 
     >W
     ===============
-    Vortagsverbrauch:    {m} %3w_delta% KWh 
+    Vortagsverbrauch:    {m} %3w_delta% kWh 
 
     >M 1
     +1,3,rE1,0,2400,WAERME,1
@@ -1335,8 +1335,8 @@ So in this script the three phases get added and published as `Power_total`.
     =>sensor53 r
     >M 1
     +1,3,s,0,9600,Smartmeter
-    1,77070100010800ff@100000000,Total consumption,KWh,Total_in,3
-    1,77070100020800ff@100000000,Total generation,KWh,Total_out,3
+    1,77070100010800ff@100000000,Total consumption,kWh,Total_in,3
+    1,77070100020800ff@100000000,Total generation,kWh,Total_out,3
     1,77070100100700ff@1,Power L1+L2+L3,W,P_L1_L2_L3,18
     1,77070100240700ff@1,Power L1,W,P_L1,18
     1,77070100380700ff@1,Power L2,W,P_L2,18
@@ -1463,8 +1463,8 @@ Growatt solar inverter. this example also shows how to send cmds to modbus
     ->sensor53 r
     >M 1
     +1,3,s,0,9600,SML
-    1,77070100010800ff@1000,Total consumption,KWh,Total_in,4
-    1,77070100020800ff@1000,Total Feed,KWh,Total_out,4
+    1,77070100010800ff@1000,Total consumption,kWh,Total_in,4
+    1,77070100020800ff@1000,Total Feed,kWh,Total_out,4
     1,77070100100700ff@1,Current consumption,W,Power_curr,0
     1,77070100200700ff@1,Voltage L1,V,Volt_p1,1
     1,77070100340700ff@1,Voltage L2,V,Volt_p2,1
@@ -1522,8 +1522,8 @@ Growatt solar inverter. this example also shows how to send cmds to modbus
     ; meter definition  
     >M 1  
     +1,3,s,0,9600,SML  
-    1,77070100010800ff@1000,Total Consumed,KWh,Total_in,4  
-    1,77070100020800ff@1000,Total Delivered,KWh,Total_out,4  
+    1,77070100010800ff@1000,Total Consumed,kWh,Total_in,4  
+    1,77070100020800ff@1000,Total Delivered,kWh,Total_out,4  
     1,77070100100700ff@1,Current Consumption,W,Power_curr,0  
     1,77070100000009ff@#,Meter Number,,Meter_number,0  
     #
@@ -1696,8 +1696,8 @@ For writing 32-bit registers like 40126, use [ModBus Bridge](Modbus-Bridge) driv
     ->sensor53 r
     >M 1
     +1,3,o,0,300,STROM,1,100,2F3F210D0A
-    1,1-0:1.8.1*255(@1,Total Consumed,KWh,Total_in,3
-    1,1-0:2.8.1*255(@1,Total Delivered,KWh,Total_out,3
+    1,1-0:1.8.1*255(@1,Total Consumed,kWh,Total_in,3
+    1,1-0:2.8.1*255(@1,Total Delivered,kWh,Total_out,3
     1,1-0:0.0.0*255(@#),Meter Number,,Meter_number,0
     #
     ```
@@ -1736,8 +1736,8 @@ You need to ask your provider. Total Delivered might be zero on some devices
     =>sensor53 r
     >M 1
     +1,3,s,0,9600,MT631
-    1,77070100010800ff@1000,Total Consumed,KWh,Total_in,2
-    1,77070100020800ff@1000,Total Delivered,KWh,Total_out,2
+    1,77070100010800ff@1000,Total Consumed,kWh,Total_in,2
+    1,77070100020800ff@1000,Total Delivered,kWh,Total_out,2
     1,77070100100700ff@1,Current Consumption,W,Power_cur,0|
     #
     ```
@@ -1753,12 +1753,12 @@ This is script for a two-direction meter (consumption and delivery) for the Isra
     =>sensor53 r
     >M 1
     +1,3,s,0,9600,MT681
-    1,77070100010800ff@1000,Total Consumed,KWh,Total_in,3
+    1,77070100010800ff@1000,Total Consumed,kWh,Total_in,3
     1,77070100100700ff@1,Current Consumption,W,Power_cur,0
     1,77070100240700ff@1,Current Consumption P1,W,Power_p1,0
     1,77070100380700ff@1,Current Consumption P2,W,Power_p2,0
     1,770701004c0700ff@1,Current Consumption P3,W,Power_p3,0
-    1,77070100020800ff@1000,Total Delivered,KWh,Total_out,3
+    1,77070100020800ff@1000,Total Delivered,kWh,Total_out,3
     1,77070100000009ff@#,Service ID,,Meter_id,0|
     #
     ```
@@ -1774,12 +1774,12 @@ This is script for a two-direction meter (consumption and delivery) for the Isra
     =>sensor53 r
     >M 1
     +1,3,s,0,9600,MT681
-    1,77070100010800ff@1000,Gesamtverbrauch,KWh,Total_in,3
+    1,77070100010800ff@1000,Gesamtverbrauch,kWh,Total_in,3
     1,770701000f0700ff@1,Leistung,W,Power_cur,0
     1,77070100150700ff@1,Leistung P1,W,Power_p1,0
     1,77070100290700ff@1,Leistung P2,W,Power_p2,0
     1,770701003d0700ff@1,Leistung P3,W,Power_p3,0
-    1,77070100020800ff@1000,Gesamteinspeisung,KWh,Total_out,3
+    1,77070100020800ff@1000,Gesamteinspeisung,kWh,Total_out,3
     1,77070100000009ff@#,Service ID,,Meter_id,0|
     #
     ```
@@ -1795,9 +1795,9 @@ This is script for a two-direction meter (consumption and delivery) for the Isra
     =>sensor53 r
     >M 1
     +1,3,s,0,9600,MT681
-    1,77070100010800ff@1000,Verbrauch,KWh,Total_in,4
+    1,77070100010800ff@1000,Verbrauch,kWh,Total_in,4
     1,77070100100700ff@1,Leistung,W,Power_cur,0
-    1,77070100020800ff@1000,Erzeugung,KWh,Total_out,4
+    1,77070100020800ff@1000,Erzeugung,kWh,Total_out,4
     1,77070100000009ff@#,Service ID,,Meter_id,0|
     #
     ```
@@ -1897,8 +1897,8 @@ By default, the KAIFA MB310H4BDE will only deliver the Total_in and Total_out va
     =>sensor53 r
     >M 1
     +1,3,s,0,9600,Haus
-    1,77070100010800ff@1000,Zaehlerstand In,KWh,Total_in,2
-    1,77070100020800ff@1000,Zaehlerstand Out,KWh,Total_out,2
+    1,77070100010800ff@1000,Zaehlerstand In,kWh,Total_in,2
+    1,77070100020800ff@1000,Zaehlerstand Out,kWh,Total_out,2
     1,77070100100700ff@1,Leistung-akt.,W,Power_curr,0
     1,77070100600100ff@#,Server-ID,,Meter_Number,0
     #
@@ -1974,8 +1974,8 @@ For read-out of "Current power" the advanced data set has to be enabled in user 
     =>sensor53 r
     >M 1
     +1,3,s,20,9600,E320
-    1,77070100020800ff@1000,Total Delivered,KWh,Total_out,3
-    1,77070100010800ff@1000,Total Consumed,KWh,Total_in,3
+    1,77070100020800ff@1000,Total Delivered,kWh,Total_out,3
+    1,77070100010800ff@1000,Total Consumed,kWh,Total_in,3
     1,77070100100700ff@1,Current power,W,Power_in,3
     1,77070100600100ff@#,Server-ID,,Meter_Number,0    
     #
@@ -1994,14 +1994,14 @@ This meter may need a PIN to unlock the current power usage - ask your provider.
     +1,3,o,0,300,STROM,1,10,2F3F210D0A,063030300D0A
     1,0(@1,Zählernummer,,Meter_number,0  
     1,=h===================  
-    1,8.0(@1,Total T1 & T2,KWh,Total,2  
-    1,8.1(@1,T1 aktuell,KWh,Total_T1,2  
-    1,8.2(@1,T2 aktuell,KWh,Total_T2,2  
+    1,8.0(@1,Total T1 & T2,kWh,Total,2  
+    1,8.1(@1,T1 aktuell,kWh,Total_T1,2  
+    1,8.2(@1,T2 aktuell,kWh,Total_T2,2  
     1,=h===================  
-    1,8.1.1(@1,T1 letzte Saison,KWh,Total_T1-1,2   
-    1,8.2.1(@1,T2 letzte Saison,KWh,Total_T2-1,2   
-    1,8.1.2(@1,T1 vorletzte Saison,KWh,Total_T1-2,2
-    1,8.2.2(@1,T2 vorletzte Saison,KWh,Total_T2-2,2     
+    1,8.1.1(@1,T1 letzte Saison,kWh,Total_T1-1,2   
+    1,8.2.1(@1,T2 letzte Saison,kWh,Total_T2-1,2   
+    1,8.1.2(@1,T1 vorletzte Saison,kWh,Total_T1-2,2
+    1,8.2.2(@1,T2 vorletzte Saison,kWh,Total_T2-2,2     
     #
     ```
 
@@ -2181,60 +2181,60 @@ Example: Changing the baud rate during operation.
     ;Webdisplay stuff  
     >W  
     
-    0:00 Uhr Σ HT+NT: {m} %0sm% KWh  
-    HT: {m} %0HT_sm% KWh  
-    NT: {m} %0NT_sm% KWh  
+    0:00 Uhr Σ HT+NT: {m} %0sm% kWh  
+    HT: {m} %0HT_sm% kWh  
+    NT: {m} %0NT_sm% kWh  
     
-    Monatsanfang: {m} %1sma% KWh  
-    HT: {m} %1HT_sma% KWh  
-    NT: {m} %1NT_sma% KWh  
+    Monatsanfang: {m} %1sma% kWh  
+    HT: {m} %1HT_sma% kWh  
+    NT: {m} %1NT_sma% kWh  
     
-    Jahresanfang: {m} %0sya% KWh  
-    HT: {m} %0HT_sya% KWh  
-    NT: {m} %0NT_sya% KWh  
+    Jahresanfang: {m} %0sya% kWh  
+    HT: {m} %0HT_sya% kWh  
+    NT: {m} %0NT_sya% kWh  
     .............................  
-    Tagesverbrauch: {m} %1sd% KWh  
-    HT: {m} %1HT_sd% KWh  
-    NT: {m} %1NT_sd% KWh  
+    Tagesverbrauch: {m} %1sd% kWh  
+    HT: {m} %1HT_sd% kWh  
+    NT: {m} %1NT_sd% kWh  
     
-    Monatsverbrauch: {m} %0smn% KWh  
-    HT: {m} %0HT_smn% KWh  
-    NT: {m} %0NT_smn% KWh  
+    Monatsverbrauch: {m} %0smn% kWh  
+    HT: {m} %0HT_smn% kWh  
+    NT: {m} %0NT_smn% kWh  
         -  
-    Jahresverbrauch: {m} %0syn% KWh  
-    HT: {m} %0HT_syn% KWh  
-    0:00 Uhr Σ HT+NT: {m} %0sm% KWh  
-    HT: {m} %0HT_sm% KWh  
-    NT: {m} %0NT_sm% KWh  
+    Jahresverbrauch: {m} %0syn% kWh  
+    HT: {m} %0HT_syn% kWh  
+    0:00 Uhr Σ HT+NT: {m} %0sm% kWh  
+    HT: {m} %0HT_sm% kWh  
+    NT: {m} %0NT_sm% kWh  
     
-    Monatsanfang: {m} %1sma% KWh  
-    HT: {m} %1HT_sma% KWh  
-    NT: {m} %1NT_sma% KWh  
+    Monatsanfang: {m} %1sma% kWh  
+    HT: {m} %1HT_sma% kWh  
+    NT: {m} %1NT_sma% kWh  
     
-    Jahresanfang: {m} %0sya% KWh  
-    HT: {m} %0HT_sya% KWh  
-    NT: {m} %0NT_sya% KWh  
+    Jahresanfang: {m} %0sya% kWh  
+    HT: {m} %0HT_sya% kWh  
+    NT: {m} %0NT_sya% kWh  
     .............................  
-    Tagesverbrauch: {m} %1sd% KWh  
-    HT: {m} %1HT_sd% KWh  
-    NT: {m} %1NT_sd% KWh  
+    Tagesverbrauch: {m} %1sd% kWh  
+    HT: {m} %1HT_sd% kWh  
+    NT: {m} %1NT_sd% kWh  
     
-    Monatsverbrauch: {m} %0smn% KWh  
-    HT: {m} %0HT_smn% KWh  
-    NT: {m} %0NT_smn% KWh  
+    Monatsverbrauch: {m} %0smn% kWh  
+    HT: {m} %0HT_smn% kWh  
+    NT: {m} %0NT_smn% kWh  
         -  
-    Jahresverbrauch: {m} %0syn% KWh  
-    HT: {m} %0HT_syn% KWh  
-    NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh  
+    Jahresverbrauch: {m} %0syn% kWh  
+    HT: {m} %0HT_syn% kWh  
+    NT: {m} %0NT_syn% kWh  
     
     >M 1  
     +1,3,o,0,9600,,1  
     1,0.0.1(@1,Zählernummer,,Meter_number,0  
     1,0.9.1(@#),Zeitstempel,Uhr,time-stamp,0  
     1,=h===================  
-    1,1.8.0(@1,HT+NT Zählerstand,KWh,Total_in,3  
-    1,1.8.1(@1,HT,KWh,HT_Total_in,3  
-    1,1.8.2(@1,NT,KWh,NT_Total_in,3  
+    1,1.8.0(@1,HT+NT Zählerstand,kWh,Total_in,3  
+    1,1.8.1(@1,HT,kWh,HT_Total_in,3  
+    1,1.8.2(@1,NT,kWh,NT_Total_in,3  
     1,=h===================  
     1,36.7.0(@1,Power_L1,kW,kW_L1,2  
     1,56.7.0(@1,Power_L2,kW,kW_L2,2  
@@ -2336,11 +2336,11 @@ Switching to different baud rates requires changing the ack sequence 06303x300D0
 	>M 1
 	+1,3,o,0,4800,data,1
 	
-	1,1-1:1.8.0(@1,energy_import,KWh,1-8-0,1
-	1,1-1:2.8.0(@1,energy_export,KWh,2-8-0,1
-	1,1-1:36.7.0(@1,power_L1,KWh,36-7-0,2
-	1,1-1:56.7.0(@1,power_L2,KWh,56-7-0,2
-	1,1-1:76.7.0(@1,power_L3,KWh,76-7-0,2
+	1,1-1:1.8.0(@1,energy_import,kWh,1-8-0,1
+	1,1-1:2.8.0(@1,energy_export,kWh,2-8-0,1
+	1,1-1:36.7.0(@1,power_L1,kWh,36-7-0,2
+	1,1-1:56.7.0(@1,power_L2,kWh,56-7-0,2
+	1,1-1:76.7.0(@1,power_L3,kWh,76-7-0,2
 	1,1-1:31.7.0(@1,current_L1,A,31-7-0,2
 	1,1-1:51.7.0(@1,current_L2,A,51-7-0,2
 	1,1-1:71.7.0(@1,current_L3,A,71-7-0,2
@@ -2389,11 +2389,11 @@ Switching to different baud rates requires changing the ack sequence 06303x300D0
     >M 1
     +1,3,o,0,9600,LK13BE,13,30,2F3F210D0A,063035310D0A
 
-    1,1-0:1.8.0*255(@1,Gesamtverbrauch,KWh,total,4
-    1,1-0:1.8.0*96(@1,Verbrauch 1 Tag,KWh,total_1d,4
-    1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,KWh,total_7d,4
-    1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,KWh,total_30d,4
-    1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,KWh,total_365d,4
+    1,1-0:1.8.0*255(@1,Gesamtverbrauch,kWh,total,4
+    1,1-0:1.8.0*96(@1,Verbrauch 1 Tag,kWh,total_1d,4
+    1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,kWh,total_7d,4
+    1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,kWh,total_30d,4
+    1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,kWh,total_365d,4
     1,1-0:16.7.0*255(@1,Verbrauch aktuell,W,power,20
     #
     ```
@@ -2409,13 +2409,13 @@ The Logarex LK13BE803039 does publish the data automatically. Do not poll this c
     >M 1
     +1,3,o,0,9600,LK13BE
 
-    1,1-0:1.8.0*255(@1,Gesamtverbrauch,KWh,total,4
-    1,1-0:1.8.0*96(@1,Verbrauch 1 Tag,KWh,total_1d,4
-    1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,KWh,total_7d,4
-    1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,KWh,total_30d,4
-    1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,KWh,total_365d,4
+    1,1-0:1.8.0*255(@1,Gesamtverbrauch,kWh,total,4
+    1,1-0:1.8.0*96(@1,Verbrauch 1 Tag,kWh,total_1d,4
+    1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,kWh,total_7d,4
+    1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,kWh,total_30d,4
+    1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,kWh,total_365d,4
     1,1-0:16.7.0*255(@1,Verbrauch aktuell,W,current,20
-    1,1-0:2.8.0*255(@1,Gesamteinspeisung,KWh,total_out,4
+    1,1-0:2.8.0*255(@1,Gesamteinspeisung,kWh,total_out,4
     #
 
     ```
@@ -2434,13 +2434,13 @@ setupline for the  HichiIR WiFi module (GPIO1: send, GPIO3: receive)
     ; only one string (@#) can be decoded per meter
     1,1-0:96.1.0*255(@#),Zählernummer,,id,0
     ;1,1-0:0.2.0*255(@#),Firmware,,fw,0
-    1,1-0:1.8.0*255(@1,Gesamtverbrauch,KWh,total,4
+    1,1-0:1.8.0*255(@1,Gesamtverbrauch,kWh,total,4
     ; available with PIN
-    1,1-0:1.8.0*96(@1,Verbrauch 1 Tag,KWh,total_1d,4
-    1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,KWh,total_7d,4
-    1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,KWh,total_30d,4
-    1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,KWh,total_365d,4
-    1,1-0:1.8.0*100(@1,Verbrauch ab reset,KWh,total_reset,4
+    1,1-0:1.8.0*96(@1,Verbrauch 1 Tag,kWh,total_1d,4
+    1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,kWh,total_7d,4
+    1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,kWh,total_30d,4
+    1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,kWh,total_365d,4
+    1,1-0:1.8.0*100(@1,Verbrauch ab reset,kWh,total_reset,4
     1,1-0:16.7.0*255(@1,Verbrauch aktuell,W,power,20
     ; available with PIN and full dataset enabled
     1,1-0:32.7.0*255(@1,Spannung L1,V,voltage_l1,1
@@ -2523,8 +2523,8 @@ This script gives also the wattage per phase. Make sure to get the PIN from your
     ->sensor53 r
     >M 1
     +1,3,s,1,9600,SML
-    1,77070100010800ff@1000,Total consumption,KWh,Total_in,4
-    1,77070100020800ff@1000,Total Feed,KWh,Total_out,4
+    1,77070100010800ff@1000,Total consumption,kWh,Total_in,4
+    1,77070100020800ff@1000,Total Feed,kWh,Total_out,4
     1,77070100100700ff@1,Current consumption,W,Power_curr,0
     1,77070100200700ff@1,Voltage L1,V,Volt_p1,1
     1,77070100340700ff@1,Voltage L2,V,Volt_p2,1
@@ -3010,8 +3010,8 @@ This device is used in the grid of EGTF - Elektrizitäts-Genossenschaft Tacherti
     ->sensor53 r
     >M 1
     +1,3,o,0,300,STROM,1,600,2F3F210D0A
-    1,1.8.1(@1,Total Consumed,KWh,Total_in,3
-    1,2.8.1(@1,Total Delivered,KWh,Total_out,3
+    1,1.8.1(@1,Total Consumed,kWh,Total_in,3
+    1,2.8.1(@1,Total Delivered,kWh,Total_out,3
     1,0.0.0(@#),Meter Number,,Meter_number,0
     #
     ```
@@ -3085,7 +3085,7 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
     ->sensor53 r
     >M 1
     +1,3,s,0,9600,SML
-    1,77070100010800ff@1000,Total Verbrauch,KWh,Total_in,3
+    1,77070100010800ff@1000,Total Verbrauch,kWh,Total_in,3
     1,77070100020800ff@1000,Total Einspeisung,kWh,Total_out,3
     1,=h==================
     1,77070100100700ff@1,Actual load,W,Power_curr,0
