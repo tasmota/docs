@@ -34,7 +34,8 @@ Additional features can be enabled by adding the following `#define` compiler di
 |NO_SML_REPLACE_VARS | disables replacement of any text in descriptor by script text variables. Useful if several occurrences of a text occupies a lot of space and you get short of script buffer. Readability may get worse so only makes sense on large descriptors. Note: to use `%` symbol un measurement units, you need to escape it like `%%`.|
 |NO_USE_SML_DECRYPT | disables decoding of encrypted ams meters. decrypting needs TLS, so must define USE_TLS also.|
 |USE_SML_AUTHKEY | enables authentication, this is not needed by most energy meters.|
-|USE_SML_TCP | enables TCP MODBUS support.|
+|NO_USE_SML_TCP | disables TCP MODBUS support.|
+|NO_USE_SML_CANBUS | disables CANBUS support.|
 	
 ### General description
 
@@ -56,6 +57,7 @@ The Smart Meter Interface provides a means to connect many kinds of meters to Ta
 | OBIS ASCII | telegrams emitted from many smart meters, including [P1 Smart Meters](https://tasmota.github.io/docs/P1-Smart-Meter/) |
 | OBIS Binary SML| telegrams emitted from many smart meters |
 | MODBus Binary | telegrams used by many power meters and industrial devices |
+| CANBus Binary | telegrams used by battery monitoring systems and industrial devices |
 | Kamstrup Binary | telegrams used by many power meters from Kamstrup |
 | EBus Binary | telegrams emitted by many heaters and heat pumps  (e.g. Vaillant, Wolf) |
 | VBus Binary | telegrams emitted by many solar thermal systems boilers (e.g. Resol, Viessmann) |
@@ -97,9 +99,9 @@ Declare `>M` section with the number of connected meters (n = `1..5`):
 | :--- | :--- |
 | `+<M>` | Meter number. The number must be increased with each additional Meter (default 1 to 5).|
 | `<rxGPIO>` | The GPIO pin number where meter data is received. <BR> [xxx.xxx.xxx.xxx] IP number instead of pin number enables MODBUS TCP mode, the tcp port number is given at the baudrate position. (tx pin can be any number and is ignored)|
-| `<type>` | The type of meter: <BR>- `o` - OBIS ASCII type of coding<BR>- `s` - SML binary smart message coding<BR>- `e` - EBus binary coding<BR>- `v` - VBus binary coding<BR>- `m` - MODBus binary coding with serial mode 8N1<BR>- `M` - MODBus binary coding with serial mode 8E1<BR>- `k` - Kamstrup binary coding with serial mode 8N1<BR>- `c` - Counter type<BR>- `r` - Raw binary coding (any binary telegram) |
+| `<type>` | The type of meter: <BR>- `o` - OBIS ASCII type of coding<BR>- `s` - SML binary smart message coding<BR>- `e` - EBus binary coding<BR>- `v` - VBus binary coding<BR>- `m` - MODBus binary coding with serial mode 8N1<BR>- `M` - MODBus binary coding with serial mode 8E1<BR>- `k` - Kamstrup binary coding with serial mode 8N1<BR>- `C` - CANBus type<BR>- `c` - Counter type<BR>- `r` - Raw binary coding (any binary telegram) |
 | `<flag>` | Options flag:<BR>- `0` - counter without pullup<BR>- `1` - counter with pullup<BR>- `16` - enable median filter for that meter. Can help with sporadic dropouts, reading errors (not available for counters). this option is enabled by default #define USE_SML_MEDIAN_FILTER, if you are low on memory and dont use this feature you may outcomment this define in the driver |
-| `<parameter>` | Parameters according to meter type:<BR>- for `o,s,e,v,m,M,k,r` types: serial baud rate e.g. `9600` (or port# for Modbus TCP).<BR>- for `c` type: a positive value = counter poll interval (not really recommended) or a negative value = debounce time (milliseconds) for irq driven counters. |
+| `<parameter>` | Parameters according to meter type:<BR>- for `o,s,e,v,m,M,k,r` types: serial baud rate e.g. `9600` (or port# for Modbus TCP).<BR>- for type `c` Canbus Baudrates and Number of receive buffers. (see example)<BR>- for `c` type: a positive value = counter poll interval (not really recommended) or a negative value = debounce time (milliseconds) for irq driven counters. |
 | `<jsonPrefix>` | Prefix for Web UI and MQTT JSON payload. Up to 7 characters.|
 | `<txGPIO>` | The GPIO pin number where meter command is transmitted (optional).|
 | `<tx enable>` | The GPIO pin number to enable transmitter (RS485) may follow the TX pin in bracket (pin) without a colon an 'i' in front of the pin number means 'inverted' (optional).|
@@ -218,7 +220,9 @@ With `=` character at the beginning of a line you can do some special decoding. 
 | `M,=so5 `| sets AES authentication key for encrypted meters.must define exactly 16 hexadecimal chars<BR>e.g. not needed by most energy meters (needs USE_SML_AUTHKEY).<BR>|
 | `M,=so6 `| sync time in milliseconds for serial block detection with AMS meters (defaults to 1000).<BR>|
 | `M,=so7 `| on ESP32 force selection of UART Nr. X (0,1,2) allows coexistence with other serial drivers <BR>|
-	
+| `M,=so8 `| CAN bus filter mask <BR>|
+| `M,=so9 `| CAB bus filter <BR>|
+
 !!! example
     To get the value of one of the descriptor lines, use `sml[X]`. `X` = Line number. Starts with `1`. (compiling with `USE_SML_SCRIPT_CMD` required)
     ```
@@ -3207,4 +3211,50 @@ Tested on an AEConversion INV500-90 with RS485 interface.
     1,030408U64@i13:1000,Batt_Ladung,kWh,v14,3
     1,030408U64@i14:1000,Batt_EntLadung,kWh,v15,3
     #
+    ```
+
+### HUAWEI R4850G2 Lipo Charger (CANBus)
+
+??? summary "View script"
+
+    ```
+    >D 40
+    IP=192.168.188.117
+    ovolt=45
+    maxc=30
+    cstr=""
+    >B
+    =>sensor53 r
+    >S
+    if chg[ovolt]>0 {
+    ; change voltage 41.5 - 58.5
+    cstr="908180FE0801000000"+hx(ovolt*1024)
+    sml(1 3 cstr)
+    }
+    if chg[maxc]>0 {
+    ; change max current 0-60A
+    cstr="908180FE0801030000"+hx(maxc*20)
+    sml(1 3 cstr)
+    }
+    >M 1
+    ; Huawei R4850G2
+    ; params -> 03 = baudrate 125kb + number of receive buffers * 100
+    +1,7,C,0,3203,CAN,6,10,908040FE080000000000000000
+    1,1081407f0801700000UUuuUUuu@1024,Input Power,W,ipwr,1
+    1,1081407f0801710000UUuuUUuu@1024,Input Frequency,Hz,freq,1
+    1,1081407f0801780000UUuuUUuu@1024,Input Voltage,V,ivolt,1
+    1,1081407f0801720000UUuuUUuu@1024,Input Current,A,icurr,1
+    1,1081407f0801750000UUuuUUuu@1024,Output Voltage,V,ovolt,1
+    1,1081407f0801810000UUuuUUuu@1024,Output Current,A,ocurr,1
+    1,1081407f0801760000UUuuUUuu@20,Output Max Current,A,mcurr,1
+    1,1081407f0801800000UUuuUUuu@1024,Input Temp,C,itmp,1
+    1,1081407f08017f0000UUuuUUuu@1024,Output Temp,C,otmp,1
+    1,1081407f0801740000UUuuUUuu@1024,Efficiency,%%,eff,1
+    1,=so8,00000000
+    1,=so9,1081407f
+    #
+    >W
+    <hr>
+    nm(41.5 58.5 0.1 ovolt "Output Voltage (V): " 80 1) 
+    nm(0 60 0.1 maxc "Max Current (A): " 80 1) 
     ```
