@@ -1489,6 +1489,7 @@ Currently supported algorithms:
 - AES CTR 256 bits - requires `#define USE_BERRY_CRYPTO_AES_CTR`
 - AES GCM 256 bits
 - AES CCM 128 or 256 bits
+- AES CBC 128 bits
 - Elliptic Curve C25519 - requires `#define USE_BERRY_CRYPTO_EC_C25519`
 - Elliptic Curve P256 (secp256r1) - requires `#define USE_BERRY_CRYPTO_EC_P256`
 - HKDF key derivation with HMAC SHA256 - requires `#define USE_BERRY_CRYPTO_HKDF_SHA256`
@@ -1606,6 +1607,32 @@ var ret = crypto.AES_CCM.decrypt1(i2r, n, 0, size(n), raw, 0, payload_idx, raw, 
 
 assert(ret)
 assert(raw[payload_idx .. -tag_len - 1] == clr)
+```
+
+#### `crypto.AES_CBC` class
+
+Encrypt and decrypt, using AES CBC with 128 bits keys.
+
+General Function|Parameters and details
+:---|:---
+decrypt1<a class="cmnd" id="aes_cbc_decrypt1"></a>|`AES_CBC.decrypt1(secret_key:bytes(16), iv:bytes(16), data:bytes(n*16)) -> bool (always true)`<br>Decrypt in a single call in-place, avoiding any object allocation
+encrypt1<a class="cmnd" id="aes_cbc_encrypt1"></a>|`AES_CBC.encrypt1(secret_key:bytes(16), iv:bytes(16), data:bytes(n*16)) -> bool (always true)`<br>Decrypt in a single call, avoiding any object allocation. Data is encrypted in-place and IV is changed in the buffer too.
+  
+Example:
+
+```berry
+var b = bytes().fromstring("hello world_____") # 16-byte aligned
+var key = bytes().fromstring("1122334455667788") # 16 bytes
+var iv = bytes().fromstring("8877665544332211") # 16 bytes
+
+print("data:",b.asstring()) # "hello world_____"
+import crypto
+aes = crypto.AES_CBC()
+aes.encrypt1(key, iv, b)
+print("cipher:",b)
+iv = bytes().fromstring("8877665544332211")
+aes.decrypt1(key, iv, b)
+print("decrypted data:",b.asstring()) # "hello world_____"
 ```
 
 #### `crypto.EC_C25519` class
