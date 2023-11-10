@@ -519,7 +519,7 @@ SetOption42<a class="cmnd" id="setoption42"></a>|`0..255` = set over-temperature
 SetOption43<a class="cmnd" id="setoption43"></a>|`0..255` = to control Rotary step. Details [#10407](https://github.com/arendst/Tasmota/issues/10407)
 SetOption44<a class="cmnd" id="setoption44"></a>|`1..100` = set base tolerance percentage for matching incoming IR messages *(default = `25`)*
 SetOption45<a class="cmnd" id="setoption45"></a>|`1..250` = change bi-stable latching relay pulse length in milliseconds *(default = `40`)*
-SetOption46<a class="cmnd" id="setoption46"></a>|`0..255` = power on delay before initializing in value * 10 milliseconds *SCD30 only*
+SetOption46<a class="cmnd" id="setoption46"></a>|`0..255` = power on delay before initializing, in 10 millisecond units, up to 2.55 seconds.
 SetOption47<a class="cmnd" id="setoption47"></a>|`3..255` = delay power on relay state in seconds to reduce power surge<BR>`1` = delays until network connected<BR>`2` = delays until MQTT connected
 SetOption51<a class="cmnd" id="setoption51"></a>|Enable GPIO9 and GPIO10 component selections in Module Configuration<BR>:rotating_light: **WARNING** Do not use on ESP8266 devices! :rotating_light:<BR>`0` = disable *(default)*<BR>`1` = enable
 SetOption52<a class="cmnd" id="setoption52"></a>|Control display of optional time offset from UTC in JSON payloads<BR>`0` = disable *(default)*<BR> `1` = enable
