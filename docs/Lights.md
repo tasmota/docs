@@ -183,7 +183,7 @@ Gamma Correction is enabled by default in Tasmota ([`LedTable 1`](Commands.md#le
 
 Human eye perception of brightness is non linear, bringing back linearity needs a trick called [Gamma Correction](https://learn.adafruit.com/led-tricks-gamma-correction).
 
-Some lights have hardware gamma correction (f.e. Sonoff B1). In that case, software gamma correction should be disabled with [`LedTable 0`](Commands.md#ledtable).
+Some lights have hardware gamma correction (e.g., Sonoff B1). In that case, software gamma correction should be disabled with [`LedTable 0`](Commands.md#ledtable).
 
 The curve used: orange=ideal, blue=tasmota.
 
@@ -225,7 +225,7 @@ To calibrate a RGBW light:
 
 [`SetOption37 128`](Commands.md#setoption37)
 
-By default RGBW and RGBCCT lights can only be controlled in single mode, either RGB or White (f.e. Turning on CT lights turns off RGB lights and vice versa).
+By default RGBW and RGBCCT lights can only be controlled in single mode, either RGB or White (e.g., Turning on CT lights turns off RGB lights and vice versa).
 
 Use [`SetOption37 128`](Commands.md#setoption37) to split RGB and White into 2 independent lights. If you are already using Channel Remapping, just add `128` to the value of [`SetOption37`](Commands.md#setoption37).
 
@@ -345,7 +345,7 @@ It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (i
 If you have more than one LED wired independently and you want it to show the power state of the relay, you **must** assign an `LedLink` GPIO.
 
 #### PWM LED Mode
-Using [`LedPwmMode`](Commands.md#ledpwmmode) you can change the LED display mode from simple on/off to a PWM controlled LED which will enable you to f.e. display a brighter LED when the relay is on and a dimmer LED when it's OFF so you can locate the switch in the dark but not have it obnoxiously bright.
+Using [`LedPwmMode`](Commands.md#ledpwmmode) you can change the LED display mode from simple on/off to a PWM controlled LED which will enable you to e.g., display a brighter LED when the relay is on and a dimmer LED when it's OFF so you can locate the switch in the dark but not have it obnoxiously bright.
 
 `LedPwmOff` and `LedPwmOn` control the preset LED brightness in their respective states.
 

@@ -63,7 +63,7 @@ If your device is similar to the existing built-in module (e.g., a particular MC
     If you have a power monitoring device, when under load the power monitoring chip should trigger switches or counters. Then it's just a matter of finding the right power monitoring components and their combination.
 
     #### Step 4. 
-    Once you have found which GPIO are connected to each input, change the GPIO setting in the configuration to your input component or use case (f.e. `Button<x>` or `Switch<x>`). Proper operation may dictate the use of regular or inverted (i.e., `Switch<x>i`/`Button<x>i`) settings. For buttons, you may need to determine whether the internal pull-up is used or not. If so, select `Button<x>`_**n**_, where _**n**_ indicates no pull-up.
+    Once you have found which GPIO are connected to each input, change the GPIO setting in the configuration to your input component or use case (e.g., `Button<x>` or `Switch<x>`). Proper operation may dictate the use of regular or inverted (i.e., `Switch<x>i`/`Button<x>i`) settings. For buttons, you may need to determine whether the internal pull-up is used or not. If so, select `Button<x>`_**n**_, where _**n**_ indicates no pull-up.
 
 === "ESP32"
 
@@ -94,7 +94,7 @@ If your device is similar to the existing built-in module (e.g., a particular MC
     If you have a power monitoring device, when under load the power monitoring chip should trigger switches which will display in the console. Then its just a matter of finding the right power monitoring components and their combination.
 
     #### Step 4. 
-    Once you have found which GPIO are connected to each input, change the GPIO setting in the configuration to your input component or use case (f.e. `Button<x>` or `Switch<x>`). Proper operation may dictate the use of regular, inverted or no pulldown settings. For buttons, you may need to determine whether the internal pull-up or pull-down is used or not. 
+    Once you have found which GPIO are connected to each input, change the GPIO setting in the configuration to your input component or use case (e.g., `Button<x>` or `Switch<x>`). Proper operation may dictate the use of regular, inverted or no pulldown settings. For buttons, you may need to determine whether the internal pull-up or pull-down is used or not. 
 
 ## Finishing Configuration
 ### Step 1
