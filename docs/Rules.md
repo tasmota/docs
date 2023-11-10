@@ -1425,25 +1425,25 @@ Rule2
     The arithmetic is done using single point precision floating point. This means calculations involving values larger than approximately 16 million (ex: `%utctime%`) will not be precise.
 
 #### ADD  
-  `ADD1` to `ADD5`: Add a value to `VARx`  
+  `ADD1` to `ADD16`: Add a value to `VARx`  
   Syntax: `ADDx value`  
   Usage: `ADD1 15`  
   Result: `VAR1 = VAR1 + 15`  
 
 #### SUBTRACT  
-  `SUB1 `to `SUB5`: Subtract a value from `VARx`  
+  `SUB1 `to `SUB16`: Subtract a value from `VARx`  
   Syntax: `SUBx value`  
   Usage: `SUB1 15`  
   Result: `VAR1 = VAR1 - 15`  
 
 #### MULTIPLY  
-  `MULT1 `to `MULT5`: Multiply a value to `VARx`  
+  `MULT1 `to `MULT16`: Multiply a value to `VARx`  
   Syntax: `MULTx value`  
   Usage: `MULT1 15`  
   Result: `VAR1 = VAR1 * 15`  
 
 #### SCALE A VALUE  
-  `SCALE1 `to `SCALE5`: Scale a value from a low and high limit to another low and high limit and store it in `VARx` (directly equivalent to MAP arduino command)  
+  `SCALE1 `to `SCALE16`: Scale a value from a low and high limit to another low and high limit and store it in `VARx` (directly equivalent to MAP arduino command)  
 
   Syntax: `SCALEx value, fromLow, fromHigh, toLow, toHigh`  
 
