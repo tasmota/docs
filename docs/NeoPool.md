@@ -47,7 +47,7 @@ To get this combination running:
 
 - compile your own Tasmota including the NeoPool driver as described under the red note `"This function is not included in precompiled binaries"` at the very top of this page and flash your this to your M5STack Atom Lite using USB
 - make the configuration steps [M5Stack Atom Lite with Tail485 template](#m5stack-atom-lite-with-tail485-template)
-- turn off the Sugar Valley device and plug the 4-wire dupont or 5 pin JST cable into the [WIFI](using-wifi-port) or [EXTERN](#using-extern-port) ports
+- turn off the Sugar Valley device and plug the 4-wire dupont or 5 pin JST cable into the [WIFI](#using-wifi-port) or [EXTERN](#using-extern-port) ports
 - turn on the Sugar Valley device
 
 That's all.

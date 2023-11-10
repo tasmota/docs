@@ -1,7 +1,7 @@
 !!! tip "You need to calibrate your power monitoring device as correct measurements are influenced by hardware and timing differences."
 
 !!! warning
-    This procedure does not apply to CT Power modules using ADC. For those, see [`AdcParam`]([url](ADC.md#commands))
+    This procedure does not apply to CT Power modules using ADC. For those, see [`AdcParam`](ADC.md#commands)
 
 - Your power monitoring capable device flashed with Tasmota and configured with the correct module/template that supports power monitoring
 - An AC capable **calibrated** multi-meter
