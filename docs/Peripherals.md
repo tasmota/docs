@@ -85,7 +85,7 @@ Others ***can*** be used but you have to mind the constraints outlined in [this 
 
 The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?title=Power) is **one of the most important elements** for stable device operation. Many devices on the market have barely adequate power supplies for normal operation. ***Connected peripherals may strain the ability of the power supply on the device to deliver appropriate power to all the components, both on-board as well as externally connected.***
 
-Voltage regulation issues typically result in fatal exception [fault code](https://github.com/esp8266/Arduino/blob/master/doc/exception_causes.rst) `1`. You must ensure that the device receives sufficient power (current **and** appropriate voltage level). Take into account the current that each wired component (f.e. sensor) will draw from the device itself. 
+Voltage regulation issues typically result in fatal exception [fault code](https://github.com/esp8266/Arduino/blob/master/doc/exception_causes.rst) `1`. You must ensure that the device receives sufficient power (current **and** appropriate voltage level). Take into account the current that each wired component (e.g., sensor) will draw from the device itself. 
 
 ### Electrical Considerations
 When you switch a GPIO pin to an input and hang a long wire off of it, that wire can pick up stray signals and cause the voltage on the GPIO pin to vary. This can cause the system to think the switch has changed.

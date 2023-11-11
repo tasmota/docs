@@ -649,9 +649,10 @@ def netflip()
 end
 tasmota.set_timer(30000,netflip)              #4
 ```
+
 1. store variable "eth" with Ethernet status - "true" if Ethernet IP exists and "false" if not
 2. check if wifi status is true and compare to eth status
-3. send command `Wifi` with parameter depending on eth variable. `..` is to concatenate a string. See Berry [manualg(https://github.com/berry-lang/berry/wiki/Chapter-3#-operator-1)
+3. send command `Wifi` with parameter depending on eth variable. `..` is to concatenate a string. See Berry [manual](https://github.com/berry-lang/berry/wiki/Chapter-3#-operator-1)
 4. set a timer to execute the netflip function 30000ms (30 seconds) after loading `autoexec.be`
 
 ## TMP117 Driver
@@ -753,4 +754,28 @@ def flash_to_file(filename, addr, len)
 end
 
 flash_to_file("safe_boot_flashed.bin", 0x10000, 768320)
+```
+
+## Tank Sensor
+
+Tank Sensor for fuel-oil volume measurement using a VL53L1X or SR04 sensor
+
+[https://github.com/trlafleur/Tasmota-Tank-Sensor](https://github.com/trlafleur/Tasmota-Tank-Sensor)
+
+## Home Assistant Controls for Tasmota
+
+This is a Tasmota Berry Script library to greatly simplify the process of exposing Home Assistant controls (e.g. Pull-down Lists, Number Sliders, Sensors, etc.) from a Tasmota device - and handling the communication between both sides.
+
+[https://github.com/fmtr/hct](https://github.com/fmtr/hct)
+
+## Build MQTT topic string based on FullTopic configuration
+
+This code bit illustrates how you can create a topic string in the form of the FullTopic specification. Details like whech %prefix% you want and what last level of the topic is obviously variable.
+
+```berry
+var topic = string.replace(string.replace(
+              tasmota.cmd('FullTopic',true)['FullTopic'],
+              '%topic%', tasmota.cmd('Topic',true)['Topic']),
+              '%prefix%', tasmota.cmd('Prefix',true)['Prefix3'])
+            + 'SENSOR'
 ```

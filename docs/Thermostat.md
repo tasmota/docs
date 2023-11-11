@@ -47,7 +47,7 @@ The Thermostat driver allows a Tasmota device to follow control heating/cooling 
 
 ## Typical setup: Heating floor system
 
-A typical setup for heating room systems can be found in the picture below. A conventional room thermostat is connected to a heating floor valve actuator, both running at AC voltage (f.e. 220V). The thermostat is connected to neutral as well as to the phase. The actuator is connected to the same neutral connection of the thermostat and to its actuation signal. The actuation signal will switch between the neutral voltage (actuation Off) and the phase voltage (actuation On).
+A typical setup for heating room systems can be found in the picture below. A conventional room thermostat is connected to a heating floor valve actuator, both running at AC voltage (e.g., 220V). The thermostat is connected to neutral as well as to the phase, the actuator to the same neutral connection of the thermostat and to its actuation signal. The actuation signal will switch between the neutral voltage (actuation Off) and the phase voltage (actuation On).
 
 Conventional room thermostats offer nowadays either 2 point control with hysteresis or a more advanced PI (Proportional-Integral) control. While the result of the PI control is an analog value, in order to control a digital devices such as a relay, it is typically transformed into a PWM signal with a pre-defined period and a variable duty cycle.
 
@@ -166,7 +166,7 @@ cmnd/Tasmota_Name/PROPBANDSET 1
 ```
 
 !!! note  
-    With the command above, the PI controller will output a proportional time equivalent to 100% of the duty cycle for delta temperatures between setpoint and room temp. above 1°C (f.e. for big rooms with weak dimensioned heating circuit).
+    With the command above, the PI controller will output a proportional time equivalent to 100% of the duty cycle for delta temperatures between setpoint and room temp. above 1°C (e.g., for big rooms with weak dimensioned heating circuit).
 
 #### Reset Time
 The reset time is the time the PI controller takes to overcome steady-state errors. The default value for the reset time is 12000 seconds. This value can be for instance increased in case a stronger integral reaction of the controller is desired. Below the command to adapt the proportional band can be found:
@@ -219,7 +219,7 @@ cmnd/Tasmota_Name/TEMPRUPDELTINSET 0.3
 The default value is 0.4°C.
 
 #### Time passed after latest setpoint change to get into "Ramp-Up" mode
-When the controller is configured in Hybrid mode (default), the activation of the "Ramp-Up" mode will not just depend on the defined temperature delta between measured and setpoint, but as well on the time in minutes passed since the last setpoint change occurred. This strategy matches the purpose of the "Ramp-Up" controller, which was developed to reach the desired temperature as fast as possible in very specific scenarios, f.e. after a night keeping the room temperature low. In hybrid mode, the controller active most part of the time should be the PI one. The following parameter can be used to define the time to allow switching to "Ramp-Up" in minutes.
+When the controller is configured in Hybrid mode (default), the activation of the "Ramp-Up" mode will not just depend on the defined temperature delta between measured and setpoint, but as well on the time in minutes passed since the last setpoint change occurred. This strategy matches the purpose of the "Ramp-Up" controller, which was developed to reach the desired temperature as fast as possible in very specific scenarios, e.g., after a night keeping the room temperature low. In hybrid mode, the controller active most part of the time should be the PI one. The following parameter can be used to define the time to allow switching to "Ramp-Up" in minutes.
 
 ```
 cmnd/Tasmota_Name/TIMEALLOWRAMPUPSET 300

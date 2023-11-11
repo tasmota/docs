@@ -13,6 +13,8 @@ You can control multiple LED strips. `WS2812 - 1` is also controlled by Tasmota'
 It is still possible to control this light strip with Berry, but whenever you use Tasmota light controls
 they will temporarily overrid Berry animations.
 
+To avoid any conflict between native WS2812 and Berry control, you can use `Scheme 14` which disables native WS2812.
+
 ### Led strips, matrix and sub-strips
 
 You first need to define the low-level `Leds` object that describes the hardware strip of connected leds.
@@ -22,13 +24,13 @@ You can then define higher level objects like sub-strips
 
 Class|Details
 :---|:---
-Leds<a class="cmnd" id="leds_ctor"></a>|`Leds(pixels:int, gpio:int [,model:int ,rmt:int]) -> instance<Leds>`<br>Creates a `Leds` instance for a linear leds strip<br>`pixels`: number of leds<br>`gpio`: physical gpio number<br>`model`: (optional) LED model, default:Leds.WS2812_GRB<br>`rmt`: (optional) `RMT`channel to use, or auto-select (see below)
+Leds<a class="cmnd" id="leds_ctor"></a>|`Leds(pixels:int, gpio:int [,model:int ,rmt:int]) -> instance<Leds>`<br>Creates a `Leds` instance for a linear leds strip<br>`pixels`: number of leds<br>`gpio`: physical gpio number<br>`model`: (optional) LED model, default: `Leds.WS2812_GRB`, alternative `Leds.SK6812_GRBW`<br>`rmt`: (optional) `RMT`channel to use, or auto-select (see below)
 
 Once a `Leds` object, you can use sub-objects:
 
 Method|Details
 :---|:---
-create_matrix<a class="cmnd" id="leds_matrix_ctor"></a>|`<strip>.create_matrix(width:int, height:int [, offset:int]) -> instance<Leds_matrix>`<br>Creates a `Leds_matrix` instance from a `Leds` instance<br>`width`: number of leds horizontally<br>`height`: number of leds vertically<br>`offset`: number of leds to skip until start of matrix
+create_matrix<a class="cmnd" id="leds_matrix_ctor"></a>|`<strip>.create_matrix(width:int, height:int [, offset:int]) -> instance<Leds_matrix>`<br>Creates a `Leds_matrix` instance from a `Leds` instance<br>`width`: number of leds horizontally<br>`height`: number of leds vertically<br>`offset`: number of leds to skip until start of matrix<BR>You can use `set_alternate(true)` to enabled alternate lines (i.e. zigzag mode).
 create_segment<a class="cmnd" id="leds_segment"></a>|`<strip>.create_segment(offset:int, pixels:int) -> instance<Leds_segment>`<br>Creates a virtual segment from a physical Leds strip, from Led number `offset` with `pixels` leds.
 
 LED model|Details
@@ -41,6 +43,7 @@ Methods are the equivalent low-level from NeoPixelBus. All colors are in `0xRRGG
 Attributes|Details
 :---|:---
 clear<a class="cmnd" id="leds_clear"></a>|`clear() -> nil`<br>Clear all led (set to black)
+clear\_to<a class="cmnd" id="leds_clear_to"></a>|`clear_to(col:color [, bri:int]) -> nil`<br>Set all leds to the specified color. `bri` (0..100) is optional and default to 100%
 show<a class="cmnd" id="leds_show"></a>|`show() -> nil`<br>Pushes the internal buffer to leds. May be ignored if a show command is already in progress. Use `can_show()` to see if `show()` is possible
 can\_show<a class="cmnd" id="leds_can_show"></a>|`can_show() -> bool`<br>Indicates if `show()` is possible, i.e. no transfer is ongoing
 is\_dirty<a class="cmnd" id="leds_is_dirty"></a>|`is_dirty() -> bool`<br>Indicates if a led was changed since last `show()`
@@ -48,8 +51,10 @@ dirty<a class="cmnd" id="leds_dirty"></a>|`dirty() -> nil`<br>Forces a refresh d
 pixel\_size<a class="cmnd" id="leds_pixel_size"></a>|`pixel_size() -> int`<br>Returns the number of bytes per pixel
 pixel\_count<a class="cmnd" id="leds_pixel_count"></a>|`pixel_count() -> int`<br>Returns the number of leds in the strip/matrix
 clear\_to<a class="cmnd" id="leds_clear_to"></a>|`clear_to(col:color [, bri:int]) -> nil`<br>Clears all leds to the specified color. `bri` is optional and default to 100%
-set\_pixel\_color<a class="cmnd" id="leds_set_pixel_color"></a>|`set_pixel_color(idx:int, col:color [, bri:int]) -> nil`<br>Set led number `idx`to the specified color. `bri` is optional and default to 100%
+set\_pixel\_color<a class="cmnd" id="leds_set_pixel_color"></a>|`set_pixel_color(idx:int, col:color [, bri:int]) -> nil`<br>Set led number `idx` to the specified color. `bri` (0..100) is optional and default to 100%
 set\_matrix\_pixel\_color<a class="cmnd" id="leds_set_matrix_pixel_color"></a>|`set_matrix_pixel_color(x:int, y:int, col:color [, bri:int]) -> nil`<br>(only `Leds_matrix`) Set led number of coordinates `x`/`y` to the specified color. `bri` is optional and default to 100%
+set\_alternate<a class="cmnd" id="leds_set_alternate"></a>|`set_alternate(bool) -> nil`<br>(only `Leds_matrix`) Sets the matrix as alternate cabling (i.e. zigzag mode) instead of regular mode.<BR>It is common for large led matrix to have every other line in reverse order.
+get\_alternate<a class="cmnd" id="leds_get_alternate"></a>|`get_alternate() -> bool`<br>(only `Leds_matrix`) Read the value set with `set_alternate(bool)`.
 get\_pixel\_color<a class="cmnd" id="leds_get_pixel_color"></a>|`get_pixel_color(idx:int) -> color:int`<br>Returns the color (including brightness and gamma correction) of led number `idx`
 gamma<a class="cmnd" id="leds_gamma"></a>|`gamma:bool`<br>Applies gamma correction if `true` (default)
 pixels\_buffer<a class="cmnd" id="leds_pixels_buffer"></a>|`pixels_buffer() -> bytes()`<br>Returns the internal buffer used by NeoPixelBus. The `byte()` object points to the original buffer, no new buffer is allocated; which means that raw data can be changed directly. Don't forget to call `dirty()` and `show()` afterwards
@@ -76,7 +81,7 @@ animate<a class="cmnd" id="leds_animator_animate"></a>|`animate() -> nil`<br>Pla
 
 Example:
 
-``` python
+```berry
 import animate
 class Rainbow_stripes : Leds_animator
   var cur_offset     # current offset in the palette
@@ -101,19 +106,53 @@ class Rainbow_stripes : Leds_animator
     var i = 0
     while i < self.pixel_count    # doing a loop rather than a `for` prevents from allocating a new object
       var col = self.palette[(self.cur_offset + i) % size(self.palette)]
-      strip.set_pixel_color(i, col, self.bri)   # simulate the method call without GETMET
+      self.strip.set_pixel_color(i, col, self.bri)   # simulate the method call without GETMET
       i += 1
     end
-    strip.show()
+    self.strip.show()
   end
 end
 ```
 
 How to use:
 
-``` python
-var strip = Leds_matrix(5,5, gpio.pin(gpio.WS2812, 1))
+```berry
+var strip = Leds(5,5, gpio.pin(gpio.WS2812, 1))
 var r = Rainbow_stripes(strip, 1.0)
+r.start()
+```
+
+And here is another example that "breathes" the LED strip with a hardcoded colour:
+
+```berry
+class Breathe : Leds_animator
+  var brightness
+  var colour
+
+  # duration in seconds
+  def init(strip, duration)
+    super(self).init(strip)
+    self.brightness = 0
+    self.colour = 0xFFFFFF
+    self.add_anim(animate.back_forth(def(v) self.brightness = v end, 0, 100, int(duration * 1000)))
+  end
+
+  def animate()
+    var i = 0
+    while i < self.pixel_count    # doing a loop rather than a `for` prevents from allocating a new object
+      self.strip.set_pixel_color(i, self.colour, self.brightness)
+      i += 1
+    end
+    self.strip.show()
+  end
+end
+```
+
+And to use this one:
+
+```berry
+var strip = Leds(5,5, gpio.pin(gpio.WS2812, 1))
+var r = Breathe(strip, 2.0)
 r.start()
 ```
 
@@ -135,7 +174,7 @@ Currently `RMT` channel 0 is used by default if no GPIO `WS2812-1` is configured
 
 Pulsating round on M5Stack Atom Matrix if GPIO 27 is configured as `WS1812 - 2`
 
-``` python
+```berry
 var strip = Leds_matrix(5,5, gpio.pin(gpio.WS2812, 1))
 var r = Round(strip, 2, 30)
 r.start()

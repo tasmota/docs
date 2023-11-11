@@ -127,7 +127,7 @@ Tele-Wifi#RSSI<a id="tele-Wifi-RSSI"></a>|when a teleperiod message is sent with
 Tele-Wifi#LinkCount<a id="tele-Wifi-LinkCount"></a>|when a teleperiod message is sent with the number of wifi disconnections
 Tele-Wifi#Downtime<a id="tele-Wifi-Downtime"></a>|when a teleperiod message is sent with the total seconds of wifi disconnections
 
-Every [command](Commands.md) with a JSON payload response has an associated rule trigger.
+Every [command](Commands.md) with a JSON payload response has an associated rule trigger, with the exception of Power<x>#Data and Switch<x>, which are superseded by by the Power<x>#State and Switch<x>#State trigger.
 
 |Trigger           | When it occurs |
 |------------------|----------------|
@@ -222,8 +222,10 @@ The value of a `Var<x>` and `Mem<x>` can be:
 - %color%
 - %deviceid%
 - %macaddr%
+- %power1% to number of power channels
 - %sunrise%
 - %sunset%
+- %switch1% to number of switch gpios
 - %time%
 - %timer1% to %timer16%
 - %timestamp%
@@ -265,12 +267,16 @@ Rule1 "
 
 ## Conditional Rules
 
-!!! failure "This feature is not included in precompiled binaries."    
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-```arduino
-#define USE_EXPRESSION         // Add support for expression evaluation in rules (+3k2 code, +64 bytes mem)  
-#define SUPPORT_IF_STATEMENT   // Add support for IF statement in rules (+4k2 code, -332 bytes mem)  
-```
+!!! failure
+      This features is not included in standard ESP8266 binaries such as `tasmota`, `tasmota-sensors`, `tasmota-lite`.
+      To use it, you must [compile your build](Compile-your-build) and add the following to `user_config_override.h`:
+
+      ```arduino
+      #define SUPPORT_IF_STATEMENT   // Add support for IF statement in rules (+4k2 code, -332 bytes mem)  
+      ```
+
+!!! note
+      This feature is included in ESP32 builds as well as in ESP8266 builds for boards with more than 1MB Flash. This include `tasmota-4M`, `tasmota-zbbridge`, `tasmota-zigbee`.
 ----
 
 #### Major features  
@@ -367,13 +373,16 @@ Rule1
 
 ## Expressions in Rules
 
-!!! failure "This feature is not included in precompiled binaries."    
+!!! failure
+      This features is not included in standard ESP8266 binaries such as `tasmota`, `tasmota-sensors`, `tasmota-lite`.
+      To use it, you must [compile your build](Compile-your-build) and add the following to `user_config_override.h`:
 
-To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
-```arduino
-#define USE_EXPRESSION         // Add support for expression evaluation in rules (+3k2 code, +64 bytes mem)  
-#define SUPPORT_IF_STATEMENT   // Add support for IF statement in rules (+4k2 code, -332 bytes mem)  
-```
+      ```arduino
+      #define USE_EXPRESSION         // Add support for expression evaluation in rules (+3k2 code, +64 bytes mem)  
+      ```
+
+!!! note
+      This feature is included in ESP32 builds as well as in ESP8266 builds for boards with more than 1MB Flash. This include `tasmota-4M`, `tasmota-zbbridge`, `tasmota-zigbee`.
 ----
 
 Beginning with Tasmota version 6.4.1.14, an optional feature for using mathematical expressions in rules was introduced. 
@@ -397,7 +406,7 @@ Expressions can use of the following operators. They are listed by the order of 
 
 !!! example
     * `1+2*2`   results in 5.0 as the multiplication is done first due to its higher priority
-* `(1+2)*2`   results in 6.0
+    * `(1+2)*2`   results in 6.0
 
 In addition to numeric constants, the following symbolic values can be used:  
 
@@ -1416,25 +1425,25 @@ Rule2
     The arithmetic is done using single point precision floating point. This means calculations involving values larger than approximately 16 million (ex: `%utctime%`) will not be precise.
 
 #### ADD  
-  `ADD1` to `ADD5`: Add a value to `VARx`  
+  `ADD1` to `ADD16`: Add a value to `VARx`  
   Syntax: `ADDx value`  
   Usage: `ADD1 15`  
   Result: `VAR1 = VAR1 + 15`  
 
 #### SUBTRACT  
-  `SUB1 `to `SUB5`: Subtract a value from `VARx`  
+  `SUB1 `to `SUB16`: Subtract a value from `VARx`  
   Syntax: `SUBx value`  
   Usage: `SUB1 15`  
   Result: `VAR1 = VAR1 - 15`  
 
 #### MULTIPLY  
-  `MULT1 `to `MULT5`: Multiply a value to `VARx`  
+  `MULT1 `to `MULT16`: Multiply a value to `VARx`  
   Syntax: `MULTx value`  
   Usage: `MULT1 15`  
   Result: `VAR1 = VAR1 * 15`  
 
 #### SCALE A VALUE  
-  `SCALE1 `to `SCALE5`: Scale a value from a low and high limit to another low and high limit and store it in `VARx` (directly equivalent to MAP arduino command)  
+  `SCALE1 `to `SCALE16`: Scale a value from a low and high limit to another low and high limit and store it in `VARx` (directly equivalent to MAP arduino command)  
 
   Syntax: `SCALEx value, fromLow, fromHigh, toLow, toHigh`  
 

@@ -310,6 +310,54 @@ Attribute name|LVGL equivalent|Details
 `qr_light_color`||Color used for the light pixels. This cannot be changed once the object is created.
 `qr_text`||(mandatory) String to encode as a QRCode, can be changed at any moment.
 
+## HASPmota styling
+
+Since v13.2.0.1, HASPmota includes styling extensions replicating [OpenHASP Styling Properties](https://www.openhasp.com/0.6.3/design/styling/).
+
+Styling attributes can include a 2-digit suffix to indicate which element and which state the styling attributes refers to:
+
+The part indexes are:
+
+- 00 = main part of the object (i.e. the background)
+- 10 = the indicator or needle, highlighting the the current value
+- 20 = the knob which can be used the change the value
+- 30 = the background of the items/buttons
+- 40 = the items/buttons (not implemented yet)
+- 50 = the selected item
+- 60 = major ticks of the gauge object
+- 70 = the text cursor
+- 80 = the scrollbar
+- 90 = other special part, not listed above
+
+The state indexes:
+
+- 00 = default styling
+- 01 = styling for toggled state
+- 02 = styling for pressed, not toggled state
+- 03 = styling for pressed and toggled state
+- 04 = styling for disabled not toggled state
+- 05 = styling for disabled and toggled state
+
+A `toggle` `btn` can be made to show `text` `yellow` when toggled ON with `"text_color":"white","text_color01":"yellow"`
+
+The following attributes accept styling suffix:
+
+- `radius`
+- `border_side`
+- `border_width`
+- `border_color`
+- `line_width`
+- `bg_color`
+- `bg_grad_color`
+- `bg_grad_dir`
+- `line_color`
+- `pad_left`
+- `pad_right`
+- `pad_top`
+- `pad_bottom`
+- `pad_all`
+- `text_color`
+
 ## Tasmota extensions
 
 ### Update sensor value via rules

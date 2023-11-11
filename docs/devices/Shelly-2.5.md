@@ -60,7 +60,7 @@ If you connect momentary switches, use the following template:
 `Button1` and `Button2` are assigned to the SW1 and SW2 external inputs. `Button3` is the button on the back of the device next to the pin header and you can optionally assign the behaviour you want using rules.
 
 If you want the buttons to respond instantly, go to the console and type `SetOption13 1`.
-But, if you want press/double press/hold functionality, run instead `Backlog SetOption1 1; SetOption11 1; SetOption32 20` to enable all three states and set hold time of 2 seconds. Use [SetOption32](../Commands#setoption32) to set another hold time.
+But, if you want press/double press/hold functionality, run instead `Backlog SetOption1 1; SetOption11 1; SetOption32 20` to enable all three states and set hold time of 2 seconds. Use [SetOption32](../Commands.md#setoption32) to set another hold time.
 
 If you want to see Voltage and Frequency also when the relays are off, use `SetOption21 1`
 

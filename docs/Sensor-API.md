@@ -209,7 +209,7 @@ NOTE: This callback ID is deprecated as sensors should prepare for more regular 
 
 `FUNC_JSON_APPEND`
 
-This callback ID is called when [`TelePeriod`](Commands#teleperiod) is due to append telemetry data to the MQTT JSON string or at approximately every 2 seconds when a rule is checked, e.g.
+This callback ID is called when [`TelePeriod`](Commands.md#teleperiod) is due to append telemetry data to the MQTT JSON string or at approximately every 2 seconds when a rule is checked, e.g.
 ```c++
 snprintf_P(mqtt_data, sizeof(mqtt_data), PSTR("{\"MPR121%c\":{\"Button%i\":%i}}"), pS->id[i], j, BITC(i,j));
 ```

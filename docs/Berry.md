@@ -67,24 +67,24 @@ The console is not designed for big coding tasks but it's recommended to use a c
 
 Try typing simple commands in the REPL. Since the input can be multi-lines, press ++enter++ twice or click "Run" button to run the code. Use ++arrow-up++ and ++arrow-down++ to navigate through history of previous commands.
 
-```python
+```berry
 > 1+1
 2
 ```
 
-```python
+```berry
 > 2.0/3
 0.666667
 ```
 
-```python
+```berry
 > print('Hello Tasmota!')
 Hello Tasmota!
 ```
 
 Note: Berry's native `print()` command displays text in the Berry Console and in the Tasmota logs. To log with finer control, you can also use the `log()` function which will not display in the Berry Console.
 
-```python
+```berry
 > print('Hello Tasmota!')
   log('Hello again')
 Hello Tasmota!
@@ -101,6 +101,11 @@ Berry can autostart your scripts. See a short desciption in the Section about th
 https://tasmota.github.io/docs/UFS/#autoexecbe
 Your can use the Filemanager to edit or save files with your berry scripts.
 
+## Iterate without rebooting
+Since v13.0.0.1 you can restart the entire Berry VM with a click in the Berry console. This feature requires to compile with `#define USE_BERRY_DEBUG` which is anyways highly recommended when coding in Berry. Be aware that restarting the Berry VM loses all context, and may generate negative side effects that we haven't yet identified. When restarting the VM, `autoexec.be` is ran again.
+
+Instead of using the Web UI, you can also use the `BrRestart` command which does not require `#define USE_BERRY_DEBUG`.
+
 ## Lights and Relays
 
 Berry provides complete support for Relays and Lights.
@@ -113,7 +118,7 @@ You can control individual Relays or lights with `tasmota.get_power()` and `tasm
 
 !!! example "2 relays and 1 light"
 
-    ```python
+    ```berry
     > tasmota.get_power()
     [false, true, false]
 
@@ -138,7 +143,7 @@ channels|`array of int, ranges 0..255`<br>Set the value for each channel, as an 
 
 When setting attributes, they are evaluated in the following order, the latter overriding the previous: `power`, `ct`, `hue`, `sat`, `rgb`, `channels`, `bri`.
 
-```python
+```berry
   # set to yellow, 25% brightness
 > light.set({"power": true, "hue":60, "bri":64, "sat":255})
 {'bri': 64, 'hue': 60, 'power': true, 'sat': 255, 'rgb': '404000', 'channels': [64, 64, 0]}
@@ -162,7 +167,7 @@ When setting attributes, they are evaluated in the following order, the latter o
 ## Rules
 The rule function have the general form below where parameters are optional:
 
-```python
+```berry
 def function_name(value, trigger, msg)
 end
 ```
@@ -176,14 +181,14 @@ Parameter|Description
 !!! example "Dimmer rule"
 
     Define the function and add a rule to Tasmota where the function runs if Dimmer value is more than 50
-    ```python
+    ```berry
     > def dimmer_over_50()
         print("The light is bright")
       end
       tasmota.add_rule("Dimmer>50", dimmer_over_50)
     ```
 
-    ```python
+    ```berry
     > tasmota.cmd("Dimmer 30")
     {'POWER': 'ON', 'Dimmer': 30, 'Color': '4D3223', 'HSBColor': '21,55,30', 'Channel': [30, 20, 14]}
 
@@ -197,13 +202,13 @@ The same function can be used with multiple triggers.
 If the function to process an ADC input should be triggered both by the `tele/SENSOR`
 message and the result of a `Status 10` command:
 
-```python
+```berry
 tasmota.add_rule("ANALOG#A1", rule_adc_1)
 tasmota.add_rule("StatusSNS#ANALOG#A1", rule_adc_1)
 ```
 
 Or if the same function is used to process similar triggers:
-```python
+```berry
 import string
 
 def rule_adc(value, trigger)
@@ -218,15 +223,36 @@ tasmota.add_rule("ANALOG#A2",rule_adc)
 ```
 
 Another way to address the same using anonymous functions created dynamically
-```python
+```berry
 def rule_adc(adc, value)
   print("value of adc",adc," is ",value)
 end
-tasmota.add_rule("ANALOG#A1",def (value) rule_adc(1,value) end )
-tasmota.add_rule("ANALOG#A2",def (value) rule_adc(2,value) end )
+tasmota.add_rule("ANALOG#A1", def (value) rule_adc(1,value) end )
+tasmota.add_rule("ANALOG#A2", def (value) rule_adc(2,value) end )
 ```
 
-**Teleperiod rules**
+### Multiple triggers AND logic ###
+
+It is possible to combine multiple triggers in a AND logic as an array:
+```berry
+tasmota.add_rule(["ANALOG#A1>300","ANALOG#A1<500"], def (values) rule_adc_in_range(1,values) end )
+```
+would trigger if `300 < ANALOG#A1 < 500`
+
+Triggers can be of different types too:
+```berry
+tasmota.add_rule(["ANALOG#A1>300","BME280#Temperature>28.0"], def (values) rule_adc_and_temp(1,values) end )
+```
+would trigger for simultaneous `ANALOG#A1>300` AND `BME280#Temperature>28.0`
+
+In that case, the value and trigger arguments passed to the rule function are also lists:
+```berry
+def function_name(values:list_of_string, triggers:list_of_string, msg)
+end
+```
+The 3rd argument `msg` remains unchanged.
+
+### Teleperiod rules ###
 
 Teleperiod rules are supported with a different syntax from Tasmota rules. Instead of using `Tele-` prefix, you must use `Tele#`. For example `Tele#ANALOG#Temperature1` instead of `Tele-ANALOG#Temperature1`
 
@@ -257,7 +283,7 @@ Berry code, when it is running, blocks the rest of Tasmota. This means that you 
 
 All times are in milliseconds. You can know the current running time in milliseconds since the last boot:
 
-```python
+```berry
 > tasmota.millis()
 9977038
 ```
@@ -265,7 +291,7 @@ All times are in milliseconds. You can know the current running time in millisec
 
 !!! example "Sending a timer is as easy as `tasmota.set_timer(<delay in ms>,<function>)`"
 
-    ```python
+    ```berry
     > def t() print("Booh!") end
 
     > tasmota.set_timer(5000, t)
@@ -351,7 +377,7 @@ Driver methods are called with the following parameters: `f(cmd, idx, payload, r
 - `button_pressed()`: called when a button is pressed
 - `save_before_restart()`: called just before a restart
 - `mqtt_data(topic, idx, data, databytes)`: called for MQTT payloads matching `mqtt.subscribe`. `idx` is zero, and `data` is normally unparsed JSON.
-- `set_power_handler(cmd, idx)`: called whenever a Power command is made. `idx` contains the index of the relay or light. `cmd` can be ignored.
+- `set_power_handler(cmd, idx)`: called whenever a Power command is made. `idx` is a combined index value, with one bit per relay or light currently on. `cmd` can be ignored.
 - `display()`: called by display driver with the following subtypes: `init_driver`, `model`, `dim`, `power`.
 
 Then register the driver with `tasmota.add_driver(<driver>)`.
@@ -362,7 +388,7 @@ There are basically two ways to respond to an event:
 
 Define a class and implement methods with the same name as the events you want to respond to.
 
-```python
+```berry
 class MyDriver
   def every_second()
     # do something
@@ -376,7 +402,7 @@ tasmota.add_driver(d1)
 
 ## Fast Loop
 
-Beyond the events above, a specific mechanism is available for near-real-time events or fast loops (above 50 times per second).
+Beyond the events above, a specific mechanism is available for near-real-time events or fast loops (200 times per second, or 5ms).
 
 Special attention is made so that there is no or very little impact on performance. Until a first callback is registered, performance is not impacted and Berry is not called. This protects any current use from any performance impact.
 
@@ -384,7 +410,9 @@ Once a callback is registered, it is called separately from Berry drivers to ens
 
 `tasmota.add_fast_loop(cl:function) -> nil` registers a callback to be called in fast loop mode.
 
-The callback is called without any parameter and does not need to return anything. The callback is called at each iteration of Tasmota event loop. The frequency is tightly linked to the `Speed <x>` command. By default, the sleep period is 50ms, hence fast_loop is called every 50ms. You can reduce the time with `Sleep 10` (10ms) hence calling 100 times per second. If you set `Sleep 0`, the callback is called as frequently as possible (discouraged unless you have a good reason).
+The callback is called without any parameter and does not need to return anything. The callback is called at each iteration of Tasmota event loop. The frequency is set to 200Hz or 5ms.
+
+Note: since v13.1.0.2, the frequency of `fast_loop` does not depend anymore on the value of the `Sleep <x>` command.
 
 `tasmota.remove_fast_loop(cl:function) -> nil` removes a previously registered function or closure. You need to pass the exact same closure reference.
 
@@ -449,8 +477,8 @@ tasmota.publish\_result<a class="cmnd" id="tasmota_publish_result"></a>|`(payloa
 tasmota.publish\_rule<a class="cmnd" id="tasmota_publish_rule"></a>|`(payload:string) -> handled:bool`<br>sends a JSON stringified message to the rule engine, without actually publishing a message to MQTT. Returns `true` if the message was handled by a rule.
 tasmota.cmd<a class="cmnd" id="tasmota_cmd"></a>|`(command:string [, mute:bool]) -> map`<br>Sends any command to Tasmota, like it was type in the console. It returns the result of the command if any, as a map parsed from the command output JSON. Takes an optional `mute` attribute. If `mute` is `true`, logging (serial, web, mqtt) is reduced to level `1` (only severe errors) to avoid polluting the logs.
 tasmota.memory<a class="cmnd" id="tasmota_memory"></a>|`() -> map`<br>Returns memory stats similar to the Information page.<br>Example: `{'iram_free': 41, 'frag': 51, 'program_free': 1856, 'flash': 4096, 'heap_free': 226, 'program': 1679}`<br>or when PSRAM `{'psram_free': 3703, 'flash': 16384, 'program_free': 3008, 'program': 1854, 'psram': 4086, 'frag': 27, 'heap_free': 150}`
-tasmota.add\_rule<a class="cmnd" id="tasmota_add_rule"></a>|`(pattern:string, f:function [, id:any]) ->nil`<br>Adds a rule to the rule engine. See above for rule patterns.<br>Optional `id` to remove selectively rules.
-tasmota.remove\_rule<a class="cmnd" id="tasmota_remove_rule"></a>|`(pattern:string [, id:any]) ->nil`<br>Removes a rule to the rule engine. Silently ignores the pattern if no rule matches. Optional `id` to remove selectively some rules.
+tasmota.add\_rule<a class="cmnd" id="tasmota_add_rule"></a>|`(trigger:string, f:function [, id:any]) ->nil`<br>`(triggers:list_of_string, f:function [, id:any]) ->nil`<br>Adds a rule to the rule engine. See above for rule triggers.<br>Optional `id` allows to remove selectively rules with `tasmota.remove_rule()`.
+tasmota.remove\_rule<a class="cmnd" id="tasmota_remove_rule"></a>|`(trigger:string [, id:any]) ->nil`<br>`(triggers:list_of_string [, id:any]) ->nil`<br>Removes a rule from the rule engine. Silently ignores the trigger(s) if no rule matches. Optional `id` to remove selectively some rules.
 tasmota.add\_driver<a class="cmnd" id="tasmota_add_driver"></a>|`(instance) ->nil`<br>Registers an instance as a driver
 tasmota.remove\_driver<a class="cmnd" id="tasmota_remove_driver"></a>|`(instance) ->nil`<br>Removes a driver
 tasmota.gc<a class="cmnd" id="tasmota_gc"></a>|`() -> int`<br>Triggers garbage collection of Berry objects and returns the bytes currently allocated. This is for debug only and shouldn't be normally used. `gc` is otherwise automatically triggered when necessary.
@@ -514,7 +542,7 @@ See examples in the [Berry-Cookbook](Berry-Cookbook#adding-commands-to-tasmota)
 
 Tasmota Function|Parameters and details
 :---|:---
-tasmota.get\_power<a class="cmnd" id="tasmota_get_power"></a>|`() -> list[bool]`<br>Returns the state On/Off of each Relay and Light as a list of bool.
+tasmota.get\_power<a class="cmnd" id="tasmota_get_power"></a>|`([index:int]) -> bool or list[bool]`<br>Returns Relay or Light On/Off state for one channel, or as a list of bool for all.
 tasmota.set\_power<a class="cmnd" id="tasmota_set_power"></a>|`(index:int, onoff:bool) -> bool`<br>Sets the on/off state of a Relay/Light. Returns the previous status of the Relay/Light of `nil` if index is invalid.<br>Example:<br>```> tasmota.get_power()```<br>```[true]```
 tasmota.get\_light<a class="cmnd" id="tasmota_get_light"></a>|_deprecated_ use `light.get`
 tasmota.set\_light<a class="cmnd" id="tasmota_set_light"></a>|_deprecated_ use `light.set`
@@ -552,8 +580,9 @@ The function takes the same parameters as `mqtt_data()`:
 Tasmota Function|Parameters and details
 :---|:---
 mqtt.publish<a class="cmnd" id="mqtt_publish"></a>|`(topic:string, payload:string[, retain:bool, start:int, len:int]) -> nil`<br>Equivalent of `publish` command, publishes a MQTT message on `topic` with `payload`. Optional `retain` parameter.<br>`payload` can be a string or a bytes() binary array<br>`start` and `len` allow to specify a sub-part of the string or bytes buffer, useful when sending only a portion of a larger buffer.
-mqtt.subscribe<a class="cmnd" id="mqtt_subscribe"></a>|`mqtt.subscribe(topic:string [, function:closure]) -> nil`<br>Subscribes to a `topic` (exact match or pattern). Contrary to Tasmota's `Subscribe` command, the topic is sent as-is and not appended with `/#`. You need to add wildcards yourself. Driver method `mqtt_data` is called for each matching payload.<br>If a function/closure is added, the function is called whenever and only if an incoming messages matches the pattern for this function. The function should return `true` if message was processed, `false` if not which will let the message flow to Tasmota eventually as a command.
+mqtt.subscribe<a class="cmnd" id="mqtt_subscribe"></a>|`mqtt.subscribe(topic:string [, function:closure]) -> nil`<br>Subscribes to a `topic` (exact match or pattern). Contrary to Tasmota's `Subscribe` command, the topic is sent as-is and not appended with `/#`. You need to add wildcards yourself. Driver method `mqtt_data` is called for each matching payload.<br>If a function/closure is added, the function is called whenever and only if an incoming messages matches the pattern for this function. The function should return `true` if message was processed, `false` if not which will let the message flow to Tasmota eventually as a command.<br>You can call mqtt.subscribe even without MQTT connection, and Tasmota will manage subscriptions upon connection, also when reconnecting after an outage. This allows code in `autoexec.be` do make a subscription, which will then have effect after connection has been established.
 mqtt.unsubscribe<a class="cmnd" id="mqtt_unsubscribe"></a>|`(topic:string) -> nil`<br>Unubscribe to a `topic` (exact match).
+mqtt.connected<a class="cmnd" id="mqtt_connected"></a>|`mqtt.connected() -> bool`<br>Returns `true` if Tasmota is connected to the MQTT broker
 
 ### `light` object
 
@@ -614,19 +643,16 @@ DAC is limited to specific GPIOs:
 DAC can also be used via `Esp8266Audio` through the ESP32 I2S -> DAC bridge.
 
 ??? example
-    ```python
+    ```berry
     class MP3_Player : Driver
-      var audio_output, audio_mp3
+      var audio_output, audio_mp3, fast_loop_closure
       def init()
-        self.audio_output = AudioOutputI2S(
-          gpio.pin(gpio.I2S_OUT_CLK),
-          gpio.pin(gpio.I2S_OUT_SLCT),
-          gpio.pin(gpio.I2S_OUT_DATA),
-          0,    #- I2S port -#
-          64)    #- number of DMA buffers of 64 bytes each, this is the value required since we update every 50ms -#
+        self.audio_output = AudioOutputI2S()
         self.audio_mp3 = AudioGeneratorMP3()
+        self.fast_loop_closure = def () self.fast_loop() end
+        tasmota.add_fast_loop(self.fast_loop_closure)
       end
-
+    
       def play(mp3_fname)
         if self.audio_mp3.isrunning()
           self.audio_mp3.stop()
@@ -635,17 +661,18 @@ DAC can also be used via `Esp8266Audio` through the ESP32 I2S -> DAC bridge.
         self.audio_mp3.begin(audio_file, self.audio_output)
         self.audio_mp3.loop()    #- start playing now -#
       end
-
-      def every_50ms()
+    
+      def fast_loop()
         if self.audio_mp3.isrunning()
-          self.audio_mp3.loop()
+          if !self.audio_mp3.loop()
+            self.audio_mp3.stop()
+            tasmota.remove_fast_loop(self.fast_loop_closure)
+          end
         end
       end
     end
-
+    
     mp3_player = MP3_Player()
-    tasmota.add_driver(mp3_player)
-
     mp3_player.play("/pno-cs.mp3")
     ```
 
@@ -788,6 +815,9 @@ path.last_modified<a class="cmnd" id="path_last_modified"></a>|`(file_name:strin
 path.listdir<a class="cmnd" id="path_listdir"></a>|`(dir_name:string) -> list(string)`<br>List a directory, typically root dir `"/"` and returns a list of filenames in the directory. Returns an empty list if the directory is invalid
 path.remove<a class="cmnd" id="path_remove"></a>|`(file_name:string) -> bool`<br>Deletes a file by name, return `true` if successful
 path.format<a class="cmnd" id="path_format"></a>|`(true:bool) -> bool`<br>Re-formats the LittleFS file system (internal ESP32 flash) and erases all content. The parameter needs to be true as to avoid unwanted calls. Returns true if reformatting was successful.<br>This is sometimes useful when the file-system becomes unstable or corrupt after multiple re-partitionings.
+path.mkdir<a class="cmnd" id="path_mkdir"></a>|`(dir_name:string) -> bool`<br>Creates a directory, return `true` if successful
+path.rmdir<a class="cmnd" id="path_rmdir"></a>|`(dir_name:string) -> bool`<br>Deletes a directory if empty, return `true` if successful
+path.isdir<a class="cmnd" id="path_isdir"></a>|`(name:string) -> bool`<br>Checks if path name is a directory
 
 
 ### `persist` module
@@ -813,7 +843,7 @@ persist.find<a class="cmnd" id="persist_find"></a>|`my_param:string [, "default 
 
 Allows to do introspection on instances and modules, to programmatically list attributes, set and get them.
 
-```python
+```berry
 > class A var a,b def f() return 1 end end
 > ins=A()
 > ins.a = "foo"
@@ -1458,6 +1488,8 @@ Currently supported algorithms:
 
 - AES CTR 256 bits - requires `#define USE_BERRY_CRYPTO_AES_CTR`
 - AES GCM 256 bits
+- AES CCM 128 or 256 bits
+- AES CBC 128 bits
 - Elliptic Curve C25519 - requires `#define USE_BERRY_CRYPTO_EC_C25519`
 - Elliptic Curve P256 (secp256r1) - requires `#define USE_BERRY_CRYPTO_EC_P256`
 - HKDF key derivation with HMAC SHA256 - requires `#define USE_BERRY_CRYPTO_HKDF_SHA256`
@@ -1523,6 +1555,84 @@ print(plaintext.asstring())
 tag = aes.tag()
 print(tag == authTag)
 # true
+```
+
+#### `crypto.AES_CCM` class
+
+Encrypt and decrypt, using AES CCM with 256 bits keys.
+
+General Function|Parameters and details
+:---|:---
+init<a class="cmnd" id="aes_ccm_init"></a>|`AES_CCM.init(secret_key:bytes(16 or 32), iv:bytes(7..13), aad:bytes(), data_len:int, tag_len:int) -> instance`<br>Initialise AES CCM instance with `secret_key` (128 or 256 bits), `iv` (initialization vector or nonce, 56 to 104 bits), `aad` is the associated data, `data_len` is the size of the payload that you need to announce in advance, `tag_len` is the lenght in bytes of the tag (normally 16).
+encrypt<a class="cmnd" id="aes_ccm_encrypt"></a>|`encrypt(ciphertext:bytes) -> bytes`<br>Encrypt the ciphertext.
+decrypt<a class="cmnd" id="aes_ccm_decrypt"></a>|`decrypt(ciphertext:bytes) -> bytes`<br>Identical to `encrypt` above.
+tag<a class="cmnd" id="aes_ccm_tag"></a>|`tag() -> bytes`<br>Returns the tag or MIC.
+decrypt1<a class="cmnd" id="aes_ccm_decrypt1"></a>|`AES_CCM.decrypt1(secret_key:bytes(16 or 32), iv:bytes(), iv_start:int, iv_len:int (7..13), aad:bytes(), aad_start:int, aad_len:int, data:bytes(), data_start:int, data_len:int, tag:bytes(), tag_start:int, tag_len:int (4..16)) -> bool (true if tag matches)`<br>Decrypt in a single call, avoiding any object allocation
+encrypt1<a class="cmnd" id="aes_ccm_encrypt1"></a>|`AES_CCM.encrypt1(secret_key:bytes(16 or 32), iv:bytes(), iv_start:int, iv_len:int (7..13), aad:bytes(), aad_start:int, aad_len:int, data:bytes(), data_start:int, data_len:int, tag:bytes(), tag_start:int, tag_len:int (4..16)) -> bool (always true)`<br>Decrypt in a single call, avoiding any object allocation. Data is encrypted in-place and Tag is changed in the buffer.
+
+Example from Matter:
+
+```berry
+# raw_in is the received frame
+raw_in = bytes("00A0DE009A5E3D0F3E85246C0EB1AA630A99042B82EC903483E26A4148C8AC909B12EF8CDB6B144493ABD6278EDBA8859C9B2C")
+
+payload_idx = 8     # unencrypted header is 8 bytes
+tag_len = 16        # MIC is 16 bytes
+
+p = raw[payload_idx .. -tag_len - 1]   # payload
+mic = raw[-tag_len .. ]                # MIC
+a = raw[0 .. payload_idx - 1]          # AAD
+
+i2r = bytes("92027B9F0DBC82491D4C3B3AFA5F2DEB")   # key
+# p   = bytes("3E85246C0EB1AA630A99042B82EC903483E26A4148C8AC909B12EF")
+# a 	= bytes("00A0DE009A5E3D0F")
+n   = bytes("009A5E3D0F0000000000000000")         # nonce / IV
+# mic = bytes("8CDB6B144493ABD6278EDBA8859C9B2C")
+
+# expected cleartext
+clr = bytes("05024FF601001536001724020024031D2404031818290324FF0118")
+
+# method 1 - with distinct calls
+import crypto
+aes = crypto.AES_CCM(i2r, n, a, size(p), 16)
+cleartext = aes.decrypt(p)
+tag = aes.tag()
+
+assert(cleartext == clr)
+assert(tag == mic)
+
+# method 2 - single call
+raw = raw_in.copy()      # copy first if we want to keep the encrypted version
+var ret = crypto.AES_CCM.decrypt1(i2r, n, 0, size(n), raw, 0, payload_idx, raw, payload_idx, size(raw) - payload_idx - tag_len, raw, size(raw) - tag_len, tag_len)
+
+assert(ret)
+assert(raw[payload_idx .. -tag_len - 1] == clr)
+```
+
+#### `crypto.AES_CBC` class
+
+Encrypt and decrypt, using AES CBC with 128 bits keys.
+
+General Function|Parameters and details
+:---|:---
+decrypt1<a class="cmnd" id="aes_cbc_decrypt1"></a>|`AES_CBC.decrypt1(secret_key:bytes(16), iv:bytes(16), data:bytes(n*16)) -> bool (always true)`<br>Decrypt in a single call in-place, avoiding any object allocation
+encrypt1<a class="cmnd" id="aes_cbc_encrypt1"></a>|`AES_CBC.encrypt1(secret_key:bytes(16), iv:bytes(16), data:bytes(n*16)) -> bool (always true)`<br>Decrypt in a single call, avoiding any object allocation. Data is encrypted in-place and IV is changed in the buffer too.
+  
+Example:
+
+```berry
+var b = bytes().fromstring("hello world_____") # 16-byte aligned
+var key = bytes().fromstring("1122334455667788") # 16 bytes
+var iv = bytes().fromstring("8877665544332211") # 16 bytes
+
+print("data:",b.asstring()) # "hello world_____"
+import crypto
+aes = crypto.AES_CBC()
+aes.encrypt1(key, iv, b)
+print("cipher:",b)
+iv = bytes().fromstring("8877665544332211")
+aes.decrypt1(key, iv, b)
+print("decrypted data:",b.asstring()) # "hello world_____"
 ```
 
 #### `crypto.EC_C25519` class
@@ -1937,7 +2047,7 @@ General methods|Parameters and details
 :---|:---
 info|`zigbee.info() -> map` returns a map with general configuration of the Zigbee coordinator.<BR>Format is identical to `ZbConfig`<BR>Example: <BR>`{'ext_pan_id': '0xCCCCCCCCA11A2233', 'tx_radio': 20, 'shortaddr': 0, 'longaddr': '0x00124B0026BAABBC', 'channel': 11, 'pan_id': 837, 'pan_id_hex': '0x0345', 'shortaddr_hex': '0x0000'}`
 size|`zigbee.size() -> int` returns the number of devices knwon by the coordinator
-iter|`zigbee.iter() -> iterator`<BR>Returns an iterator on all zigbee devices<BR>Use compact implicit form `for ze: zigbee  [...]  end`
+iter|`zigbee.iter() -> iterator`<BR>Returns an iterator on all zigbee devices<BR>Use compact implicit form:<BR>`for ze: zigbee  print(ze)  end`
 item<BR>\[\]|`zigbee.item(shortaddr:int) -> instance of zb_device`<BR>Returns the Zigbee device with short address `shortaddr`<BR>You can use the compact syntax `zigbee[0xFAB6]`
 abort|`zigbee.abort() -> nil` aborts the initialization of Zigbee MCU. To be used when initialization of Zigbee failed
 
@@ -1947,7 +2057,7 @@ The class `zb_device` contains all known information about a paired Zigbee devic
 
 `zb_device` instances can only be read, you can't change directly any attribute.
 
-Getter methods|Parameters and details
+Instance Variables|Parameters and details
 :---|:---
 shortaddr|`shortaddr -> int` returns the 16 bits short address
 longaddr|`longaddr -> bytes` returns the long 64 bits address as 8 bytes (or all zeroes if unknown)
@@ -1967,13 +2077,35 @@ Example:
 import zigbee
 
 # show all devices
-for z: zigbee
-  print(z)
+for device: zigbee
+  print(device)
 end
+#
+# outputs:
+# <instance: zb_device(0x868E, 0x00124B001F841E41, name:'Bedroom', model:'TH01', manufacturer:'eWeLink')>
+# ... more devices
 
-# output:
-<instance: zb_device(0xB955, 0x842E14FFFE139AF4, name:'Plug_Office', model:'TS0121', manufacturer:'_TZ3000_g5xawfcq')>
-[...]
+# read one device by short address
+var device = zigbee[0x868E]
+
+print(device.longaddr)
+# bytes('411E841F004B1200')
+
+print(device.reachable)
+# false - because it's a sleep device
+
+print(device.router)
+# false - it's a sleepy device so not a router
+
+print(device.manufacturer, device.model)
+# eWeLink TH013000_g5xawfcq')>
+
+# example with a plug
+device = zigbee[0xC1BC]
+print(device.longaddr, device.reachable, device.router)
+# bytes('859F4E001044EF54') true false
+print(device.manufacturer, device.model)
+# LUMI lumi.plug.maeu01
 ```
 
 ### Changing Zigbee values on-the-fly
@@ -2002,20 +2134,88 @@ Example, if you want to dump all the traffic passed:
 import zigbee
 class my_zb_handler
   def frame_received(event_type, frame, attr_list, idx)
-    print("frame_received",event_type, frame, attr_list, idx)
+    print(f"shortaddr=Ox{idx:04X} {event_type=} {frame=}")
   end
   def attributes_raw(event_type, frame, attr_list, idx)
-    print("attributes_raw")
+    print(f"shortaddr=Ox{idx:04X} {event_type=} {attr_list=}")
   end
   def attributes_refined(event_type, frame, attr_list, idx)
-    print("attributes_refined")
+    print(f"shortaddr=Ox{idx:04X} {event_type=} {attr_list=}")
   end
 
 end
 
 var my_handler = my_zb_handler()
 zigbee.add_handler(my_handler)
+
+# example of reading for a plug
+#
+# shortaddr=OxC1BC event_type=frame_received frame={'srcendpoint': 21, 'transactseq_set': 0, 'shortaddr': 49596, 'dstendpoint': 1, 'payload': bytes('5500003956CE8243'), 'shortaddr_hex': '0xC1BC', 'manuf': 0, 'payload_ptr': <ptr: 0x3ffccb5c>, 'need_response': 0, 'transactseq': 25, 'cmd': 1, 'direct': 0, 'cluster': 12, 'cluster_specific': 0, 'groupaddr': 0}
+# shortaddr=OxC1BC event_type=attributes_raw attr_list={"000C/0055":261.612,"Endpoint":21,"LinkQuality":21}
+# shortaddr=OxC1BC event_type=attributes_refined attr_list={"ActivePower":261.612,"(ActivePower)":"0B04/050B","Endpoint":21,"LinkQuality":21}
+
+# to remove handler:
+# zigbee.remove_handler(my_handler)
 ```
+
+The `attr_list` is of class `zcl_attribute_list` and can be accessed with `zigbee.zcl_attribute_list`.
+
+Methods|Parameters and details
+:---|:---
+size|`size() -> int`<BR>Number of attributes in the list
+remove|`remove(index:int) -> nil`<BR>Remove the item at `index`
+item<BR>[x]|`item(index:int) -> instance` or `[index:int] -> instance`<BR>Retrieve attribute at `index`, or `nil` if none.<BR>Note: contrary to native `list` it does not throw an exception if the index if off bounds.
+new\_head|`new_head(attribute:instance of zigbee.zcl_attribute_list) -> self`<BR>Adds a new attribute at the beginning (head) of the list
+new\_tail|`new_tail(attribute:instance of zigbee.zcl_attribute_list) -> self`<BR>Adds a new attribute at the end (tail) of the list
+
+Variables of `zcl_attribute_list` for the entire list and common to all attributes:
+
+Attributes (read or write)|Details
+:---|:---
+`groupaddr`|`uint16` group address if the message was multicast, or `nil`
+`src_ep`|`uint8` source endpoint of the message
+`lqi`|`uint8` lqi for the message received (link quality)
+
+The `zcl_attribute_list` contains a list of `zcl_attribute` instance.
+
+Attributes (read or write)|Details
+:---|:---
+`cluster`|`uint16` ZCL cluster number
+`attr_id`|`uint16` ZCL attribute id
+`cmd`|`uint8` ZCL command number
+`direction`|`0 or 1` ZCL direction of the message (to or from the coordinator)
+`cmd_general`|`0 or 1` ZCL flag indicating a general command vs a cluster specific command
+`key`|`string or nil` attribute name (if any) or `nil`
+`val`|`any` ZCL value of the attribute, can be `int/float/string/bytes...`
+`key_suffix`|`uint8` key suffix in case a same attribute is repeated<BR>Like `Power1`, `Power2`...
+`manuf`|`uint16` ZCL manufacturer specific code or 0 if none<BR>This is typically indicating a proprietary attribute
+`attr_multiplier`|`int` multiplier to be applied or `1`
+`attr_divider`|`int` divider to be applied or `1`
+`attr_base`|`int` offset to be applied or `0`
+`attr_type`|`uint8` ZCL type byte for the received attribute
+
+`zcl_attribute_list` methods:
+
+Methods|Parameters and details
+:---|:---
+tomap|`tomap() -> map`<BR>Transforms main attributes as map (read-only): `cluster`, `attr_id`, `cmd`, `direction`, `key`, `val` 
+
+#### Changing attributes received
+
+For events `attributes_raw` and `attributes_refined`, you receive an instance of `attr_list` which represents all the attributes received. This list can be modified according to specificities of devices, hence giving full liberty on decoding exotic protocols or manufacturers.
+
+The decoding is done in 2 steps:
+
+- `attributes_raw` contains individual attributes with their native raw values. Names are not yet matched, nor scale factors applied. This is where you want to decode non-standard protocols
+  Example:
+  `{"000C/0055":261.612,"Endpoint":21,"LinkQuality":21}`
+  represents raw value from a plug; the value was decoded as float.
+
+- `attributes_refined` contains a similar list with additional decoding handled, any scale factor applied (like transforming integer temperature in 1/100 of Celsius to a `float`), and human readable names attached.
+  Example:
+  `{"ActivePower":261.612,"(ActivePower)":"0B04/050B","Endpoint":21,"LinkQuality":21}`
+  In this example, the attribute is `0B04/050B` is rename as `ActivePower`, but the original `0B04/050B` attribute cluster/id is still readable. We can see that the generic `000C/0055 (AnalogValue)` from `lumi.plug.maeu01` is replaced with `0B04/050B (ActivePower)`.
+
 
 #### Changing zigbee frame, `zcl_frame` class
 
@@ -2040,6 +2240,10 @@ Attributes (read or write)|Details
 `transactseq`|`uint8` transaction number (read only)
 `transactseq_set`|`uint8` transaction number (write only - if you need to change it)
 
+Example:
+```berry
+frame_received frame_received {'srcendpoint': 21, 'transactseq_set': 0, 'shortaddr': 49596, 'dstendpoint': 1, 'payload': bytes('550039D5787B43'), 'shortaddr_hex': '0xC1BC', 'manuf': 4447, 'payload_ptr': <ptr: 0x3ffd4d04>, 'need_response': 0, 'transactseq': 60, 'cmd': 10, 'direct': 0, 'cluster': 12, 'cluster_specific': 0, 'groupaddr': 0} nil 49596
+```
 
 ## Compiling Berry
 

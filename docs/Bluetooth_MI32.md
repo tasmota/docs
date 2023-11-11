@@ -1,43 +1,22 @@
 # MI32 legacy 
   
-The MI32-driver focuses on the passive observation of BLE sensors of the Xiaomi/Mijia universe, thus only needing a small memory footprint. This allows to additionally run a dedicated software bridge to Apples HomeKit with very few additional configuration steps. Berry can be used to create generic applications.  
-Currently supported are the original ESP32, the ESP32-C3 and the ESP32-S3.
+The MI32-driver focuses on the passive observation of BLE sensors of the Xiaomi/Mijia universe, thus only needing a small memory footprint. Berry can be used to create generic applications.  
+Currently supported are the original ESP32, the ESP32-C2/C3/C6 and the ESP32-S3.
 
 ## Usage
   
 This driver is not part of any standard build. To self compile it is recommended to add build environments to `platformio_tasmota_cenv.ini`. This file needs to be created first.  
-Add these sections:  
+Add this section (change accordingly for the other chipsets):  
 ```
-[env:tasmota32-mi32-homebridge]
+[env:tasmota32-mi32-legacy]
 extends                 = env:tasmota32_base
 build_flags             = ${env:tasmota32_base.build_flags}
                           -DUSE_MI_ESP32
                           -DUSE_MI_EXT_GUI
-                          -DUSE_MI_HOMEKIT=1    ; 1 to enable; 0 to disable
 lib_extra_dirs          = lib/libesp32, lib/libesp32_div, lib/lib_basic, lib/lib_i2c, lib/lib_div, lib/lib_ssl
-lib_ignore              = ESP8266Audio
-                          ESP8266SAM
-                          TTGO TWatch Library
-                          Micro-RTSP
-                          epdiy
-                          esp32-camera
-
-[env:tasmota32c3-mi32-homebridge]
-extends                 = env:tasmota32c3
-build_flags             = ${env:tasmota32_base.build_flags}
-                          -DUSE_MI_ESP32
-                          -DUSE_MI_EXT_GUI
-                          -DUSE_MI_HOMEKIT=1    ; 1 to enable; 0 to disable
-lib_extra_dirs          = lib/libesp32, lib/libesp32_div, lib/lib_basic, lib/lib_i2c, lib/lib_div, lib/lib_ssl
-lib_ignore              = ESP8266Audio
-                          ESP8266SAM
-                          TTGO TWatch Library
-                          Micro-RTSP
-                          epdiy
-                          esp32-camera
 ```
   
-It is probably necessary to restart your IDE (i.e. Visual Studio Code) to see the option to build these environments.
+It is probably necessary to restart your IDE (i.e. Visual Studio Code) to see the option to build this environment.
 
 ## Tasmota and BLE-sensors
 
@@ -268,6 +247,7 @@ Command|Parameters
 :---|:---
 MI32Cfg<a id="mi32cfg"></a>|Saves current sensor list as **mi32cfg** file to the flash of the ESP32. After reboot only the saved drivers will be observed, no unknown drivers will be added. A valid config file is mandatory for HomeKit in this driver.
 MI32Key<a id="mi32key"></a>| Set a "bind_key" for a MAC-address to decrypt sensor data (LYWSD03MMC, MJYD2S). The argument is a 44 uppercase characters long string, which is the concatenation of the bind_key and the corresponding MAC.<BR>`<00112233445566778899AABBCCDDEEFF>` (32 characters) = bind_key<BR>`<112233445566>` (12 characters) = MAC of the sensor<BR>`<00112233445566778899AABBCCDDEEFF112233445566>` (44 characters)= final string
+MI32Name<a id="mi32name"></a>| Override the name of the sensor with `mi32name<slot> <name>`. Slot is the position of the sensor in the internal array (like in the payload from `status 8`), starting with 0. Will not append the OUI of the MAC to the name in the MQTT payload. Should be made persistent using command `mi32cfg`. `mi32name<slot>` will delete the override at runtime, but not change the config file.
 MI32Option0<a id="mi32option"></a>|`0` = sends only recently received sensor data<br>`1` = aggregates all recent sensors data types
 MI32Option1|`0` = shows full sensor data at Teleperiod<br>`1` = shows no sensor data at Teleperiod
 MI32Option2|`0` = sensor data only at Teleperiod (_default_)<br>`1` = direct bridging of BLE data to MQTT messages
@@ -281,36 +261,14 @@ MI32Option4|`0` = use passive scanning (default)<br>`1` = use active scanning, n
 
 !!! tip
 
-    If you want to add a new BLE sensor to your config on the device, use `MI32option3 1` to add the new sensor by catching a BLE packet. Then use `MI32Cfg` to save the new config on flash.
+    If you want to add a new BLE sensor to your config on the device, use `MI32option3 1` to add the new sensor by catching a BLE packet. Then use `MI32Cfg` to save the new config to the file system.  
+    To support unknown sensor types give them a suitable name with `mi32name<slot> <name>`, then save with `mi32cfg`. The system will learn about the sensors feature set by receiving data packets. The feature set can be saved too with `mi32cfg` in order to have knowledge about it at boot time.
   
   
 ## Mi Dashboard
   
 The driver provides an extended web GUI to show the observed Xiaomi sensors in a widget style, that features a responsive design to use the screen area as effective as possible. The other advantage is, that only the widget with new data gets redrawn (indicated by a fading circle) and no unnecessary refresh operations will happen. A simple graph shows if valid data for every hour was received in the last 24h, where only one gap for the coming hour is not a sign of an error. Configured sensors with no received packet since boot or key/decryption errors are dimmed.
   
-## HomeKit Bridge
-  
-If activated at compile time the driver will start the HAP core (= the main task of the HomeKit framework) after successfully reading a valid **mi32cfg** file after the start. It will create a 'bridge accessory' presenting all configured BLE devices to HomeKit. You can add the ESP32 as such a **Mi-Home-Bridge** to HomeKit in the native way, like you would add a commercial product to you local HomeKit network. The setup key is derived from the Wifi MAC of your ESP32 to easily allow many ESP32 to be used as a HomeKit bridge in your local network.
-Besides the driver will also manage up to four relays and sync them with HomeKit.  
-There is nothing more to configure, the driver will automatically translate the data packets back and forth.  
-It just works ... except, when it does not.
-
-!!! danger "Known issues"
-
-    The underlying HAP framework will expose incompatible network configurations, which will likely be related to mDNS and IGMP settings. There is nothing, that the Tasmota side can fix here.
-
-!!! danger "If it is not broken, do not upgrade"
-
-    Although the driver does not write to the NVS section and the usage of a modified HAP framework (using a NVS wrapper) the behavior of Tasmota firmware upgrades is undefined with regards to a working HomeKit installation. Similar things can also happen using much bigger projects like "Homebridge". So it might be necessary to completely erase the Mi-Bridge from your "Home" in Homekit and doing a flash erase of the ESP32 after a firmware upgrade of the ESP32. It is recommend to first create a final mi32cfg file before you add the Mi-Home-Bridge to your "Home".
-  
-### HomeKit QR-Code-Generator  - Web App
-  
-This will generate a QR-Code based on the MAC address of the ESP32 which runs Tasmotas Homekit-Bridge. Use the camera of your iPhone or iPad to easily start the setup procedure.  
-
-<script src="../extra_javascript/mi32/qrcode.js"></script>
-<input size="40" type="text" id="Wifi-MAC" value="" placeholder="Input WiFi MAC of the ESP32" style="font-size:1.5em;"><br>
-
-<object data="../extra_javascript/mi32/hk_qrcode.svg" id="hk_qrcode" type="image/svg+xml" height="0"></object>
   
 ##  Homeassistant and Tasmota - BLE sensors
   
@@ -336,6 +294,17 @@ For sensors like humidity or temperature it should not matter, how many ESP's do
 
 The driver provides two Berry modules to allow extensions and interactions with the sensors. It is also possible to write generic BLE functions unrelated to Xiaomi sensors.  
   
+What can be done?  
+
+|    Example      |                           |
+| ----------- | ------------------------------------ |
+|Improv Wi-Fi | use Bluetooth Low-Energy for Wi-Fi commissioning of your ESP32 device|
+|iBeacon      | create your own beacon, that can be tracked|
+|BTHome       | build your own BLE sensor, that sends data via BLE advertisements|
+|BLE lights   | control lights that uses smartphone apps like *Happy Lighting*, *Triones*, *ILC*, ...|
+|BLE remotes  | use a cheap BLE remote control like the BPR2S Air Mouse|
+
+  
 ### MI32 module
 This module allows access and modification of the internal data backend of the MI32 driver for the observed Xiaomi sensors.  
 First we need to import the module:  
@@ -358,35 +327,36 @@ For generic BLE access we import the module:
 To simplify BLE access this works in the form of state machine, where you have to set some properties of a context and then finally launch an operation. Besides we have three callback mechanisms for listening to advertisements, active sensor connections with Tasmota as a client and providing a server including advertising. All need a byte buffer in Berry for data exchange and a Berry function as the callback.  
 The byte buffer is always organized in the format `length-data bytes`, where the first byte represents the length of the following data bytes, which results in a maximum of 255 data bytes.  
   
+#### Observer (aka Advertisement listener)
 To listen to advertisements inside a class (that could be a driver) we could initialize like that:
 
 !!! example "Simple Advertisement Listener"
 
-  ```python
-  var buf
-  def init()
-      import BLE
-      self.buf = bytes(-64)
-      var cbp = tasmota.gen_cb(/s,m-> self.cb(s,m))
-      BLE.adv_cb(cbp,self.buf)
-  end
+    ```berry
+    var buf
+    def init()
+        import BLE
+        self.buf = bytes(-64)
+        var cbp = tasmota.gen_cb(/s,m-> self.cb(s,m))
+        BLE.adv_cb(cbp,self.buf)
+    end
 
-  def cb(svc,manu)
-    print(buf) # simply prints out the byte buffer of an advertisement packet
-    if svc != 0 # if service data present
-        print("service data:")
-        var _len = self.buf[svc-2]-1
-        # the index points to the data part of an AD element, two position before that is length of "type + data", 
-        # so we subtract one byte from that length to get the "pure" data length
-        print(self.buf[svc.._len+svc])
+    def cb(svc,manu)
+        print(buf) # simply prints out the byte buffer of an advertisement packet
+        if svc != 0 # if service data present
+            print("service data:")
+            var _len = self.buf[svc-2]-1
+            # the index points to the data part of an AD element, two position before that is length of "type + data", 
+            # so we subtract one byte from that length to get the "pure" data length
+            print(self.buf[svc.._len+svc])
+        end
+        if manu != 0 # if manufacturer data present
+            print("manufacturer data:")
+            var _len = self.buf[manu-2]-1
+            print(self.buf[manu.._len+manu])
+        end
     end
-    if manu != 0 # if manufacturer data present
-        print("manufacturer data:")
-        var _len = self.buf[manu-2]-1
-        print(self.buf[manu.._len+manu])
-    end
-  end
-  ```
+    ```
 
 To stop listening call:  
 `BLE.adv_cb(nil)`
@@ -418,20 +388,24 @@ Two methods for filtering of advertisements are provided:
 
     The watchlist is more effective to avoid missing packets, than the blocklist in environments with high BLE traffic. Both methods work for the internal Xiaomi driver and the post processing with Berry.
   
+#### Peripheral role (aka client)
+  
 Communicating via connections is a bit more complex. We have to start with a callback function and a byte buffer again.  
-```python
+```berry
 # simple example for the Berry console
 import BLE
 cbuf = bytes(-64)
 
-def cb(error,op,uuid)
+def cb(error,op,uuid,handle)
 end
 
 cbp = tasmota.gen_cb(cb)
 BLE.conn_cb(cbp,cbuf)
 ```
   
-Error codes:
+#####Return values of the callback function
+  
+Error (codes):  
 
 - 0 - no error
 - 1 - connection error
@@ -444,15 +418,21 @@ Error codes:
 - 8 - did not write value
 - 9 - timeout: did not read on notify
   
-Op codes:
+Op (codes):  
 
 - 1 - read  
 - 2 - write  
 - 3 - subscribe - direct response after launching a run command to subscribe
+- 5 - disconnect  
+- 6 - retrieve all *services* of connected device  
+- 7 - retrieve all *characteristics* and *GATT Characteristic Property Flags*  of a service  
 - 103 - notify read - the notification with data from the BLE server
   
-UUID:  
-Returns the 16 bit UUID of the characteristic as a number, that returns a value.
+uuid:  
+Returns the 16 bit UUID of the characteristic as a number, even if the UUID was 128 bit.  
+  
+handle:  
+Returns the 16 bit handle of the characteristic as a number.
   
 Internally this creates a context, that can be modified with the following methods:
   
@@ -470,6 +450,8 @@ Finally run the context with the specified properties and (if you want to get da
 - 2 - write  
 - 3 - subscribe  
 - 5 - disconnect  
+- 6 - get all services  
+- 7 - get all characteristics  
 
 - 11 - read - then disconnect (returns 1 in the callback)  
 - 12 - write - then disconnect (returns 2 in the callback)  
@@ -481,12 +463,14 @@ The buffer format for reading and writing is in the format (length - data):
 n bytes - data
 ```
   
-The server is initiated similarly with `BLE.serv_cb(cbp,cbuf)`. After that you have to construct the server by first adding all *characteristics* and finally starting it, by setting the *advertisement* data for the first time. Setting *advertisement* data without adding *characteristics* will not start a BLE server but only a BLE advertiser, which is totally fine for some use cases (i.e. Beacons, BTHome).  
+#### Central role (aka server)
+  
+The server is initiated similarly with `BLE.serv_cb(cbp,cbuf)`. After that you have to construct the server by first adding all *characteristics* and finally starting it, by setting the *advertisement* data for the first time. Setting *advertisement* data without adding *characteristics* will not start a BLE server but only a BLE Broadcaster, which is totally fine for some use cases (i.e. Beacons, BTHome).  
 The BLE server can be stopped with `BLE.serv_cb(nil)`, which will restart the "BLE Scan Task".  
 
 The callback functions returns error, operation, 16-bit-uuid and 16-bit-handle.  
   
-```python
+```berry
 # simple server setup example for the Berry console
 import BLE
 cbuf = bytes(-256)
@@ -499,21 +483,23 @@ BLE.serv_cb(cbp,cbuf)
 # now add characteristics and advertisement ...
 ```
   
-Command operators:  
-- 201 - add and/or set advertisement data according to the BLE standard, typically chaining small packets in the in the format of `length-type-data`. When called for the first time, will return a bytes buffer, that represents an array of the 16-bit-handles of all characteristics in the order of addition.
-- 202 - add and/or set scan response data, according to the BLE standard which is equally  to the advertisement data. Should be used sparsely.
-- 211 - add and/or set characteristic with value of bytes buffer. For simplicity a `Client Characteristic Configuration Descriptor` (aka 0x2902) will be added on construction of every characteristic and read, write, notification and indication is enabled. You can select write with or without response withe the optional boolean of  `BLE.set_chr(string, bool)`, which defaults to "write with no response". The function call will always trigger a *notification*. As every *characteristic* belongs to a *service*, `BLE.set_svc(string)` must have been called before.  
+####Command op codes:  
   
-Response operators (to client access to the server):
-- 221 - on read of a characteristic, returns no buffer data
-- 222 - on write of a characteristic, returns the written values as byte buffer data
-- 223 - on unsubscribe, returns no buffer data
-- 224 - on subscribe to notifications, returns no buffer data
-- 225 - on subscribe to indications, returns no buffer data
-- 226 - on subscribe to notifications and indications, returns no buffer data
-- 227 - on connect, returns MAC of client device as byte buffer
-- 228 - on disconnect, returns no buffer data
-- 229 - on status, returns error code as byte buffer
+- 201 - add and/or set advertisement data according to the BLE standard, typically chaining small packets in the in the format of `length-type-data`. When called for the first time, will return a bytes buffer, that represents an array of the 16-bit-handles of all characteristics in the order of addition.  
+- 202 - add and/or set scan response data, according to the BLE standard which is equally  to the advertisement data. Should be used sparsely.  
+- 211 - add and/or set characteristic with value of bytes buffer. For simplicity a `Client Characteristic Configuration Descriptor` (aka 0x2902) will be added on construction of every characteristic and read, write, notification and indication is enabled. You can select write with or without response withe the optional boolean of  `BLE.set_chr(string, bool)`, which defaults to "write with no response". The function call will always trigger a *notification*. As every *characteristic* belongs to a *service*, `BLE.set_svc(string)` must have been called before.    
+  
+####Response op codes (triggered when a client interacts with the server):  
+   
+- 221 - on read of a characteristic, returns no buffer data  
+- 222 - on write of a characteristic, returns the written values as byte buffer data  
+- 223 - on unsubscribe, returns no buffer data  
+- 224 - on subscribe to notifications, returns no buffer data  
+- 225 - on subscribe to indications, returns no buffer data  
+- 226 - on subscribe to notifications and indications, returns no buffer data  
+- 227 - on connect, returns MAC of client device as byte buffer  
+- 228 - on disconnect, returns no buffer data  
+- 229 - on status, returns error code as byte buffer  
  
 
   
@@ -522,7 +508,7 @@ Response operators (to client access to the server):
 Here is an implementation of the "old" MI32 commands:
 !!! example "removed MI32 commands in Berry"
 
-    ```python
+    ```berry
     import BLE
     import MI32
 
@@ -625,7 +611,7 @@ Here is an implementation of the "old" MI32 commands:
 
 ??? example "Govee desk lamp - pre-alpha"
 
-    ```python
+    ```berry
     # control a BLE Govee desk lamp
     class GOVEE : Driver
         var buf
@@ -746,79 +732,139 @@ Here is an implementation of the "old" MI32 commands:
         #   SCENES     = 0x04
     ```
 
-??? example "Xbox X/S controller - proof of concept"
+??? example " Air mouse controller"
 
-    ```python
-    # just a proof of concept to connect a Xbox X/S controller
-    # must be repaired on every connect
-    class XBOX : Driver
+    ```berry
+    # Simple Berry driver for the BPR2S Air mouse (a cheap BLE HID controller)
+    # TODO: handle mouse mode
+
+    import BLE
+
+    class BLE_BPR2S : Driver
         var buf
+        var connecting, connected
 
-        def init(MAC)
-            import BLE
-            var cbp = tasmota.gen_cb(/e,o,u->self.cb(e,o,u))
+        def init(MAC,addr_type)
+            var cbp = tasmota.gen_cb(/e,o,u,h->self.cb(e,o,u,h))
             self.buf = bytes(-256)
             BLE.conn_cb(cbp,self.buf)
-            BLE.set_MAC(bytes(bytes(MAC)),0)
+            BLE.set_MAC(bytes(MAC),addr_type)
+            print("BLE: will try to connect to BPR2S with MAC:",MAC)
             self.connect()
         end
 
-        def connect() # separated to call it from the berry console if needed
-            import BLE
+        def connect()
+            self.connecting = true;
+            self.connected = false;
             BLE.set_svc("1812")
             BLE.set_chr("2a4a") # the first characteristic we have to read
             BLE.run(1) # read
         end
 
-        def handle_read_CB(uuid) # uuid is the notifying characteristic
-            import BLE
+        def every_second()
+            if (self.connecting == false && self.connected == false)
+                print("BLE: try to reconnect BPR2S")
+                self.connect()
+            end
+        end
+
+        def handle_read_CB(uuid) # uuid is the callback characteristic
+            self.connected = true;
         # we just have to read these characteristics before we can finally subscribe
-            if uuid == 0x2a4a # ignore data
+            if uuid == 0x2a4a # did receive HID info
                 BLE.set_chr("2a4b")
                 BLE.run(1) # read next characteristic 
-            end
-            if uuid == 0x2a4b # ignore data
+            elif uuid == 0x2a4b # did receive HID report map
                 BLE.set_chr("2a4d")
-                BLE.run(1) # read next characteristic 
-            end
-            if uuid == 0x2a4d # ignore data
+                BLE.run(1) # read to trigger notifications of the HID device
+            elif uuid == 0x2a4d # did receive HID report
+                print(self.buf[1..self.buf[0]])
                 BLE.set_chr("2a4d")
-                BLE.run(3) # start notify
+                BLE.run(3) # subscribe
             end
         end
 
-        def handle_HID_notifiaction() # a very incomplete parser
-            if self.buf[14] == 1
-                print("ButtonA") # a MQTT message could actually trigger something
+        def handle_HID_notification(h) 
+            import mqtt
+            var t = "key"
+            var v = ""
+            if h == 42
+                var k = self.buf[3]
+                if k == 0x65
+                    v = "square"
+                elif k == 0x4f
+                    v = "right"
+                elif k == 0x50
+                    v = "left"
+                elif k == 0x51
+                    v = "down"
+                elif k == 0x52
+                    v = "up"
+                elif k == 0x2a
+                    v = "back"
+                end
+            elif h == 38
+                var k = self.buf[1]
+                if k == 0x30
+                    v = "on"
+                elif k == 0xe2
+                    v = "mute"
+                elif k == 0x23
+                    v = "triangle"
+                elif k == 0x21
+                    v = "circle"
+                elif k == 0x41
+                    v = "set"
+                elif k == 0x24
+                    v = "return"
+                elif k == 0xea
+                    v = "minus"
+                elif k == 0xe9
+                    v = "plus"
+                end
+            elif h == 34
+                t = "mouse"
+                var x = self.buf.geti(1,2) >> 4
+                var y  = (self.buf[2] & 0xf) << 8
+                y  |= self.buf[3]
+                if y > 2048
+                    y -= 4096
+                end
+                v = format('{"x":%i,"y":%i}',x,y)
             end
-            if self.buf[14] == 2
-                print("ButtonB")
-            end
-            if self.buf[14] == 8
-                print("ButtonX")
-            end
-            if self.buf[14] == 16
-                print("ButtonY")
+            if v != ''
+                mqtt.publish("tele/BPR2S",format('{"%s":"%s"}',t,v))
+            # else # will be triggered on button release too
+            #     print(self.buf[1..self.buf[0]],h) # show the packet as byte buffer
             end
         end
 
-        def cb(error,op,uuid)
+        def cb(error,op,uuid,handle)
             if error == 0
-                if op == 1
-                    print(op,uuid)
+                if op == 1 # read OP
+                    # print(op,uuid)
                     self.handle_read_CB(uuid)
+                elif op == 3
+                    self.connecting = false;
+                    print("BLE: init completed for BPR2S")
+                elif op == 5
+                    self.connected = false;
+                    self.connecting = false;
+                    print("BLE: did disconnect BPR2S ... will try to reconnect")
+                elif op == 103 # notification OP
+                    self.handle_HID_notification(handle)
                 end
-                if op == 3
-                self.handle_HID_notification()
-                end
-                return
             else
-                print(error)
+                print("BLE: error:",error)
+                if self.connecting == true
+                    print("BLE: init sequence failed ... try to repeat")
+                    self.connecting = false
+                end
             end
         end
 
     end
 
-    xbox = XBOX("AABBCCDDEEFF")  # xbox controller MAC
-    tasmota.add_driver(xbox)
+    ble_hid = BLE_BPR2S("E007020103C1",1) # HID controller MAC and address type
+    tasmota.add_driver(ble_hid)
     ```

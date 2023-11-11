@@ -42,8 +42,15 @@ Open the file in chosen development environment for editing.
 
 !!! warning "Do not modify my_user_config.h"
 It is strongly recommended to NOT customize your build by making changes in `my_user_config.h` because the changes you made there will be overwritten if you download/clone a newer version of Tasmota code-base. At least this would make any merge complicated. Add your custom configurations ONLY in `user_config_override.h`.
-The file [`my_user_config.h`](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h) is a great reference for available settings and features.
+The file [`my_user_config.h`](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h) is a great reference for available settings and features.  
 
+A good way to avoid dealing with the source code files is to pass defines as a flag in platformio_tasmota_cenv.ini. This needs a special stringification with escape double quotes (" -> \\\\") in the constant value and wrapping a line in single quotes.  
+```
+build_flags                 = ${env:tasmota32_base.build_flags}
+                              -DOTA_URL='""'
+                              '-DUSER_BACKLOG="so11 1; br load(\\"setup.be\\")"'
+```
+  
 ### Changing Default Settings
 
 Most default settings are defined in [`my_user_config.h`](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h) along with an explanation and the command used to change it dynamically. For example:

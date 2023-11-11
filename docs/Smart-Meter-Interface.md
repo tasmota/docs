@@ -34,6 +34,8 @@ Additional features can be enabled by adding the following `#define` compiler di
 |NO_SML_REPLACE_VARS | disables replacement of any text in descriptor by script text variables. Useful if several occurrences of a text occupies a lot of space and you get short of script buffer. Readability may get worse so only makes sense on large descriptors. Note: to use `%` symbol un measurement units, you need to escape it like `%%`.|
 |NO_USE_SML_DECRYPT | disables decoding of encrypted ams meters. decrypting needs TLS, so must define USE_TLS also.|
 |USE_SML_AUTHKEY | enables authentication, this is not needed by most energy meters.|
+|NO_USE_SML_TCP | disables TCP MODBUS support.|
+|NO_USE_SML_CANBUS | disables CANBUS support.|
 	
 ### General description
 
@@ -55,6 +57,7 @@ The Smart Meter Interface provides a means to connect many kinds of meters to Ta
 | OBIS ASCII | telegrams emitted from many smart meters, including [P1 Smart Meters](https://tasmota.github.io/docs/P1-Smart-Meter/) |
 | OBIS Binary SML| telegrams emitted from many smart meters |
 | MODBus Binary | telegrams used by many power meters and industrial devices |
+| CANBus Binary | telegrams used by battery monitoring systems and industrial devices |
 | Kamstrup Binary | telegrams used by many power meters from Kamstrup |
 | EBus Binary | telegrams emitted by many heaters and heat pumps  (e.g. Vaillant, Wolf) |
 | VBus Binary | telegrams emitted by many solar thermal systems boilers (e.g. Resol, Viessmann) |
@@ -74,7 +77,7 @@ This section must be present, even if it's empty. If compiled with `SML_REPLACE_
 ------------------------------------------------------------------------------
 Declare `>B` (boot) section to inform the interface to read the meter descriptor(s):
 > `>B`  
-=>[sensor53 r](Commands#sensor53)
+=>[sensor53 r](Commands.md#sensor53)
 ------------------------------------------------------------------------------
 (Optional) declare `>S` section with additional scripting commands:
 > `>S <n>`
@@ -95,10 +98,10 @@ Declare `>M` section with the number of connected meters (n = `1..5`):
 | Parameter | Description |
 | :--- | :--- |
 | `+<M>` | Meter number. The number must be increased with each additional Meter (default 1 to 5).|
-| `<rxGPIO>` | The GPIO pin number where meter data is received. <BR> [xxx.xxx.xxx.xxx] IP number instead of pin number enables MODBUS TCP mode (tx pin can be any number and is ignored)|
-| `<type>` | The type of meter: <BR>- `o` - OBIS ASCII type of coding<BR>- `s` - SML binary smart message coding<BR>- `e` - EBus binary coding<BR>- `v` - VBus binary coding<BR>- `m` - MODBus binary coding with serial mode 8N1<BR>- `M` - MODBus binary coding with serial mode 8E1<BR>- `k` - Kamstrup binary coding with serial mode 8N1<BR>- `c` - Counter type<BR>- `r` - Raw binary coding (any binary telegram) |
+| `<rxGPIO>` | The GPIO pin number where meter data is received. <BR> [xxx.xxx.xxx.xxx] IP number instead of pin number enables MODBUS TCP mode, the tcp port number is given at the baudrate position. (tx pin can be any number and is ignored)|
+| `<type>` | The type of meter: <BR>- `o` - OBIS ASCII type of coding<BR>- `s` - SML binary smart message coding<BR>- `e` - EBus binary coding<BR>- `v` - VBus binary coding<BR>- `m` - MODBus binary coding with serial mode 8N1<BR>- `M` - MODBus binary coding with serial mode 8E1<BR>- `k` - Kamstrup binary coding with serial mode 8N1<BR>- `C` - CANBus type<BR>- `c` - Counter type<BR>- `r` - Raw binary coding (any binary telegram) |
 | `<flag>` | Options flag:<BR>- `0` - counter without pullup<BR>- `1` - counter with pullup<BR>- `16` - enable median filter for that meter. Can help with sporadic dropouts, reading errors (not available for counters). this option is enabled by default #define USE_SML_MEDIAN_FILTER, if you are low on memory and dont use this feature you may outcomment this define in the driver |
-| `<parameter>` | Parameters according to meter type:<BR>- for `o,s,e,v,m,M,k,r` types: serial baud rate e.g. `9600`.<BR>- for `c` type: a positive value = counter poll interval (not really recommended) or a negative value = debounce time (milliseconds) for irq driven counters. |
+| `<parameter>` | Parameters according to meter type:<BR>- for `o,s,e,v,m,M,k,r` types: serial baud rate e.g. `9600` (or port# for Modbus TCP).<BR>- for type `C` Canbus Baudrates and Number of receive buffers (*100). (see example R4850G2)<BR>- 0 = 25 KBITS<BR>- 1 = 50 KBITS<BR>- 2 = 100 KBITS<BR>- 3 = 125 KBITS<BR>- 4 = 250 KBITS<BR>- 5 = 500 KBITS<BR>- 6 = 800 KBITS<BR>- 7 = 1 MBITS<BR>- for `c` type: a positive value = counter poll interval (not really recommended) or a negative value = debounce time (milliseconds) for irq driven counters. |
 | `<jsonPrefix>` | Prefix for Web UI and MQTT JSON payload. Up to 7 characters.|
 | `<txGPIO>` | The GPIO pin number where meter command is transmitted (optional).|
 | `<tx enable>` | The GPIO pin number to enable transmitter (RS485) may follow the TX pin in bracket (pin) without a colon an 'i' in front of the pin number means 'inverted' (optional).|
@@ -147,13 +150,13 @@ Each meter typically provides multiple metrics (energy, voltage, power, current 
 | Parameter | Description |
 | :--- | :--- |
 | `<M>` | The meter number to which this decoder belongs |
-| `<decoder>` | **Decoding specification**: OBIS as ASCII; SML, EBus, VBus, MODBus, RAW as HEX ASCII etc. _No space characters allowed in this section!_ <BR> **OBIS**: ASCII OBIS code terminated with `(` character which indicates the start of the meter value<BR>**Counter**: ASCII code 1-0:1.8.0\*255 for counter value, code 1-0:1.7.0\*255 for pulse rate (e.g. for actual power value)<BR> **SML**: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value<BR>**EBus, MODBus, RAW** - hex values of data blocks to compare:<BR> - `xx` = ignore value  (1 byte) or `xN` = ignore N bytes<BR> - `ss` = extract a signed byte<BR> - `uu` = extract an unsigned byte<BR>  - `UUuu` = extract an unsigned word (high order byte first)<BR> - `uuUU` = extract an unsigned word (low order byte first)<BR> - `UUuuUUuu` = extract an unsigned long word (high order byte first)<BR> - `uuUUuuUU` = extract an unsigned long word (low order byte first)<BR> - `SSss` = extract a signed word (high order byte first)<BR> - `ssSS` = extract a signed word (low order byte first)<BR> - `SSssSSss` = extract a signed long word (high order byte first)<BR> - `ssSSssSS` = extract a signed long word (low order byte first)<BR> - **on long word values**, if a trailing s is added at the end of the mask, word order is reversed<BR> - `bcdN` = extract a binary coded decimal N=2..12<BR> - `ffffffff` = extract a float value - IEEE754 decode<BR> - `FFffFFff` = extract a reverse float value - IEEE754 decode<BR>- `kstr` = decode KAMSTRUP data<BR>- `pm(x.y.z)` = pattern match(asci obis code)<BR>- `pm(hHHHHHH)` = pattern match(hex obis code)<BR>- `pm(rHHHHHH)` = pattern match(any hex pattern)<BR><BR>if using **VBus** - hex values of data blocks to compare:<BR> - `AAffffaddrff0001ffff` = VBus-specific hex header: `AA`-sync byte, `addr`-the reversed address of the device. To find his out first look up the known [hex address of the device](http://danielwippermann.github.io/resol-vbus/vbus-packets.html). E.g. Resol DeltaSol BS Plus is `0x4221`. Reverse it (without `0x`) and you will get `21 42` hex characters. Now turn on raw dump mode using command `sensor53 d1` and look for rows starting with `aa`, containing your reversed address at position 4 and 5 and `00 01` hex characters at position 7 and 8. If found, the entire header will be 10 hex characters long including `aa` (20 ascii chars without space, e.g. for Resol DeltaSol BS Plus this will be `AA100021421000010774`). At position 9 you see the number of frames containing readable data. To turn off raw dump use `sensor53 d0`.<BR> - `v` = VBus protocol indicator<BR> - `oN` = extract data from offset `N` (see offsets of your device in [VBus protocol documentation](http://danielwippermann.github.io/resol-vbus/vbus-packets.html))<BR> - `u` or `s` = extract unsigned or signed data<BR> - `w` or `b` = extract word or byte<BR>**End of decoding**: `@` indicates termination of the decoding procedure.<BR>- `(` following the `@` character in case of obis decoder indicates to fetch the 2. value in brackets, not the 1. value.  (e.g. to get the second value from an obis like `0-1:24.2.3(210117125004W)(01524.450*m3)`)<BR>- decoding multiple values coming in brackets after each other is possible with `(@(0:1`, `(@(1:1`, `(@(2:1` and so on  (e.g. to get values from an obis like `0-0:98.1.0(210201000000W)(000000.000*kWh)(000000.000*kWh)`)<BR>- decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte. (e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`)<BR>- in case of MODBus/Kamstrup, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition
+| `<decoder>` | **Decoding specification**: OBIS as ASCII; SML, EBus, VBus, MODBus, RAW as HEX ASCII etc. _No space characters allowed in this section!_ <BR> **OBIS**: ASCII OBIS code terminated with `(` character which indicates the start of the meter value<BR>**Counter**: ASCII code 1-0:1.8.0\*255 for counter value, code 1-0:1.7.0\*255 for pulse rate (e.g. for actual power value)<BR> **SML**: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value<BR>**EBus, MODBus, RAW** - hex values of data blocks to compare:<BR> - `xx` = ignore value  (1 byte) or `xN` = ignore N bytes<BR> - `ss` = extract a signed byte<BR> - `uu` = extract an unsigned byte<BR>  - `UUuu` = extract an unsigned word (high order byte first)<BR> - `uuUU` = extract an unsigned word (low order byte first)<BR> - `UUuuUUuu` or `U32` = extract an unsigned long word (high order byte first)<BR> - `uuUUuuUU` or `u32` = extract an unsigned long word (low order byte first)<BR> - `SSss` = extract a signed word (high order byte first)<BR> - `ssSS` = extract a signed word (low order byte first)<BR> - `SSssSSss` or `S32` = extract a signed long word (high order byte first)<BR> - `ssSSssSS` or `s32` = extract a signed long word (low order byte first)<BR> - **on long word values**, if a trailing s is added at the end of the mask, word order is reversed<BR>- `U64` = extract an unsigned 64 long word<BR>- `u64` = extract an unsigned 64 long word (low order byte first)<BR> - `bcdN` = extract a binary coded decimal N=2..12<BR> - `ffffffff` = extract a float value - IEEE754 decode<BR> - `FFffFFff` = extract a reverse float value - IEEE754 decode<BR>- `kstr` = decode KAMSTRUP data<BR>- `pm(x.y.z)` = pattern match(asci obis code)<BR>- `pm(hHHHHHH)` = pattern match(hex obis code)<BR>- `pm(rHHHHHH)` = pattern match(any hex pattern)<BR><BR>if using **VBus** - hex values of data blocks to compare:<BR> - `AAffffaddrff0001ffff` = VBus-specific hex header: `AA`-sync byte, `addr`-the reversed address of the device. To find his out first look up the known [hex address of the device](http://danielwippermann.github.io/resol-vbus/vbus-packets.html). E.g. Resol DeltaSol BS Plus is `0x4221`. Reverse it (without `0x`) and you will get `21 42` hex characters. Now turn on raw dump mode using command `sensor53 d1` and look for rows starting with `aa`, containing your reversed address at position 4 and 5 and `00 01` hex characters at position 7 and 8. If found, the entire header will be 10 hex characters long including `aa` (20 ascii chars without space, e.g. for Resol DeltaSol BS Plus this will be `AA100021421000010774`). At position 9 you see the number of frames containing readable data. To turn off raw dump use `sensor53 d0`.<BR> - `v` = VBus protocol indicator<BR> - `oN` = extract data from offset `N` (see offsets of your device in [VBus protocol documentation](http://danielwippermann.github.io/resol-vbus/vbus-packets.html))<BR> - `u` or `s` = extract unsigned or signed data<BR> - `w` or `b` = extract word or byte<BR>**End of decoding**: `@` indicates termination of the decoding procedure.<BR>- `(` following the `@` character in case of obis decoder indicates to fetch the 2. value in brackets, not the 1. value.  (e.g. to get the second value from an obis like `0-1:24.2.3(210117125004W)(01524.450*m3)`)<BR>- decoding multiple values coming in brackets after each other is possible with `(@(0:1`, `(@(1:1`, `(@(2:1` and so on  (e.g. to get values from an obis like `0-0:98.1.0(210201000000W)(000000.000*kWh)(000000.000*kWh)`)<BR>- decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte. (e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`)<BR>- in case of MODBus/Kamstrup, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition
 | `<scale>` | scaling factor (divisor) or string definition<BR>This can be a fraction (e.g., `0.1` = result * 10), or a negative value. When decoding a string result (e.g. meter serial number), use `#` character for this parameter _(Note: only one string can be decoded per meter!)_. For OBIS, you need a `)` termination character after the `#` character. |
 | `<offs>` | optional offset must precede with + or - sign, note: offset is applied before scale!|
 | `<label>` | web UI label (max. 23 characters) |
 | `<UoM>` | unit of measurement (max. 7 characters) |
 | `<var>` | MQTT label (max. 23 characters) | 
-| `<precision>` | number of decimal places. Add `16` to transmit the data immediately. Otherwise it is transmitted on [`TelePeriod`](Commands#teleperiod) only. |
+| `<precision>` | number of decimal places. Add `16` to transmit the data immediately. Otherwise it is transmitted on [`TelePeriod`](Commands.md#teleperiod) only. |
 
 > Use `;` character to comment lines in the script.
 
@@ -162,22 +165,22 @@ Each meter typically provides multiple metrics (energy, voltage, power, current 
 !!! example  
     (OBIS/SML/MODBus):  
     ```
-    1,1-0:1.8.1*255(@1,Total consumption,KWh,Total_in,4`  
+    1,1-0:1.8.1*255(@1,Total consumption,kWh,Total_in,4`  
     1,77070100010801ff@1000,W1,kWh,w1,4`  
     1,010304UUuuxxxxxxxx@i0:1,Spannung L1,V,Voltage_L1,0`  
-    1,0:98.1.0(@(0:1,Havi adat, KWh,havi1,3`
-    1,0:98.1.0(@(1:1,Havi adat, KWh,havi2,3`
-    1,0:98.1.0(@(2:1,Havi adat, KWh,havi3,3`
+    1,0:98.1.0(@(0:1,Havi adat, kWh,havi1,3`
+    1,0:98.1.0(@(1:1,Havi adat, kWh,havi2,3`
+    1,0:98.1.0(@(2:1,Havi adat, kWh,havi3,3`
     ```
 
     OBIS: `1,1-0:0.0.0*255(@#),Meter Nr,, Meter_number,0`
 
-    Counter: `1,1-0:1.8.0*255(@1000,consumption,KWh,Total_in,3)` precision of 3, scale for 1000 pulses/kWh<BR>
+    Counter: `1,1-0:1.8.0*255(@1000,consumption,kWh,Total_in,3)` precision of 3, scale for 1000 pulses/kWh<BR>
     `1,1-0:1.7.0*255(@0.01667, power,W,Power_actual,0)` actual power from pulse rate (in pulses/min) of counter meter, scale for 1 pulse/Wh (1 pulse/min => 60W; 1/60(=0.01667) (pulses/min)/W)
 
     SML: `1,77078181c78203ff@#,Service ID,,Meter_id,0`<BR>
-    `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,4` precision of 4, transmitted only on [`TelePeriod`](Commands#teleperiod)<BR>
-    `1,1-0:1.8.0*255(@1,consumption,KWh,Total_in,20` precision of 4, transmitted immediately (4 + 16 = 20)
+    `1,1-0:1.8.0*255(@1,consumption,kWh,Total_in,4` precision of 4, transmitted only on [`TelePeriod`](Commands.md#teleperiod)<BR>
+    `1,1-0:1.8.0*255(@1,consumption,kWh,Total_in,20` precision of 4, transmitted immediately (4 + 16 = 20)
     
     MODBus: `+1,3,M,1,9600,SBC,1,2,01030023,01030028...`<BR>
     `1,010304UUuuxxxxxxxx@i0:1,Voltage L1,V,Voltage_L1,0` the `i0:1` refers to: `01030023` with a scaling factor (`:1`) for 1<BR>
@@ -212,12 +215,14 @@ With `=` character at the beginning of a line you can do some special decoding. 
 | `*` character | To hide fields from result output or disable output completely. Compiling with `USE_SML_SCRIPT_CMD` required. <BR> - as single character in `<label>` of the metrics line will hide that value from the web UI <BR> - as single character in `<label>` of the meter definition line will suppress the entire JSON output on MQTT |
 | `M,=so1 `| special SML option for meters that use a bit in the status register to sign import or export like ED300L, AS2020 or DTZ541 <BR>e.g. 1,=so1,00010800,65,11,65,11,00100700 for DTZ541<BR> 1. obis code that holds the direction bit, 2. Flag identifier, 3. direction bit, 4. second Flag identifier (some meters use 2 different flags), 5. second bit, 6 obis code of value to be inverted on direction bit.<BR>|
 | `M,=so2 `| if 1 fixes the bug introduced by meter DWS74, if 2 enabled OBIS line compare mode instead of shift compare mode, if 4 invert hardware serial line.<BR>e.g. 1,=so2,2 enable obis line compare.<BR>|
-| `M,=so3 `| sets serial buffer size, serial IRQ buffer size and serial dump buffer size.<BR>e.g. 1,=so3,512 set serial buffer size to 512.<BR>|
+| `M,=so3 `| sets serial buffer size, serial IRQ buffer size and serial dump buffer size.<BR>enter as a new descriptor line e.g. 1,=so3,512 sets serial buffer size to 512. (default buffer is 48 bytes input, 128 bytes dump)<BR>|
 | `M,=so4 `| sets AES decrytion key for encrypted meters.must define exactly 16 hexadecimal chars<BR>e.g. 1,=so4,deabcd0020a0cfdedeabcd0020a0cfde sets decryption key and enables decrypt mode for that meter.<BR>|
 | `M,=so5 `| sets AES authentication key for encrypted meters.must define exactly 16 hexadecimal chars<BR>e.g. not needed by most energy meters (needs USE_SML_AUTHKEY).<BR>|
 | `M,=so6 `| sync time in milliseconds for serial block detection with AMS meters (defaults to 1000).<BR>|
 | `M,=so7 `| on ESP32 force selection of UART Nr. X (0,1,2) allows coexistence with other serial drivers <BR>|
-	
+| `M,=so8 `| CAN bus filter mask <BR>|
+| `M,=so9 `| CAB bus filter <BR>|
+
 !!! example
     To get the value of one of the descriptor lines, use `sml[X]`. `X` = Line number. Starts with `1`. (compiling with `USE_SML_SCRIPT_CMD` required)
     ```
@@ -419,6 +424,39 @@ Energy provider supplied a PIN code to enable output of additional data.
     #
     ```
 
+### Apator 12EC3
+
+Energy provider supplied a PIN code to enable output of additional data.
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,o,0,300,Strom,1,30,2F3F210D0A,063030300D0A
+    1,1.8.0*00(@1,Gesamtverbrauch,kWh,Pges,2
+    1,1.8.1*00(@1,Tagesverbrauch,kWh,Total_day,2
+    1,1.8.2*00(@1,Nachtverbrauch,kWh,Total_night,2
+    1,2.8.0*00(@1,Einspeisung,kWh,Total_out,2
+    #
+    ```
+
+### Apator 12EC3G
+
+No PIN code needed for output data. It can only display total consumption.
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,o,0,300,Strom,1,30,2F3F210D0A,063030300D0A
+    1,1.8.0*00(@1,Gesamtverbrauch,kWh,Pges,2
+    #
+    ```
+
 ### Carlo Gavazzi EM340 (MODBUS RTU)
 
 ??? summary "View script"
@@ -467,7 +505,7 @@ Energy provider supplied a PIN code to enable output of additional data.
     1,1-0:1.8.0*255(@10000,Water reading,cbm,Count,4  
     2,=h==================  
     2,1-0:1.8.0*255(@100,Gas reading,cbm,Count,3  
-    3,77070100010800ff@1000,Total consumption,KWh,Total_in,3  
+    3,77070100010800ff@1000,Total consumption,kWh,Total_in,3  
     3,=h==================  
     3,77070100100700ff@1,Current consumption,W,Power_curr,2  
     3,=h   ----  
@@ -525,9 +563,9 @@ A & B connected to the meter pinout.
     =>sensor53 r
     >M 1
     +1,3,s,0,9600,GS303
-    1,77070100010800ff@1000,Total Consumed,KWh,Total_in,3
+    1,77070100010800ff@1000,Total Consumed,kWh,Total_in,3
     1,77070100100700ff@1,Current Consumption,W,Power_cur,0
-    1,77070100020800ff@1000,Total Delivered,KWh,Total_out,3
+    1,77070100020800ff@1000,Total Delivered,kWh,Total_out,3
     1,7707010060320101@#,Service ID,,Meter_id,0
     #    
     ```
@@ -1010,9 +1048,9 @@ Current power values get published to mqtt immediately when received from the me
     >M 1
     +1,3,o,0,9600,AS1440,1
     1,1.7.0(@0.001,Power In,W,power_in,16
-    1,1.8.1(@1,Total In,KWh,Total_in,1
+    1,1.8.1(@1,Total In,kWh,Total_in,1
     1,2.7.0(@0.001,Power Out,W,power_out,16
-    1,2.8.1(@1,Total Out,KWh,Total_out,1
+    1,2.8.1(@1,Total Out,kWh,Total_out,1
     #
     ```
 
@@ -1099,7 +1137,7 @@ Delta calculation for previous day is included as the meter shall not be read of
 
     >W
     ===============
-    Vortagsverbrauch:    {m} %3w_delta% KWh 
+    Vortagsverbrauch:    {m} %3w_delta% kWh 
 
     >M 1
     +1,3,rE1,0,2400,WAERME,1
@@ -1246,11 +1284,36 @@ So in this script the three phases get added and published as `Power_total`.
     =>sensor53 r
     >M 1
     +1,3,s,0,9600,
-    1,77070100010800ff@1000,Gesamtverbrauch,KWh,Total_in,2
-    1,77070100020800ff@1000,Gesamteinspeisung,KWh,Total_out,2
-    1,77070100100700ff@1,Verbrauch,W,Power_curr,0
+    1,77070100010800ff@1000,Total consumption,kWh,total_in,2
+    1,77070100020800ff@1000,Total feed-in,kWh,total_out,2
+    1,77070100100700ff@1,Power,W,power_curr,0
     #
     ```
+
+### EMH metering - eHZM (SML)
+[Website](https://emh-metering.com/produkte/haushaltszaehler-smart-meter/ehzm/)
+
+[Datasheet](https://emh-metering.com/wp-content/uploads/2021/02/eHZM-DAB-D-1-00.pdf) 
+
+[Manual (+OBIS Registers)](https://emh-metering.com/wp-content/uploads/2022/11/eHZM-BIA-D-1.11.pdf)
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,s,0,9600,
+    1,77070100600100FF@#,Zaehlernummer,,serialnr,16
+    1,77070100010800FF@1000,Pos Wirkenergie tariflos,kWh,pos_wirk_tariflos,1
+    1,77070100010801FF@1000,Pos Wirkenergie Tarif 1,kWh,pos_wirk_tarif_1,1
+    1,77070100010802FF@1000,Pos Wirkenergie Tarif 2,kWh,pos_wirk_tarif_2,1
+    1,77070100020800FF@1000,Neg Wirkenergie tariflos,kWh,neg_wirk_tariflos,1
+    1,77070100020801FF@1000,Neg Wirkenergie Tarif 1,kWh,neg_wirk_tarif_1,1
+    1,77070100020802FF@1000,Neg Wirkenergie Tarif 2,kWh,neg_wirk_tarif_2,1
+    1,77070100100700FF@1,Momentanwirkleistung,W,momentanwirkleistung,0
+    #
+    ```   
 		
 ### EMH mMe4.0 (SML)
 
@@ -1276,12 +1339,59 @@ So in this script the three phases get added and published as `Power_total`.
     =>sensor53 r
     >M 1
     +1,3,s,0,9600,Smartmeter
-    1,77070100010800ff@100000000,Total consumption,KWh,Total_in,3
-    1,77070100020800ff@100000000,Total generation,KWh,Total_out,3
+    1,77070100010800ff@100000000,Total consumption,kWh,Total_in,3
+    1,77070100020800ff@100000000,Total generation,kWh,Total_out,3
     1,77070100100700ff@1,Power L1+L2+L3,W,P_L1_L2_L3,18
     1,77070100240700ff@1,Power L1,W,P_L1,18
     1,77070100380700ff@1,Power L2,W,P_L2,18
     1,770701004C0700ff@1,Power L3,W,P_L3,18
+    #
+    ```
+
+### Fronius Symo 10.0-3-M (MODBUS)
+	
+Fronius inverter, using Modbus TCP feature
+
+??? summary "View script"
+    ```
+    >D 48
+    >B
+    =>sensor53 r
+    >M 2
+    +1,[192.168.3.38],m,0,502,mod1,1,10,r01039C870015
+    1,=so3,128
+    1,01032aUUuu@i0:1,AC Current,A,AC_Current,0
+    1,01032ax2UUuu@i0:1,Phase 1 Current,A,Phase_1_Current,0
+    1,01032ax4UUuu@i0:1,Phase 2 Current,A,Phase_2_Current,0
+    1,01032ax6UUuu@i0:1,Phase 3 Current,A,Phase_3_Current,0
+    1,01032ax8SSss@i0:1,Curr Scale Fctr,SF,Curr_SF,0
+    1,01032ax16UUuu@i0:1,Phase 1 Voltage,A,Phase_1_Voltage,0
+    1,01032ax18UUuu@i0:1,Phase 2 Voltage,A,Phase_2_Voltage,0
+    1,01032ax20UUuu@i0:1,Phase 3 Voltage,A,Phase_3_Voltage,0
+    1,01032ax22SSss@i0:1,Vltg Scale Fctr,SF,Vltg_SF,0
+    1,01032ax24UUuu@i0:1,Output Power,W,Output_Power,0
+    1,01032ax26SSss@i0:1,Pwr Scale Fctr,SF,Pwr_SF,0
+    1,01032ax28UUuu@i0:1,Frequency,Hz,Frequency,0
+    1,01032ax30SSss@i0:1,Freq Scale Fctr,SF,Freq_SF,0
+    1,01032ax36UUuu@i0:1,Temperature,C,Temperature,0
+    1,01032ax38SSss@i0:1,Temp Scale Fctr,SF,Temp_SF,0
+    +2,[192.168.3.23],m,0,502,mod2,1,10,r01039C870015
+    2,=so3,128
+    2,01032aUUuu@i0:1,AC Current,A,AC_Current,0
+    2,01032ax2UUuu@i0:1,Phase 1 Current,A,Phase_1_Current,0
+    2,01032ax4UUuu@i0:1,Phase 2 Current,A,Phase_2_Current,0
+    2,01032ax6UUuu@i0:1,Phase 3 Current,A,Phase_3_Current,0
+    2,01032ax8SSss@i0:1,Curr Scale Fctr,SF,Curr_SF,0
+    2,01032ax16UUuu@i0:1,Phase 1 Voltage,A,Phase_1_Voltage,0
+    2,01032ax18UUuu@i0:1,Phase 2 Voltage,A,Phase_2_Voltage,0
+    2,01032ax20UUuu@i0:1,Phase 3 Voltage,A,Phase_3_Voltage,0
+    2,01032ax22SSss@i0:1,Vltg Scale Fctr,SF,Vltg_SF,0
+    2,01032ax24UUuu@i0:1,Output Power,W,Output_Power,0
+    2,01032ax26SSss@i0:1,Pwr Scale Fctr,SF,Pwr_SF,0
+    2,01032ax28UUuu@i0:1,Frequency,Hz,Frequency,0
+    2,01032ax30SSss@i0:1,Freq Scale Fctr,SF,Freq_SF,0
+    2,01032ax36UUuu@i0:1,Temperature,C,Temperature,0
+    2,01032ax38SSss@i0:1,Temp Scale Fctr,SF,Temp_SF,0
     #
     ```
 
@@ -1357,8 +1467,8 @@ Growatt solar inverter. this example also shows how to send cmds to modbus
     ->sensor53 r
     >M 1
     +1,3,s,0,9600,SML
-    1,77070100010800ff@1000,Total consumption,KWh,Total_in,4
-    1,77070100020800ff@1000,Total Feed,KWh,Total_out,4
+    1,77070100010800ff@1000,Total consumption,kWh,Total_in,4
+    1,77070100020800ff@1000,Total Feed,kWh,Total_out,4
     1,77070100100700ff@1,Current consumption,W,Power_curr,0
     1,77070100200700ff@1,Voltage L1,V,Volt_p1,1
     1,77070100340700ff@1,Voltage L2,V,Volt_p2,1
@@ -1416,8 +1526,8 @@ Growatt solar inverter. this example also shows how to send cmds to modbus
     ; meter definition  
     >M 1  
     +1,3,s,0,9600,SML  
-    1,77070100010800ff@1000,Total Consumed,KWh,Total_in,4  
-    1,77070100020800ff@1000,Total Delivered,KWh,Total_out,4  
+    1,77070100010800ff@1000,Total Consumed,kWh,Total_in,4  
+    1,77070100020800ff@1000,Total Delivered,kWh,Total_out,4  
     1,77070100100700ff@1,Current Consumption,W,Power_curr,0  
     1,77070100000009ff@#,Meter Number,,Meter_number,0  
     #
@@ -1462,7 +1572,7 @@ This is an example for 4 MODBus devices on the same bus (at different addresses)
     1,050304xxxxUUuu@i7:1,C5_ReactivePower,Var,C5ReactivePower,0
     #
     ```
-
+    
 ### Holley DTZ541 (SML)  
 
 This script reads pretty much all given information.
@@ -1527,6 +1637,60 @@ This meter differatiates between day and night time consumption. The script is b
     #
     ```
 
+### Holley EHZ541-BE (SML)  
+
+This Meter is sending negative values similiar to the DTZ541 model, you have to use the special option 1 (so1) as described in the 'special commands' section.
+Make sure to acquire the PIN from your energyprovider. 
+
+After unlocking the meter, you can run the following script
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,s,16,9600,SML
+    1,77070100600100ff@#,Server ID,,server_id,0
+    1,77070100010800ff@1000,Consumption (Total),kWh,total_kwh,4
+    1,=so1,00010800,65,11,65,11,00100700
+    1,77070100100700ff@1,Consumption (Current),W,curr_w,0
+    #
+    ```
+    
+### Huawei SUN2000-10KTL (Modbus)
+
+For writing 32-bit registers like 40126, use [ModBus Bridge](Modbus-Bridge) driver and send two 16-bit numbers. i.e. `modbussend {"deviceaddress": 1, "functioncode": 16, "startaddress":40126, "type":"int16", "count":2, "values":["0","6666"]}` 
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,m,0,9600,modbus,1,10,r01037D100004,01037D00,01037D08,01037D40,r01037D450003,r01037D48000A,01037D55,01037D57,01037D59,01037D6A,01037D72
+    1,010308SSss@i0:10,PV1 Voltage,V,PV1_Voltage,1
+    1,010308x2SSss@i0:100,PV1 Current,A,PV1_Current,2
+    1,010308x4SSss@i0:10,PV2 Voltage,V,PV2_Voltage,1
+    1,010308x6SSss@i0:100,PV2 Current,A,PV2_Current,2
+    1,010304UUuu@i1:1,State Code,SC,State_Code,0
+    1,010304UUuuUUuu@i2:1,Error Code,EC,Error_Code,0
+    1,010304SSssSSss@i3:1,Input Power,W,Input_Power,0
+    1,010306UUuu@i4:10,Phase 1 Voltage,V,Phase_1_Voltage,1
+    1,010306x2UUuu@i4:10,Phase 2 Voltage,V,Phase_2_Voltage,1
+    1,010306x4UUuu@i4:10,Phase 3 Voltage,V,Phase_3_Voltage,1
+    1,010314SSssSSss@i5:1000,Phase 1 Current,A,Phase_1_Current,2
+    1,010314x4SSssSSss@i5:1000,Phase 2 Current,A,Phase_2_Current,2
+    1,010314x8SSssSSss@i5:1000,Phase 3 Current,A,Phase_3_Current,2
+    1,010314x16SSssSSss@i5:1,Active Power,W,Active_Power,0
+    1,010304UUuu@i6:100,Frequency,Hz,Frequency,2
+    1,010304SSss@i7:10,Internal Temperature,c,Internal_Temperature,1
+    1,010304UUuu@i8:1,Status Code,SC,Status_Code,0
+    1,010304UUuuUUuu@i9:100,Total Yield,TY,Total_Yield,2
+    1,010304UUuuUUuu@i10:100,Daily Yield,DY,Daily_Yield,2
+    #
+    ```
+    
 ### Iskra MT 174 (OBIS)
 
 ??? summary "View script"
@@ -1536,8 +1700,8 @@ This meter differatiates between day and night time consumption. The script is b
     ->sensor53 r
     >M 1
     +1,3,o,0,300,STROM,1,100,2F3F210D0A
-    1,1-0:1.8.1*255(@1,Total Consumed,KWh,Total_in,3
-    1,1-0:2.8.1*255(@1,Total Delivered,KWh,Total_out,3
+    1,1-0:1.8.1*255(@1,Total Consumed,kWh,Total_in,3
+    1,1-0:2.8.1*255(@1,Total Delivered,kWh,Total_out,3
     1,1-0:0.0.0*255(@#),Meter Number,,Meter_number,0
     #
     ```
@@ -1564,6 +1728,24 @@ You need to ask your provider.
     #
     ```
 
+### Iskra MT 631 (SML)
+
+This meter needs a PIN to unlock the current power usage.
+You need to ask your provider. Total Delivered might be zero on some devices
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,0,9600,MT631
+    1,77070100010800ff@1000,Total Consumed,kWh,Total_in,2
+    1,77070100020800ff@1000,Total Delivered,kWh,Total_out,2
+    1,77070100100700ff@1,Current Consumption,W,Power_cur,0|
+    #
+    ```
+
 ### Iskra MT 681 (SML)
 
 This is script for a two-direction meter (consumption and delivery) for the Isra MT 681, that is widely used in Germany. If you don't deliver energy, just delete the "Total Delivered" line. If the meter provides the consumption values for the 3 phases depends also on the configuration by your local energy provider.
@@ -1575,12 +1757,12 @@ This is script for a two-direction meter (consumption and delivery) for the Isra
     =>sensor53 r
     >M 1
     +1,3,s,0,9600,MT681
-    1,77070100010800ff@1000,Total Consumed,KWh,Total_in,3
+    1,77070100010800ff@1000,Total Consumed,kWh,Total_in,3
     1,77070100100700ff@1,Current Consumption,W,Power_cur,0
     1,77070100240700ff@1,Current Consumption P1,W,Power_p1,0
     1,77070100380700ff@1,Current Consumption P2,W,Power_p2,0
     1,770701004c0700ff@1,Current Consumption P3,W,Power_p3,0
-    1,77070100020800ff@1000,Total Delivered,KWh,Total_out,3
+    1,77070100020800ff@1000,Total Delivered,kWh,Total_out,3
     1,77070100000009ff@#,Service ID,,Meter_id,0|
     #
     ```
@@ -1596,12 +1778,30 @@ This is script for a two-direction meter (consumption and delivery) for the Isra
     =>sensor53 r
     >M 1
     +1,3,s,0,9600,MT681
-    1,77070100010800ff@1000,Gesamtverbrauch,KWh,Total_in,3
+    1,77070100010800ff@1000,Gesamtverbrauch,kWh,Total_in,3
     1,770701000f0700ff@1,Leistung,W,Power_cur,0
     1,77070100150700ff@1,Leistung P1,W,Power_p1,0
     1,77070100290700ff@1,Leistung P2,W,Power_p2,0
     1,770701003d0700ff@1,Leistung P3,W,Power_p3,0
-    1,77070100020800ff@1000,Gesamteinspeisung,KWh,Total_out,3
+    1,77070100020800ff@1000,Gesamteinspeisung,kWh,Total_out,3
+    1,77070100000009ff@#,Service ID,,Meter_id,0|
+    #
+    ```
+    
+### Iskra eHZ-MT681-D4A52-K0p
+
+2023 Version Zweiwegezähler
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,0,9600,MT681
+    1,77070100010800ff@1000,Verbrauch,kWh,Total_in,4
+    1,77070100100700ff@1,Leistung,W,Power_cur,0
+    1,77070100020800ff@1000,Erzeugung,kWh,Total_out,4
     1,77070100000009ff@#,Service ID,,Meter_id,0|
     #
     ```
@@ -1701,10 +1901,11 @@ By default, the KAIFA MB310H4BDE will only deliver the Total_in and Total_out va
     =>sensor53 r
     >M 1
     +1,3,s,0,9600,Haus
-    1,77070100010800ff@1000,Zaehlerstand In,KWh,Total_in,2
-    1,77070100020800ff@1000,Zaehlerstand Out,KWh,Total_out,2
+    1,77070100010800ff@1000,Zaehlerstand In,kWh,Total_in,2
+    1,77070100020800ff@1000,Zaehlerstand Out,kWh,Total_out,2
     1,77070100100700ff@1,Leistung-akt.,W,Power_curr,0
     1,77070100600100ff@#,Server-ID,,Meter_Number,0
+    #
     ```
 
 ### Kamstrup Multical 4xx / 6xx / 8xx
@@ -1777,8 +1978,8 @@ For read-out of "Current power" the advanced data set has to be enabled in user 
     =>sensor53 r
     >M 1
     +1,3,s,20,9600,E320
-    1,77070100020800ff@1000,Total Delivered,KWh,Total_out,3
-    1,77070100010800ff@1000,Total Consumed,KWh,Total_in,3
+    1,77070100020800ff@1000,Total Delivered,kWh,Total_out,3
+    1,77070100010800ff@1000,Total Consumed,kWh,Total_in,3
     1,77070100100700ff@1,Current power,W,Power_in,3
     1,77070100600100ff@#,Server-ID,,Meter_Number,0    
     #
@@ -1797,14 +1998,14 @@ This meter may need a PIN to unlock the current power usage - ask your provider.
     +1,3,o,0,300,STROM,1,10,2F3F210D0A,063030300D0A
     1,0(@1,Zählernummer,,Meter_number,0  
     1,=h===================  
-    1,8.0(@1,Total T1 & T2,KWh,Total,2  
-    1,8.1(@1,T1 aktuell,KWh,Total_T1,2  
-    1,8.2(@1,T2 aktuell,KWh,Total_T2,2  
+    1,8.0(@1,Total T1 & T2,kWh,Total,2  
+    1,8.1(@1,T1 aktuell,kWh,Total_T1,2  
+    1,8.2(@1,T2 aktuell,kWh,Total_T2,2  
     1,=h===================  
-    1,8.1.1(@1,T1 letzte Saison,KWh,Total_T1-1,2   
-    1,8.2.1(@1,T2 letzte Saison,KWh,Total_T2-1,2   
-    1,8.1.2(@1,T1 vorletzte Saison,KWh,Total_T1-2,2
-    1,8.2.2(@1,T2 vorletzte Saison,KWh,Total_T2-2,2     
+    1,8.1.1(@1,T1 letzte Saison,kWh,Total_T1-1,2   
+    1,8.2.1(@1,T2 letzte Saison,kWh,Total_T2-1,2   
+    1,8.1.2(@1,T1 vorletzte Saison,kWh,Total_T1-2,2
+    1,8.2.2(@1,T2 vorletzte Saison,kWh,Total_T2-2,2     
     #
     ```
 
@@ -1984,60 +2185,60 @@ Example: Changing the baud rate during operation.
     ;Webdisplay stuff  
     >W  
     
-    0:00 Uhr Σ HT+NT: {m} %0sm% KWh  
-    HT: {m} %0HT_sm% KWh  
-    NT: {m} %0NT_sm% KWh  
+    0:00 Uhr Σ HT+NT: {m} %0sm% kWh  
+    HT: {m} %0HT_sm% kWh  
+    NT: {m} %0NT_sm% kWh  
     
-    Monatsanfang: {m} %1sma% KWh  
-    HT: {m} %1HT_sma% KWh  
-    NT: {m} %1NT_sma% KWh  
+    Monatsanfang: {m} %1sma% kWh  
+    HT: {m} %1HT_sma% kWh  
+    NT: {m} %1NT_sma% kWh  
     
-    Jahresanfang: {m} %0sya% KWh  
-    HT: {m} %0HT_sya% KWh  
-    NT: {m} %0NT_sya% KWh  
+    Jahresanfang: {m} %0sya% kWh  
+    HT: {m} %0HT_sya% kWh  
+    NT: {m} %0NT_sya% kWh  
     .............................  
-    Tagesverbrauch: {m} %1sd% KWh  
-    HT: {m} %1HT_sd% KWh  
-    NT: {m} %1NT_sd% KWh  
+    Tagesverbrauch: {m} %1sd% kWh  
+    HT: {m} %1HT_sd% kWh  
+    NT: {m} %1NT_sd% kWh  
     
-    Monatsverbrauch: {m} %0smn% KWh  
-    HT: {m} %0HT_smn% KWh  
-    NT: {m} %0NT_smn% KWh  
+    Monatsverbrauch: {m} %0smn% kWh  
+    HT: {m} %0HT_smn% kWh  
+    NT: {m} %0NT_smn% kWh  
         -  
-    Jahresverbrauch: {m} %0syn% KWh  
-    HT: {m} %0HT_syn% KWh  
-    0:00 Uhr Σ HT+NT: {m} %0sm% KWh  
-    HT: {m} %0HT_sm% KWh  
-    NT: {m} %0NT_sm% KWh  
+    Jahresverbrauch: {m} %0syn% kWh  
+    HT: {m} %0HT_syn% kWh  
+    0:00 Uhr Σ HT+NT: {m} %0sm% kWh  
+    HT: {m} %0HT_sm% kWh  
+    NT: {m} %0NT_sm% kWh  
     
-    Monatsanfang: {m} %1sma% KWh  
-    HT: {m} %1HT_sma% KWh  
-    NT: {m} %1NT_sma% KWh  
+    Monatsanfang: {m} %1sma% kWh  
+    HT: {m} %1HT_sma% kWh  
+    NT: {m} %1NT_sma% kWh  
     
-    Jahresanfang: {m} %0sya% KWh  
-    HT: {m} %0HT_sya% KWh  
-    NT: {m} %0NT_sya% KWh  
+    Jahresanfang: {m} %0sya% kWh  
+    HT: {m} %0HT_sya% kWh  
+    NT: {m} %0NT_sya% kWh  
     .............................  
-    Tagesverbrauch: {m} %1sd% KWh  
-    HT: {m} %1HT_sd% KWh  
-    NT: {m} %1NT_sd% KWh  
+    Tagesverbrauch: {m} %1sd% kWh  
+    HT: {m} %1HT_sd% kWh  
+    NT: {m} %1NT_sd% kWh  
     
-    Monatsverbrauch: {m} %0smn% KWh  
-    HT: {m} %0HT_smn% KWh  
-    NT: {m} %0NT_smn% KWh  
+    Monatsverbrauch: {m} %0smn% kWh  
+    HT: {m} %0HT_smn% kWh  
+    NT: {m} %0NT_smn% kWh  
         -  
-    Jahresverbrauch: {m} %0syn% KWh  
-    HT: {m} %0HT_syn% KWh  
-    NT: {m} %0NT_syn% KWhNT: {m} %0NT_syn% KWh  
+    Jahresverbrauch: {m} %0syn% kWh  
+    HT: {m} %0HT_syn% kWh  
+    NT: {m} %0NT_syn% kWh  
     
     >M 1  
     +1,3,o,0,9600,,1  
     1,0.0.1(@1,Zählernummer,,Meter_number,0  
     1,0.9.1(@#),Zeitstempel,Uhr,time-stamp,0  
     1,=h===================  
-    1,1.8.0(@1,HT+NT Zählerstand,KWh,Total_in,3  
-    1,1.8.1(@1,HT,KWh,HT_Total_in,3  
-    1,1.8.2(@1,NT,KWh,NT_Total_in,3  
+    1,1.8.0(@1,HT+NT Zählerstand,kWh,Total_in,3  
+    1,1.8.1(@1,HT,kWh,HT_Total_in,3  
+    1,1.8.2(@1,NT,kWh,NT_Total_in,3  
     1,=h===================  
     1,36.7.0(@1,Power_L1,kW,kW_L1,2  
     1,56.7.0(@1,Power_L2,kW,kW_L2,2  
@@ -2139,11 +2340,11 @@ Switching to different baud rates requires changing the ack sequence 06303x300D0
 	>M 1
 	+1,3,o,0,4800,data,1
 	
-	1,1-1:1.8.0(@1,energy_import,KWh,1-8-0,1
-	1,1-1:2.8.0(@1,energy_export,KWh,2-8-0,1
-	1,1-1:36.7.0(@1,power_L1,KWh,36-7-0,2
-	1,1-1:56.7.0(@1,power_L2,KWh,56-7-0,2
-	1,1-1:76.7.0(@1,power_L3,KWh,76-7-0,2
+	1,1-1:1.8.0(@1,energy_import,kWh,1-8-0,1
+	1,1-1:2.8.0(@1,energy_export,kWh,2-8-0,1
+	1,1-1:36.7.0(@1,power_L1,kWh,36-7-0,2
+	1,1-1:56.7.0(@1,power_L2,kWh,56-7-0,2
+	1,1-1:76.7.0(@1,power_L3,kWh,76-7-0,2
 	1,1-1:31.7.0(@1,current_L1,A,31-7-0,2
 	1,1-1:51.7.0(@1,current_L2,A,51-7-0,2
 	1,1-1:71.7.0(@1,current_L3,A,71-7-0,2
@@ -2192,11 +2393,11 @@ Switching to different baud rates requires changing the ack sequence 06303x300D0
     >M 1
     +1,3,o,0,9600,LK13BE,13,30,2F3F210D0A,063035310D0A
 
-    1,1-0:1.8.0*255(@1,Gesamtverbrauch,KWh,total,4
-    1,1-0:1.8.0*96(@1,Verbrauch 1 Tag,KWh,total_1d,4
-    1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,KWh,total_7d,4
-    1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,KWh,total_30d,4
-    1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,KWh,total_365d,4
+    1,1-0:1.8.0*255(@1,Gesamtverbrauch,kWh,total,4
+    1,1-0:1.8.0*96(@1,Verbrauch 1 Tag,kWh,total_1d,4
+    1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,kWh,total_7d,4
+    1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,kWh,total_30d,4
+    1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,kWh,total_365d,4
     1,1-0:16.7.0*255(@1,Verbrauch aktuell,W,power,20
     #
     ```
@@ -2212,13 +2413,13 @@ The Logarex LK13BE803039 does publish the data automatically. Do not poll this c
     >M 1
     +1,3,o,0,9600,LK13BE
 
-    1,1-0:1.8.0*255(@1,Gesamtverbrauch,KWh,total,4
-    1,1-0:1.8.0*96(@1,Verbrauch 1 Tag,KWh,total_1d,4
-    1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,KWh,total_7d,4
-    1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,KWh,total_30d,4
-    1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,KWh,total_365d,4
+    1,1-0:1.8.0*255(@1,Gesamtverbrauch,kWh,total,4
+    1,1-0:1.8.0*96(@1,Verbrauch 1 Tag,kWh,total_1d,4
+    1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,kWh,total_7d,4
+    1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,kWh,total_30d,4
+    1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,kWh,total_365d,4
     1,1-0:16.7.0*255(@1,Verbrauch aktuell,W,current,20
-    1,1-0:2.8.0*255(@1,Gesamteinspeisung,KWh,total_out,4
+    1,1-0:2.8.0*255(@1,Gesamteinspeisung,kWh,total_out,4
     #
 
     ```
@@ -2237,13 +2438,13 @@ setupline for the  HichiIR WiFi module (GPIO1: send, GPIO3: receive)
     ; only one string (@#) can be decoded per meter
     1,1-0:96.1.0*255(@#),Zählernummer,,id,0
     ;1,1-0:0.2.0*255(@#),Firmware,,fw,0
-    1,1-0:1.8.0*255(@1,Gesamtverbrauch,KWh,total,4
+    1,1-0:1.8.0*255(@1,Gesamtverbrauch,kWh,total,4
     ; available with PIN
-    1,1-0:1.8.0*96(@1,Verbrauch 1 Tag,KWh,total_1d,4
-    1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,KWh,total_7d,4
-    1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,KWh,total_30d,4
-    1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,KWh,total_365d,4
-    1,1-0:1.8.0*100(@1,Verbrauch ab reset,KWh,total_reset,4
+    1,1-0:1.8.0*96(@1,Verbrauch 1 Tag,kWh,total_1d,4
+    1,1-0:1.8.0*97(@1,Verbrauch 7 Tage,kWh,total_7d,4
+    1,1-0:1.8.0*98(@1,Verbrauch 30 Tage,kWh,total_30d,4
+    1,1-0:1.8.0*99(@1,Verbrauch 365 Tage,kWh,total_365d,4
+    1,1-0:1.8.0*100(@1,Verbrauch ab reset,kWh,total_reset,4
     1,1-0:16.7.0*255(@1,Verbrauch aktuell,W,power,20
     ; available with PIN and full dataset enabled
     1,1-0:32.7.0*255(@1,Spannung L1,V,voltage_l1,1
@@ -2326,8 +2527,8 @@ This script gives also the wattage per phase. Make sure to get the PIN from your
     ->sensor53 r
     >M 1
     +1,3,s,1,9600,SML
-    1,77070100010800ff@1000,Total consumption,KWh,Total_in,4
-    1,77070100020800ff@1000,Total Feed,KWh,Total_out,4
+    1,77070100010800ff@1000,Total consumption,kWh,Total_in,4
+    1,77070100020800ff@1000,Total Feed,kWh,Total_out,4
     1,77070100100700ff@1,Current consumption,W,Power_curr,0
     1,77070100200700ff@1,Voltage L1,V,Volt_p1,1
     1,77070100340700ff@1,Voltage L2,V,Volt_p2,1
@@ -2383,14 +2584,14 @@ PZEM004T V30 multiple meters on Modbus
     ->sensor53 r
     >M 1
     +1,3,m,0,9600,ENERGY,1,1,02040000,02040001,02040003,02040005,02040007,02040008,03040000,03040001,03040003,03040005,03040007,03040008,05040000,05040001,05040003,05040005,05040007,05040008
-    1,=h<hr/>Sensor-1
+    1,=h<hr/>Sensor-2
     1,020404UUuuxxxxxxxx@i0:10,Voltage,V,Sensor-1-V,2
     1,020404UUuuUUuusxxxx@i1:1000,Current,A,Sensor-1-A,2
     1,020404UUuuUUuusxxxx@i2:10,Power,W,Sensor-1-W,2
     1,020404UUuuUUuusxxxx@i3:1000,Energy,kWh,Sensor-1-kWh,4
     1,020404UUuuxxxxxxxx@i4:10,Frequency,Hz,Sensor-1-hz,2
     1,020404UUuuxxxxxxxx@i5:100,Power Factor,PF,Sensor-1-PF,2
-    1,=h<hr/>Sensor-2
+    1,=h<hr/>Sensor-3
     1,030404UUuuxxxxxxxx@i6:10,Voltage,V,Sensor-2-V,2
     1,030404UUuuUUuusxxxx@i7:1000,Current,A,Sensor-2-A,2
     1,030404UUuuUUuusxxxx@i8:10,Power,W,Sensor-2-W,2
@@ -2813,8 +3014,8 @@ This device is used in the grid of EGTF - Elektrizitäts-Genossenschaft Tacherti
     ->sensor53 r
     >M 1
     +1,3,o,0,300,STROM,1,600,2F3F210D0A
-    1,1.8.1(@1,Total Consumed,KWh,Total_in,3
-    1,2.8.1(@1,Total Delivered,KWh,Total_out,3
+    1,1.8.1(@1,Total Consumed,kWh,Total_in,3
+    1,2.8.1(@1,Total Delivered,kWh,Total_out,3
     1,0.0.0(@#),Meter Number,,Meter_number,0
     #
     ```
@@ -2888,13 +3089,13 @@ These heating regulators have a [lot of registers](https://raw.githubusercontent
     ->sensor53 r
     >M 1
     +1,3,s,0,9600,SML
-    1,77070100010800ff@1000,Total Verbrauch,KWh,Total_in,3
-    1,77070100020800ff@1000,Total Einspeisung,kWh,Total_in,3
+    1,77070100010800ff@1000,Total Verbrauch,kWh,Total_in,3
+    1,77070100020800ff@1000,Total Einspeisung,kWh,Total_out,3
     1,=h==================
     1,77070100100700ff@1,Actual load,W,Power_curr,0
     1,=h==================
     1,=m 9+10+11 @1,Currents L1+L2+L3,A,Curr_summ,3
-    ;1,=m 12+13+14/#3 @1,Voltage L1+L2+L3/3,V,Volt_avg,3
+    1,=m 12+13+14/#3 @1,Voltage L1+L2+L3/3,V,Volt_avg,3
     1,=h==================
     1,77070100240700ff@1,Consumption P1,W,Power_p1,2
     1,77070100380700ff@1,Consumption P2,W,Power_p2,2
@@ -2979,4 +3180,81 @@ Tested on an AEConversion INV500-90 with RS485 interface.
     1,212717UUuux7@1,Leistung,W,power,0
     1,212717x4UUuux4@1000,Energie,kWh,energy_sun,3
     #
+    ```
+### SMA Solar Inverter (TCP MODBus)
+
+??? summary "View script"
+
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M1
+    +1,[192.168.56.91],m,0,502,SMA,0,10,03047741,03047747,03047777,03047831,03047833,03047835,030478ED,030478EF,030478F1,03047893,030478E9,0304787D,03047881,r03047AA50004,r03047AA90004
+    1,030404U32@i0:1000,Gesamtertrag,kWh,v1,3
+    1,030404U32@i1:1000,Tagesertrag,kWh,v2,3
+    1,030404U32@i2:1000,Einspeisung_ges,kWh,v3,3
+    1,030404S32@i3:100,DC Str. A,A,v4,2
+    1,030404S32@i4:100,DC Sp. A,V,v5,2
+    1,030404S32@i5:100,DC Le. A,W,v6,2
+    1,030404S32@i6:100,DC Str. B,A,v7,2
+    1,030404S32@i7:100,DC Sp. B,V,v8,2
+    1,030404S32@i8:100,DC Le. B,W,v9,2
+    ;
+    1,030404S32@i9:100,AC Le.,W,v10,2
+    ;
+    1,030404S32@i10:10,WR_Temp,°C,v11,2
+    ;
+    1,030404U32@i11:1,Batterieladung,%%,v12,0
+    1,030404S32@i12:10,Batt_Temp,°C,v13,2
+    ;
+    1,030408U64@i13:1000,Batt_Ladung,kWh,v14,3
+    1,030408U64@i14:1000,Batt_EntLadung,kWh,v15,3
+    #
+    ```
+
+### HUAWEI R4850G2 Lipo Charger (CANBus)
+
+??? summary "View script"
+
+    ```
+    >D 40
+    IP=192.168.188.117
+    ovolt=45
+    maxc=30
+    cstr=""
+    >B
+    =>sensor53 r
+    >S
+    if chg[ovolt]>0 {
+    ; change voltage 41.5 - 58.5
+    cstr="908180FE0801000000"+hx(ovolt*1024)
+    sml(1 3 cstr)
+    }
+    if chg[maxc]>0 {
+    ; change max current 0-60A
+    cstr="908180FE0801030000"+hx(maxc*20)
+    sml(1 3 cstr)
+    }
+    >M 1
+    ; Huawei R4850G2
+    ; params -> 03 = baudrate 125kb + number of receive buffers * 100
+    +1,7,C,0,3203,CAN,6,10,908040FE080000000000000000
+    1,1081407f0801700000UUuuUUuu@1024,Input Power,W,ipwr,1
+    1,1081407f0801710000UUuuUUuu@1024,Input Frequency,Hz,freq,1
+    1,1081407f0801780000UUuuUUuu@1024,Input Voltage,V,ivolt,1
+    1,1081407f0801720000UUuuUUuu@1024,Input Current,A,icurr,1
+    1,1081407f0801750000UUuuUUuu@1024,Output Voltage,V,ovolt,1
+    1,1081407f0801810000UUuuUUuu@1024,Output Current,A,ocurr,1
+    1,1081407f0801760000UUuuUUuu@20,Output Max Current,A,mcurr,1
+    1,1081407f0801800000UUuuUUuu@1024,Input Temp,C,itmp,1
+    1,1081407f08017f0000UUuuUUuu@1024,Output Temp,C,otmp,1
+    1,1081407f0801740000UUuuUUuu@1024,Efficiency,%%,eff,1
+    1,=so8,00000000
+    1,=so9,1081407f
+    #
+    >W
+    <hr>
+    nm(41.5 58.5 0.1 ovolt "Output Voltage (V): " 80 1) 
+    nm(0 60 0.1 maxc "Max Current (A): " 80 1) 
     ```

@@ -29,7 +29,7 @@ Each module is assigned a number which is used in [Template configuration](Templ
 <a id="MotorC/AC">	</a>	14	|	Motor C/AC	|	Force all relays ON at power up and disable command `PowerOnState`
 <a id="ElectroDragon">	</a>	15	|	ElectroDragon	|	
 <a id="EXSRelays">	</a>	16	|	EXS Relay(s)	|	Enable pulse latching using even/odd numbered relay pairs
-<a id="WION">	</a>	17	|	WION	|	
+<a id="WiOn">	</a>	17	|	WiOn	|	
 <a id="Generic">	</a>	18	|	Generic	|	Show Wemos specific pin information in GUI
 <a id="SonoffDev">	</a>	19	|	Sonoff Dev	|	
 <a id="H801">	</a>	20	|	H801	|	Change hardware UART Tx from GPIO01 to GPIO02
@@ -39,7 +39,7 @@ Each module is assigned a number which is used in [Template configuration](Templ
 <a id="HuafanSS">	</a>	24	|	Huafan SS	|	
 <a id="SonoffBridge">	</a>	25	|	Sonoff Bridge	|	Enable and Process data via hardware serial interface using GPIO01 and GPIO03. Change the baud rate to 19200 bps. Process 16 buttons in web GUI. Enable EFM8BB1 firmware upload
 <a id="SonoffB1">	</a>	26	|	Sonoff B1	|	Set light type to RGBWC using MY92x1
-<a id="Ailight">	</a>	27	|	Ailight	|	Set light type to RGBW using MY92x1
+<a id="AiLight">	</a>	27	|	AiLight	|	Set light type to RGBW using MY92x1
 <a id="SonoffT11Ch">	</a>	28	|	Sonoff T1 1Ch	|	[See Sonoff Touch](devices/Sonoff-Touch)
 <a id="SonoffT12Ch">	</a>	29	|	Sonoff T1 2Ch	|	[See Sonoff Touch](devices/Sonoff-Touch)
 <a id="SonoffT13Ch">	</a>	30	|	Sonoff T1 3Ch	|	[See Sonoff Touch](devices/Sonoff-Touch)
@@ -56,14 +56,14 @@ Each module is assigned a number which is used in [Template configuration](Templ
 <a id="SonoffS31">	</a>	41	|	Sonoff S31	|	Selects component types for the CSE7766 (serial connected energy monitoring chip) with Rx and Tx hardware serial (even parity) on GPIO01 and GPIO03 respectively. Sets serial interface to 4800 baud and disables serial logging
 <a id="ZenggeWF017">	</a>	42	|	Zengge WF017	|	
 <a id="SonoffPowR2">	</a>	43	|	Sonoff Pow R2	|	
-<a id="SonoffIFan02">	</a>	44	|	Sonoff IFan02	|	Enable command [`FanSpeed`](Commands.md#fanspeed). Disable `Interlock` and `PulseTime`. Tune status information, MQTT data and GUI. Sync with microcontroller. Process Domoticz Fan state
-<a id="BlitzwolfSHP">	</a>	45	|	Blitzwolf SHP	|	Module specific power monitoring calibration
+<a id="SonoffIFan02">	</a>	44	|	Sonoff iFan02	|	Enable command [`FanSpeed`](Commands.md#fanspeed). Disable `Interlock` and `PulseTime`. Tune status information, MQTT data and GUI. Sync with microcontroller. Process Domoticz Fan state
+<a id="BlitzwolfSHP">	</a>	45	|	BlitzWolf SHP	|	Module specific power monitoring calibration
 <a id="Shelly1">	</a>	46	|	Shelly 1	|	
 <a id="Shelly2">	</a>	47	|	Shelly 2	|	
 <a id="XiaomiPhilips">	</a>	48	|	Xiaomi Philips	|	Process color temperature using PWM2 and intensity using PWM1
 <a id="NeoCoolcam">	</a>	49	|	Neo Coolcam	|	
-<a id="ESPSwitCh">	</a>	50	|	ESP SwitCh	|	
-<a id="ObiSocket">	</a>	51	|	Obi Socket	|	
+<a id="ESPSwitch">	</a>	50	|	ESP Switch	|	
+<a id="OBISocket">	</a>	51	|	OBI Socket	|	
 <a id="Teckin">	</a>	52	|	Teckin	|	
 <a id="APLICWDP303075">	</a>	53	|	APLIC WDP303075	|	
 <a id="TuyaMCU">	</a>	54	|	TuyaMCU	|	Enable and process data via software or hardware serial interface using component 107 and 108. Change the baud rate to 9600 bps. Process all buttons. [Read more...](TuyaMCU.md)
@@ -73,7 +73,7 @@ Each module is assigned a number which is used in [Template configuration](Templ
 <a id="PS-16-DZ">	</a>	58	|	PS-16-DZ	|	Enable and process data via software or hardware serial interface using component 148 and 149. Change the baud rate to 19200 bps.
 <a id="TeckinUS">	</a>	59	|	Teckin US	|	
 <a id="ManzokuStripEU_4">	</a>	60	|	Manzoku Strip (EU 4)	|	
-<a id="ObiSocket2">	</a>	61	|	Obi Socket 2	|	
+<a id="OBISocket2">	</a>	61	|	OBI Socket 2	|	
 <a id="YTFLRBridge">	</a>	62	|	YTF IR Bridge	|	Disable serial interface to stop loopback. 
 <a id="DigooDG-SP202">	</a>	63	|	Digoo DG-SP202	|	
 <a id="KA10">	</a>	64	|	KA10	|	
@@ -87,7 +87,7 @@ Each module is assigned a number which is used in [Template configuration](Templ
 <a id="EXSDimmer">	</a>	72	|	EX-Store Dimmer	|	
 <a id="PWMDimmerSwitch">	</a>	73	|	PWM Dimmer	|	For MJ-SD01/acenx/NTONPOWER PWM dimmers. [Read more...](PWM-dimmer-switch.md)
 <a id="D1">	</a>	74	|	Sonoff D1 Dimmer	|	
-75 | Sonoff ZBBridge | Sonoff Zigbee bridge |
+75 | Sonoff ZbBridge | Sonoff Zigbee bridge |
 
 **Serial logging** is disabled by the Tasmota code for several modules and components (e.g., Sonoff POW, Sonoff S31, Sonoff Dual (v1), Tuya dimmers, PZEM components, etc.). Serial communication is used by these devices to transfer the data from the MCU chip to the ESP chip. Do not enable serial logging ([SerialLog 0](Commands.md#seriallog)) on these devices. It can cause the device software to crash.
 

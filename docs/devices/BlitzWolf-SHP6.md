@@ -44,8 +44,7 @@ SHP6 10A model:
 ![Solder points](https://raw.githubusercontent.com/wiki/RTurala/Sonoff-Tasmota/images/BlitzWolf-SHP6/BW-SHP6-04.jpg)
 
 SHP6 15A model:
-![Solder points](
-https://raw.githubusercontent.com/tiagofreire-pt/docs/master_media/Blitzwolf_SHP6_15A.jpg)
+![Solder points](https://raw.githubusercontent.com/tiagofreire-pt/docs/master_media/Blitzwolf_SHP6_15A.jpg)
 
 If you do not want to solder you can try using crocodile clips and manually push a jumper cable first to IO0 (enter flash mode while booting, i.e. connect IO0 to ground) and then during flashing push a jumper to TX. Just be careful to not cause any short-circuit with the clips on the other side of the pads.
 

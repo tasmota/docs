@@ -51,9 +51,9 @@ Those channels can be driven via the I2S driver when using the “built-in DAC m
 |I2SGain | `0..100` = sets the volume of the audio signal |
 |I2SPlay | `/file.mp3` = plays a .mp3 audio file from the file system, the systems blocks until sound is played<BR>`+/file.mp3` = plays a .mp3 audio file from the file system, sound is played in a separate task not blocking the system|
 |I2SRtttl| `string` = play [Ring Tones Text Transfer Language (RTTTL)](https://www.mobilefish.com/tutorials/rtttl/rtttl_quickguide_specification.html) ringtones (requires defined `USE_I2S_RTTTL`) |
-|I2Say   | `text` = speaks the text you typed (only English language supported)|
+|I2SSay  | `text` = speaks the text you typed (only English language supported)|
 |I2STime | tells current Tasmota time in English (requires defined `USE_I2S_SAY_TIME`)|
-|I2SWr | `url` = starts playing an [mp3 radio](http://fmstream.org/) stream, no blocking (requires defined `USE_I2S_WEBRADIO`)<BR>no parameter = stops playing the stream|
+|I2SWr   | `url` = starts playing an [mp3 radio](http://fmstream.org/) stream, no blocking (requires defined `USE_I2S_WEBRADIO`)<BR>no parameter = stops playing the stream|
 
 ## Audio Input
 

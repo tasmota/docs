@@ -32,8 +32,8 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_SUNRISE               | x | x / x | x | x | x | x |
 | USE_RULES                 | x | x / x | x | x | x | x |
 | USE_SCRIPT                | - | - / - | - | - | - | - |
-| USE_EXPRESSION            | - | - / - | - | - | - | - |
-| SUPPORT_IF_STATEMENT      | - | - / - | - | - | - | - |
+| USE_EXPRESSION            | - | - / x | - | - | - | - | Every ESP32 + ESP8266 > 1MB
+| SUPPORT_IF_STATEMENT      | - | - / x | - | - | - | - | Every ESP32 + ESP8266 > 1MB
 | USE_HOTPLUG               | - | - / - | - | - | - | - |
 | USE_PROMETHEUS            | - | - / - | - | - | - | - |
 | USE_PING                  | - | - / - | - | - | - | - |
@@ -112,22 +112,28 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_ADS1115               | - | - / x | - | x | - | - |
 | USE_INA219                | - | - / x | - | x | - | - |
 | USE_INA226                | - | - / - | - | - | - | - |
+| USE_INA3221               | - | - / - | - | - | - | - |
 | USE_SHT3X                 | - | - / x | - | x | - | - |
 | USE_TSL2561               | - | - / - | - | - | - | - |
 | USE_TSL2591               | - | - / - | - | - | - | - |
 | USE_MGS                   | - | - / x | - | x | - | - |
 | USE_SGP30                 | - | - / x | - | x | - | - |
 | USE_SGP40                 | - | - / x | - | x | - | - |
+| USE_SGP4X                 | - | - / x | - | - | - | - |
 | USE_SEN5X                 | - | - / x | - | x | - | - |
 | USE_SI1145                | - | - / - | - | - | - | - |
 | USE_LM75AD                | - | - / x | - | x | - | - |
 | USE_APDS9960              | - | - / - | - | - | - | - |
 | USE_MCP230xx              | - | - / - | - | - | - | - |
+| USE_MCP23XXX_DRV          | - | - / - | - | - | - | - |
 | USE_PCA9632               | - | - / - | - | - | - | - |
 | USE_PCA9685               | - | - / - | - | - | - | - |
+| USE_PCA9685_V2            | - | - / - | - | - | - | - |
 | USE_MPR121                | - | - / - | - | - | - | - |
 | USE_CCS811                | - | - / - | - | x | - | - |
 | USE_CCS811_V2             | - | - / x | - | - | - | - |
+| USE_ENS16x                | - | - / - | - | - | - | - |
+| USE_ENS210                | - | - / - | - | - | - | - |
 | USE_MPU6050               | - | - / - | - | - | - | - |
 | USE_DS3231                | - | - / - | - | - | - | - |
 | USE_MGC3130               | - | - / - | - | - | - | - |
@@ -143,6 +149,11 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_CHIRP                 | - | - / - | - | - | - | - |
 | USE_PAJ7620               | - | - / - | - | - | - | - |
 | USE_PCF8574               | - | - / - | - | - | - | - |
+| USE_PMSA003I              | - | - / - | - | - | - | - |
+| USE_LOX_O2                | - | - / x | - | x | - | - |
+| USE_GDK101                | - | - / - | - | - | - | - |
+| USE_TC74                  | - | - / - | - | - | - | - |
+| USE_PCA9557               | - | - / - | - | - | - | - |
 |                           |   |       |   |   |   |   |
 | Feature or Sensor         | l | t     | k | s | i | d | Remarks
 | USE_HIH6                  | - | - / x | - | x | - | - |
@@ -209,6 +220,7 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_PROJECTOR_CTRL        | - | - / - | - | - | - | - |
 | USE_AS608                 | - | - / - | - | - | - | - |
 | USE_LD2410                | - | - / - | - | - | - | - |
+| USE_GM861                 | - | - / - | - | - | - | - |
 | USE_TCP_BRIDGE            | - | - / - | - | - | - | - | zbbridge / zbbrdgpro
 |                           |   |       |   |   |   |   |
 | USE_NRF24                 | - | - / - | - | - | - | - |
@@ -268,5 +280,6 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_SHELLY_PRO            |   |   / x |   |   |   |   |
 | USE_DALI                  |   |   / - |   |   |   |   |
 | USE_DINGTIAN_RELAY        |   |   / - |   |   |   |   |
+| USE_MATTER_DEVICE         |   |   / x |   |   |   |   | See SetOption151
 
 * USE_MQTT_TLS is enabled by default in every ESP32 variants

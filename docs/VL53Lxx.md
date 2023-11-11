@@ -140,7 +140,7 @@ Example: for VL53L0X it sends `tele/%topic%/SENSOR` JSON such as:
 
 With VL053L1X, the name of the sensor is adapted.
 
-The index separator is either a `-` if `SetOption4` is `0` or a `_` if it is `1`. See [`SetOption4`](Commands#setoption4).
+The index separator is either a `-` if `SetOption4` is `0` or a `_` if it is `1`. See [`SetOption4`](Commands.md#setoption4).
 
 ![image](https://user-images.githubusercontent.com/35405447/111362860-144c4780-866e-11eb-84f1-461d2857ede7.png)
 

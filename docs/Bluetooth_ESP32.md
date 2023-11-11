@@ -12,7 +12,7 @@
 Different vendors offer Bluetooth solutions, mostly as part of the Xiaomi brand, often under the Mijia label. The sensors supported by Tasmota use BLE (Bluetooth Low Energy) to transmit the sensor data, but they differ in their accessibilities quite substantially.
 
 Basically all of them use the so-called "MiBeacons" which are BLE advertisement packets with a certain data structure, which are broadcasted by the devices automatically while the device is not in an active Bluetooth connection.
-The frequency of these messages is set by the vendor and ranges from one per 3 seconds to one per hour (f.e. for the battery status of the LYWSD03MMC). Motion sensors and BLE remote controls start to send when an event is triggered.
+The frequency of these messages is set by the vendor and ranges from one per 3 seconds to one per hour (e.g., for the battery status of the LYWSD03MMC). Motion sensors and BLE remote controls start to send when an event is triggered.
 These packets already contain the sensor data and can be passively received by other devices and will be published regardless if a user decides to read out the sensors via connections or not. Thus the battery life of a BLE sensor is not influenced by reading these advertisements and the big advantage is the power efficiency as no active bi-directional connection has to be established. The other advantage is, that scanning for BLE advertisements can happen nearly parallel (very quickly one after the other), while a direct connection must be established for at least a few seconds and will then block both involved devices for that time.
 
 This is therefore the preferred option, if supported by the sensor.
@@ -167,9 +167,23 @@ This allows for the receiving of BLE advertisements from BLE devices, including 
 
 ??? failure "This feature is included only in tasmota32-bluetooth.bin"
 
-    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    When [compiling your build](Compile-your-build), you need to
+
+    (1) Add the following to `user_config_override.h`:
     ```c++
     #define USE_BLE_ESP32                // Add support for ESP32 as a BLE-bridge (+9k2? mem, +292k? flash)
+    ```
+    (2) Copy `platformio_override_sample.ini` to `platformio_override.ini`
+
+    (3) In `platformio_override.ini`, search for the following lines and remove the `;` in front of the 2nd line if it is there
+    ```
+    ; *** uncomment the following line if you use Bluetooth or Apple Homekit in a Tasmota32 build. Reduces compile time
+    ;                          lib/libesp32_div
+    ```
+    becomes
+    ```
+    ; *** uncomment the following line if you use Bluetooth or Apple Homekit in a Tasmota32 build. Reduces compile time
+                              lib/libesp32_div
     ```
 
 Be aware, enabling of the native BLE on ESP32 has an impact on Wi-Fi performance.  Although later SDK helped a bit, expect more lag on the web interface and on MQTT.

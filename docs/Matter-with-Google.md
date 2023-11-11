@@ -6,7 +6,7 @@ Google Home will not accept devices using a test Vendor ID like Tasmota does. To
 
 Open [Google Home Developer Console](https://console.home.google.com/projects) logged in under the same account used for Google Home.
 
-Click on **Create a project** then **Create project**. Enter a name for your project (f.e. "Matter Tasmota").
+Click on **Create a project** then **Create project**. Enter a name for your project (e.g., "Matter Tasmota").
 
 ![Step 1](_media/matter/google/step1.jpg)
 

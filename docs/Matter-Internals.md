@@ -1,8 +1,14 @@
 # Matter Internals
 
-!!! danger "Matter protocol is experimental"
 
-!!! tip "Matter is only supported on ESP32x based devices and requires a specific build with `#define USE_MATTER_DEVICE`"
+!!! tip "Matter protocol supported in all ESP32 variants (C3/S2/S3) since Tasmota v13.0.0. ESP8266 is not supported although ESP8266 devices can be handled via a single ESP32 in bridge mode (see below)"
+
+??? tip "This feature is included in standard `tasmota32xx` builds; not in special variants (display, sensors...)" 
+
+    When [compiling your build](Compile-your-build) add the following flag to the build environment or `user_config_override.h`:
+    ```arduino
+    #define USE_MATTER_DEVICE
+    ```
 
 Below are implementation notes to understand and extend Matter.
 
@@ -17,9 +23,9 @@ We provide currently the following classes:
 | Plug-in class           | Description                                       |
 | ----------------------- | ------------------------------------------------- |
 | Plugin_Device           | Generic device (abstract)                         |
-| Plugin_Root.            | Root node (type `0x0016`)                           |
-| Plugin_Aggregator       | Aggregator for Bridge mode (type `0x000E`)          |
-| Plugin_OnOff            | Simple On/Off Plug (type `0x010A`)                  |
+| Plugin_Root             | Root node (type `0x0016`)                         |
+| Plugin_Aggregator       | Aggregator for Bridge mode (type `0x000E`)        |
+| Plugin_OnOff            | Simple On/Off Plug (type `0x010A`)                |
 | Plugin_Light0           | Light with 0 channel (OnOff) (type 0x0100)        |
 | Plugin_Light1           | Light with 1 channels (Dimmer) (type 0x0101)      |
 | Plugin_Light2           | Light with 2 channels (CT) (type 0x010C)          |
@@ -27,15 +33,20 @@ We provide currently the following classes:
 | Plugin_Sensor           | Generic Sensor class (abstract)                   |
 | Plugin_Sensor_Temp      | Temperature Sensor (type 0x0302)                  |
 | Plugin_Sensor_Pressure  | Pressure Sensor (type 0x0305)                     |
-| Plugin_Sensor_Light     | Light/Illuminance Sensor (type 0x0106)            |
+| Plugin_Sensor_Illuminance | Light/Illuminance Sensor (type 0x0106)          |
 | Plugin_Sensor_Humidity  | Humidity Sensor (type 0x0307)                     |
-| Plugin_Sensor_Occupancy | Occupancy Sensor linked to a swithc (type 0x0107) |
+| Plugin_Sensor_Flow      | Flow Sensor (type 0x0306)                         |
+| Plugin_Sensor_Occupancy | Occupancy Sensor linked to a swithch (type 0x0107)|
+| Plugin_Sensor_Contact   | Contact Sensor (type 0x0015)                      |
+| Plugin_Sensor_OnOff     | OnOff Sensor (type 0x0850)                        |
+| Plugin_Shutter          | Shutter (type 0x0202)                             |
+| Plugin_Shutter_Tilt     | Shutter with Tilt control (type 0x0202)           |
 
 Tasmota is also able to act as a Bridge to other Tasmota devices (ESP8266 or ESP32) and drive them via the HTTP API. The following classes provide such features:
 
-| Plug-in class          | Description                                  |
-| ---------------------- | -------------------------------------------- |
-| Plugin_Bridge_HTTP          | Generic superclass for remote devices (abstract)                    |
+| Plug-in class                 | Description                                  |
+| ----------------------------- | -------------------------------------------- |
+| Plugin_Bridge_HTTP            | Generic superclass for remote devices (abstract) |
 | Plugin_Bridge_OnOff           | Simple On/Off Plug (type `0x010A`)           |
 | Plugin_Bridge_Light0          | Light with 0 channel (OnOff) (type 0x0100)   |
 | Plugin_Bridge_Light1          | Light with 1 channels (Dimmer) (type 0x0101) |
@@ -44,9 +55,10 @@ Tasmota is also able to act as a Bridge to other Tasmota devices (ESP8266 or ESP
 | Plugin_Bridge_Sensor          | Generic Sensor class (abstract)              |
 | Plugin_Bridge_Sensor_Temp     | Temperature Sensor (type 0x0302)             |
 | Plugin_Bridge_Sensor_Pressure | Pressure Sensor (type 0x0305)                |
-| Plugin_Bridge_Sensor_Light    | Light/Illuminance Sensor (type 0x0106)       |
+| Plugin_Bridge_Sensor_Illuminance | Light/Illuminance Sensor (type 0x0106)    |
 | Plugin_Bridge_Sensor_Humidity | Humidity Sensor (type 0x0307)                |
-| Plugin_Bridge_Sensor_Occupancy | Occupancy Sensor linked to a swithc (type 0x0107) |
+| Plugin_Bridge_Sensor_Occupancy | Occupancy Sensor linked to a swithch (type 0x0107) |
+| Plugin_Bridge_Sensor_Flow     | Flow Sensor (type 0x0306)                    |
 
 Plugins Hierarchy:
 ```
@@ -54,11 +66,11 @@ Matter_Plugin
 +--- Matter_Plugin_Root
 +--- Matter_Plugin_Aggregator
 +--+ Matter_Plugin_Device
-   +--+ Matter_Plugin_Light0
-   |  |--+ Matter_Plugin_Light1
-   |     |--- Matter_Plugin_Light2
-   |     |--- Matter_Plugin_Light3
+   +--+ Matter_Plugin_Light1
+   |   |--- Matter_Plugin_Light2
+   |   |--- Matter_Plugin_Light3
    +--- Matter_Plugin_OnOff
+   |  |--+ Matter_Plugin_Light0
    +--+ Matter_Plugin_Shutter
    |  +--- Matter_Plugin_ShutterTilt
    +--+ Matter_Plugin_Sensor
@@ -66,7 +78,10 @@ Matter_Plugin
    |  +--- Matter_Plugin_Sensor_Temperature
    |  +--- Matter_Plugin_Sensor_Pressure
    |  +--- Matter_Plugin_Sensor_Illuminance
-   |  +--- Matter_Plugin_Sensor_Occupancy
+   |  +--- Matter_Plugin_Sensor_Flow
+   +--- Matter_Plugin_Sensor_Contact
+   +--- Matter_Plugin_Sensor_Occupancy
+   +--- Matter_Plugin_Sensor_OnOff
    +--+ Matter_Plugin_Bridge_HTTP
       +--+ Matter_Plugin_Bridge_Light0
       |  +--+ Matter_Plugin_Bridge_Light1
@@ -78,7 +93,9 @@ Matter_Plugin
       |  +--- Matter_Plugin_Bridge_Sensor_Temperature
       |  +--- Matter_Plugin_Bridge_Sensor_Pressure
       |  +--- Matter_Plugin_Bridge_Sensor_Illuminance
+      |  +--- Matter_Plugin_Bridge_Sensor_Flow
       +--- Matter_Plugin_Bridge_Sensor_Occupancy
+      +--- Matter_Plugin_Bridge_Sensor_Contact
 ```
 
 
@@ -329,3 +346,9 @@ Once all updates are sent, the subscription are scanned again to see if any hear
 If so:
 - `im.send_subscribe_update(sub)` is called
 - the subcription list of updates is cleared via `sub.clear_before_arm()` XXX TODO
+
+## Extending Matter
+
+All Matter support code is located in `berry_matter` as a lib, which avoids polluting the main directory of drivers. Berry allows to develop **much faster** compared to C++, and performance is mostly not an issue with Matter.
+
+The Berry code is located in the `embedded` directory. Then the code is compiled into bytecode and the bytecode is stored in Flash. This avoids consuming RAM which is a very previous resource on ESP32. To solidify, you just need to run `./solidify_all.be` in `berry_matter`. But before you need to have a local version of Berry: in `berry` directory, just do `make`. For windows users, compiling Berry can be challenging so a pre-compiled `berry.exe` is provided.

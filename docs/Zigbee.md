@@ -45,7 +45,7 @@ Before using Zigbee with Tasmota, you need to understand a few concepts. Here is
 |**PanID**<BR>(Personal Area Network IDentifier)<BR>This parameter is unique in a Zigbee network (16-bit integer, 0x0000–0x3FFF).<BR>At initial start a pseudo-random PanID is derived from the ESP MAC address.|SSID (the Wi-Fi network name)|
 |**ShortAddr**<BR>Address of the device on the Zigbee network. This address is randomly assigned when the device first connects to the coordinator (16 bits integer, 0x0000–0xFFF7). The coordinator has address 0x0000.<BR>You need to track which device has which address or assign a "Friendly Name" to each new discovered device.|IP address|
 |**GroupAddr**<BR>Group address of a collection of devices, it allows a single message to address multiple devices at once (16 bits integer, 0x0000–0xFFFF). For example a remote can turn on/off a group of lights. GroupAddr 0x0000 is not assigned.|Multicast|
-|**Endpoint**<BR>The endpoint on the coordinator or on the Zigbee device the message is sent from/to. You can see endpoints as logical devices providing distinct features (8 bits integer, 1–240).|IP Port|
+|**Endpoint**<BR>The endpoint on the coordinator or on the Zigbee device the message is sent from/to. You can see endpoints as logical devices providing distinct features (8 bits integer, 1–240).|TCP port|
 |**IEEEAddr**<BR>Device hardware address (64 bits). This is unique per device and factory assigned.|MAC address|
 |**Channel** 11-26<BR>*Default: 11* (See [Zigbee-Wifi coexistence](https://www.metageek.com/training/resources/zigbee-wifi-coexistence.html))|Wi-Fi Channel|
 |**Encryption Key**<BR>128-bit encryption key.<BR>At initial start a pseudo-random Encryption key is derived from the ESP MAC address.|Wi-Fi password|
@@ -181,7 +181,7 @@ At Zigbee start, all files with `*.zb` suffix are loaded into memory. Be careful
 
 #### **attribute matcher** specifies a cluster/attribute/type tuple and matches an attribute name
 
-- `<cluster 4 hex>/<attribute 4 hex>` or `<cluster 4 hex>/attribute 4 hex>%<type 2 hex>`
+- `<cluster 4 hex>/<attribute 4 hex>` or `<cluster 4 hex>/<attribute 4 hex>%<type 2 hex>`
 - Ex: `EF00/0365,IrrigationStartTime` (Tuya cluster EF00 does not need an explicit type)
 - Ex: `0006/4001%bool,OnTime`
 
@@ -346,7 +346,7 @@ Message with `"Status":30` shows some characteristics of the device:
 
 From the start, Z2T design was to stick to a low-level view and provide higher level (named) attributes only for a limited set of mostly seen attributes. This raised difficulties and frustration for users with specific devices that use rare attributes, or devices that use non-standard attributes (like Tuya zigbee devices).
 
-We are now providing a (**Zigbee Device plugin**)[#advanced-topic-zigbee-device-plugin] mechanisms, using simple text files. These files specify mapping on a per-device type basis. The goal is to fill most of the gap with Zigbee2MQTT (provided that you write the device plugin files). The lightweight nature of plugins permits to load only the plugins required by the devices used, and does not require a software update for new devices.
+We are now providing a [**Zigbee Device plugin**](#advanced-topic-zigbee-device-plugin) mechanisms, using simple text files. These files specify mapping on a per-device type basis. The goal is to fill most of the gap with Zigbee2MQTT (provided that you write the device plugin files). The lightweight nature of plugins permits to load only the plugins required by the devices used, and does not require a software update for new devices.
 
 ### How does it work?
 
@@ -1044,7 +1044,7 @@ You can define or overwrite an attribute name for a specific cluser/attributeid,
 
 The format is:
 
-```<cluster>/<attributeid>[,%<type>],<name>[,mul:<mul>][,div:<div>][,add:<add>][,manuf:<manuf>]```
+```<cluster>/<attributeid>[%<type>],<name>[,mul:<mul>][,div:<div>][,add:<add>][,manuf:<manuf>]```
 
 Parameter|Description
 :---|:---

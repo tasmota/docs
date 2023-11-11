@@ -3,11 +3,15 @@ Pinout for flashing TYWE3S devices. Module has a nearly identical pinout to ESP-
 ![Flashing pinout](https://tasmota.github.io/docs/_media/TYWE3S_pinout.png)
 
 ### TYWE3S Wiring for Flashing
-Vcc - 3.3V
-EN - 3.3V
-TX - RX  
-RX - TX  
-GND - GND
+
+| TYWE3S | Serial Programmer |
+| :-:    | :-:               |
+| Vcc    | 3.3V              |
+| EN     | 3.3V              |
+| TX     | RX                |
+| RX     | TX                |
+| GND    | GND               |
+| GPIO0  | GND               |
 
 Make sure to ground GPIO0 during boot.
 

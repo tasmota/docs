@@ -88,8 +88,8 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.betterem
   - pymdownx.caret
   - pymdownx.details
@@ -153,6 +153,7 @@ nav:
     - Protocol Bridging:
       - Arduino MCU: TasmotaClient.md
       - BLE Gateway: Bluetooth.md
+      - HDMI CEC: HDMI_CEC.md
       - IR Communication: Tasmota-IR.md
       - LCD/DLP Projector Control: Projector.md
       - Modbus-Bridge.md
@@ -187,6 +188,7 @@ nav:
     - Domoticz.md
     - Home-Assistant.md
     - Homebridge.md
+    - Homey: "https://homey.app/en-us/app/com.paveld.tasmota/Tasmota-MQTT/"
     - HomeSeer.md
     - IP-Symcon.md
     - KNX.md
