@@ -7,6 +7,61 @@ Feel free to contribute this list.
 
 ## TV's
 
+## Samsung AA59 TV remote controller
+
+**Example IRsend Command:**
+
+`IRsend {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E09966"}`
+
+| button        | code                                                 |
+| ------------- | -----------------------------------------------------|
+| TOGGLE ON/OFF | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E040BF"} |
+| ON            | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E09966"} |
+| OFF           | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E019E6"} |
+| SOURCE        | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0807F"} |
+| 1             | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E020DF"} |
+| 2             | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0A05F"} |
+| 3             | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0609F"} |
+| 4             | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E010EF"} |
+| 5             | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0906F"} |
+| 6             | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E050AF"} |
+| 7             | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E030CF"} |
+| 8             | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0B04F"} |
+| 9             | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0708F"} |
+| 0             | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E08877"} |
+| TTX/MIX       | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E034CB"} |
+| PRE-CHN       | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0C837"} |
+| VOL+          | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0E01F"} |
+| VOL-          | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0D02F"} |
+| CH LIST       | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0D629"} |
+| MUTE          | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0F00F"} |
+| PROG+         | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E048B7"} |
+| PROG-         | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E008F7"} |
+| MENU          | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E058A7"} |
+| SMARTHUB      | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E09E61"} |
+| GUIDE         | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0F20D"} |
+| TOOLS         | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0D22D"} |
+| INFO          | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0F807"} |
+| UP            | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E006F9"} |
+| DOWN          | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E08679"} |
+| LEFT          | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0A659"} |
+| RIGHT         | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E046B9"} |
+| MIDDLE        | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E016E9"} |
+| RETURN        | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E01AE5"} |
+| EXIT          | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0B44B"} |
+| A_RED         | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E036C9"} |
+| B_GREEN       | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E028D7"} |
+| C_YELLOW      | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0A857"} |
+| D_BLUE        | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E06897"} |
+| E-MANUAL      | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0FC03"} |
+| 3D            | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0F906"} |
+| AD/SUBT       | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0A45B"} |
+| STOP          | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0629D"} |
+| PREV          | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0A25D"} |
+| PLAY          | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E0E21D"} |
+| PAUSE         | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E052AD"} |
+| NEXT          | {"Protocol":"SAMSUNG","Bits":32,"Data":"0xE0E012ED"} |
+
 ### TCL 55P715 TV
 
 **Example IRsend Command:**
@@ -672,6 +727,29 @@ IR Remote Codes for Acer K132 projector and possibly other models using a remote
 | Previous          | 0x20DF11EE |
 | Play/Pause        | 0x20DF12ED |
 | Next              | 0x20DF13EC |
+
+## Hi-Fi Amplifiers
+
+### NAD D-3020 v1
+
+| button       | code                                             |
+| ------------ | ------------------------------------------------ |
+| Power On     | {"Protocol":"NEC","Bits":32,"Data":"0xE13EA45B"} |
+| Power Off    | {"Protocol":"NEC","Bits":32,"Data":"0xE13E13EC"} |
+| Source Up    | {"Protocol":"NEC","Bits":32,"Data":"0xE13E58A7"} |
+| Source Down  | {"Protocol":"NEC","Bits":32,"Data":"0xE13EB847"} |
+| Volume Up    | {"Protocol":"NEC","Bits":32,"Data":"0xE13E11EE"} |
+| Volume Down  | {"Protocol":"NEC","Bits":32,"Data":"0xE13E31CE"} |
+| Mute         | {"Protocol":"NEC","Bits":32,"Data":"0xE13EBB44"} |
+| Skip Back    | {"Protocol":"NEC","Bits":32,"Data":"0xE13E8B74"} |
+| Skip Forward | {"Protocol":"NEC","Bits":32,"Data":"0xE13E4BB4"} |
+| Optical 1    | {"Protocol":"NEC","Bits":32,"Data":"0xE13E916E"} |
+| Optical 2    | {"Protocol":"NEC","Bits":32,"Data":"0xE13EB14E"} |
+| Coax         | {"Protocol":"NEC","Bits":32,"Data":"0xE13EA15E"} |
+| Computer     | {"Protocol":"NEC","Bits":32,"Data":"0xE13E8976"} |
+| Aux 1        | {"Protocol":"NEC","Bits":32,"Data":"0xE13ED926"} |
+| Aux 2        | {"Protocol":"NEC","Bits":32,"Data":"0xE13E03FC"} |
+| Bluetooth    | {"Protocol":"NEC","Bits":32,"Data":"0xE13E43BC"} |
 
 ## Vacuum Cleaners
 
