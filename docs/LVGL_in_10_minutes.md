@@ -95,7 +95,7 @@ In this last step, we will try to run a small LVGL application written in Berry.
 
 ![](_media/lvgl/Tasmota_lvgldemo.png)
 
-``` python
+```berry
 #- start LVGL and init environment -#
 lv.start()
 

@@ -11,7 +11,7 @@ Berry allow imports from files inside a Tasmota App (.tapp file). Also enabled `
 
 Here is the code you should add in your `autoexec.be` inside tapp file:
 
-```python
+```berry
 import sys
 var wd = tasmota.wd
 if size(wd) sys.path().push(wd) end

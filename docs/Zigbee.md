@@ -346,7 +346,7 @@ Message with `"Status":30` shows some characteristics of the device:
 
 From the start, Z2T design was to stick to a low-level view and provide higher level (named) attributes only for a limited set of mostly seen attributes. This raised difficulties and frustration for users with specific devices that use rare attributes, or devices that use non-standard attributes (like Tuya zigbee devices).
 
-We are now providing a (**Zigbee Device plugin**)[#advanced-topic-zigbee-device-plugin] mechanisms, using simple text files. These files specify mapping on a per-device type basis. The goal is to fill most of the gap with Zigbee2MQTT (provided that you write the device plugin files). The lightweight nature of plugins permits to load only the plugins required by the devices used, and does not require a software update for new devices.
+We are now providing a [**Zigbee Device plugin**](#advanced-topic-zigbee-device-plugin) mechanisms, using simple text files. These files specify mapping on a per-device type basis. The goal is to fill most of the gap with Zigbee2MQTT (provided that you write the device plugin files). The lightweight nature of plugins permits to load only the plugins required by the devices used, and does not require a software update for new devices.
 
 ### How does it work?
 

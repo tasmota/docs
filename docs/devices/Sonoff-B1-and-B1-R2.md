@@ -1,1 +1,1 @@
-[PAGE MOVED!](/devices/Sonoff-B1)
+[PAGE MOVED!](Sonoff-B1.md)

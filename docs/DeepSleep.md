@@ -1,4 +1,4 @@
-DeepSleep support for up to 10 years (i.e., 86,400 seconds = 1 day) (e.g., if used with KNX) ([`DeepSleepTime`](Commands#deepsleeptime)). 
+DeepSleep support for up to 10 years (i.e., 86,400 seconds = 1 day) (e.g., if used with KNX) ([`DeepSleepTime`](Commands.md#deepsleeptime)). 
 
 `DeepSleepTime` sets the time the device remains in DeepSleep before it returns to full operating mode. Once the command is issued, the DeepSleep cycle commences. During DeepSleep, the device is effectively **off** and, as such, it is not possible to modify DeepSleepTime without exiting DeepSleep. 
 
@@ -178,7 +178,7 @@ When MQTT connects at `13:08:38`, this sets the system to READY.
 13:08:44 CFG: Saved to flash at F4, Count 96, Bytes 3824
 ```
 
-In the context of DeepSleep, maintaining a device boot count is not relevant. When DeepSleep is enabled, boot count will not be incremented. This avoids excessive flash writes which will deteriorate the flash memory chip and eventually cause the device to fail. Boot count incrementing can be enabled using [`SetOption76`](Commands#setoption76).
+In the context of DeepSleep, maintaining a device boot count is not relevant. When DeepSleep is enabled, boot count will not be incremented. This avoids excessive flash writes which will deteriorate the flash memory chip and eventually cause the device to fail. Boot count incrementing can be enabled using [`SetOption76`](Commands.md#setoption76).
 
 In this example, TelePeriod is 10. Therefore when it is reached, telemetry reporting occurs.
 ```

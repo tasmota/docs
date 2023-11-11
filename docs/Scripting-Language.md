@@ -16,7 +16,7 @@
     | Feature | Description |
     | -- | -- |
     USE_BUTTON_EVENT | enable `>b` section (detect button state changes)
-    USE_SCRIPT_JSON_EXPORT | enable `>J` section (publish JSON payload on [TelePeriod](Commands#teleperiod))
+    USE_SCRIPT_JSON_EXPORT | enable `>J` section (publish JSON payload on [TelePeriod](Commands.md#teleperiod))
     USE_SCRIPT_SUB_COMMAND | enables invoking named script subroutines via the Console or MQTT
     USE_SCRIPT_HUE | enable `>H` section (Alexa Hue emulation)
     USE_HOMEKIT | enable `>h` section (Siri Homekit support (ESP32 only),<br>define must be given in platform_override see below)
@@ -27,7 +27,7 @@
     USE_SCRIPT_WEB_DISPLAY | enable `>W` section (modify web UI)
     SCRIPT_FULL_WEBPAGE | enable ``>w`` section (separate full web page and webserver)
     USE_TOUCH_BUTTONS | enable virtual touch button support with touch displays
-    USE_WEBSEND_RESPONSE | enable receiving the response of [`WebSend`](Commands#websend) and [`WebQuery`](Commands#webquery) commands (received in section >E)
+    USE_WEBSEND_RESPONSE | enable receiving the response of [`WebSend`](Commands.md#websend) and [`WebQuery`](Commands.md#webquery) commands (received in section >E)
     SCRIPT_STRIP_COMMENTS | enables stripping comments when attempting to paste a script that is too large to fit
     USE_ANGLE_FUNC | add sin(x),acos(x) and sqrt(x) e.g. to allow calculation of horizontal cylinder volume
     USE_SCRIPT_FATFS_EXT | enables additional FS commands   
@@ -49,6 +49,7 @@
     USE_GOOGLE_CHARTS | enables definition of google charts within web section
     USE_FEXTRACT | enables array extraction from database fxt(...), fxto() and tso(), tsn(), cts(), s2t() functions  
     USE_SCRIPT_SPI | enables support for SPI interface  
+    USE_SCRIPT_TCP_SERVER | enables support for TCP server  
     USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
     TS_FLOAT | may be define as double to use double precision numbers (uses double RAM memory and is slower)  
 
@@ -144,7 +145,7 @@ see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/
 
 #### Console Commands
 
-`script <n>` <n>: `0` = switch script off; `1` = switch script on  
+`script <n>` <n>: `0` = switch script off; `1` = switch script on  `8` = switch stop on error off; `9` = switch stop on error on 
 `script ><cmdline>` execute <cmdline>  
 - Can be used to set variables, e.g., `script >mintmp=15`  
 - Multiple statements can be specified by separating each with a semicolon, e.g. `script >mintmp=15;maxtemp=40`  
@@ -206,8 +207,8 @@ Executed every second
 Executed on restart. p vars are saved automatically after this call  
 
 `>T`  
-Executed at least at [`TelePeriod`](Commands#teleperiod) time (`SENSOR` and `STATE`) but mostly faster up to every 100 ms, only put `tele-` vars in this section  
-Remark: JSON variable names (like all others) may not contain math operators like - , you should set [`SetOption64 1`](Commands#setoption64) to replace `-` (_dash_) with `_` (_underscore_). Zigbee sensors will not report to this section, use E instead.
+Executed at least at [`TelePeriod`](Commands.md#teleperiod) time (`SENSOR` and `STATE`) but mostly faster up to every 100 ms, only put `tele-` vars in this section  
+Remark: JSON variable names (like all others) may not contain math operators like - , you should set [`SetOption64 1`](Commands.md#setoption64) to replace `-` (_dash_) with `_` (_underscore_). Zigbee sensors will not report to this section, use E instead.
 
 `>H`  
 Alexa Hue interface (up to 32 virtual hue devices) *([example](#hue-emulation))*  
@@ -314,7 +315,7 @@ read button state (x = `1.. MAX_KEYS`)
     ```
   
 `>J`  
-The lines in this section are published via MQTT in a JSON payload on [TelePeriod](Commands#teleperiod). ==Requires compiling with `#define USE_SCRIPT_JSON_EXPORT `.==  
+The lines in this section are published via MQTT in a JSON payload on [TelePeriod](Commands.md#teleperiod). ==Requires compiling with `#define USE_SCRIPT_JSON_EXPORT `.==  
 
 `>W`  
 The lines in this section are displayed in the web UI main page. ==Requires compiling with `#define USE_SCRIPT_WEB_DISPLAY`.== 
@@ -508,7 +509,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `time` = minutes since midnight  
 `sunrise` = sunrise minutes since midnight  
 `sunset` = sunset minutes since midnight  
-`tper` = [TelePeriod](Commands#teleperiod) (_**may be set also**_)  
+`tper` = [TelePeriod](Commands.md#teleperiod) (_**may be set also**_)  
 `cbs` = command text buffer size for tasmota cmds (default 256) (_**may be set also**_)  
 `tstamp` = timestamp (local date and time)  
 `topic` = mqtt topic  
@@ -616,7 +617,16 @@ SPI IO support #define `USE_SCRIPT_SPI`
 `spi(0 -2 freq)` defines a hardware SPI port 2 on ESP32 with pin numbers defined by Tasmota GPIO definition.  
 `spi(1 N GPIO)` sets the CS pin with index N (1..4) to pin Nr GPIO.  
 `spi(2 N ARRAY LEN S)` sends and receives an ARRAY with LEN values with S (1..3) (8,16,24 bits) if N==-1 CS is ignored. If S=4, CS is raised after each byte.
-  
+
+TCP server support #define `USE_SCRIPT_TCP_SERVER`  
+`wso(port)` start a tcp stream server at port  
+`wsc()` close tcp stream server  
+`wsa()` return bytes available on tcp stream  
+`wsrs()` return a string read from tcp stream  
+`wsws(string)` writes a string to tcp stream  
+`wsra(array)` reads a tcp stream into array  
+`wswa(array num (type))` writes num bytes of array to tcp stream, type: 0 = uint8 (default), 1 = uint16, 2 = sint16, 3 = float    
+
 `ttget(TNUM SEL)` get tasmota timer setting from timer TNUM (1 .. 16)  
 SEL:  
   0 = time  
@@ -1616,7 +1626,7 @@ Some variables are set from ioBroker
     punit=PressureUnit
 
     >S
-    ; update display every [`TelePeriod`](Commands#teleperiod)
+    ; update display every [`TelePeriod`](Commands.md#teleperiod)
     if upsecs%tper==0
     then
     dp2
@@ -1999,7 +2009,7 @@ Used to display home's solar power input/output (+-5000 Watts)
 ### Multiple IR Receiver Synchronization
 
 Shows how a Magic Home with IR receiver works
-Synchronizes 2 Magic Home devices by also sending the commands to a second Magic Home via [`WebSend`](Commands#websend)
+Synchronizes 2 Magic Home devices by also sending the commands to a second Magic Home via [`WebSend`](Commands.md#websend)
 
 **Script example using `if then else`**
     ; expand default string length to be able to hold `WebSend [xxx.xxx.xxx.xxx]`  
@@ -2349,7 +2359,7 @@ Uses Tasmota's Hue Emulation capabilities for Alexa interface
 
     >m
     email report at %tstamp%
-    your power consumption today was %et% KWh
+    your power consumption today was %et% kWh
     #
 
 ### Send power reading with formatted time stamp via websend

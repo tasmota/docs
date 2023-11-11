@@ -7,6 +7,34 @@ Feel free to contribute this list.
 
 ## TV's
 
+### TCL 55P715 TV
+
+**Example IRsend Command:**
+
+`IRsend {"Protocol":"NIKAI","Bits":48,"Data":0x0x0D5F2A}`
+
+| button   | code     |
+| -------- | -------- |
+| Power    | 0x0D5F2A |
+| Vol+     | 0x0D0F2F |
+| Vol-     | 0x0D1F2E |
+| Mute     | 0x0C0F3F |
+| info     | 0x0C3F3C |
+| P+=      | 0x0D2F2D |
+| P-       | 0x0D3F2C |
+| Settings | 0x030FCF |
+| EPG      | 0x0E5F1A |
+| Home     | 0x0F7F08 |
+| UP       | 0x0A6F59 |
+| Down     | 0x0A7F58 |
+| LEFT     | 0x0A9F56 |
+| Right    | 0x0A8F57 |
+| Enter    | 0x00BFF4 |
+| Menu     | 0x013FEC |
+| Back     | 0x0D8F27 |
+| NetFlix  | 0x010FEF |
+| Source   | 0x05CFA3 |
+ 
 ### Panasonic TX65FXW784 TV
 
 **Example received Code:**

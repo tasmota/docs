@@ -31,7 +31,7 @@ Changes can be discarded by clicking on the button "Manage File System" to retur
 ![File editor](_media/ufs_file_editor.png)
 
 ## Commands
-Complete list of [UFS commands](Commands#ufs)
+Complete list of [UFS commands](Commands.md#ufs)
 
 Also look into [Berry scripting language](Berry.md#loading-filesystem) for ESP32 which works with UFS.
 
@@ -44,7 +44,7 @@ Stores commands that will be executed at every boot, similar to the backlog comm
 Almost any command can be used in the file. However, avoid commands that will make the device reboot, 
 such as: changing Wifi setting, MQTT settings, Templates & GPIO, etc. Commands that triggers reboot
 will create a boot loop which will force Tasmota to automatically disable `autoexec.bat` and other settings.
-See [SetOption36](Commands#setoption36) for more details.
+See [SetOption36](Commands.md#setoption36) for more details.
 
 Commands must be kept one command per line and they will be executed sequentially. Lines starting with semicolon are ignored as comments.
 

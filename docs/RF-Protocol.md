@@ -53,7 +53,7 @@ RfProtocol`<idx> <value>`|`<idx>` 1 .. 35 `<value>` 0 or 1 :: This Disables or E
 
 If you have an RF receiver configured, a message will be logged each time an RF code is seen. RF driver will try to decode it against all protocols supported by rc-switch library.   
 
-When Tasmota receives an RF message, the data portion of the payload has the same format as the [`RfSend`](Commands#rfsend) JSON parameters.
+When Tasmota receives an RF message, the data portion of the payload has the same format as the [`RfSend`](Commands.md#rfsend) JSON parameters.
 
 ```
 "RfReceived":{"Data":"<hex-value>","Bits":<value>,"Protocol":<value>,"Pulse":<value>}

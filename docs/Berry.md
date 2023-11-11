@@ -67,24 +67,24 @@ The console is not designed for big coding tasks but it's recommended to use a c
 
 Try typing simple commands in the REPL. Since the input can be multi-lines, press ++enter++ twice or click "Run" button to run the code. Use ++arrow-up++ and ++arrow-down++ to navigate through history of previous commands.
 
-```python
+```berry
 > 1+1
 2
 ```
 
-```python
+```berry
 > 2.0/3
 0.666667
 ```
 
-```python
+```berry
 > print('Hello Tasmota!')
 Hello Tasmota!
 ```
 
 Note: Berry's native `print()` command displays text in the Berry Console and in the Tasmota logs. To log with finer control, you can also use the `log()` function which will not display in the Berry Console.
 
-```python
+```berry
 > print('Hello Tasmota!')
   log('Hello again')
 Hello Tasmota!
@@ -118,7 +118,7 @@ You can control individual Relays or lights with `tasmota.get_power()` and `tasm
 
 !!! example "2 relays and 1 light"
 
-    ```python
+    ```berry
     > tasmota.get_power()
     [false, true, false]
 
@@ -143,7 +143,7 @@ channels|`array of int, ranges 0..255`<br>Set the value for each channel, as an 
 
 When setting attributes, they are evaluated in the following order, the latter overriding the previous: `power`, `ct`, `hue`, `sat`, `rgb`, `channels`, `bri`.
 
-```python
+```berry
   # set to yellow, 25% brightness
 > light.set({"power": true, "hue":60, "bri":64, "sat":255})
 {'bri': 64, 'hue': 60, 'power': true, 'sat': 255, 'rgb': '404000', 'channels': [64, 64, 0]}
@@ -167,7 +167,7 @@ When setting attributes, they are evaluated in the following order, the latter o
 ## Rules
 The rule function have the general form below where parameters are optional:
 
-```python
+```berry
 def function_name(value, trigger, msg)
 end
 ```
@@ -181,14 +181,14 @@ Parameter|Description
 !!! example "Dimmer rule"
 
     Define the function and add a rule to Tasmota where the function runs if Dimmer value is more than 50
-    ```python
+    ```berry
     > def dimmer_over_50()
         print("The light is bright")
       end
       tasmota.add_rule("Dimmer>50", dimmer_over_50)
     ```
 
-    ```python
+    ```berry
     > tasmota.cmd("Dimmer 30")
     {'POWER': 'ON', 'Dimmer': 30, 'Color': '4D3223', 'HSBColor': '21,55,30', 'Channel': [30, 20, 14]}
 
@@ -202,13 +202,13 @@ The same function can be used with multiple triggers.
 If the function to process an ADC input should be triggered both by the `tele/SENSOR`
 message and the result of a `Status 10` command:
 
-```python
+```berry
 tasmota.add_rule("ANALOG#A1", rule_adc_1)
 tasmota.add_rule("StatusSNS#ANALOG#A1", rule_adc_1)
 ```
 
 Or if the same function is used to process similar triggers:
-```python
+```berry
 import string
 
 def rule_adc(value, trigger)
@@ -223,7 +223,7 @@ tasmota.add_rule("ANALOG#A2",rule_adc)
 ```
 
 Another way to address the same using anonymous functions created dynamically
-```python
+```berry
 def rule_adc(adc, value)
   print("value of adc",adc," is ",value)
 end
@@ -234,19 +234,19 @@ tasmota.add_rule("ANALOG#A2", def (value) rule_adc(2,value) end )
 ### Multiple triggers AND logic ###
 
 It is possible to combine multiple triggers in a AND logic as an array:
-```python
+```berry
 tasmota.add_rule(["ANALOG#A1>300","ANALOG#A1<500"], def (values) rule_adc_in_range(1,values) end )
 ```
 would trigger if `300 < ANALOG#A1 < 500`
 
 Triggers can be of different types too:
-```python
+```berry
 tasmota.add_rule(["ANALOG#A1>300","BME280#Temperature>28.0"], def (values) rule_adc_and_temp(1,values) end )
 ```
 would trigger for simultaneous `ANALOG#A1>300` AND `BME280#Temperature>28.0`
 
 In that case, the value and trigger arguments passed to the rule function are also lists:
-```python
+```berry
 def function_name(values:list_of_string, triggers:list_of_string, msg)
 end
 ```
@@ -283,7 +283,7 @@ Berry code, when it is running, blocks the rest of Tasmota. This means that you 
 
 All times are in milliseconds. You can know the current running time in milliseconds since the last boot:
 
-```python
+```berry
 > tasmota.millis()
 9977038
 ```
@@ -291,7 +291,7 @@ All times are in milliseconds. You can know the current running time in millisec
 
 !!! example "Sending a timer is as easy as `tasmota.set_timer(<delay in ms>,<function>)`"
 
-    ```python
+    ```berry
     > def t() print("Booh!") end
 
     > tasmota.set_timer(5000, t)
@@ -388,7 +388,7 @@ There are basically two ways to respond to an event:
 
 Define a class and implement methods with the same name as the events you want to respond to.
 
-```python
+```berry
 class MyDriver
   def every_second()
     # do something
@@ -815,6 +815,9 @@ path.last_modified<a class="cmnd" id="path_last_modified"></a>|`(file_name:strin
 path.listdir<a class="cmnd" id="path_listdir"></a>|`(dir_name:string) -> list(string)`<br>List a directory, typically root dir `"/"` and returns a list of filenames in the directory. Returns an empty list if the directory is invalid
 path.remove<a class="cmnd" id="path_remove"></a>|`(file_name:string) -> bool`<br>Deletes a file by name, return `true` if successful
 path.format<a class="cmnd" id="path_format"></a>|`(true:bool) -> bool`<br>Re-formats the LittleFS file system (internal ESP32 flash) and erases all content. The parameter needs to be true as to avoid unwanted calls. Returns true if reformatting was successful.<br>This is sometimes useful when the file-system becomes unstable or corrupt after multiple re-partitionings.
+path.mkdir<a class="cmnd" id="path_mkdir"></a>|`(dir_name:string) -> bool`<br>Creates a directory, return `true` if successful
+path.rmdir<a class="cmnd" id="path_rmdir"></a>|`(dir_name:string) -> bool`<br>Deletes a directory if empty, return `true` if successful
+path.isdir<a class="cmnd" id="path_isdir"></a>|`(name:string) -> bool`<br>Checks if path name is a directory
 
 
 ### `persist` module
@@ -840,7 +843,7 @@ persist.find<a class="cmnd" id="persist_find"></a>|`my_param:string [, "default 
 
 Allows to do introspection on instances and modules, to programmatically list attributes, set and get them.
 
-```python
+```berry
 > class A var a,b def f() return 1 end end
 > ins=A()
 > ins.a = "foo"
@@ -1486,6 +1489,7 @@ Currently supported algorithms:
 - AES CTR 256 bits - requires `#define USE_BERRY_CRYPTO_AES_CTR`
 - AES GCM 256 bits
 - AES CCM 128 or 256 bits
+- AES CBC 128 bits
 - Elliptic Curve C25519 - requires `#define USE_BERRY_CRYPTO_EC_C25519`
 - Elliptic Curve P256 (secp256r1) - requires `#define USE_BERRY_CRYPTO_EC_P256`
 - HKDF key derivation with HMAC SHA256 - requires `#define USE_BERRY_CRYPTO_HKDF_SHA256`
@@ -1603,6 +1607,32 @@ var ret = crypto.AES_CCM.decrypt1(i2r, n, 0, size(n), raw, 0, payload_idx, raw, 
 
 assert(ret)
 assert(raw[payload_idx .. -tag_len - 1] == clr)
+```
+
+#### `crypto.AES_CBC` class
+
+Encrypt and decrypt, using AES CBC with 128 bits keys.
+
+General Function|Parameters and details
+:---|:---
+decrypt1<a class="cmnd" id="aes_cbc_decrypt1"></a>|`AES_CBC.decrypt1(secret_key:bytes(16), iv:bytes(16), data:bytes(n*16)) -> bool (always true)`<br>Decrypt in a single call in-place, avoiding any object allocation
+encrypt1<a class="cmnd" id="aes_cbc_encrypt1"></a>|`AES_CBC.encrypt1(secret_key:bytes(16), iv:bytes(16), data:bytes(n*16)) -> bool (always true)`<br>Decrypt in a single call, avoiding any object allocation. Data is encrypted in-place and IV is changed in the buffer too.
+  
+Example:
+
+```berry
+var b = bytes().fromstring("hello world_____") # 16-byte aligned
+var key = bytes().fromstring("1122334455667788") # 16 bytes
+var iv = bytes().fromstring("8877665544332211") # 16 bytes
+
+print("data:",b.asstring()) # "hello world_____"
+import crypto
+aes = crypto.AES_CBC()
+aes.encrypt1(key, iv, b)
+print("cipher:",b)
+iv = bytes().fromstring("8877665544332211")
+aes.decrypt1(key, iv, b)
+print("decrypted data:",b.asstring()) # "hello world_____"
 ```
 
 #### `crypto.EC_C25519` class

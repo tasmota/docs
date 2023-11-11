@@ -12,8 +12,7 @@ Credits: @MikePRoberts
 
 * ESP8266 OTA Firmware Upgrade Manager and Server
 
-[https://flows.nodered.org/flow/888b4cd95250197eb429b2f40d188185](
-https://flows.nodered.org/flow/888b4cd95250197eb429b2f40d188185)
+[https://flows.nodered.org/flow/888b4cd95250197eb429b2f40d188185](https://flows.nodered.org/flow/888b4cd95250197eb429b2f40d188185)
 
 * Dynamically Populate Dashboard with Buttons to Tasmota-Sonoff Devices
 

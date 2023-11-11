@@ -4,7 +4,7 @@
 * Version with enclosure: <https://www.banggood.com/Geekcreit-2-Channel-AC-85V-250V-APP-Remote-Control-WIFI-Wireless-Switch-Socket-For-Smart-Home-p-1114958.html?rmmds=search&cur_warehouse=CN>
 
 The Geekcreit/"Sonoff" 2CH is based on the ESP8285 via the Itead PSF-B04.
-It is very similar to 4CH DIY, so this wiki page is based on [the page](/devices/Sonoff-4CH-DIY) for that device.
+It is very similar to 4CH DIY, so this wiki page is based on [the page](Sonoff-4CH-DIY.md) for that device.
 
 More info here:
 https://github.com/arendst/Tasmota/issues/1970

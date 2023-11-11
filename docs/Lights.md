@@ -183,7 +183,7 @@ Gamma Correction is enabled by default in Tasmota ([`LedTable 1`](Commands.md#le
 
 Human eye perception of brightness is non linear, bringing back linearity needs a trick called [Gamma Correction](https://learn.adafruit.com/led-tricks-gamma-correction).
 
-Some lights have hardware gamma correction (f.e. Sonoff B1). In that case, software gamma correction should be disabled with [`LedTable 0`](Commands.md#ledtable).
+Some lights have hardware gamma correction (e.g., Sonoff B1). In that case, software gamma correction should be disabled with [`LedTable 0`](Commands.md#ledtable).
 
 The curve used: orange=ideal, blue=tasmota.
 
@@ -225,7 +225,7 @@ To calibrate a RGBW light:
 
 [`SetOption37 128`](Commands.md#setoption37)
 
-By default RGBW and RGBCCT lights can only be controlled in single mode, either RGB or White (f.e. Turning on CT lights turns off RGB lights and vice versa).
+By default RGBW and RGBCCT lights can only be controlled in single mode, either RGB or White (e.g., Turning on CT lights turns off RGB lights and vice versa).
 
 Use [`SetOption37 128`](Commands.md#setoption37) to split RGB and White into 2 independent lights. If you are already using Channel Remapping, just add `128` to the value of [`SetOption37`](Commands.md#setoption37).
 
@@ -334,10 +334,10 @@ For example, on a Sonoff Basic the green LED is used as the link status LED. Onc
 
 **Link status LED** shows the network state, more specifically the Wi-Fi and MQTT connection status.
 
-It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (if MQTT is enabled). You can change this behaviour with [`LedState`](Commands#ledstate) or turn it off with [`SetOption31`](Commands#setoption31).
+It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (if MQTT is enabled). You can change this behaviour with [`LedState`](Commands.md#ledstate) or turn it off with [`SetOption31`](Commands.md#setoption31).
 
 #### Power status LED
-**Power status LED** shows the power status of relay component(s). [`LedMask`](Commands#ledmask) determines which relay(s) are associated with the power status LED. This behavior can be modified with the [`LedState`](Commands#ledstate) command. The LED is turned off by default when the relay is OFF and turned on when the relay switches ON.
+**Power status LED** shows the power status of relay component(s). [`LedMask`](Commands.md#ledmask) determines which relay(s) are associated with the power status LED. This behavior can be modified with the [`LedState`](Commands.md#ledstate) command. The LED is turned off by default when the relay is OFF and turned on when the relay switches ON.
 
 !!! note 
     Depending on the device design, some LEDs are connected to the same GPIO as the relay. Those cannot be independently controlled since they have to follow the relay state.
@@ -345,12 +345,12 @@ It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (i
 If you have more than one LED wired independently and you want it to show the power state of the relay, you **must** assign an `LedLink` GPIO.
 
 #### PWM LED Mode
-Using [`LedPwmMode`](Commands#ledpwmmode) you can change the LED display mode from simple on/off to a PWM controlled LED which will enable you to f.e. display a brighter LED when the relay is on and a dimmer LED when it's OFF so you can locate the switch in the dark but not have it obnoxiously bright.
+Using [`LedPwmMode`](Commands.md#ledpwmmode) you can change the LED display mode from simple on/off to a PWM controlled LED which will enable you to e.g., display a brighter LED when the relay is on and a dimmer LED when it's OFF so you can locate the switch in the dark but not have it obnoxiously bright.
 
 `LedPwmOff` and `LedPwmOn` control the preset LED brightness in their respective states.
 
 #### LedPower Command
-When you use [`LedPower`](Commands#ledpower) you take over control of that particular LED and it stops being linked to its corresponding relay and being its power status LED.
+When you use [`LedPower`](Commands.md#ledpower) you take over control of that particular LED and it stops being linked to its corresponding relay and being its power status LED.
 
 #### Using LedLink
 `LedLink` / `LedLinki` is used to assign the link status LED. If your device does not have an LED for link status (or you want to use that LED for a different purpose), you can assign `LedLink` to an available free GPIO. When `LedLink(i)` is assigned, other LEDs are automatically linked to their corresponding relay and serve as that relay's power status LED - i.e., `Led<x>(i)` links to `Relay<x>(i)`
