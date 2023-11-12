@@ -247,7 +247,7 @@ Hydrolysis.Runtime.Pol2|(String) Cell runtime for polarization 2
 Hydrolysis.Runtime.Changes|(Int) Number of polarization changes
 Hydrolysis.State|(String) Cell state:<BR>`OFF` = Cell inactive<BR>`FLOW` = Cell water flow alarm<BR>`POL1` = Cell polarization 1 active<BR>`POL2` = Cell polarization 2 active
 Hydrolysis.Cover|(Bool) Cover signal input:<BR>`0` = Cover input inactive<BR>`1` = Cover input active
-Hydrolysis.Boost|(Int) Boost mode state:<BR>`0` = Boost mode inactive<BR>`1` = Boost mode active with redox control<BR>`2` = Boost mode active without redox control
+Hydrolysis.Boost|(Int) Boost mode state:<BR>`0` = Boost mode inactive<BR>`1` = Boost mode active<BR>`2` = Boost mode active with redox control
 Hydrolysis.Low|(Bool) Hydrolysis low alarm:<BR>`0` = No alarm<BR>`1` = Hydrolysis cannot reach the set point
 Filtration.State|(Int) Filtration pump state:<BR>`0` = Pump off<BR>`1` = Pump on
 Filtration.Speed|(Int) Filtration pump speed:<BR>`1` = Low<BR>`2` = Middle<BR>`3` = High
@@ -313,6 +313,7 @@ Command|Parameters
 NPFiltration<a id="NPFiltration"></a>|`{<state> {speed}}`<BR>get/set manual filtration (state = `0` or `1`, speed = `1..3`). Get if state is omitted, otherwise set accordingly  `<state>`:<ul><li>`0` - manual turn filtration pump off</li><li>`1` - manual turn filtration pump on</li></ul>optional speed control is possible for non-standard filtration types:<ul><li>`1` - slow</li><li>`2` - medium</li><li>`3` - fast</li></ul>
 NPFiltrationmode<a id="NPFiltrationmode"></a>|`{<mode>}`<BR>get/set filtration mode (mode = `0..4` or `13`). Get if mode is omitted, otherwise set accordingly `<mode>`:<ul><li>`0` - *MANUAL*<BR>allows to turn the filtration (and all other systems that depend on it) on and off</li><li>`1` - *AUTO*<BR>allows filtering to be turned on and off according to the settings of the *MBF_PAR_TIMER_BLOCK_FILT_INT* timers.</li><li>`2` - *HEATING*<BR>similar to the AUTO mode, but includes setting the temperature for the heating function. This mode is activated only if the BF_PAR_HEATING_MODE register is at 1 and there is a heating relay assigned.</li><li>`3` - *SMART*<BR>adjusts the pump operating times depending on the temperature. This mode is activated only if the MBF_PAR_TEMPERATURE_ACTIVE register is at 1.</li><li>`4` - *INTELLIGENT*<BR>performs an intelligent filtration process in combination with the heating function. This mode is activated only if the MBF_PAR_HEATING_MODE register is at 1 and there is a heating relay assigned.</li><li>`13` - *BACKWASH*<BR>started when the backwash operation is activated.</ul>
 NPFiltrationspeed<a id="NPFiltrationspeed"></a>|`{<speed>}`<BR>(only available for non-standard filtration types)<BR>get/set manual filtration speed (speed = `1..3`)<BR>get filtration speed if `<speed>` is omitted, otherwise set new `<speed>`:<ul><li>`1` - Low</li><li>`2` - Mid</li><li>`3` - High</li></ul>
+NPBoost<a id="NPBoost"></a>|`{<mode>}`<BR>get/set hydrolysis/electrolysis boost mode (mode = `0..2` or `OFF`, `ON`, `REDOX`)<BR>get if mode is omitted, otherwise set accordingly `<mode>`:<ul><li>`0` or `OFF` - *Boost off*<BR>disables the boost mode</li><li>`1` or `ON` - *Boost on*<BR>enables the boost mode independent of the redox value</li><li>`2` or `REDOX` - *Boost on with Redox control*<BR>similar to ON, but with consideration of the current redox settings.</li></ul>Please note that the boost function also always switches the filtration to on.
 NPTime<a id="NPTime"></a>|`{<time>}`<BR>get/set device time. Get if time is omitted, otherwise set device time accordingly `<time>`:<ul><li>`0` - sync with Tasmota local time</li><li>`1` - sync with Tasmota utc time</li><li>`2..4294967295` - set time as epoch</li></ul>
 NPLight<a id="NPLight"></a>|`{<state> {delay}}`<BR>get/set light (state = `0..4`, delay = `5..100` in 1/10 sec). Get if state is omitted, otherwise set accordingly `<state>`:<ul><li>`0` - manual turn light off</li><li>`1` - manual turn light on</li><li>`2` - manual toggle light</li><li>`3` - switch light into auto mode according MBF_PAR_TIMER_BLOCK_LIGHT_INT settings</li><li>`4` - select light RGB LED to next program. This is normally done by power the light on (if currently off), then power off the light for a given time (delay) and power on again. The default delay is 15 (=1.5 sec).</ul>
 NPpHMin<a id="NPpHMin"></a>|`{<ph>}`<BR>(only available if pH module is installed)<BR>get/set pH lower limit (ph = `0..14`)<BR>get current limit if <ph> is omitted, otherwise set.
@@ -323,6 +324,7 @@ NPHydrolysis<a id="NPHydrolysis"></a>|`{<level> {%}}`<BR>(only available if hydr
 NPIonization<a id="NPIonization"></a>|`{<level>}`<BR>(only available if ionization control is present)<BR>get/set ionization target production level (level = `0..x`, the upper limit `x` of the range may vary depending on the MBF_PAR_ION_NOM register)<BR>get current level if <level> is omitted, otherwise set
 NPChlorine<a id="NPChlorine"></a>|`{<setpoint>}`<BR>(only available if free chlorine probe detector is installed)<BR>get/set chlorine set point in ppm (setpoint = `0..10`)<BR>get current set point if <setpoint> is omitted, otherwise set
 NPControl<a id="NPControl"></a>|<BR>Show information about system controls
+NPTelePeriod<a id="NPTelePeriod"></a>|`{<time>}`<BR>enables/disables auto telemetry message when NeoPool values change (time = `0` or `5..3600`).<BR>get current setting if time is omitted, otherwise set accordingly `<time>`:<ul><li>`0` - disable this function off (default), telemetry message are only reported depending on [TelePeriod](Commands.md#teleperiod) setting</li><li>`5..3600` - set the minimum of seconds between two telemetry messages for NeoPool measured values (status changes for relays and settings trigger the SENSOR messages immediately, regardless of the time set)</li></ul>Hint: To get telemetry immediate messages only for status changes (relays, settings) set `<time>` higher than [TelePeriod](Commands.md#teleperiod). In this case, measured sensors are reported only by [TelePeriod](Commands.md#teleperiod) setting, status changes are reported immediately.
 NPOnError<a id="NPOnError"></a>|`{<repeat>}`<BR>get/set auto-repeat Modbus read/write commands on error (repeat = `0..10`). Get if repeat is omitted, otherwise set accordingly `<repeat>`:<ul><li>`0` - disable auto-repeat on read/write error</li><li>`1..10` - repeat commands n times until ok</li></ul>
 NPResult<a id="NPResult"></a>|`{<format>}`<BR>get/set addr/data result format for read/write commands (format = `0|1`). Get if format is omitted, otherwise set accordingly `<format>`:<ul><li>`0` - output decimal numbers</li><li>`1` - output hexadecimal strings, this is the default</li></ul>
 NPPHRes<a id="NPPHRes"></a>|`{<digits>}`<BR>get/set number of digits in results for PH value (digits = `0..3`).
@@ -354,32 +356,6 @@ RESULT = {"NPFiltrationmode":"Manual"}
 ```json
 NPFiltrationmode 1
 {"NPFiltrationmode":"Auto"}
-```
-
-!!! example
-    Enable hydrolysis boost mode without redox control
-
-To do this, write `0x85A0` to register `MBF_BOOST_CTRL` (`0x020C`), exec, save it and notify system using register `MBF_NOTIFICATION` (`0x0110`) about changes:
-
-```json
-Backlog NPWrite 0x020C,0x85A0;NPSave;NPExec;NPWrite 0x0110,0x7F
-RESULT = {"NPWrite":{"Address":"0x020C","Data":"0x85A0"}}
-RESULT = {"NPSave":"Done"}
-RESULT = {"NPExec":"Done"}
-RESULT = {"NPWrite":{"Address":"0x0110","Data":"0x0000"}}
-```
-
-!!! example
-    Disable hydrolysis boost mode
-
-To do this, write `0` to register `MBF_BOOST_CTRL` (`0x020C`), exec, save it and notify system using register `MBF_NOTIFICATION` (`0x0110`) about changes:
-
-```json
-Backlog NPWrite 0x020C,0;NPSave;NPExec;NPWrite 0x0110,0x7F
-RESULT = {"NPWrite":{"Address":"0x020C","Data":"0x0000"}}
-RESULT = {"NPSave":"Done"}
-RESULT = {"NPExec":"Done"}
-RESULT = {"NPWrite":{"Address":"0x0110","Data":"0x0000"}}
 ```
 
 !!! example
@@ -592,11 +568,10 @@ Additional advantage is that you can also use Tasmota Timer switching Power1 (=f
 
 The following enhancements are made using the [Berry Scripting Language](Berry) which is available on ESP32 only.
 
-The class `NeoPoolCommands` below adds three new commands to Tasmota:
+The class `NeoPoolCommands` below adds two new commands to Tasmota:
 
 Command|Parameters
 :---|:---
-NPBoost<a id="NPBoost"></a>|`{<state>}`<BR>get/set boost mode (state = `0..2`). Get if state is omitted, otherwise set accordingly  `<state>`:<ul><li>`0` - disable boost mode</li><li>`1` - enable boost mode (without redox control)</li><li>`2` - enable boost mode (with redox control)</li></ul>
 NPAux<x\><a id="NPAux"></a>|`{<state>}`<BR>get/set auxiliary relay <x\> (state = `0..2`). Get if state is omitted, otherwise set accordingly  `<state>`:<ul><li>`0` - switch off auxiliary relay</li><li>`1` - switch on auxiliary relay</li></ul>
 NPVersion<a id="NPVersion"></a>|Get the firmware info as array (normally firmware version and creation date)
 
@@ -609,14 +584,12 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
 ```berry
 # File: neopoolcmd.be
 #
-# Add commands NPBoost, NPAux and NPVersion
+# Add commands NPAux and NPVersion
 
 # Neopool definitions
 MBF_POWER_MODULE_REGISTER = 0x000C
 MBF_POWER_MODULE_DATA = 0x000D
 var MBF_RELAY_STATE = 0x010E
-var MBF_NOTIFICATION = 0x0110
-var MBF_CELL_BOOST = 0x020C
 
 var MBF_PAR_TIMER_BLOCK_AUX1_INT1 = 0x04AC
 var MBF_PAR_TIMER_BLOCK_AUX2_INT1 = 0x04BB
@@ -675,40 +648,6 @@ class NeoPoolCommands
     parm = nil
     tasmota.gc()
     return res
-  end
-
-  #- NPBoost OFF|0|ON|1|REDOX|2
-      0|OFF:   Switch boost off
-      1|ON:    Switch boost on without redox control
-      2|REDOX: Switch boost on with redox control
-  -#
-  def NPBoost(cmd, idx, payload)
-    var ctrl, parm
-    parm = self.Param(payload, 'REDOX')
-    if parm != nil
-      if 0 == parm
-        ctrl = 0
-      elif 1 == parm
-        ctrl = 0x85A0
-      elif 2 == parm
-        ctrl = 0x05A0
-      else
-        tasmota.resp_cmnd_error()
-        return
-      end
-      tasmota.cmd(string.format("NPWrite 0x%04X,0x%04X", MBF_CELL_BOOST, ctrl))
-      tasmota.cmd("NPSave")
-      tasmota.cmd("NPExec")
-      tasmota.cmd(string.format("NPWrite 0x%04X,0x7F", MBF_NOTIFICATION))
-    else
-      try
-        ctrl = compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_CELL_BOOST)).find('NPRead', json.load('{"Data": "0x0000"}')).find('Data', 0))()
-      except ..
-        tasmota.resp_cmnd_error()
-        return
-      end
-    end
-    tasmota.resp_cmnd(string.format('{"%s":"%s"}', cmd, ctrl == 0 ? self.TEXT_OFF : (ctrl & 0x8500) == 0x8500 ? self.TEXT_ON : "REDOX"))
   end
 
   #- NPAux<x> OFF|0|ON|1 t (<x> = 1..4)
@@ -782,14 +721,12 @@ class NeoPoolCommands
     self.TEXT_ON = tasmota.cmd("StateText2")['StateText2']
     self.TEXT_TOGGLE = tasmota.cmd("StateText3")['StateText3']
     # add commands
-    tasmota.add_cmd('NPBoost', / cmd, idx, payload -> self.NPBoost(cmd, idx, payload))
     tasmota.add_cmd('NPAux', / cmd, idx, payload -> self.NPAux(cmd, idx, payload))
     tasmota.add_cmd('NPVersion', / cmd -> self.NPVersion(cmd))
   end
 
   def deinit()
     # remove commands
-    tasmota.remove_cmd('NPBoost')
     tasmota.remove_cmd('NPAux')
     tasmota.remove_cmd('NPVersion')
   end
