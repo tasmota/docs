@@ -398,32 +398,6 @@ I only receive the e5 response showing that the request was accepted. No change 
     #
     ``` 
 
-### Apator APOX+ (SML)
-
-Energy provider supplied a PIN code to enable output of additional data.
-
-??? summary "View script"
-    ```
-    >D  
-    >B  
-    ->sensor53 r
-    >M 1  
-    +1,3,s,0,9600,SML
-    1,77070100010801ff@1000,Verbrauch_Tarif_1,kWh,Total_Tarif1,3
-    1,77070100010802ff@1000,Verbrauch_Tarif_2,kWh,Total_Tarif2,3
-    1,77070100010800ff@1000,Verbrauch_Summe,kWh,Total_Summe,3
-    1,77070100100700ff@1,Current consumption,W,Power_curr,3
-    1,=h   ----  
-    1,770701001f0700ff@1,Current L1,A,Curr_p1,3  
-    1,77070100330700ff@1,Current L2,A,Curr_p2,3  
-    1,77070100470700ff@1,Current L3,A,Curr_p3,3  
-    1,=h   ----  
-    1,77070100200700ff@1,Voltage L1,V,Volt_p1,3 
-    1,77070100340700ff@1,Voltage L2,V,Volt_p2,3  
-    1,77070100480700ff@1,Voltage L3,V,Volt_p3,3
-    #
-    ```
-
 ### Apator 12EC3
 
 Energy provider supplied a PIN code to enable output of additional data.
@@ -454,6 +428,59 @@ No PIN code needed for output data. It can only display total consumption.
     >M 1
     +1,3,o,0,300,Strom,1,30,2F3F210D0A,063030300D0A
     1,1.8.0*00(@1,Gesamtverbrauch,kWh,Pges,2
+    #
+    ```
+
+### Apator APOX+ (SML)
+
+Energy provider supplied a PIN code to enable output of additional data.
+
+??? summary "View script"
+    ```
+    >D  
+    >B  
+    ->sensor53 r
+    >M 1  
+    +1,3,s,0,9600,SML
+    1,77070100010801ff@1000,Verbrauch_Tarif_1,kWh,Total_Tarif1,3
+    1,77070100010802ff@1000,Verbrauch_Tarif_2,kWh,Total_Tarif2,3
+    1,77070100010800ff@1000,Verbrauch_Summe,kWh,Total_Summe,3
+    1,77070100100700ff@1,Current consumption,W,Power_curr,3
+    1,=h   ----  
+    1,770701001f0700ff@1,Current L1,A,Curr_p1,3  
+    1,77070100330700ff@1,Current L2,A,Curr_p2,3  
+    1,77070100470700ff@1,Current L3,A,Curr_p3,3  
+    1,=h   ----  
+    1,77070100200700ff@1,Voltage L1,V,Volt_p1,3 
+    1,77070100340700ff@1,Voltage L2,V,Volt_p2,3  
+    1,77070100480700ff@1,Voltage L3,V,Volt_p3,3
+    #
+    ```
+
+### Apator Norax 3D+ (SML)  
+
+This script gives also the wattage per phase. Make sure to get the PIN from your grid operator! Tested on a WeMos D1 mini with an IR Head from <https://agalakhov.github.io/ir-interface> connected to the RX pin (3). The meter also outputs the phase angles, but i left them out since i do not need them. You can easily find additional values by activating the debug mode ("sensor53 d1" for the first meter, switch off after a few seconds with "sensor53 d0").
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,s,1,9600,SML
+    1,77070100010800ff@1000,Total consumption,kWh,Total_in,4
+    1,77070100020800ff@1000,Total Feed,kWh,Total_out,4
+    1,77070100100700ff@1,Current consumption,W,Power_curr,0
+    1,77070100200700ff@1,Voltage L1,V,Volt_p1,1
+    1,77070100340700ff@1,Voltage L2,V,Volt_p2,1
+    1,77070100480700ff@1,Voltage L3,V,Volt_p3,1
+    1,770701001f0700ff@1,Amperage L1,A,Amperage_p1,1
+    1,77070100330700ff@1,Amperage L2,A,Amperage_p2,1
+    1,77070100470700ff@1,Amperage L3,A,Amperage_p3,1
+    1,77070100240700ff@1,Current consumption L1,W,Power_curr_p1,0
+    1,77070100380700ff@1,Current consumption L2,W,Power_curr_p2,0
+    1,770701004c0700ff@1,Current consumption L3,W,Power_curr_p3,0
+    1,770701000e0700ff@1,Frequency,Hz,frequency,0
     #
     ```
 
@@ -2516,32 +2543,6 @@ This meter does not provide detailed information regarding phase etc.
     #
     ```
 
-### Norax 3D+ (SML)  
-
-This script gives also the wattage per phase. Make sure to get the PIN from your grid operator! Tested on a WeMos D1 mini with an IR Head from <https://agalakhov.github.io/ir-interface> connected to the RX pin (3). The meter also outputs the phase angles, but i left them out since i do not need them. You can easily find additional values by activating the debug mode ("sensor53 d1" for the first meter, switch off after a few seconds with "sensor53 d0").
-
-??? summary "View script"
-    ```
-    >D
-    >B
-    ->sensor53 r
-    >M 1
-    +1,3,s,1,9600,SML
-    1,77070100010800ff@1000,Total consumption,kWh,Total_in,4
-    1,77070100020800ff@1000,Total Feed,kWh,Total_out,4
-    1,77070100100700ff@1,Current consumption,W,Power_curr,0
-    1,77070100200700ff@1,Voltage L1,V,Volt_p1,1
-    1,77070100340700ff@1,Voltage L2,V,Volt_p2,1
-    1,77070100480700ff@1,Voltage L3,V,Volt_p3,1
-    1,770701001f0700ff@1,Amperage L1,A,Amperage_p1,1
-    1,77070100330700ff@1,Amperage L2,A,Amperage_p2,1
-    1,77070100470700ff@1,Amperage L3,A,Amperage_p3,1
-    1,77070100240700ff@1,Current consumption L1,W,Power_curr_p1,0
-    1,77070100380700ff@1,Current consumption L2,W,Power_curr_p2,0
-    1,770701004c0700ff@1,Current consumption L3,W,Power_curr_p3,0
-    1,770701000e0700ff@1,Frequency,Hz,frequency,0
-    #
-    ```
 ### PAFAL 20EC3gr
 
 Documentation for this Counter is very small. This informations were collected across the internet.
