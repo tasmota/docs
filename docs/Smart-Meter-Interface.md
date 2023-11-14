@@ -457,7 +457,7 @@ Energy provider supplied a PIN code to enable output of additional data.
     #
     ```
 
-### Hager EHZ363, Apator Norax 3D (SML)
+### Apator Norax 3D (SML)
 
 ??? summary "View script"
     ```
@@ -1561,7 +1561,7 @@ Growatt solar inverter. this example also shows how to send cmds to modbus
     #
     ```
 
-### Hager EHZ363, Apator Norax 3D (SML)
+### Hager EHZ363
 
 ??? summary "View script"
     ```
