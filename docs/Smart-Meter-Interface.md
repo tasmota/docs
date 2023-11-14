@@ -1317,7 +1317,8 @@ So in this script the three phases get added and published as `Power_total`.
     #
     ```
 
-### EMH metering - eHZM (SML)
+### EMH eHZM (SML)
+
 [Website](https://emh-metering.com/produkte/haushaltszaehler-smart-meter/ehzm/)
 
 [Datasheet](https://emh-metering.com/wp-content/uploads/2021/02/eHZM-DAB-D-1-00.pdf) 
