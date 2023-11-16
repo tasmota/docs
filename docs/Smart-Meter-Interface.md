@@ -457,6 +457,81 @@ Energy provider supplied a PIN code to enable output of additional data.
     #
     ```
 
+### Apator Norax 3D (SML)
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,s,0,9600,SML
+    1,77070100010800ff@1000,Total consumption,kWh,Total_in,4
+    1,77070100020800ff@1000,Total Feed,kWh,Total_out,4
+    1,77070100100700ff@1,Current consumption,W,Power_curr,0
+    1,77070100200700ff@1,Voltage L1,V,Volt_p1,1
+    1,77070100340700ff@1,Voltage L2,V,Volt_p2,1
+    1,77070100480700ff@1,Voltage L3,V,Volt_p3,1
+    1,770701001f0700ff@1,Amperage L1,A,Amperage_p1,1
+    1,77070100330700ff@1,Amperage L2,A,Amperage_p2,1
+    1,77070100470700ff@1,Amperage L3,A,Amperage_p3,1
+    1,77070100510704ff@1,Phaseangle I-L1/U-L1,deg,phase_angle_p1,1 
+    1,7707010051070fff@1,Phaseangle I-L27I-L2,deg,phase_angle_p2,1  
+    1,7707010051071aff@1,Phaseangle I-L3/I-L3,deg,phase_angle_p3,1 
+    1,770701000e0700ff@1,Frequency,Hz,frequency,0
+    #
+    ```
+
+??? summary "SML with daily values"
+    ```
+    >D  
+    pin=0  
+    pout=0  
+    pi_d=0  
+    po_d=0  
+    hr=0  
+    ; permanent midnight values  
+    p:pi_m=0  
+    p:po_m=0  
+    >B  
+    ->sensor53 r  
+    >T  
+    ; get total consumption and total feed  
+    pin=SML#Total_in  
+    pout=SML#Total_out  
+    >S  
+    ; at midnight, save meter total values  
+    hr=hours  
+    if chg[hr]>0  
+    and hr==0  
+    then  
+    pi_m=pin  
+    po_m=pout  
+    svars  
+    endif  
+    ; on teleperiod calculate current daily values from midnight  
+    if upsecs%tper==0  
+    then  
+    pi_d=pin-pi_m  
+    po_d=pout-po_m  
+    endif  
+    ; show these values on WEB UI  
+    >W  
+    Tagesverbrauch: {m} %pi_d% kWh  
+    Tageseinspeisung: {m} %po_d% kWh    
+    ; transmit these values with MQTT  
+    >J  
+    ,"daily_consumption":%pi_d%,"daily_feed":%po_d%  
+    ; meter definition  
+    >M 1  
+    +1,3,s,0,9600,SML  
+    1,77070100010800ff@1000,Total Consumed,kWh,Total_in,4  
+    1,77070100020800ff@1000,Total Delivered,kWh,Total_out,4  
+    1,77070100100700ff@1,Current Consumption,W,Power_curr,0  
+    1,77070100000009ff@#,Meter Number,,Meter_number,0  
+    #
+    ```
+
 ### Apator Norax 3D+ (SML)  
 
 This script gives also the wattage per phase. Make sure to get the PIN from your grid operator! Tested on a WeMos D1 mini with an IR Head from <https://agalakhov.github.io/ir-interface> connected to the RX pin (3). The meter also outputs the phase angles, but i left them out since i do not need them. You can easily find additional values by activating the debug mode ("sensor53 d1" for the first meter, switch off after a few seconds with "sensor53 d0").
@@ -1317,7 +1392,8 @@ So in this script the three phases get added and published as `Power_total`.
     #
     ```
 
-### EMH metering - eHZM (SML)
+### EMH eHZM (SML)
+
 [Website](https://emh-metering.com/produkte/haushaltszaehler-smart-meter/ehzm/)
 
 [Datasheet](https://emh-metering.com/wp-content/uploads/2021/02/eHZM-DAB-D-1-00.pdf) 
@@ -1485,7 +1561,7 @@ Growatt solar inverter. this example also shows how to send cmds to modbus
     #
     ```
 
-### Hager EHZ363, Apator Norax 3D (SML)
+### Hager EHZ363
 
 ??? summary "View script"
     ```
