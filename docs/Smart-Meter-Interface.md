@@ -56,7 +56,7 @@ The Smart Meter Interface provides a means to connect many kinds of meters to Ta
 | -- | -- |
 | OBIS ASCII | telegrams emitted from many smart meters, including [P1 Smart Meters](https://tasmota.github.io/docs/P1-Smart-Meter/) |
 | OBIS Binary SML| telegrams emitted from many smart meters |
-| MODBus Binary | telegrams used by many power meters and industrial devices |
+| MODBus Binary | telegrams used by many power meters and industrial devices (serial and TCP master and slave)|
 | CANBus Binary | telegrams used by battery monitoring systems and industrial devices |
 | Kamstrup Binary | telegrams used by many power meters from Kamstrup |
 | EBus Binary | telegrams emitted by many heaters and heat pumps  (e.g. Vaillant, Wolf) |
