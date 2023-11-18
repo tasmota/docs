@@ -99,7 +99,7 @@ class Rainbow_stripes : Leds_animator
     super(self).init(strip)
     self.cur_offset = 0
     # add an animator to change `self.cur_offset` to each value of the palette
-    self.add_anim(animate.rotate(def(v) self.cur_offset = v end, 0, size(self.palette), int(duration * 1000)))
+    self.add_anim(animate.rotate(def(v) self.cur_offset = v end, 0, size(self.palette) - 1, int(duration * 1000)))
   end
 
   def animate()
