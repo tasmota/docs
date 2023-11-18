@@ -117,7 +117,7 @@ end
 How to use:
 
 ```berry
-var strip = Leds(5,5, gpio.pin(gpio.WS2812, 1))
+var strip = Leds(5 * 5, gpio.pin(gpio.WS2812, 0))
 var r = Rainbow_stripes(strip, 1.0)
 r.start()
 ```
