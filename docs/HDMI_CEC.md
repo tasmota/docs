@@ -102,7 +102,7 @@ In the above, Tasmota sends command `8F` (Give Device Power Status) to query the
 
 Command: `HdmiSend 04`
 
-### Turning the TV on
+### Turning the TV off
 
 Command: `HdmiSend 36`
 
