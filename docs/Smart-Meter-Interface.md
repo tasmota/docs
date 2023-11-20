@@ -559,6 +559,24 @@ This script gives also the wattage per phase. Make sure to get the PIN from your
     #
     ```
 
+### Apator Picus eHZ.060.D/J (SML)  
+
+Make sure to acquire the PIN from your energyprovider. 
+After unlocking the meter, you can run the following script
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,0,9600,PICUS
+    1,77070100100700ff@1,Consumption (Current),W,curr_w,0
+    1,77070100010800ff@1000,Consumption (Total),Kwh,total_kwh,2
+    1,77070100020800ff@1000,feed (Total),Kwh,total_kwh_out,2
+    #
+    ```
+
 ### Carlo Gavazzi EM340 (MODBUS RTU)
 
 ??? summary "View script"
