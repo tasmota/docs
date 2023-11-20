@@ -150,7 +150,7 @@ Each meter typically provides multiple metrics (energy, voltage, power, current 
 | Parameter | Description |
 | :--- | :--- |
 | `<M>` | The meter number to which this decoder belongs |
-| `<decoder>` | **Decoding specification**: OBIS as ASCII; SML, EBus, VBus, MODBus, RAW as HEX ASCII etc. _No space characters allowed in this section!_ <BR> **OBIS**: ASCII OBIS code terminated with `(` character which indicates the start of the meter value<BR>**Counter**: ASCII code 1-0:1.8.0\*255 for counter value, code 1-0:1.7.0\*255 for pulse rate (e.g. for actual power value)<BR> **SML**: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value<BR>**EBus, MODBus, RAW** - hex values of data blocks to compare:<BR> - `xx` = ignore value  (1 byte) or `xN` = ignore N bytes<BR> - `ss` = extract a signed byte<BR> - `uu` = extract an unsigned byte<BR>  - `UUuu` = extract an unsigned word (high order byte first)<BR> - `uuUU` = extract an unsigned word (low order byte first)<BR> - `UUuuUUuu` or `U32` = extract an unsigned long word (high order byte first)<BR> - `uuUUuuUU` or `u32` = extract an unsigned long word (low order byte first)<BR> - `SSss` = extract a signed word (high order byte first)<BR> - `ssSS` = extract a signed word (low order byte first)<BR> - `SSssSSss` or `S32` = extract a signed long word (high order byte first)<BR> - `ssSSssSS` or `s32` = extract a signed long word (low order byte first)<BR> - **on long word values**, if a trailing s is added at the end of the mask, word order is reversed<BR>- `U64` = extract an unsigned 64 long word<BR>- `u64` = extract an unsigned 64 long word (low order byte first)<BR> - `bcdN` = extract a binary coded decimal N=2..12<BR> - `ffffffff` = extract a float value - IEEE754 decode<BR> - `FFffFFff` = extract a reverse float value - IEEE754 decode<BR>- `kstr` = decode KAMSTRUP data<BR>- `pm(x.y.z)` = pattern match(asci obis code)<BR>- `pm(hHHHHHH)` = pattern match(hex obis code)<BR>- `pm(rHHHHHH)` = pattern match(any hex pattern)<BR><BR>if using **VBus** - hex values of data blocks to compare:<BR> - `AAffffaddrff0001ffff` = VBus-specific hex header: `AA`-sync byte, `addr`-the reversed address of the device. To find his out first look up the known [hex address of the device](http://danielwippermann.github.io/resol-vbus/vbus-packets.html). E.g. Resol DeltaSol BS Plus is `0x4221`. Reverse it (without `0x`) and you will get `21 42` hex characters. Now turn on raw dump mode using command `sensor53 d1` and look for rows starting with `aa`, containing your reversed address at position 4 and 5 and `00 01` hex characters at position 7 and 8. If found, the entire header will be 10 hex characters long including `aa` (20 ascii chars without space, e.g. for Resol DeltaSol BS Plus this will be `AA100021421000010774`). At position 9 you see the number of frames containing readable data. To turn off raw dump use `sensor53 d0`.<BR> - `v` = VBus protocol indicator<BR> - `oN` = extract data from offset `N` (see offsets of your device in [VBus protocol documentation](http://danielwippermann.github.io/resol-vbus/vbus-packets.html))<BR> - `u` or `s` = extract unsigned or signed data<BR> - `w` or `b` = extract word or byte<BR>**End of decoding**: `@` indicates termination of the decoding procedure.<BR>- `(` following the `@` character in case of obis decoder indicates to fetch the 2. value in brackets, not the 1. value.  (e.g. to get the second value from an obis like `0-1:24.2.3(210117125004W)(01524.450*m3)`)<BR>- decoding multiple values coming in brackets after each other is possible with `(@(0:1`, `(@(1:1`, `(@(2:1` and so on  (e.g. to get values from an obis like `0-0:98.1.0(210201000000W)(000000.000*kWh)(000000.000*kWh)`)<BR>- decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte. (e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`)<BR>- in case of MODBus/Kamstrup, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition
+| `<decoder>` | **Decoding specification**: OBIS as ASCII; SML, EBus, VBus, MODBus, RAW as HEX ASCII etc. _No space characters allowed in this section!_ <BR> **OBIS**: ASCII OBIS code terminated with `(` character which indicates the start of the meter value<BR>**Counter**: ASCII code 1-0:1.8.0\*255 for counter value, code 1-0:1.7.0\*255 for pulse rate (e.g. for actual power value)<BR> **SML**: SML binary OBIS as hex terminated with `0xFF` indicating start of SML encoded value<BR>**EBus, MODBus, RAW** - hex values of data blocks to compare:<BR> - `xx` = ignore value  (1 byte) or `xN` = ignore N bytes<BR> - `ss` = extract a signed byte<BR> - `uu` = extract an unsigned byte<BR>  - `UUuu` = extract an unsigned word (high order byte first)<BR> - `uuUU` = extract an unsigned word (low order byte first)<BR> - `UUuuUUuu` or `U32` = extract an unsigned long word (high order byte first)<BR> - `uuUUuuUU` or `u32` = extract an unsigned long word (low order byte first)<BR> - `SSss` = extract a signed word (high order byte first)<BR> - `ssSS` = extract a signed word (low order byte first)<BR> - `SSssSSss` or `S32` = extract a signed long word (high order byte first)<BR> - `ssSSssSS` or `s32` = extract a signed long word (low order byte first)<BR> - **on long word values**, if a trailing s is added at the end of the mask, word order is reversed<BR>- `U64` = extract an unsigned 64 long word<BR>- `u64` = extract an unsigned 64 long word (low order byte first)<BR> - `bcdN` = extract a binary coded decimal N=2..12<BR> - `ffffffff` = extract a float value - IEEE754 decode<BR> - `FFffFFff` = extract a reverse float value - IEEE754 decode<BR>- `kstr` = decode KAMSTRUP data<BR>- `pm(x.y.z)` = pattern match(asci obis code)<BR>- `pm(hHHHHHH)` = pattern match(hex obis code)<BR>- `pm(rHHHHHH)` = pattern match(any hex pattern)<BR><BR>if using **VBus** - hex values of data blocks to compare:<BR> - `AAffffaddrff0001ffff` = VBus-specific hex header: `AA`-sync byte, `addr`-the reversed address of the device. To find his out first look up the known [hex address of the device](http://danielwippermann.github.io/resol-vbus/vbus-packets.html). E.g. Resol DeltaSol BS Plus is `0x4221`. Reverse it (without `0x`) and you will get `21 42` hex characters. Now turn on raw dump mode using command `sensor53 d1` and look for rows starting with `aa`, containing your reversed address at position 4 and 5 and `00 01` hex characters at position 7 and 8. If found, the entire header will be 10 hex characters long including `aa` (20 ascii chars without space, e.g. for Resol DeltaSol BS Plus this will be `AA100021421000010774`). At position 9 you see the number of frames containing readable data. To turn off raw dump use `sensor53 d0`.<BR> - `v` = VBus protocol indicator<BR> - `oN` = extract data from offset `N` (see offsets of your device in [VBus protocol documentation](http://danielwippermann.github.io/resol-vbus/vbus-packets.html))<BR> - `u` or `s` = extract unsigned or signed data<BR> - `w` or `b` = extract word or byte<BR>**End of decoding**: `@` indicates termination of the decoding procedure.<BR>- `(` following the `@` character in case of obis decoder indicates to fetch the 2. value in brackets, not the 1. value.  (e.g. to get the second value from an obis like `0-1:24.2.3(210117125004W)(01524.450*m3)`)<BR>- decoding multiple values coming in brackets after each other is possible with `(@(0:1`, `(@(1:1`, `(@(2:1` and so on  (e.g. to get values from an obis like `0-0:98.1.0(210201000000W)(000000.000*kWh)(000000.000*kWh)`)<BR>- `s` delimiter index colon selects an entry of special obis line (Kamstrup heatmeter) separated by delmiter e.g. `s 0:` <BR>- decoding a 0/1 bit is indicated by a `@` character followed by `bx:` (x = `0..7`) extracting the corresponding bit from a byte. (e.g.: `1,xxxx5017xxuu@b0:1,Solarpump,,Solarpump,0`)<BR>- in case of MODBus/Kamstrup, `ix:` designates the index (x = `0..n`) referring to the requested block in the transmit section of the meter definition
 | `<scale>` | scaling factor (divisor) or string definition<BR>This can be a fraction (e.g., `0.1` = result * 10), or a negative value. When decoding a string result (e.g. meter serial number), use `#` character for this parameter _(Note: only one string can be decoded per meter!)_. For OBIS, you need a `)` termination character after the `#` character. |
 | `<offs>` | optional offset must precede with + or - sign, note: offset is applied before scale!|
 | `<label>` | web UI label (max. 23 characters) |
@@ -3352,4 +3352,49 @@ Tested on an AEConversion INV500-90 with RS485 interface.
     <hr>
     nm(41.5 58.5 0.1 ovolt "Output Voltage (V): " 80 1) 
     nm(0 60 0.1 maxc "Max Current (A): " 80 1) 
+    ```
+
+
+### Kamstrup Multical M401
+
+??? summary "View script"
+
+    ```
+    >D
+    scnt=0
+    res=0
+    >B
+    =>sensor53 r
+    >F
+    ; count 100ms
+    scnt+=1
+    switch scnt
+    ;100ms after start: set sml driver to 300 baud 
+    case 1
+    res=sml(1 0 300)
+    ;1600ms send /#1 as HEX to trigger
+    case 16
+    res=sml(1 1 "2F23310D0A")
+    ;2200ms later: switch sml driver to 1200 baud
+    case 22
+    res=sml(1 0 1200)
+    ;1000ms after start: Restart sequence
+    case 100
+    scnt=0
+    ends
+    
+    >M 1
+    +1,3,o,0,1200,MC401,1
+    1,@s 0:1,Gesammt Verbrauch,kwh,total_in,0
+    1,@s 1:100,Gesammt Durchfluss,m3,total_flow,2
+    1,@s 2:1,Laufzeit,h,time,0
+    1,@s 3:100,Vorlauf Temperatur,C°,temp_in,2
+    1,@s 4:100,Rücklauf Temperatur,C°,temp_out,2
+    1,@s 5:100,Temperatur differenz,C°,delta_t,2
+    1,@s 6:10,Aktuelle Leistung,kW,power,1
+    1,@s 7:1,Durchlfuss,l/h,flow,0
+    1,@s 8:10,maximale Leistung,kWP,max_power,1
+    1,@s 9:1,Info,,info,0
+    1,=so3,256
+    #
     ```
