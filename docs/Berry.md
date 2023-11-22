@@ -838,9 +838,12 @@ Easy way to persist simple values in Berry and read/write any attribute. Values 
 Tasmota Function|Parameters and details
 :---|:---
 persist.save<a class="cmnd" id="persist_save"></a>|`()`<br>triggers saving to file system. It is called automatically before a restart but you might want to call it yourself to prevent losing data in case of power loss or crash. `persist.save()` writes to flash, so be careful of not calling it too often, or it will cause wearing of flash and reduce its lifetime.
-persist.has<a class="cmnd" id="persist_has"></a>|`(param:string) -> bool`<br>returns true or false if the key exists
-persist.remove<a class="cmnd" id="persist_remove"></a>|`(param:string) -> bool`<br>removes a key or ignores if key doesn't exist
-persist.find<a class="cmnd" id="persist_find"></a>|`my_param:string [, "default value"] -> string | bool`<br>returns the value for a key, or nil or the default value. Similar to `map.find`
+persist.has<a class="cmnd" id="persist_has"></a>|`(key:string) -> bool`<br>returns true/false if the key exists
+persist.remove<a class="cmnd" id="persist_remove"></a>|`(key:string) -> bool`<br>removes a key or ignores if key doesn't exist
+persist.find<a class="cmnd" id="persist_find"></a>|`(key:string [, "default value"]) -> string | bool`)<br>returns the value for a key, nil or the default value. Similar to `map.find`
+persist.member<a class="cmnd" id="persist_member"></a>|`(key:string) -> string | nil`<br>returns the value for a key, or nil.
+persist.setmember<a class="cmnd" id="persist_setmember"></a>|`(key:string,value:string)`<br>sets the value for a key, when the key is in a variable
+persist.zero<a class="cmnd" id="persist_zero"></a>|()<br>clears all entries. This may be destructive to other code using `persist`
 
 ### `introspect` module
 
