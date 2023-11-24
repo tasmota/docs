@@ -104,11 +104,53 @@ The naming conventions in the product range of Bluetooth sensors in Xiaomi unive
   </tr>
 </table>
 
+ <table>
+  <tr>
+    <th class="th-lboi">WZ-KR220IBLE-310</th>
+  </tr>
+  <tr>
+    <td class="tg-lboi"><img src="../_media/bluetooth/ATBtn.png" width=200></td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">button press (1-3 buttons)</td>
+  </tr>
+   <tr>
+    <td class="tg-lboi">passive</td>
+  </tr>
+</table>
+
+
 *passive* means data is received via BLE advertisements while *active* means data is received via a bidirectional connection to the sensor.
 
 **LYWSD03MMC** sends encrypted sensor data every 10 minutes. As there are no confirmed reports about correct battery presentation of the sensor (always shows 99%), this function is currently not supported.
 
 **MJYD2S** sends motion detection events and 2 discrete illuminance levels (1 lux or 100 lux for a dark or bright environment). Additionally battery level and contiguous time without motion in discrete growing steps (no motion time = NMT).
+
+### WZ-KR220IBLE-310
+
+These bluetooth switches are NOT Xiaomi branded devices and do not use encryption. They are normally be found in combination with a Tuya relay module and avaialble in 1 2 or 3 button versions.  
+Also known as bluetooth remote controls.
+All of these switches use the same source MAC address (C1A2A3A4A5A6). To be able to distinguish individual switchs and buttons, the end of the MAC address is replaced with the unique switch_id.
+Thus you can use BLEAlias to name individual switches and monitor for the button presses.
+
+To use these switches, you also need to set a few other MI32 options
+
+option|meaning
+:---|:---
+BLEAddrFilter 1|So BLE can see address, any value greater than 0 
+MI32Option1 1|Stops button press occuring at TELEPERIOD times
+MI32Option2 2|Sends message on button press
+
+!!! tip
+Two button switches are btn 1 and 3 (not 1 and 2)
+
+!!! tip
+If BLEAlias is used then an alias for C1A2A3A4A5A6 must be included, along with the alias for the unique switch
+
+```haskell
+BLEAlias c1a2a3a40048=LoungeBtn
+BLEAlias c1a2a3a4a5a6=AnyButton
+```
 
 ### Encryption and bind_key
 
