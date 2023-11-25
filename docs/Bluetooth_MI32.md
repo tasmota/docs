@@ -20,7 +20,7 @@ It is probably necessary to restart your IDE (i.e. Visual Studio Code) to see th
 
 ## Tasmota and BLE-sensors
 
-Different vendors offer Bluetooth solutions as part of the XIAOMI family often under the MIJIA-brand (while AQUARA is the typical name for a ZigBee sensor).  
+Different vendors offer Bluetooth solutions as part of the XIAOMI family often under the MIJIA-brand (while AQARA is the typical name for a ZigBee sensor).  
 The sensors supported by Tasmota use BLE (Bluetooth Low Energy) to transmit the sensor data, but they differ in their accessibilities quite substantially.  
   
 Basically all of them use of so-called „MiBeacons“ which are BLE advertisement packets with a certain data structure, which are broadcasted by the devices automatically while the device is not in an active bluetooth connection.  
