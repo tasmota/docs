@@ -7,7 +7,13 @@ DeepSleep support for up to 10 years (i.e., 86,400 seconds = 1 day) (e.g., if us
 
 !!! note
     The next wake time will always be an even number of `DeepSleepTime` cycles since the epoch (Midnight 1970-01-01).  This may matter if the sleep time isn't an even number of minutes/hours (ex: 3660), such as when trying to wake at a specific time of day.
-  
+
+With Version 13.0.2 there is a new functionality to use TIMERS for the wakeup process on deepsleep. In this case the deepsleeptime will be dynamically calculated through the TIMERS. To enable TIMERS on deepsleep there must be a `rule1 Wakeup` and `rule1 on`. Now every TIMER that has RULE as an action will wakeup the device at the proposed time. You can define multiple timers and multiple wakeups also defined on sunset or sunrise. The process will always select the NEXT wakeup it finds.
+
+![](_media/deepsleep_timers.png)
+
+Current timer will wakeup the device every day 1h after sunrise. The Time will be dynamically calculated.
+
 ![](_media/deepsleep_minimal.png)
 
 In order for the device to wake itself to perform its function during the DeepSleep cycle, the RST pin must be connected to the D0/GPIO16 pin. This is the only pin which can perform this function as the wake-up signal is sent from the RTC through D0/GPIO16 to RST. When connected to RST for DeepSleep purpose, GPIO16 may not be used for other functions. As such, it is recommended to leave it configured as `None (0)`. *On the diagram, black denotes existing parts and connections on a standard ESP board (mini-D1, NodeMCU, ...). Red denotes what is added to the DeepSleep feature.*
