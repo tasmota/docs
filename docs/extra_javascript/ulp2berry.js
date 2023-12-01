@@ -68,7 +68,7 @@ function parseULPFiles(){
     output += "ULP.load(c) \n";
     output += "ULP.run() \n";
     console.log(output);
-    document.getElementById("ulp_output").nextElementSibling.firstChild.childNodes[2].firstChild.innerText = output;
+    document.getElementById("ulp_output").nextElementSibling.firstChild.childNodes[1].firstChild.innerText = output;
 }
 
 function checkULPBuildFiles(){
