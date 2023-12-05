@@ -602,14 +602,14 @@ Register values for all 4 rotations (color display only)
 2. x offset
 3. y offset
 4. rotation pseudo opcode for touch panel, in case of RGB panel use only these entries 
-the appropriate coordinate convervsions are defined via pseudo opcodes
-0 = no conversion
-1 = swap and flip x
-2 = flipx, flip y
-3 = swap and flip y
-4 = flip x
-5 = flip y
-bit 7 = swap x,y
+the appropriate coordinate convervsions are defined via pseudo opcodes:<br>
+0 = no conversion<br>
+1 = swap and flip x<br>
+2 = flip x, flip y<br>
+3 = swap and flip y<br>
+4 = flip x<br>
+5 = flip y<br>
+bit 7 = swap x,y<br>
 
 `:A`  
 3 OPCODES to set address window _(all but epaper displays)_
