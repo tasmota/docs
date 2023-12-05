@@ -1,6 +1,18 @@
-DeepSleep support for up to 10 years (i.e., 86,400 seconds = 1 day) (e.g., if used with KNX) ([`DeepSleepTime`](Commands.md#deepsleeptime)). 
+DeepSleep support for up to 10 years (i.e., 86,400 seconds = 1 day) (e.g., if used with KNX). During DeepSleep, the device is effectively **off** and, as such, it is not possible to modify DeepSleepTime without exiting DeepSleep. 
 
-`DeepSleepTime` sets the time the device remains in DeepSleep before it returns to full operating mode. Once the command is issued, the DeepSleep cycle commences. During DeepSleep, the device is effectively **off** and, as such, it is not possible to modify DeepSleepTime without exiting DeepSleep. 
+![](_media/deepsleep_minimal.png)
+
+In order for the device to wake itself to perform its function during the DeepSleep cycle, the RST pin must be connected to the D0/GPIO16 pin. This is the only pin which can perform this function as the wake-up signal is sent from the RTC through D0/GPIO16 to RST. When connected to RST for DeepSleep purpose, GPIO16 may not be used for other functions. As such, it is recommended to leave it configured as `None (0)`. *On the diagram, black denotes existing parts and connections on a standard ESP board (mini-D1, NodeMCU, ...). Red denotes what is added to the DeepSleep feature.*
+
+![](_media/deepsleep_gpio16_none.png)
+
+## DeepSleep modes (regular, time based)
+
+There are TWO general methods to work with deepsleep. Method ONE wakes up the device on a regular intervall, wait for TELEPERIOD and immediate go to deepsleep again. This is mostly to make regular measurements and send them to a MQTT broker. Method TWO is more complex and use TIMER events to wakeup the device. The way and when the device go to deepsleep again depends on the configuration. See explanation below.
+
+### Repeating regular deepsleep based on intervall
+
+([`DeepSleepTime`](Commands.md#deepsleeptime)) `DeepSleepTime` sets the time the device remains in DeepSleep before it returns to full operating mode. Once the command is issued, the DeepSleep cycle commences. 
 
 !!! example
     With `DeepSleepTime 3600`, the device will wake up exactly every hour (e.g., 8:00am, 9:00am, ...). If you define `DeepSleepTime 86400` (i.e., 60\*60\*24), it will wake-up exactly at 0:00 local time. There is no option to shift the wakeup time; except changing the timezone. If you define `DeepSleepTime 600`, it will wake-up every 10 minutes (e.g., 8:00, 8:10, 8:20, ...).
@@ -8,15 +20,15 @@ DeepSleep support for up to 10 years (i.e., 86,400 seconds = 1 day) (e.g., if us
 !!! note
     The next wake time will always be an even number of `DeepSleepTime` cycles since the epoch (Midnight 1970-01-01).  This may matter if the sleep time isn't an even number of minutes/hours (ex: 3660), such as when trying to wake at a specific time of day.
 
-With Version 13.2 there is a new functionality to use TIMERS for the wakeup process on deepsleep. In this case the deepsleeptime will be dynamically calculated through the TIMERS. To enable TIMERS on deepsleep there must be a 
-```console
-Rule1
-  Wakeup
+### DeepSleep wakeup based on TIMER events 
 
-Rule1 ON
-or
-Rule1 5 (ONCE)
-```
+With Version 13.2 there is a new functionality to use TIMERS for the wakeup process on deepsleep. In this case the deepsleeptime will be dynamically calculated through the TIMERS. To enable TIMERS on deepsleep there must be a `rule1 Wakeup`
+
+rule1|state|Behavior
+-|:-:|-
+`Wakeup`|ON/1|Device will do a TELEPERIOD and go to deepsleep asap, similar to deepsleep with intervall
+`Wakeup`|OFF/0|Device will stay ON until send to deepsleep with Restart 9 (deepsleep)
+`Wakeup`|ONCE/5|Device will do a TELEPERIOD and go to deepsleep asap, with the next wakeup the device will stay ON
 
 Now every TIMER that has RULE as an action will wakeup the device at the proposed time. You can define multiple timers and multiple wakeups also defined on sunset or sunrise. The process will always select the NEXT wakeup it finds. As soon as all conditions meet a 60 second timer countdown starts to send the device to deepsleep. To prevent this it is recommended to disbale ALL timers on the UI during definition. If you tag the rule1 with ONCE the device will stay awake after the deepsleep. To send the device to deepsleep e.g. at sunset another rule can be used to do this:
 
@@ -33,11 +45,7 @@ Be aware that `rule1 Wakeup` will DISABLE the capability to use deepsleeptime. Y
 
 Current timer will wakeup the device every day 1h after sunrise. The Time will be dynamically calculated.
 
-![](_media/deepsleep_minimal.png)
 
-In order for the device to wake itself to perform its function during the DeepSleep cycle, the RST pin must be connected to the D0/GPIO16 pin. This is the only pin which can perform this function as the wake-up signal is sent from the RTC through D0/GPIO16 to RST. When connected to RST for DeepSleep purpose, GPIO16 may not be used for other functions. As such, it is recommended to leave it configured as `None (0)`. *On the diagram, black denotes existing parts and connections on a standard ESP board (mini-D1, NodeMCU, ...). Red denotes what is added to the DeepSleep feature.*
-
-![](_media/deepsleep_gpio16_none.png)
 
 ## Methods to (temporarily) disable DeepSleep mode
 
