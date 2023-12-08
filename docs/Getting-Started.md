@@ -111,6 +111,8 @@ When you have identified pins on your device, connect wires according to the tab
 **Note that TX from your adapter goes to RX on the ESP device and RX from adapter goes to TX on the device!**
 ![Image courtesy of https://www.domo-blog.fr/](https://user-images.githubusercontent.com/5904370/57880182-69bf2f80-781e-11e9-8953-88599cb89155.png)
 
+**Note: the [ShellyPlugUS](https://templates.blakadder.com/shelly_plug_US.html) is an exception to the above rule. The TX/RX pins on the ESP module are also connected to solder pads on the Shelly circuitboard which are mislabeled. If using these solder pads (as opposed to connecting to the module directly), TX goes to TX on the serial adapter, RX to RX.**
+
 ### Programming Mode
 
 <img alt="Typical GPIO0 Location" src="https://raw.githubusercontent.com/tasmota/docs/master/docs/_media/gpio0.png" style="margin:5px;float:right;width:180px"></img>
@@ -143,7 +145,7 @@ If everything went well, you are now in Programming Mode and ready to continue w
 * Insufficient power delivered over the serial programmer. This leads to flashing failures or corrupted flash altogether. Supply more power with a separate 3.3V power supply or get an adapter with a better power supply. Be sure all DC voltages use the same GND line.
 * Recheck your serial programmer so to ensure that it supplies 3.3V voltage and **NOT 5V**. ***5V will damage the ESP chip!***
 * Releasing GPIO0 button/wire before booting is finished - It is safe to leave GPIO0 connected to GND during the entire programming process (erase & upload). Just be sure to remove the GPIO0 to GND bridge before booting the device for regular operation.
-* Make sure that the RX pin is connected to the TX pin between the serial adapter and your ESP device, and vice versa.
+* Make sure that the RX pin is connected to the TX pin between the serial adapter and your ESP device, and vice versa. Note: some devices, such as the ShellyPlugUS, have mislabeled TX/RX solder pads. If using these pads, connect TX to TX and RX to RX. When in doubt try swapping TX and RX connections.
 * Erase the flash first and power cycle before uploading the Tasmota firmware binary. Not erasing can leave behind remnants of the previous flash contents which can interfere with the new firmware operation.
 
 ## Flashing
