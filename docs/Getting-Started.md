@@ -143,7 +143,7 @@ If everything went well, you are now in Programming Mode and ready to continue w
 * Insufficient power delivered over the serial programmer. This leads to flashing failures or corrupted flash altogether. Supply more power with a separate 3.3V power supply or get an adapter with a better power supply. Be sure all DC voltages use the same GND line.
 * Recheck your serial programmer so to ensure that it supplies 3.3V voltage and **NOT 5V**. ***5V will damage the ESP chip!***
 * Releasing GPIO0 button/wire before booting is finished - It is safe to leave GPIO0 connected to GND during the entire programming process (erase & upload). Just be sure to remove the GPIO0 to GND bridge before booting the device for regular operation.
-* Make sure that the RX pin is connected to the TX pin between the serial adapter and your ESP device, and vice versa.
+* Make sure that the RX pin is connected to the TX pin between the serial adapter and your ESP device, and vice versa. Note: some devices can have the TX and RX pins labelled in reverse. In that case connect TX to TX and RX to RX pins of your adapter. 
 * Erase the flash first and power cycle before uploading the Tasmota firmware binary. Not erasing can leave behind remnants of the previous flash contents which can interfere with the new firmware operation.
 
 ## Flashing
