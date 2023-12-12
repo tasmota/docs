@@ -1,5 +1,5 @@
 # Bluetooth for ESP32 :material-cpu-32-bit:
-
+(Bluetooth version 4.x)
 ## MI32 Sensors
 
 ??? failure "This feature is included only in tasmota32-bluetooth.bin"
