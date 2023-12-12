@@ -12,7 +12,7 @@
 Tasmota uses the [rc-switch library](https://github.com/sui77/rc-switch/) to decode RF codes. Supported hardware depends on rc-switch library support only.
 
 ## Sending RF Codes
-Send an RF control code as a decimal or hexadecimal string in a JSON payload. An inexpensive RF receiver such as a [STX882](https://www.nicerf.com/productslist_119_stx882.html) can be connected to a device running Tasmota. In order to send RF data you need to _**configure the connected GPIO as `RFSend (105)`**_  
+Send an RF control code as a decimal or hexadecimal string in a JSON payload. An inexpensive RF receiver such as a [STX882](https://www.nicerf.com/item/433mhz-ask-transmitter-module-stx882) can be connected to a device running Tasmota. In order to send RF data you need to _**configure the connected GPIO as `RFSend (105)`**_  
 
 Command|Parameters
 :---|:---
@@ -31,7 +31,7 @@ When sending decimal formatted command you need to follow the pattern otherwise 
     `RfSend 123456, 24, 1, 238` is missing the `repeat` value so the last number intended as pulse value won't be sent
 
 ## Receiving RF Codes
-An inexpensive RF receiver such as a [SRX882](https://www.nicerf.com/product_132_82.html) can be connected to a device running Tasmota. Configure the GPIO connected to Data pin on the RF receiver as 'RFrecv (106)'. 
+An inexpensive RF receiver such as a [SRX882](https://www.nicerf.com/item/433mhz-ask-transmitter-module-stx882) can be connected to a device running Tasmota. Configure the GPIO connected to Data pin on the RF receiver as 'RFrecv (106)'. 
 <br>Once you have identified the protocols that you want to receive data on , you can enable only those protocols . 
 <br>The RfProtocol command will only work if you have set a pin function to rfrecv
 
