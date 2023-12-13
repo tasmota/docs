@@ -123,9 +123,6 @@ When finished click ***Add endpoints***. The remote device will appear in the **
 
 ![Add Remote Tasmota or OpenBK configured](_media/matter/add_remote_completed.jpg)
 
-!!! note 
-    Full Bridge mode is not yet supported, which means that currently you can't dynamically add new devices/endpoints. Adding a new Tasmota-end-device requires to remove the border router from the controller and pair it again. This will be addressed in the near future.
-
 When a command arrives from the Matter controller, it is passed immediately to the end-device. Any change made on the end-device is eventually sent back to Matter controller via polling. Polling is done every 3 seconds for lights and relays and every 5 seconds for sensors.
 
 The Matter border router needs to have IP connectivity to the Tasmota end-device to send HTTP requests. However they don't need to be on the same VLAN (contrary to Matter which needs the controller and the device to be on the same VLAN).
