@@ -26,10 +26,10 @@ Incredibly expandable and flexible.
 
 - Support for ESP32-C2 and ESP32-C6 using Arduino core v3
 - Added support for:
-  - Winsen XH03x
+  - Winsen ZH03x particle sensor
   - 2nd I2C bus for some sensors
-  - [ENS16x](ENS161.md) air quality and ENS210 temperture and humidity sensors
-  - HC8 CO2 sensor
+  - NeoPool enhancements for Home Assistant
+- DeepSleep support through TIMERS
 - ESP32 Partition Wizard can be loaded dynamically
 - ESP32 support for Avago Tech Bluetooth Buttons
 

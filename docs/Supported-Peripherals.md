@@ -141,6 +141,7 @@ DS3502 | Digital potentiometer| I^2^C
 [**VL53L1x**](VL53Lxx) | Time of flight sensor| I^2^C
 **[VINDRIKTNING](https://blakadder.com/vindriktning-tasmota/)** | IKEA VINDRIKTNING particle concentration sensor | serial
 **WindMeter** | Analog cup anemometer
+[**Winsen ZH03B**](https://github.com/arendst/Tasmota/pull/19850) | Particle concentration sensor | serial
 [**WS2812B**](WS2812B-RGB-Shield) | Wemos shield with addressable LED
 [**WS2812B<BR>WS2813B**](WS2812B-and-WS2813) | Addressable LEDs
 **Xadow Grove Mutichannel Gas sensor** | Gas sensor | I^2^C
