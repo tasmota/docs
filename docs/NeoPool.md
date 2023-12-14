@@ -581,158 +581,159 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
 
 #### neopoolcmd.be
 
-```berry
-# File: neopoolcmd.be
-#
-# Add commands NPAux and NPVersion
+??? summary "View script"
+    ```berry
+    # File: neopoolcmd.be
+    #
+    # Add commands NPAux and NPVersion
 
-# Neopool definitions
-MBF_POWER_MODULE_REGISTER = 0x000C
-MBF_POWER_MODULE_DATA = 0x000D
-var MBF_RELAY_STATE = 0x010E
+    # Neopool definitions
+    MBF_POWER_MODULE_REGISTER = 0x000C
+    MBF_POWER_MODULE_DATA = 0x000D
+    var MBF_RELAY_STATE = 0x010E
 
-var MBF_PAR_TIMER_BLOCK_AUX1_INT1 = 0x04AC
-var MBF_PAR_TIMER_BLOCK_AUX2_INT1 = 0x04BB
-var MBF_PAR_TIMER_BLOCK_AUX3_INT1 = 0x04CA
-var MBF_PAR_TIMER_BLOCK_AUX4_INT1 = 0x04D9
-var PAR_TIMER_BLOCK_AUX = [
-  MBF_PAR_TIMER_BLOCK_AUX1_INT1,
-  MBF_PAR_TIMER_BLOCK_AUX2_INT1,
-  MBF_PAR_TIMER_BLOCK_AUX3_INT1,
-  MBF_PAR_TIMER_BLOCK_AUX4_INT1
-]
-var MBV_PAR_CTIMER_ALWAYS_ON      = 3
-var MBV_PAR_CTIMER_ALWAYS_OFF     = 4
+    var MBF_PAR_TIMER_BLOCK_AUX1_INT1 = 0x04AC
+    var MBF_PAR_TIMER_BLOCK_AUX2_INT1 = 0x04BB
+    var MBF_PAR_TIMER_BLOCK_AUX3_INT1 = 0x04CA
+    var MBF_PAR_TIMER_BLOCK_AUX4_INT1 = 0x04D9
+    var PAR_TIMER_BLOCK_AUX = [
+      MBF_PAR_TIMER_BLOCK_AUX1_INT1,
+      MBF_PAR_TIMER_BLOCK_AUX2_INT1,
+      MBF_PAR_TIMER_BLOCK_AUX3_INT1,
+      MBF_PAR_TIMER_BLOCK_AUX4_INT1
+    ]
+    var MBV_PAR_CTIMER_ALWAYS_ON      = 3
+    var MBV_PAR_CTIMER_ALWAYS_OFF     = 4
 
-import string
-import json
+    import string
+    import json
 
-# NeoPool command class
-class NeoPoolCommands
-  var TEXT_OFF
-  var TEXT_ON
-  var TEXT_TOGGLE
+    # NeoPool command class
+    class NeoPoolCommands
+      var TEXT_OFF
+      var TEXT_ON
+      var TEXT_TOGGLE
 
-  # string helper
-  def ltrim(s)
-    var i = 0 while(s[i]==' ') i += 1 end
-    return string.split(s, i)[1]
-  end
-  def rtrim(s)
-    return string.split(s, " ")[0]
-  end
-  def trim(s)
-    return self.rtrim(self.ltrim(s));
-  end
-
-  def Param(payload, p2)
-    var parm, res
-    try
-      parm = string.toupper(self.trim(payload))
-    except ..
-      parm = ""
-    end
-    if parm != ""
-      if string.find(parm, 'OFF')>=0 || string.find(parm, self.TEXT_OFF)>=0 || string.find(parm, '0')>=0
-        res = 0
-      elif string.find(parm, 'ON')>=0 || string.find(parm, self.TEXT_ON)>=0 || string.find(parm, '1')>=0
-        res = 1
-      elif string.find(parm, p2)>=0 || string.find(parm, '2')>=0
-        res = 2
-      else
-        res = -1
+      # string helper
+      def ltrim(s)
+        var i = 0 while(s[i]==' ') i += 1 end
+        return string.split(s, i)[1]
       end
-    else
-      res = nil
-    end
-    parm = nil
-    tasmota.gc()
-    return res
-  end
+      def rtrim(s)
+        return string.split(s, " ")[0]
+      end
+      def trim(s)
+        return self.rtrim(self.ltrim(s));
+      end
 
-  #- NPAux<x> OFF|0|ON|1 t (<x> = 1..4)
-      0|OFF:   Switch aux x off
-      1|ON:    Switch aux x on
-      2|TOGGLE: Toggle Aux x
-  -#
-  def NPAux(cmd, idx, payload, payload_json, subcmd)
-    var ctrl, parm
-
-    if idx < 1 || idx > 4
-      tasmota.resp_cmnd_error()
-      return
-    end
-    parm = self.Param(payload, self.TEXT_TOGGLE)
-    if parm != nil
-      if 0 == parm
-        ctrl = MBV_PAR_CTIMER_ALWAYS_OFF
-      elif 1 == parm
-        ctrl = MBV_PAR_CTIMER_ALWAYS_ON
-      elif 2 == parm
+      def Param(payload, p2)
+        var parm, res
         try
-          ctrl = (compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_RELAY_STATE)).find('NPRead', json.load('{"Data": "0x0000"}')).find('Data', 0))() >> (idx+2)) & 1 ? MBV_PAR_CTIMER_ALWAYS_OFF : MBV_PAR_CTIMER_ALWAYS_ON
+          parm = string.toupper(self.trim(payload))
         except ..
+          parm = ""
+        end
+        if parm != ""
+          if string.find(parm, 'OFF')>=0 || string.find(parm, self.TEXT_OFF)>=0 || string.find(parm, '0')>=0
+            res = 0
+          elif string.find(parm, 'ON')>=0 || string.find(parm, self.TEXT_ON)>=0 || string.find(parm, '1')>=0
+            res = 1
+          elif string.find(parm, p2)>=0 || string.find(parm, '2')>=0
+            res = 2
+          else
+            res = -1
+          end
+        else
+          res = nil
+        end
+        parm = nil
+        tasmota.gc()
+        return res
+      end
+
+      #- NPAux<x> OFF|0|ON|1 t (<x> = 1..4)
+          0|OFF:   Switch aux x off
+          1|ON:    Switch aux x on
+          2|TOGGLE: Toggle Aux x
+      -#
+      def NPAux(cmd, idx, payload, payload_json, subcmd)
+        var ctrl, parm
+
+        if idx < 1 || idx > 4
           tasmota.resp_cmnd_error()
           return
         end
-      else
-        tasmota.resp_cmnd_error()
-        return
+        parm = self.Param(payload, self.TEXT_TOGGLE)
+        if parm != nil
+          if 0 == parm
+            ctrl = MBV_PAR_CTIMER_ALWAYS_OFF
+          elif 1 == parm
+            ctrl = MBV_PAR_CTIMER_ALWAYS_ON
+          elif 2 == parm
+            try
+              ctrl = (compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_RELAY_STATE)).find('NPRead', json.load('{"Data": "0x0000"}')).find('Data', 0))() >> (idx+2)) & 1 ? MBV_PAR_CTIMER_ALWAYS_OFF : MBV_PAR_CTIMER_ALWAYS_ON
+            except ..
+              tasmota.resp_cmnd_error()
+              return
+            end
+          else
+            tasmota.resp_cmnd_error()
+            return
+          end
+          tasmota.cmd(string.format("NPWrite 0x%04X,%d", PAR_TIMER_BLOCK_AUX[idx-1], ctrl))
+          tasmota.cmd("NPExec")
+        else
+          try
+            ctrl = (compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_RELAY_STATE)).find('NPRead', json.load('{"Data": "0x0000"}')).find('Data', 0))() >> (idx+2)) & 1
+          except ..
+            tasmota.resp_cmnd_error()
+            return
+          end
+        end
+        if subcmd != nil
+          tasmota.resp_cmnd(string.format('{"%s":"%s"}', subcmd, ctrl == (parm != nil ? 4 : 0) ? self.TEXT_OFF : self.TEXT_ON))
+        else
+          tasmota.resp_cmnd(string.format('{"%s%d":"%s"}', cmd, idx, ctrl == (parm != nil ? 4 : 0) ? self.TEXT_OFF : self.TEXT_ON))
+        end
       end
-      tasmota.cmd(string.format("NPWrite 0x%04X,%d", PAR_TIMER_BLOCK_AUX[idx-1], ctrl))
-      tasmota.cmd("NPExec")
-    else
-      try
-        ctrl = (compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_RELAY_STATE)).find('NPRead', json.load('{"Data": "0x0000"}')).find('Data', 0))() >> (idx+2)) & 1
-      except ..
-        tasmota.resp_cmnd_error()
-        return
+
+      # NPVersion
+      def NPVersion(cmd)
+        var verstr = ""
+        for i: 0 .. 12
+          tasmota.cmd(string.format("NPWrite 0x%04X,%d", MBF_POWER_MODULE_REGISTER, i*2))
+          var data = compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_POWER_MODULE_DATA)).find('NPRead', json.load('{"Data": "0x0000"}')).find('Data', 0))()
+          verstr += string.char(data>>8 & 0xFF)
+          verstr += string.char(data    & 0xFF)
+        end
+        var arr = ""
+        for i: string.split(verstr,'\n')
+          if arr != ""
+            arr += ","
+          end
+          arr += '"'+i+'"'
+        end
+        tasmota.resp_cmnd(string.format('{"%s":[%s]}', cmd, arr))
+      end
+
+      def init()
+        # get tasmota settings
+        self.TEXT_OFF = tasmota.cmd("StateText1")['StateText1']
+        self.TEXT_ON = tasmota.cmd("StateText2")['StateText2']
+        self.TEXT_TOGGLE = tasmota.cmd("StateText3")['StateText3']
+        # add commands
+        tasmota.add_cmd('NPAux', / cmd, idx, payload -> self.NPAux(cmd, idx, payload))
+        tasmota.add_cmd('NPVersion', / cmd -> self.NPVersion(cmd))
+      end
+
+      def deinit()
+        # remove commands
+        tasmota.remove_cmd('NPAux')
+        tasmota.remove_cmd('NPVersion')
       end
     end
-    if subcmd != nil
-      tasmota.resp_cmnd(string.format('{"%s":"%s"}', subcmd, ctrl == (parm != nil ? 4 : 0) ? self.TEXT_OFF : self.TEXT_ON))
-    else
-      tasmota.resp_cmnd(string.format('{"%s%d":"%s"}', cmd, idx, ctrl == (parm != nil ? 4 : 0) ? self.TEXT_OFF : self.TEXT_ON))
-    end
-  end
-
-  # NPVersion
-  def NPVersion(cmd)
-    var verstr = ""
-    for i: 0 .. 12
-      tasmota.cmd(string.format("NPWrite 0x%04X,%d", MBF_POWER_MODULE_REGISTER, i*2))
-      var data = compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_POWER_MODULE_DATA)).find('NPRead', json.load('{"Data": "0x0000"}')).find('Data', 0))()
-      verstr += string.char(data>>8 & 0xFF)
-      verstr += string.char(data    & 0xFF)
-    end
-    var arr = ""
-    for i: string.split(verstr,'\n')
-      if arr != ""
-        arr += ","
-      end
-      arr += '"'+i+'"'
-    end
-    tasmota.resp_cmnd(string.format('{"%s":[%s]}', cmd, arr))
-  end
-
-  def init()
-    # get tasmota settings
-    self.TEXT_OFF = tasmota.cmd("StateText1")['StateText1']
-    self.TEXT_ON = tasmota.cmd("StateText2")['StateText2']
-    self.TEXT_TOGGLE = tasmota.cmd("StateText3")['StateText3']
-    # add commands
-    tasmota.add_cmd('NPAux', / cmd, idx, payload -> self.NPAux(cmd, idx, payload))
-    tasmota.add_cmd('NPVersion', / cmd -> self.NPVersion(cmd))
-  end
-
-  def deinit()
-    # remove commands
-    tasmota.remove_cmd('NPAux')
-    tasmota.remove_cmd('NPVersion')
-  end
-end
-neopoolcommands = NeoPoolCommands()
-```
+    neopoolcommands = NeoPoolCommands()
+    ```
 
 To activate the new commands, go to WebGUI "Consoles" / "Berry Scripting console" and execute
 
@@ -752,137 +753,138 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
 
 ####  neopoolgui.be
 
-```berry
-# File: neopoolgui.be
-#
-# Add GUI elements for filtration control, light and aux relais
+??? summary "View script"
+    ```berry
+    # File: neopoolgui.be
+    #
+    # Add GUI elements for filtration control, light and aux relais
 
-import webserver
-import string
+    import webserver
+    import string
 
-class NeoPoolButtonMethods : Driver
+    class NeoPoolButtonMethods : Driver
 
-  #- method for adding elements to the main menu -#
-  def web_add_main_button()
+      #- method for adding elements to the main menu -#
+      def web_add_main_button()
 
-    def selected(value, comp)
-      return comp == value ? 'selected=""' : ''
+        def selected(value, comp)
+          return comp == value ? 'selected=""' : ''
+        end
+
+        var html = '<p></p>'
+
+        var speed = tasmota.cmd('NPFiltration').find('Speed', 'invalid')
+        var mode = tasmota.cmd('NPFiltrationmode').find('NPFiltrationmode', 'invalid')
+        if 'invalid' == speed && 'invalid' == mode
+          html+= 'NeoPool device not available'
+        else
+          # Filtration mode/speed
+          html+= '<table style="width:100%"><tbody><tr>'
+          html+= '  <td style="width:50%;padding: 0 4px 0 4px;">'
+          html+= '    <label for="mode"><small>Mode:</small></label>'
+          html+= '    <select id="mode" name="mode">'
+          html+= string.format('<option value="m_sv_manual"%s>Manual</option>', selected(mode, 'Manual'))
+          html+= string.format('<option value="m_sv_auto"%s>Auto</option>', selected(mode, 'Auto'))
+          html+= string.format('<option value="m_sv_heating"%s>Heating</option>', selected(mode, 'Heating'))
+          html+= string.format('<option value="m_sv_smart"%s>Smart</option>', selected(mode, 'Smart'))
+          html+= string.format('<option value="m_sv_intelligent"%s>Intelligent</option>', selected(mode, 'Intelligent'))
+          html+= '    </select>'
+          html+= '  </td>'
+          html+= '  <td style="width:50%;padding: 0 4px 0 4px;">'
+          html+= '    <label for="speed"><small>Speed:</label>'
+          html+= '    <select id="speed" name="speed">'
+          html+= string.format('<option value="m_sv_slow"%s>Slow</option>', selected(speed, '1'))
+          html+= string.format('<option value="m_sv_medium"%s>Medium</option>', selected(speed, '2'))
+          html+= string.format('<option value="m_sv_fast"%s>Fast</option>', selected(speed, '3'))
+          html+= '    </select>'
+          html+= '  </td>'
+          html+= '</tr><tr></tr></tbody></table>'
+          html+= '<script>'
+          html+= 'document.getElementById("speed").addEventListener ("change",function(){la("&"+this.value+"=1");});'
+          html+= 'document.getElementById("mode").addEventListener ("change",function(){la("&"+this.value+"=1");});'
+          html+= '</script>'
+
+          # Filtration button
+          html+= '<table style="width:100%"><tbody><tr>'
+          html+= '  <td style="width:100%">'
+          html+= '    <button id="bn_filtration" name="bn_filtration" onclick="la(\'&m_sv_filtration=1\');">Filtration</button>'
+          html+= '  </td>'
+          html+= '</tr><tr></tr></tbody></table>'
+
+          # Light button
+          html+= '<table style="width:100%"><tbody><tr>'
+          html+= '  <td style="width:100%">'
+          html+= '    <button onclick="la(\'&m_sv_light=1\');">Light</button>'
+          html+= '  </td>'
+          html+= '</tr><tr></tr></tbody></table>'
+
+          # Aux buttons
+          html+= '<table style="width:100%"><tbody><tr>'
+          html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=1\');">Aux1</button></td>'
+          html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=2\');">Aux2</button></td>'
+          html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=3\');">Aux3</button></td>'
+          html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=4\');">Aux4</button></td>'
+          html+= '</tr><tr></tr></tbody></table>'
+        end
+
+        webserver.content_send(html)
+        html = nil
+        speed = nil
+        mode = nil
+        tasmota.gc()
+      end
+
+      #- As we can add only one sensor method we will have to combine them besides all other sensor readings in one method -#
+      def web_sensor()
+        if webserver.has_arg("m_sv_filtration")
+          tasmota.cmd("NPFiltration 2")
+        end
+
+        if webserver.has_arg("m_sv_slow")
+          tasmota.cmd("NPFiltration 1,1")
+        end
+        if webserver.has_arg("m_sv_medium")
+          tasmota.cmd("NPFiltration 1,2")
+        end
+        if webserver.has_arg("m_sv_fast")
+          tasmota.cmd("NPFiltration 1,3")
+        end
+
+        if webserver.has_arg("m_sv_manual")
+          tasmota.cmd("NPFiltrationmode 0")
+        end
+        if webserver.has_arg("m_sv_auto")
+          tasmota.cmd("NPFiltrationmode 1")
+        end
+        if webserver.has_arg("m_sv_heating")
+          tasmota.cmd("NPFiltrationmode 2")
+        end
+        if webserver.has_arg("m_sv_smart")
+          tasmota.cmd("NPFiltrationmode 3")
+        end
+        if webserver.has_arg("m_sv_intelligent")
+          tasmota.cmd("NPFiltrationmode 4")
+        end
+
+        if webserver.has_arg("m_sv_light")
+          tasmota.cmd("NPLight 2")
+        end
+
+        if webserver.has_arg("m_sv_aux")
+          tasmota.cmd("NPAux"+webserver.arg("m_sv_aux")+" TOGGLE")
+        end
+      end
+
+      def init()
+      end
+
+      def deinit()
+      end
     end
 
-    var html = '<p></p>'
-
-    var speed = tasmota.cmd('NPFiltration').find('Speed', 'invalid')
-    var mode = tasmota.cmd('NPFiltrationmode').find('NPFiltrationmode', 'invalid')
-    if 'invalid' == speed && 'invalid' == mode
-      html+= 'NeoPool device not available'
-    else
-      # Filtration mode/speed
-      html+= '<table style="width:100%"><tbody><tr>'
-      html+= '  <td style="width:50%;padding: 0 4px 0 4px;">'
-      html+= '    <label for="mode"><small>Mode:</small></label>'
-      html+= '    <select id="mode" name="mode">'
-      html+= string.format('<option value="m_sv_manual"%s>Manual</option>', selected(mode, 'Manual'))
-      html+= string.format('<option value="m_sv_auto"%s>Auto</option>', selected(mode, 'Auto'))
-      html+= string.format('<option value="m_sv_heating"%s>Heating</option>', selected(mode, 'Heating'))
-      html+= string.format('<option value="m_sv_smart"%s>Smart</option>', selected(mode, 'Smart'))
-      html+= string.format('<option value="m_sv_intelligent"%s>Intelligent</option>', selected(mode, 'Intelligent'))
-      html+= '    </select>'
-      html+= '  </td>'
-      html+= '  <td style="width:50%;padding: 0 4px 0 4px;">'
-      html+= '    <label for="speed"><small>Speed:</label>'
-      html+= '    <select id="speed" name="speed">'
-      html+= string.format('<option value="m_sv_slow"%s>Slow</option>', selected(speed, '1'))
-      html+= string.format('<option value="m_sv_medium"%s>Medium</option>', selected(speed, '2'))
-      html+= string.format('<option value="m_sv_fast"%s>Fast</option>', selected(speed, '3'))
-      html+= '    </select>'
-      html+= '  </td>'
-      html+= '</tr><tr></tr></tbody></table>'
-      html+= '<script>'
-      html+= 'document.getElementById("speed").addEventListener ("change",function(){la("&"+this.value+"=1");});'
-      html+= 'document.getElementById("mode").addEventListener ("change",function(){la("&"+this.value+"=1");});'
-      html+= '</script>'
-
-      # Filtration button
-      html+= '<table style="width:100%"><tbody><tr>'
-      html+= '  <td style="width:100%">'
-      html+= '    <button id="bn_filtration" name="bn_filtration" onclick="la(\'&m_sv_filtration=1\');">Filtration</button>'
-      html+= '  </td>'
-      html+= '</tr><tr></tr></tbody></table>'
-
-      # Light button
-      html+= '<table style="width:100%"><tbody><tr>'
-      html+= '  <td style="width:100%">'
-      html+= '    <button onclick="la(\'&m_sv_light=1\');">Light</button>'
-      html+= '  </td>'
-      html+= '</tr><tr></tr></tbody></table>'
-
-      # Aux buttons
-      html+= '<table style="width:100%"><tbody><tr>'
-      html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=1\');">Aux1</button></td>'
-      html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=2\');">Aux2</button></td>'
-      html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=3\');">Aux3</button></td>'
-      html+= '  <td style="width:25%"><button onclick="la(\'&m_sv_aux=4\');">Aux4</button></td>'
-      html+= '</tr><tr></tr></tbody></table>'
-    end
-
-    webserver.content_send(html)
-    html = nil
-    speed = nil
-    mode = nil
-    tasmota.gc()
-  end
-
-  #- As we can add only one sensor method we will have to combine them besides all other sensor readings in one method -#
-  def web_sensor()
-    if webserver.has_arg("m_sv_filtration")
-      tasmota.cmd("NPFiltration 2")
-    end
-
-    if webserver.has_arg("m_sv_slow")
-      tasmota.cmd("NPFiltration 1,1")
-    end
-    if webserver.has_arg("m_sv_medium")
-      tasmota.cmd("NPFiltration 1,2")
-    end
-    if webserver.has_arg("m_sv_fast")
-      tasmota.cmd("NPFiltration 1,3")
-    end
-
-    if webserver.has_arg("m_sv_manual")
-      tasmota.cmd("NPFiltrationmode 0")
-    end
-    if webserver.has_arg("m_sv_auto")
-      tasmota.cmd("NPFiltrationmode 1")
-    end
-    if webserver.has_arg("m_sv_heating")
-      tasmota.cmd("NPFiltrationmode 2")
-    end
-    if webserver.has_arg("m_sv_smart")
-      tasmota.cmd("NPFiltrationmode 3")
-    end
-    if webserver.has_arg("m_sv_intelligent")
-      tasmota.cmd("NPFiltrationmode 4")
-    end
-
-    if webserver.has_arg("m_sv_light")
-      tasmota.cmd("NPLight 2")
-    end
-
-    if webserver.has_arg("m_sv_aux")
-      tasmota.cmd("NPAux"+webserver.arg("m_sv_aux")+" TOGGLE")
-    end
-  end
-
-  def init()
-  end
-
-  def deinit()
-  end
-end
-
-neopool_driver = NeoPoolButtonMethods()
-tasmota.add_driver(neopool_driver)
-```
+    neopool_driver = NeoPoolButtonMethods()
+    tasmota.add_driver(neopool_driver)
+    ```
 
 To activate the new gui elements, go to WebGUI "Consoles" / "Berry Scripting console" and execute
 
