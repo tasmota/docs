@@ -574,6 +574,7 @@ The class `NeoPoolCommands` below adds two new commands to Tasmota:
 Command|Parameters
 :---|:---
 NPAux<x\><a id="NPAux"></a>|`<state>`<BR>Set auxiliary relay <x\> (x=`1..4`, state = `0..2`):<ul><li>`0` - switch off auxiliary relay</li><li>`1` - switch on auxiliary relay</li>`2` - toggle auxiliary relay</li></ul>
+NPAntiFreeze<x\><a id="NPAntiFreeze"></a>|`<state>`<BR>Set Smart mode antifreeze (state = `0..2`):<ul><li>`0` - switch Smart mode antifreeze off</li><li>`1` - switch Smart mode antifreeze on</li>`2` - toggle Smart mode antifreeze</li></ul>
 NPTimer<x\><a id="NPTimer"></a>|`0` or `OFF` or `<hh:mm hh:mm>( <period>)` or `<json>`<BR>Set device timer for filtration, light and auxiliary relay (x=`1..12`)<BR> <x\>:<ul><li>`1` - Filtration timer 1</li><li>`2` - Filtration timer 2</li><li>`3` - Filtration timer 3</li><li>`4` - Light timer</li><li>`5` - Aux1 timer 1</li><li>`6` - Aux1 timer 2</li><li>`7` - Aux2 timer 1</li><li>`8` - Aux2 timer 2</li><li>`9` - Aux3 timer 1</li><li>`10` - Aux3 timer 2</li><li>`11` - Aux4 timer 1</li><li>`12` - Aux4 timer 2</li></ul><BR><ul><li>`0` or `OFF` - Switch timer off</li><li>`hh:mm hh:mm` - Start/End time pair<li>`period` - optional period interval (default seconds), use postfix (e. g. "1d") for period unit:<BR>`s` - seconds<BR>`m` - minutes<BR>`h` - hours<BR>`d` - days<BR>`w` - weeks</li><li>`json` - valid JSON string containng start-/endtime and period e. g. `#!json {"Start":"17:00","End":"22:15","Period":"1d"}`</li></ul>
 NPVersion<a id="NPVersion"></a>|Get the firmware info as array (firmware version and creation date)
 
@@ -587,13 +588,14 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
     ```berry
     # File: neopoolcmd.be
     #
-    # Add commands NPAux, NPTimer and NPVersion
+    # Add commands NPAux, NPAntiFreeze, NPTimer and NPVersion
 
     # Neopool definitions
 
       MBF_POWER_MODULE_REGISTER = 0x000C
       MBF_POWER_MODULE_DATA = 0x000D
       MBF_RELAY_STATE = 0x010E
+      MBF_PAR_SMART_ANTI_FREEZE     = 0x41A
 
       # configuration of the system timers
       MBF_PAR_TIMER_BLOCK_FILT_INT1 = 0x0434
@@ -681,11 +683,6 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
         MBF_PAR_TIMER_BLOCK_AUX4_INT1
       ]
 
-
-
-
-
-
     import string
     import json
 
@@ -771,7 +768,7 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
       end
 
       # NPAux<x> OFF|0|ON|1|TOGGLE|2 (<x> = 1..4)
-      def NPAux(cmd, idx, payload, payload_json, subcmd)
+      def NPAux(cmd, idx, payload)
         var ctrl, parm
 
         if idx < 1 || idx > 4
@@ -786,10 +783,11 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
             ctrl = MBV_PAR_CTIMER_ALWAYS_ON
           elif 2 == parm
             try
-              ctrl = (self.Read(cmd, "NPRead", MBF_RELAY_STATE) >> (idx+2)) & 1 ? MBV_PAR_CTIMER_ALWAYS_OFF : MBV_PAR_CTIMER_ALWAYS_ON
+              ctrl = self.Read(cmd, "NPRead", MBF_RELAY_STATE)
               if nil == ctrl
                 return
               end
+              ctrl = (ctrl >> (idx+2)) & 1 ? MBV_PAR_CTIMER_ALWAYS_OFF : MBV_PAR_CTIMER_ALWAYS_ON
             except ..
               return
             end
@@ -801,19 +799,59 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
           tasmota.cmd("NPExec")
         else
           try
-            ctrl = (self.Read("NPRead", MBF_RELAY_STATE) >> (idx+2)) & 1
+            ctrl = self.Read(cmd, "NPRead", MBF_RELAY_STATE)
             if nil == ctrl
               return
             end
+            ctrl = (ctrl >> (idx+2)) & 1
         except ..
             return
           end
         end
-        if subcmd != nil
-          tasmota.resp_cmnd(string.format('{"%s":"%s"}', subcmd, ctrl == (parm != nil ? 4 : 0) ? self.TEXT_OFF : self.TEXT_ON))
+        tasmota.resp_cmnd(string.format('{"%s%d":"%s"}', cmd, idx, ctrl == (parm != nil ? 4 : 0) ? self.TEXT_OFF : self.TEXT_ON))
+      end
+
+      # NPAntiFreeze OFF|0|ON|1|TOGGLE|2
+      def NPAntiFreeze(cmd, idx, payload)
+        var ctrl, parm
+        parm = self.ParmSwitch(payload, self.TEXT_TOGGLE)
+        if parm != nil
+          if 0 == parm
+            ctrl = 0
+          elif 1 == parm
+            ctrl = 1
+          elif 2 == parm
+            try
+              ctrl = self.Read(cmd, "NPRead", MBF_PAR_SMART_ANTI_FREEZE)
+              if nil == ctrl
+                return
+              end
+              if 1 == ctrl
+                ctrl = 0
+              else
+                ctrl = 1
+              end
+            except ..
+              return
+            end
+          else
+            tasmota.resp_cmnd_error()
+            return
+          end
+          tasmota.cmd(string.format("NPWrite 0x%04X,%d", MBF_PAR_SMART_ANTI_FREEZE, ctrl))
+          tasmota.cmd("NPExec")
         else
-          tasmota.resp_cmnd(string.format('{"%s%d":"%s"}', cmd, idx, ctrl == (parm != nil ? 4 : 0) ? self.TEXT_OFF : self.TEXT_ON))
+          try
+            ctrl = self.Read(cmd, "NPRead", MBF_PAR_SMART_ANTI_FREEZE)
+            if nil == ctrl
+              return
+            end
+        except ..
+            tasmota.resp_cmnd_error()
+            return
+          end
         end
+        tasmota.resp_cmnd(string.format('{"%s":"%s"}', cmd, ctrl ? self.TEXT_ON : self.TEXT_OFF))
       end
 
       # NPTimer<x> 0|OFF|<hh:mm hh:mm>( <period>)|<json> (<x> = 1..12)
@@ -856,7 +894,7 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
         )
       end
 
-      def NPTimer(cmd, idx, payload, raw)
+      def NPTimer(cmd, idx, payload)
         var parm
 
         if idx < 1 || idx > 12
@@ -965,18 +1003,20 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
 
       def init()
         # get tasmota settings
-        self.TEXT_OFF = tasmota.cmd("StateText1")['StateText1']
-        self.TEXT_ON = tasmota.cmd("StateText2")['StateText2']
-        self.TEXT_TOGGLE = tasmota.cmd("StateText3")['StateText3']
+        self.TEXT_OFF = tasmota.cmd('StateText1').find('StateText1', 'OFF')
+        self.TEXT_ON = tasmota.cmd('StateText2').find('StateText2', 'ON')
+        self.TEXT_TOGGLE = tasmota.cmd('StateText3').find('StateText3', 'TOGGLE')
         # add commands
         tasmota.add_cmd('NPAux', / cmd, idx, payload -> self.NPAux(cmd, idx, payload))
-        tasmota.add_cmd('NPTimer', / cmd, idx, payload, raw -> self.NPTimer(cmd, idx, payload, raw))
+        tasmota.add_cmd('NPAntiFreeze', / cmd, idx, payload -> self.NPAntiFreeze(cmd, idx, payload))
+        tasmota.add_cmd('NPTimer', / cmd, idx, payload -> self.NPTimer(cmd, idx, payload))
         tasmota.add_cmd('NPVersion', / cmd -> self.NPVersion(cmd))
       end
 
       def deinit()
         # remove commands
         tasmota.remove_cmd('NPAux')
+        tasmota.remove_cmd('NPAntiFreeze')
         tasmota.remove_cmd('NPTimer')
         tasmota.remove_cmd('NPVersion')
       end
