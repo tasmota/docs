@@ -574,6 +574,7 @@ The class `NeoPoolCommands` below adds two new commands to Tasmota:
 Command|Parameters
 :---|:---
 NPAux<x\><a id="NPAux"></a>|`<state>`<BR>Set auxiliary relay <x\> (x=`1..4`, state = `0..2`):<ul><li>`0` - switch off auxiliary relay</li><li>`1` - switch on auxiliary relay</li>`2` - toggle auxiliary relay</li></ul>
+NPTimer<x\><a id="NPTimer"></a>|`0` or `OFF` or `<hh:mm hh:mm>( <period>)` or `<json>`<BR>Set device timer for filtration, light and auxiliary relay (x=`1..12`)<BR> <x\>:<ul><li>`1` - Filtration timer 1</li><li>`2` - Filtration timer 2</li><li>`3` - Filtration timer 3</li><li>`4` - Light timer</li><li>`5` - Aux1 timer 1</li><li>`6` - Aux1 timer 2</li><li>`7` - Aux2 timer 1</li><li>`8` - Aux2 timer 2</li><li>`9` - Aux3 timer 1</li><li>`10` - Aux3 timer 2</li><li>`11` - Aux4 timer 1</li><li>`12` - Aux4 timer 2</li></ul><BR><ul><li>`0` or `OFF` - Switch timer off</li><li>`hh:mm hh:mm` - Start/End time pair<li>`period` - optional period interval (default seconds), use postfix (e. g. "1d") for period unit:<BR>`s` - seconds<BR>`m` - minutes<BR>`h` - hours<BR>`d` - days<BR>`w` - weeks</li><li>`json` - valid JSON string containng start-/endtime and period e. g. `#!json {"Start":"17:00","End":"22:15","Period":"1d"}`</li></ul>
 NPVersion<a id="NPVersion"></a>|Get the firmware info as array (firmware version and creation date)
 
 The class can be used as a template for further commands.
@@ -586,25 +587,104 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
     ```berry
     # File: neopoolcmd.be
     #
-    # Add commands NPAux and NPVersion
+    # Add commands NPAux, NPTimer and NPVersion
 
     # Neopool definitions
-    MBF_POWER_MODULE_REGISTER = 0x000C
-    MBF_POWER_MODULE_DATA = 0x000D
-    var MBF_RELAY_STATE = 0x010E
 
-    var MBF_PAR_TIMER_BLOCK_AUX1_INT1 = 0x04AC
-    var MBF_PAR_TIMER_BLOCK_AUX2_INT1 = 0x04BB
-    var MBF_PAR_TIMER_BLOCK_AUX3_INT1 = 0x04CA
-    var MBF_PAR_TIMER_BLOCK_AUX4_INT1 = 0x04D9
-    var PAR_TIMER_BLOCK_AUX = [
-      MBF_PAR_TIMER_BLOCK_AUX1_INT1,
-      MBF_PAR_TIMER_BLOCK_AUX2_INT1,
-      MBF_PAR_TIMER_BLOCK_AUX3_INT1,
-      MBF_PAR_TIMER_BLOCK_AUX4_INT1
-    ]
-    var MBV_PAR_CTIMER_ALWAYS_ON      = 3
-    var MBV_PAR_CTIMER_ALWAYS_OFF     = 4
+      MBF_POWER_MODULE_REGISTER = 0x000C
+      MBF_POWER_MODULE_DATA = 0x000D
+      MBF_RELAY_STATE = 0x010E
+
+      # configuration of the system timers
+      MBF_PAR_TIMER_BLOCK_FILT_INT1 = 0x0434
+      MBF_PAR_TIMER_BLOCK_FILT_INT2 = 0x0443
+      MBF_PAR_TIMER_BLOCK_FILT_INT3 = 0x0452
+      MBF_PAR_TIMER_BLOCK_LIGHT_INT = 0x0470
+      MBF_PAR_TIMER_BLOCK_AUX1_INT1 = 0x04AC
+      MBF_PAR_TIMER_BLOCK_AUX1_INT2 = 0x0461
+      MBF_PAR_TIMER_BLOCK_AUX2_INT1 = 0x04BB
+      MBF_PAR_TIMER_BLOCK_AUX2_INT2 = 0x047F
+      MBF_PAR_TIMER_BLOCK_AUX3_INT1 = 0x04CA
+      MBF_PAR_TIMER_BLOCK_AUX3_INT2 = 0x048E
+      MBF_PAR_TIMER_BLOCK_AUX4_INT1 = 0x04D9
+      MBF_PAR_TIMER_BLOCK_AUX4_INT2 = 0x049D
+
+      # MBF_PAR_TIMER_BLOCK_BASE
+      MBV_TIMER_OFFMB_TIMER_ENABLE    = 0
+      MBV_TIMER_OFFMB_TIMER_ON        = 1
+      MBV_TIMER_OFFMB_TIMER_OFF       = 3
+      MBV_TIMER_OFFMB_TIMER_PERIOD    = 5
+      MBV_TIMER_OFFMB_TIMER_INTERVAL  = 7
+      MBV_TIMER_OFFMB_TIMER_COUNTDOWN = 9
+      MBV_TIMER_OFFMB_TIMER_FUNCTION  = 11
+      MBV_TIMER_OFFMB_TIMER_WORK_TIME = 13
+
+      MBV_TIMER_OFFMB_TIMER_ON_IDX        = 0
+      MBV_TIMER_OFFMB_TIMER_OFF_IDX       = 1
+      MBV_TIMER_OFFMB_TIMER_PERIOD_IDX    = 2
+      MBV_TIMER_OFFMB_TIMER_INTERVAL_IDX  = 3
+      MBV_TIMER_OFFMB_TIMER_COUNTDOWN_IDX = 4
+      MBV_TIMER_OFFMB_TIMER_FUNCTION_IDX  = 5
+      MBV_TIMER_OFFMB_TIMER_WORK_TIME_IDX = 6
+
+      # MBV_TIMER_OFFMB_TIMER_ENABLE working modes:
+      MBV_PAR_CTIMER_DISABLE          = 0
+      MBV_PAR_CTIMER_ENABLED          = 1
+      MBV_PAR_CTIMER_ENABLED_LINKED   = 2
+      MBV_PAR_CTIMER_ALWAYS_ON        = 3
+      MBV_PAR_CTIMER_ALWAYS_OFF       = 4
+
+      # MBV_TIMER_OFFMB_TIMER_FUNCTION codes:
+      MBV_PAR_CTIMER_FCT_FILTRATION   = 0x0001
+      MBV_PAR_CTIMER_FCT_LIGHTING     = 0x0002
+      MBV_PAR_CTIMER_FCT_HEATING      = 0x0004
+      MBV_PAR_CTIMER_FCT_AUXREL1      = 0x0100
+      MBV_PAR_CTIMER_FCT_AUXREL2      = 0x0200
+      MBV_PAR_CTIMER_FCT_AUXREL3      = 0x0400
+      MBV_PAR_CTIMER_FCT_AUXREL4      = 0x0800
+      MBV_PAR_CTIMER_FCT_AUXREL5      = 0x1000
+      MBV_PAR_CTIMER_FCT_AUXREL6      = 0x2000
+      MBV_PAR_CTIMER_FCT_AUXREL7      = 0x4000
+      # Function codes text
+      MBV_PAR_CTIMER_FCT = {
+        MBV_PAR_CTIMER_FCT_FILTRATION:"Filtration",
+        MBV_PAR_CTIMER_FCT_LIGHTING:"Light",
+        MBV_PAR_CTIMER_FCT_HEATING:"Heating",
+        MBV_PAR_CTIMER_FCT_AUXREL1:"Aux1",
+        MBV_PAR_CTIMER_FCT_AUXREL2:"Aux2",
+        MBV_PAR_CTIMER_FCT_AUXREL3:"Aux3",
+        MBV_PAR_CTIMER_FCT_AUXREL4:"Aux4",
+        MBV_PAR_CTIMER_FCT_AUXREL5:"Aux5",
+        MBV_PAR_CTIMER_FCT_AUXREL6:"Aux6",
+        MBV_PAR_CTIMER_FCT_AUXREL7:"Aux7"
+      }
+
+      # Timer base addr index
+      PAR_TIMER_BLOCK = [
+        MBF_PAR_TIMER_BLOCK_FILT_INT1,
+        MBF_PAR_TIMER_BLOCK_FILT_INT2,
+        MBF_PAR_TIMER_BLOCK_FILT_INT3,
+        MBF_PAR_TIMER_BLOCK_LIGHT_INT,
+        MBF_PAR_TIMER_BLOCK_AUX1_INT1,
+        MBF_PAR_TIMER_BLOCK_AUX1_INT2,
+        MBF_PAR_TIMER_BLOCK_AUX2_INT1,
+        MBF_PAR_TIMER_BLOCK_AUX2_INT2,
+        MBF_PAR_TIMER_BLOCK_AUX3_INT1,
+        MBF_PAR_TIMER_BLOCK_AUX3_INT2,
+        MBF_PAR_TIMER_BLOCK_AUX4_INT1,
+        MBF_PAR_TIMER_BLOCK_AUX4_INT2,
+      ]
+      PAR_TIMER_BLOCK_AUX = [
+        MBF_PAR_TIMER_BLOCK_AUX1_INT1,
+        MBF_PAR_TIMER_BLOCK_AUX2_INT1,
+        MBF_PAR_TIMER_BLOCK_AUX3_INT1,
+        MBF_PAR_TIMER_BLOCK_AUX4_INT1
+      ]
+
+
+
+
+
 
     import string
     import json
@@ -617,17 +697,32 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
 
       # string helper
       def ltrim(s)
-        var i = 0 while(s[i]==' ') i += 1 end
+        var i = 0 while(i < size(s) && s[i] == ' ') i += 1 end
         return string.split(s, i)[1]
       end
       def rtrim(s)
-        return string.split(s, " ")[0]
+        var i = size(s) while(i && s[i-1] == ' ') i -= 1 end
+        return string.split(s, i)[0]
       end
       def trim(s)
         return self.rtrim(self.ltrim(s));
       end
 
-      def Param(payload, p2)
+      def GetParm(payload)
+        if payload != nil
+          var p = ""
+          while p != payload
+            p = payload
+            payload = string.replace(p, "  ", " ")
+          end
+          p = string.split(string.replace(payload, " ", ","), ",")
+          while p.find('') != nil p.remove(p.find('')) end
+          return p
+        end
+        return []
+      end
+
+      def ParmSwitch(payload, p2)
         var parm, res
         try
           parm = string.toupper(self.trim(payload))
@@ -635,11 +730,19 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
           parm = ""
         end
         if parm != ""
-          if string.find(parm, 'OFF')>=0 || string.find(parm, self.TEXT_OFF)>=0 || string.find(parm, '0')>=0
+
+          if (size(parm) == size('OFF') && string.find(parm, 'OFF') == 0) ||
+            (size(parm) == size('0') && string.find(parm, '0') == 0) ||
+            (size(parm) == size(self.TEXT_OFF) && string.find(parm, self.TEXT_OFF) == 0)
             res = 0
-          elif string.find(parm, 'ON')>=0 || string.find(parm, self.TEXT_ON)>=0 || string.find(parm, '1')>=0
+          elif (size(parm) == size('ON') && string.find(parm, 'ON') == 0) ||
+              (size(parm) == size('1') && string.find(parm, '1') == 0) ||
+              (size(parm) == size(self.TEXT_ON) && string.find(parm, self.TEXT_ON) == 0)
             res = 1
-          elif string.find(parm, p2)>=0 || string.find(parm, '2')>=0
+          elif p2 != nil &&
+              ((size(parm) == size(p2) && string.find(parm, p2) == 0) ||
+                (size(parm) == size('2') && string.find(parm, '2') == 0)
+              )
             res = 2
           else
             res = -1
@@ -652,11 +755,22 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
         return res
       end
 
-      #- NPAux<x> OFF|0|ON|1 t (<x> = 1..4)
-          0|OFF:   Switch aux x off
-          1|ON:    Switch aux x on
-          2|TOGGLE: Toggle Aux x
-      -#
+      def Read(cmd, read_cmnd, addr, cnt)
+        var res = tasmota.cmd(string.format("%s 0x%04X,%d", read_cmnd, addr, cnt)).find(read_cmnd, "Unknown")
+        # result must be a json
+        if "Unknown" == res
+          tasmota.resp_cmnd(string.format('{"%s":"NeoPool module not available or not activated"}', cmd))
+          return nil
+        end
+        var _json = json.load(json.dump(res))
+        if nil == _json || "Error" == res
+          tasmota.resp_cmnd(string.format('{"%s":"NeoPool device does not respond"}', cmd))
+          return nil
+        end
+        return compile("return ".._json.find('Data'))()
+      end
+
+      # NPAux<x> OFF|0|ON|1|TOGGLE|2 (<x> = 1..4)
       def NPAux(cmd, idx, payload, payload_json, subcmd)
         var ctrl, parm
 
@@ -664,7 +778,7 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
           tasmota.resp_cmnd_error()
           return
         end
-        parm = self.Param(payload, self.TEXT_TOGGLE)
+        parm = self.ParmSwitch(payload, self.TEXT_TOGGLE)
         if parm != nil
           if 0 == parm
             ctrl = MBV_PAR_CTIMER_ALWAYS_OFF
@@ -672,9 +786,11 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
             ctrl = MBV_PAR_CTIMER_ALWAYS_ON
           elif 2 == parm
             try
-              ctrl = (compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_RELAY_STATE)).find('NPRead', json.load('{"Data": "0x0000"}')).find('Data', 0))() >> (idx+2)) & 1 ? MBV_PAR_CTIMER_ALWAYS_OFF : MBV_PAR_CTIMER_ALWAYS_ON
+              ctrl = (self.Read(cmd, "NPRead", MBF_RELAY_STATE) >> (idx+2)) & 1 ? MBV_PAR_CTIMER_ALWAYS_OFF : MBV_PAR_CTIMER_ALWAYS_ON
+              if nil == ctrl
+                return
+              end
             except ..
-              tasmota.resp_cmnd_error()
               return
             end
           else
@@ -685,9 +801,11 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
           tasmota.cmd("NPExec")
         else
           try
-            ctrl = (compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_RELAY_STATE)).find('NPRead', json.load('{"Data": "0x0000"}')).find('Data', 0))() >> (idx+2)) & 1
-          except ..
-            tasmota.resp_cmnd_error()
+            ctrl = (self.Read("NPRead", MBF_RELAY_STATE) >> (idx+2)) & 1
+            if nil == ctrl
+              return
+            end
+        except ..
             return
           end
         end
@@ -698,23 +816,151 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
         end
       end
 
+      # NPTimer<x> 0|OFF|<hh:mm hh:mm>( <period>)|<json> (<x> = 1..12)
+      def GetTimer(cmd, idx)
+        var timer_enable = self.Read(cmd, "NPRead", PAR_TIMER_BLOCK[idx - 1] + MBV_TIMER_OFFMB_TIMER_ENABLE);
+        if nil == timer_enable
+          return nil
+        end
+        var data = self.Read(cmd, "NPReadL", PAR_TIMER_BLOCK[idx - 1] + MBV_TIMER_OFFMB_TIMER_ON, 7)
+        if nil == data
+          return nil
+        end
+
+        var period_str
+        if (data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX] == 0)
+          period_str = "0"
+        elif ((data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX] % (86400 * 7)) == 0)
+          period_str = string.format("%dw", data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX] / (86400 * 7))
+        elif ((data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX] % 86400) == 0)
+          period_str = string.format("%dd", data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX] / 86400)
+        elif ((data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX] % 3600) == 0)
+          period_str = string.format("%dh", data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX] / 3600)
+        elif ((data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX] % 60) == 0)
+          period_str = string.format("%dm", data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX] / 60)
+        else
+          period_str = string.format("%ds", data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX])
+        end
+        var state = self.TEXT_OFF
+        if (timer_enable == MBV_PAR_CTIMER_ENABLED &&
+          (data[MBV_TIMER_OFFMB_TIMER_ON_IDX] != (data[MBV_TIMER_OFFMB_TIMER_ON_IDX] + data[MBV_TIMER_OFFMB_TIMER_INTERVAL_IDX])) )
+          state = self.TEXT_ON
+        end
+        return string.format('{"%s%d":{"State":"%s","Function":"%s","Start":"%s","End":"%s","Period":"%s"}}',
+          cmd, idx,
+          state,
+          MBV_PAR_CTIMER_FCT.find(data[MBV_TIMER_OFFMB_TIMER_FUNCTION_IDX], "undefined"),
+          tasmota.strftime("%H:%M", data[MBV_TIMER_OFFMB_TIMER_ON_IDX]),
+          tasmota.strftime("%H:%M", data[MBV_TIMER_OFFMB_TIMER_ON_IDX] + data[MBV_TIMER_OFFMB_TIMER_INTERVAL_IDX]),
+          period_str
+        )
+      end
+
+      def NPTimer(cmd, idx, payload, raw)
+        var parm
+
+        if idx < 1 || idx > 12
+          tasmota.resp_cmnd_error()
+          return
+        end
+
+        try
+          parm = string.toupper(self.trim(payload))
+        except ..
+          parm = nil
+        end
+
+        if parm != nil && size(parm)
+
+          # Set timer
+          if self.ParmSwitch(payload) == 0
+            parm = ''
+          end
+
+          if (nil == json.load(parm))
+            # convert none json parm to json parm
+            var params = self.GetParm(parm)
+            var keys = ["START", "END", "PERIOD"]
+            if size(params) > size(keys)
+              tasmota.resp_cmnd_error()
+              return
+            end
+            var _json = {}
+            while params.size() > 0
+              _json[keys[0]] = params[0]
+              keys.remove(0)
+              params.remove(0)
+            end
+            parm = json.dump(_json)
+          end
+
+          parm = json.load(parm)
+          if (nil != parm)
+            # set start and end
+            var timer_start, timer_end, strp
+            strp = tasmota.strptime(parm.find("START", "00:00"), "%H:%M")
+            timer_start = (strp.find("hour", 0) * 3600) + (strp.find("min", 0) * 60)
+            strp = tasmota.strptime(parm.find("END", "00:00"), "%H:%M")
+            timer_end = strp.find("hour", 0) * 3600 + strp.find("min", 0) * 60
+            if (timer_start > timer_end)
+              var tmp = timer_end
+              timer_end = timer_start
+              timer_start = tmp
+            end
+            tasmota.cmd(string.format("NPWrite 0x%04X,%d", PAR_TIMER_BLOCK[idx - 1] + MBV_TIMER_OFFMB_TIMER_ENABLE, MBV_PAR_CTIMER_ENABLED))
+            tasmota.cmd(string.format("NPWriteL 0x%04X,%d", PAR_TIMER_BLOCK[idx - 1] + MBV_TIMER_OFFMB_TIMER_ON, timer_start))
+            tasmota.cmd(string.format("NPWriteL 0x%04X,%d", PAR_TIMER_BLOCK[idx - 1] + MBV_TIMER_OFFMB_TIMER_INTERVAL, timer_end - timer_start))
+
+            var period_str = string.toupper(self.trim(parm.find("Period", "0")))
+            var period = int(period_str)
+            if period_str[size(period_str) - 1] == 'W'
+              period *= 7 * 24 * 60 * 60
+            elif period_str[size(period_str) - 1] == 'D'
+              period *= 24 * 60 * 60
+            elif period_str[size(period_str) - 1] == 'H'
+              period *= 60 * 60
+            elif period_str[size(period_str) - 1] == 'M'
+              period *= 60
+            end
+            if (period != 0)
+              tasmota.cmd(string.format("NPWriteL 0x%04X,%d", PAR_TIMER_BLOCK[idx - 1] + MBV_TIMER_OFFMB_TIMER_PERIOD, period))
+            end
+            tasmota.cmd("NPExec")
+
+            var res = self.GetTimer(cmd, idx)
+            if nil != res
+              tasmota.resp_cmnd(res)
+            end
+          else
+            tasmota.resp_cmnd_error()
+          end
+
+        else
+          # Get timer
+          var res = self.GetTimer(cmd, idx)
+          if nil != res
+            tasmota.resp_cmnd(res)
+          end
+
+        end
+
+      end
+
       # NPVersion
       def NPVersion(cmd)
         var verstr = ""
         for i: 0 .. 12
           tasmota.cmd(string.format("NPWrite 0x%04X,%d", MBF_POWER_MODULE_REGISTER, i*2))
-          var data = compile("return "..tasmota.cmd(string.format("NPRead 0x%04X", MBF_POWER_MODULE_DATA)).find('NPRead', json.load('{"Data": "0x0000"}')).find('Data', 0))()
+          var data = self.Read(cmd, "NPRead", MBF_POWER_MODULE_DATA)
+          if nil == data
+            return
+          end
           verstr += string.char(data>>8 & 0xFF)
           verstr += string.char(data    & 0xFF)
         end
-        var arr = ""
-        for i: string.split(verstr,'\n')
-          if arr != ""
-            arr += ","
-          end
-          arr += '"'+i+'"'
-        end
-        tasmota.resp_cmnd(string.format('{"%s":[%s]}', cmd, arr))
+        var arr = []
+        for i: string.split(verstr,'\n') arr.push(i) end
+        tasmota.resp_cmnd(string.format('{"%s":%s}', cmd, json.dump(arr)))
       end
 
       def init()
@@ -724,12 +970,14 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
         self.TEXT_TOGGLE = tasmota.cmd("StateText3")['StateText3']
         # add commands
         tasmota.add_cmd('NPAux', / cmd, idx, payload -> self.NPAux(cmd, idx, payload))
+        tasmota.add_cmd('NPTimer', / cmd, idx, payload, raw -> self.NPTimer(cmd, idx, payload, raw))
         tasmota.add_cmd('NPVersion', / cmd -> self.NPVersion(cmd))
       end
 
       def deinit()
         # remove commands
         tasmota.remove_cmd('NPAux')
+        tasmota.remove_cmd('NPTimer')
         tasmota.remove_cmd('NPVersion')
       end
     end
