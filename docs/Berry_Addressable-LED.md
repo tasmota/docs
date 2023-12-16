@@ -122,6 +122,90 @@ Methods:
 - `frame.blend_pixels(background, foreground)`: blends a background frame (considered opaque) with a front layer with alpha, and stores in the current object. It is common that the target and the background are the same objects, hence `frame.blend_pixels(frame, fore)`
 - `frame.paste_pixels(strip_raw_bytes, bri:0..100, gamma:bool)`: pastes the `Led_buffer` object into a Leds strip. This is the final step before displaying the frame to the actual leds, and apply `bri` and `gamma` correction.
 
+### pre-built animators
+
+Currently the following animators are provided:
+- `animate.oscillator`: generate a variable integer that can be used by painters as a cyclic value (brightness, size, speed...)
+- `animate.palette`: cycle through a color palette with smooth transitions
+
+#### `animate.oscillator`
+
+Methods|Description
+:---|:---
+set_duration_ms|`set_duration_ms(int) -> nil` sets the duration of the animation (in ms)
+set_cb|`set_cb(object, method) -> nil` sets the callback object and method to update after a new value is computed
+set_a<br>set_b|`set_a(int) -> nil` or `set_b(int)` sets the start and end value
+set_form|`set_form(int) -> nil` sets the waveform among the following values<br>`animate.SAWTOOTH`: ramp from `a` to `b` and start over<br>`animate.TRIANGLE`: move back and forth from `a` to `b`<br>`animate.SQUARE`: alternate values `a` and `b`<br>`animate.COSINE`: move from `a` to `b` in a cosine wave<br>`animate.SINE`: move from half-way between `a` and `b` and move in SINE wave
+set_phase|`set_phase(phase:0..100) -> nil` set the phase between 0% and 100%, defaults to `0`%
+set_duty_cycle|`set_duty_cycle(int:0..100) -> int` sets the duty cycle between `a` and `b` values, defaults to `50`%
+
+#### `animate.palette`
+
+Methods|Description
+:---|:---
+init|`init(palette: bytes() or comptr [, duration_ms:int])` initialize the palette animator with a palette object, see below
+set_duration_ms|`set_duration_ms(int) -> nil` sets the duration of the animation (in ms)
+set_cb|`set_cb(object, method) -> nil` sets the callback object and method to update after a new value is computed
+set_bri|`set_bri(bri:0..100) -> nil` sets the brightness for the color, defaults to `100`%
+
+**palettes solidified in Flash**
+
+Palette|Description
+:---|:---
+`animate.PALETTE_STANDARD_TAG`|Standard palette cycling through 7 colors<br>
+`animate.PALETTE_STANDARD_VAL`|Same palette described as values<br>
+`animate.PALETTE_RAINBOW_WHITE`|Cycle through 8 colors (including white) and keep colors steady<br>
+`animate.PALETTE_SATURATED_TAG`|Cycle through 7 saturated colors<br>
+
+Palettes can be specified as a `bytes()` object of via `comptr` if they are solidified in Flash.
+
+Palettes can follow to different formats:
+
+**1. Palette in time units** 
+Bytes: `<transition_time>|<RR><GG><BB>` (4 bytes per entry)
+
+Each entry specifies the time in units to go from the current value to the next value. The last entry must have a `<transition_time>` of `0x00`. The unit is abstract, and only ratio between value are meaningful - the actual duration is derived from `duration_ms` where all indivudal `<transition_time>` are stretched to cover the desired duration.
+
+This format makes it easier to adjust the transition time between colors
+
+Example:
+
+```
+var PALETTE_SATURATED_TAG = bytes(
+  "40"  "FF0000"    # red
+  "40"  "FFA500"    # orange
+  "40"  "FFFF00"    # yellow
+  "40"  "00FF00"    # green
+  "40"  "0000FF"    # blue
+  "40"  "FF00FF"    # indigo
+  "40"  "EE44A5"    # violet
+  "00"  "FF0000"    # red
+)
+```
+
+
+**2. Palette in values**
+Bytes: `<value>|<RR><GG><BB>` (4 bytes per entry)
+
+Each entry indicates what is the target color for a specific value. Values go from `0x00` to `0xFF` (0..255). The first entry must start with `0x00` and the last must use value `0xFF`.
+
+This format is useful to use palettes that represent a color range.
+
+Example:
+
+```
+var PALETTE_STANDARD_VAL = bytes(
+  "00"  "FF0000"    # red
+  "24"  "FFA500"    # orange
+  "49"  "FFFF00"    # yellow
+  "6E"  "008800"    # green
+  "92"  "0000FF"    # blue
+  "B7"  "4B0082"    # indigo
+  "DB"  "EE82EE"    # violet
+  "FF"  "FF0000"    # red
+)
+```
+
 ## Advanced features
 
 ### Hardware `RMT` channels
