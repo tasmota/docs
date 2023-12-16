@@ -86,12 +86,14 @@ Finally the frame buffer is copied to the physical WS2812 led strip, after apply
 ### `animate.core` class
 
 This is the main helper class to host all the animation components. It is composed of:
+
 - `strip` object representing the led strip (1-dimension, only RGB supported for now)
 - `bri` parameter (0..100) to control the overall brightness
 - `frame` the background frame buffer, instance of `animate.frame`
 - `layer` the current frame buffer being painted by a `painter`, instance of `animate.frame`. It is merged to `frame` once painted, taking into account transparency (alpha channel)
 
 The instance also does the following:
+
 - register a `fast_loop` for quick animation, and iterate every 20ms (50Hz)
 - call each `animator` object to compute new values of all parameters
 - call each `painter` object to paint layers on top of each others
@@ -99,6 +101,7 @@ The instance also does the following:
 - copy to `strip` WS2812 leds
 
 Methods:
+
 - `init(strip [, bri:int])` constructor, needs a strip, brightness defaults to 50%
 - `set_bri()` and `get_bri()` to set/get brightness
 - `add_animator()` adds an animator object to be called at each tick
@@ -115,6 +118,7 @@ This class is a helper class to manage RGB pixels frame, mix layers and compute 
 `Leds_frame` is a super-class of `bytes` and encapsulate a raw bytes buffer. Each pixel is in ARGB 32 bits format with alpha-channel.
 
 Methods:
+
 - constructor `Leds_frame(number_of_pixels:int)`: creates a frame buffer with the specified number of pixels (the actual bytes buffer is x4 this size). The buffer is filled with black opaque by default
 - `frame[i]`: read/write the 32-bit value of the ARGB pixel at index `i`
 - `frame.set_pixel(i, r, g, b, alpha)`: set the pixel at index `i` for value `r`/`g`/`b` (0..255) and optional `alpha` channel (opaque 0x00 if not specified)
@@ -125,6 +129,7 @@ Methods:
 ### pre-built animators
 
 Currently the following animators are provided:
+
 - `animate.oscillator`: generate a variable integer that can be used by painters as a cyclic value (brightness, size, speed...)
 - `animate.palette`: cycle through a color palette with smooth transitions
 
@@ -229,15 +234,3 @@ ESP32S2|4
 ESP32C3|2
 
 Currently `RMT` channel 0 is used by default if no GPIO `WS2812-1` is configured, `RMT` channel 1 otherwise.
-<!-- 
-## Example
-
-Pulsating round on M5Stack Atom Matrix if GPIO 27 is configured as `WS1812 - 2`
-
-```berry
-var strip = Leds_matrix(5,5, gpio.pin(gpio.WS2812, 1))
-var r = Round(strip, 2, 30)
-r.start()
-```
-
-**VIDEO** -->
