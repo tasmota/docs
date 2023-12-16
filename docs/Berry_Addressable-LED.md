@@ -161,7 +161,8 @@ Palettes can be specified as a `bytes()` object of via `comptr` if they are soli
 
 Palettes can follow to different formats:
 
-**1. Palette in time units** 
+**1. Palette in time units**
+
 Bytes: `<transition_time>|<RR><GG><BB>` (4 bytes per entry)
 
 Each entry specifies the time in units to go from the current value to the next value. The last entry must have a `<transition_time>` of `0x00`. The unit is abstract, and only ratio between value are meaningful - the actual duration is derived from `duration_ms` where all indivudal `<transition_time>` are stretched to cover the desired duration.
@@ -185,6 +186,7 @@ var PALETTE_SATURATED_TAG = bytes(
 
 
 **2. Palette in values**
+
 Bytes: `<value>|<RR><GG><BB>` (4 bytes per entry)
 
 Each entry indicates what is the target color for a specific value. Values go from `0x00` to `0xFF` (0..255). The first entry must start with `0x00` and the last must use value `0xFF`.
