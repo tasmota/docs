@@ -152,7 +152,7 @@ set_bri|`set_bri(bri:0..100) -> nil` sets the brightness for the color, defaults
 
 Palette|Description
 :---|:---
-`animate.PALETTE_STANDARD_TAG`|Standard palette cycling through 7 colors<br><table><tr><td width='100%' style='background:linear-gradient(to right,#FF0000 0.0%,#FFA500 14.3%,#FFFF00 28.6%,#00EE00 42.9%,#0000FF 57.1%,#4B00FF 71.4%,#FF82FF 85.7%,#FF0000 100.0%);'></td></tr></table>
+`animate.PALETTE_STANDARD_TAG`|Standard palette cycling through 7 colors<br><div style='width:140px;height:20px;background:linear-gradient(to right,#FF0000 0.0%,#FFA500 14.3%,#FFFF00 28.6%,#00EE00 42.9%,#0000FF 57.1%,#4B00FF 71.4%,#FF82FF 85.7%,#FF0000 100.0%);'>Test</div>
 `animate.PALETTE_STANDARD_VAL`|Same palette described as values<br>
 `animate.PALETTE_RAINBOW_WHITE`|Cycle through 8 colors (including white) and keep colors steady<br>
 `animate.PALETTE_SATURATED_TAG`|Cycle through 7 saturated colors<br>
