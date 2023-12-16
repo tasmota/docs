@@ -153,9 +153,9 @@ set_bri|`set_bri(bri:0..100) -> nil` sets the brightness for the color, defaults
 Palette|Description
 :---|:---
 `animate.PALETTE_RAINBOW_WHITE`|Cycle through 8 colors (including white) and keep colors steady<br><div style='width:100%;height:30px;background:linear-gradient(to right,#FF0000 0.0%,#FF0000 8.9%,#FFA500 14.3%,#FFA500 23.2%,#FFFF00 28.6%,#FFFF00 37.5%,#00FF00 42.9%,#00FF00 51.8%,#0000FF 57.1%,#0000FF 66.1%,#FF00FF 71.4%,#FF00FF 80.4%,#FFFFFF 85.7%,#FFFFFF 94.6%,#FF0000 100.0%);'></div>
-`animate.PALETTE_STANDARD_TAG`|Standard palette cycling through 7 colors<br><div style='width:100%;height:30px;background:linear-gradient(to right,#FF0000 0.0%,#FFA500 16.7%,#FFFF00 33.3%,#00FF00 50.0%,#0000FF 66.7%,#FF00FF 83.3%,#FF0000 100.0%);'></div>
-`animate.PALETTE_STANDARD_VAL`|Same palette described as values<br><div style='width:100%;height:30px;background:linear-gradient(to right,#FF0000 0.0%,#FFA500 14.1%,#FFFF00 28.6%,#00FF00 43.1%,#0000FF 57.3%,#FF00FF 71.8%,#FF0000 100.0%);'></div>
-`animate.PALETTE_SATURATED_TAG`|Cycle through 7 saturated colors<br><div style='width:100%;height:30px;background:linear-gradient(to right,#FF0000 0.0%,#FFA500 16.7%,#FFFF00 33.3%,#00FF00 50.0%,#0000FF 66.7%,#FF00FF 83.3%,#FF0000 100.0%);'></div>
+`animate.PALETTE_STANDARD_TAG`|Standard palette cycling through 7 colors<br><div style='width:100%;height:30px;background:linear-gradient(to right,#FF0000 0.0%,#FFA500 14.3%,#FFFF00 28.6%,#00FF00 42.9%,#0000FF 57.1%,#FF00FF 71.4%,#EE44A5 85.7%,#FF0000 100.0%);'></div>
+`animate.PALETTE_STANDARD_VAL`|Cycle through 6 colors as values<br><div style='width:100%;height:30px;background:linear-gradient(to right,#FF0000 0.0%,#FFA500 16.5%,#FFFF00 33.3%,#00FF00 49.8%,#0000FF 66.7%,#FF00FF 83.1%,#FF0000 100.0%);'></div>
+`animate.PALETTE_SATURATED_TAG`|Cycle through 6 saturated colors<br><div style='width:100%;height:30px;background:linear-gradient(to right,#FF0000 0.0%,#FFA500 16.7%,#FFFF00 33.3%,#00FF00 50.0%,#0000FF 66.7%,#FF00FF 83.3%,#FF0000 100.0%);'></div>
 
 Palettes can be specified as a `bytes()` object of via `comptr` if they are solidified in Flash.
 
@@ -172,7 +172,7 @@ This format makes it easier to adjust the transition time between colors
 Example:
 
 ```berry
-var PALETTE_SATURATED_TAG = bytes(
+var PALETTE_TAG = bytes(
   "40"  "FF0000"    # red
   "40"  "FFA500"    # orange
   "40"  "FFFF00"    # yellow
@@ -196,7 +196,7 @@ This format is useful to use palettes that represent a color range.
 Example:
 
 ```berry
-var PALETTE_STANDARD_VAL = bytes(
+var PALETTE_VAL = bytes(
   "00"  "FF0000"    # red
   "24"  "FFA500"    # orange
   "49"  "FFFF00"    # yellow
