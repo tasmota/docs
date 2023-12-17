@@ -161,6 +161,11 @@ Palette|Description
 `animate.PALETTE_STANDARD_TAG`|Standard palette cycling through 7 colors<br><div style='width:100%;height:30px;background:linear-gradient(to right,#FF0000 0.0%,#FFA500 14.3%,#FFFF00 28.6%,#00FF00 42.9%,#0000FF 57.1%,#FF00FF 71.4%,#EE44A5 85.7%,#FF0000 100.0%);'></div>
 `animate.PALETTE_STANDARD_VAL`|Cycle through 6 colors as values<br><div style='width:100%;height:30px;background:linear-gradient(to right,#FF0000 0.0%,#FFA500 16.5%,#FFFF00 33.3%,#00FF00 49.8%,#0000FF 66.7%,#FF00FF 83.1%,#FF0000 100.0%);'></div>
 `animate.PALETTE_SATURATED_TAG`|Cycle through 6 saturated colors<br><div style='width:100%;height:30px;background:linear-gradient(to right,#FF0000 0.0%,#FFA500 16.7%,#FFFF00 33.3%,#00FF00 50.0%,#0000FF 66.7%,#FF00FF 83.3%,#FF0000 100.0%);'></div>
+`animate.PALETTE_ib_jul01_gp`|<div style='width:100%;height:30px;background:linear-gradient(to right,#E60611 0.0%,#25605A 36.9%,#90BD6A 52.2%,#BB030D 100.0%);'></div>
+`animate.PALETTE_ib_44`|<div style='width:100%;height:30px;background:linear-gradient(to right,#D61810 0.0%,#E3734E 25.1%,#EFCE8C 100.0%);'></div>
+`animate.PALETTE_Fire_1`|<div style='width:100%;height:30px;background:linear-gradient(to right,#FF0000 0.0%,#FF8000 50.2%,#FFFF00 100.0%);'></div>
+`animate.PALETTE_bhw1_sunconure`|<div style='width:100%;height:30px;background:linear-gradient(to right,#61F04E 0.0%,#F6891E 63.1%,#F62D1E 100.0%);'></div>
+`animate.PALETTE_bhw4_089`|<div style='width:100%;height:30px;background:linear-gradient(to right,#AE341C 0.0%,#E09A85 11.0%,#EBD0CE 20.8%,#F9D076 31.0%,#E45F32 42.7%,#E3A574 51.8%,#E28343 63.9%,#FCD576 72.2%,#FCA97D 78.8%,#FFC265 87.8%,#D75023 100.0%);'></div>
 
 Palettes can be specified as a `bytes()` object of via `comptr` if they are solidified in Flash.
 
