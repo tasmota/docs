@@ -13,7 +13,7 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_DOMOTICZ              | - | x / x | x | x | x | - |
 | USE_HOME_ASSISTANT        | - | - / - | - | - | - | - |
 | USE_TASMOTA_DISCOVERY     | x | x / x | x | x | x | x |
-| USE_MQTT_TLS              | - | - / x | - | - | - | - | USE_MQTT_TLS is enabled by default in every ESP32 variants
+| USE_MQTT_TLS*             | - | - / x | - | - | - | - |
 | USE_MQTT_AWS_IOT          | - | - / - | - | - | - | - |
 | USE_4K_RSA                | - | - / - | - | - | - | - |
 | USE_TELEGRAM              | - | - / - | - | - | - | - |
@@ -94,7 +94,7 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_COUNTER               | - | x / x | x | x | - | x |
 | USE_DS18x20               | - | x / x | x | x | - | x |
 | USE_DHT                   | - | x / x | x | x | - | x |
-| USE_MAX31855              | - | - / x | - | x | - | - | [See MAX31855 docs](MAX31855)
+| USE_MAX31855              | - | - / x | - | x | - | - |
 | USE_MAX31865              | - | - / - | - | - | - | - |
 | USE_THERMOSTAT            | - | - / - | - | - | - | - |
 | USE_LMT01                 | - | - / x | - | x | - | - |
