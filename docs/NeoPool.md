@@ -189,7 +189,9 @@ Sensor data is sent via the Tasmota topic `tele/%topic%/SENSOR` in JSON format e
       "State": "Pol1",
       "Cover": 0,
       "Boost": 0,
-      "Low": 0
+      "Low": 0,
+      "FL1": 0,
+      "Redox": 1
     },
     "Filtration": {
       "State": 1,
@@ -249,6 +251,8 @@ Hydrolysis.State|(String) Cell state:<BR>`OFF` = Cell inactive<BR>`FLOW` = Cell 
 Hydrolysis.Cover|(Bool) Cover signal input:<BR>`0` = Cover input inactive<BR>`1` = Cover input active
 Hydrolysis.Boost|(Int) Boost mode state:<BR>`0` = Boost mode inactive<BR>`1` = Boost mode active<BR>`2` = Boost mode active with redox control
 Hydrolysis.Low|(Bool) Hydrolysis low alarm:<BR>`0` = No alarm<BR>`1` = Hydrolysis cannot reach the set point
+Hydrolysis.FL1|(Bool) Hydrolysis flow alarm:<BR>`0` = No alarm<BR>`1` = Hydrolysis flow alarm, no flow detected
+Hydrolysis.Redox|(Bool) Activation of hydrolysis by the redox module:<BR>`0` = Not activated by redox module<BR>`1` = Activated by redox module
 Filtration.State|(Int) Filtration pump state:<BR>`0` = Pump off<BR>`1` = Pump on
 Filtration.Speed|(Int) Filtration pump speed:<BR>`1` = Low<BR>`2` = Middle<BR>`3` = High
 Filtration.Mode|(Int) Filtration mode:<BR>`0` = Manual<BR>`1` = Auto<BR>`2` = Heating<BR>`3` = Smart<BR>`4` = Intelligent<BR>`13` = Backwash operation
