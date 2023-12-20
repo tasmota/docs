@@ -16,26 +16,24 @@ Topic: `tasmota/discovery/49A3BC`
 Payload:
 ```
 {
-  "ip":"192.168.15.10",                             // IP address
+  "btn":[0,0,0,0],                                  // Buttons, 0: disabled: 1: enabled
   "dn":"Living Room",                               // Device name
+  "ip":"192.168.15.10",                             // IP address
   "fn":["Ceiling Lamp", "Floor Lamp"],              // List of friendly names
-  "hn":"tasmota_49A3BC-0956",                       // Hostname
-  "id":"49A3BC",                                    // ChipID
-  "md":"Sonoff Dual",                               // Module
-  "of":"Offline",                                   // D_OFFLINE
-  "on":"Online",                                    // D_ONLINE
-  "st":["OFF","ON","TOGGLE","HOLD"],                // StateText[0..3]
-  "bd":"8.4.0.2",                                   // Tasmota SW build version
-  "t":"tasmota_49A3BC",                             // Topic
   "ft":"%prefix%/%topic%/",                         // Fulltopic
-  "tp":["cmnd","stat","tele"],                      // [SUB_PREFIX, PUB_PREFIX, PUB_PREFIX2]
-  "li":[0,0,0,0,0,0,0,0],                           // Lights, 0: disabled, 1: Enabled
+  "hn":"tasmota_49A3BC-0956",                       // Hostname
+  "mac":"49A3BC873A78",                             // MAC address
+  "md":"Sonoff Dual",                               // Module
+  "ofln":"Offline",                                 // D_OFFLINE
+  "onln":"Online",                                  // D_ONLINE
   "rl":[0,0,0,0,0,0,0,0],                           // Relays, 0: disabled, 1: relay, 2.. future extension (fan, shutter?)
-  "sw":[0,0,0,0,0,0,0,0],                           // Switches, 0: disabled: 1: enabled
-  "bt":[0,0,0,0],                                   // Buttons, 0: disabled: 1: enabled
   "so":{"13":0,"17":1,"30":0,"37":1,"68":0,"73":1}, // SetOption needed by HA to map Tasmota devices to HA entities and triggers
+  "state":["OFF","ON","TOGGLE","HOLD"],             // StateText[0..3]
+  "sw":"13.3.0"                                     // Tasmota SW build version
+  "swc":[0,0,0,0,0,0,0,0],                          // Switches, 0: disabled: 1: enabled
+  "t":"tasmota_49A3BC",                             // Topic
+  "tp":["cmnd","stat","tele"],                      // [SUB_PREFIX, PUB_PREFIX, PUB_PREFIX2]
   "lt_st":0,                                        // Light subtype
-  "se":[0],                                         // Sensors, 0: disabled, 0..xx index in kHAssJsonSensorTypes (??)
   "ver":1                                           // Discovery protocol version, must be 1
 }
 ```
