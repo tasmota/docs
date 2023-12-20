@@ -11,7 +11,7 @@ Tasmota communicates with Home Assistant using MQTT. Before going any further, m
 Home Assistant can add Tasmota devices using:
 
 1. Official Tasmota integration - **preferred** and automatic instant discovery of entities
-2. Deprecated legacy discovery format `SetOption19`
+2. Legacy Home Assistant discovery format **deprecated**
 3. Manual configuration by editing configuration.yaml - recommended for marginal use cases, e.g., TuyaMCU fan devices
 
 ## Tasmota Integration
