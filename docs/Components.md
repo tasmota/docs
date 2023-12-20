@@ -179,7 +179,7 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 2400 | RF Sensor      | Rf receiver with sensor decoding                                                                        |
 | 2432 | AZ Tx          | AZ-Instrument 7798 Serial interface                                                                     |
 | 2464 | AZ Rx          | AZ-Instrument 7798 Serial interface                                                                     |
-| 2496 | MX31855 CS     | MAX31855 Serial interface                                                                               |
+| 2496 | MX31855 CS     | [MAX31855](MAX31855) Serial interface                                                                               |
 | 2528 | MX31855 CLK    | MAX31855 Serial interface                                                                               |
 | 2560 | MX31855 DO     | MAX31855 Serial interface                                                                               |
 | 2592 | HLWBL SEL      | HLW8012/HJL-01/BL0937 energy monitoring                                                                 |

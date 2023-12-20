@@ -137,7 +137,7 @@ See below how the numbers are being converted. The first number is 8-bit GPIO, t
 | 116      | 2400     | RF Sensor       | Theo Arendst RF433 Sensor                                                                  |
 | 117      | 2432     | AZ Rx           | AZ 7798 CO~2~ datalogger                                                                     |
 | 118      | 2464     | AZ Tx           | AZ 7798 CO~2~ datalogger                                                                     |
-| 119      | 2496     | MX31855 CS      | MAX31855 Thermocouple Sensor Chip Select pin                                               |
+| 119      | 2496     | MX31855 CS      | [MAX31855](MAX31855) Thermocouple Sensor Chip Select pin                                               |
 | 120      | 2528     | MX31855 CLK     | MAX31855 Thermocouple Sensor Serial Clock pin                                              |
 | 121      | 2560     | MX31855 DO      | MAX31855 Thermocouple Sensor Digital Output pin                                            |
 | 122      | 96       | Button1i        | Button inverted                                                                            |
