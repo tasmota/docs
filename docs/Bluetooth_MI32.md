@@ -501,7 +501,10 @@ BLE.serv_cb(cbp,cbuf)
 - 228 - on disconnect, returns no buffer data  
 - 229 - on status, returns error code as byte buffer  
  
+!!! tip
 
+    By default the synchronization between the BLE framework and Berry happens every 50 milliseconds, which should be enough for the majority of use cases. For very fast BLE devices it can be necessary to use Berrys `fast_loop` to trigger this at maximum speed (of about every 5 milliseconds). This is typically done in an init function of a class like that:
+    `tasmota.add_fast_loop(/-> BLE.loop())`
   
 ### Berry examples
 
@@ -751,6 +754,7 @@ Here is an implementation of the "old" MI32 commands:
             BLE.set_MAC(bytes(MAC),addr_type)
             print("BLE: will try to connect to BPR2S with MAC:",MAC)
             self.connect()
+            tasmota.add_fast_loop(/-> BLE.loop())
         end
 
         def connect()
@@ -824,9 +828,11 @@ Here is an implementation of the "old" MI32 commands:
                 end
             elif h == 34
                 t = "mouse"
-                var x = self.buf.geti(1,2) >> 4
-                var y  = (self.buf[2] & 0xf) << 8
-                y  |= self.buf[3]
+                var x = self.buf.getbits(12,12)
+                if x > 2048
+                    x -= 4096
+                end
+                var y = self.buf.getbits(24,12)
                 if y > 2048
                     y -= 4096
                 end
