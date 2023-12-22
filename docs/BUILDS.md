@@ -1,10 +1,10 @@
 ## Available Features and Sensors
 
-l = lite, t = tasmota (ESP8266 / ESP32), k = knx, s = sensors, i = ir, d = display
+Columns (build variants): `l` = lite, `t` = tasmota (ESP8266 / ESP32), `k` = knx, `s` = sensors, `i` = IR, `d` = display
 
 Note: `minimal` variant is not listed as it shouldn't be used outside of the [upgrading](https://tasmota.github.io/docs/Upgrading/) process.
 
-| Feature or Sensor         | l | t     | k | s | i | d | Remarks
+| **Feature or Sensor**         | **l** | **t**     | **k** | **s** | **i** | **d** | **Remarks** |
 |---------------------------|---|-------|---|---|---|---|--------
 | MY_LANGUAGE en_GB         | x | x / x | x | x | x | x |
 | USE_IMPROV                | x | x / x | x | x | x | x |
@@ -36,7 +36,7 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_PROMETHEUS            | - | - / - | - | - | - | - |
 | USE_PING                  | - | - / - | - | - | - | - |
 |                           |   |       |   |   |   |   |
-| Feature or Sensor         | l | t     | k | s | i | d | Remarks
+| **Feature or Sensor**         | **l** | **t**     | **k** | **s** | **i** | **d** | **Remarks** |
 | ROTARY_V1                 | - | x / x | - | x | - | - |
 | USE_SONOFF_RF             | - | x / - | x | x | - | - |
 | USE_RF_FLASH              | - | x / - | x | x | - | - |
@@ -57,7 +57,7 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_SHELLY_DIMMER         | - | x / - | - | - | - | - |
 | USE_AC_ZERO_CROSS_DIMMER  | - | x / x | x | x | x | x |
 |                           |   |       |   |   |   |   |
-| Feature or Sensor         | l | t     | k | s | i | d | Remarks
+| **Feature or Sensor**         | **l** | **t**     | **k** | **s** | **i** | **d** | **Remarks** |
 | USE_LIGHT                 | x | x / x | x | x | x | x |
 | USE_WS2812                | - | x / x | x | x | - | x |
 | USE_WS2812_DMA            | - | - / - | - | - | - | - |
@@ -99,7 +99,7 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_THERMOSTAT            | - | - / - | - | - | - | - |
 | USE_LMT01                 | - | - / x | - | x | - | - |
 |                           |   |       |   |   |   |   |
-| Feature or Sensor         | l | t     | k | s | i | d | Remarks
+| **Feature or Sensor**         | **l** | **t**     | **k** | **s** | **i** | **d** | **Remarks** |
 | USE_I2C                   | - | x / x | x | x | - | x |
 | USE_SHT                   | - | - / x | - | x | - | - |
 | USE_HTU                   | - | - / x | - | x | - | - |
@@ -153,7 +153,7 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_TC74                  | - | - / - | - | - | - | - |
 | USE_PCA9557               | - | - / - | - | - | - | - |
 |                           |   |       |   |   |   |   |
-| Feature or Sensor         | l | t     | k | s | i | d | Remarks
+| **Feature or Sensor**         | **l** | **t**     | **k** | **s** | **i** | **d** | **Remarks** |
 | USE_HIH6                  | - | - / x | - | x | - | - |
 | USE_DHT12                 | - | - / x | - | x | - | - |
 | USE_DS1624                | - | - / x | - | x | - | - |
@@ -193,7 +193,7 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_HMC5883L              | - | - / - | - | - | - | - |
 | USE_QMC5883L              | - | - / - | - | - | - | - |
 |                           |   |       |   |   |   |   |
-| Feature or Sensor         | l | t     | k | s | i | d | Remarks
+| **Feature or Sensor**         | **l** | **t**     | **k** | **s** | **i** | **d** | **Remarks** |
 | USE_SPI                   | - | - / - | - | - | - | x |
 | USE_RC522                 | - | - / - | - | - | - | - |
 | USE_CANSNIFFER            | - | - / - | - | - | - | - |
@@ -245,7 +245,7 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_NEOPOOL               | - | - / - | - | - | - | - |
 | USE_FLOWRATEMETER         | - | - / - | - | - | - | - |
 |                           |   |       |   |   |   |   |
-| Feature or Sensor         | l | t     | k | s | i | d | Remarks
+| **Feature or Sensor**         | **l** | **t**     | **k** | **s** | **i** | **d** | **Remarks** |
 | USE_DISPLAY               | - | - / - | - | - | - | x |
 | USE_DISPLAY_LCD           | - | - / - | - | - | - | x |
 | USE_DISPLAY_SSD1306       | - | - / - | - | - | - | x |
