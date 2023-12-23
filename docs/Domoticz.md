@@ -35,11 +35,11 @@ Make a new virtual switch and remember its Idx number.
 Tasmota provides different ways to configure Domoticz parameters. Choose the method you prefer:
 
 - Use the webinterface and select **Configuration - Configure Domoticz**:
-    1. Configure `Idx 1` to the value read in step 2.1
+    1. Configure `Idx 1` to the value read in step 2.i
 - Use MQTT and execute commands (if necessary, replace `tasmota` with unique topic you configured in Initital Configuration, see point 5 [there](Getting-Started.md#initial-configuration)):
-    1. `cmnd/tasmota/DzIdx1` with payload value read in step 2.1
+    1. `cmnd/tasmota/DzIdx1` with payload value read in step 2.i
 - Use the serial interface and execute commands:
-    1. `DzIdx1` with the value read in step 2.1
+    1. `DzIdx1` with the value read in step 2.i
 
 #### Usage    
 That's it! You can now control your device from the Domoticz user interface.
