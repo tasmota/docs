@@ -113,6 +113,12 @@ With this option you can bridge any existing Tasmota or OpenBK device to Matter.
 
 Enter the IP or hostname of the remote device and click ***Auto-configure remote Tasmota***
 
+Since v13.3.0.2, web passwords are supported for remote Tasmota devices. Include the `admin:<password>@<IP_or_hostname>`.
+For example if the password is `banana`, specify the address as `admin:banana@192.168.2.78`
+
+![image](https://github.com/tasmota/docs/assets/49731213/8a5ae934-e436-4821-aab3-7ae3c53fd9dc)
+
+
 This will bring you to another menu where you can further configure the remote device.
 
 ![Add Remote Tasmota or OpenBK submenu](_media/matter/add_remote_submenu.jpg)
