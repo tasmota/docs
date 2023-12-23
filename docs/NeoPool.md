@@ -573,7 +573,7 @@ Additional advantage is that you can also use Tasmota Timer switching Power1 (=f
 
 The following enhancements are made using the [Berry Scripting Language](Berry) which is available on ESP32 only.
 
-The class `NeoPoolCommands` below adds new commands to Tasmota:
+The Berry script file [neopoolcmd.be](#neopoolcmdbe) below adds the following new commands to Tasmota:
 
 Command|Parameters
 :---|:---
@@ -581,10 +581,12 @@ NPAux<x\><a id="NPAux"></a>|`<state>`<BR>Set auxiliary relay <x\> (x=`1..4`, sta
 NPAntiFreeze<x\><a id="NPAntiFreeze"></a>|`<state>`<BR>Set Smart mode antifreeze (state = `0..2`):<ul><li>`0` - switch Smart mode antifreeze off</li><li>`1` - switch Smart mode antifreeze on</li>`2` - toggle Smart mode antifreeze</li></ul>
 NPTimer<x\><a id="NPTimer"></a>|`0` or `OFF` or `<hh:mm hh:mm>( <period>)` or `<json>`<BR>Set device timer for filtration, light and auxiliary relay (x=`1..12`)<BR> <x\>:<ul><li>`1` - Filtration timer 1</li><li>`2` - Filtration timer 2</li><li>`3` - Filtration timer 3</li><li>`4` - Light timer</li><li>`5` - Aux1 timer 1</li><li>`6` - Aux1 timer 2</li><li>`7` - Aux2 timer 1</li><li>`8` - Aux2 timer 2</li><li>`9` - Aux3 timer 1</li><li>`10` - Aux3 timer 2</li><li>`11` - Aux4 timer 1</li><li>`12` - Aux4 timer 2</li></ul><BR><ul><li>`0` or `OFF` - Switch timer off</li><li>`hh:mm hh:mm` - Start/End time pair<li>`period` - optional period interval (default seconds), use postfix (e. g. "1d") for period unit:<BR>`s` - seconds<BR>`m` - minutes<BR>`h` - hours<BR>`d` - days<BR>`w` - weeks</li><li>`json` - valid JSON string containng start-/endtime and period e. g. `#!json {"Start":"17:00","End":"22:15","Period":"1d"}`</li></ul>
 NPVersion<a id="NPVersion"></a>|Get the firmware info as array (firmware version and creation date)
+NPBackup<a id="NPBackup"></a>|(`<name>`( `overwrite`)<BR>Creates a backup copy of device setting (it saves the INSTALLER (0x04xx), USER (0x05xx) and MISC (0x06xx) pages). `<name>` is optional and may contain [strftime format codes](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes) (default `devicename_%Y-%m-%dT%H:%M:%S`).<BR>The command fails if the backup file already exists. Explicitly use `<name>` and append `overwrite` to overwrite an existing backup file or delete the file manually.<BR>Note: The backup files are stored in Tasmota file system within the hidden directory `.npbackup`, pay attention to the maximum free size of the file system and use `NPPrune` if necessary
+NPRestore<a id="NPRestore"></a>|`<name>`<BR>Restores a previous device setting backup, `<name>` is required. Use command `NPList` to get a list the backup files.<BR>Note: A restart of the system may be necessary if massive changes are made by an `NPRestore`.
+NPList<a id="NPList"></a>|Get a list of all stored backup files.
+NPPrune<a id="NPPrune"></a>|`<age>`( `dry-run`)<BR>Deletes backup files that are older than specified `<age>` seconds. Use postfix (e. g. "1w") for <age>:<BR>`s` - seconds<BR>`m` - minutes<BR>`h` - hours<BR>`d` - days<BR>`w` - weeks<BR>`y` - years<BR>Use `dry-run` to simulate the `NPPrune` run, it will list the files that will be deleted.
 
-The class can be used as a template for further commands.
-
-Store the following code into a Tasmota file by using the WebGUI "Console" / "Manage File system".
+Store the following script into the Tasmota file system by using the WebGUI "Console" / "Manage File system".
 
 #### neopoolcmd.be
 
@@ -592,112 +594,155 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
     ```berry
     # File: neopoolcmd.be
     #
-    # Add commands NPAux, NPAntiFreeze, NPTimer and NPVersion
+    # Add commands NPAux, NPAntiFreeze, NPTimer, NPVersion, NPBackup, NPRestore, NPList and NPPrune
 
     # Neopool definitions
 
-      MBF_POWER_MODULE_REGISTER = 0x000C
-      MBF_POWER_MODULE_DATA = 0x000D
-      MBF_RELAY_STATE = 0x010E
-      MBF_PAR_SMART_ANTI_FREEZE     = 0x41A
+    MBF_POWER_MODULE_REGISTER = 0x000C
+    MBF_POWER_MODULE_DATA = 0x000D
+    MBF_RELAY_STATE = 0x010E
+    MBF_PAR_SMART_ANTI_FREEZE = 0x41A
+    MBF_PAR_UICFG_MACHINE = 0x0600
 
-      # configuration of the system timers
-      MBF_PAR_TIMER_BLOCK_FILT_INT1 = 0x0434
-      MBF_PAR_TIMER_BLOCK_FILT_INT2 = 0x0443
-      MBF_PAR_TIMER_BLOCK_FILT_INT3 = 0x0452
-      MBF_PAR_TIMER_BLOCK_LIGHT_INT = 0x0470
-      MBF_PAR_TIMER_BLOCK_AUX1_INT1 = 0x04AC
-      MBF_PAR_TIMER_BLOCK_AUX1_INT2 = 0x0461
-      MBF_PAR_TIMER_BLOCK_AUX2_INT1 = 0x04BB
-      MBF_PAR_TIMER_BLOCK_AUX2_INT2 = 0x047F
-      MBF_PAR_TIMER_BLOCK_AUX3_INT1 = 0x04CA
-      MBF_PAR_TIMER_BLOCK_AUX3_INT2 = 0x048E
-      MBF_PAR_TIMER_BLOCK_AUX4_INT1 = 0x04D9
-      MBF_PAR_TIMER_BLOCK_AUX4_INT2 = 0x049D
+    # MBF_PAR_TIMER_BLOCK_BASE
+    MBV_TIMER_OFFMB_TIMER_ENABLE = 0
+    MBV_TIMER_OFFMB_TIMER_ON = 1
+    MBV_TIMER_OFFMB_TIMER_OFF = 3
+    MBV_TIMER_OFFMB_TIMER_PERIOD = 5
+    MBV_TIMER_OFFMB_TIMER_INTERVAL = 7
+    MBV_TIMER_OFFMB_TIMER_COUNTDOWN = 9
+    MBV_TIMER_OFFMB_TIMER_FUNCTION = 11
+    MBV_TIMER_OFFMB_TIMER_WORK_TIME = 13
 
-      # MBF_PAR_TIMER_BLOCK_BASE
-      MBV_TIMER_OFFMB_TIMER_ENABLE    = 0
-      MBV_TIMER_OFFMB_TIMER_ON        = 1
-      MBV_TIMER_OFFMB_TIMER_OFF       = 3
-      MBV_TIMER_OFFMB_TIMER_PERIOD    = 5
-      MBV_TIMER_OFFMB_TIMER_INTERVAL  = 7
-      MBV_TIMER_OFFMB_TIMER_COUNTDOWN = 9
-      MBV_TIMER_OFFMB_TIMER_FUNCTION  = 11
-      MBV_TIMER_OFFMB_TIMER_WORK_TIME = 13
+    MBV_TIMER_OFFMB_TIMER_ON_IDX = 0
+    MBV_TIMER_OFFMB_TIMER_OFF_IDX = 1
+    MBV_TIMER_OFFMB_TIMER_PERIOD_IDX = 2
+    MBV_TIMER_OFFMB_TIMER_INTERVAL_IDX = 3
+    MBV_TIMER_OFFMB_TIMER_COUNTDOWN_IDX = 4
+    MBV_TIMER_OFFMB_TIMER_FUNCTION_IDX  = 5
+    MBV_TIMER_OFFMB_TIMER_WORK_TIME_IDX = 6
 
-      MBV_TIMER_OFFMB_TIMER_ON_IDX        = 0
-      MBV_TIMER_OFFMB_TIMER_OFF_IDX       = 1
-      MBV_TIMER_OFFMB_TIMER_PERIOD_IDX    = 2
-      MBV_TIMER_OFFMB_TIMER_INTERVAL_IDX  = 3
-      MBV_TIMER_OFFMB_TIMER_COUNTDOWN_IDX = 4
-      MBV_TIMER_OFFMB_TIMER_FUNCTION_IDX  = 5
-      MBV_TIMER_OFFMB_TIMER_WORK_TIME_IDX = 6
+    # MBV_TIMER_OFFMB_TIMER_ENABLE working modes:
+    MBV_PAR_CTIMER_DISABLE = 0
+    MBV_PAR_CTIMER_ENABLED  = 1
+    MBV_PAR_CTIMER_ENABLED_LINKED = 2
+    MBV_PAR_CTIMER_ALWAYS_ON  = 3
+    MBV_PAR_CTIMER_ALWAYS_OFF = 4
+    MBV_PAR_CTIMER_COUNTDOWN_KEY = 5
+    MBV_PAR_CTIMER_COUNTDOWN_KEY_PLUS = 0x01
+    MBV_PAR_CTIMER_COUNTDOWN_KEY_MINUS = 0x02
+    MBV_PAR_CTIMER_COUNTDOWN_KEY_ARROWDOWN = 0x04
+    MBV_PAR_CTIMER_COUNTDOWN_KEY_ARROWUP = 0x08
+    MBV_PAR_CTIMER_COUNTDOWN_KEYS = {
+      MBV_PAR_CTIMER_COUNTDOWN_KEY_PLUS:"+",
+      MBV_PAR_CTIMER_COUNTDOWN_KEY_MINUS:"-",
+      MBV_PAR_CTIMER_COUNTDOWN_KEY_ARROWDOWN:"▼",
+      MBV_PAR_CTIMER_COUNTDOWN_KEY_ARROWUP:"▲"
+    }
 
-      # MBV_TIMER_OFFMB_TIMER_ENABLE working modes:
-      MBV_PAR_CTIMER_DISABLE          = 0
-      MBV_PAR_CTIMER_ENABLED          = 1
-      MBV_PAR_CTIMER_ENABLED_LINKED   = 2
-      MBV_PAR_CTIMER_ALWAYS_ON        = 3
-      MBV_PAR_CTIMER_ALWAYS_OFF       = 4
+    # MBV_TIMER_OFFMB_TIMER_FUNCTION codes:
+    MBV_PAR_CTIMER_FCT_FILTRATION = 0x0001
+    MBV_PAR_CTIMER_FCT_LIGHTING = 0x0002
+    MBV_PAR_CTIMER_FCT_HEATING = 0x0004
+    MBV_PAR_CTIMER_FCT_RELAY1 = 0x0100
+    MBV_PAR_CTIMER_FCT_RELAY2 = 0x0200
+    MBV_PAR_CTIMER_FCT_RELAY3 = 0x0400
+    MBV_PAR_CTIMER_FCT_RELAY4 = 0x0800
+    MBV_PAR_CTIMER_FCT_RELAY5 = 0x1000
+    MBV_PAR_CTIMER_FCT_RELAY6 = 0x2000
+    MBV_PAR_CTIMER_FCT_RELAY7 = 0x4000
+    # Function codes text
+    MBV_PAR_CTIMER_FCT = {
+      MBV_PAR_CTIMER_FCT_FILTRATION:"Filtration",
+      MBV_PAR_CTIMER_FCT_LIGHTING:"Light",
+      MBV_PAR_CTIMER_FCT_HEATING:"Heating",
+      MBV_PAR_CTIMER_FCT_RELAY1:"Relay1",
+      MBV_PAR_CTIMER_FCT_RELAY2:"Relay2",
+      MBV_PAR_CTIMER_FCT_RELAY3:"Relay3",
+      MBV_PAR_CTIMER_FCT_RELAY4:"Aux1",
+      MBV_PAR_CTIMER_FCT_RELAY5:"Aux2",
+      MBV_PAR_CTIMER_FCT_RELAY6:"Aux3",
+      MBV_PAR_CTIMER_FCT_RELAY7:"Aux4"
+    }
 
-      # MBV_TIMER_OFFMB_TIMER_FUNCTION codes:
-      MBV_PAR_CTIMER_FCT_FILTRATION   = 0x0001
-      MBV_PAR_CTIMER_FCT_LIGHTING     = 0x0002
-      MBV_PAR_CTIMER_FCT_HEATING      = 0x0004
-      MBV_PAR_CTIMER_FCT_AUXREL1      = 0x0100
-      MBV_PAR_CTIMER_FCT_AUXREL2      = 0x0200
-      MBV_PAR_CTIMER_FCT_AUXREL3      = 0x0400
-      MBV_PAR_CTIMER_FCT_AUXREL4      = 0x0800
-      MBV_PAR_CTIMER_FCT_AUXREL5      = 0x1000
-      MBV_PAR_CTIMER_FCT_AUXREL6      = 0x2000
-      MBV_PAR_CTIMER_FCT_AUXREL7      = 0x4000
-      # Function codes text
-      MBV_PAR_CTIMER_FCT = {
-        MBV_PAR_CTIMER_FCT_FILTRATION:"Filtration",
-        MBV_PAR_CTIMER_FCT_LIGHTING:"Light",
-        MBV_PAR_CTIMER_FCT_HEATING:"Heating",
-        MBV_PAR_CTIMER_FCT_AUXREL1:"Aux1",
-        MBV_PAR_CTIMER_FCT_AUXREL2:"Aux2",
-        MBV_PAR_CTIMER_FCT_AUXREL3:"Aux3",
-        MBV_PAR_CTIMER_FCT_AUXREL4:"Aux4",
-        MBV_PAR_CTIMER_FCT_AUXREL5:"Aux5",
-        MBV_PAR_CTIMER_FCT_AUXREL6:"Aux6",
-        MBV_PAR_CTIMER_FCT_AUXREL7:"Aux7"
-      }
+    # configuration of the system timers
+    MBF_PAR_TIMER_BLOCK_FILT_INT1 = 0x0434
+    MBF_PAR_TIMER_BLOCK_FILT_INT2 = 0x0443
+    MBF_PAR_TIMER_BLOCK_FILT_INT3 = 0x0452
+    MBF_PAR_TIMER_BLOCK_LIGHT_INT = 0x0470
+    MBF_PAR_TIMER_BLOCK_AUX1_INT1 = 0x04AC
+    MBF_PAR_TIMER_BLOCK_AUX1_INT2 = 0x0461
+    MBF_PAR_TIMER_BLOCK_AUX2_INT1 = 0x04BB
+    MBF_PAR_TIMER_BLOCK_AUX2_INT2 = 0x047F
+    MBF_PAR_TIMER_BLOCK_AUX3_INT1 = 0x04CA
+    MBF_PAR_TIMER_BLOCK_AUX3_INT2 = 0x048E
+    MBF_PAR_TIMER_BLOCK_AUX4_INT1 = 0x04D9
+    MBF_PAR_TIMER_BLOCK_AUX4_INT2 = 0x049D
 
-      # Timer base addr index
-      PAR_TIMER_BLOCK = [
-        # addr, function
-        [MBF_PAR_TIMER_BLOCK_FILT_INT1, MBV_PAR_CTIMER_FCT_FILTRATION],
-        [MBF_PAR_TIMER_BLOCK_FILT_INT2, MBV_PAR_CTIMER_FCT_FILTRATION],
-        [MBF_PAR_TIMER_BLOCK_FILT_INT3, MBV_PAR_CTIMER_FCT_FILTRATION],
-        [MBF_PAR_TIMER_BLOCK_LIGHT_INT, MBV_PAR_CTIMER_FCT_LIGHTING],
-        [MBF_PAR_TIMER_BLOCK_AUX1_INT1, MBV_PAR_CTIMER_FCT_AUXREL4],
-        [MBF_PAR_TIMER_BLOCK_AUX1_INT2, MBV_PAR_CTIMER_FCT_AUXREL4],
-        [MBF_PAR_TIMER_BLOCK_AUX2_INT1, MBV_PAR_CTIMER_FCT_AUXREL5],
-        [MBF_PAR_TIMER_BLOCK_AUX2_INT2, MBV_PAR_CTIMER_FCT_AUXREL5],
-        [MBF_PAR_TIMER_BLOCK_AUX3_INT1, MBV_PAR_CTIMER_FCT_AUXREL6],
-        [MBF_PAR_TIMER_BLOCK_AUX3_INT2, MBV_PAR_CTIMER_FCT_AUXREL6],
-        [MBF_PAR_TIMER_BLOCK_AUX4_INT1, MBV_PAR_CTIMER_FCT_AUXREL7],
-        [MBF_PAR_TIMER_BLOCK_AUX4_INT2, MBV_PAR_CTIMER_FCT_AUXREL7]
-      ]
-      PAR_TIMER_BLOCK_AUX = [
-        MBF_PAR_TIMER_BLOCK_AUX1_INT1,
-        MBF_PAR_TIMER_BLOCK_AUX2_INT1,
-        MBF_PAR_TIMER_BLOCK_AUX3_INT1,
-        MBF_PAR_TIMER_BLOCK_AUX4_INT1
-      ]
+    # Timer base addr index
+    PAR_TIMER_BLOCK = [
+      # addr, function
+      [MBF_PAR_TIMER_BLOCK_FILT_INT1, MBV_PAR_CTIMER_FCT_FILTRATION],
+      [MBF_PAR_TIMER_BLOCK_FILT_INT2, MBV_PAR_CTIMER_FCT_FILTRATION],
+      [MBF_PAR_TIMER_BLOCK_FILT_INT3, MBV_PAR_CTIMER_FCT_FILTRATION],
+      [MBF_PAR_TIMER_BLOCK_LIGHT_INT, MBV_PAR_CTIMER_FCT_LIGHTING],
+      [MBF_PAR_TIMER_BLOCK_AUX1_INT1, MBV_PAR_CTIMER_FCT_RELAY4],
+      [MBF_PAR_TIMER_BLOCK_AUX1_INT2, MBV_PAR_CTIMER_FCT_RELAY4],
+      [MBF_PAR_TIMER_BLOCK_AUX2_INT1, MBV_PAR_CTIMER_FCT_RELAY5],
+      [MBF_PAR_TIMER_BLOCK_AUX2_INT2, MBV_PAR_CTIMER_FCT_RELAY5],
+      [MBF_PAR_TIMER_BLOCK_AUX3_INT1, MBV_PAR_CTIMER_FCT_RELAY6],
+      [MBF_PAR_TIMER_BLOCK_AUX3_INT2, MBV_PAR_CTIMER_FCT_RELAY6],
+      [MBF_PAR_TIMER_BLOCK_AUX4_INT1, MBV_PAR_CTIMER_FCT_RELAY7],
+      [MBF_PAR_TIMER_BLOCK_AUX4_INT2, MBV_PAR_CTIMER_FCT_RELAY7]
+    ]
+    PAR_TIMER_BLOCK_AUX = [
+      MBF_PAR_TIMER_BLOCK_AUX1_INT1,
+      MBF_PAR_TIMER_BLOCK_AUX2_INT1,
+      MBF_PAR_TIMER_BLOCK_AUX3_INT1,
+      MBF_PAR_TIMER_BLOCK_AUX4_INT1
+    ]
+
+    # Register to exclude from restore
+    MBF_PAR_TIME_LOW = 0x0408
+    MBF_PAR_TIME_HIGH = 0x0409
+    MBF_ACTION_COPY_TO_RTC = 0x04F0
+
+    RESTORE_EXCL = [
+      MBF_PAR_TIME_LOW,
+      MBF_PAR_TIME_HIGH,
+      MBF_ACTION_COPY_TO_RTC
+    ]
+
+    MACHINE_NAMES = [
+      "NeoPool",
+      "Hidrolife",
+      "Aquascenic",
+      "Oxilife",
+      "Bionet",
+      "Hidroniser",
+      "UVScenic",
+      "Station",
+      "Brilix",
+      "Generic",
+      "Bayrol",
+      "Hay"
+    ]
 
     import string
     import json
+    import path
 
     # NeoPool command class
     class NeoPoolCommands
       var TEXT_OFF
       var TEXT_ON
       var TEXT_TOGGLE
+      var BACKUP_DIR
+      var BACKUP_NAME
+      var BACKUP_START_ADDR
+      var BACKUP_END_ADDR
 
-      # string helper
+      # helper
       def ltrim(s)
         var i = 0 while(i < size(s) && s[i] == ' ') i += 1 end
         return string.split(s, i)[1]
@@ -709,35 +754,54 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
       def trim(s)
         return self.rtrim(self.ltrim(s));
       end
-
-      def GetParm(payload)
-        if payload != nil
-          var p = ""
-          while p != payload
-            p = payload
-            payload = string.replace(p, "  ", " ")
+      def list_sort(_list)
+        for i:1..size(_list)-1
+          var _value = _list[i]
+          var j = i
+          while (j > 0) && (_list[j-1] > _value)
+            _list[j] = _list[j-1]
+            j -= 1
           end
-          p = string.split(string.replace(payload, " ", ","), ",")
-          while p.find('') != nil p.remove(p.find('')) end
-          return p
+          _list[j] = _value
         end
-        return []
+        return _list
       end
-
-      def ParmSwitch(payload, p2)
+      def get_args(payload)
+        if nil == payload
+          return []
+        end
+        var p = string.replace(payload, ' ', ',')
+        var d = nil
+        var s = ""
+        for i:0..size(p)-1
+          if nil == d && ('"' == p[i] || "'" == p[i])
+            d = p[i]
+          elif nil != d && d == p[i]
+            d = nil
+          elif nil != d && "," == p[i]
+            s += ' '
+          else
+            s += p[i]
+          end
+        end
+        p = string.split(s, ',')
+        while p.find('') != nil p.remove(p.find('')) end
+        return p
+      end
+      def get_args_switch(payload, p2)
         var parm, res
         try
-          parm = string.toupper(self.trim(payload))
+          parm = string.tolower(self.trim(payload))
         except ..
           parm = ""
         end
         if parm != ""
 
-          if (size(parm) == size('OFF') && string.find(parm, 'OFF') == 0) ||
+          if (size(parm) == size('off') && string.find(parm, 'off') == 0) ||
             (size(parm) == size('0') && string.find(parm, '0') == 0) ||
             (size(parm) == size(self.TEXT_OFF) && string.find(parm, self.TEXT_OFF) == 0)
             res = 0
-          elif (size(parm) == size('ON') && string.find(parm, 'ON') == 0) ||
+          elif (size(parm) == size('on') && string.find(parm, 'on') == 0) ||
               (size(parm) == size('1') && string.find(parm, '1') == 0) ||
               (size(parm) == size(self.TEXT_ON) && string.find(parm, self.TEXT_ON) == 0)
             res = 1
@@ -756,9 +820,85 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
         tasmota.gc()
         return res
       end
+      def get_period_from_int(period_num)
+        if (period_num == 0)
+          return "0"
+        elif ((period_num % (86400 * 365)) == 0)
+          return string.format("%dy", period_num / (86400 * 365))
+        elif ((period_num % (86400 * 7)) == 0)
+          return string.format("%dw", period_num / (86400 * 7))
+        elif ((period_num % 86400) == 0)
+          return string.format("%dd", period_num / 86400)
+        elif ((period_num % 3600) == 0)
+          return string.format("%dh", period_num / 3600)
+        elif ((period_num % 60) == 0)
+          return string.format("%dm", period_num / 60)
+        else
+          return string.format("%ds", period_num)
+        end
+      end
+      def get_period_from_str(period_str)
+        period_str = string.tolower(self.trim(period_str))
+        var period_num = int(period_str)
+        if period_str[size(period_str) - 1] == 'y'
+          period_num *= 365 * 24 * 60 * 60
+        elif period_str[size(period_str) - 1] == 'w'
+          period_num *= 7 * 24 * 60 * 60
+        elif period_str[size(period_str) - 1] == 'd'
+          period_num *= 24 * 60 * 60
+        elif period_str[size(period_str) - 1] == 'h'
+          period_num *= 60 * 60
+        elif period_str[size(period_str) - 1] == 'm'
+          period_num *= 60
+        end
+        return period_num
+      end
+      def get_timer(cmd, idx)
+        var timer_enable = self.read_register(cmd, "NPRead", PAR_TIMER_BLOCK[idx - 1][0] + MBV_TIMER_OFFMB_TIMER_ENABLE);
+        if nil == timer_enable return nil end
+        var data = self.read_register(cmd, "NPReadL", PAR_TIMER_BLOCK[idx - 1][0] + MBV_TIMER_OFFMB_TIMER_ON, 7)
+        if nil == data return nil end
 
-      def Read(cmd, read_cmnd, addr, cnt)
-        var res = tasmota.cmd(string.format("%s 0x%04X,%d", read_cmnd, addr, cnt)).find(read_cmnd, "Unknown")
+        var mode, state = "Unknown"
+        var values = ""
+        if (timer_enable == MBV_PAR_CTIMER_DISABLE || timer_enable == MBV_PAR_CTIMER_ENABLED)
+          mode = "Timer"
+          state = self.TEXT_OFF
+          if (timer_enable == MBV_PAR_CTIMER_ENABLED &&
+            (int(data[MBV_TIMER_OFFMB_TIMER_ON_IDX]) !=
+              (int(data[MBV_TIMER_OFFMB_TIMER_ON_IDX]) + int(data[MBV_TIMER_OFFMB_TIMER_INTERVAL_IDX]))
+            )
+          )
+            state = self.TEXT_ON
+          end
+
+          values = string.format(',"Start":"%s","End":"%s","Period":"%s"',
+            tasmota.strftime("%H:%M", int(data[MBV_TIMER_OFFMB_TIMER_ON_IDX])),
+            tasmota.strftime("%H:%M", int(data[MBV_TIMER_OFFMB_TIMER_ON_IDX]) + int(data[MBV_TIMER_OFFMB_TIMER_INTERVAL_IDX])),
+            self.get_period_from_int(int(data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX]))
+          )
+        end
+
+        if (timer_enable == MBV_PAR_CTIMER_ALWAYS_OFF || timer_enable == MBV_PAR_CTIMER_ALWAYS_ON)
+          mode = "Manual"
+          state = (timer_enable == MBV_PAR_CTIMER_ALWAYS_OFF) ? self.TEXT_OFF : self.TEXT_ON
+          values = ""
+        end
+
+        if ((timer_enable & 0x00FF) == MBV_PAR_CTIMER_COUNTDOWN_KEY)
+          mode = "Temporary"
+          state = self.TEXT_ON
+          values = string.format(',"Key":"%s","Duration":"%s"',
+            MBV_PAR_CTIMER_COUNTDOWN_KEYS.find(((timer_enable >> 8) & 0x0F), "unknown"),
+            self.get_period_from_int(int(data[MBV_TIMER_OFFMB_TIMER_INTERVAL_IDX]))
+          )
+        end
+
+        var alloc = MBV_PAR_CTIMER_FCT.find(int(data[MBV_TIMER_OFFMB_TIMER_FUNCTION_IDX]), "undefined")
+        return string.format('{"%s%d":{"Mode":"%s","State":"%s","Allocation":"%s"%s}}', cmd, idx, mode, state, alloc, values)
+      end
+      def read_register(cmd, read_cmnd, addr, cnt)
+        var res = tasmota.cmd(string.format("%s 0x%04X,%d", read_cmnd, addr, cnt), true).find(read_cmnd, "Unknown")
         # result must be a json
         if "Unknown" == res
           tasmota.resp_cmnd(string.format('{"%s":"NeoPool module not available or not activated"}', cmd))
@@ -780,7 +920,7 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
           tasmota.resp_cmnd_error()
           return
         end
-        parm = self.ParmSwitch(payload, self.TEXT_TOGGLE)
+        parm = self.get_args_switch(payload, self.TEXT_TOGGLE)
         if parm != nil
           if 0 == parm
             ctrl = MBV_PAR_CTIMER_ALWAYS_OFF
@@ -788,10 +928,8 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
             ctrl = MBV_PAR_CTIMER_ALWAYS_ON
           elif 2 == parm
             try
-              ctrl = self.Read(cmd, "NPRead", MBF_RELAY_STATE)
-              if nil == ctrl
-                return
-              end
+              ctrl = self.read_register(cmd, "NPRead", MBF_RELAY_STATE)
+              if nil == ctrl return end
               ctrl = (ctrl >> (idx+2)) & 1 ? MBV_PAR_CTIMER_ALWAYS_OFF : MBV_PAR_CTIMER_ALWAYS_ON
             except ..
               return
@@ -800,14 +938,12 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
             tasmota.resp_cmnd_error()
             return
           end
-          tasmota.cmd(string.format("NPWrite 0x%04X,%d", PAR_TIMER_BLOCK_AUX[idx-1], ctrl))
-          tasmota.cmd("NPExec")
+          tasmota.cmd(string.format("NPWrite 0x%04X,%d", PAR_TIMER_BLOCK_AUX[idx-1], ctrl), true)
+          tasmota.cmd("NPExec", true)
         else
           try
-            ctrl = self.Read(cmd, "NPRead", MBF_RELAY_STATE)
-            if nil == ctrl
-              return
-            end
+            ctrl = self.read_register(cmd, "NPRead", MBF_RELAY_STATE)
+            if nil == ctrl return end
             ctrl = (ctrl >> (idx+2)) & 1
         except ..
             return
@@ -819,7 +955,7 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
       # NPAntiFreeze OFF|0|ON|1|TOGGLE|2
       def NPAntiFreeze(cmd, idx, payload)
         var ctrl, parm
-        parm = self.ParmSwitch(payload, self.TEXT_TOGGLE)
+        parm = self.get_args_switch(payload, self.TEXT_TOGGLE)
         if parm != nil
           if 0 == parm
             ctrl = 0
@@ -827,10 +963,8 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
             ctrl = 1
           elif 2 == parm
             try
-              ctrl = self.Read(cmd, "NPRead", MBF_PAR_SMART_ANTI_FREEZE)
-              if nil == ctrl
-                return
-              end
+              ctrl = self.read_register(cmd, "NPRead", MBF_PAR_SMART_ANTI_FREEZE)
+              if nil == ctrl return end
               if 1 == ctrl
                 ctrl = 0
               else
@@ -843,14 +977,12 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
             tasmota.resp_cmnd_error()
             return
           end
-          tasmota.cmd(string.format("NPWrite 0x%04X,%d", MBF_PAR_SMART_ANTI_FREEZE, ctrl))
-          tasmota.cmd("NPExec")
+          tasmota.cmd(string.format("NPWrite 0x%04X,%d", MBF_PAR_SMART_ANTI_FREEZE, ctrl), true)
+          tasmota.cmd("NPExec", true)
         else
           try
-            ctrl = self.Read(cmd, "NPRead", MBF_PAR_SMART_ANTI_FREEZE)
-            if nil == ctrl
-              return
-            end
+            ctrl = self.read_register(cmd, "NPRead", MBF_PAR_SMART_ANTI_FREEZE)
+            if nil == ctrl return end
         except ..
             tasmota.resp_cmnd_error()
             return
@@ -860,45 +992,6 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
       end
 
       # NPTimer<x> 0|OFF|<hh:mm hh:mm>( <period>)|<json> (<x> = 1..12)
-      def GetTimer(cmd, idx)
-        var timer_enable = self.Read(cmd, "NPRead", PAR_TIMER_BLOCK[idx - 1][0] + MBV_TIMER_OFFMB_TIMER_ENABLE);
-        if nil == timer_enable
-          return nil
-        end
-        var data = self.Read(cmd, "NPReadL", PAR_TIMER_BLOCK[idx - 1][0] + MBV_TIMER_OFFMB_TIMER_ON, 7)
-        if nil == data
-          return nil
-        end
-
-        var period_str
-        if (int(data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX]) == 0)
-          period_str = "0"
-        elif ((int(data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX]) % (86400 * 7)) == 0)
-          period_str = string.format("%dw", int(data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX]) / (86400 * 7))
-        elif ((int(data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX]) % 86400) == 0)
-          period_str = string.format("%dd", int(data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX]) / 86400)
-        elif ((int(data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX]) % 3600) == 0)
-          period_str = string.format("%dh", int(data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX]) / 3600)
-        elif ((int(data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX]) % 60) == 0)
-          period_str = string.format("%dm", int(data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX]) / 60)
-        else
-          period_str = string.format("%ds", int(data[MBV_TIMER_OFFMB_TIMER_PERIOD_IDX]))
-        end
-        var state = self.TEXT_OFF
-        if (timer_enable == MBV_PAR_CTIMER_ENABLED &&
-          (int(data[MBV_TIMER_OFFMB_TIMER_ON_IDX]) != (int(data[MBV_TIMER_OFFMB_TIMER_ON_IDX]) + int(data[MBV_TIMER_OFFMB_TIMER_INTERVAL_IDX]))) )
-          state = self.TEXT_ON
-        end
-        return string.format('{"%s%d":{"State":"%s","Function":"%s","Start":"%s","End":"%s","Period":"%s"}}',
-          cmd, idx,
-          state,
-          MBV_PAR_CTIMER_FCT.find(int(data[MBV_TIMER_OFFMB_TIMER_FUNCTION_IDX]), "undefined"),
-          tasmota.strftime("%H:%M", int(data[MBV_TIMER_OFFMB_TIMER_ON_IDX])),
-          tasmota.strftime("%H:%M", int(data[MBV_TIMER_OFFMB_TIMER_ON_IDX]) + int(data[MBV_TIMER_OFFMB_TIMER_INTERVAL_IDX])),
-          period_str
-        )
-      end
-
       def NPTimer(cmd, idx, payload)
         var parm
 
@@ -908,7 +1001,7 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
         end
 
         try
-          parm = string.toupper(self.trim(payload))
+          parm = string.tolower(self.trim(payload))
         except ..
           parm = nil
         end
@@ -916,15 +1009,15 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
         if parm != nil && size(parm)
 
           # Set timer
-          if self.ParmSwitch(payload) == 0
+          if self.get_args_switch(payload) == 0
             parm = ''
           end
 
           try
             if (nil == json.load(parm))
               # convert none json parm to json parm
-              var params = self.GetParm(parm)
-              var keys = ["START", "END", "PERIOD"]
+              var params = self.get_args(parm)
+              var keys = ["start", "end", "period"]
               if size(params) > size(keys)
                 tasmota.resp_cmnd_error()
                 return
@@ -947,9 +1040,9 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
             var timer_start, timer_end, strp
             try
                 # set start and end
-              strp = tasmota.strptime(parm.find("START", "00:00"), "%H:%M")
+              strp = tasmota.strptime(parm.find("start", "00:00"), "%H:%M")
               timer_start = (strp.find("hour", 0) * 3600) + (strp.find("min", 0) * 60)
-              strp = tasmota.strptime(parm.find("END", "00:00"), "%H:%M")
+              strp = tasmota.strptime(parm.find("end", "00:00"), "%H:%M")
               timer_end = strp.find("hour", 0) * 3600 + strp.find("min", 0) * 60
               if (timer_start > timer_end)
                 var tmp = timer_end
@@ -960,28 +1053,17 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
               tasmota.resp_cmnd_error()
               return
             end
-            tasmota.cmd(string.format("NPWrite 0x%04X,%d", PAR_TIMER_BLOCK[idx - 1][0] + MBV_TIMER_OFFMB_TIMER_ENABLE, MBV_PAR_CTIMER_ENABLED))
-            tasmota.cmd(string.format("NPWriteL 0x%04X,%d", PAR_TIMER_BLOCK[idx - 1][0] + MBV_TIMER_OFFMB_TIMER_FUNCTION, PAR_TIMER_BLOCK[idx - 1][1]))
-            tasmota.cmd(string.format("NPWriteL 0x%04X,%d", PAR_TIMER_BLOCK[idx - 1][0] + MBV_TIMER_OFFMB_TIMER_ON, timer_start))
-            tasmota.cmd(string.format("NPWriteL 0x%04X,%d", PAR_TIMER_BLOCK[idx - 1][0] + MBV_TIMER_OFFMB_TIMER_INTERVAL, timer_end - timer_start))
+            tasmota.cmd(string.format("NPWrite 0x%04X,%d", PAR_TIMER_BLOCK[idx - 1][0] + MBV_TIMER_OFFMB_TIMER_ENABLE, MBV_PAR_CTIMER_ENABLED), true)
+            tasmota.cmd(string.format("NPWriteL 0x%04X,%d", PAR_TIMER_BLOCK[idx - 1][0] + MBV_TIMER_OFFMB_TIMER_FUNCTION, PAR_TIMER_BLOCK[idx - 1][1]), true)
+            tasmota.cmd(string.format("NPWriteL 0x%04X,%d", PAR_TIMER_BLOCK[idx - 1][0] + MBV_TIMER_OFFMB_TIMER_ON, timer_start), true)
+            tasmota.cmd(string.format("NPWriteL 0x%04X,%d", PAR_TIMER_BLOCK[idx - 1][0] + MBV_TIMER_OFFMB_TIMER_INTERVAL, timer_end - timer_start), true)
 
-            var period_str = string.toupper(self.trim(parm.find("Period", "0")))
-            var period = int(period_str)
-            if period_str[size(period_str) - 1] == 'W'
-              period *= 7 * 24 * 60 * 60
-            elif period_str[size(period_str) - 1] == 'D'
-              period *= 24 * 60 * 60
-            elif period_str[size(period_str) - 1] == 'H'
-              period *= 60 * 60
-            elif period_str[size(period_str) - 1] == 'M'
-              period *= 60
+            if (self.get_period_from_str(parm.find("Period", "0")) != 0)
+              tasmota.cmd(string.format("NPWriteL 0x%04X,%d", PAR_TIMER_BLOCK[idx - 1] + MBV_TIMER_OFFMB_TIMER_PERIOD, self.get_period_from_str(parm.find("Period", "0"))), true)
             end
-            if (period != 0)
-              tasmota.cmd(string.format("NPWriteL 0x%04X,%d", PAR_TIMER_BLOCK[idx - 1] + MBV_TIMER_OFFMB_TIMER_PERIOD, period))
-            end
-            tasmota.cmd("NPExec")
+            tasmota.cmd("NPExec", true)
 
-            var res = self.GetTimer(cmd, idx)
+            var res = self.get_timer(cmd, idx)
             if nil != res
               tasmota.resp_cmnd(res)
             end
@@ -991,7 +1073,7 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
 
         else
           # Get timer
-          var res = self.GetTimer(cmd, idx)
+          var res = self.get_timer(cmd, idx)
           if nil != res
             tasmota.resp_cmnd(res)
           end
@@ -1004,11 +1086,9 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
       def NPVersion(cmd)
         var verstr = ""
         for i: 0 .. 12
-          tasmota.cmd(string.format("NPWrite 0x%04X,%d", MBF_POWER_MODULE_REGISTER, i*2))
-          var data = self.Read(cmd, "NPRead", MBF_POWER_MODULE_DATA)
-          if nil == data
-            return
-          end
+          tasmota.cmd(string.format("NPWrite 0x%04X,%d", MBF_POWER_MODULE_REGISTER, i*2), true)
+          var data = self.read_register(cmd, "NPRead", MBF_POWER_MODULE_DATA)
+          if nil == data return end
           verstr += string.char(data>>8 & 0xFF)
           verstr += string.char(data    & 0xFF)
         end
@@ -1017,16 +1097,211 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
         tasmota.resp_cmnd(string.format('{"%s":%s}', cmd, json.dump(arr)))
       end
 
+      # NPBackup (<name>( overwrite)
+      #   <name> may contain strftime specifier
+      def NPBackup(cmd, idx, payload)
+        var name, overwrite = nil
+
+        var machine = self.read_register(cmd, "NPRead", MBF_PAR_UICFG_MACHINE)
+        if nil == machine return end
+        machine = machine > size(MACHINE_NAMES) ? 0 : machine
+
+        var parm = self.get_args(payload)
+        if parm != nil && size(parm)
+          name = self.trim(parm[0])
+          if size(parm) > 1
+            overwrite = string.tolower(self.trim(parm[1]))
+          end
+        else
+          name = tasmota.strftime(MACHINE_NAMES[machine]+"_"+self.BACKUP_NAME, tasmota.rtc()['local'])
+          name += string.format("%+03d:%02d", (tasmota.rtc()['local'] - tasmota.rtc()['utc']) / 3600, 0)
+        end
+
+        path.mkdir(self.BACKUP_DIR)
+        name = tasmota.strftime(name, tasmota.rtc()['local'])
+        if nil != overwrite
+          if size(overwrite) > 0 && 'o' == overwrite[0]
+            if path.exists(self.BACKUP_DIR+"/"+name)
+              # overwrite, first delete existing
+              path.remove(self.BACKUP_DIR+"/"+name)
+            end
+          else
+            tasmota.resp_cmnd(string.format('{"%s":"Error","File":"%s","Msg":"Unknown command %s"}', cmd, name, overwrite))
+            return
+          end
+        end
+        if path.exists(self.BACKUP_DIR+"/"+name)
+          # do not overwrite existing backups
+          tasmota.resp_cmnd(string.format('{"%s":"Error","File":"%s","Msg":"Already exists"}', cmd, name))
+          return
+        end
+
+        # read register
+        var reg_data = []
+        try
+          for addr:range(self.BACKUP_START_ADDR, self.BACKUP_END_ADDR, 16)
+            var r = self.read_register(cmd, "NPRead", addr, 16)
+            if nil == r return end
+            for i:r
+              reg_data.push(int(i))
+            end
+          end
+        except ..
+          reg_data = []
+        end
+
+        if 0 == size(reg_data)
+          tasmota.resp_cmnd(string.format('{"%s":"Error","Msg":"Reading Modbus register error"}', cmd))
+          return
+        end
+
+        # write backup file
+        try
+          var f = open(self.BACKUP_DIR+"/"+name, "w")
+          f.write(json.dump({string.format("0x%04X", self.BACKUP_START_ADDR):reg_data}))
+          f.close()
+        except ..
+          tasmota.resp_cmnd(string.format('{"%s":"Error","File":"%s","Msg":"Writing file error"}', cmd, name))
+          return
+        end
+        tasmota.resp_cmnd(string.format('{"%s":"Done","File":"%s"}', cmd, name))
+        return
+      end
+
+      # NPRestore <name>
+      def NPRestore(cmd, idx, payload)
+        var name = nil
+
+        var machine = self.read_register(cmd, "NPRead", MBF_PAR_UICFG_MACHINE)
+        if nil == machine return end
+
+        var parm = self.get_args(payload)
+
+        if parm != nil && size(parm)
+          name = self.trim(parm[0])
+        else
+          tasmota.resp_cmnd_error()
+          return
+        end
+        if !path.exists(self.BACKUP_DIR+"/"+name)
+          tasmota.resp_cmnd(string.format('{"%s":"Error","File":"%s","Msg":"Does not exists"}', cmd, name))
+          return
+        end
+
+        # Restore
+        # read backup file
+        var backup = {}
+        var f = open(self.BACKUP_DIR+"/"+name, "r")
+        try
+          backup = json.load(f.read())
+          f.close()
+        except ..
+          tasmota.resp_cmnd(string.format('{"%s":"Error","File":"%s","Msg":"JSON format error"}', cmd, name))
+          return
+        end
+
+        # if any multiple addr sort it
+        var addr_list = []
+        for i:backup.keys()
+          addr_list.push(i)
+        end
+        addr_list = self.list_sort(addr_list)
+        # do restore commands
+        for addr:addr_list
+          var reg_list = backup[addr]
+          var write_cmnd = ""
+          var cnt = 0
+          var write_addr = int(addr)
+          for reg_value:reg_list
+            if nil == RESTORE_EXCL.find(write_addr)
+              if "" == write_cmnd
+                write_cmnd = string.format("NPWrite 0x%04X", write_addr)
+              end
+              write_cmnd +="," + str(int(reg_value))
+              cnt += 1
+              if cnt >= 8
+                tasmota.cmd(write_cmnd, true)
+                write_cmnd = ""
+                cnt = 0
+              end
+            elif size(write_cmnd)
+              tasmota.cmd(write_cmnd, true)
+              write_cmnd = ""
+              cnt = 0
+            end
+            write_addr += 1
+          end
+          if size(write_cmnd)
+            tasmota.cmd(write_cmnd, true)
+          end
+        end
+        tasmota.cmd("NPExec", true)
+        tasmota.cmd("NPSave", true)
+        tasmota.resp_cmnd(string.format('{"%s":"Done","File":"%s"}', cmd, name))
+        return
+      end
+
+      # NPList
+      def NPList(cmd)
+        tasmota.resp_cmnd(string.format('{"%s":%s}', cmd, json.dump(path.listdir(self.BACKUP_DIR)) ))
+      end
+
+      # NPPrune <age>( dry-run)
+      def NPPrune(cmd, idx, payload)
+        var age = nil
+        var dry_run = false
+
+        var parm = self.get_args(payload)
+        if parm != nil && size(parm)
+          age = self.get_period_from_str(string.tolower(self.trim(parm[0])))
+          if size(parm) > 1
+            if size(string.tolower(self.trim(parm[1]))) > 0 && 'd' == string.tolower(self.trim(parm[1]))[0]
+              dry_run = true
+            else
+              tasmota.resp_cmnd_error()
+              return
+            end
+          end
+        else
+          tasmota.resp_cmnd_error()
+          return
+        end
+
+        var dfiles = []
+        for _filename:path.listdir(self.BACKUP_DIR)
+          if (tasmota.rtc()['local'] - path.last_modified(self.BACKUP_DIR+"/"+_filename)) > age
+            dfiles.push(_filename)
+            if !dry_run
+              path.remove(self.BACKUP_DIR+"/"+_filename)
+            end
+          end
+        end
+        if dry_run
+          tasmota.resp_cmnd(string.format('{"%s":"dry-run","File":%s}', cmd, json.dump(dfiles)))
+          return
+        end
+        tasmota.resp_cmnd(string.format('{"%s":"Done","File":%s}', cmd, json.dump(dfiles)))
+      end
+
+
       def init()
         # get tasmota settings
-        self.TEXT_OFF = tasmota.cmd('StateText1').find('StateText1', 'OFF')
-        self.TEXT_ON = tasmota.cmd('StateText2').find('StateText2', 'ON')
-        self.TEXT_TOGGLE = tasmota.cmd('StateText3').find('StateText3', 'TOGGLE')
+        self.TEXT_OFF = tasmota.cmd('StateText1', true).find('StateText1', 'OFF')
+        self.TEXT_ON = tasmota.cmd('StateText2', true).find('StateText2', 'ON')
+        self.TEXT_TOGGLE = tasmota.cmd('StateText3', true).find('StateText3', 'TOGGLE')
+        self.BACKUP_DIR = "/.npbackup"
+        self.BACKUP_NAME = '%Y-%m-%dT%H:%M:%S'
+        self.BACKUP_START_ADDR = 0x0400
+        self.BACKUP_END_ADDR = 0x06FF
         # add commands
         tasmota.add_cmd('NPAux', / cmd, idx, payload -> self.NPAux(cmd, idx, payload))
         tasmota.add_cmd('NPAntiFreeze', / cmd, idx, payload -> self.NPAntiFreeze(cmd, idx, payload))
         tasmota.add_cmd('NPTimer', / cmd, idx, payload -> self.NPTimer(cmd, idx, payload))
         tasmota.add_cmd('NPVersion', / cmd -> self.NPVersion(cmd))
+        tasmota.add_cmd('NPBackup', / cmd, idx, payload -> self.NPBackup(cmd, idx, payload))
+        tasmota.add_cmd('NPRestore', / cmd, idx, payload -> self.NPRestore(cmd, idx, payload))
+        tasmota.add_cmd('NPList', / cmd -> self.NPList(cmd))
+        tasmota.add_cmd('NPPrune', / cmd, idx, payload -> self.NPPrune(cmd, idx, payload))
       end
 
       def deinit()
@@ -1035,6 +1310,10 @@ Store the following code into a Tasmota file by using the WebGUI "Console" / "Ma
         tasmota.remove_cmd('NPAntiFreeze')
         tasmota.remove_cmd('NPTimer')
         tasmota.remove_cmd('NPVersion')
+        tasmota.remove_cmd('NPBackup')
+        tasmota.remove_cmd('NPRestore')
+        tasmota.remove_cmd('NPList')
+        tasmota.remove_cmd('NPPrune')
       end
     end
     neopoolcommands = NeoPoolCommands()
@@ -1199,8 +1478,7 @@ load("neopoolgui.be")
 
 ### ESP32: Make the scripts persistent
 
-If you want the extensions to be activated automatically every time you restart your ESP32, save the `load()` commands into the special file
- `autoexec.be`:
+If you want the extensions to be activated automatically every time you restart your ESP32, save the `load()` commands into the special file `autoexec.be`:
 
 #### autoexec.be
 
