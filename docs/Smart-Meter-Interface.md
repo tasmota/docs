@@ -2106,6 +2106,53 @@ For read-out of "Current power" the advanced data set has to be enabled in user 
     #
     ```
 
+### Landis + Gyr E350 (OBIS)
+
+Requesting data with a baud rate change during operation.
+
+According to its manual the meter seems to support many more metrics that were not tested, and are not listed here because of that.
+
+??? summary "View script"
+    ```
+    >D
+    scnt=0
+    res=0
+
+    >B
+    ->sensor53 r
+    tper=20
+
+    >F
+    scnt+=1
+    switch scnt
+    case 6
+    res=sml(1 0 300)
+    res=sml(1 1 "2F3F210D0A")
+
+    case 18
+    res=sml(1 1 "063035300D0A")
+
+    case 20
+    res=sml(1 0 9600)
+
+    case 50
+    scnt=0
+    ends
+
+    >M 1
+    +1,3,o,0,9600,,1
+    ;1,C.1.0(@1,Server-ID,,Meter_number,0
+    1,=h===================
+    1,1.8.0(@1,Total Consumed,kWh,Total_in,3
+    ;1,1.8.1(@1,Primary Consumed,kWh,P_Total_in,3
+    ;1,1.8.2(@1,Secondary Consumed,kWh,S_Total_in,3
+    1,=h===================
+    1,16.7(@1,Current power,kW,Power_in,2
+    #
+    ```
+
+
+
 ### Landis + Gyr ZMB120 T213CS (OBIS)
 
 This meter may need a PIN to unlock the current power usage - ask your provider. 
