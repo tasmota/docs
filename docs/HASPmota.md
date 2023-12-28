@@ -134,6 +134,17 @@ Pages objects are mapped to a global variable of name `p<x>`.
 
 Changing pages can be done with `p2.show()`
 
+#### move to page programmatically
+
+Use `haspmota.page_show(<action>)` with a parameter action taking one of the following: `next`, `prev`, `back`, `p<n>`.
+
+```berry
+haspmota.page_show('next')      # move to next page
+haspmota.page_show('prev')      # move to previous page
+haspmota.page_show('back')      # move to home page
+haspmota.page_show('p3')        # move to page 3
+```
+
 #### additional parsing
 
 HASPmota parses all lines from the file `pages.jsonl`. You can dynamically add new objects as JSON with `haspmota.parse(<json>)`. This functions takes a single json line. It is highly recommended to specify the page id in the json, otherwise the object is added to the current page.
