@@ -104,7 +104,7 @@ RGBWWTable 255,255,255,0,0
 Command|Description
 :---|:---
 ArtNetConfig &lt;json&gt;<a class="cmnd" id="artnetconfig"></a>|Example `ArtNetConfig {"Rows":5, "Cols":5, "Offset":0, "Alternate":false, "Universe":0}`<BR>There are two modes for ArtNet configuration: simple light or adressable leds.<BR>In simple Light mode, `"cols"` is zero. Only `"Universe"` needs to be specified.<BR>Example: `ArtNetConfig {"Cols":0, "Universe":0}`<BR>In Adressable Light mode, all parameters can be specified.<BR><BR>`Rows`: number of rows of display, `1` for light mode or single strip<BR>`Cols`: number of columns of the display, or length of the strip, or `0` for single light<BR>`"Offset"`: number of adressable leds to skip<BR>`Alternate`: (true/false) indicates that every other line is reversed (common in large matrix)<BR>`Universe`: starting DMX Universe number for the first line (0 based so you may need to substract 1 from software)
-ArtNet<a class="cmnd" id="artnet"></a>|`Start`, `On`>`, or `1`: Start ArtNet mode, listen to UDP port 6454 and force `SetOption148 1` for autorun at restart<BR>`Stop`, `Off` or `0`: Stop ArtNet mode, close UDP port and force `SetOption148 0` to disable ArtNet mode at restart
+ArtNet<a class="cmnd" id="artnet"></a>|`Start`, `On`, or `1`: Start ArtNet mode, listen to UDP port 6454 and force `SetOption148 1` for autorun at restart<BR>`Stop`, `Off` or `0`: Stop ArtNet mode, close UDP port and force `SetOption148 0` to disable ArtNet mode at restart
 SetOption148|Enables or disables autorun of ArtNet mode at start. If for any reason listening to UDP port fails, this mode is disabled
 
 ## Troubleshooting
