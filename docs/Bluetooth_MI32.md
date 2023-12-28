@@ -142,7 +142,7 @@ The naming conventions in the product range of bluetooth sensors in XIAOMI-unive
   </tr>
 </table> 
 passive: data is received via BLE advertisements
-active: data is received via bidrectional connection to the sensor  
+active: data is received via bidirectional connection to the sensor  
   
 #### Devices with payload encryption  
   
@@ -324,8 +324,23 @@ We have the following methods, which are chosen to be able to replace the old co
 For generic BLE access we import the module:    
 `import BLE`
   
-To simplify BLE access this works in the form of state machine, where you have to set some properties of a context and then finally launch an operation. Besides we have three callback mechanisms for listening to advertisements, active sensor connections with Tasmota as a client and providing a server including advertising. All need a byte buffer in Berry for data exchange and a Berry function as the callback.  
+BLE Function|Parameters and details
+:---|:---
+adv_cb|`(callback function:function, buffer:bytes)`<br>Will start listening to advertisements or stop it by providing `nil` as function.<br>The callback function will have arguments `service data` and `manufacturer data` as integer values, that are indices pointing to these kinds of data in the buffer or have a value of 0 if there is no such data in the advertisement.
+adv_watch|`(MAC:bytes[, type:int])`<br>Watch BLE address exclusively, is added to a list (MAC is a 6-byte-buffer, type is optional 0-3, default is 0).
+adv_block|`(MAC:bytes[, type:int])`<br>Block BLE address, is added to a list (MAC is a 6-byte-buffer, type is optional 0-3, default is 0).
+conn_cb|`(callback function:function, buffer:bytes)`<br>Will init Tasmota as a peripheral device, that can connect to a central device.<br>The callback function will have arguments `error`,`op code`,`16-bit uuid` and `handle`. If an UUID with more than 16 bit is accessed, the automatic conversion to 16-bit will probably give no usable result, thus the handle should be used in these cases.
+serv_cb|`(callback function:function, buffer:bytes)`<br>Will init Tasmota as a central device (aka server) or stop it by providing `nil` as function.<br>The callback function will have arguments `error`,`op code`,`16-bit uuid` and `handle`. If an UUID with more than 16 bit is accessed, the automatic conversion to 16-bit will probably give no usable result, thus the handle should be used in these cases.
+set_MAC|`(MAC:bytes[, type:int]) -> handled:bool`<br>Set MAC for for use as peripheral or central device as a 6-byte-buffer, type is optional 0-3, default is 0.
+set_svc|`(UUID:string[, discoverAttributes:bool]) -> handled:bool`<br>Set service UUID for for use as peripheral or central device as a 16-Bit or 128-Bit service uuid, the latter must include the dashes. Optional: Let the BLE stack discover all attributes of the service, which takes time and battery. Default is `false`.
+set_chr|`(UUID:string) -> handled:bool`<br>Set characteristic UUID for for use as peripheral or central device as a 16-Bit or 128-Bit service uuid, the latter must include the dashes.
+run|`(operation:int[, response:bool])`<br>Start a Bluetooth operation, where `operation` is a proprietary code - see sections below. `Response` is optional and defaults to `false`.
+loop|`()`<br>Triggers a synchronization between Bluetooth stack and Berry, thus firing callbacks, if there is new data. Will typically be called from Berrys [Fast Loop](Berry.md#fast-loop).
+
+  
+To simplify BLE access this works in the form of state machine, where you have to set some properties of a context and then finally launch an operation. Besides we have three callback mechanisms for listening to advertisements, active sensor connections with Tasmota as a client and providing a server including advertising. All you need is a byte buffer in Berry for data exchange and a Berry function as the callback.  
 The byte buffer is always organized in the format `length-data bytes`, where the first byte represents the length of the following data bytes, which results in a maximum of 255 data bytes.  
+Because Bluetooth is inherently very asynchronous, almost every status, result or error condition is reported via callbacks.  
   
 #### Observer (aka Advertisement listener)
 To listen to advertisements inside a class (that could be a driver) we could initialize like that:
@@ -380,13 +395,10 @@ The payload is always provided completely, so every possibles AD type can be par
 
     The payload can be parsed according to the BLE GAP standard. It consists of AD elements of variable size in the format length-type-data, where the length byte describes the length of the two following components in bytes, the type byte is defined in the GAP and the data parts of 'length-1' bytes is interpreted according to the type.
 
-Two methods for filtering of advertisements are provided:  
-`BLE.adv_watch(MAC,type)`: watch BLE address exclusively, is added to a list (MAC is a 6-byte-buffer, type is optional 0-3, default is 0)  
-`BLE.adv_block(MAC,type)`: block  BLE address, is added to a list(MAC is a 6-byte-buffer, type is optional 0-3, default is 0)  
-  
+
 !!! tip
 
-    The watchlist is more effective to avoid missing packets, than the blocklist in environments with high BLE traffic. Both methods work for the internal Xiaomi driver and the post processing with Berry.
+    The watchlist is more effective to avoid missing packets than the blocklist in environments with high BLE traffic. Both methods work for the internal Xiaomi driver and the post processing with Berry, because they set properties of the underlying Bluetooth framework.
   
 #### Peripheral role (aka client)
   
@@ -739,13 +751,13 @@ Here is an implementation of the "old" MI32 commands:
 
     ```berry
     # Simple Berry driver for the BPR2S Air mouse (a cheap BLE HID controller)
-    # TODO: handle mouse mode
 
     import BLE
 
     class BLE_BPR2S : Driver
         var buf
-        var connecting, connected
+        var connecting, connected, new_position
+        var x,y
 
         def init(MAC,addr_type)
             var cbp = tasmota.gen_cb(/e,o,u,h->self.cb(e,o,u,h))
@@ -754,12 +766,15 @@ Here is an implementation of the "old" MI32 commands:
             BLE.set_MAC(bytes(MAC),addr_type)
             print("BLE: will try to connect to BPR2S with MAC:",MAC)
             self.connect()
-            tasmota.add_fast_loop(/-> BLE.loop())
+            tasmota.add_fast_loop(/-> BLE.loop()) # needed for mouse position
         end
 
         def connect()
-            self.connecting = true;
-            self.connected = false;
+            self.connecting = true
+            self.connected = false
+            self.new_position = false
+            self.x = 128
+            self.y = 128
             BLE.set_svc("1812")
             BLE.set_chr("2a4a") # the first characteristic we have to read
             BLE.run(1) # read
@@ -772,20 +787,51 @@ Here is an implementation of the "old" MI32 commands:
             end
         end
 
+        def every_50ms()
+            import mqtt
+            if self.new_position == true
+                mqtt.publish("tele/BPR2S",format('{"mouse":{"x":%s,"y":%s}}',self.x,self.y))
+                self.new_position = false
+            end
+        end
+
         def handle_read_CB(uuid) # uuid is the callback characteristic
             self.connected = true;
         # we just have to read these characteristics before we can finally subscribe
             if uuid == 0x2a4a # did receive HID info
+                print("BLE: now connecting to BPR2S")
                 BLE.set_chr("2a4b")
                 BLE.run(1) # read next characteristic 
             elif uuid == 0x2a4b # did receive HID report map
                 BLE.set_chr("2a4d")
                 BLE.run(1) # read to trigger notifications of the HID device
             elif uuid == 0x2a4d # did receive HID report
-                print(self.buf[1..self.buf[0]])
                 BLE.set_chr("2a4d")
                 BLE.run(3) # subscribe
             end
+        end
+
+        def handle_mouse_pos()
+            var x = self.buf.getbits(12,12)
+            if x > 2048
+                x -= 4096
+            end
+            var y = self.buf.getbits(24,12)
+            if y > 2048
+                y -= 4096
+            end
+
+            self.x += (x >> 7) # some conversion factor
+            self.y += (y >> 7)
+            
+            # could be mapped to hue, saturation, brightness, ...
+            if self.x > 255 self.x = 255
+            elif self.x < 0 self.x = 0
+            end
+            if self.y > 255 self.y = 255
+            elif self.y < 0 self.y = 0
+            end
+            self.new_position = true
         end
 
         def handle_HID_notification(h) 
@@ -827,16 +873,8 @@ Here is an implementation of the "old" MI32 commands:
                     v = "plus"
                 end
             elif h == 34
-                t = "mouse"
-                var x = self.buf.getbits(12,12)
-                if x > 2048
-                    x -= 4096
-                end
-                var y = self.buf.getbits(24,12)
-                if y > 2048
-                    y -= 4096
-                end
-                v = format('{"x":%i,"y":%i}',x,y)
+                self.handle_mouse_pos()
+                return
             end
             if v != ''
                 mqtt.publish("tele/BPR2S",format('{"%s":"%s"}',t,v))
@@ -851,13 +889,15 @@ Here is an implementation of the "old" MI32 commands:
                     # print(op,uuid)
                     self.handle_read_CB(uuid)
                 elif op == 3
-                    self.connecting = false;
+                    self.connecting = false
+                    self.connected = true
                     print("BLE: init completed for BPR2S")
                 elif op == 5
-                    self.connected = false;
-                    self.connecting = false;
+                    self.connected = false
+                    self.connecting = false
                     print("BLE: did disconnect BPR2S ... will try to reconnect")
                 elif op == 103 # notification OP
+                    if self.connected == false return end
                     self.handle_HID_notification(handle)
                 end
             else
