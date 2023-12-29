@@ -752,8 +752,8 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
 
 `break` exits a section or terminates a `for next` loop  
 `dpx` sets decimal precision to x (0-9)  
-`dpx.y` sets preceding digits to x and decimal precision to y (0-9)  
-`dp(x y)` sets preceding digits to x and decimal precision to y  
+`dpx.y` sets preceding digits to x and decimal precision to y (0-9), the delimiter also sets the decimal point character to . or ,  
+`dp(x y)` sets preceding digits to x and decimal precision to y, the delimter if space sets decimal point character to ., a comma sets the point o comma  
 `svars` save permanent vars  
 `delay(x)` pauses x milliseconds (should be as short as possible)  
 `beep(f l)` (ESP32) beeps with a passive piezo beeper. beep(-f 0) attaches PIN f to the beeper, beep(f l) starts a sound with frequency f (Hz) and len l (ms). f=0 stops the sound.  
