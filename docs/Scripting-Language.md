@@ -656,7 +656,7 @@ SEL:
 `rapp` = append this line to MQTT (ResponseAppend)  
 `wm` = contains source of web request code e.g. 0 = Sensor display (FUNC_WEB_SENSOR)  
   
-`acp(dst src)` = copy array, ist src is numeric variable or constant array dst is filled with this value   
+`acp(dst src)` = copy array, if src is numeric variable or constant array dst is filled with this value   
   
 `knx(code value)` = sends a number value to KNX   
 
