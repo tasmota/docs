@@ -238,8 +238,10 @@ Choose an installation method:
     ```
     esptool.py write_flash -fm dout 0x0 tasmota.bin
     ```
-    or for ESP32
-    
+    or for ESP32:
+    !!! note
+        _Factory_ binaries are used for inital flashing this time
+        https://ota.tasmota.com/tasmota32/release/
     ```
     esptool.py write_flash 0x0 tasmota32.factory.bin
     ```
