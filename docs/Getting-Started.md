@@ -206,7 +206,8 @@ Choose an installation method:
     Go to the folder and install Esptool with command 
     ```
     python setup.py install
-    ```
+
+    ??? warning "Old esptool.py versions (v2.8) might detect wrongly and not flash newer chips as ESP32-C3"
 
     Make sure you followed the steps to put your device in programming mode. Place your chosen firmware binary file in the same folder as esptool.py.
 
