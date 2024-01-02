@@ -42,7 +42,7 @@ To send commands and view responses you'll need an [MQTT client](http://www.hive
 Commands over MQTT are issued to Tasmota by using topic `cmnd/%topic%/<command>` and payload `<parameter>`. If there is no `<parameter>` (an empty MQTT message/payload), a query is sent for current status of the `<command>`.
 
 !!! tip
-    If you are using *mosquitto_pub*, you can issue an empty payload using the `-n` command line option. 
+    If you are using `mosquitto_pub` command-line tool, you can issue an empty payload using the `-n` command line option. 
     If your MQTT client cannot issue an empty payload, you can use the single character `?` instead.
 
 ### Command flow
