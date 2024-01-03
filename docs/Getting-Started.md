@@ -148,7 +148,7 @@ If everything went well, you are now in Programming Mode and ready to continue w
 
 ## Flashing
 
-If you have followed [Hardware preparation](#hardware-preparation), your device should be in _Programming Mode_ and ready for a Tasmota firmware binary to be installed.
+If you have followed [Hardware preparation](#hardware-preparation), your device should be in [_Programming Mode_](#programming-mode) and ready for a Tasmota firmware binary to be installed.
 
 !!! tip "You may want to back up the device manufacturer's firmware on the one in a million chance you don't like Tasmota."  
   
@@ -202,13 +202,12 @@ Choose an installation method:
 
     Esptool is the official Espressif tool for flashing ESP chips. It requires Python, if you do not have an installed copy of Python 2.x or 3.x download and install it from <https://www.python.org>.
 
-    Download the [esptool Source code](https://github.com/espressif/esptool/releases) to a folder of your choice.
-    Go to the folder and install Esptool with command 
+    Use [Esptool](https://docs.espressif.com/projects/esptool/) packaged with your distro or install it yourself with command:
     ```
-    python setup.py install
+    pip install esptool
     ```
 
-    Make sure you followed the steps to put your device in programming mode. Place your chosen firmware binary file in the same folder as esptool.py.
+    Make sure you followed the steps to put your device in [_Programming mode_](#programming-mode). Place your chosen firmware binary file in the current folder you run _esptool.py_ from.
 
     Esptool uses the serial interface to communicate with your device. On Windows these interfaces are named COM1, COM2, etc. and on Linux they are named /dev/ttyUSB0, /dev/ttyUSB1, etc. Before using esptool, make sure you know which serial port your programming adapter is connected to.
 
