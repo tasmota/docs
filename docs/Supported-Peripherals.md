@@ -104,7 +104,7 @@ DS3502 | Digital potentiometer| I^2^C
 [**RF Transceiver**](RF-Transceiver) | IR receiver and/or transmitter
 **RX-4M50RR30SF<BR>RX-AM8SF** | RF sensor receiver | gpio
 **SCD30** | CO~2~ sensor| I^2^C
-**SCD40**<BR>**SCD41** | CO~2~ sensor| I^2^C
+[**SCD40**<BR>**SCD41**](SCD4x) | CO~2~ sensor| I^2^C
 **Eastron SDM72** | Modbus energy meter| serial
 **Eastron SDM120** | Modbus energy meter| serial
 **Eastron SDM220** | Modbus energy meter| serial
