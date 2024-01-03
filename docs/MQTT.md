@@ -261,10 +261,6 @@ Rule1
   ON Event#DnTemp DO TempMeasuredSet %value% ENDON
 ```
 will allow a thermostat to subscribe to a temperature sensor on another Tasmota device
-```console
-  ON Event#DnTemp DO TempMeasuredSet %value% ENDON
-```
-Will allow a thermostat to subscribe to a temperature sensor on another Tasmota device
 
 ### Unsubscribe
 Unsubscribe from topics which were subscribed to using the [`Subscribe`](#subscribe) command.  
