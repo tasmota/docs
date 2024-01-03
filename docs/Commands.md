@@ -1098,5 +1098,5 @@ EthType<a class="cmnd" id="ethtype"></a>|Ethernet type.<BR>`0` = ETH_PHY_LAN8720
 EthIPAddress<a class="cmnd" id="ethipaddress"></a>|Set device Ethernet IP address (for Wi-Fi, see <a href="#ipaddress">IpAddress</a>)<BR><li>`0.0.0.0` = use dynamic IP address (DHCP)</li><li>`XXX.XXX.XXX.XXX` = set static IP address</li><BR>*Follow any IP configuration commands with `restart 1` to apply changes*
 EthGateway<a class="cmnd" id="ethgateway"></a>|Set gateway IP address
 EthSubnetmask<a class="cmnd" id="ethsubnetmask"></a>|Set subnet mask
-EthDNSServer1<a class="cmnd" id="ethdnsserver"></a><BR>EthDNSServer2|Set DNS servers IP address
+EthDNSServer1<a class="cmnd" id="ethdnsserver"></a><BR>EthDNSServer2|Set DNS servers IP addresses<br>*Due to a limitation of the underlying LwIP library, only 2 DNS servers are supported. These are shared among all interfaces, including WiFi/Ethernet, IPv4/IPv6.*
 See Also|[`wifi`](#wifi) - Enable/Disable Wi-Fi<BR>
