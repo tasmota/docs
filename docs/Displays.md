@@ -691,7 +691,7 @@ Defines an optional mapping for touch controllers (always needed on resistive to
 `X1` = display left margin  
 `X2` = display right margin  
 `Y1` = display upper margin  
-`Y1` = display lower margin  
+`Y2` = display lower margin  
   
 `:r,X`
 Defines optional display rotation `X` = `0..3`
