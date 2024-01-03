@@ -2161,6 +2161,23 @@ Enable it with `Rule1 1`
 
 The only catch is that the protocol needs to be setup in the rule. Most likely this can be taken care of by using a more complex rule maybe using variables. Would update in future
 
+------------------------------------------------------------------------------
+
+### Power LED brightness indicates Power Load
+
+Uses the power LED to indicate the power load.
+
+* Relay off - Power LED off
+* Relay on  - Power LED dimmed to minimum of 50% (`128`) which equals no power consumption (`0W`)
+              the remaining possible brightness (50%-100%) correlates with the power consumption (100% = `255`, equals `200W`)
+
+```haskell
+# enable PWM mode
+LedPwmMode1 1
+
+Rule1 ON ENERGY#Power DO BACKLOG Scale1 %value%,0,200,128,255; LedPwmOn %var1% ENDON
+```
+Enable it with `Rule1 1`
 
 ------------------------------------------------------------------------------
 
