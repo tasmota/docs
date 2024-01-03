@@ -207,6 +207,8 @@ Choose an installation method:
     pip install esptool
     ```
 
+    ??? warning "Old esptool versions will not detect and will not flash newer chips (ESP32-C3, ESP32-S3, etc)"
+  
     Make sure you followed the steps to put your device in [_Programming mode_](#programming-mode). Place your chosen firmware binary file in the current folder you run _esptool.py_ from.
 
     Esptool uses the serial interface to communicate with your device. On Windows these interfaces are named COM1, COM2, etc. and on Linux they are named /dev/ttyUSB0, /dev/ttyUSB1, etc. Before using esptool, make sure you know which serial port your programming adapter is connected to.
