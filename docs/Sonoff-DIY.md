@@ -40,10 +40,12 @@ curl -XPOST --header "Content-Type: application/json" --data-raw '{"deviceid": "
 
 
 <details>
-<summary> Or with the Rester browser extension:</summary>
+<summary> Or with the Rester browser extension:</summary>  
+	
 Install **Rester** extension in Chrome or Firefox or any other preferred tool to perform REST API operations.
 
-To test your device DIY mode create new request in **Rester**:
+To test your device DIY mode create new request in **Rester**: 
+
 	1. Method: **POST**
 	2. URL: http://<*IP of your device*>:8081/zeroconf/info
 	3. Body: `{"data": {}}`
@@ -80,7 +82,8 @@ curl -XPOST --header "Content-Type: application/json" --data-raw '{"deviceid": "
 ```
 
 <details>
-<summary> Or with the Rester browser extension:</summary>
+<summary> Or with the Rester browser extension:</summary> 
+	
 	1. Method: **POST**
 	2. URL: http://<*IP of your device*>:8081/zeroconf/ota_unlock
 	3. Body: `{"data": {}}`
@@ -96,10 +99,23 @@ There are a number of [reported](https://github.com/itead/Sonoff_Devices_DIY_Too
 `$HASH` must be defined with the `sha256sum` of the intended firmware file (the `.bin` file) before running the `curl` command.  
 For example:
 ```sh
-HASH="f2ca1bb6c7e907d06dafe4687e579fce76b37e4e93b7605022da52e6ccc26fd2"
+HASH="5c1aecd2a19a49ae1bec0c863f69b83ef40812145c8392eebe5fd2677a6250cc"
 curl -XPOST --data "{\"deviceid\":\"\",\"data\":{\"downloadUrl\": \"http://sonoff-ota.aelius.com/tasmota-latest-lite.bin\", \"sha256sum\": \"$HASH\"} }" http://$SONOFF_IP:8081/zeroconf/ota_flash
 ```
 
+<details>
+<summary> Or with the Rester browser extension:</summary>  
+	
+	1. Method: **POST**
+	2. URL: http://<*IP of your device*>:8081/zeroconf/ota_flash
+	3. Body: `{"data": {"downloadUrl": "http://sonoff-ota.aelius.com/tasmota-latest-lite.bin", "sha256sum": "5c1aecd2a19a49ae1bec0c863f69b83ef40812145c8392eebe5fd2677a6250cc"}}`
+	4. Header: **Content-Type** with value **application/json**
+	5. Press **SEND**
+	6. You should get status code *200*
+</details>
+
+**Note:** If flashing is successful, a new **ITEAD-XXXXXXXX** access point will be created.  
+Connect to this AP to configure Tasmota to connect to your WiFi network. 
 
 You're now ready to [configure tasmota](https://tasmota.github.io/docs/Getting-Started/#using-web-ui).
 
