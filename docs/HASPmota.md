@@ -312,6 +312,53 @@ Attribute name|LVGL equivalent|Details
 `angle`||The length of the spinning segment in degrees - can be changed after initial value since v12.1.1.1
 `speed`||The time for 1 turn in ms - can be changed after initial value since v12.1.1.1
 
+#### Attributes specific to `chart`
+
+The `chart` object allows to track values over time and show them in a graph. This object is not part of OPENhasp.
+
+Example of `pages.jsonl`:
+
+```json
+{"page":1,"comment":"---------- Page 1 ----------"}
+{"id":0,"bg_color":"#0000A0","text_color":"#FFFFFF"}
+
+{"id":10,"obj":"chart","x":10,"y":50,"w":230,"h":150,"bg_color":"#440000","bg_opa":100,"border_color":"#0099EE","border_width":1,"radius":0,"pad_all":2,"y_min":0,"y_max":50,"point_count":20,"height10":0,"width10":0,"v_div_line_count":0,"h_div_line_count":5,"line_color":"#555555"}
+```
+
+Here is the `autoexec.be`:
+
+```berry
+# simple `autoexec.be` to run HASPmota using the default `pages.jsonl`
+import haspmota
+
+haspmota.start()
+global.p1b10.val = 10
+global.p1b10.val = 40
+global.p1b10.val = 30
+global.p1b10.val = 40
+global.p1b10.val = 20
+
+global.p1b10.val2 = 45
+global.p1b10.val2 = 35
+global.p1b10.val2 = 55
+global.p1b10.val2 = -5
+global.p1b10.val2 = 25
+```
+
+Output:
+![lv_chart](https://github.com/arendst/Tasmota/assets/49731213/f9ba4db0-a75f-4199-bb6f-2ed391e94daa)
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`x_min`<br>`x_max`<br>`y_min`<br>`y_max`|`set_range`|Set the minimum and maximum values for `x` or `y` scales. Default are 0..100 for both axis.
+`point_count`|`point_count`|Set the number of points to display in the chart. Default is `10`. Changing this value clears the content of the chart.
+`height10`<br>`width10`||Set the height and width for dots for each value. Set to `0` to remove dots and live only lines.
+`v_div_line_count`<br>`h_div_line_count`|`div_line_count`|Set the number of division lines vertically and horizontally. Detault for `v_div_line_count` is `5`, for `h_div_line_count` is `3`.<br>Change the division line color with `line_color`.
+`type`|`chart_type`|Change the chart type.<br>`0`: Don't draw the series<br>`1` (`LINE`): Connect the points with lines<br>`2` (`BAR`): Draw columns.<br>`3` (`SCATTER`): Draw points and lines in 2D (x,y coordinates).
+`val`<br>`val2`||Add a value to the fist series with `val` and to second series with `val2`.
+`zoom_x`<br>`zoom_y`|`zoom`|Zoom into the chart in X or Y direction.<br>`256` for no zoom, `512` double zoom.
+`update_mode`|`update_mode`|Set update mode of the chart object, default is `SHIFT`.<br>`0`: (`SHIFT`) Shift old data to the left and add the new one the right<br>`1`: (`CIRCULAR`) Add the new data in a circular way
+
 #### Attributes specific to `qrcode`
 
 Attribute name|LVGL equivalent|Details
