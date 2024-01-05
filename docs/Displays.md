@@ -501,7 +501,7 @@ RGB 16 bit interface: (ESP32-S3 only)
 3. HSYNC pin
 4. PCLK pin
 5. Backlight pin 
-6. b0-b5 pins (blue color)
+6. b0-b4 pins (blue color)
 7. g0-g5 pins (green color)
 8. r0-r4 pins (red color) 
 9. Pixel clock Speed in MHz (usually 14)
