@@ -482,6 +482,7 @@ tasmota.add\_driver<a class="cmnd" id="tasmota_add_driver"></a>|`(instance) ->ni
 tasmota.remove\_driver<a class="cmnd" id="tasmota_remove_driver"></a>|`(instance) ->nil`<br>Removes a driver
 tasmota.gc<a class="cmnd" id="tasmota_gc"></a>|`() -> int`<br>Triggers garbage collection of Berry objects and returns the bytes currently allocated. This is for debug only and shouldn't be normally used. `gc` is otherwise automatically triggered when necessary.
 tasmota.urlfetch<a class="cmnd" id="tasmota_urlfetch"></a>|`(url:string [, filename:string]) -> bytes:int`<br>Download a url (http or https) and store the content in the filesystem<br>`filename` is optional, needed if you want to change the name of the file from the url suffix. Returns the number of bytes downloaded or -1 if failed.
+tasmota.urlbecload<a class="cmnd" id="tasmota_urlbecload"></a>|`(url:string) -> bool`<br>Download `.bec` file from a url and run it, return `true` if sucessful. This allows to run complementary code like Partition Wizard from precompiled Berry.
 
 #### Functions used to retrieve Tasmota configuration
 
