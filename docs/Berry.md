@@ -1024,6 +1024,7 @@ arg<a class="cmnd" id="ws_arg"></a>|`(arg_name:string or arg_index:int): -> stri
 arg\_name<a class="cmnd" id="ws_arg_name"></a>|`(arg_index:int) -> string`<br>Returns the name of argument by index [0..arg_size()-1]
 has\_arg<a class="cmnd" id="ws_has_arg"></a>|`(arg_name:string): -> bool`<br>Checks if an argument with this name exists
 check\_privileged\_access<a class="cmnd" id="ws_check_privileged_access"></a>|`() -> bool`<br>Returns `true` if the page needs privileged access
+header<a class="cmnd" id="ws_header"></a>|`(name:string) -> string or nil`<br>Return the header with key `name` sent by the browser. The name is case sensitive. Return `nil` if the header is not present or not collected.<br>Currently only `Referer`, `Host`, `Authorization` and `If-None-Match`.
 content\_send<a class="cmnd" id="ws_content_send"></a>|`(string) -> nil`<br>Sends the HTML content to the client. Tasmota uses Chunked encoding, which means than the content is regularly sent to the client and not buffered in Tasmota's memory
 content\_button<a class="cmnd" id="ws_content_button"></a>|`([button:int]) -> nil`<br>Displays a standard button by code, using Tasmota localization. Possible values are `webserver.BUTTON_CONFIGURATION`, `webserver.BUTTON_INFORMATION`, `webserver.BUTTON_MAIN`, `webserver.BUTTON_MANAGEMENT`, `webserver.BUTTON_MODULE`. Default is `webserver.BUTTON_MAIN`.
 html\_escape<a class="cmnd" id="ws_html_escape"></a>|`(string) -> string`<br>Escapes characters to safe HTML.
