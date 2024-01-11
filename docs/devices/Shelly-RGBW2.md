@@ -1,35 +1,29 @@
+# [Shelly RGBW2](https://www.shelly.com/en-us/products/shop/shelly-rgbw2-us)
 
+<img src="https://kb.shelly.cloud/__attachments/229146742/image-20220920-071244.png?inst-v=37db5b47-02b4-47d2-9c77-9f9b8a60a4f2" width="250" align="right" />
 
+An ESP8266 with 2MB flash LED Controller.
+- Supports any 12v or 24v White, RGB, or RGBW led strips and 12/24v led bulbs, with up to 288W combined power
+- Supports four-way PWM, applied to control four colors LED(R/G/B/W) for colored lights, color temperature lights, and general lights
+- A separate 12V/24V power supply unit is required
+- 12V --> 144W combined / 45W per Channel
+- 24V --> 288W combined / 90W per Channel
+- [Shelly RGBW2 Knowledge Base](https://kb.shelly.cloud/knowledge-base/shelly-rgbw2)
+- [Shelly RGW2 API Reference](https://shelly-api-docs.shelly.cloud/gen1/#shelly-rgbw2-color)
 
-  
-The Shelly RGBW2 is supported by using a template.
-
-<img src="https://shelly.cloud/wp-content/uploads/2019/05/RGBW_250.png" width="250" align="right" />
-
-* [Allterco Shelly RGBW2 Product Page](https://shelly.cloud/wifi-smart-shelly-rgbw-2/)
-* [Allterco Shelly RGBW2 Shop](https://shop.shelly.cloud/shelly-rgbw2-wifi-smart-home-automation)
 
 
 ## ⚠️️Special Shelly Attention⚠️️
 
-**DO NOT CONNECT ANYTHING TO ANY GPIOs OF THESE DEVICES!!! (No sensors, no switches, nothing)  
-There is no galvanic isolation between the DC Inputs and the GPIOs.**
+**DO NOT CONNECT ANYTHING TO ANY GPIOs OF THESE DEVICES!**
+
+**No sensors, no switches, nothing!**
+
+**There is no galvanic isolation between the DC Inputs and the GPIOs.**
+
 **Do not connect AC/DC power and the serial connection at the same time!**
- Only use a Shelly as designed. 
 
-
-
-
-# [Shelly RGBW2](https://shelly.cloud/wifi-smart-shelly-rgbw-2/)
-
-
-An ESP8266 with 2MB flash LED Controller.
-- Support any 12v or 24v White, RGB, RGBW led strips and 12/24v led bulbs, with up to 288W combined power
-- Support 4 ways PWM, applied to control 4 colors LED(R/G/B/W), meet a requirement for colored lights, color temperature lights, and general lights
-- A separate 12V/24V power supply unit is required.
-- 12V => 144W combined / 45W p. Channel
-- 24V => 288W combined / 90W p. Channel
-
+**Only use a Shelly as designed.**
 
 
 
@@ -39,16 +33,17 @@ The Shelly RGBW2 model comes with a partially exposed programming/debug header w
 
 <img src="https://i1.wp.com/indomus.it/wp-content/uploads/Shelly-RGBW2-connessioni-per-riprogrammazione.png?w=610&ssl=1" height="250" />
 
-The onboard connector is 1.27mm raster with 1mm diameter holes. Normal Dupont cables won't fit. To avoid damaging the pcb, use either a stripped Ethernet cable and breadboard as an adapter, or female header socket legs (see image below). The legs of a female header socket fit nicely. Solder them to custom-crimped Dupont wires for use with your USB-to-UART adapter. These often come with Wemos D1 Mini boards in multiple lengths.
+The onboard connector is 1.27mm pitch with 1mm diameter holes. Normal Dupont cables won't fit. To avoid damaging the PCB, use either a stripped Ethernet cable and breadboard as an adapter, or female header socket legs (see image below). The legs of a female header socket fit nicely. Solder them to custom-crimped Dupont wires for use with your USB-to-UART adapter. These often come with Wemos D1 Mini boards in multiple lengths.
 
 <img src="https://user-images.githubusercontent.com/188284/63646301-aef1d800-c710-11e9-9bf7-5b45ca470144.png" height="250" />
 <img src="https://user-images.githubusercontent.com/188284/63646333-3dfef000-c711-11e9-9446-82ea0ce88c95.png" height="250" />
 
+
+
 ## Template
- 
 
 | GPIO | Component |
-| -- | -- |
+| --- | --- |
 | 0 | None
 | 1 | None
 | 2 | LEDLink
@@ -62,63 +57,84 @@ The onboard connector is 1.27mm raster with 1mm diameter holes. Normal Dupont ca
 | 14 | PWM3
 | 15 | PWM2
 | 16 | None
-| A0 | OpAmp Current Monitor
+| 17 | OpAmp Current Monitor
 
-[Template:](../Templates#importing-templates)
-` {"NAME":"ShellyRGBW2","GPIO":[0,0,157,0,40,89,0,0,37,17,39,38,0],"FLAG":7,"BASE":18}`  
+[Template:](../Templates.md#importing-templates)
 
-Energy metering is done by a LM321 OpAmp (1mOhm Shunt lowside) via ADC0 .
+    {"NAME":"ShellyRGBW2","GPIO":[0,0,157,0,40,89,0,0,37,17,39,38,0],"FLAG":7,"BASE":18}
 
-If you want to use a push button, you should take a look at the [Button & Switches.](../Buttons-and-Switches#button-vs-switch) 
+Energy metering is done by a LM321 OpAmp (1mOhm Shunt low side) via **GPIO17**.
+
+If you want to use a push button, you should take a look at the [Button and Switches](../Buttons-and-Switches.md#button-vs-switch).
 
 If you want the buttons to respond instantly, go to the console and type `SetOption13 1`.
-But, if you want press/double press/hold functionality, run instead `Backlog SetOption1 1; SetOption11 1; SetOption32 20` to enable all three states and set hold time of 2 seconds. Use [SetOption32](../Commands.md#setoption32) to set another hold time.
+
+If you want press/double press/hold functionality, run instead `Backlog SetOption1 1; SetOption11 1; SetOption32 20` to enable all three states and set hold time of 2 seconds. Use [SetOption32](../Commands.md#setoption32) to set another hold time.
 
 
 
 ## Flash mode
-To be able to flash the Tasmota firmware you need to get into flash mode. Therefore connect a wire from GPIO0 to ground. For further information have a look at [programming mode](../Getting-Started#programming-mode).
+To be able to flash the Tasmota firmware you need to get into flash mode. Connect a wire from **GPIO0** to ground when powering on the device. For further information have a look at [programming mode](../Getting-Started.md#programming-mode).
 
 ## Calibration
 After successfully flashing Tasmota and selecting the template for the Shelly RGBW2, you can start configuring the power consumption.
 
-1. Disconnect the GPIOs and connect the Shelly RGBW to its future power supply.  Set ADC0 to Analog in the [template settings](../Templates#how-to-use). Save this setting.
-2. After restarting, you will find the actual ADC Value of the analog input in the main menu. There should be no light on at this time.
-Make a note of this value. It's the baseValue.
+1. Disconnect the GPIOs and connect the Shelly RGBW to its future power supply. Set **GPIO17** to **ADC Input** in the [template configuration](../Templates.md#how-to-use) and click Save.
 
-3. In the template settings, set ADC0 to CT-POWER and save the settings.
+2. After restarting, the actual ADC value of the analog input is displayed on the Main Menu as **Analog0**. There should be no LED lights on at this time.
 
-4. Use the [AdcParam](../Commands.md#sensors) command:<BR> `AdcParam 7, baseValue, Multiplcator, Voltage` <BR>in the webconsole. For a 12VDC PowerSupply and a baseValue of 407 this lines looks like this: <BR>  `AdcParam 7, 407, 3282, 0.012`<BR>
+    Make a note of this value. It's the **baseValue** passed to the `AdcParam` command later on.
+
+3. In the template configuration, set **GPIO17** to **ADC CT Power** and click Save.
+
+4. Use the [AdcParam](../Commands.md#sensors) command in the web console:
+
+        AdcParam 7, baseValue, Multiplier, Voltage/1000
+
+    For a 12VDC power supply and a **baseValue** of 407, the command looks like this:
+
+        AdcParam 7, 407, 3282, 0.012
+
+
 5. If there are no lights on, the Main Menu should show only the Voltage but no consumption.
 6. Connect a light source with a current consumption known to you. Or measure the current with a multimeter. Compare the displayed values in the menu and those of your meter.
 Please note that the measurement of the Shelly RGBW2 is very inaccurate due to its electrical construction.
 
-!!! tip
-In case the values do not fit at all, you have to perform a recalibration. 
+### Calculate the Analog CT Multiplier (optional)
 
-1. Set the ADC0 input back to analog. 
-2. Note the base value when the light is switched off.
-3. Switch on the light and note the displayed analog value (comparison value) and the current value displayed by your meter (real value). 
-4. Calculate: `(ComparisonValue-baseValue)*100/realValue = Multiplicator`
+It may be necessary to calculate the Analog CT Multiplier value. Generally 3282 is sufficient.
 
-!!! example
-`BaseValue 407, ComparisonValue 455, realValue=1.5A
-(455-407)*100/1,5 = 3200`
+1. Set **GPIO17** input back to **ADC Input**.
+2. Note the **baseValue** when the light is switched off.
+3. Switch on the light and note the displayed analog value (**comparisonValue**) and the current value displayed by your meter (**realValue**).
+4. Calculate the Multiplier value:
 
-5. Set the ADC0 input back to CT-Power and start at 4. of the previous list.
+    (comparisonValue - baseValue) x 100 / realValue = Multiplier
 
-  
-## Using the attached AC switch adapter
+    **Example**:
 
-As described in [AC Frequency Detection Switch](../Buttons-and-Switches#ac-frequency-detection-switch) section, the adapter sends pulses (by shorting red wire to GND), when AC voltage is present between the two black wires.
-Shelly RGBW2 has an on-board pull-up resistor to 3.3V, therefore to make it work set GPIO5 to `Switch_n` mode, then use command like `SwitchDebounce 69` to enable pulse detection.
+        comparisonValue = 455
+        baseValue = 407
+        realValue 1.5A
+
+        (455-407)*100/1.5 = 3200
+
+5. Set **GPIO17** input back to **ADC CT Power** and start at step 4 of the  Calibration procedure.
 
 
-## Use rules to control both switches
+## Using the Attached AC Switch Adapter
 
-If [SetOption37](../Commands.md#setoption37) is set to 128 the RGB and White is splited.
-To switch both RGB and W on/off with the connected hardware switch, you can use this Rule:
->`rule1 on power1#state do power2 %value% endon`<BR> `rule1 1`
+As described in [AC Frequency Detection Switch](../Buttons-and-Switches.md#ac-frequency-detection-switch) section, the adapter sends pulses (by shorting red wire to GND), when AC voltage is present between the two black wires.
+
+Shelly RGBW2 has an onboard pull-up resistor to 3.3V. To make it work correctly, set **GPIO5** to `Switch_n` mode. Then use the ['SwitchDebounce'](Commands.md#switchdebounce) command to set the number of pulses required for the switch to be recognized as on or off. For example, `SwitchDebounce 69`.
+
+
+## Use Rules to Control Both Switches
+
+If [SetOption37](../Commands.md#setoption37) is set to 128 the RGB and White is split, use this rule to switch both RGB and White on/off with the connected hardware switch:
+
+    Rule1 ON Power1#State DO Power2 %value% ENDON
+    Rule1 1
 
 
 
@@ -133,10 +149,14 @@ Some issues were reported for this topic - [search query](https://github.com/are
 
 ## Light setup
 
-Please read: [Lights](../Lights#control-lights).
+To get the equivalent of what Shelly calls "White mode", run `SetOption68 1`.
+
+To switch back to what Shelly calls "Color mode" (the default), run `SetOption68 0`.
+
+See [Lights](../Lights.md#control-lights) for more details.
 
 ## PCB images
-  
+
 ![shelly-rgbw2-front](https://user-images.githubusercontent.com/1452106/150571332-524315ce-dfe9-478d-8a47-cddf80980ab4.png)
  ![shelly-rgbw2-bottom](https://user-images.githubusercontent.com/1452106/150574749-f83f88d8-8b33-4f3b-a8ab-94d4a8bbfbdb.png)
 
