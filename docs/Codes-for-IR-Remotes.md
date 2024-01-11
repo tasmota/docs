@@ -7,7 +7,7 @@ Feel free to contribute this list.
 
 ## TV's
 
-## Samsung AA59 TV remote controller
+### Samsung AA59 TV remote controller
 
 **Example IRsend Command:**
 
