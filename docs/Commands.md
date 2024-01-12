@@ -1016,6 +1016,21 @@ See also|[`SetOption157`](#setoption157) - Hide/Show sensitive data
 
 ### BLE ESP32
 
+Tasmota keeps track of iBeacon devices in a list with up to 32 slots where each device is uniquely identified by these attributes:
+
+- `UUID`
+- `Major`
+- `Minor`
+
+Once all 32 slots are used up, additional devices will not be added until at least one slot is freed up again.
+
+Devices are added to the list as soon as BLE iBeacon advertisements are received from a yet unknown beacon.<BR>
+Any additional advertisements override the device's entry until a reporting period (see [IBeaconPeriod](#ibeaconperiod)) has passed and an MQTT message is sent based on the last advertisement's data.
+
+Device entries expire automatically if no iBeacon advertisements were received within a certain timeframe (see [IBeaconTimeout](#ibeacontimeout)).<BR>
+Upon expiry, Tasmota creates an MQTT message with the `RSSI` value set to `0000`.
+<BR>
+
 Command|Parameters
 :---|:---
 BLEAddrFilter<a class="cmnd" id="bleaddrfilter"></a>|Set BLE Address type filter.<BR>`BLEAddrFilter` = show filter level<BR>`BLEAddrFilter n` = set BLE address type filter 0..3 - default 3.  Ignores BLE address types > filter value.  Set 0 to ONLY see public addresses.
@@ -1029,11 +1044,11 @@ BLEName<a class="cmnd" id="blename"></a>|Read or write the name of a BLE device.
 BLEOp<a class="cmnd" id="bleop"></a>|Perform a simple active BLE operation (read/write/notify).<BR>see separate description in source code
 BLEPeriod<a class="cmnd" id="bleperiod"></a>|Set the period for publish of BLE data<BR>`<value>` = set interval in seconds
 BLEScan<a class="cmnd" id="blescan"></a>|Cause/Configure BLE a scan<BR>`BLEScan0 0..1` = enable or disable Active scanning. (an active scan will gather extra data from devices, including name)<BR>`BLEScan` = Trigger a 20s scan now if in BLEMode1<BR>`BLEScan n` = Trigger a scan now for n seconds if in BLEMode1
-IBEACON<a class="cmnd" id="ibeacon"></a>|Show or set enable for the iBeacon driver<BR>`IBEACON` = Display 0|1<BR>`IBEACON 0` = disable<BR>`IBEACON 1` = enable.
-IBEACONclear<a class="cmnd" id="ibeaconclear"></a>|Clear iBeacon list
-IBEACONonlyaliased<a class="cmnd" id="ibeacononlyaliased"></a>|Show or set OnlyAliased for the iBeacon driver<BR>`IBEACONonlyaliased` = Display 0|1<BR>`IBEACONonlyaliased 0` = enable iBeacon to hear ALL BLE devices<BR>`IBEACONonlyaliased 1` = enable iBeacon to hear ONLY devices with valid BLEAlias<BR>`IBEACONonlyaliased 2` = enable iBeacon to hear ONLY devices with valid BLEAlias starting `iB`
-IBEACONperiod<a class="cmnd" id="ibeaconperiod"></a>|Display or Set the period for publish of iBeacon data<BR>`IBEACONperiod` = display interval<BR>`IBEACONperiod ss` = set interval in seconds
-IBEACONtimeout<a class="cmnd" id="ibeacontimeout"></a>|Display or Set the timeout for iBeacon devices<BR>`IBEACONtimeout` = display timeout<BR>`IBEACONtimeout ss` = set timeout in seconds
+IBeacon<a class="cmnd" id="ibeacon"></a>|Show or set enable for the iBeacon driver<BR>`IBeacon` = Get current state<BR>`IBeacon 0` = disable<BR>`IBeacon 1` = enable.
+IBeaconClear<a class="cmnd" id="ibeaconclear"></a>|Clears the list of iBeacon devices
+IBeaconOnlyAliased<a class="cmnd" id="ibeacononlyaliased"></a>|Shows or sets OnlyAliased for the iBeacon driver<BR>`IBeaconOnlyAliased` = Get current state<BR>`IBeaconOnlyAliased 0` = enable iBeacon to hear ALL BLE devices<BR>`IBeaconOnlyAliased 1` = enable iBeacon to hear ONLY devices with valid BLEAlias<BR>`IBeaconOnlyAliased 2` = enable iBeacon to hear ONLY devices with valid BLEAlias starting `iB`
+IBeaconPeriod<a class="cmnd" id="ibeaconperiod"></a>|Displays or sets the period at which iBeacon data will be published.<BR>`IBeaconPeriod` = Get current interval (defaults to 10)<BR>`IBeaconPeriod <sec>` = Interval in seconds
+IBeaconTimeout<a class="cmnd" id="ibeacontimeout"></a>|Displays or sets the timeout after which iBeacon devices are automatically expunged from the iBeacon device list.<BR>`IBeaconTimeout` = Get current timeout (defaults to 30)<BR>`IBeaconTimeout <sec>` = Timeout in seconds
 
 ### BLE MI Sensors
 
