@@ -1044,11 +1044,11 @@ BLEName<a class="cmnd" id="blename"></a>|Read or write the name of a BLE device.
 BLEOp<a class="cmnd" id="bleop"></a>|Perform a simple active BLE operation (read/write/notify).<BR>see separate description in source code
 BLEPeriod<a class="cmnd" id="bleperiod"></a>|Set the period for publish of BLE data<BR>`<value>` = set interval in seconds
 BLEScan<a class="cmnd" id="blescan"></a>|Cause/Configure BLE a scan<BR>`BLEScan0 0..1` = enable or disable Active scanning. (an active scan will gather extra data from devices, including name)<BR>`BLEScan` = Trigger a 20s scan now if in BLEMode1<BR>`BLEScan n` = Trigger a scan now for n seconds if in BLEMode1
-IBeacon<a class="cmnd" id="ibeacon"></a>|Show or set enable for the iBeacon driver<BR>`IBeacon` = Get current state<BR>`IBeacon 0` = disable<BR>`IBeacon 1` = enable.
+IBeacon<a class="cmnd" id="ibeacon"></a>|Enable or disable the iBeacon driver<BR>`IBeacon` = Get current state<BR>`IBeacon 0` = Disable<BR>`IBeacon 1` = Enable
 IBeaconClear<a class="cmnd" id="ibeaconclear"></a>|Clears the list of iBeacon devices
 IBeaconOnlyAliased<a class="cmnd" id="ibeacononlyaliased"></a>|Shows or sets OnlyAliased for the iBeacon driver<BR>`IBeaconOnlyAliased` = Get current state<BR>`IBeaconOnlyAliased 0` = enable iBeacon to hear ALL BLE devices<BR>`IBeaconOnlyAliased 1` = enable iBeacon to hear ONLY devices with valid BLEAlias<BR>`IBeaconOnlyAliased 2` = enable iBeacon to hear ONLY devices with valid BLEAlias starting `iB`
-IBeaconPeriod<a class="cmnd" id="ibeaconperiod"></a>|Displays or sets the period at which iBeacon data will be published.<BR>`IBeaconPeriod` = Get current interval (defaults to 10)<BR>`IBeaconPeriod <sec>` = Interval in seconds
-IBeaconTimeout<a class="cmnd" id="ibeacontimeout"></a>|Displays or sets the timeout after which iBeacon devices are automatically expunged from the iBeacon device list.<BR>`IBeaconTimeout` = Get current timeout (defaults to 30)<BR>`IBeaconTimeout <sec>` = Timeout in seconds
+IBeaconPeriod<a class="cmnd" id="ibeaconperiod"></a>|Displays or sets the period at which iBeacon data will be published.<BR>`IBeaconPeriod` = Get current interval (defaults to `10`)<BR>`IBeaconPeriod <sec>` = Interval in seconds
+IBeaconTimeout<a class="cmnd" id="ibeacontimeout"></a>|Displays or sets the timeout after which iBeacon devices are automatically expunged from the iBeacon device list.<BR>`IBeaconTimeout` = Get current timeout (defaults to `30`)<BR>`IBeaconTimeout <sec>` = Timeout in seconds
 
 ### BLE MI Sensors
 
