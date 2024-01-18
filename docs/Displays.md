@@ -803,6 +803,121 @@ AF
 #
 ```
 
+## Universal Touch Driver  
+This option allows to add drivers for various touch chips  
+to use this you must ommit the Touch ids in normal display.ini  
+instead use these IDs.  
+
+4 sections:  
+
+`:UTI`,FT5206,I2,38,-1,-1  
+init section  
+device name, up to 7 chars  
+interface type:  I=I2C, S=SPI, R=resistive,  1 or 2 denotes bus number, i2c address or SPI CS pin, reset pin, irq pin
+
+`:UTT`  
+touch check call  
+
+`:UTX`  
+get x coordinate  
+
+`:UTY`  
+get y coordinate  
+
+commands:  
+input goes to array[16]  
+result register holds move or compare  
+
+DN = decimal number  
+HN = hex number  
+
+`RD HN` = read one byte  (from bytes adress)  
+`RDM HN DN` = read n bytes (from bytes adress)  
+
+`RDW HWN` = read one byte  (from word adress)  
+`RDWM HWN DN` = read n bytes (from word adress)  
+
+`WR HN HN` = write one byte  (to bytes adress)  
+`WRW HWN HN` = write one byte (to word adress)  
+
+`CP HN` = compare array[0] with immediate to result  
+`CPR HN` = compare result with immediate to result  
+
+`RTF` = return when result == false with false  
+`RTT` = return when result == true  with false  
+
+`MV DN DN` = move from array index to result, second parameter: 1 = move byte, 2 = move word, 3 = move word, reverse order  
+
+`MVB DN DN` = move byte from array index to result, par1; 0 = low, 1 = high byte, par2 = array index  
+
+`AND HN` = and result with immediate to result  
+
+`RT` = return result  
+
+`GSRT DN` = get result from simple resitive touch to array, parameter = threshold  
+
+`DBG DN` = log result and first 4 array bytes  
+
+example:  
+
+```
+:H,ILI9342,320,240,16,SPI,1,5,18,23,15,-1,-1,38,40
+:S,2,1,3,0,100,100
+:B,60,0
+:I
+EF,3,03,80,02
+CF,3,00,C1,30
+ED,4,64,03,12,81
+E8,3,85,00,78
+CB,5,39,2C,00,34,02
+F7,1,20
+EA,2,00,00
+C0,1,23
+C1,1,10
+C5,2,3e,28
+C7,1,86
+36,1,48
+37,1,00
+3A,1,55
+B1,2,00,18
+B6,3,08,82,27
+F2,1,00
+26,1,01
+E0,0F,0F,31,2B,0C,0E,08,4E,F1,37,07,10,03,0E,09,00
+E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
+21,80
+11,80
+29,80
+:o,28
+:O,29
+:A,2A,2B,2C,16
+:R,36
+:0,08,00,00,00
+:1,A8,00,00,84
+:2,C8,00,00,02
+:3,68,00,00,85
+:i,21,20
+:UTI,FT5206,I2,38,-1,-1
+RD A8
+CP 11
+RTF
+RD A3
+CP 64
+RTF
+RT
+:UTT
+RDM 00 16
+MV 2 1
+RT
+:UTX
+MV 3 2
+RT
+:UTY
+MV 5 2
+RT
+#
+```
+
 ## Compiling
 There are also many variants of each display available and not all variants may be supported.  
 
