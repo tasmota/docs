@@ -509,6 +509,8 @@ RGB 16 bit interface: (ESP32-S3 only)
 All signals must be given. Unused pins may be set to -1. If you specify a `*` char the pin number is derived from the Tasmota GPIO GUI.  
 The CS and DC pins must be the standard pins e.g. `SPI_CS` or `SPI_DC`.  
 
+there are RGB displays that also need an SPI initialisation. in this case specify the Init sequence with :IS,SCLK,MOSI,CS,RESET   
+
 !!! example "Example"
 
 ```haskell
