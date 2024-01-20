@@ -850,13 +850,15 @@ HN = hex number
 
 `MVB DN DN` = move byte from array index to result, par1; 0 = low, 1 = high byte, par2 = array index  
 
-`AND HN` = and result with immediate to result  
+`AND HWN` = and result with immediate HEX WORD to result  
 
 `RT` = return result  
 
 `GSRT DN` = get result from simple resitive touch to array, parameter = threshold  
 
-`DBG DN` = log result and first 4 array bytes  
+`XPT DN` = get result from XPT2046 SPI touch chip to array, parameter = threshold  
+
+`DBG DN` = log result and first 4 array bytes, DN = id number  
 
 example:  
 
