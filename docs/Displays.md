@@ -425,6 +425,7 @@ The EPD fonts use about 9k space, which can be selected at compile time using \#
 
 ## Universal Display Driver
 
+(`#define USE_UNIVERSAL_DISPLAY`)  
 Universal Display Driver or uDisplay is a way to define your display settings using a simple text file and easily add it to Tasmota.
 uDisplay is `DisplayModel 17`. It supports I2C and hardware or software SPI (3 or 4 wire), 8,16 Bit parallel and RGB interface. The driver must be enabled by OPTION A3 on any GPIO pin. 
 
@@ -540,7 +541,7 @@ there are RGB displays that also need an SPI initialisation. in this case specif
 `:I`  
 Initial register setup for the display controller. (`IC` marks that the controller is using command mode even with command parameters)
 All values are in hex. On SPI the first value is the command, then the number of arguments and the the arguments itself.
-`Bi7 7` on the number of arguments set indicate a wait of 150 ms. On I^2^C all hex values are sent to I^2^C.
+`Bit 7` on the number of arguments set indicate a wait of 150 ms. On I^2^C all hex values are sent to I^2^C.
 
 !!! example
 
@@ -768,7 +769,7 @@ E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
 :3,E8,00,00,02
 #
 ```
-Scripter is the nost convenient way to edit and develop a uDisplay driver. On every scripter save the display is reinitialized and you immediately see results of your changes.  
+Scripter is the nost convenient way to edit and develop an uDisplay driver. On every scripter save the display is reinitialized and you immediately see results of your changes.  
 
 !!! example "Scripter driven display descriptor"  
 
@@ -804,6 +805,8 @@ AF
 ```
 
 ## Universal Touch Driver  
+
+(`#define USE_UNIVERSAL_TOUCH`)  
 This option allows to add drivers for various touch chips  
 to use this you must ommit the Touch ids in normal display.ini  
 instead use these IDs.  
