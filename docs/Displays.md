@@ -855,6 +855,10 @@ HN = hex number
 
 `AND HWN` = and result with immediate HEX WORD to result  
 
+`SCL DWN FLOAT` = scale result by subtracting first paramter and multiplying with second float paramter  
+
+`LIM DWN` = limit result with immediate word to result  
+
 `RT` = return result  
 
 `GSRT DN` = get result from simple resitive touch to array, parameter = threshold  
