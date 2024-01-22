@@ -926,6 +926,97 @@ MV 5 2
 RT
 #
 ```
+### FT5206 example
+```
+:UTI,FT5206,I2,38,-1,-1
+RD A8
+CP 11
+RTF
+RD A3
+CP 64
+RTF
+RT
+:UTT
+RDM 00 16
+MV 2 1
+RT
+:UTX
+MV 3 2
+RT
+:UTY
+MV 5 2
+RT
+#
+```
+### XPT2046 example
+```
+:UTI,XPT2046,S1,21,-1,22
+CPR 00
+RT
+:UTT
+XPT 300
+RT
+:UTX
+MV 0 2
+;DBG 1
+SCL 460 0.0930233
+LIM 319
+RT
+:UTY
+MV 2 2
+SCL 300 0.0695652
+LIM 239
+RT
+#
+```
+### GT911 example
+```
+:UTI,GT911,I1,5d,38,-1
+RDWM 8140 4
+MV 0 1
+CPR 39
+RTF
+MV 1 1
+CPR 31
+RTF
+MV 2 1
+CPR 31
+RTF
+RT
+:UTT
+RDW 814E
+MV 0 1
+AND 80
+CPR 80
+RTF
+RDWM 8150 8
+WRW 814E 00
+RT
+:UTX
+MV 0 3
+RT
+:UTY
+MV 2 3
+RT
+#
+```
+
+### Simple resitive touch example
+```
+:UTI,SRES,R
+CPR 00
+RT
+:UTT
+GSRT 500
+RT
+:UTX
+MV 0 2
+RT
+:UTY
+MV 2 2
+RT
+#
+```
 
 ## Compiling
 There are also many variants of each display available and not all variants may be supported.  
