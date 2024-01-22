@@ -1451,6 +1451,76 @@ So in this script the three phases get added and published as `Power_total`.
     #
     ```
 
+### EMH LZQJ-XC (OBIS)
+
+Script to read a EMH metering LZQJ-XC smart meter.
+
+This script is for a smart meter that is set to "Protocol mode A" IEC 62056-21:2002(E) 6.4.1
+by the supplier. Therefore it is set to a fixed baud rate of 300 and can not be switched to a higher baudrate.
+
+??? summary "View script"
+    ```
+    >D
+    res=0
+    scnt=0
+    
+    >B
+    =>sensor53 r
+    
+    >F
+    ;F section is executed every 100ms
+    scnt+=1
+    switch scnt
+    ;300ms after start: set sml driver to 300 baud and send /?! as HEX to trigger the Meter.
+    case 3
+    ;Statt in >M Sektion hier den Zähler alle 300s triggern. 
+    ;Denn das Kommando "+1,5,o,0,300,METER,4,3000,2F3F210D0A" in >M Sektion funktioniert nicht richtig - <txPeriod> = 3000 wird nicht angewendet. 
+    ;Der Zähler wird sofort nach dem Auslesen (nach 261s) erneut getriggert, was zu einem Versatz in den Messwerten führt.
+    res=sml(1 0 300)
+    res=sml(1 1 "2F3F210D0A")
+    ;300000ms after start: Restart sequence
+    case 3000
+    scnt=0
+    ends
+    
+    >M 1
+    ; Device: EMH metering LZQJ-XC
+    ; protocol is OBIS ASCII
+    ; Gerät mit hex "2F3F210D0A" = ASCII "/?!" aufwecken.
+    ; Zaehler EMH LZQJ-XC arbeitet im "Protocol mode A" IEC 62056-21:2002(E) 6.4.1
+    ; mit einer festen Baudrate von 300 Baud und kann nicht umgeschaltet werden
+    ; Zaehler EMH LZQJ-XC auslesen dauert 4:21 Minuten. Kuerzere TelePeriod als 300sek/5min daher nicht sinnvoll.
+    
+    +1,5,o,0,300,METER,4
+    1,0.0.0(@1,Zähler-Nr.,,0_0_0,0
+    1,0.0.9(@#),Zähler-ID,,0_0_9,0
+    1,0.9.1(@1),Uhrzeit,,0_9_1,0
+    1,0.9.2(@1),Datum,,0_9_1,0
+    
+    1,1.6.1(@1,MaxBezugT1,kW,1_6_1,3
+    1,1.6.2(@1,MaxBezugT2,kW,1_6_2,3
+    
+    1,1.8.0(@1,WirkEnBezug,kWh,1_8_0,3
+    1,1.8.1(@1,WirkEnBezugNT,kWh,1_8_1,3
+    1,1.8.2(@1,WirkEnBezugHT,kWh,1_8_2,3
+    
+    1,2.6.1(@1,MaxEinspT1,kW,2_6_1,3
+    1,2.6.2(@1,MaxEinspT2,kW,2_6_2,3
+    
+    1,2.8.0(@1,WirkEnEinsp,kWh,2_8_0,3
+    1,2.8.1(@1,WirkEnEinspNT,kWh,2_8_1,3
+    1,2.8.2(@1,WirkEnEinspHT,kWh,2_8_2,3
+    
+    1,3.8.0(@1,BlindEnBezug,kvarh,3_8_0,3
+    1,3.8.1(@1,BlindEnBezugT1,kvarh,3_8_1,3
+    1,3.8.2(@1,BlindEnBezugT2,kvarh,3_8_2,3
+    
+    1,4.8.0(@1,BlindEnEinsp,kvarh,4_8_0,3
+    1,4.8.1(@1,BlindEnEinspT1,kvarh,4_8_1,3
+    1,4.8.2(@1,BlindEnEinspT2,kvarh,4_8_2,3
+    #
+    ```
+    
 ### eZB MD3 (SML)
 	
 ??? summary "View script"
