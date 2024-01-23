@@ -1811,7 +1811,54 @@ For writing 32-bit registers like 40126, use [ModBus Bridge](Modbus-Bridge) driv
     1,010304UUuuUUuu@i10:100,Daily Yield,DY,Daily_Yield,2
     #
     ```
+
+### inepro PRO380-Mod (Modbus)
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
     
+    >M 1    
+    +1,3,M,0,9600,MODBUS,1,1,01035002,01035004,01035006,01035008,0103500C,0103500E,01035010,01035012,01035014,01035016,01035018,0103501A,0103501C,0103501E,01035020,01035022,01035024,01035026,01035028,0103502A,0103502C,0103502E,01035030,0103600C,01036018,01036030,0103603C
+    ; ***************************************
+    ; *   inepro PRO380-Mod Energy Meter    *
+    ; ***************************************
+    ; Serial: 9600
+    ; Device parity: EVEN
+    ; Slave address: 0x01
+    ; ***************************************
+    1,010304ffffffff@i0:1,L1 Voltage,V,32_7_0,3
+    1,010304ffffffff@i1:1,L2 Voltage,V,52_7_0,3
+    1,010304ffffffff@i2:1,L3 Voltage,V,72_7_0,3
+    1,010304ffffffff@i3:1,Grid frequency,Hz,14_7_0,3
+    1,010304ffffffff@i4:1,L1 Current,A,31_7_0,3
+    1,010304ffffffff@i5:1,L2 Current,A,51_7_0,3
+    1,010304ffffffff@i6:1,L3 Current,A,71_7_0,3
+    1,010304ffffffff@i7:1,Tot act power,kW,1_7_0,3
+    1,010304ffffffff@i8:1,L1 Act power,kW,21_7_0,3
+    1,010304ffffffff@i9:1,L2 Act power,kW,41_7_0,3
+    1,010304ffffffff@i10:1,L3 Act power,kW,61_7_0,3
+    1,010304ffffffff@i11:1,Tot react power,kvar,3_7_0,3
+    1,010304ffffffff@i12:1,L1 react power,kvar,23_7_0,3
+    1,010304ffffffff@i13:1,L2 react power,kvar,43_7_0,3
+    1,010304ffffffff@i14:1,L3 react power,kvar,63_7_0,3
+    1,010304ffffffff@i15:1,Tot appar power,kVA,9_7_0,3
+    1,010304ffffffff@i16:1,L1 appar power,kVA,29_7_0,3
+    1,010304ffffffff@i17:1,L2 appar Power,kVA,49_7_0,3
+    1,010304ffffffff@i18:1,L3 appar Power,kVA,69_7_0,3
+    1,010304ffffffff@i19:1,Power factor,,13_7_0,3
+    1,010304ffffffff@i20:1,L1 Power factor,,33_7_0,3
+    1,010304ffffffff@i21:1,L2 Power factor,,53_7_0,3
+    1,010304ffffffff@i22:1,L3 Power factor,,73_7_0,3
+    1,010304ffffffff@i23:1,Forw act en,kWh,1_8_0,3
+    1,010304ffffffff@i24:1,Rev act en,kWh,2_8_0,3
+    1,010304ffffffff@i25:1,Forw react en,kvarh,3_8_0,3
+    1,010304ffffffff@i26:1,Rev react en,kvarh,4_8_0,3
+    #
+    ```
+
 ### Iskra MT 174 (OBIS)
 
 ??? summary "View script"
