@@ -3008,6 +3008,46 @@ This meter sends bursts of data at 115200 baud every 10 seconds. Some data lines
     #
     ```
 
+### Schneider iEM3150 (Modbus)
+Set device parity to EVEN. Set device serial baud rate to 9600.
+	
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    
+    >M 1
+    +1,3,M,0,9600,MODBUS,1,1,0103B02B,01030BB7,01030BB9,01030BBB,01030BC1,01030BCB,01030BCD,01030BCF,01030BD1,01030BD3,01030BD5,01030BD7,01030BDB,01030BED,01030BEF,01030BF1,01030BF3,01030C0B,01030C25
+    ; ***************************************
+    ; *   Schneider iEM3150 Energy Meter    *
+    ; ***************************************
+    ; Serial: 9600
+    ; Device parity: EVEN
+    ; Slave address: 0x01
+    ; ***************************************
+    1,010304ffffffff@i0:1,Wirkenergie,kWh,1_8_0,3
+    1,010304ffffffff@i1:1,Strom L1,A,31_7_0,3
+    1,010304ffffffff@i2:1,Strom L2,A,51_7_0,3
+    1,010304ffffffff@i3:1,Strom L3,A,71_7_0,3
+    1,010304ffffffff@i4:1,Strom Avg,A,11_7_0,3
+    1,010304ffffffff@i5:1,Spannung L1-L2,V,V_L1-L2,3
+    1,010304ffffffff@i6:1,Spannung L2-L3,V,V_L2-L3,3
+    1,010304ffffffff@i7:1,Spannung L3-L1,V,V_L3-L1,3
+    1,010304ffffffff@i8:1,Spannung L-L,V,V_L-L_sum,3
+    1,010304ffffffff@i9:1,Spannung L1-N,V,32_7_0,3
+    1,010304ffffffff@i10:1,Spannung L2-N,V,52_7_0,3
+    1,010304ffffffff@i11:1,Spannung L3-N,V,72_7_0,3
+    1,010304ffffffff@i12:1,Spannung L-N,V,12_7_0,3
+    1,010304ffffffff@i13:1,Wirkleistung L1,kW,21_7_0,3
+    1,010304ffffffff@i14:1,Wirkleistung L2,kW,41_7_0,3
+    1,010304ffffffff@i15:1,Wirkleistung L3,kW,61_7_0,3
+    1,010304ffffffff@i16:1,Wirkleistung,kW,1_7_0,3
+    1,010304ffffffff@i17:1,Leistungsfaktor,,13_7_0,3
+    1,010304ffffffff@i18:1,Frequenz,Hz,14_7_0,3
+    #
+    ```
+
 ### Schneider iEM3155 (MODBus)
 Set device parity to NONE
 	
