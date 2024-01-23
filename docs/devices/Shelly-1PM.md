@@ -1,14 +1,17 @@
+# [Shelly 1PM](https://www.shelly.com/en-us/products/shop/shelly-1pm-ul)
+
 The Shelly 1PM is supported from Tasmota 6.5.0.10 using a template.
 
-<img src="https://shelly.cloud/wp-content/uploads/2019/02/shelly1pm_thumb.png" width="250" align="right" />
+[Shelly 1PM Knowledge Base](https://kb.shelly.cloud/knowledge-base/shelly-1pm)
 
-* [Allterco Shelly 1PM Product Page](https://shelly.cloud/shelly-1pm-wifi-smart-relay-home-automation/)
-* [Allterco Shelly 1PM Shop](https://shelly.cloud/product/wifi-smart-home-automation-shelly-1pm-switch-relay/)
+[Shelly 1PM API Reference](https://shelly-api-docs.shelly.cloud/gen1/#shelly1-shelly1pm)
+
+<img src="https://www.shelly.com/_Resources/Persistent/4/7/8/1/478161c97b76a75a2693da49f2772c01ad2cd4e0/Shelly_1PM_x1-1200x1200.webp" width="250" align="right" />
 
 ## ⚠️️Special Shelly Attention⚠️️
 
 **DO NOT CONNECT ANYTHING TO ANY GPIOs OF THESE DEVICES!!! (No sensors, no switches, nothing) <br>
-The GPIOs on the Shelly are connected to AC power!** Only use a Shelly as designed. 
+The GPIOs on the Shelly are connected to AC power!** Only use a Shelly as designed.
 
 **Do not connect AC power and the serial connection at the same time**
 The GND connection of the Shelly is connected to the live AC wire. Connecting serial with your PC will fry your PC.
@@ -20,7 +23,7 @@ Shelly 1PM comes with a partially exposed programming/debug header which can be 
 
 <img src="https://raw.githubusercontent.com/arendst/arendst.github.io/master/media/shelly/shelly1pm-pinout-812x400.png" height="250" />
 
-## Template 
+## Template
 ```
 {"NAME":"Shelly 1PM","GPIO":[56,0,0,0,82,134,0,0,0,0,0,21,0],"FLAG":2,"BASE":18}
 ```
