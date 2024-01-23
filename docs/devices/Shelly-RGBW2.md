@@ -127,7 +127,7 @@ It may be necessary to calculate the Analog CT Multiplier value. Generally 3282 
 
 As described in [AC Frequency Detection Switch](../Buttons-and-Switches.md#ac-frequency-detection-switch) section, the adapter sends pulses (by shorting red wire to GND), when AC voltage is present between the two black wires.
 
-Shelly RGBW2 has an onboard pull-up resistor to 3.3V. To make it work correctly, set **GPIO5** to `Switch_n` mode. Then use the ['SwitchDebounce'](Commands.md#switchdebounce) command to set the number of pulses required for the switch to be recognized as on or off. For example, `SwitchDebounce 69`.
+Shelly RGBW2 has an onboard pull-up resistor to 3.3V. To make it work correctly, set **GPIO5** to `Switch_n` mode. Then use the ['SwitchDebounce'](../Commands.md#switchdebounce) command to set the number of pulses required for the switch to be recognized as on or off. For example, `SwitchDebounce 69`.
 
 
 ## Use Rules to Control Both Switches
