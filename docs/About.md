@@ -44,7 +44,7 @@ People helping to keep the show on the road:
 - Gennaro Tortone for implementing and maintaining Eastron drivers
 - Raymond Mouthaan for managing Wemos Wiki information
 - Norbert Richter for his [decode-config.py](https://github.com/tasmota/decode-config) tool
-- Andre Thomas for providing [thehackbox](http://thehackbox.org/tasmota/) OTA support and daily development builds
+- Andre Thomas for TasmotaClient, Tasmota Sleep and sensor drivers
 - Joel Stein, digiblur and Shantur Rathore for their Tuya research and driver
 - Frogmore42 for providing many issue answers
 - Jason2866 for platformio support and providing many issue answers
