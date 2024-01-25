@@ -42,7 +42,7 @@ set_values|lv_anim_set_values|"(lv.lv_anim)ii"|
 set_var|lv_anim_set_var|"(lv.lv_anim)."|
 start|lv_anim_start|"(lv.lv_anim)"|lv.lv_anim
 
-## `lv_display` class
+### `lv_display` class
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -123,7 +123,7 @@ set_user_data|lv_display_set_user_data|"(lv.lv_display)."|
 trig_activity|lv_display_trigger_activity|"(lv.lv_display)"|
 trigger_activity|lv_display_trigger_activity|"(lv.lv_display)"|
 
-## `lv_group` class
+### `lv_group` class
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -153,7 +153,7 @@ set_refocus_policy|lv_group_set_refocus_policy|"(lv.lv_group)i"|
 set_wrap|lv_group_set_wrap|"(lv.lv_group)b"|
 swap_obj|lv_group_swap_obj|"(lv.lv_obj)(lv.lv_obj)"|
 
-## `lv_obj` class
+### `lv_obj` class
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -567,7 +567,7 @@ update_flag|lv_obj_update_flag|"(lv.lv_obj)ib"|
 update_layout|lv_obj_update_layout|"(lv.lv_obj)"|
 update_snap|lv_obj_update_snap|"(lv.lv_obj)i"|
 
-## `lv_style` class
+### `lv_style` class
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -706,7 +706,7 @@ set_width|lv_style_set_width|"(lv.lv_style)i"|
 set_x|lv_style_set_x|"(lv.lv_style)i"|
 set_y|lv_style_set_y|"(lv.lv_style)i"|
 
-## `lv_timer` class
+### `lv_timer` class
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -727,9 +727,9 @@ set_period|lv_timer_set_period|"(lv.lv_timer)i"|
 set_repeat_count|lv_timer_set_repeat_count|"(lv.lv_timer)i"|
 set_user_data|lv_timer_set_user_data|"(lv.lv_timer)."|
 
-# Widgets
+## Widgets
 
-## `lv_image` widget
+### `lv_image` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -765,7 +765,7 @@ set_src|lv_image_set_src|"(lv.lv_obj)."|
 set_tasmota_logo|lv_image_set_tasmota_logo|"(lv.lv_obj)"|
 set_zoom|lv_image_set_scale|"(lv.lv_obj)i"|
 
-## `lv_qrcode` widget
+### `lv_qrcode` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -774,7 +774,7 @@ set_light_color|lv_qrcode_set_light_color|"(lv.lv_obj)(lv.lv_color)"|
 set_size|lv_qrcode_set_size|"(lv.lv_obj)i"|
 update|lv_qrcode_update|"(lv.lv_obj).i"|i
 
-## `lv_arc` widget
+### `lv_arc` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -807,7 +807,7 @@ set_rotation|lv_arc_set_rotation|"(lv.lv_obj)i"|
 set_start_angle|lv_arc_set_start_angle|"(lv.lv_obj)i"|
 set_value|lv_arc_set_value|"(lv.lv_obj)i"|
 
-## `lv_bar` widget
+### `lv_bar` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -822,12 +822,12 @@ set_range|lv_bar_set_range|"(lv.lv_obj)ii"|
 set_start_value|lv_bar_set_start_value|"(lv.lv_obj)ii"|
 set_value|lv_bar_set_value|"(lv.lv_obj)ii"|
 
-## `lv_button` widget
+### `lv_button` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
 
-## `lv_buttonmatrix` widget
+### `lv_buttonmatrix` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -848,7 +848,7 @@ set_map|lv_buttonmatrix_set_map|"(lv.lv_obj)(lv.str_arr)"|
 set_one_checked|lv_buttonmatrix_set_one_checked|"(lv.lv_obj)b"|
 set_selected_button|lv_buttonmatrix_set_selected_button|"(lv.lv_obj)i"|
 
-## `lv_canvas` widget
+### `lv_canvas` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -864,7 +864,7 @@ set_draw_buf|lv_canvas_set_draw_buf|"(lv.lv_obj)(lv.lv_draw_buf)"|
 set_palette|lv_canvas_set_palette|"(lv.lv_obj)ii"|
 set_px|lv_canvas_set_px|"(lv.lv_obj)ii(lv.lv_color)i"|
 
-## `lv_chart` widget
+### `lv_chart` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -900,7 +900,7 @@ set_value_by_id|lv_chart_set_value_by_id|"(lv.lv_obj)(lv.lv_chart_series)ii"|
 set_value_by_id2|lv_chart_set_value_by_id2|"(lv.lv_obj)(lv.lv_chart_series)iii"|
 set_x_start_point|lv_chart_set_x_start_point|"(lv.lv_obj)(lv.lv_chart_series)i"|
 
-## `lv_checkbox` widget
+### `lv_checkbox` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -908,7 +908,7 @@ get_text|lv_checkbox_get_text|"(lv.lv_obj)"|s
 set_text|lv_checkbox_set_text|"(lv.lv_obj)s"|
 set_text_static|lv_checkbox_set_text_static|"(lv.lv_obj)s"|
 
-## `lv_dropdown` widget
+### `lv_dropdown` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -936,14 +936,14 @@ set_selected_highlight|lv_dropdown_set_selected_highlight|"(lv.lv_obj)b"|
 set_symbol|lv_dropdown_set_symbol|"(lv.lv_obj)."|
 set_text|lv_dropdown_set_text|"(lv.lv_obj)s"|
 
-## `lv_imagebutton` widget
+### `lv_imagebutton` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
 set_src|lv_imagebutton_set_src|"(lv.lv_obj)i..."|
 set_state|lv_imagebutton_set_state|"(lv.lv_obj)i"|
 
-## `lv_keyboard` widget
+### `lv_keyboard` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -958,7 +958,7 @@ set_mode|lv_keyboard_set_mode|"(lv.lv_obj)i"|
 set_popovers|lv_keyboard_set_popovers|"(lv.lv_obj)b"|
 set_textarea|lv_keyboard_set_textarea|"(lv.lv_obj)(lv.lv_obj)"|
 
-## `lv_label` widget
+### `lv_label` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -978,7 +978,7 @@ set_text_selection_end|lv_label_set_text_selection_end|"(lv.lv_obj)i"|
 set_text_selection_start|lv_label_set_text_selection_start|"(lv.lv_obj)i"|
 set_text_static|lv_label_set_text_static|"(lv.lv_obj)s"|
 
-## `lv_led` widget
+### `lv_led` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -989,7 +989,7 @@ set_brightness|lv_led_set_brightness|"(lv.lv_obj)i"|
 set_color|lv_led_set_color|"(lv.lv_obj)(lv.lv_color)"|
 toggle|lv_led_toggle|"(lv.lv_obj)"|
 
-## `lv_line` widget
+### `lv_line` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -997,7 +997,7 @@ get_y_invert|lv_line_get_y_invert|"(lv.lv_obj)"|b
 set_points|lv_line_set_points|"(lv.lv_obj)(lv.lv_point_precise)i"|
 set_y_invert|lv_line_set_y_invert|"(lv.lv_obj)b"|
 
-## `lv_list` widget
+### `lv_list` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -1009,7 +1009,7 @@ get_button_text|lv_list_get_button_text|"(lv.lv_obj)(lv.lv_obj)"|s
 set_btn_text|lv_list_set_button_text|"(lv.lv_obj)(lv.lv_obj)s"|
 set_button_text|lv_list_set_button_text|"(lv.lv_obj)(lv.lv_obj)s"|
 
-## `lv_msgbox` widget
+### `lv_msgbox` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -1025,7 +1025,7 @@ get_footer|lv_msgbox_get_footer|"(lv.lv_obj)"|lv.lv_obj
 get_header|lv_msgbox_get_header|"(lv.lv_obj)"|lv.lv_obj
 get_title|lv_msgbox_get_title|"(lv.lv_obj)"|lv.lv_obj
 
-## `lv_roller` widget
+### `lv_roller` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -1039,7 +1039,7 @@ set_selected|lv_roller_set_selected|"(lv.lv_obj)ii"|
 set_visible_row_cnt|lv_roller_set_visible_row_count|"(lv.lv_obj)i"|
 set_visible_row_count|lv_roller_set_visible_row_count|"(lv.lv_obj)i"|
 
-## `lv_scale` widget
+### `lv_scale` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -1065,7 +1065,7 @@ set_rotation|lv_scale_set_rotation|"(lv.lv_obj)i"|
 set_text_src|lv_scale_set_text_src|"(lv.lv_obj)(lv.str_arr)"|
 set_total_tick_count|lv_scale_set_total_tick_count|"(lv.lv_obj)i"|
 
-## `lv_slider` widget
+### `lv_slider` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -1081,7 +1081,7 @@ set_mode|lv_slider_set_mode|"(lv.lv_obj)i"|
 set_range|lv_slider_set_range|"(lv.lv_obj)ii"|
 set_value|lv_slider_set_value|"(lv.lv_obj)ii"|
 
-## `lv_spangroup` widget
+### `lv_spangroup` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -1104,7 +1104,7 @@ set_max_lines|lv_spangroup_set_max_lines|"(lv.lv_obj)i"|
 set_mode|lv_spangroup_set_mode|"(lv.lv_obj)i"|
 set_overflow|lv_spangroup_set_overflow|"(lv.lv_obj)i"|
 
-## `lv_spinbox` widget
+### `lv_spinbox` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -1123,18 +1123,18 @@ set_value|lv_spinbox_set_value|"(lv.lv_obj)i"|
 step_next|lv_spinbox_step_next|"(lv.lv_obj)"|
 step_prev|lv_spinbox_step_prev|"(lv.lv_obj)"|
 
-## `lv_spinner` widget
+### `lv_spinner` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
 set_anim_params|lv_spinner_set_anim_params|"(lv.lv_obj)ii"|
 
-## `lv_switch` widget
+### `lv_switch` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
 
-## `lv_table` widget
+### `lv_table` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -1160,7 +1160,7 @@ set_column_width|lv_table_set_column_width|"(lv.lv_obj)ii"|
 set_row_cnt|lv_table_set_row_count|"(lv.lv_obj)i"|
 set_row_count|lv_table_set_row_count|"(lv.lv_obj)i"|
 
-## `lv_tabview` widget
+### `lv_tabview` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -1177,7 +1177,7 @@ set_active|lv_tabview_set_active|"(lv.lv_obj)ii"|
 set_tab_bar_position|lv_tabview_set_tab_bar_position|"(lv.lv_obj)i"|
 set_tab_bar_size|lv_tabview_set_tab_bar_size|"(lv.lv_obj)i"|
 
-## `lv_textarea` widget
+### `lv_textarea` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
@@ -1218,7 +1218,7 @@ set_text|lv_textarea_set_text|"(lv.lv_obj)s"|
 set_text_selection|lv_textarea_set_text_selection|"(lv.lv_obj)b"|
 text_is_selected|lv_textarea_text_is_selected|"(lv.lv_obj)"|b
 
-## `lv_tileview` widget
+### `lv_tileview` widget
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
