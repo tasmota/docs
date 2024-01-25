@@ -5,9 +5,9 @@
 [//]: # (**********************************************************************)
 
 
-# Core classes
+## Core classes
 
-## `lv_anim` class
+### `lv_anim` class
 
 Method|LVGL equivalent|Arguments|Return type
 :---|:---|:---|:---
