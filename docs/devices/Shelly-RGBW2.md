@@ -3,6 +3,7 @@
 <img src="https://kb.shelly.cloud/__attachments/229146742/image-20220920-071244.png?inst-v=37db5b47-02b4-47d2-9c77-9f9b8a60a4f2" width="250" align="right" />
 
 An ESP8266 with 2MB flash LED Controller.
+
 - Supports any 12v or 24v White, RGB, or RGBW led strips and 12/24v led bulbs, with up to 288W combined power
 - Supports four-way PWM, applied to control four colors LED(R/G/B/W) for colored lights, color temperature lights, and general lights
 - A separate 12V/24V power supply unit is required
@@ -126,7 +127,7 @@ It may be necessary to calculate the Analog CT Multiplier value. Generally 3282 
 
 As described in [AC Frequency Detection Switch](../Buttons-and-Switches.md#ac-frequency-detection-switch) section, the adapter sends pulses (by shorting red wire to GND), when AC voltage is present between the two black wires.
 
-Shelly RGBW2 has an onboard pull-up resistor to 3.3V. To make it work correctly, set **GPIO5** to `Switch_n` mode. Then use the ['SwitchDebounce'](Commands.md#switchdebounce) command to set the number of pulses required for the switch to be recognized as on or off. For example, `SwitchDebounce 69`.
+Shelly RGBW2 has an onboard pull-up resistor to 3.3V. To make it work correctly, set **GPIO5** to `Switch_n` mode. Then use the ['SwitchDebounce'](../Commands.md#switchdebounce) command to set the number of pulses required for the switch to be recognized as on or off. For example, `SwitchDebounce 69`.
 
 
 ## Use Rules to Control Both Switches

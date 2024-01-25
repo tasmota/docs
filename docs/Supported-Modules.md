@@ -46,6 +46,7 @@
 - [Shelly 1PM](devices/Shelly-1PM.md)
 - [Shelly 2](devices/Shelly-2.md)
 - [Shelly 2.5](devices/Shelly-2.5.md)
+- [Shelly RGBW2](devices/Shelly-RGBW2.md)
 - [SK03 Outdoor Smart Plug](devices/SK03-Outdoor-Smart-Plug.md)
 - [Teckin SP10 Smart Socket](devices/Teckin-sp10.md)
 - [Teckin SP22](devices/Teckin-SP22.md)
