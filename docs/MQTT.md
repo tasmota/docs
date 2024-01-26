@@ -251,13 +251,13 @@ Rule1
 ```
 ```console
 Rule1
-  ON mqtt#connected DO Subscribe DnTemp, stat/other-device-topic/SENSOR, DS18B20.Temperature ENDON
+  ON mqtt#connected DO Subscribe DnTemp, tele/other-device-topic/SENSOR, DS18B20.Temperature ENDON
   ON Event#DnTemp>=21 DO <command> ENDON
 ```
 where the MQTT message payload is `{"Time":"2017-02-16T10:13:52", "DS18B20":{"Temperature":20.6}}`
 ```console
 Rule1
-  ON mqtt#connected DO Subscribe DnTemp, stat/other-device-topic/SENSOR, DS18B20.Temperature ENDON
+  ON mqtt#connected DO Subscribe DnTemp, tele/other-device-topic/SENSOR, DS18B20.Temperature ENDON
   ON Event#DnTemp DO TempMeasuredSet %value% ENDON
 ```
 will allow a thermostat to subscribe to a temperature sensor on another Tasmota device
