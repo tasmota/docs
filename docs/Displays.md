@@ -511,6 +511,21 @@ All signals must be given. Unused pins may be set to -1. If you specify a `*` ch
 The CS and DC pins must be the standard pins e.g. `SPI_CS` or `SPI_DC`.  
 
 there are RGB displays that also need an SPI initialisation. in this case specify the Init sequence with :IS,SCLK,MOSI,CS,RESET   
+there are RGB displays that also need an I2C initialisation. in this case specify the Init sequence with :II,BUS,ADDR (BUS = i2c bus nr 1 or 2, ADDR = adress of i2c device)  
+
+!!! i2c example
+```haskell
+:II,1,38
+03,00
+08,00
+10
+07,FF
+```
+
+1. entry = device register to write  
+2. entry = value to write  
+single entry defines a delay in milliseconds  
+
 
 !!! example "Example"
 
@@ -569,6 +584,7 @@ All values are in hex. On SPI the first value is the command, then the number of
     E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
     11,80
     29,80
+    #
     ```
 
 `:V` video signal parameters for RGB panels  
