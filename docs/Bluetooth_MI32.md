@@ -348,29 +348,33 @@ To listen to advertisements inside a class (that could be a driver) we could ini
 !!! example "Simple Advertisement Listener"
 
     ```berry
-    var buf
-    def init()
-        import BLE
-        self.buf = bytes(-64)
-        var cbp = tasmota.gen_cb(/s,m-> self.cb(s,m))
-        BLE.adv_cb(cbp,self.buf)
+    class LISTENER
+        var buf # transfer buffer, gets filled by the Bluetooth driver, can be read in Berry
+        def init()
+            import BLE
+            self.buf = bytes(-64) # will be used in the form length-data, so self.buf[0] = length of actual data 
+            var callback_pointer = cb.gen_cb(/svc,manu->self.cb(svc,manu))
+            BLE.adv_cb(callback_pointer,self.buf)
+        end
+        def cb(svc,manu)
+            print("Full buffer:")
+            print(self.buf[1..self.buf[0]])
+            if svc != 0 # if service data present
+                print("service data:")
+                var _len = self.buf[svc-2]-1
+                # the index points to the data part of an AD element, two position before that is length of "type + data", 
+                # so we subtract one byte from that length to get the "pure" data length
+                print(self.buf[svc.._len+svc])
+            end
+            if manu != 0 # if manufacturer data present
+                print("manufacturer data:")
+                var _len = self.buf[manu-2]-1
+                print(self.buf[manu.._len+manu])
+            end
+        end
     end
 
-    def cb(svc,manu)
-        print(buf) # simply prints out the byte buffer of an advertisement packet
-        if svc != 0 # if service data present
-            print("service data:")
-            var _len = self.buf[svc-2]-1
-            # the index points to the data part of an AD element, two position before that is length of "type + data", 
-            # so we subtract one byte from that length to get the "pure" data length
-            print(self.buf[svc.._len+svc])
-        end
-        if manu != 0 # if manufacturer data present
-            print("manufacturer data:")
-            var _len = self.buf[manu-2]-1
-            print(self.buf[manu.._len+manu])
-        end
-    end
+    return LISTENER()
     ```
 
 To stop listening call:  
