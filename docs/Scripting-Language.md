@@ -951,7 +951,7 @@ The script itself is also stored on the file system with a default size of 8192 
 `fsm` return 1 if filesystem is mounted, (valid SD card found)  
 `res=fsi(sel)` gets file system information, sel=0 returns total media size, sel=1 returns free space both in kB   
 `fra(array fr)` reads array from open file with fr (assumes tab delimited entries)  
-`fwa(array fr)` writes array to open file with fr (writes tab delimited entries)  
+`fwa(array fr (a))` writes array to open file with fr (writes tab delimited entries and line feed at end) the optional a parameter ommits the linefeed for appending arrays   
 `fz(fr)` returns file size  
 `fa(fr)` returns number of available bytes in open file stream  
 `fs(fr pos)` seek to file position pos  
