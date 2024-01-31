@@ -3602,3 +3602,81 @@ Tested on an AEConversion INV500-90 with RS485 interface.
     1,=so3,256
     #
     ```
+
+### Sensus Pollucom F (Wärmemengenzähler, HeatMeter; used with Hichi IR interface)
+
+??? summary "View script"
+	```
+	>D
+	;start, define variables
+	wkup=1
+	>B
+	;setup sensor
+	->sensor53 r
+	->sensor53 d0
+	->sensor53 l255
+	;tper=300 
+	>S
+	; this device is powered by battery
+	; frequent requests will lead to blocking and reduces lifetime
+	; starting sequence:
+	;- press button on device once
+	;- restart Tasmota with script sctivated (you have 5 minutes to do this)
+	;- after 30s first data is retrieved and logged (including SYSLOG depending on Tasmota log config)
+        ;- after 60s WebUI is updated first time
+	;- now every 45min a new request is done, updated in WebUI (and transferred by MQTT every TPER period); polling period needs to be less 60min to avoid sleep mode of device!
+	if upsecs==30 {
+	    ->sensor53 d1
+	    print read meter (debug log 30s)
+	    =#readmeter
+	}
+	if upsecs==60 {
+	    ->sensor53 d0
+	    print read meter (WebUI update 60s)
+	    =#readmeter
+	}
+	if upsecs%2700==0 {
+	    print read meter (modulo 2700s)
+	    =#readmeter
+	}
+	
+	>M 1
+	+1,3,rE1,0,2400,WAERME,1
+	; note that maximum of chars per line is 8 so set buffer to 8 to get non-delayed decoding
+	1,=so3,8
+	1,68080072bcd8@1,Zählernummer,,Zählernummer,0
+	; note that 16 = 0+16 means that this particular value has 0 comma places but is transferred immediately by MQTT
+	1,0c06bcd8@1,Energie,kWh,Energie,16
+	1,0c13bcd8@1000,Volumen,m³,Volumen,0
+	1,0c3bbcd8@1,Durchfluss,l/h,Durchfluss,0
+	1,0c2bbcd8@1,Leistung,W,Leistung,0
+	1,025auuUU@10,Durchflusstemperatur,°C,Durchflusstemperatur,1
+	1,025euuUU@10,Rücklauftemperatur,°C,Rücklauftemperatur,1
+	1,0360uuUU@1000,Temperaturdifferenz,K,Temperaturdifferenz,3
+	#
+	
+	#readmeter
+	print wakeup start
+	;set serial protocol
+	sml(-1 1 "2400:8N1")
+	;send 0x55 for 2,2 seconds with 8N1 (53x), 2400 baud (wakeup sequence)
+	for wkup 1 53 1
+	sml(1 1 "55555555555555555555")
+	next
+	print wakeup end
+	wkup=1
+	print wait for the meter
+	;wait for the meter to wake up
+	delay(350)
+	;switch serial protocol
+	sml(-1 1 "2400:8E1")
+	print Init MBus 1040004016; SCAN for Device 00
+	sml(1 1 "1040004016")
+	delay(350)
+	print request data 107BFE7916 aktuelle Werte!!!
+	sml(1 1 "107BFE7916")
+	;print request data 105BFE5916
+	;sml(1 1 "105BFE5916")
+	print request data finished
+	#
+ 	```
