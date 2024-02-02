@@ -175,17 +175,8 @@ rotary.set_group(g)
 ```
 
 ### Touch Screen Support
-![colorwheel](https://user-images.githubusercontent.com/49731213/135708597-ae589748-417b-46c2-a452-5398cd90ee09.png)
 
 Touch screen are supported natively via Universal Display driver.
-
-Example:
-
-```berry
-colp = lv.colorwheel(scr, false)
-colp.set_size(130, 130)
-colp.set_pos(10,30)
-```
 
 Let's go into the details of this example.
 
