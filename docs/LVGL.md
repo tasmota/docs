@@ -116,7 +116,7 @@ btn_style.set_text_color(lv.color(0xFFFFFF))    # text color white #FFFFFF
 #- create buttons -#
 prev_btn = lv.btn(scr)                            # create button with main screen as parent
 prev_btn.set_pos(20,vres-40)                      # position of button
-prev_btn.set_size(80, 30)                         # size of button
+prev_btn.set_size(80, 35)                         # size of button
 prev_btn.add_style(btn_style, lv.PART_MAIN | lv.STATE_DEFAULT)   # style of button
 prev_label = lv.label(prev_btn)                   # create a label as sub-object
 prev_label.set_text("<")                          # set label text
@@ -124,7 +124,7 @@ prev_label.center()
 
 next_btn = lv.btn(scr)                            # right button
 next_btn.set_pos(220,vres-40)
-next_btn.set_size(80, 30)
+next_btn.set_size(80, 35)
 next_btn.add_style(btn_style, lv.PART_MAIN | lv.STATE_DEFAULT)
 next_label = lv.label(next_btn)
 next_label.set_text(">")
@@ -132,7 +132,7 @@ next_label.center()
 
 home_btn = lv.btn(scr)                            # center button
 home_btn.set_pos(120,vres-40)
-home_btn.set_size(80, 30)
+home_btn.set_size(80, 35)
 home_btn.add_style(btn_style, lv.PART_MAIN | lv.STATE_DEFAULT)
 home_label = lv.label(home_btn)
 home_label.set_text(lv.SYMBOL_OK)                 # set text as Home icon
@@ -310,7 +310,7 @@ We create a `lv_style` object and associate some attributes. This works similarl
 ```berry
 home_btn = lv.btn(scr)                            # center button
 home_btn.set_pos(120,vres-40)
-home_btn.set_size(80, 30)
+home_btn.set_size(80, 35)
 home_btn.add_style(btn_style, lv.PART_MAIN | lv.STATE_DEFAULT)
 home_label = lv.label(home_btn)
 home_label.set_text(lv.SYMBOL_OK)                 # set text as Home icon
