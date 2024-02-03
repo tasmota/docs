@@ -50,7 +50,7 @@
     USE_FEXTRACT | enables array extraction from database fxt(...), fxto() and tso(), tsn(), cts(), s2t() functions  
     USE_SCRIPT_SPI | enables support for SPI interface  
     USE_SCRIPT_TCP_SERVER | enables support for TCP server  
-    USE_DSIPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
+    USE_DISPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
     TS_FLOAT | may be define as double to use double precision numbers (uses double RAM memory and is slower)  
 
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules). For ESP32 builds it is recommended to use [Berry](Berry)"
