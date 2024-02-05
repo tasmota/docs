@@ -1450,7 +1450,51 @@ So in this script the three phases get added and published as `Power_total`.
     1,77070100100700FF@1,Power,W,power,0
     #
     ```
+    
+### EMH DIZ-W1EL-00-KM0-0M-200010-E50/K (M-Bus)
 
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    ; ***************************************
+    ; * EMH DIZ-W1EL-00-KM0-0M-200010-E50/K *
+    ; ***************************************
+    ; Serial: 2400 baud
+    ; Device parity: EVEN
+    ; Slave address: 001
+    ; ***************************************
+    +1,3,rE1,0,2400,MBUS,1,10,1040014116,105b015c16
+    1,68282868080272bcd8@1@1,Zähler-Nr.,,0_0_0,0
+    1,68282868080272xxxxxxxxa8150002xxxx00008c1006bcd8@1,total energy,kWh,1_8_0,0
+    1,68282868080272xxxxxxxxa8150002xxxx00008c1006xxxxxxxx8c2006xxxxxxxxc4002auuUUuuUUs@10000,instantaneous power,kW,1_7_0,3
+    #
+    ```
+    
+### EMH EIZ-GDWL739B (M-Bus)
+    
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    ; ***************************************
+    ; *   EMH EIZ-GDWL739B                  *
+    ; ***************************************
+    ; Serial: 2400 baud
+    ; Device parity: EVEN
+    ; Slave address: 001
+    ; ***************************************
+    +1,3,rE1,0,2400,MBUS,1,10,1040014116,105b015c16
+    1,68363668080172bcd8@1@1,Zähler-Nr.,,0_0_0,0
+    1,68363668080172xxxxxxxxa8150002xxxx0000046dxxxxxxxx0422xxxxxxxx0405uuUUuuUUs@10,total energy,kWh,1_8_0,1
+    1,68363668080172xxxxxxxxa8150002xxxx0000046dxxxxxxxx0422xxxxxxxx0405xxxxxxxx042auuUUuuUUs@10000,instantaneous power,kW,1_7_0,3
+    #
+    ```
+    
 ### EMH LZQJ-XC (OBIS)
 
 Script to read a EMH metering LZQJ-XC smart meter.
