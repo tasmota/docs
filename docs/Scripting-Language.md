@@ -162,7 +162,7 @@ a valid script must start with >D in the first line
   define and init variables here, must be the first section, no other code allowed  
   `p:vname`   
   specifies permanent variables. The number of permanent variables is limited by Tasmota rules space (50 bytes) - numeric variables are 4 bytes; string variables are one byte longer than the length of string.  p vars are stored sequentially in the order of defintion.
-therefore when specifing permanent variables, add newly defined ones always at the end of already defined p vars. (more then one permanent string variable is however not really recommended due to possible side effects).  
+therefore when specifing permanent variables, add newly defined ones always at the end of already defined p vars. otherwise variables are mixed up and string variables may even be destroyed.  
   `t:vname`   
   specifies countdown timers, if >0 they are decremented in seconds until zero is reached. see example below  
   `i:vname`   
