@@ -178,7 +178,7 @@ Hardware and software serial interface, RF, IR and TuyaMCU are also supported ba
 
 
 ### Rule Command
-A rule command can be any command listed in the [Commands list](Commands.md). The command's `<parameter>` can be replaced with  `%value%` which will use the value of the trigger. 
+A rule command can be any command listed in the [Commands list](Commands.md). The command's `<parameter>` can be replaced with  `%value%` which will use the value of the trigger, strings are folded to uppercase. 
 
 `ON Switch1#State DO Power %value% ENDON`
 
