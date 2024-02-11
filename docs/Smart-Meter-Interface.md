@@ -1565,7 +1565,7 @@ by the supplier. Therefore it is set to a fixed baud rate of 300 and can not be 
     #
     ```
     
-### eZB MD3 (SML)
+### eBZ MD3 (SML)
 	
 ??? summary "View script"
     ```
