@@ -1,4 +1,4 @@
-How to setup and configure Esptool for Tasmota upload.
+How to setup and configure Esptool for Tasmota upload on an esp8266
 
 The information below is for the Python version of esptool - If you want to use the Windows/Linux/OSX(MAC) executable version of esptool (as would be included in Arduino ESP8266 cores) then please go to the [esptool executable (Windows & Linux)](Esptool#esptool-executable-windows-linux) section at the bottom.
 
