@@ -96,13 +96,13 @@ Page `2` contains custom widgets as Berry code. These widgets are imported withi
 Finally, the following line allows to run arbitrary Berry code.
 
 ``` json
-{"comment":"--- Trigger sensors every 2 seconds ---","berry_run":"tasmota.add_cron('*/2 * * * * *', def () tasmota.publish_rule(tasmota.read_sensors()) end, 'oh_every_5_s')"}
+{"comment":"--- Trigger sensors every 2 seconds ---","berry_run":"tasmota.add_cron('*/2 * * * * *', def () var s = tasmota.read_sensors() if (s) tasmota.publish_rule(s) end end, 'hm_every_5_s')"}
 ```
 
 The code trigger a read of sensors every 2 seconds and publish the JSON result to be parsed by the rule engine.
 
 ``` berry
-tasmota.add_cron('*/2 * * * * *', def () tasmota.publish_rule(tasmota.read_sensors()) end, 'oh_every_5_s')
+tasmota.add_cron('*/2 * * * * *', def () var s = tasmota.read_sensors() if (s) tasmota.publish_rule(s) end end, 'hm_every_5_s')
 ```
 
 ## Running HASPmota
