@@ -26,9 +26,18 @@ Upload `tamota_demo.tapp` to your file system. The easy way is to use the follow
 
 You should see the following screen, and click on buttons to switch to the second screen:
 
-![haspmota1](https://user-images.githubusercontent.com/49731213/162054703-376955c1-233b-4a60-aaae-8a316829325e.png)
+![HASPmota page 1](_media/lvgl/HASPmota_page_1.png)
 
-![haspmota2](https://user-images.githubusercontent.com/49731213/162054725-57ec6a25-f250-4404-b013-7d54b37d497f.png)
+![HASPmota page 2](_media/lvgl/HASPmota_page_2.png)
+
+![HASPmota page 3](_media/lvgl/HASPmota_page_3.png)
+
+![HASPmota page 4](_media/lvgl/HASPmota_page_4.png)
+
+![HASPmota page 5](_media/lvgl/HASPmota_page_5.png)
+
+![HASPmota page 6](_media/lvgl/HASPmota_page_6.png)
+
 
 ### Understanding the template
 
