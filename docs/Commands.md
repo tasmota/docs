@@ -610,8 +610,8 @@ SetOption154<a class="cmnd" id="setoption154"></a>|`1` = Handle Berry led using 
 SetOption155<a class="cmnd" id="setoption155"></a>|`1` = (ZCDimmer) Enable rare falling Edge dimmer instead of leading edge
 SetOption156<a class="cmnd" id="setoption156"></a>|`1` = (Sen5x) Run in passive mode when there is another I2C master
 SetOption157<a class="cmnd" id="setoption157"></a>|`0` = hide NeoPool sensitive data _(default)_<BR>`1` = show NeoPool sensitive data
-SetOption158<a class="cmnd" id="setoption157"></a>|`0` = Disable publish ModbusReceived MQTT messages (`1`), in this case you must use event trigger rules instead
-SetOption159<a class="cmnd" id="setoption157"></a>|`0` = Enable counting for Counter on both rising and falling edge<BR>`0` =  Counter only reacts on falling edge _(default)_<BR>`1` =  Counter reacts on falling and rising edge
+SetOption158<a class="cmnd" id="setoption158"></a>|`0` = Disable publish ModbusReceived MQTT messages (`1`), in this case you must use event trigger rules instead
+SetOption159<a class="cmnd" id="setoption159"></a>|`0` = Enable counting for Counter on both rising and falling edge<BR>`0` =  Counter only reacts on falling edge _(default)_<BR>`1` =  Counter reacts on falling and rising edge
 
 
 ### TuyaMCU
