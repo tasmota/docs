@@ -16,7 +16,7 @@ The Tasmota Sugar Valley NeoPool Controller sensor module shows the most of para
 
 ![](_media/xsns_83_neopool_s.png)
 
-There are [Tasmota commands](#commands) implemented to control the high level functions for filtration, light and system parameters such as pH set point, hydrolysis level, redox set point etc.
+There are [Tasmota commands](#commands) implemented to control the high level functions for filtration, light and system parameters such as pH setpoint, hydrolysis level, redox setpoint etc.
 However, the sensor also provides low-level commands to directly [read](#NPRead) and [write](#NPWrite) NeoPool register, means that you have the option to implement your own commands via home automation systems or by using the Tasmota build-in possibilities [Rules](Commands.md#rules) with [Backlog](Commands.md#the-power-of-backlog) or the powerful Berry language on ESP32.
 
 ## Connection
@@ -226,7 +226,7 @@ Powerunit.4-20mA|(Float) Current value of the 4-20mA output
 pH.Data|(Float) Current pH value (`0`..`14`)
 pH.Min|(Float) Minimum setting value for pH control (only useful if a base pump is connected).
 pH.Max|(Float) Maximum setting value for pH control (only useful if an acid pump is connected).
-pH.State|(Int) Status of the pH controller:<BR>`0` = no alarm<BR>`1` = pH too high: pH value is 0.8 points higher than the setpoint (`NPpHMax` on acid systems, `NPpHMin` on base systems, `NPpHMax` on acid+base systems)<BR>`2` = pH too low: pH value is 0.8 points lower than the set point value set in (`NPpHMax` on acid systems, `NPpHMin` on base systems, `NPpHMin` on acid+base systems)<BR>`3` = pH pump has exceeded the working time set by the MBF_PAR_RELAY_PH_MAX_TIME parameter and has stopped<BR>`4` = pH higher than the set point (`NPpHMax` + 0.1 on acid systems, `NPpHMin` + 0.1 on base systems, `NPpHMax` on acid+base systems)<BR>`5` = pH lower than the set point  (`NPpHMax` - 0.3 on acid systems, `NPpHMin` - 0.3 on base systems, `NPpHMin` on acid+base systems)<BR>`6` = Tank level alarm
+pH.State|(Int) Status of the pH controller:<BR>`0` = no alarm<BR>`1` = pH too high: pH value is 0.8 points higher than setpoint (`NPpHMax` on acid systems, `NPpHMin` on base systems, `NPpHMax` on acid+base systems)<BR>`2` = pH too low: pH value is 0.8 points lower than setpoint (`NPpHMax` on acid systems, `NPpHMin` on base systems, `NPpHMin` on acid+base systems)<BR>`3` = pH pump has exceeded the working time set by the MBF_PAR_RELAY_PH_MAX_TIME parameter and has stopped<BR>`4` = pH higher than setpoint (`NPpHMax` + 0.1 on acid systems, `NPpHMin` + 0.1 on base systems, `NPpHMax` on acid+base systems)<BR>`5` = pH lower than setpoint (`NPpHMax` - 0.3 on acid systems, `NPpHMin` - 0.3 on base systems, `NPpHMin` on acid+base systems)<BR>`6` = Tank level alarm
 pH.Pump|(Int) pH control module and controlling pumps:<BR>`0` = pH control module and controlling pumps inactive<BR>`1` = Acid/base pH pump pump on<BR>`2` = Acid/base pH pump pump off
 pH.FL1|(Bool) Water flow status:<BR>`0` = No flow alarm<BR>`1` = Flow alarm
 pH.Tank|(Bool) Acid/Base tank signal input:<BR>`0` = Tank empty<BR>`1` = No Tank alarm
@@ -250,7 +250,7 @@ Hydrolysis.Runtime.Changes|(Int) Number of polarization changes
 Hydrolysis.State|(String) Cell state:<BR>`OFF` = Cell inactive<BR>`FLOW` = Cell water flow alarm<BR>`POL1` = Cell polarization 1 active<BR>`POL2` = Cell polarization 2 active
 Hydrolysis.Cover|(Bool) Cover signal input:<BR>`0` = Cover input inactive<BR>`1` = Cover input active
 Hydrolysis.Boost|(Int) Boost mode state:<BR>`0` = Boost mode inactive<BR>`1` = Boost mode active<BR>`2` = Boost mode active with redox control
-Hydrolysis.Low|(Bool) Hydrolysis low alarm:<BR>`0` = No alarm<BR>`1` = Hydrolysis cannot reach the set point
+Hydrolysis.Low|(Bool) Hydrolysis low alarm:<BR>`0` = No alarm<BR>`1` = Hydrolysis cannot reach the setpoint
 Hydrolysis.FL1|(Bool) Hydrolysis flow alarm:<BR>`0` = No alarm<BR>`1` = Hydrolysis flow alarm, no flow detected
 Hydrolysis.Redox|(Bool) Activation of hydrolysis by the redox module:<BR>`0` = Not activated by redox module<BR>`1` = Activated by redox module
 Filtration.State|(Int) Filtration pump state:<BR>`0` = Pump off<BR>`1` = Pump on
@@ -323,10 +323,10 @@ NPLight<a id="NPLight"></a>|`<state>( <delay>)`<BR>Set light (state = `0..4`, de
 NPpHMin<a id="NPpHMin"></a>|`<ph>`<BR>Set pH lower limit (ph = `0..14`)<BR>Note: The command is only available if the pH module is installed.
 NPpHMax<a id="NPpHMax"></a>|`<ph>`<BR>Set pH upper limit (ph = `0..14`)<BR>Note: The command is only available if the pH module is installed.
 NPpH<a id="NPpH"></a>|`<ph>`<BR>Set pH upper limit (ph = `0..14`) - alias for NPpHMax<BR>Note: The command is only available if the pH module is installed.
-NPRedox<a id="NPRedox"></a>|`<setpoint>`<BR>Set redox set point in mV (setpoint = `0..1000`)<BR>Note: The command is only available if the redox module is installed.
+NPRedox<a id="NPRedox"></a>|`<setpoint>`<BR>Set redox setpoint in mV (setpoint = `0..1000`)<BR>Note: The command is only available if the redox module is installed.
 NPHydrolysis<a id="NPHydrolysis"></a>|`<level>( %)`<BR>Set hydrolysis/electrolysis level:<ul><li>`0..100` in % for systems configured to %</li><li>`0..<max>` in g/h for systems configured to g/h (`<max>` depends on the value of the [MBF_PAR_HIDRO_NOM](https://github.com/arendst/Tasmota/blob/development/tasmota/tasmota_xsns_sensor/xsns_83_neopool.ino#L141) register of the device)</li></ul>`<level>` can specified in % on all systems by appending the % sign to the value<BR>Note: The command is only available if the hydrolysis/electrolysis control is present.
 NPIonization<a id="NPIonization"></a>|`<level>`<BR>Set ionization target production level (level = `0..<max>`, the upper limit `<max>` may vary depending on the [MBF_PAR_ION_NOM](https://github.com/arendst/Tasmota/blob/development/tasmota/tasmota_xsns_sensor/xsns_83_neopool.ino#L140) register)<BR>Note: The command is only available if the hydrolysis/electrolysis control is present.
-NPChlorine<a id="NPChlorine"></a>|`<setpoint>`<BR>Set chlorine set point in ppm (setpoint = `0..10`)<BR>Note: The command is only available if the free chlorine probe detector is installed.
+NPChlorine<a id="NPChlorine"></a>|`<setpoint>`<BR>Set chlorine setpoint in ppm (setpoint = `0..10`)<BR>Note: The command is only available if the free chlorine probe detector is installed.
 NPControl<a id="NPControl"></a>|Show information about [system controls](NeoPool#sensor-data-description).
 NPTelePeriod<a id="NPTelePeriod"></a>|`<time>`<BR>Enables/disables auto telemetry message when NeoPool values change (time = `0` or `5..3600`):<ul><li>`0` - disable this function off (default), telemetry message are only reported depending on [TelePeriod](#teleperiod) setting</li><li>`5..3600` - set the minimum of seconds between two telemetry messages for NeoPool measured values (status changes for relays and settings trigger the SENSOR messages immediately, regardless of the time set)</li></ul>Hint: To get immediate telemetry messages only for status changes (relays, settings) set `<time>` higher than [TelePeriod](#teleperiod). In this case, measured sensors are reported only by [TelePeriod](#teleperiod) setting, status changes are reported immediately.
 NPOnError<a id="NPOnError"></a>|`<repeat>`<BR>Set the number of retries for Modbus read/write commands errors (repeat = `0..10`):<ul><li>`0` - disable auto-repeat on read/write error</li><li>`1..10` - repeat commands n times until ok</li></ul>
