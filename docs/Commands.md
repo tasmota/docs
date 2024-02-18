@@ -753,6 +753,7 @@ ShutterStop<x\><a class="cmnd" id="shutterstop"></a>|Disengage the relays to sto
 ShutterStopClose<x\><a class="cmnd" id="shutterstopclose"></a>|Stop the shutter when currently moving, close it otherwise
 ShutterStopOpen<x\><a class="cmnd" id="shutterstopopen"></a>|Stop the shutter when currently moving, open it otherwise
 ShutterStopPosition<x\><a class="cmnd" id="shutterstopposition"></a>|Stop the shutter when currently moving, set it to position `0..100`, `UP`, `DOWN`, `STOP`, `TOGGLE` otherwise
+ShutterStopRelay<x\><a class="cmnd" id="shutterstoprelay"></a>|`0` = only for pulse relay the STOP will be send on the last triggered relay *(default)*<BR>`1` = STOP will be send to a THIRD relay (e.g. RELAY3)
 ShutterStopToggle<x\><a class="cmnd" id="shutterstoptoggle"></a>|Stop the shutter when currently moving, do `ShutterToggle` otherwise
 ShutterStopToggleDir<x\><a class="cmnd" id="shutterstoptoggledir"></a>|Stop the shutter when currently moving, do `ShutterToggleDir` otherwise
 ShutterToggle<x\><a class="cmnd" id="shuttertoggle"></a>|Toggle the shutter - close the shutter when its position is >50, open it otherwise
