@@ -690,6 +690,24 @@ A & B connected to the meter pinout.
     #    
     ```
 
+### DZG DWZE12.2.G2 (DVZE) (SML)
+
+A bidirectional metering device from DZG Metering GmbH.
+
+??? summary "View script for the extended dataset"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,16,9600,DWZE12
+    1,77070100010800ff@1000,Total Energy In,kWh,TotalIn,3
+    1,77070100020800ff@1000,Total Energy Out,kWh,TotalOut,3
+    1,77070100100700ff@1,Current Power,W,CurrPower,3
+    1,77070100600100ff@#,Meter Id,,MeterId,0
+    #
+    ```
+
 ### DZG DWS7410.2V.G2 (SML) and DZG DVS7420.2 (SML)
 
 A bidirectional metering device from DZG Metering GmbH.
