@@ -65,7 +65,7 @@ DS3502 | Digital potentiometer| I^2^C
 **INA226** | High-side or Low-side DC current and voltage sensor| I^2^C
 [**IR Remote**](IR-Remote) | IR transmitter and receiver
 **K30, K70, S8** | SenseAir CO~2~ sensors | serial | 
-[**LM75AD**](LM75AD) | Temperature sensor | I^2^C
+[**LM75AD**<BR>**STDS75**(LM75AD) | Temperature sensor | I^2^C
 [**LMT01**](LMT01) | Temperature sensor | gpio
 [**MAX17043**](https://github.com/arendst/Tasmota/blob/development/tasmota/tasmota_xsns_sensor/xsns_110_max17043.ino) | LiPo fuel gauge | I^2^C
 [**MAX31855**<br>**MAX6675**](MAX31855) | Thermocouple sensor | SPI
