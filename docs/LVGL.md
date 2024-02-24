@@ -146,7 +146,15 @@ def btn_clicked_cb(obj, event)
     elif obj == next_btn  btn = "Next"
     elif obj == home_btn  btn = "Home"
     end
-    print(btn, "button pressed")
+    # get the coordinates
+    var indev = event.get_indev()
+    var point = lv.point()
+    indev.get_point(point)
+    # get local coordinates
+    var area = lv.area()
+    obj.get_coords(area)
+
+    print(f"{btn} button pressed at ({point.x},{point.y}) local ({point.x - area.x1},{point.y - area.y1})")
 end
 
 
