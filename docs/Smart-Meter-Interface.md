@@ -3346,6 +3346,29 @@ Script to extract readings from Eastron [SDM72D Series](https://www.eastroneurop
     #
     ```
 
+### Sorel LTDC (CANBus)
+
+Compile firmware with #define ```USE_SML_CANBUS```. Use a proper CAN transceiver. You need a 120Ohms resistor in the second CAN port of the controller, otherwise ESP32 device will not decode anything on the bus, the baudrate is 250 KBITS.
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    ; SOREL LTDC
+    ; params -> 04 = baudrate 250kb + number of receive buffers * 100
+    +1,3,C,0,3204,CAN,1,5
+    1,100124800500uuUU@10,Temp S1,ºC,S1,0
+    1,100124800501uuUU@10,Temp S2,ºC,S2,0
+    1,100124800502uuUU@10,Temp S3,ºC,S3,0
+    1,100124800503uuUU@10,Temp S4,ºC,S4,0
+    1,10022480050000ss@-0.01,Relay R1,,R1,0
+    1,10022480050100ss@-0.01,Relay R2,,R2,0
+    1,10022480050200ss@-0.01,Relay R3,,R3,0
+    #
+    ```
+
 ### Siemens TD-3511
 
 This device is used in the grid of EGTF - Elektrizitäts-Genossenschaft Tacherting-Feichten eG. Read uses IEC 62056-21 data mode "C" without acknowledgement by the reading device.
