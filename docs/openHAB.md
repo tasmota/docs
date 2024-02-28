@@ -51,10 +51,16 @@ Thing mqtt:topic:tasmota:tasmota_TH "Light_TH" (mqtt:broker:myMQTTBroker) [ avai
         Type switch : PowerSwitch  [stateTopic="stat/tasmota_TH/POWER",   commandTopic="cmnd/tasmota_TH/POWER", on="ON", off="OFF"]
 
         // Sonoff Pow (read current wattage; for read and switch on-state see above)
-        Type number : Power        [stateTopic="tele/tasmota_TH/SENSOR", transformationPattern="JSONPATH:$.ENERGY.Power"]
+        Type number : Power                 [stateTopic="tele/tasmota_TH/SENSOR", transformationPattern="JSONPATH:$.ENERGY.Power"]
+        // More power readouts
+        Type number : ApparentPower         [stateTopic="tele/tasmota_TH/SENSOR", transformationPattern="JSONPATH:$.ENERGY.ApparentPower"]
+        Type number : ReactivePower         [stateTopic="tele/tasmota_TH/SENSOR", transformationPattern="JSONPATH:$.ENERGY.ReactivePower"]
+        Type number : PowerFactor           [stateTopic="tele/tasmota_TH/SENSOR", transformationPattern="JSONPATH:$.ENERGY.Factor"]
+        Type number : Voltage               [stateTopic="tele/tasmota_TH/SENSOR", transformationPattern="JSONPATH:$.ENERGY.Voltage"]
+        Type number : Current               [stateTopic="tele/tasmota_TH/SENSOR", transformationPattern="JSONPATH:$.ENERGY.Current"]
 
         // devices including AM2301 temperature sensor
-        Type number : Temperature  [stateTopic="tele/tasmota_TH/SENSOR",  transformationPattern="JSONPATH:$.AM2301.Temperature"]
+        // Type number : Temperature  [stateTopic="tele/tasmota_TH/SENSOR",  transformationPattern="JSONPATH:$.AM2301.Temperature"]
 
         // Tasmota Status
         Type string : Version      [stateTopic="stat/tasmota_TH/STATUS2", transformationPattern="JSONPATH:$.StatusFWR.Version"]
@@ -80,24 +86,35 @@ For every property your device exposes, you need to define an item, linked to co
 
 ```js
 // device specific properties
-Switch             Switch_TH      "Switch_TH"                           {channel="mqtt:topic:tasmota:tasmota_TH:PowerSwitch"}
-Number:Temperature Switch_TH_Temp "Temperature [%.1f °C]" <temperature> {channel="mqtt:topic:tasmota:tasmota_TH:Temperature"}
-Number:Power       Power          "Power [%.1f W]"                      {channel="mqtt:topic:tasmota:tasmota_TH:Power"}
+// replace "TH" with device ID from MQTT topic
+// replace "My Socket" to desirecd name
+// Comment out items/links that are not used/needed
+
+Switch             Tasmota_TH_Switch      "My Socket: Switch" <switch>                  {channel="mqtt:topic:tasmota:tasmota_TH:PowerSwitch"}
+
+Number:Power                 Tasmota_TH_Power               "My Socket: Power [%.1f W]" <energy>           {channel="mqtt:topic:tasmota:tasmota_TH:Power"}
+Number:Power                 Tasmota_TH_ApparentPower       "My Socket: Apparent Power [%.1f VA]" <energy>           {channel="mqtt:topic:tasmota:tasmota_TH:ApparentPower"}
+Number:Power                 Tasmota_TH_ReactivePower       "My Socket: Reactive Power [%.1f VAr]" <energy>           {channel="mqtt:topic:tasmota:tasmota_TH:ReactivePower"}
+Number:Dimensionless         Tasmota_TH_PowerFactir         "My Socket: Power Factor [%.2f]" <energy>           {channel="mqtt:topic:tasmota:tasmota_TH:PowerFactor"}
+Number:ElectricPotential     Tasmota_TH_Voltage             "My Socket: Voltage [%.0f V]" <energy>           {channel="mqtt:topic:tasmota:tasmota_TH:Voltage"}
+Number:ElectricCurrent       Tasmota_TH_Current             "My Socket: Current [%.2f A]" <energy>           {channel="mqtt:topic:tasmota:tasmota_TH:Current"}
+Number:Temperature           Tasmota_TH_Temp                "My Socket: Temperature [%.1f °C]" <temperature> {channel="mqtt:topic:tasmota:tasmota_TH:Temperature"}
 
 // Tasmota Status
-String             Tasmota_Version   "Tasmota Version [%s]" {channel="mqtt:topic:tasmota:tasmota_TH:Version", channel="mqtt:topic:tasmota:tasmota_TH:Version2"}
-Switch             Tasmota_Reachable "Reachable"            {channel="mqtt:topic:tasmota:tasmota_TH:Reachable"}
+String             Tasmota_TH_Version   "My Socket: Tasmota Version [%s]" {channel="mqtt:topic:tasmota:tasmota_TH:Version", channel="mqtt:topic:tasmota:tasmota_TH:Version2"}
+Switch             Tasmota_TH_Reachable "My Socket: Reachable"            {channel="mqtt:topic:tasmota:tasmota_TH:Reachable"}
 
 // Diagnostics
-String               Tasmota_RestartReason "Restart Reason [%s]"  {channel="mqtt:topic:tasmota:tasmota_TH:RestartReason"}
-Number:Dimensionless Tasmota_RSSI          "Signal [%d %%]"       {channel="mqtt:topic:tasmota:tasmota_TH:RSSI"}
-String               Tasmota_WifiDowntime  "Wifi Downtime [%s]"   {channel="mqtt:topic:tasmota:tasmota_TH:WifiDowntime"}
-Number:Dimensionless Tasmota_LoadAvg       "Load [%d %%]"         {channel="mqtt:topic:tasmota:tasmota_TH:LoadAvg"}
-String               Tasmota_Result        "Result [%s]"          {channel="mqtt:topic:tasmota:tasmota_TH:Result"}
-Number:Time          Tasmota_Uptime        "Uptime [%.1f s]"      {channel="mqtt:topic:tasmota:tasmota_TH:Uptime"}
+String               Tasmota_TH_RestartReason "My Socket: Restart Reason [%s]"  {channel="mqtt:topic:tasmota:tasmota_TH:RestartReason"}
+Number:Dimensionless Tasmota_TH_RSSI          "My Socket: Signal [%d %%]"  <qualityofservice>     {channel="mqtt:topic:tasmota:tasmota_TH:RSSI"}
+String               Tasmota_TH_WifiDowntime  "My Socket: Wifi Downtime [%s]"   {channel="mqtt:topic:tasmota:tasmota_TH:WifiDowntime"}
+Number:Dimensionless Tasmota_TH_LoadAvg       "My Socket: Load [%d %%]"         {channel="mqtt:topic:tasmota:tasmota_TH:LoadAvg"}
+String               Tasmota_TH_Result        "My Socket: Result [%s]"          {channel="mqtt:topic:tasmota:tasmota_TH:Result"}
+Number:Time          Tasmota_TH_Uptime        "My Socket: Uptime [%.1f s]"      {channel="mqtt:topic:tasmota:tasmota_TH:Uptime"}
 
 // Maintenance (described below)
-String Tasmota_Action "Tasmota Action"
+String Tasmota_TH_Action "My Socket: Tasmota Action"
+
 ```
 
 **.sitemap File:**
