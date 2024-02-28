@@ -60,7 +60,7 @@ Thing mqtt:topic:tasmota:tasmota_TH "Light_TH" (mqtt:broker:myMQTTBroker) [ avai
         Type number : Current               [stateTopic="tele/tasmota_TH/SENSOR", transformationPattern="JSONPATH:$.ENERGY.Current"]
 
         // devices including AM2301 temperature sensor
-        // Type number : Temperature  [stateTopic="tele/tasmota_TH/SENSOR",  transformationPattern="JSONPATH:$.AM2301.Temperature"]
+        Type number : Temperature  [stateTopic="tele/tasmota_TH/SENSOR",  transformationPattern="JSONPATH:$.AM2301.Temperature"]
 
         // Tasmota Status
         Type string : Version      [stateTopic="stat/tasmota_TH/STATUS2", transformationPattern="JSONPATH:$.StatusFWR.Version"]
