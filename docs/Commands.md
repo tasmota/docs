@@ -250,6 +250,24 @@ WiFiScan<a class="cmnd" id="wifiscan"></a>|`1` = start a network scan. Results w
 WiFiTest<x\><a class="cmnd" id="wifitest"></a>|Only available in AP mode. Test whether the Wi-Fi SSId and Password are correct and Tasmota can connect to the network. `<x>` = `0..3`<BR>&nbsp;&nbsp;`0` = test credentials, if successful save them in SSID slot 1, restart Tasmota<BR>&nbsp;&nbsp;`1` = test credentials, if successful save them in SSID slot 1 without restart<BR>&nbsp;&nbsp;`2` = test credentials, if successful save them in SSID slot 2 without restart<BR>&nbsp;&nbsp;`3` = test credentials without storing anything persistently and without restart<BR>`ssid+password` = credentials used for testing, `+` symbol is the separator since it is not allowed in an SSId name.* [Read more...](https://github.com/arendst/Tasmota/pull/16141)
 See also|[`SetOption55`](#setoption55) - mDNS service control<BR>[`SetOption56`](#setoption56) - Wi-Fi network scan to select strongest signal on restart<BR>[`SetOption57`](#setoption57) - Wi-Fi network re-scan, alternate AP
 
+
+### FTP Server
+
+Simple FTP Server for ESP8266 and ESP32 with filesystem.
+Define as per below and specify credentials you want:
+```
+#define USE_FTP
+#define USER_FTP "user"
+#define PW_FTP "pass"
+```
+Command|Parameters
+:---|:---
+UFSFTP<a class="cmnd" id="ufsftp"></a>|`0` = FTP off<BR>`1` = FTP on SD card (when no SD card defaults to FFS)<BR>`2` = FTP on Flash file System
+!!! note
+    It works very stable, but a little slow, about 70 kb per second
+    Enabled by default for the following config (`tasmota_configurations.h`): NOT(ESP8266_1M) AND NOT(FIRMWARE_MINIMAL) AND ESP8266_4M
+
+
 ### MQTT
 
 Command|Parameters
