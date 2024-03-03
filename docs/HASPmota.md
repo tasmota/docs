@@ -10,9 +10,9 @@ This feature is heavily inspired from @fvanroie's [openHASP project](https://git
 
 **Hardware**: HASPmota is supported on all ESP32 variants, and requires a display configured with universal display (using `display.ini` or `autoconf`). When they are correctly configured, you should see a splash screen at startup.
 
-Currently **PSRAM** is strongly recommended to run HASPmota. 
+Currently **PSRAM** is strongly recommended to run HASPmota if you want to use images and external fonts. Boards without PSRAM can do basic HASPmota.
 
-**Firmware**: HASPmota is included in `tasmota32-lvgl` firmwares.
+**Firmware**: HASPmota is included in `tasmota32-lvgl` firmwares, you don't need any additional `.tapp` file.
 
 ## Quick tour
 
