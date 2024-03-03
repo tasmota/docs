@@ -328,6 +328,31 @@ Attribute name|LVGL equivalent|Details
 `angle`||The length of the spinning segment in degrees - can be changed after initial value since v12.1.1.1
 `speed`||The time for 1 turn in ms - can be changed after initial value since v12.1.1.1
 
+
+### `led`
+
+Example:
+
+![HASPmota chart](_media/lvgl/HASPmota_led.png)
+
+Example from `pages.jsonl`:
+
+```json
+{"id":11,"obj":"led","x":10,"y":60,"w":20,"h":20,"color":"#FF0000"}
+{"id":12,"obj":"led","x":60,"y":60,"w":20,"h":20,"color":"#FF0000","val":200}
+{"id":13,"obj":"led","x":110,"y":60,"w":20,"h":20,"color":"#FF0000","val":0}
+
+{"id":21,"obj":"led","x":10,"y":100,"w":20,"h":20,"color":"#00FF00"}
+{"id":22,"obj":"led","x":60,"y":100,"w":20,"h":20,"color":"#00FF00","val":200}
+{"id":23,"obj":"led","x":110,"y":100,"w":20,"h":20,"color":"#00FF00","val":0}
+```
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`val`<br>`brightness`|`set_brightness`|The brightness from `0` (off) to `255` (on)
+`color`|`set_color`|The overall color of the led
+
+
 ### `chart`
 
 !!!note "This object is not part of OPENhasp."
