@@ -343,12 +343,24 @@ Attribute name|LVGL equivalent|Details
 
 ### `img`
 
+Example:
+
+![HASPmota image](_media/lvgl/HASPmota_img.png)
+
+```json
+{"id":11,"obj":"img","x":10,"y":60,"src":"A:colors-icon.png"}
+{"id":12,"obj":"img","x":120,"y":60,"src":"A:colors-icon.png","scale":350,"angle":150,"image_recolor":"#FFFF88","image_recolor_opa":200}
+{"id":13,"obj":"img","x":230,"y":60,"src":"tasmota_logo","image_recolor":"#FFFFFF","image_recolor_opa":255}
+```
+
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
-`src`|`src`|Path to the image in the file-system
+`src`|`src`|Path to the image in the file-system<br>`"tasmota_logo"` to use the embedded logo in Flash. Note that this logo is black, so it needs to be recolored to white on dark background
 `image_recolor`|`style_image_recolor`|Color used to recolor the image
-`image_recolor_opa`|`style_image_recolor_opa`|Opacity of image recoloring
-`angle`|`angle`|Angle of the image, in 1/10th of degrees. Range 0..3600.
+`image_recolor_opa`|`style_image_recolor_opa`|Opacity of image recoloring<br>`0`: no recolor<br>`255`: full recolor
+`scale`<br>`scale_x`<br>`scale_y`|`scale`|Zoom value, `256` (default) is no zoom, `128` is half size, `256` is double size<br>`scale_x` and `scale_y` can be used to the scale independently horizontally and vertically (non-uniform scale)
+`angle`|`angle`|Angle of the image, in 1/10th of degrees. Range `0`..`3600`
+`antialias`|`antialias`|`true` (defaul) the transformations are higher quality but slower
 
 ### `roller`
 
