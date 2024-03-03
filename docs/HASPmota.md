@@ -201,6 +201,9 @@ HASPmota Class|Embedded LVGL class
 `slider`|`lv.slider`
 `arc`|`lv.arc`
 `textarea`|`lv.textarea`
+`chart`|`lv.chart`
+`spangroup`|`lv.spangroup`
+`span`|`lv.span`
 `qrcode`|`lv.qrcode`
 
 You can also import custom widget as long as they inherit from `lv.obj` and the class name matches the module name.
@@ -247,7 +250,7 @@ Attribute name|LVGL equivalent|Details
 `pad_bottom`|`style_pad_bottom`|Bottom padding in pixels
 `pad_all`|`style_pad_all`|Sets all 4 padding values at once (Write-only)
 
-#### Attributes related to text content
+### Attributes related to text content
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
@@ -268,7 +271,7 @@ Attribute name|LVGL equivalent|Details
 `text_rule_formula`||Link the text to a Tasmota rule, see below
 `text_rule_format`||Link the text to a Tasmota rule, see below
 
-#### Attributes related to values
+### Attributes related to values
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
@@ -278,7 +281,7 @@ Attribute name|LVGL equivalent|Details
 `val_rule`||Link a value to a Tasmota rule, see below
 `val_rule_formula`||Link a value to a Tasmota rule, see below
 
-#### Attributes specific to `switch`
+### `switch`
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
@@ -286,7 +289,7 @@ Attribute name|LVGL equivalent|Details
 `bg_color20`|`bg_color`|Color of the knob.
 `radius20`|`radius`|Radius of the knob.
 
-#### Attributes specific to `arc`
+### `arc`
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
@@ -303,7 +306,7 @@ Attribute name|LVGL equivalent|Details
 `pad_all2`|`style_pad_all`|Set all 4 padding for `lv.PART_KNOB` part (write-only)
 `radius2`|`style_radius`|Radius for `lv.PART_KNOB` part
 
-#### Attributes specific to `img`
+### `img`
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
@@ -312,39 +315,37 @@ Attribute name|LVGL equivalent|Details
 `image_recolor_opa`|`style_image_recolor_opa`|Opacity of image recoloring
 `angle`|`angle`|Angle of the image, in 1/10th of degrees. Range 0..3600.
 
-#### Attributes specific to `roller`
+### `roller`
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
 `text`|`selected_text`|(read-only) Get the text of the currently selected item. The string is truncated to the first 256 bytes.
 
-#### Attributes specific to `spinner`
+### `spinner`
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
 `angle`||The length of the spinning segment in degrees - can be changed after initial value since v12.1.1.1
 `speed`||The time for 1 turn in ms - can be changed after initial value since v12.1.1.1
 
-#### Attributes specific to `chart`
+### `chart`
 
-The `chart` object allows to track values over time and show them in a graph. This object is not part of OPENhasp.
+!!!note "This object is not part of OPENhasp."
+
+The `chart` object allows to track values over time and show them in a graph.
+
+![HASPmota chart](_media/lvgl/HASPmota_chart.png)
 
 Example of `pages.jsonl`:
-
 ```json
-{"page":1,"comment":"---------- Page 1 ----------"}
-{"id":0,"bg_color":"#0000A0","text_color":"#FFFFFF"}
+{"page":10,"id":10,"obj":"chart","x":10,"y":60,"w":230,"h":120,"bg_color":"#440000","border_color":"#FFFF44","bg_opa":100,"border_color":"#0099EE","border_width":1,"radius":0,"pad_all":2,"y_min":0,"y_max":50,"point_count":50,"height10":0,"width10":0,"v_div_line_count":0,"h_div_line_count":5,"line_color":"#555555","line_width30":3}
 
-{"id":10,"obj":"chart","x":10,"y":50,"w":230,"h":150,"bg_color":"#440000","bg_opa":100,"border_color":"#0099EE","border_width":1,"radius":0,"pad_all":2,"y_min":0,"y_max":50,"point_count":20,"height10":0,"width10":0,"v_div_line_count":0,"h_div_line_count":5,"line_color":"#555555"}
+{"comment":"--- Add random values to chart every second ---","berry_run":"tasmota.add_cron('*/1 * * * * *', def () import math var val = math.rand() % 50 global.p10b10.val = val val = math.rand() % 50 global.p10b10.val2 = val end, 'hm_every_1_s_chart')"}
 ```
 
-Here is the `autoexec.be`:
+You can also add values programmatically:
 
 ```berry
-# simple `autoexec.be` to run HASPmota using the default `pages.jsonl`
-import haspmota
-
-haspmota.start()
 global.p1b10.val = 10
 global.p1b10.val = 40
 global.p1b10.val = 30
@@ -358,9 +359,6 @@ global.p1b10.val2 = -5
 global.p1b10.val2 = 25
 ```
 
-Output:
-![lv_chart](https://github.com/arendst/Tasmota/assets/49731213/f9ba4db0-a75f-4199-bb6f-2ed391e94daa)
-
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
 `x_min`<br>`x_max`<br>`y_min`<br>`y_max`|`set_range`|Set the minimum and maximum values for `x` or `y` scales. Default are 0..100 for both axis.
@@ -368,13 +366,14 @@ Attribute name|LVGL equivalent|Details
 `height10`<br>`width10`||Set the height and width for dots for each value. Set to `0` to remove dots and live only lines.
 `v_div_line_count`<br>`h_div_line_count`|`div_line_count`|Set the number of division lines vertically and horizontally. Detault for `v_div_line_count` is `5`, for `h_div_line_count` is `3`.<br>Change the division line color with `line_color`.
 `type`|`chart_type`|Change the chart type.<br>`0`: Don't draw the series<br>`1` (`LINE`): Connect the points with lines<br>`2` (`BAR`): Draw columns.<br>`3` (`SCATTER`): Draw points and lines in 2D (x,y coordinates).
+`series1_color`<br>`series2_color`|`set_series_color`|Sets the color for each series
 `val`<br>`val2`||Add a value to the fist series with `val` and to second series with `val2`.
 `zoom_x`<br>`zoom_y`|`zoom`|Zoom into the chart in X or Y direction.<br>`256` for no zoom, `512` double zoom.
 `update_mode`|`update_mode`|Set update mode of the chart object, default is `SHIFT`.<br>`0`: (`SHIFT`) Shift old data to the left and add the new one the right<br>`1`: (`CIRCULAR`) Add the new data in a circular way
 
-#### Attributes specific to `spangroup` (styled text)
+### `spangroup` (styled text)
 
-Available (since v13.4).
+!!!note "Available (since v13.4). This object is not part of OPENhasp."
 
 The `spangroup` object is equivalent to HTML `<span>` and allows to have a text area composed of multiple fragments, each fragment with its own style, size, font, color...
 
@@ -415,7 +414,7 @@ Attribute name|LVGL equivalent|Details
 `text_letter_space`|`set_text_letter_space`|Set the letter space in pixels
 `text_line_space`|`set_text_line_space`|Set the line space in pixels.
 
-#### Attributes specific to `qrcode`
+### `qrcode`
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
