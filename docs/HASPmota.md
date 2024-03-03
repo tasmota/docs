@@ -286,7 +286,7 @@ Attribute name|LVGL equivalent|Details
 
 Example:
 
-![HASPmota chart](_media/lvgl/HASPmota_btn.png)
+![HASPmota btn](_media/lvgl/HASPmota_btn.png)
 
 
 ```json
@@ -299,11 +299,30 @@ Example:
 
 ### `switch`
 
+Example:
+
+![HASPmota switch](_media/lvgl/HASPmota_switch.png)
+
+```json
+{"id":11,"obj":"switch","x":0,"y":60,"w":60,"h":30,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400"}
+{"id":12,"obj":"switch","x":80,"y":60,"w":60,"h":30,"toggle":true,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400"}
+{"id":13,"obj":"switch","x":160,"y":60,"w":60,"h":30,"enabled":false,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400"}
+{"id":14,"obj":"switch","x":240,"y":60,"w":60,"h":30,"toggle":true,"enabled":false,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400"}
+
+{"id":21,"obj":"switch","x":0,"y":100,"w":130,"h":30,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400","text":"On","text_color":"#FFFF44","text_color01":"#000000"}
+{"id":22,"obj":"switch","x":140,"y":100,"w":130,"h":30,"toggle":true,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400","text":"Off","text_color":"#FFFF44","text_color01":"#000000"}
+```
+
+
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
-`bg_color10`|`bg_color`|Color of the indicator when the switch is selected. Otherwise it uses `bg_color`.
-`bg_color20`|`bg_color`|Color of the knob.
-`radius20`|`radius`|Radius of the knob.
+`toggle`||`true` or `false`: read or change the value of the switch
+`bg_color`||Color of the indicator when the switch is Off
+`bg_color11`||Color of the indicator when the switch is On
+`bg_color20`||Color of the knob
+`text_color`||Color of the text when the switch if Off
+`text_color01`||Color of the text when the switch if On
+`radius20`||Radius of the knob.
 
 ### `arc`
 
