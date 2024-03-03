@@ -371,17 +371,17 @@ Example of `pages.jsonl`:
 You can also add values programmatically:
 
 ```berry
-global.p1b10.val = 10
-global.p1b10.val = 40
-global.p1b10.val = 30
-global.p1b10.val = 40
-global.p1b10.val = 20
+global.p10b10.val = 10
+global.p10b10.val = 40
+global.p10b10.val = 30
+global.p10b10.val = 40
+global.p10b10.val = 20
 
-global.p1b10.val2 = 45
-global.p1b10.val2 = 35
-global.p1b10.val2 = 55
-global.p1b10.val2 = -5
-global.p1b10.val2 = 25
+global.p10b10.val2 = 45
+global.p10b10.val2 = 35
+global.p10b10.val2 = 55
+global.p10b10.val2 = -5
+global.p10b10.val2 = 25
 ```
 
 Attribute name|LVGL equivalent|Details
