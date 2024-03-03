@@ -364,8 +364,21 @@ Attribute name|LVGL equivalent|Details
 
 ### `roller`
 
+Example:
+
+![HASPmota roller](_media/lvgl/HASPmota_roller.png)
+
+```json
+{"id":11,"obj":"roller","x":10,"y":55,"options":"Option 1\nOption 2\nOption 3\nOption 4","val":1,"bg_color50":"#FF4400","text_color":"#FFFF88","text_color50":"#000000","border_color":"#FFFF88"}
+```
+
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
+`options`|`options`|(string) options separated by `\n`
+`val`||The number of the selected item, `0` (default) is the first item
+`bg_color50`||Background color of the selected item
+`text_color`||Text color of non-selected options
+`text_color50`||Text color of the selected options
 `text`|`selected_text`|(read-only) Get the text of the currently selected item. The string is truncated to the first 256 bytes.
 
 ### `spinner`
