@@ -353,6 +353,8 @@ Example:
 {"id":13,"obj":"img","x":230,"y":60,"src":"tasmota_logo","image_recolor":"#FFFFFF","image_recolor_opa":255}
 ```
 
+using the following image: ![colors-icon](_media/lvgl/colors-icon.png)
+
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
 `src`|`src`|Path to the image in the file-system<br>`"tasmota_logo"` to use the embedded logo in Flash. Note that this logo is black, so it needs to be recolored to white on dark background
