@@ -257,6 +257,10 @@ Attribute name|LVGL equivalent|Details
 `text_font`|`style_text_font`|Sets the font name and size for the text.<br>If `int`, the default font is `robotocondensed_latin1` and the parameter sets the size<br>If `string`, the font is in the form `<font_name>-<font_size>`, example: `montserrat-20` or in the form `A:<font_file>` to load a binary font from the file-system.
 `value_font`|`style_text_font`|Synonym of `text_font`
 `text_color`|`style_text_color`|Sets the color of text
+`text_decor`|`style_text_decor`|Sets the text decorator, can be ORed<br>`0`: none<br>`1` underline<br>`2`: strike-through
+`text_opa`|`style_text_opa`|Sets the text opacity<br>`0`: transparent<br>`255`: opaque 
+`text_letter_space`|`style_text_letter_space`|Set the letter space in pixels
+`text_line_space`|`style_text_line_space`|Set the line space in pixels.
 `value_color`|`style_text_color`|Synonym of `text_color`
 `value_ofs_x`|`x` of sub-label|Sets the X offset in pixels within the object
 `value_ofs_y`|`y` of sub-label|Sets the Y offset in pixels within the object
@@ -367,6 +371,49 @@ Attribute name|LVGL equivalent|Details
 `val`<br>`val2`||Add a value to the fist series with `val` and to second series with `val2`.
 `zoom_x`<br>`zoom_y`|`zoom`|Zoom into the chart in X or Y direction.<br>`256` for no zoom, `512` double zoom.
 `update_mode`|`update_mode`|Set update mode of the chart object, default is `SHIFT`.<br>`0`: (`SHIFT`) Shift old data to the left and add the new one the right<br>`1`: (`CIRCULAR`) Add the new data in a circular way
+
+#### Attributes specific to `spangroup` (styled text)
+
+Available (since v13.4).
+
+The `spangroup` object is equivalent to HTML `<span>` and allows to have a text area composed of multiple fragments, each fragment with its own style, size, font, color...
+
+![HASPmota spangroup](_media/lvgl/HASPmota_spangroup.png)
+
+Example:
+
+```json
+{"id":11,"obj":"spangroup","x":0,"y":60,"w":300,"h":115,"text_font":"montserrat-20","bg_color":"#000088","bg_opa":255}
+  {"id":12,"obj":"span","parentid":11,"text":"This is "}
+  {"id":13,"obj":"span","parentid":11,"text":"RED","text_color":"#FF0000","text_font":"montserrat-28"}
+  {"id":12,"obj":"span","parentid":11,"text":"and this is "}
+  {"id":14,"obj":"span","parentid":11,"text":"GREEN","text_color":"#00FF00","text_font":"montserrat-28","text_decor":1}
+  {"id":15,"obj":"span","parentid":11,"text":" underlined"}
+  {"id":16,"obj":"span","parentid":11,"text":"\nAnd this is almost transparent","text_opa":100}
+```
+
+You must first define a `spangroup` object, and add as many as `span` sub-objects. You need to define the `parentid` attribute to the `spangroup`.
+
+Note: span are parsed in the order in the jsonl file, not by id number. Text from span can be updated via rules, like normal HASPmota text.
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`align`|`set_align`|Similar to `label` object<br>`0`: (default) align auto<br>`1`: align left<br>`2`: align center<br>`3`: align right
+`mode`|`set_mode`|Display modes:<br>`0`: fixes the object size<br>`1`: expand the object size to the text size but stay on a single line<br>`2`: (default) keep width, break the too long lines and auto expand height
+`overflow`|`set_overflow`|Trucature modes:<br>`0`: (default) truncates the text at the limit of the area<br>`1`: will display an ellipsis `(...) when text overflows the area
+`indent`|`set_indent`|Set the indent of the first line in pixels
+`max_lines`|`set_max_lines`|Set the maximum number of lines to be displayed in `mode`=`2`, negative values indicate no limit
+
+Each `span` sub-object must have an explicit `parentid` to the `spangroup`, and accepts only the following attributes (mostly from `lv_style`):
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`text`|`set_text`|Sets the text of the `span` element, use `\n` for a new line
+`text_color`|`set_text_color`|Sets the color of text
+`text_decor`|`set_text_decor`|Sets the text decorator, can be ORed<br>`0`: none<br>`1` underline<br>`2`: strike-through
+`text_opa`|`set_text_opa`|Sets the text opacity<br>`0`: transparent<br>`255`: opaque 
+`text_letter_space`|`set_text_letter_space`|Set the letter space in pixels
+`text_line_space`|`set_text_line_space`|Set the line space in pixels.
 
 #### Attributes specific to `qrcode`
 
