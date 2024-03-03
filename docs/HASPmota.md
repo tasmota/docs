@@ -201,6 +201,7 @@ HASPmota Class|Embedded LVGL class
 `slider`|`lv.slider`
 `arc`|`lv.arc`
 `textarea`|`lv.textarea`
+`led`|`lv.led`
 `chart`|`lv.chart`
 `spangroup`|`lv.spangroup`
 `span`|`lv.span`
