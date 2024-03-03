@@ -282,6 +282,21 @@ Attribute name|LVGL equivalent|Details
 `val_rule`||Link a value to a Tasmota rule, see below
 `val_rule_formula`||Link a value to a Tasmota rule, see below
 
+### `btn`
+
+Example:
+
+![HASPmota chart](_media/lvgl/HASPmota_btn.png)
+
+
+```json
+{"id":11,"obj":"btn","x":0,"y":60,"w":80,"h":30,"bg_color":"#4f4f4f","text_color":"#FFFF44","radius":10,"text":"Disabled","border_width":3,"border_side":15,"border_color":"#FFFF44","border_opa":210,"enabled":false}
+{"id":12,"obj":"btn","x":100,"y":60,"w":80,"h":30,"bg_color":"#4f4f4f","text_color":"#FFFF44","radius":10,"text":"Enabled","border_width":3,"border_side":15,"border_color":"#FFFF44","border_opa":210}
+
+{"id":13,"obj":"btn","x":0,"y":100,"w":80,"h":30,"text_color":"#FFFF44","radius":0,"text":"Disabled","border_width":3,"border_side":15,"border_opa":210,"enabled":false,"bg_color":"#884488","border_color":"#DD3300"}
+{"id":14,"obj":"btn","x":100,"y":100,"w":80,"h":30,"text_color":"#FFFF44","radius":0,"text":"Enabled","border_width":3,"border_side":15,"bg_color":"#884488","border_color":"#DD3300"}
+```
+
 ### `switch`
 
 Attribute name|LVGL equivalent|Details
