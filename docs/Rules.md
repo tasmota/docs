@@ -2071,12 +2071,10 @@ mem3 25
 
 ```haskell
 rule1
-  ON DS18B20-1#temperature DO event t1=%value% ENDON
+  ON DS18B20-1#temperature DO Backlog0 var2 %value%; add2 1 ; var3 %value%; add3 2 ENDON
   ON DS18B20-2#temperature DO event t2=%value% ENDON
   ON event#t2>%mem3% DO var1 1 ENDON
   ON event#t2<=%mem3% DO var1 0 ENDON
-  ON event#t1 DO Backlog var2 %value%; add2 1 ENDON
-  ON event#t1 DO Backlog var3 %value%; add3 2 ENDON
   ON event#t2>%var3% DO Power1 %var1% ENDON
   ON event#t2<%var2% DO Power1 0 ENDON
 ```
