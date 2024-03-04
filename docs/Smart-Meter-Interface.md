@@ -781,6 +781,7 @@ For `Inf off`, a simplified dataset is returned only.
 ### DZG DWS76 (SML)
 
 Should also be applicable to many other DZG Metering GmbH meters, like DVS76, DVS74, DWS74 or in general DxS7x - not tested though.
+Succesfully tested with DWS7612.1T
 
 Once unlocked with a PIN and set to `Inf on`, the meter returns not only an integer of the total consumption, but an extended dataset which also includes decimals as well as the current power. Further values unknown yet.
 
