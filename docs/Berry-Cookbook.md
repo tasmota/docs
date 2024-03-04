@@ -779,3 +779,11 @@ var topic = string.replace(string.replace(
               '%prefix%', tasmota.cmd('Prefix',true)['Prefix3'])
             + 'SENSOR'
 ```
+
+## Other resources
+
+For Tasmota the're many Berry scripts available which can be found in the links below.
+
+[https://github.com/arendst/Tasmota/tree/development/tasmota/berry](https://github.com/arendst/Tasmota/tree/development/tasmota/berry)
+[http://sfromis.strangled.net/tasmota/berry/github-repositories](http://sfromis.strangled.net/tasmota/berry/github-repositories)
+[https://github.com/tasmota/Berry_playground/tree/main](https://github.com/tasmota/Berry_playground/tree/main)
