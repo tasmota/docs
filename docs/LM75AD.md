@@ -17,6 +17,8 @@ The LM75AD is an I<sup>2</sup>C temperature sensor that converts temperature dir
 
 [LM75A Datasheet](https://www.nxp.com/docs/en/data-sheet/LM75A.pdf)
 
+The STDS75 chip is functionally identical to the LM75A, and can be interfaced using the same code as the LM75A.
+
 ## Configuration
 
 ### Wiring
