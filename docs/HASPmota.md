@@ -288,7 +288,6 @@ Example:
 
 ![HASPmota btn](_media/lvgl/HASPmota_btn.png)
 
-
 ```json
 {"id":11,"obj":"btn","x":0,"y":60,"w":80,"h":30,"bg_color":"#4f4f4f","text_color":"#FFFF44","radius":10,"text":"Disabled","border_width":3,"border_side":15,"border_color":"#FFFF44","border_opa":210,"enabled":false}
 {"id":12,"obj":"btn","x":100,"y":60,"w":80,"h":30,"bg_color":"#4f4f4f","text_color":"#FFFF44","radius":10,"text":"Enabled","border_width":3,"border_side":15,"border_color":"#FFFF44","border_opa":210}
@@ -301,7 +300,7 @@ Example:
 
 Example:
 
-![HASPmota switch](_media/lvgl/HASPmota_switch.png)
+![HASPmota switch](_media/lvgl/HASPmota_5_switch.png)
 
 ```json
 {"id":11,"obj":"switch","x":0,"y":60,"w":60,"h":30,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400"}
@@ -313,7 +312,6 @@ Example:
 {"id":22,"obj":"switch","x":140,"y":100,"w":130,"h":30,"toggle":true,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400","text":"Off","text_color":"#FFFF44","text_color01":"#000000"}
 ```
 
-
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
 `toggle`||`true` or `false`: read or change the value of the switch
@@ -324,16 +322,56 @@ Attribute name|LVGL equivalent|Details
 `text_color01`||Color of the text when the switch if On
 `radius20`||Radius of the knob.
 
-### `arc`
+### `slider`
+
+Example:
+
+![HASPmota switch](_media/lvgl/HASPmota_14_slider.png)
+
+```json
+{"id":11,"obj":"slider","x":0,"y":60,"w":100,"h":10,"bg_color":"#FFFF88","bg_color10":"#FFFF88","bg_color20":"#FF4400","val":65}
+{"id":12,"obj":"slider","x":0,"y":90,"w":180,"h":20,"bg_color":"#4F4F4F","bg_color10":"#00FF00","bg_color20":"#FF4400","val":40,"bg_opa":255,"border_color":"#FFFF88","border_width":2,"pad_all":6,"radius":6}
+{"id":13,"obj":"slider","x":0,"y":120,"w":180,"h":15,"bg_color":"#4F4F4F","bg_opa":255,"bg_color10":"#4444FF","bg_color20":"#FF4400","val":26,"min":-20,"max":30,"bg_grad_color10":"#FF4400","bg_grad_dir10":2}
+```
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
-`start_angle`|`bg_start_angle`|Start angle of the arc background.<br>Angles are in degrees in [0;360] range.<br>Zero degrees is at the middle right (3 o'clock) of the object and the degrees are increasing in clockwise direction.
+`bg_color`||Color of the background (inactive) part of the slider, by default dimmed with `bg_opa`
+`bg_color10`||Color of the active part of the slider
+`bg_color20`||Color of the indicator
+`border_width`||Width of the overall border, `0` by default
+`pad_all`||Padding of the overall border, `0` by default
+`bg_grad_color10`||End color of the active part of the slider when gradient is enabled
+`bg_grad_dir10`||Gradient direction<br>`0`: none<br>`1`: Vertical (top to bottom) gradient<br>`2`: Horizontal (left to right) gradient
+`min`||(int) Minimum value
+`max`||(int) Maximum value
+`val`||(int) Current value
+
+### `arc`
+
+Example:
+
+![HASPmota switch](_media/lvgl/HASPmota_15_arc.png)
+
+```json
+{"id":11,"obj":"arc","x":10,"y":60,"w":100,"h":100,"arc_color10":"#FFFF88","bg_color20":"#FF4400","min":-20,"max":40,"val":26,"text":"76%","label_to_angle":-20}
+{"id":12,"obj":"arc","x":150,"y":60,"w":100,"h":120,"arc_color10":"#00FF00","bg_color20":"#FF4400","val":65,"text":"Nominal","angle":-40,"border_width20":4,"border_color20":"#FFFFFF","end_angle":310}
+```
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`start_angle`|`bg_start_angle`|Start angle of the arc background.<br>Angles are in degrees in `0..360`] range.<br>Zero degrees is at the middle right (3 o'clock) of the object and the degrees are increasing in clockwise direction.
 `end_angle`|`bg_end_angle`|End angle of the arc background.
 `start_angle1`|`start_angle`|Start angle of the arc indicator.
 `end_angle1`|`end_angle`|End angle of the arc indicator.
 `rotation`|`rotation`|Offset to the 0 degree position
 `type`|`mode`|Sets the arc mode<br>`0`: `lv.ARC_MODE_NORMAL`<br>`1`: `lv.ARC_MODE_REVERSE`<br>`2`: `lv.ARC_MODE_SYMMETRICAL`
+`arc_color10`||Sets the color of the arc indicator
+`border_width20`||Border width of the indicator, `0` by default
+`border_color20`||Border color of the indicator
+`bg_color20`||Color of the indicator
+`text`||Sets the text of the label, centered by default, can be turned with `label_to_angle`
+`label_to_angle`|`rotate_obj_to_angle`|Rotates the label to the current value, and sets an offset in pixels (positive is towards the outer, negative towards the inner)
 `pad_top2`|`style_pad_top`|Top padding for `lv.PART_KNOB` part
 `pad_bottom2`|`style_pad_bottom`|Bottom padding for `lv.PART_KNOB` part
 `pad_left2`|`style_pad_left`|Left padding for `lv.PART_KNOB` part
@@ -345,30 +383,41 @@ Attribute name|LVGL equivalent|Details
 
 Example:
 
-![HASPmota image](_media/lvgl/HASPmota_img.png)
+![HASPmota image](_media/lvgl/HASPmota_3_btn.png)
 
 ```json
-{"id":11,"obj":"img","x":10,"y":60,"src":"A:colors-icon.png"}
-{"id":12,"obj":"img","x":120,"y":60,"src":"A:colors-icon.png","scale":350,"angle":150,"image_recolor":"#FFFF88","image_recolor_opa":200}
-{"id":13,"obj":"img","x":230,"y":60,"src":"tasmota_logo","image_recolor":"#FFFFFF","image_recolor_opa":255}
+{"id":11,"obj":"img","x":10,"y":60,"raw":"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"}
+{"id":12,"obj":"img","x":200,"y":60,"scale":350,"src":"tasmota_logo","image_recolor":"#FFFFFF","image_recolor_opa":255}
 ```
 
-using the following image: ![colors-icon](_media/lvgl/colors-icon.png)
+using the following image: ![HASPmota image](_media/lvgl/berry_logo.png)
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
 `src`|`src`|Path to the image in the file-system<br>`"tasmota_logo"` to use the embedded logo in Flash. Note that this logo is black, so it needs to be recolored to white on dark background
+`raw`||You can embed directly a PNG image as a `base64` string, instead of a file
 `image_recolor`|`style_image_recolor`|Color used to recolor the image
 `image_recolor_opa`|`style_image_recolor_opa`|Opacity of image recoloring<br>`0`: no recolor<br>`255`: full recolor
 `scale`<br>`scale_x`<br>`scale_y`|`scale`|Zoom value, `256` (default) is no zoom, `128` is half size, `256` is double size<br>`scale_x` and `scale_y` can be used to the scale independently horizontally and vertically (non-uniform scale)
 `angle`|`angle`|Angle of the image, in 1/10th of degrees. Range `0`..`3600`
 `antialias`|`antialias`|`true` (defaul) the transformations are higher quality but slower
 
+Example of code to convert an image to `base64`:
+
+```berry
+f=open('logo-berry.png')
+raw=f.readbytes()
+f.close()
+f=open('logo-bery.b4','w')
+f.write(raw.tob64())
+f.close()
+```
+
 ### `roller`
 
 Example:
 
-![HASPmota roller](_media/lvgl/HASPmota_roller.png)
+![HASPmota roller](_media/lvgl/HASPmota_12_roller.png)
 
 ```json
 {"id":11,"obj":"roller","x":10,"y":55,"options":"Option 1\nOption 2\nOption 3\nOption 4","val":1,"bg_color50":"#FF4400","text_color":"#FFFF88","text_color50":"#000000","border_color":"#FFFF88"}
@@ -395,7 +444,7 @@ Attribute name|LVGL equivalent|Details
 
 Example:
 
-![HASPmota chart](_media/lvgl/HASPmota_led.png)
+![HASPmota chart](_media/lvgl/HASPmota_4_led.png)
 
 Example from `pages.jsonl`:
 
@@ -407,6 +456,10 @@ Example from `pages.jsonl`:
 {"id":21,"obj":"led","x":10,"y":100,"w":20,"h":20,"color":"#00FF00"}
 {"id":22,"obj":"led","x":60,"y":100,"w":20,"h":20,"color":"#00FF00","val":200}
 {"id":23,"obj":"led","x":110,"y":100,"w":20,"h":20,"color":"#00FF00","val":0}
+
+{"id":21,"obj":"led","x":10,"y":140,"w":20,"h":20,"color":"#FFFF88"}
+{"id":22,"obj":"led","x":60,"y":140,"w":20,"h":20,"color":"#FFFF88","val":200}
+{"id":23,"obj":"led","x":110,"y":140,"w":20,"h":20,"color":"#FFFF88","val":0}
 ```
 
 Attribute name|LVGL equivalent|Details
@@ -421,7 +474,7 @@ Attribute name|LVGL equivalent|Details
 
 The `chart` object allows to track values over time and show them in a graph.
 
-![HASPmota chart](_media/lvgl/HASPmota_chart.png)
+![HASPmota chart](_media/lvgl/HASPmota_10_chart.png)
 
 Example of `pages.jsonl`:
 ```json
@@ -464,18 +517,18 @@ Attribute name|LVGL equivalent|Details
 
 The `spangroup` object is equivalent to HTML `<span>` and allows to have a text area composed of multiple fragments, each fragment with its own style, size, font, color...
 
-![HASPmota spangroup](_media/lvgl/HASPmota_spangroup.png)
+![HASPmota spangroup](_media/lvgl/HASPmota_2_spangroup.png)
 
 Example:
 
 ```json
-{"id":11,"obj":"spangroup","x":0,"y":60,"w":300,"h":115,"text_font":"montserrat-20","bg_color":"#000088","bg_opa":255}
+{"id":11,"obj":"spangroup","x":0,"y":60,"w":300,"h":115,"text_font":"robotocondensed-16","bg_color":"#000088","bg_opa":255}
   {"id":12,"obj":"span","parentid":11,"text":"This is "}
   {"id":13,"obj":"span","parentid":11,"text":"RED","text_color":"#FF0000","text_font":"montserrat-28"}
-  {"id":12,"obj":"span","parentid":11,"text":"and this is "}
+  {"id":12,"obj":"span","parentid":11,"text":" and this is "}
   {"id":14,"obj":"span","parentid":11,"text":"GREEN","text_color":"#00FF00","text_font":"montserrat-28","text_decor":1}
   {"id":15,"obj":"span","parentid":11,"text":" underlined"}
-  {"id":16,"obj":"span","parentid":11,"text":"\nAnd this is almost transparent","text_opa":100}
+  {"id":16,"obj":"span","parentid":11,"text":"\nAnd this is almost transparent","text_opa":100,"text_font":"montserrat-20"}
 ```
 
 You must first define a `spangroup` object, and add as many as `span` sub-objects. You need to define the `parentid` attribute to the `spangroup`.
@@ -502,6 +555,14 @@ Attribute name|LVGL equivalent|Details
 `text_line_space`|`set_text_line_space`|Set the line space in pixels.
 
 ### `qrcode`
+
+Example:
+
+![HASPmota qrcode](_media/lvgl/HASPmota_13_qrcode.png)
+
+```json
+{"id":11,"obj":"qrcode","qr_text":"https://tasmota.github.io/","x":85,"y":55,"qr_size":120,"qr_light_color":"#FFFF88","qr_dark_color":"#4F4F4F"}
+```
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
