@@ -781,6 +781,10 @@ Embedded font|Details
 
 ### Embedded special fonts
 
+The font `seg7` is used to look like 7-segment display. To improve readability, sizes up to 20 are straight, and sizes above 24 are slightly italic.
+
+![HASPmota seg7](_media/lvgl/HASPmota_22_seg7.png)
+
 Embedded font|Details
 :---|:---
 `seg7-8`<br>`seg7-10`<br>`seg7-12`<br>`seg7-14`<br>`seg7-16`<br>`seg7-18`<br>`seg7-20`<br>`seg7-24`<br>`seg7-28`<br>`seg7-36`<br>`seg7-48`|7 segments display, contains digits, space, ':' and '!' for a space of the size of ':'<br>Sizes 8, 10, 12, 14, 16, 18 are pixel-perfect bold<br>Sizes 20, 24, 28, 36, 48 are dithered (2 bits per pixel) bold-italic
