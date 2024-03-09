@@ -587,7 +587,7 @@ Attribute name|LVGL equivalent|Details
 
 ### `spangroup` (styled text)
 
-!!!note "Available (since v13.4). This object is not part of OPENhasp."
+!!!note "Available (since Tasmota v13.4). This object is not part of OPENhasp."
 
 The `spangroup` object is equivalent to HTML `<span>` and allows to have a text area composed of multiple fragments, each fragment with its own style, size, font, color...
 
@@ -746,19 +746,28 @@ HASPmota can use 3 types of LVGL fonts:
 
 - embedded fonts, i.e. fonts included in Tasmota firmware
 - binary bitmat fonts (extension `.lvfont`), stored in the Tasmota file-system using `lv_font_conv` tool. Tasmota includes various fonts pre-converted
-- TrueType fonts (extension `.ttf`), stored in the Tasmota file-system. TrueType vector fonts can be scaled at any size and render well at high font-sizes, but require significant PSRAM memory
+- TrueType fonts (extension `.ttf`), stored in the Tasmota file-system. TrueType vector fonts can be scaled at any size and render well at high font-sizes, but require significant PSRAM memory. Bitmaps TrueType (BDF) are now supported since Tasmota v13.4
 
 ### Embedded fonts
 
-Use attribute `"text_font":"unscii-8"`. The general form is `"text_font":"<font_name>-<font_size>"`
+Use attribute like `"text_font":"<font_name>-<font_size>"`. The default is `"text_font":"robotocondensed-14"`
 
+![HASPmota fonts](_media/lvgl/HASPmota_20_fonts.png)
 
 Embedded font|Details
 :---|:---
+`robotocondensed-12`<br>`robotocondensed-16`<br>`robotocondensed-24`|Default OpenHASP
 `montserrat-10`<br>`montserrat-14`<br>`montserrat-20`<br>`montserrat-28`|Default LVGL normal font, including icons
 `unscii-8`<br>`unscii-16`|Default LVGL, 8 px and 16 px pixel perfect font with only ASCII characters
 `seg7-8`<br>`seg7-10`<br>`seg7-12`<br>`seg7-14`<br>`seg7-16`<br>`seg7-18`<br>`seg7-20`<br>`seg7-24`<br>`seg7-28`<br>`seg7-36`<br>`seg7-48`|7 segments display, contains digits, space, ':' and '!' for a space of the size of ':'<br>Sizes 8, 10, 12, 14, 16, 18 are pixel-perfect bold<br>Sizes 20, 24, 28, 36, 48 are dithered (2 bits per pixel) bold-italic
-`robotocondensed-12`<br>`robotocondensed-16`<br>`robotocondensed-24`|Default OpenHASP
+
+### Embedded symbols
+
+### Embedded special fonts
+
+Embedded font|Details
+:---|:---
+`seg7-8`<br>`seg7-10`<br>`seg7-12`<br>`seg7-14`<br>`seg7-16`<br>`seg7-18`<br>`seg7-20`<br>`seg7-24`<br>`seg7-28`<br>`seg7-36`<br>`seg7-48`|7 segments display, contains digits, space, ':' and '!' for a space of the size of ':'<br>Sizes 8, 10, 12, 14, 16, 18 are pixel-perfect bold<br>Sizes 20, 24, 28, 36, 48 are dithered (2 bits per pixel) bold-italic
 
 ### Binary bitmap fonts
 
