@@ -750,7 +750,7 @@ HASPmota can use 3 types of LVGL fonts:
 
 ### Embedded fonts
 
-Use attribute like `"text_font":"<font_name>-<font_size>"`. The default is `"text_font":"robotocondensed-14"`
+Use attribute like `"text_font":"<font_name>-<font_size>"`. The default is `"text_font":"robotocondensed-16"`
 
 ![HASPmota fonts](_media/lvgl/HASPmota_20_fonts.png)
 
@@ -762,6 +762,22 @@ Embedded font|Details
 `seg7-8`<br>`seg7-10`<br>`seg7-12`<br>`seg7-14`<br>`seg7-16`<br>`seg7-18`<br>`seg7-20`<br>`seg7-24`<br>`seg7-28`<br>`seg7-36`<br>`seg7-48`|7 segments display, contains digits, space, ':' and '!' for a space of the size of ':'<br>Sizes 8, 10, 12, 14, 16, 18 are pixel-perfect bold<br>Sizes 20, 24, 28, 36, 48 are dithered (2 bits per pixel) bold-italic
 
 ### Embedded symbols
+
+HASPmota combines icons from LVGL and from OpenHASP.
+
+![HASPmota icons](_media/lvgl/HASPmota_21_icons.png)
+
+You can use the following icons fonts:
+
+Embedded font|Details
+:---|:---
+`icons-10`|Also contained in `montserrat-10`
+`icons-12`|
+`icons-14`|Also contained in `montserrat-14`
+`icons-18`|
+`icons-20`|Also contained in `montserrat-20`
+`icons-24`|
+`icons-28`|Also contained in `montserrat-28`
 
 ### Embedded special fonts
 
