@@ -282,11 +282,23 @@ Attribute name|LVGL equivalent|Details
 `val_rule`||Link a value to a Tasmota rule, see below
 `val_rule_formula`||Link a value to a Tasmota rule, see below
 
+### `label`
+
+Example:
+
+![HASPmota label](_media/lvgl/HASPmota_1_instructions.png)
+
+```json
+{"id":10,"obj":"label","x":0,"y":30,"w":240,"h":24,"text":"[1. Instructions]","text_font":"montserrat-20"}
+```
+
+Attributes are all related to [text](#attributes-related-to-text-content) content (see above).
+
 ### `btn`
 
 Example:
 
-![HASPmota btn](_media/lvgl/HASPmota_btn.png)
+![HASPmota btn](_media/lvgl/HASPmota_3_btn.png)
 
 ```json
 {"id":11,"obj":"btn","x":0,"y":60,"w":80,"h":30,"bg_color":"#4f4f4f","text_color":"#FFFF44","radius":10,"text":"Disabled","border_width":3,"border_side":15,"border_color":"#FFFF44","border_opa":210,"enabled":false}
@@ -339,6 +351,30 @@ Attribute name|LVGL equivalent|Details
 `bg_color`||Color of the background (inactive) part of the slider, by default dimmed with `bg_opa`
 `bg_color10`||Color of the active part of the slider
 `bg_color20`||Color of the indicator
+`border_width`||Width of the overall border, `0` by default
+`pad_all`||Padding of the overall border, `0` by default
+`bg_grad_color10`||End color of the active part of the slider when gradient is enabled
+`bg_grad_dir10`||Gradient direction<br>`0`: none<br>`1`: Vertical (top to bottom) gradient<br>`2`: Horizontal (left to right) gradient
+`min`||(int) Minimum value
+`max`||(int) Maximum value
+`val`||(int) Current value
+
+### `bar`
+
+Example:
+
+![HASPmota bar](_media/lvgl/HASPmota_8_bar.png)
+
+```json
+{"id":11,"obj":"bar","x":0,"y":60,"w":100,"h":10,"bg_color":"#FFFF88","bg_color10":"#FFFF88","val":65}
+{"id":12,"obj":"bar","x":0,"y":90,"w":180,"h":20,"bg_color":"#4F4F4F","bg_color10":"#00FF00","val":40,"bg_opa":255,"border_color":"#FFFF88","border_width":2,"pad_all":6,"radius":6}
+{"id":13,"obj":"bar","x":0,"y":120,"w":180,"h":15,"bg_color":"#4F4F4F","bg_opa":255,"bg_color10":"#4444FF","val":26,"min":-20,"max":30,"bg_grad_color10":"#FF4400","bg_grad_dir10":2}
+```
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`bg_color`||Color of the background (inactive) part of the slider, by default dimmed with `bg_opa`
+`bg_color10`||Color of the active part of the slider
 `border_width`||Width of the overall border, `0` by default
 `pad_all`||Padding of the overall border, `0` by default
 `bg_grad_color10`||End color of the active part of the slider when gradient is enabled
@@ -439,6 +475,26 @@ Attribute name|LVGL equivalent|Details
 `angle`||The length of the spinning segment in degrees - can be changed after initial value since v12.1.1.1
 `speed`||The time for 1 turn in ms - can be changed after initial value since v12.1.1.1
 
+### `btnmatrix`
+
+Example:
+
+![HASPmota btnmatrix](_media/lvgl/HASPmota_9_btnmatrix.png)
+
+Example from `pages.jsonl`:
+
+```json
+{"id":11,"obj":"btnmatrix","x":5,"y":60,"w":310,"h":125,"bg_color":"#4F4F4F","options":["1","2","3","4","5","\n","6","7","8","9","0","\n","Action1","Action2",""],"border_color30":"#FFFF88","border_width30":2,"bg_color30":"#4F4F4F","text_color30":"#FFFF88","border_color":"#4F4F4F"}
+```
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`options`||(json array) Array of strings where each element is the label of a button. Use `"\n"` for a new line of buttons, and end with an empty string `""`
+`border_color`||Color of the overall border
+`border_color30`||Color of the border of each button
+`border_width30`||Border width of each button
+`text_color30`||Color of the inner text of each button
+
 
 ### `led`
 
@@ -467,6 +523,24 @@ Attribute name|LVGL equivalent|Details
 `val`<br>`brightness`|`set_brightness`|The brightness from `0` (off) to `255` (on)
 `color`|`set_color`|The overall color of the led
 
+### `line`
+
+Example:
+
+![HASPmota line](_media/lvgl/HASPmota_7_line.png)
+
+Example from `pages.jsonl`:
+
+```json
+{"id":11,"obj":"line","x":0,"y":60,"w":100,"h":50,"line_color":"#FFFF88","line_width":3,"points":[[0,0],[30,40],[65,15],[90,50]]}
+{"id":12,"obj":"line","x":120,"y":60,"w":100,"h":50,"line_color":"#00FF00","line_width":5,"points":[[0,0],[30,40],[65,15],[90,50]],"y_invert":true,"line_rounded":true}
+```
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`points`||(JSON array) Array of 2-value arrays, each entry is a point<br>Ex: `[[0,0],[30,40],[65,15],[90,50]]`
+`line_rounded`||(bool) Make the end points of the lines rounded. `true`: rounded, `false`: perpendicular line ending
+`y_invert`||(bool) `false`: y == 0 point is in the top of the object<br>`true`: y == 0 will be the bottom of the object
 
 ### `chart`
 
