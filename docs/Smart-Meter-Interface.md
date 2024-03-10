@@ -577,7 +577,7 @@ After unlocking the meter, you can run the following script
     #
     ```
 
-### Carlo Gavazzi EM340 (MODBUS RTU)
+### Carlo Gavazzi EM340 (MODBus RTU)
 
 ??? summary "View script"
     ```
@@ -1608,9 +1608,11 @@ by the supplier. Therefore it is set to a fixed baud rate of 300 and can not be 
     #
     ```
 
-### Fronius Symo 10.0-3-M (MODBUS)
+### Fronius Symo 10.0-3-M (MODBus TCP)
 	
-Fronius inverter, using Modbus TCP feature
+Fronius inverter, using Modbus TCP feature.
+
+For this script the inverter must be configured to use Sunspec Model Type "int+SF"
 
 ??? summary "View script"
     ```
@@ -1653,6 +1655,33 @@ Fronius inverter, using Modbus TCP feature
     2,01032ax36UUuu@i0:1,Temperature,C,Temperature,0
     2,01032ax38SSss@i0:1,Temp Scale Fctr,SF,Temp_SF,0
     #
+    ```
+
+Use this script when the inverter is configured to use Sunspec Model Type "float":
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    
+    >M 1
+    +1,[192.168.2.251],m,0,502,FRONIUS,0,100,r01039C870020
+    1,=so3,80
+    1,010340ffffffff@i0:1,AC Current,A,11_7_0,3
+    1,010340x4ffffffff@i0:1,L1 Current,A,31_7_0,3
+    1,010340x8ffffffff@i0:1,L2 Current,A,51_7_0,3
+    1,010340x12ffffffff@i0:1,L3 Current,A,71_7_0,3
+    1,010340x28ffffffff@i0:1,L1 Voltage,V,32_7_0,2
+    1,010340x32ffffffff@i0:1,L2 Voltage,V,52_7_0,2
+    1,010340x36ffffffff@i0:1,L3 Voltage,V,72_7_0,2
+    1,010340x40ffffffff@i0:1000,Output Power,kW,2_7_0,3
+    1,010340x44ffffffff@i0:1,Frequency,Hz,14_7_0,3
+    1,010340x48ffffffff@i0:1000,Apparent Power,kVA,9_7_0,3
+    1,010340x52ffffffff@i0:1000,Reactive Power,kVAr,4_7_0,3
+    1,010340x56ffffffff@i0:1,Power Factor,,13_7_0,3
+    1,010340x60ffffffff@i0:1000,AC Lifetime En,kWh,2_8_0,3
+    #    
     ```
 
 ### Growatt MAX4200 (MODBus)  
@@ -1918,7 +1947,7 @@ After unlocking the meter, you can run the following script
     #
     ```
     
-### Huawei SUN2000-10KTL (Modbus)
+### Huawei SUN2000-10KTL (MODBus)
 
 For writing 32-bit registers like 40126, use [ModBus Bridge](Modbus-Bridge) driver and send two 16-bit numbers. i.e. `modbussend {"deviceaddress": 1, "functioncode": 16, "startaddress":40126, "type":"int16", "count":2, "values":["0","6666"]}` 
 
@@ -1951,7 +1980,7 @@ For writing 32-bit registers like 40126, use [ModBus Bridge](Modbus-Bridge) driv
     #
     ```
 
-### inepro PRO380-Mod (Modbus)
+### inepro PRO380-Mod (MODBus)
 
 ??? summary "View script"
     ```
@@ -2901,7 +2930,7 @@ Documentation for this Counter is very small. This informations were collected a
     15:48:53.542 : 0.2.2(:::::G11)!
     ```
 	
-### Peacefair PZEM004TV30 (MODBUS)
+### Peacefair PZEM004TV30 (MODBus)
 
 PZEM004T V30 multiple meters on Modbus
        
@@ -3194,7 +3223,7 @@ This meter sends bursts of data at 115200 baud every 10 seconds. Some data lines
     #
     ```
 
-### Schneider iEM3150 (Modbus)
+### Schneider iEM3150 (MODBus)
 Set device parity to EVEN. Set device serial baud rate to 9600.
 	
 ??? summary "View script"
@@ -3572,7 +3601,7 @@ Tested on an AEConversion INV500-90 with RS485 interface.
     1,212717x4UUuux4@1000,Energie,kWh,energy_sun,3
     #
     ```
-### SMA Solar Inverter (TCP MODBus)
+### SMA Solar Inverter (MODBus TCP)
 
 ??? summary "View script"
 
