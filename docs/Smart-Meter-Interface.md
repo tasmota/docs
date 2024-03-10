@@ -945,17 +945,17 @@ Also, the source code has to be patched from 8N1 to 7E1 mode for the hardware se
         Serial.swap();
     ```
 
-### eBZ DD3 (OBIS)
+### eBZ DD3 (OBIS/SML)
 
 The eBZ DD3 by eBZ GmbH is a three-phase model energy meter, which is sold in a number of different configurations. The D0 port is read-only with a fixed time interval of one second. 
 
 There are two communication interfaces:
-  * The INFO interface on the front, with a metal backplate. Pushes a reduces OBIS ASCI datagram every second.
-  * The MSB interface on the top, no metal backplate. Pushes a full OBIS ASCI datagram every second.    
+  * The INFO interface on the front, with a metal backplate. Pushes a reduced OBIS ASCI/SML binary datagram every second.
+  * The MSB interface on the top, no metal backplate. Pushes a full OBIS ASCI/SML binary datagram every second.    
     
 There are two types available using different communication settings: 
-  * OD-type: 7 data bits, even parity, one stop bit, 9600 baud (9600 7E1)
-  * SM-type: 8 data bits, no parity, one stop bit, 9600 baud (9600 8N1) 
+  * OD-type: 7 data bits, even parity, one stop bit, 9600 baud (9600 7E1) - OBIS ASCI protocol
+  * SM-type: 8 data bits, no parity, one stop bit, 9600 baud (9600 8N1) - SML binary protcol
 
 Tested with an eBZ DD3 2R06 ODZ1 (two-direction model for e. g. solar power metering).
     
@@ -1019,34 +1019,40 @@ Example reading of the two-direction model using GPIO 3:
     >M 1
     ; Device: eBZ DD3 2R06 DTA SMZ1
     ; protocol is D0 SML HEX
-    ; 9600@7E1 for OP-type devices, 9600@8N1 for SM-type devices
-    +1,3,s,0,9600,SML,1
+    ; 9600@7E1 for OD-type devices, 9600@8N1 for SM-type devices
+    +1,13,s,0,9600,SML
     ; Zählerstand zu +A, tariflos, 
-    ; Zählerstände Auflösung 10 µW*h (6 Vorkomma- und 8 Nachkommastellen)
+    ; Auflösung 10 µW*h (6 Vorkomma- und 8 Nachkommastellen)
     1,77070100010800FF@100000000,Energie Bezug,kWh,1_8_0,8
     ; Zählerstand zu +A, Tarif 1
-    1,77070100010801FF@100000000,Energie Bezug T1,kWh,1_8_1,8
+    ; Auflösung 1 W*h (6 Vorkomma- und 3 Nachkommastellen)
+    1,77070100010801FF@1000,Energie Bezug NT,kWh,1_8_1,3
     ; Zählerstand zu +A, Tarif 2
-    1,77070100010802FF@100000000,Energie Bezug T2,kWh,1_8_2,8
+    ; Auflösung 1 W*h (6 Vorkomma- und 3 Nachkommastellen)
+    1,77070100010802FF@1000,Energie Bezug HT,kWh,1_8_2,3
     ; Zählerstand zu -A, tariflos
+    ; Auflösung 10 µW*h (6 Vorkomma- und 8 Nachkommastellen)
     1,77070100020800FF@100000000,Energie Export,kWh,2_8_0,8
     ; Summe der Momentan-Leistungen in allen Phasen, Auflösung 0,01W (5 Vorkomma- und 2 Nachkommastellen)
-    1,77070100100700FF@1,Leistung,W,16_7_0,16
+    1,77070100100700FF@1,Leistung,W,16_7_0,18
     ; Momentane Leistung in Phase Lx, Auflösung 0,01W (5 Vorkomma- und 2 Nachkommastellen)
-    1,77070100240700FF@1,Leistung L1,W,36_7_0,16
-    1,77070100380700FF@1,Leistung L2,W,56_7_0,16
-    1,770701004C0700FF@1,Leistung L3,W,76_7_0,16
+    1,77070100240700FF@1,Leistung L1,W,36_7_0,18
+    1,77070100380700FF@1,Leistung L2,W,56_7_0,18
+    1,770701004C0700FF@1,Leistung L3,W,76_7_0,18
     ; Spannung in Phase Lx, Auflösung 0,1V (nur über MSB)
-    ;1,77070100200700FF@1,Spannung L1,V,32_70,1
-    ;1,77070100340700FF@1,Spannung L2,V,52_7_0,1
-    ;1,77070100480700FF@1,Spannung L3,V,72_7_0,1
+    1,77070100200700FF@1,Spannung L1,V,32_7_0,1
+    1,77070100340700FF@1,Spannung L2,V,52_7_0,1
+    1,77070100480700FF@1,Spannung L3,V,72_7_0,1
     ; Statuswort, 4 Byte Information über den Betriebszustand, HEX string
     ; tasmota can decode one string per device only!
     ;1,1-0:96.5.0*255@#),Status1,,96_5_0,0
     ;1,1-0:96.8.0*255@#),Status2,,96_8_0,0
+    ; Hersteller-Identifikation, Hersteller-Kennung und Typ mit Software Version
+    ;1,77078181C78203FF@#),Herstellerkennung,,Typ,0
+    ; Eigentumsnummer nach Kundenwunsch, sonst nach DIN 43863-5
+    ;1,77070100000000FF@#),Eigentumsnummer,,0_0_0,0
     ; Geräte-Identifikation, Nach DIN 43863-5 
-    1,77070100000009FF@#),Identifikation,,96_1_0,0
-    ;1,77070100000000FF@#),Identifikation,,0_0_0,0
+    ;1,77070100000009FF@#),Identifikation,,96_1_0,0
     #
     ```
 	
