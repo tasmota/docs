@@ -33,7 +33,7 @@ The GPIOs from ESP devices are electrically compatible with HDMI specifications 
 <img width="345" alt="HDMI_CEC_template" src="https://github.com/tasmota/docs/assets/49731213/02ad00fc-3d91-4dba-ba00-deb8a05a38a7">
 
 ESP8266|Wemos D1 Mini|Configuration|HDMI
-:---|:---|:---
+:---|:---|:---|:---
 GPIO 2|D4|HDMI CEC|HDMI Pin 13<BR>On the Wemos D1 Mini (and possibly other dev boards), GPIO2 is connected to a blue LED which can act as a visual indicator of CEC traffic.
 GPIO 4|D2|I2C SDA|HDMI Pin 16
 GPIO 5|D1|I2C SCL|HDMI Pin 15
