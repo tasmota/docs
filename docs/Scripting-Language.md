@@ -160,7 +160,7 @@ a valid script must start with >D in the first line
 `>D ssize`   
   `ssize` = optional max string size (default=19, max=48 unless increased with `#define SCRIPT_MAXSSIZE`)  
   define and init variables here, must be the first section, no other code allowed  
-  `p:vname`   
+  `p:vname`  
   specifies permanent variables. The number of permanent variables is limited by Tasmota rules space (50 bytes) - numeric variables are 4 bytes; string variables are one byte longer than the length of string.  p vars are stored sequentially in the order of defintion.
 therefore when specifing permanent variables, add newly defined ones always at the end of already defined p vars. otherwise variables are mixed up and string variables may even be destroyed.  
   `t:vname`   
@@ -169,9 +169,9 @@ therefore when specifing permanent variables, add newly defined ones always at t
   specifies auto increment counters if =0 (in seconds)  
   `g:vname`   
   specifies global variable which is linked to all global variables with the same definition on all devices in the homenet.
-  when a variable is updated in one device it is instantly updated in all other devices. if a section >G exists it is executed when a variable is updated from another device (this is done via UDP-multicast, so not always reliable)
+  when a variable is updated in one device it is instantly updated in all other devices. if a section >G exists it is executed when a variable is updated from another device (this is done via UDP-multicast, so not always reliable)  
   `I:vname`   
-  specifies an integer 32 bit variable instead of float. (limited support) integer constants must be preceeded by '#'
+  specifies an integer 32 bit variable instead of float. (limited support) integer constants must be preceeded by '#'  
   `m:vname`   
    specifies a median filter variable with 5 entries (for elimination of outliers)  
   `M:vname`   
@@ -179,8 +179,9 @@ therefore when specifing permanent variables, add newly defined ones always at t
   (max 5 filters in total m+M) optional another filter length (1..127) can be given after the definition.  
   Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer (may be set also), x = `-1` returns array length, x = `-2` returns array average)
   Using this filter, vars can be used as arrays, #define LARGE_ARRAYS allows for arrays up to 1000 entries  
-  array may also be permanent by specifying an extra :p  
-  m:p:vname defines a permanent array. Keep in mind however that in 1M Flash standard configurations you only have 50 bytes permanent storage which stands for a maximum of 12 numbers. (see list above for permanent storage in other configurations)  
+  array may also be permanent by specifying an extra `:p`  
+  `m:p:vname`   
+  defines a permanent array. Keep in mind however that in 1M Flash standard configurations you only have 50 bytes permanent storage which stands for a maximum of 12 numbers. (see list above for permanent storage in other configurations)  
   arrays may also be preset in auto increment mode array=X sets the value at index array[0] and increments the index by 1.  
   array = {x y z} sets 3 values in an array from index array[0]  
 
