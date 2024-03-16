@@ -51,7 +51,8 @@
     USE_SCRIPT_SPI | enables support for SPI interface  
     USE_SCRIPT_TCP_SERVER | enables support for TCP server  
     USE_DISPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
-    TS_FLOAT | may be define as double to use double precision numbers (uses double RAM memory and is slower)  
+    TS_FLOAT | may be define as double to use double precision numbers (uses double RAM memory and is slower) 
+    SCRIPT_FULL_OPTIONS | enables almost any of the above options (uses about 90k of Flash)  
 
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules). For ESP32 builds it is recommended to use [Berry](Berry)"
 
@@ -515,6 +516,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `cbs` = command text buffer size for tasmota cmds (default 256) (_**may be set also**_)  
 `tstamp` = timestamp (local date and time)  
 `topic` = mqtt topic  
+`maca` = current MAC Address  
 `gtopic` = mqtt group topic  
 `lip` = local ip as string  
 `luip` = udp ip as string (from updating device when USE_SCRIPT_GLOBVARS defined)  
