@@ -217,6 +217,8 @@ Example: `"obj":"lv_wifi_graph"` will trigger the following:
 
 ### Attributes
 
+!!!note "Values in pixels can be expressed in percentage instead of absolute value. Just suffix the attribute name with `%`. Example: `"h%:100` instead of `"h":320`"
+
 Below are the standard attributes:
 
 Attribute name|LVGL equivalent|Details
@@ -266,6 +268,7 @@ Attribute name|LVGL equivalent|Details
 `text_opa`|`style_text_opa`|Sets the text opacity<br>`0`: transparent<br>`255`: opaque 
 `text_letter_space`|`style_text_letter_space`|Set the letter space in pixels
 `text_line_space`|`style_text_line_space`|Set the line space in pixels.
+`label_mode`|`set_long_mode`|
 `value_color`|`style_text_color`|Synonym of `text_color`
 `value_ofs_x`|`x` of sub-label|Sets the X offset in pixels within the object
 `value_ofs_y`|`y` of sub-label|Sets the Y offset in pixels within the object
@@ -705,7 +708,7 @@ Attribute name|LVGL equivalent|Details
 `parentid`||Set to the `id` of the `spangroup` it belongs to
 `align`|`set_align`|Similar to `label` object<br>`0`: (default) align auto<br>`1`: align left<br>`2`: align center<br>`3`: align right
 `mode`|`set_mode`|Display modes:<br>`0`: fixes the object size<br>`1`: expand the object size to the text size but stay on a single line<br>`2`: (default) keep width, break the too long lines and auto expand height
-`overflow`|`set_overflow`|Trucature modes:<br>`0`: (default) truncates the text at the limit of the area<br>`1`: will display an ellipsis `(...) when text overflows the area
+`overflow`|`set_overflow`|Trucature modes:<br>`0`: (default) truncates the text at the limit of the area<br>`1`: will display an ellipsis `(...)` when text overflows the area
 `indent`|`set_indent`|Set the indent of the first line in pixels
 `max_lines`|`set_max_lines`|Set the maximum number of lines to be displayed in `mode`=`2`, negative values indicate no limit
 
