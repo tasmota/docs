@@ -286,6 +286,48 @@ Attribute name|LVGL equivalent|Details
 `val_rule`||Link a value to a Tasmota rule, see below
 `val_rule_formula`||Link a value to a Tasmota rule, see below
 
+### Flex layout, `flex_evenly_right`
+
+HASPmota originally supported only absolute positions and sizes in pixels, which made it cumbersome to handle with different screen sizes. LVGL provide [flexbox layout](https://docs.lvgl.io/master/layouts/flex.html). It can arrange items into rows or columns (tracks), handle wrapping, adjust the spacing between the items and tracks, handle grow to make the item(s) fill the remaining space with respect to min/max width and height.
+
+Flex layout is just attributes you can assign to any LVGL object like `"obj"`. To make it easier to build transparent invisible Flex container, we added the classes `flex_right` and `flex_down`.
+
+#### `flex_evenly_right`
+
+Class `flex_right` defines a transparent object used to distribute evenly from left to right. It is used to place buttons in the lower part of the screen in HASPmota demo.
+
+Values used for `flew_evenly_right`:
+
+Default attribute|Description
+:---|:---
+`"obj":"obj"`|Simple `obj` container class
+`"pad_all":0`|No padding
+`"radius":0`|Rectangle object (no rounded corners)
+`"border_width":0`|No border
+`"margin_all":0`|No margin
+`"h%":100`|Default height of 100%, can be changed
+`"w%":100`|Default width of 100%, can be changed
+`"flex_flow":0`|`lv.FLEX_FLOW_ROW` place in row without wrapping
+`"flex_main_place":3`|`lv.FLEX_ALIGN_SPACE_EVENLY` items are distributed so that the spacing between any two items (and the space to the edges) is equal
+`"flex_cross_place":0`|`lv.FLEX_ALIGN_START` left on a horizontally and top vertically
+`"flex_track_place":0`|`lv.FLEX_ALIGN_START` left on a horizontally and top vertically
+
+```json
+{"id":100,"obj":"flex_evenly_right","x":0,"y":188,"h":50,"w%":100}
+  # [sub-objects]
+```
+
+General flex attributes|Description
+:---|:---
+`flex_flow`|Sets the layout flow<br>`0`: (`lv.FLEX_FLOW_ROW`) Place the children in a row without wrapping<br>`1`: (`lv.FLEX_FLOW_COLUMN`) Place the children in a column without wrapping<br>`4`: (`lv.FLEX_FLOW_ROW_WRAP`) Place the children in a row with wrapping<br>`5`: (`lv.FLEX_FLOW_COLUMN_WRAP`) Place the children in a column with wrapping<br>`8`: (`lv.FLEX_FLOW_ROW_REVERSE`) Place the children in a row without wrapping but in reversed order<br>`9`: (`lv.FLEX_FLOW_COLUMN_REVERSE`) Place the children in a column without wrapping but in reversed order<br>`12`: (`lv.FLEX_FLOW_ROW_WRAP_REVERSE`) Place the children in a row with wrapping but in reversed order<br>`13`: (`lv.FLEX_FLOW_COLUMN_WRAP_REVERSE`) Place the children in a column with wrapping but in reversed order
+`flex_main_place`|Determines how to distribute the items in their track on the main axis.<br>`0`: (`lv.FLEX_ALIGN_START`) means left on a horizontally and top vertically (default)<br>`1`: (`lv.FLEX_ALIGN_END`) means right on a horizontally and bottom vertically<br>`2`: (`lv.FLEX_ALIGN_CENTER`) simply center<br>`3`: (`lv.FLEX_ALIGN_SPACE_EVENLY`) items are distributed so that the spacing between any two items (and the space to the edges) is equal (does not apply to `flex_track_place`)|`4`: (`lv.FLEX_ALIGN_SPACE_AROUND`) items are evenly distributed in the track with equal space around them (does not apply to `track_cross_place`)<br>`5`: (`lv.FLEX_ALIGN_SPACE_BETWEEN`) items are evenly distributed in the track: first item is on the start line, last item on the end line (does not apply to `flex_track_place`)
+`flex_cross_place`|Determines how to distribute the items in their track on the cross axis. E.g. if the items have different height place them to the bottom of the track<br>Same values as `flex_main_place`
+`flex_track_place`|Determines how to distribute the tracks<br>Same values as `flex_main_place` except `3`, `4` and `5`
+`flex_grow` (on child)|Make one or more children fill the available space on the track. When more children have grow parameters, the available space will be distributed proportionally to the grow values.
+`pad_row`|Sets the padding between the rows
+`pad_column`|Sets the padding between the columns
+
+
 ### `label`
 
 Example:
