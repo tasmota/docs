@@ -380,8 +380,8 @@ Attribute name|LVGL equivalent|Details
 `pad_all`||Padding of the overall border, `0` by default
 `bg_grad_color10`||End color of the active part of the slider when gradient is enabled
 `bg_grad_dir10`||Gradient direction<br>`0`: none<br>`1`: Vertical (top to bottom) gradient<br>`2`: Horizontal (left to right) gradient
-`min`||(int) Minimum value
-`max`||(int) Maximum value
+`min`||(int) Minimum value, inherited from parent `scale` if `parentid` refers to a `scale`
+`max`||(int) Maximum value, inherited from parent `scale` if `parentid` refers to a `scale`
 `val`||(int) Current value
 
 ### `scale`, `scale_section`, `scale_line`
@@ -391,10 +391,12 @@ Example:
 ![HASPmota scale 1](_media/lvgl/HASPmota_16_scale.png)
 
 ```json
-{"id":11,"obj":"scale","x":10,"y":60,"w":200,"h":30,"min":10,"max":40,"total_tick_count":31,"major_tick_every":5,"label_show":true,"line_color":"#FFFF88","line_color10":"#00FF00","line_color30":"#00FF00","line_width":2,"line_width10":2,"line_width30":2,"length10":10,"length30":5}
+{"id":11,"obj":"scale","x":10,"y":60,"w":200,"h":30,"min":10,"max":40,"total_tick_count":31,"major_tick_every":5,"label_show":true,"line_color":"#FFFF88","line_color10":"#00FF00","line_color30":"#00FF00","line_width":2,"line_width10":2,"line_width30":2,"length10":10,"length30":5,"pad_top":10}
+  {"id":12,"obj":"bar","parentid":11,"y":-8,"w%":100,"h":6,"radius":0,"radius10":0,"bg_color":"#4F4F4F","bg_color10":"#FFFF88","val":27}
 
-{"id":12,"obj":"scale","x":240,"y":35,"w":70,"h":140,"min":0,"max":100,"mode":4,"total_tick_count":21,"major_tick_every":5,"label_show":true,"line_color":"#4444FF","line_color10":"#4444FF","line_color30":"#AAAAFF","line_width":2,"line_width10":2,"line_width30":2,"length10":10,"length30":5,"text_src":["0 °C", "25 °C", "50 °C", "75 °C", "100 °C", ""],"bg_color":"#607D8B","bg_opa":127,"pad_left":10,"radius":8,"pad_ver":12}
-  {"id":13,"obj":"scale_section","parentid":12,"min":75,"max":100,"line_color":"#FF4400","line_width":3,"line_color10":"#FF4400","line_width10":4,"text_color10":"#FF4400","line_color30":"#FF4400","line_width30":3}
+{"id":22,"obj":"scale","x":240,"y":35,"w":74,"h":140,"min":0,"max":100,"mode":4,"total_tick_count":21,"major_tick_every":5,"label_show":true,"line_color":"#4444FF","line_color10":"#4444FF","line_color30":"#AAAAFF","line_width":2,"line_width10":2,"line_width30":2,"length10":10,"length30":5,"text_src":["0 °C", "25 °C", "50 °C", "75 °C", "100 °C"],"bg_color":"#607D8B","bg_opa":127,"pad_left":16,"radius":8,"pad_ver":12}
+  {"id":23,"obj":"scale_section","parentid":22,"min":75,"max":100,"line_color":"#FF4400","line_width":3,"line_color10":"#FF4400","line_width10":4,"text_color10":"#FF4400","line_color30":"#FF4400","line_width30":3}
+  {"id":24,"obj":"bar","parentid":22,"x":-10,"h%":100,"w":6,"radius":0,"radius10":0,"bg_color":"#4F4F4F","bg_color10":"#AAAAFF","val":27}
 ```
 
 ![HASPmota scale 2](_media/lvgl/HASPmota_17_scale.png)
@@ -404,34 +406,34 @@ Example:
   {"id":22,"obj":"scale_line","parentid":21,"line_color":"#00FF00","line_width":4,"line_rounded":true,"needle_length":50,"val":22}
   {"id":23,"obj":"scale_line","parentid":21,"line_color":"#FF4400","line_width":6,"line_rounded":true,"needle_length":30,"val":33}
 
-{"id":31,"obj":"scale","x":180,"y":80,"w":80,"h":80,"min":0,"max":100,"mode":16,"bg_opa":0,"label_show":true,"total_tick_count":21,"major_tick_every":5,"text_src":["0 °C", "25 °C", "50 °C", "75 °C", "100 °C", ""],"arc_color":"#4444FF","line_color10":"#4444FF","line_color30":"#AAAAFF","text_color":"#AAAAFF","arc_width":2,"line_width10":2,"line_width30":2,"length10":10,"length30":5}
+{"id":31,"obj":"scale","x":180,"y":80,"w":80,"h":80,"min":0,"max":100,"mode":16,"bg_opa":0,"label_show":true,"total_tick_count":21,"major_tick_every":5,"text_src":["0 °C", "25 °C", "50 °C", "75 °C", "100 °C"],"arc_color":"#4444FF","line_color10":"#4444FF","line_color30":"#AAAAFF","text_color":"#AAAAFF","arc_width":2,"line_width10":2,"line_width30":2,"length10":10,"length30":5}
   {"id":32,"obj":"scale_section","parentid":31,"min":75,"max":100,"arc_color":"#FF4400","arc_width":3,"line_color10":"#FF4400","line_width10":4,"text_color10":"#FF4400","line_color30":"#FF4400","line_width30":3}
   {"id":33,"obj":"scale_line","parentid":31,"line_color":"#AAAAFF","line_width":10,"line_rounded":true,"needle_length":30,"val":37}
 ```
 
 Note: there is no current `val` on the scale object. It must be done with a second `bar` object for linear scale or with a `scale_meter` sub-object for circular scale.
 
-Attribute name|LVGL equivalent|Details
-:---|:---|:---
-`mode`||Set scale mode<br>`0`: `lv.SCALE_MODE_HORIZONTAL_TOP`<br>`1`: `lv.SCALE_MODE_HORIZONTAL_BOTTOM`<br>`2`: `lv.SCALE_MODE_VERTICAL_LEFT`<br>`4`: `lv.SCALE_MODE_VERTICAL_RIGHT`<br>`8`: `lv.SCALE_MODE_ROUND_INNER`<br>`16`: `lv.SCALE_MODE_ROUND_OUTER`
-`min`||(int) Minimum value
-`max`||(int) Maximum value
-`total_tick_count`||Set the number of total ticks
-`major_tick_every`||Set a major tick being every Nth ticks
-`line_width`||Set the line width of the scale line
-`arc_width`||Set the line width of the scale line (for circular scale)
-`line_width10`||Set the line width of the major ticks
-`line_width30`||Set the line width of the minor ticks
-`line_color`||Set the line color of the scale line
-`arc_color`||Set the line color of the scale line (for circular scale)
-`line_color10`||Set the line color of the major ticks
-`line_color30`||Set the line color of the minor ticks
-`length10`||Set the length of the major ticks
-`length30`||Set the length of the minor ticks
-`label_show`||(bool) Show or hide the labels
-`options`|`options`|(array of string) Labels for major ticks
-`angle_range`||Set the angular range of a circular scale (in degrees 0..360)
-`rotation`||Set the angular offset from the 3 o'clock position (clock-wise, in degrees 0..360)
+`scale` attribute|Details
+:---|:---
+`mode`|Set scale mode<br>`0`: `lv.SCALE_MODE_HORIZONTAL_TOP`<br>`1`: `lv.SCALE_MODE_HORIZONTAL_BOTTOM`<br>`2`: `lv.SCALE_MODE_VERTICAL_LEFT`<br>`4`: `lv.SCALE_MODE_VERTICAL_RIGHT`<br>`8`: `lv.SCALE_MODE_ROUND_INNER`<br>`16`: `lv.SCALE_MODE_ROUND_OUTER`
+`min`|(int) Minimum value
+`max`|(int) Maximum value
+`total_tick_count`|Set the number of total ticks
+`major_tick_every`|Set a major tick being every Nth ticks
+`line_width`|Set the line width of the scale line
+`arc_width`|Set the line width of the scale line (for circular scale)
+`line_width10`|Set the line width of the major ticks
+`line_width30`|Set the line width of the minor ticks
+`line_color`|Set the line color of the scale line
+`arc_color`|Set the line color of the scale line (for circular scale)
+`line_color10`|Set the line color of the major ticks
+`line_color30`|Set the line color of the minor ticks
+`length10`|Set the length of the major ticks
+`length30`|Set the length of the minor ticks
+`label_show`|(bool) Show or hide the labels
+`options`|(array of string) Labels for major ticks. It is not necessary to end with an empty string.
+`angle_range`|Set the angular range of a circular scale (in degrees 0..360)
+`rotation`|Set the angular offset from the 3 o'clock position (clock-wise, in degrees 0..360)
 
 You can define sub-scales to have a different rendering on the scale using a sub-object `scale_section`
 
@@ -439,21 +441,21 @@ You can define sub-scales to have a different rendering on the scale using a sub
   {"id":13,"obj":"scale_section","parentid":12,"min":75,"max":100,"line_color":"#FF4400","line_width":3,"line_color10":"#FF4400","line_width10":4,"text_color10":"#FF4400","line_color30":"#FF4400","line_width30":3}
 ```
 
-Attribute name|LVGL equivalent|Details
-:---|:---|:---
-`parentid`||Set to the `id` of the `scale` it belongs to
-`min`||(int) Minimum value of the sub-section
-`max`||(int) Maximum value of the sub-section
-`line_width`||Set the line width of the scale line
-`arc_width`||Set the line width of the scale line (for circular scale)
-`line_width10`||Set the line width of the major ticks
-`line_width30`||Set the line width of the minor ticks
-`line_color`||Set the line color of the scale line
-`arc_color`||Set the line color of the scale line (for circular scale)
-`line_color10`||Set the line color of the major ticks
-`line_color30`||Set the line color of the minor ticks
-`length10`||Set the length of the major ticks
-`length30`||Set the length of the minor ticks
+`scale_section` attribute|Details
+:---|:---
+`parentid`|Set to the `id` of the `scale` it belongs to
+`min`|(int) Minimum value of the sub-section
+`max`|(int) Maximum value of the sub-section
+`line_width`|Set the line width of the scale line
+`arc_width`|Set the line width of the scale line (for circular scale)
+`line_width10`|Set the line width of the major ticks
+`line_width30`|Set the line width of the minor ticks
+`line_color`|Set the line color of the scale line
+`arc_color`|Set the line color of the scale line (for circular scale)
+`line_color10`|Set the line color of the major ticks
+`line_color30`|Set the line color of the minor ticks
+`length10`|Set the length of the major ticks
+`length30`|Set the length of the minor ticks
 
 For circular scales, you can define zero or more line indicators with sub-objects `scale_line`
 
@@ -461,15 +463,16 @@ For circular scales, you can define zero or more line indicators with sub-object
   {"id":22,"obj":"scale_line","parentid":21,"line_color":"#00FF00","line_width":4,"line_rounded":true,"needle_length":50,"val":22}
 ```
 
-Attribute name|LVGL equivalent|Details
-:---|:---|:---
-`parentid`||Set to the `id` of the `scale` it belongs to
-`val`||(int) The value of the indicator line in the scale (between `min` and `max`)
-`line_width`||Set the line width of the scale line
-`line_color`||Set the line color of the scale line
-`line_rounded`||(bool) Rounds both ends of the line
-`needle_length`||Length of the line
+`scale_line` attribute|Details
+:---|:---
+`parentid`|Set to the `id` of the `scale` it belongs to
+`val`|(int) The value of the indicator line in the scale (between `min` and `max`)
+`line_width`|Set the line width of the scale line
+`line_color`|Set the line color of the scale line
+`line_rounded`|(bool) Rounds both ends of the line
+`needle_length`|Length of the line
 
+For linear scales, you can just use a `bar` sub-object. It inherits `min` and `max` values from the parent `scale` object.
 
 ### `arc`
 
