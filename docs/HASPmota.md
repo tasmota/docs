@@ -2,7 +2,7 @@
 
 !!! tip "This feature is included in tasmota32-lvgl.bin"
 
-Tasmota is happy to support openHASP compatible format (named HASPmota), which allows to describe rich graphics interfaces using simple JSON templates. HASPmota support leverages the power of [LVGL](https://tasmota.github.io/docs/LVGL/) and the [Berry language](https://tasmota.github.io/docs/Berry/), but doesn't need to code nor learn the LVGL API.
+Tasmota happily supports the openHASP compatible format, known as HASPmota. This format allows you to describe rich graphics interfaces using simple JSON templates. The HASPmota support in Tasmota leverages the power of [LVGL](https://tasmota.github.io/docs/LVGL/) and the [Berry language](https://tasmota.github.io/docs/Berry/), but you don't need to code or learn the LVGL API to use it.
 
 This feature is heavily inspired from @fvanroie's [openHASP project](https://github.com/HASwitchPlate/openHASP).
  
@@ -217,7 +217,15 @@ Example: `"obj":"lv_wifi_graph"` will trigger the following:
 
 ### Attributes
 
-!!!note "Values in pixels can be expressed in percentage instead of absolute value. Just suffix the attribute name with `%`. Example: `"h%:100` instead of `"h":320`"
+!!!note "New in Tasmota v13.4.0.4, sizes can be expressed in percentage of the screen."
+
+Values in pixels can be expressed in percentage instead of absolute value. Just suffix the attribute name with `%`. Example: `"h%:100` instead of `"h":320`. Percentage values can only be set (written to); when you read back a size, it is always in pixels.
+
+When using Berry scripting, `h%` is not a valid attribute name so you need to use the special syntax:
+
+```berry
+p10b20.('h%') = 100
+```
 
 Below are the standard attributes:
 
@@ -288,33 +296,31 @@ Attribute name|LVGL equivalent|Details
 
 ### Flex layout, `flex_evenly_right`
 
-HASPmota originally supported only absolute positions and sizes in pixels, which made it cumbersome to handle with different screen sizes. LVGL provide [flexbox layout](https://docs.lvgl.io/master/layouts/flex.html). It can arrange items into rows or columns (tracks), handle wrapping, adjust the spacing between the items and tracks, handle grow to make the item(s) fill the remaining space with respect to min/max width and height.
+HASPmota originally supported only absolute positions and sizes in pixels, which made it challenging to handle different screen sizes. LVGL, on the other hand, provides a [flexbox layout](https://docs.lvgl.io/master/layouts/flex.html). This layout can arrange items into rows or columns (tracks), handle wrapping, adjust the spacing between the items and tracks, and dynamically adjust the size of the items to fill the remaining space, while respecting their minimum and maximum width and height constraints.
 
-Flex layout is just attributes you can assign to any LVGL object like `"obj"`. To make it easier to build transparent invisible Flex container, we added the classes `flex_right` and `flex_down`.
+Flex layout in LVGL is a set of attributes that can be assigned to any object, such as `"obj"`. To make it easier to create transparent and invisible Flex containers, HASPmota has introduced the `flex` classes.
 
-#### `flex_evenly_right`
+#### `flex`
 
-Class `flex_right` defines a transparent object used to distribute evenly from left to right. It is used to place buttons in the lower part of the screen in HASPmota demo.
+Class `flex` defines a transparent object used as a container for LVGL flex layout. It is for example used to place buttons in the lower part of the screen in HASPmota demo.
 
-Values used for `flew_evenly_right`:
+Default values used for `flex`:
 
 Default attribute|Description
 :---|:---
-`"obj":"obj"`|Simple `obj` container class
+`"obj":"flex"`|`flex` is a subclass of `obj`
 `"pad_all":0`|No padding
 `"radius":0`|Rectangle object (no rounded corners)
 `"border_width":0`|No border
 `"margin_all":0`|No margin
+`"bg_opa":0`|Background transparent
 `"h%":100`|Default height of 100%, can be changed
 `"w%":100`|Default width of 100%, can be changed
-`"flex_flow":0`|`lv.FLEX_FLOW_ROW` place in row without wrapping
-`"flex_main_place":3`|`lv.FLEX_ALIGN_SPACE_EVENLY` items are distributed so that the spacing between any two items (and the space to the edges) is equal
-`"flex_cross_place":0`|`lv.FLEX_ALIGN_START` left on a horizontally and top vertically
-`"flex_track_place":0`|`lv.FLEX_ALIGN_START` left on a horizontally and top vertically
+
 
 ```json
-{"id":100,"obj":"flex_evenly_right","x":0,"y":188,"h":50,"w%":100}
-  # [sub-objects]
+{"id":100,"obj":"flex","x":0,"y":188,"h":50,"w%":100,"flex_main_place":3}
+  # [sub-objects with "parentid":100]
 ```
 
 General flex attributes|Description
@@ -327,6 +333,12 @@ General flex attributes|Description
 `pad_row`|Sets the padding between the rows
 `pad_column`|Sets the padding between the columns
 
+Children object can also influence the flex layout with the folowing attributes:
+
+Children flex attributes|Description
+:---|:---
+`flex_in_new_track`|(bool) When `true` force item into a new line
+`flex_grow`|Make one or more children fill the available space on the track. When more children have grow parameters, the available space will be distributed proportionally to the grow values. See LVGL documentation for more details.
 
 ### `label`
 
