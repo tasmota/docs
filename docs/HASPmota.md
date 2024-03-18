@@ -294,15 +294,15 @@ Attribute name|LVGL equivalent|Details
 `val_rule`||Link a value to a Tasmota rule, see below
 `val_rule_formula`||Link a value to a Tasmota rule, see below
 
-### Flex layout, `flex_evenly_right`
-
-HASPmota originally supported only absolute positions and sizes in pixels, which made it challenging to handle different screen sizes. LVGL, on the other hand, provides a [flexbox layout](https://docs.lvgl.io/master/layouts/flex.html). This layout can arrange items into rows or columns (tracks), handle wrapping, adjust the spacing between the items and tracks, and dynamically adjust the size of the items to fill the remaining space, while respecting their minimum and maximum width and height constraints.
-
-Flex layout in LVGL is a set of attributes that can be assigned to any object, such as `"obj"`. To make it easier to create transparent and invisible Flex containers, HASPmota has introduced the `flex` classes.
-
 #### `flex`
 
+HASPmota originally supported only absolute positions and sizes in pixels, which made it challenging to handle different screen sizes. LVGL, on the other hand, provides a [flexbox layout](https://docs.lvgl.io/master/layouts/flex.html). This layout can arrange items into rows or columns (tracks), handle wrapping, adjust the spacing between the items and tracks, and dynamically adjust the size of the items to fill the remaining space, while respecting their minimum and maximum width and height constraints. Flex layout in LVGL is a set of attributes that can be assigned to any object, such as `"obj"`. To make it easier to create transparent and invisible Flex containers, HASPmota has introduced the `flex` classes.
+
 Class `flex` defines a transparent object used as a container for LVGL flex layout. It is for example used to place buttons in the lower part of the screen in HASPmota demo.
+
+```json
+{"id":100,"obj":"flex","x":0,"y%":80,"h%":20,"w%":100,"flex_main_place":3}
+```
 
 Default values used for `flex`:
 
