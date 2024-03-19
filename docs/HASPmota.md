@@ -392,6 +392,27 @@ Attribute name|LVGL equivalent|Details
 `text_color01`||Color of the text when the switch if On
 `radius20`||Radius of the knob.
 
+### `checkbox`
+
+Example:
+
+![HASPmota checkbox](_media/lvgl/HASPmota_6_checkbox.png)
+
+```json
+{"id":11,"obj":"checkbox","x":0,"y":60,"w":60,"h":30,"text":"","border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400"}
+{"id":12,"obj":"checkbox","x":80,"y":60,"w":60,"h":30,"toggle":true,"text":"","border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400"}
+{"id":13,"obj":"checkbox","x":160,"y":60,"w":60,"h":30,"text":"","enabled":false,"border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400"}
+{"id":14,"obj":"checkbox","x":240,"y":60,"w":60,"h":30,"text":"","toggle":true,"enabled":false,"border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400"}
+```
+
+Attribute name|Details
+:---|:---
+`toggle`|`true` or `false`: read or change the value of the checkbox
+`bg_color`|Color of the indicator when the checkbox is Off
+`bg_color11`|Color of the indicator when the checkbox is On
+`text_color`|Color of the text when the checkbox if Off
+`text_color01`|Color of the text when the checkbox if On
+
 ### `slider`
 
 Example:
