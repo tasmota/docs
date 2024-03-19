@@ -6,18 +6,15 @@ Tasmota happily supports the openHASP compatible format, known as HASPmota. This
 
 This feature is heavily inspired from @fvanroie's [openHASP project](https://github.com/HASwitchPlate/openHASP).
  
-## Preview of widgets
+## Gallery of widgets
 
 ![HASPmota label](_media/lvgl/HASPmota_1_instructions.png){width="160"} ![HASPmota spangroup](_media/lvgl/HASPmota_2_spangroup.png){width="160"} ![HASPmota btn](_media/lvgl/HASPmota_3_btn.png){width="160"} ![HASPmota chart](_media/lvgl/HASPmota_4_led.png){width="160"}
-
 ![HASPmota switch](_media/lvgl/HASPmota_5_switch.png){width="160"} ![HASPmota checkbox](_media/lvgl/HASPmota_6_checkbox.png){width="160"} ![HASPmota line](_media/lvgl/HASPmota_7_line.png){width="160"} ![HASPmota bar](_media/lvgl/HASPmota_8_bar.png){width="160"}
-
 ![HASPmota btnmatrix](_media/lvgl/HASPmota_9_btnmatrix.png){width="160"} ![HASPmota chart](_media/lvgl/HASPmota_10_chart.png){width="160"} ![HASPmota image](_media/lvgl/HASPmota_11_img.png){width="160"} ![HASPmota roller](_media/lvgl/HASPmota_12_roller.png){width="160"}
-
 ![HASPmota qrcode](_media/lvgl/HASPmota_13_qrcode.png){width="160"} ![HASPmota switch](_media/lvgl/HASPmota_14_slider.png){width="160"} ![HASPmota switch](_media/lvgl/HASPmota_15_arc.png){width="160"} ![HASPmota scale 1](_media/lvgl/HASPmota_16_scale.png){width="160"}
-
 ![HASPmota scale 2](_media/lvgl/HASPmota_17_scale.png){width="160"}
 
+The `jsonl` file used to display the widgets can be found [here](_media/lvgl/haspmota_demo.jsonl)
 
 ## Minimal requirements
 
