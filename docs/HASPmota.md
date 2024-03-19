@@ -6,6 +6,11 @@ Tasmota happily supports the openHASP compatible format, known as HASPmota. This
 
 This feature is heavily inspired from @fvanroie's [openHASP project](https://github.com/HASwitchPlate/openHASP).
  
+## Preview of widgets
+
+![HASPmota label](_media/lvgl/HASPmota_1_instructions.png){width="160"} ![HASPmota spangroup](_media/lvgl/HASPmota_2_spangroup.png){width="160"} ![HASPmota btn](_media/lvgl/HASPmota_3_btn.png){width="160"} ![HASPmota chart](_media/lvgl/HASPmota_4_led.png){width="160"}
+
+
 ## Minimal requirements
 
 **Hardware**: HASPmota is supported on all ESP32 variants, and requires a display configured with universal display (using `display.ini` or `autoconf`). When they are correctly configured, you should see a splash screen at startup.
