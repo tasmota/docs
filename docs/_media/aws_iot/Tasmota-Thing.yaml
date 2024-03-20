@@ -166,7 +166,7 @@ Resources:
       Handler: "index.handler"
       MemorySize: 512
       Role: !GetAtt LambdaExecRoleProvisioning.Arn
-      Runtime: python3.7
+      Runtime: python3.12
       Timeout: 5
       Code:
         ZipFile: |
@@ -236,7 +236,8 @@ Resources:
       Handler: "index.handler"
       MemorySize: 512
       Role: !GetAtt LambdaExecRoleProvisioning.Arn
-      Runtime: python3.7
+      Runtime: python3.12
+      Architectures: ['arm64']
       Timeout: 5
       Code:
         ZipFile: |
