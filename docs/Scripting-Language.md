@@ -115,13 +115,15 @@ with all linker files
 
 #### script init error codes
 after initialization the script reports some info in the console e.g:  
-20:21:28.259 Script: nv=51, tv=13, vns=279, vmem=3305, smem=4096  
+09:25:26.607 SCR: nv=4, tv=1, vns=21, vmem=2127, smem=6200, gmem=480, tmem=8828  
 nv = number of used variables in total (numeric and strings)  
 tv = number of used string variables  
 vns = total size of name strings in bytes (may not exceed 255) or #define SCRIPT_LARGE_VNBUFF extents the size to 4095
 vmem = used heap ram by the script (psram if available)  
 smem = used script (text) memory (psram if available)  
-  
+gmem = used script global static memory  
+tmem = used script memory total  
+
 if the script init fails an error code is reported:    
 -4 = not enough memory  
 -5 = variable name length too long in total  
