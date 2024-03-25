@@ -6,6 +6,16 @@ Tasmota happily supports the openHASP compatible format, known as HASPmota. This
 
 This feature is heavily inspired from @fvanroie's [openHASP project](https://github.com/HASwitchPlate/openHASP).
  
+## Gallery of widgets
+
+![HASPmota label](_media/lvgl/HASPmota_1_instructions.png){width="160"} ![HASPmota spangroup](_media/lvgl/HASPmota_2_spangroup.png){width="160"} ![HASPmota btn](_media/lvgl/HASPmota_3_btn.png){width="160"} ![HASPmota chart](_media/lvgl/HASPmota_4_led.png){width="160"}
+![HASPmota switch](_media/lvgl/HASPmota_5_switch.png){width="160"} ![HASPmota checkbox](_media/lvgl/HASPmota_6_checkbox.png){width="160"} ![HASPmota line](_media/lvgl/HASPmota_7_line.png){width="160"} ![HASPmota bar](_media/lvgl/HASPmota_8_bar.png){width="160"}
+![HASPmota btnmatrix](_media/lvgl/HASPmota_9_btnmatrix.png){width="160"} ![HASPmota chart](_media/lvgl/HASPmota_10_chart.png){width="160"} ![HASPmota image](_media/lvgl/HASPmota_11_img.png){width="160"} ![HASPmota roller](_media/lvgl/HASPmota_12_roller.png){width="160"}
+![HASPmota qrcode](_media/lvgl/HASPmota_13_qrcode.png){width="160"} ![HASPmota switch](_media/lvgl/HASPmota_14_slider.png){width="160"} ![HASPmota switch](_media/lvgl/HASPmota_15_arc.png){width="160"} ![HASPmota scale 1](_media/lvgl/HASPmota_16_scale.png){width="160"}
+![HASPmota scale 2](_media/lvgl/HASPmota_17_scale.png){width="160"}
+
+The `jsonl` file used to display the widgets can be found [here](_media/lvgl/haspmota_demo.jsonl)
+
 ## Minimal requirements
 
 **Hardware**: HASPmota is supported on all ESP32 variants, and requires a display configured with universal display (using `display.ini` or `autoconf`). When they are correctly configured, you should see a splash screen at startup.
@@ -391,6 +401,27 @@ Attribute name|LVGL equivalent|Details
 `text_color`||Color of the text when the switch if Off
 `text_color01`||Color of the text when the switch if On
 `radius20`||Radius of the knob.
+
+### `checkbox`
+
+Example:
+
+![HASPmota checkbox](_media/lvgl/HASPmota_6_checkbox.png)
+
+```json
+{"id":11,"obj":"checkbox","x":0,"y":60,"w":60,"h":30,"text":"","border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400"}
+{"id":12,"obj":"checkbox","x":80,"y":60,"w":60,"h":30,"toggle":true,"text":"","border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400"}
+{"id":13,"obj":"checkbox","x":160,"y":60,"w":60,"h":30,"text":"","enabled":false,"border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400"}
+{"id":14,"obj":"checkbox","x":240,"y":60,"w":60,"h":30,"text":"","toggle":true,"enabled":false,"border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400"}
+```
+
+Attribute name|Details
+:---|:---
+`toggle`|`true` or `false`: read or change the value of the checkbox
+`bg_color`|Color of the indicator when the checkbox is Off
+`bg_color11`|Color of the indicator when the checkbox is On
+`text_color`|Color of the text when the checkbox if Off
+`text_color01`|Color of the text when the checkbox if On
 
 ### `slider`
 

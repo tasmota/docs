@@ -950,10 +950,12 @@ Also, the source code has to be patched from 8N1 to 7E1 mode for the hardware se
 The eBZ DD3 by eBZ GmbH is a three-phase model energy meter, which is sold in a number of different configurations. The D0 port is read-only with a fixed time interval of one second. 
 
 There are two communication interfaces:
+
   * The INFO interface on the front, with a metal backplate. Pushes a reduced OBIS ASCI/SML binary datagram every second.
   * The MSB interface on the top, no metal backplate. Pushes a full OBIS ASCI/SML binary datagram every second.    
     
 There are two types available using different communication settings: 
+
   * OD-type: 7 data bits, even parity, one stop bit, 9600 baud (9600 7E1) - OBIS ASCI protocol
   * SM-type: 8 data bits, no parity, one stop bit, 9600 baud (9600 8N1) - SML binary protcol
 
@@ -966,7 +968,7 @@ Change the serial mode in the console by typing `SerialConfig 7E1`.
 Example reading of the two-direction model using GPIO 3:
     
   * "TelePeriod 30" sets telemetry period to 30 seconds (remove if not needed/wanted)
-  * Values for ?6.7.0 (power) are transmit immediately (precision + 16)    
+  * Values for ?6.7.0 (power) are transmitted immediately (precision + 16)    
   * power readings will be negative in case of inverse power flow
     
 ??? summary "View script"
@@ -1056,6 +1058,24 @@ Example reading of the two-direction model using GPIO 3:
     #
     ```
 	
+### eBZ MD3 (SML)
+	
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,0,9600,Smartmeter
+    1,77070100010800ff@100000000,Total consumption,kWh,Total_in,3
+    1,77070100020800ff@100000000,Total generation,kWh,Total_out,3
+    1,77070100100700ff@1,Power L1+L2+L3,W,P_L1_L2_L3,18
+    1,77070100240700ff@1,Power L1,W,P_L1,18
+    1,77070100380700ff@1,Power L2,W,P_L2,18
+    1,770701004C0700ff@1,Power L3,W,P_L3,18
+    #
+    ```
+
 ### EasyMeter Q1A (SML)
 
 The Q1A series of EasyMeter is available as one- or two-way meter, with and without backstop respectively. It is also available as single or dual tariff meter. The script below works for the Q1Ax1054 variant. This variant is a single-tariff one-way meter with a backstop mechanism. The script only reads two values: the energy counter value and the current power value.
@@ -1590,24 +1610,6 @@ by the supplier. Therefore it is set to a fixed baud rate of 300 and can not be 
     #
     ```
     
-### eBZ MD3 (SML)
-	
-??? summary "View script"
-    ```
-    >D
-    >B
-    =>sensor53 r
-    >M 1
-    +1,3,s,0,9600,Smartmeter
-    1,77070100010800ff@100000000,Total consumption,kWh,Total_in,3
-    1,77070100020800ff@100000000,Total generation,kWh,Total_out,3
-    1,77070100100700ff@1,Power L1+L2+L3,W,P_L1_L2_L3,18
-    1,77070100240700ff@1,Power L1,W,P_L1,18
-    1,77070100380700ff@1,Power L2,W,P_L2,18
-    1,770701004C0700ff@1,Power L3,W,P_L3,18
-    #
-    ```
-
 ### Fronius Symo 10.0-3-M (MODBus TCP)
 	
 Fronius inverter, using Modbus TCP feature.
@@ -3423,6 +3425,42 @@ Compile firmware with #define ```USE_SML_CANBUS```. Use a proper CAN transceiver
     #
     ```
 
+### Siemens IM-350
+
+This device is used in the grid of Wiener Netze. Insert your Key into the script.
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,r,0,9600,Home
+    1,=so3,256
+    1,=so4,KEY
+    1,020909x14UUuuUUuu@1000,Zählerstand,kWh,Zaehlerstand,2
+    1,020909x34UUuuUUuu@1000,Bezug aktuell,kwh,Bezug,3 
+    1,020909x24UUuuUUuu@1000,BL Bezug,kvarh,BL_Bezug,3 
+    1,020909x19UUuuUUuu@1000,Einspeisung Gesamt,kWh,Einspeisung_ges,2 
+    1,020909x39UUuuUUuu@1000,Einspeisung aktuell ,kW,Einspeisung_akt,3 
+    1,020909x29UUuuUUuu@1000,BL Einspeisung,kvarh,BL_Einspeisung,3
+    1,020909x19UUuu@1,year,,year,0
+    1,020909x21ss@1,month,,month,0
+    1,020909x22ss@1,day,,day,0
+    1,020909x24ss@1,hh,,hh,0
+    1,020909x25ss@1,mm,,mm,0
+    1,020909x26ss@1,ss,,ss,0
+    1,020909x32UUuuUUuu@1000,+A,kWh,+A,3
+    1,020909x37UUuuUUuu@1000,-A,kWh,-A,3
+    1,020909x42UUuuUUuu@1000,+R,varh,+R,3
+    1,020909x47UUuuUUuu@1000,-R,varh,-R,3
+    1,020909x52UUuuUUuu@1,+P,W,+P,3
+    1,020909x57UUuuUUuu@1,-P,W,-P,3
+    1,020909x62UUuuUUuu@1,+Q,var,+Q,3
+    1,020909x67UUuuUUuu@1,-Q,var,-Q,3
+    #
+    ```
+    
 ### Siemens TD-3511
 
 This device is used in the grid of EGTF - Elektrizitäts-Genossenschaft Tacherting-Feichten eG. Read uses IEC 62056-21 data mode "C" without acknowledgement by the reading device.
@@ -3439,7 +3477,7 @@ This device is used in the grid of EGTF - Elektrizitäts-Genossenschaft Tacherti
     1,0.0.0(@#),Meter Number,,Meter_number,0
     #
     ```
-
+    
 ### Trovis 557x (MODBus)
 
 These heating regulators have a [lot of registers](https://raw.githubusercontent.com/Tom-Bom-badil/samson_trovis_557x/master/_register.py). If your station number is different from standard (247 ==> 0xF7) you have got to change every first byte accordingly.

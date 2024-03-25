@@ -115,13 +115,15 @@ with all linker files
 
 #### script init error codes
 after initialization the script reports some info in the console e.g:  
-20:21:28.259 Script: nv=51, tv=13, vns=279, vmem=3305, smem=4096  
+09:25:26.607 SCR: nv=4, tv=1, vns=21, vmem=2127, smem=6200, gmem=480, tmem=8828  
 nv = number of used variables in total (numeric and strings)  
 tv = number of used string variables  
 vns = total size of name strings in bytes (may not exceed 255) or #define SCRIPT_LARGE_VNBUFF extents the size to 4095
 vmem = used heap ram by the script (psram if available)  
 smem = used script (text) memory (psram if available)  
-  
+gmem = used script global static memory  
+tmem = used script memory total  
+
 if the script init fails an error code is reported:    
 -4 = not enough memory  
 -5 = variable name length too long in total  
@@ -953,7 +955,7 @@ The script itself is also stored on the file system with a default size of 8192 
 `frn("spath" "dpath")` rename a file  
 `flx(fname)` create download link for file (x=1 or 2) fname = file name of file to download  
 `fsm` return 1 if filesystem is mounted, (valid SD card found)  
-`res=fsi(sel)` gets file system information, sel=0 returns total media size, sel=1 returns free space both in kB      
+`res=fsi(sel)` gets file system information, sel=0 returns total media size, sel=1 returns free space both in kB     
 `fz(fr)` returns file size  
 `fa(fr)` returns number of available bytes in open file stream  
 `fs(fr pos)` seek to file position pos  
@@ -980,6 +982,8 @@ The script itself is also stored on the file system with a default size of 8192 
 `fx("fname")` check if file fname exists  
 `fe("fname")` execute script fname (max 2048 bytes, script must start with the '>' character on the first line)  
 `lfw("fname" payload limit)` logs a string (payload) to a file (fname) with size limit (limit)  paylyoad is added to end of file together with a LF character. if file size is exceeded first line of file is removed.   
+`fra(array fr)` reads array from open file with fr (assumes tab delimited entries)  
+`fwa(array fr (a))` writes array to open file with fr (writes tab delimited entries and line feed at end) the optional a parameter ommits the linefeed for appending arrays 
     
 **ESP32 real Multitasking support**  
 `#define USE_SCRIPT_TASK` 
