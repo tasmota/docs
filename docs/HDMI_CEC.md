@@ -9,27 +9,36 @@
     #define USE_HDMI_CEC
     ```
 
+??? tip "This feature relies on I2C support, and may not compile if this is not enabled."
+
+    If you encounter this issue, add the following flag to the build environment or `user_config_override.h`:
+    ```arduino
+    #ifndef USE_I2C
+    #define USE_I2C
+    #endif
+    ```
+
 ## What is HDMI CEC?
 
 HDMI CEC is a feature of HDMI designed to control HDMI connected devices by using only one remote controller; so, individual CEC enabled devices can command and control each other without user intervention, for up to 15 devices.
 
-This features enables a simple Tasmota device plugged to any HDMI port of your home equipment, to control the TV and other equipments, with a protocol more standard and robust than Infra-Red.
+This feature enables a simple Tasmota device plugged to any HDMI port of your home equipment, to control the TV and other equipments, with a protocol more standard and robust than Infra-Red.
 
 ## Hardware needed
 
 HDMI CEC needs only 3 GPIOs to be connected to an HDMI port. You can use a simple ESP8266 Wemos D1 Mini plugged with Dupont cables to an HDMI pass-through like [these devices from Alix](https://www.aliexpress.com/item/1005004343592426.html)
 
-The GPIOs from ESP devices are electrically compatible with HDMI specifications, so you can simply connect GPIOs with no additional harware components:
+The GPIOs from ESP devices are electrically compatible with HDMI specifications (running at 3.3V logic levels, and the ESP is able to emulate an open-drain communication line by switching its pin input state), so you can simply connect GPIOs with no additional hardware components:
 
 <img width="345" alt="HDMI_CEC_template" src="https://github.com/tasmota/docs/assets/49731213/02ad00fc-3d91-4dba-ba00-deb8a05a38a7">
 
-Wemos D1 Mini|Configuration|HDMI
-:---|:---|:---
-GPIO 2|HDMI CEC|HDMI Pin 13<BR>GPIO 2 on Wemos D1 Mini is connected to a blue Led which is a visual indicator of CEC traffic
-GPIO 4|I2C SDA|HDMI Pin 16
-GPIO 5|I2C SCL|HDMI Pin 15
-Ground||HDMI Pin 17
-+5V||HDMI Pin 18<BR>If another device is present on the same HDMI port, it provides +5V with enough power for ESP8266. In such case you don't need an external power (tested with AppleTV).
+ESP8266|Wemos D1 Mini|Configuration|HDMI
+:---|:---|:---|:---
+GPIO 2|D4|HDMI CEC|HDMI Pin 13<BR>On the Wemos D1 Mini (and possibly other dev boards), GPIO2 is connected to a blue LED which can act as a visual indicator of CEC traffic.
+GPIO 4|D2|I2C SDA|HDMI Pin 16
+GPIO 5|D1|I2C SCL|HDMI Pin 15
+Ground|||HDMI Pin 17
++5V|||HDMI Pin 18<BR>If another device is present on the same HDMI port by using a passthrough adapter such as the one linked above, the other device provides +5V with enough power for ESP8266. In such cases, you don't need an external power (tested with AppleTV). However, if you are using the Tasmota device in a standalone capacity (without a further device connected), you may need to supply 5V from the ESP's power source to cause the TV to detect the port as active, and listen to and broadcast commands.
 
 Below is the template:
 
@@ -75,15 +84,15 @@ In the above example, the first part probes I2C to get EDID data and compute the
 
 Command|Parameters
 :---|:---
-HdmiType<a class="cmnd" id="hdmitype"></a>|<type>: set the CEC device type (0..15 as per CEC specs)<BR>The default value is `4` (Playback Device). Changes require a restart to renegociate a new HDMI logical address.<BR>Possible values are:<BR>`0`: TV<BR>`1`: Recording Device<BR>`2`: Reserved<BR>`3`: Tuner<BR>`4`: Playback Device<BR>`5`: Audio System
-HdmiSend<a class="cmnd" id="hdmisend"></a>|Send a payload to the TV or to any device<BR>`HdmiSend <hex>`: sends the `<hex>` payload to the TV<BR>`HdmiSend { ["To": <to>, ] "Data":"<hex>"}` gives more control about the target.<BR>`<to>` is the logical address of the targer, default is `0` which is the TV<BR>`<hex>` is the payload<BR>Examples:<BR>`HdmiSend 8F` or `HdmiSend {"Data":"8F"}` - ask the power status of the TV<BR>`HdmiSend {"To":4,"Data":"8C}` - ask its vendor id to logical address `4`
+HdmiType<a class="cmnd" id="hdmitype"></a>|<type>: set the CEC device type (0..15 as per CEC specs)<BR>The default value is `4` (Playback Device). Changes require a restart to renegotiate a new HDMI logical address.<BR>Possible values are:<BR>`0`: TV<BR>`1`: Recording Device<BR>`2`: Reserved<BR>`3`: Tuner<BR>`4`: Playback Device<BR>`5`: Audio System
+HdmiSend<a class="cmnd" id="hdmisend"></a>|Send a payload to the TV or to any device<BR>`HdmiSend <hex>`: sends the `<hex>` payload to the TV<BR>`HdmiSend { ["To": <to>, ] "Data":"<hex>"}` gives more control about the target.<BR>`<to>` is the logical address of the target, default is `0` which is the TV.<BR>`<hex>` is the payload, being an encoded CEC command. Note that the byte which describes the requesting and target device does not need to be added; it will be calculated from the logical address which Tasmota has claimed.<BR>Examples:<BR>`HdmiSend 8F` or `HdmiSend {"Data":"8F"}` - ask the power status of the TV<BR>`HdmiSend {"To":4,"Data":"8C"}` - ask its vendor id to logical address `4`
 
 
 ## Receiving and parsing payloads
 
-Currently payloads are passed as HEX data without any encoding/decoding.
+Currently, payloads are passed as HEX data without any encoding/decoding.
 
-Whenever a message is received on the CEC bus, a payload using the following syntax is triggered and can be matched with a Rule. Only messages addressed to Tasmota are published as payloads in MQTT, all messages not adressed to Tasmota are masked to avoid generating too much traffic. Note: the total traffic can be monitored with loglevel 3.
+Whenever a message is received on the CEC bus, a payload using the following syntax is triggered and can be matched with a Rule. Only messages addressed to Tasmota are published as payloads in MQTT; all messages not adressed to Tasmota are masked to avoid generating too much traffic. Note: the total traffic can be monitored with loglevel 3.
 
 Received payloads generate an Rule event as follows:
 ```
@@ -96,7 +105,7 @@ Example: command `HdmiSend 8F`
 20:07:59.454 RSL: RESULT = {"HdmiSend":"Done"}
 20:07:59.632 RSL: SENSOR = {"HdmiReceived":{"From":0,"To":8,"Data":"9001"}}
 ```
-In the above, Tasmota sends command `8F` (Give Device Power Status) to query the power status of the TV. The response `9001` (Report Power Status) indicates that the TV is in Standby mode.
+In the above, Tasmota sends command `8F` (Give Device Power Status) to query the power status of the TV. The response `9001` (command `90`: Report Power Status) indicates that the TV is in Standby mode (the value of `01`).
 
 ### Turning the TV on
 
@@ -114,7 +123,7 @@ The following commands are for advanced users or specific use-cases:
 
 Command|Parameters
 :---|:---
-HdmiSendRaw<a class="cmnd" id="hdmisendraw"></a>|`<hex>`: send a raw payload to the HDMI CEC bus<BR>This gives full control over messages and allows to impersonate another device<BR>`HdmiSendRaw 408F` pretend that device at logical address `4` asks TV for its power status.
-HdmiAddr<a class="cmnd" id="hdmiaddr"></a>|<addr>: set the default HDMI Physical Address in case it cannot be discovered.<BR>The default value is `0x1000` which is HDMI Port 1 on the TV<BR>This value is only used if the I2C port is not connected or if the discovery failes.<BR>If no argumant, this command returns the current physical adress.
+HdmiSendRaw<a class="cmnd" id="hdmisendraw"></a>|`<hex>`: send a raw payload to the HDMI CEC bus.<BR>This gives full control over messages and allows to impersonate another device. Note that if using this command, unlike `HdmiSend`, the address byte must be included.<BR>`HdmiSendRaw 408F` will issue a command that asks the TV for its power status, and report it to the device at logical address `4` (which may not be the Tasmota device that actually issued the command).
+HdmiAddr<a class="cmnd" id="hdmiaddr"></a>|<addr>: set the default HDMI Physical Address in case it cannot be discovered.<BR>The default value is `0x1000` which is HDMI Port 1 on the TV<BR>This value is only used if the I2C port is not connected or if the discovery failes.<BR>If no argument is provided, this command returns the current physical adress.
 
-The [CEC-O-MATIC](https://www.cec-o-matic.com/) tool is handy to decode and encode payloads.
+The [CEC-O-MATIC](https://www.cec-o-matic.com/) tool is handy to decode and encode payloads. Note that it does take into account the addressing byte; you may need to remove it if you are sending commands.
