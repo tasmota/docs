@@ -15,11 +15,11 @@ There is no performance difference between both modes.
 
 The fingerprint is now calculated on the server's Public Key and no longer on its Certificate. The good news is that Public Keys tend to change far less often than certificates, i.e. LetsEncrypt triggers a certificate renewal every 3 months, the Public Key fingerprint will not change after a certificate renewal. The bad news is that there is no `openssl` command to retrieve the server's Public Key fingerprint.
 
-The original Fingerprint V1 algorithm had a security potential vulnerability, it has been replaced by a new more robust method v2. To avoid breaking compatibility, Tasmota will automatically detect when a fingerprint v1 is present and will convert it automatically to V2.
+The following tool can be used [to calculate the Fingerprint](https://github.com/issacg/tasmota-fingerprint) from your certificate using the new V2 algorithm.
 
-**Important**: the following tool [to calculate it](https://github.com/issacg/tasmota-fingerprint) from your certificate is now deprecated. The fingerprint will work once and will be replaced with the new fingerprint.
+**Important**: The original Fingerprint V1 algorithm had a security potential vulnerability, it has been replaced by a new more robust method v2. 
 
-So to simplify your task, we have added two more options: 1/ auto-learning of the fingerprint, 2/ disabling of the fingerprint validation altogether.
+To simplify your task, we have added two more options: 1/ auto-learning of the fingerprint, 2/ disabling of the fingerprint validation altogether.
 
 #### Option 1: Fingerprint auto-learn
 If set, Tasmota will automatically learn the fingerprint during the first connection and will set the Fingerprint settings to the target fingerprint. To do so, use one of the following commands:
