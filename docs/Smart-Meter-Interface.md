@@ -3429,34 +3429,34 @@ This device is used in the grid of Wiener Netze. Insert your Key into the script
 
 ??? summary "View script"
     ```
->D
->B
-=>sensor53 r
->M 1
-+1,3,r,0,9600,Home
-1,=so3,256
-1,=so4,KEY
-1,020909x14UUuuUUuu@1000,Zählerstand,kWh,Zaehlerstand,2
-1,020909x34UUuuUUuu@1000,Bezug aktuell,kwh,Bezug,3 
-1,020909x24UUuuUUuu@1000,BL Bezug,kvarh,BL_Bezug,3 
-1,020909x19UUuuUUuu@1000,Einspeisung Gesamt,kWh,Einspeisung_ges,2 
-1,020909x39UUuuUUuu@1000,Einspeisung aktuell ,kW,Einspeisung_akt,3 
-1,020909x29UUuuUUuu@1000,BL Einspeisung,kvarh,BL_Einspeisung,3
-1,020909x19UUuu@1,year,,year,0
-1,020909x21ss@1,month,,month,0
-1,020909x22ss@1,day,,day,0
-1,020909x24ss@1,hh,,hh,0
-1,020909x25ss@1,mm,,mm,0
-1,020909x26ss@1,ss,,ss,0
-1,020909x32UUuuUUuu@1000,+A,kWh,+A,3
-1,020909x37UUuuUUuu@1000,-A,kWh,-A,3
-1,020909x42UUuuUUuu@1000,+R,varh,+R,3
-1,020909x47UUuuUUuu@1000,-R,varh,-R,3
-1,020909x52UUuuUUuu@1,+P,W,+P,3
-1,020909x57UUuuUUuu@1,-P,W,-P,3
-1,020909x62UUuuUUuu@1,+Q,var,+Q,3
-1,020909x67UUuuUUuu@1,-Q,var,-Q,3
-#
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,r,0,9600,Home
+    1,=so3,256
+    1,=so4,KEY
+    1,020909x14UUuuUUuu@1000,Zählerstand,kWh,Zaehlerstand,2
+    1,020909x34UUuuUUuu@1000,Bezug aktuell,kwh,Bezug,3 
+    1,020909x24UUuuUUuu@1000,BL Bezug,kvarh,BL_Bezug,3 
+    1,020909x19UUuuUUuu@1000,Einspeisung Gesamt,kWh,Einspeisung_ges,2 
+    1,020909x39UUuuUUuu@1000,Einspeisung aktuell ,kW,Einspeisung_akt,3 
+    1,020909x29UUuuUUuu@1000,BL Einspeisung,kvarh,BL_Einspeisung,3
+    1,020909x19UUuu@1,year,,year,0
+    1,020909x21ss@1,month,,month,0
+    1,020909x22ss@1,day,,day,0
+    1,020909x24ss@1,hh,,hh,0
+    1,020909x25ss@1,mm,,mm,0
+    1,020909x26ss@1,ss,,ss,0
+    1,020909x32UUuuUUuu@1000,+A,kWh,+A,3
+    1,020909x37UUuuUUuu@1000,-A,kWh,-A,3
+    1,020909x42UUuuUUuu@1000,+R,varh,+R,3
+    1,020909x47UUuuUUuu@1000,-R,varh,-R,3
+    1,020909x52UUuuUUuu@1,+P,W,+P,3
+    1,020909x57UUuuUUuu@1,-P,W,-P,3
+    1,020909x62UUuuUUuu@1,+Q,var,+Q,3
+    1,020909x67UUuuUUuu@1,-Q,var,-Q,3
+    #
     ```
     
 ### Siemens TD-3511
