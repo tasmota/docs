@@ -2080,7 +2080,7 @@ You need to ask your provider. Total Delivered might be zero on some devices
     +1,3,s,0,9600,MT631
     1,77070100010800ff@1000,Total Consumed,kWh,Total_in,2
     1,77070100020800ff@1000,Total Delivered,kWh,Total_out,2
-    1,77070100100700ff@1,Current Consumption,W,Power_cur,0|
+    1,77070100100700ff@1,Current Consumption,W,Power_cur,0
     #
     ```
 
@@ -2101,7 +2101,7 @@ This is script for a two-direction meter (consumption and delivery) for the Isra
     1,77070100380700ff@1,Current Consumption P2,W,Power_p2,0
     1,770701004c0700ff@1,Current Consumption P3,W,Power_p3,0
     1,77070100020800ff@1000,Total Delivered,kWh,Total_out,3
-    1,77070100000009ff@#,Service ID,,Meter_id,0|
+    1,77070100000009ff@#,Service ID,,Meter_id,0
     #
     ```
 
@@ -2122,7 +2122,7 @@ This is script for a two-direction meter (consumption and delivery) for the Isra
     1,77070100290700ff@1,Leistung P2,W,Power_p2,0
     1,770701003d0700ff@1,Leistung P3,W,Power_p3,0
     1,77070100020800ff@1000,Gesamteinspeisung,kWh,Total_out,3
-    1,77070100000009ff@#,Service ID,,Meter_id,0|
+    1,77070100000009ff@#,Service ID,,Meter_id,0
     #
     ```
     
@@ -2140,7 +2140,7 @@ This is script for a two-direction meter (consumption and delivery) for the Isra
     1,77070100010800ff@1000,Verbrauch,kWh,Total_in,4
     1,77070100100700ff@1,Leistung,W,Power_cur,0
     1,77070100020800ff@1000,Erzeugung,kWh,Total_out,4
-    1,77070100000009ff@#,Service ID,,Meter_id,0|
+    1,77070100000009ff@#,Service ID,,Meter_id,0
     #
     ```
 
