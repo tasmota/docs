@@ -977,6 +977,8 @@ The script itself is also stored on the file system with a default size of 8192 
 `#define USE_SCRIPT_FATFS_EXT`  
 `fmd("fname")` make directory fname  
 `frd("fname")` remove directory fname  
+`fra(array fr)` reads array from open file with fr (assumes tab delimited entries)  
+`fwa(array fr (a))` writes array to open file with fr (writes tab delimited entries and line feed at end) the optional a parameter ommits the linefeed for appending arrays
 `fx("fname")` check if file fname exists  
 `fe("fname")` execute script fname (max 2048 bytes, script must start with the '>' character on the first line)  
 `lfw("fname" payload limit)` logs a string (payload) to a file (fname) with size limit (limit)  paylyoad is added to end of file together with a LF character. if file size is exceeded first line of file is removed.   
