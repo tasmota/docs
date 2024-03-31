@@ -68,7 +68,7 @@ In the **_Configuration -> Configure Module_** page assign:
 1. GPIOa to `I2C SDA`
 2. GPIOb to `I2C SCL`
 
-On ESP8266 almost any GPIO can be used for I2C except for GPIO15. However the standard is to use GPIO4 (D1) for I2C SCL and GPIO5 (D2) for I2C SDA.
+On ESP8266 almost any GPIO can be used for I2C except for GPIO15. However the standard is to use GPIO4 (D2) for I2C SDA and GPIO5 (D1) for I2C SCL.
 
 On ESP32 any pin can be assigned to I2C.
 
