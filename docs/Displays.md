@@ -860,6 +860,8 @@ HN = hex number
 `WRW HWN HN` = write one byte (to word adress)  
 
 `CP HN` = compare array[0] with immediate to result  
+`CPM NUM HN1 HN2 HNx` = compare array[0] with NUM immediate numbers to result
+
 `CPR HN` = compare result with immediate to result  
 
 `RTF` = return when result == false with false  
