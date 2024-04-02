@@ -124,7 +124,7 @@ Tasmota expects that you send a response to commands. You can use the following 
 - `tasmota.resp_cmnd_error()`: report command as `Error`
 - `tasmota.resp_cmnd_failed()`: report command as `Failed`
 - `tasmota.resp_cmnd_str(<msg>)`: report an arbitrary string
-- `tasmota.resp_cmd(<json>)`: report a custom JSON message (not prefixed by command name).
+- `tasmota.resp_cmnd(<json>)`: report a custom JSON message (not prefixed by command name).
 
 
 ## Adding a button to the Main menu
