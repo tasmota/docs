@@ -454,9 +454,18 @@ Logs a message to the Tasmota console. Optional second argument is log_level (0.
 
 #### `load(filename:string) -> bool`
 
-Loads a Berry script from the filesystem, and returns true if loaded successfully, false if file not found, or raises an exception in runtime. Filename does not need to start with `/`, but needs to end with `.be` (Berry source code) or `.bec` (precompiled bytecode).
+Loads a Berry script from the filesystem, and returns true if loaded successfully, false if file not found, or raises an exception in runtime. Filename does not need to start with `/`, but needs to end with `.be` (Berry source code) or `.bec` (precompiled bytecode). If the `.be` extension is missing, it is automatically added.
 
-When loading a source file, the precompiled bytecode is saved to filesystem using the `.bec` extension.
+The behavior for `.bec` files changed in v13.4:
+- when loading `<file>.be`, the `.be` file is loaded in priority and any `.bec` file with same prefix is removed (to avoid inconsistencies). If no `.be` file is present, it tried to load `.bec` file.
+- when loading `<file>.bec`, only `.bec` files are loaded and `.be` is ignored.
+- to create `.bec` files, you need to use `tasmota.compile` (see below)
+
+#### `tasmota.compile(filename:string) -> bool`
+
+Loads a `.be` file, compiles it and saves a `.bec` file containing the compiled bytecode.
+
+Note: `tasmota.compile` is different from Berry native `compile` function.
 
 #### `save(filename:string, f:closure) -> nil`
 
