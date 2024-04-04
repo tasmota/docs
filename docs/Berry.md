@@ -1956,6 +1956,22 @@ m = h.finish()
 assert(m == bytes("9e107d9d372bb6826bd81d3542a419d6"))
 ```
 
+
+### `flash` module
+
+Warning: this is a low-level module used to read and write flash memory. You normally shouldn't need to use it. It is used internally by `partition_core`. Use with `import flash`.
+
+
+Function|Parameters and details
+:---|:---
+read<a class="cmnd" id="flash_read"></a>|`flash.read(address:int[, length:int]) -> bytes()`<br>Reads bytes from an absolute address from the flash and returns a `bytes()` object. If `length` is omitted, the size is 4KB (4096 bytes)
+write<a class="cmnd" id="flash_write"></a>|`flash.write(address:int, content:bytes [, no_erase:bool]) -> nil`<br>Writes a `bytes` object to flash. It is generally better to do 4KB aligned writes.<br>By default, the 4KB page is first erased and the content is written back to it. This call handles automatically writes non-aligned to 4KB boundaries<br>If `no_erase` is `true`, content is writtent without erasing, which can be useful when writing a small number of bytes from previously erased pages<br>Flash contains all ones when erased, and writing to flash can only turn `1` to `0`. Erasing flash causes wear leveling and reduces the lifetime of flash.
+erase<a class="cmnd" id="flash_erase"></a>|`flash.erase(address:int, length:int) -> nil`<br>Erases flash pages. `address` and `lenght` must be 4KB aligned, i.e. multiples of `4096`
+id<a class="cmnd" id="flash_id"></a>|`flash.id() -> int`<br>Returns the 32-bit flash identifier
+size<a class="cmnd" id="flash_size"></a>|`flash.size() -> int`<br>Returns the size of flash in bytes
+current_ota<a class="cmnd" id="flash_current_ota"></a>|`flash.current_ota() -> int`<br>Returns the number ofw the partition Tasmota is running from, typically `0` or `1`, or `-1` for safeboot. With safeboot layout, it is always `0`
+factory<a class="cmnd" id="flash_factory"></a>|`flash.factory(force_ota:bool) -> nil`<br>Forces the next restart to use the `factory` partition if any is present.<br>If `force_ota` is true, it forces an OTA update with the current URL
+
 ## Philips Hue emulation for Alexa
 Berry extends the native Hue/Alexa emulation and makes it possible to handle any number of virtual lights. You can easily define "virtual" lights in Berry, respond to commands from Alexa and send light status.
 
