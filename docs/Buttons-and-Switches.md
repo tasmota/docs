@@ -237,7 +237,7 @@ Multipress functions for 2 and more presses cannot be changed using SetOptions o
     !!! note "If [ButtonRetain](Commands.md#buttonretain) has been enabled the MQTT message will also contain the MQTT retain flag."
 
     !!! danger
-        When a button is configured as inverted or with a [Switchmode](Commands.md#switchmode) that keeps it as ON while depressed it activates the reset to firmware defaults function. Change the Button configuration or SwitchMode to avoid repeated reset to defaults or use `Setoption1 1` to disable that function.
+        When a button is configured as inverted so that it is read as pressed when not depressed, the reset to firmware defaults function will be activated. Change the Button configuration to avoid repeated reset to defaults or use `Setoption1 1` to disable that function.
 
     !!! warning
         If you define a button with a number higher than available power outputs it will default to controlling `Power1`. Example: Button4 on a device with Power1 and Power2 will control `Power1`.
