@@ -107,7 +107,7 @@ align right
 `Cip` = set foreground index color (0..31) for color displays (see index color table below)  
 `Bip` = set background index color (0..31) for color displays (see index color table below)  
 `wp` = draws an analog watch with radius p  (#define USE_AWATCH)   
-`Pfilename:` = display an rgb 16-bit color (or jpg on ESP32) image when file system is present, Scripteditor contains a converter to convert jpg to special RGB16 pictures See [ScriptEditor](https://tasmota.github.io/docs/Scripting-Language/#optional-external-editor)
+`Pfilename:` = display an rgb 16-bit color (or jpg on ESP32) image when file system is present, Scripteditor contains a converter to convert jpg to special RGB16 pictures See [ScriptEditor](https://tasmota.github.io/docs/Scripting-Language/#optional-external-editor)  
 `Ffilename:` = load RAM font file when file system is present. the font is selected with font Nr. 5, these fonts are special binary versions of GFX fonts of any type. they end with .fnt. an initial collection is found in Folder BinFonts  
 `SXfilename:` = load display descriptor for multiple display support (X = 1..3) for up to 3 displays. 
 `SX:` = switch to display number (X = 1..3).  
@@ -166,8 +166,13 @@ You may specify a picture for selected and unselected button state. Picture file
 
 Set the state of a button or slider with:  
 
-* `b#sX` where # = is slider number `0..15`
-* `X` = `0` or `1` for buttons, `0..100` for sliders   
+* `b#sX` where # = is slider or button number `0..15`
+* `X` = `0` or `1` for buttons, `0..100` for sliders
+
+Disbale button or slider with:  
+
+* `bd#` disbale where # = is slider or button number `0..15`  
+* `be#` enable  where # = is slider or button number `0..15`  
 
 ### Display JSON variables
 
