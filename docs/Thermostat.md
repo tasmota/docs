@@ -265,6 +265,28 @@ ON Time#Minute DO Backlog Var3 %Var2%; Sub3 .3; Var2 %Var1% ENDON
 ON Var2#State<=%Var3% DO Event windowstop ENDON
 ```
 
+## Preventing stuck valves by forcing actuation
+
+When left in place for too long, radiator valves might seize. Following rules will force actuation every week in order to prevent this.
+A time of `600` seconds should be long enough for slow actuators to open fully, adjust yours as needed.
+If using above `windowstop` code, skip `Rules#Timer=1` as you already have it set.
+
+```
+ON Event#forceactuate DO Backlog EnableOutputSet 0; Power 1; RuleTimer1 600 ENDON
+ON Rules#Timer=1 DO EnableOutputSet 1 ENDON
+ON Clock#Timer=1 DO Event forceactuate ENDON
+```
+```
+Timers 1
+Timer1 {"Enable":1,"Mode":0,"Time":"08:00","Window":0,"Days":"0100000","Repeat":1,"Output":1,"Action":3}
+```
+
+If you have a button on your controller, consider using it to trigger the `forceactuate` event.
+This allows you to request instant heating when feeling cold. Add to your rule:
+```
+ON Button1#State DO Event forceactuate ENDON
+```
+
 ## Advanced features
 
 ### Multi-controller
