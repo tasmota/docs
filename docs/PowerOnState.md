@@ -6,7 +6,7 @@
 
 The `PowerOnState` device configuration parameter is applied when the device is initially powered up. _It does not apply to device warm restarts_.
 
-To lock the power state in its current setting you can use [`PowerLock`](Commands.md#powerlock) followed by the number of relay you want to lock. The value 0|1 defines the state locked|unlocked.
+To lock the power state in its current setting you can use [`PowerLock`](Commands.md#powerlock) followed by the number of relay you want to lock. The value `0|1` defines the state `locked|unlocked`. The `PowerOnState` always has a higher priority than the `PowerLock`.
 
 Tasmota tracks the relays' state in a masked variable. A set bit (`1`) means the corresponding **relay** is turned ON. The associated GPIO state will be high or low according to whether the relay is configured as `Relay<x>` or `Relay<x>i`. Every command for setting the relay state is "recorded" in the variable and saved to flash (depending on [`SetOption0`](Commands.md#setoption0)). The setting of the relay GPIO is then executed.
 
