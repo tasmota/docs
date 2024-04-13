@@ -14,21 +14,20 @@ The currently supported display drivers are:
 
 Display type|Interface
 :---|:---
-2 | SSD1306 OLED display | I^2^C
-ILI934x TFT| SPI
-Waveshare E-Paper 2.9" display (black/white, partial update) | SPI
-Waveshare E-Paper 4.2" display (black/white, full update) | SPI
-SH1106 OLED display | I^2^C
-ILI9488 TFT display | SPI
-SSD1351 OLED color display | SPI
-RA8876 TFT display | SPI 
-7 segment common anode display | I^2^C
-ST7789 TFT display | SPI
-SD1331 TFT display | SPI
-[TM1637, TM1638 and MAX7219](TM163x) 7-segment displays | GPIO
-LilyGO T5 4.7" E-Paper display ESP32 device | :material-cpu-32-bit:
-[MAX7219 Dot Matrix](MAX7219.md) | Interface GPIO
-[TM1650](TM1650) 7-segment displays | I^2^C 
+ILI9341 TFT|SPI
+ILI9342 TFT|SPI
+ILI9488 TFT|SPI
+GC9A01|SPI
+SH1106 OLED display|I^2^C
+SH1107|SPI
+SSD1306 OLED display|I^2^C
+SSD1331|SPI
+ST7262|RGB (ESP32S3)
+ST7735<br>ST7735S|SPI
+ST7789 TFT display|SPI
+ST7796U|SPI<br>Parallel
+Waveshare E-Paper 2.9" display|SPI
+Waveshare E-Paper 4.2" display|SPI
 
 ### Step 2. Flash with uDisplay compatible binary
 
@@ -74,6 +73,7 @@ Depending on your touch device, add the following templates to `display.ini`:
 ### FT5206 example
 
 Configure:
+
 - GPIO `TS SPI CS` to the touch SPI `CS` pin
 - add the following template:
 
@@ -102,6 +102,7 @@ RT
 ### XPT2046 example
 
 Configure:
+
 - GPIO `TS SPI CS` to the touch SPI `CS` pin
 - GPIO `TS IRQ` to the interrupt pin
 - add the following template:
@@ -130,6 +131,7 @@ RT
 ### GT911 example
 
 Configure:
+
 - GPIO `TS RST` to the touch reset pin
 - add the following template:
 
