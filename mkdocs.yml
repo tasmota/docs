@@ -137,6 +137,7 @@ nav:
     - Buttons-and-Switches.md
     - DeepSleep.md
     - Device-Groups.md
+    - Universal-Display-Driver.md
     - Displays.md
     - Dynamic-Sleep.md
     - I2C Devices: I2CDEVICES.md
