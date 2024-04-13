@@ -47,7 +47,7 @@ The configuration template is slightly different with uDrive:
 
 ### Step 5. Configure the `display.ini` descriptor file
 
-Select the appropriate `display.ini` file from the repository, and store it as `display.ini` file in the file system.
+Select the appropriate `display.ini` file from the [repository](https://github.com/arendst/Tasmota/tree/development/tasmota/displaydesc), and store it as `display.ini` file in the file system.
 
 Storing `display.ini` is the preferred method to configure the descriptor file. If this is not possible or if the device has no filesystem, use the alternative methods:
 
