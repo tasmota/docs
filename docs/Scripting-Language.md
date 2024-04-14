@@ -155,6 +155,8 @@ see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/
   
 `script?<var>` queries a script variable `var`  
 
+`scriptsize N` sets the amount of script source code allowed between 1000 and max defined during compile (with #define UFSYS_SIZE)    
+
 - The script itself can't be specified because the size would not fit the MQTT buffers
 
 ## Script Sections
