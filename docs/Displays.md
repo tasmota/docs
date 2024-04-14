@@ -107,9 +107,10 @@ align right
 `Cip` = set foreground index color (0..31) for color displays (see index color table below)  
 `Bip` = set background index color (0..31) for color displays (see index color table below)  
 `wp` = draws an analog watch with radius p  (#define USE_AWATCH)   
-`Pfilename:` = display an rgb 16-bit color (or jpg on ESP32) image when file system is present, Scripteditor contains a converter to convert jpg to special RGB16 pictures See [ScriptEditor](https://tasmota.github.io/docs/Scripting-Language/#optional-external-editor)  
+`Pfilename:` = display an rgb 16-bit color (or jpg on ESP32) image when file system is present, Scripteditor contains a converter to convert jpg to special RGB16 pictures See [ScriptEditor](https://tasmota.github.io/docs/Scripting-Language/#optional-external-editor)   
+`Pfilename:C:ys:ys` displays a centered picture in frame xs, ys. if C > 0 the picture gets a frame in this index color  
 `Ffilename:` = load RAM font file when file system is present. the font is selected with font Nr. 5, these fonts are special binary versions of GFX fonts of any type. they end with .fnt. an initial collection is found in Folder BinFonts  
-`SXfilename:` = load display descriptor for multiple display support (X = 1..3) for up to 3 displays. 
+`SXfilename:` = load display descriptor for multiple display support (X = 1..3) for up to 3 displays.  
 `SX:` = switch to display number (X = 1..3).  
 `dcI:V` = define index color entry Index 19-31, V 16 bit color value (index 0-18 is fixed)  
 
