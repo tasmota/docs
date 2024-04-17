@@ -12,7 +12,9 @@ This feature is heavily inspired from @fvanroie's [openHASP project](https://git
 ![HASPmota switch](_media/lvgl/HASPmota_5_switch.png){width="160"} ![HASPmota checkbox](_media/lvgl/HASPmota_6_checkbox.png){width="160"} ![HASPmota line](_media/lvgl/HASPmota_7_line.png){width="160"} ![HASPmota bar](_media/lvgl/HASPmota_8_bar.png){width="160"}
 ![HASPmota btnmatrix](_media/lvgl/HASPmota_9_btnmatrix.png){width="160"} ![HASPmota chart](_media/lvgl/HASPmota_10_chart.png){width="160"} ![HASPmota image](_media/lvgl/HASPmota_11_img.png){width="160"} ![HASPmota roller](_media/lvgl/HASPmota_12_roller.png){width="160"}
 ![HASPmota qrcode](_media/lvgl/HASPmota_13_qrcode.png){width="160"} ![HASPmota switch](_media/lvgl/HASPmota_14_slider.png){width="160"} ![HASPmota switch](_media/lvgl/HASPmota_15_arc.png){width="160"} ![HASPmota scale 1](_media/lvgl/HASPmota_16_scale.png){width="160"}
-![HASPmota scale 2](_media/lvgl/HASPmota_17_scale.png){width="160"}
+![HASPmota scale 2](_media/lvgl/HASPmota_17_scale.png){width="160"} ![HASPmota spinner](_media/lvgl/HASPmota_18_spinner.png){width="160"} ![HASPmota dropdown](_media/lvgl/HASPmota_19_dropdown.png){width="160"} ![HASPmota fonts](_media/lvgl/HASPmota_20_fonts.png){width="160"}
+![HASPmota icons](_media/lvgl/HASPmota_21_icons.png){width="160"} ![HASPmota seg7](_media/lvgl/HASPmota_22_seg7.png){width="160"}
+
 
 The `jsonl` file used to display the widgets can be found [here](_media/lvgl/haspmota_demo.jsonl)
 
@@ -683,6 +685,14 @@ Attribute name|Details
 `text_color`|Text color of non-selected options
 
 ### `spinner`
+
+Example:
+
+![HASPmota dropdown](_media/lvgl/HASPmota_18_spinner.png)
+
+```json
+{"id":11,"obj":"spinner","x":10,"y":60,"w":100,"h":100,"angle":200,"speed":5000,"arc_color":"#4F4F4F","arc_color10":"#FFFF88"}
+```
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
