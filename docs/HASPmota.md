@@ -286,7 +286,7 @@ Attribute name|LVGL equivalent|Details
 `text_opa`|`style_text_opa`|Sets the text opacity<br>`0`: transparent<br>`255`: opaque 
 `text_letter_space`|`style_text_letter_space`|Set the letter space in pixels
 `text_line_space`|`style_text_line_space`|Set the line space in pixels.
-`label_mode`|`set_long_mode`|
+`long_mode`<br>`label_mode`|`set_long_mode`|Usually the size of the label is automatically expanded to the text size. If the width or height are explicitly set, the following policies are applied:<br>`"expand"`: expand to size<br>`break` or `0`: (`lv.LABEL_LONG_WRAP`) Wrap too long lines<br>`"dots"` or `1`: (`lv.LABEL_LONG_DOT`) Replaces the last 3 characters from bottom right corner of the label with dots<br>`"scroll"` or `2`: (`lv.LABEL_LONG_SCROLL`) If the text is wider than the label scroll it horizontally back and forth. If it's higher, scroll vertically<br>`"loop"` or `3`: (`lv.LABEL_LONG_SCROLL_CIRCULAR`) If the text is wider than the label scroll it horizontally continuously. If it's higher, scroll vertically.<br>`"crop"` or `4`: (`lv.LABEL_LONG_CLIP`) Simply clip the parts of the text outside the label.
 `value_color`|`style_text_color`|Synonym of `text_color`
 `value_ofs_x`|`x` of sub-label|Sets the X offset in pixels within the object
 `value_ofs_y`|`y` of sub-label|Sets the Y offset in pixels within the object
@@ -304,7 +304,7 @@ Attribute name|LVGL equivalent|Details
 `val_rule`||Link a value to a Tasmota rule, see below
 `val_rule_formula`||Link a value to a Tasmota rule, see below
 
-### `flex`
+### `flex` (flex layout)
 
 HASPmota originally supported only absolute positions and sizes in pixels, which made it challenging to handle different screen sizes. LVGL, on the other hand, provides a [flexbox layout](https://docs.lvgl.io/master/layouts/flex.html). This layout can arrange items into rows or columns (tracks), handle wrapping, adjust the spacing between the items and tracks, and dynamically adjust the size of the items to fill the remaining space, while respecting their minimum and maximum width and height constraints. Flex layout in LVGL is a set of attributes that can be assigned to any object, such as `"obj"`. To make it easier to create transparent and invisible Flex containers, HASPmota has introduced the `flex` classes.
 
@@ -349,6 +349,12 @@ Children flex attributes|Description
 :---|:---
 `flex_in_new_track`|(bool) When `true` force item into a new line
 `flex_grow`|Make one or more children fill the available space on the track. When more children have grow parameters, the available space will be distributed proportionally to the grow values. See LVGL documentation for more details.
+
+### `fixed` (fixed layout)
+
+Fixed layout allows to create a transparent object in which you can place fixed position and fixed size object. This is equivalent to `obj` but fully transparent.
+
+It can be used as an alternative to `flex` above as a container used in flex layout.
 
 ### `label`
 
@@ -646,6 +652,35 @@ Attribute name|LVGL equivalent|Details
 `text_color`||Text color of non-selected options
 `text_color50`||Text color of the selected options
 `text`|`selected_text`|(read-only) Get the text of the currently selected item. The string is truncated to the first 256 bytes.
+
+### `dropdown` and `dropdown_list`
+
+Example:
+
+![HASPmota dropdown](_media/lvgl/HASPmota_19_dropdown.png)
+
+```json
+{"id":11,"obj":"dropdown","x":10,"y":55,"direction":3,"options":"Option 1\nOption 2\nOption 3\nOption 4","val":1,"bg_color50":"#FF4400","text_color":"#FFFF88","text_color50":"#FFFF88","border_color":"#FFFF88"}
+  {"id":12,"obj":"dropdown_list","parentid":11,"h":90,"text_color":"#EAEAEA","bg_color51":"#FF4400"}
+```
+
+Attribute name|Details
+:---|:---
+`options`|(string) options separated by `\n`
+`val`|The number of the selected item, `0` (default) is the first item
+`direction`|Direction of the dropdown, the arrow symbol is automatically adjusted<br>`0`: down<br>`1`: up<br>`2`: left<br>`3`: right
+`bg_color50`|Background color of the selected item
+`text_color`|Text color of non-selected options
+`text_color50`|Text color of the selected options
+`text`|(read-only) Get the text of the currently selected item. The string is truncated to the first 256 bytes.
+
+If you want to apply style to the `list` sub-object, you can define a `dropdown_list` with `parentid` referring to the `dropdown` object.
+
+Attribute name|Details
+:---|:---
+`options`|(string) options separated by `\n`
+`bg_color51`|Background color of the selected item
+`text_color`|Text color of non-selected options
 
 ### `spinner`
 
