@@ -3839,3 +3839,82 @@ Tested on an AEConversion INV500-90 with RS485 interface.
 	print request data finished
 	#
  	```
+
+### Engelmann SensoStar E (Heat meter, used with Hichi IR interface)
+
+??? summary "View script"
+	```
+	>D
+	wkup=1
+
+	>B
+	;setup sensor
+	->sensor53 d0
+	->sensor53 r
+
+	>S
+	; this device is powered by battery
+	; frequent requests will lead to blocking and reduces lifetime
+	; starting sequence:
+	;- press button on device once
+	;- restart Tasmota with script activated (you have 5 minutes to do this)
+	;- after 30s data is retrieved and logged (including SYSLOG depending on Tasmota log config)
+	;- now every 45min a new request is done, updated in WebUI (and transferred by MQTT every TPER period); polling period needs to be less 60min to avoid sleep mode of device!
+
+	if ((upsecs==1) or (upsecs%2700==0)) {
+		print read meter
+		=#readmeter
+	}
+
+	if upsecs==30 {
+		->sensor53 d1
+		print read meter (dump)
+		=#readmeter
+	}
+
+	if upsecs==60 {
+		; disable dump
+		->sensor53 d0
+	}
+
+
+	>M 1
+	+1,3,rE1,0,2400,WAERME,1
+	1,=so3,32
+	1,0478u32s@1,Zählernummer,,Zählernummer,0
+	1,0406u32s@1000,Energie,MWh,Energie,3
+	1,0413u32s@1000,Volumen,m³,Volumen,3
+	1,042bu32s@1,Leistung,W,Leistung,0
+	1,142bu32s@1,Max. Leistung,W,Max. Leistung,0
+	1,043bu32s@1000,Volumenstrom,m³/h,Volumenstrom,3
+	1,143bu32s@1000,Max. Volumenstrom,m³/h,Max. Volumenstrom,3
+	1,025buuUU@1,Vorlauftemperatur,°C,Vorlauftemperatur,0
+	1,025fuuUU@1,Rücklauftemperatur,°C,Rücklauftemperatur,0
+	1,0261ssSS@100,Temperaturdifferenz,°C,Temperaturdifferenz,2
+	1,0223uuUU@1,Betriebsdauer,Tage,Betriebsdauer,0
+	1,4406u32s@1000,Stichtag Energie,MWh,Letzter Stichtag Energie,3
+	1,4413u32s@1000,Stichtag Volumen,m³,Letzter Stichtag Volumen,3
+	#
+
+	#readmeter
+	print wakeup start
+	;set serial protocol
+	sml(-1 1 "2400:8N1")
+	;send 0x55 for 2,2 seconds with 8N1 (53x), 2400 baud (wakeup sequence)
+	for wkup 1 53 1
+	sml(1 1 "55555555555555555555")
+	next
+	print wakeup end
+	wkup=1
+	print wait for the meter
+	delay(350)
+	;switch serial protocol
+	sml(-1 1 "2400:8E1")
+	print init MBus (1040004016); scan for device 00
+	sml(1 1 "1040004016")
+	delay(350)
+	print request current data (107BFE7916)
+	sml(1 1 "107BFE7916")
+	print request current data finished
+	#
+ 	```
