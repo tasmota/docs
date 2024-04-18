@@ -11,7 +11,7 @@ This feature is heavily inspired from @fvanroie's [openHASP project](https://git
 [![HASPmota label](_media/lvgl/HASPmota_1_instructions.png){width="160"}](#label)
 [![HASPmota spangroup](_media/lvgl/HASPmota_2_spangroup.png){width="160"}](#spangroup-styled-text)
 [![HASPmota btn](_media/lvgl/HASPmota_3_btn.png){width="160"}](#btn)
-[![HASPmota chart](_media/lvgl/HASPmota_4_led.png){width="160"}](#led)
+[![HASPmota led](_media/lvgl/HASPmota_4_led.png){width="160"}](#led)
 [![HASPmota switch](_media/lvgl/HASPmota_5_switch.png){width="160"}](#switch)
 [![HASPmota checkbox](_media/lvgl/HASPmota_6_checkbox.png){width="160"}](#checkbox)
 [![HASPmota line](_media/lvgl/HASPmota_7_line.png){width="160"}](#line)
@@ -21,11 +21,11 @@ This feature is heavily inspired from @fvanroie's [openHASP project](https://git
 [![HASPmota image](_media/lvgl/HASPmota_11_img.png){width="160"}](#img)
 [![HASPmota roller](_media/lvgl/HASPmota_12_roller.png){width="160"}](#roller)
 [![HASPmota qrcode](_media/lvgl/HASPmota_13_qrcode.png){width="160"}](#qrcode)
-[![HASPmota switch](_media/lvgl/HASPmota_14_slider.png){width="160"}](#slider)
-[![HASPmota switch](_media/lvgl/HASPmota_15_arc.png){width="160"}](#arc)
+[![HASPmota slider](_media/lvgl/HASPmota_14_slider.png){width="160"}](#slider)
+[![HASPmota arc](_media/lvgl/HASPmota_15_arc.png){width="160"}](#arc)
 [![HASPmota scale 1](_media/lvgl/HASPmota_16_scale.png){width="160"}](#scale-scale_section-scale_line)
 [![HASPmota scale 2](_media/lvgl/HASPmota_17_scale.png){width="160"}](#scale-scale_section-scale_line)
-[![HASPmota dropdown](_media/lvgl/HASPmota_18_spinner.png){width="160"}](#spinner)
+[![HASPmota spinner](_media/lvgl/HASPmota_18_spinner.png){width="160"}](#spinner)
 [![HASPmota dropdown](_media/lvgl/HASPmota_19_dropdown.png){width="160"}](#dropdown-and-dropdown_list)
 [![HASPmota fonts](_media/lvgl/HASPmota_20_fonts.png){width="160"}](#embedded-fonts)
 [![HASPmota icons](_media/lvgl/HASPmota_21_icons.png){width="160"}](#embedded-symbols)
@@ -451,7 +451,7 @@ Attribute name|Details
 
 Example:
 
-![HASPmota switch](_media/lvgl/HASPmota_14_slider.png)
+![HASPmota slider](_media/lvgl/HASPmota_14_slider.png)
 
 ```json
 {"id":11,"obj":"slider","x":0,"y":60,"w":100,"h":10,"bg_color":"#FFFF88","bg_color10":"#FFFF88","bg_color20":"#FF4400","val":65}
@@ -590,7 +590,7 @@ For linear scales, you can just use a `bar` sub-object. It inherits `min` and `m
 
 Example:
 
-![HASPmota switch](_media/lvgl/HASPmota_15_arc.png)
+![HASPmota arc](_media/lvgl/HASPmota_15_arc.png)
 
 ```json
 {"id":11,"obj":"arc","x":10,"y":60,"w":100,"h":100,"arc_color10":"#FFFF88","bg_color20":"#FF4400","min":-20,"max":40,"val":26,"text":"76%","label_to_angle":-20}
@@ -704,7 +704,7 @@ Attribute name|Details
 
 Example:
 
-![HASPmota dropdown](_media/lvgl/HASPmota_18_spinner.png)
+![HASPmota spinner](_media/lvgl/HASPmota_18_spinner.png)
 
 ```json
 {"id":11,"obj":"spinner","x":10,"y":60,"w":100,"h":100,"angle":200,"speed":5000,"arc_color":"#4F4F4F","arc_color10":"#FFFF88"}
@@ -740,7 +740,7 @@ Attribute name|LVGL equivalent|Details
 
 Example:
 
-![HASPmota chart](_media/lvgl/HASPmota_4_led.png)
+![HASPmota led](_media/lvgl/HASPmota_4_led.png)
 
 Example from `pages.jsonl`:
 
