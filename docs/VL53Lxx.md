@@ -27,7 +27,7 @@ In the documentation below, VL53LXX is used whenever the information applies to 
 
 ## The devices
 
-For specifics on how to install and adapt these sensors for specific use-cases, please consult the datasheet. You will also find infomration on the supported distances and the impact of the reflectance of the target object and the amount of ambinet light and how those are effected by each mode.
+For specifics on how to install and adapt these sensors for specific use-cases, please consult the datasheet. You will also find information on the supported distances and the impact of the reflectance of the target object and the amount of ambient light and how those are effected by each mode.
 
 * Datasheet [VL53L0X](https://www.st.com/resource/en/datasheet/vl53l0x.pdf)
 * Datasheet [VL53L1X](https://www.st.com/resource/en/datasheet/vl53l1x.pdf)
