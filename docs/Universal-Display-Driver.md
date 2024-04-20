@@ -128,6 +128,27 @@ RT
 #
 ```
 
+If your device does not have the same calibration, you instead:
+
+
+```
+:UTI,XPT2046,S1,*,-1,*
+CPR 00
+RT
+:UTT
+XPT 300
+RT
+:UTX
+MV 0 2
+RT
+:UTY
+MV 2 2
+RT
+#
+```
+
+then run [DisplayCalibrate](https://tasmota.github.io/docs/Tasmota-Application/#display-calibration) application which creates an additional `:H` line with your display's specific calibration.
+
 ### GT911 example
 
 Configure:
