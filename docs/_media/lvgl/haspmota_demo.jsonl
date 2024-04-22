@@ -3,7 +3,7 @@
 
 {"id":90,"obj":"flex","x":0,"y":0,"w%":100,"h":24,"bg_color":"#4f4f4f","bg_opa":255,"radius":0,"border_side":1,"border_width":1,"border_color":"#FFFF44","text_color":"#FFFF44"}
   {"id":91,"obj":"label","parentid":90,"x":0,"y":0,"w":100,"h%":100,"long_mode":3,"text":"HASPmota widgets explorer","flex_grow":1}
-  {"id":92,"obj":"fixed","parentid":90,"w":100,"text_color":"#FFFF44"}
+  {"id":92,"obj":"fixed","parentid":90,"w":102,"text_color":"#FFFF44"}
     {"id":95,"parentid":92,"comment":"-- Clock --","obj":"lv_clock","x":0,"y":3,"w":55,"h":16,"radius":0,"border_side":0}
     {"id":96,"parentid":92,"comment":"-- Battery indicator --","obj":"label","x":57,"y":0,"w":20,"h":20,"text":"\uF2A3","align":0,"text_font":"icons-18"}
     {"id":97,"parentid":92,"comment":"-- Wifi indicator --","obj":"lv_wifi_arcs","x":73,"y":0,"w":29,"h":20,"radius":0,"border_side":0,"bg_color":"#000000","line_color":"#FFFF44"}
