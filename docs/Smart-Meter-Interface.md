@@ -1169,7 +1169,54 @@ For SGM-C4, double-tariff variants or meters measuring supply remove the appropr
 
     Overview of the codes
     ![image](https://user-images.githubusercontent.com/5443580/186160623-3db77d01-429f-49db-86ff-d804578aad99.png)
-	
+
+### EFR SGM-D4A920N
+By default, the energy meter only sends the total energy values. To be able to read all the other values, you need to enter the PIN and set `InF on`. (can be done with "optical" button)
+The PIN must be requested from the metering provider, which is usually your local grid provider and not your energy provider (but they know whom to ask). After entering the PIN and setting `InF on`, all the values will be available.
+A few values I wasn't able to figure out, but the most relevant are there. If you want to try this parameters you have to comment out the lines (remove leading ;)
+
+??? summary "View script"
+    ```
+>D
+>B
+spinm(4 1)
+=>sensor53 r
+>M 1
++1,3,s,0,9600,sml
+1,77070100010800FF@1000,Bezug (180),kWh,zaehlerstand_180,3
+;1,77070100010801FF@1,Tarif 1 (180),Wh,zaehlerstand_tarif_1_180,3
+;1,77070100010802FF@1,Tarif 2 (180),Wh,zaehlerstand_tarif_2_180,3
+1,77070100020800FF@1000,Einspeisung (280),kWh,zaehlerstand_280,3
+;1,77070100020801FF@1,Tarif 1 (280),Wh,zaehlerstand_tarif_1_280,3
+;1,77070100020802FF@1,Tarif 2 (280),Wh,zaehlerstand_tarif_2_280,3
+1,770701000E0700FF@1,Netz Frequenz,Hz,netz_frequenz,1
+1,77070100100700FF@1,aktuelle Wirkleistung,W,aktuelle_wirkleistung,0
+1,770701001F0700FF@1,Strom L1,A,strom_l1,2
+1,77070100200700FF@1,Spannung L1,V,spannung_l1,1
+1,77070100240700FF@1,Wirkleistung L1,W,wirkleistung_l1,0
+1,77070100330700FF@1,Strom L2,A,strom_l2,2
+1,77070100340700FF@1,Spannung L2,V,spannung_l2,1
+1,77070100380700FF@1,Wirkleistung L2,W,wirkleistung_l2,0
+1,77070100470700FF@1,Strom L3,A,strom_l3,2
+1,77070100480700FF@1,Spannung L3,V,spannung_l3,1
+1,770701004C0700FF@1,Wirkleistung L3,W,wirkleistung_l3,0
+1,77070100510701FF@1,Phasenwinkel U L1/L2,°,phasenwinkel_u_l1_l2,0
+1,77070100510702FF@1,Phasenwinkel U L1/L3,°,phasenwinkel_u_l1_l3,0
+1,77070100510704FF@1,Phasenwinkel I/U L1,°,phasenwinkel_i_u_l1,0
+1,7707010051070FFF@1,Phasenwinkel I/U L2,°,phasenwinkel_i_u_l2,0
+1,7707010051071AFF@1,Phasenwinkel I/U L3,°,phasenwinkel_i_u_l3,0
+;1,77070100600100FF@#,Seriennummer,,seriennummer,0
+;1,7707010060320101@#,Hersteller,,hersteller,0
+;1,7707010060320104@#,HW Version,,hw_version,0
+;1,7707010060320204@#,HW Version PCB2,,hw_version,0
+;1,7707010060320404@#,Parameter Version,,parameter_version,0
+;1,77070100605A0201@#,FW Checksum,,fw_checksum,0
+;1,77070100605A0202@#,Unbekannt 2,,unbekanntes_mqtt_topic_2,0
+;1,7707010000020000@#,Firmware Version,,firmwareversion,0
+;1,7707010000020001@#,Unbekannt 1,,unbekanntes_mqtt_topic_1,0
+
+ ```
+ 
 ### Elster / Honeywell AS1440 (OBIS)
     
 Based on Landis script with changed timings in the >F section, as AS1440 seems to be slower in responding.
