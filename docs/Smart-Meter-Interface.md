@@ -2245,6 +2245,27 @@ By default, the KAIFA MB310H4BDE will only deliver the Total_in and Total_out va
     1,77070100600100ff@#,Server-ID,,Meter_Number,0
     #
     ```
+### Kamstrup 382Lx7
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >S
+    >M 1
+    +1,5,k,0,9600,K382Lx7,4,10,3F100200010002,3F1003041E041F0420,3F1003043404350436,3F100203ff0400,
+    1,3F100001kstr@i0:1,EnergyIn,kWh,EnergyIn,16
+    1,3F10x08xx0002kstr@i0:1,EnergyOut,kWh,EnergyOut,16
+    1,3F10041ekstr@i1:1,VoltageP1,V,VoltageP1,16
+    1,3F10x06xx041fkstr@i1:1,VoltageP2,V,VoltageP2,16
+    1,3F10x13xx0420kstr@i1:1,VoltageP3,V,VoltageP3,16
+    1,3F100434kstr@i2:100,CurrentP1,A,CurrentP1,18
+    1,3F10x08xx0435kstr@i2:100,CurrentP2,A,CurrentP2,18
+    1,3F10x17xx0436kstr@i2:100,CurrentP3,A,CurrentP2,18
+    1,3F1003ffkstr@i3:1,PowerIN,W,PowerIN,16
+    1,3F10x08xx0400kstr@i3:1,PowerOUT,W,PowerOUT,16
+    #
+    ```
 
 ### Kamstrup Multical 4xx / 6xx / 8xx
 	
