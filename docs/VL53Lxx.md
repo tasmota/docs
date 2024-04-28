@@ -101,7 +101,7 @@ For the VL53L1X
 
 Tasmota, by default, supports up to 8 of sensors of the same model in parallel. The I2C GPIO and I2C driver configuration listed above are the same.
 
-When using multiple VL53LXX devices the XSHUT pin of each sensor must be wired to a dedicated GPIO and assigned as `VL53LXX XSHUT` 1 to 8. This allows Tasmota to programatically change the I2C address of each sensor so that they are unique. The sensors don't save this new address so this procedure is performed automatically at every restart. The addresses used for this are, by default, 0x78 (120) to 0x7F (127). As a concequence, no other devices can use those addresses. As of January 2023, there are no I2C devices supported by Tasmota with those addresses. However, such devices exist and may be supported by later versions. You can change the reassigned addresses via a compile option, see the [compile options](#compile-options) section.
+When using multiple VL53LXX devices the XSHUT pin of each sensor must be wired to a dedicated GPIO and assigned as `VL53LXX XSHUT` 1 to 8. This allows Tasmota to programatically change the I2C address of each sensor so that they are unique. The sensors don't save this new address so this procedure is performed automatically at every restart. The addresses used for this are, by default, 0x78 (120) to 0x7F (127). As a consequence, no other devices can use those addresses. As of January 2023, there are no I2C devices supported by Tasmota with those addresses. However, such devices exist and may be supported by later versions. You can change the reassigned addresses via a compile option, see the [compile options](#compile-options) section.
 
 ### Wiring for Multiple Sensors
 | VL53LXX-1   | VL53LXX-2   | VL53LXX-3   | ... | ESP |
