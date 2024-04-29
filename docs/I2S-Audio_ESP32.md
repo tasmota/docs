@@ -13,7 +13,20 @@
 The main difference to the older ESP8266 sound driver is the configuration of the various settings at runtime with the command `i2sconfig`, which uses a hidden driver file.  
 
 I2S (Inter-IC Sound) is a serial, synchronous communication protocol that is usually used for transmitting audio data between two digital audio devices.  
-The I2S framework of the ESP-IDF supports 3 communication modes which are standard, PDM and TDM. TDM is the most advanced mode and very uncommon in the IOT world - there is no support for it in Tasmota yet.
+The I2S framework of the ESP-IDF supports 3 communication modes which are standard, PDM and TDM. TDM is the most advanced mode and very uncommon in the IOT world - there is no support for it in Tasmota yet.  
+  
+Support for different I2S modes varies across the ESP32 family:  
+  
+|Target|Standard|PDM TX|PDM RX|TDM|ADC/DAC|LCD/Camera
+| --- | --- | --- | --- | --- | --- | --- |
+|ESP32|I2S 0/1|I2S 0|I2S 0|none|I2S 0|I2S 0|
+|ESP32-S2|I2S 0|none|none|none|none|I2S 0|
+|ESP32-C3|I2S 0|I2S 0|none|I2S 0|none|none|
+|ESP32-C6|I2S 0|I2S 0|none|I2S 0|none|none|
+|ESP32-S3|I2S 0/1|I2S 0|I2S 0|I2S 0/1|none|none|
+
+Note the limited support for PDM microphones.
+
 
 ## Audio settings
   
@@ -140,14 +153,11 @@ Starts an UDP audio service to connect 2 ESP32 devices as an audio intercom ([an
 
 Needs audio output and microphone on 2 devices (no PSRAM needed)  
 
-```arduino
-#ifndef I2S_BRIDGE
-#define USE_I2S_AUDIO                       // Add support for I2S audio output
-#define USE_I2S_MIC                         // Add support for I2S microphone
-#define I2S_BRIDGE                          // Add support for UDP PCM audio bridge
-  //#define I2S_BRIDGE_PORT    6970         // Set bridge port (default = 6970)
-#endif
-```
+    ```arduino
+    build_flags                 = ${env:tasmota32_base.build_flags}
+                                  -DUSE_I2S_ALL
+                                  -DUSE_I2S_BRIDGE
+    ```
 
 |CMD bridge|action|
 |---|---|
