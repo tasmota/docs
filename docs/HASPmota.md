@@ -753,9 +753,9 @@ Example from `pages.jsonl`:
 {"id":22,"obj":"led","x":60,"y":100,"w":20,"h":20,"color":"#00FF00","val":200}
 {"id":23,"obj":"led","x":110,"y":100,"w":20,"h":20,"color":"#00FF00","val":0}
 
-{"id":21,"obj":"led","x":10,"y":140,"w":20,"h":20,"color":"#FFFF88"}
-{"id":22,"obj":"led","x":60,"y":140,"w":20,"h":20,"color":"#FFFF88","val":200}
-{"id":23,"obj":"led","x":110,"y":140,"w":20,"h":20,"color":"#FFFF88","val":0}
+{"id":31,"obj":"led","x":10,"y":140,"w":20,"h":20,"color":"#FFFF88"}
+{"id":32,"obj":"led","x":60,"y":140,"w":20,"h":20,"color":"#FFFF88","val":200}
+{"id":33,"obj":"led","x":110,"y":140,"w":20,"h":20,"color":"#FFFF88","val":0}
 ```
 
 Attribute name|LVGL equivalent|Details
@@ -839,10 +839,10 @@ Example:
 {"id":11,"obj":"spangroup","x":0,"y":60,"w":300,"h":115,"text_font":"robotocondensed-16","bg_color":"#000088","bg_opa":255}
   {"id":12,"obj":"span","parentid":11,"text":"This is "}
   {"id":13,"obj":"span","parentid":11,"text":"RED","text_color":"#FF0000","text_font":"montserrat-28"}
-  {"id":12,"obj":"span","parentid":11,"text":" and this is "}
-  {"id":14,"obj":"span","parentid":11,"text":"GREEN","text_color":"#00FF00","text_font":"montserrat-28","text_decor":1}
-  {"id":15,"obj":"span","parentid":11,"text":" underlined"}
-  {"id":16,"obj":"span","parentid":11,"text":"\nAnd this is almost transparent","text_opa":100,"text_font":"montserrat-20"}
+  {"id":14,"obj":"span","parentid":11,"text":" and this is "}
+  {"id":15,"obj":"span","parentid":11,"text":"GREEN","text_color":"#00FF00","text_font":"montserrat-28","text_decor":1}
+  {"id":16,"obj":"span","parentid":11,"text":" underlined"}
+  {"id":17,"obj":"span","parentid":11,"text":"\nAnd this is almost transparent","text_opa":100,"text_font":"montserrat-20"}
 ```
 
 You must first define a `spangroup` object, and add as many as `span` sub-objects. You need to define the `parentid` attribute to the `spangroup`.
