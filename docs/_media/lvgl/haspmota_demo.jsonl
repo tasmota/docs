@@ -228,7 +228,7 @@
 {"id":46,"obj":"label","x":152,"y":110,"w":30,"align":1,"text":"\uE335","text_font":"icons-24"}
 {"id":47,"obj":"label","x":192,"y":110,"w":30,"align":1,"text":"\uE335","text_font":"icons-28"}
 
-{"page":22,"comment":"---------- Page 21 Seg7 font ----------"}
+{"page":22,"comment":"---------- Page 22 Seg7 font ----------"}
 {"id":0,"bg_color":"#000000","text_color":"#FFFFFF","text_font":"robotocondensed-16"}
 {"id":1,"obj":"label","x":0,"y":30,"w%":100,"h":24,"text":"[22. Font Seg7]","text_font":"montserrat-20"}
 
