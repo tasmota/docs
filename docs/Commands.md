@@ -293,6 +293,7 @@ Prefix2<a class="cmnd" id="Prefix2"></a>|`1` = reset MQTT status prefix to firmw
 Prefix3<a class="cmnd" id="Prefix3"></a>|`1` = Reset MQTT telemetry prefix to firmware default (`PUB_PREFIX2`) and restart<BR>`<value>` = set MQTT telemetry prefix and restart
 Publish<a class="cmnd" id="publish"></a>|`<topic> <payload>` = MQTT publish any topic and optional payload&emsp;
 Publish2<a class="cmnd" id="Publish2"></a>|`<topic> <payload>` = MQTT publish any topic and optional payload with retain flag
+Publish3<a class="cmnd" id="Publish3"></a>|`<topic> <payload>` = MQTT publish any topic and optional binary payload encoded in Hex (disabled in MINIMAL and SAFEBOOT)
 SensorRetain<a class="cmnd" id="sensorretain"></a>|`0` = disable use of sensor MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on message `tele/%topic%/SENSOR`
 StateRetain<a class="cmnd" id="stateretain"></a>|`0` = disable use of state MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on message `tele/%topic%/STATE`
 StatusRetain<a class="cmnd" id="statusretain"></a>|`0` = disable use of status MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on message `tele/%topic%/STATUS`
