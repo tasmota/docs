@@ -5,12 +5,14 @@
     ```
     build_flags             = ${env:tasmota32_base.build_flags}
                             -DUSE_BERRY_TF_LITE
-                            -DESP_NN ; use optimized kernels for ESP32
-                            -DUSE_I2S ; add only for speech/microphone use
+                            -DESP_NN ; use optimized kernels for ESP32/ESP32-S3
+                            -DUSE_I2S_ALL ; add only for speech/microphone use
     lib_extra_dirs          = lib/libesp32, lib/libesp32_div, lib/lib_basic, lib/lib_i2c, lib/lib_div, lib/lib_ssl, lib/libesp32_ml
     ; lib/libesp32_ml is important to include 
     ```  
   
+Currently supported targets: ESP32 and ESP32-S3.  
+
 ## Different Levels of TensorFlow
   
 [TensorFlow](https://www.tensorflow.org) is an open-source machine-learning platform that is widely adopted and thus is a whole ecosystem with tools, libraries and a huge community. It is not application specific and can be used for all kind of tasks.  
@@ -46,7 +48,7 @@ The API shall be quite slim with as few boilerplate code as possible, but can be
     With Tasmota this is now independent to each other. You can retrain and reupload the model to the file system as often as needed at runtime. The same is valid for refining the Berry code.
   
 In order to get things done like speech recognition, where especially realtime feature extraction is not possible to achieve with Berry (with the knowledge of today), additional specialized functionality is included.  
-Where it makes sense helper functions for capturing data are added too.  
+
   
 !!! failure "Before you proceed, check you expectations!!" 
     The most important prerequisite for speech recognition on MCU's is to have the right mindset. It is totally impossible to reach the level of recognition of a commercial product (Alexa, Siri, Cortana, ... you name it) on much stronger hardware. The usual cheap I2S MEMS microphone alone is a severe problem and the tuning of the various variables of the model is trial and error in many cases. It will make the final application fail with wrong but similar sounding words or mumbling.   
@@ -85,7 +87,6 @@ begin<a class="cmnd" id="tfl_begin">|`(type:string, descriptor:bytes)`<br>First 
 load<a class="cmnd" id="tfl_begin">|`(model:bytes, output:bytes, memory:int)`<br>Will load and run the model<br>`model` a bytes buffer that holds the model data for the entire lifecycle<br>`output` a byte buffer that matches the output size of the model<br>`memory` optional (default: 2000), a model specific memory size in bytes that will be allocated, find by trial-end-error
 input<a class="cmnd" id="tfl_input">|`(input:bytes)`<br>Feed the input of the model with values, must match the size of the model input. Will invoke an inference.
 output<a class="cmnd" id="tfl_output">|`(output:bytes) -> bool`<br>Returns true if function was not called yet on actual output data.
-rec<a class="cmnd" id="tfl_rec">|`(filename:string, seconds:int)`<br>Records audio to a WAV file (Mono, 16 kHz, 16 Bit).
 stats<a class="cmnd" id="tfl_stats">|`() -> string`<br>Returns a JSON string with some metrics of the current session.
 log<a class="cmnd" id="tfl_log">|`() -> string`<br>Returns a log message, typically for debugging.  
   
@@ -166,80 +167,25 @@ High frequency|8000 Hz - Sample frequency/2 and default too. Higher values would
   
 ### Create Training Data  
   
-A working microphone setup for recording training data and later audio recognition is needed.  
+A working microphone setup for recording training data and later audio recognition is needed. We reuse the setup of the I2S driver of Tasmota, that must be configured according to [I2S-Audio for ESP32](I2S-Audio_ESP32.md).  
 
-Therefor the `-DUSE_I2S` must be defined in the `build_flags:` section of the environment in `platformio_tasmota_cenv.ini`. This allows to set the GPIO pins for the I2S microphone according to [I2S-Audio](I2S-Audio.md).  
-
+Currently supported are 16 bits per sample at a rate of 16000 Hz. This can be set with:  
+```
+i2sconfig {"Rx":{"SampleRate":16000}}
+```
+The required preamplification factor is usually quite high (often around 16 - 32) and can be set with:  
+```
+i2sconfig {"Rx":{"Gain":30}}
+```
+Too high values will lead to clipping. The audio output of most I2S microphone is very low. Check your setup by recording a WAV file and analyze in Edgeimpulse or use an audio tool like *Audacity*.
+  
 Although you can use the microphone of your computer or smartphone, it is highly recommended to use your ESP32 microphone at least for a large amount of samples in order to train the model with the same pure sound quality, that it later has to run inference on. A working SD card config is the best way to capture training data.
 
-You can use a simple Berry driver to get this done:  
-
-```berry
-# record to 16-bit WAV file at 16 kHz, SD card highly recommended
-# repeat the intended keyword roughly every second in the same technical setup, that will later be used for keyword spotting
-# usage 'rec<seconds> filename', example: rec30 left -> record 30 seconds from I2S microphone to '/left.wav'
-class WAV_REC : Driver
-    var secs
-
-    def init()
-        import TFL
-        TFL.begin("") # init empty for log buffer
-        print("TFL: command 'rec' added")
-        self.secs = 0
-    end
-
-    def begin()
-        import TFL
-        var descriptor = bytes(-10) # mic descriptor
-        descriptor[0] = 4  # i2s_channel_fmt, 4=left
-        descriptor[1] = 16 # amplification factor
-        descriptor[2] = 32 # slice_dur
-        descriptor[3] = 32 # slice_stride
-        descriptor[4] = 40 # mfe filter (= features if MFE mode)
-        descriptor[5] = 0  # mfcc coefficients, if 0 -> compute MFE only
-        descriptor[6] = 9  # 2^9 = 512 fft_bins
-        descriptor[7] = 10 # max. invocations per second
-        descriptor[8] = 52 # db noisefloor -> negative value
-        descriptor[9] = 0  # preemphasis
-        TFL.begin("MIC",descriptor)
-    end
-
-    def every_second()
-        if self.secs > 0
-            print(self.secs)
-            if self.secs == 1 print("... done!") end
-            self.secs -= 1
-        end
-    end
-
-    def every_100ms()
-        import TFL
-        var s = TFL.log()
-        if s print(s) end
-    end
-
-    def rec(name,secs)
-        import TFL
-        self.begin()
-        TFL.rec(name,secs) # Edgeimpulse can infer the label from the name, so name it accordingly
-        self.secs = secs + 1 # add startup latency
-        print("TFL: record",secs,"seconds to",name)
-    end
-end
-
-var wav_rec = WAV_REC()
-tasmota.add_driver(wav_rec)
-
-def rec(cmd, idx, payload, payload_json)
-    var file = "/" + payload + ".wav"
-    wav_rec.rec(file,idx)
-    tasmota.resp_cmnd_str(file)
-end
-
-tasmota.add_cmd('rec', rec) # rec30 left -> record 30 seconds from I2S microphone to "/left.wav"
-``` 
-
-!!! note "Most of the descriptor values do not really matter here, but the whole descriptor must have valid values, meaning some values MUST not be 0!"
+You can use a simple Berry driver from Tasmotas example collection to get this done:  
+[wavrec.be](https://github.com/arendst/Tasmota/blob/development/tasmota/berry/audio/wavrec.be)  
+  
+Usage:  
+`waverec5 /test` - > record 5 seconds to /test.wav
   
 Then you can talk into the microphone with around 1 word per second and later upload this file to your [Edge Impulse](https://www.edgeimpulse.com/) project via your computer.
   
@@ -283,8 +229,8 @@ On the Tasmota side the feature settings have to be translated in Berry with a d
   
 |number|property|value|
 |---|:---|:---|
-0|i2s_channel_fmt_t|*i2s_channel_fmt_t* from i2s_types.h, we need mono, so 3 for right or 4 for left
-1|amplification factor|typical values are 8 - 32, must be >0, too high values will lead to clipping<br>The audio output of most I2S microphone is very low. Check your setup by recording a WAV file and analyze in Edgeimpulse or use an audio tool like *Audacity*.
+0|i2s_channel_fmt_t|this is an old setting and ignored now, maybe used differently in the future
+1|amplification factor|this is an old setting and ignored now, maybe used differently in the future
 2|slice duration<br>*or* Frame length|A slice of audio data in milliseconds. With the fixed audio settings 32 milliseconds translate to 512 samples, which as a power of 2 is a good fit for FFT.
 3|slice stride<br>*or* Frame stride|Time in milliseconds between the starts of 2 adjacent slices. No overlap happens if duration and stride are equal. Lower values create more stress for the system. Values around and below 20 milliseconds may leads to problems. Bad Wifi will worsen things earlier!!
 4|Filter number|Number of captured mel energies. For MFE mode these are the feature values for one slice.
@@ -373,8 +319,8 @@ class MICROSPEECH : Driver
         self.p = PREDICTOR(self.o_sz,4) # second arg is number of averages for prediction
 
         var descriptor = bytes(-10)
-        descriptor[0] = 4  # i2s_channel_fmt, 4=left
-        descriptor[1] = 16 # amplification factor
+        descriptor[0] = 4  # ignored
+        descriptor[1] = 16 # ignored
         descriptor[2] = 32 # slice_dur in ms 
         descriptor[3] = 32 # slice_stride in ms
         descriptor[4] = 26 # mfe filter (= features if MFE mode)
@@ -412,4 +358,3 @@ var mic = MICROSPEECH()
 
 tasmota.add_driver(mic)
 ```
-
