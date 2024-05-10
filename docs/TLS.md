@@ -5,7 +5,7 @@
 Starting with version 10.0.0.4, TLS now support dual mode, depending of the value of `SetOption132`:
 
 - `SetOption132 0` (default): the server's identity is checked against pre-defined Certificate Authorities. There is no further configuration needed. Tasmota includes the following CAs:
-  - [LetsEncrypt R3 certificate](https://letsencrypt.org/certificates/), RSA 2048 bits SHA 256, valid until 20250915
+  - [LetsEncrypt ISRG Root X1 certificate](https://letsencrypt.org/certificates/), RSA 4096 bits SHA 256, valid until 20350604
   - [Amazon Root CA](https://www.amazontrust.com/repository/), RSA 2048 bits SHA 256, valid until 20380117, used by AWS IoT
 - `SetOption132 1`: Fingerprint validation. This method works for any server certificate, including self-signed certificates. The server's public key is hashed into a fingerprint and compared to a pre-recorded value. This method is more universal but requires an additional configuration (see below)
 
