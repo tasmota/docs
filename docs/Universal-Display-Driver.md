@@ -53,7 +53,7 @@ Storing `display.ini` is the preferred method to configure the descriptor file. 
 
 1. A `display.ini` file present in the flash file system. ***preferred option***
 2. A special `>d` section in scripting. Copy the file to the `>d` script section and place a `->displayreinit` cmd into `>B` section
-3. Copy the descriptor to `Rule 3` but **do not** enable it (descriptor may not contain ANY spaces in this mode)
+3. Copy the descriptor to `Rule 3` but **do not** enable it. Convert the multiline descriptor into a single line descriptor by replacing every linefeed with a space. All other spaces need to be removed
 4. Compile the descriptor into the binary in a section in `user_config_override.h` under driver 17 (const char)
 
 ### Step 6. Restart
@@ -227,7 +227,7 @@ which may be provided by any of the following methods:
 
 1. A `display.ini` file present in the flash file system. ***preferred option***
 2. A special `>d` section in scripting. Copy the file to the `>d` script section and place a `->displayreinit` cmd into `>B` section
-3. Copy the descriptor to `Rule 3` but **do not** enable it (descriptor may not contain ANY spaces in this mode)
+3. Copy the descriptor to `Rule 3` but **do not** enable it. Convert the multiline descriptor into a single line descriptor by replacing every linefeed with a space. All other spaces need to be removed
 4. Compile the descriptor into the binary in a section in `user_config_override.h` under driver 17 (const char)
 
 Options 2 and 4 work well for 1M flash devices.
