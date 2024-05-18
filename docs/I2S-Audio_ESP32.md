@@ -61,6 +61,54 @@ Examples:
 
 `i2sconfig {"Rx":{"SampleRate":48000}}` changes sample rate of the microphone.  
 `i2sconfig {"Rx":{"DMAFrame":768}}` use DMA buffer for higher sample rate.  
+  
+### How to apply complex settings? The ugly truth ...
+  
+In order to support basically any type of microphone in a combination with a certain ESP32 type, we need to find documentation about the needed settings (this works rarely or never) or find/generate demo code, which can be converted to Tasmotas I2S driver.  
+In example the INMP441 does not need the same setting on different SOC's of the ESP32 family.  
+  
+For the ESP32-S2 this microphone works with the following configuration macro from Espressif (found with trial and error):  
+  
+```
+#define I2S_STD_PHILIPS_SLOT_DEFAULT_CONFIG(bits_per_sample, mono_or_stereo) { \
+    .data_bit_width = bits_per_sample, \
+    .slot_bit_width = I2S_SLOT_BIT_WIDTH_AUTO, \
+    .slot_mode = mono_or_stereo, \
+    .slot_mask = (mono_or_stereo == I2S_SLOT_MODE_MONO) ? \
+                I2S_STD_SLOT_LEFT : I2S_STD_SLOT_BOTH, \
+    .ws_width = bits_per_sample, \
+    .ws_pol = false, \
+    .bit_shift = true, \
+    .msb_right = true, \
+}
+```
+  
+Now we have to translate this.
+    
+`I2S_SLOT_BIT_WIDTH_AUTO` is an enum with an int value of 0, so we need:  
+```
+i2sconfig {"Rx":{"SlotWidth":0}}
+```  
+  
+`I2S_STD_SLOT_LEFT` and `I2S_STD_SLOT_BOTH` are enums too with values of 1 and 3. For mono:  
+```
+i2sconfig {"Rx":{"SlotMask":1}}
+```  
+
+The next values are pretty obvious:  
+```
+i2sconfig {"Rx":{"WsWidth":16}}
+i2sconfig {"Rx":{"WsPol":0}}
+i2sconfig {"Rx":{"BitShift":1}}
+```  
+
+The C struct member `.msb_right` does only exist on ESP32 and ESP32-S2 and is not part of the driver settings with this name.  
+Instead the settings key *LsbOrder* is reused for these 2 SOC's:  
+```
+i2sconfig {"Rx":{"LsbOrder":1}}
+```  
+
+The rest of the data is inferred from the currently fixed sample rate of the Tasmota driver of 16 bits and channel number with the driver key `channels`.  
 
 
 ## Audio Output
@@ -137,15 +185,15 @@ When using PDM microphones the microphone CLK pin is configured as `I2S_WS` in T
 
 ### Commands
 
-!!! warning "ESP32 with PSRAM required!"
-  `i2sconfig {"Sys":{"Mp3Preallocate":1}}` to turn on PSRAM allocation needed for MP3 encoding.
+!!! warning "ESP32 with enough RAM required! PSRAM recommended."
+  `i2sconfig {"Sys":{"Mp3Preallocate":1}}` to turn on buffer allocation needed for MP3 encoding.
 
 
 | CMD | Action |
 | --- | --- |
 | I2SMGain | `1..50` = sets the gain factor of the microphone |
 | I2SRec | (requires defined `USE_SHINE`)`/file.mp3` = starts recording a .mp3 audio file to the file system, no blocking<BR> no parameter = stops recording<BR>`-?` = shows how many seconds already recorded |
-| I2SStream |(requires defined `MP3_MIC_STREAM`)<BR>`1` = starts streaming .mp3 server at `http://<device_ip>:81/stream.mp3`<BR> `1` = stop the stream |
+| I2SStream |(requires defined `MP3_MIC_STREAM`)<BR>`1` = starts streaming .mp3 server at `http://<device_ip>:81/stream.mp3`<BR> `0` = stop the stream |
 
 ## I2S Audio Bridge
 
@@ -153,11 +201,11 @@ Starts an UDP audio service to connect 2 ESP32 devices as an audio intercom ([an
 
 Needs audio output and microphone on 2 devices (no PSRAM needed)  
 
-    ```arduino
-    build_flags                 = ${env:tasmota32_base.build_flags}
-                                  -DUSE_I2S_ALL
-                                  -DUSE_I2S_BRIDGE
-    ```
+```
+build_flags                 = ${env:tasmota32_base.build_flags}
+                              -DUSE_I2S_ALL
+                              -DUSE_I2S_BRIDGE
+```
 
 |CMD bridge|action|
 |---|---|
