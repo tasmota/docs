@@ -10,7 +10,7 @@ Useful resources:
 
 - First time user of Berry: [Berry Introduction (in 20 minutes of less)](Berry-Introduction.md)
 - Language fast reference PDF (7 pages) [Berry Short manual](https://tasmota.github.io/docs/_media/berry_short_manual.pdf)
-- Full language documentation [The Berry Script Language Reference Manual](https://github.com/berry-lang/berry/wiki/Reference)
+- Full language documentation [The Berry Script Language Reference Manual](https://berry.readthedocs.io/en/latest/source/en/Reference.html)
 - Tasmota extension of Berry, see below
 - Full examples in the [Berry Cookbook](Berry-Cookbook.md)
 
@@ -20,8 +20,8 @@ Useful resources:
 
 Berry is the next generation scripting for Tasmota. It is based on the open-source Berry project, delivering an ultra-lightweight dynamically typed scripting language designed for lower-performance embedded devices.
 
-[**Github**](https://github.com/Skiars/berry)
-[**Manual**](https://github.com/berry-lang/berry/wiki/Reference)
+[**Github**](https://github.com/berry-lang/berry/)
+[**Manual**](https://github.com/berry.readthedocs.io/en/latest/source/en/Reference.html)
 
 !!! tip "Reference sheet"
     Download [Berry Short Manual](https://tasmota.github.io/docs/_media/berry_short_manual.pdf) to get a list of basic functions and capabilities of Berry language
