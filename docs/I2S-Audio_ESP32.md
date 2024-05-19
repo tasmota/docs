@@ -51,7 +51,7 @@ Some properties are easy to understand like number of channels or sample rate.
 The "weird ones" a very likely data structures from the I2S audio framework of the ESP-IDF. Numeric values for these properties are integer representations of `enums` in many cases.  
 This allows for a very flexible audio setup to support a wide range of hardware combinations with one firmware image.  
   
-Changing values are done by passing a JSON with the new key-value-pair.  
+Changing values is done by passing a JSON with the new key-value-pair.  
   
 Examples:  
   
@@ -143,10 +143,15 @@ Those channels can be driven via the I2S driver when using the “built-in DAC m
 |I2SSay  | `text` = speaks the text you typed (only English language supported)|
 |I2STime | tells current Tasmota time in English (requires defined `USE_I2S_SAY_TIME`)|
 |I2SWr   | `url` = starts playing an [mp3 radio](http://fmstream.org/) stream, no blocking (requires defined `USE_I2S_WEBRADIO`)<BR>no parameter = stops playing the stream|
+|I2SStop  | stops current play operation|
+
 
 ## Audio Input
 
-For microphone input an I2S microphone must be connected.  
+For microphone input an I2S microphone must be connected. It is pretty common, that the captured audio signal has a very low volume.  
+Hence a relatively high gain factor is needed, that can be configured with:  
+`i2sconfig {"Rx":{"Gain":30}}`  
+
 
 ### I2S Microphone - standard mode
 
@@ -186,12 +191,12 @@ When using PDM microphones the microphone CLK pin is configured as `I2S_WS` in T
 ### Commands
 
 !!! warning "ESP32 with enough RAM required! PSRAM recommended."
-  `i2sconfig {"Sys":{"Mp3Preallocate":1}}` to turn on buffer allocation needed for MP3 encoding.
+  Optional: `i2sconfig {"Sys":{"Mp3Preallocate":1}}` to turn on buffer preallocation at boot time. Can solve issues, if there is not enough contiguous RAM available later. 
 
 
 | CMD | Action |
 | --- | --- |
-| I2SMGain | `1..50` = sets the gain factor of the microphone |
+| I2SMIC | Internal debug function. Can be used to do a silent warm start of the microphone to avoid the initial noise, that basically every I2S microphone produces.  |
 | I2SRec | (requires defined `USE_SHINE`)`/file.mp3` = starts recording a .mp3 audio file to the file system, no blocking<BR> no parameter = stops recording<BR>`-?` = shows how many seconds already recorded |
 | I2SStream |(requires defined `MP3_MIC_STREAM`)<BR>`1` = starts streaming .mp3 server at `http://<device_ip>:81/stream.mp3`<BR> `0` = stop the stream |
 
