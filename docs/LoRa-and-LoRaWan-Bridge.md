@@ -19,19 +19,19 @@ Both features use dedicated hardware supporting the LoRa protocol. Tasmota provi
 
 Some devices using SX127x are:
 
-* HopeRF RFM95W, RFM96W and RFM98W
-* LilyGo TTGO T3 LoRa32 868MHz ESP32 (uses SX1276)
-* LilyGo TTGO T-Higrow 868MHz (uses SX1276)
-* DFRobot FireBeetle Covers LoRa Radio 868MHz (uses SX1278)
-* M5Stack LoRa868 (uses AI-01 which uses SX1276)
-* Modtronix
+- HopeRF RFM95W, RFM96W and RFM98W
+- LilyGo TTGO T3 LoRa32 868MHz ESP32 (uses SX1276)
+- LilyGo TTGO T-Higrow 868MHz (uses SX1276)
+- DFRobot FireBeetle Covers LoRa Radio 868MHz (uses SX1278)
+- M5Stack LoRa868 (uses AI-01 which uses SX1276)
+- Modtronix
  
 Some devices using SX126x are:
 
-* LilyGo T3S3 LoRa32 868MHz ESP32S3 (uses SX1262)
-* LilyGo TTGO T-Weigh ESP32 LoRa 868MHz HX711 (uses SX1262)
-* Heltec (CubeCell) (uses SX1262)
-* Waveshare SX1262 Lora Node (HF) and (LF)
+- LilyGo T3S3 LoRa32 868MHz ESP32S3 (uses SX1262)
+- LilyGo TTGO T-Weigh ESP32 LoRa 868MHz HX711 (uses SX1262)
+- Heltec (CubeCell) (uses SX1262)
+- Waveshare SX1262 Lora Node (HF) and (LF)
 
 ## LoRa commands
 
