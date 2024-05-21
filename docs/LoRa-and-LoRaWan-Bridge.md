@@ -5,7 +5,7 @@
     When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
     ```c++
     #ifndef USE_SPI 
-    #define USE_SPI                 //  Add support for SPI
+    #define USE_SPI                 // Add support for SPI
     #endif
     #define USE_SPI_LORA            // Add support for LoRaSend and LoRaCommand (+4k code)
     #define USE_LORA_SX126X         // Add driver support for LoRa on SX126x based devices like LiliGo T3S3 Lora32 (+16k code)
@@ -18,6 +18,7 @@ The LoRa feature can be used to add a RF communication channel between two or mo
 Both features use dedicated hardware supporting the LoRa protocol. Tasmota provides support for two different Semtech drivers used in most LoRa devices today: SX127x and newer SX126x.
 
 Some devices using SX127x are:
+
 * HopeRF RFM95W, RFM96W and RFM98W
 * LilyGo TTGO T3 LoRa32 868MHz ESP32 (uses SX1276)
 * LilyGo TTGO T-Higrow 868MHz (uses SX1276)
@@ -26,6 +27,7 @@ Some devices using SX127x are:
 * Modtronix
  
 Some devices using SX126x are:
+
 * LilyGo T3S3 LoRa32 868MHz ESP32S3 (uses SX1262)
 * LilyGo TTGO T-Weigh ESP32 LoRa 868MHz HX711 (uses SX1262)
 * Heltec (CubeCell) (uses SX1262)
