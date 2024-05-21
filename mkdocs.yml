@@ -157,7 +157,7 @@ nav:
       - HDMI CEC: HDMI_CEC.md
       - IR Communication: Tasmota-IR.md
       - LCD/DLP Projector Control: Projector.md
-      - Lora-and-LoRaWan-Bridge.md
+      - LoRa-and-LoRaWan-Bridge.md
       - Modbus-Bridge.md
       - OpenTherm: OpenTherm.md
       - RF Communication: RF-Protocol.md
