@@ -48,12 +48,14 @@ Some devices using SX126x are:
 * `LoRaSend5 <string>`: send as hex. Data in response messages is encoded as hex strings.
 * `LoRaSend6 <string>`: send as comma-delimited string of decimal numbers.
 * `LoRaSend15 <string>`: send as hex with inverted IQ. Data in response messages is encoded as hex strings.
+* `LoRaOption4 1`: enable reception of `LoRaCommand` commands.
 * `LoRaCommand <topic_of_lora_receiver> <command>`: send command to device with MQTT topic.
 
 ## LoRaWan commands
 
 * `LoRaWanBridge 1`: enable LoRaWan bridge.
 * `LoRaWanBridge 0`: disable LoRaWan bridge.
+* `LoRaOption3 1`: enable LoRaWan decoding of received data from Dragino LDS01 and MerryIoT DW10.
 * `LoRaWanAppKey<x> <32_character_app_key>`: set known appkey of LoRaWan device or node to be joined.
 * `LoRaWanName<x> <string>`: set friendly name for device or node.
 
