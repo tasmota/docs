@@ -76,6 +76,14 @@ The goal of the LoRaWan bridge is to provide local communication with off-the-sh
 {"LwReceived":{"LDS01":{"Node":1,"Device":"0x4AD6","Name":"LDS01","RSSI":-49.0,"SNR":9.8,"Events":2,"LastEvent":0,"DoorOpen":1,"Alarm":0,"Battery":3.006}}}
 ```
 
+or if decoding is disabled using command ``LoRaOption3 0`` or no hardcoded device (LDS01 or DW10)
+
+``` json
+{"LwReceived":{"LDS01":{"Node":1,"Device":"0x4AD6","Name":"LDS01","RSSI":-49.0,"SNR":9.5,"DevEUIh":"A840410E","DevEUIl":"71894AD6","FPort":10,"Payload":[11,196,1,0,0,2,0,0,19,0]}}}
+```
+
+### Information
+
 The LoRaWan Bridge can communicate with LoRaWan devices supporting single channel mode and/or Adaptive Data Rate (ADR).
 
 End-Device activation is supported via Over-The-Air-Activation (OTAA). Activation By Personalization (ABP) is not supported. The bridge currently supports maximum four devices.
@@ -84,13 +92,13 @@ The functionality of the bridge has been tested using Dragino LDS01 and a MerryI
 
 ### Example of OTAA
 
-For OTAA the LoRaWan AppKey, provided with the device, needs to be known by the LoRaWan bridge. In case of the MerryIoT, which is default configured for Helium Network, I received the AppKey as a response to my email to their support departement.
+For OTAA the LoRaWan AppKey, provided with the device, needs to be known by the LoRaWan bridge. In case of MerryIoT, default configured for `Helium Network`, I received the AppKey as a response to my e-mail to their support office.
 
 ``` json
-11:41:06.111 CMD: LoRaWanAppKey1 11F81EAEB17EE9043E5574BB98EFC9D6
+11:41:06.111 CMD: LoRaWanAppKey1 11F81EAEB17EE9043E5884BB98EFC9D6
 11:41:06.113 SRC: WebConsole from 192.168.2.1
-11:41:06.114 CMD: Grp 0, Cmd 'LORAWANAPPKEY', Idx 1, Len 32, Pld 11, Data '11F81EAEB17EE9043E5574BB98EFC9D6'
-11:41:06.131 MQT: stat/core2/RESULT = {"LoRaWanAppKey1":"11F81EAEB17EE9043E5574BB98EFC9D6"}
+11:41:06.114 CMD: Grp 0, Cmd 'LORAWANAPPKEY', Idx 1, Len 32, Pld 11, Data '11F81EAEB17EE9043E5884BB98EFC9D6'
+11:41:06.131 MQT: stat/core2/RESULT = {"LoRaWanAppKey1":"11F81EAEB17EE9043E5884BB98EFC9D6"}
 ```
 
 Initiate the OTAA process on the device either by pressing a button or replacing it's batteries and wait for the bridge to receive it's request. This can take several minutes as the device cycles through several Frequencies and Spreadingsfactors.
