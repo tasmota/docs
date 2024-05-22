@@ -118,7 +118,7 @@ When using a switch for manual operation `Switch<x>` pairs should usually be set
 Any shutter positioning can be locked `ShutterLock<x> 1`. Once executed an ongoing movement is finished while further positioning commands like `ShutterOpen<x>`, `ShutterClose<x>`, `ShutterStop<x>`,  `ShutterPosition<x>`, ... as well as web UI buttons, web UI sliders, and shutter buttons are disabled. This can be used to lock an outdoor blind in case of high wind or rain. You may also disable shutter positioning games by your children. Shutter positioning can be unlocked using `ShutterLock<x> 0`. Please be aware that the shutter can still be moved by direct relay control (i.e., `Power<x>`), or physical switches and buttons. Use the `ShutterButton<x>` command prior to `ShutterLock` to be able to lock buttons.
     
 ## AutoSetup (Only Shelly plus 2PM, ESP32 based)
-The shelly plus has enough memory and a power measuring unit to setup the shutter in convinent way. First you must callibrate your mechanical endstops of the shutter. Please do as descibed in the documentation of your shutter motors to ensure the shutter will stop at the endpoint correctly.
+The shelly plus has enough memory and a power measuring unit to setup the shutter in a convenient way. First you must callibrate your mechanical endstops of the shutter. Please do as descibed in the documentation of your shutter motors to ensure the shutter will stop at the endpoint correctly.
 
 Then close the shutter until endstop is reached (repeat: `backlog shuttersetopen;shutterclose` until closed)
 - `interlock 1,2`
