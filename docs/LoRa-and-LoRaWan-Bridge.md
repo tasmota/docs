@@ -13,24 +13,24 @@
     #define USE_LORAWAN_BRIDGE      // Add support for LoRaWan bridge (+8k code)
     ```
 
-The LoRa feature can be used to add a RF communication channel between two or more devices. The LoRaWan Bridge feature can be used to receive information from any joined LoRaWan devices.
+The LoRa feature can be used to add a RF communication channel between two or more devices. The LoRaWan Bridge feature can be used to receive information from any joined LoRaWan device.
 
 Both features use dedicated hardware supporting the LoRa protocol. Tasmota provides support for two different Semtech drivers used in most LoRa devices today: SX127x and newer SX126x.
 
 Some devices using SX127x are:
 
 - HopeRF RFM95W, RFM96W and RFM98W
-- LilyGo TTGO T3 LoRa32 868MHz ESP32 (uses SX1276)
-- LilyGo TTGO T-Higrow 868MHz (uses SX1276)
-- DFRobot FireBeetle Covers LoRa Radio 868MHz (uses SX1278)
-- M5Stack LoRa868 (uses AI-01 which uses SX1276)
+- LilyGo TTGO T3 LoRa32 868MHz ESP32 (SX1276)
+- LilyGo TTGO T-Higrow 868MHz (SX1276)
+- DFRobot FireBeetle Covers LoRa Radio 868MHz (SX1276) or 434MHz (SX1278)
+- M5Stack LoRa868 (uses AI-01 whith SX1276)
 - Modtronix
  
 Some devices using SX126x are:
 
-- LilyGo T3S3 LoRa32 868MHz ESP32S3 (uses SX1262)
-- LilyGo TTGO T-Weigh ESP32 LoRa 868MHz HX711 (uses SX1262)
-- Heltec (CubeCell) (uses SX1262)
+- LilyGo T3S3 LoRa32 868MHz ESP32S3 (SX1262)
+- LilyGo TTGO T-Weigh ESP32 LoRa 868MHz HX711 (SX1262)
+- Heltec (CubeCell) (SX1262)
 - Waveshare SX1262 Lora Node (HF) and (LF)
 
 ## LoRa commands
@@ -56,6 +56,10 @@ Some devices using SX126x are:
 * `LoRaWanBridge 1`: enable LoRaWan bridge.
 * `LoRaWanBridge 0`: disable LoRaWan bridge.
 * `LoRaOption3 1`: enable LoRaWan decoding of received data from Dragino LDS01 and MerryIoT DW10.
+* `SetOption100 1`: remove LwReceived form JSON message.
+* `SetOption118 1`: move LwReceived from JSON message and into the subtopic replacing "SENSOR" default.
+* `SetOption119 1`: remove the device addr from json payload, can be used with LoRaWanName where the addr is already known from the topic.
+* `SetOption144 1`: include time in `LwReceived` messages like other sensors.
 * `LoRaWanAppKey<x> <32_character_app_key>`: set known appkey of LoRaWan device or node to be joined.
 * `LoRaWanName<x> <string>`: set friendly name for device or node.
 
@@ -66,5 +70,49 @@ First assign SPI GPIOs to `SPI MISO`, `SPI MOSI`, `SPI CLK`, `LoRa CS` and `LoRa
 
 ## LoRaWan bridge
 
-The LoRaWan Bridge can communicate with LoRaWan devices supporting single channel mode.
+The goal of the LoRaWan bridge is to provide local communication with off-the-shelf LoRaWan devices. So no LoRaWan gateway, network- and application server and cloud service like `The Thing Network` or `Helium Network` is needed. The bridge will provide MQTT JSON response like 
+
+``` json
+{"LwReceived":{"LDS01":{"Node":1,"Device":"0x4AD6","Name":"LDS01","RSSI":-49.0,"SNR":9.8,"Events":2,"LastEvent":0,"DoorOpen":1,"Alarm":0,"Battery":3.006}}}
+```
+
+The LoRaWan Bridge can communicate with LoRaWan devices supporting single channel mode and/or Adaptive Data Rate (ADR).
+
+End-Device activation is supported via Over-The-Air-Activation (OTAA). Activation By Personalization (ABP) is not supported. The bridge currently supports maximum four devices.
+
+The functionality of the bridge has been tested using Dragino LDS01 and a MerryIoT DW10 devices on 868MHz. 
+
+### Example of OTAA
+
+For OTAA the LoRaWan AppKey, provided with the device, needs to be known by the LoRaWan bridge. In case of the MerryIoT, which is default configured for Helium Network, I received the AppKey as a response to my email to their support departement.
+
+``` json
+11:41:06.111 CMD: LoRaWanAppKey1 11F81EAEB17EE9043E5574BB98EFC9D6
+11:41:06.113 SRC: WebConsole from 192.168.2.1
+11:41:06.114 CMD: Grp 0, Cmd 'LORAWANAPPKEY', Idx 1, Len 32, Pld 11, Data '11F81EAEB17EE9043E5574BB98EFC9D6'
+11:41:06.131 MQT: stat/core2/RESULT = {"LoRaWanAppKey1":"11F81EAEB17EE9043E5574BB98EFC9D6"}
+```
+
+Initiate the OTAA process on the device either by pressing a button or replacing it's batteries and wait for the bridge to receive it's request. This can take several minutes as the device cycles through several Frequencies and Spreadingsfactors.
+
+``` json
+11:42:13.772 LOR: JoinEUI 07010000004140A8, DevEUIh A840410E, DevEUIl 71894AD6, DevNonce F45F, MIC 3B3EE35E
+11:42:14.719 CFG: Lora saved to file
+11:42:19.441 MQT: tele/core2/SENSOR = {"LwReceived":{"0x4AD6":{"Node":1,"Device":"0x4AD6","RSSI":-50.0,"SNR":12.0,"Events":0,"LastEvent":0,"DoorOpen":1,"Alarm":0,"Battery":3.000}}}
+11:42:21.216 CFG: Lora saved to file
+```
+
+Now is a good time to give the device a friendlyname.
+
+``` json
+11:46:55.067 CMD: LoRaWanName1 LDS01
+11:46:55.069 SRC: WebConsole from 192.168.2.1
+11:46:55.070 CMD: Grp 0, Cmd 'LORAWANNAME', Idx 1, Len 5, Pld -99, Data 'LDS01'
+11:46:55.086 MQT: stat/core2/RESULT = {"LoRaWanName1":"LDS01"}
+11:46:56.829 CFG: Lora saved to file
+```
+
+## Resources
+
+[LoRaWan specification v1.0.2](https://resources.lora-alliance.org/technical-specifications/lorawan-specification-v1-0-2)
 
