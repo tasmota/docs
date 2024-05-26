@@ -48,7 +48,7 @@ Some devices using SX126x are:
 * `LoRaSend5 <string>`: send as hex. Data in response messages is encoded as hex strings.
 * `LoRaSend6 <string>`: send as comma-delimited string of decimal numbers.
 * `LoRaSend15 <string>`: send as hex with inverted IQ. Data in response messages is encoded as hex strings.
-* `LoRaOption4 1`: enable reception of `LoRaCommand` commands.
+* `LoRaOption4 1`: enable reception of `LoRaCommand` commands. No security, anyone in range can send any command.
 * `LoRaCommand <topic_of_lora_receiver> <command>`: send command to device with MQTT topic.
 
 ## LoRaWan commands
