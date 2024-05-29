@@ -8,7 +8,7 @@
     #define USE_TELEGRAM                 // Support for Telegram protocol (+49k code, +7.0k mem and +4.8k additional during connection handshake)
     #endif
 
-    #ifndef
+    #ifndef USE_TELEGRAM_FINGERPRINT
     #define USE_TELEGRAM_FINGERPRINT "\x4E\x7F\xF5\x6D\x1E\x29\x40\x58\xAB\x84\xDE\x63\x69\x7B\xCD\xDF\x44\x2E\xD2\xF6" // Telegram api.telegram.org TLS public key fingerpring
     #endif
     ```
@@ -76,7 +76,7 @@ The ``TmState``, ``TmToken`` and ``TmChatId`` commands need to be performed only
 
 ### Background information
 
-Communication between Tasmota and Telegram is encrypted by TLS. It needs a so called `Fingerprint` for this to work. The initial fingerprint is provided by you as `#define USE_TELEGRAM_FINGERPRINT`. Over time Telegram might change this fingerprint. The default Tasmota configuration will try to adopt the new Telegram fingerprint and continue to work without your interaction. 
+Communication between Tasmota and Telegram is using HTTPS. It needs a so called `Fingerprint` for this to work. The initial fingerprint is provided by you as `#define USE_TELEGRAM_FINGERPRINT`. Over time Telegram might change this fingerprint. The default Tasmota configuration will try to adopt the new Telegram fingerprint and continue to work without your interaction. 
 
 If for any reason this `auto-fingerprint` doesn't work you can disable it with command ``TmState 7`` and enter the correct fingerprint using command ``TmFingerprint 4E 7F F5 6D 1E 29 40 58 AB 84 DE 63 69 7B CD DF 44 2E D2 F6``.
 
