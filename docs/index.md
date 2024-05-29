@@ -15,23 +15,26 @@ Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v13.4.0">Tasmota v13.4.0 Quinta</a></span>
+<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v14.0.0">Tasmota v14.0.0 Rodney</a></span>
 
 ## Breaking Changes
 
-- NeoPool SENSOR topic `Power` renamed to `Powerunit` 
-- Remove Berry `every_200ms` event which didn't work in the first place
+- Replaced most display drivers by Universal Display driver
+- Removed dedicated touch drivers in favour of Universal Touch driver
+- ESP32-C3 OTA binary name from `tasmota32c3cdc.bin` to `tasmota32c3.bin`
+- ESP32-C6 OTA binary name from `tasmota32c6cdc.bin` to `tasmota32c6.bin`
+- ESP32-S3 OTA binary name from `tasmota32s3cdc.bin` to `tasmota32s3.bin`
 
 ## New Features
 
-- Support for ESP32-C2 and ESP32-C6 using Arduino core v3
+- New commands `Wifi 6`, `PowerLock` and `Publish3`
 - Added support for:
-  - Winsen ZH03x particle sensor
-  - 2nd I2C bus for some sensors
-  - NeoPool enhancements for Home Assistant
-- DeepSleep support through TIMERS
-- ESP32 Partition Wizard can be loaded dynamically
-- ESP32 support for Avago Tech Bluetooth Buttons
+  - LoRa and LoRaWanBridge
+  - Domoticz `idx5` to `idx32`
+  - SPL06_007 pressure and temperature sensor
+  - AHT30 temperature and humidity sensor
+- ESP32 Framework (Arduino Core) v3.0.0
+- Berry functions
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
 
