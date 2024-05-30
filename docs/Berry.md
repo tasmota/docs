@@ -346,15 +346,28 @@ You can get the timestamp for the next event by using `tasmota.next_cron(id)` wh
 
 ## Loading Filesystem
 
+Berry files can exist in 2 forms, either a source file (extension `.be`) or a pre-compiled bytecode (extension `.bec`). Pre-compiled are usually smaller and load slightly faster (although compilation is fast enough in most use cases). It's usually more flexible and simpler to use source code (`.be`).
+
 You can upload Berry code in the filesystem using the ***Consoles - Manage File system*** menu and load them at runtime. Make careful to use `*.be` extension for those files.
 
 To load a Berry file, use the `load(filename)` function where `filename` is the name of the file with `.be` or `.bec` extension; if the file has no extension '.be' is automatically appended.
 
 !!! note "You don't need to prefix with `/`. A leading `/` will be added automatically if it is not present."
 
-When loading a Berry script, the compiled bytecode is automatically saved to the filesystem, with the extension `.bec` (this is similar to Python's `.py`/`.pyc` mechanism). The `save(filename,closure)` function is used internally to save the bytecode.
+??? note "Previous behavior before 13.4.0.3:"
 
-If a precompiled bytecode (extension `.bec`) is present of more recent than the Berry source file, the bytecode is directly loaded which is faster than compiling code. You can eventually remove the `*.be` file and keep only `*.bec` file (even with `load("file.be")`.
+    When loading a Berry script, the compiled bytecode is automatically saved to the filesystem, with the extension `.bec` (this is similar to Python's `.py`/`.pyc` mechanism). The `save(filename,closure)` function is used internally to save the bytecode.
+
+    If a precompiled bytecode (extension `.bec`) is present of more recent than the Berry source file, the bytecode is directly loaded which is faster than compiling code. You can eventually remove the `*.be` file and keep only `*.bec` file (even with `load("file.be")`.
+
+The loading behavior is as follows:
+
+- `load("hello")` and `load("hello.be")` loads `hello.be` and tries `hello.bec` if the first does not exist. If both `hello.be` and `hello.bec` exist, `hello.bec` is deleted to avoid confusion between versions.
+- `load("hello.bec")` loads only `hello.bec` and fails if only `hello.be` is present
+
+To compile to `.bec` use `tasmota.compile("hello.be")`. If all is good, it returns `true` and creates `hello.bec`. But beware that if you use `load()` the `.bec` file is deleted.
+
+Note: `tasmota.compile()` is different than native Berry `compile()`
 
 ## Creating a Tasmota Driver
 
