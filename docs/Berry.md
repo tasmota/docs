@@ -1174,7 +1174,7 @@ Simple tcp server (socket) listening for incoming connection on any port.
 
 - create an instance of the `tcpserver` on a specific port with `s = tcpserver(8888)`
 - periodically call `s.hasclient()` to know if a new client has connected
-- if the previous returned `true`, call `var c = s.accept()` to accept the connection. It returns an instance of `tcpclient` as above; it responds to the same APIs as outgoing TCP connection and allows text and binary transfers.
+- if the previous returned `true`, call `var c = s.accept()` or `var c = s.acceptasync()` to accept the connection. It returns an instance of `tcpclient` or `tcpclientasync`; it responds to the same APIs as outgoing TCP connection and allows text and binary transfers.
 - you can call `c.close()` to close the connection, or call `c.connected()` to know if it's still connected (i.e. the client hasn't closed the connection on their side)
 - close the server with `s.close()`. This will prevent the server from receinving any new connection, but existing connections are kept alive.
 
@@ -1183,6 +1183,7 @@ tcpserver Function|Parameters and details
 constructor<a class="cmnd" id="tcpserver_constructor"></a>|`tcpserver(port:int) -> nit`<BR>Opens a socket on `port` and starts lisenting to new incoming connections. If the server can't open the socket (ex: it is already in use) an exception is raised
 hasclient<a class="cmnd" id="tcpserver_hasclient"></a>|`hasclient() -> bool`<BR>Returns `true` if a new client connected to the socket, in such case you should call `accept()`. You need to call this method regularly (ex: in event loop or fast\_loop)
 accept<a class="cmnd" id="tcpserver_accept"></a>|`accept() -> instance:tcpclient or nil`<BR>Returns an instance of `tcpclient` for the new incoming connection, or raise an exception if no connection is available. You should call `hasclient()` returning `true` before calling `accept()`.
+acceptasync<a class="cmnd" id="tcpserver_acceptasync"></a>|`acceptasync() -> instance:tcpclientasync or nil`<BR>Returns an instance of `tcpclientasync` for the new incoming connection, or raise an exception if no connection is available. You should call `hasclient()` returning `true` before calling `acceptasync()`.
 close<a class="cmnd" id="tcpserver_close"></a>|`close() -> nil`<BR>Closes the server and makes the port available again.
 
 Full example:
