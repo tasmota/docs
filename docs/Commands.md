@@ -260,9 +260,11 @@ Define as per below and specify credentials you want:
 #define USER_FTP "user"
 #define PW_FTP "pass"
 ```
+
 Command|Parameters
 :---|:---
 UFSFTP<a class="cmnd" id="ufsftp"></a>|`0` = FTP off<BR>`1` = FTP on SD card (when no SD card defaults to FFS)<BR>`2` = FTP on Flash file System
+
 !!! note
     It works very stable, but a little slow, about 70 kb per second
     Enabled by default for the following config (`tasmota_configurations.h`): NOT(ESP8266_1M) AND NOT(FIRMWARE_MINIMAL) AND ESP8266_4M
