@@ -20,45 +20,33 @@ Endpoint `root` (0) is managed by the `matter.Plugin_Root` class because of its 
 
 We provide currently the following classes:
 
-| Plug-in class           | Description                                       |
-| ----------------------- | ------------------------------------------------- |
-| Plugin_Device           | Generic device (abstract)                         |
-| Plugin_Root             | Root node (type `0x0016`)                         |
-| Plugin_Aggregator       | Aggregator for Bridge mode (type `0x000E`)        |
-| Plugin_OnOff            | Simple On/Off Plug (type `0x010A`)                |
-| Plugin_Light0           | Light with 0 channel (OnOff) (type 0x0100)        |
-| Plugin_Light1           | Light with 1 channels (Dimmer) (type 0x0101)      |
-| Plugin_Light2           | Light with 2 channels (CT) (type 0x010C)          |
-| Plugin_Light3           | Light with 3 channels (RGB) (type 0x010D)         |
-| Plugin_Sensor           | Generic Sensor class (abstract)                   |
-| Plugin_Sensor_Temp      | Temperature Sensor (type 0x0302)                  |
-| Plugin_Sensor_Pressure  | Pressure Sensor (type 0x0305)                     |
-| Plugin_Sensor_Illuminance | Light/Illuminance Sensor (type 0x0106)          |
-| Plugin_Sensor_Humidity  | Humidity Sensor (type 0x0307)                     |
-| Plugin_Sensor_Flow      | Flow Sensor (type 0x0306)                         |
-| Plugin_Sensor_Occupancy | Occupancy Sensor linked to a swithch (type 0x0107)|
-| Plugin_Sensor_Contact   | Contact Sensor (type 0x0015)                      |
-| Plugin_Sensor_OnOff     | OnOff Sensor (type 0x0850)                        |
-| Plugin_Shutter          | Shutter (type 0x0202)                             |
-| Plugin_Shutter_Tilt     | Shutter with Tilt control (type 0x0202)           |
+| Plug-in class           | Description                                       | Bridge | Virtual |
+| ----------------------- | ------------------------------------------------- |--------|---------|
+| Plugin_Device           | Generic device (abstract)                         |        |         |
+| Plugin_Root             | Root node (type 0x0016)                           |        |         |
+| Plugin_Aggregator       | Aggregator for Bridge mode (type 0x000E)          |        |         |
+| Plugin_OnOff            | Simple On/Off Plug (type 0x010A)                  |  x     |    x    |
+| Plugin_Light0           | Light with 0 channel (OnOff) (type 0x0100)        |  x     |    x    |
+| Plugin_Light1           | Light with 1 channels (Dimmer) (type 0x0101)      |  x     |    x    |
+| Plugin_Light2           | Light with 2 channels (CT) (type 0x010C)          |  x     |    x    |
+| Plugin_Light3           | Light with 3 channels (RGB) (type 0x010D)         |  x     |    x    |
+| Plugin_Sensor           | Generic Sensor class (abstract)                   |        |         |
+| Plugin_Sensor_Temp      | Temperature Sensor (type 0x0302)                  |  x     |    x    |
+| Plugin_Sensor_Pressure  | Pressure Sensor (type 0x0305)                     |  x     |    x    |
+| Plugin_Sensor_Illuminance | Light/Illuminance Sensor (type 0x0106)          |  x     |    x    |
+| Plugin_Sensor_Humidity  | Humidity Sensor (type 0x0307)                     |  x     |    x    |
+| Plugin_Sensor_Flow      | Flow Sensor (type 0x0306)                         |  x     |    x    |
+| Plugin_Sensor_Occupancy | Occupancy Sensor linked to a swithch (type 0x0107)|  x     |    x    |
+| Plugin_Sensor_Contact   | Contact Sensor (type 0x0015)                      |  x     |    x    |
+| Plugin_Sensor_OnOff     | OnOff Sensor (type 0x0850)                        |        |         |
+| Plugin_Sensor_Waterleak | Water Leak Sensor (type 0x0043)                   |  x     |    x    |
+| Plugin_Sensor_Air_Quality | Air Quality Sensor (co2, pm...) (type 0x002C)   |  x     |    x    |
+| Plugin_Shutter          | Shutter (type 0x0202)                             |        |         |
+| Plugin_Shutter_Tilt     | Shutter with Tilt control (type 0x0202)           |        |         |
 
-Tasmota is also able to act as a Bridge to other Tasmota devices (ESP8266 or ESP32) and drive them via the HTTP API. The following classes provide such features:
+Bridge: Tasmota is able to act as a Bridge to other Tasmota devices (ESP8266 or ESP32) and drive them via the HTTP API.
 
-| Plug-in class                 | Description                                  |
-| ----------------------------- | -------------------------------------------- |
-| Plugin_Bridge_HTTP            | Generic superclass for remote devices (abstract) |
-| Plugin_Bridge_OnOff           | Simple On/Off Plug (type `0x010A`)           |
-| Plugin_Bridge_Light0          | Light with 0 channel (OnOff) (type 0x0100)   |
-| Plugin_Bridge_Light1          | Light with 1 channels (Dimmer) (type 0x0101) |
-| Plugin_Bridge_Light2          | Light with 2 channels (CT) (type 0x010C)     |
-| Plugin_Bridge_Light3          | Light with 3 channels (RGB) (type 0x010D)    |
-| Plugin_Bridge_Sensor          | Generic Sensor class (abstract)              |
-| Plugin_Bridge_Sensor_Temp     | Temperature Sensor (type 0x0302)             |
-| Plugin_Bridge_Sensor_Pressure | Pressure Sensor (type 0x0305)                |
-| Plugin_Bridge_Sensor_Illuminance | Light/Illuminance Sensor (type 0x0106)    |
-| Plugin_Bridge_Sensor_Humidity | Humidity Sensor (type 0x0307)                |
-| Plugin_Bridge_Sensor_Occupancy | Occupancy Sensor linked to a swithch (type 0x0107) |
-| Plugin_Bridge_Sensor_Flow     | Flow Sensor (type 0x0306)                    |
+Virtual: the endpoint is not connected to any device by Tasmota, and can be driven by Berry code to drive any hardware device or simulate a hardware device.
 
 Plugins Hierarchy:
 ```
@@ -66,11 +54,11 @@ Matter_Plugin
 +--- Matter_Plugin_Root
 +--- Matter_Plugin_Aggregator
 +--+ Matter_Plugin_Device
-   +--+ Matter_Plugin_Light1
-   |   |--- Matter_Plugin_Light2
-   |   |--- Matter_Plugin_Light3
-   +--- Matter_Plugin_OnOff
-   |  |--+ Matter_Plugin_Light0
+   |--+ Matter_Plugin_Light0
+   |  +--+ Matter_Plugin_Light1
+   |  |  +--- Matter_Plugin_Light2
+   |  |  +--- Matter_Plugin_Light3
+   |  +--- Matter_Plugin_OnOff
    +--+ Matter_Plugin_Shutter
    |  +--- Matter_Plugin_ShutterTilt
    +--+ Matter_Plugin_Sensor
@@ -82,21 +70,11 @@ Matter_Plugin
    +--- Matter_Plugin_Sensor_Contact
    +--- Matter_Plugin_Sensor_Occupancy
    +--- Matter_Plugin_Sensor_OnOff
-   +--+ Matter_Plugin_Bridge_HTTP
-      +--+ Matter_Plugin_Bridge_Light0
-      |  +--+ Matter_Plugin_Bridge_Light1
-      |  |  +--- Matter_Plugin_Bridge_Light2
-      |  |  +--- Matter_Plugin_Bridge_Light3
-      |  +--- Matter_Plugin_Bridge_OnOff
-      +--+ Matter_Plugin_Bridge_Sensor
-      |  +--- Matter_Plugin_Bridge_Sensor_Humidity
-      |  +--- Matter_Plugin_Bridge_Sensor_Temperature
-      |  +--- Matter_Plugin_Bridge_Sensor_Pressure
-      |  +--- Matter_Plugin_Bridge_Sensor_Illuminance
-      |  +--- Matter_Plugin_Bridge_Sensor_Flow
-      +--- Matter_Plugin_Bridge_Sensor_Occupancy
-      +--- Matter_Plugin_Bridge_Sensor_Contact
+   +--- Matter_Plugin_Sensor_WaterLeak
+   +--- Matter_Plugin_Sensor_AirQuality
 ```
+
+All endpoints that support `Bridge` and `Virtual` have `Matter_Plugin_Bridge_<name>` and `Matter_Plugin_Virt_<name>` subclasses.
 
 
 ## Plugin superclass
@@ -105,9 +83,9 @@ All plugins inherit from the `Matter_Plugin` superclass.
 
 Note: for solidification to succeed, you need to declare `class Matter_Plugin end` fake class in the same Berry file. The actual class will be used in solidified code.
 
-| Plugin method          | Description                                                                                       |
-| ---------------------- | ------------------------------------------------------------------------------------------------- |
-| init(device, endpoint) | (can be overridden) Instantiate the plugin on a specific `endpoint`. You need to pass the root `matter_device` object |
+| Plugin method          | Description       |
+| ---------------------- | ----------------- |
+| init(device, endpoint, config) | (can be overridden) Instantiate the plugin on a specific `endpoint`. You need to pass the root `matter_device` object, and the `config` map extracted from the JSON configuration |
 
 ## Core classes
 
@@ -352,3 +330,24 @@ If so:
 All Matter support code is located in `berry_matter` as a lib, which avoids polluting the main directory of drivers. Berry allows to develop **much faster** compared to C++, and performance is mostly not an issue with Matter.
 
 The Berry code is located in the `embedded` directory. Then the code is compiled into bytecode and the bytecode is stored in Flash. This avoids consuming RAM which is a very previous resource on ESP32. To solidify, you just need to run `./solidify_all.be` in `berry_matter`. But before you need to have a local version of Berry: in `berry` directory, just do `make`. For windows users, compiling Berry can be challenging so a pre-compiled `berry.exe` is provided.
+
+## Creating a new endpoint type (class)
+
+Ideally select the best super class and inherit from it. Most new type will derive from `Matter_Plugin_Device`.
+
+Below are the class attributes that need to be defined or are inherited from their superclass
+
+Method|Description
+:----|:---
+TYPE|Internal name of the plugin class as referenced in configuration JSON.<BR>This attribute is mandatory and its value must be different from all other classes.
+BRIDGE|Set to `true` if this endpoint is a bridged, i.e. used to drive a remote ESP8266 or OpenBK device. If such, some additional methods need to be defined, like `parse_status`, `web_values` and `web_values_prefix`
+VRITUAL|Set to `true` if the device is purely virtual and driven by Berry code or updated with `MtrUpdate` command
+DISPLAY_NAME|The user-readable name of the plugin class, to be displayed in WebUI
+ARG|The main argument key name in configuraiton JSON
+ARG_TYPE|A Berry function used to enforce the type of the argument, like `/ x -> int(x)`
+ARG_HINT|A hint message displayed in the WebUI about what to put in the argument field
+UPDATE_CMD|Tasmota command used to update the internal shadow value, and potentially update the Matter controller if a subscription is active
+UPDATE_TIME|Update every `UPDATE_TIME` milliseconds. It can be very small for features driven by Berry functions (lights) but needs to be set for several seconds if it requires a `Status` comment or a remote (bridge) access
+CLUSTERS|Map of supported clusters and attributes per clusters. You need only to set the class specific attributes, the complete list is consolidated with superclasses at compile time.
+TYPES|A map of the supported "device type" as per Matter device list specification, and the revision of the spec for this device type
+UPDATE_COMMANDS|List of all `MtrUpdate` commands supportde. The list is consolidated with superclasses at compile time
