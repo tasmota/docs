@@ -44,9 +44,9 @@ We provide currently the following classes:
 | Plugin_Shutter          | Shutter (type 0x0202)                             |        |         |
 | Plugin_Shutter_Tilt     | Shutter with Tilt control (type 0x0202)           |        |         |
 
-Bridge: Tasmota is able to act as a Bridge to other Tasmota devices (ESP8266 or ESP32) and drive them via the HTTP API.
+**Bridge**: Tasmota is able to act as a Bridge to other Tasmota devices (ESP8266 or ESP32) and drive them via the HTTP API.
 
-Virtual: the endpoint is not connected to any device by Tasmota, and can be driven by Berry code to drive any hardware device or simulate a hardware device.
+**Virtual**: the endpoint is not connected to any device by Tasmota, and can be driven by Berry code to drive any hardware device or simulate a hardware device.
 
 Plugins Hierarchy:
 ```
