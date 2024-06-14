@@ -273,6 +273,8 @@ Humidity|Humidity|`0..10000` Humidity in 1/100th of percentage
 Illuminance|Illuminance|`0..65534` Illuminance with formula `log10(val + 1) * 10000`
 Pressure|Pressure|Pressure in `hPa`
 Temperature|Temperature|`-32767..32767` Temperature in 1/100th of °C
+Rain|Rain|`0`/`1` change rain sensor state°C
+Waterleak|Waterleak|`0`/`1` change rain sensor state
 
 
 Keep in mind that many values are in the range `0..254` because `255` is an invalid value (this comes from Zigbee).
