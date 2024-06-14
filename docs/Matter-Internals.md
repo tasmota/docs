@@ -30,15 +30,18 @@ We provide currently the following classes:
 | Plugin_Light1           | Light with 1 channels (Dimmer) (type 0x0101)      |  x     |    x    |
 | Plugin_Light2           | Light with 2 channels (CT) (type 0x010C)          |  x     |    x    |
 | Plugin_Light3           | Light with 3 channels (RGB) (type 0x010D)         |  x     |    x    |
+| Plugin_Fan              | Fan (type 0x002B) Virtual only                    |        |    x    |
 | Plugin_Sensor           | Generic Sensor class (abstract)                   |        |         |
 | Plugin_Sensor_Temp      | Temperature Sensor (type 0x0302)                  |  x     |    x    |
 | Plugin_Sensor_Pressure  | Pressure Sensor (type 0x0305)                     |  x     |    x    |
 | Plugin_Sensor_Illuminance | Light/Illuminance Sensor (type 0x0106)          |  x     |    x    |
 | Plugin_Sensor_Humidity  | Humidity Sensor (type 0x0307)                     |  x     |    x    |
 | Plugin_Sensor_Flow      | Flow Sensor (type 0x0306)                         |  x     |    x    |
+| Plugin_Sensor_Boolean   | Generic Booleand Sensor class (abstract)          |        |         |
 | Plugin_Sensor_Occupancy | Occupancy Sensor linked to a swithch (type 0x0107)|  x     |    x    |
 | Plugin_Sensor_Contact   | Contact Sensor (type 0x0015)                      |  x     |    x    |
 | Plugin_Sensor_OnOff     | OnOff Sensor (type 0x0850)                        |        |         |
+| Plugin_Sensor_Rain      | Rain Sensor (type 0x0044)                         |  x     |    x    |
 | Plugin_Sensor_Waterleak | Water Leak Sensor (type 0x0043)                   |  x     |    x    |
 | Plugin_Sensor_Air_Quality | Air Quality Sensor (co2, pm...) (type 0x002C)   |  x     |    x    |
 | Plugin_Shutter          | Shutter (type 0x0202)                             |        |         |
@@ -59,6 +62,7 @@ Matter_Plugin
    |  |  +--- Matter_Plugin_Light2
    |  |  +--- Matter_Plugin_Light3
    |  +--- Matter_Plugin_OnOff
+   +--+ Matter_Plugin_Fan
    +--+ Matter_Plugin_Shutter
    |  +--- Matter_Plugin_ShutterTilt
    +--+ Matter_Plugin_Sensor
@@ -67,10 +71,12 @@ Matter_Plugin
    |  +--- Matter_Plugin_Sensor_Pressure
    |  +--- Matter_Plugin_Sensor_Illuminance
    |  +--- Matter_Plugin_Sensor_Flow
-   +--- Matter_Plugin_Sensor_Contact
-   +--- Matter_Plugin_Sensor_Occupancy
-   +--- Matter_Plugin_Sensor_OnOff
-   +--- Matter_Plugin_Sensor_WaterLeak
+   +--+ Matter_Plugin_Sensor_Boolean
+   |  +--- Matter_Plugin_Sensor_Contact
+   |  +--- Matter_Plugin_Sensor_Occupancy
+   |  +--- Matter_Plugin_Sensor_OnOff
+   |  +--- Matter_Plugin_Sensor_Rain
+   |  +--- Matter_Plugin_Sensor_WaterLeak
    +--- Matter_Plugin_Sensor_AirQuality
 ```
 
