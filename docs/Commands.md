@@ -1118,7 +1118,7 @@ Command|Parameters
 Ethernet<a class="cmnd" id="ethernet"></a>|*Only for ESP32 boards with additional LAN chip*<BR>`0` = disable Ethernet<BR>`1` = enable Ethernet _(default)_
 EthAddress<a class="cmnd" id="ethaddress"></a>|`0..31` = PHYxx address
 EthClockMode<a class="cmnd" id="ethclockmode"></a>|Ethernet clock mode.<BR>`0` = ETH_CLOCK_GPIO0_IN <BR>`1` = ETH_CLOCK_GPIO0_OUT <BR>`2` = ETH_CLOCK_GPIO16_OUT<BR>`3` = ETH_CLOCK_GPIO17_OUT (default)
-EthType<a class="cmnd" id="ethtype"></a>|Ethernet type.<BR>`0` = ETH_PHY_LAN8720 *(default)*<BR>`1` = ETH_PHY_TLK110 <BR>`2` = ETH_PHY_RTL8201<BR>`3` = ETH_PHY_DP83848<BR>`4` = ETH_PHY_DM9051 (SPI)<BR>`5`= ETH_PHY_KSZ8041<BR>`6` = ETH_PHY_KSZ8081<BR>`7` = ETH_PHY_JL1101<BR>`8` = ETH_PHY_W5500 (SPI)<BR>`9` = ETH_PHY_KSZ8851 (SPI)
+EthType<a class="cmnd" id="ethtype"></a>|Ethernet type.<BR>`0` = ETH_PHY_LAN8720 *(default)*<BR>`1` = ETH_PHY_TLK110 <BR>`2` = ETH_PHY_RTL8201<BR>`3` = ETH_PHY_DP83848<BR>`4` = ETH_PHY_DM9051 (SPI)<BR>`5` = ETH_PHY_KSZ8081<BR>`6`= ETH_PHY_KSZ8041<BR>`7` = ETH_PHY_JL1101<BR>`8` = ETH_PHY_W5500 (SPI)<BR>`9` = ETH_PHY_KSZ8851 (SPI)
 EthIPAddress<a class="cmnd" id="ethipaddress"></a>|Set device Ethernet IP address (for Wi-Fi, see <a href="#ipaddress">IpAddress</a>)<BR><li>`0.0.0.0` = use dynamic IP address (DHCP)</li><li>`XXX.XXX.XXX.XXX` = set static IP address</li><BR>*Follow any IP configuration commands with `restart 1` to apply changes*
 EthGateway<a class="cmnd" id="ethgateway"></a>|Set gateway IP address
 EthSubnetmask<a class="cmnd" id="ethsubnetmask"></a>|Set subnet mask
