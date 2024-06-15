@@ -275,6 +275,9 @@ Pressure|Pressure|Pressure in `hPa`
 Temperature|Temperature|`-32767..32767` Temperature in 1/100th of °C
 Rain|Rain|`0`/`1` change rain sensor state°C
 Waterleak|Waterleak|`0`/`1` change rain sensor state
+FanMode|Fan|`0`: Off<br>`1`: Low (33%)<br>`2`: Med (66%)<br>`3`: High (100%)
+FanSpeed|Fan|`0..100` Fan speed in percentage
+FanSpeed255|Fan|`0..255` Fan speed in a range more suitable for Rules and PWM
 
 
 Keep in mind that many values are in the range `0..254` because `255` is an invalid value (this comes from Zigbee).
