@@ -970,7 +970,7 @@ Knx_Enhanced<a class="cmnd" id="knx_enhanced"></a>|Status of Enhanced mode for K
 Knx_PA<a class="cmnd" id="knx_pa"></a>|KNX Physical Address<BR>`0.0.0` = address not set<BR>`x.x.x` = set the device address (example `1.1.0`)
 Knx_GA<a class="cmnd" id="knx_ga"></a>|Return the amount of Group Address to Send Data/Commands configured
 Knx_GA<x\><a class="cmnd" id="knx_gax"></a>|Setup Group Address to Send Data/Commands (<x\> = KNX Group Address number)<BR>`1` = return configuration of GA<x\><BR>`<option>, <area>, <line>, <member>` to set configuration of GA<x\><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<option>` = see table below for OPTION list<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<area>, <line>, <member>` = KNX Address to Send Data/Commands<BR>
-Knx_CB<a class="cmnd" id="knx_cbb"></a>|Return the amount of Group Address to Receive Data/Commands configured
+Knx_CB<a class="cmnd" id="knx_cb"></a>|Return the amount of Group Address to Receive Data/Commands configured
 Knx_CB<x\><a class="cmnd" id="knx_cbx"></a>|Setup Group Address to Receive Data/Commands <BR>`1` = return configuration of CB<x\><BR>`<option>, <area>, <line>, <member>` to set configuration of CB<x\><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<option>` = see table below for OPTION list<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<area>, <line>, <member>` = KNX Address to Receive Data/Commands
 
 OPTION|OPTION<BR>Value|<BR>OPTION|OPTION<BR>Value
@@ -1090,7 +1090,7 @@ WcAWBGain<a class="cmnd" id="wcawbgain"></a>|`1` = enable Auto White Balance Gai
 WcBPC<a class="cmnd" id="wcbpc"></a>|`1` = enable Black Pixel Correct, `0` = disable *(default)*
 WcBrightness<a class="cmnd" id="wcbrightness"></a>|`-2..+2` = set picture brightness
 WcClock<a class="cmnd" id="wcclock"></a>|`10..200` = set clock speed in MHz *(default = 20)*
-WcColorbar<a class="cmnd" id="wcclock"></a>|`1` = show colorbar, `0` = hide colorbar *(default)*
+WcColorbar<a class="cmnd" id="wccolorbar"></a>|`1` = show colorbar, `0` = hide colorbar *(default)*
 WcContrast<a class="cmnd" id="wccontrast"></a>|`-2..+2` = set picture contrast
 WcDCW<a class="cmnd" id="wcdcw"></a>|`1` = enable downscale, `0` = disable *(default)*
 WcFeature<a class="cmnd" id="wcfeature"></a>|[Extended features](https://hobbylad.files.wordpress.com/2020/02/ov2640-camera-module-software-application-notes.pdf). Only boards with PSRAM should be used.<BR>`0` = off, `1` = reduce FPS and increase exposure time for better low light performance, `2` = nightmode, increase exposure time and lower the Framerate depending on available light
@@ -1104,7 +1104,7 @@ WcResolution<a class="cmnd" id="wcresolution"></a>|Set camera resolution.<BR>`0`
 WcRtsp<a class="cmnd" id="wcrtsp"></a>|(Requires defined `ENABLE_RTSPSERVER`)<BR>`1` = start RTSP server (forces restart) , `0` = stop server
 WcSaturation<a class="cmnd" id="wcsaturation"></a>|`-2..+2` = set picture saturation
 WcSpecialEffect<a class="cmnd" id="wcspecialeffect"></a>|Set picture effect: `0` = off, `1` = Negative, `2` = Grayscale, `3` = Red Tint, `4` = Green Tint, `5` = Blue Tint, `6` = Sepia
-WcStats<a class="cmnd" id="wcspecialeffect"></a>|show statistics
+WcStats<a class="cmnd" id="wcstats"></a>|show statistics
 WcStream<a class="cmnd" id="wcstream"></a>|`1` = start webcam stream at http://<device_ip\>:81/stream or http://<device_ip\>:81/cam.mjpeg<BR>`0` = stop stream<BR>
 WcWBMode<a class="cmnd" id="wcwbmode"></a>|White Balance Mode<BR>`0` = auto, `1` = Sunny, `2` = Cloudy, `3` = Office, `4` = Home
 WcWPC<a class="cmnd" id="wcwpc"></a>|`1` = enable White Pixel Correct, `0` = disable *(default)*
