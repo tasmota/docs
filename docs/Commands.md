@@ -895,10 +895,10 @@ MP3Volume<a class="cmnd" id="mp3volume"></a>|`0..100` = set Volume
 
 Command|Parameters
 :---|:---
-ThermostatModeSet<x\><a class="cmnd" id="thermostatmodeSet"></a>|Sets the thermostat mode<BR> `0` = Thermostat Off (controller inactive, default)<BR> `1` = Thermostat in automatic mode (controller active)<BR> `2` = Thermostat in manual mode (output switch follows the input switch, used to follow an existing wall thermostat)</ul>
-ClimateModeSet<x\><a class="cmnd" id="climatemodeSet"></a>|Sets the climate mode<BR> `0` = Heating mode (default)<BR> `1` = Cooling mode</ul>
-ControllerModeSet<x\><a class="cmnd" id="controllermodeSet"></a>|Sets the controller mode (used for thermostat in automatic mode)<BR> `0` = Hybrid controller (Predictive ramp-up controller and PI, default)<BR> `1` = PI controller<BR> `2` = Predictive ramp-up controller</ul>
-TempFrostProtectSet<x\><a class="cmnd" id="tempfrostprotectSet"></a>|Sets the frost protection temperature. The controller, if in automatic mode, will never allow the temperature to sink below this value<BR> `<0..12>` = Temperature value in degrees Celsius/Fahrenheit (default 4.0° Celsius) </ul>
+ThermostatModeSet<x\><a class="cmnd" id="thermostatmodeset"></a>|Sets the thermostat mode<BR> `0` = Thermostat Off (controller inactive, default)<BR> `1` = Thermostat in automatic mode (controller active)<BR> `2` = Thermostat in manual mode (output switch follows the input switch, used to follow an existing wall thermostat)</ul>
+ClimateModeSet<x\><a class="cmnd" id="climatemodeset"></a>|Sets the climate mode<BR> `0` = Heating mode (default)<BR> `1` = Cooling mode</ul>
+ControllerModeSet<x\><a class="cmnd" id="controllermodeset"></a>|Sets the controller mode (used for thermostat in automatic mode)<BR> `0` = Hybrid controller (Predictive ramp-up controller and PI, default)<BR> `1` = PI controller<BR> `2` = Predictive ramp-up controller</ul>
+TempFrostProtectSet<x\><a class="cmnd" id="tempfrostprotectset"></a>|Sets the frost protection temperature. The controller, if in automatic mode, will never allow the temperature to sink below this value<BR> `<0..12>` = Temperature value in degrees Celsius/Fahrenheit (default 4.0° Celsius) </ul>
 InputSwitchSet<x\><a class="cmnd" id="inputswitchset"></a>|Sets the number of the input used in case in manual control<BR> `<1..4>` = Number of the input (default 1)</ul>
 InputSwitchUse<x\><a class="cmnd" id="inputswitchuse"></a>|Switch to decide if the input shall be used to automatically switch to manual mode and assign it to the output (useful if using a serially connected wall thermostat)<BR> `0` = Input not used (default)<BR> `1` = Input used</ul>
 SensorInputSet<x\><a class="cmnd" id="sensorinputset"></a>|Sets the temperature sensor to be used<BR> `0` = MQTT (default)<BR> `1` = Local sensor (can be changed by define, default DS18B20)</ul>
@@ -914,7 +914,7 @@ TimeManualToAutoSet<x\><a class="cmnd" id="timemanualtoautoset"></a>|Sets the ti
 PropBandSet<x\><a class="cmnd" id="propbandset"></a>|Sets the value of the proportional band of the PI controller<BR> `0..20` = value in degrees Celsius (default 4 degrees Celsius)</ul>
 TimeResetSet<x\><a class="cmnd" id="timeresetset"></a>|Sets the value of the reset time of the PI controller<BR> `0..86400` = value in seconds (default 12000 seconds)</ul>
 TimePiProportRead<x\><a class="cmnd" id="timepiproportread"></a>|Returns the proportional part of the PI controller calculation in seconds<BR> `value` = value in seconds</ul>
-TimePiIntegrRead<x\><a class="cmnd" id="timepiIntegrread"></a>|Returns the integral part of the PI controller calculation in seconds<BR> `value` = value in seconds</ul>
+TimePiIntegrRead<x\><a class="cmnd" id="timepiintegrread"></a>|Returns the integral part of the PI controller calculation in seconds<BR> `value` = value in seconds</ul>
 TimePiCycleSet<x\><a class="cmnd" id="timepicycleset"></a>|Sets the value of the cycle for the PI controller<BR> `0..1440` = value in minutes (default 30 minutes)</ul>
 TempAntiWindupResetSet<x\><a class="cmnd" id="tempantiwindupresetset"></a>|Sets the value of the delta between controlled temperature and setpoint above which the integral part of the PI controller will be set to 0, in degrees Celsius/Fahrenheit<BR> `0..10` = value in degrees (default 0.8° Celsius)</ul>
 TempHystSet<x\><a class="cmnd" id="temphystset"></a>|Sets the value of the temperature hysteresis for the PI controller, in degrees Celsius/Fahrenheit<BR> `-10..10` = value in degrees (default 0.1° Celsius)</ul>
@@ -922,7 +922,7 @@ TimeMaxActionSet<x\><a class="cmnd" id="timemaxactionset"></a>|Sets the maximum 
 TimeMinActionSet<x\><a class="cmnd" id="timeminactionset"></a>|Sets the minimum duty cycle of the PI controller in minutes<BR> `0..1440` = value in minutes (default 4 minutes)</ul>
 TimeSensLostSet<x\><a class="cmnd" id="timesenslostset"></a>|Sets the maximum time without a temperature sensor update to mark it as lost in minutes<BR> `0..1440` = value in minutes (default 30 minutes)</ul>
 TimeMinTurnoffActionSet<x\><a class="cmnd" id="timeminturnoffactionset"></a>|Sets the minimum time in minutes within a cycle for the PI controller to switch off the output, below it, it will stay on<BR> `0..1440` = value in minutes (default 3 minutes)</ul>
-TempRupDeltInSet<x\><a class="cmnd" id="temprupdeltinSet"></a>|Sets the minimum delta between controlled temperature and setpoint for the controller to switch to ramp-up controller phase (applicable just in Hybrid controller mode)<BR> `0..10` = value in degrees Celsius/Fahrenheit (default 0.4° Celsius)</ul>
+TempRupDeltInSet<x\><a class="cmnd" id="temprupdeltinset"></a>|Sets the minimum delta between controlled temperature and setpoint for the controller to switch to ramp-up controller phase (applicable just in Hybrid controller mode)<BR> `0..10` = value in degrees Celsius/Fahrenheit (default 0.4° Celsius)</ul>
 TempRupDeltOutSet<x\><a class="cmnd" id="temprupdeltoutset"></a>|Sets the maximum delta between controlled temperature and setpoint for the controller to switch to the PI controller phase (applicable just in Hybrid controller mode)<BR> `0..10` = value in degrees Celsius/Fahrenheit (default 0.2° Celsius)</ul>
 TimeRampupMaxSet<x\><a class="cmnd" id="timerampupmaxset"></a>|Sets the maximum time in minutes for the controller to stay in the ramp-up phase (applicable just in Hybrid controller mode<BR> `0..1440` = value in minutes (default 960 minutes)</ul>
 TimeRampupCycleSet<x\><a class="cmnd" id="timerampupcycleset"></a>|Sets the value of the cycle for the ramp-up controller<BR> `0..1440` = value in minutes (default 30 minutes)</ul>
@@ -970,7 +970,7 @@ Knx_Enhanced<a class="cmnd" id="knx_enhanced"></a>|Status of Enhanced mode for K
 Knx_PA<a class="cmnd" id="knx_pa"></a>|KNX Physical Address<BR>`0.0.0` = address not set<BR>`x.x.x` = set the device address (example `1.1.0`)
 Knx_GA<a class="cmnd" id="knx_ga"></a>|Return the amount of Group Address to Send Data/Commands configured
 Knx_GA<x\><a class="cmnd" id="knx_gax"></a>|Setup Group Address to Send Data/Commands (<x\> = KNX Group Address number)<BR>`1` = return configuration of GA<x\><BR>`<option>, <area>, <line>, <member>` to set configuration of GA<x\><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<option>` = see table below for OPTION list<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<area>, <line>, <member>` = KNX Address to Send Data/Commands<BR>
-Knx_CB<a class="cmnd" id="knx_cbB"></a>|Return the amount of Group Address to Receive Data/Commands configured
+Knx_CB<a class="cmnd" id="knx_cbb"></a>|Return the amount of Group Address to Receive Data/Commands configured
 Knx_CB<x\><a class="cmnd" id="knx_cbx"></a>|Setup Group Address to Receive Data/Commands <BR>`1` = return configuration of CB<x\><BR>`<option>, <area>, <line>, <member>` to set configuration of CB<x\><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<option>` = see table below for OPTION list<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`<area>, <line>, <member>` = KNX Address to Receive Data/Commands
 
 OPTION|OPTION<BR>Value|<BR>OPTION|OPTION<BR>Value
