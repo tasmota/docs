@@ -254,15 +254,19 @@ DOUBLE<BR>UTF4 UTF8<BR>B4 B8|Unsupported in Tasmota
 #### Creating TLV
 
 Simple value:
+
 `matter.TLV.create_TLV(type, value)`
 
 Example:
-`matter.TLV.create_TLV(matter.TLV.UTF1, "Hello world")`
-`matter.TLV.create_TLV(matter.TLV.BOOL, true)`
-`matter.TLV.create_TLV(matter.TLV.NULL, nil)`
-`matter.TLV.create_TLV(matter.TLV.FLOAT, 3.5)`
-`matter.TLV.create_TLV(matter.TLV.I2, -345)`
-`matter.TLV.create_TLV(matter.TLV.U8, bytes("DEADBEEFDEADBEEF"))`
+
+```berry
+matter.TLV.create_TLV(matter.TLV.UTF1, "Hello world")
+matter.TLV.create_TLV(matter.TLV.BOOL, true)
+matter.TLV.create_TLV(matter.TLV.NULL, nil)
+matter.TLV.create_TLV(matter.TLV.FLOAT, 3.5)
+matter.TLV.create_TLV(matter.TLV.I2, -345)
+matter.TLV.create_TLV(matter.TLV.U8, bytes("DEADBEEFDEADBEEF"))
+```
 
 ## Subscriptions
 
