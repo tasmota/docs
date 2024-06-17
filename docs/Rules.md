@@ -362,7 +362,7 @@ When the `<if-statement>` is preceded by other Tasmota commands you should use `
    `ON Power2#state=1 DO IF (Mem1==0) Var1 Var1+1; Mem1 1 ENDIF; Delay 10; Power1 on ENDON`
 
 !!! example
-     Rule used to control pressure cooker with a Sonoff S31. Once it is finished cooking, shut off the power immediately.  
+     Rule used to control pressure cooker with a Sonoff S31. Once it is finished cooking, shut off the power after 10 minutes.  
 ```haskell
 Rule1
  ON system#boot DO var1 0 ENDON
