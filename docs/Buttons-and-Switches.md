@@ -226,7 +226,7 @@ Multipress functions for 2 and more presses cannot be changed using SetOptions o
 :    When using Button1 toggles the fifth power state (if available on the device). This will blink the LED five times and send an MQTT status message like `stat/tasmota/POWER5 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"PENTA"}` when SetOption73 is enabled. The button state for rules is `14`.
 
 `6 short presses`
-:    Start [`WifiConfig 2`](Commands.md#wificonfig). Can be disabled using [SetOption1 1](Commands.md#setoption1)
+:    Set [`WifiConfig 2`](Commands.md#wificonfig) (start Wi-Fi Manager). Can be disabled using [`SetOption1 1`](Commands.md#setoption1). For [security reasons](Securing-your-IoT-from-hacking.md#disable-unsecured-fallback-wifi-wifimanager), you should change back `WifiConfig` after that.
 
 `**Long press**`
 :    There are two separate functions associated with a button long press based on how long it is held:
