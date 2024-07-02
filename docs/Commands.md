@@ -566,7 +566,7 @@ SetOption69<a class="cmnd" id="setoption69"></a>|**Deprecated** in favor of [Dim
 SetOption71<a class="cmnd" id="setoption71"></a>|Set DDS238 Modbus register for active energy<BR>`0` = set primary register *(default)*<BR>`1` = set alternate register
 SetOption72<a class="cmnd" id="setoption72"></a>|Set reference used for total energy <BR>`0` = use firmware counter *(default)*<BR>`1` = use energy monitor (e.g., PZEM-0xx, SDM120, SDM630, DDS238, DDSU666) hardware counter
 SetOption73<a class="cmnd" id="setoption73"></a>|Detach buttons from relays and send multi-press and hold MQTT messages instead<BR>`0` = disable *(default)*<BR>`1` = enable <BR>Example message: `{"Button1":{"Action":"SINGLE"}}`
-SetOption74<a class="cmnd" id="setoption74"></a>|Enable internal pullup for single DS18x20 sensor <BR>`0` = disable *(default)*<BR>`1` = internal pullup enabled
+SetOption74<a class="cmnd" id="setoption74"></a>|Enable internal pullup for single DS18x20 sensor <BR>`0` = disable *(default)*<BR>`1` = internal pullup enabled ***This only affects ESP8266*** ESP32 always needs external pullup
 SetOption75<a class="cmnd" id="setoption75"></a>|Set grouptopic behaviour ([#6779](https://github.com/arendst/Tasmota/issues/6779))<BR>`0` = GroupTopic using FullTopic replacing %topic% _(default)_<BR>`1` =  GroupTopic is `cmnd/%grouptopic%/`
 SetOption76<a class="cmnd" id="setoption76"></a>|Boot count incrementing when [DeepSleep](DeepSleep) is enabled ([#6930](https://github.com/arendst/Tasmota/issues/6930))<BR>`0` = disable boot count incrementing _(default)_<BR>`1` = enable boot count incrementing
 SetOption77<a class="cmnd" id="setoption77"></a>|Do not power off if a slider is moved to far left<BR>`0` = disable _(default)_<BR>`1` = enable
