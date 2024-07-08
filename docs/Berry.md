@@ -2039,7 +2039,7 @@ def roi_dsc(m)
     return d
 end
 ```
-A simple web tool, to create such matrices is provided in here:  https://github.com/Staars/MockUp (will be reworked soon)
+A simple web tool to create such matrices is embedded in the docs: [ROI  editor](ROI-editor.md)
   
 Example:
 ```berry
