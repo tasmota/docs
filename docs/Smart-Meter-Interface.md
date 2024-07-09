@@ -445,6 +445,7 @@ Energy provider supplied a PIN code to enable output of additional data.
     1,77070100010801ff@1000,Verbrauch_Tarif_1,kWh,Total_Tarif1,3
     1,77070100010802ff@1000,Verbrauch_Tarif_2,kWh,Total_Tarif2,3
     1,77070100010800ff@1000,Verbrauch_Summe,kWh,Total_Summe,3
+    1,77070100020800ff@1000,Einspeisung_Summe,kWh,Total_Einsp,3
     1,77070100100700ff@1,Current consumption,W,Power_curr,3
     1,=h   ----  
     1,770701001f0700ff@1,Current L1,A,Curr_p1,3  
