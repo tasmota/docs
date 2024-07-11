@@ -44,4 +44,9 @@ An alternate partition scheme is used in Sonoff Zigbee Bridge Pro:
 
 ![Flash_layout_safeboot_alt](https://user-images.githubusercontent.com/49731213/174431192-351b4226-7b84-420a-9f9f-0e27855a53e4.svg){ width="270" align="left" }
 
-Note: the Safeboot firmware is a reduced version of Tasmota containing only what's required for OTA updates (Web UI, MQTT, TLS...). However it does not save settings nor support initial Wi-Fi configuration.
+Note: the Safeboot firmware is a reduced version of Tasmota containing only what's required for OTA updates (Web UI, MQTT, TLS...). However it does not save settings nor support initial Wi-Fi configuration.  
+
+!!! tip
+
+    If even Safeboot is not enough for your self compiled large firmware (e.g. with webcam, LVGL, Tensorflow, Bluetooth, ...) it is possible to override the partition scheme in your build environemnt in `platformio_tasmota_cenv.ini` with `board_build.partitions      = partitions/esp32_partition_app3904k_fs3392k.csv # this is already part of Tasmota`.
+
