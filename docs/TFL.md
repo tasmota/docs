@@ -358,3 +358,204 @@ var mic = MICROSPEECH()
 
 tasmota.add_driver(mic)
 ```
+  
+## Image classification
+  
+This is really a huge task for any ESP32 and needs some "treatment" to make life as easy as possible for this tiny and weak platform. Do not expect easy success.  
+As other projects have shown before it is important to create an optimal photo capture setup, which typically involves 3D printed housing.  
+Excellent and extensive information can be found here: [AI-on-the-edge-device](https://jomjol.github.io/AI-on-the-edge-device-docs/)
+  
+In Tasmota we use a generic and flexible approach, which does not use a special mode of the TFL module.  
+The biggest chunk of work goes into model creation and the hardware setup. Once this is solved, running inference on the ESP with a Berry script should not be a showstopper.  
+  
+### ML-learning by doing
+Let's walk through a simple example step by step.  
+The object to observe has a very common 7-segment display, which could show any type of data, but here it is just a clock.  
+  
+### Camera setup
+First step is to create the capture setup. If we would change this later, most of the next step will need to be done again. As the main problem of any ESP is the lack of memory, it is important to use the lowest camera resolution, that get's the job done. Orthographic projection wil produce the least artifacts, so we try to come as close to this as possible.  
+  
+### ROI creation
+Now we must create definitions of regions of interest for every digit, that will be used later in the Berry script. This can be done with the help of a web tool right here in the docs: [ROI  editor](ROI-editor.md)
+  
+<figcaption>ROI editor -  create 2D affine matrix:</figcaption>
+![ROI editor](_media/ml/roi_editor.png){ width="700" }
+  
+You can select-copy-paste the matrix definition for later use as it is already valid Berry code.  The ROI pictures can be saved (with chrome based browser) to be used in the training process later.  
+
+After we have a feasible construction, we can think about the model.  
+
+### Model training
+  
+A ready made model "from somewhere" is the fastest option, but here we create one from scratch.  
+  
+To train it, we typically need thousands of photos. This would be a pretty insane task to shoot by hand. That's why the demo model was created with the help of synthetic image creation, which includes a so called "image augmentation". This means the creation of multiple slight abbreviations of one source image, which typically involves scaling, shearing, blurring, noise addition, contrast variation and in this case image inversion. Very likely we must add some original pictures from the observed display, which we can get from the ROI editor.   
+  
+Again we use Edgeimpulse to finally create the model. The demo project can be found here:  
+[7-segment](https://studio.edgeimpulse.com/public/436849/live)  
+Here we can see the uploaded images and model design - similar to the speech recognition example from above.
+  
+From the dashboard we can download the final model file with the type `TensorFlow Lite (int8 quantized)` which is about 17 KB in size.  
+  
+### Berry implementation
+  
+Finally we must put it all together. We need the model binary file and write the Berry script to use it.  
+For demo purposes the following script can run inference on the demo image from the docs: [dt.jpg](_media/ml/dt.jpg), which must be uploaded to the ESP.  
+Download the [model](https://studio.edgeimpulse.com/v1/api/436849/learn-data/14/model/tflite-int8), name it `7d.lite` and upload it too.
+  
+Now save the Berry script as `digits.be` and start with `br load("digits")` from the normal console or with `load("digits")` from the Berry console.  
+  
+```berry
+class ROI_DSC
+    var _dsc
+
+    def init()
+        self._dsc = []
+        var d1 = { "width": 32, "height": 32, "scaleX": 1, "shearY": 0, "transX": 189, "scaleY": 2.5161290322580645, "shearX": 0, "transY": 213 }
+        self._dsc.push(self.roi_dsc(d1))
+        var d2 = { "width": 32, "height": 32, "scaleX": 1.4193548387096775, "shearY": 0, "transX": 215, "scaleY": 2.5161290322580645, "shearX": 0, "transY": 210 }
+        self._dsc.push(self.roi_dsc(d2))
+        var d3 = { "width": 32, "height": 32, "scaleX": 1.4193548387096775, "shearY": 0, "transX": 269, "scaleY": 2.5161290322580645, "shearX": 0, "transY": 205 }
+        self._dsc.push(self.roi_dsc(d3))
+        var d4 = { "width": 32, "height": 32, "scaleX": 1.4193548387096775, "shearY": 0, "transX": 315, "scaleY": 2.5161290322580645, "shearX": 0, "transY": 200 }
+        self._dsc.push(self.roi_dsc(d4))
+    end
+
+    def get(idx)
+        if idx > (size(self._dsc) - 1)
+            return nil
+        end
+        return self._dsc[idx]
+    end
+
+    def roi_dsc(m)
+        var d = bytes(-24)
+        d.setfloat(0,m["scaleX"])
+        d.setfloat(4,m["shearX"])
+        d.setfloat(8,m["shearY"])
+        d.setfloat(12,m["scaleY"])
+        d.seti(16,m["transX"],2)
+        d.seti(18,m["transY"],2)
+        d.seti(20,m["width"],2)
+        d.seti(22,m["height"],2)
+        return d
+    end
+end
+
+class DIGITS : Driver
+    var out, model
+    var cam_img
+    var dsc
+    var result, idx, idx_step, need_input
+
+
+    def init()
+        self.initTFL()
+        self.cam_img = img()
+        self.dsc = ROI_DSC()
+        self.result = [-1,-1,-1,-1]
+        self.idx = 0
+        self.idx_step = 0
+        self.need_input = true
+
+        self.initCam() 
+        self.initFromFile() # for the demo
+        # self.updateImg() # really take picture from cam
+        tasmota.add_driver(self)
+    end
+
+    def stop()
+        self.tasmota.remove_driver(self)
+    end
+
+    def initCam()
+        import cam
+        cam.setup(8) # 640 * 480
+    end
+
+    def initFromFile() # utility method for demo testing/debugging
+        var f = open("/dt.jpg","r")
+        var b = f.readbytes()
+        f.close()
+        self.cam_img.from_jpg(b,img.GRAYSCALE)
+        b = nil
+        tasmota.gc()
+    end
+
+    def updateImg()
+        import cam
+        cam.get_image(self.cam_img,img.GRAYSCALE)
+    end
+
+    def initTFL()
+        import TFL
+        TFL.begin("BUF")  # generic TFL session 
+        self.out = bytes(-10) # one output for every digit
+        self.model = open("/7d.lite").readbytes() # this binary file must have been saved in the FS before
+        TFL.load(self.model,self.out,20000) # load and run, find value for memory allocation by trial and error
+    end
+
+    def handle_inference()
+        import mqtt
+        var digit = self.predict()
+        if digit == nil
+            self.result[self.idx] = -1
+            # mqtt.publish("tele/display",format('{"time":"error"}'))
+        else
+            self.result[self.idx] = digit
+        end
+        self.idx += 1
+        if self.idx == size(self.result) # full run over 4 digits complete
+            self.idx = 0
+
+            # self.updateImg() # now we might take the next picture
+
+            log(f"Complete result: {self.result[0]}{self.result[1]}:{self.result[2]}{self.result[3]}") # or mqtt publish
+            # mqtt.publish("tele/clock",format('{"time":"%i%i:%i%i"}',self.result[0],self.result[1],self.result[2],self.result[3]))
+        end
+        log(f"DIG: result of inference: {digit} for {self.idx}",3)
+        self.need_input = true
+    end
+
+    def update_input()
+        import TFL
+        var next_dsc = self.dsc.get(self.idx)
+        var roi = self.cam_img.get_buffer(next_dsc)
+        if TFL.input(roi, true)
+            self.need_input = false
+        end
+    end
+
+    def every_100ms() # not aiming at 
+        import TFL
+        if self.need_input
+            self.update_input()
+        elif TFL.output(self.out)
+            self.handle_inference()
+        end
+        var log_msg = TFL.log() # receive log messages from the TF lite tasks
+        if log_msg log(f"TFL: {log_msg}",3) end 
+    end
+
+    def predict()
+        # very simple implementation
+        var max_val = -128
+        var threshold = 0 # find out empirically
+        var digit = nil
+        for idx : 0..(size(self.out)-1)
+            var score = self.out.geti(idx,1)
+            if max_val < score
+                if score > threshold
+                    digit = idx
+                end
+                max_val = score
+            end
+        end
+        return digit
+    end
+end
+
+digits = DIGITS()
+```
+  
+This will print the clock string to the console and can be used as a starting point for real world use cases.
