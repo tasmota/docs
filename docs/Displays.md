@@ -430,11 +430,11 @@ The EPD fonts use about 9k space, which can be selected at compile time using \#
 
 ## Universal Display Driver
 
-Documentation for Universal Display Driver was moved to a [specific page](Universal-Display-Driver/#universal-display-driver-udisplay)
+Documentation for Universal Display Driver was moved to a [specific page](https://tasmota.github.io/docs/Universal-Display-Driver/#universal-display-driver-udisplay)
 
 ## Universal Touch Driver  
 
-Documentation for Universal Touch Driver was moved to a [specific page](Universal-Display-Driver/#universal-touch-driver-utouch)
+Documentation for Universal Touch Driver was moved to a [specific page](https://tasmota.github.io/docs/Universal-Display-Driver/#universal-touch-driver-utouch)
 
 ## Compiling
 There are also many variants of each display available and not all variants may be supported.  
