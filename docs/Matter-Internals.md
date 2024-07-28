@@ -44,6 +44,7 @@ We provide currently the following classes:
 | Plugin_Sensor_Rain      | Rain Sensor (type 0x0044)                         |  x     |    x    |
 | Plugin_Sensor_Waterleak | Water Leak Sensor (type 0x0043)                   |  x     |    x    |
 | Plugin_Sensor_Air_Quality | Air Quality Sensor (co2, pm...) (type 0x002C)   |  x     |    x    |
+| Plugin_Sensor_GenericSwitch_Btn | Generic switch for Buttons (type 0x000F)  |        |         |
 | Plugin_Shutter          | Shutter (type 0x0202)                             |        |         |
 | Plugin_Shutter_Tilt     | Shutter with Tilt control (type 0x0202)           |        |         |
 
@@ -78,6 +79,7 @@ Matter_Plugin
    |  +--- Matter_Plugin_Sensor_Rain
    |  +--- Matter_Plugin_Sensor_WaterLeak
    +--- Matter_Plugin_Sensor_AirQuality
+   +--- Matter_Plugin_Sensor_GenericSwitch_Btn
 ```
 
 All endpoints that support `Bridge` and `Virtual` have `Matter_Plugin_Bridge_<name>` and `Matter_Plugin_Virt_<name>` subclasses.
