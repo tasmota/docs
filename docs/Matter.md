@@ -68,7 +68,7 @@ You can change the name of the Matter endpoint, switch its Parameter number or r
 
 After changing these options click ***Change configuration***.
 
-### Add to configuration
+### Adding supported device types
 
 #### Add local sensor or device
 
@@ -140,6 +140,33 @@ The Matter border router needs to have IP connectivity to the Tasmota end-device
 #### Reset all and Auto-discover
 
 This option will reset all configured endpoints and try to auto discover them again.
+
+### Specific supported types
+
+Find below specific information you need to know for certain device types
+
+#### Lights
+
+When possible, native lights are automatically mapped to Matter lights. Currently, lights with 1/2/3 channels are mapped to `Light 1 Dimmer`/`Light 2 CT`/`Light 3 RGB` endpoint types. They don't need any parameter, except for bridged device where you need to indicate the `Power<x>` number associated to the light (this is due to bridge mode not able to automatically detect it).
+
+##### RGB and White Split
+
+See [RGB and White Split](https://tasmota.github.io/docs/Lights/#rgb-and-white-split) enabled with `SetOption37 128`.
+
+4 channels lights are split as 1 RGB and 1 Dimmer:
+![image](https://github.com/user-attachments/assets/0d8ba0f8-425f-465c-8013-1575ea4c8e91)
+
+5 channels light are split as 1 RGB and 1 CT:
+![image](https://github.com/user-attachments/assets/daf3e8f5-69af-4e53-a29b-e058fe9c9da0)
+
+##### Independent PWM Channels
+
+See [Independent PWM Channels](https://tasmota.github.io/docs/Lights/#independent-pwm-channels) enabled with `SetOption68 1`
+
+All channels are defined as independant Light Dimmers:
+![image](https://github.com/user-attachments/assets/e077fb97-a501-4932-8e5c-6bc7f1f4e057)
+
+Note: the first Dimmer has no parameter and is mapped to the default (first) channel. Other channels need an additional `light` parameter to map to the appropriate channel (numbering starts with `1` which is also the default).
 
 ## Advanced Configuration
 
