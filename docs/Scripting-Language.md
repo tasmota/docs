@@ -119,6 +119,7 @@ after initialization the script reports some info in the console e.g:
 nv = number of used variables in total (numeric and strings)  
 tv = number of used string variables  
 vns = total size of name strings in bytes (may not exceed 255) or #define SCRIPT_LARGE_VNBUFF extents the size to 4095
+
 vmem = used heap ram by the script (psram if available)  
 smem = used script (text) memory (psram if available)  
 gmem = used script global static memory  
