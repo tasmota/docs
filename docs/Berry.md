@@ -2208,6 +2208,7 @@ First step is to use `import zigbee` which returns an instance (monad) of `zb_co
 
 General methods|Parameters and details
 :---|:---
+started|`zigbee.started() -> bool or nil`<BR>Returns `true` if zigbee sucessfully started, then all other zigbee methods are available. This state is final and does not change.<BR>Returns `false` if zigbee is still in initialization process. This state eventually changes to `true` or `nil`.<BR>Returns `nil` if zigbee is not configured (no GPIO) or if initialization failes. This state is final and indicates a fatal error.
 info|`zigbee.info() -> map` returns a map with general configuration of the Zigbee coordinator.<BR>Format is identical to `ZbConfig`<BR>Example: <BR>`{'ext_pan_id': '0xCCCCCCCCA11A2233', 'tx_radio': 20, 'shortaddr': 0, 'longaddr': '0x00124B0026BAABBC', 'channel': 11, 'pan_id': 837, 'pan_id_hex': '0x0345', 'shortaddr_hex': '0x0000'}`
 size|`zigbee.size() -> int` returns the number of devices knwon by the coordinator
 iter|`zigbee.iter() -> iterator`<BR>Returns an iterator on all zigbee devices<BR>Use compact implicit form:<BR>`for ze: zigbee  print(ze)  end`
