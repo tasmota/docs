@@ -2211,7 +2211,8 @@ General methods|Parameters and details
 info|`zigbee.info() -> map` returns a map with general configuration of the Zigbee coordinator.<BR>Format is identical to `ZbConfig`<BR>Example: <BR>`{'ext_pan_id': '0xCCCCCCCCA11A2233', 'tx_radio': 20, 'shortaddr': 0, 'longaddr': '0x00124B0026BAABBC', 'channel': 11, 'pan_id': 837, 'pan_id_hex': '0x0345', 'shortaddr_hex': '0x0000'}`
 size|`zigbee.size() -> int` returns the number of devices knwon by the coordinator
 iter|`zigbee.iter() -> iterator`<BR>Returns an iterator on all zigbee devices<BR>Use compact implicit form:<BR>`for ze: zigbee  print(ze)  end`
-item<BR>\[\]|`zigbee.item(shortaddr:int) -> instance of zb_device`<BR>Returns the Zigbee device with short address `shortaddr`<BR>You can use the compact syntax `zigbee[0xFAB6]`
+item<BR>\[\]|`zigbee.item(shortaddr:int | friendlyname:str) -> instance of zb_device`<BR>Returns the Zigbee device corresponding to short address `shortaddr` or to friendlyname `friendlyname`.<BR>Returns an `index_error` exception if not found.<BR>You can use the compact syntax `zigbee[0xFAB6]`
+find|`zigbee.find(shortaddr:int | friendlyname:str) -> instance of zb_device`<BR>Returns the Zigbee device corresponding to short address `shortaddr` or to friendlyname `friendlyname`.<BR>Contrary to the above, returns `nil` if not found (no exception).
 abort|`zigbee.abort() -> nil` aborts the initialization of Zigbee MCU. To be used when initialization of Zigbee failed
 
 ### `zb_device` class
