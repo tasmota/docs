@@ -459,6 +459,8 @@ Energy provider supplied a PIN code to enable output of additional data.
 
 ### Apator Norax 3D (SML)
 
+To get all information with the scrpit below you need to enter the PIN. In the following menu you then turn "Pin" to "off" and "InF" to "on". Now all values are submitted through the SML script.
+
 ??? summary "View script"
     ```
     >D
