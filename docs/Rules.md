@@ -151,7 +151,7 @@ Connected sensors can be a trigger in the form as they are represented in the `T
 |INA219#Current\>0.100| whenever the current drawn is more than 0.1A|
 |Energy#Power\>100| whenever the power used is more than 100W|
 
-When the payload consists of an array of data eg: `ENERGY":{Current":[1.320,2.100]}`
+When the payload consists of an array of data eg: `"ENERGY":{"Current":[1.320,2.100]}`
 
 |Trigger           | When it occurs |
 ------------------|----------------|
