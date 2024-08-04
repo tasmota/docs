@@ -174,7 +174,7 @@ therefore when specifing permanent variables, add newly defined ones always at t
   specifies auto increment counters if =0 (in seconds)  
   `g:vname`   
   specifies global variable which is linked to all global variables with the same definition on all devices in the homenet.
-  when a variable is updated in one device it is instantly updated in all other devices. if a section >G exists it is executed when a variable is updated from another device (this is done via UDP-multicast, so not always reliable)  
+  when a variable is updated in one device it is instantly updated in all other devices. if a section >G exists it is executed when a variable is updated from another device (this is done via UDP-multicast, so not always reliable) the global variable receiver may be reset by cmd `gvr`  
   `I:vname`   
   specifies an integer 32 bit variable instead of float. (limited support) integer constants must be preceeded by '#'  
   `m:vname`   
