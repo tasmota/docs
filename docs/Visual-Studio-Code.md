@@ -16,6 +16,7 @@ Install the _PlatformIO IDE_ extension in VSC.
 Select ``View`` - ``Extensions`` and type PlatformIO in the search box.
 
 Make sure to select the official PlatformIO.org *PlatformIO IDE* extension and select *Install*. Accept to install dependencies.
+To install on Linux, it is essential to first have the python3-venv package installed on your system.
 
 ## Download Tasmota
 Download the latest Tasmota version from <https://github.com/arendst/Tasmota> and unzip to a known folder.
