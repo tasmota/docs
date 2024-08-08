@@ -2923,6 +2923,39 @@ This meter does not provide detailed information regarding phase etc.
     #
     ```
 
+### MetCom MCS301
+
+Reading the data (at 300 baud!) takes longer than a minute!
+
+??? summary "View script"
+    ...
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,o,0,300,H37,1,600,2F3F210D0A,063030300D0A
+    1,0.0.0(@1),Counter number,,znr,0
+    1,0.0.1(@#),Counter ID,,zid,0
+    1,1.7.0(@0.001,Import Act. Power,W,pimport,1
+    1,1.6.1(@0.001,Import Act. Max. Power,Wpeak,maximport,1
+    1,1.8.0(@0.001,Import Act. Energy,Wh,import,1
+    1,1.8.1(@0.001,Import Act. Energy Tar.1,Wh,importht,1
+    1,1.8.2(@0.001,Import Act. Energy Tar.2 NT,Wh,importnt,1
+    1,2.7.0(@0.001,Export Act. Power,W,pexport,1
+    1,2.6.1(@0.001,Export Act. Max. Power,Wpeak,maxexport,1
+    1,2.8.0(@0.001,Export Act. Energy,Wh,export,1
+    1,2.8.1(@0.001,Export Act. Energy Tar.1,Wh,exportht,1
+    1,2.8.2(@0.001,Export Act. Energy Tar.2,Wh,exportnt,1
+    1,31.7.0(@1,Current L1,A,il1,3
+    1,51.7.0(@1,Current L2,A,il2,3
+    1,51.7.0(@1,Current L3,A,il3,3
+    1,32.7.0(@1,Voltage L1,V,ul1,2
+    1,52.7.0(@1,Voltage L2,V,ul2,2
+    1,52.7.0(@1,Voltage L3,V,ul3,2
+    1,14.7.0(@0.001,Frequency,Hz,freq,2
+    #
+    ...
+
 ### PAFAL 20EC3gr
 
 Documentation for this Counter is very small. This informations were collected across the internet.
