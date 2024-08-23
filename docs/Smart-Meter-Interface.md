@@ -2928,7 +2928,7 @@ This meter does not provide detailed information regarding phase etc.
 Reading the data (at 300 baud!) takes longer than a minute!
 
 ??? summary "View script"
-    ...
+    ```
     >D
     >B
     ->sensor53 r
@@ -2954,7 +2954,7 @@ Reading the data (at 300 baud!) takes longer than a minute!
     1,52.7.0(@1,Voltage L3,V,ul3,2
     1,14.7.0(@0.001,Frequency,Hz,freq,2
     #
-    ...
+    ```
 
 ### PAFAL 20EC3gr
 
