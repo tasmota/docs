@@ -596,7 +596,7 @@ SetOption109<a class="cmnd" id="setoption109"></a>|`0` = _(default)_<BR>`1` = fo
 SetOption113<a class="cmnd" id="setoption113"></a>|_works only with rotary dial button_<BR>`0` = _(default)_<BR>`1` = set dimmer low on rotary dial after power off
 SetOption114<a class="cmnd" id="setoption114"></a>|Detach switches from relays and send MQTT messages instead<BR>`0` = disable *(default)*<BR>`1` = enable<BR> Example result: `{"Switch1":{"Action":"ON"}}`
 SetOption115<a class="cmnd" id="setoption115"></a>|ESP32 MI32 BLE<BR>`0` = disable  _(default)_<BR>`1` = enable
-SetOption116<a class="cmnd" id="setoption116"></a>|Auto-query of lights and devices<BR>`1` = disable
+SetOption116<a class="cmnd" id="setoption116"></a>|Zigbee Auto-query of lights and devices shortly after a light command is sent.<BR>`1` = disable<BR>Delay is 200ms for On/Off, 1050ms (1s) for lights levels, 10s for shutters.
 SetOption117<a class="cmnd" id="setoption117"></a>|Run fade at fixed duration instead of fixed slew rate<BR>`1` = enable
 SetOption123<a class="cmnd" id="setoption123"></a>|Wiegand tag number output in hex format<BR>`1` = enable
 SetOption124<a class="cmnd" id="setoption124"></a>|Wiegand key pad stroke format<br>`0` = one tag (ending char # or *) *(default)*<BR>`1` = one key
@@ -814,6 +814,7 @@ ZbName<a class="cmnd" id="zbname"></a>|Sets or reads the Zigbee device friendly 
 ZbNameKey<a class="cmnd" id="zbnamekey"></a><BR>SetOption83<a class="cmnd" id="setoption83"></a>|Uses Zigbee device friendly name instead of 16 bits short addresses as JSON key when reporting values and commands<BR>`0` = JSON key as short address<BR>`1` = JSON key as friendly name<BR>See [`ZbName <device>,<name>`](#zbname)
 ZbNameTopic<a class="cmnd" id="zbnametopic"></a><BR>SetOption112<a class="cmnd" id="setoption112"></a>|`0` = _(default)_<BR>`1` = use friendly name in Zigbee topic (use with [`ZbDeviceTopic`](#zbdevicetopic))
 ZbNoAutoBind<a class="cmnd" id="zbnoautobind"></a><BR>SetOption110<a class="cmnd" id="setoption110"></a>|`0` = _(default)_<BR>`1` = disable Zigbee auto-binding and auto-attribute reporting when pairing a new device. Use only if you want to manually configure devices
+ZbNoAutoQuery<a class="cmnd" id="zbnoautoquery"></a><BR>SetOption116<a class="cmnd" id="setoption116"></a>|Zigbee Auto-query of lights and devices shortly after a light command is sent.<BR>`1` = disable<BR>Delay is 200ms for On/Off, 1050ms (1s) for lights levels, 10s for shutters.
 ZbNoPrefix<a class="cmnd" id="zbnoprefix"></a><BR>SetOption100<a class="cmnd" id="setoption100"></a>|remove Zigbee `ZbReceived` value from `{"ZbReceived":{xxx:yyy}}` JSON message<BR>`0` = disable _(default)_ <BR>`1` = enable
 ZbOccupancy<a class="cmnd" id="zboccupancy"></a>|Configure the time-out after `"Occupancy":1` to send a synthetic `"Occupancy":0` for Zigbee motion sensors<BR>`<device>,<x>` - set occupancy timeout for `<device>`<BR>Possible values for `<x>`<br>`0`: no time-out, the device actually generates "Occupancy":0<br>`n`: the number of seconds. The possible values are 15, 30, 45, 60, 75, 90, 105, 120. If the number is different, it is rounded up<br>`-1`: apply the default of 90 seconds
 ZbOmitDevice<a class="cmnd" id="zbomitdevice"></a><BR>SetOption119<a class="cmnd" id="setoption119"></a>|Remove device addr from JSON payload<BR>`0` = disable *(default)*<BR>`1` = enable
