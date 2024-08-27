@@ -8,9 +8,9 @@ In order for the device to wake itself to perform its function during the DeepSl
 
 ## DeepSleep modes (regular, time based)
 
-There are TWO general methods to work with deepsleep. Method ONE wakes up the device on a regular intervall, wait for TELEPERIOD and immediate go to deepsleep again. This is mostly to make regular measurements and send them to a MQTT broker. Method TWO is more complex and use TIMER events to wakeup the device. The way and when the device go to deepsleep again depends on the configuration. See explanation below.
+There are TWO general methods to work with deepsleep. Method ONE wakes up the device on a regular interval, wait for TELEPERIOD and immediate go to deepsleep again. This is mostly to make regular measurements and send them to a MQTT broker. Method TWO is more complex and use TIMER events to wakeup the device. The way and when the device go to deepsleep again depends on the configuration. See explanation below.
 
-### Repeating regular deepsleep based on intervall
+### Repeating regular deepsleep based on interval
 
 ([`DeepSleepTime`](Commands.md#deepsleeptime)) `DeepSleepTime` sets the time the device remains in DeepSleep before it returns to full operating mode. Once the command is issued, the DeepSleep cycle commences. 
 
@@ -26,7 +26,7 @@ With Version 13.2 there is a new functionality to use TIMERS for the wakeup proc
 
 rule1|state|Behavior
 -|:-:|-
-`Wakeup`|ON/1|Device will do a TELEPERIOD and go to deepsleep asap, similar to deepsleep with intervall
+`Wakeup`|ON/1|Device will do a TELEPERIOD and go to deepsleep asap, similar to deepsleep with interval
 `Wakeup`|OFF/0|Device will stay ON until send to deepsleep with Restart 9 (deepsleep)
 `Wakeup`|ONCE/5|Device will do a TELEPERIOD and go to deepsleep asap, with the next wakeup the device will stay ON
 
