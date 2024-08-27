@@ -6,7 +6,7 @@
 
 !!! info "Check the [LVGL API Reference](LVGL_API_Reference.md)"
 
-Supported version: LVGL v9.1.0, LodePNG v20201017, Freetype 2.13.2
+Supported version: LVGL v9.2.0, LodePNG v20201017, Freetype 2.13.2
 
 **LVGL** (_Light and Versatile Graphics Library_) is Tasmota's next generation display. It is powerful, lightweight and simple to use. It combines:
 
