@@ -802,6 +802,28 @@ var topic = string.replace(string.replace(
             + 'SENSOR'
 ```
 
+## Wake-on-LAN
+
+The code below sends WoL (Wake on Lan) packets so you can wake up a device located on the same LAN.
+
+```berry
+def send_wake_on_lan(mac, broadcast_ip)
+  import string
+  u = udp()
+  u.begin("", 0)
+  var payload = bytes("FFFFFFFFFFFF")
+  var mac_bytes = bytes().fromhex(string.tr(mac, ":", ""))
+  for i:1..16
+    payload += mac_bytes
+  end
+  #print(payload)
+  return u.send(broadcast_ip, 9, payload)
+end
+
+
+send_wake_on_lan("84:CC:A8:64:B7:68", "192.168.2.255")
+```
+
 ## Other resources
 
 For Tasmota the're many Berry scripts available which can be found in the links below.
