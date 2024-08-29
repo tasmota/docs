@@ -655,6 +655,28 @@ tasmota.set_timer(30000,netflip)              #4
 3. send command `Wifi` with parameter depending on eth variable. `..` is to concatenate a string. See Berry [manual](https://berry.readthedocs.io/en/latest/source/en/Chapter-3.html#operator-2)
 4. set a timer to execute the netflip function 30000ms (30 seconds) after loading `autoexec.be`
 
+For newer Berry versions, there is an improved version:
+
+```berry
+# Ethernet Network Flipper - checks every 30 seconds if ethernet if up
+# if Ethernet is up, Wifi is turned off to avoid interference with Zigbee
+# if Ethernet is down, Wifi is turned back on to allow fallback connection
+def netflip()
+  var eth = tasmota.eth('up')                 #1
+  if tasmota.wifi('up') == eth                #2
+    tasmota.cmd('Wifi ' + (eth ? '0' : '1'))  #3
+  end
+  tasmota.set_timer(30000,netflip)            #4
+end
+tasmota.set_timer(30000,netflip)              #5
+```
+
+1. store variable "eth" with Ethernet status - "true" if Ethernet IP exists and "false" if not
+2. check if wifi and eth are both up or both down
+3. send command `Wifi` with parameter depending on eth variable, turn Wifi on if eth is down, turn Wifi off if eth is up
+4. set a timer to execute the netflip function every 30000ms (30 seconds)
+5. set a timer to execute the netflip function 30000ms (30 seconds) after loading `autoexec.be`
+
 ## TMP117 Driver
 
 [TomsTek@GitHub](https://github.com/TomsTek/tasmota-berry-TMP117-driver)
