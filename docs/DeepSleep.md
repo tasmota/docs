@@ -53,7 +53,7 @@ Current timer will wakeup the device every day 1h after sunrise. The Time will b
 
 ![](_media/deepsleep_switch.png)
 
-Select another GPIO (let's call it "GPIOn") and connect it GND. This can be performed through a switch per the schematic below. Flipping the switch to "ON" will prevent Tasmota to enter DeepSleep again after next wake-up until the switch is flipped back OFF. *On the diagram, blue denotes additional parts and connections to be able to disableDeepSleep.* GPIOn should be defined as `DeepSleep (182)` in the configuration as shown below:
+Select another GPIO (let's call it "GPIOn") and connect it GND. This can be performed through a switch per the schematic below. Flipping the switch to "ON" will prevent Tasmota to enter DeepSleep again after next wake-up until the switch is flipped back OFF. *On the diagram, blue denotes additional parts and connections to be able to disable DeepSleep.* GPIOn should be defined as `DeepSleep (182)` in the configuration as shown below:
 
 ![](_media/deepsleep_deepsleep182.png)
 
