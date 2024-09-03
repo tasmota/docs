@@ -67,9 +67,12 @@ Matter_Plugin
    +--+ Matter_Plugin_Shutter
    |  +--- Matter_Plugin_ShutterTilt
    +--+ Matter_Plugin_Sensor
-   |  +--- Matter_Plugin_Sensor_Humidity
-   |  +--- Matter_Plugin_Sensor_Temperature
-   |  +--- Matter_Plugin_Sensor_Pressure
+   |  +--+ Matter_Plugin_Sensor_Humidity
+   |     +--- Matter_Plugin_Zigbee_Humidity
+   |  +--+ Matter_Plugin_Sensor_Temperature
+   |     +--- Matter_Plugin_Zigbee_Temperature
+   |  +--+ Matter_Plugin_Sensor_Pressure
+   |     +--- Matter_Plugin_Zigbee_Pressure
    |  +--- Matter_Plugin_Sensor_Illuminance
    |  +--- Matter_Plugin_Sensor_Flow
    +--+ Matter_Plugin_Sensor_Boolean
@@ -82,7 +85,7 @@ Matter_Plugin
    +--- Matter_Plugin_Sensor_GenericSwitch_Btn
 ```
 
-All endpoints that support `Bridge` and `Virtual` have `Matter_Plugin_Bridge_<name>` and `Matter_Plugin_Virt_<name>` subclasses.
+All endpoints that support `Bridge`, `Virtual` and `Zigbee` have `Matter_Plugin_Bridge_<name>`, `Matter_Plugin_Virt_<name>` and `Matter_Plugin_Zigbee_<name>` subclasses.
 
 
 ## Plugin superclass
