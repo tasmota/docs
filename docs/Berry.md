@@ -737,17 +737,17 @@ Attribute|Type|Description
 voltage|float|Voltage (V) for main phase
 voltage\_phases|array of float|Voltage (V) as an array of phases
 current|float|Current (A) for main phase
-current\_phases|float|Current (A) as an array of phases
+current\_phases|array of float|Current (A) as an array of phases
 active\_power|float|Active Power (W) for main phase
-active\_power\_phases|float|Active Power (W) as an array of phases
+active\_power\_phases|array of float|Active Power (W) as an array of phases
 reactive\_power|float|Reactive Power (W) for main phase
-reactive\_power\_phases|float|Reactive Power (W) as an array of phases
+reactive\_power\_phases|array of float|Reactive Power (W) as an array of phases
 power\_factor|float|Power Factor (no unit) for main phase
-power\_factor\_phases|float|Power Factor (no unit) as an array of phases
+power\_factor\_phases|array of float|Power Factor (no unit) as an array of phases
 frequency|float|Frequency (Hz) for main phase
-frequency\_phases|float|Frequency (Hz) as an array of phases
+frequency\_phases|array of float|Frequency (Hz) as an array of phases
 export\_active|float|(kWh)
-export\_active\_phases|float|(kWh)
+export\_active\_phases|array of float|(kWh)
 start\_energy|float|Total previous energy (kWh)
 daily|float|Daily energy (kWh)
 total|float|Total energy (kWh)
@@ -758,7 +758,7 @@ period|uint32|(deca milli Watt hours)
 fifth\_second|uint8|
 command\_code|uint8|
 data\_valid|uint8|`0` if data is valid for main phase
-data\_valid\_phases|uint8|`0` if data is valid as an array of phases
+data\_valid\_phases|array of uint8|`0` if data is valid as an array of phases
 phase\_count|uint8|Number of phases (1..8)
 voltage\_common|bool|Use single voltage
 frequency\_common|bool|Use single frequency
