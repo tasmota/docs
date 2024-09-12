@@ -728,18 +728,26 @@ The special `energy.read()` function dumps all current values to a single `map`.
 Tasmota Function|Parameters and details
 :---|:---
 energy.read()<a class="cmnd" id="energy_read"></a>|`() -> map`<br>Returns all current values for the energy module. Some values may be unused by the current driver.
+energy.driver_enabled()<a class="cmnd" id="energy_driver_enabled"></a>|`() -> bool`<br>Returns `true` if the Berry virtual driver is active, i.e. `OPTION_A 9` is configured on a GPIO.<br>See below for Berry Energy driver implementation.
 
 List of `energy` attributes that you can read or write:
 
 Attribute|Type|Description
 :---|:---|:---
-voltage<br>voltage\_2<br>voltage\_3|float|Voltage (V) for main phase or 3 phases
-current<br>current\_2<br>current\_3|float|Current (A) for main phase or 3 phases
-active\_power<br>active\_power\_2<br>active\_power\_3|float|Active Power (W) for main phase or 3 phases
-reactive\_power<br>reactive\_power\_2<br>reactive\_power\_3|float|Reactive Power (W) for main phase or 3 phases
-power\_factor<br>power\_factor_2<br>power\_factor\_3|float|Power Factor (no unit) for main phase or 3 phases
-frequency<br>frequency\_2<br>frequency\_3|float|Frequency (Hz) for main phase or 3 phases
-export\_active<br>export\_active\_2<br>export\_active\_3|float|(kWh)
+voltage|float|Voltage (V) for main phase
+voltage\_phases|array of float|Voltage (V) as an array of phases
+current|float|Current (A) for main phase
+current\_phases|float|Current (A) as an array of phases
+active\_power|float|Active Power (W) for main phase
+active\_power\_phases|float|Active Power (W) as an array of phases
+reactive\_power|float|Reactive Power (W) for main phase
+reactive\_power\_phases|float|Reactive Power (W) as an array of phases
+power\_factor|float|Power Factor (no unit) for main phase
+power\_factor\_phases|float|Power Factor (no unit) as an array of phases
+frequency|float|Frequency (Hz) for main phase
+frequency\_phases|float|Frequency (Hz) as an array of phases
+export\_active|float|(kWh)
+export\_active\_phases|float|(kWh)
 start\_energy|float|Total previous energy (kWh)
 daily|float|Daily energy (kWh)
 total|float|Total energy (kWh)
@@ -749,8 +757,9 @@ today\_kwh|uint32|(deca milli Watt hours)
 period|uint32|(deca milli Watt hours)
 fifth\_second|uint8|
 command\_code|uint8|
-data\_valid<br>data\_valid\_2<br>data\_valid\_3|uint8|
-phase\_count|uint8|Number of phases (1,2 or 3)
+data\_valid|uint8|`0` if data is valid for main phase
+data\_valid\_phases|uint8|`0` if data is valid as an array of phases
+phase\_count|uint8|Number of phases (1..8)
 voltage\_common|bool|Use single voltage
 frequency\_common|bool|Use single frequency
 use\_overtemp|bool|Use global temperature as overtemp trigger on internal energy monitor hardware
@@ -760,7 +769,7 @@ current\_available|bool|Enable if current is measured
 type\_dc|bool|
 power\_on|bool|
 |||**Below if for Energy Margin Detection**
-power\_history\_0<br>power\_history\_0\_2<br>power\_history\_0\_3<br>power\_history\_1<br>power\_history\_1\_2<br>power\_history\_1\_3<br>power\_history\_2<br>power\_history\_2\_2<br>power\_history\_2\_3|uint16|
+power\_history\_0<br>power\_history\_1<br>power\_history\_2|uint16|
 power\_steady\_counter|uint8|Allow for power on stabilization
 min\_power\_flag|bool|
 max\_power\_flag|bool|
@@ -773,6 +782,28 @@ mplh\_counter|uint16|
 mplw\_counter|uint16|
 mplr\_counter|uint8|
 max\_energy\_state|uint8|
+
+### Energy driver in Berry
+
+Since v14.2.0, it is possible to implement an Energy driver in pure Berry. The Berry driver is enabled when an `OPTION_A 9` GPIO is configured:
+
+- by default, the energy driver has zero consumption.
+- the berry code can is `energy.driver_enabled()` to check if the virtual Berry Energy driver is active (i.e. `OPTION_A 9` is configured)
+- the following values need to be configured: `energy.phase_count` (default `1`), `energy.voltage`, `energy.current`, `energy.power_factor` (typically `1.0` or less), `energy.frequency` (default `nan`)
+- the most important value is `energy.active_power` (in Watt) which is added to the daily power consumptio
+
+Example test code in `autoexec.be`:
+
+```berry
+if energy.driver_enabled()
+  energy.phase_count = 1
+  energy.voltage = 240
+  energy.power_factor = 1.0
+  energy.current = 1.5
+  energy.frequency = 50
+  energy.active_power = 360
+end
+```
 
 ### `wire` object for I^2^C
 
