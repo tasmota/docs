@@ -19,8 +19,6 @@ Matter cannot be directly supported on ESP8266 due to limited memory resources b
 
 ![Matter diagram](_media/matter/matter_schema_zigbee.svg)
 
-<img width="900" alt="Tasmota-Matter" src="https://github.com/tasmota/docs/assets/49731213/1b445a7f-f3e8-4686-82bd-14d5ad652d38">
-
 !!! info "Thread is not supported" 
     Thread requires a specific radio and is not supported by ESP32 devices, it would require an additional, separate MCU.
     Espressif has launched a certified Thread Border Router based on ESP32S3 + ESP32H2 which should allow to
