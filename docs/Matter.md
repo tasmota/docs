@@ -168,6 +168,31 @@ All channels are defined as independant Light Dimmers:
 
 Note: the first Dimmer has no parameter and is mapped to the default (first) channel. Other channels need an additional `light` parameter to map to the appropriate channel (numbering starts with `1` which is also the default).
 
+### Bridging Zigbee devices
+
+Since v14.2.0, it is now possible to control a selection of Zigbee devices via a Z2T (Zigbee2Tasmota) bridge device. Such bridge device should have Zigbee and Matter enabled; currently you need to self-compile the firmware.
+
+!!! warning "This mode is not possible if you are using **Zigbee2MQTT** or **ZHA** with Tasmota in TCP tunnel (`TCPStart`). In such modes, Tasmota has no visibility on the data passed between Z2M/ZHA, and has no control over the Zigbee MCU.""
+
+!!! tip "Matter control of zigbee lights is compatible with Alexa Hue, you can have the same light controlled by multiple controllers."
+
+To configure a Zigbee devices mapped to a Matter endpoint, you simply need to choose the Zigbee Matter type and select the Zigbee device: either by shortaddr (ex: 0xABCD) or by friendlyname (preferred).
+
+![Matter Zigbee types](_media/matter/zigbee_menu.png)
+
+Matter type|Zigbee mapping
+:---|:---
+Zig Light 0 OnOff|Light On/Off controlled via `Power` command and attribute
+Zig Light 1 Dimmer|Light with 1 channel, controlled via `Power` and `Bri` commands and attributes
+Zig Light 2 CT|Light with 2 channels (white with color temperature), controlled via `Power`, `Bri` and `CT` commands and attributes
+Zig Temperature|Temperature sensor, reported via `Temperature` attribute
+Zig Pressure|Atmospheric Pressure sensor, reported via `Pressure` attribute
+Zig Humidity|Atmospheric Humidity sensor, reported via `Humidity` attribute
+Zig Occupancy|Occupancy sensor, reported via `Occupancy` attribute
+
+Limitations: currently only the first endpoint light can be controlled. Plugs with multple relays are not yet supported (only the first one is accessible).
+
+
 ## Advanced Configuration
 
 ### Matter Passcode
