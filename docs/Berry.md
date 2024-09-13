@@ -2251,6 +2251,10 @@ abort|`zigbee.abort() -> nil` aborts the initialization of Zigbee MCU. To be use
 
 The class `zb_device` contains all known information about a paired Zigbee device (end-device or router). You can't create a `zb_device` from scratch, they most be retrieved from `zigbee` object.
 
+General methods|Parameters and details
+:---|:---
+info|`info() -> attribute_list or nil`<BR>Returns the last known state for this device as an `attribute_list`<br>This is equivalent of running `ZbInfo <device>`` and getting the attribute_list
+
 `zb_device` instances can only be read, you can't change directly any attribute.
 
 Instance Variables|Parameters and details
@@ -2313,6 +2317,8 @@ Messages are sent in the following order:
 - `frame_received`: (low-level) the raw zigbee message is passed as `bytes` and attributes are not yet decoded. The `bytes` buffer can be modified and passed back to the Tasmota Zigbee engine.
 - `attributes_raw`: (mid-level) Zigbee attributes are decoded but no transformation is applied yet. Attributes are only available in cluser/attribute format, names are not decoded and plug-ins are not yet applied.<BR>This is the perfect moment to change non-standard attributes and map them to standard ones.
 - `attributes_refined`: (high-level) Attributes are mapped to their names (when possible) and all transformations are applied. This is the last chance to change values.
+- `attributes_final`: (high-level) consolidated `attributes_refined`. It is triggered just before final and consolidated attributes are sent to MQTT. Zigbee typically waits for 350ms before sending attributes, so it can consolidate multiple sensors (like temperature + humidity + pressure) in a single MQTT message
+
 
 The format of methods are the following:
 `def <zigbee event>(event_type, frame, attr_list, idx)`
