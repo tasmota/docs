@@ -17,6 +17,8 @@ Tasmota supports Matter over IP (Wi-Fi or Ethernet) as an end-device. This means
 
 Matter cannot be directly supported on ESP8266 due to limited memory resources but you can use an ESP32 device as a Matter bridge to other Tasmota and [OpenBK](https://github.com/openshwprojects/OpenBK7231T_App) devices.
 
+![Matter diagram](_media/matter/matter_schema_zigbee.svg)
+
 <img width="900" alt="Tasmota-Matter" src="https://github.com/tasmota/docs/assets/49731213/1b445a7f-f3e8-4686-82bd-14d5ad652d38">
 
 !!! info "Thread is not supported" 
