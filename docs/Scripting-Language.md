@@ -2663,15 +2663,15 @@ start dim level = initial dimmer level after power-up or restart; max 100
     endif
     
     #rsub
-    rap ,"CD4067":{
+    rapp ,"CD4067":{
     for cnt 1 16 1
-    rap "%is1[cnt]%":%mux[cnt]%
+    rapp "%is1[cnt]%":%mux[cnt]%
     if cnt<16
     then
-    rap ,
+    rapp ,
     endif
     next
-    rap }
+    rapp }
 
     >J
     ; send to mqtt
