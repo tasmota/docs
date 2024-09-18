@@ -594,11 +594,12 @@ Since v11.1.0.1, there is an easier way than registering a driver, and listening
 The function you attach to a topic pattern received **only** the matching MQTT messages, not all messages unlike `mqtt_data()` would.
 
 The function takes the same parameters as `mqtt_data()`:
-- `topic`: full topic received from the broker
-- `idx`: not used
-- `payload_s`: payload as string, usually converted to JSON with `import json json.load(payloas_s)`
-- `payload_b`: payload as a binary payload, bytes() array
-- the function should return `true` if the event was parsed or if the event should not trigger a Tasmota command. If you return `nil` or nothing, it is considered as `true` which is the usual behavior you want (i.e. not trigger a Tasmota command from random MQTT messages).
+* `topic`: full topic received from the broker
+* `idx`: not used
+* `payload_s`: payload as string, usually converted to JSON with `import json json.load(payloas_s)`
+* `payload_b`: payload as a binary payload, bytes() array
+
+the function should return `true` if the event was parsed or if the event should not trigger a Tasmota command. If you return `nil` or nothing, it is considered as `true` which is the usual behavior you want (i.e. not trigger a Tasmota command from random MQTT messages).
 
 Tasmota Function|Parameters and details
 :---|:---
