@@ -594,10 +594,11 @@ Since v11.1.0.1, there is an easier way than registering a driver, and listening
 The function you attach to a topic pattern received **only** the matching MQTT messages, not all messages unlike `mqtt_data()` would.
 
 The function takes the same parameters as `mqtt_data()`:
-* `topic`: full topic received from the broker
-* `idx`: not used
-* `payload_s`: payload as string, usually converted to JSON with `import json json.load(payloas_s)`
-* `payload_b`: payload as a binary payload, bytes() array
+
+- `topic`: full topic received from the broker
+- `idx`: not used
+- `payload_s`: payload as string, usually converted to JSON with `import json json.load(payload_s)`
+- `payload_b`: payload as a binary payload, bytes() array
 
 the function should return `true` if the event was parsed or if the event should not trigger a Tasmota command. If you return `nil` or nothing, it is considered as `true` which is the usual behavior you want (i.e. not trigger a Tasmota command from random MQTT messages).
 
@@ -791,7 +792,7 @@ Since v14.2.0, it is possible to implement an Energy driver in pure Berry. The B
 - by default, the energy driver has zero consumption.
 - the berry code can is `energy.driver_enabled()` to check if the virtual Berry Energy driver is active (i.e. `OPTION_A 9` is configured)
 - the following values need to be configured: `energy.phase_count` (default `1`), `energy.voltage`, `energy.current`, `energy.power_factor` (typically `1.0` or less), `energy.frequency` (default `nan`)
-- the most important value is `energy.active_power` (in Watt) which is added to the daily power consumptio
+- the most important value is `energy.active_power` (in Watt) which is added to the daily power consumption
 
 Example test code in `autoexec.be`:
 
