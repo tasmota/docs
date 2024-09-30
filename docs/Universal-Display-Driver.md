@@ -211,8 +211,6 @@ You are now done.
 
 ## Universal Display Driver (uDisplay)
 
-!!! info "The documentation is also available in [Displays](Displays.md#universal-display-driver) page. It is copied here for convenience."
-
 !!! info "uDisplay is included in all pre-compiled display binaries, for ESP8266 and ESP32. If you compile yourself, you need to `#define USE_UNIVERSAL_DISPLAY`"
 
 Universal Display Driver or uDisplay is a way to define your display settings using a simple text file and easily add it to Tasmota.
@@ -610,8 +608,6 @@ AF
 ```
 
 ## Universal Touch Driver (uTouch)
-
-!!! info "The documentation is also available in [Displays](Displays.md#universal-touch-driver) page. It is copied here for convenience."
 
 (`#define USE_UNIVERSAL_TOUCH`)  
 This option allows to add drivers for various touch chips  
