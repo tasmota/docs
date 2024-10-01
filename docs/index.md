@@ -23,7 +23,7 @@ Incredibly expandable and flexible.
 
 ## New Features
 
-- New commands `AdcGpio<gpio> <parameters>` to better support ADC configuration
+- New command `AdcGpio<gpio> <parameters>` to better support ADC configuration
 - Added support for:
   - QMP6988 temperature and pressure sensor
   - Sonoff WTS01 temperature sensor using SerialBridge in `SSerialMode 3`
