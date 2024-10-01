@@ -15,25 +15,21 @@ Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v14.1.0">Tasmota v14.1.0 Rachel</a></span>
+<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v14.2.0">Tasmota v14.2.0 Rita</a></span>
 
 ## Breaking Changes
 
-- Replaced most display drivers by Universal Display driver
-- Removed dedicated touch drivers in favour of Universal Touch driver
-- ESP32-C3 OTA binary name from `tasmota32c3cdc.bin` to `tasmota32c3.bin`
-- ESP32-C6 OTA binary name from `tasmota32c6cdc.bin` to `tasmota32c6.bin`
-- ESP32-S3 OTA binary name from `tasmota32s3cdc.bin` to `tasmota32s3.bin`
+- Berry energy module support for 8 phases and move to pseudo-arrays
 
 ## New Features
 
-- New commands `Wifi 6`, `PowerLock` and `Publish3`
+- New commands `AdcGpio<gpio> <parameters>` to better support ADC configuration
 - Added support for:
-  - LoRa and LoRaWanBridge
-  - Domoticz `idx5` to `idx32`
-  - SPL06_007 pressure and temperature sensor
+  - QMP6988 temperature and pressure sensor
+  - Sonoff WTS01 temperature sensor using SerialBridge in `SSerialMode 3`
+  - Sonoff POWCT Ring
   - AHT30 temperature and humidity sensor
-- ESP32 Framework (Arduino Core) v3.0.0
+- ESP32 Framework (Arduino Core) v3.0.4
 - Berry functions
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
