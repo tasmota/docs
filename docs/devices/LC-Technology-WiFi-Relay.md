@@ -42,9 +42,10 @@ To configure an LC Technology ESP8266 Relay X2, use the following settings...
   ```
 * Enable the rule (type `rule1 1` in the Tasmota console)  
 
-## LC Technology WiFi Relay - Quad Relay (note, older versions of this board used a baud rate of 9600, so if 115200 doesn't work, try 9600)
+## LC Technology WiFi Relay - Quad Relay
 
-Note: The template provided below did not work on an ESP-01 running Tasmota 8.1.0. It was necessary to manually enter the template in the `Configure Template` menu.
+!!! info
+    The template provided below did not work on an ESP-01 running Tasmota 8.1.0 nor on an ESP-01S running Tasmota 14.2.0. If after setting the template string you do not see the options to configure the relevant GPIO pins, in configuration open `Configure Template` and manually configure GPIO0, GPIO2, GPIO4 and GPIO5 as Relay1, Relay2, Relay3 and Relay4.
 
 * In configuration open `Configure Other` paste this template and select activate
 `{"NAME":"LC Technology 4CH Relay","GPIO":[52,255,17,255,255,255,255,255,21,22,23,24,255],"FLAG":0,"BASE":18}`
@@ -54,7 +55,7 @@ Note: The template provided below did not work on an ESP-01 running Tasmota 8.1.
 Enter this command in console (configure the 1st rule)  
 ```
 Rule1
- on System#Boot do Backlog Baudrate 9600; SerialSend5 0 endon
+ on System#Boot do Backlog Baudrate 115200; SerialSend5 0 endon
  on Power1#State=1 do SerialSend5 A00101A2 endon
  on Power1#State=0 do SerialSend5 A00100A1 endon
  on Power2#State=1 do SerialSend5 A00201A3 endon
@@ -64,17 +65,59 @@ Rule1
  on Power4#State=1 do SerialSend5 A00401A5 endon
  on Power4#State=0 do SerialSend5 A00400A4 endon
 ```
-Enable the rule (type `rule1 1` in the Tasmota console)  
 
-If your relay is still not switching, check the LED on the board.
+!!! info
+    Make sure the jumper connectors on the three pairs of pins on the board are connected correctly. In my case, the ESP-01's TX and RX pins are connected to the middle pair of pins while the other microcontroller's RX and TX pins are connected to the pair of pins farthest from the ESP-01 (and closest to the microcontroller). These need to be connected via jumpers for the two to communicate.
+
+!!! info
+    Older versions of this board used a baud rate of 9600, so if 115200 doesn't work, try 9600. To do so, replace the first line of `Rule1` with `on System#Boot do Backlog Baudrate 9600; SerialSend5 0 endon`.
+
+Enable the rule (type `rule1 1` in the Tasmota console).
+What this rule does is it sends serial commands to the second microcontroller on the board telling it to switch the respective relays on or off. The ESP-01 does not switch the relays itself.
+
+At this point, head back to the main menu and try toggling the different relays.
+If the relays work, you've successfully set up your relay board.
+If not, continue below.
+
+### Switching to Mode 1
+First, check the LEDs on the board.
 If LED D5 is on (blue on my board, the middle LED) then the controller is in Mode 2.
-By pressing S2 while power up you can change back to Mode 1.
-After that the LED D7 is on (red in my case) and the device works like a charm.
-Be careful when you press S1 you change the mode again!
+By pressing the correct button during power up you can change back to Mode 1.
+Which button you need to press seems to vary between versions of this board.
+Try holding S1 during power up. If LED D7 turns on (red in my case) and LED D5 is off you've switched to Mode 1.
+If not, remove power and repeat with button S2.
+Be careful as when you press the wrong button afterwards you again change modes again!
+Again, go to the main menu and try toggling the relays. Should they still not work continue below.
 
-## LC Technology WiFi Relay X2 with Nuvoton N76E003AT20
+### Configuring the Nuvoton N76E003AT20
+Newer versions of the board use the Nuvoton N76E003AT20 as its host microcontroller similary to the LC Technology WiFi Relay X2. This microcontroller requires a special configuration for it to start listening to serial commands.
+We need to add a new rule that sends this configuration to the N76E003AT20.
+However, if we combine this with our rule for turning on and off the relays, the rule gets too big and won't be accepted. We thus split it up into two rules.
+```
+Rule 1
+ on System#Boot do Backlog Baudrate 115200 endon
+ on SerialReceived#Data=41542B5253540D0A do SerialSend5 5749464920434f4e4e45435445440a5749464920474f542049500a41542b4349504d55583d310a41542b4349505345525645523d312c383038300a41542b43495053544f3d333630 endon
+```
+```
+Rule2
+ on Power1#State=1 do SerialSend5 A00101A2 endon
+ on Power1#State=0 do SerialSend5 A00100A1 endon
+ on Power2#State=1 do SerialSend5 A00201A3 endon
+ on Power2#State=0 do SerialSend5 A00200A2 endon
+ on Power3#State=1 do SerialSend5 A00301A4 endon
+ on Power3#State=0 do SerialSend5 A00300A3 endon
+ on Power4#State=1 do SerialSend5 A00401A5 endon
+ on Power4#State=0 do SerialSend5 A00400A4 endon
+```
+Afterwards activate both rules by entering `rule1 1` and `rule2 1`.
+Head back to the main menu and try toggling the relays. They should now switch as expected.
 
-Note: This version of the board has the Nuvoton N76E003AT20 as its host microcontroller instead of  STC15F104W. This device requires a special configuration for it to start listening to serial commands.
+!!! info
+    For more information on what `Rule1` does, see the explanation in the section on the [X2](#lc-tech-wifi-relay-x2-N76E003AT20).
+
+## LC Technology WiFi Relay X2 with Nuvoton N76E003AT20 {#lc-tech-wifi-relay-x2-N76E003AT20}
+
+Note: This version of the board has the Nuvoton N76E003AT20 as its host microcontroller instead of STC15F104W. This device requires a special configuration for it to start listening to serial commands.
 
 Use the following device template, configurable in `Configure Other`:
 
