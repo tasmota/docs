@@ -28,7 +28,6 @@ Incredibly expandable and flexible.
   - QMP6988 temperature and pressure sensor
   - Sonoff WTS01 temperature sensor using SerialBridge in `SSerialMode 3`
   - Sonoff POWCT Ring
-  - AHT30 temperature and humidity sensor
 - ESP32 Framework (Arduino Core) v3.0.4
 - Berry functions
 
