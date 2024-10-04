@@ -6,7 +6,7 @@ This page is primarily targeting users that need to move from specific driver (I
 
 ## Migrating to uDisplay
 
-### Step 1. Check that you display is supported by uDisplay driver
+### Step 1. Check that your display is supported by uDisplay driver
 
 The currently supported display drivers are:
 
