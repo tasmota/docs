@@ -251,3 +251,15 @@
 {"id":26,"obj":"label","x":2,"y":122,"w":70,"align":1,"text":"12:34","text_font":"seg7-20","text_color":"#FF4400"}
 {"id":27,"obj":"label","x":72,"y":122,"w":90,"align":1,"text":"12:34","text_font":"seg7-24","text_color":"#FF4400"}
 {"id":28,"obj":"label","x":162,"y":122,"w":130,"align":1,"text":"12:34","text_font":"seg7-36","text_color":"#FF4400"}
+
+{"page":23,"comment":"---------- Page 23 Message Box ----------"}
+{"id":0,"bg_color":"#000000","text_color":"#FFFFFF","text_font":"robotocondensed-16"}
+{"id":1,"obj":"label","x":0,"y":30,"w%":100,"h":24,"text":"[23. Message Box]","text_font":"montserrat-20"}
+
+{"id":10,"obj":"msgbox","x":0,"y":0,"w%":80,"h":100,"text":"A message box with two buttons.","border_color":"#FF4400","bg_color":"#4f4f4f","bg_opa":200,"buttons_bg_color":"#FF4400","buttons_border_width":3,"buttons_border_color":"#FFFFFF","text_color":"#FFFFFF","options":["Apply","Close"]}
+
+{"page":24,"comment":"---------- Page 24 Color Picker ----------"}
+{"id":0,"bg_color":"#000000","text_color":"#FFFFFF","text_font":"robotocondensed-16"}
+{"id":1,"obj":"label","x":0,"y":30,"w%":100,"h":24,"text":"[24. Color Picker]","text_font":"montserrat-20"}
+
+{"id":10,"obj":"cpicker","x":20,"y":60,"w":120,"h":120,"color":"#FFFF00","mode":"hue","scale_width":20}
