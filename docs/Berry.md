@@ -882,25 +882,28 @@ path.isdir<a class="cmnd" id="path_isdir"></a>|`(name:string) -> bool`<br>Checks
 
 ### `persist` module
 
-Easy way to persist simple values in Berry and read/write any attribute. Values are written in JSON format in `_persist.json` file.
+Easy way to persist simple values in Berry and read/write any attribute. Values are written in JSON format in `_persist.json` file. Be aware that `persist` cannot detect any change in sub-objects like lists or maps; in such case you can call `persist.dirty()` to indicate that data needs to be saved.
 
-!!! example 
+!!! example
+     ```berry
      > import persist    
      > persist.a = 1    
      > persist.b = "foobar"    
      > print(persist)    
      <instance: Persist({'a': 1, 'b': 'foobar'})>    
-     > persist.save()   # save to _persist.json    
+     > persist.save()   # save to _persist.json
+     ```   
 
 Tasmota Function|Parameters and details
 :---|:---
-persist.save<a class="cmnd" id="persist_save"></a>|`()`<br>triggers saving to file system. It is called automatically before a restart but you might want to call it yourself to prevent losing data in case of power loss or crash. `persist.save()` writes to flash, so be careful of not calling it too often, or it will cause wearing of flash and reduce its lifetime.
+persist.save<a class="cmnd" id="persist_save"></a>|`()`<br>triggers saving to file system. It is called automatically before a restart but you might want to call it yourself to prevent losing data in case of power loss or crash. `persist.save()` writes to flash, so be careful of not calling it too often, or it will cause wearing of flash and reduce its lifetime.<br>By default `persist.save()` only saves if data was marked as dirty, or does nothing. You can force an actual save with `persist.save(true)`
 persist.has<a class="cmnd" id="persist_has"></a>|`(key:string) -> bool`<br>returns true/false if the key exists
 persist.remove<a class="cmnd" id="persist_remove"></a>|`(key:string) -> bool`<br>removes a key or ignores if key doesn't exist
 persist.find<a class="cmnd" id="persist_find"></a>|`(key:string [, "default value"]) -> string | bool`<br>returns the value for a key, nil or the default value. Similar to `map.find`
 persist.member<a class="cmnd" id="persist_member"></a>|`(key:string) -> string | nil`<br>returns the value for a key, or nil.
 persist.setmember<a class="cmnd" id="persist_setmember"></a>|`(key:string, value:string)`<br>sets the value for a key, when the key is in a variable
 persist.zero<a class="cmnd" id="persist_zero"></a>|`()`<br>clears all entries. This may be destructive to other code using `persist`
+persist.dirty<a class="cmnd" id="persist_dirty"></a>|`()`<br>marks data as dirty to force writing to flash
 
 ### `introspect` module
 
