@@ -30,8 +30,8 @@ This feature is heavily inspired from @fvanroie's [openHASP project](https://git
 [![HASPmota fonts](_media/lvgl/HASPmota_20_fonts.png){width="160"}](#embedded-fonts)
 [![HASPmota icons](_media/lvgl/HASPmota_21_icons.png){width="160"}](#embedded-symbols)
 [![HASPmota seg7](_media/lvgl/HASPmota_22_seg7.png){width="160"}](#embedded-special-fonts)
-[![HASPmota msgbox](_media/lvgl/HASPmota_23_msgbox.png){width="160"}](#embedded-special-fonts)
-[![HASPmota cpicker](_media/lvgl/HASPmota_24_cpicker.png){width="160"}](#embedded-special-fonts)
+[![HASPmota msgbox](_media/lvgl/HASPmota_23_msgbox.png){width="160"}](#msgbox)
+[![HASPmota cpicker](_media/lvgl/HASPmota_24_cpicker.png){width="160"}](#cpicker)
 
 
 The `jsonl` file used to display the widgets can be found [here](_media/lvgl/haspmota_demo.jsonl)
