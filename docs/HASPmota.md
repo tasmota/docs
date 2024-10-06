@@ -30,6 +30,8 @@ This feature is heavily inspired from @fvanroie's [openHASP project](https://git
 [![HASPmota fonts](_media/lvgl/HASPmota_20_fonts.png){width="160"}](#embedded-fonts)
 [![HASPmota icons](_media/lvgl/HASPmota_21_icons.png){width="160"}](#embedded-symbols)
 [![HASPmota seg7](_media/lvgl/HASPmota_22_seg7.png){width="160"}](#embedded-special-fonts)
+[![HASPmota msgbox](_media/lvgl/HASPmota_23_msgbox.png){width="160"}](#embedded-special-fonts)
+[![HASPmota cpicker](_media/lvgl/HASPmota_24_cpicker.png){width="160"}](#embedded-special-fonts)
 
 
 The `jsonl` file used to display the widgets can be found [here](_media/lvgl/haspmota_demo.jsonl)
@@ -232,8 +234,10 @@ HASPmota Class|Embedded LVGL class
 `textarea`|`lv.textarea`
 `led`|`lv.led`
 `chart`|`lv.chart`
+`cpicker`|`lv.colorwheel` (ported from LVGL8 to LVGL9)
 `spangroup`|`lv.spangroup`
 `span`|`lv.span`
+`msgbox`|`lv.msgbox`
 `qrcode`|`lv.qrcode`
 
 You can also import custom widget as long as they inherit from `lv.obj` and the class name matches the module name.
@@ -825,6 +829,25 @@ Attribute name|LVGL equivalent|Details
 `zoom_x`<br>`zoom_y`|`zoom`|Zoom into the chart in X or Y direction.<br>`256` for no zoom, `512` double zoom.
 `update_mode`|`update_mode`|Set update mode of the chart object, default is `SHIFT`.<br>`0`: (`SHIFT`) Shift old data to the left and add the new one the right<br>`1`: (`CIRCULAR`) Add the new data in a circular way
 
+### `cpicker`
+
+The `cpicker` (color picker) object allows to select a color, encoded as `#RRGGBB` where RR/GG/BB are Hex values for Red/Green/Blue. Color Picker has 3 modes: "hue", "saturation", "value"; use long press to change mode.
+
+![HASPmota cpicker](_media/lvgl/HASPmota_23_cpicker.png)
+
+Example of `pages.jsonl`:
+```json
+{"id":10,"obj":"cpicker","x":20,"y":60,"w":120,"h":120,"color":"#FFFF00","mode":"hue","scale_width":20}
+```
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`color`|`color_rgb`|Set or read the current color as `#RRGGBB` string, where Red/Green/Blue are encoded as 2-digit hex. Example: `#FFFF00` is yellow.
+`mode`|`mode`|Set or read the current mode<br>`hue` displays a hue ring<br>`saturation` displays a saturation ring from 0 to white<br>`value` displays a brightness ring from pure color to black
+`mode_fixed`|`mode_fixed`|(bool) Set or read the `mode_fixed` attribute. If `true`, there is no mode change on long-press.
+`scale_width`|`arc_width`|(int) Set or read the width of the ring
+`pad_inner`||This attribute is ignored but present for OpenHASP compatibility. Since LVGL 8, there is no inner circle showing the color. There color is shown on the knob instead
+
 ### `spangroup` (styled text)
 
 !!!note "Available (since Tasmota v13.4). This object is not part of OPENhasp."
@@ -868,6 +891,29 @@ Attribute name|LVGL equivalent|Details
 `text_opa`|`set_text_opa`|Sets the text opacity<br>`0`: transparent<br>`255`: opaque 
 `text_letter_space`|`set_text_letter_space`|Set the letter space in pixels
 `text_line_space`|`set_text_line_space`|Set the line space in pixels.
+
+### `msgbox`
+
+The `msgbox` (message box) object allows to display a pop-up with a text content and one or multiple buttons. The pop-up can be made "modal" (not impemented yet).
+
+![HASPmota msgbox](_media/lvgl/HASPmota_24_msgbox.png)
+
+Example of `pages.jsonl`:
+```json
+{"id":10,"obj":"msgbox","x":0,"y":0,"w%":80,"h":100,"text":"A message box with two buttons.","border_color":"#FF4400","bg_color":"#4f4f4f","bg_opa":200,"buttons_bg_color":"#FF4400","buttons_border_width":3,"buttons_border_color":"#FFFFFF","text_color":"#FFFFFF","options":["Apply","Close"]}
+```
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`text`|`content`|Set the contect of the Message box. If you write a new value, it will add to the existing content (LVGL limitation)
+`options`|(array of string, not empty) Labels for buttons
+`footer_<X>`<br>`header_<X>`<br>`title_<X>`<br>`content<X>`<br>`buttons_<X>`||Prefix to set or read style attributes on sub-objects of the message box.<BR>Styles for `buttons_` cannot be read, and set the same style for all buttons.
+`border_color`||Set the color of the border of the pop-up.
+`text_color`||Set the text color of the content
+`bg_opa`||Set the opacity of the pop-up, `255` (fully opaque) by default.
+`buttons_bg_color`||Set the background color of all buttons.
+`buttons_border_width`||Set the border width of all buttons.
+`buttons_border_color`||Set the border color of all buttons.
 
 ### `qrcode`
 
