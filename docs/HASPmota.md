@@ -833,7 +833,7 @@ Attribute name|LVGL equivalent|Details
 
 The `cpicker` (color picker) object allows to select a color, encoded as `#RRGGBB` where RR/GG/BB are Hex values for Red/Green/Blue. Color Picker has 3 modes: "hue", "saturation", "value"; use long press to change mode.
 
-![HASPmota cpicker](_media/lvgl/HASPmota_23_cpicker.png)
+![HASPmota cpicker](_media/lvgl/HASPmota_24_cpicker.png)
 
 Example of `pages.jsonl`:
 ```json
@@ -896,7 +896,7 @@ Attribute name|LVGL equivalent|Details
 
 The `msgbox` (message box) object allows to display a pop-up with a text content and one or multiple buttons. The pop-up can be made "modal" (not impemented yet).
 
-![HASPmota msgbox](_media/lvgl/HASPmota_24_msgbox.png)
+![HASPmota msgbox](_media/lvgl/HASPmota_23_msgbox.png)
 
 Example of `pages.jsonl`:
 ```json
