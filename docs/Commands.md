@@ -964,8 +964,11 @@ IfxRP<a class="cmnd" id="ifxrp"></a>|`<value>` = set Influxdb retention policy _
 
 Command|Parameters
 :---|:---
-KnxTx_Cmnd<x\><a class="cmnd" id="knxtx_cmnd"></a>|`0` or `1` = send command using slot <x\> set in KNX Menu at KNX_TX
-KnxTx_Val<x\><a class="cmnd" id="knxtx_val"></a>|`<value>` = send float value using slot <x\> set in KNX Menu at KNX_TX
+KnxTx_Cmnd<x\><a class="cmnd" id="knxtx_cmnd"></a>|`0` or `1` = send 1 bit command using slot <x\> set in KNX Menu at KNX_TX
+KnxTx_Double<x\><a class="cmnd" id="knxtx_double"></a>|`<value>` = send 32 bits float value (DPT 14) using slot <x\> set in KNX Menu at KNX_TX
+KnxTx_Val<x\><a class="cmnd" id="knxtx_val"></a>|`<value>` = Alias for KnxTx_Double, send 32 float value (DPT 14) using slot <x\> set in KNX Menu at KNX_TX
+KnxTx_Float<x\><a class="cmnd" id="knxtx_float"></a>|`<value>` = send 16 bits float value (DPT 9) using slot <x\> set in KNX Menu at KNX_TX
+KnxTx_Byte<x\><a class="cmnd" id="knxtx_byte"></a>|`<value>` = send 8 bits unsigned integer value (DPT 5) using slot <x\> set in KNX Menu at KNX_TX
 KnxTx_Scene<a class="cmnd" id="knxtx_scene"></a>|`<value>` = send scene number to the GA set in KNX Menu
 Knx_Enabled<a class="cmnd" id="knx_enabled"></a>|Status of KNX Communications<BR>`0` = set to Disable<BR>`1` = set to Enable
 Knx_Enhanced<a class="cmnd" id="knx_enhanced"></a>|Status of Enhanced mode for KNX Communications<BR>`0` = set to Disable<BR>`1` = set to Enable
