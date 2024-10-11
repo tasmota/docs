@@ -158,14 +158,14 @@ SwitchMode, as the name implies, applies _**ONLY**_ to GPIO configured in Tasmot
     !!! tip "This mode is useful with [PIR sensors](PIR-Motion-Sensors)"
 
 **`SwitchMode 15`**
-:    Send only MQTT message on switch change. This will stop the switch from controlling power outputs.
+:    Send only MQTT message on switch change. This will stop the switch from controlling power outputs, and you get no state values for rules.
 
     ```console
     tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:00","Switch1":"OFF"}
     tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:00","Switch1":"ON"}
     ```
 **`SwitchMode 16`**
-:    Send only MQTT message on inverted switch change. This will stop the switch from controlling power outputs.
+:    Send only MQTT message on inverted switch change. This will stop the switch from controlling power outputs, and you get no state values for rules.
 
     ```console
     tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:00","Switch1":"ON"}
