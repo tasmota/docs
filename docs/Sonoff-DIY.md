@@ -1,7 +1,7 @@
 Some new Sonoff devices support the new [Itead DIY architecture](https://www.youtube.com/watch?v=fRS-ukCgD_I) which allows OTA firmware upload. With [Sonoff DIY](https://github.com/itead/Sonoff_Devices_DIY_Tools), a user has more control over the hardware features of the device and also allows for upgrading the firmware without additional hardware. The following procedure upgrades Sonoff eWelink firmware to Tasmota.
 
 !!! warning "There are many reports this procedure has changed with newer versions of Sonoff DIY"
-    Tasmota does not provide any kind of support for flashing using this method. Please contact [Sonoff Support](https://sonoff.tech/support) for help.
+    Tasmota does not provide any kind of support for flashing using this method. Please contact [Sonoff Support](https://sonoff.tech/support) for help. Version 3.7.6 firmware requires that deviceid be included in the post command to the unit, otherwise it will ignore it. You will need to add the device to the eWeLink app, find the deviceid, then start over in DIY mode and follow the instructions below.
 
 **IMPORTANT:** There are [some reports](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/36) suggesting that the Windows version of Sonoff DIY Tool contains a trojan. It is not clear if it actually contains the malicious code or these are just false positives due to the way Python code was converted to native executables. Nevertheless, proceed with care.
 
@@ -19,7 +19,7 @@ As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible tha
 ## Flash procedure
 _Guide originally from [@Brunas](https://github.com/Brunas/HomeAutomation/blob/master/doc/Sonoff%20Mini%203.6.0%20to%20Tasmota.md)_
 
-0. Pair the device with the eWeLink app and update firmware. [The wifi network you connect to during this step will need to be reachable in order to enter DIY mode.](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/90)
+0. Pair the device with the eWeLink app and update firmware. Note the Device ID in Device Settings. [The wifi network you connect to during this step will need to be reachable in order to enter DIY mode.](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/90)
 1. Follow instructions how to enter DIY mode from [Sonoff](https://github.com/itead/Sonoff_Devices_DIY_Tools/blob/master/SONOFF%20DIY%20MODE%20Protocol%20Doc%20v2.0%20Doc.pdf). This is the excerpt from it:
 
 	1. Long press the button for 5 seconds to enter pairing mode, then press another 5 seconds to ender Compatible Pairing Mode (AP). The LED indicator should blink continuously.
