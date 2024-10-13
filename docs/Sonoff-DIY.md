@@ -1,7 +1,7 @@
 Some new Sonoff devices support the new [Itead DIY architecture](https://www.youtube.com/watch?v=fRS-ukCgD_I) which allows OTA firmware upload. With [Sonoff DIY](https://github.com/itead/Sonoff_Devices_DIY_Tools), a user has more control over the hardware features of the device and also allows for upgrading the firmware without additional hardware. The following procedure upgrades Sonoff eWelink firmware to Tasmota.
 
 !!! warning "There are many reports this procedure has changed with newer versions of Sonoff DIY"
-    Tasmota does not provide any kind of support for flashing using this method. Please contact [Sonoff Support](https://sonoff.tech/support) for help. Version 3.7.6 firmware requires that deviceid be included in the post command to the unit, otherwise it will ignore it. You will need to add the device to the eWeLink app, find the deviceid, then start over in DIY mode and follow the instructions below.
+    Tasmota does not provide any kind of support for flashing using this method. Please contact [Sonoff Support](https://sonoff.tech/support) for help. Version 3.7.6 firmware requires that deviceid be included in the post command to the unit, otherwise it will ignore it. When the device creates its wifi network, note the number after ewelink-, this is the device id.
 
 **IMPORTANT:** There are [some reports](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/36) suggesting that the Windows version of Sonoff DIY Tool contains a trojan. It is not clear if it actually contains the malicious code or these are just false positives due to the way Python code was converted to native executables. Nevertheless, proceed with care.
 
