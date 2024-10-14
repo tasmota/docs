@@ -1115,7 +1115,7 @@ WcStats<a class="cmnd" id="wcstats"></a>|show statistics
 WcStream<a class="cmnd" id="wcstream"></a>|`1` = start webcam stream at http://<device_ip\>:81/stream or http://<device_ip\>:81/cam.mjpeg<BR>`0` = stop stream<BR>
 WcWBMode<a class="cmnd" id="wcwbmode"></a>|White Balance Mode<BR>`0` = auto, `1` = Sunny, `2` = Cloudy, `3` = Office, `4` = Home
 WcWPC<a class="cmnd" id="wcwpc"></a>|`1` = enable White Pixel Correct, `0` = disable *(default)*
-
+WcAuth<a class="cmnd" id="wcauth"></a>|`1` = enable basic Authentication for stream and screenshot urls, `0` = disable *(default)*
 
 
 ### Ethernet
