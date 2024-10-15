@@ -15,20 +15,21 @@ Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v14.2.0">Tasmota v14.2.0 Rita</a></span>
+<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v14.3.0">Tasmota v14.3.0 Robert</a></span>
 
 ## Breaking Changes
 
-- Berry energy module support for 8 phases and move to pseudo-arrays
+- Berry make energy modules changes from #21887 backwards compatible
 
 ## New Features
 
-- New command `AdcGpio<gpio> <parameters>` to better support ADC configuration
+- Extend command `PowerSet<phase> <power>,<voltage>` to calibrate both Current and Power with known resistive load using previous calibrated Voltage
 - Added support for:
-  - QMP6988 temperature and pressure sensor
-  - Sonoff WTS01 temperature sensor using SerialBridge in `SSerialMode 3`
-  - Sonoff POWCT Ring
-- ESP32 Framework (Arduino Core) v3.0.4
+  - I2C M5Unit (Mini)Scales using HX711 driver
+  - DALI on ESP8266
+  - BL0906 up to 6 channel energy monitor as used in Athom EM2/EM6
+  - Sonoff SPM v1.3.0
+- ESP32 Framework (Arduino Core) v3.1.0
 - Berry functions
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
