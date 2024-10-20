@@ -60,8 +60,8 @@ In the list below `p` stands for parameter and may be a number from 1 to n digit
 On monochrome graphic displays things are drawn into a local frame buffer and sent to the display either
 via the `d` command or automatically at the end of the command.
 
-Co-ordinates are mapped from 0,0 (x,y) at the top left of the frame buffer, where x is the horizontal axis incrementing
-right and y is the vertical axes incrementing down. how the frame buffer is displayed on screen can be adjusted on some
+Co-ordinates are mapped from 0,0 (x,y) at the top left of the logical display, where x is the horizontal axis incrementing
+right and y is the vertical axes incrementing down. How the logical display is physically displayed (rotated) on screen can be adjusted on some
 displays using the `DisplayRotate` command.
 
 ### Positioning
@@ -82,9 +82,9 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 `kp` = draws a circle with radius `p`  
 `Kp` = draws a filled circle with radius `p`  
 `rp:p` = draws a rectangle with `p` width and `p` height  
-`Rp:p` = draws a filled rectangle width `p` with and `p` height  
-`up:p:p` = draws a rounded rectangle with `p` with, `p` height and `p` radius v
-`Up:p:p` = draws a filled rounded rectangle with `p` with, `p` height and `p` radius  
+`Rp:p` = draws a filled rectangle with `p` width and `p` height  
+`up:p:p` = draws a rounded rectangle with `p` width, `p` height and `p` radius v
+`Up:p:p` = draws a filled rounded rectangle with `p` width, `p` height and `p` radius  
 
 ### Miscellaneous
 
