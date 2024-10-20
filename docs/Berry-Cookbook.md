@@ -35,7 +35,7 @@ brgc
 
 ### General form of the custom command function
 
-The custom command function have the general form below where parameters are optionals:
+The custom command function have the general form below where parameters are optional:
 
 ```berry
 def function_name(cmd, idx, payload, payload_json)
@@ -508,8 +508,8 @@ scr = lv.scr_act()          # default screean object
 f20 = lv.montserrat_font(20)  # load embedded Montserrat 20
 f28 = lv.montserrat_font(28)  # load embedded Montserrat 28
 
-#- Backgroun -#
-scr.set_style_local_bg_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(0x000066))  # backgroun in dark blue #000066
+#- Background -#
+scr.set_style_local_bg_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(0x000066))  # background in dark blue #000066
 
 #- Upper state line -#
 stat_line = lv_label(scr)
@@ -633,7 +633,7 @@ end
 
 ## Multi-Zone Heating Controller
 
-This project is a multi-zone heating controller written entirely in berry. It demonstrates the use of the persist module for saving/loading data; the webserver module for creating a custom "Manage Heating" user interface; dynamic loading of HTML from the file system; subscribing to a variety of rule triggers (using tasmota.add_rule); the implementation of custom commands (using tasmota.add_cmnd). It also makes good use of time functionaity (via tasmota.rtc, tasmota.time_dump, tasmota.set_timer and tasmota.strftime). The project also includes an LCD I2C driver for running a basic 20x4 display. The entire driver is implemented using just the tasmota.wire_scan method.
+This project is a multi-zone heating controller written entirely in berry. It demonstrates the use of the persist module for saving/loading data; the webserver module for creating a custom "Manage Heating" user interface; dynamic loading of HTML from the file system; subscribing to a variety of rule triggers (using tasmota.add_rule); the implementation of custom commands (using tasmota.add_cmnd). It also makes good use of time functionality (via `tasmota.rtc`, `tasmota.time_dump`, `tasmota.set_timer` and `tasmota.strftime`). The project also includes an LCD I2C driver for running a basic 20x4 display. The entire driver is implemented using just the `tasmota.wire_scan` method.
 
 [https://github.com/Beormund/Tasmota32-Multi-Zone-Heating-Controller](https://github.com/Beormund/Tasmota32-Multi-Zone-Heating-Controller)
 
@@ -696,7 +696,7 @@ end
 
 An H-bridge is an electronic circuit that switches the polarity of a voltage applied to a load. These circuits are often used in robotics and other applications to allow DC motors to run forwards or backwards.
 
-You can typically use 2 PWM channels to pilot a H-bridge, under the condition that both channels are never active at the same time; otherwise you may destroy your device. This means that phasing must be calculated so that one pulse started once the other pulse is inactive, and the sum of both dutys must not exceed 100%.
+You can typically use 2 PWM channels to pilot a H-bridge, under the condition that both channels are never active at the same time; otherwise you may destroy your device. This means that phasing must be calculated so that one pulse started once the other pulse is inactive, and the sum of both duty cycles must not exceed 100%.
 
 The following Berry function ensures appropriate management of H-bridge:
 
@@ -745,7 +745,7 @@ BRY: Exception> 'value_error' - the sum of duties must not exceed 100%
 
 This is an example of dumping the content of the internal flash of the ESP32 and write the content in the file system that you can download back to your PC.
 
-The example below dumps the contant of the safeboot partition.
+The example below dumps the content of the safeboot partition.
 
 ```berry
 def flash_to_file(filename, addr, len)
@@ -792,7 +792,7 @@ This is a Tasmota Berry Script library to greatly simplify the process of exposi
 
 ## Build MQTT topic string based on FullTopic configuration
 
-This code bit illustrates how you can create a topic string in the form of the FullTopic specification. Details like whech %prefix% you want and what last level of the topic is obviously variable.
+This code bit illustrates how you can create a topic string in the form of the `FullTopic` specification. Details like which `%prefix%` you want and what topic last level are obviously variable.
 
 ```berry
 var topic = string.replace(string.replace(
