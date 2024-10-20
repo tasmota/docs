@@ -60,6 +60,10 @@ In the list below `p` stands for parameter and may be a number from 1 to n digit
 On monochrome graphic displays things are drawn into a local frame buffer and sent to the display either
 via the `d` command or automatically at the end of the command.
 
+Co-ordinates are mapped from 0,0 (x,y) at the top left of the frame buffer, where x is the horizontal axis incrementing
+right and y is the vertical axes incrementing down. how the frame buffer is displayed on screen can be adjusted on some
+displays using the `DisplayRotate` command.
+
 ### Positioning
 
 `lp` = sets a character line to print at (on LCD display `p` = {0&hellip;}, on TFT display `p` = {1&hellip;})  
@@ -74,11 +78,11 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 
 `hp` = draws a horizontal line with length `p` (x is advanced)  
 `vp` = draws a vertical line with length `p` (y is advanced)  
-`Lp:p` = draws a line top:`p` (x,y are advanced)  
+`Lp:p` = draws a line to destination `p:p` (x,y are advanced)  
 `kp` = draws a circle with radius `p`  
 `Kp` = draws a filled circle with radius `p`  
-`rp:p` = draws a rectangle with `p` with and `p` height  
-`Rp:p` = draws a filled rectangle with `p` with and `p` height  
+`rp:p` = draws a rectangle with `p` width and `p` height  
+`Rp:p` = draws a filled rectangle width `p` with and `p` height  
 `up:p:p` = draws a rounded rectangle with `p` with, `p` height and `p` radius v
 `Up:p:p` = draws a filled rounded rectangle with `p` with, `p` height and `p` radius  
 
