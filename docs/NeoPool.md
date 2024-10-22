@@ -378,7 +378,7 @@ NPPHRes<a id="NPPHRes"></a>|`<resolution>`<BR>Set number of decimal places in re
 NPCLRes<a id="NPCLRes"></a>|`<resolution>`<BR>Set number of decimal places in results for CL value (resolution = `0..3`).
 NPIONRes<a id="NPIONRes"></a>|`<resolution>`<BR>Set number of decimal places in results for ION value (resolution = `0..3`).
 NPSetOption0<a id="NPSetOption0"></a>|Sensor data min/max validation and correction function (ESP32 only)<BR>`0` = disable correction<BR> `1` = enable correction *(default)*
-NPSetOption1<a id="NPSetOption1"></a>|NeoPool Modbus connection statistics (ESP32 only)<BR>`0` = disable statistics<BR> `1` = disable statistics *(default)*
+NPSetOption1<a id="NPSetOption1"></a>|NeoPool Modbus connection statistics (ESP32 only)<BR>`0` = disable statistics<BR> `1` = enable statistics *(default)*
 NPRead<a id="NPRead"></a>|`<addr>( <cnt>)`<BR>Read device 16-bit register (addr = `0..0x060F`, cnt = `1..30`). `<cnt>` = `1` if omitted
 NPReadL<a id="NPReadL"></a>|`<addr>( <cnt>)`<BR>Read device 32-bit register (addr = `0..0x060F`, cnt = `1..15`). `<cnt>` = `1` if omitted
 NPWrite<a id="NPWrite"></a>|`<addr> <data>( <data>...)`<BR>Write device 16-bit register (addr = `0..0x060F`, data = `0..0xFFFF`). Use of `<data>` max 10 times

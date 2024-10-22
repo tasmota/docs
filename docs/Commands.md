@@ -1031,7 +1031,7 @@ NPPHRes<a class="cmnd" id="npphres"></a>|`<resolution>`<BR>Set number of decimal
 NPCLRes<a class="cmnd" id="npclres"></a>|`<resolution>`<BR>Set number of decimal places in results for CL value (resolution = `0..3`).
 NPIONRes<a class="cmnd" id="npionres"></a>|`<resolution>`<BR>Set number of decimal places in results for ION value (resolution = `0..3`).
 NPSetOption0<a class="cmnd" id="npsetoption0"></a>|Sensor data min/max validation and correction (ESP32 only)<BR>`0` = disable correction<BR> `1` = enable correction *(default)*.
-NPSetOption1<a class="cmnd" id="npsetoption1"></a>|NeoPool Modbus connection statistics (ESP32 only)<BR>`0` = disable statistics<BR> `1` = disable statistics *(default)*.
+NPSetOption1<a class="cmnd" id="npsetoption1"></a>|NeoPool Modbus connection statistics (ESP32 only)<BR>`0` = disable statistics<BR> `1` = enable statistics *(default)*.
 NPRead<a class="cmnd" id="npread"></a>|`<addr>( <cnt>)`<BR>Read device 16-bit register (addr = `0..0x060F`, cnt = `1..30`). `<cnt>` = `1` if omitted
 NPReadL<a class="cmnd" id="npreadl"></a>|`<addr>( <cnt>)`<BR>Read device 32-bit register (addr = `0..0x060F`, cnt = `1..15`). `<cnt>` = `1` if omitted
 NPWrite<a class="cmnd" id="npwrite"></a>|`<addr> <data>( <data>...)`<BR>Write device 16-bit register (addr = `0..0x060F`, data = `0..0xFFFF`). Use of `<data>` max 10 times
