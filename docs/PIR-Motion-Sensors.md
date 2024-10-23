@@ -78,3 +78,46 @@ With this it will stay ON for 30 seconds then send OFF message and the timer res
 Set the data pin to `Switch n` for it to work.
 
 [Datasheet](https://eu.mouser.com/datasheet/2/315/PANA_S_A0004395539_1-2560640.pdf)
+
+## Configuring Tasmota to for Home Assistant
+
+To make Home Assistant recognize your PIR sensor automatically, skip all previous steps, and execute
+the following steps to make Tasmota announce your PIR as a motion sensor.
+
+1. In **_Configuration -> Configure Module_** menu change your GPIO pin to `Switch2` (or any other switch number).
+2. Assuming you picked `Switch2` in the previous step, run this command:
+
+```console
+Backlog rule1 on switch2#state do publish stat/%topic%/MOTION %value% endon; rule1 1; switchmode2 1, so19 1
+```
+
+3. Run this very-long command all at once:
+
+```console
+rule2 on system#boot do publish2 homeassistant/%topic%/config {
+  "name": "Motion Sensor",
+  "state_topic": "stat/%topic%/MOTION",
+  "payload_on": 1,
+  "availability_topic": "tele/%topic%/LWT",
+  "payload_available": "Online",
+  "payload_not_available": "Offline",
+  "device_class": "motion",
+  "force_update": true,
+  "off_delay": 30,
+  "unique_id": "%deviceid%_motion",
+  "device": {
+    "identifiers": [
+      "%deviceid%"
+    ]
+  }
+} endon
+```
+
+4. Run the following two commands to enable the rule, and then restart the device:
+
+```console
+Rule2 1
+Restart 1
+```
+
+Note that this configuration, much like the rest of the examples on this page, don't show the PIR sensor's state on the home screen of Tasmota.
