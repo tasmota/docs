@@ -4050,3 +4050,20 @@ Read the comments for 1/3-phase arrangements. Last month summary is not decoded 
 	1,1-0:31.4.0(@1,Current limit 1 thresh.,A,current_limit_1,2
 	#
 	```
+
+Some extra status and textual metrics can be added per the following.
+
+??? summary "View script"
+	```
+	; extra metrics
+	1,0-0:96.50.68(@1,Breaker 1 status,,breaker_1_status,0
+	1,0-0:96.3.10(@1,Breaker 2 status,,breaker_2_status,0
+	1,0-0:17.0.0(@1,Limiter threshold,A,limiter_threshold,0
+	
+	; extra textual metrics - only one can be used at a time
+	1,0-0:1.0.0(@#),Time,time,time,0
+	1,0-0:42.0.0(@#),COSEM device name,text,cosem_name,0
+	1,0-0:96.1.0(@#),Meter serial number,text,meter_serial,0
+	1,0-0:98.1.0(@#),Last month data,text,history_last_month,0
+	1,0-0:96.13.0(@#),Utility company msg,text,message,0
+	```
