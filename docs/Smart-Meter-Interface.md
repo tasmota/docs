@@ -3973,3 +3973,80 @@ Tested on an AEConversion INV500-90 with RS485 interface.
 	print request current data finished
 	#
  	```
+
+### Sagemcom MA105/MA304 single phase/3-phase smart meter (OBIS ASCII)
+
+Read the comments for 1/3-phase arrangements. Last month summary is not decoded as I find it useless but it can be added, see Sanxing SX6x1.
+
+??? summary "View script"
+	```
+	>D
+	; Sagemcom MA105/MA304 smart meters - Tasmota script for OBIS ASCII
+ 
+	>B
+	; don't send teleperiod MQTT at boot
+	smlj=0
+	->sensor53 r
+ 
+	>R
+	; don't send teleperiod MQTT at script restart
+	smlj=0
+ 
+	>S
+	; only send teleperiod MQTT if 22 seconds passed since boot
+	if upsecs>22
+	then
+	smlj|=1
+	endif
+ 
+	>M 1
+	; meter definition
+	+1,35,o,16,115200,ma105
+	; invert the HW serial line as the P1 port uses inverse signaling
+	; no external signal inverter circuit is needed
+	1,=so2,4
+	; instantaneous metrics
+	1,1-0:32.7.0(@1,Voltage,V,voltage_l1,17
+	; uncomment for 3-phase meters
+	; 1,1-0:52.7.0(@1,Voltage,V,voltage_l2,17
+	; 1,1-0:72.7.0(@1,Voltage,V,voltage_l3,17
+	1,1-0:1.7.0(@1,Power import (+A),kW,power_import,19
+	1,1-0:2.7.0(@1,Power export (-A),kW,power_export,19
+	1,1-0:31.7.0(@1,Current,A,current_l1,16
+	; uncomment for 3-phase meters
+	; 1,1-0:51.7.0(@1,Current,A,current_l2,16
+	; 1,1-0:71.7.0(@1,Current,A,current_l3,16
+	1,1-0:14.7.0(@1,Frequency,Hz,frequency,18
+	; comment out for 3-phase meters
+	1,1-0:13.7.0(@1,Power factor,,power_factor,19
+	; uncomment for 3-phase meters
+	; 1-0:33.7.0(@1,Power factor,,power_factor1,19
+	; 1-0:53.7.0(@1,Power factor,,power_factor2,19
+	; 1-0:73.7.0(@1,Power factor,,power_factor3,19
+	1,1-0:5.7.0(@1,Reactive power (QI),kVAr,power_reactive_q1,19
+	1,1-0:6.7.0(@1,Reactive power (QII),kVAr,power_reactive_q2,19
+	1,1-0:7.7.0(@1,Reactive power (QIII),kVAr,power_reactive_q3,19
+	1,1-0:8.7.0(@1,Reactive power (QIV),kVAr,power_reactive_q4,19
+	1,=h<hr/>
+	; teleperiod metrics
+	1,0-0:96.14.0(@1,Current tariff,,tariff,0
+	1,1-0:1.8.0(@1,Import energy (+A),kWh,energy_import,3
+	1,1-0:1.8.1(@1,Import energy (+A) - T1,kWh,energy_import_t1,3
+	1,1-0:1.8.2(@1,Import energy (+A) - T2,kWh,energy_import_t2,3
+	1,1-0:1.8.3(@1,Import energy (+A) - T3,kWh,energy_import_t3,3
+	1,1-0:1.8.4(@1,Import energy (+A) - T4,kWh,energy_import_t4,3
+	1,1-0:2.8.0(@1,Export energy (-A),kWh,energy_export,3
+	1,1-0:2.8.1(@1,Export energy (-A) - T1,kWh,energy_export_t1,3
+	1,1-0:2.8.2(@1,Export energy (-A) - T2,kWh,energy_export_t2,3
+	1,1-0:2.8.3(@1,Export energy (-A) - T3,kWh,energy_export_t3,3
+	1,1-0:2.8.4(@1,Export energy (-A) - T4,kWh,energy_export_t4,3
+	1,1-0:15.8.0(@1,Combined energy,kWh,energy_active,3
+	1,1-0:3.8.0(@1,Reactive imp. nrg (+R),kVArh,power_import_reactive,3
+	1,1-0:4.8.0(@1,Reactive exp. nrg (-R),kVArh,power_export_reactive,3
+	1,1-0:5.8.0(@1,Reactive energy (QI),kVArh,energy_active_q1,3
+	1,1-0:6.8.0(@1,Reactive energy (QII),kVArh,energy_active_q2,3
+	1,1-0:7.8.0(@1,Reactive energy (QIII),kVArh,energy_active_q3,3
+	1,1-0:8.8.0(@1,Reactive energy (QIV),kVArh,energy_active_q4,3
+	1,1-0:31.4.0(@1,Current limit 1 thresh.,A,current_limit_1,2
+	#
+	```
