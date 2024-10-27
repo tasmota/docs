@@ -31,7 +31,7 @@ _[`GPIOs All`](Commands.md#gpios) shows list of all available components by name
 **For a peripheral to show up you may need to power cycle your device instead of a soft restart.**
 
 ### `Template`
-Instead of using `Module` and `GPIO` you can define everything using `Template`. [Read more...](Templates#template-configuration-with-commands)
+Instead of using `Module` and `GPIO` you can define everything using `Template`. [Read more...](Templates#commands)
 
 ## Additional Options
 

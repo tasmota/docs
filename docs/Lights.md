@@ -69,7 +69,7 @@ If you define multiple relays, they are controlled with [`Power<x>`](Commands.md
     |Channel3| PWM3 (optional)|
     |Channelxx| PWMxx (optional)|
     |Zero-Cross PIN| COUNTER4 (mandatory)|
-    |Commands|[`ZCDimmerSet`](Commands.md#zcdimmerset) ESP32 only|
+    |Commands| `ZCDimmerSet`|
 
     Example schematic:  
     ![ZCDimmer example schematic](_media/peripherals/ZCDimmer_Schematic.png)
@@ -102,7 +102,7 @@ If you define multiple relays, they are controlled with [`Power<x>`](Commands.md
 |Configuration|(see below)|
 |---|---|
 |Commands|[`Power`](Commands.md#power), [`Dimmer`](Commands.md#dimmer), [`Color`](Commands.md#color), [`White`](Commands.md#white), [`CT`](Commands.md#ct)|
-|Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction), [**PWM CT**](#pwm-ct-module-48)|
+|Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction), [**PWM CT**](#pwm-ct)|
 
 <br clear="right"/>
 
@@ -255,13 +255,13 @@ _this feature is experimental and will probably not give brilliant results_
 
 Used with 4 channel RGBW lights to simulate the missing white channel (cold or warm) using RGB channels.
 
-Enable Virtual CT with [`SetOption106 1`](Commands.md#setoption106) then choose which type of white you're simulating with [`SetOption107`](Commands.md#setoption107) where `0` is warm white and `1` is cold white 
+Enable Virtual CT with `SetOption106 1` then choose which type of white you're simulating with [`SetOption107`](Commands.md#setoption107) where `0` is warm white and `1` is cold white 
 
 ## Light Categories
 
 Lights come in various shapes (bulb, strips, ceiling lights, ...) but in Tasmota they are separated in 3 categories:
 
- - [Channel Controlled LEDs](#channel-controlled-leds)
+ - [Channel Controlled Lights](#channel-controlled-lights)
  - [Addressable LEDs](#addressable-leds)
  - [Status LEDs](#status-leds) 
 
