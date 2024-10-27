@@ -154,6 +154,7 @@ nav:
     - Protocol Bridging:
       - Arduino MCU: TasmotaClient.md
       - BLE Gateway: Bluetooth.md
+      - DALI.md
       - HDMI CEC: HDMI_CEC.md
       - IR Communication: Tasmota-IR.md
       - LCD/DLP Projector Control: Projector.md
