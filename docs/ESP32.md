@@ -88,7 +88,7 @@ Enable display of ESP32 internal temperature with [`SetOption146 1`](Commands.md
 ```json
 {"Time":"2021-01-01T00:00:00","ESP32":{"Temperature":41.7},"TempUnit":"C"}
 ```
-You can deactivate sensor by using command [`SetSensor127 0`](Commands.md#setsensor127)
+You can deactivate sensor by using command [`SetSensor127 0`](Commands.md#setsensor)
 
 ### DAC
 

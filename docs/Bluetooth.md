@@ -123,7 +123,7 @@ Telink Flashers allow the generation of a bind_key by faking a pairing with the 
 
 Use the bind_key and MAC address of the sensor to use with command `NRFkey`. Tasmota will receive the sensor data roughly every 10 minutes (in two chunks for humidity and temperature with about a minute in between) and decode the data. This is the most energy efficient way. 
 
-The current way of storing these keys on the NRF24L01 is to use [`NRFkey`](Commands.md#nrf32key)):
+The current way of storing these keys on the NRF24L01 is to use [`NRFkey`](Commands.md#nrfkey)):
 
 ```haskell
 rule1 on System#Boot do backlog NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFPage 6; NRFUse 0; NRFUse 4 endon
