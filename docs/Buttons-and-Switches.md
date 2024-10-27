@@ -284,7 +284,7 @@ Multipress functions for 2 and more presses cannot be changed using SetOptions o
 
 ### Changing Default Functionality
 
-If a [`ButtonTopic`](Commands.md#buttontopic) (and if [`SetOption1 1`](Commands.md#setoption1)) or [`SwitchTopic 1`](Commands.md#switchtopic) is defined (and [`SwitchMode`](Commands.md#switchmode) is set to `5` or `6`) and a button is pressed longer than defined Key Hold Time ([`SetOption32`](Commands.md#setoption32) default 4 seconds) an MQTT message like `cmnd/%topic%/POWER HOLD` will be sent. `HOLD` can be changed with [`StateText4`](Commands.md#StateText).
+If a [`ButtonTopic`](Commands.md#buttontopic) (and if [`SetOption1 1`](Commands.md#setoption1)) or [`SwitchTopic 1`](Commands.md#switchtopic) is defined (and [`SwitchMode`](Commands.md#switchmode) is set to `5` or `6`) and a button is pressed longer than defined Key Hold Time ([`SetOption32`](Commands.md#setoption32) default 4 seconds) an MQTT message like `cmnd/%topic%/POWER HOLD` will be sent. `HOLD` can be changed with [`StateText4`](Commands.md#statetext).
 
 Command [`SetOption11`](Commands.md#setoption11) allows for swapping the functionality between the SINGLE and DOUBLE press of the push button.
 
