@@ -33,12 +33,12 @@ The ESP32-C3 based [Shelly DALI Dimmer Gen3](https://www.shelly.com/products/she
 
 Command|Parameters
 :---|:---
-DaliSend<a class="cmnd" id="dalisend"></a>|`<byte1\>,<byte2\>` = Execute DALI code and do not expect a DALI backward frame.<br>`<0xA3\>,<byte2\>,<byte3\>,<byte4\>` = Set DALI parameter using DTR0 and do not expect a DALI backward frame.
-DaliQuery<a class="cmnd" id="daliquery"></a>|`<byte1\>,<byte2\>` = Execute DALI code and report result (DALI backward frame).
-DaliScan<a class="cmnd" id="daliscan"></a>|`1` = Reset and commission new device addresses.<br>`2` = Reset and commission additional device addresses.
-DaliGear<a class="cmnd" id="daligear"></a>|Display current max address.<br>`1..64` = Set max address to speed up DaliGroup result (default = `64`).
-DaliGroup<x\><a class="cmnd" id="daligear"></a>|Display current group contents.<br>`[+]<device\>,<device\>...` = Add devices to group.<br>`-<device\>,<device\>...` = Remove devices from group.<br><br><x\> = 1 to 16.
-DaliPower<x\><a class="cmnd" id="dalipower"></a>|Display current power state.<br>`0` = Turn power off.<br>`1` = Restore power to last dimmer value.<br>`2` = Toggle power.<br>`3` to `254` = Set absolute brightness.<br><br><x\> = 0 for broadcast, 1 to 64 for individual gear or 101 to 116 for group.
-DaliDimmer<x\><a class="cmnd" id="dalidimmer"></a>|Display current dimmer state.<br>`0` = Turn power off.<br>`1` to `100` = Percentage of brightness.<br><br><x\> = 0 for broadcast, 1 to 64 for individual gear or 101 to 116 for group.
-DaliLight<a class="cmnd" id="dalilight"></a>|Display current state.<br>`0` = Disable Tasmota light control for DaliTarget device.<br>`1` = Enable Tasmota light control for DaliTarget device (default).
-DaliTarget<a class="cmnd" id="dalitarget"></a>|Display current target.<br>`0` = Broadcast (default).<br>`1` to `64` = Individual gear.<br>`101` to `116` = group.
+DaliSend<a class="cmnd" id="dalisend"></a>|Low level DALI control.<br><br>`<byte1\>,<byte2\>` = Execute DALI code and do not expect a DALI backward frame.<br>`<0xA3\>,<byte2\>,<byte3\>,<byte4\>` = Set DALI parameter using DTR0 and do not expect a DALI backward frame.
+DaliQuery<a class="cmnd" id="daliquery"></a>|Low level DALI control with expected response.<br><br>`<byte1\>,<byte2\>` = Execute DALI code and report result (DALI backward frame).
+DaliScan<a class="cmnd" id="daliscan"></a>|Sequential address assignment using commissioning protocol. This resets  parameters stored on the control gear.<br><br>`1` = Reset and commission new device addresses.<br>`2` = Reset and commission additional device addresses.
+DaliGear<a class="cmnd" id="daligear"></a>|To reduce DaliGroup response time set the max commissionned control gear address.<br><br>Display current max address.<br>`1..64` = Set max address (default = `64`).
+DaliGroup<x\><a class="cmnd" id="daligear"></a>|Add or remove control gear to/from up to 16 groups.<br><br>Display current group contents.<br>`[+]<device\>,<device\>...` = Add devices to group.<br>`-<device\>,<device\>...` = Remove devices from group.<br><br><x\> = 1 to 16.
+DaliPower<x\><a class="cmnd" id="dalipower"></a>|Control power to broadcast or any control gear or group.<br><br>Display current power state.<br>`0` = Turn power off.<br>`1` = Restore power to last dimmer value.<br>`2` = Toggle power.<br>`3` to `254` = Set absolute brightness.<br><br><x\> = 0 for broadcast, 1 to 64 for individual gear or 101 to 116 for group.
+DaliDimmer<x\><a class="cmnd" id="dalidimmer"></a>|Control dimmer to broadcast or any control gear or group.<br><br>Display current dimmer state.<br>`0` = Turn power off.<br>`1` to `100` = Percentage of brightness.<br><br><x\> = 0 for broadcast, 1 to 64 for individual gear or 101 to 116 for group.
+DaliLight<a class="cmnd" id="dalilight"></a>|Switch between DALI or Tasmota Light control. The latter allows for the DALI lighting to be controlled as a local light by any Tasmota protocol like Matter, Alexa, Hue and KNX.<br><br>Display current state.<br>`0` = Disable Tasmota light control for DaliTarget device.<br>`1` = Enable Tasmota light control for DaliTarget device (default).
+DaliTarget<a class="cmnd" id="dalitarget"></a>|Select DALI target to be used when DaliLight is enabled.<br><br>Display current target.<br>`0` = Broadcast (default).<br>`1` to `64` = Individual gear.<br>`101` to `116` = group.
