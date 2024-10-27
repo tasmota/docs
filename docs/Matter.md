@@ -123,7 +123,7 @@ This will bring you to another menu where you can further configure the remote d
 
 ![Add Remote Tasmota or OpenBK submenu](_media/matter/add_remote_submenu.jpg)
 
-Add remote [Endpoints](#endpoint) same as for a local sensors and devices.
+Add remote Endpoints same as for a local sensors and devices.
 
 When finished click ***Add endpoints***. The remote device will appear in the ***Current configuration*** list.
 

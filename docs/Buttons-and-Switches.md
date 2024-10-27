@@ -228,7 +228,7 @@ Multipress functions for 2 and more presses cannot be changed using SetOptions o
 `6 short presses`
 :    Set [`WifiConfig 2`](Commands.md#wificonfig) (start Wi-Fi Manager). Can be disabled using [`SetOption1 1`](Commands.md#setoption1). For [security reasons](Securing-your-IoT-from-hacking.md#disable-unsecured-fallback-wifi-wifimanager), you should change back `WifiConfig` after that.
 
-`**Long press**`
+#### `Long press`
 :    There are two separate functions associated with a button long press based on how long it is held:
 
     1. When held continuously for 40 seconds (Configurable with [SetOption32](Commands.md#setoption32), value is 10x the configured hold time) Tasmota will reset to firmware defaults and restart.

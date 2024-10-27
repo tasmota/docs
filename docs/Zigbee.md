@@ -424,7 +424,7 @@ To remove a device from the Zigbee2Tasmota list of devices and from the WebUI, u
 
 ### Advanced topic: Device Information
 
-You can get a quick list of Zigbee devices with the command [`ZbStatus`](Commands.md#zigbeestatus).
+You can get a quick list of Zigbee devices with the command [`ZbStatus`](Commands.md#zbstatus).
 
 Example:
 
