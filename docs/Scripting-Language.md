@@ -696,8 +696,8 @@ SEL:
 `eres` = result of >E section set this var to 1 in section >E to tell Tasmota event is handled (prevents MQTT)  
 
 The following variables are cleared after reading true:  
-`chg[var]` = true if a variables value was changed (numeric vars only)
-`diff[var]` = difference since last variable update
+`chg[var]` = true if a variables value was changed (numeric vars only)  
+`diff[var]` = difference since last variable update  
 `upd[var]` = true if a variable was updated  
 `boot` = true on BOOT  
 `tinit` = true on time init  
@@ -928,7 +928,7 @@ Instead of passing the `msg` as a string constant, the body of the e-mail messag
 &arrayname specifies an array attachment (as tab delimited text, no file system needed)  
 $N attach a webcam picture from rambuffer number N (usually 1)  
   
-See [Scripting Cookbook Example].(#send-e-mail)  
+See [Scripting Cookbook Example](#send-e-mail)  
  
 **Subscribe, Unsubscribe**  
 `#define SUPPORT_MQTT_EVENT`  
@@ -1016,6 +1016,27 @@ print task1 on core %core%
 print task2 on core %core%
 
 ```
+**minimal LVGL support**  
+`#define USE_LVGL`  
+to test LVGL a few functions are implemented:  
+`lvgl(sel ...)` general lvgl call  
+each object gets a concurrent number 1 ... N with which you can reference the object
+sel = 0 => initialize LVGL with current display
+sel = 1 => clear screen  
+sel = 2 xp yp xs ys text => create a button. the button press is reported in section >lvb  
+sel = 3 xp yp xs ys => create a slider. the slider move is reported in section >lvs  
+sel = 4 xp yp xs ys min max => create a gauge.    
+set = 5 objnr value => set gauge value.  
+sel = 6 xp yp xs ys text => create a label.  
+sel = 7 objnr text => set label text  
+sel = 8 create a keyboard, just get a look and feel  
+
+sel = 50 => get obj nr from caller in callback >lvb or >lvs  
+sel = 51 => get event nr from caller in callback >lvb or >lvs  
+sel = 52 => get slider value from caller in callback >lvs  
+
+
+
 **minimal LVGL support**  
 `#define USE_LVGL`  
 to test LVGL a few functions are implemented:  
