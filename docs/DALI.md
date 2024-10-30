@@ -25,7 +25,14 @@ Tasmota DALI gateway is an application controller. It defaults to supporting Dev
 
 ## Hardware
 
-The driver is supported on both ESP8266 and ESP32. Possible DALI interface could look like this as used on the DALI 2 Click <img alt="Dali" src="../_media/dali_schematics.png"></img>
+The driver is supported on both ESP8266 and ESP32. A possible DALI interface could look like this as used on the DALI 2 Click. <img alt="Dali" src="../_media/dali_schematics.png"></img> On the left side is the connection to the DALI bus which should provide a voltage between 16V to 22.5V DC. On the right side is the connection to an ESP device where wires are connected according to the table:
+
+| DALI interface | ESP device |
+|----------------|------------|
+|            VCC | 3V3        |
+|        DALI_TX | DALI TX_i  |
+|        DALI_RX | DALI RX_i  |
+|            GND | GND        |
 
 ### MikroE DALI Click
 
