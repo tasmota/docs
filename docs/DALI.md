@@ -25,7 +25,15 @@ Tasmota DALI gateway is an application controller. It defaults to supporting Dev
 
 ## Hardware
 
-The driver is supported on both ESP8266 and ESP32. It has been tested using [DALI Click](https://www.mikroe.com/dali-click) with GPIO settings `DALI TX` and `DALI RX` and a [Busch-Jaeger Rotary dimmer](https://www.busch-jaeger.de/en/online-catalogue/detail/2CKA006599A2986) acting as a DALI bus power supply.
+The driver is supported on both ESP8266 and ESP32. Possible DALI interface could look like this as used on the DALI 2 Click <img alt="Dali" src="../_media/dali_schematics.png"></img>
+
+### MikroE DALI Click
+
+Initial implementation has been performed using [DALI Click](https://www.mikroe.com/dali-click) with GPIO settings `DALI TX` and `DALI RX` and a [Busch-Jaeger Rotary dimmer](https://www.busch-jaeger.de/en/online-catalogue/detail/2CKA006599A2986) acting as a DALI bus power supply.
+
+### MikroE DALI 2 Click
+
+A redesigned version called [DALI 2 Click](https://www.mikroe.com/dali-2-click) also works fine whith GPIO settings `DALI TX_i` and `DALI RX_i`.
 
 ### Shelly DALI Dimmer Gen3
 
@@ -49,6 +57,7 @@ To add Shelly DALI Dimmer to a bus powered environment it's best to disable the 
 ```
 {"NAME":"Shelly DALI Dimmer Gen3 (No power)","GPIO":[34,4736,0,3872,11360,11392,128,129,0,1,576,0,0,0,0,0,0,0,0,1,1,1],"FLAG":0,"BASE":1}
 ``` 
+In addition you can easily remove the Shelly power supply assembly from the main board.
 
 ## Commands
 
