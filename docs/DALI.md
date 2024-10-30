@@ -9,7 +9,7 @@
 
 ## What is DALI?
 
-[DALI](https://en.wikipedia.org/wiki/Digital_Addressable_Lighting_Interface) is a trademark for network-based products that control lighting.
+[Digital Addressable Lighting Interface](https://en.wikipedia.org/wiki/Digital_Addressable_Lighting_Interface) (DALI) is a trademark for network-based products that control lighting.
 
 A DALI network consists of at least one application controller and bus power supply (which may be built into any of the products) as well as input devices (e.g. sensors and push-buttons), control gear (e.g., electrical ballasts, LED drivers and dimmers) with DALI interfaces.
 
