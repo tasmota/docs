@@ -1,7 +1,8 @@
 # MI32 legacy
 
 The MI32-driver focuses on the passive observation of BLE sensors of the Xiaomi/Mijia universe, thus only needing a small memory footprint. Berry can be used to create generic applications.
-Currently supported are all members of the ESP32 family with Bluetooth capabilities.
+Currently supported are all members of the ESP32 family with Bluetooth capabilities.  
+The driver can be built to use Bluetooth version 5.x.  
 
 ## Usage
 
@@ -16,7 +17,24 @@ build_flags             = ${env:tasmota32_base.build_flags}
                           -DCONFIG_BT_NIMBLE_NVS_PERSIST=y
 lib_extra_dirs          = lib/libesp32, lib/libesp32_div, lib/lib_basic, lib/lib_i2c, lib/lib_div, lib/lib_ssl
 ```
-
+  
+If you want to try out Bluetooth version 5.x, which consumes a bit more memory and has limited capabilities on the platform itself, a custom build is needed, e.g.:  
+```
+[env:tasmota32c3-mi32]
+extends                 = env:tasmota32_base
+board                   = esp32c3
+board_build.flash_mode  = qio
+lib_ignore              = Micro-RTSP
+build_flags             = ${env:tasmota32_base.build_flags}
+                          -DFIRMWARE_BLUETOOTH
+                          -DUSE_MI_EXT_GUI
+                          -DCONFIG_BT_NIMBLE_EXT_ADV
+                          -DCONFIG_BT_NIMBLE_MAX_EXT_ADV_INSTANCES=1
+                          -DOTA_URL='"http://ota.tasmota.com/tasmota32/release/tasmota32c3.bin"'
+custom_sdkconfig        = CONFIG_BT_NIMBLE_50_FEATURE_SUPPORT=y
+                          CONFIG_BT_NIMBLE_EXT_ADV=y
+```
+  
 It is probably necessary to restart your IDE (i.e. Visual Studio Code) to see the option to build this environment.
 
 ## Tasmota and BLE-sensors
@@ -42,7 +60,8 @@ All sensors are treated as if they are physically connected to the ESP32 device.
 
 !!! note "It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely!"
 
-The naming conventions in the product range of bluetooth sensors in XIAOMI-universe can be a bit confusing. The exact same sensor can be advertised under slightly different names depending on the seller (Mijia, Xiaomi, Cleargrass, ...).
+The naming conventions in the product range of bluetooth sensors in XIAOMI-universe can be a bit confusing. The exact same sensor can be advertised under slightly different names depending on the seller (Mijia, Xiaomi, Cleargrass, ...).  
+If an unknown "Mijia" sensor is found it will be added with naming scheme `MI_`+`PID` and if the builtin parser of the driver supports the packet type, it will work too.  
 
  <table>
   <tr>
@@ -159,10 +178,10 @@ rule1 on System#Boot do backlog MI32key 00112233445566778899AABBCCDDEEFF11223344
 ```
 (key for two sensors)
 
-#### Tracking of other devices
+### Tracking of BLE devices and "iPhone presence detection"
 
-It is possible to track generic BLE devices with `mi32option5 1>`. This includes every device with a public address (aka a fixed MAC address) out of the box.
-Additionally it is possible to observe (typically more modern) BLE devices with a *Random Private Resolvable Address* or in short RPA, which includes iPhones and other Apple devices.
+It is possible to track generic BLE devices with `mi32option5 1>`. This includes every device with a public address (aka a fixed MAC address) out of the box.  
+Additionally it is possible to observe (typically more modern) BLE devices with a *Random Private Resolvable Address* or in short RPA, which includes iPhones and other Apple devices.  
 For the latter it is necessary to retrieve the Identiy Resolving Key (= IRK), which is supported in directly the driver with the help of a Berry script:
 
 ??? example " Retrieve IRK from BLE device with RPA"
@@ -402,7 +421,8 @@ MI32Option5|`0` = do not report generic BLE devices (default)<br>`1` = report ev
 
 ## Mi Dashboard
 
-The driver provides an extended web GUI to show the observed Xiaomi sensors in a widget style, that features a responsive design to use the screen area as effective as possible. The other advantage is, that only the widget with new data gets redrawn (indicated by a fading circle) and no unnecessary refresh operations will happen. A simple graph shows if valid data for every hour was received in the last 24h, where only one gap for the coming hour is not a sign of an error. Configured sensors with no received packet since boot or key/decryption errors are dimmed.
+The driver provides an extended web GUI to show the observed Xiaomi sensors in a widget style, that features a responsive design to use the screen area as effective as possible. The other advantage is, that only the widget with new data gets redrawn (indicated by a fading circle) and no unnecessary refresh operations will happen. A simple graph shows if valid data for every hour was received in the last 24h, where only one gap for the coming hour is not a sign of an error. Configured sensors with no received packet since boot or key/decryption errors are dimmed.  
+Own widgets can be added with Berry using the `MI32` module, thus allowing to create small Apps or visualizing the state of arbitrary BLE devices.  
 
 
 ##  Homeassistant and Tasmota - BLE sensors
@@ -439,6 +459,7 @@ What can be done?
 |BLE lights   | control lights that uses smartphone apps like *Happy Lighting*, *Triones*, *ILC*, ...|
 |BLE remotes  | use a cheap BLE remote control like the BPR2S Air Mouse|
 |BLE UART     | control Tasmota without WiFi via Nordic UART Service (NUS) |
+|Tuya BLE     | Control Tuya Bluetooth devices like the Fingerbot |
 
 
 ### MI32 module
@@ -446,14 +467,15 @@ This module allows access and modification of the internal data backend of the M
 First we need to import the module:
 `import MI32`
 
-We have the following methods, which are chosen to be able to replace the old commands MI32Battery, MI32Unit and MI32Time:
-
-- `MI32.devices()`: returns the number of monitored Xiaomi devices
-- `MI32.get_name(x)`: returns a string with the sensor name (internal name of the driver) at slot x in the internal sensor array of the driver
-- `MI32.get_MAC(x)`: returns a byte buffer (6 bytes) representing the MAC at slot x in the internal sensor array of the driver
-- `MI32.set_bat(x,v)`:  sets the battery value to v at slot x in the internal sensor array of the driver
-- `MI32.set_hum(x,v)`:  sets the humidity value to v at slot x in the internal sensor array of the driver
-- `MI32.set_temp(x,v)`:  sets the temperature value to v at slot x in the internal sensor array of the driver
+MI32 method|Parameters and details
+:---|:---
+MI32.devices|`()` returns the number of monitored Xiaomi devices
+MI32.get_name|`(x)` returns a string with the sensor name (internal name of the driver) at slot x in the internal sensor array of the driver
+MI32.get_MAC|`(x)` returns a byte buffer (6 bytes) representing the MAC at slot x in the internal sensor array of the driver
+MI32.set_bat|`(x,v)`  sets the battery value to v at slot x in the internal sensor array of the driver
+MI32.set_hum|`(x,v)`  sets the humidity value to v at slot x in the internal sensor array of the driver
+MI32.set_temp|`(x,v)`  sets the temperature value to v at slot x in the internal sensor array of the driver
+MI32.widget|`(html:string[,cb:function])`  send a custom widget to the dashboard expecting a string with minimal content of `<div class="box" id="myID">hello world!</div>`, optionally get notified with a callback function for a complex UI
 
 ### BLE module
 
