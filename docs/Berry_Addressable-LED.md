@@ -43,16 +43,16 @@ Methods are the equivalent low-level from NeoPixelBus. All colors are in `0xRRGG
 Attributes|Details
 :---|:---
 clear<a class="cmnd" id="leds_clear"></a>|`clear() -> nil`<br>Clear all led (set to black)
-clear\_to<a class="cmnd" id="leds_clear_to"></a>|`clear_to(col:color [, bri:int]) -> nil`<br>Set all leds to the specified color. `bri` (0..100) is optional and default to 100%
+clear\_to<a class="cmnd" id="leds_clear_to"></a>|`clear_to(col:color [, bri:int]) -> nil`<br>Set all leds to the specified color. `bri` (0..255) is optional and default to 255
 show<a class="cmnd" id="leds_show"></a>|`show() -> nil`<br>Pushes the internal buffer to leds. May be ignored if a show command is already in progress. Use `can_show()` to see if `show()` is possible
 can\_show<a class="cmnd" id="leds_can_show"></a>|`can_show() -> bool`<br>Indicates if `show()` is possible, i.e. no transfer is ongoing
 is\_dirty<a class="cmnd" id="leds_is_dirty"></a>|`is_dirty() -> bool`<br>Indicates if a led was changed since last `show()`
 dirty<a class="cmnd" id="leds_dirty"></a>|`dirty() -> nil`<br>Forces a refresh during next `show()`
 pixel\_size<a class="cmnd" id="leds_pixel_size"></a>|`pixel_size() -> int`<br>Returns the number of bytes per pixel
 pixel\_count<a class="cmnd" id="leds_pixel_count"></a>|`pixel_count() -> int`<br>Returns the number of leds in the strip/matrix
-clear\_to<a class="cmnd" id="leds_clear_to"></a>|`clear_to(col:color [, bri:int]) -> nil`<br>Clears all leds to the specified color. `bri` is optional and default to 100%
-set\_pixel\_color<a class="cmnd" id="leds_set_pixel_color"></a>|`set_pixel_color(idx:int, col:color [, bri:int]) -> nil`<br>Set led number `idx` to the specified color. `bri` (0..100) is optional and default to 100%
-set\_matrix\_pixel\_color<a class="cmnd" id="leds_set_matrix_pixel_color"></a>|`set_matrix_pixel_color(x:int, y:int, col:color [, bri:int]) -> nil`<br>(only `Leds_matrix`) Set led number of coordinates `x`/`y` to the specified color. `bri` is optional and default to 100%
+clear\_to<a class="cmnd" id="leds_clear_to"></a>|`clear_to(col:color [, bri:int]) -> nil`<br>Clears all leds to the specified color. `bri` is optional and default to 255
+set\_pixel\_color<a class="cmnd" id="leds_set_pixel_color"></a>|`set_pixel_color(idx:int, col:color [, bri:int]) -> nil`<br>Set led number `idx` to the specified color. `bri` (0..255) is optional and default to 255
+set\_matrix\_pixel\_color<a class="cmnd" id="leds_set_matrix_pixel_color"></a>|`set_matrix_pixel_color(x:int, y:int, col:color [, bri:int]) -> nil`<br>(only `Leds_matrix`) Set led number of coordinates `x`/`y` to the specified color. `bri` is optional and default to 255
 set\_alternate<a class="cmnd" id="leds_set_alternate"></a>|`set_alternate(bool) -> nil`<br>(only `Leds_matrix`) Sets the matrix as alternate cabling (i.e. zigzag mode) instead of regular mode.<BR>It is common for large led matrix to have every other line in reverse order.
 get\_alternate<a class="cmnd" id="leds_get_alternate"></a>|`get_alternate() -> bool`<br>(only `Leds_matrix`) Read the value set with `set_alternate(bool)`.
 get\_pixel\_color<a class="cmnd" id="leds_get_pixel_color"></a>|`get_pixel_color(idx:int) -> color:int`<br>Returns the color (including brightness and gamma correction) of led number `idx`
@@ -90,7 +90,7 @@ Finally the frame buffer is copied to the physical WS2812 led strip, after apply
 This is the main helper class to host all the animation components. It is composed of:
 
 - `strip` object representing the led strip (1-dimension, only RGB supported for now)
-- `bri` parameter (0..100) to control the overall brightness
+- `bri` parameter (0..255) to control the overall brightness
 - `frame` the background frame buffer, instance of `animate.frame`
 - `layer` the current frame buffer being painted by a `painter`, instance of `animate.frame`. It is merged to `frame` once painted, taking into account transparency (alpha channel)
 
@@ -126,7 +126,7 @@ Methods:
 - `frame.set_pixel(i, r, g, b, alpha)`: set the pixel at index `i` for value `r`/`g`/`b` (0..255) and optional `alpha` channel (opaque 0x00 if not specified)
 - `frame.fill_pixels(argb)`: fill the frame with `argb` 32-bit value
 - `frame.blend_pixels(background, foreground)`: blends a background frame (considered opaque) with a front layer with alpha, and stores in the current object. It is common that the target and the background are the same objects, hence `frame.blend_pixels(frame, fore)`
-- `frame.paste_pixels(strip_raw_bytes, bri:0..100, gamma:bool)`: pastes the `Led_buffer` object into a Leds strip. This is the final step before displaying the frame to the actual leds, and apply `bri` and `gamma` correction.
+- `frame.paste_pixels(strip_raw_bytes, bri:0..255, gamma:bool)`: pastes the `Led_buffer` object into a Leds strip. This is the final step before displaying the frame to the actual leds, and apply `bri` and `gamma` correction.
 
 ### pre-built animators
 
@@ -153,7 +153,7 @@ Methods|Description
 init|`init(palette: bytes() or comptr [, duration_ms:int])` initialize the palette animator with a palette object, see below
 set_duration_ms|`set_duration_ms(int) -> nil` sets the duration of the animation (in ms)
 set_cb|`set_cb(object, method) -> nil` sets the callback object and method to update after a new value is computed
-set_bri|`set_bri(bri:0..100) -> nil` sets the brightness for the color, defaults to `100`%
+set_bri|`set_bri(bri:0..255) -> nil` sets the brightness for the color, defaults to `255`
 
 **palettes solidified in Flash**
 
