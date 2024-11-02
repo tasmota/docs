@@ -457,7 +457,7 @@ tasmota.add_fast_loop(/-> my_driver.fast_loop())    # register a closure to capt
 
 #### `log(msg:string [, level:int = 3]) -> string`
 
-Logs a message to the Tasmota console. Optional second argument is log_level (0..4), default is `2` `LOG_LEVEL_INFO`.
+Logs a message to the Tasmota console. Optional second argument is log_level (0..4), default is `2` (matching build time `LOG_LEVEL_INFO`).
 
 !!! example
 
