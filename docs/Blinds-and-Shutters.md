@@ -128,7 +128,7 @@ Then close the shutter until endstop is reached (repeat: `backlog shuttersetopen
 
 After setup is started the shutter will move to the upper endpoint and close again. If the shutter stops somewhere in the middle, try again. After setup you can use your shutter. Initial callibration for `ShutterSetHalfway` is 70. If you want to have it more accurate: `backlog shutterclose;ShutterSetHalfway 50` and follow instructions below.
 
-### Calibration
+## Calibration
 [Shutter calibration video tutorial](https://www.youtube.com/watch?v=Z-grrvnu2bU)  
 
 [Shutter calibration Google Spreadsheet](https://docs.google.com/spreadsheets/d/1-okVzGfdltbx8kMcObw4I0B22m9ZCQL3JgifgwjbzTc/edit?usp=sharing)
@@ -151,7 +151,7 @@ After setup is started the shutter will move to the upper endpoint and close aga
 
 After calibration is complete, you might want to enable an additional 1 second motor movement with `ShutterEnableEndStopTime<x> 1` when the shutter is asked to move to its end positions (0% and 100%). With this you can guarantee that end positions are still reached in case of inaccuracies. Take care to disable this with `ShutterEnableEndStopTime<x> 0` before further open or close duration measurements.
 
-#### Increasing Calibration Granularity
+### Increasing Calibration Granularity
 If you desire that the %-opening closely match what `ShutterPosition<x>` and web UI indicate, there is a granular calibration matrix available. Ensure that `ShutterClose<x>` and `ShutterOpen<x>` moves the shutter more or less to the limit positions and follow this procedure:
 
 - `ShutterSetHalfway<x> 50` (reset to default)
@@ -170,7 +170,7 @@ If you desire that the %-opening closely match what `ShutterPosition<x>` and web
 
 Notice that there is no calibration for the 10% position. On many shutters, there is no movement during the initial phase (i.e., nearly 10% of total time). Therefore the opening could be `0`. This measurement would cause an execution DIV 0 exception. Therefore the first calibration point is 30%. In most cases this is not a large opening so the calibration will be near enough. Yes, until ~10%, the position will be a bit "off" but not enough for concern.  
 
-### Motor Movement Delays
+## Motor Movement Delays
 Some motors need up to one second after power is turned on before they start moving. You can confirm if you are having this issue if opening and closing as a single action works properly but doing this in smaller steps result in a shift of the position.  
 
 1. `Shutterposition<x> 30`  
@@ -192,12 +192,12 @@ Close the shutter and repeat this procedure until the motor delay is set properl
 Following defaults are pre-compiled into the code and can only be changed by compiling you own binary and use the `user_config.override`
 - In Failsafe-Mode the driver waits for 0.1sec to let the direction relay execute and be stable before switching on the power relay starting the movement. The time in [ms] can be changed by adding following line with a different value: `#define SHUTTER_RELAY_OPERATION_TIME 100 // wait for direction relay 0.1sec before power up main relay`
 - 
-### Motor Stop time
+## Motor Stop time
 When shutters change direction immediatly it can happen that there is a short circuit or at least high moments on the motors. Therfore the default time between a STOP and the next START of the shutter is 0.5s = 500ms. This allows in most cases the shutter to fully stop and then start from a static position. With Version 12.3 you can change the duration through `shuttermotorstop 500` or any other value in ms. The value is for all defined shutters the same.
 
 WARNING: If you control the relay DIRECT through buttons or switches and do not use shutterbuttons or a rule to decouple it, then the MOTOSTOPTIME cannot kick in. The Relay is ON before the shutterdriver can intercept.
 
-### Button Control
+## Button Control
 When shutter is running in `ShutterMode 1` (normal two relay up/off down/off), you already have basic control over the shutter movement using switches or buttons in the module configuration to directly drive the shutter relays. For short circuit safe operation `ShutterMode 2` direct control of the relays will not give you a nice user interface since you have to 1st set the direction with one switch/button and 2nd switch on the power by the other switch/button. Because the button controll use multi-press events ensure that the "immediate action" is disabled: `SetOption13 0` (default)
 
 To have shutter mode independent button control over the shutter and not over its relays one can use the `ShutterButton<x>` command. It also introduces some more features, see below:
@@ -237,21 +237,31 @@ By a button single press the shutter is set to position `<p1>`.  Double press wi
 
 Global steering of all your shutters at home is supported by additional MQTT broadcast. By any button action a corresponding MQTT command can be initiated to the `<grouptopic>` of the device. For single press this can be enabled by `<m1>` equal to `1`, disabling is indicated by `-`. Double to hold MQTT configurations are given by `<m2>` to `<mh>`, correspondingly. When `<mi>` is equal to `-` only `cmnd/<grouptopic>/Shutterposition<x> <p1..h>` is fired. When `<mi>` is equal to `1`, `<x>`=`1..4` is used to control any shutter number of a Tasmota device having same `<grouptopic>`.
 
-!!! example 
-
-    - `ShutterButton<x> <button> 100 50 74 100 0 0 0 1 1` is same as `ShutterButton<x> <button> up 1`.
-    - `ShutterButton<x> <button> 0 50 24 0 0 0 0 1 1` is same as `ShutterButton<x> <button> down 1`.
-    - `ShutterButton<x> <button> 100 0 50 - 0 0 0 0 0` is same as `ShutterButton<x> <button> updown 0`.
-    - `ShutterButton<x> <button> t 50 - - 0 0 0 0 0` is same as `ShutterButton<x> <button> toggle 0`.
+    ShutterButton<x> <button> 100 50 74 100 0 0 0 1 1` is same as `ShutterButton<x> <button> up 1
+    ShutterButton<x> <button> 0 50 24 0 0 0 0 1 1` is same as `ShutterButton<x> <button> down 1
+    ShutterButton<x> <button> 100 0 50 - 0 0 0 0 0` is same as `ShutterButton<x> <button> updown 0
+    ShutterButton<x> <button> t 50 - - 0 0 0 0 0` is same as `ShutterButton<x> <button> toggle 0
 
 Module WiFi setup, restart, upgrade and reset according to [Buttons and Switches](Buttons-and-Switches.md) are supported "child and fool proof" only when no button restriction ([`SetOption1`](Commands.md#setoption1)) is given and when all configured shutter buttons of that shutter are pressed 5x, 6x, 7x times or hold long simultaneously.
 
-### Remote Control
+## Remote Control
 Use any other Tasmota device with buttons or switches to control remotely a shutter using rules. Similar behavior as direct button control can be achieved by applying `ShutterStopClose, ShutterStopOpen, ShutterStopToggle, ShutterStopPosition` commands. They stop shutter movement if it is in motion and otherwise execute close, open, toggle or position commands.
 
-!!! example
-    Run this rule on another Tasmota device with a switch configured.
-    `rule1 on switch1#state=2 do publish cmnd/%shutter-topic%/ShutterStopToggle endon`
+Run this rule on another Tasmota device with a switch configured.
+
+    rule1 on switch1#state=2 do publish cmnd/%shutter-topic%/ShutterStopToggle endon
+
+## Using Rules
+Shutters can be used in rules to react on sensor data. Durign shutter operations data from all shutters is send every second to inform about current position, target, direction and the tilt (if supported). As usual with rules the compare operator can be used. Examples:
+
+    rule1 on shutter1#direction=0 do <echo shutter1 stopped> endon
+    rule1 on shutter2#position do var1 = %value% endon
+    rule1 on shutter#moving do <echo at least one shutter start moving> endon
+    rule1 on shutter#moved do <echo on shutter just stopped moving> endon
+
+Additionally all commands are send as rules and can be used to trigger an action
+
+    rule1 on shutterposition1=0 do <echo shutter 1 is closing> endon
 
 ## Specific Configuration
 
