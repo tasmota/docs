@@ -52,7 +52,8 @@ DS3502 | Digital potentiometer| I^2^C
 **[HC-SR04<BR>HC-SR04P<BR>JSN-SR04T)](HC-SR04)** | Ultrasonic sensor | gpio
 **HM330x** | SeedStudio Grove HM3301 particulate matter sensor | I^2^C
 [**HMC5883L**](https://github.com/arendst/Tasmota/blob/development/tasmota/tasmota_xsns_sensor/xsns_101_hmc5883l.ino) | 3-Axis digital compass sensor | I^2^C
-**HLK-LD2410** | 24GHz mmWave presence sensor | serial
+**[HLK-LD2410<br>HLK-LD2410B](HLK-LD2410)** | 24GHz mmWave presence sensor | serial
+**[HLK-LD2410S](HLK-LD2410S)** | Low energy 24GHz mmWave presence sensor | serial
 **[Honeywell HIH](Honeywell-HIH)** | Temperature and humidity sensor| I^2^C
 **Honeywell HPMA115xx** | Particulate matter sensor| serial
 **HTU21** | Temperature and humidity sensor| I^2^C
