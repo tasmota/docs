@@ -147,6 +147,10 @@ then with cmd r the script is transferred to the ESP and immediately started.
 (all comments and indents are removed before transferring)
 see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/AACcVmpZ4AfpdrWE_MPFGmbma?dl=0)  
 
+#### Visual Studio Code Extension
+
+If you're used to working with Visual Studio Code, you can use [this extension](https://marketplace.visualstudio.com/items?itemName=StefanoBertini.tasmota-script-support) to edit your scripts with the benefit of various helpful features, such as, for example, Syntax Highlighting, Automatic script upload, #define, ifdef and ifndef preprocessor macros, Code Folding, Code Snippet and Hover hints on tasmota functions and variables documentation.  
+
 #### Console Commands
 
 `script <n>` <n>: `0` = switch script off; `1` = switch script on  `8` = switch stop on error off; `9` = switch stop on error on 
