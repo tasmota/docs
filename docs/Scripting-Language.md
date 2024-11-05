@@ -34,14 +34,13 @@
     USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
     USE_FACE_DETECT | enables face detecting in ESP32 Webcam
     USE_SCRIPT_TASK | enables multitasking Task in ESP32
-    USE_LVGL | enables support for LVGL
+    `USE_LVGL` | enables support for LVGL, no longer supported, use Berry script with LVGL
     USE_SCRIPT_GLOBVARS | enables global variables and >G section
     USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
     SML_REPLACE_VARS | enables possibility to replace the lines from the (SML) descriptor with Vars
     NO_USE_SML_SCRIPT_CMD | disables SML script cmds
     USE_SCRIPT_I2C | enables I2C support
     USE_SCRIPT_SERIAL | enables support for serial io cmds
-    USE_LVGL | enables support for LVGL
     USE_SCRIPT_TIMER | enables up to 4 Arduino timers (so called tickers)  
     SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
     LARGE_ARRAYS | enables arrays of up to 1000 entries instead of max 127  
@@ -1018,47 +1017,6 @@ print task1 on core %core%
 
 >t2
 print task2 on core %core%
-
-```
-**minimal LVGL support**  
-`#define USE_LVGL`  
-to test LVGL a few functions are implemented:  
-`lvgl(sel ...)` general lvgl call  
-each object gets a concurrent number 1 ... N with which you can reference the object
-sel = 0 => initialize LVGL with current display
-sel = 1 => clear screen  
-sel = 2 xp yp xs ys text => create a button. the button press is reported in section >lvb  
-sel = 3 xp yp xs ys => create a slider. the slider move is reported in section >lvs  
-sel = 4 xp yp xs ys min max => create a gauge.    
-set = 5 objnr value => set gauge value.  
-sel = 6 xp yp xs ys text => create a label.  
-sel = 7 objnr text => set label text  
-sel = 8 create a keyboard, just get a look and feel  
-
-sel = 50 => get obj nr from caller in callback >lvb or >lvs  
-sel = 51 => get event nr from caller in callback >lvb or >lvs  
-sel = 52 => get slider value from caller in callback >lvs  
-
-
-
-**minimal LVGL support**  
-`#define USE_LVGL`  
-to test LVGL a few functions are implemented:  
-`lvgl(sel ...)` general lvgl call  
-each object gets a concurrent number 1 ... N with which you can reference the object
-sel = 0 => initialize LVGL with current display
-sel = 1 => clear screen  
-sel = 2 xp yp xs ys text => create a button. the button press is reported in section >lvb  
-sel = 3 xp yp xs ys => create a slider. the slider move is reported in section >lvs  
-sel = 4 xp yp xs ys min max => create a gauge.    
-set = 5 objnr value => set gauge value.  
-sel = 6 xp yp xs ys text => create a label.  
-sel = 7 objnr text => set label text  
-sel = 8 create a keyboard, just get a look and feel  
-
-sel = 50 => get obj nr from caller in callback >lvb or >lvs  
-sel = 51 => get event nr from caller in callback >lvb or >lvs  
-sel = 52 => get slider value from caller in callback >lvs  
 
 **ESP32 Webcam support**   
 `#define USE_WEBCAM`  
