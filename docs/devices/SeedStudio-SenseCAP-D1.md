@@ -2,7 +2,7 @@
 
 The device is a 4-Inch Touch Screen IoT development platform powered by ESP32S3 & RP2040. It has variants with LoRa support, and Air Quality support.
 
-![Device Image](../_media/devices/SeedStudio-SenseCap-D1.jpg)
+![Device Image](../../_media/devices/SeedStudio-SenseCap-D1.jpg)
 
 Link to purchase the device [SeedStudio web site](https://www.seeedstudio.com/SenseCAP-Indicator-D1L-p-5646.html)
 
@@ -139,7 +139,7 @@ For easy setup, download and install [Thonny](https://thonny.org/):
 - The script will automatically run at power on
 
 Here is how it should look like:
-![Thonny console](../_media/devices/SeedStudio-SenseCap-D1-Thonny.jpg)
+![Thonny console](../../_media/devices/SeedStudio-SenseCap-D1-Thonny.jpg)
 
 # MicroPython code for RP2040
 
@@ -312,4 +312,4 @@ run()
 
 SeedStudio does not provide the detailed schematics, but still provides an overview of GPIO connection:
 
-![SenseCap D1 internals](../_media/devices/SeedStudio-SenseCap-D1-Internal.jpg)
+![SenseCap D1 internals](../../_media/devices/SeedStudio-SenseCap-D1-Internal.jpg)
