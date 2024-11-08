@@ -23,6 +23,7 @@ We will focus below on the "SenseCAP Indicator D1L" which includes:
 - internal SCD40 CO2 Carbon Dioxid Sensors (Range: 1-500 VOC Index Points)
 - external AHT20 Temperature and Humidity sensor (Range: -40 ~ + 85 ℃/± 0.3 ℃; 0 ~ 100% RH/± 2% RH (25 ℃))
 
+![Web Console showing readings](https://tasmota.github.io/docs/_media/devices/SeedStudio-SenseCap-D1-Console.png)
 
 ## ESP32S3 build
 
