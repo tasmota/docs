@@ -2349,6 +2349,9 @@ class my_zb_handler
   def attributes_refined(event_type, frame, attr_list, idx)
     print(f"shortaddr=Ox{idx:04X} {event_type=} {attr_list=}")
   end
+  def attributes_final(event_type, frame, attr_list, idx)
+    print(f"shortaddr=Ox{idx:04X} {event_type=} {attr_list=}")
+  end
 
 end
 
@@ -2360,6 +2363,7 @@ zigbee.add_handler(my_handler)
 # shortaddr=OxC1BC event_type=frame_received frame={'srcendpoint': 21, 'transactseq_set': 0, 'shortaddr': 49596, 'dstendpoint': 1, 'payload': bytes('5500003956CE8243'), 'shortaddr_hex': '0xC1BC', 'manuf': 0, 'payload_ptr': <ptr: 0x3ffccb5c>, 'need_response': 0, 'transactseq': 25, 'cmd': 1, 'direct': 0, 'cluster': 12, 'cluster_specific': 0, 'groupaddr': 0}
 # shortaddr=OxC1BC event_type=attributes_raw attr_list={"000C/0055":261.612,"Endpoint":21,"LinkQuality":21}
 # shortaddr=OxC1BC event_type=attributes_refined attr_list={"ActivePower":261.612,"(ActivePower)":"0B04/050B","Endpoint":21,"LinkQuality":21}
+# shortaddr=OxC1BC event_type=attributes_final attr_list={"ActivePower":261.612,"(ActivePower)":"0B04/050B","Endpoint":21,"LinkQuality":21}
 
 # to remove handler:
 # zigbee.remove_handler(my_handler)
