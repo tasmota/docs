@@ -11,7 +11,7 @@
 
 !!! warning "This feature is designed only to work with HLK-LD 2410S module. To work with the HLK-LD2410(B,C) modules see [here](HLK-LD2410.md)."
 
-<img src="../_media/devices/HLK/LD2410S/LD2410s_board.png" width=50%>>
+<img src="../_media/devices/HLK/LD2410S/LD2410s_board.png" width=50%>
 
 ## Configuration
 ### Wiring
@@ -40,7 +40,7 @@ In the **_Configuration -> Configure Module_** page assign:
 ## Usage
 Tasmola is ready to read the status packet from the LD2410S module
 
-<<img src="../_media/devices/HLK/LD2410S/LD2410S_web.png" width=50%>>
+<img src="../_media/devices/HLK/LD2410S/LD2410S_web.png" width=50%>
 
 Console output:
 ```

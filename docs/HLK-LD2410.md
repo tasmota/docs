@@ -41,7 +41,7 @@ In the **_Configuration -> Configure Module_** page assign:
 ## Usage
 Tasmola is ready to read the status packet from the LD2410 module
 
-<<img src="../_media/devices/HLK/LD2410/2410_main_web.png" width=50%>>
+<img src="../_media/devices/HLK/LD2410/2410_main_web.png" width=50%>
 
 Console output:
 ```
@@ -88,7 +88,7 @@ LD2410Get
 
 In engineering mode, the main page additionally displays the obtained values for moving and static targets:
 
-<img src="../_media/devices/HLK/LD2410/2410_web_engineering.png" width=50%>>
+<img src="../_media/devices/HLK/LD2410/2410_web_engineering.png" width=50%>
 
 !!! info "Light sensor available if installed on board"
 
