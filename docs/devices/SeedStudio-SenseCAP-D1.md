@@ -32,7 +32,32 @@ The device requires a self-compile with the following options:
 - Compile with an environment that uses `board = esp32s3-qio_opi_120`, which enables Quad SPI Flash and Octal SPI PSRAM at 120MHz.
 - Enable the following options: `USE_SDCARD`, `USE_I2C_SERIAL`, `USE_AHT2x`, `USE_SGP4X`, `USE_SCD40`, `USE_I2C`, `USE_SPI`, `USE_LVGL`, `USE_DISPLAY_LVGL_ONLY`, `USE_DISPLAY`, `USE_UNIVERSAL_TOUCH`, `USE_UNIVERSAL_DISPLAY`
 
-TODO: have a ready-to-use `platformio_override.ini` template.
+In file `platformio_override.ini`, add the following section and select :
+
+```
+[env:tasmota32s3-qio_opi_120-SenseCap_D1]
+; device needs >= 8MB Flash!!
+extends                     = env:tasmota32_base
+board                       = esp32s3-qio_opi_120
+board_build.partitions      = partitions/esp32_partition_app3904k_fs3392k.csv
+build_flags                 = ${env:tasmota32_base.build_flags}
+                              -DUSE_BERRY_ULP
+                              -DFIRMWARE_LVGL
+                              -DUSE_LVGL_OPENHASP
+                              -DUSE_I2C_SERIAL
+                              -DUSE_AHT2x
+                              -DUSE_SGP4X
+                              -DUSE_SCD40
+                              -DOTA_URL='""'
+```
+
+and compile with:
+
+```
+default_envs =
+; *** Uncomment the line(s) below to select version(s)
+    tasmota32s3-qio_opi_120-SenseCap_D1
+```
 
 ## Auto-configuration
 
