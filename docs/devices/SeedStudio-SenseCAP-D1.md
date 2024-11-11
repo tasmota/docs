@@ -32,9 +32,17 @@ The device requires a self-compile with the following options:
 - Compile with an environment that uses `board = esp32s3-qio_opi_120`, which enables Quad SPI Flash and Octal SPI PSRAM at 120MHz.
 - Enable the following options: `USE_SDCARD`, `USE_I2C_SERIAL`, `USE_AHT2x`, `USE_SGP4X`, `USE_SCD40`, `USE_I2C`, `USE_SPI`, `USE_LVGL`, `USE_DISPLAY_LVGL_ONLY`, `USE_DISPLAY`, `USE_UNIVERSAL_TOUCH`, `USE_UNIVERSAL_DISPLAY`
 
-TODO: have a readu-to-use `platformio_override.ini` template.
+TODO: have a ready-to-use `platformio_override.ini` template.
+
+## Auto-configuration
+
+For easy configuration, select "Configuration" then "Auto-configuration". Select "SeedStudio-SenseCAP-D1" in the dropdown and click on "Apply configuration". The device will download the configuration (internet connection is required) and reboot twice.
+
+![Auto-configuration](https://tasmota.github.io/docs/_media/devices/SeedStudio-SenseCap-D1-Autoconf.jpg){ width="352" }
 
 ## Configure GPIOs and LVGL Display
+
+If you used Auto-Configuration, you can skip this section. This is a manual alternative to auto-configuration.
 
 Use:
 
