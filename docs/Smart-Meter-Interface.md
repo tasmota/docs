@@ -3527,6 +3527,46 @@ Compile firmware with #define ```USE_SML_CANBUS```. Use a proper CAN transceiver
     #
     ```
 
+### Sorel XHCC (CANBus)
+
+Compile firmware with #define ```USE_SML_CANBUS```. Use a proper CAN transceiver. You need a 120Ohms resistor in the second CAN port of the controller, otherwise ESP32 device will not decode anything on the bus, the baudrate is 250 KBITS.
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    ; SOREL XHCC
+    ; params -> 04 = baudrate 250kb + number of receive buffers * 100
+    ; character 5 and 6 (in the example below "8b") is the can-bus id of your sorel device
+    ; you need to replace it with your xhcc can-bus id converted to hex format
+    ; you will find your can-bus id (in decimal) in Special Functions (7) -> Network (31) -> CAN-bus ID (4)
+    ; in the example below, the can-bus id of the xhcc device was "139"
+    +1,26,C,0,3204,XHCC,25,5
+    1,10018b800500ssSS@10,Temp S1,ºC,S1,1
+    1,10018b800501ssSS@10,Temp S2,ºC,S2,1
+    1,10018b800502ssSS@10,Temp S3,ºC,S3,1
+    1,10018b800503ssSS@10,Temp S4,ºC,S4,1
+    1,10018b800504ssSS@10,Temp S5,ºC,S5,1
+    1,10018b800505ssSS@10,Temp S6,ºC,S6,1
+    1,10018b800506ssSS@10,Temp S7,ºC,S7,1
+    1,10018b800507ssSS@10,Temp S8,ºC,S8,1
+    1,10018b800508ssSS@10,Temp S9,ºC,S9,1
+    1,10028b80050000ss@-1,Relay R1,,R1,0
+    1,10028b80050100ss@-1,Relay R2,,R2,0
+    1,10028b80050200ss@-1,Relay R3,,R3,0
+    1,10028b80050300ss@-1,Relay R4,,R4,0
+    1,10028b80050400ss@-1,Relay R5,,R5,0
+    1,10028b80050500ss@-1,Relay R6,,R6,0
+    1,10028b80050600ss@-1,Relay R7,,R7,0
+    1,10028b80050702ss@-1,Relay V1,,V1,0
+    1,10028b80050802ss@-1,Relay V2,,V2,0
+    1,10028b80050902ss@-1,Relay V3,,V3,0
+    1,10028b80050a02ss@-1,Relay V4,,V4,0
+    #
+    ```
+    
 ### Siemens IM-350
 
 This device is used in the grid of Wiener Netze. Insert your Key into the script.
