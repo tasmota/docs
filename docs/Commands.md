@@ -633,7 +633,7 @@ SetOption156<a class="cmnd" id="setoption156"></a>|`1` = (Sen5x) Run in passive 
 SetOption157<a class="cmnd" id="setoption157"></a>|`0` = hide NeoPool sensitive data _(default)_<BR>`1` = show NeoPool sensitive data
 SetOption158<a class="cmnd" id="setoption158"></a>|`0` = Disable publish ModbusReceived MQTT messages (`1`), in this case you must use event trigger rules instead
 SetOption159<a class="cmnd" id="setoption159"></a>|Set counting for Counter on falling edge or rising and falling edge<BR>`0` = Counter only reacts on falling edge _(default)_<BR>`1` = Counter reacts on falling and rising edge
-
+SetOption160<a class="cmnd" id="setoption160"></a>|`1` = Disable generate moving event by sensor report - use LD2410 out pin for events
 
 ### TuyaMCU
 
