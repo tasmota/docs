@@ -23,7 +23,7 @@ We will focus below on the "SenseCAP Indicator D1L" which includes:
 - internal SCD40 CO2 Carbon Dioxid Sensors (Range: 1-500 VOC Index Points)
 - external AHT20 Temperature and Humidity sensor (Range: -40 ~ + 85 ℃/± 0.3 ℃; 0 ~ 100% RH/± 2% RH (25 ℃))
 
-![Web Console showing readings](https://tasmota.github.io/docs/_media/devices/SeedStudio-SenseCap-D1-Console.png)
+![Web Console showing readings](https://tasmota.github.io/docs/_media/devices/SeedStudio-SenseCap-D1-Console.png){ width="352" }
 
 ## ESP32S3 build
 
@@ -122,13 +122,13 @@ Now you need to flash the `RP2040` and use a simple Micropython script to bridge
 
 ## Flashing and configuring RP2040
 
-# Step 1. Flash Micropython
+### Step 1. Flash Micropython
 
 To flash the RP2040, you need to insert a pin in the "reset" small hole, and power-up the device while keeping the Reset button pushed. You can then release the Reset button.
 
 RP2040 boots in flash mode, and shows a USB disk. Simply download the latest RPI Pico Micropython firmware (file ending with `.uf2`) from [the official Micropython site](https://micropython.org/download/RPI_PICO/). This was tested with `RPI_PICO-20241025-v1.24.0.uf2`.
 
-# Step 2. Use Thonny
+### Step 2. Use Thonny
 
 For easy setup, download and install [Thonny](https://thonny.org/):
 
@@ -142,7 +142,7 @@ For easy setup, download and install [Thonny](https://thonny.org/):
 Here is how it should look like:
 ![Thonny console](https://tasmota.github.io/docs/_media/devices/SeedStudio-SenseCap-D1-Thonny.jpg)
 
-# MicroPython code for RP2040
+### Step 3. MicroPython code for RP2040
 
 ```python
 # below is an example of Micropython code for Seedstudio SenseCap
@@ -307,6 +307,40 @@ def run():
                 cmd = process_discard()
 
 run()
+```
+
+### Step 4. Wrap-up
+
+Reboot and you should the sensors working.
+
+For reference, here are the boot logs with `Seriallog 3`:
+
+```
+00:00:00.251 CMD: Fall back to serial port, no SOF packet detected on USB port
+00:00:00.251 HDW: ESP32-S3 v0.2 (PSRAM)
+00:00:00.262 UFS: FlashFS mounted with 4380 kB free
+00:00:00.267 CFG: Loaded from File, Count 386
+00:00:00.273 QPC: Count 1
+00:00:00.274 CFG: CR 362/699, Busy 0
+00:00:00.275 I2C: Bus2 using GPIO40(SCL) and GPIO39(SDA)
+00:00:00.290 CFG: No '*.autoconf' file found
+00:00:00.295 BRY: Berry initialized, RAM used 6578 bytes
+00:00:00.298 BRY: No 'preinit.be'
+00:00:00.305 DSP: File descriptor used
+00:00:01.236 UTI: FT5x06 initialized
+00:00:01.236 DSP: ST7701 initialized
+00:00:02.239 I2C: I2C serial configured on GPIO TX 19 / RX 20 for bus 1
+00:00:02.260 I2C: I2C serial initialized
+00:00:02.261 SRC: Restart
+00:00:02.263 Project tasmota - Tasmota Version 14.3.0.4(tasmota)-3_1_0(2024-11-07T22:41:20)
+00:00:02.275 LVG: Allocating buffer1 112 KB in main memory (flushlines 120)
+00:00:02.280 LVG: LVGL initialized
+00:00:02.405 I2C: AHT2X found at 0x38
+00:00:03.069 SCD40 serial nr 0x2FC1 0x5B07 0x3BCF
+00:00:03.081 I2C: SCD40 found at 0x62
+00:00:03.116 SGP4X serial nr 0x0 0x57F 0x84F1
+00:00:03.137 SGP4X features: 0x3240
+00:00:03.137 I2C: SGP4X found at 0x59
 ```
 
 ## Internals
