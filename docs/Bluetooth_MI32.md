@@ -54,7 +54,7 @@ Other sensors like the MJYD2S and nearly every newer device are not usable witho
 
 The idea is to provide as many automatic functions as possible. Besides the hardware setup, there are zero or very few things to configure.
 The sensor namings are based on the original sensor names and shortened if appropriate (Flower care -> Flora). A part of the MAC will be added to the name as a suffix.
-All sensors are treated as if they are physically connected to the ESP32 device. For motion and remote control sensors MQTT-messages will be published in (nearly) real time.
+All sensors are treated as if they are physically connected to the ESP32 device. For motion and remote control sensors MQTT-messages will be published in (nearly) real time.  
 
 ### Supported Devices
 
@@ -499,6 +499,21 @@ loop|`()`<br>Triggers a synchronization between Bluetooth stack and Berry, thus 
 To simplify BLE access this works in the form of state machine, where you have to set some properties of a context and then finally launch an operation. Besides we have three callback mechanisms for listening to advertisements, active sensor connections with Tasmota as a client and providing a server including advertising. All you need is a byte buffer in Berry for data exchange and a Berry function as the callback.
 The byte buffer is always organized in the format `length-data bytes`, where the first byte represents the length of the following data bytes, which results in a maximum of 255 data bytes.
 Because Bluetooth is inherently very asynchronous, almost every status, result or error condition is reported via callbacks.
+```mermaid
+sequenceDiagram
+    participant Berry
+    participant Context
+    participant Bluetooth-Task
+    Berry->>Berry: create bytes buffer for data exchange
+    Berry->>Berry: create callback function
+    Berry->>Context: bind buffer and callback to context
+    Berry->>Context: set properties with methods of BLE module
+    Berry->>Context: launch a command with op code
+    Context->>Bluetooth-Task: act on the BLE stack asynchronously
+    Bluetooth-Task->>Context: finish requested job, update context
+    Context->>Berry: callback function
+```
+
 
 #### Observer (aka Advertisement listener)
 To listen to advertisements inside a class (that could be a driver) we could initialize like that:
@@ -681,6 +696,12 @@ BLE.serv_cb(cbp,cbuf)
     By default the synchronization between the BLE framework and Berry happens every 50 milliseconds, which should be enough for the majority of use cases. For very fast BLE devices it can be necessary to use Berrys `fast_loop` to trigger this at maximum speed (of about every 5 milliseconds). This is typically done in an init function of a class like that:
     `tasmota.add_fast_loop(/-> BLE.loop())`
 
+####Configuration op codes (return immediately, no callback involved):
+
+- 231 - set own address to random with `BLE.set_MAC(bytes("aabbccddeeff"),1)`
+- 232 - set advertising parameters with bytes() descriptor of length 5 [advType:byte, minInterval:uint16_t, max interval: uint16_t]
+- 233 - set GAP name with `string` in bytes buffer (must be null terminated)
+  
 ### Berry examples
 
 Here is an implementation of the "old" MI32 commands:
