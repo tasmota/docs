@@ -1,41 +1,58 @@
+---
+tags:
+  - Bluetooth
+  - BLE
+  - Berry
+  - Mijia
+  - Xiaomi
+  - ESP32
+---
+
 # MI32 legacy
 
-The MI32-driver focuses on the passive observation of BLE sensors of the Xiaomi/Mijia universe, thus only needing a small memory footprint. Berry can be used to create generic applications.
-Currently supported are all members of the ESP32 family with Bluetooth capabilities.  
-The driver can be built to use Bluetooth version 5.x.  
+Focus on the passive observation of BLE sensors of the Xiaomi/Mijia universe with a small memory footprint.
+Create generic Bluetooth applications with Berry.
+
 
 ## Usage
 
-This driver is not part of any standard build. To self compile it is recommended to add build environments to `platformio_tasmota_cenv.ini`. This file needs to be created first.
-Add this section (change accordingly for the other chipsets or use one of the examples in `platformio_tasmota_cenv.ini` with naming scheme `tasmota32xx-mi32`):
-```
-[env:tasmota32-mi32-legacy]
-extends                 = env:tasmota32_base
-build_flags             = ${env:tasmota32_base.build_flags}
-                          -DUSE_MI_ESP32
-                          -DUSE_MI_EXT_GUI
-                          -DCONFIG_BT_NIMBLE_NVS_PERSIST=y
-lib_extra_dirs          = lib/libesp32, lib/libesp32_div, lib/lib_basic, lib/lib_i2c, lib/lib_div, lib/lib_ssl
-```
-  
-If you want to try out Bluetooth version 5.x, which consumes a bit more memory and has limited capabilities on the platform itself, a custom build is needed, e.g.:  
-```
-[env:tasmota32c3-mi32]
-extends                 = env:tasmota32_base
-board                   = esp32c3
-board_build.flash_mode  = qio
-lib_ignore              = Micro-RTSP
-build_flags             = ${env:tasmota32_base.build_flags}
-                          -DFIRMWARE_BLUETOOTH
-                          -DUSE_MI_EXT_GUI
-                          -DCONFIG_BT_NIMBLE_EXT_ADV
-                          -DCONFIG_BT_NIMBLE_MAX_EXT_ADV_INSTANCES=1
-                          -DOTA_URL='"http://ota.tasmota.com/tasmota32/release/tasmota32c3.bin"'
-custom_sdkconfig        = CONFIG_BT_NIMBLE_50_FEATURE_SUPPORT=y
-                          CONFIG_BT_NIMBLE_EXT_ADV=y
-```
-  
-It is probably necessary to restart your IDE (i.e. Visual Studio Code) to see the option to build this environment.
+Currently supported are all members of the ESP32 family with Bluetooth capabilities.
+This driver is not part of any standard build. To self compile it is recommended to use `platformio_tasmota_cenv.ini`, which needs to be created first.
+Use or change one of the existing example sections with naming scheme `tasmota32xx-mi32`.
+??? example "build environment"
+    ```
+    [env:tasmota32-mi32-legacy]
+    extends                 = env:tasmota32_base
+    build_flags             = ${env:tasmota32_base.build_flags}
+                              -DUSE_MI_ESP32
+                              -DUSE_MI_EXT_GUI
+                              -DCONFIG_BT_NIMBLE_NVS_PERSIST=y
+    lib_extra_dirs          = lib/libesp32, lib/libesp32_div, lib/lib_basic, lib/lib_i2c, lib/lib_div, lib/lib_ssl
+    ```
+
+### Bluetooth 5
+
+If you want to try out Bluetooth version 5.x, which consumes a bit more memory and has limited capabilities on the ESP platform itself, a custom build is needed, e.g.:
+??? example "build environment BLE 5"
+    ```
+    [env:tasmota32c3-mi32]
+    extends                 = env:tasmota32_base
+    board                   = esp32c3
+    board_build.flash_mode  = qio
+    lib_ignore              = Micro-RTSP
+    build_flags             = ${env:tasmota32_base.build_flags}
+                              -DFIRMWARE_BLUETOOTH
+                              -DUSE_MI_EXT_GUI
+                              -DCONFIG_BT_NIMBLE_EXT_ADV
+                              -DCONFIG_BT_NIMBLE_MAX_EXT_ADV_INSTANCES=1
+                              -DOTA_URL='"http://ota.tasmota.com/tasmota32/release/tasmota32c3.bin"'
+    custom_sdkconfig        = CONFIG_BT_NIMBLE_50_FEATURE_SUPPORT=y
+                              CONFIG_BT_NIMBLE_EXT_ADV=y
+    ;It is probably necessary to restart your IDE (i.e. Visual Studio Code) to see the option to build this environment.
+    ```
+Basically every consumer BLE device with "BLE 5" capabilities has only hardware support for Bluetooth 5.x.
+At the time of writing there is not a single widely used product out there, that has the software support enabled.
+The only known exception is the open source firmware on [pvvx.github.io](https://pvvx.github.io) with possible BLE long range support, but due to hardware limitations the ESP32 platform does not gain much (aka nothing) here.
 
 ## Tasmota and BLE-sensors
 
@@ -54,14 +71,14 @@ Other sensors like the MJYD2S and nearly every newer device are not usable witho
 
 The idea is to provide as many automatic functions as possible. Besides the hardware setup, there are zero or very few things to configure.
 The sensor namings are based on the original sensor names and shortened if appropriate (Flower care -> Flora). A part of the MAC will be added to the name as a suffix.
-All sensors are treated as if they are physically connected to the ESP32 device. For motion and remote control sensors MQTT-messages will be published in (nearly) real time.  
+All sensors are treated as if they are physically connected to the ESP32 device. For motion and remote control sensors MQTT-messages will be published in (nearly) real time.
 
 ### Supported Devices
 
 !!! note "It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely!"
 
-The naming conventions in the product range of bluetooth sensors in XIAOMI-universe can be a bit confusing. The exact same sensor can be advertised under slightly different names depending on the seller (Mijia, Xiaomi, Cleargrass, ...).  
-If an unknown "Mijia" sensor is found it will be added with naming scheme `MI_`+`PID` and if the builtin parser of the driver supports the packet type, it will work too.  
+The naming conventions in the product range of bluetooth sensors in XIAOMI-universe can be a bit confusing. The exact same sensor can be advertised under slightly different names depending on the seller (Mijia, Xiaomi, Cleargrass, ...).
+If an unknown "Mijia" sensor is found it will be added with naming scheme `MI_`+`PID` and if the builtin parser of the driver supports the packet type, it will work too.
 
  <table>
   <tr>
@@ -161,8 +178,10 @@ If an unknown "Mijia" sensor is found it will be added with naming scheme `MI_`+
     <td class="tg-lboi">passive only with decryption (legacy decryption)<br>both versions reported as YLKG08</td>
   </tr>
 </table>
-passive: data is received via BLE advertisements
-active: data is received via bidirectional connection to the sensor
+
+[passive]: data is received via BLE advertisements  
+[active]: data is received via bidirectional connection to the sensor  
+
 
 #### Devices with payload encryption
 
@@ -180,9 +199,9 @@ rule1 on System#Boot do backlog MI32key 00112233445566778899AABBCCDDEEFF11223344
 
 ### Tracking of BLE devices and "iPhone presence detection"
 
-It is possible to track generic BLE devices with `mi32option5 1>`. This includes every device with a public address (aka a fixed MAC address) out of the box.  
-Additionally it is possible to observe (typically more modern) BLE devices with a *Random Private Resolvable Address* or in short RPA, which includes iPhones and other Apple devices.  
-For the latter it is necessary to retrieve the Identiy Resolving Key (= IRK), which is supported in directly the driver with the help of a Berry script:
+It is possible to track generic BLE devices with `mi32option5 1`. This includes every device with a public address (aka a fixed MAC address) out of the box.
+Additionally it is possible to observe (typically more modern) BLE devices with a *Random Private Resolvable Address* or in short RPA, which includes iPhones and other Apple devices.
+For the latter it is necessary to retrieve the Identiy Resolving Key (= IRK), which is supported directly by the driver with the help of a Berry script:
 
 ??? example " Retrieve IRK from BLE device with RPA"
 
@@ -421,8 +440,8 @@ MI32Option5|`0` = do not report generic BLE devices (default)<br>`1` = report ev
 
 ## Mi Dashboard
 
-The driver provides an extended web GUI to show the observed Xiaomi sensors in a widget style, that features a responsive design to use the screen area as effective as possible. The other advantage is, that only the widget with new data gets redrawn (indicated by a fading circle) and no unnecessary refresh operations will happen. A simple graph shows if valid data for every hour was received in the last 24h, where only one gap for the coming hour is not a sign of an error. Configured sensors with no received packet since boot or key/decryption errors are dimmed.  
-Own widgets can be added with Berry using the `MI32` module, thus allowing to create small Apps or visualizing the state of arbitrary BLE devices.  
+The driver provides an extended web GUI to show the observed Xiaomi sensors in a widget style, that features a responsive design to use the screen area as effective as possible. The other advantage is, that only the widget with new data gets redrawn (indicated by a fading circle) and no unnecessary refresh operations will happen. A simple graph shows if valid data for every hour was received in the last 24h, where only one gap for the coming hour is not a sign of an error. Configured sensors with no received packet since boot or key/decryption errors are dimmed.
+Own widgets can be added with Berry using the `MI32` module, thus allowing to create small Apps or visualizing the state of arbitrary BLE devices.
 
 
 ##  Homeassistant and Tasmota - BLE sensors
@@ -561,6 +580,15 @@ We just have to provide a pointer to a (callback) function and a byte buffer.  T
 1 byte  - length of payload
 n bytes - payload data
 ```
+```mermaid
+packet-beta
+0-5: "MAC"
+6: "t"
+7: "R"
+8: "l"
+9-40: "payload data (up to 31 byte)"
+41-71: "optional scan response (up to 31 byte)"
+```
 
 The advertisement callback function provides 2 arguments, which are indices of the whole buffer that point to optional parts of the payload. A value of 0 means, this type of of element is not in the payload.
 1. svc (= service data index) - index of service data in the advertisement buffer
@@ -588,40 +616,55 @@ cbuf = bytes(-64)
 def cb(error,op,uuid,handle)
 end
 
-cbp = tasmota.gen_cb(cb)
+cbp = tasmota.gen_cb(/e,o,u,h->cb)
 BLE.conn_cb(cbp,cbuf)
 ```
 
-#####Return values of the callback function
-
-Error (codes):
-
-- 0 - no error
-- 1 - connection error
-- 2 - did disconnect
-- 3 - did not get service
-- 4 - did not get characteristic
-- 5 - could not read value
-- 6 - characteristic can not notify
-- 7 - characteristic not writable
-- 8 - did not write value
-- 9 - timeout: did not read on notify
-
-Op (codes):
-
-- 1 - read
-- 2 - write
-- 3 - subscribe - direct response after launching a run command to subscribe
-- 5 - disconnect
-- 6 - retrieve all *services* of connected device
-- 7 - retrieve all *characteristics* and *GATT Characteristic Property Flags*  of a service
-- 103 - notify read - the notification with data from the BLE server
-
-uuid:
-Returns the 16 bit UUID of the characteristic as a number, even if the UUID was 128 bit.
-
-handle:
-Returns the 16 bit handle of the characteristic as a number.
+```mermaid
+---
+title: "Return values of the callback function"
+---
+classDiagram
+class cb{
+    <<function>>
+    error, operation, uuid, handle
+}
+class error{
+    <<int>>
+    0 - no error
+    1 - connection error
+    2 - did disconnect
+    3 - did not get service
+    4 - did not get characteristic
+    5 - could not read value
+    6 - characteristic can not notify
+    7 - characteristic not writable
+    8 - did not write value
+    9 - timeout: did not read on notify
+}
+class operation{
+    <<int>>
+    1   - read
+    2   - write
+    3   - subscribe - response to command to subscribe, not a notification
+    5   - disconnect
+    6   - retrieve all services of connected device
+    7   - retrieve all characteristics and GATT Characteristic Property Flags  of a service
+    103 - notify read - the notification with data from the BLE server
+}
+class uuid{
+    <<int>>
+    16-bit uuid
+}
+class handle{
+    <<int>>
+    16-bit handle
+}
+cb --|> error
+cb --|> operation
+cb --|> uuid
+cb --|> handle
+```
 
 Internally this creates a context, that can be modified with the following methods:
 
@@ -644,7 +687,7 @@ Finally run the context with the specified properties and (if you want to get da
 
 - 11 - read - then disconnect (returns 1 in the callback)
 - 12 - write - then disconnect (returns 2 in the callback)
-- 13 - subscribe - then disconnect after waiting for notification(returns 3 in the callback)
+- 13 - subscribe - then disconnect after waiting for notification (returns 3 in the callback)
 
 The buffer format for reading and writing is in the format (length - data):
 ```
@@ -654,7 +697,9 @@ n bytes - data
 
 #### Central role (aka server)
 
-The server is initiated similarly with `BLE.serv_cb(cbp,cbuf)`. After that you have to construct the server by first adding all *characteristics* and finally starting it, by setting the *advertisement* data for the first time. Setting *advertisement* data without adding *characteristics* will not start a BLE server but only a BLE Broadcaster, which is totally fine for some use cases (i.e. Beacons, BTHome).
+The server is initiated similarly with `BLE.serv_cb(cbp,cbuf)`.
+After that you have to construct the server by first adding all *characteristics* and finally starting it, by setting the *advertisement* data for the first time.
+Setting *advertisement* data without adding *characteristics* will not start a BLE server but only a BLE Broadcaster, which is totally fine for some use cases (i.e. Beacons, BTHome).
 The BLE server can be stopped with `BLE.serv_cb(nil)`, which will restart the "BLE Scan Task".
 
 The callback functions returns error, operation, 16-bit-uuid and 16-bit-handle.
@@ -674,9 +719,13 @@ BLE.serv_cb(cbp,cbuf)
 
 ####Command op codes:
 
-- 201 - add and/or set advertisement data according to the BLE standard, typically chaining small packets in the in the format of `length-type-data`. When called for the first time, will return a bytes buffer, that represents an array of the 16-bit-handles of all characteristics in the order of addition.
+- 201 - add and/or set advertisement data according to the BLE standard, typically chaining small packets in the in the format of `length-type-data`.
+When called for the first time, will return a bytes buffer, that represents an array of the 16-bit-handles of all characteristics in the order of addition.
 - 202 - add and/or set scan response data, according to the BLE standard which is equally  to the advertisement data. Should be used sparsely.
-- 211 - add and/or set characteristic with value of bytes buffer. For simplicity a `Client Characteristic Configuration Descriptor` (aka 0x2902) will be added on construction of every characteristic and read, write, notification and indication is enabled. You can select write with or without response withe the optional boolean of  `BLE.set_chr(string, bool)`, which defaults to "write with no response". The function call will always trigger a *notification*. As every *characteristic* belongs to a *service*, `BLE.set_svc(string)` must have been called before.
+- 211 - add and/or set characteristic with value of bytes buffer. 
+For simplicity a `Client Characteristic Configuration Descriptor` (aka 0x2902) will be added on construction of every characteristic and read, write, notification and indication is enabled.
+You can select write with or without response withe the optional boolean of  `BLE.set_chr(string, bool)`, which defaults to "write with no response".
+The function call will always trigger a *callback*. As every *characteristic* belongs to a *service*, `BLE.set_svc(string)` must have been called before.
 
 ####Response op codes (triggered when a client interacts with the server):
 
@@ -693,7 +742,9 @@ BLE.serv_cb(cbp,cbuf)
 
 !!! tip
 
-    By default the synchronization between the BLE framework and Berry happens every 50 milliseconds, which should be enough for the majority of use cases. For very fast BLE devices it can be necessary to use Berrys `fast_loop` to trigger this at maximum speed (of about every 5 milliseconds). This is typically done in an init function of a class like that:
+    By default the synchronization between the BLE framework and Berry happens every 50 milliseconds, which should be enough for the majority of use cases.
+    For very fast BLE devices it can be necessary to use Berrys `fast_loop` to trigger this at maximum speed (of about every 5 milliseconds).
+    This is typically done in an init function of a class like that:
     `tasmota.add_fast_loop(/-> BLE.loop())`
 
 ####Configuration op codes (return immediately, no callback involved):
@@ -701,7 +752,7 @@ BLE.serv_cb(cbp,cbuf)
 - 231 - set own address to random with `BLE.set_MAC(bytes("aabbccddeeff"),1)`
 - 232 - set advertising parameters with bytes() descriptor of length 5 [advType:byte, minInterval:uint16_t, max interval: uint16_t]
 - 233 - set GAP name with `string` in bytes buffer (must be null terminated)
-  
+
 ### Berry examples
 
 Here is an implementation of the "old" MI32 commands:
