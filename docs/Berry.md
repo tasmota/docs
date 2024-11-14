@@ -2143,6 +2143,10 @@ end
 
 video()
 ```
+
+### `BLE` module
+  
+Write drivers and applications for Bluetooth Low Energy supporting all 4 roles. More information here: [BLE module](Bluetooth_MI32.md#ble-module)
   
 ## Philips Hue emulation for Alexa
 Berry extends the native Hue/Alexa emulation and makes it possible to handle any number of virtual lights. You can easily define "virtual" lights in Berry, respond to commands from Alexa and send light status.
