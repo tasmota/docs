@@ -33,7 +33,7 @@ function parseBinSFile(){
                 }
             }
         }
-        if(line.startsWith(".word")){
+        if(line.startsWith(".word") || line.startsWith(".long")){
             words = parseInt((line.split(" ")[1]))
         }
     }
