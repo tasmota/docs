@@ -250,7 +250,7 @@ pH.Min|(Float) Minimum setting value for pH control (only useful if a base pump 
 pH.Max|(Float) Maximum setting value for pH control (only useful if an acid pump is connected).
 pH.State|(Int) Status of the pH controller:<BR>`0` = no alarm<BR>`1` = pH too high: pH value is 0.8 points higher than setpoint (`NPpHMax` on acid systems, `NPpHMin` on base systems, `NPpHMax` on acid+base systems)<BR>`2` = pH too low: pH value is 0.8 points lower than setpoint (`NPpHMax` on acid systems, `NPpHMin` on base systems, `NPpHMin` on acid+base systems)<BR>`3` = pH pump has exceeded the working time set by the MBF_PAR_RELAY_PH_MAX_TIME parameter and has stopped<BR>`4` = pH higher than setpoint (`NPpHMax` + 0.1 on acid systems, `NPpHMin` + 0.1 on base systems, `NPpHMax` on acid+base systems)<BR>`5` = pH lower than setpoint (`NPpHMax` - 0.3 on acid systems, `NPpHMin` - 0.3 on base systems, `NPpHMin` on acid+base systems)<BR>`6` = Tank level alarm
 pH.Pump|(Int) pH control module and controlling pumps:<BR>`0` = pH control module and controlling pumps inactive<BR>`1` = Acid/base pH pump pump on<BR>`2` = Acid/base pH pump pump off
-pH.FL1|(Bool) Water flow status:<BR>`0` = No flow alarm<BR>`1` = Flow alarm
+pH.FL1|(Bool) Control status of the pH module by flow detection:<BR>`0` = Disable<BR>`1` = Enable
 pH.Tank|(Bool) Acid/Base tank signal input:<BR>`0` = Tank empty<BR>`1` = No Tank alarm
 Redox.Data|(Int) Current redox value [mV]
 Redox.Setpoint|(Int) Redox target [mV]
@@ -273,7 +273,7 @@ Hydrolysis.State|(String) Cell state:<BR>`OFF` = Cell inactive<BR>`FLOW` = Cell 
 Hydrolysis.Cover|(Bool) Cover signal input:<BR>`0` = Cover input inactive<BR>`1` = Cover input active
 Hydrolysis.Boost|(Int) Boost mode state:<BR>`0` = Boost mode inactive<BR>`1` = Boost mode active<BR>`2` = Boost mode active with redox control
 Hydrolysis.Low|(Bool) Hydrolysis low alarm:<BR>`0` = No alarm<BR>`1` = Hydrolysis cannot reach the setpoint
-Hydrolysis.FL1|(Bool) Hydrolysis flow alarm:<BR>`0` = No alarm<BR>`1` = Hydrolysis flow alarm, no flow detected
+Hydrolysis.FL1|(Bool) Hydrolysis cell flow indicator:<BR>`0` = No alarm<BR>`1` = Hydrolysis flow alarm, no flow detected
 Hydrolysis.Redox|(Bool) Activation of hydrolysis by the redox module:<BR>`0` = Not activated by redox module<BR>`1` = Activated by redox module
 Filtration.State|(Int) Filtration pump state:<BR>`0` = Pump off<BR>`1` = Pump on
 Filtration.Speed|(Int) Filtration pump speed:<BR>`1` = Low<BR>`2` = Middle<BR>`3` = High
