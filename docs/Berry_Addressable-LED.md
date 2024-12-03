@@ -64,6 +64,8 @@ set\_bytes<a class="cmnd" id="leds_set_bytes"></a>|`set_bytes(row:int, buffer:by
 
 !!! note "An [offline emulator](https://github.com/s-hadinger/Tasmota-Berry-emulator) is available to test animation on a computer instead of an embedded device and generate animated images to show the final result"
 
+!!! note "Based on the project above there as an [online emulator](https://staars.github.io/docs/emulator/) with a minimal Tasmota environment running real Berry in a web browser, which will show animations in real time. Just copy and paste the code."
+
 The module `animate` provides a simple framework to build customizable animations. It is optimized for 1D animations on Led strips.
 
 ![Leds_animator](https://github.com/tasmota/docs/assets/49731213/1b4db455-938a-4f89-a3b6-69886be1ce6f)
