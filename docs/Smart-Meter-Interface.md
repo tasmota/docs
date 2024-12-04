@@ -2157,7 +2157,7 @@ This is script for a two-direction meter (consumption and delivery) for the Isra
 
 ### Iskra eHZ-MT681-D4A51-K0p
 
-2012 version of the Iskra MT 681 with slightly other OBIS codes for the power values.
+2012 version of the Iskra MT 681 with slightly different OBIS codes for the power values.
 
 ??? summary "View script"
     ```
@@ -2191,6 +2191,26 @@ This is script for a two-direction meter (consumption and delivery) for the Isra
     1,77070100100700ff@1,Leistung,W,Power_cur,0
     1,77070100020800ff@1000,Erzeugung,kWh,Total_out,4
     1,77070100000009ff@#,Service ID,,Meter_id,0
+    #
+    ```
+
+### Iskra eHZ-MS2020 MT691-D4A52-KDy-H03 GRID
+
+"Moderne Messeinrichtung" installed in 2024 
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,0,9600,MT691
+    1,77070100010800ff@1000,Total Consumed,kWh,Total_in,3
+    1,77070100100700ff@1,Current Consumption,W,Power_cur,0
+    1,77070100240700ff@1,Current Consumption P1,W,Power_p1,0
+    1,77070100380700ff@1,Current Consumption P2,W,Power_p2,0
+    1,770701004c0700ff@1,Current Consumption P3,W,Power_p3,0
+    1,77070100020800ff@1000,Total Delivered,kWh,Total_out,3
     #
     ```
 
