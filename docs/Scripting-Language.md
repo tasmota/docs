@@ -2649,13 +2649,13 @@ start dim level = initial dimmer level after power-up or restart; max 100
     This example fetches various values from Tesla Powerwall API
     and displays them in the WEB UI and on an ILI9341 LCD display
 
-    you will needs these additional defines:
+    you will need these additional defines:
     #define USE_TLS
     #define TESLA_POWERWALL
-    #define USE_SENDMAIL (because thes SSL Library from email is needed)
+    #define USE_SENDMAIL (because this SSL Library from email is needed)
     #define SCRIPT_GET_HTTPS_JP
 
-    remark: since the Tasmota JSON parser has various limitations some TESLA JSON values had to be reanamed to get a more compact response. 
+    remark: since the Tasmota JSON parser has various limitations some TESLA JSON values had to be renamed to get a more compact response. 
 
     >D
     tmp=0
@@ -2730,7 +2730,7 @@ start dim level = initial dimmer level after power-up or restart; max 100
     next
 
     >BS
-    ;set powerwall ip and credentials (prefix @D)
+    ;set powerwall ip and credentials (prefix @D), insert your credentials here
     res=gpwl("@D192.168.188.60,email,password")
     ;set powerwall serial numbers of CTS devices 1 and 2 (prefix @C)
     res=gpwl("@C0x000004714B006CCD,0x000004714B007969")
