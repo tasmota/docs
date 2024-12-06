@@ -2643,6 +2643,235 @@ start dim level = initial dimmer level after power-up or restart; max 100
     >W
     ; call web subroutine
     %=#wsub
+
+### accessing TESLA Powerwall 2 API
+
+    This example fetches various values from Tesla Powerwall API
+    and displays them in the WEB UI and on an ILI9341 LCD display
+
+    you will needs these additional defines:
+    #define USE_TLS
+    #define TESLA_POWERWALL
+    #define USE_SENDMAIL (because thes SSL Library from email is needed)
+    #define SCRIPT_GET_HTTPS_JP
+
+    remark: since the Tasmota JSON parser has various limitations some TESLA JSON values had to be reanamed to get a more compact response. 
+
+    >D
+    tmp=0
+    res=0
+    cnt=0
+
+    ;powerwall
+    pwl=8
+    ;Net
+    sip=0
+    ;Solar
+    sop=0
+    ;Battery
+    bip=0
+    ;House
+    hip=0
+    ;total cap
+    tcap=0
+    ;remainig cap
+    rcap=0
+    ;reserve percent
+    rper=0
+
+    ;3 phases
+    phs1=0
+    phs2=0
+    phs3=0
+
+    p1w=0
+    p2w=0
+    p3w=0
+    p4w=0
+    p5w=0
+    p6w=0
+    p7w=0
+    p8w=0
+
+    pwf=0
+
+    xp=0
+    yp=0
+
+    hs1="{m}<span style='color:"
+    hs5="</span>"
+    ps=""
+    str=""
+    tm=""
+    perr=""
+
+    >B
+    ;month
+    tmp=is1(0 "Jan|Feb|Mar|Apr|Mai|Jun|Jul|Aug|Sep|Okt|Nov|Dec|")
+    ;weekdays
+    tmp=is(0 "So|Mo|Th|Wd|Th|Fr|Sa|")
+    ;display labels
+    tmp=is2(0 "Battery %:|Net:|Solar:|Battery:|Home:|Tot Cap:|Rem Cap:|Rcap Lim:|Solar 1:|Solar 2:|Phase 1:|Phase 2:|Phase 3:|")
+
+    ;clr display
+    dt [Bi0D0z]
+
+    =#labels
+
+    ;draw all labels on display
+    #labels
+    dt [Ci5x0y20h70x170h70]
+    dt [Ci16f1s1y18x90]Powerwall
+    dt [f1s1Ci16]
+    yp=60
+    for res 1 13 1
+	    dt [x15y%0yp%]%is2[res]%
+	    yp+=20
+    next
+
+    >BS
+    ;set powerwall ip and credentials (prefix @D)
+    res=gpwl("@D192.168.188.60,email,password")
+    ;set powerwall serial numbers of CTS devices 1 and 2 (prefix @C)
+    res=gpwl("@C0x000004714B006CCD,0x000004714B007969")
+
+
+    >S
+    ;display time and date
+    dt [Ci3x50y40T]
+    dt [x150y40tS]
+
+    ;show powerwall values on display every 5 seconds
+    if upsecs%5==0 {
+	    dt [Ci5]
+	    yp=60
+	    dt [x150y%0yp%p-10]%2pwl% %%
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1sip% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1sop% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1bip% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1hip% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1tcap% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1rcap% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%rper% %%
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1p1w% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1p2w% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1p5w% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1p6w% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1p7w% W
+	    yp+=20	
+    }
+
+    ;access powerwall api every 4 seconds
+    if year>2023 {
+	    switch cnt
+		    case 0
+			    gpwl("/api/meters/aggregates")
+		    case 4
+			    gpwl("/api/system_status/soe")
+		    case 8
+			    gpwl("/api/system_status")
+		    case 12
+			    gpwl("/api/operation")
+		    case 14
+			    pwf=1
+			    gpwl("/api/meters/readings")
+		    case 18
+			    cnt=-1
+	    ends
+	    cnt+=1
+    }
+
+    ;JSON fetch section
+    >jp
+    ;fetch powerwall JSON output
+    sip=site#i_power
+    bip=battery#i_power
+    hip=load#i_power
+    sop=solar#i_power
+    pwl=percentage
+    tcap=f_p_e
+    rcap=n_e_r
+    rper=b_r_p
+
+    ;readings cannot be decoded by tasmota JSON
+    ;so use string search ("gwr")
+    if pwf>0 {
+	    str=""
+	    str=PW_CTS1#error
+	    perr=str
+	    if str=="" {
+		    p1w=gwr( "\"p_W\":" 2)
+		    p2w=gwr( "\"p_W\":" 3)
+		    p3w=gwr( "\"p_W\":" 4)
+		    p4w=gwr( "\"p_W\":" 5)
+	    }
+	    str=""
+	    str=PW_CTS2#error
+	    perr=str
+	    if str=="" {
+		    p5w=gwr( "\"p_W\":" 6)
+		    p6w=gwr( "\"p_W\":" 7)
+		    p7w=gwr( "\"p_W\":" 8)
+		    p8w=gwr( "\"p_W\":" 9)
+		    phs1=p5w
+		    phs2=p6w
+		    phs3=p7w
+	    }
+	
+	    pwf=0
+	    str=""
+    }
+
+    #wtime
+    ;only in webmode 0
+    if wm==0 {
+	    ;show time, weekday and date
+	    wcs {s}<center><h1 style="color:green;font-size:40px;">%2.0hours%:%2.0mins%:%2.0secs%</h1>{m}%is[wday]% %0day%. %is1[month]% <br>%0year%{e}
+	    dp(2 0)
+	    ps=s(int(sunrise/60))+":"+s(sunrise%60)
+	    str=s(int(sunset/60))+":"+s(sunset%60)
+	    res=sunset-sunrise
+	    tm=s(int(res/60))+":"+s(res%60)
+	    wcs {s}<center>&#127774 %ps% <--- %tm% ---> %str% &#127769{e}
+	    dp(0 2)
+    }
+
+    >W
+    %=#wtime
+    <hr>
+    Battery Percent%hs1%yellow;'>%pwl% %% (%2(pwl/100*(tcap/1000))% kWh)%hs5%
+    Net%hs1%yellow;'>%sip% W %hs5%
+    Solar%hs1%green;'>%sop% W %hs5%
+    Battery%hs1%yellow;'>%bip% W %hs5%
+    House%hs1%red;'>%hip% W %hs5%
+    Total Capacity%hs1%yellow;'>%3(tcap/1000)% kWh %hs5%
+    Remaining Capacity%hs1%yellow;'>%3(rcap/1000)% kWh %hs5%
+    RcapLimit%hs1%yellow;'>%rper% %% %hs5%
+    <hr>
+    Solar P1%hs1%yellow;'>%1p1w% W %hs5%
+    Solar P2%hs1%yellow;'>%1p3w% W %hs5%
+    <hr>
+    Net P1%hs1%yellow;'>%1p5w% W %hs5%
+    Net P2%hs1%yellow;'>%1p6w% W %hs5%
+    Net P3%hs1%yellow;'>%1p7w% W %hs5%
+    <hr>
+    CTS Error%hs1%yellow;'>%perr%%hs5%
+    <hr>
+    heap:{m}%heap%
+    >R
+    print exit script
       
 ### Image gallery of various Tasmota scripts  
         
