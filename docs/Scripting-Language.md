@@ -2652,7 +2652,7 @@ start dim level = initial dimmer level after power-up or restart; max 100
     you will need these additional defines:
     #define USE_TLS
     #define TESLA_POWERWALL
-    #define USE_SENDMAIL (because this SSL Library from email is needed)
+    #define USE_SENDMAIL (because the SSL Library from email is needed)
     #define SCRIPT_GET_HTTPS_JP
 
     remark: since the Tasmota JSON parser has various limitations some TESLA JSON values had to be renamed to get a more compact response. 
@@ -2711,7 +2711,7 @@ start dim level = initial dimmer level after power-up or restart; max 100
     ;weekdays
     tmp=is(0 "So|Mo|Th|Wd|Th|Fr|Sa|")
     ;display labels
-    tmp=is2(0 "Battery %:|Net:|Solar:|Battery:|Home:|Tot Cap:|Rem Cap:|Rcap Lim:|Solar 1:|Solar 2:|Phase 1:|Phase 2:|Phase 3:|")
+    tmp=is2(0 "Battery %:|Grid:|Solar:|Battery:|Home:|Tot Cap:|Rem Cap:|Rcap Lim:|Solar 1:|Solar 2:|Phase 1:|Phase 2:|Phase 3:|")
 
     ;clr display
     dt [Bi0D0z]
@@ -2852,7 +2852,7 @@ start dim level = initial dimmer level after power-up or restart; max 100
     %=#wtime
     <hr>
     Battery Percent%hs1%yellow;'>%pwl% %% (%2(pwl/100*(tcap/1000))% kWh)%hs5%
-    Net%hs1%yellow;'>%sip% W %hs5%
+    Grid%hs1%yellow;'>%sip% W %hs5%
     Solar%hs1%green;'>%sop% W %hs5%
     Battery%hs1%yellow;'>%bip% W %hs5%
     House%hs1%red;'>%hip% W %hs5%
