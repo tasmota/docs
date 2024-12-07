@@ -587,7 +587,7 @@ After unlocking the meter, you can run the following script
     ->sensor53 r
     ;->sensor53 d1
     >M 1
-    +1,13,m,0,115200,MODBUS,12,2,01030000,01030002,01030004,0103000C,0103000E,01030010,01030012,01030014,01030016,01030018,0103001A,0103001C,0103001E,01030020,01030022,01030034,01030038,0103002e,0103002f,01030030,0103004e
+    +1,3,m,0,115200,MODBUS,12,2,01030000,01030002,01030004,0103000C,0103000E,01030010,01030012,01030014,01030016,01030018,0103001A,0103001C,0103001E,01030020,01030022,01030034,01030038,0103002e,0103002f,01030030,0103004e
     1,010304SSssSSsss@i0:10,Voltage L1,V,Voltage_L1,1
     1,010304SSssSSsss@i1:10,Voltage L2,V,Voltage_L2,1
     1,010304SSssSSsss@i2:10,Voltage L3,V,Voltage_L3,1
@@ -1023,7 +1023,7 @@ Example reading of the two-direction model using GPIO 3:
     ; Device: eBZ DD3 2R06 DTA SMZ1
     ; protocol is D0 SML HEX
     ; 9600@7E1 for OD-type devices, 9600@8N1 for SM-type devices
-    +1,13,s,0,9600,SML
+    +1,3,s,0,9600,SML
     ; Zählerstand zu +A, tariflos, 
     ; Auflösung 10 µW*h (6 Vorkomma- und 8 Nachkommastellen)
     1,77070100010800FF@100000000,Energie Bezug,kWh,1_8_0,8
@@ -1463,7 +1463,7 @@ So in this script the three phases get added and published as `Power_total`.
     >B   
     ->sensor53 r  
     >M 2  
-    +1,13,s,0,9600,Haus  
+    +1,3,s,0,9600,Haus  
     +2,12,s,0,9600,Heizung  
     1,770701000F0700FF@1,Aktuell,W,Power_curr,0  
     1,77070100010800FF@1000,Zählerstand Verb.,kWh,Tariflos,2  
@@ -3797,7 +3797,7 @@ Tested on an AEConversion INV500-90 with RS485 interface.
     ; Monitor Sensor at GPIO25
     =>sensor53 l255
     >M 1
-    +1,13,r,0,9600,aec,15,50,2101B203FD4D0D
+    +1,3,r,0,9600,aec,15,50,2101B203FD4D0D
     
     1,212717UUuux7@1,Leistung,W,power,0
     1,212717x4UUuux4@1000,Energie,kWh,energy_sun,3
