@@ -26,6 +26,8 @@ In commands with `x..y` value parameters use a number from `x` to `y` range.
 
 When a command mentions resetting to *"firmware default"* it means the setting will revert to the one in the flashed binary file. If you used `user_config_override.h` at compile time it will revert to those.
 
+If a command name is prefixed with `_` (underscore), the command result will neither be logged nor published via MQTT. However, output from the `Status` command will not be suppressed, as it does not count as "result". This is also the case where command output is only asynchroneously generated after some time, like the `Ping` command.
+
 !!! note
     All commands are standard in the form: `COMMAND`<`INDEX`> `DATA` It has only one `SPACE` between `INDEX` and `DATA`. (There is no command in Tasmota that allows the `=` sign)
 
@@ -124,6 +126,8 @@ Command|Parameters
 :---|:---
 Backlog<a class="cmnd" id="backlog"></a>|List of commands to be executed in sequence separated by  `;`<BR> See [Using Backlog](#the-power-of-backlog) for examples.<a class="cmnd" id="blinkcount"></a>
 Backlog0<a class="cmnd" id="backlog0"></a>|List of commands to be executed without any delay in sequence separated by  `;`<BR> See [Using Backlog](#the-power-of-backlog) for examples.
+Backlog2<a class="cmnd" id="backlog2"></a>|Like `Backlog0`, but without result published, same as prefixing all the commands with `_`
+Backlog3<a class="cmnd" id="backlog3"></a>|Like `Backlog`, but without result published, same as prefixing all the commands with `_`
 BlinkCount<a class="cmnd" id="blinkcount"></a>|Number of relay toggles ([blinks](#power)) _(does not control the status LED)_<BR> `0` = blink many times before restoring power state <BR> `1..32000` = set number of blinks *(default = `10`)*
 BlinkTime<a class="cmnd" id="blinktime"></a>|`2..3600` set duration, in 0.1 second increments, to [blink](#power) aka toggle Power _(does not control the status LED)_
 Br<a class="cmnd" id="br"></a>|Run the code from the console<BR>Example to download a file from a remote server into filesystem:<BR>`br def urlfetch(url,file); if file==nil; import string; file=string.split(url,'/').pop(); end; var wc=webclient(); wc.begin(url); var st=wc.GET(); if st!=200 raise 'connection_error','status: '+str(st) end; st='Fetched '+str(wc.write_file(file)); print(url,st); wc.close(); return st; end; urlfetch('https://raw.githubusercontent.com/arendst/Tasmota/development/tasmota/zigbee/giex_water.zb')`
