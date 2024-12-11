@@ -15,7 +15,7 @@ Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v14.3.0">Tasmota v14.3.0 Robert</a></span>
+<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v14.4.0">Tasmota v14.4.0 Rudolph</a></span>
 
 ## Breaking Changes
 
@@ -23,14 +23,11 @@ Incredibly expandable and flexible.
 
 ## New Features
 
-- Extend command `PowerSet<phase> <power>,<voltage>` to calibrate both Current and Power with known resistive load using previous calibrated Voltage
+- Added commands `WebColor20`, `SetOption161` 
 - Added support for:
-  - I2C M5Unit (Mini)Scales using HX711 driver
-  - DALI on ESP8266
-  - BL0906 up to 6 channel energy monitor as used in Athom EM2/EM6
-  - Sonoff SPM v1.3.0
-- ESP32 Framework (Arduino Core) v3.1.0
-- Berry functions
+  - I2C over Serial
+  - DALI support enchancements
+  - HLK-LD2410S, MS5837, TM1640, HLK-LD2410 engineering mode
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
 
