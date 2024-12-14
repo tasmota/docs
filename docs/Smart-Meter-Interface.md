@@ -458,7 +458,7 @@ Energy provider supplied a PIN code to enable output of additional data.
     #
     ```
 
-### Apator Lupus 3.060 (SML)
+### Apator Lepus 3.060 (SML)
 
 Instructions for Activating the Instantaneous Power Display and Disabling the PIN Protection. For more details and additional instructions, you can download the user manual from the internet.
 
