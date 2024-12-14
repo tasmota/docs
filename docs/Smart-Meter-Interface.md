@@ -458,6 +458,93 @@ Energy provider supplied a PIN code to enable output of additional data.
     #
     ```
 
+### Apator Lupus 3.060 (SML)
+
+Instructions for Activating the Instantaneous Power Display and Disabling the PIN Protection. For more details and additional instructions, you can download the user manual from the internet.
+
+**Important Note**:  
+Entering the PIN with a flashlight is **not** sufficient to permanently display the instantaneous power or disable the PIN protection.
+
+Please follow the steps below. For more details, refer to the user manual of the meter, which is available for download online.
+
+1. To start, press and hold the **left arrow button** for **more than 5 seconds** to access the parameter menu. A display test will briefly show the top and bottom lines of the display.
+
+2. If PIN protection is active, you will be prompted to enter the PIN. Use **short button presses** to select the correct digits. After about 2 seconds of no input, the cursor will automatically move to the next digit.
+
+3. To activate the instantaneous power display, navigate to the **"Inf"** menu option and press and hold the **left arrow button for more than 5 seconds**. This will enable the **"Inf on"** setting, which will display the instantaneous power on the second line of the display permanently.
+
+4. To disable PIN protection, navigate to the **"Pin"** menu option and press and hold the **left arrow button for more than 5 seconds**. This will turn off the PIN protection.
+
+After following these steps, the instantaneous power will be displayed permanently in the second line of the display.
+
+??? summary "View script in English"
+    ```
+        >D  
+        >B  
+        ->sensor53 r
+        >M 1  
+        +1,3,s,1,9600,SML  
+        1,77070100100700FF@1,Power Consumption,W,Current_Active_Power,16
+        1,77070100240700FF@1,Phase 1,W,Active_Power_L1,0
+        1,77070100380700FF@1,Phase 2,W,Active_Power_L2,0
+        1,770701004C0700FF@1,Phase 3,W,Active_Power_L3,0
+        1,=h ----
+        1,77070100010800FF@1,Total Consumption,Wh,Total_Consumption,1
+        1,77070100020800FF@1,Feed-in,Wh,Total_Active_Energy,1
+        1,=h ----
+        1,770701000E0700FF@1,Grid Frequency,Hz,Grid_Frequency,1
+        1,770701001F0700FF@1,Current L1,A,Current_L1,2
+        1,77070100330700FF@1,Current L2,A,Current_L2,2
+        1,77070100470700FF@1,Current L3,A,Current_L3,2
+        1,77070100200700FF@1,Voltage L1,V,Voltage_L1,1
+        1,77070100340700FF@1,Voltage L2,V,Voltage_L2,1
+        1,77070100480700FF@1,Voltage L3,V,Voltage_L3,1
+        1,77070100510701FF@1,Delta Phi U L1/L2,°,Delta_Phi_U_L1_L2,0
+        1,77070100510702FF@1,Delta Phi U L1/L3,°,Delta_Phi_U_L1_L3,0
+        1,77070100510704FF@1,Delta Phi I/U L1,°,Delta_Phi_I_U_L1,0
+        1,7707010051070FFF@1,Delta Phi I/U L2,°,Delta_Phi_I_U_L2,0
+        1,7707010051071AFF@1,Delta Phi I/U L3,°,Delta_Phi_I_U_L3,0
+        1,77070100600100ff@#,Server ID,,Server_ID,0
+        1,7707010060320101@#,Service ID,,Meter_ID,0
+        1,77070100605a0201@1,Firmware Checksum,,FwCheck,0
+        #
+    ```
+
+??? summary "View script in German"
+    ```
+        >D  
+        >B  
+        ->sensor53 r
+        >M 1  
+        +1,3,s,1,9600,SML
+        1,77070100100700FF@1,Stromverbrauch,W,aktuelle_Wirkleistung,16
+        1,77070100240700FF@1,Leiter 1,W,Wirkleistung_L1,0
+        1,77070100380700FF@1,Leiter 2,W,Wirkleistung_L2,0
+        1,770701004C0700FF@1,Leiter 3,W,Wirkleistung_L3,0
+        1,=h   ----
+        1,77070100010800FF@1,Zähler Verbrauch,Wh,Zaehlerstand_total,1
+        1,77070100020800FF@1,Zähler Einspeisung,Wh,Wirkenergie_total,1
+        1,=h   ----
+        1,770701000E0700FF@1,Netz Frequenz,Hz,Netz_Frequenz,1
+        1,770701001F0700FF@1,Strom L1,A,Strom_L1,2
+        1,77070100330700FF@1,Strom L2,A,Strom_L2,2
+        1,77070100470700FF@1,Strom L3,A,Strom_L3,2
+        1,77070100200700FF@1,Spannung L1,V,Spannung_L1,1
+        1,77070100340700FF@1,Spannung L2,V,Spannung_L2,1
+        1,77070100480700FF@1,Spannung L3,V,Spannung_L3,1
+        1,77070100510701FF@1,delta phi U L1/L2,°,delta_phi_U_L1-L2,0
+        1,77070100510702FF@1,delta phi U L1/L3,°,delta_phi_U_L1-L3,0
+        1,77070100510704FF@1,delta phi I/U  L1,°,delta_phi_I_U_L1,0
+        1,7707010051070FFF@1,delta phi I/U L2,°,delta_phi_I_U_L2,0
+        1,7707010051071AFF@1,delta phi I/U L3,°,delta_phi_I_U_L3,0
+        1,77070100600100ff@#,Server ID,,Server_ID,0
+        1,7707010060320101@#,Service ID,,Meter_ID,0
+        1,77070100605a0201@1,Firmware Checksum,,FwCheck,0
+        #
+    ```
+
+For further support, visit the [APATOR LEPUS Discussion Thread](https://github.com/arendst/Tasmota/discussions/17635).
+
 ### Apator Norax 3D (SML)
 
 ??? summary "View script"
