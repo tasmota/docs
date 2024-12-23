@@ -905,10 +905,10 @@ The `tabview` can be used to organize content in tabs.
 Example:
 
 ```json
-{"id":10,"obj":"tabview","x%":5,"y":60,"h%":55,"w%":90,"tab_bar_size":40,"btn_pos":1,"bg_color":"#222222","border_width":2,"border_color":"#FFFF44"}
-  {"id":51,"obj":"tab","parentid":10,"text":"Tab 1","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF"}
-  {"id":52,"obj":"tab","parentid":10,"text":"Tab 2","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF"}
-  {"id":53,"obj":"tab","parentid":10,"text":"Tab 3","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF"}
+{"id":10,"obj":"tabview","x%":5,"y":60,"h%":55,"w%":90,"tab_bar_size":40,"btn_pos":1,"bg_color":"#222222","border_width":2,"border_color":"#FFFF44","val":2}
+  {"id":51,"obj":"tab","parentid":10,"text":"Tab 1","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF","tab_border_color":"#FFFF44","tab_border_side":1,"tab_border_width":0,"tab_border_width01":3}
+  {"id":52,"obj":"tab","parentid":10,"text":"Tab 2","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF","tab_border_color":"#FFFF44","tab_border_side":1,"tab_border_width":0,"tab_border_width01":3}
+  {"id":53,"obj":"tab","parentid":10,"text":"Tab 3","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF","tab_border_color":"#FFFF44","tab_border_side":1,"tab_border_width":0,"tab_border_width01":3}
     {"id":61,"obj":"switch","x":20,"y":10,"w":60,"h":30,"parentid":51,"radius":25,"radius20":25,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400"}
     {"id":71,"obj":"dropdown","x":15,"y":10,"w":110,"h":30,"parentid":52,"options":"Apple\nBanana\nOrange\nMelon","bg_color50":"#FF4400","text_color":"#FFFF88","text_color50":"#FFFF88","border_color":"#FFFF88"}
       {"id":72,"obj":"dropdown_list","parentid":71,"text_color":"#EAEAEA","bg_color51":"#FF4400"}
@@ -921,6 +921,9 @@ You must first define a `tabview` object, and add as many as `tab` sub-objects. 
 :---|:---|:---
 `tab_bar_size`|`tab_bar_size`|(write-only) Set the vertical size of tab buttons.
 `bg_color`|`bg_color`|Set the background color for the content background of the sub-tabs
+`val`||Set or read the index of the active tab (0..count-1).
+`count`||(read-only) Read the number of tabs
+`text`||(read-only) Read the label of the active tab
 `border_color`|`border_color`|Set the color of the overall border of tabview.
 `border_width`|`border_width`|Set the border size of the overall border of tabview.
 
