@@ -49,7 +49,7 @@
 !!! example
      Consider a power usage of $60W$ at a voltage of $240V$. Then the current in milliAmps can be calculated as
      
-     $$1000 \* \frac{60}{240} = 240.0$$
+     $$1000 \* \frac{60}{240} = 250.0$$
 
 4. Confirm the validity of your calibration process checking `Power Factor` from the web UI which should be as close as possible to `1.00`. In theory resistive loads will always provide a power factor of 1.00. If that is not the case, we recommend you repeat the calibration process and make sure everything was done correctly. 
    
