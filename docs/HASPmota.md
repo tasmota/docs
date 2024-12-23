@@ -32,6 +32,7 @@ This feature is heavily inspired from @fvanroie's [openHASP project](https://git
 [![HASPmota seg7](_media/lvgl/HASPmota_22_seg7.png){width="160"}](#embedded-special-fonts)
 [![HASPmota msgbox](_media/lvgl/HASPmota_23_msgbox.png){width="160"}](#msgbox)
 [![HASPmota cpicker](_media/lvgl/HASPmota_24_cpicker.png){width="160"}](#cpicker)
+[![HASPmota tabview](_media/lvgl/HASPmota_25_tabview.png){width="160"}](#tabview)
 
 
 The `jsonl` file used to display the widgets can be found [here](_media/lvgl/haspmota_demo.jsonl)
@@ -239,6 +240,7 @@ HASPmota Class|Embedded LVGL class
 `span`|`lv.span`
 `msgbox`|`lv.msgbox`
 `qrcode`|`lv.qrcode`
+`tabview`|`lv.tabview`
 
 You can also import custom widget as long as they inherit from `lv.obj` and the class name matches the module name.
 
@@ -891,6 +893,46 @@ Attribute name|LVGL equivalent|Details
 `text_opa`|`set_text_opa`|Sets the text opacity<br>`0`: transparent<br>`255`: opaque 
 `text_letter_space`|`set_text_letter_space`|Set the letter space in pixels
 `text_line_space`|`set_text_line_space`|Set the line space in pixels.
+
+### `tabview`
+
+!!!note "Available (since Tasmota v14.4.2)."
+
+The `tabview` can be used to organize content in tabs.
+
+![HASPmota tabview](_media/lvgl/HASPmota_25_tabview.png)
+
+Example:
+
+```json
+{"id":10,"obj":"tabview","x%":5,"y":60,"h%":55,"w%":90,"tab_bar_size":40,"btn_pos":1,"bg_color":"#222222","border_width":2,"border_color":"#FFFF44"}
+  {"id":51,"obj":"tab","parentid":10,"text":"Tab 1","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF"}
+  {"id":52,"obj":"tab","parentid":10,"text":"Tab 2","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF"}
+  {"id":53,"obj":"tab","parentid":10,"text":"Tab 3","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF"}
+    {"id":61,"obj":"switch","x":20,"y":10,"w":60,"h":30,"parentid":51,"radius":25,"radius20":25,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400"}
+    {"id":71,"obj":"dropdown","x":15,"y":10,"w":110,"h":30,"parentid":52,"options":"Apple\nBanana\nOrange\nMelon","bg_color50":"#FF4400","text_color":"#FFFF88","text_color50":"#FFFF88","border_color":"#FFFF88"}
+      {"id":72,"obj":"dropdown_list","parentid":71,"text_color":"#EAEAEA","bg_color51":"#FF4400"}
+    {"id":81,"obj":"checkbox","x":15,"y":10,"w":120,"h":30,"parentid":53,"text":" Nice tabview","border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400","text_color":"#FFFF44"}
+```
+
+You must first define a `tabview` object, and add as many as `tab` sub-objects. You need to define the `parentid` attribute to the `tabview`. Sub-objects are then placed within each `tab` as long as you define `parentid` to the `tab`.
+
+`tabview` Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`tab_bar_size`|`tab_bar_size`|(write-only) Set the vertical size of tab buttons.
+`bg_color`|`bg_color`|Set the background color for the content background of the sub-tabs
+`border_color`|`border_color`|Set the color of the overall border of tabview.
+`border_width`|`border_width`|Set the border size of the overall border of tabview.
+
+`tab` Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`parentid`||Set to the `id` of the `tabview` it belongs to.
+`text`||Set the title of the tab button; cannot be changed once the tab is created.
+`tab_bg_color`||Set the background color of the tab button when it is not selected.
+`tab_bg_color01`||Set the background color of the tab button when it is selected.
+`tab_text_color`||Set the text color of the tab button when it is not selected.
+`tab_text_color01`||Set the text color of the tab button when it is selected.
+`tab_radius`||Set the radius of the tab button. Set to `0` by default for rectangular tab buttons.
 
 ### `msgbox`
 
