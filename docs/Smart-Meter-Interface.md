@@ -1110,7 +1110,7 @@ Example reading of the two-direction model using GPIO 3:
     ; Device: eBZ DD3 2R06 DTA SMZ1
     ; protocol is D0 SML HEX
     ; 9600@7E1 for OD-type devices, 9600@8N1 for SM-type devices
-    +1,13,s,0,9600,SML
+    +1,3,s,0,9600,SML
     ; Zählerstand zu +A, tariflos, 
     ; Auflösung 10 µW*h (6 Vorkomma- und 8 Nachkommastellen)
     1,77070100010800FF@100000000,Energie Bezug,kWh,1_8_0,8
