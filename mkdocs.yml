@@ -167,6 +167,7 @@ nav:
       - OpenTherm: OpenTherm.md
       - RF Communication: RF-Protocol.md
       - Serial-to-TCP-Bridge.md
+      - TWAI.md
       - Telegram.md
       - Zigbee.md
     - Smart-Meter-Interface.md
