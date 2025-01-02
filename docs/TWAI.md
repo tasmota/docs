@@ -99,10 +99,12 @@ tasmota.add_driver(twai)
 ```
 Save the file as `twai.be` and add a line `load('twai.be')` to file `preinit.be`. This will execute the file at restart and prepare the driver for 250Kbit/s and Listen Only Mode.
 
-### Remeha Calenta Ace sniffer to Domoticz
+### Remeha Calenta Ace sniffer for Domoticz
 
-<img alt="Remeha" src="../_media/Remeha1.jpg" style="margin:10px;float:right;width:20em"> </img>
+<img alt="Remeha" src="../_media/Remeha1.jpg" style="margin:10px;float:right;width:18em"> </img>
 The Remeha boiler provides a RJ12 connector for a Service Tool. The communication between the boiler and the Service Tool takes place using CAN-bus in 11-bit identifier mode. A dongle consisting of a M5 Mini CAN Unit and a M5Atom (ESP32/ESP32S3) or M5Nano (ESP32C6) with Tasmota can be used as sniffer sending important data to a Home Automation tool like Domoticz.
+
+To make the M5 Mini CAN Unit compliant with the CAN-bus standard you'll need to remove the internal 120 Ohm resistor as the Remeha L-Bus is already terminated with two 120 Ohm resistors. As an alternative you can use the M5 Unit CAN which has no internal 120 Ohm termination resistor. In that case you'll need to power the Atom or Nano externally with a USB power supply as the CAN-bus is isolated.
 
 The RJ12 6-pin usage as shown from the front of the boiler
 
@@ -110,8 +112,6 @@ Pin number:|1|2|3|4|5|6
 :-|:-|:-|:-|:-|:-|:-
 Remeha Ace RJ12|24V|-|Gnd|-|Tx|Rx
 M5 Mini CAN    |HV| |G| |L|H
-
-To make the M5 Mini CAN Unit compliant with the CAN-bus standard you'll need to remove the internal 120 Ohm resistor as the Remeha L-Bus is already terminated with two 120 Ohm resistors. As an alternative you can use the M5 Unit CAN which has no internal 120 Ohm termination resistor. In that case you'll need to power the Atom or Nano externally with a USB power supply as the CAN-bus is isolated.
 
 This berry class supports a Remeha Calenta Ace boiler sending some data to Domoticz home automation for logging. 
 ```
