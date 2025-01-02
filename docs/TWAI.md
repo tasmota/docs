@@ -13,6 +13,20 @@
 
 The ESP32 series contains 1 to 3 TWAI controller(s) that can be configured to communicate on a TWAI bus via an external transceiver.
 
+Platform|TWAI busses
+:-|:-:
+ESP8266|0
+ESP32 (ESP32solo1)|1
+ESP32-S2|1
+ESP32-S3|1
+ESP32-C2 (ESP8684)|0
+ESP32-C3 (ESP8685)|1
+ESP32-C5|2
+ESP32-C6|2
+ESP32-C61|2
+ESP32-H2|1
+ESP32-P4|3
+
 ??? warning "The TWAI controller is not compatible with ISO11898-1 FD Format frames, and will interpret such frames as errors."
 
 ## Hardware needed
