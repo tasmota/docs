@@ -106,14 +106,18 @@ The Remeha boiler provides a RJ12 connector for a Service Tool. The communicatio
 
 To make the <b>M5 Mini CAN Unit</b> compliant with the CAN-bus standard you'll need to remove the internal 120 Ohm resistor as the Remeha L-Bus is already terminated with two 120 Ohm resistors.
 
+??? warning "When using the <b>M5 Mini CAN Unit</b> DO NOT CONNECT ANY USB CABLE TO THE M5ATOM OR M5NANO. It likely blows (one of) the ESD diodes (as mine did). If USB connection is needed use <b>M5 Unit CAN</b>."
+
 As an alternative you can use the <b>M5 Unit CAN</b> which has no internal 120 Ohm termination resistor. In that case you'll need to power the M5Atom or M5Nano externally with a USB power supply as the CAN-bus is isolated.
 
 The RJ12 6-pin usage as shown from the front of the boiler
 
-1|2|3|4|5|6|Device
-:-:|:-:|:-:|:-:|:-:|:-:|:-
-24V|-|Gnd|-|Tx|Rx|Remeha Ace
-HV| |G| |L|H|M5 Mini CAN Unit
+```
+             Pin   1    2    3    4    5    6
+      Remeha Ace  24V   nc  Gnd   nc   Tx   Rx
+M5 Mini CAN Unit   HV        G         L    H
+     M5 Unit CAN             G         L    H
+```
 
 #### Berry class
 
