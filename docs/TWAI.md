@@ -102,16 +102,20 @@ Save the file as `twai.be` and add a line `load('twai.be')` to file `preinit.be`
 ### Remeha Calenta Ace sniffer for Domoticz
 
 <img alt="Remeha" src="../_media/Remeha1.jpg" style="margin:10px;float:right;width:18em"> </img>
-The Remeha boiler provides a RJ12 connector for a Service Tool. The communication between the boiler and the Service Tool takes place using CAN-bus in 11-bit identifier mode. A dongle consisting of a M5 Mini CAN Unit and a M5Atom (ESP32/ESP32S3) or M5Nano (ESP32C6) with Tasmota can be used as sniffer sending important data to a Home Automation tool like Domoticz.
+The Remeha boiler provides a RJ12 connector for a Service Tool. The communication between the boiler and the Service Tool takes place using CAN-bus in 11-bit identifier mode. A dongle consisting of a <b>M5 Mini CAN Unit</b> and a <b>M5Atom</b> (ESP32/ESP32S3) or <b>M5Nano</b> (ESP32C6) with Tasmota can be used as sniffer sending important data to a Home Automation tool like Domoticz.
 
-To make the M5 Mini CAN Unit compliant with the CAN-bus standard you'll need to remove the internal 120 Ohm resistor as the Remeha L-Bus is already terminated with two 120 Ohm resistors. As an alternative you can use the M5 Unit CAN which has no internal 120 Ohm termination resistor. In that case you'll need to power the Atom or Nano externally with a USB power supply as the CAN-bus is isolated.
+To make the <b>M5 Mini CAN Unit</b> compliant with the CAN-bus standard you'll need to remove the internal 120 Ohm resistor as the Remeha L-Bus is already terminated with two 120 Ohm resistors.
+
+As an alternative you can use the <b>M5 Unit CAN</b> which has no internal 120 Ohm termination resistor. In that case you'll need to power the M5Atom or M5Nano externally with a USB power supply as the CAN-bus is isolated.
 
 The RJ12 6-pin usage as shown from the front of the boiler
 
-Pin number:|1|2|3|4|5|6
-:-|:-|:-|:-|:-|:-|:-
-Remeha Ace RJ12|24V|-|Gnd|-|Tx|Rx
-M5 Mini CAN    |HV| |G| |L|H
+1|2|3|4|5|6|Device
+-|-|-|-|-|-|-
+24V|-|Gnd|-|Tx|Rx|Remeha Ace
+HV| |G| |L|H|M5 Mini CAN Unit
+
+#### Berry class
 
 This berry class supports a Remeha Calenta Ace boiler sending some data to Domoticz home automation for logging. 
 ```
@@ -250,4 +254,8 @@ twai = twai_cls()
 tasmota.add_driver(twai)
 ```
 Save the file as `twai.be` and add a line `load('twai.be')` to file `preinit.be`. This will execute the file a restart and prepare the driver for 1Mbit/s and Listen Only Mode.
+
+#### Result of monitoring boiler pressure over time
+
+<img alt="CalentaPressure" src="../_media/CalentaPressure.png" style="margin:10px"> </img>
 
