@@ -27,7 +27,7 @@ Parameters to configure the driver need to be entered using a berry script. See 
 The following table shows the supported Interface Speed.
 
 Code|Speed
-:---|:---
+---|:---
 0|25Kbit/s
 1|50Kbit/s
 2|100Kbit/s 
@@ -40,7 +40,7 @@ Code|Speed
 The following table shows the supported Operating Modes.
 
 Code|Mode
-:---|:---
+---|:---
 0|Normal Mode
 1|No Ack Mode
 2|Listen Only Mode
@@ -111,7 +111,7 @@ As an alternative you can use the <b>M5 Unit CAN</b> which has no internal 120 O
 The RJ12 6-pin usage as shown from the front of the boiler
 
 1|2|3|4|5|6|Device
--|-|-|-|-|-|-
+:-:|:-:|:-:|:-:|:-:|:-:|:-
 24V|-|Gnd|-|Tx|Rx|Remeha Ace
 HV| |G| |L|H|M5 Mini CAN Unit
 
@@ -257,5 +257,5 @@ Save the file as `twai.be` and add a line `load('twai.be')` to file `preinit.be`
 
 #### Result of monitoring boiler pressure over time
 
-<img alt="CalentaPressure" src="../_media/CalentaPressure.png" style="margin:10px"> </img>
+<img alt="CalentaPressure" src="../_media/CalentaPressure.png"> </img>
 
