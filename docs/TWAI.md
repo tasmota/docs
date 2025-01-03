@@ -78,13 +78,11 @@ TwaiSend<bus\><a class="cmnd" id="dalisend"></a>|Send zero or up to eigth data b
 A minimal berry script should look like this:
 ```
 class twai_cls
-  var active                   # (bool)
   var twai_speed, twai_mode    # (int, int)
 
   def init()
     self.twai_speed = 4        # 0 = 25K, 1 = 50K, 2 = 100K, 3 = 125K, 4 = 250K, 5 = 500K, 6 = 800K, 7 = 1Mbits
     self.twai_mode = 2         # 0 = TWAI_MODE_NORMAL, 1 = TWAI_MODE_NO_ACK, 2 = TWAI_MODE_LISTEN_ONLY
-    self.active = 0
   end
 
   #----------------------------------------------------------------------------------------------
@@ -103,24 +101,22 @@ class twai_cls
     var extended = ident >> 31 & 0x1                 # Extended identifier flag (0..1)
     var id = ident & 0x1fffffff
 
-
-    self.active = 1                                  # At least one valid decode
   end
 end
 
 twai = twai_cls()                                    # This class name (twai) is used by the TWAI driver!
 tasmota.add_driver(twai)
 ```
-Save the file as `twai.be` and add a line `load('twai.be')` to file `preinit.be`. This will execute the file at restart and prepare the driver for 250Kbit/s and Listen Only Mode.
+Save the file as `twai_minimal.be` and add a line `load('twai_minimal.be')` to file `preinit.be`. This will execute the file at restart and prepare the driver for 250Kbit/s and Listen Only Mode.
 
 ### Remeha Calenta Ace sniffer for Domoticz
 
 <img alt="Remeha" src="../_media/Remeha1.jpg" style="margin:10px;float:right;width:18em"> </img>
 The Remeha boiler provides a RJ12 connector for a Service Tool. The communication between the boiler and the Service Tool takes place using CAN-bus in 11-bit identifier mode. A dongle consisting of a <b>M5 Mini CAN Unit</b> and a <b>M5Atom</b> (ESP32/ESP32S3) or <b>M5Nano</b> (ESP32C6) with Tasmota can be used as sniffer sending important data to a Home Automation tool like Domoticz.
 
-To make the <b>M5 Mini CAN Unit</b> compliant with the CAN-bus standard you'll need to remove the internal 120 Ohm resistor as the Remeha L-Bus is already terminated with two 120 Ohm resistors.
+??? note "To make the M5 Mini CAN Unit compliant with the CAN-bus standard you'll need to remove the internal 120 Ohm resistor as the Remeha L-Bus is already terminated with two 120 Ohm resistors."
 
-??? warning "When using the <b>M5 Mini CAN Unit</b> DO NOT CONNECT ANY USB CABLE TO THE M5ATOM OR M5NANO. It likely blows (one of) the ESD diodes (as mine did). If USB connection is needed use <b>M5 Unit CAN</b>."
+??? warning "When using the M5 Mini CAN Unit DO NOT CONNECT ANY USB CABLE TO THE M5ATOM OR M5NANO. It likely blows (one of) the ESD diodes (as mine did). If USB connection is needed use M5 Unit CAN."
 
 As an alternative you can use the <b>M5 Unit CAN</b> which has no internal 120 Ohm termination resistor. In that case you'll need to power the M5Atom or M5Nano externally with a USB power supply as the CAN-bus is isolated.
 
@@ -271,7 +267,7 @@ end
 twai = twai_cls()
 tasmota.add_driver(twai)
 ```
-Save the file as `twai.be` and add a line `load('twai.be')` to file `preinit.be`. This will execute the file a restart and prepare the driver for 1Mbit/s and Listen Only Mode.
+Save the file as `calenta.be` and add a line `load('calenta.be')` to file `preinit.be`. This will execute the file a restart and prepare the driver for 1Mbit/s and Listen Only Mode.
 
 #### Result of monitoring boiler pressure over time
 
