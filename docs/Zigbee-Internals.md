@@ -219,7 +219,7 @@ Note2: `LinkQuality`, `Device`, `Name`, `Group` and `Endpoint` are _special_ val
 	
 Note3: `BatteryPercentage` is systematically added with the last known value to each attribute reporting.
 
-#### 6. Apply transoformations to the attributes.
+#### 6. Apply transformations to the attributes.
 
 There are many transformations that are required because some device use proprietary values, or we need to compute new values out of the existing attributes.
 	
