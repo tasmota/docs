@@ -83,7 +83,7 @@ Topic: ESP_123456
 User: ESP_123456 (must be the same to Topic)  
 password: 987654321  
 
-Configuration file: /etc/mosquitte/conf.d/jp.acl
+Configuration file: /etc/mosquitto/conf.d/jp.acl
 ```
 user root
 topic read #
