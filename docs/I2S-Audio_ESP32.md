@@ -9,6 +9,18 @@
                                   -DUSE_I2S_ALL
     ```
     Also requires `lib_extra_dirs = lib/lib_audio` added to the build environment
+
+    You can create smaller firmware versions with selective use of the build flags:
+    ```
+      #define USE_I2S ;             base flag - always needed
+      #define USE_I2S_AUDIO ;       base flag - always needed
+      #define USE_I2S_MIC ;         microphone support
+      #define USE_SHINE ;           MP3 encoder support for microphone
+      #define MP3_MIC_STREAM ;      streaming from microphone to local network
+      #define USE_I2S_AUDIO_BERRY ; the I2S module for Berry
+      #define USE_I2S_AAC ;         AAC decoder - needs about 75 kB flash
+      #define USE_I2S_OPUS ;        OPUS decoder - needs about 25 kB flash
+    ```
   
 The main difference to the older ESP8266 sound driver is the configuration of the various settings at runtime with the command `i2sconfig`, which uses a hidden driver file.  
 
@@ -138,12 +150,21 @@ Those channels can be driven via the I2S driver when using the “built-in DAC m
 |CMD DAC|action|
 |---|---|
 |I2SGain | `0..100` = sets the volume of the audio signal |
-|I2SPlay | `/file.mp3` = plays a .mp3 audio file from the file system, the systems blocks until sound is played<BR>`+/file.mp3` = plays a .mp3 audio file from the file system, sound is played in a separate task not blocking the system|
+|I2SPlay | `<decoder_type> file` = plays an audio file from the file system, sound is played in a separate task not blocking the system|
+|I2SLoop | `<decoder_type> file` = plays an audio file from the file system in an endless loop<br>Example: `i2sloop2 file.opus`|
 |I2SRtttl| `string` = play [Ring Tones Text Transfer Language (RTTTL)](https://www.mobilefish.com/tutorials/rtttl/rtttl_quickguide_specification.html) ringtones (requires defined `USE_I2S_RTTTL`) |
 |I2SSay  | `text` = speaks the text you typed (only English language supported)|
 |I2STime | tells current Tasmota time in English (requires defined `USE_I2S_SAY_TIME`)|
-|I2SWr   | `url` = starts playing an [mp3 radio](http://fmstream.org/) stream, no blocking (requires defined `USE_I2S_WEBRADIO`)<BR>no parameter = stops playing the stream|
+|I2SWr   | `<decoder_type> url` = starts playing a [radio](http://fmstream.org/) stream, no blocking (requires defined `USE_I2S_WEBRADIO`)<BR>no parameter = stops playing the stream|
 |I2SStop  | stops current play operation|
+  
+Tasmota can support multiple audio decoder types for file play/loop and web radio, which are MP3, AAC and OPUS. For the referring commands the type is provided at the `index` position of the command (right behind the command without a space). The filename does not matter, there is no check for naming conventions. Wrong combinations can lead to crashes.  
+
+|Decoder index|Decoder name|
+|---|---|
+|0| AAC - must be provided as `AAC` format, not embedded in an `M4A` container!|
+|1| MP3 - if you do not provide the type explicitly, this is the automatic default
+|2| OPUS - most modern and open standard, but has highest memory requirements. Allows nearly perfect gapless looping.|
 
 
 ## Audio Input
@@ -216,4 +237,4 @@ build_flags                 = ${env:tasmota32_base.build_flags}
 |---|---|
 | I2SBridge | `ip` = sets the IP of the slave device<BR>`0` = stop bridge<BR>`1` = start bridge in read mode<BR>`2` = start bridge in write mode<BR>`3` = start bridge in loopback mode<BR>`4` = set bridge to master<br>`5` = set bridge to slave<br>`6` = set microphone to swapped<BR>`7` = set microphone to not swapped<BR>`p<x>` = sets the push to talk button where `x` is the button's GPIO pin number|
 
-If a push to talk button is defined the bridge goes to write mode if the button is pushed and to read mode if the button is released  
+If a push to talk button is defined the bridge goes to write mode if the button is pushed and to read mode if the button is released.
