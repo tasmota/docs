@@ -584,12 +584,16 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sf(F)` = sets the CPU Frequency (ESP32) to 80,160,240 Mhz, returns current Freq.  
 `s(x)` = explicit conversion from number x to string  may be preceded by precision digits e.g. s(2.2x) = use 2 digits before and after decimal point  
   
-I2C support #define USE_SCRIPT_I2C  
+### I2C support
+
+`#define USE_SCRIPT_I2C`
 `ia(AA)`, `ia2(AA)` test and set I2C device with address AA (on BUS 1 or 2), returns 1 if device is present  
 `iw(aa val)` , `iw1(aa val)`, `iw2(aa val)`, `iw3(aa val) `write val to register aa (1..3 bytes), if in aa bit 15 is set no destination register is transfered (needed for some devices), if bit 14 is set byte order is reversed  
 `ir(aa)`, `ir1(aa)`, `ir2(aa)`, `ir3(aa)` read 1..3 bytes from register aa  
  
-Onewire support #define USE_SCRIPT_ONEWIRE  
+### Onewire support 
+
+`#define USE_SCRIPT_ONEWIRE`
 support for onewire either directly or via serial port with onewire bus driver DS2480B  
 `ow(SEL <opt PAR>)`
     SEL 0 = init bus with pin number N (if bit 15 ist set, select serial DS2480B, lsb = rec pin, msb = trx pin)  
@@ -605,7 +609,9 @@ support for onewire either directly or via serial port with onewire bus driver D
     SEL 10-18 = get byte (1-8) of adress from index PAR  
     SEL 99 = delete bus driver  
     
-Serial IO support #define USE_SCRIPT_SERIAL  
+### Serial IO support 
+
+`#define USE_SCRIPT_SERIAL  `
 `so(RXPIN TXPIN BR)` open serial port with RXPIN, TXPIN and baud rate BR with 8N1 serial mode (-1 for pin means don't use)  
 `so(RXPIN TXPIN BR MMM)` open serial port with RXPIN, TXPIN and baud rate BR and serial mode e.g 7E2 (all 3 modechars must be specified)  
 `so(RXPIN TXPIN BR MMM BSIZ)` open serial port with RXPIN, TXPIN and baud rate BR and serial mode e.g 7E2 (all 3 modechars must be specified) and serial IRW buffer size  
@@ -623,14 +629,18 @@ Serial IO support #define USE_SCRIPT_SERIAL
 `swa(ARRAY len (flags))` send len bytes of an array to serial port, if flags is set Modbus cmd is assumed and cksum is calculated, 0 = standard Modbus, 1 = Rec BMA mode  
 `smw(ADDR MODE NUMBER)` send a value with checksum to MODBUS Address, MODE 0 = uint16, 1 = uint32, 3 = float  
   
-SPI IO support #define `USE_SCRIPT_SPI`  
+### SPI IO support 
+
+`#define USE_SCRIPT_SPI`  
 `spi(0 SCLK MOSI MISO)` defines a software SPI port with pin numbers used for SCLK, MOSI, MISO.  
 `spi(0 -1 freq)` defines a hardware SPI port with pin numbers defined by Tasmota GPIO definition with bus frequency in Mhz.  
 `spi(0 -2 freq)` defines a hardware SPI port 2 on ESP32 with pin numbers defined by Tasmota GPIO definition.  
 `spi(1 N GPIO)` sets the CS pin with index N (1..4) to pin Nr GPIO.  
 `spi(2 N ARRAY LEN S)` sends and receives an ARRAY with LEN values with S (1..3) (8,16,24 bits) if N==-1 CS is ignored. If S=4, CS is raised after each byte.
 
-TCP server support #define `USE_SCRIPT_TCP_SERVER`  
+### TCP server support
+
+`#define USE_SCRIPT_TCP_SERVER`  
 `wso(port)` start a tcp stream server at port  
 `wsc()` close tcp stream server  
 `wsa()` return bytes available on tcp stream  
@@ -710,7 +720,7 @@ The following variables are cleared after reading true:
 `wific` = true on Wi-Fi connect  
 `wifid` = true on Wi-Fi disconnect  
 
-**System variables** (for debugging)  
+### System variables (for debugging)  
 `stack` = stack size  
 `heap` = free heap size  
 `pheap` = PSRAM free heap size (ESP32)  
