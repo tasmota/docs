@@ -166,7 +166,9 @@ If you're used to working with Visual Studio Code, you can use [this extension](
 ## Script Sections
 _Section descriptors (e.g., `>E`) are **case sensitive**_  
 a valid script must start with >D in the first line  
-`>D ssize`   
+
+### >D ssize
+
   `ssize` = optional max string size (default=19, max=48 unless increased with `#define SCRIPT_MAXSSIZE`)  
   define and init variables here, must be the first section, no other code allowed  
   `p:vname`  
@@ -199,29 +201,35 @@ therefore when specifing permanent variables, add newly defined ones always at t
     Memory is dynamically allocated as a result of the D section.  
     Copying a string to a number or reverse is supported  
 
-`>B`  
+### >B
+
 executed on BOOT time before sensors are initialized and on save script  
 
-`>BS`  
+### >BS
+
 executed on BOOT time after sensors are initialized  
 
-`>E`  
+### >E
 Executed when a Tasmota MQTT `RESULT` message is received, e.g., on `POWER` change. Also  Zigbee reports to  this section.
 
-`>F`  
+### >F
 Executed every 100 ms  
 
-`>S`  
+### >S
+
 Executed every second  
 
-`>R`  
+### >R
+
 Executed on restart. p vars are saved automatically after this call  
 
-`>T`  
+### >T
+
 Executed at least at [`TelePeriod`](Commands.md#teleperiod) time (`SENSOR` and `STATE`) but mostly faster up to every 100 ms, only put `tele-` vars in this section  
 Remark: JSON variable names (like all others) may not contain math operators like - , you should set [`SetOption64 1`](Commands.md#setoption64) to replace `-` (_dash_) with `_` (_underscore_). Zigbee sensors will not report to this section, use E instead.
 
-`>H`  
+### >H
+
 Alexa Hue interface (up to 32 virtual hue devices) *([example](#hue-emulation))*  
 `device`,`type`,`onVars`  
 Remark: hue values have a range from 0-65535. Divide by 182 to assign HSBcolors hue values.
@@ -233,7 +241,8 @@ Remark: hue values have a range from 0-65535. Divide by 182 to assign HSBcolors 
 !!! example 
     `lamp1,E,on=pwr1,hue=hue1,sat=sat1,bri=bri1,ct=ct1`
 
-`>h` passcode  
+### >h passcode  
+
 Siri Homekit interface (up to 16 virtual Homekit devices)  
 passcode = 111-11-111  keep this format, numbers 0-9  
 `name`,`type`,`opt`,`var1`,`var2`...  
@@ -281,29 +290,38 @@ the special variables
     lib_extra_dirs  
     lib/libesp32_div  
     
-`>U`  
+### >U
+
 JSON messages from cmd status arrive here
   
-`>C`  
+### >C
+
 HTML messages arrive here (on web user io event, (if defined USE_HTML_CALLBACK))  
 
-`>G`  
+### >G
+
 global variable updated section
 
-`>P`  
+### >P
+
 any power change triggers here (if defined SCRIPT_POWER_SECTION)
 
-`>jp`  
+### >jp
+
 https webpage json parse arrives here  
+
+### >ti#
 
 `>ti1`  
 `>ti2`  
 `>ti3`  
-`>ti4`  
+
 ticker callback after timer expiration
 
 
-`>b` _(note lower case)_  
+### >b
+
+_(note lower case)_  
 executed on button state change  
 
 `bt[x]`   
@@ -325,10 +343,12 @@ read button state (x = `1.. MAX_KEYS`)
     endif
     ```
   
-`>J`  
+### >J
+
 The lines in this section are published via MQTT in a JSON payload on [TelePeriod](Commands.md#teleperiod). ==Requires compiling with `#define USE_SCRIPT_JSON_EXPORT `.==  
 
-`>W`  
+### >W
+
 The lines in this section are displayed in the web UI main page. ==Requires compiling with `#define USE_SCRIPT_WEB_DISPLAY`.== 
 
 You may put any html code here. 
@@ -339,11 +359,14 @@ You may put any html code here.
 - HTML statements preceded with a `$` are displayed in the main section  
 - USER IO elements are displayed at the top of the page  
   
-optionally these sections may be used  
-`>WS`  
+## optionally these sections may be used  
+
+### >WS
+
 - HTML statements are displayed in the sensor section of the main page  
   
-`>WM`  
+### >WM
+
 - HTML statements are displayed in the main section of the main page  
 
 for next loops are supported to repeat HTML code (precede with % char)
@@ -364,13 +387,16 @@ insa(array) in any position insert all elements from an array comma separated
 A web user interface may be generated containing any of the following elements:  
     
 remark: state variable names used for IO in the web interface may not contain an underscore.  
-**Button:**   
+
+#### Button
+
  `bu(vn txt1 txt2)` (up to 4 buttons may be defined in one row)  
  `vn` = name of variable to hold button state  
  `txt1` = text of ON state of button  
  `txt2` = text of OFF state of button  
 
-**Pulldown:**   
+#### Pulldown
+
  `pd(vn label (xs) txt1 txt2 ... txtn)`  
  `vn` = name of variable to hold selected state  
  `label` = label text  
@@ -378,7 +404,8 @@ remark: state variable names used for IO in the web interface may not contain an
  `txt1` = text of 1. entry  
  `txt2` = text of 2. entry and so on  
   
-**Radio button:**   
+#### Radio button
+
  `rb(vn label (xs) txt1 txt2 ... txtn)`  
  `vn` = name of variable to hold selected state  
  `label` = label text  
@@ -386,13 +413,15 @@ remark: state variable names used for IO in the web interface may not contain an
  `txt1` = text of 1. entry  
  `txt2` = text of 2. entry and so on  
     
-**Checkbox:**   
+#### Checkbox
+
  `ck(vn txt (xs))`  
  `vn` = name of variable to hold checkbox state  
  `txt` = label text   
  `xs` = optional xs (default 200) 
 
-**Slider:**    
+#### Slider
+
 `sl(min max vn ltxt mtxt rtxt)`  
  `min` = slider minimum value  
  `max` = slider maximum value  
@@ -401,20 +430,20 @@ remark: state variable names used for IO in the web interface may not contain an
  `mtxt` = label middle of slider  
  `rtxt` = label right of slider  
   
-**Text Input:**    
+#### Text Input    
  `tx(vn lbl (xs) (type min max))`  
  `vn` = name of string variable to hold text state  
  `lbl` = label text  
  `xs` = optional xs (default 200)  
  `type min max` = optional strings type = e.g "datetime-local" for date+time selector, min, max = date-time min max range  
   
-**Time Input:**    
+#### Time Input    
  `tm(vn lbl (xs))`  
  `vn` = name of number variable to hold time HHMM as number e.g. 1900 means 19:00  
  `lbl` = label text  
  `xs` = optional xs (default 70)  
   
-**Number Input:**  
+#### Number Input  
  `nm(min max step vn txt (xs) (prec))`  
  `min` = number minimum value  
  `max` = number maximum value  
@@ -424,14 +453,14 @@ remark: state variable names used for IO in the web interface may not contain an
  `xs` = optional xs (default 200)  
  `prec` = optional number precision (default 1)  
   
-**special html options:**  
+#### special html options  
   `so(flags)`  
   `WSO_NOCENTER` = 1 force elements not centered  
   `WSO_NODIV` = 2 force elements not in extra \<div\>  
   `WSO_FORCEPLAIN` = 4 send line in plain (no table elements)  
   `WSO_FORCEMAIN` = 8 send lines in main mode ($ mode)  
   
- **Google Charts:**  
+ #### Google Charts  
   google chart support requires arrays and to make sense also permanent arrays. Therefore on 4M Flash Systems the use of `USE_UFILESYS` is recommended while on 1 M Flash Systems the special EEPROM mode should be used (see above). other options may also be needed like `LARGE_ARRAYS`  
   
   draws a google chart with up to 4 data sets per chart  
