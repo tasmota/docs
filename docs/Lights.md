@@ -89,7 +89,7 @@ If you define multiple relays, they are controlled with [`Power<x>`](Commands.md
 |Configuration|(see below)|
 |---|---|
 |Commands|[`Power`](Commands.md#power), [`Dimmer`](Commands.md#dimmer), [`Channel`](Commands.md#channel), [`Fade`](Commands.md#fade), [`Speed`](Commands.md#speed)|
-|Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction)|
+|Options|[**Auto Power On**](#disable-auto-power-on), [**Independant PWM Channels**](#independent-pwm-channels), [**Gamma Correction**](#gamma-correction)|
 
 ### 2 Channels - CCT Light
 
@@ -102,7 +102,7 @@ If you define multiple relays, they are controlled with [`Power<x>`](Commands.md
 |Configuration|(see below)|
 |---|---|
 |Commands|[`Power`](Commands.md#power), [`Dimmer`](Commands.md#dimmer), [`Color`](Commands.md#color), [`White`](Commands.md#white), [`CT`](Commands.md#ct)|
-|Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction), [**PWM CT**](#pwm-ct)|
+|Options|[**Auto Power On**](#disable-auto-power-on), [**Independant PWM Channels**](#independent-pwm-channels), [**Gamma Correction**](#gamma-correction), [**PWM CT**](#pwm-ct)|
 
 <br clear="right"/>
 
