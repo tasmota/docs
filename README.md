@@ -9,6 +9,13 @@ Built on [MkDocs](https://www.mkdocs.org/) using [Material for MkDocs](https://s
 
 ## Editing Articles
 
+You can edit and suggest change by performing the steps below:
+- clicking on the pencil button on the top right of the page.
+That will help you create a fork of the doc repository into your own GitHub account where you will make the change.
+- After finishing changes, press "Commit changes" at top right of page 
+- submit your changes by creating a PR (pull request) to the original Tasmota/docs repository
+
+
 Edit only articles in `/docs` folder. 
 
 All paths are relative. 
