@@ -306,7 +306,7 @@ Edit `/etc/mosquitto/conf.d/default.conf` as following:
 ```
 protocol mqtt
 allow_anonymous false
-listener 8884
+listener 8883
 socket_domain ipv4
 # Certs and Keys
 cafile /etc/mosquitto/ca_certificates/ca.crt
