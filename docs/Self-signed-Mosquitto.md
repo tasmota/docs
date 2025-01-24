@@ -190,7 +190,7 @@ git clone https://www.bearssl.org/git/BearSSL
 cd BearSSL
 make tools
 ```
-- Convert the root certificate into a format suitable for inclusion in the Tasmota build. This be will easier if the `brssl` (`brssl.exe` in Cygwin) executable is copied into the the `easyrsa3` directory first. Then, these two commands may be executed from the `easyrsa3` directory verbatim to generate the required header files.
+- Convert the root certificate into a format suitable for inclusion in the Tasmota build. This will be easier if the `brssl` (`brssl.exe` in Cygwin) executable is copied into the the `easyrsa3` directory first. Then, these two commands may be executed from the `easyrsa3` directory verbatim to generate the required header files.
  
 ```
 ./brssl ta pki/ca.crt | sed -e 's/TA0/PROGMEM TA0/' -e '/br_x509/,+999 d' > local_ca_data.h
