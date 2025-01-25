@@ -460,7 +460,8 @@ remark: state variable names used for IO in the web interface may not contain an
   `WSO_FORCEPLAIN` = 4 send line in plain (no table elements)  
   `WSO_FORCEMAIN` = 8 send lines in main mode ($ mode)  
   
- #### Google Charts  
+ ### Google Charts  
+ 
   google chart support requires arrays and to make sense also permanent arrays. Therefore on 4M Flash Systems the use of `USE_UFILESYS` is recommended while on 1 M Flash Systems the special EEPROM mode should be used (see above). other options may also be needed like `LARGE_ARRAYS`  
   
   draws a google chart with up to 4 data sets per chart  
@@ -522,7 +523,8 @@ remark: state variable names used for IO in the web interface may not contain an
   
   
   
-`>w` ButtonLabel
+### >w ButtonLabel
+
 generates a button with the name "ButtonLabel" in Tasmota main menu.  
 Clicking  this button displays a web page with the HTML data of this section.
 all cmds like in >W apply here. these lines are refreshed frequently to show e.g. sensor values.
@@ -534,7 +536,8 @@ you may display files from the flash or SD filesystem by specifying the url:  IP
 ==Requires compiling with `#define SCRIPT_FULL_WEBPAGE`.==  
 
   
-`>M`  
+###  >M
+
 [Smart Meter Interface](Smart-Meter-Interface)  
 
 If a variable does not exist, `???` is displayed for commands  
@@ -774,13 +777,15 @@ If you define a variable with the same name as a special variable that special v
     _**Recursion**_: If you execute a tasmota cmd in an >E section and this cmd itself executes >E you will get an infinite loop.
     this is disabled normally and enabled by the +> in case you know what you are doing
 
-**Variable Substitution**  
+### Variable Substitution
+
 - A single percent sign must be given as `%%`  
 - Variable replacement within commands is allowed using `%varname%`. Optionally, the decimal places precision for numeric values may be specified by placing a digit (`%Nvarname%`, N = `0..9`) in front of the substitution variable (e.g., `Humidity: %3hum%%%` will output `Humidity: 43.271%`)  
 - instead of variables arbitrary calculations my be inserted by bracketing %N(formula)%  
 - Linefeed, tab and carriage return may be defined by \n, \t and \r  
 
-**Special** commands:  
+### Special  commands:  
+
 `print` or `=>print` prints to the log for debugging  
 A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` statements to debug a script.  
     
@@ -815,7 +820,8 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
 `hsvrgb(h s v)` converts hue (0..360), saturation (0..100) and value (0..100) to RGB color  
 `dt` display text command (if #define USE_DISPLAY)  
 
-**Subroutines and Parameters**
+### Subroutines and Parameters
+
 `#name` names a subroutine. Subroutine is called with `=#name`  
 `#name(param)` names a subroutine with a parameter.  
 Each parameter variable must be declared in the '>D' section.  
@@ -852,14 +858,14 @@ S
 print subroutine was executed
 ```
 
-**For loop** (loop count must not be less than 1, no direct nesting supported)
+### For loop (loop count must not be less than 1, no direct nesting supported)
 
 ```
 for var <from> <to> <inc>  
 next  
 ```
   
-**Switch selector** (numeric or string)
+### Switch selector  (numeric or string)
 
 ```
 switch x  
@@ -868,7 +874,8 @@ case b
 ends  
 ```
 
-**Conditional Statements**  
+### Conditional Statements
+
 There are two syntax alternatives. You may **_NOT_** mix both formats.  
 
 ```
@@ -906,7 +913,8 @@ Conditional expressions may be enclosed in parentheses. The statement must be on
 if ((a==b) and ((c==d) or (c==e)) and (s!="x"))
 ```
 
-**Mapping Function**  
+###  Mapping Function
+
 ```
 mp(x cond1 result1 cond2 result2 ... cond<n> result<n>)  
 ```
@@ -935,7 +943,8 @@ y=100
 ```
 
 
-**E-mail**  
+### >m E-mail
+
 `#define USE_SENDMAIL`  
 Enabling this feature also enables [Tasmota TLS](TLS) as `sendmail` uses SSL.  
   
@@ -972,7 +981,8 @@ $N attach a webcam picture from rambuffer number N (usually 1)
   
 See [Scripting Cookbook Example](#send-e-mail)  
  
-**Subscribe, Unsubscribe**  
+###  MQTT Subscribe, Unsubscribe*
+
 `#define SUPPORT_MQTT_EVENT`  
 `subscribe` and `unsubscribe` commands are supported. In contrast to rules, no event is generated but the event name specifies a variable defined in `D` section and this variable is automatically set on transmission of the subscribed item  
 within a script the subscribe cmd must be send with +> instead of =>  
@@ -980,7 +990,8 @@ the MQTT decoder may be configured for more space in user config overwrite by
 `#define MQTT_EVENT_MSIZE` xxx   (default is 256)  
 `#define MQTT_EVENT_JSIZE` xxx   (default is 400)  
 
-**File System Support**    
+### File System Support
+
 `#define USE_UFILESYS`  
 optional for SD_CARD:  
 `#define USE_SDCARD`  
@@ -1009,7 +1020,8 @@ The script itself is also stored on the file system with a default size of 8192 
 `frw(fr url)` read file from web url, if url is an immediate string it may be longer than max string size to support very long URLs.  
 `fcs(fr "del" index ec)` = gets non string from file: del = delimiter char or string, index = n´th element, ec = end character delimiter.  
 
-**Other commands**   (+?? flash)  
+###  Other commands   (+?? flash)
+
 `#define USE_FEXTRACT`  
 `fxt(fr ts_from ts_to col_offs accum array1 array2 ... arrayn)` read arrays from csv file from timestamp to timestamp with column offset and accumulate values into arrays1 .. N, assumes csv file with timestamp in 1. column and data values in columns 2 to n.  
 `fxto(...` same as above with time optimized access  
@@ -1018,7 +1030,8 @@ The script itself is also stored on the file system with a default size of 8192 
 `tsn(tstamp)` convert timestamp to seconds  
 `s2t(seconds)` convert seconds to Tasmota timestamp  
 
-**Extended commands**   (+0,9k flash)  
+### Extended commands   (+0,9k flash)  
+
 `#define USE_SCRIPT_FATFS_EXT`  
 `fmd("fname")` make directory fname  
 `frd("fname")` remove directory fname  
@@ -1030,7 +1043,8 @@ The script itself is also stored on the file system with a default size of 8192 
 `fra(array fr)` reads array from open file with fr (assumes tab delimited entries)  
 `fwa(array fr (a))` writes array to open file with fr (writes tab delimited entries and line feed at end) the optional a parameter ommits the linefeed for appending arrays 
     
-**ESP32 real Multitasking support**  
+### >t ESP32 real Multitasking support
+
 `#define USE_SCRIPT_TASK` 
 enables support for multitasking scripts  
 res=ct(num timer core (prio) (stack))  
@@ -1057,7 +1071,8 @@ print task1 on core %core%
 >t2
 print task2 on core %core%
 
-**ESP32 Webcam support**   
+### ESP32 Webcam support
+
 `#define USE_WEBCAM`  
 Template for AI THINKER CAM :  
 {"NAME":"AITHINKER CAM No SPI","GPIO":[4992,65504,65504,65504,65504,5088,65504,65504,65504,65504,65504,65504,65504,65504,5089,5090,0,5091,5184,5152,0,5120,5024,5056,0,0,0,0,4928,65504,5094,5095,5092,0,0,5093],"FLAG":0,"BASE":1}
@@ -1178,10 +1193,12 @@ remark: the Flash illumination LED is connected to GPIO4
 ```
     
 ## Scripting Cookbook
+
     a valid script must start with >D in the first line!  
     some samples still contain comment lines before >D. This is no longer valid!  
         
 ### simple example to start with
+
     >D
     ; in this section you may define and or preset variables, there are numbers or strings.
     ; in contrast to rules you may choose any variable name
@@ -1223,6 +1240,7 @@ remark: the Flash illumination LED is connected to GPIO4
         
        
 ### Scripting Language Example
+
     **Actually this code is too large**. This is only meant to show some of the possibilities
 
     >D
@@ -2024,7 +2042,7 @@ Used to display home's solar power input/output (+-5000 Watts)
 Shows how a Magic Home with IR receiver works
 Synchronizes 2 Magic Home devices by also sending the commands to a second Magic Home via [`WebSend`](Commands.md#websend)
 
-**Script example using `if then else`**
+#### Script example using `if then else`
     ; expand default string length to be able to hold `WebSend [xxx.xxx.xxx.xxx]`  
 
     >D 25
@@ -2094,7 +2112,7 @@ Synchronizes 2 Magic Home devices by also sending the commands to a second Magic
 
     istr=""
 
-**Script example using `switch case ends`**
+#### Script example using `switch case ends`
     ; expand default string length to be able to hold `WebSend [xxx.xxx.xxx.xxx]`  
 
     >D 25
