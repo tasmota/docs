@@ -747,6 +747,15 @@ In the absence of a separate "Power On" and "Power Off" IR command, you will pro
 
 ## Hi-Fi Amplifiers & Receivers
 
+### JBL On Air 2.4G Control
+
+| button       | code                                             |
+| ------------ | ------------------------------------------------ |
+| Change Input | {"Protocol":"NEC","Bits":32,"Data":"0x538522DD"} |
+| Volume Up    | {"Protocol":"NEC","Bits":32,"Data":"0x538521DE"} |
+| Volume Down  | {"Protocol":"NEC","Bits":32,"Data":"0x538520DF"} |
+| Mute         | {"Protocol":"NEC","Bits":32,"Data":"0x538523DC"} |
+
 ### NAD D-3020 v1
 
 | button       | code                                             |
