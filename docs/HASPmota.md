@@ -227,7 +227,7 @@ HASPmota Class|Embedded LVGL class
 `img`|`lv.img`
 `dropdown`|`lv.dropdown`
 `roller`|`lv.roller`
-`btnmatrix`|`lv.btnmatrix`
+`btnmatrix`|`lv.buttonmatrix`
 `bar`|`lv.bar`
 `scale`|`lv.scale`
 `slider`|`lv.slider`
@@ -741,6 +741,19 @@ Attribute name|LVGL equivalent|Details
 `border_width30`||Border width of each button
 `text_color30`||Color of the inner text of each button
 
+
+For `btnmatrix`, events generated contain an addtional suffix to indicate which button was pressed or released.
+
+Example: `p9b11_0` means page `9`, object id `11`, button `0`
+
+```
+xx:xx:25.131 {'hasp': {'p9b11_0': {'event': 'changed'}}}
+xx:xx:25.134 {'hasp': {'p9b11_0': {'event': 'down'}}}
+xx:xx:25.520 {'hasp': {'p9b11_0': {'event': 'long'}}}
+xx:xx:25.670 {'hasp': {'p9b11_0': {'event': 'changed'}}}
+xx:xx:25.735 {'hasp': {'p9b11_0': {'event': 'release'}}}
+xx:xx:25.737 {'hasp': {'p9b11_0': {'event': 'up'}}}
+```
 
 ### `led`
 
