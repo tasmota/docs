@@ -67,7 +67,7 @@ mv easyrsa tmprsa
 tr -d '\r' <tmprsa >easyrsa
 ```
 
-#### 1.2.  Define your certificate information
+#### 1.2. Define your certificate information
 
 The commands below may be copied and pasted into a terminal window, then the resulting file, `vars` edited as appropriate.
 
@@ -87,7 +87,7 @@ set_var EASYRSA_DN "org"
 
 # Organizational fields (used with 'org' mode and ignored in 'cn_only' mode.)
 # These are the default values for fields which will be placed in the
-# certificate.  Don't leave any of these fields blank, although interactively
+# certificate. Don't leave any of these fields blank, although interactively
 # you may omit any specific field by typing the "." symbol (not valid for
 # email.)
 
@@ -98,7 +98,7 @@ set_var EASYRSA_REQ_ORG "myorg"
 set_var EASYRSA_REQ_EMAIL "info@myorg.com"
 set_var EASYRSA_REQ_OU "MQTT"
 
-# Choose a size in bits for your keypairs. The recommended value is 2048.  Using
+# Choose a size in bits for your keypairs. The recommended value is 2048. Using
 # 2048-bit keys is considered more than sufficient for many years into the
 # future. Larger keysizes will slow down TLS negotiation and make key/DH param
 # generation take much longer. Values up to 4096 should be accepted by most
@@ -208,7 +208,7 @@ Add the following to `user_config_override.h`:
 ```
 #ifndef USE_MQTT_TLS
 #define USE_MQTT_TLS
-//  #define USE_MQTT_TLS_CA_CERT               // Force full CA validation instead of fingerprints, slower, but simpler to use.  (+2.2k code, +1.9k mem during connection handshake)
+//  #define USE_MQTT_TLS_CA_CERT               // Force full CA validation instead of fingerprints, slower, but simpler to use. (+2.2k code, +1.9k mem during connection handshake)
 #define USE_MQTT_AWS_IOT                       // This includes the LetsEncrypt CA in tasmota_ca.ino for verifying server certificates
 #define USE_MQTT_TLS_FORCE_EC_CIPHER           // Force Elliptic Curve cipher (higher security) required by some servers (automatically enabled with USE_MQTT_AWS_IOT) (+11.4k code, +0.4k mem)
 #define MQTT_FINGERPRINT1      "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"  // [MqttFingerprint1] (auto-learn)
@@ -221,7 +221,7 @@ Add the following to `user_config_override.h`:
 ```
 #ifndef USE_MQTT_TLS
 #define USE_MQTT_TLS
-#define USE_MQTT_TLS_CA_CERT                   // Force full CA validation instead of fingerprints, slower, but simpler to use.  (+2.2k code, +1.9k mem during connection handshake)
+#define USE_MQTT_TLS_CA_CERT                   // Force full CA validation instead of fingerprints, slower, but simpler to use. (+2.2k code, +1.9k mem during connection handshake)
 #define USE_MQTT_AWS_IOT                       // This will include LetsEncrypt CA, as well as our CA, in tasmota_ca.ino for verifying server certificates
 #define USE_MQTT_TLS_FORCE_EC_CIPHER           // Force Elliptic Curve cipher (higher security) required by some servers (automatically enabled with USE_MQTT_AWS_IOT) (+11.4k code, +0.4k mem)
 #define INCLUDE_LOCAL_CERT
@@ -330,7 +330,7 @@ To start Mosquitto on Windows, either use the services snap-in (`services.msc`),
 net start mosquitto
 ```
 
-### 6. - Generate and configure certificates for your devices
+### 6. Generate and configure certificates for your devices
 
 !!! failure "Repeated step" Repeat the following 6.x steps once for every device, changing tasmota_name for each device. You will be prompted for a private key password for each device. 
 After entering the new password (twice for verification), you will also be prompted for the private key password of the root CA certificate.
