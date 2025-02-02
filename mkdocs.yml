@@ -9,9 +9,10 @@ docs_dir: docs
 
 plugins:
   - search:
+      min_search_length: 2
       lang:
         - de
-        - en
+        - en       
   - alternate-link
   - minify:
       minify_html: true
