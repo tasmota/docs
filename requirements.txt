@@ -1,5 +1,5 @@
 tzdata>=2021.5
-mkdocs~=1.5,>=1.5.3
+mkdocs~=1.6,>=1.6.1
 mkdocs-material>=9.4.0
 mkdocs-material-extensions~=1.3
 Pygments>=2.4
