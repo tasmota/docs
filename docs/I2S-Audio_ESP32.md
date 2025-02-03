@@ -19,7 +19,7 @@
       #define MP3_MIC_STREAM ;      streaming from microphone to local network
       #define USE_I2S_AUDIO_BERRY ; the I2S module for Berry
       #define USE_I2S_AAC ;         AAC decoder - needs about 75 kB flash
-      #define USE_I2S_OPUS ;        OPUS decoder - needs about 25 kB flash
+      #define USE_I2S_OPUS ;        OPUS codec - needs about 25 kB flash
     ```
   
 The main difference to the older ESP8266 sound driver is the configuration of the various settings at runtime with the command `i2sconfig`, which uses a hidden driver file.  
@@ -79,7 +79,7 @@ Examples:
 In order to support basically any type of microphone in a combination with a certain ESP32 type, we need to find documentation about the needed settings (this works rarely or never) or find/generate demo code, which can be converted to Tasmotas I2S driver.  
 In example the INMP441 does not need the same setting on different SOC's of the ESP32 family.  
   
-For the ESP32-S2 this microphone works with the following configuration macro from Espressif (found with trial and error):  
+For the ESP32-S3 this microphone works with the following configuration macro from Espressif (found with trial and error):  
   
 ```
 #define I2S_STD_PHILIPS_SLOT_DEFAULT_CONFIG(bits_per_sample, mono_or_stereo) { \
@@ -158,11 +158,11 @@ Those channels can be driven via the I2S driver when using the “built-in DAC m
 |I2SWr   | `<decoder_type> url` = starts playing a [radio](http://fmstream.org/) stream, no blocking (requires defined `USE_I2S_WEBRADIO`)<BR>no parameter = stops playing the stream|
 |I2SStop  | stops current play operation|
   
-Tasmota can support multiple audio decoder types for file play/loop and web radio, which are MP3, AAC and OPUS. For the referring commands the type is provided at the `index` position of the command (right behind the command without a space). The filename does not matter, there is no check for naming conventions. Wrong combinations can lead to crashes.  
+Tasmota can support multiple audio codec types for file play/loop, microphone recordings and web radio, which are MP3, AAC (decoder only!!) and OPUS. For the referring commands the type is provided at the `index` position of the command (right behind the command without a space). The filename does not matter, there is no check for naming conventions. Wrong combinations can lead to crashes.  
 
-|Decoder index|Decoder name|
+|Codec index|Codec name|
 |---|---|
-|0| AAC - must be provided as `AAC` format, not embedded in an `M4A` container!|
+|0| AAC - decoder only, must be provided as `AAC` format, not embedded in an `M4A` container!|
 |1| MP3 - if you do not provide the type explicitly, this is the automatic default
 |2| OPUS - most modern and open standard, but has highest memory requirements. Allows nearly perfect gapless looping.|
 
@@ -218,8 +218,21 @@ When using PDM microphones the microphone CLK pin is configured as `I2S_WS` in T
 | CMD | Action |
 | --- | --- |
 | I2SMIC | Internal debug function. Can be used to do a silent warm start of the microphone to avoid the initial noise, that basically every I2S microphone produces.  |
-| I2SRec | (requires defined `USE_SHINE`)`/file.mp3` = starts recording a .mp3 audio file to the file system, no blocking<BR> no parameter = stops recording<BR>`-?` = shows how many seconds already recorded |
-| I2SStream |(requires defined `MP3_MIC_STREAM`)<BR>`1` = starts streaming .mp3 server at `http://<device_ip>:81/stream.mp3`<BR> `0` = stop the stream |
+| I2SRec | `<encoder_type> file` = starts recording a .mp3 or .webm audio file to the file system, no blocking,<BR> correct file suffix provided by the user,<BR> no parameter = stops recording<BR>`-?` = shows how many seconds already recorded |
+| I2SStream |(requires defined `MP3_MIC_STREAM`)<BR>`1` = starts streaming .mp3/.webm server at `http://<device_ip>:81/stream.mp3` or `http://<device_ip>:81/stream.webm`<BR> `0` = stop the stream |
+  
+Supported sampling frequencies are:  
+32000, 44100 and 48000 Hz - for MP3  
+8000, 12000, 16000, 24000, 48000 Hz - for Opus/Webm
+
+Frequencies above 32000 Hz will probably bring down most ESP32's, which have to punch above their weights here, although it might work with very good WiFi conditions - especially on the ESP32-S3.  
+  
+8000 Hz will distort voices quite a lot.  
+  
+The efficiency of the Opus encoder reveals weaknesses of many clients (including VLC, Chrome and Firefox), which do not adapt their receive buffers to the low bandwidth of the audio stream. Thus these first fill up the buffers - holding above 5- 30 seconds now - and start playing with the resulting latency.  
+Notable exception is Apples Safari with a delay of about 1 second. Cross-platform console player `mpv` is not far behind.    
+  
+Streaming can introduce rhythmic noise into the stream with the send rate of the data packets by interference of the WiFi radio. Proper cabeling and shielding is needed here. This can be quite difficult to achieve.  
 
 ## I2S Audio Bridge
 
