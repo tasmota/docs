@@ -267,16 +267,8 @@ Rule1 "
 
 ## Conditional Rules
 
-!!! failure
-      This features is not included in standard ESP8266 binaries such as `tasmota`, `tasmota-sensors`, `tasmota-lite`.
-      To use it, you must [compile your build](Compile-your-build) and add the following to `user_config_override.h`:
-
-      ```arduino
-      #define SUPPORT_IF_STATEMENT   // Add support for IF statement in rules (+4k2 code, -332 bytes mem)  
-      ```
-
 !!! note
-      This feature is included in ESP32 builds as well as in ESP8266 builds for boards with more than 1MB Flash. This include `tasmota-4M`, `tasmota-zbbridge`, `tasmota-zigbee`.
+      This feature is now included in ESP32 builds as well as in ESP8266 builds since v13.3.0.4.
 ----
 
 #### Major features  
@@ -373,16 +365,8 @@ Rule1
 
 ## Expressions in Rules
 
-!!! failure
-      This features is not included in standard ESP8266 binaries such as `tasmota`, `tasmota-sensors`, `tasmota-lite`.
-      To use it, you must [compile your build](Compile-your-build) and add the following to `user_config_override.h`:
-
-      ```arduino
-      #define USE_EXPRESSION         // Add support for expression evaluation in rules (+3k2 code, +64 bytes mem)  
-      ```
-
 !!! note
-      This feature is included in ESP32 builds as well as in ESP8266 builds for boards with more than 1MB Flash. This include `tasmota-4M`, `tasmota-zbbridge`, `tasmota-zigbee`.
+      This feature is now included in ESP32 builds as well as in ESP8266 builds since v13.3.0.4.
 ----
 
 Beginning with Tasmota version 6.4.1.14, an optional feature for using mathematical expressions in rules was introduced. 
