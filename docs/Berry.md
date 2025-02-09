@@ -300,6 +300,8 @@ All times are in milliseconds. You can know the current running time in millisec
     Booh!
     ```
 
+Timers are scheduled roughly within 50 milliseconds ticks. This means that you cannot have better than 50 ms resolution, and `set_timer(0, <function>`) will schedule the function 50 ms later. In certain cases, you need to defer a function to an immediate future; for such case use `tasmota.defer(<function>)` which will run the function typically within the next millisecond.
+
 #### A word on functions and closure
 
 Berry is a functional language, and includes the very powerful concept of a *closure*. In a nutshell, it means that when you create a function, it can capture the values of variables when the function was created. This roughly means that it does what intuitively you would expect it to do.
@@ -531,7 +533,8 @@ tasmota.time\_reached<a class="cmnd" id="tasmota_time_reached"></a>|`(timer:int)
 tasmota.rtc<a class="cmnd" id="tasmota_rtc"></a>|`() -> map` or `(key:string) -> any`<br>Returns clockwall time with variants.<br>Example: `{'local': 1619560407, 'utc': 1619556807, 'timezone': 60, 'restart': 1619556779}`<br>If a `key` is passed, the value is returned without allocating a new `map`, or `nil` if no value matches the `key`.
 tasmota.time\_dump<a class="cmnd" id="tasmota_time_dump"></a>|`(timestamp:int) -> map`<br>Decompose a timestamp value (in seconds) to its components<br>Example: `tasmota.time_dump(1619560407)` -> `{'min': 53, 'weekday': 2, 'sec': 27, 'month': 4, 'year': 2021, 'day': 27, 'epoch': 1619560407, 'hour': 21}`
 tasmota.time\_str<a class="cmnd" id="tasmota_time_str"></a>|`(timestamp:int) -> string`<br>Converts a timestamp value (in seconds) to an ISO 8601 string<br>Example: `tasmota.time_str(1619560407)` -> `2021-04-27T21:53:27`
-tasmota.set\_timer<a class="cmnd" id="tasmota_set_timer"></a>|`(delay:int, f:function [, id:any]) -> nil`<br>Runs the closure or function `f` after `delay` milliseconds, optional `id` can be used to remove the timer.
+tasmota.set\_timer<a class="cmnd" id="tasmota_set_timer"></a>|`(delay:int, f:function [, id:any]) -> nil`<br>Runs the closure or function `f` after `delay` milliseconds, optional `id` can be used to remove the timer.<BR>The `delay` resolution is roughly 50 milliseconds.<BR>If you need to defer the function immediately after the current event loop, and not wait for 50 millisecond, consider using `tasmota.defer()` below.
+tasmota.defer<a class="cmnd" id="tasmota_defer"></a>|`(f:function) -> nil`<br>Runs the closure or function `f` within the next millisecond (delay is not guaranteed). This can be used as a faster alternative to `tasmota.set_timer(0, f)`
 tasmota.remove\_timer<a class="cmnd" id="tasmota_remove_timer"></a>|`(id:string) -> nil`<br>Removes the timer with the `id` used on `tasmota.set_timer`.
 tasmota.strftime<a class="cmnd" id="tasmota_strftime"></a>|`(format:string, timestamp:int) -> string`<br>Converts a timestamp value (in seconds) to a string using the format conversion specifiers<br>Example: `tasmota.strftime("%d %B %Y %H:%M:%S", 1619560407)` -> `27 April 2021 21:53:27`
 tasmota.strptime<a class="cmnd" id="tasmota_strptime"></a>|`(time:string, format:string) -> map or nil`<br>Converts a string to a date, according to a time format following the C `strptime` format. Returns a `map` similar to `tasmota.time_dump()` or `nil` if parsing failed. An additional `unparsed` attribute reports the unparsed string, or empty string if everything was parsed.<br>Example: `tasmota.strptime("2001-11-12 18:31:01", "%Y-%m-%d %H:%M:%S")` -> `{'unparsed': '', 'weekday': 1, 'day': 12, 'epoch': 1005589861, 'min': 31, 'year': 2001, 'month': 11, 'sec': 1, 'hour': 18}`
