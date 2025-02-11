@@ -370,12 +370,13 @@ You may put any html code here.
 - HTML statements are displayed in the main section of the main page  
 
 for next loops are supported to repeat HTML code (precede with % char)
+```
 %for var from to inc
 %next
-
+```
 but this method is preferred:
 script subroutines may be called sub=name of subroutine, like normal subroutines
-%=#sub
+`%=#sub`
 in this subroutine a web line may be sent by wcs (see below) thus allowing dynamic HTML pages
 
 =#sub(x) in any position of webline calls subroutine. this allows inserting content
@@ -460,11 +461,13 @@ remark: state variable names used for IO in the web interface may not contain an
   `WSO_FORCEPLAIN` = 4 send line in plain (no table elements)  
   `WSO_FORCEMAIN` = 8 send lines in main mode ($ mode)  
   
- ### Google Charts  
+### Google Charts  
  
   google chart support requires arrays and to make sense also permanent arrays. Therefore on 4M Flash Systems the use of `USE_UFILESYS` is recommended while on 1 M Flash Systems the special EEPROM mode should be used (see above). other options may also be needed like `LARGE_ARRAYS`  
   
-  draws a google chart with up to 4 data sets per chart  
+#### basic chart
+
+draw a google chart with up to 4 data sets per chart  
   `gc(T (size) array1 ... array4 "name" "label1" ... "label4" "entrylabels" "header" {"maxy1"} {"maxy2"})`   
   `T` = type  
   - b=barchart  
@@ -482,7 +485,9 @@ remark: state variable names used for IO in the web interface may not contain an
   
   b,l,h type may have the '2' option to specify exactly 2 arrays with 2 y scales given at the end of parameter list.  
   
-  a very individual chart may be specified by splitting the chart definition and inserting the chart options directly see example below  
+####  advanced chart
+a custom chart may be specified by splitting the chart definition and inserting the chart options directly.
+see example below  
   
   `size` = optional size, allows to use only part of an array, must be lower then array size  
   
@@ -501,8 +506,10 @@ remark: state variable names used for IO in the web interface may not contain an
   
   additionally you have to define the html frame to put the chart in (both lines must be preceded by a $ char)
   e.g.  
-  <pre><code>$&lt;div id="chart1"style="width:640px;height:480px;margin:0 auto">&lt;/div>
-  $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")</pre></code>
+  ```
+  $<div id="chart1"style="width:640px;height:480px;margin:0 auto"></div>
+  $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")
+  ```
   
   you may define more then one chart. The charts id is chart1 ... chartN
   
@@ -1070,6 +1077,7 @@ print task1 on core %core%
 
 >t2
 print task2 on core %core%
+```
 
 ### ESP32 Webcam support
 
