@@ -49,12 +49,12 @@ The configuration template is slightly different with uDrive:
 
 Select the appropriate `display.ini` file from the [repository](https://github.com/arendst/Tasmota/tree/development/tasmota/displaydesc), and store it as `display.ini` file in the file system.
 
-Storing `display.ini` is the preferred method to configure the descriptor file. If this is not possible or if the device has no filesystem, use the alternative methods:
+Storing `display.ini` is the preferred method to configure the descriptor file. If this is not possible or if the device has no filesystem, use one of the alternative methods:
 
 1. A `display.ini` file present in the flash file system. ***preferred option***
 2. A special `>d` section in scripting. Copy the file to the `>d` script section and place a `->displayreinit` cmd into `>B` section
-3. Copy the descriptor to `Rule 3` but **do not** enable it. Convert the multiline descriptor into a single line descriptor by replacing every linefeed with a space. All other spaces need to be removed
-4. Compile the descriptor into the binary with a `#define DSP_ROM_DESC` string in `user_config_override.h`, see [example here]([url](https://github.com/arendst/Tasmota/blob/development/tasmota/displaydesc/readme.md)).
+3. Copy the descriptor to `Rule3` but **do not** enable it. Convert the multiline descriptor into a single line descriptor by replacing every linefeed with a space. All other spaces need to be removed. Maximum length is a little more than 511 bytes.
+4. Compile the descriptor into the binary with a `#define DSP_ROM_DESC` string in `user_config_override.h`, see [example here](https://github.com/arendst/Tasmota/blob/development/tasmota/displaydesc/readme.md).
 
 ### Step 6. Restart
 
