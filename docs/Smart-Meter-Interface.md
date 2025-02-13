@@ -2205,8 +2205,7 @@ You need to ask your provider.
 
 ### Iskra MT 631 (SML)
 
-This meter needs a PIN to unlock the current power usage.
-You need to ask your provider. Total Delivered might be zero on some devices
+This meter requires a PIN to unlock the current power usage details. To obtain the PIN, you'll need to contact your utility provider. Once you have the PIN, deactivate it on the meter and enable the detailed information display to also get the "Current Consumption". Please note that the "Total Delivered" value may show as zero on some devices.
 
 ??? summary "View script"
     ```
