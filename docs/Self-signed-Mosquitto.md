@@ -332,7 +332,8 @@ net start mosquitto
 
 ### 6. - Generate and configure certificates for your devices
 
-!!! failure "Repeated step" Repeat the following 6.x steps once for every device, changing tasmota_name for each device. You will be prompted for a private key password for each device. 
+!!! failure "Repeated step" Repeat the following 6.x steps once for every device, changing tasmota_name for each device. You will be prompted for a private key password for each device.
+
 After entering the new password (twice for verification), you will also be prompted for the private key password of the root CA certificate.
 
 #### 6.1 Generate the client certificates
