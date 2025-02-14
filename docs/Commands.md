@@ -552,6 +552,7 @@ SetOption44<a class="cmnd" id="setoption44"></a>|`1..100` = set base tolerance p
 SetOption45<a class="cmnd" id="setoption45"></a>|`1..250` = change bi-stable latching relay pulse length in milliseconds *(default = `40`)*
 SetOption46<a class="cmnd" id="setoption46"></a>|`0..255` = power on delay before initializing, in 10 millisecond units, up to 2.55 seconds.
 SetOption47<a class="cmnd" id="setoption47"></a>|`3..255` = delay power on relay state in seconds to reduce power surge<BR>`1` = delays until network connected<BR>`2` = delays until MQTT connected
+SetOption48<a class="cmnd" id="setoption48"></a>|Support energy dummy relays
 SetOption51<a class="cmnd" id="setoption51"></a>|Enable GPIO9 and GPIO10 component selections in Module Configuration<BR>:rotating_light: **WARNING** Do not use on ESP8266 devices! :rotating_light:<BR>`0` = disable *(default)*<BR>`1` = enable
 SetOption52<a class="cmnd" id="setoption52"></a>|Control display of optional time offset from UTC in JSON payloads<BR>`0` = disable *(default)*<BR> `1` = enable
 SetOption53<a class="cmnd" id="setoption53"></a>|Display hostname and IP address in GUI<BR>`0` = disable *(default)*<BR> `1` = enable
@@ -615,6 +616,7 @@ SetOption129<a class="cmnd" id="setoption129"></a>|Enable split total energy res
 SetOption130<a class="cmnd" id="setoption130"></a>|Add heap size (and ESP32 fragmentation) to logging timestamp for debugging<BR>`1` = enable
 SetOption131<a class="cmnd" id="setoption131"></a>|(Tuya) Allow save dimmer = 0 received by MCU<BR>`1` = enable
 SetOption132<a class="cmnd" id="setoption132"></a>|When MQTT TLS is enabled, forces fingerprint validation of server identity instead of checking the identify against a certificate authority (CA)<BR>`1` = Fingerprint, `0` = CA
+SetOption133<a class="cmnd" id="setoption133"></a>|Invert outputs of 74x595 shift register, `0` = don't invert
 SetOption134<a class="cmnd" id="setoption134"></a>|PWM force phases to be synced (ESP32 only).<BR>On ESP32, PWM phases are by default distributed one after the other to minimize effect on power supply. This is also mandatory for H-Bridge devices.<BR>`0` = phases are automatically aligned one after the other, `1` = phases all start at the same time (default behavior for ESP8266).
 SetOption135<a class="cmnd" id="setoption135"></a>|Disables Display Splash screen (for all drivers, universal & LVGL)<BR>`1` = Splash screen disabled, `0` = Splash screen displayed
 SetOption136<a class="cmnd" id="setoption136"></a>|`1` = Disable single sensor reports from Tuya devices while keeping teleperiod reports<BR>`0` = Publish an immediate `tele/%topic%/SENSOR` TuyaSNS message at each reception of individual value _(default)_
@@ -641,7 +643,11 @@ SetOption157<a class="cmnd" id="setoption157"></a>|`0` = hide NeoPool sensitive 
 SetOption158<a class="cmnd" id="setoption158"></a>|`0` = Disable publish ModbusReceived MQTT messages (`1`), in this case you must use event trigger rules instead
 SetOption159<a class="cmnd" id="setoption159"></a>|Set counting for Counter on falling edge or rising and falling edge<BR>`0` = Counter only reacts on falling edge _(default)_<BR>`1` = Counter reacts on falling and rising edge
 SetOption160<a class="cmnd" id="setoption160"></a>|`1` = Disable generate moving event by sensor report - use LD2410 out pin for events
-
+SetOption161<a class="cmnd" id="setoption161"></a>|Disable display of state text
+SetOption162<a class="cmnd" id="setoption162"></a>|Do not add export energy to energy today
+SetOption163<a class="cmnd" id="setoption163"></a>|Disable display of GUI device name
+SetOption164<a class="cmnd" id="setoption164"></a>|Enable WiZ Smart Remote support
+              
 ### TuyaMCU
 
 Command|Parameters
