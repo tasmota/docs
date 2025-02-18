@@ -284,7 +284,7 @@ Attribute name|LVGL equivalent|Details
 `bg_color`|`style_bg_color`|Color of background, format is `#RRGGBB`
 `bg_grad_color`|`style_bg_grad_color`|Color of background gradient
 `bg_grad_dir`|`style_bg_grad_dir`|Gradient direction<br>`0`: none<br>`1`: Vertical (top to bottom) gradient<br>`2`: Horizontal (left to right) gradient
-`border_side`|`style_border_side`|Borders to be displayed (add all values)<br>`0`: none<br>`1`: bottom<br>`2`: top<br>`4`: left<br>`8`: bottom<br>`15`: full (all 4)
+`border_side`|`style_border_side`|Borders to be displayed (add all values)<br>`0`: none<br>`1`: bottom<br>`2`: top<br>`4`: left<br>`8`: right<br>`15`: full (all 4)
 `border_width`|`style_border_width`|Width of border in pixels
 `border_color`|`style_border_color`|
 `line_color`|`style_line_color`|Color of line
