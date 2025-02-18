@@ -15,7 +15,7 @@ Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v14.4.1">Tasmota v14.4.1 Rudolph</a></span>
+<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v14.5.0">Tasmota v14.5.0 Ruth</a></span>
 
 ## Breaking Changes
 
@@ -23,12 +23,9 @@ Incredibly expandable and flexible.
 
 ## New Features
 
-- GUI refresh
-- Added commands `WebColor20`, `SetOption161` 
 - Added support for:
-  - I2C over Serial
-  - DALI support enchancements
-  - HLK-LD2410S, MS5837, TM1640, HLK-LD2410 engineering mode
+  - Lithuanian language
+  - PCF85063 RTC, Senseair S88 CO2 sensor, C8-CO2-5K CO2 sensor, ESP32 Two-Wire Automotive Interface (TWAI) or Controller Area Network (CAN) busses, WiZ Smart Remote
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
 
