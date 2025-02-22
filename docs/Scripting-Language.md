@@ -188,7 +188,7 @@ therefore when specifing permanent variables, add newly defined ones always at t
   `M:vname`   
   specifies a moving average filter variable with 8 entries (for smoothing data, should be also used to define arrays)  
   (max 5 filters in total m+M) optional another filter length (1..127) can be given after the definition.  
-  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer (may be set also), x = `-1` returns array length, x = `-2` returns array average)
+  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer (may be set also), x = `-1` returns array length, x = `-2` returns array average,x = `-3` returns array sum)
   Using this filter, vars can be used as arrays, #define LARGE_ARRAYS allows for arrays up to 1000 entries  
   array may also be permanent by specifying an extra `:p`  
   `m:p:vname`   
