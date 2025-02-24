@@ -21,11 +21,8 @@ To install on Linux, it is essential to first have the python3-venv package inst
 ## Download Tasmota
 Download the latest Tasmota version from <https://github.com/arendst/Tasmota> and unzip to a known folder.
 
-### Copy files
-Copy all files from the Tasmota Source code into your VSC working folder.
-
 ## Compile Tasmota
-Start VSC and select ``File`` - ``Open Folder...`` to point to the working folder.
+Start VSC and select ``File`` - ``Open Folder...`` the folder with the unzipped Tasmota files
 
 **Note:** Press `Ctrl` + `Shift` + `P` and type `PlatformIO` to see all options.
 
@@ -35,46 +32,14 @@ Easy compilation can be performed from the icons at the bottom of the VSC screen
 
 ## Upload Tasmota
 
-Enable desired options in _platformio.ini_ for serial upload like:
+Optional: Enable desired options in _platformio_override.ini_ for serial upload like:
 ```
-; *** Upload Serial reset method for Wemos and NodeMCU
 upload_port = COM5
 ;upload_speed = 512000
 upload_speed = 115200
-;upload_resetmethod = nodemcu
 ```
 
-### deploy via HTTP upload
-
-Special options (not needed for compiling Tasmota!) are enabled in _platformio_override.ini_ :
-```
-; *** Upload file to OTA server using HTTP
-upload_port = -i domus1 -p 80 -u /api/upload-arduino.php
-extra_scripts = ${esp_defaults.extra_scripts} pio/http-uploader.py
-```
-For ESP32 replace `esp_defaults` with `esp32_defaults`.
-
-Or if you wish to upload the gzip files (not for ESP32 only for ESP8266):
-```
-upload_port = -i domus1 -p 80 -u /api/upload-arduino.php
-extra_scripts = ${esp_defaults.extra_scripts} pio/http-gz-uploader.py
-```
 Easy compilation and upload can be performed from the icons at the bottom of the VSC screen or use `Ctrl` + `Alt` + `U` to upload (will build if needed).
-
-The _upload.php_ file at your webserver could look like this:
-```
-<?php
-$image = basename($_FILES["file"]["name"]);
-$target_file = "./".$image;
-$hostname = $_SERVER['SERVER_NAME'];
-
-if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-  echo "The file $image has been uploaded to OTA server $hostname. \n";
-} else {
-  echo "Sorry, there was an error uploading your file $image to OTA server $hostname. \n";
-}
-?>
-```
 
 ## *Hint:*
 In case vscode shows a huge amount of errors using PlatformIO - Intellisense a possible "solution" is to change the cpp-Intelli Sense Engine type to "TAG PARSER"
