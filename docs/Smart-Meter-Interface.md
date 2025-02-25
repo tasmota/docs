@@ -3565,7 +3565,59 @@ Set device parity to NONE
     1,010404ffffffff@i8:1,Active Power P3,W,Power_P3,2  
     #  
     ```
+    
+### SDM630 (MODBus)
+Show how to request multiple registers.
 
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+
+    ; multiple float register request, 9 at once
+    >M 1
+    +1,[192.168.188.106],m,0,502,SDM630,0,20,r010400000012
+    1,010424ffffffff@i0:1,Voltage P1,V,Voltage_P1,2
+    1,010424x4ffffffff@i0:1,Voltage P2,V,Voltage_P2,2
+    1,010424x8ffffffff@i0:1,Voltage P3,V,Voltage_P3,2
+    1,010424x12ffffffff@i0:1,Current P1,A,Current_P1,2
+    1,010424x16ffffffff@i0:1,Current P2,A,Current_P2,2
+    1,010424x20ffffffff@i0:1,Current P3,A,Current_P3,2
+    1,010424x24ffffffff@i0:1,Active Power P1,W,Power_P1,2
+    1,010424x28ffffffff@i0:1,Active Power P2,W,Power_P2,2
+    1,010424x32ffffffff@i0:1,Active Power P3,W,Power_P3,2
+    #
+    
+    ; multiple float register request, 3 at once
+    >xM 1
+    +1,[192.168.188.106],m,0,502,SDM630,0,10,r010400000006,r010400060006,r0104000c0006
+    1,01040cffffffff@i0:1,Voltage P1,V,Voltage_P1,2
+    1,01040cx4ffffffff@i0:1,Voltage P2,V,Voltage_P2,2
+    1,01040cx8ffffffff@i0:1,Voltage P3,V,Voltage_P3,2
+    1,01040cffffffff@i1:1,Current P1,A,Current_P1,2
+    1,01040cx4ffffffff@i1:1,Current P2,A,Current_P2,2
+    1,01040cx8ffffffff@i1:1,Current P3,A,Current_P3,2
+    1,01040cffffffff@i2:1,Active Power P1,W,Power_P1,2
+    1,01040cx4ffffffff@i2:1,Active Power P2,W,Power_P2,2
+    1,01040cx8ffffffff@i2:1,Active Power P3,W,Power_P3,2
+    #
+    
+    ; single float register request
+    >xM 1
+    +1,[192.168.188.106],m,0,502,SDM630,0,10,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010
+    1,010404ffffffff@i0:1,Voltage P1,V,Voltage_P1,2
+    1,010404ffffffff@i1:1,Voltage P2,V,Voltage_P2,2
+    1,010404ffffffff@i2:1,Voltage P3,V,Voltage_P3,2
+    1,010404ffffffff@i3:1,Current P1,A,Current_P1,2
+    1,010404ffffffff@i4:1,Current P2,A,Current_P2,2
+    1,010404ffffffff@i5:1,Current P3,A,Current_P3,2
+    1,010404ffffffff@i6:1,Active Power P1,W,Power_P1,2
+    1,010404ffffffff@i7:1,Active Power P2,W,Power_P2,2
+    1,010404ffffffff@i8:1,Active Power P3,W,Power_P3,2
+    #
+    ```
+    
 ### SDM72D (MODBus)
 Script to extract readings from Eastron [SDM72D Series](https://www.eastroneurope.com/products/view/sdm72modbus) devices (tested on SDM72D-M). Manual with comprehensive documentation about all Modbus registers available [here](https://stromzähler.eu/media/pdf/93/17/d7/SDM72DM-V2.pdf).
 
