@@ -205,7 +205,8 @@ Each meter typically provides multiple metrics (energy, voltage, power, current 
 
 ## Special Commands
 
-With `=` character at the beginning of a line you can do some special decoding. With `*` character fields can be hidden or skipped.
+With `=` character at the beginning of a line you can do some special decoding. With `*` character fields can be hidden or skipped. The term decoder entries refer to the relative line number (starting with 1) in the decoder section.
+Special options and e.g math calculations are not counted as a decoder entry and have to be skipped in counting.
 
 | Command | Description |
 | :--- | :--- |
