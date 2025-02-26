@@ -3578,7 +3578,7 @@ Show how to request multiple registers.
 
     ; multiple float register request, 9 at once
     >M 1
-    +1,[192.168.188.106],m,0,502,SDM630,0,20,r010400000012
+    +1,3,m,0,9600,SDM630,1,20,r010400000012
     1,010424ffffffff@i0:1,Voltage P1,V,Voltage_P1,2
     1,010424x4ffffffff@i0:1,Voltage P2,V,Voltage_P2,2
     1,010424x8ffffffff@i0:1,Voltage P3,V,Voltage_P3,2
@@ -3592,7 +3592,7 @@ Show how to request multiple registers.
     
     ; multiple float register request, 3 at once
     >xM 1
-    +1,[192.168.188.106],m,0,502,SDM630,0,10,r010400000006,r010400060006,r0104000c0006
+    +1,3,m,0,9600,SDM630,1,10,r010400000006,r010400060006,r0104000c0006
     1,01040cffffffff@i0:1,Voltage P1,V,Voltage_P1,2
     1,01040cx4ffffffff@i0:1,Voltage P2,V,Voltage_P2,2
     1,01040cx8ffffffff@i0:1,Voltage P3,V,Voltage_P3,2
@@ -3606,7 +3606,7 @@ Show how to request multiple registers.
     
     ; single float register request
     >xM 1
-    +1,[192.168.188.106],m,0,502,SDM630,0,10,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010
+    +1,3,m,0,960,SDM630,1,5,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010,,01040048,0104004a
     1,010404ffffffff@i0:1,Voltage P1,V,Voltage_P1,2
     1,010404ffffffff@i1:1,Voltage P2,V,Voltage_P2,2
     1,010404ffffffff@i2:1,Voltage P3,V,Voltage_P3,2
@@ -3616,6 +3616,8 @@ Show how to request multiple registers.
     1,010404ffffffff@i6:1,Active Power P1,W,Power_P1,2
     1,010404ffffffff@i7:1,Active Power P2,W,Power_P2,2
     1,010404ffffffff@i8:1,Active Power P3,W,Power_P3,2
+    1,010404ffffffff@i9:1,Total Import,KWh,Timp,3
+    1,010404ffffffff@i10:1,Total Export,KWh,Texp,3
     #
     ```
     
