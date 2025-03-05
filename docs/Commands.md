@@ -955,6 +955,8 @@ DzSend<type\><a class="cmnd" id="dzsend"></a>|send values or state to Domoticz<B
 DzSensorIdx<x\><a class="cmnd" id="dzsensoridx"></a>|Show Domoticz Sensor idx <x\> (x = `1..5`)<BR>`0` = disable use of Sensor idx <x\> *(default)*<BR>`<value>` = Show Sensor idx <x\>
 DzSwitchIdx<x\><a class="cmnd" id="dzswitchidx"></a>|Show Domoticz Switch idx <x\> (x = `1..4`)<BR>`0` = disable use of Switch idx <x\> *(default)*<BR>`<value>` = Show Switch idx <x\> (to use enable [SwitchTopic](#switchtopic))
 DzUpdateTimer<a class="cmnd" id="dzupdatetimer"></a>|Show current update timer value in seconds<BR>`0` = disable sending interim Domoticz status *(default)*<BR>`1..3600` = send status to Domoticz in defined intervals
+See also|[Domoticz](https://tasmota.github.io/docs/Domoticz/)
+
 
 ### InfluxDB
 
