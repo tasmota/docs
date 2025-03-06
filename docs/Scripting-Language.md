@@ -1042,6 +1042,7 @@ The script itself is also stored on the file system with a default size of 8192 
 ### Extended commands   (+0,9k flash)  
 
 `#define USE_SCRIPT_FATFS_EXT`  
+`fmt(0)` format flash file system (erases all data)  
 `fmd("fname")` make directory fname  
 `frd("fname")` remove directory fname  
 `fra(array fr)` reads array from open file with fr (assumes tab delimited entries)  
