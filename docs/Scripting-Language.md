@@ -540,9 +540,17 @@ you may display files from the flash or SD filesystem by specifying the url:  IP
 
 [Smart Meter Interface](Smart-Meter-Interface)  
 
+###  >y
+
+
+on devices without a file system a configuration string may be defined here, e.g. for universal display driver (display.ini)  
+
+
 If a variable does not exist, `???` is displayed for commands  
 
 If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var` does not exist the destination variable is ==NOT== updated.  
+
+
 
 ## Special Variables
 
