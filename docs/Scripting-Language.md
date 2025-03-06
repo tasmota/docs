@@ -544,7 +544,7 @@ you may display files from the flash or SD filesystem by specifying the url:  IP
 ###  >y
 
 
-on devices without a file system a configuration string may be defined here, e.g. for universal display driver (display.ini)  
+on devices without a file system a configuration string may be defined here, e.g. xnrg_29_modbus.ino driver 
 
 
 If a variable does not exist, `???` is displayed for commands  
