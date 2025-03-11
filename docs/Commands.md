@@ -347,7 +347,8 @@ Timer<x\><a class="cmnd" id="timer"></a>|Parameters for Timer<x\> where x = `1..
 
 Command|Parameters
 :---|:---
-AdcParam<x\><a class="cmnd" id="adcparam"></a>|[ADC](ADC) analog input tuning parameters. On ESP32 x is channel `1..8`<BR>`<sensor>, <param1>, <param2>, <param3>,  <param4>`<BR>complete `<sensor>` values listed [here...](ADC.md)
+AdcGpio<x\><a class="cmnd" id="adcgpio"></a>|[ADC](ADC) analog input tuning parameters, x is the gpio number and following 4 parameters are configration values for the type of sensor.<BR>`<param1>, <param2>, <param3>,  <param4>`<BR>See the ADC docs [ADC docs](ADC.md) for details.
+AdcParam<x\><a class="cmnd" id="adcparam"></a>|[ADC](ADC) deprecated old command for setting analog input tuning parameters. On ESP32 x is channel `1..8`<BR>`<sensor>, <param1>, <param2>, <param3>,  <param4>`<BR>complete `<sensor>` values listed [here...](ADC.md)
 Altitude<a class="cmnd" id="altitude"></a>|`-30000..30000` = altitude in meters
 AmpRes<a class="cmnd" id="sensors-ampres"></a>|Current sensor resolution<BR>`0..3` = maximum number of decimal places
 Bh1750Resolution<x\><a class="cmnd" id="bh1750resolution"></a>|[BH1750](BH1750.md) resolution mode. `x` = BH1750 sensor number (`1..2`) <BR>`0..2` = choose sensor resolution (`0` = high _(default)_, `1` = high2, `2` = low)
