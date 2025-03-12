@@ -1307,6 +1307,38 @@ A few values I wasn't able to figure out, but the most relevant are there. If yo
     #
     ```
 
+### eHZB
+
+??? summary "View script"
+    ```
+    
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,s,0,9600,ENERGY
+    1,77070100600100FF@#,Meter ID,,ID,0
+    1,77070100010800FF@1000,Meter Reading Total,kWh,meter_reading_total,1
+    1,77070100020800FF@1000,Negative Active Energy,kWh,neg_active_total,1
+    1,770701000E0700FF@1,Net Frequency,Hz,net_frequency,1
+    1,77070100100700FF@1,Actual Power,W,actual_power,0
+    1,770701001F0700FF@1,Current L1,A,current_l1,2
+    1,77070100200700FF@1,Voltage L1,V,voltage_l1,1
+    1,77070100240700FF@1,Effective Power L1,W,eff_power_l1,0
+    1,77070100330700FF@1,Current L2,A,current_l2,2
+    1,77070100340700FF@1,Voltage L2,V,voltage_l2,1
+    1,77070100380700FF@1,Effective Power L2,W,eff_power_l2,0
+    1,77070100470700FF@1,Current L3,A,current_l3,2
+    1,77070100480700FF@1,Voltage L3,V,voltage_l3,1
+    1,770701004C0700FF@1,Effective Power L3,W,eff_power_l3,0
+    1,77070100510701FF@1,Phase L1/L2,deg,phase_l1_l2,0
+    1,77070100510702FF@1,Phase L1/L3,deg,phase_l1_l3,0
+    1,77070100510704FF@1,Phase L1,deg,phase_l1,0
+    1,7707010051070FFF@1,Phase L2,deg,phase_l2,0
+    1,7707010051071AFF@1,Phase L3,deg,phase_l3,0
+    #
+    ```
+
 ### Elster / Honeywell AS1440 (OBIS)
     
 Based on Landis script with changed timings in the >F section, as AS1440 seems to be slower in responding.
