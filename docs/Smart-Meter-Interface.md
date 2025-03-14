@@ -3604,7 +3604,7 @@ Show how to emulate an SDM630 e.g. to interact with a GROWATT solar inverter.
 
 ??? summary "View script"
     ```
-    >D
+    \>D
     ; simulate eastron sdm630 modbus meter
     IP=192.168.188.114
     ; need this additional defs
@@ -3632,9 +3632,9 @@ Show how to emulate an SDM630 e.g. to interact with a GROWATT solar inverter.
     curr1=0
     cpw1=0
     cvol1=230
-    >B
+    \>B
     =>sensor53 r
-    >BS
+    \>BS
     ; should be hardware serial pins
     res=so(rec trx 9600 8N1 1024)
     if res==0 {
@@ -3729,18 +3729,14 @@ Show how to emulate an SDM630 e.g. to interact with a GROWATT solar inverter.
 next
 ; write response
 smw(addr 3 resp regs)
-
 ; multitasking every 1 ms
 \>t1
-
 ; get current power from meter
 cmpwr=sml[3]
-
 ; fake power 
 ;cmpwr=3000+rnd(1000)
 curr1=cmpwr/230/3
 cpw1=cmpwr/3
-
 ; check for incomming request
 res=sa()
 if res>=8 {
@@ -3770,10 +3766,7 @@ if res>=8 {
 		res=sa()
 		res=sra(resp)
 	}
-	
 }
-
-
 \>R
 ; close serial port
 sc()
