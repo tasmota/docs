@@ -6,6 +6,8 @@ Components can be: buttons, switches, relays, LEDs, sensors, displays, MCU units
 
 Every Tasmota device has some components configured by default. Most often there is a relay, a button and a LED configured as is the case for a Sonoff Basic in the following image.
 
+If components of the same type (e.g. buttons, switches,...) are used, they are given a consecutive number (button1, button2,...) for precise identification. This consecutive number must be selected in such a way that no numbers are omitted in the natural sequence. Otherwise the reaction of Tasmota may be unpredictable. This omission does not refer to the device itself, but the rule applies per component. So if you introduce another button in addition to Relay1, you should name it button1 rather than button2.
+
 !!! bug
     Tasmota 9.1 completely redesigned GPIO mapping to allow for future expansion. Read more about the [GPIO Conversion](GPIO-Conversion.md)
 
