@@ -3,6 +3,10 @@
 After you have a working [MQTT broker](https://www.google.com/search?q=setting+up+an+mqtt+broker) you need to configure Tasmota to communicate with it. 
 If you have no knowledge of what MQTT is, you can learn about it from [MQTT Essentials](http://www.hivemq.com/mqtt-essentials/) articles. 
 
+## Warning
+Excepted for ESP2 devices, Tasmota does not provide encrypted MQTT coomunication.
+Unencrypted MQTT should be limited to own LAN, external unencrypted communication is a very serious security flaw, your device can become a malware bot!
+
 ## Configure MQTT 
 If you flashed a precompiled .bin or didn't enter MQTT info in `user_config_override.h` before compiling you have to configure it on your device first.
 
