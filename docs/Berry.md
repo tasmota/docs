@@ -1523,40 +1523,64 @@ There are two ways to use regex, first is to call directly the module which trig
 
 # first series are all-in-one, patterns are compiled on the fly
 
+# Returns the list of matches, or empty list of no match
 > re.search("a.*?b(z+)", "zaaaabbbccbbzzzee")
 ['aaaabbbccbbzzz', 'zzz']
-> re.match("a.*?b(z+)", "aaaabbbccbbzzzee")
-['aaaabbbccbbzzz', 'zzz']
-> re.split('/', "foo/bar//baz")
-['foo', 'bar', '', 'baz']
+
+# Returns the list of list of matches
 > re.searchall('<([a-zA-Z]+)>', '<abc> yeah <xyz>')
 [['<abc>', 'abc'], ['<xyz>', 'xyz']]
 
-# below are pre-compiled patterns, which is much faster if you use the
-# pattern multiple times
+# Returns the list of matches, or empty list of no match; must match from the beginning of the string.
+> re.match("a.*?b(z+)", "aaaabbbccbbzzzee")
+['aaaabbbccbbzzz', 'zzz']
 
-> rr = re.compile('<([a-zA-Z]+)>')
-> rr.searchall('<abc> yeah <xyz>')
+# Returns the number of chars matched instead of the entire match (saves memory)
+> re.match2("a.*?b(z+)", "aaaabbbccbbzzzee")
+[14, 'zzz']
+
+# Returns the list of matches, or empty list of no match; there should not be any gaps between matches.
+> re.matchall('<([a-zA-Z]+)>', '<abc> yeah <xyz>')
+[['<abc>', 'abc']])
+> re.matchall('<([a-zA-Z]+)>', '<abc><xyz>')
 [['<abc>', 'abc'], ['<xyz>', 'xyz']]
 
-> rr = re.compile("/")
-> rr
-<instance: re_pattern()>
-
-> rr.split("foo/bar//baz")
+# Returns the list of strings from split
+> re.split('/', "foo/bar//baz")
 ['foo', 'bar', '', 'baz']
-> rr.split("/b")
+
+# below are pre-compiled patterns, which is much faster if you use the
+# pattern multiple times
+#
+# the compiled pattern is a `bytes()` object that can be used
+# as a replacement for the pattern string
+> rb = re.compilebytes('<([a-zA-Z]+)>')
+# rb is compiled to bytes('1A0000000C0000000100000062030260FB7E00013C7E020302617A415A62F87E03013E7E017F')
+
+> re.searchall(rb, '<abc> yeah <xyz>')
+[['<abc>', 'abc'], ['<xyz>', 'xyz']]
+
+> rb = re.compilebytes("/")
+> rb
+bytes('0C000000070000000000000062030260FB7E00012F7E017F')
+
+> re.split(rb, "foo/bar//baz")
+['foo', 'bar', '', 'baz']
+> re.split(rb, "/b")
 ['', 'b']
 ```
 
 Tasmota Function|Parameters and details
 :---|:---
-search<a class="cmnd" id="re_search"></a>|`re.search(pattern:string, payload:string) -> list of strings`<br>Returns the list of matches, or empty list of no match
-match<a class="cmnd" id="re_match"></a>|`re.match(pattern:string, payload:string) -> list of strings`<br>Returns the list of matches, or empty list of no match. The difference with `search` is that match must match from the beginning of the string.
-searchall<a class="cmnd" id="re_searchall"></a>|`re.searchall(pattern:string, payload:string [, limit:string]) -> list of list of strings`<br>Returns the list of list of matches, or empty list of no match. `limit` allows to limit the number of matches.
-matchall<a class="cmnd" id="re_matchall"></a>|`re.matchall(pattern:string, payload:string [, limit:string]) -> list of list of strings`<br>Returns the list of matches, or empty list of no match. The difference with `searchall` is that there should not be any gaps between matches.  `limit` allows to limit the number of matches.
-split<a class="cmnd" id="re_split"></a>|`re.search(pattern:string, payload:string) -> list of strings`<br>Returns the list of strings from split, or a list with a single element containing the entire string if no match
-compile<a class="cmnd" id="re_compile"></a>|`re.compile(pattern:string) -> instance of <re_pattern>`<br>Compiles the regex into a reusable faster bytecode. You can then call the following methods:<br>`search()`, `match()`, `split()` similarly to the module's functions.
+search<a class="cmnd" id="re_search"></a>|`re.search(pattern:string or bytes, payload:string [, offset:int]) -> list of strings`<br>Returns the list of matches, or empty list of no match
+match<a class="cmnd" id="re_match"></a>|`re.match(pattern:string or bytes, payload:string [, offset:int]) -> list of strings`<br>Returns the list of matches, or empty list of no match. The difference with `search` is that match must match from the beginning of the string.<br>Takes an optional second argument offset which indicates at which character to start the in the payload (default 0).
+match2<a class="cmnd" id="re_match2"></a>|`re.match2(pattern:string or bytes, payload:string [, offset:int]) -> list of strings`<br>Returns the list of matches, or empty list of no match. The difference with `match` is that the first element contains the number of matched characters instead of the matched string, which saves memory for large matches.<br>Takes an optional second argument offset which indicates at which character to start the in the payload (default 0).
+searchall<a class="cmnd" id="re_searchall"></a>|`re.searchall(pattern:string or bytes, payload:string [, limit:string]) -> list of list of strings`<br>Returns the list of list of matches, or empty list of no match. `limit` allows to limit the number of matches.
+matchall<a class="cmnd" id="re_matchall"></a>|`re.matchall(pattern:string or bytes, payload:string [, limit:string]) -> list of list of strings`<br>Returns the list of matches, or empty list of no match. The difference with `searchall` is that there should not be any gaps between matches.  `limit` allows to limit the number of matches.
+split<a class="cmnd" id="re_split"></a>|`re.search(pattern:string or bytes, payload:string) -> list of strings`<br>Returns the list of strings from split, or a list with a single element containing the entire string if no match
+compilebytes<a class="cmnd" id="re_compilebytes"></a>|`re.compilebytes(pattern:string) -> instance of bytes()`<br>Compiles the regex into a reusable faster bytecode. You can then use the `bytes()` compiled pattern as a replacement for the patter string
+compile<a class="cmnd" id="re_compile"></a>|**Deprecated**, use `compilebytes` instead.<br>`re.compile(pattern:string) -> instance of <re_pattern>`<br>Compiles the regex into a reusable faster bytecode. You can then call the following methods:<br>`search()`, `match()`, `split()` similarly to the module's functions.
+dump<a class="cmnd" id="re_dump"></a>|`re.dump(pattern:bytes) -> nil`<br>Prints to the console a dump of the compiled pattern.<br>Only if compiled with `#define USE_BERRY_DEBUG` and only for curiosity/debugging purpose.
 
 Note: for `match` and `search`, the first element in the list contains the global match of the pattern. Additional elements correspond to the sub-groups (in parenthesis).
 
