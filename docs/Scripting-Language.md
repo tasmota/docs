@@ -867,7 +867,7 @@ S
 print subroutine was executed
 ```
 
-### For loop (loop count must not be less than 1, no direct nesting supported)
+### For loop (loop count must not be less than 1, nesting up to 3 levels)
 
 ```
 for var <from> <to> <inc>  
