@@ -16,6 +16,22 @@ When a file `pages.jsonl` is present in the file system, HASPmota is automatical
 
 HASPmota auto-start is triggered after `autoexec.be` is executed, so you have the opportunity to start HASPmota yourself, or initialize any sensor or components `autoexec.be` time. You can also use a different name than `pages.jsonl` and start HASPmota at any time of your convenience.
 
+### Running HASPMota manually
+
+If you need to start HASPmota manually, you can use the following code in `autoexec.be`:
+
+```berry
+import haspmota
+haspmota.start()         # manually start HASPmota using default 'pages.jsonl' file
+```
+
+You can pass an additional parameter with the name of the template file:
+
+```berry
+import haspmota
+haspmota.start("my_template.jsonl")
+```
+
 ## Gallery of widgets
 
 [![HASPmota label](_media/lvgl/HASPmota_1_instructions.png){width="160"}](#label)
