@@ -2,10 +2,20 @@
 
 !!! tip "This feature is included in tasmota32-lvgl.bin"
 
+!!! Starting from v14.5.0.2, HASPmota automatically starts if a file `pages.jsonl` is present
+
 Tasmota happily supports the openHASP compatible format, known as HASPmota. This format allows you to describe rich graphics interfaces using simple JSON templates. The HASPmota support in Tasmota leverages the power of [LVGL](https://tasmota.github.io/docs/LVGL/) and the [Berry language](https://tasmota.github.io/docs/Berry/), but you don't need to code or learn the LVGL API to use it.
 
 This feature is heavily inspired from @fvanroie's [openHASP project](https://github.com/HASwitchPlate/openHASP).
- 
+
+## Running HASPmota
+
+HASPmota, like OpenHASP, relies of describing the elements to be displayed in a simple JSONL file. [JSONL (JSON Lines)](https://jsonlines.org/) is a file format where each line is a valid JSON value. The default file name is `pages.jsonl`.
+
+When a file `pages.jsonl` is present in the file system, HASPmota is automatically started without any additional code needed (since v14.5.0.2, previously you needed to start HASPmota in `autoexec.be`).
+
+HASPmota auto-start is triggered after `autoexec.be` is executed, so you have the opportunity to start HASPmota yourself, or initialize any sensor or components `autoexec.be` time. You can also use a different name than `pages.jsonl` and start HASPmota at any time of your convenience.
+
 ## Gallery of widgets
 
 [![HASPmota label](_media/lvgl/HASPmota_1_instructions.png){width="160"}](#label)
@@ -35,7 +45,7 @@ This feature is heavily inspired from @fvanroie's [openHASP project](https://git
 [![HASPmota tabview](_media/lvgl/HASPmota_25_tabview.png){width="160"}](#tabview)
 
 
-The `jsonl` file used to display the widgets can be found [here](_media/lvgl/haspmota_demo.jsonl)
+The `jsonl` file used to display the widgets can be found [widget demo JSONL file](_media/lvgl/haspmota_demo.jsonl)
 
 ## Minimal requirements
 
@@ -135,22 +145,6 @@ The code trigger a read of sensors every 2 seconds and publish the JSON result t
 ``` berry
 tasmota.add_cron('*/2 * * * * *', def () var s = tasmota.read_sensors() if (s) tasmota.publish_rule(s) end end, 'hm_every_5_s')
 ```
-
-## Running HASPmota
-
-`HASPmota` code is included in `tasmota32-lvgl` firmwares.
-
-Running `HASPmota` with your own template is as simple as:
-
-- create a template in `pages.jsonl` and store it in the Tasmota file system
-- create an `autoexec.be` file containing the following:
-
-``` berry
-# simple `autoexec.be` to run HASPmota using the default `pages.jsonl`
-import haspmota
-haspmota.start()
-```
-
 
 ## HASPmota reference
 
