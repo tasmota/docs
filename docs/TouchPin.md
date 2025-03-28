@@ -27,11 +27,6 @@ g - number of the graph (= number of the button)
 v - raw value of the corresponding touch pin
 h - number of continuous hits below current threshold, useful to see the number and length of "spikes", should be 0 without touching
   
-The new values for a personal configuration can be stored in RULE:  
-  
-!!! example
-    `rule1 on System#Init do TouchNum 1 endon`  
-
 ### Tasmota Serial Plotter  
   
 This little tool should be helpful to get a feel for the touch values. It is located in the /tools folder of the Tasmota repository and needs the installation of "mathplotlib" and "pyserial" in the active python environment. It is confirmed to work under Windows 10 and macOS Catalina.  
@@ -45,6 +40,3 @@ You can send commands to Tasmota via SEND-box.
   
   
 ![](https://user-images.githubusercontent.com/5481060/83327677-f730be80-a27d-11ea-85a2-bf72e644cb4e.gif)  
-
-(Note the short spikes, which in this config only would need TouchNum 1 to get filtered out)  
-  
