@@ -17,8 +17,8 @@ The default values are very conservative in order to rule out unwanted actions. 
  
 | __Command__ | __Description__                            |
 |------------|--------------------------------------------|
-| TouchCal x       | x=button 1 .. 4. This plots the sensor values to the console, to get information regarding the setting of the 2 following commands<BR> 0 will turn off calibration<BR> 255 will turn on calibration for all buttons     |
-| TouchThres x     | x=button 1 .. 4. This plots the sensor values to the console, to get information regarding the setting of the 2 following commands |
+| TouchCal x    | x=button 1 .. 4. This plots the sensor values to the console, to get information regarding the setting of the `TouchThres` value.<BR> 0 will turn off calibration<BR> 255 will turn on calibration for all buttons     |
+| TouchThres x  | Set touch threshold for all touch buttons, as determined via the `TouchCal` command. |
   
 While the calibration process is running, the raw data values will be printed in the console in the format:  
 <Time> PLOT: g, v, h,  
