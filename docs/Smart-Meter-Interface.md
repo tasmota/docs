@@ -546,6 +546,24 @@ After following these steps, the instantaneous power will be displayed permanent
 
 For further support, visit the [APATOR LEPUS Discussion Thread](https://github.com/arendst/Tasmota/discussions/17635).
 
+### Apator Norax 1D+ (SML)
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,s,1,9600,SML
+    1,77070100010800ff@1000,Total consumption,kWh,total_in,4
+    1,77070100020800ff@1000,Total Feed,kWh,total_out,4
+    1,770701000b0700ff@1,Amperage,A,amperage,1
+    1,770701000c0700ff@1,Voltage,V,voltage,1
+    1,770701000e0700ff@1,Frequency,Hz,frequency,0
+    1,77070100100700ff@1,Current consumption,W,power_curr,0
+    #
+    ```
+
 ### Apator Norax 3D (SML)
 
 ??? summary "View script"
