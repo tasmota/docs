@@ -34,7 +34,7 @@ Now every TIMER that has RULE as an action will wakeup the device at the propose
 
 ```console
 Rule2
-  on time#minute==%sunset% do rule1 5 endon
+  on time#minute=%sunset% do rule1 5 endon
 
 Rule2 ON
 ```
