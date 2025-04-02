@@ -320,7 +320,7 @@ See also|[`SetOption3`](#setoption3) - Disable//Enable MQTT<BR>[`SetOption4`](#s
 Command|Parameters
 :---|:---
 Add<x\><a class="cmnd" id="add"></a>|`<value>` = add value to Var<x\> ([example](Rules#arithmetic-commands-used-with-var))
-CalcRes<a class="cmnd" id="calcres"></a>|Current calculation resolution<BR>`0..7` = set number of decimal places to be used in `Add`, `Sub`, `Mult` and `Scale`
+CalcRes<a class="cmnd" id="calcres"></a>|Current calculation resolution<BR>`0..7` = set number of decimal places to be used for arithmetic expressions in rules, and the `Add`, `Sub`, `Mult` and `Scale` commands.
 Event<a class="cmnd" id="event"></a>|Execute an event to trigger a rule as [documented](Rules#rule-trigger)&emsp;
 Mem<x\><a class="cmnd" id="mem"></a>|Manage up to 16 variables stored on flash (x = `1..16`)<BR>`Mem` returns all current values. `Mem<x>` returns the variable's current value.<BR>`<value>` = store a string value in a variable<BR>`"` = clear stored value in Mem<x\>
 Mult<x\><a class="cmnd" id="mult"></a>|`<value>` = multiply value to Var<x\> ([example](Rules#arithmetic-commands-used-with-var))<BR>
