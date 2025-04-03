@@ -36,6 +36,7 @@ Additional features can be enabled by adding the following `#define` compiler di
 |USE_SML_AUTHKEY | enables authentication, this is not needed by most energy meters.|
 |NO_USE_SML_TCP | disables TCP MODBUS support.|
 |NO_USE_SML_CANBUS | disables CANBUS support.|
+|USE_SML_CRC | enables CRC support for binary SML. Must still be enabled via line like "1,=soC,1024,15". See [special options](#special-option-soc).
 	
 ### General description
 
@@ -223,6 +224,7 @@ Special options and e.g math calculations are not counted as a decoder entry and
 | `M,=so7 `| on ESP32 force selection of UART Nr. X (0,1,2) allows coexistence with other serial drivers <BR>|
 | `M,=so8 `| CAN bus filter mask <BR>|
 | `M,=so9 `| CAB bus filter <BR>|
+| `M,=soC `| <a name="special-options-soc"></a> CRC check for binary SML. exp: 1,=soC,1024,15<BR>spec: 1,=soC,\<buffersize\>,\<cr-cmode\> <BR> For buffersize 1024 is a good starting point. crc-modes are: 15:auto-detect, 0:x25, 1:ccitt, 2:kermit 3:modbus, 4:xmodem,5:mcrf4xx <BR>auto-detect works by simply trying all available algorithms. starting with x25 (crcmode=0). If 4 consecutive correct files are received auto-detecting will choose this algorithm until next restart. |
 
 !!! example
     To get the value of one of the descriptor lines, use `sml[X]`. `X` = Line number. Starts with `1`. (compiling with `USE_SML_SCRIPT_CMD` required)
