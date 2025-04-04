@@ -1195,6 +1195,7 @@ The meter's manufacturer's datasheet neatly explains the serial message format u
 	
 ??? summary "View script"
     ```
+
     >D
     >B
     =>sensor53 r
@@ -1208,6 +1209,30 @@ The meter's manufacturer's datasheet neatly explains the serial message format u
     According to the manufacturer's datasheet, the serial parameters are 9600 baud and 7E1. 
 	
     For Tasmota versions that are built with a TasmotaSerial.cpp of version 3.5.0 (and probably all higher versions, too), no modification of the TasmotaSerial.cpp source code (as suggested in other entries of this documentation) is necessary to set the serial parameters to 7E1: By configuring the [meter type](#meter-definition) as OBIS ("o") in line 5 of the above code, you implicitly tell Tasmota to set the serial parameters to 7E1 (probably the same applies to all other meters in this documentation where a modification of TasmotaSerial.cpp has previously been recommended).
+
+### EFR SGM-DD-4A92T (SML)
+
+Energy provider supplied a PIN code to enable output of additional data.
+
+??? summary "View script"
+    ```
+        
+    >D
+    >B
+    spinm(4 1)
+    =>sensor53 r
+    >M 1
+    +1,3,s,0,9600,sml
+    1,77070100010800FF@1000,Bezug,kWh,Bezug,19
+    1,77070100010801FF@1000,Bezug T1,kWh,t1_Bezug,19
+    1,77070100010802FF@1000,Bezug T2,kWh,t2_Bezug,19
+    1,77070100020800FF@1000,Einspeisung,kWh,Einspeisung,19
+    1,77070100020801FF@1000,Einspeisung T1,kWh,t1_Einspeisung,19
+    1,77070100020802FF@1000,Einspeisung T2,kWh,t2_Einspeisung,19
+    1,77070100100700FF@1,aktuelle Wirkleistung,W,Leistung,16
+    #
+    ```
+
 
 ### EFR SGM-C2/C4/D4 (SML)
 
