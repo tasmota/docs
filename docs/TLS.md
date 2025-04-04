@@ -173,8 +173,9 @@ Here are most common TLS errors:
 
 |Error code | Description|
 |---:|:---|
-| -1004 | Missing CA |
-| -1003 | Missing EC private key |
+| -1005 | Time-out during TLS handshake |
+| -1004 | Missing CA (deprecated)|
+| -1003 | Missing EC private key (deprecated)|
 | -1002 | Cannot connect to TCP port |
 | -1001 | Cannot resolve IP address |
 | -1000 | Out of memory error |
