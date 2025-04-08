@@ -2243,6 +2243,79 @@ For writing 32-bit registers like 40126, use [ModBus Bridge](Modbus-Bridge) driv
     1,010304ffffffff@i26:1,Rev react en,kvarh,4_8_0,3
     #
     ```
+### Iskra AM550
+
+(Wiener Netze)
+
+Based on the spec found [at Wiener Netze](https://www.wienernetze.at/kundenschnittstelle2)
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,r,0,9600,HHStrom
+    1,=so3,256
+    1,=so4,<your key>
+    1,0209090cUUuu@1,year,,year,0
+    1,0209090cx2ss@1,month,,month,0
+    1,0209090cx3ss@1,day,,day,0
+    1,0209090cx5ss@1,hh,,hh,0
+    1,0209090cx6ss@1,mm,,mm,0
+    1,0209090cx7ss@1,ss,,ss,0
+    1,0209090cx13UUuuUUuu@1000,Zählerstand,kWh,Zaehlerstand,3
+    1,020a090cx18UUuuUUuu@1000,Einspeisung,kWh,Einspeisung,3
+    1,0209090cx23UUuuUUuu@1000,Blindenergie,varh,Blindenergie,3
+    1,0209090cx28UUuuUUuu@1000,Blindenergie einsp,varh,Blindenergie einsp,3
+    ; Letzter Paramater (Precision) = add 16 to send data immediately 0 + 16 = 16
+    1,0209090cx33UUuuUUuu@1,Momentanleistung,W,Momentanleistung,16
+    1,0209090cx38UUuuUUuu@1,Einspeiseleistung,W,Einspeiseleistung,0
+    1,0209090cx43UUuuUUuu@1,Blindleistung,var,Blindleistung,0
+    1,0209090cx48UUuuUUuu@1,Blindleistung einsp,var,Blindleistung einsp,0
+    #
+    ```
+
+You need to adapt the identifier string at the beginning of the decoding lines ('0209090c' here) to the code shown in your dump.
+
+To start the dump enter 'sensor53 d1' in the Console, to stop it 'sensor53 d0'. The dump delivers something like:
+
+```
+18:12:11.474 SML: decrypted block: 56 bytes
+18:12:11.476 :>02 09 09 0c 07 e8 0b 0e 04 12 0c 0c 00 ff c4 00 
+18:12:11.477 :>06 00 01 5a b1 06 00 03 db c9 06 00 00 3d 1b 06 
+18:12:11.479 :>00 02 7b e4 06 00 00 00 11 06 00 00 00 00 06 00 
+18:12:11.481 :>00 00 00 06 00 00 00 ba 
+18:12:11.523 :>00 00 00 06 00 00 00 ba 
+```
+
+As long as you don't get this dump, either the interface is not operational or the provided code from your provider is wrong.
+
+Take the first four bytes from your dump ('02 09 09 0c´ here) and adapt the script.
+
+Be aware that the data sent has separator-bytes between the values (`04' and ´06'). And the last line seems repeated.
+
+This is the interpreted dump:
+
+|Obis |Data  |Value |
+|-|-|-|
+| Key(?)|02 09 09 0c | |
+| year|**07 e8** | 2024 |
+| month|**0b** | 11 |
+|day|**0e**| 14 |
+| sep|04 | |
+| hh|**12** | 18 |
+| mm|**0c** | 12 |
+| ss|**0c** | 12 |
+|(??) |00 ff c4 00 06 | |
+| +A|**00 01 5a b1** 06 | 88753 |
+| -A|**00 03 db c9** 06 | 252873 |
+| +R|**00 00 3d 1b** 06 | 15643 |
+| -R|**00 02 7b e4** 06 | 16278817 |
+| +P|**00 00 00 11** 06 | 17 |
+| -P|**00 00 00 00** 06 | 0 |
+| +Q|**00 00 00 00** 06 | 0 |
+| -Q|**00 00 00 ba** | 186 |
 
 ### Iskra MT 174 (OBIS)
 
