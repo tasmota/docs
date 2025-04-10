@@ -295,10 +295,10 @@ Common colors table:
 
 | Color | Code | Color | Code | Color | Code |
 | -- | -- | -- | -- | -- | -- |
-| Black	| 0 | Navy	| 15 | Dark green	| 3 |
+| Black	| 0 | Navy	| 15 | Dark green	| 992 |
 | Dark cyan	| 1007 | Maroon	| 30720 | Purple	| 30735 |
 | Olive	| 31712 | Light grey	| 50712 | Dark grey	| 31727 |
-| Blue	| 31 | Green	| 7 | Cyan	| 2047 |
+| Blue	| 31 | Green	| 2016 | Cyan	| 2047 |
 | Red	| 63488 | Magenta	| 63519 | Yellow	| 65504 |
 | White	| 65535 | Orange	| 64800 | Green yellow	| 45029 |
 | Pink	| 64536 | | | | |
