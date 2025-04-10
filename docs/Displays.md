@@ -301,7 +301,7 @@ Common colors table:
 | Dark green	| 992 | Dark cyan	| 1007 | Maroon	| 30720 |
 | Purple	| 30735 | Olive	| 31712 | Light grey	| 50712 |
 | Dark grey	| 31727 | Orange	| 64800 | Green yellow	| 45029 |
-| Pink	| 64536 | | | | |
+| Pink	| 63519 | | | | |
 
 
 ### Color Indices
