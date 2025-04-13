@@ -844,7 +844,7 @@ global.p10b10.val2 = 25
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
-`x_min`<br>`x_max`<br>`y_min`<br>`y_max`|`set_range`|Set the minimum and maximum values for `x` or `y` scales. Default are 0..100 for both axis.
+`x_min`<br>`x_max`<br>`y_min` or `y2_min`<br>`y_max` or `y2_max`|`set_range`|Set the minimum and maximum values for `x` or `y` scales. Default are 0..100 for both axis.<br>`y2_min` and `y2_max` control the range for the second data series.
 `point_count`|`point_count`|Set the number of points to display in the chart. Default is `10`. Changing this value clears the content of the chart.
 `height10`<br>`width10`||Set the height and width for dots for each value. Set to `0` to remove dots and live only lines.
 `v_div_line_count`<br>`h_div_line_count`|`div_line_count`|Set the number of division lines vertically and horizontally. Detault for `v_div_line_count` is `5`, for `h_div_line_count` is `3`.<br>Change the division line color with `line_color`.
