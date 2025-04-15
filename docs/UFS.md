@@ -16,7 +16,7 @@ After compiling and flashing you will find a new entry in Tasmota webUI: ***Cons
 The "Manage File System" page provides:
 
 * On top, the total size of the file system and the free size
-* A button to upload a file from the host (1st select the file with the `Choose File` button, then `Start Upload`)
+* A button to upload a file from the host (1st select the file with the `Choose File` button, then `Start Upload`).  **Beware, only filnems up to 31 characters long are allowed.**
 * A list of available files with timestamp of upload and size in bytes
 * The 'fire' icon allows to delete the file **without any confirmation**
 * The 'memo' icon allows to edit the file and the "Create and edit new file"
