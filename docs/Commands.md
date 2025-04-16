@@ -130,7 +130,7 @@ Backlog2<a class="cmnd" id="backlog2"></a>|Like `Backlog0`, but without result p
 Backlog3<a class="cmnd" id="backlog3"></a>|Like `Backlog`, but without result published, same as prefixing all the commands with `_`
 BlinkCount<a class="cmnd" id="blinkcount"></a>|Number of relay toggles ([blinks](#power)) _(does not control the status LED)_<BR> `0` = blink many times before restoring power state <BR> `1..32000` = set number of blinks *(default = `10`)*
 BlinkTime<a class="cmnd" id="blinktime"></a>|`2..3600` set duration, in 0.1 second increments, to [blink](#power) aka toggle Power _(does not control the status LED)_
-Br<a class="cmnd" id="br"></a>|Run the code from the console<BR>Example to download a file from a remote server into filesystem:<BR>`br def urlfetch(url,file); if file==nil; import string; file=string.split(url,'/').pop(); end; var wc=webclient(); wc.begin(url); var st=wc.GET(); if st!=200 raise 'connection_error','status: '+str(st) end; st='Fetched '+str(wc.write_file(file)); print(url,st); wc.close(); return st; end; urlfetch('https://raw.githubusercontent.com/arendst/Tasmota/development/tasmota/zigbee/giex_water.zb')`
+Br<a class="cmnd" id="br"></a>|Run [Berry](https://tasmota.github.io/docs/Berry/) code from the console<BR>Example to download a file from a remote server into filesystem:<BR>`br def urlfetch(url,file); if file==nil; import string; file=string.split(url,'/').pop(); end; var wc=webclient(); wc.begin(url); var st=wc.GET(); if st!=200 raise 'connection_error','status: '+str(st) end; st='Fetched '+str(wc.write_file(file)); print(url,st); wc.close(); return st; end; urlfetch('https://raw.githubusercontent.com/arendst/Tasmota/development/tasmota/zigbee/giex_water.zb')`
 BrRestart<a class="cmnd" id="brrestart"></a>|Restart the Berry VM. [read more...](https://tasmota.github.io/docs/Berry/#iterate-without-rebooting)
 ButtonDebounce<a class="cmnd" id="buttondebounce"></a>|User control over button debounce timing <BR>`40..1000` = set button debounce time in milliseconds *(default = `50`)*
 Buzzer<a class="cmnd" id="buzzer"></a>|`0` = stop active buzzer cycle<BR>`<count>,<beep>,<silence>,<tune>` = [read more...](Buzzer)<BR>`2,3` = Beep twice with 300 milliseconds duration and 100 milliseconds pause<BR>`2,3,4` = Beep twice with 300 milliseconds duration and 400 milliseconds pause<BR>`1,2,3,0xF54` (0000 0000 0000 0000 0000 1111 0101 0100). Each `1` bit beeps for 200 milliseconds and each bounded `0` bit pauses for 300 milliseconds<BR>`-1` = infinite mode<BR>`-2` = follow LED mode
@@ -320,7 +320,7 @@ See also|[`SetOption3`](#setoption3) - Disable//Enable MQTT<BR>[`SetOption4`](#s
 Command|Parameters
 :---|:---
 Add<x\><a class="cmnd" id="add"></a>|`<value>` = add value to Var<x\> ([example](Rules#arithmetic-commands-used-with-var))
-CalcRes<a class="cmnd" id="calcres"></a>|Current calculation resolution<BR>`0..7` = set number of decimal places to be used in `Add`, `Sub`, `Mult` and `Scale`
+CalcRes<a class="cmnd" id="calcres"></a>|Current calculation resolution<BR>`0..7` = set number of decimal places to be used for arithmetic expressions in rules, and the `Add`, `Sub`, `Mult` and `Scale` commands.
 Event<a class="cmnd" id="event"></a>|Execute an event to trigger a rule as [documented](Rules#rule-trigger)&emsp;
 Mem<x\><a class="cmnd" id="mem"></a>|Manage up to 16 variables stored on flash (x = `1..16`)<BR>`Mem` returns all current values. `Mem<x>` returns the variable's current value.<BR>`<value>` = store a string value in a variable<BR>`"` = clear stored value in Mem<x\>
 Mult<x\><a class="cmnd" id="mult"></a>|`<value>` = multiply value to Var<x\> ([example](Rules#arithmetic-commands-used-with-var))<BR>
@@ -347,7 +347,8 @@ Timer<x\><a class="cmnd" id="timer"></a>|Parameters for Timer<x\> where x = `1..
 
 Command|Parameters
 :---|:---
-AdcParam<x\><a class="cmnd" id="adcparam"></a>|[ADC](ADC) analog input tuning parameters. On ESP32 x is channel `1..8`<BR>`<sensor>, <param1>, <param2>, <param3>,  <param4>`<BR>complete `<sensor>` values listed [here...](ADC.md)
+AdcGpio<x\><a class="cmnd" id="adcgpio"></a>|[ADC](ADC) analog input tuning parameters, x is the gpio number and following 4 parameters are configration values for the type of sensor.<BR>`<param1>, <param2>, <param3>,  <param4>`<BR>See the ADC docs [ADC docs](ADC.md) for details.
+AdcParam<x\><a class="cmnd" id="adcparam"></a>|[ADC](ADC) deprecated old command for setting analog input tuning parameters. On ESP32 x is channel `1..8`<BR>`<sensor>, <param1>, <param2>, <param3>,  <param4>`<BR>complete `<sensor>` values listed [here...](ADC.md)
 Altitude<a class="cmnd" id="altitude"></a>|`-30000..30000` = altitude in meters
 AmpRes<a class="cmnd" id="sensors-ampres"></a>|Current sensor resolution<BR>`0..3` = maximum number of decimal places
 Bh1750Resolution<x\><a class="cmnd" id="bh1750resolution"></a>|[BH1750](BH1750.md) resolution mode. `x` = BH1750 sensor number (`1..2`) <BR>`0..2` = choose sensor resolution (`0` = high _(default)_, `1` = high2, `2` = low)
@@ -469,7 +470,7 @@ LedPwmOn<a class="cmnd" id="ledpwmon"></a>|`0..255` = set LED brightness when ON
 LedTable<a class="cmnd" id="ledtable"></a>|`0` = do not use [LED gamma correction](https://learn.adafruit.com/led-tricks-gamma-correction?view=all) *(default &laquo;6.5.0.9)*<BR>`1` = use gamma correction *(default &raquo;6.5.0.9)*
 MultiPWM<a class="cmnd" id="multipwm"></a><BR>SetOption68<a class="cmnd" id="setoption68"></a>|Multi-channel PWM instead of a single light<BR>`0` = Treat [PWM](#pwm) as a single light *(default)*<BR>`1` = Treat [PWM](#pwm) as separate channels. In this mode, use [`Power<x>`](#power) to turn lights on and off, and [`Channel<x>`](#channel) to change the value of each channel.<BR>[`Color`](#color) still works to set all channels at once.<BR>***Requires restart after change***
 Palette<a class="cmnd" id="palette"></a>| `0` = Clear color palette<br>`[ ...]` = Set list of colors used by `Color<1,2>` and `Scheme <2,3,4>` commands with each color separated by a space. The palette setting is not saved to flash. Use a boot-time rule such as ON System#Boot DO Palette xxxxx ENDON to set it back at each restart.
-Pixels<a class="cmnd" id="pixels"></a>|`1..512` = set amount of pixels in strip or ring and reset [`Rotation`](#rotation) *(applies only to addressable LEDs)*
+Pixels<a class="cmnd" id="pixels"></a>|`1..512` = set the number of pixels in strip or ring and reset [`Rotation`](#rotation) *(applies only to addressable LEDs)*<br><br>**ESP32 only**<br>`<pixels>[,<reverse>,<height>,<alternate>]`<br>`pixels` (`1..512`) set the number of pixels in strip or ring (backwards compatible with ESP8266)<br>`<reverse>` (opt, `0..1`) `1`= the leds are in reverse order (not yet implemented)<br>`<height>` (opt, default `1`) number of lines in a leds matrix<br>`<alternate>` (opt, `0..1`) `1`= lines in the matrix are in alternate order (zig-zag)<br>Returns a JSON with current values<br><br>Example: `Pixels 256,0,8,1` returns<br>`{"Pixels":256,"PixelsReverse":0,"PixelsHeight":8,"PixelsAlternate":1}`
 PixelType<a class="cmnd" id="pixeltype"></a>|(ESP32 only) Set the number of channels per led in the strip, and the color order<BR>`0` = use compile-time options, like on ESP8266 (default)<BR>`1` = `GRB` (typical for WS2812)<BR>`2` = `RGB`<BR>`3` = `RBG`<BR>`4` = `BRG`<BR>`5` = `BGR`<BR>`6` = `GBR`<BR>add `8` = 4 channels strip (RGBW), default 3 channels<BR>add `16` = if `W` is sent first, default `W` is sent last<BR><BR>Examples:<BR>`1` = `GRB`<BR>`9` = `GRBW`<BR>`25` = `WGRB`
 PowerOnFade<a class="cmnd" id="poweronfade"></a><BR>SetOption91<a class="cmnd" id="setoption91"></a>|Enable `Fade` at boot and power on. By default fading is not enabled at boot because of stuttering caused by wi-fi connection<BR>`0` = don't Fade at startup _(default)_ <BR>`1` = Fade at startup
 PWMCT<a class="cmnd" id="pwmct"></a><BR>SetOption92<a class="cmnd" id="setoption92"></a>|Alternative to `Module 38`: for Cold/Warm white bulbs, enable the second PWM as CT (Color Temp) instead of Warm White, as required for Philips-Xiaomi bulbs.<BR>`0` = normal Cold/Warm PWM _(default)_ <BR>`1` = Brightness/CT PWM<BR>See [PWM CT in Lights](Lights.md#pwm-ct)
@@ -955,6 +956,8 @@ DzSend<type\><a class="cmnd" id="dzsend"></a>|send values or state to Domoticz<B
 DzSensorIdx<x\><a class="cmnd" id="dzsensoridx"></a>|Show Domoticz Sensor idx <x\> (x = `1..5`)<BR>`0` = disable use of Sensor idx <x\> *(default)*<BR>`<value>` = Show Sensor idx <x\>
 DzSwitchIdx<x\><a class="cmnd" id="dzswitchidx"></a>|Show Domoticz Switch idx <x\> (x = `1..4`)<BR>`0` = disable use of Switch idx <x\> *(default)*<BR>`<value>` = Show Switch idx <x\> (to use enable [SwitchTopic](#switchtopic))
 DzUpdateTimer<a class="cmnd" id="dzupdatetimer"></a>|Show current update timer value in seconds<BR>`0` = disable sending interim Domoticz status *(default)*<BR>`1..3600` = send status to Domoticz in defined intervals
+See also|[Domoticz](https://tasmota.github.io/docs/Domoticz/)
+
 
 ### InfluxDB
 

@@ -64,6 +64,7 @@ This JSON payload data can be used in a rule such as:
 ```
 ON RfReceived#Data=<hex-value> DO <command> ENDON
 ```
+Note: If you need a decimal-value instead of a \<hex-value\> see [SetOption28](https://tasmota.github.io/docs/Commands/#setoption28).
 
 Examples:  
 **Sonoff RM433 Remote**  

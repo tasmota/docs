@@ -34,12 +34,14 @@ Now every TIMER that has RULE as an action will wakeup the device at the propose
 
 ```console
 Rule2
-  on timers#minute=%sunset% do rule1 5 endon
+  on time#minute==%sunset% do rule1 5 endon
 
 Rule2 ON
 ```
 
 Be aware that `rule1 Wakeup` will DISABLE the capability to use deepsleeptime. You have to clean rule1 if you want to use the regular wakeups through deepsleeptime window.
+
+Also be aware that `restart 9` does not trigger the deepsleep timing. It just send the device into deepsleep and you have to wake up the device externally.
 
 ![](_media/deepsleep_timers.png)
 

@@ -210,7 +210,6 @@ Add the following to `user_config_override.h`:
 #define USE_MQTT_TLS
 //  #define USE_MQTT_TLS_CA_CERT               // Force full CA validation instead of fingerprints, slower, but simpler to use. (+2.2k code, +1.9k mem during connection handshake)
 #define USE_MQTT_AWS_IOT                       // This includes the LetsEncrypt CA in tasmota_ca.ino for verifying server certificates
-#define USE_MQTT_TLS_FORCE_EC_CIPHER           // Force Elliptic Curve cipher (higher security) required by some servers (automatically enabled with USE_MQTT_AWS_IOT) (+11.4k code, +0.4k mem)
 #define MQTT_FINGERPRINT1      "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"  // [MqttFingerprint1] (auto-learn)
 #define MQTT_FINGERPRINT2      "DA 39 A3 EE 5E 6B 4B 0D 32 55 BF EF 95 60 18 90 AF D8 07 09"  // [MqttFingerprint2] (invalid)
 #endif
@@ -223,7 +222,6 @@ Add the following to `user_config_override.h`:
 #define USE_MQTT_TLS
 #define USE_MQTT_TLS_CA_CERT                   // Force full CA validation instead of fingerprints, slower, but simpler to use. (+2.2k code, +1.9k mem during connection handshake)
 #define USE_MQTT_AWS_IOT                       // This will include LetsEncrypt CA, as well as our CA, in tasmota_ca.ino for verifying server certificates
-#define USE_MQTT_TLS_FORCE_EC_CIPHER           // Force Elliptic Curve cipher (higher security) required by some servers (automatically enabled with USE_MQTT_AWS_IOT) (+11.4k code, +0.4k mem)
 #define INCLUDE_LOCAL_CERT
 #endif
 ```

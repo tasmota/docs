@@ -114,14 +114,15 @@ with all linker files
 
 #### script init error codes
 after initialization the script reports some info in the console e.g:  
-09:25:26.607 SCR: nv=4, tv=1, vns=21, vmem=2127, smem=6200, gmem=480, tmem=8828  
+00:00:00.043 SCR: nv=15, tv=1, vns=83, vmem=895, smem=8192, gmem=588, pmem=0, tmem=9758  
 nv = number of used variables in total (numeric and strings)  
 tv = number of used string variables  
 vns = total size of name strings in bytes (may not exceed 255) or #define SCRIPT_LARGE_VNBUFF extents the size to 4095
 
 vmem = used heap ram by the script (psram if available)  
 smem = used script (text) memory (psram if available)  
-gmem = used script global static memory  
+gmem = used script global static memory 
+pmem = used script permanent memory  
 tmem = used script memory total  
 
 if the script init fails an error code is reported:    
@@ -188,7 +189,7 @@ therefore when specifing permanent variables, add newly defined ones always at t
   `M:vname`   
   specifies a moving average filter variable with 8 entries (for smoothing data, should be also used to define arrays)  
   (max 5 filters in total m+M) optional another filter length (1..127) can be given after the definition.  
-  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer (may be set also), x = `-1` returns array length, x = `-2` returns array average)
+  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer (may be set also), x = `-1` returns array length, x = `-2` returns array average,x = `-3` returns array sum)
   Using this filter, vars can be used as arrays, #define LARGE_ARRAYS allows for arrays up to 1000 entries  
   array may also be permanent by specifying an extra `:p`  
   `m:p:vname`   
@@ -540,9 +541,17 @@ you may display files from the flash or SD filesystem by specifying the url:  IP
 
 [Smart Meter Interface](Smart-Meter-Interface)  
 
+###  >y
+
+
+on devices without a file system a configuration string may be defined here, e.g. xnrg_29_modbus.ino driver 
+
+
 If a variable does not exist, `???` is displayed for commands  
 
 If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var` does not exist the destination variable is ==NOT== updated.  
+
+
 
 ## Special Variables
 
@@ -858,7 +867,7 @@ S
 print subroutine was executed
 ```
 
-### For loop (loop count must not be less than 1, no direct nesting supported)
+### For loop (loop count must not be less than 1, nesting up to 3 levels)
 
 ```
 for var <from> <to> <inc>  
@@ -1033,6 +1042,7 @@ The script itself is also stored on the file system with a default size of 8192 
 ### Extended commands   (+0,9k flash)  
 
 `#define USE_SCRIPT_FATFS_EXT`  
+`fmt(0)` format flash file system (erases all data)  
 `fmd("fname")` make directory fname  
 `frd("fname")` remove directory fname  
 `fra(array fr)` reads array from open file with fr (assumes tab delimited entries)  

@@ -2,10 +2,36 @@
 
 !!! tip "This feature is included in tasmota32-lvgl.bin"
 
+!!! Starting from v14.5.0.2, HASPmota automatically starts if a file `pages.jsonl` is present
+
 Tasmota happily supports the openHASP compatible format, known as HASPmota. This format allows you to describe rich graphics interfaces using simple JSON templates. The HASPmota support in Tasmota leverages the power of [LVGL](https://tasmota.github.io/docs/LVGL/) and the [Berry language](https://tasmota.github.io/docs/Berry/), but you don't need to code or learn the LVGL API to use it.
 
 This feature is heavily inspired from @fvanroie's [openHASP project](https://github.com/HASwitchPlate/openHASP).
- 
+
+## Running HASPmota
+
+HASPmota, like OpenHASP, relies of describing the elements to be displayed in a simple JSONL file. [JSONL (JSON Lines)](https://jsonlines.org/) is a file format where each line is a valid JSON value. The default file name is `pages.jsonl`.
+
+When a file `pages.jsonl` is present in the file system, HASPmota is automatically started without any additional code needed (since v14.5.0.2, previously you needed to start HASPmota in `autoexec.be`).
+
+HASPmota auto-start is triggered after `autoexec.be` is executed, so you have the opportunity to start HASPmota yourself, or initialize any sensor or components `autoexec.be` time. You can also use a different name than `pages.jsonl` and start HASPmota at any time of your convenience.
+
+### Running HASPMota manually
+
+If you need to start HASPmota manually, you can use the following code in `autoexec.be`:
+
+```berry
+import haspmota
+haspmota.start()         # manually start HASPmota using default 'pages.jsonl' file
+```
+
+You can pass an additional parameter with the name of the template file:
+
+```berry
+import haspmota
+haspmota.start("my_template.jsonl")
+```
+
 ## Gallery of widgets
 
 [![HASPmota label](_media/lvgl/HASPmota_1_instructions.png){width="160"}](#label)
@@ -35,7 +61,7 @@ This feature is heavily inspired from @fvanroie's [openHASP project](https://git
 [![HASPmota tabview](_media/lvgl/HASPmota_25_tabview.png){width="160"}](#tabview)
 
 
-The `jsonl` file used to display the widgets can be found [here](_media/lvgl/haspmota_demo.jsonl)
+The `jsonl` file used to display the widgets can be found [widget demo JSONL file](_media/lvgl/haspmota_demo.jsonl)
 
 ## Minimal requirements
 
@@ -135,22 +161,6 @@ The code trigger a read of sensors every 2 seconds and publish the JSON result t
 ``` berry
 tasmota.add_cron('*/2 * * * * *', def () var s = tasmota.read_sensors() if (s) tasmota.publish_rule(s) end end, 'hm_every_5_s')
 ```
-
-## Running HASPmota
-
-`HASPmota` code is included in `tasmota32-lvgl` firmwares.
-
-Running `HASPmota` with your own template is as simple as:
-
-- create a template in `pages.jsonl` and store it in the Tasmota file system
-- create an `autoexec.be` file containing the following:
-
-``` berry
-# simple `autoexec.be` to run HASPmota using the default `pages.jsonl`
-import haspmota
-haspmota.start()
-```
-
 
 ## HASPmota reference
 
@@ -834,7 +844,7 @@ global.p10b10.val2 = 25
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
-`x_min`<br>`x_max`<br>`y_min`<br>`y_max`|`set_range`|Set the minimum and maximum values for `x` or `y` scales. Default are 0..100 for both axis.
+`x_min`<br>`x_max`<br>`y_min` or `y2_min`<br>`y_max` or `y2_max`|`set_range`|Set the minimum and maximum values for `x` or `y` scales. Default are 0..100 for both axis.<br>`y2_min` and `y2_max` control the range for the second data series.
 `point_count`|`point_count`|Set the number of points to display in the chart. Default is `10`. Changing this value clears the content of the chart.
 `height10`<br>`width10`||Set the height and width for dots for each value. Set to `0` to remove dots and live only lines.
 `v_div_line_count`<br>`h_div_line_count`|`div_line_count`|Set the number of division lines vertically and horizontally. Detault for `v_div_line_count` is `5`, for `h_div_line_count` is `3`.<br>Change the division line color with `line_color`.

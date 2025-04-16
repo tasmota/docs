@@ -56,7 +56,6 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 #define MQTT_TLS_ENABLED       true              // [SetOption103] Enable TLS mode (requires TLS version)
 //  #define USE_MQTT_TLS_CA_CERT                   // Force full CA validation instead of fingerprints, slower, but simpler to use.  (+2.2k code, +1.9k mem during connection handshake)
                                                    // This includes the LetsEncrypt CA in tasmota_ca.ino for verifying server certificates
-//  #define USE_MQTT_TLS_FORCE_EC_CIPHER           // Force Elliptic Curve cipher (higher security) required by some servers (automatically enabled with USE_MQTT_AWS_IOT) (+11.4k code, +0.4k mem)
 #endif
 ```
 
@@ -174,8 +173,9 @@ Here are most common TLS errors:
 
 |Error code | Description|
 |---:|:---|
-| -1004 | Missing CA |
-| -1003 | Missing EC private key |
+| -1005 | Time-out during TLS handshake |
+| -1004 | Missing CA (deprecated)|
+| -1003 | Missing EC private key (deprecated)|
 | -1002 | Cannot connect to TCP port |
 | -1001 | Cannot resolve IP address |
 | -1000 | Out of memory error |
