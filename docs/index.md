@@ -15,17 +15,21 @@ Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v14.5.0">Tasmota v14.5.0 Ruth</a></span>
+<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v14.6.0">Tasmota v14.6.0 Ryan</a></span>
 
 ## Breaking Changes
 
-- Berry make energy modules changes from #21887 backwards compatible
+- Berry removed `Leds.create_matrix` from the standard library waiting for reimplementation
+- HASPmota added `y2_min` and `y2_max` to control the second series of `chart`
+- HASPmota default theme is now Tasmota-style
 
 ## New Features
 
 - Added support for:
-  - Lithuanian language
-  - PCF85063 RTC, Senseair S88 CO2 sensor, C8-CO2-5K CO2 sensor, ESP32 Two-Wire Automotive Interface (TWAI) or Controller Area Network (CAN) busses, WiZ Smart Remote
+  - Vango Technologies V924x ultralow power, single-phase, power measurement
+  - HLK-LD2402 24GHz smart wave motion sensor
+  - Telnet server
+  - LVGL experimental mirroring of display on Web UI
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
 
