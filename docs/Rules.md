@@ -132,7 +132,7 @@ Every [command](Commands.md) with a JSON payload response has an associated rule
 |Trigger           | When it occurs |
 |------------------|----------------|
 |&lt;command\>#Data|A one level JSON payload such as `{"Command":"value"}`. For example, for {"Fanspeed":3}, the trigger is`Fanspeed#Data`.|
-|&lt;command\>#level1#level2#levelN|A multi-level JSON payload such as `{"TriggerLevel1":{"TriggerLevel2":{"ValueName":"value"}}}` does **NOT** have the `#Data` trigger. Instead, the trigger for these responses is `TriggerLevel1#TriggerLevel2#ValueName`. 
+|level1#level2#levelN|A multi-level JSON payload such as `{"TriggerLevel1":{"TriggerLevel2":{"ValueName":"value"}}}` does **NOT** have the `#Data` trigger. Instead, the trigger for these responses is `TriggerLevel1#TriggerLevel2#ValueName`. 
 
 !!! note "When the JSON payload response is produced by a command executed by a rule i.e. `on time=120 do status 8 endon`, the `StatusSNS#Data` trigger will not fire unless the command is wrapped in `backlog` i.e. `on time=120 do backlog status 8 endon`"    
     
