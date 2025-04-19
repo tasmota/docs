@@ -3915,6 +3915,41 @@ This device is used in the grid of Wiener Netze. Insert your Key into the script
     1,020909x67UUuuUUuu@1,-Q,var,-Q,3
     #
     ```
+
+### Siemens IM-350 (RAW)
+
+This device is used in the grid of Wels Strom in Upper Austria. Insert your KEY into the script.
+
+You may need to adapt the IDENTIFER string in the text variable 'r' ('020a0906' here) to the code shown in your dump.
+For explanation see Iskra AM550 (Wiener Netze).
+
+Connection is via the RJ11 port which also works with 3V3 but needs a transistor on the dataline to invert the signal (like Sanxing SX6x1). An external power supply is required.
+
+??? summary "View script"
+    ```
+    >D
+    ;define text variable: "MeterNbr,IDENTIFIER"
+    r="1,020a0906"
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,r,0,115200,Meter
+    1,=so3,256
+    1,=so4,KEY
+    %r%x24UUuu@1,year,,year,0
+    %r%x26ss@1,month,,month,0
+    %r%x27ss@1,day,,day,0
+    %r%x18ss@1,hh,,hh,0
+    %r%x19ss@1,mm,,mm,0
+    %r%x20ss@1,ss,,ss,0
+    %r%x30UUuuUUuu@1000,Energy A+,kWh,1_8_0,3
+    %r%x35UUuuUUuu@1000,Energy A-,kWh,2_8_0,3
+    %r%x40UUuuUUuu@1000,reactive E. R+,kVarh,3_8_0,3
+    %r%x45UUuuUUuu@1000,reactive E. R-,kVarh,4_8_0,3
+    %r%x50UUuuUUuu@1,active P+,W,1_7_0,0
+    %r%x55UUuuUUuu@1,active P-,W,2_7_0,0
+    #
+    ```
     
 ### Siemens TD-3511
 
