@@ -3920,10 +3920,12 @@ This device is used in the grid of Wiener Netze. Insert your Key into the script
 
 This device is used in the grid of Wels Strom in Upper Austria. Insert your KEY into the script.
 
-You may need to adapt the IDENTIFER string in the text variable 'r' ('020a0906' here) to the code shown in your dump.
+You may need to adapt the IDENTIFIER string in the text variable 'r' ('020a0906' here) to the code shown in your dump.
 For explanation see Iskra AM550 (Wiener Netze).
 
 Connection is via the RJ11 port which also works with 3V3 but needs a transistor on the dataline to invert the signal (like Sanxing SX6x1). An external power supply is required.
+
+The website https://www.smartcircuits.de/wattwaechter-wifi-usb/flashen/ (in German) allows to directly flash Tasmota with the included Smart Meter Interface to your device through your Chrome or Edge browser.
 
 ??? summary "View script"
     ```
