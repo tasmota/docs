@@ -4,6 +4,7 @@ A typical device usually has at least one button (exception being bulbs and some
 
 !!! note
     Other than relays/lights, Tasmota does not publish the state of components (switches, buttons, sensors, etc.) in real-time. State of components is transmitted automatically each [TelePeriod](Commands.md#teleperiod) via the `SENSORS` message.
+
 # Choose GPIO configuration
 All board are not born equal so does your own diy realisations, you might have choosen to put your own pull-up resistors , or had an inverted logic on your button input.
 
