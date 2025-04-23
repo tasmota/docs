@@ -37,8 +37,8 @@ Hold the little button pressed while connecting the serial-to-USB adapter to you
 [![](http://img.youtube.com/vi/5k_35ppDPho/0.jpg)](http://www.youtube.com/watch?v=5k_35ppDPho "")
 
 ## Official Sources
-* Itead Product Page: http://sonoff.itead.cc/en/products/residential/s20-socket
-* Itead Wiki: https://www.itead.cc/wiki/S20_Smart_Socket
+* Itead Product Page: <http://sonoff.itead.cc/en/products/residential/s20-socket>
+* Itead Wiki: <https://www.itead.cc/wiki/S20_Smart_Socket>
 
 ### OpenHab Configuration
 

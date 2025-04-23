@@ -1,14 +1,17 @@
 # PZEM-0xx power monitor
 
-!!! note "PZEM is a dedicated separate energy monitor, device calibration in Tasmota is not supported."
+!!! note "PZEM is a dedicated separate energy monitor, device calibration in Tasmota is not necessary, the PZEM devices are precisely factory-calibrated."
 
 ## PZEM-004
+
 ![](https://user-images.githubusercontent.com/5904370/67893137-58f94080-fb56-11e9-877e-9675149c0fd6.png)
 
 <img src="https://github.com/arendst/arendst.github.io/blob/master/media/pzem/pzem-done.jpg?raw=true" width="250" align="right" />
+
 The PZEM-004T together with a Sonoff Basic provide a good clamp on energy monitor.
 
 ### Parts needed
+
 - Sonoff Basic
 - PZEM-004T
 - Resistor 1k
@@ -16,9 +19,11 @@ The PZEM-004T together with a Sonoff Basic provide a good clamp on energy monito
 - Power cable
 
 ### Preparation
+
 Install Tasmota on the Sonoff Basic and confirm it is functional before connecting the PZEM-004T to its serial interface.
 
 ### Hardware connections
+
 As the PZEM-004T RX optocoupler series resistor (1K ohm, R15 for v.1 .0 and R8 for v.3.0 ) is designed for 5V, that resistor value had to be reduced in order to achieve the current for driving the RX optocoupler diode.
 This can be accomplished by soldering a 1k resistor between the joints shown below (modification works for version v.1.0 and v.3.0).
 The resistor has to be connected between VDD (5V/3.3V) terminal and the RX opto terminal 1.
@@ -28,6 +33,7 @@ PZEM-004T v.1.0
 
 PZEM-004T v.3.0
 <img src="https://user-images.githubusercontent.com/17679049/95775726-999c8c00-0ccb-11eb-8e0d-36af1220de36.jpg" height="600" />
+
 It can be used a SMD resistor 102 or 1001 (1K) soldered near/parallel with R8 or a normal resistor (THT) similar to that used on the image of v.1.0
 The resistor is placed in different place on v.3.0 because the optocouplers RX and TX are reversed compared to v.1.0
 
@@ -40,7 +46,7 @@ Connect the serial interface of the Sonoff Basic with the serial interface of th
 
 ![](https://github.com/arendst/arendst.github.io/blob/master/media/pzem/pzem-basic.png)
 
-_(Image re-used from https://www.instructables.com/id/Use-Homie-Firmware-to-Drive-Sonoff-Switch-Module-E/ Thanks @amayii0)_
+_(Image re-used from <https://www.instructables.com/id/Use-Homie-Firmware-to-Drive-Sonoff-Switch-Module-E/> Thanks @amayii0)_
 
 If you need 5V you can use directly from Sonoff (for something else) but do not connect to PZEM logic because this will result in a big flash (kaboom!, the sonoff LIVE line may reach the PZEM NEUTRAL or viceversa). Using 5V from Sonoff for PZEM TTL port is safe but the resistor mod explained above must be undone and another mod is needed for dropping the PZEM TX line from 5V to 3.3V. So, the simplest way is to use 3.3V from Sonoff to 5V TTL terminal of the PZEM and the resistor mod explained in the above images.
 <img src="https://camo.githubusercontent.com/f014130fdde36f97f37a5af20fc223621b192e1b/687474703a2f2f74696e6b65726d616e2e6361742f77702d636f6e74656e742f75706c6f6164732f323031362f30362f70696e6f75745f6261636b2e6a7067" height="400" />
@@ -50,6 +56,7 @@ Cut the power cable in two and connect the input wires to both Sonoff Basic and 
 As most parts are connected to high voltage AC it is recommended to fit the hardware in a solid enclosure.
 
 ### Software configuration
+
 Configure the GPIO's for hardware serial connection as shown below.
 
 **IMPORTANT: If using the connections as following, the communication works in all cores due to TASMOTA using hardware serial. If the user wants to use other GPIOs for communication, TASMOTA will emulate a serial interface using software serial. This feature does not work using core 2.3.0 due to insufficient RAM. To use the software serial feature, you must use a core version of 2.4.2 or greater.**
@@ -69,6 +76,7 @@ Configure the GPIO's for hardware serial connection as shown below.
 The PZEM-004T together with a HW-655 Relay provide a good clamp-on energy monitor for a 240V clothes dryer.
 
 ### Parts needed
+
 * [Circuit Box](https://www.lowes.com/pd/CARLON-1-Gang-Blue-Plastic-Interior-New-Work-Standard-Switch-Outlet-Wall-Electrical-Box/3286106)
 * [3-prong Dryer Electrical Cord](https://smile.amazon.com/gp/product/B002RL9JB6) (Note - some households use a 4-prong plug)
 * [3-prong Dryer Receptacle](https://smile.amazon.com/gp/product/B000BQSU8C) (Note - some households use a 4-prong plug)
@@ -79,9 +87,11 @@ The PZEM-004T together with a HW-655 Relay provide a good clamp-on energy monito
 * DuPont Connectors & 22 AWG wire
 
 ### Preparation
+
 Install Tasmota on the ESP-01 and confirm it is functional before connecting the PZEM-004T to its serial interface. Use of pins other that the default hardware serial GPIO (01 & 03) in order for TASMOTA to emulate a serial interface using software serial.
 
 ### Hardware connections
+
 <img src="https://user-images.githubusercontent.com/34340210/51444410-2536e380-1cc5-11e9-8989-b181c2851863.png" height="400" /><br>
 
 Connect the serial interface of the HW-655 with the serial interface of the PZEM-004T.
@@ -112,6 +122,7 @@ Use the module template to configure the GPIO's for hardware serial connection.
 # Connected Power Meter using PZEM-004T, Wemos D1 Mini and a 1602 I<sup>2</sup>C display
 
 ### Parts needed
+
 - Wemos D1 Mini
 - PZEM-004T
 - 1kOhm Resistor (optional - see alternate wiring)
@@ -122,26 +133,22 @@ Use the module template to configure the GPIO's for hardware serial connection.
 - Mammuth Clamps
 
 ### Preparation
+
 **You need to compile your own Tasmota firmware as none of the pre-compiled binaries have support for _display and PZEM_ module.**  
 
-**Set up your preferred IDE as described in [wiki](/docs/Compile-your-build)**  
+**Set up your preferred IDE as described in [wiki](Compile-your-build.md)**  
 
 #### Enable IDE to Use Custom Settings
+
 Create _**user_config_override.h**_ in the `tasmota` folder and paste the contents of this [sample configuration file](https://pastebin.com/WkfyKYnh).
 
 #### PlatformIO
+
 - Rename [platformio_override_sample.ini](https://github.com/arendst/Tasmota/blob/development/platformio_override_sample.ini).   to platformio_override.ini
 - Enter `platformio run -e <variant-name>`  
   Examples:  
   - `platformio run -e tasmota-sensors`  
   - `platformio run -e tasmota-DE`  
-
-#### Arduino IDE
-- Edit [_**my_user_config.h**_](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h). Uncomment the statement by removing the "//" in front of the line:
-  `#define USE_CONFIG_OVERRIDE`
-- Click compile
-
-[Flash](Getting-Started#flashing) the binary on the Wemos D1 Mini and confirm it is functional before connecting the PZEM-004T to its serial interface.
 
 ### Tasmota Parameter Configuration
 

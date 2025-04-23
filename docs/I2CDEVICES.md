@@ -9,8 +9,9 @@ The following table lists the supported I2C devices
 Index | Define              | Driver   | Device   | Address(es) | Description
 ------|---------------------|----------|----------|-------------|-----------------------------------------------
    1  | USE_PCA9685         | xdrv_15  | PCA9685  | 0x40 - 0x47 | 16-channel 12-bit pwm driver
-   2  | USE_PCF8574         | xdrv_28  | PCF8574  | 0x20 - 0x26 | 8-bit I/O expander
-   2  | USE_PCF8574         | xdrv_28  | PCF8574A | 0x39 - 0x3F | 8-bit I/O expander
+   1  | USE_PCA9685_V2      | xdrv_15  | PCA9685  | 0x40 - 0x47 | 16-channel 12-bit pwm driver
+   2  | USE_PCF8574         | xdrv_28  | PCF8574  | 0x20 - 0x26 | 8-bit I/O expander (address range overridable)
+   2  | USE_PCF8574         | xdrv_28  | PCF8574A | 0x39 - 0x3F | 8-bit I/O expander (address range overridable)
    3  | USE_DISPLAY_LCD     | xdsp_01  |          | 0x27, 0x3F  | LCD display
    4  | USE_DISPLAY_SSD1306 | xdsp_02  | SSD1306  | 0x3C - 0x3D | Oled display
    5  | USE_DISPLAY_MATRIX  | xdsp_03  | HT16K33  | 0x70 - 0x77 | 8x8 led matrix
@@ -45,6 +46,7 @@ Index | Define              | Driver   | Device   | Address(es) | Description
   22  | USE_MCP230xx        | xsns_29  | MCP23017 | 0x20 - 0x26 | 16-bit I/O expander
   23  | USE_MPR121          | xsns_30  | MPR121   | 0x5A - 0x5D | Proximity capacitive touch sensor
   24  | USE_CCS811          | xsns_31  | CCS811   | 0x5A        | Gas (TVOC) and air quality sensor
+  24' | USE_CCS811_V2       | xsns_31  | CCS811   | 0x5A - 0x5B | Gas (TVOC) and air quality sensor
   25  | USE_MPU6050         | xsns_32  | MPU6050  | 0x68 - 0x69 | 3-axis gyroscope and temperature sensor
   26  | USE_DS3231          | xsns_33  | DS3231   | 0x68        | Real time clock
   27  | USE_MGC3130         | xsns_36  | MGC3130  | 0x42        | Electric field sensor
@@ -60,7 +62,7 @@ Index | Define              | Driver   | Device   | Address(es) | Description
   37  | USE_24C256          | xdrv_10  | 24C256   | 0x50        | Scripter EEPROM storage
   38  | USE_DISPLAY_ILI9488 | xdsp_08  | FT6236   | 0x38        | Touch panel controller
   39  | USE_DISPLAY_RA8876  | xdsp_10  | FT5316   | 0x38        | Touch panel controller
-  40  | USE_TSL2591         | xsns_57  | TLS2591  | 0x29        | Light intensity sensor
+  40  | USE_TSL2591         | xsns_57  | TSL2591  | 0x29        | Light intensity sensor
   41  | USE_DHT12           | xsns_58  | DHT12    | 0x5C        | Temperature and humidity sensor
   42  | USE_DS1624          | xsns_59  | DS1621   | 0x48 - 0x4F | Temperature sensor
   42  | USE_DS1624          | xsns_59  | DS1624   | 0x48 - 0x4F | Temperature sensor
@@ -87,12 +89,12 @@ Index | Define              | Driver   | Device   | Address(es) | Description
   55  | USE_EZOO2           | xsns_78  | EZOO2    | 0x61 - 0x70 | O2 sensor
   55  | USE_EZOPRS          | xsns_78  | EZOPRS   | 0x61 - 0x70 | Pressure sensor
   55  | USE_EZOFLO          | xsns_78  | EZOFLO   | 0x61 - 0x70 | Flow meter sensor
-  55  | USE_EZODO           | xsns_78  | EZODO    | 0x61 - 0x70 | Disolved Oxygen sensor
+  55  | USE_EZODO           | xsns_78  | EZODO    | 0x61 - 0x70 | Dissolved Oxygen sensor
   55  | USE_EZORGB          | xsns_78  | EZORGB   | 0x61 - 0x70 | Color sensor
   55  | USE_EZOPMP          | xsns_78  | EZOPMP   | 0x61 - 0x70 | Peristaltic Pump
   56  | USE_SEESAW_SOIL     | xsns_81  | SEESOIL  | 0x36 - 0x39 | Adafruit seesaw soil moisture sensor
   57  | USE_TOF10120        | xsns_84  | TOF10120 | 0x52        | Time-of-flight (ToF) distance sensor
-  58  | USE_MPU_ACCEL       | xsns_85  | MPU_ACCEL| 0x68        | MPU6886/MPU9250 6-axis MotionTracking sensor from M5Stac k
+  58  | USE_MPU_ACCEL       | xsns_85  | MPU_ACCEL| 0x68        | MPU6886/MPU9250 6-axis MotionTracking sensor from M5Stack
   59  | USE_BM8563          | xdrv_56  | BM8563   | 0x51        | BM8563 RTC from M5Stack
   60  | USE_AM2320          | xsns_88  | AM2320   | 0x5C        | Temperature and Humidity sensor
   61  | USE_T67XX           | xsns_89  | T67XX    | 0x15        | CO2 sensor
@@ -107,3 +109,23 @@ Index | Define              | Driver   | Device   | Address(es) | Description
   70  | USE_LUXV30B         | xsns_99  | LUXV30B  | 0x4A        | DFRobot SEN0390 V30B lux sensor
   71  | USE_QMC5883L        | xsns_33  | QMC5883L | 0x0D        | Magnetic Field Sensor
   72  | USE_INA3221         | xsns_100 | INA3221  | 0x40-0x43   | 3-channels Voltage and Current sensor
+  73  | USE_HMC5883L        | xsns_101 | HMC5883L | 0x1E        | 3-channels Magnetic Field Sensor
+  74  | USE_DISPLAY_TM1650  | xdsp_20  | TM1650   | 0x24 - 0x27, 0x34 - 0x37 | Four-digit seven-segment LED controller
+  75  | USE_PCA9632         | xdrv_64  | PCA9632  | 0x60        | 4-channel 4-bit pwm driver
+  76  | USE_SEN5X           | xsns_103 | SEN5X    | 0x69        | Gas (VOC/NOx index) and air quality (PPM <1,<2.5,<4,<10)
+  77  | USE_MCP23XXX_DRV    | xdrv_67  | MCP23x17 | 0x20 - 0x26 | 16-bit I/O expander as virtual button/switch/relay
+  78  | USE_PMSA003I        | xsns_104 | PMSA003I | 0x12        | PM2.5 Air Quality Sensor with I2C Interface
+  79  | USE_GDK101          | xsns_106 | GDK101   | 0x18 - 0x1B | Gamma Radiation Sensor
+  80  | USE_TC74            | xsns_108 | TC74     | 0x48 - 0x4F | Temperature sensor
+  81  | USE_PCA9557         | xdrv_69  | PCA95xx  | 0x18 - 0x1F | 8-bit I/O expander as virtual button/switch/relay
+  82  | USE_SGP4X           | xsns_109 | SGP4X    | 0x59        | Gas (TVOC/NOx index)
+  83  | USE_MAX17043        | xsns_110 | MAX17043 | 0x36        | Fuel-gauge for 3.7 Volt Lipo battery
+  84  | USE_ENS16x          | xsns_111 | ENS16x   | 0x52 - 0x53 | Gas (TVOC, eCO2) and air quality sensor
+  85  | USE_ENS210          | xsns_112 | ENS210   | 0x43 - 0x44 | Temperature and humidity sensor
+  86  | USE_AMSX915         | xsns_114 | AMS6915  | 0x28        | Pressure (absolute/differential) and temperature sensor
+  87  | USE_SPL06_007       | xsns_25  | SPL06-007 | 0x76       | Pressure and temperature sensor
+  88  | USE_QMP6988         | xsns_28  | QMP6988   | 0x56, 0x70 | Pressure and temperature sensor
+  89  | USE_HX711_M5SCALES  | xsns_34  | M5SCALES  | 0x26       | M5Unit (Mini)Scales(HX711 STM32) U177
+  90  | USE_RX8010          | xdrv_56  | RX8010    | 0x32       | RX8010 RTC from IOTTIMER
+  91  | USE_MS5837          | xsns_116 | MS5837    | 0x76       | Pressure and temperature sensor
+  92  | USE_PCF85063        | xdrv_56  | PCF85063  | 0x51       | PCF85063 Real time clock

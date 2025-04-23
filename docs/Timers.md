@@ -31,7 +31,7 @@ JSON Name|JSON Value
 :---|:---
 Enable|`0` = disarm or disable timer<BR>`1` = arm or enable timer
 Mode|`0` = use clock time<BR>`1` = Use local sunrise time using `Longitude`, `Latitude` and `Time` offset<BR>`2` = use local sunset time using `Longitude`, `Latitude` and `Time` offset
-Time|`hh:mm` = set time in hours `0 .. 23` and minutes `0 .. 59`<BR>`-hh:mm` = set time in offset hours `-11 .. 12` and minutes `0 .. 59` (used with `Mode 1` and `Mode 2`)
+Time|*When `Mode 0` is active*<BR>>&ensp;`hh:mm` = set time in hours `0 .. 23` and minutes `0 .. 59`<BR>*When `Mode 1` or `Mode 2` is active*<BR>>&ensp;`+hh:mm` or `-hh:mm` = set offset in hours `0 .. 11` and minutes `0 .. 59` from the time defined by sunrise/sunset.
 Window|`0..15` = add or subtract a random number of minutes to `Time`
 Days|`SMTWTFS` = set day of weeks mask where `0` or `-` = OFF and any different character = ON
 Repeat|`0` = allow timer only once<BR>`1` = repeat timer execution

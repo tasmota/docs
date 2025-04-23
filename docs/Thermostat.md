@@ -41,21 +41,21 @@ description: Control over heating and cooling as a true HVAC unit
 
 !!! info "Control over heating and cooling as a true HVAC unit"
 
-Thermostat driver allows a Tasmota device, provided it receives the temperature input via MQTT or a locally connected sensor, to follow control heating/cooling strategies to reach the desired setpoint. The thermostat offers similar functions as feature rich commercial ones as the models found below:
+The Thermostat driver allows a Tasmota device to follow control heating/cooling strategies to reach the desired setpoint. In order to accomplish this it must be provided with the present temperature either via MQTT or a locally connected sensor. The thermostat offers similar functions as the feature rich commercial models found below:
 
 ![Pinout](_media/thermostat/Feature_rich_thermostat.png)
 
 ## Typical setup: Heating floor system
 
-A typical setup for heating room systems can be found in the picture below. A conventional room thermostat is connected to a heating floor valve actuator, both running at AC voltage (f.e. 220V). The thermostat is connected to neutral as well as to the phase, the actuator to the same neutral connection of the thermostat and to its actuation signal. The actuation signal will switch between the neutral voltage (actuation Off) and the phase voltage (actuation On).
+A typical setup for heating room systems can be found in the picture below. A conventional room thermostat is connected to a heating floor valve actuator, both running at AC voltage (e.g., 220V). The thermostat is connected to neutral as well as to the phase, the actuator to the same neutral connection of the thermostat and to its actuation signal. The actuation signal will switch between the neutral voltage (actuation Off) and the phase voltage (actuation On).
 
-The conventional room thermostats offer nowadays either 2 point control with hysteresis or a more advanced PI (Proportional-Integral) control. The result of the PI control is typically transformed into a PWM signal with a pre-defined period and a variable duty cycle.
+Conventional room thermostats offer nowadays either 2 point control with hysteresis or a more advanced PI (Proportional-Integral) control. While the result of the PI control is an analog value, in order to control a digital devices such as a relay, it is typically transformed into a PWM signal with a pre-defined period and a variable duty cycle.
 
 ![Pinout](_media/thermostat/conventional_thermostat.png)
 
 ### Use of tasmota switch to bypass an existing wall thermostat
 
-A tasmota switch can be installed in a way that it bypasses the existing wall thermostat. The advantage of this setup is that the thermostat driver offers the possibility to follow the output of the existing wall thermostat or acting autonomously. This setup allows a seamless integration with existing wall thermostats and gives the user the freedom to still use them.
+A tasmota switch can be installed in conjunction with an existing wall thermostat. The advantage of this setup is that the thermostat driver offers the possibility of following the output of the existing wall thermostat or of acting autonomously. This setup allows a seamless integration with existing wall thermostats and gives the user the freedom to still use them.
 
 Below you can find an example of a Shelly switch bypassing a wall thermostat:
 
@@ -63,7 +63,7 @@ Below you can find an example of a Shelly switch bypassing a wall thermostat:
 
 ## Configuration for standalone application or bypass of existing wall thermostat
 
-The driver by default does not consider the input switch states even if available and its therefore suitable for standalone use. If the application requires to follow the command of the input once active (see bypass setup explained in previous section). This bypass function is specially useful to allow the user to use the device bypassed, in case of a wall thermostat, to allow this thermostat to be used if desired. To enable this bypass function, the following command is to be sent to the tasmota device:
+The driver by default ignores the input switch states, making it completely standalone (independently of any existing wall thermostat). The bypass function is specially useful to allow the user to bypass the TASMOTA thermostat driver and allow the wall thermostat to take over instead. To enable this bypass function, the following command is to be sent to the tasmota device:
 
 ```
 cmnd/Tasmota_Name/INPUTSWITCHUSE 1
@@ -166,10 +166,10 @@ cmnd/Tasmota_Name/PROPBANDSET 1
 ```
 
 !!! note  
-    With the command above, the PI controller will output a proportional time equivalent to 100% of the duty cycle for delta temperatures between setpoint and room temp. above 1°C (f.e. for big rooms with weak dimensioned heating circuit).
+    With the command above, the PI controller will output a proportional time equivalent to 100% of the duty cycle for delta temperatures between setpoint and room temp. above 1°C (e.g., for big rooms with weak dimensioned heating circuit).
 
 #### Reset Time
-The reset time is the time the PI controller takes to overcome steady-state errors. The default value for the reset time is 1800 seconds. This value can be for instance increased in case a stronger integral reaction of the controller is desired. Below the command to adapt the proportional band can be found:
+The reset time is the time the PI controller takes to overcome steady-state errors. The default value for the reset time is 12000 seconds. This value can be for instance increased in case a stronger integral reaction of the controller is desired. Below the command to adapt the proportional band can be found:
 
 ```
 cmnd/Tasmota_Name/TIMERESETSET 1800
@@ -210,16 +210,16 @@ If the value is very low, in case of floor heating systems for instance, the hea
 ### Ramp-Up controller main parameters
 
 #### Temperature delta to get into "Ramp-Up" mode
-When the controller is configured in Hybrid mode (default), the control strategy will be a mix-up between "Ramp-Up" (for big deltas between room temperature and setpoint) and PI (around the setpoint). The following parameter can be set to define at above which delta temperature between measured and setpoint the "Ramp-Up" controller shall be active:
+When the controller is configured in Hybrid mode (default), the control strategy will be a mix  between "Ramp-Up" (for big deltas between room temperature and setpoint) and PI (around the setpoint). The following parameter can be set to define the delta temperature (between measured and setpoint) above which the "Ramp-Up" controller will be active:
 
 ```
-cmnd/Tasmota_Name/TEMPRUPDELTINSET 30
+cmnd/Tasmota_Name/TEMPRUPDELTINSET 0.3
 ```
 
 The default value is 0.4°C.
 
 #### Time passed after latest setpoint change to get into "Ramp-Up" mode
-When the controller is configured in Hybrid mode (default), the activation of the "Ramp-Up" mode will not just depend on the defined temperature delta between measured and setpoint, but as well on the time in minutes passed since the last setpoint change occurred. This strategy matches the purpose of the "Ramp-Up" controller, which was developed to reach the desired temperature as fast as possible in very specific scenarios, f.e. after a night keeping the room temperature low. In hybrid mode, the controller active most part of the time should be the PI one. The following parameter can be used to define the time to allow switching to "Ramp-Up" in minutes.
+When the controller is configured in Hybrid mode (default), the activation of the "Ramp-Up" mode will not just depend on the defined temperature delta between measured and setpoint, but as well on the time in minutes passed since the last setpoint change occurred. This strategy matches the purpose of the "Ramp-Up" controller, which was developed to reach the desired temperature as fast as possible in very specific scenarios, e.g., after a night keeping the room temperature low. In hybrid mode, the controller active most part of the time should be the PI one. The following parameter can be used to define the time to allow switching to "Ramp-Up" in minutes.
 
 ```
 cmnd/Tasmota_Name/TIMEALLOWRAMPUPSET 300
@@ -228,17 +228,17 @@ cmnd/Tasmota_Name/TIMEALLOWRAMPUPSET 300
 The default value is 300 minutes.
 
 #### Cycle time
-Depending on the heating system, the cycle time (PMW period) can be adapted. Very slow systems (high time constants) such as heating floor systems might need higher values (default value is 30 minutes), faster systems might need smaller cycle times. Below the command to adapt the cycle time can be found:
+Depending on the heating system, the cycle time (PMW period) can be adapted. Very slow systems (high time constants) such as heating floor systems might need higher values (default value is 30 minutes), faster systems might need smaller cycle times. The following parameter can be used to define the cycle time in minutes:
 
 ```
-cmnd/Tasmota_Name/TIMERAMPUPCYCLESET 30
+cmnd/Tasmota_Name/TIMERAMPUPCYCLESET 45
 ```
 
 #### Maximum Ramp-Up time
-The maximum time the ramp-up phase of the controller shall be active can be configured. The default value is 960 minutes. Below the command to adapt this time can be found:
+The maximum time the ramp-up phase of the controller shall be active can be configured (default value is 960 minutes). The following parameter can be used to define the ramp-up time in minutes:
 
 ```
-cmnd/Tasmota_Name/TIMERAMPUPMAXSET 960
+cmnd/Tasmota_Name/TIMERAMPUPMAXSET 180
 ```
 
 ## Thermostat persistent storage for configuration
@@ -263,6 +263,28 @@ ON Rules#Timer=1 DO EnableOutputSet 1 ENDON
 ON HTU21#Temperature DO Var1 %value% ENDON
 ON Time#Minute DO Backlog Var3 %Var2%; Sub3 .3; Var2 %Var1% ENDON
 ON Var2#State<=%Var3% DO Event windowstop ENDON
+```
+
+## Preventing stuck valves by forcing actuation
+
+When left in place for too long, radiator valves might seize. Following rules will force actuation every week in order to prevent this.
+A time of `600` seconds should be long enough for slow actuators to open fully, adjust yours as needed.
+If using above `windowstop` code, skip `Rules#Timer=1` as you already have it set.
+
+```
+ON Event#forceactuate DO Backlog EnableOutputSet 0; Power 1; RuleTimer1 600 ENDON
+ON Rules#Timer=1 DO EnableOutputSet 1 ENDON
+ON Clock#Timer=1 DO Event forceactuate ENDON
+```
+```
+Timers 1
+Timer1 {"Enable":1,"Mode":0,"Time":"08:00","Window":0,"Days":"0100000","Repeat":1,"Output":1,"Action":3}
+```
+
+If you have a button on your controller, consider using it to trigger the `forceactuate` event.
+This allows you to request instant heating when feeling cold. Add to your rule:
+```
+ON Button1#State DO Event forceactuate ENDON
 ```
 
 ## Advanced features
@@ -316,4 +338,10 @@ A PI autotune feature following the Zigler-Nichols closed loop algorithm has bee
 ```
 #define USE_PI_AUTOTUNING // (Ziegler-Nichols closed loop method)
 ```
+## Example
 
+The following chart shows the thermostat behavior in a forced air heated house:
+
+![Thermostat](https://user-images.githubusercontent.com/7401394/219059013-919891b1-d0d0-4244-9893-18c6d8ff3683.png)
+
+The red shaded areas are where the thermostat commanded heat and the green line is the temperature. The temperature setpoint is 18 C at night and is then increased to 22.5 in the morning.  This step demonstrates the ramp part of the hybrid control algorithm of the thermostat.  Once the temperature is near the set point the thermostat switches to he PI algorithm.  In the evenings the temperature is increased to 23.5 C.

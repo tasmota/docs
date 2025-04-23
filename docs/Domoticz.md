@@ -16,7 +16,8 @@ If not already done configure Domoticz MQTT and Virtual Sensor hardware.
 - On the hardware page add Type `MQTT Client Gateway with LAN interface`
     1. Give it a name
     2. Configure the interface with access to your MQTT server (`Remote Address`, `Port`, `Username` and `Password`)
-    3. Set the `Public Topic` to flat (which seems to relate to `out` in the select field)
+    3. Set the `Publish Topic` preferably to `Index` although other options are also supported
+    4. Set `Topic In Prefix` to `domoticz/in` and `Topic Out Prefix` to `domoticz/out` as default defined by Tasmota DOMOTICZ_IN_TOPIC and DOMOTICZ_OUT_TOPIC
 - On the hardware page add Type `Dummy (used for virtual switches)`
     1. Give it a name
 
@@ -26,27 +27,19 @@ Make a new virtual switch and remember its Idx number.
 1. Make a new virtual switch to be used with Sonoff by clicking `Create Virtual Sensors`
     1. Give it a name
     2. Select `Sensor Type Switch`
-2. On the Devices page find the new switch by it's name
-    1. Remember it's Idx number
+2. On the Devices page find the new switch by its name
+    1. Remember its Idx number
 
 ## Tasmota Configuration
 <img alt="Domoticz" src="../_media/logo/domoticz3.jpg" style="margin:10px;float:right;width:15em"> </img>
 Tasmota provides different ways to configure Domoticz parameters. Choose the method you prefer:
 
-[The sections below don't look like they are needed any longer. The in topic and out topic entry areas don't appear to be in the Domoticz configure section - at least they are not there in mine and mine is working 17/03/2018]
-
 - Use the webinterface and select **Configuration - Configure Domoticz**:
-    1. Set `In topic` to `domoticz/in` as hardcoded in Domoticz
-    2. Set `Out topic` to `domoticz/out` as hardcoded in Domoticz
-    3. Configure `Idx 1` to the value read in step 2.i
+    1. Configure `Idx 1` to the value read in step 2.i
 - Use MQTT and execute commands (if necessary, replace `tasmota` with unique topic you configured in Initital Configuration, see point 5 [there](Getting-Started.md#initial-configuration)):
-    1. `cmnd/tasmota/DzInTopic` with payload `domoticz/in` as hardcoded in Domoticz
-    2. `cmnd/tasmota/DzOutTopic` with payload `domoticz/out` as hardcoded in Domoticz
-    3. `cmnd/tasmota/DzIdx1` with payload value read in step 2.i
+    1. `cmnd/tasmota/DzIdx1` with payload value read in step 2.i
 - Use the serial interface and execute commands:
-    1. `DzInTopic` with `domoticz/in` as hardcoded in Domoticz
-    2. `DzOutTopic` with `domoticz/out` as hardcoded in Domoticz
-    3. `DzIdx1` with the value read in step 2.i
+    1. `DzIdx1` with the value read in step 2.i
 
 #### Usage    
 That's it! You can now control your device from the Domoticz user interface.
@@ -76,7 +69,7 @@ Configure Domoticz MQTT Discovery plugin.
 
 ### Tasmota Configuration
 #### Precompiled Binary
-- Each Tasmota device must have it's own topic, the easiest way is to set topic to `tasmota_%06X` (%06X will be replaced by MAC address). See [here](Getting-Started.md) for how to set the topic.
+- Each Tasmota device must have its own topic, the easiest way is to set topic to `tasmota_%06X` (%06X will be replaced by MAC address). See [here](Getting-Started.md) for how to set the topic.
 - Use MQTT or Serial or Web console and execute commands (replace `%topic%` with the device's unique topic)
     1. `cmnd/%topic%/SetOption19` with payload `1` to enable MQTT discovery
 

@@ -5,7 +5,7 @@ For ESP32 Bluetooth go [here](Bluetooth_ESP32.md)
 Different vendors offer Bluetooth solutions, mostly as part of the Xiaomi brand, often under the Mijia label. The sensors supported by Tasmota use BLE (Bluetooth Low Energy) to transmit the sensor data, but they differ in their accessibilities quite substantially.  
   
 Basically all of them use the so-called "MiBeacons" which are BLE advertisement packets with a certain data structure, which are broadcasted by the devices automatically while the device is not in an active Bluetooth connection.       
-The frequency of these messages is set by the vendor and ranges from one per 3 seconds to one per hour (f.e. for the battery status of the LYWSD03MMC). Motion sensors and BLE remote controls start to send when an event is triggered.     
+The frequency of these messages is set by the vendor and ranges from one per 3 seconds to one per hour (e.g., for the battery status of the LYWSD03MMC). Motion sensors and BLE remote controls start to send when an event is triggered.     
 These packets already contain the sensor data and can be passively received by other devices and will be published regardless if a user decides to read out the sensors via connections or not. Thus the battery life of a BLE sensor is not influenced by reading these advertisements and the big advantage is the power efficiency as no active bi-directional connection has to be established. The other advantage is, that scanning for BLE advertisements can happen nearly parallel (very quickly one after the other), while a direct connection must be established for at least a few seconds and will then block both involved devices for that time.  
 
 This is therefore the preferred option, if supported by the sensor.
@@ -123,7 +123,7 @@ Telink Flashers allow the generation of a bind_key by faking a pairing with the 
 
 Use the bind_key and MAC address of the sensor to use with command `NRFkey`. Tasmota will receive the sensor data roughly every 10 minutes (in two chunks for humidity and temperature with about a minute in between) and decode the data. This is the most energy efficient way. 
 
-The current way of storing these keys on the NRF24L01 is to use [`NRFkey`](Commands.md#nrf32key)):
+The current way of storing these keys on the NRF24L01 is to use [`NRFkey`](Commands.md#nrfkey)):
 
 ```haskell
 rule1 on System#Boot do backlog NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFkey 00112233445566778899AABBCCDDEEFF112233445566; NRFPage 6; NRFUse 0; NRFUse 4 endon
@@ -150,7 +150,7 @@ Take note that only the ESP32 and the HM-1x modules are real BLE devices whereas
 ## using HM-1x
 
 !!! info "This feature is included only in tasmota-sensors.bin"
-Otherwise you must [compile your build]Compile-your-build). Add the following to `user_config_override.h`:
+Otherwise you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
 
 ```c++
 #ifndef USE_HM10
@@ -175,7 +175,7 @@ This will re-scan up to 3 times if less than 6 sensors are found.
 
 ### Configuration
   
-You must [compile your build]Compile-your-build). Change the following in `my_user_config.h`:
+You must [compile your build](Compile-your-build). Change the following in `my_user_config.h`:
 
 ```c++
 #define USE_SPI                                  // Hardware SPI using GPIO12(MISO), GPIO13(MOSI) and GPIO14(CLK) in addition to two user selectable GPIOs(CS and DC)

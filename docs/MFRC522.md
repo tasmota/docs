@@ -27,6 +27,8 @@ This reader is ubiquitous in many Arduino starter and sensor kits. It uses SPI p
 |  RST    | GPIO0..5,15,16 |  RC522 Rst
 |  3V3    | 3V3            |
 
+Warning : on esp8266, as the RST pin is pulling the signal high by default, gpio15 cannot be used for that signal. Please check esp8266 gpios specifications or the table in the section [GPIO Overview](Expanding-Tasmota#gpio-overview)
+
 ### Tasmota Settings 
 In the **_Configuration -> Configure Module_** page assign:
 

@@ -1,12 +1,14 @@
 # Zigbee internals
+
 [Back to Zigbee](Zigbee)
 
 This page is for developers who want to understand how Zigbee2Tasmota (Z2T) works and its implementation details.
 
 ## CC2530 Serial protocol
+
 The CC2530 is flashed with Texas Instrument ZNP Software version 1.2. The protocol is build on a serial communication between the main cpu and the CC2530.
 
-[Z-Stack 1.2 Monitor and Test API](/docs/_media/zigbee/Z-Stack_API_1_2.pdf)
+[Z-Stack 1.2 Monitor and Test API](_media/zigbee/Z-Stack_API_1_2.pdf)
 
 Serial communication is configured as 8N1, 115200 bauds. We suggest to use GPIO13/15 because they have hardware serial support. Please note that there is only one usable hardware serial, either on GPIO1/3 or GPIO13/15.
 
@@ -217,7 +219,7 @@ Note2: `LinkQuality`, `Device`, `Name`, `Group` and `Endpoint` are _special_ val
 	
 Note3: `BatteryPercentage` is systematically added with the last known value to each attribute reporting.
 
-#### 6. Apply transoformations to the attributes.
+#### 6. Apply transformations to the attributes.
 
 There are many transformations that are required because some device use proprietary values, or we need to compute new values out of the existing attributes.
 	

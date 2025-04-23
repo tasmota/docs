@@ -11,6 +11,8 @@ DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can r
 
 Some Tasmota devices also have issues with OFDMA (WiFi 6) enabled on the 2.4GHz band.  Disabling OFDMA can solve problems with WiFi failing to connect. 
 
+Some Wi-Fi routers employ **band steering**. Band steering works by responding only to 5 GHz association requests and not the 2.4 GHz requests, which interferes with Tasmota devices which only support 2.4 GHz. Disabling band steering may resolve connectivity issues.
+
 ### I entered wrong Wi-Fi information
 If you have a device with a button and the button is configured as a component in the Tasmota settings (e.g., GPIO0 - Button1), you can try pressing the button to force the device into [Wi-Fi configuration mode](Buttons-and-Switches#multi-press-functions) with 4&nbsp;short presses of the button. **Note:** Since version 8.3.0 this requires 6&nbsp;short presses instead.
 
@@ -53,7 +55,7 @@ If you flashed a light bulb or any device without a built-in button and entered 
 First thing to try when having Wi-Fi issues: `Reset 3` which will erase wi-fi calibration data only and will keep configuration intact. Make sure to power cycle restart after that. If that doesn't help try rebooting the router as well
 
 As a last resort try :
-Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](Getting-Started.md#esptoolpy)) using [the latest precompiled binaries](http://ota.tasmota.com/tasmota/).
+Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](Getting-Started.md#__tabbed_1_3)) using [the latest precompiled binaries](http://ota.tasmota.com/tasmota/).
 
 This approach has solved many of the reported issues. Sometimes this is due to a bad flash, a bad OTA or invalid data that remains in the flash where the SDK memory is.
 
@@ -117,12 +119,12 @@ or your mosquitto broker log shows messages like this -
 1496455350: Client SONOFF already connected, closing old connection.
 1496455350: Client SONOFF disconnected.
 ```
-You have more than one device connected with the same %topic% defined. Its important that each device has a unique %topic% instead of the default `sonoff`.
+You have more than one device connected with the same %topic% defined. It's important that each device has a unique %topic% instead of the default `sonoff`.
 
 If that is not the issue, erase all flash using esptool.py or esptool.exe and flash again by wire (as explained [here](Esptool#upload-tasmota)) using [the latest precompiled bins with core v2.7.1](http://ota.tasmota.com/tasmota/).
 
 ### Device is often unavailable, usually 30 seconds every minute
-Due to a bug in the Arduino core that we are working on to solve, Tasmota devices require time to be correctly setup to work properly (see https://github.com/tasmota/docs/blob/master/docs/FAQ.md#timers-trigger-at-the-wrong-time for details and alternatives). If a Tasmota device cannot reach one of the NTP server after restarting, the device will be unavailable during 30 seconds every minute while trying to update the time.
+Due to a bug in the Arduino core that we are working on to solve, Tasmota devices require time to be correctly setup to work properly (see <https://github.com/tasmota/docs/blob/master/docs/FAQ.md#timers-trigger-at-the-wrong-time> for details and alternatives). If a Tasmota device cannot reach one of the NTP server after restarting, the device will be unavailable during 30 seconds every minute while trying to update the time.
 
 To confirm this issue, the command weblog can be set to 4 (typing "weblog 4" in the console), and log should indicate "NTP: Sync time..." followed by "NTP: Unable to resolve IP address" 30 seconds later, in the 30 seconds period the device is unavailable.
 
@@ -145,7 +147,7 @@ Your device may be in a boot loop - a restart caused by any exception or watchdo
 - 5<sup>th</sup> restart: reset module to Sonoff Basic (1)
 
 ### Relay clicks and LED flashes at 1 second intervals
-This indicates that your device did not get flashed properly. In this case it will toggle all it's pins at 1 sec intervals. A flash erase and a new flash is required.
+This indicates that your device did not get flashed properly. In this case it will toggle all its pins at 1 sec intervals. A flash erase and a new flash is required.
 
 ### Status LED blinking
 Your device status LED blinks repeatedly when Wi-Fi and/or MQTT is not connected. If you're not using MQTT and did not configure it the status LED will still keep blinking.
@@ -229,7 +231,7 @@ If you have timers that use the sunset or sunrise times, you must set your [lati
 ### Auto-discovery in Home Assistant does not work
 The `tasmota-lite.bin` firmware binary (which comes packaged with Tuya-Convert) does not support auto-discovery. Please upgrade to `tasmota.bin` or a similar firmware variant that supports this feature.
 
-Make sure its enabled in Tasmota it with `SetOption19 1` and you configured the  Home Assistant MQTT integration with Discovery enabled.
+Make sure it's enabled in Tasmota it with `SetOption19 1` and you configured the  Home Assistant MQTT integration with Discovery enabled.
 
 ### Why is my changed configuration not loaded?
 If you have flashed a precompiled binary, be aware that all the configuration made after the flash (Wi-Fi, MQTT, topics, names, rules, etc) will be lost in a factory firmware reset.
@@ -291,7 +293,7 @@ Be sure to press the button correctly, you must "feel" a click. If your on-devic
 
 - If esptool.py stops at "Uploading stub...", use --no-stub 
 
-- If the flash fails or the device does not operate as expected, try using the default ESP82xx boot ROM baud rate - `74880`. This is the baud rate the ESP82xx is set to by default when it boots into programming mode. It can be specified as a command line option in [esptool.py](Getting-Started.md#esptoolpy) (`-b`) and [esptool.exe](Getting-Started.md#esptool-executable) (`-cb`).
+- If the flash fails or the device does not operate as expected, try using the default ESP82xx boot ROM baud rate - `74880`. This is the baud rate the ESP82xx is set to by default when it boots into programming mode. It can be specified as a command line option in [esptool.py](Getting-Started.md#__tabbed_1_3) (`-b`) and esptool.exe (`-cb`).
 
   You may also want to select a serial monitor/terminal capable of setting this "unusual" baud rate. In Termite, type this value (`74880`) in the baud rate selection text box when configuring the port. Having the option to specify this unusual baud rate will allow you to view the [ESP8266 boot ROM log](https://github.com/espressif/esptool/wiki/ESP8266-Boot-ROM-Log) while the device is booting.
 
@@ -354,4 +356,4 @@ Arduino Core (open source) are the core libraries for ESP8266/ESP8285 chips to m
 You can see the Arduino Core Version and the Espressif SDK Version on the Tasmota WebUI under the Information Menu entry.
 
 ## I Cannot Find An Answer Here!
-Check the [Troubleshooting](Troubleshooting) section or join [Discord](https://discord.gg/Ks2Kzd4), [Telegram](https://t.me/tasmota), [Reddit](https://www.reddit.com/r/tasmota/) or [Google Groups](https://groups.google.com/d/forum/sonoffusers) for assistance from other Tasmota users.  
+Check the [Troubleshooting](Troubleshooting) section or join [Discord](https://discord.gg/Ks2Kzd4), [Matrix](https://matrix.to/#/%23tasmota:matrix.org), [Telegram](https://t.me/tasmota), [Reddit](https://www.reddit.com/r/tasmota/) or [Google Groups](https://groups.google.com/d/forum/sonoffusers) for assistance from other Tasmota users.

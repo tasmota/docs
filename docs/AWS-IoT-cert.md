@@ -68,7 +68,7 @@ Here is a simple guide.
 
 ### 0. Open an AWS Account
 
-If you don't have already one, just follow the guide: https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/
+If you don't have already one, just follow the guide: <https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/>
 
 ### 1. Prerequisites
 

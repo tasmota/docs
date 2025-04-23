@@ -119,7 +119,7 @@ This callback ID is called every second.
 
 It can be useful for anything that you need to do on a per second basis and is commonly used as an entry point to detect a driver or initialize an externally driven device such as a sensor, relay board or other forms of input/output required by your driver.
 
-You would normally want to make sure you've detected and initialised before it is used by `JSON_APPEND`, etc. so that its ready to serve data.
+You would normally want to make sure you've detected and initialised before it is used by `JSON_APPEND`, etc. so that it's ready to serve data.
 
 The generally accepted way to use this would be to detect your sensor and once this is done set a sensor value accordingly so that the function does not use unnecessary resources during future calls, for example:
 ```c++
@@ -209,7 +209,7 @@ NOTE: This callback ID is deprecated as sensors should prepare for more regular 
 
 `FUNC_JSON_APPEND`
 
-This callback ID is called when [`TelePeriod`](Commands#teleperiod) is due to append telemetry data to the MQTT JSON string or at approximately every 2 seconds when a rule is checked, e.g.
+This callback ID is called when [`TelePeriod`](Commands.md#teleperiod) is due to append telemetry data to the MQTT JSON string or at approximately every 2 seconds when a rule is checked, e.g.
 ```c++
 snprintf_P(mqtt_data, sizeof(mqtt_data), PSTR("{\"MPR121%c\":{\"Button%i\":%i}}"), pS->id[i], j, BITC(i,j));
 ```

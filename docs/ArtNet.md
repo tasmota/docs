@@ -8,9 +8,9 @@
 
 ArtNet is a royalty-free UDP based protocol to transport DMX lighting control.It allows to control either a Light, or a WS2812 Matrix/Strip with a remote software with real-time animations.
 
-This feature is experimental and tested only with LED Lab (Mac and iOS)
+This feature is experimental, it has been tested with LED Lab (Mac and iOS) and QLC (linux)
 
-When enabling ArtNet mode, Tasmota listens to UDP port 6454 on local address and on multicast address `239.255.25.59`. Incoming DMX/ArtNet packets drive the display and light.
+When enabling ArtNet mode, Tasmota listens to UDP port 6454 on local address and on multicast address `239.255.25.54`. Incoming DMX/ArtNet packets drive the display and light.
 
 ![ezgif-3-5d1d4b87d0](https://user-images.githubusercontent.com/49731213/201535653-3bb395b8-f84c-4083-93d7-a54782933ebf.gif)
 
@@ -41,12 +41,13 @@ Step 4. Launch `LED Lab`, click on the `Settings` icon (wheel), select `LED Setu
 
 
 In the LED Setup:
+
 - Enter the number of rows in `Outputs`
 - Enter the number of columns in `LEDS/Output`
 - Enter the IP Address of the Tasmota device
 - Make sure that `UDP Broadcast` is selected (green background)
 - Make sure `First Universe` is 1 and `Channel Range` starts with `1`
-- Set `Channel Values for Each Pixel` to `GRB`
+- Set `Channel Values for Each Pixel` to `GRB`. NOTE: for ESP32 you should use `RGB` instead.
 - Click `OK` in upper right corner
 
 <img src="../_media/artnet/LED_Lab_Setup.png">
@@ -85,12 +86,18 @@ ArtNet Start
 
 ### Single Light
 
-When setting `"Cols":0` (zero columns) ArtNet uses the first GBR payload to control the global light (ex PWM) or the entire WS2812 strip.
+When setting `"Cols":0` (zero columns) ArtNet uses the first GBRWW payload to control the global light (ex PWM) or the entire WS2812 strip. Multiple single lights (eg. bulbs) can be used on the same universe by setting the offset value.
 
 Example:
 ```
-ArtNetConfig {"Cols":0, "Universe":0}
+ArtNetConfig {"Cols":0, "Universe":0, "Offset":0}
 ArtNet Start
+```
+
+The calibration values set by the RGBWWTable command will be applied to any DMX inputs.
+For example to disable the white channels:
+```
+RGBWWTable 255,255,255,0,0
 ```
 
 ## Commands
@@ -98,7 +105,7 @@ ArtNet Start
 Command|Description
 :---|:---
 ArtNetConfig &lt;json&gt;<a class="cmnd" id="artnetconfig"></a>|Example `ArtNetConfig {"Rows":5, "Cols":5, "Offset":0, "Alternate":false, "Universe":0}`<BR>There are two modes for ArtNet configuration: simple light or adressable leds.<BR>In simple Light mode, `"cols"` is zero. Only `"Universe"` needs to be specified.<BR>Example: `ArtNetConfig {"Cols":0, "Universe":0}`<BR>In Adressable Light mode, all parameters can be specified.<BR><BR>`Rows`: number of rows of display, `1` for light mode or single strip<BR>`Cols`: number of columns of the display, or length of the strip, or `0` for single light<BR>`"Offset"`: number of adressable leds to skip<BR>`Alternate`: (true/false) indicates that every other line is reversed (common in large matrix)<BR>`Universe`: starting DMX Universe number for the first line (0 based so you may need to substract 1 from software)
-ArtNet<a class="cmnd" id="artnet"></a>|`Start`, `On`>`, or `1`: Start ArtNet mode, listen to UDP port 6454 and force `SetOption148 1` for autorun at restart<BR>`Stop`, `Off` or `0`: Stop ArtNet mode, close UDP port and force `SetOption148 0` to disable ArtNet mode at restart
+ArtNet<a class="cmnd" id="artnet"></a>|`Start`, `On`, or `1`: Start ArtNet mode, listen to UDP port 6454 and force `SetOption148 1` for autorun at restart<BR>`Stop`, `Off` or `0`: Stop ArtNet mode, close UDP port and force `SetOption148 0` to disable ArtNet mode at restart
 SetOption148|Enables or disables autorun of ArtNet mode at start. If for any reason listening to UDP port fails, this mode is disabled
 
 ## Troubleshooting

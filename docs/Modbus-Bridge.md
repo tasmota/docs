@@ -33,7 +33,7 @@ Then set baud rate with `ModbusBaudRate` (default is 9600).
 
 Command|Parameters
 :---|:---
-ModbusSend|Sending a message to the Modbus network as JSON payload.<BR>```{"deviceAddress":<value>, "functionCode":<value>, "startAddress":<value>, "type":"<value>","count":<value>}```<BR>&emsp;&emsp;`"deviceAddress":1..255` = device address from the Modbus slave.<BR>&emsp;&emsp;`"functioncode":1..6 or 15..16` = function code to send to the Modbus slave (see table below).<BR>&emsp;&emsp;`"startaddress":1..65535` address of the first register to read.<BR>&emsp;&emsp;`"type":"<value>"` Gives the type of the returned data (see table below). <BR>&emsp;&emsp;`"count":1..n` the number of values to be requested.
+ModbusSend|Sending a message to the Modbus network as JSON payload.<BR>```{"deviceAddress":<value>, "functionCode":<value>, "startAddress":<value>, "type":"<value>","count":<value> "endian":<value>}```<BR>&emsp;&emsp;`"deviceAddress":1..255` = device address from the Modbus slave.<BR>&emsp;&emsp;`"functioncode":1..6 or 15..16` = function code to send to the Modbus slave (see table below).<BR>&emsp;&emsp;`"startaddress":1..65535` address of the first register to read.<BR>&emsp;&emsp;`"type":"<value>"` Gives the type of the returned data (see table below). <BR>&emsp;&emsp;`"count":1..n` the number of values to be requested. <BR>&emsp;&emsp;`"endian":msb,lsb` Sets endian msb (big) or lsb (little) (optional).
 ModbusBaudrate| `1200...115200` = set baudrate for serial (only 8N1 mode) in 1200 increments _(default = `9600`)_
 ModbusSerialConfig|Set serial protocol using data/parity/stop conventional notation (example: 8N1 or 702)<BR>`0..23` = set serial protocol (`3` equals 8N1)
   
@@ -65,11 +65,12 @@ int8|Return or send the slave data as an 8 bits signed int
 int16|Return or send the slave data as a 16 bits signed int
 int32|Return or send the slave data as a 32 bits signed int
   
-### Additional commands for USE_MODBUS_TCP_BRIDGE
+### Additional commands for USE_MODBUS_BRIDGE_TCP
 Command|Parameters
 :---|:---
-ModbusTCPStart| Start the Modbus TCP bridge on the specified `tcp port`
-ModbusTCPConnect| Connect to a remote Modbus TCP server on `ip address` and `remote tcp port`
+ModbusTCPStart | `<port>` = start the Modbus TCP bridge on the specified port
+ModbusTCPConnect | `<port>,<ip_address>` = connect to a remote Modbus TCP server on remote tcp `port˙` and `ip_address`
+ModbusTCPMqtt| `<x>` = send results queried by tcp modbus client also to mqtt when parameter is 1
   
 ## Returned Data
 ```json
@@ -120,7 +121,7 @@ Requesting 4 holding registers starting from register 1 from slave address
 #### Register 1
 On command:
 ```
-ModBusSend {"deviceaddress": 1, "functioncode": 3, "startaddress": 1, "type":"uint16", "count":4}`
+ModBusSend {"deviceaddress": 1, "functioncode": 3, "startaddress": 1, "type":"uint16", "count":4}
 ```
 
 Response:
@@ -143,7 +144,7 @@ RSL: RESULT = {"ModbusReceived":{"DeviceAddress":1,"FunctionCode":5,"StartAddres
 #### Setting multiple coils starting from coil register 1 from slave address 1
 On command:
 ```
-ModBusSend '{"deviceaddress": 1, "functioncode": 15, "startaddress": 1, "type":"bit", "count":8, "values":[1,0,0,1,1,1,0,0]}
+ModBusSend {"deviceaddress": 1, "functioncode": 15, "startaddress": 1, "type":"bit", "count":8, "values":[1,0,0,1,1,1,0,0]}
 ```
 Response:
 ```json

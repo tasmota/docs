@@ -67,7 +67,7 @@ After the upgrade is completed you can reconnect back to the web UI and check th
 ### Upgrade by file upload 
 
 Go to **Firmware Upgrade**. This time browse to the binary you want to upgrade to with **Choose File** and click **Start upgrade**.    
-_In our example its `tasmota-sensors.bin`._
+_In our example it's `tasmota-sensors.bin`._
 
 ![image](https://user-images.githubusercontent.com/5904370/68962783-a7087800-07d5-11ea-9f8c-bd90fdb3e9ca.png)
 
@@ -86,7 +86,7 @@ When you try to immediately upgrade with the new binary without using smaller mi
 This means your flash doesn't have enough free space to install the binary you're trying to upload. Use a .gz binary instead of the .bin one. If you still receive the same error download tasmota-minimal.bin(.gz) and follow instructions:
 
 Browse to the minimal binary with ***Choose File***. The chosen filename should be visible.    
-_In our example its `tasmota-minimal.bin`._
+_In our example it's `tasmota-minimal.bin`._
 
 ![minimal upgrade](https://user-images.githubusercontent.com/5904370/68962383-baffaa00-07d4-11ea-8122-fcf971ca96f5.png)
 
@@ -128,6 +128,8 @@ You can set up OTA url and initiate OTA upgrade from TDM using GUI.
 [**Node-RED OTA server and firmware manager**](https://flows.nodered.org/flow/888b4cd95250197eb429b2f40d188185) - [Node-RED](https://nodered.org/) flow for managing OTA updates 
 
 [**OTA over SCP**](OTA-over-SCP) - setup and configure "OTA over SCP" upload for PlatformIO
+
+[**Deploy via HTTP**](Visual-Studio-Code#deploy-via-http-upload) - deploy _.bin_ and _.bin.gz_ files to your own web server via PlatformIO upload
 
 ### Private OTA Server
 It is possible to create your own simple http OTA server (https is not supported) using Python and perform upgrades from there. 

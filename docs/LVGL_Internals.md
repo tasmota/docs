@@ -54,7 +54,7 @@ This phase is specific to Berry pre-compiled modules and classes.
 
 Tasmota automatically and implicitly imports `lv` module if compiled with LVGL.
 
-```
+```berry
 import lv
 ```
 
@@ -66,7 +66,7 @@ Concretely, this means that the new `lv` module is a facade to the read-only sol
 
 This is how it is done internally:
 
-``` ruby
+```berry
 lv = module("lv")
 
 # rename `lv` to `lv_ntv` and replace `lv` with `lv_tasmota`
@@ -152,7 +152,7 @@ Berry builds an actual Object Oriented class system, with a base class `lv_obj` 
 
 The class names supported are defined in `convert.py` and are currently:
 
-```
+```berry
 'lv_arc', 'lv_bar', 'lv_btn', 'lv_btnmatrix', 'lv_calendar', 'lv_canvas', 'lv_chart', 'lv_checkbox',
 'lv_cont', 'lv_cpicker', 'lv_dropdown', 'lv_gauge', 'lv_img', 'lv_imgbtn', 'lv_keyboard', 'lv_label', 'lv_led', 'lv_line',
 'lv_linemeter', 'lv_list', 'lv_msgbox', 'lv_objmask', 'lv_templ', 'lv_page', 'lv_roller', 'lv_slider', 'lv_spinbox',
@@ -161,7 +161,7 @@ The class names supported are defined in `convert.py` and are currently:
 
 Additional 'special' classes are (they do not inherit from `lv_obj`):
 
-```
+```berry
 'lv_obj', 'lv_group', 'lv_style', 'lv_indev'
 ```
 
@@ -230,7 +230,7 @@ All widgets constructor always take 2 arguments, the first is the parent object,
 
 Example:
 
-```
+```berry
 scr = lv.scr_act()
 log = lv_label(scr)   # scr is parent object of log
 ```
@@ -250,7 +250,7 @@ We define 5 different C functions with 5 distinct addresses, one for each callba
 
 Here is the call used at startup:
 
-```python
+```berry
 import lvgl as lv
 
 # for each callback type, mapping between first argument and closure

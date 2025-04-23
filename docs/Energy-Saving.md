@@ -1,8 +1,8 @@
-Using the [`Sleep`](Commands#sleep) command you can instruct Tasmota to sleep for the set milliseconds in its main cycle. While sleeping your device will consume less power.
+Using the [`Sleep`](Commands.md#sleep) command you can instruct Tasmota to sleep for the set milliseconds in its main cycle. While sleeping your device will consume less power.
 
 [Dynamic Sleep](Dynamic-Sleep) is enabled by default with a value of 50. To continue using Normal Sleep you may disable it by using the command:
 
-[`SetOption60 1`](Commands#setoption60)
+[`SetOption60 1`](Commands.md#setoption60)
 
 Setting `Sleep` to lowest value `1` reduces power consumption already about ~30% in idle mode (relay off) and button presses are still noticed without any delay. Setting this around 50 ms reduces power consumption from ~1.1 W to ~0.6 W on an idling (relay off) device and button presses are still noticed correctly. With this setting you have to concentrate very hard to click the button so fast that it is not recognized by the device.
 
@@ -12,7 +12,7 @@ If your device needs to do something continuously, this will be affected. E.g., 
 > Expect overall button/key/switch misses and wrong values on Sonoff Pow
 
 **Notes:**
-- Starting with Tasmota 6.1.1.12 `Sleep` &ne; `0` has no impact on real time related commands like [`Delay`](Commands#delay), [`PulseTime`](Commands#pulsetime), [`TelePeriod`](Commands#teleperiod) and [`Blinktime`](Commands#blinktime).
+- Starting with Tasmota 6.1.1.12 `Sleep` &ne; `0` has no impact on real time related commands like [`Delay`](Commands.md#delay), [`PulseTime`](Commands.md#pulsetime), [`TelePeriod`](Commands.md#teleperiod) and [`Blinktime`](Commands.md#blinktime).
 - As the WiFi Modem on an ESP8266 is the major consumer - using Sleep with WiFi AP mode enabled is more or less without effect.
 
 ## Device power consumption and measurement

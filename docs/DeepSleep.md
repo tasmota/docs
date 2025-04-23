@@ -1,18 +1,53 @@
-DeepSleep support for up to 10 years (i.e., 86,400 seconds = 1 day) (e.g., if used with KNX) ([`DeepSleepTime`](Commands#deepsleeptime)). 
+DeepSleep support for up to 10 years (i.e., 86,400 seconds = 1 day) (e.g., if used with KNX). During DeepSleep, the device is effectively **off** and, as such, it is not possible to modify DeepSleepTime without exiting DeepSleep. 
 
-`DeepSleepTime` sets the time the device remains in DeepSleep before it returns to full operating mode. Once the command is issued, the DeepSleep cycle commences. During DeepSleep, the device is effectively **off** and, as such, it is not possible to modify DeepSleepTime without exiting DeepSleep. 
-
-!!! example
-    With `DeepSleepTime 3600`, the device will wake up exactly every hour (e.g., 8:00am, 9:00am, ...). If you define `DeepSleepTime 86400` (i.e., 60\*60\*24), it will wake-up exactly at 0:00 local time. There is no option to shift the wakeup time; except changing the timezone. If you define `DeepSleepTime 600`, it will wake-up every 10 minutes (e.g., 8:00, 8:10, 8:20, ...).
-
-!!! warning
-  Please be aware that the minimum DeepSleep time is 10 seconds.
-  
 ![](_media/deepsleep_minimal.png)
 
 In order for the device to wake itself to perform its function during the DeepSleep cycle, the RST pin must be connected to the D0/GPIO16 pin. This is the only pin which can perform this function as the wake-up signal is sent from the RTC through D0/GPIO16 to RST. When connected to RST for DeepSleep purpose, GPIO16 may not be used for other functions. As such, it is recommended to leave it configured as `None (0)`. *On the diagram, black denotes existing parts and connections on a standard ESP board (mini-D1, NodeMCU, ...). Red denotes what is added to the DeepSleep feature.*
 
 ![](_media/deepsleep_gpio16_none.png)
+
+## DeepSleep modes (regular, time based)
+
+There are TWO general methods to work with deepsleep. Method ONE wakes up the device on a regular interval, wait for TELEPERIOD and immediate go to deepsleep again. This is mostly to make regular measurements and send them to a MQTT broker. Method TWO is more complex and use TIMER events to wakeup the device. The way and when the device go to deepsleep again depends on the configuration. See explanation below.
+
+### Repeating regular deepsleep based on interval
+
+([`DeepSleepTime`](Commands.md#deepsleeptime)) `DeepSleepTime` sets the time the device remains in DeepSleep before it returns to full operating mode. Once the command is issued, the DeepSleep cycle commences. 
+
+!!! example
+    With `DeepSleepTime 3600`, the device will wake up exactly every hour (e.g., 8:00am, 9:00am, ...). If you define `DeepSleepTime 86400` (i.e., 60\*60\*24), it will wake-up exactly at 0:00 local time. There is no option to shift the wakeup time; except changing the timezone. If you define `DeepSleepTime 600`, it will wake-up every 10 minutes (e.g., 8:00, 8:10, 8:20, ...).
+
+!!! note
+    The next wake time will always be an even number of `DeepSleepTime` cycles since the epoch (Midnight 1970-01-01).  This may matter if the sleep time isn't an even number of minutes/hours (ex: 3660), such as when trying to wake at a specific time of day.
+
+### DeepSleep wakeup based on TIMER events 
+
+With Version 13.2 there is a new functionality to use TIMERS for the wakeup process on deepsleep. In this case the deepsleeptime will be dynamically calculated through the TIMERS. To enable TIMERS on deepsleep there must be a `rule1 Wakeup`
+
+rule1|state|Behavior
+-|:-:|-
+`Wakeup`|ON/1|Device will do a TELEPERIOD and go to deepsleep asap, similar to deepsleep with interval
+`Wakeup`|OFF/0|Device will stay ON until send to deepsleep with Restart 9 (deepsleep)
+`Wakeup`|ONCE/5|Device will do a TELEPERIOD and go to deepsleep asap, with the next wakeup the device will stay ON
+
+Now every TIMER that has RULE as an action will wakeup the device at the proposed time. You can define multiple timers and multiple wakeups also defined on sunset or sunrise. The process will always select the NEXT wakeup it finds. As soon as all conditions meet a 60 second timer countdown starts to send the device to deepsleep. To prevent this it is recommended to disbale ALL timers on the UI during definition. If you tag the rule1 with ONCE the device will stay awake after the deepsleep. To send the device to deepsleep e.g. at sunset another rule can be used to do this:
+
+```console
+Rule2
+  on time#minute==%sunset% do rule1 5 endon
+
+Rule2 ON
+```
+
+Be aware that `rule1 Wakeup` will DISABLE the capability to use deepsleeptime. You have to clean rule1 if you want to use the regular wakeups through deepsleeptime window.
+
+Also be aware that `restart 9` does not trigger the deepsleep timing. It just send the device into deepsleep and you have to wake up the device externally.
+
+![](_media/deepsleep_timers.png)
+
+Current timer will wakeup the device every day 1h after sunrise. The Time will be dynamically calculated.
+
+
 
 ## Methods to (temporarily) disable DeepSleep mode
 
@@ -20,7 +55,7 @@ In order for the device to wake itself to perform its function during the DeepSl
 
 ![](_media/deepsleep_switch.png)
 
-Select another GPIO (let's call it "GPIOn") and connect it GND. This can be performed through a switch per the schematic below. Flipping the switch to "ON" will prevent Tasmota to enter DeepSleep again after next wake-up until the switch is flipped back OFF. *On the diagram, blue denotes additional parts and connections to be able to disableDeepSleep.* GPIOn should be defined as `DeepSleep (182)` in the configuration as shown below:
+Select another GPIO (let's call it "GPIOn") and connect it GND. This can be performed through a switch per the schematic below. Flipping the switch to "ON" will prevent Tasmota to enter DeepSleep again after next wake-up until the switch is flipped back OFF. *On the diagram, blue denotes additional parts and connections to be able to disable DeepSleep.* GPIOn should be defined as `DeepSleep (182)` in the configuration as shown below:
 
 ![](_media/deepsleep_deepsleep182.png)
 
@@ -67,6 +102,18 @@ Once device maintenance is completed, place it back into DeepSleep mode using or
    
 ## Rules
 
+!!! example
+    An example of a ruleset which deepsleeps a device with a RTC module attached during a certain portion of the day (i.e. at night). Mem1 is set to wakeup time in the morning (i.e. 540) and Mem2 to sleep time (i.e. 1080). For network attached devices with no RTC module, `time#initialized` trigger is better than `system#init`. Might be smart to have a DeepSleep gpio assigned if you need to access the device outside of normal awake hours.
+    ```
+    rule1 
+    on system#init do backlog event timecheck=%time%; ruletimer1 1 endon
+    on time#minute do event timecheck=%time%; ruletimer1 1 endon
+    on event#timecheck<%mem1% do Var1 3600 endon
+    on event#timecheck>%mem1% do Var1 0 endon
+    on event#timecheck>%mem2% do Var1 3600 endon
+    on rules#timer=1 do deepsleeptime %var1% endon
+    ```
+    
 The following triggers can be used to execute commands upon wake-up or right before entering DeepSleep:
 - `Power1#Boot` : is the earliest trigger. But valid only if you have a `Relay` output defined.
 - `Switch1#Boot` : is the next trigger, also occur very early in the boot process. But valid only if you have `Switch` input defined.
@@ -133,12 +180,12 @@ Rule1 ON
 ```
 
 ## DeepSleep Algorithm General Timing
-Let's assume you have set `DeepSleepTime 3600` (one hour) and `TelePeriod 300` (five minutes). The device will first wake at 8:00 am. The device will boot and connect Wi-Fi. Next, the correct time must be sync'ed from one of the NTP servers. Now the device has all prerequisites for going into DeepSleep.
+Let's assume you have set `DeepSleepTime 3600` (one hour) and `TelePeriod 60` (one minute). The device will first wake at 8:00 am. The device will boot and connect Wi-Fi. Next, the correct time must be synchronized from one of the NTP servers and initial telemetry is sent.
 
-DeepSleep is then triggered after the TelePeriod event. In this example, it will occur after five minutes. Telemetry will be collected and sent (e.g., via MQTT). Now, DeepSleep can happen. First, `Offline` is published to the LWT topic on MQTT. It then calculates the new sleeping time to wake-up at 9:00 am (3600 seconds after the last wake-up). At 9:00 am this same sequence of events happens again.
+DeepSleep is then triggered after the next TelePeriod event. In this example, it will occur after one minute. Telemetry will be collected and sent (e.g., via MQTT) and DeepSleep can happen. First, `Offline` is published to the LWT topic on MQTT. It then calculates the new sleeping time to wake-up at 9:00 am (3600 seconds after the last wake-up). At 9:00 am this same sequence of events happens again.
 
-If you want to minimize the time that the device is in operation, decrease TelePeriod down to 10 seconds. This period of time is counted ==after== MQTT is connected. Also, in this case, the device will wake up at 9:00 am even if the uptime was much smaller. If the device missed a wake-up it will try a start at the next event - in this case 10:00 am.
-
+If you want to minimize the time that the device is in operation, two special values for TelePeriod exist: 10 seconds and 300 seconds.  Using either of these two exact values will prevent waiting for the next telemetry.  DeepSleep will be triggered within a few second of the time being synchronized rather than waiting for the TelePeriod.
+    
 ## ESP8266 DeepSleep Side-effects
 Not all GPIO behave the same during DeepSleep. Some GPIO go HIGH, some LOW, some FOLLOW the relay but work only on FET transistors. As soon as current flows they go LOW. I use one GPIO to trigger a BC337 transistor to switch OFF all connected devices during DeepSleep.
 
@@ -166,7 +213,7 @@ When MQTT connects at `13:08:38`, this sets the system to READY.
 13:08:44 CFG: Saved to flash at F4, Count 96, Bytes 3824
 ```
 
-In the context of DeepSleep, maintaining a device boot count is not relevant. When DeepSleep is enabled, boot count will not be incremented. This avoids excessive flash writes which will deteriorate the flash memory chip and eventually cause the device to fail. Boot count incrementing can be enabled using [`SetOption76`](Commands#setoption76).
+In the context of DeepSleep, maintaining a device boot count is not relevant. When DeepSleep is enabled, boot count will not be incremented. This avoids excessive flash writes which will deteriorate the flash memory chip and eventually cause the device to fail. Boot count incrementing can be enabled using [`SetOption76`](Commands.md#setoption76).
 
 In this example, TelePeriod is 10. Therefore when it is reached, telemetry reporting occurs.
 ```
@@ -205,7 +252,8 @@ For this, we consider that:
 
 * the battery level is measured by the ESP ADC with the appropriate voltage divider,
 * the Tasmota ADC mode is set to Range mode,
-* `AdcParams 6` has been used so the range value represent the battery voltage in millivolts   
+* `AdcParams 6` has been used so the range value represent the battery voltage in millivolts
+* There is a `BatteryPercentage` feature that can be feeded by a rule and used here to drive DeepSleep behavior
 
 The below graph represent the adaptation paths we want to follow to adjust DeepSleepTime: one path
 while the level is dropping, another path while the level is rising.
@@ -255,3 +303,6 @@ Rule1 +on tele-Analog#Range<3800 do if (%var1%<900) deepsleeptime 900 elseif (%v
 ```
 
 Don't forget to enable using `Rule1 1`
+
+## DeepSleep Power Saving
+The amount of power saved during deep sleep depends significantly on the type of ESP module used.  For example, an ESP-M3 module drops to 20-25 uA at 2.5-3.3 V when in deep sleep.  Other devices, with onboard regulators, USB chips etc. like the WEMOS D1 Mini, may still require 18 mA at 5 V when in deep sleep (i.e.: greater than 1000 times more power).

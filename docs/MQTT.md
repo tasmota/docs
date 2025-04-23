@@ -42,7 +42,7 @@ To send commands and view responses you'll need an [MQTT client](http://www.hive
 Commands over MQTT are issued to Tasmota by using topic `cmnd/%topic%/<command>` and payload `<parameter>`. If there is no `<parameter>` (an empty MQTT message/payload), a query is sent for current status of the `<command>`.
 
 !!! tip
-    If you are using *mosquitto_pub*, you can issue an empty payload using the `-n` command line option. 
+    If you are using `mosquitto_pub` command-line tool, you can issue an empty payload using the `-n` command line option. 
     If your MQTT client cannot issue an empty payload, you can use the single character `?` instead.
 
 ### Command flow
@@ -81,9 +81,9 @@ In the following examples `%topic%` is `tasmota`, FullTopic is `%prefix%/%topic%
 
 - The relay can be controlled with `cmnd/tasmota/POWER on`, `cmnd/tasmota/POWER off` or `cmnd/tasmota/POWER toggle`. Tasmota will send a MQTT status message like `stat/tasmota/POWER ON`.
 
-- Power state message can be sent with the retain flag set using [`PowerRetain 1`](Commands#powerretain).
+- Power state message can be sent with the retain flag set using [`PowerRetain 1`](Commands.md#powerretain).
 
-- Telemetry messages can also be sent with the retain flag using [`SensorRetain`](Commands#sensorretain).
+- Telemetry messages can also be sent with the retain flag using [`SensorRetain`](Commands.md#sensorretain).
 
 - For Sonoff Dual or Sonoff 4CH the relays need to be addressed with `cmnd/tasmota/POWER<x>`, where {x} is the relay number from 1 to 2 (Sonoff Dual) or from 1 to 4 (Sonoff 4CH). `cmnd/tasmota/POWER4 off` turns off the 4th relay on a Sonoff 4CH.
 
@@ -220,9 +220,16 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 #define SUPPORT_MQTT_EVENT
 #endif
 ```
+To default maximum MQTT message size that Tasmota can process is 256 bytes. You can increase it by redefining the following constant in `user_config_override.h`:
+```
+#ifdef RULE_MAX_MQTT_EVENTSZ
+#undef RULE_MAX_MQTT_EVENTSZ
+#endif
+#define RULE_MAX_MQTT_EVENTSZ  512
+```
 
 ### Subscribe
-Subscribes to an MQTT topic and assigns an [`Event`](Commands#event) name to it. 
+Subscribes to an MQTT topic and assigns an [`Event`](Commands.md#event) name to it. 
 
 `Subscribe <eventName>, <mqttTopic> [, <key>]`
 
@@ -231,6 +238,10 @@ The `<key>` parameter is specified when you need to parse a key/value pair from 
 You subscribe to an MQTT topic and assign an event name. Once the subscribed MQTT message is received the configured event will be triggered. 
 
 Command without any parameters will list all currently subscribed topics.
+
+!!! tip "Domoticz Users"
+    As designed, `domoticz/out` (or any user defined DOMOTICZ_OUT_TOPIC) overrules the rule subscribe functionality in a way that you're unable to subscribe to `domoticz/out/1234/#. _This means that you can't subscribe to this topic, unless you remove all Domoticz relay/idx relations with command ``DzIdx0 0`` or if you had disabled the `USE_DOMOTICZ` flag when compiling your own firmware._
+
 
 You can set up a rule with `ON EVENT#<event_name> DO ... ENDON` to do what you want based on this MQTT message. The payload is passed as a parameter once the event has been triggered. If the payload is in JSON format, you are able to get the value of specified key as a parameter.  
 
@@ -244,20 +255,16 @@ Rule1
 ```
 ```console
 Rule1
-  ON mqtt#connected DO Subscribe DnTemp, stat/other-device-topic/SENSOR, DS18B20.Temperature ENDON
+  ON mqtt#connected DO Subscribe DnTemp, tele/other-device-topic/SENSOR, DS18B20.Temperature ENDON
   ON Event#DnTemp>=21 DO <command> ENDON
 ```
 where the MQTT message payload is `{"Time":"2017-02-16T10:13:52", "DS18B20":{"Temperature":20.6}}`
 ```console
 Rule1
-  ON mqtt#connected DO Subscribe DnTemp, stat/other-device-topic/SENSOR, DS18B20.Temperature ENDON
+  ON mqtt#connected DO Subscribe DnTemp, tele/other-device-topic/SENSOR, DS18B20.Temperature ENDON
   ON Event#DnTemp DO TempMeasuredSet %value% ENDON
 ```
 will allow a thermostat to subscribe to a temperature sensor on another Tasmota device
-```console
-  ON Event#DnTemp DO TempMeasuredSet %value% ENDON
-```
-Will allow a thermostat to subscribe to a temperature sensor on another Tasmota device
 
 ### Unsubscribe
 Unsubscribe from topics which were subscribed to using the [`Subscribe`](#subscribe) command.  

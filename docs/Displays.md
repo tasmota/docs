@@ -21,6 +21,8 @@
 16 | LilyGO T5 4.7" E-Paper display ESP32 device | :material-cpu-32-bit:
 17 | [Universal Display Driver](#universal-display-driver) | SPI or I^2^C
 18 | Interface to virtual display driver with [Berry](Berry) | :material-cpu-32-bit:
+19 | [MAX7219 Dot Matrix](MAX7219.md) | Interface GPIO
+20 | [TM1650](TM1650) 7-segment displays | I^2^C 
 
 ## Display Commands
 
@@ -30,11 +32,11 @@ See commands page for full list of available [Display Commands](Commands.md#disp
 
 The display driver is able to display predefined setups of text or user defined text. To display text using `DisplayText` set `DisplayMode` to `0`, or set `DisplayMode` to `1` for the HT16K33 dot-matrix display.  
 
-To use the seven-segment-specific [TM1637, TM1638 and MAX7219](TM163x#commands-and-usage) _Display-_ commands, set `DisplayMode` to `0`.
+To use the seven-segment-specific [TM1637, TM1638 and MAX7219](TM163x#commands-and-usage) or [TM1650](TM1650#commands-and-usage)  _Display-_ commands, set `DisplayMode` to `0`.
 
-Parameter	|	LCD Display	|	OLED Display	|	TFT Display  | 7-segment Display (TM163x and MAX7219)
+Parameter	|	LCD Display	|	OLED Display	|	TFT Display  | 7-segment Display (TM163x, MAX7219 and TM1650)
 ---	|	---	|	---	|	---     |    ----
-0	|	DisplayText	|	DisplayText	|	DisplayText  |    All [TM163x](TM163x#commands-and-usage) _Display-_ functions
+0	|	DisplayText	|	DisplayText	|	DisplayText  |    All [TM163x](TM163x#commands-and-usage) / [TM1650](TM1650#commands-and-usage)  _Display-_ functions
 1	|	Time/Date	|	Time/Date	|	Time/Date    |    Time
 2	|	Local sensors	|	Local sensors	|	Local sensors   |   Date
 3	|	MQTT and Time/Date	|	Local sensors and Time/Date	|	Local sensors and Time/Date  |   Time/Date
@@ -50,13 +52,17 @@ The string can be prefixed by embedded control commands enclosed in brackets `[]
 
 In order to use the `DisplayText` command the `DisplayMode` must be set to `0` (or optional `1` on LCD displays) or other modes must be disabled before compilation with `#undef USE_DISPLAY_MODES1TO5`.  
 
-The `DisplayText` command is customised for the TM1637, TM1638 and MAX7219 seven-segment display modules. This is documented [here](TM163x#commands-and-usage).  
+The `DisplayText` command is customised for the TM1637, TM1638 and MAX7219 or TM1650 seven-segment display modules. This is documented [here](TM163x#commands-and-usage) and [here](TM1650#commands-and-usage).  
 
 ### DisplayText Parameters
 
 In the list below `p` stands for parameter and may be a number from 1 to n digits.
 On monochrome graphic displays things are drawn into a local frame buffer and sent to the display either
 via the `d` command or automatically at the end of the command.
+
+Co-ordinates are mapped from 0,0 (x,y) at the top left of the logical display, where x is the horizontal axis incrementing
+right and y is the vertical axes incrementing down. How the logical display is physically displayed (rotated) on screen can be adjusted on some
+displays using the `DisplayRotate` command.
 
 ### Positioning
 
@@ -72,13 +78,13 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 
 `hp` = draws a horizontal line with length `p` (x is advanced)  
 `vp` = draws a vertical line with length `p` (y is advanced)  
-`Lp:p` = draws a line top:`p` (x,y are advanced)  
+`Lp:p` = draws a line to destination `p:p` (x,y are advanced)  
 `kp` = draws a circle with radius `p`  
 `Kp` = draws a filled circle with radius `p`  
-`rp:p` = draws a rectangle with `p` with and `p` height  
-`Rp:p` = draws a filled rectangle with `p` with and `p` height  
-`up:p:p` = draws a rounded rectangle with `p` with, `p` height and `p` radius v
-`Up:p:p` = draws a filled rounded rectangle with `p` with, `p` height and `p` radius  
+`rp:p` = draws a rectangle with `p` width and `p` height  
+`Rp:p` = draws a filled rectangle with `p` width and `p` height  
+`up:p:p` = draws a rounded rectangle with `p` width, `p` height and `p` radius v
+`Up:p:p` = draws a filled rounded rectangle with `p` width, `p` height and `p` radius  
 
 ### Miscellaneous
 
@@ -105,9 +111,10 @@ align right
 `Cip` = set foreground index color (0..31) for color displays (see index color table below)  
 `Bip` = set background index color (0..31) for color displays (see index color table below)  
 `wp` = draws an analog watch with radius p  (#define USE_AWATCH)   
-`Pfilename:` = display an rgb 16-bit color (or jpg on ESP32) image when file system is present, Scripteditor contains a converter to convert jpg to special RGB16 pictures  See ![ScriptEditor](https://tasmota.github.io/docs/Scripting-Language/#optional-external-editor)
+`Pfilename:` = display an rgb 16-bit color (or jpg on ESP32) image when file system is present, Scripteditor contains a converter to convert jpg to special RGB16 pictures See [ScriptEditor](https://tasmota.github.io/docs/Scripting-Language/#optional-external-editor)   
+`Pfilename:C:ys:ys` displays a centered picture in frame xs, ys. if C > 0 the picture gets a frame in this index color  
 `Ffilename:` = load RAM font file when file system is present. the font is selected with font Nr. 5, these fonts are special binary versions of GFX fonts of any type. they end with .fnt. an initial collection is found in Folder BinFonts  
-`SXfilename:` = load display descriptor for multiple display support (X = 1..3) for up to 3 displays. 
+`SXfilename:` = load display descriptor for multiple display support (X = 1..3) for up to 3 displays.  
 `SX:` = switch to display number (X = 1..3).  
 `dcI:V` = define index color entry Index 19-31, V 16 bit color value (index 0-18 is fixed)  
 
@@ -164,8 +171,13 @@ You may specify a picture for selected and unselected button state. Picture file
 
 Set the state of a button or slider with:  
 
-* `b#sX` where # = is slider number `0..15`
-* `X` = `0` or `1` for buttons, `0..100` for sliders   
+* `b#sX` where # = is slider or button number `0..15`
+* `X` = `0` or `1` for buttons, `0..100` for sliders
+
+Disbale button or slider with:  
+
+* `bd#` disbale where # = is slider or button number `0..15`  
+* `be#` enable  where # = is slider or button number `0..15`  
 
 ### Display JSON variables
 
@@ -283,12 +295,12 @@ Common colors table:
 
 | Color | Code | Color | Code | Color | Code |
 | -- | -- | -- | -- | -- | -- |
-| Black	| 0 | Navy	| 15 | Dark green	| 3 |
-| Dark cyan	| 1007 | Maroon	| 30720 | Purple	| 30735 |
-| Olive	| 31712 | Light grey	| 50712 | Dark grey	| 31727 |
-| Blue	| 31 | Green	| 7 | Cyan	| 2047 |
-| Red	| 63488 | Magenta	| 63519 | Yellow	| 65504 |
-| White	| 65535 | Orange	| 64800 | Green yellow	| 45029 |
+| Black	| 0 | White	| 65535 | Red	| 63488 |
+| Green	| 2016 | Blue	| 31 | Cyan	| 2047 |
+| Magenta	| 63519 | Yellow	| 65504 | Navy	| 15 |
+| Dark green	| 992 | Dark cyan	| 1007 | Maroon	| 30720 |
+| Purple	| 30735 | Olive	| 31712 | Light grey	| 50712 |
+| Dark grey	| 31727 | Orange	| 64800 | Green yellow	| 45029 |
 | Pink	| 64536 | | | | |
 
 
@@ -335,8 +347,7 @@ EPDFont:
 ## Hardware Connections
 I<sup>2</sup>C displays are connected in the usual manner and defined via the GPIO component selection.  
 
-The I<sup>2</sup>C address must be specified using `DisplayAddress XX`, e.g., `60`. The model must be specified with `DisplayModel`, e.g., `2` for SSD1306. To permanently turn the display on set `DisplayDimmer 100`. Display rotation can be permanently set using `DisplayRotate X` (x = `0..3`).
-
+The I<sup>2</sup>C address must be specified using `DisplayAddress XX`, e.g., `60`. The model must be specified with `DisplayModel`, e.g., `2` for SSD1306. In versions with Universal Display Driver the DisplayModel is always `17`. To permanently turn the display on set `DisplayDimmer 100`. Display rotation can be permanently set using `DisplayRotate X` (x = `0..3`). 
 On SPI the CS and DC pins when needed must use the pin definition with Display_ID + CS e.g. ST7789_CS
 
 E-Paper displays are connected via software 3-wire SPI `(CS, SCLK, MOSI)`. DC should be connected to GND , Reset to 3.3 V 
@@ -397,7 +408,10 @@ rule1 on tele-BME280#Temperature do DisplayText [s1p21x0y0]Temp: %value% C endon
 
 ## WaveShare Display Drivers
 
-Waveshare has two kinds of display controllers: with partial update and without partial update. The 2.9 inch driver is for partial update and should also support other Waveshare partial update models with modified WIDTH and HEIGHT parameters. The 4.2 inch driver is a hack which makes the full update display behave like a partial update and should probably work with other full update displays.  
+Waveshare has two kinds of display controllers: with partial update and without partial update. The 2.9 inch driver is for partial update and should also support other Waveshare partial update models with modified WIDTH and HEIGHT parameters. The 4.2 inch driver is a full update display.
+
+epaper displays should be connected via software SPI. most of them require a reset and a busy line. connect the busy line to SSPI_MISO.
+  
 
 The drivers are subclasses of the Adafruit GFX library. The class hierarchy is `LOWLEVEL :: Paint :: Renderer :: GFX`, where:  
 
@@ -417,333 +431,13 @@ The EPD fonts use about 9k space, which can be selected at compile time using \#
 - EPD29   - 2.1k
 - Display and Render class - ~12k
 
-
 ## Universal Display Driver
 
-Universal Display Driver or uDisplay is a way to define your display settings using a simple text file and easily add it to Tasmota.
-uDisplay is `DisplayModel 17`. It supports I2C and hardware or software SPI (3 or 4 wire). 
+Documentation for Universal Display Driver was moved to a [specific page](Universal-Display-Driver#universal-display-driver-udisplay)
 
-The driver is enabled by compiling with `#define USE_UNIVERSAL_DISPLAY` and setting an unused GPIO to `Option A3`.
+## Universal Touch Driver  
 
-### Descriptor File
-The display itself is defined by a descriptor file. Many display descriptor files are included in Tasmota GitHub in [`tasmota/displaydesc`](https://github.com/arendst/Tasmota/tree/development/tasmota/displaydesc) folder
-
-which may be provided by any of the following methods:
-
-1. A `display.ini` file present in the flash file system. ***preferred option***
-2. A special `>d` section in scripting. Copy the file to the `>d` script section and place a `->displayreinit` cmd into `>B` section
-3. Copy the descriptor to `Rule 3` but **do not** enable it (descriptor may not contain ANY spaces in this mode)
-4. Compile the descriptor into the binary in a section in `user_config_override.h` under driver 17 (const char)
-
-Options 2 and 4 work well for 1M flash devices.
-
-Descriptor text file has the following elements:  
-
-`:H`  
-
-Header line describes the main features of the display (comma separated, no spaces allowed)
-
-1. name
-2. x size in pixels
-3. y size in pixels
-4. bits per pixel (1 for bw displays, 16 for color displays)
-5. hardware interface used either I2C or SPI
-
-`I2C`  
-  
-I2C interface:
-
-1. I2C address in HEX
-2. SCL pin
-3. SDA pin
-4. RESET pin
-
-`SPI`  
-
-SPI interface:
-  
-1. Number (1 = hardware SPI 1, 2 = Hardware SPI 2 (ESP32), 3 = software SPI
-2. CS pin
-3. CLK pin
-4. MOSI pin
-5. DC pin
-6. Backlight pin
-7. RESET pin
-8. MISO pin
-9. SPI Speed in MHz
-  
-`PAR`  
-
-Parallel interface: (ESP32-S3 only)
-  
-1. Bus size 8 or 16
-2. RESET pin
-3. CS pin
-4. DC pin
-5. WR pin
-6. RD pin
-7. Backlight pin
-8. d0-d7 pins
-9. d8-d15 pins if bus size = 16
-10. Parallel Speed in MHz (usually 20)
-
-All signals must be given. Unused pins may be set to -1. If you specify a `*` char the pin number is derived from the Tasmota GPIO GUI.  
-The CS and DC pins must be the standard pins e.g. `SPI_CS` or `SPI_DC`.  
-
-!!! example "Example"
-
-```haskell
-:H,SH1106,128,64,1,I2C,3c,*,*,*
-```
-
-```haskell
-:H,ILI9341,240,320,16,SPI,1,-1,14,13,5,4,15,*,40
-```
-
-`:S`  
-(_optional_) Splash setup, also defines initial colors. If omitted screen is not cleared initially.
-
-1. Font number
-2. Font size
-3. FG color (as index color)
-4. BG color (as index color)
-5. x position of text
-6. y position of text  
-
-!!! example
-
-    ```haskell
-    :S,2,1,1,0,40,20
-    ```
-    
-`:I`  
-Initial register setup for the display controller. (`IC` marks that the controller is using command mode even with command parameters)
-All values are in hex. On SPI the first value is the command, then the number of arguments and the the arguments itself.
-`Bi7 7` on the number of arguments set indicate a wait of 150 ms. On I^2^C all hex values are sent to I^2^C.
-
-!!! example
-
-    ```haskell
-    :I
-    EF,3,03,80,02
-    CF,3,00,C1,30
-    ED,4,64,03,12,81
-    E8,3,85,00,78
-    CB,5,39,2C,00,34,02
-    F7,1,20
-    EA,2,00,00
-    C0,1,23
-    C1,1,10
-    C5,2,3e,28
-    C7,1,86
-    36,1,48
-    37,1,00
-    3A,1,55
-    B1,2,00,18
-    B6,3,08,82,27
-    F2,1,00
-    26,1,01
-    E0,0F,0F,31,2B,0C,0E,08,4E,F1,37,07,10,03,0E,09,00
-    E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
-    11,80
-    29,80
-    ```
-
-`:o`,OP      
-`OP` = controller OPCODE to switch display off  
-
-`:O`,OP       
-`OP` = controller OPCODE to switch display on  
-
-`:R`,OP,SL       
-
-1. `OP` = rotation opcode
-2. `SL` = startline opcode (optional)  
-
-`:0`  
-`:1`  
-`:2`  
-`:3`  
-
-Register values for all 4 rotations (color display only)
-
-1. rotation code
-2. x offset
-3. y offset
-4. rotation pseudo opcode for touch panel
-the appropriate coordinate convervsions are defined via pseudo opcodes
-0 = no conversion
-1 = swap and flip x
-2 = flipx, flip y
-3 = swap and flip y
-4 = flip x
-5 = flip y
-bit 7 = swap x,y
-
-`:A`  
-3 OPCODES to set address window _(all but epaper displays)_
-
-1. set column opcode  
-2. set row opcode  
-3. start write opcode  
-4. pixel size (optional)  
-
-`:P`  
-Pixel transfer size (default = 16 bit RGB) _(optional)_
-
-`:i`  
-invert display opcodes  
-1. inversion off  
-2. inversion on  
-
-`:D`  
-dimmer opcode _(optional)_
-
-`:B`  
-LVGL _(optional)_
-  
-1. number of display lines flushed at once (min 10) the lower the lesser memory needed  
-2. bit 0: DMA enables (`0` for no DMA, 1 use DMA) - not supported on all displays<br>bit 1: selects color swap, 2 = swap 16 bit color<br>bit 2: enable async DMA, `0` wait for DMA to complete before returning, `4` run DMA async in the background. This later mode is only valid if the SPI bus is not shared between the display and any other SPI device like SD Card Reader.
-
-`:T`  
-Wait times used for E-paper display  
-1. full refresh wait in ms  
-2. partial refresh wait in ms  
-3. wait after update in ms  
-
-`:L`  
-Lookup table for full refresh (Waveshare 29)
-
-`:l`  
-Lookuptable for partial refresh (Waveshare 29)
-
-`:Lx`,OP  
-Lookuptable for full refresh (Waveshare 42) 
-`x` = 1..5  
-`OP` = opcode for sending refresh table  
-
-`:TIx,AA,SCL,SDA`  
-Defines a touch panel an I2C bus nr `x` (1 or 2)  
-AA is device address  
-SCL, SDA are the pins used (or * for tasmota definition)  
-
-`:TS,CS_PIN`   
-Defines a touch panel an SPI bus with chip select `CS_PIN` (or *)  
-
-`:M,X1,X2,Y1,Y2`
-Defines an optional mapping for touch controllers (always needed on resistive touch) 
-`X1` = display left margin  
-`X2` = display right margin  
-`Y1` = display upper margin  
-`Y1` = display lower margin  
-  
-`:r,X`
-Defines optional display rotation `X` = `0..3`
-
-`:b,X`
-Defines optional inverted backpanel `X` = `1` = use inverted logic for backpanel  
-
-  
-!!! example "Full configuration for SH1106 (comment lines starting with ; are allowed)"  
-
-```haskell
-:H,SH1106,128,64,1,I2C,3c,*,*,*
-:S,0,2,1,0,30,20
-:I
-AE
-D5,80
-A8,3f
-D3,00
-40
-8D,14
-20,00
-A1
-C8
-DA,12
-81,CF
-D9F1
-DB,40
-A4
-A6
-AF
-:o,AE
-:O,AF
-:A,00,10,40
-#
-```
-
-!!! example "Full configuration for ILI9341: (comment lines starting with ; are allowed)"  
-
-```haskell
-:H,ILI9341,240,320,16,SPI,1,*,*,*,*,*,*,*,40
-:S,2,1,1,0,40,20
-:I
-EF,3,03,80,02
-CF,3,00,C1,30
-ED,4,64,03,12,81
-E8,3,85,00,78
-CB,5,39,2C,00,34,02
-F7,1,20
-EA,2,00,00
-C0,1,23
-C1,1,10
-C5,2,3e,28
-C7,1,86
-36,1,48
-37,1,00
-3A,1,55
-B1,2,00,18
-B6,3,08,82,27
-F2,1,00
-26,1,01
-E0,0F,0F,31,2B,0C,0E,08,4E,F1,37,07,10,03,0E,09,00
-E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
-11,80
-29,80
-:o,28
-:O,29
-:A,2A,2B,2C
-:R,36
-:0,48,00,00,00
-:1,28,00,00,01
-:2,88,00,00,02
-:3,E8,00,00,02
-#
-```
-Scripter is the nost convenient way to edit and develop a uDisplay driver. On every scripter save the display is reinitialized and you immediately see results of your changes.  
-
-!!! example "Scripter driven display descriptor"  
-
-```haskell
->D
->B
-=>displayreinit
->d
-; name,xs,ys,bpp,interface, address, scl,sda,reset
-:H,SH1106,128,64,1,I2C,3c,*,*,*
-:S,0,2,1,0,30,20
-:I
-AE
-D5,80
-A8,3f
-D3,00
-40
-8D,14
-20,00
-A1
-C8
-DA,12
-81,CF
-D9F1
-DB,40
-A4
-A6
-AF
-:o,AE
-:O,AF
-:A,00,10,40
-#
-```
+Documentation for Universal Touch Driver was moved to a [specific page](Universal-Display-Driver#universal-touch-driver-utouch)
 
 ## Compiling
 There are also many variants of each display available and not all variants may be supported.  
@@ -752,7 +446,7 @@ There are also many variants of each display available and not all variants may 
  ---|---
 USE_DISPLAY | Enable display support. Also requires at least one of the following compilation directives 
 USE_DISPLAY_LCD | Enable LCD display. Also requires `USE_I2C`
-USE_DISPLAY_SSD1306 | Enable OLED SSD1306 display. Also requires `USE_I2C`
+USE_DISPLAY_SSD1306 | Enable OLED SSD1306 display. Also requires `USE_I2C` / Now with Universal Display Driver
 USE_DISPLAY_MATRIX | Enable MATRIX display
 USE_DISPLAY_ILI9341 | Enable TFT ILI9341 display. Also requires `USE_SPI`<br>if seconds SPI bus on ESP32 shall be used SSPI must be defined instead of SPI<br>ILI9342 also supported, select with cmd displayilimode 3, default is: displayilimode 1 (ILI9341)
 USE_DISPLAY_EPAPER_29 | Enable Waveshare EPAPER_29 display.(black/white, partial update)<br>Also requires `USE_SPI`
@@ -766,8 +460,8 @@ USE_DISPLAY_ST7789  | Enable TFT ST7789 display. Also requires `USE_SPI`
 USE_DISPLAY_ILI9342  | Enable TFT ILI9342 display. Also requires `USE_SPI` 
 USE_DISPLAY_SD1331  | Enable TFT SD1331 display. Also requires `USE_SPI` 
 USE_DISPLAY_TM1637  | Enable 7-segment [TM1637, TM1638 and MAX7219](TM163x.md) display. 
+USE_DISPLAY_TM1650  | Enable 7-segment [TM1650](TM1650.md) display. Also requires `USE_I2C`
 USE_DISPLAY_SEVENSEG_COMMON_ANODE | Common anode 7 segment displays. Also requires `USE_I2C`  
-USE_DISPLAY_TM1637 | Enable TM1637 display
 USE_LILYGO47  | Enable LILGO 4.7 Epaper display ESP32 combo
 USE_UNIVERSAL_DISPLAY  | Enable universal display driver
 USE_LVGL  | Enable LVGL, currently only supported by berry scripting  

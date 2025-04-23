@@ -1,23 +1,23 @@
 ## General Weaknesses
 
-Whenever you add devices to your network you generate additional points of potential intrusion. This is not only valid for your mobile phones and computers, but also for you Smart TV, you Alexa, or all of your SONOFF devices (ESP8266).
+Whenever you add devices to your network, you generate additional points of potential intrusion. This is not only valid for your mobile phones and computers, but also for your Smart TV, your Alexa, or all of your SONOFF devices (ESP8266).
 
 There are following potential risks you have to mitigate:
 
 * Someone is able to communicate with your device ([Scenario 1](#scenario-1))
-* Someone hacks your device and is able to log in into your WLAN. (why is this a problem? [Scanario 2](#scenario-2))
-* Someone hacks your device and is able to read and change any value on your MQTT server (why is this a problem? [Scanario 3](#scenario-3))
-* Someone hacks your network and can interact with your devices (why is this a problem? [Scanario 4](#scenario-4))
-* Someone hacks your device and use it for different things like mail bot or DOS (Denial of Service) device or WLAN jammer (why is this a problem? [Scanario 5](#scenario-5))
+* Someone hacks your device and is able to log in into your WLAN. (why is this a problem? [Scenario 2](#scenario-2))
+* Someone hacks your device and is able to read and change any value on your MQTT server (why is this a problem? [Scenario 3](#scenario-3))
+* Someone hacks your network and can interact with your devices (why is this a problem? [Scenario 4](#scenario-4))
+* Someone hacks your device and use it for different things like mail bot or DOS (Denial of Service) device or WLAN jammer (why is this a problem? [Scenario 5](#scenario-5))
 
 #### Scenario 1
 It is possible to [set a password to the webadmin interface]( https://github.com/arendst/Tasmota/pull/12900), however ESP8266 devices *SHALL* not be exposed to internet or accessible to other network clients. (e.g. users in the same network) [[1]](https://github.com/arendst/Tasmota/discussions/14166#discussioncomment-1872750) [[2]](https://github.com/arendst/Tasmota/discussions/14166#discussioncomment-1871619). 
 
 #### Scenario 2  
-If someone is able to get your WLAN key, he can login into your network, if he is nearby and scan for any traffic and for any devices. Many communication is not encrypted in your WLAN by default. Therefore be part of your WLAN gives the attacker a great opportunity to screw-up the rest of your infrastructure. Also be part of your WLAN does mean, that the attacker can use your IP-Address and your traffic to do nasty things.
+If someone is able to get your WLAN key, they can login into your network.  If they are nearby, they can scan for any traffic and for any devices. Many communications are not encrypted on your WLAN by default. Therefore being part of your WLAN gives the attacker a greater opportunity to screw-up the rest of your infrastructure. Also being part of your WLAN does mean, that the attacker can use your IP-Address and your traffic to do nasty things.
 
 #### Scenario 3
-If you can hack an ESP82xx device, you might get access to the keys stored in the device. For example, the MQTT password allows you to read ALL of your devices and change any device at any time. With the information of the MQTT-Server user/password, it might be not required anymore to physically be in your WLAN. Maybe your MQTT Server is publicly accessible. Then the attacker can control your home from any place.
+If you can hack an ESP82xx device, you might get access to the keys stored in the device. For example, the MQTT password allows you to monitor and control ALL of your devices at any time. If you are using a publicly accessible MQTT Server and an attacker has captured your MQTT Server infomation (e.g. hostname, user, and password), an attacker can monitor and control your home from anywhere on the Internet.
 
 Update: Beginning with version 6.0.0, passwords are not directly exposed through the serial connection or web interface in configuration mode. Therefore it is now less simple, **however still possible** to obtain the MQTT or WLAN password from a device. Such can be accomplished by downloading a configuration backup via the web UI of the device and decoding it using the `decode-config.py` script found in the Tasmota `tools` folder.
 
@@ -83,7 +83,7 @@ Topic: ESP_123456
 User: ESP_123456 (must be the same to Topic)  
 password: 987654321  
 
-Configuration file: /etc/mosquitte/conf.d/jp.acl
+Configuration file: /etc/mosquitto/conf.d/jp.acl
 ```
 user root
 topic read #
@@ -138,7 +138,7 @@ How to generate the certificates in mosquitto please look at:
 
 Type WifiConfig into the tasmota console. If this parameter is set to 2, you might want to change it after completing the setup of your device since in case your Wifi SSID is not available (i.e. access point dies or WLAN jammer is used as in [Scanario 5](#scenario-5)), the WiFiManager will jump into action and make your tasmota devices available using an unsecured access point.
    
-   Some less risky options would be: 0/4/5. Currently the [default WiFiConfig value](https://github.com/arendst/Tasmota/issues/4400) is [(WIFI_RETRY)](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h#L79) which means that device retries other AP without rebooting.  (For details, see [Wi-Fi commands](Commands#wi-fi)).
+   Some less risky options would be: 0/4/5. Currently the [default WiFiConfig value](https://github.com/arendst/Tasmota/issues/4400) is [(WIFI_RETRY)](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h#L79) which means that device retries other AP without rebooting.  (For details, see [Wi-Fi commands](Commands.md#wi-fi)).
 
 ## Home Assistant OS MQTT Add-On
 If you are using Home Assistant OS [MQTT add-on](https://github.com/home-assistant/addons/tree/master/mosquitto) with [Tasmota integration](https://www.home-assistant.io/integrations/tasmota/) the devices will need write access to the `tasmota/discovery/#` topic.

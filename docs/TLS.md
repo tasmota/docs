@@ -1,35 +1,37 @@
 # TLS Secured MQTT
 
-??? tip "This feature is included only in `tasmota32` binaries" 
+??? tip "This feature is included only in `tasmota32` and `tasmota-zbbridge` binaries" 
 
 Starting with version 10.0.0.4, TLS now support dual mode, depending of the value of `SetOption132`:
 
 - `SetOption132 0` (default): the server's identity is checked against pre-defined Certificate Authorities. There is no further configuration needed. Tasmota includes the following CAs:
-  - [LetsEncrypt R3 certificate](https://letsencrypt.org/certificates/), RSA 2048 bits SHA 256, valid until 20250915
+  - [Let's Encrypt ISRG Root X1](https://letsencrypt.org/certificates/), RSA 4096 bits SHA 256, valid until 20300604, starting with Tasmota version 13.4.1.2
   - [Amazon Root CA](https://www.amazontrust.com/repository/), RSA 2048 bits SHA 256, valid until 20380117, used by AWS IoT
 - `SetOption132 1`: Fingerprint validation. This method works for any server certificate, including self-signed certificates. The server's public key is hashed into a fingerprint and compared to a pre-recorded value. This method is more universal but requires an additional configuration (see below)
 
 There is no performance difference between both modes.
 
+Because of [changes](https://letsencrypt.org/2024/04/12/changes-to-issuance-chains) in the Let's Encrypt certificate chain, Tasmota needs to be updated to at least version 13.4.1.2 to validate certificates issued by Let's Encrypt after June 6th, 2024.
+
 ## Fingerprint Validation
 
 The fingerprint is now calculated on the server's Public Key and no longer on its Certificate. The good news is that Public Keys tend to change far less often than certificates, i.e. LetsEncrypt triggers a certificate renewal every 3 months, the Public Key fingerprint will not change after a certificate renewal. The bad news is that there is no `openssl` command to retrieve the server's Public Key fingerprint.
 
-The original Fingerprint V1 algorithm had a security potential vulnerability, it has been replaced by a new more robust method v2. To avoid breaking compatibility, Tasmota will automatically detect when a fingerprint v1 is present and will convert it automatically to V2.
+The following tool can be used [to calculate the Fingerprint](https://github.com/issacg/tasmota-fingerprint) from your certificate using the new V2 algorithm.
 
-**Important**: the following tool [to calculate it](https://github.com/issacg/tasmota-fingerprint) from your certificate is now deprecated. The fingerprint will work once and will be replaced with the new fingerprint.
+**Important**: The original Fingerprint V1 algorithm had a security potential vulnerability, it has been replaced by a new more robust method v2. 
 
-So to simplify your task, we have added two more options: 1/ auto-learning of the fingerprint, 2/ disabling of the fingerprint validation altogether.
+To simplify your task, we have added two more options: 1/ auto-learning of the fingerprint, 2/ disabling of the fingerprint validation altogether.
 
 #### Option 1: Fingerprint auto-learn
 If set, Tasmota will automatically learn the fingerprint during the first connection and will set the Fingerprint settings to the target fingerprint. To do so, use one of the following commands:
 
 ```
-#define MQTT_FINGERPRINT1     "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+#define MQTT_FINGERPRINT1      0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
 ```
 or
 ```
-#define MQTT_FINGERPRINT2     "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+#define MQTT_FINGERPRINT2      0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
 ```
 
 #### Option 2: Disable Fingerprint
@@ -38,7 +40,7 @@ You can completely disable server fingerprint validation, which means that Tasmo
 To do so, set one of the Fingerprints to all 0xFF:
 
 ```
-#define MQTT_FINGERPRINT1     "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF"
+#define MQTT_FINGERPRINT1      0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF
 ```
 Tasmota also provide an option to authenticate clients using an x509 certificate and a public key for authentication, instead of username/password.
 
@@ -54,7 +56,6 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 #define MQTT_TLS_ENABLED       true              // [SetOption103] Enable TLS mode (requires TLS version)
 //  #define USE_MQTT_TLS_CA_CERT                   // Force full CA validation instead of fingerprints, slower, but simpler to use.  (+2.2k code, +1.9k mem during connection handshake)
                                                    // This includes the LetsEncrypt CA in tasmota_ca.ino for verifying server certificates
-//  #define USE_MQTT_TLS_FORCE_EC_CIPHER           // Force Elliptic Curve cipher (higher security) required by some servers (automatically enabled with USE_MQTT_AWS_IOT) (+11.4k code, +0.4k mem)
 #endif
 ```
 
@@ -86,9 +87,12 @@ On ESP32, BearSSL provides a much lighter footprint than MbedTLS (~45kB instead 
 
 Main limitations are:
 
-- Your SSL/TLS server must support TLS 1.2 and the `ECDHE_RSA_WITH_AES_128_GCM_SHA2566` cipher - which is the case with the default Mosquitto configuration
+- Your SSL/TLS server must support TLS 1.2 and the `ECDHE_
+` cipher - which is the case with the default Mosquitto configuration
 - The server certificate must have an RSA private key (max 2048 bits) and the certificate must be signed with RSA and SHA256 hash. This is the case with default LetsEncrypt certificates. ESP32 supports by default RSA private keys up to 4096 bits, ESP8266 must be compiled with option `-DUSE_4K_RSA` to support 4096 private keys.
 - Your SSL/TLS should support TLS 1.2 MFLN to limit buffer to 1024 bytes. If MFLN is not supported, it will still work well, as long as the server does not send any message above 1024 bytes. On ESP32 buffers are raised to 2048 bytes.
+- If you are using **certbot** with Letsencrypt: starting with v2.0.0 certbot requests ECDSA certificates by default. Make sure you explicitly add `--key-type rsa` and `--rsa-key-size 2048` (or `--rsa-key-size 4096`).
+
 
 -----------
 
@@ -109,7 +113,7 @@ Here are the tips and tricks used to reduce Flash and Memory:
 !!! bug "Tasmota will crash if the server serves a 4096 bit RSA certificate. The crash will likely be in `br_rsa_i15_pkcs1_vrfy`. Enable `USE_4K_RSA` to avoid this behaviour."
     
 * **EC private key**: AWS IoT requires the client to authenticate with its own Private Key and Certificate. By default AWS IoT will generate an RSA 2048 bit private key. In Tasmota, we moved to an EC (Elliptic Curve) Private Key of 256 bits. EC keys are much smaller, and handshake is significantly faster. Note: the key being 256 bits does not mean it's less secure than RSA 2048, it's actually the opposite.
-* **Single Cipher**: to reduce code size, we only support a single TLS cipher and embed only the code strictly necessary. When using TLS (e.g. LetsEncrypt on Mosquitto) the supported cipher is `RSA_WITH_AES_128_GCM_SHA256` which is a very commonly supported cipher. For AWS IoT, the only supported cipher is `ECDHE_RSA_WITH_AES_128_GCM_SHA256` which is one of the recommended ciphers. Additionally, ECDHE offers Perfect Forward Secrecy which means extra security.
+* **Single Cipher**: to reduce code size, we only support a single TLS cipher and embed only the code strictly necessary. When using TLS (e.g. LetsEncrypt on Mosquitto) the supported cipher is `ECDHE_RSA_WITH_AES_128_GCM_SHA256`. Additionally, ECDHE offers Perfect Forward Secrecy which means extra security.
 * **Adaptive Thunk Stack**: BearSSL does not allocate memory on its own. It's either the caller's responsibility or memory is taken on the Stack. Stack usage can go above 5k, more than the ESP8266 stack. Arduino created a **Thunk Stack**, a secondary stack of 5.6k, allocated on Heap, and activated when a TLS connection is active. Actually the stack is mostly used during TLS handshake, and much less memory is required during TLS message processing. Tasmota only allocates the Thunk Stack during TLS handshake and switches back to the normal Stack afterwards. See below for details of actual memory usage.
 * **Keys and CA in PROGMEM**: BearSSL was adapted from original source code to push most on the tables and static data into PROGMEM:
 https://github.com/earlephilhower/bearssl-esp8266. Additional work now allows us to put the Client Private Key, Certificate and CA in PROGMEM too, saving at least 3k of Memory.
@@ -169,8 +173,9 @@ Here are most common TLS errors:
 
 |Error code | Description|
 |---:|:---|
-| -1004 | Missing CA |
-| -1003 | Missing EC private key |
+| -1005 | Time-out during TLS handshake |
+| -1004 | Missing CA (deprecated)|
+| -1003 | Missing EC private key (deprecated)|
 | -1002 | Cannot connect to TCP port |
 | -1001 | Cannot resolve IP address |
 | -1000 | Out of memory error |

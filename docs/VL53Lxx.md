@@ -15,7 +15,7 @@
     When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
     ```arduino
     #ifndef USE_VL53L1X 
-    #define #define USE_VL53L1X                    // [I2cDriver54] Enable VL53L1X time of flight sensor (I2C address 0x29) using Pololu VL53L1X library (+2k9 code)
+    #define USE_VL53L1X                            // [I2cDriver54] Enable VL53L1X time of flight sensor (I2C address 0x29) using Pololu VL53L1X library (+2k9 code)
       #define VL53L1X_XSHUT_ADDRESS 0x78           //   VL53L1X base address when used with XSHUT control
       #define VL53L1X_DISTANCE_MODE Long           //   VL53L1X distance mode : Long | Medium | Short
     #endif
@@ -68,7 +68,7 @@ In the **_Configuration -> Configure Module_** page assign:
 1. GPIOa to `I2C SDA`
 2. GPIOb to `I2C SCL`
 
-On ESP8266 almost any GPIO can be used for I2C except for GPIO15. However the standard is to use GPIO4 (D1) for I2C SCL and GPIO5 (D2) for I2C SDA.
+On ESP8266 almost any GPIO can be used for I2C except for GPIO15.
 
 On ESP32 any pin can be assigned to I2C.
 
@@ -140,7 +140,7 @@ Example: for VL53L0X it sends `tele/%topic%/SENSOR` JSON such as:
 
 With VL053L1X, the name of the sensor is adapted.
 
-The index separator is either a `-` if `SetOption4` is `0` or a `_` if it is `1`. See [`SetOption4`](Commands#setoption4).
+The index separator is either a `-` if `SetOption4` is `0` or a `_` if it is `1`. See [`SetOption4`](Commands.md#setoption4).
 
 ![image](https://user-images.githubusercontent.com/35405447/111362860-144c4780-866e-11eb-84f1-461d2857ede7.png)
 

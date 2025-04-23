@@ -40,7 +40,7 @@ The maximum current that can be drawn from a single GPIO pin is 12mA.
 
     The [power supplied to the device](https://www.letscontrolit.com/wiki/index.php?title=Power) is **one of the most important             elements** for stable device operation. Many devices on the market have barely adequate power supplies for normal operation.             ***Connected peripherals may strain the ability of the power supply on the device to deliver appropriate power to all the               components, both on-board as well as externally connected.***
 
-Voltage regulation issues typically result in fatal exception [fault code](https://github.com/esp8266/Arduino/blob/master/doc/exception_causes.rst) `1`. You must ensure that the device receives sufficient power (current **and** appropriate voltage level). Take into account the current that each wired component (f.e. sensor) will draw from the device itself. 
+Voltage regulation issues typically result in fatal exception [fault code](https://github.com/esp8266/Arduino/blob/master/doc/exception_causes.rst) `1`. You must ensure that the device receives sufficient power (current **and** appropriate voltage level). Take into account the current that each wired component (e.g., sensor) will draw from the device itself. 
 
 ### Electrical Considerations
 When you switch a GPIO pin to an input and hang a long wire off of it, that wire can pick up stray signals and cause the voltage on the GPIO pin to vary. This can cause the system to think the switch has changed.
@@ -62,7 +62,7 @@ Shielding or using twisted pair wiring are other ways to reduce the effect of ra
 (issue[#2708](https://github.com/arendst/Tasmota/issues/2708#issuecomment-388574891))
 
 # The ESP8266 Hardware
-Complete document available from https://tttapa.github.io/ESP8266/Chap04%20-%20Microcontroller.html
+Complete document available from <https://tttapa.github.io/ESP8266/Chap04%20-%20Microcontroller.html>
 ## Digital I/O
 Just like a normal Arduino, the ESP8266 has digital input/output pins (I/O or GPIO, General Purpose Input/Output pins). As the name implies, they can be used as digital inputs to read a digital voltage, or as digital outputs to output either 0V (sink current) or 3.3V (source current).
 

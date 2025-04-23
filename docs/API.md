@@ -91,7 +91,7 @@ FUNC_DISPLAY_CLOCK *          |      |
 FUNC_DISPLAY_SCROLLTEXT *     |      |
 
 
-\* TM1637 driver Only
+\* TM1637, TM1638, MAX7219 and TM1650 driver only
 
 ## Init sequence
 

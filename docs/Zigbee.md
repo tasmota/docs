@@ -45,7 +45,7 @@ Before using Zigbee with Tasmota, you need to understand a few concepts. Here is
 |**PanID**<BR>(Personal Area Network IDentifier)<BR>This parameter is unique in a Zigbee network (16-bit integer, 0x0000–0x3FFF).<BR>At initial start a pseudo-random PanID is derived from the ESP MAC address.|SSID (the Wi-Fi network name)|
 |**ShortAddr**<BR>Address of the device on the Zigbee network. This address is randomly assigned when the device first connects to the coordinator (16 bits integer, 0x0000–0xFFF7). The coordinator has address 0x0000.<BR>You need to track which device has which address or assign a "Friendly Name" to each new discovered device.|IP address|
 |**GroupAddr**<BR>Group address of a collection of devices, it allows a single message to address multiple devices at once (16 bits integer, 0x0000–0xFFFF). For example a remote can turn on/off a group of lights. GroupAddr 0x0000 is not assigned.|Multicast|
-|**Endpoint**<BR>The endpoint on the coordinator or on the Zigbee device the message is sent from/to. You can see endpoints as logical devices providing distinct features (8 bits integer, 1–240).|IP Port|
+|**Endpoint**<BR>The endpoint on the coordinator or on the Zigbee device the message is sent from/to. You can see endpoints as logical devices providing distinct features (8 bits integer, 1–240).|TCP port|
 |**IEEEAddr**<BR>Device hardware address (64 bits). This is unique per device and factory assigned.|MAC address|
 |**Channel** 11-26<BR>*Default: 11* (See [Zigbee-Wifi coexistence](https://www.metageek.com/training/resources/zigbee-wifi-coexistence.html))|Wi-Fi Channel|
 |**Encryption Key**<BR>128-bit encryption key.<BR>At initial start a pseudo-random Encryption key is derived from the ESP MAC address.|Wi-Fi password|
@@ -139,7 +139,7 @@ On **ESP32** serial is always handled by hardware so you don't need to bother.
 
 On **ESP8266** using the hardware serial is preferred. To do so, you need to use GPIOs 13/15 for Zigbee Rx/Tx and set `SerialLog 0`. By doing so, Z2T *steals* the hardware UART from the serial console and uses it for communicating with the MCU. Otherwise Z2T uses Software Serial which requires compiling at 160MHz and might be unreliable on very rare occasions.
 
-## Usage
+## Commands
 
 For a list of available commands see [Zigbee Commands](Commands.md#zigbee).
 
@@ -174,20 +174,23 @@ At Zigbee start, all files with `*.zb` suffix are loaded into memory. Be careful
   - rest of the file is of form **device matcher** followed by **attribute definitions** or **attribute synonyms**
 
 #### **device matchers**
--  composed of one or more lines defining the `modelId` and `manufacturerId`. If a field is empty, it matches all values
+
+- composed of one or more lines defining the `modelId` and `manufacturerId`. If a field is empty, it matches all values
 - `:<modelId>,<manufacturerId>`
 - example: `:TS0601,_TZE200_sh1btabb` for GiEX water valve
 
 #### **attribute matcher** specifies a cluster/attribute/type tuple and matches an attribute name
-- `<cluster 4 hex>/<attribute 4 hex>` or `<cluster 4 hex>/attribute 4 hex>%<type 2 hex>`
+
+- `<cluster 4 hex>/<attribute 4 hex>` or `<cluster 4 hex>/<attribute 4 hex>%<type 2 hex>`
 - Ex: `EF00/0365,IrrigationStartTime` (Tuya cluster EF00 does not need an explicit type)
 - Ex: `0006/4001%bool,OnTime`
 
 #### **attribute synonyms** specifies that a received attribute is a synonym for another attribute
+
 - `<cluster 4 hex>/<attribute 4 hex>=<new_cluster 4 hex>/<new_attribute 4 hex>,<multiplier>`
 - Ex: `EF00/026C=0001/0021,2` converts any EFOO/026C attribute received to `0001/0021` (BatteryPercentage) and multiplies by `2` to convert to ZCL standard.
 
-Multiplier is 8 bit int (-128..127). If `0` or `1`, the value is unchanged. Otherwize the value is converted to `float` and is multiplied by `multiplier` if positive, or divided by `-multiplier` if negative.
+Multiplier is 8 bit int (-128..127). If `0` or `1`, the value is unchanged. Otherwise the value is converted to `float` and is multiplied by `multiplier` if positive, or divided by `-multiplier` if negative.
 
 I.e. `multiplier=10` means multiply by 10, `multiplier=-5` means divide by 5
 
@@ -339,6 +342,19 @@ Message with `"Status":30` shows some characteristics of the device:
 |`ReceiveWhenIdle`|`true` = the device can receive commands when idle<BR>`false` = the device is not listening. Commands should be sent when the device reconnects and is idle|
 |`Security`|Security capability (meaning unknown, to be determined)|
 
+## Advanced topic: Zigbee plugin Definition File
+
+From the start, Z2T design was to stick to a low-level view and provide higher level (named) attributes only for a limited set of mostly seen attributes. This raised difficulties and frustration for users with specific devices that use rare attributes, or devices that use non-standard attributes (like Tuya zigbee devices).
+
+We are now providing a [**Zigbee Device plugin**](#advanced-topic-zigbee-device-plugin) mechanisms, using simple text files. These files specify mapping on a per-device type basis. The goal is to fill most of the gap with Zigbee2MQTT (provided that you write the device plugin files). The lightweight nature of plugins permits to load only the plugins required by the devices used, and does not require a software update for new devices.
+
+### How does it work?
+
+You simply copy device plugin files (externsion `*.zb`) in the file system and they are **automatically loaded at start**.
+
+During troubleshooting, you can dynamically load new files with `ZbLoad <file>.zb` or unload definitions with `ZbUnload <file>.zb`. When you reload a file with the same name, it is first unloaded.
+
+At Zigbee start, all files with `*.zb` suffix are loaded into memory. Be careful of not saturating memory, especially on ESP8266.
 
 ## Pairing Devices
 
@@ -373,6 +389,7 @@ Instead of a short address like `0x8F20` you can assign an easy to remember frie
 See [`ZbName`](Commands.md#zbname) command for all options.
 
 !!! example "Xiaomi Aqara Cube with address `0x128F`"
+
 ```json
 MQT: tele/%topic%/RESULT = {"ZbReceived":{"0x128F":{"AqaraVibrationMode":"tilt","AqaraVibrationsOrAngle":162,"AqaraAccelerometer":[-690,2,138],"AqaraAngles":[-78,0,11],"LinkQuality":158}}}
 ```
@@ -407,7 +424,7 @@ To remove a device from the Zigbee2Tasmota list of devices and from the WebUI, u
 
 ### Advanced topic: Device Information
 
-You can get a quick list of Zigbee devices with the command [`ZbStatus`](Commands.md#zigbeestatus).
+You can get a quick list of Zigbee devices with the command [`ZbStatus`](Commands.md#zbstatus).
 
 Example:
 
@@ -561,6 +578,18 @@ Devices connected to mains (smart plugs, smart bulbs...) are always reachable an
 
 Devices that are powered by batteries are not always reachable. Most of the time they are in sleep mode and not reachable. They regularly connect back to the coordinator to send new values and get messages (ex: once per hour). When you need to send messages to battery-powered devices, you must first wake them up, for example pressing on a button. The device may stay awake for only a couple of seconds, so you must send the message just before or just after pressing the button on the device.
 
+### Configure Reporting
+Devices normally report their status when the value changes. They can also report the state within certain intervals, to configure this the command ZbSend is used.
+
+Example for setting the reporting interval for a smart plug to always report the state, regardless if it has changed or not:
+```
+ZbSend {"Device": "MySmartPlug1", "Config":{"Power":{"MinInterval":30, "MaxInterval": 50, "ReportableChange": 0}}}
+```
+Example for setting the reporting interval for a Parasoll-door-sensor to always report the state (keep sensor awake when sending this by triggering it):
+```
+ZbSend {"Device": "myDoorSensorSwitch", "Endpoint": 2, "Config": {"0500/0002": {"MinInterval": 60, "MaxInterval": 120, "ReportableChange": 0}}}
+```
+
 ### Advanced topic: Endpoints and Clusters
 
 An endpoint supports different functions separated in clusters, and a device can have multiple endpoints to do different things. To simplify, think of your Zigbee device as a normal Tasmota device with a Zigbee radio instead of Wi-Fi. Each endpoint is akin to a GPIO that has connected [Components](Components) or Clusters, in Zigbee terms.
@@ -667,7 +696,7 @@ There is a special syntax if you want to send arbitrary commands:
     `ZbSend {"Device":"0x1234","Send":"0000_00/0500"}`
      Send a Read command (0x00) to the general cluster (0x0000) for attribute ManufId (0x0005). Note: all values are little-endian.
 
-Or use '!' instead of '_' to specify cluster-specific commands:
+Or use `'!'` instead of `'_'` to specify cluster-specific commands:
 
 `"<cluster>!<cmd>/<bytes>"`: send a cluster specific command for cluster id `<cluster>`, command id `<cmd>` and payload `<bytes>`.
 
@@ -965,6 +994,186 @@ ZbSend {"Device": "Utility", "Write":{"TuyaTempTarget":20}}
 will set the TRV setpoint to 20C.
 Other commands will be available and will be added when	clarified.
 
+
+## Advanced Topic: Zigbee Device Plugin
+
+Zigbee2Tasmota supports most common and standard attributes from ZCL, see [here](#advanced-topic-zigbee-reference).
+
+But creativity of manufacturers is limitless. Some manufacturers make mistakes compared to the Zigbee ZCL standard (maybe because their developers didn't read the specifications thoroughly), and others invent their own standards - ex: TuyA devices sometimes use a encapsulation of TuYa Serial protocol in Zigbee.
+
+The Zigbee plug-in mechanisms is composed of simple text files to describe device-specific non-standard attributes or non-standard mapping of values.
+
+You simply need to copy the required file(s) in the coordinator's filesystem and restart. You should see logs similar to the following after Zigbee has started.
+
+```
+ZIG: Zigbee started
+ZIG: Zigbee device information found in File System (1 devices - 48 bytes)
+ZIG: Zigbee device data in File System (20 bytes)
+ZIG: ZbLoad '<internal_plugin>' loaded successfully
+ZIG: ZbLoad 'TS0001_switch.zb' loaded successfully
+```
+
+### Writing Zigbee plugins
+
+A Zigbee plugin file needs to have `.zb` extension and start with the first line:
+
+```
+#Z2Tv1
+```
+
+The plugin file has 3 types of declarations:
+
+- a device match pattern, specifies which `model` and/or `manufacturer` identifiers to match
+- an attribute definition, defines a new attribute name
+- an attribute synonym, remaps the incoming attribute to a new attribute (or the same) and applies multiplier/divisor
+- `#` is a marker for comments, and everything from `#` to end of line is ignored
+
+Note: Zigbee plugins currently only handles Zigbee attributes (read, write, report) but not Zigbee commands which can't be remapped. There hasn't been any need for command remapping but who knows...
+
+#### Matching a device or a family of devices
+
+A plugin section needs to start with one or more matching patterns. All the following statements share the same matching pattern until a new pattern appears.
+
+A pattern is of form: `:<modelid>,<manufecturerid>`. Possible values are:
+
+- "match all", if empty the pattern matches all devices
+- "exact match", if a value is provided, the model or manufacturer value must exactly match
+- "starts with", if a value ends with `*`, any value starting with this value macthes
+
+Example:
+
+Pattern|Description
+:---|:---
+`:,`|Matches all devices
+`:TRADFRI*,`<br>`:SYMFONISK*,`|Matches any device with ModelID starting with `TRADFRI` or `SYMFONISK`
+`:TS0201,_TZ3000_ywagc4rj`|Match only if DeviceID is `TS0201` and ManufacturerID is `_TZ3000_ywagc4rj`
+
+!!! warning  "Only the first succesful match is applied, all subsequent statements are ignored. You may need to adjust the order of files if priority is needed between plugins"
+
+#### Defining a new attribute
+
+You can define or overwrite an attribute name for a specific cluser/attributeid, and apply optional multiplier/divider.
+
+The format is:
+
+```<cluster>/<attributeid>[%<type>],<name>[,mul:<mul>][,div:<div>][,add:<add>][,manuf:<manuf>]```
+
+Parameter|Description
+:---|:---
+`<cluster>`|Cluster number in 4 digits hex<br>Example: `0006` for cluster 6
+`<attributeid>`|Attribute identifier in 4 digits hex<br>Example: `0001` for attribute id 1
+`%<type>`|(optional) Type of the attribute either in 2 digits hex format or using the Zigbee type name<BR>Example: `%21` or `%uint16`
+`mul:<mul>`|(optional) `1..65535`: Apply a multiplier to the value received
+`div:<div>`|(optional) `1..65535`: Apply a divider to the value received (after the multiplier is applied)
+`add:<add>`|(optional) `-36278..32767`: Add/substract a value (after multiplier and divider are applied)
+`manuf:<manuf>`|(optional) Add a manufacturer specific code in 4 digits hex
+
+When a value is received, the following formula is applied (computed using integers):
+
+`new_val = add + (val * mul) / div`
+
+The inverse formula is applied when writing back an attribute. Beware of rounding errors.
+
+**Special case of Tuya attributes (cluster `0xEF00`)**
+
+For attributes from the Tuya cluster `0xEF00` the attribute has the form `AABB` where `AA` is the type and `BB` is the `dpid`. If you only care about receiving attributes, you can use `FF` as a type so Tasmota accepts any value. To be able to write the attribute, the type must be specified.
+
+Example: `EF00/FF02` accepts any value for `dpip` `2`, while `EF00/0202` specifies the type `02` for this `dpid`. The regular Zigbee type `%<type>` is unused with Tuya attributes.
+
+Tuya type|Description
+:---|:---
+`00`|raw bytes decoded as hex (n bytes)
+`01`|bool (1 byte)
+`02`|int32 (4 bytes)
+`03`|string (n bytes)
+`04`|enum (1 byte)
+`05`|bitmap (1/2/4 bytes)
+
+
+#### Defining an attribute synonym
+
+An attribute synonym can remap an incoming attribute value to another attribute and apply the regular transformation. It can also be used to fix a value and keep the same attribute.
+
+The format is:
+
+```<cluster>/<attributeid>=<new_cluster>/<new_attributedid>[,mul:<mul>][,div:<div>][,add:<add>]```
+
+Parameter|Description
+:---|:---
+`<cluster>`|Cluster number in 4 digits hex
+`<attributeid>`|Attribute identifier in 4 digits hex
+`<new_cluster>`|Cluster number in 4 digits hex
+`<new_attributeid>`|Attribute identifier in 4 digits hex
+`mul:<mul>`|(optional) `1..65535`: Apply a multiplier to the value received
+`div:<div>`|(optional) `1..65535`: Apply a divider to the value received (after the multiplier is applied)
+`add:<add>`|(optional) `-36278..32767`: Add/substract a value (after multiplier and divider are applied)
+
+
+Currently the inverse attribute mapping is not done when writing an attribute.
+
+### Troubleshooting
+
+While all `*.zb` files are automatically loaded at startup, you can manually unload a file with `ZbUnload <file.zb>` and load a modified version with `ZbLoad <file.zb>`.
+
+You can dump all the plugins loaded in memory with `ZbLoadDump`.
+
+When a synonym is applied, you can see it in logs with loglevel 3 or more:
+
+`ZIG: apply synonym 000C/0055 with 0B04/050B (mul:1 div:1)`
+
+### Complete examples
+
+#### Default plugin
+
+Below is the default plug-in stored in Flash `<internal_plugin>` and automatically loaded. It handles the following:
+
+- solve a bug in IKEA device where the BatteryPercentage is not multiplied by 2
+- map the `Power` attribute of Aqara magnet window sensor to a synthetic attribute 0500/FFF2 for specific handling
+
+```
+#Z2Tv1
+:TRADFRI*,
+:SYMFONISK*,
+0001/0021=0001/0021,mul:2
+:lumi.sensor_magnet*,
+0006/0000=0500/FFF2
+```
+
+#### Tuya Moes thermostat humidity bug
+
+`Tuya_KCTW1Z.zb` fixes a bug where humidity should be multiplied by 10.
+
+```
+#Z2Tv1
+# Tuya fix humidity by 10 
+# https://zigbee.blakadder.com/Tuya_KCTW1Z.html
+:TS0201,_TZ3000_ywagc4rj
+0405/0000=0405/0000,mul:10
+
+```
+
+#### GiEX garden watering
+
+The following plugin defines device specific Tuya attributes, and matches the `BatteryPercentage` to the regular ZCL attribute (multiplied by 2).
+
+```
+#Z2Tv1
+# GiEX garden watering https://www.aliexpress.com/item/1005004222098040.html
+:TS0601,_TZE200_sh1btabb
+EF00/0101,WaterMode                 # duration=0 / capacity=1
+EF00/0102,WaterState                # off=0 / on=1
+EF00/0365,IrrigationStartTime       # (string) ex: "08:12:26"
+EF00/0366,IrrigationStopTime        # (string) ex: "08:13:36"
+EF00/0267,CycleIrrigationNumTimes   # number of cycle irrigation times, set to 0 for single cycle
+EF00/0268,IrrigationTarget          # duration in minutes or capacity in Liters (depending on mode)
+EF00/0269,CycleIrrigationInterval   # cycle irrigation interval (minutes, max 1440)
+EF00/026A,CurrentTemperature        # (value ignored because isn't a valid tempurature reading.  Misdocumented and usage unclear)
+EF00/026C=0001/0021,mul:2           # match to BatteryPercentage
+EF00/026F,WaterConsumed             # water consumed (Litres)
+EF00/0372,LastIrrigationDuration    # (string) Ex: "00:01:10,0"
+```
+
+
 ## Advanced topic: Zigbee Reference
 
 ??? tip "Tasmota includes plain text aliases for most of the common ZCL attributes (click to expand)" 
@@ -1114,7 +1323,7 @@ Other commands will be available and will be added when	clarified.
 	`BinaryInInactiveText`|0x000F|0x002E|%42 - string
 	`BinaryInOutOfService`|0x000F|0x0051|%10 - bool
 	`BinaryInPolarity`|0x000F|0x0054|%30 - enum8
-	`BinaryInValue`|0x000F|0x0055|%42 - string
+	`BinaryInValue`|0x000F|0x0055|%10 - bool
 	`BinaryInReliability`|0x000F|0x0067|%30 - enum8
 	`BinaryInStatusFlags`|0x000F|0x006F|%18 - map8
 	`BinaryInApplicationType`|0x000F|0x0100|%23 - uint32

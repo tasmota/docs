@@ -71,7 +71,7 @@ GPIO04 - Button-             5 |D| 5  Initially GND but ready for GPIO01 (U0TxD)
 
 Adding to the great guide above ...
 
-So if soldering isn't your bag, there are a few connection points that you can get at with clip probes. There is a +5V and GND contact on the left side of the board and the right LED legs give access to the ESP's GPIO0 and RXD. The tricky bit is the ESP's TXD line which, as stated before, is only accessible on the daughter board via the chip's pin or an smd pad above and to the right. @jwrw, I am in awe of anyone that can solder onto this pad! As an alternative, try connecting an alligator clip to a sewing pin 8) to make a probe and holding it in place with your finger during firmware programming (hey, it only has to work once as from then on you use OTA). Powering via the pcb contacts requires more current than my FTDI was able to source so a separate 5V power supply is required (a Raspberry Pi can provide the +5V/GND via it's GPIO header if you haven't got a dedicated power supply at hand).
+So if soldering isn't your bag, there are a few connection points that you can get at with clip probes. There is a +5V and GND contact on the left side of the board and the right LED legs give access to the ESP's GPIO0 and RXD. The tricky bit is the ESP's TXD line which, as stated before, is only accessible on the daughter board via the chip's pin or an smd pad above and to the right. @jwrw, I am in awe of anyone that can solder onto this pad! As an alternative, try connecting an alligator clip to a sewing pin 8) to make a probe and holding it in place with your finger during firmware programming (hey, it only has to work once as from then on you use OTA). Powering via the pcb contacts requires more current than my FTDI was able to source so a separate 5V power supply is required (a Raspberry Pi can provide the +5V/GND via its GPIO header if you haven't got a dedicated power supply at hand).
 
 ![](https://raw.githubusercontent.com/PeteBa/media/master/huafan_connections.jpg)
 
@@ -83,7 +83,7 @@ Firstly, make sure that you have installed release 5.5.0 of Tasmota or later and
 
 Next, you should ensure that you have installed version 2.4.0-rc1 or later of ESP8266/Arduino core that includes support for the 40MHz crystal used by the HuaFan. Installation instructions can be found [here](https://github.com/esp8266/Arduino/releases) but are essentially as follows:
 - Start Arduino and open Preferences window.
-- Swap the existing link for the stable ESP8266/Arduino core release with https://github.com/esp8266/Arduino/releases/download/2.4.0-rc1/package_esp8266com_index.json in Additional Board Manager URLs field..
+- Swap the existing link for the stable ESP8266/Arduino core release with <https://github.com/esp8266/Arduino/releases/download/2.4.0-rc1/package_esp8266com_index.json> in Additional Board Manager URLs field..
 - Open Boards Manager from Tools > Board menu and update esp8266 platform (check that it is using the RC version).
 
 Lastly, you need to edit the boards.txt file to allow selection of the 40MHz Crystal via the Arduino IDE Tools menu. Add the following lines into the section for the "Generic ESP8266 Module" and immediately after the "generic.menu.CpuFrequency" items:

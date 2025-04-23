@@ -25,7 +25,7 @@ In Tasmota a `Switch` is any switch or push-button additionally connected to a f
 - [PIR sensor](https://en.wikipedia.org/wiki/Passive_infrared_sensor) - even though it's technically a  sensor it is [configured as a switch in Tasmota](PIR-Motion-Sensors)
 - [mechanical push-button](https://en.wikipedia.org/wiki/Push-button)
 
-By default a switch toggles the corresponding power state (f.e. `Switch1` controls `Power1`). Every time the switch gets flipped the power state of the relay toggles.
+By default a switch toggles the corresponding power state (e.g., `Switch1` controls `Power1`). Every time the switch gets flipped the power state of the relay toggles.
 
 If you want to detach switches from relays read [here](#detach-switches-with).
 
@@ -158,11 +158,18 @@ SwitchMode, as the name implies, applies _**ONLY**_ to GPIO configured in Tasmot
     !!! tip "This mode is useful with [PIR sensors](PIR-Motion-Sensors)"
 
 **`SwitchMode 15`**
-:    Send only MQTT message on switch change. This will stop the switch from controlling power outputs.
+:    Send only MQTT message on switch change. This will stop the switch from controlling power outputs, and you get no state values for rules.
 
     ```console
     tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:00","Switch1":"OFF"}
     tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:00","Switch1":"ON"}
+    ```
+**`SwitchMode 16`**
+:    Send only MQTT message on inverted switch change. This will stop the switch from controlling power outputs, and you get no state values for rules.
+
+    ```console
+    tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:00","Switch1":"ON"}
+    tele/tasmota/SENSOR = {"Time":"2021-01-01T00:00:00","Switch1":"OFF"}
     ```
 
     !!! tip "Also see `SetOption114` below."
@@ -219,9 +226,9 @@ Multipress functions for 2 and more presses cannot be changed using SetOptions o
 :    When using Button1 toggles the fifth power state (if available on the device). This will blink the LED five times and send an MQTT status message like `stat/tasmota/POWER5 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"PENTA"}` when SetOption73 is enabled. The button state for rules is `14`.
 
 `6 short presses`
-:    Start [`WifiConfig 2`](Commands.md#wificonfig). Can be disabled using [SetOption1 1](Commands.md#setoption1)
+:    Set [`WifiConfig 2`](Commands.md#wificonfig) (start Wi-Fi Manager). Can be disabled using [`SetOption1 1`](Commands.md#setoption1). For [security reasons](Securing-your-IoT-from-hacking.md#disable-unsecured-fallback-wifi-wifimanager), you should change back `WifiConfig` after that.
 
-`**Long press**`
+#### `Long press`
 :    There are two separate functions associated with a button long press based on how long it is held:
 
     1. When held continuously for 40 seconds (Configurable with [SetOption32](Commands.md#setoption32), value is 10x the configured hold time) Tasmota will reset to firmware defaults and restart.
@@ -273,11 +280,11 @@ Multipress functions for 2 and more presses cannot be changed using SetOptions o
 `ButtonTopic 1` sends an MQTT message to the device topic. This sets the state of the devices power state accordingly.
 `ButtonTopic <value>` sends an MQTT message command to the custom topic. This does not change the state of the devices power state.
 
-!!! warning "**When a Button is set to a different topic than `0` is not possible to use `Button#State` as a trigger for rules.**"
+!!! warning "**When a Button is set to a different topic than `0` is not possible to use `Button<x>#State` as a trigger for rules.**"
 
 ### Changing Default Functionality
 
-If a [`ButtonTopic`](Commands.md#buttontopic) (and if [`SetOption1 1`](Commands.md#setoption1)) or [`SwitchTopic 1`](Commands.md#switchtopic) is defined (and [`SwitchMode`](Commands.md#switchmode) is set to `5` or `6`) and a button is pressed longer than defined Key Hold Time ([`SetOption32`](Commands.md#setoption32) default 4 seconds) an MQTT message like `cmnd/%topic%/POWER HOLD` will be sent. `HOLD` can be changed with [`StateText4`](Commands.md#StateText).
+If a [`ButtonTopic`](Commands.md#buttontopic) (and if [`SetOption1 1`](Commands.md#setoption1)) or [`SwitchTopic 1`](Commands.md#switchtopic) is defined (and [`SwitchMode`](Commands.md#switchmode) is set to `5` or `6`) and a button is pressed longer than defined Key Hold Time ([`SetOption32`](Commands.md#setoption32) default 4 seconds) an MQTT message like `cmnd/%topic%/POWER HOLD` will be sent. `HOLD` can be changed with [`StateText4`](Commands.md#statetext).
 
 Command [`SetOption11`](Commands.md#setoption11) allows for swapping the functionality between the SINGLE and DOUBLE press of the push button.
 

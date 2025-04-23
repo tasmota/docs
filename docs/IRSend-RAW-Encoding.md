@@ -33,10 +33,10 @@ or
 8570,4240,550,1580,550,510,565,1565,565,505,565,505
 ```
 
-If you need to transform the compact format in the legacy format, you can use the online tool: https://tasmota.hadinger.fr/util
+If you need to transform the compact format in the legacy format, you can use the online tool: <https://tasmota.hadinger.fr/util>
 
 ## IRSend for raw IR
-There are two command syntax forms for sending a remote control code in RAW format with [`IRsend`](Commands#irsend):
+There are two command syntax forms for sending a remote control code in RAW format with [`IRsend`](Commands.md#irsend):
 
 1. `IRSend<x> <frequency>,<rawdata1>,<rawdata2>,..,<rawdataN>`
 

@@ -14,4 +14,5 @@ jobs:
           python-version: 3.x
       - run: pip install wheel
       - run: pip install -r requirements.txt
-      - run: mkdocs gh-deploy --force --strict
+      # - run: mkdocs gh-deploy --force --strict
+      - run: mkdocs gh-deploy --force 

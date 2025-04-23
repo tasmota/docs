@@ -9,7 +9,7 @@ Based on the ESP8285, but using a Silabs EFM8BB1 microcontroller to extend the n
 * [SYN470R Data Sheet](https://www.birdandgua.net/bird/wp-content/uploads/2016/09/SYN470R-Synoxo.pdf)
 ## Read before flashing
 Tasmota has functionality to perform special actions on multiple button presses and long press for 40 seconds resets firmware to default. This will cause the T1 board to reset if relay board is not connected, because long press on Button1 will be detected.
-**To avoid this, use command [`SetOption13 1`](../Commands#setoption13) immediately after flashing Tasmota.**
+**To avoid this, use command [`SetOption13 1`](../Commands.md#setoption13) immediately after flashing Tasmota.**
 
 When powered solely with 3.3v from the serial-to-USB adapter long press will be detected by Tasmota on Button1.
 
@@ -41,6 +41,9 @@ Notes:
 1. There is not enough room with this version to solder header pins to the programming port and still close the case. One possibility is to slightly bend the pins of a 4-way header and push it into the holes, removing it after programming.
 2. GPIO0 is connected to the helper chip on this version, so the only way to get Ver1.1 of the board into flash mode is to solder a lead onto the resistor R19 from pin 15 on the ESP chip (GPIO0) and connect this lead to GND on power up; the device will set all the touch pads to dim and the WiFi LED D3 will NOT be on at all.
 3. The connection marked 'LOG' on the J3 header is GPIO2.
+
+### Touch Board Ver:2.0
+The 3v3, GND, TX, RX are pretty well labeled, but for BOOT mode you need to connect "TP1 KEY0" to the ground. See [more details](https://github.com/arendst/Tasmota/discussions/15057)
 
 **WARNING!!** Do not attempt to power the device from your serial-to-USB adapter when connected to the relay board. This draws too much power and will cause the ESP to reboot frequently and reset all the configured settings.
 

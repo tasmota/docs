@@ -24,7 +24,7 @@ _Guide originally from [@Brunas](https://github.com/Brunas/HomeAutomation/blob/m
 
 	1. Long press the button for 5 seconds to enter pairing mode, then press another 5 seconds to ender Compatible Pairing Mode (AP). The LED indicator should blink continuously.
 	2. From mobile phone or PC WiFi setting, an Access Point of the device named **ITEAD-XXXXXXXX** will be found, connect it with default password **12345678**
-	3. Open the browser and access http://10.10.7.1/
+	3. Open the browser and access <http://10.10.7.1/>
 	4. Next, Fill in WiFi SSID and password. Once successfully connected, the device is in DIY mode.
 
 Note: I needed to manually change IP address to 10.10.7.2, 255.0.0.0 with gateway 10.10.7.1 in adapter TCP/IPv4 settings to access that IP address.
@@ -32,22 +32,26 @@ Note: I needed to manually change IP address to 10.10.7.2, 255.0.0.0 with gatewa
 2. Use Fing or any similar local network scanning app on your smartphone or PC to find IP address of your Sonoff Mini device. MAC Vendor most likely is **Espressif** and the device has **8081** port open.
 3. Check that diy mode is working properly.
 
-With curl:
-
+`$SONOFF_IP` must be defined with the IP or FQDN of the intended Sonoff device before running the `curl` command. With curl or with PowerShell (Windows):
 ```sh
+# curl
+SONOFF_IP="10.0.0.2"
 curl -XPOST --header "Content-Type: application/json" --data-raw '{"deviceid": "", "data": {}}' http://$SONOFF_IP:8081/zeroconf/info
 ```
 
-!!! note "`$SONOFF_IP` must be defined with the IP or FQDN of the intended Sonoff device before running the `curl` command"
-    ```sh
-    SONOFF_IP="10.0.0.2"
-    ```
+```pwsh
+# powershell
+$SONOFF_IP='10.0.0.2'
+Invoke-RestMethod -Method POST -Body '{"deviceid": "", "data": {}}' -Uri "http://$($SONOFF_IP):8081/zeroconf/info" | ConvertTo-Json
+```
 
 <details>
-<summary> Or with the Rester browser extension:</summary>
+<summary> Or with the Rester browser extension:</summary>  
+	
 Install **Rester** extension in Chrome or Firefox or any other preferred tool to perform REST API operations.
 
-To test your device DIY mode create new request in **Rester**:
+To test your device DIY mode create new request in **Rester**: 
+
 	1. Method: **POST**
 	2. URL: http://<*IP of your device*>:8081/zeroconf/info
 	3. Body: `{"data": {}}`
@@ -77,14 +81,21 @@ If all is OK, status code *200* should be returned with bunch of data:
 If that doesn't return *200*, try going back to 5s+5s reset above.
 4. If all above works, let's unlock OTA:
 
-With curl:
+With curl or PowerShell (Windows):
 
 ```sh
+# curl
 curl -XPOST --header "Content-Type: application/json" --data-raw '{"deviceid": "", "data": {}}' http://$SONOFF_IP:8081/zeroconf/ota_unlock
 ```
 
+```pwsh
+# powershell
+Invoke-RestMethod -Method POST -Body '{"deviceid": "", "data": {}}' -Uri "http://$($SONOFF_IP):8081/zeroconf/ota_unlock" | ConvertTo-Json
+```
+
 <details>
-<summary> Or with the Rester browser extension:</summary>
+<summary> Or with the Rester browser extension:</summary> 
+	
 	1. Method: **POST**
 	2. URL: http://<*IP of your device*>:8081/zeroconf/ota_unlock
 	3. Body: `{"data": {}}`
@@ -94,18 +105,57 @@ curl -XPOST --header "Content-Type: application/json" --data-raw '{"deviceid": "
 </details>
 
 Optionally for curiosity you could retry *info* query to check if *otaUnlock* value now is *true*
-5. Download the appropriate binary from http://ota.tasmota.com/tasmota/release and flash it. *NOTE: The maximum firmware size is 508kb, which precludes the standard release binary.* Absolutely do not use tasmota-minimal at this stage, this would brick your device.
+5. Download the appropriate binary from <http://ota.tasmota.com/tasmota/release> and flash it. *NOTE: The maximum firmware size is 508kb, which precludes the standard release binary.* Absolutely do not use tasmota-minimal at this stage, this would brick your device.
 
-There are a number of [reported](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/10) [issues](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/95) with the stock firmware's OTA behavior, so it may be easier to use [an existing server](http://sonoff-ota.aelius.com/) that works around these issues. For example:
+!!! There are a number of [reported](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/10) [issues](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/95) with the stock 
+    firmware's OTA behavior, so it may be easier to use [an existing server](http://sonoff-ota.aelius.com/) that works around these issues.  
 
+!!! Please note: if you have 3.5.0 or 3.6.0 firmware, maybe others (see version in `/info` response), firmware has a bug: it connects to specified server, but always sends dl.itead.cn as server name.
+    That is why you have to update from server that supports serving files with server name `dl.itead.cn`
+    * `ota.tasmota.com` is NOT suitable for this.
+    * Use `sonoff-ota.aelius.com` or set up your local web server
+
+`$HASH` must be defined with the `sha256sum` of the intended firmware file (the `.bin` file) before running the `curl` command. 
+If using PowerShell, it is not necessary.
+!!! There are a number of [reported](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/10) [issues](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/95) with the stock 
+    firmware's OTA behavior, so it may be easier to use [an existing server](http://sonoff-ota.aelius.com/) that works around these issues.  
+
+!!! Please note: if you have 3.5.0 or 3.6.0 firmware, maybe others (see version in `/info` response), firmware has a bug: it connects to specified server, but always sends dl.itead.cn as server name.
+    That is why you have to update from server that supports serving files with server name `dl.itead.cn`
+    * `ota.tasmota.com` is NOT suitable for this.
+    * Use `sonoff-ota.aelius.com` or set up your local web server
+
+`$HASH` must be defined with the `sha256sum` of the intended firmware file (the `.bin` file) before running the `curl` command. 
+If using PowerShell, it is not necessary.
+For example:
 ```sh
+# curl
+HASH="5c1aecd2a19a49ae1bec0c863f69b83ef40812145c8392eebe5fd2677a6250cc"
 curl -XPOST --data "{\"deviceid\":\"\",\"data\":{\"downloadUrl\": \"http://sonoff-ota.aelius.com/tasmota-latest-lite.bin\", \"sha256sum\": \"$HASH\"} }" http://$SONOFF_IP:8081/zeroconf/ota_flash
 ```
 
-!!! note "`$HASH` must be defined with the `sha256sum` of the intended firmware file (the `.bin` file) before running the `curl` command"
-    ```sh
-    HASH="f2ca1bb6c7e907d06dafe4687e579fce76b37e4e93b7605022da52e6ccc26fd2"
-    ```
+```pwsh
+# powershell
+$FW_URL = 'http://sonoff-ota.aelius.com/tasmota-latest-lite.bin'
+$HASH = [BitConverter]::ToString([System.Security.Cryptography.SHA256]::Create().ComputeHash([System.Net.WebClient]::new().DownloadData($FW_URL))).Replace('-','').ToLower()
+Invoke-RestMethod -Method POST -Body ('{"deviceid":"","data":{"downloadUrl": "' + $FW_URL + '", "sha256sum": "' + $HASH +'"} }') -Uri "http://$($SONOFF_IP):8081/zeroconf/ota_flash" | ConvertTo-Json
+```
+
+<details>
+<summary> Or with the Rester browser extension:</summary>  
+	
+	1. Method: **POST**
+	2. URL: http://<*IP of your device*>:8081/zeroconf/ota_flash
+	3. Body: `{"data": {"downloadUrl": "http://sonoff-ota.aelius.com/tasmota-latest-lite.bin", "sha256sum": "5c1aecd2a19a49ae1bec0c863f69b83ef40812145c8392eebe5fd2677a6250cc"}}`
+	4. Header: **Content-Type** with value **application/json**
+	5. Press **SEND**
+	6. You should get status code *200*
+</details>
+
+!!! Flashing can take up to few minutes, as device downloads firmware part-by-part. There is high risk of bricking device if you reboot it or if internet connection fails.
+
+**Note:** If flashing is successful, a new **tasmota-XXXXXXXX** access point will be created.  
+Connect to this AP to configure Tasmota to connect to your WiFi network. 
 
 You're now ready to [configure tasmota](https://tasmota.github.io/docs/Getting-Started/#using-web-ui).
 

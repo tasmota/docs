@@ -33,11 +33,11 @@ Current integration acts as a master to the boiler.
 <img src="../_media/opentherm/opentherm_master.png" width=375>
 
 !!! note
-    If OpenTherm `master` device is present, the boiler may disable it's front panel controls. Users may not be able to set a boiler and hot water temperature through the boiler. Now it's the responsibility of the `master` device. This behavior might vary across different boilers.
+    If OpenTherm `master` device is present, the boiler may disable its front panel controls. Users may not be able to set a boiler and hot water temperature through the boiler. Now it's the responsibility of the `master` device. This behavior might vary across different boilers.
 
 You may disable this behavior by removing [OpenTherm Slave Status](https://github.com/arendst/Tasmota/blob/development/tasmota/xsns_69_opentherm_protocol.ino#L58-L67) command. However, the integration will not be able to read flame/heating/failure flags.
 
-[OpenTherm Gateway Arduino shield](https://www.tindie.com/products/jiripraus/opentherm-gateway-arduino-shield/) support a gateway mode. As of now, this mode does *not supported* by the integration.
+[OpenTherm Gateway Arduino shield](https://www.tindie.com/products/jiripraus/opentherm-gateway-arduino-shield/) support a gateway mode. As of now, this mode is *not supported* by the integration.
 
 <img src="../_media/opentherm/opentherm_gw.png" width=375>
 

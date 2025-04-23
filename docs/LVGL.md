@@ -4,7 +4,9 @@
 
 !!! info "This feature is included in tasmota32-lvgl.bin" 
 
-Supported version: LVGL v8.3.3, LodePNG v20201017, Freetype 2.10.4
+!!! info "Check the [LVGL API Reference](LVGL_API_Reference.md)"
+
+Supported version: LVGL v9.2.2, LodePNG v20201017, Freetype 2.13.2
 
 **LVGL** (_Light and Versatile Graphics Library_) is Tasmota's next generation display. It is powerful, lightweight and simple to use. It combines:
 
@@ -72,14 +74,14 @@ E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
 
 Then open the Berry console and copy/paste the following: (alternatively create an `autoexec.be` file with this content):
 
-``` ruby
+```berry
 #- start LVGL and init environment -#
 lv.start()
 
 hres = lv.get_hor_res()       # should be 320
 vres = lv.get_ver_res()       # should be 240
 
-scr = lv.scr_act()            # default screan object
+scr = lv.scr_act()            # default screen object
 f20 = lv.montserrat_font(20)  # load embedded Montserrat 20
 
 #- Background with a gradient from black #000000 (bottom) to dark blue #0000A0 (top) -#
@@ -116,7 +118,7 @@ btn_style.set_text_color(lv.color(0xFFFFFF))    # text color white #FFFFFF
 #- create buttons -#
 prev_btn = lv.btn(scr)                            # create button with main screen as parent
 prev_btn.set_pos(20,vres-40)                      # position of button
-prev_btn.set_size(80, 30)                         # size of button
+prev_btn.set_size(80, 35)                         # size of button
 prev_btn.add_style(btn_style, lv.PART_MAIN | lv.STATE_DEFAULT)   # style of button
 prev_label = lv.label(prev_btn)                   # create a label as sub-object
 prev_label.set_text("<")                          # set label text
@@ -124,7 +126,7 @@ prev_label.center()
 
 next_btn = lv.btn(scr)                            # right button
 next_btn.set_pos(220,vres-40)
-next_btn.set_size(80, 30)
+next_btn.set_size(80, 35)
 next_btn.add_style(btn_style, lv.PART_MAIN | lv.STATE_DEFAULT)
 next_label = lv.label(next_btn)
 next_label.set_text(">")
@@ -132,7 +134,7 @@ next_label.center()
 
 home_btn = lv.btn(scr)                            # center button
 home_btn.set_pos(120,vres-40)
-home_btn.set_size(80, 30)
+home_btn.set_size(80, 35)
 home_btn.add_style(btn_style, lv.PART_MAIN | lv.STATE_DEFAULT)
 home_label = lv.label(home_btn)
 home_label.set_text(lv.SYMBOL_OK)                 # set text as Home icon
@@ -146,7 +148,15 @@ def btn_clicked_cb(obj, event)
     elif obj == next_btn  btn = "Next"
     elif obj == home_btn  btn = "Home"
     end
-    print(btn, "button pressed")
+    # get the coordinates
+    var indev = event.get_indev()
+    var point = lv.point()
+    indev.get_point(point)
+    # get local coordinates
+    var area = lv.area()
+    obj.get_coords(area)
+
+    print(f"{btn} button pressed at ({point.x},{point.y}) local ({point.x - area.x1},{point.y - area.y1})")
 end
 
 
@@ -165,7 +175,7 @@ Setting an input device is simple, we are now configuring the three buttons as t
 
 To control focus, you need to create a group, put the focusable items in the group, and assign the input device to the group:
 
-```python
+```berry
 g = lv.group()
 g.add_obj(prev_btn)
 g.add_obj(home_btn)
@@ -175,17 +185,8 @@ rotary.set_group(g)
 ```
 
 ### Touch Screen Support
-![colorwheel](https://user-images.githubusercontent.com/49731213/135708597-ae589748-417b-46c2-a452-5398cd90ee09.png)
 
 Touch screen are supported natively via Universal Display driver.
-
-Example:
-
-```python
-colp = lv.colorwheel(scr, false)
-colp.set_size(130, 130)
-colp.set_pos(10,30)
-```
 
 Let's go into the details of this example.
 
@@ -193,15 +194,15 @@ Let's go into the details of this example.
 
 Start LVGL
 
-```python
+```berry
 lv.start()
 ```
 
 Note: when you create an LVGL object, you need to use the `lv` module. For example, creating a label object is done with `lv.lv_label`. As a convenience, classes can also be named with a shorter name `lv.label` which is equivalent to `lv.lv_label`. The internal class name is still `lv_label`.
 
-Use `lv.montserrat_font(<size>)` to load a pre-defined montserrat font. Embedded sizes are: 10, 14, 20, 28. You can also load a font from the file-system but you need to convert them first. See: https://docs.lvgl.io/latest/en/html/overview/font.html
+Use `lv.montserrat_font(<size>)` to load a pre-defined montserrat font. Embedded sizes are: 10, 14, 20, 28. You can also load a font from the file-system but you need to convert them first. See: <https://docs.lvgl.io/latest/en/html/overview/font.html>
 
-```python
+```berry
 hres = lv.get_hor_res()       # should be 320
 vres = lv.get_ver_res()       # should be 240
 
@@ -211,7 +212,7 @@ f20 = lv.montserrat_font(20)  # load embedded Montserrat 20
 
 ### Set the background color
 
-```python
+```berry
 #- Background with a gradient from black #000000 (bottom) to dark blue #0000A0 (top) -#
 scr.set_style_bg_color(lv.color(0x0000A0), lv.PART_MAIN | lv.STATE_DEFAULT)
 scr.set_style_bg_grad_color(lv.color(0x000000), lv.PART_MAIN | lv.STATE_DEFAULT)
@@ -235,7 +236,7 @@ The line above shows the internal color converted back to 24 bits RGB (rounding 
 
 ### Create the upper text line
 
-```python
+```berry
 #- Upper state line -#
 stat_line = lv.label(scr)
 if f20 != nil stat_line.set_style_text_font(f20, lv.PART_MAIN | lv.STATE_DEFAULT) end
@@ -252,32 +253,32 @@ stat_line.refr_pos()                                                            
 
 Let's decompose:
 
-```python
+```berry
 stat_line = lv.label(scr)
 ```
 
 Creates an object of type `lv_label` with parent `scr` (screen).
 
-```python
+```berry
 if f20 != nil stat_line.set_style_text_font(f20, lv.PART_MAIN | lv.STATE_DEFAULT) end
 ```
 
 If `f20` is correctly loaded, set the font to Montserrat 20. Styles are associated to parts of objects and to states. Here we associate to the main part for state default.
 
-```python
+```berry
 stat_line.set_long_mode(lv.LABEL_LONG_SCROLL)                                        # auto scrolling if text does not fit
 ```
 
 Set the label to auto roll from right to left and vice versa if the text does not fit in the display.
 
-```python
+```berry
 stat_line.set_width(hres)
 stat_line.set_align(lv.TEXT_ALIGN_LEFT)                                              # align text left
 ```
 
 Set the width to full screen resolution, and align text to the left.
 
-```python
+```berry
 stat_line.set_style_bg_color(lv.color(0xD00000), lv.PART_MAIN | lv.STATE_DEFAULT)    # background #000088
 stat_line.set_style_bg_opa(lv.OPA_COVER, lv.PART_MAIN | lv.STATE_DEFAULT)            # 100% background opacity
 stat_line.set_style_text_color(lv.color(0xFFFFFF), lv.PART_MAIN | lv.STATE_DEFAULT)  # text color #FFFFFF
@@ -285,13 +286,13 @@ stat_line.set_style_text_color(lv.color(0xFFFFFF), lv.PART_MAIN | lv.STATE_DEFAU
 
 Set background color to red, text color to white, opacity to 100%.
 
-```python
+```berry
 stat_line.set_text("Tasmota")
 ```
 
 Set the text of the label.
 
-```python
+```berry
 stat_line.refr_size()                                                                # new in LVGL8
 stat_line.refr_pos()                                                                 # new in LVGL8
 ```
@@ -301,7 +302,7 @@ Please note that the actual display is asynchronous. We describe the objects, in
 
 ### Create a style
 
-```python
+```berry
 #- create a style for the buttons -#
 btn_style = lv.style()
 btn_style.set_radius(10)                        # radius of rounded corners
@@ -316,10 +317,10 @@ We create a `lv_style` object and associate some attributes. This works similarl
 
 ### Create the buttons
 
-```python
+```berry
 home_btn = lv.btn(scr)                            # center button
 home_btn.set_pos(120,vres-40)
-home_btn.set_size(80, 30)
+home_btn.set_size(80, 35)
 home_btn.add_style(btn_style, lv.PART_MAIN | lv.STATE_DEFAULT)
 home_label = lv.label(home_btn)
 home_label.set_text(lv.SYMBOL_OK)                 # set text as Home icon
@@ -362,7 +363,7 @@ Example: store the following image as `Sunrise320.png`
 
 ![Sunrise320.png](https://user-images.githubusercontent.com/49731213/149226013-257926a9-28f3-4316-b165-981c3ad4e1f8.png)
 
-``` ruby
+```berry
 sunrise = lv.img(scr)                   # create an empty image object in the current screen
 sunrise.set_src("A:/Sunrise320.png")    # load "Sunrise320.png", the default drive letter is 'A:'
 sunrise.move_background()               # move the image to the background
@@ -370,9 +371,9 @@ sunrise.move_background()               # move the image to the background
 
 ![screenshot-1642357636](https://user-images.githubusercontent.com/49731213/149672938-e01264c4-1a8a-4e00-b217-01b35981d1bc.png)
 
-### Freetype fonts support
+### FreeType fonts support
 
-Support for Freetype fonts depends on `#define USE_LVGL_FREETYPE` - which is **NOT** enabled by default in Tasmota32-lvgl.
+Support for FreeType fonts depends on `#define USE_LVGL_FREETYPE` - which is **NOT** enabled by default in Tasmota32-lvgl.
 
 Bitmat fonts typically consume significant flash size because you need to embed the font at different size. Using FreeType vector fonts can bring more flexibility and options. You need to first upload the desired fonts on the Tasmota file system.
 
@@ -380,7 +381,7 @@ To create the `lv_font` object, use `lv.load_freetype_font(name:string, size:int
 
 Example (after loading `lvgl_demo.be`) using `sketchbook.ttf` font:
 
-``` ruby
+```berry
 sb120 = lv.load_freetype_font("sketchbook.ttf", 120, 0)
 tt = lv.label(scr)
 tt.set_style_bg_opa(lv.OPA_0, lv.PART_MAIN | lv.STATE_DEFAULT)
@@ -415,24 +416,24 @@ What's implemented currently:
 What will probably not be implemented
 
 * ~~Native LVGL animation engine~~
-* Styles garbage collection is not done, which means that creating lots of styles leads to memoly leak
+* Styles garbage collection is not done, which means that creating lots of styles leads to memory leak
 * multi-screens display - I don't know of a single ESP32 based device with multi-screens
 * Bidirectional fonts - unless there is strong demand
 * LVGL tasks - Berry provides all the necessary tools for task scheduling
 
 ## Converting C LVGL to Berry
 
-Simply speaking, you can convert most constants from their C equivalent to berry by just changing the `LV_` prefix to `lv.`.
+Simply speaking, you can convert most constants from their C equivalent to Berry by just changing the `LV_` prefix to `lv.`.
 
 Example: `LV_SYMBOL_OK` becomes `lv.SYMBOL_OK`
 
-Berry provides an object model to `lv_object` and sub-classes for widhets like `lv_btn`, `lv_label`... To create an object, just instantiate the class: `lv_btn(parent)`
+Berry provides an object model to `lv_object` and sub-classes for widgets like `lv_btn`, `lv_label`... To create an object, just instantiate the class: `lv_btn(parent)`
 
 `lv_style` is created independently.
 
 `lv_color` takes a 24 bits 0xRRGGB as parameter, or a pre-defined color like `lv.BLUE`
 
-## Compiling for LVLG
+## Compiling for LVGL
 
 In `my_user_config.h` or in your config override, add:
 
@@ -457,7 +458,7 @@ Be aware that it adds 440Kb to you firmware, so make sure you have a partition w
 
 Get a Tasmota logo:
 
-```python
+```berry
 # start the display
 lv.start()
 
@@ -475,7 +476,7 @@ logo.center()
 
 The logo is black, with anti-aliasing and transparency. You can now manipulate the logo: change zoom, rotate or recolor.
 
-```python
+```berry
 # recolor logo to white
 logo.set_style_img_recolor_opa(255, lv.PART_MAIN | lv.STATE_DEFAULT)
 logo.set_style_img_recolor(lv.color(lv.COLOR_WHITE), lv.PART_MAIN | lv.STATE_DEFAULT)
@@ -491,7 +492,7 @@ logo.set_angle(300)
 
 Example of animation:
 
-```
+```berry
 cur_zoom = 200
 cur_incr = 5
 def animate_logo()
@@ -504,7 +505,7 @@ end
 animate_logo()
 ```
 
-### Calibrate a resitive Touch Screen
+### Calibrate a resistive Touch Screen
 
 Some touchscreens like [Lolin TFT 2.4 Touch Shields](https://www.wemos.cc/en/latest/d1_mini_shield/tft_2_4.html) use a resistive touchscreen controlled by `XPT2046`. Contrary to capacitive touchscreens, resistive touchscreens needs a per-device calibration.
 
@@ -543,9 +544,9 @@ If the geometry is wrong, you will see the following screen and no change is don
 
 ### Measuring user inactivity
 
-LVGL has a notion of screen inactivity, i.e. how long did the user not interact with the screen. This can be use to dim the display or turn it off after a moment of inactivity (like a screen saver). The time is in milliseconds. Full doc here: https://docs.lvgl.io/8/overview/display.html#inactivity
+LVGL has a notion of screen inactivity, i.e. how long did the user not interact with the screen. This can be use to dim the display or turn it off after a moment of inactivity (like a screen saver). The time is in milliseconds. Full doc here: <https://docs.lvgl.io/8/overview/display.html#inactivity>
 
-``` python
+```berry
 # time of inactivity in ms
 lv.disp().get_inactive_time()
 ```

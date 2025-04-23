@@ -1,4 +1,4 @@
-* Product Page: https://www.amazon.co.uk/gp/product/B07GJ26TCQ
+* Product Page: <https://www.amazon.co.uk/gp/product/B07GJ26TCQ>
 
 ## Serial Connection
 

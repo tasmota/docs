@@ -62,6 +62,7 @@ theme:
     - navigation.tabs.sticky
     - navigation.top
     - navigation.tracking
+    - content.action.edit
 
   font:
     text: Barlow
@@ -87,15 +88,19 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.betterem
   - pymdownx.caret
   - pymdownx.details
   - pymdownx.highlight
   - pymdownx.keys
   - pymdownx.mark
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.snippets
   - pymdownx.tilde
   - meta
@@ -136,10 +141,14 @@ nav:
     - Buttons-and-Switches.md
     - DeepSleep.md
     - Device-Groups.md
+    - Universal-Display-Driver.md
     - Displays.md
     - Dynamic-Sleep.md
     - I2C Devices: I2CDEVICES.md
+    - I2S Audio: I2S-Audio.md
+    - IPv6.md
     - Lights.md
+    - Matter: Matter.md
     - PIR-Motion-Sensors.md
     - Power-Monitoring-Calibration.md
     - PWM-dimmer-switch.md
@@ -149,12 +158,17 @@ nav:
     - Protocol Bridging:
       - Arduino MCU: TasmotaClient.md
       - BLE Gateway: Bluetooth.md
+      - DALI.md
+      - HDMI CEC: HDMI_CEC.md
       - IR Communication: Tasmota-IR.md
       - LCD/DLP Projector Control: Projector.md
+      - LoRa-and-LoRaWan-Bridge.md
       - Modbus-Bridge.md
       - OpenTherm: OpenTherm.md
       - RF Communication: RF-Protocol.md
       - Serial-to-TCP-Bridge.md
+      - TWAI.md
+      - Telegram.md
       - Zigbee.md
     - Smart-Meter-Interface.md
     - Thermostat.md
@@ -168,10 +182,11 @@ nav:
     - Tasmota32 Features: ESP32.md
     - Berry: Berry.md
     - Bluetooth Low Energy: Bluetooth_ESP32.md
-    - I2S Audio: I2S-Audio.md
     - LVGL: LVGL.md
     - HASPmota: HASPmota.md
+    - Matter.md
     - Tasmota-Application.md
+    - TensorFlow Lite: TFL.md
     - Touch GPIOs: TouchPin.md
     - Safeboot Partition Layout: Safeboot.md
     - Supported Devices: "https://templates.blakadder.com/esp32"
@@ -182,6 +197,7 @@ nav:
     - Domoticz.md
     - Home-Assistant.md
     - Homebridge.md
+    - Homey: "https://homey.app/en-us/app/com.paveld.tasmota/Tasmota-MQTT/"
     - HomeSeer.md
     - IP-Symcon.md
     - KNX.md

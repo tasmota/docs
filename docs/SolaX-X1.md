@@ -27,12 +27,18 @@
 	```arduino
 	#define SOLAXX1_READCONFIG
 	```
+	This module works as energy sensor. So be sure to define this, if not already done:
+	```arduino
+	#ifndef USE_ENERGY_SENSOR
+	#define USE_ENERGY_SENSOR
+	#endif
+	```
 	
 ## General
 
 This module reads runtime values from a [Solax X1](https://www.solaxpower.com) device via RS485 Modbus interface and publishes them to MQTT.  
 [![X1 Mini](_media/solax-x1/X1Mini_200.png)](_media/solax-x1/X1Mini.png) [![X1 Air](_media/solax-x1/X1Air_200.png)](_media/solax-x1/X1Air.png) [![X1 Smart](_media/solax-x1/X1Smart_200.png)](_media/solax-x1/X1Smart.png)  
-The communication of this module is based on the description of the [communication protocol version 1.7](_media/solax-x1/SolaxPower_Single_Phase_External_Communication_Protocol_X1_V1.7.pdf).
+The communication of this module is based on the description of the [communication protocol version 1.8](_media/solax-x1/SolaxPower_Single_Phase_External_Communication_Protocol_X1_V1.8.pdf).
 
 ## Wiring
 
@@ -58,8 +64,8 @@ The RX-, TX- and RTS- (if needed) lines have to be connected to the ESP matching
 |------|--------|---------|
 | 3.3V | 3-5V   | VCC     |
 | GND  | GND    | GND     |
-| RX   | TX-O   | TXD     |
-| TX   | RX-I   | RXD     |
+| RX   | TX-O   | RXD     |
+| TX   | RX-I   | TXD     |
 | RTS  | RTS    | -       |
 
 ### Breakout board ⬌ inverter
@@ -90,9 +96,10 @@ You have to configure the module or the template. Select `SolaxX1 Tx` and `Solax
 When every thing works you will see the current data on the main page. They are also provided via MQTT.  
 ![x1-example](_media/solax-x1/x1-example_300.png)
 
-!!! tip
-	To send a MQTT telemetry message immediately on every change of power, you can set a [`PowerDelta`](Commands#powerdelta) value.  
+!!! tip "Tips"
+	- To send a MQTT telemetry message immediately on every change of power, you can set a [`PowerDelta`](Commands.md#powerdelta) value.  
 	E.g. `PowerDelta 101` for every change of at least 1 W.
+	- Set [`SetOption72`](Commands.md#setoption72) to `1` for displaying the value of total energy reported from the inverter.
 
 ### Console commands
 There are two special console commands for the X1 converter:  
@@ -105,3 +112,35 @@ In the case when no data is received, it will be display `off`. As the converter
 
 !!! tip
 	When the inverter is working and `off` is displayed, so you have to check your hard- and software setup.
+
+## Meter Mode
+The Meter Mode can be used to easily build a zero injection solution. When the [export control](#enable-export-control) is enabled in the inverter settings, it requests the momentary grid consumption from an attached meter. This driver emulates the meter and reports back the requested values. Based on this values and the integrated export control algorithm, the inverter can limit the output to only be sufficient to the load, so as to achieve zero injection to the grid.  
+
+The grid load consumption can be measured by any device, like a meter, smart meter, etc. and transmitted to the driver. Please consult the [commands](#commands-meter-mode).
+
+The driver automatically detects when the inverter requests the meter mode. Only one mode is possilbe at the same time.
+
+!!! tip
+	To avoid problems, be sure the "normal" mode works completely flawlessly.
+
+### Enable export control
+Setting up the inverters export control function can be done via LCD. As an example, the steps are as follows:  
+![export-control-config](_media/solax-x1/export-control-config.png)  
+For more information have a look at the user manual of the inverter.
+
+### Commands (Meter Mode)
+The meter values can be communicated to the driver via this commands:  
+`EnergyConfig MeterPower` current imported or exported power in W (required)  
+`EnergyConfig MeterImport` imported energy in kWh to be displayed on the inverter (optional)  
+`EnergyConfig MeterExport` exported energy in kWh to be displayed on the inverter (optional)  
+
+A good way for operation is to subscribe to the (smart) meter MQTT topics directly. Therefore compile with `#define SUPPORT_MQTT_EVENT`. 
+
+A sample rule subscribing to values of the [SML driver](Smart-Meter-Interface.md) can look like this: 
+```
+Rule1
+ON mqtt#connected DO Subscribe PwrEvt, MT175/tele/SENSOR ENDON
+ON Event#PwrEvt#SML#Power_all DO EnergyConfig MeterPower %value% ENDON
+ON Event#PwrEvt#SML#Total_in DO EnergyConfig MeterImport %value% ENDON
+ON Event#PwrEvt#SML#Total_out DO EnergyConfig MeterExport %value% ENDON
+```

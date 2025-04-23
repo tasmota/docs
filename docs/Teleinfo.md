@@ -65,7 +65,7 @@ For example schematic on custom Denky board (ESP32) is as follow
 
 ![](_media/teleinfo/teleinfo_en_sch.png)
 
-!!! warning "Resistors values R3 and R4 need to be changed to work with `standard` and `historique`. New official values for R3 is 220ohm and R4 is 3.3Kohm."
+!!! warning "Resistors values R3 and R4 need to be changed to work with `standard` and `historique`. New official values for R3 is 220ohm and R4 is 3.3Kohm. If you still have issues in Standard mode try to increase R3 up to 1Kohm"
 
 As you can see GPIO33 is used for RX and GPIO4 for Enable (need set to 1 to be able to receive data) 
 
@@ -95,6 +95,7 @@ Full|Enable sending of all frames in raw mode.
 Changed|Enable sending raw frames only when data has changed.
 Skip _n_|Skips _n_ frames before sending raw frame.
 Limit|Limit raw frames to values subject to fast change (Power, Current, ...)
+Stats|Show Teleinfo frames errors statistics
 
 Changing mode from historique to standard and vice-versa will restart tamota.
 
@@ -104,12 +105,12 @@ First thing is to see how teleinfo is configured, for this you need to use `Ener
 
 ```
 17:24:56.758 CMD: EnergyConfig
-17:24:56.766 TIC: Settings Mode:historique, RX:GPIO23, EN:None, Raw:noraw, Skip:0, Limit:0
+17:24:56.766 TIC: Settings Mode:historique, RX:GPIO23, EN:None, Raw:noraw, Skip:0, Limit:0, Stats:0
 17:24:56.783 MQT: emoncms/ch2i/factory/denky_D6C0C0/stat/RESULT = {"EnergyConfig":"Done"}
 ```
 
 In this case we can see we are in historique mode, RX data is coming on GPIO32 (it's an ESP32) and Enable Pin is not used.
-No MQTT raw frame will be sent (noraw) on teleinfo frame reception, so keeping default config of telemetry.
+No MQTT raw frame will be sent (noraw) on teleinfo frame reception, so keeping default config of telemetry. Statistics are disabled, so won't be displayed on WEB UI but still available on console.
 
 ## Energy from Teleinfo
 
@@ -214,6 +215,12 @@ As you can see we now only data changed is sent.
 
 
 !!! tip "Don't worry about other fields, they will be send on each telemetry data as usual."
+
+### Errors Statistics
+
+You can check classic frame reception errors (checksum, size, format, ...), with `EnergyConfig Stats x` command. Setting to `1` allow to display statistics on WEB UI while setting to `0` disable this option, but you will be able to always see stats on console with command `EnergyConfig Stats`.
+
+You can clear Stats counters with `EnergyConfig Stats 2`
 
 ## Tasmota Rules examples
 

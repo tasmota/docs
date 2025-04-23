@@ -15,5 +15,5 @@
 site/
 
 # Python
-venv
-.venv
+venv*
+.venv*

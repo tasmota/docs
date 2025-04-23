@@ -1,42 +1,36 @@
 # Addressable LEDs in Berry
 
-Requires `#define USE_WS2812`.
+!!! note "Requires `#define USE_WS2812`, included in Tasmota32"
 
-Support for addressable leds strips or matrix, including animation. 
-
-Internally relies on NeoPixelBus library and currently supports WS2812 and SK6812.
-
-## Example
-
-Pulsating round on M5Stack Atom Matrix if GPIO 27 is configured as `WS1812 - 2`
-
-``` python
-var strip = Leds_matrix(5,5, gpio.pin(gpio.WS2812, 1))
-var r = Round(strip, 2, 30)
-r.start()
-```
-
-**VIDEO**
+Support for addressable leds strips and animation.
+Internally relies on optimized TasmotaLED library, currently supporting WS2812 and SK6812, 3 and 4 channels, over RMT and SPI.
 
 ##  How to use
 
 ### Compatibility with Templates
 
-Leds strip must be either controlled by Tasmota's lights features or by Berry, but they can't be controlled by both at the same time.
+You can control multiple LED strips. `WS2812 - 1` is also controlled by Tasmota's light controls.
+It is still possible to control this light strip with Berry, but whenever you use Tasmota light controls
+they will temporarily overrid Berry animations.
 
-For Berry control, it is highly recommended to use `WS2812 - 2` and higher (for multiple strips)
+To avoid any conflict between native WS2812 and Berry control, you can use `Scheme 14` which disables native WS2812.
 
-### `Leds`and `Leds_matrix` classes
+### Led strips, sub-strips
 
+You first need to define the low-level `Leds` object that describes the hardware strip of connected leds.
 
-All leds features rely on the low-level `Leds` or `Leds_matrix` classes.
+You can then define higher level objects like sub-strips
+(if there are actually several strips chained together like rings).
 
-
-Attributes|Details
+Class|Details
 :---|:---
-Leds<a class="cmnd" id="leds_ctor"></a>|`Leds(pixels:int, gpio:int [,model:int ,rmt:int]) -> instance<Leds>`<br>Creates a `Leds` instance for a linear leds strip<br>`pixels`: number of leds<br>`gpio`: gpio number<br>`model`: (opt) LED model, default:Leds.WS2812_GRB`<br>`rmt`: (opt) `RMT`channel to use, or auto-select (see below)
-Leds.matrix<a class="cmnd" id="leds_matrix_ctor"></a>|`Leds_matrix(width:int, height:int, gpio:int [,model:int ,rmt:int]) -> instance<Leds_matrix>`<br>Creates a `Leds` instance for a matrix of leds<br>`width`: number of leds horizontally<br>`height`: number of leds vertically<br>`gpio`: gpio number<br>`model`: (opt) LED model, default:Leds.WS2812_GRB`<br>`rmt`: (opt) `RMT`channel to use, or auto-select (see below)
-<strip>.create_segment<a class="cmnd" id="leds_segment"></a>|`<strip>.create_segment(offset:int, pixels:int) -> instance<Leds_segment>`<br>Creates a virtual segment from a physical Leds strip, from Led number `offset` with `pixels` leds.
+Leds<a class="cmnd" id="leds_ctor"></a>|`Leds(pixels:int, gpio:int [,model:int ,rmt:int]) -> instance<Leds>`<br>Creates a `Leds` instance for a linear leds strip<br>`pixels`: number of leds<br>`gpio`: physical gpio number<br>`model`: (optional) LED model, default: `Leds.WS2812_GRB`, alternative `Leds.SK6812_GRBW`<br>`rmt`: (optional) `RMT`channel to use, or auto-select (see below)
+
+Once a `Leds` object, you can use sub-objects:
+
+Method|Details
+:---|:---
+create_segment<a class="cmnd" id="leds_segment"></a>|`<strip>.create_segment(offset:int, pixels:int) -> instance<Leds_segment>`<br>Creates a virtual segment from a physical Leds strip, from Led number `offset` with `pixels` leds.
 
 LED model|Details
 :---|:---
@@ -48,79 +42,187 @@ Methods are the equivalent low-level from NeoPixelBus. All colors are in `0xRRGG
 Attributes|Details
 :---|:---
 clear<a class="cmnd" id="leds_clear"></a>|`clear() -> nil`<br>Clear all led (set to black)
+clear\_to<a class="cmnd" id="leds_clear_to"></a>|`clear_to(col:color [, bri:int]) -> nil`<br>Set all leds to the specified color. `bri` (0..255) is optional and default to 255
 show<a class="cmnd" id="leds_show"></a>|`show() -> nil`<br>Pushes the internal buffer to leds. May be ignored if a show command is already in progress. Use `can_show()` to see if `show()` is possible
 can\_show<a class="cmnd" id="leds_can_show"></a>|`can_show() -> bool`<br>Indicates if `show()` is possible, i.e. no transfer is ongoing
 is\_dirty<a class="cmnd" id="leds_is_dirty"></a>|`is_dirty() -> bool`<br>Indicates if a led was changed since last `show()`
 dirty<a class="cmnd" id="leds_dirty"></a>|`dirty() -> nil`<br>Forces a refresh during next `show()`
 pixel\_size<a class="cmnd" id="leds_pixel_size"></a>|`pixel_size() -> int`<br>Returns the number of bytes per pixel
-pixel\_count<a class="cmnd" id="leds_pixel_count"></a>|`pixel_count() -> int`<br>Returns the number of leds in the strip/matrix
-clear\_to<a class="cmnd" id="leds_clear_to"></a>|`clear_to(col:color [, bri:int]) -> nil`<br>Clears all leds to the specified color. `bri` is optional and default to 100%
-set\_pixel\_color<a class="cmnd" id="leds_set_pixel_color"></a>|`set_pixel_color(idx:int, col:color [, bri:int]) -> nil`<br>Set led number `idx`to the specified color. `bri` is optional and default to 100%
-set\_matrix\_pixel\_color<a class="cmnd" id="leds_set_matrix_pixel_color"></a>|`set_matrix_pixel_color(x:int, y:int, col:color [, bri:int]) -> nil`<br>(only `Leds_matrix`) Set led number of coordinates `x`/`y` to the specified color. `bri` is optional and default to 100%
+pixel\_count<a class="cmnd" id="leds_pixel_count"></a>|`pixel_count() -> int`<br>Returns the number of leds in the strip
+clear\_to<a class="cmnd" id="leds_clear_to"></a>|`clear_to(col:color [, bri:int]) -> nil`<br>Clears all leds to the specified color. `bri` is optional and default to 255
+set\_pixel\_color<a class="cmnd" id="leds_set_pixel_color"></a>|`set_pixel_color(idx:int, col:color [, bri:int]) -> nil`<br>Set led number `idx` to the specified color. `bri` (0..255) is optional and default to 255
 get\_pixel\_color<a class="cmnd" id="leds_get_pixel_color"></a>|`get_pixel_color(idx:int) -> color:int`<br>Returns the color (including brightness and gamma correction) of led number `idx`
 gamma<a class="cmnd" id="leds_gamma"></a>|`gamma:bool`<br>Applies gamma correction if `true` (default)
 pixels\_buffer<a class="cmnd" id="leds_pixels_buffer"></a>|`pixels_buffer() -> bytes()`<br>Returns the internal buffer used by NeoPixelBus. The `byte()` object points to the original buffer, no new buffer is allocated; which means that raw data can be changed directly. Don't forget to call `dirty()` and `show()` afterwards
 
-## Animation framework
+## animation framework - module `animate`
 
-The class `Leds_animator` sets the necessary methods to facilitate animations. You just need create a sub-class or `Leds_animator`, provide a `Leds` or `Leds_matrix` instance and implement the `animate` method. You can also register `animators` (see below).
+!!! note "An [offline emulator](https://github.com/s-hadinger/Tasmota-Berry-emulator) is available to test animation on a computer instead of an embedded device and generate animated images to show the final result"
 
-The instance is automatically registered as driver. Call `start()` to start the animation, and `stop()` to stop it.
+!!! note "Based on the project above there as an [online emulator](https://staars.github.io/docs/emulator/) with a minimal Tasmota environment running real Berry in a web browser, which will show animations in real time. Just copy and paste the code."
 
+The module `animate` provides a simple framework to build customizable animations. It is optimized for 1D animations on Led strips.
 
-Attributes|Details
+![Leds_animator](https://github.com/tasmota/docs/assets/49731213/1b4db455-938a-4f89-a3b6-69886be1ce6f)
+
+Note: `import animate` is only available if Tasmota is compiled with `#define USE_WS2812` , which is the case of most precompiled binaries.
+
+The core class is `animate.core`. You first need to create a `Leds` object to describe the Led strip object and length. 
+
+```
+import animate
+var strip = Leds(25, gpio.pin(gpio.WS2812, 0))
+var anim = animate.core(strip)
+```
+
+At each tick (50 times per second) the `core` classes first executes the `animators`. Each `animator` can change a velue depending on the timestamp and internal parameters, and publishes the new values to a 'listener'. For example, a "palette animator" iterates through colors, and publishes color values to an object like a background or a dot.
+
+The concept of `animator` is inspired from audio modular synthesizers. An `animator` is like a stand-alone oscillator and a waveform (square, triangle...) that feeds directly other components in cascade.
+
+Once all `animators` are called, `core` then runs each layered `painter` object. A `painter` draws a layer into a `Leds_frame` object (like a frame buffer). The frame supports transparency alpha channel in ARGB mode (see below). Each layer is flattened onto the background layer like a layered cake. Once all layers are rendered and flattened, the final frame buffer is availale.
+
+Finally the frame buffer is copied to the physical WS2812 led strip, after applying brightness `bri` and applying gamma correction (if required).
+### `animate.core` class
+
+This is the main helper class to host all the animation components. It is composed of:
+
+- `strip` object representing the led strip (1-dimension, only RGB supported for now)
+- `bri` parameter (0..255) to control the overall brightness
+- `frame` the background frame buffer, instance of `animate.frame`
+- `layer` the current frame buffer being painted by a `painter`, instance of `animate.frame`. It is merged to `frame` once painted, taking into account transparency (alpha channel)
+
+The instance also does the following:
+
+- register a `fast_loop` for quick animation, and iterate every 20ms (50Hz)
+- call each `animator` object to compute new values of all parameters
+- call each `painter` object to paint layers on top of each others
+- apply brightness to frame buffer
+- copy to `strip` WS2812 leds
+
+Methods:
+
+- `init(strip [, bri:int])` constructor, needs a strip, brightness defaults to 50%
+- `set_bri()` and `get_bri()` to set/get brightness
+- `add_animator()` adds an animator object to be called at each tick
+- `add_painter()` adds a painter object
+- `start()` and `stop()`, by default the animation is stopped. It needs to be started explcitly
+- `clear()` clear all leds and stop animation
+- `set_cb()` sets the callback at each tick to compute the animation. All animators have been processed before this call. `set_cb(instance, method)`
+- `remove()` stop the animation and removes the object from `fast_loop`; `clear()` is called internally
+
+### `animate.frame` class
+
+This class is a helper class to manage RGB pixels frame, mix layers and compute the final image. All frames are computed in ARGB (alpha + RGB) at full brightness and with no gamma (full linear). It's only at the last moment that brightness and gamma correction are applied.
+
+`Leds_frame` is a super-class of `bytes` and encapsulate a raw bytes buffer. Each pixel is in ARGB 32 bits format with alpha-channel.
+
+Methods:
+
+- constructor `Leds_frame(number_of_pixels:int)`: creates a frame buffer with the specified number of pixels (the actual bytes buffer is x4 this size). The buffer is filled with black opaque by default
+- `frame[i]`: read/write the 32-bit value of the ARGB pixel at index `i`
+- `frame.set_pixel(i, r, g, b, alpha)`: set the pixel at index `i` for value `r`/`g`/`b` (0..255) and optional `alpha` channel (opaque 0x00 if not specified)
+- `frame.fill_pixels(argb)`: fill the frame with `argb` 32-bit value
+- `frame.blend_pixels(background, foreground)`: blends a background frame (considered opaque) with a front layer with alpha, and stores in the current object. It is common that the target and the background are the same objects, hence `frame.blend_pixels(frame, fore)`
+- `frame.paste_pixels(strip_raw_bytes, bri:0..255, gamma:bool)`: pastes the `Led_buffer` object into a Leds strip. This is the final step before displaying the frame to the actual leds, and apply `bri` and `gamma` correction.
+
+### pre-built animators
+
+Currently the following animators are provided:
+
+- `animate.oscillator`: generate a variable integer that can be used by painters as a cyclic value (brightness, size, speed...)
+- `animate.palette`: cycle through a color palette with smooth transitions
+
+#### `animate.oscillator`
+
+Methods|Description
 :---|:---
-Leds\_animator<a class="cmnd" id="leds_animator_ctor"></a>|`Leds_animator(strip:instance) -> instance<Leds_animator>`<br>Constructors only needs an instance of `Leds` or `Leds_matrix`
-start<a class="cmnd" id="leds_animator_start"></a>|`start() -> nil`<br>Register the animator as Tasmota driver (with `tasmota.add_driver`) and start the animation
-stop<a class="cmnd" id="leds_animator_stop"></a>|`stop() -> nil`<br>Stop the animation and removes the driver from Tasmota drivers list
-clear<a class="cmnd" id="leds_animator_clear"></a>|`clear() -> nil`<br>Call `stop()` and clear all leds (set to black)
-remove<a class="cmnd" id="leds_animator_remove"></a>|`remove() -> nil`<br>Removes the instance from Tasmota's list of drivers, and stops the animation
-set\_bri<a class="cmnd" id="leds_animator_set_bri"></a>|`set_bri(bri:int) -> nil`<br>Sets the brightness of the animation (0..100)
-add\_anim<a class="cmnd" id="leds_animator_add_anim"></a>|`add_anim(anim:instance) -> nil`<br>Registers an animator to be called just before the call to `animate` (see below)
-get\_bri<a class="cmnd" id="leds_animator_get_bri"></a>|`get_bri() -> int`<br>Returns the brightness of the animation (0..100)
-animate<a class="cmnd" id="leds_animator_animate"></a>|`animate() -> nil`<br>Place-holder for the actual animation. You need to override this method
+set_duration_ms|`set_duration_ms(int) -> nil` sets the duration of the animation (in ms)
+set_cb|`set_cb(object, method) -> nil` sets the callback object and method to update after a new value is computed
+set_a<br>set_b|`set_a(int) -> nil` or `set_b(int)` sets the start and end value
+set_form|`set_form(int) -> nil` sets the waveform among the following values<br>`animate.SAWTOOTH`: ramp from `a` to `b` and start over<br>`animate.TRIANGLE`: move back and forth from `a` to `b`<br>`animate.SQUARE`: alternate values `a` and `b`<br>`animate.COSINE`: move from `a` to `b` in a cosine wave<br>`animate.SINE`: move from half-way between `a` and `b` and move in SINE wave
+set_phase|`set_phase(phase:0..100) -> nil` set the phase between 0% and 100%, defaults to `0`%
+set_duty_cycle|`set_duty_cycle(int:0..100) -> int` sets the duty cycle between `a` and `b` values, defaults to `50`%
+
+#### `animate.palette`
+
+Methods|Description
+:---|:---
+init|`init(palette: bytes() or comptr [, duration_ms:int])` initialize the palette animator with a palette object, see below
+set_duration_ms|`set_duration_ms(int) -> nil` sets the duration of the animation (in ms)
+set_cb|`set_cb(object, method) -> nil` sets the callback object and method to update after a new value is computed
+set_bri|`set_bri(bri:0..255) -> nil` sets the brightness for the color, defaults to `255`
+
+**palettes solidified in Flash**
+
+Palette|Description
+:---|:---
+`animate.PALETTE_RAINBOW_WHITE`|Cycle through 8 colors (including white) and keep colors steady<br><div style='width:100%;height:30px;background:linear-gradient(to right,#FF0000 0.0%,#FF0000 8.9%,#FFA500 14.3%,#FFA500 23.2%,#FFFF00 28.6%,#FFFF00 37.5%,#00FF00 42.9%,#00FF00 51.8%,#0000FF 57.1%,#0000FF 66.1%,#FF00FF 71.4%,#FF00FF 80.4%,#FFFFFF 85.7%,#FFFFFF 94.6%,#FF0000 100.0%);'></div>
+`animate.PALETTE_STANDARD_TAG`|Standard palette cycling through 7 colors<br><div style='width:100%;height:30px;background:linear-gradient(to right,#FF0000 0.0%,#FFA500 14.3%,#FFFF00 28.6%,#00FF00 42.9%,#0000FF 57.1%,#FF00FF 71.4%,#EE44A5 85.7%,#FF0000 100.0%);'></div>
+`animate.PALETTE_STANDARD_VAL`|Cycle through 6 colors as values<br><div style='width:100%;height:30px;background:linear-gradient(to right,#FF0000 0.0%,#FFA500 16.5%,#FFFF00 33.3%,#00FF00 49.8%,#0000FF 66.7%,#FF00FF 83.1%,#FF0000 100.0%);'></div>
+`animate.PALETTE_SATURATED_TAG`|Cycle through 6 saturated colors<br><div style='width:100%;height:30px;background:linear-gradient(to right,#FF0000 0.0%,#FFA500 16.7%,#FFFF00 33.3%,#00FF00 50.0%,#0000FF 66.7%,#FF00FF 83.3%,#FF0000 100.0%);'></div>
+`animate.PALETTE_ib_jul01_gp`|<div style='width:100%;height:30px;background:linear-gradient(to right,#E60611 0.0%,#25605A 36.9%,#90BD6A 52.2%,#BB030D 100.0%);'></div>
+`animate.PALETTE_ib_44`|<div style='width:100%;height:30px;background:linear-gradient(to right,#D61810 0.0%,#E3734E 25.1%,#EFCE8C 100.0%);'></div>
+`animate.PALETTE_Fire_1`|<div style='width:100%;height:30px;background:linear-gradient(to right,#FF0000 0.0%,#FF8000 50.2%,#FFFF00 100.0%);'></div>
+`animate.PALETTE_bhw1_sunconure`|<div style='width:100%;height:30px;background:linear-gradient(to right,#61F04E 0.0%,#F6891E 63.1%,#F62D1E 100.0%);'></div>
+`animate.PALETTE_bhw4_089`|<div style='width:100%;height:30px;background:linear-gradient(to right,#AE341C 0.0%,#E09A85 11.0%,#EBD0CE 20.8%,#F9D076 31.0%,#E45F32 42.7%,#E3A574 51.8%,#E28343 63.9%,#FCD576 72.2%,#FCA97D 78.8%,#FFC265 87.8%,#D75023 100.0%);'></div>
+
+Palettes can be specified as a `bytes()` object of via `comptr` if they are solidified in Flash.
+
+Palettes can follow to different formats:
+
+**1. Palette in time units**
+
+Bytes: `<transition_time>|<RR><GG><BB>` (4 bytes per entry)
+
+Each entry specifies the time in units to go from the current value to the next value. The last entry must have a `<transition_time>` of `0x00`. The unit is abstract, and only ratio between value are meaningful - the actual duration is derived from `duration_ms` where all indivudal `<transition_time>` are stretched to cover the desired duration.
+
+This format makes it easier to adjust the transition time between colors
 
 Example:
 
-``` python
-import animate
-class Rainbow_stripes : Leds_animator
-  var cur_offset     # current offset in the palette
-  static palette = [ 0xFF0000, #- red -#
-                     0xFFA500, #- orange -#
-                     0xFFFF00, #- yellow -#
-                     0x008800, #- green -#
-                     0x0000FF, #- blue -#
-                     0x4B0082, #- indigo -#
-                     0xEE82EE, #- violet -#
-                  ]
-
-  # duration in seconds
-  def init(strip, duration)
-    super(self).init(strip)
-    self.cur_offset = 0
-    # add an animator to change `self.cur_offset` to each value of the palette
-    self.add_anim(animate.rotate(def(v) self.cur_offset = v end, 0, size(self.palette), int(duration * 1000)))
-  end
-
-  def animate()
-    var i = 0
-    while i < self.pixel_count    # doing a loop rather than a `for` prevents from allocating a new object
-      var col = self.palette[(self.cur_offset + i) % size(self.palette)]
-      strip.set_pixel_color(i, col, self.bri)   # simulate the method call without GETMET
-      i += 1
-    end
-    strip.show()
-  end
-end
+```berry
+var PALETTE_TAG = bytes(
+  "40"  "FF0000"    # red
+  "40"  "FFA500"    # orange
+  "40"  "FFFF00"    # yellow
+  "40"  "00FF00"    # green
+  "40"  "0000FF"    # blue
+  "40"  "FF00FF"    # indigo
+  "40"  "EE44A5"    # violet
+  "00"  "FF0000"    # red
+)
 ```
 
-How to use:
 
-``` python
-var strip = Leds_matrix(5,5, gpio.pin(gpio.WS2812, 1))
-var r = Rainbow_stripes(strip, 1.0)
-r.start()
+**2. Palette in values**
+
+Bytes: `<value>|<RR><GG><BB>` (4 bytes per entry)
+
+Each entry indicates what is the target color for a specific value. Values go from `0x00` to `0xFF` (0..255). The first entry must start with `0x00` and the last must use value `0xFF`.
+
+This format is useful to use palettes that represent a color range.
+
+Example:
+
+```berry
+var PALETTE_VAL = bytes(
+  "00"  "FF0000"    # red
+  "24"  "FFA500"    # orange
+  "49"  "FFFF00"    # yellow
+  "6E"  "008800"    # green
+  "92"  "0000FF"    # blue
+  "B7"  "4B0082"    # indigo
+  "DB"  "EE82EE"    # violet
+  "FF"  "FF0000"    # red
+)
+```
+
+Note: you can generate a CSS linear-gradient of a palette with the following code:
+
+```berry
+import animate
+print(animate.palette.to_css_gradient(animate.PALETTE_STANDARD_TAG))
+# background:linear-gradient(to right,#FF0000 0.0%,#FFA500 14.3%,#FFFF00 28.6%,#00FF00 42.9%,#0000FF 57.1%,#FF00FF 71.4%,#FFFFFF 85.7%,#FF0000 100.0%);
 ```
 
 ## Advanced features

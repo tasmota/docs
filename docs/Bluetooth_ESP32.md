@@ -1,5 +1,5 @@
 # Bluetooth for ESP32 :material-cpu-32-bit:
-
+(Bluetooth version 4.x)
 ## MI32 Sensors
 
 ??? failure "This feature is included only in tasmota32-bluetooth.bin"
@@ -12,7 +12,7 @@
 Different vendors offer Bluetooth solutions, mostly as part of the Xiaomi brand, often under the Mijia label. The sensors supported by Tasmota use BLE (Bluetooth Low Energy) to transmit the sensor data, but they differ in their accessibilities quite substantially.
 
 Basically all of them use the so-called "MiBeacons" which are BLE advertisement packets with a certain data structure, which are broadcasted by the devices automatically while the device is not in an active Bluetooth connection.
-The frequency of these messages is set by the vendor and ranges from one per 3 seconds to one per hour (f.e. for the battery status of the LYWSD03MMC). Motion sensors and BLE remote controls start to send when an event is triggered.
+The frequency of these messages is set by the vendor and ranges from one per 3 seconds to one per hour (e.g., for the battery status of the LYWSD03MMC). Motion sensors and BLE remote controls start to send when an event is triggered.
 These packets already contain the sensor data and can be passively received by other devices and will be published regardless if a user decides to read out the sensors via connections or not. Thus the battery life of a BLE sensor is not influenced by reading these advertisements and the big advantage is the power efficiency as no active bi-directional connection has to be established. The other advantage is, that scanning for BLE advertisements can happen nearly parallel (very quickly one after the other), while a direct connection must be established for at least a few seconds and will then block both involved devices for that time.
 
 This is therefore the preferred option, if supported by the sensor.
@@ -104,11 +104,53 @@ The naming conventions in the product range of Bluetooth sensors in Xiaomi unive
   </tr>
 </table>
 
+ <table>
+  <tr>
+    <th class="th-lboi">WZ-KR220IBLE-310</th>
+  </tr>
+  <tr>
+    <td class="tg-lboi"><img src="../_media/bluetooth/ATBtn.png" width=200></td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">button press (1-3 buttons)</td>
+  </tr>
+   <tr>
+    <td class="tg-lboi">passive</td>
+  </tr>
+</table>
+
+
 *passive* means data is received via BLE advertisements while *active* means data is received via a bidirectional connection to the sensor.
 
 **LYWSD03MMC** sends encrypted sensor data every 10 minutes. As there are no confirmed reports about correct battery presentation of the sensor (always shows 99%), this function is currently not supported.
 
 **MJYD2S** sends motion detection events and 2 discrete illuminance levels (1 lux or 100 lux for a dark or bright environment). Additionally battery level and contiguous time without motion in discrete growing steps (no motion time = NMT).
+
+### WZ-KR220IBLE-310
+
+These bluetooth switches are NOT Xiaomi branded devices and do not use encryption. They are normally be found in combination with a Tuya relay module and avaialble in 1 2 or 3 button versions.  
+Also known as bluetooth remote controls.
+All of these switches use the same source MAC address (C1A2A3A4A5A6). To be able to distinguish individual switchs and buttons, the end of the MAC address is replaced with the unique switch_id.
+Thus you can use BLEAlias to name individual switches and monitor for the button presses.
+
+To use these switches, you also need to set a few other MI32 options
+
+option|meaning
+:---|:---
+BLEAddrFilter 1|So BLE can see address, any value greater than 0 
+MI32Option1 1|Stops button press occuring at TELEPERIOD times
+MI32Option2 2|Sends message on button press
+
+!!! tip
+Two button switches are btn 1 and 3 (not 1 and 2)
+
+!!! tip
+If BLEAlias is used then an alias for C1A2A3A4A5A6 must be included, along with the alias for the unique switch
+
+```haskell
+BLEAlias c1a2a3a40048=LoungeBtn
+BLEAlias c1a2a3a4a5a6=AnyButton
+```
 
 ### Encryption and bind_key
 
@@ -167,9 +209,23 @@ This allows for the receiving of BLE advertisements from BLE devices, including 
 
 ??? failure "This feature is included only in tasmota32-bluetooth.bin"
 
-    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    When [compiling your build](Compile-your-build), you need to
+
+    (1) Add the following to `user_config_override.h`:
     ```c++
     #define USE_BLE_ESP32                // Add support for ESP32 as a BLE-bridge (+9k2? mem, +292k? flash)
+    ```
+    (2) Copy `platformio_override_sample.ini` to `platformio_override.ini`
+
+    (3) In `platformio_override.ini`, search for the following lines and remove the `;` in front of the 2nd line if it is there
+    ```
+    ; *** uncomment the following line if you use Bluetooth or Apple Homekit in a Tasmota32 build. Reduces compile time
+    ;                          lib/libesp32_div
+    ```
+    becomes
+    ```
+    ; *** uncomment the following line if you use Bluetooth or Apple Homekit in a Tasmota32 build. Reduces compile time
+                              lib/libesp32_div
     ```
 
 Be aware, enabling of the native BLE on ESP32 has an impact on Wi-Fi performance.  Although later SDK helped a bit, expect more lag on the web interface and on MQTT.

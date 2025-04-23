@@ -11,7 +11,7 @@ Berry allow imports from files inside a Tasmota App (.tapp file). Also enabled `
 
 Here is the code you should add in your `autoexec.be` inside tapp file:
 
-```python
+```berry
 import sys
 var wd = tasmota.wd
 if size(wd) sys.path().push(wd) end
@@ -35,6 +35,10 @@ The LVGL screen will change from black to red to green to blue to white each sec
 [Partition Wizard](https://raw.githubusercontent.com/arendst/Tasmota/development/tasmota/berry/modules/Partition_Wizard.tapp)
 
 [Partition Manager](https://raw.githubusercontent.com/arendst/Tasmota/development/tasmota/berry/modules/Partition_Manager.tapp)
+
+To run either of these apps, simply upload the .tapp file to the filesystem and reboot the board.  After doing so, the app will appear on the consoles page in the GUI.
+
+![Partition_Wizard](_media/Partition_Wizard.png)
 
 ### Display Calibration
 

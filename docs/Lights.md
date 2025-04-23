@@ -33,64 +33,63 @@ See [**light commands**](Commands.md#light) for how to control lights.
 
 Switched or On/Off lights are controlled through `Relay` GPIOs.
 
-If you define multiple relays, they are controlled with `Power<x>` starting at `x=1`.
+If you define multiple relays, they are controlled with [`Power<x>`](Commands.md#power) starting at `x=1`.
 
-**Alexa**: you can use Wemo emulation, your device will appear as a switch. You can change it to a light in the Alexa app.
+**Alexa**: You can use Wemo emulation, your device will appear as a switch. You can change it to a light in the Alexa app.
 
-**Alexa**: if you have one or multiple relays, you can use Philips Hue emulation. All devices will appear as On/Off lights, and named accordingly to `FriendlyName`. Note: if you have only Echo Spot 2nd generation, your light will have a dummy dimmer.
+**Alexa**: If you have one or multiple relays, you can use Philips Hue emulation. All devices will appear as On/Off lights, and named accordingly to [`FriendlyName`](Commands.md#friendlyname). Note: If you have only Echo Spot 2nd generation, your light will have a dummy dimmer.
 
 <br clear="right"/>
 
 |Configuration|(see below)|
 |---|---|
-|Commands|`Power`|
+|Commands|[`Power`](Commands.md#power)|
 |Configuration|none|
 
 ### 1 Channel - Dimmable Light
 
-<img style="float:right; width:180px" alt="Tasmota_1" src="https://user-images.githubusercontent.com/49731213/71555196-9e889b80-2a29-11ea-9f96-fc47ad65ef43.png">
+![Example light 1 channel](https://user-images.githubusercontent.com/49731213/71555196-9e889b80-2a29-11ea-9f96-fc47ad65ef43.png){width="180" align=right}
 
-1 channel lights are often white lights with On/Off controls and Dimmer.
+1 channel lights are often white lights with On/Off controls and dimmer.
 
-**Alexa**: you can use Philips Hue emulation, the light will appear as White light with Dimmer.
-
-**Leading edge dimmer** You can also configure a leading edge dimmer on 230V with the 1 Channel configuration. In this case you need a TRIAC and a zero-Cross detection that give a pulse with every crossing of the 0V of the sinus curve. This is currently ONLY supported on ESP8266. A working ESP32 is "work in progress".
-
-Robotdyn AC Dimmer example:
-<img style="float:right;height:120px" alt="CCT" src="https://ae01.alicdn.com/kf/HTB1TrhBQpXXXXbsaFXXq6xXFXXX8/AC-Licht-lampe-dimmen-LED-lampe-und-motor-Dimmer-Modul-1-Kanal-3-3-V-5.jpg">
-
-Define a COUNTER with the same number as the PWM (e.g. COUNTER1 & PWM1). You will need to connect the output of PWM1 to an input as COUNTER1. 
-Connect zero-Crossing to GPIO of COUNTER4
-
-|Configuration|(see below)|
-|---|---|
-|Dimmer1| PWM1, COUNTER1|
-|Dimmer2| PWM2, COUNTER2 (optional)|
-|Dimmer3| PWM3, COUNTER3 (optional)|
-|Zero-Cross PIN| COUNTER4 (mandatory|
-    
-example schematic:
-    
-<img height="240" alt="ACDimmer" src="https://user-images.githubusercontent.com/24524506/155886267-56433a26-614a-43d7-8b30-3e38ef9931d7.png">
-
-example Config:
-    
-<img width="190" alt="Screenshot 2022-02-27 at 15 34 19" src="https://user-images.githubusercontent.com/24524506/155886737-8139f80b-510f-4b61-937a-b6929aa27531.png">
-
-    
-Preferably before connecting the ZC & PWM perform the following commands:
-    
-`SETOPTION99 1` -> to enable detection of the raising edge of the zero-crossing.<br/>
-`PWMFREQUENCY 100` -> (50hz) or 120 (60hz) depending on the frequency of the main in your country.<br/>
-`LEDTABLE 0` -> for normal lamps or motors.<br/>
-
-
-|Configuration|(see below)|
-|---|---|
-|Commands|`Power`, `Dimmer`, `Channel`, `Fade`, `Speed`|
-|Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction)|
-
+**Alexa**: You can use Philips Hue emulation, the light will appear as white light with dimmer.
 <br clear="right"/>
+![Robotdyn-Dimmermodul](_media/peripherals/Robotdyn-Dimmermodul-1Kanal.jpg){width="180" align=right}
+
+**Leading edge dimmer**: You can also configure a leading edge dimmer on 230V with the 1 channel configuration. In this case you need a TRIAC and a zero-cross detection that give a pulse with every crossing of the 0V of the sinus curve. The dimmer is power callibrated. 10% --> 10% light or power consumption on a device like a heater. The Dimmer is e.g. suitable to dynamically pump remaining solar power into a heat sink.
+<br clear="right"/>
+
+??? summary "Robotdyn AC dimmer configuration"  
+    Connect zero-crossing to GPIO of Counter4. Define a PWM and connect
+    
+    |Configuration|(see below)|
+    |---|---|
+    |Dimmer,Channel1| PWM1|
+    |Channel2| PWM2 (optional)|
+    |Channel3| PWM3 (optional)|
+    |Channelxx| PWMxx (optional)|
+    |Zero-Cross PIN| COUNTER4 (mandatory)|
+    |Commands| `ZCDimmerSet`|
+
+    Example schematic:  
+    ![ZCDimmer example schematic](_media/peripherals/ZCDimmer_Schematic.png)
+
+    Example config:  
+    ![ZCDimmer example config](_media/peripherals/ZCDimmer_Config.png){width="300"}
+
+    Preferably before connecting the ZC & PWM perform the following commands:
+
+    - [`SetOption99 1`](Commands.md#setoption99) -> to enable detection of the raising edge of the zero-crossing
+    - [`SetOption68 1`](Commands.md#setoption68) -> with more than ONE PWM this will all operate as single lights. Control with [`channelx 1..100`]
+    - [`LedTable 0`](Commands.md#ledtable) -> for normal lamps or motors. Recommended
+    - [`savedata 0`](Commands.md#savedata) -> Saving the current status create small flickering. OFF prevent this. On ESP32 recommended. Do not change after reboot!
+
+
+
+|Configuration|(see below)|
+|---|---|
+|Commands|[`Power`](Commands.md#power), [`Dimmer`](Commands.md#dimmer), [`Channel`](Commands.md#channel), [`Fade`](Commands.md#fade), [`Speed`](Commands.md#speed)|
+|Options|[**Auto Power On**](#disable-auto-power-on), [**Independant PWM Channels**](#independent-pwm-channels), [**Gamma Correction**](#gamma-correction)|
 
 ### 2 Channels - CCT Light
 
@@ -98,12 +97,12 @@ Preferably before connecting the ZC & PWM perform the following commands:
 
 2 channels lights are white lights with correlated color temperature (CCT) controls from Cold White (CT=153) to Warm White (CT=500).
 
-**Alexa**: you can use Philips Hue emulation, the light will appear as White light with Color Temperature. Control through the Alexa app is limited to the `CT` range `199..383`.
+**Alexa**: You can use Philips Hue emulation, the light will appear as white light with color temperature. Control through the Alexa app is limited to the `CT` range `199..383`.
 
 |Configuration|(see below)|
 |---|---|
-|Commands|`Power`, `Dimmer`, `Color`, `White`, `CT`|
-|Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction), [**PWM CT**](#pwm-ct-module-48)|
+|Commands|[`Power`](Commands.md#power), [`Dimmer`](Commands.md#dimmer), [`Color`](Commands.md#color), [`White`](Commands.md#white), [`CT`](Commands.md#ct)|
+|Options|[**Auto Power On**](#disable-auto-power-on), [**Independant PWM Channels**](#independent-pwm-channels), [**Gamma Correction**](#gamma-correction), [**PWM CT**](#pwm-ct)|
 
 <br clear="right"/>
 
@@ -113,11 +112,11 @@ Preferably before connecting the ZC & PWM perform the following commands:
 
 3 channel lights are RGB color lights. You can set color either via RGB or HSB (_not HSL_). Alexa support also allows XY color, but that is not supported through commands.
 
-**Alexa**: you can use Philips Hue emulation, the light will appear as Color light.
+**Alexa**: You can use Philips Hue emulation, the light will appear as Color light.
 
 |Configuration|(see below)|
 |---|---|
-|Commands|`Power`, `Dimmer`, `Color`, `HSBColor`|
+|Commands|[`Power`](Commands.md#power), [`Dimmer`](Commands.md#dimmer), [`Color`](Commands.md#color), [`HSBColor`](Commands.md#hsbcolor)|
 |Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction), [**Channel Remapping**](#channel-remapping)|
 
 <br clear="right"/>
@@ -128,22 +127,20 @@ Preferably before connecting the ZC & PWM perform the following commands:
 
 4 channel lights are RGBW, i.e. RGB light and an additional White light. White can be either Warm White or Cold White depending on the manufacturer.
 
-**Alexa**: you can use Philips Hue emulation, the light will appear as Color light and White light with CT control. The CT control is only present to force pure white instead of RGB white. Changin CT will have no effect.
+**Alexa**: You can use Philips Hue emulation, the light will appear as Color light and White light with CT control. The CT control is only present to force pure white instead of RGB white. Changing CT will have no effect.
 
 <br clear="right"/>
 
 !!! failure "There is no White only slider in the UI for 4 channel lights"
-    Use [`White`](Commands.md#white) commands or set up [White Blend Mode](#white-blend-mode) or [**RGB and White Split**](#rgb-and-white-split).
+    Use [`White`](Commands.md#white) commands or set up [White Blend Mode](#white-blend-mode) or [RGB and White Split](#rgb-and-white-split).
 
 |Configuration|(see below)|
 |---|---|
-|Commands|`Power`, `Dimmer`, `Color`, `HSBColor`, `White`|
+|Commands|[`Power`](Commands.md#power), [`Dimmer`](Commands.md#dimmer), [`Color`](Commands.md#color), [`HSBColor`](Commands.md#hsbcolor), [`White`](Commands.md#white)|
 |Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction), [**Channel Remapping**](#channel-remapping), [**White Blend Mode**](#white-blend-mode), [**RGB and White Split**](#rgb-and-white-split)|
 
-<br clear="right"/>
-
 !!! danger 
-    Some lights have limited power supply that do not allow all channels to be at full power at the same time. Be careful not to burn out your light if you force all channels to be on using `Color` or [**RGB and White Split**](#rgb-and-white-split).
+    Some lights have limited power supply that do not allow all channels to be at full power at the same time. Be careful not to burn out your light if you force all channels to be on using [`Color`](Commands.md#color) or [RGB and White Split](#rgb-and-white-split).
 
 ### 5 Channels - RGBCCT Lights
 
@@ -151,25 +148,27 @@ Preferably before connecting the ZC & PWM perform the following commands:
 
 5 channel lights are RGBCCT - a 3 channel RGB light and an additional 2 channel CCT light.
 
-**Alexa**: you can use Philips Hue emulation, the light will appear as Color light and White light with CT control.
+**Alexa**: You can use Philips Hue emulation, the light will appear as Color light and White light with CT control.
+
+<br clear="right"/>
 
 |Configuration|(see below)|
 |---|---|
-|Commands|`Power`, `Dimmer`, `Color`, `HSBColor`, `White`, `CT`|
+|Commands|[`Power`](Commands.md#power), [`Dimmer`](Commands.md#dimmer), [`Color`](Commands.md#color), [`HSBColor`](Commands.md#hsbcolor), [`White`](Commands.md#white), [`CT`](Commands.md#ct)|
 |Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction), [**Channel Remapping**](#channel-remapping), [**White Blend Mode**](#white-blend-mode), [**RGB and White Split**](#rgb-and-white-split)|
 
 !!! danger
-    Some lights have limited power supply that do not allow all channels to be at full power at the same time. Be careful not to burn out your light if you force all channels via `Color` or [**RGB and White Split**](#rgb-and-white-split)
+    Some lights have limited power supply that do not allow all channels to be at full power at the same time. Be careful not to burn out your light if you force all channels via [`Color`](Commands.md#color) or [RGB and White Split](#rgb-and-white-split)
 
 ### Independent PWM Channels 
 
 <img style="float:right;width:180px" alt="Tasmota_multi" src="https://user-images.githubusercontent.com/49731213/71555865-bdd6f700-2a30-11ea-8bdb-9dda72139a9a.png">
 
-Any combination of Relays and PWMs, when enabling `SetOption68 1`. Splits off the light into individually controlled Channels (Useful when connecting multiple 1 channel strips to a single controller)
+Any combination of Relays and PWMs, when enabling [`SetOption68 1`](Commands.md#setoption68). Splits off the light into individually controlled Channels (Useful when connecting multiple 1 channel strips to a single controller)
 
 |Configuration|(see below)|
 |---|---|
-|Commands|`Power`, `Channel`, `Color`|
+|Commands|[`Power`](Commands.md#power), [`Channel`](Commands.md#channel), [`Color`](Commands.md#color)|
 |Options|[**Auto Power On**](#disable-auto-power-on), [**PWM Channel Configuration**](#pwm-channel-configuration), [**Gamma Correction**](#gamma-correction)|
 
 <br clear="right"/>
@@ -182,17 +181,19 @@ Gamma Correction is enabled by default in Tasmota ([`LedTable 1`](Commands.md#le
 
 <img style="float:right; width:200px" src="https://user-images.githubusercontent.com/49731213/71531106-798f0e00-28ed-11ea-8916-9ce2e9b98e27.png">
 
-Human eye perception of brightness is non linear, bringing back linearity needs a trick called **[Gamma Correction](https://learn.adafruit.com/led-tricks-gamma-correction)**.
+Human eye perception of brightness is non linear, bringing back linearity needs a trick called [Gamma Correction](https://learn.adafruit.com/led-tricks-gamma-correction).
 
-Some lights have hardware gamma correction (f.e. Sonoff B1)., in which case software gamma correction should be disabled with `LedTable 0`.
+Some lights have hardware gamma correction (e.g., Sonoff B1). In that case, software gamma correction should be disabled with [`LedTable 0`](Commands.md#ledtable).
 
 The curve used: orange=ideal, blue=tasmota.
 
 !!! question "How do I know if I have hardware gamma correction?"
-    If you find your light very dark even with `Dimmer 40`, it can mean either you have hardware PWM, disable it with `LedTable 0`, or you need to apply a minimum PWM value, use `DimmerRange 40,100` (adapt to the best value).
+    If you find your light very dark even with [`Dimmer 40`](Commands.md#dimmer), it can mean either you have hardware PWM, disable it with [`LedTable 0`](Commands.md#ledtable), or you need to apply a minimum PWM value, use [`DimmerRange 40,100`](Commands.md#dimmerrange) (adapt to the best value).
 
 !!! quote ""
     Internally Tasmota uses 10 bits resolution PWM to get smoother levels at low brightness. 
+
+When using `Fade` mode, a different Gamma curve (called `gamma_fast`). This cruve cheats slightly and makes lights increase brighness faster then normal; otherwise the light starts glowing very slowly and gives the impression that the light is not responsive.
 
 ### White Blend Mode
 
@@ -200,7 +201,7 @@ White Blend Mode mixes in the white channel with RGB colors while controlling th
 
 Enable it with [`SetOption105 1`](Commands.md#setoption105).
 
-For Tasmota versions before 8.5 use command `RGBWWTable 255,255,255,0` instead.
+For Tasmota versions before 8.5 use command [`RGBWWTable 255,255,255,0`](Commands.md#rgbwwtable) instead.
 
 #### Calibration (optional)
 Generally white LEDs are brighter than RGB LEDs. If you want to keep the same brightness, you need to calibrate the white level. In this mode, any white component will be removed from RGB LEDs and sent to the white LEDs. This makes whites look much better.
@@ -224,9 +225,9 @@ To calibrate a RGBW light:
 
 [`SetOption37 128`](Commands.md#setoption37)
 
-By default RGBW and RGBCCT lights can only be controlled in single mode, either RGB or White (f.e. Turning on CT lights turns off RGB lights and vice versa).
+By default RGBW and RGBCCT lights can only be controlled in single mode, either RGB or White (e.g., Turning on CT lights turns off RGB lights and vice versa).
 
-Use `SetOption37 128` to split RGB and White into 2 independent lights. If you are already using Channel Remapping, just add `128` to the value of `SetOption37`.
+Use [`SetOption37 128`](Commands.md#setoption37) to split RGB and White into 2 independent lights. If you are already using Channel Remapping, just add `128` to the value of [`SetOption37`](Commands.md#setoption37).
 
 ### Channel Remapping 
 
@@ -254,13 +255,13 @@ _this feature is experimental and will probably not give brilliant results_
 
 Used with 4 channel RGBW lights to simulate the missing white channel (cold or warm) using RGB channels.
 
-Enable Virtual CT with [`SetOption106 1`](Commands.md#setoption106) then choose which type of white you're simulating with [`SetOption107`](Commands.md#setoption107) where `0` is warm white and `1` is cold white 
+Enable Virtual CT with `SetOption106 1` then choose which type of white you're simulating with [`SetOption107`](Commands.md#setoption107) where `0` is warm white and `1` is cold white 
 
 ## Light Categories
 
 Lights come in various shapes (bulb, strips, ceiling lights, ...) but in Tasmota they are separated in 3 categories:
 
- - [Channel Controlled LEDs](#channel-controlled-leds)
+ - [Channel Controlled Lights](#channel-controlled-lights)
  - [Addressable LEDs](#addressable-leds)
  - [Status LEDs](#status-leds) 
 
@@ -333,10 +334,10 @@ For example, on a Sonoff Basic the green LED is used as the link status LED. Onc
 
 **Link status LED** shows the network state, more specifically the Wi-Fi and MQTT connection status.
 
-It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (if MQTT is enabled). You can change this behaviour with [`LedState`](Commands#ledstate) or turn it off with [`SetOption31`](Commands#setoption31).
+It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (if MQTT is enabled). You can change this behaviour with [`LedState`](Commands.md#ledstate) or turn it off with [`SetOption31`](Commands.md#setoption31).
 
 #### Power status LED
-**Power status LED** shows the power status of relay component(s). [`LedMask`](Commands#ledmask) determines which relay(s) are associated with the power status LED. This behavior can be modified with the [`LedState`](Commands#ledstate) command. The LED is turned off by default when the relay is OFF and turned on when the relay switches ON.
+**Power status LED** shows the power status of relay component(s). [`LedMask`](Commands.md#ledmask) determines which relay(s) are associated with the power status LED. This behavior can be modified with the [`LedState`](Commands.md#ledstate) command. The LED is turned off by default when the relay is OFF and turned on when the relay switches ON.
 
 !!! note 
     Depending on the device design, some LEDs are connected to the same GPIO as the relay. Those cannot be independently controlled since they have to follow the relay state.
@@ -344,12 +345,12 @@ It blinks if the device is not connected to your Wi-Fi AP **and** MQTT broker (i
 If you have more than one LED wired independently and you want it to show the power state of the relay, you **must** assign an `LedLink` GPIO.
 
 #### PWM LED Mode
-Using [`LedPwmMode`](Commands#ledpwmmode) you can change the LED display mode from simple on/off to a PWM controlled LED which will enable you to f.e. display a brighter LED when the relay is on and a dimmer LED when its OFF so you can locate the switch in the dark but not have it obnoxiously bright.
+Using [`LedPwmMode`](Commands.md#ledpwmmode) you can change the LED display mode from simple on/off to a PWM controlled LED which will enable you to e.g., display a brighter LED when the relay is on and a dimmer LED when it's OFF so you can locate the switch in the dark but not have it obnoxiously bright.
 
 `LedPwmOff` and `LedPwmOn` control the preset LED brightness in their respective states.
 
 #### LedPower Command
-When you use [`LedPower`](Commands#ledpower) you take over control of that particular LED and it stops being linked to its corresponding relay and being its power status LED.
+When you use [`LedPower`](Commands.md#ledpower) you take over control of that particular LED and it stops being linked to its corresponding relay and being its power status LED.
 
 #### Using LedLink
 `LedLink` / `LedLinki` is used to assign the link status LED. If your device does not have an LED for link status (or you want to use that LED for a different purpose), you can assign `LedLink` to an available free GPIO. When `LedLink(i)` is assigned, other LEDs are automatically linked to their corresponding relay and serve as that relay's power status LED - i.e., `Led<x>(i)` links to `Relay<x>(i)`

@@ -13,7 +13,7 @@ All ESP32 systems on a chip (SoC) are 32-bit MCUs with 2.4 GHz Wi-Fi & Bluetooth
 
 ### ESP32
 
-An ESP32 has two or one Xtensa® 32-bit LX6 microprocessor(s) with clock frequency ranging from 80 MHz to 240 MHz. Tasmota32 is initially developed and tested with the dual core ESP32-D0WD-V3 and later expanded to include single core or PSRAM versions.
+An ESP32 has two or one Xtensa® 32-bit LX6 microprocessor(s) with clock frequency ranging from 80 MHz to 240 MHz. Tasmota32 is initially developed and tested with the dual core ESP32-D0WD-V3 and later expanded to include single core or PSRAM versions. Only first 4MB of PSRAM are useable (and reported) even if a bigger chip is connected (see [here](https://github.com/arendst/Tasmota/discussions/16423#discussioncomment-3570038) for more information).
 
 !!! warning "Single core SoCs do not work with standard binaries, for those use only `tasmota32solo1.bin` or compile your own binary using the tasmota32solo1 environment."
 
@@ -21,15 +21,11 @@ An ESP32 has two or one Xtensa® 32-bit LX6 microprocessor(s) with clock frequen
 
 A more cost-efficient version of ESP32, cut down to a single core and several dedicated hardware security features (eFuse, flash encryption, secure boot, signature verification, integrated AES, SHA and RSA algorithms). It has 43 available GPIOs. [Product page for ESP32-S2](https://www.espressif.com/en/products/socs/esp32-s2)
 
-!!! note "Beta support in Tasmota"
-
 Use `tasmota32s2-` binaries for this line of chips.
 
 ### ESP32-S3
 
 Keeping the security improvements the S3 line now again features the dual core SoC with Bluetooth upgraded to V5 . [Product page for ESP32-S3](https://www.espressif.com/en/products/socs/esp32-s3).
-
-!!! note "Beta support in Tasmota"
 
 Use `tasmota32s3-` binaries for this line of chips.
 
@@ -37,9 +33,31 @@ Use `tasmota32s3-` binaries for this line of chips.
 
 Unlike previous versions, C3 is a single-core Wi-Fi and Bluetooth 5 (LE) microcontroller SoC based on the open-source RISC-V architecture. It is available as [ESP32-C3-MINI-1](_media/datasheets/esp32-c3-mini-1_datasheet_en.pdf) and [ESP32-C3-WROOM-02](_media/datasheets/esp32-c3-wroom-02_datasheet_en.pdf) modules. [Product page for ESP32-C3](https://www.espressif.com/en/products/socs/esp32-c3)
 
-!!! note "Beta Support in Tasmota"
-
 Use `tasmota32c3-` binaries for this line of chips.
+
+## Flashing
+
+Use [Tasmota Web Installer](http://tasmota.github.io/install) to easily flash ESP32 devices.
+
+Other options include:
+
+[ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) for flashing an ESP32 or ESP82xx (Windows, MacOs or Linux (Ubuntu)).
+
+esptool.py - use the following command syntax:
+
+```bash
+esptool.py write_flash 0x0 tasmota32.factory.bin
+```
+
+!!! warning "Use a proper power supply!"
+    ESP32 is power hungry and there's a high chance it will not be able to boot properly off the serial-to-USB power. Power it from a separate power supply that can provide at least 500mA.
+
+You can download precompiled binaries:
+
+- development branch from [http://ota.tasmota.com/tasmota32/](http://ota.tasmota.com/tasmota32/)
+- stable releases from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/)
+
+OTA upgrade from older versions of tasmota32 might fail due to significant changes in partition tables.
 
 ## Exclusive Features
 
@@ -53,15 +71,24 @@ Configuration files are stored here: <https://github.com/tasmota/autoconf>
 
 To use it you need to have `#define USE_AUTOCONF`.
 
+### Berry Scripting
+
+ESP32 introduces [Berry](Berry.md) language as a more approachable scripting language. Berry is very powerful and you can even code an I2C driver using it.
+
+### LVGL
+
+Use [LVGL](https://lvgl.io/) in conjunction with Berry on devices with displays and touch displays to design your own UI.
+
 ### CPU Temperature Sensor
 
-Tasmota will create an internal temperature sensor and display the values in the webUI and MQTT.
+Tasmota will create an internal temperature sensor and display the values in the webUI and MQTT. The accuracy of this sensor varies a lot depending on the ESP32 chip involved and should not be taken as a reliable metric.
+
+Enable display of ESP32 internal temperature with [`SetOption146 1`](Commands.md#setoption146) 
 
 ```json
 {"Time":"2021-01-01T00:00:00","ESP32":{"Temperature":41.7},"TempUnit":"C"}
 ```
-
-You can deactivate it using command [`SetSensor127 0`](Commands.md#setsensor127)
+You can deactivate sensor by using command [`SetSensor127 0`](Commands.md#setsensor)
 
 ### DAC
 
@@ -78,44 +105,13 @@ To enable set in module configuration or template:
 
 ### I2S
 
-[Inter-IC Sound](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/i2s.html) or I2S is possible through [Berry `gpio` module](Berry.md#i2s)
+ESP32 contains two I2S peripherals. These peripherals can be configured to input and output sample data via the I2S driver. [Read more...](https://docs.espressif.com/projects/esp-idf/en/v4.2/esp32/api-reference/peripherals/i2s.html)
+
+I2S is possible through [I2S Audio](I2S-Audio) or [Berry `gpio` module](Berry.md#i2s).
 
 ### Touch Pins
 
 ESP32 has 10 capacitive touch GPIOs. More on configuring and [using them...](https://tasmota.github.io/docs/TouchPin/).
-
-### Berry Scripting
-
-ESP32 introduces [Berry](Berry.md) language as a more approachable scripting language. Berry is very powerful and you can even code an I2C driver using it.
-
-### LVGL
-
-Use [LVGL](https://lvgl.io/) in conjunction with Berry on devices with displays and touch displays to design your own UI.
-
-## Flashing
-
-Use [Tasmota Web Installer](http://tasmota.github.io/install) to easily flash ESP32 devices.
-
-Other options include:
-
-[ESP_Flasher](https://github.com/Jason2866/ESP_Flasher/releases) for flashing an ESP32 or ESP82xx (Windows, MacOs or Linux (Ubuntu)).
-
-esptool.py - use the following command syntax:
-
-```bash
-esptool.py --chip esp32 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dout --flash_size detect 0x0 tasmota32.factory.bin
-```
-
-!!! warning "Use a proper power supply!"
-    ESP32 is power hungry and there's a high chance it will not be able to boot properly off the serial-to-USB power. Power it from a separate power supply that can provide at least 500mA.
-
-You can download precompiled binaries:
-
-- development branch from [http://ota.tasmota.com/tasmota32/](http://ota.tasmota.com/tasmota32/)
-- stable releases from [http://ota.tasmota.com/tasmota32/release/](http://ota.tasmota.com/tasmota32/release/)
-- the required [flash files](https://github.com/arendst/Tasmota-firmware/tree/main/static) _(not needed when using ESP_Flasher)_
-
-OTA upgrade from older versions of tasmota32 might fail due to significant changes in partition tables.
 
 ## Compiling
 
@@ -128,5 +124,3 @@ All binaries use `user_config_override.h` if it exists.
 ## Working Devices
 
 [Tasmota Supported Devices Repository](https://templates.blakadder.com/esp32.html) has a more extenstive list of [ESP32 based](https://templates.blakadder.com/esp32.html) devices.
-
-[ESP32 Devices](ESP32-Devices.md)

@@ -48,7 +48,8 @@ Resources:
       Description: "Tasmota: temporary function used to generate a random password (can be deleted safely)"
       MemorySize: 256
       Role: !GetAtt LambdaBasicExecRoleRandomGenerator.Arn
-      Runtime: python3.7
+      Runtime: python3.12
+      Architectures: ['arm64']
       Timeout: 10
       Code:
         ZipFile: |
@@ -115,7 +116,8 @@ Resources:
       Description: "Tasmota: custom authorizer for Tasmota MQTT using password credentials"
       MemorySize: 128
       Role: !GetAtt LambdaBasicExecRole.Arn
-      Runtime: python3.7
+      Runtime: python3.12
+      Architectures: ['arm64']
       Timeout: 2
       Environment:
         Variables:
@@ -191,7 +193,8 @@ Resources:
       Description: "Tasmota: custom authorizer for Tasmota MQTT using password credentials"
       MemorySize: 128
       Role: !GetAtt LambdaBasicExecRoleRetain.Arn
-      Runtime: python3.7
+      Runtime: python3.12
+      Architectures: ['arm64']
       Timeout: 2
       Environment:
         Variables:

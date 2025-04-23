@@ -10,13 +10,16 @@ You can contribute by:
 - fixing spelling mistakes, broken links and other errors in the documentation
 - writing guides on wiring and using sensors or your DIY projects featuring Tasmota
 
-## Editing Articles
+## Editing articles
 
 !!! failure "You need a GitHub user account to be able to edit"
 
-If you spot an error in an article use the *pencil icon* link at the top of the page, near the title, to correct it. This version of documentation uses strict markdown syntax with some enhancements. See [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) for all features
+If you spot an error in an article, use the *pencil icon* link (see image below) at the top of the related [documentation GitHub repository page](https://github.com/tasmota/docs) to correct it.
 
-You'll be taken to the GitHub repository page of that file, after a "fork" (copy) of the docs are made into your own GitHub account.
+This version of documentation uses strict markdown syntax with some enhancements.
+See [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) for all features.
+
+You'll be taken to the GitHub repository page of that article file, after a "fork" (copy) of the docs is made into your own GitHub account.
 
 ![Edit file](_media/pr_tutorial_1.png)
 
@@ -36,5 +39,19 @@ _**Congratulations**_!
 
 You've made a contribution to the Tasmota project making it a better experience for all future users. Thank you!
 
-## Adding devices to the documentation
-If you're adding a new page, go to [documentation GitHub](https://github.com/tasmota/docs/tree/master/docs) and click **Create new file**, name the file with .md extension.
+## Adding articles
+
+!!! failure "You need a GitHub user account to be able to edit"
+
+If you want to add a new article, go to the [documentation GitHub repository](https://github.com/tasmota/docs), click **Add File** and name the file with an .md extension.
+
+This version of documentation uses strict markdown syntax with some enhancements.
+See [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) for all features.
+
+You'll be taken to the GitHub repository page of that new article file, after a "fork" (copy) of the docs is made into your own GitHub account.
+
+Don't forget to add links to other article pages in the appropriate place that refer to the new article so that the new article can also be found.
+
+## Adding device templates to the documentation
+
+If you want to add a new device templates go to <https://templates.blakadder.com/new.html> (or its [GitHub repository](https://github.com/blakadder/templates)).

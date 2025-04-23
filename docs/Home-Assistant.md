@@ -1,4 +1,6 @@
+---
 description: Everything about using Tasmota in Home Assistant
+---
 
 # Home Assistant
 
@@ -9,7 +11,7 @@ Tasmota communicates with Home Assistant using MQTT. Before going any further, m
 Home Assistant can add Tasmota devices using:
 
 1. Official Tasmota integration - **preferred** and automatic instant discovery of entities
-2. Manual configuration by editing configuration.yaml - recommended for marginal use cases, f.e. TuyaMCU fan devices
+2. Manual configuration by editing configuration.yaml - recommended for marginal use cases, e.g., TuyaMCU fan devices
 
 ## Tasmota Integration
 
@@ -27,7 +29,7 @@ All Tasmota devices will be listed in their own Tasmota card in **Configuration 
 Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmota integration and [`FriendlyName<x>`](Commands.md#friendlyname) to name power outputs (switch or light entities in HA). 
 
 ??? tip "Use templates to change the Module name"
-    Setting the [template](Templates) name will change the Module name as well which will be reflected in Home Assistant. This helps in identifying when dealing with a large number of devices. Its nicer than having 10 Sonoff S31's or a bunch of TuyaMCU's"
+    Setting the [template](Templates) name will change the Module name as well which will be reflected in Home Assistant. This helps in identifying when dealing with a large number of devices. It's nicer than having 10 Sonoff S31's or a bunch of TuyaMCU's"
     ![Template name as Module name in Home Assistant](_media/templatemodule.png)
 
 !!! bug 
@@ -48,7 +50,9 @@ Tasmota uses [`DeviceName`](Commands.md#devicename) to name the device in Tasmot
 - Devices configured as iFan02 or iFan03 as fan entities. TuyaMCU fans are not supported.
 - Each discovered device will by default add 8 disabled sensors. Enable the ones you need. You cannot delete them, they will simply be re-added on a restart.
 
-Types of devices not listed above still require [manual configuration](#editing-configurationyaml)
+Types of devices not listed above still require [manual configuration](#editing-configurationyaml). 
+
+If you're running Tasmota on ESP32 you can use [Home Assistant Controls](https://github.com/fmtr/hct) in Berry to discover more complex entities (pull-down lists, number sliders, etc)
 
 !!! warning "Zigbee and Bluetooth devices paired in Tasmota will **NOT** be discovered in Home Assistant"
 
@@ -105,7 +109,7 @@ If you are using a localized (non-english) version be sure to check the correct 
 !!! tip
     If you want the power states to be persistent in Tasmota and Home Assistant set `PowerRetain 1` instead of using `retain: true` in Home Assistant
 
-!!! Warning "When using `unique_id:` make sure its unique to each entity"
+!!! Warning "When using `unique_id:` make sure it's unique to each entity"
     When `unique_id` is set, Home Assistant will allow some entity customization from the UI such as changing the name or icon.
 
 ### Switches
@@ -1101,7 +1105,7 @@ mqtt:
 
 !!! failure "Home Assistant MQTT Discovery is removed from all builds of Tasmota and development of this feature is halted!"
 
-Home Assistant has a feature called [MQTT discovery](https://www.home-assistant.io/docs/mqtt/discovery/).
+Home Assistant has a feature called [MQTT discovery](https://www.home-assistant.io/integrations/mqtt/#mqtt-discovery).
 With MQTT discovery no user interaction or configuration file editing is needed to add new devices in Home Assistant. Most of the changes will be updated in HA automatically.
 
 #### Enable Autodiscovery

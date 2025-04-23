@@ -81,7 +81,7 @@ Extra functions    | 97 to 99 | 97 for motor direction<br>98 for error logging (
 !!! note
     This component is under active development which means the function list may expand in the future.
 
-Since the majority of devices have a power on/off functions on dpId 1 its mapped to fnId 11 (Relay1) by default. If you don't need it, map it to fnId 99  with `TuyaMcu 99,1`
+Since the majority of devices have a power on/off functions on dpId 1 it's mapped to fnId 11 (Relay1) by default. If you don't need it, map it to fnId 99  with `TuyaMcu 99,1`
 
 !!! danger
     Mapping a relay or switch to a dpId that is not a simple on/off function (data Type 1) might result in unwanted power toggling (i.e. dpId sends value of 4 which toggles the relay to Power 4 aka blink mode)
@@ -609,7 +609,7 @@ The MCU communicates with the Wi-Fi module through the serial port with a Tuya s
 They are common protocols integrated in Tasmota's TuyaMCU module. They stay the same for each product and are mandatory for Tuya module to work correctly. 
 
 ## Functional protocols 
-Functional protocols are used for delivering and reporting data of functions. These protocols differ between devices and manufacturers and might require configuration in Tasmota using [`TuyaMCU`](#tuyamcu) command or with [`TuyaSend<x>`](#tuyasend) command.
+Functional protocols are used for delivering and reporting data of functions. These protocols differ between devices and manufacturers and might require configuration in Tasmota using [`TuyaMCU`](Commands.md#tuyamcu) command or with [`TuyaSend<x>`](Commands.md#tuyasend) command.
 
 ## Anatomy of Tuya Protocol
 
