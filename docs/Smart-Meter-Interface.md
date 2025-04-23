@@ -2265,7 +2265,7 @@ Based on the spec found [at Wiener Netze](https://www.wienernetze.at/kundenschni
     1,0209090cx6ss@1,mm,,mm,0
     1,0209090cx7ss@1,ss,,ss,0
     1,0209090cx13UUuuUUuu@1000,Zählerstand,kWh,Zaehlerstand,3
-    1,020a090cx18UUuuUUuu@1000,Einspeisung,kWh,Einspeisung,3
+    1,0209090cx18UUuuUUuu@1000,Einspeisung,kWh,Einspeisung,3
     1,0209090cx23UUuuUUuu@1000,Blindenergie,varh,Blindenergie,3
     1,0209090cx28UUuuUUuu@1000,Blindenergie einsp,varh,Blindenergie einsp,3
     ; Letzter Paramater (Precision) = add 16 to send data immediately 0 + 16 = 16
