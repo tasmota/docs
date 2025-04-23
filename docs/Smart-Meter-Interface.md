@@ -3328,6 +3328,34 @@ PZEM004T V30 multiple meters on Modbus
 
     #
     ```
+### Peacefair PZEM004TV4.0 (MODBus)
+
+PZEM004T V4.0 multiple meters on Modbus
+       
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,m,0,9600,modbus,1,3,r010400000009,r020400000009,r030400000009
+	1,010412UUuu@i0:10,Voltage,V,Volt_2,1
+	1,010412x2UUuuUUuus@i0:1000,Current,A,Curr_1,3
+	1,010412x6UUuuUUuus@i0:10,Power,W,Pow_1,1
+	1,010412x14UUuu@i0:10,Frequency,Hz,Freq_1,1
+	1,010412x16UUuu@i0:100,Power Factor,PF,PF_1,2
+	1,020412UUuu@i1:10,Voltage,V,Volt_2,1
+	1,020412x2UUuuUUuus@i1:1000,Current,A,Curr_2,3
+	1,020412x6UUuuUUuus@i1:10,Power,W,Pow_2,1
+	1,020412x14UUuu@i1:10,Frequency,Hz,Freq_2,1
+	1,020412x16UUuu@i1:100,Power Factor,PF,PF_2,2
+	1,030412UUuu@i2:10,Voltage,V,Volt_3,1
+	1,030412x2UUuuUUuus@i2:1000,Current,A,Curr_3,3
+	1,030412x6UUuuUUuus@i2:10,Power,W,Pow_3,1
+	1,030412x14UUuu@i2:10,Frequency,Hz,Freq_3,1
+	1,030412x16UUuu@i2:100,Power Factor,PF,PF_3,2
+    #
+    ```
 
 ### Resol Deltasol BS Plus (VBus)
 
