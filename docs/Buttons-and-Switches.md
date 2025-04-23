@@ -5,6 +5,23 @@ A typical device usually has at least one button (exception being bulbs and some
 !!! note
     Other than relays/lights, Tasmota does not publish the state of components (switches, buttons, sensors, etc.) in real-time. State of components is transmitted automatically each [TelePeriod](Commands.md#teleperiod) via the `SENSORS` message.
 
+# Choose GPIO configuration
+All board are not born equal so does your own diy realisations, you might have choosen to put your own pull-up resistors , or had an inverted logic on your button input.
+
+The first thing is to correctly select the Button or Switch variant accordingly in the "Configure module" or "Configure template" menu.
+the variants supported by ESP8266 are following :
+* Button : Button active low, internal pull-up resistor
+* Button_n :  Button active low, no internal pull-up resistor (_n like NoPullUp)
+* Button_i : Button inverted, active high with internal pull-up resistor
+* Button_in :  Button inverted, active high no internal pull-up resistor (_in like Inverted NoPullUp)
+* Switch : Switch with internal pull-up resistor
+* Switch_n : Switch without pull-up resistor
+
+the ESP32 supports all forementionned variants plus : 
+* Button_d : Button with internal pull-down resistor
+* Button_id : Button inverted, active high with internal pull-down resistor
+* Switch_d : Switch with internal pull-down resistor
+
 # Button vs. Switch
 A button (also called a push-button) is a momentary or non-latching switch which causes a temporary change in the state of an electrical circuit only while the switch is pressed. An automatic mechanism (i.e. a spring) returns the switch to its default position immediately afterwards, restoring the initial circuit condition.
 
