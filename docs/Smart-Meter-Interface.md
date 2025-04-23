@@ -926,21 +926,36 @@ For `Inf off`, a simplified dataset is returned only.
     ```
 ### DZG DWSB12.2 (SML)
 
-For `Inf off`, a simplified dataset is returned.
-The energy meter does have 2 meters, one for incoming and outgoing power. If you have a solar panel installed and you are delivering power to the network the second value will increase appropriately.
+This is a 2-way-meter, so it features both an import- (incoming) and an export-register (e.g. for photovoltaic installations). In default configuration, the meter only outputs a simplified dataset, excluding the momentary effective power and decimals for both imported and exported energy. In order to enable the full dataset, one has to ask their energy provider for the Pin and change the "Inf off" setting to "Inf on" (see meter manual).
    
-??? summary "Alternative script for the simplified dataset"
+??? summary "Script for the simplified dataset"
     ```
     >D
     >B
     =>sensor53 r
     >M 1
     +1,3,s,16,9600,DWSB122
-    1,77070100010800ff@1000,Energie bezogen,kWh,energy,0
-    1,77070100020800ff@1000,Energie geliefert,kWh,energy,0
-    1,7707010060320101@#,Service ID,,meter_id,0
-    1,77010b0a01445a47@#,Unbekannt,,unknown,0
-    1,77070100600100ff@#,Zählernummer,,meter_number,0
+    1,77070100010800ff@1000,Energy Imported,kWh,energy_imported,0
+    1,77070100020800ff@1000,Energy Exported,kWh,energy_exported,0
+    1,7707010060320101@#,Server ID,,meter_id,0
+    1,77010b0a01445a47@#,Unknown,,unknown,0
+    1,77070100600100ff@#,Meter Number,,meter_number,0
+    #
+    ```
+
+??? summary "Script for the full dataset"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,16,9600,DWSB122
+    1,77070100100700ff@1,Effective Power,W,effective_power,2
+    1,77070100010800ff@1000,Energy Imported,kWh,energy_imported,2
+    1,77070100020800ff@1000,Energy Exported,kWh,energy_exported,2
+    1,7707010060320101@#,Server ID,,meter_id,0
+    1,77010b0a01445a47@#,Unknown,,unknown,0
+    1,77070100600100ff@#,Meter Number,,meter_number,0
     #
     ```
 	
