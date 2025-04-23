@@ -6,7 +6,7 @@ This page is primarily targeting users that need to move from specific driver (I
 
 ## Migrating to uDisplay
 
-### Step 1. Check that you display is supported by uDisplay driver
+### Step 1. Check that your display is supported by uDisplay driver
 
 The currently supported display drivers are:
 
@@ -49,12 +49,12 @@ The configuration template is slightly different with uDrive:
 
 Select the appropriate `display.ini` file from the [repository](https://github.com/arendst/Tasmota/tree/development/tasmota/displaydesc), and store it as `display.ini` file in the file system.
 
-Storing `display.ini` is the preferred method to configure the descriptor file. If this is not possible or if the device has no filesystem, use the alternative methods:
+Storing `display.ini` is the preferred method to configure the descriptor file. If this is not possible or if the device has no filesystem, use one of the alternative methods:
 
 1. A `display.ini` file present in the flash file system. ***preferred option***
 2. A special `>d` section in scripting. Copy the file to the `>d` script section and place a `->displayreinit` cmd into `>B` section
-3. Copy the descriptor to `Rule 3` but **do not** enable it (descriptor may not contain ANY spaces in this mode)
-4. Compile the descriptor into the binary in a section in `user_config_override.h` under driver 17 (const char)
+3. Copy the descriptor to `Rule3` but **do not** enable it. Convert the multiline descriptor into a single line descriptor by replacing every linefeed with a space. All other spaces need to be removed. Maximum length is a little more than 511 bytes.
+4. Compile the descriptor into the binary with a `#define DSP_ROM_DESC` string in `user_config_override.h`, see [example here](https://github.com/arendst/Tasmota/blob/development/tasmota/displaydesc/readme.md).
 
 ### Step 6. Restart
 
@@ -211,8 +211,6 @@ You are now done.
 
 ## Universal Display Driver (uDisplay)
 
-!!! info "The documentation is also available in [Displays](Displays.md#universal-display-driver) page. It is copied here for convenience."
-
 !!! info "uDisplay is included in all pre-compiled display binaries, for ESP8266 and ESP32. If you compile yourself, you need to `#define USE_UNIVERSAL_DISPLAY`"
 
 Universal Display Driver or uDisplay is a way to define your display settings using a simple text file and easily add it to Tasmota.
@@ -227,7 +225,7 @@ which may be provided by any of the following methods:
 
 1. A `display.ini` file present in the flash file system. ***preferred option***
 2. A special `>d` section in scripting. Copy the file to the `>d` script section and place a `->displayreinit` cmd into `>B` section
-3. Copy the descriptor to `Rule 3` but **do not** enable it (descriptor may not contain ANY spaces in this mode)
+3. Copy the descriptor to `Rule 3` but **do not** enable it. Convert the multiline descriptor into a single line descriptor by replacing every linefeed with a space. All other spaces need to be removed
 4. Compile the descriptor into the binary in a section in `user_config_override.h` under driver 17 (const char)
 
 Options 2 and 4 work well for 1M flash devices.
@@ -442,7 +440,7 @@ dimmer opcode _(optional)_
 LVGL _(optional)_
   
 1. number of display lines flushed at once (min 10) the lower the lesser memory needed  
-2. bit 0: DMA enables (`0` for no DMA, 1 use DMA) - not supported on all displays<br>bit 1: selects color swap, 2 = swap 16 bit color<br>bit 2: enable async DMA, `0` wait for DMA to complete before returning, `4` run DMA async in the background. This later mode is only valid if the SPI bus is not shared between the display and any other SPI device like SD Card Reader,<br>bit 3: `8` inverted busy line on epaper displays.
+2. bit 0: DMA enables (`0` for no DMA, 1 use DMA) - not supported on all displays<br>bit 1: selects color swap, 2 = swap 16 bit color<br>bit 2: enable async DMA, `0` wait for DMA to complete before returning, `4` run DMA async in the background. This later mode is only valid if the SPI bus is not shared between the display and any other SPI device like SD Card Reader,<br>bit 3: `8` inverted busy line on epaper displays.<br>bit 4: `16` swap black and white in monochrome pictures (pushcolors, needed for bw pictures on epaper displays).
 
 `:T`  
 Wait times used for E-paper display  
@@ -610,8 +608,6 @@ AF
 ```
 
 ## Universal Touch Driver (uTouch)
-
-!!! info "The documentation is also available in [Displays](Displays.md#universal-touch-driver) page. It is copied here for convenience."
 
 (`#define USE_UNIVERSAL_TOUCH`)  
 This option allows to add drivers for various touch chips  

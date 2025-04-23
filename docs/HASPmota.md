@@ -2,10 +2,36 @@
 
 !!! tip "This feature is included in tasmota32-lvgl.bin"
 
+!!! Starting from v14.5.0.2, HASPmota automatically starts if a file `pages.jsonl` is present
+
 Tasmota happily supports the openHASP compatible format, known as HASPmota. This format allows you to describe rich graphics interfaces using simple JSON templates. The HASPmota support in Tasmota leverages the power of [LVGL](https://tasmota.github.io/docs/LVGL/) and the [Berry language](https://tasmota.github.io/docs/Berry/), but you don't need to code or learn the LVGL API to use it.
 
 This feature is heavily inspired from @fvanroie's [openHASP project](https://github.com/HASwitchPlate/openHASP).
- 
+
+## Running HASPmota
+
+HASPmota, like OpenHASP, relies of describing the elements to be displayed in a simple JSONL file. [JSONL (JSON Lines)](https://jsonlines.org/) is a file format where each line is a valid JSON value. The default file name is `pages.jsonl`.
+
+When a file `pages.jsonl` is present in the file system, HASPmota is automatically started without any additional code needed (since v14.5.0.2, previously you needed to start HASPmota in `autoexec.be`).
+
+HASPmota auto-start is triggered after `autoexec.be` is executed, so you have the opportunity to start HASPmota yourself, or initialize any sensor or components `autoexec.be` time. You can also use a different name than `pages.jsonl` and start HASPmota at any time of your convenience.
+
+### Running HASPMota manually
+
+If you need to start HASPmota manually, you can use the following code in `autoexec.be`:
+
+```berry
+import haspmota
+haspmota.start()         # manually start HASPmota using default 'pages.jsonl' file
+```
+
+You can pass an additional parameter with the name of the template file:
+
+```berry
+import haspmota
+haspmota.start("my_template.jsonl")
+```
+
 ## Gallery of widgets
 
 [![HASPmota label](_media/lvgl/HASPmota_1_instructions.png){width="160"}](#label)
@@ -30,9 +56,12 @@ This feature is heavily inspired from @fvanroie's [openHASP project](https://git
 [![HASPmota fonts](_media/lvgl/HASPmota_20_fonts.png){width="160"}](#embedded-fonts)
 [![HASPmota icons](_media/lvgl/HASPmota_21_icons.png){width="160"}](#embedded-symbols)
 [![HASPmota seg7](_media/lvgl/HASPmota_22_seg7.png){width="160"}](#embedded-special-fonts)
+[![HASPmota msgbox](_media/lvgl/HASPmota_23_msgbox.png){width="160"}](#msgbox)
+[![HASPmota cpicker](_media/lvgl/HASPmota_24_cpicker.png){width="160"}](#cpicker)
+[![HASPmota tabview](_media/lvgl/HASPmota_25_tabview.png){width="160"}](#tabview)
 
 
-The `jsonl` file used to display the widgets can be found [here](_media/lvgl/haspmota_demo.jsonl)
+The `jsonl` file used to display the widgets can be found [widget demo JSONL file](_media/lvgl/haspmota_demo.jsonl)
 
 ## Minimal requirements
 
@@ -133,22 +162,6 @@ The code trigger a read of sensors every 2 seconds and publish the JSON result t
 tasmota.add_cron('*/2 * * * * *', def () var s = tasmota.read_sensors() if (s) tasmota.publish_rule(s) end end, 'hm_every_5_s')
 ```
 
-## Running HASPmota
-
-`HASPmota` code is included in `tasmota32-lvgl` firmwares.
-
-Running `HASPmota` with your own template is as simple as:
-
-- create a template in `pages.jsonl` and store it in the Tasmota file system
-- create an `autoexec.be` file containing the following:
-
-``` berry
-# simple `autoexec.be` to run HASPmota using the default `pages.jsonl`
-import haspmota
-haspmota.start()
-```
-
-
 ## HASPmota reference
 
 ### Integration to Berry
@@ -224,7 +237,7 @@ HASPmota Class|Embedded LVGL class
 `img`|`lv.img`
 `dropdown`|`lv.dropdown`
 `roller`|`lv.roller`
-`btnmatrix`|`lv.btnmatrix`
+`btnmatrix`|`lv.buttonmatrix`
 `bar`|`lv.bar`
 `scale`|`lv.scale`
 `slider`|`lv.slider`
@@ -232,9 +245,12 @@ HASPmota Class|Embedded LVGL class
 `textarea`|`lv.textarea`
 `led`|`lv.led`
 `chart`|`lv.chart`
+`cpicker`|`lv.colorwheel` (ported from LVGL8 to LVGL9)
 `spangroup`|`lv.spangroup`
 `span`|`lv.span`
+`msgbox`|`lv.msgbox`
 `qrcode`|`lv.qrcode`
+`tabview`|`lv.tabview`
 
 You can also import custom widget as long as they inherit from `lv.obj` and the class name matches the module name.
 
@@ -278,7 +294,7 @@ Attribute name|LVGL equivalent|Details
 `bg_color`|`style_bg_color`|Color of background, format is `#RRGGBB`
 `bg_grad_color`|`style_bg_grad_color`|Color of background gradient
 `bg_grad_dir`|`style_bg_grad_dir`|Gradient direction<br>`0`: none<br>`1`: Vertical (top to bottom) gradient<br>`2`: Horizontal (left to right) gradient
-`border_side`|`style_border_side`|Borders to be displayed (add all values)<br>`0`: none<br>`1`: bottom<br>`2`: top<br>`4`: left<br>`8`: bottom<br>`15`: full (all 4)
+`border_side`|`style_border_side`|Borders to be displayed (add all values)<br>`0`: none<br>`1`: bottom<br>`2`: top<br>`4`: left<br>`8`: right<br>`15`: full (all 4)
 `border_width`|`style_border_width`|Width of border in pixels
 `border_color`|`style_border_color`|
 `line_color`|`style_line_color`|Color of line
@@ -736,6 +752,19 @@ Attribute name|LVGL equivalent|Details
 `text_color30`||Color of the inner text of each button
 
 
+For `btnmatrix`, events generated contain an addtional suffix to indicate which button was pressed or released.
+
+Example: `p9b11_0` means page `9`, object id `11`, button `0`
+
+```
+xx:xx:25.131 {'hasp': {'p9b11_0': {'event': 'changed'}}}
+xx:xx:25.134 {'hasp': {'p9b11_0': {'event': 'down'}}}
+xx:xx:25.520 {'hasp': {'p9b11_0': {'event': 'long'}}}
+xx:xx:25.670 {'hasp': {'p9b11_0': {'event': 'changed'}}}
+xx:xx:25.735 {'hasp': {'p9b11_0': {'event': 'release'}}}
+xx:xx:25.737 {'hasp': {'p9b11_0': {'event': 'up'}}}
+```
+
 ### `led`
 
 Example:
@@ -753,9 +782,9 @@ Example from `pages.jsonl`:
 {"id":22,"obj":"led","x":60,"y":100,"w":20,"h":20,"color":"#00FF00","val":200}
 {"id":23,"obj":"led","x":110,"y":100,"w":20,"h":20,"color":"#00FF00","val":0}
 
-{"id":21,"obj":"led","x":10,"y":140,"w":20,"h":20,"color":"#FFFF88"}
-{"id":22,"obj":"led","x":60,"y":140,"w":20,"h":20,"color":"#FFFF88","val":200}
-{"id":23,"obj":"led","x":110,"y":140,"w":20,"h":20,"color":"#FFFF88","val":0}
+{"id":31,"obj":"led","x":10,"y":140,"w":20,"h":20,"color":"#FFFF88"}
+{"id":32,"obj":"led","x":60,"y":140,"w":20,"h":20,"color":"#FFFF88","val":200}
+{"id":33,"obj":"led","x":110,"y":140,"w":20,"h":20,"color":"#FFFF88","val":0}
 ```
 
 Attribute name|LVGL equivalent|Details
@@ -815,7 +844,7 @@ global.p10b10.val2 = 25
 
 Attribute name|LVGL equivalent|Details
 :---|:---|:---
-`x_min`<br>`x_max`<br>`y_min`<br>`y_max`|`set_range`|Set the minimum and maximum values for `x` or `y` scales. Default are 0..100 for both axis.
+`x_min`<br>`x_max`<br>`y_min` or `y2_min`<br>`y_max` or `y2_max`|`set_range`|Set the minimum and maximum values for `x` or `y` scales. Default are 0..100 for both axis.<br>`y2_min` and `y2_max` control the range for the second data series.
 `point_count`|`point_count`|Set the number of points to display in the chart. Default is `10`. Changing this value clears the content of the chart.
 `height10`<br>`width10`||Set the height and width for dots for each value. Set to `0` to remove dots and live only lines.
 `v_div_line_count`<br>`h_div_line_count`|`div_line_count`|Set the number of division lines vertically and horizontally. Detault for `v_div_line_count` is `5`, for `h_div_line_count` is `3`.<br>Change the division line color with `line_color`.
@@ -824,6 +853,25 @@ Attribute name|LVGL equivalent|Details
 `val`<br>`val2`||Add a value to the fist series with `val` and to second series with `val2`.
 `zoom_x`<br>`zoom_y`|`zoom`|Zoom into the chart in X or Y direction.<br>`256` for no zoom, `512` double zoom.
 `update_mode`|`update_mode`|Set update mode of the chart object, default is `SHIFT`.<br>`0`: (`SHIFT`) Shift old data to the left and add the new one the right<br>`1`: (`CIRCULAR`) Add the new data in a circular way
+
+### `cpicker`
+
+The `cpicker` (color picker) object allows to select a color, encoded as `#RRGGBB` where RR/GG/BB are Hex values for Red/Green/Blue. Color Picker has 3 modes: "hue", "saturation", "value"; use long press to change mode.
+
+![HASPmota cpicker](_media/lvgl/HASPmota_24_cpicker.png)
+
+Example of `pages.jsonl`:
+```json
+{"id":10,"obj":"cpicker","x":20,"y":60,"w":120,"h":120,"color":"#FFFF00","mode":"hue","scale_width":20}
+```
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`color`|`color_rgb`|Set or read the current color as `#RRGGBB` string, where Red/Green/Blue are encoded as 2-digit hex. Example: `#FFFF00` is yellow.
+`mode`|`mode`|Set or read the current mode<br>`hue` displays a hue ring<br>`saturation` displays a saturation ring from 0 to white<br>`value` displays a brightness ring from pure color to black
+`mode_fixed`|`mode_fixed`|(bool) Set or read the `mode_fixed` attribute. If `true`, there is no mode change on long-press.
+`scale_width`|`arc_width`|(int) Set or read the width of the ring
+`pad_inner`||This attribute is ignored but present for OpenHASP compatibility. Since LVGL 8, there is no inner circle showing the color. There color is shown on the knob instead
 
 ### `spangroup` (styled text)
 
@@ -839,10 +887,10 @@ Example:
 {"id":11,"obj":"spangroup","x":0,"y":60,"w":300,"h":115,"text_font":"robotocondensed-16","bg_color":"#000088","bg_opa":255}
   {"id":12,"obj":"span","parentid":11,"text":"This is "}
   {"id":13,"obj":"span","parentid":11,"text":"RED","text_color":"#FF0000","text_font":"montserrat-28"}
-  {"id":12,"obj":"span","parentid":11,"text":" and this is "}
-  {"id":14,"obj":"span","parentid":11,"text":"GREEN","text_color":"#00FF00","text_font":"montserrat-28","text_decor":1}
-  {"id":15,"obj":"span","parentid":11,"text":" underlined"}
-  {"id":16,"obj":"span","parentid":11,"text":"\nAnd this is almost transparent","text_opa":100,"text_font":"montserrat-20"}
+  {"id":14,"obj":"span","parentid":11,"text":" and this is "}
+  {"id":15,"obj":"span","parentid":11,"text":"GREEN","text_color":"#00FF00","text_font":"montserrat-28","text_decor":1}
+  {"id":16,"obj":"span","parentid":11,"text":" underlined"}
+  {"id":17,"obj":"span","parentid":11,"text":"\nAnd this is almost transparent","text_opa":100,"text_font":"montserrat-20"}
 ```
 
 You must first define a `spangroup` object, and add as many as `span` sub-objects. You need to define the `parentid` attribute to the `spangroup`.
@@ -868,6 +916,72 @@ Attribute name|LVGL equivalent|Details
 `text_opa`|`set_text_opa`|Sets the text opacity<br>`0`: transparent<br>`255`: opaque 
 `text_letter_space`|`set_text_letter_space`|Set the letter space in pixels
 `text_line_space`|`set_text_line_space`|Set the line space in pixels.
+
+### `tabview`
+
+!!!note "Available (since Tasmota v14.4.2)."
+
+The `tabview` can be used to organize content in tabs.
+
+![HASPmota tabview](_media/lvgl/HASPmota_25_tabview.png)
+
+Example:
+
+```json
+{"id":10,"obj":"tabview","x%":5,"y":60,"h%":55,"w%":90,"tab_bar_size":40,"btn_pos":1,"bg_color":"#222222","border_width":2,"border_color":"#FFFF44","val":2}
+  {"id":51,"obj":"tab","parentid":10,"text":"Tab 1","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF","tab_border_color":"#FFFF44","tab_border_side":1,"tab_border_width":0,"tab_border_width01":3}
+  {"id":52,"obj":"tab","parentid":10,"text":"Tab 2","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF","tab_border_color":"#FFFF44","tab_border_side":1,"tab_border_width":0,"tab_border_width01":3}
+  {"id":53,"obj":"tab","parentid":10,"text":"Tab 3","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF","tab_border_color":"#FFFF44","tab_border_side":1,"tab_border_width":0,"tab_border_width01":3}
+    {"id":61,"obj":"switch","x":20,"y":10,"w":60,"h":30,"parentid":51,"radius":25,"radius20":25,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400"}
+    {"id":71,"obj":"dropdown","x":15,"y":10,"w":110,"h":30,"parentid":52,"options":"Apple\nBanana\nOrange\nMelon","bg_color50":"#FF4400","text_color":"#FFFF88","text_color50":"#FFFF88","border_color":"#FFFF88"}
+      {"id":72,"obj":"dropdown_list","parentid":71,"text_color":"#EAEAEA","bg_color51":"#FF4400"}
+    {"id":81,"obj":"checkbox","x":15,"y":10,"w":120,"h":30,"parentid":53,"text":" Nice tabview","border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400","text_color":"#FFFF44"}
+```
+
+You must first define a `tabview` object, and add as many as `tab` sub-objects. You need to define the `parentid` attribute to the `tabview`. Sub-objects are then placed within each `tab` as long as you define `parentid` to the `tab`.
+
+`tabview` Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`tab_bar_size`|`tab_bar_size`|(write-only) Set the vertical size of tab buttons.
+`bg_color`|`bg_color`|Set the background color for the content background of the sub-tabs
+`val`||Set or read the index of the active tab (0..count-1).
+`count`||(read-only) Read the number of tabs
+`text`||(read-only) Read the label of the active tab
+`border_color`|`border_color`|Set the color of the overall border of tabview.
+`border_width`|`border_width`|Set the border size of the overall border of tabview.
+
+`tab` Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`parentid`||Set to the `id` of the `tabview` it belongs to.
+`text`||Set the title of the tab button; cannot be changed once the tab is created.
+`tab_bg_color`||Set the background color of the tab button when it is not selected.
+`tab_bg_color01`||Set the background color of the tab button when it is selected.
+`tab_text_color`||Set the text color of the tab button when it is not selected.
+`tab_text_color01`||Set the text color of the tab button when it is selected.
+`tab_radius`||Set the radius of the tab button. Set to `0` by default for rectangular tab buttons.
+
+### `msgbox`
+
+The `msgbox` (message box) object allows to display a pop-up with a text content and one or multiple buttons. The pop-up can be made "modal" (not impemented yet).
+
+![HASPmota msgbox](_media/lvgl/HASPmota_23_msgbox.png)
+
+Example of `pages.jsonl`:
+```json
+{"id":10,"obj":"msgbox","x":0,"y":0,"w%":80,"h":100,"text":"A message box with two buttons.","border_color":"#FF4400","bg_color":"#4f4f4f","bg_opa":200,"buttons_bg_color":"#FF4400","buttons_border_width":3,"buttons_border_color":"#FFFFFF","text_color":"#FFFFFF","options":["Apply","Close"]}
+```
+
+Attribute name|LVGL equivalent|Details
+:---|:---|:---
+`text`|`content`|Set the contect of the Message box. If you write a new value, it will add to the existing content (LVGL limitation)
+`options`|(array of string, not empty) Labels for buttons
+`footer_<X>`<br>`header_<X>`<br>`title_<X>`<br>`content<X>`<br>`buttons_<X>`||Prefix to set or read style attributes on sub-objects of the message box.<BR>Styles for `buttons_` cannot be read, and set the same style for all buttons.
+`border_color`||Set the color of the border of the pop-up.
+`text_color`||Set the text color of the content
+`bg_opa`||Set the opacity of the pop-up, `255` (fully opaque) by default.
+`buttons_bg_color`||Set the background color of all buttons.
+`buttons_border_width`||Set the border width of all buttons.
+`buttons_border_color`||Set the border color of all buttons.
 
 ### `qrcode`
 

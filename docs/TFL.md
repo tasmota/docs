@@ -5,12 +5,14 @@
     ```
     build_flags             = ${env:tasmota32_base.build_flags}
                             -DUSE_BERRY_TF_LITE
-                            -DESP_NN ; use optimized kernels for ESP32
-                            -DUSE_I2S ; add only for speech/microphone use
+                            -DESP_NN ; use optimized kernels for ESP32/ESP32-S3
+                            -DUSE_I2S_ALL ; add only for speech/microphone use
     lib_extra_dirs          = lib/libesp32, lib/libesp32_div, lib/lib_basic, lib/lib_i2c, lib/lib_div, lib/lib_ssl, lib/libesp32_ml
     ; lib/libesp32_ml is important to include 
     ```  
   
+Currently supported targets: ESP32 and ESP32-S3.  
+
 ## Different Levels of TensorFlow
   
 [TensorFlow](https://www.tensorflow.org) is an open-source machine-learning platform that is widely adopted and thus is a whole ecosystem with tools, libraries and a huge community. It is not application specific and can be used for all kind of tasks.  
@@ -46,7 +48,7 @@ The API shall be quite slim with as few boilerplate code as possible, but can be
     With Tasmota this is now independent to each other. You can retrain and reupload the model to the file system as often as needed at runtime. The same is valid for refining the Berry code.
   
 In order to get things done like speech recognition, where especially realtime feature extraction is not possible to achieve with Berry (with the knowledge of today), additional specialized functionality is included.  
-Where it makes sense helper functions for capturing data are added too.  
+
   
 !!! failure "Before you proceed, check you expectations!!" 
     The most important prerequisite for speech recognition on MCU's is to have the right mindset. It is totally impossible to reach the level of recognition of a commercial product (Alexa, Siri, Cortana, ... you name it) on much stronger hardware. The usual cheap I2S MEMS microphone alone is a severe problem and the tuning of the various variables of the model is trial and error in many cases. It will make the final application fail with wrong but similar sounding words or mumbling.   
@@ -85,7 +87,6 @@ begin<a class="cmnd" id="tfl_begin">|`(type:string, descriptor:bytes)`<br>First 
 load<a class="cmnd" id="tfl_begin">|`(model:bytes, output:bytes, memory:int)`<br>Will load and run the model<br>`model` a bytes buffer that holds the model data for the entire lifecycle<br>`output` a byte buffer that matches the output size of the model<br>`memory` optional (default: 2000), a model specific memory size in bytes that will be allocated, find by trial-end-error
 input<a class="cmnd" id="tfl_input">|`(input:bytes)`<br>Feed the input of the model with values, must match the size of the model input. Will invoke an inference.
 output<a class="cmnd" id="tfl_output">|`(output:bytes) -> bool`<br>Returns true if function was not called yet on actual output data.
-rec<a class="cmnd" id="tfl_rec">|`(filename:string, seconds:int)`<br>Records audio to a WAV file (Mono, 16 kHz, 16 Bit).
 stats<a class="cmnd" id="tfl_stats">|`() -> string`<br>Returns a JSON string with some metrics of the current session.
 log<a class="cmnd" id="tfl_log">|`() -> string`<br>Returns a log message, typically for debugging.  
   
@@ -166,80 +167,25 @@ High frequency|8000 Hz - Sample frequency/2 and default too. Higher values would
   
 ### Create Training Data  
   
-A working microphone setup for recording training data and later audio recognition is needed.  
+A working microphone setup for recording training data and later audio recognition is needed. We reuse the setup of the I2S driver of Tasmota, that must be configured according to [I2S-Audio for ESP32](I2S-Audio_ESP32.md).  
 
-Therefor the `-DUSE_I2S` must be defined in the `build_flags:` section of the environment in `platformio_tasmota_cenv.ini`. This allows to set the GPIO pins for the I2S microphone according to [I2S-Audio](I2S-Audio.md).  
-
+Currently supported are 16 bits per sample at a rate of 16000 Hz. This can be set with:  
+```
+i2sconfig {"Rx":{"SampleRate":16000}}
+```
+The required preamplification factor is usually quite high (often around 16 - 32) and can be set with:  
+```
+i2sconfig {"Rx":{"Gain":30}}
+```
+Too high values will lead to clipping. The audio output of most I2S microphone is very low. Check your setup by recording a WAV file and analyze in Edgeimpulse or use an audio tool like *Audacity*.
+  
 Although you can use the microphone of your computer or smartphone, it is highly recommended to use your ESP32 microphone at least for a large amount of samples in order to train the model with the same pure sound quality, that it later has to run inference on. A working SD card config is the best way to capture training data.
 
-You can use a simple Berry driver to get this done:  
-
-```berry
-# record to 16-bit WAV file at 16 kHz, SD card highly recommended
-# repeat the intended keyword roughly every second in the same technical setup, that will later be used for keyword spotting
-# usage 'rec<seconds> filename', example: rec30 left -> record 30 seconds from I2S microphone to '/left.wav'
-class WAV_REC : Driver
-    var secs
-
-    def init()
-        import TFL
-        TFL.begin("") # init empty for log buffer
-        print("TFL: command 'rec' added")
-        self.secs = 0
-    end
-
-    def begin()
-        import TFL
-        var descriptor = bytes(-10) # mic descriptor
-        descriptor[0] = 4  # i2s_channel_fmt, 4=left
-        descriptor[1] = 16 # amplification factor
-        descriptor[2] = 32 # slice_dur
-        descriptor[3] = 32 # slice_stride
-        descriptor[4] = 40 # mfe filter (= features if MFE mode)
-        descriptor[5] = 0  # mfcc coefficients, if 0 -> compute MFE only
-        descriptor[6] = 9  # 2^9 = 512 fft_bins
-        descriptor[7] = 10 # max. invocations per second
-        descriptor[8] = 52 # db noisefloor -> negative value
-        descriptor[9] = 0  # preemphasis
-        TFL.begin("MIC",descriptor)
-    end
-
-    def every_second()
-        if self.secs > 0
-            print(self.secs)
-            if self.secs == 1 print("... done!") end
-            self.secs -= 1
-        end
-    end
-
-    def every_100ms()
-        import TFL
-        var s = TFL.log()
-        if s print(s) end
-    end
-
-    def rec(name,secs)
-        import TFL
-        self.begin()
-        TFL.rec(name,secs) # Edgeimpulse can infer the label from the name, so name it accordingly
-        self.secs = secs + 1 # add startup latency
-        print("TFL: record",secs,"seconds to",name)
-    end
-end
-
-var wav_rec = WAV_REC()
-tasmota.add_driver(wav_rec)
-
-def rec(cmd, idx, payload, payload_json)
-    var file = "/" + payload + ".wav"
-    wav_rec.rec(file,idx)
-    tasmota.resp_cmnd_str(file)
-end
-
-tasmota.add_cmd('rec', rec) # rec30 left -> record 30 seconds from I2S microphone to "/left.wav"
-``` 
-
-!!! note "Most of the descriptor values do not really matter here, but the whole descriptor must have valid values, meaning some values MUST not be 0!"
+You can use a simple Berry driver from Tasmotas example collection to get this done:  
+[wavrec.be](https://github.com/arendst/Tasmota/blob/development/tasmota/berry/audio/wavrec.be)  
+  
+Usage:  
+`waverec5 /test` - > record 5 seconds to /test.wav
   
 Then you can talk into the microphone with around 1 word per second and later upload this file to your [Edge Impulse](https://www.edgeimpulse.com/) project via your computer.
   
@@ -283,8 +229,8 @@ On the Tasmota side the feature settings have to be translated in Berry with a d
   
 |number|property|value|
 |---|:---|:---|
-0|i2s_channel_fmt_t|*i2s_channel_fmt_t* from i2s_types.h, we need mono, so 3 for right or 4 for left
-1|amplification factor|typical values are 8 - 32, must be >0, too high values will lead to clipping<br>The audio output of most I2S microphone is very low. Check your setup by recording a WAV file and analyze in Edgeimpulse or use an audio tool like *Audacity*.
+0|i2s_channel_fmt_t|this is an old setting and ignored now, maybe used differently in the future
+1|amplification factor|this is an old setting and ignored now, maybe used differently in the future
 2|slice duration<br>*or* Frame length|A slice of audio data in milliseconds. With the fixed audio settings 32 milliseconds translate to 512 samples, which as a power of 2 is a good fit for FFT.
 3|slice stride<br>*or* Frame stride|Time in milliseconds between the starts of 2 adjacent slices. No overlap happens if duration and stride are equal. Lower values create more stress for the system. Values around and below 20 milliseconds may leads to problems. Bad Wifi will worsen things earlier!!
 4|Filter number|Number of captured mel energies. For MFE mode these are the feature values for one slice.
@@ -373,8 +319,8 @@ class MICROSPEECH : Driver
         self.p = PREDICTOR(self.o_sz,4) # second arg is number of averages for prediction
 
         var descriptor = bytes(-10)
-        descriptor[0] = 4  # i2s_channel_fmt, 4=left
-        descriptor[1] = 16 # amplification factor
+        descriptor[0] = 4  # ignored
+        descriptor[1] = 16 # ignored
         descriptor[2] = 32 # slice_dur in ms 
         descriptor[3] = 32 # slice_stride in ms
         descriptor[4] = 26 # mfe filter (= features if MFE mode)
@@ -412,4 +358,204 @@ var mic = MICROSPEECH()
 
 tasmota.add_driver(mic)
 ```
+  
+## Image classification
+  
+This is really a huge task for any ESP32 and needs some "treatment" to make life as easy as possible for this tiny and weak platform. Do not expect easy success.  
+As other projects have shown before it is important to create an optimal photo capture setup, which typically involves 3D printed housing.  
+Excellent and extensive information can be found here: [AI-on-the-edge-device](https://jomjol.github.io/AI-on-the-edge-device-docs/)
+  
+In Tasmota we use a generic and flexible approach, which does not use a special mode of the TFL module.  
+The biggest chunk of work goes into model creation and the hardware setup. Once this is solved, running inference on the ESP with a Berry script should not be a showstopper.  
+  
+### ML-learning by doing
+Let's walk through a simple example step by step.  
+The object to observe has a very common 7-segment display, which could show any type of data, but here it is just a clock.  
+  
+### Camera setup
+First step is to create the capture setup. If we would change this later, most of the next step will need to be done again. As the main problem of any ESP is the lack of memory, it is important to use the lowest camera resolution, that get's the job done. Orthographic projection wil produce the least artifacts, so we try to come as close to this as possible.  
+  
+### ROI creation
+Now we must create definitions of regions of interest for every digit, that will be used later in the Berry script. This can be done with the help of a web tool right here in the docs: [ROI  editor](ROI-editor.md)
+  
+<figcaption>ROI editor -  create 2D affine matrix:</figcaption>
+![ROI editor](_media/ml/roi_editor.png){ width="700" }
+  
+You can select-copy-paste the matrix definition for later use as it is already valid Berry code.  The ROI pictures can be saved (with chrome based browser) to be used in the training process later.  
 
+After we have a feasible construction, we can think about the model.  
+
+### Model training
+  
+A ready made model "from somewhere" is the fastest option, but here we create one from scratch.  
+  
+To train it, we typically need thousands of photos. This would be a pretty insane task to shoot by hand. That's why the demo model was created with the help of synthetic image creation, which includes a so called "image augmentation". This means the creation of multiple slight abbreviations of one source image, which typically involves scaling, shearing, blurring, noise addition, contrast variation and in this case image inversion. Very likely we must add some original pictures from the observed display, which we can get from the ROI editor.   
+  
+Again we use Edgeimpulse to finally create the model. The demo project can be found here:  
+[7-segment](https://studio.edgeimpulse.com/public/436849/live)  
+Here we can see the uploaded images and model design - similar to the speech recognition example from above.
+  
+From the dashboard we can download the final model file with the type `TensorFlow Lite (int8 quantized)` which is about 17 KB in size.  
+  
+### Berry implementation
+  
+Finally we must put it all together. We need the model binary file and write the Berry script to use it.  
+For demo purposes the following script can run inference on the demo image from the docs: [dt.jpg](_media/ml/dt.jpg), which must be uploaded to the ESP.  
+Download the [model](https://studio.edgeimpulse.com/v1/api/436849/learn-data/14/model/tflite-int8), name it `7d.lite` and upload it too.
+  
+Now save the Berry script as `digits.be` and start with `br load("digits")` from the normal console or with `load("digits")` from the Berry console.  
+  
+```berry
+class ROI_DSC
+    var _dsc
+
+    def init()
+        self._dsc = []
+        var d1 = { "width": 32, "height": 32, "scaleX": 1, "shearY": 0, "transX": 189, "scaleY": 2.5161290322580645, "shearX": 0, "transY": 213 }
+        self._dsc.push(self.roi_dsc(d1))
+        var d2 = { "width": 32, "height": 32, "scaleX": 1.4193548387096775, "shearY": 0, "transX": 215, "scaleY": 2.5161290322580645, "shearX": 0, "transY": 210 }
+        self._dsc.push(self.roi_dsc(d2))
+        var d3 = { "width": 32, "height": 32, "scaleX": 1.4193548387096775, "shearY": 0, "transX": 269, "scaleY": 2.5161290322580645, "shearX": 0, "transY": 205 }
+        self._dsc.push(self.roi_dsc(d3))
+        var d4 = { "width": 32, "height": 32, "scaleX": 1.4193548387096775, "shearY": 0, "transX": 315, "scaleY": 2.5161290322580645, "shearX": 0, "transY": 200 }
+        self._dsc.push(self.roi_dsc(d4))
+    end
+
+    def get(idx)
+        if idx > (size(self._dsc) - 1)
+            return nil
+        end
+        return self._dsc[idx]
+    end
+
+    def roi_dsc(m)
+        var d = bytes(-24)
+        d.setfloat(0,m["scaleX"])
+        d.setfloat(4,m["shearX"])
+        d.setfloat(8,m["shearY"])
+        d.setfloat(12,m["scaleY"])
+        d.seti(16,m["transX"],2)
+        d.seti(18,m["transY"],2)
+        d.seti(20,m["width"],2)
+        d.seti(22,m["height"],2)
+        return d
+    end
+end
+
+class DIGITS : Driver
+    var out, model
+    var cam_img
+    var dsc
+    var result, idx, idx_step, need_input
+
+
+    def init()
+        self.initTFL()
+        self.cam_img = img()
+        self.dsc = ROI_DSC()
+        self.result = [-1,-1,-1,-1]
+        self.idx = 0
+        self.idx_step = 0
+        self.need_input = true
+
+        self.initCam() 
+        self.initFromFile() # for the demo
+        # self.updateImg() # really take picture from cam
+        tasmota.add_driver(self)
+    end
+
+    def stop()
+        self.tasmota.remove_driver(self)
+    end
+
+    def initCam()
+        import cam
+        cam.setup(8) # 640 * 480
+    end
+
+    def initFromFile() # utility method for demo testing/debugging
+        var f = open("/dt.jpg","r")
+        var b = f.readbytes()
+        f.close()
+        self.cam_img.from_jpg(b,img.GRAYSCALE)
+        b = nil
+        tasmota.gc()
+    end
+
+    def updateImg()
+        import cam
+        cam.get_image(self.cam_img,img.GRAYSCALE)
+    end
+
+    def initTFL()
+        import TFL
+        TFL.begin("BUF")  # generic TFL session 
+        self.out = bytes(-10) # one output for every digit
+        self.model = open("/7d.lite").readbytes() # this binary file must have been saved in the FS before
+        TFL.load(self.model,self.out,20000) # load and run, find value for memory allocation by trial and error
+    end
+
+    def handle_inference()
+        import mqtt
+        var digit = self.predict()
+        if digit == nil
+            self.result[self.idx] = -1
+            # mqtt.publish("tele/display",format('{"time":"error"}'))
+        else
+            self.result[self.idx] = digit
+        end
+        self.idx += 1
+        if self.idx == size(self.result) # full run over 4 digits complete
+            self.idx = 0
+
+            # self.updateImg() # now we might take the next picture
+
+            log(f"Complete result: {self.result[0]}{self.result[1]}:{self.result[2]}{self.result[3]}") # or mqtt publish
+            # mqtt.publish("tele/clock",format('{"time":"%i%i:%i%i"}',self.result[0],self.result[1],self.result[2],self.result[3]))
+        end
+        log(f"DIG: result of inference: {digit} for {self.idx}",3)
+        self.need_input = true
+    end
+
+    def update_input()
+        import TFL
+        var next_dsc = self.dsc.get(self.idx)
+        var roi = self.cam_img.get_buffer(next_dsc)
+        if TFL.input(roi, true)
+            self.need_input = false
+        end
+    end
+
+    def every_100ms() # not aiming at 
+        import TFL
+        if self.need_input
+            self.update_input()
+        elif TFL.output(self.out)
+            self.handle_inference()
+        end
+        var log_msg = TFL.log() # receive log messages from the TF lite tasks
+        if log_msg log(f"TFL: {log_msg}",3) end 
+    end
+
+    def predict()
+        # very simple implementation
+        var max_val = -128
+        var threshold = 0 # find out empirically
+        var digit = nil
+        for idx : 0..(size(self.out)-1)
+            var score = self.out.geti(idx,1)
+            if max_val < score
+                if score > threshold
+                    digit = idx
+                end
+                max_val = score
+            end
+        end
+        return digit
+    end
+end
+
+digits = DIGITS()
+```
+  
+This will print the clock string to the console and can be used as a starting point for real world use cases.

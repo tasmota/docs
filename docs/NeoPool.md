@@ -203,6 +203,28 @@ Sensor data is sent via the Tasmota topic `tele/%topic%/SENSOR` in JSON format e
       "State": [0, 1, 0, 0, 0, 1, 0],
       "Aux": [0, 0, 1, 0],
       "Acid": 0
+    },
+    "Connection": {
+      "Time": "2024-08-14T15:00:00",
+      "MBRequests": 9040,
+      "MBNoError": 9039,
+      "MBIllegalFunc": 0,
+      "MBIllegalDataAddr": 0,
+      "MBIllegalDataValue": 0,
+      "MBSlaveError": 0,
+      "MBAck": 0,
+      "MBSlaveBusy": 0,
+      "MBNotEnoughData": 0,
+      "MBMemParityErr": 0,
+      "MBCRCErr": 0,
+      "MBGWPath": 0,
+      "MBGWTarget": 0,
+      "MBRegErr": 0,
+      "MBRegData": 0,
+      "MBTooManyReg": 0,
+      "MBUnknownErr": 0,
+      "MBNoResponse": 1,
+      "DataOutOfRange": 0
     }
   },
   "TempUnit": "C"
@@ -228,7 +250,7 @@ pH.Min|(Float) Minimum setting value for pH control (only useful if a base pump 
 pH.Max|(Float) Maximum setting value for pH control (only useful if an acid pump is connected).
 pH.State|(Int) Status of the pH controller:<BR>`0` = no alarm<BR>`1` = pH too high: pH value is 0.8 points higher than setpoint (`NPpHMax` on acid systems, `NPpHMin` on base systems, `NPpHMax` on acid+base systems)<BR>`2` = pH too low: pH value is 0.8 points lower than setpoint (`NPpHMax` on acid systems, `NPpHMin` on base systems, `NPpHMin` on acid+base systems)<BR>`3` = pH pump has exceeded the working time set by the MBF_PAR_RELAY_PH_MAX_TIME parameter and has stopped<BR>`4` = pH higher than setpoint (`NPpHMax` + 0.1 on acid systems, `NPpHMin` + 0.1 on base systems, `NPpHMax` on acid+base systems)<BR>`5` = pH lower than setpoint (`NPpHMax` - 0.3 on acid systems, `NPpHMin` - 0.3 on base systems, `NPpHMin` on acid+base systems)<BR>`6` = Tank level alarm
 pH.Pump|(Int) pH control module and controlling pumps:<BR>`0` = pH control module and controlling pumps inactive<BR>`1` = Acid/base pH pump pump on<BR>`2` = Acid/base pH pump pump off
-pH.FL1|(Bool) Water flow status:<BR>`0` = No flow alarm<BR>`1` = Flow alarm
+pH.FL1|(Bool) Control status of the pH module by flow detection:<BR>`0` = Disable<BR>`1` = Enable
 pH.Tank|(Bool) Acid/Base tank signal input:<BR>`0` = Tank empty<BR>`1` = No Tank alarm
 Redox.Data|(Int) Current redox value [mV]
 Redox.Setpoint|(Int) Redox target [mV]
@@ -251,7 +273,7 @@ Hydrolysis.State|(String) Cell state:<BR>`OFF` = Cell inactive<BR>`FLOW` = Cell 
 Hydrolysis.Cover|(Bool) Cover signal input:<BR>`0` = Cover input inactive<BR>`1` = Cover input active
 Hydrolysis.Boost|(Int) Boost mode state:<BR>`0` = Boost mode inactive<BR>`1` = Boost mode active<BR>`2` = Boost mode active with redox control
 Hydrolysis.Low|(Bool) Hydrolysis low alarm:<BR>`0` = No alarm<BR>`1` = Hydrolysis cannot reach the setpoint
-Hydrolysis.FL1|(Bool) Hydrolysis flow alarm:<BR>`0` = No alarm<BR>`1` = Hydrolysis flow alarm, no flow detected
+Hydrolysis.FL1|(Bool) Hydrolysis cell flow indicator:<BR>`0` = No alarm<BR>`1` = Hydrolysis flow alarm, no flow detected
 Hydrolysis.Redox|(Bool) Activation of hydrolysis by the redox module:<BR>`0` = Not activated by redox module<BR>`1` = Activated by redox module
 Filtration.State|(Int) Filtration pump state:<BR>`0` = Pump off<BR>`1` = Pump on
 Filtration.Speed|(Int) Filtration pump speed:<BR>`1` = Low<BR>`2` = Middle<BR>`3` = High
@@ -268,12 +290,33 @@ Relay.Conductivity|(Bool) Conductivity relay state
 Relay.Heating|(Bool) Heating relay state
 Relay.UV|(Bool) UV relay state
 Relay.Valve|(Bool) Valve relay state
+Connection|NeoPool Modbus connection statistics (ESP32 only, [NPSetOption1](#NPSetOption1) must be 1):
+Connection.Time|(String) Start time statistics
+Connection.MBRequests|(Int) Total ModBus queries
+Connection.MBNoError|(Int) Responses without error
+Connection.MBNoResponse|(Int) Missing responses
+Connection.DataOutOfRange|(Int) Number of values outside the sensor range
+Connection.MBIllegalFunc|(Int) Err 1: Illegal Function
+Connection.MBIllegalDataAddr|(Int) Err 2: Illegal Data Address
+Connection.MBIllegalDataValue|(Int) Err 3: Illegal Data Value
+Connection.MBSlaveError|(Int) Err 4: Slave Error
+Connection.MBAck|(Int) Err 5: Acknowledge but not finished (no error)
+Connection.MBSlaveBusy|(Int) Err 6: Slave Busy
+Connection.MBNotEnoughData|(Int) Err 7: Not enough minimal data received
+Connection.MBMemParityErr|(Int) Err 8: Memory Parity error
+Connection.MBCRCErr|(Int) Err 9: CRC error
+Connection.MBGWPath|(Int) Err 10: Gateway Path Unavailable
+Connection.MBGWTarget|(Int) Err 11: Gateway Target device failed to respond
+Connection.MBRegErr|(Int) Err 12: Wrong number of registers
+Connection.MBRegData|(Int) Err 13: Register data not specified
+Connection.MBTooManyReg|(Int) Err 14: To many registers
+Connection.MBUnknownErr|(Int) Unknown errors occured
 
 The JSON values `pH`, `Redox`, `Hydrolysis`, `Chlorine`, `Conductivity` and `Ionization` are only available if the corresponding module is installed in the device (the corresponding "Module" subkey must be `1`).
 
 The `Relay` subkeys `Acid`, `Base`, `Redox`, `Chlorine`, `Conductivity`, `Heating`, `UV` and `Valve` are only available if the related function is assigned to a relay.
 
-To check which modules are installed use the `Module` value from SENSOR topic or query it manually by using the [NPControl command](#NPControl):
+To check which modules are installed use the `Module` value from SENSOR topic or query it manually by using the [NPControl](#NPControl) command:
 
 ```json
 {
@@ -307,7 +350,7 @@ Relays|(Int) These subkeys list the relay number assignments to the internal fun
 
 This sensor supports some high-level [commands](#commands) for end user.
 
-Regardless, all other Modbus registers can be read and write, so you can [enhance](#Enhancements) your Sugar Valley control by using low-level [NPRead](#NPRead)/[NPWrite](#NPWrite) commands.
+Regardless, all other Modbus registers can be read and write, so you can [enhance](#enhancements) your Sugar Valley control by using low-level [NPRead](#NPRead)/[NPWrite](#NPWrite) commands.
 
 Modbus register addresses and their meaning are described within source file [xsns_83_neopool.ino](https://github.com/arendst/Tasmota/blob/development/tasmota/xsns_83_neopool.ino) at the beginning and (partly) within document [171-Modbus-registers](https://downloads.vodnici.net/uploads/wpforo/attachments/69/171-Modbus-registers.pdf).<BR>
 Please note that Sugar Valley Modbus registers are not byte addresses but modbus registers containing 16-bit values - don't think in byte memory layout.
@@ -328,12 +371,14 @@ NPHydrolysis<a id="NPHydrolysis"></a>|`<level>( %)`<BR>Set hydrolysis/electrolys
 NPIonization<a id="NPIonization"></a>|`<level>`<BR>Set ionization target production level (level = `0..<max>`, the upper limit `<max>` may vary depending on the [MBF_PAR_ION_NOM](https://github.com/arendst/Tasmota/blob/development/tasmota/tasmota_xsns_sensor/xsns_83_neopool.ino#L140) register)<BR>Note: The command is only available if the hydrolysis/electrolysis control is present.
 NPChlorine<a id="NPChlorine"></a>|`<setpoint>`<BR>Set chlorine setpoint in ppm (setpoint = `0..10`)<BR>Note: The command is only available if the free chlorine probe detector is installed.
 NPControl<a id="NPControl"></a>|Show information about [system controls](NeoPool#sensor-data-description).
-NPTelePeriod<a id="NPTelePeriod"></a>|`<time>`<BR>Enables/disables auto telemetry message when NeoPool values change (time = `0` or `5..3600`):<ul><li>`0` - disable this function off (default), telemetry message are only reported depending on [TelePeriod](#teleperiod) setting</li><li>`5..3600` - set the minimum of seconds between two telemetry messages for NeoPool measured values (status changes for relays and settings trigger the SENSOR messages immediately, regardless of the time set)</li></ul>Hint: To get immediate telemetry messages only for status changes (relays, settings) set `<time>` higher than [TelePeriod](#teleperiod). In this case, measured sensors are reported only by [TelePeriod](#teleperiod) setting, status changes are reported immediately.
+NPTelePeriod<a id="NPTelePeriod"></a>|`<time>`<BR>Enables/disables auto telemetry message when NeoPool values change (time = `0` or `5..3600`):<ul><li>`0` - disable this function off (default), telemetry message are only reported depending on [TelePeriod](Commands.md#teleperiod) setting</li><li>`5..3600` - set the minimum of seconds between two telemetry messages for NeoPool measured values (status changes for relays and settings trigger the SENSOR messages immediately, regardless of the time set)</li></ul>Hint: To get immediate telemetry messages only for status changes (relays, settings) set `<time>` higher than [TelePeriod](Commands.md#teleperiod). In this case, measured sensors are reported only by [TelePeriod](Commands.md#teleperiod) setting, status changes are reported immediately.
 NPOnError<a id="NPOnError"></a>|`<repeat>`<BR>Set the number of retries for Modbus read/write commands errors (repeat = `0..10`):<ul><li>`0` - disable auto-repeat on read/write error</li><li>`1..10` - repeat commands n times until ok</li></ul>
 NPResult<a id="NPResult"></a>|`<format>`<BR>Set addr/data result format for read/write commands (format = `0|1`):<ul><li>`0` - output decimal numbers</li><li>`1` - output hexadecimal strings, this is the default</li></ul>
 NPPHRes<a id="NPPHRes"></a>|`<resolution>`<BR>Set number of decimal places in results for PH value (resolution = `0..3`).
 NPCLRes<a id="NPCLRes"></a>|`<resolution>`<BR>Set number of decimal places in results for CL value (resolution = `0..3`).
 NPIONRes<a id="NPIONRes"></a>|`<resolution>`<BR>Set number of decimal places in results for ION value (resolution = `0..3`).
+NPSetOption0<a id="NPSetOption0"></a>|Sensor data min/max validation and correction function (ESP32 only)<BR>`0` = disable correction<BR> `1` = enable correction *(default)*
+NPSetOption1<a id="NPSetOption1"></a>|NeoPool Modbus connection statistics (ESP32 only)<BR>`0` = disable statistics<BR> `1` = enable statistics *(default)*
 NPRead<a id="NPRead"></a>|`<addr>( <cnt>)`<BR>Read device 16-bit register (addr = `0..0x060F`, cnt = `1..30`). `<cnt>` = `1` if omitted
 NPReadL<a id="NPReadL"></a>|`<addr>( <cnt>)`<BR>Read device 32-bit register (addr = `0..0x060F`, cnt = `1..15`). `<cnt>` = `1` if omitted
 NPWrite<a id="NPWrite"></a>|`<addr> <data>( <data>...)`<BR>Write device 16-bit register (addr = `0..0x060F`, data = `0..0xFFFF`). Use of `<data>` max 10 times
@@ -344,6 +389,13 @@ NPEscape<a id="NPEscape"></a>|Clears possible errors (like pump exceeded time et
 NPExec<a id="NPExec"></a>|Take over changes without writing to EEPROM. This command is necessary e. g. on changes in *Installer page* (addr 0x0400..0x04EE).
 NPSave<a id="NPSave"></a>|Write data permanently into EEPROM.<BR>During the EEPROM write procedure the NeoPool device may be unresponsive to MODBUS requests, this process always takes less than 1 second.<BR>Since this process is limited by the number of EEPROM write cycles, it is recommend to write all necessary changes to the registers and only then execute EEPROM write process using this command.<BR>__Note: The number of EEPROM writes for Sugar Valley NeoPool devices is guaranteed 100,000 cycles. As soon as this number is exceeded, further storage of information can no longer be guaranteed__.
 See also|[`SetOption157`](Commands.md#setoption157) - Hide/Show sensitive data
+
+!!! note
+    The setttings changed by commands [NPPHRes](#NPPHRes), [NPCLRes](#NPCLRes), [NPIONRes](#NPIONRes), [NPSetOption0](#NPSetOption0)
+    and [NPSetOption1](#NPSetOption1) are permanently stored only if firmware was compiled with USE_UFILESYS
+    (#define `USE_UFILESYS`, default enabled on ESP32 and disabled on ESP82xx).
+    Without USE_UFILESYS (default on ESP82xx), you can alternatively use a rule to set your defaults during system start, e. g.:
+    `Rule1 ON System#Init DO Backlog NPPHRes 1;NPCLRes 1;NPIonRes 1;NPSetOption0 1;NPSetOption1 0`
 
 ### Examples
 

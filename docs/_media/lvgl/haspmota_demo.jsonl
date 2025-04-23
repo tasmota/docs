@@ -29,10 +29,10 @@
 {"id":11,"obj":"spangroup","x":0,"y":60,"w":300,"h":115,"text_font":"robotocondensed-16","bg_color":"#000088","bg_opa":255}
   {"id":12,"obj":"span","parentid":11,"text":"This is "}
   {"id":13,"obj":"span","parentid":11,"text":"RED","text_color":"#FF0000","text_font":"montserrat-28"}
-  {"id":12,"obj":"span","parentid":11,"text":" and this is "}
-  {"id":14,"obj":"span","parentid":11,"text":"GREEN","text_color":"#00FF00","text_font":"montserrat-28","text_decor":1}
-  {"id":15,"obj":"span","parentid":11,"text":" underlined"}
-  {"id":16,"obj":"span","parentid":11,"text":"\nAnd this is almost transparent","text_opa":100,"text_font":"montserrat-20"}
+  {"id":14,"obj":"span","parentid":11,"text":" and this is "}
+  {"id":15,"obj":"span","parentid":11,"text":"GREEN","text_color":"#00FF00","text_font":"montserrat-28","text_decor":1}
+  {"id":16,"obj":"span","parentid":11,"text":" underlined"}
+  {"id":17,"obj":"span","parentid":11,"text":"\nAnd this is almost transparent","text_opa":100,"text_font":"montserrat-20"}
 
 {"page":3,"comment":"---------- Page 3 Buttons ----------"}
 {"id":0,"bg_color":"#000000","text_color":"#FFFFFF"}
@@ -56,9 +56,9 @@
 {"id":22,"obj":"led","x":60,"y":100,"w":20,"h":20,"color":"#00FF00","val":200}
 {"id":23,"obj":"led","x":110,"y":100,"w":20,"h":20,"color":"#00FF00","val":0}
 
-{"id":21,"obj":"led","x":10,"y":140,"w":20,"h":20,"color":"#FFFF88"}
-{"id":22,"obj":"led","x":60,"y":140,"w":20,"h":20,"color":"#FFFF88","val":200}
-{"id":23,"obj":"led","x":110,"y":140,"w":20,"h":20,"color":"#FFFF88","val":0}
+{"id":31,"obj":"led","x":10,"y":140,"w":20,"h":20,"color":"#FFFF88"}
+{"id":32,"obj":"led","x":60,"y":140,"w":20,"h":20,"color":"#FFFF88","val":200}
+{"id":33,"obj":"led","x":110,"y":140,"w":20,"h":20,"color":"#FFFF88","val":0}
 
 {"page":5,"comment":"---------- Page 5 Switches ----------"}
 {"id":0,"bg_color":"#000000","text_color":"#FFFFFF"}
@@ -228,7 +228,7 @@
 {"id":46,"obj":"label","x":152,"y":110,"w":30,"align":1,"text":"\uE335","text_font":"icons-24"}
 {"id":47,"obj":"label","x":192,"y":110,"w":30,"align":1,"text":"\uE335","text_font":"icons-28"}
 
-{"page":22,"comment":"---------- Page 21 Seg7 font ----------"}
+{"page":22,"comment":"---------- Page 22 Seg7 font ----------"}
 {"id":0,"bg_color":"#000000","text_color":"#FFFFFF","text_font":"robotocondensed-16"}
 {"id":1,"obj":"label","x":0,"y":30,"w%":100,"h":24,"text":"[22. Font Seg7]","text_font":"montserrat-20"}
 
@@ -251,3 +251,28 @@
 {"id":26,"obj":"label","x":2,"y":122,"w":70,"align":1,"text":"12:34","text_font":"seg7-20","text_color":"#FF4400"}
 {"id":27,"obj":"label","x":72,"y":122,"w":90,"align":1,"text":"12:34","text_font":"seg7-24","text_color":"#FF4400"}
 {"id":28,"obj":"label","x":162,"y":122,"w":130,"align":1,"text":"12:34","text_font":"seg7-36","text_color":"#FF4400"}
+
+{"page":23,"comment":"---------- Page 23 Message Box ----------"}
+{"id":0,"bg_color":"#000000","text_color":"#FFFFFF","text_font":"robotocondensed-16"}
+{"id":1,"obj":"label","x":0,"y":30,"w%":100,"h":24,"text":"[23. Message Box]","text_font":"montserrat-20"}
+
+{"id":10,"obj":"msgbox","x":0,"y":0,"w%":80,"h":100,"text":"A message box with two buttons.","border_color":"#FF4400","bg_color":"#4f4f4f","bg_opa":200,"buttons_bg_color":"#FF4400","buttons_border_width":3,"buttons_border_color":"#FFFFFF","text_color":"#FFFFFF","options":["Apply","Close"]}
+
+{"page":24,"comment":"---------- Page 24 Color Picker ----------"}
+{"id":0,"bg_color":"#000000","text_color":"#FFFFFF","text_font":"robotocondensed-16"}
+{"id":1,"obj":"label","x":0,"y":30,"w%":100,"h":24,"text":"[24. Color Picker]","text_font":"montserrat-20"}
+
+{"id":10,"obj":"cpicker","x":20,"y":60,"w":120,"h":120,"color":"#FFFF00","mode":"hue","scale_width":20}
+
+{"page":25,"comment":"---------- Page 25 Tabview ----------"}
+{"id":0,"bg_color":"#000000","text_color":"#FFFFFF","text_font":"robotocondensed-16"}
+{"id":1,"obj":"label","x":0,"y":30,"w%":100,"h":24,"text":"[25. Tabview]","text_font":"montserrat-20"}
+
+{"id":10,"obj":"tabview","x%":5,"y":60,"h%":55,"w%":90,"tab_bar_size":40,"btn_pos":1,"bg_color":"#222222","border_width":2,"border_color":"#FFFF44","val":2}
+  {"id":51,"obj":"tab","parentid":10,"text":"Tab 1","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF","tab_border_color":"#FFFF44","tab_border_side":1,"tab_border_width":0,"tab_border_width01":3}
+  {"id":52,"obj":"tab","parentid":10,"text":"Tab 2","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF","tab_border_color":"#FFFF44","tab_border_side":1,"tab_border_width":0,"tab_border_width01":3}
+  {"id":53,"obj":"tab","parentid":10,"text":"Tab 3","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF","tab_border_color":"#FFFF44","tab_border_side":1,"tab_border_width":0,"tab_border_width01":3}
+    {"id":61,"obj":"switch","x":20,"y":10,"w":60,"h":30,"parentid":51,"radius":25,"radius20":25,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400"}
+    {"id":71,"obj":"dropdown","x":15,"y":10,"w":110,"h":30,"parentid":52,"options":"Apple\nBanana\nOrange\nMelon","bg_color50":"#FF4400","text_color":"#FFFF88","text_color50":"#FFFF88","border_color":"#FFFF88"}
+      {"id":72,"obj":"dropdown_list","parentid":71,"text_color":"#EAEAEA","bg_color51":"#FF4400"}
+    {"id":81,"obj":"checkbox","x":15,"y":10,"w":120,"h":30,"parentid":53,"text":" Nice tabview","border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400","text_color":"#FFFF44"}

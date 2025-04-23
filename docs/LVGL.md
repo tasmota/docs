@@ -6,7 +6,7 @@
 
 !!! info "Check the [LVGL API Reference](LVGL_API_Reference.md)"
 
-Supported version: LVGL v9.1.0, LodePNG v20201017, Freetype 2.13.2
+Supported version: LVGL v9.2.2, LodePNG v20201017, Freetype 2.13.2
 
 **LVGL** (_Light and Versatile Graphics Library_) is Tasmota's next generation display. It is powerful, lightweight and simple to use. It combines:
 
@@ -81,7 +81,7 @@ lv.start()
 hres = lv.get_hor_res()       # should be 320
 vres = lv.get_ver_res()       # should be 240
 
-scr = lv.scr_act()            # default screan object
+scr = lv.scr_act()            # default screen object
 f20 = lv.montserrat_font(20)  # load embedded Montserrat 20
 
 #- Background with a gradient from black #000000 (bottom) to dark blue #0000A0 (top) -#
@@ -371,9 +371,9 @@ sunrise.move_background()               # move the image to the background
 
 ![screenshot-1642357636](https://user-images.githubusercontent.com/49731213/149672938-e01264c4-1a8a-4e00-b217-01b35981d1bc.png)
 
-### Freetype fonts support
+### FreeType fonts support
 
-Support for Freetype fonts depends on `#define USE_LVGL_FREETYPE` - which is **NOT** enabled by default in Tasmota32-lvgl.
+Support for FreeType fonts depends on `#define USE_LVGL_FREETYPE` - which is **NOT** enabled by default in Tasmota32-lvgl.
 
 Bitmat fonts typically consume significant flash size because you need to embed the font at different size. Using FreeType vector fonts can bring more flexibility and options. You need to first upload the desired fonts on the Tasmota file system.
 
@@ -416,24 +416,24 @@ What's implemented currently:
 What will probably not be implemented
 
 * ~~Native LVGL animation engine~~
-* Styles garbage collection is not done, which means that creating lots of styles leads to memoly leak
+* Styles garbage collection is not done, which means that creating lots of styles leads to memory leak
 * multi-screens display - I don't know of a single ESP32 based device with multi-screens
 * Bidirectional fonts - unless there is strong demand
 * LVGL tasks - Berry provides all the necessary tools for task scheduling
 
 ## Converting C LVGL to Berry
 
-Simply speaking, you can convert most constants from their C equivalent to berry by just changing the `LV_` prefix to `lv.`.
+Simply speaking, you can convert most constants from their C equivalent to Berry by just changing the `LV_` prefix to `lv.`.
 
 Example: `LV_SYMBOL_OK` becomes `lv.SYMBOL_OK`
 
-Berry provides an object model to `lv_object` and sub-classes for widhets like `lv_btn`, `lv_label`... To create an object, just instantiate the class: `lv_btn(parent)`
+Berry provides an object model to `lv_object` and sub-classes for widgets like `lv_btn`, `lv_label`... To create an object, just instantiate the class: `lv_btn(parent)`
 
 `lv_style` is created independently.
 
 `lv_color` takes a 24 bits 0xRRGGB as parameter, or a pre-defined color like `lv.BLUE`
 
-## Compiling for LVLG
+## Compiling for LVGL
 
 In `my_user_config.h` or in your config override, add:
 
@@ -505,7 +505,7 @@ end
 animate_logo()
 ```
 
-### Calibrate a resitive Touch Screen
+### Calibrate a resistive Touch Screen
 
 Some touchscreens like [Lolin TFT 2.4 Touch Shields](https://www.wemos.cc/en/latest/d1_mini_shield/tft_2_4.html) use a resistive touchscreen controlled by `XPT2046`. Contrary to capacitive touchscreens, resistive touchscreens needs a per-device calibration.
 

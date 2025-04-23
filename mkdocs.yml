@@ -96,7 +96,11 @@ markdown_extensions:
   - pymdownx.highlight
   - pymdownx.keys
   - pymdownx.mark
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.snippets
   - pymdownx.tilde
   - meta
@@ -154,13 +158,17 @@ nav:
     - Protocol Bridging:
       - Arduino MCU: TasmotaClient.md
       - BLE Gateway: Bluetooth.md
+      - DALI.md
       - HDMI CEC: HDMI_CEC.md
       - IR Communication: Tasmota-IR.md
       - LCD/DLP Projector Control: Projector.md
+      - LoRa-and-LoRaWan-Bridge.md
       - Modbus-Bridge.md
       - OpenTherm: OpenTherm.md
       - RF Communication: RF-Protocol.md
       - Serial-to-TCP-Bridge.md
+      - TWAI.md
+      - Telegram.md
       - Zigbee.md
     - Smart-Meter-Interface.md
     - Thermostat.md

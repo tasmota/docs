@@ -28,10 +28,10 @@ Implemented for situations where a device cannot be reset to firmware defaults b
 #### Procedure
 
 1. Cut power from the device completely for 30 seconds
-2. Power the device on and off six times with intervals lower than 10 seconds and leave it on after seventh time
+2. Power the device on and off six times with intervals lower than 10 seconds and leave it on after seventh time. While it may work being quick, a pace of 2 seconds for both the on and off steps recommended.
 3. Fast power cycle device recovery should activate and the device should be reset to firmware defaults
 
-If you flashed a precompiled binary you can [reconfigure](Getting-Started.md#configure-wi-fi) the device using the web UI after the reset. 
+If you flashed a precompiled binary you can [reconfigure](Getting-Started.md#initial-configuration) the device using the web UI after the reset. 
 
 ## After Recovery
 Once recovered, the device should be observed that it operates without instabilities before attempting to configure the device in any way. If the device still does not, follow these steps if you are able to configure its Wi-Fi and connect:

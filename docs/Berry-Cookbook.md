@@ -35,7 +35,7 @@ brgc
 
 ### General form of the custom command function
 
-The custom command function have the general form below where parameters are optionals:
+The custom command function have the general form below where parameters are optional:
 
 ```berry
 def function_name(cmd, idx, payload, payload_json)
@@ -508,8 +508,8 @@ scr = lv.scr_act()          # default screean object
 f20 = lv.montserrat_font(20)  # load embedded Montserrat 20
 f28 = lv.montserrat_font(28)  # load embedded Montserrat 28
 
-#- Backgroun -#
-scr.set_style_local_bg_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(0x000066))  # backgroun in dark blue #000066
+#- Background -#
+scr.set_style_local_bg_color(lv.OBJ_PART_MAIN, lv.STATE_DEFAULT, lv_color(0x000066))  # background in dark blue #000066
 
 #- Upper state line -#
 stat_line = lv_label(scr)
@@ -633,7 +633,7 @@ end
 
 ## Multi-Zone Heating Controller
 
-This project is a multi-zone heating controller written entirely in berry. It demonstrates the use of the persist module for saving/loading data; the webserver module for creating a custom "Manage Heating" user interface; dynamic loading of HTML from the file system; subscribing to a variety of rule triggers (using tasmota.add_rule); the implementation of custom commands (using tasmota.add_cmnd). It also makes good use of time functionaity (via tasmota.rtc, tasmota.time_dump, tasmota.set_timer and tasmota.strftime). The project also includes an LCD I2C driver for running a basic 20x4 display. The entire driver is implemented using just the tasmota.wire_scan method.
+This project is a multi-zone heating controller written entirely in berry. It demonstrates the use of the persist module for saving/loading data; the webserver module for creating a custom "Manage Heating" user interface; dynamic loading of HTML from the file system; subscribing to a variety of rule triggers (using tasmota.add_rule); the implementation of custom commands (using tasmota.add_cmnd). It also makes good use of time functionality (via `tasmota.rtc`, `tasmota.time_dump`, `tasmota.set_timer` and `tasmota.strftime`). The project also includes an LCD I2C driver for running a basic 20x4 display. The entire driver is implemented using just the `tasmota.wire_scan` method.
 
 [https://github.com/Beormund/Tasmota32-Multi-Zone-Heating-Controller](https://github.com/Beormund/Tasmota32-Multi-Zone-Heating-Controller)
 
@@ -652,8 +652,30 @@ tasmota.set_timer(30000,netflip)              #4
 
 1. store variable "eth" with Ethernet status - "true" if Ethernet IP exists and "false" if not
 2. check if wifi status is true and compare to eth status
-3. send command `Wifi` with parameter depending on eth variable. `..` is to concatenate a string. See Berry [manual](https://github.com/berry-lang/berry/wiki/Chapter-3#-operator-1)
+3. send command `Wifi` with parameter depending on eth variable. `..` is to concatenate a string. See Berry [manual](https://berry.readthedocs.io/en/latest/source/en/Chapter-3.html#operator-2)
 4. set a timer to execute the netflip function 30000ms (30 seconds) after loading `autoexec.be`
+
+For newer Berry versions, there is an improved version:
+
+```berry
+# Ethernet Network Flipper - checks every 30 seconds if ethernet if up
+# if Ethernet is up, Wifi is turned off to avoid interference with Zigbee
+# if Ethernet is down, Wifi is turned back on to allow fallback connection
+def netflip()
+  var eth = tasmota.eth('up')                 #1
+  if tasmota.wifi('up') == eth                #2
+    tasmota.cmd('Wifi ' + (eth ? '0' : '1'))  #3
+  end
+  tasmota.set_timer(30000,netflip)            #4
+end
+tasmota.set_timer(30000,netflip)              #5
+```
+
+1. store variable "eth" with Ethernet status - "true" if Ethernet IP exists and "false" if not
+2. check if wifi and eth are both up or both down
+3. send command `Wifi` with parameter depending on eth variable, turn Wifi on if eth is down, turn Wifi off if eth is up
+4. set a timer to execute the netflip function every 30000ms (30 seconds)
+5. set a timer to execute the netflip function 30000ms (30 seconds) after loading `autoexec.be`
 
 ## TMP117 Driver
 
@@ -674,7 +696,7 @@ end
 
 An H-bridge is an electronic circuit that switches the polarity of a voltage applied to a load. These circuits are often used in robotics and other applications to allow DC motors to run forwards or backwards.
 
-You can typically use 2 PWM channels to pilot a H-bridge, under the condition that both channels are never active at the same time; otherwise you may destroy your device. This means that phasing must be calculated so that one pulse started once the other pulse is inactive, and the sum of both dutys must not exceed 100%.
+You can typically use 2 PWM channels to pilot a H-bridge, under the condition that both channels are never active at the same time; otherwise you may destroy your device. This means that phasing must be calculated so that one pulse started once the other pulse is inactive, and the sum of both duty cycles must not exceed 100%.
 
 The following Berry function ensures appropriate management of H-bridge:
 
@@ -723,7 +745,7 @@ BRY: Exception> 'value_error' - the sum of duties must not exceed 100%
 
 This is an example of dumping the content of the internal flash of the ESP32 and write the content in the file system that you can download back to your PC.
 
-The example below dumps the contant of the safeboot partition.
+The example below dumps the content of the safeboot partition.
 
 ```berry
 def flash_to_file(filename, addr, len)
@@ -770,7 +792,7 @@ This is a Tasmota Berry Script library to greatly simplify the process of exposi
 
 ## Build MQTT topic string based on FullTopic configuration
 
-This code bit illustrates how you can create a topic string in the form of the FullTopic specification. Details like whech %prefix% you want and what last level of the topic is obviously variable.
+This code bit illustrates how you can create a topic string in the form of the `FullTopic` specification. Details like which `%prefix%` you want and what topic last level are obviously variable.
 
 ```berry
 var topic = string.replace(string.replace(
@@ -778,6 +800,28 @@ var topic = string.replace(string.replace(
               '%topic%', tasmota.cmd('Topic',true)['Topic']),
               '%prefix%', tasmota.cmd('Prefix',true)['Prefix3'])
             + 'SENSOR'
+```
+
+## Wake-on-LAN
+
+The code below sends WoL (Wake on Lan) packets so you can wake up a device located on the same LAN.
+
+```berry
+def send_wake_on_lan(mac, broadcast_ip)
+  import string
+  u = udp()
+  u.begin("", 0)
+  var payload = bytes("FFFFFFFFFFFF")
+  var mac_bytes = bytes().fromhex(string.tr(mac, ":", ""))
+  for i:1..16
+    payload += mac_bytes
+  end
+  #print(payload)
+  return u.send(broadcast_ip, 9, payload)
+end
+
+
+send_wake_on_lan("84:CC:A8:64:B7:68", "192.168.2.255")
 ```
 
 ## Other resources

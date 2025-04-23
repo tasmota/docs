@@ -112,3 +112,35 @@ In the case when no data is received, it will be display `off`. As the converter
 
 !!! tip
 	When the inverter is working and `off` is displayed, so you have to check your hard- and software setup.
+
+## Meter Mode
+The Meter Mode can be used to easily build a zero injection solution. When the [export control](#enable-export-control) is enabled in the inverter settings, it requests the momentary grid consumption from an attached meter. This driver emulates the meter and reports back the requested values. Based on this values and the integrated export control algorithm, the inverter can limit the output to only be sufficient to the load, so as to achieve zero injection to the grid.  
+
+The grid load consumption can be measured by any device, like a meter, smart meter, etc. and transmitted to the driver. Please consult the [commands](#commands-meter-mode).
+
+The driver automatically detects when the inverter requests the meter mode. Only one mode is possilbe at the same time.
+
+!!! tip
+	To avoid problems, be sure the "normal" mode works completely flawlessly.
+
+### Enable export control
+Setting up the inverters export control function can be done via LCD. As an example, the steps are as follows:  
+![export-control-config](_media/solax-x1/export-control-config.png)  
+For more information have a look at the user manual of the inverter.
+
+### Commands (Meter Mode)
+The meter values can be communicated to the driver via this commands:  
+`EnergyConfig MeterPower` current imported or exported power in W (required)  
+`EnergyConfig MeterImport` imported energy in kWh to be displayed on the inverter (optional)  
+`EnergyConfig MeterExport` exported energy in kWh to be displayed on the inverter (optional)  
+
+A good way for operation is to subscribe to the (smart) meter MQTT topics directly. Therefore compile with `#define SUPPORT_MQTT_EVENT`. 
+
+A sample rule subscribing to values of the [SML driver](Smart-Meter-Interface.md) can look like this: 
+```
+Rule1
+ON mqtt#connected DO Subscribe PwrEvt, MT175/tele/SENSOR ENDON
+ON Event#PwrEvt#SML#Power_all DO EnergyConfig MeterPower %value% ENDON
+ON Event#PwrEvt#SML#Total_in DO EnergyConfig MeterImport %value% ENDON
+ON Event#PwrEvt#SML#Total_out DO EnergyConfig MeterExport %value% ENDON
+```

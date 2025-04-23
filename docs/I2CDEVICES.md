@@ -120,3 +120,12 @@ Index | Define              | Driver   | Device   | Address(es) | Description
   81  | USE_PCA9557         | xdrv_69  | PCA95xx  | 0x18 - 0x1F | 8-bit I/O expander as virtual button/switch/relay
   82  | USE_SGP4X           | xsns_109 | SGP4X    | 0x59        | Gas (TVOC/NOx index)
   83  | USE_MAX17043        | xsns_110 | MAX17043 | 0x36        | Fuel-gauge for 3.7 Volt Lipo battery
+  84  | USE_ENS16x          | xsns_111 | ENS16x   | 0x52 - 0x53 | Gas (TVOC, eCO2) and air quality sensor
+  85  | USE_ENS210          | xsns_112 | ENS210   | 0x43 - 0x44 | Temperature and humidity sensor
+  86  | USE_AMSX915         | xsns_114 | AMS6915  | 0x28        | Pressure (absolute/differential) and temperature sensor
+  87  | USE_SPL06_007       | xsns_25  | SPL06-007 | 0x76       | Pressure and temperature sensor
+  88  | USE_QMP6988         | xsns_28  | QMP6988   | 0x56, 0x70 | Pressure and temperature sensor
+  89  | USE_HX711_M5SCALES  | xsns_34  | M5SCALES  | 0x26       | M5Unit (Mini)Scales(HX711 STM32) U177
+  90  | USE_RX8010          | xdrv_56  | RX8010    | 0x32       | RX8010 RTC from IOTTIMER
+  91  | USE_MS5837          | xsns_116 | MS5837    | 0x76       | Pressure and temperature sensor
+  92  | USE_PCF85063        | xdrv_56  | PCF85063  | 0x51       | PCF85063 Real time clock

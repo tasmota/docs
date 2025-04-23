@@ -36,6 +36,7 @@ Additional features can be enabled by adding the following `#define` compiler di
 |USE_SML_AUTHKEY | enables authentication, this is not needed by most energy meters.|
 |NO_USE_SML_TCP | disables TCP MODBUS support.|
 |NO_USE_SML_CANBUS | disables CANBUS support.|
+|USE_SML_CRC | enables CRC support for binary SML. Must still be enabled via line like "1,=soC,1024,15". See [special options](#special-option-soc).
 	
 ### General description
 
@@ -100,13 +101,13 @@ Declare `>M` section with the number of connected meters (n = `1..5`):
 | `+<M>` | Meter number. The number must be increased with each additional Meter (default 1 to 5).|
 | `<rxGPIO>` | The GPIO pin number where meter data is received. <BR> [xxx.xxx.xxx.xxx] IP number instead of pin number enables MODBUS TCP mode, the tcp port number is given at the baudrate position. (tx pin can be any number and is ignored)|
 | `<type>` | The type of meter: <BR>- `o` - OBIS ASCII type of coding<BR>- `s` - SML binary smart message coding<BR>- `e` - EBus binary coding<BR>- `v` - VBus binary coding<BR>- `m` - MODBus binary coding with serial mode 8N1<BR>- `M` - MODBus binary coding with serial mode 8E1<BR>- `k` - Kamstrup binary coding with serial mode 8N1<BR>- `C` - CANBus type<BR>- `c` - Counter type<BR>- `r` - Raw binary coding (any binary telegram) |
-| `<flag>` | Options flag:<BR>- `0` - counter without pullup<BR>- `1` - counter with pullup<BR>- `16` - enable median filter for that meter. Can help with sporadic dropouts, reading errors (not available for counters). this option is enabled by default #define USE_SML_MEDIAN_FILTER, if you are low on memory and dont use this feature you may outcomment this define in the driver |
+| `<flag>` | Options flag:<BR>- `0` - counter without pullup<BR>- `1` - counter with pullup<BR>- `16` - enable median filter for that meter. Can help with sporadic dropouts, reading errors (not available for counters). this option is enabled by default #define USE_SML_MEDIAN_FILTER, if you are low on memory and dont use this feature you may outcomment this define in the driver<BR>- `32` - Disable FastExit for binary SML parsing. See [#21497](https://github.com/arendst/Tasmota/pull/21497) for details |
 | `<parameter>` | Parameters according to meter type:<BR>- for `o,s,e,v,m,M,k,r` types: serial baud rate e.g. `9600` (or port# for Modbus TCP).<BR>- for type `C` Canbus Baudrates and Number of receive buffers (*100). (see example R4850G2)<BR>- 0 = 25 KBITS<BR>- 1 = 50 KBITS<BR>- 2 = 100 KBITS<BR>- 3 = 125 KBITS<BR>- 4 = 250 KBITS<BR>- 5 = 500 KBITS<BR>- 6 = 800 KBITS<BR>- 7 = 1 MBITS<BR>- for `c` type: a positive value = counter poll interval (not really recommended) or a negative value = debounce time (milliseconds) for irq driven counters. |
 | `<jsonPrefix>` | Prefix for Web UI and MQTT JSON payload. Up to 7 characters.|
 | `<txGPIO>` | The GPIO pin number where meter command is transmitted (optional).|
 | `<tx enable>` | The GPIO pin number to enable transmitter (RS485) may follow the TX pin in bracket (pin) without a colon an 'i' in front of the pin number means 'inverted' (optional).|
 | `<txPeriod>` | Period to repeat the transmission of commands to the meter (optional). Number of 100ms increments (n * 100ms).|
-| `<cmdTelegram>` | Comma separated hex coded byte blocks to send to meter device. For MODBus each comma separated block is a command to retrieve a certain register from the meter (optional: only required for measuring devices that have to be triggered with a certain character string).|
+| `<cmdTelegram>` | Comma separated hex coded byte blocks to send to meter device. For MODBus each comma separated block is a command to retrieve a certain register from the meter (optional: only required for measuring devices that have to be triggered with a certain character string). TRX code lines ending with a comma are continued at next line|
     
 !!! note
     for other serial protocols you may specify the exact mode (only for hardware serial) by the following code after the type specifier:  
@@ -205,16 +206,17 @@ Each meter typically provides multiple metrics (energy, voltage, power, current 
 
 ## Special Commands
 
-With `=` character at the beginning of a line you can do some special decoding. With `*` character fields can be hidden or skipped.
+With `=` character at the beginning of a line you can do some special decoding. With `*` character fields can be hidden or skipped. The term decoder entries refer to the relative line number (starting with 1) in the decoder section.
+Special options and e.g math calculations are not counted as a decoder entry and have to be skipped in counting.
 
 | Command | Description |
 | :--- | :--- |
-| `M,=m` | Perform arithmetic (`+,-,*,/`) on the measured data. Use `#` before a number to designate a constant value <BR>e.g. `1,=m 3+4+5/#3 @100,Voltage L1+L2+L3/3,V,Volt_avg,2` to sum results of decoder entries 3,4,5 and divide by 3 (average) |
-| `M,=d` | Calculate difference between metric values decoded at time intervals (up to 10 =d lines possible) <BR>e.g. `1,=d 3 10` calculate 10 second interval difference of decoder entry 3  |
+| `M,=m` | Perform arithmetic (`+,-,*,/`) on the measured data. Use `#` before a number to designate a constant value, evaluation is from left to right, no brackets supported, first paramter must be a decoder entry, not a constant<BR>e.g. `1,=m 3+4+5/#3 @100,Voltage L1+L2+L3/3,V,Volt_avg,2` to sum results of decoder entries 3,4,5 and divide by 3 (average) |
+| `M,=d` | Calculate difference between metric values decoded at time intervals (up to 10 =d lines possible) <BR>e.g. `1,=d 3 10` calculate 10 second interval difference of decoder entry 3, this is meant for meters that lack current power, therefore result is rescaled to hours (KWh) |
 | `M,=h` | Insert text on the web interface (html text up to 30 chars). These lines do not count as decoder entry.<BR> e.g. `1,=h<hr/>` to insert a separator line on the web UI |
 | `*` character | To hide fields from result output or disable output completely. Compiling with `USE_SML_SCRIPT_CMD` required. <BR> - as single character in `<label>` of the metrics line will hide that value from the web UI <BR> - as single character in `<label>` of the meter definition line will suppress the entire JSON output on MQTT |
 | `M,=so1 `| special SML option for meters that use a bit in the status register to sign import or export like ED300L, AS2020 or DTZ541 <BR>e.g. 1,=so1,00010800,65,11,65,11,00100700 for DTZ541<BR> 1. obis code that holds the direction bit, 2. Flag identifier, 3. direction bit, 4. second Flag identifier (some meters use 2 different flags), 5. second bit, 6 obis code of value to be inverted on direction bit.<BR>|
-| `M,=so2 `| if 1 fixes the bug introduced by meter DWS74, if 2 enabled OBIS line compare mode instead of shift compare mode, if 4 invert hardware serial line.<BR>e.g. 1,=so2,2 enable obis line compare.<BR>|
+| `M,=so2 `| if 1 fixes the bug introduced by meter DWS74, if 2 enabled OBIS line compare mode instead of shift compare mode, if 4 invert hardware serial line, if 8 disable UART pullup on hardware serial rec line.<BR>e.g. 1,=so2,2 enable obis line compare.<BR>|
 | `M,=so3 `| sets serial buffer size, serial IRQ buffer size and serial dump buffer size.<BR>enter as a new descriptor line e.g. 1,=so3,512 sets serial buffer size to 512. (default buffer is 48 bytes input, 128 bytes dump)<BR>note: size should fit to the maximum length of a single line of decoding description; too big buffer sizes lead to delayed WebUI/MQTT updates|
 | `M,=so4 `| sets AES decrytion key for encrypted meters.must define exactly 16 hexadecimal chars<BR>e.g. 1,=so4,deabcd0020a0cfdedeabcd0020a0cfde sets decryption key and enables decrypt mode for that meter.<BR>|
 | `M,=so5 `| sets AES authentication key for encrypted meters.must define exactly 16 hexadecimal chars<BR>e.g. not needed by most energy meters (needs USE_SML_AUTHKEY).<BR>|
@@ -222,6 +224,7 @@ With `=` character at the beginning of a line you can do some special decoding. 
 | `M,=so7 `| on ESP32 force selection of UART Nr. X (0,1,2) allows coexistence with other serial drivers <BR>|
 | `M,=so8 `| CAN bus filter mask <BR>|
 | `M,=so9 `| CAB bus filter <BR>|
+| `M,=soC `| <a name="special-option-soc"></a> CRC check for binary SML. exp: 1,=soC,1024,15<BR>spec: 1,=soC,\<buffersize\>,\<cr-cmode\> <BR> For buffersize 1024 is a good starting point. crc-modes are: 15:auto-detect, 0:x25, 1:ccitt, 2:kermit 3:modbus, 4:xmodem,5:mcrf4xx <BR>auto-detect works by simply trying all available algorithms. starting with x25 (crcmode=0). If 4 consecutive correct files are received auto-detecting will choose this algorithm until next restart. |
 
 !!! example
     To get the value of one of the descriptor lines, use `sml[X]`. `X` = Line number. Starts with `1`. (compiling with `USE_SML_SCRIPT_CMD` required)
@@ -445,6 +448,7 @@ Energy provider supplied a PIN code to enable output of additional data.
     1,77070100010801ff@1000,Verbrauch_Tarif_1,kWh,Total_Tarif1,3
     1,77070100010802ff@1000,Verbrauch_Tarif_2,kWh,Total_Tarif2,3
     1,77070100010800ff@1000,Verbrauch_Summe,kWh,Total_Summe,3
+    1,77070100020800ff@1000,Einspeisung_Summe,kWh,Total_Einsp,3
     1,77070100100700ff@1,Current consumption,W,Power_curr,3
     1,=h   ----  
     1,770701001f0700ff@1,Current L1,A,Curr_p1,3  
@@ -457,7 +461,114 @@ Energy provider supplied a PIN code to enable output of additional data.
     #
     ```
 
+### Apator Lepus 3.060 (SML)
+
+Instructions for Activating the Instantaneous Power Display and Disabling the PIN Protection. For more details and additional instructions, you can download the user manual from the internet.
+
+**Important Note**:  
+Entering the PIN with a flashlight is **not** sufficient to permanently display the instantaneous power or disable the PIN protection.
+
+Please follow the steps below. For more details, refer to the user manual of the meter, which is available for download online.
+
+1. To start, press and hold the **left arrow button** for **more than 5 seconds** to access the parameter menu. A display test will briefly show the top and bottom lines of the display.
+
+2. If PIN protection is active, you will be prompted to enter the PIN. Use **short button presses** to select the correct digits. After about 2 seconds of no input, the cursor will automatically move to the next digit.
+
+3. To activate the instantaneous power display, navigate to the **"Inf"** menu option and press and hold the **left arrow button for more than 5 seconds**. This will enable the **"Inf on"** setting, which will display the instantaneous power on the second line of the display permanently.
+
+4. To disable PIN protection, navigate to the **"Pin"** menu option and press and hold the **left arrow button for more than 5 seconds**. This will turn off the PIN protection.
+
+After following these steps, the instantaneous power will be displayed permanently in the second line of the display.
+
+??? summary "View script in English"
+    ```
+        >D  
+        >B  
+        ->sensor53 r
+        >M 1  
+        +1,3,s,1,9600,SML  
+        1,77070100100700FF@1,Power Consumption,W,Current_Active_Power,16
+        1,77070100240700FF@1,Phase 1,W,Active_Power_L1,0
+        1,77070100380700FF@1,Phase 2,W,Active_Power_L2,0
+        1,770701004C0700FF@1,Phase 3,W,Active_Power_L3,0
+        1,=h ----
+        1,77070100010800FF@1,Total Consumption,Wh,Total_Consumption,1
+        1,77070100020800FF@1,Feed-in,Wh,Total_Active_Energy,1
+        1,=h ----
+        1,770701000E0700FF@1,Grid Frequency,Hz,Grid_Frequency,1
+        1,770701001F0700FF@1,Current L1,A,Current_L1,2
+        1,77070100330700FF@1,Current L2,A,Current_L2,2
+        1,77070100470700FF@1,Current L3,A,Current_L3,2
+        1,77070100200700FF@1,Voltage L1,V,Voltage_L1,1
+        1,77070100340700FF@1,Voltage L2,V,Voltage_L2,1
+        1,77070100480700FF@1,Voltage L3,V,Voltage_L3,1
+        1,77070100510701FF@1,Delta Phi U L1/L2,°,Delta_Phi_U_L1_L2,0
+        1,77070100510702FF@1,Delta Phi U L1/L3,°,Delta_Phi_U_L1_L3,0
+        1,77070100510704FF@1,Delta Phi I/U L1,°,Delta_Phi_I_U_L1,0
+        1,7707010051070FFF@1,Delta Phi I/U L2,°,Delta_Phi_I_U_L2,0
+        1,7707010051071AFF@1,Delta Phi I/U L3,°,Delta_Phi_I_U_L3,0
+        1,77070100600100ff@#,Server ID,,Server_ID,0
+        1,7707010060320101@#,Service ID,,Meter_ID,0
+        1,77070100605a0201@1,Firmware Checksum,,FwCheck,0
+        #
+    ```
+
+??? summary "View script in German"
+    ```
+        >D  
+        >B  
+        ->sensor53 r
+        >M 1  
+        +1,3,s,1,9600,SML
+        1,77070100100700FF@1,Stromverbrauch,W,aktuelle_Wirkleistung,16
+        1,77070100240700FF@1,Leiter 1,W,Wirkleistung_L1,0
+        1,77070100380700FF@1,Leiter 2,W,Wirkleistung_L2,0
+        1,770701004C0700FF@1,Leiter 3,W,Wirkleistung_L3,0
+        1,=h   ----
+        1,77070100010800FF@1,Zähler Verbrauch,Wh,Zaehlerstand_total,1
+        1,77070100020800FF@1,Zähler Einspeisung,Wh,Wirkenergie_total,1
+        1,=h   ----
+        1,770701000E0700FF@1,Netz Frequenz,Hz,Netz_Frequenz,1
+        1,770701001F0700FF@1,Strom L1,A,Strom_L1,2
+        1,77070100330700FF@1,Strom L2,A,Strom_L2,2
+        1,77070100470700FF@1,Strom L3,A,Strom_L3,2
+        1,77070100200700FF@1,Spannung L1,V,Spannung_L1,1
+        1,77070100340700FF@1,Spannung L2,V,Spannung_L2,1
+        1,77070100480700FF@1,Spannung L3,V,Spannung_L3,1
+        1,77070100510701FF@1,delta phi U L1/L2,°,delta_phi_U_L1-L2,0
+        1,77070100510702FF@1,delta phi U L1/L3,°,delta_phi_U_L1-L3,0
+        1,77070100510704FF@1,delta phi I/U  L1,°,delta_phi_I_U_L1,0
+        1,7707010051070FFF@1,delta phi I/U L2,°,delta_phi_I_U_L2,0
+        1,7707010051071AFF@1,delta phi I/U L3,°,delta_phi_I_U_L3,0
+        1,77070100600100ff@#,Server ID,,Server_ID,0
+        1,7707010060320101@#,Service ID,,Meter_ID,0
+        1,77070100605a0201@1,Firmware Checksum,,FwCheck,0
+        #
+    ```
+
+For further support, visit the [APATOR LEPUS Discussion Thread](https://github.com/arendst/Tasmota/discussions/17635).
+
+### Apator Norax 1D+ (SML)
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,s,1,9600,SML
+    1,77070100010800ff@1000,Total consumption,kWh,total_in,4
+    1,77070100020800ff@1000,Total Feed,kWh,total_out,4
+    1,770701000b0700ff@1,Amperage,A,amperage,1
+    1,770701000c0700ff@1,Voltage,V,voltage,1
+    1,770701000e0700ff@1,Frequency,Hz,frequency,0
+    1,77070100100700ff@1,Current consumption,W,power_curr,0
+    #
+    ```
+
 ### Apator Norax 3D (SML)
+
+To get all information with the scrpit below you need to enter the PIN. In the following menu you then turn "Pin" to "off" and "InF" to "on". Now all values are submitted through the SML script.
 
 ??? summary "View script"
     ```
@@ -817,21 +928,36 @@ For `Inf off`, a simplified dataset is returned only.
     ```
 ### DZG DWSB12.2 (SML)
 
-For `Inf off`, a simplified dataset is returned.
-The energy meter does have 2 meters, one for incoming and outgoing power. If you have a solar panel installed and you are delivering power to the network the second value will increase appropriately.
+This is a 2-way-meter, so it features both an import- (incoming) and an export-register (e.g. for photovoltaic installations). In default configuration, the meter only outputs a simplified dataset, excluding the momentary effective power and decimals for both imported and exported energy. In order to enable the full dataset, one has to ask their energy provider for the Pin and change the "Inf off" setting to "Inf on" (see meter manual).
    
-??? summary "Alternative script for the simplified dataset"
+??? summary "Script for the simplified dataset"
     ```
     >D
     >B
     =>sensor53 r
     >M 1
     +1,3,s,16,9600,DWSB122
-    1,77070100010800ff@1000,Energie bezogen,kWh,energy,0
-    1,77070100020800ff@1000,Energie geliefert,kWh,energy,0
-    1,7707010060320101@#,Service ID,,meter_id,0
-    1,77010b0a01445a47@#,Unbekannt,,unknown,0
-    1,77070100600100ff@#,Zählernummer,,meter_number,0
+    1,77070100010800ff@1000,Energy Imported,kWh,energy_imported,0
+    1,77070100020800ff@1000,Energy Exported,kWh,energy_exported,0
+    1,7707010060320101@#,Server ID,,meter_id,0
+    1,77010b0a01445a47@#,Unknown,,unknown,0
+    1,77070100600100ff@#,Meter Number,,meter_number,0
+    #
+    ```
+
+??? summary "Script for the full dataset"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,16,9600,DWSB122
+    1,77070100100700ff@1,Effective Power,W,effective_power,2
+    1,77070100010800ff@1000,Energy Imported,kWh,energy_imported,2
+    1,77070100020800ff@1000,Energy Exported,kWh,energy_exported,2
+    1,7707010060320101@#,Server ID,,meter_id,0
+    1,77010b0a01445a47@#,Unknown,,unknown,0
+    1,77070100600100ff@#,Meter Number,,meter_number,0
     #
     ```
 	
@@ -1106,6 +1232,7 @@ The meter's manufacturer's datasheet neatly explains the serial message format u
 	
 ??? summary "View script"
     ```
+
     >D
     >B
     =>sensor53 r
@@ -1120,11 +1247,35 @@ The meter's manufacturer's datasheet neatly explains the serial message format u
 	
     For Tasmota versions that are built with a TasmotaSerial.cpp of version 3.5.0 (and probably all higher versions, too), no modification of the TasmotaSerial.cpp source code (as suggested in other entries of this documentation) is necessary to set the serial parameters to 7E1: By configuring the [meter type](#meter-definition) as OBIS ("o") in line 5 of the above code, you implicitly tell Tasmota to set the serial parameters to 7E1 (probably the same applies to all other meters in this documentation where a modification of TasmotaSerial.cpp has previously been recommended).
 
-### EFR SGM-C2/C4 (SML)
+### EFR SGM-DD-4A92T (SML)
+
+Energy provider supplied a PIN code to enable output of additional data.
+
+??? summary "View script"
+    ```
+        
+    >D
+    >B
+    spinm(4 1)
+    =>sensor53 r
+    >M 1
+    +1,3,s,0,9600,sml
+    1,77070100010800FF@1000,Bezug,kWh,Bezug,19
+    1,77070100010801FF@1000,Bezug T1,kWh,t1_Bezug,19
+    1,77070100010802FF@1000,Bezug T2,kWh,t2_Bezug,19
+    1,77070100020800FF@1000,Einspeisung,kWh,Einspeisung,19
+    1,77070100020801FF@1000,Einspeisung T1,kWh,t1_Einspeisung,19
+    1,77070100020802FF@1000,Einspeisung T2,kWh,t2_Einspeisung,19
+    1,77070100100700FF@1,aktuelle Wirkleistung,W,Leistung,16
+    #
+    ```
+
+
+### EFR SGM-C2/C4/D4 (SML)
 
 By default, the energy meter only sends the total energy values. To be able to read all the other values, you need to enter the PIN and set `InF on`.
 The PIN must be requested from the metering provider, which is usually your local grid provider and not your energy provider (but they know whom to ask). After entering the PIN and setting `InF on`, all the values will be available. The jsonPrefix `ENERGY` and variable names (between second to last and last `,`) Total, Power, Voltage and Current are chosen to match the regular MQTT message format, used by tasmota powerplugs.
-For SGM-C4, double-tariff variants or meters measuring supply remove the appropriate leading `;` to uncomment and enable the values you are interested in.
+For SGM-C4 or SGM-D4, double-tariff variants or meters measuring supply remove the appropriate leading `;` to uncomment and enable the values you are interested in.
 
 ??? summary "View script"
     ```
@@ -1169,7 +1320,87 @@ For SGM-C4, double-tariff variants or meters measuring supply remove the appropr
 
     Overview of the codes
     ![image](https://user-images.githubusercontent.com/5443580/186160623-3db77d01-429f-49db-86ff-d804578aad99.png)
-	
+
+### EFR SGM-D4A920N
+By default, the energy meter only sends the total energy values. To be able to read all the other values, you need to enter the PIN and set `InF on`. (can be done with "optical" button)
+The PIN must be requested from the metering provider, which is usually your local grid provider and not your energy provider (but they know whom to ask). After entering the PIN and setting `InF on`, all the values will be available.
+A few values I wasn't able to figure out, but the most relevant are there. If you want to try this parameters you have to comment out the lines (remove leading ;)
+
+??? summary "View script"
+    ```
+    
+    >D
+    >B
+    spinm(4 1)
+    =>sensor53 r
+    >M 1
+    +1,3,s,0,9600,sml
+    1,77070100010800FF@1000,Bezug (180),kWh,zaehlerstand_180,3
+    ;1,77070100010801FF@1,Tarif 1 (180),Wh,zaehlerstand_tarif_1_180,3
+    ;1,77070100010802FF@1,Tarif 2 (180),Wh,zaehlerstand_tarif_2_180,3
+    1,77070100020800FF@1000,Einspeisung (280),kWh,zaehlerstand_280,3
+    ;1,77070100020801FF@1,Tarif 1 (280),Wh,zaehlerstand_tarif_1_280,3
+    ;1,77070100020802FF@1,Tarif 2 (280),Wh,zaehlerstand_tarif_2_280,3
+    1,770701000E0700FF@1,Netz Frequenz,Hz,netz_frequenz,1
+    1,77070100100700FF@1,aktuelle Wirkleistung,W,aktuelle_wirkleistung,0
+    1,770701001F0700FF@1,Strom L1,A,strom_l1,2
+    1,77070100200700FF@1,Spannung L1,V,spannung_l1,1
+    1,77070100240700FF@1,Wirkleistung L1,W,wirkleistung_l1,0
+    1,77070100330700FF@1,Strom L2,A,strom_l2,2
+    1,77070100340700FF@1,Spannung L2,V,spannung_l2,1
+    1,77070100380700FF@1,Wirkleistung L2,W,wirkleistung_l2,0
+    1,77070100470700FF@1,Strom L3,A,strom_l3,2
+    1,77070100480700FF@1,Spannung L3,V,spannung_l3,1
+    1,770701004C0700FF@1,Wirkleistung L3,W,wirkleistung_l3,0
+    1,77070100510701FF@1,Phasenwinkel U L1/L2,°,phasenwinkel_u_l1_l2,0
+    1,77070100510702FF@1,Phasenwinkel U L1/L3,°,phasenwinkel_u_l1_l3,0
+    1,77070100510704FF@1,Phasenwinkel I/U L1,°,phasenwinkel_i_u_l1,0
+    1,7707010051070FFF@1,Phasenwinkel I/U L2,°,phasenwinkel_i_u_l2,0
+    1,7707010051071AFF@1,Phasenwinkel I/U L3,°,phasenwinkel_i_u_l3,0
+    ;1,77070100600100FF@#,Seriennummer,,seriennummer,0
+    ;1,7707010060320101@#,Hersteller,,hersteller,0
+    ;1,7707010060320104@#,HW Version,,hw_version,0
+    ;1,7707010060320204@#,HW Version PCB2,,hw_version,0
+    ;1,7707010060320404@#,Parameter Version,,parameter_version,0
+    ;1,77070100605A0201@#,FW Checksum,,fw_checksum,0
+    ;1,77070100605A0202@#,Unbekannt 2,,unbekanntes_mqtt_topic_2,0
+    ;1,7707010000020000@#,Firmware Version,,firmwareversion,0
+    ;1,7707010000020001@#,Unbekannt 1,,unbekanntes_mqtt_topic_1,0
+    #
+    ```
+
+### eHZB
+
+??? summary "View script"
+    ```
+    
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,s,0,9600,ENERGY
+    1,77070100600100FF@#,Meter ID,,ID,0
+    1,77070100010800FF@1000,Meter Reading Total,kWh,meter_reading_total,1
+    1,77070100020800FF@1000,Negative Active Energy,kWh,neg_active_total,1
+    1,770701000E0700FF@1,Net Frequency,Hz,net_frequency,1
+    1,77070100100700FF@1,Actual Power,W,actual_power,0
+    1,770701001F0700FF@1,Current L1,A,current_l1,2
+    1,77070100200700FF@1,Voltage L1,V,voltage_l1,1
+    1,77070100240700FF@1,Effective Power L1,W,eff_power_l1,0
+    1,77070100330700FF@1,Current L2,A,current_l2,2
+    1,77070100340700FF@1,Voltage L2,V,voltage_l2,1
+    1,77070100380700FF@1,Effective Power L2,W,eff_power_l2,0
+    1,77070100470700FF@1,Current L3,A,current_l3,2
+    1,77070100480700FF@1,Voltage L3,V,voltage_l3,1
+    1,770701004C0700FF@1,Effective Power L3,W,eff_power_l3,0
+    1,77070100510701FF@1,Phase L1/L2,deg,phase_l1_l2,0
+    1,77070100510702FF@1,Phase L1/L3,deg,phase_l1_l3,0
+    1,77070100510704FF@1,Phase L1,deg,phase_l1,0
+    1,7707010051070FFF@1,Phase L2,deg,phase_l2,0
+    1,7707010051071AFF@1,Phase L3,deg,phase_l3,0
+    #
+    ```
+
 ### Elster / Honeywell AS1440 (OBIS)
     
 Based on Landis script with changed timings in the >F section, as AS1440 seems to be slower in responding.
@@ -1179,6 +1410,7 @@ Current power values get published to mqtt immediately when received from the me
     
 ??? summary "View script"
     ```
+    
     >D
     scnt=0
     res=0
@@ -2028,6 +2260,79 @@ For writing 32-bit registers like 40126, use [ModBus Bridge](Modbus-Bridge) driv
     1,010304ffffffff@i26:1,Rev react en,kvarh,4_8_0,3
     #
     ```
+### Iskra AM550
+
+(Wiener Netze)
+
+Based on the spec found [at Wiener Netze](https://www.wienernetze.at/kundenschnittstelle2)
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,r,0,9600,HHStrom
+    1,=so3,256
+    1,=so4,<your key>
+    1,0209090cUUuu@1,year,,year,0
+    1,0209090cx2ss@1,month,,month,0
+    1,0209090cx3ss@1,day,,day,0
+    1,0209090cx5ss@1,hh,,hh,0
+    1,0209090cx6ss@1,mm,,mm,0
+    1,0209090cx7ss@1,ss,,ss,0
+    1,0209090cx13UUuuUUuu@1000,Zählerstand,kWh,Zaehlerstand,3
+    1,0209090cx18UUuuUUuu@1000,Einspeisung,kWh,Einspeisung,3
+    1,0209090cx23UUuuUUuu@1000,Blindenergie,varh,Blindenergie,3
+    1,0209090cx28UUuuUUuu@1000,Blindenergie einsp,varh,Blindenergie einsp,3
+    ; Letzter Paramater (Precision) = add 16 to send data immediately 0 + 16 = 16
+    1,0209090cx33UUuuUUuu@1,Momentanleistung,W,Momentanleistung,16
+    1,0209090cx38UUuuUUuu@1,Einspeiseleistung,W,Einspeiseleistung,0
+    1,0209090cx43UUuuUUuu@1,Blindleistung,var,Blindleistung,0
+    1,0209090cx48UUuuUUuu@1,Blindleistung einsp,var,Blindleistung einsp,0
+    #
+    ```
+
+You need to adapt the identifier string at the beginning of the decoding lines ('0209090c' here) to the code shown in your dump.
+
+To start the dump enter 'sensor53 d1' in the Console, to stop it 'sensor53 d0'. The dump delivers something like:
+
+```
+18:12:11.474 SML: decrypted block: 56 bytes
+18:12:11.476 :>02 09 09 0c 07 e8 0b 0e 04 12 0c 0c 00 ff c4 00 
+18:12:11.477 :>06 00 01 5a b1 06 00 03 db c9 06 00 00 3d 1b 06 
+18:12:11.479 :>00 02 7b e4 06 00 00 00 11 06 00 00 00 00 06 00 
+18:12:11.481 :>00 00 00 06 00 00 00 ba 
+18:12:11.523 :>00 00 00 06 00 00 00 ba 
+```
+
+As long as you don't get this dump, either the interface is not operational or the provided code from your provider is wrong.
+
+Take the first four bytes from your dump ('02 09 09 0c´ here) and adapt the script.
+
+Be aware that the data sent has separator-bytes between the values (`04' and ´06'). And the last line seems repeated.
+
+This is the interpreted dump:
+
+|Obis |Data  |Value |
+|-|-|-|
+| Key(?)|02 09 09 0c | |
+| year|**07 e8** | 2024 |
+| month|**0b** | 11 |
+|day|**0e**| 14 |
+| sep|04 | |
+| hh|**12** | 18 |
+| mm|**0c** | 12 |
+| ss|**0c** | 12 |
+|(??) |00 ff c4 00 06 | |
+| +A|**00 01 5a b1** 06 | 88753 |
+| -A|**00 03 db c9** 06 | 252873 |
+| +R|**00 00 3d 1b** 06 | 15643 |
+| -R|**00 02 7b e4** 06 | 16278817 |
+| +P|**00 00 00 11** 06 | 17 |
+| -P|**00 00 00 00** 06 | 0 |
+| +Q|**00 00 00 00** 06 | 0 |
+| -Q|**00 00 00 ba** | 186 |
 
 ### Iskra MT 174 (OBIS)
 
@@ -2068,8 +2373,7 @@ You need to ask your provider.
 
 ### Iskra MT 631 (SML)
 
-This meter needs a PIN to unlock the current power usage.
-You need to ask your provider. Total Delivered might be zero on some devices
+This meter requires a PIN to unlock the current power usage details. To obtain the PIN, you'll need to contact your utility provider. Once you have the PIN, deactivate it on the meter and enable the detailed information display to also get the "Current Consumption". Please note that the "Total Delivered" value may show as zero on some devices.
 
 ??? summary "View script"
     ```
@@ -2107,7 +2411,7 @@ This is script for a two-direction meter (consumption and delivery) for the Isra
 
 ### Iskra eHZ-MT681-D4A51-K0p
 
-2012 version of the Iskra MT 681 with slightly other OBIS codes for the power values.
+2012 version of the Iskra MT 681 with slightly different OBIS codes for the power values.
 
 ??? summary "View script"
     ```
@@ -2141,6 +2445,26 @@ This is script for a two-direction meter (consumption and delivery) for the Isra
     1,77070100100700ff@1,Leistung,W,Power_cur,0
     1,77070100020800ff@1000,Erzeugung,kWh,Total_out,4
     1,77070100000009ff@#,Service ID,,Meter_id,0
+    #
+    ```
+
+### Iskra eHZ-MS2020 MT691-D4A52-KDy-H03 GRID
+
+"Moderne Messeinrichtung" installed in 2024 
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >M 1
+    +1,3,s,0,9600,MT691
+    1,77070100010800ff@1000,Total Consumed,kWh,Total_in,3
+    1,77070100100700ff@1,Current Consumption,W,Power_cur,0
+    1,77070100240700ff@1,Current Consumption P1,W,Power_p1,0
+    1,77070100380700ff@1,Current Consumption P2,W,Power_p2,0
+    1,770701004c0700ff@1,Current Consumption P3,W,Power_p3,0
+    1,77070100020800ff@1000,Total Delivered,kWh,Total_out,3
     #
     ```
 
@@ -2243,6 +2567,27 @@ By default, the KAIFA MB310H4BDE will only deliver the Total_in and Total_out va
     1,77070100020800ff@1000,Zaehlerstand Out,kWh,Total_out,2
     1,77070100100700ff@1,Leistung-akt.,W,Power_curr,0
     1,77070100600100ff@#,Server-ID,,Meter_Number,0
+    #
+    ```
+### Kamstrup 382Lx7
+??? summary "View script"
+    ```
+    >D
+    >B
+    =>sensor53 r
+    >S
+    >M 1
+    +1,5,k,0,9600,K382Lx7,4,10,3F100200010002,3F1003041E041F0420,3F1003043404350436,3F100203ff0400,
+    1,3F100001kstr@i0:1,EnergyIn,kWh,EnergyIn,16
+    1,3F10x08xx0002kstr@i0:1,EnergyOut,kWh,EnergyOut,16
+    1,3F10041ekstr@i1:1,VoltageP1,V,VoltageP1,16
+    1,3F10x06xx041fkstr@i1:1,VoltageP2,V,VoltageP2,16
+    1,3F10x13xx0420kstr@i1:1,VoltageP3,V,VoltageP3,16
+    1,3F100434kstr@i2:100,CurrentP1,A,CurrentP1,18
+    1,3F10x08xx0435kstr@i2:100,CurrentP2,A,CurrentP2,18
+    1,3F10x17xx0436kstr@i2:100,CurrentP3,A,CurrentP2,18
+    1,3F1003ffkstr@i3:1,PowerIN,W,PowerIN,16
+    1,3F10x08xx0400kstr@i3:1,PowerOUT,W,PowerOUT,16
     #
     ```
 
@@ -2901,6 +3246,39 @@ This meter does not provide detailed information regarding phase etc.
     #
     ```
 
+### MetCom MCS301
+
+Reading the data (at 300 baud!) takes longer than a minute!
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,o,0,300,H37,1,600,2F3F210D0A,063030300D0A
+    1,0.0.0(@1),Counter number,,znr,0
+    1,0.0.1(@#),Counter ID,,zid,0
+    1,1.7.0(@0.001,Import Act. Power,W,pimport,1
+    1,1.6.1(@0.001,Import Act. Max. Power,Wpeak,maximport,1
+    1,1.8.0(@0.001,Import Act. Energy,Wh,import,1
+    1,1.8.1(@0.001,Import Act. Energy Tar.1,Wh,importht,1
+    1,1.8.2(@0.001,Import Act. Energy Tar.2 NT,Wh,importnt,1
+    1,2.7.0(@0.001,Export Act. Power,W,pexport,1
+    1,2.6.1(@0.001,Export Act. Max. Power,Wpeak,maxexport,1
+    1,2.8.0(@0.001,Export Act. Energy,Wh,export,1
+    1,2.8.1(@0.001,Export Act. Energy Tar.1,Wh,exportht,1
+    1,2.8.2(@0.001,Export Act. Energy Tar.2,Wh,exportnt,1
+    1,31.7.0(@1,Current L1,A,il1,3
+    1,51.7.0(@1,Current L2,A,il2,3
+    1,51.7.0(@1,Current L3,A,il3,3
+    1,32.7.0(@1,Voltage L1,V,ul1,2
+    1,52.7.0(@1,Voltage L2,V,ul2,2
+    1,52.7.0(@1,Voltage L3,V,ul3,2
+    1,14.7.0(@0.001,Frequency,Hz,freq,2
+    #
+    ```
+
 ### PAFAL 20EC3gr
 
 Documentation for this Counter is very small. This informations were collected across the internet.
@@ -2965,6 +3343,34 @@ PZEM004T V30 multiple meters on Modbus
     1,050404UUuuxxxxxxxx@i16:10,Frequency,Hz,Sensor-05-hz,2
     1,050404UUuuxxxxxxxx@i17:100,Power Factor,PF,Sensor-05-PF,2
 
+    #
+    ```
+### Peacefair PZEM004TV4.0 (MODBus)
+
+PZEM004T V4.0 multiple meters on Modbus
+       
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,m,0,9600,modbus,1,3,r010400000009,r020400000009,r030400000009
+	1,010412UUuu@i0:10,Voltage,V,Volt_2,1
+	1,010412x2UUuuUUuus@i0:1000,Current,A,Curr_1,3
+	1,010412x6UUuuUUuus@i0:10,Power,W,Pow_1,1
+	1,010412x14UUuu@i0:10,Frequency,Hz,Freq_1,1
+	1,010412x16UUuu@i0:100,Power Factor,PF,PF_1,2
+	1,020412UUuu@i1:10,Voltage,V,Volt_2,1
+	1,020412x2UUuuUUuus@i1:1000,Current,A,Curr_2,3
+	1,020412x6UUuuUUuus@i1:10,Power,W,Pow_2,1
+	1,020412x14UUuu@i1:10,Frequency,Hz,Freq_2,1
+	1,020412x16UUuu@i1:100,Power Factor,PF,PF_2,2
+	1,030412UUuu@i2:10,Voltage,V,Volt_3,1
+	1,030412x2UUuuUUuus@i2:1000,Current,A,Curr_3,3
+	1,030412x6UUuuUUuus@i2:10,Power,W,Pow_3,1
+	1,030412x14UUuu@i2:10,Frequency,Hz,Freq_3,1
+	1,030412x16UUuu@i2:100,Power Factor,PF,PF_3,2
     #
     ```
 
@@ -3355,7 +3761,61 @@ Set device parity to NONE
     1,010404ffffffff@i8:1,Active Power P3,W,Power_P3,2  
     #  
     ```
+    
+### SDM630 (MODBus)
+Show how to request multiple registers.
 
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+
+    ; multiple float register request, 9 at once
+    >M 1
+    +1,3,m,0,9600,SDM630,1,20,r010400000012
+    1,010424ffffffff@i0:1,Voltage P1,V,Voltage_P1,2
+    1,010424x4ffffffff@i0:1,Voltage P2,V,Voltage_P2,2
+    1,010424x8ffffffff@i0:1,Voltage P3,V,Voltage_P3,2
+    1,010424x12ffffffff@i0:1,Current P1,A,Current_P1,2
+    1,010424x16ffffffff@i0:1,Current P2,A,Current_P2,2
+    1,010424x20ffffffff@i0:1,Current P3,A,Current_P3,2
+    1,010424x24ffffffff@i0:1,Active Power P1,W,Power_P1,2
+    1,010424x28ffffffff@i0:1,Active Power P2,W,Power_P2,2
+    1,010424x32ffffffff@i0:1,Active Power P3,W,Power_P3,2
+    #
+    
+    ; multiple float register request, 3 at once
+    >xM 1
+    +1,3,m,0,9600,SDM630,1,10,r010400000006,r010400060006,r0104000c0006
+    1,01040cffffffff@i0:1,Voltage P1,V,Voltage_P1,2
+    1,01040cx4ffffffff@i0:1,Voltage P2,V,Voltage_P2,2
+    1,01040cx8ffffffff@i0:1,Voltage P3,V,Voltage_P3,2
+    1,01040cffffffff@i1:1,Current P1,A,Current_P1,2
+    1,01040cx4ffffffff@i1:1,Current P2,A,Current_P2,2
+    1,01040cx8ffffffff@i1:1,Current P3,A,Current_P3,2
+    1,01040cffffffff@i2:1,Active Power P1,W,Power_P1,2
+    1,01040cx4ffffffff@i2:1,Active Power P2,W,Power_P2,2
+    1,01040cx8ffffffff@i2:1,Active Power P3,W,Power_P3,2
+    #
+    
+    ; single float register request
+    >xM 1
+    +1,3,m,0,960,SDM630,1,5,01040000,01040002,01040004,01040006,01040008,0104000a,0104000c,0104000e,01040010,,01040048,0104004a
+    1,010404ffffffff@i0:1,Voltage P1,V,Voltage_P1,2
+    1,010404ffffffff@i1:1,Voltage P2,V,Voltage_P2,2
+    1,010404ffffffff@i2:1,Voltage P3,V,Voltage_P3,2
+    1,010404ffffffff@i3:1,Current P1,A,Current_P1,2
+    1,010404ffffffff@i4:1,Current P2,A,Current_P2,2
+    1,010404ffffffff@i5:1,Current P3,A,Current_P3,2
+    1,010404ffffffff@i6:1,Active Power P1,W,Power_P1,2
+    1,010404ffffffff@i7:1,Active Power P2,W,Power_P2,2
+    1,010404ffffffff@i8:1,Active Power P3,W,Power_P3,2
+    1,010404ffffffff@i9:1,Total Import,KWh,Timp,3
+    1,010404ffffffff@i10:1,Total Export,KWh,Texp,3
+    #
+    ```
+    
 ### SDM72D (MODBus)
 Script to extract readings from Eastron [SDM72D Series](https://www.eastroneurope.com/products/view/sdm72modbus) devices (tested on SDM72D-M). Manual with comprehensive documentation about all Modbus registers available [here](https://stromzähler.eu/media/pdf/93/17/d7/SDM72DM-V2.pdf).
 
@@ -3425,6 +3885,46 @@ Compile firmware with #define ```USE_SML_CANBUS```. Use a proper CAN transceiver
     #
     ```
 
+### Sorel XHCC (CANBus)
+
+Compile firmware with #define ```USE_SML_CANBUS```. Use a proper CAN transceiver. You need a 120Ohms resistor in the second CAN port of the controller, otherwise ESP32 device will not decode anything on the bus, the baudrate is 250 KBITS.
+
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    ; SOREL XHCC
+    ; params -> 04 = baudrate 250kb + number of receive buffers * 100
+    ; character 5 and 6 (in the example below "8b") is the can-bus id of your sorel device
+    ; you need to replace it with your xhcc can-bus id converted to hex format
+    ; you will find your can-bus id (in decimal) in Special Functions (7) -> Network (31) -> CAN-bus ID (4)
+    ; in the example below, the can-bus id of the xhcc device was "139"
+    +1,26,C,0,3204,XHCC,25,5
+    1,10018b800500ssSS@10,Temp S1,ºC,S1,1
+    1,10018b800501ssSS@10,Temp S2,ºC,S2,1
+    1,10018b800502ssSS@10,Temp S3,ºC,S3,1
+    1,10018b800503ssSS@10,Temp S4,ºC,S4,1
+    1,10018b800504ssSS@10,Temp S5,ºC,S5,1
+    1,10018b800505ssSS@10,Temp S6,ºC,S6,1
+    1,10018b800506ssSS@10,Temp S7,ºC,S7,1
+    1,10018b800507ssSS@10,Temp S8,ºC,S8,1
+    1,10018b800508ssSS@10,Temp S9,ºC,S9,1
+    1,10028b80050000ss@-1,Relay R1,,R1,0
+    1,10028b80050100ss@-1,Relay R2,,R2,0
+    1,10028b80050200ss@-1,Relay R3,,R3,0
+    1,10028b80050300ss@-1,Relay R4,,R4,0
+    1,10028b80050400ss@-1,Relay R5,,R5,0
+    1,10028b80050500ss@-1,Relay R6,,R6,0
+    1,10028b80050600ss@-1,Relay R7,,R7,0
+    1,10028b80050702ss@-1,Relay V1,,V1,0
+    1,10028b80050802ss@-1,Relay V2,,V2,0
+    1,10028b80050902ss@-1,Relay V3,,V3,0
+    1,10028b80050a02ss@-1,Relay V4,,V4,0
+    #
+    ```
+    
 ### Siemens IM-350
 
 This device is used in the grid of Wiener Netze. Insert your Key into the script.
@@ -3918,3 +4418,97 @@ Tested on an AEConversion INV500-90 with RS485 interface.
 	print request current data finished
 	#
  	```
+
+### Sagemcom MA105/MA304 single phase/3-phase smart meter (OBIS ASCII)
+
+Read the comments for 1/3-phase arrangements. Last month summary is not decoded as I find it useless but it can be added, see Sanxing SX6x1.
+
+??? summary "View script"
+	```
+	>D
+	; Sagemcom MA105/MA304 smart meters - Tasmota script for OBIS ASCII
+ 
+	>B
+	; don't send teleperiod MQTT at boot
+	smlj=0
+	->sensor53 r
+ 
+	>R
+	; don't send teleperiod MQTT at script restart
+	smlj=0
+ 
+	>S
+	; only send teleperiod MQTT if 22 seconds passed since boot
+	if upsecs>22
+	then
+	smlj|=1
+	endif
+ 
+	>M 1
+	; meter definition
+	+1,35,o,16,115200,ma105
+	; invert the HW serial line as the P1 port uses inverse signaling
+	; no external signal inverter circuit is needed
+	1,=so2,4
+	; instantaneous metrics
+	1,1-0:32.7.0(@1,Voltage,V,voltage_l1,17
+	; uncomment for 3-phase meters
+	; 1,1-0:52.7.0(@1,Voltage,V,voltage_l2,17
+	; 1,1-0:72.7.0(@1,Voltage,V,voltage_l3,17
+	1,1-0:1.7.0(@1,Power import (+A),kW,power_import,19
+	1,1-0:2.7.0(@1,Power export (-A),kW,power_export,19
+	1,1-0:31.7.0(@1,Current,A,current_l1,16
+	; uncomment for 3-phase meters
+	; 1,1-0:51.7.0(@1,Current,A,current_l2,16
+	; 1,1-0:71.7.0(@1,Current,A,current_l3,16
+	1,1-0:14.7.0(@1,Frequency,Hz,frequency,18
+	; comment out for 3-phase meters
+	1,1-0:13.7.0(@1,Power factor,,power_factor,19
+	; uncomment for 3-phase meters
+	; 1-0:33.7.0(@1,Power factor,,power_factor1,19
+	; 1-0:53.7.0(@1,Power factor,,power_factor2,19
+	; 1-0:73.7.0(@1,Power factor,,power_factor3,19
+	1,1-0:5.7.0(@1,Reactive power (QI),kVAr,power_reactive_q1,19
+	1,1-0:6.7.0(@1,Reactive power (QII),kVAr,power_reactive_q2,19
+	1,1-0:7.7.0(@1,Reactive power (QIII),kVAr,power_reactive_q3,19
+	1,1-0:8.7.0(@1,Reactive power (QIV),kVAr,power_reactive_q4,19
+	1,=h<hr/>
+	; teleperiod metrics
+	1,0-0:96.14.0(@1,Current tariff,,tariff,0
+	1,1-0:1.8.0(@1,Import energy (+A),kWh,energy_import,3
+	1,1-0:1.8.1(@1,Import energy (+A) - T1,kWh,energy_import_t1,3
+	1,1-0:1.8.2(@1,Import energy (+A) - T2,kWh,energy_import_t2,3
+	1,1-0:1.8.3(@1,Import energy (+A) - T3,kWh,energy_import_t3,3
+	1,1-0:1.8.4(@1,Import energy (+A) - T4,kWh,energy_import_t4,3
+	1,1-0:2.8.0(@1,Export energy (-A),kWh,energy_export,3
+	1,1-0:2.8.1(@1,Export energy (-A) - T1,kWh,energy_export_t1,3
+	1,1-0:2.8.2(@1,Export energy (-A) - T2,kWh,energy_export_t2,3
+	1,1-0:2.8.3(@1,Export energy (-A) - T3,kWh,energy_export_t3,3
+	1,1-0:2.8.4(@1,Export energy (-A) - T4,kWh,energy_export_t4,3
+	1,1-0:15.8.0(@1,Combined energy,kWh,energy_active,3
+	1,1-0:3.8.0(@1,Reactive imp. nrg (+R),kVArh,power_import_reactive,3
+	1,1-0:4.8.0(@1,Reactive exp. nrg (-R),kVArh,power_export_reactive,3
+	1,1-0:5.8.0(@1,Reactive energy (QI),kVArh,energy_active_q1,3
+	1,1-0:6.8.0(@1,Reactive energy (QII),kVArh,energy_active_q2,3
+	1,1-0:7.8.0(@1,Reactive energy (QIII),kVArh,energy_active_q3,3
+	1,1-0:8.8.0(@1,Reactive energy (QIV),kVArh,energy_active_q4,3
+	1,1-0:31.4.0(@1,Current limit 1 thresh.,A,current_limit_1,2
+	#
+	```
+
+Some extra status and textual metrics can be added per the following.
+
+??? summary "View script"
+	```
+	; extra metrics
+	1,0-0:96.50.68(@1,Breaker 1 status,,breaker_1_status,0
+	1,0-0:96.3.10(@1,Breaker 2 status,,breaker_2_status,0
+	1,0-0:17.0.0(@1,Limiter threshold,A,limiter_threshold,0
+	
+	; extra textual metrics - only one can be used at a time
+	1,0-0:1.0.0(@#),Time,time,time,0
+	1,0-0:42.0.0(@#),COSEM device name,text,cosem_name,0
+	1,0-0:96.1.0(@#),Meter serial number,text,meter_serial,0
+	1,0-0:98.1.0(@#),Last month data,text,history_last_month,0
+	1,0-0:96.13.0(@#),Utility company msg,text,message,0
+	```

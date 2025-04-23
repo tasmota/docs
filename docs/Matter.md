@@ -17,7 +17,7 @@ Tasmota supports Matter over IP (Wi-Fi or Ethernet) as an end-device. This means
 
 Matter cannot be directly supported on ESP8266 due to limited memory resources but you can use an ESP32 device as a Matter bridge to other Tasmota and [OpenBK](https://github.com/openshwprojects/OpenBK7231T_App) devices.
 
-<img width="900" alt="Tasmota-Matter" src="https://github.com/tasmota/docs/assets/49731213/1b445a7f-f3e8-4686-82bd-14d5ad652d38">
+![Matter diagram](_media/matter/matter_schema_zigbee.svg)
 
 !!! info "Thread is not supported" 
     Thread requires a specific radio and is not supported by ESP32 devices, it would require an additional, separate MCU.
@@ -68,7 +68,7 @@ You can change the name of the Matter endpoint, switch its Parameter number or r
 
 After changing these options click ***Change configuration***.
 
-### Add to configuration
+### Adding supported device types
 
 #### Add local sensor or device
 
@@ -123,7 +123,7 @@ This will bring you to another menu where you can further configure the remote d
 
 ![Add Remote Tasmota or OpenBK submenu](_media/matter/add_remote_submenu.jpg)
 
-Add remote [Endpoints](#endpoint) same as for a local sensors and devices.
+Add remote Endpoints same as for a local sensors and devices.
 
 When finished click ***Add endpoints***. The remote device will appear in the ***Current configuration*** list.
 
@@ -140,6 +140,58 @@ The Matter border router needs to have IP connectivity to the Tasmota end-device
 #### Reset all and Auto-discover
 
 This option will reset all configured endpoints and try to auto discover them again.
+
+### Specific supported types
+
+Find below specific information you need to know for certain device types
+
+#### Lights
+
+When possible, native lights are automatically mapped to Matter lights. Currently, lights with 1/2/3 channels are mapped to `Light 1 Dimmer`/`Light 2 CT`/`Light 3 RGB` endpoint types. They don't need any parameter, except for bridged device where you need to indicate the `Power<x>` number associated to the light (this is due to bridge mode not able to automatically detect it).
+
+##### RGB and White Split
+
+See [RGB and White Split](https://tasmota.github.io/docs/Lights/#rgb-and-white-split) enabled with `SetOption37 128`.
+
+4 channels lights are split as 1 RGB and 1 Dimmer:
+![image](https://github.com/user-attachments/assets/0d8ba0f8-425f-465c-8013-1575ea4c8e91)
+
+5 channels light are split as 1 RGB and 1 CT:
+![image](https://github.com/user-attachments/assets/daf3e8f5-69af-4e53-a29b-e058fe9c9da0)
+
+##### Independent PWM Channels
+
+See [Independent PWM Channels](https://tasmota.github.io/docs/Lights/#independent-pwm-channels) enabled with `SetOption68 1`
+
+All channels are defined as independant Light Dimmers:
+![image](https://github.com/user-attachments/assets/e077fb97-a501-4932-8e5c-6bc7f1f4e057)
+
+Note: the first Dimmer has no parameter and is mapped to the default (first) channel. Other channels need an additional `light` parameter to map to the appropriate channel (numbering starts with `1` which is also the default).
+
+### Bridging Zigbee devices
+
+Since v14.2.0, it is now possible to control a selection of Zigbee devices via a Z2T (Zigbee2Tasmota) bridge device. Such bridge device should have Zigbee and Matter enabled; currently you need to self-compile the firmware.
+
+!!! warning "This mode is not possible if you are using **Zigbee2MQTT** or **ZHA** with Tasmota in TCP tunnel (`TCPStart`). In such modes, Tasmota has no visibility on the data passed between Z2M/ZHA, and has no control over the Zigbee MCU.""
+
+!!! tip "Matter control of zigbee lights is compatible with Alexa Hue, you can have the same light controlled by multiple controllers."
+
+To configure a Zigbee devices mapped to a Matter endpoint, you simply need to choose the Zigbee Matter type and select the Zigbee device: either by shortaddr (ex: 0xABCD) or by friendlyname (preferred).
+
+![Matter Zigbee types](_media/matter/zigbee_menu.png)
+
+Matter type|Zigbee mapping
+:---|:---
+Zig Light 0 OnOff|Light On/Off controlled via `Power` command and attribute
+Zig Light 1 Dimmer|Light with 1 channel, controlled via `Power` and `Bri` commands and attributes
+Zig Light 2 CT|Light with 2 channels (white with color temperature), controlled via `Power`, `Bri` and `CT` commands and attributes
+Zig Temperature|Temperature sensor, reported via `Temperature` attribute
+Zig Pressure|Atmospheric Pressure sensor, reported via `Pressure` attribute
+Zig Humidity|Atmospheric Humidity sensor, reported via `Humidity` attribute
+Zig Occupancy|Occupancy sensor, reported via `Occupancy` attribute
+
+Limitations: currently only the first endpoint light can be controlled. Plugs with multple relays are not yet supported (only the first one is accessible).
+
 
 ## Advanced Configuration
 
@@ -273,6 +325,11 @@ Humidity|Humidity|`0..10000` Humidity in 1/100th of percentage
 Illuminance|Illuminance|`0..65534` Illuminance with formula `log10(val + 1) * 10000`
 Pressure|Pressure|Pressure in `hPa`
 Temperature|Temperature|`-32767..32767` Temperature in 1/100th of °C
+Rain|Rain|`0`/`1` change rain sensor state°C
+Waterleak|Waterleak|`0`/`1` change rain sensor state
+FanMode|Fan|`0`: Off<br>`1`: Low (33%)<br>`2`: Med (66%)<br>`3`: High (100%)
+FanSpeed|Fan|`0..100` Fan speed in percentage
+FanSpeed255|Fan|`0..255` Fan speed in a range more suitable for Rules and PWM
 
 
 Keep in mind that many values are in the range `0..254` because `255` is an invalid value (this comes from Zigbee).

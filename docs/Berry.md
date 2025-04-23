@@ -10,7 +10,7 @@ Useful resources:
 
 - First time user of Berry: [Berry Introduction (in 20 minutes of less)](Berry-Introduction.md)
 - Language fast reference PDF (7 pages) [Berry Short manual](https://tasmota.github.io/docs/_media/berry_short_manual.pdf)
-- Full language documentation [The Berry Script Language Reference Manual](https://berry.readthedocs.io/en/latest/)
+- Full language documentation [The Berry Script Language Reference Manual](https://berry.readthedocs.io/en/latest/source/en/Reference.html)
 - Tasmota extension of Berry, see below
 - Full examples in the [Berry Cookbook](Berry-Cookbook.md)
 
@@ -20,8 +20,8 @@ Useful resources:
 
 Berry is the next generation scripting for Tasmota. It is based on the open-source Berry project, delivering an ultra-lightweight dynamically typed scripting language designed for lower-performance embedded devices.
 
-[**Github**](https://github.com/Skiars/berry)
-[**Manual**](https://github.com/berry-lang/berry/wiki/Reference)
+[**Github**](https://github.com/berry-lang/berry/)
+[**Manual**](https://github.com/berry.readthedocs.io/en/latest/source/en/Reference.html)
 
 !!! tip "Reference sheet"
     Download [Berry Short Manual](https://tasmota.github.io/docs/_media/berry_short_manual.pdf) to get a list of basic functions and capabilities of Berry language
@@ -300,6 +300,8 @@ All times are in milliseconds. You can know the current running time in millisec
     Booh!
     ```
 
+Timers are scheduled roughly within 50 milliseconds ticks. This means that you cannot have better than 50 ms resolution, and `set_timer(0, <function>`) will schedule the function 50 ms later. In certain cases, you need to defer a function to an immediate future; for such case use `tasmota.defer(<function>)` which will run the function typically within the next millisecond.
+
 #### A word on functions and closure
 
 Berry is a functional language, and includes the very powerful concept of a *closure*. In a nutshell, it means that when you create a function, it can capture the values of variables when the function was created. This roughly means that it does what intuitively you would expect it to do.
@@ -346,15 +348,28 @@ You can get the timestamp for the next event by using `tasmota.next_cron(id)` wh
 
 ## Loading Filesystem
 
+Berry files can exist in 2 forms, either a source file (extension `.be`) or a pre-compiled bytecode (extension `.bec`). Pre-compiled are usually smaller and load slightly faster (although compilation is fast enough in most use cases). It's usually more flexible and simpler to use source code (`.be`).
+
 You can upload Berry code in the filesystem using the ***Consoles - Manage File system*** menu and load them at runtime. Make careful to use `*.be` extension for those files.
 
 To load a Berry file, use the `load(filename)` function where `filename` is the name of the file with `.be` or `.bec` extension; if the file has no extension '.be' is automatically appended.
 
 !!! note "You don't need to prefix with `/`. A leading `/` will be added automatically if it is not present."
 
-When loading a Berry script, the compiled bytecode is automatically saved to the filesystem, with the extension `.bec` (this is similar to Python's `.py`/`.pyc` mechanism). The `save(filename,closure)` function is used internally to save the bytecode.
+??? note "Previous behavior before 13.4.0.3:"
 
-If a precompiled bytecode (extension `.bec`) is present of more recent than the Berry source file, the bytecode is directly loaded which is faster than compiling code. You can eventually remove the `*.be` file and keep only `*.bec` file (even with `load("file.be")`.
+    When loading a Berry script, the compiled bytecode is automatically saved to the filesystem, with the extension `.bec` (this is similar to Python's `.py`/`.pyc` mechanism). The `save(filename,closure)` function is used internally to save the bytecode.
+
+    If a precompiled bytecode (extension `.bec`) is present of more recent than the Berry source file, the bytecode is directly loaded which is faster than compiling code. You can eventually remove the `*.be` file and keep only `*.bec` file (even with `load("file.be")`.
+
+The loading behavior is as follows:
+
+- `load("hello")` and `load("hello.be")` loads `hello.be` and tries `hello.bec` if the first does not exist. If both `hello.be` and `hello.bec` exist, `hello.bec` is deleted to avoid confusion between versions.
+- `load("hello.bec")` loads only `hello.bec` and fails if only `hello.be` is present
+
+To compile to `.bec` use `tasmota.compile("hello.be")`. If all is good, it returns `true` and creates `hello.bec`. But beware that if you use `load()` the `.bec` file is deleted.
+
+Note: `tasmota.compile()` is different than native Berry `compile()`
 
 ## Creating a Tasmota Driver
 
@@ -377,6 +392,7 @@ Driver methods are called with the following parameters: `f(cmd, idx, payload, r
 - `save_before_restart()`: called just before a restart
 - `mqtt_data(topic, idx, data, databytes)`: called for MQTT payloads matching `mqtt.subscribe`. `idx` is zero, and `data` is normally unparsed JSON.
 - `set_power_handler(cmd, idx)`: called whenever a Power command is made. `idx` is a combined index value, with one bit per relay or light currently on. `cmd` can be ignored.
+- `any_key(cmd, idx)`: called when an interaction with Button or Switch occurs. `idx` is encoded as follows: `device_save << 24 | key << 16 | state << 8 | device`
 - `display()`: called by display driver with the following subtypes: `init_driver`, `model`, `dim`, `power`.
 
 Then register the driver with `tasmota.add_driver(<driver>)`.
@@ -443,7 +459,7 @@ tasmota.add_fast_loop(/-> my_driver.fast_loop())    # register a closure to capt
 
 #### `log(msg:string [, level:int = 3]) -> string`
 
-Logs a message to the Tasmota console. Optional second argument is log_level (0..4), default is `2` `LOG_LEVEL_INFO`.
+Logs a message to the Tasmota console. Optional second argument is log_level (0..4), default is `2` (matching build time `LOG_LEVEL_INFO`).
 
 !!! example
 
@@ -485,13 +501,18 @@ tasmota.publish\_result<a class="cmnd" id="tasmota_publish_result"></a>|`(payloa
 tasmota.publish\_rule<a class="cmnd" id="tasmota_publish_rule"></a>|`(payload:string) -> handled:bool`<br>sends a JSON stringified message to the rule engine, without actually publishing a message to MQTT. Returns `true` if the message was handled by a rule.
 tasmota.cmd<a class="cmnd" id="tasmota_cmd"></a>|`(command:string [, mute:bool]) -> map`<br>Sends any command to Tasmota, like it was type in the console. It returns the result of the command if any, as a map parsed from the command output JSON. Takes an optional `mute` attribute. If `mute` is `true`, logging (serial, web, mqtt) is reduced to level `1` (only severe errors) to avoid polluting the logs.
 tasmota.memory<a class="cmnd" id="tasmota_memory"></a>|`() -> map` or `(key:string) -> any`<br>Returns memory stats similar to the Information page.<br>Example: `{'iram_free': 41, 'frag': 51, 'program_free': 1856, 'flash': 4096, 'heap_free': 226, 'program': 1679}`<br>or when PSRAM `{'psram_free': 3703, 'flash': 16384, 'program_free': 3008, 'program': 1854, 'psram': 4086, 'frag': 27, 'heap_free': 150}`<br>If a `key` is passed, the value is returned without allocating a new `map`, or `nil` if no value matches the `key`.
-tasmota.add\_rule<a class="cmnd" id="tasmota_add_rule"></a>|`(trigger:string, f:function [, id:any]) ->nil`<br>`(triggers:list_of_string, f:function [, id:any]) ->nil`<br>Adds a rule to the rule engine. See above for rule triggers.<br>Optional `id` allows to remove selectively rules with `tasmota.remove_rule()`.
+tasmota.add\_rule<a class="cmnd" id="tasmota_add_rule"></a>|`(trigger:string, f:function [, id:any]) ->nil`<br>`(triggers:list_of_string, f:function [, id:any]) ->nil`<br>Adds a rule to the rule engine. See above for rule triggers.<br>Optional `id` allows to remove selectively rules with `tasmota.remove_rule()`.<br>If you add a new rule with the same `trigger` and the same non-`nil` `id`, the previous rule is removed and the new one replaces it (this is handy when developing new code)
+tasmota.add\_rule\_once<a class="cmnd" id="tasmota_add_rule_once"></a>|`(trigger:string, f:function [, id:any]) ->nil`<br>`(triggers:list_of_string, f:function [, id:any]) ->nil`<br>Same as `add_rule` except the rule is fired only once and then removed from rules
 tasmota.remove\_rule<a class="cmnd" id="tasmota_remove_rule"></a>|`(trigger:string [, id:any]) ->nil`<br>`(triggers:list_of_string [, id:any]) ->nil`<br>Removes a rule from the rule engine. Silently ignores the trigger(s) if no rule matches. Optional `id` to remove selectively some rules.
+tasmota.when\_network\_up<a class="cmnd" id="tasmota_when_network_up"></a>|`(f:function) ->nil`<br>Runs the provided function or closure as soon as the first network stack is available (wifi or ethernet).<br>This is to be used whenever you call network function from Berry, calling most of network functions before the network is up generally causes a crash.
 tasmota.add\_driver<a class="cmnd" id="tasmota_add_driver"></a>|`(instance) ->nil`<br>Registers an instance as a driver
 tasmota.remove\_driver<a class="cmnd" id="tasmota_remove_driver"></a>|`(instance) ->nil`<br>Removes a driver
 tasmota.gc<a class="cmnd" id="tasmota_gc"></a>|`() -> int`<br>Triggers garbage collection of Berry objects and returns the bytes currently allocated. This is for debug only and shouldn't be normally used. `gc` is otherwise automatically triggered when necessary.
 tasmota.urlfetch<a class="cmnd" id="tasmota_urlfetch"></a>|`(url:string [, filename:string]) -> bytes:int`<br>Download a url (http or https) and store the content in the filesystem<br>`filename` is optional, needed if you want to change the name of the file from the url suffix. Returns the number of bytes downloaded or -1 if failed.
 tasmota.urlbecload<a class="cmnd" id="tasmota_urlbecload"></a>|`(url:string) -> bool`<br>Download `.bec` file from a url and run it, return `true` if sucessful. This allows to run complementary code like Partition Wizard from precompiled Berry.
+tasmota.scale\_uint<a class="cmnd" id="tasmota_scale_uint"></a>|`(value:int, fromMin:int, fromMax:int, toMin:int, toMax:int) -> int`<br>Linear scaling of an unsigned integer range, based on two points on the line, typically min and max for "from" and "to" ranges. The internal implementation works better on 16 bits integers.
+tasmota.scale\_int<a class="cmnd" id="tasmota_scale_int"></a>|`(value:int, fromMin:int, fromMax:int, toMin:int, toMax:int) -> int`<br>Linear scaling of an integer range, based on two points on the line, typically min and max for "from" and "to" ranges.
+tasmota.int<a class="cmnd" id="tasmota_int"></a>|`(value:int, min:int, max:int) -> int`<br>Convert a value `v` to an `int` and to guard the value between `min` and `max`. If `v` is `nil`, it returns `min`. If `min > max`, it returns `min`. If `min` or `max` are `nil`, it behaves like Berry native `int()`.<BR>Since v14.4.2
 
 #### Functions used to retrieve Tasmota configuration
 
@@ -504,6 +525,7 @@ tasmota.arch<a class="cmnd" id="tasmota_arch"></a>|`() -> string`<br>Returns the
 tasmota.read\_sensors<a class="cmnd" id="tasmota_read_sensors"></a>|`([show_sensor:bool]) -> string`<br>Returns the value of sensors as a JSON string similar to the teleperiod. The response is a string, not a JSON object. The reason is that some sensors might produce invalid JSON. It's your code's responsibility to try parsing as JSON.<br>An optional boolean parameter (false by default) can be set to trigger a display of the new values (i.e. sends a FUNC_SHOW_SENSOR` event to drivers).
 tasmota.wifi<a class="cmnd" id="tasmota_wifi"></a>|`() -> map` or `(key:string) -> any`<br>Retrieves Wi-Fi connection info or empty map.<br>Example: `{'mac': 'aa:bb:cc:22:11:03', 'quality': 100, 'rssi': -47, 'ip': '192.168.1.102'}`<br>If a `key` is passed, the value is returned without allocating a new `map`, or `nil` if no value matches the `key`.
 tasmota.eth<a class="cmnd" id="tasmota_eth"></a>|`() -> map` or `(key:string) -> any`<br>Retrieves Ethernet connection info or empty map.<br>Example: `{'mac': 'aa:bb:cc:22:11:00', 'ip': '192.168.1.101'}`<br>If a `key` is passed, the value is returned without allocating a new `map`, or `nil` if no value matches the `key`.
+tasmota.webcolor<a class="cmnd" id="tasmota_webcolor"></a>|`() -> map` or `(index:integer) -> string`<br>Dump all webcolors from the Tasmota configuratio, or retrieve a specific color by index number.<br>Colors are expressed in `#RRGGBB` hex format and ready to use for HASPmota<br>Note: indices are 0-based so `1` less than in `WebColor` command<br>`0`: Global text, default `"#eaeaea"`<br>`1`: Global background, default `"#252525"`<br>`2`: Form background, default `"#4f4f4f"`<br>`3`: Input text, default `"#000000"`<br>`4`: Input background, default `"#dddddd"`<br>`5`: Console text, default `"#65c115"`<br>`6`: Console background, default `"#1f1f1f"`<br>`7`: Warning text, default `"#ff5661"`<br>`8`: Success text, default `"#008000"`<br>`9`: Button text, default `"#faffff"`<br>`10`: Button, default `"#1fa3ec"`<br>`11`: Button hovered over, default `"#0e70a4"`<br>`12`: Restart/Reset/Delete button, default `"#d43535"`<br>`13`: Restart/Reset/Delete button hover, default `"#931f1f"`<br>`14`: Save button, default `"#47c266"`<br>`15`: Save button hover, default `"#5aaf6f"`<br>`16`: Config timer tab text, default `"#faffff"`<br>`17`: Config timer tab background, default `"#999999"`<br>`18`: Module title and FriendlyName text, default `"#eaeaea"`<br>`19`: Button color when off, default `"#08405e"`
 
 #### Functions for time, timers or cron
 
@@ -514,7 +536,8 @@ tasmota.time\_reached<a class="cmnd" id="tasmota_time_reached"></a>|`(timer:int)
 tasmota.rtc<a class="cmnd" id="tasmota_rtc"></a>|`() -> map` or `(key:string) -> any`<br>Returns clockwall time with variants.<br>Example: `{'local': 1619560407, 'utc': 1619556807, 'timezone': 60, 'restart': 1619556779}`<br>If a `key` is passed, the value is returned without allocating a new `map`, or `nil` if no value matches the `key`.
 tasmota.time\_dump<a class="cmnd" id="tasmota_time_dump"></a>|`(timestamp:int) -> map`<br>Decompose a timestamp value (in seconds) to its components<br>Example: `tasmota.time_dump(1619560407)` -> `{'min': 53, 'weekday': 2, 'sec': 27, 'month': 4, 'year': 2021, 'day': 27, 'epoch': 1619560407, 'hour': 21}`
 tasmota.time\_str<a class="cmnd" id="tasmota_time_str"></a>|`(timestamp:int) -> string`<br>Converts a timestamp value (in seconds) to an ISO 8601 string<br>Example: `tasmota.time_str(1619560407)` -> `2021-04-27T21:53:27`
-tasmota.set\_timer<a class="cmnd" id="tasmota_set_timer"></a>|`(delay:int, f:function [, id:any]) -> nil`<br>Runs the closure or function `f` after `delay` milliseconds, optional `id` can be used to remove the timer.
+tasmota.set\_timer<a class="cmnd" id="tasmota_set_timer"></a>|`(delay:int, f:function [, id:any]) -> nil`<br>Runs the closure or function `f` after `delay` milliseconds, optional `id` can be used to remove the timer.<BR>The `delay` resolution is roughly 50 milliseconds.<BR>If you need to defer the function immediately after the current event loop, and not wait for 50 millisecond, consider using `tasmota.defer()` below.
+tasmota.defer<a class="cmnd" id="tasmota_defer"></a>|`(f:function) -> nil`<br>Runs the closure or function `f` within the next millisecond (delay is not guaranteed). This can be used as a faster alternative to `tasmota.set_timer(0, f)`
 tasmota.remove\_timer<a class="cmnd" id="tasmota_remove_timer"></a>|`(id:string) -> nil`<br>Removes the timer with the `id` used on `tasmota.set_timer`.
 tasmota.strftime<a class="cmnd" id="tasmota_strftime"></a>|`(format:string, timestamp:int) -> string`<br>Converts a timestamp value (in seconds) to a string using the format conversion specifiers<br>Example: `tasmota.strftime("%d %B %Y %H:%M:%S", 1619560407)` -> `27 April 2021 21:53:27`
 tasmota.strptime<a class="cmnd" id="tasmota_strptime"></a>|`(time:string, format:string) -> map or nil`<br>Converts a string to a date, according to a time format following the C `strptime` format. Returns a `map` similar to `tasmota.time_dump()` or `nil` if parsing failed. An additional `unparsed` attribute reports the unparsed string, or empty string if everything was parsed.<br>Example: `tasmota.strptime("2001-11-12 18:31:01", "%Y-%m-%d %H:%M:%S")` -> `{'unparsed': '', 'weekday': 1, 'day': 12, 'epoch': 1005589861, 'min': 31, 'year': 2001, 'month': 11, 'sec': 1, 'hour': 18}`
@@ -580,11 +603,13 @@ Since v11.1.0.1, there is an easier way than registering a driver, and listening
 The function you attach to a topic pattern received **only** the matching MQTT messages, not all messages unlike `mqtt_data()` would.
 
 The function takes the same parameters as `mqtt_data()`:
+
 - `topic`: full topic received from the broker
 - `idx`: not used
-- `payload_s`: payload as string, usually converted to JSON with `import json json.load(payloas_s)`
+- `payload_s`: payload as string, usually converted to JSON with `import json json.load(payload_s)`
 - `payload_b`: payload as a binary payload, bytes() array
-- the function should return `true` if the event was parsed or if the event should not trigger a Tasmota command. If you return `nil` or nothing, it is considered as `true` which is the usual behavior you want (i.e. not trigger a Tasmota command from random MQTT messages).
+
+the function should return `true` if the event was parsed or if the event should not trigger a Tasmota command. If you return `nil` or nothing, it is considered as `true` which is the usual behavior you want (i.e. not trigger a Tasmota command from random MQTT messages).
 
 Tasmota Function|Parameters and details
 :---|:---
@@ -620,6 +645,7 @@ gpio.digital\_read<a class="cmnd" id="gpio_digital_read"></a>|`(phy_gpio) -> int
 gpio.pin\_mode<a class="cmnd" id="gpio_pin_mode"></a>|`(phy_gpio, mode) -> nil` needs the physical GPIO number<br>Changes the GPIO mode. It should be called very cautiously. Normally Tasmota handles automatically GPIO modes.<BR>`mode` can have the following values: `gpio.INPUT`, `gpio.OUTPUT`, `gpio.PULLUP`, `gpio.INPUT_PULLUP`, `gpio.PULLDOWN`, `gpio.OPEN_DRAIN`, `gpio.OUTPUT_OPEN_DRAIN`, `gpio.DAC`
 gpio.dac\_voltage<a class="cmnd" id="gpio_dac_voltage"></a>|`(phy_gpio:int, voltage_mv:int) -> int`<br>Sets the DAC voltage in mV. The resolution is 8 bits over a range of 0..3.3V, i.e. an increment of ~13mV, this function returns the actual voltage output rounded to the closest value. See below for constraints of DAC GPIOs.
 gpio.set\_pwm<a class="cmnd" id="gpio_set_pwm"></a>|`(phy_gpio:int, duty:int [, phase:int]) -> nil`<br>Sets the value of a PWM output<br>`phy_gpio`: physical GPIO number<br>`duty`: analog value for the pwm, range is 0..1023 unless you change the PWM range<br>`phase`: (opt) set the starting point in time for this pulse from start of cycle. Range is 0..1023 unless you change PWM range. This allows to dephase pulses, for example for H-bridge.<br>**Low-level** this is a low-level function that bypasses all the Tasmota logic around PWM. Use with caution as a `PWM` command might overwrite your settings.
+gpio.set\_pwm\_freq<a class="cmnd" id="gpio_set_pwm_frew"></a>|`(phy_gpio:int, frequency:int) -> nil`<br>Sets the frequency value of a PWM output.<br>**Low-level** this is a low-level function that bypasses all the Tasmota logic around PWM. Use with caution as a `PWM` command might overwrite your settings.
 gpio.counter\_read<a class="cmnd" id="gpio_counter_read"></a>|`(counter:int) -> int or nil`<br>Read counter value, 0 is Counter1, or return nil if counter is not used
 gpio.counter\_set<a class="cmnd" id="gpio_counter_set"></a>|`(counter:int, value:int) -> int or nil`<br>Set the counter value, 0 is Counter1, return the actual value, or return nil if counter is not used
 gpio.counter\_add<a class="cmnd" id="gpio_counter_add"></a>|`(counter:int, value:int) -> int or nil`<br>Add to the counter value, 0 is Counter1, return the actual value, or return nil if counter is not used
@@ -713,18 +739,26 @@ The special `energy.read()` function dumps all current values to a single `map`.
 Tasmota Function|Parameters and details
 :---|:---
 energy.read()<a class="cmnd" id="energy_read"></a>|`() -> map`<br>Returns all current values for the energy module. Some values may be unused by the current driver.
+energy.driver_enabled()<a class="cmnd" id="energy_driver_enabled"></a>|`() -> bool`<br>Returns `true` if the Berry virtual driver is active, i.e. `OPTION_A 9` is configured on a GPIO.<br>See below for Berry Energy driver implementation.
 
 List of `energy` attributes that you can read or write:
 
 Attribute|Type|Description
 :---|:---|:---
-voltage<br>voltage\_2<br>voltage\_3|float|Voltage (V) for main phase or 3 phases
-current<br>current\_2<br>current\_3|float|Current (A) for main phase or 3 phases
-active\_power<br>active\_power\_2<br>active\_power\_3|float|Active Power (W) for main phase or 3 phases
-reactive\_power<br>reactive\_power\_2<br>reactive\_power\_3|float|Reactive Power (W) for main phase or 3 phases
-power\_factor<br>power\_factor_2<br>power\_factor\_3|float|Power Factor (no unit) for main phase or 3 phases
-frequency<br>frequency\_2<br>frequency\_3|float|Frequency (Hz) for main phase or 3 phases
-export\_active<br>export\_active\_2<br>export\_active\_3|float|(kWh)
+voltage|float|Voltage (V) for main phase
+voltage\_phases|array of float|Voltage (V) as an array of phases
+current|float|Current (A) for main phase
+current\_phases|array of float|Current (A) as an array of phases
+active\_power|float|Active Power (W) for main phase
+active\_power\_phases|array of float|Active Power (W) as an array of phases
+reactive\_power|float|Reactive Power (W) for main phase
+reactive\_power\_phases|array of float|Reactive Power (W) as an array of phases
+power\_factor|float|Power Factor (no unit) for main phase
+power\_factor\_phases|array of float|Power Factor (no unit) as an array of phases
+frequency|float|Frequency (Hz) for main phase
+frequency\_phases|array of float|Frequency (Hz) as an array of phases
+export\_active|float|(kWh)
+export\_active\_phases|array of float|(kWh)
 start\_energy|float|Total previous energy (kWh)
 daily|float|Daily energy (kWh)
 total|float|Total energy (kWh)
@@ -734,8 +768,9 @@ today\_kwh|uint32|(deca milli Watt hours)
 period|uint32|(deca milli Watt hours)
 fifth\_second|uint8|
 command\_code|uint8|
-data\_valid<br>data\_valid\_2<br>data\_valid\_3|uint8|
-phase\_count|uint8|Number of phases (1,2 or 3)
+data\_valid|uint8|`0` if data is valid for main phase
+data\_valid\_phases|array of uint8|`0` if data is valid as an array of phases
+phase\_count|uint8|Number of phases (1..8)
 voltage\_common|bool|Use single voltage
 frequency\_common|bool|Use single frequency
 use\_overtemp|bool|Use global temperature as overtemp trigger on internal energy monitor hardware
@@ -745,7 +780,7 @@ current\_available|bool|Enable if current is measured
 type\_dc|bool|
 power\_on|bool|
 |||**Below if for Energy Margin Detection**
-power\_history\_0<br>power\_history\_0\_2<br>power\_history\_0\_3<br>power\_history\_1<br>power\_history\_1\_2<br>power\_history\_1\_3<br>power\_history\_2<br>power\_history\_2\_2<br>power\_history\_2\_3|uint16|
+power\_history\_0<br>power\_history\_1<br>power\_history\_2|uint16|
 power\_steady\_counter|uint8|Allow for power on stabilization
 min\_power\_flag|bool|
 max\_power\_flag|bool|
@@ -758,6 +793,28 @@ mplh\_counter|uint16|
 mplw\_counter|uint16|
 mplr\_counter|uint8|
 max\_energy\_state|uint8|
+
+### Energy driver in Berry
+
+Since v14.2.0, it is possible to implement an Energy driver in pure Berry. The Berry driver is enabled when an `OPTION_A 9` GPIO is configured:
+
+- by default, the energy driver has zero consumption.
+- the berry code can is `energy.driver_enabled()` to check if the virtual Berry Energy driver is active (i.e. `OPTION_A 9` is configured)
+- the following values need to be configured: `energy.phase_count` (default `1`), `energy.voltage`, `energy.current`, `energy.power_factor` (typically `1.0` or less), `energy.frequency` (default `nan`)
+- the most important value is `energy.active_power` (in Watt) which is added to the daily power consumption
+
+Example test code in `autoexec.be`:
+
+```berry
+if energy.driver_enabled()
+  energy.phase_count = 1
+  energy.voltage = 240
+  energy.power_factor = 1.0
+  energy.current = 1.5
+  energy.frequency = 50
+  energy.active_power = 360
+end
+```
 
 ### `wire` object for I^2^C
 
@@ -825,34 +882,38 @@ Tasmota Function|Parameters and details
 path.exists<a class="cmnd" id="path_exists"></a>|`(file_name:string) -> bool`<br>Returns `true` if the file exists. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
 path.last_modified<a class="cmnd" id="path_last_modified"></a>|`(file_name:string) -> int`<br>Returns the timestamp when the file was last modified, or `nil` if the file does not exist. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
 path.listdir<a class="cmnd" id="path_listdir"></a>|`(dir_name:string) -> list(string)`<br>List a directory, typically root dir `"/"` and returns a list of filenames in the directory. Returns an empty list if the directory is invalid
-path.remove<a class="cmnd" id="path_remove"></a>|`(file_name:string) -> bool`<br>Deletes a file by name, return `true` if successful
+path.remove<a class="cmnd" id="path_remove"></a>|`(file_name:string) -> bool`<br>Deletes a file by name, return `true` if successful<br>A folder needs to be empty or a `false` is returned.
 path.format<a class="cmnd" id="path_format"></a>|`(true:bool) -> bool`<br>Re-formats the LittleFS file system (internal ESP32 flash) and erases all content. The parameter needs to be true as to avoid unwanted calls. Returns true if reformatting was successful.<br>This is sometimes useful when the file-system becomes unstable or corrupt after multiple re-partitionings.
 path.mkdir<a class="cmnd" id="path_mkdir"></a>|`(dir_name:string) -> bool`<br>Creates a directory, return `true` if successful
 path.rmdir<a class="cmnd" id="path_rmdir"></a>|`(dir_name:string) -> bool`<br>Deletes a directory if empty, return `true` if successful
 path.isdir<a class="cmnd" id="path_isdir"></a>|`(name:string) -> bool`<br>Checks if path name is a directory
+path.rename<a class="cmnd" id="path_rename"></a>|`(name1:string, name2:string) -> bool`<br>Rename file or folder `name1` into `name2`, return `true` if succesful
 
 
 ### `persist` module
 
-Easy way to persist simple values in Berry and read/write any attribute. Values are written in JSON format in `_persist.json` file.
+Easy way to persist simple values in Berry and read/write any attribute. Values are written in JSON format in `_persist.json` file. Be aware that `persist` cannot detect any change in sub-objects like lists or maps; in such case you can call `persist.dirty()` to indicate that data needs to be saved.
 
-!!! example 
+!!! example
+     ```berry
      > import persist    
      > persist.a = 1    
      > persist.b = "foobar"    
      > print(persist)    
      <instance: Persist({'a': 1, 'b': 'foobar'})>    
-     > persist.save()   # save to _persist.json    
+     > persist.save()   # save to _persist.json
+     ```   
 
 Tasmota Function|Parameters and details
 :---|:---
-persist.save<a class="cmnd" id="persist_save"></a>|`()`<br>triggers saving to file system. It is called automatically before a restart but you might want to call it yourself to prevent losing data in case of power loss or crash. `persist.save()` writes to flash, so be careful of not calling it too often, or it will cause wearing of flash and reduce its lifetime.
+persist.save<a class="cmnd" id="persist_save"></a>|`()` -> nil<br>triggers saving to file system. It is called automatically before a restart but you might want to call it yourself to prevent losing data in case of power loss or crash. `persist.save()` writes to flash, so be careful of not calling it too often, or it will cause wearing of flash and reduce its lifetime.<br>By default `persist.save()` only saves if data was marked as dirty, or does nothing. You can force an actual save with `persist.save(true)`
 persist.has<a class="cmnd" id="persist_has"></a>|`(key:string) -> bool`<br>returns true/false if the key exists
 persist.remove<a class="cmnd" id="persist_remove"></a>|`(key:string) -> bool`<br>removes a key or ignores if key doesn't exist
 persist.find<a class="cmnd" id="persist_find"></a>|`(key:string [, "default value"]) -> string | bool`<br>returns the value for a key, nil or the default value. Similar to `map.find`
 persist.member<a class="cmnd" id="persist_member"></a>|`(key:string) -> string | nil`<br>returns the value for a key, or nil.
-persist.setmember<a class="cmnd" id="persist_setmember"></a>|`(key:string, value:string)`<br>sets the value for a key, when the key is in a variable
-persist.zero<a class="cmnd" id="persist_zero"></a>|`()`<br>clears all entries. This may be destructive to other code using `persist`
+persist.setmember<a class="cmnd" id="persist_setmember"></a>|`(key:string, value:string) -> nil`<br>sets the value for a key, when the key is in a variable
+persist.zero<a class="cmnd" id="persist_zero"></a>|`() -> nil`<br>clears all entries. This may be destructive to other code using `persist`
+persist.dirty<a class="cmnd" id="persist_dirty"></a>|`() -> nil`<br>marks data as dirty to force writing to flash
 
 ### `introspect` module
 
@@ -1160,7 +1221,7 @@ Simple tcp server (socket) listening for incoming connection on any port.
 
 - create an instance of the `tcpserver` on a specific port with `s = tcpserver(8888)`
 - periodically call `s.hasclient()` to know if a new client has connected
-- if the previous returned `true`, call `var c = s.accept()` to accept the connection. It returns an instance of `tcpclient` as above; it responds to the same APIs as outgoing TCP connection and allows text and binary transfers.
+- if the previous returned `true`, call `var c = s.accept()` or `var c = s.acceptasync()` to accept the connection. It returns an instance of `tcpclient` or `tcpclientasync`; it responds to the same APIs as outgoing TCP connection and allows text and binary transfers.
 - you can call `c.close()` to close the connection, or call `c.connected()` to know if it's still connected (i.e. the client hasn't closed the connection on their side)
 - close the server with `s.close()`. This will prevent the server from receinving any new connection, but existing connections are kept alive.
 
@@ -1169,6 +1230,7 @@ tcpserver Function|Parameters and details
 constructor<a class="cmnd" id="tcpserver_constructor"></a>|`tcpserver(port:int) -> nit`<BR>Opens a socket on `port` and starts lisenting to new incoming connections. If the server can't open the socket (ex: it is already in use) an exception is raised
 hasclient<a class="cmnd" id="tcpserver_hasclient"></a>|`hasclient() -> bool`<BR>Returns `true` if a new client connected to the socket, in such case you should call `accept()`. You need to call this method regularly (ex: in event loop or fast\_loop)
 accept<a class="cmnd" id="tcpserver_accept"></a>|`accept() -> instance:tcpclient or nil`<BR>Returns an instance of `tcpclient` for the new incoming connection, or raise an exception if no connection is available. You should call `hasclient()` returning `true` before calling `accept()`.
+acceptasync<a class="cmnd" id="tcpserver_acceptasync"></a>|`acceptasync() -> instance:tcpclientasync or nil`<BR>Returns an instance of `tcpclientasync` for the new incoming connection, or raise an exception if no connection is available. You should call `hasclient()` returning `true` before calling `acceptasync()`.
 close<a class="cmnd" id="tcpserver_close"></a>|`close() -> nil`<BR>Closes the server and makes the port available again.
 
 Full example:
@@ -1344,7 +1406,7 @@ Tasmota Function|Parameters and details
 serial (constructor)<a class="cmnd" id="serial"></a>|`serial(gpio_rx:int, gpio_tx:int, baud:int [, mode:int, inverted:bool])`<br>Creates a `serial` object<br>`gpio_rx` receive GPIO (or -1 if transmit only)<br>`gpio_tx` transmit GPIO (or -1 if receive only)<br>`baud` speed, ex: 9600, 115200<br>`mode` serial message format, default is `serial.SERIAL_8N1` (8 bits, no parity, 1 stop bit)<br>`inverted` true if signal is inverted (inactive low), default `false`<br>Other mode values are described below.
 config_tx_en<a class="cmnd" id="serial_config_tx_en"></a>|`config_tx_en(phy_gpio:int) -> nil`<br>Configures the Tx EN GPIO, or `-1` to clear it. Typically used for RS485.
 write<a class="cmnd" id="serial_write"></a>|`write(val:int || bytes()) -> bytes_sent:int`<br>Send either a single byte if argument is int, or send a binary message from a `bytes()` object.<br>The methods blocks until all messages are sent to the UART hardware buffer; they may not all have been sent over the wire
-read<a class="cmnd" id="serial_read"></a>|`read(void) -> bytes()`<br>Read all bytes received in the incoming buffer. If the buffer is empty, returns an empty `bytes()` object
+read<a class="cmnd" id="serial_read"></a>|`read( [max_bytes:int] ) -> bytes()`<br>Read all bytes received in the incoming buffer. If the buffer is empty, returns an empty `bytes()` object; in such case you can call `available()` first to check if the buffer is empty<br>Takes an optional argument `max_bytes` to limit the number of bytes returned, remaining bytes are kept in the internal serial buffer.
 flush<a class="cmnd" id="serial_flush"></a>|`flush(void) -> void`<br>Flushes all buffers. Waits for all outgoing messages to be sent over the wire and clear the incoming buffer.
 available<a class="cmnd" id="serial_available"></a>|`available(void) -> int`<br>Returns the number of incoming bytes in the incoming buffer, `0` in none.
 close<a class="cmnd" id="serial_close"></a>|`close(void) -> nil`<br>Closes the serial port and deallocates resources and hardware serial. After this, any call to the serial instance will return `nil` and will have no effect
@@ -1462,40 +1524,64 @@ There are two ways to use regex, first is to call directly the module which trig
 
 # first series are all-in-one, patterns are compiled on the fly
 
+# Returns the list of matches, or empty list of no match
 > re.search("a.*?b(z+)", "zaaaabbbccbbzzzee")
 ['aaaabbbccbbzzz', 'zzz']
-> re.match("a.*?b(z+)", "aaaabbbccbbzzzee")
-['aaaabbbccbbzzz', 'zzz']
-> re.split('/', "foo/bar//baz")
-['foo', 'bar', '', 'baz']
+
+# Returns the list of list of matches
 > re.searchall('<([a-zA-Z]+)>', '<abc> yeah <xyz>')
 [['<abc>', 'abc'], ['<xyz>', 'xyz']]
 
-# below are pre-compiled patterns, which is much faster if you use the
-# pattern multiple times
+# Returns the list of matches, or empty list of no match; must match from the beginning of the string.
+> re.match("a.*?b(z+)", "aaaabbbccbbzzzee")
+['aaaabbbccbbzzz', 'zzz']
 
-> rr = re.compile('<([a-zA-Z]+)>')
-> rr.searchall('<abc> yeah <xyz>')
+# Returns the number of chars matched instead of the entire match (saves memory)
+> re.match2("a.*?b(z+)", "aaaabbbccbbzzzee")
+[14, 'zzz']
+
+# Returns the list of matches, or empty list of no match; there should not be any gaps between matches.
+> re.matchall('<([a-zA-Z]+)>', '<abc> yeah <xyz>')
+[['<abc>', 'abc']])
+> re.matchall('<([a-zA-Z]+)>', '<abc><xyz>')
 [['<abc>', 'abc'], ['<xyz>', 'xyz']]
 
-> rr = re.compile("/")
-> rr
-<instance: re_pattern()>
-
-> rr.split("foo/bar//baz")
+# Returns the list of strings from split
+> re.split('/', "foo/bar//baz")
 ['foo', 'bar', '', 'baz']
-> rr.split("/b")
+
+# below are pre-compiled patterns, which is much faster if you use the
+# pattern multiple times
+#
+# the compiled pattern is a `bytes()` object that can be used
+# as a replacement for the pattern string
+> rb = re.compilebytes('<([a-zA-Z]+)>')
+# rb is compiled to bytes('1A0000000C0000000100000062030260FB7E00013C7E020302617A415A62F87E03013E7E017F')
+
+> re.searchall(rb, '<abc> yeah <xyz>')
+[['<abc>', 'abc'], ['<xyz>', 'xyz']]
+
+> rb = re.compilebytes("/")
+> rb
+bytes('0C000000070000000000000062030260FB7E00012F7E017F')
+
+> re.split(rb, "foo/bar//baz")
+['foo', 'bar', '', 'baz']
+> re.split(rb, "/b")
 ['', 'b']
 ```
 
 Tasmota Function|Parameters and details
 :---|:---
-search<a class="cmnd" id="re_search"></a>|`re.search(pattern:string, payload:string) -> list of strings`<br>Returns the list of matches, or empty list of no match
-match<a class="cmnd" id="re_match"></a>|`re.match(pattern:string, payload:string) -> list of strings`<br>Returns the list of matches, or empty list of no match. The difference with `search` is that match must match from the beginning of the string.
-searchall<a class="cmnd" id="re_searchall"></a>|`re.searchall(pattern:string, payload:string [, limit:string]) -> list of list of strings`<br>Returns the list of list of matches, or empty list of no match. `limit` allows to limit the number of matches.
-matchall<a class="cmnd" id="re_matchall"></a>|`re.matchall(pattern:string, payload:string [, limit:string]) -> list of list of strings`<br>Returns the list of matches, or empty list of no match. The difference with `searchall` is that there should not be any gaps between matches.  `limit` allows to limit the number of matches.
-split<a class="cmnd" id="re_split"></a>|`re.search(pattern:string, payload:string) -> list of strings`<br>Returns the list of strings from split, or a list with a single element containing the entire string if no match
-compile<a class="cmnd" id="re_compile"></a>|`re.compile(pattern:string) -> instance of <re_pattern>`<br>Compiles the regex into a reusable faster bytecode. You can then call the following methods:<br>`search()`, `match()`, `split()` similarly to the module's functions.
+search<a class="cmnd" id="re_search"></a>|`re.search(pattern:string or bytes, payload:string [, offset:int]) -> list of strings`<br>Returns the list of matches, or empty list of no match
+match<a class="cmnd" id="re_match"></a>|`re.match(pattern:string or bytes, payload:string [, offset:int]) -> list of strings`<br>Returns the list of matches, or empty list of no match. The difference with `search` is that match must match from the beginning of the string.<br>Takes an optional second argument offset which indicates at which character to start the in the payload (default 0).
+match2<a class="cmnd" id="re_match2"></a>|`re.match2(pattern:string or bytes, payload:string [, offset:int]) -> list of strings`<br>Returns the list of matches, or empty list of no match. The difference with `match` is that the first element contains the number of matched characters instead of the matched string, which saves memory for large matches.<br>Takes an optional second argument offset which indicates at which character to start the in the payload (default 0).
+searchall<a class="cmnd" id="re_searchall"></a>|`re.searchall(pattern:string or bytes, payload:string [, limit:string]) -> list of list of strings`<br>Returns the list of list of matches, or empty list of no match. `limit` allows to limit the number of matches.
+matchall<a class="cmnd" id="re_matchall"></a>|`re.matchall(pattern:string or bytes, payload:string [, limit:string]) -> list of list of strings`<br>Returns the list of matches, or empty list of no match. The difference with `searchall` is that there should not be any gaps between matches.  `limit` allows to limit the number of matches.
+split<a class="cmnd" id="re_split"></a>|`re.search(pattern:string or bytes, payload:string) -> list of strings`<br>Returns the list of strings from split, or a list with a single element containing the entire string if no match
+compilebytes<a class="cmnd" id="re_compilebytes"></a>|`re.compilebytes(pattern:string) -> instance of bytes()`<br>Compiles the regex into a reusable faster bytecode. You can then use the `bytes()` compiled pattern as a replacement for the patter string
+compile<a class="cmnd" id="re_compile"></a>|**Deprecated**, use `compilebytes` instead.<br>`re.compile(pattern:string) -> instance of <re_pattern>`<br>Compiles the regex into a reusable faster bytecode. You can then call the following methods:<br>`search()`, `match()`, `split()` similarly to the module's functions.
+dump<a class="cmnd" id="re_dump"></a>|`re.dump(pattern:bytes) -> nil`<br>Prints to the console a dump of the compiled pattern.<br>Only if compiled with `#define USE_BERRY_DEBUG` and only for curiosity/debugging purpose.
 
 Note: for `match` and `search`, the first element in the list contains the global match of the pattern. Additional elements correspond to the sub-groups (in parenthesis).
 
@@ -1981,7 +2067,121 @@ id<a class="cmnd" id="flash_id"></a>|`flash.id() -> int`<br>Returns the 32-bit f
 size<a class="cmnd" id="flash_size"></a>|`flash.size() -> int`<br>Returns the size of flash in bytes
 current_ota<a class="cmnd" id="flash_current_ota"></a>|`flash.current_ota() -> int`<br>Returns the number ofw the partition Tasmota is running from, typically `0` or `1`, or `-1` for safeboot. With safeboot layout, it is always `0`
 factory<a class="cmnd" id="flash_factory"></a>|`flash.factory(force_ota:bool) -> nil`<br>Forces the next restart to use the `factory` partition if any is present.<br>If `force_ota` is true, it forces an OTA update with the current URL
+  
+### `img` class
 
+Thin wrapper for image data, that allows format conversions and is able to reduce memory reallocations in certain scenarios.  
+  
+Supports following image types, which integer values are equal to the enum `pixformat_t` of Espressif's webcam driver:  
+- `img.RGB565`      = 0  
+- `img.RGB888`      = 5  
+- `img.JPEG`        = 4  
+- `img.GRAYSCALE`   = 3  
+
+Create an instance of an image with `var i = img()`.  
+Memory will be released automatically by Berrys garbage collector after deletion of the instance.  
+
+img Function|Parameters and details
+:---|:---
+from_jpeg|`img.from_jpeg(jpeg_buffer:bytes[, type:img.type]) -> nil` Copy JPEG image as byte buffer to the buffer of an `img` instance. If optional image type is provided, this will be converted on the fly. This will not reallocate the image buffer, if the size and format does not change.
+from_buffer|`img.from_buffer(image_data:bytes,width:int:height:int,type:img.type) -> nil` Construct image from raw image data for the types `RGB565`, `RGB888` and `GRAYSCALE`.
+get_buffer|`img.get_buffer([descriptor:bytes]) -> image_data:bytes` Returns the raw image data for any supported type. For `RGB565`, `RGB888` and `GRAYSCALE` a descriptor can be provided to get a ROI (region of interest).
+convert_to|`img.convert_to(type:img.type) -> nil` Internal conversion of the image format.
+info|`img.info() -> map` Returns a map with some infos about the current image.
+  
+The optional ROI descriptor is a representation of an affine matrix, which can be constructed in Berry:
+```berry
+#  Describe ROI using an affine matrix (https://en.wikipedia.org/wiki/Affine_transformation#Image_transformation)
+#   | scale_x shear_x translation_x |
+#   | shear_y scale_y translation_y |
+#   | 0	      0       1             | - these are constants in this scope
+  
+def roi_dsc(m)
+    var d = bytes(-24)
+    d.setfloat(0,m["scaleX"])
+    d.setfloat(4,m["shearX"])
+    d.setfloat(8,m["shearY"])
+    d.setfloat(12,m["scaleY"])
+    d.seti(16,m["transX"],2)
+    d.seti(18,m["transY"],2)
+    d.seti(20,m["width"],2)
+    d.seti(22,m["height"],2)
+    return d
+end
+```
+A simple web tool to create such matrices is embedded in the docs: [ROI  editor](ROI-editor.md)
+  
+Example:
+```berry
+# load jpg file into img
+var i = img()
+var f = open("j.jpg","r")
+i.from_jpg(f.readbytes(),img.RGB565) # i now holds image data with type RGB565
+f.close()
+```
+  
+### `cam` module
+
+Very small module to access a connected camera module with the purpose to have as much heap memory available as possible in comparison to the fully fledged webcam drivers for machine learning, but there are more possible applications. It is not intended to be a general replacement for the webcam drivers.
+  
+Tasmota Function|Parameters and details
+:---|:---
+cam.setup|`(mode:int) -> bool` Init camera hardware with the resolution (same value as command `wcresolution`).
+cam.get_image|`([image:img[,type:img.type]]) -> bytes or nil` Takes a picture - without an additional option this is just a JPEG buffer. If an image instance is provided, the image data will go there. If an additional type is given, a conversion will happen on the fly. This will not lead to a memory reallocation, if there is no change for size and type of the image.
+cam.info|`() -> map` Shows info map with last current resolution and camera mode 
+
+Example:  
+
+``` berry
+
+# Simple "video player" for boards with a camera and a display
+
+scr = lv.scr_act()
+scr.set_style_bg_color(lv.color(lv.COLOR_BLUE), lv.PART_MAIN | lv.STATE_DEFAULT)
+
+# create a lv_img object as image view
+cam_view = lv.img(scr)
+cam_view.center()
+
+i = img()
+
+import cam
+cam.setup(4) # 240 x 240
+cam.get_image(i,i.RGB565)
+
+def lv_img_dsc(image)
+    var i = image.info()
+    var dsc = bytes(24)
+    dsc..0x19 # magic
+    dsc..0x12 # cf RGB565
+    dsc.add(0,2) # flags
+    dsc.add(i["width"],2) # width
+    dsc.add(i["height"],2) # height
+    dsc.add(i["width"] * 2,2) # stride
+    dsc.add(0,2) # reserved
+    dsc.add(i["size"],4) # size
+    dsc.add(i["buf_addr"],4) # data
+    dsc.add(0,4) # reserved
+    print(dsc)
+    return dsc
+end
+
+descriptor = lv_img_dsc(i)
+cam_view.set_src(descriptor) # bind cam_view to buffer of img
+
+def video()
+    cam.get_image(i,i.RGB565) # this will just update the buffer, no reallocation
+    cam_view.invalidate()
+    tasmota.set_timer(20,/->video()) # aim for 50 Hz
+end
+
+video()
+```
+
+### `BLE` module
+  
+Write drivers and applications for Bluetooth Low Energy supporting all 4 roles. More information here: [BLE module](Bluetooth_MI32.md#ble-module)
+  
 ## Philips Hue emulation for Alexa
 Berry extends the native Hue/Alexa emulation and makes it possible to handle any number of virtual lights. You can easily define "virtual" lights in Berry, respond to commands from Alexa and send light status.
 
@@ -2082,15 +2282,21 @@ First step is to use `import zigbee` which returns an instance (monad) of `zb_co
 
 General methods|Parameters and details
 :---|:---
+started|`zigbee.started() -> bool or nil`<BR>Returns `true` if zigbee sucessfully started, then all other zigbee methods are available. This state is final and does not change.<BR>Returns `false` if zigbee is still in initialization process. This state eventually changes to `true` or `nil`.<BR>Returns `nil` if zigbee is not configured (no GPIO) or if initialization failes. This state is final and indicates a fatal error.
 info|`zigbee.info() -> map` returns a map with general configuration of the Zigbee coordinator.<BR>Format is identical to `ZbConfig`<BR>Example: <BR>`{'ext_pan_id': '0xCCCCCCCCA11A2233', 'tx_radio': 20, 'shortaddr': 0, 'longaddr': '0x00124B0026BAABBC', 'channel': 11, 'pan_id': 837, 'pan_id_hex': '0x0345', 'shortaddr_hex': '0x0000'}`
 size|`zigbee.size() -> int` returns the number of devices knwon by the coordinator
 iter|`zigbee.iter() -> iterator`<BR>Returns an iterator on all zigbee devices<BR>Use compact implicit form:<BR>`for ze: zigbee  print(ze)  end`
-item<BR>\[\]|`zigbee.item(shortaddr:int) -> instance of zb_device`<BR>Returns the Zigbee device with short address `shortaddr`<BR>You can use the compact syntax `zigbee[0xFAB6]`
+item<BR>\[\]|`zigbee.item(shortaddr:int | friendlyname:str) -> instance of zb_device`<BR>Returns the Zigbee device corresponding to short address `shortaddr` or to friendlyname `friendlyname`.<BR>Returns an `index_error` exception if not found.<BR>You can use the compact syntax `zigbee[0xFAB6]`
+find|`zigbee.find(shortaddr:int | friendlyname:str) -> instance of zb_device`<BR>Returns the Zigbee device corresponding to short address `shortaddr` or to friendlyname `friendlyname`.<BR>Contrary to the above, returns `nil` if not found (no exception).
 abort|`zigbee.abort() -> nil` aborts the initialization of Zigbee MCU. To be used when initialization of Zigbee failed
 
 ### `zb_device` class
 
 The class `zb_device` contains all known information about a paired Zigbee device (end-device or router). You can't create a `zb_device` from scratch, they most be retrieved from `zigbee` object.
+
+General methods|Parameters and details
+:---|:---
+info|`info() -> attribute_list or nil`<BR>Returns the last known state for this device as an `attribute_list`<br>This is equivalent of running `ZbInfo <device>`` and getting the attribute_list
 
 `zb_device` instances can only be read, you can't change directly any attribute.
 
@@ -2154,6 +2360,8 @@ Messages are sent in the following order:
 - `frame_received`: (low-level) the raw zigbee message is passed as `bytes` and attributes are not yet decoded. The `bytes` buffer can be modified and passed back to the Tasmota Zigbee engine.
 - `attributes_raw`: (mid-level) Zigbee attributes are decoded but no transformation is applied yet. Attributes are only available in cluser/attribute format, names are not decoded and plug-ins are not yet applied.<BR>This is the perfect moment to change non-standard attributes and map them to standard ones.
 - `attributes_refined`: (high-level) Attributes are mapped to their names (when possible) and all transformations are applied. This is the last chance to change values.
+- `attributes_final`: (high-level) consolidated `attributes_refined`. It is triggered just before final and consolidated attributes are sent to MQTT. Zigbee typically waits for 350ms before sending attributes, so it can consolidate multiple sensors (like temperature + humidity + pressure) in a single MQTT message
+
 
 The format of methods are the following:
 `def <zigbee event>(event_type, frame, attr_list, idx)`
@@ -2171,13 +2379,16 @@ Example, if you want to dump all the traffic passed:
 import zigbee
 class my_zb_handler
   def frame_received(event_type, frame, attr_list, idx)
-    print(f"shortaddr=Ox{idx:04X} {event_type=} {frame=}")
+    print(f"shortaddr=0x{idx:04X} {event_type=} {frame=}")
   end
   def attributes_raw(event_type, frame, attr_list, idx)
-    print(f"shortaddr=Ox{idx:04X} {event_type=} {attr_list=}")
+    print(f"shortaddr=0x{idx:04X} {event_type=} {attr_list=}")
   end
   def attributes_refined(event_type, frame, attr_list, idx)
-    print(f"shortaddr=Ox{idx:04X} {event_type=} {attr_list=}")
+    print(f"shortaddr=0x{idx:04X} {event_type=} {attr_list=}")
+  end
+  def attributes_final(event_type, frame, attr_list, idx)
+    print(f"shortaddr=0x{idx:04X} {event_type=} {attr_list=}")
   end
 
 end
@@ -2187,9 +2398,10 @@ zigbee.add_handler(my_handler)
 
 # example of reading for a plug
 #
-# shortaddr=OxC1BC event_type=frame_received frame={'srcendpoint': 21, 'transactseq_set': 0, 'shortaddr': 49596, 'dstendpoint': 1, 'payload': bytes('5500003956CE8243'), 'shortaddr_hex': '0xC1BC', 'manuf': 0, 'payload_ptr': <ptr: 0x3ffccb5c>, 'need_response': 0, 'transactseq': 25, 'cmd': 1, 'direct': 0, 'cluster': 12, 'cluster_specific': 0, 'groupaddr': 0}
-# shortaddr=OxC1BC event_type=attributes_raw attr_list={"000C/0055":261.612,"Endpoint":21,"LinkQuality":21}
-# shortaddr=OxC1BC event_type=attributes_refined attr_list={"ActivePower":261.612,"(ActivePower)":"0B04/050B","Endpoint":21,"LinkQuality":21}
+# shortaddr=0xC1BC event_type=frame_received frame={'srcendpoint': 21, 'transactseq_set': 0, 'shortaddr': 49596, 'dstendpoint': 1, 'payload': bytes('5500003956CE8243'), 'shortaddr_hex': '0xC1BC', 'manuf': 0, 'payload_ptr': <ptr: 0x3ffccb5c>, 'need_response': 0, 'transactseq': 25, 'cmd': 1, 'direct': 0, 'cluster': 12, 'cluster_specific': 0, 'groupaddr': 0}
+# shortaddr=0xC1BC event_type=attributes_raw attr_list={"000C/0055":261.612,"Endpoint":21,"LinkQuality":21}
+# shortaddr=0xC1BC event_type=attributes_refined attr_list={"ActivePower":261.612,"(ActivePower)":"0B04/050B","Endpoint":21,"LinkQuality":21}
+# shortaddr=0xC1BC event_type=attributes_final attr_list={"ActivePower":261.612,"(ActivePower)":"0B04/050B","Endpoint":21,"LinkQuality":21}
 
 # to remove handler:
 # zigbee.remove_handler(my_handler)

@@ -424,7 +424,7 @@ To remove a device from the Zigbee2Tasmota list of devices and from the WebUI, u
 
 ### Advanced topic: Device Information
 
-You can get a quick list of Zigbee devices with the command [`ZbStatus`](Commands.md#zigbeestatus).
+You can get a quick list of Zigbee devices with the command [`ZbStatus`](Commands.md#zbstatus).
 
 Example:
 
@@ -577,6 +577,18 @@ When a command is sent or an attribute is written to a device, the device may or
 Devices connected to mains (smart plugs, smart bulbs...) are always reachable and can accept Zigbee messages at any time.
 
 Devices that are powered by batteries are not always reachable. Most of the time they are in sleep mode and not reachable. They regularly connect back to the coordinator to send new values and get messages (ex: once per hour). When you need to send messages to battery-powered devices, you must first wake them up, for example pressing on a button. The device may stay awake for only a couple of seconds, so you must send the message just before or just after pressing the button on the device.
+
+### Configure Reporting
+Devices normally report their status when the value changes. They can also report the state within certain intervals, to configure this the command ZbSend is used.
+
+Example for setting the reporting interval for a smart plug to always report the state, regardless if it has changed or not:
+```
+ZbSend {"Device": "MySmartPlug1", "Config":{"Power":{"MinInterval":30, "MaxInterval": 50, "ReportableChange": 0}}}
+```
+Example for setting the reporting interval for a Parasoll-door-sensor to always report the state (keep sensor awake when sending this by triggering it):
+```
+ZbSend {"Device": "myDoorSensorSwitch", "Endpoint": 2, "Config": {"0500/0002": {"MinInterval": 60, "MaxInterval": 120, "ReportableChange": 0}}}
+```
 
 ### Advanced topic: Endpoints and Clusters
 

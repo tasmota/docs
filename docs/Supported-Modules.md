@@ -42,6 +42,7 @@
 - [OBI Socket](devices/OBI-Wifi-Socket.md)
 - [OBI Socket 2](devices/OBI-Socket-2.md)
 - [OBI Socket IP44 (Black.md)](devices/OBI-WiFi-Socket-IP44.md)
+- [SeedStudio SenseCAP D1](devices/SeedStudio-SenseCAP-D1.md)
 - [Shelly 1](devices/Shelly-1.md)
 - [Shelly 1PM](devices/Shelly-1PM.md)
 - [Shelly 2](devices/Shelly-2.md)

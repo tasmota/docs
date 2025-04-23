@@ -41,12 +41,13 @@ Step 4. Launch `LED Lab`, click on the `Settings` icon (wheel), select `LED Setu
 
 
 In the LED Setup:
+
 - Enter the number of rows in `Outputs`
 - Enter the number of columns in `LEDS/Output`
 - Enter the IP Address of the Tasmota device
 - Make sure that `UDP Broadcast` is selected (green background)
 - Make sure `First Universe` is 1 and `Channel Range` starts with `1`
-- Set `Channel Values for Each Pixel` to `GRB`
+- Set `Channel Values for Each Pixel` to `GRB`. NOTE: for ESP32 you should use `RGB` instead.
 - Click `OK` in upper right corner
 
 <img src="../_media/artnet/LED_Lab_Setup.png">

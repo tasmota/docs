@@ -1,7 +1,5 @@
 # HDMI CEC 
 
-!!! warning "This feature is experimental and still under development. It has only been tested on ESP8266."
-
 ??? tip "This feature is not included in standard Tasmota builds." 
 
     When [compiling your build](Compile-your-build) add the following flag to the build environment or `user_config_override.h`:

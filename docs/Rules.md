@@ -132,7 +132,7 @@ Every [command](Commands.md) with a JSON payload response has an associated rule
 |Trigger           | When it occurs |
 |------------------|----------------|
 |&lt;command\>#Data|A one level JSON payload such as `{"Command":"value"}`. For example, for {"Fanspeed":3}, the trigger is`Fanspeed#Data`.|
-|&lt;command\>#level1#level2#levelN|A multi-level JSON payload such as `{"TriggerLevel1":{"TriggerLevel2":{"ValueName":"value"}}}` does **NOT** have the `#Data` trigger. Instead, the trigger for these responses is `TriggerLevel1#TriggerLevel2#ValueName`. 
+|level1#level2#levelN|A multi-level JSON payload such as `{"TriggerLevel1":{"TriggerLevel2":{"ValueName":"value"}}}` does **NOT** have the `#Data` trigger. Instead, the trigger for these responses is `TriggerLevel1#TriggerLevel2#ValueName`. 
 
 !!! note "When the JSON payload response is produced by a command executed by a rule i.e. `on time=120 do status 8 endon`, the `StatusSNS#Data` trigger will not fire unless the command is wrapped in `backlog` i.e. `on time=120 do backlog status 8 endon`"    
     
@@ -151,7 +151,7 @@ Connected sensors can be a trigger in the form as they are represented in the `T
 |INA219#Current\>0.100| whenever the current drawn is more than 0.1A|
 |Energy#Power\>100| whenever the power used is more than 100W|
 
-When the payload consists of an array of data eg: `ENERGY":{Current":[1.320,2.100]}`
+When the payload consists of an array of data eg: `"ENERGY":{"Current":[1.320,2.100]}`
 
 |Trigger           | When it occurs |
 ------------------|----------------|
@@ -267,16 +267,8 @@ Rule1 "
 
 ## Conditional Rules
 
-!!! failure
-      This features is not included in standard ESP8266 binaries such as `tasmota`, `tasmota-sensors`, `tasmota-lite`.
-      To use it, you must [compile your build](Compile-your-build) and add the following to `user_config_override.h`:
-
-      ```arduino
-      #define SUPPORT_IF_STATEMENT   // Add support for IF statement in rules (+4k2 code, -332 bytes mem)  
-      ```
-
 !!! note
-      This feature is included in ESP32 builds as well as in ESP8266 builds for boards with more than 1MB Flash. This include `tasmota-4M`, `tasmota-zbbridge`, `tasmota-zigbee`.
+      This feature is now included in ESP32 builds as well as in ESP8266 builds since v13.3.0.4.
 ----
 
 #### Major features  
@@ -362,7 +354,7 @@ When the `<if-statement>` is preceded by other Tasmota commands you should use `
    `ON Power2#state=1 DO IF (Mem1==0) Var1 Var1+1; Mem1 1 ENDIF; Delay 10; Power1 on ENDON`
 
 !!! example
-     Rule used to control pressure cooker with a Sonoff S31. Once it is finished cooking, shut off the power immediately.  
+     Rule used to control pressure cooker with a Sonoff S31. Once it is finished cooking, shut off the power after 10 minutes.  
 ```haskell
 Rule1
  ON system#boot DO var1 0 ENDON
@@ -373,16 +365,8 @@ Rule1
 
 ## Expressions in Rules
 
-!!! failure
-      This features is not included in standard ESP8266 binaries such as `tasmota`, `tasmota-sensors`, `tasmota-lite`.
-      To use it, you must [compile your build](Compile-your-build) and add the following to `user_config_override.h`:
-
-      ```arduino
-      #define USE_EXPRESSION         // Add support for expression evaluation in rules (+3k2 code, +64 bytes mem)  
-      ```
-
 !!! note
-      This feature is included in ESP32 builds as well as in ESP8266 builds for boards with more than 1MB Flash. This include `tasmota-4M`, `tasmota-zbbridge`, `tasmota-zigbee`.
+      This feature is now included in ESP32 builds as well as in ESP8266 builds since v13.3.0.4.
 ----
 
 Beginning with Tasmota version 6.4.1.14, an optional feature for using mathematical expressions in rules was introduced. 

@@ -31,7 +31,7 @@ _[`GPIOs All`](Commands.md#gpios) shows list of all available components by name
 **For a peripheral to show up you may need to power cycle your device instead of a soft restart.**
 
 ### `Template`
-Instead of using `Module` and `GPIO` you can define everything using `Template`. [Read more...](Templates#template-configuration-with-commands)
+Instead of using `Module` and `GPIO` you can define everything using `Template`. [Read more...](Templates#commands)
 
 ## Additional Options
 
@@ -142,9 +142,9 @@ GPIO 0-15 all have a built-in pull-up resistor, just like in an Arduino. GPIO16 
 
 **ESP8266** Unlike most Atmel chips (Arduino), the ESP8266 doesn’t support hardware PWM, however, software PWM is supported on all digital pins. The default PWM range is 10-bits @ 1kHz, but this can be changed (up to >14-bit@1kHz). Check [Restrictions](#restrictions).
 
-ESP8266 has only software and supports 5 PWM channels. `PWM` and `PWMi` GPIOs are used in two modes depending on `SetOption15`: either as lights or as pure PWM.
+ESP8266 has only software and supports 5 PWM channels. `PWM` and `PWMi` GPIOs are used in two modes depending on [`SetOption15`](Commands.md#setoption15): either as lights or as pure PWM.
 
-**ESP32** has hardware PWM support, named `ledc`, up to 16 channels depending on CPU type. You can mix lights and pure PWM channels. The first 5 PWM are reserved for lights, unless `SetOption15 0`. For pure PWM GPIOs, you can assign any PWM number, they don't need to be continuous. For example you can use `PWM 1/2/3` for a 3-channel RGB light, and `PWM 6` & `PWM 10` for pure PWM at the same time.
+**ESP32** has hardware PWM support, named `ledc`, up to 16 channels depending on CPU type. You can mix lights and pure PWM channels. The first 5 PWM channels are reserved for lights, unless `SetOption15 0`. For pure PWM GPIOs, you can assign any PWM number, they don't need to be continuous. For example you can use `PWM 1/2/3` for a 3-channel RGB light, and `PWM 6` & `PWM 10` for pure PWM at the same time.
 
 CPU type|PWM channels
 :---|:---
@@ -152,7 +152,7 @@ ESP32|16 channels
 ESP32S2|8 channels
 ESP32C3|6 channels
 
-Channels are assigned to GPIOs in a first-in-first-serve way, and PWM GPIOs are assigned first. If `ledc` channel are exhausted, an error will appear in logs.
+Channels are assigned to GPIOs in a first-in-first-serve way, and PWM GPIOs are assigned first. If `ledc` channels are exhausted, an error will appear in logs.
 
 The following GPIOs use `ledc` PWM channels:
 
@@ -172,23 +172,23 @@ RSL: RESULT = {"PWM":{"PWM1":410,"PWM2":286,"PWM3":286,"PWM4":0,"PWM5":0,"PWM6":
 
 #### Auto-phasing of PWM
 
-(ESP32 only) By default, phases of consecutive PWM are disaligned so that a PWM pulses starts when the pulse of the previous PWM channels ends. This helps in distributing over time all pulses and have a smoother effect on power supply.
+(ESP32 only) By default, phases of consecutive PWM channels are disaligned so that a PWM pulse starts when the pulse of the previous PWM channel ends. This helps distributing all pulses over time and has a smoother effect on the power supply.
 
 With auto-phasing:
 ![PWM_autophase](https://user-images.githubusercontent.com/49731213/151606010-cf24d1bc-348f-493d-b5aa-9aa867c41b77.jpg)
 
 
-You can revert this with `SetOption134 1`; all phases are synces and all pulses start at the same moment.
+You can revert this with `SetOption134 1`; all phases are synced and all pulses start at the same moment.
 ![PWM_sync](https://user-images.githubusercontent.com/49731213/151606020-e1e95f27-40ae-4e1b-8e13-64309e74e1c4.jpg)
 
 
 #### H-bridge
 
-H-bridge is an electronic circuit that switches the polarity of a voltage applied to a load. It uses 2 PWM outputs to control the current sent to each polarity.
+H-bridge is an electronic circuit that switches the polarity of a voltage applied to a load. It uses 2 PWM outputs to control the current sent to each pole.
 
-When auto-phasing is enabled, you can use 2 consecutive PWM to drive a H-bridge siunce PWM phases don't overlap - under the condition that the sum of both PWM don't exceed `1023`.
+When auto-phasing is enabled, you can use 2 consecutive PWM channels to drive an H-bridge since PWM phases won't overlap - under the condition that the sum of the PWM duty cycles doesn't exceed `1023`.
 
-**Important**: you must always ensure that the sum of both PWM channels is less or equal than `1023`. Values over this threshold can damage the circuit.
+**Important**: you must always ensure that the sum of both PWM channels is less or equal than `1023`. Values over this threshold can damage the circuit, because the phases will overlap opening both poles of the H-bridge and shorting the power supply.
 
 
 

@@ -1,7 +1,7 @@
 Some new Sonoff devices support the new [Itead DIY architecture](https://www.youtube.com/watch?v=fRS-ukCgD_I) which allows OTA firmware upload. With [Sonoff DIY](https://github.com/itead/Sonoff_Devices_DIY_Tools), a user has more control over the hardware features of the device and also allows for upgrading the firmware without additional hardware. The following procedure upgrades Sonoff eWelink firmware to Tasmota.
 
 !!! warning "There are many reports this procedure has changed with newer versions of Sonoff DIY"
-    Tasmota does not provide any kind of support for flashing using this method. Please contact [Sonoff Support](https://sonoff.tech/support) for help.
+    Tasmota does not provide any kind of support for flashing using this method. Please contact [Sonoff Support](https://sonoff.tech/support) for help. Version 3.7.6 firmware requires that deviceid be included in the post command to the unit, otherwise it will ignore it. When the device creates its wifi network, note the number after ITEAD-, this is the device id.
 
 **IMPORTANT:** There are [some reports](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/36) suggesting that the Windows version of Sonoff DIY Tool contains a trojan. It is not clear if it actually contains the malicious code or these are just false positives due to the way Python code was converted to native executables. Nevertheless, proceed with care.
 
@@ -19,7 +19,7 @@ As Sonoff DIY is enabled by connecting GPIO16 to GND it may well be possible tha
 ## Flash procedure
 _Guide originally from [@Brunas](https://github.com/Brunas/HomeAutomation/blob/master/doc/Sonoff%20Mini%203.6.0%20to%20Tasmota.md)_
 
-0. Pair the device with the eWeLink app and update firmware. [The wifi network you connect to during this step will need to be reachable in order to enter DIY mode.](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/90)
+0. Pair the device with the eWeLink app and update firmware. Note the Device ID in Device Settings. [The wifi network you connect to during this step will need to be reachable in order to enter DIY mode.](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/90)
 1. Follow instructions how to enter DIY mode from [Sonoff](https://github.com/itead/Sonoff_Devices_DIY_Tools/blob/master/SONOFF%20DIY%20MODE%20Protocol%20Doc%20v2.0%20Doc.pdf). This is the excerpt from it:
 
 	1. Long press the button for 5 seconds to enter pairing mode, then press another 5 seconds to ender Compatible Pairing Mode (AP). The LED indicator should blink continuously.
@@ -32,12 +32,18 @@ Note: I needed to manually change IP address to 10.10.7.2, 255.0.0.0 with gatewa
 2. Use Fing or any similar local network scanning app on your smartphone or PC to find IP address of your Sonoff Mini device. MAC Vendor most likely is **Espressif** and the device has **8081** port open.
 3. Check that diy mode is working properly.
 
-`$SONOFF_IP` must be defined with the IP or FQDN of the intended Sonoff device before running the `curl` command. With curl:
+`$SONOFF_IP` must be defined with the IP or FQDN of the intended Sonoff device before running the `curl` command. With curl or with PowerShell (Windows):
 ```sh
+# curl
 SONOFF_IP="10.0.0.2"
 curl -XPOST --header "Content-Type: application/json" --data-raw '{"deviceid": "", "data": {}}' http://$SONOFF_IP:8081/zeroconf/info
 ```
 
+```pwsh
+# powershell
+$SONOFF_IP='10.0.0.2'
+Invoke-RestMethod -Method POST -Body '{"deviceid": "", "data": {}}' -Uri "http://$($SONOFF_IP):8081/zeroconf/info" | ConvertTo-Json
+```
 
 <details>
 <summary> Or with the Rester browser extension:</summary>  
@@ -75,10 +81,16 @@ If all is OK, status code *200* should be returned with bunch of data:
 If that doesn't return *200*, try going back to 5s+5s reset above.
 4. If all above works, let's unlock OTA:
 
-With curl:
+With curl or PowerShell (Windows):
 
 ```sh
+# curl
 curl -XPOST --header "Content-Type: application/json" --data-raw '{"deviceid": "", "data": {}}' http://$SONOFF_IP:8081/zeroconf/ota_unlock
+```
+
+```pwsh
+# powershell
+Invoke-RestMethod -Method POST -Body '{"deviceid": "", "data": {}}' -Uri "http://$($SONOFF_IP):8081/zeroconf/ota_unlock" | ConvertTo-Json
 ```
 
 <details>
@@ -95,12 +107,38 @@ curl -XPOST --header "Content-Type: application/json" --data-raw '{"deviceid": "
 Optionally for curiosity you could retry *info* query to check if *otaUnlock* value now is *true*
 5. Download the appropriate binary from <http://ota.tasmota.com/tasmota/release> and flash it. *NOTE: The maximum firmware size is 508kb, which precludes the standard release binary.* Absolutely do not use tasmota-minimal at this stage, this would brick your device.
 
-There are a number of [reported](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/10) [issues](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/95) with the stock firmware's OTA behavior, so it may be easier to use [an existing server](http://sonoff-ota.aelius.com/) that works around these issues.  
-`$HASH` must be defined with the `sha256sum` of the intended firmware file (the `.bin` file) before running the `curl` command.  
+!!! There are a number of [reported](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/10) [issues](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/95) with the stock 
+    firmware's OTA behavior, so it may be easier to use [an existing server](http://sonoff-ota.aelius.com/) that works around these issues.  
+
+!!! Please note: if you have 3.5.0 or 3.6.0 firmware, maybe others (see version in `/info` response), firmware has a bug: it connects to specified server, but always sends dl.itead.cn as server name.
+    That is why you have to update from server that supports serving files with server name `dl.itead.cn`
+    * `ota.tasmota.com` is NOT suitable for this.
+    * Use `sonoff-ota.aelius.com` or set up your local web server
+
+`$HASH` must be defined with the `sha256sum` of the intended firmware file (the `.bin` file) before running the `curl` command. 
+If using PowerShell, it is not necessary.
+!!! There are a number of [reported](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/10) [issues](https://github.com/itead/Sonoff_Devices_DIY_Tools/issues/95) with the stock 
+    firmware's OTA behavior, so it may be easier to use [an existing server](http://sonoff-ota.aelius.com/) that works around these issues.  
+
+!!! Please note: if you have 3.5.0 or 3.6.0 firmware, maybe others (see version in `/info` response), firmware has a bug: it connects to specified server, but always sends dl.itead.cn as server name.
+    That is why you have to update from server that supports serving files with server name `dl.itead.cn`
+    * `ota.tasmota.com` is NOT suitable for this.
+    * Use `sonoff-ota.aelius.com` or set up your local web server
+
+`$HASH` must be defined with the `sha256sum` of the intended firmware file (the `.bin` file) before running the `curl` command. 
+If using PowerShell, it is not necessary.
 For example:
 ```sh
+# curl
 HASH="5c1aecd2a19a49ae1bec0c863f69b83ef40812145c8392eebe5fd2677a6250cc"
 curl -XPOST --data "{\"deviceid\":\"\",\"data\":{\"downloadUrl\": \"http://sonoff-ota.aelius.com/tasmota-latest-lite.bin\", \"sha256sum\": \"$HASH\"} }" http://$SONOFF_IP:8081/zeroconf/ota_flash
+```
+
+```pwsh
+# powershell
+$FW_URL = 'http://sonoff-ota.aelius.com/tasmota-latest-lite.bin'
+$HASH = [BitConverter]::ToString([System.Security.Cryptography.SHA256]::Create().ComputeHash([System.Net.WebClient]::new().DownloadData($FW_URL))).Replace('-','').ToLower()
+Invoke-RestMethod -Method POST -Body ('{"deviceid":"","data":{"downloadUrl": "' + $FW_URL + '", "sha256sum": "' + $HASH +'"} }') -Uri "http://$($SONOFF_IP):8081/zeroconf/ota_flash" | ConvertTo-Json
 ```
 
 <details>
@@ -114,7 +152,9 @@ curl -XPOST --data "{\"deviceid\":\"\",\"data\":{\"downloadUrl\": \"http://sonof
 	6. You should get status code *200*
 </details>
 
-**Note:** If flashing is successful, a new **ITEAD-XXXXXXXX** access point will be created.  
+!!! Flashing can take up to few minutes, as device downloads firmware part-by-part. There is high risk of bricking device if you reboot it or if internet connection fails.
+
+**Note:** If flashing is successful, a new **tasmota-XXXXXXXX** access point will be created.  
 Connect to this AP to configure Tasmota to connect to your WiFi network. 
 
 You're now ready to [configure tasmota](https://tasmota.github.io/docs/Getting-Started/#using-web-ui).

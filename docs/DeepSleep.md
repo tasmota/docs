@@ -8,9 +8,9 @@ In order for the device to wake itself to perform its function during the DeepSl
 
 ## DeepSleep modes (regular, time based)
 
-There are TWO general methods to work with deepsleep. Method ONE wakes up the device on a regular intervall, wait for TELEPERIOD and immediate go to deepsleep again. This is mostly to make regular measurements and send them to a MQTT broker. Method TWO is more complex and use TIMER events to wakeup the device. The way and when the device go to deepsleep again depends on the configuration. See explanation below.
+There are TWO general methods to work with deepsleep. Method ONE wakes up the device on a regular interval, wait for TELEPERIOD and immediate go to deepsleep again. This is mostly to make regular measurements and send them to a MQTT broker. Method TWO is more complex and use TIMER events to wakeup the device. The way and when the device go to deepsleep again depends on the configuration. See explanation below.
 
-### Repeating regular deepsleep based on intervall
+### Repeating regular deepsleep based on interval
 
 ([`DeepSleepTime`](Commands.md#deepsleeptime)) `DeepSleepTime` sets the time the device remains in DeepSleep before it returns to full operating mode. Once the command is issued, the DeepSleep cycle commences. 
 
@@ -26,7 +26,7 @@ With Version 13.2 there is a new functionality to use TIMERS for the wakeup proc
 
 rule1|state|Behavior
 -|:-:|-
-`Wakeup`|ON/1|Device will do a TELEPERIOD and go to deepsleep asap, similar to deepsleep with intervall
+`Wakeup`|ON/1|Device will do a TELEPERIOD and go to deepsleep asap, similar to deepsleep with interval
 `Wakeup`|OFF/0|Device will stay ON until send to deepsleep with Restart 9 (deepsleep)
 `Wakeup`|ONCE/5|Device will do a TELEPERIOD and go to deepsleep asap, with the next wakeup the device will stay ON
 
@@ -34,12 +34,14 @@ Now every TIMER that has RULE as an action will wakeup the device at the propose
 
 ```console
 Rule2
-  on timers#minute=%sunset% do rule1 5 endon
+  on time#minute==%sunset% do rule1 5 endon
 
 Rule2 ON
 ```
 
 Be aware that `rule1 Wakeup` will DISABLE the capability to use deepsleeptime. You have to clean rule1 if you want to use the regular wakeups through deepsleeptime window.
+
+Also be aware that `restart 9` does not trigger the deepsleep timing. It just send the device into deepsleep and you have to wake up the device externally.
 
 ![](_media/deepsleep_timers.png)
 
@@ -53,7 +55,7 @@ Current timer will wakeup the device every day 1h after sunrise. The Time will b
 
 ![](_media/deepsleep_switch.png)
 
-Select another GPIO (let's call it "GPIOn") and connect it GND. This can be performed through a switch per the schematic below. Flipping the switch to "ON" will prevent Tasmota to enter DeepSleep again after next wake-up until the switch is flipped back OFF. *On the diagram, blue denotes additional parts and connections to be able to disableDeepSleep.* GPIOn should be defined as `DeepSleep (182)` in the configuration as shown below:
+Select another GPIO (let's call it "GPIOn") and connect it GND. This can be performed through a switch per the schematic below. Flipping the switch to "ON" will prevent Tasmota to enter DeepSleep again after next wake-up until the switch is flipped back OFF. *On the diagram, blue denotes additional parts and connections to be able to disable DeepSleep.* GPIOn should be defined as `DeepSleep (182)` in the configuration as shown below:
 
 ![](_media/deepsleep_deepsleep182.png)
 

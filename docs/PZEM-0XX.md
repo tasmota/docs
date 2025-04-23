@@ -1,6 +1,6 @@
 # PZEM-0xx power monitor
 
-!!! note "PZEM is a dedicated separate energy monitor, device calibration in Tasmota is not supported."
+!!! note "PZEM is a dedicated separate energy monitor, device calibration in Tasmota is not necessary, the PZEM devices are precisely factory-calibrated."
 
 ## PZEM-004
 

@@ -60,6 +60,10 @@ In the list below `p` stands for parameter and may be a number from 1 to n digit
 On monochrome graphic displays things are drawn into a local frame buffer and sent to the display either
 via the `d` command or automatically at the end of the command.
 
+Co-ordinates are mapped from 0,0 (x,y) at the top left of the logical display, where x is the horizontal axis incrementing
+right and y is the vertical axes incrementing down. How the logical display is physically displayed (rotated) on screen can be adjusted on some
+displays using the `DisplayRotate` command.
+
 ### Positioning
 
 `lp` = sets a character line to print at (on LCD display `p` = {0&hellip;}, on TFT display `p` = {1&hellip;})  
@@ -74,13 +78,13 @@ and either x or x for the horizontal position. Neither x nor y are advanced/upda
 
 `hp` = draws a horizontal line with length `p` (x is advanced)  
 `vp` = draws a vertical line with length `p` (y is advanced)  
-`Lp:p` = draws a line top:`p` (x,y are advanced)  
+`Lp:p` = draws a line to destination `p:p` (x,y are advanced)  
 `kp` = draws a circle with radius `p`  
 `Kp` = draws a filled circle with radius `p`  
-`rp:p` = draws a rectangle with `p` with and `p` height  
-`Rp:p` = draws a filled rectangle with `p` with and `p` height  
-`up:p:p` = draws a rounded rectangle with `p` with, `p` height and `p` radius v
-`Up:p:p` = draws a filled rounded rectangle with `p` with, `p` height and `p` radius  
+`rp:p` = draws a rectangle with `p` width and `p` height  
+`Rp:p` = draws a filled rectangle with `p` width and `p` height  
+`up:p:p` = draws a rounded rectangle with `p` width, `p` height and `p` radius v
+`Up:p:p` = draws a filled rounded rectangle with `p` width, `p` height and `p` radius  
 
 ### Miscellaneous
 
@@ -291,12 +295,12 @@ Common colors table:
 
 | Color | Code | Color | Code | Color | Code |
 | -- | -- | -- | -- | -- | -- |
-| Black	| 0 | Navy	| 15 | Dark green	| 3 |
-| Dark cyan	| 1007 | Maroon	| 30720 | Purple	| 30735 |
-| Olive	| 31712 | Light grey	| 50712 | Dark grey	| 31727 |
-| Blue	| 31 | Green	| 7 | Cyan	| 2047 |
-| Red	| 63488 | Magenta	| 63519 | Yellow	| 65504 |
-| White	| 65535 | Orange	| 64800 | Green yellow	| 45029 |
+| Black	| 0 | White	| 65535 | Red	| 63488 |
+| Green	| 2016 | Blue	| 31 | Cyan	| 2047 |
+| Magenta	| 63519 | Yellow	| 65504 | Navy	| 15 |
+| Dark green	| 992 | Dark cyan	| 1007 | Maroon	| 30720 |
+| Purple	| 30735 | Olive	| 31712 | Light grey	| 50712 |
+| Dark grey	| 31727 | Orange	| 64800 | Green yellow	| 45029 |
 | Pink	| 64536 | | | | |
 
 
@@ -343,8 +347,7 @@ EPDFont:
 ## Hardware Connections
 I<sup>2</sup>C displays are connected in the usual manner and defined via the GPIO component selection.  
 
-The I<sup>2</sup>C address must be specified using `DisplayAddress XX`, e.g., `60`. The model must be specified with `DisplayModel`, e.g., `2` for SSD1306. To permanently turn the display on set `DisplayDimmer 100`. Display rotation can be permanently set using `DisplayRotate X` (x = `0..3`).
-
+The I<sup>2</sup>C address must be specified using `DisplayAddress XX`, e.g., `60`. The model must be specified with `DisplayModel`, e.g., `2` for SSD1306. In versions with Universal Display Driver the DisplayModel is always `17`. To permanently turn the display on set `DisplayDimmer 100`. Display rotation can be permanently set using `DisplayRotate X` (x = `0..3`). 
 On SPI the CS and DC pins when needed must use the pin definition with Display_ID + CS e.g. ST7789_CS
 
 E-Paper displays are connected via software 3-wire SPI `(CS, SCLK, MOSI)`. DC should be connected to GND , Reset to 3.3 V 
@@ -430,11 +433,11 @@ The EPD fonts use about 9k space, which can be selected at compile time using \#
 
 ## Universal Display Driver
 
-Documentation for Universal Display Driver was moved to a [specific page](Universal-Display-Drive.md#universal-display-driver-udisplay)
+Documentation for Universal Display Driver was moved to a [specific page](Universal-Display-Driver#universal-display-driver-udisplay)
 
 ## Universal Touch Driver  
 
-Documentation for Universal Touch Driver was moved to a [specific page](Universal-Display-Drive.md#universal-touch-driver-utouch)
+Documentation for Universal Touch Driver was moved to a [specific page](Universal-Display-Driver#universal-touch-driver-utouch)
 
 ## Compiling
 There are also many variants of each display available and not all variants may be supported.  
@@ -443,7 +446,7 @@ There are also many variants of each display available and not all variants may 
  ---|---
 USE_DISPLAY | Enable display support. Also requires at least one of the following compilation directives 
 USE_DISPLAY_LCD | Enable LCD display. Also requires `USE_I2C`
-USE_DISPLAY_SSD1306 | Enable OLED SSD1306 display. Also requires `USE_I2C`
+USE_DISPLAY_SSD1306 | Enable OLED SSD1306 display. Also requires `USE_I2C` / Now with Universal Display Driver
 USE_DISPLAY_MATRIX | Enable MATRIX display
 USE_DISPLAY_ILI9341 | Enable TFT ILI9341 display. Also requires `USE_SPI`<br>if seconds SPI bus on ESP32 shall be used SSPI must be defined instead of SPI<br>ILI9342 also supported, select with cmd displayilimode 3, default is: displayilimode 1 (ILI9341)
 USE_DISPLAY_EPAPER_29 | Enable Waveshare EPAPER_29 display.(black/white, partial update)<br>Also requires `USE_SPI`

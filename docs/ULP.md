@@ -1,5 +1,9 @@
 # ULP for ESP32 :material-cpu-32-bit:
   
+## Ultra Low Power coprocessor
+
+Many members of the ESP32 family have an additional coprocessor with limited features and processing power but at the same time the ability to work independent from the main CPU and in deep sleep mode. This Berry module exposes these processing units in order to load and execute code at runtime thus allowing to provide solutions for special use cases and using every bit of available processing power.
+
 ??? failure "This feature is not included in precompiled binaries"  
     When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
     ```arduino
@@ -11,29 +15,30 @@
                             -DUSE_BERRY_ULP
     ```  
   
-  
-## Ultra Low Power coprocessor
-  
 The purpose of this document is not to repeat every information of these documents:  
 [https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/ulp.html](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/ulp.html)  
 [https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/ulp_instruction_set.html](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/ulp_instruction_set.html)  
   
 It will also not make it easy to write assembler code for the ULP and embed it in Berry projects. But it shall guide you through the process of adapting one of many open source examples, do some little changes and setting up a toolchain for personal use cases.  
-!!! tip 
-    It can even make it easier and substantially faster to rapidly develop assembler projects, because there is no flashing involved in the code deployment, which happens in Berry at runtime.
+In return, it can even make it easier and substantially faster to rapidly develop assembler projects, because there is no flashing involved in the code deployment, which happens in Berry at runtime.
   
   
 ### FSM and RISCV ... what?
   
 Currently there are 3 SOC's of the ESP32-family with an included ULP, which are the ESP32, the ESP32S2 and the ESP32S3.  
+New to the game is the ESP32C6 with a so called **LP_CORE** which for simpicity is handled by the ULP module too.  
+  
 The oldest one - the ESP32 - features the simplest type, which Espressif names **Finite State Machine** or in short **FSM**. This ULP can only be programmed in assembly.  
 The newer ESP32S2/S3 allow to run the ULP in FSM mode too with some minor additions in the instruction set. They are able ( = should be able in most cases) to use the same assembly source code, but the resulting binaries are not compatible.  
 But additionally both of the new models (ESPS2/S3) are able to run the ULP in RISCV mode, which has a different toolchain and allows to use C as programming language. This makes it a lot easier to work with it. Only one ULP mode possible at a time, so you can run only in FSM or RISCV mode.  
+The LP_CORE of the ESP32C6 always runs in RISCV mode and is the most powerful low power core to date.  
+
 For Tasmota it was decided to keep things as simple and modern as possible, thus for ESP32S2 and ESP32S3 the old FSM mode is not supported and we enjoy the simplicity of the high level language C. 
+Of course it is possible to use inline assembly for the RISCV cores in a C file for hand optimized code parts.
    
 Bottom line for Tasmota:  
 **ESP32** - uses ULP in **FSM** mode  
-**ESP32S2 and ESP32S3** - use ULP in **RISCV** mode  
+**Every other device** - use ULP/LP in **RISCV** mode  
   
 !!! tip
     Although the main core of the ESP32C3 uses the RISCV architecure, there is no built in ULP at all. For the upcoming ESP32C6 an integrated ULP was anounced, but no further info is available at the moment. 
@@ -42,12 +47,12 @@ Bottom line for Tasmota:
   
 To simplify some things:  
 Everything in the ULP is limited. On the old FSM type ULP there are only 4 registers, very few operations and limited memory access. For some operations it is not possible to use mutable values, but the code must be fixed (for pin/register access) at compile time. That's why you will see lots of defines and constants in basically every example project.  
-This was the reason, why for projects like Tasmota it never made sense to include ULP code.  
+This was the reason, why for projects like Tasmota it never made sense to include ULP code in core parts.  
   
 ### Advantages of the ULP
 Besides the possibility to run code in deep sleep and wake up the system, it can also make sense to run the ULP in parallel to the main system.  
 To simplify again:  
-Everything that is critical to precise timing and is somehow portable to ULP, should run better than on the main cores! This includes the internal temperature sensor and the hall sensor. Additionally it can free the main cores of some tasks.  
+Everything that is critical to precise timing and is somehow portable to ULP, should run better than on the main cores! This includes the internal temperature sensor and the hall sensor. Additionally it can free the main cores of some tasks. It could be demonstrated that the newer LP_CORE is fast enough to controll a WS2812 LED strip using bitbanging.  
   
 ### Data exchange between main system and ULP
   
@@ -56,6 +61,21 @@ There is a memory region which is located at fixed  address 0x5000000, which is 
 ### General program flow
   
 A typical ULP program is started from the main core at the position of the so called *global entry point*. Then it executes its chain of commands and ends with a `halt` command. It is technically possible to create a run loop inside the code and to not end with `halt`. But typically such a loop is realized with a wakeup timer, that restarts the  with a certain interval, which can be set with `ULP.wake_period(register,time in microseconds)`. The register is numbered from 0 to 4 and can be changed in the assembly code with `sleep register`.  
+
+```mermaid
+sequenceDiagram
+    participant CPU
+    participant RTC_MEM
+    participant ULP/LP
+    CPU->>RTC_MEM: Load ULP program
+    CPU->>ULP/LP: Start ULP program
+    CPU->>CPU: Continue normal work
+    CPU->>CPU: or deep sleep
+    ULP/LP->>ULP/LP: Do some work
+    ULP/LP->>RTC_MEM: Update data in RAM
+    ULP/LP->>CPU: optional - Wake up CPU
+    CPU->>RTC_MEM: Work with data in RAM
+```
   
 ### Tasmota conventions
   
@@ -77,9 +97,33 @@ WRITE_RTC_REG(RTC_IO_TOUCH_PAD5_REG, 31, 1, 1) //hold
 ## Using external toolchains for this driver  
   
 There are 2 ways to assemble code for later use in Tasmota. In theory every external ULP project, which fits in the reserved memory space that is defined in the framework package used to compile the Tasmota firmware, should be convertible. This limit is subject to change.  
+
+###  Export from ESP-IDF project
   
-### Micropython and micropython-esp32-ulp (FSM only)
+This is the recommended way, that works for every ULP version in Tasmota.
   
+Many projects are using the ESP-IDF with CMAKE and will be compiled with `idf.py build`. We can extract the ULP code without flashing this project, with two simple methods: 
+
+#### Python script 'binS2Berry.py'
+Start a helper Python [binS2Berry.py](https://github.com/Staars/berry-examples/blob/main/ulp_helper/binS2Berry.py) script in the root level of the project, which prints hooks to used variables and functions to console as Berry code, that can be used as a base application.  
+  
+#### Web-App:  
+Use the embedded JS application right here.  
+<script src="../extra_javascript/ulp2berry.js"></script>
+<p>ESP-IDF build folder: <input type="file" id="ulp_files" onchange="processULPFiles()" webkitdirectory mozdirectory multiple/></p>
+(You can drag and drop the folder on the button too.)
+
+<div id="ulp_output"></div>
+``` py
+# Generate ULP code in your browser !! Parsing completely in JS, no file upload to a server.
+```
+  
+Additionally it can be helpful, to test the ULP code in a minimal working example outside of Tasmota.
+  
+### Micropython and micropython-esp32-ulp (FSM only) - DEPRECATED!!
+
+!!! failure "DO NOT USE FOR NEW PROJECTS!"  
+
 Only available for the ESP32 using the FSM type ULP.
   
 A great project to run ULP code in Micropython on the ESP32 can be used to assemble and export the same projects to Tasmota.  
@@ -101,30 +145,6 @@ The ULP code is embedded as a multiline string in Micropython scripts. For use i
 After you created or did download your `ulp_app.py` you can export the data with 'micropython ulp_app.py' to the console, from where it can be copy pasted to the Berry console or to your Berry project.  
 !!! tip
     It is recommended to embed the setup steps for GPIO pins or ADC to the bottom part of this `ulp_app.py` by printing Berry commands for easier testing in the Berry console.
-  
-
-###  Export from ESP-IDF project
-  
-This is the only way, that works for every ULP version in Tasmota.
-  
-Many projects are using the ESP-IDF with CMAKE and will be compiled with `idf.py build`. We can extract the ULP code without flashing this project, with two simple methods: 
-
-#### Python script 'binS2Berry.py'
-Start a helper Python [binS2Berry.py](https://github.com/Staars/berry-examples/blob/main/ulp_helper/binS2Berry.py) script in the root level of the project, which prints the same information to console as the Micropython way.  
-  
-#### Web-App:  
-Use the embedded JS application right here.  
-<script src="../extra_javascript/ulp2berry.js"></script>
-<p>ESP-IDF build folder: <input type="file" id="ulp_files" onchange="processULPFiles()" webkitdirectory mozdirectory multiple/></p>
-(You can drag and drop the folder on the button too.)
-
-<div id="ulp_output"></div>
-``` py
-# Generate ULP code in your browser !! Parsing completely in JS, no file upload to a server.
-```
-  
-Thus the ULP projects that may fail to assemble in Micropython can be used too. Additionally it can be helpful, to test the ULP code in a minimal working example outside of Tasmota.
-  
   
 
 ## Examples

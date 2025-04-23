@@ -5,11 +5,13 @@
 Starting with version 10.0.0.4, TLS now support dual mode, depending of the value of `SetOption132`:
 
 - `SetOption132 0` (default): the server's identity is checked against pre-defined Certificate Authorities. There is no further configuration needed. Tasmota includes the following CAs:
-  - [LetsEncrypt R3 certificate](https://letsencrypt.org/certificates/), RSA 2048 bits SHA 256, valid until 20250915
+  - [Let's Encrypt ISRG Root X1](https://letsencrypt.org/certificates/), RSA 4096 bits SHA 256, valid until 20300604, starting with Tasmota version 13.4.1.2
   - [Amazon Root CA](https://www.amazontrust.com/repository/), RSA 2048 bits SHA 256, valid until 20380117, used by AWS IoT
 - `SetOption132 1`: Fingerprint validation. This method works for any server certificate, including self-signed certificates. The server's public key is hashed into a fingerprint and compared to a pre-recorded value. This method is more universal but requires an additional configuration (see below)
 
 There is no performance difference between both modes.
+
+Because of [changes](https://letsencrypt.org/2024/04/12/changes-to-issuance-chains) in the Let's Encrypt certificate chain, Tasmota needs to be updated to at least version 13.4.1.2 to validate certificates issued by Let's Encrypt after June 6th, 2024.
 
 ## Fingerprint Validation
 
@@ -54,7 +56,6 @@ To use it you must [compile your build](Compile-your-build). Add the following t
 #define MQTT_TLS_ENABLED       true              // [SetOption103] Enable TLS mode (requires TLS version)
 //  #define USE_MQTT_TLS_CA_CERT                   // Force full CA validation instead of fingerprints, slower, but simpler to use.  (+2.2k code, +1.9k mem during connection handshake)
                                                    // This includes the LetsEncrypt CA in tasmota_ca.ino for verifying server certificates
-//  #define USE_MQTT_TLS_FORCE_EC_CIPHER           // Force Elliptic Curve cipher (higher security) required by some servers (automatically enabled with USE_MQTT_AWS_IOT) (+11.4k code, +0.4k mem)
 #endif
 ```
 
@@ -172,8 +173,9 @@ Here are most common TLS errors:
 
 |Error code | Description|
 |---:|:---|
-| -1004 | Missing CA |
-| -1003 | Missing EC private key |
+| -1005 | Time-out during TLS handshake |
+| -1004 | Missing CA (deprecated)|
+| -1003 | Missing EC private key (deprecated)|
 | -1002 | Cannot connect to TCP port |
 | -1001 | Cannot resolve IP address |
 | -1000 | Out of memory error |

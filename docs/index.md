@@ -15,23 +15,21 @@ Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v13.4.0">Tasmota v13.4.0 Quinta</a></span>
+<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v14.6.0">Tasmota v14.6.0 Ryan</a></span>
 
 ## Breaking Changes
 
-- NeoPool SENSOR topic `Power` renamed to `Powerunit` 
-- Remove Berry `every_200ms` event which didn't work in the first place
+- Berry removed `Leds.create_matrix` from the standard library waiting for reimplementation
+- HASPmota added `y2_min` and `y2_max` to control the second series of `chart`
+- HASPmota default theme is now Tasmota-style
 
 ## New Features
 
-- Support for ESP32-C2 and ESP32-C6 using Arduino core v3
 - Added support for:
-  - Winsen ZH03x particle sensor
-  - 2nd I2C bus for some sensors
-  - NeoPool enhancements for Home Assistant
-- DeepSleep support through TIMERS
-- ESP32 Partition Wizard can be loaded dynamically
-- ESP32 support for Avago Tech Bluetooth Buttons
+  - Vango Technologies V924x ultralow power, single-phase, power measurement
+  - HLK-LD2402 24GHz smart wave motion sensor
+  - Telnet server
+  - LVGL experimental mirroring of display on Web UI
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
 

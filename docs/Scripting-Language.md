@@ -34,14 +34,13 @@
     USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
     USE_FACE_DETECT | enables face detecting in ESP32 Webcam
     USE_SCRIPT_TASK | enables multitasking Task in ESP32
-    USE_LVGL | enables support for LVGL
+    `USE_LVGL` | enables support for LVGL, no longer supported, use Berry script with LVGL
     USE_SCRIPT_GLOBVARS | enables global variables and >G section
     USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
     SML_REPLACE_VARS | enables possibility to replace the lines from the (SML) descriptor with Vars
     NO_USE_SML_SCRIPT_CMD | disables SML script cmds
     USE_SCRIPT_I2C | enables I2C support
     USE_SCRIPT_SERIAL | enables support for serial io cmds
-    USE_LVGL | enables support for LVGL
     USE_SCRIPT_TIMER | enables up to 4 Arduino timers (so called tickers)  
     SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
     LARGE_ARRAYS | enables arrays of up to 1000 entries instead of max 127  
@@ -115,13 +114,15 @@ with all linker files
 
 #### script init error codes
 after initialization the script reports some info in the console e.g:  
-09:25:26.607 SCR: nv=4, tv=1, vns=21, vmem=2127, smem=6200, gmem=480, tmem=8828  
+00:00:00.043 SCR: nv=15, tv=1, vns=83, vmem=895, smem=8192, gmem=588, pmem=0, tmem=9758  
 nv = number of used variables in total (numeric and strings)  
 tv = number of used string variables  
 vns = total size of name strings in bytes (may not exceed 255) or #define SCRIPT_LARGE_VNBUFF extents the size to 4095
+
 vmem = used heap ram by the script (psram if available)  
 smem = used script (text) memory (psram if available)  
-gmem = used script global static memory  
+gmem = used script global static memory 
+pmem = used script permanent memory  
 tmem = used script memory total  
 
 if the script init fails an error code is reported:    
@@ -146,6 +147,10 @@ then with cmd r the script is transferred to the ESP and immediately started.
 (all comments and indents are removed before transferring)
 see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/AACcVmpZ4AfpdrWE_MPFGmbma?dl=0)  
 
+#### Visual Studio Code Extension
+
+If you're used to working with Visual Studio Code, you can use [this extension](https://marketplace.visualstudio.com/items?itemName=StefanoBertini.tasmota-script-support) to edit your scripts with the benefit of various helpful features, such as, for example, Syntax Highlighting, Automatic script upload, #define, ifdef and ifndef preprocessor macros, Code Folding, Code Snippet and Hover hints on tasmota functions and variables documentation.  
+
 #### Console Commands
 
 `script <n>` <n>: `0` = switch script off; `1` = switch script on  `8` = switch stop on error off; `9` = switch stop on error on 
@@ -162,7 +167,9 @@ see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/
 ## Script Sections
 _Section descriptors (e.g., `>E`) are **case sensitive**_  
 a valid script must start with >D in the first line  
-`>D ssize`   
+
+### >D ssize
+
   `ssize` = optional max string size (default=19, max=48 unless increased with `#define SCRIPT_MAXSSIZE`)  
   define and init variables here, must be the first section, no other code allowed  
   `p:vname`  
@@ -174,7 +181,7 @@ therefore when specifing permanent variables, add newly defined ones always at t
   specifies auto increment counters if =0 (in seconds)  
   `g:vname`   
   specifies global variable which is linked to all global variables with the same definition on all devices in the homenet.
-  when a variable is updated in one device it is instantly updated in all other devices. if a section >G exists it is executed when a variable is updated from another device (this is done via UDP-multicast, so not always reliable)  
+  when a variable is updated in one device it is instantly updated in all other devices. if a section >G exists it is executed when a variable is updated from another device (this is done via UDP-multicast, so not always reliable) the global variable receiver may be reset by cmd `gvr`  
   `I:vname`   
   specifies an integer 32 bit variable instead of float. (limited support) integer constants must be preceeded by '#'  
   `m:vname`   
@@ -182,7 +189,7 @@ therefore when specifing permanent variables, add newly defined ones always at t
   `M:vname`   
   specifies a moving average filter variable with 8 entries (for smoothing data, should be also used to define arrays)  
   (max 5 filters in total m+M) optional another filter length (1..127) can be given after the definition.  
-  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer (may be set also), x = `-1` returns array length, x = `-2` returns array average)
+  Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer (may be set also), x = `-1` returns array length, x = `-2` returns array average,x = `-3` returns array sum)
   Using this filter, vars can be used as arrays, #define LARGE_ARRAYS allows for arrays up to 1000 entries  
   array may also be permanent by specifying an extra `:p`  
   `m:p:vname`   
@@ -195,29 +202,35 @@ therefore when specifing permanent variables, add newly defined ones always at t
     Memory is dynamically allocated as a result of the D section.  
     Copying a string to a number or reverse is supported  
 
-`>B`  
+### >B
+
 executed on BOOT time before sensors are initialized and on save script  
 
-`>BS`  
+### >BS
+
 executed on BOOT time after sensors are initialized  
 
-`>E`  
+### >E
 Executed when a Tasmota MQTT `RESULT` message is received, e.g., on `POWER` change. Also  Zigbee reports to  this section.
 
-`>F`  
+### >F
 Executed every 100 ms  
 
-`>S`  
+### >S
+
 Executed every second  
 
-`>R`  
+### >R
+
 Executed on restart. p vars are saved automatically after this call  
 
-`>T`  
+### >T
+
 Executed at least at [`TelePeriod`](Commands.md#teleperiod) time (`SENSOR` and `STATE`) but mostly faster up to every 100 ms, only put `tele-` vars in this section  
 Remark: JSON variable names (like all others) may not contain math operators like - , you should set [`SetOption64 1`](Commands.md#setoption64) to replace `-` (_dash_) with `_` (_underscore_). Zigbee sensors will not report to this section, use E instead.
 
-`>H`  
+### >H
+
 Alexa Hue interface (up to 32 virtual hue devices) *([example](#hue-emulation))*  
 `device`,`type`,`onVars`  
 Remark: hue values have a range from 0-65535. Divide by 182 to assign HSBcolors hue values.
@@ -229,7 +242,8 @@ Remark: hue values have a range from 0-65535. Divide by 182 to assign HSBcolors 
 !!! example 
     `lamp1,E,on=pwr1,hue=hue1,sat=sat1,bri=bri1,ct=ct1`
 
-`>h` passcode  
+### >h passcode  
+
 Siri Homekit interface (up to 16 virtual Homekit devices)  
 passcode = 111-11-111  keep this format, numbers 0-9  
 `name`,`type`,`opt`,`var1`,`var2`...  
@@ -277,29 +291,38 @@ the special variables
     lib_extra_dirs  
     lib/libesp32_div  
     
-`>U`  
+### >U
+
 JSON messages from cmd status arrive here
   
-`>C`  
+### >C
+
 HTML messages arrive here (on web user io event, (if defined USE_HTML_CALLBACK))  
 
-`>G`  
+### >G
+
 global variable updated section
 
-`>P`  
+### >P
+
 any power change triggers here (if defined SCRIPT_POWER_SECTION)
 
-`>jp`  
+### >jp
+
 https webpage json parse arrives here  
+
+### >ti#
 
 `>ti1`  
 `>ti2`  
 `>ti3`  
-`>ti4`  
+
 ticker callback after timer expiration
 
 
-`>b` _(note lower case)_  
+### >b
+
+_(note lower case)_  
 executed on button state change  
 
 `bt[x]`   
@@ -321,10 +344,12 @@ read button state (x = `1.. MAX_KEYS`)
     endif
     ```
   
-`>J`  
+### >J
+
 The lines in this section are published via MQTT in a JSON payload on [TelePeriod](Commands.md#teleperiod). ==Requires compiling with `#define USE_SCRIPT_JSON_EXPORT `.==  
 
-`>W`  
+### >W
+
 The lines in this section are displayed in the web UI main page. ==Requires compiling with `#define USE_SCRIPT_WEB_DISPLAY`.== 
 
 You may put any html code here. 
@@ -335,20 +360,24 @@ You may put any html code here.
 - HTML statements preceded with a `$` are displayed in the main section  
 - USER IO elements are displayed at the top of the page  
   
-optionally these sections may be used  
-`>WS`  
+## optionally these sections may be used  
+
+### >WS
+
 - HTML statements are displayed in the sensor section of the main page  
   
-`>WM`  
+### >WM
+
 - HTML statements are displayed in the main section of the main page  
 
 for next loops are supported to repeat HTML code (precede with % char)
+```
 %for var from to inc
 %next
-
+```
 but this method is preferred:
 script subroutines may be called sub=name of subroutine, like normal subroutines
-%=#sub
+`%=#sub`
 in this subroutine a web line may be sent by wcs (see below) thus allowing dynamic HTML pages
 
 =#sub(x) in any position of webline calls subroutine. this allows inserting content
@@ -360,13 +389,16 @@ insa(array) in any position insert all elements from an array comma separated
 A web user interface may be generated containing any of the following elements:  
     
 remark: state variable names used for IO in the web interface may not contain an underscore.  
-**Button:**   
+
+#### Button
+
  `bu(vn txt1 txt2)` (up to 4 buttons may be defined in one row)  
  `vn` = name of variable to hold button state  
  `txt1` = text of ON state of button  
  `txt2` = text of OFF state of button  
 
-**Pulldown:**   
+#### Pulldown
+
  `pd(vn label (xs) txt1 txt2 ... txtn)`  
  `vn` = name of variable to hold selected state  
  `label` = label text  
@@ -374,7 +406,8 @@ remark: state variable names used for IO in the web interface may not contain an
  `txt1` = text of 1. entry  
  `txt2` = text of 2. entry and so on  
   
-**Radio button:**   
+#### Radio button
+
  `rb(vn label (xs) txt1 txt2 ... txtn)`  
  `vn` = name of variable to hold selected state  
  `label` = label text  
@@ -382,13 +415,15 @@ remark: state variable names used for IO in the web interface may not contain an
  `txt1` = text of 1. entry  
  `txt2` = text of 2. entry and so on  
     
-**Checkbox:**   
+#### Checkbox
+
  `ck(vn txt (xs))`  
  `vn` = name of variable to hold checkbox state  
  `txt` = label text   
  `xs` = optional xs (default 200) 
 
-**Slider:**    
+#### Slider
+
 `sl(min max vn ltxt mtxt rtxt)`  
  `min` = slider minimum value  
  `max` = slider maximum value  
@@ -397,20 +432,20 @@ remark: state variable names used for IO in the web interface may not contain an
  `mtxt` = label middle of slider  
  `rtxt` = label right of slider  
   
-**Text Input:**    
+#### Text Input    
  `tx(vn lbl (xs) (type min max))`  
  `vn` = name of string variable to hold text state  
  `lbl` = label text  
  `xs` = optional xs (default 200)  
  `type min max` = optional strings type = e.g "datetime-local" for date+time selector, min, max = date-time min max range  
   
-**Time Input:**    
+#### Time Input    
  `tm(vn lbl (xs))`  
  `vn` = name of number variable to hold time HHMM as number e.g. 1900 means 19:00  
  `lbl` = label text  
  `xs` = optional xs (default 70)  
   
-**Number Input:**  
+#### Number Input  
  `nm(min max step vn txt (xs) (prec))`  
  `min` = number minimum value  
  `max` = number maximum value  
@@ -420,17 +455,20 @@ remark: state variable names used for IO in the web interface may not contain an
  `xs` = optional xs (default 200)  
  `prec` = optional number precision (default 1)  
   
-**special html options:**  
+#### special html options  
   `so(flags)`  
   `WSO_NOCENTER` = 1 force elements not centered  
   `WSO_NODIV` = 2 force elements not in extra \<div\>  
   `WSO_FORCEPLAIN` = 4 send line in plain (no table elements)  
   `WSO_FORCEMAIN` = 8 send lines in main mode ($ mode)  
   
- **Google Charts:**  
+### Google Charts  
+ 
   google chart support requires arrays and to make sense also permanent arrays. Therefore on 4M Flash Systems the use of `USE_UFILESYS` is recommended while on 1 M Flash Systems the special EEPROM mode should be used (see above). other options may also be needed like `LARGE_ARRAYS`  
   
-  draws a google chart with up to 4 data sets per chart  
+#### basic chart
+
+draw a google chart with up to 4 data sets per chart  
   `gc(T (size) array1 ... array4 "name" "label1" ... "label4" "entrylabels" "header" {"maxy1"} {"maxy2"})`   
   `T` = type  
   - b=barchart  
@@ -448,7 +486,9 @@ remark: state variable names used for IO in the web interface may not contain an
   
   b,l,h type may have the '2' option to specify exactly 2 arrays with 2 y scales given at the end of parameter list.  
   
-  a very individual chart may be specified by splitting the chart definition and inserting the chart options directly see example below  
+####  advanced chart
+a custom chart may be specified by splitting the chart definition and inserting the chart options directly.
+see example below  
   
   `size` = optional size, allows to use only part of an array, must be lower then array size  
   
@@ -467,8 +507,10 @@ remark: state variable names used for IO in the web interface may not contain an
   
   additionally you have to define the html frame to put the chart in (both lines must be preceded by a $ char)
   e.g.  
-  <pre><code>$&lt;div id="chart1"style="width:640px;height:480px;margin:0 auto">&lt;/div>
-  $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")</pre></code>
+  ```
+  $<div id="chart1"style="width:640px;height:480px;margin:0 auto"></div>
+  $gc(c array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so" "Solar feed")
+  ```
   
   you may define more then one chart. The charts id is chart1 ... chartN
   
@@ -489,7 +531,8 @@ remark: state variable names used for IO in the web interface may not contain an
   
   
   
-`>w` ButtonLabel
+### >w ButtonLabel
+
 generates a button with the name "ButtonLabel" in Tasmota main menu.  
 Clicking  this button displays a web page with the HTML data of this section.
 all cmds like in >W apply here. these lines are refreshed frequently to show e.g. sensor values.
@@ -501,12 +544,21 @@ you may display files from the flash or SD filesystem by specifying the url:  IP
 ==Requires compiling with `#define SCRIPT_FULL_WEBPAGE`.==  
 
   
-`>M`  
+###  >M
+
 [Smart Meter Interface](Smart-Meter-Interface)  
+
+###  >y
+
+
+on devices without a file system a configuration string may be defined here, e.g. xnrg_29_modbus.ino driver 
+
 
 If a variable does not exist, `???` is displayed for commands  
 
 If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var` does not exist the destination variable is ==NOT== updated.  
+
+
 
 ## Special Variables
 
@@ -580,12 +632,16 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sf(F)` = sets the CPU Frequency (ESP32) to 80,160,240 Mhz, returns current Freq.  
 `s(x)` = explicit conversion from number x to string  may be preceded by precision digits e.g. s(2.2x) = use 2 digits before and after decimal point  
   
-I2C support #define USE_SCRIPT_I2C  
+### I2C support
+
+`#define USE_SCRIPT_I2C`
 `ia(AA)`, `ia2(AA)` test and set I2C device with address AA (on BUS 1 or 2), returns 1 if device is present  
 `iw(aa val)` , `iw1(aa val)`, `iw2(aa val)`, `iw3(aa val) `write val to register aa (1..3 bytes), if in aa bit 15 is set no destination register is transfered (needed for some devices), if bit 14 is set byte order is reversed  
 `ir(aa)`, `ir1(aa)`, `ir2(aa)`, `ir3(aa)` read 1..3 bytes from register aa  
  
-Onewire support #define USE_SCRIPT_ONEWIRE  
+### Onewire support 
+
+`#define USE_SCRIPT_ONEWIRE`
 support for onewire either directly or via serial port with onewire bus driver DS2480B  
 `ow(SEL <opt PAR>)`
     SEL 0 = init bus with pin number N (if bit 15 ist set, select serial DS2480B, lsb = rec pin, msb = trx pin)  
@@ -601,7 +657,9 @@ support for onewire either directly or via serial port with onewire bus driver D
     SEL 10-18 = get byte (1-8) of adress from index PAR  
     SEL 99 = delete bus driver  
     
-Serial IO support #define USE_SCRIPT_SERIAL  
+### Serial IO support 
+
+`#define USE_SCRIPT_SERIAL  `
 `so(RXPIN TXPIN BR)` open serial port with RXPIN, TXPIN and baud rate BR with 8N1 serial mode (-1 for pin means don't use)  
 `so(RXPIN TXPIN BR MMM)` open serial port with RXPIN, TXPIN and baud rate BR and serial mode e.g 7E2 (all 3 modechars must be specified)  
 `so(RXPIN TXPIN BR MMM BSIZ)` open serial port with RXPIN, TXPIN and baud rate BR and serial mode e.g 7E2 (all 3 modechars must be specified) and serial IRW buffer size  
@@ -619,14 +677,18 @@ Serial IO support #define USE_SCRIPT_SERIAL
 `swa(ARRAY len (flags))` send len bytes of an array to serial port, if flags is set Modbus cmd is assumed and cksum is calculated, 0 = standard Modbus, 1 = Rec BMA mode  
 `smw(ADDR MODE NUMBER)` send a value with checksum to MODBUS Address, MODE 0 = uint16, 1 = uint32, 3 = float  
   
-SPI IO support #define `USE_SCRIPT_SPI`  
+### SPI IO support 
+
+`#define USE_SCRIPT_SPI`  
 `spi(0 SCLK MOSI MISO)` defines a software SPI port with pin numbers used for SCLK, MOSI, MISO.  
 `spi(0 -1 freq)` defines a hardware SPI port with pin numbers defined by Tasmota GPIO definition with bus frequency in Mhz.  
 `spi(0 -2 freq)` defines a hardware SPI port 2 on ESP32 with pin numbers defined by Tasmota GPIO definition.  
 `spi(1 N GPIO)` sets the CS pin with index N (1..4) to pin Nr GPIO.  
 `spi(2 N ARRAY LEN S)` sends and receives an ARRAY with LEN values with S (1..3) (8,16,24 bits) if N==-1 CS is ignored. If S=4, CS is raised after each byte.
 
-TCP server support #define `USE_SCRIPT_TCP_SERVER`  
+### TCP server support
+
+`#define USE_SCRIPT_TCP_SERVER`  
 `wso(port)` start a tcp stream server at port  
 `wsc()` close tcp stream server  
 `wsa()` return bytes available on tcp stream  
@@ -695,8 +757,8 @@ SEL:
 `eres` = result of >E section set this var to 1 in section >E to tell Tasmota event is handled (prevents MQTT)  
 
 The following variables are cleared after reading true:  
-`chg[var]` = true if a variables value was changed (numeric vars only)
-`diff[var]` = difference since last variable update
+`chg[var]` = true if a variables value was changed (numeric vars only)  
+`diff[var]` = difference since last variable update  
 `upd[var]` = true if a variable was updated  
 `boot` = true on BOOT  
 `tinit` = true on time init  
@@ -706,7 +768,7 @@ The following variables are cleared after reading true:
 `wific` = true on Wi-Fi connect  
 `wifid` = true on Wi-Fi disconnect  
 
-**System variables** (for debugging)  
+### System variables (for debugging)  
 `stack` = stack size  
 `heap` = free heap size  
 `pheap` = PSRAM free heap size (ESP32)  
@@ -731,13 +793,15 @@ If you define a variable with the same name as a special variable that special v
     _**Recursion**_: If you execute a tasmota cmd in an >E section and this cmd itself executes >E you will get an infinite loop.
     this is disabled normally and enabled by the +> in case you know what you are doing
 
-**Variable Substitution**  
+### Variable Substitution
+
 - A single percent sign must be given as `%%`  
 - Variable replacement within commands is allowed using `%varname%`. Optionally, the decimal places precision for numeric values may be specified by placing a digit (`%Nvarname%`, N = `0..9`) in front of the substitution variable (e.g., `Humidity: %3hum%%%` will output `Humidity: 43.271%`)  
 - instead of variables arbitrary calculations my be inserted by bracketing %N(formula)%  
 - Linefeed, tab and carriage return may be defined by \n, \t and \r  
 
-**Special** commands:  
+### Special  commands:  
+
 `print` or `=>print` prints to the log for debugging  
 A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` statements to debug a script.  
     
@@ -772,7 +836,8 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
 `hsvrgb(h s v)` converts hue (0..360), saturation (0..100) and value (0..100) to RGB color  
 `dt` display text command (if #define USE_DISPLAY)  
 
-**Subroutines and Parameters**
+### Subroutines and Parameters
+
 `#name` names a subroutine. Subroutine is called with `=#name`  
 `#name(param)` names a subroutine with a parameter.  
 Each parameter variable must be declared in the '>D' section.  
@@ -809,14 +874,14 @@ S
 print subroutine was executed
 ```
 
-**For loop** (loop count must not be less than 1, no direct nesting supported)
+### For loop (loop count must not be less than 1, nesting up to 3 levels)
 
 ```
 for var <from> <to> <inc>  
 next  
 ```
   
-**Switch selector** (numeric or string)
+### Switch selector  (numeric or string)
 
 ```
 switch x  
@@ -825,7 +890,8 @@ case b
 ends  
 ```
 
-**Conditional Statements**  
+### Conditional Statements
+
 There are two syntax alternatives. You may **_NOT_** mix both formats.  
 
 ```
@@ -863,7 +929,8 @@ Conditional expressions may be enclosed in parentheses. The statement must be on
 if ((a==b) and ((c==d) or (c==e)) and (s!="x"))
 ```
 
-**Mapping Function**  
+###  Mapping Function
+
 ```
 mp(x cond1 result1 cond2 result2 ... cond<n> result<n>)  
 ```
@@ -892,7 +959,8 @@ y=100
 ```
 
 
-**E-mail**  
+### >m E-mail
+
 `#define USE_SENDMAIL`  
 Enabling this feature also enables [Tasmota TLS](TLS) as `sendmail` uses SSL.  
   
@@ -927,9 +995,10 @@ Instead of passing the `msg` as a string constant, the body of the e-mail messag
 &arrayname specifies an array attachment (as tab delimited text, no file system needed)  
 $N attach a webcam picture from rambuffer number N (usually 1)  
   
-See [Scripting Cookbook Example].(#send-e-mail)  
+See [Scripting Cookbook Example](#send-e-mail)  
  
-**Subscribe, Unsubscribe**  
+###  MQTT Subscribe, Unsubscribe*
+
 `#define SUPPORT_MQTT_EVENT`  
 `subscribe` and `unsubscribe` commands are supported. In contrast to rules, no event is generated but the event name specifies a variable defined in `D` section and this variable is automatically set on transmission of the subscribed item  
 within a script the subscribe cmd must be send with +> instead of =>  
@@ -937,7 +1006,8 @@ the MQTT decoder may be configured for more space in user config overwrite by
 `#define MQTT_EVENT_MSIZE` xxx   (default is 256)  
 `#define MQTT_EVENT_JSIZE` xxx   (default is 400)  
 
-**File System Support**    
+### File System Support
+
 `#define USE_UFILESYS`  
 optional for SD_CARD:  
 `#define USE_SDCARD`  
@@ -966,7 +1036,8 @@ The script itself is also stored on the file system with a default size of 8192 
 `frw(fr url)` read file from web url, if url is an immediate string it may be longer than max string size to support very long URLs.  
 `fcs(fr "del" index ec)` = gets non string from file: del = delimiter char or string, index = n´th element, ec = end character delimiter.  
 
-**Other commands**   (+?? flash)  
+###  Other commands   (+?? flash)
+
 `#define USE_FEXTRACT`  
 `fxt(fr ts_from ts_to col_offs accum array1 array2 ... arrayn)` read arrays from csv file from timestamp to timestamp with column offset and accumulate values into arrays1 .. N, assumes csv file with timestamp in 1. column and data values in columns 2 to n.  
 `fxto(...` same as above with time optimized access  
@@ -975,8 +1046,10 @@ The script itself is also stored on the file system with a default size of 8192 
 `tsn(tstamp)` convert timestamp to seconds  
 `s2t(seconds)` convert seconds to Tasmota timestamp  
 
-**Extended commands**   (+0,9k flash)  
+### Extended commands   (+0,9k flash)  
+
 `#define USE_SCRIPT_FATFS_EXT`  
+`fmt(0)` format flash file system (erases all data)  
 `fmd("fname")` make directory fname  
 `frd("fname")` remove directory fname  
 `fra(array fr)` reads array from open file with fr (assumes tab delimited entries)  
@@ -987,7 +1060,8 @@ The script itself is also stored on the file system with a default size of 8192 
 `fra(array fr)` reads array from open file with fr (assumes tab delimited entries)  
 `fwa(array fr (a))` writes array to open file with fr (writes tab delimited entries and line feed at end) the optional a parameter ommits the linefeed for appending arrays 
     
-**ESP32 real Multitasking support**  
+### >t ESP32 real Multitasking support
+
 `#define USE_SCRIPT_TASK` 
 enables support for multitasking scripts  
 res=ct(num timer core (prio) (stack))  
@@ -1013,49 +1087,10 @@ print task1 on core %core%
 
 >t2
 print task2 on core %core%
-
 ```
-**minimal LVGL support**  
-`#define USE_LVGL`  
-to test LVGL a few functions are implemented:  
-`lvgl(sel ...)` general lvgl call  
-each object gets a concurrent number 1 ... N with which you can reference the object
-sel = 0 => initialize LVGL with current display
-sel = 1 => clear screen  
-sel = 2 xp yp xs ys text => create a button. the button press is reported in section >lvb  
-sel = 3 xp yp xs ys => create a slider. the slider move is reported in section >lvs  
-sel = 4 xp yp xs ys min max => create a gauge.    
-set = 5 objnr value => set gauge value.  
-sel = 6 xp yp xs ys text => create a label.  
-sel = 7 objnr text => set label text  
-sel = 8 create a keyboard, just get a look and feel  
 
-sel = 50 => get obj nr from caller in callback >lvb or >lvs  
-sel = 51 => get event nr from caller in callback >lvb or >lvs  
-sel = 52 => get slider value from caller in callback >lvs  
+### ESP32 Webcam support
 
-
-
-**minimal LVGL support**  
-`#define USE_LVGL`  
-to test LVGL a few functions are implemented:  
-`lvgl(sel ...)` general lvgl call  
-each object gets a concurrent number 1 ... N with which you can reference the object
-sel = 0 => initialize LVGL with current display
-sel = 1 => clear screen  
-sel = 2 xp yp xs ys text => create a button. the button press is reported in section >lvb  
-sel = 3 xp yp xs ys => create a slider. the slider move is reported in section >lvs  
-sel = 4 xp yp xs ys min max => create a gauge.    
-set = 5 objnr value => set gauge value.  
-sel = 6 xp yp xs ys text => create a label.  
-sel = 7 objnr text => set label text  
-sel = 8 create a keyboard, just get a look and feel  
-
-sel = 50 => get obj nr from caller in callback >lvb or >lvs  
-sel = 51 => get event nr from caller in callback >lvb or >lvs  
-sel = 52 => get slider value from caller in callback >lvs  
-
-**ESP32 Webcam support**   
 `#define USE_WEBCAM`  
 Template for AI THINKER CAM :  
 {"NAME":"AITHINKER CAM No SPI","GPIO":[4992,65504,65504,65504,65504,5088,65504,65504,65504,65504,65504,65504,65504,65504,5089,5090,0,5091,5184,5152,0,5120,5024,5056,0,0,0,0,4928,65504,5094,5095,5092,0,0,5093],"FLAG":0,"BASE":1}
@@ -1176,10 +1211,12 @@ remark: the Flash illumination LED is connected to GPIO4
 ```
     
 ## Scripting Cookbook
+
     a valid script must start with >D in the first line!  
     some samples still contain comment lines before >D. This is no longer valid!  
         
 ### simple example to start with
+
     >D
     ; in this section you may define and or preset variables, there are numbers or strings.
     ; in contrast to rules you may choose any variable name
@@ -1221,6 +1258,7 @@ remark: the Flash illumination LED is connected to GPIO4
         
        
 ### Scripting Language Example
+
     **Actually this code is too large**. This is only meant to show some of the possibilities
 
     >D
@@ -2022,7 +2060,7 @@ Used to display home's solar power input/output (+-5000 Watts)
 Shows how a Magic Home with IR receiver works
 Synchronizes 2 Magic Home devices by also sending the commands to a second Magic Home via [`WebSend`](Commands.md#websend)
 
-**Script example using `if then else`**
+#### Script example using `if then else`
     ; expand default string length to be able to hold `WebSend [xxx.xxx.xxx.xxx]`  
 
     >D 25
@@ -2092,7 +2130,7 @@ Synchronizes 2 Magic Home devices by also sending the commands to a second Magic
 
     istr=""
 
-**Script example using `switch case ends`**
+#### Script example using `switch case ends`
     ; expand default string length to be able to hold `WebSend [xxx.xxx.xxx.xxx]`  
 
     >D 25
@@ -2662,15 +2700,15 @@ start dim level = initial dimmer level after power-up or restart; max 100
     endif
     
     #rsub
-    rap ,"CD4067":{
+    rapp ,"CD4067":{
     for cnt 1 16 1
-    rap "%is1[cnt]%":%mux[cnt]%
+    rapp "%is1[cnt]%":%mux[cnt]%
     if cnt<16
     then
-    rap ,
+    rapp ,
     endif
     next
-    rap }
+    rapp }
 
     >J
     ; send to mqtt
@@ -2680,6 +2718,235 @@ start dim level = initial dimmer level after power-up or restart; max 100
     >W
     ; call web subroutine
     %=#wsub
+
+### accessing TESLA Powerwall 2 API
+
+    This example fetches various values from Tesla Powerwall API
+    and displays them in the WEB UI and on an ILI9341 LCD display
+
+    you will need these additional defines:
+    #define USE_TLS
+    #define TESLA_POWERWALL
+    #define USE_SENDMAIL (because the SSL Library from email is needed)
+    #define SCRIPT_GET_HTTPS_JP
+
+    remark: since the Tasmota JSON parser has various limitations some TESLA JSON values had to be renamed to get a more compact response. 
+
+    >D
+    tmp=0
+    res=0
+    cnt=0
+
+    ;powerwall
+    pwl=8
+    ;Net
+    sip=0
+    ;Solar
+    sop=0
+    ;Battery
+    bip=0
+    ;House
+    hip=0
+    ;total cap
+    tcap=0
+    ;remainig cap
+    rcap=0
+    ;reserve percent
+    rper=0
+
+    ;3 phases
+    phs1=0
+    phs2=0
+    phs3=0
+
+    p1w=0
+    p2w=0
+    p3w=0
+    p4w=0
+    p5w=0
+    p6w=0
+    p7w=0
+    p8w=0
+
+    pwf=0
+
+    xp=0
+    yp=0
+
+    hs1="{m}<span style='color:"
+    hs5="</span>"
+    ps=""
+    str=""
+    tm=""
+    perr=""
+
+    >B
+    ;month
+    tmp=is1(0 "Jan|Feb|Mar|Apr|Mai|Jun|Jul|Aug|Sep|Okt|Nov|Dec|")
+    ;weekdays
+    tmp=is(0 "So|Mo|Th|Wd|Th|Fr|Sa|")
+    ;display labels
+    tmp=is2(0 "Battery %:|Grid:|Solar:|Battery:|Home:|Tot Cap:|Rem Cap:|Rcap Lim:|Solar 1:|Solar 2:|Phase 1:|Phase 2:|Phase 3:|")
+
+    ;clr display
+    dt [Bi0D0z]
+
+    =#labels
+
+    ;draw all labels on display
+    #labels
+    dt [Ci5x0y20h70x170h70]
+    dt [Ci16f1s1y18x90]Powerwall
+    dt [f1s1Ci16]
+    yp=60
+    for res 1 13 1
+	    dt [x15y%0yp%]%is2[res]%
+	    yp+=20
+    next
+
+    >BS
+    ;set powerwall ip and credentials (prefix @D), insert your credentials here
+    res=gpwl("@D192.168.188.60,email,password")
+    ;set powerwall serial numbers of CTS devices 1 and 2 (prefix @C)
+    res=gpwl("@C0x000004714B006CCD,0x000004714B007969")
+
+
+    >S
+    ;display time and date
+    dt [Ci3x50y40T]
+    dt [x150y40tS]
+
+    ;show powerwall values on display every 5 seconds
+    if upsecs%5==0 {
+	    dt [Ci5]
+	    yp=60
+	    dt [x150y%0yp%p-10]%2pwl% %%
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1sip% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1sop% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1bip% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1hip% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1tcap% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1rcap% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%rper% %%
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1p1w% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1p2w% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1p5w% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1p6w% W
+	    yp+=20
+	    dt [x150y%0yp%p-10]%1p7w% W
+	    yp+=20	
+    }
+
+    ;access powerwall api every 4 seconds
+    if year>2023 {
+	    switch cnt
+		    case 0
+			    gpwl("/api/meters/aggregates")
+		    case 4
+			    gpwl("/api/system_status/soe")
+		    case 8
+			    gpwl("/api/system_status")
+		    case 12
+			    gpwl("/api/operation")
+		    case 14
+			    pwf=1
+			    gpwl("/api/meters/readings")
+		    case 18
+			    cnt=-1
+	    ends
+	    cnt+=1
+    }
+
+    ;JSON fetch section
+    >jp
+    ;fetch powerwall JSON output
+    sip=site#i_power
+    bip=battery#i_power
+    hip=load#i_power
+    sop=solar#i_power
+    pwl=percentage
+    tcap=f_p_e
+    rcap=n_e_r
+    rper=b_r_p
+
+    ;readings cannot be decoded by tasmota JSON
+    ;so use string search ("gwr")
+    if pwf>0 {
+	    str=""
+	    str=PW_CTS1#error
+	    perr=str
+	    if str=="" {
+		    p1w=gwr( "\"p_W\":" 2)
+		    p2w=gwr( "\"p_W\":" 3)
+		    p3w=gwr( "\"p_W\":" 4)
+		    p4w=gwr( "\"p_W\":" 5)
+	    }
+	    str=""
+	    str=PW_CTS2#error
+	    perr=str
+	    if str=="" {
+		    p5w=gwr( "\"p_W\":" 6)
+		    p6w=gwr( "\"p_W\":" 7)
+		    p7w=gwr( "\"p_W\":" 8)
+		    p8w=gwr( "\"p_W\":" 9)
+		    phs1=p5w
+		    phs2=p6w
+		    phs3=p7w
+	    }
+	
+	    pwf=0
+	    str=""
+    }
+
+    #wtime
+    ;only in webmode 0
+    if wm==0 {
+	    ;show time, weekday and date
+	    wcs {s}<center><h1 style="color:green;font-size:40px;">%2.0hours%:%2.0mins%:%2.0secs%</h1>{m}%is[wday]% %0day%. %is1[month]% <br>%0year%{e}
+	    dp(2 0)
+	    ps=s(int(sunrise/60))+":"+s(sunrise%60)
+	    str=s(int(sunset/60))+":"+s(sunset%60)
+	    res=sunset-sunrise
+	    tm=s(int(res/60))+":"+s(res%60)
+	    wcs {s}<center>&#127774 %ps% <--- %tm% ---> %str% &#127769{e}
+	    dp(0 2)
+    }
+
+    >W
+    %=#wtime
+    <hr>
+    Battery Percent%hs1%yellow;'>%pwl% %% (%2(pwl/100*(tcap/1000))% kWh)%hs5%
+    Grid%hs1%yellow;'>%sip% W %hs5%
+    Solar%hs1%green;'>%sop% W %hs5%
+    Battery%hs1%yellow;'>%bip% W %hs5%
+    House%hs1%red;'>%hip% W %hs5%
+    Total Capacity%hs1%yellow;'>%3(tcap/1000)% kWh %hs5%
+    Remaining Capacity%hs1%yellow;'>%3(rcap/1000)% kWh %hs5%
+    RcapLimit%hs1%yellow;'>%rper% %% %hs5%
+    <hr>
+    Solar P1%hs1%yellow;'>%1p1w% W %hs5%
+    Solar P2%hs1%yellow;'>%1p3w% W %hs5%
+    <hr>
+    Net P1%hs1%yellow;'>%1p5w% W %hs5%
+    Net P2%hs1%yellow;'>%1p6w% W %hs5%
+    Net P3%hs1%yellow;'>%1p7w% W %hs5%
+    <hr>
+    CTS Error%hs1%yellow;'>%perr%%hs5%
+    <hr>
+    heap:{m}%heap%
+    >R
+    print exit script
       
 ### Image gallery of various Tasmota scripts  
         

@@ -11,6 +11,8 @@ DD-WRT also has Wi-Fi Multi-Media (WMM) enabled by default.  Disabling WMM can r
 
 Some Tasmota devices also have issues with OFDMA (WiFi 6) enabled on the 2.4GHz band.  Disabling OFDMA can solve problems with WiFi failing to connect. 
 
+Some Wi-Fi routers employ **band steering**. Band steering works by responding only to 5 GHz association requests and not the 2.4 GHz requests, which interferes with Tasmota devices which only support 2.4 GHz. Disabling band steering may resolve connectivity issues.
+
 ### I entered wrong Wi-Fi information
 If you have a device with a button and the button is configured as a component in the Tasmota settings (e.g., GPIO0 - Button1), you can try pressing the button to force the device into [Wi-Fi configuration mode](Buttons-and-Switches#multi-press-functions) with 4&nbsp;short presses of the button. **Note:** Since version 8.3.0 this requires 6&nbsp;short presses instead.
 
@@ -53,7 +55,7 @@ If you flashed a light bulb or any device without a built-in button and entered 
 First thing to try when having Wi-Fi issues: `Reset 3` which will erase wi-fi calibration data only and will keep configuration intact. Make sure to power cycle restart after that. If that doesn't help try rebooting the router as well
 
 As a last resort try :
-Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](Getting-Started.md#esptoolpy)) using [the latest precompiled binaries](http://ota.tasmota.com/tasmota/).
+Erase all flash using esptool.py or esptool.exe and flash via serial (as explained [here](Getting-Started.md#__tabbed_1_3)) using [the latest precompiled binaries](http://ota.tasmota.com/tasmota/).
 
 This approach has solved many of the reported issues. Sometimes this is due to a bad flash, a bad OTA or invalid data that remains in the flash where the SDK memory is.
 
@@ -291,7 +293,7 @@ Be sure to press the button correctly, you must "feel" a click. If your on-devic
 
 - If esptool.py stops at "Uploading stub...", use --no-stub 
 
-- If the flash fails or the device does not operate as expected, try using the default ESP82xx boot ROM baud rate - `74880`. This is the baud rate the ESP82xx is set to by default when it boots into programming mode. It can be specified as a command line option in [esptool.py](Getting-Started.md#esptoolpy) (`-b`) and [esptool.exe](Getting-Started.md#esptool-executable) (`-cb`).
+- If the flash fails or the device does not operate as expected, try using the default ESP82xx boot ROM baud rate - `74880`. This is the baud rate the ESP82xx is set to by default when it boots into programming mode. It can be specified as a command line option in [esptool.py](Getting-Started.md#__tabbed_1_3) (`-b`) and esptool.exe (`-cb`).
 
   You may also want to select a serial monitor/terminal capable of setting this "unusual" baud rate. In Termite, type this value (`74880`) in the baud rate selection text box when configuring the port. Having the option to specify this unusual baud rate will allow you to view the [ESP8266 boot ROM log](https://github.com/espressif/esptool/wiki/ESP8266-Boot-ROM-Log) while the device is booting.
 

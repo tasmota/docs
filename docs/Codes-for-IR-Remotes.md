@@ -640,6 +640,23 @@ IR Remote Codes for Acer K132 projector and possibly other models using a remote
 | Sound  | {"Protocol":"NEC","Bits":32,"Data":"0x10C8AD52"} |
 | Mute   | {"Protocol":"NEC","Bits":32,"Data":"0x10C88679"} |
 
+### Sanyo PLV-Z4
+
+Selected IR Remote Codes for the Sanyo PLV-Z4 with Sanyo CXTS remote.
+
+In the absence of a separate "Power On" and "Power Off" IR command, you will probably want to disable the "Power Off Confirmation" in the projector settings menu to simplify automation.
+
+| button | code                                                                               |
+| ------ | ---------------------------------------------------------------------------------- |
+| ON/OFF | {"Protocol":"NEC","Bits":32,"Data":"0xCC0000FF","DataLSB":"0x330000FF","Repeat":0} |
+| Video  | {"Protocol":"NEC","Bits":32,"Data":"0xCC00BC43","DataLSB":"0x33003DC2","Repeat":0} |
+| SVideo | {"Protocol":"NEC","Bits":32,"Data":"0xCC007C83","DataLSB":"0x33003EC1","Repeat":0} |
+| C1     | {"Protocol":"NEC","Bits":32,"Data":"0xCC00C13E","DataLSB":"0x3300837C","Repeat":0} | 
+| C2     | {"Protocol":"NEC","Bits":32,"Data":"0xCC00817E","DataLSB":"0x3300817E","Repeat":0} |
+| HDMI   | {"Protocol":"NEC","Bits":32,"Data":"0xCC00EC13","DataLSB":"0x330037C8","Repeat":0} |
+| PC     | {"Protocol":"NEC","Bits":32,"Data":"0xCC001CE3","DataLSB":"0x330038C7","Repeat":0} |
+
+
 ## Soundbars
 
 ### Panasonic SCALL70T Soundbar
@@ -728,7 +745,16 @@ IR Remote Codes for Acer K132 projector and possibly other models using a remote
 | Play/Pause        | 0x20DF12ED |
 | Next              | 0x20DF13EC |
 
-## Hi-Fi Amplifiers
+## Hi-Fi Amplifiers & Receivers
+
+### JBL On Air 2.4G Control
+
+| button       | code                                             |
+| ------------ | ------------------------------------------------ |
+| Change Input | {"Protocol":"NEC","Bits":32,"Data":"0x538522DD"} |
+| Volume Up    | {"Protocol":"NEC","Bits":32,"Data":"0x538521DE"} |
+| Volume Down  | {"Protocol":"NEC","Bits":32,"Data":"0x538520DF"} |
+| Mute         | {"Protocol":"NEC","Bits":32,"Data":"0x538523DC"} |
 
 ### NAD D-3020 v1
 
@@ -750,6 +776,32 @@ IR Remote Codes for Acer K132 projector and possibly other models using a remote
 | Aux 1        | {"Protocol":"NEC","Bits":32,"Data":"0xE13ED926"} |
 | Aux 2        | {"Protocol":"NEC","Bits":32,"Data":"0xE13E03FC"} |
 | Bluetooth    | {"Protocol":"NEC","Bits":32,"Data":"0xE13E43BC"} |
+
+### Yamaha RX-V1900
+
+Selected codes for the Yamaha RX-V1900 AV Reciever with RAV385 Remote. Only codes relevant to remote operation included.
+
+| button       | code                                                                               |
+| ------------ | ---------------------------------------------------------------------------------- |
+| Power On     | {"Protocol":"NEC","Bits":32,"Data":"0x7E817E81","DataLSB":"0x7E817E81","Repeat":0} |
+| Power Off    | {"Protocol":"NEC","Bits":32,"Data":"0x7E81FE01","DataLSB":"0x7E817F80","Repeat":0} |
+| Multi        | {"Protocol":"NEC","Bits":32,"Data":"0x5EA1E11E","DataLSB":"0x7A858778","Repeat":0} |
+| V-Aux        | {"Protocol":"NEC","Bits":32,"Data":"0x5EA1AA55","DataLSB":"0x7A8555AA","Repeat":0} |
+| Phono        | {"Protocol":"NEC","Bits":32,"Data":"0x5EA128D7","DataLSB":"0x7A8514EB","Repeat":0} |
+| Dock         | {"Protocol":"NEC","Bits":32,"Data":"0xFE8052AD","DataLSB":"0x7F014AB5","Repeat":0} |
+| BD HD DVD    | {"Protocol":"NEC","Bits":32,"Data":"0x5EA113EC","DataLSB":"0x7A85C837","Repeat":0} |
+| DVD          | {"Protocol":"NEC","Bits":32,"Data":"0x5EA1837C","DataLSB":"0x7A85C13E","Repeat":0} |
+| CD           | {"Protocol":"NEC","Bits":32,"Data":"0x5EA1A857","DataLSB":"0x7A8515EA","Repeat":0} |
+| MD CD-R      | {"Protocol":"NEC","Bits":32,"Data":"0x5EA19867","DataLSB":"0x6AE5F81F","Repeat":0} |
+| CBL SAT      | {"Protocol":"NEC","Bits":32,"Data":"0x5EA103FC","DataLSB":"0x7A85C03F","Repeat":0} |
+| TV           | {"Protocol":"NEC","Bits":32,"Data":"0x5EA12AD5","DataLSB":"0x7A8554AB","Repeat":0} |
+| DVR          | {"Protocol":"NEC","Bits":32,"Data":"0x5EA1C837","DataLSB":"0x7A8513EC","Repeat":0} |
+| VCR          | {"Protocol":"NEC","Bits":32,"Data":"0x5EA1F00F","DataLSB":"0x7A850FF0","Repeat":0} |
+| Tuner        | {"Protocol":"NEC","Bits":32,"Data":"0x5EA16897","DataLSB":"0x7A8516E9","Repeat":0} |
+| USB          | {"Protocol":"NEC","Bits":32,"Data":"0xFE80FC03","DataLSB":"0x7F013FC0","Repeat":0} |
+| Sur Decode   | {"Protocol":"NEC","Bits":32,"Data":"0x5EA1B14E","DataLSB":"0x7A858D72","Repeat":0} |
+| Stereo       | {"Protocol":"NEC","Bits":32,"Data":"0x5EA131CE","DataLSB":"0x7A858D72","Repeat":0} |
+| Enhancer     | {"Protocol":"NEC","Bits":32,"Data":"0x5EA129D6","DataLSB":"0x7A85946B","Repeat":0} |
 
 ## Vacuum Cleaners
 
