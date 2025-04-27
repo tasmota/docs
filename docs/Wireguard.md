@@ -2,10 +2,11 @@
 
 !!! info "Wireguard VPN is not included in pre-compiled binaries. It requires to self-compile with `#define USE_WIREGUARD`"
 
+!!! warning "You should never expose a Tasmota device directly over the Internet. Tasmota Web UI should **never** be exposed on a public IP. Wireguard can only be used when your Tasmota device is behind a router with NAT."
+
 [WireGuard®](https://www.wireguard.com/) is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography. This component uses a custom implementation not developed by original authors and currently available for ESP32, ESP8266 and BK72xx microcontrollers only. The Tasmota port of Wireguard is based on the works done on ESPHome and https://github.com/droscy/esp_wireguard.
 
-!!! info
-    To successfully use this component you must have WireGuard® also on your remote host (already installed and ready to accept connections). If you don't have it please read the section Remote peer setup.
+To successfully use this component you must have WireGuard® also on your remote host (already installed and ready to accept connections). If you don't have it please read the section Remote peer setup.
 
 ## Configuring Wireguard
 
@@ -80,6 +81,7 @@ This means that you have to tweak the `[Tasmota]/Netmask` parameter to "cover" a
 
 Currantly Wireguard for Tasmota has the following limitations:
 
+- Wireguard VPN is currenlty only tested over Wifi, it has not been tested yet over Ethernet nor dual Eth/Wifi connections.
 - the `DNS` field is currently ignored; which means that DNS may fail if it uses a DNS relay on your local network that is not reachable by your VPN server
 - you can connect only to **one** peer at a time. Alghough the underlying library could connect to multiple peers, `LwIP` used in Tasmota does not support static routes which would made routing to multiple peers not practical
 - On ESP8266, when a VPN connection is enabled, the Web UI is not reachable anymore. This problem does not occur on ESP32.
