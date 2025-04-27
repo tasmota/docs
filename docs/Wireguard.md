@@ -2,7 +2,7 @@
 
 !!! info "Wireguard VPN is not included in pre-compiled binaries. It requires to self-compile with `#define USE_WIREGUARD`"
 
-(WireGuard®)[https://www.wireguard.com/] is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography. This component uses a custom implementation not developed by original authors and currently available for ESP32, ESP8266 and BK72xx microcontrollers only. The Tasmota port of Wireguard is based on the works done on ESPHome and https://github.com/droscy/esp_wireguard.
+[WireGuard®](https://www.wireguard.com/) is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography. This component uses a custom implementation not developed by original authors and currently available for ESP32, ESP8266 and BK72xx microcontrollers only. The Tasmota port of Wireguard is based on the works done on ESPHome and https://github.com/droscy/esp_wireguard.
 
 !!! info
     To successfully use this component you must have WireGuard® also on your remote host (already installed and ready to accept connections). If you don't have it please read the section Remote peer setup.
