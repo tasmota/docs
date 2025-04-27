@@ -177,6 +177,7 @@ nav:
     - TuyaMCU.md
     - Universal File System: UFS.md
     - Wi-Fi Range Extender: Range-Extender.md
+    - Wireguard VPN: Wireguard.md
     - Projects and Tutorials: Tutorials.md
   - ESP32:
     - Tasmota32 Features: ESP32.md
