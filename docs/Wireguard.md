@@ -71,15 +71,15 @@ This means that you have to tweak the `[Tasmota]/Netmask` parameter to "cover" a
 | 172.16.0.100 | 255.255.255.0 | `172.16.0.0/24`<br>`192.168.0.0/24`<br>*any other* | because `192.168.0.0/24` and any other network will be outside `172.16.0.0/24` |
 | 172.16.0.100 | 255.255.255.0 | `192.168.0.0/24` | **none** because `192.168.0.0/24` is not part of `172.16.0.0/24` |
 | 10.44.0.100 | 255.0.0.0 | *omitted* | to `10.0.0.0/8` network |
-| 10.44.0.100 | 255.0.0.0 | `10.44.0.0/16`<br>`10.10.0.0/16` | only to the networks in the allowed list because the netmask will route the whole `10.0.0.0/8` but wireguard allows only those two subnets |
+| 10.44.0.100 | 255.0.0.0 | `10.44.0.0/16`<br>`10.10.0.0/16` | only to the networks in the allowed list because the netmask will route the whole `10.0.0.0/8` but Wireguard allows only those two subnets |
 | any | 0.0.0.0 | *omitted* | **any** |
-| any | 0.0.0.0 | `172.16.0.0/24`<br>`10.44.0.0/16`<br>`10.10.0.0/16` | to any network that is in the list of allowed IPs because the netmask will route any traffic but wireguard allows only its own list |
+| any | 0.0.0.0 | `172.16.0.0/24`<br>`10.44.0.0/16`<br>`10.10.0.0/16` | to any network that is in the list of allowed IPs because the netmask will route any traffic but Wireguard allows only its own list |
 
-!!! info "Setting `[Tasmota]/Netmask` to 0.0.0.0 or leaving its default value, has the effect of routing through the VPN link any traffic. It is like having set the wireguard interface as the system default."
+!!! info "Setting `[Tasmota]/Netmask` to 0.0.0.0 or leaving its default value, has the effect of routing through the VPN link any traffic. It is like having set the Wireguard interface as the system default."
 
 ## Limitations
 
-Currantly Wireguard for Tasmota has the following limitations:
+Currently Wireguard for Tasmota has the following limitations:
 
 - Wireguard VPN is currenlty only tested over Wifi, it has not been tested yet over Ethernet nor dual Eth/Wifi connections.
 - the `DNS` field is currently ignored; which means that DNS may fail if it uses a DNS relay on your local network that is not reachable by your VPN server
