@@ -344,6 +344,27 @@ Special options and e.g math calculations are not counted as a decoder entry and
  - sensor53 l x = set an optional LED GPIO pin to indicate serial activity of a meter, set to 255 for disable  
  - sensor53 m x = sets the meter from which to show activity via the l cmd  
 
+## Web Requests
+
+In addition to the MQTT publishing, the sensor data can be polled using [web requests](https://tasmota.github.io/docs/Commands/#with-web-requests) with the [status 10 command](https://tasmota.github.io/docs/Commands/#management), e.g. `http:/<IP>/cm?cmnd=status%2010`.
+
+It is also possible to directly access certain lines of the script. Example:
+
+```
+>D
+>B
+=>sensor53 r
+>M 1
++1,3,s,0,9600,powermeter
+1,77070100010800FF@1,Input Total,Wh,input_total,1
+1,77070100020800FF@1,Output Total,Wh,output_total,1
+1,770701000E0700FF@1,Net Frequency,Hz,net_frequency,2
+1,77070100100700FF@1,Current Power,W,current_power,0
+#
+```
+
+To access the fourth line `current_power` use the following URL: `http://<IP>/cm?cmnd=script?sml[4]` which will result in a short JSON string like `{"script":{"sml[4]":280}}`.
+
 ## Smart Meter Descriptors
 
 ### ABB B23 (MODBus)
