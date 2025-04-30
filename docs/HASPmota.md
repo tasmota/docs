@@ -117,9 +117,9 @@ The lines below describe the 3 buttons at the bottom, and their respective actio
 
 ``` json
 {"comment":"---------- Bottom buttons - prev/home/next ----------"}
-{"id":101,"obj":"btn","x":20,"y":210,"w":80,"h":25,"action":"prev","bg_color":"#1fa3ec","radius":10,"border_side":1,"text":"\uF053","text_font":"montserrat-20"}
-{"id":102,"obj":"btn","x":120,"y":210,"w":80,"h":25,"action":"back","bg_color":"#1fa3ec","radius":10,"border_side":1,"text":"\uF015","text_font":"montserrat-20"}
-{"id":103,"obj":"btn","x":220,"y":210,"w":80,"h":25,"action":"next","bg_color":"#1fa3ec","radius":10,"border_side":1,"text":"\uF054","text_font":"montserrat-20"}
+{"id":101,"obj":"btn","x":20,"y":210,"w":80,"h":25,"action":"prev","bg_color":"#1fa3ec","radius":10,"border_side":0,"text":"\uF053","text_font":"montserrat-20"}
+{"id":102,"obj":"btn","x":120,"y":210,"w":80,"h":25,"action":"back","bg_color":"#1fa3ec","radius":10,"border_side":0,"text":"\uF015","text_font":"montserrat-20"}
+{"id":103,"obj":"btn","x":220,"y":210,"w":80,"h":25,"action":"next","bg_color":"#1fa3ec","radius":10,"border_side":0,"text":"\uF054","text_font":"montserrat-20"}
 ```
 
 Page `1` is the default page, and contains different widgets types: labels and arc. The values are changed at runtime via Tasmota's rule system, see below for details.
