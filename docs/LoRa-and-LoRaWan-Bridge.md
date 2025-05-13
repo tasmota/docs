@@ -62,6 +62,7 @@ Some devices using SX126x are:
 * `SetOption144 1`: include time in `LwReceived` messages like other sensors.
 * `LoRaWanAppKey<x> <32_character_app_key>`: set known appkey of LoRaWan device or node to be joined.
 * `LoRaWanName<x> <string>`: set friendly name for device or node.
+* `LoRaWanDecoder<x> <string>`: set name of decoder file. See [LoRaWan-Decoders](LoRaWan-Decoders).
 
 ## Configuration
 
