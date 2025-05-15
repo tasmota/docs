@@ -1050,6 +1050,25 @@ The following attributes accept styling suffix:
 
 ## Tasmota extensions
 
+### Auto-dimming
+
+HASPmota has an auto-dimming features that triggers after a period of inactivity (i.e. no touch on the screen). The screen is first dimmed to lower brightness after `dimming_time` minutes and turned off after `dimming_duration` seconds. When dimmed or off, touch events are disabled, to prevent pressing on an invisible button and triggering unwanted behavior.
+
+Parameters are associated to `p0b0` (page `0` item `0`):
+```json
+{"page":0,"id":0,"dimming_time":1,"dimming_min":35,"dimming_duration":30}
+```
+
+Parameters:
+- `dimming_time` number of **minutes** before changing from full brightness to 1/4 brightness. Default: `0` = off.
+- `dimming_duration` number of **seconds** before turning screen off. Default `30` seconds
+- `dimming_min` minimum visible value for DisplayDimmer that keeps the screen on. Default `1`. This used for screen that turn off the backlighting when `DisplayDimmer` is under a certain value.
+
+Events sent:
+- `{"hasp":{"p0b0":{"idle":"short"}}}` is sent when dimming is enabled
+- `{"hasp":{"p0b0":{"idle":"long"}}}` is sent when screen is turned off
+- `{"hasp":{"p0b0":{"idle":"off"}}}` is sent when screen is turned on again after a press on the screen
+
 ### Update sensor value via rules
 
 You can automatically adjust attributes `val` and `text` from sensor values via a simple rule engine.
