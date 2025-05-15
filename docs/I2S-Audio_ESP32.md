@@ -8,8 +8,6 @@
     build_flags                 = ${env:tasmota32_base.build_flags}
                                   -DUSE_I2S_ALL
     ```
-    Also requires `lib_extra_dirs = lib/libesp32` added to the build environment
-
     You can create smaller firmware versions with selective use of the build flags:
     ```
       #define USE_I2S ;             base flag - always needed
