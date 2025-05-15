@@ -17,8 +17,6 @@
 
     // USE_M5STACK_CORE2, USE_TTGO_WATCH and ESP32S3_BOX already include I2S_AUDIO
     ```
-    Also requires `lib_extra_dirs = lib/lib_audio, lib/libesp32_audio` added to the build environment
-
 
 I2S (Inter-IC Sound) is a serial, synchronous communication protocol that is usually used for transmitting audio data between two digital audio devices.
 
