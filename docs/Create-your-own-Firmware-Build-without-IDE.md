@@ -246,7 +246,7 @@ If this GPIO0 is connected to GND when the module gets power, it starts in a fir
 Switch off the power of the board, this will be the reference 'steady state' of the system.
 
 ```
-(esptool) [tasmota_installer@lantash ~/esptool]$ esptool.py read_flash 0x00000 0x100000 fcmila_bulb_orig.bin
+(esptool) [tasmota_installer@lantash ~/esptool]$ esptool.py read-flash 0x00000 0x100000 fcmila_bulb_orig.bin
 esptool.py v2.6
 Found 1 serial ports
 Serial port /dev/cuaU0
@@ -280,11 +280,11 @@ If done, then **power the module off**, as this management mode is not restartab
 If it's not well, then you may try some queries:
 
 ```
-(esptool) [tasmota_installer@lantash ~/esptool]$ esptool.py -p /dev/ttyU0 chip_id
+(esptool) [tasmota_installer@lantash ~/esptool]$ esptool.py -p /dev/ttyU0 chip-id
 ...
 Chip ID: 0x00e02af2
 ...
-(esptool) [tasmota_installer@lantash ~/esptool]$ esptool.py -p /dev/ttyU0 flash_id
+(esptool) [tasmota_installer@lantash ~/esptool]$ esptool.py -p /dev/ttyU0 flash-id
 ...
 Manufacturer: c8
 Device: 4014
@@ -301,7 +301,7 @@ Until you can't get this step working, don't proceed to the next one, it won't w
 (With the usual button-pressed-power-on rain dance, and don't forget to power the module off afterwards.)
 
 ```
-(esptool) [tasmota_installer@lantash ~/esptool]$ esptool.py erase_flash
+(esptool) [tasmota_installer@lantash ~/esptool]$ esptool.py erase-flash
 ...
 Erasing flash (this may take a while)...
 Chip erase completed successfully in 1.6s
@@ -310,7 +310,7 @@ Chip erase completed successfully in 1.6s
 ## Install the firmware to your module
 
 ```
-(esptool) [tasmota_installer@lantash ~/esptool]$ esptool.py write_flash --flash_size 1MB --flash_mode dout 0x00000 firmware.bin
+(esptool) [tasmota_installer@lantash ~/esptool]$ esptool.py write-flash --flash-size 1MB --flash-mode dout 0x00000 firmware.bin
 Configuring flash size...
 Compressed 535424 bytes to 367679...
 Wrote 535424 bytes (367679 compressed) at 0x00000000 in 33.8 seconds (effective 126.6 kbit/s)...
