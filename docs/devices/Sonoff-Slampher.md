@@ -10,7 +10,7 @@ After much screwing around, I discovered that simply holding the button while I 
 I flashed it from a mac terminal window like so:
 
 ```shellsession
-esptool.py --port /dev/tty.usbserial-A60226NF write_flash -fs 1MB -fm dout 0x0 ~/Downloads/tasmota.bin
+esptool.py --port /dev/tty.usbserial-A60226NF write-flash -fs 1MB -fm dout 0x0 ~/Downloads/tasmota.bin
 ```
 
 The barcode on the box for the device that I received is 6920075757361, it's also labeled with MPN:IM190528001.  

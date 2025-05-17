@@ -131,8 +131,8 @@ To put the ESP into Programming Mode:
 ??? tip "esptool.py programming mode test"
      You can test whether your device is in Programming Mode by attempting to read information from the ESP82xx chip. This requires `esptool.py`. Instructions on installing and using `esptool` are provided below. For example (`COM5` will be your COM port):  
 
-     - `esptool.py -p COM5 read_mac` (It should read the MAC address. It may fail afterwards during Uploading and running a "stub". This is normal.)
-     - `esptool.py -p COM5 flash_id`
+     - `esptool.py -p COM5 read-mac` (It should read the MAC address. It may fail afterwards during Uploading and running a "stub". This is normal.)
+     - `esptool.py -p COM5 flash-id`
 
 If everything went well, you are now in Programming Mode and ready to continue with [flashing](#flashing). If the flashing process is unable to start, disconnect the device and retry the steps.
 
@@ -222,14 +222,14 @@ Choose an installation method:
     #### Backup Firmware <small>(optional step)</small>
     Backup the current firmware with the following command:
     ```
-    esptool.py --port COM5 read_flash 0x00000 0x100000 fwbackup.bin
+    esptool.py --port COM5 read-flash 0x00000 0x100000 fwbackup.bin
     ```
     *When the command completes the device is not in programming mode anymore.* Repeat the process of putting your device in programming mode.
 
     #### Erase Flash Memory
     Erase the complete flash memory holding the firmware with the following command:
     ```
-    esptool.py --port COM5 erase_flash
+    esptool.py --port COM5 erase-flash
     ```
     It only takes a few seconds to erase 1M of flash.
 
@@ -239,14 +239,14 @@ Choose an installation method:
     Load the chosen Tasmota firmware file with the following command (e.g., `tasmota.bin` in this example):
 
     ```
-    esptool.py write_flash -fm dout 0x0 tasmota.bin
+    esptool.py write-flash -fm dout 0x0 tasmota.bin
     ```
     or for ESP32:
     !!! note
         _Factory_ binaries are used for inital flashing this time
         https://ota.tasmota.com/tasmota32/release/
     ```
-    esptool.py write_flash 0x0 tasmota32.factory.bin
+    esptool.py write-flash 0x0 tasmota32.factory.bin
     ```
 
     Unplug your serial programming adapter or your device and plug it back in or connect to another power source. Your device is now ready for [Initial configuration](#initial-configuration). 
