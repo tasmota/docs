@@ -222,7 +222,7 @@ Choose an installation method:
     #### Backup Firmware <small>(optional step)</small>
     Backup the current firmware with the following command:
     ```
-    esptool.py --port COM5 read-flash 0x00000 0x100000 fwbackup.bin
+    esptool.py --port COM5 read-flash 0x00000 ALL fwbackup.bin
     ```
     *When the command completes the device is not in programming mode anymore.* Repeat the process of putting your device in programming mode.
 

@@ -37,7 +37,7 @@ Ensure the device is in firmware upload mode.
 
 Backup the current firmware with the following command:
 ```
-esptool.py --port COM5 read-flash 0x00000 0x100000 image1M.bin
+esptool.py --port COM5 read-flash 0x00000 ALL image.bin
 ```
 NOTE: When the command completes the device is out of firmware upload mode!
 
