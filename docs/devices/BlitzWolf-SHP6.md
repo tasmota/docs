@@ -61,7 +61,7 @@ Erase flash to avoid issues with dropping WiFi connection.
 
 Example using esptool:
 ```
-esptool.py --port COM3 erase-flash
+esptool.py --port COM3 erase_flash
 ```
 
 ### Step 8

@@ -46,7 +46,7 @@ Other options include:
 esptool.py - use the following command syntax:
 
 ```bash
-esptool.py write-flash 0x0 tasmota32.factory.bin
+esptool.py write_flash 0x0 tasmota32.factory.bin
 ```
 
 !!! warning "Use a proper power supply!"
