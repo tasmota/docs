@@ -37,7 +37,7 @@ Ensure the device is in firmware upload mode.
 
 Backup the current firmware with the following command:
 ```
-esptool.py --port COM5 read_flash 0x00000 0x100000 image1M.bin
+esptool.py --port COM5 read-flash 0x00000 ALL image.bin
 ```
 NOTE: When the command completes the device is out of firmware upload mode!
 
@@ -46,7 +46,7 @@ Ensure the device is in firmware upload mode.
 
 Erase the complete flash memory holding the firmware with the following command:
 ```
-esptool.py --port COM5 erase_flash
+esptool.py --port COM5 erase-flash
 ```
 NOTE1: When the command completes the device is out of firmware upload mode!
 
@@ -58,7 +58,7 @@ Ensure the device is in firmware upload mode.
 Load the downloaded Tasmota firmware file *tasmota.bin* with the following command:
 
 ```
-esptool.py --port COM5 write_flash -fs 1MB -fm dout 0x0 tasmota.bin
+esptool.py --port COM5 write-flash -fs 1MB -fm dout 0x0 tasmota.bin
 ```
 NOTE1: When the command completes the device is out of firmware upload mode!
 
@@ -86,11 +86,11 @@ Once the device is in firmware upload mode the following commands are recommende
 
 Erase the flash completely with the following command (substituting the COM port for the one which was used on your computer)
 
-`esptool.exe --port COM5 erase_flash`
+`esptool.exe --port COM5 erase-flash`
 
 Once the erase is complete, reset your device back into programming mode and then upload the firmware using the following command
 
 `
-esptool.exe --port COM5 write_flash -fs 1MB -fm dout 0x0 tasmota.bin`
+esptool.exe --port COM5 write-flash -fs 1MB -fm dout 0x0 tasmota.bin`
 
 
