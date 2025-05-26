@@ -170,7 +170,7 @@ a valid script must start with >D in the first line
 
 ### >D ssize
 
-  `ssize` = optional max string size (default=19, max=48 unless increased with `#define SCRIPT_MAXSSIZE`)  
+  `ssize` = optional max string size (default=19, max=255)  
   define and init variables here, must be the first section, no other code allowed  
   `p:vname`  
   specifies permanent variables. The number of permanent variables is limited by Tasmota rules space (50 bytes) - numeric variables are 4 bytes; string variables are one byte longer than the length of string.  p vars are stored sequentially in the order of defintion.
@@ -575,7 +575,7 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `maca` = current MAC Address  
 `gtopic` = mqtt group topic  
 `lip` = local ip as string  
-`luip` = udp ip as string (from updating device when USE_SCRIPT_GLOBVARS defined)  
+`luip` = udp ip as string (from updating device when USE_SCRIPT_GLOBVARS defined) 
 `prefixn` = prefix n = 1-3  
 `frnm` = friendly name  
 `dvnm` = device name  
@@ -593,6 +593,23 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `gtmp` = global temperature  
 `ghum` = global humidity  
 `gprs` = global pressure  
+
+global variables  
+now optional binary mode, much faster and more precise, also supports arrays.  
+`gvr` = reset global variable handler  
+`gvrbs` = get, set global variable udp buffer size  
+`gvrm` = get, set global variable udp mode, 0 = string mode (default), 1 = binary mode  
+`gvrsa(array)` = send array as global variable in binary mode  
+`udp(url port string)` = send a string via UDP
+
+deep sleep for ESP32 devices only  
+`ds(-1)` = get deep sleep wakeup status  
+`ds(x)` = deep sleep for x seconds  
+`ds(x pin level)` = deep sleep for time and pin level  
+if x > 0 sleep x seconds  
+if pin != -1 wake on pin change  
+pin level that causes wake up  
+
 `pow(x y)` = calculates exponential powers x^y (imprecise version only)  
 `med(n x)` = calculates a 5 value median filter of x (2 filters possible n=0,1)  
 `int(x)` = gets the integer part of x (like floor)  
@@ -726,7 +743,7 @@ SEL:
 `rapp` = append this line to MQTT (ResponseAppend)  
 `wm` = contains source of web request code e.g. 0 = Sensor display (FUNC_WEB_SENSOR)  
   
-`acp(dst src)` = copy array, if src is numeric variable or constant array dst is filled with this value   
+`acp(dst src)` = copy array, if src is numeric variable or constant array dst is filled with this value, if src = sml SML decoder results are copied.   
   
 `knx(code value)` = sends a number value to KNX   
 
@@ -735,7 +752,7 @@ SEL:
 `sml(-m 1 initstr)` = reinits serial port of Meter m, initstr: "baud:mode" e.g. "9600:8E1", currently only baud and N,E,O are evaluated.    
 `sml(m 2)` = reads serial data received by Meter m into string (if m<0 reads hex values, else asci values)
 `sml(m 3 hstr)` = inserts SML Hexstring variable hstr as binary to Meter m in Output stream e.g. for special MODBUS cmds, hstr must be a string variable NO string constant   
-`sml[n]` = get value of SML energy register n   
+`sml[n]` = get value of SML energy register n, if n == 0 then get number of decode lines   
 `smls[m]` = get value of SML meter string info of meter m, if m < 0 gets string representation of numeric value of decode line m, this enables double number resolution.  
 `smlv[n]` = get SML decode valid status of line n (1..N), returns 1 if line decoded. n=0 resets all status codes to zero 
 `smld(m)` = call decoder of meter m  
