@@ -10,6 +10,7 @@ All board are not born equal so does your own diy realisations, you might have c
 
 The first thing is to correctly select the Button or Switch variant accordingly in the "Configure module" or "Configure template" menu.
 the variants supported by ESP8266 are following :
+
 - Button : Button active low, internal pull-up resistor
 - Button_n :  Button active low, no internal pull-up resistor (_n like NoPullUp)
 - Button_i : Button inverted, active high with internal pull-up resistor
@@ -18,6 +19,7 @@ the variants supported by ESP8266 are following :
 - Switch_n : Switch without pull-up resistor
 
 the ESP32 supports all forementionned variants plus : 
+
 - Button_d : Button with internal pull-down resistor
 - Button_id : Button inverted, active high with internal pull-down resistor
 - Switch_d : Switch with internal pull-down resistor
