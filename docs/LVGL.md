@@ -25,52 +25,7 @@ After compiling Tasmota with LVGL support and configuring [uDisplay](Displays.md
 
 This example uses the [M5Stack Fire](https://docs.m5stack.com/en/core/fire) device.
 
-Use the following template to define the relevant SPI GPIOs. Also set one of the unused GPIOs to `Option A3`.
-
-The complete configuration for M5Stack Fire is:
-
-```json
-Template {"NAME":"M5stack Fire","GPIO":[6210,1,1,1,1,1,1,1,1,1,768,1,1,1,736,672,0,640,608,704,0,3872,3872,800,0,0,0,0,992,1024,1,0,0,34,33,32],"FLAG":0,"BASE":1,"CMND":"Module 0"}
-```
-
-Save the following file as `display.ini` in the file system:
-
-```
-:H,ILI9341,320,240,16,SPI,1,*,*,*,*,*,*,*,40
-:B,60,1
-:I
-EF,3,03,80,02
-CF,3,00,C1,30
-ED,4,64,03,12,81
-E8,3,85,00,78
-CB,5,39,2C,00,34,02
-F7,1,20
-EA,2,00,00
-C0,1,23
-C1,1,10
-C5,2,3e,28
-C7,1,86
-36,1,48
-37,1,00
-3A,1,55
-B1,2,00,18
-B6,3,08,82,27
-F2,1,00
-26,1,01
-E0,0F,0F,31,2B,0C,0E,08,4E,F1,37,07,10,03,0E,09,00
-E1,0F,00,0E,14,03,11,07,31,C1,48,08,0F,0C,31,36,0F
-11,80
-29,80
-:o,28
-:O,29
-:A,2A,2B,2C
-:R,36
-:0,08,00,00,00
-:1,68,00,00,01
-:2,C8,00,00,02
-:3,A8,00,00,03
-#
-```
+Use the **Auto-Conf** feature in **Configuration** menu to set up the GPIOs and the `display.ini` file. After a couple of restarts, the device should show a splash scren with a Tasmota logo. You are ready to start.
 
 Then open the Berry console and copy/paste the following: (alternatively create an `autoexec.be` file with this content):
 
@@ -85,9 +40,7 @@ scr = lv.scr_act()            # default screen object
 f20 = lv.montserrat_font(20)  # load embedded Montserrat 20
 
 #- Background with a gradient from black #000000 (bottom) to dark blue #0000A0 (top) -#
-scr.set_style_bg_color(lv.color(0x0000A0), lv.PART_MAIN | lv.STATE_DEFAULT)
-scr.set_style_bg_grad_color(lv.color(0x000000), lv.PART_MAIN | lv.STATE_DEFAULT)
-scr.set_style_bg_grad_dir(lv.GRAD_DIR_VER, lv.PART_MAIN | lv.STATE_DEFAULT)
+scr.set_style_bg_color(lv.color(0x000077), lv.PART_MAIN | lv.STATE_DEFAULT)
 
 #- Upper state line -#
 stat_line = lv.label(scr)
