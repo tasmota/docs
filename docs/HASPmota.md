@@ -2,7 +2,7 @@
 
 !!! tip "This feature is included in tasmota32-lvgl.bin"
 
-!!! Starting from v14.5.0.2, HASPmota automatically starts if a file `pages.jsonl` is present
+!!! tip "Starting from v14.5.0.2, HASPmota automatically starts if a file `pages.jsonl` is present"
 
 Tasmota happily supports the openHASP compatible format, known as HASPmota. This format allows you to describe rich graphics interfaces using simple JSON templates. The HASPmota support in Tasmota leverages the power of [LVGL](https://tasmota.github.io/docs/LVGL/) and the [Berry language](https://tasmota.github.io/docs/Berry/), but you don't need to code or learn the LVGL API to use it.
 
