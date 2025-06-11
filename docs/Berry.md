@@ -575,7 +575,7 @@ See examples in the [Berry-Cookbook](Berry-Cookbook#adding-commands-to-tasmota)
 Tasmota Function|Parameters and details
 :---|:---
 tasmota.get\_power<a class="cmnd" id="tasmota_get_power"></a>|`([index:int]) -> bool or list[bool]`<br>Returns Relay or Light On/Off state for one channel, or as a list of bool for all.
-tasmota.set\_power<a class="cmnd" id="tasmota_set_power"></a>|`(index:int, onoff:bool) -> bool`<br>Sets the on/off state of a Relay/Light. Returns the previous status of the Relay/Light of `nil` if index is invalid.<br>Example:<br>```> tasmota.get_power()```<br>```[true]```
+tasmota.set\_power<a class="cmnd" id="tasmota_set_power"></a>|`(index:int, onoff:bool) -> bool or nil`<br>Sets the on/off state of a Relay/Light. Returns the previous status of the Relay/Light or `nil` if index is invalid.<br>Example:<br>```> tasmota.set_power(0, true)```<br>```[true]```
 tasmota.get\_light<a class="cmnd" id="tasmota_get_light"></a>|_deprecated_ use `light.get`
 tasmota.set\_light<a class="cmnd" id="tasmota_set_light"></a>|_deprecated_ use `light.set`
 tasmota.get\_switches<a class="cmnd" id="tasmota_get_switches"></a>|`() -> list(bool)`<br>Returns as many values as switches are present. `true` means `PRESSED` and `false` means `NOT_PRESSED`. (Warning: this is the opposite of the internal representation where PRESSED=0)<br>Note: if there are holes in the switch definition, the values will be skipped. I.e. if you define SWITCH1 and SWITCH3, the array will return the two consecutive values for switches 1/3.
