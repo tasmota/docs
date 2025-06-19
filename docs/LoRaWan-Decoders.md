@@ -52,15 +52,15 @@ The _Tasmota LoRaWAN Decoder_ feature:
 }
 ```
  
- ## Files
- These files are available from the [Tasmota Github Repository](
+## Files
+These files are available from the [Tasmota Github Repository](
 https://github.com/arendst/Tasmota/tree/master/tasmota/berry/lorawan/decoders)
 
 - [LwDecoder.be](https://github.com/arendst/Tasmota/tree/master/tasmota/berrylorawan/decoders/LwDecoder.be)
 - [Device Decoder Files](https://github.com/arendst/Tasmota/tree/master/tasmota/berry/lorawan/decoders/vendors) (indexed by Vendor/Model)
 
 
- ## How to use the Device Decoder feature
+## How to use the Device Decoder feature
  1. Download to your local PC, then upload to the Tasmota File System 
     - [LwDecode.be](https://github.com/arendst/Tasmota/tree/master/tasmota/berry/lorawan/decoders/LwDecode.be)
     - the _Device Decoder File(s)_ for your _End Device(s)_, or write your own (see below)
@@ -73,7 +73,7 @@ https://github.com/arendst/Tasmota/tree/master/tasmota/berry/lorawan/decoders)
 	e.g.  `LoRaWanDecoder1 LHT52` associates node 1 with the `LHT52.be` decoder file
     - `BrRestart` to restart Berry  
  
- ## Write your own Device Decoder file ##
+## Write your own Device Decoder file ##
 1. Find the JavaScript (*.js) decoder file for your device from [TTN Device Decoder database](https://github.com/TheThingsNetwork/lorawan-devices/tree/master/vendor)  
 Alternatively, find the manufacturer's datasheet/User Guide/User Manual/etc. to learn the syntax of the _Raw Data Payload_
 2. Edit [LwDecoderSample.be](https://github.com/arendst/Tasmota/tree/master/tasmota/berry/lorawan/decoders/LwDecoderSample.be) to decode the _Raw Data Payload_
@@ -81,7 +81,7 @@ Alternatively, find the manufacturer's datasheet/User Guide/User Manual/etc. to 
 4. Copy `<DeviceName>.be` to the _Tasmota File System_.
 5. Test
 	- `load("<DeviceName>.be")` from the Berry Scripting Console, looking for any reported errors.
-    - Execute this Tasmota console command: `LoRaWanDecoder<x> <DeviceName>` 	
+        - Execute this Tasmota console command: `LoRaWanDecoder<x> <DeviceName>` 	
 	- Wait for your device to send raw Data Payloads to your Tasmota installation, and confirm `LwDecoded` MQTT messages are received, and the values are correct: 
 
 6. Submit a [PR](https://github.com/arendst/Tasmota/pulls) to share your new decoder with the Tasmota community.
