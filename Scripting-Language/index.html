@@ -1,0 +1,1734 @@
+<!doctype html><html lang=en class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Documentation (Wiki) for Tasmota"><link href=https://tasmota.github.io/docs/Scripting-Language/ rel=canonical><link href=../Rules/ rel=prev><link href=../Blinds-and-Shutters/ rel=next><link rel=icon href=../_media/favicon.ico><meta name=generator content="mkdocs-1.6.1, mkdocs-material-9.6.14"><title>Scripting Language - Tasmota</title><link rel=stylesheet href=../assets/stylesheets/main.342714a4.min.css><link rel=stylesheet href=../assets/stylesheets/palette.06af60db.min.css><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Barlow:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback"><style>:root{--md-text-font:"Barlow";--md-code-font:"Roboto Mono"}</style><link rel=stylesheet href=../assets/css/anchor-fix.css><script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script><script id=__analytics>function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-8J08F8X90S"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-8J08F8X90S",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-8J08F8X90S",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script><script>"undefined"!=typeof __md_analytics&&__md_analytics()</script></head> <body dir=ltr data-md-color-scheme=default data-md-color-primary=blue data-md-color-accent=indigo> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#scripting class=md-skip> Skip to content </a> </div> <div data-md-component=announce> </div> <header class="md-header md-header--shadow md-header--lifted" data-md-component=header> <nav class="md-header__inner md-grid" aria-label=Header> <a href=.. title=Tasmota class="md-header__button md-logo" aria-label=Tasmota data-md-component=logo> <img src=../_media/logo.svg alt=logo> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> Tasmota </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> Scripting Language </span> </div> </div> </div> <form class=md-header__option data-md-component=palette> <input class=md-option data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme=default data-md-color-primary=blue data-md-color-accent=indigo aria-label="Switch to dark mode" type=radio name=__palette id=__palette_0> <label class="md-header__button md-icon" title="Switch to dark mode" for=__palette_1 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg> </label> <input class=md-option data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme=slate data-md-color-primary=blue data-md-color-accent=deep-purple aria-label="Switch to light mode" type=radio name=__palette id=__palette_1> <label class="md-header__button md-icon" title="Switch to light mode" for=__palette_0 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg> </label> </form> <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script> <label class="md-header__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=Search placeholder=Search autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg> </label> <nav class=md-search__options aria-label=Search> <button type=reset class="md-search__icon md-icon" title=Clear aria-label=Clear tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg> </button> </nav> </form> <div class=md-search__output> <div class=md-search__scrollwrap tabindex=0 data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> Initializing search </div> <ol class=md-search-result__list role=presentation></ol> </div> </div> </div> </div> </div> <div class=md-header__source> <a href=https://github.com/arendst/tasmota title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg> </div> <div class=md-source__repository> arendst/tasmota </div> </a> </div> </nav> <nav class=md-tabs aria-label=Tabs data-md-component=tabs> <div class=md-grid> <ul class=md-tabs__list> <li class=md-tabs__item> <a href=.. class=md-tabs__link> Home </a> </li> <li class="md-tabs__item md-tabs__item--active"> <a href=../Features/ class=md-tabs__link> Features </a> </li> <li class=md-tabs__item> <a href=../ESP32/ class=md-tabs__link> ESP32 </a> </li> <li class=md-tabs__item> <a href=../Integrations/ class=md-tabs__link> Smart Home Integrations </a> </li> <li class=md-tabs__item> <a href=../Supported-Peripherals/ class=md-tabs__link> Peripherals </a> </li> <li class=md-tabs__item> <a href=../Configuration-Procedure-for-New-Devices/ class=md-tabs__link> Supported Devices </a> </li> <li class=md-tabs__item> <a href=../FAQ/ class=md-tabs__link> Help </a> </li> <li class=md-tabs__item> <a href=http://tasmota.github.io/install class=md-tabs__link> Web Installer </a> </li> </ul> </div> </nav> </header> <div class=md-container data-md-component=container> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary md-nav--lifted" aria-label=Navigation data-md-level=0> <label class=md-nav__title for=__drawer> <a href=.. title=Tasmota class="md-nav__button md-logo" aria-label=Tasmota data-md-component=logo> <img src=../_media/logo.svg alt=logo> </a> Tasmota </label> <div class=md-nav__source> <a href=https://github.com/arendst/tasmota title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg> </div> <div class=md-source__repository> arendst/tasmota </div> </a> </div> <ul class=md-nav__list data-md-scrollfix> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type=checkbox id=__nav_1> <label class=md-nav__link for=__nav_1 id=__nav_1_label tabindex=0> <span class=md-ellipsis> Home </span> <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav data-md-level=1 aria-labelledby=__nav_1_label aria-expanded=false> <label class=md-nav__title for=__nav_1> <span class="md-nav__icon md-icon"></span> Home </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=.. class=md-nav__link> <span class=md-ellipsis> News </span> </a> </li> <li class=md-nav__item> <a href=../About/ class=md-nav__link> <span class=md-ellipsis> About </span> </a> </li> <li class=md-nav__item> <a href=../Getting-Started/ class=md-nav__link> <span class=md-ellipsis> Getting Started </span> </a> </li> <li class=md-nav__item> <a href=../Upgrading/ class=md-nav__link> <span class=md-ellipsis> Upgrading </span> </a> </li> <li class=md-nav__item> <a href=../MQTT/ class=md-nav__link> <span class=md-ellipsis> MQTT </span> </a> </li> <li class=md-nav__item> <a href=../Commands/ class=md-nav__link> <span class=md-ellipsis> Commands </span> </a> </li> <li class=md-nav__item> <a href=../Templates/ class=md-nav__link> <span class=md-ellipsis> Templates </span> </a> </li> <li class=md-nav__item> <a href=../Components/ class=md-nav__link> <span class=md-ellipsis> Components </span> </a> </li> <li class=md-nav__item> <a href=../Modules/ class=md-nav__link> <span class=md-ellipsis> Modules </span> </a> </li> <li class=md-nav__item> <a href=../Peripherals/ class=md-nav__link> <span class=md-ellipsis> Peripherals </span> </a> </li> <li class=md-nav__item> <a href=../WebUI/ class=md-nav__link> <span class=md-ellipsis> WebUI </span> </a> </li> <li class=md-nav__item> <a href=../Firmware-Builds/ class=md-nav__link> <span class=md-ellipsis> Firmware Builds </span> </a> </li> <li class=md-nav__item> <a href=../Compile-your-build/ class=md-nav__link> <span class=md-ellipsis> Compiling </span> </a> </li> <li class=md-nav__item> <a href=../Contributing/ class=md-nav__link> <span class=md-ellipsis> Contributing </span> </a> </li> <li class=md-nav__item> <a href=../Download/ class=md-nav__link> <span class=md-ellipsis> Download </span> </a> </li> <li class=md-nav__item> <a href=https://github.com/arendst/Tasmota/discussions/categories/show-and-tell class=md-nav__link> <span class=md-ellipsis> Project Showcase </span> </a> </li> <li class=md-nav__item> <a href=../For-Developers/ class=md-nav__link> <span class=md-ellipsis> For Developers </span> </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type=checkbox id=__nav_2 checked> <label class=md-nav__link for=__nav_2 id=__nav_2_label tabindex> <span class=md-ellipsis> Features </span> <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav data-md-level=1 aria-labelledby=__nav_2_label aria-expanded=true> <label class=md-nav__title for=__nav_2> <span class="md-nav__icon md-icon"></span> Features </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../Features/ class=md-nav__link> <span class=md-ellipsis> Introduction </span> </a> </li> <li class=md-nav__item> <a href=../ADC/ class=md-nav__link> <span class=md-ellipsis> Analog Pin </span> </a> </li> <li class=md-nav__item> <a href=../ArtNet/ class=md-nav__link> <span class=md-ellipsis> ArtNet DMX </span> </a> </li> <li class=md-nav__item> <a href=../Buttons-and-Switches/ class=md-nav__link> <span class=md-ellipsis> Buttons and Switches </span> </a> </li> <li class=md-nav__item> <a href=../DeepSleep/ class=md-nav__link> <span class=md-ellipsis> DeepSleep </span> </a> </li> <li class=md-nav__item> <a href=../Device-Groups/ class=md-nav__link> <span class=md-ellipsis> Device Groups </span> </a> </li> <li class=md-nav__item> <a href=../Universal-Display-Driver/ class=md-nav__link> <span class=md-ellipsis> Universal Display and Universal Touch drivers (uDisplay/uTouch) </span> </a> </li> <li class=md-nav__item> <a href=../Displays/ class=md-nav__link> <span class=md-ellipsis> Displays </span> </a> </li> <li class=md-nav__item> <a href=../Dynamic-Sleep/ class=md-nav__link> <span class=md-ellipsis> Dynamic Sleep </span> </a> </li> <li class=md-nav__item> <a href=../I2CDEVICES/ class=md-nav__link> <span class=md-ellipsis> I2C Devices </span> </a> </li> <li class=md-nav__item> <a href=../I2S-Audio/ class=md-nav__link> <span class=md-ellipsis> I2S Audio </span> </a> </li> <li class=md-nav__item> <a href=../IPv6/ class=md-nav__link> <span class=md-ellipsis> IPv6 </span> </a> </li> <li class=md-nav__item> <a href=../Lights/ class=md-nav__link> <span class=md-ellipsis> Lights </span> </a> </li> <li class=md-nav__item> <a href=../Matter/ class=md-nav__link> <span class=md-ellipsis> Matter </span> </a> </li> <li class=md-nav__item> <a href=../PIR-Motion-Sensors/ class=md-nav__link> <span class=md-ellipsis> PIR Motion Sensors </span> </a> </li> <li class=md-nav__item> <a href=../Power-Monitoring-Calibration/ class=md-nav__link> <span class=md-ellipsis> Power Monitoring Calibration </span> </a> </li> <li class=md-nav__item> <a href=../PWM-dimmer-switch/ class=md-nav__link> <span class=md-ellipsis> PWM Dimmer </span> </a> </li> <li class=md-nav__item> <a href=../Rules/ class=md-nav__link> <span class=md-ellipsis> Rules </span> </a> </li> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> <span class=md-ellipsis> Scripting Language </span> <span class="md-nav__icon md-icon"></span> </label> <a href=./ class="md-nav__link md-nav__link--active"> <span class=md-ellipsis> Scripting Language </span> </a> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#features class=md-nav__link> <span class=md-ellipsis> Features </span> </a> </li> <li class=md-nav__item> <a href=#script-sections class=md-nav__link> <span class=md-ellipsis> Script Sections </span> </a> <nav class=md-nav aria-label="Script Sections"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#d-ssize class=md-nav__link> <span class=md-ellipsis> &gt;D ssize </span> </a> </li> <li class=md-nav__item> <a href=#b class=md-nav__link> <span class=md-ellipsis> &gt;B </span> </a> </li> <li class=md-nav__item> <a href=#bs class=md-nav__link> <span class=md-ellipsis> &gt;BS </span> </a> </li> <li class=md-nav__item> <a href=#e class=md-nav__link> <span class=md-ellipsis> &gt;E </span> </a> </li> <li class=md-nav__item> <a href=#f class=md-nav__link> <span class=md-ellipsis> &gt;F </span> </a> </li> <li class=md-nav__item> <a href=#s class=md-nav__link> <span class=md-ellipsis> &gt;S </span> </a> </li> <li class=md-nav__item> <a href=#r class=md-nav__link> <span class=md-ellipsis> &gt;R </span> </a> </li> <li class=md-nav__item> <a href=#t class=md-nav__link> <span class=md-ellipsis> &gt;T </span> </a> </li> <li class=md-nav__item> <a href=#h class=md-nav__link> <span class=md-ellipsis> &gt;H </span> </a> </li> <li class=md-nav__item> <a href=#h-passcode class=md-nav__link> <span class=md-ellipsis> &gt;h passcode </span> </a> </li> <li class=md-nav__item> <a href=#u class=md-nav__link> <span class=md-ellipsis> &gt;U </span> </a> </li> <li class=md-nav__item> <a href=#c class=md-nav__link> <span class=md-ellipsis> &gt;C </span> </a> </li> <li class=md-nav__item> <a href=#g class=md-nav__link> <span class=md-ellipsis> &gt;G </span> </a> </li> <li class=md-nav__item> <a href=#p class=md-nav__link> <span class=md-ellipsis> &gt;P </span> </a> </li> <li class=md-nav__item> <a href=#jp class=md-nav__link> <span class=md-ellipsis> &gt;jp </span> </a> </li> <li class=md-nav__item> <a href=#ti class=md-nav__link> <span class=md-ellipsis> &gt;ti </span> </a> </li> <li class=md-nav__item> <a href=#b_1 class=md-nav__link> <span class=md-ellipsis> &gt;b </span> </a> </li> <li class=md-nav__item> <a href=#j class=md-nav__link> <span class=md-ellipsis> &gt;J </span> </a> </li> <li class=md-nav__item> <a href=#w class=md-nav__link> <span class=md-ellipsis> &gt;W </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#optionally-these-sections-may-be-used class=md-nav__link> <span class=md-ellipsis> optionally these sections may be used </span> </a> <nav class=md-nav aria-label="optionally these sections may be used"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#ws class=md-nav__link> <span class=md-ellipsis> &gt;WS </span> </a> </li> <li class=md-nav__item> <a href=#wm class=md-nav__link> <span class=md-ellipsis> &gt;WM </span> </a> </li> <li class=md-nav__item> <a href=#google-charts class=md-nav__link> <span class=md-ellipsis> Google Charts </span> </a> </li> <li class=md-nav__item> <a href=#w-buttonlabel class=md-nav__link> <span class=md-ellipsis> &gt;w ButtonLabel </span> </a> </li> <li class=md-nav__item> <a href=#m class=md-nav__link> <span class=md-ellipsis> &gt;M </span> </a> </li> <li class=md-nav__item> <a href=#y class=md-nav__link> <span class=md-ellipsis> &gt;y </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#special-variables class=md-nav__link> <span class=md-ellipsis> Special Variables </span> </a> <nav class=md-nav aria-label="Special Variables"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#i2c-support class=md-nav__link> <span class=md-ellipsis> I2C support </span> </a> </li> <li class=md-nav__item> <a href=#onewire-support class=md-nav__link> <span class=md-ellipsis> Onewire support </span> </a> </li> <li class=md-nav__item> <a href=#serial-io-support class=md-nav__link> <span class=md-ellipsis> Serial IO support </span> </a> </li> <li class=md-nav__item> <a href=#spi-io-support class=md-nav__link> <span class=md-ellipsis> SPI IO support </span> </a> </li> <li class=md-nav__item> <a href=#tcp-server-support class=md-nav__link> <span class=md-ellipsis> TCP server support </span> </a> </li> <li class=md-nav__item> <a href=#system-variables-for-debugging class=md-nav__link> <span class=md-ellipsis> System variables (for debugging) </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#commands class=md-nav__link> <span class=md-ellipsis> Commands </span> </a> <nav class=md-nav aria-label=Commands> <ul class=md-nav__list> <li class=md-nav__item> <a href=#variable-substitution class=md-nav__link> <span class=md-ellipsis> Variable Substitution </span> </a> </li> <li class=md-nav__item> <a href=#special-commands class=md-nav__link> <span class=md-ellipsis> Special commands: </span> </a> </li> <li class=md-nav__item> <a href=#subroutines-and-parameters class=md-nav__link> <span class=md-ellipsis> Subroutines and Parameters </span> </a> </li> <li class=md-nav__item> <a href=#for-loop-loop-count-must-not-be-less-than-1-nesting-up-to-3-levels class=md-nav__link> <span class=md-ellipsis> For loop (loop count must not be less than 1, nesting up to 3 levels) </span> </a> </li> <li class=md-nav__item> <a href=#switch-selector-numeric-or-string class=md-nav__link> <span class=md-ellipsis> Switch selector (numeric or string) </span> </a> </li> <li class=md-nav__item> <a href=#conditional-statements class=md-nav__link> <span class=md-ellipsis> Conditional Statements </span> </a> </li> <li class=md-nav__item> <a href=#mapping-function class=md-nav__link> <span class=md-ellipsis> Mapping Function </span> </a> </li> <li class=md-nav__item> <a href=#m-e-mail class=md-nav__link> <span class=md-ellipsis> &gt;m E-mail </span> </a> </li> <li class=md-nav__item> <a href=#mqtt-subscribe-unsubscribe class=md-nav__link> <span class=md-ellipsis> MQTT Subscribe, Unsubscribe* </span> </a> </li> <li class=md-nav__item> <a href=#file-system-support class=md-nav__link> <span class=md-ellipsis> File System Support </span> </a> </li> <li class=md-nav__item> <a href=#other-commands-flash class=md-nav__link> <span class=md-ellipsis> Other commands (+?? flash) </span> </a> </li> <li class=md-nav__item> <a href=#extended-commands-09k-flash class=md-nav__link> <span class=md-ellipsis> Extended commands (+0,9k flash) </span> </a> </li> <li class=md-nav__item> <a href=#t-esp32-real-multitasking-support class=md-nav__link> <span class=md-ellipsis> &gt;t ESP32 real Multitasking support </span> </a> </li> <li class=md-nav__item> <a href=#esp32-webcam-support class=md-nav__link> <span class=md-ellipsis> ESP32 Webcam support </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#scripting-cookbook class=md-nav__link> <span class=md-ellipsis> Scripting Cookbook </span> </a> <nav class=md-nav aria-label="Scripting Cookbook"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#simple-example-to-start-with class=md-nav__link> <span class=md-ellipsis> simple example to start with </span> </a> </li> <li class=md-nav__item> <a href=#scripting-language-example class=md-nav__link> <span class=md-ellipsis> Scripting Language Example </span> </a> </li> <li class=md-nav__item> <a href=#sensor-logging class=md-nav__link> <span class=md-ellipsis> Sensor Logging </span> </a> </li> <li class=md-nav__item> <a href=#global-variables-example class=md-nav__link> <span class=md-ellipsis> global variables example </span> </a> </li> <li class=md-nav__item> <a href=#e-paper-29-display-with-sgp30-and-bme280 class=md-nav__link> <span class=md-ellipsis> e-Paper 29 Display with SGP30 and BME280 </span> </a> </li> <li class=md-nav__item> <a href=#e-paper-42-display-with-sht31-and-bme280 class=md-nav__link> <span class=md-ellipsis> e-Paper 42 Display with SHT31 and BME280 </span> </a> </li> <li class=md-nav__item> <a href=#ili-9488-color-lcd-display-with-bmp280-and-vl5310x class=md-nav__link> <span class=md-ellipsis> ILI 9488 Color LCD Display with BMP280 and VL5310X </span> </a> </li> <li class=md-nav__item> <a href=#led-bar-display-with-ws2812-led-chain class=md-nav__link> <span class=md-ellipsis> LED Bar Display with WS2812 LED Chain </span> </a> </li> <li class=md-nav__item> <a href=#multiple-ir-receiver-synchronization class=md-nav__link> <span class=md-ellipsis> Multiple IR Receiver Synchronization </span> </a> </li> <li class=md-nav__item> <a href=#fast-polling class=md-nav__link> <span class=md-ellipsis> Fast Polling </span> </a> </li> <li class=md-nav__item> <a href=#web-ui class=md-nav__link> <span class=md-ellipsis> Web UI </span> </a> </li> <li class=md-nav__item> <a href=#hue-emulation class=md-nav__link> <span class=md-ellipsis> Hue Emulation </span> </a> </li> <li class=md-nav__item> <a href=#alexa-controlled-mcp230xx-i2c-gpio-expander class=md-nav__link> <span class=md-ellipsis> Alexa Controlled MCP230xx I2C GPIO Expander </span> </a> </li> <li class=md-nav__item> <a href=#retrieve-network-gateway-ip-address class=md-nav__link> <span class=md-ellipsis> Retrieve network gateway IP Address </span> </a> </li> <li class=md-nav__item> <a href=#send-e-mail class=md-nav__link> <span class=md-ellipsis> Send e-mail </span> </a> </li> <li class=md-nav__item> <a href=#send-power-reading-with-formatted-time-stamp-via-websend class=md-nav__link> <span class=md-ellipsis> Send power reading with formatted time stamp via websend </span> </a> </li> <li class=md-nav__item> <a href=#switching-and-dimming-by-recognizing-mains-power-frequency class=md-nav__link> <span class=md-ellipsis> Switching and Dimming By Recognizing Mains Power Frequency </span> </a> </li> <li class=md-nav__item> <a href=#dual-display-example class=md-nav__link> <span class=md-ellipsis> Dual display example </span> </a> </li> <li class=md-nav__item> <a href=#read-i2c-example-axp192 class=md-nav__link> <span class=md-ellipsis> read I2C example (AXP192) </span> </a> </li> <li class=md-nav__item> <a href=#multiplexing-a-single-adc-with-cd4067-breakout class=md-nav__link> <span class=md-ellipsis> Multiplexing a single adc with CD4067 breakout </span> </a> </li> <li class=md-nav__item> <a href=#accessing-tesla-powerwall-2-api class=md-nav__link> <span class=md-ellipsis> accessing TESLA Powerwall 2 API </span> </a> </li> <li class=md-nav__item> <a href=#image-gallery-of-various-tasmota-scripts class=md-nav__link> <span class=md-ellipsis> Image gallery of various Tasmota scripts </span> </a> </li> <li class=md-nav__item> <a href=#internet-radio class=md-nav__link> <span class=md-ellipsis> Internet radio </span> </a> </li> <li class=md-nav__item> <a href=#webcam-with-multiple-options class=md-nav__link> <span class=md-ellipsis> Webcam with multiple options </span> </a> </li> <li class=md-nav__item> <a href=#energy-collector class=md-nav__link> <span class=md-ellipsis> Energy collector </span> </a> </li> <li class=md-nav__item> <a href=#energy-display-main-menu class=md-nav__link> <span class=md-ellipsis> Energy display main menu </span> </a> </li> <li class=md-nav__item> <a href=#energy-display-one-day-of-database class=md-nav__link> <span class=md-ellipsis> Energy display one day of database </span> </a> </li> <li class=md-nav__item> <a href=#energy-display-last-week-of-database class=md-nav__link> <span class=md-ellipsis> Energy display last week of database </span> </a> </li> <li class=md-nav__item> <a href=#energy-display-last-weeks-of-database class=md-nav__link> <span class=md-ellipsis> Energy display last weeks of database </span> </a> </li> <li class=md-nav__item> <a href=#environment-sensor class=md-nav__link> <span class=md-ellipsis> environment sensor </span> </a> </li> <li class=md-nav__item> <a href=#timer-main-menu class=md-nav__link> <span class=md-ellipsis> timer main menu </span> </a> </li> <li class=md-nav__item> <a href=#timer-setup class=md-nav__link> <span class=md-ellipsis> timer setup </span> </a> </li> </ul> </nav> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../Blinds-and-Shutters/ class=md-nav__link> <span class=md-ellipsis> Shutters and Blinds </span> </a> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type=checkbox id=__nav_2_21> <label class=md-nav__link for=__nav_2_21 id=__nav_2_21_label tabindex=0> <span class=md-ellipsis> Protocol Bridging </span> <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav data-md-level=2 aria-labelledby=__nav_2_21_label aria-expanded=false> <label class=md-nav__title for=__nav_2_21> <span class="md-nav__icon md-icon"></span> Protocol Bridging </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../TasmotaClient/ class=md-nav__link> <span class=md-ellipsis> Arduino MCU </span> </a> </li> <li class=md-nav__item> <a href=../Bluetooth/ class=md-nav__link> <span class=md-ellipsis> BLE Gateway </span> </a> </li> <li class=md-nav__item> <a href=../DALI/ class=md-nav__link> <span class=md-ellipsis> DALI </span> </a> </li> <li class=md-nav__item> <a href=../HDMI_CEC/ class=md-nav__link> <span class=md-ellipsis> HDMI CEC </span> </a> </li> <li class=md-nav__item> <a href=../Tasmota-IR/ class=md-nav__link> <span class=md-ellipsis> IR Communication </span> </a> </li> <li class=md-nav__item> <a href=../Projector/ class=md-nav__link> <span class=md-ellipsis> LCD/DLP Projector Control </span> </a> </li> <li class=md-nav__item> <a href=../LoRa-and-LoRaWan-Bridge/ class=md-nav__link> <span class=md-ellipsis> LoRa and LoRaWan Bridge </span> </a> </li> <li class=md-nav__item> <a href=../Modbus-Bridge/ class=md-nav__link> <span class=md-ellipsis> Modbus Bridge </span> </a> </li> <li class=md-nav__item> <a href=../OpenTherm/ class=md-nav__link> <span class=md-ellipsis> OpenTherm </span> </a> </li> <li class=md-nav__item> <a href=../RF-Protocol/ class=md-nav__link> <span class=md-ellipsis> RF Communication </span> </a> </li> <li class=md-nav__item> <a href=../Serial-to-TCP-Bridge/ class=md-nav__link> <span class=md-ellipsis> Serial to TCP Bridge </span> </a> </li> <li class=md-nav__item> <a href=../TWAI/ class=md-nav__link> <span class=md-ellipsis> TWAI </span> </a> </li> <li class=md-nav__item> <a href=../Telegram/ class=md-nav__link> <span class=md-ellipsis> Telegram </span> </a> </li> <li class=md-nav__item> <a href=../Zigbee/ class=md-nav__link> <span class=md-ellipsis> Zigbee </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../Smart-Meter-Interface/ class=md-nav__link> <span class=md-ellipsis> Smart Meter Interface </span> </a> </li> <li class=md-nav__item> <a href=../Thermostat/ class=md-nav__link> <span class=md-ellipsis> Thermostat </span> </a> </li> <li class=md-nav__item> <a href=../Timers/ class=md-nav__link> <span class=md-ellipsis> Timers </span> </a> </li> <li class=md-nav__item> <a href=../TLS/ class=md-nav__link> <span class=md-ellipsis> TLS Secured MQTT </span> </a> </li> <li class=md-nav__item> <a href=../TuyaMCU/ class=md-nav__link> <span class=md-ellipsis> TuyaMCU </span> </a> </li> <li class=md-nav__item> <a href=../UFS/ class=md-nav__link> <span class=md-ellipsis> Universal File System </span> </a> </li> <li class=md-nav__item> <a href=../Range-Extender/ class=md-nav__link> <span class=md-ellipsis> Wi-Fi Range Extender </span> </a> </li> <li class=md-nav__item> <a href=../Wireguard/ class=md-nav__link> <span class=md-ellipsis> Wireguard VPN </span> </a> </li> <li class=md-nav__item> <a href=../Tutorials/ class=md-nav__link> <span class=md-ellipsis> Projects and Tutorials </span> </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type=checkbox id=__nav_3> <label class=md-nav__link for=__nav_3 id=__nav_3_label tabindex=0> <span class=md-ellipsis> ESP32 </span> <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav data-md-level=1 aria-labelledby=__nav_3_label aria-expanded=false> <label class=md-nav__title for=__nav_3> <span class="md-nav__icon md-icon"></span> ESP32 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../ESP32/ class=md-nav__link> <span class=md-ellipsis> Tasmota32 Features </span> </a> </li> <li class=md-nav__item> <a href=../Berry/ class=md-nav__link> <span class=md-ellipsis> Berry </span> </a> </li> <li class=md-nav__item> <a href=../Bluetooth_ESP32/ class=md-nav__link> <span class=md-ellipsis> Bluetooth Low Energy </span> </a> </li> <li class=md-nav__item> <a href=../LVGL/ class=md-nav__link> <span class=md-ellipsis> LVGL </span> </a> </li> <li class=md-nav__item> <a href=../HASPmota/ class=md-nav__link> <span class=md-ellipsis> HASPmota </span> </a> </li> <li class=md-nav__item> <a href=../Matter/ class=md-nav__link> <span class=md-ellipsis> Matter </span> </a> </li> <li class=md-nav__item> <a href=../Tasmota-Application/ class=md-nav__link> <span class=md-ellipsis> Tasmota Application Files </span> </a> </li> <li class=md-nav__item> <a href=../TFL/ class=md-nav__link> <span class=md-ellipsis> TensorFlow Lite </span> </a> </li> <li class=md-nav__item> <a href=../TouchPin/ class=md-nav__link> <span class=md-ellipsis> Touch GPIOs </span> </a> </li> <li class=md-nav__item> <a href=../Safeboot/ class=md-nav__link> <span class=md-ellipsis> Safeboot Partition Layout </span> </a> </li> <li class=md-nav__item> <a href=https://templates.blakadder.com/esp32 class=md-nav__link> <span class=md-ellipsis> Supported Devices </span> </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type=checkbox id=__nav_4> <label class=md-nav__link for=__nav_4 id=__nav_4_label tabindex=0> <span class=md-ellipsis> Smart Home Integrations </span> <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav data-md-level=1 aria-labelledby=__nav_4_label aria-expanded=false> <label class=md-nav__title for=__nav_4> <span class="md-nav__icon md-icon"></span> Smart Home Integrations </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../Integrations/ class=md-nav__link> <span class=md-ellipsis> Introduction </span> </a> </li> <li class=md-nav__item> <a href=../Alexa/ class=md-nav__link> <span class=md-ellipsis> Alexa </span> </a> </li> <li class=md-nav__item> <a href=../AWS-IoT/ class=md-nav__link> <span class=md-ellipsis> AWS IoT </span> </a> </li> <li class=md-nav__item> <a href=../Domoticz/ class=md-nav__link> <span class=md-ellipsis> Domoticz </span> </a> </li> <li class=md-nav__item> <a href=../Home-Assistant/ class=md-nav__link> <span class=md-ellipsis> Home Assistant </span> </a> </li> <li class=md-nav__item> <a href=../Homebridge/ class=md-nav__link> <span class=md-ellipsis> Homebridge </span> </a> </li> <li class=md-nav__item> <a href=https://homey.app/en-us/app/com.paveld.tasmota/Tasmota-MQTT/ class=md-nav__link> <span class=md-ellipsis> Homey </span> </a> </li> <li class=md-nav__item> <a href=../HomeSeer/ class=md-nav__link> <span class=md-ellipsis> HomeSeer </span> </a> </li> <li class=md-nav__item> <a href=../IP-Symcon/ class=md-nav__link> <span class=md-ellipsis> IP Symcon </span> </a> </li> <li class=md-nav__item> <a href=../KNX/ class=md-nav__link> <span class=md-ellipsis> KNX </span> </a> </li> <li class=md-nav__item> <a href=../NodeRed/ class=md-nav__link> <span class=md-ellipsis> NodeRed </span> </a> </li> <li class=md-nav__item> <a href=../nymea/ class=md-nav__link> <span class=md-ellipsis> nymea </span> </a> </li> <li class=md-nav__item> <a href=../Octoprint/ class=md-nav__link> <span class=md-ellipsis> OctoPrint </span> </a> </li> <li class=md-nav__item> <a href=../openHAB/ class=md-nav__link> <span class=md-ellipsis> openHAB </span> </a> </li> <li class=md-nav__item> <a href=../otto/ class=md-nav__link> <span class=md-ellipsis> Otto </span> </a> </li> <li class=md-nav__item> <a href=https://github.com/arendst/Tasmota/issues/3769 class=md-nav__link> <span class=md-ellipsis> IOBroker </span> </a> </li> <li class=md-nav__item> <a href=https://github.com/tim-hellhake/tasmota-adapter class=md-nav__link> <span class=md-ellipsis> Mozilla WebThings Adapter </span> </a> </li> <li class=md-nav__item> <a href=https://github.com/hongtat/tasmota-connect class=md-nav__link> <span class=md-ellipsis> SmartThings </span> </a> </li> <li class=md-nav__item> <a href=https://github.com/Gifford47/tasmohab/blob/master/README.md class=md-nav__link> <span class=md-ellipsis> Tasmohab </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../Supported-Peripherals/ class=md-nav__link> <span class=md-ellipsis> Peripherals </span> </a> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type=checkbox id=__nav_6> <label class=md-nav__link for=__nav_6 id=__nav_6_label tabindex=0> <span class=md-ellipsis> Supported Devices </span> <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav data-md-level=1 aria-labelledby=__nav_6_label aria-expanded=false> <label class=md-nav__title for=__nav_6> <span class="md-nav__icon md-icon"></span> Supported Devices </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../Configuration-Procedure-for-New-Devices/ class=md-nav__link> <span class=md-ellipsis> Configure Unknown Device </span> </a> </li> <li class=md-nav__item> <a href="https://templates.blakadder.com/ " target='_blank""' class=md-nav__link> <span class=md-ellipsis> All Supported Devices </span> </a> </li> <li class=md-nav__item> <a href=../Pinouts/ class=md-nav__link> <span class=md-ellipsis> Wi-Fi Module Pinouts </span> </a> </li> <li class=md-nav__item> <a href=../Supported-Modules/ class=md-nav__link> <span class=md-ellipsis> Supported Modules </span> </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type=checkbox id=__nav_7> <label class=md-nav__link for=__nav_7 id=__nav_7_label tabindex=0> <span class=md-ellipsis> Help </span> <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav data-md-level=1 aria-labelledby=__nav_7_label aria-expanded=false> <label class=md-nav__title for=__nav_7> <span class="md-nav__icon md-icon"></span> Help </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../FAQ/ class=md-nav__link> <span class=md-ellipsis> FAQ </span> </a> </li> <li class=md-nav__item> <a href=../Troubleshooting/ class=md-nav__link> <span class=md-ellipsis> Troubleshooting </span> </a> </li> <li class=md-nav__item> <a href=../Device-Recovery/ class=md-nav__link> <span class=md-ellipsis> Device Recovery </span> </a> </li> <li class=md-nav__item> <a href="https://discord.gg/Ks2Kzd4 " target='_blank""' class=md-nav__link> <span class=md-ellipsis> Discord Support </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=http://tasmota.github.io/install class=md-nav__link> <span class=md-ellipsis> Web Installer </span> </a> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=sidebar data-md-type=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#features class=md-nav__link> <span class=md-ellipsis> Features </span> </a> </li> <li class=md-nav__item> <a href=#script-sections class=md-nav__link> <span class=md-ellipsis> Script Sections </span> </a> <nav class=md-nav aria-label="Script Sections"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#d-ssize class=md-nav__link> <span class=md-ellipsis> &gt;D ssize </span> </a> </li> <li class=md-nav__item> <a href=#b class=md-nav__link> <span class=md-ellipsis> &gt;B </span> </a> </li> <li class=md-nav__item> <a href=#bs class=md-nav__link> <span class=md-ellipsis> &gt;BS </span> </a> </li> <li class=md-nav__item> <a href=#e class=md-nav__link> <span class=md-ellipsis> &gt;E </span> </a> </li> <li class=md-nav__item> <a href=#f class=md-nav__link> <span class=md-ellipsis> &gt;F </span> </a> </li> <li class=md-nav__item> <a href=#s class=md-nav__link> <span class=md-ellipsis> &gt;S </span> </a> </li> <li class=md-nav__item> <a href=#r class=md-nav__link> <span class=md-ellipsis> &gt;R </span> </a> </li> <li class=md-nav__item> <a href=#t class=md-nav__link> <span class=md-ellipsis> &gt;T </span> </a> </li> <li class=md-nav__item> <a href=#h class=md-nav__link> <span class=md-ellipsis> &gt;H </span> </a> </li> <li class=md-nav__item> <a href=#h-passcode class=md-nav__link> <span class=md-ellipsis> &gt;h passcode </span> </a> </li> <li class=md-nav__item> <a href=#u class=md-nav__link> <span class=md-ellipsis> &gt;U </span> </a> </li> <li class=md-nav__item> <a href=#c class=md-nav__link> <span class=md-ellipsis> &gt;C </span> </a> </li> <li class=md-nav__item> <a href=#g class=md-nav__link> <span class=md-ellipsis> &gt;G </span> </a> </li> <li class=md-nav__item> <a href=#p class=md-nav__link> <span class=md-ellipsis> &gt;P </span> </a> </li> <li class=md-nav__item> <a href=#jp class=md-nav__link> <span class=md-ellipsis> &gt;jp </span> </a> </li> <li class=md-nav__item> <a href=#ti class=md-nav__link> <span class=md-ellipsis> &gt;ti </span> </a> </li> <li class=md-nav__item> <a href=#b_1 class=md-nav__link> <span class=md-ellipsis> &gt;b </span> </a> </li> <li class=md-nav__item> <a href=#j class=md-nav__link> <span class=md-ellipsis> &gt;J </span> </a> </li> <li class=md-nav__item> <a href=#w class=md-nav__link> <span class=md-ellipsis> &gt;W </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#optionally-these-sections-may-be-used class=md-nav__link> <span class=md-ellipsis> optionally these sections may be used </span> </a> <nav class=md-nav aria-label="optionally these sections may be used"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#ws class=md-nav__link> <span class=md-ellipsis> &gt;WS </span> </a> </li> <li class=md-nav__item> <a href=#wm class=md-nav__link> <span class=md-ellipsis> &gt;WM </span> </a> </li> <li class=md-nav__item> <a href=#google-charts class=md-nav__link> <span class=md-ellipsis> Google Charts </span> </a> </li> <li class=md-nav__item> <a href=#w-buttonlabel class=md-nav__link> <span class=md-ellipsis> &gt;w ButtonLabel </span> </a> </li> <li class=md-nav__item> <a href=#m class=md-nav__link> <span class=md-ellipsis> &gt;M </span> </a> </li> <li class=md-nav__item> <a href=#y class=md-nav__link> <span class=md-ellipsis> &gt;y </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#special-variables class=md-nav__link> <span class=md-ellipsis> Special Variables </span> </a> <nav class=md-nav aria-label="Special Variables"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#i2c-support class=md-nav__link> <span class=md-ellipsis> I2C support </span> </a> </li> <li class=md-nav__item> <a href=#onewire-support class=md-nav__link> <span class=md-ellipsis> Onewire support </span> </a> </li> <li class=md-nav__item> <a href=#serial-io-support class=md-nav__link> <span class=md-ellipsis> Serial IO support </span> </a> </li> <li class=md-nav__item> <a href=#spi-io-support class=md-nav__link> <span class=md-ellipsis> SPI IO support </span> </a> </li> <li class=md-nav__item> <a href=#tcp-server-support class=md-nav__link> <span class=md-ellipsis> TCP server support </span> </a> </li> <li class=md-nav__item> <a href=#system-variables-for-debugging class=md-nav__link> <span class=md-ellipsis> System variables (for debugging) </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#commands class=md-nav__link> <span class=md-ellipsis> Commands </span> </a> <nav class=md-nav aria-label=Commands> <ul class=md-nav__list> <li class=md-nav__item> <a href=#variable-substitution class=md-nav__link> <span class=md-ellipsis> Variable Substitution </span> </a> </li> <li class=md-nav__item> <a href=#special-commands class=md-nav__link> <span class=md-ellipsis> Special commands: </span> </a> </li> <li class=md-nav__item> <a href=#subroutines-and-parameters class=md-nav__link> <span class=md-ellipsis> Subroutines and Parameters </span> </a> </li> <li class=md-nav__item> <a href=#for-loop-loop-count-must-not-be-less-than-1-nesting-up-to-3-levels class=md-nav__link> <span class=md-ellipsis> For loop (loop count must not be less than 1, nesting up to 3 levels) </span> </a> </li> <li class=md-nav__item> <a href=#switch-selector-numeric-or-string class=md-nav__link> <span class=md-ellipsis> Switch selector (numeric or string) </span> </a> </li> <li class=md-nav__item> <a href=#conditional-statements class=md-nav__link> <span class=md-ellipsis> Conditional Statements </span> </a> </li> <li class=md-nav__item> <a href=#mapping-function class=md-nav__link> <span class=md-ellipsis> Mapping Function </span> </a> </li> <li class=md-nav__item> <a href=#m-e-mail class=md-nav__link> <span class=md-ellipsis> &gt;m E-mail </span> </a> </li> <li class=md-nav__item> <a href=#mqtt-subscribe-unsubscribe class=md-nav__link> <span class=md-ellipsis> MQTT Subscribe, Unsubscribe* </span> </a> </li> <li class=md-nav__item> <a href=#file-system-support class=md-nav__link> <span class=md-ellipsis> File System Support </span> </a> </li> <li class=md-nav__item> <a href=#other-commands-flash class=md-nav__link> <span class=md-ellipsis> Other commands (+?? flash) </span> </a> </li> <li class=md-nav__item> <a href=#extended-commands-09k-flash class=md-nav__link> <span class=md-ellipsis> Extended commands (+0,9k flash) </span> </a> </li> <li class=md-nav__item> <a href=#t-esp32-real-multitasking-support class=md-nav__link> <span class=md-ellipsis> &gt;t ESP32 real Multitasking support </span> </a> </li> <li class=md-nav__item> <a href=#esp32-webcam-support class=md-nav__link> <span class=md-ellipsis> ESP32 Webcam support </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#scripting-cookbook class=md-nav__link> <span class=md-ellipsis> Scripting Cookbook </span> </a> <nav class=md-nav aria-label="Scripting Cookbook"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#simple-example-to-start-with class=md-nav__link> <span class=md-ellipsis> simple example to start with </span> </a> </li> <li class=md-nav__item> <a href=#scripting-language-example class=md-nav__link> <span class=md-ellipsis> Scripting Language Example </span> </a> </li> <li class=md-nav__item> <a href=#sensor-logging class=md-nav__link> <span class=md-ellipsis> Sensor Logging </span> </a> </li> <li class=md-nav__item> <a href=#global-variables-example class=md-nav__link> <span class=md-ellipsis> global variables example </span> </a> </li> <li class=md-nav__item> <a href=#e-paper-29-display-with-sgp30-and-bme280 class=md-nav__link> <span class=md-ellipsis> e-Paper 29 Display with SGP30 and BME280 </span> </a> </li> <li class=md-nav__item> <a href=#e-paper-42-display-with-sht31-and-bme280 class=md-nav__link> <span class=md-ellipsis> e-Paper 42 Display with SHT31 and BME280 </span> </a> </li> <li class=md-nav__item> <a href=#ili-9488-color-lcd-display-with-bmp280-and-vl5310x class=md-nav__link> <span class=md-ellipsis> ILI 9488 Color LCD Display with BMP280 and VL5310X </span> </a> </li> <li class=md-nav__item> <a href=#led-bar-display-with-ws2812-led-chain class=md-nav__link> <span class=md-ellipsis> LED Bar Display with WS2812 LED Chain </span> </a> </li> <li class=md-nav__item> <a href=#multiple-ir-receiver-synchronization class=md-nav__link> <span class=md-ellipsis> Multiple IR Receiver Synchronization </span> </a> </li> <li class=md-nav__item> <a href=#fast-polling class=md-nav__link> <span class=md-ellipsis> Fast Polling </span> </a> </li> <li class=md-nav__item> <a href=#web-ui class=md-nav__link> <span class=md-ellipsis> Web UI </span> </a> </li> <li class=md-nav__item> <a href=#hue-emulation class=md-nav__link> <span class=md-ellipsis> Hue Emulation </span> </a> </li> <li class=md-nav__item> <a href=#alexa-controlled-mcp230xx-i2c-gpio-expander class=md-nav__link> <span class=md-ellipsis> Alexa Controlled MCP230xx I2C GPIO Expander </span> </a> </li> <li class=md-nav__item> <a href=#retrieve-network-gateway-ip-address class=md-nav__link> <span class=md-ellipsis> Retrieve network gateway IP Address </span> </a> </li> <li class=md-nav__item> <a href=#send-e-mail class=md-nav__link> <span class=md-ellipsis> Send e-mail </span> </a> </li> <li class=md-nav__item> <a href=#send-power-reading-with-formatted-time-stamp-via-websend class=md-nav__link> <span class=md-ellipsis> Send power reading with formatted time stamp via websend </span> </a> </li> <li class=md-nav__item> <a href=#switching-and-dimming-by-recognizing-mains-power-frequency class=md-nav__link> <span class=md-ellipsis> Switching and Dimming By Recognizing Mains Power Frequency </span> </a> </li> <li class=md-nav__item> <a href=#dual-display-example class=md-nav__link> <span class=md-ellipsis> Dual display example </span> </a> </li> <li class=md-nav__item> <a href=#read-i2c-example-axp192 class=md-nav__link> <span class=md-ellipsis> read I2C example (AXP192) </span> </a> </li> <li class=md-nav__item> <a href=#multiplexing-a-single-adc-with-cd4067-breakout class=md-nav__link> <span class=md-ellipsis> Multiplexing a single adc with CD4067 breakout </span> </a> </li> <li class=md-nav__item> <a href=#accessing-tesla-powerwall-2-api class=md-nav__link> <span class=md-ellipsis> accessing TESLA Powerwall 2 API </span> </a> </li> <li class=md-nav__item> <a href=#image-gallery-of-various-tasmota-scripts class=md-nav__link> <span class=md-ellipsis> Image gallery of various Tasmota scripts </span> </a> </li> <li class=md-nav__item> <a href=#internet-radio class=md-nav__link> <span class=md-ellipsis> Internet radio </span> </a> </li> <li class=md-nav__item> <a href=#webcam-with-multiple-options class=md-nav__link> <span class=md-ellipsis> Webcam with multiple options </span> </a> </li> <li class=md-nav__item> <a href=#energy-collector class=md-nav__link> <span class=md-ellipsis> Energy collector </span> </a> </li> <li class=md-nav__item> <a href=#energy-display-main-menu class=md-nav__link> <span class=md-ellipsis> Energy display main menu </span> </a> </li> <li class=md-nav__item> <a href=#energy-display-one-day-of-database class=md-nav__link> <span class=md-ellipsis> Energy display one day of database </span> </a> </li> <li class=md-nav__item> <a href=#energy-display-last-week-of-database class=md-nav__link> <span class=md-ellipsis> Energy display last week of database </span> </a> </li> <li class=md-nav__item> <a href=#energy-display-last-weeks-of-database class=md-nav__link> <span class=md-ellipsis> Energy display last weeks of database </span> </a> </li> <li class=md-nav__item> <a href=#environment-sensor class=md-nav__link> <span class=md-ellipsis> environment sensor </span> </a> </li> <li class=md-nav__item> <a href=#timer-main-menu class=md-nav__link> <span class=md-ellipsis> timer main menu </span> </a> </li> <li class=md-nav__item> <a href=#timer-setup class=md-nav__link> <span class=md-ellipsis> timer setup </span> </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <article class="md-content__inner md-typeset"> <a href=https://github.com/tasmota/docs/blob/master/docs/Scripting-Language.md title="Edit this page" class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg> </a> <h1 id=scripting>Scripting<a class=headerlink href=#scripting title="Permanent link">~</a></h1> <details class=failure> <summary>This feature is not included in precompiled binaries</summary> <p>When <a href=../Compile-your-build/ >compiling your build</a> add the following to <code>user_config_override.h</code>: <div class=highlight><pre><span></span><code><span class=cp>#ifndef USE_SCRIPT</span>
+<span class=cp>#define USE_SCRIPT  </span><span class=c1>// adds about 17k flash size, variable ram size</span>
+<span class=cp>#endif</span>
+<span class=cp>#ifdef USE_RULES</span>
+<span class=cp>#undef USE_RULES</span>
+<span class=cp>#endif  </span>
+</code></pre></div></p> <p>Additional features are enabled by adding the following <code>#define</code> compiler directive parameters and then compiling the firmware. These parameters are explained further below in the article.</p> <table> <thead> <tr> <th>Feature</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td>USE_BUTTON_EVENT</td> <td>enable <code>&gt;b</code> section (detect button state changes)</td> </tr> <tr> <td>USE_SCRIPT_JSON_EXPORT</td> <td>enable <code>&gt;J</code> section (publish JSON payload on <a href=../Commands/#teleperiod>TelePeriod</a>)</td> </tr> <tr> <td>USE_SCRIPT_SUB_COMMAND</td> <td>enables invoking named script subroutines via the Console or MQTT</td> </tr> <tr> <td>USE_SCRIPT_HUE</td> <td>enable <code>&gt;H</code> section (Alexa Hue emulation)</td> </tr> <tr> <td>USE_HOMEKIT</td> <td>enable <code>&gt;h</code> section (Siri Homekit support (ESP32 only),<br>define must be given in platform_override see below)</td> </tr> <tr> <td>USE_SCRIPT_STATUS</td> <td>enable <code>&gt;U</code> section (receive JSON payloads from cmd status)</td> </tr> <tr> <td>SCRIPT_POWER_SECTION</td> <td>enable <code>&gt;P</code> section (execute on power changes)</td> </tr> <tr> <td>SUPPORT_MQTT_EVENT</td> <td>enables support for subscribe unsubscribe</td> </tr> <tr> <td>USE_SENDMAIL</td> <td>enable <code>&gt;m</code> section and support for sending e-mail<br>(on ESP32 you must add USE_ESP32MAIL)</td> </tr> <tr> <td>USE_SCRIPT_WEB_DISPLAY</td> <td>enable <code>&gt;W</code> section (modify web UI)</td> </tr> <tr> <td>SCRIPT_FULL_WEBPAGE</td> <td>enable <code>&gt;w</code> section (separate full web page and webserver)</td> </tr> <tr> <td>USE_TOUCH_BUTTONS</td> <td>enable virtual touch button support with touch displays</td> </tr> <tr> <td>USE_WEBSEND_RESPONSE</td> <td>enable receiving the response of <a href=../Commands/#websend><code>WebSend</code></a> and <a href=../Commands/#webquery><code>WebQuery</code></a> commands (received in section &gt;E)</td> </tr> <tr> <td>SCRIPT_STRIP_COMMENTS</td> <td>enables stripping comments when attempting to paste a script that is too large to fit</td> </tr> <tr> <td>USE_ANGLE_FUNC</td> <td>add sin(x),acos(x) and sqrt(x) e.g. to allow calculation of horizontal cylinder volume</td> </tr> <tr> <td>USE_SCRIPT_FATFS_EXT</td> <td>enables additional FS commands</td> </tr> <tr> <td>USE_WEBCAM</td> <td>enables support ESP32 Webcam which is controlled by scripter cmds</td> </tr> <tr> <td>USE_FACE_DETECT</td> <td>enables face detecting in ESP32 Webcam</td> </tr> <tr> <td>USE_SCRIPT_TASK</td> <td>enables multitasking Task in ESP32</td> </tr> <tr> <td><code>USE_LVGL</code></td> <td>enables support for LVGL, no longer supported, use Berry script with LVGL</td> </tr> <tr> <td>USE_SCRIPT_GLOBVARS</td> <td>enables global variables and &gt;G section</td> </tr> <tr> <td>USE_SML_M</td> <td>enables <a href=../Smart-Meter-Interface/ >Smart Meter Interface</a></td> </tr> <tr> <td>SML_REPLACE_VARS</td> <td>enables possibility to replace the lines from the (SML) descriptor with Vars</td> </tr> <tr> <td>NO_USE_SML_SCRIPT_CMD</td> <td>disables SML script cmds</td> </tr> <tr> <td>USE_SCRIPT_I2C</td> <td>enables I2C support</td> </tr> <tr> <td>USE_SCRIPT_SERIAL</td> <td>enables support for serial io cmds</td> </tr> <tr> <td>USE_SCRIPT_TIMER</td> <td>enables up to 4 Arduino timers (so called tickers)</td> </tr> <tr> <td>SCRIPT_GET_HTTPS_JP</td> <td>enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)</td> </tr> <tr> <td>LARGE_ARRAYS</td> <td>enables arrays of up to 1000 entries instead of max 127</td> </tr> <tr> <td>SCRIPT_LARGE_VNBUFF</td> <td>enables to use 4096 in stead of 256 bytes buffer for variable names</td> </tr> <tr> <td>USE_GOOGLE_CHARTS</td> <td>enables definition of google charts within web section</td> </tr> <tr> <td>USE_FEXTRACT</td> <td>enables array extraction from database fxt(...), fxto() and tso(), tsn(), cts(), s2t() functions</td> </tr> <tr> <td>USE_SCRIPT_SPI</td> <td>enables support for SPI interface</td> </tr> <tr> <td>USE_SCRIPT_TCP_SERVER</td> <td>enables support for TCP server</td> </tr> <tr> <td>USE_DISPLAY_DUMP</td> <td>enables to show epaper screen as BMP image in &gt;w section</td> </tr> <tr> <td>TS_FLOAT</td> <td>may be define as double to use double precision numbers (uses double RAM memory and is slower)</td> </tr> <tr> <td>SCRIPT_FULL_OPTIONS</td> <td>enables almost any of the above options (uses about 90k of Flash)</td> </tr> </tbody> </table> </details> <div class="admonition info"> <p class=admonition-title>Scripting Language for Tasmota is an alternative to Tasmota <a href=../Rules/ >Rules</a>. For ESP32 builds it is recommended to use <a href=../Berry/ >Berry</a></p> </div> <p>To enter a script, go to <strong>Consoles -&gt; Edit Script</strong> in the Tasmota web UI menu (for version before 9.4, go to <strong>Configuration -&gt; Edit script</strong>)</p> <p>To save code space almost no error messages are provided. However it is taken care of that at least it should not crash on syntax errors. </p> <h3 id=features>Features<a class=headerlink href=#features title="Permanent link">~</a></h3> <ul> <li>Up to 50 variables (45 numeric and 5 strings - this may be changed by setting a compilation <code>#define</code> directive) </li> <li>Freely definable variable names (all variable names are intentionally <em><strong>case sensitive</strong></em>) </li> <li>Nested if,then,else up to a level of 8 </li> <li>Math operators <code>+</code>,<code>-</code>,<code>*</code>,<code>/</code>,<code>%</code>,<code>&amp;</code>,<code>|</code>,<code>^</code>,<code>&lt;&lt;</code>,<code>&gt;&gt;</code> </li> <li>All operators may be used in the <code>op=</code> form, e.g., <code>+=</code> </li> <li>Comparison operators <code>==</code>,<code>!=</code>,<code>&gt;</code>,<code>&gt;=</code>,<code>&lt;</code>,<code>&lt;=</code> </li> <li><code>and</code> , <code>or</code> support </li> <li>Hexadecimal numbers with prefix <code>0x</code> are supported</li> <li>Strings support <code>+</code> and <code>+=</code> operators </li> <li>Support for \n \r regular expressions on strings</li> <li>String comparison <code>==</code>, <code>!=</code> </li> <li>String size is 19 characters (default). This can be increased or decreased by the optional parameter on the <code>D</code> section definition</li> </ul> <h4 id=script-interpreter>Script Interpreter<a class=headerlink href=#script-interpreter title="Permanent link">~</a></h4> <ul> <li>Execution is <em><strong>strictly sequential</strong></em>, <em><strong>line by line</strong></em></li> <li>Evaluation is <em><strong>left to right</strong></em> with optional brackets </li> <li>All <em><strong>numbers are float</strong></em>, e.g., temp=hum*(100/37.5)+temp-(timer*hum%10) </li> <li><em><strong>No spaces are allowed between math operators</strong></em></li> <li>Comments start with <code>;</code> </li> </ul> <h4 id=script-buffer-size>Script buffer size<a class=headerlink href=#script-buffer-size title="Permanent link">~</a></h4> <p>the script language normally shares script buffer with rules buffer which is 1536 chars. with below options script buffer size may be expanded. PVARS is size for permanent vars.</p> <table> <thead> <tr> <th style="text-align: left;">Feature</th> <th style="text-align: center;">ESP</th> <th style="text-align: center;">ESP32</th> <th style="text-align: center;">PVARS</th> <th style="text-align: left;">remarks</th> </tr> </thead> <tbody> <tr> <td style="text-align: left;">fallback</td> <td style="text-align: center;">1536</td> <td style="text-align: center;">1536</td> <td style="text-align: center;">50</td> <td style="text-align: left;">no longer supported</td> </tr> <tr> <td style="text-align: left;">compression (default)</td> <td style="text-align: center;">2560</td> <td style="text-align: center;">2560</td> <td style="text-align: center;">50</td> <td style="text-align: left;">actual compression rate may vary</td> </tr> <tr> <td style="text-align: left;">#define USE_UFILESYS<br>#define UFSYS_SIZE S</td> <td style="text-align: center;">S&lt;=8192</td> <td style="text-align: center;">S&lt;=16384</td> <td style="text-align: center;">1536</td> <td style="text-align: left;">ESP must use 4M Flash use linker option <code>-Wl,-Teagle.flash.4m2m.ld</code> or SDCARD <br>ESP32 can use any linker file, size of Filesystem depends on linker file</td> </tr> <tr> <td style="text-align: left;">#define EEP_SCRIPT_SIZE S<br>#define USE_EEPROM<br>#define USE_24C256</td> <td style="text-align: center;">S&lt;=8192</td> <td style="text-align: center;">S&lt;=16384</td> <td style="text-align: center;">1536</td> <td style="text-align: left;">for hardware eeprom only</td> </tr> <tr> <td style="text-align: left;">#define EEP_SCRIPT_SIZE 8192<br>#define USE_EEPROM</td> <td style="text-align: center;">S=8192</td> <td style="text-align: center;">not supported</td> <td style="text-align: center;">1536</td> <td style="text-align: left;">script may be lost on OTA and serial flash, not on restart</td> </tr> </tbody> </table> <p>most useful definition for larger scripts would be </p> <h5 id=esp8266>ESP8266<a class=headerlink href=#esp8266 title="Permanent link">~</a></h5> <p>with 1M flash only default compressed mode should be used (or an SDCARD)<br> a special mode can be enabled for 8192 chars by defining #define USE_EEPROM, #define EEP_SCRIPT_SIZE 8192<br> however this has some side effects. the script may be deleted on firware OTA or serial update and may have to be reinstalled after update. </p> <p>with 4M Flash best mode would be <br> <code>#define USE_UFILESYS</code> <br> with linker file "eagle.flash.4m2m.ld" </p> <h5 id=esp32>ESP32<a class=headerlink href=#esp32 title="Permanent link">~</a></h5> <p>with all linker files<br> <code>#define USE_UFILESYS</code> </p> <h4 id=script-init-error-codes>script init error codes<a class=headerlink href=#script-init-error-codes title="Permanent link">~</a></h4> <p>after initialization the script reports some info in the console e.g:<br> 00:00:00.043 SCR: nv=15, tv=1, vns=83, vmem=895, smem=8192, gmem=588, pmem=0, tmem=9758<br> nv = number of used variables in total (numeric and strings)<br> tv = number of used string variables<br> vns = total size of name strings in bytes (may not exceed 255) or #define SCRIPT_LARGE_VNBUFF extents the size to 4095</p> <p>vmem = used heap ram by the script (psram if available)<br> smem = used script (text) memory (psram if available)<br> gmem = used script global static memory pmem = used script permanent memory<br> tmem = used script memory total </p> <p>if the script init fails an error code is reported: <br> -4 = not enough memory<br> -5 = variable name length too long in total<br> -6 = too many arrays defined<br> -7 = not enough memory </p> <p>number of variables is only limited by RAM. you will probably get a memory error when you define to many variables. you may increase the number of allowed array and the maximum string size defines in user_config_override<br> defaults and override defines:<br> Number of filters (arrays) = 5 (override #define MAXFILT)<br> Max string size = 20 (increase with &gt;D size up to default default 48) (override #define SCRIPT_MAXSSIZE) </p> <h4 id=optional-external-editor>Optional external editor<a class=headerlink href=#optional-external-editor title="Permanent link">~</a></h4> <p>you may use a special external editor with syntax highlighting to edit the scripts. (mac and pc) you may use any number of comments and indents to make it better readable. then with cmd r the script is transferred to the ESP and immediately started. (all comments and indents are removed before transferring) see further info and download <a href="https://www.dropbox.com/sh/0us18ohui4c3k82/AACcVmpZ4AfpdrWE_MPFGmbma?dl=0">here</a> </p> <h4 id=visual-studio-code-extension>Visual Studio Code Extension<a class=headerlink href=#visual-studio-code-extension title="Permanent link">~</a></h4> <p>If you're used to working with Visual Studio Code, you can use <a href="https://marketplace.visualstudio.com/items?itemName=StefanoBertini.tasmota-script-support">this extension</a> to edit your scripts with the benefit of various helpful features, such as, for example, Syntax Highlighting, Automatic script upload, #define, ifdef and ifndef preprocessor macros, Code Folding, Code Snippet and Hover hints on tasmota functions and variables documentation. </p> <h4 id=console-commands>Console Commands<a class=headerlink href=#console-commands title="Permanent link">~</a></h4> <p><code>script &lt;n&gt;</code> <n>: <code>0</code> = switch script off; <code>1</code> = switch script on <code>8</code> = switch stop on error off; <code>9</code> = switch stop on error on <code>script &gt;&lt;cmdline&gt;</code> execute <cmdline><br> - Can be used to set variables, e.g., <code>script &gt;mintmp=15</code><br> - Multiple statements can be specified by separating each with a semicolon, e.g. <code>script &gt;mintmp=15;maxtemp=40</code> </p> <p><code>script?&lt;var&gt;</code> queries a script variable <code>var</code> </p> <p><code>scriptsize N</code> sets the amount of script source code allowed between 1000 and max defined during compile (with #define UFSYS_SIZE) </p> <ul> <li>The script itself can't be specified because the size would not fit the MQTT buffers</li> </ul> <h2 id=script-sections>Script Sections<a class=headerlink href=#script-sections title="Permanent link">~</a></h2> <p><em>Section descriptors (e.g., <code>&gt;E</code>) are <strong>case sensitive</strong></em><br> a valid script must start with &gt;D in the first line </p> <h3 id=d-ssize>&gt;D ssize<a class=headerlink href=#d-ssize title="Permanent link">~</a></h3> <p><code>ssize</code> = optional max string size (default=19, max=255)<br> define and init variables here, must be the first section, no other code allowed<br> <code>p:vname</code><br> specifies permanent variables. The number of permanent variables is limited by Tasmota rules space (50 bytes) - numeric variables are 4 bytes; string variables are one byte longer than the length of string. p vars are stored sequentially in the order of defintion. therefore when specifing permanent variables, add newly defined ones always at the end of already defined p vars. otherwise variables are mixed up and string variables may even be destroyed.<br> <code>t:vname</code> <br> specifies countdown timers, if &gt;0 they are decremented in seconds until zero is reached. see example below<br> <code>i:vname</code> <br> specifies auto increment counters if =0 (in seconds)<br> <code>g:vname</code> <br> specifies global variable which is linked to all global variables with the same definition on all devices in the homenet. when a variable is updated in one device it is instantly updated in all other devices. if a section &gt;G exists it is executed when a variable is updated from another device (this is done via UDP-multicast, so not always reliable) the global variable receiver may be reset by cmd <code>gvr</code><br> <code>I:vname</code> <br> specifies an integer 32 bit variable instead of float. (limited support) integer constants must be preceeded by '#'<br> <code>m:vname</code> <br> specifies a median filter variable with 5 entries (for elimination of outliers)<br> <code>M:vname</code> <br> specifies a moving average filter variable with 8 entries (for smoothing data, should be also used to define arrays)<br> (max 5 filters in total m+M) optional another filter length (1..127) can be given after the definition.<br> Filter vars can be accessed also in indexed mode <code>vname[x]</code> (x = <code>1..N</code>, x = <code>0</code> returns current array index pointer (may be set also), x = <code>-1</code> returns array length, x = <code>-2</code> returns array average,x = <code>-3</code> returns array sum) Using this filter, vars can be used as arrays, #define LARGE_ARRAYS allows for arrays up to 1000 entries<br> array may also be permanent by specifying an extra <code>:p</code><br> <code>m:p:vname</code> <br> defines a permanent array. Keep in mind however that in 1M Flash standard configurations you only have 50 bytes permanent storage which stands for a maximum of 12 numbers. (see list above for permanent storage in other configurations)<br> arrays may also be preset in auto increment mode array=X sets the value at index array[0] and increments the index by 1.<br> array = {x y z} sets 3 values in an array from index array[0] </p> <div class="admonition tip"> <p class=admonition-title>Tip</p> <p>Keep variable names as short as possible. The length of all variable names taken together may not exceed 256 characters.<br> Memory is dynamically allocated as a result of the D section.<br> Copying a string to a number or reverse is supported </p> </div> <h3 id=b>&gt;B<a class=headerlink href=#b title="Permanent link">~</a></h3> <p>executed on BOOT time before sensors are initialized and on save script </p> <h3 id=bs>&gt;BS<a class=headerlink href=#bs title="Permanent link">~</a></h3> <p>executed on BOOT time after sensors are initialized </p> <h3 id=e>&gt;E<a class=headerlink href=#e title="Permanent link">~</a></h3> <p>Executed when a Tasmota MQTT <code>RESULT</code> message is received, e.g., on <code>POWER</code> change. Also Zigbee reports to this section.</p> <h3 id=f>&gt;F<a class=headerlink href=#f title="Permanent link">~</a></h3> <p>Executed every 100 ms </p> <h3 id=s>&gt;S<a class=headerlink href=#s title="Permanent link">~</a></h3> <p>Executed every second </p> <h3 id=r>&gt;R<a class=headerlink href=#r title="Permanent link">~</a></h3> <p>Executed on restart. p vars are saved automatically after this call </p> <h3 id=t>&gt;T<a class=headerlink href=#t title="Permanent link">~</a></h3> <p>Executed at least at <a href=../Commands/#teleperiod><code>TelePeriod</code></a> time (<code>SENSOR</code> and <code>STATE</code>) but mostly faster up to every 100 ms, only put <code>tele-</code> vars in this section<br> Remark: JSON variable names (like all others) may not contain math operators like - , you should set <a href=../Commands/#setoption64><code>SetOption64 1</code></a> to replace <code>-</code> (<em>dash</em>) with <code>_</code> (<em>underscore</em>). Zigbee sensors will not report to this section, use E instead.</p> <h3 id=h>&gt;H<a class=headerlink href=#h title="Permanent link">~</a></h3> <p>Alexa Hue interface (up to 32 virtual hue devices) <em>(<a href=#hue-emulation>example</a>)</em><br> <code>device</code>,<code>type</code>,<code>onVars</code><br> Remark: hue values have a range from 0-65535. Divide by 182 to assign HSBcolors hue values.</p> <p><code>device</code> device name<br> <code>type</code> device type - <code>E</code> = extended color; <code>S</code> = switch<br> <code>onVars</code> assign Hue "on" extended color parameters for hue, saturation, brightness, and color temperature (hue,sat,bri,ct) to scripter variables </p> <div class="admonition example"> <p class=admonition-title>Example</p> <p><code>lamp1,E,on=pwr1,hue=hue1,sat=sat1,bri=bri1,ct=ct1</code></p> </div> <h3 id=h-passcode>&gt;h passcode<a class=headerlink href=#h-passcode title="Permanent link">~</a></h3> <p>Siri Homekit interface (up to 16 virtual Homekit devices)<br> passcode = 111-11-111 keep this format, numbers 0-9<br> <code>name</code>,<code>type</code>,<code>opt</code>,<code>var1</code>,<code>var2</code>... </p> <p><code>name</code> device name (max 23 characters)<br> <code>type</code> device type (HAP_CID)<br> - <code>7</code> = outlet, on/off<br> - <code>5</code> = light, on/off,hue,sat,bri<br> - <code>10</code> = sensor </p> <p><code>opt</code> sensor type<br> - <code>0</code> = Temperature,val<br> - <code>1</code> = Humidity,val<br> - <code>2</code> = Light level,val<br> - <code>3</code> = Battery status,level,low battery,charging<br> - <code>4</code> = Ambient light level with extended range -10000,+10000<br> - <code>5</code> = Contact Sensor (switch)</p> <p><code>var1 ...</code> variable name (max 11 characters) the variables denote scripting variables that need to be set by script<br> the special variables<br> @px x (1..9) directly set, read power states e.g. relays<br> @sx x (1..9) directly read switch state<br> @bx x (1..9) directly read button state </p> <div class="admonition example"> <p class=admonition-title>Example</p> <p><code>&gt;h 111-11-111</code><br> <code>outlet,7,0,@p1</code> <code>lamp1,5,0,pwr,hue,sat,bri</code><br> <code>temperature,10,0,tval</code> </p> <p>a restart is required after modification of descriptor!<br> by faulty parameters the homekit dataset may get corrupted<br> to reset the homekit dataset completely type in console script&gt;hki(89) </p> <p>compilation:</p> <p>needs to add in linker to </p> <p>build_flags<br> -DUSE_HOMEKIT </p> <p>lib_extra_dirs<br> lib/libesp32_div </p> </div> <h3 id=u>&gt;U<a class=headerlink href=#u title="Permanent link">~</a></h3> <p>JSON messages from cmd status arrive here</p> <h3 id=c>&gt;C<a class=headerlink href=#c title="Permanent link">~</a></h3> <p>HTML messages arrive here (on web user io event, (if defined USE_HTML_CALLBACK)) </p> <h3 id=g>&gt;G<a class=headerlink href=#g title="Permanent link">~</a></h3> <p>global variable updated section</p> <h3 id=p>&gt;P<a class=headerlink href=#p title="Permanent link">~</a></h3> <p>any power change triggers here (if defined SCRIPT_POWER_SECTION)</p> <h3 id=jp>&gt;jp<a class=headerlink href=#jp title="Permanent link">~</a></h3> <p>https webpage json parse arrives here </p> <h3 id=ti>&gt;ti<a class=headerlink href=#ti title="Permanent link">~</a></h3> <p><code>&gt;ti1</code><br> <code>&gt;ti2</code><br> <code>&gt;ti3</code> </p> <p>ticker callback after timer expiration</p> <h3 id=b_1>&gt;b<a class=headerlink href=#b_1 title="Permanent link">~</a></h3> <p><em>(note lower case)</em><br> executed on button state change </p> <p><code>bt[x]</code> <br> read button state (x = <code>1.. MAX_KEYS</code>) </p> <div class="admonition example"> <p class=admonition-title>Example</p> <div class=highlight><pre><span></span><code>&gt;D
+tmp=0
+&gt;b
+tmp=bt[1]
+if tmp==0  
+then  
+print falling edge of button1  
+endif  
+if tmp==1  
+then  
+print rising edge of button1  
+endif
+</code></pre></div> </div> <h3 id=j>&gt;J<a class=headerlink href=#j title="Permanent link">~</a></h3> <p>The lines in this section are published via MQTT in a JSON payload on <a href=../Commands/#teleperiod>TelePeriod</a>. <mark>Requires compiling with <code>#define USE_SCRIPT_JSON_EXPORT</code>.</mark> </p> <h3 id=w>&gt;W<a class=headerlink href=#w title="Permanent link">~</a></h3> <p>The lines in this section are displayed in the web UI main page. <mark>Requires compiling with <code>#define USE_SCRIPT_WEB_DISPLAY</code>.</mark> </p> <p>You may put any html code here. </p> <ul> <li>Variables may be substituted using %var% </li> <li>HTML statements are displayed in the sensor section of the main page </li> <li>HTML statements preceded with a <code>@</code> are displayed at the top of the page </li> <li>HTML statements preceded with a <code>$</code> are displayed in the main section </li> <li>USER IO elements are displayed at the top of the page </li> </ul> <h2 id=optionally-these-sections-may-be-used>optionally these sections may be used<a class=headerlink href=#optionally-these-sections-may-be-used title="Permanent link">~</a></h2> <h3 id=ws>&gt;WS<a class=headerlink href=#ws title="Permanent link">~</a></h3> <ul> <li>HTML statements are displayed in the sensor section of the main page </li> </ul> <h3 id=wm>&gt;WM<a class=headerlink href=#wm title="Permanent link">~</a></h3> <ul> <li>HTML statements are displayed in the main section of the main page </li> </ul> <p>for next loops are supported to repeat HTML code (precede with % char) <div class=highlight><pre><span></span><code>%for var from to inc
+%next
+</code></pre></div> but this method is preferred: script subroutines may be called sub=name of subroutine, like normal subroutines <code>%=#sub</code> in this subroutine a web line may be sent by wcs (see below) thus allowing dynamic HTML pages</p> <p>=#sub(x) in any position of webline calls subroutine. this allows inserting content</p> <p>insa(array) in any position insert all elements from an array comma separated </p> <p>%/file calls a file from the file system and send its content to browser. in this file any cmds may apply.</p> <p>A web user interface may be generated containing any of the following elements: </p> <p>remark: state variable names used for IO in the web interface may not contain an underscore. </p> <h4 id=button>Button<a class=headerlink href=#button title="Permanent link">~</a></h4> <p><code>bu(vn txt1 txt2)</code> (up to 4 buttons may be defined in one row)<br> <code>vn</code> = name of variable to hold button state<br> <code>txt1</code> = text of ON state of button<br> <code>txt2</code> = text of OFF state of button </p> <h4 id=pulldown>Pulldown<a class=headerlink href=#pulldown title="Permanent link">~</a></h4> <p><code>pd(vn label (xs) txt1 txt2 ... txtn)</code><br> <code>vn</code> = name of variable to hold selected state<br> <code>label</code> = label text<br> <code>xs</code> = optional xs (default 200) <code>txt1</code> = text of 1. entry<br> <code>txt2</code> = text of 2. entry and so on </p> <h4 id=radio-button>Radio button<a class=headerlink href=#radio-button title="Permanent link">~</a></h4> <p><code>rb(vn label (xs) txt1 txt2 ... txtn)</code><br> <code>vn</code> = name of variable to hold selected state<br> <code>label</code> = label text<br> <code>xs</code> = optional xs (default 200) <code>txt1</code> = text of 1. entry<br> <code>txt2</code> = text of 2. entry and so on </p> <h4 id=checkbox>Checkbox<a class=headerlink href=#checkbox title="Permanent link">~</a></h4> <p><code>ck(vn txt (xs))</code><br> <code>vn</code> = name of variable to hold checkbox state<br> <code>txt</code> = label text <br> <code>xs</code> = optional xs (default 200) </p> <h4 id=slider>Slider<a class=headerlink href=#slider title="Permanent link">~</a></h4> <p><code>sl(min max vn ltxt mtxt rtxt)</code><br> <code>min</code> = slider minimum value<br> <code>max</code> = slider maximum value<br> <code>vn</code> = name of variable to hold slider value<br> <code>ltxt</code> = label left of slider<br> <code>mtxt</code> = label middle of slider<br> <code>rtxt</code> = label right of slider </p> <h4 id=text-input>Text Input<a class=headerlink href=#text-input title="Permanent link">~</a></h4> <p><code>tx(vn lbl (xs) (type min max))</code><br> <code>vn</code> = name of string variable to hold text state<br> <code>lbl</code> = label text<br> <code>xs</code> = optional xs (default 200)<br> <code>type min max</code> = optional strings type = e.g "datetime-local" for date+time selector, min, max = date-time min max range </p> <h4 id=time-input>Time Input<a class=headerlink href=#time-input title="Permanent link">~</a></h4> <p><code>tm(vn lbl (xs))</code><br> <code>vn</code> = name of number variable to hold time HHMM as number e.g. 1900 means 19:00<br> <code>lbl</code> = label text<br> <code>xs</code> = optional xs (default 70) </p> <h4 id=number-input>Number Input<a class=headerlink href=#number-input title="Permanent link">~</a></h4> <p><code>nm(min max step vn txt (xs) (prec))</code><br> <code>min</code> = number minimum value<br> <code>max</code> = number maximum value<br> <code>step</code> = number step value for up/down arrows<br> <code>vn</code> = name of number variable to hold number<br> <code>txt</code> = label text<br> <code>xs</code> = optional xs (default 200)<br> <code>prec</code> = optional number precision (default 1) </p> <h4 id=special-html-options>special html options<a class=headerlink href=#special-html-options title="Permanent link">~</a></h4> <p><code>so(flags)</code><br> <code>WSO_NOCENTER</code> = 1 force elements not centered<br> <code>WSO_NODIV</code> = 2 force elements not in extra \&lt;div&gt;<br> <code>WSO_FORCEPLAIN</code> = 4 send line in plain (no table elements)<br> <code>WSO_FORCEMAIN</code> = 8 send lines in main mode ($ mode) </p> <h3 id=google-charts>Google Charts<a class=headerlink href=#google-charts title="Permanent link">~</a></h3> <p>google chart support requires arrays and to make sense also permanent arrays. Therefore on 4M Flash Systems the use of <code>USE_UFILESYS</code> is recommended while on 1 M Flash Systems the special EEPROM mode should be used (see above). other options may also be needed like <code>LARGE_ARRAYS</code> </p> <h4 id=basic-chart>basic chart<a class=headerlink href=#basic-chart title="Permanent link">~</a></h4> <p>draw a google chart with up to 4 data sets per chart<br> <code>gc(T (size) array1 ... array4 "name" "label1" ... "label4" "entrylabels" "header" {"maxy1"} {"maxy2"})</code> <br> <code>T</code> = type<br> - b=barchart<br> - c=columnchart<br> - cs=columnchart stacked - C=combochart<br> - p=piechart<br> - l=linechart up to 4 lines with same scaling<br> - l2=linechart with exactly 2 lines and 2 y scales (must be given at end)<br> - lf2 like above but with splined lines<br> - h=histogram<br> - t=data table<br> - g=simple gauges (must give extra 3 vars after header, yellow start, red start, maxval)<br> - T=Timeline (special type arrays contains start,stop pairs in minutes timeofday) </p> <p>b,l,h type may have the '2' option to specify exactly 2 arrays with 2 y scales given at the end of parameter list. </p> <h4 id=advanced-chart>advanced chart<a class=headerlink href=#advanced-chart title="Permanent link">~</a></h4> <p>a custom chart may be specified by splitting the chart definition and inserting the chart options directly. see example below </p> <p><code>size</code> = optional size, allows to use only part of an array, must be lower then array size </p> <p><code>array</code> = up to 4 arrays of data<br> <code>name</code> = name of chart<br> <code>label</code> = label for up to the 4 datasets in chart<br> <code>entrylabel</code> = labels of each x axis entry separated by '|' char<br> ("cntN" starts numbering entries with the number N an optional /X generates numbers divided by X. Produce labels that cycle through the array indexes, starting with the number N. For instance, "cnt6" with an array of length 8 will produce the labels 6|7|0|1|2|3|4|5| Using "cntN/X" will then divide the numeric value of the label, so "cnt6/2" with an array of length 8 will produce the labels 3|3|0|0|1|1|2|2|) ("wdh: before a week definition generates a week with full hours)<br> <code>header</code> = visible header name of chart<br> the curve displayed in google chart starts at array index (array[0]) so array index must be set also. thus the displayed curve may be shifted to the desired position by adjusting the array index.</p> <p>additionally you have to define the html frame to put the chart in (both lines must be preceded by a $ char) e.g.<br> <div class=highlight><pre><span></span><code>$&lt;div id=&quot;chart1&quot;style=&quot;width:640px;height:480px;margin:0 auto&quot;&gt;&lt;/div&gt;
+$gc(c array1 array2 &quot;wr&quot; &quot;pwr1&quot; &quot;pwr2&quot; &quot;mo|di|mi|do|fr|sa|so&quot; &quot;Solar feed&quot;)
+</code></pre></div></p> <p>you may define more then one chart. The charts id is chart1 ... chartN</p> <p>very customized chart definition:<br> define a chart like above, but add a t to the definition<br> this generates a google table from the arrays e.g.:<br> &amp;gc(lt array1 array2 "wr" "pwr1" "pwr2" "mo|di|mi|do|fr|sa|so")</p> <p>then define the options for the graph as from the doku of google e.g.:<br> $var options = {<br> $vAxes:{0:{maxValue:40,title:'Außentemperatur'},1:{maxValue:60,title:'Solarspeicher'}},<br> $series:{0:{targetAxisIndex:0},1:{targetAxisIndex:1}},<br> $hAxis: {title: 'Wochenverlauf'},<br> $};<br> then gc(e) closes the definition <br> $gc(e) </p> <h3 id=w-buttonlabel>&gt;w ButtonLabel<a class=headerlink href=#w-buttonlabel title="Permanent link">~</a></h3> <p>generates a button with the name "ButtonLabel" in Tasmota main menu.<br> Clicking this button displays a web page with the HTML data of this section. all cmds like in &gt;W apply here. these lines are refreshed frequently to show e.g. sensor values. lines preceded by $ are static and not refreshed and displayed below lines without $.<br> this option also enables a full webserver interface when USE_UFILESYS is active.<br> you may display files from the flash or SD filesystem by specifying the url: IP/ufs/path . (supported files: *.jpg, *.html, *.txt)<br> <code>&gt;w1</code> <code>&gt;w2</code> <code>&gt;w3</code> <code>&gt;w4</code> <code>&gt;w5</code> <code>&gt;w6</code> some as above <code>&gt;w</code><br> <mark>Requires compiling with <code>#define SCRIPT_FULL_WEBPAGE</code>.</mark> </p> <h3 id=m>&gt;M<a class=headerlink href=#m title="Permanent link">~</a></h3> <p><a href=../Smart-Meter-Interface/ >Smart Meter Interface</a> </p> <h3 id=y>&gt;y<a class=headerlink href=#y title="Permanent link">~</a></h3> <p>on devices without a file system a configuration string may be defined here, e.g. xnrg_29_modbus.ino driver </p> <p>If a variable does not exist, <code>???</code> is displayed for commands </p> <p>If a Tasmota <code>SENSOR</code> or <code>STATUS</code> or <code>RESULT</code> message is not generated or a <code>Var</code> does not exist the destination variable is <mark>NOT</mark> updated. </p> <h2 id=special-variables>Special Variables<a class=headerlink href=#special-variables title="Permanent link">~</a></h2> <p>(read only)<br> <code>upsecs</code> = seconds since start<br> <code>uptime</code> = minutes since start<br> <code>time</code> = minutes since midnight<br> <code>sunrise</code> = sunrise minutes since midnight<br> <code>sunset</code> = sunset minutes since midnight<br> <code>tper</code> = <a href=../Commands/#teleperiod>TelePeriod</a> (<em><strong>may be set also</strong></em>)<br> <code>cbs</code> = command text buffer size for tasmota cmds (default 256) (<em><strong>may be set also</strong></em>)<br> <code>tstamp</code> = timestamp (local date and time)<br> <code>topic</code> = mqtt topic<br> <code>maca</code> = current MAC Address<br> <code>gtopic</code> = mqtt group topic<br> <code>lip</code> = local ip as string<br> <code>luip</code> = udp ip as string (from updating device when USE_SCRIPT_GLOBVARS defined) <code>prefixn</code> = prefix n = 1-3<br> <code>frnm</code> = friendly name<br> <code>dvnm</code> = device name<br> <code>pwr[x]</code> = power state (x = 1..N)<br> <code>npwr</code> = number of tasmota power devices <br> <code>pc[x]</code> = pulse counter value (x = 1..4)<br> <code>tbut[x]</code> = touch screen button state (x = 1..N)<br> <code>sw[x]</code> = switch state (x = 0..N) (Switch1 = <code>sw[0]</code>)<br> <code>bt[x]</code> = button state (x = 1..N) only valid in section b (if defined USE_BUTTON_EVENT)<br> <code>pin[x]</code> = GPIO pin level (x = 0..16)<br> <code>pn[x]</code> = GPIO for sensor code x. 99 if none<br> <code>pd[x]</code> = defined sensor for GPIO x. 999 if none<br> <code>adc(fac (pin))</code> = get adc value (on ESP32 can select pin) fac is number of averaged samples (power of 2: 0..7)<br> <code>sht[x]</code> = shutter position (x = 1..N) (if defined USE_SHUTTER)<br> <code>gtmp</code> = global temperature<br> <code>ghum</code> = global humidity<br> <code>gprs</code> = global pressure </p> <p>global variables<br> now optional binary mode, much faster and more precise, also supports arrays.<br> <code>gvr</code> = reset global variable handler<br> <code>gvrbs</code> = get, set global variable udp buffer size<br> <code>gvrm</code> = get, set global variable udp mode, 0 = string mode (default), 1 = binary mode<br> <code>gvrsa(array)</code> = send array as global variable in binary mode<br> <code>udp(url port string)</code> = send a string via UDP</p> <p>deep sleep for ESP32 devices only<br> <code>ds(-1)</code> = get deep sleep wakeup status<br> <code>ds(x)</code> = deep sleep for x seconds<br> <code>ds(x pin level)</code> = deep sleep for time and pin level<br> if x &gt; 0 sleep x seconds<br> if pin != -1 wake on pin change<br> pin level that causes wake up </p> <p><code>pow(x y)</code> = calculates exponential powers x^y (imprecise version only)<br> <code>med(n x)</code> = calculates a 5 value median filter of x (2 filters possible n=0,1)<br> <code>int(x)</code> = gets the integer part of x (like floor)<br> <code>floor(x)</code> = gets the integer part of x<br> <code>ceil(x)</code> = gets the integer + 1 part of x<br> <code>round(x)</code> = round to nearest integer x<br> <code>i(x)</code> = convert float x to integer<br> <code>f(x)</code> = convert integer x to float<br> <code>hn(x)</code> = converts x (0..255) to a hex nibble string<br> <code>hni(x)</code> = converts integer x (0..255) to a hex nibble string<br> <code>hx(x)</code> = converts x (0..4294967295, 32-bit) to a hex string<br> <code>hxi(x)</code> = converts integer x (0..4294967295, 32-bit) to a hex string<br> <code>hd("hstr")</code> = converts hex number string to a decimal number<br> <code>af(array index)</code> = converts 4 bytes of an array at index <code>index</code> to float number <br> <code>as(array)</code> = sort array<br> <code>sas(index)</code> = sort string array (is, is1, is2, index = 1,2,3)<br> <code>hf("hstr")</code> = converts hex float number string to a decimal number<br> <code>hf("hstr" r)</code> = converts hex float number string (reverse byte order) to a decimal number<br> <code>st(svar c n)</code> or = <code>st(svar 'c' n)</code>string token - retrieve the n<sup>th</sup> element of svar delimited by c,<br> <code>ins(s1 s2)</code> = check if string s2 is contained in string s1, return -1 if not contained or position of contained string<br> <code>sl(svar)</code> = gets the length of a string<br> <code>asc(svar)</code> = gets the binary value of 1. char of a string<br> <code>sb(svar p n)</code> = gets a substring from svar at position p (if p&lt;0 counts from end) and length n<br> <code>is(num "string1|string2|....|stringn|")</code> = defines a string array optionally preset with immediate strings separated by '|' (this immediate string may be up to 255 chars long) num = 0 read only string array, num &gt; 0 number of elements in read write string array<br> <code>is[index]</code> = gets string <code>index</code> from string array, if read-write also write string of index<br> <code>is1(..)</code>, <code>is2(...)</code> string array see above<br> <code>is1[x]</code>, <code>is2[x]</code> string array see above<br> <code>rr()</code> = returns the reset reason of last restart (as string)<br> <code>s2hms(S)</code>, converts seconds to HH:MM:SS string<br> <code>sin(x)</code> = calculates the sinus(x) (if defined USE_ANGLE_FUNC) <br> <code>cos(x)</code> = calculates the cosinus(x) (if defined USE_ANGLE_FUNC)<br> <code>acos(x)</code> = calculates the acos(x) (if defined USE_ANGLE_FUNC)<br> <code>sqrt(x)</code> = calculates the sqrt(x) (if defined USE_ANGLE_FUNC)<br> <code>abs(x)</code> = calculates the absolute value of x<br> <code>mpt(x)</code> = measure pulse time, x&gt;=0 defines pin to use, -1 returns low pulse time,-2 return high pulse time (if defined USE_ANGLE_FUNC)<br> <code>rnd(x)</code> = return a random number between 0 and x, (seed may be set by rnd(-x))<br> <code>sf(F)</code> = sets the CPU Frequency (ESP32) to 80,160,240 Mhz, returns current Freq.<br> <code>s(x)</code> = explicit conversion from number x to string may be preceded by precision digits e.g. s(2.2x) = use 2 digits before and after decimal point </p> <h3 id=i2c-support>I2C support<a class=headerlink href=#i2c-support title="Permanent link">~</a></h3> <p><code>#define USE_SCRIPT_I2C</code> <code>ia(AA)</code>, <code>ia2(AA)</code> test and set I2C device with address AA (on BUS 1 or 2), returns 1 if device is present<br> <code>iw(aa val)</code> , <code>iw1(aa val)</code>, <code>iw2(aa val)</code>, <code>iw3(aa val)</code>write val to register aa (1..3 bytes), if in aa bit 15 is set no destination register is transfered (needed for some devices), if bit 14 is set byte order is reversed<br> <code>ir(aa)</code>, <code>ir1(aa)</code>, <code>ir2(aa)</code>, <code>ir3(aa)</code> read 1..3 bytes from register aa </p> <h3 id=onewire-support>Onewire support<a class=headerlink href=#onewire-support title="Permanent link">~</a></h3> <p><code>#define USE_SCRIPT_ONEWIRE</code> support for onewire either directly or via serial port with onewire bus driver DS2480B<br> <code>ow(SEL &lt;opt PAR&gt;)</code> SEL 0 = init bus with pin number N (if bit 15 ist set, select serial DS2480B, lsb = rec pin, msb = trx pin)<br> SEL 1 = reset cmd<br> SEL 2 = skip cmd<br> SEL 3 = write PAR<br> SEL 4 = read<br> SEL 5 = reset search cmd<br> SEL 6 = search cmd addr index PAR<br> SEL 7 = select cmd addr index PAR SEL 8 = select and set bits index PAR<br> SEL 9 = select and read word index PAR bit 7 = 0 start, bit 7 = 1 read result<br> SEL 10-18 = get byte (1-8) of adress from index PAR<br> SEL 99 = delete bus driver </p> <h3 id=serial-io-support>Serial IO support<a class=headerlink href=#serial-io-support title="Permanent link">~</a></h3> <p><code>#define USE_SCRIPT_SERIAL</code> <code>so(RXPIN TXPIN BR)</code> open serial port with RXPIN, TXPIN and baud rate BR with 8N1 serial mode (-1 for pin means don't use)<br> <code>so(RXPIN TXPIN BR MMM)</code> open serial port with RXPIN, TXPIN and baud rate BR and serial mode e.g 7E2 (all 3 modechars must be specified)<br> <code>so(RXPIN TXPIN BR MMM BSIZ)</code> open serial port with RXPIN, TXPIN and baud rate BR and serial mode e.g 7E2 (all 3 modechars must be specified) and serial IRW buffer size<br> <code>sc()</code> close serial port<br> <code>sw(STR)</code> write the string STR to serial port<br> <code>swb(NUM)</code> write the number char code NUM to serial port<br> <code>sa()</code> returns number of bytes available on port<br> <code>sr()</code> read a string from serial port, all available chars up to string size<br> <code>sr(X)</code> read a string from serial port until charcode X, all available chars up to string size or until charcode X<br> <code>srb()</code> read a number char code from serial port<br> <code>sp()</code> read a number char code from serial port, don't remove it from serial input (peek)<br> <code>sra(ARRAY (flags))</code> fill an array from serial port, if USE_SML_M is enabled and Array size is 8 it is assumed to be a MODBUS request and the checksum is evaluated, if OK <code>8</code> is returned, else -2, or if flags is set Modbus response is assumed and checksum is calculated, 0 = standard Modbus, 1 = Rec BMA mode, return -2 on checksum error a</p> <p><code>sra(ARRAY (flags))</code> fill an array from serial port, if USE_SML_M is enabled and Array size is 8 it is assumed to be a MODBUS request and the checksum is evaluated, if OK <code>8</code> is returned, else -2, or if flags is set Modbus response is assumed and ckum is calculated, 0 = standard Modbus, 1 = Rec BMA mode <br> <code>swa(ARRAY len (flags))</code> send len bytes of an array to serial port, if flags is set Modbus cmd is assumed and cksum is calculated, 0 = standard Modbus, 1 = Rec BMA mode<br> <code>smw(ADDR MODE NUMBER)</code> send a value with checksum to MODBUS Address, MODE 0 = uint16, 1 = uint32, 3 = float </p> <h3 id=spi-io-support>SPI IO support<a class=headerlink href=#spi-io-support title="Permanent link">~</a></h3> <p><code>#define USE_SCRIPT_SPI</code><br> <code>spi(0 SCLK MOSI MISO)</code> defines a software SPI port with pin numbers used for SCLK, MOSI, MISO.<br> <code>spi(0 -1 freq)</code> defines a hardware SPI port with pin numbers defined by Tasmota GPIO definition with bus frequency in Mhz.<br> <code>spi(0 -2 freq)</code> defines a hardware SPI port 2 on ESP32 with pin numbers defined by Tasmota GPIO definition.<br> <code>spi(1 N GPIO)</code> sets the CS pin with index N (1..4) to pin Nr GPIO.<br> <code>spi(2 N ARRAY LEN S)</code> sends and receives an ARRAY with LEN values with S (1..3) (8,16,24 bits) if N==-1 CS is ignored. If S=4, CS is raised after each byte.</p> <h3 id=tcp-server-support>TCP server support<a class=headerlink href=#tcp-server-support title="Permanent link">~</a></h3> <p><code>#define USE_SCRIPT_TCP_SERVER</code><br> <code>wso(port)</code> start a tcp stream server at port<br> <code>wsc()</code> close tcp stream server<br> <code>wsa()</code> return bytes available on tcp stream<br> <code>wsrs()</code> return a string read from tcp stream<br> <code>wsws(string)</code> writes a string to tcp stream<br> <code>wsra(array)</code> reads a tcp stream into array<br> <code>wswa(array num (type))</code> writes num bytes of array to tcp stream, type: 0 = uint8 (default), 1 = uint16, 2 = sint16, 3 = float </p> <p><code>ttget(TNUM SEL)</code> get tasmota timer setting from timer TNUM (1 .. 16)<br> SEL:<br> 0 = time<br> 1 = time window<br> 2 = repeat<br> 3 = days<br> 4 = device<br> 5 = power<br> 6 = mode<br> 7 = arm<br> <code>mqtts</code> = MQTT connection status: <code>0</code> = disconnected, <code>&gt;0</code> = connected<br> <code>wbut</code> = button status of watch side button (if defined USE_TTGO_WATCH)<br> <code>wdclk</code> = double tapped on display (if defined USE_TTGO_WATCH)<br> <code>wtch(sel)</code> = gets state from touch panel sel=0 =&gt; touched, sel=1 =&gt; x position, sel=2 =&gt; y position (if defined USE_TTGO_WATCH)<br> <code>slp(time)</code> = sleep time in seconds, pos values =&gt; light sleep, neg values =&gt; deep sleep (if defined USE_TTGO_WATCH)<br> <code>pl("path")</code> = play mp3 audio from filesystem (if defined USE_I2S_AUDIO or USE_TTGO_WATCH or USE_M5STACK_CORE2)<br> <code>say("text")</code> = plays specified text to speech (if defined USE_I2S_AUDIO or USE_TTGO_WATCH or USE_M5STACK_CORE2) <br> <code>c2ps(sel val)</code> = gets, sets values on ESP32 CORE2 sel=0 green led, sel=1 vibration motor, sel=2,3,4 get touch button state 1,2,3 (if defined USE_M5STACK_CORE2)<br> <code>rec(path seconds)</code> = rec n seconds wav audio file from i2s microphone to filesystem path (if defined USE_I2S_AUDIO or USE_M5STACK_CORE2)<br> <code>pwmN(-pin freq)</code> = defines a pwm channel N (1..N) with pin Nr and frequency (pin 0 being -64, N=5 with esp8266 and N=8 with esp32)<br> <code>pwmN(val)</code> = outputs a pwm signal on channel N (1..N) with val (0-1023)<br> <code>wifis</code> = Wi-Fi connection status: <code>0</code> = disconnected, <code>&gt;0</code> = connected </p> <p><code>wcs</code> = send this line to webpage (WebContentSend)<br> <code>wcf</code> = flushes the web buffer (WSContentFlush)<br> <code>wfs</code> = send this file to webpage<br> <code>rapp</code> = append this line to MQTT (ResponseAppend)<br> <code>wm</code> = contains source of web request code e.g. 0 = Sensor display (FUNC_WEB_SENSOR) </p> <p><code>acp(dst src)</code> = copy array, if src is numeric variable or constant array dst is filled with this value, if src = sml SML decoder results are copied. </p> <p><code>knx(code value)</code> = sends a number value to KNX </p> <p><code>sml(m 0 bd)</code> = set SML baud rate of Meter m to bd (baud)<br> <code>sml(m 1 htxt)</code> = send SML Hex string htxt as binary to Meter m<br> <code>sml(-m 1 initstr)</code> = reinits serial port of Meter m, initstr: "baud:mode" e.g. "9600:8E1", currently only baud and N,E,O are evaluated. <br> <code>sml(m 2)</code> = reads serial data received by Meter m into string (if m&lt;0 reads hex values, else asci values) <code>sml(m 3 hstr)</code> = inserts SML Hexstring variable hstr as binary to Meter m in Output stream e.g. for special MODBUS cmds, hstr must be a string variable NO string constant <br> <code>sml[n]</code> = get value of SML energy register n, if n == 0 then get number of decode lines <br> <code>smls[m]</code> = get value of SML meter string info of meter m, if m &lt; 0 gets string representation of numeric value of decode line m, this enables double number resolution.<br> <code>smlv[n]</code> = get SML decode valid status of line n (1..N), returns 1 if line decoded. n=0 resets all status codes to zero <code>smld(m)</code> = call decoder of meter m<br> <code>smlj</code> = read or write variable, when 0 disables MQTT output of SML.<br> <code>enrg[n]</code> = get value of energy register n 0=total, 1..3 voltage of phase 1..3, 4..6 current of phase 1..3, 7..9 power of phase 1..3, 10=start energy, 11=daily energy, 12=energy yesterday (if defined USE_ENERGY_SENSOR)<br> <code>gjp("host" "path")</code> = trigger HTTPS JSON page read as used by Tesla Powerwall (if defined SCRIPT_GET_HTTPS_JP)<br> <code>gwr("del" index (ec))</code> = gets non JSON element from webresponse del = delimiter char or string, index = n´th element, optional end character delimiter ec. (if defined USE_WEBSEND_RESPONSE)<br> <code>http("url" "payload")</code> = does a GET or POST request on a URL (http:// is internally added) <code>tsN(ms)</code> = set up to 4 timers (N=1..4) to millisecond time on expiration triggers section &gt;tiN (if defined USE_SCRIPT_TIMER)<br> <code>hours</code> = hours<br> <code>mins</code> = mins<br> <code>secs</code> = seconds<br> <code>day</code> = day of month<br> <code>wday</code> = day of week (Sunday=1,Monday=2;Tuesday=3;Wednesday=4,Thursday=5,Friday=6,Saturday=7)<br> <code>month</code> = month <br> <code>year</code> = year<br> <code>epoch</code> = epoch time (from 2019-1-1 00:00:00)<br> <code>epoffs</code> = set epoch offset, (must be no longer then 2 years to fit into single float with second precision)<br> <code>eres</code> = result of &gt;E section set this var to 1 in section &gt;E to tell Tasmota event is handled (prevents MQTT) </p> <p>The following variables are cleared after reading true:<br> <code>chg[var]</code> = true if a variables value was changed (numeric vars only)<br> <code>diff[var]</code> = difference since last variable update<br> <code>upd[var]</code> = true if a variable was updated<br> <code>boot</code> = true on BOOT<br> <code>tinit</code> = true on time init<br> <code>tset</code> = true on time set<br> <code>mqttc</code> = true on mqtt connect<br> <code>mqttd</code> = true on mqtt disconnect<br> <code>wific</code> = true on Wi-Fi connect<br> <code>wifid</code> = true on Wi-Fi disconnect </p> <h3 id=system-variables-for-debugging>System variables (for debugging)<a class=headerlink href=#system-variables-for-debugging title="Permanent link">~</a></h3> <p><code>stack</code> = stack size<br> <code>heap</code> = free heap size<br> <code>pheap</code> = PSRAM free heap size (ESP32)<br> <code>core</code> = current core (0 or 1) (ESP32)<br> <code>ram</code> = used ram size<br> <code>slen</code> = script length<br> <code>freq</code> = cpu frequency<br> <code>micros</code> = running microseconds<br> <code>millis</code> = running milliseconds<br> <code>loglvl</code> = loglevel of script cmds (<em><strong>may be set also</strong></em>) </p> <p>Remarks:<br> If you define a variable with the same name as a special variable that special variable is discarded </p> <h2 id=commands>Commands<a class=headerlink href=#commands title="Permanent link">~</a></h2> <p><code>=&gt; &lt;command&gt;</code> Execute <command> cmd with MQTT output enabled<br> <code>-&gt; &lt;command&gt;</code> Execute <command> cmd with MQTT output disabled, <em><strong>recursion</strong></em> disabled. Do not send MQTT or log messages (i.e., silent execute - useful to reduce traffic)<br> <code>+&gt; &lt;command&gt;</code> Execute <command> cmd with MQTT output enabled, <em><strong>recursion</strong></em> enabled. </p> <div class="admonition warning"> <p class=admonition-title>Warning</p> <p><em><strong>Recursion</strong></em>: If you execute a tasmota cmd in an &gt;E section and this cmd itself executes &gt;E you will get an infinite loop. this is disabled normally and enabled by the +&gt; in case you know what you are doing</p> </div> <h3 id=variable-substitution>Variable Substitution<a class=headerlink href=#variable-substitution title="Permanent link">~</a></h3> <ul> <li>A single percent sign must be given as <code>%%</code> </li> <li>Variable replacement within commands is allowed using <code>%varname%</code>. Optionally, the decimal places precision for numeric values may be specified by placing a digit (<code>%Nvarname%</code>, N = <code>0..9</code>) in front of the substitution variable (e.g., <code>Humidity: %3hum%%%</code> will output <code>Humidity: 43.271%</code>) </li> <li>instead of variables arbitrary calculations my be inserted by bracketing %N(formula)% </li> <li>Linefeed, tab and carriage return may be defined by \n, \t and \r </li> </ul> <h3 id=special-commands>Special commands:<a class=headerlink href=#special-commands title="Permanent link">~</a></h3> <p><code>print</code> or <code>=&gt;print</code> prints to the log for debugging<br> A Tasmota MQTT RESULT message invokes the script's <code>E</code> section. Add <code>print</code> statements to debug a script. </p> <div class="admonition example"> <p class=admonition-title>Example</p> <div class=highlight><pre><span></span><code>&gt;E
+slider=Dimmer
+power=POWER
+
+if upd[slider]&gt;0
+then
+print slider updated %slider%
+endif
+
+if upd[power]&gt;0
+then
+print power updated %power%
+endif
+</code></pre></div> </div> <p><code>break</code> exits a section or terminates a <code>for next</code> loop<br> <code>dpx</code> sets decimal precision to x (0-9)<br> <code>dpx.y</code> sets preceding digits to x and decimal precision to y (0-9), the delimiter also sets the decimal point character to . or ,<br> <code>dp(x y)</code> sets preceding digits to x and decimal precision to y, the delimter if space sets decimal point character to ., a comma sets the point o comma<br> <code>svars</code> save permanent vars<br> <code>delay(x)</code> pauses x milliseconds (should be as short as possible)<br> <code>beep(f l)</code> (ESP32) beeps with a passive piezo beeper. beep(-f 0) attaches PIN f to the beeper, beep(f l) starts a sound with frequency f (Hz) and len l (ms). f=0 stops the sound.<br> <code>spin(x b)</code> set GPIO <code>x</code> (0..16) to value <code>b</code> (0,1). Only bit 0 of <code>b</code> is used - even values set the GPIO to <code>0</code> and uneven values set the GPIO to <code>1</code><br> <code>spinm(x m)</code> set GPIO <code>x</code> (0..16) to mode <code>m</code> (input=0, output=1, input with pullup=2,alternatively b may be: O=out, I=in, P=in with pullup)<br> <code>ws2812(array dstoffset)</code> copies an array (defined with <code>m:vname</code>) to the WS2812 LED chain. The array length should be defined as long as the number of pixels. Color is coded as 24 bit RGB. optionally the destination offset in the LED chain may be given<br> if dstoffset is flagged by 0x1000, 2 values 16 bits each in an array are used for 32 bit RGBW pixels <code>hsvrgb(h s v)</code> converts hue (0..360), saturation (0..100) and value (0..100) to RGB color<br> <code>dt</code> display text command (if #define USE_DISPLAY) </p> <h3 id=subroutines-and-parameters>Subroutines and Parameters<a class=headerlink href=#subroutines-and-parameters title="Permanent link">~</a></h3> <p><code>#name</code> names a subroutine. Subroutine is called with <code>=#name</code><br> <code>#name(param)</code> names a subroutine with a parameter.<br> Each parameter variable must be declared in the '&gt;D' section.<br> A subroutine with multiple parameters is declared as '#name(p1 p2 p3)', i.e. spaces between parameters.<br> A subroutine is invoked with <code>=#name(param)</code> or '=#name(p1 p2)<br> Invoking a subroutine sets the parameter variable to the corresponding expression of the invocation. This means that parameter variables have script wide scope, i.e. they are not local variables to the subroutine.<br> Subroutines end with the next <code>#</code> or <code>&gt;</code> line or break. Subroutine invocations may be nested (each level uses about 600 bytes stack space, so nesting level should not exceed 4). Parameters can be numbers or strings and on type mismatch are converted. </p> <p>If <code>#define USE_SCRIPT_SUB_COMMAND</code> is included in your <code>user_config_override.h</code>, a subroutine may be invoked via the Console or MQTT using the subroutine's name. For example, a declared subroutine <code>#SETLED(num)</code> may be invoked by typing <code>SETLED 1</code> in the Console. The parameter <code>1</code> is passed into the <code>num</code> argument. This also works with string parameters. since Tasmota capitalizes all commands you must use upper case labels. </p> <p>It is possible to "replace" internal Tasmota commands. For example, if a <code>#POWER1(num)</code> subroutine is declared, the command <code>POWER1</code> is processed in the scripter instead of in the main Tasmota code. </p> <p>String parameter should be passed within double quotas: <code>CUSTOMCMD "Some string here"</code></p> <p><code>=(svar)</code> executes a routine whose name is passed as a string in a variable (dynamic or self modifying code). The string has to start with <code>&gt;</code> or <code>=#</code> for the routine to be executed.</p> <p>a subroutine may return a value (number or string):<br> <code>return var</code></p> <p>a subroutine is called with: var=#sub(x) when returning a value<br> or<br> =#sub(x) when not returning a value</p> <div class=highlight><pre><span></span><code>D
+svar=&quot;=#subroutine&quot;
+
+S
+=(svar)
+
+#subroutine
+print subroutine was executed
+</code></pre></div> <h3 id=for-loop-loop-count-must-not-be-less-than-1-nesting-up-to-3-levels>For loop (loop count must not be less than 1, nesting up to 3 levels)<a class=headerlink href=#for-loop-loop-count-must-not-be-less-than-1-nesting-up-to-3-levels title="Permanent link">~</a></h3> <div class=highlight><pre><span></span><code>for var &lt;from&gt; &lt;to&gt; &lt;inc&gt;  
+next  
+</code></pre></div> <h3 id=switch-selector-numeric-or-string>Switch selector (numeric or string)<a class=headerlink href=#switch-selector-numeric-or-string title="Permanent link">~</a></h3> <div class=highlight><pre><span></span><code>switch x  
+case a  
+case b  
+ends  
+</code></pre></div> <h3 id=conditional-statements>Conditional Statements<a class=headerlink href=#conditional-statements title="Permanent link">~</a></h3> <p>There are two syntax alternatives. You may <strong><em>NOT</em></strong> mix both formats. </p> <div class=highlight><pre><span></span><code>if a==b  
+and x==y  
+or k==i  
+then = do this  
+else = do that  
+endif  
+</code></pre></div> <p><strong>or</strong> </p> <div class=highlight><pre><span></span><code>if a==b  
+and x==y  
+or k==i {  
+  = do this  
+} else {  
+  = do that  
+}  
+</code></pre></div> <p>Remarks:<br> The last closing bracket must be on a separate line<br> Calculations are permitted in conditional expressions, e.g., </p> <div class=highlight><pre><span></span><code>if var1-var2==var3*var4
+</code></pre></div> <p>Conditional expressions may be enclosed in parentheses. The statement must be on a single line. e.g., </p> <div class=highlight><pre><span></span><code>if ((a==b) and ((c==d) or (c==e)) and (s!=&quot;x&quot;))
+</code></pre></div> <h3 id=mapping-function>Mapping Function<a class=headerlink href=#mapping-function title="Permanent link">~</a></h3> <p><div class=highlight><pre><span></span><code>mp(x cond1 result1 cond2 result2 ... cond&lt;n&gt; result&lt;n&gt;)  
+</code></pre></div> It addresses a standard task with less code and much flexibility: mapping an arbitrary incoming numeric value into the allowed range. The numeric value x (float only - no integer I:) passed as the first parameter is followed by parameter pairs which can be repeated. A parameter pair consists of condition<n> and result<n>. So input value x is compared to the conditions in the order they are provided as subsequent parameters. If the value matches the condition, the associated result is returned as function. Subsequent rules are skipped. If x matches none of the conditions, x is returned unchanged as result.<br> Conditions consist of one of the comparison operators "&lt;", "&gt;", "=" followed by a numeric value/variable. Be noted that 2-char-operators like "&gt;=" are not allowed. Results consist of a numeric value/variable.</p> <div class=highlight><pre><span></span><code>Example 1: y=mp(x &lt;8 0)
+           This mapping reads: If x is less than 8 return 0, otherwise return x
+                                                          .
+Example 2: y=mp(x &gt;100 100)
+           This mapping reads: If x is greater than 100 return 100, otherwise x.
+
+Example 3: y=mp(x &lt;8 0 &gt;100 100)
+           This mapping reads: Assigns 0 to y if x is less than 8. Assigns 100 to y if x is greater than 100. 
+                               Assigns x to y for all values of x that do not meet the above criteria (8 to 100).
+The above code of example 3 does the same as the following code - with just one line of code and 16 characters less:
+y=x
+if x&lt;8 {
+y=0
+}
+if x&gt;100 {
+y=100
+}
+</code></pre></div> <h3 id=m-e-mail>&gt;m E-mail<a class=headerlink href=#m-e-mail title="Permanent link">~</a></h3> <p><code>#define USE_SENDMAIL</code><br> Enabling this feature also enables <a href=../TLS/ >Tasmota TLS</a> as <code>sendmail</code> uses SSL. </p> <p><code>sendmail [server:port:user:passwd:from:to:subject] msg</code> </p> <div class="admonition example"> <p class=admonition-title>Example</p> <div class=highlight><pre><span></span><code>sendmail [smtp.gmail.com:465:user:passwd:&lt;sender@gmail.com&gt;:&lt;rec@gmail.com&gt;:alarm] %string%
+</code></pre></div> <p>Remark:<br> A number of e-mail servers (such as Gmail) require the receiver's e-mail address to be enclosed by angle brackets <code>&lt; ... &gt;</code> as in example above. Most other e-mail servers also accept this format. While ESP8266 sendmail needs brackets, ESP32 sendmail inserts brackets itself so you should not specify brackets here. </p> </div> <div class="admonition warning"> <p class=admonition-title>Warning</p> <p>Don't use your Google account password with GMAIL SMTP server.<br> You must create an <a href=https://support.google.com/accounts/answer/185833>Application specific password</a></p> </div> <p>The following parameters can be specified during compilation via <code>#define</code> directives in <code>user_config_override.h</code>:<br> * <code>EMAIL_SERVER</code><br> * <code>EMAIL_PORT</code><br> * <code>EMAIL_USER</code><br> * <code>EMAIL_PASSWORD</code><br> * <code>EMAIL_FROM</code> </p> <p>To use any of these values, pass an <code>*</code> as its corresponding argument placeholder. </p> <div class="admonition example"> <p class=admonition-title>Example</p> <p><code>sendmail [*:*:*:*:*:&lt;rec@gmail.com&gt;:theSubject] theMessage</code></p> </div> <p>Instead of passing the <code>msg</code> as a string constant, the body of the e-mail message may also be composed using the script <code>m</code> <em>(note lower case)</em> section. The specified text in this script section must end with a <code>#</code> character. <code>sendmail</code> will use the <code>m</code> section if <code>*</code> is passed as the <code>msg</code> parameter. in this &gt;m section you may also specify email attachments. @/filename specifies a file to be attached (if file system is present)<br> &amp;arrayname specifies an array attachment (as tab delimited text, no file system needed)<br> $N attach a webcam picture from rambuffer number N (usually 1) </p> <p>See <a href=#send-e-mail>Scripting Cookbook Example</a> </p> <h3 id=mqtt-subscribe-unsubscribe>MQTT Subscribe, Unsubscribe*<a class=headerlink href=#mqtt-subscribe-unsubscribe title="Permanent link">~</a></h3> <p><code>#define SUPPORT_MQTT_EVENT</code><br> <code>subscribe</code> and <code>unsubscribe</code> commands are supported. In contrast to rules, no event is generated but the event name specifies a variable defined in <code>D</code> section and this variable is automatically set on transmission of the subscribed item<br> within a script the subscribe cmd must be send with +&gt; instead of =&gt;<br> the MQTT decoder may be configured for more space in user config overwrite by<br> <code>#define MQTT_EVENT_MSIZE</code> xxx (default is 256)<br> <code>#define MQTT_EVENT_JSIZE</code> xxx (default is 400) </p> <h3 id=file-system-support>File System Support<a class=headerlink href=#file-system-support title="Permanent link">~</a></h3> <p><code>#define USE_UFILESYS</code><br> optional for SD_CARD:<br> <code>#define USE_SDCARD</code><br> <code>#define SDCARD_CS_PIN X</code> X = GPIO of card chip select <br> SD card uses standard hardware SPI GPIO: mosi,miso,sclk<br> depending on used linker file you get a flash file system with the same functionality but very low capacity (e.g. 2 MB)<br> A maximum of four files may be open at a time<br> e.g., allows for logging sensors to a tab delimited file and then downloading the file (<a href=#sensor-logging>see Sensor Logging example</a>) <br> The script itself is also stored on the file system with a default size of 8192 characters </p> <p><code>fr=fo("fname" m)</code> open file fname, mode 0=read, 1=write, 2=append (returns file reference (0-3) or -1 for error (alternatively m may be: r=read, w=write, a=append). For files on SD card, filename must be preceded with / e.g. fr=fo("/fname.txt" 0)<br> <code>res=fw("text" fr)</code> writes text to (the end of) file fr, returns number of bytes written<br> <code>res=fr(svar fr)</code> reads a string into svar, returns bytes read. String is read until delimiter (\t \n \r) or eof<br> <code>fc(fr)</code> close file<br> <code>ff(fr)</code> flush file, writes cached data and updates directory<br> <code>fd("fname")</code> delete file fname<br> <code>frn("spath" "dpath")</code> rename a file<br> <code>flx(fname)</code> create download link for file (x=1 or 2) fname = file name of file to download<br> <code>fsm</code> return 1 if filesystem is mounted, (valid SD card found)<br> <code>res=fsi(sel)</code> gets file system information, sel=0 returns total media size, sel=1 returns free space both in kB <br> <code>fz(fr)</code> returns file size<br> <code>fa(fr)</code> returns number of available bytes in open file stream<br> <code>fs(fr pos)</code> seek to file position pos<br> <code>fwb(byte fr)</code> write byte to file<br> <code>frb(fr)</code> read byte from file<br> <code>frw(fr url)</code> read file from web url, if url is an immediate string it may be longer than max string size to support very long URLs.<br> <code>fcs(fr "del" index ec)</code> = gets non string from file: del = delimiter char or string, index = n´th element, ec = end character delimiter. </p> <h3 id=other-commands-flash>Other commands (+?? flash)<a class=headerlink href=#other-commands-flash title="Permanent link">~</a></h3> <p><code>#define USE_FEXTRACT</code><br> <code>fxt(fr ts_from ts_to col_offs accum array1 array2 ... arrayn)</code> read arrays from csv file from timestamp to timestamp with column offset and accumulate values into arrays1 .. N, assumes csv file with timestamp in 1. column and data values in columns 2 to n.<br> <code>fxto(...</code> same as above with time optimized access<br> <code>cts(tstamp flg)</code> convert timestamp to German locale format back and forth flg=0 to webformat, 1 to German format<br> <code>tso(tstamp day flag)</code> add time offset in days to timestamp optional flg = char 0 zo zero time HH:MM:SS<br> <code>tsn(tstamp)</code> convert timestamp to seconds<br> <code>s2t(seconds)</code> convert seconds to Tasmota timestamp </p> <h3 id=extended-commands-09k-flash>Extended commands (+0,9k flash)<a class=headerlink href=#extended-commands-09k-flash title="Permanent link">~</a></h3> <p><code>#define USE_SCRIPT_FATFS_EXT</code><br> <code>fmt(0)</code> format flash file system (erases all data)<br> <code>fmd("fname")</code> make directory fname<br> <code>frd("fname")</code> remove directory fname<br> <code>fra(array fr)</code> reads array from open file with fr (assumes tab delimited entries)<br> <code>fwa(array fr (a))</code> writes array to open file with fr (writes tab delimited entries and line feed at end) the optional a parameter ommits the linefeed for appending arrays <code>fx("fname")</code> check if file fname exists<br> <code>fe("fname")</code> execute script fname (max 2048 bytes, script must start with the '&gt;' character on the first line)<br> <code>lfw("fname" payload limit)</code> logs a string (payload) to a file (fname) with size limit (limit) paylyoad is added to end of file together with a LF character. if file size is exceeded first line of file is removed. <br> <code>fra(array fr)</code> reads array from open file with fr (assumes tab delimited entries)<br> <code>fwa(array fr (a))</code> writes array to open file with fr (writes tab delimited entries and line feed at end) the optional a parameter ommits the linefeed for appending arrays </p> <h3 id=t-esp32-real-multitasking-support>&gt;t ESP32 real Multitasking support<a class=headerlink href=#t-esp32-real-multitasking-support title="Permanent link">~</a></h3> <p><code>#define USE_SCRIPT_TASK</code> enables support for multitasking scripts<br> res=ct(num timer core (prio) (stack))<br> creates a task num (1 or 2) with optional priority and stack size<br> which is executed every timer (ms) time<br> on core 0 or 1 </p> <p>the sections are named<br> &gt;t1 for task 1<br> &gt;t2 for task 2 </p> <div class="admonition example"> <p class=admonition-title>Example</p> </div> <div class=highlight><pre><span></span><code>&gt;D
+&gt;B
+; create task 1 every 1000 ms on core 0
+ct(1 1000 0)
+; create task 2 every 3000 ms on core 1
+ct(2 3000 1)
+
+&gt;t1
+print task1 on core %core%
+
+&gt;t2
+print task2 on core %core%
+</code></pre></div> <h3 id=esp32-webcam-support>ESP32 Webcam support<a class=headerlink href=#esp32-webcam-support title="Permanent link">~</a></h3> <p cam=CAM no=No spi_gpio_:_4992_65504_65504_65504_65504_5088_65504_65504_65504_65504_65504_65504_65504_65504_5089_5090_0_5091_5184_5152_0_5120_5024_5056_0_0_0_0_4928_65504_5094_5095_5092_0_0_5093_flag_:0_base_:1='SPI","GPIO":[4992,65504,65504,65504,65504,5088,65504,65504,65504,65504,65504,65504,65504,65504,5089,5090,0,5091,5184,5152,0,5120,5024,5056,0,0,0,0,4928,65504,5094,5095,5092,0,0,5093],"FLAG":0,"BASE":1' _name_:_aithinker='"NAME":"AITHINKER'><code>#define USE_WEBCAM</code><br> Template for AI THINKER CAM :<br></p> <p>remarks:<br> - GPIO0 zero must be disconnected from any wire after programming because this pin drives the cam clock and does not tolerate any capacitive load<br> - Only boards with PSRAM should be used. To enable PSRAM board should be se set to esp32cam in common32 of platform_override.ini<br> board = esp32cam<br> - To speed up cam processing CPU frequency should be better set to 240Mhz in common32 of platform_override.ini<br> board_build.f_cpu = 240000000L </p> <p>file system extension:<br> <code>fwp(pnum fr)</code> write picture from RAM buffer number pnum to SD card file with file reference fr<br> specific webcam commands:<br> <code>res=wc(sel p1 p2)</code> control webcam, sel = function selector p1 ... optional parameters<br> <code>res=wc(0 pres)</code> init webcam with picture resolution pres, returns 0 when error, 2 when PSRAM found, else 1<br> pres<br> * <code>0 = FRAMESIZE_QQVGA, // 160x120</code><br> * <code>1 = FRAMESIZE_QQVGA2, // 128x160</code><br> * <code>2 = FRAMESIZE_QCIF, // 176x144</code><br> * <code>3 = FRAMESIZE_HQVGA, // 240x176</code><br> * <code>4 = FRAMESIZE_QVGA, // 320x240</code><br> * <code>5 = FRAMESIZE_CIF, // 400x296</code><br> * <code>6 = FRAMESIZE_VGA, // 640x480</code><br> * <code>7 = FRAMESIZE_SVGA, // 800x600</code><br> * <code>8 = FRAMESIZE_XGA, // 1024x768</code><br> * <code>9 = FRAMESIZE_SXGA, // 1280x1024</code><br> * <code>10 = FRAMESIZE_UXGA, // 1600x1200</code> </p> <p><code>res=wc(1 bnum)</code> capture picture to rambuffer bnum (1..4), returns framesize of picture or 0 when error<br> <code>res=wc(2 sel p1)</code> execute various controls, details below.<br> <code>res=wc(3)</code> gets picture width<br> <code>res=wc(4)</code> gets picture height<br> <code>res=wc(5 p)</code> start stop streaming 0=stop, 1=start<br> <code>res=wc(6 p)</code> start stop motion detector, p=0 =&gt; stop detector, p=T start detector with picture every T ms, -1 get picture difference, -2 get picture brightness<br> <code>res=wc(7 p)</code> start stop face detector, p=0 =&gt; stop detector, p=T start detector with picture every T ms, -1 get number of faces found in picture (USE_FACE_DETECT must be defined) </p> <p>control cmds sel =<br> * 0 fs = set frame size (see above for constants) <br> * 1 se = set special effect </p> <ul> <li><code>0 = no effect</code> </li> <li><code>1 = negative</code> </li> <li><code>2 = black and white</code> </li> <li><code>3 = reddish</code> </li> <li><code>4 = greenish</code> </li> <li><code>5 = blue</code> </li> <li> <p><code>6 = retro</code> </p> </li> <li> <p>2 fl = set horizontal flip 0,1 </p> </li> <li>3 mi = set vertical mirror 0,1 </li> </ul> <p>to read a value without setting pass -1</p> <ul> <li> <p>extensions to the email system on ESP32<br> <code>#define SEND_EMAIL</code> and <code>#define USE_ESP32MAIL</code><br> enables specific ESP32 mail server<br> this server can handle more mail servers by supporting START_TLS<br> remark: mail addresses must not be enclosed with &lt;&gt; because the server inserts them automatically<br> this server also supports email attachments<br> in the &gt;m section you may write<br> &amp;/file.txt to attach a file from SD card<br> $N N=1..4 to attach a picture from picture RAM buffer number N </p> </li> <li> <p>displaying webcam pictures in WEBUI<br> you may display a webcam picture by giving the name /wc.jpg?p=N (1..4) for RAM picturebuffer N<br> "&lt;img src="/wc.jpg?p=1" alt="webcam image" &gt;"<br> you may also provide the picture size (h and v have to be preset before)<br> "&lt;img src="/wc.jpg?p=1" alt="webcam image" style="width:%w%px;height:%h%px;"&gt;"<br> if you precede the line by &amp; char the image is displayed in the main section, else in the sensor tab section </p> </li> </ul> <p>the webcam stream can be specified by the following line<br> lip is a system variable containing the local device ip <br> "&amp;&lt;br&gt;"<br> "&amp;&lt;img src="http://%lip%:81/stream" style="width:%w%px;height:%h%px"&gt;"<br> "&amp;&lt;br&gt;&lt;center&gt;webcam stream" </p> <p>remark: the Flash illumination LED is connected to GPIO4</p> <div class="admonition example"> <p class=admonition-title>Example</p> </div> <div class=highlight><pre><span></span><code>    &gt;D
+    res=0
+    w=0
+    h=0
+    mot=0
+    bri=0
+
+    &gt;B
+    ; init cam with QVGA
+    res=wc(0 4)
+    ; get pixel size
+    w=wc(3)
+    h=wc(4)
+    ; start motion detector, picture every 1000 ms
+    mot=wc(6 1000)
+
+    &gt;S
+    if wific&gt;0
+    then
+    ; when wifi up, start stream
+    res=wc(5 1)
+    endif
+
+    ; get motion detect diff value
+    mot=wc(6 -1)
+    ; get picture brightnes
+    bri=wc(6 -2)
+
+    &gt;W
+    &lt;center&gt;motion diff = %mot%&lt;br&gt;
+    &lt;center&gt;brightness = %bri%&lt;br&gt;
+    ; show stream on WEBUI
+    &amp;&lt;br&gt;
+    &amp;&lt;img src=&quot;http://%lip%:81/stream&quot; style=&quot;width:%w%px;height:%h%px&quot;&gt;
+    &amp;&lt;br&gt;&lt;center&gt;webcam stream
+</code></pre></div> <h2 id=scripting-cookbook>Scripting Cookbook<a class=headerlink href=#scripting-cookbook title="Permanent link">~</a></h2> <div class=highlight><pre><span></span><code>a valid script must start with &gt;D in the first line!  
+some samples still contain comment lines before &gt;D. This is no longer valid!
+</code></pre></div> <h3 id=simple-example-to-start-with>simple example to start with<a class=headerlink href=#simple-example-to-start-with title="Permanent link">~</a></h3> <div class=highlight><pre><span></span><code>&gt;D
+; in this section you may define and or preset variables, there are numbers or strings.
+; in contrast to rules you may choose any variable name
+; numeric variable
+val1=1.234
+; numeric variable that is preserved after reboot or power down
+p:val2=0
+; text variable
+txt=&quot;hello world&quot;
+
+&gt;B
+; this section is executed durig boot or on script restart
+print we are booting
+
+&gt;S
+; this section is executed every second
+print one second tick
+; variables may be printed enclosed with % char, thus showing &quot;hello world 1.234&quot;
+; very handy for debugging
+print %txt% %val1%
+
+; check if upcounting seconds give zero result when dividing by 10
+; upsecs is a system defined variable that counts seconds from start
+
+; you may use if then, else, endif
+if upsecs%10==0
+then
+    print every 10 seconds
+endif
+
+; or if {} else {}
+if upsecs%10==0 {
+    print every 10 seconds
+}
+
+&gt;R
+; this section is executed on restart
+print we are restarting
+</code></pre></div> <h3 id=scripting-language-example>Scripting Language Example<a class=headerlink href=#scripting-language-example title="Permanent link">~</a></h3> <div class=highlight><pre><span></span><code>**Actually this code is too large**. This is only meant to show some of the possibilities
+
+&gt;D
+; define all vars here
+p:mintmp=10  (p:means permanent)
+p:maxtmp=30
+t:timer1=30  (t:means countdown timer)
+t:mt=0
+i:count=0  (i:means auto counter)
+hello=&quot;hello world&quot;
+string=&quot;xxx&quot;
+url=&quot;[_IP_]&quot;;
+hum=0
+temp=0
+zigbeetemp=0
+timer=0
+dimmer=0
+sw=0
+rssi=0
+param=0
+
+col=&quot;&quot;
+ocol=&quot;&quot;
+chan1=0
+chan2=0
+chan3=0
+
+ahum=0
+atemp=0
+tcnt=0
+hour=0
+state=1
+m:med5=0
+M:movav=0
+; define array with 10 entries
+m:array=0 10
+
+&gt;B
+string=hello+&quot;how are you?&quot;
+print BOOT executed
+print %hello%
+=&gt;mp3track 1
+
+; list gpio pin definitions
+for cnt 0 16 1
+tmp=pd[cnt]
+print %cnt% = %tmp%
+next
+
+; get gpio pin for relais 1
+tmp=pn[21]
+print relais 1 is on pin %tmp%
+
+; pulse relais over raw gpio
+spin(tmp 1)
+delay(100)
+spin(tmp 0)
+
+; raw pin level
+print level of gpio1 %pin[1]%
+
+; pulse over tasmota cmd
+=&gt;power 1
+delay(100)
+=power 0
+
+&gt;T
+hum=BME280#Humidity
+temp=BME280#Temperature
+rssi=Wifi#RSSI
+string=SleepMode
+
+; add to median filter
+median=temp
+; add to moving average filter
+movav=hum
+
+; show filtered results
+print %median% %movav%
+
+if chg[rssi]&gt;0
+then print rssi changed to %rssi%
+endif
+
+if temp&gt;30
+and hum&gt;70
+then print damn hot!
+endif
+
+=#siren(5)
+
+; loop nesting workaround
+; by using subroutine
+#siren(num)
+for cnt 1 num 1
+=#stone
+next
+
+#stone
+for tone 2000 1000 -20
+beep(tone 10);
+delay(12)
+next
+
+&gt;S
+; every second but not completely reliable time here
+; use upsecs and uptime or best t: for reliable timers
+
+; arrays
+array[1]=4
+array[2]=5
+tmp=array[1]+array[2]
+
+; call subrountines with parameters
+=#sub1(&quot;hallo&quot;)
+=#sub2(999)
+
+; stop timer after expired
+if timer1==0
+then timer1=-1
+print timer1 expired
+endif
+
+; auto counter with restart
+if count=10
+then print 10 seconds over
+count=0
+endif
+
+if upsecs%5==0
+then print %upsecs%  (every 5 seconds)
+endif
+
+; not recommended for reliable timers
+timer+=1
+if timer&gt;=5
+then print 5 seconds over (may be)
+timer=0
+endif
+
+dimmer+=1
+if dimmer&gt;100
+then dimmer=0
+endif
+
+=&gt;dimmer %dimmer%
+=&gt;WebSend %url% dimmer %dimmer%
+
+; show on display
+dp0
+dt [c1l1f1s2p20] dimmer=%dimmer%
+
+print %upsecs% %uptime% %time% %sunrise% %sunset% %tstamp%
+
+if time&gt;sunset
+or time&lt;sunrise
+then
+; night time
+if pwr[1]==0
+then =&gt;power1 1
+endif
+else
+; day time
+if pwr[1]&gt;0
+then =&gt;power1 0
+endif
+endif
+
+; clr display on boot
+if boot&gt;0
+then dt [z]
+endif
+
+; frost warning
+if ((temp&lt;0 or zigbeetemp&lt;0) and mt&lt;=0)
+then =#sendmail(&quot;frost alert&quot;)
+; alarm only every 5 minutes
+mt=300
+=mp3track 2
+endif
+
+; var has been updated
+if upd[hello]&gt;0
+then print %hello%
+endif
+
+; send to Thingspeak every 60 seconds
+; average data in between
+if upsecs%60==0
+then
+ahum&gt;=tcnt
+atemp&gt;=tcnt
+=WebSend [_IP_]/update?key=_token_&amp;field1=%atemp%&amp;field2=%ahum%
+tcnt=0
+atemp=0
+ahum=0
+else
+ahum+=hum
+atemp+=temp
+tcnt+=1
+endif
+
+hour=int(time/60)
+if chg[hour]&gt;0
+then
+; exactly every hour
+print full hour reached
+endif
+
+if time5 {
+print more then 5 minutes after midnight
+} else {
+print less then 5 minutes after midnight
+}
+
+; publish abs hum every teleperiod time
+if mqtts&gt;0
+and upsecs%tper==0
+then
+; calc abs humidity
+tmp=pow(2.718281828 (17.67*temp)/(temp+243.5))
+tmp=(6.112*tmp*hum*18.01534)/((273.15+temp)*8.31447215)
+; publish median filtered value
+=&gt;Publish tele/%topic%/SENSOR {&quot;Script&quot;:{&quot;abshum&quot;:%med(0 tmp)%}}
+endif
+
+;switch case state machine
+switch state
+case 1
+print state=%state% , start
+state+=1
+case 2
+print state=%state%
+state+=1
+case 3
+print state=%state%  , reset
+state=1
+ends
+
+; subroutines
+#sub1(string)
+print sub1: %string%
+#sub2(param)
+print sub2: %param%
+
+#sendmail(string)
+=&gt;sendmail [smtp.gmail.com:465:user:passwd:&lt;sender@gmail.de:&lt;rec@gmail.de:alarm] %string%
+
+&gt;E
+print event executed!
+
+; Assign temperature from a Zigbee sensor
+zigbeetemp=ZbReceived#0x2342#Temperature
+; get HSBColor 1. component
+tmp=st(HSBColor , 1)
+
+; check if switch changed state
+sw=sw[1]
+if chg[sw]&gt;0
+then =&gt;power1 %sw%
+endif
+
+hello=&quot;event occurred&quot;
+
+; check for Color change (Color is a string)
+col=Color
+; color change needs 2 string vars
+if col!=ocol
+then ocol=col
+print color changed  %col%
+endif
+
+; or check change of color channels
+chan1=Channel[1]
+chan2=Channel[2]
+chan3=Channel[3]
+
+if chg[chan1]&gt;0
+or chg[chan2]&gt;0
+or chg[chan3]&gt;0
+then = color has changed
+endif
+
+; compose color string for red
+col=hn(255)+hn(0)+hn(0)
+=color %col%
+
+&gt;R
+print restarting now
+</code></pre></div> <h3 id=sensor-logging>Sensor Logging<a class=headerlink href=#sensor-logging title="Permanent link">~</a></h3> <div class=highlight><pre><span></span><code>; define all vars here
+; reserve large strings
+&gt;D 48
+hum=0
+temp=0
+fr=0
+res=0
+cnt=0
+; moving average for 60 seconds
+M:mhum=0 60
+M:mtemp=0 60
+str=&quot;&quot;
+
+&gt;B
+; set sensor file download link
+;fl1(&quot;slog.txt&quot;)
+; delete file in case we want to start fresh
+;fd(&quot;slog.txt&quot;)
+
+; list all files in root directory
+fr=fo(&quot;/&quot; 0)
+for cnt 1 20 1
+res=fr(str fr)
+if res&gt;0
+then
+print %cnt% : %str%
+else
+break
+endif
+next
+fc(fr)
+
+&gt;T
+; get sensor values
+temp=BME280#Temperature
+hum=BME280#Humidity
+
+&gt;S
+; average sensor values every second
+mhum=hum
+mtemp=temp
+
+; write average to sensor log every minute
+if upsecs%60==0
+then
+; open file for write
+fr=fo(&quot;slog.txt&quot; 1)
+; compose string for tab delimited file entry
+str=s(upsecs)+&quot;\t&quot;+s(mhum)+&quot;\t&quot;+s(mtemp)+&quot;\n&quot;
+; write string to log file
+res=fw(str fr)
+; close file
+fc(fr)
+endif
+
+&gt;R
+</code></pre></div> <h3 id=global-variables-example>global variables example<a class=headerlink href=#global-variables-example title="Permanent link">~</a></h3> <p>make temperature and humidity of an SHT sensor public<br> all devices in the local network may use the global variables needs #define USE_SCRIPT_GLOBVARS </p> <p>Sender:</p> <div class=highlight><pre><span></span><code>&gt;D
+g:temp=0
+g:hum=0
+
+&gt;T
+temp=SHT3X_0x44#Temperature
+hum=SHT3X_0x44#Humidity
+</code></pre></div> <p>Receiver(s) displays the value on a display</p> <div class=highlight><pre><span></span><code>&gt;D
+g:temp=0
+g:hum=0
+
+&gt;S
+dt [l1c1p10]temp=%temp% C
+dt [l2c1p10]hum=%hum% %%
+</code></pre></div> <h3 id=e-paper-29-display-with-sgp30-and-bme280>e-Paper 29 Display with SGP30 and BME280<a class=headerlink href=#e-paper-29-display-with-sgp30-and-bme280 title="Permanent link">~</a></h3> <p>Some variables are set from ioBroker</p> <div class=highlight><pre><span></span><code>&gt;D
+hum=0
+temp=0
+press=0
+ahum=0
+tvoc=0
+eco2=0
+zwz=0
+wr1=0
+wr2=0
+wr3=0
+otmp=0
+pwl=0
+tmp=0
+; preset units in case they are not available
+punit=&quot;hPa&quot;
+tunit=&quot;C&quot;
+
+&gt;B
+;reset auto draw
+dt [zD0]
+;clr display and draw a frame
+dt [x0y20h296x0y40h296]
+
+&gt;T
+; get telemetry sensor values
+temp=BME280#Temperature
+hum=BME280#Humidity
+press=BME280#Pressure
+tvoc=SGP30#TVOC
+eco2=SGP30#eCO2
+ahum=SGP30#aHumidity
+tunit=TempUnit
+punit=PressureUnit
+
+&gt;S
+; update display every [`TelePeriod`](Commands.md#teleperiod)
+if upsecs%tper==0
+then
+dp2
+dt [f1p7x0y5]%temp% %tunit%
+dt [p5x70y5]%hum% %%[x250y5t]
+dt [p11x140y5]%press% %punit%
+dt [p10x30y25]TVOC: %tvoc% ppb
+dt [p10x160y25]eCO2: %eco2% ppm
+dt [p10c26l5]ahum: %ahum% g^m3
+
+dp0
+dt [p25c1l5]WR 1 (Dach)  : %wr1% W
+dt [p25c1l6]WR 2 (Garage): %-wr3% W
+dt [p25c1l7]WR 3 (Garten): %-wr2% W
+dt [p25c1l8]Aussentemperatur: %otmp% C
+dt [x170y95r120:30f2p6x185y100] %pwl% %%
+; now update screen
+dt [d]
+endif
+
+&gt;E
+
+&gt;R
+</code></pre></div> <h3 id=e-paper-42-display-with-sht31-and-bme280>e-Paper 42 Display with SHT31 and BME280<a class=headerlink href=#e-paper-42-display-with-sht31-and-bme280 title="Permanent link">~</a></h3> <p>This script shows 2 graphs on a 4.2 inch e-Paper display: 1. some local sensors, and 2. power statistics</p> <ul> <li>The first graph is the battery level of a solar battery (Tesla PowerWall 2) </li> <li>The second graph shows the solar yield of the roof panels in Watts </li> <li>Another special feature is that this script displays daily and weekly averages (via moving average) of all power IO of the house. </li> <li>it sends an email every Sunday night with the weekly data </li> <li>it displays a google bar chart on the webui with values for each weekday of the last week </li> <li>ESP32 CPU with SD card </li> <li>Since the display is a full update panel it is updated only once a minute </li> <li>Some values (like power meters) are set remotely from ioBroker </li> </ul> <hr> <div class=highlight><pre><span></span><code>&gt;D
+hum=0
+temp=0
+press=0
+zwz=0
+wr1=0
+wr2=0
+wr3=0
+otmp=0
+pwl=0
+ez1=0
+sez1=0
+M:mez1=0 7
+ezh=0
+sezh=0
+M:mezh=0 7
+vzh=0
+svzh=0
+M:mvzh=0 7
+wd=0
+res=0    
+hr=0
+t1=0
+res=0
+
+&gt;B
+-&gt;setoption64 1
+tper=30
+
+dt [IzD0]
+dt [zG10352:5:40:-350:80:10080:0:100f3x360y40]100 %%[x360y115]0 %%
+dt [f1x100y25]Powerwall - 7 Tage[f1x360y75] 0 %%
+dt [G10353:5:140:-350:80:10080:0:5000f3x360y140]+5000 W[x360y215]0 W
+dt [f1x70y125]Volleinspeisung - 7 Tage[f1x360y180] 0 W
+dt [p13x10y230]WR 1,2,3:
+dt [p13x10y245]H-Einsp.:
+dt [p13x10y260]H-Verbr.:
+dt [p13x10y275]D-Einsp.:
+dt [d]
+
+dt [Gr0:/g0_sav.txt:]
+dt [Gr1:/g1_sav.txt:]
+
+beep(-25 0)
+beep(1000 100)
+
+&gt;T
+press=BMP280#Pressure
+temp=SHT3X_0x44#Temperature
+hum=SHT3X_0x44#Humidity
+
+&gt;S
+
+if upsecs%60==0
+then
+dp2
+dt [f1p7x0y5]%temp% C
+dt [x0y20h400x250y5T][x350t][f1p10x70y5]%hum% %%
+dt [p10x140y5]%press% hPa
+dp0
+dt [p5x360y75]%pwl% %%
+dt [p6x360y180]%wr1%W
+dt [g0:%pwl%g1:%wr1%]
+
+dt [p24x75y230] %wr1% W : %-wr2% W : %-wr3% W
+dt [p-10x75y245]%ezh% kWh
+dt [p-10x75y260]%vzh% kWh
+dt [p-10x75y275]%ez1% kWh
+
+t1=mezh*7
+dt [p-10x150y245]: %t1% kWh
+t1=mvzh*7
+dt [p-10x150y260]: %t1% kWh
+t1=mez1*7
+dt [p-10x150y275]: %t1% kWh
+
+dp1
+t1=ezh-sezh
+dt [p12x250y245]: %t1% kWh
+t1=vzh-svzh
+dt [p12x250y260]: %t1% kWh
+t1=ez1-sez1
+dt [p12x250y275]: %t1% kWh
+
+dp0
+dt [f2p5x320y250] %otmp%C
+
+dt [d]
+print updating display
+endif
+
+hr=hours
+if chg[hr]&gt;0
+and hr==0
+then
+mez1=ez1-sez1
+sez1=ez1
+mezh=ezh-sezh
+sezh=ezh
+mvzh=vzh-svzh
+svzh=vzh
+endif
+
+if sezh==0
+then
+sez1=ez1
+sezh=ezh
+svzh=vzh
+endif
+
+wd=wday
+if chg[wd]&gt;0
+and wd==1
+then
+=&gt;sendmail [*:*:*:*:*:user.tasmota@gmail.com: Wochenbericht]*
+print sending email
+endif
+
+
+if upsecs%300==0
+then
+=#savgraf
+print saving graph
+endif
+
+#savgraf
+dt [Gs0:/g0_sav.txt:]
+dt [Gs1:/g1_sav.txt:]
+
+&gt;m
+Wochenbericht Einspeisung und Verbrauch&lt;br&gt;&lt;br&gt;
+w1=%mez1[1]%,%mez1[2]%,%mez1[3]%,%mez1[4]%,%mez1[5]%,%mez1[6]%,%mez1[7]%,%mez1[8]%&lt;br&gt;
+w2=%mezh[1]%,%mezh[2]%,%mezh[3]%,%mezh[4]%,%mezh[5]%,%mezh[6]%,%mezh[7]%,%mezh[8]%&lt;br&gt;
+w3=%mvzh[1]%,%mvzh[2]%,%mvzh[3]%,%mvzh[4]%,%mvzh[5]%,%mvzh[6]%,%mvzh[7]%,%mvzh[8]%&lt;br&gt;
+#
+&gt;W
+&amp;&lt;br&gt;&lt;div id=&quot;container&quot;style=&quot;width:640px;height:480px;margin:0 auto&quot;&gt;&lt;/div&gt;&lt;br&gt;
+&amp;&lt;script type=&quot;text/javascript&quot; src=&quot;https://www.gstatic.com/charts/loader.js&quot;&gt;&lt;/script&gt;
+&amp;&lt;script type=&quot;text/javascript&quot;&gt;google.charts.load(&#39;current&#39;,{packages:[&#39;corechart&#39;]});&lt;/script&gt;
+&amp;&lt;script language=&quot;JavaScript&quot;&gt;function drawChart(){var data=
+&amp;google.visualization.arrayToDataTable([
+&amp;[&#39;weekday&#39;,&#39;Power&#39;],[&#39;Mo&#39;,%mvzh[1]%],[&#39;Di&#39;,%mvzh[2]%],[&#39;Mi&#39;,%mvzh[3]%],[&#39;Do&#39;,%mvzh[4]%],
+&amp;[&#39;Fr&#39;,%mvzh[5]%],[&#39;Sa&#39;,%mvzh[6]%],[&#39;So&#39;,%mvzh[7]%]]);
+&amp;var options={title:&#39;daily solar feed&#39;,isStacked:true};
+&amp;var chart=new 
+&amp;google.visualization.ColumnChart(document.getElementById(&#39;container&#39;));chart.draw(data,options);}
+&amp;google.charts.setOnLoadCallback(drawChart);&lt;/script&gt;
+#
+</code></pre></div> <h3 id=ili-9488-color-lcd-display-with-bmp280-and-vl5310x>ILI 9488 Color LCD Display with BMP280 and VL5310X<a class=headerlink href=#ili-9488-color-lcd-display-with-bmp280-and-vl5310x title="Permanent link">~</a></h3> <p>Shows various BMP280 energy graphs Turn display on and off using VL5310X proximity sensor to prevent burn-in</p> <p>Some variables are set from ioBroker</p> <div class=highlight><pre><span></span><code>&gt;D
+temp=0
+press=0
+zwz=0
+wr1=0
+wr2=0
+wr3=0
+otmp=0
+pwl=0
+tmp=0
+dist=0
+punit=&quot;hPa&quot;
+tunit=&quot;C&quot;
+hour=0
+
+&gt;B
+dt [z]
+
+// define 2 graphs, 2. has 3 tracks
+dt [zCi1G2656:5:20:400:80:1440:-5000:5000:3Ci7f3x410y20]+5000 W[x410y95]-5000 W [Ci7f1x70y3] Zweirichtungsz~80hler - 24 Stunden
+dt  [Ci1G2657:5:120:400:80:1440:0:5000:3Ci7f3x410y120]+5000 W[x410y195]0 W [Ci7f1x70y103] Wechselrichter 1-3 - 24 Stunden
+dt [Ci1G2658:5:120:400:80:1440:0:5000:16][Ci1G2659:5:120:400:80:1440:0:5000:5]
+dt [f1s1b0:260:260:100&amp;#8203;:50:2:11:4:2:Rel 1:b1:370:260:100&amp;#8203;:50:2:11:4:2:Dsp off:]
+=&gt;mp3volume 100
+=&gt;mp3track 4
+
+&gt;T
+; get some telemetry values
+temp=BMP280#Temperature
+press=BMP280#Pressure
+tunit=TempUnit
+punit=PressureUnit
+dist=VL53L0X#Distance
+
+; check proximity sensor to turn display on and off to prevent burn-in
+if dist&gt;300
+then
+if pwr[2]&gt;0
+then
+=&gt;power2 0
+endif
+else
+if pwr[2]==0
+then
+=&gt;power2 1
+endif
+endif
+
+&gt;S
+; update graph every teleperiod
+if upsecs%tper==0
+then
+dp2
+dt [f1Ci3x40y260w30Ci1]
+dt [Ci7x120y220t]
+dt [Ci7x180y220T]
+dt [Ci7p8x120y240]%temp% %tunit%
+dt [Ci7x120y260]%press% %punit%
+dt [Ci7x120y280]%dist% mm
+dp0
+dt [g0:%zwz%g1:%wr1%g2:%-wr2%g3:%-wr3%]
+if zwz0
+then
+dt [p-8x410y55Ci2Bi0]%zwz% W
+else
+dt [p-8x410y55Ci3Bi0]%zwz% W
+endif
+dt [p-8x410y140Ci3Bi0]%wr1% W
+dt [p-8x410y155Ci16Bi0]%-wr2% W
+dt [p-8x410y170Ci5Bi0]%-wr3% W
+endif
+
+; chime every full hour
+hour=int(time/60)
+if chg[hour]&gt;0
+then -&gt;mp3track 4
+endif
+
+&gt;E
+
+&gt;R
+</code></pre></div> <h3 id=led-bar-display-with-ws2812-led-chain>LED Bar Display with WS2812 LED Chain<a class=headerlink href=#led-bar-display-with-ws2812-led-chain title="Permanent link">~</a></h3> <p>Used to display home's solar power input/output (+-5000 Watts)</p> <div class=highlight><pre><span></span><code>&gt;D
+m:array=0 60 ;defines array for 60 led pixels
+cnt=0
+val=0
+ind=0
+; rgb values for grid
+colr1=0x050000
+colr2=0x050100
+colg1=0x000300
+colg2=0x020300
+ledbar=0
+blue=64
+pixels=60
+steps=10
+div=0
+tog=0
+max=5000
+min=-5000
+pos=0
+
+&gt;B
+div=pixels/steps
+=#prep
+ws2812(array)
+
+; ledbar is set from broker
+
+&gt;S
+if ledbar&lt;min
+then ledbar=min
+endif
+
+if ledbar&gt;max
+then ledbar=max
+endif
+
+pos=(ledbar/max)*(pixels/2)
+if ledbar&gt;0
+then
+pos+=(pixels/2)
+if pospixels-1
+then pos=pixels
+endif
+else
+pos+=(pixels/2)+1
+if pospixels-1
+then pos=1
+endif
+endif
+
+if pos&lt;1
+or pos&gt;pixels
+then pos=1
+endif
+
+=#prep
+if ledbar==0
+then
+array[pos]=blue
+array[pos-1]=blue
+else
+array[pos]=blue
+endif
+
+; only used if power is off
+; so lets may be used normally if on
+if pwr[1]==0
+then
+ws2812(array)
+endif
+
+; subroutine for grid
+#prep
+for cnt 1 pixels 1
+ind+=1
+if ind&gt;div
+then ind=1
+tog^=1
+endif
+
+if cnt&lt;=pixels/2
+then
+if tog&gt;0
+then val=colr1
+else val=colr2
+endif
+else
+if tog&gt;0
+then val=colg1
+else val=colg2
+endif
+endif
+array[cnt]=val
+next
+
+&gt;R
+</code></pre></div> <h3 id=multiple-ir-receiver-synchronization>Multiple IR Receiver Synchronization<a class=headerlink href=#multiple-ir-receiver-synchronization title="Permanent link">~</a></h3> <p>Shows how a Magic Home with IR receiver works Synchronizes 2 Magic Home devices by also sending the commands to a second Magic Home via <a href=../Commands/#websend><code>WebSend</code></a></p> <h4 id=script-example-using-if-then-else>Script example using <code>if then else</code><a class=headerlink href=#script-example-using-if-then-else title="Permanent link">~</a></h4> <div class=highlight><pre><span></span><code>; expand default string length to be able to hold `WebSend [xxx.xxx.xxx.xxx]`
+
+&gt;D 25
+istr=&quot;&quot;
+ws=&quot;WebSend [_IP_]&quot;
+
+; event section
+&gt;E
+; get ir data
+istr=IrReceived#Data
+
+; on
+if istr==&quot;0x00F7C03F&quot;
+then
+-&gt;wakeup
+-&gt;%ws% wakeup
+endif
+
+; off
+if istr==&quot;0x00F740BF&quot;
+then
+-&gt;power1 0
+-&gt;%ws% power1 0
+endif
+
+;white
+if istr==&quot;0x00F7E01F&quot;
+then
+-&gt;color 000000ff
+-&gt;%ws% color 000000ff
+endif
+
+;red
+if istr==&quot;0x00F720DF&quot;
+then
+-&gt;color ff000000
+-&gt;%ws% color ff000000
+endif
+
+;green
+if istr==&quot;0x00F7A05F&quot;
+then
+-&gt;color 00ff0000
+-&gt;%ws% color 00ff0000
+endif
+
+;blue
+if istr==&quot;0x00F7609F&quot;
+then
+-&gt;color 0000ff00
+-&gt;%ws% color 0000ff00
+endif
+
+; dimmer up
+if istr==&quot;0x00F700FF&quot;
+then
+-&gt;dimmer +
+-&gt;%ws% dimmer +
+endif
+
+;dimmer down  
+if istr==&quot;0x00F7807F&quot;  
+then  
+-&gt;dimmer -  
+-&gt;%ws% dimmer -  
+endif
+
+istr=&quot;&quot;
+</code></pre></div> <h4 id=script-example-using-switch-case-ends>Script example using <code>switch case ends</code><a class=headerlink href=#script-example-using-switch-case-ends title="Permanent link">~</a></h4> <div class=highlight><pre><span></span><code>; expand default string length to be able to hold `WebSend [xxx.xxx.xxx.xxx]`
+
+&gt;D 25
+istr=&quot;&quot;
+ws=&quot;WebSend [_IP_]&quot;
+
+; event section
+&gt;E
+; get ir data
+istr=IrReceived#Data
+
+switch istr
+; on
+case &quot;0x00F7C03F&quot;
+-&gt;wakeup
+-&gt;%ws% wakeup
+
+;off
+case &quot;0x00F740BF&quot;
+-&gt;power1 0
+-&gt;%ws% power1 0
+
+;white
+case &quot;0x00F7E01F&quot;
+-&gt;color 000000ff
+-&gt;%ws% color 000000ff
+
+;red
+case &quot;0x00F720DF&quot;
+-&gt;color ff000000
+-&gt;%ws% color ff000000
+
+;green
+case &quot;0x00F7A05F&quot;
+-&gt;color 00ff0000
+-&gt;%ws% color 00ff0000
+
+;blue
+case &quot;0x00F7609F&quot;
+-&gt;color 0000ff00
+-&gt;%ws% color 0000ff00
+
+; dimmer up
+case &quot;0x00F700FF&quot;
+-&gt;dimmer +
+-&gt;%ws% dimmer +
+
+; dimmer down
+case &quot;0x00F7807F&quot;
+-&gt;dimmer -
+-&gt;%ws% dimmer -
+ends
+
+istr=&quot;&quot;
+</code></pre></div> <h3 id=fast-polling>Fast Polling<a class=headerlink href=#fast-polling title="Permanent link">~</a></h3> <div class=highlight><pre><span></span><code>; expand default string length to be able to hold `WebSend [xxx.xxx.xxx.xxx]`  
+&gt;D 25
+sw=0
+ws=&quot;WebSend [_IP_]&quot;
+timer=0
+hold=0
+toggle=0
+
+&gt;B
+; gpio 5 button input
+spinm(5,0)
+
+; fast section 100ms
+&gt;F
+sw=pin[5]
+; 100 ms timer
+timer+=1
+
+; 3 seconds long press
+; below 0,5 short press
+if sw==0
+and timer5
+and timer&lt;30
+then
+; short press
+;print short press
+toggle^=1
+=&gt;%ws% power1 %toggle%
+endif
+
+if sw&gt;0
+then
+;pressed
+if timer&gt;30
+then
+; hold
+hold=1
+;print hold=%timer%
+if toggle&gt;0
+then
+=&gt;%ws% dimmer +
+else
+=&gt;%ws% dimmer -
+endif
+endif
+else
+timer=0
+hold=0
+endif
+</code></pre></div> <h3 id=web-ui>Web UI<a class=headerlink href=#web-ui title="Permanent link">~</a></h3> <p>An example to show how to implement a web UI. This example controls a light via <code>WebSend</code></p> <div class=highlight><pre><span></span><code>&gt;D
+dimmer=0
+sw=0
+color=&quot;&quot;
+col1=&quot;&quot;
+red=0
+green=0
+blue=0
+ww=0
+
+&gt;F
+color=hn(red)+hn(green)+hn(blue)+hn(ww)
+if color!=col1
+then
+col1=color
+=&gt;websend [192.168.178.75] color %color%
+endif
+
+if chg[dimmer]&gt;0
+then  
+=&gt;websend [192.168.178.75] dimmer %dimmer%
+endif
+
+if chg[sw]&gt;0
+then
+=&gt;websend [192.168.178.75] power1 %sw%
+endif
+
+&gt;W
+bu(sw &quot;Light on&quot; &quot;Light off&quot;)
+ck(sw &quot;Light on/off   &quot;)
+sl(0 100 dimmer &quot;0&quot; &quot;Dimmer&quot; &quot;100&quot;)
+sl(0 255 red &quot;0&quot; &quot;red&quot; &quot;255&quot;)
+sl(0 255 green &quot;0&quot; &quot;green&quot; &quot;255&quot;)
+sl(0 255 blue &quot;0&quot; &quot;blue&quot; &quot;255&quot;)
+sl(0 255 ww &quot;0&quot; &quot;warm white&quot; &quot;255&quot;)
+tx(color &quot;color:   &quot;)
+</code></pre></div> <h3 id=hue-emulation>Hue Emulation<a class=headerlink href=#hue-emulation title="Permanent link">~</a></h3> <p>An example to show how to respond to Alexa requests via Hue Emulation</p> <p>When Alexa sends on/off, dimmer, and color (via hsb), send commands to a MagicHome device</p> <div class=highlight><pre><span></span><code>&gt;D
+pwr1=0
+hue1=0
+sat1=0
+bri1=0
+tmp=0
+
+&gt;E
+if upd[hue1]&gt;0
+or upd[sat1]&gt;0
+or upd[bri1]&gt;0
+then
+tmp=hue1/182
+-&gt;websend [192.168.178.84] hsbcolor %tmp%,%sat1%,%bri1%
+endif
+
+if upd[pwr1]&gt;0
+then
+-&gt;websend [192.168.178.84] power1 %pwr1%
+endif
+
+&gt;H
+; on,hue,sat,bri,ct
+livingroom,E,on=pwr1,hue=hue1,sat=sat1,bri=bri1
+</code></pre></div> <h3 id=alexa-controlled-mcp230xx-i2c-gpio-expander>Alexa Controlled MCP230xx I<sup>2</sup>C GPIO Expander<a class=headerlink href=#alexa-controlled-mcp230xx-i2c-gpio-expander title="Permanent link">~</a></h3> <p>Uses Tasmota's Hue Emulation capabilities for Alexa interface</p> <div class=highlight><pre><span></span><code>; define vars
+&gt;D
+p:p1=0
+p:p2=0
+p:p3=0
+p:p4=0
+
+; init ports
+&gt;B
+-&gt;sensor29 0,5,0
+-&gt;sensor29 1,5,0
+-&gt;sensor29 2,5,0
+-&gt;sensor29 3,5,0
+-&gt;sensor29 0,%0p1%
+-&gt;sensor29 1,%0p2%
+-&gt;sensor29 2,%0p3%
+-&gt;sensor29 3,%0p4%
+
+; define Alexa virtual devices
+&gt;H
+port1,S,on=p1
+port2,S,on=p2
+port3,S,on=p3
+port4,S,on=p4
+
+; handle events
+&gt;E
+print EVENT
+
+if upd[p1]&gt;0
+then
+-&gt;sensor29 0,%0p1%
+endif
+if upd[p2]&gt;0
+then
+-&gt;sensor29 1,%0p2%
+endif
+if upd[p3]&gt;0
+then
+-&gt;sensor29 2,%0p3%
+endif
+if upd[p4]&gt;0
+then
+-&gt;sensor29 3,%0p4%
+endif
+
+=#pub
+
+; publish routine
+#pub
+=&gt;publish stat/%topic%/RESULT {&quot;MCP23XX&quot;:{&quot;p1&quot;:%0p1%,&quot;p2&quot;:%0p2%,&quot;p3&quot;:%0p3%,&quot;p4&quot;:%0p4%}}
+svars
+
+; web interface
+&gt;W
+bu(p1 &quot;p1 on&quot; &quot;p1 off&quot;)bu(p2 &quot;p2 on&quot; &quot;p2 off&quot;)bu(p3 &quot;p3 on&quot; &quot;p3 off&quot;)bu(p4 &quot;p4 on&quot; &quot;p4 off&quot;)
+</code></pre></div> <h3 id=retrieve-network-gateway-ip-address>Retrieve network gateway IP Address<a class=headerlink href=#retrieve-network-gateway-ip-address title="Permanent link">~</a></h3> <div class=highlight><pre><span></span><code>&gt;D
+gw=&quot;&quot;
+
+; Request Status information. The response will trigger the `U` section
+&gt;B
++&gt;status 5
+
+; Read the status JSON payload
+&gt;U
+gw=StatusNET#Gateway
+print %gw%
+</code></pre></div> <h3 id=send-e-mail>Send e-mail<a class=headerlink href=#send-e-mail title="Permanent link">~</a></h3> <div class=highlight><pre><span></span><code>&gt;D 25
+day1=0
+et=0
+to=&quot;&lt;mrx@gmail.com&gt;&quot;
+
+&gt;T
+et=ENERGY#Total
+
+&gt;S
+; send at midnight
+day1=day
+if chg[day1]&gt;0
+then
+=&gt;sendmail [*:*:*:*:*:%to%:energy report]*
+endif
+
+&gt;m
+email report at %tstamp%
+your power consumption today was %et% kWh
+#
+</code></pre></div> <h3 id=send-power-reading-with-formatted-time-stamp-via-websend>Send power reading with formatted time stamp via websend<a class=headerlink href=#send-power-reading-with-formatted-time-stamp-via-websend title="Permanent link">~</a></h3> <p>Some web APIs require certain formats (e.g. date &amp; time) to be provided. This example illustrates how to reformat the timestamp and embed it in the get payload. On ESP8266 based devices this is limited to unsecured http (no "s") connections! Don't use this for sensitive data!</p> <div class=highlight><pre><span></span><code>&gt;D 42
+;long string required for key
+y=0
+m=0
+d=0
+key=&quot;yourkey&quot;
+id=&quot;yourSystemID&quot;
+ws=&quot;WebSend [pvoutput.org]&quot;
+et=0
+p=0
+
+&gt;T
+et=ENERGY#Total
+p=ENERGY#Power
+; every 5 minutes
+if upsecs%300==0
+then
+y=sb(tstamp 0 4)
+m=sb(tstamp 5 2)
+d=sb(tstamp 8 2)
+=&gt;%ws%/service/r2/addstatus.jsp?key=%key%&amp;sid=%id%&amp;d=%1.0(y)%%2.0(m)%%2.0(d)%&amp;t=%1(sb(tstamp 11 5))%&amp;v2=%s(2.0p)%
+endif
+</code></pre></div> <h3 id=switching-and-dimming-by-recognizing-mains-power-frequency>Switching and Dimming By Recognizing Mains Power Frequency<a class=headerlink href=#switching-and-dimming-by-recognizing-mains-power-frequency title="Permanent link">~</a></h3> <p>Switching in Tasmota is usually done by High/Low (+3.3V/GND) changes on a GPIO. However, for devices like the <a href=https://templates.blakadder.com/qs-wifi_D01_dimmer.html>Moes QS-WiFi-D01 Dimmer</a>, this is achieved by a pulse frequency when connected to the GPIO, and these pulses are captured by <code>Counter1</code> in Tasmota.</p> <p><img alt=pushbutton-input src=https://user-images.githubusercontent.com/36734573/61955930-5d90e480-afbc-11e9-8d7e-00ac526874d3.png></p> <ul> <li>When the <strong>light is OFF</strong> and there is a <strong>short period</strong> of pulses - then turn the light <strong>ON</strong> at the previous dimmer level.</li> <li>When the <strong>light is ON</strong> and there is a <strong>short period</strong> of pulses - then turn the light <strong>OFF</strong>.</li> <li>When there is a longer period of pulses (i.e., <strong>HOLD</strong>) - toggle dimming direction and then adjust the brightness level as long as the button is pressed or until the limits are reached.</li> </ul> <p><a href=https://github.com/arendst/Tasmota/issues/6085#issuecomment-512353010>Issue 6085</a></p> <p>In the Data Section D at the beginning of the Script the following initialization variables may be changed:</p> <p>dim multiplier = <code>0..2.55</code> set the dimming increment value dim lower limit = range for the dimmer value for push-button operation (set according to your bulb); min 0 dim upper limit = range for the dimmer value for push-button operation (set according to your bulb); max 100 start dim level = initial dimmer level after power-up or restart; max 100</p> <div class=highlight><pre><span></span><code>&gt;D
+sw=0
+tmp=0
+cnt=0
+tmr=0
+hold=0
+powert=0
+slider=0
+dim=&quot;&quot;
+shortprl=2 ;short press lo limit
+shortpru=10;short press up limit
+dimdir=0   ;dim direction 0/1
+dimstp=2   ;dim step/speed 1 to 5
+dimmlp=2.2 ;dim multiplier
+dimll=15   ;dim lower limit
+dimul=95   ;dim upper limit
+dimval=70  ;start dim level
+
+&gt;B
+print &quot;WiFi-Dimmer-Script-v0.2&quot;
+=&gt;Counter1 0
+=&gt;Baudrate 9600
+; boot sequence
+=#senddim(dimval)
+delay(1000)
+=#senddim(0)
+
+&gt;F
+cnt=pc[1]
+if chg[cnt]&gt;0
+; sw pressed
+then sw=1
+else sw=0
+; sw not pressed
+endif
+
+; 100ms timer
+tmr+=1
+
+; short press
+if sw==0
+and tmr&gt;shortprl
+and tmr&lt;shortpru
+then
+powert^=1
+
+; change light on/off
+if powert==1
+then
+=#senddim(dimval)
+else
+=#senddim(0)
+endif
+endif
+
+
+; long press
+if sw&gt;0
+then
+if hold==0
+then
+
+; change dim direction
+dimdir^=1
+endif
+if tmr&gt;shortpru
+then
+hold=1
+if powert&gt;0
+; dim when on &amp; hold
+then
+if dimdir&gt;0
+then
+
+; increase dim level
+dimval+=dimstp
+if dimval&gt;dimul  
+then
+
+; upper limit
+dimval=dimul
+endif
+=#senddim(dimval)
+else
+
+; decrease dim level
+dimval-=dimstp
+if dimval&lt;dimll
+then
+
+; lower limit
+dimval=dimll
+endif
+=#senddim(dimval)
+endif
+endif
+endif
+else
+tmr=0
+hold=0
+endif
+
+&gt;E
+slider=Dimmer
+
+; slider change
+if chg[slider]&gt;0
+then
+
+; dim according slider
+if slider&gt;0
+then
+dimval=slider
+=#senddim(dimval)
+else
+powert=0
+=#senddim(0)
+endif
+endif
+
+if pwr[1]==1
+; on/off webui
+then
+powert=1
+=#senddim(dimval)
+else
+powert=0
+=#senddim(0)
+endif
+
+; subroutine dim
+#senddim(tmp)
+dim=&quot;FF55&quot;+hn(tmp*dimmlp)+&quot;05DC0A&quot;
+=&gt;SerialSend5 %dim%
+=&gt;Dimmer %tmp%
+#
+</code></pre></div> <h3 id=dual-display-example>Dual display example<a class=headerlink href=#dual-display-example title="Permanent link">~</a></h3> <div class=highlight><pre><span></span><code>&gt;D
+&gt;B
+; load sh1106 driver
+dt [S2/SH1106_desc.txt:]
+; clear screen, switch to LCD font; set auto draw
+dt [zf4s1D1]
+dt [S1:]
+&gt;S
+; switch to display 2
+dt [S2:]
+; show time
+dt [x20y20t]
+; switch back to display 1
+dt [S1:]
+</code></pre></div> <h3 id=read-i2c-example-axp192>read I2C example (AXP192)<a class=headerlink href=#read-i2c-example-axp192 title="Permanent link">~</a></h3> <div class=highlight><pre><span></span><code>&gt;D
+volt=0
+curr=0
+found=0
+&gt;B
+; check device on I2C bus Nr.2
+found=ia2(0x34)
+
+&gt;S
+; if found read registers, (this example takes 2ms to read both values)
+if found&gt;0 {
+volt=ir(0x5a)&lt;&lt;4|ir(0x5b)*1.7/1000
+curr=ir(0x58)&lt;&lt;4|ir(0x59)*0.625
+}
+
+&gt;W
+; show on webui
+Bus Voltage{m}%volt% V
+Bus Current{m}%curr% mA
+</code></pre></div> <h3 id=multiplexing-a-single-adc-with-cd4067-breakout>Multiplexing a single adc with CD4067 breakout<a class=headerlink href=#multiplexing-a-single-adc-with-cd4067-breakout title="Permanent link">~</a></h3> <div class=highlight><pre><span></span><code>&gt;D
+; this script works with a CD4067 breakout to multiplex a single ADC channel
+; of an ESP
+IP=192.168.178.177
+SB=8192
+res=0
+cnt=0
+mcnt=0
+m:mux=0 16
+
+&gt;B
+; define output pins for multiplexer
+spinm(12 O)
+spinm(13 O)
+spinm(14 O)
+spinm(15 O)
+; define string array with 16 entries
+res=is1(16 &quot;&quot;)
+is1[1]=&quot;Azalea&quot;
+is1[2]=&quot;Aster&quot;
+is1[3]=&quot;Bougainvillea&quot;
+is1[4]=&quot;Camellia&quot;
+is1[5]=&quot;Carnation&quot;
+is1[6]=&quot;Chrysanthemum&quot;
+is1[7]=&quot;Clematis&quot;
+is1[8]=&quot;Daffodil&quot;
+is1[9]=&quot;Dahlia&quot;
+is1[10]=&quot;Daisy&quot;
+is1[11]=&quot;Edelweiss&quot;
+is1[12]=&quot;Fuchsia&quot;
+is1[13]=&quot;Gladiolus&quot;
+is1[14]=&quot;Iris&quot;
+is1[15]=&quot;Lily&quot;
+is1[16]=&quot;Periwinkle&quot;
+
+&gt;F
+; get adc value into array, average 4 values
+; this is for ESP32 here on pin 32
+mux[mcnt+1]=adc(2 32)
+; this is for ESP8266 it has only 1 ADC input
+; mux[mcnt+1]=adc(2)
+mcnt+=1
+if mcnt&gt;=16
+then
+mcnt=0
+endif
+; set multiplexer
+spin(12 mcnt)
+spin(13 mcnt/2)
+spin(14 mcnt/4)
+spin(15 mcnt/8)
+
+; display web UI
+#wsub
+if wm==0
+then
+for cnt 1 16 1
+wcs  {s}Ch %0cnt%: %is1[cnt]%{m}%mux[cnt]% %%{e}
+next
+endif
+
+#rsub
+rapp ,&quot;CD4067&quot;:{
+for cnt 1 16 1
+rapp &quot;%is1[cnt]%&quot;:%mux[cnt]%
+if cnt&lt;16
+then
+rapp ,
+endif
+next
+rapp }
+
+&gt;J
+; send to mqtt
+; call json subroutine
+%=#rsub
+
+&gt;W
+; call web subroutine
+%=#wsub
+</code></pre></div> <h3 id=accessing-tesla-powerwall-2-api>accessing TESLA Powerwall 2 API<a class=headerlink href=#accessing-tesla-powerwall-2-api title="Permanent link">~</a></h3> <div class=highlight><pre><span></span><code>This example fetches various values from Tesla Powerwall API
+and displays them in the WEB UI and on an ILI9341 LCD display
+
+you will need these additional defines:
+#define USE_TLS
+#define TESLA_POWERWALL
+#define USE_SENDMAIL (because the SSL Library from email is needed)
+#define SCRIPT_GET_HTTPS_JP
+
+remark: since the Tasmota JSON parser has various limitations some TESLA JSON values had to be renamed to get a more compact response.
+
+&gt;D
+tmp=0
+res=0
+cnt=0
+
+;powerwall
+pwl=8
+;Net
+sip=0
+;Solar
+sop=0
+;Battery
+bip=0
+;House
+hip=0
+;total cap
+tcap=0
+;remainig cap
+rcap=0
+;reserve percent
+rper=0
+
+;3 phases
+phs1=0
+phs2=0
+phs3=0
+
+p1w=0
+p2w=0
+p3w=0
+p4w=0
+p5w=0
+p6w=0
+p7w=0
+p8w=0
+
+pwf=0
+
+xp=0
+yp=0
+
+hs1=&quot;{m}&lt;span style=&#39;color:&quot;
+hs5=&quot;&lt;/span&gt;&quot;
+ps=&quot;&quot;
+str=&quot;&quot;
+tm=&quot;&quot;
+perr=&quot;&quot;
+
+&gt;B
+;month
+tmp=is1(0 &quot;Jan|Feb|Mar|Apr|Mai|Jun|Jul|Aug|Sep|Okt|Nov|Dec|&quot;)
+;weekdays
+tmp=is(0 &quot;So|Mo|Th|Wd|Th|Fr|Sa|&quot;)
+;display labels
+tmp=is2(0 &quot;Battery %:|Grid:|Solar:|Battery:|Home:|Tot Cap:|Rem Cap:|Rcap Lim:|Solar 1:|Solar 2:|Phase 1:|Phase 2:|Phase 3:|&quot;)
+
+;clr display
+dt [Bi0D0z]
+
+=#labels
+
+;draw all labels on display
+#labels
+dt [Ci5x0y20h70x170h70]
+dt [Ci16f1s1y18x90]Powerwall
+dt [f1s1Ci16]
+yp=60
+for res 1 13 1
+    dt [x15y%0yp%]%is2[res]%
+    yp+=20
+next
+
+&gt;BS
+;set powerwall ip and credentials (prefix @D), insert your credentials here
+res=gpwl(&quot;@D192.168.188.60,email,password&quot;)
+;set powerwall serial numbers of CTS devices 1 and 2 (prefix @C)
+res=gpwl(&quot;@C0x000004714B006CCD,0x000004714B007969&quot;)
+
+
+&gt;S
+;display time and date
+dt [Ci3x50y40T]
+dt [x150y40tS]
+
+;show powerwall values on display every 5 seconds
+if upsecs%5==0 {
+    dt [Ci5]
+    yp=60
+    dt [x150y%0yp%p-10]%2pwl% %%
+    yp+=20
+    dt [x150y%0yp%p-10]%1sip% W
+    yp+=20
+    dt [x150y%0yp%p-10]%1sop% W
+    yp+=20
+    dt [x150y%0yp%p-10]%1bip% W
+    yp+=20
+    dt [x150y%0yp%p-10]%1hip% W
+    yp+=20
+    dt [x150y%0yp%p-10]%1tcap% W
+    yp+=20
+    dt [x150y%0yp%p-10]%1rcap% W
+    yp+=20
+    dt [x150y%0yp%p-10]%rper% %%
+    yp+=20
+    dt [x150y%0yp%p-10]%1p1w% W
+    yp+=20
+    dt [x150y%0yp%p-10]%1p2w% W
+    yp+=20
+    dt [x150y%0yp%p-10]%1p5w% W
+    yp+=20
+    dt [x150y%0yp%p-10]%1p6w% W
+    yp+=20
+    dt [x150y%0yp%p-10]%1p7w% W
+    yp+=20  
+}
+
+;access powerwall api every 4 seconds
+if year&gt;2023 {
+    switch cnt
+        case 0
+            gpwl(&quot;/api/meters/aggregates&quot;)
+        case 4
+            gpwl(&quot;/api/system_status/soe&quot;)
+        case 8
+            gpwl(&quot;/api/system_status&quot;)
+        case 12
+            gpwl(&quot;/api/operation&quot;)
+        case 14
+            pwf=1
+            gpwl(&quot;/api/meters/readings&quot;)
+        case 18
+            cnt=-1
+    ends
+    cnt+=1
+}
+
+;JSON fetch section
+&gt;jp
+;fetch powerwall JSON output
+sip=site#i_power
+bip=battery#i_power
+hip=load#i_power
+sop=solar#i_power
+pwl=percentage
+tcap=f_p_e
+rcap=n_e_r
+rper=b_r_p
+
+;readings cannot be decoded by tasmota JSON
+;so use string search (&quot;gwr&quot;)
+if pwf&gt;0 {
+    str=&quot;&quot;
+    str=PW_CTS1#error
+    perr=str
+    if str==&quot;&quot; {
+        p1w=gwr( &quot;\&quot;p_W\&quot;:&quot; 2)
+        p2w=gwr( &quot;\&quot;p_W\&quot;:&quot; 3)
+        p3w=gwr( &quot;\&quot;p_W\&quot;:&quot; 4)
+        p4w=gwr( &quot;\&quot;p_W\&quot;:&quot; 5)
+    }
+    str=&quot;&quot;
+    str=PW_CTS2#error
+    perr=str
+    if str==&quot;&quot; {
+        p5w=gwr( &quot;\&quot;p_W\&quot;:&quot; 6)
+        p6w=gwr( &quot;\&quot;p_W\&quot;:&quot; 7)
+        p7w=gwr( &quot;\&quot;p_W\&quot;:&quot; 8)
+        p8w=gwr( &quot;\&quot;p_W\&quot;:&quot; 9)
+        phs1=p5w
+        phs2=p6w
+        phs3=p7w
+    }
+
+    pwf=0
+    str=&quot;&quot;
+}
+
+#wtime
+;only in webmode 0
+if wm==0 {
+    ;show time, weekday and date
+    wcs {s}&lt;center&gt;&lt;h1 style=&quot;color:green;font-size:40px;&quot;&gt;%2.0hours%:%2.0mins%:%2.0secs%&lt;/h1&gt;{m}%is[wday]% %0day%. %is1[month]% &lt;br&gt;%0year%{e}
+    dp(2 0)
+    ps=s(int(sunrise/60))+&quot;:&quot;+s(sunrise%60)
+    str=s(int(sunset/60))+&quot;:&quot;+s(sunset%60)
+    res=sunset-sunrise
+    tm=s(int(res/60))+&quot;:&quot;+s(res%60)
+    wcs {s}&lt;center&gt;&amp;#127774 %ps% &lt;--- %tm% ---&gt; %str% &amp;#127769{e}
+    dp(0 2)
+}
+
+&gt;W
+%=#wtime
+&lt;hr&gt;
+Battery Percent%hs1%yellow;&#39;&gt;%pwl% %% (%2(pwl/100*(tcap/1000))% kWh)%hs5%
+Grid%hs1%yellow;&#39;&gt;%sip% W %hs5%
+Solar%hs1%green;&#39;&gt;%sop% W %hs5%
+Battery%hs1%yellow;&#39;&gt;%bip% W %hs5%
+House%hs1%red;&#39;&gt;%hip% W %hs5%
+Total Capacity%hs1%yellow;&#39;&gt;%3(tcap/1000)% kWh %hs5%
+Remaining Capacity%hs1%yellow;&#39;&gt;%3(rcap/1000)% kWh %hs5%
+RcapLimit%hs1%yellow;&#39;&gt;%rper% %% %hs5%
+&lt;hr&gt;
+Solar P1%hs1%yellow;&#39;&gt;%1p1w% W %hs5%
+Solar P2%hs1%yellow;&#39;&gt;%1p3w% W %hs5%
+&lt;hr&gt;
+Net P1%hs1%yellow;&#39;&gt;%1p5w% W %hs5%
+Net P2%hs1%yellow;&#39;&gt;%1p6w% W %hs5%
+Net P3%hs1%yellow;&#39;&gt;%1p7w% W %hs5%
+&lt;hr&gt;
+CTS Error%hs1%yellow;&#39;&gt;%perr%%hs5%
+&lt;hr&gt;
+heap:{m}%heap%
+&gt;R
+print exit script
+</code></pre></div> <h3 id=image-gallery-of-various-tasmota-scripts>Image gallery of various Tasmota scripts<a class=headerlink href=#image-gallery-of-various-tasmota-scripts title="Permanent link">~</a></h3> <div class=highlight><pre><span></span><code>these are some examples of more complex scripts to show what is possible.
+complex scripts should be edited with the external source editor as they contain lots of comments and indents.
+i will provide the sources later.
+</code></pre></div> <h3 id=internet-radio>Internet radio<a class=headerlink href=#internet-radio title="Permanent link">~</a></h3> <p><img width=458 alt=webradio_screenshot src=https://user-images.githubusercontent.com/11647075/179342912-90b03843-f081-46ef-87ee-899139834c42.png></p> <h3 id=webcam-with-multiple-options>Webcam with multiple options<a class=headerlink href=#webcam-with-multiple-options title="Permanent link">~</a></h3> <p><img width=441 alt="Bildschirmfoto 2022-07-16 um 08 22 11" src=https://user-images.githubusercontent.com/11647075/179342907-7276d06b-a75e-40cd-8f29-dc45a705ee8d.png></p> <h3 id=energy-collector>Energy collector<a class=headerlink href=#energy-collector title="Permanent link">~</a></h3> <p><img width=327 alt=energy src=https://user-images.githubusercontent.com/11647075/179344137-8c2ea36d-d5a7-48a5-a978-8b648f7feadd.png></p> <h3 id=energy-display-main-menu>Energy display main menu<a class=headerlink href=#energy-display-main-menu title="Permanent link">~</a></h3> <p><img width=249 alt=core2 src=https://user-images.githubusercontent.com/11647075/179344159-e13c8471-fce3-4c5d-9c16-d33c5123c1d4.png></p> <h3 id=energy-display-one-day-of-database>Energy display one day of database<a class=headerlink href=#energy-display-one-day-of-database title="Permanent link">~</a></h3> <p><img width=514 alt=oneday src=https://user-images.githubusercontent.com/11647075/179344195-17d7e1eb-b92e-454d-86f8-bfba83a91625.png></p> <h3 id=energy-display-last-week-of-database>Energy display last week of database<a class=headerlink href=#energy-display-last-week-of-database title="Permanent link">~</a></h3> <p><img width=700 alt=week src=https://user-images.githubusercontent.com/11647075/179344202-5a2611ee-cf94-41bd-8180-f9942d55f063.png></p> <h3 id=energy-display-last-weeks-of-database>Energy display last weeks of database<a class=headerlink href=#energy-display-last-weeks-of-database title="Permanent link">~</a></h3> <p><img width=684 alt=lastweeks src=https://user-images.githubusercontent.com/11647075/179344214-c6f0f2af-c230-4571-9955-94370659501a.png> </p> <h3 id=environment-sensor>environment sensor<a class=headerlink href=#environment-sensor title="Permanent link">~</a></h3> <p><img width=640 alt=sensors src=https://user-images.githubusercontent.com/11647075/179344242-2b2f43b0-a266-4583-9930-7086b971fad8.png> </p> <h3 id=timer-main-menu>timer main menu<a class=headerlink href=#timer-main-menu title="Permanent link">~</a></h3> <p><img width=398 alt=timer1 src=https://user-images.githubusercontent.com/11647075/179344268-165ef57f-721d-48c6-a8aa-9c33ee030da9.png></p> <h3 id=timer-setup>timer setup<a class=headerlink href=#timer-setup title="Permanent link">~</a></h3> <p><img width=472 alt=timer2 src=https://user-images.githubusercontent.com/11647075/179344270-88050666-0d07-4cb3-a905-6c4ae8409541.png></p> </article> </div> <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script> </div> <button type=button class="md-top md-icon" data-md-component=top hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg> Back to top </button> </main> <footer class=md-footer> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> <div class=md-social> <a href=https://discord.gg/Ks2Kzd4 target=_blank rel=noopener title=discord.gg class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 640 512"><!-- Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M524.531 69.836a1.5 1.5 0 0 0-.764-.7A485 485 0 0 0 404.081 32.03a1.82 1.82 0 0 0-1.923.91 338 338 0 0 0-14.9 30.6 447.9 447.9 0 0 0-134.426 0 310 310 0 0 0-15.135-30.6 1.89 1.89 0 0 0-1.924-.91 483.7 483.7 0 0 0-119.688 37.107 1.7 1.7 0 0 0-.788.676C39.068 183.651 18.186 294.69 28.43 404.354a2.02 2.02 0 0 0 .765 1.375 487.7 487.7 0 0 0 146.825 74.189 1.9 1.9 0 0 0 2.063-.676A348 348 0 0 0 208.12 430.4a1.86 1.86 0 0 0-1.019-2.588 321 321 0 0 1-45.868-21.853 1.885 1.885 0 0 1-.185-3.126 251 251 0 0 0 9.109-7.137 1.82 1.82 0 0 1 1.9-.256c96.229 43.917 200.41 43.917 295.5 0a1.81 1.81 0 0 1 1.924.233 235 235 0 0 0 9.132 7.16 1.884 1.884 0 0 1-.162 3.126 301.4 301.4 0 0 1-45.89 21.83 1.875 1.875 0 0 0-1 2.611 391 391 0 0 0 30.014 48.815 1.86 1.86 0 0 0 2.063.7A486 486 0 0 0 610.7 405.729a1.88 1.88 0 0 0 .765-1.352c12.264-126.783-20.532-236.912-86.934-334.541M222.491 337.58c-28.972 0-52.844-26.587-52.844-59.239s23.409-59.241 52.844-59.241c29.665 0 53.306 26.82 52.843 59.239 0 32.654-23.41 59.241-52.843 59.241m195.38 0c-28.971 0-52.843-26.587-52.843-59.239s23.409-59.241 52.843-59.241c29.667 0 53.307 26.82 52.844 59.239 0 32.654-23.177 59.241-52.844 59.241"/></svg> </a> <a href=https://t.me/tasmota target=_blank rel=noopener title=t.me class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 496 512"><!-- Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M248 8C111.033 8 0 119.033 0 256s111.033 248 248 248 248-111.033 248-248S384.967 8 248 8m114.952 168.66c-3.732 39.215-19.881 134.378-28.1 178.3-3.476 18.584-10.322 24.816-16.948 25.425-14.4 1.326-25.338-9.517-39.287-18.661-21.827-14.308-34.158-23.215-55.346-37.177-24.485-16.135-8.612-25 5.342-39.5 3.652-3.793 67.107-61.51 68.335-66.746.153-.655.3-3.1-1.154-4.384s-3.59-.849-5.135-.5q-3.283.746-104.608 69.142-14.845 10.194-26.894 9.934c-8.855-.191-25.888-5.006-38.551-9.123-15.531-5.048-27.875-7.717-26.8-16.291q.84-6.7 18.45-13.7 108.446-47.248 144.628-62.3c68.872-28.647 83.183-33.623 92.511-33.789 2.052-.034 6.639.474 9.61 2.885a10.45 10.45 0 0 1 3.53 6.716 43.8 43.8 0 0 1 .417 9.769"/></svg> </a> <a href=https://github.com/tasmota target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 480 512"><!-- Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg> </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"base": "..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "content.action.edit"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script> <script src=../assets/javascripts/bundle.13a4f30d.min.js></script> <script src=https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js></script> <script src=../extra_javascript/tablesort.js></script> </body> </html>
