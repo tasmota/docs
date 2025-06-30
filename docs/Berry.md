@@ -52,7 +52,7 @@ Berry has the following advantages:
 
 ## Tasmota Port
 
-Berry Scripting in only supported on Tasmota32 for ESP32. The RAM usage starts at ~10kb and will be later optimized. Berry uses PSRAM on ESP32 if available (PSRAM is external RAM attached to ESP32 via SPI, it is slower but larger than internal RAM.
+Berry Scripting in only supported on Tasmota32 for ESP32. The RAM usage starts at ~10KB and will be later optimized. Berry uses PSRAM on ESP32 if available (PSRAM is external RAM attached to ESP32 via SPI, it is slower but larger than internal RAM.
 
 ### Quick Start
 
@@ -98,7 +98,7 @@ Meanwhile the Tasmota log shows:
 The light is bright
 ```
 ## Save your Scripts
-Berry can autostart your scripts. See a short desciption in the Section about the Filesystem:
+Berry can autostart your scripts. See a short description in the Section about the filesystem:
 https://tasmota.github.io/docs/UFS/#autoexecbe
 Your can use the Filemanager to edit or save files with your berry scripts.
 
@@ -137,7 +137,7 @@ Attributes|Details
 power|`boolean`<br>Turns the light off or on. Equivalent to `tasmota.set_power()`. When brightness is set to `0`, power is automatically set to off. On the contrary, you need to specify `power:true` to turn the light on.
 bri|`int range 0..255`<br>Set the overall brightness. Be aware that the range is `0..255` and not `0..100` as Dimmer.
 hue|`int 0..360`<br>Set the color Hue in degree, range 0..360 (0=red).
-sat|`int 0..255`<br>Set the color Saturation (0 is grey).
+sat|`int 0..255`<br>Set the color Saturation (0 is gray).
 ct|`int 153..500`<br>Set the white color temperature in mired, ranging from 153 (cold white) to 500 (warm white)
 rgb|`string 6 hex digits`<br>Set the color as hex `RRGGBB`, changing color and brightness.
 channels|`array of int, ranges 0..255`<br>Set the value for each channel, as an array of numbers
@@ -386,7 +386,7 @@ Driver methods are called with the following parameters: `f(cmd, idx, payload, r
 - `web_sensor()`: display sensor information on the Web UI
 - `json_append()`: display sensor information in JSON format for TelePeriod reporting
 - `web_add_button()`: (deprecated) synonym of `web_add_console_button()`
-- `web_add_main_button()`, `web_add_management_button()`, `web_add_console_button()`, `web_add_config_button()`: add a button to Tasmotas Web UI on a specific page
+- `web_add_main_button()`, `web_add_management_button()`, `web_add_console_button()`, `web_add_config_button()`: add a button to Tasmota's Web UI on a specific page
 - `web_add_handler()`: called when Tasmota web server started, and the right time to call `webserver.on()` to add handlers
 - `button_pressed()`: called when a button is pressed
 - `save_before_restart()`: called just before a restart
@@ -509,7 +509,7 @@ tasmota.add\_driver<a class="cmnd" id="tasmota_add_driver"></a>|`(instance) ->ni
 tasmota.remove\_driver<a class="cmnd" id="tasmota_remove_driver"></a>|`(instance) ->nil`<br>Removes a driver
 tasmota.gc<a class="cmnd" id="tasmota_gc"></a>|`() -> int`<br>Triggers garbage collection of Berry objects and returns the bytes currently allocated. This is for debug only and shouldn't be normally used. `gc` is otherwise automatically triggered when necessary.
 tasmota.urlfetch<a class="cmnd" id="tasmota_urlfetch"></a>|`(url:string [, filename:string]) -> bytes:int`<br>Download a url (http or https) and store the content in the filesystem<br>`filename` is optional, needed if you want to change the name of the file from the url suffix. Returns the number of bytes downloaded or -1 if failed.
-tasmota.urlbecload<a class="cmnd" id="tasmota_urlbecload"></a>|`(url:string) -> bool`<br>Download `.bec` file from a url and run it, return `true` if sucessful. This allows to run complementary code like Partition Wizard from precompiled Berry.
+tasmota.urlbecload<a class="cmnd" id="tasmota_urlbecload"></a>|`(url:string) -> bool`<br>Download `.bec` file from a url and run it, return `true` if successful. This allows to run complementary code like Partition Wizard from precompiled Berry.
 tasmota.scale\_uint<a class="cmnd" id="tasmota_scale_uint"></a>|`(value:int, fromMin:int, fromMax:int, toMin:int, toMax:int) -> int`<br>Linear scaling of an unsigned integer range, based on two points on the line, typically min and max for "from" and "to" ranges. The internal implementation works better on 16 bits integers.
 tasmota.scale\_int<a class="cmnd" id="tasmota_scale_int"></a>|`(value:int, fromMin:int, fromMax:int, toMin:int, toMax:int) -> int`<br>Linear scaling of an integer range, based on two points on the line, typically min and max for "from" and "to" ranges.
 tasmota.int<a class="cmnd" id="tasmota_int"></a>|`(value:int, min:int, max:int) -> int`<br>Convert a value `v` to an `int` and to guard the value between `min` and `max`. If `v` is `nil`, it returns `min`. If `min > max`, it returns `min`. If `min` or `max` are `nil`, it behaves like Berry native `int()`.<BR>Since v14.4.2
@@ -519,7 +519,7 @@ tasmota.int<a class="cmnd" id="tasmota_int"></a>|`(value:int, min:int, max:int) 
 Tasmota Function|Parameters and details
 :---|:---
 tasmota.get\_option<a class="cmnd" id="tasmota_get_option"></a>|`(index:int) -> int`<br>Returns the value of `SetOption <index>`
-tasmota.wire\_scan<a class="cmnd" id="tasmota_wire_scan"></a>|`(addr:int [, index:int]) -> wire instance or nil`<br>Scan both I^2^C buses for a device of address addr, optionally taking into account disabled devices via `I2CDevice`. Returns a `wire` object corresponding to the bus where the device is, or `nil` if device is not connected or disabled.
+tasmota.wire\_scan<a class="cmnd" id="tasmota_wire_scan"></a>|`(addr:int [, index:int]) -> wire instance or nil`<br>Scan both I^2^C buses for a device of address `addr`, optionally taking into account disabled devices via `I2CDevice`. Returns a `wire` object corresponding to the bus where the device is, or `nil` if device is not connected or disabled.
 tasmota.i2c\_enabled<a class="cmnd" id="tasmota_i2c_enabled"></a>|`(index:int) -> bool`<br>Returns true if the I^2^C module is enabled, see I^2^C page.
 tasmota.arch<a class="cmnd" id="tasmota_arch"></a>|`() -> string`<br>Returns the name of the architecture. Currently can be `esp32`, `esp32s2`, `esp32s3`, `esp32c3`
 tasmota.read\_sensors<a class="cmnd" id="tasmota_read_sensors"></a>|`([show_sensor:bool]) -> string`<br>Returns the value of sensors as a JSON string similar to the teleperiod. The response is a string, not a JSON object. The reason is that some sensors might produce invalid JSON. It's your code's responsibility to try parsing as JSON.<br>An optional boolean parameter (false by default) can be set to trigger a display of the new values (i.e. sends a FUNC_SHOW_SENSOR` event to drivers).
@@ -574,7 +574,7 @@ See examples in the [Berry-Cookbook](Berry-Cookbook#adding-commands-to-tasmota)
 
 Tasmota Function|Parameters and details
 :---|:---
-tasmota.get\_power<a class="cmnd" id="tasmota_get_power"></a>|`([index:int]) -> bool or list[bool]`<br>Returns Relay or Light On/Off state for one channel, or as a list of bool for all.
+tasmota.get\_power<a class="cmnd" id="tasmota_get_power"></a>|`([index:int]) -> bool or list[bool]`<br>Returns Relay or Light On/Off state for one channel, or as a list of `bool` for all.
 tasmota.set\_power<a class="cmnd" id="tasmota_set_power"></a>|`(index:int, onoff:bool) -> bool or nil`<br>Sets the on/off state of a Relay/Light. Returns the previous status of the Relay/Light or `nil` if index is invalid.<br>Example:<br>```> tasmota.set_power(0, true)```<br>```[true]```
 tasmota.get\_light<a class="cmnd" id="tasmota_get_light"></a>|_deprecated_ use `light.get`
 tasmota.set\_light<a class="cmnd" id="tasmota_set_light"></a>|_deprecated_ use `light.set`
@@ -615,7 +615,7 @@ Tasmota Function|Parameters and details
 :---|:---
 mqtt.publish<a class="cmnd" id="mqtt_publish"></a>|`(topic:string, payload:string[, retain:bool, start:int, len:int]) -> nil`<br>Equivalent of `publish` command, publishes a MQTT message on `topic` with `payload`. Optional `retain` parameter.<br>`payload` can be a string or a bytes() binary array<br>`start` and `len` allow to specify a sub-part of the string or bytes buffer, useful when sending only a portion of a larger buffer.
 mqtt.subscribe<a class="cmnd" id="mqtt_subscribe"></a>|`mqtt.subscribe(topic:string [, function:closure]) -> nil`<br>Subscribes to a `topic` (exact match or pattern). Contrary to Tasmota's `Subscribe` command, the topic is sent as-is and not appended with `/#`. You need to add wildcards yourself. Driver method `mqtt_data` is called for each matching payload.<br>If a function/closure is added, the function is called whenever and only if an incoming messages matches the pattern for this function. The function should return `true` if message was processed, `false` if not which will let the message flow to Tasmota eventually as a command.<br>You can call mqtt.subscribe even without MQTT connection, and Tasmota will manage subscriptions upon connection, also when reconnecting after an outage. This allows code in `autoexec.be` do make a subscription, which will then have effect after connection has been established.
-mqtt.unsubscribe<a class="cmnd" id="mqtt_unsubscribe"></a>|`(topic:string) -> nil`<br>Unubscribe to a `topic` (exact match).
+mqtt.unsubscribe<a class="cmnd" id="mqtt_unsubscribe"></a>|`(topic:string) -> nil`<br>Unsubscribe to a `topic` (exact match).
 mqtt.connected<a class="cmnd" id="mqtt_connected"></a>|`mqtt.connected() -> bool`<br>Returns `true` if Tasmota is connected to the MQTT broker
 
 ### `light` object
@@ -632,7 +632,7 @@ light.gamma8<a class="cmnd" id="light_gamma8"></a>|`(channel) -> int`<br>Compute
 
 ### `gpio` module
 
-This module allows to retrieve the GPIO configuration set in the templates. You need to distinguish between **logical gpio** (like PWM, or I2C) and **physical gpio** which represent the GPIO number of the physical pin. `gpio.pin()` transforms a logical GPIO to a physical GPIO, or `-1` if the logical GPIO is not set.
+This module allows to retrieve the GPIO configuration set in the templates. You need to distinguish between **logical GPIO** (like PWM, or I2C) and **physical GPIO** which represent the GPIO number of the physical pin. `gpio.pin()` transforms a logical GPIO to a physical GPIO, or `-1` if the logical GPIO is not set.
 
 Currently there is limited support for GPIO: you can only read/write in digital mode and set the GPIO mode.
 
@@ -883,11 +883,11 @@ path.exists<a class="cmnd" id="path_exists"></a>|`(file_name:string) -> bool`<br
 path.last_modified<a class="cmnd" id="path_last_modified"></a>|`(file_name:string) -> int`<br>Returns the timestamp when the file was last modified, or `nil` if the file does not exist. You don't need to prefix with `/`, as it will automatically be added if the file does not start with `/`
 path.listdir<a class="cmnd" id="path_listdir"></a>|`(dir_name:string) -> list(string)`<br>List a directory, typically root dir `"/"` and returns a list of filenames in the directory. Returns an empty list if the directory is invalid
 path.remove<a class="cmnd" id="path_remove"></a>|`(file_name:string) -> bool`<br>Deletes a file by name, return `true` if successful<br>A folder needs to be empty or a `false` is returned.
-path.format<a class="cmnd" id="path_format"></a>|`(true:bool) -> bool`<br>Re-formats the LittleFS file system (internal ESP32 flash) and erases all content. The parameter needs to be true as to avoid unwanted calls. Returns true if reformatting was successful.<br>This is sometimes useful when the file-system becomes unstable or corrupt after multiple re-partitionings.
+path.format<a class="cmnd" id="path_format"></a>|`(true:bool) -> bool`<br>Re-formats the LittleFS filesystem (internal ESP32 flash) and erases all content. The parameter needs to be true as to avoid unwanted calls. Returns true if reformatting was successful.<br>This is sometimes useful when the file-system becomes unstable or corrupt after multiple re-partitionings.
 path.mkdir<a class="cmnd" id="path_mkdir"></a>|`(dir_name:string) -> bool`<br>Creates a directory, return `true` if successful
 path.rmdir<a class="cmnd" id="path_rmdir"></a>|`(dir_name:string) -> bool`<br>Deletes a directory if empty, return `true` if successful
 path.isdir<a class="cmnd" id="path_isdir"></a>|`(name:string) -> bool`<br>Checks if path name is a directory
-path.rename<a class="cmnd" id="path_rename"></a>|`(name1:string, name2:string) -> bool`<br>Rename file or folder `name1` into `name2`, return `true` if succesful
+path.rename<a class="cmnd" id="path_rename"></a>|`(name1:string, name2:string) -> bool`<br>Rename file or folder `name1` into `name2`, return `true` if successful
 
 
 ### `persist` module
@@ -906,7 +906,7 @@ Easy way to persist simple values in Berry and read/write any attribute. Values 
 
 Tasmota Function|Parameters and details
 :---|:---
-persist.save<a class="cmnd" id="persist_save"></a>|`()` -> nil<br>triggers saving to file system. It is called automatically before a restart but you might want to call it yourself to prevent losing data in case of power loss or crash. `persist.save()` writes to flash, so be careful of not calling it too often, or it will cause wearing of flash and reduce its lifetime.<br>By default `persist.save()` only saves if data was marked as dirty, or does nothing. You can force an actual save with `persist.save(true)`
+persist.save<a class="cmnd" id="persist_save"></a>|`()` -> nil<br>triggers saving to filesystem. It is called automatically before a restart but you might want to call it yourself to prevent losing data in case of power loss or crash. `persist.save()` writes to flash, so be careful of not calling it too often, or it will cause wearing of flash and reduce its lifetime.<br>By default `persist.save()` only saves if data was marked as dirty, or does nothing. You can force an actual save with `persist.save(true)`
 persist.has<a class="cmnd" id="persist_has"></a>|`(key:string) -> bool`<br>returns true/false if the key exists
 persist.remove<a class="cmnd" id="persist_remove"></a>|`(key:string) -> bool`<br>removes a key or ignores if key doesn't exist
 persist.find<a class="cmnd" id="persist_find"></a>|`(key:string [, "default value"]) -> string | bool`<br>returns the value for a key, nil or the default value. Similar to `map.find`
@@ -945,7 +945,7 @@ introspect.get<a class="cmnd" id="introspect_get"></a>|`(instance | module, name
 introspect.set<a class="cmnd" id="introspect_set"></a>|`(instance | module, name:string, value:any) -> any`<br>Sets the member of name `name` to `value` or ignores the call if the member does not exist. Note: virtual dynamic members are not yet supported.
 introspect.module<a class="cmnd" id="introspect_module"></a>|`(name:string) -> module or nil`<br>Loads a module by name or return nil if not found. The import command works only for static predefined names, this addition makes it dynamic. Contrary to import command, this function does not create an entry in the current scope (i.e. does not either create a global variable with the module's name).
 introspect.toptr<a class="cmnd" id="introspect_toptr"></a>|`(any) -> comptr`<br>Converts an `int` to a `comptr` pointer. This is sage in Tasmota since pointers and ints are both 32 bits in size.<br>If argument is a general object, this returns a pointer to the object, and can be converted back to the original object with `introspect.fromptr`.
-introspect.fromptr<a class="cmnd" id="introspect_fromptr"></a>|`(comptr) -> any`<br>Converts a `comptr` pointer to its original object.<br>**Warning:** this operation is considered dagerous and should be used with extreme care. If the pointer is invalid or the object was garbage collected, Tasmota will crash.
+introspect.fromptr<a class="cmnd" id="introspect_fromptr"></a>|`(comptr) -> any`<br>Converts a `comptr` pointer to its original object.<br>**Warning:** this operation is considered dangerous and should be used with extreme care. If the pointer is invalid or the object was garbage collected, Tasmota will crash.
 introspect.ismethod<a class="cmnd" id="introspect_ismethod"></a>|`(function or closure) -> bool`<br>Returns `true` if the function passed as argument is a method of a class, or `false` if the argument is a simple function or a static method.<br>This is typically used to check callbacks and make sure that you don't pass a method as argument; methods typically need to be wrapped in a closure to capture the target object.
 
 ### `webclient` class
@@ -972,7 +972,7 @@ Current limitations (if you need extra features please open a feature request on
  - Only supports text responses (html, json...) but not binary content yet (no NULL char allowed). However you can download binary content to the file-system with `write_file`
  - Maximum response size is 32KB, requests are dropped if larger
  - HTTPS (TLS) is in 'insecure' mode and does not check the server's certificate; it is subject to Man-in-the-Middle attack
- - No support for compressed response - this should not be a problem since the client does not advertize support for compressed responses
+ - No support for compressed response - this should not be a problem since the client does not advertise support for compressed responses
 
 
 !!! example
@@ -1060,7 +1060,7 @@ DELETE<a class="cmnd" id="wc_delete"></a>|`(payload:string or bytes) -> result_c
 get\_size<a class="cmnd" id="wc_get_size"></a>|`() -> int`<br>Once a connection succeeded (GET or POST), reads the size of the response as returned by the server in headers (before actually reading the content). A value `-1` means that the response size is unknown until you read it.
 get\_string<a class="cmnd" id="wc_get_string"></a>|`() -> string`<br>Once a connection succeeded (GET or POST), reads the content of the response in a string. The response max size is 32KB, any response larger is dropped. Connection is closed and resources are freed after this call completes.
 close<a class="cmnd" id="wc_close"></a>|`() -> nil`<br>Closes the connection and frees buffers. `close` can be called after `GET` or `POST` and is implicitly called by `get_string`. You don't usually need to use `close` unless you are only retrieving the result_code for a request and not interested in the content.
-write\_file<a class="cmnd" id="wc_write_file"></a>|`(file_name:string) -> int`<br>Downloads the binary content of the resource and stores it on the file system. Returns the number of bytes downloaded or -1 if an error occurred
+write\_file<a class="cmnd" id="wc_write_file"></a>|`(file_name:string) -> int`<br>Downloads the binary content of the resource and stores it on the filesystem. Returns the number of bytes downloaded or -1 if an error occurred
 
 Request customization:
 
@@ -1095,7 +1095,7 @@ arg\_name<a class="cmnd" id="ws_arg_name"></a>|`(arg_index:int) -> string`<br>Re
 has\_arg<a class="cmnd" id="ws_has_arg"></a>|`(arg_name:string): -> bool`<br>Checks if an argument with this name exists
 check\_privileged\_access<a class="cmnd" id="ws_check_privileged_access"></a>|`() -> bool`<br>Returns `true` if the page needs privileged access
 header<a class="cmnd" id="ws_header"></a>|`(name:string) -> string or nil`<br>Return the header with key `name` sent by the browser. The name is case sensitive. Return `nil` if the header is not present or not collected.<br>Currently only `Referer`, `Host`, `Authorization` and `If-None-Match`.
-content\_send<a class="cmnd" id="ws_content_send"></a>|`(string) -> nil`<br>Sends the HTML content to the client. Tasmota uses Chunked encoding, which means than the content is regularly sent to the client and not buffered in Tasmota's memory
+content\_send<a class="cmnd" id="ws_content_send"></a>|`(string) -> nil`<br>Sends the HTML content to the client. Tasmota uses Chunked encoding, which means that the content is regularly sent to the client and not buffered in Tasmota's memory
 content\_button<a class="cmnd" id="ws_content_button"></a>|`([button:int]) -> nil`<br>Displays a standard button by code, using Tasmota localization. Possible values are `webserver.BUTTON_CONFIGURATION`, `webserver.BUTTON_INFORMATION`, `webserver.BUTTON_MAIN`, `webserver.BUTTON_MANAGEMENT`, `webserver.BUTTON_MODULE`. Default is `webserver.BUTTON_MAIN`.
 html\_escape<a class="cmnd" id="ws_html_escape"></a>|`(string) -> string`<br>Escapes characters to safe HTML.
 
@@ -1123,7 +1123,7 @@ See the [Berry Cookbook](Berry-Cookbook.md) for examples.
 
 ### `tcpclient` class
 
-Simple tcp client supporting string and binary transfers:
+Simple TCP client supporting string and binary transfers:
 
 - create an instance of the client with `var tcp = tcpclient()`
 - connect to the server `tcp.connect(address:string, port:int [, timeout_ms:int]) -> bool` Address can be numerical IPv4 or domain name. Returns `true` if the connection succeeded. Optional `timeout` in milliseconds. The default timeout is `USE_BERRY_WEBCLIENT_TIMEOUT` (2 seconds).
@@ -1166,7 +1166,7 @@ Variant of `tcpclient` using only non-blocking calls in full asynchronous mode. 
 
 All calls return immediately, so you need to poll the API periodically to send/receive data, and manage timeouts yourself.
 
-Typical equence:
+Typical sequence:
 
 - create an instance of the client with `var tcp = tcpclientasync()`
 - connect to the server `tcp.connect(address:string, port:int) -> bool`. Address should be numerical IPv4 or IPv6 if you want the call to return immediately (i.e. do DNS resolution ahead of time), otherwise a DNS resolution might take some time and fail. If DNS failed, this call returns `false`.
@@ -1217,17 +1217,17 @@ tcp = try_connect("192.168.1.19", 80)
 
 ### `tcpserver` class
 
-Simple tcp server (socket) listening for incoming connection on any port.
+Simple TCP server (socket) listening for incoming connection on any port.
 
 - create an instance of the `tcpserver` on a specific port with `s = tcpserver(8888)`
 - periodically call `s.hasclient()` to know if a new client has connected
 - if the previous returned `true`, call `var c = s.accept()` or `var c = s.acceptasync()` to accept the connection. It returns an instance of `tcpclient` or `tcpclientasync`; it responds to the same APIs as outgoing TCP connection and allows text and binary transfers.
 - you can call `c.close()` to close the connection, or call `c.connected()` to know if it's still connected (i.e. the client hasn't closed the connection on their side)
-- close the server with `s.close()`. This will prevent the server from receinving any new connection, but existing connections are kept alive.
+- close the server with `s.close()`. This will prevent the server from receiving any new connection, but existing connections are kept alive.
 
 tcpserver Function|Parameters and details
 :---|:---
-constructor<a class="cmnd" id="tcpserver_constructor"></a>|`tcpserver(port:int) -> nit`<BR>Opens a socket on `port` and starts lisenting to new incoming connections. If the server can't open the socket (ex: it is already in use) an exception is raised
+constructor<a class="cmnd" id="tcpserver_constructor"></a>|`tcpserver(port:int) -> nit`<BR>Opens a socket on `port` and starts listening to new incoming connections. If the server can't open the socket (ex: it is already in use) an exception is raised
 hasclient<a class="cmnd" id="tcpserver_hasclient"></a>|`hasclient() -> bool`<BR>Returns `true` if a new client connected to the socket, in such case you should call `accept()`. You need to call this method regularly (ex: in event loop or fast\_loop)
 accept<a class="cmnd" id="tcpserver_accept"></a>|`accept() -> instance:tcpclient or nil`<BR>Returns an instance of `tcpclient` for the new incoming connection, or raise an exception if no connection is available. You should call `hasclient()` returning `true` before calling `accept()`.
 acceptasync<a class="cmnd" id="tcpserver_acceptasync"></a>|`acceptasync() -> instance:tcpclientasync or nil`<BR>Returns an instance of `tcpclientasync` for the new incoming connection, or raise an exception if no connection is available. You should call `hasclient()` returning `true` before calling `acceptasync()`.
@@ -1359,7 +1359,7 @@ This works the same with IPv6 using an address like "FF35:0040:FD00::AABB"
 
 ### `mdns` module
   
-Module `import mdns` support for mdns (Multicast DNS, aka Bonjour protocol) announces. This is needed for Matter Wifi support.
+Module `import mdns` support for mDNS (Multicast DNS, aka Bonjour protocol) announces. This is needed for Matter Wifi support.
 
 This feature requires `#define USE_DISCOVERY` compile option (not included in standard builds).
 
@@ -1373,16 +1373,16 @@ mdns.add_service("_matterc","_udp", 5540, {"VP":"65521+32768", "SII":5000, "SAI"
 
 General Function|Parameters and details
 :---|:---
-start<a class="cmnd" id="mdns_start"></a>|`mdns.start([hostname: string]) -> nil`<br>Start or restart mdns, specify a new hostname if needed or implicitly use `tasmota.hostname()` if none provided (default)
-stop<a class="cmnd" id="mdns_stop"></a>|`mdns.stop() -> nil`<br>Free all mdns resources
+start<a class="cmnd" id="mdns_start"></a>|`mdns.start([hostname: string]) -> nil`<br>Start or restart mDNS, specify a new hostname if needed or implicitly use `tasmota.hostname()` if none provided (default)
+stop<a class="cmnd" id="mdns_stop"></a>|`mdns.stop() -> nil`<br>Free all mDNS resources
 set_hostname<a class="cmnd" id="mdns_set_hostname"></a>|`mdsn.set_hostname(hostname:string) -> nil`<br>Change the hostname
 add_service<a class="cmnd" id="mdns_add_service"></a>|`mdns.add_service(service:string, proto:string, port:int, txt:map) -> nil`<br>Add a service declaration using the current hostname as instance name, and specify TXT fields as a `map`
 
-### Addressable leds (WS2812, SK6812)
+### Addressable LEDs (WS2812, SK6812)
 
-There is native support for addressable leds via NeoPixelBus, with support for animations. Currently supported: WS2812, SK6812.
+There is native support for addressable LEDs via NeoPixelBus, with support for animations. Currently supported: WS2812, SK6812.
 
-Details are in [Berry leds](Berry_Addressable-LED.md)
+Details are in [Berry LEDs](Berry_Addressable-LED.md)
 
 ### `serial` class
 
@@ -1502,7 +1502,7 @@ ULP.run()
 
 Tasmota Function|Parameters and details
 :---|:---
-run<a class="cmnd" id="ULP_run"></a>|`ULP.run() -> nil`<br>Execute ULP prgramm
+run<a class="cmnd" id="ULP_run"></a>|`ULP.run() -> nil`<br>Execute ULP program
 load<a class="cmnd" id="ULP_load"></a>|`ULP.load(code:bytes) -> nil`<br>Load ULP code from a bytes() buffer into memory
 set_mem<a class="cmnd" id="ULP_set_mem"></a>|`ULP.set_mem(addr:int, value:int) -> nil`<br>Set memory position in RTC_SLOW_MEM to value. Address and Value are 32-bit!!
 get_mem<a class="cmnd" id="ULP_get_mem"></a>|`ULP.set_mem(addr:int) -> int16_t`<br>Get value from memory position in RTC_SLOW_MEM. By hardware design only the lower 16-bit are usable, so this function already masks out the upper 16-bit
@@ -1511,7 +1511,7 @@ adc_config <a class="cmnd" id="ULP_adc_config"></a>|`ULP.adc_config(channel:int,
 wake_period <a class="cmnd" id="ULP_wake_period"></a>|`ULP.wake_period(register:int, time:int) -> nil`<br>Configures one of 5 (0..4) wake timer registers with the time value in microseconds
 sleep <a class="cmnd" id="ULP_sleep"></a>|`ULP.wake_period([time:int]) -> nil`<br>Starts deep sleep mode and allow wake up by the ULP, with an optional time value in seconds an additional wake up timer gets started
   
-More infos (including suggestions for a toolchain) on the [ULP page](ULP.md).
+More information (including suggestions for a toolchain) on the [ULP page](ULP.md).
   
 ### `re` regex module
 
@@ -1585,7 +1585,7 @@ dump<a class="cmnd" id="re_dump"></a>|`re.dump(pattern:bytes) -> nil`<br>Prints 
 
 Note: for `match` and `search`, the first element in the list contains the global match of the pattern. Additional elements correspond to the sub-groups (in parenthesis).
 
-The regex engine is based on [re1.5](https://github.com/pfalcon/re1.5) also used in Micropython.
+The regex engine is based on [re1.5](https://github.com/pfalcon/re1.5) also used in MicroPython.
 
 ### `crypto` module
 
@@ -1612,7 +1612,7 @@ Encrypt and decrypt, using AES CTR (Counter mode) with 256 bits keys.
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_ctr_init"></a>|`AES_CTR.init(secret_key:bytes(32)) -> instance`<br>Initialise AES CTR instance with `secret_key` (256 bits) and `iv` (initialization vector or nonce, 96 bits)
+init<a class="cmnd" id="aes_ctr_init"></a>|`AES_CTR.init(secret_key:bytes(32)) -> instance`<br>Initialize AES CTR instance with `secret_key` (256 bits) and `iv` (initialization vector or nonce, 96 bits)
 encrypt<a class="cmnd" id="aes_ctr_encrypt"></a>|`encrypt(ciphertext:bytes, iv:bytes(12), cc:int) -> bytes`<br>Encrypt the ciphertext. The `iv` (Initialization Vector) must be 12 bytes, it can be the concatenation of 4 bytes Nonce and 8 bytes iv. `cc` is the counter (4 bytes) incremented for each block of 16 bytes.<BR>Note: the last counter value is not returned, so it is advised to encrypt all data at once.
 decrypt<a class="cmnd" id="aes_ctr_decrypt"></a>|`decrypt(ciphertext:bytes, iv:bytes(12), cc:int) -> bytes`<br>Identical to `encrypt` above.
 
@@ -1634,11 +1634,11 @@ assert(plain == plain2)
 
 #### `crypto.AES_GCM` class
 
-Encrypt, decrypt and verify, using AES GCM (Gallois Counter Mode) with 256 bits keys.
+Encrypt, decrypt and verify, using AES GCM (Galois Counter Mode) with 256 bits keys.
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_gcm_init"></a>|`AES_GCM.init(secret_key:bytes(32), iv:bytes(12)) -> instance`<br>Initialise AES GCM instance with `secret_key` (256 bits) and `iv` (initialization vector or nonce, 96 bits)
+init<a class="cmnd" id="aes_gcm_init"></a>|`AES_GCM.init(secret_key:bytes(32), iv:bytes(12)) -> instance`<br>Initialize AES GCM instance with `secret_key` (256 bits) and `iv` (initialization vector or nonce, 96 bits)
 encrypt<a class="cmnd" id="aes_gcm_encrypt"></a>|`encrypt(ciphertext:bytes) -> bytes`<br>Encrypt the ciphertext. Can be called multiple times, the tag is updated accordingly
 decrypt<a class="cmnd" id="aes_gcm_decrypt"></a>|`decrypt(ciphertext:bytes) -> bytes`<br>Decrypt the ciphertext. Can be called multiple times, the tag is updated accordingly
 tag<a class="cmnd" id="aes_gcm_tag"></a>|`tag() -> bytes`<br>Compute the verification tag for the object encrypted or decrypted (128 bits).
@@ -1670,7 +1670,7 @@ Encrypt and decrypt, using AES CCM with 256 bits keys.
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_ccm_init"></a>|`AES_CCM.init(secret_key:bytes(16 or 32), iv:bytes(7..13), aad:bytes(), data_len:int, tag_len:int) -> instance`<br>Initialise AES CCM instance with `secret_key` (128 or 256 bits), `iv` (initialization vector or nonce, 56 to 104 bits), `aad` is the associated data, `data_len` is the size of the payload that you need to announce in advance, `tag_len` is the lenght in bytes of the tag (normally 16).
+init<a class="cmnd" id="aes_ccm_init"></a>|`AES_CCM.init(secret_key:bytes(16 or 32), iv:bytes(7..13), aad:bytes(), data_len:int, tag_len:int) -> instance`<br>Initialize AES CCM instance with `secret_key` (128 or 256 bits), `iv` (initialization vector or nonce, 56 to 104 bits), `aad` is the associated data, `data_len` is the size of the payload that you need to announce in advance, `tag_len` is the length in bytes of the tag (normally 16).
 encrypt<a class="cmnd" id="aes_ccm_encrypt"></a>|`encrypt(ciphertext:bytes) -> bytes`<br>Encrypt the ciphertext.
 decrypt<a class="cmnd" id="aes_ccm_decrypt"></a>|`decrypt(ciphertext:bytes) -> bytes`<br>Identical to `encrypt` above.
 tag<a class="cmnd" id="aes_ccm_tag"></a>|`tag() -> bytes`<br>Returns the tag or MIC.
@@ -1786,7 +1786,7 @@ shared_key<a class="cmnd" id="ec_p256_shared_key"></a>|`crypto.EC_P256().shared_
 Specific Functions|Parameters and details
 :---|:---
 mod<a class="cmnd" id="ec_p256_mod"></a>|`crypto.EC_P256().mod(data:bytes()) -> bytes(32)`<br>Computes the modulus of an arbitrary large number. The modulus is done towards the order of the curve.
-neg<a class="cmnd" id="ec_p256_neg"></a>|`crypto.EC_P256().neg(data:bytes(32)) -> bytes(32)`<br>`-x mod p` or `p - x` if `x` is lower than `p`<br>Computes the opposite (negate) of a number modulus the order of the curve (it's actuall modulus - data).
+neg<a class="cmnd" id="ec_p256_neg"></a>|`crypto.EC_P256().neg(data:bytes(32)) -> bytes(32)`<br>`-x mod p` or `p - x` if `x` is lower than `p`<br>Computes the opposite (negate) of a number modulus the order of the curve (it's actually modulus - data).
 mul<a class="cmnd" id="ec_p256_mul"></a>|`crypto.EC_P256().mul(x:bytes(), A:bytes(65)) -> bytes(65)`<br>`x * A`<br>Computes multiplication of a number and a point on the curve.<br>`x` needs to be smaller than `p`, use `mod()` if not sure<br>The function checks that the point `A` is on the curve, or raises an error
 muladd<a class="cmnd" id="ec_p256_muladd"></a>|`crypto.EC_P256().muladd(x:bytes(), A:bytes(65), y:bytes(), B:bytes(65)) -> bytes(65)`<br>`x * A + y * B`<br>`x` and `y` need to be smaller than `p`, use `mod()` if not sure<br>The function checks that the points `A` and `B` are on the curve, or raises an error<br>If `B` is empty `bytes()`, the Generator `P` of the curve is used instead.
 
@@ -1888,7 +1888,7 @@ Provides SHA256 hashing function
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_sha256_init"></a>|`HMAC_SHA256.init() -> instance`<br>Initialise SHA256 hashing function
+init<a class="cmnd" id="aes_sha256_init"></a>|`HMAC_SHA256.init() -> instance`<br>Initialize SHA256 hashing function
 update<a class="cmnd" id="aes_sha256_update"></a>|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained.
 out<a class="cmnd" id="aes_sha256_out"></a>|`out() -> bytes(32)`<br>Output the value of the hash
 
@@ -1912,7 +1912,7 @@ Provides HMAC SHA256 hashing function
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_hmac_sha256_init"></a>|`HMAC_SHA256.init(key:bytes) -> instance`<br>Initialise HMAC_SHA256 hashing function with a provided key
+init<a class="cmnd" id="aes_hmac_sha256_init"></a>|`HMAC_SHA256.init(key:bytes) -> instance`<br>Initialize HMAC_SHA256 hashing function with a provided key
 update<a class="cmnd" id="aes_hmac_sha256_update"></a>|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained
 out<a class="cmnd" id="aes_hmac_sha256_out"></a>|`out() -> bytes(32)`<br>Output the value of the hash
 
@@ -2037,7 +2037,7 @@ Provides MD5 hashing function.
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_md5_init"></a>|`MD5.init() -> instance`<br>Initialise MD5 hashing function
+init<a class="cmnd" id="aes_md5_init"></a>|`MD5.init() -> instance`<br>Initialize MD5 hashing function
 update<a class="cmnd" id="aes_md5_update"></a>|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained.
 finish<a class="cmnd" id="aes_md5_finish"></a>|`finish() -> bytes(16)`<br>Finish the MD5 calculation and output the result (16 bytes)
 
@@ -2061,11 +2061,11 @@ Warning: this is a low-level module used to read and write flash memory. You nor
 Function|Parameters and details
 :---|:---
 read<a class="cmnd" id="flash_read"></a>|`flash.read(address:int[, length:int]) -> bytes()`<br>Reads bytes from an absolute address from the flash and returns a `bytes()` object. If `length` is omitted, the size is 4KB (4096 bytes)
-write<a class="cmnd" id="flash_write"></a>|`flash.write(address:int, content:bytes [, no_erase:bool]) -> nil`<br>Writes a `bytes` object to flash. It is generally better to do 4KB aligned writes.<br>By default, the 4KB page is first erased and the content is written back to it. This call handles automatically writes non-aligned to 4KB boundaries<br>If `no_erase` is `true`, content is writtent without erasing, which can be useful when writing a small number of bytes from previously erased pages<br>Flash contains all ones when erased, and writing to flash can only turn `1` to `0`. Erasing flash causes wear leveling and reduces the lifetime of flash.
+write<a class="cmnd" id="flash_write"></a>|`flash.write(address:int, content:bytes [, no_erase:bool]) -> nil`<br>Writes a `bytes` object to flash. It is generally better to do 4KB aligned writes.<br>By default, the 4KB page is first erased and the content is written back to it. This call handles automatically writes non-aligned to 4KB boundaries<br>If `no_erase` is `true`, content is written without erasing, which can be useful when writing a small number of bytes from previously erased pages<br>Flash contains all ones when erased, and writing to flash can only turn `1` to `0`. Erasing flash causes wear leveling and reduces the lifetime of flash.
 erase<a class="cmnd" id="flash_erase"></a>|`flash.erase(address:int, length:int) -> nil`<br>Erases flash pages. `address` and `lenght` must be 4KB aligned, i.e. multiples of `4096`
 id<a class="cmnd" id="flash_id"></a>|`flash.id() -> int`<br>Returns the 32-bit flash identifier
 size<a class="cmnd" id="flash_size"></a>|`flash.size() -> int`<br>Returns the size of flash in bytes
-current_ota<a class="cmnd" id="flash_current_ota"></a>|`flash.current_ota() -> int`<br>Returns the number ofw the partition Tasmota is running from, typically `0` or `1`, or `-1` for safeboot. With safeboot layout, it is always `0`
+current_ota<a class="cmnd" id="flash_current_ota"></a>|`flash.current_ota() -> int`<br>Returns the number of the partition Tasmota is running from, typically `0` or `1`, or `-1` for safeboot. With safeboot layout, it is always `0`
 factory<a class="cmnd" id="flash_factory"></a>|`flash.factory(force_ota:bool) -> nil`<br>Forces the next restart to use the `factory` partition if any is present.<br>If `force_ota` is true, it forces an OTA update with the current URL
   
 ### `img` class
@@ -2079,7 +2079,7 @@ Supports following image types, which integer values are equal to the enum `pixf
 - `img.GRAYSCALE`   = 3  
 
 Create an instance of an image with `var i = img()`.  
-Memory will be released automatically by Berrys garbage collector after deletion of the instance.  
+Memory will be released automatically by Berry's garbage collector after deletion of the instance.  
 
 img Function|Parameters and details
 :---|:---
@@ -2087,7 +2087,7 @@ from_jpeg|`img.from_jpeg(jpeg_buffer:bytes[, type:img.type]) -> nil` Copy JPEG i
 from_buffer|`img.from_buffer(image_data:bytes,width:int:height:int,type:img.type) -> nil` Construct image from raw image data for the types `RGB565`, `RGB888` and `GRAYSCALE`.
 get_buffer|`img.get_buffer([descriptor:bytes]) -> image_data:bytes` Returns the raw image data for any supported type. For `RGB565`, `RGB888` and `GRAYSCALE` a descriptor can be provided to get a ROI (region of interest).
 convert_to|`img.convert_to(type:img.type) -> nil` Internal conversion of the image format.
-info|`img.info() -> map` Returns a map with some infos about the current image.
+info|`img.info() -> map` Returns a map with some information about the current image.
   
 The optional ROI descriptor is a representation of an affine matrix, which can be constructed in Berry:
 ```berry
@@ -2185,7 +2185,7 @@ Write drivers and applications for Bluetooth Low Energy supporting all 4 roles. 
 ## Philips Hue emulation for Alexa
 Berry extends the native Hue/Alexa emulation and makes it possible to handle any number of virtual lights. You can easily define "virtual" lights in Berry, respond to commands from Alexa and send light status.
 
-It is up to you to define the final behavoir. For example you could control some fancy devices, light strips or whatever takes on/off, dimmer or RGB commands. Your imagination is the limit.
+It is up to you to define the final behavior. For example you could control some fancy devices, light strips or whatever takes on/off, dimmer or RGB commands. Your imagination is the limit.
 
 Hue emulation requires both `#define USE_EMULATION` and 
 `#define USE_EMULATION_HUE`. Emulation must also be enabled with `Emulation 2` command.
@@ -2216,7 +2216,7 @@ hue16|`(int)` hue as 16 bits (0..65535)
 r<BR>g<BR>b|`(int)` Red Green Blue channels (0..255)
 x<BR>y|`(float)` x/y color as floats (0.0 .. 1.0)
 mode_ct<BR>mode_rgb|`(bool)` light is in RGB or CT mode
-get|`get() -> map` returns the complete state of the light as a map<BR>Exemple:<BR>`{'rgb': '1E285A', 'hue': 230, 'type': 5, 'power': false, 'bri': 90, 'mode_rgb': true, 'sat': 170, 'mode_ct': false, 'channels': [30, 40, 90, 0, 0]}`
+get|`get() -> map` returns the complete state of the light as a map<BR>Example:<BR>`{'rgb': '1E285A', 'hue': 230, 'type': 5, 'power': false, 'bri': 90, 'mode_rgb': true, 'sat': 170, 'mode_ct': false, 'channels': [30, 40, 90, 0, 0]}`
 
 `light_state` setters:
 
@@ -2258,13 +2258,13 @@ l5 = light_state(light_state.RGBCT)
 hue_bridge.add_light(15, l5, "Synthetic RGBCT")
 ```
 
-When you start the Hue pairing, all virtual lights are advertized. You need to make sure that virtual lights are defined at each restart (in `autoexec.be` for example).
+When you start the Hue pairing, all virtual lights are advertised. You need to make sure that virtual lights are defined at each restart (in `autoexec.be` for example).
 
 `hue_bridge` functions:
 
 Methods|Parameters and details
 :---|:---
-add\_light|`add_light(id:int, light:instance of light_state, name:string [, model:string, manuf:strin]) -> light`<BR>Adds an virtual light to the Hue bridge.<BR>`id` = numerical identifier of the Hue light. Using low numbers avoids conflict with real lights from Tasmota<BR>`light` = instance of `light_state` handling the state and behavior of the light<BR>`name` = name of the light as displayed in the Alexa app (can be overriden in the app)<BR>`model` (opt) = name of the manufacturer model, defaults to "Unkwnon"<BR>`manuf` (opt) = name of the manufacturer, defaults to "Tasmota"
+add\_light|`add_light(id:int, light:instance of light_state, name:string [, model:string, manuf:strin]) -> light`<BR>Adds an virtual light to the Hue bridge.<BR>`id` = numerical identifier of the Hue light. Using low numbers avoids conflict with real lights from Tasmota<BR>`light` = instance of `light_state` handling the state and behavior of the light<BR>`name` = name of the light as displayed in the Alexa app (can be overridden in the app)<BR>`model` (opt) = name of the manufacturer model, defaults to "Unknown"<BR>`manuf` (opt) = name of the manufacturer, defaults to "Tasmota"
 remove\_light|`remove_light(id:int) -> nil`<BR>Removes a light from the Hue bridge by hue id.
 light_to_id|`light_to_id(light:instance) -> int` converts a registered `light_instance` instance to its Hue id
 
@@ -2282,12 +2282,12 @@ First step is to use `import zigbee` which returns an instance (monad) of `zb_co
 
 General methods|Parameters and details
 :---|:---
-started|`zigbee.started() -> bool or nil`<BR>Returns `true` if zigbee sucessfully started, then all other zigbee methods are available. This state is final and does not change.<BR>Returns `false` if zigbee is still in initialization process. This state eventually changes to `true` or `nil`.<BR>Returns `nil` if zigbee is not configured (no GPIO) or if initialization failes. This state is final and indicates a fatal error.
+started|`zigbee.started() -> bool or nil`<BR>Returns `true` if Zigbee successfully started, then all other Zigbee methods are available. This state is final and does not change.<BR>Returns `false` if Zigbee is still in initialization process. This state eventually changes to `true` or `nil`.<BR>Returns `nil` if Zigbee is not configured (no GPIO) or if initialization failed. This state is final and indicates a fatal error.
 info|`zigbee.info() -> map` returns a map with general configuration of the Zigbee coordinator.<BR>Format is identical to `ZbConfig`<BR>Example: <BR>`{'ext_pan_id': '0xCCCCCCCCA11A2233', 'tx_radio': 20, 'shortaddr': 0, 'longaddr': '0x00124B0026BAABBC', 'channel': 11, 'pan_id': 837, 'pan_id_hex': '0x0345', 'shortaddr_hex': '0x0000'}`
-size|`zigbee.size() -> int` returns the number of devices knwon by the coordinator
-iter|`zigbee.iter() -> iterator`<BR>Returns an iterator on all zigbee devices<BR>Use compact implicit form:<BR>`for ze: zigbee  print(ze)  end`
-item<BR>\[\]|`zigbee.item(shortaddr:int | friendlyname:str) -> instance of zb_device`<BR>Returns the Zigbee device corresponding to short address `shortaddr` or to friendlyname `friendlyname`.<BR>Returns an `index_error` exception if not found.<BR>You can use the compact syntax `zigbee[0xFAB6]`
-find|`zigbee.find(shortaddr:int | friendlyname:str) -> instance of zb_device`<BR>Returns the Zigbee device corresponding to short address `shortaddr` or to friendlyname `friendlyname`.<BR>Contrary to the above, returns `nil` if not found (no exception).
+size|`zigbee.size() -> int` returns the number of devices known by the coordinator
+iter|`zigbee.iter() -> iterator`<BR>Returns an iterator on all Zigbee devices<BR>Use compact implicit form:<BR>`for ze: zigbee  print(ze)  end`
+item<BR>\[\]|`zigbee.item(shortaddr:int | friendlyname:str) -> instance of zb_device`<BR>Returns the Zigbee device corresponding to short address `shortaddr` or to friendly name `friendlyname`.<BR>Returns an `index_error` exception if not found.<BR>You can use the compact syntax `zigbee[0xFAB6]`
+find|`zigbee.find(shortaddr:int | friendlyname:str) -> instance of zb_device`<BR>Returns the Zigbee device corresponding to short address `shortaddr` or to friendly name `friendlyname`.<BR>Contrary to the above, returns `nil` if not found (no exception).
 abort|`zigbee.abort() -> nil` aborts the initialization of Zigbee MCU. To be used when initialization of Zigbee failed
 
 ### `zb_device` class
@@ -2304,15 +2304,15 @@ Instance Variables|Parameters and details
 :---|:---
 shortaddr|`shortaddr -> int` returns the 16 bits short address
 longaddr|`longaddr -> bytes` returns the long 64 bits address as 8 bytes (or all zeroes if unknown)
-name|`name -> string` returns the friendlyname of the device or `0x....` hex name if no friendlyname was defined using `ZbName` command
+name|`name -> string` returns the friendly name of the device or `0x....` hex name if no friendly name was defined using `ZbName` command
 reachable|`reachable -> bool` is the device reachable, i.e. did it respond last time we tried to contact them
 hidden|`hidden -> bool` is the device declared as hidden, i.e. not announced in Hue emulation
 router|`router -> bool` is the device known to be a router
 model|`model -> string` model of the device
 manufacturer|`manufacturer -> string` manufacturer name of the device
 lastseen|`lastseen -> int` timestamp (epoch) when the device was last seen
-lqi|`lqi -> int` radion strength and quality when the device was last seen
-battery|`battery -> int` percentage of battery, or `-1` if unknwon of no battery
+lqi|`lqi -> int` radio strength and quality when the device was last seen
+battery|`battery -> int` percentage of battery, or `-1` if unknown of no battery
 battery\_lastseen|`battery_lastseen -> int` timestamp (epoch) when the battery was last reported, or `-1`
 
 Example:
@@ -2357,8 +2357,8 @@ Whenever a Zigbee message is received (typically values of attributes), the Tasm
 
 Messages are sent in the following order:
 
-- `frame_received`: (low-level) the raw zigbee message is passed as `bytes` and attributes are not yet decoded. The `bytes` buffer can be modified and passed back to the Tasmota Zigbee engine.
-- `attributes_raw`: (mid-level) Zigbee attributes are decoded but no transformation is applied yet. Attributes are only available in cluser/attribute format, names are not decoded and plug-ins are not yet applied.<BR>This is the perfect moment to change non-standard attributes and map them to standard ones.
+- `frame_received`: (low-level) the raw Zigbee message is passed as `bytes` and attributes are not yet decoded. The `bytes` buffer can be modified and passed back to the Tasmota Zigbee engine.
+- `attributes_raw`: (mid-level) Zigbee attributes are decoded but no transformation is applied yet. Attributes are only available in cluster/attribute format, names are not decoded and plug-ins are not yet applied.<BR>This is the perfect moment to change non-standard attributes and map them to standard ones.
 - `attributes_refined`: (high-level) Attributes are mapped to their names (when possible) and all transformations are applied. This is the last chance to change values.
 - `attributes_final`: (high-level) consolidated `attributes_refined`. It is triggered just before final and consolidated attributes are sent to MQTT. Zigbee typically waits for 350ms before sending attributes, so it can consolidate multiple sensors (like temperature + humidity + pressure) in a single MQTT message
 
@@ -2466,7 +2466,7 @@ The decoding is done in 2 steps:
   In this example, the attribute is `0B04/050B` is rename as `ActivePower`, but the original `0B04/050B` attribute cluster/id is still readable. We can see that the generic `000C/0055 (AnalogValue)` from `lumi.plug.maeu01` is replaced with `0B04/050B (ActivePower)`.
 
 
-#### Changing zigbee frame, `zcl_frame` class
+#### Changing Zigbee frame, `zcl_frame` class
 
 The `zcl_frame` represents a low-level ZCL (Zigbee Cluster Library) structure before any decoding or specific processing. You generally prefer to modify a frame later on when attributes or commands are decoded.
 
