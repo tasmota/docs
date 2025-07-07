@@ -4,6 +4,8 @@
 
 !!! tip "If you plan to code in Berry, you should enable `#define USE_BERRY_DEBUG` which will give you much more details when coding"
 
+!!! success "If you want to use Generative AI to generate Berry code, it is highly suggested to use [claude.ai](https://claude.ai/) and use the [Markdown Language Reference](https://tasmota.github.io/docs/_media/BERRY_LANGUAGE_REFERENCE.txt). This files consumes ~6000 input tokens."
+
 <img style="float:right;height:40px" alt="Berry logo" src="../_media/berry/berry.svg">
 
 Useful resources:
