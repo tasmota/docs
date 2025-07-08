@@ -8,6 +8,8 @@
     build_flags                 = ${env:tasmota32_base.build_flags}
                                   -DUSE_I2S_ALL
     ```
+    Also requires `lib_extra_dirs = lib/lib_audio` added to the build environment
+
     You can create smaller firmware versions with selective use of the build flags:
     ```
       #define USE_I2S ;             base flag - always needed
@@ -155,8 +157,9 @@ Those channels can be driven via the I2S driver when using the “built-in DAC m
 |I2STime | tells current Tasmota time in English (requires defined `USE_I2S_SAY_TIME`)|
 |I2SWr   | `<decoder_type> url` = starts playing a [radio](http://fmstream.org/) stream, no blocking (requires defined `USE_I2S_WEBRADIO`)<BR>no parameter = stops playing the stream|
 |I2SStop  | stops current play operation|
+|I2SPause  | pauses current file play operation, can be resumed with `i2splay` (without any argument)|
   
-Tasmota can support multiple audio codec types for file play/loop, microphone recordings and web radio, which are MP3, AAC (decoder only!!) and OPUS. For the referring commands the type is provided at the `index` position of the command (right behind the command without a space). The filename does not matter, there is no check for naming conventions. Wrong combinations can lead to crashes.  
+Tasmota can support multiple audio codec types for file playback/loop, microphone recordings and web radio, which are MP3, AAC (decoder only!!) and OPUS. For the referring commands the type is provided at the `index` position of the command (right behind the command without a space). The filename does not matter, there is no check for naming conventions. Wrong combinations can lead to crashes.  
 
 |Codec index|Codec name|
 |---|---|
@@ -228,13 +231,13 @@ Frequencies above 32000 Hz will probably bring down most ESP32's, which have to 
 8000 Hz will distort voices quite a lot.  
   
 The efficiency of the Opus encoder reveals weaknesses of many clients (including VLC, Chrome and Firefox), which do not adapt their receive buffers to the low bandwidth of the audio stream. Thus these first fill up the buffers - holding above 5- 30 seconds now - and start playing with the resulting latency.  
-Notable exception is Apples Safari with a delay of about 1 second. Cross-platform console player `mpv` is not far behind.    
+Notable exception is Apple's Safari with a delay of about 1 second. The cross-platform console player `mpv` is not far behind.    
   
 Streaming can introduce rhythmic noise into the stream with the send rate of the data packets by interference of the WiFi radio. Proper cabeling and shielding is needed here. This can be quite difficult to achieve.  
 
 ## I2S Audio Bridge
 
-Starts an UDP audio service to connect 2 ESP32 devices as an audio intercom ([an example](https://github.com/arendst/Tasmota/discussions/16226)). 
+Starts a UDP audio service to connect 2 ESP32 devices as an audio intercom ([an example](https://github.com/arendst/Tasmota/discussions/16226)). 
 
 Needs audio output and microphone on 2 devices (no PSRAM needed)  
 
@@ -248,4 +251,11 @@ build_flags                 = ${env:tasmota32_base.build_flags}
 |---|---|
 | I2SBridge | `ip` = sets the IP of the slave device<BR>`0` = stop bridge<BR>`1` = start bridge in read mode<BR>`2` = start bridge in write mode<BR>`3` = start bridge in loopback mode<BR>`4` = set bridge to master<br>`5` = set bridge to slave<br>`6` = set microphone to swapped<BR>`7` = set microphone to not swapped<BR>`p<x>` = sets the push to talk button where `x` is the button's GPIO pin number|
 
-If a push to talk button is defined the bridge goes to write mode if the button is pushed and to read mode if the button is released.
+If a push to talk button is defined the bridge goes to write mode if the button is pushed and to read mode if the button is released.  
+  
+## Codec / DAC
+  
+Some ESP boards contain integrated circuits or modules that convert audio signals between analog and digital forms, sometimes with support for digital audio processing, mixing and volume control. These external audio codec chips are typically controlled via an additional I2C connection, while the pure audio data still runs over I2S.  
+The intended integration into the core I2S audio driver works with an additional Berry driver that establishes the I2C connection and may provide additional audio commands, while communicating with the core I2S driver via some callbacks.  
+A way to ease the setup work for the end user is to create `Autoconf` packages for specific boards. Examples already exist for the audio boards `Louder-ESP32` and `Louder-ESP32S3` (each using a TAS5805m), which, after initial WiFi setup, only have to be selected in the [Autoconf](ESP32.md#autoconf) section of the `Configuration` menu.  
+Currently there is no official support for any of these devices, but you may suggest a board to be looked at in Tasmota's GH discussions or in the Discord channel.
