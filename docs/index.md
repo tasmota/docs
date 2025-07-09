@@ -15,21 +15,18 @@ Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v14.6.0">Tasmota v14.6.0 Ryan</a></span>
+<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v15.0.1">Tasmota v15.0.1 Sharon</a></span>
 
 ## Breaking Changes
 
-- Berry removed `Leds.create_matrix` from the standard library waiting for reimplementation
-- HASPmota added `y2_min` and `y2_max` to control the second series of `chart`
-- HASPmota default theme is now Tasmota-style
+- none
 
 ## New Features
 
 - Added support for:
-  - Vango Technologies V924x ultralow power, single-phase, power measurement
-  - HLK-LD2402 24GHz smart wave motion sensor
-  - Telnet server
-  - LVGL experimental mirroring of display on Web UI
+  - multi channel AU915-928 LoRaWanBridge
+  - AP33772S USB PD Sink Controller
+  - Wireguard VPN
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
 
