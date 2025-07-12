@@ -33,7 +33,19 @@ Use `tasmota32s3-` binaries for this line of chips.
 
 Unlike previous versions, C3 is a single-core Wi-Fi and Bluetooth 5 (LE) microcontroller SoC based on the open-source RISC-V architecture. It is available as [ESP32-C3-MINI-1](_media/datasheets/esp32-c3-mini-1_datasheet_en.pdf) and [ESP32-C3-WROOM-02](_media/datasheets/esp32-c3-wroom-02_datasheet_en.pdf) modules. [Product page for ESP32-C3](https://www.espressif.com/en/products/socs/esp32-c3)
 
-Use `tasmota32c3-` binaries for this line of chips.
+Use `tasmota32c3-` binaries for this line of chips.  
+  
+### ESP32-C6
+
+The ESP32-C6 series is based on the RISC-V architecture and offers both Wi-Fi  and Bluetooth (LE) support. [Product page for ESP32-C6](https://www.espressif.com/en/products/socs/esp32-c6)
+
+Use `tasmota32c6-` binaries for this line of chips.
+
+### ESP32-P4
+
+The ESP32-P4 series is designed for high-performance applications and features a dual-core RISC-V processor, extensive peripheral support and advanced security features. It is particularly suitable for demanding control and multimedia applications, although support in Tasmota is just beginning and many new features are not implemented yet. [Product page for ESP32-P4](https://www.espressif.com/en/products/socs/esp32-p4)
+
+Use `tasmota32p4-` binaries for this line of chips.
 
 ## Flashing
 
