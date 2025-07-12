@@ -1163,3 +1163,11 @@ EthGateway<a class="cmnd" id="ethgateway"></a>|Set gateway IP address
 EthSubnetmask<a class="cmnd" id="ethsubnetmask"></a>|Set subnet mask
 EthDNSServer1<a class="cmnd" id="ethdnsserver"></a><BR>EthDNSServer2|Set DNS servers IP addresses<br>*Due to a limitation of the underlying LwIP library, only 2 DNS servers are supported. These are shared among all interfaces, including WiFi/Ethernet, IPv4/IPv6.*
 See Also|[`wifi`](#wifi) - Enable/Disable Wi-Fi<BR>
+
+### Hosted MCU
+  
+Handling embedded MCU's like the ESP32-C6 on some ESP32-P4 boards.  
+  
+Command|Parameters
+:---|:---
+HostedOTA| `http://url/firmware_name.bin` = download `firmware_name.bin` from `http://url`, flash to hosted MCU and restart.
