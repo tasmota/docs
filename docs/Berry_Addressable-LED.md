@@ -32,6 +32,11 @@ Method|Details
 :---|:---
 create_segment<a class="cmnd" id="leds_segment"></a>|`<strip>.create_segment(offset:int, pixels:int) -> instance<Leds_segment>`<br>Creates a virtual segment from a physical Leds strip, from Led number `offset` with `pixels` leds.
 
+The `Leds_segment` class provides the same interface as the `Leds` class, with the following differences:
+- It doesn't have its own buffer, it's a view into the parent strip's buffer
+- The `show()` method takes an optional `force` parameter that, when `true`, forces a show even if the segment doesn't cover the entire strip
+- The `pixels_buffer()` method returns `nil` since segments don't have their own buffer
+
 LED model|Details
 :---|:---
 Leds.WS2812_GRB|WS2812b Leds (GRB) - takes 24 bits RGB colors
@@ -45,6 +50,7 @@ clear<a class="cmnd" id="leds_clear"></a>|`clear() -> nil`<br>Clear all led (set
 clear\_to<a class="cmnd" id="leds_clear_to"></a>|`clear_to(col:color [, bri:int]) -> nil`<br>Set all leds to the specified color. `bri` (0..255) is optional and default to 255
 show<a class="cmnd" id="leds_show"></a>|`show() -> nil`<br>Pushes the internal buffer to leds. May be ignored if a show command is already in progress. Use `can_show()` to see if `show()` is possible
 can\_show<a class="cmnd" id="leds_can_show"></a>|`can_show() -> bool`<br>Indicates if `show()` is possible, i.e. no transfer is ongoing
+can\_show\_wait<a class="cmnd" id="leds_can_show_wait"></a>|`can_show_wait() -> nil`<br>Waits until `show()` is possible, i.e. no transfer is ongoing
 is\_dirty<a class="cmnd" id="leds_is_dirty"></a>|`is_dirty() -> bool`<br>Indicates if a led was changed since last `show()`
 dirty<a class="cmnd" id="leds_dirty"></a>|`dirty() -> nil`<br>Forces a refresh during next `show()`
 pixel\_size<a class="cmnd" id="leds_pixel_size"></a>|`pixel_size() -> int`<br>Returns the number of bytes per pixel
@@ -52,6 +58,12 @@ pixel\_count<a class="cmnd" id="leds_pixel_count"></a>|`pixel_count() -> int`<br
 clear\_to<a class="cmnd" id="leds_clear_to"></a>|`clear_to(col:color [, bri:int]) -> nil`<br>Clears all leds to the specified color. `bri` is optional and default to 255
 set\_pixel\_color<a class="cmnd" id="leds_set_pixel_color"></a>|`set_pixel_color(idx:int, col:color [, bri:int]) -> nil`<br>Set led number `idx` to the specified color. `bri` (0..255) is optional and default to 255
 get\_pixel\_color<a class="cmnd" id="leds_get_pixel_color"></a>|`get_pixel_color(idx:int) -> color:int`<br>Returns the color (including brightness and gamma correction) of led number `idx`
+set\_gamma<a class="cmnd" id="leds_set_gamma"></a>|`set_gamma(gamma:bool) -> nil`<br>Sets whether gamma correction is applied
+get\_gamma<a class="cmnd" id="leds_get_gamma"></a>|`get_gamma() -> bool`<br>Returns whether gamma correction is applied
+set\_bri<a class="cmnd" id="leds_set_bri"></a>|`set_bri(bri:int) -> nil`<br>Sets the brightness (0..255)
+get\_bri<a class="cmnd" id="leds_get_bri"></a>|`get_bri() -> int`<br>Returns the current brightness
+set\_animate<a class="cmnd" id="leds_set_animate"></a>|`set_animate(animate) -> nil`<br>Sets the animation object attached to this strip
+get\_animate<a class="cmnd" id="leds_get_animate"></a>|`get_animate() -> instance`<br>Returns the animation object attached to this strip
 gamma<a class="cmnd" id="leds_gamma"></a>|`gamma:bool`<br>Applies gamma correction if `true` (default)
 pixels\_buffer<a class="cmnd" id="leds_pixels_buffer"></a>|`pixels_buffer() -> bytes()`<br>Returns the internal buffer used by NeoPixelBus. The `byte()` object points to the original buffer, no new buffer is allocated; which means that raw data can be changed directly. Don't forget to call `dirty()` and `show()` afterwards
 
