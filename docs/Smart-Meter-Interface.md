@@ -805,6 +805,28 @@ A & B connected to the meter pinout.
     1,050404ffffffff@i7:1,Tot. react. power,Kvarh,DDM_Reac_Power,2
     #
     ```
+    
+### DEYE (MODBus) 
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M1
+    +1,4,m,0,9600,Deye,2,1,01030271,0103028D,
+    0103024C,0103024E,010302A0,010302A1,0103029B,01030298,01030299,0103029A
+    1,010304SSss@i0:1,Total Grid Power,W,Total_Grid_Power,0
+    1,010304SSss@i1:1,Total Load Power,W,Total_Load_Power,0
+    1,010304SSss@i2:1,Battery SOC,%%,Battery_SOC,0
+    1,010304SSss@i3:1,Battery Power,W,Battery_Power,0
+    1,010304SSss@i4:1,PV1 Power,W,PV1_Power,0
+    1,010304SSss@i5:1,PV2 Power,W,PV2_Power,0
+    1,010304SSss@i6:1,Total Gen Power,W,Total_Gen_Power,0
+    1,010304SSss@i7:1,Gen Power L1,W,Gen_Power_L1,0
+    1,010304SSss@i8:1,Gen Power L2,W,Gen_Power_L2,0
+    1,010304SSss@i9:1,Gen Power L3,W,Gen_Power_L3,0
+    #
+    ```
 
 ### Digimeto GS303 (SML)  
 
