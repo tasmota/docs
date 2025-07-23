@@ -550,8 +550,21 @@ you may display files from the flash or SD filesystem by specifying the url:  IP
 
 ###  >y
 
-
 on devices without a file system a configuration string may be defined here, e.g. xnrg_29_modbus.ino driver 
+
+###  >ah
+
+add up to 3 headers e.g.  
+; http rpc handler  
+res=won(1 "/rpc/*")  
+this section is only called on tasmota restart, if changing >ah have to restart device  
+
+###  >on1
+###  >on2
+###  >on3
+here add header x arrives  
+
+`warg` string that contains the web args of on1 ... on3  
 
 
 If a variable does not exist, `???` is displayed for commands  
@@ -600,7 +613,17 @@ now optional binary mode, much faster and more precise, also supports arrays.
 `gvrbs` = get, set global variable udp buffer size  
 `gvrm` = get, set global variable udp mode, 0 = string mode (default), 1 = binary mode  
 `gvrsa(array)` = send array as global variable in binary mode  
-`udp(url port string)` = send a string via UDP
+`udp(0 port)` = open UDP port 'port'  
+`udp(1)` = read string from UDP  
+`udp(2 s1 (s2) (s3))` = answer to UDP remote port, up to 3 strings concatenated  
+`udp(3 url s1)` = send string to url  and udp port  
+`udp(4)` = return udp remote ip as string  
+`udp(5)` = return udp remote port  
+`udp(6 url port string)` = send a string via UDP to url and port  
+
+when #define USE_SCRIPT_MDNS  
+`mdns(name mac type)` = open mdns service with name, mac (use device mac if '-') and type e.g. "shelly"  
+
 
 deep sleep for ESP32 devices only  
 `ds(-1)` = get deep sleep wakeup status  
