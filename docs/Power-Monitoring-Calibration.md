@@ -35,21 +35,22 @@
    [`VoltageSet <voltage>`](Commands.md#voltageset)  
    _Replace `<voltage>` with your standard voltage or with reading on your multi-meter if you have one. Your voltage will vary depending on the electrical standards and your electrical grid_  
 
-3. Verify the **Current** reading by calculating current value (amperage) using this formula: **P<sub>(W)</sub>/V<sub>(V)</sub>=I<sub>(A)</sub>**. Adjust the current offset if needed (in milliAmps ($1000mA=1A$)):  
+3. Verify the **Current** reading by calculating current value (amperage) using this formula: **P<sub>(W)</sub>/V<sub>(V)</sub>=I<sub>(A)</sub>**. Adjust the current offset if needed (in milliAmps (**1000mA = 1A**)):  
    [`CurrentSet <current>`](Commands.md#currentset)  
    _Replace `<current>` with your calculated value (in milliAmps)_  
 
    `CurrentSet` calculation:   
-   $$\frac{Watts}{Volts}=Amps$$
+   
+   **Watts / Volts = Amperes**
    
    and thus
-   
-   $$1000 \* \frac{Watts}{Volts} = milliAmps$$
+
+   **(1000 * Watts) / Volts = milliAmperes**
 
 !!! example
-     Consider a power usage of $60W$ at a voltage of $240V$. Then the current in milliAmps can be calculated as
-     
-     $$1000 \* \frac{60}{240} = 250.0$$
+     Consider a power usage of **60W** at a voltage of **240V**. Then the current in milliAmps can be calculated as
+
+     (1000 * 60) / 240 = 250.0
 
 4. Confirm the validity of your calibration process checking `Power Factor` from the web UI which should be as close as possible to `1.00`. In theory resistive loads will always provide a power factor of 1.00. If that is not the case, we recommend you repeat the calibration process and make sure everything was done correctly. 
    
