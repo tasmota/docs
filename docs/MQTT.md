@@ -243,7 +243,7 @@ You subscribe to an MQTT topic and assign an event name. Once the subscribed MQT
 Command without any parameters will list all currently subscribed topics.
 
 !!! tip "Domoticz Users"
-    As designed, `domoticz/out` (or any user defined DOMOTICZ_OUT_TOPIC) overrules the rule subscribe functionality in a way that you're unable to subscribe to `domoticz/out/1234/#. _This means that you can't subscribe to this topic, unless you remove all Domoticz relay/idx relations with command ``DzIdx0 0`` or if you had disabled the `USE_DOMOTICZ` flag when compiling your own firmware._
+    As designed, `domoticz/out` (or any user defined DOMOTICZ_OUT_TOPIC) overrules the rule subscribe functionality in a way that you're unable to subscribe to `domoticz/out/1234/#`. This means that you can't subscribe to this topic, unless you remove all Domoticz relay/idx relations with command ``DzIdx0 0`` or if you had disabled the `USE_DOMOTICZ` flag when compiling your own firmware.
 
 
 You can set up a rule with `ON EVENT#<event_name> DO ... ENDON` to do what you want based on this MQTT message. The payload is passed as a parameter once the event has been triggered. If the payload is in JSON format, you are able to get the value of specified key as a parameter.  
