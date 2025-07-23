@@ -792,13 +792,13 @@ This is a Tasmota Berry Script library to greatly simplify the process of exposi
 
 ## Build MQTT topic string based on FullTopic configuration
 
-This code bit illustrates how you can create a topic string in the form of the `FullTopic` specification. Details like which `%prefix%` you want and what topic last level are obviously variable.
+This code bit illustrates how you can create a topic string in the form of the `FullTopic` specification. Details like which `%prefix%` you want and what topic last level are obviously variable. In a class, creating the variable makes snnse in `init()` to avoid issuing commands every time. Commands prefixed with `_` does avoid MQTT messages, but this feature is not available on older Tasmota version.
 
 ```berry
 var topic = string.replace(string.replace(
-              tasmota.cmd('FullTopic',true)['FullTopic'],
-              '%topic%', tasmota.cmd('Topic',true)['Topic']),
-              '%prefix%', tasmota.cmd('Prefix',true)['Prefix3'])
+              tasmota.cmd('_FullTopic',true)['FullTopic'],
+              '%topic%', tasmota.cmd('_Topic',true)['Topic']),
+              '%prefix%', tasmota.cmd('_Prefix',true)['Prefix3'])
             + 'SENSOR'
 ```
 
