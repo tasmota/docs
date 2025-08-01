@@ -111,7 +111,7 @@ To apply a new configuration, populate the fields you want to change in a single
 
 !!! info "Changing any parameter with `ZbConfig` requires to re-pair all devices."
 
-!!! info "You have about 15 seconds to use ZbConfig to change your configuration before the coordinator is started. After that, all zigbee commands are disabled."
+!!! info "In case you coordinator fails at starting, for example because of conflicting PanID, you have about 15 seconds after boot to use ZbConfig to change your configuration. After the coordinator fails to start all, zigbee commands are disabled."
 
 |Parameter|Description|
 |---|---|
