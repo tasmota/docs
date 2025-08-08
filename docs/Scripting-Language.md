@@ -134,8 +134,8 @@ if the script init fails an error code is reported:
 number of variables is only limited by RAM. you will probably get a memory error when you define to many variables.
 you may increase the number of allowed array and the maximum string size defines in user_config_override  
 defaults and override defines:  
-Number of filters (arrays) = 5 (override #define MAXFILT)  
-Max string size            = 20 (increase with >D size up to default default 48) (override #define SCRIPT_MAXSSIZE)     
+Number of filters (arrays) = 10 (override #define MAXFILT)  
+Max string size            = 20 (increase with >D n, n up to SCRIPT_MAXSSIZE, default 255) (override #define SCRIPT_MAXSSIZE)     
 
 
 
@@ -188,7 +188,7 @@ therefore when specifing permanent variables, add newly defined ones always at t
    specifies a median filter variable with 5 entries (for elimination of outliers)  
   `M:vname`   
   specifies a moving average filter variable with 8 entries (for smoothing data, should be also used to define arrays)  
-  (max 5 filters in total m+M) optional another filter length (1..127) can be given after the definition.  
+  (max 10 filters in total m+M) optional another filter length (1..127) can be given after the definition.  
   Filter vars can be accessed also in indexed mode `vname[x]` (x = `1..N`, x = `0` returns current array index pointer (may be set also), x = `-1` returns array length, x = `-2` returns array average,x = `-3` returns array sum)
   Using this filter, vars can be used as arrays, #define LARGE_ARRAYS allows for arrays up to 1000 entries  
   array may also be permanent by specifying an extra `:p`  
