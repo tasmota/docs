@@ -242,7 +242,8 @@ Special options and e.g math calculations are not counted as a decoder entry and
 !!! example
     To disable and enable publishing of MQTT data on TelePeriod, use `smlj=0` and `smlj|=1`, respectively. For example to skip first MQTT publishing after boot (may contain erroneous data at after restart if meter is slow, see [Sanxing SX6x1](#sanxing-sx6x1-sxxu1x-ascii-obis)):
     ```
-    >B
+    >D
+	>B
     ;disable publishing at MQTT teleperiod, on boot
     smlj=0
     >S
@@ -791,7 +792,8 @@ A & B connected to the meter pinout.
 
 ??? summary "View script"
     ```
-    >B  
+    >D
+	>B  
     ->sensor53 r
     >M 1  
     +1,3,M,0,9600,DDM,1,2,05040000,05040008,05040012,0504001A,05040036,0504002A,05040100,05040400
@@ -3719,7 +3721,7 @@ Set device parity to NONE
 	
 ??? summary "View script"
     ```
-    	>D  
+    >D  
 	>B  
 	->sensor53 r
 	>M 1  
