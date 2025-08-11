@@ -1917,16 +1917,21 @@ Connect the hardware as follows, make sure GPIO1 and GPIO3 are not assigned so t
 
 #### Script explanation
 
-The following line should ouput apparent power of phase 2. This value is given as in the registers 2548 and 2549. Encoding is T_float meaning a IEEE 754 Floating-Point Single Precision Value (32 bit). The leading 45 is 0x45 (0d69) the address of the Modbus device. 04 refers to the Modbus register type. ffffffff converts the values into a float. i14 is the 14th value requested in the main meter line (see 450409F2) where 0x09F2 (0d2548) is the starting address of the desired register
+The following line should ouput apparent power of phase 2.
+This value is given as in the registers 2548 and 2549.
+Encoding is T_float meaning a IEEE 754 Floating-Point Single Precision Value (32 bit). The leading 45 is 0x45 (0d69) the address of the Modbus device. 04 refers to the Modbus register type. ffffffff converts the values into a float. i14 is the 14th value requested in the main meter line (see 450409F2) where 0x09F2 (0d2548) is the starting address of the desired register
+
     ```
     1,450404ffffffff@i14:1,Apparent_Power_S_L2,var,sl2,3
     ```
+
 Breakdown
+
 - 1 refers to meter 1
-- 450404 refers to Modbus device address 0x45 (0d69) and register type
-- ffffffff converts the registers to float
-- i14 refers to the index 14 of all requested registers
-- 1 is scaling with 1 with no effect
+- 450404 refers to Modbus device address 0x45 (0d69) and Modbus function code 04
+- ffffffff converts the register contents to float
+- i14 refers to the index 14 of all requested registers (see first meter line 15th entry (count from 0) -> 450409F2)
+- 1 is scaling with 1, here with no effect
 - Apparent_Power_S_L2 is the label in the web ui
 - var is the unit in the web ui
 - sl2 is the label for the measurement
