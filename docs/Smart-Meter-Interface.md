@@ -1936,7 +1936,7 @@ Breakdown
 - var is the unit in the web ui
 - sl2 is the label for the measurement
 
-#### Sample scripts
+#### Sample script three phase system
 
 Full script using a three phase system with L1, L2, L3
 ??? summary "View script"
@@ -1975,6 +1975,8 @@ Full script using a three phase system with L1, L2, L3
     1,450404ffffffff@i26:1000,Energy_Total_Out_2_8_0,kWh,eto280,2
     #
     ```
+
+#### Sample script single phase system
 
 Using a three phase energy meter in a single phase system requires using phase 3 only.
 See Finder 7M.38 Series manual, page 12 image 6.
