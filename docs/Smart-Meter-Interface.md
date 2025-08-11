@@ -1919,7 +1919,7 @@ Connect the hardware as follows, make sure GPIO1 and GPIO3 are not assigned so t
 
 The following line should ouput apparent power of phase 2.
 This value is given as in the registers 2548 and 2549.
-Encoding is T_float meaning a IEEE 754 Floating-Point Single Precision Value (32 bit). The leading 45 is 0x45 (0d69) the address of the Modbus device. 04 refers to the Modbus register type. ffffffff converts the values into a float. i14 is the 14th value requested in the main meter line (see 450409F2) where 0x09F2 (0d2548) is the starting address of the desired register
+Encoding is T_float meaning a IEEE 754 Floating-Point Single Precision Value (32 bit). The leading 45 is 0x45 (0d69) the address of the Modbus device. 04 refers to the Modbus function code. ffffffff converts the values into a float. i14 is the 15th value (count from 0) requested in the main meter line (see 450409F2) where 0x09F2 (0d2548) is the starting address of the desired register.
 
     ```
     1,450404ffffffff@i14:1,Apparent_Power_S_L2,var,sl2,3
