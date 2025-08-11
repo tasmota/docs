@@ -1955,14 +1955,14 @@ Full script using a three phase system with L1, L2, L3
     1,450404ffffffff@i6:1,Current_L1,A,i1,3
     1,450404ffffffff@i7:1,Current_L2,A,i2,3
     1,450404ffffffff@i8:1,Current_L3,A,i3,3
-    1,450404ffffffff@i9:1,Reactive_Power_Q_L1,var,ql1,3
-    1,450404ffffffff@i10:1,Reactive_Power_Q_L2,var,ql2,3
-    1,450404ffffffff@i11:1,Reactive_Power_Q_L3,var,ql3,3
-    1,450404ffffffff@i12:1,Reactive_Power_Total,var,qt,3
-    1,450404ffffffff@i13:1,Apparent_Power_S_L1,var,sl1,3
-    1,450404ffffffff@i14:1,Apparent_Power_S_L2,var,sl2,3
-    1,450404ffffffff@i15:1,Apparent_Power_S_L3,var,sl3,3
-    1,450404ffffffff@i16:1,Apparent_Power_Total,var,st,3
+    1,450404ffffffff@i9:1,Reactive_Power_Q_L1,VAR,ql1,3
+    1,450404ffffffff@i10:1,Reactive_Power_Q_L2,VAR,ql2,3
+    1,450404ffffffff@i11:1,Reactive_Power_Q_L3,VAR,ql3,3
+    1,450404ffffffff@i12:1,Reactive_Power_Total,VAR,qt,3
+    1,450404ffffffff@i13:1,Apparent_Power_S_L1,VA,sl1,3
+    1,450404ffffffff@i14:1,Apparent_Power_S_L2,VA,sl2,3
+    1,450404ffffffff@i15:1,Apparent_Power_S_L3,VA,sl3,3
+    1,450404ffffffff@i16:1,Apparent_Power_Total,VA,st,3
     1,450404ffffffff@i17:1,Active_Power_L1,W,pl1,3
     1,450404ffffffff@i18:1,Active_Power_L2,W,pl2,3
     1,450404ffffffff@i19:1,Active_Power_L3,W,pl3,3
@@ -1994,8 +1994,8 @@ Full script using a single phase system with L3 as single phase
     1,450404ffffffff@i2:1,Frequency,Hz,freq,3
     1,450404ffffffff@i3:1,Voltage_L3,V,U3,2
     1,450404ffffffff@i4:1,Current_L3,A,i3,3
-    1,450404ffffffff@i5:1,Reactive_Power_Total,var,qt,3
-    1,450404ffffffff@i6:1,Apparent_Power_Total,var,st,3
+    1,450404ffffffff@i5:1,Reactive_Power_Total,VAR,qt,3
+    1,450404ffffffff@i6:1,Apparent_Power_Total,VA,st,3
     1,450404ffffffff@i7:1,Active_Power_Total,W,pt,3
     1,450404ffffffff@i8:1,Power_Factor_Total,,pft,3
     1,450404ffffffff@i9:1000,Energy_Total_In_1_8_0,kWh,eti180,2
