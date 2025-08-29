@@ -632,8 +632,8 @@ To get all information with the scrpit below you need to enter the PIN. In the f
     ->sensor53 r  
     >T  
     ; get total consumption and total feed  
-    pin=SML#Total_in  
-    pout=SML#Total_out  
+    pin=sml[1] 
+    pout=sml[2]  
     >S  
     ; at midnight, save meter total values  
     hr=hours  
@@ -2068,8 +2068,8 @@ Growatt solar inverter. this example also shows how to send cmds to modbus
     ->sensor53 r  
     >T  
     ; get total consumption and total feed  
-    pin=SML#Total_in  
-    pout=SML#Total_out  
+    pin=sml[1]
+    pout=sml[2] 
     >S  
     ; at midnight, save meter total values  
     hr=hours  
