@@ -1911,9 +1911,13 @@ In short: 115200 baud, 8E1
 
 #### Hardware connection
 
-Connect the hardware as follows, make sure GPIO1 and GPIO3 are not assigned so the script can use them.
+Connect the hardware with an ESP8266 as follows, make sure GPIO1 and GPIO3 are not assigned so the script can use them.
 
-![](_media/Smart-Meter-Interface/Finder7M38_Hardware.png)
+![](_media/Smart-Meter-Interface/Finder7M38_HardwareESP8266.png)
+
+Connect the hardware with an ESP32-C3 as follows, make sure GPIO20 and GPI21 are not assigned so the script can use them.
+
+![](_media/Smart-Meter-Interface/Finder7M38_HardwareESP32.png)
 
 #### Script explanation
 
