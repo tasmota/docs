@@ -622,7 +622,7 @@ now optional binary mode, much faster and more precise, also supports arrays.
 `udp(6 url port string)` = send a string via UDP to url and port  
 
 when #define USE_SCRIPT_MDNS  
-`mdns(name mac type)` = open mdns service with name, mac (use device mac if '-') and type e.g. "shelly"  
+`mdns(name mac type)` = open mdns service with name, mac (use device mac if '-') and type (use tasmota hostname if '-' or e.g. "shelly"). If “shelly” or “everhome” is used, a corresponding txt record is also set (for Shelly/EcoTracker emulation).  
 
 
 deep sleep for ESP32 devices only  
