@@ -227,22 +227,22 @@ Multipress functions for 2 and more presses cannot be changed using SetOptions o
 
 !!! note
     `Button1` can directly control up to five relays. The number of the activated relay corresponds to the number of button presses and this feature is not present in the other buttons.
-    When ButtonTopic is set to default `0` a button will always send its state for rules.
+    When ButtonTopic is set to default `0` a button will always send its state for rules. In the below, you can enable `SetOption4` to replace the "RESULT" part of the topic.
 
 `1 short press`
-:    Toggles the power state. This will blink the LED once and send an MQTT status message like `stat/tasmota/POWER = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"SINGLE"}` when SetOption73 is enabled. The button state for rules is `2` (`10` if `Setoption73` is enabled).
+:    Toggles the power state. This will blink the LED once and send an MQTT status message like `stat/tasmota/POWER = ON` or another one like `stat/tasmota/RESULT = {"Button<x>":{"Action":"SINGLE"}}` when SetOption73 is enabled. The button state for rules is `2` (`10` if `Setoption73` is enabled).
 
 `2 short presses`
-:    When using Button1 toggles the second power state (if available on the device). This will blink the LED twice and send an MQTT status message like `stat/tasmota/POWER2 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"DOUBLE"}` when SetOption73 is enabled. The button state for rules is `11`.
+:    When using Button1 toggles the second power state (if available on the device). This will blink the LED twice and send an MQTT status message like `stat/tasmota/POWER2 = ON` or another one like `stat/tasmota/RESULT = {"Button<x>":{"Action":"DOUBLE"}}` when SetOption73 is enabled. The button state for rules is `11`.
 
 `3 short presses`
-:    When using Button1 toggles the third power state (if available on the device). This will blink the LED three times and send an MQTT status message like `stat/tasmota/POWER3 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"TRIPLE"}` when SetOption73 is enabled. The button state for rules is `12`.
+:    When using Button1 toggles the third power state (if available on the device). This will blink the LED three times and send an MQTT status message like `stat/tasmota/POWER3 = ON` or another one like `stat/tasmota/RESULT = {"Button<x>":{"Action":"TRIPLE"}}` when SetOption73 is enabled. The button state for rules is `12`.
 
 `4 short presses`
-:    When using Button1 toggles the fourth power state (if available on the device). This will blink the LED for times and send an MQTT status message like `stat/tasmota/POWER4 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"QUAD"}` when SetOption73 is enabled. The button state for rules is `13`.
+:    When using Button1 toggles the fourth power state (if available on the device). This will blink the LED for times and send an MQTT status message like `stat/tasmota/POWER4 = ON` or another one like `stat/tasmota/RESULT = {"Button<x>":{"Action":"QUAD"}}` when SetOption73 is enabled. The button state for rules is `13`.
 
 `5 short presses`
-:    When using Button1 toggles the fifth power state (if available on the device). This will blink the LED five times and send an MQTT status message like `stat/tasmota/POWER5 = ON` or another one like `stat/tasmota/BUTTON<x> = {"ACTION":"PENTA"}` when SetOption73 is enabled. The button state for rules is `14`.
+:    When using Button1 toggles the fifth power state (if available on the device). This will blink the LED five times and send an MQTT status message like `stat/tasmota/POWER5 = ON` or another one like `stat/tasmota/RESULT = {"Button<x>":{"Action":"PENTA"}}` when SetOption73 is enabled. The button state for rules is `14`.
 
 `6 short presses`
 :    Set [`WifiConfig 2`](Commands.md#wificonfig) (start Wi-Fi Manager). Can be disabled using [`SetOption1 1`](Commands.md#setoption1). For [security reasons](Securing-your-IoT-from-hacking.md#disable-unsecured-fallback-wifi-wifimanager), you should change back `WifiConfig` after that.
