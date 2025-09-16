@@ -251,7 +251,7 @@ Multipress functions for 2 and more presses cannot be changed using SetOptions o
 :    There are two separate functions associated with a button long press based on how long it is held:
 
     1. When held continuously for 40 seconds (Configurable with [SetOption32](Commands.md#setoption32), value is 10x the configured hold time) Tasmota will reset to firmware defaults and restart.
-    2. If enabled, button pressed for 4 seconds (Configurable with [SetOption32](Commands.md#setoption32)) creates a HOLD action and send an MQTT status message like `stat/tasmota/BUTTON<x> = {"ACTION":"HOLD"}` when SetOption73 is enabled. The button state for rules is `3`. With SetOption73 enabled, when the button is released you'll also get MQTT messages like `stat/tasmota/BUTTON<x> = {"ACTION":"CLEAR"}` and button state `15`.
+    2. If enabled, button pressed for 4 seconds (Configurable with [SetOption32](Commands.md#setoption32)) creates a HOLD action and send an MQTT status message like `stat/tasmota/RESULT = {"Button<x>":{"Action":"HOLD"}}` when SetOption73 is enabled. The button state for rules is `3`. With SetOption73 enabled, when the button is released you'll also get MQTT messages like `stat/tasmota/RESULT = {"Button<x>":{"Action":"CLEAR"}}` and button state `15`.
 
     !!! note "If [ButtonRetain](Commands.md#buttonretain) has been enabled the MQTT message will also contain the MQTT retain flag."
 
