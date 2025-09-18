@@ -19,25 +19,25 @@ By default, all extensions present in the `/.extensions/` folder are run at boot
 
 Example with 2 extensions installed, only 1 is running:
 
-![Installed extensions 1 running](_media/berry/Tasmota_ext_installed_1.png){ width="150" }
+![Installed extensions 1 running](_media/berry/Tasmota_ext_installed_1.png){ width="300" }
 
 Then clicking the "Stopped" button, both are running:
 
-![Installed extensions 2 running](_media/berry/Tasmota_ext_installed_2.png){ width="150" }
+![Installed extensions 2 running](_media/berry/Tasmota_ext_installed_2.png){ width="300" }
 
 Clicking on "Extension Store" brings you to the online store (Internet connectivity for the Tasmota device is required):
 
-![Tasmota Extension store](_media/berry/Tasmota_ext_store_1.png){ width="150" }
+![Tasmota Extension store](_media/berry/Tasmota_ext_store_1.png){ width="300" }
 
 Clicking on one app unfolds details and shows actions:
 
-![Tasmota Extension store](_media/berry/Tasmota_ext_store_2_unfold1.png){ width="150" }
+![Tasmota Extension store](_media/berry/Tasmota_ext_store_2_unfold1.png){ width="300" }
 
 Here are all the applications unfolded with 3 possible actions: Install, Upgrade, Uninstall
 
-![Tasmota Extension store](_media/berry/Tasmota_ext_store_2_unfoldall.png){ width="150" }
+![Tasmota Extension store](_media/berry/Tasmota_ext_store_2_unfoldall.png){ width="300" }
 
-## For extension creators
+## Create Extensions
 
 The section below is intended for extension creators who want to package their code into a new extension and possibly publish them into the online store.
 
@@ -47,7 +47,7 @@ Extension are regular `.tapp` files with some specificities:
 - they contain an `autoexec.be` file with specificities
 - they must guarantee that all resources are freed when `unload()` is called (this is probably the most delicate step)
 
-### Extension manifest
+### `manifest.json`
 
 **Note**: All version numbers are publish as 32 bits integers in the format `'0xAABBCCDD'` where the human readable is `vA.B.C.D` with decimal numbers. For example:
 
@@ -57,11 +57,13 @@ Extension are regular `.tapp` files with some specificities:
 
 Extensions must include a mandatory `manifest.json` file with the mantadory and optional fiels:
 
-- `name` (**mandatory**) the display name of the extension, keep it very short
-- `version` (**mandatory**) the version of the extension using the 32-bit integer format (see above)
-- `description` (**mandatory**) a longer description of what the extension is doing
-- `author` (optional) name of the author and/or maintainer
-- `min_tasmota` (optional) the minimum version of Tasmota required to run this extention; older Tasmota version will not be able to install it
+Field||details
+:---|:---|:---
+`name`|(**mandatory**)|the display name of the extension, keep it very short
+`version`|(**mandatory**)|the version of the extension using the 32-bit integer format (see above)
+`description`|(**mandatory**)|a longer description of what the extension is doing
+`author`|(optional)|name of the author and/or maintainer
+`min_tasmota`|(optional)|the minimum version of Tasmota required to run this extention; older Tasmota version will not be able to install it
 
 Full example of `manifest.json`:
 
@@ -75,7 +77,7 @@ Full example of `manifest.json`:
 }
 ```
 
-### Extension autoexec
+### `autoexec.be`
 
 Extensions must follow some very strict rules for `autoexec.be` that must have the following structure:
 
