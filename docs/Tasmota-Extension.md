@@ -59,11 +59,11 @@ Extensions must include a mandatory `manifest.json` file with the mantadory and 
 
 Field||details
 :---|:---|:---
-`name`|(**mandatory**)|the display name of the extension, keep it very short
-`version`|(**mandatory**)|the version of the extension using the 32-bit integer format (see above)
-`description`|(**mandatory**)|a longer description of what the extension is doing
-`author`|(optional)|name of the author and/or maintainer
-`min_tasmota`|(optional)|the minimum version of Tasmota required to run this extention; older Tasmota version will not be able to install it
+name|mandatory|the display name of the extension, keep it very short
+version|mandatory|the version of the extension using the 32-bit integer format (see above)
+description|mandatory|a longer description of what the extension is doing
+author|optional|name of the author and/or maintainer
+min_tasmota|optional|the minimum version of Tasmota required to run this extention; older Tasmota version will not be able to install it
 
 Full example of `manifest.json`:
 
