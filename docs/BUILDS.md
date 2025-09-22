@@ -36,6 +36,7 @@ Note: the `minimal` variant is not listed as it shouldn't be used outside of the
 | USE_EXPRESSION            | -     | x / x | -     | -     | -     | -     |
 | SUPPORT_IF_STATEMENT      | -     | x / x | -     | -     | -     | -     |
 | USE_HOTPLUG               | -     | - / - | -     | -     | -     | -     |
+| USE_INFLUXDB              | -     | - / x | -     | -     | -     | -     |
 | USE_PROMETHEUS            | -     | - / - | -     | -     | -     | -     |
 | USE_PING                  | -     | - / - | -     | -     | -     | -     |
 | USE_HDMI_CEC              | -     | - / - | -     | -     | -     | -     |
