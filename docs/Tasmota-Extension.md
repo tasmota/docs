@@ -41,7 +41,7 @@ You may go back to the main page to see the Ticker showing on the top left corne
 
 ### How it works
 
-Tasmota Extenstion relies on the [Berry scripting language](Berry.md) and on [Tasmota Application](Tasmota-Application.md) `.tapp` files. Each `.tapp` includes all the necessary resources for the extension. Once installed, extensions are copied in the hidden `/.extensions/` folder.
+Tasmota Extension relies on the [Berry scripting language](Berry.md) and on [Tasmota Application](Tasmota-Application.md) `.tapp` files. Each `.tapp` includes all the necessary resources for the extension. Once installed, extensions are copied in the hidden `/.extensions/` folder.
 
 By default, all extensions present in the `/.extensions/` folder are run at boot. You can switch off autorun when you rename the file with the `.tapp_` file suffix (add a trailing underscore); this is handled automatically via the WebUI.
 
@@ -58,13 +58,13 @@ Extension are regular `.tapp` files with some specificities:
 
 ### `manifest.json`
 
-**Note**: All version numbers are publish as 32 bits integers in the format `'0xAABBCCDD'` where the human readable is `vA.B.C.D` with decimal numbers. For example:
+**Note**: All version numbers are published as 32 bits integers in the format `'0xAABBCCDD'` where the human readable is `vA.B.C.D` with decimal numbers. For example:
 
 - `0x19090100` converts to `v25.9.1.0` - referred as the date version meaning it was released in 2025-Sep-1
-- `0x0E060001` converts to `v14.6.0.1` - referres as classical version like used in Tasmota firmware version
+- `0x0E060001` converts to `v14.6.0.1` - refers as classical version like used in Tasmota firmware version
 - you can choose whatever numbering scheme you want as long as the numbers increase when converted to signed 32 bit integers.
 
-Extensions must include a mandatory `manifest.json` file with the mantadory and optional fiels:
+Extensions must include a mandatory `manifest.json` file with the mandatory and optional fields:
 
 Field||details
 :---|:---|:---
@@ -72,7 +72,7 @@ name|mandatory|the display name of the extension, keep it very short
 version|mandatory|the version of the extension using the 32-bit integer format (see above)
 description|mandatory|a longer description of what the extension is doing
 author|optional|name of the author and/or maintainer
-min_tasmota|optional|the minimum version of Tasmota required to run this extention; older Tasmota version will not be able to install it
+min_tasmota|optional|the minimum version of Tasmota required to run this extension; older Tasmota version will not be able to install it
 
 Full example of `manifest.json`:
 
@@ -100,9 +100,9 @@ end
 
 Here are the details:
 
-- the whole statement in enclosed in `do ... end` to avoid having `my_ext` polluting the global namespace. `do ... end` creates a local scope.
-- `introspect.module('<main_file>', true)`: this is equivalent to `import <main_file>` except it does not keep the loaded into cache, which allows to eventually unload the entire code
-- `tasmota.add_extension(my_ext)`: registered the Berry driver as an extension. Tasmota will call the `unload()` method of the driver to remove it from memory
+- the whole statement is enclosed in `do ... end` to avoid having `my_ext` polluting the global namespace. `do ... end` creates a local scope.
+- `introspect.module('<main_file>', true)`: this is equivalent to `import <main_file>` except it does not keep the loaded module into cache, which allows to eventually unload the entire code
+- `tasmota.add_extension(my_ext)`: registers the Berry driver as an extension. Tasmota will call the `unload()` method of the driver to remove it from memory
 
 Example for Leds Panel:
 
@@ -149,3 +149,83 @@ end
 
 return Minimal_Tasmota_Extension()    # return an instance of the driver
 ```
+
+## Publishing Extensions to this Repository
+
+To publish a new extension to this repository and make it available in the online store, follow these steps:
+
+### 1. Prepare Your Extension Files
+
+Create a new folder in the `raw/` directory with your extension name (use underscores instead of spaces). Your extension must include these required files:
+
+- `manifest.json` - Extension metadata
+- `autoexec.be` - Extension loader script  
+- `<your_extension>.be` - Main extension code (Berry script)
+
+### 2. Create the manifest.json
+
+Your `manifest.json` must include these mandatory fields:
+
+```json
+{
+  "name": "Your Extension Name",
+  "version": "0x19090100",
+  "description": "Brief description of what your extension does",
+  "author": "Your Name",
+  "min_tasmota": "0x0E060001"
+}
+```
+
+**Version Format**: Use 32-bit integer format `0xAABBCCDD` where human readable is `vA.B.C.D`:
+- `0x19090100` = v25.9.1.0 (date-based: 2025-Sep-1)
+- `0x0E060001` = v14.6.0.1 (semantic versioning)
+
+### 3. Create the autoexec.be
+
+Your `autoexec.be` must follow this exact structure:
+
+```berry
+do
+  import introspect
+  var your_extension = introspect.module('your_extension_file', true)
+  tasmota.add_extension(your_extension)
+end
+```
+
+Replace `your_extension_file` with the name of your main Berry script (without `.be` extension).
+
+### 4. Directory Structure Example
+
+```
+raw/
+└── Your_Extension_Name/
+    ├── manifest.json
+    ├── autoexec.be
+    └── your_extension.be
+```
+
+### 5. Build and Test
+
+The repository includes an automated build system:
+
+1. **Local Testing**: Run `python3 gen.py` to build your extension into a `.tapp` file
+2. **Validation**: The script will validate your `manifest.json` and check for required files
+3. **Output**: Generated `.tapp` files appear in `extensions/tapp/` directory
+
+### 6. Submit Your Extension
+
+1. Fork this repository
+2. Add your extension folder to the `raw/` directory
+3. Test locally with `python3 gen.py`
+4. Copy manually the `.tapp` file in the `/.extensions/` directory on your Tasmota device (click on "Show hidden files" to show the hidden directory)
+5. Create a pull request with:
+   - Clear description of your extension
+   - Screenshots if applicable
+   - Testing notes
+
+### 7. Automated Processing
+
+Once merged, GitHub Actions will automatically:
+- Build your extension into a `.tapp` file
+- Update the `extensions.jsonl` manifest
+- Make your extension available in the online store
