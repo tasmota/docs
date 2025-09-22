@@ -187,6 +187,7 @@ nav:
     - LVGL: LVGL.md
     - HASPmota: HASPmota.md
     - Matter.md
+    - Tasmota-Extension.md
     - Tasmota-Application.md
     - TensorFlow Lite: TFL.md
     - Touch GPIOs: TouchPin.md
