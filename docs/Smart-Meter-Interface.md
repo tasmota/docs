@@ -1888,7 +1888,125 @@ by the supplier. Therefore it is set to a fixed baud rate of 300 and can not be 
     1,4.8.2(@1,BlindEnEinspT2,kvarh,4_8_2,3
     #
     ```
-    
+
+### Finder 7M.38 Series bi-directional multi-functional energy meter
+
+A Finder 7M.38 series energy meter can be read out using Modbus. To use it, a RS485 converter is needed to interface to an ESPs serial IOs.
+
+Official Product [Finder 7M.38 Series](https://www.findernet.com/en/usa/series/7m-series-smart-energy-meters/type/type-7m-38-three-phase-multi-function-bi-directional-energy-meters-with-backlit-matrix-lcd-display/)
+
+The amount of values collected by this energy meter is huge, any value offered can be added by adding the adresses in the script.
+For further values and their corresponding adresses consult the official manual.
+
+#### Modbus Serial Configuration
+
+Make sure you set the correct parameters on your meter. Either via NFC (Finder Toolbox App) or directly with the touch button on the device.
+
+The following sample scripts will use this parameters
+- Baudrate 115200
+- Stopbits 1
+- Parity even
+
+In short: 115200 baud, 8E1
+
+#### Hardware connection
+
+Connect the hardware with an ESP8266 as follows, make sure GPIO1 and GPIO3 are not assigned so the script can use them.
+
+![](_media/Smart-Meter-Interface/Finder7M38_HardwareESP8266.png)
+
+Connect the hardware with an ESP32-C3 as follows, make sure GPIO20 and GPI21 are not assigned so the script can use them.
+
+![](_media/Smart-Meter-Interface/Finder7M38_HardwareESP32.png)
+
+#### Script explanation
+
+The following line should ouput apparent power of phase 2.
+This value is given as in the registers 2548 and 2549.
+Encoding is T_float meaning a IEEE 754 Floating-Point Single Precision Value (32 bit). The leading 45 is 0x45 (0d69) the address of the Modbus device. 04 refers to the Modbus function code. ffffffff converts the values into a float. i14 is the 15th value (count from 0) requested in the main meter line (see 450409F2) where 0x09F2 (0d2548) is the starting address of the desired register.
+
+    ```
+    1,450404ffffffff@i14:1,Apparent_Power_S_L2,var,sl2,3
+    ```
+
+Breakdown
+
+- 1 refers to meter 1
+- 450404 refers to Modbus device address 0x45 (0d69) and Modbus function code 04
+- ffffffff converts the register contents to float
+- i14 refers to the index 14 of all requested registers (see first meter line 15th entry (count from 0) -> 450409F2)
+- 1 is scaling with 1, here with no effect
+- Apparent_Power_S_L2 is the label in the web ui
+- var is the unit in the web ui
+- sl2 is the label for the measurement
+
+#### Sample script three phase system
+
+Full script using a three phase system with L1, L2, L3
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,M,0,115200,Finder,1,10,450300CA,45040A62,450409C2,450409C4,450409C6,450409C8,450409D4,450409D6,450409D8,450409EA,450409EC,450409EE,450409F0,450409F2,450409F4,450409F6,450409F8,450409E2,450409E4,450409E6,450409BA,450409FA,450409FC,450409FE,45040A00,45040AC0,45040AC2
+    1,450304UUuu@i0:1,Modbus_Address,,MBaddress,0
+    1,450404ffffffff@i1:1,Temperature,°C,temperature,2
+    1,450404ffffffff@i2:1,Frequency,Hz,freq,3
+    1,450404ffffffff@i3:1,Voltage_L1,V,U1,2
+    1,450404ffffffff@i4:1,Voltage_L2,V,U2,2
+    1,450404ffffffff@i5:1,Voltage_L3,V,U3,2
+    1,450404ffffffff@i6:1,Current_L1,A,i1,3
+    1,450404ffffffff@i7:1,Current_L2,A,i2,3
+    1,450404ffffffff@i8:1,Current_L3,A,i3,3
+    1,450404ffffffff@i9:1,Reactive_Power_Q_L1,VAR,ql1,3
+    1,450404ffffffff@i10:1,Reactive_Power_Q_L2,VAR,ql2,3
+    1,450404ffffffff@i11:1,Reactive_Power_Q_L3,VAR,ql3,3
+    1,450404ffffffff@i12:1,Reactive_Power_Total,VAR,qt,3
+    1,450404ffffffff@i13:1,Apparent_Power_S_L1,VA,sl1,3
+    1,450404ffffffff@i14:1,Apparent_Power_S_L2,VA,sl2,3
+    1,450404ffffffff@i15:1,Apparent_Power_S_L3,VA,sl3,3
+    1,450404ffffffff@i16:1,Apparent_Power_Total,VA,st,3
+    1,450404ffffffff@i17:1,Active_Power_L1,W,pl1,3
+    1,450404ffffffff@i18:1,Active_Power_L2,W,pl2,3
+    1,450404ffffffff@i19:1,Active_Power_L3,W,pl3,3
+    1,450404ffffffff@i20:1,Active_Power_Total,W,pt,3
+    1,450404ffffffff@i21:1,Power_Factor_L1,,pfl1,3
+    1,450404ffffffff@i22:1,Power_Factor_L2,,pfl2,3
+    1,450404ffffffff@i23:1,Power_Factor_L3,,pfl3,3
+    1,450404ffffffff@i24:1,Power_Factor_Total,,pft,3
+    1,450404ffffffff@i25:1000,Energy_Total_In_1_8_0,kWh,eti180,2
+    1,450404ffffffff@i26:1000,Energy_Total_Out_2_8_0,kWh,eto280,2
+    #
+    ```
+
+#### Sample script single phase system
+
+Using a three phase energy meter in a single phase system requires using phase 3 only.
+See Finder 7M.38 Series manual, page 12 image 6.
+
+Full script using a single phase system with L3 as single phase
+??? summary "View script"
+    ```
+    >D
+    >B
+    ->sensor53 r
+    >M 1
+    +1,3,M,0,115200,Finder,1,10,450300CA,45040A62,450409C2,450409C8,450409D8,450409F0,450409F8,450409BA,45040A00,45040AC0,45040AC2
+    1,450304UUuu@i0:1,Modbus_Address,,MBaddress,0
+    1,450404ffffffff@i1:1,Temperature,°C,temperature,2
+    1,450404ffffffff@i2:1,Frequency,Hz,freq,3
+    1,450404ffffffff@i3:1,Voltage_L3,V,U3,2
+    1,450404ffffffff@i4:1,Current_L3,A,i3,3
+    1,450404ffffffff@i5:1,Reactive_Power_Total,VAR,qt,3
+    1,450404ffffffff@i6:1,Apparent_Power_Total,VA,st,3
+    1,450404ffffffff@i7:1,Active_Power_Total,W,pt,3
+    1,450404ffffffff@i8:1,Power_Factor_Total,,pft,3
+    1,450404ffffffff@i9:1000,Energy_Total_In_1_8_0,kWh,eti180,2
+    1,450404ffffffff@i10:1000,Energy_Total_Out_2_8_0,kWh,eto280,2
+    #
+    ```
+
 ### Fronius Symo 10.0-3-M (MODBus TCP)
 	
 Fronius inverter, using Modbus TCP feature.
