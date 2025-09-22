@@ -2,7 +2,7 @@
 
 !!! info "An extensible way to load and unload extensions dynamically :material-cpu-32-bit:"
 
-Tasmota Extension is a new option for all ESP32\<x\> variants. It provides an online "Extension Store", similar to App Stores, so you can install and uninstall extension at will. Once installed, each Extension can be started and stopped (hence freeing memory) without rebooting; or configured at auto-start at boot.
+Tasmota Extension is a new option for all ESP32&lt;x&gt; variants. It provides an online "Extension Store", similar to App Stores, so you can install and uninstall extension at will. Once installed, each Extension can be started and stopped (hence freeing memory) without rebooting; or configured at auto-start at boot.
 
 Extensions includes features like:
 
