@@ -177,6 +177,7 @@ Your `manifest.json` must include these mandatory fields:
 ```
 
 **Version Format**: Use 32-bit integer format `0xAABBCCDD` where human readable is `vA.B.C.D`:
+
 - `0x19090100` = v25.9.1.0 (date-based: 2025-Sep-1)
 - `0x0E060001` = v14.6.0.1 (semantic versioning)
 
@@ -219,6 +220,7 @@ The repository includes an automated build system:
 3. Test locally with `python3 gen.py`
 4. Copy manually the `.tapp` file in the `/.extensions/` directory on your Tasmota device (click on "Show hidden files" to show the hidden directory)
 5. Create a pull request with:
+
    - Clear description of your extension
    - Screenshots if applicable
    - Testing notes
@@ -226,6 +228,7 @@ The repository includes an automated build system:
 ### 7. Automated Processing
 
 Once merged, GitHub Actions will automatically:
+
 - Build your extension into a `.tapp` file
 - Update the `extensions.jsonl` manifest
 - Make your extension available in the online store
