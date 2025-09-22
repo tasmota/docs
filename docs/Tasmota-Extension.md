@@ -13,31 +13,40 @@ Extensions includes features like:
 
 ## Quickstart
 
-Tasmota Extenstion relies on the [Berry scripting language](Berry.md)  and on [Tasmota Application](Tasmota-Application.md) `.tapp` files. Each `.tapp` includes all the necessary resources for the extension. Once installed, extensions are copied in the hidden `/.extensions/` folder.
+"**Extension Manager**" is in the "**Tools**" menu. When you first click on it, you see an empty
+list of installed extensions, followed by the list of extensions available in the online store:
+
+![Extension Manager with no extension installed](_media/berry/Tasmotaext_empty.png){ width="300" }
+
+Then click on "**Wifi Heap Sticker**" in the Online Store to show the details and actions:
+
+![Extension Manager with details of Wifi Heap Sticker](_media/berry/Tasmotaext_empty_wifiheap.png){ width="300" }
+
+Then click on "**Install**" button, and confirm:
+
+![Extension Manager confirm installation](_media/berry/Tasmotaext_confirm.png){ width="350" }
+
+The page refreshes itself and shows the list of installed extensions:
+
+![Extension Manager with Wifi Heap Sticker installed](_media/berry/Tasmotaext_wifi_installed.png){ width="300" }
+
+The "Wifi Heap Sticker" extensions is installed, configured as Auto-Run but not yet running.
+Click on "**Stopped**" to run it immediately:
+
+![Extension Manager with Wifi Heap Sticker running](_media/berry/Tasmotaext_wifi_running.png){ width="300" }
+
+You may go back to the main page to see the Ticker showing on the top left corner:
+
+![Wifi Heap Sticker in action](_media/berry/Tasmotaext_ticker.png){ width="300" }
+
+### How it works
+
+Tasmota Extenstion relies on the [Berry scripting language](Berry.md) and on [Tasmota Application](Tasmota-Application.md) `.tapp` files. Each `.tapp` includes all the necessary resources for the extension. Once installed, extensions are copied in the hidden `/.extensions/` folder.
 
 By default, all extensions present in the `/.extensions/` folder are run at boot. You can switch off autorun when you rename the file with the `.tapp_` file suffix (add a trailing underscore); this is handled automatically via the WebUI.
 
-Example with 2 extensions installed, only 1 is running:
 
-![Installed extensions 1 running](_media/berry/Tasmota_ext_installed_1.png){ width="300" }
-
-Then clicking the "Stopped" button, both are running:
-
-![Installed extensions 2 running](_media/berry/Tasmota_ext_installed_2.png){ width="300" }
-
-Clicking on "Extension Store" brings you to the online store (Internet connectivity for the Tasmota device is required):
-
-![Tasmota Extension store](_media/berry/Tasmota_ext_store_1.png){ width="300" }
-
-Clicking on one app unfolds details and shows actions:
-
-![Tasmota Extension store](_media/berry/Tasmota_ext_store_2_unfold1.png){ width="300" }
-
-Here are all the applications unfolded with 3 possible actions: Install, Upgrade, Uninstall
-
-![Tasmota Extension store](_media/berry/Tasmota_ext_store_2_unfoldall.png){ width="300" }
-
-## Create Extensions
+## Creating Extensions (for developers)
 
 The section below is intended for extension creators who want to package their code into a new extension and possibly publish them into the online store.
 
