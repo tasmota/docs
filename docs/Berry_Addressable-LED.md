@@ -249,4 +249,61 @@ ESP32|8
 ESP32S2|4
 ESP32C3|2
 
-Currently `RMT` channel 0 is used by default if no GPIO `WS2812-1` is configured, `RMT` channel 1 otherwise.
+Currently `RMT` channel 0 is used by default if no GPIO `WS2812-1` is configured, `RMT` channel 1 otherwise.  
+
+## pixmat class for 2D pixel buffers
+
+The `pixmat` class provides a native high-performance 2D pixel buffer abstraction for Berry.  
+It supports mono (1‑bpp), RGB (3‑bpp), and RGBW (4‑bpp) formats, with optional serpentine layout.
+
+### Constructor
+
+Overload|Description
+:---|:---
+`pixmat(bitplane_bytes:bytes, bytes_per_line:int)`|Creates a 1‑bpp mono matrix from packed bitplane data. Each bit becomes a pixel (0 or 255).
+`pixmat(buf:bytes, width:int, height:int, bpp:int[, serpentine:bool])`|Wraps an existing pixel buffer. No copy is made. `bpp` is bytes per pixel (1=mono, 3=RGB, 4=RGBA). `serpentine` reverses odd rows if `true`.
+`pixmat(width:int, height:int, bpp:int[, serpentine:bool])`|Allocates a new zero‑filled buffer with given dimensions and pixel format.
+
+
+- `bitplane_bytes`: packed bits (1‑bpp), each bit becomes a pixel (0 or 255)
+- `buf`: external buffer to wrap (no copy)
+- `width`, `height`: pixel dimensions
+- `bpp`: bytes per pixel (1=mono, 3=RGB, 4=RGBW)
+- `serpentine`: if true, odd rows are reversed in memory
+
+### Methods
+
+Method|Description
+:---|:---
+`pixmat.clear([val:int])`|Fills the entire matrix with `val` (default 0). For mono: luminance. For RGB/RGBA: all channels.
+`pixmat.get(x:int, y:int)` → `int` or `list`|Returns pixel value at `(x, y)`. Packed int for mono/RGB/RGBA, list for other bpp.
+`pixmat.set(x:int, y:int, rgb:int[, bri:int])`|Sets pixel at `(x, y)` using packed RGB (`0xRRGGBB`). Optional brightness scaling.
+`pixmat.set(x:int, y:int, h:int, s:int, v:int[, bri:int])`|Sets pixel using HSV values. Converts to RGB internally. Optional brightness.
+`pixmat.blit(src:pixmat, dx:int, dy:int[, bri:int][, tint:int])`|Copies pixels from `src` matrix with optional brightness and RGB tint. Supports mono→color expansion.
+`pixmat.scroll(dir:int[, src:pixmat])`|Scrolls matrix content by one pixel. `dir`: 0=up, 1=left, 2=down, 3=right. Optional `src` fills vacated row/column.
+
+
+- `clear(val)`: fills matrix with value (default 0)
+- `get(x,y)`: returns pixel value (packed int or list)
+- `set(x,y,rgb)`: sets pixel with packed RGB
+- `set(x,y,h,s,v)`: sets pixel with HSV (converted internally)
+- `blit(src, dx, dy)`: copies pixels from another matrix, for mono source 0 becomes transparent
+- `scroll(dir)`: scrolls content by one pixel (0=up, 1=left, 2=down, 3=right)
+
+### Notes
+
+- All operations are in-place and use integer math
+- Brightness and tinting are supported in `set()` and `blit()`
+- Mono→color expansion is automatic when blitting
+- Ideal for use with `Leds.pixels_buffer()` to drive 2D LED panels
+
+### Example
+
+```berry
+var strip = Leds(256, gpio.pin(gpio.WS2812, 32))
+var m = pixmat(strip.pixels_buffer(), 32, 8, strip.pixel_size(), true)
+m.set(0, 0, 0xFF0000)  # top-left pixel red
+strip.show()
+```
+  
+A few more examples can be found [here](https://github.com/Staars/ulanzi-tc001-tasmota/tree/master/anim).
