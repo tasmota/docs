@@ -22,16 +22,11 @@ Then click on "**Wifi Heap Sticker**" in the Online Store to show the details an
 
 ![Extension Manager with details of Wifi Heap Sticker](_media/berry/Tasmotaext_empty_wifiheap.png){ width="300" }
 
-Then click on "**Install**" button, and confirm:
+Then click on "**Install+Run**" button, and confirm:
 
 ![Extension Manager confirm installation](_media/berry/Tasmotaext_confirm.png){ width="350" }
 
-The page refreshes itself and shows the list of installed extensions:
-
-![Extension Manager with Wifi Heap Sticker installed](_media/berry/Tasmotaext_wifi_installed.png){ width="300" }
-
-The "Wifi Heap Sticker" extensions is installed, configured as Auto-Run but not yet running.
-Click on "**Stopped**" to run it immediately:
+The page refreshes itself and shows the list of extensions:
 
 ![Extension Manager with Wifi Heap Sticker running](_media/berry/Tasmotaext_wifi_running.png){ width="300" }
 
