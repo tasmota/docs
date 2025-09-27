@@ -1110,9 +1110,10 @@ state<a class="cmnd" id="ws_state"></a>|`() -> int`<br>Returns the internal stat
 content_open<a class="cmnd" id="ws_content_open"></a>|`(http_code:int, mimetype:string) -> nil`<br>Sets http code and mime type for the response
 content_start<a class="cmnd" id="ws_content_start"></a>|`(string) -> nil`<br>Start response page with title
 content_response<a class="cmnd" id="ws_content_response"></a>|`(string) -> nil`<br>Sends a response to a XMLHttpRequest
-content_send_style<a class="cmnd" id="ws_content_send_style"></a>|`() -> nil`<br>Sends the standard Tasmota style
+content_send_style<a class="cmnd" id="ws_content_send_style"></a>|`([styles -> string]) -> nil`<br>Sends the standard Tasmota style<br>Optional argument `styles` to add custom CSS styles to the `<head>` section
 content_flush<a class="cmnd" id="ws_content_flush"></a>|`() -> nil`<br>Flush the buffer and send any buffered content to the client
-content_stop<a class="cmnd" id="ws_content_stop"></a>|`() -> nil`<br>End of the response, closes the connection
+content_stop<a class="cmnd" id="ws_content_stop"></a>|`() -> nil`<br>Produce the standard Tasmota footer and closes the connection
+content_close<a class="cmnd" id="ws_content_close"></a>|`() -> nil`<br>Closes the connection without adding any more content
 redirect<a class="cmnd" id="ws_redirect"></a>|`(string) -> nil`<br>Sets location header, and http status 302
 
 Module `webserver` also defines the following constants:
