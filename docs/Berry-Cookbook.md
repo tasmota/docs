@@ -691,6 +691,7 @@ def set_timer_modulo(delay,f,id)
   tasmota.set_timer((now+delay/4+delay)/delay*delay-now, def() set_timer_modulo(delay,f,id) f() end, id)
 end
 ```
+Note that the timer calculation will overflow after about 25 days of uptime, resulting in incorrect timer values.  A better option is to use cron instead.
 
 ## H-bridge control
 
