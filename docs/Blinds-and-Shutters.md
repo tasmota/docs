@@ -140,37 +140,10 @@ After setup is started the shutter will move to the upper endpoint and close aga
   * If the shutter does not close completely, open again and adjust close time.
   * If it runs too long, move it back to desired closed position with `ShutterSetPosition<x>`, reset to 0 with `ShutterSetClose<x>` and decrease open time.
 - Alternate between opening and closing the shutter until you find out the exact times needed to get the same positions multiple times
-- Now set the 50% open position of the shutter. Some shutters need some time from totally closed until they begin moving the bottom-most part and opening. This often results in a shutter that is less than 50% open when the shutter has been operating for 50% of the set time. This can be corrected by using `ShutterSetHalfway<x>`. Use this procedure to calibrate the half-open position:
-   1. `ShutterClose<x>` (confirm that the shutter is completely closed)
-   2. `ShutterSetHalfway<x> 50` (reset to default)
-   3. Move the shutter to actual 50% open position.
-   4. Use `ShutterPosition<x>` to inquire the shutter's current position and record the value. This value is a **percentage of the total opening** (e.g., `63` = 63% of opening).
-   5. `ShutterClose<x>`
-   6. `ShutterSetHalfway<x> 63` (using the value from step #4 above)
-   7. `Restart 1`
 
 After calibration is complete, you might want to enable an additional 1 second motor movement with `ShutterEnableEndStopTime<x> 1` when the shutter is asked to move to its end positions (0% and 100%). With this you can guarantee that end positions are still reached in case of inaccuracies. Take care to disable this with `ShutterEnableEndStopTime<x> 0` before further open or close duration measurements.
 
-### Increasing Calibration Granularity
-If you desire that the %-opening closely match what `ShutterPosition<x>` and web UI indicate, there is a granular calibration matrix available. Ensure that `ShutterClose<x>` and `ShutterOpen<x>` moves the shutter more or less to the limit positions and follow this procedure:
-
-- `ShutterSetHalfway<x> 50` (reset to default)
-- `ShutterCalibration<x> 30 50 70 90 100`
-- `Restart 1`
-- `ShutterClose<x>`
-- Move the shutter to each of the following opening percentages and measure the shutter's position for each. 
-   - `ShutterPosition<x> 30` (e.g., measurement = `15`)
-   - `ShutterPosition<x> 50` (e.g., measurement = `50`)
-   - `ShutterPosition<x> 70` (e.g., measurement = `100`)
-   - `ShutterPosition<x> 90` (e.g., measurement = `150`)
-   - `ShutterPosition<x> 100` (e.g., measurement = `180`)
-- Finally, enter the position measurements as the calibration values: `ShutterCalibration<x> 15 50 100 150 180`  
-
-`ShutterCalibration<x>` takes position measurements (**not** the time it takes to move). During calibration you position the shutter to an indicated percentage (e.g., `30%`) of opening and measure the shutter position (e.g., `15`). Use the same unit of measure for all your measurements (e.g., centimeters, inches, steps, etc.). After calibration `ShutterPosition<x> 30` will move to `30%` opening. This will be 30% from  `180` (full open) == `54`. Now the percentage match the percent in cm/inch/steps.
-
-Notice that there is no calibration for the 10% position. On many shutters, there is no movement during the initial phase (i.e., nearly 10% of total time). Therefore the opening could be `0`. This measurement would cause an execution DIV 0 exception. Therefore the first calibration point is 30%. In most cases this is not a large opening so the calibration will be near enough. Yes, until ~10%, the position will be a bit "off" but not enough for concern.  
-
-## Motor Movement Delays
+### Motor Movement Delays
 Some motors need up to one second after power is turned on before they start moving. You can confirm if you are having this issue if opening and closing as a single action works properly but doing this in smaller steps result in a shift of the position.  
 
 1. `Shutterposition<x> 30`  
@@ -191,7 +164,37 @@ Close the shutter and repeat this procedure until the motor delay is set properl
 
 Following defaults are pre-compiled into the code and can only be changed by compiling you own binary and use the `user_config.override`
 - In Failsafe-Mode the driver waits for 0.1sec to let the direction relay execute and be stable before switching on the power relay starting the movement. The time in [ms] can be changed by adding following line with a different value: `#define SHUTTER_RELAY_OPERATION_TIME 100 // wait for direction relay 0.1sec before power up main relay`
-- 
+
+### Coarse Positioning Calibration (Halfway point only)
+
+Some shutters need some time from totally closed until they begin moving the bottom-most part and opening. This often results in a shutter that is less than 50% open when the shutter has been operating for 50% of the set time. This can be corrected by using `ShutterSetHalfway<x>`. Use this procedure to calibrate the half-open position (alternatively there is a more exact calibration sequence using matrix values available in the next section):
+
+ 1. `ShutterClose<x>` (confirm that the shutter is completely closed)
+ 2. `ShutterSetHalfway<x> 50` (reset to default)
+ 3. Move the shutter to actual 50% open position.
+ 4. Use `ShutterPosition<x>` to inquire the shutter's current position and record the value. This value is a **percentage of the total opening** (e.g., `63` = 63% of opening).
+ 5. `ShutterClose<x>`
+ 6. `ShutterSetHalfway<x> 63` (using the value from step #4 above)
+ 7. `Restart 1`
+
+### Fine Positioning Calibration (Calibration Matrix)
+If you desire that the %-opening closely match what `ShutterPosition<x>` and web UI indicate, there is a granular calibration matrix available. Ensure that `ShutterClose<x>` and `ShutterOpen<x>` moves the shutter more or less to the limit positions and follow this procedure:
+
+ 1. `ShutterSetHalfway<x> 50` (reset to default)
+ 2. `ShutterCalibration<x> 30 50 70 90 100` (reset to default)
+ 3. `ShutterClose<x>`
+ 4. Move the shutter to each of the following opening percentages and measure the shutter's position for each. 
+    1. `ShutterPosition<x> 30` (e.g., measurement = `15`)
+    2. `ShutterPosition<x> 50` (e.g., measurement = `50`)
+    3. `ShutterPosition<x> 70` (e.g., measurement = `100`)
+    4. `ShutterPosition<x> 90` (e.g., measurement = `150`)
+    5. `ShutterPosition<x> 100` (e.g., measurement = `180`)
+ 5. Finally, enter the position measurements as the calibration values: `ShutterCalibration<x> 15 50 100 150 180`  
+
+`ShutterCalibration<x>` takes position measurements (**not** the time it takes to move). During calibration you position the shutter to an indicated percentage (e.g., `30%`) of opening and measure the shutter position (e.g., `15`). Use the same unit of measure for all your measurements (e.g., centimeters, inches, steps, etc.). After calibration `ShutterPosition<x> 30` will move to `30%` opening. This will be 30% from  `180` (full open) == `54`. Now the percentage match the percent in cm/inch/steps.
+
+Notice that there is no calibration for the 10% position. On many shutters, there is no movement during the initial phase (i.e., nearly 10% of total time). Therefore the opening could be `0`. This measurement would cause an execution DIV 0 exception. Therefore the first calibration point is 30%. In most cases this is not a large opening so the calibration will be near enough. Yes, until ~10%, the position will be a bit "off" but not enough for concern. 
+
 ## Motor Stop time
 When shutters change direction immediatly it can happen that there is a short circuit or at least high moments on the motors. Therfore the default time between a STOP and the next START of the shutter is 0.5s = 500ms. This allows in most cases the shutter to fully stop and then start from a static position. With Version 12.3 you can change the duration through `shuttermotorstop 500` or any other value in ms. The value is for all defined shutters the same.
 
