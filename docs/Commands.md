@@ -649,6 +649,7 @@ SetOption161<a class="cmnd" id="setoption161"></a>|Disable display of state text
 SetOption162<a class="cmnd" id="setoption162"></a>|Do not add export energy to energy today
 SetOption163<a class="cmnd" id="setoption163"></a>|Disable display of GUI device name
 SetOption164<a class="cmnd" id="setoption164"></a>|Enable WiZ Smart Remote support
+SetOption165<a class="cmnd" id="setoption165"></a>|Allow TLS ECDSA certificates<br>`0` = allow only RSA certificates<br>`1` = allow both RSA and ECDSA certificates<br>Because letsencrypt nod defaults to ECDSA certificates, in case of TLS error 296 (unsupported cipher), `SetOption165 1` is automatically enabled.
               
 ### TuyaMCU
 
