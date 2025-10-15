@@ -143,7 +143,7 @@ A few more examples can be found [here](https://github.com/Staars/ulanzi-tc001-t
 This page displays all 59 WLED gradient palettes available in the Berry Animation Framework.
 
 <style>
-table:first-of-type td:nth-child(2) {
+h3#palette-gallery + * td:nth-child(2) {
     background-color: rgb(30, 33, 41);
     padding: 8px;
 }
