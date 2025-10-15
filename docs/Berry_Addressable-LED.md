@@ -148,7 +148,6 @@ table:first-of-type td:nth-child(2) {
     padding: 8px;
 }
 </style>
-<div class="palette-table">
 
 ### Palette Gallery
 
