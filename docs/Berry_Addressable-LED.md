@@ -151,8 +151,6 @@ This page displays all 59 WLED gradient palettes available in the Berry Animatio
 
 ### Palette Gallery
 
-<div class="wled-palette-table" markdown="1">
-
 Palette | Gradient
 :--- | :---
 `Analogous`<br><small>5 color stops</small> | <div style='width:480px;height:30px;background:linear-gradient(to right, #2600FF 0.0%, #5600FF 24.7%, #8B00FF 49.8%, #C40075 74.9%, #FF0000 100.0%);'></div>
