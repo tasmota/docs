@@ -15,18 +15,18 @@ Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v15.0.1">Tasmota v15.0.1 Sharon</a></span>
+<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v15.1.0">Tasmota v15.1.0 Stella</a></span>
 
 ## Breaking Changes
 
-- none
+- Berry animate framework is DEPRECATED, will be replace by animation framework
 
 ## New Features
 
 - Added support for:
-  - multi channel AU915-928 LoRaWanBridge
-  - AP33772S USB PD Sink Controller
-  - Wireguard VPN
+  - ESP32-C5 and ESP32-P4
+  - ESP32 Extension Manager replacing loading of Partition Wizard
+- Many ESP32 berry fixes and enhancements
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
 
