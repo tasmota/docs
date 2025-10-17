@@ -23,6 +23,7 @@
   - Click on Console in one browser window
   - Keep the other on the main page to view the Power telemetry data
 - Turn the power on to your device. Be sure to turn the output on so the load is powered on as well
+- Optionally increase resolution with commands `Voltres 1` and/or `WattRes 2`
 - Wait a few seconds for the readings to stabilize
 
 ## Calibration Procedure - Tasmota v14.2.0.1 and up
