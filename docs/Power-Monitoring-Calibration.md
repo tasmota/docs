@@ -31,7 +31,7 @@
    [`VoltageSet <voltage>`](Commands.md#voltageset)  
    _Replace `<voltage>` with your standard voltage or with reading on your multi-meter if you have one. Your voltage will vary depending on the electrical standards and your electrical grid_  
 
-2. Verify the **Power** and **Current** readings in the web UI (optionally with the power meter as well) for the expected wattage and amperage. Adjust both power and current offset if needed (in Watts and milliAmps):  
+2. Verify the **Power** and **Current** readings in the web UI (optionally with the power meter as well) for the expected wattage and amperage. Adjust both power and current offset if needed (in Watts):  
    [`PowerSet 60.0, <voltage>`](Commands.md#powerset)  
    _If you're using something other than a 60W bulb, enter your load's power rating.
    Replace `<voltage>` with your standard voltage or with reading on your multi-meter if you have one. Your voltage will vary depending on the electrical standards and your electrical grid_  
