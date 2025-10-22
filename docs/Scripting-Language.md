@@ -59,7 +59,7 @@ To enter a script, go to **Consoles -> Edit Script** in the Tasmota web UI menu 
 
 To save code space almost no error messages are provided. However it is taken care of that at least it should not crash on syntax errors.  
 
-### Features
+## Features
 
 - Up to 50 variables (45 numeric and 5 strings - this may be changed by setting a compilation `#define` directive)  
 - Freely definable variable names (all variable names are intentionally _**case sensitive**_)  
@@ -149,19 +149,19 @@ see further info and download [here](https://www.dropbox.com/sh/0us18ohui4c3k82/
 
 #### Visual Studio Code Extension
 
-If you're used to working with Visual Studio Code, you can use [this extension](https://marketplace.visualstudio.com/items?itemName=StefanoBertini.tasmota-script-support) to edit your scripts with the benefit of various helpful features, such as, for example, Syntax Highlighting, Automatic script upload, #define, ifdef and ifndef preprocessor macros, Code Folding, Code Snippet and Hover hints on tasmota functions and variables documentation.  
+If you're used to work with Visual Studio Code, you can use [this extension](https://marketplace.visualstudio.com/items?itemName=StefanoBertini.tasmota-script-support) to edit your scripts with the benefit of various helpful features, such as, for example, Syntax Highlighting, Automatic script upload, #define, ifdef and ifndef preprocessor macros, Code Folding, Code Snippet and Hover hints on tasmota functions and variables documentation.  
 
-#### Console Commands
+### Console Commands
 
-`script <n>` <n>: `0` = switch script off; `1` = switch script on  `8` = switch stop on error off; `9` = switch stop on error on 
-`script ><cmdline>` execute <cmdline>  
-- Can be used to set variables, e.g., `script >mintmp=15`  
-- Multiple statements can be specified by separating each with a semicolon, e.g. `script >mintmp=15;maxtemp=40`  
+- `script <n>` <n>: `0` = switch script off; `1` = switch script on  `8` = switch stop on error off; `9` = switch stop on error on 
+- `script ><cmdline>` to execute `<cmdline>`  
+
+  - Can be used to set variables, e.g., `script >mintmp=15`  
+  - Multiple statements can be specified by separating each with a semicolon, e.g. `script >mintmp=15;maxtemp=40`  
   
-`script?<var>` queries a script variable `var`  
+  - `script?<var>` queries a script variable `var`  
 
-`scriptsize N` sets the amount of script source code allowed between 1000 and max defined during compile (with #define UFSYS_SIZE)    
-
+- `scriptsize N` sets the amount of script source code allowed between 1000 and max defined during compile (with #define UFSYS_SIZE)    
 - The script itself can't be specified because the size would not fit the MQTT buffers
 
 ## Script Sections
