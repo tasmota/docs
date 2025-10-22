@@ -1,10 +1,5 @@
 How to setup and configure Visual Studio Code with PlatformIO for Tasmota compilation and upload.
 
-## Easy way (only Windows): Portable install of Visual Studio Code for Tasmota
-Download the ready made [Portable Installation](https://github.com/Jason2866/Portable_VSC_PlatformIO/releases/download/1.3/VSC_PlatformIO_Python.zip)
-of VSC/PlatformIO and extract the ZIP to a folder or a fast extern drive.<br>
-Grab [Tasmota](https://github.com/arendst/Tasmota/archive/refs/heads/development.zip) unpack and Start `VS Code.exe` (in folder VSC)
-
 ## Full Install (Windows, Linux and Mac)
 
 ## Download and Install Visual Studio Code
@@ -17,6 +12,8 @@ Select ``View`` - ``Extensions`` and type PlatformIO in the search box.
 
 Make sure to select the official PlatformIO.org *PlatformIO IDE* extension and select *Install*. Accept to install dependencies.
 To install on Linux, it is essential to first have the python3-venv package installed on your system.
+
+As an alternative to the *Platformio IDE* the *pioarduino IDE* extension can be used.
 
 ## Download Tasmota
 Download the latest Tasmota version from <https://github.com/arendst/Tasmota> and unzip to a known folder.
