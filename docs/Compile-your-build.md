@@ -11,18 +11,11 @@ If you want to modify the code or default settings you can use:
 - [**PlatformIO CLI**](PlatformIO-CLI) - how to flash Tasmota using the PlatformIO command line interface on Linux
 - [**PlatformIO-Core**](Create-your-own-Firmware-Build-without-IDE) - automate firmware builds using PlatformIO-Core and flash with esptool
 - [**Visual Studio Code**](Visual-Studio-Code) -  setup and configure [Visual Studio Code](https://code.visualstudio.com) with PlatformIO for Tasmota
-- [**Docker Tasmota**](https://github.com/tasmota/docker-tasmota) - compile from a Docker container using PlatformIO
-
-### Online Compilers
-
-_**Can only create a firmware binary.** Use one of the [tools](Getting-Started.md#flashing-tool) to flash it to your device or try the [Webserial ESPTool](https://jason2866.github.io/WebSerial_ESPTool/).
-
-- [**Gitpod**](Gitpod) - compile your own binary in the cloud using [Gitpod](https://www.gitpod.io/).  
-- [**TasmoCompiler**](https://github.com/benzino77/tasmocompiler) - simple web GUI to compile Tasmota with your own settings
-
-**Simplest way to compile is with [GitPod](Gitpod), requires only a web browser.**
 
 Once you have set up the development environment, unzip the source code into a folder.
+
+- [**Docker Tasmota**](https://github.com/tasmota/docker-tasmota) - compile from a Docker container using PlatformIO
+- [**TasmoCompiler**](https://github.com/benzino77/tasmocompiler) - simple web GUI to compile Tasmota via Docker with your own settings
 
 ## Customize Your Build
 
