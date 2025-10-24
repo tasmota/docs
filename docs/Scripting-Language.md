@@ -117,7 +117,7 @@ after initialization the script reports some info in the console e.g:
 00:00:00.043 SCR: nv=15, tv=1, vns=83, vmem=895, smem=8192, gmem=588, pmem=0, tmem=9758  
 nv = number of used variables in total (numeric and strings)  
 tv = number of used string variables  
-vns = total size of name strings in bytes (may not exceed 255) or #define SCRIPT_LARGE_VNBUFF extents the size to 4095
+vns = total size of name strings in bytes (may not exceed 256) or #define SCRIPT_LARGE_VNBUFF extents the size to 4095 (default)
 
 vmem = used heap ram by the script (psram if available)  
 smem = used script (text) memory (psram if available)  
@@ -198,7 +198,7 @@ therefore when specifing permanent variables, add newly defined ones always at t
   array = {x y z} sets 3 values in an array from index array[0]  
 
 !!! tip
-    Keep variable names as short as possible. The length of all variable names taken together may not exceed 256 characters.  
+    Keep variable names as short as possible. The length of all variable names taken together may not exceed 4096 characters.  
     Memory is dynamically allocated as a result of the D section.  
     Copying a string to a number or reverse is supported  
 
