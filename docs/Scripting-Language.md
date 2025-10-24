@@ -61,7 +61,7 @@ To save code space almost no error messages are provided. However it is taken ca
 
 ## Features
 
-- Up to 50 variables (45 numeric and 5 strings - this may be changed by setting a compilation `#define` directive)  
+- number of variables limited by available RAM only 
 - Freely definable variable names (all variable names are intentionally _**case sensitive**_)  
 - Nested if,then,else up to a level of 8  
 - Math operators  `+`,`-`,`*`,`/`,`%`,`&`,`|`,`^`,`<<`,`>>`  
