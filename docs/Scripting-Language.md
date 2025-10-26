@@ -1075,6 +1075,8 @@ The script itself is also stored on the file system with a default size of 8192 
 `frb(fr)` read byte from file  
 `frw(fr url)` read file from web url, if url is an immediate string it may be longer than max string size to support very long URLs.  
 `fcs(fr "del" index ec)` = gets non string from file: del = delimiter char or string, index = n´th element, ec = end character delimiter.  
+files in filesystem may also be listed or downloaded via http://ip/ufs/filename
+with http://ip/ufs/$varname(;varname2;...) you may list variables and arrays from scripter in json format.
 
 ###  Other commands   (+?? flash)
 
