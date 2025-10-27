@@ -96,7 +96,7 @@ Backlog rule1 on switch2#state do publish stat/%topic%/MOTION %value% endon; rul
 3. Run this very-long command all at once:
 
 ```console
-rule2 on system#boot do publish2 homeassistant/%topic%/config {
+rule2 on system#boot do publish2 homeassistant/binary_sensor/%topic%/config {
   "name": "Motion Sensor",
   "state_topic": "stat/%topic%/MOTION",
   "payload_on": 1,
