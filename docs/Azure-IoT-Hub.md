@@ -162,3 +162,62 @@ Using a tool like the [Azure IoT Explorer](https://github.com/Azure/azure-iot-ex
 Using a tool like the [Azure IoT Explorer](https://github.com/Azure/azure-iot-explorer/releases/), select Cloud-to-device message set a property of Topic to `/power`, add `toggle` to the message body and click the `Send message to device` button.
 
 ![image](https://user-images.githubusercontent.com/15837044/117373865-afed7d80-ae91-11eb-8824-25a690f97c59.png)
+
+
+## How to update a Device Twin's "Reported Properties" using Rules
+
+### Overview
+Azure IoT Hub supports a cloud-stored representation of an IoT device, known as a Device Twin, inside of Azure IoT Hub. A main benefit of the Device Twin is that critical state properties of the actual IoT device can be "reported" to IoT hub and stored.
+
+The device twin, in practice, is no more than a JSON document. Certain properties are updated automatically by the IoT Hub service, such as the "connectionState" parameter that indicates if the MQTT connection is active. See the Azure documentation for more details on the standard properties and reported/desired property collections.
+
+This capabilites enables an easily queriable data-source that can be efficiently queried for devices that match certain conditions. 
+
+### Azure Documentation Resources
+See: [Understand and use device twins in IoT Hub](https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins)
+
+### Conceptual Explanation of Device Twins
+
+Imagine a deployment where you have 1000 IoT Power Outlets – you want to identify wall devices where the "Power" state is "On".
+
+Without Device Twinning, a service would have to individually message each device, asynchronously collect the responses, then report back the result.
+With Device Twinning the service just needs to query a single centrally accessible data store (managed by IoT Hub). 
+
+It should be noted that property-value disconnects can occur, as well as eventual consistency of state, but the trade off provides for a high-value query feature that would otherwise be unpracticle for large deployments.
+
+### Updating a Reported Property on a Device Twin using Rules
+
+Tasmota Rules can be used to trigger the update of a Device Twin's reported properties. Rules can be triggered off many conditions. It is up to you to decide what trigger to use, as well as the name of the property you'd like to set. See [Tasmota Rules](Rules.md) for details on what's available
+
+#### Set the Rule using the Console
+
+1. Open the Tasmota device configuration via a web browser (by entering the device's IP address)
+
+2. Navigate to the "Console"
+
+3. Enter a Rule definition into the command prompt and hit enter, command takes the following format:
+
+Rule<#> ON \<Trigger Property Name\> DO publish $iothub/twin/PATCH/properties/reported/?$rid=1 \<JSON Object Key/Value Pairs\> ENDON
+
+Example: 
+```
+Rule1 ON Power1#State DO publish $iothub/twin/PATCH/properties/reported/?$rid=1 {"powerState": "%value%"} ENDON
+```
+This rule would create a "powerState" property on the device twin. It would be updated to either 0 or 1 each time the device's (in this case a wall outlet) power setting changes.
+
+4. Be sure to enable the rule with the following command template: *Rule<#> 1*. 
+
+For example, to activate "Rule 1" use the following command. Rules are not active by default.
+
+```
+Rule1 1
+```
+
+#### The Fixed Topic Name for Device Twin Reported Properties
+
+IoT Hub uses prescribed MQTT topic names to enable certain behaviors. 
+
+For Device Twin updates, the topic must be: **$iothub/twin/PATCH/properties/reported/?$rid={#}**.
+The "rid" property must be set to something, but what excactly it is doesn't matter for basic usage.
+
+When a MQTT topic name with a prefix of $iothub is detected, Tasmota will not publish data to the telemetry topic. This means that the message will NOT show up in the Telemetry viewer if you are using Azure IoT Explorer.
