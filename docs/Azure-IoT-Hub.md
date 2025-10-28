@@ -166,12 +166,16 @@ Using a tool like the [Azure IoT Explorer](https://github.com/Azure/azure-iot-ex
 
 ## How to update a Device Twin's "Reported Properties" using Rules
 
+The following content assumes you have successfully connected your Tasmota device to Azure IoT Hub. See the above section for instructions.
+
 ### Overview
 Azure IoT Hub supports a cloud-stored representation of an IoT device, known as a Device Twin, inside of Azure IoT Hub. A main benefit of the Device Twin is that critical state properties of the actual IoT device can be "reported" to IoT hub and stored.
 
 The device twin, in practice, is no more than a JSON document. Certain properties are updated automatically by the IoT Hub service, such as the "connectionState" parameter that indicates if the MQTT connection is active. See the Azure documentation for more details on the standard properties and reported/desired property collections.
 
 This capabilites enables an easily queriable data-source that can be efficiently queried for devices that match certain conditions. 
+
+![](_media/azure_iot/AzureIotHub_DeviceTwin_StandardProperty.jpeg) 
 
 ### Azure Documentation Resources
 See: [Understand and use device twins in IoT Hub](https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins)
@@ -181,13 +185,18 @@ See: [Understand and use device twins in IoT Hub](https://learn.microsoft.com/en
 Imagine a deployment where you have 1000 IoT Power Outlets – you want to identify wall devices where the "Power" state is "On".
 
 Without Device Twinning, a service would have to individually message each device, asynchronously collect the responses, then report back the result.
+
 With Device Twinning the service just needs to query a single centrally accessible data store (managed by IoT Hub). 
+
+```
+SELECT * FROM devices WHERE properties.reported.powerState = '0'
+```
 
 It should be noted that property-value disconnects can occur, as well as eventual consistency of state, but the trade off provides for a high-value query feature that would otherwise be unpracticle for large deployments.
 
 ### Updating a Reported Property on a Device Twin using Rules
 
-Tasmota Rules can be used to trigger the update of a Device Twin's reported properties. Rules can be triggered off many conditions. It is up to you to decide what trigger to use, as well as the name of the property you'd like to set. See [Tasmota Rules](Rules.md) for details on what's available
+Tasmota Rules can be used to trigger the update of a Device Twin's reported properties. Rules can be triggered off many conditions. It is up to you to decide what trigger to use, as well as the name of the property you'd like to set. See [Tasmota Rules](Rules.md) for details on what's available. Reported properties are just Key/Value pairs and you decide each key name – multiple properties can be set in a single publish command.
 
 #### Set the Rule using the Console
 
@@ -199,7 +208,7 @@ Tasmota Rules can be used to trigger the update of a Device Twin's reported prop
 
 Rule<#> ON \<Trigger Property Name\> DO publish $iothub/twin/PATCH/properties/reported/?$rid=1 \<JSON Object Key/Value Pairs\> ENDON
 
-Example: 
+#### Example 1 - Trigger on Power state change: 
 ```
 Rule1 ON Power1#State DO publish $iothub/twin/PATCH/properties/reported/?$rid=1 {"powerState": "%value%"} ENDON
 ```
@@ -213,7 +222,21 @@ For example, to activate "Rule 1" use the following command. Rules are not activ
 Rule1 1
 ```
 
-#### The Fixed Topic Name for Device Twin Reported Properties
+#### Example 2 - Manual Publish
+
+While testing and experimenting, you can directly publish MQTT commands to the Device twin though Tasmota Console commands.
+
+The following command sets a property called "foo" as a string, and "alpha" as an integer.
+
+```
+publish $iothub/twin/PATCH/properties/reported/?$rid=1 {"foo": "bar", "alpha": 8675309}
+```
+
+Notice how IoT Hub also records last updated metadata for each property.
+
+![](_media/azure_iot/AzureIotHub_DeviceTwin_ReportedProperty.jpeg) 
+
+### The Fixed Topic Name for Device Twin Reported Properties
 
 IoT Hub uses prescribed MQTT topic names to enable certain behaviors. 
 
