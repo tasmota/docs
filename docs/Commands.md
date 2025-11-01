@@ -1050,12 +1050,16 @@ NPCLRes<a class="cmnd" id="npclres"></a>|`<resolution>`<BR>Set number of decimal
 NPIONRes<a class="cmnd" id="npionres"></a>|`<resolution>`<BR>Set number of decimal places in results for ION value (resolution = `0..3`).
 NPSetOption0<a class="cmnd" id="npsetoption0"></a>|Sensor data min/max validation and correction (ESP32 only)<BR>`0` = disable correction<BR> `1` = enable correction *(default)*.
 NPSetOption1<a class="cmnd" id="npsetoption1"></a>|NeoPool Modbus connection statistics (ESP32 only)<BR>`0` = disable statistics<BR> `1` = enable statistics *(default)*.
-NPRead<a class="cmnd" id="npread"></a>|`<addr>( <cnt>)`<BR>Read device 16-bit register (addr = `0..0x060F`, cnt = `1..30`). `<cnt>` = `1` if omitted
-NPReadL<a class="cmnd" id="npreadl"></a>|`<addr>( <cnt>)`<BR>Read device 32-bit register (addr = `0..0x060F`, cnt = `1..15`). `<cnt>` = `1` if omitted
-NPWrite<a class="cmnd" id="npwrite"></a>|`<addr> <data>( <data>...)`<BR>Write device 16-bit register (addr = `0..0x060F`, data = `0..0xFFFF`). Use of `<data>` max 10 times
-NPWriteL<a class="cmnd" id="npwritel"></a>|`<addr> <data>( <data>...)`<BR>Write device 32-bit register (addr = `0..0x060F`, data = `0..0xFFFFFFFF`). Use of `<data>` max 10 times
-NPBit<a class="cmnd" id="npbit"></a>|`<addr> <bit>( <data>)`<BR>Read/Write a single bit from device 16-bit register (addr = `0..0x060F`, bit = `0..15`, data = `0|1`). Read if `<data>` is omitted, otherwise set single bit
-NPBitL<a class="cmnd" id="npbitl"></a>|`<addr> <bit>( <data>)`<BR>Read/Write a single bit from device 32-bit register (addr = `0..0x060F`, bit = `0..31`, data = `0|1`). Read if `<data>` is omitted, otherwise set single bit
+NPRead<a class="cmnd" id="npread"></a>|`<addr>( <cnt>)`<BR>Read device 16-bit register (addr = `0..0x06FF`, cnt = `1..30`). `<cnt>` = `1` if omitted
+NPReadLSB<a class="cmnd" id="npreadlsb"></a>|`<addr>( <cnt>)`<BR>Read device LSB of 16-bit register (addr = `0..0x06FF`, cnt = `1..30`). `<cnt>` = `1` if omitted
+NPReadMSB<a class="cmnd" id="npreadmsb"></a>|`<addr>( <cnt>)`<BR>Read device MSB of 16-bit register (addr = `0..0x06FF`, cnt = `1..30`). `<cnt>` = `1` if omitted
+NPReadL<a class="cmnd" id="npreadl"></a>|`<addr>( <cnt>)`<BR>Read device 32-bit register (addr = `0..0x06FF`, cnt = `1..15`). `<cnt>` = `1` if omitted
+NPWrite<a class="cmnd" id="npwrite"></a>|`<addr> <data>( <data>...)`<BR>Write device 16-bit register (addr = `0..0x06FF`, data = `0..0xFFFF`). Use of `<data>` max 20 times
+NPWriteLSB<a class="cmnd" id="npwritelsb"></a>|`<addr> <data>( <data>...)`<BR>Write device LSB 16-bit register (addr = `0..0x06FF`, data = `0..0xFF`). Use of `<data>` max 20 times
+NPWriteMSB<a class="cmnd" id="npwritemsb"></a>|`<addr> <data>( <data>...)`<BR>Write device MSB 16-bit register (addr = `0..0x06FF`, data = `0..0xFF`). Use of `<data>` max 20 times
+NPWriteL<a class="cmnd" id="npwritel"></a>|`<addr> <data>( <data>...)`<BR>Write device 32-bit register (addr = `0..0x06FF`, data = `0..0xFFFFFFFF`). Use of `<data>` max 10 times
+NPBit<a class="cmnd" id="npbit"></a>|`<addr> <bit>( <data>)`<BR>Read/Write a single bit from device 16-bit register (addr = `0..0x06FF`, bit = `0..15`, data = `0|1`). Read if `<data>` is omitted, otherwise set single bit
+NPBitL<a class="cmnd" id="npbitl"></a>|`<addr> <bit>( <data>)`<BR>Read/Write a single bit from device 32-bit register (addr = `0..0x06FF`, bit = `0..31`, data = `0|1`). Read if `<data>` is omitted, otherwise set single bit
 NPEscape<a class="cmnd" id="npescape"></a>|Clears possible errors (like pump exceeded time etc.)
 NPExec<a class="cmnd" id="npexec"></a>|Take over changes without writing to EEPROM. This command is necessary e. g. on changes in *Installer page* (addr 0x0400..0x04EE).
 NPSave<a class="cmnd" id="npsave"></a>|Write data permanently into EEPROM.<BR>During the EEPROM write procedure the NeoPool device may be unresponsive to MODBUS requests, this process always takes less than 1 second.<BR>Since this process is limited by the number of EEPROM write cycles, it is recommend to write all necessary changes to the registers and only then execute EEPROM write process using this command.<BR>__Note: The number of EEPROM writes for Sugar Valley NeoPool devices is guaranteed 100,000 cycles. As soon as this number is exceeded, further storage of information can no longer be guaranteed__.
