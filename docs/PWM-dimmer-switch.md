@@ -1,7 +1,7 @@
 # PWM Dimmer
 
 !!! info "PWM dimmer is supported in standard tasmota.bin"
-      To enable PWM dimmer operation, select the PWM Dimmer module.
+      To enable PWM dimmer operation, select the PWM Dimmer module. On ESP32, instead config an unused gpio as `Option E1`, and use a build with `#define USE_PWM_DIMMER`.
 
 PWM Dimmer module adds support for PWM dimmer switches and devices with one or more buttons that control devices in a device group. The brightness of the load for PWM dimmers is controlled by a PWM GPIO pin. They typically have power, up and down buttons, a powered-on LED, five brightness LEDs and another status LED. The SD0x dimmer from Martin Jerry, Acenx, Tessan or NTONPOWER is an example of such a device.
 
