@@ -74,7 +74,7 @@ To save code space almost no error messages are provided. However it is taken ca
 - String comparison `==`, `!=`  
 - String size is 19 characters (default). This can be increased or decreased by the optional parameter on the `D` section definition
 
-#### Script Interpreter
+### Script Interpreter
 
 - Execution is _**strictly sequential**_, _**line by line**_
 - Evaluation is _**left to right**_ with optional brackets  
@@ -1075,10 +1075,10 @@ The script itself is also stored on the file system with a default size of 8192 
 `frb(fr)` read byte from file  
 `frw(fr url)` read file from web url, if url is an immediate string it may be longer than max string size to support very long URLs.  
 `fcs(fr "del" index ec)` = gets non string from file: del = delimiter char or string, index = n´th element, ec = end character delimiter.  
-files in filesystem may also be listed or downloaded via http://ip/ufs/filename
+files in file system may also be listed or downloaded via http://ip/ufs/filename
 with http://ip/ufs/$varname(;varname2;...) you may list variables and arrays from scripter in json format.
 
-###  Other commands   (+?? flash)
+###  time series database   (+2kB flash)
 
 `#define USE_FEXTRACT`  
 `fxt(fr ts_from ts_to col_offs accum array1 array2 ... arrayn)` read arrays from csv file from timestamp to timestamp with column offset and accumulate values into arrays1 .. N, assumes csv file with timestamp in 1. column and data values in columns 2 to n.  
@@ -1088,7 +1088,7 @@ with http://ip/ufs/$varname(;varname2;...) you may list variables and arrays fro
 `tsn(tstamp)` convert timestamp to seconds  
 `s2t(seconds)` convert seconds to Tasmota timestamp  
 
-### Extended commands   (+0,9k flash)  
+### file system commands   (+0,9k flash)  
 
 `#define USE_SCRIPT_FATFS_EXT`  
 `fmt(0)` format flash file system (erases all data)  
