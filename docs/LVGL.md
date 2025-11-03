@@ -456,7 +456,7 @@ def animate_logo()
   cur_zoom += cur_incr
   if cur_zoom > 300 cur_incr = - cur_incr end
   if cur_zoom < 200 cur_incr = - cur_incr end
-  logo.set_zoom(cur_zoom)
+  logo.set_style_transform_scale(cur_zoom, lv.PART_MAIN | lv.STATE_DEFAULT)
   tasmota.set_timer(100, animate_logo)
 end
 animate_logo()
