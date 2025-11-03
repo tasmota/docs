@@ -605,7 +605,9 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 `sht[x]` = shutter position (x = 1..N) (if defined USE_SHUTTER)  
 `gtmp` = global temperature  
 `ghum` = global humidity  
-`gprs` = global pressure  
+`gprs` = global pressure
+`encabs[x]` = absolute position of the rotary encoder (x = 1..N)
+`encrel[x]` = relative position of the rotary encoder, the value will be reset after reading (x = 1..N)
 
 global variables  
 now optional binary mode, much faster and more precise, also supports arrays.  
