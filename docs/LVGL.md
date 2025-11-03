@@ -434,11 +434,15 @@ The logo is black, with anti-aliasing and transparency. You can now manipulate t
 logo.set_style_img_recolor_opa(255, lv.PART_MAIN | lv.STATE_DEFAULT)
 logo.set_style_img_recolor(lv.color(lv.COLOR_WHITE), lv.PART_MAIN | lv.STATE_DEFAULT)
 
+# set the center point of the image as the reference for zoom and rotation
+logo.set_style_transform_pivot_x(32, lv.PART_MAIN | lv.STATE_DEFAULT)
+logo.set_style_transform_pivot_y(32, lv.PART_MAIN | lv.STATE_DEFAULT)
+
 # zoom by 125% - 100% is 256, so 125% is 320
-logo.set_zoom(300)
+logo.set_style_transform_scale(320, lv.PART_MAIN | lv.STATE_DEFAULT)
 
 # rotate by 30 degrees - or 300 deci-degrees
-logo.set_angle(300)
+logo.set_style_transform_rotation(300, lv.PART_MAIN | lv.STATE_DEFAULT)
 ```
 
 ![screenshot-1618843394](https://user-images.githubusercontent.com/49731213/115389410-5886b680-a1dd-11eb-9b9f-bb901268aeec.png)
