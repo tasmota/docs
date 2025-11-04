@@ -461,6 +461,10 @@ remark: state variable names used for IO in the web interface may not contain an
   `WSO_NODIV` = 2 force elements not in extra \<div\>  
   `WSO_FORCEPLAIN` = 4 send line in plain (no table elements)  
   `WSO_FORCEMAIN` = 8 send lines in main mode ($ mode)  
+  `WSO_FORCEGUI` = 16 force allow gui macros  
+  `WSO_FORCETAB` = 32 force tasmota tab in line ({s}{e})  
+  `WSO_FORCESUBFILE` = 64 force allow html subfile  
+  `WSO_STOP_DIV` = 0x80 force </div> at end of macro  
   
 ### Google Charts  
  
