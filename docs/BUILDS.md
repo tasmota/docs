@@ -36,12 +36,12 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_EXPRESSION            | - | x / x | - | - | - | - |
 | SUPPORT_IF_STATEMENT      | - | x / x | - | - | - | - |
 | USE_HOTPLUG               | - | - / - | - | - | - | - |
-| USE_INFLUXDB              | - | - / - | - | - | - | - |
+| USE_INFLUXDB              | - | - / x | - | - | - | - |
 | USE_PROMETHEUS            | - | - / - | - | - | - | - |
 | USE_PING                  | - | - / - | - | - | - | - |
 |                           |   |       |   |   |   |   |
 | Feature or Sensor         | l | t     | k | s | i | d | Remarks
-| USE_HDMI_CEC              | - | - / x | - | - | - | - |
+| USE_HDMI_CEC              | - | - / - | - | - | - | - |
 | USE_MAGIC_SWITCH          | - | - / x | - | - | - | - |
 | USE_GPIO_VIEWER           | - | - / x | - | - | - | - |
 | ROTARY_V1                 | - | x / x | - | x | - | - |
@@ -237,11 +237,11 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_LD2410                | - | - / - | - | - | - | - |
 | USE_LD2410S               | - | - / - | - | - | - | - |
 | USE_GM861                 | - | - / - | - | - | - | - |
+| USE_TCP_BRIDGE            | - | - / - | - | - | - | - | zbbridge / zbbrdgpro
 | USE_HC8                   | - | - / - | - | - | - | - |
 | USE_PIPSOLAR              | - | - / - | - | - | - | - |
 | USE_WOOLIIS               | - | - / - | - | - | - | - |
 | USE_C8_CO2_5K             | - | - / - | - | - | - | - |
-| USE_TCP_BRIDGE            | - | - / - | - | - | - | - | zbbridge / zbbrdgpro
 |                           |   |       |   |   |   |   |
 | USE_NRF24                 | - | - / - | - | - | - | - |
 | USE_MIBLE                 | - | - / - | - | - | - | - |
@@ -259,7 +259,7 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_DYP                   | - | - / - | - | - | - | - |
 | USE_TM1638                | - | - / x | - | x | - | - |
 | USE_HX711                 | - | - / x | - | x | - | - |
-| USE_HX711_M5SCALES        | - | - / x | - | x | - | - |
+| USE_HX711_M5SCALES        | - | - / - | - | - | - | - |
 | USE_TX2x_WIND_SENSOR      | - | - / - | - | - | - | - |
 | USE_WINDMETER             | - | - / - | - | - | - | - |
 | USE_RC_SWITCH             | - | - / x | - | x | - | - |
