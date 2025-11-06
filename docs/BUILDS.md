@@ -2,7 +2,7 @@
 
 l = lite, t = tasmota (ESP8266 / ESP32), k = knx, s = sensors, i = ir, d = display
 
-Note: `minimal` variant is not listed as it shouldn't be used outside of the [upgrading](https://tasmota.github.io/docs/Upgrading/) process.
+Note: the `minimal` variant is not listed as it shouldn't be used outside of the [upgrading](https://tasmota.github.io/docs/Upgrading/) process.
 
 | Feature or Sensor         | l | t     | k | s | i | d | Remarks
 |---------------------------|---|-------|---|---|---|---|--------
@@ -13,7 +13,7 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_DOMOTICZ              | - | x / x | x | x | x | - |
 | USE_HOME_ASSISTANT        | - | - / - | - | - | - | - |
 | USE_TASMOTA_DISCOVERY     | x | x / x | x | x | x | x |
-| USE_MQTT_TLS*             | - | - / x | - | - | - | - |
+| USE_MQTT_TLS\*            | - | - / x | - | - | - | - |
 | USE_MQTT_CLIENT_CERT      | - | - / - | - | - | - | - |
 | USE_MQTT_AWS_IOT          | - | - / - | - | - | - | - |
 | USE_4K_RSA                | - | - / - | - | - | - | - |
@@ -39,11 +39,11 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_INFLUXDB              | - | - / x | - | - | - | - |
 | USE_PROMETHEUS            | - | - / - | - | - | - | - |
 | USE_PING                  | - | - / - | - | - | - | - |
-|                           |   |       |   |   |   |   |
-| Feature or Sensor         | l | t     | k | s | i | d | Remarks
 | USE_HDMI_CEC              | - | - / - | - | - | - | - |
 | USE_MAGIC_SWITCH          | - | - / x | - | - | - | - |
 | USE_GPIO_VIEWER           | - | - / x | - | - | - | - |
+|                           |   |       |   |   |   |   |
+| Feature or Sensor         | l | t     | k | s | i | d | Remarks
 | ROTARY_V1                 | - | x / x | - | x | - | - |
 | USE_SONOFF_RF             | - | x / - | x | x | - | - |
 | USE_RF_FLASH              | - | x / - | x | x | - | - |
@@ -109,16 +109,16 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | Feature or Sensor         | l | t     | k | s | i | d | Remarks
 | USE_I2C                   | - | x / x | x | x | - | x |
 | USE_RTC_CHIPS             | - | - / x | - | - | - | - |
-| USE_BM8563                | - | - / x | - | - | - | - |
-| USE_DS3231                | - | - / - | - | - | - | - |
-| USE_PCF85063              | - | - / - | - | - | - | - |
-| USE_PCF85363              | - | - / - | - | - | - | - |
-| USE_RX8010                | - | - / - | - | - | - | - |
-| USE_RX8030                | - | - / - | - | - | - | - |
+| -USE_BM8563               | - | - / x | - | - | - | - |
+| -USE_DS3231               | - | - / - | - | - | - | - |
+| -USE_PCF85063             | - | - / - | - | - | - | - |
+| -USE_PCF85363             | - | - / - | - | - | - | - |
+| -USE_RX8010               | - | - / - | - | - | - | - |
+| -USE_RX8030               | - | - / - | - | - | - | - |
 | USE_SHT                   | - | - / x | - | x | - | - |
 | USE_HTU                   | - | - / x | - | x | - | - |
 | USE_BMP                   | - | - / x | - | x | - | - |
-| USE_BME68X                | - | - / x | - | x | - | - |
+| -USE_BME68X               | - | - / x | - | x | - | - |
 | USE_AMSX915               | - | - / - | - | - | - | - |
 | USE_SPL06_007             | - | - / - | - | - | - | - |
 | USE_QMP6988               | - | - / - | - | - | - | - |
@@ -254,12 +254,13 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_IR_REMOTE_FULL        | - | - / - | - | - | x | - | Enable ALL protocols
 |                           |   |       |   |   |   |   |
 | USE_WIZMOTE               | - | - / - | - | - | - | - |
+|                           |   |       |   |   |   |   |
 | USE_SR04                  | - | - / - | - | x | - | - |
 | USE_ME007                 | - | - / - | - | - | - | - |
 | USE_DYP                   | - | - / - | - | - | - | - |
 | USE_TM1638                | - | - / x | - | x | - | - |
 | USE_HX711                 | - | - / x | - | x | - | - |
-| USE_HX711_M5SCALES        | - | - / - | - | - | - | - |
+| -USE_HX711_M5SCALES       | - | - / - | - | - | - | - |
 | USE_TX2x_WIND_SENSOR      | - | - / - | - | - | - | - |
 | USE_WINDMETER             | - | - / - | - | - | - | - |
 | USE_RC_SWITCH             | - | - / x | - | x | - | - |
@@ -299,4 +300,6 @@ Note: `minimal` variant is not listed as it shouldn't be used outside of the [up
 | USE_DINGTIAN_RELAY        |   |   / - |   |   |   |   |
 | USE_MATTER_DEVICE         |   |   / x |   |   |   |   | See SetOption151
 
-* USE_MQTT_TLS is enabled by default in every ESP32 variants
+The following specific display drivers are replaced with uDisplay, see [uDisplay/uTouch documentation](https://tasmota.github.io/docs/Universal-Display-Driver/#migrating-to-udisplay): `USE_DISPLAY_ILI9341`, `USE_DISPLAY_SSD1306`, `USE_DISPLAY_SH1106`, `USE_DISPLAY_SSD1351`, `USE_DISPLAY_ST7789`
+
+- USE_MQTT_TLS is enabled by default in every ESP32 variants
