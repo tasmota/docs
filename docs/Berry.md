@@ -1106,7 +1106,7 @@ Low-level functions if you want to display custom pages and content:
 General Function|Parameters and details
 :---|:---
 on<a class="cmnd" id="ws_on"></a>|`(prefix:string, callback:closure [, method:int]) -> nil`<br>Attaches a handler (any closure or function) to a prefix. An optional `method` argument (defaults to `webserver.HTTP_ANY`) specifies the HTTP methods to be received (ANY, GET, POST, OPTIONS, POST)<BR>WARNING - this should be called only when receiving `web_add_handler` event. If called before the WebServer is set up and Wi-Fi on, it will crash. For debug purpose, it can be called later when you are sure that Wi-Fi or Ethernet is up.
-remove_route<a class="cmnd" id="ws_remove_route"></a>|`(prefix:string [, method:int]) -> bool<br>Remove a handler already added with `webserver.on()`. Does nothing if the handler does not exist or was already removed.
+remove_route<a class="cmnd" id="ws_remove_route"></a>|`(prefix:string [, method:int]) -> bool`<br>Remove a handler already added with `webserver.on()`. Does nothing if the handler does not exist or was already removed.
 state<a class="cmnd" id="ws_state"></a>|`() -> int`<br>Returns the internal state of Tasmota web server. Possible values are `webserver.HTTP_OFF`, `webserver.HTTP_USER`, `webserver.HTTP_ADMIN`, `webserver.HTTP_MANAGER`, `webserver.HTTP_MANAGER_RESET_ONLY`.
 content_open<a class="cmnd" id="ws_content_open"></a>|`(http_code:int, mimetype:string) -> nil`<br>Sets http code and mime type for the response
 content_start<a class="cmnd" id="ws_content_start"></a>|`(string) -> nil`<br>Start response page with title
