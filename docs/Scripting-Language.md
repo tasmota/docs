@@ -464,7 +464,7 @@ remark: state variable names used for IO in the web interface may not contain an
   `WSO_FORCEGUI` = 16 force allow gui macros  
   `WSO_FORCETAB` = 32 force tasmota tab in line  
   `WSO_FORCESUBFILE` = 64 force allow html subfile  
-  `WSO_STOP_DIV` = 0x80 force </div> at end of macro  
+  `WSO_STOP_DIV` = 0x80 force \<div\> at end of macro  
   
 ### Google Charts  
  
