@@ -542,7 +542,7 @@ Clicking  this button displays a web page with the HTML data of this section.
 all cmds like in >W apply here. these lines are refreshed frequently to show e.g. sensor values.
 lines preceded by $ are static and not refreshed and displayed below lines without $.  
 this option also enables a full webserver interface when USE_UFILESYS is active.  
-you may display files from the flash or SD filesystem by specifying the url:  IP/ufs/path  .
+you may display files from the flash or SD filesystem by specifying the url:  <IP>/ufs/<path>  .
 (supported files: *.jpg, *.html, *.txt)  
 `>w1` `>w2` `>w3`  `>w4`  `>w5`  `>w6` some as above `>w`  
 ==Requires compiling with `#define SCRIPT_FULL_WEBPAGE`.==  
@@ -1081,8 +1081,8 @@ The script itself is also stored on the file system with a default size of 8192 
 `frb(fr)` read byte from file  
 `frw(fr url)` read file from web url, if url is an immediate string it may be longer than max string size to support very long URLs.  
 `fcs(fr "del" index ec)` = gets non string from file: del = delimiter char or string, index = n´th element, ec = end character delimiter.  
-files in file system may also be listed or downloaded via http://ip/ufs/filename
-with http://ip/ufs/$varname(;varname2;...) you may list variables and arrays from scripter in json format.
+files in file system may also be listed or downloaded via http://<ip>/ufs/<filename>
+with http://<ip>/ufs/$<varname>(;<varname2>;...) you may list variables and arrays from scripter in json format.
 
 ###  time series database   (+2kB flash)
 
