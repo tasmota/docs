@@ -15,19 +15,19 @@
 
     | Feature | Description |
     | -- | -- |
-    USE_BUTTON_EVENT | enable `>b` section (detect button state changes)
-    USE_SCRIPT_JSON_EXPORT | enable `>J` section (publish JSON payload on [TelePeriod](Commands.md#teleperiod))
+    USE_BUTTON_EVENT | enables `>b` section (detect button state changes)
+    USE_SCRIPT_JSON_EXPORT | enables `>J` section (publish JSON payload on [TelePeriod](Commands.md#teleperiod))
     USE_SCRIPT_SUB_COMMAND | enables invoking named script subroutines via the Console or MQTT
-    USE_SCRIPT_HUE | enable `>H` section (Alexa Hue emulation)
-    USE_HOMEKIT | enable `>h` section (Siri Homekit support (ESP32 only),<br>define must be given in platform_override see below)
-    USE_SCRIPT_STATUS | enable `>U` section (receive JSON payloads from cmd status)
-    SCRIPT_POWER_SECTION | enable `>P` section (execute on power changes)
+    USE_SCRIPT_HUE | enables `>H` section (Alexa Hue emulation)
+    USE_HOMEKIT | enables `>h` section (Siri Homekit support (ESP32 only),<br>define must be given in platform_override see below)
+    USE_SCRIPT_STATUS | enables `>U` section (receive JSON payloads from cmd status)
+    SCRIPT_POWER_SECTION | enables `>P` section (execute on power changes)
     SUPPORT_MQTT_EVENT | enables support for subscribe unsubscribe
-    USE_SENDMAIL | enable `>m` section and support for sending e-mail<br>(on ESP32 you must add USE_ESP32MAIL)  
-    USE_SCRIPT_WEB_DISPLAY | enable `>W` section (modify web UI)
+    USE_SENDMAIL | enables `>m` section and support for sending e-mail<br>(on ESP32 you must add USE_ESP32MAIL)  
+    USE_SCRIPT_WEB_DISPLAY | enables `>W` section (modify web UI)
     SCRIPT_FULL_WEBPAGE | enable ``>w`` section (separate full web page and webserver)
-    USE_TOUCH_BUTTONS | enable virtual touch button support with touch displays
-    USE_WEBSEND_RESPONSE | enable receiving the response of [`WebSend`](Commands.md#websend) and [`WebQuery`](Commands.md#webquery) commands (received in section >E)
+    USE_TOUCH_BUTTONS | enables virtual touch button support with touch displays
+    USE_WEBSEND_RESPONSE | enables receiving the response of [`WebSend`](Commands.md#websend) and [`WebQuery`](Commands.md#webquery) commands (received in section >E)
     SCRIPT_STRIP_COMMENTS | enables stripping comments when attempting to paste a script that is too large to fit
     USE_ANGLE_FUNC | add sin(x),acos(x) and sqrt(x) e.g. to allow calculation of horizontal cylinder volume
     USE_SCRIPT_FATFS_EXT | enables additional FS commands   
@@ -36,20 +36,19 @@
     USE_SCRIPT_TASK | enables multitasking Task in ESP32
     USE_SCRIPT_GLOBVARS | enables global variables and >G section
     USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
-    SML_REPLACE_VARS | enables possibility to replace the lines from the (SML) descriptor with Vars
+    SML_REPLACE_VARS | enables replacing hard-coded definitions for SML descriptor with variables
     NO_USE_SML_SCRIPT_CMD | disables SML script cmds
     USE_SCRIPT_I2C | enables I2C support
     USE_SCRIPT_SERIAL | enables support for serial io cmds
     USE_SCRIPT_TIMER | enables up to 4 Arduino timers (so called tickers)  
     SCRIPT_GET_HTTPS_JP | enables reading HTTPS JSON WEB Pages (e.g. Tesla Powerwall)
     LARGE_ARRAYS | enables arrays of up to 1000 entries instead of max 127  
-    SCRIPT_LARGE_VNBUFF | enables to use 4096 in stead of 256 bytes buffer for variable names  
+    SCRIPT_LARGE_VNBUFF | enables to use 4096 instead of 256 bytes buffer for variable names  
     USE_GOOGLE_CHARTS | enables definition of google charts within web section
     USE_FEXTRACT | enables array extraction from database fxt(...), fxto() and tso(), tsn(), cts(), s2t() functions  
     USE_SCRIPT_SPI | enables support for SPI interface  
     USE_SCRIPT_TCP_SERVER | enables support for TCP server  
     USE_DISPLAY_DUMP | enables to show epaper screen as BMP image in >w section  
-    TS_FLOAT | may be define as double to use double precision numbers (uses double RAM memory and is slower) 
     SCRIPT_FULL_OPTIONS | enables almost any of the above options (uses about 90k of Flash)  
 
 !!! info "Scripting Language for Tasmota is an alternative to Tasmota [Rules](Rules). For ESP32 builds it is recommended to use [Berry](Berry)"
