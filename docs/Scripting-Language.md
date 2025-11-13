@@ -34,7 +34,6 @@
     USE_WEBCAM | enables support ESP32 Webcam which is controlled by scripter cmds
     USE_FACE_DETECT | enables face detecting in ESP32 Webcam
     USE_SCRIPT_TASK | enables multitasking Task in ESP32
-    `USE_LVGL` | enables support for LVGL, no longer supported, use Berry script with LVGL
     USE_SCRIPT_GLOBVARS | enables global variables and >G section
     USE_SML_M | enables [Smart Meter Interface](Smart-Meter-Interface)
     SML_REPLACE_VARS | enables possibility to replace the lines from the (SML) descriptor with Vars
