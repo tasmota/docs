@@ -57,7 +57,6 @@ SetOption73 1
 
 is supported via build Tasmota32-lvgl. Upload firmware and configure via Menu `Auto-configuration`
 
-
 To make the device work nicely, change the following settings in the Console:
 ```
 adcparam3 6,0,4095,0,6160
@@ -141,12 +140,29 @@ OLED display needs the following template
 {"NAME":"WiFi Kit 32","GPIO":[1,1,1,1,640,1,1,1,1,1,1,608,3840,1,1,1,0,1,1,1,0,224,1,1,0,0,0,0,1,1,1,1,1,0,0,1],"FLAG":0,"BASE":1}
 ```
 
-
 #### WEMOS / LOLIN D32
 verified support for board plus I2C sensors
 
 to use I2C, set IO21 to SDA and IO22 to SCL
 
+#### ESP32-S3-ETH and ESP32-S3-POE-ETH by Spotpear
+verified support
+
+Flash with standard Tasmota via the USB-C connector. Then configure GPIO
+
+![Ethernet GPIO](images/ESP32-S3-Eth-gpio.png)
+
+Configure the adapter with commands:
+```
+EthType 8
+Hostname foo
+```
+After reboot, use command `Status 0` to see the Ethernet adapter's MAC and IP addresses.
+
+By default, DHCP will be used.
+
+This configuration enables the Tasmota web interface to be accessed via both the Ethernet and WiFi adapters. 
+No changes are needed to use the POE feature, just add the POE board.
 
 #### Displays, sensors and other options 
 
