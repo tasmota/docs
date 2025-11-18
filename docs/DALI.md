@@ -46,7 +46,7 @@ A redesigned version called [DALI 2 Click](https://www.mikroe.com/dali-2-click) 
 
 This [DALI2 expansion Module](https://www.waveshare.com/pico-dali2.htm) for ESP32-Pico series boards works fine with a Waveshare [ESP32-S3-Pico](https://www.waveshare.com/ESP32-S3-Pico.htm) using GPIO14 as `DALI RX` and GPIO17 as `DALI TX_i`. 
 
-The Waveshare [ESP32-C6-Pico](https://www.waveshare.com/ESP32-C6-Pico.htm) has no GPIO connection to the Pico DALI2. At the physical locations of the Pico DALI2 signals it uses a Texas Instruments TCA9554 I/O expander, compatible with PCF8574, providing ExIO1 (`DALI TX_i`) and ExIO2 (`DALI RX`). This is currently not supported by Tasmota.
+The Waveshare [ESP32-C6-Pico](https://www.waveshare.com/ESP32-C6-Pico.htm) also works fine using GPIO5 as `DALI RX` and GPIO14 as `DALI TX_i`.
 
 ### Shelly DALI Dimmer Gen3
 
