@@ -42,7 +42,7 @@ Initial implementation has been performed using [DALI Click](https://www.mikroe.
 
 A redesigned version called [DALI 2 Click](https://www.mikroe.com/dali-2-click) also works fine whith GPIO settings `DALI TX_i` and `DALI RX_i`.
 
-## Waveshare Pico DALI2
+### Waveshare Pico DALI2
 
 This [DALI2 expansion Module](https://www.waveshare.com/pico-dali2.htm) for ESP32-Pico series boards works fine with a Waveshare [ESP32-S3-Pico](https://www.waveshare.com/ESP32-S3-Pico.htm) using GPIO14 as `DALI RX` and GPIO17 as `DALI TX_i`. 
 
