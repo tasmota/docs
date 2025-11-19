@@ -2150,8 +2150,8 @@ cam_view.center()
 i = img()
 
 import cam
-cam.setup(4) # 240 x 240
-cam.get_image(i,i.RGB565)
+cam.setup(5) # 240 x 240
+cam.get_image(i,i.RGB565LE)
 
 def lv_img_dsc(image)
     var i = image.info()
@@ -2174,7 +2174,7 @@ descriptor = lv_img_dsc(i)
 cam_view.set_src(descriptor) # bind cam_view to buffer of img
 
 def video()
-    cam.get_image(i,i.RGB565) # this will just update the buffer, no reallocation
+    cam.get_image(i,i.RGB565LE) # this will just update the buffer, no reallocation
     cam_view.invalidate()
     tasmota.set_timer(20,/->video()) # aim for 50 Hz
 end
