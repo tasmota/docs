@@ -63,6 +63,7 @@ and in MQTT topic (according to TelePeriod):
 - Return data: -1 in case of error, "value" otherwise
 - Exec(ms): time in ms needed for execution
 - DPM: may be executed during periodic measurements
+- Use SCD40Stop before changing settings. Use SCD40Pers and SCD40strt after changing settings.
 
 | Command | Returns | Exec(ms) | DPM | Function |
 |---|---|---|---|---|
@@ -70,7 +71,7 @@ and in MQTT topic (according to TelePeriod):
 | SCD40Alt x    | errorvalue     | 1 | no | Set Sensor Altitude in range 0-3000 (in m)
 | SCD40Auto     | data           | 1 | no | Get CalibrationEnabled status (bool)
 | SCD40Auto x   | errorvalue     | 1 | no | Set CalibrationEnabled status (bool)
-| SCD40Toff     | data           | 1 | no | Set Temperature offset (centigrades)
+| SCD40Toff     | data           | 1 | no | Set Temperature offset (centigrades) (higher value is lower reading, no negative value)
 | SCD40Toff x   | errorvalue     | 1 | no | Set Temperature offset (centigrades) (some rounding may occur)
 | SCD40Pres x   | errorvalue     | 1 | yes | Set Ambient Pressure in range 700-1200(mbar) (overrides Sensor Altitude setting)
 | SCD40Cal x    | errorvalue   | 400 | no | Perform forced recalibration (ppm CO2)
