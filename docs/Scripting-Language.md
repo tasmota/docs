@@ -112,11 +112,10 @@ with all linker files
 
 #### script init error codes
 after initialization the script reports some info in the console e.g:  
-00:00:00.043 SCR: nv=15, tv=1, vns=83, vmem=895, smem=8192, gmem=588, pmem=0, tmem=9758  
+`00:00:00.043 SCR: nv=15, tv=1, vns=83, vmem=895, smem=8192, gmem=588, pmem=0, tmem=9758`
 nv = number of used variables in total (numeric and strings)  
 tv = number of used string variables  
-vns = total size of name strings in bytes (may not exceed 256) or #define SCRIPT_LARGE_VNBUFF extents the size to 4095 (default)
-
+vns = total size of name strings in bytes (may not exceed 256) or #define SCRIPT_LARGE_VNBUFF extents the size to 4095 (default)  
 vmem = used heap ram by the script (psram if available)  
 smem = used script (text) memory (psram if available)  
 gmem = used script global static memory 
@@ -151,7 +150,12 @@ If you're used to work with Visual Studio Code, you can use [this extension](htt
 
 ### Console Commands
 
-- `script <n>` <n>: `0` = switch script off; `1` = switch script on  `8` = switch stop on error off; `9` = switch stop on error on 
+- `script <n>` set runtime options for scripting  
+   with <n>:
+  	- `0` = switch script off
+  	- `1` = switch script on
+  	- `8` = switch stop on error off
+  	- `9` = switch stop on error on 
 - `script ><cmdline>` to execute `<cmdline>`  
 
   - Can be used to set variables, e.g., `script >mintmp=15`  
