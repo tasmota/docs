@@ -140,6 +140,7 @@ DS3502 | Digital potentiometer| I^2^C
 [**VEML7700**](VEML7700) |  Ambient light intensity sensor| I^2^C
 [**VL53L0x**](VL53Lxx) | Time of flight sensor| I^2^C
 [**VL53L1x**](VL53Lxx) | Time of flight sensor| I^2^C
+[**VID6608**](vid6608) | Analog gauges stepper motor | 
 **[VINDRIKTNING](https://blakadder.com/vindriktning-tasmota/)** | IKEA VINDRIKTNING particle concentration sensor | serial
 **WindMeter** | Analog cup anemometer
 [**Winsen ZH03B**](https://github.com/arendst/Tasmota/pull/19850) | Particle concentration sensor | serial
