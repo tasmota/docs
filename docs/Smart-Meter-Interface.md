@@ -1268,7 +1268,42 @@ The current power and counter in high resolution are available after PIN entry w
     1,77070100100700ff@1,Verbrauch,W,Power,1
     #
     ```
+### EasyMeter M60 V14.02 (SML)
+
+Communication with the EasyM electricity meter occurs serially via two infrared data interfaces (DSS). The baud rate is 9600 Baud (8N1).
+All telegrams are encoded using the SML transport protocol (V1.04).
+
+The electricity meter is a 3-Phase AC meter that can handle two tarifs as well as counters from the grid and what was delivered to the grid.
+When the PIN is entered more information is available on via the INFO-DSS like Voltage and Power per Phase.
+
+
+There are two communication interfaces:
+
+  * INFO-DSS: Unidirectional infrared interface. Permanently outputs (every second) billing-relevant measured values and other information. (used for the script)
+  * MSB-DSS: Bidirectional infrared interface. Permanently outputs (every second) billing-relevant measured values and other information. Additionally, the MSB interface is used for setting meter parameters and controlling tariffs. (Not tested/ used for the script)
+
+For the counter value precision 1 is used for the rest i only took the numbers without any decimal points
+
+??? summary "View script" 
+    ```
 	
+	>D
+	>B
+	=>sensor53 r
+	>M 1
+	+1,3,s,16,9600,ESY
+	1,77070100010800ff@1000,Zaehlerstand,kWh,Bezug_Summe,1
+	1,77070100020800ff@1000,Einspeisung,kWh,Einspeisung_Summe,1
+	1,77070100100700ff@1,Verbrauch,W,Leistung_Total,0
+	1,77070100240700ff@1,L1,W,Leistung_L1,0
+	1,77070100380700ff@1,L2,W,Leistung_L2,0
+	1,770701004c0700ff@1,L3,W,Leistung_L3,0
+	1,77070100200700ff@1,U1,V,Spannung_L1,0
+	1,77070100340700ff@1,U2,V,Spannung_L2,0
+	1,77070100480700ff@1,U3,V,Spannung_L3,0
+	#
+	...
+ 
 ### EasyMeter Q1D (ASCII OBIS)
 
 This script is for the EasyMeter Q1DB1004 variant of the Q1D series. This variant is a one-phase one-way electricity counter with a backstop mechanism. 
