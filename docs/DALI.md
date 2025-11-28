@@ -21,7 +21,9 @@ Scenes can be stored in the devices, for recall on an individual, group or broad
 
 ## Implemented Features
 
-Tasmota DALI gateway is an application controller. It defaults to supporting Device Type 6 (DT6) or Part207 single color LED lighting controller using standard Tasmota light controls.
+Tasmota DALI gateway is an application controller. It defaults to supporting Device Type 6 (DT6) or Part207 single color LED lighting controller using standard Tasmota light controls. It also supports Device Type 8 (DT8) or Part209 RGBWAF color control using standard Tasmota light controls.
+
+Connecting several Tasmota DALI gateways to the same bus is supported. It will synchronise the GUI if configured equally or allow control of different lights using standard Tasmota light controls.
 
 ## Hardware
 
@@ -46,7 +48,7 @@ A redesigned version called [DALI 2 Click](https://www.mikroe.com/dali-2-click) 
 
 This [DALI2 expansion Module](https://www.waveshare.com/pico-dali2.htm) for ESP32-Pico series boards works fine with a Waveshare [ESP32-S3-Pico](https://www.waveshare.com/ESP32-S3-Pico.htm) using GPIO14 as `DALI RX` and GPIO17 as `DALI TX_i`. 
 
-The Waveshare [ESP32-C6-Pico](https://www.waveshare.com/ESP32-C6-Pico.htm) also works fine using GPIO5 as `DALI RX` and GPIO14 as `DALI TX_i`.
+The Waveshare [ESP32-C6-Pico](https://www.waveshare.com/ESP32-C6-Pico.htm) also works fine using GPIO5 as `DALI RX` and GPIO14 as `DALI TX_i`. For best result you'll need to isolate GPIO4 (pin 4) from the Pico DALI2. The ESP32-C6-Pico GPIO4 is hardwired to it's USB Type-C interface input voltage using a resistor bridge and is supposed to be used as an ADC input to measure voltage. The Pico DALI2 uses the same pin for high voltage DALI receive input. It seems to interfere with the data in GPIO5 resulting in no DALI signal detection. I removed pin 4 from the ESP32-C6-Pico header.
 
 ### Shelly DALI Dimmer Gen3
 
@@ -77,9 +79,9 @@ In addition you can easily remove the Shelly power supply assembly from the main
 
 Command|Parameters
 :---|:---
-DaliSend<a class="cmnd" id="dalisend"></a>|Low level DALI control.<br><br>`<byte1>,<byte2>` = Execute DALI code and do not expect a DALI backward frame.<br>`<0xA3>,<byte2>,<byte3>,<byte4>` = Set DALI parameter using DTR0 and do not expect a DALI backward frame.
-DaliQuery<a class="cmnd" id="daliquery"></a>|Low level DALI control with expected response.<br><br>`<byte1>,<byte2>` = Execute DALI code and report result (DALI backward frame).
-DaliScan<a class="cmnd" id="daliscan"></a>|Sequential address assignment using commissioning protocol. This resets  parameters stored on the control gear.<br><br>`1` = Reset and commission new device addresses.<br>`2` = Reset and commission additional device addresses.
+DaliSend<x\><a class="cmnd" id="dalisend"></a>|Low level DALI control.<br><br>`<byte1>,<byte2>` = Execute DALI code and do not expect a DALI backward frame.<br>`<0xA3>,<byte2>,<byte3>,<byte4>` = Set DALI parameter using DTR0 and do not expect a DALI backward frame.<br><br><x\> = optional, 6 for DT6 extended commands or 8 for DT8 extended commands.
+DaliQuery<x\><a class="cmnd" id="daliquery"></a>|Low level DALI control with expected response.<br><br>`<byte1>,<byte2>` = Execute DALI code and report result (DALI backward frame).<br><br><x\> = optional, 6 for DT6 extended commands or 8 for DT8 extended commands.
+DaliScan<a class="cmnd" id="daliscan"></a>|Sequential address assignment using commissioning protocol. This resets  parameters stored on the control gear.<br><br>`<option1>[,<option2>]` where option1 =<br>`1` = Reset and commission new device addresses.<br>`2` = Reset and commission additional device addresses.<br>and option2 defines the max number of devices allowed to add.
 DaliGear<a class="cmnd" id="daligear"></a>|To reduce DaliGroup response time set the max commissionned control gear address.<br><br>Display current max address.<br>`1..64` = Set max address (default = `64`).
 DaliGroup<x\><a class="cmnd" id="daligroup"></a>|Add or remove control gear to/from up to 16 groups.<br><br>Display current group contents.<br>`[+]<device>,<device>...` = Add devices to group.<br>`-<device>,<device>...` = Remove devices from group.<br><br><x\> = 1 to 16.
 DaliGroupSliders<a class="cmnd" id="daligroupsliders"></a>|Add or remove group sliders from the GUI when in `DaliLight 0` mode.<br><br>Display current groupsliders amount.<br>`1..16` = Number of groupsliders to display.
@@ -87,3 +89,25 @@ DaliPower<x\><a class="cmnd" id="dalipower"></a>|Control power to broadcast or a
 DaliDimmer<x\><a class="cmnd" id="dalidimmer"></a>|Control dimmer to broadcast or any control gear or group.<br><br>Display current dimmer state.<br>`0` = Turn power off.<br>`1` to `100` = Percentage of brightness.<br><br><x\> = 0 for broadcast, 1 to 64 for individual gear or 101 to 116 for group.
 DaliLight<a class="cmnd" id="dalilight"></a>|Switch between DALI or Tasmota Light control. The latter allows for the DALI lighting to be controlled as a local light by any Tasmota protocol like Matter, Alexa, Hue and KNX.<br><br>Display current state.<br>`0` = Disable Tasmota light control for DaliTarget device.<br>`1` = Enable Tasmota light control for DaliTarget device (default).
 DaliTarget<a class="cmnd" id="dalitarget"></a>|Select DALI target to be used when DaliLight is enabled.<br><br>Display current target.<br>`0` = Broadcast (default).<br>`1` to `64` = Individual gear.<br>`101` to `116` = group.
+
+## DALI ballasts
+
+I've tested Tasmota DALI with several DALI-2 DT6 certified ballasts like inbuild ceiling LEDs and larger LED panels. It also works with DT8 color LED ballasts.
+
+### MiBoxer DALI 5 in 1 LED controller (DT8)
+
+This controller is not a certified DALI ballast but it will work with Tasmota DALI. Do not try to commission the DALI bus when it is connected as it will likely fail.
+
+The controller is tested with an RGB led strip using it's default configuration and a user selected short address.  With a short address set to 11 and using the following commands once will enable Tasmota light control:
+```
+DaliTarget 12
+DaliChannels 3
+DaliLight 1
+```
+
+Using two or more devices in a group also works fine. Execute the following commands assuming the second controller has a short address of 12:
+```
+Daligroup1 12,13
+DaliTarget 101
+```
+Notice the numbering for Tasmota short adresses is from 1 to 64 and group addresses from 101 to 116.
