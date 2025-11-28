@@ -112,4 +112,4 @@ Using two or more devices in a group also works fine. Execute the following comm
 Daligroup1 12,13
 DaliTarget 101
 ```
-Notice the numbering for Tasmota short adresses is from 1 to 64 and group addresses from 101 to 116.
+!!! note "The numbering for Tasmota short adresses is from 1 to 64 and group addresses from 101 to 116."
