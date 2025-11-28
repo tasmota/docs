@@ -50,7 +50,7 @@ This [DALI2 expansion Module](https://www.waveshare.com/pico-dali2.htm) for ESP3
 
 The Waveshare [ESP32-C6-Pico](https://www.waveshare.com/ESP32-C6-Pico.htm) also works fine using GPIO5 as `DALI RX` and GPIO14 as `DALI TX_i`. 
 
-!!! Info "For best result you'll need to isolate GPIO4 (pin 4) from the Pico DALI2. The ESP32-C6-Pico GPIO4 is hardwired to it's USB Type-C interface input voltage using a resistor bridge and is supposed to be used as an ADC input to measure voltage. The Pico DALI2 uses the same pin for high voltage DALI receive input. It seems to interfere with the data on GPIO5 resulting in no DALI signal detection. An easy fix is to remove pin 4 from the ESP32-C6-Pico header."
+!!! note "For best result you'll need to isolate GPIO4 (pin 4) from the Pico DALI2. The ESP32-C6-Pico GPIO4 is hardwired to it's USB Type-C interface input voltage using a resistor bridge and is supposed to be used as an ADC input to measure voltage. The Pico DALI2 uses the same pin for high voltage DALI receive input. It seems to interfere with the data on GPIO5 resulting in no DALI signal detection. An easy fix is to remove pin 4 from the ESP32-C6-Pico header."
 
 ### Shelly DALI Dimmer Gen3
 
