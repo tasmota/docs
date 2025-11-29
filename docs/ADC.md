@@ -12,7 +12,7 @@ After wiring a peripheral to GPIO17 (A0) pin you have to configure it in **Confi
 
 ![ADC configuration](_media/A0.png)
 
-The ESP32 board has six ADC GPIO pins available (gpio32, gpio33, gpio34, gpio35, gpio36, gpio39 which are ADC1 channel in ESP32 platform, see [Tasmota ESP32 features](https://tasmota.github.io/docs/ESP32/) ) which can be used for analog inputs. These can be used to read voltage at the ADC pin or to read the module supply voltage (VCC). 
+The ESP32 board has eight ADC GPIO pins available (gpio32, gpio33, gpio34, gpio35, gpio36, gpio37, gpio38, gpio39 which are ADC1 channel in ESP32 platform, see [Tasmota ESP32 features](https://tasmota.github.io/docs/ESP32/). Usually only 6 available in ESP32 board: 32, 33, 34, 35, 36 and 39) which can be used for analog inputs. These can be used to read voltage at the ADC pin or to read the module supply voltage (VCC). 
 All analog input pins support 3.3V. 
 
 After wiring a peripheral to the specified Analog Input GPIO pin, it can be configured in **Configure Module**:
