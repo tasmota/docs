@@ -102,6 +102,9 @@ Enable display of ESP32 internal temperature with [`SetOption146 1`](Commands.md
 ```
 You can deactivate sensor by using command [`SetSensor127 0`](Commands.md#setsensor)
 
+### ADC
+Despite ESP32 has 18 ADC input pins, they are grouped in two channels: ADC1 (gpios 32, 33, 34, 35, 36, 37, 38, 39) and ADC2 (gpios 0, 2, 4, 12, 13, 14, 15, 25, 26, 27). ADC2 channel doesn't work with Wifi activated, so Tasmota can only use ADC1 channel. Besides, ESP32 boards usually have only 6 pins available: 32, 33, 34, 35, 36 and 39.
+
 ### DAC
 
 [DAC](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/dac.html) GPIOs are supported through [Berry `gpio` module](Berry.md#dac-gpios).
