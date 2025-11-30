@@ -377,16 +377,19 @@ for next loops are supported to repeat HTML code (precede with % char)
 %for var from to inc
 %next
 ```
-but this method is preferred:
-script subroutines may be called sub=name of subroutine, like normal subroutines
-`%=#sub`
-in this subroutine a web line may be sent by wcs (see below) thus allowing dynamic HTML pages
+but this method is preferred:  
+script subroutines may be called sub=name of subroutine, like normal subroutines  
+`%=#sub`  
+in this subroutine a web line may be sent by wcs (see below) thus allowing dynamic HTML pages  
 
-=#sub(x) in any position of webline calls subroutine. this allows inserting content
- 
-insa(array) in any position insert all elements from an array comma separated 
+script subfiles may be called like normal subroutines but in a file  
+`%=#(subfile.tas)`
+
+=#sub(x) in any position of webline calls subroutine. this allows inserting content  
+
+insa(array) in any position insert all elements from an array comma separated  
   
-%/file calls a file from the file system and send its content to browser. in this file any cmds may apply.
+%/file calls a file from the file system and send its content to browser. in this file any html code may apply.  
  
 A web user interface may be generated containing any of the following elements:  
     
@@ -398,6 +401,7 @@ remark: state variable names used for IO in the web interface may not contain an
  `vn` = name of variable to hold button state  
  `txt1` = text of ON state of button  
  `txt2` = text of OFF state of button  
+ if variable name vn begins with an undercore the name specifies a subroutine which is called when pressing the button  
 
 #### Pulldown
 
@@ -407,6 +411,14 @@ remark: state variable names used for IO in the web interface may not contain an
  `xs` = optional xs (default 200) 
  `txt1` = text of 1. entry  
  `txt2` = text of 2. entry and so on  
+ if txt1 text is "#g" a list of GPIOs ist presented, those already used greyed out  
+ if txt1 starts with # and a number range like "#5-10" an number range from 5 to 10 ist presented  
+ 
+ special selector for SML descriptor files  
+ `smlpd(json_url label sel)`  
+ `json_url` = url of a json file with directory of descriptor files  
+ `label` = label text  
+ `sel` = variable of selected entry   
   
 #### Radio button
 
@@ -581,6 +593,11 @@ If a Tasmota `SENSOR` or `STATUS` or `RESULT` message is not generated or a `Var
 
 ## Special Variables
 
+universal variables (defaults to 4, may be increased up to 10 by #define SCRIPT_LOCAL_NVARS N)
+may be used without a declaration in >D  
+numbers:	lnv0 ... lnv3
+strings:	lsv0 ... sls3
+
 (read only)  
 `upsecs` = seconds since start  
 `uptime` = minutes since start  
@@ -628,6 +645,7 @@ now optional binary mode, much faster and more precise, also supports arrays.
 `udp(4)` = return udp remote ip as string  
 `udp(5)` = return udp remote port  
 `udp(6 url port string)` = send a string via UDP to url and port  
+`udp(7 url port array)` = send an array via UDP to url and port  
 
 when #define USE_SCRIPT_MDNS  
 `mdns(name mac type)` = open mdns service with name, mac (use device mac if '-') and type (use tasmota hostname if '-' or e.g. "shelly"). If “shelly” or “everhome” is used, a corresponding txt record is also set (for Shelly/EcoTracker emulation).  
