@@ -54,7 +54,7 @@ The Waveshare [ESP32-C6-Pico](https://www.waveshare.com/ESP32-C6-Pico.htm) also 
 
 ### Shelly DALI Dimmer Gen3
 
-<img alt="ShellyDali" src="../_media/dali_tasmota_main.png" style="margin:10px;float:right;width:20em"> </img>
+<img alt="ShellyDali" src="../_media/dali_shelly.png" style="margin:10px;float:right;width:17em"> </img>
 The ESP32-C3 based [Shelly DALI Dimmer Gen3](https://www.shelly.com/products/shelly-dali-dimmer-gen3) is supported using template 
 ```
 {"NAME":"Shelly DALI Dimmer Gen3","GPIO":[34,4736,0,3840,11360,11392,128,129,0,1,576,0,0,0,0,0,0,0,0,1,1,1],"FLAG":0,"BASE":1}
@@ -86,7 +86,8 @@ DaliQuery<x\><a class="cmnd" id="daliquery"></a>|Low level DALI control with exp
 DaliScan<a class="cmnd" id="daliscan"></a>|Sequential address assignment using commissioning protocol. This resets  parameters stored on the control gear.<br><br>`<option1>[,<option2>]` where option1 =<br>`1` = Reset and commission new device addresses.<br>`2` = Reset and commission additional device addresses.<br>and option2 defines the max number of devices allowed to add.
 DaliGear<a class="cmnd" id="daligear"></a>|To reduce DaliGroup response time set the max commissionned control gear address.<br><br>Display current max address.<br>`1..64` = Set max address (default = `64`).
 DaliGroup<x\><a class="cmnd" id="daligroup"></a>|Add or remove control gear to/from up to 16 groups.<br><br>Display current group contents.<br>`[+]<device>,<device>...` = Add devices to group.<br>`-<device>,<device>...` = Remove devices from group.<br><br><x\> = 1 to 16.
-DaliGroupSliders<a class="cmnd" id="daligroupsliders"></a>|Add or remove group sliders from the GUI when in `DaliLight 0` mode.<br><br>Display current groupsliders amount.<br>`1..16` = Number of groupsliders to display.
+DaliBS<a class="cmnd" id="dalibs"></a>|Show or Hide broadcast slider from the GUI.<br><br>Display current state.<br>`0` - Hide broadcast slider.<br>`1` - Show broadcast slider (default).
+DaliGroupSliders<a class="cmnd" id="daligroupsliders"></a>|Add or remove group sliders from the GUI.<br><br>Display current groupsliders amount.<br>`1..16` = Number of groupsliders to display (default 2).
 DaliPower<x\><a class="cmnd" id="dalipower"></a>|Control power to broadcast or any control gear or group.<br><br>Display current power state.<br>`0` = Turn power off.<br>`1` = Restore power to last dimmer value.<br>`2` = Toggle power.<br>`3` to `254` = Set absolute brightness.<br><br><x\> = 0 for broadcast, 1 to 64 for individual gear or 101 to 116 for group.
 DaliDimmer<x\><a class="cmnd" id="dalidimmer"></a>|Control dimmer to broadcast or any control gear or group.<br><br>Display current dimmer state.<br>`0` = Turn power off.<br>`1` to `100` = Percentage of brightness.<br><br><x\> = 0 for broadcast, 1 to 64 for individual gear or 101 to 116 for group.
 DaliLight<a class="cmnd" id="dalilight"></a>|Switch between DALI or Tasmota Light control. The latter allows for the DALI lighting to be controlled as a local light by any Tasmota protocol like Matter, Alexa, Hue and KNX.<br><br>Display current state.<br>`0` = Disable Tasmota light control for DaliTarget device.<br>`1` = Enable Tasmota light control for DaliTarget device (default).
