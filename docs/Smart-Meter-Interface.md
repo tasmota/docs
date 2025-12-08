@@ -2863,7 +2863,7 @@ For read-out of "Current power" the advanced data set has to be enabled in user 
     +1,3,s,20,9600,E320
     1,77070100020800ff@1000,Total Delivered,kWh,Total_out,3
     1,77070100010800ff@1000,Total Consumed,kWh,Total_in,3
-    1,77070100100700ff@1,Current power,W,Power_in,3
+    1,77070100100700ff@1,Current power,W,Power_in,19
     1,77070100600100ff@#,Server-ID,,Meter_Number,0    
     #
     ```
