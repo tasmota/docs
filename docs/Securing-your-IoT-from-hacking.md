@@ -130,15 +130,19 @@ How to generate the certificates in mosquitto please look at:
 
 ## SSL/TLS on Tasmota
 
-[TLS](TLS) article explains how to set it up in Tasmota
+The [TLS article](TLS) explains how to set TLS up in Tasmota.
 
-[Self-signed-Mosquitto](Self-signed-Mosquitto) article explain how to set up Tasmota with certificate-based TLS authentication on a local installation of Mosquitto.
+The [Self-signed-Mosquitto article](Self-signed-Mosquitto) explain how to set up Tasmota with certificate-based TLS authentication on a local installation of Mosquitto.
 
 ## Disable unsecured fallback WiFi (WifiManager)
 
-Type WifiConfig into the tasmota console. If this parameter is set to 2, you might want to change it after completing the setup of your device since in case your Wifi SSID is not available (i.e. access point dies or WLAN jammer is used as in [Scanario 5](#scenario-5)), the WiFiManager will jump into action and make your tasmota devices available using an unsecured access point.
+If the wifi connection to the network fails, Tasmota may spawn an unsecured access point to allow reconfiguration. Despite being convenient, this behaviour can also be a security vulnerability.
+
+Type `WifiConfig` into the Tasmota console. If this parameter is set to `2`, you might want to change it after completing the setup of your device, in case your Wifi SSID is not available in the future. For example, if the access point dies or a WLAN jammer is used (as in [Scanario 5](#scenario-5)), the WiFiManager will jump into action and make your Tasmota devices accessible by hosting an unsecured access point.
    
-   Some less risky options would be: 0/4/5. Currently the [default WiFiConfig value](https://github.com/arendst/Tasmota/issues/4400) is [(WIFI_RETRY)](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h#L79) which means that device retries other AP without rebooting.  (For details, see [Wi-Fi commands](Commands.md#wi-fi)).
+Some less risky options than 2 are: `0`/`4`/`5`. Currently, the [default `WiFiConfig` value](https://github.com/arendst/Tasmota/issues/4400) is [`WIFI_RETRY` (4)](https://github.com/arendst/Tasmota/blob/development/tasmota/my_user_config.h#L89) (in the `WIFI_CONFIG_TOOL` macro), which means that device retries other AP without rebooting.
+
+For details, see [Wi-Fi commands](Commands.md#wi-fi).
 
 ## Home Assistant OS MQTT Add-On
 If you are using Home Assistant OS [MQTT add-on](https://github.com/home-assistant/addons/tree/master/mosquitto) with [Tasmota integration](https://www.home-assistant.io/integrations/tasmota/) the devices will need write access to the `tasmota/discovery/#` topic.
