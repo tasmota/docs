@@ -256,6 +256,10 @@ Rule1
   ON mqtt#connected DO Publish stat/topic/BLACKOUT {"From":"%Var1%","To":"%Var2%"} ENDON
 ```
 
+!!! tip
+	To see the values of used `Var<x>` and `Mem<x>` at the WebUI, add `#define USE_VIEW_RULE_MEMS_AND_VARS` to your `user_config_override.h` and [recompile](Compile-your-build).
+
+
 #### Delete rule
 
 To [clear / delete](Commands.md#rule) use double quote(s):
