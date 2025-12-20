@@ -686,11 +686,35 @@
             
             // Initialize Code Editor
             if (typeof window.initCodeEditor === 'function') {
-                var defaultCode = '# Simple animation example\n' +
-                    'animation back = solid(\n' +
-                    '    color = red\n' +
+                var defaultCode = '# @desc Rainbow gradient rotating along the strip over 5 seconds\n' +
+                    '\n' +
+                    '# define a palette of rainbow colors including white with constant brightness\n' +
+                    'palette rainbow_with_white = [\n' +
+                    '    0xFC0000        # Red\n' +
+                    '    0xFF8000        # Orange\n' +
+                    '    0xFFFF00        # Yellow\n' +
+                    '    0x00FF00        # Green\n' +
+                    '    0x00FFFF        # Cyan\n' +
+                    '    0x0080FF        # Blue\n' +
+                    '    0x8000FF        # Violet\n' +
+                    '    0xCCCCCC        # White\n' +
+                    '    0xFC0000        # Red - need to add the first color at last position to ensure roll-over\n' +
+                    ']\n' +
+                    '\n' +
+                    '# define a color attribute cycles color in space\n' +
+                    'color rainbow_rich_color = rich_palette(\n' +
+                    '    palette=rainbow_with_white,\n' +
+                    '    cycle_period=0,\n' +
+                    '    transition_type=SINE\n' +
                     ')\n' +
-                    'run back';
+                    '\n' +
+                    '# define a gradient across the whole strip\n' +
+                    'animation back_pattern = palette_gradient_animation(\n' +
+                    '    color_source = rainbow_rich_color,\n' +
+                    '    shift_period = 5s\n' +
+                    ')\n' +
+                    '\n' +
+                    'run back_pattern';
                 
                 window.codeEditor = window.initCodeEditor({
                     containerId: 'code-editor-container',
@@ -1162,6 +1186,18 @@
                     restoreOnLoad: true
                 });
             }
+            
+            // Auto-compile and run the default example after everything is loaded
+            // Wait a bit to ensure all modules are fully initialized
+            setTimeout(function() {
+                var compileRunBtn = document.getElementById('btn-compile-run');
+                if (compileRunBtn && !compileRunBtn.disabled) {
+                    if (window.consoleManager) {
+                        window.consoleManager.info('Auto-running default example...');
+                    }
+                    compileRunBtn.click();
+                }
+            }, 50);
         });
     </script>
 </body>
