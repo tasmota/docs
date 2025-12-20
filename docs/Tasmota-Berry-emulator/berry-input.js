@@ -17,13 +17,11 @@ class BerryInput {
     /**
      * Create a new Berry input component
      * @param {Object} options - Configuration options
-     * @param {string} options.containerId - ID of the container element
      * @param {string} options.inputId - ID for the textarea element
      * @param {number} options.maxHistory - Maximum history entries (default 50)
      * @param {Function} options.onExecute - Callback when code is executed
      */
     constructor(options = {}) {
-        this.containerId = options.containerId || 'berry-input-container';
         this.inputId = options.inputId || 'berry-input';
         this.maxHistory = options.maxHistory || 50;
         this.onExecute = options.onExecute || null;
@@ -36,9 +34,9 @@ class BerryInput {
         this.lastKeyWasEnter = false;
         
         // DOM elements
-        this.container = null;
         this.textarea = null;
         this.hintEl = null;
+        this.runButton = null;
         
         // Initialize
         this._init();
@@ -49,57 +47,27 @@ class BerryInput {
      * @private
      */
     _init() {
-        this.container = document.getElementById(this.containerId);
-        if (!this.container) {
-            console.warn('BerryInput: Container not found:', this.containerId);
+        // Get references to existing DOM elements
+        this.textarea = document.getElementById(this.inputId);
+        
+        if (!this.textarea) {
+            console.warn('BerryInput: Textarea not found:', this.inputId);
             return;
         }
         
-        // Create the input structure
-        this._createInputStructure();
+        // Find hint and button elements (siblings of textarea)
+        const parent = this.textarea.parentElement;
+        if (parent) {
+            this.hintEl = parent.querySelector('.berry-input-hint');
+            this.runButton = document.getElementById('berry-input-run-btn') || 
+                           parent.querySelector('.berry-input-run-btn');
+        }
         
         // Set up event listeners
         this._setupEventListeners();
         
         // Load history from localStorage
         this._loadHistory();
-    }
-    
-    /**
-     * Create the input HTML structure
-     * @private
-     */
-    _createInputStructure() {
-        // Create wrapper div
-        const wrapper = document.createElement('div');
-        wrapper.className = 'berry-input-wrapper';
-        
-        // Create hint text
-        this.hintEl = document.createElement('div');
-        this.hintEl.className = 'berry-input-hint';
-        this.hintEl.textContent = '↑↓ for history';
-        wrapper.appendChild(this.hintEl);
-        
-        // Create textarea
-        this.textarea = document.createElement('textarea');
-        this.textarea.id = this.inputId;
-        this.textarea.className = 'berry-input';
-        this.textarea.placeholder = 'Enter Berry code here...';
-        this.textarea.rows = 2;
-        this.textarea.spellcheck = false;
-        this.textarea.autocomplete = 'off';
-        this.textarea.autocapitalize = 'off';
-        wrapper.appendChild(this.textarea);
-        
-        // Create run button
-        this.runButton = document.createElement('button');
-        this.runButton.type = 'button';
-        this.runButton.className = 'berry-input-run-btn';
-        this.runButton.textContent = "Run code (or press 'Enter' twice)";
-        this.runButton.addEventListener('click', () => this._executeCode());
-        wrapper.appendChild(this.runButton);
-        
-        this.container.appendChild(wrapper);
     }
     
     /**
@@ -119,6 +87,11 @@ class BerryInput {
                 this.historyIndex = -1;
             }
         });
+        
+        // Run button click handler
+        if (this.runButton) {
+            this.runButton.addEventListener('click', () => this._executeCode());
+        }
     }
     
     /**

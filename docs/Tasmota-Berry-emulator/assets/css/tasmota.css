@@ -391,7 +391,7 @@ button:disabled:hover {
 /* Console textarea - Tasmota style */
 .console-output {
     resize: both;  /* Allow horizontal and vertical resize */
-    width: 98%;
+    width: 100%;
     height: 200px;
     padding: 5px;
     overflow: auto;
@@ -1543,6 +1543,7 @@ textarea:focus-visible {
 .code-editor-container {
     width: 100%;
     box-sizing: border-box;
+    padding: 0;
 }
 
 /* Editor wrapper - handles resize and positioning */
@@ -1718,6 +1719,7 @@ textarea:focus-visible {
     display: flex;
     gap: 15px;
     margin-bottom: 8px;
+    padding: 0;
 }
 
 .code-editor-lang-toggle label {
@@ -1781,15 +1783,11 @@ textarea:focus-visible {
    Task 8.5.1 - Berry arbitrary input for debugging
    ============================================ */
 
-/* Berry input wrapper */
-.berry-input-wrapper {
+/* Hint text above input */
+.berry-input-hint {
     margin-top: 10px;
     padding-top: 10px;
     border-top: 1px solid var(--c_bg);
-}
-
-/* Hint text above input */
-.berry-input-hint {
     font-size: 0.8em;
     color: var(--c_tab);
     margin-bottom: 5px;
@@ -1798,7 +1796,7 @@ textarea:focus-visible {
 
 /* Berry input textarea */
 .berry-input {
-    width: 98%;
+    width: 100%;
     min-height: 44px;
     height: 60px;
     padding: 8px;
@@ -1862,8 +1860,7 @@ textarea:focus-visible {
 
 /* Library container (embedded in Animation Code fieldset) */
 #animation-library-container {
-    margin-top: -10px;
-    margin-bottom: -10px;
+    padding: 0;
 }
 
 /* Library header */

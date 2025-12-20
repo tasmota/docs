@@ -138,7 +138,9 @@
             <textarea id="console-output" class="console-output" readonly placeholder="Console output will appear here..."></textarea>
             
             <!-- Berry Input for debugging -->
-            <div id="berry-input-container"></div>
+            <div class="berry-input-hint">↑↓ for history</div>
+            <textarea id="berry-input" class="berry-input" placeholder="Enter Berry code here..." rows="2" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+            <button type="button" id="berry-input-run-btn" class="berry-input-run-btn">Run code (or press 'Enter' twice)</button>
             
             <p></p>
             <button id="btn-clear" class="bred">Clear Console</button>
@@ -517,7 +519,6 @@
             // Initialize Berry input for debugging
             if (typeof window.initBerryInput === 'function') {
                 window.initBerryInput({
-                    containerId: 'berry-input-container',
                     inputId: 'berry-input',
                     maxHistory: 50,
                     onExecute: function(code, success) {
