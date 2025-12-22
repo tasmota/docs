@@ -22,7 +22,9 @@ The DSL **transpiles to standard Berry code**, so you get the best of both world
 
 Test and create animations without a Tasmota device using the online emulator:
 
-**[https://tasmota.github.io/docs/Tasmota-Berry-emulator/](https://tasmota.github.io/docs/Tasmota-Berry-emulator/index.html)**
+[![Tasmota_Berry_LED_emulator](berry_animation_docs/emulator_screenshot.png){width=353}](https://tasmota.github.io/docs/Tasmota-Berry-emulator/index.html){target=_blank}
+
+**[https://tasmota.github.io/docs/Tasmota-Berry-emulator/](https://tasmota.github.io/docs/Tasmota-Berry-emulator/index.html){target=_blank}**
 
 The emulator runs **entirely in your browser** with no server required. It includes:
 
@@ -44,31 +46,31 @@ Without `USE_BERRY_ANIMATION_DSL`, use the online emulator to create animations 
 
 ## Quick Start
 
-### Simple Pulsing Animation
+### Simple Breathing Animation
 
 ```berry
-color bordeaux = 0x6F2C4F
-animation pulse = pulsating_animation(color=bordeaux, period=3s)
+animation pulse = breathe_animation(color=red, period=2s)
 run pulse
 ```
 
-### Rainbow Color Cycling
+### Rainbow Smooth Color Cycling
 
 ```berry
-animation rainbow = rich_palette(palette=PALETTE_RAINBOW, cycle_period=5s)
+animation rainbow = rich_palette_animation(palette=PALETTE_RAINBOW)
 run rainbow
 ```
 
 ### Animation Sequence
 
 ```berry
-animation red_pulse = pulsating_animation(color=red, period=2s)
-animation blue_pulse = pulsating_animation(color=blue, period=2s)
+animation red_pulse = breathe_animation(color=red, period=2s)
+animation blue_pulse = breathe_animation(color=blue, period=1.5s)
 
-sequence show {
-  play red_pulse for 3s
-  wait 500ms
+sequence show repeat forever {
+  play red_pulse for 4s
+  wait 200ms
   play blue_pulse for 3s
+  wait 300ms
 }
 run show
 ```
@@ -110,7 +112,7 @@ palette sunset = [
   (0, navy), (128, purple), (255, orange)
 ]
 
-# Built-in palettes: PALETTE_RAINBOW, PALETTE_FIRE, PALETTE_OCEAN...
+# Built-in palettes: PALETTE_RAINBOW, PALETTE_FIRE...
 ```
 
 ### Value Providers (Oscillators)
@@ -118,7 +120,7 @@ palette sunset = [
 Create dynamic values that change over time:
 
 ```berry
-set breathing = smooth(min_value=50, max_value=255, period=3s)
+set breathing = smooth(min_value=50, max_value=255, duration=3s)
 animation pulse = solid(color=red)
 pulse.opacity = breathing
 ```
@@ -131,10 +133,10 @@ Create reusable, parameterized animation patterns:
 
 ```berry
 template animation pulse_effect {
-  param color type color
+  param pulse_color type color
   param speed
   
-  animation pulse = pulsating_animation(color=color, period=speed)
+  animation pulse = pulsating_animation(color=pulse_color, period=speed)
   run pulse
 }
 
