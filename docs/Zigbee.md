@@ -198,7 +198,7 @@ I.e. `multiplier=10` means multiply by 10, `multiplier=-5` means divide by 5
 
 ### Sonoff SNZB-02 Sensor
 
-![SNZB-02](https://zigbee.blakadder.com/assets/images/devices/Sonoff_SNZB-02.webp){ width="150" }
+![SHP15](_media/zigbee/SNZB-02.webp){width="150"}
 
 Put Z2T in **pairing mode** (command `ZbPermitJoin 1` or via WebUI) and keep the button of the sensor pressed for 5 seconds. Wait 20 seconds, you should see something similar to this in the logs:
 
@@ -255,7 +255,7 @@ When you hover over the battery icon, you get a more precise reading.
 
 ### BlitzWolf SHP15 Plug
 
-![SHP15](https://zigbee.blakadder.com/assets/images/devices/BlitzWolf_BW-SHP15.webp){ width="150" }
+![SHP15](_media/zigbee/BlitzWolf_BW-SHP15.webp){width="150"}
 
 Put Z2T in **pairing mode** (command `ZbPermitJoin 1` or via WebUI) and keep the button of the sensor pressed for 5 seconds. Wait 20 seconds, you should see something similar to this in the logs:
 
