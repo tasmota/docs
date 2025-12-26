@@ -61,7 +61,7 @@ This chapter covers the basics: creating simple animations, using colors, and la
 
 ### 1.1 Your First Animation: Solid Color
 
-![Solid Red](png/chap_1_10.png)
+![Solid Red](./png/chap_1_10.png)
 
 Every animation starts with two steps: **define** it, then **run** it. The simplest animation fills the entire strip with a single color.
 
@@ -82,7 +82,7 @@ The DSL provides many predefined colors: `red`, `green`, `blue`, `white`, `yello
 
 ### 1.2 Custom Colors
 
-![Custom Color](png/chap_1_20.png)
+![Custom Color](../png/chap_1_20.png)
 
 Predefined colors are convenient, but you'll often want specific shades. Define custom colors using hexadecimal values.
 
