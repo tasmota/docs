@@ -22,7 +22,7 @@ The DSL **transpiles to standard Berry code**, so you get the best of both world
 
 Test and create animations without a Tasmota device using the online emulator:
 
-[![Tasmota_Berry_LED_emulator](berry_animation_docs/emulator_screenshot.png){width=353}](https://tasmota.github.io/docs/Tasmota-Berry-emulator/index.html){target=_blank}
+[![Tasmota_Berry_LED_emulator](animation_docs/emulator_screenshot.png){width=353}](https://tasmota.github.io/docs/Tasmota-Berry-emulator/index.html){target=_blank}
 
 **[https://tasmota.github.io/docs/Tasmota-Berry-emulator/](https://tasmota.github.io/docs/Tasmota-Berry-emulator/index.html){target=_blank}**
 
@@ -56,7 +56,7 @@ run pulse
 ### Rainbow Smooth Color Cycling
 
 ```berry
-animation rainbow = rich_palette_animation(palette=PALETTE_RAINBOW)
+animation rainbow = rich_palette_animation(colors=PALETTE_RAINBOW)
 run rainbow
 ```
 
@@ -158,7 +158,7 @@ Animation|Description
 `pulsating_animation`|Breathing/pulsing effect with smooth transitions
 `breathe_animation`|Natural breathing effect with customizable curve
 `beacon_animation`|Pulse/highlight at specific position with optional slew
-`crenel_position_animation`|Crenel/square wave pattern
+`crenel_animation`|Crenel/square wave pattern
 `comet_animation`|Moving comet with fading tail
 `twinkle_animation`|Twinkling stars effect
 `fire_animation`|Realistic fire simulation
@@ -172,10 +172,10 @@ Animation|Description
 
 ## Documentation
 
-- **[Quick Start Guide](berry_animation_docs/QUICK_START.md)** - Get running in 5 minutes
-- **[DSL Reference](berry_animation_docs/DSL_REFERENCE.md)** - Complete syntax reference
-- **[Examples](berry_animation_docs/EXAMPLES.md)** - Comprehensive examples
-- **[Animation Classes](berry_animation_docs/ANIMATION_CLASS_HIERARCHY.md)** - All animations and parameters
-- **[Oscillation Patterns](berry_animation_docs/OSCILLATION_PATTERNS.md)** - Dynamic value waveforms
-- **[User Functions](berry_animation_docs/USER_FUNCTIONS.md)** - Extend with custom Berry functions
-- **[Troubleshooting](berry_animation_docs/TROUBLESHOOTING.md)** - Common issues and solutions
+- **[Quick Start Guide](animation_docs/Quick_Start.md)** - Get running in 5 minutes
+- **[DSL Reference](animation_docs/Dsl_Reference.md)** - Complete syntax reference
+- **[Examples](animation_docs/Examples.md)** - Comprehensive examples
+- **[Animation Classes](animation_docs/Animation_Class_Hierarchy.md)** - All animations and parameters
+- **[Oscillation Patterns](animation_docs/Oscillation_Patterns.md)** - Dynamic value waveforms
+- **[User Functions](animation_docs/User_Functions.md)** - Extend with custom Berry functions
+- **[Troubleshooting](animation_docs/Troubleshooting.md)** - Common issues and solutions
