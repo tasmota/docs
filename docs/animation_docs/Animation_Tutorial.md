@@ -61,10 +61,7 @@ This chapter covers the basics: creating simple animations, using colors, and la
 
 ### 1.1 Your First Animation: Solid Color
 
-![Solid Red](../../_media/berry_animation/chap_1_10.png)
-
-<img src="../../_media/berry_animation/chap_1_10.png">
-<img src="png/chap_1_10.png">
+<img src="../../_media/berry_animation/chap_1_10.png" alt="Solid Red">
 
 Every animation starts with two steps: **define** it, then **run** it. The simplest animation fills the entire strip with a single color.
 
@@ -85,7 +82,7 @@ The DSL provides many predefined colors: `red`, `green`, `blue`, `white`, `yello
 
 ### 1.2 Custom Colors
 
-![Custom Color](/docs/_media/berry_animation/chap_1_20.png)
+<img src="../../_media/berry_animation/chap_1_20.png" alt="Custom Color">
 
 Predefined colors are convenient, but you'll often want specific shades. Define custom colors using hexadecimal values.
 
@@ -113,7 +110,7 @@ The DSL also provides `transparent` as a predefined color, equivalent to `0x0000
 
 ### 1.3 Using Predefined Animations
 
-![Twinkle Stars](png/chap_1_30.png)
+<img src="../../_media/berry_animation/chap_1_30.png" alt="Twinkle Stars">
 
 Beyond `solid`, the DSL includes many ready-to-use animation types. Each creates a different visual effect. Let's try `twinkle_animation`, which creates a twinkling stars effect.
 
@@ -128,7 +125,7 @@ With no parameters, animations use sensible defaults. The twinkle effect will us
 
 ### 1.4 Animation Parameters
 
-![Twinkle Parameters](png/chap_1_40.png)
+<img src="../../_media/berry_animation/chap_1_40.png" alt="Twinkle Parameters">
 
 Most animations accept **parameters** to customize their behavior. Parameters use the `name=value` syntax inside the parentheses.
 
@@ -156,7 +153,7 @@ run stars
 
 ### 1.5 Layering Animations
 
-![Twinkle Night](png/chap_1_50.png)
+<img src="../../_media/berry_animation/chap_1_50.png" alt="Twinkle Night">
 
 One of the most powerful features is **layering** - running multiple animations simultaneously. Each animation has a `priority` that determines its rendering order. Think of it like layers in an image editor: lower numbers are "on top" and can obscure higher numbers.
 
@@ -198,7 +195,7 @@ The key concept is the **color provider** - instead of a fixed color value, you 
 
 ### 2.1 Built-in Palette Cycling
 
-![Palette Rotation](png/chap_2_10.png)
+<img src="../../_media/berry_animation/chap_2_10.png" alt="Palette Rotation">
 
 The simplest way to create changing colors is with `color_cycle`, which steps through a palette of colors over time.
 
@@ -229,7 +226,7 @@ The `color_cycle` function creates a color provider that cycles through the pale
 
 ### 2.2 Custom Palettes
 
-![Custom Palette](png/chap_2_20.png)
+<img src="../../_media/berry_animation/chap_2_20.png" alt="Custom Palette">
 
 Built-in palettes are convenient, but you'll often want your own color schemes. Define custom palettes as arrays of hex colors.
 
@@ -266,7 +263,7 @@ Chapter 2 showed `color_cycle`, which steps discretely between colors. This chap
 
 ### 3.1 Rich Palette Animation
 
-![Rich Palette](png/chap_3_10.png)
+<img src="../../_media/berry_animation/chap_3_10.png" alt="Rich Palette">
 
 The `rich_palette_animation` is a complete animation that handles both the color transitions and rendering. It's the easiest way to get smooth rainbow effects.
 
@@ -284,7 +281,7 @@ With no parameters, it uses sensible defaults. The `transition_type=SINE` create
 
 ### 3.2 Rich Palette with Custom Colors
 
-![Rich Palette Custom](png/chap_3_20.png)
+<img src="../../_media/berry_animation/chap_3_20.png" alt="Rich Palette Custom">
 
 For more control, use `rich_palette` as a **color provider** (not an animation). This lets you use smooth color transitions with any animation type.
 
@@ -328,7 +325,7 @@ The key insight is that color providers can work in two dimensions:
 
 ### 4.1 Rainbow Gradient
 
-![Color Pattern](png/chap_4_10.png)
+<img src="../../_media/berry_animation/chap_4_10.png" alt="Color Pattern">
 
 A gradient maps colors to positions along the strip. The `palette_gradient_animation` does exactly this.
 
@@ -347,7 +344,7 @@ The magic is `period=0` - this tells the color provider to ignore time and only 
 
 ### 4.2 Multiple Gradient Repetitions
 
-![Gradient 2x](png/chap_4_12.png)
+<img src="../../_media/berry_animation/chap_4_12.png" alt="Gradient 2x">
 
 By default, the gradient spans the entire strip once. Use `spatial_period` to control how many LEDs one complete gradient cycle covers.
 
@@ -374,7 +371,7 @@ With `spatial_period = strip_len / 2`, the gradient repeats twice across the str
 
 ### 4.3 Oscillating Spatial Period
 
-![Oscillating Period](png/chap_4_15.png)
+<img src="../../_media/berry_animation/chap_4_15.png" alt="Oscillating Period">
 
 Here's where things get interesting: you can make **any parameter dynamic** by using a value provider instead of a fixed number. This example makes the gradient "breathe" by oscillating its spatial period.
 
@@ -407,7 +404,7 @@ The `sine_osc` function creates a **value provider** - a number that changes smo
 
 ### 4.4 Rotating Gradient
 
-![Rotating Gradient](png/chap_4_18.png)
+<img src="../../_media/berry_animation/chap_4_18.png" alt="Rotating Gradient">
 
 Make the gradient rotate along the strip:
 
@@ -427,7 +424,7 @@ The `shift_period` parameter makes the entire pattern shift along the strip.
 
 ### 4.5 VU-Meter Style Animation
 
-![VU Meter](png/chap_4_30.png)
+<img src="../../_media/berry_animation/chap_4_30.png" alt="VU Meter">
 
 Create a meter/bar that fills based on a value:
 
@@ -460,7 +457,7 @@ The palette uses position-based entries `(position, color)` where position range
 
 ### 4.6 Custom Value Functions
 
-![Random Meter](png/chap_4_35.png)
+<img src="../../_media/berry_animation/chap_4_35.png" alt="Random Meter">
 
 Sometimes the built-in oscillators aren't enough - you need custom logic like random values, sensor readings, or complex calculations. The DSL lets you embed native Berry code and use it in your animations.
 
@@ -526,7 +523,7 @@ A beacon has five key properties:
 
 ### 5.1 Static Beacon
 
-![Static Beacon](png/chap_5_10.png)
+<img src="../../_media/berry_animation/chap_5_10.png" alt="Static Beacon">
 
 Let's start with a stationary beacon - a red highlight on a blue background.
 
@@ -544,7 +541,7 @@ run back
 
 ### 5.2 Beacon with Slew (Soft Edges)
 
-![Beacon Slew](png/chap_5_15.png)
+<img src="../../_media/berry_animation/chap_5_15.png" alt="Beacon Slew">
 
 Hard edges can look harsh. The `slew_size` parameter adds a gradual fade on each side of the beacon, creating softer, more natural-looking highlights.
 
@@ -572,7 +569,7 @@ run back
 
 ### 5.3 Animated Slew
 
-![Oscillating Slew](png/chap_5_20.png)
+<img src="../../_media/berry_animation/chap_5_20.png" alt="Oscillating Slew">
 
 Remember: any numeric parameter can be replaced with a value provider. Here we make the slew size pulse in and out.
 
@@ -593,7 +590,7 @@ run back
 
 ### 5.4 Cylon Eye (Moving Beacon)
 
-![Cylon Eye](png/chap_5_30.png)
+<img src="../../_media/berry_animation/chap_5_30.png" alt="Cylon Eye">
 
 Now for the classic effect: a beacon that moves back and forth across the strip. We use `cosine_osc` on the `pos` parameter to create smooth scanning motion.
 
@@ -615,7 +612,7 @@ The cosine oscillator creates smooth acceleration and deceleration at the ends, 
 
 ### 5.5 Rainbow Cylon with Stars
 
-![Rainbow Cylon](png/chap_5_40.png)
+<img src="../../_media/berry_animation/chap_5_40.png" alt="Rainbow Cylon">
 
 Let's combine everything we've learned: layered animations, dynamic colors, and moving beacons. This example creates a scene with two layers.
 
@@ -664,7 +661,7 @@ The result: a rainbow-colored eye scans across a field of twinkling stars, with 
 
 ### 5.6 Beacon as Opacity Mask
 
-![Opacity Mask](png/chap_5_50.png)
+<img src="../../_media/berry_animation/chap_5_50.png" alt="Opacity Mask">
 
 Instead of layering animations with priority, you can use one animation as an **opacity mask** for another. This creates a "window" effect where the mask controls what's visible.
 
@@ -725,7 +722,7 @@ Sequences are essential when you need things to happen in order: play animation 
 
 ### 6.1 Simple Shutter
 
-![Simple Shutter](png/chap_6_10.png)
+<img src="../../_media/berry_animation/chap_6_10.png" alt="Simple Shutter">
 
 A shutter effect is simply a beacon with an animated size. Using `sawtooth` makes it grow linearly then reset.
 
@@ -748,7 +745,7 @@ run shutter_lr_animation
 
 ### 6.2 Shutter with Rotating Colors
 
-![Rotating Shutter](png/chap_6_20.png)
+<img src="../../_media/berry_animation/chap_6_20.png" alt="Rotating Shutter">
 
 Now let's add color changes after each shutter cycle. This requires a **sequence** - a way to run code at specific times.
 
@@ -812,7 +809,7 @@ This gives you precise control over color changes, synchronized with your sequen
 
 ### 6.3 Central Shutter
 
-![Central Shutter](png/chap_6_30.png)
+<img src="../../_media/berry_animation/chap_6_30.png" alt="Central Shutter">
 
 Instead of expanding from the left edge, this shutter expands from the center outward.
 
@@ -861,7 +858,7 @@ run shutter_seq
 
 ### 6.4 Bidirectional Shutter
 
-![Bidirectional Shutter](png/chap_6_40.png)
+<img src="../../_media/berry_animation/chap_6_40.png" alt="Bidirectional Shutter">
 
 This example combines both directions: first the shutter expands from center (in-out), then contracts back to center (out-in). The sequence cycles through all palette colors in each direction before switching.
 
@@ -943,7 +940,7 @@ Crenels create repeating square wave patterns - alternating blocks of two colors
 
 ### 7.1 Static Crenel
 
-![Static Crenel](png/chap_7_10.png)
+<img src="../../_media/berry_animation/chap_7_10.png" alt="Static Crenel">
 
 A basic crenel alternates between two colors with configurable block sizes.
 
@@ -976,7 +973,7 @@ This creates a pattern: 🔴🔴🔵🔵🔴🔴🔵🔵... across the entire st
 
 ### 7.2 Variable Number of Pulses
 
-![Variable Pulses](png/chap_7_20.png)
+<img src="../../_media/berry_animation/chap_7_20.png" alt="Variable Pulses">
 
 Instead of showing all pulses (`nb_pulse = -1`), you can animate the number of visible pulses using a value provider. The `triangle` oscillator smoothly varies `nb_pulse` from 0 (no pulses) to the maximum that fits on the strip.
 
@@ -1003,7 +1000,7 @@ run back
 
 ### 7.3 Variable Pulse Size
 
-![Variable Size](png/chap_7_30.png)
+<img src="../../_media/berry_animation/chap_7_30.png" alt="Variable Size">
 
 Instead of a fixed `pulse_size`, you can use a value provider to animate the pulse width over time. Here, a `triangle` oscillator smoothly varies the pulse size between 0 and 4 pixels over 2 seconds, creating a breathing effect on the crenel pattern:
 
@@ -1023,7 +1020,7 @@ run back
 
 ### 7.4 Dynamic Colors
 
-![Dynamic Colors](png/chap_7_40.png)
+<img src="../../_media/berry_animation/chap_7_40.png" alt="Dynamic Colors">
 
 The `color` parameter also accepts a color provider instead of a static color. This example uses `rich_palette` to cycle through rainbow colors over 5 seconds, making the crenel pulses continuously change color while the blue background remains fixed:
 
@@ -1043,7 +1040,7 @@ run back
 
 ### 7.5 Crenel as Opacity Mask
 
-![Crenel Mask](png/chap_7_50.png)
+<img src="../../_media/berry_animation/chap_7_50.png" alt="Crenel Mask">
 
 Instead of using a crenel directly as a visible animation, you can use it as an **opacity mask** for another animation. This creates a "window" effect where the crenel pattern controls what's visible.
 
@@ -1097,7 +1094,7 @@ Think of templates like functions in programming: define once, use many times wi
 
 ### 8.1 Simple Template: Cylon Eye
 
-![Template Cylon](png/chap_8_10.png)
+<img src="../../_media/berry_animation/chap_8_10.png" alt="Template Cylon">
 
 The `template animation` keyword creates a new animation type that can be instantiated just like built-in animations (`solid`, `beacon_animation`, etc.). Once defined, you use it by calling `animation my_anim = template_name(param1=value1, ...)` - exactly like native animations.
 
@@ -1159,7 +1156,7 @@ run eye
 
 ### 8.2 Template with Palette Parameter
 
-![Template Color Cycle](png/chap_8_20.png)
+<img src="../../_media/berry_animation/chap_8_20.png" alt="Template Color Cycle">
 
 Templates can accept complex types like palettes. Here we create a reusable color cycling animation where the user provides their own palette and cycle period:
 
@@ -1189,7 +1186,7 @@ run main
 
 ### 8.3 Advanced Template with Conditional Flags
 
-![Template Shutter](png/chap_8_30.png)
+<img src="../../_media/berry_animation/chap_8_30.png" alt="Template Shutter">
 
 Templates support `bool` parameters that can be used with `if` statements inside sequences. This allows users to enable or disable parts of the animation at instantiation time. Here we create a bidirectional shutter that can optionally run in-out, out-in, or both directions.
 
