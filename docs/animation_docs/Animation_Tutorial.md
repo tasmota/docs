@@ -61,7 +61,7 @@ This chapter covers the basics: creating simple animations, using colors, and la
 
 ### 1.1 Your First Animation: Solid Color
 
-<img src="../../_media/berry_animation/chap_1_10.png" alt="Solid Red">
+<a href="https://tasmota.github.io/docs/Tasmota-Berry-emulator/index.html?example=chap_1_10_plain" target="_blank"><img src="../../_media/berry_animation/chap_1_10.png" alt="Solid Red"></a>
 
 Every animation starts with two steps: **define** it, then **run** it. The simplest animation fills the entire strip with a single color.
 
