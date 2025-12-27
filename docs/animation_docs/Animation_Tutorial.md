@@ -82,7 +82,7 @@ The DSL provides many predefined colors: `red`, `green`, `blue`, `white`, `yello
 
 ### 1.2 Custom Colors
 
-![Custom Color](_media/berry_animation/chap_1_20.png)
+![Custom Color](/_media/berry_animation/chap_1_20.png)
 
 Predefined colors are convenient, but you'll often want specific shades. Define custom colors using hexadecimal values.
 
