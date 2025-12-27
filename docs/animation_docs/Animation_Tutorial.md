@@ -64,6 +64,7 @@ This chapter covers the basics: creating simple animations, using colors, and la
 ![Solid Red](../../_media/berry_animation/chap_1_10.png)
 
 <img src="../../_media/berry_animation/chap_1_10.png">
+<img src="png/chap_1_10.png">
 
 Every animation starts with two steps: **define** it, then **run** it. The simplest animation fills the entire strip with a single color.
 
