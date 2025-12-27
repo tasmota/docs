@@ -1177,15 +1177,52 @@
                 });
             }
             
+            // Check for URL parameter to load a specific example
+            // Supports: ?example=<id> or ?ex=<id>
+            function getExampleFromURL() {
+                var params = new URLSearchParams(window.location.search);
+                return params.get('example') || params.get('ex');
+            }
+            
             // Auto-compile and run the default example after everything is loaded
             // Wait a bit to ensure all modules are fully initialized
             setTimeout(function() {
-                var compileRunBtn = document.getElementById('btn-compile-run');
-                if (compileRunBtn && !compileRunBtn.disabled) {
-                    if (window.consoleManager) {
-                        window.consoleManager.info('Auto-running default example...');
+                var requestedExample = getExampleFromURL();
+                
+                if (requestedExample && window.animationExamples) {
+                    // Try to load the requested example
+                    var example = window.animationExamples.getById(requestedExample);
+                    if (example) {
+                        if (window.consoleManager) {
+                            window.consoleManager.info('Loading example from URL: ' + example.name);
+                        }
+                        // Use the library's selectExample method which handles loading and running
+                        if (window.animationLibrary) {
+                            window.animationLibrary.selectExample(requestedExample);
+                        }
+                    } else {
+                        // Example not found - log available examples
+                        if (window.consoleManager) {
+                            window.consoleManager.warn('Example not found: ' + requestedExample);
+                            var allExamples = window.animationExamples.getAll();
+                            var ids = allExamples.map(function(e) { return e.id; }).join(', ');
+                            window.consoleManager.info('Available examples: ' + ids);
+                        }
+                        // Fall back to default behavior
+                        var compileRunBtn = document.getElementById('btn-compile-run');
+                        if (compileRunBtn && !compileRunBtn.disabled) {
+                            compileRunBtn.click();
+                        }
                     }
-                    compileRunBtn.click();
+                } else {
+                    // No URL parameter - run default example
+                    var compileRunBtn = document.getElementById('btn-compile-run');
+                    if (compileRunBtn && !compileRunBtn.disabled) {
+                        if (window.consoleManager) {
+                            window.consoleManager.info('Auto-running default example...');
+                        }
+                        compileRunBtn.click();
+                    }
                 }
             }, 50);
         });
