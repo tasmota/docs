@@ -83,6 +83,8 @@ The DSL provides many predefined colors: `red`, `green`, `blue`, `white`, `yello
 ### 1.2 Custom Colors
 
 ![Custom Color](../png/chap_1_20.png)
+[![Tasmota_Berry_LED_emulator](../png/chap_1_20.png){width=353}](https://tasmota.github.io/docs/Tasmota-Berry-emulator/index.html){target=_blank}
+[![Tasmota_Berry_LED_emulator](png/chap_1_20.png){width=353}](https://tasmota.github.io/docs/Tasmota-Berry-emulator/index.html){target=_blank}
 
 Predefined colors are convenient, but you'll often want specific shades. Define custom colors using hexadecimal values.
 
