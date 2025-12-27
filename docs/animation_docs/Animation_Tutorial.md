@@ -61,7 +61,7 @@ This chapter covers the basics: creating simple animations, using colors, and la
 
 ### 1.1 Your First Animation: Solid Color
 
-![Solid Red](./png/chap_1_10.png)
+![Solid Red](_media/berry_animation/chap_1_10.png)
 
 Every animation starts with two steps: **define** it, then **run** it. The simplest animation fills the entire strip with a single color.
 
@@ -82,9 +82,7 @@ The DSL provides many predefined colors: `red`, `green`, `blue`, `white`, `yello
 
 ### 1.2 Custom Colors
 
-![Custom Color](../png/chap_1_20.png)
-[![Tasmota_Berry_LED_emulator](../png/chap_1_20.png){width=353}](https://tasmota.github.io/docs/Tasmota-Berry-emulator/index.html){target=_blank}
-[![Tasmota_Berry_LED_emulator](png/chap_1_20.png){width=353}](https://tasmota.github.io/docs/Tasmota-Berry-emulator/index.html){target=_blank}
+![Custom Color](_media/berry_animation/chap_1_20.png)
 
 Predefined colors are convenient, but you'll often want specific shades. Define custom colors using hexadecimal values.
 
