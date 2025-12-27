@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="icon" href="data:image/x-icon;base64,AAABAAEAEBACAAEAAQCwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA////AP5/b+H6X2/h8k9v4eZnb+Hud2/h7ndv4e53b+FmZm/hMkxv4ZgZb+HOc2/h5+dv4fPPb+H5n2/h/D9v4f5/b+EAAO4EAADuBAAA7gQAAO4EAADuBAAA7gQAAO4EAADuBAAA7gQAAO4EAADuBAAA7gQAAO4EAADuBAAA7gQAAO4E">
+    <title>Berry Animation Simulator</title>
+    <link rel="stylesheet" href="assets/css/tasmota.css">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Header -->
+        <div style='text-align:center;color:var(--c_ttl);'>
+            <noscript>To use Berry Simulator, please enable JavaScript<br></noscript>
+            <h2>Tasmota Berry LED Simulator</h2>
+        </div>
+
+        <!-- LED Strip Visualization -->
+        <fieldset id="led-fieldset">
+            <legend><b>&nbsp;LED Strip&nbsp;</b></legend>
+            
+            <!-- LED Canvas Container with integrated status and controls -->
+            <div id="led-container" class="led-canvas-container">
+                <canvas id="led-canvas" width="600" height="20"></canvas>
+                <div class="led-toolbar">
+                    <div class="led-controls-group">
+                        <button id="btn-compile-run" class="bgrn led-btn">Compile &amp; Run</button>
+                        <button id="btn-resume" class="led-btn">Resume</button>
+                        <button id="btn-pause" class="bred led-btn">Pause</button>
+                        <button id="btn-export" class="led-btn export-btn" title="Export animation as APNG">Export</button>
+                    </div>
+                    <div class="led-status-group">
+                        <span id="fps-display" class="led-status-compact">FPS: --.-</span>
+                        <span id="status-display" class="led-status-compact status-ready">Ready</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Placeholder to maintain layout when sticky -->
+            <div id="led-placeholder" class="led-canvas-placeholder"></div>
+            
+            <!-- LED Strip Configuration Controls -->
+            <div class="led-config-section">
+                <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+                    <span style="white-space:nowrap;">
+                        <b>Pixels</b>
+                        <input type="number" id="led-length" min="1" max="300" value="30" 
+                               onchange="updateLEDConfig()" style="width:60px;margin-left:5px;">
+                    </span>
+                    <span style="white-space:nowrap;">
+                        <b>Orientation</b>
+                        <select id="led-orientation" onchange="updateLEDConfig()" style="width:auto;margin-left:5px;">
+                            <option value="ltr" selected>Standard →</option>
+                            <option value="rtl">Reverse ←</option>
+                        </select>
+                    </span>
+                    <span style="white-space:nowrap;">
+                        <b>Pixel Size</b>
+                        <select id="led-pixel-size" onchange="updateLEDConfig()" style="width:auto;margin-left:5px;">
+                            <option value="small">Small</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="large">Large</option>
+                        </select>
+                        <span id="pixel-size-label" style="color:var(--c_tab);font-size:0.9em;margin-left:5px;">10px</span>
+                    </span>
+                </div>
+            </div>
+            
+            <!-- Advanced Configuration Section (collapsible) -->
+            <div class="library-header">
+                <div class="library-header-row" onclick="toggleAdvancedSection()">
+                    <span id="advanced-toggle" class="library-toggle">▶</span>
+                    <span class="library-title"><b>Advanced configuration</b></span>
+                </div>
+            <div id="advanced-content" class="library-content" style="display:none;">
+                    <!-- Brightness Slider (semi-linear: 3/4 for 0-100, 1/4 for 100-200) -->
+                    <div id="brightness-container" class="brightness-section">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;">
+                            <label for="led-brightness"><b>Brightness</b></label>
+                            <span id="brightness-value" style="color:var(--c_tab);">100</span>
+                        </div>
+                        <div class="r r-bri-boost brightness-slider-container">
+                            <input type="range" id="led-brightness" min="0" max="100" value="75">
+                        </div>
+                        <div class="slider-labels">
+                            <span>0%</span>
+                            <span>100%</span>
+                            <span style="color:var(--c_tab);">overexpose</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Custom Faders -->
+                    <div class="faders-section">
+                        <div style="margin-bottom:4px;"><b>Custom Faders (not yet implemented)</b></div>
+                        <div id="faders-container" class="faders-row">
+                            <!-- Faders will be added here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <p></p>
+
+        <!-- Code Editor -->
+        <fieldset id="code-editor-fieldset">
+            <legend><b>&nbsp;Animation Code&nbsp;</b></legend>
+            <!-- Animation Library (embedded at top) -->
+            <div id="animation-library-container"></div>
+            <div class="code-editor-lang-toggle">
+                <label>
+                    <input type="radio" name="code-lang" value="dsl" checked>
+                    <b>Animation language</b>
+                </label>
+                <label>
+                    <input type="radio" name="code-lang" value="berry">
+                    <b>Berry transpiled code</b>
+                </label>
+            </div>
+            <div id="code-editor-container"></div>
+            <!-- Error message area (hidden by default, between editor and button) -->
+            <div id="code-error-container" class="code-error-container" style="display:none;"></div>
+            <button id="btn-compile" style="margin-top:8px;">Compile only</button>
+        </fieldset>
+
+        <p></p>
+
+        <!-- Console Output -->
+        <fieldset class="console-fieldset">
+            <legend><b>&nbsp;Console&nbsp;</b></legend>
+            <div class="console-header">
+                <label>
+                    <input type="checkbox" id="console-autoscroll" checked>
+                    <b>Auto-scroll</b>
+                </label>
+                <span id="console-line-count" style="color:var(--c_tab);font-size:0.9em;">0 lines</span>
+            </div>
+            <textarea id="console-output" class="console-output" readonly placeholder="Console output will appear here..."></textarea>
+            
+            <!-- Berry Input for debugging -->
+            <div class="berry-input-hint">↑↓ for history</div>
+            <textarea id="berry-input" class="berry-input" placeholder="Enter Berry code here..." rows="2" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+            <button type="button" id="berry-input-run-btn" class="berry-input-run-btn">Run code (or press 'Enter' twice)</button>
+            
+            <p></p>
+            <button id="btn-clear" class="bred">Clear Console</button>
+        </fieldset>
+
+        <!-- Footer -->
+        <div style='text-align:right;font-size:11px;'>
+            <a href='https://github.com/arendst/Tasmota' target='_blank' style='color:var(--c_tab);'>
+                Berry Simulator 1.0.0 - Tasmota Animation Framework
+            </a>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-container">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading Berry WASM Module...</div>
+            <div class="loading-progress">
+                <div class="loading-progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Define writeOutputText and waitLineText before berry.js loads -->
+    <script>
+        // Loading state management
+        window.loadingState = {
+            isLoading: true,
+            startTime: Date.now(),
+            maxLoadTime: 30000  // 30 seconds max
+        };
+        
+        /**
+         * Update loading progress
+         * @param {number} percent - Progress percentage (0-100)
+         */
+        window.updateLoadingProgress = function(percent) {
+            var progressBar = document.querySelector('.loading-progress-bar');
+            if (progressBar) {
+                progressBar.style.width = Math.min(percent, 95) + '%';
+            }
+        };
+        
+        /**
+         * Hide loading overlay
+         */
+        window.hideLoadingOverlay = function() {
+            var overlay = document.getElementById('loading-overlay');
+            if (overlay) {
+                overlay.classList.add('fade-out');
+                setTimeout(function() {
+                    overlay.style.display = 'none';
+                    window.loadingState.isLoading = false;
+                }, 300);
+            }
+        };
+        
+        /**
+         * Show loading error
+         * @param {string} message - Error message
+         */
+        window.showLoadingError = function(message) {
+            var textDiv = document.querySelector('.loading-text');
+            if (textDiv) {
+                textDiv.textContent = 'Error: ' + message;
+                textDiv.style.color = 'var(--c_txtwrn)';
+            }
+            var spinner = document.querySelector('.loading-spinner');
+            if (spinner) {
+                spinner.style.display = 'none';
+            }
+        };
+        
+        // Required by Berry's print() function - called by _js_writebuffer in be_port.c
+        window.writeOutputText = function(text) {
+            if (window.consoleManager) {
+                var cleanText = text.replace(/\n$/, '');
+                if (cleanText) {
+                    window.consoleManager.log(cleanText);
+                }
+            } else {
+                console.log('[Berry Output]', text);
+            }
+        };
+        // Required by Berry's input() function
+        window.waitLineText = function() {
+            return Promise.resolve('');
+        };
+    </script>
+    <!-- Load LED Strip API (provides renderLEDStrip and getStripSize for Berry) -->
+    <script src="led-strip-api.js"></script>
+    <!-- Virtual filesystem must be loaded before Berry VM initializes -->
+    <script src="virtual-fs.js"></script>
+    <script src="berry-modules.js"></script>
+    <script src="berry.js"></script>
+    <script src="berry-vm.js"></script>
+    <script src="dsl-transpiler.js"></script>
+    <!-- renderer.js functionality is now consolidated in led-strip-api.js -->
+    <script src="animation-loop.js"></script>
+    <script src="controls.js"></script>
+    <script src="console.js"></script>
+    <script src="sticky-led.js"></script>
+    <script src="code-editor.js"></script>
+    <script src="berry-input.js"></script>
+    <script src="animation-examples.js"></script>
+    <script src="animation-library.js"></script>
+    <script src="config-persistence.js"></script>
+    <!-- fflate for APNG DEFLATE compression (smaller than pako) -->
+    <script src="fflate.min.js"></script>
+    <script src="apng.js"></script>
+    <script src="apng-exporter.js"></script>
+    <script src="export-ui.js"></script>
+    <script src="berry-simulator.js"></script>
+    <script>
+        // Advanced section toggle state
+        var advancedSectionOpen = false;
+        
+        /**
+         * Toggle the advanced section visibility
+         */
+        function toggleAdvancedSection() {
+            advancedSectionOpen = !advancedSectionOpen;
+            var content = document.getElementById('advanced-content');
+            var toggle = document.getElementById('advanced-toggle');
+            if (content && toggle) {
+                content.style.display = advancedSectionOpen ? 'block' : 'none';
+                toggle.textContent = advancedSectionOpen ? '▼' : '▶';
+            }
+        }
+        
+        // LED Strip Configuration State
+        var ledConfig = {
+            length: 30,
+            reversed: false,  // false = left-to-right, true = right-to-left
+            pixelSize: 10,
+            pixelSizeMode: 'medium',  // 'small', 'medium', 'large'
+            isRunning: false,
+            animationState: 'ready'  // 'ready', 'running', 'stopped', 'error'
+        };
+        
+        /**
+         * Calculate pixel size based on mode and LED count
+         * Adapts pixel size to fit reasonably on screen
+         * @param {string} mode - 'small', 'medium', 'large'
+         * @param {number} ledCount - Number of LEDs
+         * @returns {number} Pixel size in pixels
+         */
+        function calculatePixelSize(mode, ledCount) {
+            // Base sizes for each mode
+            var baseSizes = {
+                small: { base: 4, min: 2, max: 8 },
+                medium: { base: 10, min: 4, max: 16 },
+                large: { base: 16, min: 8, max: 24 }
+            };
+            
+            var config = baseSizes[mode] || baseSizes.medium;
+            var pixelSize = config.base;
+            
+            // Adapt based on LED count to keep reasonable canvas width
+            // Target max canvas width around 600-800px
+            var targetMaxWidth = 700;
+            var spacing = 2;
+            var maxPixelSize = Math.floor((targetMaxWidth / ledCount) - spacing);
+            
+            // Clamp to mode's min/max range
+            pixelSize = Math.min(pixelSize, maxPixelSize);
+            pixelSize = Math.max(config.min, Math.min(config.max, pixelSize));
+            
+            return pixelSize;
+        }
+        
+        /**
+         * Update LED configuration from UI controls
+         * Called when any LED config control changes
+         */
+        function updateLEDConfig() {
+            var lengthInput = document.getElementById('led-length');
+            var orientationSelect = document.getElementById('led-orientation');
+            var pixelSizeSelect = document.getElementById('led-pixel-size');
+            
+            // Get values from controls
+            var newLength = parseInt(lengthInput.value, 10);
+            var newOrientation = orientationSelect.value;
+            var newReversed = (newOrientation === 'rtl');
+            var newPixelSizeMode = pixelSizeSelect.value;
+            
+            // Validate length (1-300)
+            if (isNaN(newLength) || newLength < 1) {
+                newLength = 1;
+                lengthInput.value = 1;
+            } else if (newLength > 300) {
+                newLength = 300;
+                lengthInput.value = 300;
+            }
+            
+            // Update config state
+            ledConfig.length = newLength;
+            ledConfig.reversed = newReversed;
+            ledConfig.pixelSizeMode = newPixelSizeMode;
+            
+            // Update LED Strip API with new configuration (consolidated canvas management)
+            // The API handles pixel size calculation based on mode
+            if (window.ledStripAPI) {
+                window.ledStripAPI.setPixelSizeMode(newPixelSizeMode);
+                window.ledStripAPI.setReversed(newReversed);
+                window.ledStripAPI.setStripSize(newLength);
+                // Sync pixel size back to ledConfig
+                ledConfig.pixelSize = window.ledStripAPI.getPixelSize();
+            } else {
+                // Fallback: calculate pixel size locally if API not available
+                ledConfig.pixelSize = calculatePixelSize(newPixelSizeMode, newLength);
+            }
+            
+            // Update LED count display
+            updateLEDCountDisplay();
+            
+            // Update pixel size label
+            updatePixelSizeLabel();
+            
+            // Update sticky LED after resize
+            if (window.stickyLED) {
+                setTimeout(function() {
+                    if (window.stickyLED) {
+                        window.stickyLED.update();
+                    }
+                }, 150);
+            }
+            
+            // Log configuration change
+            var direction = newReversed ? 'R→L' : 'L→R';
+            if (window.consoleManager) {
+                window.consoleManager.info('LED config: ' + newLength + ' LEDs, ' + direction + ', ' + newPixelSizeMode + ' (' + ledConfig.pixelSize + 'px)');
+            }
+        }
+        
+        /**
+         * Update the pixel size label display
+         */
+        function updatePixelSizeLabel() {
+            var label = document.getElementById('pixel-size-label');
+            if (label) {
+                // Get pixel size from consolidated API if available
+                var pixelSize = window.ledStripAPI ? window.ledStripAPI.getPixelSize() : ledConfig.pixelSize;
+                ledConfig.pixelSize = pixelSize; // Keep ledConfig in sync
+                label.textContent = pixelSize + 'px';
+            }
+        }
+        
+        /**
+         * Update the LED count display
+         */
+        function updateLEDCountDisplay() {
+            var display = document.getElementById('led-count-display');
+            if (display) {
+                display.textContent = ledConfig.length;
+                display.title = 'LED count: ' + ledConfig.length;
+            }
+        }
+        
+        /**
+         * Update the animation status display
+         * @param {string} state - 'ready', 'running', 'stopped', 'error'
+         * @param {string} message - Optional status message
+         * @param {string} errorDetail - Optional detailed error message for error container
+         */
+        function updateAnimationStatus(state, message, errorDetail) {
+            var statusDisplay = document.getElementById('status-display');
+            var errorContainer = document.getElementById('code-error-container');
+            if (!statusDisplay) return;
+            
+            ledConfig.animationState = state;
+            
+            // Remove all status classes
+            statusDisplay.classList.remove('status-ready', 'status-running', 'status-stopped', 'status-error');
+            
+            // Add appropriate class and set text
+            switch (state) {
+                case 'running':
+                    statusDisplay.classList.add('status-running');
+                    statusDisplay.textContent = 'Running';
+                    break;
+                case 'stopped':
+                    statusDisplay.classList.add('status-stopped');
+                    statusDisplay.textContent = 'Paused';
+                    break;
+                case 'error':
+                    statusDisplay.classList.add('status-error');
+                    statusDisplay.textContent = 'Error';
+                    break;
+                case 'ready':
+                default:
+                    statusDisplay.classList.add('status-ready');
+                    statusDisplay.textContent = 'Ready';
+                    break;
+            }
+            
+            // Handle error container visibility
+            if (errorContainer) {
+                if (state === 'error' && errorDetail) {
+                    errorContainer.textContent = errorDetail;
+                    errorContainer.style.display = 'block';
+                } else if (state !== 'error') {
+                    errorContainer.style.display = 'none';
+                    errorContainer.textContent = '';
+                }
+            }
+        }
+        
+        /**
+         * Show error message in the code error container
+         * @param {string} errorMessage - Error message to display
+         */
+        function showCodeError(errorMessage) {
+            var errorContainer = document.getElementById('code-error-container');
+            if (errorContainer) {
+                errorContainer.textContent = errorMessage;
+                errorContainer.style.display = 'block';
+            }
+        }
+        
+        /**
+         * Clear error message from the code error container
+         */
+        function clearCodeError() {
+            var errorContainer = document.getElementById('code-error-container');
+            if (errorContainer) {
+                errorContainer.style.display = 'none';
+                errorContainer.textContent = '';
+            }
+        }
+        
+        /**
+         * Update FPS display
+         * @param {number} fps - Current frames per second
+         */
+        function updateFPSDisplay(fps) {
+            var fpsDisplay = document.getElementById('fps-display');
+            if (fpsDisplay) {
+                fpsDisplay.textContent = 'FPS: ' + fps.toFixed(1);
+            }
+        }
+        
+        // Initialize console manager and LED renderer when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize console with Tasmota styling
+            window.initConsole({
+                outputId: 'console-output',
+                clearBtnId: 'btn-clear',
+                autoScrollId: 'console-autoscroll',
+                lineCountId: 'console-line-count',
+                maxLines: 500,
+                showTimestamps: true
+            });
+            
+            // Initialize LED Strip API for Berry frame buffer rendering
+            // The consolidated API handles all canvas management
+            if (typeof window.ledStripAPI !== 'undefined') {
+                // Get the CSS variable value for background color
+                var canvasBgColor = getComputedStyle(document.documentElement).getPropertyValue('--c_intxt').trim() || '#000000';
+                window.ledStripAPI.init({
+                    stripLength: ledConfig.length,
+                    pixelSizeMode: ledConfig.pixelSizeMode,
+                    ledSpacing: 2,
+                    reversed: ledConfig.reversed,
+                    maxCanvasWidth: 700,
+                    canvasId: 'led-canvas',
+                    backgroundColor: canvasBgColor,
+                    // Note: FPS tracking is handled by AnimationLoop, not LED Strip API
+                    // This avoids FPS display oscillation between two different counters
+                    enablePerformanceMonitoring: false
+                });
+            }
+            
+            // Initialize Berry input for debugging
+            if (typeof window.initBerryInput === 'function') {
+                window.initBerryInput({
+                    inputId: 'berry-input',
+                    maxHistory: 50,
+                    onExecute: function(code, success) {
+                        // Optional callback when code is executed
+                        if (success && window.consoleManager) {
+                            // Success is already logged by Berry's print()
+                        }
+                    }
+                });
+            }
+            
+            // LED Strip API is already initialized above with ledStripAPI.init()
+            // The consolidated API handles all canvas management
+            // Update displays
+            updateLEDCountDisplay();
+            updatePixelSizeLabel();
+            
+            // Initialize Sticky LED controller
+            if (typeof window.initStickyLED === 'function') {
+                window.initStickyLED({
+                    containerId: 'led-container',
+                    placeholderId: 'led-placeholder',
+                    stickyThreshold: 0,
+                    enabled: true
+                });
+            }
+            
+            // Initialize Animation Loop
+            // The animation loop calls Berry's _fast_loop() function at each tick (60 FPS target)
+            // _fast_loop() is defined in tasmota_core.be and calls tasmota.fast_loop()
+            // which iterates through all registered fast_loop closures (including animation engine)
+            var animationLoop = null;
+            if (typeof window.AnimationLoop === 'function') {
+                animationLoop = new AnimationLoop({
+                    targetFPS: 60,  // Target 60 frames per second
+                    useBerryFastLoop: true,  // Enable calling Berry's _fast_loop()
+                    // No JavaScript fallback - Berry animations only
+                    onFPSUpdate: function(fps, metrics) {
+                        updateFPSDisplay(fps);
+                        if (window.animationControls) {
+                            window.animationControls.updateFPS(fps);
+                        }
+                        // Update performance metrics display if available
+                        if (metrics && window.updatePerformanceMetrics) {
+                            window.updatePerformanceMetrics(metrics);
+                        }
+                    },
+                    onStart: function() {
+                        updateAnimationStatus('running', 'Running');
+                        clearCodeError();  // Clear any previous errors
+                        // Enable export button when animation starts
+                        if (window.exportUI) {
+                            window.exportUI.setEnabled(true);
+                        }
+                        if (window.consoleManager) {
+                            window.consoleManager.info('Animation loop started (60 FPS target)');
+                        }
+                    },
+                    onStop: function() {
+                        updateAnimationStatus('stopped', 'Paused');
+                        // Update controls state so buttons reflect stopped state
+                        if (window.animationControls) {
+                            window.animationControls.setRunning(false);
+                        }
+                    },
+                    onError: function(errorMessage, errorCount) {
+                        // Handle Berry execution errors gracefully
+                        if (errorCount === 1) {
+                            // First error - log it and show in error container
+                            if (window.consoleManager) {
+                                window.consoleManager.error('Berry error: ' + errorMessage);
+                            }
+                            updateAnimationStatus('error', null, errorMessage);
+                            // Update controls to reflect error state (enable Start, disable Stop)
+                            if (window.animationControls) {
+                                window.animationControls.setRunning(false);
+                            }
+                        } else if (errorCount >= 10) {
+                            // Too many errors - animation was stopped
+                            if (window.consoleManager) {
+                                window.consoleManager.error('Animation stopped: too many consecutive errors');
+                            }
+                            updateAnimationStatus('error', null, 'Too many consecutive errors. Animation stopped.\n\n' + errorMessage);
+                            // Ensure controls reflect stopped state
+                            if (window.animationControls) {
+                                window.animationControls.setRunning(false);
+                            }
+                        }
+                    }
+                });
+                window.animationLoop = animationLoop;
+            }
+            
+            // Initialize Animation Controls
+            if (typeof window.initAnimationControls === 'function') {
+                var controls = window.initAnimationControls({
+                    startBtnId: 'btn-resume',
+                    stopBtnId: 'btn-pause',
+                    compileBtnId: 'btn-compile',
+                    compileRunBtnId: 'btn-compile-run',
+                    fpsDisplayId: 'fps-display',
+                    statusDisplayId: 'status-display',
+                    parametersContainerId: 'parameters-container'
+                });
+                
+                // Wire up control callbacks
+                controls.setOnStart(function() {
+                    if (animationLoop) {
+                        animationLoop.start();
+                    }
+                    if (window.consoleManager) {
+                        window.consoleManager.info('Animation started');
+                    }
+                });
+                
+                controls.setOnStop(function() {
+                    if (animationLoop) {
+                        animationLoop.stop();
+                    }
+                    if (window.consoleManager) {
+                        window.consoleManager.info('Animation paused');
+                    }
+                });
+                
+                // Compile only callback (used by both compile-only and compile & run)
+                controls.setOnCompile(function() {
+                    // Get code from editor
+                    var code = window.codeEditor ? window.codeEditor.getCode() : '';
+                    var lang = window.codeEditor ? window.codeEditor.getLanguage() : 'dsl';
+                    
+                    if (window.consoleManager) {
+                        window.consoleManager.info('Compiling ' + lang.toUpperCase() + ' code...');
+                    }
+                    
+                    // Clear any previous errors
+                    if (window.codeEditor) {
+                        window.codeEditor.clearErrors();
+                    }
+                    
+                    // TODO: Actual compilation will be implemented in task 9.4
+                    // For now, just log the code length
+                    if (window.consoleManager) {
+                        window.consoleManager.success('Code ready (' + code.length + ' chars, ' + lang.toUpperCase() + ')');
+                    }
+                    
+                    return Promise.resolve(true);  // Return true to indicate success
+                });
+                
+                controls.setOnParameterChange(function(id, value) {
+                    if (window.consoleManager) {
+                        window.consoleManager.info('Parameter ' + id + ' = ' + value);
+                    }
+                });
+            }
+            
+            // Initialize Code Editor
+            if (typeof window.initCodeEditor === 'function') {
+                var defaultCode = '# @desc Rainbow gradient rotating along the strip over 5 seconds\n' +
+                    '\n' +
+                    '# define a palette of rainbow colors including white with constant brightness\n' +
+                    'palette rainbow_with_white = [\n' +
+                    '    0xFC0000        # Red\n' +
+                    '    0xFF8000        # Orange\n' +
+                    '    0xFFFF00        # Yellow\n' +
+                    '    0x00FF00        # Green\n' +
+                    '    0x00FFFF        # Cyan\n' +
+                    '    0x0080FF        # Blue\n' +
+                    '    0x8000FF        # Violet\n' +
+                    '    0xCCCCCC        # White\n' +
+                    '    0xFC0000        # Red - need to add the first color at last position to ensure roll-over\n' +
+                    ']\n' +
+                    '\n' +
+                    '# define a color attribute cycles color in space\n' +
+                    'color rainbow_rich_color = rich_palette(\n' +
+                    '    colors=rainbow_with_white,\n' +
+                    '    period=0,\n' +
+                    '    transition_type=SINE\n' +
+                    ')\n' +
+                    '\n' +
+                    '# define a gradient across the whole strip\n' +
+                    'animation back_pattern = palette_gradient_animation(\n' +
+                    '    color_source = rainbow_rich_color,\n' +
+                    '    shift_period = 5s\n' +
+                    ')\n' +
+                    '\n' +
+                    'run back_pattern';
+                
+                window.codeEditor = window.initCodeEditor({
+                    containerId: 'code-editor-container',
+                    radioGroupName: 'code-lang',
+                    initialLanguage: 'dsl',
+                    initialCode: defaultCode,
+                    onChange: function(code, lang) {
+                        // Notify controls that code has changed (disables Resume)
+                        if (window.animationControls) {
+                            window.animationControls.notifyCodeChanged();
+                        }
+                        
+                        // If user edits Berry code directly, clear the transpiled flag
+                        if (lang === 'berry' && window.codeEditor && window.codeEditor.isBerryTranspiled()) {
+                            window.codeEditor.clearTranspiledFlag();
+                            if (window.consoleManager) {
+                                window.consoleManager.info('Berry code edited - transpiled flag cleared');
+                            }
+                        }
+                    },
+                    onLanguageChange: function(newLang, editor) {
+                        // Update transpiled banner visibility
+                        updateTranspiledBanner(newLang, editor);
+                    }
+                });
+                
+                if (window.consoleManager) {
+                    window.consoleManager.info('Code editor initialized');
+                }
+            }
+            
+            // Initialize Animation Library
+            if (typeof window.initAnimationLibrary === 'function') {
+                window.initAnimationLibrary({
+                    containerId: 'animation-library-container',
+                    collapsed: true,  // Start collapsed
+                    onSelect: function(example) {
+                        // Optional: additional actions when example is selected
+                        // The library already loads code into the editor
+                    }
+                });
+                
+                if (window.consoleManager) {
+                    var count = window.animationExamples ? window.animationExamples.count() : 0;
+                    window.consoleManager.info('Animation library loaded (' + count + ' examples)');
+                }
+            }
+            
+            /**
+             * Update the transpiled code banner visibility
+             * @param {string} lang - Current language ('dsl' or 'berry')
+             * @param {CodeEditor} editor - Editor instance
+             */
+            function updateTranspiledBanner(lang, editor) {
+                // Safety check - ensure editor and container exist
+                if (!editor) return;
+                
+                var container = document.getElementById('code-editor-container');
+                if (!container) return;
+                
+                // Remove existing banner if any
+                var existingBanner = container.querySelector('.code-editor-transpiled-banner');
+                if (existingBanner) {
+                    existingBanner.remove();
+                }
+                
+                // Show banner if viewing transpiled Berry code
+                if (lang === 'berry' && editor.isBerryTranspiled && editor.isBerryTranspiled()) {
+                    var banner = document.createElement('div');
+                    banner.className = 'code-editor-transpiled-banner';
+                    banner.textContent = 'Transpiled from DSL - edit DSL to regenerate';
+                    
+                    // Insert at the beginning of the container
+                    container.insertBefore(banner, container.firstChild);
+                }
+            }
+            
+            // Initialize brightness slider in LED Strip panel
+            // Semi-linear mapping: 0-75 slider -> 0-100 brightness, 75-100 slider -> 100-200 brightness
+            var brightnessSlider = document.getElementById('led-brightness');
+            var brightnessValue = document.getElementById('brightness-value');
+            var brightnessContainer = document.querySelector('.brightness-slider-container');
+            
+            // Magnetic snap configuration
+            var SNAP_THRESHOLD = 3;  // Slider units to snap within
+            var SNAP_POSITION = 75;  // Slider position for brightness 100
+            
+            /**
+             * Convert slider position (0-100) to brightness value (0-200)
+             * Semi-linear: left 3/4 (0-75) maps to 0-100, right 1/4 (75-100) maps to 100-200
+             */
+            function sliderToBrightness(sliderValue) {
+                if (sliderValue <= 75) {
+                    // Linear from 0-75 slider -> 0-100 brightness
+                    return Math.round((sliderValue / 75) * 100);
+                } else {
+                    // Linear from 75-100 slider -> 100-200 brightness
+                    return Math.round(100 + ((sliderValue - 75) / 25) * 100);
+                }
+            }
+            
+            /**
+             * Convert brightness value (0-200) to slider position (0-100)
+             */
+            function brightnessToSlider(brightness) {
+                if (brightness <= 100) {
+                    return Math.round((brightness / 100) * 75);
+                } else {
+                    return Math.round(75 + ((brightness - 100) / 100) * 25);
+                }
+            }
+            
+            if (brightnessSlider) {
+                brightnessSlider.addEventListener('input', function(e) {
+                    var sliderValue = parseInt(e.target.value, 10);
+                    
+                    // Magnetic snap to 75 (brightness 100) when close
+                    var isSnapped = false;
+                    if (Math.abs(sliderValue - SNAP_POSITION) <= SNAP_THRESHOLD) {
+                        sliderValue = SNAP_POSITION;
+                        e.target.value = SNAP_POSITION;
+                        isSnapped = true;
+                    }
+                    
+                    // Update snap visual feedback
+                    if (brightnessContainer) {
+                        if (isSnapped) {
+                            brightnessContainer.classList.add('snapped');
+                        } else {
+                            brightnessContainer.classList.remove('snapped');
+                        }
+                    }
+                    
+                    // Convert to brightness value
+                    var brightness = sliderToBrightness(sliderValue);
+                    brightnessValue.textContent = brightness;
+                    
+                    // Update LED Strip API brightness so Berry can read it via js.get_brightness()
+                    if (window.ledStripAPI) {
+                        window.ledStripAPI.setBrightness(brightness);
+                    }
+                });
+                
+                // Initialize brightness in LED Strip API with current slider value
+                var initialBrightness = sliderToBrightness(parseInt(brightnessSlider.value, 10));
+                brightnessValue.textContent = initialBrightness;
+                if (window.ledStripAPI) {
+                    window.ledStripAPI.setBrightness(initialBrightness);
+                }
+            }
+            
+            // Fader values (accessible to animations) - range 0-100
+            window.faderValues = [50, 50, 50, 50, 50, 50, 50, 50];
+            
+            // Fader names (optional, can be set by user)
+            // Example: set some common animation parameter names
+            window.faderNames = ['speed', 'hue', 'width', 'decay', '', '', '', ''];
+            
+            // Initialize vertical faders
+            initFaders();
+            
+            /**
+             * Initialize vertical faders
+             */
+            function initFaders() {
+                var container = document.getElementById('faders-container');
+                if (!container) return;
+                
+                // Create 8 faders on one line
+                for (var i = 1; i <= 8; i++) {
+                    var fader = createFader(i, 50, window.faderNames[i - 1]);
+                    container.appendChild(fader);
+                }
+            }
+            
+            /**
+             * Create a single vertical fader element
+             * @param {number} num - Fader number (1-8)
+             * @param {number} initialValue - Initial value (0-100)
+             * @param {string} name - Optional name for the fader
+             * @returns {HTMLElement} Fader container element
+             */
+            function createFader(num, initialValue, name) {
+                var container = document.createElement('div');
+                container.className = 'fader-container';
+                container.id = 'fader-container-' + num;
+                
+                // Number label (top)
+                var numLabel = document.createElement('div');
+                numLabel.className = 'fader-num';
+                numLabel.textContent = num;
+                container.appendChild(numLabel);
+                
+                // Fader wrapper
+                var wrapper = document.createElement('div');
+                wrapper.className = 'fader-wrapper';
+                wrapper.id = 'fader-wrapper-' + num;
+                
+                // Track
+                var track = document.createElement('div');
+                track.className = 'fader-track';
+                wrapper.appendChild(track);
+                
+                // Fill
+                var fill = document.createElement('div');
+                fill.className = 'fader-fill';
+                wrapper.appendChild(fill);
+                
+                // Handle
+                var handle = document.createElement('div');
+                handle.className = 'fader-handle';
+                wrapper.appendChild(handle);
+                
+                // Set initial value
+                updateFaderVisual(wrapper, initialValue);
+                
+                // Event handlers
+                setupFaderEvents(wrapper, num);
+                
+                container.appendChild(wrapper);
+                
+                // Value display (below slider)
+                var valueDisplay = document.createElement('div');
+                valueDisplay.className = 'fader-value';
+                valueDisplay.id = 'fader-value-' + num;
+                valueDisplay.textContent = initialValue;
+                container.appendChild(valueDisplay);
+                
+                // Name label (bottom, optional)
+                var nameLabel = document.createElement('div');
+                nameLabel.className = 'fader-name';
+                nameLabel.id = 'fader-name-' + num;
+                nameLabel.textContent = name || '';
+                nameLabel.style.display = name ? 'block' : 'none';
+                container.appendChild(nameLabel);
+                
+                return container;
+            }
+            
+            /**
+             * Update fader visual appearance based on value
+             * @param {HTMLElement} wrapper - Fader wrapper element
+             * @param {number} value - Value 0-100
+             */
+            function updateFaderVisual(wrapper, value) {
+                // Convert value (0-100) to height (0-62px for 70px track)
+                var height = (value / 100) * 62;
+                wrapper.style.setProperty('--fader-height', height + 'px');
+            }
+            
+            /**
+             * Setup event handlers for fader interaction
+             * @param {HTMLElement} wrapper - Fader wrapper element
+             * @param {number} num - Fader number
+             */
+            function setupFaderEvents(wrapper, num) {
+                var isDragging = false;
+                
+                // Mouse/touch drag handling
+                wrapper.addEventListener('mousedown', startDrag);
+                wrapper.addEventListener('touchstart', startDrag, { passive: false });
+                
+                function startDrag(e) {
+                    e.preventDefault();
+                    isDragging = true;
+                    wrapper.classList.add('dragging');
+                    updateFromEvent(e);
+                    
+                    document.addEventListener('mousemove', onDrag);
+                    document.addEventListener('mouseup', stopDrag);
+                    document.addEventListener('touchmove', onDrag, { passive: false });
+                    document.addEventListener('touchend', stopDrag);
+                }
+                
+                function onDrag(e) {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    updateFromEvent(e);
+                }
+                
+                function updateFromEvent(e) {
+                    var rect = wrapper.getBoundingClientRect();
+                    var y = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+                    var relY = rect.bottom - y - 4; // 4px padding at bottom
+                    var value = Math.max(0, Math.min(100, Math.round((relY / 62) * 100)));
+                    updateFaderValue(num, value);
+                }
+                
+                function stopDrag() {
+                    isDragging = false;
+                    wrapper.classList.remove('dragging');
+                    document.removeEventListener('mousemove', onDrag);
+                    document.removeEventListener('mouseup', stopDrag);
+                    document.removeEventListener('touchmove', onDrag);
+                    document.removeEventListener('touchend', stopDrag);
+                }
+                
+                // Scroll wheel support
+                wrapper.addEventListener('wheel', function(e) {
+                    e.preventDefault();
+                    var currentValue = window.faderValues[num - 1] || 0;
+                    var delta = e.deltaY > 0 ? -5 : 5;
+                    var newValue = Math.max(0, Math.min(100, currentValue + delta));
+                    updateFaderValue(num, newValue);
+                }, { passive: false });
+            }
+            
+            /**
+             * Update fader value and trigger callbacks
+             * @param {number} num - Fader number (1-8)
+             * @param {number} value - New value (0-100)
+             */
+            function updateFaderValue(num, value) {
+                var wrapper = document.getElementById('fader-wrapper-' + num);
+                var valueDisplay = document.getElementById('fader-value-' + num);
+                
+                if (wrapper) {
+                    updateFaderVisual(wrapper, value);
+                }
+                if (valueDisplay) {
+                    valueDisplay.textContent = value;
+                }
+                
+                // Store in global array (0-indexed)
+                // Berry can read these via js.get_fader(num) or js.get_all_faders()
+                window.faderValues[num - 1] = value;
+            }
+            
+            /**
+             * Get fader value by number
+             * @param {number} num - Fader number (1-8)
+             * @returns {number} Fader value (0-100)
+             */
+            window.getFaderValue = function(num) {
+                return window.faderValues[num - 1] || 0;
+            };
+            
+            /**
+             * Set fader name
+             * @param {number} num - Fader number (1-8)
+             * @param {string} name - Name to display (empty string to hide)
+             */
+            window.setFaderName = function(num, name) {
+                var nameLabel = document.getElementById('fader-name-' + num);
+                if (nameLabel) {
+                    nameLabel.textContent = name || '';
+                    nameLabel.style.display = name ? 'block' : 'none';
+                }
+                window.faderNames[num - 1] = name || '';
+            };
+            
+            // Keep backward compatibility with getKnobValue
+            window.getKnobValue = window.getFaderValue;
+            
+            // Initialize BerryAnimationSimulator
+            // This orchestrates the compile and run workflow
+            if (typeof window.initBerrySimulator === 'function') {
+                window.initBerrySimulator({
+                    ledCanvasId: 'led-canvas',
+                    ledLength: ledConfig.length,
+                    editorContainerId: 'code-editor-container',
+                    radioGroupName: 'code-lang',
+                    initialLanguage: 'dsl'
+                }).then(async function(simulator) {
+                    // Load the DSL transpiler in the background
+                    if (window.dslTranspiler) {
+                        window.consoleManager.info('Loading DSL transpiler...');
+                        try {
+                            var loadResult = await window.dslTranspiler.load();
+                            if (loadResult.success) {
+                                window.consoleManager.success('DSL transpiler loaded');
+                            } else {
+                                window.consoleManager.warn('DSL transpiler load failed: ' + (loadResult.error || 'unknown'));
+                                window.consoleManager.info('Demo animations will be used instead');
+                            }
+                        } catch (err) {
+                            window.consoleManager.warn('DSL transpiler error: ' + err.message);
+                            window.consoleManager.info('Demo animations will be used instead');
+                        }
+                    }
+                    
+                    if (window.consoleManager) {
+                        window.consoleManager.info('Click Compile to process your animation code');
+                    }
+                }).catch(function(error) {
+                    if (window.consoleManager) {
+                        window.consoleManager.error('Simulator init failed: ' + error.message);
+                    }
+                });
+            } else {
+                // Fallback if berry-simulator.js not loaded
+                if (window.consoleManager) {
+                    window.consoleManager.success('Berry Simulator initialized (basic mode)');
+                    window.consoleManager.info('LED Strip: ' + ledConfig.length + ' LEDs configured');
+                    window.consoleManager.info('Ready to compile and run animations');
+                }
+            }
+            
+            // Initialize APNG Exporter
+            var apngExporter = null;
+            if (typeof window.APNGExporter !== 'undefined') {
+                apngExporter = new window.APNGExporter({
+                    canvas: 'led-canvas',
+                    repeat: 0  // Loop forever
+                });
+                
+                apngExporter.setOnError(function(message) {
+                    if (window.consoleManager) {
+                        window.consoleManager.error('Export error: ' + message);
+                    }
+                });
+                
+                window.apngExporter = apngExporter;
+            }
+            
+            // Initialize Export UI
+            if (typeof window.initExportUI === 'function') {
+                window.exportUI = window.initExportUI({
+                    dialogId: 'export-dialog',
+                    exportBtnId: 'btn-export',
+                    getStripSize: function() {
+                        return ledConfig.length;
+                    },
+                    onExport: async function(fps, duration, progressCallback) {
+                        if (window.consoleManager) {
+                            window.consoleManager.info('Export: ' + fps + ' FPS, ' + duration + 's');
+                        }
+                        
+                        if (!apngExporter) {
+                            if (window.consoleManager) {
+                                window.consoleManager.error('Exporter not initialized');
+                            }
+                            return null;
+                        }
+                        
+                        apngExporter.setOnProgress(progressCallback);
+                        var result = await apngExporter.startCapture(fps, duration);
+                        
+                        if (result && result.stats && window.consoleManager) {
+                            window.consoleManager.info(
+                                'Captured ' + result.stats.frames + ' frames in ' + 
+                                Math.round(result.stats.captureTime) + 'ms'
+                            );
+                        }
+                        
+                        return result;
+                    },
+                    onCancel: function() {
+                        if (apngExporter && apngExporter.isInProgress()) {
+                            apngExporter.cancel();
+                        }
+                        if (window.consoleManager) {
+                            window.consoleManager.info('Export cancelled');
+                        }
+                    }
+                });
+                
+                if (window.consoleManager) {
+                    window.consoleManager.info('Export ready');
+                }
+            }
+            
+            // Initialize configuration persistence
+            // This restores saved settings and sets up auto-save
+            if (typeof window.initConfigPersistence === 'function') {
+                window.configPersistence = window.initConfigPersistence({
+                    enabled: true,
+                    autoSave: true,
+                    restoreOnLoad: true
+                });
+            }
+            
+            // Check for URL parameter to load a specific example
+            // Supports: ?example=<id> or ?ex=<id>
+            function getExampleFromURL() {
+                var params = new URLSearchParams(window.location.search);
+                return params.get('example') || params.get('ex');
+            }
+            
+            // Auto-compile and run the default example after everything is loaded
+            // Wait a bit to ensure all modules are fully initialized
+            setTimeout(function() {
+                var requestedExample = getExampleFromURL();
+                
+                if (requestedExample && window.animationExamples) {
+                    // Try to load the requested example
+                    var example = window.animationExamples.getById(requestedExample);
+                    if (example) {
+                        if (window.consoleManager) {
+                            window.consoleManager.info('Loading example from URL: ' + example.name);
+                        }
+                        // Use the library's selectExample method which handles loading and running
+                        if (window.animationLibrary) {
+                            window.animationLibrary.selectExample(requestedExample);
+                        }
+                    } else {
+                        // Example not found - log available examples
+                        if (window.consoleManager) {
+                            window.consoleManager.warn('Example not found: ' + requestedExample);
+                            var allExamples = window.animationExamples.getAll();
+                            var ids = allExamples.map(function(e) { return e.id; }).join(', ');
+                            window.consoleManager.info('Available examples: ' + ids);
+                        }
+                        // Fall back to default behavior
+                        var compileRunBtn = document.getElementById('btn-compile-run');
+                        if (compileRunBtn && !compileRunBtn.disabled) {
+                            compileRunBtn.click();
+                        }
+                    }
+                } else {
+                    // No URL parameter - run default example
+                    var compileRunBtn = document.getElementById('btn-compile-run');
+                    if (compileRunBtn && !compileRunBtn.disabled) {
+                        if (window.consoleManager) {
+                            window.consoleManager.info('Auto-running default example...');
+                        }
+                        compileRunBtn.click();
+                    }
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>
