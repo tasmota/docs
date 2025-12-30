@@ -627,6 +627,26 @@ Common buttons should work across multiple models
 
 ## BD/DVD players
 
+## Panasonic DP-UB424EGK/ Remote n2qayb001185
+
+| button         | code                                                                                            |
+| -------------- | ------------------------------------------------------------------------------------------------|
+| TOGGLE ON/OFF  | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00BCB1","DataLSB":"0x220B0003D8D","Repeat":0} |
+| OPEN/CLOSE     | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00808D","DataLSB":"0x220B00001B1","Repeat":0} |
+| SEARCH BACK    | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00202D","DataLSB":"0x220B00004B4","Repeat":0} |
+| SEARCH FORWARD | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00A0AD","DataLSB":"0x220B00005B5","Repeat":0} |
+| SKIP BACK      | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00929F","DataLSB":"0x220B00049F9","Repeat":0} |
+| SKIP FORWARD   | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00525F","DataLSB":"0x220B0004AFA","Repeat":0} |
+| PLAY           | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00505D","DataLSB":"0x220B0000ABA","Repeat":0} |
+| PAUSE          | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00606D","DataLSB":"0x220B00006B6","Repeat":0} |
+| STOP           | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00000D","DataLSB":"0x220B00000B0","Repeat":0} |
+| TOP MENU       | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00D9D4","DataLSB":"0x220B0009B2B","Repeat":0} |
+| POPUP MENU     | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D800A87","DataLSB":"0x220B00150E1","Repeat":0} |
+| HOME           | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00EAE7","DataLSB":"0x220B00057E7","Repeat":0} |
+
+There are more buttons on the control, which I don't use, therefore not listed
+
+
 ### Sony BD-S1500
 
 Common buttons should work across multiple models
